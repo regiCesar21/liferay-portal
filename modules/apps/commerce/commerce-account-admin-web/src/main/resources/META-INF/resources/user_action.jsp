@@ -13,6 +13,10 @@ CommerceAccountUserRelAdminDisplayContext commerceAccountUserRelAdminDisplayCont
 ResultRow row = (ResultRow)request.getAttribute(WebKeys.SEARCH_CONTAINER_RESULT_ROW);
 
 CommerceAccountUserRel commerceAccountUserRel = (CommerceAccountUserRel)row.getObject();
+
+User commerceAccountUser = commerceAccountUserRel.getUser();
+
+String editUserRoleId = "editUserRoles" + commerceAccountUser.getUserId();
 %>
 
 <liferay-ui:icon-menu
@@ -22,6 +26,14 @@ CommerceAccountUserRel commerceAccountUserRel = (CommerceAccountUserRel)row.getO
 	message="<%= StringPool.BLANK %>"
 	showWhenSingleIcon="<%= true %>"
 >
+	<c:if test="<%= commerceAccountUserRelAdminDisplayContext.hasPermission(commerceAccountUserRel.getCommerceAccountId(), ActionKeys.UPDATE) %>">
+		<liferay-ui:icon
+			id="<%= editUserRoleId %>"
+			message="edit-roles"
+			url="javascript:;"
+		/>
+	</c:if>
+
 	<c:if test="<%= commerceAccountUserRelAdminDisplayContext.hasPermission(commerceAccountUserRel.getCommerceAccountId(), ActionKeys.DELETE) %>">
 		<portlet:actionURL name="/commerce_account_admin/edit_commerce_account_user_rel" var="deleteURL">
 			<portlet:param name="<%= Constants.CMD %>" value="<%= Constants.DELETE %>" />
@@ -36,3 +48,46 @@ CommerceAccountUserRel commerceAccountUserRel = (CommerceAccountUserRel)row.getO
 		/>
 	</c:if>
 </liferay-ui:icon-menu>
+
+<aui:script use="liferay-item-selector-dialog">
+	$('#<portlet:namespace /><%= editUserRoleId %>').on(
+		'click',
+		function(event) {
+			event.preventDefault();
+
+			var itemSelectorDialog = new A.LiferayItemSelectorDialog(
+				{
+					eventName: 'userRoleItemSelector',
+					on: {
+						selectedItemChange: function(event) {
+						var <portlet:namespace />addUserRolesIds = [];
+
+						var selectedItems = event.newVal;
+
+							if (selectedItems) {
+								A.Array.each(
+									selectedItems,
+									function(item, index, selectedItems) {
+										<portlet:namespace />addUserRolesIds.push(item.id);
+									}
+								);
+
+								var form = AUI.$(document.<portlet:namespace />fm);
+
+								form.fm('<%= Constants.CMD %>').val('<%= Constants.UPDATE %>');
+								form.fm('commerceAccountUserId').val(<%= String.valueOf(commerceAccountUser.getUserId()) %>);
+								form.fm('roleIds').val(<portlet:namespace />addUserRolesIds.join(','));
+
+								submitForm(form, '<portlet:actionURL name="editCommerceAccountUserRel" />');
+							}
+						}
+					},
+					title: '<liferay-ui:message key="edit-roles" />',
+					url: '<%= commerceAccountUserRelAdminDisplayContext.getUserRoleItemSelectorUrl(commerceAccountUserRel) %>'
+				}
+			);
+
+			itemSelectorDialog.open();
+		}
+	);
+</aui:script>
