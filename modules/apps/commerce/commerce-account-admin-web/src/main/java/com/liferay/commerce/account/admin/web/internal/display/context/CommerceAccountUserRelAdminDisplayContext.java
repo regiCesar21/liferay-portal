@@ -140,18 +140,9 @@ public class CommerceAccountUserRelAdminDisplayContext
 	public String getUserRoleIds(CommerceAccountUserRel commerceAccountUserRel)
 		throws PortalException {
 
-		List<UserGroupRole> userGroupRoles =
-			commerceAccountUserRel.getUserGroupRoles();
-
-		Stream<UserGroupRole> stream = userGroupRoles.stream();
-
-		Long[] rolesArray = stream.map(
-			UserGroupRole::getRoleId
-		).toArray(
-			Long[]::new
-		);
-
-		return StringUtil.merge(rolesArray, StringPool.COMMA_AND_SPACE);
+		return ListUtil.toString(
+			commerceAccountUserRel.getUserGroupRoles(), "roleId",
+			StringPool.COMMA_AND_SPACE);
 	}
 
 	public String getUserRoleItemSelectorUrl(
@@ -179,7 +170,7 @@ public class CommerceAccountUserRelAdminDisplayContext
 
 		itemSelectorURL.setParameter(
 			"checkedRoleIds", getUserRoleIds(commerceAccountUserRel));
-		itemSelectorURL.setParameter("rowChecker", "");
+		itemSelectorURL.setParameter("rowChecker", StringPool.BLANK);
 
 		itemSelectorURL.setWindowState(LiferayWindowState.POP_UP);
 
