@@ -1081,11 +1081,31 @@ public class LDAPUserImporterImpl implements LDAPUserImporter, UserImporter {
 			String modifyTimestamp = LDAPUtil.getAttributeString(
 				userLdapAttribtes, "modifyTimestamp");
 
-			user = updateUser(
-				ldapImportContext, ldapUser, user, password, modifyTimestamp,
-				isNew);
+			try {
+				user = updateUser(
+					ldapImportContext, ldapUser, user, password,
+					modifyTimestamp, isNew);
 
-			ldapImportContext.addImportedUserId(fullUserDN, user.getUserId());
+				ldapImportContext.addImportedUserId(
+					fullUserDN, user.getUserId());
+			}
+			catch (GroupFriendlyURLException gfurle) {
+				int type = gfurle.getType();
+
+				if (type == GroupFriendlyURLException.DUPLICATE) {
+					_log.error(
+						"Unable to import user " + user.getUserId() +
+							" because of a duplicate group friendly URL",
+						gfurle);
+				}
+				else {
+					_log.error(
+						"Unable to import user " + user.getUserId(), gfurle);
+				}
+			}
+			catch (Exception e) {
+				_log.error("Unable to import user " + user.getUserId(), e);
+			}
 
 			return user;
 		}
