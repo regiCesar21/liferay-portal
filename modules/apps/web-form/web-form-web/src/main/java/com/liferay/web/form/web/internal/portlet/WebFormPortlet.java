@@ -284,10 +284,7 @@ public class WebFormPortlet extends MVCPortlet {
 		String cmd = ParamUtil.getString(resourceRequest, Constants.CMD);
 
 		try {
-			if (cmd.equals("captcha")) {
-				serveCaptcha(resourceRequest, resourceResponse);
-			}
-			else if (cmd.equals("export")) {
+			if (cmd.equals("export")) {
 				exportData(resourceRequest, resourceResponse);
 			}
 		}
@@ -537,13 +534,6 @@ public class WebFormPortlet extends MVCPortlet {
 
 			return false;
 		}
-	}
-
-	protected void serveCaptcha(
-			ResourceRequest resourceRequest, ResourceResponse resourceResponse)
-		throws Exception {
-
-		CaptchaUtil.serveImage(resourceRequest, resourceResponse);
 	}
 
 	@Reference(unbind = "-")

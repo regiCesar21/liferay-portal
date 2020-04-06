@@ -149,11 +149,7 @@ String redirect = ParamUtil.getString(request, "redirect");
 			<aui:input name="body" type="hidden" />
 
 			<c:if test="<%= captchaConfiguration.messageBoardsEditMessageCaptchaEnabled() %>">
-				<portlet:resourceURL id="/message_boards/captcha" var="captchaURL" />
-
-				<liferay-captcha:captcha
-					url="<%= captchaURL %>"
-				/>
+				<liferay-captcha:captcha />
 			</c:if>
 
 			<aui:button cssClass="advanced-reply btn btn-link btn-sm" value="advanced-reply" />

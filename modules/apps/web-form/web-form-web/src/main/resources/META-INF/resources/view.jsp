@@ -126,13 +126,7 @@ String title = LocalizationUtil.getPreferencesValue(portletPreferences, "title",
 		%>
 
 		<c:if test='<%= GetterUtil.getBoolean(portletPreferences.getValue("requireCaptcha", StringPool.BLANK)) %>'>
-			<portlet:resourceURL var="captchaURL">
-				<portlet:param name="<%= Constants.CMD %>" value="captcha" />
-			</portlet:resourceURL>
-
-			<liferay-captcha:captcha
-				url="<%= captchaURL %>"
-			/>
+			<liferay-captcha:captcha />
 		</c:if>
 
 		<aui:button onClick="" type="submit" value="send" />

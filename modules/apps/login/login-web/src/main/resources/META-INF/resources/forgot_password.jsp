@@ -78,11 +78,7 @@ renderResponse.setTitle(LanguageUtil.get(request, "forgot-password"));
 					</aui:input>
 
 					<c:if test="<%= captchaConfiguration.sendPasswordCaptchaEnabled() %>">
-						<liferay-portlet:resourceURL copyCurrentRenderParameters="<%= false %>" id="/login/captcha" var="captchaURL" />
-
-						<liferay-captcha:captcha
-							url="<%= captchaURL %>"
-						/>
+						<liferay-captcha:captcha />
 					</c:if>
 
 					<aui:button-row>
@@ -114,11 +110,7 @@ renderResponse.setTitle(LanguageUtil.get(request, "forgot-password"));
 						</c:when>
 						<c:otherwise>
 							<c:if test="<%= reminderAttempts >= 3 %>">
-								<liferay-portlet:resourceURL copyCurrentRenderParameters="<%= false %>" id="/login/captcha" var="captchaURL" />
-
-								<liferay-captcha:captcha
-									url="<%= captchaURL %>"
-								/>
+								<liferay-captcha:captcha />
 							</c:if>
 
 							<aui:button-row>
