@@ -111,7 +111,7 @@ public class SimpleCaptchaImpl implements Captcha {
 			HttpServletResponse httpServletResponse)
 		throws IOException {
 
-		HttpSession httpSession = _getSession(httpServletRequest);
+		HttpSession httpSession = _getHttpSession(httpServletRequest);
 
 		String key = WebKeys.CAPTCHA_TEXT;
 
@@ -249,13 +249,13 @@ public class SimpleCaptchaImpl implements Captcha {
 		if ((_captchaConfiguration.maxChallenges() > 0) &&
 			Validator.isNotNull(httpServletRequest.getRemoteUser())) {
 
-			HttpSession httpSession = _getSession(httpServletRequest);
+			HttpSession httpSession = _getHttpSession(httpServletRequest);
 
 			Integer count = (Integer)httpSession.getAttribute(
-				_getSessionKey(WebKeys.CAPTCHA_COUNT, httpServletRequest));
+				_getHttpSessionKey(WebKeys.CAPTCHA_COUNT, httpServletRequest));
 
 			httpSession.setAttribute(
-				_getSessionKey(WebKeys.CAPTCHA_COUNT, httpServletRequest),
+				_getHttpSessionKey(WebKeys.CAPTCHA_COUNT, httpServletRequest),
 				incrementCounter(count));
 		}
 	}
@@ -351,10 +351,10 @@ public class SimpleCaptchaImpl implements Captcha {
 		HttpServletRequest httpServletRequest) {
 
 		if (_captchaConfiguration.maxChallenges() > 0) {
-			HttpSession httpSession = _getSession(httpServletRequest);
+			HttpSession httpSession = _getHttpSession(httpServletRequest);
 
 			Integer count = (Integer)httpSession.getAttribute(
-				_getSessionKey(WebKeys.CAPTCHA_COUNT, httpServletRequest));
+				_getHttpSessionKey(WebKeys.CAPTCHA_COUNT, httpServletRequest));
 
 			return isExceededMaxChallenges(count);
 		}
@@ -386,10 +386,10 @@ public class SimpleCaptchaImpl implements Captcha {
 	protected boolean validateChallenge(HttpServletRequest httpServletRequest)
 		throws CaptchaException {
 
-		HttpSession httpSession = _getSession(httpServletRequest);
+		HttpSession httpSession = _getHttpSession(httpServletRequest);
 
 		String captchaText = (String)httpSession.getAttribute(
-			_getSessionKey(WebKeys.CAPTCHA_TEXT, httpServletRequest));
+			_getHttpSessionKey(WebKeys.CAPTCHA_TEXT, httpServletRequest));
 
 		if (captchaText == null) {
 			_log.error(
@@ -424,6 +424,25 @@ public class SimpleCaptchaImpl implements Captcha {
 	)
 	protected Release release;
 
+	private HttpSession _getHttpSession(HttpServletRequest httpServletRequest) {
+		HttpServletRequest originalHttpServletRequest =
+			portal.getOriginalServletRequest(httpServletRequest);
+
+		return originalHttpServletRequest.getSession();
+	}
+
+	private String _getHttpSessionKey(
+		String key, HttpServletRequest httpServletRequest) {
+
+		String portletId = portal.getPortletId(httpServletRequest);
+
+		if (Validator.isNotNull(portletId)) {
+			return portal.getPortletNamespace(portletId) + key;
+		}
+
+		return key;
+	}
+
 	private Object _getInstance(String className) {
 		className = className.trim();
 
@@ -445,25 +464,6 @@ public class SimpleCaptchaImpl implements Captcha {
 		}
 
 		return instance;
-	}
-
-	private HttpSession _getSession(HttpServletRequest httpServletRequest) {
-		HttpServletRequest originalHttpServletRequest =
-			portal.getOriginalServletRequest(httpServletRequest);
-
-		return originalHttpServletRequest.getSession();
-	}
-
-	private String _getSessionKey(
-		String key, HttpServletRequest httpServletRequest) {
-
-		String portletId = portal.getPortletId(httpServletRequest);
-
-		if (Validator.isNotNull(portletId)) {
-			return portal.getPortletNamespace(portletId) + key;
-		}
-
-		return key;
 	}
 
 	private Class<?> _loadClass(String className) throws Exception {
