@@ -111,7 +111,7 @@ public class SimpleCaptchaImpl implements Captcha {
 			HttpServletResponse httpServletResponse)
 		throws IOException {
 
-		HttpSession session = _getSession(httpServletRequest);
+		HttpSession httpSession = _getSession(httpServletRequest);
 
 		nl.captcha.Captcha simpleCaptcha = getSimpleCaptcha();
 
@@ -123,7 +123,7 @@ public class SimpleCaptchaImpl implements Captcha {
 			key = portal.getPortletNamespace(portletId) + key;
 		}
 
-		session.setAttribute(key, simpleCaptcha.getAnswer());
+		httpSession.setAttribute(key, simpleCaptcha.getAnswer());
 
 		httpServletResponse.setContentType(ContentTypes.IMAGE_PNG);
 
@@ -249,12 +249,12 @@ public class SimpleCaptchaImpl implements Captcha {
 		if ((_captchaConfiguration.maxChallenges() > 0) &&
 			Validator.isNotNull(httpServletRequest.getRemoteUser())) {
 
-			HttpSession session = _getSession(httpServletRequest);
+			HttpSession httpSession = _getSession(httpServletRequest);
 
-			Integer count = (Integer)session.getAttribute(
+			Integer count = (Integer)httpSession.getAttribute(
 				_getSessionKey(WebKeys.CAPTCHA_COUNT, httpServletRequest));
 
-			session.setAttribute(
+			httpSession.setAttribute(
 				_getSessionKey(WebKeys.CAPTCHA_COUNT, httpServletRequest),
 				incrementCounter(count));
 		}
@@ -351,9 +351,9 @@ public class SimpleCaptchaImpl implements Captcha {
 		HttpServletRequest httpServletRequest) {
 
 		if (_captchaConfiguration.maxChallenges() > 0) {
-			HttpSession session = _getSession(httpServletRequest);
+			HttpSession httpSession = _getSession(httpServletRequest);
 
-			Integer count = (Integer)session.getAttribute(
+			Integer count = (Integer)httpSession.getAttribute(
 				_getSessionKey(WebKeys.CAPTCHA_COUNT, httpServletRequest));
 
 			return isExceededMaxChallenges(count);
@@ -386,9 +386,9 @@ public class SimpleCaptchaImpl implements Captcha {
 	protected boolean validateChallenge(HttpServletRequest httpServletRequest)
 		throws CaptchaException {
 
-		HttpSession session = _getSession(httpServletRequest);
+		HttpSession httpSession = _getSession(httpServletRequest);
 
-		String captchaText = (String)session.getAttribute(
+		String captchaText = (String)httpSession.getAttribute(
 			_getSessionKey(WebKeys.CAPTCHA_TEXT, httpServletRequest));
 
 		if (captchaText == null) {
@@ -404,7 +404,7 @@ public class SimpleCaptchaImpl implements Captcha {
 			ParamUtil.getString(httpServletRequest, "captchaText"));
 
 		if (valid) {
-			session.removeAttribute(WebKeys.CAPTCHA_TEXT);
+			httpSession.removeAttribute(WebKeys.CAPTCHA_TEXT);
 		}
 
 		return valid;
