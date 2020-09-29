@@ -5,6 +5,7 @@
 
 package com.liferay.dynamic.data.mapping.form.field.type.internal.numeric;
 
+import com.liferay.dynamic.data.mapping.form.field.type.DDMFormFieldValueEditingAware;
 import com.liferay.dynamic.data.mapping.form.field.type.DDMFormFieldValueLocalizer;
 import com.liferay.dynamic.data.mapping.util.NumericDDMFormFieldUtil;
 import com.liferay.portal.kernel.log.Log;
@@ -27,7 +28,7 @@ import org.osgi.service.component.annotations.Component;
 	service = DDMFormFieldValueLocalizer.class
 )
 public class NumericDDMFormFieldValueLocalizer
-	implements DDMFormFieldValueLocalizer {
+	implements DDMFormFieldValueEditingAware, DDMFormFieldValueLocalizer {
 
 	@Override
 	public String localize(String value, Locale locale) {
@@ -61,7 +62,14 @@ public class NumericDDMFormFieldValueLocalizer
 		return value;
 	}
 
+	@Override
+	public void setEditing(boolean editing) {
+		_editing = editing;
+	}
+
 	private static final Log _log = LogFactoryUtil.getLog(
 		NumericDDMFormFieldValueLocalizer.class);
+
+	private boolean _editing;
 
 }
