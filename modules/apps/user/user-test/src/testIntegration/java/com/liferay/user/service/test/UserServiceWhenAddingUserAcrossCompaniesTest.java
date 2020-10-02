@@ -97,7 +97,7 @@ public class UserServiceWhenAddingUserAcrossCompaniesTest {
 		}
 		catch (PrincipalException principalException) {
 			Assert.assertEquals(
-				"Only the OmniAdmin can add users to another company",
+				"Only the omniadmin can add users to another company",
 				principalException.getMessage());
 		}
 		finally {
