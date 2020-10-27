@@ -179,6 +179,11 @@ public class DLFileEntryLocalServiceImpl
 
 		String fileName = DLUtil.getSanitizedFileName(title, extension);
 
+		if (Validator.isNotNull(sourceFileName)) {
+			fileName = DLUtil.getSanitizedFileName(
+				FileUtil.stripExtension(sourceFileName), extension);
+		}
+
 		if (fileEntryTypeId == -1) {
 			fileEntryTypeId =
 				DLFileEntryTypeLocalServiceImpl.getDefaultFileEntryTypeId(
@@ -2111,7 +2116,7 @@ public class DLFileEntryLocalServiceImpl
 			(dlFileEntry.getFileEntryId() != fileEntryId)) {
 
 			throw new DuplicateFileEntryException(
-				"A file entry already exists with file name " + title);
+				"A file entry already exists with file name " + fileName);
 		}
 	}
 
@@ -2598,6 +2603,11 @@ public class DLFileEntryLocalServiceImpl
 			}
 
 			String fileName = DLUtil.getSanitizedFileName(title, extension);
+
+			if (Validator.isNotNull(sourceFileName)) {
+				fileName = DLUtil.getSanitizedFileName(
+					FileUtil.stripExtension(sourceFileName), extension);
+			}
 
 			Date now = new Date();
 
