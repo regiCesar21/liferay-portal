@@ -1020,7 +1020,7 @@ public class DLImpl implements DL {
 
 		if (fileEntry != null) {
 			sb.append(StringPool.SLASH);
-			sb.append(DLWebDAVUtil.escapeURLTitle(fileEntry.getTitle()));
+			sb.append(DLWebDAVUtil.escapeURLTitle(fileEntry.getFileName()));
 		}
 
 		webDavURLSB.append(sb.toString());
