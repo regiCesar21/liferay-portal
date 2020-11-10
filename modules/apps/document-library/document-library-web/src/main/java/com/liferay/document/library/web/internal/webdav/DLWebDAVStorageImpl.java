@@ -370,7 +370,7 @@ public class DLWebDAVStorageImpl extends BaseWebDAVStorageImpl {
 				}
 
 				try {
-					FileEntry fileEntry = _dlAppService.getFileEntry(
+					FileEntry fileEntry = _getFileEntryByName(
 						webDAVRequest.getGroupId(), parentFolderId,
 						getTitle(pathArray));
 
@@ -679,7 +679,7 @@ public class DLWebDAVStorageImpl extends BaseWebDAVStorageImpl {
 
 			if (webDAVRequest.isMac()) {
 				try {
-					FileEntry destFileEntry = _dlAppService.getFileEntry(
+					FileEntry destFileEntry = _getFileEntryByName(
 						groupId, newParentFolderId, title);
 
 					InputStream is = fileEntry.getContentStream();
@@ -778,7 +778,7 @@ public class DLWebDAVStorageImpl extends BaseWebDAVStorageImpl {
 				httpServletRequest, file, title);
 
 			try {
-				FileEntry fileEntry = _dlAppService.getFileEntry(
+				FileEntry fileEntry = _getFileEntryByName(
 					webDAVRequest.getGroupId(), parentFolderId, title);
 
 				if (!hasLock(fileEntry, webDAVRequest.getLockUuid()) &&
@@ -946,7 +946,7 @@ public class DLWebDAVStorageImpl extends BaseWebDAVStorageImpl {
 			}
 
 			try {
-				FileEntry fileEntry = _dlAppService.getFileEntry(
+				FileEntry fileEntry = _getFileEntryByName(
 					groupId, parentFolderId, name);
 
 				if (!hasLock(fileEntry, lockUuid) &&
@@ -1209,6 +1209,23 @@ public class DLWebDAVStorageImpl extends BaseWebDAVStorageImpl {
 		resource.setPrimaryKey(folder.getPrimaryKey());
 
 		return resource;
+	}
+
+	private FileEntry _getFileEntryByName(
+			long groupId, long parentFolderId, String name)
+		throws PortalException {
+
+		try {
+			return _dlAppService.getFileEntry(groupId, parentFolderId, name);
+		}
+		catch (NoSuchFileEntryException noSuchFileEntryException) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(noSuchFileEntryException, noSuchFileEntryException);
+			}
+
+			return _dlAppService.getFileEntryByFileName(
+				groupId, parentFolderId, name);
+		}
 	}
 
 	private ServiceContext _getServiceContext(
