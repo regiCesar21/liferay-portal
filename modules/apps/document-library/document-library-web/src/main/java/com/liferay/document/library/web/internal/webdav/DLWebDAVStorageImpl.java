@@ -690,10 +690,7 @@ public class DLWebDAVStorageImpl extends BaseWebDAVStorageImpl {
 					_dlAppService.updateFileEntry(
 						destFileEntry.getFileEntryId(),
 						destFileEntry.getFileName(),
-						destFileEntry.getMimeType(),
-						_getTitle(
-							destFileEntry.getFileName(),
-							fileEntry.getFileName(), destFileEntry.getTitle()),
+						destFileEntry.getMimeType(), destFileEntry.getTitle(),
 						destFileEntry.getDescription(), StringPool.BLANK,
 						DLVersionNumberIncrease.MINOR, file, serviceContext);
 
@@ -713,10 +710,9 @@ public class DLWebDAVStorageImpl extends BaseWebDAVStorageImpl {
 
 			_dlAppService.updateFileEntry(
 				fileEntry.getFileEntryId(), fileName, fileEntry.getMimeType(),
-				_getTitle(
-					fileName, fileEntry.getFileName(), fileEntry.getTitle()),
-				fileEntry.getDescription(), StringPool.BLANK,
-				DLVersionNumberIncrease.MINOR, file, serviceContext);
+				fileEntry.getTitle(), fileEntry.getDescription(),
+				StringPool.BLANK, DLVersionNumberIncrease.MINOR, file,
+				serviceContext);
 
 			if (fileEntry.getFolderId() != newParentFolderId) {
 				_dlAppService.moveFileEntry(
@@ -797,11 +793,9 @@ public class DLWebDAVStorageImpl extends BaseWebDAVStorageImpl {
 
 				_dlAppService.updateFileEntry(
 					fileEntry.getFileEntryId(), fileName, contentType,
-					_getTitle(
-						fileName, fileEntry.getFileName(),
-						fileEntry.getTitle()),
-					fileEntry.getDescription(), StringPool.BLANK,
-					DLVersionNumberIncrease.MINOR, file, serviceContext);
+					fileEntry.getTitle(), fileEntry.getDescription(),
+					StringPool.BLANK, DLVersionNumberIncrease.MINOR, file,
+					serviceContext);
 			}
 			catch (NoSuchFileEntryException noSuchFileEntryException) {
 				if (_log.isDebugEnabled()) {
@@ -1255,16 +1249,6 @@ public class DLWebDAVStorageImpl extends BaseWebDAVStorageImpl {
 			webDAVRequest.getGroupId(), className);
 
 		return serviceContext;
-	}
-
-	private String _getTitle(
-		String newFileName, String originalFileName, String title) {
-
-		if (Objects.equals(originalFileName, newFileName)) {
-			return title;
-		}
-
-		return newFileName;
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
