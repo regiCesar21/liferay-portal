@@ -411,6 +411,13 @@ public class DDMFormEvaluatorHelper {
 		return false;
 	}
 
+	protected boolean isFieldNative(
+		DDMFormEvaluatorFieldContextKey ddmFormFieldContextKey) {
+
+		return getBooleanPropertyValue(
+			ddmFormFieldContextKey, "nativeField", true);
+	}
+
 	protected boolean isFieldReadOnly(
 		DDMFormEvaluatorFieldContextKey ddmFormEvaluatorFieldContextKey) {
 
@@ -714,6 +721,7 @@ public class DDMFormEvaluatorHelper {
 			(ddmFormFieldContextKey, ddmFormFieldProperties) -> {
 				if (_ddmFormEvaluatorEvaluateRequest.isViewMode() &&
 					_ddmFormEvaluatorEvaluateRequest.isEditingFieldValue() &&
+					!isFieldNative(ddmFormFieldContextKey) &&
 					!isFieldVisible(ddmFormFieldContextKey)) {
 
 					ddmFormFieldProperties.put("value", StringPool.BLANK);
