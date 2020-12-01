@@ -314,10 +314,12 @@ definition {
 	}
 
 	@description = "This ensures that the document file can be downloaded through the document file name."
-	@priority = "5"
+	@priority = 5
 	test DownloadDocumentThroughFileName {
 		var portalURL = PropsUtil.get("portal.url");
-		var siteID = JSONGroupAPI._getGroupIdByName(groupName = "Guest", site = "true");
+		var siteID = JSONGroupAPI._getGroupIdByName(
+			groupName = "Guest",
+			site = "true");
 
 		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
 
@@ -362,10 +364,12 @@ definition {
 	}
 
 	@description = "This ensures that the document file can be downloaded through the document title."
-	@priority = "5"
+	@priority = 5
 	test DownloadDocumentThroughTitle {
 		var portalURL = PropsUtil.get("portal.url");
-		var siteID = JSONGroupAPI._getGroupIdByName(groupName = "Guest", site = "true");
+		var siteID = JSONGroupAPI._getGroupIdByName(
+			groupName = "Guest",
+			site = "true");
 
 		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
 
@@ -746,10 +750,12 @@ definition {
 	}
 
 	@description = "This ensures that the document file can be accessed through the original URL."
-	@priority = "5"
+	@priority = 5
 	test PreviewDocumentThroughURL {
 		var portalURL = PropsUtil.get("portal.url");
-		var siteID = JSONGroupAPI._getGroupIdByName(groupName = "Guest", site = "true");
+		var siteID = JSONGroupAPI._getGroupIdByName(
+			groupName = "Guest",
+			site = "true");
 
 		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
 
@@ -896,6 +902,8 @@ definition {
 		AssertVisible(locator1 = "DocumentsAndMediaDocument#DOCUMENT_INFO_THUMBNAIL");
 	}
 
+	@description = "This ensures that the SVG file can be previewed."
+	@priority = 5
 	test PreviewSVG {
 		property portal.acceptance = "true";
 
