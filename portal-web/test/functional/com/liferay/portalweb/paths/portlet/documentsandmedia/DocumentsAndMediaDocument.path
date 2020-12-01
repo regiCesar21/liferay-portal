@@ -221,6 +221,14 @@
 	<td></td>
 </tr>
 
+<!--DOCUMENT_VIEWPORT-->
+
+<tr>
+	<td>DOCUMENT_VIEWPORT_PREVIEW</td>
+	<td>//img[contains(@src,'${key_imageSourceURL}')]</td>
+	<td></td>
+</tr>
+
 <!--MARKETING-->
 
 <tr>
