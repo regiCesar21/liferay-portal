@@ -344,7 +344,6 @@ public class WebDAVOSXTest extends BaseWebDAVTestCase {
 			}
 
 			assertCode(HttpServletResponse.SC_NOT_FOUND, servicePropFind(dest));
-			assertCode(HttpServletResponse.SC_NOT_FOUND, servicePropFind(dest));
 
 			if (i == 0) {
 				assertCode(
