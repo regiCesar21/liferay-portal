@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-(function (A, Liferay) {
+(function (A) {
 	var CLICK_EVENTS = {};
 	var Util = Liferay.Util;
 
@@ -195,4 +195,4 @@
 			dialog.hide();
 		}
 	});
-})(AUI(), Liferay);
+})(AUI());
