@@ -39,6 +39,10 @@ public final class DDMFormEvaluatorEvaluateRequest {
 		return _userId;
 	}
 
+	public boolean isViewMode() {
+		return _viewMode;
+	}
+
 	public static class Builder {
 
 		public static Builder newBuilder(
@@ -69,6 +73,12 @@ public final class DDMFormEvaluatorEvaluateRequest {
 			return this;
 		}
 
+		public Builder withViewMode(boolean viewMode) {
+			_ddmFormEvaluatorEvaluateRequest._viewMode = viewMode;
+
+			return this;
+		}
+
 		private Builder(
 			DDMForm ddmForm, DDMFormValues ddmFormValues, Locale locale) {
 
@@ -92,5 +102,6 @@ public final class DDMFormEvaluatorEvaluateRequest {
 	private long _groupId;
 	private Locale _locale;
 	private long _userId;
+	private boolean _viewMode;
 
 }
