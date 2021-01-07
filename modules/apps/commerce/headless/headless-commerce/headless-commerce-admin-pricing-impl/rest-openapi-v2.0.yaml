@@ -5621,7 +5621,7 @@ paths:
             parameters:
                 - in: path
                   explode: false
-                  name: id
+                  name: priceEntryId
                   required: true
                   schema:
                       description:
