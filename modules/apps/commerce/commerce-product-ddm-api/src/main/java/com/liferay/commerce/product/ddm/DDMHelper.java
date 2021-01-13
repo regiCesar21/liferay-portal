@@ -17,6 +17,8 @@ import java.util.Map;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
 
+import javax.servlet.jsp.PageContext;
+
 /**
  * @author Igor Beslic
  */
@@ -38,6 +40,13 @@ public interface DDMHelper {
 		Map<CPDefinitionOptionRel, List<CPDefinitionOptionValueRel>>
 			cpDefinitionOptionRelCPDefinitionOptionValueRels,
 		long companyId, long userId);
+
+	public String renderCPAttachmentFileEntryOptions(
+			long cpDefinitionId, String json, PageContext pageContext,
+			RenderRequest renderRequest, RenderResponse renderResponse,
+			Map<CPDefinitionOptionRel, List<CPDefinitionOptionValueRel>>
+				cpDefinitionOptionRelCPDefinitionOptionValueRels)
+		throws PortalException;
 
 	public String renderCPAttachmentFileEntryOptions(
 			long cpDefinitionId, String json, RenderRequest renderRequest,

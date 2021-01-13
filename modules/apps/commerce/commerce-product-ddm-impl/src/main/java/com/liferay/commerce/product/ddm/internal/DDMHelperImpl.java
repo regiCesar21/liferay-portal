@@ -39,6 +39,7 @@ import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
+import com.liferay.taglib.servlet.PipingServletResponse;
 
 import java.util.List;
 import java.util.Locale;
@@ -52,6 +53,7 @@ import javax.portlet.RenderResponse;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.jsp.PageContext;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -108,6 +110,23 @@ public class DDMHelperImpl implements DDMHelper {
 		return ddmForm;
 	}
 
+	public String renderCPAttachmentFileEntryOptions(
+			long cpDefinitionId, String json, PageContext pageContext,
+			RenderRequest renderRequest, RenderResponse renderResponse,
+			Map<CPDefinitionOptionRel, List<CPDefinitionOptionValueRel>>
+				cpDefinitionOptionRelCPDefinitionOptionValueRels)
+		throws PortalException {
+
+		Locale locale = _portal.getLocale(renderRequest);
+
+		DDMForm ddmForm = getCPAttachmentFileEntryDDMForm(
+			locale, cpDefinitionOptionRelCPDefinitionOptionValueRels);
+
+		return _render(
+			cpDefinitionId, locale, ddmForm, json, pageContext, renderRequest,
+			renderResponse);
+	}
+
 	@Override
 	public String renderCPAttachmentFileEntryOptions(
 			long cpDefinitionId, String json, RenderRequest renderRequest,
@@ -122,7 +141,7 @@ public class DDMHelperImpl implements DDMHelper {
 			locale, cpDefinitionOptionRelCPDefinitionOptionValueRels);
 
 		return _render(
-			cpDefinitionId, locale, ddmForm, json, renderRequest,
+			cpDefinitionId, locale, ddmForm, json, null, renderRequest,
 			renderResponse);
 	}
 
@@ -487,7 +506,8 @@ public class DDMHelperImpl implements DDMHelper {
 
 	private String _render(
 			long cpDefinitionId, Locale locale, DDMForm ddmForm, String json,
-			RenderRequest renderRequest, RenderResponse renderResponse)
+			PageContext pageContext, RenderRequest renderRequest,
+			RenderResponse renderResponse)
 		throws PortalException {
 
 		if (ddmForm == null) {
@@ -499,6 +519,11 @@ public class DDMHelperImpl implements DDMHelper {
 
 		HttpServletResponse httpServletResponse =
 			_portal.getHttpServletResponse(renderResponse);
+
+		if (pageContext != null) {
+			httpServletResponse =
+				PipingServletResponse.createPipingServletResponse(pageContext);
+		}
 
 		DDMFormRenderingContext ddmFormRenderingContext =
 			new DDMFormRenderingContext();
@@ -522,6 +547,16 @@ public class DDMHelperImpl implements DDMHelper {
 		}
 
 		return _ddmFormRenderer.render(ddmForm, ddmFormRenderingContext);
+	}
+
+	private String _render(
+			long cpDefinitionId, Locale locale, DDMForm ddmForm, String json,
+			RenderRequest renderRequest, RenderResponse renderResponse)
+		throws PortalException {
+
+		return _render(
+			cpDefinitionId, locale, ddmForm, json, null, renderRequest,
+			renderResponse);
 	}
 
 	private static final String[] _ARRAY_VALUE_FIELD_TYPE = {

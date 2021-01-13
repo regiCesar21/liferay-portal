@@ -12,7 +12,7 @@
 		</div>
 	</c:when>
 	<c:otherwise>
-		<%= cpAttachmentFileEntriesDisplayContext.renderOptions(renderRequest, renderResponse) %>
+		<%= cpAttachmentFileEntriesDisplayContext.renderOptions(pageContext, renderRequest, renderResponse) %>
 
 		<aui:input name="ddmFormValues" type="hidden" />
 	</c:otherwise>
