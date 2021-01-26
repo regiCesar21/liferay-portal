@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import {isObject, isString} from 'metal';
+import isObject from './../util/is_object';
 
 import PortletConstants from './portlet_constants.es';
 
@@ -76,7 +76,7 @@ class RenderState {
 	 */
 
 	getValue(name, defaultValue) {
-		if (!isString(name)) {
+		if (!(typeof name === 'string')) {
 			throw new TypeError('Parameter name must be a string');
 		}
 
@@ -105,7 +105,7 @@ class RenderState {
 	 */
 
 	getValues(name, defaultValue) {
-		if (!isString(name)) {
+		if (!(typeof name === 'string')) {
 			throw new TypeError('Parameter name must be a string');
 		}
 
@@ -133,7 +133,7 @@ class RenderState {
 	 */
 
 	remove(name) {
-		if (!isString(name)) {
+		if (!(typeof name === 'string')) {
 			throw new TypeError('Parameter name must be a string');
 		}
 
@@ -151,7 +151,7 @@ class RenderState {
 	 */
 
 	setPortletMode(portletMode) {
-		if (!isString(portletMode)) {
+		if (!(typeof portletMode === 'string')) {
 			throw new TypeError('Portlet Mode must be a string');
 		}
 
@@ -174,11 +174,11 @@ class RenderState {
 	 */
 
 	setValue(name, value) {
-		if (!isString(name)) {
+		if (!(typeof name === 'string')) {
 			throw new TypeError('Parameter name must be a string');
 		}
 
-		if (!isString(value) && value !== null && !Array.isArray(value)) {
+		if (!(typeof value === 'string') && value !== null && !Array.isArray(value)) {
 			throw new TypeError(
 				'Parameter value must be a string, an array or null'
 			);
@@ -214,7 +214,7 @@ class RenderState {
 	 */
 
 	setWindowState(windowState) {
-		if (!isString(windowState)) {
+		if (!(typeof windowState === 'string')) {
 			throw new TypeError('Window State must be a string');
 		}
 

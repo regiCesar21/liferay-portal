@@ -32,6 +32,8 @@ export {default as KeyboardFocusManager} from './liferay/keyboard-focus/Keyboard
 export {default as CompatibilityEventProxy} from './liferay/CompatibilityEventProxy.es';
 
 export {default as DefaultEventHandler} from './liferay/DefaultEventHandler.es';
+export {default as Disposable} from './liferay/Disposable';
+export {default as EventEmitter} from './liferay/EventEmitter';
 export {default as ItemSelectorDialog} from './liferay/ItemSelectorDialog.es';
 export {default as PortletBase} from './liferay/PortletBase.es';
 
