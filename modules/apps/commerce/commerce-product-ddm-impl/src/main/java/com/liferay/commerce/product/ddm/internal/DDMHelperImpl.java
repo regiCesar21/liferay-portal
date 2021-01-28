@@ -135,14 +135,7 @@ public class DDMHelperImpl implements DDMHelper {
 				cpDefinitionOptionRelCPDefinitionOptionValueRels)
 		throws PortalException {
 
-		Locale locale = _portal.getLocale(renderRequest);
-
-		DDMForm ddmForm = getCPAttachmentFileEntryDDMForm(
-			locale, cpDefinitionOptionRelCPDefinitionOptionValueRels);
-
-		return _render(
-			cpDefinitionId, locale, ddmForm, json, null, renderRequest,
-			renderResponse);
+		throw new UnsupportedOperationException();
 	}
 
 	@Override
