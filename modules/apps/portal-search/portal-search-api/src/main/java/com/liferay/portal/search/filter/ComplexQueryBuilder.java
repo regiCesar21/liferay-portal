@@ -23,6 +23,8 @@ public interface ComplexQueryBuilder {
 
 	public Query build();
 
+	public Query buildPart(ComplexQueryPart complexQueryPart);
+
 	public ComplexQueryBuilder root(BooleanQuery booleanQuery);
 
 }

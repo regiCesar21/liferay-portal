@@ -35,4 +35,6 @@ public interface ComplexQueryPart {
 
 	public boolean isDisabled();
 
+	public boolean isRootClause();
+
 }
