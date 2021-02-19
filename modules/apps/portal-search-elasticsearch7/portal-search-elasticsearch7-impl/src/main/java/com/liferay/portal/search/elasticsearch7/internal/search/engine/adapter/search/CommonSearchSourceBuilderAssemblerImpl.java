@@ -132,7 +132,17 @@ public class CommonSearchSourceBuilderAssemblerImpl
 				additiveComplexQueryParts.add(complexQueryPart);
 			}
 			else {
-				nonadditiveComplexQueryParts.add(complexQueryPart);
+				if (complexQueryPart.isRootClause() &&
+					(queryBuilder instanceof BoolQueryBuilder)) {
+
+					BoolQueryBuilder boolQueryBuilder =
+						(BoolQueryBuilder)queryBuilder;
+
+					_combine(boolQueryBuilder, complexQueryPart);
+				}
+				else {
+					nonadditiveComplexQueryParts.add(complexQueryPart);
+				}
 			}
 		}
 
@@ -549,6 +559,30 @@ public class CommonSearchSourceBuilderAssemblerImpl
 		}
 
 		return null;
+	}
+
+	private void _combine(
+		BoolQueryBuilder boolQueryBuilder, ComplexQueryPart complexQueryPart) {
+
+		Query query = _complexQueryBuilderFactory.builder(
+		).buildPart(
+			complexQueryPart
+		);
+
+		String occur = complexQueryPart.getOccur();
+
+		if (occur.equals("filter")) {
+			boolQueryBuilder.filter(translateQuery(query));
+		}
+		else if (occur.equals("must")) {
+			boolQueryBuilder.must(translateQuery(query));
+		}
+		else if (occur.equals("must_not")) {
+			boolQueryBuilder.mustNot(translateQuery(query));
+		}
+		else if (occur.equals("should")) {
+			boolQueryBuilder.should(translateQuery(query));
+		}
 	}
 
 	private AggregationTranslator<AggregationBuilder> _aggregationTranslator;
