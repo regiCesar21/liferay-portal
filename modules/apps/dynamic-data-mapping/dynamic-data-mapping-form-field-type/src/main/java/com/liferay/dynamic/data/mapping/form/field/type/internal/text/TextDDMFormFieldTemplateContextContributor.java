@@ -26,8 +26,6 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
-import com.liferay.portal.kernel.util.HtmlUtil;
-import com.liferay.portal.kernel.util.Validator;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -70,22 +68,17 @@ public class TextDDMFormFieldTemplateContextContributor
 				getTooltip(ddmFormField, ddmFormFieldRenderingContext));
 		}
 
-		String value = getValue(ddmFormFieldRenderingContext);
+		parameters.put(
+			"options", getOptions(ddmFormField, ddmFormFieldRenderingContext));
 
-		if (Validator.isNotNull(value)) {
-			parameters.put("value", value);
+		String predefinedValue = getPredefinedValue(
+			ddmFormField, ddmFormFieldRenderingContext);
+
+		if (predefinedValue != null) {
+			parameters.put("predefinedValue", predefinedValue);
 		}
 
-		return HashMapBuilder.<String, Object>put(
-			"options", getOptions(ddmFormField, ddmFormFieldRenderingContext)
-		).put(
-			"predefinedValue",
-			DDMFormFieldTypeUtil.getPropertyValue(
-				ddmFormField, ddmFormFieldRenderingContext.getLocale(),
-				"predefinedValue")
-		).putAll(
-			parameters
-		).build();
+		return parameters;
 	}
 
 	protected String getDisplayStyle(DDMFormField ddmFormField) {
@@ -147,19 +140,6 @@ public class TextDDMFormFieldTemplateContextContributor
 		return getValueString(
 			tooltip, ddmFormFieldRenderingContext.getLocale(),
 			ddmFormFieldRenderingContext);
-	}
-
-	protected String getValue(
-		DDMFormFieldRenderingContext ddmFormFieldRenderingContext) {
-
-		String value = String.valueOf(
-			ddmFormFieldRenderingContext.getProperty("value"));
-
-		if (ddmFormFieldRenderingContext.isViewMode()) {
-			value = HtmlUtil.extractText(value);
-		}
-
-		return value;
 	}
 
 	protected String getValueString(
