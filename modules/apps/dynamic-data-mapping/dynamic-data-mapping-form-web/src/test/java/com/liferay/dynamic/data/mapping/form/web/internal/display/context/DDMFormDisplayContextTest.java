@@ -458,7 +458,6 @@ public class DDMFormDisplayContextTest extends PowerMockito {
 		throws PortalException {
 
 		return new DDMFormDisplayContext(
-			renderRequest, new MockRenderResponse(),
 			mock(DDMFormFieldTypeServicesTracker.class),
 			_ddmFormInstanceLocalService,
 			mock(DDMFormInstanceRecordService.class),
@@ -467,9 +466,9 @@ public class DDMFormDisplayContextTest extends PowerMockito {
 			mock(DDMFormRenderer.class), mock(DDMFormValuesFactory.class),
 			mock(DDMFormValuesMerger.class), _ddmFormWebConfiguration,
 			mock(DDMStorageAdapterTracker.class), mock(GroupLocalService.class),
-			new JSONFactoryImpl(), mock(RoleLocalService.class),
-			mock(UserLocalService.class), mock(WorkflowDefinitionLinkLocalService.class),
-			mock(Portal.class));
+			new JSONFactoryImpl(), mock(Portal.class), renderRequest,
+			new MockRenderResponse(), mock(RoleLocalService.class),
+			mock(UserLocalService.class), mock(WorkflowDefinitionLinkLocalService.class));
 	}
 
 	protected DDMFormDisplayContext createSpy(
