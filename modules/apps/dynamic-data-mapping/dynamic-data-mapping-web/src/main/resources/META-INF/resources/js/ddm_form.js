@@ -4664,6 +4664,7 @@ AUI.add(
 
 					drag.addInvalid('.alloy-editor');
 					drag.addInvalid('.cke');
+					drag.addInvalid('.lfr-map');
 					drag.addInvalid('.lfr-source-editor');
 				},
 
