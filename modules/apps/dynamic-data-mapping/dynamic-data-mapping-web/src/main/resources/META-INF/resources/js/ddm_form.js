@@ -1011,6 +1011,7 @@ AUI.add(
 					if (
 						fieldDefinition &&
 						(fieldDefinition.dataType == 'html' ||
+							fieldDefinition.type == 'ddm-geolocation' ||
 							fieldDefinition.type == 'ddm-separator')
 					) {
 						container._node.insertAdjacentHTML(
