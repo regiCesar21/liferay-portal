@@ -203,9 +203,9 @@ public class ProductDTOConverter
 		return stream.collect(
 			Collectors.toMap(
 				entry -> {
-					Locale key = entry.getKey();
+					Locale locale = entry.getKey();
 
-					return key.toString();
+					return locale.toString();
 				},
 				Map.Entry::getValue));
 	}
