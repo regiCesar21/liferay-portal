@@ -5,21 +5,22 @@
 
 import Component from 'metal-component';
 import Soy, {Config} from 'metal-soy';
+import QuantityControls, {UPDATE_AFTER} from './util/index';
 
 import template from './QuantitySelector.soy';
 
 class QuantitySelector extends Component {
 	attached() {
+		this.controls = new QuantityControls({...this});
 		this.inputDebounceTimeout = null;
 
 		if (!this.quantity) {
 			this.quantity = this.allowedQuantities
 				? this.allowedQuantities[0]
-				: this.minQuantity;
+				: this.controls.getLowerBound(this.minQuantity);
+
 			this._updateQuantity(this.quantity);
 		}
-
-		return !!this.quantity;
 	}
 
 	syncQuantity() {
@@ -128,8 +129,14 @@ class QuantitySelector extends Component {
 		}
 
 		this.inputDebounceTimeout = setTimeout(() => {
-			this._submitQuantity(parseInt(e.target.value, 10));
-		}, 500);
+			const controlledQuantity = this.controls.getLowerBound(
+				parseInt(e.target.value, 10)
+			);
+
+			e.target.value = controlledQuantity;
+
+			this._updateQuantity(controlledQuantity);
+		}, UPDATE_AFTER);
 	}
 
 	_handleFormSubmit(e) {
@@ -139,28 +146,9 @@ class QuantitySelector extends Component {
 		return this.emit('submitQuantity', this.quantity);
 	}
 
-	_submitQuantity(quantity) {
-		let computedQuantity = quantity;
-
-		if (this.multipleQuantity) {
-			if (!computedQuantity || computedQuantity % this.multipleQuantity) {
-				computedQuantity -= computedQuantity % this.multipleQuantity;
-			}
-		}
-
-		if (computedQuantity < this.minQuantity) {
-			computedQuantity = this.minQuantity;
-		}
-
-		if (computedQuantity > this.maxQuantity) {
-			computedQuantity = this.maxQuantity;
-		}
-
-		this._updateQuantity(computedQuantity);
-	}
-
 	_updateQuantity(quantity) {
 		this.showError = false;
+		this.quantity = quantity;
 
 		return this.emit('updateQuantity', quantity);
 	}
