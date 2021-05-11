@@ -12,7 +12,7 @@
  * details.
  */
 
-export const UPDATE_AFTER = 1000;
+export const UPDATE_AFTER = 350;
 
 export default class QuantityControls {
 	constructor({maxQuantity, minQuantity, multipleQuantity}) {
