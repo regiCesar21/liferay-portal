@@ -87,7 +87,9 @@ public class LDAPUserExporterImpl implements UserExporter {
 			contact.getContactId());
 
 		if (user.isDefaultUser() ||
-			(user.getStatus() != WorkflowConstants.STATUS_APPROVED)) {
+			((user.getStatus() != WorkflowConstants.STATUS_APPROVED) &&
+			 (user.getStatus() != WorkflowConstants.STATUS_INACTIVE)) ||
+			_isAnonymousUser(user)) {
 
 			return;
 		}
@@ -268,7 +270,9 @@ public class LDAPUserExporterImpl implements UserExporter {
 		throws Exception {
 
 		if (user.isDefaultUser() ||
-			(user.getStatus() != WorkflowConstants.STATUS_APPROVED)) {
+			((user.getStatus() != WorkflowConstants.STATUS_APPROVED) &&
+			 (user.getStatus() != WorkflowConstants.STATUS_INACTIVE)) ||
+			_isAnonymousUser(user)) {
 
 			return;
 		}
