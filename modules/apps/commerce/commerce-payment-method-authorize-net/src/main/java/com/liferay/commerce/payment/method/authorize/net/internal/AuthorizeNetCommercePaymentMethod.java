@@ -10,6 +10,7 @@ import com.liferay.commerce.constants.CommerceOrderPaymentConstants;
 import com.liferay.commerce.constants.CommercePaymentConstants;
 import com.liferay.commerce.currency.model.CommerceCurrency;
 import com.liferay.commerce.model.CommerceOrder;
+import com.liferay.commerce.payment.constants.CommercePaymentWebKeys;
 import com.liferay.commerce.payment.method.CommercePaymentMethod;
 import com.liferay.commerce.payment.method.authorize.net.internal.configuration.AuthorizeNetGroupServiceConfiguration;
 import com.liferay.commerce.payment.method.authorize.net.internal.constants.AuthorizeNetCommercePaymentMethodConstants;
@@ -200,8 +201,10 @@ public class AuthorizeNetCommercePaymentMethod
 
 			String url = StringBundler.concat(
 				_getServletUrl(authorizeNetCommercePaymentRequest),
-				"?redirectUrl=", URLCodec.encodeURL(redirectUrl), "&token=",
-				URLEncoder.encode(token, "UTF-8"));
+				StringPool.QUESTION, CommercePaymentWebKeys.REDIRECT_URL,
+				StringPool.EQUAL, URLCodec.encodeURL(redirectUrl),
+				StringPool.AMPERSAND, CommercePaymentWebKeys.TOKEN,
+				StringPool.EQUAL, URLEncoder.encode(token, StringPool.UTF8));
 
 			List<String> resultMessages = new ArrayList<>();
 

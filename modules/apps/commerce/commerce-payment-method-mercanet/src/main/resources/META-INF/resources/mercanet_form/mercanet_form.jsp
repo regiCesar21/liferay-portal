@@ -8,18 +8,14 @@
 <%@ include file="/init.jsp" %>
 
 <%
-String redirectionDataAttribute = (String)request.getAttribute("redirectionData");
+String redirectionData = URLDecoder.decode((String)request.getAttribute(CommercePaymentWebKeys.REDIRECTION_DATA), StringPool.UTF8);
 
-String redirectionData = URLDecoder.decode(redirectionDataAttribute, "UTF-8");
+String redirectURL = URLCodec.decodeURL((String)request.getAttribute(CommercePaymentWebKeys.REDIRECT_URL));
 
-String redirectUrlAttribute = (String)request.getAttribute("redirectUrl");
-
-String redirectUrl = URLCodec.decodeURL(redirectUrlAttribute);
-
-String sealAttribute = (String)request.getAttribute("seal");
+String sealAttribute = URLDecoder.decode((String)request.getAttribute(CommercePaymentWebKeys.SEAL), StringPool.UTF8);
 %>
 
-<form action="<%= HtmlUtil.escapeHREF(redirectUrl) %>" class="hide" id="formMercanet" method="post" name="formMercanet">
+<form action="<%= HtmlUtil.escapeHREF(redirectURL) %>" class="hide" id="formMercanet" method="post" name="formMercanet">
 	<input name="redirectionData" type="hidden" value="<%= HtmlUtil.escapeAttribute(redirectionData) %>" />
 	<input name="seal" type="hidden" value="<%= HtmlUtil.escapeAttribute(URLDecoder.decode(sealAttribute, "UTF-8")) %>" />
 
