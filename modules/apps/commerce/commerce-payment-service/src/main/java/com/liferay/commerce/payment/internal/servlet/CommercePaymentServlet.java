@@ -16,13 +16,16 @@ import com.liferay.commerce.payment.util.CommercePaymentHttpHelper;
 import com.liferay.commerce.product.model.CPDefinition;
 import com.liferay.commerce.product.model.CPInstance;
 import com.liferay.commerce.service.CommerceOrderService;
+import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.servlet.PortalSessionThreadLocal;
+import com.liferay.portal.kernel.util.CamelCaseUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
+import com.liferay.portal.kernel.util.StringUtil;
 
 import java.io.IOException;
 
@@ -197,7 +200,10 @@ public class CommercePaymentServlet extends HttpServlet {
 			String name = param.split(StringPool.EQUAL)[0];
 			String value = param.split(StringPool.EQUAL)[1];
 
-			map.put(name, value);
+			map.put(
+				StringUtil.toUpperCase(
+					CamelCaseUtil.fromCamelCase(name, CharPool.UNDERLINE)),
+				value);
 		}
 
 		return map;
