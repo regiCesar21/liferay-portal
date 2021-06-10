@@ -472,8 +472,27 @@ public class CommerceOrderHttpHelperImpl implements CommerceOrderHttpHelper {
 
 		CommerceOrder commerceOrder = _commerceOrderThreadLocal.get();
 
+		CommerceAccount commerceAccount = commerceContext.getCommerceAccount();
+
 		if (commerceOrder != null) {
-			return commerceOrder;
+			CommerceOrder persistenceCommerceOrder =
+				_commerceOrderLocalService.fetchCommerceOrder(
+					commerceOrder.getCommerceOrderId());
+
+			if (persistenceCommerceOrder == null) {
+				return commerceOrder;
+			}
+
+			if ((commerceAccount == null) ||
+				(commerceOrder.getCommerceAccountId() !=
+					commerceAccount.getCommerceAccountId())) {
+
+				return null;
+			}
+
+			_commerceOrderThreadLocal.set(persistenceCommerceOrder);
+
+			return persistenceCommerceOrder;
 		}
 
 		CommerceChannel commerceChannel =
@@ -483,8 +502,6 @@ public class CommerceOrderHttpHelperImpl implements CommerceOrderHttpHelper {
 		if (commerceChannel == null) {
 			return null;
 		}
-
-		CommerceAccount commerceAccount = commerceContext.getCommerceAccount();
 
 		if (commerceAccount == null) {
 			return null;
@@ -520,6 +537,12 @@ public class CommerceOrderHttpHelperImpl implements CommerceOrderHttpHelper {
 			}
 
 			if (commerceOrder != null) {
+				if (commerceOrder.getCommerceAccountId() !=
+						commerceAccount.getCommerceAccountId()) {
+
+					return null;
+				}
+
 				_validateCommerceOrderItemVersions(
 					commerceOrder, _portal.getLocale(httpServletRequest));
 
