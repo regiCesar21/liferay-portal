@@ -10,6 +10,7 @@ import com.liferay.commerce.model.CommerceOrder;
 import com.liferay.commerce.model.CommerceOrderItem;
 import com.liferay.commerce.order.engine.CommerceOrderEngine;
 import com.liferay.commerce.order.status.CommerceOrderStatus;
+import com.liferay.commerce.product.model.CPDefinition;
 import com.liferay.commerce.service.CommerceOrderService;
 import com.liferay.commerce.util.CommerceShippingHelper;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -92,8 +93,12 @@ public class ShippedCommerceOrderStatusImpl implements CommerceOrderStatus {
 		for (CommerceOrderItem shippedCommerceOrderItem :
 				commerceOrder.getCommerceOrderItems()) {
 
-			if (shippedCommerceOrderItem.getShippedQuantity() <
-					shippedCommerceOrderItem.getQuantity()) {
+			CPDefinition cpDefinition =
+				shippedCommerceOrderItem.getCPDefinition();
+
+			if ((shippedCommerceOrderItem.getShippedQuantity() <
+					shippedCommerceOrderItem.getQuantity()) &&
+				cpDefinition.isShippable()) {
 
 				allOrderItemsShipped = false;
 			}
@@ -103,8 +108,7 @@ public class ShippedCommerceOrderStatusImpl implements CommerceOrderStatus {
 				CommerceOrderConstants.ORDER_STATUS_PROCESSING) ||
 			 (commerceOrder.getOrderStatus() ==
 				 CommerceOrderConstants.ORDER_STATUS_PARTIALLY_SHIPPED)) &&
-			(allOrderItemsShipped ||
-			 !_commerceShippingHelper.isShippable(commerceOrder))) {
+			allOrderItemsShipped) {
 
 			return true;
 		}
