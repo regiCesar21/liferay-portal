@@ -4,7 +4,7 @@
  */
 
 import ClayDropDown from '@clayui/drop-down';
-import {ClayCheckbox} from '@clayui/form';
+import {ClayCheckbox, ClayInput} from '@clayui/form';
 import React, {forwardRef, useEffect, useMemo, useRef, useState} from 'react';
 
 import {FieldBase} from '../FieldBase/ReactFieldBase.es';
@@ -607,7 +607,7 @@ const Main = ({
 		>
 			<Select
 				multiple={multiple}
-				name={name}
+				name={`${name}_field`}
 				onCloseButtonClicked={({event, value}) =>
 					onChange(event, value)
 				}
@@ -629,6 +629,7 @@ const Main = ({
 				value={value}
 				{...otherProps}
 			/>
+			<ClayInput name={name} type="hidden" value={value} />
 		</FieldBase>
 	);
 };

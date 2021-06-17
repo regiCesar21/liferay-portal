@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import {ClayCheckbox} from '@clayui/form';
+import {ClayCheckbox, ClayInput} from '@clayui/form';
 import classNames from 'classnames';
 import React, {useState} from 'react';
 
@@ -83,20 +83,21 @@ const CheckboxMultiple = ({
 
 	return (
 		<div className="lfr-ddm-checkbox-multiple">
-			{options.map((option) => (
+			{options.map((option, index) => (
 				<Toggle
 					checked={displayValues.includes(option.value)}
 					disabled={disabled}
 					inline={inline}
 					key={option.value}
 					label={option.label}
-					name={name}
+					name={`${name}_${index}`}
 					onBlur={onBlur}
 					onChange={handleChange}
 					onFocus={onFocus}
 					value={option.value}
 				/>
 			))}
+			<ClayInput name={name} type="hidden" value={value} />
 		</div>
 	);
 };
