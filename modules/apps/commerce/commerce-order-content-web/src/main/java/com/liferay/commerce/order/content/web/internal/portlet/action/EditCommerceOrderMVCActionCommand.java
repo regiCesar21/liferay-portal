@@ -16,6 +16,7 @@ package com.liferay.commerce.order.content.web.internal.portlet.action;
 
 import com.liferay.commerce.account.exception.NoSuchAccountException;
 import com.liferay.commerce.account.model.CommerceAccount;
+import com.liferay.commerce.account.util.CommerceAccountHelper;
 import com.liferay.commerce.constants.CommerceOrderConstants;
 import com.liferay.commerce.constants.CommercePortletKeys;
 import com.liferay.commerce.constants.CommerceWebKeys;
@@ -352,6 +353,12 @@ public class EditCommerceOrderMVCActionCommand extends BaseMVCActionCommand {
 			_commerceOrderService.reorderCommerceOrder(
 				commerceOrderId, commerceContext);
 
+		_commerceAccountHelper.setCurrentCommerceAccount(
+			_portal.getHttpServletRequest(actionRequest),
+			_commerceChannelLocalService.getCommerceChannelGroupIdBySiteGroupId(
+				_portal.getScopeGroupId(actionRequest)),
+			commerceOrder.getCommerceAccountId());
+
 		_commerceOrderHttpHelper.setCurrentCommerceOrder(
 			_portal.getHttpServletRequest(actionRequest), commerceOrder);
 
@@ -420,6 +427,9 @@ public class EditCommerceOrderMVCActionCommand extends BaseMVCActionCommand {
 
 		return portletURL.toString();
 	}
+
+	@Reference
+	private CommerceAccountHelper _commerceAccountHelper;
 
 	@Reference
 	private CommerceChannelLocalService _commerceChannelLocalService;
