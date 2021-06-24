@@ -124,6 +124,20 @@ public class EditCommerceOrderMVCActionCommand extends BaseMVCActionCommand {
 			ActionRequest actionRequest, long commerceOrderId)
 		throws Exception {
 
+		CommerceContext commerceContext =
+			(CommerceContext)actionRequest.getAttribute(
+				CommerceWebKeys.COMMERCE_CONTEXT);
+
+		CommerceOrder commerceOrder =
+			_commerceOrderService.reorderCommerceOrder(
+				commerceOrderId, commerceContext);
+
+		_commerceAccountHelper.setCurrentCommerceAccount(
+			_portal.getHttpServletRequest(actionRequest),
+			_commerceChannelLocalService.getCommerceChannelGroupIdBySiteGroupId(
+				_portal.getScopeGroupId(actionRequest)),
+			commerceOrder.getCommerceAccountId());
+
 		PortletURL portletURL =
 			_commerceOrderHttpHelper.getCommerceCheckoutPortletURL(
 				_portal.getHttpServletRequest(actionRequest));
