@@ -12,12 +12,13 @@ import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.PasswordPolicy;
 import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.module.configuration.ConfigurationProvider;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.service.PasswordPolicyLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.UserLocalService;
-import com.liferay.portal.kernel.util.HashMapDictionary;
+import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
 import com.liferay.portal.kernel.util.LocaleThreadLocal;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.security.pwd.PwdToolkitUtil;
@@ -30,7 +31,6 @@ import java.util.Locale;
 import java.util.Optional;
 
 import org.osgi.service.cm.Configuration;
-import org.osgi.service.cm.ConfigurationAdmin;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
@@ -134,17 +134,13 @@ public class UADAnonymizerHelper {
 		if (!configurationOptional.isPresent()) {
 			User anonymousUser = _createAnonymousUser(companyId);
 
-			Configuration configuration =
-				_configurationAdmin.createFactoryConfiguration(
-					AnonymousUserConfiguration.class.getName(),
-					StringPool.QUESTION);
-
-			Dictionary<String, Object> properties = new HashMapDictionary<>();
-
-			properties.put("companyId", companyId);
-			properties.put("userId", anonymousUser.getUserId());
-
-			configuration.update(properties);
+			_configurationProvider.saveCompanyConfiguration(
+				AnonymousUserConfiguration.class, companyId,
+				HashMapDictionaryBuilder.<String, Object>put(
+					"companyId", companyId
+				).put(
+					"userId", anonymousUser.getUserId()
+				).build());
 
 			return anonymousUser;
 		}
@@ -181,7 +177,7 @@ public class UADAnonymizerHelper {
 	private CompanyLocalService _companyLocalService;
 
 	@Reference
-	private ConfigurationAdmin _configurationAdmin;
+	private ConfigurationProvider _configurationProvider;
 
 	@Reference
 	private CounterLocalService _counterLocalService;
