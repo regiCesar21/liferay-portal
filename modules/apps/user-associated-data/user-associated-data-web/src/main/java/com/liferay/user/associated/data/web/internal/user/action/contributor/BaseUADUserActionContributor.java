@@ -11,8 +11,8 @@ import com.liferay.portal.kernel.portlet.LiferayPortletURL;
 import com.liferay.portal.kernel.portlet.PortletURLFactoryUtil;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
+import com.liferay.user.associated.data.anonymizer.UADAnonymousUserProvider;
 import com.liferay.user.associated.data.constants.UserAssociatedDataPortletKeys;
-import com.liferay.user.associated.data.web.internal.util.UADAnonymizerHelper;
 import com.liferay.users.admin.user.action.contributor.BaseUserActionContributor;
 
 import java.util.Objects;
@@ -60,7 +60,7 @@ public abstract class BaseUADUserActionContributor
 
 		if (Objects.equals(user, selectedUser) ||
 			!permissionChecker.isCompanyAdmin() ||
-			uadAnonymizerHelper.isAnonymousUser(selectedUser)) {
+			uadAnonymousUserProvider.isAnonymousUser(selectedUser)) {
 
 			return false;
 		}
@@ -73,6 +73,6 @@ public abstract class BaseUADUserActionContributor
 	protected abstract String getMVCRenderCommandName();
 
 	@Reference
-	protected UADAnonymizerHelper uadAnonymizerHelper;
+	protected UADAnonymousUserProvider uadAnonymousUserProvider;
 
 }
