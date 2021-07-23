@@ -19,6 +19,7 @@ import com.liferay.bulk.rest.internal.selection.v1_0.DocumentBulkSelectionFactor
 import com.liferay.bulk.rest.resource.v1_0.TaxonomyVocabularyResource;
 import com.liferay.bulk.selection.BulkSelection;
 import com.liferay.document.library.kernel.model.DLFileEntry;
+import com.liferay.portal.kernel.change.tracking.CTAware;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.BaseModelPermissionCheckerUtil;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
@@ -48,6 +49,7 @@ import org.osgi.service.component.annotations.ServiceScope;
 	properties = "OSGI-INF/liferay/rest/v1_0/taxonomy-vocabulary.properties",
 	scope = ServiceScope.PROTOTYPE, service = TaxonomyVocabularyResource.class
 )
+@CTAware
 public class TaxonomyVocabularyResourceImpl
 	extends BaseTaxonomyVocabularyResourceImpl {
 
