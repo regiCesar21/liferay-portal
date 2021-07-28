@@ -492,6 +492,7 @@ public class RestrictedLiferayObjectWrapperTest
 
 	private void _testWrap() throws Exception {
 		testWrap(new RestrictedLiferayObjectWrapper(null, null, null));
+
 		testWrap(
 			new RestrictedLiferayObjectWrapper(
 				new String[] {StringPool.STAR}, null, null));
@@ -499,6 +500,7 @@ public class RestrictedLiferayObjectWrapperTest
 			new RestrictedLiferayObjectWrapper(
 				new String[] {StringPool.STAR},
 				new String[] {LiferayObjectWrapper.class.getName()}, null));
+
 		testWrap(
 			new RestrictedLiferayObjectWrapper(
 				new String[] {StringPool.BLANK}, null, null));
@@ -509,13 +511,16 @@ public class RestrictedLiferayObjectWrapperTest
 			new RestrictedLiferayObjectWrapper(
 				new String[] {StringPool.BLANK},
 				new String[] {StringPool.BLANK}, null));
-
 		testWrap(
 			new RestrictedLiferayObjectWrapper(
 				new String[] {StringPool.BLANK},
 				new String[] {StringPool.BLANK},
 				new String[] {StringPool.BLANK}));
-
+		testWrap(
+			new RestrictedLiferayObjectWrapper(
+				new String[] {StringPool.BLANK},
+				new String[] {StringPool.BLANK},
+				new String[] {TestBaseModel.class.getName() + "#getName"}));
 		testWrap(
 			new RestrictedLiferayObjectWrapper(
 				new String[] {StringPool.BLANK},
@@ -523,12 +528,6 @@ public class RestrictedLiferayObjectWrapperTest
 				new String[] {
 					TestLiferayMethodObject.class.getName() + "#getName"
 				}));
-
-		testWrap(
-			new RestrictedLiferayObjectWrapper(
-				new String[] {StringPool.BLANK},
-				new String[] {StringPool.BLANK},
-				new String[] {TestBaseModel.class.getName() + "#getName"}));
 	}
 
 	private static class TestBaseModel extends BaseModelImpl<TestBaseModel> {
