@@ -86,7 +86,7 @@ public class CTServicePublisher<T extends CTModel<T>> {
 					"select count(*) from CTEntry left join ", tableName,
 					" on CTEntry.modelClassPK = ", tableName, ".",
 					primaryKeyName, " and ", tableName, ".ctCollectionId = ",
-					_sourceCTCollectionId, " where CTEntry.changeType = ",
+					_targetCTCollectionId, " where CTEntry.changeType = ",
 					CTConstants.CT_CHANGE_TYPE_DELETION,
 					" and CTEntry.ctCollectionId = ", _sourceCTCollectionId,
 					" and CTEntry.modelClassNameId = ", _modelClassNameId,
