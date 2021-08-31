@@ -71,6 +71,8 @@ public class DLFileEntryTableReferenceDefinition
 			)
 		).resourcePermissionReference(
 			DLFileEntryTable.INSTANCE.fileEntryId, DLFileEntry.class
+		).systemEventReference(
+			DLFileEntryTable.INSTANCE.fileEntryId, DLFileEntry.class
 		);
 	}
 
