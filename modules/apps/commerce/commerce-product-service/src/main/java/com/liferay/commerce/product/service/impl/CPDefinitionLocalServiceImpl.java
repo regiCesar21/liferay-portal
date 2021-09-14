@@ -833,6 +833,7 @@ public class CPDefinitionLocalServiceImpl
 			newCPInstance.setExternalReferenceCode(
 				String.valueOf(newCPInstance.getCPInstanceId()));
 			newCPInstance.setCPInstanceId(counterLocalService.increment());
+			newCPInstance.setCPInstanceUuid(PortalUUIDUtil.generate());
 
 			newCPInstance.setCPDefinitionId(newCPDefinitionId);
 
