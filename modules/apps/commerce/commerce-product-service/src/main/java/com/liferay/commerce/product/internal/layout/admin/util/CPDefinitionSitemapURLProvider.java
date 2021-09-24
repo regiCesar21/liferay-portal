@@ -140,7 +140,7 @@ public class CPDefinitionSitemapURLProvider implements SitemapURLProvider {
 		}
 
 		String currentSiteURL = _portal.getGroupFriendlyURL(
-			layout.getLayoutSet(), themeDisplay);
+			layout.getLayoutSet(), themeDisplay, false, false);
 
 		CPDefinition cpDefinition = _cpDefinitionLocalService.getCPDefinition(
 			cpDefinitionId);

@@ -8985,7 +8985,7 @@ public class JournalArticleLocalServiceImpl
 
 		sb.append(
 			_portal.getGroupFriendlyURL(
-				group.getPublicLayoutSet(), themeDisplay));
+				group.getPublicLayoutSet(), themeDisplay, false, false));
 
 		sb.append(layoutDisplayPageProvider.getURLSeparator());
 

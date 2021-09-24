@@ -117,7 +117,7 @@ public class AssetCategorySitemapURLProvider implements SitemapURLProvider {
 		}
 
 		String currentSiteURL = _portal.getGroupFriendlyURL(
-			layout.getLayoutSet(), themeDisplay);
+			layout.getLayoutSet(), themeDisplay, false, false);
 
 		FriendlyURLEntry friendlyURLEntry =
 			_friendlyURLEntryLocalService.getMainFriendlyURLEntry(

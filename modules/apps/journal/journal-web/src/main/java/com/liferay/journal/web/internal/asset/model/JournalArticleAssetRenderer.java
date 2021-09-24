@@ -432,7 +432,7 @@ public class JournalArticleAssetRenderer
 		String groupFriendlyURL = PortalUtil.getGroupFriendlyURL(
 			LayoutSetLocalServiceUtil.getLayoutSet(
 				_article.getGroupId(), layout.isPrivateLayout()),
-			themeDisplay);
+			themeDisplay, false, false);
 
 		StringBundler sb = new StringBundler(3);
 
