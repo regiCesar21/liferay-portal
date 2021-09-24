@@ -692,6 +692,11 @@ public interface Portal {
 		throws PortalException;
 
 	public String getGroupFriendlyURL(
+			LayoutSet layoutSet, ThemeDisplay themeDisplay,
+			boolean canonicalURL, boolean controlPanel)
+		throws PortalException;
+
+	public String getGroupFriendlyURL(
 			LayoutSet layoutSet, ThemeDisplay themeDisplay, Locale locale)
 		throws PortalException;
 
