@@ -34,13 +34,13 @@ import com.liferay.dynamic.data.mapping.validator.DDMFormValuesValidationExcepti
 import com.liferay.dynamic.data.mapping.validator.DDMFormValuesValidator;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory;
-import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.SetUtil;
+import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 
@@ -164,7 +164,7 @@ public class DDMFormValuesValidatorImpl implements DDMFormValuesValidator {
 		}
 		catch (NullPointerException nullPointerException) {
 
-			// LRQA-66928
+			// Catching NPE to investigate LRQA-66928. If resolved, remove it.
 
 			String ddmExpressionString = StringPool.NULL;
 
@@ -180,9 +180,9 @@ public class DDMFormValuesValidatorImpl implements DDMFormValuesValidator {
 
 			throw new NullPointerException(
 				StringBundler.concat(
-					nullPointerException.getMessage(), ", DDM expression: ",
-					ddmExpressionString, ", DDM expression factory: ",
-					ddmExpressionFactoryString));
+					nullPointerException.getMessage(), "; DDMExpression: \"",
+					ddmExpressionString, "\"; DDMExpressionFactory: \"",
+					ddmExpressionFactoryString, "\""));
 		}
 	}
 
