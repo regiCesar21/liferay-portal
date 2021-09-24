@@ -247,7 +247,8 @@ public class SiteActionDropdownItemsProvider {
 		_getViewSitePublicPagesActionUnsafeConsumer() {
 
 		return dropdownItem -> {
-			dropdownItem.setHref(_group.getDisplayURL(_themeDisplay, false));
+			dropdownItem.setHref(
+				_group.getDisplayURL(_themeDisplay, false, true));
 			dropdownItem.setLabel(
 				LanguageUtil.get(_httpServletRequest, "go-to-public-pages"));
 			dropdownItem.setTarget("_blank");
