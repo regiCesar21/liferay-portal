@@ -87,7 +87,8 @@ public class JournalArticleActivityInterpreter
 
 			if (layout != null) {
 				String groupFriendlyURL = _portal.getGroupFriendlyURL(
-					layout.getLayoutSet(), serviceContext.getThemeDisplay());
+					layout.getLayoutSet(), serviceContext.getThemeDisplay(),
+					false, false);
 
 				return groupFriendlyURL.concat(
 					JournalArticleConstants.CANONICAL_URL_SEPARATOR

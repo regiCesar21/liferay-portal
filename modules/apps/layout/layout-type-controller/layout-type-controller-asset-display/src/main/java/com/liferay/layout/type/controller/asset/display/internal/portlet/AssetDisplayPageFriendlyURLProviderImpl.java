@@ -63,7 +63,7 @@ public class AssetDisplayPageFriendlyURLProviderImpl
 
 		sb.append(
 			_portal.getGroupFriendlyURL(
-				group.getPublicLayoutSet(), themeDisplay));
+				group.getPublicLayoutSet(), themeDisplay, false, false));
 
 		sb.append(infoDisplayContributor.getInfoURLSeparator());
 		sb.append(
