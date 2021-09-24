@@ -2514,6 +2514,22 @@ public class PortalImpl implements Portal {
 
 	@Override
 	public String getGroupFriendlyURL(
+			LayoutSet layoutSet, ThemeDisplay themeDisplay,
+			boolean canonicalURL, boolean controlPanel)
+		throws PortalException {
+
+		Group group = themeDisplay.getSiteGroup();
+
+		if (group.getGroupId() != layoutSet.getGroupId()) {
+			group = layoutSet.getGroup();
+		}
+
+		return _getGroupFriendlyURL(
+			group, layoutSet, themeDisplay, canonicalURL, controlPanel);
+	}
+
+	@Override
+	public String getGroupFriendlyURL(
 			LayoutSet layoutSet, ThemeDisplay themeDisplay, Locale locale)
 		throws PortalException {
 
@@ -7554,21 +7570,6 @@ public class PortalImpl implements Portal {
 
 		return getGroupFriendlyURL(
 			layoutSet, themeDisplay, canonicalURL, false);
-	}
-
-	protected String getGroupFriendlyURL(
-			LayoutSet layoutSet, ThemeDisplay themeDisplay,
-			boolean canonicalURL, boolean controlPanel)
-		throws PortalException {
-
-		Group group = themeDisplay.getSiteGroup();
-
-		if (group.getGroupId() != layoutSet.getGroupId()) {
-			group = layoutSet.getGroup();
-		}
-
-		return _getGroupFriendlyURL(
-			group, layoutSet, themeDisplay, canonicalURL, controlPanel);
 	}
 
 	protected String[] getGroupPermissions(
