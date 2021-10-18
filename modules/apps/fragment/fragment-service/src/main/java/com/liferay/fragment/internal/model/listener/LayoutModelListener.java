@@ -5,14 +5,19 @@
 
 package com.liferay.fragment.internal.model.listener;
 
+import com.liferay.exportimport.kernel.lar.ExportImportThreadLocal;
 import com.liferay.fragment.service.FragmentEntryLinkLocalService;
+import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
+import com.liferay.layout.page.template.service.LayoutPageTemplateEntryLocalService;
 import com.liferay.portal.kernel.exception.ModelListenerException;
 import com.liferay.portal.kernel.model.BaseModelListener;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.LayoutConstants;
 import com.liferay.portal.kernel.model.ModelListener;
+import com.liferay.portal.kernel.util.CopyLayoutThreadLocal;
 import com.liferay.portal.kernel.util.Portal;
 
+import java.util.Date;
 import java.util.Objects;
 
 import org.osgi.service.component.annotations.Component;
@@ -23,6 +28,34 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(service = ModelListener.class)
 public class LayoutModelListener extends BaseModelListener<Layout> {
+
+	@Override
+	public void onAfterUpdate(Layout layout) throws ModelListenerException {
+		if (CopyLayoutThreadLocal.isCopyLayout() ||
+			ExportImportThreadLocal.isImportInProcess() ||
+			!(Objects.equals(
+				layout.getType(), LayoutConstants.TYPE_ASSET_DISPLAY) ||
+			  Objects.equals(layout.getType(), LayoutConstants.TYPE_CONTENT)) ||
+			((layout.getClassPK() > 0) &&
+			 (layout.getClassNameId() == _portal.getClassNameId(
+				 Layout.class)))) {
+
+			return;
+		}
+
+		LayoutPageTemplateEntry layoutPageTemplateEntry =
+			_layoutPageTemplateEntryLocalService.
+				fetchLayoutPageTemplateEntryByPlid(layout.getPlid());
+
+		if (layoutPageTemplateEntry == null) {
+			return;
+		}
+
+		layoutPageTemplateEntry.setModifiedDate(new Date());
+
+		_layoutPageTemplateEntryLocalService.updateLayoutPageTemplateEntry(
+			layoutPageTemplateEntry);
+	}
 
 	@Override
 	public void onBeforeRemove(Layout layout) throws ModelListenerException {
@@ -42,6 +75,10 @@ public class LayoutModelListener extends BaseModelListener<Layout> {
 
 	@Reference
 	private FragmentEntryLinkLocalService _fragmentEntryLinkLocalService;
+
+	@Reference
+	private LayoutPageTemplateEntryLocalService
+		_layoutPageTemplateEntryLocalService;
 
 	@Reference
 	private Portal _portal;
