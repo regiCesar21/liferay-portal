@@ -43,6 +43,7 @@
 						ddmFormValuesInput:
 							'#<portlet:namespace /><%= HtmlUtil.getAUICompatibleId(ddmFormValuesInputName) %>',
 						definition: <%= DDMUtil.getDDMFormJSONString(ddmForm) %>,
+						displayLocale: '<%= LocaleUtil.toLanguageId(requestedLocale) %>',
 						doAsGroupId: <%= scopeGroupId %>,
 						fieldsNamespace: '<%= HtmlUtil.escapeJS(fieldsNamespace) %>',
 						mode: '<%= HtmlUtil.escapeJS(mode) %>',
