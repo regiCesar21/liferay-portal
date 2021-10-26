@@ -89,6 +89,16 @@ public class RepositoryEntryBrowserDisplayContext {
 		return StringPool.BLANK;
 	}
 
+	public boolean isEditable(FileVersion fileVersion) {
+		if (fileVersion == null) {
+			return false;
+		}
+
+		return ArrayUtil.contains(
+			PropsValues.DL_FILE_ENTRY_PREVIEW_IMAGE_MIME_TYPES,
+			fileVersion.getMimeType());
+	}
+
 	public boolean isSearchEverywhere() {
 		if (_searchEverywhere != null) {
 			return _searchEverywhere;
