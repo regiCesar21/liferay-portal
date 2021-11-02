@@ -385,6 +385,7 @@ public class AssetPublisherHelperImpl implements AssetPublisherHelper {
 			overrideAllAssetCategoryIds, overrideAllAssetTagNames,
 			overrideAllKeywords);
 
+		assetEntryQuery.setAttribute("showNonindexable", Boolean.TRUE);
 		assetEntryQuery.setGroupIds(groupIds);
 
 		boolean anyAssetType = GetterUtil.getBoolean(
@@ -444,8 +445,6 @@ public class AssetPublisherHelperImpl implements AssetPublisherHelper {
 			portletPreferences.getValue("orderByType2", "ASC"));
 
 		assetEntryQuery.setOrderByType2(orderByType2);
-
-		assetEntryQuery.setAttribute("showNonindexable", Boolean.TRUE);
 
 		return assetEntryQuery;
 	}

@@ -614,6 +614,12 @@ public class AssetHelperImpl implements AssetHelper {
 			searchContext.setAttribute("paginationType", paginationType);
 		}
 
+		if (GetterUtil.getBoolean(
+				assetEntryQuery.getAttribute("showNonindexable"))) {
+
+			searchContext.setAttribute("showNonindexable", Boolean.TRUE);
+		}
+
 		searchContext.setClassTypeIds(assetEntryQuery.getClassTypeIds());
 		searchContext.setEnd(end);
 		searchContext.setGroupIds(
@@ -626,12 +632,6 @@ public class AssetHelperImpl implements AssetHelper {
 		}
 		else {
 			searchContext.setLike(true);
-		}
-
-		if (GetterUtil.getBoolean(
-				assetEntryQuery.getAttribute("showNonindexable"))) {
-
-			searchContext.setAttribute("showNonindexable", Boolean.TRUE);
 		}
 
 		_searchRequestBuilderFactory.builder(
