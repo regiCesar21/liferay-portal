@@ -66,7 +66,6 @@ public class KaleoInstanceModelDocumentContributor
 					return kaleoNode.getName();
 				},
 				String.class));
-
 		document.addKeyword(
 			"kaleoDefinitionName", kaleoInstance.getKaleoDefinitionName());
 		document.addKeyword(
