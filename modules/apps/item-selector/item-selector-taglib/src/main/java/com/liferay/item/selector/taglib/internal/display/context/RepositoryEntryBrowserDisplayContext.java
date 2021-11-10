@@ -89,7 +89,7 @@ public class RepositoryEntryBrowserDisplayContext {
 		return StringPool.BLANK;
 	}
 
-	public boolean isEditable(FileVersion fileVersion) {
+	public boolean isPreviewable(FileVersion fileVersion) {
 		if (fileVersion == null) {
 			return false;
 		}
