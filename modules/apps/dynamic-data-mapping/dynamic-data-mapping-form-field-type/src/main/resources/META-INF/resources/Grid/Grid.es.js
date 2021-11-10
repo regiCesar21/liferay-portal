@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import {ClayInput, ClayRadio} from '@clayui/form';
+import {ClayRadio} from '@clayui/form';
 import ClayTable from '@clayui/table';
 import React, {useState} from 'react';
 
@@ -79,8 +79,7 @@ const Grid = ({
 					: '';
 
 				return (
-					<ClayInput
-						aria-hidden="true"
+					<input
 						key={`row-${row.value}-${rowIndex}`}
 						name={name}
 						type="hidden"

@@ -128,7 +128,7 @@ const DocumentLibrary = ({
 				</ClayInput.Group>
 			)}
 
-			<ClayInput
+			<input
 				id={id}
 				name={name}
 				placeholder={placeholder}
@@ -207,7 +207,7 @@ const GuestUploadFile = ({
 				)}
 			</ClayInput.Group>
 
-			<ClayInput
+			<input
 				id={id}
 				name={name}
 				placeholder={placeholder}
