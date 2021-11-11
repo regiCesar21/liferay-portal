@@ -94,6 +94,13 @@ public class PortalImplGroupFriendlyURLTest {
 
 		_testGroupFriendlyURL(
 			_PUBLIC_LAYOUT_HOSTNAME, expectedURL, _group, _publicLayout);
+	}
+
+	@Test
+	public void testGetGroupFriendlyURLFromPublicLayoutLocalhost()
+		throws Exception {
+
+		String expectedURL = StringPool.BLANK;
 
 		_testGroupFriendlyURL("localhost", expectedURL, _group, _publicLayout);
 	}
