@@ -7,6 +7,7 @@ package com.liferay.portal.workflow.kaleo.internal.runtime.integration.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.model.WorkflowInstanceLink;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.WorkflowDefinitionLinkLocalService;
@@ -14,6 +15,7 @@ import com.liferay.portal.kernel.service.WorkflowInstanceLinkLocalService;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
+import com.liferay.portal.kernel.test.util.UserTestUtil;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
 import com.liferay.portal.kernel.util.ProxyUtil;
@@ -115,6 +117,36 @@ public class WorkflowInstanceManagerImplTest {
 		workflowHandlerServiceRegistration.unregister();
 	}
 
+	@Test
+	public void testSearchWorkflowInstancesWhenTwoUsersSubmitAnEntry()
+		throws Exception {
+
+		ServiceRegistration<WorkflowHandler<?>>
+			workflowHandlerServiceRegistration = _registryWorkflowHandler(
+				"Single Approver");
+
+		Class<?> clazz = getClass();
+
+		WorkflowHandlerRegistryUtil.startWorkflowInstance(
+			TestPropsValues.getCompanyId(), 0, TestPropsValues.getUserId(),
+			clazz.getName(), 1, null, new ServiceContext());
+
+		User user = UserTestUtil.addUser(TestPropsValues.getCompanyId());
+
+		WorkflowHandlerRegistryUtil.startWorkflowInstance(
+			TestPropsValues.getCompanyId(), 0, user.getUserId(),
+			clazz.getName(), 2, null, new ServiceContext());
+
+		Assert.assertEquals(
+			1,
+			_workflowInstanceManager.searchCount(
+				TestPropsValues.getCompanyId(), user.getUserId(),
+				StringPool.BLANK, StringPool.BLANK, StringPool.BLANK,
+				StringPool.BLANK, StringPool.BLANK, null));
+
+		workflowHandlerServiceRegistration.unregister();
+	}
+
 	private InputStream _getResourceInputStream(String name) {
 		Class<?> clazz = getClass();
 
@@ -166,8 +198,8 @@ public class WorkflowInstanceManagerImplTest {
 							method.getName(), "startWorkflowInstance")) {
 
 						_workflowInstanceLinkLocalService.startWorkflowInstance(
-							TestPropsValues.getCompanyId(), 0,
-							TestPropsValues.getUserId(), clazz.getName(), 1,
+							TestPropsValues.getCompanyId(), 0, (Long)args[2],
+							clazz.getName(), 1,
 							(Map<String, Serializable>)args[5]);
 					}
 
