@@ -82,6 +82,7 @@ public class KaleoInstanceModelPreFilterContributor
 		appendKaleoDefinitionVersionTerm(booleanFilter, kaleoInstanceQuery);
 		appendKaleoInstanceIdTerm(booleanFilter, kaleoInstanceQuery);
 		appendRootKaleoInstanceTokenIdTerm(booleanFilter, kaleoInstanceQuery);
+		appendUserIdTerm(booleanFilter, kaleoInstanceQuery);
 	}
 
 	protected void appendAssetDescriptionTerm(
@@ -332,6 +333,18 @@ public class KaleoInstanceModelPreFilterContributor
 
 		booleanFilter.addRequiredTerm(
 			"rootKaleoInstanceTokenId", rootKaleoInstanceTokenId);
+	}
+
+	protected void appendUserIdTerm(
+		BooleanFilter booleanFilter, KaleoInstanceQuery kaleoInstanceQuery) {
+
+		Long userId = kaleoInstanceQuery.getUserId();
+
+		if (userId == null) {
+			return;
+		}
+
+		booleanFilter.addRequiredTerm(Field.USER_ID, userId);
 	}
 
 	@Reference
