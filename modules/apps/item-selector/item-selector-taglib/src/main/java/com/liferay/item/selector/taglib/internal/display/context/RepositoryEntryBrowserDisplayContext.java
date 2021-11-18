@@ -95,11 +95,9 @@ public class RepositoryEntryBrowserDisplayContext {
 		}
 
 		if (ArrayUtil.contains(
-				PropsValues.DL_FILE_ENTRY_PREVIEW_IMAGE_MIME_TYPES,
-				fileVersion.getMimeType()) ||
-			ArrayUtil.contains(
 				PropsValues.DL_FILE_ENTRY_PREVIEW_VIDEO_MIME_TYPES,
 				fileVersion.getMimeType()) ||
+			ImageProcessorUtil.isImageSupported(fileVersion.getMimeType()) ||
 			Objects.equals(
 				VIDEO_EXTERNAL_SHORTCUT, fileVersion.getMimeType())) {
 
