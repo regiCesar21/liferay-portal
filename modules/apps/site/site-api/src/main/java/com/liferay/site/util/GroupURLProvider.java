@@ -11,11 +11,15 @@ import com.liferay.application.list.constants.PanelCategoryKeys;
 import com.liferay.application.list.display.context.logic.PanelCategoryHelper;
 import com.liferay.depot.model.DepotEntry;
 import com.liferay.depot.service.DepotEntryLocalService;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Group;
+import com.liferay.portal.kernel.model.LayoutSet;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
+import com.liferay.portal.kernel.service.LayoutLocalService;
+import com.liferay.portal.kernel.service.LayoutSetLocalService;
 import com.liferay.portal.kernel.service.permission.GroupPermissionUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -39,6 +43,38 @@ import org.osgi.service.component.annotations.ReferencePolicyOption;
  */
 @Component(immediate = true, service = GroupURLProvider.class)
 public class GroupURLProvider {
+
+	public String getDisplayURL(
+		Group group, ThemeDisplay themeDisplay, boolean privateLayout,
+		boolean controlPanel) {
+
+		try {
+			LayoutSet layoutSet = _layoutSetLocalService.getLayoutSet(
+				group.getGroupId(), privateLayout);
+
+			if ((layoutSet.getPageCount() > 0) ||
+				(group.isUser() &&
+				 (_layoutLocalService.getLayoutsCount(group, privateLayout) >
+					 0))) {
+
+				String groupFriendlyURL = _portal.getGroupFriendlyURL(
+					layoutSet, themeDisplay, false, controlPanel);
+
+				if (group.isUser()) {
+					return _portal.addPreservedParameters(
+						themeDisplay, groupFriendlyURL, false, true);
+				}
+
+				return _portal.addPreservedParameters(
+					themeDisplay, groupFriendlyURL);
+			}
+		}
+		catch (PortalException portalException) {
+			_log.error(portalException, portalException);
+		}
+
+		return StringPool.BLANK;
+	}
 
 	public String getGroupAdministrationURL(
 		Group group, PortletRequest portletRequest) {
@@ -202,6 +238,12 @@ public class GroupURLProvider {
 
 	@Reference
 	private Http _http;
+
+	@Reference
+	private LayoutLocalService _layoutLocalService;
+
+	@Reference
+	private LayoutSetLocalService _layoutSetLocalService;
 
 	private PanelAppRegistry _panelAppRegistry;
 	private PanelCategoryRegistry _panelCategoryRegistry;
