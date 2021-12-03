@@ -99,6 +99,7 @@ import com.liferay.site.constants.SiteWebKeys;
 import com.liferay.site.initializer.SiteInitializer;
 import com.liferay.site.initializer.SiteInitializerRegistry;
 import com.liferay.site.util.GroupSearchProvider;
+import com.liferay.site.util.GroupURLProvider;
 import com.liferay.sites.kernel.util.Sites;
 import com.liferay.sites.kernel.util.SitesUtil;
 
@@ -382,6 +383,9 @@ public class SiteAdminPortlet extends MVCPortlet {
 
 		renderRequest.setAttribute(
 			SiteWebKeys.GROUP_SEARCH_PROVIDER, groupSearchProvider);
+
+		renderRequest.setAttribute(
+			SiteWebKeys.GROUP_URL_PROVIDER, groupURLProvider);
 
 		renderRequest.setAttribute(
 			SiteWebKeys.SITE_INITIALIZER_REGISTRY, siteInitializerRegistry);
@@ -1110,6 +1114,9 @@ public class SiteAdminPortlet extends MVCPortlet {
 	protected GroupLocalService groupLocalService;
 	protected GroupSearchProvider groupSearchProvider;
 	protected GroupService groupService;
+
+	@Reference
+	protected GroupURLProvider groupURLProvider;
 
 	@Reference
 	protected Http http;
