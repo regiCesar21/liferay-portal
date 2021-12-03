@@ -24,6 +24,8 @@ import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.site.admin.web.internal.constants.SiteAdminPortletKeys;
 import com.liferay.site.admin.web.internal.display.context.SiteAdminDisplayContext;
+import com.liferay.site.constants.SiteWebKeys;
+import com.liferay.site.util.GroupURLProvider;
 import com.liferay.sites.kernel.util.SitesUtil;
 
 import java.util.List;
@@ -47,6 +49,10 @@ public class SiteActionDropdownItemsProvider {
 		_group = group;
 		_liferayPortletResponse = liferayPortletResponse;
 		_siteAdminDisplayContext = siteAdminDisplayContext;
+
+		_groupURLProvider =
+			(GroupURLProvider)liferayPortletRequest.getAttribute(
+				SiteWebKeys.GROUP_URL_PROVIDER);
 
 		_httpServletRequest = PortalUtil.getHttpServletRequest(
 			liferayPortletRequest);
@@ -248,7 +254,8 @@ public class SiteActionDropdownItemsProvider {
 
 		return dropdownItem -> {
 			dropdownItem.setHref(
-				_group.getDisplayURL(_themeDisplay, false, true));
+				_groupURLProvider.getDisplayURL(
+					_group, _themeDisplay, false, true));
 			dropdownItem.setLabel(
 				LanguageUtil.get(_httpServletRequest, "go-to-public-pages"));
 			dropdownItem.setTarget("_blank");
@@ -331,6 +338,7 @@ public class SiteActionDropdownItemsProvider {
 	}
 
 	private final Group _group;
+	private final GroupURLProvider _groupURLProvider;
 	private final HttpServletRequest _httpServletRequest;
 	private final LiferayPortletResponse _liferayPortletResponse;
 	private String _redirect;

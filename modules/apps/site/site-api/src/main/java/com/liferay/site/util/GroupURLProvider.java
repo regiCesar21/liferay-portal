@@ -129,8 +129,8 @@ public class GroupURLProvider {
 		ThemeDisplay themeDisplay = (ThemeDisplay)portletRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
-		String groupDisplayURL = group.getDisplayURL(
-			themeDisplay, false,
+		String groupDisplayURL = getDisplayURL(
+			group, themeDisplay, false,
 			GetterUtil.getBoolean(
 				portletRequest.getAttribute(
 					SiteWebKeys.GROUP_URL_PROVIDER_CONTROL_PANEL)));
