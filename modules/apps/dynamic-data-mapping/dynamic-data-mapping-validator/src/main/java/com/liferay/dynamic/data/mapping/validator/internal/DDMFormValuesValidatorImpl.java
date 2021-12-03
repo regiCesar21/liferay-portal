@@ -46,6 +46,7 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Set;
 import java.util.stream.Stream;
 
@@ -92,7 +93,7 @@ public class DDMFormValuesValidatorImpl implements DDMFormValuesValidator {
 		_serviceTrackerMap.close();
 	}
 
-	protected boolean evaluateValidationExpression(
+	protected Boolean evaluateValidationExpression(
 			String dataType, String ddmFormFieldName,
 			DDMFormFieldValidation ddmFormFieldValidation, Locale locale,
 			Value value)
@@ -308,11 +309,11 @@ public class DDMFormValuesValidatorImpl implements DDMFormValuesValidator {
 			return;
 		}
 
-		boolean valid = evaluateValidationExpression(
+		Boolean valid = evaluateValidationExpression(
 			ddmFormField.getDataType(), ddmFormField.getName(),
 			ddmFormFieldValidation, value.getDefaultLocale(), value);
 
-		if (!valid) {
+		if (!Objects.equals(Boolean.TRUE, valid)) {
 			throw new MustSetValidValue(ddmFormField.getName());
 		}
 	}
