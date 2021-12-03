@@ -44,7 +44,6 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
-import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 
@@ -248,43 +247,14 @@ public class DDMFormEvaluatorHelper {
 
 			return false;
 		}
-		catch (NullPointerException nullPointerException) {
-
-			// LRQA-66927
-
-			throw new NullPointerException(
-				StringBundler.concat(
-					nullPointerException.getMessage(), "; Condition: \"",
-					condition));
-		}
 	}
 
 	protected <T> T evaluateExpression(String expression)
 		throws DDMExpressionException {
 
-		DDMExpression<T> ddmExpression = null;
+		DDMExpression<T> ddmExpression = createExpression(expression);
 
-		try {
-			ddmExpression = createExpression(expression);
-
-			return (T)ddmExpression.evaluate();
-		}
-		catch (NullPointerException nullPointerException) {
-
-			// LRQA-66927
-
-			String ddmExpressionString = StringPool.NULL;
-
-			if (ddmExpression != null) {
-				ddmExpressionString = ddmExpression.toString();
-			}
-
-			throw new NullPointerException(
-				StringBundler.concat(
-					nullPointerException.getMessage(), "; DDMExpression: \"",
-					ddmExpressionString, "\"; Expression: \"", expression,
-					"\""));
-		}
+		return (T)ddmExpression.evaluate();
 	}
 
 	protected void evaluateVisibilityExpression(
