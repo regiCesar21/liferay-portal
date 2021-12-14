@@ -130,7 +130,7 @@ public class OpenIdConnectTokenRequestUtil {
 			OIDCTokens oidcTokens = oidcTokenResponse.getOIDCTokens();
 
 			_validate(
-				clientID, nonce, oidcProviderMetadata, oidcTokens,
+				clientID, secret, nonce, oidcProviderMetadata, oidcTokens,
 				openIdConnectProvider.geTokenConnectionTimeout());
 
 			return oidcTokens;
@@ -152,7 +152,7 @@ public class OpenIdConnectTokenRequestUtil {
 	}
 
 	private static IDTokenClaimsSet _validate(
-			ClientID clientID, Nonce nonce,
+			ClientID clientID, Secret clientSecret, Nonce nonce,
 			OIDCProviderMetadata oidcProviderMetadata, OIDCTokens oidcTokens,
 			int tokenConnectionTimeout)
 		throws OpenIdConnectServiceException.TokenException {
@@ -172,9 +172,18 @@ public class OpenIdConnectTokenRequestUtil {
 					oidcProviderMetadata.getIDTokenJWSAlgs()) {
 
 				if (Objects.equals(jwsAlgorithm.getName(), name)) {
+					if (JWSAlgorithm.Family.HMAC_SHA.contains(jwsAlgorithm)) {
+						IDTokenValidator idTokenValidator =
+							new IDTokenValidator(
+								oidcProviderMetadata.getIssuer(), clientID,
+								jwsAlgorithm, clientSecret);
+
+						return idTokenValidator.validate(idToken, nonce);
+					}
+
 					IDTokenValidator idTokenValidator = new IDTokenValidator(
 						oidcProviderMetadata.getIssuer(), clientID,
-						JWSAlgorithm.parse(name), uri.toURL(),
+						jwsAlgorithm, uri.toURL(),
 						new DefaultResourceRetriever(
 							tokenConnectionTimeout, tokenConnectionTimeout));
 
