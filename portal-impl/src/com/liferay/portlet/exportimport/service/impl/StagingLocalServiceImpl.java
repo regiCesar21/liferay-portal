@@ -12,6 +12,7 @@ import com.liferay.document.library.kernel.util.comparator.RepositoryModelTitleC
 import com.liferay.exportimport.kernel.configuration.ExportImportConfigurationConstants;
 import com.liferay.exportimport.kernel.configuration.ExportImportConfigurationParameterMapFactoryUtil;
 import com.liferay.exportimport.kernel.exception.ExportImportIOException;
+import com.liferay.exportimport.kernel.exception.MissingReferenceException;
 import com.liferay.exportimport.kernel.exception.RemoteExportException;
 import com.liferay.exportimport.kernel.lar.ExportImportDateUtil;
 import com.liferay.exportimport.kernel.lar.ExportImportThreadLocal;
@@ -565,6 +566,9 @@ public class StagingLocalServiceImpl extends StagingLocalServiceBaseImpl {
 				ExportImportIOException.PUBLISH_STAGING_REQUEST);
 
 			throw exportImportIOException;
+		}
+		catch (MissingReferenceException missingReferenceException) {
+			return missingReferenceException.getMissingReferences();
 		}
 		finally {
 			if (exportImportConfiguration.getType() ==
