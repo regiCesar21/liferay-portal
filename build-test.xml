@@ -12189,6 +12189,8 @@ cluster.link.bind.addr["cluster-link-udp"]=127.0.0.1</echo>
 			</then>
 		</if>
 
+		<delete dir="${liferay.home}/data/elasticsearch7" />
+
 		<unzip
 			dest="${liferay.home}"
 			src="${portal.legacy.dir}/${portal.version}/data-archive/${data.archive.type}-${database.type}.zip"
