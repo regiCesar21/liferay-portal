@@ -90,6 +90,8 @@ public class DB2DB extends BaseDB {
 	public void runSQL(Connection con, String[] templates)
 		throws IOException, SQLException {
 
+		reorgTables(con, templates);
+
 		super.runSQL(con, templates);
 
 		reorgTables(con, templates);
@@ -178,7 +180,8 @@ public class DB2DB extends BaseDB {
 
 			String lowerCaseTemplate = StringUtil.toLowerCase(template);
 
-			if (lowerCaseTemplate.startsWith("alter table")) {
+			if (lowerCaseTemplate.startsWith("alter table") ||
+					lowerCaseTemplate.startsWith("delete from")) {
 				tableNames.add(template.split(" ")[2]);
 			}
 			else if (lowerCaseTemplate.startsWith(ALTER_COLUMN_TYPE)) {
