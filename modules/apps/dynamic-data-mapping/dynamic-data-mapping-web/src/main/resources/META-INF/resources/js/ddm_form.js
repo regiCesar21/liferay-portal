@@ -1344,9 +1344,8 @@ AUI.add(
 
 						if (
 							!(locale in localizationMap) ||
-							(localizationMap[defaultLocale] !== undefined &&
-								value !== localizationMap[defaultLocale]) ||
-							localizationMap[locale] !== undefined
+							(localizationMap[locale] !== undefined &&
+								value !== localizationMap[locale])
 						) {
 							localizationMap[locale] = value;
 						}
