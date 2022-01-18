@@ -1348,7 +1348,7 @@ AUI.add(
 						var defaultLocale = instance.getDefaultLocale();
 
 						if (
-							locale === defaultLocale ||
+							!(locale in localizationMap) ||
 							(localizationMap[defaultLocale] !== undefined &&
 								value !== localizationMap[defaultLocale]) ||
 							localizationMap[locale] !== undefined
