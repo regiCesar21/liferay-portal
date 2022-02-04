@@ -53,6 +53,8 @@ import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.taglib.servlet.PipingServletResponse;
+import com.liferay.segments.SegmentsEntryRetriever;
+import com.liferay.segments.context.RequestContextMapper;
 
 import java.util.List;
 import java.util.Locale;
@@ -152,6 +154,13 @@ public class GetCollectionFieldMVCResourceCommand
 
 				defaultLayoutListRetrieverContext.setPagination(
 					Pagination.of(size, 0));
+
+				long[] segmentsEntryIds = _segmentsEntryRetriever.getSegmentsEntryIds(
+					_portal.getScopeGroupId(httpServletRequest),
+					_portal.getUserId(httpServletRequest),
+					_requestContextMapper.map(httpServletRequest));
+
+				defaultLayoutListRetrieverContext.setSegmentsEntryIds(segmentsEntryIds);
 
 				ListObjectReference listObjectReference =
 					listObjectReferenceFactory.getListObjectReference(
@@ -309,5 +318,11 @@ public class GetCollectionFieldMVCResourceCommand
 
 	@Reference
 	private Portal _portal;
+
+	@Reference
+	private RequestContextMapper _requestContextMapper;
+
+	@Reference
+	private SegmentsEntryRetriever _segmentsEntryRetriever;
 
 }
