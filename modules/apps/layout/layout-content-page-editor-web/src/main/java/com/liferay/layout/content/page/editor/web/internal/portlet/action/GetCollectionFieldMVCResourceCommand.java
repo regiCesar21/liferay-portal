@@ -155,6 +155,11 @@ public class GetCollectionFieldMVCResourceCommand
 				defaultLayoutListRetrieverContext.setPagination(
 					Pagination.of(size, 0));
 
+				ListObjectReference listObjectReference =
+					listObjectReferenceFactory.getListObjectReference(
+						layoutObjectReferenceJSONObject);
+
+
 				long[] segmentsEntryIds =
 					_segmentsEntryRetriever.getSegmentsEntryIds(
 						_portal.getScopeGroupId(httpServletRequest),
@@ -163,11 +168,6 @@ public class GetCollectionFieldMVCResourceCommand
 
 				defaultLayoutListRetrieverContext.setSegmentsEntryIds(
 					segmentsEntryIds);
-
-				ListObjectReference listObjectReference =
-					listObjectReferenceFactory.getListObjectReference(
-						layoutObjectReferenceJSONObject);
-
 				// LPS-111037
 
 				String itemType = listObjectReference.getItemType();
