@@ -23,8 +23,6 @@ import com.liferay.portal.kernel.test.util.CompanyTestUtil;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
-import com.liferay.portal.kernel.util.PropsKeys;
-import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.TreeMapBuilder;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.test.rule.Inject;
@@ -58,7 +56,7 @@ public class PortalInstancesTest {
 
 	@Before
 	public void setUp() throws Exception {
-		ReflectionTestUtil.setFieldValue(
+		_virtualHostsDefaultSiteName = ReflectionTestUtil.getAndSetFieldValue(
 			PropsValues.class, "VIRTUAL_HOSTS_DEFAULT_SITE_NAME", "Guest");
 
 		_company = CompanyTestUtil.addCompany();
@@ -90,7 +88,7 @@ public class PortalInstancesTest {
 	public void tearDown() throws PortalException {
 		ReflectionTestUtil.setFieldValue(
 			PropsValues.class, "VIRTUAL_HOSTS_DEFAULT_SITE_NAME",
-			PropsUtil.get(PropsKeys.VIRTUAL_HOSTS_DEFAULT_SITE_NAME));
+			_virtualHostsDefaultSiteName);
 
 		_companyLocalService.deleteCompany(_company);
 	}
@@ -187,5 +185,7 @@ public class PortalInstancesTest {
 
 	@Inject
 	private VirtualHostLocalService _virtualHostLocalService;
+
+	private String _virtualHostsDefaultSiteName;
 
 }
