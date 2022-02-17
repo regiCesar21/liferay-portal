@@ -96,7 +96,6 @@ public class PortalInstancesTest {
 		_testGetCompanyId(
 			_company.getVirtualHostname(),
 			_defaultGroupPublicLayout.getLayoutSet());
-
 		_testGetCompanyId(
 			_nondefaultGroupPublicLayoutHostname,
 			_nondefaultGroupPublicLayout.getLayoutSet());
@@ -111,11 +110,9 @@ public class PortalInstancesTest {
 		_testGetCompanyId(
 			_company.getVirtualHostname(),
 			_defaultGroupPublicLayout.getLayoutSet());
-
 		_testGetCompanyId(
 			defaultGroupPublicLayoutHostname,
 			_defaultGroupPublicLayout.getLayoutSet());
-
 		_testGetCompanyId(
 			_nondefaultGroupPublicLayoutHostname,
 			_nondefaultGroupPublicLayout.getLayoutSet());
