@@ -158,7 +158,7 @@ public class PortalInstances {
 					layoutSet.getVirtualHostnames();
 
 				if (virtualHostnames.isEmpty() ||
-					_isCompanyVirtualHostName(
+					_isCompanyVirtualHostname(
 						companyId, httpServletRequest.getServerName())) {
 
 					httpServletRequest.setAttribute(
@@ -491,7 +491,7 @@ public class PortalInstances {
 		return 0;
 	}
 
-	private static boolean _isCompanyVirtualHostName(
+	private static boolean _isCompanyVirtualHostname(
 			long companyId, String serverName)
 		throws PortalException {
 
