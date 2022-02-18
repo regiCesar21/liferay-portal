@@ -29,7 +29,7 @@ java.util.Calendar endTimeJCalendar = JCalendarUtil.getJCalendar(endTime, userTi
 AssetEntry layoutAssetEntry = AssetEntryLocalServiceUtil.getEntry(CalendarBooking.class.getName(), calendarBooking.getCalendarBookingId());
 %>
 
-<c:if test="<%= (calendar != null) && CalendarPermission.contains(themeDisplay.getPermissionChecker(), calendar, CalendarActionKeys.VIEW_BOOKING_DETAILS) %>">
+<c:if test="<%= CalendarPermission.contains(themeDisplay.getPermissionChecker(), calendar, CalendarActionKeys.VIEW_BOOKING_DETAILS) %>">
 	<div class="container-fluid-1280">
 		<div class="panel panel-default">
 			<liferay-ui:header
