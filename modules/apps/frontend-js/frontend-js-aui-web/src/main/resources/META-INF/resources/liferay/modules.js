@@ -46,7 +46,11 @@
 	};
 
 	window.YUI_config = {
-		base: Liferay.ThemeDisplay.getCDNBaseURL() + Liferay.ThemeDisplay.getPathContext() + PATH_JAVASCRIPT + '/aui/',
+		base:
+			Liferay.ThemeDisplay.getCDNBaseURL() +
+			Liferay.ThemeDisplay.getPathContext() +
+			PATH_JAVASCRIPT +
+			'/aui/',
 		combine: COMBINE,
 		comboBase: LiferayAUI.getComboPath(),
 		filter: Liferay.AUI.getFilter(),
