@@ -6,8 +6,12 @@
 package com.liferay.portal.workflow.task.web.internal.notifications;
 
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.model.UserNotificationEvent;
 import com.liferay.portal.kernel.notifications.BaseUserNotificationHandler;
 import com.liferay.portal.kernel.notifications.UserNotificationHandler;
@@ -42,6 +46,32 @@ public class WorkflowTaskUserNotificationHandler
 	public WorkflowTaskUserNotificationHandler() {
 		setOpenDialog(true);
 		setPortletId(PortletKeys.MY_WORKFLOW_TASK);
+	}
+
+	@Override
+	public boolean isApplicable(
+		UserNotificationEvent userNotificationEvent,
+		ServiceContext serviceContext) {
+
+		try {
+			JSONObject jsonObject = JSONFactoryUtil.createJSONObject(
+				userNotificationEvent.getPayload());
+
+			for (User user :
+					WorkflowTaskManagerUtil.getNotifiableUsers(
+						jsonObject.getLong("companyId"),
+						jsonObject.getLong("workflowTaskId"))) {
+
+				if (user.getUserId() == serviceContext.getUserId()) {
+					return true;
+				}
+			}
+		}
+		catch (PortalException portalException) {
+			_log.error(portalException);
+		}
+
+		return false;
 	}
 
 	@Override
@@ -144,6 +174,9 @@ public class WorkflowTaskUserNotificationHandler
 		return _workflowTaskPermissionChecker.hasPermission(
 			groupId, workflowTask, themeDisplay.getPermissionChecker());
 	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		WorkflowTaskUserNotificationHandler.class);
 
 	private UserNotificationEventLocalService
 		_userNotificationEventLocalService;
