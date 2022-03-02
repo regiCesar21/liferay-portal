@@ -10,6 +10,7 @@ import com.liferay.portal.json.JSONFactoryImpl;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
+import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.model.UserNotificationEvent;
 import com.liferay.portal.kernel.model.UserNotificationEventWrapper;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
@@ -36,7 +37,9 @@ import com.liferay.registry.collections.ServiceTrackerMap;
 
 import java.io.Serializable;
 
+import java.util.ArrayList;
 import java.util.Collections;
+import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Set;
@@ -73,6 +76,7 @@ public class WorkflowTaskUserNotificationHandlerTest extends PowerMockito {
 
 	@Before
 	public void setUp() {
+		_allowedUsers = new ArrayList<>();
 		_setUpWorkflowHandlerRegistryUtil();
 	}
 
@@ -96,6 +100,43 @@ public class WorkflowTaskUserNotificationHandlerTest extends PowerMockito {
 			_workflowTaskUserNotificationHandler.getLink(
 				mockUserNotificationEvent(
 					_VALID_ENTRY_CLASS_NAME, _INVALID_WORKFLOW_TASK_ID),
+				_serviceContext));
+	}
+
+	@Test
+	public void testIsApplicable() {
+		User user1 = Mockito.mock(User.class);
+
+		Mockito.when(
+			user1.getUserId()
+		).thenReturn(
+			_SERVICE_CONTEXT_USER_ID
+		);
+
+		_allowedUsers.add(user1);
+
+		User user2 = Mockito.mock(User.class);
+
+		Mockito.when(
+			user2.getUserId()
+		).thenReturn(
+			RandomTestUtil.randomLong()
+		);
+
+		_allowedUsers.add(user2);
+
+		Assert.assertTrue(
+			_workflowTaskUserNotificationHandler.isApplicable(
+				mockUserNotificationEvent(
+					_VALID_ENTRY_CLASS_NAME, _VALID_WORKFLOW_TASK_ID),
+				_serviceContext));
+
+		_allowedUsers.remove(user1);
+
+		Assert.assertFalse(
+			_workflowTaskUserNotificationHandler.isApplicable(
+				mockUserNotificationEvent(
+					_VALID_ENTRY_CLASS_NAME, _VALID_WORKFLOW_TASK_ID),
 				_serviceContext));
 	}
 
@@ -217,6 +258,13 @@ public class WorkflowTaskUserNotificationHandlerTest extends PowerMockito {
 					return null;
 				}
 
+				@Override
+				public List<User> getNotifiableUsers(
+					long companyId, long workflowTaskId) {
+
+					return _allowedUsers;
+				}
+
 			});
 	}
 
@@ -289,6 +337,9 @@ public class WorkflowTaskUserNotificationHandlerTest extends PowerMockito {
 	private static final String _NOTIFICATION_MESSAGE =
 		RandomTestUtil.randomString();
 
+	private static final Long _SERVICE_CONTEXT_USER_ID =
+		RandomTestUtil.randomLong();
+
 	private static final String _VALID_ENTRY_CLASS_NAME =
 		RandomTestUtil.randomString();
 
@@ -296,6 +347,8 @@ public class WorkflowTaskUserNotificationHandlerTest extends PowerMockito {
 
 	private static final Long _VALID_WORKFLOW_TASK_ID =
 		RandomTestUtil.randomLong();
+
+	private static List<User> _allowedUsers;
 
 	private static final ServiceContext _serviceContext = new ServiceContext() {
 
@@ -306,6 +359,11 @@ public class WorkflowTaskUserNotificationHandlerTest extends PowerMockito {
 					setSiteGroupId(RandomTestUtil.randomLong());
 				}
 			};
+		}
+
+		@Override
+		public long getUserId() {
+			return _SERVICE_CONTEXT_USER_ID;
 		}
 
 	};
