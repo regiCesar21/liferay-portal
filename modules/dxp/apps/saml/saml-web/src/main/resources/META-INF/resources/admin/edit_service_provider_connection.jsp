@@ -57,8 +57,14 @@ long assertionLifetime = GetterUtil.getLong(request.getAttribute(SamlWebKeys.SAM
 	<aui:fieldset helpMessage="service-provider-metadata-help" label="metadata">
 		<aui:input name="metadataUrl" />
 
-		<aui:button-row>
-			<aui:button onClick='<%= renderResponse.getNamespace() + "uploadMetadataXml();" %>' value="upload-metadata-xml" />
+		<c:if test="<%= (samlIdpSpConnection != null) && Validator.isNull(samlIdpSpConnection.getMetadataUrl()) && Validator.isNotNull(samlIdpSpConnection.getMetadataXml()) %>">
+			<div class="portlet-msg-alert">
+				<liferay-ui:message arguments="<%= String.valueOf(samlIdpSpConnection.getSamlSpEntityId()) %>" key="the-x-is-configured-through-an-uploaded-metadata-file" />
+			</div>
+		</c:if>
+
+		<aui:button-row cssClass="sheet-footer">
+			<aui:button onClick='<%= liferayPortletResponse.getNamespace() + "uploadMetadataXml();" %>' value="upload-metadata-xml" />
 		</aui:button-row>
 
 		<div class="hide" id="<portlet:namespace />uploadMetadataXmlForm">
@@ -100,20 +106,21 @@ long assertionLifetime = GetterUtil.getLong(request.getAttribute(SamlWebKeys.SAM
 </aui:form>
 
 <aui:script>
-	Liferay.provide(
-		window,
-		'<portlet:namespace />uploadMetadataXml',
-		function() {
-			var A = AUI();
+	window['<portlet:namespace />uploadMetadataXml'] = function () {
+		var uploadMetadataXmlForm = document.getElementById(
+			'<portlet:namespace />uploadMetadataXmlForm'
+		);
 
-			var uploadMetadataXmlForm = A.one(
-				'#<portlet:namespace />uploadMetadataXmlForm'
+		if (uploadMetadataXmlForm) {
+			uploadMetadataXmlForm.classList.remove('hide');
+			uploadMetadataXmlForm.removeAttribute('hidden');
+			uploadMetadataXmlForm.style.display = '';
+
+			var metadataUrl = document.getElementById(
+				'<portlet:namespace />metadataUrl'
 			);
 
-			if (uploadMetadataXmlForm) {
-				uploadMetadataXmlForm.show();
-			}
-		},
-		['aui-base']
-	);
+			metadataUrl.value = '';
+		}
+	};
 </aui:script>
