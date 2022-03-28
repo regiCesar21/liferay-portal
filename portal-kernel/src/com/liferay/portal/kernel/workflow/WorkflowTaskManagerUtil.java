@@ -81,6 +81,14 @@ public class WorkflowTaskManagerUtil {
 			companyId, userId, workflowTaskId);
 	}
 
+	public static List<User> getNotifiableUsers(
+			long companyId, long workflowTaskId)
+		throws WorkflowException {
+
+		return getWorkflowTaskManager().getNotifiableUsers(
+			companyId, workflowTaskId);
+	}
+
 	/**
 	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
 	 *             #getAssignableUsers(long, long)}
