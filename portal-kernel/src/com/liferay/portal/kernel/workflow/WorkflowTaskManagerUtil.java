@@ -71,6 +71,14 @@ public class WorkflowTaskManagerUtil {
 			companyId, userId, workflowTaskId);
 	}
 
+	public static long[] getNotifiableUserIds(
+			long companyId, long workflowTaskId)
+		throws WorkflowException {
+
+		return getWorkflowTaskManager().getNotifiableUserIds(
+			companyId, workflowTaskId);
+	}
+
 	public static long[] getPooledActorsIds(long companyId, long workflowTaskId)
 		throws WorkflowException {
 

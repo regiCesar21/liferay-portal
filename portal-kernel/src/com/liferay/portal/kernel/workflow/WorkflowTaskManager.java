@@ -53,6 +53,13 @@ public interface WorkflowTaskManager {
 			long companyId, long userId, long workflowTaskId)
 		throws WorkflowException;
 
+	public default long[] getNotifiableUserIds(
+			long companyId, long workflowTaskId)
+		throws WorkflowException {
+
+		throw new UnsupportedOperationException();
+	}
+
 	public long[] getPooledActorsIds(long companyId, long workflowTaskId)
 		throws WorkflowException;
 
