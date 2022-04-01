@@ -19,6 +19,7 @@ import com.liferay.expando.kernel.model.ExpandoColumn;
 import com.liferay.expando.kernel.model.ExpandoColumnConstants;
 import com.liferay.expando.kernel.service.ExpandoColumnLocalService;
 import com.liferay.expando.kernel.util.ExpandoBridgeFactory;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.search.BooleanQuery;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.Hits;
@@ -54,6 +55,7 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 
 import org.mockito.Matchers;
+import org.mockito.Mock;
 import org.mockito.Mockito;
 
 /**
@@ -215,8 +217,7 @@ public abstract class BaseExpandoTestCase extends BaseIndexingTestCase {
 		).when(
 			expandoBridgeIndexer
 		).encodeFieldName(
-			Mockito.anyString(),
-			Matchers.eq(ExpandoColumnConstants.INDEX_TYPE_KEYWORD)
+			Matchers.eq(_indexTypeKeywordExpandoColumn)
 		);
 
 		Mockito.doReturn(
@@ -224,8 +225,15 @@ public abstract class BaseExpandoTestCase extends BaseIndexingTestCase {
 		).when(
 			expandoBridgeIndexer
 		).encodeFieldName(
-			Mockito.anyString(),
-			Matchers.eq(ExpandoColumnConstants.INDEX_TYPE_TEXT)
+			Matchers.eq(_indexTypeTextExpandoColumn)
+		);
+
+		Mockito.doReturn(
+			StringPool.BLANK
+		).when(
+			expandoBridgeIndexer
+		).getNumericSuffix(
+			Mockito.anyInt()
 		);
 
 		return expandoBridgeIndexer;
@@ -254,7 +262,7 @@ public abstract class BaseExpandoTestCase extends BaseIndexingTestCase {
 			ExpandoColumnLocalService.class);
 
 		Mockito.doReturn(
-			createExpandoColumn(ExpandoColumnConstants.INDEX_TYPE_KEYWORD)
+			_indexTypeKeywordExpandoColumn
 		).when(
 			expandoColumnLocalService
 		).getDefaultTableColumn(
@@ -263,7 +271,7 @@ public abstract class BaseExpandoTestCase extends BaseIndexingTestCase {
 		);
 
 		Mockito.doReturn(
-			createExpandoColumn(ExpandoColumnConstants.INDEX_TYPE_TEXT)
+			_indexTypeTextExpandoColumn
 		).when(
 			expandoColumnLocalService
 		).getDefaultTableColumn(
@@ -340,5 +348,13 @@ public abstract class BaseExpandoTestCase extends BaseIndexingTestCase {
 
 	private static final String _FIELD_TEXT =
 		"expando__custom_fields__testColumnName";
+
+	@Mock
+	private ExpandoColumn _indexTypeKeywordExpandoColumn = createExpandoColumn(
+		ExpandoColumnConstants.INDEX_TYPE_KEYWORD);
+
+	@Mock
+	private ExpandoColumn _indexTypeTextExpandoColumn = createExpandoColumn(
+		ExpandoColumnConstants.INDEX_TYPE_TEXT);
 
 }
