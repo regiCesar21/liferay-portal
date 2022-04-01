@@ -20,7 +20,6 @@ import com.liferay.expando.kernel.model.ExpandoTable;
 import com.liferay.expando.kernel.model.ExpandoTableConstants;
 import com.liferay.expando.kernel.service.ExpandoColumnLocalService;
 import com.liferay.expando.kernel.service.ExpandoTableLocalService;
-import com.liferay.expando.kernel.util.ExpandoBridgeIndexerUtil;
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
 import com.liferay.portal.kernel.dao.orm.ProjectionFactoryUtil;
@@ -45,6 +44,7 @@ import com.liferay.portal.odata.entity.EntityField;
 import com.liferay.portal.odata.entity.EntityModel;
 import com.liferay.portal.odata.entity.IntegerEntityField;
 import com.liferay.portal.odata.entity.StringEntityField;
+import com.liferay.portal.search.expando.ExpandoBridgeIndexer;
 import com.liferay.segments.internal.odata.entity.EntityModelFieldMapper;
 import com.liferay.segments.internal.odata.entity.UserEntityModel;
 import com.liferay.segments.service.SegmentsEntryLocalService;
@@ -177,9 +177,8 @@ public class UserExpandoColumnModelListener
 			_entityModelFieldMapper.getExpandoColumnEntityFieldName(
 				expandoColumn);
 
-		String encodedIndexedFieldName =
-			ExpandoBridgeIndexerUtil.encodeFieldName(
-				expandoColumn.getName(), indexType);
+		String encodedIndexedFieldName = _expandoBridgeIndexer.encodeFieldName(
+			expandoColumn.getName(), indexType);
 
 		EntityField entityField = null;
 
@@ -331,6 +330,9 @@ public class UserExpandoColumnModelListener
 
 	@Reference
 	private EntityModelFieldMapper _entityModelFieldMapper;
+
+	@Reference
+	private ExpandoBridgeIndexer _expandoBridgeIndexer;
 
 	@Reference
 	private ExpandoColumnLocalService _expandoColumnLocalService;
