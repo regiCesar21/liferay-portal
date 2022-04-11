@@ -56,7 +56,7 @@ long clockSkew = GetterUtil.getLong(request.getAttribute(SamlWebKeys.SAML_CLOCK_
 
 		<c:if test="<%= (samlSpIdpConnection != null) && Validator.isNull(samlSpIdpConnection.getMetadataUrl()) && Validator.isNotNull(samlSpIdpConnection.getMetadataXml()) %>">
 			<div class="portlet-msg-alert">
-				<liferay-ui:message arguments="<%= String.valueOf(samlSpIdpConnection.getSamlIdpEntityId()) %>" key="the-x-is-configured-through-an-uploaded-metadata-file" />
+				<liferay-ui:message key="the-connected-provider-is-configured-through-an-uploaded-metadata-file" />
 			</div>
 		</c:if>
 
