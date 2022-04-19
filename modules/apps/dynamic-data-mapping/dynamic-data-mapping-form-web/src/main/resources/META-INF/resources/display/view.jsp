@@ -40,6 +40,13 @@ long formInstanceId = ddmFormDisplayContext.getFormInstanceId();
 	<c:otherwise>
 
 		<%
+		DDMFormInstance formInstance = ddmFormDisplayContext.getFormInstance();
+
+		boolean isFormAvailable = ddmFormDisplayContext.isFormAvailable();
+		boolean isFormShared = ddmFormDisplayContext.isFormShared();
+		boolean preview = ddmFormDisplayContext.isPreview();
+		boolean showSuccessPage = ddmFormDisplayContext.isShowSuccessPage();
+
 		String languageId = ddmFormDisplayContext.getDefaultLanguageId();
 
 		Locale displayLocale = LocaleUtil.fromLanguageId(languageId);
@@ -65,7 +72,7 @@ long formInstanceId = ddmFormDisplayContext.getFormInstanceId();
 					</div>
 				</div>
 			</c:when>
-			<c:when test="<%= ddmFormDisplayContext.isFormAvailable() %>">
+			<c:when test="<%= isFormAvailable || preview %>">
 				<portlet:actionURL name="/dynamic_data_mapping_form/add_form_instance_record" var="addFormInstanceRecordActionURL" />
 
 				<%
@@ -131,7 +138,7 @@ long formInstanceId = ddmFormDisplayContext.getFormInstanceId();
 
 						<liferay-ui:error-principal />
 
-						<c:if test="<%= ddmFormDisplayContext.isFormShared() %>">
+						<c:if test="<%= isFormShared || preview %>">
 							<clay:container-fluid>
 								<div class="locale-actions">
 									<liferay-ui:language
@@ -216,7 +223,7 @@ long formInstanceId = ddmFormDisplayContext.getFormInstanceId();
 
 					Liferay.on('destroyPortlet', <portlet:namespace />clearPortletHandlers);
 
-					<c:if test="<%= ddmFormDisplayContext.isFormShared() %>">
+					<c:if test="<%= isFormShared %>">
 						document.title =
 							'<%= HtmlUtil.escapeJS(formInstance.getName(displayLocale)) %>';
 					</c:if>
