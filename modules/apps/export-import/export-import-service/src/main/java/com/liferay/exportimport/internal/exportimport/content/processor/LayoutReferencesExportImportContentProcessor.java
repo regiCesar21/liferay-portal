@@ -1012,7 +1012,7 @@ public class LayoutReferencesExportImportContentProcessor
 						_layoutLocalService.fetchLayoutByFriendlyURL(
 							group.getGroupId(), false, urlWithoutLocale);
 
-					if (layout != null) {
+					if (layout == null) {
 						layout = _layoutLocalService.fetchLayoutByFriendlyURL(
 							group.getGroupId(), true, urlWithoutLocale);
 					}
