@@ -45,7 +45,6 @@ long formInstanceId = ddmFormDisplayContext.getFormInstanceId();
 		boolean isFormAvailable = ddmFormDisplayContext.isFormAvailable();
 		boolean isFormShared = ddmFormDisplayContext.isFormShared();
 		boolean preview = ddmFormDisplayContext.isPreview();
-		boolean showSuccessPage = ddmFormDisplayContext.isShowSuccessPage();
 
 		String languageId = ddmFormDisplayContext.getDefaultLanguageId();
 

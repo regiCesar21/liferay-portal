@@ -292,7 +292,17 @@ public class DDMFormDisplayContextTest extends PowerMockito {
 
 	@Test
 	public void testIsFormAvailableForLoggedUser() throws Exception {
-		DDMFormInstance ddmFormInstance = mockDDMFormInstance();
+		DDMFormInstanceSettings ddmFormInstanceSettings = Mockito.mock(
+			DDMFormInstanceSettings.class);
+
+		Mockito.when(
+			ddmFormInstanceSettings.published()
+		).thenReturn(
+			true
+		);
+
+		DDMFormInstance ddmFormInstance = _mockDDMFormInstance(
+			ddmFormInstanceSettings);
 
 		when(
 			_ddmFormInstanceLocalService.fetchFormInstance(Matchers.anyLong())
@@ -380,7 +390,7 @@ public class DDMFormDisplayContextTest extends PowerMockito {
 
 	@Test
 	public void testIsShowSuccessPage() throws Exception {
-		mockDDMFormInstance(mock(DDMFormInstanceSettings.class));
+		_mockDDMFormInstance(mock(DDMFormInstanceSettings.class));
 
 		MockRenderRequest mockRenderRequest = mockRenderRequest();
 
@@ -405,7 +415,7 @@ public class DDMFormDisplayContextTest extends PowerMockito {
 			"http://localhost:8080/web/forms/shared/-/form/123"
 		);
 
-		mockDDMFormInstance(ddmFormInstanceSettings);
+		_mockDDMFormInstance(ddmFormInstanceSettings);
 
 		MockRenderRequest mockRenderRequest = mockRenderRequest();
 
@@ -506,7 +516,7 @@ public class DDMFormDisplayContextTest extends PowerMockito {
 		return formInstance;
 	}
 
-	protected void mockDDMFormInstance(
+	private DDMFormInstance _mockDDMFormInstance(
 			DDMFormInstanceSettings ddmFormInstanceSettings)
 		throws Exception {
 
@@ -531,6 +541,8 @@ public class DDMFormDisplayContextTest extends PowerMockito {
 		).thenReturn(
 			ddmFormInstance
 		);
+
+		return ddmFormInstance;
 	}
 
 	protected DDMFormInstanceSettings
