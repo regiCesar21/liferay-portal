@@ -62,6 +62,7 @@ import com.liferay.portal.kernel.util.AggregateResourceBundle;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.CookieKeys;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.LocaleThreadLocal;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
@@ -386,8 +387,7 @@ public class DDMFormDisplayContext {
 	}
 
 	public String getSubmitLabel() throws PortalException {
-		ResourceBundle resourceBundle = getResourceBundle(
-			getLocale(_getHttpServletRequest(), getDDMForm()));
+		ResourceBundle resourceBundle = _getResourceBundle();
 
 		if (hasWorkflowEnabled(getFormInstance(), getThemeDisplay())) {
 			DDMFormInstanceRecord ddmFormInstanceRecord =
@@ -861,16 +861,6 @@ public class DDMFormDisplayContext {
 		return portletDisplay.getPortletResource();
 	}
 
-	protected ResourceBundle getResourceBundle(Locale locale) {
-		ResourceBundle portalResourceBundle = _portal.getResourceBundle(locale);
-
-		ResourceBundle moduleResourceBundle = ResourceBundleUtil.getBundle(
-			"content.Language", locale, getClass());
-
-		return new AggregateResourceBundle(
-			moduleResourceBundle, portalResourceBundle);
-	}
-
 	protected ThemeDisplay getThemeDisplay() {
 		return (ThemeDisplay)_renderRequest.getAttribute(WebKeys.THEME_DISPLAY);
 	}
@@ -949,6 +939,18 @@ public class DDMFormDisplayContext {
 				WorkflowConstants.STATUS_APPROVED);
 
 		return _latestDDMFormInstanceVersion;
+	}
+
+	private ResourceBundle _getResourceBundle() {
+		ResourceBundle portalResourceBundle = _portal.getResourceBundle(
+			LocaleThreadLocal.getThemeDisplayLocale());
+
+		ResourceBundle moduleResourceBundle = ResourceBundleUtil.getBundle(
+			"content.Language", LocaleThreadLocal.getThemeDisplayLocale(),
+			getClass());
+
+		return new AggregateResourceBundle(
+			moduleResourceBundle, portalResourceBundle);
 	}
 
 	private static final String _DDM_FORM_FIELD_NAME_CAPTCHA = "_CAPTCHA_";
