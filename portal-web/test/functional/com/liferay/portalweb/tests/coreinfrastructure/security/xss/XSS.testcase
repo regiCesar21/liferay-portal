@@ -174,7 +174,7 @@ definition {
 
 		Form.addTextField(fieldPositionNumber = 1);
 
-		Form.save();
+		Form.publishForm();
 
 		ProductMenu.gotoPortlet(
 			category = "Site Builder",
