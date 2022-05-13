@@ -27,13 +27,39 @@ class Email extends Component {
 
 	render() {
 		const {autocompleteUser, emailContent} = this.state;
+		const {autocompleteUserURL, portletNamespace} = this.props;
 
 		return (
 			<div class="share-form-modal-item-email">
 				{autocompleteUser && (
 					<ClayMultiSelect
 						autocompleteFilterCondition="value"
-						dataSource={autocompleteUser}
+						dataSource={(query) => {
+							return makeFetch({
+								method: 'GET',
+								url:
+									autocompleteUserURL +
+									'&' +
+									portletNamespace +
+									'query=' +
+									query,
+							})
+								.then((responseData) => {
+									if (!this.isDisposed()) {
+										return responseData.map((data) => {
+											return {
+												label: data.emailAddress,
+												value: this._getAutoCompleteValue(
+													data
+												),
+											};
+										});
+									}
+								})
+								.catch((error) => {
+									throw new Error(error);
+								});
+						}}
 						events={{
 							inputChange: this._handleInputChange.bind(this),
 							labelItemAdded: this._handleLabelItemAdded.bind(
@@ -219,6 +245,14 @@ Email.PROPS = {
 	 * @type {!object}
 	 */
 	localizedName: Config.object(),
+
+	/**
+	 * @default undefined
+	 * @instance
+	 * @memberof Email
+	 * @type {!string}
+	 */
+	portletNamespace: Config.string(),
 
 	/**
 	 * @default undefined

@@ -49,7 +49,12 @@ class ShareFormModal extends Component {
 	}
 
 	render() {
-		const {autocompleteUserURL, spritemap, url} = this.props;
+		const {
+			autocompleteUserURL,
+			portletNamespace,
+			spritemap,
+			url,
+		} = this.props;
 
 		return (
 			<div class="share-form-modal">
@@ -83,6 +88,7 @@ class ShareFormModal extends Component {
 											localizedName={
 												this.props.localizedName
 											}
+											portletNamespace={portletNamespace}
 											ref="emailRef"
 											spritemap={spritemap}
 											url={url}
