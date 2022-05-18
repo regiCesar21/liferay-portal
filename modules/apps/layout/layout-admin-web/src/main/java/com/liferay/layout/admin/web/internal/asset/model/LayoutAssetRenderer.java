@@ -80,8 +80,11 @@ public class LayoutAssetRenderer extends BaseJSPAssetRenderer<Layout> {
 		sb.append(":</strong> ");
 		sb.append(_layout.getHTMLTitle(locale));
 
+		int layoutStatus = _layout.getStatus();
+
 		if (_layout.isTypeContent() &&
-			(_layout.getStatus() == WorkflowConstants.STATUS_PENDING)) {
+			((layoutStatus == WorkflowConstants.STATUS_PENDING) ||
+			 (layoutStatus == WorkflowConstants.STATUS_DENIED))) {
 
 			return HtmlUtil.stripHtml(sb.toString());
 		}
@@ -112,7 +115,11 @@ public class LayoutAssetRenderer extends BaseJSPAssetRenderer<Layout> {
 		ThemeDisplay themeDisplay, String noSuchEntryRedirect) {
 
 		try {
-			if (_layout.getStatus() != WorkflowConstants.STATUS_PENDING) {
+			int layoutStatus = _layout.getStatus();
+
+			if ((layoutStatus != WorkflowConstants.STATUS_PENDING) &&
+				(layoutStatus != WorkflowConstants.STATUS_DENIED)) {
+
 				return PortalUtil.getLayoutFriendlyURL(_layout, themeDisplay);
 			}
 
