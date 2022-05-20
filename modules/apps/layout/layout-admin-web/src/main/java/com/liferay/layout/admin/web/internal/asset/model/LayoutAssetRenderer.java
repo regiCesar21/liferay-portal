@@ -80,7 +80,7 @@ public class LayoutAssetRenderer extends BaseJSPAssetRenderer<Layout> {
 		sb.append(_layout.getHTMLTitle(locale));
 
 		if (_layout.isTypeContent() &&
-			(_layout.isPending() || _layout.isDenied())) {
+			(_layout.isDenied() || _layout.isPending())) {
 
 			return HtmlUtil.stripHtml(sb.toString());
 		}
@@ -111,7 +111,7 @@ public class LayoutAssetRenderer extends BaseJSPAssetRenderer<Layout> {
 		ThemeDisplay themeDisplay, String noSuchEntryRedirect) {
 
 		try {
-			if (!_layout.isPending() && !_layout.isDenied()) {
+			if (!_layout.isDenied() && !_layout.isPending()) {
 				return PortalUtil.getLayoutFriendlyURL(_layout, themeDisplay);
 			}
 
