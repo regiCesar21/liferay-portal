@@ -39,6 +39,7 @@ import com.liferay.headless.delivery.dto.v1_0.Rating;
 import com.liferay.headless.delivery.internal.dto.v1_0.converter.DocumentDTOConverter;
 import com.liferay.headless.delivery.internal.dto.v1_0.util.CustomFieldsUtil;
 import com.liferay.headless.delivery.internal.dto.v1_0.util.DDMFormValuesUtil;
+import com.liferay.headless.delivery.internal.dto.v1_0.util.DocumentUtil;
 import com.liferay.headless.delivery.internal.dto.v1_0.util.EntityFieldsUtil;
 import com.liferay.headless.delivery.internal.dto.v1_0.util.RatingUtil;
 import com.liferay.headless.delivery.internal.odata.entity.v1_0.DocumentEntityModel;
@@ -64,9 +65,11 @@ import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.util.ArrayUtil;
+import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.Portal;
+import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.odata.entity.EntityModel;
 import com.liferay.portal.search.aggregation.Aggregations;
 import com.liferay.portal.search.legacy.searcher.SearchRequestBuilderFactory;
@@ -274,7 +277,7 @@ public class DocumentResourceImpl
 					() -> _assetTagLocalService.getTagNames(
 						DLFileEntry.class.getName(), documentId),
 					existingFileEntry.getFolderId(), documentOptional,
-					existingFileEntry.getGroupId())));
+					existingFileEntry.getGroupId(), Constants.UPDATE)));
 	}
 
 	@Override
@@ -362,7 +365,7 @@ public class DocumentResourceImpl
 				_createServiceContext(
 					() -> new Long[0], () -> new String[0],
 					existingFileEntry.getFolderId(), documentOptional,
-					existingFileEntry.getGroupId())));
+					existingFileEntry.getGroupId(),Constants.UPDATE)));
 	}
 
 	@Override
@@ -407,7 +410,7 @@ public class DocumentResourceImpl
 				null, binaryFile.getInputStream(), binaryFile.getSize(),
 				_createServiceContext(
 					() -> new Long[0], () -> new String[0], documentFolderId,
-					documentOptional, groupId)));
+					documentOptional, groupId, Constants.ADD)));
 	}
 
 	private UnsafeConsumer<BooleanQuery, Exception>
@@ -435,9 +438,9 @@ public class DocumentResourceImpl
 	}
 
 	private ServiceContext _createServiceContext(
-		Supplier<Long[]> defaultCategoriesSupplier,
-		Supplier<String[]> defaultKeywordsSupplier, Long documentFolderId,
-		Optional<Document> documentOptional, Long groupId)
+			Supplier<Long[]> defaultCategoriesSupplier,
+			Supplier<String[]> defaultKeywordsSupplier, Long documentFolderId,
+			Optional<Document> documentOptional, Long groupId, String command)
 		throws Exception {
 
 		ServiceContext serviceContext =
@@ -502,6 +505,14 @@ public class DocumentResourceImpl
 					_ddmBeanTranslator.translate(ddmFormValues));
 			}
 		}
+
+		serviceContext.setCompanyId(contextCompany.getCompanyId());
+		contextHttpServletRequest.setAttribute(
+			WebKeys.THEME_DISPLAY,
+			DocumentUtil.getThemeDisplay(contextHttpServletRequest, groupId));
+
+		serviceContext.setRequest(contextHttpServletRequest);
+		serviceContext.setCommand(command);
 
 		return serviceContext;
 	}
@@ -689,6 +700,54 @@ public class DocumentResourceImpl
 				_dtoConverterRegistry, fileEntry.getFileEntryId(),
 				contextAcceptLanguage.getPreferredLocale(), contextUriInfo,
 				contextUser));
+	}
+
+	private Document _updateDocument(
+			FileEntry fileEntry, MultipartBody multipartBody)
+		throws Exception {
+
+		BinaryFile binaryFile = multipartBody.getBinaryFile("file");
+
+		Optional<Document> documentOptional =
+			multipartBody.getValueAsInstanceOptional(
+				"document", Document.class);
+
+		if ((binaryFile == null) && !documentOptional.isPresent()) {
+			throw new BadRequestException(
+				"Document and file are not found in body");
+		}
+
+		if (binaryFile == null) {
+			binaryFile = new BinaryFile(
+				fileEntry.getMimeType(), fileEntry.getFileName(),
+				fileEntry.getContentStream(), fileEntry.getSize());
+		}
+
+		fileEntry = _moveDocument(
+			fileEntry.getFileEntryId(), documentOptional, fileEntry);
+
+		return _toDocument(
+			_dlAppService.updateFileEntry(
+				fileEntry.getFileEntryId(), binaryFile.getFileName(),
+				binaryFile.getContentType(),
+				documentOptional.map(
+					Document::getTitle
+				).orElse(
+					fileEntry.getTitle()
+				),
+				null,
+				documentOptional.map(
+					Document::getDescription
+				).orElse(
+					null
+				),
+				null, DLVersionNumberIncrease.AUTOMATIC,
+				binaryFile.getInputStream(), binaryFile.getSize(),
+				fileEntry.getExpirationDate(), fileEntry.getReviewDate(),
+				_createServiceContext(
+					() -> new Long[0], () -> new String[0],
+					fileEntry.getFolderId(), documentOptional,
+					fileEntry.getGroupId(), Constants.UPDATE)));
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
