@@ -39,7 +39,6 @@ import com.liferay.headless.delivery.dto.v1_0.Rating;
 import com.liferay.headless.delivery.internal.dto.v1_0.converter.DocumentDTOConverter;
 import com.liferay.headless.delivery.internal.dto.v1_0.util.CustomFieldsUtil;
 import com.liferay.headless.delivery.internal.dto.v1_0.util.DDMFormValuesUtil;
-import com.liferay.headless.delivery.internal.dto.v1_0.util.DocumentUtil;
 import com.liferay.headless.delivery.internal.dto.v1_0.util.EntityFieldsUtil;
 import com.liferay.headless.delivery.internal.dto.v1_0.util.RatingUtil;
 import com.liferay.headless.delivery.internal.odata.entity.v1_0.DocumentEntityModel;
@@ -50,6 +49,8 @@ import com.liferay.headless.delivery.resource.v1_0.DocumentResource;
 import com.liferay.journal.service.JournalArticleService;
 import com.liferay.petra.function.UnsafeConsumer;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.events.ServicePreAction;
+import com.liferay.portal.events.ThemeServicePreAction;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.repository.model.FileEntry;
@@ -64,11 +65,13 @@ import com.liferay.portal.kernel.search.filter.TermFilter;
 import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.UserLocalService;
+import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.Portal;
+import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.odata.entity.EntityModel;
 import com.liferay.portal.search.aggregation.Aggregations;
 import com.liferay.portal.search.legacy.searcher.SearchRequestBuilderFactory;
@@ -92,6 +95,9 @@ import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 import java.util.function.Supplier;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 import javax.ws.rs.BadRequestException;
 import javax.ws.rs.core.MultivaluedMap;
@@ -363,9 +369,9 @@ public class DocumentResourceImpl
 				null, DLVersionNumberIncrease.AUTOMATIC,
 				binaryFile.getInputStream(), binaryFile.getSize(),
 				_createServiceContext(
-					() -> new Long[0], () -> new String[0],
+					Constants.UPDATE,() -> new Long[0], () -> new String[0],
 					existingFileEntry.getFolderId(), documentOptional,
-					existingFileEntry.getGroupId(),Constants.UPDATE)));
+					existingFileEntry.getGroupId())));
 	}
 
 	@Override
@@ -471,7 +477,7 @@ public class DocumentResourceImpl
 		serviceContext.setUserId(contextUser.getUserId());
 
 		if (contextHttpServletRequest != null) {
-			DocumentUtil.addThemeDisplay(
+			_initThemeDisplay(
 				groupId, contextHttpServletRequest, contextHttpServletResponse);
 		}
 
@@ -647,6 +653,29 @@ public class DocumentResourceImpl
 			contextUser);
 	}
 
+	private void _initThemeDisplay(
+			long groupId, HttpServletRequest httpServletRequest,
+			HttpServletResponse httpServletResponse)
+		throws Exception {
+
+		ServicePreAction servicePreAction = new ServicePreAction();
+
+		servicePreAction.servicePre(
+			httpServletRequest, httpServletResponse, false);
+
+		ThemeServicePreAction themeServicePreAction =
+			new ThemeServicePreAction();
+
+		themeServicePreAction.run(httpServletRequest, httpServletResponse);
+
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)httpServletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
+
+		themeDisplay.setScopeGroupId(groupId);
+		themeDisplay.setSiteGroupId(groupId);
+	}
+
 	private FileEntry _moveDocument(
 			Long documentId, Optional<Document> documentOptional,
 			FileEntry existingFileEntry)
@@ -704,53 +733,6 @@ public class DocumentResourceImpl
 				contextUser));
 	}
 
-	private Document _updateDocument(
-			FileEntry fileEntry, MultipartBody multipartBody)
-		throws Exception {
-
-		BinaryFile binaryFile = multipartBody.getBinaryFile("file");
-
-		Optional<Document> documentOptional =
-			multipartBody.getValueAsInstanceOptional(
-				"document", Document.class);
-
-		if ((binaryFile == null) && !documentOptional.isPresent()) {
-			throw new BadRequestException(
-				"Document and file are not found in body");
-		}
-
-		if (binaryFile == null) {
-			binaryFile = new BinaryFile(
-				fileEntry.getMimeType(), fileEntry.getFileName(),
-				fileEntry.getContentStream(), fileEntry.getSize());
-		}
-
-		fileEntry = _moveDocument(
-			fileEntry.getFileEntryId(), documentOptional, fileEntry);
-
-		return _toDocument(
-			_dlAppService.updateFileEntry(
-				fileEntry.getFileEntryId(), binaryFile.getFileName(),
-				binaryFile.getContentType(),
-				documentOptional.map(
-					Document::getTitle
-				).orElse(
-					fileEntry.getTitle()
-				),
-				null,
-				documentOptional.map(
-					Document::getDescription
-				).orElse(
-					null
-				),
-				null, DLVersionNumberIncrease.AUTOMATIC,
-				binaryFile.getInputStream(), binaryFile.getSize(),
-				fileEntry.getExpirationDate(), fileEntry.getReviewDate(),
-				_createServiceContext(
-					Constants.UPDATE, () -> new Long[0], () -> new String[0],
-					fileEntry.getFolderId(), documentOptional,
-					fileEntry.getGroupId())));
-	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		DocumentResourceImpl.class);
