@@ -23,8 +23,11 @@ public class DefaultStyleBookEntryUtil {
 			Layout masterLayout = LayoutLocalServiceUtil.fetchLayout(
 				layout.getMasterLayoutPlid());
 
-			styleBookEntry = StyleBookEntryLocalServiceUtil.fetchStyleBookEntry(
-				masterLayout.getStyleBookEntryId());
+			if (masterLayout != null) {
+				styleBookEntry =
+					StyleBookEntryLocalServiceUtil.fetchStyleBookEntry(
+						masterLayout.getStyleBookEntryId());
+			}
 		}
 
 		if (styleBookEntry == null) {

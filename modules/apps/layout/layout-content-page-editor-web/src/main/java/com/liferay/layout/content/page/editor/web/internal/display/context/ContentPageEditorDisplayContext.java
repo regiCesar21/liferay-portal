@@ -1414,9 +1414,13 @@ public class ContentPageEditorDisplayContext {
 					fetchLayoutPageTemplateEntryByPlid(
 						layout.getMasterLayoutPlid());
 
-			fragmentEntryLinks.addAll(
-				FragmentEntryLinkLocalServiceUtil.getFragmentEntryLinksByPlid(
-					getGroupId(), masterLayoutPageTemplateEntry.getPlid()));
+			if (masterLayoutPageTemplateEntry != null) {
+				fragmentEntryLinks.addAll(
+					FragmentEntryLinkLocalServiceUtil.
+						getFragmentEntryLinksByPlid(
+							getGroupId(),
+							masterLayoutPageTemplateEntry.getPlid()));
+			}
 		}
 
 		boolean isolated = themeDisplay.isIsolated();
