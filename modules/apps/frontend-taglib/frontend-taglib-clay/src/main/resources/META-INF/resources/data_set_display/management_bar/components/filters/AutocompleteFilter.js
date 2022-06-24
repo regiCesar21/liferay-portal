@@ -42,7 +42,7 @@ function fetchData(apiURL, searchParam, currentPage = 1) {
 		url.searchParams.append('search', encodeURIComponent(searchParam));
 	}
 
-	return fetch(url, {
+	return fetch(url.pathname + url.search, {
 		headers: {
 			'Accept-Language': getAcceptLanguageHeaderParam(),
 		},
