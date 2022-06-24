@@ -37,8 +37,8 @@ export const fetchParams = {
 	headers: Liferay.staticEnvHeaders || fetchHeaders,
 };
 
-export function getData(apiUrl, query, page, pageSize) {
-	const url = new URL(apiUrl, Liferay.ThemeDisplay.getPortalURL());
+export function getData(apiURL, query, page, pageSize) {
+	const url = new URL(apiURL, Liferay.ThemeDisplay.getPortalURL());
 
 	if (query) {
 		url.searchParams.append('search', query);
@@ -52,7 +52,7 @@ export function getData(apiUrl, query, page, pageSize) {
 		url.searchParams.append('pageSize', pageSize);
 	}
 
-	return fetch(url, {
+	return fetch(url.pathname + url.search, {
 		...fetchParams,
 	}).then((data) => data.json());
 }
