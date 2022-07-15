@@ -12,6 +12,8 @@ import React, {useState} from 'react';
 
 import Lang from '../utils/lang';
 
+const ID_PREFIX = 'rsd_';
+
 export default function RatingsSelectStars({
 	averageScore,
 	disabled,
@@ -33,7 +35,7 @@ export default function RatingsSelectStars({
 
 	const handleInitialFocus = () => {
 		if (!focusId) {
-			setFocusId('rsd_0');
+			setFocusId(`${ID_PREFIX}0`);
 		}
 	};
 
@@ -96,13 +98,13 @@ export default function RatingsSelectStars({
 								return (
 									<ClayDropDown.Item
 										active={label === score}
-										id={'rsd_' + index}
+										id={`${ID_PREFIX}index`}
 										key={index}
 										onClick={() => {
 											handleOnClick(index);
 										}}
 										onFocus={() => {
-											setFocusId('rsd_' + index);
+											setFocusId(`${ID_PREFIX}index`);
 										}}
 										role="option"
 									>
@@ -119,11 +121,15 @@ export default function RatingsSelectStars({
 
 							<ClayDropDown.Item
 								disabled={score === 0}
-								id={'rsd_' + Liferay.Language.get('delete')}
+								id={`${ID_PREFIX}${Liferay.Language.get(
+									'delete'
+								)}`}
 								onClick={handleOnClick}
 								onFocus={() => {
 									setFocusId(
-										'rsd_' + Liferay.Language.get('delete')
+										`${ID_PREFIX}${Liferay.Language.get(
+											'delete'
+										)}`
 									);
 								}}
 								role="option"
