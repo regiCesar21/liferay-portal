@@ -233,7 +233,7 @@ function AssetVocabulariesCategoriesSelector({
 
 						{invalidItems && invalidItems.length > 0 && (
 							<ClayForm.FeedbackGroup>
-								<ClayForm.FeedbackItem>
+								<ClayForm.FeedbackItem aria-live="polite">
 									<ClayForm.FeedbackIndicator symbol="info-circle" />
 
 									{Lang.sub(
