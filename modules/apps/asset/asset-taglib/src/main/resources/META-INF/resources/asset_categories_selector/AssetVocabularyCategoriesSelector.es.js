@@ -194,7 +194,7 @@ function AssetVocabulariesCategoriesSelector({
 				)}
 
 				{label && (
-					<label>
+					<label htmlFor={inputName + '_MultiSelect'}>
 						{label}
 
 						{required && (
@@ -212,6 +212,7 @@ function AssetVocabulariesCategoriesSelector({
 				<ClayInput.Group>
 					<ClayInput.GroupItem>
 						<ClayMultiSelect
+							id={inputName + '_MultiSelect'}
 							inputName={inputName}
 							items={selectedItems}
 							onChange={setInputValue}
