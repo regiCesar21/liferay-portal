@@ -14,10 +14,6 @@ String ppid = ParamUtil.getString(request, "p_p_id");
 RenderContentLayoutDisplayContext renderContentLayoutDisplayContext = new RenderContentLayoutDisplayContext(request, response);
 %>
 
-<liferay-util:html-top>
-	<%= renderContentLayoutDisplayContext.getPortletHeaderPaths() %>
-</liferay-util:html-top>
-
 <liferay-ui:success key="layoutPublished" message="the-page-was-published-succesfully" />
 
 <c:choose>
@@ -58,7 +54,3 @@ RenderContentLayoutDisplayContext renderContentLayoutDisplayContext = new Render
 </c:choose>
 
 <liferay-ui:layout-common />
-
-<liferay-util:html-bottom>
-	<%= renderContentLayoutDisplayContext.getPortletFooterPaths() %>
-</liferay-util:html-bottom>
