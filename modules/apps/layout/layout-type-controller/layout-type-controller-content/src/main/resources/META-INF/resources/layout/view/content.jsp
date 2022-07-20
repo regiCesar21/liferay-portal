@@ -10,8 +10,6 @@
 <%
 String mode = ParamUtil.getString(request, "liferay-layout:render-fragment-layout:mode", FragmentEntryLinkConstants.VIEW);
 String ppid = ParamUtil.getString(request, "p_p_id");
-
-RenderContentLayoutDisplayContext renderContentLayoutDisplayContext = new RenderContentLayoutDisplayContext(request, response);
 %>
 
 <liferay-ui:success key="layoutPublished" message="the-page-was-published-succesfully" />
