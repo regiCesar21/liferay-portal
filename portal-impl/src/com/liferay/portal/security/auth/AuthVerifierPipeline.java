@@ -34,6 +34,7 @@ import com.liferay.registry.RegistryUtil;
 import com.liferay.registry.ServiceReference;
 import com.liferay.registry.ServiceTracker;
 import com.liferay.registry.ServiceTrackerCustomizer;
+import com.liferay.portal.kernel.util.Validator;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -108,12 +109,18 @@ public class AuthVerifierPipeline {
 		HttpServletRequest httpServletRequest =
 			accessControlContext.getRequest();
 
+		String pathProxy = PortalUtil.getPathProxy();
+
 		List<AuthVerifierConfiguration> authVerifierConfigurations =
 			new ArrayList<>();
 
 		String requestURI = httpServletRequest.getRequestURI();
 
 		String pathContext = PortalUtil.getPathContext();
+
+		if (Validator.isNotNull(pathProxy)) {
+			requestURI = pathProxy + requestURI;
+		}
 
 		requestURI = requestURI.substring(pathContext.length());
 
