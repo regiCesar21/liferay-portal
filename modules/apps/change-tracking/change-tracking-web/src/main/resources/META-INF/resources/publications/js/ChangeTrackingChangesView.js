@@ -15,6 +15,8 @@ import ClayTable from '@clayui/table';
 import {fetch} from 'frontend-js-web';
 import React from 'react';
 
+import WorkflowStatusLabel from './components/WorkflowStatusLabel';
+
 class ChangeTrackingChangesView extends React.Component {
 	constructor(props) {
 		super(props);
@@ -45,6 +47,7 @@ class ChangeTrackingChangesView extends React.Component {
 		this.COLUMN_SITE = 'SITE';
 		this.COLUMN_TITLE = 'TITLE';
 		this.COLUMN_USER = 'USER';
+		this.COLUMN_WORKFLOW_STATUS = 'status';
 		this.FILTER_CLASS_EVERYTHING = 'everything';
 		this.GLOBAL_SITE_NAME = Liferay.Language.get('global');
 		this.MVC_RENDER_COMMAND_NAME = '/change_tracking/view_changes';
@@ -401,6 +404,36 @@ class ChangeTrackingChangesView extends React.Component {
 
 				if (a.title > b.title) {
 					return 1;
+				}
+
+				return 0;
+			});
+		}
+		else if (this._getColumn() === this.COLUMN_WORKFLOW_STATUS) {
+			nodes.sort((a, b) => {
+				const workflowStatusA = a.workflowStatus;
+				const workflowStatusB = b.workflowStatus;
+
+				if (
+					workflowStatusA < workflowStatusB ||
+					workflowStatusA === null
+				) {
+					if (ascendingState) {
+						return -1;
+					}
+
+					return 1;
+				}
+
+				if (
+					workflowStatusA > workflowStatusB ||
+					workflowStatusB === null
+				) {
+					if (ascendingState) {
+						return 1;
+					}
+
+					return -1;
 				}
 
 				return 0;
@@ -1026,6 +1059,12 @@ class ChangeTrackingChangesView extends React.Component {
 						className="table-cell-expand-smallest"
 						headingCell
 					>
+						{Liferay.Language.get('status')}
+					</ClayTable.Cell>
+					<ClayTable.Cell
+						className="table-cell-expand-smallest"
+						headingCell
+					>
 						{Liferay.Language.get('change-type')}
 					</ClayTable.Cell>
 					<ClayTable.Cell
@@ -1059,7 +1098,7 @@ class ChangeTrackingChangesView extends React.Component {
 						<ClayTable.Cell
 							colSpan={
 								this.state.viewType === this.VIEW_TYPE_CHANGES
-									? 5
+									? 6
 									: 1
 							}
 						>
@@ -1144,6 +1183,14 @@ class ChangeTrackingChangesView extends React.Component {
 				cells.push(
 					<ClayTable.Cell className="publication-name table-cell-expand">
 						{node.title}
+					</ClayTable.Cell>
+				);
+
+				cells.push(
+					<ClayTable.Cell className="table-cell-expand-smallest">
+						<WorkflowStatusLabel
+							workflowStatus={node.workflowStatus}
+						/>
 					</ClayTable.Cell>
 				);
 
