@@ -55,7 +55,7 @@ public class UnrecognizedPropertyExceptionMapper
 	}
 
 	@Override
-	protected boolean isSanitizedMapper() {
+	protected boolean isSanitize() {
 		return false;
 	}
 
