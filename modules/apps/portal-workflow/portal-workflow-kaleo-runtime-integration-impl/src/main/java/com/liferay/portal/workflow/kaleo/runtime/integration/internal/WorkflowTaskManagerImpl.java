@@ -251,7 +251,7 @@ public class WorkflowTaskManagerImpl implements WorkflowTaskManager {
 			long companyId, long workflowTaskInstanceId)
 		throws WorkflowException {
 
-		return getAllowedUserIds(
+		return getUsersWithPermission(
 			_TASK_ACTION_VIEW_NOTIFICATION, workflowTaskInstanceId);
 	}
 
@@ -260,7 +260,8 @@ public class WorkflowTaskManagerImpl implements WorkflowTaskManager {
 			long companyId, long workflowTaskInstanceId)
 		throws WorkflowException {
 
-		return getAllowedUserIds(_TASK_ACTION_ASSIGN, workflowTaskInstanceId);
+		return getUsersWithPermission(
+			_TASK_ACTION_ASSIGN, workflowTaskInstanceId);
 	}
 
 	@Override
@@ -812,50 +813,6 @@ public class WorkflowTaskManagerImpl implements WorkflowTaskManager {
 			kaleoInstanceToken, workflowContext, workflowContextServiceContext);
 	}
 
-	protected long[] getAllowedUserIds(
-			String actionType, long workflowTaskInstanceId)
-		throws WorkflowException {
-
-		try {
-			KaleoTaskInstanceToken kaleoTaskInstanceToken =
-				_kaleoTaskInstanceTokenLocalService.getKaleoTaskInstanceToken(
-					workflowTaskInstanceId);
-
-			if (kaleoTaskInstanceToken.isCompleted() &&
-				Objects.equals(actionType, _TASK_ACTION_ASSIGN)) {
-
-				return new long[0];
-			}
-
-			long assignedUserId = getAssignedUserId(workflowTaskInstanceId);
-
-			List<KaleoTaskAssignment> calculatedKaleoTaskAssignments =
-				getCalculatedKaleoTaskAssignments(kaleoTaskInstanceToken);
-
-			Set<User> users = new HashSet<>();
-
-			for (KaleoTaskAssignment calculatedKaleoTaskAssignment :
-					calculatedKaleoTaskAssignments) {
-
-				populateUsers(
-					actionType, assignedUserId, calculatedKaleoTaskAssignment,
-					kaleoTaskInstanceToken, users);
-			}
-
-			Map<String, Long> pooledActors = new TreeMap<>(
-				new NaturalOrderStringComparator());
-
-			for (User user : users) {
-				pooledActors.put(user.getScreenName(), user.getUserId());
-			}
-
-			return ArrayUtil.toLongArray(pooledActors.values());
-		}
-		catch (Exception exception) {
-			throw new WorkflowException(exception);
-		}
-	}
-
 	protected long getAssignedUserId(long kaleoTaskInstanceTokenId) {
 		List<Long> assignedUserIds = new ArrayList<>();
 
@@ -915,6 +872,50 @@ public class WorkflowTaskManagerImpl implements WorkflowTaskManager {
 
 		return taskAssignmentSelector.calculateTaskAssignments(
 			kaleoTaskAssignment, executionContext);
+	}
+
+	protected long[] getUsersWithPermission(
+			String actionType, long workflowTaskInstanceId)
+		throws WorkflowException {
+
+		try {
+			KaleoTaskInstanceToken kaleoTaskInstanceToken =
+				_kaleoTaskInstanceTokenLocalService.getKaleoTaskInstanceToken(
+					workflowTaskInstanceId);
+
+			if (kaleoTaskInstanceToken.isCompleted() &&
+				Objects.equals(actionType, _TASK_ACTION_ASSIGN)) {
+
+				return new long[0];
+			}
+
+			long assignedUserId = getAssignedUserId(workflowTaskInstanceId);
+
+			List<KaleoTaskAssignment> calculatedKaleoTaskAssignments =
+				getCalculatedKaleoTaskAssignments(kaleoTaskInstanceToken);
+
+			Set<User> users = new HashSet<>();
+
+			for (KaleoTaskAssignment calculatedKaleoTaskAssignment :
+					calculatedKaleoTaskAssignments) {
+
+				populateUsers(
+					actionType, assignedUserId, calculatedKaleoTaskAssignment,
+					kaleoTaskInstanceToken, users);
+			}
+
+			Map<String, Long> pooledActors = new TreeMap<>(
+				new NaturalOrderStringComparator());
+
+			for (User user : users) {
+				pooledActors.put(user.getScreenName(), user.getUserId());
+			}
+
+			return ArrayUtil.toLongArray(pooledActors.values());
+		}
+		catch (Exception exception) {
+			throw new WorkflowException(exception);
+		}
 	}
 
 	protected boolean hasOtherPooledActors(
