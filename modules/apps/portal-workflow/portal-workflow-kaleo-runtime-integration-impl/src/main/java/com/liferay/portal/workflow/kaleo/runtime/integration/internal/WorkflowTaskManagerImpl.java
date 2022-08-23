@@ -250,7 +250,7 @@ public class WorkflowTaskManagerImpl implements WorkflowTaskManager {
 	public List<User> getAssignableUsers(long companyId, long workflowTaskId)
 		throws WorkflowException {
 
-		return _getAllowedUsers(_TASK_ACTION_ASSIGN, workflowTaskId);
+		return _getUsersWithPermission(_TASK_ACTION_ASSIGN, workflowTaskId);
 	}
 
 	@Override
@@ -293,7 +293,8 @@ public class WorkflowTaskManagerImpl implements WorkflowTaskManager {
 	public List<User> getNotifiableUsers(long companyId, long workflowTaskId)
 		throws WorkflowException {
 
-		return _getAllowedUsers(_TASK_ACTION_VIEW_NOTIFICATION, workflowTaskId);
+		return _getUsersWithPermission(
+			_TASK_ACTION_VIEW_NOTIFICATION, workflowTaskId);
 	}
 
 	/**
@@ -1053,44 +1054,6 @@ public class WorkflowTaskManagerImpl implements WorkflowTaskManager {
 			kaleoInstanceToken, workflowContext, workflowContextServiceContext);
 	}
 
-	private List<User> _getAllowedUsers(String actionType, long workflowTaskId)
-		throws WorkflowException {
-
-		try {
-			KaleoTaskInstanceToken kaleoTaskInstanceToken =
-				_kaleoTaskInstanceTokenLocalService.getKaleoTaskInstanceToken(
-					workflowTaskId);
-
-			if (kaleoTaskInstanceToken.isCompleted() &&
-				Objects.equals(actionType, _TASK_ACTION_ASSIGN)) {
-
-				return Collections.emptyList();
-			}
-
-			Set<User> assignableUsers = new TreeSet<>(
-				new UserScreenNameComparator(true));
-
-			long assignedUserId = _getAssignedUserId(workflowTaskId);
-
-			for (KaleoTaskAssignment calculatedKaleoTaskAssignment :
-					_getCalculatedKaleoTaskAssignments(
-						kaleoTaskInstanceToken)) {
-
-				_populateAllowedUsers(
-					actionType, assignableUsers, assignedUserId,
-					calculatedKaleoTaskAssignment, kaleoTaskInstanceToken);
-			}
-
-			return ListUtil.fromCollection(assignableUsers);
-		}
-		catch (WorkflowException workflowException) {
-			throw workflowException;
-		}
-		catch (Exception exception) {
-			throw new WorkflowException(exception);
-		}
-	}
-
 	private String[] _getAssetTypes(String assetType) {
 		if (Validator.isNull(assetType)) {
 			return null;
@@ -1168,6 +1131,45 @@ public class WorkflowTaskManagerImpl implements WorkflowTaskManager {
 		}
 
 		return new String[] {taskName};
+	}
+
+	private List<User> _getUsersWithPermission(
+			String actionType, long workflowTaskId)
+		throws WorkflowException {
+
+		try {
+			KaleoTaskInstanceToken kaleoTaskInstanceToken =
+				_kaleoTaskInstanceTokenLocalService.getKaleoTaskInstanceToken(
+					workflowTaskId);
+
+			if (kaleoTaskInstanceToken.isCompleted() &&
+				Objects.equals(actionType, _TASK_ACTION_ASSIGN)) {
+
+				return Collections.emptyList();
+			}
+
+			Set<User> assignableUsers = new TreeSet<>(
+				new UserScreenNameComparator(true));
+
+			long assignedUserId = _getAssignedUserId(workflowTaskId);
+
+			for (KaleoTaskAssignment calculatedKaleoTaskAssignment :
+					_getCalculatedKaleoTaskAssignments(
+						kaleoTaskInstanceToken)) {
+
+				_populateAllowedUsers(
+					actionType, assignableUsers, assignedUserId,
+					calculatedKaleoTaskAssignment, kaleoTaskInstanceToken);
+			}
+
+			return ListUtil.fromCollection(assignableUsers);
+		}
+		catch (WorkflowException workflowException) {
+			throw workflowException;
+		}
+		catch (Exception exception) {
+			throw new WorkflowException(exception);
+		}
 	}
 
 	private boolean _hasAssignableUsers(
