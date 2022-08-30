@@ -36,17 +36,13 @@ import com.liferay.portal.kernel.util.PortletKeys;
 import java.io.IOException;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Dictionary;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
-import java.util.Objects;
 import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 import javax.portlet.PortletPreferences;
 
@@ -115,38 +111,21 @@ public class FragmentCollectionContributorTrackerImpl
 
 	@Override
 	public Map<String, FragmentEntry> getFragmentEntries(Locale locale) {
-		Collection<FragmentCollectionContributor>
-			fragmentCollectionContributors = _serviceTrackerMap.values();
+		Map<String, FragmentEntry> fragmentEntries = new HashMap<>();
 
-		Stream<FragmentCollectionContributor> stream =
-			fragmentCollectionContributors.stream();
+		for (FragmentCollectionContributor fragmentCollectionContributor :
+				_serviceTrackerMap.values()) {
 
-		return stream.map(
-			fragmentCollectionContributor -> {
-				Map<String, FragmentEntry> fragmentEntries = new HashMap<>();
+			for (FragmentEntry fragmentEntry :
+					fragmentCollectionContributor.getFragmentEntries(
+						_SUPPORTED_FRAGMENT_TYPES, locale)) {
 
-				for (FragmentEntry fragmentEntry :
-						fragmentCollectionContributor.getFragmentEntries(
-							_SUPPORTED_FRAGMENT_TYPES, locale)) {
-
-					fragmentEntries.put(
-						fragmentEntry.getFragmentEntryKey(), fragmentEntry);
-				}
-
-				return fragmentEntries;
+				fragmentEntries.put(
+					fragmentEntry.getFragmentEntryKey(), fragmentEntry);
 			}
-		).flatMap(
-			fragmentEntriesMap -> {
-				Collection<FragmentEntry> fragmentEntries =
-					fragmentEntriesMap.values();
+		}
 
-				return fragmentEntries.stream();
-			}
-		).collect(
-			Collectors.toMap(
-				FragmentEntry::getFragmentEntryKey,
-				fragmentEntry -> fragmentEntry)
-		);
+		return fragmentEntries;
 	}
 
 	@Override
@@ -158,20 +137,21 @@ public class FragmentCollectionContributorTrackerImpl
 
 	@Override
 	public ResourceBundleLoader getResourceBundleLoader() {
-		Collection<FragmentCollectionContributor>
-			fragmentCollectionContributors = _serviceTrackerMap.values();
+		List<ResourceBundleLoader> resourceBundleLoaders = new ArrayList<>();
 
-		Stream<FragmentCollectionContributor> stream =
-			fragmentCollectionContributors.stream();
+		for (FragmentCollectionContributor fragmentCollectionContributor :
+				_serviceTrackerMap.values()) {
+
+			ResourceBundleLoader resourceBundleLoader =
+				fragmentCollectionContributor.getResourceBundleLoader();
+
+			if (resourceBundleLoader != null) {
+				resourceBundleLoaders.add(resourceBundleLoader);
+			}
+		}
 
 		return new AggregateResourceBundleLoader(
-			stream.map(
-				FragmentCollectionContributor::getResourceBundleLoader
-			).filter(
-				Objects::nonNull
-			).toArray(
-				ResourceBundleLoader[]::new
-			));
+			resourceBundleLoaders.toArray(new ResourceBundleLoader[0]));
 	}
 
 	@Activate
