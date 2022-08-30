@@ -106,7 +106,7 @@ public class FragmentCollectionContributorTrackerImpl
 
 	@Override
 	public Map<String, FragmentEntry> getFragmentEntries() {
-		return new HashMap<>(_getFragmentEntries());
+		return new HashMap<>(_fragmentEntries);
 	}
 
 	@Override
@@ -130,9 +130,7 @@ public class FragmentCollectionContributorTrackerImpl
 
 	@Override
 	public FragmentEntry getFragmentEntry(String fragmentEntryKey) {
-		Map<String, FragmentEntry> fragmentEntriesMap = _getFragmentEntries();
-
-		return fragmentEntriesMap.get(fragmentEntryKey);
+		return _fragmentEntries.get(fragmentEntryKey);
 	}
 
 	@Override
@@ -173,25 +171,6 @@ public class FragmentCollectionContributorTrackerImpl
 
 	@Reference
 	protected FragmentEntryValidator fragmentEntryValidator;
-
-	private synchronized Map<String, FragmentEntry> _getFragmentEntries() {
-		Map<String, FragmentEntry> fragmentEntries = _fragmentEntries;
-
-		if (fragmentEntries == null) {
-			fragmentEntries = new HashMap<>();
-
-			for (FragmentCollectionContributor fragmentCollectionContributor :
-					_serviceTrackerMap.values()) {
-
-				fragmentEntries.putAll(
-					_getFragmentEntries(fragmentCollectionContributor));
-			}
-
-			_fragmentEntries = fragmentEntries;
-		}
-
-		return fragmentEntries;
-	}
 
 	private Map<String, FragmentEntry> _getFragmentEntries(
 		FragmentCollectionContributor fragmentCollectionContributor) {
@@ -344,7 +323,7 @@ public class FragmentCollectionContributorTrackerImpl
 	@Reference
 	private ConfigurationAdmin _configurationAdmin;
 
-	private volatile Map<String, FragmentEntry> _fragmentEntries =
+	private final Map<String, FragmentEntry> _fragmentEntries =
 		new ConcurrentHashMap<>();
 
 	@Reference
@@ -372,10 +351,6 @@ public class FragmentCollectionContributorTrackerImpl
 
 			FragmentCollectionContributor fragmentCollectionContributor =
 				_bundleContext.getService(serviceReference);
-
-			if (_fragmentEntries == null) {
-				_fragmentEntries = new ConcurrentHashMap<>();
-			}
 
 			_fragmentEntries.putAll(
 				_getFragmentEntries(fragmentCollectionContributor));
