@@ -363,7 +363,8 @@ public class FragmentCollectionContributorTrackerImpl
 			FragmentCollectionContributor fragmentCollectionContributor) {
 
 			for (FragmentEntry fragmentEntry :
-					fragmentCollectionContributor.getFragmentEntries()) {
+					fragmentCollectionContributor.getFragmentEntries(
+						_SUPPORTED_FRAGMENT_TYPES)) {
 
 				_fragmentEntries.remove(fragmentEntry.getFragmentEntryKey());
 			}
