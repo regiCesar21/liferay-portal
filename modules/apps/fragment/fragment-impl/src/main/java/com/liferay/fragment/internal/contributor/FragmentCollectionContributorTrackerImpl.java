@@ -29,7 +29,6 @@ import com.liferay.portal.kernel.resource.bundle.ResourceBundleLoader;
 import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.service.PortalPreferencesLocalService;
 import com.liferay.portal.kernel.util.HashMapDictionary;
-import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.PortletKeys;
 
@@ -89,19 +88,18 @@ public class FragmentCollectionContributorTrackerImpl
 		getFragmentCollectionContributors() {
 
 		List<FragmentCollectionContributor> fragmentCollectionContributors =
-			new ArrayList<>(_serviceTrackerMap.values());
+			new ArrayList<>();
 
-		return ListUtil.filter(
-			fragmentCollectionContributors,
-			fragmentCollectionContributor -> {
-				if (MapUtil.isNotEmpty(
-						fragmentCollectionContributor.getNames())) {
+		for (FragmentCollectionContributor fragmentCollectionContributor :
+				_serviceTrackerMap.values()) {
 
-					return true;
-				}
+			if (MapUtil.isNotEmpty(fragmentCollectionContributor.getNames())) {
+				fragmentCollectionContributors.add(
+					fragmentCollectionContributor);
+			}
+		}
 
-				return false;
-			});
+		return fragmentCollectionContributors;
 	}
 
 	@Override
