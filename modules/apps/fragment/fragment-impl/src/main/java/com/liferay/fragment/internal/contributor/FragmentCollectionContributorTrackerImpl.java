@@ -28,14 +28,12 @@ import com.liferay.portal.kernel.resource.bundle.AggregateResourceBundleLoader;
 import com.liferay.portal.kernel.resource.bundle.ResourceBundleLoader;
 import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.service.PortalPreferencesLocalService;
-import com.liferay.portal.kernel.util.HashMapDictionary;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.PortletKeys;
 
 import java.io.IOException;
 
 import java.util.ArrayList;
-import java.util.Dictionary;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
@@ -353,17 +351,13 @@ public class FragmentCollectionContributorTrackerImpl
 			_fragmentEntries.putAll(
 				_getFragmentEntries(fragmentCollectionContributor));
 
-			Dictionary<String, Object> properties = new HashMapDictionary<>();
-
-			properties.put(
-				"fragment.collection.key",
-				serviceReference.getProperty("fragment.collection.key"));
-
 			_bundleContext.registerService(
 				FragmentCollectionContributorRegistration.class,
 				new FragmentCollectionContributorRegistration() {
 				},
-				properties);
+				MapUtil.singletonDictionary(
+					"fragment.collection.key",
+					serviceReference.getProperty("fragment.collection.key")));
 
 			return fragmentCollectionContributor;
 		}
