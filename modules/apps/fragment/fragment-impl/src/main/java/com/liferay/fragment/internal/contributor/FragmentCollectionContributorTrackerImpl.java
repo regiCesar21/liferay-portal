@@ -190,7 +190,7 @@ public class FragmentCollectionContributorTrackerImpl
 			_fragmentEntries = fragmentEntries;
 		}
 
-		return new HashMap<>(fragmentEntries);
+		return fragmentEntries;
 	}
 
 	private Map<String, FragmentEntry> _getFragmentEntries(
