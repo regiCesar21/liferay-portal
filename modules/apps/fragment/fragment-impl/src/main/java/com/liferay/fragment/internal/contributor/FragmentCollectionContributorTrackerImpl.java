@@ -168,28 +168,6 @@ public class FragmentCollectionContributorTrackerImpl
 	@Reference
 	protected FragmentEntryValidator fragmentEntryValidator;
 
-	private Map<String, FragmentEntry> _getFragmentEntries(
-		FragmentCollectionContributor fragmentCollectionContributor) {
-
-		Map<String, FragmentEntry> fragmentEntries = new HashMap<>();
-
-		for (FragmentEntry fragmentEntry :
-				fragmentCollectionContributor.getFragmentEntries(
-					_SUPPORTED_FRAGMENT_TYPES)) {
-
-			if (!_validateFragmentEntry(fragmentEntry)) {
-				continue;
-			}
-
-			fragmentEntries.put(
-				fragmentEntry.getFragmentEntryKey(), fragmentEntry);
-		}
-
-		_updateFragmentEntryLinks(fragmentEntries);
-
-		return fragmentEntries;
-	}
-
 	private Configuration _getFragmentServiceCompanyConfiguration(
 			long companyId)
 		throws ConfigurationException {
@@ -348,8 +326,19 @@ public class FragmentCollectionContributorTrackerImpl
 			FragmentCollectionContributor fragmentCollectionContributor =
 				_bundleContext.getService(serviceReference);
 
-			_fragmentEntries.putAll(
-				_getFragmentEntries(fragmentCollectionContributor));
+			for (FragmentEntry fragmentEntry :
+					fragmentCollectionContributor.getFragmentEntries(
+						_SUPPORTED_FRAGMENT_TYPES)) {
+
+				if (!_validateFragmentEntry(fragmentEntry)) {
+					continue;
+				}
+
+				_fragmentEntries.put(
+					fragmentEntry.getFragmentEntryKey(), fragmentEntry);
+			}
+
+			_updateFragmentEntryLinks(_fragmentEntries);
 
 			_bundleContext.registerService(
 				FragmentCollectionContributorRegistration.class,
