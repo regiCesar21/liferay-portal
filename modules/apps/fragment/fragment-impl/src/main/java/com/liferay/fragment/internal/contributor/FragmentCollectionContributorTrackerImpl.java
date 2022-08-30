@@ -46,6 +46,7 @@ import javax.portlet.PortletPreferences;
 import org.osgi.framework.BundleContext;
 import org.osgi.framework.InvalidSyntaxException;
 import org.osgi.framework.ServiceReference;
+import org.osgi.framework.ServiceRegistration;
 import org.osgi.service.cm.Configuration;
 import org.osgi.service.cm.ConfigurationAdmin;
 import org.osgi.service.component.annotations.Activate;
@@ -306,6 +307,8 @@ public class FragmentCollectionContributorTrackerImpl
 	@Reference
 	private PortalPreferencesLocalService _portalPreferencesLocalService;
 
+	private final Map<FragmentCollectionContributor, ServiceRegistration<?>>
+		_serviceRegistrations = new HashMap<>();
 	private ServiceTrackerMap<String, FragmentCollectionContributor>
 		_serviceTrackerMap;
 
@@ -340,13 +343,16 @@ public class FragmentCollectionContributorTrackerImpl
 
 			_updateFragmentEntryLinks(_fragmentEntries);
 
-			_bundleContext.registerService(
-				FragmentCollectionContributorRegistration.class,
-				new FragmentCollectionContributorRegistration() {
-				},
-				MapUtil.singletonDictionary(
-					"fragment.collection.key",
-					serviceReference.getProperty("fragment.collection.key")));
+			_serviceRegistrations.put(
+				fragmentCollectionContributor,
+				_bundleContext.registerService(
+					FragmentCollectionContributorRegistration.class,
+					new FragmentCollectionContributorRegistration() {
+					},
+					MapUtil.singletonDictionary(
+						"fragment.collection.key",
+						serviceReference.getProperty(
+							"fragment.collection.key"))));
 
 			return fragmentCollectionContributor;
 		}
@@ -361,6 +367,11 @@ public class FragmentCollectionContributorTrackerImpl
 		public void removedService(
 			ServiceReference<FragmentCollectionContributor> serviceReference,
 			FragmentCollectionContributor fragmentCollectionContributor) {
+
+			ServiceRegistration<?> serviceRegistration =
+				_serviceRegistrations.remove(fragmentCollectionContributor);
+
+			serviceRegistration.unregister();
 
 			for (FragmentEntry fragmentEntry :
 					fragmentCollectionContributor.getFragmentEntries(
