@@ -252,7 +252,7 @@ public class WorkflowTaskManagerImpl implements WorkflowTaskManager {
 		throws WorkflowException {
 
 		return getUserIds(
-			_TASK_ACTION_VIEW_NOTIFICATION, workflowTaskInstanceId);
+			_ACTION_TYPE_VIEW_NOTIFICATION, workflowTaskInstanceId);
 	}
 
 	@Override
@@ -260,7 +260,7 @@ public class WorkflowTaskManagerImpl implements WorkflowTaskManager {
 			long companyId, long workflowTaskInstanceId)
 		throws WorkflowException {
 
-		return getUserIds(_TASK_ACTION_ASSIGN, workflowTaskInstanceId);
+		return getUserIds(_ACTION_TYPE_ASSIGN, workflowTaskInstanceId);
 	}
 
 	@Override
@@ -873,7 +873,7 @@ public class WorkflowTaskManagerImpl implements WorkflowTaskManager {
 			kaleoTaskAssignment, executionContext);
 	}
 
-	protected long[] getUserIds(String actionType, long workflowTaskInstanceId)
+	protected long[] getUserIds(int actionType, long workflowTaskInstanceId)
 		throws WorkflowException {
 
 		try {
@@ -882,7 +882,7 @@ public class WorkflowTaskManagerImpl implements WorkflowTaskManager {
 					workflowTaskInstanceId);
 
 			if (kaleoTaskInstanceToken.isCompleted() &&
-				Objects.equals(actionType, _TASK_ACTION_ASSIGN)) {
+				(actionType == _ACTION_TYPE_ASSIGN)) {
 
 				return new long[0];
 			}
@@ -997,7 +997,7 @@ public class WorkflowTaskManagerImpl implements WorkflowTaskManager {
 	}
 
 	protected void populateUsers(
-			String actionType, long assignedUserId,
+			int actionType, long assignedUserId,
 			KaleoTaskAssignment kaleoTaskAssignment,
 			KaleoTaskInstanceToken kaleoTaskInstanceToken, Set<User> users)
 		throws PortalException {
@@ -1031,7 +1031,7 @@ public class WorkflowTaskManagerImpl implements WorkflowTaskManager {
 					kaleoTaskInstanceToken.getGroupId(),
 					WorkflowConstants.STATUS_APPROVED, null);
 
-				if (Objects.equals(actionType, _TASK_ACTION_ASSIGN)) {
+				if (actionType == _ACTION_TYPE_ASSIGN) {
 					groupUsers = ListUtil.filter(
 						groupUsers, user -> user.getUserId() != assignedUserId);
 				}
@@ -1058,7 +1058,7 @@ public class WorkflowTaskManagerImpl implements WorkflowTaskManager {
 					return null;
 				});
 
-			if (Objects.equals(actionType, _TASK_ACTION_ASSIGN)) {
+			if (actionType == _ACTION_TYPE_ASSIGN) {
 				userGroupRolesUsers = ListUtil.filter(
 					userGroupRolesUsers,
 					user ->
@@ -1089,7 +1089,7 @@ public class WorkflowTaskManagerImpl implements WorkflowTaskManager {
 				Collectors.toList()
 			);
 
-			if (Objects.equals(actionType, _TASK_ACTION_ASSIGN)) {
+			if (actionType == _ACTION_TYPE_ASSIGN) {
 				ListUtil.filter(
 					userGroupGroupRolesUsers,
 					user ->
@@ -1108,7 +1108,7 @@ public class WorkflowTaskManagerImpl implements WorkflowTaskManager {
 					kaleoTaskAssignment.getAssigneeClassPK(), QueryUtil.ALL_POS,
 					QueryUtil.ALL_POS, null);
 
-			if (Objects.equals(actionType, _TASK_ACTION_ASSIGN)) {
+			if (actionType == _ACTION_TYPE_ASSIGN) {
 				inheritedRoleUsers = ListUtil.filter(
 					inheritedRoleUsers,
 					user ->
@@ -1149,10 +1149,9 @@ public class WorkflowTaskManagerImpl implements WorkflowTaskManager {
 	@Reference
 	protected LockManager lockManager;
 
-	private static final String _TASK_ACTION_ASSIGN = "TASK_ACTION_ASSIGN";
+	private static final int _ACTION_TYPE_ASSIGN = 1;
 
-	private static final String _TASK_ACTION_VIEW_NOTIFICATION =
-		"TASK_ACTION_VIEW_NOTIFICATION";
+	private static final int _ACTION_TYPE_VIEW_NOTIFICATION = 2;
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		WorkflowTaskManagerImpl.class);
