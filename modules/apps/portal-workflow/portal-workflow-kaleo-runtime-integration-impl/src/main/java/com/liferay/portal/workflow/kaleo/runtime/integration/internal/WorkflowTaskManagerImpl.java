@@ -251,7 +251,7 @@ public class WorkflowTaskManagerImpl implements WorkflowTaskManager {
 			long companyId, long workflowTaskInstanceId)
 		throws WorkflowException {
 
-		return getUsersWithPermission(
+		return getUserIds(
 			_TASK_ACTION_VIEW_NOTIFICATION, workflowTaskInstanceId);
 	}
 
@@ -260,8 +260,7 @@ public class WorkflowTaskManagerImpl implements WorkflowTaskManager {
 			long companyId, long workflowTaskInstanceId)
 		throws WorkflowException {
 
-		return getUsersWithPermission(
-			_TASK_ACTION_ASSIGN, workflowTaskInstanceId);
+		return getUserIds(_TASK_ACTION_ASSIGN, workflowTaskInstanceId);
 	}
 
 	@Override
@@ -874,8 +873,7 @@ public class WorkflowTaskManagerImpl implements WorkflowTaskManager {
 			kaleoTaskAssignment, executionContext);
 	}
 
-	protected long[] getUsersWithPermission(
-			String actionType, long workflowTaskInstanceId)
+	protected long[] getUserIds(String actionType, long workflowTaskInstanceId)
 		throws WorkflowException {
 
 		try {

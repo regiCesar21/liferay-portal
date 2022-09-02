@@ -113,7 +113,7 @@ public class WorkflowTaskUserNotificationHandlerTest extends PowerMockito {
 		Mockito.when(
 			user1.getUserId()
 		).thenReturn(
-			_SERVICE_CONTEXT_USER_ID
+			_USER_ID
 		);
 
 		_allowedUsers.add(user1);
@@ -341,8 +341,7 @@ public class WorkflowTaskUserNotificationHandlerTest extends PowerMockito {
 	private static final String _NOTIFICATION_MESSAGE =
 		RandomTestUtil.randomString();
 
-	private static final Long _SERVICE_CONTEXT_USER_ID =
-		RandomTestUtil.randomLong();
+	private static final Long _USER_ID = RandomTestUtil.randomLong();
 
 	private static final String _VALID_ENTRY_CLASS_NAME =
 		RandomTestUtil.randomString();
@@ -367,7 +366,7 @@ public class WorkflowTaskUserNotificationHandlerTest extends PowerMockito {
 
 		@Override
 		public long getUserId() {
-			return _SERVICE_CONTEXT_USER_ID;
+			return _USER_ID;
 		}
 
 	};
