@@ -250,7 +250,7 @@ public class WorkflowTaskManagerImpl implements WorkflowTaskManager {
 	public List<User> getAssignableUsers(long companyId, long workflowTaskId)
 		throws WorkflowException {
 
-		return _getUsersWithPermission(_TASK_ACTION_ASSIGN, workflowTaskId);
+		return _getUsers(_TASK_ACTION_ASSIGN, workflowTaskId);
 	}
 
 	@Override
@@ -293,7 +293,7 @@ public class WorkflowTaskManagerImpl implements WorkflowTaskManager {
 	public List<User> getNotifiableUsers(long companyId, long workflowTaskId)
 		throws WorkflowException {
 
-		return _getUsersWithPermission(
+		return _getUsers(
 			_TASK_ACTION_VIEW_NOTIFICATION, workflowTaskId);
 	}
 
@@ -1133,8 +1133,7 @@ public class WorkflowTaskManagerImpl implements WorkflowTaskManager {
 		return new String[] {taskName};
 	}
 
-	private List<User> _getUsersWithPermission(
-			String actionType, long workflowTaskId)
+	private List<User> _getUsers(String actionType, long workflowTaskId)
 		throws WorkflowException {
 
 		try {
