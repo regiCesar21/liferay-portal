@@ -902,14 +902,14 @@ public class WorkflowTaskManagerImpl implements WorkflowTaskManager {
 					kaleoTaskInstanceToken, users);
 			}
 
-			Map<String, Long> pooledActors = new TreeMap<>(
+			Map<String, Long> allowedUsers = new TreeMap<>(
 				new NaturalOrderStringComparator());
 
 			for (User user : users) {
-				pooledActors.put(user.getScreenName(), user.getUserId());
+				allowedUsers.put(user.getScreenName(), user.getUserId());
 			}
 
-			return ArrayUtil.toLongArray(pooledActors.values());
+			return ArrayUtil.toLongArray(allowedUsers.values());
 		}
 		catch (Exception exception) {
 			throw new WorkflowException(exception);
