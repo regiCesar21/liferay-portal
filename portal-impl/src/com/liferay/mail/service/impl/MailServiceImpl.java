@@ -10,6 +10,7 @@ import com.liferay.mail.kernel.model.Filter;
 import com.liferay.mail.kernel.model.MailMessage;
 import com.liferay.mail.kernel.service.MailService;
 import com.liferay.mail.kernel.util.Hook;
+import com.liferay.portal.kernel.change.tracking.CTAware;
 import com.liferay.portal.kernel.cluster.Clusterable;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -38,6 +39,7 @@ import javax.mail.Session;
 /**
  * @author Brian Wing Shun Chan
  */
+@CTAware
 public class MailServiceImpl implements IdentifiableOSGiService, MailService {
 
 	@Override
