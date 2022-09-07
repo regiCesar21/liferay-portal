@@ -113,6 +113,7 @@ import java.io.Serializable;
 import java.sql.Timestamp;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
@@ -445,6 +446,11 @@ public class PortletDataContextImpl implements PortletDataContext {
 		}
 
 		return value;
+	}
+
+	@Override
+	public void addScopedPrimaryKeys(Collection<String> scopedPrimaryKeys) {
+		_scopedPrimaryKeys.addAll(scopedPrimaryKeys);
 	}
 
 	@Override
@@ -1121,6 +1127,10 @@ public class PortletDataContextImpl implements PortletDataContext {
 	@Override
 	public String getRootPortletId() {
 		return _rootPortletId;
+	}
+
+	public Set<String> getScopedPrimaryKeys() {
+		return _scopedPrimaryKeys;
 	}
 
 	@Override
