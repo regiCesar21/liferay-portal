@@ -195,6 +195,8 @@ public class JournalArticleIndexer extends BaseIndexer<JournalArticle> {
 
 		boolean head = GetterUtil.getBoolean(
 			searchContext.getAttribute("head"), Boolean.TRUE);
+		boolean headOrShowNonIndexable = GetterUtil.getBoolean(
+			searchContext.getAttribute("headOrShowNonIndexable"));
 		boolean latest = GetterUtil.getBoolean(
 			searchContext.getAttribute("latest"));
 		boolean relatedClassName = GetterUtil.getBoolean(
@@ -205,7 +207,9 @@ public class JournalArticleIndexer extends BaseIndexer<JournalArticle> {
 		if (latest && !relatedClassName && !showNonindexable) {
 			contextBooleanFilter.addRequiredTerm("latest", Boolean.TRUE);
 		}
-		else if (head && !relatedClassName && !showNonindexable) {
+		else if (head && !headOrShowNonIndexable && !relatedClassName &&
+				 !showNonindexable) {
+
 			contextBooleanFilter.addRequiredTerm("head", Boolean.TRUE);
 		}
 
@@ -214,6 +218,10 @@ public class JournalArticleIndexer extends BaseIndexer<JournalArticle> {
 		}
 		else if (!relatedClassName && showNonindexable) {
 			contextBooleanFilter.addRequiredTerm("headListable", Boolean.TRUE);
+		}
+		else if (headOrShowNonIndexable && !relatedClassName) {
+			contextBooleanFilter.addTerm("head", Boolean.TRUE);
+			contextBooleanFilter.addTerm("headListable", Boolean.TRUE);
 		}
 
 		boolean filterExpired = GetterUtil.getBoolean(
