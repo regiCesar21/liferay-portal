@@ -32,7 +32,7 @@ public class ProductContentCommerceMLRecommendationIndexer
 
 	@Override
 	public String getDocumentType() {
-		return "ProductCommerceMLRecommendationDocumentType";
+		return "_doc";
 	}
 
 	@Override
