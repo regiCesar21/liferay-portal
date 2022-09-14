@@ -405,7 +405,7 @@ public class AssetPublisherHelperImpl implements AssetPublisherHelper {
 			overrideAllAssetCategoryIds, overrideAllAssetTagNames,
 			overrideAllKeywords);
 
-		assetEntryQuery.setAttribute("showNonindexable", Boolean.TRUE);
+		assetEntryQuery.setAttribute("headOrShowNonIndexable", Boolean.TRUE);
 		assetEntryQuery.setGroupIds(groupIds);
 
 		boolean anyAssetType = GetterUtil.getBoolean(
