@@ -1343,6 +1343,12 @@ public class SitesImpl implements Sites {
 	public void mergeLayoutSetPrototypeLayouts(Group group, LayoutSet layoutSet)
 		throws Exception {
 
+		if (MergeLayoutPrototypesThreadLocal.isSkipMerge()) {
+			return;
+		}
+
+		MergeLayoutPrototypesThreadLocal.setSkipMerge(true);
+
 		layoutSet = LayoutSetLocalServiceUtil.fetchLayoutSet(
 			layoutSet.getLayoutSetId());
 
