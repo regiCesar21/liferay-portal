@@ -40,14 +40,14 @@ export const AutoFocus = ({children}) => {
 						document.activeElement.querySelector('input') &&
 						document.activeElement.querySelector('input').type ===
 							'hidden') ||
-					containerElement?.current.parentNode.className.includes(
+					containerElement.current.parentNode.className.includes(
 						'ddm-form-builder-app'
 					)
 				) {
 					removeTabs();
 
 					const currentTitle = containerElement?.current.parentNode.getElementsByClassName(
-						'ddm-form-name'
+						'lfr-ddm__default-page-header-title'
 					)[0];
 
 					scrollComponentToTop(currentTitle);
@@ -55,7 +55,7 @@ export const AutoFocus = ({children}) => {
 					const componentTitle = currentTitle?.innerHTML;
 
 					const currentDescription = containerElement?.current.parentNode.getElementsByClassName(
-						'.ddm-form-description'
+						'.lfr-ddm__default-page-header-description'
 					)[0];
 
 					const componentDescription = currentDescription?.innerHTML;
@@ -110,17 +110,15 @@ export const AutoFocus = ({children}) => {
 }
 
 function scrollComponentToTop(currentTitle) {
-	if (currentTitle) {
-		const containerPosition = currentTitle.getBoundingClientRect();
+	const containerPosition = currentTitle.getBoundingClientRect();
 
-		const menuSize = document.querySelector('.control-menu-container')
-			?.clientHeight;
+	const menuSize = document.querySelector('.control-menu-container')
+		?.clientHeight;
 
-		window.scroll(
-			containerPosition.x - menuSize,
-			containerPosition.y - menuSize
-		);
-	}
+	window.scroll(
+		containerPosition.x - menuSize,
+		containerPosition.y - menuSize
+	);
 }
 
 function removeTabs() {
@@ -133,7 +131,7 @@ function removeTabs() {
 	if (!formPortlet) {
 		document
 			.querySelectorAll(
-				'.ddm-form-name,.ddm-form-description,.lfr-ddm-form-page-title,.lfr-ddm-form-page-description'
+				'.lfr-ddm__default-page-header-title,.lfr-ddm__default-page-header-description,.lfr-ddm-form-page-title,.lfr-ddm-form-page-description'
 			)
 			?.forEach((element) => element.removeAttribute('tabindex'));
 	}
