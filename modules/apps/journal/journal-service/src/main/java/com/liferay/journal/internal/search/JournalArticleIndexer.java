@@ -220,8 +220,13 @@ public class JournalArticleIndexer extends BaseIndexer<JournalArticle> {
 			contextBooleanFilter.addRequiredTerm("headListable", Boolean.TRUE);
 		}
 		else if (headOrShowNonindexable && !relatedClassName) {
-			contextBooleanFilter.addTerm("head", Boolean.TRUE);
-			contextBooleanFilter.addTerm("headListable", Boolean.TRUE);
+			BooleanFilter headOrShowNonindexableFilter = new BooleanFilter();
+
+			headOrShowNonindexableFilter.addTerm("head", Boolean.TRUE);
+			headOrShowNonindexableFilter.addTerm("headListable", Boolean.TRUE);
+
+			contextBooleanFilter.add(
+				headOrShowNonindexableFilter, BooleanClauseOccur.MUST);
 		}
 
 		boolean filterExpired = GetterUtil.getBoolean(
