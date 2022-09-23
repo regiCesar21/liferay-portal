@@ -238,7 +238,11 @@ public class FragmentCollectionContributorTest {
 
 		return registry.registerService(
 			FragmentCollectionContributor.class,
-			testFragmentCollectionContributor);
+			testFragmentCollectionContributor,
+			HashMapBuilder.<String, Object>put(
+				"fragment.collection.key",
+				testFragmentCollectionContributor.getFragmentCollectionKey()
+			).build());
 	}
 
 	@Inject
