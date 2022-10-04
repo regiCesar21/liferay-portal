@@ -40,7 +40,7 @@ export const AutoFocus = ({children}) => {
 						document.activeElement.querySelector('input') &&
 						document.activeElement.querySelector('input').type ===
 							'hidden') ||
-					containerElement.current.parentNode.className.includes(
+					containerElement?.current.parentNode.className.includes(
 						'ddm-form-builder-app'
 					)
 				) {
@@ -110,15 +110,17 @@ export const AutoFocus = ({children}) => {
 }
 
 function scrollComponentToTop(currentTitle) {
-	const containerPosition = currentTitle.getBoundingClientRect();
+	if (currentTitle) {
+		const containerPosition = currentTitle.getBoundingClientRect();
 
-	const menuSize = document.querySelector('.control-menu-container')
-		?.clientHeight;
+		const menuSize = document.querySelector('.control-menu-container')
+			?.clientHeight;
 
-	window.scroll(
-		containerPosition.x - menuSize,
-		containerPosition.y - menuSize
-	);
+		window.scroll(
+			containerPosition.x - menuSize,
+			containerPosition.y - menuSize
+		);
+	}
 }
 
 function removeTabs() {
