@@ -11,6 +11,7 @@ import com.liferay.frontend.taglib.clay.data.set.view.table.BaseTableClayDataSet
 import com.liferay.frontend.taglib.clay.data.set.view.table.ClayTableSchema;
 import com.liferay.frontend.taglib.clay.data.set.view.table.ClayTableSchemaBuilder;
 import com.liferay.frontend.taglib.clay.data.set.view.table.ClayTableSchemaBuilderFactory;
+import com.liferay.frontend.taglib.clay.data.set.view.table.ClayTableSchemaField;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -31,7 +32,12 @@ public class CommercePendingOrderClayTableDataSetDisplayView
 		ClayTableSchemaBuilder clayTableSchemaBuilder =
 			_clayTableSchemaBuilderFactory.create();
 
-		clayTableSchemaBuilder.addClayTableSchemaField("date", "create-date");
+		ClayTableSchemaField dateClayTableSchemaField =
+			clayTableSchemaBuilder.addClayTableSchemaField(
+				"date", "create-date");
+
+		dateClayTableSchemaField.setContentRenderer("date");
+		dateClayTableSchemaField.setSortable(true);
 
 		clayTableSchemaBuilder.addClayTableSchemaField("orderId", "order-id");
 
