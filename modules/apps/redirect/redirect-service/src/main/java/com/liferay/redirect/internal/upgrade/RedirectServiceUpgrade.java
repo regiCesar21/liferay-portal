@@ -23,7 +23,13 @@ import org.osgi.service.component.annotations.Component;
 /**
  * @author Alejandro Tardín
  */
-@Component(service = UpgradeStepRegistrator.class)
+@Component(
+	immediate = true,
+	service = {
+		RedirectServiceUpgrade.class,
+		UpgradeStepRegistrator.class
+	}
+)
 public class RedirectServiceUpgrade implements UpgradeStepRegistrator {
 
 	@Override
