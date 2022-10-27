@@ -582,7 +582,7 @@ public class ExpandoValueLocalServiceImpl
 
 		return expandoValueLocalService.addValue(
 			companyId, className, tableName, columnName, classPK,
-			(Map<Locale, ?>)data, LocaleUtil.getDefault());
+			(Map<Locale, ?>)data, LocaleUtil.getSiteDefault());
 	}
 
 	@Override
@@ -825,7 +825,7 @@ public class ExpandoValueLocalServiceImpl
 				Map<Locale, String> defaultValuesMap =
 					(Map<Locale, String>)attributeValue;
 
-				Locale defaultLocale = LocaleUtil.getDefault();
+				Locale defaultLocale = LocaleUtil.getSiteDefault();
 
 				if (Validator.isNull(defaultValuesMap.get(defaultLocale))) {
 					for (String defaultValue : defaultValuesMap.values()) {
