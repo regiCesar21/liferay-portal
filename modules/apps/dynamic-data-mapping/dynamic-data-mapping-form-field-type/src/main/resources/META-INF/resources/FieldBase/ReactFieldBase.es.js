@@ -146,7 +146,7 @@ function FieldBase({
 			type === 'grid' ||
 			type === 'paragraph' ||
 			type === 'radio');
-	const showFor = type === 'text' || type === 'numeric';
+	const showFor = type === 'text' || type === 'numeric' || type === 'select';
 
 	if (!renderLabel) {
 		parentDivTabIndex = 0;
