@@ -3813,19 +3813,22 @@ AUI.add(
 
 					var editor = instance.getEditor();
 
-					var editorValue = editor.getHTML();
+					var editorValue = editor.getHTML;
 
 					var localizationMap = instance.get('localizationMap');
 
-					if (
+					if (isNode(editor)) {
+						return A.one(editor).val();
+					}
+					else if (
 						!editor.instanceReady &&
 						localizationMap[instance.get('displayLocale')]
 					) {
-						editorValue =
-							localizationMap[instance.get('displayLocale')];
+						return localizationMap[instance.get('displayLocale')];
 					}
-
-					return isNode(editor) ? A.one(editor).val() : editorValue;
+					else {
+						return editorValue();
+					}
 				},
 
 				initializer() {
