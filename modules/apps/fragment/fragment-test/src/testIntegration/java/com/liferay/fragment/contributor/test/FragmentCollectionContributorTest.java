@@ -10,12 +10,30 @@ import com.liferay.fragment.constants.FragmentConstants;
 import com.liferay.fragment.contributor.FragmentCollectionContributor;
 import com.liferay.fragment.contributor.FragmentCollectionContributorTracker;
 import com.liferay.fragment.model.FragmentEntry;
+import com.liferay.fragment.model.FragmentEntryLink;
+import com.liferay.fragment.service.FragmentEntryLinkLocalService;
 import com.liferay.fragment.service.FragmentEntryLocalServiceUtil;
+import com.liferay.petra.string.StringBundler;
+import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.json.JSONFactoryUtil;
+import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.model.Group;
+import com.liferay.portal.kernel.model.Layout;
+import com.liferay.portal.kernel.model.LayoutConstants;
+import com.liferay.portal.kernel.service.LayoutLocalService;
+import com.liferay.portal.kernel.service.LayoutLocalServiceUtil;
+import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
+import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
+import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
+import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
+import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.HashMapBuilder;
+import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
+import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
 import com.liferay.registry.Registry;
 import com.liferay.registry.RegistryUtil;
 import com.liferay.registry.ServiceRegistration;
@@ -25,6 +43,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.junit.Assert;
+import org.junit.Before;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
@@ -39,7 +58,103 @@ public class FragmentCollectionContributorTest {
 	@ClassRule
 	@Rule
 	public static final AggregateTestRule aggregateTestRule =
-		new LiferayIntegrationTestRule();
+		new AggregateTestRule(
+			new LiferayIntegrationTestRule(),
+			PermissionCheckerMethodTestRule.INSTANCE);
+
+	@Before
+	public void setUp() throws Exception {
+		_group = GroupTestUtil.addGroup();
+
+		_serviceContext = ServiceContextTestUtil.getServiceContext(
+			_group.getGroupId());
+	}
+
+	@Test
+	public void testPropagateContributedFragmentEntry() throws Exception {
+		String fragmentCollectionContributorKey = RandomTestUtil.randomString();
+
+		String fragmentEntryKey = StringBundler.concat(
+			fragmentCollectionContributorKey, StringPool.DASH,
+			RandomTestUtil.randomString());
+
+		Layout layout = LayoutLocalServiceUtil.addLayout(
+			TestPropsValues.getUserId(), _group.getGroupId(), false,
+			LayoutConstants.DEFAULT_PARENT_LAYOUT_ID,
+			RandomTestUtil.randomString(), RandomTestUtil.randomString(),
+			StringPool.BLANK, LayoutConstants.TYPE_CONTENT, false,
+			StringPool.BLANK, _serviceContext);
+
+		FragmentEntryLink fragmentEntryLink =
+			_fragmentEntryLinkLocalService.addFragmentEntryLink(
+				TestPropsValues.getUserId(), _group.getGroupId(), 0, 0,
+				_portal.getClassNameId(Layout.class), layout.getPlid(),
+				StringPool.BLANK,
+				"<div><lfr-editable id=\"editable-1\" type=\"rich-text\">" +
+					"EDITABLE 1</lfr-editable></div>",
+				StringPool.BLANK, StringPool.BLANK, null, StringPool.BLANK, 0,
+				fragmentEntryKey, _serviceContext);
+
+		String modifiedHtml = StringBundler.concat(
+			"<div><lfr-editable id=\"editable-1\" type=\"rich-text\">",
+			"EDITABLE 1</lfr-editable></div><div><lfr-editable ",
+			"id=\"editable-2\" type=\"rich-text\">EDITABLE 2</lfr-editable>",
+			"</div>");
+
+		ServiceRegistration<?> serviceRegistration = _getServiceRegistration(
+			new TestFragmentCollectionContributor(
+				fragmentCollectionContributorKey,
+				HashMapBuilder.put(
+					FragmentConstants.TYPE_COMPONENT,
+					_getFragmentEntry(
+						fragmentEntryKey, modifiedHtml,
+						FragmentConstants.TYPE_COMPONENT)
+				).build()));
+
+		try {
+			FragmentEntryLink persistedFragmentEntryLink =
+				_fragmentEntryLinkLocalService.getFragmentEntryLink(
+					fragmentEntryLink.getFragmentEntryLinkId());
+
+			Assert.assertEquals(
+				modifiedHtml, persistedFragmentEntryLink.getHtml());
+
+			JSONObject jsonObject = JSONFactoryUtil.createJSONObject(
+				persistedFragmentEntryLink.getEditableValues());
+
+			JSONObject editableFragmentEntryProcessorJSONObject =
+				jsonObject.getJSONObject(
+					"com.liferay.fragment.entry.processor.editable." +
+						"EditableFragmentEntryProcessor");
+
+			Assert.assertEquals(
+				editableFragmentEntryProcessorJSONObject.toString(), 2,
+				editableFragmentEntryProcessorJSONObject.length());
+
+			Assert.assertTrue(
+				editableFragmentEntryProcessorJSONObject.has("editable-1"));
+
+			JSONObject editable1JSONObject =
+				editableFragmentEntryProcessorJSONObject.getJSONObject(
+					"editable-1");
+
+			Assert.assertEquals(
+				"EDITABLE 1", editable1JSONObject.get("defaultValue"));
+
+			Assert.assertTrue(
+				editableFragmentEntryProcessorJSONObject.has("editable-2"));
+
+			JSONObject editable2JSONObject =
+				editableFragmentEntryProcessorJSONObject.getJSONObject(
+					"editable-2");
+
+			Assert.assertEquals(
+				"EDITABLE 2", editable2JSONObject.get("defaultValue"));
+		}
+		finally {
+			serviceRegistration.unregister();
+		}
+	}
 
 	@Test
 	public void testRegisterContributedFragmentEntries() {
@@ -142,6 +257,20 @@ public class FragmentCollectionContributorTest {
 	@Inject
 	private FragmentCollectionContributorTracker
 		_fragmentCollectionContributorTracker;
+
+	@Inject
+	private FragmentEntryLinkLocalService _fragmentEntryLinkLocalService;
+
+	@DeleteAfterTestRun
+	private Group _group;
+
+	@Inject
+	private LayoutLocalService _layoutLocalService;
+
+	@Inject
+	private Portal _portal;
+
+	private ServiceContext _serviceContext;
 
 	private static class TestFragmentCollectionContributor
 		implements FragmentCollectionContributor {
