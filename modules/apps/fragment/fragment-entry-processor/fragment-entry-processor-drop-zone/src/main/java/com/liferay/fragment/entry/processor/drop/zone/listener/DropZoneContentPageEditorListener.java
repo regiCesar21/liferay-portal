@@ -131,6 +131,47 @@ public class DropZoneContentPageEditorListener
 		}
 	}
 
+	private FragmentDropZoneLayoutStructureItem
+		_getDeletedFragmentDropZoneStructureItem(
+			String fragmentDropZoneId, LayoutStructure layoutStructure,
+			String parentItemId) {
+
+		List<DeletedLayoutStructureItem> deletedLayoutStructureItems =
+			layoutStructure.getDeletedLayoutStructureItems();
+
+		for (DeletedLayoutStructureItem deletedLayoutStructureItem :
+				deletedLayoutStructureItems) {
+
+			LayoutStructureItem layoutStructureItem =
+				layoutStructure.getLayoutStructureItem(
+					deletedLayoutStructureItem.getItemId());
+
+			if (!(layoutStructureItem instanceof
+					FragmentDropZoneLayoutStructureItem)) {
+
+				continue;
+			}
+
+			FragmentDropZoneLayoutStructureItem
+				fragmentDropZoneLayoutStructureItem =
+					(FragmentDropZoneLayoutStructureItem)layoutStructureItem;
+
+			if (Objects.equals(
+					fragmentDropZoneLayoutStructureItem.getParentItemId(),
+					parentItemId) &&
+				(Validator.isNull(fragmentDropZoneId) ||
+				 Objects.equals(
+					 fragmentDropZoneId,
+					 fragmentDropZoneLayoutStructureItem.
+						 getFragmentDropZoneId()))) {
+
+				return fragmentDropZoneLayoutStructureItem;
+			}
+		}
+
+		return null;
+	}
+
 	private Document _getDocument(String html) {
 		Document document = Jsoup.parseBodyFragment(html);
 
@@ -318,6 +359,21 @@ public class DropZoneContentPageEditorListener
 					layoutStructure.moveLayoutStructureItem(
 						itemId, parentLayoutStructureItem.getItemId(), index);
 				}
+
+				continue;
+			}
+
+			fragmentDropZoneLayoutStructureItem =
+				_getDeletedFragmentDropZoneStructureItem(
+					id, layoutStructure, parentLayoutStructureItem.getItemId());
+
+			if (fragmentDropZoneLayoutStructureItem != null) {
+				String itemId = fragmentDropZoneLayoutStructureItem.getItemId();
+
+				layoutStructure.unmarkLayoutStructureItemForDeletion(itemId);
+
+				layoutStructure.moveLayoutStructureItem(
+					itemId, parentLayoutStructureItem.getItemId(), index);
 
 				continue;
 			}
