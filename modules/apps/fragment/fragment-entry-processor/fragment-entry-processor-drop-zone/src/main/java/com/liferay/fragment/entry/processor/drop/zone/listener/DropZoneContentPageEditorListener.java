@@ -338,6 +338,15 @@ public class DropZoneContentPageEditorListener
 			fragmentDropZoneLayoutStructureItem.setFragmentDropZoneId(id);
 		}
 
+		for (FragmentDropZoneLayoutStructureItem
+				fragmentDropZoneLayoutStructureItem :
+					noIdFragmentDropZoneLayoutStructureItems) {
+
+			layoutStructure.markLayoutStructureItemForDeletion(
+				fragmentDropZoneLayoutStructureItem.getItemId(),
+				Collections.emptyList());
+		}
+
 		_layoutPageTemplateStructureLocalService.
 			updateLayoutPageTemplateStructureData(
 				fragmentEntryLink.getGroupId(), fragmentEntryLink.getPlid(),
