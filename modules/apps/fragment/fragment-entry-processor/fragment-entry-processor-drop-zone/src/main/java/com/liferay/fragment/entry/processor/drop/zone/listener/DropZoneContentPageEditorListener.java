@@ -345,6 +345,8 @@ public class DropZoneContentPageEditorListener
 			}
 		}
 
+		boolean update = false;
+
 		for (int index = 0; index < elementIds.size(); index++) {
 			String id = elementIds.get(index);
 
@@ -358,6 +360,8 @@ public class DropZoneContentPageEditorListener
 				if (index != childrenItemIds.indexOf(itemId)) {
 					layoutStructure.moveLayoutStructureItem(
 						itemId, parentLayoutStructureItem.getItemId(), index);
+
+					update = true;
 				}
 
 				continue;
@@ -375,6 +379,8 @@ public class DropZoneContentPageEditorListener
 				layoutStructure.moveLayoutStructureItem(
 					itemId, parentLayoutStructureItem.getItemId(), index);
 
+				update = true;
+
 				continue;
 			}
 
@@ -391,6 +397,8 @@ public class DropZoneContentPageEditorListener
 						itemId, parentLayoutStructureItem.getItemId(), index);
 				}
 
+				update = true;
+
 				continue;
 			}
 
@@ -400,6 +408,8 @@ public class DropZoneContentPageEditorListener
 						parentLayoutStructureItem.getItemId(), index);
 
 			fragmentDropZoneLayoutStructureItem.setFragmentDropZoneId(id);
+
+			update = true;
 		}
 
 		for (FragmentDropZoneLayoutStructureItem
@@ -409,6 +419,8 @@ public class DropZoneContentPageEditorListener
 			layoutStructure.markLayoutStructureItemForDeletion(
 				fragmentDropZoneLayoutStructureItem.getItemId(),
 				Collections.emptyList());
+
+			update = true;
 		}
 
 		for (FragmentDropZoneLayoutStructureItem
@@ -418,13 +430,17 @@ public class DropZoneContentPageEditorListener
 			layoutStructure.markLayoutStructureItemForDeletion(
 				fragmentDropZoneLayoutStructureItem.getItemId(),
 				Collections.emptyList());
+
+			update = true;
 		}
 
-		_layoutPageTemplateStructureLocalService.
-			updateLayoutPageTemplateStructureData(
-				fragmentEntryLink.getGroupId(), fragmentEntryLink.getPlid(),
-				fragmentEntryLink.getSegmentsExperienceId(),
-				layoutStructure.toString());
+		if (update) {
+			_layoutPageTemplateStructureLocalService.
+				updateLayoutPageTemplateStructureData(
+					fragmentEntryLink.getGroupId(), fragmentEntryLink.getPlid(),
+					fragmentEntryLink.getSegmentsExperienceId(),
+					layoutStructure.toString());
+		}
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
