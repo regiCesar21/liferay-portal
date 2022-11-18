@@ -260,14 +260,14 @@ public class DropZoneContentPageEditorListener
 			return;
 		}
 
+		List<String> childrenItemIds = new LinkedList<>(
+			parentLayoutStructureItem.getChildrenItemIds());
+
 		Map<String, FragmentDropZoneLayoutStructureItem>
 			fragmentDropZoneLayoutStructureItemsMap = new LinkedHashMap<>();
 
 		List<FragmentDropZoneLayoutStructureItem>
 			noIdFragmentDropZoneLayoutStructureItems = new LinkedList<>();
-
-		List<String> childrenItemIds =
-			parentLayoutStructureItem.getChildrenItemIds();
 
 		for (String childrenItemId : childrenItemIds) {
 			LayoutStructureItem layoutStructureItem =
