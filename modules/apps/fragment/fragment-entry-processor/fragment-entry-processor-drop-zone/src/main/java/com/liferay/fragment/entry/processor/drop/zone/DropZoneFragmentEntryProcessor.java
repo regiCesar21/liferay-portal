@@ -117,11 +117,11 @@ public class DropZoneFragmentEntryProcessor implements FragmentEntryProcessor {
 				fragmentEntryProcessorContext.getMode(),
 				FragmentEntryLinkConstants.EDIT)) {
 
-			boolean existIds = true;
+			boolean idsAvailable = true;
 
 			for (Element element : elements) {
 				if (Validator.isNull(element.id())) {
-					existIds = false;
+					idsAvailable = false;
 
 					break;
 				}
@@ -129,7 +129,7 @@ public class DropZoneFragmentEntryProcessor implements FragmentEntryProcessor {
 
 			if (!GetterUtil.getBoolean(
 					PropsUtil.get("feature.flag.LPS-167932")) ||
-				!existIds) {
+				!idsAvailable) {
 
 				for (int i = 0;
 					 (i < dropZoneItemIds.size()) && (i < elements.size());
@@ -147,10 +147,10 @@ public class DropZoneFragmentEntryProcessor implements FragmentEntryProcessor {
 					String id = element.id();
 
 					for (String itemId : dropZoneItemIds) {
-						LayoutStructureItem childrenLayoutStructureItem =
+						LayoutStructureItem childLayoutStructureItem =
 							layoutStructure.getLayoutStructureItem(itemId);
 
-						if (!(childrenLayoutStructureItem instanceof
+						if (!(childLayoutStructureItem instanceof
 								FragmentDropZoneLayoutStructureItem)) {
 
 							continue;
@@ -159,7 +159,7 @@ public class DropZoneFragmentEntryProcessor implements FragmentEntryProcessor {
 						FragmentDropZoneLayoutStructureItem
 							fragmentDropZoneLayoutStructureItem =
 								(FragmentDropZoneLayoutStructureItem)
-									childrenLayoutStructureItem;
+									childLayoutStructureItem;
 
 						if (Objects.equals(
 								id,
