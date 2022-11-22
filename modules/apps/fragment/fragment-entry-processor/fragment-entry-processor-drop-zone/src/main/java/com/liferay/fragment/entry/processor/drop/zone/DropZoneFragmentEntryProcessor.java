@@ -36,11 +36,12 @@ import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.Validator;
 
-import java.util.ArrayList;
+import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
+import java.util.Set;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -221,7 +222,7 @@ public class DropZoneFragmentEntryProcessor implements FragmentEntryProcessor {
 			return;
 		}
 
-		List<String> elementIds = new ArrayList<>();
+		Set<String> elementIds = new LinkedHashSet<>();
 
 		for (Element element : elements) {
 			String id = element.id();
