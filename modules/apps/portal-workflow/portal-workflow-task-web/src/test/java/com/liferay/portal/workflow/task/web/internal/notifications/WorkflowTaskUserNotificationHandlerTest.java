@@ -124,15 +124,6 @@ public class WorkflowTaskUserNotificationHandlerTest extends PowerMockito {
 	}
 
 	@Test
-	public void testValidWorkflowTaskIdShouldReturnBody() throws Exception {
-		Assert.assertEquals(
-			_NOTIFICATION_MESSAGE,
-			_workflowTaskUserNotificationHandler.getBody(
-				mockUserNotificationEvent(null, _VALID_WORKFLOW_TASK_ID),
-				_serviceContext));
-	}
-
-	@Test
 	public void testValidWorkflowTaskIdAllowedUserShouldReturnLink()
 		throws Exception {
 
@@ -163,6 +154,15 @@ public class WorkflowTaskUserNotificationHandlerTest extends PowerMockito {
 			_workflowTaskUserNotificationHandler.getLink(
 				mockUserNotificationEvent(
 					_VALID_ENTRY_CLASS_NAME, _VALID_WORKFLOW_TASK_ID),
+				_serviceContext));
+	}
+
+	@Test
+	public void testValidWorkflowTaskIdShouldReturnBody() throws Exception {
+		Assert.assertEquals(
+			_NOTIFICATION_MESSAGE,
+			_workflowTaskUserNotificationHandler.getBody(
+				mockUserNotificationEvent(null, _VALID_WORKFLOW_TASK_ID),
 				_serviceContext));
 	}
 
