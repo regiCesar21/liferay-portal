@@ -23,6 +23,7 @@ import com.liferay.dynamic.data.mapping.test.util.DDMStructureTestUtil;
 import com.liferay.dynamic.data.mapping.test.util.DDMTemplateTestUtil;
 import com.liferay.journal.constants.JournalArticleConstants;
 import com.liferay.journal.constants.JournalFolderConstants;
+import com.liferay.journal.exception.ArticleFriendlyURLException;
 import com.liferay.journal.exception.DuplicateArticleIdException;
 import com.liferay.journal.model.JournalArticle;
 import com.liferay.journal.model.JournalArticleDisplay;
@@ -125,7 +126,7 @@ public class JournalArticleLocalServiceTest {
 		_themeDisplay.setUser(user);
 	}
 
-	@Test
+	@Test(expected = ArticleFriendlyURLException.class)
 	public void testArticleFriendlyURLValidationCompanyGroup()
 		throws Exception {
 
@@ -138,14 +139,7 @@ public class JournalArticleLocalServiceTest {
 
 		Assert.assertNotNull(journalArticle.getUrlTitle());
 
-		Map<Locale, String> friendlyURLMap = journalArticle.getFriendlyURLMap();
-
-		journalArticle = _updateJournalArticle(
-			Collections.emptyMap(), journalArticle);
-
-		Assert.assertEquals(friendlyURLMap, journalArticle.getFriendlyURLMap());
-
-		Assert.assertNotNull(journalArticle.getUrlTitle());
+		_updateJournalArticle(Collections.emptyMap(), journalArticle);
 	}
 
 	@Test

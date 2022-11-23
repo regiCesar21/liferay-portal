@@ -6,13 +6,9 @@
 package com.liferay.journal.web.internal.servlet.taglib.ui;
 
 import com.liferay.journal.model.JournalArticle;
-import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.GroupLocalService;
-import com.liferay.portal.kernel.service.ServiceContext;
-import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.servlet.taglib.ui.FormNavigatorEntry;
-import com.liferay.portal.kernel.theme.ThemeDisplay;
 
 import javax.servlet.ServletContext;
 
@@ -37,7 +33,7 @@ public class JournalDisplayPagePreviewFormNavigatorEntry
 	@Override
 	public boolean isVisible(User user, JournalArticle article) {
 		if (!isEditDefaultValues(article) &&
-			(_isDepotArticle(article) || isGlobalScopeArticle(article))) {
+			isDepotOrGlobalScopeArticle(article)) {
 
 			return true;
 		}
@@ -56,29 +52,6 @@ public class JournalDisplayPagePreviewFormNavigatorEntry
 	@Override
 	protected String getJspPath() {
 		return "/article/asset_display_page_preview.jsp";
-	}
-
-	private Group _getGroup(JournalArticle article) {
-		if ((article != null) && (article.getId() > 0)) {
-			return _groupLocalService.fetchGroup(article.getGroupId());
-		}
-
-		ServiceContext serviceContext =
-			ServiceContextThreadLocal.getServiceContext();
-
-		ThemeDisplay themeDisplay = serviceContext.getThemeDisplay();
-
-		return themeDisplay.getScopeGroup();
-	}
-
-	private boolean _isDepotArticle(JournalArticle article) {
-		Group group = _getGroup(article);
-
-		if ((group != null) && group.isDepot()) {
-			return true;
-		}
-
-		return false;
 	}
 
 	@Reference
