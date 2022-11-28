@@ -259,11 +259,13 @@ public class DropZoneContentPageEditorListener
 		List<String> elementIds = new LinkedList<>();
 
 		for (Element element : elements) {
-			if (Validator.isNull(element.id())) {
+			String dropZoneId = element.attr("data-lfr-drop-zone-id");
+
+			if (Validator.isNull(dropZoneId)) {
 				break;
 			}
 
-			elementIds.add(element.id());
+			elementIds.add(dropZoneId);
 		}
 
 		if (!GetterUtil.getBoolean(PropsUtil.get("feature.flag.LPS-167932")) ||
