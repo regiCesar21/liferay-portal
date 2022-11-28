@@ -256,7 +256,7 @@ public class DropZoneContentPageEditorListener
 			return;
 		}
 
-		List<String> elementIds = new LinkedList<>();
+		List<String> elementDropZoneIds = new LinkedList<>();
 
 		for (Element element : elements) {
 			String dropZoneId = element.attr("data-lfr-drop-zone-id");
@@ -265,11 +265,11 @@ public class DropZoneContentPageEditorListener
 				break;
 			}
 
-			elementIds.add(dropZoneId);
+			elementDropZoneIds.add(dropZoneId);
 		}
 
 		if (!GetterUtil.getBoolean(PropsUtil.get("feature.flag.LPS-167932")) ||
-			(elementIds.size() < elements.size())) {
+			(elementDropZoneIds.size() < elements.size())) {
 
 			List<String> childrenItemIds =
 				parentLayoutStructureItem.getChildrenItemIds();
@@ -341,7 +341,7 @@ public class DropZoneContentPageEditorListener
 				noIdFragmentDropZoneLayoutStructureItems.add(
 					fragmentDropZoneLayoutStructureItem);
 			}
-			else if (elementIds.contains(fragmentDropZoneId)) {
+			else if (elementDropZoneIds.contains(fragmentDropZoneId)) {
 				fragmentDropZoneLayoutStructureItemsMap.put(
 					fragmentDropZoneId, fragmentDropZoneLayoutStructureItem);
 			}
@@ -353,12 +353,12 @@ public class DropZoneContentPageEditorListener
 
 		boolean update = false;
 
-		for (int index = 0; index < elementIds.size(); index++) {
-			String id = elementIds.get(index);
+		for (int index = 0; index < elementDropZoneIds.size(); index++) {
+			String dropZoneId = elementDropZoneIds.get(index);
 
 			FragmentDropZoneLayoutStructureItem
 				fragmentDropZoneLayoutStructureItem =
-					fragmentDropZoneLayoutStructureItemsMap.remove(id);
+					fragmentDropZoneLayoutStructureItemsMap.remove(dropZoneId);
 
 			if (fragmentDropZoneLayoutStructureItem != null) {
 				String itemId = fragmentDropZoneLayoutStructureItem.getItemId();
@@ -375,7 +375,8 @@ public class DropZoneContentPageEditorListener
 
 			fragmentDropZoneLayoutStructureItem =
 				_getDeletedFragmentDropZoneStructureItem(
-					id, layoutStructure, parentLayoutStructureItem.getItemId());
+					dropZoneId, layoutStructure,
+					parentLayoutStructureItem.getItemId());
 
 			if (fragmentDropZoneLayoutStructureItem != null) {
 				String itemId = fragmentDropZoneLayoutStructureItem.getItemId();
@@ -394,7 +395,8 @@ public class DropZoneContentPageEditorListener
 				fragmentDropZoneLayoutStructureItem =
 					noIdFragmentDropZoneLayoutStructureItems.remove(0);
 
-				fragmentDropZoneLayoutStructureItem.setFragmentDropZoneId(id);
+				fragmentDropZoneLayoutStructureItem.setFragmentDropZoneId(
+					dropZoneId);
 
 				String itemId = fragmentDropZoneLayoutStructureItem.getItemId();
 
@@ -413,7 +415,8 @@ public class DropZoneContentPageEditorListener
 					layoutStructure.addFragmentDropZoneLayoutStructureItem(
 						parentLayoutStructureItem.getItemId(), index);
 
-			fragmentDropZoneLayoutStructureItem.setFragmentDropZoneId(id);
+			fragmentDropZoneLayoutStructureItem.setFragmentDropZoneId(
+				dropZoneId);
 
 			update = true;
 		}
