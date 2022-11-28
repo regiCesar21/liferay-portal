@@ -233,7 +233,7 @@ public class DropZoneFragmentEntryProcessor implements FragmentEntryProcessor {
 		for (Element element : elements) {
 			String dropZoneId = element.attr("data-lfr-drop-zone-id");
 
-			if (Validator.isNotNull(dropZoneId)) {
+			if (!Validator.isBlank(dropZoneId)) {
 				elementDropZoneIds.add(dropZoneId);
 			}
 		}
