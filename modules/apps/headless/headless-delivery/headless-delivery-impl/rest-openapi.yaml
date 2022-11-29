@@ -2299,6 +2299,7 @@ components:
                         - $ref: "#/components/schemas/PageCollectionItemDefinition"
                         - $ref: "#/components/schemas/PageColumnDefinition"
                         - $ref: "#/components/schemas/PageDropZoneDefinition"
+                        - $ref: "#/components/schemas/PageFragmentDropZoneDefinition"
                         - $ref: "#/components/schemas/PageFragmentInstanceDefinition"
                         - $ref: "#/components/schemas/PageRootDefinition"
                         - $ref: "#/components/schemas/PageRowDefinition"
@@ -2312,6 +2313,17 @@ components:
                     enum: [Collection, CollectionItem, Column, DropZone, Fragment, FragmentDropZone, Root, Row, Section,
                         Widget]
                     type: string
+        PageFragmentDropZoneDefinition:
+            # @review
+            description:
+                Represents a definition of a Page Fragment DropZone.
+            properties:
+                fragmentDropZoneId:
+                    # @review
+                    description:
+                        The id of the fragment dropzone
+                    type: string
+            type: object
         PageFragmentInstanceDefinition:
             properties:
                 fragment:
