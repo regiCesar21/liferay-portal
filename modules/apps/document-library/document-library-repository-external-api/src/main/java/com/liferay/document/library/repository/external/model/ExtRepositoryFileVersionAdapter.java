@@ -9,6 +9,7 @@ import com.liferay.document.library.kernel.util.DLUtil;
 import com.liferay.document.library.repository.external.ExtRepositoryAdapter;
 import com.liferay.document.library.repository.external.ExtRepositoryFileVersion;
 import com.liferay.exportimport.kernel.lar.StagedModelType;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.repository.model.FileVersion;
@@ -112,7 +113,11 @@ public class ExtRepositoryFileVersionAdapter
 			mimeType = MimeTypesUtil.getContentType(getTitle());
 		}
 
-		return mimeType;
+		if (Validator.isNotNull(mimeType)) {
+			return mimeType;
+		}
+
+		return StringPool.BLANK;
 	}
 
 	@Override

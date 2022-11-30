@@ -208,11 +208,15 @@ public class CMISFileVersion extends CMISModel implements FileVersion {
 	public String getMimeType() {
 		String mimeType = _document.getContentStreamMimeType();
 
+		if (Validator.isNull(mimeType)) {
+			mimeType = MimeTypesUtil.getContentType(getTitle());
+		}
+
 		if (Validator.isNotNull(mimeType)) {
 			return mimeType;
 		}
 
-		return MimeTypesUtil.getContentType(getTitle());
+		return StringPool.BLANK;
 	}
 
 	@Override
