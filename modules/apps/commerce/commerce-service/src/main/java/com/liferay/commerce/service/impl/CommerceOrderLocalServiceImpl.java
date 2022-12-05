@@ -554,7 +554,24 @@ public class CommerceOrderLocalServiceImpl
 
 		SearchContext searchContext = buildSearchContext(
 			companyId, groupId, commerceAccountIds, keywords,
-			excludeOrderStatus, orderStatuses, start, end);
+			excludeOrderStatus, orderStatuses, start, end, null);
+
+		BaseModelSearchResult<CommerceOrder> baseModelSearchResult =
+			commerceOrderLocalService.searchCommerceOrders(searchContext);
+
+		return baseModelSearchResult.getBaseModels();
+	}
+
+	@Override
+	public List<CommerceOrder> getCommerceOrders(
+			long companyId, long groupId, long[] commerceAccountIds,
+			String keywords, int[] orderStatuses, boolean excludeOrderStatus,
+			int start, int end, Sort sort)
+		throws PortalException {
+
+		SearchContext searchContext = buildSearchContext(
+			companyId, groupId, commerceAccountIds, keywords,
+			excludeOrderStatus, orderStatuses, start, end, sort);
 
 		BaseModelSearchResult<CommerceOrder> baseModelSearchResult =
 			commerceOrderLocalService.searchCommerceOrders(searchContext);
@@ -614,7 +631,7 @@ public class CommerceOrderLocalServiceImpl
 		SearchContext searchContext = buildSearchContext(
 			companyId, groupId, commerceAccountIds, keywords,
 			excludeOrderStatus, orderStatuses, QueryUtil.ALL_POS,
-			QueryUtil.ALL_POS);
+			QueryUtil.ALL_POS, null);
 
 		return commerceOrderLocalService.searchCommerceOrdersCount(
 			searchContext);
@@ -1760,7 +1777,7 @@ public class CommerceOrderLocalServiceImpl
 	protected SearchContext buildSearchContext(
 			long companyId, long commerceChannelGroupId,
 			long[] commerceAccountIds, String keywords, boolean negated,
-			int[] orderStatuses, int start, int end)
+			int[] orderStatuses, int start, int end, Sort sort)
 		throws PortalException {
 
 		SearchContext searchContext = new SearchContext();
@@ -1780,8 +1797,14 @@ public class CommerceOrderLocalServiceImpl
 		searchContext.setGroupIds(new long[] {commerceChannelGroupId});
 		searchContext.setKeywords(keywords);
 
-		Sort sort = SortFactoryUtil.getSort(
-			CommerceOrder.class, Sort.LONG_TYPE, Field.CREATE_DATE, "DESC");
+		if (sort == null) {
+			sort = SortFactoryUtil.getSort(
+				CommerceOrder.class, Sort.LONG_TYPE, Field.CREATE_DATE, "DESC");
+		}
+		else {
+			sort.setFieldName(Field.CREATE_DATE);
+			sort.setType(Sort.LONG_TYPE);
+		}
 
 		searchContext.setSorts(sort);
 
