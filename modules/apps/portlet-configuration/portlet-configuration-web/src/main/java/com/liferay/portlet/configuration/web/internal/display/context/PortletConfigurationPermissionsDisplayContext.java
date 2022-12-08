@@ -112,6 +112,8 @@ public class PortletConfigurationPermissionsDisplayContext {
 		_selLayout = selLayout;
 		_group = group;
 		_groupId = groupId;
+		_themeDisplay = (ThemeDisplay)_httpServletRequest.getAttribute(
+			WebKeys.THEME_DISPLAY);
 	}
 
 	public List<String> getActions() throws PortalException {
@@ -180,19 +182,16 @@ public class PortletConfigurationPermissionsDisplayContext {
 	}
 
 	public PortletURL getDefinePermissionsURL() throws Exception {
-		ThemeDisplay themeDisplay =
-			(ThemeDisplay)_httpServletRequest.getAttribute(
-				WebKeys.THEME_DISPLAY);
-
 		LiferayPortletURL liferayPortletURL =
 			(LiferayPortletURL)PortletProviderUtil.getPortletURL(
 				_httpServletRequest, Role.class.getName(),
 				PortletProvider.Action.MANAGE);
 
 		liferayPortletURL.setParameter(Constants.CMD, Constants.VIEW);
-		liferayPortletURL.setParameter("backURL", themeDisplay.getURLCurrent());
+		liferayPortletURL.setParameter(
+			"backURL", _themeDisplay.getURLCurrent());
 		liferayPortletURL.setPortletMode(PortletMode.VIEW);
-		liferayPortletURL.setRefererPlid(themeDisplay.getPlid());
+		liferayPortletURL.setRefererPlid(_themeDisplay.getPlid());
 
 		liferayPortletURL.setWindowState(LiferayWindowState.POP_UP);
 
@@ -200,11 +199,7 @@ public class PortletConfigurationPermissionsDisplayContext {
 	}
 
 	public String getGroupDescriptiveName() throws PortalException {
-		ThemeDisplay themeDisplay =
-			(ThemeDisplay)_httpServletRequest.getAttribute(
-				WebKeys.THEME_DISPLAY);
-
-		return _group.getDescriptiveName(themeDisplay.getLocale());
+		return _group.getDescriptiveName(_themeDisplay.getLocale());
 	}
 
 	public long getGroupId() {
@@ -287,25 +282,21 @@ public class PortletConfigurationPermissionsDisplayContext {
 			return _resource;
 		}
 
-		ThemeDisplay themeDisplay =
-			(ThemeDisplay)_httpServletRequest.getAttribute(
-				WebKeys.THEME_DISPLAY);
-
 		int count =
 			ResourcePermissionLocalServiceUtil.getResourcePermissionsCount(
-				themeDisplay.getCompanyId(), getSelResource(),
+				_themeDisplay.getCompanyId(), getSelResource(),
 				ResourceConstants.SCOPE_INDIVIDUAL, getResourcePrimKey());
 
 		if (count == 0) {
 			boolean portletActions = Validator.isNull(getModelResource());
 
 			ResourceLocalServiceUtil.addResources(
-				themeDisplay.getCompanyId(), getGroupId(), 0, getSelResource(),
+				_themeDisplay.getCompanyId(), getGroupId(), 0, getSelResource(),
 				getResourcePrimKey(), portletActions, true, true);
 		}
 
 		_resource = ResourceLocalServiceUtil.getResource(
-			themeDisplay.getCompanyId(), getSelResource(),
+			_themeDisplay.getCompanyId(), getSelResource(),
 			ResourceConstants.SCOPE_INDIVIDUAL, getResourcePrimKey());
 
 		return _resource;
@@ -330,10 +321,6 @@ public class PortletConfigurationPermissionsDisplayContext {
 		if (_roleSearchContainer != null) {
 			return _roleSearchContainer;
 		}
-
-		ThemeDisplay themeDisplay =
-			(ThemeDisplay)_httpServletRequest.getAttribute(
-				WebKeys.THEME_DISPLAY);
 
 		SearchContainer<Role> roleSearchContainer = new RoleSearch(
 			_renderRequest, getIteratorURL());
@@ -440,7 +427,8 @@ public class PortletConfigurationPermissionsDisplayContext {
 
 		RoleVisibilityConfiguration stricterRoleVisibilityConfiguration =
 			ConfigurationProviderUtil.getCompanyConfiguration(
-				RoleVisibilityConfiguration.class, themeDisplay.getCompanyId());
+				RoleVisibilityConfiguration.class,
+				_themeDisplay.getCompanyId());
 
 		if (Validator.isNull(searchTerms.getKeywords())) {
 			int count = 0;
@@ -450,24 +438,24 @@ public class PortletConfigurationPermissionsDisplayContext {
 					restrictPermissionSelectorRoleVisibility()) {
 
 				count = RoleServiceUtil.getGroupRolesAndTeamRolesCount(
-					themeDisplay.getCompanyId(), searchTerms.getKeywords(),
+					_themeDisplay.getCompanyId(), searchTerms.getKeywords(),
 					excludedRoleNames, getRoleTypes(), modelResourceRoleId,
 					teamGroupId);
 
 				roles = RoleServiceUtil.getGroupRolesAndTeamRoles(
-					themeDisplay.getCompanyId(), searchTerms.getKeywords(),
+					_themeDisplay.getCompanyId(), searchTerms.getKeywords(),
 					excludedRoleNames, getRoleTypes(), modelResourceRoleId,
 					teamGroupId, roleSearchContainer.getStart(),
 					roleSearchContainer.getEnd());
 			}
 			else {
 				count = RoleLocalServiceUtil.getGroupRolesAndTeamRolesCount(
-					themeDisplay.getCompanyId(), searchTerms.getKeywords(),
+					_themeDisplay.getCompanyId(), searchTerms.getKeywords(),
 					excludedRoleNames, getRoleTypes(), modelResourceRoleId,
 					teamGroupId);
 
 				roles = RoleLocalServiceUtil.getGroupRolesAndTeamRoles(
-					themeDisplay.getCompanyId(), searchTerms.getKeywords(),
+					_themeDisplay.getCompanyId(), searchTerms.getKeywords(),
 					excludedRoleNames, getRoleTypes(), modelResourceRoleId,
 					teamGroupId, roleSearchContainer.getStart(),
 					roleSearchContainer.getEnd());
@@ -483,13 +471,13 @@ public class PortletConfigurationPermissionsDisplayContext {
 					restrictPermissionSelectorRoleVisibility()) {
 
 				roles = RoleServiceUtil.getGroupRolesAndTeamRoles(
-					themeDisplay.getCompanyId(), searchTerms.getKeywords(),
+					_themeDisplay.getCompanyId(), searchTerms.getKeywords(),
 					excludedRoleNames, getRoleTypes(), modelResourceRoleId,
 					teamGroupId, QueryUtil.ALL_POS, QueryUtil.ALL_POS);
 			}
 			else {
 				roles = RoleLocalServiceUtil.getGroupRolesAndTeamRoles(
-					themeDisplay.getCompanyId(), searchTerms.getKeywords(),
+					_themeDisplay.getCompanyId(), searchTerms.getKeywords(),
 					excludedRoleNames, getRoleTypes(), modelResourceRoleId,
 					teamGroupId, QueryUtil.ALL_POS, QueryUtil.ALL_POS);
 			}
@@ -498,14 +486,14 @@ public class PortletConfigurationPermissionsDisplayContext {
 				roles,
 				role -> {
 					String roleName = StringUtil.toLowerCase(
-						role.getTitle(themeDisplay.getLocale()),
-						themeDisplay.getLocale());
+						role.getTitle(_themeDisplay.getLocale()),
+						_themeDisplay.getLocale());
 
 					return (roleName != null) &&
 						   roleName.contains(
 							   StringUtil.toLowerCase(
 								   searchTerms.getKeywords(),
-								   themeDisplay.getLocale()));
+								   _themeDisplay.getLocale()));
 				});
 
 			roleSearchContainer.setResults(
@@ -590,12 +578,8 @@ public class PortletConfigurationPermissionsDisplayContext {
 			return _selResource;
 		}
 
-		ThemeDisplay themeDisplay =
-			(ThemeDisplay)_httpServletRequest.getAttribute(
-				WebKeys.THEME_DISPLAY);
-
 		Portlet portlet = PortletLocalServiceUtil.getPortletById(
-			themeDisplay.getCompanyId(), _getPortletResource());
+			_themeDisplay.getCompanyId(), _getPortletResource());
 
 		_selResource = portlet.getRootPortletId();
 
@@ -609,17 +593,13 @@ public class PortletConfigurationPermissionsDisplayContext {
 			return _selResourceDescription;
 		}
 
-		ThemeDisplay themeDisplay =
-			(ThemeDisplay)_httpServletRequest.getAttribute(
-				WebKeys.THEME_DISPLAY);
-
 		Portlet portlet = PortletLocalServiceUtil.getPortletById(
-			themeDisplay.getCompanyId(), _getPortletResource());
+			_themeDisplay.getCompanyId(), _getPortletResource());
 
 		HttpSession session = _httpServletRequest.getSession();
 
 		_selResourceDescription = PortalUtil.getPortletTitle(
-			portlet, session.getServletContext(), themeDisplay.getLocale());
+			portlet, session.getServletContext(), _themeDisplay.getLocale());
 
 		return _selResourceDescription;
 	}
@@ -696,11 +676,7 @@ public class PortletConfigurationPermissionsDisplayContext {
 			_httpServletRequest, "resourceGroupId");
 
 		if (_resourceGroupId == 0) {
-			ThemeDisplay themeDisplay =
-				(ThemeDisplay)_httpServletRequest.getAttribute(
-					WebKeys.THEME_DISPLAY);
-
-			_resourceGroupId = themeDisplay.getScopeGroupId();
+			_resourceGroupId = _themeDisplay.getScopeGroupId();
 		}
 
 		return _resourceGroupId;
@@ -751,5 +727,6 @@ public class PortletConfigurationPermissionsDisplayContext {
 	private final Layout _selLayout;
 	private String _selResource;
 	private String _selResourceDescription;
+	private final ThemeDisplay _themeDisplay;
 
 }
