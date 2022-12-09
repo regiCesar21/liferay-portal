@@ -170,6 +170,39 @@ public class CTClosureFactoryImpl implements CTClosureFactory {
 		return GraphUtil.getNodeMap(nodes, edgeMap);
 	}
 
+	private Predicate _getChildPKColumnPredicate(
+		Column<?, Long> childPKColumn, Long[] childPrimaryKeysArray) {
+
+		Predicate predicate = null;
+
+		int i = 0;
+
+		while (i < childPrimaryKeysArray.length) {
+			int batchSize = 1000;
+
+			if ((i + batchSize) > childPrimaryKeysArray.length) {
+				batchSize = childPrimaryKeysArray.length - i;
+			}
+
+			Long[] batchChildPrimaryKeys = new Long[batchSize];
+
+			System.arraycopy(
+				childPrimaryKeysArray, i, batchChildPrimaryKeys, 0, batchSize);
+
+			if (predicate == null) {
+				predicate = childPKColumn.in(batchChildPrimaryKeys);
+			}
+			else {
+				predicate = predicate.or(
+					childPKColumn.in(batchChildPrimaryKeys));
+			}
+
+			i += batchSize;
+		}
+
+		return predicate.withParentheses();
+	}
+
 	private Connection _getConnection(TableReferenceInfo<?> tableReferenceInfo)
 		throws SQLException {
 
@@ -205,8 +238,8 @@ public class CTClosureFactoryImpl implements CTClosureFactory {
 
 			GroupByStep groupByStep = joinStep.where(
 				() -> {
-					Predicate predicate = childPKColumn.in(
-						childPrimaryKeysArray);
+					Predicate predicate = _getChildPKColumnPredicate(
+						childPKColumn, childPrimaryKeysArray);
 
 					Table<?> parentTable = parentPKColumn.getTable();
 
