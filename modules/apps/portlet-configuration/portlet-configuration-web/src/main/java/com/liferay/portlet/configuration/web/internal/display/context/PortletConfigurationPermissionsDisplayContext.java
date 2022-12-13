@@ -95,7 +95,7 @@ public class PortletConfigurationPermissionsDisplayContext {
 		_renderRequest = renderRequest;
 		_roleTypeContributorProvider = roleTypeContributorProvider;
 
-		_themeDisplay = (ThemeDisplay)_httpServletRequest.getAttribute(
+		_themeDisplay = (ThemeDisplay)httpServletRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
 		long groupId = _getResourceGroupId();
