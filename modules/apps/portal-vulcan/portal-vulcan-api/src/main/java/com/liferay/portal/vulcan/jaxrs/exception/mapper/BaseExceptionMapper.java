@@ -59,7 +59,7 @@ public abstract class BaseExceptionMapper<T extends Throwable>
 	protected abstract Problem getProblem(T exception);
 
 	protected boolean isSanitize() {
-		return true;
+		return false;
 	}
 
 	@Context
