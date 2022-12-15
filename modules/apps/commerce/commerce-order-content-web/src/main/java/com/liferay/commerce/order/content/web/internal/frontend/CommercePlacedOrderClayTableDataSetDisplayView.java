@@ -38,7 +38,6 @@ public class CommercePlacedOrderClayTableDataSetDisplayView
 			clayTableSchemaBuilder.addClayTableSchemaField(
 				"date", "order-date");
 
-		dateClayTableSchemaField.setContentRenderer("date");
 		dateClayTableSchemaField.setSortable(true);
 
 		clayTableSchemaBuilder.addClayTableSchemaField(
