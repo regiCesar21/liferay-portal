@@ -117,6 +117,9 @@ function ManagementToolbar({
 							<ClayManagementToolbar.Item>
 								<ClayButtonGroup spaced>
 									<ClayButton
+										aria-label={Liferay.Language.get(
+											'turn-on'
+										)}
 										displayType="secondary"
 										onClick={onUpdateSelected(true)}
 										small
@@ -125,6 +128,9 @@ function ManagementToolbar({
 									</ClayButton>
 
 									<ClayButton
+										aria-label={Liferay.Language.get(
+											'turn-off'
+										)}
 										displayType="secondary"
 										onClick={onUpdateSelected(false)}
 										small
@@ -143,6 +149,9 @@ function ManagementToolbar({
 									items={filterItems}
 									trigger={
 										<ClayButton
+											aria-label={Liferay.Language.get(
+												'filter'
+											)}
 											className="nav-link"
 											displayType="unstyled"
 										>
@@ -160,6 +169,9 @@ function ManagementToolbar({
 
 								<ClayTooltipProvider>
 									<ClayButton
+										aria-label={Liferay.Language.get(
+											'reverse-sort-direction'
+										)}
 										className="nav-link nav-link-monospaced"
 										data-tooltip-align="bottom"
 										displayType="unstyled"
@@ -270,6 +282,7 @@ function ManagementToolbar({
 
 					<ClayResultsBar.Item>
 						<ClayButton
+							aria-label={Liferay.Language.get('clear')}
 							className="component-link tbar-link"
 							displayType="unstyled"
 							onClick={() => {

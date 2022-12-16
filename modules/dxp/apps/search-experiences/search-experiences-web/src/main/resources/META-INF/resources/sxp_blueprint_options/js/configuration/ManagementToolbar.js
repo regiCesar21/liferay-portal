@@ -34,6 +34,9 @@ const ManagementToolbar = ({
 						items={filterItems}
 						trigger={
 							<ClayButton
+								aria-label={Liferay.Language.get(
+									'filter-and-order'
+								)}
 								className="nav-link"
 								disabled={loading}
 								displayType="unstyled"
@@ -60,6 +63,11 @@ const ManagementToolbar = ({
 
 					<ClayManagementToolbar.Item>
 						<ClayButton
+							aria-label={
+								sortOrder === 'asc'
+									? Liferay.Language.get('ascending')
+									: Liferay.Language.get('descending')
+							}
 							className="nav-link nav-link-monospaced"
 							disabled={loading}
 							displayType="unstyled"
@@ -98,6 +106,7 @@ const ManagementToolbar = ({
 
 							<ClayInput.GroupInsetItem after tag="span">
 								<ClayButtonWithIcon
+									aria-label={Liferay.Language.get('clear')}
 									className="navbar-breakpoint-d-none"
 									displayType="unstyled"
 									onClick={() => setSearchMobile(false)}
@@ -105,6 +114,7 @@ const ManagementToolbar = ({
 								/>
 
 								<ClayButtonWithIcon
+									aria-label={Liferay.Language.get('search')}
 									disabled={loading}
 									displayType="unstyled"
 									onClick={() => onSearch(searchInputValue)}
@@ -118,6 +128,7 @@ const ManagementToolbar = ({
 				<ClayManagementToolbar.ItemList>
 					<ClayManagementToolbar.Item className="navbar-breakpoint-d-none">
 						<ClayButton
+							aria-label={Liferay.Language.get('search')}
 							className="nav-link nav-link-monospaced"
 							displayType="unstyled"
 							onClick={() => setSearchMobile(true)}
