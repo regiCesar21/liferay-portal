@@ -11,7 +11,7 @@
 
 import {fetch} from 'frontend-js-web';
 
-import {DEFAULT_ERROR} from './constants';
+import {DEFAULT_ERROR} from './errorMessages';
 import {openErrorToast} from './toasts';
 
 const DEFAULT_HEADERS = new Headers({

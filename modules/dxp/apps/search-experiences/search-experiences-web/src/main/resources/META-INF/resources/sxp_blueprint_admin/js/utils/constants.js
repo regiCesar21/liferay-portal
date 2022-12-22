@@ -20,10 +20,6 @@ export const CONFIG_PREFIX = 'configuration';
 
 export const COPY_BUTTON_CSS_CLASS = 'sxp-copy-button';
 
-export const DEFAULT_ERROR = Liferay.Language.get(
-	'an-unexpected-error-occurred'
-);
-
 export const SIDEBARS = {
 	ADD_SXP_ELEMENT: 'addSXPElement',
 	CLAUSE_CONTRIBUTORS: 'clauseContributors',

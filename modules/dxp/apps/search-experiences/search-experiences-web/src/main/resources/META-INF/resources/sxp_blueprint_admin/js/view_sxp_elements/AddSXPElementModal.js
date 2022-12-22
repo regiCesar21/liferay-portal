@@ -17,8 +17,8 @@ import {useIsMounted} from 'frontend-js-react-web';
 import {fetch, navigate} from 'frontend-js-web';
 import React, {useContext, useState} from 'react';
 
-import {DEFAULT_ERROR} from '../utils/constants';
 import {CUSTOM_JSON_SXP_ELEMENT} from '../utils/data';
+import {DEFAULT_ERROR} from '../utils/errorMessages';
 import {setInitialSuccessToast} from '../utils/toasts';
 import {isDefined} from '../utils/utils';
 import PortletContext from './PortletContext';
