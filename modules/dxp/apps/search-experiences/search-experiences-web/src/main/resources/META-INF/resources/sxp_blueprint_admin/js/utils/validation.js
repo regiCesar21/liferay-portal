@@ -10,9 +10,10 @@
  */
 
 import {ERROR_MESSAGES} from './errorMessages';
+import isDefined from './functions/is_defined';
+import isEmpty from './functions/is_empty';
 import {INPUT_TYPES} from './inputTypes';
 import {sub} from './language';
-import {isDefined, isEmpty} from './utils';
 
 export function validateBoost(configValue, type) {
 	if (configValue === null) {

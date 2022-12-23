@@ -9,16 +9,15 @@
  * distribution rights of the Software.
  */
 
+import isDefined from '../../../src/main/resources/META-INF/resources/sxp_blueprint_admin/js/utils/functions/is_defined';
+import isEmpty from '../../../src/main/resources/META-INF/resources/sxp_blueprint_admin/js/utils/functions/is_empty';
+import replaceStr from '../../../src/main/resources/META-INF/resources/sxp_blueprint_admin/js/utils/functions/replace_str';
 import {INPUT_TYPES} from '../../../src/main/resources/META-INF/resources/sxp_blueprint_admin/js/utils/inputTypes';
-import {
-	cleanUIConfiguration,
-	getConfigurationEntry,
+import cleanUIConfiguration from '../../../src/main/resources/META-INF/resources/sxp_blueprint_admin/js/utils/sxp_element/clean_ui_configuration';
+import getUIConfigurationValues, {
 	getDefaultValue,
-	getUIConfigurationValues,
-	isDefined,
-	isEmpty,
-	replaceStr,
-} from '../../../src/main/resources/META-INF/resources/sxp_blueprint_admin/js/utils/utils';
+} from '../../../src/main/resources/META-INF/resources/sxp_blueprint_admin/js/utils/sxp_element/get_ui_configuration_values';
+import replaceTemplateVariable from '../../../src/main/resources/META-INF/resources/sxp_blueprint_admin/js/utils/sxp_element/replace_template_variable';
 
 describe('utils', () => {
 	describe('isDefined', () => {
@@ -738,10 +737,10 @@ describe('utils', () => {
 		});
 	});
 
-	describe('getConfigurationEntry', () => {
+	describe('replaceTemplateVariable', () => {
 		it('gets configurationEntry of date', () => {
 			expect(
-				getConfigurationEntry({
+				replaceTemplateVariable({
 					sxpElement: {
 						elementDefinition: {
 							configuration: {
@@ -776,7 +775,7 @@ describe('utils', () => {
 
 		it('gets configurationEntry of select', () => {
 			expect(
-				getConfigurationEntry({
+				replaceTemplateVariable({
 					sxpElement: {
 						elementDefinition: {
 							configuration: {
@@ -831,7 +830,7 @@ describe('utils', () => {
 
 		it('gets configurationEntry of itemSelector', () => {
 			expect(
-				getConfigurationEntry({
+				replaceTemplateVariable({
 					sxpElement: {
 						elementDefinition: {
 							configuration: {
@@ -867,7 +866,7 @@ describe('utils', () => {
 
 		it('gets configurationEntry of multiselect', () => {
 			expect(
-				getConfigurationEntry({
+				replaceTemplateVariable({
 					sxpElement: {
 						elementDefinition: {
 							configuration: {
@@ -900,7 +899,7 @@ describe('utils', () => {
 
 		it('gets configurationEntry of number', () => {
 			expect(
-				getConfigurationEntry({
+				replaceTemplateVariable({
 					sxpElement: {
 						elementDefinition: {
 							configuration: {
@@ -933,7 +932,7 @@ describe('utils', () => {
 
 		it('gets configurationEntry of number with suffix', () => {
 			expect(
-				getConfigurationEntry({
+				replaceTemplateVariable({
 					sxpElement: {
 						elementDefinition: {
 							configuration: {
@@ -970,7 +969,7 @@ describe('utils', () => {
 
 		it('gets configurationEntry of slider', () => {
 			expect(
-				getConfigurationEntry({
+				replaceTemplateVariable({
 					sxpElement: {
 						elementDefinition: {
 							configuration: {
@@ -1003,7 +1002,7 @@ describe('utils', () => {
 
 		it('gets configurationEntry of field mapping', () => {
 			expect(
-				getConfigurationEntry({
+				replaceTemplateVariable({
 					sxpElement: {
 						elementDefinition: {
 							configuration: {
@@ -1043,7 +1042,7 @@ describe('utils', () => {
 
 		it('gets configurationEntry of field mapping list', () => {
 			expect(
-				getConfigurationEntry({
+				replaceTemplateVariable({
 					sxpElement: {
 						elementDefinition: {
 							configuration: {
@@ -1107,7 +1106,7 @@ describe('utils', () => {
 
 		it('gets configurationEntry of field mapping list with undefined or blank locale', () => {
 			expect(
-				getConfigurationEntry({
+				replaceTemplateVariable({
 					sxpElement: {
 						elementDefinition: {
 							configuration: {
@@ -1164,7 +1163,7 @@ describe('utils', () => {
 
 		it('gets configurationEntry of json', () => {
 			expect(
-				getConfigurationEntry({
+				replaceTemplateVariable({
 					sxpElement: {
 						elementDefinition: {
 							configuration: {
@@ -1196,7 +1195,7 @@ describe('utils', () => {
 
 		it('gets configurationEntry of text', () => {
 			expect(
-				getConfigurationEntry({
+				replaceTemplateVariable({
 					sxpElement: {
 						elementDefinition: {
 							configuration: {
@@ -1233,7 +1232,7 @@ describe('utils', () => {
 
 		it('gets configurationEntry of configuration with multiple fields', () => {
 			expect(
-				getConfigurationEntry({
+				replaceTemplateVariable({
 					sxpElement: {
 						elementDefinition: {
 							configuration: {
@@ -1294,7 +1293,7 @@ describe('utils', () => {
 
 		it('gets configurationEntry of custom json with no configuration', () => {
 			expect(
-				getConfigurationEntry({
+				replaceTemplateVariable({
 					sxpElement: {
 						description_i18n: {en_US: 'Editable JSON text area'},
 						elementDefinition: {

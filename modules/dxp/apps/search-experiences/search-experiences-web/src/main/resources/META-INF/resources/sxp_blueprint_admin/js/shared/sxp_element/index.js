@@ -21,12 +21,10 @@ import {PropTypes} from 'prop-types';
 import React, {useContext, useEffect, useState} from 'react';
 
 import {DEFAULT_SXP_ELEMENT_ICON} from '../../utils/data';
+import isDefined from '../../utils/functions/is_defined';
 import {INPUT_TYPES} from '../../utils/inputTypes';
-import {
-	cleanUIConfiguration,
-	getSXPElementJSON,
-	isDefined,
-} from '../../utils/utils';
+import cleanUIConfiguration from '../../utils/sxp_element/clean_ui_configuration';
+import getSXPElementJSON from '../../utils/sxp_element/get_sxp_element_json';
 import {PreviewModalWithCopyDownload} from '../PreviewModal';
 import ThemeContext from '../ThemeContext';
 import {getLocalizedText} from './../../utils/language';

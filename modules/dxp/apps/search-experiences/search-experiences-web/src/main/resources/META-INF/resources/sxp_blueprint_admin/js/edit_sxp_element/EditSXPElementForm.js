@@ -41,8 +41,9 @@ import SXPElement from '../shared/sxp_element/index';
 import {CONFIG_PREFIX} from '../utils/constants';
 import {DEFAULT_ERROR} from '../utils/errorMessages';
 import {sub} from '../utils/language';
+import getUIConfigurationValues from '../utils/sxp_element/get_ui_configuration_values';
+import isCustomJSONSXPElement from '../utils/sxp_element/is_custom_json_sxp_element';
 import {openErrorToast, setInitialSuccessToast} from '../utils/toasts';
-import {getUIConfigurationValues, isCustomJSONSXPElement} from '../utils/utils';
 import SidebarPanel from './SidebarPanel';
 
 /**
