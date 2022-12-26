@@ -55,7 +55,7 @@ public class JournalArticleLayoutDisplayPageProvider
 
 		try {
 			return new JournalArticleLayoutDisplayPageObjectProvider(
-				article, _assetHelper, journalArticleAssetRendererFactory);
+				article, assetHelper, journalArticleAssetRendererFactory);
 		}
 		catch (PortalException portalException) {
 			throw new RuntimeException(portalException);
@@ -76,7 +76,7 @@ public class JournalArticleLayoutDisplayPageProvider
 
 		try {
 			return new JournalArticleLayoutDisplayPageObjectProvider(
-				article, _assetHelper, journalArticleAssetRendererFactory);
+				article, assetHelper, journalArticleAssetRendererFactory);
 		}
 		catch (PortalException portalException) {
 			throw new RuntimeException(portalException);
@@ -89,13 +89,13 @@ public class JournalArticleLayoutDisplayPageProvider
 	}
 
 	@Reference
+	protected AssetHelper assetHelper;
+
+	@Reference
 	protected JournalArticleAssetRendererFactory
 		journalArticleAssetRendererFactory;
 
 	@Reference
 	protected JournalArticleLocalService journalArticleLocalService;
-
-	@Reference
-	private AssetHelper _assetHelper;
 
 }
