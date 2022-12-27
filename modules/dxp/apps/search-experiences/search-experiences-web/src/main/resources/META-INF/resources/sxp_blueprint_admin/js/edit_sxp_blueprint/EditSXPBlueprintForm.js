@@ -30,13 +30,11 @@ import PageToolbar from '../shared/PageToolbar';
 import Sidebar from '../shared/Sidebar';
 import SubmitWarningModal from '../shared/SubmitWarningModal';
 import ThemeContext from '../shared/ThemeContext';
-import {SIDEBARS} from '../utils/constants';
 import {DEFAULT_ERROR} from '../utils/errorMessages';
 import {fetchData, fetchPreviewSearch} from '../utils/fetch';
 import filterAndSortClassNames from '../utils/functions/filter_and_sort_class_names';
 import getResultsError from '../utils/functions/get_results_error';
 import isDefined from '../utils/functions/is_defined';
-import {INPUT_TYPES} from '../utils/inputTypes';
 import {getLocalizedText} from '../utils/language';
 import {setStorageAddSXPElementSidebar} from '../utils/sessionStorage';
 import cleanUIConfiguration from '../utils/sxp_element/clean_ui_configuration';
@@ -52,6 +50,8 @@ import {
 	openSuccessToast,
 	setInitialSuccessToast,
 } from '../utils/toasts';
+import {INPUT_TYPES} from '../utils/types/inputTypes';
+import {SIDEBAR_TYPES} from '../utils/types/sidebarTypes';
 import {
 	validateBoost,
 	validateJSON,
@@ -95,7 +95,9 @@ function EditSXPBlueprintForm({
 		loading: false,
 		results: {},
 	}));
-	const [openSidebar, setOpenSidebar] = useState(SIDEBARS.ADD_SXP_ELEMENT);
+	const [openSidebar, setOpenSidebar] = useState(
+		SIDEBAR_TYPES.ADD_SXP_ELEMENT
+	);
 	const [showSubmitWarningModal, setShowSubmitWarningModal] = useState(false);
 	const [tab, setTab] = useState('query-builder');
 
@@ -504,8 +506,8 @@ function EditSXPBlueprintForm({
 	const _handleChangeTab = (tab) => {
 		if (
 			tab !== 'query-builder' &&
-			(openSidebar === SIDEBARS.CLAUSE_CONTRIBUTORS ||
-				openSidebar === SIDEBARS.INDEXER_CLAUSES)
+			(openSidebar === SIDEBAR_TYPES.CLAUSE_CONTRIBUTORS ||
+				openSidebar === SIDEBAR_TYPES.INDEXER_CLAUSES)
 		) {
 			setOpenSidebar('');
 		}
@@ -763,7 +765,7 @@ function EditSXPBlueprintForm({
 	};
 
 	const _handleToggleSidebar = (type) => () => {
-		if (type === SIDEBARS.PREVIEW) {
+		if (type === SIDEBAR_TYPES.PREVIEW) {
 			setStorageAddSXPElementSidebar('closed');
 		}
 
@@ -792,7 +794,9 @@ function EditSXPBlueprintForm({
 						<AddSXPElementSidebar
 							onAddSXPElement={_handleAddSXPElement}
 							onClose={_handleCloseSidebar}
-							visible={openSidebar === SIDEBARS.ADD_SXP_ELEMENT}
+							visible={
+								openSidebar === SIDEBAR_TYPES.ADD_SXP_ELEMENT
+							}
 						/>
 
 						<ClauseContributorsSidebar
@@ -821,7 +825,8 @@ function EditSXPBlueprintForm({
 								_handleFrameworkConfigChange
 							}
 							visible={
-								openSidebar === SIDEBARS.CLAUSE_CONTRIBUTORS
+								openSidebar ===
+								SIDEBAR_TYPES.CLAUSE_CONTRIBUTORS
 							}
 						/>
 
@@ -831,7 +836,9 @@ function EditSXPBlueprintForm({
 							title={Liferay.Language.get(
 								'search-framework-indexer-clauses'
 							)}
-							visible={openSidebar === SIDEBARS.INDEXER_CLAUSES}
+							visible={
+								openSidebar === SIDEBAR_TYPES.INDEXER_CLAUSES
+							}
 						>
 							<div className="container-fluid text-secondary">
 								<span className="help-text">
@@ -847,12 +854,14 @@ function EditSXPBlueprintForm({
 						<div
 							className={getCN({
 								'open-add-sxp-element':
-									openSidebar === SIDEBARS.ADD_SXP_ELEMENT,
+									openSidebar ===
+									SIDEBAR_TYPES.ADD_SXP_ELEMENT,
 								'open-clause-contributors':
 									openSidebar ===
-									SIDEBARS.CLAUSE_CONTRIBUTORS,
+									SIDEBAR_TYPES.CLAUSE_CONTRIBUTORS,
 								'open-info':
-									openSidebar === SIDEBARS.INDEXER_CLAUSES,
+									openSidebar ===
+									SIDEBAR_TYPES.INDEXER_CLAUSES,
 							})}
 						>
 							<QueryBuilderTab
@@ -929,11 +938,11 @@ function EditSXPBlueprintForm({
 					<ClayButton
 						borderless
 						className={getCN({
-							active: openSidebar === SIDEBARS.PREVIEW,
+							active: openSidebar === SIDEBAR_TYPES.PREVIEW,
 						})}
 						data-testid={TEST_IDS.PREVIEW_SIDEBAR_BUTTON}
 						displayType="secondary"
-						onClick={_handleToggleSidebar(SIDEBARS.PREVIEW)}
+						onClick={_handleToggleSidebar(SIDEBAR_TYPES.PREVIEW)}
 						small
 					>
 						{Liferay.Language.get('preview')}
@@ -951,12 +960,12 @@ function EditSXPBlueprintForm({
 				onFocusSXPElement={_handleFocusSXPElement}
 				responseString={previewInfo.results.responseString}
 				totalHits={previewInfo.results.searchHits?.totalHits}
-				visible={openSidebar === SIDEBARS.PREVIEW}
+				visible={openSidebar === SIDEBAR_TYPES.PREVIEW}
 			/>
 
 			<div
 				className={getCN({
-					'open-preview': openSidebar === SIDEBARS.PREVIEW,
+					'open-preview': openSidebar === SIDEBAR_TYPES.PREVIEW,
 				})}
 			>
 				{_renderTabContent()}
