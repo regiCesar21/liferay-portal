@@ -35,7 +35,7 @@ import {fetchData, fetchPreviewSearch} from '../utils/fetch';
 import filterAndSortClassNames from '../utils/functions/filter_and_sort_class_names';
 import getResultsError from '../utils/functions/get_results_error';
 import isDefined from '../utils/functions/is_defined';
-import {getLocalizedText} from '../utils/language';
+import getLocalizedText from '../utils/language/get_localized_text';
 import {setStorageAddSXPElementSidebar} from '../utils/sessionStorage';
 import cleanUIConfiguration from '../utils/sxp_element/clean_ui_configuration';
 import getUIConfigurationValues from '../utils/sxp_element/get_ui_configuration_values';

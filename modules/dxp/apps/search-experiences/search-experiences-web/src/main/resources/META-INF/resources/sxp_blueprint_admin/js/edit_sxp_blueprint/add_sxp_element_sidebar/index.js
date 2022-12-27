@@ -34,7 +34,7 @@ import {
 	DEFAULT_SXP_ELEMENT_ICON,
 } from '../../utils/data';
 import {addParams, fetchData} from '../../utils/fetch';
-import {getLocalizedText} from '../../utils/language';
+import getLocalizedText from '../../utils/language/get_localized_text';
 import {setStorageAddSXPElementSidebar} from '../../utils/sessionStorage';
 
 const DEFAULT_CATEGORY = 'other';

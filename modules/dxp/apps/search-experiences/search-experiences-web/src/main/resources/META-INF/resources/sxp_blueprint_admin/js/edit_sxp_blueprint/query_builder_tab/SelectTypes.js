@@ -19,7 +19,7 @@ import ClayTable from '@clayui/table';
 import React, {useContext, useState} from 'react';
 
 import ThemeContext from '../../shared/ThemeContext';
-import {sub} from '../../utils/language';
+import sub from '../../utils/language/sub';
 
 function SelectTypes({
 	onFrameworkConfigChange,

@@ -16,7 +16,7 @@ import ErrorBoundary from '../shared/ErrorBoundary';
 import ThemeContext from '../shared/ThemeContext';
 import {COPY_BUTTON_CSS_CLASS} from '../utils/constants';
 import {fetchData} from '../utils/fetch';
-import {renameKeys} from '../utils/language';
+import renameKeys from '../utils/language/rename_keys';
 import {openInitialSuccessToast} from '../utils/toasts';
 import EditSXPElementForm from './EditSXPElementForm';
 

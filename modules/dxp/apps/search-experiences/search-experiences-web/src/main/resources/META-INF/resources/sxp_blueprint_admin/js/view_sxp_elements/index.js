@@ -25,7 +25,7 @@ import React, {useEffect, useState} from 'react';
 
 import SortButton from '../shared/SortButton';
 import {DEFAULT_ERROR} from '../utils/constants';
-import {sub} from '../utils/language';
+import sub from '../utils/language/sub';
 import {checkPermission} from '../utils/permissions';
 import {formatDate, truncateString} from '../utils/strings';
 import {openErrorToast, openSuccessToast} from '../utils/toasts';

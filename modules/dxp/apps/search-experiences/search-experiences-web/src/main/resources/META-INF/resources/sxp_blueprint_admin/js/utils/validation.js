@@ -12,7 +12,7 @@
 import {ERROR_MESSAGES} from './errorMessages';
 import isDefined from './functions/is_defined';
 import isEmpty from './functions/is_empty';
-import {sub} from './language';
+import sub from './language/sub';
 import {INPUT_TYPES} from './types/inputTypes';
 
 export function validateBoost(configValue, type) {
