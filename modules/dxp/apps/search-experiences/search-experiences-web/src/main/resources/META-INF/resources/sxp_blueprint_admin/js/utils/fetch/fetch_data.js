@@ -11,16 +11,16 @@
 
 import {fetch} from 'frontend-js-web';
 
-import {DEFAULT_ERROR} from './errorMessages';
-import {openErrorToast} from './toasts';
+import {DEFAULT_ERROR} from '../errorMessages';
+import {openErrorToast} from '../toasts';
 
-const DEFAULT_HEADERS = new Headers({
+export const DEFAULT_HEADERS_OBJECT = {
 	Accept: 'application/json',
 	'Accept-Language': Liferay.ThemeDisplay.getBCP47LanguageId(),
 	'Content-Type': 'application/json',
-});
+};
 
-const DEFAULT_METHOD = 'GET';
+export const DEFAULT_HEADERS = new Headers(DEFAULT_HEADERS_OBJECT);
 
 /**
  * A wrapper around frontend-js-web's `fetch` function with commonly used
@@ -31,10 +31,10 @@ const DEFAULT_METHOD = 'GET';
  * @param {Object=} init An optional object containing custom configuration.
  * @return {Promise} A Promise that resolves to a Response object.
  */
-export function fetchData(resource = '', init) {
+export default function fetchData(resource = '', {headers, ...init} = {}) {
 	return fetch(resource, {
-		headers: DEFAULT_HEADERS,
-		method: DEFAULT_METHOD,
+		headers: new Headers({...DEFAULT_HEADERS_OBJECT, ...headers}),
+		method: 'GET',
 		...init,
 	})
 		.then((response) => {
@@ -53,40 +53,4 @@ export function fetchData(resource = '', init) {
 
 			throw error;
 		});
-}
-
-/**
- * Modifies the url to include parameters.
- * @param {string} url The base url to fetch.
- * @param {Object} params The url parameters to be included in the request.
- * @returns {string} The modified url.
- */
-export function addParams(url, params) {
-	const fetchURL = new URL(url, Liferay.ThemeDisplay.getPortalURL());
-
-	Object.keys(params).forEach((key) => {
-		if (params[key] !== null) {
-			fetchURL.searchParams.append(key, params[key]);
-		}
-	});
-
-	return fetchURL;
-}
-
-/**
- * A wrapper function to fetch data for the preview sidebar. This was split into
- * a separate function primarily to make it easier to mock in tests.
- * @param {object} urlParameters The parameters to be added to the url.
- * @param {object} options Additional fetch options. For example, `{body: ...}`
- * @returns
- */
-export function fetchPreviewSearch(urlParameters, options) {
-	return fetch(
-		addParams('/o/search-experiences-rest/v1.0/search', urlParameters),
-		{
-			headers: DEFAULT_HEADERS,
-			method: 'POST',
-			...options,
-		}
-	);
 }

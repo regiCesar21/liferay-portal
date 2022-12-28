@@ -15,7 +15,7 @@ import useClipboardJS from '../hooks/useClipboardJS';
 import ErrorBoundary from '../shared/ErrorBoundary';
 import ThemeContext from '../shared/ThemeContext';
 import {COPY_BUTTON_CSS_CLASS} from '../utils/constants';
-import {fetchData} from '../utils/fetch';
+import fetchData from '../utils/fetch/fetch_data';
 import {openInitialSuccessToast} from '../utils/toasts';
 import EditSXPBlueprintForm from './EditSXPBlueprintForm';
 
