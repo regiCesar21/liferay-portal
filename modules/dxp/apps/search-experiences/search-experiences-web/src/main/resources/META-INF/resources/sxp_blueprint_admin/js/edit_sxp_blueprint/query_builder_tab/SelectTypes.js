@@ -215,7 +215,6 @@ function SelectTypes({
 												return (
 													<ClayTable.Row
 														active={isSelected}
-														className="cursor-pointer"
 														key={className}
 														onClick={_handleRowCheck(
 															className
