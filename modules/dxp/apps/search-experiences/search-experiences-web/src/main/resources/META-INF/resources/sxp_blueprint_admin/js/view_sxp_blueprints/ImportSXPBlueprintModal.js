@@ -103,7 +103,7 @@ const ImportSXPBlueprintModal = ({redirectURL}) => {
 	};
 
 	return (
-		<div className="import-sxp-blueprint-form">
+		<div className="sxp-import-modal-root">
 			<ClayModal.Body>
 				{errorMessage && (
 					<ClayAlert

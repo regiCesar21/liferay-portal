@@ -179,7 +179,7 @@ const AddSXPBlueprintModal = ({children}) => {
 		<>
 			{visibleModal && (
 				<ClayModal
-					className="sxp-blueprint-edit-title-modal"
+					className="sxp-add-blueprint-modal-root"
 					observer={observer}
 					size="md"
 				>

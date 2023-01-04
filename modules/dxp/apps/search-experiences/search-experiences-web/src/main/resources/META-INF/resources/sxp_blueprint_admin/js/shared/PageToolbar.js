@@ -52,7 +52,7 @@ function EditTitleModal({
 
 	return (
 		<ClayModal
-			className="entry-edit-title-modal"
+			className="sxp-edit-title-modal-root"
 			observer={observer}
 			size="md"
 		>

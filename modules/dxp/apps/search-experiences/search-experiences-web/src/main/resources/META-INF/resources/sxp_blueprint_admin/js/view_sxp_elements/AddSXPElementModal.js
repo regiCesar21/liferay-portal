@@ -114,7 +114,11 @@ const AddSXPElementModal = ({children}) => {
 		<>
 			<ClayModalProvider>
 				{visibleModal && (
-					<ClayModal observer={observer} size="md">
+					<ClayModal
+						className="sxp-add-element-modal-root"
+						observer={observer}
+						size="md"
+					>
 						<ClayModal.Header>
 							{Liferay.Language.get('new-search-element')}
 						</ClayModal.Header>
