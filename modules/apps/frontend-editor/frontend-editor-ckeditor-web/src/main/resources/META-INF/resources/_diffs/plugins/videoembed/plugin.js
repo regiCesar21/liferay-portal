@@ -256,7 +256,6 @@ if (!CKEDITOR.plugins.get('videoembed')) {
 
 	let currentAlignment = null;
 	let currentElement = null;
-	let resizer = null;
 	const EMBED_VIDEO_WIDTH = 560;
 	const EMBED_VIDEO_HEIGHT = 315;
 
@@ -416,13 +415,13 @@ if (!CKEDITOR.plugins.get('videoembed')) {
 
 				editor.focus();
 
-				resizer.hide();
+				editor.resizer.hide();
 			}, 0);
 		},
 
 		afterInit(editor) {
 			editor.on('resize', () => {
-				resizer.hide();
+				editor.resizer.hide();
 				selectWidget(editor);
 			});
 
@@ -473,7 +472,7 @@ if (!CKEDITOR.plugins.get('videoembed')) {
 								);
 
 								if (imageElement) {
-									resizer.show(imageElement.$);
+									editor.resizer.show(imageElement.$);
 								}
 
 								event.cancel();
@@ -565,8 +564,8 @@ if (!CKEDITOR.plugins.get('videoembed')) {
 						currentAlignment = result.alignment;
 						currentElement = result.element;
 
-						if (resizer.isHandle(event.target)) {
-							resizer.initDrag(event);
+						if (editor.resizer.isHandle(event.target)) {
+							editor.resizer.initDrag(event);
 						}
 					}
 
@@ -636,7 +635,7 @@ if (!CKEDITOR.plugins.get('videoembed')) {
 			window.addEventListener(
 				'resize',
 				() => {
-					resizer.hide();
+					editor.resizer.hide();
 					selectWidget(editor);
 				},
 				false
@@ -678,11 +677,11 @@ if (!CKEDITOR.plugins.get('videoembed')) {
 						);
 
 						if (imageElement) {
-							resizer.show(imageElement.$);
+							editor.resizer.show(imageElement.$);
 						}
 					}
 					else {
-						resizer.hide();
+						editor.resizer.hide();
 					}
 				}
 			});
@@ -696,7 +695,7 @@ if (!CKEDITOR.plugins.get('videoembed')) {
 			});
 
 			editor.on('blur', () => {
-				resizer.hide();
+				editor.resizer.hide();
 			});
 
 			editor.filter.addElementCallback((element) => {
@@ -713,7 +712,7 @@ if (!CKEDITOR.plugins.get('videoembed')) {
 			];
 
 			CKEDITOR.scriptLoader.load(dependencies, () => {
-				resizer = new Liferay.ResizerCKEditor(editor, {
+				editor.resizer = new Liferay.ResizerCKEditor(editor, {
 					onComplete(element, width, height) {
 						resizeElement(element, width, height);
 
