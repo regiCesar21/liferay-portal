@@ -2333,18 +2333,9 @@ public class SitesImpl implements Sites {
 		LayoutSet layoutSet = LayoutSetLocalServiceUtil.getLayoutSet(
 			groupId, privateLayout);
 
-		boolean mergeLayoutPrototypesThreadLocalSkipMerge =
-			MergeLayoutPrototypesThreadLocal.isSkipMerge();
+		MergeLayoutPrototypesThreadLocal.setSkipMerge(false);
 
-		try {
-			MergeLayoutPrototypesThreadLocal.setSkipMerge(false);
-
-			mergeLayoutSetPrototypeLayouts(group, layoutSet);
-		}
-		finally {
-			MergeLayoutPrototypesThreadLocal.setSkipMerge(
-				mergeLayoutPrototypesThreadLocalSkipMerge);
-		}
+		mergeLayoutSetPrototypeLayouts(group, layoutSet);
 	}
 
 	private String _acquireLock(
