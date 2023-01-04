@@ -193,6 +193,7 @@
 					requestedLocale:
 						'<%= (requestedLocale == null) ? StringPool.BLANK : HtmlUtil.escapeJS(requestedLocale.toString()) %>',
 					synchronousFormSubmission: <%= synchronousFormSubmission %>,
+					webContentSelectorURL: '<%= webContentSelectorURL %>',
 
 					<c:if test="<%= ddmFormValues != null %>">
 						values: <%= DDMUtil.getDDMFormValuesJSONString(ddmFormValues) %>,
