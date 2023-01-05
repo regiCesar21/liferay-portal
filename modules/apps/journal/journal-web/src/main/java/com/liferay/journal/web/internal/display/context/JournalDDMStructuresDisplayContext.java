@@ -12,11 +12,14 @@ import com.liferay.dynamic.data.mapping.service.DDMStructureServiceUtil;
 import com.liferay.dynamic.data.mapping.util.comparator.StructureIdComparator;
 import com.liferay.dynamic.data.mapping.util.comparator.StructureModifiedDateComparator;
 import com.liferay.dynamic.data.mapping.util.comparator.StructureNameComparator;
+import com.liferay.journal.constants.JournalPortletKeys;
 import com.liferay.journal.model.JournalArticle;
 import com.liferay.journal.web.internal.configuration.JournalWebConfiguration;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.search.EmptyOnClickRowChecker;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
+import com.liferay.portal.kernel.portlet.PortalPreferences;
+import com.liferay.portal.kernel.portlet.PortletPreferencesFactoryUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.ListUtil;
@@ -53,6 +56,9 @@ public class JournalDDMStructuresDisplayContext {
 		_journalWebConfiguration =
 			(JournalWebConfiguration)_httpServletRequest.getAttribute(
 				JournalWebConfiguration.class.getName());
+
+		_portalPreferences = PortletPreferencesFactoryUtil.getPortalPreferences(
+			_httpServletRequest);
 
 		_themeDisplay = (ThemeDisplay)_httpServletRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
@@ -144,8 +150,30 @@ public class JournalDDMStructuresDisplayContext {
 			return _orderByCol;
 		}
 
-		_orderByCol = ParamUtil.getString(
-			_renderRequest, "orderByCol", "modified-date");
+		_orderByCol = ParamUtil.getString(_renderRequest, "orderByCol");
+
+		if (Validator.isNull(_orderByCol)) {
+			if (isSearch()) {
+				_orderByCol = _portalPreferences.getValue(
+					JournalPortletKeys.JOURNAL, "order-by-col", "relevance");
+			}
+			else {
+				_orderByCol = _portalPreferences.getValue(
+					JournalPortletKeys.JOURNAL, "order-by-col",
+					"modified-date");
+
+				if (_orderByCol.equals("relevance")) {
+					_orderByCol = "modified-date";
+
+					_portalPreferences.setValue(
+						JournalPortletKeys.JOURNAL, "order-by-col", null);
+				}
+			}
+		}
+		else {
+			_portalPreferences.setValue(
+				JournalPortletKeys.JOURNAL, "order-by-col", _orderByCol);
+		}
 
 		return _orderByCol;
 	}
@@ -155,8 +183,23 @@ public class JournalDDMStructuresDisplayContext {
 			return _orderByType;
 		}
 
-		_orderByType = ParamUtil.getString(
-			_renderRequest, "orderByType", "desc");
+		_orderByType = ParamUtil.getString(_renderRequest, "orderByType");
+
+		if (Validator.isNull(_orderByType)) {
+			String defaultOrderByType = "asc";
+
+			if (_orderByCol.equals("modified-date")) {
+				defaultOrderByType = "desc";
+			}
+
+			_orderByType = _portalPreferences.getValue(
+				JournalPortletKeys.JOURNAL, "order-by-type",
+				defaultOrderByType);
+		}
+		else {
+			_portalPreferences.setValue(
+				JournalPortletKeys.JOURNAL, "order-by-type", _orderByType);
+		}
 
 		return _orderByType;
 	}
@@ -238,6 +281,7 @@ public class JournalDDMStructuresDisplayContext {
 	private String _keywords;
 	private String _orderByCol;
 	private String _orderByType;
+	private final PortalPreferences _portalPreferences;
 	private final RenderRequest _renderRequest;
 	private final RenderResponse _renderResponse;
 	private final ThemeDisplay _themeDisplay;
