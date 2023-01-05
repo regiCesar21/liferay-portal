@@ -4166,6 +4166,8 @@ AUI.add(
 					validator: Lang.isBoolean,
 					value: true,
 				},
+
+				webContentSelectorURL: {},
 			},
 
 			AUGMENTS: [DDMPortletSupport, FieldsSupport],
