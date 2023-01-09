@@ -167,28 +167,6 @@ public class FriendlyURLServletTest {
 	}
 
 	@Test
-	public void testGetRedirectWithUpperCaseAccentedSourceURLRedirectEntry()
-		throws Throwable {
-
-		Layout redirectionLayout = LayoutTestUtil.addLayout(_group);
-
-		_redirectEntryLocalService.addRedirectEntry(
-			_group.getGroupId(), redirectionLayout.getName(LocaleUtil.US), null,
-			false, "TÉSTREDIRECT", ServiceContextTestUtil.getServiceContext());
-
-		MockHttpServletRequest mockHttpServletRequest =
-			new MockHttpServletRequest();
-
-		mockHttpServletRequest.setPathInfo("/TÉSTREDIRECT");
-
-		testGetRedirect(
-			mockHttpServletRequest, _group.getFriendlyURL() + "/TÉSTREDIRECT",
-			Portal.PATH_MAIN,
-			_redirectConstructor2.newInstance(
-				redirectionLayout.getName(LocaleUtil.US), true, false));
-	}
-
-	@Test
 	public void testGetRedirectWithExistentSite() throws Throwable {
 		MockHttpServletRequest mockHttpServletRequest =
 			new MockHttpServletRequest();
@@ -295,6 +273,28 @@ public class FriendlyURLServletTest {
 		testGetRedirect(
 			mockHttpServletRequest, getPath(_group, _layout), Portal.PATH_MAIN,
 			_redirectConstructor1.newInstance(getURL(_layout)));
+	}
+
+	@Test
+	public void testGetRedirectWithUpperCaseAccentedSourceURLRedirectEntry()
+		throws Throwable {
+
+		Layout redirectionLayout = LayoutTestUtil.addLayout(_group);
+
+		_redirectEntryLocalService.addRedirectEntry(
+			_group.getGroupId(), redirectionLayout.getName(LocaleUtil.US), null,
+			false, "TÉSTREDIRECT", ServiceContextTestUtil.getServiceContext());
+
+		MockHttpServletRequest mockHttpServletRequest =
+			new MockHttpServletRequest();
+
+		mockHttpServletRequest.setPathInfo("/TÉSTREDIRECT");
+
+		testGetRedirect(
+			mockHttpServletRequest, _group.getFriendlyURL() + "/TÉSTREDIRECT",
+			Portal.PATH_MAIN,
+			_redirectConstructor2.newInstance(
+				redirectionLayout.getName(LocaleUtil.US), true, false));
 	}
 
 	@Test
