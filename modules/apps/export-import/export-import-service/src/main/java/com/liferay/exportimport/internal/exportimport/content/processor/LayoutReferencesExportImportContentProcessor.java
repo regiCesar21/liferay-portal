@@ -1183,7 +1183,7 @@ public class LayoutReferencesExportImportContentProcessor
 		try {
 			URI uri = _http.getURI(url);
 
-			if (uri != null) {
+			if ((uri != null) && Validator.isIPAddress(uri.getHost())) {
 				InetAddress inetAddress = InetAddressUtil.getInetAddressByName(
 					uri.getHost());
 
