@@ -135,8 +135,7 @@ public class StagingImplTest {
 				PropsValuesTestUtil.swapWithSafeCloseable(
 					"TUNNEL_SERVLET_HIDE_EXCEPTION_DATA", true)) {
 
-			caughtThrowable =
-				_disableRemoteStagingWithIncorrectLiveGroupId();
+			caughtThrowable = _disableRemoteStagingWithIncorrectLiveGroupId();
 		}
 
 		Assert.assertNotNull(caughtThrowable);
@@ -170,8 +169,7 @@ public class StagingImplTest {
 				PropsValuesTestUtil.swapWithSafeCloseable(
 					"TUNNEL_SERVLET_HIDE_EXCEPTION_DATA", false)) {
 
-			caughtThrowable =
-				_disableRemoteStagingWithIncorrectLiveGroupId();
+			caughtThrowable = _disableRemoteStagingWithIncorrectLiveGroupId();
 		}
 
 		Assert.assertNotNull(caughtThrowable);
