@@ -98,7 +98,6 @@ entriesChecker.setRememberCheckBoxStateURLRegex("^(?!.*" + liferayPortletRespons
 							HashMapBuilder.<String, Object>put(
 								"actions", StringUtil.merge(dlAdminManagementToolbarDisplayContext.getAvailableActions(fileEntry))
 							).build());
-
 						row.setPrimaryKey(String.valueOf(fileEntry.getFileEntryId()));
 						%>
 
