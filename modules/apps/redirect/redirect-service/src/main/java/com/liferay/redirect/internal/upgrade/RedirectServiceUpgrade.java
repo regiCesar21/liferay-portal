@@ -16,8 +16,8 @@ package com.liferay.redirect.internal.upgrade;
 
 import com.liferay.portal.kernel.upgrade.DummyUpgradeProcess;
 import com.liferay.portal.upgrade.registry.UpgradeStepRegistrator;
-
 import com.liferay.redirect.internal.upgrade.v3_0_2.RedirectEntrySourceURLUpgradeProcess;
+
 import org.osgi.service.component.annotations.Component;
 
 /**
