@@ -9,6 +9,7 @@ import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
+import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.security.auth.AuthTokenUtil;
 import com.liferay.portal.kernel.struts.StrutsAction;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -124,6 +125,14 @@ public class SamlLoginAction extends BaseSamlStrutsAction {
 			}
 		}
 
+		if (!_hideIdpRedirectMessage) {
+			httpServletRequest.setAttribute(
+				SamlWebKeys.SAML_IDP_REDIRECT_MESSAGE,
+				_language.get(
+					httpServletRequest,
+					"redirecting-to-your-identity-provider"));
+		}
+
 		httpServletRequest.setAttribute(
 			SamlWebKeys.SAML_SSO_LOGIN_CONTEXT,
 			toJSONObject(samlSpIdpConnections));
@@ -131,7 +140,7 @@ public class SamlLoginAction extends BaseSamlStrutsAction {
 		JspUtil.dispatch(
 			httpServletRequest, httpServletResponse,
 			"/portal/saml/select_idp.jsp",
-			"please-select-your-identity-provider", false);
+			"please-select-your-identity-provider", _hideIdpRedirectMessage);
 
 		return null;
 	}
@@ -168,6 +177,9 @@ public class SamlLoginAction extends BaseSamlStrutsAction {
 	}
 
 	private boolean _hideIdpRedirectMessage;
+
+	@Reference
+	private Language _language;
 
 	@Reference
 	private Portal _portal;

@@ -25,6 +25,9 @@ public interface SamlWebKeys {
 
 	public static final String SAML_ENTITY_ID = "SAML_ENTITY_ID";
 
+	public static final String SAML_IDP_REDIRECT_MESSAGE =
+		"SAML_IDP_REDIRECT_MESSAGE";
+
 	public static final String SAML_IDP_SP_CONNECTION =
 		"SAML_IDP_SP_CONNECTION";
 

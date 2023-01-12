@@ -10,6 +10,8 @@
 <%
 String redirect = ParamUtil.getString(request, "redirect");
 
+String samlIdPRedirectMessage = GetterUtil.getString(request.getAttribute("SAML_IDP_REDIRECT_MESSAGE"));
+
 JSONObject samlSsoLoginContext = (JSONObject)request.getAttribute("SAML_SSO_LOGIN_CONTEXT");
 
 JSONArray relevantIdpConnectionsJSONArray = samlSsoLoginContext.getJSONArray("relevantIdpConnections");
@@ -21,7 +23,7 @@ JSONArray relevantIdpConnectionsJSONArray = samlSsoLoginContext.getJSONArray("re
 
 	<c:choose>
 		<c:when test="<%= relevantIdpConnectionsJSONArray.length() == 1 %>">
-			<p><liferay-ui:message key="redirecting-to-your-identity-provider" /></p>
+			<p><%= samlIdPRedirectMessage %></p>
 
 			<%
 			JSONObject relevantIdpConnectionJSONObject = relevantIdpConnectionsJSONArray.getJSONObject(0);
