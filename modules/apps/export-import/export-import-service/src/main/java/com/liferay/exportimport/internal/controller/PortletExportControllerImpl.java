@@ -662,6 +662,7 @@ public class PortletExportControllerImpl implements PortletExportController {
 		finally {
 			portletDataContext.setGroupId(groupId);
 			portletDataContext.setStartDate(originalStartDate);
+			portletDataContext.clearScopedPrimaryKeys();
 		}
 
 		if (Validator.isNull(data)) {
