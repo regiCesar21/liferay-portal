@@ -198,7 +198,7 @@ public class GetCollectionFieldMVCResourceCommandTest {
 			JSONUtil.put(
 				"itemType", BlogsEntry.class.getName()
 			).put(
-				"key", TestInfoCollectionProvider.class.getName()
+				"key", TestInfoListProvider.class.getName()
 			).put(
 				"type", InfoListProviderItemSelectorReturnType.class.getName()
 			).toString(),
