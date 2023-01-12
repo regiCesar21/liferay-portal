@@ -17,6 +17,7 @@ package com.liferay.portal.upload.internal.configuration.persistence.listener;
 import com.liferay.portal.configuration.persistence.listener.ConfigurationModelListener;
 import com.liferay.portal.configuration.persistence.listener.ConfigurationModelListenerException;
 import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.upload.UploadServletRequestConfigurationHelperUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.LocaleThreadLocal;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
@@ -60,7 +61,9 @@ public class UploadServletRequestConfigurationModelListener
 	public void onBeforeSave(String pid, Dictionary<String, Object> properties)
 		throws ConfigurationModelListenerException {
 
-		long maxSize = (long)properties.get("maxSize");
+		long maxSize = GetterUtil.getLong(
+			properties.get("maxSize"),
+			UploadServletRequestConfigurationHelperUtil.getMaxSize());
 
 		if (maxSize < _MINIMUM_MAX_SIZE) {
 			ResourceBundle resourceBundle = _getResourceBundle();
