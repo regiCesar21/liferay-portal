@@ -24,7 +24,7 @@ import {
 	DEFAULT_SORT_CONFIGURATION,
 } from '../utils/data';
 import {DEFAULT_ERROR} from '../utils/errorMessages';
-import fetchData from '../utils/fetch/fetch_data';
+import fetchData, {DEFAULT_HEADERS} from '../utils/fetch/fetch_data';
 import filterAndSortClassNames from '../utils/functions/filter_and_sort_class_names';
 import {setInitialSuccessToast} from '../utils/toasts';
 import PortletContext from './PortletContext';
@@ -118,9 +118,7 @@ const AddSXPBlueprintModal = ({children}) => {
 				elementInstances: [],
 				title_i18n: {[defaultLocale]: titleInputValue},
 			}),
-			headers: new Headers({
-				'Content-Type': 'application/json',
-			}),
+			headers: DEFAULT_HEADERS,
 			method: 'POST',
 		})
 			.then((response) => {

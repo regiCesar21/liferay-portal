@@ -31,7 +31,7 @@ import Sidebar from '../shared/Sidebar';
 import SubmitWarningModal from '../shared/SubmitWarningModal';
 import ThemeContext from '../shared/ThemeContext';
 import {DEFAULT_ERROR} from '../utils/errorMessages';
-import fetchData from '../utils/fetch/fetch_data';
+import fetchData, {DEFAULT_HEADERS} from '../utils/fetch/fetch_data';
 import fetchPreviewSearch from '../utils/fetch/fetch_preview_search';
 import filterAndSortClassNames from '../utils/functions/filter_and_sort_class_names';
 import getResultsError from '../utils/functions/get_results_error';
@@ -183,9 +183,7 @@ function EditSXPBlueprintForm({
 							elementInstances,
 							title_i18n: {[defaultLocale]: formik.values.title},
 						}),
-						headers: new Headers({
-							'Content-Type': 'application/json',
-						}),
+						headers: DEFAULT_HEADERS,
 						method: 'POST',
 					}
 				).then((response) => response.json());
@@ -215,9 +213,7 @@ function EditSXPBlueprintForm({
 						elementInstances,
 						title_i18n: {[defaultLocale]: formik.values.title},
 					}),
-					headers: new Headers({
-						'Content-Type': 'application/json',
-					}),
+					headers: DEFAULT_HEADERS,
 					method: 'PATCH',
 				}
 			)
