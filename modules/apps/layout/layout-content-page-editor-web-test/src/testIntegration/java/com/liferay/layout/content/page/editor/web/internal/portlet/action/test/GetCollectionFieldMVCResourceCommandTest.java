@@ -188,12 +188,11 @@ public class GetCollectionFieldMVCResourceCommandTest {
 		JSONObject jsonObject = ReflectionTestUtil.invoke(
 			_mvcResourceCommand, "_getCollectionFieldsJSONObject",
 			new Class<?>[] {
-				HttpServletRequest.class, HttpServletResponse.class, int.class,
+				HttpServletRequest.class, HttpServletResponse.class,
 				String.class, String.class, String.class, String.class,
-				String.class, int.class, int.class, String.class, boolean.class,
-				String.class
+				String.class, int.class
 			},
-			request, new MockHttpServletResponse(), 0,
+			request, new MockHttpServletResponse(),
 			LocaleUtil.toLanguageId(LocaleUtil.US),
 			JSONUtil.put(
 				"itemType", BlogsEntry.class.getName()
@@ -202,8 +201,7 @@ public class GetCollectionFieldMVCResourceCommandTest {
 			).put(
 				"type", InfoListProviderItemSelectorReturnType.class.getName()
 			).toString(),
-			StringPool.BLANK, StringPool.BLANK, StringPool.BLANK, 1, 20,
-			"regular", false, StringPool.BLANK);
+			StringPool.BLANK, StringPool.BLANK, StringPool.BLANK, 1);
 
 		Assert.assertEquals(1, jsonObject.getInt("length"));
 
