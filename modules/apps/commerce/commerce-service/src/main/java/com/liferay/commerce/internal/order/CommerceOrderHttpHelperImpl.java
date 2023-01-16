@@ -609,12 +609,8 @@ public class CommerceOrderHttpHelperImpl implements CommerceOrderHttpHelper {
 			return;
 		}
 
-		long commerceChannelGroupId =
-			_commerceChannelLocalService.getCommerceChannelGroupIdBySiteGroupId(
-				themeDisplay.getScopeGroupId());
-
 		Cookie cookie = new Cookie(
-			getCookieName(commerceChannelGroupId), commerceOrder.getUuid());
+			getCookieName(commerceOrder.getGroupId()), commerceOrder.getUuid());
 
 		String domain = CookieKeys.getDomain(themeDisplay.getRequest());
 
