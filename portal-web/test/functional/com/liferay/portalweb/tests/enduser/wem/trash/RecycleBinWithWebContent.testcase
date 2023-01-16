@@ -95,7 +95,11 @@ definition {
 		}
 
 		task ("Navigate to Web Content admin") {
-			WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
+			ApplicationsMenu.gotoSite(site = "Test Site Name");
+
+			ProductMenu.gotoPortlet(
+				category = "Content & Data",
+				portlet = "Web Content");
 		}
 
 		task ("Expand the Recycle Bin category") {
