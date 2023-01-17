@@ -255,7 +255,7 @@ public class LayoutCTTest {
 			Assert.assertEquals(
 				layout, _layoutLocalService.fetchLayout(layout.getPlid()));
 
-			layout.setFriendlyURL("/testModifyLayout");
+			layout.setFriendlyURL("/" + RandomTestUtil.randomString());
 
 			layout = _layoutLocalService.updateLayout(layout);
 
@@ -423,7 +423,7 @@ public class LayoutCTTest {
 
 			_layoutLocalService.deleteLayout(deletedLayout);
 
-			modifiedLayout.setFriendlyURL("/testModifyLayout");
+			modifiedLayout.setFriendlyURL("/" + RandomTestUtil.randomString());
 
 			_layoutLocalService.updateLayout(modifiedLayout);
 		}
@@ -546,7 +546,7 @@ public class LayoutCTTest {
 
 	@Test
 	public void testPublishLayoutWithConflictingConstraints() throws Exception {
-		String friendlyURL = "/testModifyLayout";
+		String friendlyURL = "/" + RandomTestUtil.randomString();
 
 		Layout layout1 = LayoutTestUtil.addLayout(_group);
 
@@ -606,8 +606,8 @@ public class LayoutCTTest {
 
 	@Test
 	public void testPublishLayoutWithFriendlyURLUpdate() throws Exception {
-		String ctFriendlyURL = "/testCTLayout";
-		String newCTFriendlyURL = "/testCTLayoutWithNewURL";
+		String ctFriendlyURL = "/" + RandomTestUtil.randomString();
+		String newCTFriendlyURL = "/" + RandomTestUtil.randomString();
 
 		Layout layout = LayoutTestUtil.addLayout(_group);
 
@@ -666,7 +666,7 @@ public class LayoutCTTest {
 				CTCollectionThreadLocal.setCTCollectionIdWithSafeCloseable(
 					_ctCollection.getCtCollectionId())) {
 
-			layout.setFriendlyURL("/testModifyLayout");
+			layout.setFriendlyURL("/" + RandomTestUtil.randomString());
 
 			layout = _layoutLocalService.updateLayout(layout);
 		}
@@ -828,7 +828,7 @@ public class LayoutCTTest {
 				CTCollectionThreadLocal.setCTCollectionIdWithSafeCloseable(
 					_ctCollection.getCtCollectionId())) {
 
-			layout.setFriendlyURL("/testModifyLayout");
+			layout.setFriendlyURL("/" + RandomTestUtil.randomString());
 
 			layout = _layoutLocalService.updateLayout(layout);
 		}
