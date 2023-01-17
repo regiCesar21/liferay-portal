@@ -355,7 +355,7 @@ public class AssetPublisherHelperImpl implements AssetPublisherHelper {
 						assetEntry.getClassPK());
 
 				if (assetRenderer.hasViewPermission(permissionChecker)) {
-					viewableAssetEntryList.add(assetEntry);
+					viewableAssetEntries.add(assetEntry);
 				}
 			}
 
