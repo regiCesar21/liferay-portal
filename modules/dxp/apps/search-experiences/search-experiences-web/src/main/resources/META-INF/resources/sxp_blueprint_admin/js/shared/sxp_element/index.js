@@ -22,9 +22,9 @@ import React, {useContext, useEffect, useState} from 'react';
 
 import {DEFAULT_SXP_ELEMENT_ICON} from '../../utils/data';
 import isDefined from '../../utils/functions/is_defined';
-import getLocalizedText from '../../utils/language/get_localized_text';
 import cleanUIConfiguration from '../../utils/sxp_element/clean_ui_configuration';
 import getSXPElementJSON from '../../utils/sxp_element/get_sxp_element_json';
+import getSXPElementTitleAndDescription from '../../utils/sxp_element/get_sxp_element_title_and_description';
 import {INPUT_TYPES} from '../../utils/types/inputTypes';
 import {PreviewModalWithCopyDownload} from '../PreviewModal';
 import ThemeContext from '../ThemeContext';
@@ -75,11 +75,10 @@ function SXPElement({
 	const [collapse, setCollapse] = useState(false);
 	const [active, setActive] = useState(false);
 
-	const description =
-		getLocalizedText(sxpElement.description_i18n, locale) ||
-		sxpElement.description;
-	const title =
-		getLocalizedText(sxpElement.title_i18n, locale) || sxpElement.title;
+	const [title, description] = getSXPElementTitleAndDescription(
+		sxpElement,
+		locale
+	);
 
 	const fieldSets = cleanUIConfiguration(
 		sxpElement.elementDefinition?.uiConfiguration
