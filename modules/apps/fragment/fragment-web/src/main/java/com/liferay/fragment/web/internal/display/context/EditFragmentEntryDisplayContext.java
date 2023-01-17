@@ -18,6 +18,7 @@ import com.liferay.fragment.web.internal.constants.FragmentWebKeys;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.module.configuration.ConfigurationProviderUtil;
+import com.liferay.portal.kernel.portlet.LiferayPortletURL;
 import com.liferay.portal.kernel.portlet.LiferayWindowState;
 import com.liferay.portal.kernel.portlet.PortletURLFactoryUtil;
 import com.liferay.portal.kernel.repository.model.FileEntry;
@@ -452,7 +453,18 @@ public class EditFragmentEntryDisplayContext {
 				"redirect", getRedirect()
 			).put(
 				"render",
-				_getFragmentEntryRenderURL("/fragment/render_fragment_entry")
+				() -> {
+					LiferayPortletURL renderFragmentEntryURL =
+						(LiferayPortletURL)_renderResponse.createResourceURL();
+
+					renderFragmentEntryURL.setResourceID(
+						"/fragment/render_fragment_entry");
+
+					renderFragmentEntryURL.setWindowState(
+						LiferayWindowState.POP_UP);
+
+					return renderFragmentEntryURL.toString();
+				}
 			).build()
 		).build();
 	}
