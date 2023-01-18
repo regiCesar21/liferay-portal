@@ -204,12 +204,10 @@ public class DirectServletRegistryImpl implements DirectServletRegistry {
 
 		ServletContext servletContext = servletConfig.getServletContext();
 
-		String servletContextPath = servletContext.getContextPath();
+		String contextPath = servletContext.getContextPath();
 
-		if (!Validator.isBlank(servletContextPath) &&
-			path.startsWith(servletContextPath)) {
-
-			path = path.substring(servletContextPath.length());
+		if (!Validator.isBlank(contextPath) && path.startsWith(contextPath)) {
+			path = path.substring(contextPath.length());
 		}
 
 		return new File(servletContext.getRealPath(StringPool.BLANK), path);
