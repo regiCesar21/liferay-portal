@@ -25,7 +25,9 @@ AUI.add(
 
 		var STR_ACTIONS_WILDCARD = '*';
 
-		var STR_CHECKBOX_SELECTOR = 'input[type=checkbox]:enabled';
+		var STR_CHECKBOX_ENABLED_SELECTOR = 'input[type=checkbox]:enabled';
+
+		var STR_CHECKBOX_SELECTOR = 'input[type="checkbox"]';
 
 		var STR_CHECKED = 'checked';
 
@@ -145,7 +147,7 @@ AUI.add(
 							selector:
 								instance.get(STR_ROW_SELECTOR) +
 								' ' +
-								STR_CHECKBOX_SELECTOR,
+								STR_CHECKBOX_ENABLED_SELECTOR,
 						},
 						owner: host.get('id'),
 					});
@@ -188,7 +190,7 @@ AUI.add(
 					var instance = this;
 
 					return instance._getElements(
-						STR_CHECKBOX_SELECTOR,
+						STR_CHECKBOX_ENABLED_SELECTOR,
 						onlySelected
 					);
 				},
@@ -199,7 +201,7 @@ AUI.add(
 					return instance._getElements(
 						instance.get(STR_ROW_SELECTOR) +
 							' ' +
-							STR_CHECKBOX_SELECTOR,
+							STR_CHECKBOX_ENABLED_SELECTOR,
 						onlySelected
 					);
 				},
@@ -261,6 +263,56 @@ AUI.add(
 					) {
 						instance._addRestoreTask();
 						instance._addRestoreTaskState();
+					}
+				},
+
+				_restoreFromSessionStorage(host) {
+					var instance = this;
+
+					if (
+						sessionStorage.getItem(
+							instance.get('searchContainerId') +
+								Liferay.ThemeDisplay.getUserId() +
+								'_selections'
+						)
+					) {
+						var container = A.one(host._getNodeToParse());
+
+						var selections = sessionStorage
+							.getItem(
+								instance.get('searchContainerId') +
+									Liferay.ThemeDisplay.getUserId() +
+									'_selections'
+							)
+							.split(',');
+
+						var itemName = host
+							.get('contentBox')
+							.one(STR_CHECKBOX_SELECTOR)
+							?.get('name');
+
+						var offScreenElementsHtml = '';
+
+						selections.map((item) => {
+							var input = container.one(
+								A.Lang.sub(TPL_INPUT_SELECTOR, {value: item})
+							);
+
+							if (input) {
+								input.attr('checked', true);
+								input
+									.ancestor(instance.get(STR_ROW_SELECTOR))
+									.addClass('active');
+							}
+							else {
+								offScreenElementsHtml += A.Lang.sub(
+									TPL_HIDDEN_INPUT_CHECKED,
+									{name: itemName, value: item}
+								);
+							}
+						});
+
+						container.append(offScreenElementsHtml);
 					}
 				},
 
@@ -362,7 +414,7 @@ AUI.add(
 								toggleRowCSSFn,
 								instance.get(STR_ROW_SELECTOR) +
 									' ' +
-									STR_CHECKBOX_SELECTOR,
+									STR_CHECKBOX_ENABLED_SELECTOR,
 								instance
 							),
 						host
@@ -381,10 +433,16 @@ AUI.add(
 							instance
 						),
 					];
+
+					if (!Liferay.SPA) {
+						instance._restoreFromSessionStorage(host);
+					}
 				},
 
 				isSelected(element) {
-					return element.one(STR_CHECKBOX_SELECTOR).attr(STR_CHECKED);
+					return element
+						.one(STR_CHECKBOX_ENABLED_SELECTOR)
+						.attr(STR_CHECKED);
 				},
 
 				toggleAllRows(selected, bulkSelection) {
@@ -414,7 +472,7 @@ AUI.add(
 					var instance = this;
 
 					if (config && config.toggleCheckbox) {
-						var checkbox = row.one(STR_CHECKBOX_SELECTOR);
+						var checkbox = row.one(STR_CHECKBOX_ENABLED_SELECTOR);
 
 						checkbox.attr(STR_CHECKED, !checkbox.attr(STR_CHECKED));
 					}
