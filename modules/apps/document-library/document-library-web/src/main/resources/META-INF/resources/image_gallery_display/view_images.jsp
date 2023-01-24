@@ -80,17 +80,19 @@ DLPortletInstanceSettingsHelper dlPortletInstanceSettingsHelper = new DLPortletI
 					thumbnailSrc = DLURLHelperUtil.getThumbnailSrc(fileEntry, fileVersion, themeDisplay);
 				}
 
+				String description = fileEntry.getDescription();
+
 				String title = fileEntry.getTitle();
 
-				if (Validator.isNotNull(fileEntry.getDescription())) {
-					title += " - " + fileEntry.getDescription();
+				if (Validator.isNotNull(description)) {
+					title += " - " + description;
 				}
 
 				row.setCssClass("card-page-item card-page-item-asset");
 				%>
 
 				<liferay-ui:search-container-column-text>
-					<a class="image-link preview" <%= (hasAudio || hasVideo) ? "data-options=\"height=" + playerHeight + "&thumbnailURL=" + HtmlUtil.escapeURL(DLURLHelperUtil.getPreviewURL(fileEntry, fileVersion, themeDisplay, "&videoThumbnail=1")) + "&width=640" + dataOptions + "\"" : StringPool.BLANK %> href="<%= imageURL %>" thumbnailId="<%= thumbnailId %>" title="<%= title %>">
+					<a class="image-link preview" <%= (hasAudio || hasVideo) ? "data-options=\"height=" + playerHeight + "&thumbnailURL=" + HtmlUtil.escapeURL(DLURLHelperUtil.getPreviewURL(fileEntry, fileVersion, themeDisplay, "&videoThumbnail=1")) + "&width=640" + dataOptions + "\"" : StringPool.BLANK %> description="<%= description %>" href="<%= imageURL %>" thumbnailId="<%= thumbnailId %>" title="<%= title %>">
 						<c:choose>
 							<c:when test="<%= Validator.isNull(thumbnailSrc) %>">
 								<liferay-frontend:icon-vertical-card
