@@ -15,6 +15,7 @@ import com.liferay.portal.kernel.struts.StrutsAction;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
+import com.liferay.portal.kernel.util.Props;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.saml.constants.SamlWebKeys;
 import com.liferay.saml.persistence.model.SamlSpIdpConnection;
@@ -25,14 +26,12 @@ import com.liferay.saml.runtime.servlet.profile.SamlSpIdpConnectionsProfile;
 import com.liferay.saml.util.JspUtil;
 
 import java.util.List;
-import java.util.Map;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 import org.osgi.service.component.annotations.ReferenceCardinality;
@@ -55,12 +54,6 @@ public class SamlLoginAction extends BaseSamlStrutsAction {
 		}
 
 		return false;
-	}
-
-	@Activate
-	protected void activate(Map<String, Object> properties) {
-		_hideIdpRedirectMessage = GetterUtil.getBoolean(
-			properties.get("hide.idp.redirect.message"));
 	}
 
 	@Override
@@ -125,7 +118,10 @@ public class SamlLoginAction extends BaseSamlStrutsAction {
 			}
 		}
 
-		if (!_hideIdpRedirectMessage) {
+		boolean hideIdpRedirectMessage = GetterUtil.getBoolean(
+			_props.get("hide.idp.redirect.message"));
+
+		if (!hideIdpRedirectMessage) {
 			httpServletRequest.setAttribute(
 				SamlWebKeys.SAML_IDP_REDIRECT_MESSAGE,
 				_language.get(
@@ -140,7 +136,7 @@ public class SamlLoginAction extends BaseSamlStrutsAction {
 		JspUtil.dispatch(
 			httpServletRequest, httpServletResponse,
 			"/portal/saml/select_idp.jsp",
-			"please-select-your-identity-provider", _hideIdpRedirectMessage);
+			"please-select-your-identity-provider", hideIdpRedirectMessage);
 
 		return null;
 	}
@@ -176,13 +172,17 @@ public class SamlLoginAction extends BaseSamlStrutsAction {
 		return JSONUtil.put("relevantIdpConnections", jsonArray);
 	}
 
-	private boolean _hideIdpRedirectMessage;
-
 	@Reference
 	private Language _language;
 
 	@Reference
 	private Portal _portal;
+
+	@Reference
+	private Props _props;
+
+	@Reference
+	private SamlProviderConfigurationHelper _samlProviderConfigurationHelper;
 
 	@Reference
 	private SamlSpIdpConnectionLocalService _samlSpIdpConnectionLocalService;
