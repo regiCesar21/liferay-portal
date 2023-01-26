@@ -12,9 +12,11 @@ import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Company;
+import com.liferay.portal.kernel.model.GroupConstants;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.module.configuration.ConfigurationProvider;
 import com.liferay.portal.kernel.service.CompanyLocalService;
+import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
@@ -115,6 +117,13 @@ public class UADAnonymousUserProviderImpl implements UADAnonymousUserProvider {
 
 		_userLocalService.addUser(user);
 
+		_groupLocalService.addGroup(
+			user.getUserId(), GroupConstants.DEFAULT_PARENT_GROUP_ID,
+			User.class.getName(), user.getUserId(),
+			GroupConstants.DEFAULT_LIVE_GROUP_ID, null, null, 0, true,
+			GroupConstants.DEFAULT_MEMBERSHIP_RESTRICTION,
+			StringPool.SLASH + screenName, false, true, null);
+
 		return user;
 	}
 
@@ -188,6 +197,9 @@ public class UADAnonymousUserProviderImpl implements UADAnonymousUserProvider {
 
 	@Reference
 	private CounterLocalService _counterLocalService;
+
+	@Reference
+	private GroupLocalService _groupLocalService;
 
 	@Reference
 	private Portal _portal;
