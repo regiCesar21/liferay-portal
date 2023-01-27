@@ -36,6 +36,7 @@
 	"jest": {
 		"setupFilesAfterEnv": [
 			"@testing-library/react/cleanup-after-each",
+			"<rootDir>/jest-setup.config.js",
 			"<rootDir>/test/js/mocks/fetch.js"
 		],
 		"testPathIgnorePatterns": [
