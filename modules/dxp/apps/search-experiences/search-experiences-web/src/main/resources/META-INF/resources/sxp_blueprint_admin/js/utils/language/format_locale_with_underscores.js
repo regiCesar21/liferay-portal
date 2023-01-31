@@ -21,5 +21,5 @@
  * @returns {string}
  */
 export default function formatLocaleWithUnderscores(locale) {
-	return locale.replaceAll('-', '_');
+	return locale.replace(/-/g, '_');
 }

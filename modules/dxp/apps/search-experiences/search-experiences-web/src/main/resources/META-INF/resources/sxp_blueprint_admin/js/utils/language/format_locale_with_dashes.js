@@ -21,5 +21,5 @@
  * @returns {string}
  */
 export default function formatLocaleWithDashes(locale) {
-	return locale.replaceAll('_', '-');
+	return locale.replace(/_/g, '-');
 }
