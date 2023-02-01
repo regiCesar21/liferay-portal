@@ -679,7 +679,7 @@ public class LDAPUserImporterImpl implements LDAPUserImporter, UserImporter {
 		return user;
 	}
 
-	protected void addUserGroupsNotBelongingToLDAPServer(
+	protected void addUserGroupsNotAddedByLDAPImport(
 			long userId, Set<Long> ldapServerGroupIds, Set<Long> userGroupIds)
 		throws Exception {
 
@@ -1150,7 +1150,7 @@ public class LDAPUserImporterImpl implements LDAPUserImporter, UserImporter {
 			}
 		}
 
-		addUserGroupsNotBelongingToLDAPServer(
+		addUserGroupsNotAddedByLDAPImport(
 			user.getUserId(), ldapServerGroupIds, newUserGroupIds);
 
 		Set<Long> oldUserGroupIds = new LinkedHashSet<>();
