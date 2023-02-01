@@ -85,6 +85,18 @@ public class AMServlet extends HttpServlet {
 			AdaptiveMedia<?> adaptiveMedia = adaptiveMediaOptional.orElseThrow(
 				AMException.AMNotFound::new);
 
+			long fileEntryId = _getFileEntryId(
+				String.valueOf(adaptiveMedia.getURI()));
+
+			if (fileEntryId > 0) {
+				httpServletResponse.addHeader(
+					HttpHeaders.CACHE_CONTROL,
+					FileEntryHttpHeaderCustomizerUtil.getHttpHeaderValue(
+						_dlAppLocalService.getFileEntry(fileEntryId),
+						HttpHeaders.CACHE_CONTROL,
+						HttpHeaders.CACHE_CONTROL_PRIVATE_VALUE));
+			}
+
 			Optional<Long> contentLengthOptional =
 				adaptiveMedia.getValueOptional(
 					AMAttribute.getContentLengthAMAttribute());
@@ -102,19 +114,6 @@ public class AMServlet extends HttpServlet {
 				AMAttribute.getFileNameAMAttribute());
 
 			String fileName = fileNameOptional.orElse(null);
-
-			String uri = String.valueOf(adaptiveMedia.getURI());
-
-			long fileEntryId = _getFileEntryId(uri);
-
-			if (fileEntryId > -1) {
-				httpServletResponse.addHeader(
-					HttpHeaders.CACHE_CONTROL,
-					FileEntryHttpHeaderCustomizerUtil.getHttpHeaderValue(
-						_dlAppLocalService.getFileEntry(fileEntryId),
-						HttpHeaders.CACHE_CONTROL,
-						HttpHeaders.CACHE_CONTROL_PRIVATE_VALUE));
-			}
 
 			boolean download = ParamUtil.getBoolean(
 				httpServletRequest, "download");
@@ -172,7 +171,7 @@ public class AMServlet extends HttpServlet {
 			return Long.valueOf(matcher.group(2));
 		}
 
-		return -1;
+		return 0;
 	}
 
 	private String _getRequestHandlerPattern(
