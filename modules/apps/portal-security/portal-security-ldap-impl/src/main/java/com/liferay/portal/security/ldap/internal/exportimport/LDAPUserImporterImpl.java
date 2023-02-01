@@ -1043,16 +1043,16 @@ public class LDAPUserImporterImpl implements LDAPUserImporter, UserImporter {
 
 			String fullUserDN = userBinding.getNameInNamespace();
 
-			String groupMappingsGroupName = GetterUtil.getString(
-				groupMappings.getProperty("groupName"));
-
-			groupMappingsGroupName = StringUtil.toLowerCase(
-				groupMappingsGroupName);
-
 			byte[] cookie = new byte[0];
 
 			while (cookie != null) {
 				List<SearchResult> searchResults = new ArrayList<>();
+
+				String groupMappingsGroupName = GetterUtil.getString(
+					groupMappings.getProperty("groupName"));
+
+				groupMappingsGroupName = StringUtil.toLowerCase(
+					groupMappingsGroupName);
 
 				cookie = _safePortalLDAP.getGroups(
 					ldapImportContext.getLdapServerId(),
@@ -1110,16 +1110,16 @@ public class LDAPUserImporterImpl implements LDAPUserImporter, UserImporter {
 			Attribute userGroupAttribute = userAttributes.get(
 				userMappingsGroup);
 
-			String groupMappingsGroupName = GetterUtil.getString(
-				groupMappings.getProperty("groupName"));
-
-			groupMappingsGroupName = StringUtil.toLowerCase(
-				groupMappingsGroupName);
-
 			byte[] cookie = new byte[0];
 
 			while (cookie != null) {
 				List<SearchResult> searchResults = new ArrayList<>();
+
+				String groupMappingsGroupName = GetterUtil.getString(
+					groupMappings.getProperty("groupName"));
+
+				groupMappingsGroupName = StringUtil.toLowerCase(
+					groupMappingsGroupName);
 
 				cookie = _safePortalLDAP.getGroups(
 					ldapImportContext.getLdapServerId(),
