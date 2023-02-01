@@ -360,7 +360,9 @@ public class DDMIndexerImpl implements DDMIndexer {
 
 				Serializable value = field.getValue(locale);
 
-				if (value == null) {
+				if ((value == null) ||
+					Validator.isBlank(String.valueOf(value))) {
+
 					continue;
 				}
 
@@ -388,6 +390,10 @@ public class DDMIndexerImpl implements DDMIndexer {
 						String valueString = _getSortableValue(
 							ddmStructure.getDDMFormField(field.getName()),
 							locale, values[i].toString());
+
+						if (Validator.isBlank(valueString)) {
+							continue;
+						}
 
 						_addFieldValue(sb, field.getType(), valueString);
 
