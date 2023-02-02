@@ -177,8 +177,8 @@ public class SXPParameterDataCreatorTest {
 			).build());
 
 		DocumentsAssert.assertValues(
-			searchResponse.getRequestString(), searchResponse.getDocuments(),
-			"title_en_US", expected);
+			searchResponse.getRequestString(),
+			searchResponse.getDocumentsStream(), "title_en_US", expected);
 	}
 
 	@DeleteAfterTestRun
