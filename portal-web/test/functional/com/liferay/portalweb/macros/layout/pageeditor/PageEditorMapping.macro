@@ -66,6 +66,8 @@ definition {
 				locator1 = "Card#CARD_TITLE");
 		}
 
+		SelectFrameTop();
+
 		AssertElementPresent(
 			key_contentName = ${entryTitle},
 			locator1 = "PageEditor#ITEM_SELECTOR_CONTENT_INPUT");

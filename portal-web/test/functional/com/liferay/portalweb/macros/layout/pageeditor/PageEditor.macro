@@ -1264,6 +1264,8 @@ definition {
 			Button.clickAdd();
 		}
 
+		SelectFrameTop();
+
 		PageEditor.waitForAutoSave();
 
 		if (isSet(imageDescription)) {
