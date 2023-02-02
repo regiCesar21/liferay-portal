@@ -139,6 +139,8 @@ public class SiteNavigationMenuExportImportPortletPreferencesProcessor
 						portletDataContext.getPlid(),
 						portletDataContext.getPortletId());
 
+			long navigationMenuId = 0;
+
 			if (!originalPreferencesList.isEmpty()) {
 				com.liferay.portal.kernel.model.PortletPreferences
 					originalPreferences = originalPreferencesList.get(0);
@@ -147,21 +149,20 @@ public class SiteNavigationMenuExportImportPortletPreferencesProcessor
 					_portletPreferenceValueLocalService.getPreferences(
 						originalPreferences);
 
-				long originalNavigationMenuId = GetterUtil.getLong(
+				navigationMenuId = GetterUtil.getLong(
 					originalPreferencesWithValue.getValue(
 						"siteNavigationMenuId", "0"));
+			}
 
-				try {
-					portletPreferences.setValue(
-						"siteNavigationMenuId",
-						String.valueOf(originalNavigationMenuId));
-				}
-				catch (ReadOnlyException readOnlyException) {
-					PortletDataException portletDataException =
-						new PortletDataException(readOnlyException);
+			try {
+				portletPreferences.setValue(
+					"siteNavigationMenuId", String.valueOf(navigationMenuId));
+			}
+			catch (ReadOnlyException readOnlyException) {
+				PortletDataException portletDataException =
+					new PortletDataException(readOnlyException);
 
-					throw portletDataException;
-				}
+				throw portletDataException;
 			}
 
 			return portletPreferences;
