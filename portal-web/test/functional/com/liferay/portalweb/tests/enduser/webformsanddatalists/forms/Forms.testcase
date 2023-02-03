@@ -4023,6 +4023,8 @@ definition {
 			navTab = "Documents and Media",
 			uploadFileName = "Document_1.jpg");
 
+		SelectFrameTop();
+
 		FormPortlet.submitSuccessfully();
 
 		Navigator.openURL();
