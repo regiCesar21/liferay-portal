@@ -1108,6 +1108,8 @@ definition {
 
 				LexiconCard.clickCard(card = ${entryTitle});
 
+				SelectFrameTop();
+
 				AssertElementPresent(
 					key_contentName = ${entryTitle},
 					locator1 = "PageEditor#ITEM_SELECTOR_CONTENT_INPUT");

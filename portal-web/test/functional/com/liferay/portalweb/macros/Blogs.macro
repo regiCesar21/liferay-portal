@@ -184,6 +184,8 @@ definition {
 
 		Pause(locator1 = 5000);
 
+		SelectFrame(value1 = "relative-top");
+
 		if (isSet(captionField)) {
 			AssertElementPresent(locator1 = "BlogsEntry#ENTRY_COVER_IMAGE_CAPTION");
 		}
