@@ -367,7 +367,9 @@ definition {
 			webContentTitle = "WC WebContent Title",
 			webContentTitleEdit = "WC WebContent Title 2 Edit");
 
-		Publications.selectPublication(publicationName = "Publication Name");
+		Publications.selectPublication(
+			gotoManagePublications = "true",
+			publicationName = "Publication Name");
 
 		Publications.gotoReviewChanges();
 
@@ -387,7 +389,9 @@ definition {
 
 		Publications.publishPublication(publicationName = "Publication Name");
 
-		Publications.selectPublication(publicationName = "Publication 2 Name");
+		Publications.selectPublication(
+			gotoManagePublications = "true",
+			publicationName = "Publication 2 Name");
 
 		Navigator.gotoNavTab(navTab = "History");
 
@@ -648,7 +652,9 @@ definition {
 
 		Publications.publishPublication(publicationName = "Publication 2 Name");
 
-		Publications.selectPublication(publicationName = "Publication Name");
+		Publications.selectPublication(
+			gotoManagePublications = "true",
+			publicationName = "Publication Name");
 
 		Publications.gotoPublish(publicationName = "Publication Name");
 
