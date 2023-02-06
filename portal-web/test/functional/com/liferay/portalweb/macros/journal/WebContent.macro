@@ -410,6 +410,8 @@ definition {
 
 		LexiconCard.clickCard(card = ${dmDocumentTitle});
 
+		SelectFrameTop();
+
 		PortletEntry.publish();
 	}
 
