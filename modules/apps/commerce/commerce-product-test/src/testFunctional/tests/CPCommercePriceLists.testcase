@@ -318,6 +318,8 @@ definition {
 
 		Click(locator1 = "Icon#CLOSE");
 
+		SelectFrameTop();
+
 		Click(locator1 = "Button#PLUS");
 
 		SelectFrame.selectFrameNoLoading(locator1 = "IFrame#MODAL_BODY");
