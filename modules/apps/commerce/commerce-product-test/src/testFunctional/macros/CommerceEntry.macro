@@ -174,6 +174,8 @@ definition {
 
 		Button.click(button = "Submit");
 
+		SelectFrameTop();
+
 		Type(
 			locator1 = "CommerceEntry#DISCOUNT_AMOUNT",
 			value1 = ${discountAmount});
@@ -363,6 +365,8 @@ definition {
 			locator1 = "MenuItem#DROPDOWN_MENU_ITEM");
 
 		Click(locator1 = "Button#SUBMIT");
+
+		SelectFrameTop();
 
 		WaitForElementPresent(
 			key_title = ${productName},
