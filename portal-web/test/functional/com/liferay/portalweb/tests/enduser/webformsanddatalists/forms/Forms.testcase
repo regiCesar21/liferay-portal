@@ -4528,6 +4528,8 @@ definition {
 			navTab = "Documents and Media",
 			uploadFileName = "Document_1.jpg");
 
+		SelectFrameTop();
+
 		Form.editImageDescription(
 			descriptionContent = "Description 1",
 			descriptionPosition = 1);
@@ -4537,6 +4539,8 @@ definition {
 		ItemSelector.uploadFile(
 			navTab = "Documents and Media",
 			uploadFileName = "Document_1.jpg");
+
+		SelectFrameTop();
 
 		Form.editImageDescription(
 			descriptionContent = "Description 2",
