@@ -958,6 +958,8 @@ definition {
 
 				LexiconCard.clickCard(card = ${assetListName});
 
+				SelectFrameTop();
+
 				AssertElementPresent(
 					key_contentName = ${assetListName},
 					locator1 = "PageEditor#ITEM_SELECTOR_CONTENT_INPUT");
