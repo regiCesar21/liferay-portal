@@ -610,6 +610,8 @@ definition {
 					navTab = "Web Content Images",
 					uploadFileName = ${webContentImage});
 			}
+
+			SelectFrameTop();
 		}
 
 		if (isSet(webContentImageDescription)) {
