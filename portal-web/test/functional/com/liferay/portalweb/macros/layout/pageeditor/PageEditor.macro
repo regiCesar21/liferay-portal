@@ -1142,6 +1142,8 @@ definition {
 				}
 
 				if (isSet(customWebcontenttemplate)) {
+					SelectFrameTop();
+
 					Select(
 						locator1 = "FragmentEditor#FRAGMENTS_EDITOR_FLOATING_TOOLBAR_FIELD_SELECT",
 						value1 = ${customWebcontenttemplate});
