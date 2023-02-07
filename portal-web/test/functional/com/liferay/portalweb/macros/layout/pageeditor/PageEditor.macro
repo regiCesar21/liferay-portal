@@ -969,6 +969,8 @@ definition {
 
 				LexiconCard.clickCard(card = ${infoListProviderName});
 
+				SelectFrameTop();
+
 				AssertElementPresent(
 					key_contentName = ${infoListProviderName},
 					locator1 = "PageEditor#ITEM_SELECTOR_CONTENT_INPUT");
@@ -1091,6 +1093,8 @@ definition {
 
 				LexiconCard.clickCard(card = ${imageFileName});
 
+				SelectFrameTop();
+
 				AssertElementPresent(
 					key_contentName = ${imageFileName},
 					locator1 = "PageEditor#ITEM_SELECTOR_CONTENT_INPUT");
@@ -1144,6 +1148,8 @@ definition {
 
 					LexiconCard.clickCard(card = ${webContentTitle});
 				}
+
+				SelectFrameTop();
 
 				if (isSet(customWebcontenttemplate)) {
 					SelectFrameTop();

@@ -225,6 +225,8 @@ definition {
 				imageFileName = "Document Title",
 				navTab = "Documents and Media");
 
+			SelectFrameTop();
+
 			PageEditor.clickManagementBar();
 		}
 
