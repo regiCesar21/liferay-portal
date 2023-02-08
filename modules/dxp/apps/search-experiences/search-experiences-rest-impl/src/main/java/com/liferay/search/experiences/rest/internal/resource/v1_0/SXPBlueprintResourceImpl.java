@@ -115,6 +115,8 @@ public class SXPBlueprintResourceImpl
 				_jsonFactory.createJSONArray(
 					sxpBlueprint.getElementInstancesJSON())
 			).put(
+				"externalReferenceCode", sxpBlueprint.getExternalReferenceCode()
+			).put(
 				"schemaVersion", sxpBlueprint.getSchemaVersion()
 			).put(
 				"title_i18n",

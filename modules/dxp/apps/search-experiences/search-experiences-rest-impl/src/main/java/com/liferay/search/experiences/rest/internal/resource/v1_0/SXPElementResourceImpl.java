@@ -106,6 +106,8 @@ public class SXPElementResourceImpl
 				_jsonFactory.createJSONObject(
 					sxpElement.getElementDefinitionJSON())
 			).put(
+				"externalReferenceCode", sxpElement.getExternalReferenceCode()
+			).put(
 				"schemaVersion", sxpElement.getSchemaVersion()
 			).put(
 				"title_i18n",
