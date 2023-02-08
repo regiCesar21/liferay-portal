@@ -17,9 +17,9 @@ package com.liferay.portal.template.freemarker.internal;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
-import com.liferay.portal.kernel.cache.MultiVMPool;
 import com.liferay.portal.kernel.cache.PortalCache;
-import com.liferay.portal.kernel.cache.SingleVMPool;
+import com.liferay.portal.kernel.cache.PortalCacheHelperUtil;
+import com.liferay.portal.kernel.cache.PortalCacheManagerNames;
 import com.liferay.portal.kernel.template.TemplateConstants;
 import com.liferay.portal.kernel.template.TemplateResource;
 import com.liferay.portal.template.BaseTemplateResourceCache;
@@ -33,7 +33,6 @@ import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Deactivate;
 import org.osgi.service.component.annotations.Modified;
-import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Tina Tian
@@ -58,17 +57,14 @@ public class FreeMarkerTemplateResourceCache extends BaseTemplateResourceCache {
 
 		init(
 			freeMarkerEngineConfiguration.resourceModificationCheck(),
-			_multiVMPool, _singleVMPool, _PORTAL_CACHE_NAME);
+			_PORTAL_CACHE_NAME);
 
 		if (isEnabled()) {
-			_secondLevelPortalCache =
-				(PortalCache
-					<TemplateResource, TemplateCache.MaybeMissingTemplate>)
-						_singleVMPool.getPortalCache(
-							StringBundler.concat(
-								TemplateResource.class.getName(),
-								StringPool.POUND,
-								TemplateConstants.LANG_TYPE_FTL));
+			_secondLevelPortalCache = PortalCacheHelperUtil.getPortalCache(
+				PortalCacheManagerNames.SINGLE_VM,
+				StringBundler.concat(
+					TemplateResource.class.getName(), StringPool.POUND,
+					TemplateConstants.LANG_TYPE_FTL));
 
 			setSecondLevelPortalCache(_secondLevelPortalCache);
 		}
@@ -79,7 +75,8 @@ public class FreeMarkerTemplateResourceCache extends BaseTemplateResourceCache {
 		destroy();
 
 		if (_secondLevelPortalCache != null) {
-			_singleVMPool.removePortalCache(
+			PortalCacheHelperUtil.removePortalCache(
+				PortalCacheManagerNames.SINGLE_VM,
 				_secondLevelPortalCache.getPortalCacheName());
 
 			_secondLevelPortalCache = null;
@@ -96,14 +93,8 @@ public class FreeMarkerTemplateResourceCache extends BaseTemplateResourceCache {
 	private static final String _PORTAL_CACHE_NAME =
 		FreeMarkerTemplateResourceCache.class.getName();
 
-	@Reference
-	private MultiVMPool _multiVMPool;
-
 	private volatile PortalCache
 		<TemplateResource, TemplateCache.MaybeMissingTemplate>
 			_secondLevelPortalCache;
-
-	@Reference
-	private SingleVMPool _singleVMPool;
 
 }
