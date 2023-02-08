@@ -430,7 +430,8 @@ public class StructuredContentResourceImpl
 				localDateTime.getHour(), localDateTime.getMinute(), 0, 0, 0, 0,
 				0, true, 0, 0, 0, 0, 0, true, true, false, null, null, null,
 				null,
-				_createServiceContext(_getAssetCategoryIds(journalArticle, structuredContent),
+				_createServiceContext(
+					_getAssetCategoryIds(journalArticle, structuredContent),
 					structuredContentId, structuredContent, 0L)));
 	}
 
@@ -536,7 +537,8 @@ public class StructuredContentResourceImpl
 				localDateTime.getHour(), localDateTime.getMinute(), 0, 0, 0, 0,
 				0, true, 0, 0, 0, 0, 0, true, true, false, null, null, null,
 				null,
-				_createServiceContext(_getAssetCategoryIds(journalArticle, structuredContent),
+				_createServiceContext(
+					_getAssetCategoryIds(journalArticle, structuredContent),
 					structuredContentId, structuredContent, 0L)));
 	}
 
@@ -645,7 +647,10 @@ public class StructuredContentResourceImpl
 				localDateTime.getDayOfMonth(), localDateTime.getYear(),
 				localDateTime.getHour(), localDateTime.getMinute(), 0, 0, 0, 0,
 				0, true, 0, 0, 0, 0, 0, true, true, false, null, null, null,
-				null, _createServiceContext(structuredContent.getTaxonomyCategoryIds(),0L, structuredContent, siteId)));
+				null,
+				_createServiceContext(
+					structuredContent.getTaxonomyCategoryIds(), 0L,
+					structuredContent, siteId)));
 	}
 
 	private DDMStructure _checkDDMStructurePermission(
@@ -716,8 +721,7 @@ public class StructuredContentResourceImpl
 				_journalArticleService.getLatestArticle(structuredContentId);
 
 			serviceContext = ServiceContextRequestUtil.createServiceContext(
-				assetCategoryIds,
-				structuredContent.getKeywords(),
+				assetCategoryIds, structuredContent.getKeywords(),
 				_getExpandoBridgeAttributes(structuredContent),
 				journalArticle.getGroupId(), contextHttpServletRequest,
 				structuredContent.getViewableByAsString());
@@ -733,34 +737,13 @@ public class StructuredContentResourceImpl
 		}
 		else {
 			serviceContext = ServiceContextRequestUtil.createServiceContext(
-				assetCategoryIds,
-				structuredContent.getKeywords(),
+				assetCategoryIds, structuredContent.getKeywords(),
 				_getExpandoBridgeAttributes(structuredContent), siteId,
 				contextHttpServletRequest,
 				structuredContent.getViewableByAsString());
 		}
 
 		return serviceContext;
-	}
-	private Long[] _getAssetCategoryIds(
-		JournalArticle journalArticle, StructuredContent structuredContent)
-		throws Exception {
-
-		if ((journalArticle == null) ||
-			(structuredContent.getTaxonomyCategoryIds() != null)) {
-
-			return structuredContent.getTaxonomyCategoryIds();
-		}
-
-		AssetRendererFactory<?> assetRendererFactory =
-			AssetRendererFactoryRegistryUtil.getAssetRendererFactoryByClass(
-				JournalArticle.class);
-
-		AssetEntry assetEntry = assetRendererFactory.getAssetEntry(
-			JournalArticle.class.getName(),
-			journalArticle.getResourcePrimKey());
-
-		return ArrayUtil.toLongArray(assetEntry.getCategoryIds());
 	}
 
 	private UnsafeConsumer<BooleanQuery, Exception>
@@ -780,6 +763,27 @@ public class StructuredContentResourceImpl
 					BooleanClauseOccur.MUST);
 			}
 		};
+	}
+
+	private Long[] _getAssetCategoryIds(
+			JournalArticle journalArticle, StructuredContent structuredContent)
+		throws Exception {
+
+		if ((journalArticle == null) ||
+			(structuredContent.getTaxonomyCategoryIds() != null)) {
+
+			return structuredContent.getTaxonomyCategoryIds();
+		}
+
+		AssetRendererFactory<?> assetRendererFactory =
+			AssetRendererFactoryRegistryUtil.getAssetRendererFactoryByClass(
+				JournalArticle.class);
+
+		AssetEntry assetEntry = assetRendererFactory.getAssetEntry(
+			JournalArticle.class.getName(),
+			journalArticle.getResourcePrimKey());
+
+		return ArrayUtil.toLongArray(assetEntry.getCategoryIds());
 	}
 
 	private DDMFormField _getDDMFormField(
