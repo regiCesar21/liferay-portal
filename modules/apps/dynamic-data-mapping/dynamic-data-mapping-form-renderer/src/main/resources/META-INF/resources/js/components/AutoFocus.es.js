@@ -47,7 +47,7 @@ export const AutoFocus = ({children}) => {
 					removeTabs();
 
 					const currentTitle = containerElement?.current.parentNode.getElementsByClassName(
-						'lfr-ddm__default-page-header-title'
+						'ddm-form-name'
 					)[0];
 
 					scrollComponentToTop(currentTitle);
@@ -55,7 +55,7 @@ export const AutoFocus = ({children}) => {
 					const componentTitle = currentTitle?.innerHTML;
 
 					const currentDescription = containerElement?.current.parentNode.getElementsByClassName(
-						'.lfr-ddm__default-page-header-description'
+						'.ddm-form-description'
 					)[0];
 
 					const componentDescription = currentDescription?.innerHTML;
@@ -66,14 +66,6 @@ export const AutoFocus = ({children}) => {
 
 					const firstInput = currentPage?.querySelector(
 						'input:not([type="hidden"])'
-					);
-
-					const sidebarOpen = document.querySelector(
-						'.ddm-form-builder--sidebar-open'
-					);
-
-					const userViewContent = containerElement.current.querySelector(
-						'.ddm-user-view-content'
 					);
 
 					const defaultTitle = Liferay.Language.get('untitled-form');
@@ -107,7 +99,7 @@ export const AutoFocus = ({children}) => {
 			childRef.current = node;
 		},
 	});
-}
+};
 
 function scrollComponentToTop(currentTitle) {
 	if (currentTitle) {
@@ -133,7 +125,7 @@ function removeTabs() {
 	if (!formPortlet) {
 		document
 			.querySelectorAll(
-				'.lfr-ddm__default-page-header-title,.lfr-ddm__default-page-header-description,.lfr-ddm-form-page-title,.lfr-ddm-form-page-description'
+				'.ddm-form-name,.ddm-form-description,.lfr-ddm-form-page-title,.lfr-ddm-form-page-description'
 			)
 			?.forEach((element) => element.removeAttribute('tabindex'));
 	}
