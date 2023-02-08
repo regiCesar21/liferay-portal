@@ -47,7 +47,7 @@ export const AutoFocus = ({children}) => {
 					removeTabs();
 
 					const currentTitle = containerElement?.current.parentNode.getElementsByClassName(
-						'lfr-ddm__default-page-header-title'
+						'ddm-form-name'
 					)[0];
 
 					scrollComponentToTop(currentTitle);
@@ -55,7 +55,7 @@ export const AutoFocus = ({children}) => {
 					const componentTitle = currentTitle?.innerHTML;
 
 					const currentDescription = containerElement?.current.parentNode.getElementsByClassName(
-						'.lfr-ddm__default-page-header-description'
+						'.ddm-form-description'
 					)[0];
 
 					const componentDescription = currentDescription?.innerHTML;
@@ -133,7 +133,7 @@ function removeTabs() {
 	if (!formPortlet) {
 		document
 			.querySelectorAll(
-				'.lfr-ddm__default-page-header-title,.lfr-ddm__default-page-header-description,.lfr-ddm-form-page-title,.lfr-ddm-form-page-description'
+				'.ddm-form-name,.ddm-form-description,.lfr-ddm-form-page-title,.lfr-ddm-form-page-description'
 			)
 			?.forEach((element) => element.removeAttribute('tabindex'));
 	}

@@ -67,9 +67,9 @@ long formInstanceId = ddmFormDisplayContext.getFormInstanceId();
 				<div class="portlet-forms">
 					<div class="ddm-form-basic-info ddm-form-success-page">
 						<clay:container-fluid>
-							<h1 class="ddm-form-name"><%= HtmlUtil.escape(GetterUtil.getString(title.getString(displayLocale), title.getString(title.getDefaultLocale()))) %></h1>
+							<h1 class="ddm-form-name" tabindex={0}><%= HtmlUtil.escape(GetterUtil.getString(title.getString(displayLocale), title.getString(title.getDefaultLocale()))) %></h1>
 
-							<p class="ddm-form-description"><%= HtmlUtil.escape(GetterUtil.getString(body.getString(displayLocale), body.getString(body.getDefaultLocale()))) %></p>
+							<p class="ddm-form-description" tabindex={0}><%= HtmlUtil.escape(GetterUtil.getString(body.getString(displayLocale), body.getString(body.getDefaultLocale()))) %></p>
 						</clay:container-fluid>
 					</div>
 				</div>
@@ -185,14 +185,14 @@ long formInstanceId = ddmFormDisplayContext.getFormInstanceId();
 
 						<div class="ddm-form-basic-info">
 							<clay:container-fluid>
-								<h1 class="ddm-form-name"><%= HtmlUtil.escape(formInstance.getName(displayLocale)) %></h1>
+								<h1 class="ddm-form-name" tabindex={0}><%= HtmlUtil.escape(formInstance.getName(displayLocale)) %></h1>
 
 								<%
 								String description = StringUtil.trim(HtmlUtil.escape(formInstance.getDescription(displayLocale)));
 								%>
 
 								<c:if test="<%= Validator.isNotNull(description) %>">
-									<p class="ddm-form-description"><%= description %></p>
+									<p class="ddm-form-description" tabindex={0}><%= description %></p>
 								</c:if>
 							</clay:container-fluid>
 						</div>
