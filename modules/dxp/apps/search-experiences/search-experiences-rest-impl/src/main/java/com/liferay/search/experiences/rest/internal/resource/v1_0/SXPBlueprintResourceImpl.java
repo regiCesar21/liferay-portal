@@ -248,7 +248,8 @@ public class SXPBlueprintResourceImpl
 				contextAcceptLanguage.getPreferredLocale(), contextUriInfo,
 				contextUser),
 			_sxpBlueprintService.addSXPBlueprint(
-				null, _getConfigurationJSON(sxpBlueprint),
+				sxpBlueprint.getExternalReferenceCode(),
+				_getConfigurationJSON(sxpBlueprint),
 				LocalizedMapUtil.getLocalizedMap(
 					contextAcceptLanguage.getPreferredLocale(),
 					sxpBlueprint.getDescription(),
