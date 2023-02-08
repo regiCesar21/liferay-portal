@@ -14,7 +14,9 @@
 
 package com.liferay.headless.delivery.internal.resource.v1_0;
 
+import com.liferay.asset.kernel.AssetRendererFactoryRegistryUtil;
 import com.liferay.asset.kernel.model.AssetEntry;
+import com.liferay.asset.kernel.model.AssetRendererFactory;
 import com.liferay.asset.kernel.service.AssetEntryLocalService;
 import com.liferay.document.library.kernel.service.DLAppService;
 import com.liferay.dynamic.data.mapping.io.DDMFormValuesSerializer;
@@ -428,7 +430,7 @@ public class StructuredContentResourceImpl
 				localDateTime.getHour(), localDateTime.getMinute(), 0, 0, 0, 0,
 				0, true, 0, 0, 0, 0, 0, true, true, false, null, null, null,
 				null,
-				_createServiceContext(
+				_createServiceContext(_getAssetCategoryIds(journalArticle, structuredContent),
 					structuredContentId, structuredContent, 0L)));
 	}
 
@@ -534,7 +536,7 @@ public class StructuredContentResourceImpl
 				localDateTime.getHour(), localDateTime.getMinute(), 0, 0, 0, 0,
 				0, true, 0, 0, 0, 0, 0, true, true, false, null, null, null,
 				null,
-				_createServiceContext(
+				_createServiceContext(_getAssetCategoryIds(journalArticle, structuredContent),
 					structuredContentId, structuredContent, 0L)));
 	}
 
@@ -643,7 +645,7 @@ public class StructuredContentResourceImpl
 				localDateTime.getDayOfMonth(), localDateTime.getYear(),
 				localDateTime.getHour(), localDateTime.getMinute(), 0, 0, 0, 0,
 				0, true, 0, 0, 0, 0, 0, true, true, false, null, null, null,
-				null, _createServiceContext(0L, structuredContent, siteId)));
+				null, _createServiceContext(structuredContent.getTaxonomyCategoryIds(),0L, structuredContent, siteId)));
 	}
 
 	private DDMStructure _checkDDMStructurePermission(
@@ -703,8 +705,8 @@ public class StructuredContentResourceImpl
 	}
 
 	private ServiceContext _createServiceContext(
-			Long structuredContentId, StructuredContent structuredContent,
-			Long siteId)
+			Long[] assetCategoryIds, Long structuredContentId,
+			StructuredContent structuredContent, Long siteId)
 		throws Exception {
 
 		ServiceContext serviceContext = null;
@@ -714,7 +716,7 @@ public class StructuredContentResourceImpl
 				_journalArticleService.getLatestArticle(structuredContentId);
 
 			serviceContext = ServiceContextRequestUtil.createServiceContext(
-				structuredContent.getTaxonomyCategoryIds(),
+				assetCategoryIds,
 				structuredContent.getKeywords(),
 				_getExpandoBridgeAttributes(structuredContent),
 				journalArticle.getGroupId(), contextHttpServletRequest,
@@ -731,7 +733,7 @@ public class StructuredContentResourceImpl
 		}
 		else {
 			serviceContext = ServiceContextRequestUtil.createServiceContext(
-				structuredContent.getTaxonomyCategoryIds(),
+				assetCategoryIds,
 				structuredContent.getKeywords(),
 				_getExpandoBridgeAttributes(structuredContent), siteId,
 				contextHttpServletRequest,
@@ -739,6 +741,26 @@ public class StructuredContentResourceImpl
 		}
 
 		return serviceContext;
+	}
+	private Long[] _getAssetCategoryIds(
+		JournalArticle journalArticle, StructuredContent structuredContent)
+		throws Exception {
+
+		if ((journalArticle == null) ||
+			(structuredContent.getTaxonomyCategoryIds() != null)) {
+
+			return structuredContent.getTaxonomyCategoryIds();
+		}
+
+		AssetRendererFactory<?> assetRendererFactory =
+			AssetRendererFactoryRegistryUtil.getAssetRendererFactoryByClass(
+				JournalArticle.class);
+
+		AssetEntry assetEntry = assetRendererFactory.getAssetEntry(
+			JournalArticle.class.getName(),
+			journalArticle.getResourcePrimKey());
+
+		return ArrayUtil.toLongArray(assetEntry.getCategoryIds());
 	}
 
 	private UnsafeConsumer<BooleanQuery, Exception>
