@@ -79,7 +79,7 @@ public class LockLocalServiceImpl extends LockLocalServiceBaseImpl {
 		Lock lock = lockPersistence.fetchByC_K(className, key);
 
 		if ((lock != null) && lock.isExpired()) {
-			expireLock(lock);
+			_expireLock(lock);
 
 			lock = null;
 		}
@@ -104,7 +104,7 @@ public class LockLocalServiceImpl extends LockLocalServiceBaseImpl {
 		Lock lock = lockPersistence.findByC_K(className, key);
 
 		if (lock.isExpired()) {
-			expireLock(lock);
+			_expireLock(lock);
 
 			throw new ExpiredLockException();
 		}
@@ -186,7 +186,7 @@ public class LockLocalServiceImpl extends LockLocalServiceBaseImpl {
 
 		if (lock != null) {
 			if (lock.isExpired()) {
-				expireLock(lock);
+				_expireLock(lock);
 
 				lock = null;
 			}
@@ -439,24 +439,38 @@ public class LockLocalServiceImpl extends LockLocalServiceBaseImpl {
 		}
 	}
 
-	protected void expireLock(Lock lock) {
-		LockListener lockListener = _getLockListener(lock.getClassName());
-
-		String key = lock.getKey();
-
-		if (lockListener != null) {
-			lockListener.onBeforeExpire(key);
-		}
-
+	private void _expireLock(Lock lock) {
 		try {
-			lockPersistence.remove(lock);
+			TransactionInvokerUtil.invoke(
+				_transactionConfig,
+				() -> {
+					LockListener lockListener = _getLockListener(
+						lock.getClassName());
 
-			lockPersistence.flush();
+					String key = lock.getKey();
+
+					if (lockListener != null) {
+						lockListener.onBeforeExpire(key);
+					}
+
+					try {
+						lockPersistence.remove(lock);
+
+						lockPersistence.flush();
+					}
+					finally {
+						if (lockListener != null) {
+							lockListener.onAfterExpire(key);
+						}
+					}
+
+					return null;
+				});
 		}
-		finally {
-			if (lockListener != null) {
-				lockListener.onAfterExpire(key);
-			}
+		catch (Throwable throwable) {
+			_log.error("Unable to expire lock", throwable);
+
+			ReflectionUtil.throwException(throwable);
 		}
 	}
 
