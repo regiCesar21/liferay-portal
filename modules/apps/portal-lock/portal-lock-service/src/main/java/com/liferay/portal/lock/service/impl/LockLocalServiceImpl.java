@@ -20,7 +20,6 @@ import com.liferay.petra.reflect.ReflectionUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.change.tracking.CTAware;
-import com.liferay.portal.kernel.dao.jdbc.aop.MasterDataSource;
 import com.liferay.portal.kernel.dao.orm.ORMException;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.lock.LockListener;
@@ -239,13 +238,11 @@ public class LockLocalServiceImpl extends LockLocalServiceBaseImpl {
 		return lock;
 	}
 
-	@MasterDataSource
 	@Override
 	public Lock lock(String className, String key, String owner) {
 		return lock(className, key, null, owner);
 	}
 
-	@MasterDataSource
 	@Override
 	public Lock lock(
 		final String className, final String key, final String expectedOwner,
@@ -380,7 +377,6 @@ public class LockLocalServiceImpl extends LockLocalServiceBaseImpl {
 		}
 	}
 
-	@MasterDataSource
 	@Override
 	public void unlock(
 		final String className, final String key, final String owner) {
