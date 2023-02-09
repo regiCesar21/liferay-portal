@@ -19,6 +19,8 @@ import java.util.stream.Stream;
 
 import javax.net.ssl.SSLContext;
 
+import org.apache.http.Header;
+import org.apache.http.HttpHeaders;
 import org.apache.http.HttpHost;
 import org.apache.http.auth.AuthScope;
 import org.apache.http.auth.UsernamePasswordCredentials;
@@ -26,6 +28,7 @@ import org.apache.http.client.CredentialsProvider;
 import org.apache.http.client.config.RequestConfig;
 import org.apache.http.impl.client.BasicCredentialsProvider;
 import org.apache.http.impl.nio.client.HttpAsyncClientBuilder;
+import org.apache.http.message.BasicHeader;
 import org.apache.http.ssl.SSLContextBuilder;
 import org.apache.http.ssl.SSLContexts;
 
@@ -45,6 +48,15 @@ public class RestHighLevelClientFactory {
 	public RestHighLevelClient newRestHighLevelClient() {
 		RestClientBuilder restClientBuilder = RestClient.builder(
 			getHttpHosts()
+		).setDefaultHeaders(
+			new Header[] {
+				new BasicHeader(
+					HttpHeaders.ACCEPT,
+					"application/vnd.elasticsearch+json;compatible-with=7"),
+				new BasicHeader(
+					HttpHeaders.CONTENT_TYPE,
+					"application/vnd.elasticsearch+json;compatible-with=7")
+			}
 		).setHttpClientConfigCallback(
 			this::customizeHttpClient
 		).setRequestConfigCallback(
