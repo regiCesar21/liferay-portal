@@ -352,7 +352,7 @@ public class GroupLocalServiceImpl extends GroupLocalServiceBaseImpl {
 			int groupKeyMaxLength = ModelHintsUtil.getMaxLength(
 				Group.class.getName(), "groupKey");
 
-			if (groupKey.length() <
+			if (groupKey.length() <=
 					(groupKeyMaxLength - stagingGroupKeyAddition.length())) {
 
 				groupKey = groupKey.concat(stagingGroupKeyAddition);
