@@ -167,7 +167,7 @@ public class RankingGetHiddenResultsBuilder {
 		).build();
 	}
 
-	protected static final String LIFERAY_DOCUMENT_TYPE = "LiferayDocumentType";
+	protected static final String LIFERAY_DOCUMENT_TYPE = "_doc";
 
 	private String _getViewURL(Document document) {
 		return RankingResultUtil.getRankingResultViewURL(
