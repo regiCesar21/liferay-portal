@@ -25,8 +25,6 @@ import com.liferay.portal.kernel.model.ModelListener;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.transaction.TransactionCommitCallbackUtil;
-import com.liferay.portal.kernel.util.LocaleUtil;
-import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.vulcan.util.LocalizedMapUtil;
 import com.liferay.search.experiences.rest.dto.v1_0.SXPElement;
@@ -62,18 +60,18 @@ public class CompanyModelListener extends BaseModelListener<Company> {
 			Company company, SXPElementLocalService sxpElementLocalService)
 		throws PortalException {
 
-		Set<String> titles = new HashSet<>();
+		Set<String> externalReferenceCodes = new HashSet<>();
 
 		for (com.liferay.search.experiences.model.SXPElement sxpPElement :
 				sxpElementLocalService.getSXPElements(
 					company.getCompanyId(), true)) {
 
-			titles.add(sxpPElement.getTitle(LocaleUtil.US));
+			externalReferenceCodes.add(sxpPElement.getExternalReferenceCode());
 		}
 
 		for (SXPElement sxpElement : _getSXPElements()) {
-			if (titles.contains(
-					MapUtil.getString(sxpElement.getTitle_i18n(), "en_US"))) {
+			if (externalReferenceCodes.contains(
+					sxpElement.getExternalReferenceCode())) {
 
 				continue;
 			}
