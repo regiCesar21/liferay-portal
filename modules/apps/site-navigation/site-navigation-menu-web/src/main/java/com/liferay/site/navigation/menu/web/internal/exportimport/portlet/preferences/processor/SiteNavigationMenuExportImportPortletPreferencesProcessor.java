@@ -22,7 +22,6 @@ import com.liferay.exportimport.kernel.staging.MergeLayoutPrototypesThreadLocal;
 import com.liferay.exportimport.portlet.preferences.processor.Capability;
 import com.liferay.exportimport.portlet.preferences.processor.ExportImportPortletPreferencesProcessor;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.service.PortletPreferenceValueLocalService;
 import com.liferay.portal.kernel.service.PortletPreferencesLocalService;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ListUtil;
@@ -147,8 +146,12 @@ public class SiteNavigationMenuExportImportPortletPreferencesProcessor
 						serviceBuilderPortletPreferencesList.get(0);
 
 				PortletPreferences originalPortletPreferences =
-					_portletPreferenceValueLocalService.getPreferences(
-						serviceBuilderPortletPreferences);
+					_portletPreferencesLocalService.fetchPreferences(
+						serviceBuilderPortletPreferences.getCompanyId(),
+						serviceBuilderPortletPreferences.getOwnerId(),
+						serviceBuilderPortletPreferences.getOwnerType(),
+						serviceBuilderPortletPreferences.getPlid(),
+						serviceBuilderPortletPreferences.getPortletId());
 
 				siteNavigationMenuId = GetterUtil.getLong(
 					originalPortletPreferences.getValue(
@@ -212,10 +215,6 @@ public class SiteNavigationMenuExportImportPortletPreferencesProcessor
 
 	@Reference(unbind = "-")
 	private PortletPreferencesLocalService _portletPreferencesLocalService;
-
-	@Reference(unbind = "-")
-	private PortletPreferenceValueLocalService
-		_portletPreferenceValueLocalService;
 
 	@Reference(unbind = "-")
 	private SiteNavigationMenuLocalService _siteNavigationMenuLocalService;
