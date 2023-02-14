@@ -23,17 +23,17 @@ definition {
 		var parameters = JSONUtil2._addJSONObject(
 			JSON = "{}",
 			key = "domain",
-			value = "\\"${domain}\\"");
+			value = "\"${domain}\"");
 
 		var parameters = JSONUtil2._addJSONObject(
 			JSON = ${parameters},
 			key = "virtualHost",
-			value = "\\"${virtualHost}\\"");
+			value = "\"${virtualHost}\"");
 
 		var parameters = JSONUtil2._addJSONObject(
 			JSON = ${parameters},
 			key = "portalInstanceId",
-			value = "\\"${portalInstanceId}\\"");
+			value = "\"${portalInstanceId}\"");
 
 		var curl = '''
 			${portalURL}/o/headless-portal-instances/v1.0/portal-instances \

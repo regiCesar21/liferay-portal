@@ -199,7 +199,7 @@ definition {
 
 		AssertTextEquals.assertPartialText(
 			locator1 = "SearchResults#SEARCH_INSIGHTS_PORTLET_REQUEST_STRING",
-			value1 = "\\"explain\\":true");
+			value1 = "\"explain\":true");
 
 		AssertTextEquals.assertPartialText(
 			locator1 = "SearchResults#SEARCH_INSIGHTS_PORTLET_RESPONSE_STRING",
@@ -227,7 +227,7 @@ definition {
 
 		AssertTextEquals.assertPartialText(
 			locator1 = "SearchResults#SEARCH_INSIGHTS_PORTLET_REQUEST_STRING",
-			value1 = "\\"explain\\":false");
+			value1 = "\"explain\":false");
 
 		AssertTextNotEquals.assertNotPartialText(
 			locator1 = "SearchResults#SEARCH_INSIGHTS_PORTLET_RESPONSE_STRING",
@@ -523,14 +523,14 @@ definition {
 	test OSGiConfigSmokeTest {
 		property embedded.elasticsearch.only = "true";
 		property osgi.module.configuration.file.names = "com.liferay.portal.search.elasticsearch7.configuration.ElasticsearchConfiguration.config";
-		property osgi.module.configurations = "clusterName=\\"LiferayElasticsearchCluster1\\"";
+		property osgi.module.configurations = "clusterName=\"LiferayElasticsearchCluster1\"";
 		property portal.acceptance = "true";
 
 		var portalHostname = PropsUtil.get("portal.hostname");
 
 		Navigator.openSpecificURL(url = "http://${portalHostname}:9201");
 
-		Elasticsearch.viewClusterStatus(clusterStatus = "\\"cluster_name\\" : \\"LiferayElasticsearchCluster1\\"");
+		Elasticsearch.viewClusterStatus(clusterStatus = "\"cluster_name\" : \"LiferayElasticsearchCluster1\"");
 	}
 
 	@description = "Assert search is functional after Elasticsearch connector is redeployed from GogoShell"
@@ -744,7 +744,7 @@ definition {
 
 		Navigator.openSpecificURL(url = "http://${portalHostname}:9201");
 
-		Elasticsearch.viewClusterStatus(clusterStatus = "\\"cluster_name\\" : \\"LiferayElasticsearchCluster1\\"");
+		Elasticsearch.viewClusterStatus(clusterStatus = "\"cluster_name\" : \"LiferayElasticsearchCluster1\"");
 
 		Navigator.openURL();
 

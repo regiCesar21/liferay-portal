@@ -770,7 +770,7 @@ ${httpUtil.URLtoString(request.getAttribute("CTX").getResource(".").toURI().crea
 			siteName = "Test Site Name");
 
 		WebContentDisplayPortlet.searchWebContent(
-			webContentSearchValue = "\\"WC WebContent Title\\"",
+			webContentSearchValue = "\"WC WebContent Title\"",
 			webContentTitle = "WC WebContent Title");
 
 		Navigator.gotoSitePage(
@@ -778,7 +778,7 @@ ${httpUtil.URLtoString(request.getAttribute("CTX").getResource(".").toURI().crea
 			siteName = "Test Site Name");
 
 		WebContentDisplayPortlet.searchWebContentNo(
-			webContentSearchValue = "\\"WC2 WebContent2 Title2\\"",
+			webContentSearchValue = "\"WC2 WebContent2 Title2\"",
 			webContentTitle = "WC2 WebContent2 Title2");
 	}
 

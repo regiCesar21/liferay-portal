@@ -75,15 +75,15 @@ definition {
 
 		AssertTextEquals.assertPartialText(
 			locator1 = "//body",
-			value1 = "\\"cluster_name\\" : \\"LiferayElasticsearchCluster\\"");
+			value1 = "\"cluster_name\" : \"LiferayElasticsearchCluster\"");
 
 		AssertTextEquals.assertPartialText(
 			locator1 = "//body",
-			value1 = "\\"number_of_nodes\\" : ${numberOfNodes}");
+			value1 = "\"number_of_nodes\" : ${numberOfNodes}");
 
 		AssertTextEquals.assertPartialText(
 			locator1 = "//body",
-			value1 = "\\"number_of_data_nodes\\" : ${numberOfNodes}");
+			value1 = "\"number_of_data_nodes\" : ${numberOfNodes}");
 	}
 
 }

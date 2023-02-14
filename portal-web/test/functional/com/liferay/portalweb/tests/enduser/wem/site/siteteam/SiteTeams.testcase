@@ -281,12 +281,12 @@ definition {
 
 		Team.searchCP(
 			membershipType = "User Group",
-			searchTerm = "\\"User Group Name 1\\"");
+			searchTerm = "\"User Group Name 1\"");
 
 		Team.searchCP(
 			isEmpty = "true",
 			membershipType = "User Group",
-			searchTerm = "\\"User Group Name 2\\"");
+			searchTerm = "\"User Group Name 2\"");
 	}
 
 	test AddSiteTeamSearchUsers {

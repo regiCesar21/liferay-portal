@@ -764,7 +764,7 @@ definition {
 			publicationName = "Publication Name",
 			publishNow = "true");
 
-		Publications.publishPublication(publicationName = "Revert \\"Publication Name\\"");
+		Publications.publishPublication(publicationName = "Revert \"Publication Name\"");
 
 		Navigator.openURL();
 
