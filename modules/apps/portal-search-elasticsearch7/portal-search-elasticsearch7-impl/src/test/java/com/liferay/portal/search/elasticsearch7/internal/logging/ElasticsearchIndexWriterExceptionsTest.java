@@ -160,7 +160,7 @@ public class ElasticsearchIndexWriterExceptionsTest
 	public void testPartiallyUpdateDocument() {
 		expectedException.expect(ElasticsearchStatusException.class);
 		expectedException.expectMessage(
-			"type=document_missing_exception, reason=[LiferayDocumentType]");
+			"type=document_missing_exception, reason=[_doc]");
 
 		Document document = new DocumentImpl();
 
