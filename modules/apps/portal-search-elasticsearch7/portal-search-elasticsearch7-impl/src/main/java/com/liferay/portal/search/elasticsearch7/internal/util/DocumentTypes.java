@@ -10,6 +10,6 @@ package com.liferay.portal.search.elasticsearch7.internal.util;
  */
 public class DocumentTypes {
 
-	public static final String LIFERAY = "LiferayDocumentType";
+	public static final String LIFERAY = "_doc";
 
 }
