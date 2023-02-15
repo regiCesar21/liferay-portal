@@ -1590,6 +1590,8 @@ definition {
 		task ("Assert fragment display correctly") {
 			LexiconCard.clickCard(card = "Document Title");
 
+			SelectFrameTop();
+
 			AssertTextEquals(
 				locator1 = "//div[contains(@class,'fragment_dm')]",
 				value1 = "Document Title");
