@@ -69,8 +69,6 @@ public abstract class BaseCommerceMLForecastServiceImpl
 		IndexDocumentRequest indexDocumentRequest = new IndexDocumentRequest(
 			commerceMLIndexer.getIndexName(model.getCompanyId()), document);
 
-		indexDocumentRequest.setType(commerceMLIndexer.getDocumentType());
-
 		IndexDocumentResponse indexDocumentResponse =
 			searchEngineAdapter.execute(indexDocumentRequest);
 

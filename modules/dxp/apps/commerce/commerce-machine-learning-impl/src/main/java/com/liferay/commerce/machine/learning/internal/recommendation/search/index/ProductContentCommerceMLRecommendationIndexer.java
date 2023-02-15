@@ -31,11 +31,6 @@ public class ProductContentCommerceMLRecommendationIndexer
 	}
 
 	@Override
-	public String getDocumentType() {
-		return "_doc";
-	}
-
-	@Override
 	public String getIndexName(long companyId) {
 		return String.format(
 			_INDEX_NAME_PATTERN, _indexNameBuilder.getIndexName(companyId));

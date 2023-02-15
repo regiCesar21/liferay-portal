@@ -44,8 +44,7 @@ public class ProductInteractionCommerceMLRecommendationManagerImpl
 		return addCommerceMLRecommendation(
 			productInteractionCommerceMLRecommendation,
 			_commerceMLIndexer.getIndexName(
-				productInteractionCommerceMLRecommendation.getCompanyId()),
-			_commerceMLIndexer.getDocumentType());
+				productInteractionCommerceMLRecommendation.getCompanyId()));
 	}
 
 	@Override
