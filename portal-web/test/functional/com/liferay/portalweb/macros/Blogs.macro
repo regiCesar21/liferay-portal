@@ -381,6 +381,10 @@ definition {
 	}
 
 	macro clickEllipsisItemPG {
+		MouseOver.mouseOverInvisible(
+			key_entryTitle = ${entryTitle},
+			locator1 = "Blogs#WIDGET_VIEW_ENTRY_ELLIPSIS");
+
 		Click(
 			key_entryTitle = ${entryTitle},
 			locator1 = "Blogs#WIDGET_VIEW_ENTRY_ELLIPSIS");
