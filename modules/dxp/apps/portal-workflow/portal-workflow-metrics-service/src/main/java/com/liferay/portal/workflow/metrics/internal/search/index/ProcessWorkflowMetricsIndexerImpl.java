@@ -43,12 +43,7 @@ public class ProcessWorkflowMetricsIndexerImpl
 					document.getLong("companyId")),
 				_createWorkflowMetricsInstanceDocument(
 					document.getLong("companyId"),
-					document.getLong("processId"))) {
-
-				{
-					setType(_instanceWorkflowMetricsIndex.getIndexType());
-				}
-			});
+					document.getLong("processId"))));
 
 		bulkDocumentRequest.addBulkableDocumentRequest(
 			new IndexDocumentRequest(
@@ -56,25 +51,13 @@ public class ProcessWorkflowMetricsIndexerImpl
 					document.getLong("companyId")),
 				_slaInstanceResultWorkflowMetricsIndexer.creatDefaultDocument(
 					document.getLong("companyId"),
-					document.getLong("processId"))) {
-
-				{
-					setType(
-						_slaInstanceResultWorkflowMetricsIndexer.
-							getIndexType());
-				}
-			});
+					document.getLong("processId"))));
 
 		bulkDocumentRequest.addBulkableDocumentRequest(
 			new IndexDocumentRequest(
 				_processWorkflowMetricsIndex.getIndexName(
 					document.getLong("companyId")),
-				document) {
-
-				{
-					setType(_processWorkflowMetricsIndex.getIndexType());
-				}
-			});
+				document));
 
 		if (PortalRunMode.isTestMode()) {
 			bulkDocumentRequest.setRefresh(true);

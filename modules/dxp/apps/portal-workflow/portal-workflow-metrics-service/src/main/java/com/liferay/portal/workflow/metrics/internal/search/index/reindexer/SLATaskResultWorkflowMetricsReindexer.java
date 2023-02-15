@@ -107,13 +107,7 @@ public class SLATaskResultWorkflowMetricsReindexer
 		).map(
 			document -> new IndexDocumentRequest(
 				_slaTaskResultWorkflowMetricsIndexer.getIndexName(companyId),
-				document) {
-
-				{
-					setType(
-						_slaTaskResultWorkflowMetricsIndexer.getIndexType());
-				}
-			}
+				document)
 		).forEach(
 			indexDocumentRequest -> {
 				bulkDocumentRequest.addBulkableDocumentRequest(

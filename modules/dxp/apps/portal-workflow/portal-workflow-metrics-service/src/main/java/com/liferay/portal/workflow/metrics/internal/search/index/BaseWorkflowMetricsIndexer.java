@@ -62,12 +62,7 @@ public abstract class BaseWorkflowMetricsIndexer {
 			document -> bulkDocumentRequest.addBulkableDocumentRequest(
 				new IndexDocumentRequest(
 					getIndexName(document.getLong("companyId")),
-					document.getString("uid"), document) {
-
-					{
-						setType(getIndexType());
-					}
-				}));
+					document.getString("uid"), document)));
 
 		if (ListUtil.isNotEmpty(
 				bulkDocumentRequest.getBulkableDocumentRequests())) {
@@ -105,8 +100,6 @@ public abstract class BaseWorkflowMetricsIndexer {
 		if (PortalRunMode.isTestMode()) {
 			indexDocumentRequest.setRefresh(true);
 		}
-
-		indexDocumentRequest.setType(getIndexType());
 
 		searchEngineAdapter.execute(indexDocumentRequest);
 	}
@@ -268,7 +261,6 @@ public abstract class BaseWorkflowMetricsIndexer {
 			updateDocumentRequest.setRefresh(true);
 		}
 
-		updateDocumentRequest.setType(getIndexType());
 		updateDocumentRequest.setUpsert(true);
 
 		searchEngineAdapter.execute(updateDocumentRequest);
