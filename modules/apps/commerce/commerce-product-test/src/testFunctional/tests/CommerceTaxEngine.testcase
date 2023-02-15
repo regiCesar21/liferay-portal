@@ -49,6 +49,8 @@ definition {
 			channelName = "Test Channel",
 			channelType = "Site");
 
+		SelectFrameTop();
+
 		Type(
 			key_fieldLabel = "Shipping Tax Category",
 			locator1 = "TextInput#GENERIC_TEXT_INPUT",
