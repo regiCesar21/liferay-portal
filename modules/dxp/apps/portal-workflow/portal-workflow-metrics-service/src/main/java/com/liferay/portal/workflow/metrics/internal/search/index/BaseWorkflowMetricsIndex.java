@@ -51,8 +51,7 @@ public abstract class BaseWorkflowMetricsIndex implements WorkflowMetricsIndex {
 				createIndexRequest.setSource(
 					JSONUtil.put(
 						"mappings",
-						JSONUtil.put(
-							getIndexType(), jsonObject.get(getIndexType()))
+						JSONUtil.put("_doc", jsonObject.get(getIndexType()))
 					).put(
 						"settings",
 						JSONFactoryUtil.createJSONObject(
