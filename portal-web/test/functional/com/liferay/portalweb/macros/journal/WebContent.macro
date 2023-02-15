@@ -583,6 +583,8 @@ definition {
 					locator1 = "WC#ICON_DOCUMENT_TITLE",
 					value1 = ${webContentDocumentsAndMedia});
 			}
+
+			SelectFrameTop();
 		}
 
 		if (isSet(webContentHTML)) {
