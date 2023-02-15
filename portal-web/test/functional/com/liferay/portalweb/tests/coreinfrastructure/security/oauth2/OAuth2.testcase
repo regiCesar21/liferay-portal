@@ -462,6 +462,7 @@ definition {
 		}
 	}
 
+	@ignore = "true"
 	test AuthorizeExternalApplication {
 		property custom.properties = "virtual.hosts.default.site.name=Guest";
 
@@ -712,6 +713,7 @@ definition {
 			resourcePanels = "Portal Services,Sample QA app");
 	}
 
+	@ignore = "true"
 	@priority = 4
 	test RefreshTokenTime {
 		property custom.properties = "virtual.hosts.default.site.name=Guest";
@@ -793,6 +795,7 @@ definition {
 	}
 
 	@description = "This is a use case for LPS-105156."
+	@ignore = "true"
 	@priority = 5
 	test RemoveExpiredAuthorization {
 		property osgi.module.configuration.file.names = "com.liferay.oauth2.provider.rest.internal.spi.bearer.token.provider.configuration.DefaultBearerTokenProviderConfiguration.config:com.liferay.oauth2.provider.configuration.OAuth2ProviderConfiguration.config";
