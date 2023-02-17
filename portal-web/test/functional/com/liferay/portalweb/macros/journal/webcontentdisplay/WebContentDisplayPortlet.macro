@@ -34,6 +34,8 @@ definition {
 
 			Click(locator1 = "ContentRow#ENTRY_CONTENT_ENTRY_NAME");
 
+			SelectFrameTop();
+
 			SelectFrame(locator1 = "IFrame#MODAL_BODY");
 
 			AssertTextEquals.assertPartialText(

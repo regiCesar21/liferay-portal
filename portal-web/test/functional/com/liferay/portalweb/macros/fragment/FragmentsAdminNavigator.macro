@@ -19,6 +19,8 @@ definition {
 	}
 
 	macro gotoCollection {
+		SelectFrameTop();
+
 		AssertClick.assertPartialTextClickAt(
 			locator1 = "FragmentAdmin#FRAGMENT_COLLECTION",
 			value1 = ${collectionName});

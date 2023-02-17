@@ -8,6 +8,8 @@ definition {
 	}
 
 	macro gotoEntry {
+		SelectFrameTop();
+
 		AssertClickNoError(
 			key_entryName = ${entryName},
 			locator1 = "CommerceNavigation#ENTRY_NAME",

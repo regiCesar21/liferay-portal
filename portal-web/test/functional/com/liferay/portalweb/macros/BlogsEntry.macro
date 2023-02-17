@@ -184,6 +184,8 @@ definition {
 	}
 
 	macro addTitle {
+		SelectFrameTop();
+
 		Type(
 			key_text = "Title",
 			locator1 = "TextArea#ANY",

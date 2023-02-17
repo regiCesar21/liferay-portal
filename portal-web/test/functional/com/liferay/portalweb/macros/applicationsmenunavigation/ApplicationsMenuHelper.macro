@@ -20,6 +20,8 @@ definition {
 	}
 
 	macro openApplicationsMenu {
+		SelectFrameTop();
+
 		if (IsElementNotPresent(locator1 = "ApplicationsMenu#APPLICATIONS_MENU")) {
 			Click(locator1 = "ApplicationsMenu#TOGGLE");
 		}

@@ -178,6 +178,8 @@ definition {
 			}
 		}
 
+		SelectFrameTop();
+
 		Click(locator1 = "Questions#ASK_QUESTION_POST_YOUR_QUESTION_BUTTON");
 	}
 

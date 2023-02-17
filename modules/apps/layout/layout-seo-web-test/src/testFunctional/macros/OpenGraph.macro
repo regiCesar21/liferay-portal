@@ -81,6 +81,8 @@ definition {
 		}
 
 		if (!(isSet(dontSave))) {
+			SelectFrameTop();
+
 			Button.click(button = "Save");
 
 			if (isSet(customImage)) {

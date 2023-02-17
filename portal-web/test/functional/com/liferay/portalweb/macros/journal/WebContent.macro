@@ -597,6 +597,8 @@ definition {
 		}
 
 		if (isSet(webContentImage)) {
+			SelectFrameTop();
+
 			Click(locator1 = "WCEditWebContent#IMAGE_FIELD_SELECT");
 
 			if (isSet(depotName)) {

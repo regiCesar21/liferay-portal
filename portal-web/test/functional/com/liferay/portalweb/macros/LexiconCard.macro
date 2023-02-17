@@ -75,6 +75,8 @@ definition {
 	}
 
 	macro viewCardPresent {
+		SelectFrameTop();
+
 		AssertVisible(
 			key_card = ${card},
 			locator1 = "Card#CARD");
@@ -88,6 +90,8 @@ definition {
 	}
 
 	macro viewCardThumbnail {
+		SelectFrameTop();
+
 		AssertVisible(
 			key_card = ${card},
 			locator1 = "Card#CARD_THUMBNAIL");
