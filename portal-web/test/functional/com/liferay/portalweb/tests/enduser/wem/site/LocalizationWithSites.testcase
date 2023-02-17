@@ -450,10 +450,7 @@ definition {
 			defaultPortalLanguage = "inglés (Estados Unidos)",
 			localizationTranslation = "Localización");
 
-		ProductMenu.gotoLocalizedSite(
-			displayStyle = "tabla",
-			navItem = "Mis Sitios",
-			site = "Nombre del Sitio");
+		ApplicationsMenu.gotoSite(site = "Nombre del Sitio");
 
 		ProductMenu.gotoPortlet(
 			category = "Configuración",
