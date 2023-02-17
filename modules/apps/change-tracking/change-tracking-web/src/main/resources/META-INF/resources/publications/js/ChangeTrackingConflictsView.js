@@ -31,6 +31,7 @@ class ChangeTrackingConflictsView extends ChangeTrackingBaseScheduleView {
 			showPageOverwriteWarning,
 			spritemap,
 			timeZone,
+			unapprovedChangesAllowed,
 			unresolvedConflicts,
 		} = props;
 
@@ -43,6 +44,7 @@ class ChangeTrackingConflictsView extends ChangeTrackingBaseScheduleView {
 		this.showPageOverwriteWarning = showPageOverwriteWarning;
 		this.spritemap = spritemap;
 		this.timeZone = timeZone;
+		this.unapprovedChangesAllowed = unapprovedChangesAllowed;
 		this.unresolvedConflicts = unresolvedConflicts;
 
 		this.state = {
@@ -73,20 +75,23 @@ class ChangeTrackingConflictsView extends ChangeTrackingBaseScheduleView {
 			<div className="sheet sheet-lg">
 				<div className="sheet-header">
 					<h2 className="sheet-title">
-						{Liferay.Language.get('conflicting-changes')}
+						{Liferay.Language.get('checking-changes')}
 					</h2>
 
 					{this.hasUnapprovedChanges && (
 						<ClayAlert
 							displayType="warning"
 							spritemap={this.spritemap}
-						>
-							<span>
-								{Liferay.Language.get(
-									'this-publication-contains-unapproved-changes-that-must-be-approved-before-publishing'
-								)}
-							</span>
-						</ClayAlert>
+							title={
+								this.unapprovedChangesAllowed
+									? Liferay.Language.get(
+											'this-publication-contains-unapproved-changes'
+									  )
+									: Liferay.Language.get(
+											'this-publication-contains-unapproved-changes-that-must-be-approved-before-publishing'
+									  )
+							}
+						/>
 					)}
 
 					{this.unresolvedConflicts.length > 0 && (
@@ -99,7 +104,9 @@ class ChangeTrackingConflictsView extends ChangeTrackingBaseScheduleView {
 						/>
 					)}
 
-					{!this.hasUnapprovedChanges &&
+					{(!this.hasUnapprovedChanges ||
+						(this.hasUnapprovedChanges &&
+							this.unapprovedChangesAllowed)) &&
 						!this.unresolvedConflicts.length && (
 							<ClayAlert
 								displayType="success"
@@ -230,7 +237,8 @@ class ChangeTrackingConflictsView extends ChangeTrackingBaseScheduleView {
 							<button
 								className={
 									!!this.unresolvedConflicts.length ||
-									this.hasUnapprovedChanges
+									(this.hasUnapprovedChanges &&
+										!this.unapprovedChangesAllowed)
 										? 'btn btn-primary disabled'
 										: 'btn btn-primary'
 								}
