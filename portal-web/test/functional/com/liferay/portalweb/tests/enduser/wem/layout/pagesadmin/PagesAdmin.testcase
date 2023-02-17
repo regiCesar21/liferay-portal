@@ -540,6 +540,8 @@ definition {
 			item = "Edit Content",
 			tableEntry = "Webcontent Title");
 
+		SelectFrameTop();
+
 		AssertVisible(locator1 = "WCEditWebContent#SIDEBAR");
 
 		Navigator.gotoBack();
@@ -557,6 +559,8 @@ definition {
 		Page.gotoCollectionEntryEllipsisItem(
 			item = "Edit Content",
 			tableEntry = "Blogs Entry Title");
+
+		SelectFrameTop();
 
 		AssertTextEquals(
 			key_text = "Title",
@@ -578,6 +582,8 @@ definition {
 		Page.gotoCollectionEntryEllipsisItem(
 			item = "Edit Content",
 			tableEntry = "Document Title");
+
+		SelectFrameTop();
 
 		AssertTextEquals(
 			locator1 = "TextInput#TITLE",
@@ -607,6 +613,8 @@ definition {
 			item = "Edit Content",
 			tableEntry = "Webcontent Title");
 
+		SelectFrameTop();
+
 		AssertVisible(locator1 = "WCEditWebContent#SIDEBAR");
 
 		Click(locator1 = "Icon#ANGLE_LEFT_BACK");
@@ -626,6 +634,8 @@ definition {
 		Page.gotoCollectionEntryEllipsisItem(
 			item = "Edit Content",
 			tableEntry = "Blogs Entry Title");
+
+		SelectFrameTop();
 
 		AssertTextEquals(
 			key_text = "Title",
@@ -649,6 +659,8 @@ definition {
 		Page.gotoCollectionEntryEllipsisItem(
 			item = "Edit Content",
 			tableEntry = "Document Title");
+
+		SelectFrameTop();
 
 		AssertTextEquals(
 			locator1 = "TextInput#TITLE",
