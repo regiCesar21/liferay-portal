@@ -870,17 +870,21 @@ definition {
 			siteRoleName = "Site Administrator",
 			userScreenName = "usersn");
 
-		User.firstLoginPG(
-			password = "test",
-			samlEnabled = "true",
-			userEmailAddress = "userea@liferay.com",
-			virtualHostsURL = "www.baker.com:8080/group/russia2018");
+		User.logoutPG();
 
-		Navigator.openSpecificURL(url = "http://www.baker.com:8080/group/russia2018");
+		User.viewLoggedOutPG();
+
+		User.firstLoginUI(
+			password = "test",
+			specificURL = "http://www.baker.com:8080/group/russia2018",
+			userEmailAddress = "userea@liferay.com");
 
 		Page.viewSpecificPG(pageNameList = "Accomodations,Maps");
 
-		Navigator.openSpecificURL(url = "${portalURL}/web/russia2018");
+		User.firstLoginUI(
+			password = "test",
+			specificURL = "${portalURL}/web/russia2018",
+			userEmailAddress = "userea@liferay.com");
 
 		ProductMenu.gotoPortlet(
 			category = "Publishing",
