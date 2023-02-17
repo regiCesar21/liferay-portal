@@ -317,8 +317,6 @@ definition {
 
 		AdaptiveMedia.viewImageVariantURL(imageName = "high_resolution_photo.jpg");
 
-		SelectFrameTop();
-
 		Button.clickPublish();
 	}
 

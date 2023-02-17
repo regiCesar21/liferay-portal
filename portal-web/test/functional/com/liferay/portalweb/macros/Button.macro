@@ -77,6 +77,8 @@ definition {
 	}
 
 	macro clickPublish {
+		SelectFrameTop();
+
 		ScrollWebElementIntoView(
 			key_text = "Publish",
 			locator1 = "Button#ANY");
