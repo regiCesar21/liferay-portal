@@ -494,6 +494,8 @@ definition {
 				ItemSelector.uploadFile(uploadFileName = ${uploadFileName});
 			}
 
+			SelectFrameTop();
+
 			AssertVisible(
 				key_text = ${fieldPredefinedValue},
 				locator1 = "Link#ANY");
