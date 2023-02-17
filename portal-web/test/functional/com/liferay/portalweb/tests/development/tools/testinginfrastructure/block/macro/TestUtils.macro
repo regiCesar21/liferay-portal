@@ -50,6 +50,22 @@ return element.textContent;
 		return ${textContent};
 	}
 
+	macro getScreenHeight {
+		WaitForSPARefresh();
+
+		var screenHeight = selenium.getEval("return	screen.height.toString();");
+
+		return ${screenHeight};
+	}
+
+	macro getScreenWidth {
+		WaitForSPARefresh();
+
+		var screenWidth = selenium.getEval("return screen.width.toString();");
+
+		return ${screenWidth};
+	}
+
 	macro hardRefresh {
 		var mac = OSDetector.isApple();
 
@@ -76,6 +92,13 @@ return element.textContent;
 		else {
 			TestUtils.fail(message = "FAILED: actual '${actual}' is less than or equals to expected '${expected}'");
 		}
+	}
+
+	macro maximizeWindow {
+		var screenWidth = TestUtils.getScreenWidth();
+		var screenHeight = TestUtils.getScreenHeight();
+
+		SetWindowSize(value1 = "${screenWidth},${screenHeight}");
 	}
 
 	macro pass {
