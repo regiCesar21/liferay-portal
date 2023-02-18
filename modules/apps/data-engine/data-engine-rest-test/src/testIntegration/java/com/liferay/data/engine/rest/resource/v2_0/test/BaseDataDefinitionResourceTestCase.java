@@ -1090,12 +1090,21 @@ public abstract class BaseDataDefinitionResourceTestCase {
 		DataDefinition getDataDefinition =
 			dataDefinitionResource.
 				getSiteDataDefinitionByContentTypeByDataDefinitionKey(
-					postDataDefinition.getSiteId(),
+					testGetSiteDataDefinitionByContentTypeByDataDefinitionKey_getSiteId(
+						postDataDefinition),
 					postDataDefinition.getContentType(),
 					postDataDefinition.getDataDefinitionKey());
 
 		assertEquals(postDataDefinition, getDataDefinition);
 		assertValid(getDataDefinition);
+	}
+
+	protected Long
+			testGetSiteDataDefinitionByContentTypeByDataDefinitionKey_getSiteId(
+				DataDefinition dataDefinition)
+		throws Exception {
+
+		return dataDefinition.getSiteId();
 	}
 
 	protected DataDefinition
@@ -1125,13 +1134,16 @@ public abstract class BaseDataDefinitionResourceTestCase {
 									{
 										put(
 											"siteKey",
-											"\"" + dataDefinition.getSiteId() +
-												"\"");
+											"\"" +
+												testGraphQLGetSiteDataDefinitionByContentTypeByDataDefinitionKey_getSiteId(
+													dataDefinition) + "\"");
+
 										put(
 											"contentType",
 											"\"" +
 												dataDefinition.
 													getContentType() + "\"");
+
 										put(
 											"dataDefinitionKey",
 											"\"" +
@@ -1143,6 +1155,14 @@ public abstract class BaseDataDefinitionResourceTestCase {
 								getGraphQLFields())),
 						"JSONObject/data",
 						"Object/dataDefinitionByContentTypeByDataDefinitionKey"))));
+	}
+
+	protected Long
+			testGraphQLGetSiteDataDefinitionByContentTypeByDataDefinitionKey_getSiteId(
+				DataDefinition dataDefinition)
+		throws Exception {
+
+		return dataDefinition.getSiteId();
 	}
 
 	@Test

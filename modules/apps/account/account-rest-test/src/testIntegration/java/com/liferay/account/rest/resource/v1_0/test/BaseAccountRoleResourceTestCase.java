@@ -867,8 +867,16 @@ public abstract class BaseAccountRoleResourceTestCase {
 		assertHttpResponseStatusCode(
 			204,
 			accountRoleResource.deleteAccountRoleUserAssociationHttpResponse(
-				accountRole.getAccountId(), accountRole.getId(),
+				testDeleteAccountRoleUserAssociation_getAccountId(accountRole),
+				accountRole.getId(),
 				testDeleteAccountRoleUserAssociation_getAccountUserId()));
+	}
+
+	protected Long testDeleteAccountRoleUserAssociation_getAccountId(
+			AccountRole accountRole)
+		throws Exception {
+
+		return accountRole.getAccountId();
 	}
 
 	protected Long testDeleteAccountRoleUserAssociation_getAccountUserId()
