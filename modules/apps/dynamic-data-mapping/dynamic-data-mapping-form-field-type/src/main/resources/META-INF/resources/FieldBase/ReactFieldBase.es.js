@@ -148,6 +148,8 @@ function FieldBase({
 			type === 'radio');
 	const showFor = type === 'text' || type === 'numeric' || type === 'select';
 
+	const readFieldDetails = !showFor || type === 'select';
+
 	if (!renderLabel) {
 		parentDivTabIndex = 0;
 		parentDivAriaLabelledby = fieldDetailsId;
@@ -177,7 +179,8 @@ function FieldBase({
 
 	const accessibleProps = {
 		...(fieldDetails && {'aria-labelledby': fieldDetailsId}),
-		...(showFor ? {htmlFor: id ?? name} : {tabIndex: 0}),
+		...(showFor ? {htmlFor: id ?? name} : {}),
+		...(readFieldDetails ? {tabIndex: 0} : {}),
 	};
 
 	return (
