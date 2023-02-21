@@ -281,7 +281,7 @@ public class UpgradeRedirectEntrySourceURLTest {
 	private Timestamp _timestamp;
 
 	@Inject(
-		filter = "(&(component.name=com.liferay.redirect.internal.upgrade.registry.RedirectServiceUpgradeStepRegistrator))"
+		filter = "(&(component.name=com.liferay.redirect.internal.upgrade.RedirectServiceUpgrade))"
 	)
 	private UpgradeStepRegistrator _upgradeStepRegistrator;
 
