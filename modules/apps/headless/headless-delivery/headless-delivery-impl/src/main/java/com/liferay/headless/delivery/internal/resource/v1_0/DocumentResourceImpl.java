@@ -369,7 +369,7 @@ public class DocumentResourceImpl
 				null, DLVersionNumberIncrease.AUTOMATIC,
 				binaryFile.getInputStream(), binaryFile.getSize(),
 				_createServiceContext(
-					Constants.UPDATE,() -> new Long[0], () -> new String[0],
+					Constants.UPDATE, () -> new Long[0], () -> new String[0],
 					existingFileEntry.getFolderId(), documentOptional,
 					existingFileEntry.getGroupId())));
 	}
@@ -503,21 +503,21 @@ public class DocumentResourceImpl
 			for (DDMStructure ddmStructure : ddmStructures) {
 				com.liferay.dynamic.data.mapping.model.DDMStructure
 					modelDDMStructure = _ddmStructureService.getStructure(
-					ddmStructure.getStructureId());
+						ddmStructure.getStructureId());
 
 				com.liferay.dynamic.data.mapping.storage.DDMFormValues
 					ddmFormValues = DDMFormValuesUtil.toDDMFormValues(
-					contentFields, modelDDMStructure.getDDMForm(),
-					_dlAppService, groupId, _journalArticleService,
-					_layoutLocalService,
-					contextAcceptLanguage.getPreferredLocale(),
-					transform(
-						ddmStructure.getRootFieldNames(),
-						modelDDMStructure::getDDMFormField));
+						contentFields, modelDDMStructure.getDDMForm(),
+						_dlAppService, groupId, _journalArticleService,
+						_layoutLocalService,
+						contextAcceptLanguage.getPreferredLocale(),
+						transform(
+							ddmStructure.getRootFieldNames(),
+							modelDDMStructure::getDDMFormField));
 
 				serviceContext.setAttribute(
 					DDMFormValues.class.getName() + StringPool.POUND +
-					ddmStructure.getStructureId(),
+						ddmStructure.getStructureId(),
 					_ddmBeanTranslator.translate(ddmFormValues));
 			}
 		}
@@ -732,7 +732,6 @@ public class DocumentResourceImpl
 				contextAcceptLanguage.getPreferredLocale(), contextUriInfo,
 				contextUser));
 	}
-
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		DocumentResourceImpl.class);
