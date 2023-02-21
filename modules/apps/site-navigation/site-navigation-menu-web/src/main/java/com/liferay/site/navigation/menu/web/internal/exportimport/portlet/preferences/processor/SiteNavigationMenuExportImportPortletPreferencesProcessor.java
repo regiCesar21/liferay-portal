@@ -153,9 +153,11 @@ public class SiteNavigationMenuExportImportPortletPreferencesProcessor
 						serviceBuilderPortletPreferences.getPlid(),
 						serviceBuilderPortletPreferences.getPortletId());
 
-				siteNavigationMenuId = GetterUtil.getLong(
-					originalPortletPreferences.getValue(
-						"siteNavigationMenuId", "0"));
+				if (originalPortletPreferences != null) {
+					siteNavigationMenuId = GetterUtil.getLong(
+						originalPortletPreferences.getValue(
+							"siteNavigationMenuId", "0"));
+				}
 			}
 
 			try {
