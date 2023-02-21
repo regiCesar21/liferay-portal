@@ -333,7 +333,7 @@ definition {
 
 		var key_entryContent = ${entryContent};
 
-		AssertTextEquals.assertPartialText(
+		AssertTextEquals(
 			locator1 = "BlogsEntry#CONTENT",
 			value1 = ${entryContent});
 
@@ -467,7 +467,7 @@ definition {
 			locator1 = "BlogsEntry#TITLE",
 			value1 = ${entryTitle});
 
-		AssertTextEquals.assertPartialText(
+		AssertTextEquals(
 			locator1 = "BlogsEntry#CONTENT",
 			value1 = ${entryContent});
 
@@ -700,7 +700,7 @@ definition {
 			locator1 = "BlogsEntry#TITLE",
 			value1 = ${entryTitle});
 
-		AssertTextEquals.assertPartialText(
+		AssertTextEquals(
 			key_entryContent = ${entryContent},
 			locator1 = "BlogsEntry#CONTENT",
 			value1 = ${entryContent});
@@ -747,7 +747,7 @@ definition {
 
 		var key_entryContent = ${entryContent};
 
-		AssertTextEquals.assertPartialText(
+		AssertTextEquals(
 			locator1 = "BlogsEntry#CONTENT",
 			value1 = ${entryContent});
 	}
@@ -803,7 +803,7 @@ definition {
 		}
 
 		if (isSet(entryContent)) {
-			AssertTextEquals.assertPartialText(
+			AssertTextEquals(
 				locator1 = "BlogsEntry#CONTENT",
 				value1 = ${entryContent});
 		}
@@ -877,9 +877,7 @@ definition {
 		}
 
 		if (isSet(entryContent)) {
-			var key_entryContent = ${entryContent};
-
-			AssertTextEquals.assertPartialText(
+			AssertTextEquals(
 				locator1 = "BlogsEntry#CONTENT",
 				value1 = ${entryContent});
 		}
@@ -1069,7 +1067,7 @@ definition {
 
 		var key_entryContent = ${entryContent};
 
-		AssertTextEquals.assertPartialText(
+		AssertTextEquals(
 			locator1 = "BlogsEntry#CONTENT",
 			value1 = ${entryContent});
 	}
@@ -1412,7 +1410,7 @@ definition {
 			locator1 = "BlogsEntry#TITLE",
 			value1 = ${entryTitle});
 
-		AssertTextEquals.assertPartialText(
+		AssertTextEquals(
 			locator1 = "BlogsEntry#CONTENT",
 			value1 = ${entryContent});
 
@@ -1435,7 +1433,7 @@ definition {
 			locator1 = "BlogsEntry#TITLE",
 			value1 = ${entryTitle2});
 
-		AssertTextEquals.assertPartialText(
+		AssertTextEquals(
 			locator1 = "BlogsEntry#CONTENT",
 			value1 = ${entryContent2});
 	}
