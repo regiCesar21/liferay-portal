@@ -243,7 +243,10 @@ public abstract class BaseMessageBoardThreadResourceTestCase {
 			assertEquals(
 				Arrays.asList(irrelevantMessageBoardThread),
 				(List<MessageBoardThread>)page.getItems());
-			assertValid(page);
+			assertValid(
+				page,
+				testGetMessageBoardSectionMessageBoardThreadsPage_getExpectedActions(
+					irrelevantMessageBoardSectionId));
 		}
 
 		MessageBoardThread messageBoardThread1 =
@@ -265,13 +268,37 @@ public abstract class BaseMessageBoardThreadResourceTestCase {
 		assertEqualsIgnoringOrder(
 			Arrays.asList(messageBoardThread1, messageBoardThread2),
 			(List<MessageBoardThread>)page.getItems());
-		assertValid(page);
+		assertValid(
+			page,
+			testGetMessageBoardSectionMessageBoardThreadsPage_getExpectedActions(
+				messageBoardSectionId));
 
 		messageBoardThreadResource.deleteMessageBoardThread(
 			messageBoardThread1.getId());
 
 		messageBoardThreadResource.deleteMessageBoardThread(
 			messageBoardThread2.getId());
+	}
+
+	protected Map<String, Map>
+			testGetMessageBoardSectionMessageBoardThreadsPage_getExpectedActions(
+				Long messageBoardSectionId)
+		throws Exception {
+
+		Map<String, Map> expectedActions = new HashMap<>();
+
+		Map createBatchAction = new HashMap<>();
+		createBatchAction.put("method", "POST");
+		createBatchAction.put(
+			"href",
+			"http://localhost:8080/o/headless-delivery/v1.0/message-board-sections/{messageBoardSectionId}/message-board-threads/batch".
+				replace(
+					"{messageBoardSectionId}",
+					String.valueOf(messageBoardSectionId)));
+
+		expectedActions.put("createBatch", createBatchAction);
+
+		return expectedActions;
 	}
 
 	@Test
@@ -667,13 +694,23 @@ public abstract class BaseMessageBoardThreadResourceTestCase {
 			messageBoardThread1, (List<MessageBoardThread>)page.getItems());
 		assertContains(
 			messageBoardThread2, (List<MessageBoardThread>)page.getItems());
-		assertValid(page);
+		assertValid(
+			page, testGetMessageBoardThreadsRankedPage_getExpectedActions());
 
 		messageBoardThreadResource.deleteMessageBoardThread(
 			messageBoardThread1.getId());
 
 		messageBoardThreadResource.deleteMessageBoardThread(
 			messageBoardThread2.getId());
+	}
+
+	protected Map<String, Map>
+			testGetMessageBoardThreadsRankedPage_getExpectedActions()
+		throws Exception {
+
+		Map<String, Map> expectedActions = new HashMap<>();
+
+		return expectedActions;
 	}
 
 	@Test
@@ -1207,7 +1244,10 @@ public abstract class BaseMessageBoardThreadResourceTestCase {
 			assertEquals(
 				Arrays.asList(irrelevantMessageBoardThread),
 				(List<MessageBoardThread>)page.getItems());
-			assertValid(page);
+			assertValid(
+				page,
+				testGetSiteMessageBoardThreadsPage_getExpectedActions(
+					irrelevantSiteId));
 		}
 
 		MessageBoardThread messageBoardThread1 =
@@ -1226,13 +1266,33 @@ public abstract class BaseMessageBoardThreadResourceTestCase {
 		assertEqualsIgnoringOrder(
 			Arrays.asList(messageBoardThread1, messageBoardThread2),
 			(List<MessageBoardThread>)page.getItems());
-		assertValid(page);
+		assertValid(
+			page,
+			testGetSiteMessageBoardThreadsPage_getExpectedActions(siteId));
 
 		messageBoardThreadResource.deleteMessageBoardThread(
 			messageBoardThread1.getId());
 
 		messageBoardThreadResource.deleteMessageBoardThread(
 			messageBoardThread2.getId());
+	}
+
+	protected Map<String, Map>
+			testGetSiteMessageBoardThreadsPage_getExpectedActions(Long siteId)
+		throws Exception {
+
+		Map<String, Map> expectedActions = new HashMap<>();
+
+		Map createBatchAction = new HashMap<>();
+		createBatchAction.put("method", "POST");
+		createBatchAction.put(
+			"href",
+			"http://localhost:8080/o/headless-delivery/v1.0/sites/{siteId}/message-board-threads/batch".
+				replace("{siteId}", String.valueOf(siteId)));
+
+		expectedActions.put("createBatch", createBatchAction);
+
+		return expectedActions;
 	}
 
 	@Test
@@ -2245,6 +2305,12 @@ public abstract class BaseMessageBoardThreadResourceTestCase {
 	}
 
 	protected void assertValid(Page<MessageBoardThread> page) {
+		assertValid(page, Collections.emptyMap());
+	}
+
+	protected void assertValid(
+		Page<MessageBoardThread> page, Map<String, Map> expectedActions) {
+
 		boolean valid = false;
 
 		java.util.Collection<MessageBoardThread> messageBoardThreads =
@@ -2260,6 +2326,20 @@ public abstract class BaseMessageBoardThreadResourceTestCase {
 		}
 
 		Assert.assertTrue(valid);
+
+		Map<String, Map> actions = page.getActions();
+
+		for (String key : expectedActions.keySet()) {
+			Map action = actions.get(key);
+
+			Assert.assertNotNull(key + " does not contain an action", action);
+
+			Map expectedAction = expectedActions.get(key);
+
+			Assert.assertEquals(
+				expectedAction.get("method"), action.get("method"));
+			Assert.assertEquals(expectedAction.get("href"), action.get("href"));
+		}
 	}
 
 	protected void assertValid(Rating rating) {
