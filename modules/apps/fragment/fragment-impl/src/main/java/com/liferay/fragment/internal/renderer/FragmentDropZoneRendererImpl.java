@@ -27,7 +27,6 @@ import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.taglib.servlet.PipingServletResponse;
 
 import java.util.Map;
-
 import java.util.Objects;
 
 import javax.servlet.http.HttpServletRequest;
