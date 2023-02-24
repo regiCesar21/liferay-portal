@@ -22,7 +22,6 @@ import com.liferay.fragment.renderer.FragmentRendererController;
 import com.liferay.layout.taglib.servlet.taglib.RenderFragmentLayoutTag;
 import com.liferay.petra.io.unsync.UnsyncStringWriter;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.servlet.PipingServletResponse;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.taglib.servlet.PipingServletResponse;
 
