@@ -142,7 +142,6 @@ const Textarea = ({
 			}}
 			onFocus={onFocus}
 			placeholder={placeholder}
-			type="text"
 			value={value}
 		/>
 	);
