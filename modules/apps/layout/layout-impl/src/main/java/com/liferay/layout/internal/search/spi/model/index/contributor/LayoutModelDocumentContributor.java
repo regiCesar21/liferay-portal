@@ -82,6 +82,7 @@ import java.security.Principal;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.Enumeration;
+import java.util.HashSet;
 import java.util.Iterator;
 import java.util.Locale;
 import java.util.Map;
@@ -277,8 +278,8 @@ Set<Locale> locales = LanguageUtil.getAvailableLocales(
 		Document document, Layout layout,
 		LayoutPageTemplateStructure layoutPageTemplateStructure) {
 
-		Set<Locale> locales = LanguageUtil.getAvailableLocales(
-			layout.getGroupId());
+		Set<Locale> locales = new HashSet<>(
+			LanguageUtil.getAvailableLocales(layout.getGroupId()));
 
 		if (_isUseLayoutCrawler(layout)) {
 			Iterator<Locale> iterator = locales.iterator();
