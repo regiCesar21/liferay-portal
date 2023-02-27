@@ -778,50 +778,57 @@ public class JournalEditArticleDisplayContext {
 			}
 		).put(
 			"editDDMTemplateURL",
-			() -> PortletURLBuilder.createRenderURL(
-				_liferayPortletResponse
-			).setMVCPath(
-				"/edit_ddm_template.jsp"
-			).setParameter(
-				"ddmTemplateId",
-				() -> {
-					DDMTemplate ddmTemplate = getDDMTemplate();
+			() -> {
+				PortletURL portletURL =
+					_liferayPortletResponse.createRenderURL();
 
-					if (ddmTemplate != null) {
-						return ddmTemplate.getTemplateId();
-					}
+				DDMTemplate ddmTemplate = getDDMTemplate();
 
-					return 0;
+				long ddmTemplateId = 0;
+
+				if (ddmTemplate != null) {
+					ddmTemplateId = ddmTemplate.getTemplateId();
 				}
-			).setParameter(
-				"redirect", _themeDisplay.getURLCurrent()
-			).buildString()
+
+				portletURL.setParameter(
+					"ddmTemplateId", String.valueOf(ddmTemplateId));
+				portletURL.setParameter("mvcPath", "/edit_ddm_template.jsp");
+				portletURL.setParameter(
+					"redirect", _themeDisplay.getURLCurrent());
+
+				return portletURL.toString();
+			}
 		).put(
 			"previewArticleContentTemplateURL",
-			() -> PortletURLBuilder.createRenderURL(
-				_liferayPortletResponse
-			).setMVCPath(
-				"/preview_article_content_template.jsp"
-			).setParameter(
-				"groupId", getGroupId()
-			).setParameter(
-				"articleId", getArticleId()
-			).setParameter(
-				"version", getVersion()
-			).setWindowState(
-				LiferayWindowState.POP_UP
-			).buildString()
+			() -> {
+				PortletURL portletURL =
+					_liferayPortletResponse.createRenderURL();
+
+				portletURL.setParameter("articleId", getArticleId());
+				portletURL.setParameter(
+					"groupId", String.valueOf(getGroupId()));
+				portletURL.setParameter(
+					"mvcPath", "/preview_article_content_template.jsp");
+				portletURL.setParameter(
+					"version", String.valueOf(getVersion()));
+				portletURL.setWindowState(LiferayWindowState.POP_UP);
+
+				return portletURL.toString();
+			}
 		).put(
 			"selectDDMTemplateURL",
-			() -> PortletURLBuilder.createRenderURL(
-				_liferayPortletResponse
-			).setMVCPath(
-				"/select_ddm_template.jsp"
-			).setParameter(
-				"ddmStructureId", _ddmStructure.getStructureId()
-			).setWindowState(
-				LiferayWindowState.POP_UP
-			).buildString()
+			() -> {
+				PortletURL portletURL =
+					_liferayPortletResponse.createRenderURL();
+
+				portletURL.setParameter(
+					"ddmStructureId",
+					String.valueOf(_ddmStructure.getStructureId()));
+				portletURL.setParameter("mvcPath", "/select_ddm_template.jsp");
+				portletURL.setWindowState(LiferayWindowState.POP_UP);
+
+				return portletURL.toString();
+			}
 		).build();
 	}
 
