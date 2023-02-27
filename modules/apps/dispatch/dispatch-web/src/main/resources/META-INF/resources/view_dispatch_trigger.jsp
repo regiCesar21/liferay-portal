@@ -71,7 +71,7 @@ portletURL.setParameter("searchContainerId", "dispatchTriggers");
 
 					<liferay-ui:search-container-column-text
 						name="task-executor-type"
-						property="dispatchTaskExecutorType"
+						value="<%= dispatchTriggerDisplayContext.getDispatchTaskExecutorName(dispatchTrigger.getDispatchTaskExecutorType(), locale) %>"
 					/>
 
 					<liferay-ui:search-container-column-text
