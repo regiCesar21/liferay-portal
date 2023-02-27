@@ -386,7 +386,7 @@ public class LDAPAuth implements Authenticator {
 				}
 			}
 
-			if (!ldapAuthResult.isAuthenticated()) {
+			if (!ldapAuthResult.isAuthenticated() || (user == null)) {
 				if (_log.isDebugEnabled()) {
 					StringBundler sb = new StringBundler(10);
 
