@@ -303,10 +303,9 @@ public class CTServicePublisher<T extends CTModel<T>> {
 			sb.append(" in (");
 
 			int i = 0;
-			int batchSize = 1000;
 
 			for (CTEntry ctEntry : ctEntries) {
-				if (i == batchSize) {
+				if (i == _BATCH_SIZE) {
 					sb.setStringAt(")", sb.index() - 1);
 					sb.append(" or ");
 					sb.append(tableName);
@@ -400,6 +399,8 @@ public class CTServicePublisher<T extends CTModel<T>> {
 			}
 		}
 	}
+
+	private static final int _BATCH_SIZE = 1000;
 
 	private Map<Serializable, CTEntry> _additionCTEntries;
 	private final CTEntryLocalService _ctEntryLocalService;
