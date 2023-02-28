@@ -168,11 +168,11 @@ public class SortPortletSharedSearchContributor
 		}
 	}
 
-	private static final Log _log = LogFactoryUtil.getLog(
-		SortPortletSharedSearchContributor.class);
-
 	@Reference
 	protected DDMIndexer ddmIndexer;
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		SortPortletSharedSearchContributor.class);
 
 	@Reference
 	private SortBuilderFactory _sortBuilderFactory;
