@@ -129,8 +129,8 @@ public class GoogleJavaScriptMinifier implements JavaScriptMinifier {
 			DiagnosticType diagnosticType = jsError.getType();
 
 			return String.format(
-				"(%s:%d): %s [%s]", jsError.sourceName, jsError.lineNumber,
-				jsError.description, diagnosticType.key);
+				"(%s:%d): %s [%s]", jsError.getSourceName(), jsError.getLineno(),
+				jsError.getDescription(), diagnosticType.key);
 		}
 
 		@Override
