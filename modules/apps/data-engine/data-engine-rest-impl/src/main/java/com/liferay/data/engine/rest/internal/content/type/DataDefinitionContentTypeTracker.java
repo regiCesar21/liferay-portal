@@ -8,10 +8,8 @@ package com.liferay.data.engine.rest.internal.content.type;
 import com.liferay.data.engine.content.type.DataDefinitionContentType;
 import com.liferay.data.engine.rest.resource.exception.DataDefinitionValidationException;
 import com.liferay.portal.kernel.util.MapUtil;
-import com.liferay.portal.kernel.util.Portal;
 
 import java.util.Map;
-import java.util.Optional;
 import java.util.TreeMap;
 
 import org.osgi.service.component.annotations.Component;
@@ -27,13 +25,15 @@ import org.osgi.service.component.annotations.ReferencePolicyOption;
 @Component(immediate = true, service = DataDefinitionContentTypeTracker.class)
 public class DataDefinitionContentTypeTracker {
 
-	public Long getClassNameId(String contentType) {
-		return Optional.ofNullable(
-			_classNameIds.get(contentType)
-		).orElseThrow(
-			() -> new DataDefinitionValidationException.MustSetValidContentType(
-				contentType)
-		);
+	public Long getClassNameId(String contentType) throws Exception {
+		Long id = _classNameIds.get(contentType);
+
+		if (id == null) {
+			throw new DataDefinitionValidationException.MustSetValidContentType(
+				contentType);
+		}
+
+		return id;
 	}
 
 	public DataDefinitionContentType getDataDefinitionContentType(
@@ -43,14 +43,18 @@ public class DataDefinitionContentTypeTracker {
 	}
 
 	public DataDefinitionContentType getDataDefinitionContentType(
-		String contentType) {
+			String contentType)
+		throws Exception {
 
-		return Optional.ofNullable(
-			_dataDefinitionContentTypesByContentType.get(contentType)
-		).orElseThrow(
-			() -> new DataDefinitionValidationException.MustSetValidContentType(
-				contentType)
-		);
+		DataDefinitionContentType dataDefinitionContentType =
+			_dataDefinitionContentTypesByContentType.get(contentType);
+
+		if (dataDefinitionContentType == null) {
+			throw new DataDefinitionValidationException.MustSetValidContentType(
+				contentType);
+		}
+
+		return dataDefinitionContentType;
 	}
 
 	@Reference(
@@ -102,8 +106,5 @@ public class DataDefinitionContentTypeTracker {
 		_dataDefinitionContentTypesByClassNameId = new TreeMap<>();
 	private final Map<String, DataDefinitionContentType>
 		_dataDefinitionContentTypesByContentType = new TreeMap<>();
-
-	@Reference
-	private Portal _portal;
 
 }
