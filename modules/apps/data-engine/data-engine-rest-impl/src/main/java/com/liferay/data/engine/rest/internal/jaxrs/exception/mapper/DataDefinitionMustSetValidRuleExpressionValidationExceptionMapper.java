@@ -38,7 +38,8 @@ public class DataDefinitionMustSetValidRuleExpressionValidationExceptionMapper
 			mustSetValidRuleExpression.getExpression(),
 			Response.Status.BAD_REQUEST,
 			mustSetValidRuleExpression.getMessage(),
-			"MustSetValidRuleExpression");
+			DataDefinitionValidationException.MustSetValidRuleExpression.class.
+				getName());
 	}
 
 }

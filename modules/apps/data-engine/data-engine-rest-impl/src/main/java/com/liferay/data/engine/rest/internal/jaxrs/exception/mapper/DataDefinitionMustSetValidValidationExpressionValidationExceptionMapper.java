@@ -46,7 +46,8 @@ public class
 			).toString(),
 			Response.Status.BAD_REQUEST,
 			mustSetValidValidationExpression.getMessage(),
-			"MustSetValidValidationExpression");
+			DataDefinitionValidationException.MustSetValidValidationExpression.
+				class.getName());
 	}
 
 }

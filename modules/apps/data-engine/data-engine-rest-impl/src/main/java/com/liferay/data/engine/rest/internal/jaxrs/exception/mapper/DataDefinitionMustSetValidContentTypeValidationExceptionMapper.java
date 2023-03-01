@@ -37,7 +37,8 @@ public class DataDefinitionMustSetValidContentTypeValidationExceptionMapper
 		return new Problem(
 			mustSetValidContentType.getContentType(),
 			Response.Status.BAD_REQUEST, mustSetValidContentType.getMessage(),
-			"MustSetValidContentType");
+			DataDefinitionValidationException.MustSetValidContentType.class.
+				getName());
 	}
 
 }

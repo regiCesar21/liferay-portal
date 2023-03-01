@@ -40,7 +40,8 @@ public class
 			mustSetValidCharactersForFieldType.getFieldType(),
 			Response.Status.BAD_REQUEST,
 			mustSetValidCharactersForFieldType.getMessage(),
-			"MustSetValidCharactersForFieldType");
+			DataDefinitionValidationException.
+				MustSetValidCharactersForFieldType.class.getName());
 	}
 
 }

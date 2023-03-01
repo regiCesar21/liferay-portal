@@ -47,7 +47,8 @@ public class DataLayoutMustNotDuplicateFieldNameValidationExceptionMapper
 		return new Problem(
 			stream.collect(Collectors.joining(StringPool.COMMA)),
 			Response.Status.BAD_REQUEST, mustNotDuplicateFieldName.getMessage(),
-			"MustNotDuplicateFieldName");
+			DataLayoutValidationException.MustNotDuplicateFieldName.class.
+				getName());
 	}
 
 }

@@ -36,7 +36,9 @@ public class DataDefinitionMustSetOptionsForFieldValidationExceptionMapper
 
 		return new Problem(
 			mustSetOptionsForField.getFieldName(), Response.Status.BAD_REQUEST,
-			mustSetOptionsForField.getMessage(), "MustSetOptionsForField");
+			mustSetOptionsForField.getMessage(),
+			DataDefinitionValidationException.MustSetOptionsForField.class.
+				getName());
 	}
 
 }
