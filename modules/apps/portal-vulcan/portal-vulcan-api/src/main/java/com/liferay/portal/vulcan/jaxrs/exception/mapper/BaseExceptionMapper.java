@@ -5,6 +5,8 @@
 
 package com.liferay.portal.vulcan.jaxrs.exception.mapper;
 
+import com.liferay.portal.kernel.util.StringUtil;
+
 import java.util.List;
 
 import javax.ws.rs.core.Context;
@@ -22,6 +24,18 @@ public abstract class BaseExceptionMapper<T extends Throwable>
 	@Override
 	public Response toResponse(T exception) {
 		Problem problem = getProblem(exception);
+
+		String type = problem.getType();
+
+		if (type != null) {
+			String[] segments = type.split("\\.");
+
+			String exceptionType = segments[segments.length - 1];
+
+			if (exceptionType != null) {
+				problem.setType(StringUtil.replace(exceptionType, '$', '.'));
+			}
+		}
 
 		return Response.status(
 			problem.getStatus()
