@@ -746,6 +746,10 @@ public class ExportImportHelperImpl implements ExportImportHelper {
 				return true;
 			}
 
+			if (_exportImportServiceConfiguration.publishDisplayedContent()) {
+				return true;
+			}
+
 			ExportImportPortletPreferencesProcessor
 				exportImportPortletPreferencesProcessor =
 					ExportImportPortletPreferencesProcessorRegistryUtil.
