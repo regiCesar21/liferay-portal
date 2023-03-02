@@ -66,7 +66,6 @@ import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.HttpUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
-import com.liferay.portal.kernel.util.LocalizationUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -525,15 +524,17 @@ public class JournalEditArticleDisplayContext {
 			return _ddmTemplateKey;
 		}
 
-		_ddmTemplateKey = ParamUtil.getString(
+		String ddmTemplateKey = ParamUtil.getString(
 			_httpServletRequest, "ddmTemplateKey");
 
-		if (Validator.isNull(_ddmTemplateKey) && (_article != null) &&
+		if (Validator.isNull(ddmTemplateKey) && (_article != null) &&
 			Objects.equals(
 				_article.getDDMStructureKey(), getDDMStructureKey())) {
 
-			_ddmTemplateKey = _article.getDDMTemplateKey();
+			ddmTemplateKey = _article.getDDMTemplateKey();
 		}
+
+		_ddmTemplateKey = ddmTemplateKey;
 
 		return _ddmTemplateKey;
 	}
@@ -554,19 +555,25 @@ public class JournalEditArticleDisplayContext {
 			siteDefaultLocale = LocaleUtil.getSiteDefault();
 		}
 
+		String defaultArticleLanguageId;
+
 		if (Validator.isNull(getArticleId())) {
-			_defaultArticleLanguageId =
+			defaultArticleLanguageId =
 				_getDefaultArticleLanguageIdRelatedDDMStructure();
 
-			if (_defaultArticleLanguageId == null) {
-				_defaultArticleLanguageId = LocaleUtil.toLanguageId(
+			if (defaultArticleLanguageId == null) {
+				defaultArticleLanguageId = LocaleUtil.toLanguageId(
 					siteDefaultLocale);
 			}
 		}
 		else {
-			_defaultArticleLanguageId = LocalizationUtil.getDefaultLanguageId(
-				_article.getContent(), siteDefaultLocale);
+			DDMFormValues ddmFormValues = _article.getDDMFormValues();
+
+			defaultArticleLanguageId = LocaleUtil.toLanguageId(
+				ddmFormValues.getDefaultLocale());
 		}
+
+		_defaultArticleLanguageId = defaultArticleLanguageId;
 
 		return _defaultArticleLanguageId;
 	}
@@ -695,14 +702,14 @@ public class JournalEditArticleDisplayContext {
 			return _defaultLanguageId;
 		}
 
-		_defaultLanguageId = ParamUtil.getString(
+		String defaultLanguageId = ParamUtil.getString(
 			_httpServletRequest, "languageId");
 
-		if (Validator.isNotNull(_defaultLanguageId)) {
-			return _defaultLanguageId;
+		if (Validator.isNull(defaultLanguageId)) {
+			defaultLanguageId = getDefaultArticleLanguageId();
 		}
 
-		_defaultLanguageId = getDefaultArticleLanguageId();
+		_defaultLanguageId = defaultLanguageId;
 
 		return _defaultLanguageId;
 	}
