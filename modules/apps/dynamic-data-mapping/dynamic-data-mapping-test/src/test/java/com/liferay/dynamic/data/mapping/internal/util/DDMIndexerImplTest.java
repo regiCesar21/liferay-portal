@@ -31,6 +31,7 @@ import com.liferay.dynamic.data.mapping.storage.DDMFormValues;
 import com.liferay.dynamic.data.mapping.test.util.DDMFormTestUtil;
 import com.liferay.dynamic.data.mapping.test.util.DDMFormValuesTestUtil;
 import com.liferay.dynamic.data.mapping.util.DDMIndexer;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.json.JSONFactoryImpl;
 import com.liferay.portal.kernel.search.Document;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
@@ -60,6 +61,7 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 import org.junit.After;
+import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -101,6 +103,95 @@ public class DDMIndexerImplTest {
 		ddmFixture.tearDown();
 
 		documentFixture.tearDown();
+	}
+
+	@Test
+	public void testFormWithAnEmptyField() {
+		DDMForm ddmForm = DDMFormTestUtil.createDDMForm(
+			SetUtil.fromArray(LocaleUtil.US), LocaleUtil.US);
+
+		ddmForm.addDDMFormField(_createDDMFormField());
+
+		String fieldValue = StringPool.BLANK;
+
+		LocalizedValue localizedValue =
+			DDMFormValuesTestUtil.createLocalizedValue(
+				fieldValue, LocaleUtil.US);
+
+		DDMFormFieldValue ddmFormFieldValue =
+			DDMFormValuesTestUtil.createDDMFormFieldValue(
+				_FIELD_NAME, localizedValue);
+
+		DDMStructure ddmStructure = _createDDMStructure(ddmForm);
+
+		DDMFormValues ddmFormValues = _createDDMFormValues(
+			ddmForm, ddmFormFieldValue);
+
+		String indexableAttributes = _ddmIndexer.extractIndexableAttributes(
+			ddmStructure, ddmFormValues, LocaleUtil.US);
+
+		Assert.assertEquals(fieldValue, indexableAttributes);
+	}
+
+	@Test
+	public void testFormWithAnEmptyRepeatableField() {
+		DDMForm ddmForm = DDMFormTestUtil.createDDMForm(
+			SetUtil.fromArray(LocaleUtil.US), LocaleUtil.US);
+
+		DDMFormField ddmFormField = DDMFormTestUtil.createTextDDMFormField(
+			_FIELD_NAME, true, true, true);
+
+		ddmFormField.setIndexType("text");
+
+		ddmForm.addDDMFormField(ddmFormField);
+
+		String fieldValue = StringPool.BLANK;
+
+		LocalizedValue localizedValue =
+			DDMFormValuesTestUtil.createLocalizedValue(
+				fieldValue, LocaleUtil.US);
+
+		DDMFormFieldValue ddmFormFieldValue =
+			DDMFormValuesTestUtil.createDDMFormFieldValue(
+				_FIELD_NAME, localizedValue);
+
+		DDMStructure ddmStructure = _createDDMStructure(ddmForm);
+
+		DDMFormValues ddmFormValues = _createDDMFormValues(
+			ddmForm, ddmFormFieldValue);
+
+		String indexableAttributes = _ddmIndexer.extractIndexableAttributes(
+			ddmStructure, ddmFormValues, LocaleUtil.US);
+
+		Assert.assertEquals(fieldValue, indexableAttributes);
+	}
+
+	@Test
+	public void testFormWithANullLiteralFieldValue() {
+		DDMForm ddmForm = DDMFormTestUtil.createDDMForm(
+			SetUtil.fromArray(LocaleUtil.US), LocaleUtil.US);
+
+		ddmForm.addDDMFormField(_createDDMFormField());
+
+		String fieldValue = "null";
+
+		LocalizedValue localizedValue =
+			DDMFormValuesTestUtil.createLocalizedValue(
+				fieldValue, LocaleUtil.US);
+
+		DDMFormFieldValue ddmFormFieldValue =
+			DDMFormValuesTestUtil.createDDMFormFieldValue(
+				_FIELD_NAME, localizedValue);
+
+		DDMStructure ddmStructure = _createDDMStructure(ddmForm);
+
+		DDMFormValues ddmFormValues = _createDDMFormValues(
+			ddmForm, ddmFormFieldValue);
+
+		String indexableAttributes = _ddmIndexer.extractIndexableAttributes(
+			ddmStructure, ddmFormValues, LocaleUtil.US);
+
+		Assert.assertEquals(fieldValue, indexableAttributes);
 	}
 
 	@Test
