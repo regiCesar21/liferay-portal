@@ -386,7 +386,7 @@ public class LDAPAuth implements Authenticator {
 				}
 			}
 
-			if (!ldapAuthResult.isAuthenticated() || (user == null)) {
+			if (!ldapAuthResult.isAuthenticated()) {
 				if (_log.isDebugEnabled()) {
 					StringBundler sb = new StringBundler(10);
 
@@ -402,6 +402,18 @@ public class LDAPAuth implements Authenticator {
 					sb.append(errorMessage);
 
 					_log.debug(sb.toString());
+				}
+
+				return FAILURE;
+			}
+
+			if (user == null) {
+				if (_log.isDebugEnabled()) {
+					_log.debug(
+						StringBundler.concat(
+							"Incorrect search filter with ", fullUserDN,
+							" on LDAP server ", ldapServerId, ", company ",
+							companyId, ", and LDAP context ", safeLdapContext));
 				}
 
 				return FAILURE;
