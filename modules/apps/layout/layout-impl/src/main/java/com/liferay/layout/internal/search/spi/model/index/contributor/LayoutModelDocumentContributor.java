@@ -150,8 +150,7 @@ public class LayoutModelDocumentContributor
 		if (layoutPageTemplateStructure == null) {
 			return;
 		}
-
-		Set<Locale> locales = LanguageUtil.getAvailableLocales(
+Set<Locale> locales = LanguageUtil.getAvailableLocales(
 			layout.getGroupId());
 
 		if (_isUseLayoutCrawler(layout)) {
@@ -263,7 +262,6 @@ public class LayoutModelDocumentContributor
 			themeDisplay.setLayout(originalThemeDisplayLayout);
 			themeDisplay.setPlid(originalThemeDisplayPlid);
 		}
-
 		_addContent(document, layout, layoutPageTemplateStructure);
 	}
 
@@ -290,14 +288,14 @@ public class LayoutModelDocumentContributor
 					}
 				}
 
-				if (Validator.isNull(content)) {
+				if(Validator.isNull(content)) {
 					iterator.remove();
 
 					_addLocalizedContentField(content, document, locale);
 				}
 			}
 
-			if (SetUtil.isEmpty(locales)) {
+			if(SetUtil.isEmpty(locales)){
 				return;
 			}
 		}
