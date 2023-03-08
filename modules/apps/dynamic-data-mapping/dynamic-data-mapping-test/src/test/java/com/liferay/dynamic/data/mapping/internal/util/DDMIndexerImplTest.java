@@ -106,7 +106,35 @@ public class DDMIndexerImplTest {
 	}
 
 	@Test
-	public void testFormWithAnEmptyField() {
+	public void testExtractAttributesUsingForm() {
+		DDMForm ddmForm = DDMFormTestUtil.createDDMForm(
+			SetUtil.fromArray(LocaleUtil.US), LocaleUtil.US);
+
+		ddmForm.addDDMFormField(_createDDMFormField());
+
+		String fieldValue = "Create New";
+
+		LocalizedValue localizedValue =
+			DDMFormValuesTestUtil.createLocalizedValue(
+				fieldValue, LocaleUtil.US);
+
+		DDMFormFieldValue ddmFormFieldValue =
+			DDMFormValuesTestUtil.createDDMFormFieldValue(
+				_FIELD_NAME, localizedValue);
+
+		DDMStructure ddmStructure = _createDDMStructure(ddmForm);
+
+		DDMFormValues ddmFormValues = _createDDMFormValues(
+			ddmForm, ddmFormFieldValue);
+
+		String indexableAttributes = _ddmIndexer.extractIndexableAttributes(
+			ddmStructure, ddmFormValues, LocaleUtil.US);
+
+		Assert.assertEquals(fieldValue, indexableAttributes);
+	}
+
+	@Test
+	public void testExtractAttributesUsingFormWithAnEmptyField() {
 		DDMForm ddmForm = DDMFormTestUtil.createDDMForm(
 			SetUtil.fromArray(LocaleUtil.US), LocaleUtil.US);
 
@@ -134,7 +162,7 @@ public class DDMIndexerImplTest {
 	}
 
 	@Test
-	public void testFormWithAnEmptyRepeatableField() {
+	public void testExtractAttributesUsingFormWithAnEmptyRepeatableField() {
 		DDMForm ddmForm = DDMFormTestUtil.createDDMForm(
 			SetUtil.fromArray(LocaleUtil.US), LocaleUtil.US);
 
@@ -167,7 +195,7 @@ public class DDMIndexerImplTest {
 	}
 
 	@Test
-	public void testFormWithANullLiteralFieldValue() {
+	public void testExtractAttributesUsingFormWithANullLiteralFieldValue() {
 		DDMForm ddmForm = DDMFormTestUtil.createDDMForm(
 			SetUtil.fromArray(LocaleUtil.US), LocaleUtil.US);
 
