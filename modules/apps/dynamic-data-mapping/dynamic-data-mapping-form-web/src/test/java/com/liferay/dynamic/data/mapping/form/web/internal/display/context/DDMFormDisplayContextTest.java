@@ -468,7 +468,8 @@ public class DDMFormDisplayContextTest extends PowerMockito {
 			mock(DDMStorageAdapterTracker.class), mock(GroupLocalService.class),
 			new JSONFactoryImpl(), mock(Portal.class), renderRequest,
 			new MockRenderResponse(), mock(RoleLocalService.class),
-			mock(UserLocalService.class), mock(WorkflowDefinitionLinkLocalService.class));
+			mock(UserLocalService.class),
+			mock(WorkflowDefinitionLinkLocalService.class));
 	}
 
 	protected DDMFormDisplayContext createSpy(
