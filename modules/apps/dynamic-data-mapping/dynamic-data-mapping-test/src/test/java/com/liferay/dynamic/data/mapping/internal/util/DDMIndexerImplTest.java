@@ -107,12 +107,17 @@ public class DDMIndexerImplTest {
 
 	@Test
 	public void testExtractIndexableAttributes() {
-		_testExtractIndexableAttributes(
-			_createDDMFormField(), StringPool.BLANK);
-		_testExtractIndexableAttributes(_createDDMFormField(), "Create New");
-		_testExtractIndexableAttributes(_createDDMFormField(), "null");
+		String fieldName = "text1";
+		String indexType = "text";
 
-		DDMFormField ddmFormField = _createDDMFormField();
+		_testExtractIndexableAttributes(
+			createDDMFormField(fieldName, indexType), StringPool.BLANK);
+		_testExtractIndexableAttributes(
+			createDDMFormField(fieldName, indexType), "Create New");
+		_testExtractIndexableAttributes(
+			createDDMFormField(fieldName, indexType), "null");
+
+		DDMFormField ddmFormField = createDDMFormField(fieldName, indexType);
 
 		ddmFormField.setRepeatable(true);
 
@@ -382,32 +387,32 @@ public class DDMIndexerImplTest {
 			PropsKeys.INDEX_SORTABLE_TEXT_FIELDS_TRUNCATED_LENGTH, "255");
 	}
 
-	private void _testExtractIndexableAttributes(
-		DDMFormField ddmFormField, String fieldValue) {
-
-		DDMForm ddmForm = DDMFormTestUtil.createDDMForm(
-			SetUtil.fromArray(LocaleUtil.US), LocaleUtil.US);
-
-		ddmForm.addDDMFormField(ddmFormField);
-
-		Assert.assertEquals(
-			fieldValue,
-			_ddmIndexer.extractIndexableAttributes(
-				_createDDMStructure(ddmForm),
-				_createDDMFormValues(
-					ddmForm,
-					DDMFormValuesTestUtil.createDDMFormFieldValue(
-						_FIELD_NAME,
-						DDMFormValuesTestUtil.createLocalizedValue(
-							fieldValue, LocaleUtil.US))),
-				LocaleUtil.US));
-	}
-
 	protected final DDMFixture ddmFixture = new DDMFixture();
 	protected final DDMFormJSONSerializer ddmFormJSONSerializer =
 		createDDMFormJSONSerializer();
 	protected DDMIndexer ddmIndexer;
 	protected final DocumentFixture documentFixture = new DocumentFixture();
+
+	private void _testExtractIndexableAttributes(
+		DDMFormField ddmFormField, String fieldValue) {
+
+		DDMForm ddmForm = DDMFormTestUtil.createDDMForm(
+			Collections.singleton(LocaleUtil.US), LocaleUtil.US);
+
+		ddmForm.addDDMFormField(ddmFormField);
+
+		Assert.assertEquals(
+			fieldValue,
+			ddmIndexer.extractIndexableAttributes(
+				createDDMStructure(ddmForm),
+				createDDMFormValues(
+					ddmForm,
+					DDMFormValuesTestUtil.createDDMFormFieldValue(
+						"text1",
+						DDMFormValuesTestUtil.createLocalizedValue(
+							fieldValue, LocaleUtil.US))),
+				LocaleUtil.US));
+	}
 
 	private Map<String, String> _withSortableValues(Map<String, String> map) {
 		Set<Map.Entry<String, String>> entrySet = map.entrySet();
