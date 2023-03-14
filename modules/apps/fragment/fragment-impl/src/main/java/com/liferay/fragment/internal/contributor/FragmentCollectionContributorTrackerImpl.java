@@ -30,6 +30,7 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.resource.bundle.AggregateResourceBundleLoader;
 import com.liferay.portal.kernel.resource.bundle.ResourceBundleLoader;
+import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.util.HashMapDictionary;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.MapUtil;
@@ -235,19 +236,22 @@ public class FragmentCollectionContributorTrackerImpl
 	}
 
 	private void _updateFragmentEntryLinks(FragmentEntry fragmentEntry) {
-		List<FragmentEntryLink> fragmentEntryLinks =
-			_fragmentEntryLinkLocalService.getFragmentEntryLinks(
-				fragmentEntry.getFragmentEntryKey());
+		_companyLocalService.forEachCompany(
+			company -> {
+				List<FragmentEntryLink> fragmentEntryLinks =
+					_fragmentEntryLinkLocalService.getFragmentEntryLinks(
+						fragmentEntry.getFragmentEntryKey());
 
-		for (FragmentEntryLink fragmentEntryLink : fragmentEntryLinks) {
-			try {
-				_fragmentEntryLinkLocalService.updateLatestChanges(
-					fragmentEntry, fragmentEntryLink);
-			}
-			catch (PortalException portalException) {
-				_log.error(portalException);
-			}
-		}
+				for (FragmentEntryLink fragmentEntryLink : fragmentEntryLinks) {
+					try {
+						_fragmentEntryLinkLocalService.updateLatestChanges(
+							fragmentEntry, fragmentEntryLink);
+					}
+					catch (PortalException portalException) {
+						_log.error(portalException);
+					}
+				}
+			});
 	}
 
 	private boolean _validateFragmentEntry(FragmentEntry fragmentEntry) {
@@ -273,6 +277,9 @@ public class FragmentCollectionContributorTrackerImpl
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		FragmentCollectionContributorTrackerImpl.class);
+
+	@Reference
+	private CompanyLocalService _companyLocalService;
 
 	private volatile Map<String, FragmentEntry> _fragmentEntries =
 		new ConcurrentHashMap<>();
