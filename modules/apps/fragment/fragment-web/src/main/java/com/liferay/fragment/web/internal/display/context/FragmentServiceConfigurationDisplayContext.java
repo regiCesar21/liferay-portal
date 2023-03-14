@@ -54,6 +54,24 @@ public class FragmentServiceConfigurationDisplayContext {
 		return editFragmentServiceConfigurationURL.toString();
 	}
 
+	public String getPropagateContributedFragmentEntriesChangesURL() {
+		PortletURL propagateContributedFragmentEntriesChangesURL =
+			_liferayPortletResponse.createActionURL();
+
+		propagateContributedFragmentEntriesChangesURL.setParameter(
+			ActionRequest.ACTION_NAME,
+			"/instance_settings" +
+				"/propagate_contributed_fragment_entries_changes");
+		propagateContributedFragmentEntriesChangesURL.setParameter(
+			"redirect", PortalUtil.getCurrentURL(_httpServletRequest));
+		propagateContributedFragmentEntriesChangesURL.setParameter(
+			"scope", _scope);
+		propagateContributedFragmentEntriesChangesURL.setParameter(
+			"scopePK", String.valueOf(_getScopePk()));
+
+		return propagateContributedFragmentEntriesChangesURL.toString();
+	}
+
 	public boolean isPropagateChangesEnabled() {
 		return _fragmentServiceManagedServiceFactory.isPropagateChanges(
 			_scope, _getScopePk());

@@ -33,6 +33,8 @@ FragmentServiceConfigurationDisplayContext fragmentServiceConfigurationDisplayCo
 							"propagateChanges", fragmentServiceConfigurationDisplayContext.isPropagateChangesEnabled()
 						).put(
 							"propagateContributedFragmentChanges", fragmentServiceConfigurationDisplayContext.isPropagateContributedFragmentChangesEnabled()
+						).put(
+							"propagateContributedFragmentEntriesChangesURL", fragmentServiceConfigurationDisplayContext.getPropagateContributedFragmentEntriesChangesURL()
 						).build()
 					%>'
 					module="js/apps/FragmentServiceConfigurationApp"
