@@ -68,6 +68,23 @@ public class FragmentServiceManagedServiceFactory
 		throw new IllegalArgumentException("Unsupported scope: " + scope);
 	}
 
+	public boolean isPropagateContributedFragmentChanges(
+		String scope, long scopePK) {
+
+		if (scope.equals(
+				ExtendedObjectClassDefinition.Scope.COMPANY.getValue())) {
+
+			return _isCompanyPropagateContributedFragmentChanges(scopePK);
+		}
+		else if (scope.equals(
+					ExtendedObjectClassDefinition.Scope.SYSTEM.getValue())) {
+
+			return _isSystemPropagateContributedFragmentChanges();
+		}
+
+		throw new IllegalArgumentException("Unsupported scope: " + scope);
+	}
+
 	@Override
 	public void updated(String pid, Dictionary<String, ?> dictionary)
 		throws ConfigurationException {
@@ -83,19 +100,22 @@ public class FragmentServiceManagedServiceFactory
 	}
 
 	public void updatePropagateChanges(
-			boolean propagateChanges, String scope, long scopePK)
+			boolean propagateChanges,
+			boolean propagateContributedFragmentChanges, String scope,
+			long scopePK)
 		throws Exception {
 
 		if (scope.equals(
 				ExtendedObjectClassDefinition.Scope.COMPANY.getValue())) {
 
 			_updateCompanyFragmentServiceConfiguration(
-				scopePK, propagateChanges);
+				scopePK, propagateChanges, propagateContributedFragmentChanges);
 		}
 		else if (scope.equals(
 					ExtendedObjectClassDefinition.Scope.SYSTEM.getValue())) {
 
-			_updateSystemFragmentServiceConfiguration(propagateChanges);
+			_updateSystemFragmentServiceConfiguration(
+				propagateChanges, propagateContributedFragmentChanges);
 		}
 		else {
 			throw new PortalException("Unsupported scope: " + scope);
@@ -144,8 +164,23 @@ public class FragmentServiceManagedServiceFactory
 		return fragmentServiceConfiguration.propagateChanges();
 	}
 
+	private boolean _isCompanyPropagateContributedFragmentChanges(
+		long companyId) {
+
+		FragmentServiceConfiguration fragmentServiceConfiguration =
+			_getFragmentServiceConfiguration(companyId);
+
+		return fragmentServiceConfiguration.
+			propagateContributedFragmentChanges();
+	}
+
 	private boolean _isSystemPropagateChanges() {
 		return _systemFragmentServiceConfiguration.propagateChanges();
+	}
+
+	private boolean _isSystemPropagateContributedFragmentChanges() {
+		return _systemFragmentServiceConfiguration.
+			propagateContributedFragmentChanges();
 	}
 
 	private void _unmapPid(String pid) {
@@ -167,14 +202,17 @@ public class FragmentServiceManagedServiceFactory
 	}
 
 	private void _updateCompanyFragmentServiceConfiguration(
-			long companyId, boolean propagateChanges)
+			long companyId, boolean propagateChanges,
+			boolean propagateContributedFragmentChanges)
 		throws Exception {
 
-		_updateScopedConfiguration(propagateChanges, companyId);
+		_updateScopedConfiguration(
+			propagateChanges, propagateContributedFragmentChanges, companyId);
 	}
 
 	private void _updateScopedConfiguration(
-			boolean propagateChanges, long companyId)
+			boolean propagateChanges,
+			boolean propagateContributedFragmentChanges, long companyId)
 		throws Exception {
 
 		Dictionary<String, Object> properties;
@@ -195,12 +233,16 @@ public class FragmentServiceManagedServiceFactory
 		}
 
 		properties.put("propagateChanges", propagateChanges);
+		properties.put(
+			"propagateContributedFragmentChanges",
+			propagateContributedFragmentChanges);
 
 		configuration.update(properties);
 	}
 
 	private void _updateSystemFragmentServiceConfiguration(
-			boolean propagateChanges)
+			boolean propagateChanges,
+			boolean propagateContributedFragmentChanges)
 		throws Exception {
 
 		Configuration configuration = _configurationAdmin.getConfiguration(
@@ -213,6 +255,9 @@ public class FragmentServiceManagedServiceFactory
 		}
 
 		properties.put("propagateChanges", propagateChanges);
+		properties.put(
+			"propagateContributedFragmentChanges",
+			propagateContributedFragmentChanges);
 
 		configuration.update(properties);
 	}
