@@ -21,11 +21,17 @@ import {PropTypes} from 'prop-types';
 import React, {useState} from 'react';
 
 const FragmentServiceConfiguration = ({
+	alreadyPropagateContributedFragmentChanges,
 	namespace,
 	propagateChanges,
 	propagateContributedFragmentChanges,
 	propagateContributedFragmentEntriesChangesURL
 }) => {
+	const [
+		disablePropagateChangesButton,
+		setDisablePropagateChangesButton
+	] = useState(alreadyPropagateContributedFragmentChanges);
+
 	const [
 		propagateContributedFragmentChangesChecked,
 		setPropagateContributedFragmentChangesChecked
@@ -56,6 +62,7 @@ const FragmentServiceConfiguration = ({
 						type: 'success'
 					});
 
+					setDisablePropagateChangesButton(true);
 					setMessageType('success');
 				}
 				else {
@@ -126,6 +133,7 @@ const FragmentServiceConfiguration = ({
 				id={`${namespace}propagateContributedFragmentChangesContainer`}
 			>
 				<ClayButton
+					disabled={disablePropagateChangesButton}
 					displayType="secondary"
 					onClick={() => setWarningModalVisible(true)}
 				>
@@ -237,6 +245,7 @@ const FragmentServiceConfiguration = ({
 	);
 };
 FragmentServiceConfiguration.propTypes = {
+	alreadyPropagateContributedFragmentChanges: PropTypes.bool.isRequired,
 	namespace: PropTypes.string.isRequired,
 	propagateChanges: PropTypes.bool.isRequired,
 	propagateContributedFragmentChanges: PropTypes.bool.isRequired,

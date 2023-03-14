@@ -28,6 +28,8 @@ FragmentServiceConfigurationDisplayContext fragmentServiceConfigurationDisplayCo
 				<react:component
 					data='<%=
 						HashMapBuilder.<String, Object>put(
+							"alreadyPropagateContributedFragmentChanges", fragmentServiceConfigurationDisplayContext.isAlreadyPropagateContributedFragmentChanges()
+						).put(
 							"namespace", liferayPortletResponse.getNamespace()
 						).put(
 							"propagateChanges", fragmentServiceConfigurationDisplayContext.isPropagateChangesEnabled()
