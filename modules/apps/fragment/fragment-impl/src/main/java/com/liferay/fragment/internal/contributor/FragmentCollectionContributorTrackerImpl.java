@@ -33,9 +33,11 @@ import com.liferay.portal.kernel.module.configuration.ConfigurationProviderUtil;
 import com.liferay.portal.kernel.resource.bundle.AggregateResourceBundleLoader;
 import com.liferay.portal.kernel.resource.bundle.ResourceBundleLoader;
 import com.liferay.portal.kernel.service.CompanyLocalService;
+import com.liferay.portal.kernel.service.PortalPreferencesLocalService;
 import com.liferay.portal.kernel.util.HashMapDictionary;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.MapUtil;
+import com.liferay.portal.kernel.util.PortletKeys;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -48,6 +50,8 @@ import java.util.Objects;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
+
+import javax.portlet.PortletPreferences;
 
 import org.osgi.framework.BundleContext;
 import org.osgi.framework.ServiceReference;
@@ -249,6 +253,17 @@ public class FragmentCollectionContributorTrackerImpl
 					if (!fragmentServiceConfiguration.
 							propagateContributedFragmentChanges()) {
 
+						PortletPreferences portletPreferences =
+							_portalPreferencesLocalService.getPreferences(
+								company.getCompanyId(),
+								PortletKeys.PREFS_OWNER_TYPE_COMPANY);
+
+						portletPreferences.setValue(
+							"alreadyPropagateContributedFragmentChanges",
+							Boolean.FALSE.toString());
+
+						portletPreferences.store();
+
 						return;
 					}
 				}
@@ -306,6 +321,9 @@ public class FragmentCollectionContributorTrackerImpl
 
 	@Reference
 	private FragmentEntryLinkLocalService _fragmentEntryLinkLocalService;
+
+	@Reference
+	private PortalPreferencesLocalService _portalPreferencesLocalService;
 
 	private ServiceTrackerMap<String, FragmentCollectionContributor>
 		_serviceTrackerMap;
