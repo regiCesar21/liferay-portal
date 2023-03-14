@@ -204,6 +204,10 @@
 			<finder-column name="groupId" />
 			<finder-column name="fragmentEntryId" />
 		</finder>
+		<finder name="C_R" return-type="Collection">
+			<finder-column name="companyId" />
+			<finder-column name="rendererKey" />
+		</finder>
 		<finder name="G_F_C" return-type="Collection">
 			<finder-column name="groupId" />
 			<finder-column name="fragmentEntryId" />
