@@ -31,6 +31,7 @@ import com.liferay.journal.constants.JournalFolderConstants;
 import com.liferay.journal.constants.JournalWebKeys;
 import com.liferay.journal.model.JournalArticle;
 import com.liferay.journal.model.JournalFolder;
+import com.liferay.journal.service.JournalArticleServiceUtil;
 import com.liferay.journal.service.JournalFolderLocalServiceUtil;
 import com.liferay.journal.util.JournalConverter;
 import com.liferay.journal.web.internal.security.permission.resource.JournalArticlePermission;
@@ -547,10 +548,18 @@ public class JournalEditArticleDisplayContext {
 		String defaultArticleLanguageId = null;
 
 		if (Validator.isNotNull(getArticleId())) {
-			DDMFormValues ddmFormValues = _article.getDDMFormValues();
+			try {
+				DDMFormValues ddmFormValues = getDDMFormValues(
+					_article.getDDMStructure());
 
-			defaultArticleLanguageId = LocaleUtil.toLanguageId(
-				ddmFormValues.getDefaultLocale());
+				defaultArticleLanguageId = LocaleUtil.toLanguageId(
+					ddmFormValues.getDefaultLocale());
+			}
+			catch (PortalException portalException) {
+				if (_log.isDebugEnabled()) {
+					_log.debug(portalException);
+				}
+			}
 		}
 		else if (getClassNameId() ==
 					JournalArticleConstants.CLASS_NAME_ID_DEFAULT) {
