@@ -73,6 +73,25 @@ public abstract class BaseFragmentCollectionContributor
 	}
 
 	@Override
+	public List<FragmentEntry> getFragmentEntries(int[] types) {
+		_initialize();
+
+		List<FragmentEntry> fragmentEntries = new ArrayList<>();
+
+		for (int type : types) {
+			fragmentEntries.addAll(
+				_fragmentEntries.getOrDefault(type, Collections.emptyList()));
+		}
+
+		return fragmentEntries;
+	}
+
+	@Override
+	public List<FragmentEntry> getFragmentEntries(int[] types, Locale locale) {
+		return _getFragmentEntries(getFragmentEntries(types), locale);
+	}
+
+	@Override
 	public String getName() {
 		_initialize();
 

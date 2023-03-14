@@ -30,6 +30,14 @@ public interface FragmentCollectionContributor {
 		return getFragmentEntries(type);
 	}
 
+	public List<FragmentEntry> getFragmentEntries(int[] types);
+
+	public default List<FragmentEntry> getFragmentEntries(
+		int[] types, Locale locale) {
+
+		return getFragmentEntries(types);
+	}
+
 	public String getName();
 
 	public default String getName(Locale locale) {
