@@ -18,6 +18,8 @@ import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.model.Company;
+import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.util.AggregateResourceBundleLoader;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.ResourceBundleLoader;
@@ -193,17 +195,19 @@ public class FragmentCollectionContributorTrackerImpl
 	}
 
 	private void _updateFragmentEntryLinks(FragmentEntry fragmentEntry) {
-		List<FragmentEntryLink> fragmentEntryLinks =
-			_fragmentEntryLinkLocalService.getFragmentEntryLinks(
-				fragmentEntry.getFragmentEntryKey());
+		for (Company company : _companyLocalService.getCompanies()) {
+			List<FragmentEntryLink> fragmentEntryLinks =
+				_fragmentEntryLinkLocalService.getFragmentEntryLinks(
+					fragmentEntry.getFragmentEntryKey());
 
-		for (FragmentEntryLink fragmentEntryLink : fragmentEntryLinks) {
-			try {
-				_fragmentEntryLinkLocalService.updateLatestChanges(
-					fragmentEntry, fragmentEntryLink);
-			}
-			catch (PortalException portalException) {
-				_log.error(portalException);
+			for (FragmentEntryLink fragmentEntryLink : fragmentEntryLinks) {
+				try {
+					_fragmentEntryLinkLocalService.updateLatestChanges(
+						fragmentEntry, fragmentEntryLink);
+				}
+				catch (PortalException portalException) {
+					_log.error(portalException);
+				}
 			}
 		}
 	}
@@ -231,6 +235,9 @@ public class FragmentCollectionContributorTrackerImpl
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		FragmentCollectionContributorTrackerImpl.class);
+
+	@Reference
+	private CompanyLocalService _companyLocalService;
 
 	private volatile Map<String, FragmentEntry> _fragmentEntries =
 		new ConcurrentHashMap<>();
