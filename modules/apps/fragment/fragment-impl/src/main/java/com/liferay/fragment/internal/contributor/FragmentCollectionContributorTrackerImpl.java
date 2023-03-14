@@ -92,14 +92,12 @@ public class FragmentCollectionContributorTrackerImpl
 			fragmentCollectionContributor -> {
 				Map<String, FragmentEntry> fragmentEntries = new HashMap<>();
 
-				for (int type : _SUPPORTED_FRAGMENT_TYPES) {
-					for (FragmentEntry fragmentEntry :
-							fragmentCollectionContributor.getFragmentEntries(
-								type, locale)) {
+				for (FragmentEntry fragmentEntry :
+						fragmentCollectionContributor.getFragmentEntries(
+							_SUPPORTED_FRAGMENT_TYPES, locale)) {
 
-						fragmentEntries.put(
-							fragmentEntry.getFragmentEntryKey(), fragmentEntry);
-					}
+					fragmentEntries.put(
+						fragmentEntry.getFragmentEntryKey(), fragmentEntry);
 				}
 
 				return fragmentEntries;
@@ -177,19 +175,18 @@ public class FragmentCollectionContributorTrackerImpl
 
 		Map<String, FragmentEntry> fragmentEntries = new HashMap<>();
 
-		for (int type : _SUPPORTED_FRAGMENT_TYPES) {
-			for (FragmentEntry fragmentEntry :
-					fragmentCollectionContributor.getFragmentEntries(type)) {
+		for (FragmentEntry fragmentEntry :
+				fragmentCollectionContributor.getFragmentEntries(
+					_SUPPORTED_FRAGMENT_TYPES)) {
 
-				if (!_validateFragmentEntry(fragmentEntry)) {
-					continue;
-				}
-
-				fragmentEntries.put(
-					fragmentEntry.getFragmentEntryKey(), fragmentEntry);
-
-				_updateFragmentEntryLinks(fragmentEntry);
+			if (!_validateFragmentEntry(fragmentEntry)) {
+				continue;
 			}
+
+			fragmentEntries.put(
+				fragmentEntry.getFragmentEntryKey(), fragmentEntry);
+
+			_updateFragmentEntryLinks(fragmentEntry);
 		}
 
 		return fragmentEntries;
