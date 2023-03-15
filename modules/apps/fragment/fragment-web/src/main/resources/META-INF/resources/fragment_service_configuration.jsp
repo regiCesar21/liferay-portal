@@ -19,6 +19,13 @@ FragmentServiceConfigurationDisplayContext fragmentServiceConfigurationDisplayCo
 			<h2>
 				<liferay-ui:message key="fragment-configuration-name" />
 			</h2>
+
+			<c:if test="<%= fragmentServiceConfigurationDisplayContext.showInfoMessage() %>">
+				<clay:alert
+					message='<%= LanguageUtil.get(resourceBundle, "this-configuration-is-not-saved-yet.-the-values-shown-are-the-default") %>'
+					title='<%= LanguageUtil.get(resourceBundle, "info") %>'
+				/>
+			</c:if>
 		</div>
 
 		<div class="sheet-section">
