@@ -47,6 +47,7 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Objects;
+import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
@@ -234,14 +235,16 @@ public class FragmentCollectionContributorTrackerImpl
 
 			fragmentEntries.put(
 				fragmentEntry.getFragmentEntryKey(), fragmentEntry);
-
-			_updateFragmentEntryLinks(fragmentEntry);
 		}
+
+		_updateFragmentEntryLinks(fragmentEntries);
 
 		return fragmentEntries;
 	}
 
-	private void _updateFragmentEntryLinks(FragmentEntry fragmentEntry) {
+	private void _updateFragmentEntryLinks(
+		Map<String, FragmentEntry> fragmentEntries) {
+
 		_companyLocalService.forEachCompany(
 			company -> {
 				try {
@@ -273,14 +276,19 @@ public class FragmentCollectionContributorTrackerImpl
 					return;
 				}
 
+				Set<String> fragmentEntriesSet = fragmentEntries.keySet();
+
 				List<FragmentEntryLink> fragmentEntryLinks =
 					_fragmentEntryLinkLocalService.getFragmentEntryLinks(
-						fragmentEntry.getFragmentEntryKey());
+						company.getCompanyId(),
+						fragmentEntriesSet.toArray(new String[0]));
 
 				for (FragmentEntryLink fragmentEntryLink : fragmentEntryLinks) {
 					try {
 						_fragmentEntryLinkLocalService.updateLatestChanges(
-							fragmentEntry, fragmentEntryLink);
+							fragmentEntries.get(
+								fragmentEntryLink.getRendererKey()),
+							fragmentEntryLink);
 					}
 					catch (PortalException portalException) {
 						_log.error(portalException);
