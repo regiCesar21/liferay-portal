@@ -38,6 +38,7 @@ import com.liferay.registry.Registry;
 import com.liferay.registry.RegistryUtil;
 import com.liferay.registry.ServiceRegistration;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
@@ -296,6 +297,21 @@ public class FragmentCollectionContributorTest {
 			}
 
 			return Collections.emptyList();
+		}
+
+		@Override
+		public List<FragmentEntry> getFragmentEntries(int[] types) {
+			List<FragmentEntry> fragmentEntries = new ArrayList<>();
+
+			for (int type : types) {
+				FragmentEntry fragmentEntry = _fragmentEntriesMap.get(type);
+
+				if (fragmentEntry != null) {
+					fragmentEntries.add(fragmentEntry);
+				}
+			}
+
+			return fragmentEntries;
 		}
 
 		@Override
