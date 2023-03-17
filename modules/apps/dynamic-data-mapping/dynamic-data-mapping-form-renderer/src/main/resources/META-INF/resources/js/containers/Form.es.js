@@ -29,7 +29,7 @@ import formValidate from '../thunks/formValidate.es';
 import pageLanguageUpdate from '../thunks/pageLanguageUpdate.es';
 import {getConnectedReactComponentAdapter} from '../util/ReactComponentAdapter.es';
 import {evaluate} from '../util/evaluation.es';
-import {getFormId, getFormNode} from '../util/formId.es';
+import {getFormId, getFormNode, getFormTitle} from '../util/formId.es';
 import templates from './Form.soy';
 
 const Form = React.forwardRef(
@@ -199,7 +199,8 @@ const Form = React.forwardRef(
 				Liferay.fire('ddmFormPageShow', {
 					formId: getFormId(getFormNode(containerRef.current)),
 					page: activePage,
-					title: pages[activePage].title,
+					formPageTitle: pages[activePage].title,
+					title: getFormTitle()
 				});
 			}
 			// eslint-disable-next-line react-hooks/exhaustive-deps

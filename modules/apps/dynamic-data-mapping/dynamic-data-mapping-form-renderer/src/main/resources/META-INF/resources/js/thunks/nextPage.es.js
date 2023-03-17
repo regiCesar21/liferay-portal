@@ -15,6 +15,7 @@
 import {EVENT_TYPES} from '../actions/eventTypes.es';
 import {evaluate} from '../util/evaluation.es';
 import {PagesVisitor} from '../util/visitors.es';
+import {getFormTitle} from '../util/formId.es';
 
 export default function nextPage({
 	activePage,
@@ -26,6 +27,8 @@ export default function nextPage({
 	portletNamespace,
 	rules,
 }) {
+	const title = getFormTitle();
+	
 	return (dispatch) => {
 		evaluate(null, {
 			defaultLanguageId,
@@ -65,8 +68,9 @@ export default function nextPage({
 
 				Liferay.fire('ddmFormPageShow', {
 					formId,
+					formPageTitle: pages[activePageUpdated].title,
 					page: activePageUpdated,
-					title: pages[activePageUpdated].title,
+					title
 				});
 			}
 			else {
