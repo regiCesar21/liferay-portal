@@ -5729,7 +5729,12 @@ public class JournalArticleLocalServiceImpl
 			(classNameLocalService.getClassNameId(DDMStructure.class) !=
 				article.getClassNameId())) {
 
-			throw new ArticleFriendlyURLException();
+			urlTitle = urlTitleMap.get(
+				LocaleUtil.toLanguageId(LocaleUtil.getDefault()));
+
+			if (Validator.isNull(urlTitle)) {
+				throw new ArticleFriendlyURLException();
+			}
 		}
 
 		content = format(user, groupId, article, content);
