@@ -56,9 +56,9 @@ export default function previousPage({
 
 			Liferay.fire('ddmFormPageShow', {
 				formId,
-				page: activePageUpdated,
 				formPageTitle: pages[activePageUpdated].title,
-				title
+				page: activePageUpdated,
+				title,
 			});
 		});
 	};

@@ -14,8 +14,8 @@
 
 import {EVENT_TYPES} from '../actions/eventTypes.es';
 import {evaluate} from '../util/evaluation.es';
-import {PagesVisitor} from '../util/visitors.es';
 import {getFormTitle} from '../util/formId.es';
+import {PagesVisitor} from '../util/visitors.es';
 
 export default function nextPage({
 	activePage,
@@ -28,7 +28,7 @@ export default function nextPage({
 	rules,
 }) {
 	const title = getFormTitle();
-	
+
 	return (dispatch) => {
 		evaluate(null, {
 			defaultLanguageId,
@@ -70,7 +70,7 @@ export default function nextPage({
 					formId,
 					formPageTitle: pages[activePageUpdated].title,
 					page: activePageUpdated,
-					title
+					title,
 				});
 			}
 			else {

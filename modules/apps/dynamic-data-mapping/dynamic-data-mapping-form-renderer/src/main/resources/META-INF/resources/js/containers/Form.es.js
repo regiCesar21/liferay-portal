@@ -198,9 +198,9 @@ const Form = React.forwardRef(
 			if (containerRef.current) {
 				Liferay.fire('ddmFormPageShow', {
 					formId: getFormId(getFormNode(containerRef.current)),
-					page: activePage,
 					formPageTitle: pages[activePage].title,
-					title: getFormTitle()
+					page: activePage,
+					title: getFormTitle(),
 				});
 			}
 			// eslint-disable-next-line react-hooks/exhaustive-deps
