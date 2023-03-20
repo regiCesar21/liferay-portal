@@ -66,6 +66,7 @@ import com.liferay.portal.security.ldap.exportimport.configuration.LDAPImportCon
 import com.liferay.portal.security.ldap.internal.UserImportTransactionThreadLocal;
 import com.liferay.portal.security.ldap.util.LDAPUtil;
 import com.liferay.portal.security.ldap.validator.LDAPFilterValidator;
+import com.liferay.portal.util.PropsValues;
 
 import java.io.Serializable;
 
@@ -149,7 +150,7 @@ public class LDAPUserImporterImpl implements LDAPUserImporter, UserImporter {
 			ldapImportContext.getContactMappings(),
 			ldapImportContext.getContactExpandoMappings(), password);
 
-		if (!ldapServerConfiguration.ignoreUserSearchFilterForAuth() &&
+		if (!PropsValues.LDAP_IGNORE_USER_SEARCH_FILTER_FOR_AUTH &&
 			!_safePortalLDAP.hasUser(
 				ldapServerId, companyId, ldapUser.getScreenName(),
 				ldapUser.getEmailAddress())) {
