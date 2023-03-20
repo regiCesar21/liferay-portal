@@ -219,11 +219,11 @@ public class FragmentCollectionContributorTrackerImpl
 				FragmentServiceConfiguration.class.getName(), ".scoped",
 				")(companyId=", companyId, "))");
 
-			Configuration[] configuration =
+			Configuration[] configurations =
 				_configurationAdmin.listConfigurations(filterString);
 
-			if (configuration != null) {
-				return configuration[0];
+			if (configurations != null) {
+				return configurations[0];
 			}
 
 			return null;
