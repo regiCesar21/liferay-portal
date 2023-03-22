@@ -21,6 +21,7 @@ import com.liferay.portal.kernel.model.impl.DefaultLayoutTypeAccessPolicyImpl;
 import com.liferay.portal.kernel.portlet.PortletPreferencesFactory;
 import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.service.PortletPreferencesLocalService;
+import com.liferay.portal.kernel.service.ResourcePermissionLocalService;
 
 import javax.portlet.PortletPreferences;
 
@@ -75,5 +76,8 @@ public abstract class BaseLayoutTypeAccessPolicy
 
 	@Reference
 	protected PortletPreferencesLocalService portletPreferencesLocalService;
+
+	@Reference
+	protected ResourcePermissionLocalService resourcePermissionLocalService;
 
 }
