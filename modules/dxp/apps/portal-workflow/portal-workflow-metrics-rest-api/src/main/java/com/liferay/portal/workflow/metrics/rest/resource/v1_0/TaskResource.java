@@ -59,6 +59,11 @@ public interface TaskResource {
 
 	public Page<Task> getProcessTasksPage(Long processId) throws Exception;
 
+	public Response postProcessTasksPageExportBatch(
+			Long processId, String callbackURL, String contentType,
+			String fieldNames)
+		throws Exception;
+
 	public Task postProcessTask(Long processId, Task task) throws Exception;
 
 	public Response postProcessTaskBatch(

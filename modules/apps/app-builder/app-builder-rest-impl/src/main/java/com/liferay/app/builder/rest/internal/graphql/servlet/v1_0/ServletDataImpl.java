@@ -85,6 +85,10 @@ public class ServletDataImpl implements ServletData {
 			new HashMap<String, ObjectValuePair<Class<?>, String>>() {
 				{
 					put(
+						"mutation#createAppsPageExportBatch",
+						new ObjectValuePair<>(
+							AppResourceImpl.class, "postAppsPageExportBatch"));
+					put(
 						"mutation#deleteApp",
 						new ObjectValuePair<>(
 							AppResourceImpl.class, "deleteApp"));
@@ -111,6 +115,11 @@ public class ServletDataImpl implements ServletData {
 						"mutation#createDataDefinitionApp",
 						new ObjectValuePair<>(
 							AppResourceImpl.class, "postDataDefinitionApp"));
+					put(
+						"mutation#createSiteAppsPageExportBatch",
+						new ObjectValuePair<>(
+							AppResourceImpl.class,
+							"postSiteAppsPageExportBatch"));
 
 					put(
 						"query#apps",

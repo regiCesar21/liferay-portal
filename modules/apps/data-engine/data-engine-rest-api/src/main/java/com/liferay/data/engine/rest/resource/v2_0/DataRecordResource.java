@@ -61,6 +61,12 @@ public interface DataRecordResource {
 			Pagination pagination, Sort[] sorts)
 		throws Exception;
 
+	public Response postDataDefinitionDataRecordsPageExportBatch(
+			Long dataDefinitionId, Long dataListViewId, String keywords,
+			Sort[] sorts, String callbackURL, String contentType,
+			String fieldNames)
+		throws Exception;
+
 	public DataRecord postDataDefinitionDataRecord(
 			Long dataDefinitionId, DataRecord dataRecord)
 		throws Exception;
@@ -72,6 +78,12 @@ public interface DataRecordResource {
 	public Page<DataRecord> getDataRecordCollectionDataRecordsPage(
 			Long dataRecordCollectionId, Long dataListViewId, String keywords,
 			Pagination pagination, Sort[] sorts)
+		throws Exception;
+
+	public Response postDataRecordCollectionDataRecordsPageExportBatch(
+			Long dataRecordCollectionId, Long dataListViewId, String keywords,
+			Sort[] sorts, String callbackURL, String contentType,
+			String fieldNames)
 		throws Exception;
 
 	public DataRecord postDataRecordCollectionDataRecord(

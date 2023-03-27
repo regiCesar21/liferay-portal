@@ -61,6 +61,12 @@ public interface AppResource {
 			String scope, Long[] userIds, Pagination pagination, Sort[] sorts)
 		throws Exception;
 
+	public Response postAppsPageExportBatch(
+			Boolean active, String[] deploymentTypes, String keywords,
+			String scope, Long[] userIds, Sort[] sorts, String callbackURL,
+			String contentType, String fieldNames)
+		throws Exception;
+
 	public void deleteApp(Long appId) throws Exception;
 
 	public Response deleteAppBatch(String callbackURL, Object object)
@@ -88,6 +94,11 @@ public interface AppResource {
 	public Page<App> getSiteAppsPage(
 			Long siteId, String keywords, String scope, Pagination pagination,
 			Sort[] sorts)
+		throws Exception;
+
+	public Response postSiteAppsPageExportBatch(
+			Long siteId, String keywords, String scope, Sort[] sorts,
+			String callbackURL, String contentType, String fieldNames)
 		throws Exception;
 
 	public default void setContextAcceptLanguage(

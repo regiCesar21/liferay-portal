@@ -55,6 +55,8 @@ public class ServletDataImpl implements ServletData {
 	public void activate(BundleContext bundleContext) {
 		Mutation.setDataDefinitionResourceComponentServiceObjects(
 			_dataDefinitionResourceComponentServiceObjects);
+		Mutation.setDataDefinitionFieldLinkResourceComponentServiceObjects(
+			_dataDefinitionFieldLinkResourceComponentServiceObjects);
 		Mutation.setDataLayoutResourceComponentServiceObjects(
 			_dataLayoutResourceComponentServiceObjects);
 		Mutation.setDataListViewResourceComponentServiceObjects(
@@ -148,10 +150,20 @@ public class ServletDataImpl implements ServletData {
 							DataDefinitionResourceImpl.class,
 							"postSiteDataDefinitionByContentType"));
 					put(
+						"mutation#createDataDefinitionDataDefinitionFieldLinksPageExportBatch",
+						new ObjectValuePair<>(
+							DataDefinitionFieldLinkResourceImpl.class,
+							"postDataDefinitionDataDefinitionFieldLinksPageExportBatch"));
+					put(
 						"mutation#deleteDataDefinitionDataLayout",
 						new ObjectValuePair<>(
 							DataLayoutResourceImpl.class,
 							"deleteDataDefinitionDataLayout"));
+					put(
+						"mutation#createDataDefinitionDataLayoutsPageExportBatch",
+						new ObjectValuePair<>(
+							DataLayoutResourceImpl.class,
+							"postDataDefinitionDataLayoutsPageExportBatch"));
 					put(
 						"mutation#createDataDefinitionDataLayout",
 						new ObjectValuePair<>(
@@ -191,6 +203,11 @@ public class ServletDataImpl implements ServletData {
 							DataListViewResourceImpl.class,
 							"deleteDataDefinitionDataListView"));
 					put(
+						"mutation#createDataDefinitionDataListViewsPageExportBatch",
+						new ObjectValuePair<>(
+							DataListViewResourceImpl.class,
+							"postDataDefinitionDataListViewsPageExportBatch"));
+					put(
 						"mutation#createDataDefinitionDataListView",
 						new ObjectValuePair<>(
 							DataListViewResourceImpl.class,
@@ -220,6 +237,11 @@ public class ServletDataImpl implements ServletData {
 							DataListViewResourceImpl.class,
 							"putDataListViewBatch"));
 					put(
+						"mutation#createDataDefinitionDataRecordsPageExportBatch",
+						new ObjectValuePair<>(
+							DataRecordResourceImpl.class,
+							"postDataDefinitionDataRecordsPageExportBatch"));
+					put(
 						"mutation#createDataDefinitionDataRecord",
 						new ObjectValuePair<>(
 							DataRecordResourceImpl.class,
@@ -229,6 +251,11 @@ public class ServletDataImpl implements ServletData {
 						new ObjectValuePair<>(
 							DataRecordResourceImpl.class,
 							"postDataDefinitionDataRecordBatch"));
+					put(
+						"mutation#createDataRecordCollectionDataRecordsPageExportBatch",
+						new ObjectValuePair<>(
+							DataRecordResourceImpl.class,
+							"postDataRecordCollectionDataRecordsPageExportBatch"));
 					put(
 						"mutation#createDataRecordCollectionDataRecord",
 						new ObjectValuePair<>(
@@ -261,6 +288,11 @@ public class ServletDataImpl implements ServletData {
 						new ObjectValuePair<>(
 							DataRecordResourceImpl.class,
 							"putDataRecordBatch"));
+					put(
+						"mutation#createDataDefinitionDataRecordCollectionsPageExportBatch",
+						new ObjectValuePair<>(
+							DataRecordCollectionResourceImpl.class,
+							"postDataDefinitionDataRecordCollectionsPageExportBatch"));
 					put(
 						"mutation#createDataDefinitionDataRecordCollection",
 						new ObjectValuePair<>(
@@ -412,6 +444,10 @@ public class ServletDataImpl implements ServletData {
 		_dataDefinitionResourceComponentServiceObjects;
 
 	@Reference(scope = ReferenceScope.PROTOTYPE_REQUIRED)
+	private ComponentServiceObjects<DataDefinitionFieldLinkResource>
+		_dataDefinitionFieldLinkResourceComponentServiceObjects;
+
+	@Reference(scope = ReferenceScope.PROTOTYPE_REQUIRED)
 	private ComponentServiceObjects<DataLayoutResource>
 		_dataLayoutResourceComponentServiceObjects;
 
@@ -426,9 +462,5 @@ public class ServletDataImpl implements ServletData {
 	@Reference(scope = ReferenceScope.PROTOTYPE_REQUIRED)
 	private ComponentServiceObjects<DataRecordCollectionResource>
 		_dataRecordCollectionResourceComponentServiceObjects;
-
-	@Reference(scope = ReferenceScope.PROTOTYPE_REQUIRED)
-	private ComponentServiceObjects<DataDefinitionFieldLinkResource>
-		_dataDefinitionFieldLinkResourceComponentServiceObjects;
 
 }

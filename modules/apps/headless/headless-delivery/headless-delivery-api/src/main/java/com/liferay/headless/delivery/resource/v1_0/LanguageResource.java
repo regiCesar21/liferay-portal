@@ -38,6 +38,7 @@ import javax.annotation.Generated;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import javax.ws.rs.core.Response;
 import javax.ws.rs.core.UriInfo;
 
 import org.osgi.annotation.versioning.ProviderType;
@@ -57,7 +58,17 @@ public interface LanguageResource {
 	public Page<Language> getAssetLibraryLanguagesPage(Long assetLibraryId)
 		throws Exception;
 
+	public Response postAssetLibraryLanguagesPageExportBatch(
+			Long assetLibraryId, String callbackURL, String contentType,
+			String fieldNames)
+		throws Exception;
+
 	public Page<Language> getSiteLanguagesPage(Long siteId) throws Exception;
+
+	public Response postSiteLanguagesPageExportBatch(
+			Long siteId, String callbackURL, String contentType,
+			String fieldNames)
+		throws Exception;
 
 	public default void setContextAcceptLanguage(
 		AcceptLanguage contextAcceptLanguage) {

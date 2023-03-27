@@ -65,6 +65,11 @@ public interface DataLayoutResource {
 			Sort[] sorts)
 		throws Exception;
 
+	public Response postDataDefinitionDataLayoutsPageExportBatch(
+			Long dataDefinitionId, String keywords, Sort[] sorts,
+			String callbackURL, String contentType, String fieldNames)
+		throws Exception;
+
 	public DataLayout postDataDefinitionDataLayout(
 			Long dataDefinitionId, DataLayout dataLayout)
 		throws Exception;
