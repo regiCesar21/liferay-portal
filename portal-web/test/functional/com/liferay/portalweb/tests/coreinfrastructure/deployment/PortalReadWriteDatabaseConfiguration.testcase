@@ -105,7 +105,7 @@ definition {
 			category = "Site Builder",
 			portlet = "Pages");
 
-		PagesAdmin.addPage(pageName = "Test Page1");
+		SitePages.addPublicPage(pageName = "Test Page1");
 
 		Navigator.gotoPage(pageName = "Test Page1");
 
