@@ -129,7 +129,7 @@ String emailFromName = ParamUtil.getString(request, "preferences--emailFromName-
 				</liferay-frontend:fieldset-group>
 			</liferay-ui:section>
 
-			<c:if test="<%= WorkflowDefinitionLinkLocalServiceUtil.getWorkflowDefinitionLinksCount(themeDisplay.getCompanyId(), scopeGroupId, JournalFolder.class.getName()) > 0 %>">
+			<c:if test="<%= JournalUtil.hasWorkflowDefinitionsLinks(themeDisplay) %>">
 				<liferay-ui:section>
 					<liferay-frontend:fieldset-group>
 						<liferay-frontend:email-notification-settings
