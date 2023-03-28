@@ -73,26 +73,6 @@ public class Mutation {
 			accountUserResourceComponentServiceObjects;
 	}
 
-	@GraphQLField
-	public Response createAccountsPageExportBatch(
-			@GraphQLName("keywords") String keywords,
-			@GraphQLName("filter") String filterString,
-			@GraphQLName("sort") String sortsString,
-			@GraphQLName("callbackURL") String callbackURL,
-			@GraphQLName("contentType") String contentType,
-			@GraphQLName("fieldNames") String fieldNames)
-		throws Exception {
-
-		return _applyComponentServiceObjects(
-			_accountResourceComponentServiceObjects,
-			this::_populateResourceContext,
-			accountResource -> accountResource.postAccountsPageExportBatch(
-				keywords,
-				_filterBiFunction.apply(accountResource, filterString),
-				_sortsBiFunction.apply(accountResource, sortsString),
-				callbackURL, contentType, fieldNames));
-	}
-
 	@GraphQLField(description = "Creates a new account")
 	public Account createAccount(@GraphQLName("account") Account account)
 		throws Exception {

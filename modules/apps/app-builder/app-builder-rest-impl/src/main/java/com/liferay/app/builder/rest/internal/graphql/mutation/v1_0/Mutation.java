@@ -33,8 +33,6 @@ import javax.annotation.Generated;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import javax.validation.constraints.NotEmpty;
-
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.UriInfo;
 
@@ -53,27 +51,6 @@ public class Mutation {
 
 		_appResourceComponentServiceObjects =
 			appResourceComponentServiceObjects;
-	}
-
-	@GraphQLField
-	public Response createAppsPageExportBatch(
-			@GraphQLName("active") Boolean active,
-			@GraphQLName("deploymentTypes") String[] deploymentTypes,
-			@GraphQLName("keywords") String keywords,
-			@GraphQLName("scope") String scope,
-			@GraphQLName("userIds") Long[] userIds,
-			@GraphQLName("sort") String sortsString,
-			@GraphQLName("callbackURL") String callbackURL,
-			@GraphQLName("contentType") String contentType,
-			@GraphQLName("fieldNames") String fieldNames)
-		throws Exception {
-
-		return _applyComponentServiceObjects(
-			_appResourceComponentServiceObjects, this::_populateResourceContext,
-			appResource -> appResource.postAppsPageExportBatch(
-				active, deploymentTypes, keywords, scope, userIds,
-				_sortsBiFunction.apply(appResource, sortsString), callbackURL,
-				contentType, fieldNames));
 	}
 
 	@GraphQLField
@@ -147,25 +124,6 @@ public class Mutation {
 			_appResourceComponentServiceObjects, this::_populateResourceContext,
 			appResource -> appResource.postDataDefinitionApp(
 				dataDefinitionId, app));
-	}
-
-	@GraphQLField
-	public Response createSiteAppsPageExportBatch(
-			@GraphQLName("siteKey") @NotEmpty String siteKey,
-			@GraphQLName("keywords") String keywords,
-			@GraphQLName("scope") String scope,
-			@GraphQLName("sort") String sortsString,
-			@GraphQLName("callbackURL") String callbackURL,
-			@GraphQLName("contentType") String contentType,
-			@GraphQLName("fieldNames") String fieldNames)
-		throws Exception {
-
-		return _applyComponentServiceObjects(
-			_appResourceComponentServiceObjects, this::_populateResourceContext,
-			appResource -> appResource.postSiteAppsPageExportBatch(
-				Long.valueOf(siteKey), keywords, scope,
-				_sortsBiFunction.apply(appResource, sortsString), callbackURL,
-				contentType, fieldNames));
 	}
 
 	private <T, R, E1 extends Throwable, E2 extends Throwable> R

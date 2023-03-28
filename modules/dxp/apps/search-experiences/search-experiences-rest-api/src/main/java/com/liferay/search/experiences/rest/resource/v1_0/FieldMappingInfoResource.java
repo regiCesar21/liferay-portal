@@ -38,7 +38,6 @@ import javax.annotation.Generated;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import javax.ws.rs.core.Response;
 import javax.ws.rs.core.UriInfo;
 
 import org.osgi.annotation.versioning.ProviderType;
@@ -56,11 +55,6 @@ import org.osgi.annotation.versioning.ProviderType;
 public interface FieldMappingInfoResource {
 
 	public Page<FieldMappingInfo> getFieldMappingInfosPage(String query)
-		throws Exception;
-
-	public Response postFieldMappingInfosPageExportBatch(
-			String query, String callbackURL, String contentType,
-			String fieldNames)
 		throws Exception;
 
 	public default void setContextAcceptLanguage(

@@ -38,18 +38,13 @@ import com.liferay.portal.workflow.metrics.rest.dto.v1_0.Task;
 import com.liferay.portal.workflow.metrics.rest.dto.v1_0.TaskBulkSelection;
 import com.liferay.portal.workflow.metrics.rest.resource.v1_0.AssigneeMetricResource;
 import com.liferay.portal.workflow.metrics.rest.resource.v1_0.AssigneeResource;
-import com.liferay.portal.workflow.metrics.rest.resource.v1_0.CalendarResource;
 import com.liferay.portal.workflow.metrics.rest.resource.v1_0.IndexResource;
 import com.liferay.portal.workflow.metrics.rest.resource.v1_0.InstanceResource;
 import com.liferay.portal.workflow.metrics.rest.resource.v1_0.NodeResource;
-import com.liferay.portal.workflow.metrics.rest.resource.v1_0.ProcessMetricResource;
 import com.liferay.portal.workflow.metrics.rest.resource.v1_0.ProcessResource;
-import com.liferay.portal.workflow.metrics.rest.resource.v1_0.RoleResource;
 import com.liferay.portal.workflow.metrics.rest.resource.v1_0.SLAResource;
 import com.liferay.portal.workflow.metrics.rest.resource.v1_0.TaskResource;
-import com.liferay.portal.workflow.metrics.rest.resource.v1_0.TimeRangeResource;
 
-import java.util.Date;
 import java.util.function.BiFunction;
 
 import javax.annotation.Generated;
@@ -85,14 +80,6 @@ public class Mutation {
 			assigneeMetricResourceComponentServiceObjects;
 	}
 
-	public static void setCalendarResourceComponentServiceObjects(
-		ComponentServiceObjects<CalendarResource>
-			calendarResourceComponentServiceObjects) {
-
-		_calendarResourceComponentServiceObjects =
-			calendarResourceComponentServiceObjects;
-	}
-
 	public static void setIndexResourceComponentServiceObjects(
 		ComponentServiceObjects<IndexResource>
 			indexResourceComponentServiceObjects) {
@@ -125,22 +112,6 @@ public class Mutation {
 			processResourceComponentServiceObjects;
 	}
 
-	public static void setProcessMetricResourceComponentServiceObjects(
-		ComponentServiceObjects<ProcessMetricResource>
-			processMetricResourceComponentServiceObjects) {
-
-		_processMetricResourceComponentServiceObjects =
-			processMetricResourceComponentServiceObjects;
-	}
-
-	public static void setRoleResourceComponentServiceObjects(
-		ComponentServiceObjects<RoleResource>
-			roleResourceComponentServiceObjects) {
-
-		_roleResourceComponentServiceObjects =
-			roleResourceComponentServiceObjects;
-	}
-
 	public static void setSLAResourceComponentServiceObjects(
 		ComponentServiceObjects<SLAResource>
 			slaResourceComponentServiceObjects) {
@@ -155,14 +126,6 @@ public class Mutation {
 
 		_taskResourceComponentServiceObjects =
 			taskResourceComponentServiceObjects;
-	}
-
-	public static void setTimeRangeResourceComponentServiceObjects(
-		ComponentServiceObjects<TimeRangeResource>
-			timeRangeResourceComponentServiceObjects) {
-
-		_timeRangeResourceComponentServiceObjects =
-			timeRangeResourceComponentServiceObjects;
 	}
 
 	@GraphQLField
@@ -210,20 +173,6 @@ public class Mutation {
 	}
 
 	@GraphQLField
-	public Response createCalendarsPageExportBatch(
-			@GraphQLName("callbackURL") String callbackURL,
-			@GraphQLName("contentType") String contentType,
-			@GraphQLName("fieldNames") String fieldNames)
-		throws Exception {
-
-		return _applyComponentServiceObjects(
-			_calendarResourceComponentServiceObjects,
-			this::_populateResourceContext,
-			calendarResource -> calendarResource.postCalendarsPageExportBatch(
-				callbackURL, contentType, fieldNames));
-	}
-
-	@GraphQLField
 	public boolean patchIndexesReindex(@GraphQLName("index") Index index)
 		throws Exception {
 
@@ -233,31 +182,6 @@ public class Mutation {
 			indexResource -> indexResource.patchIndexesReindex(index));
 
 		return true;
-	}
-
-	@GraphQLField
-	public Response createProcessInstancesPageExportBatch(
-			@GraphQLName("processId") Long processId,
-			@GraphQLName("assigneeIds") Long[] assigneeIds,
-			@GraphQLName("classPKs") Long[] classPKs,
-			@GraphQLName("completed") Boolean completed,
-			@GraphQLName("dateEnd") Date dateEnd,
-			@GraphQLName("dateStart") Date dateStart,
-			@GraphQLName("slaStatuses") String[] slaStatuses,
-			@GraphQLName("taskNames") String[] taskNames,
-			@GraphQLName("callbackURL") String callbackURL,
-			@GraphQLName("contentType") String contentType,
-			@GraphQLName("fieldNames") String fieldNames)
-		throws Exception {
-
-		return _applyComponentServiceObjects(
-			_instanceResourceComponentServiceObjects,
-			this::_populateResourceContext,
-			instanceResource ->
-				instanceResource.postProcessInstancesPageExportBatch(
-					processId, assigneeIds, classPKs, completed, dateEnd,
-					dateStart, slaStatuses, taskNames, callbackURL, contentType,
-					fieldNames));
 	}
 
 	@GraphQLField
@@ -332,21 +256,6 @@ public class Mutation {
 				processId, instanceId, instance));
 
 		return true;
-	}
-
-	@GraphQLField
-	public Response createProcessNodesPageExportBatch(
-			@GraphQLName("processId") Long processId,
-			@GraphQLName("callbackURL") String callbackURL,
-			@GraphQLName("contentType") String contentType,
-			@GraphQLName("fieldNames") String fieldNames)
-		throws Exception {
-
-		return _applyComponentServiceObjects(
-			_nodeResourceComponentServiceObjects,
-			this::_populateResourceContext,
-			nodeResource -> nodeResource.postProcessNodesPageExportBatch(
-				processId, callbackURL, contentType, fieldNames));
 	}
 
 	@GraphQLField
@@ -465,56 +374,6 @@ public class Mutation {
 	}
 
 	@GraphQLField
-	public Response createProcessMetricsPageExportBatch(
-			@GraphQLName("title") String title,
-			@GraphQLName("sort") String sortsString,
-			@GraphQLName("callbackURL") String callbackURL,
-			@GraphQLName("contentType") String contentType,
-			@GraphQLName("fieldNames") String fieldNames)
-		throws Exception {
-
-		return _applyComponentServiceObjects(
-			_processMetricResourceComponentServiceObjects,
-			this::_populateResourceContext,
-			processMetricResource ->
-				processMetricResource.postProcessMetricsPageExportBatch(
-					title,
-					_sortsBiFunction.apply(processMetricResource, sortsString),
-					callbackURL, contentType, fieldNames));
-	}
-
-	@GraphQLField
-	public Response createProcessRolesPageExportBatch(
-			@GraphQLName("processId") Long processId,
-			@GraphQLName("completed") Boolean completed,
-			@GraphQLName("callbackURL") String callbackURL,
-			@GraphQLName("contentType") String contentType,
-			@GraphQLName("fieldNames") String fieldNames)
-		throws Exception {
-
-		return _applyComponentServiceObjects(
-			_roleResourceComponentServiceObjects,
-			this::_populateResourceContext,
-			roleResource -> roleResource.postProcessRolesPageExportBatch(
-				processId, completed, callbackURL, contentType, fieldNames));
-	}
-
-	@GraphQLField
-	public Response createProcessSLAsPageExportBatch(
-			@GraphQLName("processId") Long processId,
-			@GraphQLName("status") Integer status,
-			@GraphQLName("callbackURL") String callbackURL,
-			@GraphQLName("contentType") String contentType,
-			@GraphQLName("fieldNames") String fieldNames)
-		throws Exception {
-
-		return _applyComponentServiceObjects(
-			_slaResourceComponentServiceObjects, this::_populateResourceContext,
-			slaResource -> slaResource.postProcessSLAsPageExportBatch(
-				processId, status, callbackURL, contentType, fieldNames));
-	}
-
-	@GraphQLField
 	public SLA createProcessSLA(
 			@GraphQLName("processId") Long processId,
 			@GraphQLName("sla") SLA sla)
@@ -584,21 +443,6 @@ public class Mutation {
 			_slaResourceComponentServiceObjects, this::_populateResourceContext,
 			slaResource -> slaResource.putSLABatch(
 				slaId, sla, callbackURL, object));
-	}
-
-	@GraphQLField
-	public Response createProcessTasksPageExportBatch(
-			@GraphQLName("processId") Long processId,
-			@GraphQLName("callbackURL") String callbackURL,
-			@GraphQLName("contentType") String contentType,
-			@GraphQLName("fieldNames") String fieldNames)
-		throws Exception {
-
-		return _applyComponentServiceObjects(
-			_taskResourceComponentServiceObjects,
-			this::_populateResourceContext,
-			taskResource -> taskResource.postProcessTasksPageExportBatch(
-				processId, callbackURL, contentType, fieldNames));
 	}
 
 	@GraphQLField
@@ -690,21 +534,6 @@ public class Mutation {
 			});
 	}
 
-	@GraphQLField
-	public Response createTimeRangesPageExportBatch(
-			@GraphQLName("callbackURL") String callbackURL,
-			@GraphQLName("contentType") String contentType,
-			@GraphQLName("fieldNames") String fieldNames)
-		throws Exception {
-
-		return _applyComponentServiceObjects(
-			_timeRangeResourceComponentServiceObjects,
-			this::_populateResourceContext,
-			timeRangeResource ->
-				timeRangeResource.postTimeRangesPageExportBatch(
-					callbackURL, contentType, fieldNames));
-	}
-
 	private <T, R, E1 extends Throwable, E2 extends Throwable> R
 			_applyComponentServiceObjects(
 				ComponentServiceObjects<T> componentServiceObjects,
@@ -778,22 +607,6 @@ public class Mutation {
 			_vulcanBatchEngineImportTaskResource);
 	}
 
-	private void _populateResourceContext(CalendarResource calendarResource)
-		throws Exception {
-
-		calendarResource.setContextAcceptLanguage(_acceptLanguage);
-		calendarResource.setContextCompany(_company);
-		calendarResource.setContextHttpServletRequest(_httpServletRequest);
-		calendarResource.setContextHttpServletResponse(_httpServletResponse);
-		calendarResource.setContextUriInfo(_uriInfo);
-		calendarResource.setContextUser(_user);
-		calendarResource.setGroupLocalService(_groupLocalService);
-		calendarResource.setRoleLocalService(_roleLocalService);
-
-		calendarResource.setVulcanBatchEngineImportTaskResource(
-			_vulcanBatchEngineImportTaskResource);
-	}
-
 	private void _populateResourceContext(IndexResource indexResource)
 		throws Exception {
 
@@ -858,40 +671,6 @@ public class Mutation {
 			_vulcanBatchEngineImportTaskResource);
 	}
 
-	private void _populateResourceContext(
-			ProcessMetricResource processMetricResource)
-		throws Exception {
-
-		processMetricResource.setContextAcceptLanguage(_acceptLanguage);
-		processMetricResource.setContextCompany(_company);
-		processMetricResource.setContextHttpServletRequest(_httpServletRequest);
-		processMetricResource.setContextHttpServletResponse(
-			_httpServletResponse);
-		processMetricResource.setContextUriInfo(_uriInfo);
-		processMetricResource.setContextUser(_user);
-		processMetricResource.setGroupLocalService(_groupLocalService);
-		processMetricResource.setRoleLocalService(_roleLocalService);
-
-		processMetricResource.setVulcanBatchEngineImportTaskResource(
-			_vulcanBatchEngineImportTaskResource);
-	}
-
-	private void _populateResourceContext(RoleResource roleResource)
-		throws Exception {
-
-		roleResource.setContextAcceptLanguage(_acceptLanguage);
-		roleResource.setContextCompany(_company);
-		roleResource.setContextHttpServletRequest(_httpServletRequest);
-		roleResource.setContextHttpServletResponse(_httpServletResponse);
-		roleResource.setContextUriInfo(_uriInfo);
-		roleResource.setContextUser(_user);
-		roleResource.setGroupLocalService(_groupLocalService);
-		roleResource.setRoleLocalService(_roleLocalService);
-
-		roleResource.setVulcanBatchEngineImportTaskResource(
-			_vulcanBatchEngineImportTaskResource);
-	}
-
 	private void _populateResourceContext(SLAResource slaResource)
 		throws Exception {
 
@@ -924,28 +703,10 @@ public class Mutation {
 			_vulcanBatchEngineImportTaskResource);
 	}
 
-	private void _populateResourceContext(TimeRangeResource timeRangeResource)
-		throws Exception {
-
-		timeRangeResource.setContextAcceptLanguage(_acceptLanguage);
-		timeRangeResource.setContextCompany(_company);
-		timeRangeResource.setContextHttpServletRequest(_httpServletRequest);
-		timeRangeResource.setContextHttpServletResponse(_httpServletResponse);
-		timeRangeResource.setContextUriInfo(_uriInfo);
-		timeRangeResource.setContextUser(_user);
-		timeRangeResource.setGroupLocalService(_groupLocalService);
-		timeRangeResource.setRoleLocalService(_roleLocalService);
-
-		timeRangeResource.setVulcanBatchEngineImportTaskResource(
-			_vulcanBatchEngineImportTaskResource);
-	}
-
 	private static ComponentServiceObjects<AssigneeResource>
 		_assigneeResourceComponentServiceObjects;
 	private static ComponentServiceObjects<AssigneeMetricResource>
 		_assigneeMetricResourceComponentServiceObjects;
-	private static ComponentServiceObjects<CalendarResource>
-		_calendarResourceComponentServiceObjects;
 	private static ComponentServiceObjects<IndexResource>
 		_indexResourceComponentServiceObjects;
 	private static ComponentServiceObjects<InstanceResource>
@@ -954,16 +715,10 @@ public class Mutation {
 		_nodeResourceComponentServiceObjects;
 	private static ComponentServiceObjects<ProcessResource>
 		_processResourceComponentServiceObjects;
-	private static ComponentServiceObjects<ProcessMetricResource>
-		_processMetricResourceComponentServiceObjects;
-	private static ComponentServiceObjects<RoleResource>
-		_roleResourceComponentServiceObjects;
 	private static ComponentServiceObjects<SLAResource>
 		_slaResourceComponentServiceObjects;
 	private static ComponentServiceObjects<TaskResource>
 		_taskResourceComponentServiceObjects;
-	private static ComponentServiceObjects<TimeRangeResource>
-		_timeRangeResourceComponentServiceObjects;
 
 	private AcceptLanguage _acceptLanguage;
 	private com.liferay.portal.kernel.model.Company _company;

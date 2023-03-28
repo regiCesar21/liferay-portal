@@ -61,11 +61,6 @@ public interface KeywordResource {
 			Pagination pagination, Sort[] sorts)
 		throws Exception;
 
-	public Response postAssetLibraryKeywordsPageExportBatch(
-			Long assetLibraryId, String search, Filter filter, Sort[] sorts,
-			String callbackURL, String contentType, String fieldNames)
-		throws Exception;
-
 	public Keyword postAssetLibraryKeyword(Long assetLibraryId, Keyword keyword)
 		throws Exception;
 
@@ -92,11 +87,6 @@ public interface KeywordResource {
 	public Page<Keyword> getSiteKeywordsPage(
 			Long siteId, String search, Filter filter, Pagination pagination,
 			Sort[] sorts)
-		throws Exception;
-
-	public Response postSiteKeywordsPageExportBatch(
-			Long siteId, String search, Filter filter, Sort[] sorts,
-			String callbackURL, String contentType, String fieldNames)
 		throws Exception;
 
 	public Keyword postSiteKeyword(Long siteId, Keyword keyword)

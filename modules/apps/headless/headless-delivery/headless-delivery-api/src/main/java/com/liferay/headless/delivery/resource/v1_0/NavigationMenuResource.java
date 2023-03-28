@@ -75,11 +75,6 @@ public interface NavigationMenuResource {
 			Long siteId, Pagination pagination)
 		throws Exception;
 
-	public Response postSiteNavigationMenusPageExportBatch(
-			Long siteId, String callbackURL, String contentType,
-			String fieldNames)
-		throws Exception;
-
 	public NavigationMenu postSiteNavigationMenu(
 			Long siteId, NavigationMenu navigationMenu)
 		throws Exception;

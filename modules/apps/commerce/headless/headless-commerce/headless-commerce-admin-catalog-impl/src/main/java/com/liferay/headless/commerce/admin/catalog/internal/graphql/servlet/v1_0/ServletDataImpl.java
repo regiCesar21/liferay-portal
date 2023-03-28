@@ -294,11 +294,6 @@ public class ServletDataImpl implements ServletData {
 						new ObjectValuePair<>(
 							CatalogResourceImpl.class, "patchCatalog"));
 					put(
-						"mutation#createCatalogsPageExportBatch",
-						new ObjectValuePair<>(
-							CatalogResourceImpl.class,
-							"postCatalogsPageExportBatch"));
-					put(
 						"mutation#createCatalog",
 						new ObjectValuePair<>(
 							CatalogResourceImpl.class, "postCatalog"));
@@ -316,11 +311,6 @@ public class ServletDataImpl implements ServletData {
 						new ObjectValuePair<>(
 							CategoryResourceImpl.class,
 							"patchProductIdCategory"));
-					put(
-						"mutation#createOptionsPageExportBatch",
-						new ObjectValuePair<>(
-							OptionResourceImpl.class,
-							"postOptionsPageExportBatch"));
 					put(
 						"mutation#createOption",
 						new ObjectValuePair<>(
@@ -392,11 +382,6 @@ public class ServletDataImpl implements ServletData {
 							OptionValueResourceImpl.class,
 							"postOptionIdOptionValueBatch"));
 					put(
-						"mutation#createProductsPageExportBatch",
-						new ObjectValuePair<>(
-							ProductResourceImpl.class,
-							"postProductsPageExportBatch"));
-					put(
 						"mutation#createProduct",
 						new ObjectValuePair<>(
 							ProductResourceImpl.class, "postProduct"));
@@ -465,11 +450,6 @@ public class ServletDataImpl implements ServletData {
 						new ObjectValuePair<>(
 							ProductConfigurationResourceImpl.class,
 							"patchProductIdConfiguration"));
-					put(
-						"mutation#createProductGroupsPageExportBatch",
-						new ObjectValuePair<>(
-							ProductGroupResourceImpl.class,
-							"postProductGroupsPageExportBatch"));
 					put(
 						"mutation#createProductGroup",
 						new ObjectValuePair<>(
@@ -644,10 +624,6 @@ public class ServletDataImpl implements ServletData {
 						new ObjectValuePair<>(
 							SkuResourceImpl.class, "postProductIdSkuBatch"));
 					put(
-						"mutation#createSkusPageExportBatch",
-						new ObjectValuePair<>(
-							SkuResourceImpl.class, "postSkusPageExportBatch"));
-					put(
 						"mutation#deleteSkuByExternalReferenceCode",
 						new ObjectValuePair<>(
 							SkuResourceImpl.class,
@@ -669,11 +645,6 @@ public class ServletDataImpl implements ServletData {
 						"mutation#patchSku",
 						new ObjectValuePair<>(
 							SkuResourceImpl.class, "patchSku"));
-					put(
-						"mutation#createSpecificationsPageExportBatch",
-						new ObjectValuePair<>(
-							SpecificationResourceImpl.class,
-							"postSpecificationsPageExportBatch"));
 					put(
 						"mutation#createSpecification",
 						new ObjectValuePair<>(

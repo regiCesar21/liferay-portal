@@ -62,11 +62,6 @@ public interface DocumentFolderResource {
 			Filter filter, Pagination pagination, Sort[] sorts)
 		throws Exception;
 
-	public Response postAssetLibraryDocumentFoldersPageExportBatch(
-			Long assetLibraryId, String search, Filter filter, Sort[] sorts,
-			String callbackURL, String contentType, String fieldNames)
-		throws Exception;
-
 	public DocumentFolder postAssetLibraryDocumentFolder(
 			Long assetLibraryId, DocumentFolder documentFolder)
 		throws Exception;
@@ -114,11 +109,6 @@ public interface DocumentFolderResource {
 			Long siteId, Boolean flatten, String search,
 			com.liferay.portal.vulcan.aggregation.Aggregation aggregation,
 			Filter filter, Pagination pagination, Sort[] sorts)
-		throws Exception;
-
-	public Response postSiteDocumentFoldersPageExportBatch(
-			Long siteId, String search, Filter filter, Sort[] sorts,
-			String callbackURL, String contentType, String fieldNames)
 		throws Exception;
 
 	public DocumentFolder postSiteDocumentFolder(

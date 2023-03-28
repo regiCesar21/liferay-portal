@@ -76,28 +76,6 @@ public class Mutation {
 	}
 
 	@GraphQLField
-	public Response createAssetLibraryKeywordsPageExportBatch(
-			@GraphQLName("assetLibraryId") @NotEmpty String assetLibraryId,
-			@GraphQLName("search") String search,
-			@GraphQLName("filter") String filterString,
-			@GraphQLName("sort") String sortsString,
-			@GraphQLName("callbackURL") String callbackURL,
-			@GraphQLName("contentType") String contentType,
-			@GraphQLName("fieldNames") String fieldNames)
-		throws Exception {
-
-		return _applyComponentServiceObjects(
-			_keywordResourceComponentServiceObjects,
-			this::_populateResourceContext,
-			keywordResource ->
-				keywordResource.postAssetLibraryKeywordsPageExportBatch(
-					Long.valueOf(assetLibraryId), search,
-					_filterBiFunction.apply(keywordResource, filterString),
-					_sortsBiFunction.apply(keywordResource, sortsString),
-					callbackURL, contentType, fieldNames));
-	}
-
-	@GraphQLField
 	public Keyword createAssetLibraryKeyword(
 			@GraphQLName("assetLibraryId") @NotEmpty String assetLibraryId,
 			@GraphQLName("keyword") Keyword keyword)
@@ -176,27 +154,6 @@ public class Mutation {
 			this::_populateResourceContext,
 			keywordResource -> keywordResource.putKeywordBatch(
 				callbackURL, object));
-	}
-
-	@GraphQLField
-	public Response createSiteKeywordsPageExportBatch(
-			@GraphQLName("siteKey") @NotEmpty String siteKey,
-			@GraphQLName("search") String search,
-			@GraphQLName("filter") String filterString,
-			@GraphQLName("sort") String sortsString,
-			@GraphQLName("callbackURL") String callbackURL,
-			@GraphQLName("contentType") String contentType,
-			@GraphQLName("fieldNames") String fieldNames)
-		throws Exception {
-
-		return _applyComponentServiceObjects(
-			_keywordResourceComponentServiceObjects,
-			this::_populateResourceContext,
-			keywordResource -> keywordResource.postSiteKeywordsPageExportBatch(
-				Long.valueOf(siteKey), search,
-				_filterBiFunction.apply(keywordResource, filterString),
-				_sortsBiFunction.apply(keywordResource, sortsString),
-				callbackURL, contentType, fieldNames));
 	}
 
 	@GraphQLField(description = "Inserts a new keyword in a Site.")

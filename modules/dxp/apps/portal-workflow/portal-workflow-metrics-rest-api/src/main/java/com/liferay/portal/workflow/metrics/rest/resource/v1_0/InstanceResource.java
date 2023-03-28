@@ -63,13 +63,6 @@ public interface InstanceResource {
 			String[] slaStatuses, String[] taskNames, Pagination pagination)
 		throws Exception;
 
-	public Response postProcessInstancesPageExportBatch(
-			Long processId, Long[] assigneeIds, Long[] classPKs,
-			Boolean completed, Date dateEnd, Date dateStart,
-			String[] slaStatuses, String[] taskNames, String callbackURL,
-			String contentType, String fieldNames)
-		throws Exception;
-
 	public Instance postProcessInstance(Long processId, Instance instance)
 		throws Exception;
 

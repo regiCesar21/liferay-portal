@@ -38,7 +38,6 @@ import javax.annotation.Generated;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import javax.ws.rs.core.Response;
 import javax.ws.rs.core.UriInfo;
 
 import org.osgi.annotation.versioning.ProviderType;
@@ -58,11 +57,6 @@ public interface DataDefinitionFieldLinkResource {
 	public Page<DataDefinitionFieldLink>
 			getDataDefinitionDataDefinitionFieldLinksPage(
 				Long dataDefinitionId, String fieldName)
-		throws Exception;
-
-	public Response postDataDefinitionDataDefinitionFieldLinksPageExportBatch(
-			Long dataDefinitionId, String fieldName, String callbackURL,
-			String contentType, String fieldNames)
 		throws Exception;
 
 	public default void setContextAcceptLanguage(

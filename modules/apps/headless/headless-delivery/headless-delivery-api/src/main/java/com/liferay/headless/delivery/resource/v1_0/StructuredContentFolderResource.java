@@ -63,11 +63,6 @@ public interface StructuredContentFolderResource {
 				Filter filter, Pagination pagination, Sort[] sorts)
 		throws Exception;
 
-	public Response postAssetLibraryStructuredContentFoldersPageExportBatch(
-			Long assetLibraryId, String search, Filter filter, Sort[] sorts,
-			String callbackURL, String contentType, String fieldNames)
-		throws Exception;
-
 	public StructuredContentFolder postAssetLibraryStructuredContentFolder(
 			Long assetLibraryId,
 			StructuredContentFolder structuredContentFolder)
@@ -81,11 +76,6 @@ public interface StructuredContentFolderResource {
 			Long siteId, Boolean flatten, String search,
 			com.liferay.portal.vulcan.aggregation.Aggregation aggregation,
 			Filter filter, Pagination pagination, Sort[] sorts)
-		throws Exception;
-
-	public Response postSiteStructuredContentFoldersPageExportBatch(
-			Long siteId, String search, Filter filter, Sort[] sorts,
-			String callbackURL, String contentType, String fieldNames)
 		throws Exception;
 
 	public StructuredContentFolder postSiteStructuredContentFolder(

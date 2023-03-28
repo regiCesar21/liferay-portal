@@ -57,11 +57,6 @@ public interface NodeResource {
 
 	public Page<Node> getProcessNodesPage(Long processId) throws Exception;
 
-	public Response postProcessNodesPageExportBatch(
-			Long processId, String callbackURL, String contentType,
-			String fieldNames)
-		throws Exception;
-
 	public Node postProcessNode(Long processId, Node node) throws Exception;
 
 	public Response postProcessNodeBatch(

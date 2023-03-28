@@ -60,11 +60,6 @@ public interface AccountResource {
 			String keywords, Filter filter, Pagination pagination, Sort[] sorts)
 		throws Exception;
 
-	public Response postAccountsPageExportBatch(
-			String keywords, Filter filter, Sort[] sorts, String callbackURL,
-			String contentType, String fieldNames)
-		throws Exception;
-
 	public Account postAccount(Account account) throws Exception;
 
 	public Response postAccountBatch(String callbackURL, Object object)
