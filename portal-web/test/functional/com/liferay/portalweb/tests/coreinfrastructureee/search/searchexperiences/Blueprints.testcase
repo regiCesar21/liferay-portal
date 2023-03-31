@@ -1728,7 +1728,6 @@ definition {
 
 	test HotDeploySearchExperiencesApp {
 		property hot.deploy.osgi.app.includes = "search-experiences";
-		property osgi.app.includes = "";
 		property test.assert.warning.exceptions = "true";
 		property test.name.skip.portal.instance = "Blueprints#HotDeploySearchExperiencesApp";
 
