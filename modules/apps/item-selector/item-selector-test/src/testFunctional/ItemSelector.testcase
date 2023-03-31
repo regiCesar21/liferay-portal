@@ -713,7 +713,9 @@ definition {
 			locator1 = "Breadcrumb#BREADCRUMB_ENTRY_LINK",
 			value1 = "Sites and Libraries");
 
-		LexiconCard.viewCardPresent(card = "Site X");
+		AssertVisible(
+			key_card = "Site X",
+			locator1 = "Card#CARD");
 
 		LexiconCard.viewCardNotPresent(card = "Site A");
 	}
