@@ -626,8 +626,8 @@
 			var imageSrcInput = instance._extractData(STR_IMG, true);
 
 			if (
-				REGEX_IMAGE_SRC.test(imageSrcInput) ||
-				imageSrcInput.startsWith('data:image/')
+				imageSrcInput.startsWith('data:image/') ||
+				REGEX_IMAGE_SRC.test(imageSrcInput)
 			) {
 				imageSrc = CKTools.htmlEncodeAttr(imageSrcInput);
 			}
