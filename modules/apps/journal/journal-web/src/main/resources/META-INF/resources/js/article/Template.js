@@ -57,9 +57,7 @@ export default function ({
 						(newDDMTemplate && newDDMTemplate.name) || '',
 				});
 
-				form.action = url;
-
-				form.submit();
+				submitForm(form, url, false, false);
 			}
 		}
 	};
