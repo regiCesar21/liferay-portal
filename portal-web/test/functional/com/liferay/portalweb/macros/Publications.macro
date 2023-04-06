@@ -473,7 +473,7 @@ definition {
 
 			MenuItem.click(menuItem = "Select a Publication");
 
-			SelectFrame(locator1 = "IFrame#MODAL_BODY");
+			SelectFrameTop(value1 = "relative=top");
 
 			var key_publicationName = ${publicationName};
 
@@ -481,8 +481,6 @@ definition {
 				locator1 = "Publications#SELECT_PUBLICATION_NAME",
 				value1 = ${publicationName});
 		}
-
-		SelectFrameTop();
 
 		AssertTextPresent(
 			locator1 = "Publications#PUBLICATIONS_INDICATOR_TITLE",
