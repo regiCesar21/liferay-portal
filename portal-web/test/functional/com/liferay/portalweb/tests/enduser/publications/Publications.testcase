@@ -189,7 +189,9 @@ definition {
 			key_menuItem = "Publish",
 			locator1 = "MenuItem#ANY_MENU_ITEM");
 
-		Publications.selectPublication(publicationName = "Publication Name 3");
+		Publications.selectPublication(
+			gotoManagePublications = "true",
+			publicationName = "Publication Name 3");
 
 		Click(locator1 = "Publications#PUBLICATIONS_INDICATOR_BUTTON");
 
