@@ -16,6 +16,7 @@ package com.liferay.portal.util;
 
 import com.liferay.petra.nio.CharsetEncoderUtil;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.util.File;
 import com.liferay.portal.kernel.util.HttpUtil;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
@@ -206,6 +207,46 @@ public class FriendlyURLNormalizerImplTest {
 			encodedReplacement + StringPool.DASH + encodedValue,
 			_friendlyURLNormalizerImpl.normalizeWithEncoding(
 				"\uDBFF-" + value));
+	}
+
+	@Test
+	public void testNormalizeWithPeriods() {
+		String s1 = RandomTestUtil.randomString();
+		String s2 = RandomTestUtil.randomString();
+
+		Assert.assertEquals(
+			_friendlyURLNormalizerImpl.normalize(s1 + s2),
+			_friendlyURLNormalizerImpl.normalizeWithPeriods(s1 + s2));
+
+		Assert.assertEquals(
+			_friendlyURLNormalizerImpl.normalize(s1 + StringPool.DASH + s2),
+			_friendlyURLNormalizerImpl.normalizeWithPeriods(
+				s1 + StringPool.PERIOD + s2));
+
+		Assert.assertEquals(
+			_friendlyURLNormalizerImpl.normalize(s1 + StringPool.SLASH + s2),
+			_friendlyURLNormalizerImpl.normalizeWithPeriods(
+				s1 + StringPool.SLASH + s2));
+	}
+
+	@Test
+	public void testNormalizeWithPeriodsAndSlashes() {
+		String s1 = RandomTestUtil.randomString();
+		String s2 = RandomTestUtil.randomString();
+
+		Assert.assertEquals(
+			_friendlyURLNormalizerImpl.normalize(s1 + s2),
+			_friendlyURLNormalizerImpl.normalizeWithPeriodsAndSlashes(s1 + s2));
+
+		Assert.assertEquals(
+			_friendlyURLNormalizerImpl.normalize(s1 + StringPool.DASH + s2),
+			_friendlyURLNormalizerImpl.normalizeWithPeriodsAndSlashes(
+				s1 + StringPool.PERIOD + s2));
+
+		Assert.assertEquals(
+			_friendlyURLNormalizerImpl.normalize(s1 + StringPool.DASH + s2),
+			_friendlyURLNormalizerImpl.normalizeWithPeriodsAndSlashes(
+				s1 + StringPool.SLASH + s2));
 	}
 
 	@Test
