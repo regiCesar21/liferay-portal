@@ -364,7 +364,8 @@ public class AssetCategoriesSelectorTag extends IncludeTag {
 				vocabularyMap.put("selectedItems", selectedItems);
 			}
 
-			vocabularyMap.put("singleSelect", !vocabulary.isMultiValued());
+			vocabularyMap.put(
+				"singleSelect", _singleSelect || !vocabulary.isMultiValued());
 
 			vocabulariesList.add(vocabularyMap);
 		}
