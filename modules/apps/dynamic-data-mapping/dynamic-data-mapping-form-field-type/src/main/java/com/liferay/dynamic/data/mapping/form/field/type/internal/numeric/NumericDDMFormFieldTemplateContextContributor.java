@@ -68,7 +68,8 @@ public class NumericDDMFormFieldTemplateContextContributor
 			getFormattedValue(
 				ddmFormFieldRenderingContext, locale,
 				DDMFormFieldTypeUtil.getPropertyValue(
-					ddmFormField, ddmFormFieldRenderingContext.getLocale(),"predefinedValue"))
+					ddmFormField, ddmFormFieldRenderingContext.getLocale(),
+					"predefinedValue"))
 		).put(
 			"symbols", getSymbolsMap(locale)
 		).put(
