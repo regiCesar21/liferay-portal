@@ -456,24 +456,9 @@ public abstract class BaseMessageBoardThreadResourceImpl
 		MessageBoardThread existingMessageBoardThread = getMessageBoardThread(
 			messageBoardThreadId);
 
-		if (messageBoardThread.getActions() != null) {
-			existingMessageBoardThread.setActions(
-				messageBoardThread.getActions());
-		}
-
 		if (messageBoardThread.getArticleBody() != null) {
 			existingMessageBoardThread.setArticleBody(
 				messageBoardThread.getArticleBody());
-		}
-
-		if (messageBoardThread.getDateCreated() != null) {
-			existingMessageBoardThread.setDateCreated(
-				messageBoardThread.getDateCreated());
-		}
-
-		if (messageBoardThread.getDateModified() != null) {
-			existingMessageBoardThread.setDateModified(
-				messageBoardThread.getDateModified());
 		}
 
 		if (messageBoardThread.getEncodingFormat() != null) {
@@ -501,24 +486,9 @@ public abstract class BaseMessageBoardThreadResourceImpl
 				messageBoardThread.getKeywords());
 		}
 
-		if (messageBoardThread.getLocked() != null) {
-			existingMessageBoardThread.setLocked(
-				messageBoardThread.getLocked());
-		}
-
 		if (messageBoardThread.getMessageBoardSectionId() != null) {
 			existingMessageBoardThread.setMessageBoardSectionId(
 				messageBoardThread.getMessageBoardSectionId());
-		}
-
-		if (messageBoardThread.getNumberOfMessageBoardAttachments() != null) {
-			existingMessageBoardThread.setNumberOfMessageBoardAttachments(
-				messageBoardThread.getNumberOfMessageBoardAttachments());
-		}
-
-		if (messageBoardThread.getNumberOfMessageBoardMessages() != null) {
-			existingMessageBoardThread.setNumberOfMessageBoardMessages(
-				messageBoardThread.getNumberOfMessageBoardMessages());
 		}
 
 		if (messageBoardThread.getSeen() != null) {
@@ -528,11 +498,6 @@ public abstract class BaseMessageBoardThreadResourceImpl
 		if (messageBoardThread.getShowAsQuestion() != null) {
 			existingMessageBoardThread.setShowAsQuestion(
 				messageBoardThread.getShowAsQuestion());
-		}
-
-		if (messageBoardThread.getSiteId() != null) {
-			existingMessageBoardThread.setSiteId(
-				messageBoardThread.getSiteId());
 		}
 
 		if (messageBoardThread.getSubscribed() != null) {
@@ -548,11 +513,6 @@ public abstract class BaseMessageBoardThreadResourceImpl
 		if (messageBoardThread.getThreadType() != null) {
 			existingMessageBoardThread.setThreadType(
 				messageBoardThread.getThreadType());
-		}
-
-		if (messageBoardThread.getViewCount() != null) {
-			existingMessageBoardThread.setViewCount(
-				messageBoardThread.getViewCount());
 		}
 
 		if (messageBoardThread.getViewableBy() != null) {

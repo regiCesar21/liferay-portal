@@ -345,38 +345,12 @@ public abstract class BaseOrganizationResourceImpl
 
 		Organization existingOrganization = getOrganization(organizationId);
 
-		if (organization.getActions() != null) {
-			existingOrganization.setActions(organization.getActions());
-		}
-
 		if (organization.getComment() != null) {
 			existingOrganization.setComment(organization.getComment());
 		}
 
-		if (organization.getDateCreated() != null) {
-			existingOrganization.setDateCreated(organization.getDateCreated());
-		}
-
-		if (organization.getDateModified() != null) {
-			existingOrganization.setDateModified(
-				organization.getDateModified());
-		}
-
-		if (organization.getImage() != null) {
-			existingOrganization.setImage(organization.getImage());
-		}
-
-		if (organization.getKeywords() != null) {
-			existingOrganization.setKeywords(organization.getKeywords());
-		}
-
 		if (organization.getName() != null) {
 			existingOrganization.setName(organization.getName());
-		}
-
-		if (organization.getNumberOfOrganizations() != null) {
-			existingOrganization.setNumberOfOrganizations(
-				organization.getNumberOfOrganizations());
 		}
 
 		preparePatch(organization, existingOrganization);

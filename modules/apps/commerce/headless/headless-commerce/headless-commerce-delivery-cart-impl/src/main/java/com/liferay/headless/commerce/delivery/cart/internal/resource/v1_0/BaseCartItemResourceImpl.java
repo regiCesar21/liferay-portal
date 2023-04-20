@@ -233,17 +233,8 @@ public abstract class BaseCartItemResourceImpl
 			existingCartItem.setErrorMessages(cartItem.getErrorMessages());
 		}
 
-		if (cartItem.getName() != null) {
-			existingCartItem.setName(cartItem.getName());
-		}
-
 		if (cartItem.getOptions() != null) {
 			existingCartItem.setOptions(cartItem.getOptions());
-		}
-
-		if (cartItem.getParentCartItemId() != null) {
-			existingCartItem.setParentCartItemId(
-				cartItem.getParentCartItemId());
 		}
 
 		if (cartItem.getProductId() != null) {
@@ -254,24 +245,8 @@ public abstract class BaseCartItemResourceImpl
 			existingCartItem.setQuantity(cartItem.getQuantity());
 		}
 
-		if (cartItem.getSku() != null) {
-			existingCartItem.setSku(cartItem.getSku());
-		}
-
 		if (cartItem.getSkuId() != null) {
 			existingCartItem.setSkuId(cartItem.getSkuId());
-		}
-
-		if (cartItem.getSubscription() != null) {
-			existingCartItem.setSubscription(cartItem.getSubscription());
-		}
-
-		if (cartItem.getThumbnail() != null) {
-			existingCartItem.setThumbnail(cartItem.getThumbnail());
-		}
-
-		if (cartItem.getValid() != null) {
-			existingCartItem.setValid(cartItem.getValid());
 		}
 
 		preparePatch(cartItem, existingCartItem);
