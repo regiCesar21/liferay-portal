@@ -173,6 +173,12 @@ public class EditUserMVCActionCommand extends BaseMVCActionCommand {
 				WorkflowConstants.STATUS_INACTIVE);
 		}
 		else if (cmd.equals(Constants.RESTORE)) {
+			ThemeDisplay themeDisplay =
+				(ThemeDisplay)actionRequest.getAttribute(WebKeys.THEME_DISPLAY);
+
+			_userLocalService.validateCompanyMaxUsers(
+				themeDisplay.getCompanyId());
+
 			_updateUsers(
 				actionRequest, deleteUserIds,
 				WorkflowConstants.STATUS_APPROVED);
@@ -540,8 +546,6 @@ public class EditUserMVCActionCommand extends BaseMVCActionCommand {
 		}
 	}
 
-	}
-
 	private void _updateUsers(
 			ActionRequest actionRequest, long[] accountUserIds, int status)
 		throws Exception {
@@ -552,6 +556,7 @@ public class EditUserMVCActionCommand extends BaseMVCActionCommand {
 				ServiceContextFactory.getInstance(
 					User.class.getName(), actionRequest));
 		}
+	}
 
 	private ActionRequest _wrapActionRequest(ActionRequest actionRequest)
 		throws Exception {
@@ -577,6 +582,9 @@ public class EditUserMVCActionCommand extends BaseMVCActionCommand {
 
 	@Reference
 	private Portal _portal;
+
+	@Reference
+	private UserLocalService _userLocalService;
 
 	private UserService _userService;
 
