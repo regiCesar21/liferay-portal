@@ -599,7 +599,7 @@ public abstract class BaseAppResourceImpl
 		}
 		else {
 			return getAppsPage(
-				Boolean.parseBoolean((String)parameters.get("active")),
+				_parseBoolean((String)parameters.get("active")),
 				(String[])parameters.get("deploymentTypes"),
 				(String)parameters.get("keywords"),
 				(String)parameters.get("scope"),
@@ -642,7 +642,7 @@ public abstract class BaseAppResourceImpl
 		if ("UPDATE".equalsIgnoreCase(updateStrategy)) {
 			appUnsafeConsumer = app -> putApp(
 				app.getId() != null ? app.getId() :
-					Long.parseLong((String)parameters.get("appId")),
+					_parseLong((String)parameters.get("appId")),
 				app);
 		}
 
@@ -660,6 +660,22 @@ public abstract class BaseAppResourceImpl
 				appUnsafeConsumer.accept(app);
 			}
 		}
+	}
+
+	private Boolean _parseBoolean(String value) {
+		if (value != null) {
+			return Boolean.parseBoolean(value);
+		}
+
+		return null;
+	}
+
+	private Long _parseLong(String value) {
+		if (value != null) {
+			return Long.parseLong(value);
+		}
+
+		return null;
 	}
 
 	public void setContextAcceptLanguage(AcceptLanguage contextAcceptLanguage) {

@@ -1038,7 +1038,7 @@ public abstract class BaseMessageBoardMessageResourceImpl
 			if (parameters.containsKey("messageBoardThreadId")) {
 				messageBoardMessageUnsafeConsumer = messageBoardMessage ->
 					postMessageBoardThreadMessageBoardMessage(
-						Long.parseLong(
+						_parseLong(
 							(String)parameters.get("messageBoardThreadId")),
 						messageBoardMessage);
 			}
@@ -1114,12 +1114,12 @@ public abstract class BaseMessageBoardMessageResourceImpl
 		if (parameters.containsKey("siteId")) {
 			return getSiteMessageBoardMessagesPage(
 				(Long)parameters.get("siteId"),
-				Boolean.parseBoolean((String)parameters.get("flatten")), search,
-				null, filter, pagination, sorts);
+				_parseBoolean((String)parameters.get("flatten")), search, null,
+				filter, pagination, sorts);
 		}
 		else if (parameters.containsKey("messageBoardThreadId")) {
 			return getMessageBoardThreadMessageBoardMessagesPage(
-				Long.parseLong((String)parameters.get("messageBoardThreadId")),
+				_parseLong((String)parameters.get("messageBoardThreadId")),
 				search, null, filter, pagination, sorts);
 		}
 		else {
@@ -1167,7 +1167,7 @@ public abstract class BaseMessageBoardMessageResourceImpl
 				messageBoardMessage -> patchMessageBoardMessage(
 					messageBoardMessage.getId() != null ?
 						messageBoardMessage.getId() :
-							Long.parseLong(
+							_parseLong(
 								(String)parameters.get(
 									"messageBoardMessageId")),
 					messageBoardMessage);
@@ -1178,7 +1178,7 @@ public abstract class BaseMessageBoardMessageResourceImpl
 				messageBoardMessage -> putMessageBoardMessage(
 					messageBoardMessage.getId() != null ?
 						messageBoardMessage.getId() :
-							Long.parseLong(
+							_parseLong(
 								(String)parameters.get(
 									"messageBoardMessageId")),
 					messageBoardMessage);
@@ -1201,6 +1201,22 @@ public abstract class BaseMessageBoardMessageResourceImpl
 				messageBoardMessageUnsafeConsumer.accept(messageBoardMessage);
 			}
 		}
+	}
+
+	private Boolean _parseBoolean(String value) {
+		if (value != null) {
+			return Boolean.parseBoolean(value);
+		}
+
+		return null;
+	}
+
+	private Long _parseLong(String value) {
+		if (value != null) {
+			return Long.parseLong(value);
+		}
+
+		return null;
 	}
 
 	public void setContextAcceptLanguage(AcceptLanguage contextAcceptLanguage) {

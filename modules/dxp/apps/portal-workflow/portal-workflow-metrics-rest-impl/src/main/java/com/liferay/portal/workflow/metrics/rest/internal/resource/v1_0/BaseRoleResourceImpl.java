@@ -169,8 +169,8 @@ public abstract class BaseRoleResourceImpl
 
 		if (parameters.containsKey("processId")) {
 			return getProcessRolesPage(
-				Long.parseLong((String)parameters.get("processId")),
-				Boolean.parseBoolean((String)parameters.get("completed")));
+				_parseLong((String)parameters.get("processId")),
+				_parseBoolean((String)parameters.get("completed")));
 		}
 		else {
 			throw new NotSupportedException(
@@ -207,6 +207,22 @@ public abstract class BaseRoleResourceImpl
 
 		throw new UnsupportedOperationException(
 			"This method needs to be implemented");
+	}
+
+	private Boolean _parseBoolean(String value) {
+		if (value != null) {
+			return Boolean.parseBoolean(value);
+		}
+
+		return null;
+	}
+
+	private Long _parseLong(String value) {
+		if (value != null) {
+			return Long.parseLong(value);
+		}
+
+		return null;
 	}
 
 	public void setContextAcceptLanguage(AcceptLanguage contextAcceptLanguage) {

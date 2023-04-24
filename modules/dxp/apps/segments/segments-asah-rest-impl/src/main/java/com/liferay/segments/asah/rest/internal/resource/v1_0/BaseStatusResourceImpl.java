@@ -178,8 +178,7 @@ public abstract class BaseStatusResourceImpl
 		if ("INSERT".equalsIgnoreCase(createStrategy)) {
 			if (parameters.containsKey("experimentId")) {
 				statusUnsafeConsumer = status -> postExperimentStatus(
-					Long.parseLong((String)parameters.get("experimentId")),
-					status);
+					_parseLong((String)parameters.get("experimentId")), status);
 			}
 			else {
 				throw new NotSupportedException(
@@ -278,6 +277,14 @@ public abstract class BaseStatusResourceImpl
 
 		throw new UnsupportedOperationException(
 			"This method needs to be implemented");
+	}
+
+	private Long _parseLong(String value) {
+		if (value != null) {
+			return Long.parseLong(value);
+		}
+
+		return null;
 	}
 
 	public void setContextAcceptLanguage(AcceptLanguage contextAcceptLanguage) {

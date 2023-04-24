@@ -235,7 +235,7 @@ public abstract class BasePhoneResourceImpl
 		}
 		else if (parameters.containsKey("userAccountId")) {
 			return getUserAccountPhonesPage(
-				Long.parseLong((String)parameters.get("userAccountId")));
+				_parseLong((String)parameters.get("userAccountId")));
 		}
 		else {
 			throw new NotSupportedException(
@@ -272,6 +272,14 @@ public abstract class BasePhoneResourceImpl
 
 		throw new UnsupportedOperationException(
 			"This method needs to be implemented");
+	}
+
+	private Long _parseLong(String value) {
+		if (value != null) {
+			return Long.parseLong(value);
+		}
+
+		return null;
 	}
 
 	public void setContextAcceptLanguage(AcceptLanguage contextAcceptLanguage) {

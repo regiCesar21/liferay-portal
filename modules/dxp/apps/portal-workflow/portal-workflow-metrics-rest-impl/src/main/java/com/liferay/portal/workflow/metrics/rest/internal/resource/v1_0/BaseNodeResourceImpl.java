@@ -243,7 +243,7 @@ public abstract class BaseNodeResourceImpl
 		if ("INSERT".equalsIgnoreCase(createStrategy)) {
 			if (parameters.containsKey("processId")) {
 				nodeUnsafeConsumer = node -> postProcessNode(
-					Long.parseLong((String)parameters.get("processId")), node);
+					_parseLong((String)parameters.get("processId")), node);
 			}
 			else {
 				throw new NotSupportedException(
@@ -311,7 +311,7 @@ public abstract class BaseNodeResourceImpl
 
 		if (parameters.containsKey("processId")) {
 			return getProcessNodesPage(
-				Long.parseLong((String)parameters.get("processId")));
+				_parseLong((String)parameters.get("processId")));
 		}
 		else {
 			throw new NotSupportedException(
@@ -348,6 +348,14 @@ public abstract class BaseNodeResourceImpl
 
 		throw new UnsupportedOperationException(
 			"This method needs to be implemented");
+	}
+
+	private Long _parseLong(String value) {
+		if (value != null) {
+			return Long.parseLong(value);
+		}
+
+		return null;
 	}
 
 	public void setContextAcceptLanguage(AcceptLanguage contextAcceptLanguage) {

@@ -169,7 +169,7 @@ public abstract class BasePaymentMethodResourceImpl
 
 		if (parameters.containsKey("cartId")) {
 			return getCartPaymentMethodsPage(
-				Long.parseLong((String)parameters.get("cartId")));
+				_parseLong((String)parameters.get("cartId")));
 		}
 		else {
 			throw new NotSupportedException(
@@ -207,6 +207,14 @@ public abstract class BasePaymentMethodResourceImpl
 
 		throw new UnsupportedOperationException(
 			"This method needs to be implemented");
+	}
+
+	private Long _parseLong(String value) {
+		if (value != null) {
+			return Long.parseLong(value);
+		}
+
+		return null;
 	}
 
 	public void setContextAcceptLanguage(AcceptLanguage contextAcceptLanguage) {

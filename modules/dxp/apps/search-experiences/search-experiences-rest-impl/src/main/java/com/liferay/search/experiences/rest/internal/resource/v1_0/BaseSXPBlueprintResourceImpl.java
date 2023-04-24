@@ -534,7 +534,7 @@ public abstract class BaseSXPBlueprintResourceImpl
 		if ("PARTIAL_UPDATE".equalsIgnoreCase(updateStrategy)) {
 			sxpBlueprintUnsafeConsumer = sxpBlueprint -> patchSXPBlueprint(
 				sxpBlueprint.getId() != null ? sxpBlueprint.getId() :
-					Long.parseLong((String)parameters.get("sxpBlueprintId")),
+					_parseLong((String)parameters.get("sxpBlueprintId")),
 				sxpBlueprint);
 		}
 
@@ -553,6 +553,14 @@ public abstract class BaseSXPBlueprintResourceImpl
 				sxpBlueprintUnsafeConsumer.accept(sxpBlueprint);
 			}
 		}
+	}
+
+	private Long _parseLong(String value) {
+		if (value != null) {
+			return Long.parseLong(value);
+		}
+
+		return null;
 	}
 
 	public void setContextAcceptLanguage(AcceptLanguage contextAcceptLanguage) {
