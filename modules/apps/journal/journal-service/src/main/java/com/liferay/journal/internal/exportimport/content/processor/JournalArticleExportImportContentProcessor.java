@@ -140,14 +140,10 @@ public class JournalArticleExportImportContentProcessor
 		DDMFormValuesTransformer ddmFormValuesTransformer =
 			new DDMFormValuesTransformer(ddmFormValues);
 
-		ImageExportDDMFormFieldValueTransformer
-			imageExportDDMFormFieldValueTransformer =
-				new ImageExportDDMFormFieldValueTransformer(
-					_dlAppLocalService, exportReferencedContent,
-					portletDataContext, stagedModel);
-
 		ddmFormValuesTransformer.addTransformer(
-			imageExportDDMFormFieldValueTransformer);
+			new ImageExportDDMFormFieldValueTransformer(
+				_dlAppLocalService, exportReferencedContent, portletDataContext,
+				stagedModel));
 
 		ddmFormValuesTransformer.transform();
 
@@ -207,13 +203,9 @@ public class JournalArticleExportImportContentProcessor
 		DDMFormValuesTransformer ddmFormValuesTransformer =
 			new DDMFormValuesTransformer(ddmFormValues);
 
-		ImageImportDDMFormFieldValueTransformer
-			imageImportDDMFormFieldValueTransformer =
-				new ImageImportDDMFormFieldValueTransformer(
-					_dlAppLocalService, portletDataContext, stagedModel);
-
 		ddmFormValuesTransformer.addTransformer(
-			imageImportDDMFormFieldValueTransformer);
+			new ImageImportDDMFormFieldValueTransformer(
+				_dlAppLocalService, portletDataContext, stagedModel));
 
 		ddmFormValuesTransformer.transform();
 
