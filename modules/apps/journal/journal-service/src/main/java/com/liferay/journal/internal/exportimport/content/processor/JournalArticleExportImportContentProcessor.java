@@ -200,8 +200,11 @@ public class JournalArticleExportImportContentProcessor
 				ExportImportPathUtil.getModelPath(stagedModel));
 		}
 
-		content = replaceImportJournalArticleReferences(
-			ddmStructure, fields, portletDataContext, stagedModel);
+		replaceImportJournalArticleReferences(
+			fields, portletDataContext, stagedModel);
+
+		content = _journalConverter.getContent(
+			ddmStructure, fields, ddmStructure.getGroupId());
 
 		DDMFormValues ddmFormValues = _journalConverter.getDDMFormValues(
 			ddmStructure, fields);
@@ -358,9 +361,9 @@ public class JournalArticleExportImportContentProcessor
 		return _journalConverter.getContent(ddmStructure, fields);
 	}
 
-	protected String replaceImportJournalArticleReferences(
-			DDMStructure ddmStructure, Fields fields,
-			PortletDataContext portletDataContext, StagedModel stagedModel)
+	protected void replaceImportJournalArticleReferences(
+			Fields fields, PortletDataContext portletDataContext,
+			StagedModel stagedModel)
 		throws Exception {
 
 		for (Field field : fields) {
@@ -407,8 +410,6 @@ public class JournalArticleExportImportContentProcessor
 				}
 			}
 		}
-
-		return _journalConverter.getContent(ddmStructure, fields);
 	}
 
 	protected void validateJournalArticleReferences(String content)
