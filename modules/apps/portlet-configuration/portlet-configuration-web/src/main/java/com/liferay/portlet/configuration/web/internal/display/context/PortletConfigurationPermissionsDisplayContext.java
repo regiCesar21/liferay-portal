@@ -439,9 +439,7 @@ public class PortletConfigurationPermissionsDisplayContext {
 				RoleVisibilityConfiguration.class,
 				_themeDisplay.getCompanyId());
 
-		String keywords = searchTerms.getKeywords();
-
-		if (Validator.isNull(keywords)) {
+		if (Validator.isNull(searchTerms.getKeywords())) {
 			int count = 0;
 			List<Role> roles = null;
 
@@ -480,15 +478,17 @@ public class PortletConfigurationPermissionsDisplayContext {
 					restrictPermissionSelectorRoleVisibility()) {
 
 				roles = RoleServiceUtil.getGroupRolesAndTeamRoles(
-					_themeDisplay.getCompanyId(), keywords, excludedRoleNames,
-					keywords, null, getRoleTypes(), modelResourceRoleId,
-					teamGroupId, QueryUtil.ALL_POS, QueryUtil.ALL_POS);
+					_themeDisplay.getCompanyId(), searchTerms.getKeywords(),
+					excludedRoleNames, searchTerms.getKeywords(), null,
+					getRoleTypes(), modelResourceRoleId, teamGroupId,
+					QueryUtil.ALL_POS, QueryUtil.ALL_POS);
 			}
 			else {
 				roles = RoleLocalServiceUtil.getGroupRolesAndTeamRoles(
-					_themeDisplay.getCompanyId(), keywords, excludedRoleNames,
-					keywords, null, getRoleTypes(), modelResourceRoleId,
-					teamGroupId, QueryUtil.ALL_POS, QueryUtil.ALL_POS);
+					_themeDisplay.getCompanyId(), searchTerms.getKeywords(),
+					excludedRoleNames, searchTerms.getKeywords(), null,
+					getRoleTypes(), modelResourceRoleId, teamGroupId,
+					QueryUtil.ALL_POS, QueryUtil.ALL_POS);
 			}
 
 			roleSearchContainer.setResults(roles);
