@@ -312,7 +312,6 @@ public class RoleLocalServiceTest {
 			Collections.singletonMap(LocaleUtil.getDefault(), keyword),
 			Collections.emptyMap(), RoleConstants.TYPE_SITE, StringPool.BLANK,
 			new ServiceContext());
-
 		Role role2 = _roleLocalService.addRole(
 			userId, null, 0, StringUtil.randomString(),
 			Collections.singletonMap(
