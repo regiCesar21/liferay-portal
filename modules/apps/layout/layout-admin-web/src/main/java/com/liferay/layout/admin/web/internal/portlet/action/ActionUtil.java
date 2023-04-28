@@ -31,7 +31,6 @@ import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.impl.ThemeSettingImpl;
 
-import java.util.Iterator;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
@@ -50,15 +49,7 @@ public class ActionUtil {
 
 		Set<String> keys = typeSettingsUnicodeProperties.keySet();
 
-		Iterator<String> iterator = keys.iterator();
-
-		while (iterator.hasNext()) {
-			String key = iterator.next();
-
-			if (key.startsWith(keyPrefix)) {
-				iterator.remove();
-			}
-		}
+		keys.removeIf(key -> key.startsWith(keyPrefix));
 	}
 
 	public static String getColorSchemeId(
