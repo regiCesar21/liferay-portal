@@ -101,6 +101,12 @@ public class ActionUtil {
 			boolean deviceInheritLookAndFeel = ParamUtil.getBoolean(
 				actionRequest, device + "InheritLookAndFeel");
 
+			long groupId = liveGroupId;
+
+			if (stagingGroupId > 0) {
+				groupId = stagingGroupId;
+			}
+
 			if (deviceInheritLookAndFeel) {
 				deviceThemeId = ThemeFactoryUtil.getDefaultRegularThemeId(
 					companyId);
@@ -114,14 +120,8 @@ public class ActionUtil {
 					companyId, deviceThemeId, deviceColorSchemeId);
 
 				updateThemeSettingsProperties(
-					actionRequest, companyId, typeSettingsUnicodeProperties,
-					device, deviceThemeId, true);
-			}
-
-			long groupId = liveGroupId;
-
-			if (stagingGroupId > 0) {
-				groupId = stagingGroupId;
+					actionRequest, companyId, groupId, layoutId, privateLayout,
+					typeSettingsUnicodeProperties, device, deviceThemeId, true);
 			}
 
 			LayoutServiceUtil.updateLayout(
@@ -135,7 +135,8 @@ public class ActionUtil {
 	}
 
 	public static UnicodeProperties updateThemeSettingsProperties(
-			ActionRequest actionRequest, long companyId,
+			ActionRequest actionRequest, long companyId, long groupId,
+			long layoutId, boolean privateLayout,
 			UnicodeProperties typeSettingsUnicodeProperties, String device,
 			String deviceThemeId, boolean layout)
 		throws Exception {
@@ -152,14 +153,15 @@ public class ActionUtil {
 		}
 
 		setThemeSettingProperties(
-			actionRequest, typeSettingsUnicodeProperties, themeSettings, device,
-			layout);
+			actionRequest, groupId, layoutId, privateLayout,
+			typeSettingsUnicodeProperties, themeSettings, device, layout);
 
 		return typeSettingsUnicodeProperties;
 	}
 
 	protected static void setThemeSettingProperties(
-			ActionRequest actionRequest,
+			ActionRequest actionRequest, long groupId, long layoutId,
+			boolean privateLayout,
 			UnicodeProperties typeSettingsUnicodeProperties,
 			Map<String, ThemeSetting> themeSettings, String device,
 			boolean isLayout)
@@ -168,11 +170,6 @@ public class ActionUtil {
 		Layout layout = null;
 
 		if (isLayout) {
-			long groupId = ParamUtil.getLong(actionRequest, "groupId");
-			boolean privateLayout = ParamUtil.getBoolean(
-				actionRequest, "privateLayout");
-			long layoutId = ParamUtil.getLong(actionRequest, "layoutId");
-
 			layout = LayoutLocalServiceUtil.getLayout(
 				groupId, privateLayout, layoutId);
 		}
