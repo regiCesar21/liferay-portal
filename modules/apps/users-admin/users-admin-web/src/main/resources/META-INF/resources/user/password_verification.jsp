@@ -76,7 +76,12 @@ String eventName = ParamUtil.getString(request, "eventName", liferayPortletRespo
 			.then(function (response) {
 				var openingLiferay = Liferay.Util.getOpener().Liferay;
 
-				openingLiferay.fire('<%= HtmlUtil.escapeJS(eventName) %>');
+				openingLiferay.fire('<%= HtmlUtil.escapeJS(eventName) %>', {
+					<c:if test='<%= eventName.equals(liferayPortletResponse.getNamespace() + "verifyPassword") %>'>
+						data: document.getElementById('<portlet:namespace />password')
+							.value,
+					</c:if>
+				});
 				openingLiferay.fire('closeModal');
 			})
 			.catch(function (error) {
