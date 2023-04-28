@@ -134,7 +134,7 @@ public class ActionUtil {
 		}
 	}
 
-	public static UnicodeProperties updateThemeSettingsProperties(
+	public static void updateThemeSettingsProperties(
 			ActionRequest actionRequest, long companyId, long groupId,
 			long layoutId, boolean privateLayout,
 			UnicodeProperties typeSettingsUnicodeProperties, String device,
@@ -149,14 +149,12 @@ public class ActionUtil {
 			theme.getConfigurableSettings();
 
 		if (themeSettings.isEmpty()) {
-			return typeSettingsUnicodeProperties;
+			return;
 		}
 
 		setThemeSettingProperties(
 			actionRequest, groupId, layoutId, privateLayout,
 			typeSettingsUnicodeProperties, themeSettings, device, layout);
-
-		return typeSettingsUnicodeProperties;
 	}
 
 	protected static void setThemeSettingProperties(
