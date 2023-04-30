@@ -78,6 +78,12 @@ public class ActionUtil {
 			UnicodeProperties typeSettingsUnicodeProperties)
 		throws Exception {
 
+		long groupId = liveGroupId;
+
+		if (stagingGroupId > 0) {
+			groupId = stagingGroupId;
+		}
+
 		String[] devices = StringUtil.split(
 			ParamUtil.getString(actionRequest, "devices"));
 
@@ -91,12 +97,6 @@ public class ActionUtil {
 
 			boolean deviceInheritLookAndFeel = ParamUtil.getBoolean(
 				actionRequest, device + "InheritLookAndFeel");
-
-			long groupId = liveGroupId;
-
-			if (stagingGroupId > 0) {
-				groupId = stagingGroupId;
-			}
 
 			if (deviceInheritLookAndFeel) {
 				deviceThemeId = ThemeFactoryUtil.getDefaultRegularThemeId(
