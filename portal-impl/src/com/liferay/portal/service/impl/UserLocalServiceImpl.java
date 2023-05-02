@@ -5708,21 +5708,6 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 		return user;
 	}
 
-	public void validateMaxUsers(long companyId) throws PortalException {
-		Company company = companyPersistence.findByPrimaryKey(companyId);
-
-		if (company.isSystem() || (company.getMaxUsers() == 0)) {
-			return;
-		}
-
-		int userCount = searchCount(
-			companyId, null, WorkflowConstants.STATUS_APPROVED, null);
-
-		if (userCount >= company.getMaxUsers()) {
-			throw new CompanyMaxUsersException();
-		}
-	}
-
 	/**
 	 * Updates the user.
 	 *
@@ -5817,6 +5802,21 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 		user.setOpenId(openId);
 
 		return userLocalService.updateUser(user);
+	}
+
+	public void validateMaxUsers(long companyId) throws PortalException {
+		Company company = companyPersistence.findByPrimaryKey(companyId);
+
+		if (company.isSystem() || (company.getMaxUsers() == 0)) {
+			return;
+		}
+
+		int userCount = searchCount(
+			companyId, null, WorkflowConstants.STATUS_APPROVED, null);
+
+		if (userCount >= company.getMaxUsers()) {
+			throw new CompanyMaxUsersException();
+		}
 	}
 
 	/**
