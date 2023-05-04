@@ -38,12 +38,12 @@ public class LayoutAdaptiveMediaProcessorImpl
 
 	@Override
 	public String processAdaptiveMediaContent(String content) {
-		if (!_ffLayoutContentPageEditorConfiguration.adaptiveMediaEnabled()) {
-			return content;
+		if (_ffLayoutContentPageEditorConfiguration.adaptiveMediaEnabled()) {
+			content = _contentTransformerHandler.transform(
+				ContentTransformerContentTypes.HTML, content);
 		}
 
-		return _contentTransformerHandler.transform(
-			ContentTransformerContentTypes.HTML, content);
+		return content;
 	}
 
 	@Modified
