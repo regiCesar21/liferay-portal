@@ -171,7 +171,8 @@ public class CompanyIndexFactoryTest {
 					String indexName, TypeMappingsHelper typeMappingsHelper) {
 
 					typeMappingsHelper.addTypeMappings(
-						indexName, loadAdditionalTypeMappingsWithLegacyRootType());
+						indexName,
+						loadAdditionalTypeMappingsWithLegacyRootType());
 				}
 
 			});
@@ -465,6 +466,35 @@ public class CompanyIndexFactoryTest {
 
 		assertType("match_additional_mapping", "keyword");
 		assertType("match_catch_all", "text");
+	}
+
+	@Test
+	public void testOverrideLegacyTypeMappings() throws Exception {
+		Mockito.when(
+			_elasticsearchConfigurationWrapper.additionalIndexConfigurations()
+		).thenReturn(
+			loadAdditionalAnalyzers()
+		);
+
+		Mockito.when(
+			_elasticsearchConfigurationWrapper.overrideTypeMappings()
+		).thenReturn(
+			loadOverrideLegacyTypeMappings()
+		);
+
+		createIndices();
+
+		String field1 = "title";
+
+		indexOneDocument(field1);
+
+		assertAnalyzer(field1, "kuromoji_liferay_custom");
+
+		String field2 = "description";
+
+		indexOneDocument(field2);
+
+		assertNoAnalyzer(field2);
 	}
 
 	@Test
@@ -763,6 +793,12 @@ public class CompanyIndexFactoryTest {
 		catch (Exception exception) {
 			throw new RuntimeException(exception);
 		}
+	}
+
+	protected String loadOverrideLegacyTypeMappings() throws Exception {
+		return ResourceUtil.getResourceAsString(
+			getClass(),
+			"CompanyIndexFactoryTest-overrideLegacyTypeMappings.json");
 	}
 
 	protected String loadOverrideTypeMappings() throws Exception {
