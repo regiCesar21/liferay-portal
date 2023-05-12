@@ -220,7 +220,7 @@ definition {
 			changeOrder = 3,
 			changeSite = "Guest",
 			changeTitle = "DM Folder 1 Name",
-			changeType = "Modified",
+			changeType = "Deleted",
 			changeUser = "Test Test");
 	}
 
