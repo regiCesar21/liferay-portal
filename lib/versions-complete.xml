@@ -4411,8 +4411,8 @@
 						<license-url>https://aws.amazon.com/apache2.0</license-url>
 					</license>
 				</licenses>
-				<current-version-publish-date>2022-07-26 21:40:38</current-version-publish-date>
-				<latest-version-publish-date>2023-05-11 20:43:37</latest-version-publish-date>
+				<current-version-publish-date>2022-07-27 21:02:22</current-version-publish-date>
+				<latest-version-publish-date>2023-05-15 20:56:59</latest-version-publish-date>
 			</library>
 			<library>
 				<file-name>com.liferay.portal.store.s3.jar!aws-java-sdk-kms.jar</file-name>
@@ -4425,8 +4425,8 @@
 						<license-url>https://aws.amazon.com/apache2.0</license-url>
 					</license>
 				</licenses>
-				<current-version-publish-date>2022-07-26 21:40:43</current-version-publish-date>
-				<latest-version-publish-date>2023-05-11 20:44:49</latest-version-publish-date>
+				<current-version-publish-date>2022-07-27 21:01:29</current-version-publish-date>
+				<latest-version-publish-date>2023-05-15 20:57:48</latest-version-publish-date>
 			</library>
 			<library>
 				<file-name>com.liferay.portal.store.s3.jar!aws-java-sdk-s3.jar</file-name>
@@ -4439,8 +4439,8 @@
 						<license-url>https://aws.amazon.com/apache2.0</license-url>
 					</license>
 				</licenses>
-				<current-version-publish-date>2022-07-26 21:42:09</current-version-publish-date>
-				<latest-version-publish-date>2023-05-11 20:43:49</latest-version-publish-date>
+				<current-version-publish-date>2022-07-27 21:02:03</current-version-publish-date>
+				<latest-version-publish-date>2023-05-15 20:57:38</latest-version-publish-date>
 			</library>
 			<library>
 				<file-name>com.liferay.portal.store.s3.jar!commons-codec.jar</file-name>
@@ -4717,7 +4717,7 @@
 					</license>
 				</licenses>
 				<current-version-publish-date>2016-06-17 19:53:14</current-version-publish-date>
-				<latest-version-publish-date>2023-05-04 21:50:24</latest-version-publish-date>
+				<latest-version-publish-date>2023-05-12 17:41:05</latest-version-publish-date>
 			</library>
 			<library>
 				<file-name>com.liferay.portal.template.soy.impl.jar!icu4j.jar</file-name>
@@ -5073,7 +5073,7 @@
 					</license>
 				</licenses>
 				<current-version-publish-date>2022-07-26 23:55:52</current-version-publish-date>
-				<latest-version-publish-date>2023-05-09 05:51:14</latest-version-publish-date>
+				<latest-version-publish-date>2023-05-15 23:58:00</latest-version-publish-date>
 			</library>
 			<library>
 				<file-name>com.liferay.portal.vulcan.impl.jar!guava.jar</file-name>
@@ -5251,7 +5251,7 @@
 					</license>
 				</licenses>
 				<current-version-publish-date>2018-11-27 15:15:34</current-version-publish-date>
-				<latest-version-publish-date>2023-03-20 10:44:06</latest-version-publish-date>
+				<latest-version-publish-date>2023-05-15 10:06:12</latest-version-publish-date>
 			</library>
 			<library>
 				<file-name>com.liferay.portal.vulcan.impl.jar!swagger-integration.jar</file-name>
@@ -5264,7 +5264,7 @@
 					</license>
 				</licenses>
 				<current-version-publish-date>2018-11-27 15:15:47</current-version-publish-date>
-				<latest-version-publish-date>2023-03-20 10:44:05</latest-version-publish-date>
+				<latest-version-publish-date>2023-05-15 10:06:05</latest-version-publish-date>
 			</library>
 			<library>
 				<file-name>com.liferay.portal.vulcan.impl.jar!swagger-jaxrs2.jar</file-name>
@@ -5277,7 +5277,7 @@
 					</license>
 				</licenses>
 				<current-version-publish-date>2018-11-27 15:16:12</current-version-publish-date>
-				<latest-version-publish-date>2023-03-20 10:44:06</latest-version-publish-date>
+				<latest-version-publish-date>2023-05-15 10:06:02</latest-version-publish-date>
 			</library>
 			<library>
 				<file-name>com.liferay.portal.vulcan.impl.jar!swagger-models.jar</file-name>
@@ -5290,7 +5290,7 @@
 					</license>
 				</licenses>
 				<current-version-publish-date>2018-11-27 15:15:02</current-version-publish-date>
-				<latest-version-publish-date>2023-03-20 10:44:06</latest-version-publish-date>
+				<latest-version-publish-date>2023-05-15 10:06:15</latest-version-publish-date>
 			</library>
 			<library>
 				<file-name>com.liferay.portal.workflow.kaleo.service.jar!json.jar</file-name>
