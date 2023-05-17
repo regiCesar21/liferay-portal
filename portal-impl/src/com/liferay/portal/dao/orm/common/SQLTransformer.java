@@ -52,13 +52,13 @@ public class SQLTransformer {
 	}
 
 	private void _reloadSQLTransformer() {
-		if (_transformedSqlsPortalCache == null) {
-			_transformedSqlsPortalCache = PortalCacheHelperUtil.getPortalCache(
+		if (_transformedSQLsPortalCache == null) {
+			_transformedSQLsPortalCache = PortalCacheHelperUtil.getPortalCache(
 				PortalCacheManagerNames.SINGLE_VM,
 				SQLTransformer.class.getName());
 		}
 		else {
-			_transformedSqlsPortalCache.removeAll();
+			_transformedSQLsPortalCache.removeAll();
 		}
 
 		_sqlTransformer = SQLTransformerFactory.getSQLTransformer(
@@ -66,7 +66,7 @@ public class SQLTransformer {
 	}
 
 	private String _transformFromHQLToJPQL(String sql) {
-		String newSQL = _transformedSqlsPortalCache.get(sql);
+		String newSQL = _transformedSQLsPortalCache.get(sql);
 
 		if (newSQL != null) {
 			return newSQL;
@@ -84,13 +84,13 @@ public class SQLTransformer {
 			newSQL = function.apply(newSQL);
 		}
 
-		_transformedSqlsPortalCache.put(sql, newSQL);
+		_transformedSQLsPortalCache.put(sql, newSQL);
 
 		return newSQL;
 	}
 
 	private String _transformFromJPQLToHQL(String sql) {
-		String newSQL = _transformedSqlsPortalCache.get(sql);
+		String newSQL = _transformedSQLsPortalCache.get(sql);
 
 		if (newSQL != null) {
 			return newSQL;
@@ -103,7 +103,7 @@ public class SQLTransformer {
 
 		newSQL = countFunction.apply(newSQL);
 
-		_transformedSqlsPortalCache.put(sql, newSQL);
+		_transformedSQLsPortalCache.put(sql, newSQL);
 
 		return newSQL;
 	}
@@ -112,6 +112,6 @@ public class SQLTransformer {
 
 	private com.liferay.portal.dao.sql.transformer.SQLTransformer
 		_sqlTransformer;
-	private PortalCache<String, String> _transformedSqlsPortalCache;
+	private PortalCache<String, String> _transformedSQLsPortalCache;
 
 }
