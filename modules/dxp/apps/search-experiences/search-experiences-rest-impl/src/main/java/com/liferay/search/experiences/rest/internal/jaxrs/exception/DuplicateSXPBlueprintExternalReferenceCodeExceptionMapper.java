@@ -27,7 +27,6 @@ import org.osgi.service.component.annotations.Component;
  * @author Gustavo Lima
  */
 @Component(
-	enabled = false,
 	property = {
 		"osgi.jaxrs.application.select=(osgi.jaxrs.name=Liferay.Search.Experiences.REST)",
 		"osgi.jaxrs.extension=true",
