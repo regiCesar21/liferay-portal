@@ -161,7 +161,7 @@ public class OpenIdConnectTokenRequestUtil {
 	}
 
 	private static IDTokenClaimsSet _validate(
-			ClientID clientID, Secret clientSecret, Nonce nonce,
+			ClientID clientID, Secret secret, Nonce nonce,
 			OIDCProviderMetadata oidcProviderMetadata, OIDCTokens oidcTokens,
 			int tokenConnectionTimeout)
 		throws OpenIdConnectServiceException.TokenException {
@@ -185,7 +185,7 @@ public class OpenIdConnectTokenRequestUtil {
 						IDTokenValidator idTokenValidator =
 							new IDTokenValidator(
 								oidcProviderMetadata.getIssuer(), clientID,
-								jwsAlgorithm, clientSecret);
+								jwsAlgorithm, secret);
 
 						return idTokenValidator.validate(idToken, nonce);
 					}
