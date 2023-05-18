@@ -88,6 +88,10 @@ public class SXPElementServiceUtil {
 		return _service;
 	}
 
+	public static void setService(SXPElementService service) {
+		_service = service;
+	}
+
 	private static volatile SXPElementService _service;
 
 }
