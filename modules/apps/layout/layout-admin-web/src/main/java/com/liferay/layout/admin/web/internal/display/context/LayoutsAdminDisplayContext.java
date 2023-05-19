@@ -84,13 +84,16 @@ import com.liferay.portal.util.RobotsUtil;
 import com.liferay.portlet.layoutsadmin.display.context.GroupDisplayContextHelper;
 import com.liferay.site.navigation.model.SiteNavigationMenu;
 import com.liferay.site.navigation.service.SiteNavigationMenuLocalServiceUtil;
+import com.liferay.sites.kernel.util.SitesUtil;
 import com.liferay.staging.StagingGroupHelper;
 import com.liferay.taglib.security.PermissionsURLTag;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Objects;
+import java.util.Set;
 import java.util.TreeMap;
 
 import javax.portlet.ActionRequest;
@@ -276,6 +279,30 @@ public class LayoutsAdminDisplayContext {
 			"privateLayout", String.valueOf(layout.isPrivateLayout()));
 
 		return configureLayoutURL.toString();
+	}
+
+	public Set<Long> getConflictPlids() {
+		if (_conflictPlids != null) {
+			return _conflictPlids;
+		}
+
+		LayoutSet layoutSet = getSelLayoutSet();
+		Group group = getSelGroup();
+
+		if (layoutSet.isLayoutSetPrototypeLinkEnabled()) {
+			_conflictPlids = SitesUtil.getConflictingPlidsOfLayoutSetGroup(
+				group.getGroupId());
+		}
+		else if (group.isLayoutSetPrototype()) {
+			_conflictPlids =
+				SitesUtil.getConflictingPlidsOfLayoutSetPrototypeGroup(
+					group.getGroupId());
+		}
+		else {
+			_conflictPlids = new HashSet<>();
+		}
+
+		return _conflictPlids;
 	}
 
 	public String getConvertLayoutURL(Layout layout) {
@@ -1916,6 +1943,7 @@ public class LayoutsAdminDisplayContext {
 
 	private Long _activeLayoutSetBranchId;
 	private String _backURL;
+	private Set<Long> _conflictPlids;
 	private String _displayStyle;
 	private Boolean _firstColumn;
 	private SearchContainer<String> _firstColumnLayoutsSearchContainer;

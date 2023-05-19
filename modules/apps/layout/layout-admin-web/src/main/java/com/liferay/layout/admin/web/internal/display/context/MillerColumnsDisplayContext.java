@@ -42,6 +42,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
+import java.util.Set;
 import java.util.ResourceBundle;
 
 import javax.portlet.ActionRequest;
@@ -775,6 +776,27 @@ public class MillerColumnsDisplayContext {
 					"id", "pending"
 				).put(
 					"label", LanguageUtil.get(_httpServletRequest, "pending")
+				));
+		}
+
+		Set<Long> conflictPlids =
+			_layoutsAdminDisplayContext.getConflictPlids();
+
+		if (conflictPlids.contains(layout.getPlid())) {
+			Group group = layout.getGroup();
+
+			jsonArray.put(
+				JSONUtil.put(
+					"helptext",
+					LanguageUtil.get(
+						_httpServletRequest,
+						group.isLayoutSetPrototype() ?
+							"friendly-url-conflict-site-template-page" :
+								"friendly-url-conflict-site-page")
+				).put(
+					"id", "url-conflict"
+				).put(
+					"type", "warning"
 				));
 		}
 
