@@ -23,6 +23,7 @@ import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.LayoutBranch;
 import com.liferay.portal.kernel.model.LayoutConstants;
 import com.liferay.portal.kernel.model.LayoutRevision;
+import com.liferay.portal.kernel.model.LayoutSet;
 import com.liferay.portal.kernel.model.LayoutSetBranch;
 import com.liferay.portal.kernel.model.impl.VirtualLayout;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
@@ -31,6 +32,7 @@ import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.service.LayoutRevisionLocalService;
 import com.liferay.portal.kernel.service.LayoutService;
 import com.liferay.portal.kernel.service.LayoutSetBranchLocalService;
+import com.liferay.portal.kernel.service.LayoutSetLocalService;
 import com.liferay.portal.kernel.service.permission.GroupPermissionUtil;
 import com.liferay.portal.kernel.service.permission.LayoutPermission;
 import com.liferay.portal.kernel.service.permission.LayoutPermissionUtil;
@@ -45,14 +47,17 @@ import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.util.PropsValues;
 import com.liferay.portlet.layoutsadmin.util.LayoutsTree;
+import com.liferay.sites.kernel.util.Sites;
 import com.liferay.sites.kernel.util.SitesUtil;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Locale;
 import java.util.Objects;
+import java.util.Set;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -139,6 +144,7 @@ public class LayoutsTreeImpl implements LayoutsTree {
 			groupId, privateLayout, parentLayoutId, true, start, end);
 
 		JSONObject jsonObject = _toJSONObject(
+			_getConflictPlids(groupId, privateLayout),
 			httpServletRequest, groupId, layouts, total, layoutSetBranch);
 
 		List<Layout> ancestorLayouts = _layoutService.getAncestorLayouts(
@@ -211,7 +217,7 @@ public class LayoutsTreeImpl implements LayoutsTree {
 			httpServletRequest, groupId, privateLayout, parentLayoutId,
 			incomplete, expandedLayoutIds, treeId, false);
 
-		return _toJSON(
+		return _toJSON(_getConflictPlids(groupId, privateLayout),
 			httpServletRequest, groupId, layoutTreeNodes, layoutSetBranch);
 	}
 
@@ -254,7 +260,10 @@ public class LayoutsTreeImpl implements LayoutsTree {
 				LayoutConstants.DEFAULT_PARENT_LAYOUT_ID, false, null, treeId,
 				false));
 
-		return _toJSON(
+		Set<Long> conflictPlids = _getConflictPlids(groupId,true);
+		conflictPlids.addAll(_getConflictPlids(groupId,false));
+
+		return _toJSON(conflictPlids,
 			httpServletRequest, groupId, layoutTreeNodes, layoutSetBranch);
 	}
 
@@ -301,6 +310,28 @@ public class LayoutsTreeImpl implements LayoutsTree {
 		ancestorLayouts.add(layout);
 
 		return ancestorLayouts;
+	}
+
+	private Set<Long> _getConflictPlids(long groupId, boolean privateLayout)
+		throws Exception {
+
+		LayoutSet layoutSet = _layoutSetLocalService.fetchLayoutSet(
+			groupId, privateLayout);
+
+		Group group = layoutSet.getGroup();
+
+		Set<Long> conflictPlids = new HashSet<>();
+
+		if (layoutSet.isLayoutSetPrototypeLinkEnabled()) {
+			conflictPlids = _sites.getConflictingPlidsOfLayoutSetGroup(
+				group.getGroupId());
+		}
+		else if (group.isLayoutSetPrototype()) {
+			conflictPlids = _sites.getConflictingPlidsOfLayoutSetPrototypeGroup(
+				group.getGroupId());
+		}
+
+		return conflictPlids;
 	}
 
 	private Layout _getDraftLayout(Layout layout) {
@@ -579,19 +610,21 @@ public class LayoutsTreeImpl implements LayoutsTree {
 	}
 
 	private String _toJSON(
-			HttpServletRequest httpServletRequest, long groupId,
-			LayoutTreeNodes layoutTreeNodes, LayoutSetBranch layoutSetBranch)
+			Set<Long> conflictPlids, HttpServletRequest httpServletRequest,
+			long groupId, LayoutTreeNodes layoutTreeNodes,
+			LayoutSetBranch layoutSetBranch)
 		throws Exception {
 
-		JSONObject jsonObject = _toJSONObject(
+		JSONObject jsonObject = _toJSONObject(conflictPlids,
 			httpServletRequest, groupId, layoutTreeNodes, layoutSetBranch);
 
 		return jsonObject.toString();
 	}
 
 	private JSONObject _toJSONObject(
-			HttpServletRequest httpServletRequest, long groupId,
-			LayoutTreeNodes layoutTreeNodes, LayoutSetBranch layoutSetBranch)
+			Set<Long> conflictPlids, HttpServletRequest httpServletRequest,
+			long groupId, LayoutTreeNodes layoutTreeNodes,
+			LayoutSetBranch layoutSetBranch)
 		throws Exception {
 
 		if (_log.isDebugEnabled()) {
@@ -618,7 +651,7 @@ public class LayoutsTreeImpl implements LayoutsTree {
 		boolean mobile = BrowserSnifferUtil.isMobile(httpServletRequest);
 
 		for (LayoutTreeNode layoutTreeNode : layoutTreeNodes) {
-			JSONObject childrenJSONObject = _toJSONObject(
+			JSONObject childrenJSONObject = _toJSONObject(conflictPlids,
 				httpServletRequest, groupId,
 				layoutTreeNode.getChildLayoutTreeNodes(), layoutSetBranch);
 
@@ -714,6 +747,8 @@ public class LayoutsTreeImpl implements LayoutsTree {
 					themeDisplay.getPermissionChecker(), layout,
 					ActionKeys.UPDATE)
 			).put(
+				"urlConflict", conflictPlids.contains(layout.getPlid())
+			).put(
 				"uuid", layout.getUuid()
 			);
 
@@ -777,8 +812,9 @@ public class LayoutsTreeImpl implements LayoutsTree {
 	}
 
 	private JSONObject _toJSONObject(
-			HttpServletRequest httpServletRequest, long groupId,
-			List<Layout> layouts, int total, LayoutSetBranch layoutSetBranch)
+			Set<Long> conflictPlids, HttpServletRequest httpServletRequest,
+			long groupId, List<Layout> layouts, int total,
+			LayoutSetBranch layoutSetBranch)
 		throws Exception {
 
 		List<LayoutTreeNode> layoutTreeNodesList = new ArrayList<>();
@@ -792,7 +828,7 @@ public class LayoutsTreeImpl implements LayoutsTree {
 		LayoutTreeNodes layoutTreeNodes = new LayoutTreeNodes(
 			layoutTreeNodesList, total);
 
-		return _toJSONObject(
+		return _toJSONObject(conflictPlids,
 			httpServletRequest, groupId, layoutTreeNodes, layoutSetBranch);
 	}
 
@@ -819,10 +855,16 @@ public class LayoutsTreeImpl implements LayoutsTree {
 	private LayoutService _layoutService;
 
 	@Reference
+	private LayoutSetLocalService _layoutSetLocalService;
+
+	@Reference
 	private LayoutSetBranchLocalService _layoutSetBranchLocalService;
 
 	@Reference
 	private Portal _portal;
+
+	@Reference
+	private Sites _sites;
 
 	@Reference
 	private Staging _staging;
