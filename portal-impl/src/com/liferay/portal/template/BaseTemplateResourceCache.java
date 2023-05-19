@@ -168,6 +168,17 @@ public abstract class BaseTemplateResourceCache
 		init(modificationCheckInterval, portalCacheName, null);
 	}
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
+	 *          #init(long, String, String)}
+	 */
+	@Deprecated
+	protected void init(
+		long modificationCheckInterval, String portalCacheName) {
+
+		init(modificationCheckInterval, portalCacheName, null);
+	}
+
 	protected void init(
 		long modificationCheckInterval, String portalCacheName,
 		String secondLevelPortalCacheName) {
