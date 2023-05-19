@@ -14,11 +14,13 @@
 
 package com.liferay.portal.template;
 
+import com.liferay.portal.kernel.cache.MultiVMPool;
 import com.liferay.portal.kernel.cache.PortalCache;
 import com.liferay.portal.kernel.cache.PortalCacheException;
 import com.liferay.portal.kernel.cache.PortalCacheHelperUtil;
 import com.liferay.portal.kernel.cache.PortalCacheListener;
 import com.liferay.portal.kernel.cache.PortalCacheManagerNames;
+import com.liferay.portal.kernel.cache.SingleVMPool;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.template.StringTemplateResource;
@@ -156,16 +158,14 @@ public abstract class BaseTemplateResourceCache
 
 	/**
 	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link
-	 *          #init(long, MultiVMPool, SingleVMPool, String, String)}
+	 *          #init(long, String, String)}
 	 */
 	@Deprecated
 	protected void init(
 		long modificationCheckInterval, MultiVMPool multiVMPool,
 		SingleVMPool singleVMPool, String portalCacheName) {
 
-		init(
-			modificationCheckInterval, multiVMPool, singleVMPool,
-			portalCacheName, null);
+		init(modificationCheckInterval, portalCacheName, null);
 	}
 
 	protected void init(
