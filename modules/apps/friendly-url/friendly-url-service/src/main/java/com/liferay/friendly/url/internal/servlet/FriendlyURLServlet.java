@@ -338,7 +338,8 @@ public class FriendlyURLServlet extends HttpServlet {
 					group, _normalizeFriendlyURL(layoutFriendlyURL));
 			}
 
-			if (exception instanceof NoSuchLayoutException) {
+			if (exception instanceof LayoutPermissionException ||
+				exception instanceof NoSuchLayoutException) {
 				if (Validator.isNotNull(
 						PropsValues.LAYOUT_FRIENDLY_URL_PAGE_NOT_FOUND)) {
 
