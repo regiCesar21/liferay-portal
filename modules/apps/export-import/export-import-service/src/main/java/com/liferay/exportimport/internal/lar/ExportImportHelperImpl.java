@@ -601,7 +601,7 @@ public class ExportImportHelperImpl implements ExportImportHelper {
 		List<Layout> layouts = _layoutLocalService.getLayouts(
 			groupId, privateLayout);
 
-		Node root = _buildTree(new Node(null), layouts);
+		Node root = _buildTree(new Node(null), new LinkedList<Layout>(layouts));
 
 		JSONArray jsonArray = JSONFactoryUtil.createJSONArray();
 
