@@ -65,7 +65,7 @@ public class YAMLUtil {
 	private static final Yaml _YAML_OPEN_API;
 
 	static {
-		Representer representer = new Representer();
+		Representer representer = new Representer(new DumperOptions());
 
 		PropertyUtils propertyUtils = representer.getPropertyUtils();
 
