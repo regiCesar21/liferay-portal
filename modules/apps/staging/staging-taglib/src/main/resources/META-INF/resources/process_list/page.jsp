@@ -164,7 +164,7 @@
 					deleteMenu="<%= deleteMenu %>"
 					localPublishing="<%= localPublishing %>"
 					relaunchMenu="<%= relaunchMenu %>"
-					summaryMenu="<%= summaryMenu && !(backgroundTask.getStatus() == BackgroundTaskConstants.STATUS_FAILED) %>"
+					summaryMenu="<%= summaryMenu %>"
 				/>
 			</liferay-ui:search-container-column-text>
 		</liferay-ui:search-container-row>
