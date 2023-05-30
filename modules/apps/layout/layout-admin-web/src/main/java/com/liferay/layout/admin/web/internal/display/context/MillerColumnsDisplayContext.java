@@ -12,6 +12,7 @@ import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.LayoutConstants;
 import com.liferay.portal.kernel.model.LayoutRevision;
@@ -143,6 +144,13 @@ public class MillerColumnsDisplayContext {
 				_layoutsAdminDisplayContext.getMoveLayoutColumnItemURL()
 			).put(
 				"searchContainerId", "pages"
+			).put(
+				"siteTemplate",
+				() -> {
+					Group group = _themeDisplay.getScopeGroup();
+
+					return group.isLayoutSetPrototype();
+				}
 			).build()
 		).build();
 	}
@@ -156,6 +164,9 @@ public class MillerColumnsDisplayContext {
 		List<Layout> layouts = LayoutServiceUtil.getLayouts(
 			_layoutsAdminDisplayContext.getSelGroupId(), privateLayout,
 			parentLayoutId, true, QueryUtil.ALL_POS, QueryUtil.ALL_POS);
+
+		Set<Long> conflictPlids =
+			_layoutsAdminDisplayContext.getConflictPlids();
 
 		for (Layout layout : layouts) {
 			if (_layoutsAdminDisplayContext.getActiveLayoutSetBranchId() > 0) {
@@ -233,6 +244,9 @@ public class MillerColumnsDisplayContext {
 				"privateLayout", String.valueOf(layout.isPrivateLayout()));
 
 			layoutJSONObject.put("url", portletURL.toString());
+
+			layoutJSONObject.put("urlConflict",
+				conflictPlids.contains(layout.getPlid()));
 
 			if (_layoutsAdminDisplayContext.isShowViewLayoutAction(layout)) {
 				layoutJSONObject.put(
@@ -776,27 +790,6 @@ public class MillerColumnsDisplayContext {
 					"id", "pending"
 				).put(
 					"label", LanguageUtil.get(_httpServletRequest, "pending")
-				));
-		}
-
-		Set<Long> conflictPlids =
-			_layoutsAdminDisplayContext.getConflictPlids();
-
-		if (conflictPlids.contains(layout.getPlid())) {
-			Group group = layout.getGroup();
-
-			jsonArray.put(
-				JSONUtil.put(
-					"helptext",
-					LanguageUtil.get(
-						_httpServletRequest,
-						group.isLayoutSetPrototype() ?
-							"friendly-url-conflict-site-template-page" :
-								"friendly-url-conflict-site-page")
-				).put(
-					"id", "url-conflict"
-				).put(
-					"type", "warning"
 				));
 		}
 
