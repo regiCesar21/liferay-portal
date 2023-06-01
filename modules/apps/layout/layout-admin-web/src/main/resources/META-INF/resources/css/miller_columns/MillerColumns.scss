@@ -107,6 +107,15 @@
 		top: 2px;
 	}
 
+	.icon-warning,
+	.list-group-title {
+		z-index: 2;
+	}
+
+	.icon-warning {
+		margin-top: 1px;
+	}
+
 	.list-group-title .text-truncate {
 		z-index: 2;
 	}

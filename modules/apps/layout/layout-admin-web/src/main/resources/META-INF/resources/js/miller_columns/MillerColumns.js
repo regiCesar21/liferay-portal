@@ -66,6 +66,7 @@ const MillerColumns = ({
 	onItemStayHover,
 	rtl,
 	searchContainer,
+	isSiteTemplate,
 }) => {
 	const ref = useRef();
 
@@ -257,6 +258,7 @@ const MillerColumns = ({
 						actionHandlers={actionHandlers}
 						columnItems={column.items}
 						columnsContainer={ref}
+						isSiteTemplate={isSiteTemplate}
 						items={items}
 						key={index}
 						namespace={namespace}

@@ -14,6 +14,7 @@ const Layout = ({
 	getItemChildrenURL,
 	initialBreadcrumbEntries,
 	initialLayoutColumns,
+	isSiteTemplate,
 	languageDirection,
 	languageId,
 	moveItemURL,
@@ -165,6 +166,7 @@ const Layout = ({
 			<MillerColumns
 				actionHandlers={actionHandlers}
 				initialColumns={layoutColumns}
+				isSiteTemplate={isSiteTemplate}
 				namespace={namespace}
 				onColumnsChange={updateBreadcrumbs}
 				onItemMove={saveData}
@@ -186,6 +188,7 @@ export default function ({
 		layoutColumns,
 		moveItemURL,
 		searchContainerId,
+		siteTemplate = false,
 	},
 }) {
 	return (
@@ -193,6 +196,7 @@ export default function ({
 			getItemChildrenURL={getItemChildrenURL}
 			initialBreadcrumbEntries={breadcrumbEntries}
 			initialLayoutColumns={layoutColumns}
+			isSiteTemplate={isSiteTemplate}
 			languageDirection={languageDirection}
 			languageId={languageId}
 			moveItemURL={moveItemURL}
