@@ -192,11 +192,12 @@ public class FieldConstants {
 			return value;
 		}
 		else if (type.equals(DOUBLE)) {
-			if (value.matches(_SCIENTIFIC_NOTATION_PATTERN)) {
+			try {
 				return new BigDecimal(value.trim());
 			}
-
-			return GetterUtil.getDouble(value);
+			catch (NumberFormatException numberFormatException) {
+				return GetterUtil.getDouble(value);
+			}
 		}
 		else if (type.equals(FLOAT)) {
 			return GetterUtil.getFloat(value);
@@ -244,9 +245,6 @@ public class FieldConstants {
 
 		return decimalFormat;
 	}
-
-	private static final String _SCIENTIFIC_NOTATION_PATTERN =
-		"^[+-]?\\d+(?:\\.\\d*(?:[eE][+-]?\\d+)+)+$";
 
 	private static final Log _log = LogFactoryUtil.getLog(FieldConstants.class);
 
