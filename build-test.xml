@@ -8114,6 +8114,12 @@ go</echo>
 		</gradle-execute>
 	</target>
 
+	<target name="clear-redis">
+		<execute>
+			docker exec osbasahredis redis-cli FLUSHALL
+		</execute>
+	</target>
+
 	<target name="cluster-invoke-method">
 		<if>
 			<isset property="cluster.invoke.method" />
