@@ -253,6 +253,13 @@ public class LayoutsTreeDisplayContext {
 		).put(
 			"productMenuPortletURL", getProductMenuPortletURL()
 		).put(
+			"siteTemplate",
+			() -> {
+				Group group = _themeDisplay.getScopeGroup();
+
+				return group.isLayoutSetPrototype();
+			}
+		).put(
 			"spritemap", _themeDisplay.getPathThemeImages() + "/clay/icons.svg"
 		).build();
 	}
