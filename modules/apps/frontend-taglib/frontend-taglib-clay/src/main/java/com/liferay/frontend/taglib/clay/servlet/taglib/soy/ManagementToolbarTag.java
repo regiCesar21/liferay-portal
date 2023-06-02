@@ -348,8 +348,7 @@ public class ManagementToolbarTag extends BaseClayTag {
 
 		if (context.get("clearResultsURL") == null) {
 			setClearResultsURL(
-				HtmlUtil.escapeAttribute(
-					managementToolbarDisplayContext.getClearResultsURL()));
+				managementToolbarDisplayContext.getClearResultsURL());
 		}
 
 		if (context.get("componentId") == null) {
