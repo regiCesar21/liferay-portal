@@ -18,6 +18,7 @@ import com.liferay.expando.kernel.exception.DuplicateTableNameException;
 import com.liferay.expando.kernel.exception.TableNameException;
 import com.liferay.expando.kernel.model.ExpandoTable;
 import com.liferay.expando.kernel.model.ExpandoTableConstants;
+import com.liferay.portal.kernel.change.tracking.CTAware;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portlet.expando.service.base.ExpandoTableLocalServiceBaseImpl;
@@ -28,6 +29,7 @@ import java.util.List;
  * @author Raymond Augé
  * @author Brian Wing Shun Chan
  */
+@CTAware(onProduction = true)
 public class ExpandoTableLocalServiceImpl
 	extends ExpandoTableLocalServiceBaseImpl {
 
