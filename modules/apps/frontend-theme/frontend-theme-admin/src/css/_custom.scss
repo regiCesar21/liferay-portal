@@ -33,6 +33,10 @@ body {
 		.portlet-body .container-fluid-1280 {
 			max-width: map-get($container-max-widths, xl);
 			position: relative;
+
+			.custom-control:not(.custom-checkbox) {
+				margin-bottom: 8px;
+			}
 		}
 	}
 
