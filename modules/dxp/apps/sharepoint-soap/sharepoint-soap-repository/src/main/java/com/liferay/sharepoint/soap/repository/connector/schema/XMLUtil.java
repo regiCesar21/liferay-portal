@@ -5,6 +5,7 @@
 
 package com.liferay.sharepoint.soap.repository.connector.schema;
 
+import com.liferay.portal.kernel.security.xml.SecureXMLFactoryProviderUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 
 import java.io.StringWriter;
@@ -68,7 +69,7 @@ public final class XMLUtil {
 
 	public static String toString(org.w3c.dom.Node node) {
 		TransformerFactory transformerFactory =
-			TransformerFactory.newInstance();
+			SecureXMLFactoryProviderUtil.newTransformerFactory();
 
 		Transformer transformer = null;
 
