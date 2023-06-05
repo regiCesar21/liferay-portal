@@ -651,8 +651,9 @@ public class StructuredContentResourceImpl
 				0, true, 0, 0, 0, 0, 0, true, true, false, null, null, null,
 				null,
 				_createServiceContext(
-					structuredContent.getTaxonomyCategoryIds(),structuredContent.getKeywords(), 0L,
-					structuredContent, siteId)));
+					structuredContent.getTaxonomyCategoryIds(),
+					structuredContent.getKeywords(), 0L, structuredContent,
+					siteId)));
 	}
 
 	private DDMStructure _checkDDMStructurePermission(
@@ -712,8 +713,9 @@ public class StructuredContentResourceImpl
 	}
 
 	private ServiceContext _createServiceContext(
-			Long[] assetCategoryIds,String[] assetTags, Long structuredContentId,
-			StructuredContent structuredContent, Long siteId)
+			Long[] assetCategoryIds, String[] assetTags,
+			Long structuredContentId, StructuredContent structuredContent,
+			Long siteId)
 		throws Exception {
 
 		ServiceContext serviceContext = null;
@@ -786,6 +788,27 @@ public class StructuredContentResourceImpl
 			journalArticle.getResourcePrimKey());
 
 		return ArrayUtil.toLongArray(assetEntry.getCategoryIds());
+	}
+
+	private String[] _getAssetTags(
+			JournalArticle journalArticle, StructuredContent structuredContent)
+		throws Exception {
+
+		if ((journalArticle == null) ||
+			(structuredContent.getKeywords() != null)) {
+
+			return structuredContent.getKeywords();
+		}
+
+		AssetRendererFactory<?> assetRendererFactory =
+			AssetRendererFactoryRegistryUtil.getAssetRendererFactoryByClass(
+				JournalArticle.class);
+
+		AssetEntry assetEntry = assetRendererFactory.getAssetEntry(
+			JournalArticle.class.getName(),
+			journalArticle.getResourcePrimKey());
+
+		return ArrayUtil.toStringArray(assetEntry.getTagNames());
 	}
 
 	private DDMFormField _getDDMFormField(
@@ -1139,27 +1162,6 @@ public class StructuredContentResourceImpl
 				ddmFormValuesValidationException);
 		}
 	}
-	private String[] _getAssetTags(
-		JournalArticle journalArticle, StructuredContent structuredContent)
-		throws Exception {
-
-		if ((journalArticle == null) ||
-			(structuredContent.getKeywords() != null)) {
-
-			return structuredContent.getKeywords();
-		}
-
-		AssetRendererFactory<?> assetRendererFactory =
-			AssetRendererFactoryRegistryUtil.getAssetRendererFactoryByClass(
-				JournalArticle.class);
-
-		AssetEntry assetEntry = assetRendererFactory.getAssetEntry(
-			JournalArticle.class.getName(),
-			journalArticle.getResourcePrimKey());
-
-		return ArrayUtil.toStringArray(assetEntry.getTagNames());
-	}
-
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		StructuredContentResourceImpl.class);
