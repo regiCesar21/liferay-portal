@@ -34,6 +34,7 @@ import com.liferay.portal.kernel.service.LayoutRevisionLocalService;
 import com.liferay.portal.kernel.service.LayoutService;
 import com.liferay.portal.kernel.service.LayoutSetBranchLocalService;
 import com.liferay.portal.kernel.service.LayoutSetLocalService;
+import com.liferay.portal.kernel.service.LayoutSetPrototypeLocalService;
 import com.liferay.portal.kernel.service.permission.GroupPermissionUtil;
 import com.liferay.portal.kernel.service.permission.LayoutPermission;
 import com.liferay.portal.kernel.service.permission.LayoutPermissionUtil;
@@ -320,23 +321,20 @@ public class LayoutsTreeImpl implements LayoutsTree {
 		LayoutSet layoutSet = _layoutSetLocalService.fetchLayoutSet(
 			groupId, privateLayout);
 
+		if (layoutSet.isLayoutSetPrototypeLinkEnabled()) {
+			return _layoutSetPrototypeHelper.getDuplicatedFriendlyURLPlids(
+				layoutSet);
+		}
+
 		Group group = layoutSet.getGroup();
 
-		List<Long> duplicatedFriendlyURLPlids = new ArrayList<>();
-
-		if (layoutSet.isLayoutSetPrototypeLinkEnabled()) {
-			duplicatedFriendlyURLPlids =
-				_layoutSetPrototypeHelper.getDuplicatedFriendlyURLPlids(
-					layoutSet);
-		}
-		else if (group.isLayoutSetPrototype()) {
-			duplicatedFriendlyURLPlids =
-				_layoutSetPrototypeHelper.getDuplicatedFriendlyURLPlids(
-					_layoutSetPrototypeLocalService.fetchLayoutSetPrototype(
-						group.getClassPK()));
+		if (group.isLayoutSetPrototype()) {
+			return _layoutSetPrototypeHelper.getDuplicatedFriendlyURLPlids(
+				_layoutSetPrototypeLocalService.fetchLayoutSetPrototype(
+					group.getClassPK()));
 		}
 
-		return duplicatedFriendlyURLPlids;
+		return Collections.emptyList();
 	}
 
 
@@ -868,6 +866,9 @@ public class LayoutsTreeImpl implements LayoutsTree {
 
 	@Reference
 	private LayoutSetPrototypeHelper _layoutSetPrototypeHelper;
+
+	@Reference
+	private LayoutSetPrototypeLocalService _layoutSetPrototypeLocalService;
 
 	@Reference
 	private Portal _portal;
