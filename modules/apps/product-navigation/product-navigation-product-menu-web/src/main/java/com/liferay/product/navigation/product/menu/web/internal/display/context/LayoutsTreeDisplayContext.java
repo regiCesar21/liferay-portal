@@ -249,16 +249,16 @@ public class LayoutsTreeDisplayContext {
 				return findLayoutsURL.toString();
 			}
 		).put(
-			"namespace", getNamespace()
-		).put(
-			"productMenuPortletURL", getProductMenuPortletURL()
-		).put(
-			"siteTemplate",
+			"isLayoutSetPrototype",
 			() -> {
 				Group group = _themeDisplay.getScopeGroup();
 
 				return group.isLayoutSetPrototype();
 			}
+		).put(
+			"namespace", getNamespace()
+		).put(
+			"productMenuPortletURL", getProductMenuPortletURL()
 		).put(
 			"spritemap", _themeDisplay.getPathThemeImages() + "/clay/icons.svg"
 		).build();

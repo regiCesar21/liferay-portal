@@ -134,6 +134,13 @@ public class MillerColumnsDisplayContext {
 			).put(
 				"getItemChildrenURL", getLayoutChildrenURL()
 			).put(
+				"isLayoutSetPrototype",
+				() -> {
+					Group group = _themeDisplay.getScopeGroup();
+
+					return group.isLayoutSetPrototype();
+				}
+			).put(
 				"languageDirection", _getLanguageDirection()
 			).put(
 				"languageId", _themeDisplay.getLanguageId()
@@ -144,13 +151,6 @@ public class MillerColumnsDisplayContext {
 				_layoutsAdminDisplayContext.getMoveLayoutColumnItemURL()
 			).put(
 				"searchContainerId", "pages"
-			).put(
-				"siteTemplate",
-				() -> {
-					Group group = _themeDisplay.getScopeGroup();
-
-					return group.isLayoutSetPrototype();
-				}
 			).build()
 		).build();
 	}
