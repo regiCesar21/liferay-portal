@@ -164,8 +164,8 @@ public class MillerColumnsDisplayContext {
 			_layoutsAdminDisplayContext.getSelGroupId(), privateLayout,
 			parentLayoutId, true, QueryUtil.ALL_POS, QueryUtil.ALL_POS);
 
-		List<Long> conflictPlids =
-			_layoutsAdminDisplayContext.getConflictPlids();
+		List<Long> duplicatedFriendlyURLPlids =
+			_layoutsAdminDisplayContext.getDuplicatedFriendlyURLPlids();
 
 		for (Layout layout : layouts) {
 			if (_layoutsAdminDisplayContext.getActiveLayoutSetBranchId() > 0) {
@@ -245,7 +245,7 @@ public class MillerColumnsDisplayContext {
 			layoutJSONObject.put("url", portletURL.toString());
 
 			layoutJSONObject.put("urlConflict",
-				conflictPlids.contains(layout.getPlid()));
+				duplicatedFriendlyURLPlids.contains(layout.getPlid()));
 
 			if (_layoutsAdminDisplayContext.isShowViewLayoutAction(layout)) {
 				layoutJSONObject.put(

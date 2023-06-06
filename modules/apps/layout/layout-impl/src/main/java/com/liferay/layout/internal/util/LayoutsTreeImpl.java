@@ -145,7 +145,7 @@ public class LayoutsTreeImpl implements LayoutsTree {
 			groupId, privateLayout, parentLayoutId, true, start, end);
 
 		JSONObject jsonObject = _toJSONObject(
-			_getConflictPlids(groupId, privateLayout),
+			_getDuplicatedFriendlyURLPlids(groupId, privateLayout),
 			httpServletRequest, groupId, layouts, total, layoutSetBranch);
 
 		List<Layout> ancestorLayouts = _layoutService.getAncestorLayouts(
@@ -218,7 +218,7 @@ public class LayoutsTreeImpl implements LayoutsTree {
 			httpServletRequest, groupId, privateLayout, parentLayoutId,
 			incomplete, expandedLayoutIds, treeId, false);
 
-		return _toJSON(_getConflictPlids(groupId, privateLayout),
+		return _toJSON(_getDuplicatedFriendlyURLPlids(groupId, privateLayout),
 			httpServletRequest, groupId, layoutTreeNodes, layoutSetBranch);
 	}
 
@@ -261,10 +261,10 @@ public class LayoutsTreeImpl implements LayoutsTree {
 				LayoutConstants.DEFAULT_PARENT_LAYOUT_ID, false, null, treeId,
 				false));
 
-		List<Long> conflictPlids = _getConflictPlids(groupId,true);
-		conflictPlids.addAll(_getConflictPlids(groupId,false));
+		List<Long> duplicatedFriendlyURLPlids = _getDuplicatedFriendlyURLPlids(groupId,true);
+		duplicatedFriendlyURLPlids.addAll(_getDuplicatedFriendlyURLPlids(groupId,false));
 
-		return _toJSON(conflictPlids,
+		return _toJSON(duplicatedFriendlyURLPlids,
 			httpServletRequest, groupId, layoutTreeNodes, layoutSetBranch);
 	}
 
@@ -313,7 +313,8 @@ public class LayoutsTreeImpl implements LayoutsTree {
 		return ancestorLayouts;
 	}
 
-	private List<Long> _getConflictPlids(long groupId, boolean privateLayout)
+	private List<Long> _getDuplicatedFriendlyURLPlids(
+		long groupId, boolean privateLayout)
 		throws Exception {
 
 		LayoutSet layoutSet = _layoutSetLocalService.fetchLayoutSet(
@@ -321,20 +322,23 @@ public class LayoutsTreeImpl implements LayoutsTree {
 
 		Group group = layoutSet.getGroup();
 
-		List<Long> conflictPlids = new ArrayList<>();
+		List<Long> duplicatedFriendlyURLPlids = new ArrayList<>();
 
 		if (layoutSet.isLayoutSetPrototypeLinkEnabled()) {
-			conflictPlids = _layoutSetPrototypeHelper.
-				getConflictingPlidsOfLayoutSetGroup(group.getGroupId());
+			duplicatedFriendlyURLPlids =
+				_layoutSetPrototypeHelper.getDuplicatedFriendlyURLPlids(
+					layoutSet);
 		}
 		else if (group.isLayoutSetPrototype()) {
-			conflictPlids = _layoutSetPrototypeHelper.
-				getConflictingPlidsOfLayoutSetPrototypeGroup(
-				group.getGroupId());
+			duplicatedFriendlyURLPlids =
+				_layoutSetPrototypeHelper.getDuplicatedFriendlyURLPlids(
+					_layoutSetPrototypeLocalService.fetchLayoutSetPrototype(
+						group.getClassPK()));
 		}
 
-		return conflictPlids;
+		return duplicatedFriendlyURLPlids;
 	}
+
 
 	private Layout _getDraftLayout(Layout layout) {
 		if (!layout.isTypeContent()) {
@@ -612,19 +616,19 @@ public class LayoutsTreeImpl implements LayoutsTree {
 	}
 
 	private String _toJSON(
-			List<Long> conflictPlids, HttpServletRequest httpServletRequest,
+			List<Long> duplicatedFriendlyURLPlids, HttpServletRequest httpServletRequest,
 			long groupId, LayoutTreeNodes layoutTreeNodes,
 			LayoutSetBranch layoutSetBranch)
 		throws Exception {
 
-		JSONObject jsonObject = _toJSONObject(conflictPlids,
+		JSONObject jsonObject = _toJSONObject(duplicatedFriendlyURLPlids,
 			httpServletRequest, groupId, layoutTreeNodes, layoutSetBranch);
 
 		return jsonObject.toString();
 	}
 
 	private JSONObject _toJSONObject(
-			List<Long> conflictPlids, HttpServletRequest httpServletRequest,
+			List<Long> duplicatedFriendlyURLPlids, HttpServletRequest httpServletRequest,
 			long groupId, LayoutTreeNodes layoutTreeNodes,
 			LayoutSetBranch layoutSetBranch)
 		throws Exception {
@@ -653,7 +657,7 @@ public class LayoutsTreeImpl implements LayoutsTree {
 		boolean mobile = BrowserSnifferUtil.isMobile(httpServletRequest);
 
 		for (LayoutTreeNode layoutTreeNode : layoutTreeNodes) {
-			JSONObject childrenJSONObject = _toJSONObject(conflictPlids,
+			JSONObject childrenJSONObject = _toJSONObject(duplicatedFriendlyURLPlids,
 				httpServletRequest, groupId,
 				layoutTreeNode.getChildLayoutTreeNodes(), layoutSetBranch);
 
@@ -749,7 +753,7 @@ public class LayoutsTreeImpl implements LayoutsTree {
 					themeDisplay.getPermissionChecker(), layout,
 					ActionKeys.UPDATE)
 			).put(
-				"urlConflict", conflictPlids.contains(layout.getPlid())
+				"urlConflict", duplicatedFriendlyURLPlids.contains(layout.getPlid())
 			).put(
 				"uuid", layout.getUuid()
 			);
@@ -814,7 +818,7 @@ public class LayoutsTreeImpl implements LayoutsTree {
 	}
 
 	private JSONObject _toJSONObject(
-			List<Long> conflictPlids, HttpServletRequest httpServletRequest,
+			List<Long> duplicatedFriendlyURLPlids, HttpServletRequest httpServletRequest,
 			long groupId, List<Layout> layouts, int total,
 			LayoutSetBranch layoutSetBranch)
 		throws Exception {
@@ -830,7 +834,7 @@ public class LayoutsTreeImpl implements LayoutsTree {
 		LayoutTreeNodes layoutTreeNodes = new LayoutTreeNodes(
 			layoutTreeNodesList, total);
 
-		return _toJSONObject(conflictPlids,
+		return _toJSONObject(duplicatedFriendlyURLPlids,
 			httpServletRequest, groupId, layoutTreeNodes, layoutSetBranch);
 	}
 
