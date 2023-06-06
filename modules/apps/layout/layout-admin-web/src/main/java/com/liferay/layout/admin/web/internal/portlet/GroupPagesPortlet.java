@@ -21,6 +21,7 @@ import com.liferay.layout.page.template.exception.DuplicateLayoutPageTemplateCol
 import com.liferay.layout.page.template.exception.LayoutPageTemplateCollectionNameException;
 import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
 import com.liferay.layout.page.template.service.LayoutPageTemplateEntryLocalService;
+import com.liferay.layout.set.prototype.helper.LayoutSetPrototypeHelper;
 import com.liferay.layout.util.LayoutCopyHelper;
 import com.liferay.layout.util.template.LayoutConverterRegistry;
 import com.liferay.petra.string.StringPool;
@@ -180,7 +181,7 @@ public class GroupPagesPortlet extends MVCPortlet {
 			LayoutsAdminDisplayContext layoutsAdminDisplayContext =
 				new LayoutsAdminDisplayContext(
 					_layoutConverterConfiguration, _layoutConverterRegistry,
-					_layoutCopyHelper,
+					_layoutCopyHelper, _layoutSetPrototypeHelper,
 					_portal.getLiferayPortletRequest(renderRequest),
 					_portal.getLiferayPortletResponse(renderResponse),
 					_stagingGroupHelper);
@@ -268,6 +269,9 @@ public class GroupPagesPortlet extends MVCPortlet {
 
 	@Reference
 	private LayoutPrototypeLocalService _layoutPrototypeLocalService;
+
+	@Reference
+	private LayoutSetPrototypeHelper _layoutSetPrototypeHelper;
 
 	@Reference
 	private Portal _portal;

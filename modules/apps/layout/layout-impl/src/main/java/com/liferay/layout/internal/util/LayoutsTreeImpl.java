@@ -8,6 +8,7 @@ package com.liferay.layout.internal.util;
 import com.liferay.exportimport.kernel.staging.LayoutStagingUtil;
 import com.liferay.exportimport.kernel.staging.Staging;
 import com.liferay.layout.security.permission.resource.LayoutContentModelResourcePermission;
+import com.liferay.layout.set.prototype.helper.LayoutSetPrototypeHelper;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
@@ -323,11 +324,12 @@ public class LayoutsTreeImpl implements LayoutsTree {
 		Set<Long> conflictPlids = new HashSet<>();
 
 		if (layoutSet.isLayoutSetPrototypeLinkEnabled()) {
-			conflictPlids = _sites.getConflictingPlidsOfLayoutSetGroup(
-				group.getGroupId());
+			conflictPlids = _layoutSetPrototypeHelper.
+				getConflictingPlidsOfLayoutSetGroup(group.getGroupId());
 		}
 		else if (group.isLayoutSetPrototype()) {
-			conflictPlids = _sites.getConflictingPlidsOfLayoutSetPrototypeGroup(
+			conflictPlids = _layoutSetPrototypeHelper.
+				getConflictingPlidsOfLayoutSetPrototypeGroup(
 				group.getGroupId());
 		}
 
@@ -859,6 +861,9 @@ public class LayoutsTreeImpl implements LayoutsTree {
 
 	@Reference
 	private LayoutSetBranchLocalService _layoutSetBranchLocalService;
+
+	@Reference
+	private LayoutSetPrototypeHelper _layoutSetPrototypeHelper;
 
 	@Reference
 	private Portal _portal;

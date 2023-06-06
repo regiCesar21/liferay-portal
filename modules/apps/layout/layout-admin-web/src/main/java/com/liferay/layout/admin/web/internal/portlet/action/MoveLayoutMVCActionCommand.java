@@ -10,6 +10,7 @@ import com.liferay.layout.admin.web.internal.configuration.LayoutConverterConfig
 import com.liferay.layout.admin.web.internal.display.context.LayoutsAdminDisplayContext;
 import com.liferay.layout.admin.web.internal.display.context.MillerColumnsDisplayContext;
 import com.liferay.layout.admin.web.internal.handler.LayoutExceptionRequestHandler;
+import com.liferay.layout.set.prototype.helper.LayoutSetPrototypeHelper;
 import com.liferay.layout.util.LayoutCopyHelper;
 import com.liferay.layout.util.template.LayoutConverterRegistry;
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
@@ -101,8 +102,9 @@ public class MoveLayoutMVCActionCommand extends BaseAddLayoutMVCActionCommand {
 				new MillerColumnsDisplayContext(
 					new LayoutsAdminDisplayContext(
 						_layoutConverterConfiguration, _layoutConverterRegistry,
-						_layoutCopyHelper, liferayPortletRequest,
-						liferayPortletResponse, _stagingGroupHelper),
+						_layoutCopyHelper, _layoutSetPrototypeHelper,
+						liferayPortletRequest,liferayPortletResponse,
+						_stagingGroupHelper),
 					liferayPortletRequest, liferayPortletResponse);
 
 			JSONObject jsonObject = JSONUtil.put(
@@ -133,6 +135,9 @@ public class MoveLayoutMVCActionCommand extends BaseAddLayoutMVCActionCommand {
 
 	@Reference
 	private LayoutService _layoutService;
+
+	@Reference
+	private LayoutSetPrototypeHelper _layoutSetPrototypeHelper;
 
 	@Reference
 	private Portal _portal;

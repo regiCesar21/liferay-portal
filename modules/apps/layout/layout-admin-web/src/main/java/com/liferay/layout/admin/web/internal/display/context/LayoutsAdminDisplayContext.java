@@ -21,6 +21,7 @@ import com.liferay.layout.page.template.service.LayoutPageTemplateCollectionLoca
 import com.liferay.layout.page.template.service.LayoutPageTemplateEntryLocalServiceUtil;
 import com.liferay.layout.page.template.service.LayoutPageTemplateEntryServiceUtil;
 import com.liferay.layout.page.template.util.comparator.LayoutPageTemplateCollectionNameComparator;
+import com.liferay.layout.set.prototype.helper.LayoutSetPrototypeHelper;
 import com.liferay.layout.util.LayoutCopyHelper;
 import com.liferay.layout.util.comparator.LayoutCreateDateComparator;
 import com.liferay.layout.util.comparator.LayoutRelevanceComparator;
@@ -84,7 +85,6 @@ import com.liferay.portal.util.RobotsUtil;
 import com.liferay.portlet.layoutsadmin.display.context.GroupDisplayContextHelper;
 import com.liferay.site.navigation.model.SiteNavigationMenu;
 import com.liferay.site.navigation.service.SiteNavigationMenuLocalServiceUtil;
-import com.liferay.sites.kernel.util.SitesUtil;
 import com.liferay.staging.StagingGroupHelper;
 import com.liferay.taglib.security.PermissionsURLTag;
 
@@ -111,6 +111,7 @@ public class LayoutsAdminDisplayContext {
 		LayoutConverterConfiguration layoutConverterConfiguration,
 		LayoutConverterRegistry layoutConverterRegistry,
 		LayoutCopyHelper layoutCopyHelper,
+		LayoutSetPrototypeHelper layoutSetPrototypeHelper,
 		LiferayPortletRequest liferayPortletRequest,
 		LiferayPortletResponse liferayPortletResponse,
 		StagingGroupHelper stagingGroupHelper) {
@@ -118,6 +119,7 @@ public class LayoutsAdminDisplayContext {
 		_layoutConverterConfiguration = layoutConverterConfiguration;
 		_layoutConverterRegistry = layoutConverterRegistry;
 		_layoutCopyHelper = layoutCopyHelper;
+		_layoutSetPrototypeHelper = layoutSetPrototypeHelper;
 		_liferayPortletRequest = liferayPortletRequest;
 		_liferayPortletResponse = liferayPortletResponse;
 		_stagingGroupHelper = stagingGroupHelper;
@@ -290,13 +292,15 @@ public class LayoutsAdminDisplayContext {
 		Group group = getSelGroup();
 
 		if (layoutSet.isLayoutSetPrototypeLinkEnabled()) {
-			_conflictPlids = SitesUtil.getConflictingPlidsOfLayoutSetGroup(
-				group.getGroupId());
+			_conflictPlids =
+				_layoutSetPrototypeHelper.getConflictingPlidsOfLayoutSetGroup(
+					group.getGroupId());
 		}
 		else if (group.isLayoutSetPrototype()) {
 			_conflictPlids =
-				SitesUtil.getConflictingPlidsOfLayoutSetPrototypeGroup(
-					group.getGroupId());
+				_layoutSetPrototypeHelper.
+					getConflictingPlidsOfLayoutSetPrototypeGroup(
+						group.getGroupId());
 		}
 		else {
 			_conflictPlids = new HashSet<>();
@@ -1954,6 +1958,7 @@ public class LayoutsAdminDisplayContext {
 	private final LayoutCopyHelper _layoutCopyHelper;
 	private List<LayoutDescription> _layoutDescriptions;
 	private Long _layoutId;
+	private final LayoutSetPrototypeHelper _layoutSetPrototypeHelper;
 	private SearchContainer<Layout> _layoutsSearchContainer;
 	private final LiferayPortletRequest _liferayPortletRequest;
 	private final LiferayPortletResponse _liferayPortletResponse;
