@@ -43,7 +43,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
-import java.util.Set;
 import java.util.ResourceBundle;
 
 import javax.portlet.ActionRequest;
@@ -165,7 +164,7 @@ public class MillerColumnsDisplayContext {
 			_layoutsAdminDisplayContext.getSelGroupId(), privateLayout,
 			parentLayoutId, true, QueryUtil.ALL_POS, QueryUtil.ALL_POS);
 
-		Set<Long> conflictPlids =
+		List<Long> conflictPlids =
 			_layoutsAdminDisplayContext.getConflictPlids();
 
 		for (Layout layout : layouts) {

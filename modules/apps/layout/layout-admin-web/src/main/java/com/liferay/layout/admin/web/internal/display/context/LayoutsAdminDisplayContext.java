@@ -93,7 +93,6 @@ import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Objects;
-import java.util.Set;
 import java.util.TreeMap;
 
 import javax.portlet.ActionRequest;
@@ -283,7 +282,7 @@ public class LayoutsAdminDisplayContext {
 		return configureLayoutURL.toString();
 	}
 
-	public Set<Long> getConflictPlids() {
+	public List<Long> getConflictPlids() {
 		if (_conflictPlids != null) {
 			return _conflictPlids;
 		}
@@ -303,7 +302,7 @@ public class LayoutsAdminDisplayContext {
 						group.getGroupId());
 		}
 		else {
-			_conflictPlids = new HashSet<>();
+			_conflictPlids = new ArrayList<>();
 		}
 
 		return _conflictPlids;
@@ -1947,7 +1946,7 @@ public class LayoutsAdminDisplayContext {
 
 	private Long _activeLayoutSetBranchId;
 	private String _backURL;
-	private Set<Long> _conflictPlids;
+	private List<Long> _conflictPlids;
 	private String _displayStyle;
 	private Boolean _firstColumn;
 	private SearchContainer<String> _firstColumnLayoutsSearchContainer;

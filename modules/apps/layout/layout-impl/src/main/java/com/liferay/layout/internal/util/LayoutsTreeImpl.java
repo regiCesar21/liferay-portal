@@ -261,7 +261,7 @@ public class LayoutsTreeImpl implements LayoutsTree {
 				LayoutConstants.DEFAULT_PARENT_LAYOUT_ID, false, null, treeId,
 				false));
 
-		Set<Long> conflictPlids = _getConflictPlids(groupId,true);
+		List<Long> conflictPlids = _getConflictPlids(groupId,true);
 		conflictPlids.addAll(_getConflictPlids(groupId,false));
 
 		return _toJSON(conflictPlids,
@@ -313,7 +313,7 @@ public class LayoutsTreeImpl implements LayoutsTree {
 		return ancestorLayouts;
 	}
 
-	private Set<Long> _getConflictPlids(long groupId, boolean privateLayout)
+	private List<Long> _getConflictPlids(long groupId, boolean privateLayout)
 		throws Exception {
 
 		LayoutSet layoutSet = _layoutSetLocalService.fetchLayoutSet(
@@ -321,7 +321,7 @@ public class LayoutsTreeImpl implements LayoutsTree {
 
 		Group group = layoutSet.getGroup();
 
-		Set<Long> conflictPlids = new HashSet<>();
+		List<Long> conflictPlids = new ArrayList<>();
 
 		if (layoutSet.isLayoutSetPrototypeLinkEnabled()) {
 			conflictPlids = _layoutSetPrototypeHelper.
@@ -612,7 +612,7 @@ public class LayoutsTreeImpl implements LayoutsTree {
 	}
 
 	private String _toJSON(
-			Set<Long> conflictPlids, HttpServletRequest httpServletRequest,
+			List<Long> conflictPlids, HttpServletRequest httpServletRequest,
 			long groupId, LayoutTreeNodes layoutTreeNodes,
 			LayoutSetBranch layoutSetBranch)
 		throws Exception {
@@ -624,7 +624,7 @@ public class LayoutsTreeImpl implements LayoutsTree {
 	}
 
 	private JSONObject _toJSONObject(
-			Set<Long> conflictPlids, HttpServletRequest httpServletRequest,
+			List<Long> conflictPlids, HttpServletRequest httpServletRequest,
 			long groupId, LayoutTreeNodes layoutTreeNodes,
 			LayoutSetBranch layoutSetBranch)
 		throws Exception {
@@ -814,7 +814,7 @@ public class LayoutsTreeImpl implements LayoutsTree {
 	}
 
 	private JSONObject _toJSONObject(
-			Set<Long> conflictPlids, HttpServletRequest httpServletRequest,
+			List<Long> conflictPlids, HttpServletRequest httpServletRequest,
 			long groupId, List<Layout> layouts, int total,
 			LayoutSetBranch layoutSetBranch)
 		throws Exception {
