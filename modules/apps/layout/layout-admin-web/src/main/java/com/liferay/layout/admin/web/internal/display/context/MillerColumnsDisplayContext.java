@@ -164,9 +164,6 @@ public class MillerColumnsDisplayContext {
 			_layoutsAdminDisplayContext.getSelGroupId(), privateLayout,
 			parentLayoutId, true, QueryUtil.ALL_POS, QueryUtil.ALL_POS);
 
-		List<Long> duplicatedFriendlyURLPlids =
-			_layoutsAdminDisplayContext.getDuplicatedFriendlyURLPlids();
-
 		for (Layout layout : layouts) {
 			if (_layoutsAdminDisplayContext.getActiveLayoutSetBranchId() > 0) {
 				LayoutRevision layoutRevision =
@@ -222,6 +219,17 @@ public class MillerColumnsDisplayContext {
 			LayoutType layoutType = layout.getLayoutType();
 
 			layoutJSONObject.put(
+				"hasDuplicatedFriendlyURL",
+				() -> {
+
+					List<Long> duplicatedFriendlyURLPlids =
+						_layoutsAdminDisplayContext.
+							getDuplicatedFriendlyURLPlids();
+
+					return duplicatedFriendlyURLPlids.contains(
+						layout.getPlid());
+				}
+			).put(
 				"parentable", layoutType.isParentable()
 			).put(
 				"selectable", true
@@ -243,9 +251,6 @@ public class MillerColumnsDisplayContext {
 				"privateLayout", String.valueOf(layout.isPrivateLayout()));
 
 			layoutJSONObject.put("url", portletURL.toString());
-
-			layoutJSONObject.put("urlConflict",
-				duplicatedFriendlyURLPlids.contains(layout.getPlid()));
 
 			if (_layoutsAdminDisplayContext.isShowViewLayoutAction(layout)) {
 				layoutJSONObject.put(

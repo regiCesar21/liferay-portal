@@ -696,6 +696,9 @@ public class LayoutsTreeImpl implements LayoutsTree {
 			jsonObject.put(
 				"hasChildren", layout.hasChildren()
 			).put(
+				"hasDuplicatedFriendlyURL",
+				duplicatedFriendlyURLPlids.contains(layout.getPlid())
+			).put(
 				"layoutId", layout.getLayoutId()
 			);
 
@@ -750,8 +753,6 @@ public class LayoutsTreeImpl implements LayoutsTree {
 				LayoutPermissionUtil.contains(
 					themeDisplay.getPermissionChecker(), layout,
 					ActionKeys.UPDATE)
-			).put(
-				"urlConflict", duplicatedFriendlyURLPlids.contains(layout.getPlid())
 			).put(
 				"uuid", layout.getUuid()
 			);
