@@ -184,11 +184,11 @@ export default function ({
 		breadcrumbEntries,
 		getItemChildrenURL,
 		languageDirection,
+		isLayoutSetPrototype = false,
 		languageId,
 		layoutColumns,
 		moveItemURL,
 		searchContainerId,
-		siteTemplate = false,
 	},
 }) {
 	return (
@@ -196,7 +196,7 @@ export default function ({
 			getItemChildrenURL={getItemChildrenURL}
 			initialBreadcrumbEntries={breadcrumbEntries}
 			initialLayoutColumns={layoutColumns}
-			isSiteTemplate={isSiteTemplate}
+			isLayoutSetPrototype={isLayoutSetPrototype}
 			languageDirection={languageDirection}
 			languageId={languageId}
 			moveItemURL={moveItemURL}
