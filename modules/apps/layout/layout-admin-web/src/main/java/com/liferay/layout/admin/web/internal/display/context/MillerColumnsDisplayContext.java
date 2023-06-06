@@ -42,7 +42,6 @@ import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.util.LayoutTypeControllerTracker;
 
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
@@ -385,22 +384,27 @@ public class MillerColumnsDisplayContext {
 		}
 
 		LayoutSet layoutSet = _layoutsAdminDisplayContext.getSelLayoutSet();
-		Group group = _layoutsAdminDisplayContext.getSelGroup();
 
 		if (layoutSet.isLayoutSetPrototypeLinkEnabled()) {
 			_duplicatedFriendlyURLPlids =
 				_layoutSetPrototypeHelper.getDuplicatedFriendlyURLPlids(
 					layoutSet);
+
+			return _duplicatedFriendlyURLPlids;
 		}
-		else if (group.isLayoutSetPrototype()) {
+
+		Group group = _layoutsAdminDisplayContext.getSelGroup();
+
+		if (group.isLayoutSetPrototype()) {
 			_duplicatedFriendlyURLPlids =
 				_layoutSetPrototypeHelper.getDuplicatedFriendlyURLPlids(
 					LayoutSetPrototypeLocalServiceUtil.fetchLayoutSetPrototype(
 						group.getClassPK()));
+
+			return _duplicatedFriendlyURLPlids;
 		}
-		else {
-			_duplicatedFriendlyURLPlids = new ArrayList<>();
-		}
+
+		_duplicatedFriendlyURLPlids = Collections.emptyList();
 
 		return _duplicatedFriendlyURLPlids;
 	}
