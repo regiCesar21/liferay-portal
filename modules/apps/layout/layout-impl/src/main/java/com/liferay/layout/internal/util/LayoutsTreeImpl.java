@@ -41,9 +41,11 @@ import com.liferay.portal.kernel.service.permission.LayoutPermissionUtil;
 import com.liferay.portal.kernel.servlet.BrowserSnifferUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ArrayUtil;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
+import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.SessionClicks;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
@@ -317,6 +319,12 @@ public class LayoutsTreeImpl implements LayoutsTree {
 	private List<Long> _getDuplicatedFriendlyURLPlids(
 		long groupId, boolean privateLayout)
 		throws Exception {
+
+
+		if (!GetterUtil.getBoolean(PropsUtil.get(
+			"feature.flag.LPS-174417"))) {
+			return new ArrayList<>();
+		}
 
 		LayoutSet layoutSet = _layoutSetLocalService.fetchLayoutSet(
 			groupId, privateLayout);

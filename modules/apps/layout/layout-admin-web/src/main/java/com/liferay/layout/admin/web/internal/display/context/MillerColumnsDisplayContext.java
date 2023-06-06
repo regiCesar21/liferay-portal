@@ -35,6 +35,7 @@ import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
+import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -227,6 +228,10 @@ public class MillerColumnsDisplayContext {
 			layoutJSONObject.put(
 				"hasDuplicatedFriendlyURL",
 				() -> {
+					if (!GetterUtil.getBoolean(PropsUtil.get(
+						"feature.flag.LPS-174417"))) {
+						return false;
+					}
 
 					List<Long> duplicatedFriendlyURLPlids =
 						_getDuplicatedFriendlyURLPlids();
