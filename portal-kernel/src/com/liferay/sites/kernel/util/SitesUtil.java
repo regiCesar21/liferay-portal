@@ -20,7 +20,6 @@ import java.io.InputStream;
 
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 
 import javax.portlet.PortletPreferences;
 import javax.portlet.PortletRequest;
@@ -150,16 +149,6 @@ public class SitesUtil {
 
 	public static Long[] filterGroups(List<Group> groups, String[] names) {
 		return getSites().filterGroups(groups, names);
-	}
-
-	public static Set<Long> getConflictingPlidsOfLayoutSetGroup(long groupId) {
-		return _sites.getConflictingPlidsOfLayoutSetGroup(groupId);
-	}
-
-	public static Set<Long> getConflictingPlidsOfLayoutSetPrototypeGroup(
-		long groupId) {
-
-		return _sites.getConflictingPlidsOfLayoutSetPrototypeGroup(groupId);
 	}
 
 	public static Layout getLayoutSetPrototypeLayout(Layout layout) {
