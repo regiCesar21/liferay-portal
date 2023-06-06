@@ -100,9 +100,9 @@ public class MoveLayoutMVCActionCommand extends BaseAddLayoutMVCActionCommand {
 
 			MillerColumnsDisplayContext millerColumnsDisplayContext =
 				new MillerColumnsDisplayContext(
-					new LayoutsAdminDisplayContext(
+					_layoutSetPrototypeHelper, new LayoutsAdminDisplayContext(
 						_layoutConverterConfiguration, _layoutConverterRegistry,
-						_layoutCopyHelper, _layoutSetPrototypeHelper,
+						_layoutCopyHelper,
 						liferayPortletRequest,liferayPortletResponse,
 						_stagingGroupHelper),
 					liferayPortletRequest, liferayPortletResponse);

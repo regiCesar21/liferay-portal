@@ -21,7 +21,6 @@ import com.liferay.layout.page.template.service.LayoutPageTemplateCollectionLoca
 import com.liferay.layout.page.template.service.LayoutPageTemplateEntryLocalServiceUtil;
 import com.liferay.layout.page.template.service.LayoutPageTemplateEntryServiceUtil;
 import com.liferay.layout.page.template.util.comparator.LayoutPageTemplateCollectionNameComparator;
-import com.liferay.layout.set.prototype.helper.LayoutSetPrototypeHelper;
 import com.liferay.layout.util.LayoutCopyHelper;
 import com.liferay.layout.util.comparator.LayoutCreateDateComparator;
 import com.liferay.layout.util.comparator.LayoutRelevanceComparator;
@@ -58,7 +57,6 @@ import com.liferay.portal.kernel.service.LayoutLocalServiceUtil;
 import com.liferay.portal.kernel.service.LayoutServiceUtil;
 import com.liferay.portal.kernel.service.LayoutSetBranchLocalServiceUtil;
 import com.liferay.portal.kernel.service.LayoutSetLocalServiceUtil;
-import com.liferay.portal.kernel.service.LayoutSetPrototypeLocalServiceUtil;
 import com.liferay.portal.kernel.service.RoleLocalServiceUtil;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextFactory;
@@ -111,7 +109,6 @@ public class LayoutsAdminDisplayContext {
 		LayoutConverterConfiguration layoutConverterConfiguration,
 		LayoutConverterRegistry layoutConverterRegistry,
 		LayoutCopyHelper layoutCopyHelper,
-		LayoutSetPrototypeHelper layoutSetPrototypeHelper,
 		LiferayPortletRequest liferayPortletRequest,
 		LiferayPortletResponse liferayPortletResponse,
 		StagingGroupHelper stagingGroupHelper) {
@@ -119,7 +116,6 @@ public class LayoutsAdminDisplayContext {
 		_layoutConverterConfiguration = layoutConverterConfiguration;
 		_layoutConverterRegistry = layoutConverterRegistry;
 		_layoutCopyHelper = layoutCopyHelper;
-		_layoutSetPrototypeHelper = layoutSetPrototypeHelper;
 		_liferayPortletRequest = liferayPortletRequest;
 		_liferayPortletResponse = liferayPortletResponse;
 		_stagingGroupHelper = stagingGroupHelper;
@@ -378,32 +374,6 @@ public class LayoutsAdminDisplayContext {
 		return _displayStyle;
 	}
 
-
-	public List<Long> getDuplicatedFriendlyURLPlids() throws PortalException {
-		if (_duplicatedFriendlyURLPlids != null) {
-			return _duplicatedFriendlyURLPlids;
-		}
-
-		LayoutSet layoutSet = getSelLayoutSet();
-		Group group = getSelGroup();
-
-		if (layoutSet.isLayoutSetPrototypeLinkEnabled()) {
-			_duplicatedFriendlyURLPlids =
-				_layoutSetPrototypeHelper.getDuplicatedFriendlyURLPlids(
-					layoutSet);
-		}
-		else if (group.isLayoutSetPrototype()) {
-			_duplicatedFriendlyURLPlids =
-				_layoutSetPrototypeHelper.getDuplicatedFriendlyURLPlids(
-					LayoutSetPrototypeLocalServiceUtil.fetchLayoutSetPrototype(
-						group.getClassPK()));
-		}
-		else {
-			_duplicatedFriendlyURLPlids = new ArrayList<>();
-		}
-
-		return _duplicatedFriendlyURLPlids;
-	}
 
 	public String getEditLayoutURL(Layout layout) throws Exception {
 		if (layout.isTypeContent()) {
@@ -1949,7 +1919,6 @@ public class LayoutsAdminDisplayContext {
 	private Long _activeLayoutSetBranchId;
 	private String _backURL;
 	private String _displayStyle;
-	private List<Long> _duplicatedFriendlyURLPlids;
 	private Boolean _firstColumn;
 	private SearchContainer<String> _firstColumnLayoutsSearchContainer;
 	private final GroupDisplayContextHelper _groupDisplayContextHelper;
@@ -1959,7 +1928,6 @@ public class LayoutsAdminDisplayContext {
 	private final LayoutCopyHelper _layoutCopyHelper;
 	private List<LayoutDescription> _layoutDescriptions;
 	private Long _layoutId;
-	private final LayoutSetPrototypeHelper _layoutSetPrototypeHelper;
 	private SearchContainer<Layout> _layoutsSearchContainer;
 	private final LiferayPortletRequest _liferayPortletRequest;
 	private final LiferayPortletResponse _liferayPortletResponse;
