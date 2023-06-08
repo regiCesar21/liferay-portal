@@ -50,13 +50,13 @@ const MillerColumnsColumn = ({
 	actionHandlers,
 	columnItems = [],
 	columnsContainer,
+	isLayoutSetPrototype,
 	items,
 	namespace,
 	onItemDrop,
 	onItemStayHover,
 	parent,
 	rtl,
-	isSiteTemplate,
 }) => {
 	const ref = useRef();
 
@@ -104,7 +104,7 @@ const MillerColumnsColumn = ({
 			{columnItems.map((item, index) => (
 				<MillerColumnsItem
 					actionHandlers={actionHandlers}
-					isSiteTemplate={isSiteTemplate}
+					isLayoutSetPrototype={isLayoutSetPrototype}
 					item={{...item, itemIndex: index}}
 					items={items}
 					key={item.key}

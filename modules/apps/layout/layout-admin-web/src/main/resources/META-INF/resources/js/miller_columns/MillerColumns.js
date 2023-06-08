@@ -60,13 +60,13 @@ const noop = () => {};
 const MillerColumns = ({
 	actionHandlers,
 	initialColumns = [],
+	isLayoutSetPrototype,
 	namespace,
 	onColumnsChange = noop,
 	onItemMove = noop,
 	onItemStayHover,
 	rtl,
 	searchContainer,
-	isSiteTemplate,
 }) => {
 	const ref = useRef();
 
@@ -258,7 +258,7 @@ const MillerColumns = ({
 						actionHandlers={actionHandlers}
 						columnItems={column.items}
 						columnsContainer={ref}
-						isSiteTemplate={isSiteTemplate}
+						isLayoutSetPrototype={isLayoutSetPrototype}
 						items={items}
 						key={index}
 						namespace={namespace}
