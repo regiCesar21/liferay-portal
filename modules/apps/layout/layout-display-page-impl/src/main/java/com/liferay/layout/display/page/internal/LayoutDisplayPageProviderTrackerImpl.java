@@ -77,8 +77,7 @@ public class LayoutDisplayPageProviderTrackerImpl
 					}
 				}
 			).collectSingleValue(
-				Collections.reverseOrder(
-					new PropertyServiceReferenceComparator<>("service.ranking"))
+				new PropertyServiceReferenceComparator<>("service.ranking")
 			).build();
 
 		_layoutDisplayPageProviderByURLSeparatorServiceTrackerMap =
@@ -100,8 +99,7 @@ public class LayoutDisplayPageProviderTrackerImpl
 					}
 				}
 			).collectSingleValue(
-				Collections.reverseOrder(
-					new PropertyServiceReferenceComparator<>("service.ranking"))
+				new PropertyServiceReferenceComparator<>("service.ranking")
 			).build();
 	}
 
