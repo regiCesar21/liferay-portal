@@ -160,9 +160,7 @@ public class CTTableMapperHelper {
 				StringBundler.concat(
 					"select ", _leftColumnName, ", ", _rightColumnName,
 					" from ", _tableName, " where ctCollectionId = ",
-					ctCollectionId, " and ctChangeType = ?"))) {
-
-			ps.setBoolean(1, false);
+					ctCollectionId))) {
 
 			try (ResultSet rs = ps.executeQuery()) {
 				while (rs.next()) {
