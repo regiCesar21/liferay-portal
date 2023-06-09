@@ -21,7 +21,6 @@ import com.liferay.osgi.service.tracker.collections.map.PropertyServiceReference
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 import org.osgi.framework.BundleContext;
