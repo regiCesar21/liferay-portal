@@ -317,7 +317,7 @@ public class CTCollectionLocalServiceTest {
 	}
 
 	@Test
-	public void testDeletePreDeletedLayout() throws Exception {
+	public void testDeletePredeletedLayout() throws Exception {
 		Layout layout1 = LayoutTestUtil.addLayout(_group);
 
 		Layout layout2 = LayoutTestUtil.addLayout(_group);
@@ -358,7 +358,7 @@ public class CTCollectionLocalServiceTest {
 	}
 
 	@Test
-	public void testDeletePreDeletedLayoutWithTwoCollections()
+	public void testDeletePredeletedLayoutWithTwoCollections()
 		throws Exception {
 
 		Layout layout1 = LayoutTestUtil.addLayout(_group);
