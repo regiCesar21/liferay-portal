@@ -2604,6 +2604,88 @@ jdbc.default.password=${database.password}</echo>
 		</sequential>
 	</macrodef>
 
+	<macrodef name="prepare-read-write-database-configuration-properties">
+		<sequential>
+			<get-database-property property.name="database.driver" />
+			<get-database-property property.name="database.host" />
+			<get-database-property property.name="database.password" />
+			<get-database-property property.name="database.url" />
+			<get-database-property property.name="database.username" />
+
+			<set-app-server-properties />
+
+			<if>
+				<equals arg1="${configure.read.write.database}" arg2="jdbc" />
+				<then>
+					<replace
+						file="${test.app.server.classes.portal.dir}/portal-ext.properties"
+					>
+						<replacetoken>jdbc.default</replacetoken>
+						<replacevalue>jdbc.write</replacevalue>
+					</replace>
+
+					<echo append="true" file="${test.app.server.classes.portal.dir}/portal-ext.properties">
+jdbc.read.driverClassName=${database.driver}
+jdbc.read.url=${database.url}
+jdbc.read.username=read_only_user
+jdbc.read.password=password</echo>
+				</then>
+				<elseif>
+					<equals arg1="${configure.read.write.database}" arg2="jndi" />
+					<then>
+						<prepare-database-jndi />
+
+						<replace
+							file="${app.server.dir}/conf/context.xml"
+						>
+							<replacetoken><![CDATA[<Context>]]></replacetoken>
+							<replacevalue>
+								<![CDATA[
+									<Context>
+										<ResourceLink name="jdbc/LiferayReadPool" global="jdbc/LiferayReadPool" type="javax.sql.DataSource" />
+								]]>
+							</replacevalue>
+						</replace>
+
+						<replace
+							file="${app.server.dir}/conf/server.xml"
+						>
+							<replacetoken><![CDATA[<GlobalNamingResources>]]></replacetoken>
+							<replacevalue expandproperties="true">
+								<![CDATA[
+									<GlobalNamingResources>
+										<Resource
+											auth="Container"
+											description="Global Address Database"
+											driverClassName="${database.driver}"
+											maxActive="40"
+											maxIdle="20"
+											maxWait="1000"
+											name="jdbc/LiferayReadPool"
+											password="password"
+											type="javax.sql.DataSource"
+											url="jdbc:mysql://${database.host}/lportal?useUnicode=true&amp;characterEncoding=UTF-8&amp;useFastDateParsing=false&amp;serverTimezone=GMT&amp;dontTrackOpenResources=true&amp;holdResultsOpenOverStatementClose=true"
+											username="read_only_user"
+										/>
+								]]>
+							</replacevalue>
+						</replace>
+
+						<replace
+							file="${test.app.server.classes.portal.dir}/portal-ext.properties"
+						>
+							<replacetoken>jdbc.default.jndi.name=</replacetoken>
+							<replacevalue>jdbc.write.jndi.name=jdbc/LiferayPool</replacevalue>
+						</replace>
+
+						<echo append="true" file="${test.app.server.classes.portal.dir}/portal-ext.properties">
+jdbc.read.jndi.name=jdbc/LiferayReadPool</echo>
+					</then>
+				</elseif>
+			</if>
+		</sequential>
+	</macrodef>
+
 	<macrodef name="prepare-safari-driver">
 		<sequential>
 			<if>
@@ -7770,6 +7852,21 @@ create database lportal${databases.size} encoding = 'UNICODE';</echo>
 							tofile="create.sql"
 						/>
 					</else>
+				</if>
+
+				<get-testcase-property property.name="configure.read.write.database" />
+
+				<if>
+					<isset property="configure.read.write.database" />
+					<then>
+						<echo append="true" file="create.sql">
+							<![CDATA[
+								create user 'read_only_user'@'%' identified BY 'password';
+								grant select ON *.* TO 'read_only_user'@'%';
+								flush privileges;
+							]]>
+						</echo>
+					</then>
 				</if>
 
 				<get-database-property property.name="database.device.name" />
@@ -14035,6 +14132,15 @@ module.framework.properties.blacklist.portal.profile.names=${blacklist.portal.pr
 			<equals arg1="${cluster.enabled}" arg2="true" />
 			<then>
 				<prepare-test-cluster-properties />
+			</then>
+		</if>
+
+		<get-testcase-property property.name="configure.read.write.database" />
+
+		<if>
+			<isset property="configure.read.write.database" />
+			<then>
+				<prepare-read-write-database-configuration-properties />
 			</then>
 		</if>
 
