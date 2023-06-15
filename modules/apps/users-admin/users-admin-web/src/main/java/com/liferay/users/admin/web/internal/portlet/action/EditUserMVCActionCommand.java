@@ -427,7 +427,7 @@ public class EditUserMVCActionCommand extends BaseMVCActionCommand {
 			!emailAddress.equals(oldEmailAddress)) {
 
 			int authResult = _userLocalService.authenticateByUserId(
-				themeDisplay.getCompanyId(), user.getUserId(),
+				themeDisplay.getCompanyId(), portal.getUserId(actionRequest),
 				ParamUtil.getString(actionRequest, "password"), new HashMap<>(),
 				new HashMap<>(), new HashMap<>());
 
