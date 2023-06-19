@@ -950,7 +950,7 @@
 			</library>
 			<library>
 				<file-name>com.liferay.document.library.repository.cmis.impl.jar!cxf-core.jar</file-name>
-				<version>3.2.14</version>
+				<version>3.4.4</version>
 				<project-name>Apache CXF Core</project-name>
 				<project-url>https://cxf.apache.org</project-url>
 				<licenses>
@@ -962,7 +962,7 @@
 			</library>
 			<library>
 				<file-name>com.liferay.document.library.repository.cmis.impl.jar!cxf-rt-bindings-soap.jar</file-name>
-				<version>3.2.14</version>
+				<version>3.4.4</version>
 				<project-name>Apache CXF Runtime SOAP Binding</project-name>
 				<project-url>https://cxf.apache.org</project-url>
 				<licenses>
@@ -974,7 +974,7 @@
 			</library>
 			<library>
 				<file-name>com.liferay.document.library.repository.cmis.impl.jar!cxf-rt-bindings-xml.jar</file-name>
-				<version>3.2.14</version>
+				<version>3.4.4</version>
 				<project-name>Apache CXF Runtime XML Binding</project-name>
 				<project-url>https://cxf.apache.org</project-url>
 				<licenses>
@@ -986,7 +986,7 @@
 			</library>
 			<library>
 				<file-name>com.liferay.document.library.repository.cmis.impl.jar!cxf-rt-databinding-jaxb.jar</file-name>
-				<version>3.2.14</version>
+				<version>3.4.4</version>
 				<project-name>Apache CXF Runtime JAXB DataBinding</project-name>
 				<project-url>https://cxf.apache.org</project-url>
 				<licenses>
@@ -998,7 +998,7 @@
 			</library>
 			<library>
 				<file-name>com.liferay.document.library.repository.cmis.impl.jar!cxf-rt-frontend-jaxws.jar</file-name>
-				<version>3.2.14</version>
+				<version>3.4.4</version>
 				<project-name>Apache CXF Runtime JAX-WS Frontend</project-name>
 				<project-url>https://cxf.apache.org</project-url>
 				<licenses>
@@ -1010,7 +1010,7 @@
 			</library>
 			<library>
 				<file-name>com.liferay.document.library.repository.cmis.impl.jar!cxf-rt-frontend-simple.jar</file-name>
-				<version>3.2.14</version>
+				<version>3.4.4</version>
 				<project-name>Apache CXF Runtime Simple Frontend</project-name>
 				<project-url>https://cxf.apache.org</project-url>
 				<licenses>
@@ -1022,7 +1022,7 @@
 			</library>
 			<library>
 				<file-name>com.liferay.document.library.repository.cmis.impl.jar!cxf-rt-transports-http.jar</file-name>
-				<version>3.2.14</version>
+				<version>3.4.4</version>
 				<project-name>Apache CXF Runtime HTTP Transport</project-name>
 				<project-url>https://cxf.apache.org</project-url>
 				<licenses>
@@ -1034,7 +1034,7 @@
 			</library>
 			<library>
 				<file-name>com.liferay.document.library.repository.cmis.impl.jar!cxf-rt-ws-addr.jar</file-name>
-				<version>3.2.14</version>
+				<version>3.4.4</version>
 				<project-name>Apache CXF Runtime WS Addressing</project-name>
 				<project-url>https://cxf.apache.org</project-url>
 				<licenses>
@@ -1046,7 +1046,7 @@
 			</library>
 			<library>
 				<file-name>com.liferay.document.library.repository.cmis.impl.jar!cxf-rt-ws-policy.jar</file-name>
-				<version>3.2.14</version>
+				<version>3.4.4</version>
 				<project-name>Apache CXF Runtime WS Policy</project-name>
 				<project-url>https://cxf.apache.org</project-url>
 				<licenses>
@@ -1058,7 +1058,7 @@
 			</library>
 			<library>
 				<file-name>com.liferay.document.library.repository.cmis.impl.jar!cxf-rt-wsdl.jar</file-name>
-				<version>3.2.14</version>
+				<version>3.4.4</version>
 				<project-name>Apache CXF Runtime Core for WSDL</project-name>
 				<project-url>https://cxf.apache.org</project-url>
 				<licenses>
@@ -2138,8 +2138,7 @@
 				<project-url>http://www.terracotta.org</project-url>
 				<licenses>
 					<license>
-						<license-name>LGPL 2.1</license-name>
-						<license-url>http://www.gnu.org/licenses/old-licenses/lgpl-2.1.txt</license-url>
+						<license-name>src/assemble/EHCACHE-CORE-LICENSE.txt</license-name>
 					</license>
 				</licenses>
 			</library>
@@ -2333,78 +2332,6 @@
 				</licenses>
 			</library>
 			<library>
-				<file-name>com.liferay.portal.remote.jaxrs.whiteboard.jar!cxf-core.jar</file-name>
-				<version>3.2.14</version>
-				<project-name>Apache CXF Core</project-name>
-				<project-url>https://cxf.apache.org</project-url>
-				<licenses>
-					<license>
-						<license-name>Apache License, Version 2.0</license-name>
-						<license-url>https://www.apache.org/licenses/LICENSE-2.0.txt</license-url>
-					</license>
-				</licenses>
-			</library>
-			<library>
-				<file-name>com.liferay.portal.remote.jaxrs.whiteboard.jar!cxf-rt-bindings-soap.jar</file-name>
-				<version>3.2.14</version>
-				<project-name>Apache CXF Runtime SOAP Binding</project-name>
-				<project-url>https://cxf.apache.org</project-url>
-				<licenses>
-					<license>
-						<license-name>Apache License, Version 2.0</license-name>
-						<license-url>https://www.apache.org/licenses/LICENSE-2.0.txt</license-url>
-					</license>
-				</licenses>
-			</library>
-			<library>
-				<file-name>com.liferay.portal.remote.jaxrs.whiteboard.jar!cxf-rt-bindings-xml.jar</file-name>
-				<version>3.2.14</version>
-				<project-name>Apache CXF Runtime XML Binding</project-name>
-				<project-url>https://cxf.apache.org</project-url>
-				<licenses>
-					<license>
-						<license-name>Apache License, Version 2.0</license-name>
-						<license-url>https://www.apache.org/licenses/LICENSE-2.0.txt</license-url>
-					</license>
-				</licenses>
-			</library>
-			<library>
-				<file-name>com.liferay.portal.remote.jaxrs.whiteboard.jar!cxf-rt-databinding-jaxb.jar</file-name>
-				<version>3.2.14</version>
-				<project-name>Apache CXF Runtime JAXB DataBinding</project-name>
-				<project-url>https://cxf.apache.org</project-url>
-				<licenses>
-					<license>
-						<license-name>Apache License, Version 2.0</license-name>
-						<license-url>https://www.apache.org/licenses/LICENSE-2.0.txt</license-url>
-					</license>
-				</licenses>
-			</library>
-			<library>
-				<file-name>com.liferay.portal.remote.jaxrs.whiteboard.jar!cxf-rt-wsdl.jar</file-name>
-				<version>3.2.14</version>
-				<project-name>Apache CXF Runtime Core for WSDL</project-name>
-				<project-url>https://cxf.apache.org</project-url>
-				<licenses>
-					<license>
-						<license-name>Apache License, Version 2.0</license-name>
-						<license-url>https://www.apache.org/licenses/LICENSE-2.0.txt</license-url>
-					</license>
-				</licenses>
-			</library>
-			<library>
-				<file-name>com.liferay.portal.remote.jaxrs.whiteboard.jar!cxf-tools-validator.jar</file-name>
-				<version>3.2.14</version>
-				<project-name>Apache CXF Command Line Tools Validator</project-name>
-				<project-url>https://cxf.apache.org</project-url>
-				<licenses>
-					<license>
-						<license-name>Apache License, Version 2.0</license-name>
-						<license-url>https://www.apache.org/licenses/LICENSE-2.0.txt</license-url>
-					</license>
-				</licenses>
-			</library>
-			<library>
 				<file-name>com.liferay.portal.remote.jaxrs.whiteboard.jar!wsdl4j.jar</file-name>
 				<version>1.6.3</version>
 				<project-name>WSDL4J</project-name>
@@ -2418,8 +2345,20 @@
 			</library>
 			<library>
 				<file-name>com.liferay.portal.remote.rest.extender.jar!cxf-rt-rs-extension-providers.jar</file-name>
-				<version>3.2.14</version>
+				<version>3.4.4</version>
 				<project-name>Apache CXF JAX-RS Extensions: Providers</project-name>
+				<project-url>https://cxf.apache.org</project-url>
+				<licenses>
+					<license>
+						<license-name>Apache License, Version 2.0</license-name>
+						<license-url>https://www.apache.org/licenses/LICENSE-2.0.txt</license-url>
+					</license>
+				</licenses>
+			</library>
+			<library>
+				<file-name>com.liferay.portal.remote.rest.extender.jar!cxf-rt-rs-json-basic.jar</file-name>
+				<version>3.4.4</version>
+				<project-name>Apache CXF JAX-RS Extensions: JSON Basic</project-name>
 				<project-url>https://cxf.apache.org</project-url>
 				<licenses>
 					<license>
@@ -2437,54 +2376,6 @@
 					<license>
 						<license-name>Apache License, Version 2.0</license-name>
 						<license-url>http://www.apache.org/licenses/LICENSE-2.0</license-url>
-					</license>
-				</licenses>
-			</library>
-			<library>
-				<file-name>com.liferay.portal.remote.rest.extender.jar!org.apache.cxf.jaxrs.json.basic.jar</file-name>
-				<version>3.2.14.LIFERAY-PATCHED-1</version>
-				<project-name>Apache CXF JAX-RS Extensions: JSON Basic</project-name>
-				<project-url>http://cxf.apache.org</project-url>
-				<licenses>
-					<license>
-						<license-name>LGPL 2.1</license-name>
-						<license-url>http://www.gnu.org/licenses/old-licenses/lgpl-2.1.txt</license-url>
-					</license>
-				</licenses>
-			</library>
-			<library>
-				<file-name>com.liferay.portal.remote.soap.extender.impl.jar!cxf-rt-frontend-jaxws.jar</file-name>
-				<version>3.2.14</version>
-				<project-name>Apache CXF Runtime JAX-WS Frontend</project-name>
-				<project-url>https://cxf.apache.org</project-url>
-				<licenses>
-					<license>
-						<license-name>Apache License, Version 2.0</license-name>
-						<license-url>https://www.apache.org/licenses/LICENSE-2.0.txt</license-url>
-					</license>
-				</licenses>
-			</library>
-			<library>
-				<file-name>com.liferay.portal.remote.soap.extender.impl.jar!cxf-rt-frontend-simple.jar</file-name>
-				<version>3.2.14</version>
-				<project-name>Apache CXF Runtime Simple Frontend</project-name>
-				<project-url>https://cxf.apache.org</project-url>
-				<licenses>
-					<license>
-						<license-name>Apache License, Version 2.0</license-name>
-						<license-url>https://www.apache.org/licenses/LICENSE-2.0.txt</license-url>
-					</license>
-				</licenses>
-			</library>
-			<library>
-				<file-name>com.liferay.portal.remote.soap.extender.impl.jar!cxf-rt-ws-policy.jar</file-name>
-				<version>3.2.14</version>
-				<project-name>Apache CXF Runtime WS Policy</project-name>
-				<project-url>https://cxf.apache.org</project-url>
-				<licenses>
-					<license>
-						<license-name>Apache License, Version 2.0</license-name>
-						<license-url>https://www.apache.org/licenses/LICENSE-2.0.txt</license-url>
 					</license>
 				</licenses>
 			</library>
@@ -2864,7 +2755,8 @@
 				<project-name>jts-core</project-name>
 				<licenses>
 					<license>
-						<license-name>https://github.com/locationtech/jts/blob/master/LICENSE_EPLv1.txt, https://github.com/locationtech/jts/blob/master/LICENSE_EDLv1.txt</license-name>
+						<license-name>Eclipse Publish License, Version 1.0</license-name>
+						<license-url>https://github.com/locationtech/jts/blob/master/LICENSE_EPLv1.txt</license-url>
 					</license>
 				</licenses>
 			</library>
@@ -3624,7 +3516,8 @@
 				<project-url>http://www.oracle.com</project-url>
 				<licenses>
 					<license>
-						<license-name>http://www.eclipse.org/legal/epl-2.0, https://www.gnu.org/software/classpath/license.html, http://www.eclipse.org/org/documents/edl-v10.php</license-name>
+						<license-name>GPL2 w/ CPE</license-name>
+						<license-url>https://www.gnu.org/software/classpath/license.html</license-url>
 					</license>
 				</licenses>
 			</library>
@@ -4624,7 +4517,8 @@
 				<project-name>JGraphT - Core</project-name>
 				<licenses>
 					<license>
-						<license-name>http://jgrapht.sourceforge.net/LGPL.html, http://www.eclipse.org/legal/epl-v10.html</license-name>
+						<license-name>GNU Lesser General Public License Version 2.1, February 1999</license-name>
+						<license-url>http://jgrapht.sourceforge.net/LGPL.html</license-url>
 					</license>
 				</licenses>
 			</library>
@@ -4886,7 +4780,8 @@
 				<project-url>http://www.javassist.org/</project-url>
 				<licenses>
 					<license>
-						<license-name>http://www.mozilla.org/MPL/MPL-1.1.html, http://www.gnu.org/licenses/lgpl-2.1.html, http://www.apache.org/licenses/</license-name>
+						<license-name>MPL 1.1</license-name>
+						<license-url>http://www.mozilla.org/MPL/MPL-1.1.html</license-url>
 					</license>
 				</licenses>
 			</library>
@@ -4909,7 +4804,8 @@
 				<project-url>http://github.com/ronmamo/reflections</project-url>
 				<licenses>
 					<license>
-						<license-name>http://www.wtfpl.net/, http://www.opensource.org/licenses/bsd-license.html</license-name>
+						<license-name>WTFPL</license-name>
+						<license-url>http://www.wtfpl.net/</license-url>
 					</license>
 				</licenses>
 			</library>
@@ -5975,7 +5871,7 @@
 			</library>
 			<library>
 				<file-name>lib/development/jetty-server.jar</file-name>
-				<version>9.3.25.v20180904</version>
+				<version>9.3.30.v20211001</version>
 				<project-name>Jetty</project-name>
 				<project-url>http://www.eclipse.org/jetty</project-url>
 				<licenses>
@@ -5991,7 +5887,7 @@
 			</library>
 			<library>
 				<file-name>lib/development/jetty-util.jar</file-name>
-				<version>9.3.25.v20180904</version>
+				<version>9.3.30.v20211001</version>
 				<project-name>Jetty</project-name>
 				<project-url>http://www.eclipse.org/jetty</project-url>
 				<licenses>
@@ -6983,7 +6879,7 @@
 			</library>
 			<library>
 				<file-name>lib/portal/commons-fileupload.jar</file-name>
-				<version>1.3.3</version>
+				<version>1.5</version>
 				<project-name>Commons FileUpload</project-name>
 				<project-url>http://commons.apache.org/fileupload</project-url>
 				<licenses>
