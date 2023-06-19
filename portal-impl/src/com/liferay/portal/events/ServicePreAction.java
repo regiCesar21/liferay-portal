@@ -112,6 +112,7 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
+import java.util.Objects;
 import java.util.TimeZone;
 import java.util.concurrent.ConcurrentHashMap;
 
@@ -986,8 +987,9 @@ public class ServicePreAction extends Action {
 			Group layoutGroup = layout.getGroup();
 
 			if (layoutGroup.isUser()) {
-				if (!GetterUtil.getBoolean(
-						PropsUtil.get("feature.flag.LPS-155692"))) {
+				if (GetterUtil.getBoolean(
+						PropsUtil.get(
+							PropsKeys.LAYOUT_USER_PLID_ACCESS_DENIED))) {
 
 					long originalPlid = ParamUtil.getLong(
 						PortalUtil.getOriginalServletRequest(
