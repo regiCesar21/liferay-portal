@@ -451,7 +451,8 @@ AUI.add(
 
 					const visibleRows = contentBox
 						.all('.lfr-form-row')
-						.filter((node) => node.getDOMNode().checkVisibility());
+						.getDOMNodes()
+						.filter((node) => node.checkVisibility());
 
 					const visibleRowsLength = visibleRows.length;
 
