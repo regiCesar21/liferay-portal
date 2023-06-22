@@ -143,7 +143,7 @@ export default function ({fieldType, mappedItem, onMappingSelect}) {
 				fieldType={fieldType}
 				onValueSelect={(event) => {
 					if (event.target.value === UNMAPPED_OPTION.value) {
-						onMappingSelect({collectionFieldId: ''});
+						onMappingSelect({});
 					}
 					else {
 						onMappingSelect({
