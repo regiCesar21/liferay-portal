@@ -147,7 +147,7 @@ definition {
 
 	@priority = 5
 	test AddJoinXORWorkflowDefinitionViaViewTab {
-		property test.name.skip.portal.instance = "Kaleodesigner#AddJoinXORNodeEditNameAndDesciptionAndDeleteViaViewTab";
+		property test.name.skip.portal.instance = "Kaleodesigner#AddJoinXORWorkflowDefinitionViaViewTab";
 		property testray.component.names = "Training";
 
 		ApplicationsMenu.gotoPortlet(
@@ -214,7 +214,7 @@ definition {
 
 		KaleoDesigner.addConnectorViaViewTab(
 			connectorName = "Join2",
-			nodeType = "state2",
+			nodeType = "state",
 			nodeTypeDestination = "join-xor");
 
 		KaleoDesigner.addConnectorAndNodeViaViewTab(
