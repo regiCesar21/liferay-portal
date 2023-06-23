@@ -305,19 +305,6 @@ public class DXPEntityDTOConverterImpl implements DXPEntityDTOConverter {
 		List<String> includeAttributeNames = new ArrayList<>();
 
 		if (StringUtil.equals(
-				baseModel.getModelClassName(), AccountEntry.class.getName())) {
-
-			AccountEntry accountEntry = (AccountEntry)baseModel;
-
-			AnalyticsConfiguration analyticsConfiguration =
-				_analyticsConfigurationRegistry.getAnalyticsConfiguration(
-					accountEntry.getCompanyId());
-
-			includeAttributeNames = ListUtil.fromArray(
-				analyticsConfiguration.syncedAccountFieldNames());
-		}
-
-		if (StringUtil.equals(
 				baseModel.getModelClassName(), User.class.getName())) {
 
 			User user = (User)baseModel;

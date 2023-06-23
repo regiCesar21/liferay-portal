@@ -19,21 +19,10 @@ package com.liferay.analytics.batch.exportimport.constants;
  */
 public class AnalyticsDXPEntityBatchExporterConstants {
 
-	public static final String
-		DISPATCH_TRIGGER_NAME_ACCOUNT_ENTRY_DXP_ENTITIES =
-			"export-account-entry-analytics-dxp-entities";
-
-	public static final String DISPATCH_TRIGGER_NAME_ORDER =
-		"analytics-upload-order";
-
-	public static final String DISPATCH_TRIGGER_NAME_PRODUCT =
-		"analytics-upload-product";
-
 	public static final String DISPATCH_TRIGGER_NAME_USER_DXP_ENTITIES =
 		"export-user-analytics-dxp-entities";
 
 	public static final String[] DISPATCH_TRIGGER_NAMES_DXP_ENTITIES = {
-		"export-account-group-analytics-dxp-entities",
 		"export-analytics-association-analytics-dxp-entities",
 		"export-analytics-delete-message-analytics-dxp-entities",
 		"export-expando-column-analytics-dxp-entities",
