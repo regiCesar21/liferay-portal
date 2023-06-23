@@ -61,6 +61,14 @@ public class AnalyticsDeleteMessageLocalServiceUtil {
 		return getService().addAnalyticsDeleteMessage(analyticsDeleteMessage);
 	}
 
+	public static AnalyticsDeleteMessage addAnalyticsDeleteMessage(
+		long companyId, java.util.Date createDate, String className,
+		long classPK, long userId) {
+
+		return getService().addAnalyticsDeleteMessage(
+			companyId, createDate, className, classPK, userId);
+	}
+
 	/**
 	 * Creates a new analytics delete message with the primary key. Does not add the analytics delete message to the database.
 	 *
@@ -259,6 +267,19 @@ public class AnalyticsDeleteMessageLocalServiceUtil {
 		return getService().getAnalyticsDeleteMessages(start, end);
 	}
 
+	public static List<AnalyticsDeleteMessage> getAnalyticsDeleteMessages(
+		long companyId, java.util.Date modifiedDate, int start, int end) {
+
+		return getService().getAnalyticsDeleteMessages(
+			companyId, modifiedDate, start, end);
+	}
+
+	public static List<AnalyticsDeleteMessage> getAnalyticsDeleteMessages(
+		long companyId, int start, int end) {
+
+		return getService().getAnalyticsDeleteMessages(companyId, start, end);
+	}
+
 	/**
 	 * Returns the number of analytics delete messages.
 	 *
@@ -266,6 +287,17 @@ public class AnalyticsDeleteMessageLocalServiceUtil {
 	 */
 	public static int getAnalyticsDeleteMessagesCount() {
 		return getService().getAnalyticsDeleteMessagesCount();
+	}
+
+	public static int getAnalyticsDeleteMessagesCount(long companyId) {
+		return getService().getAnalyticsDeleteMessagesCount(companyId);
+	}
+
+	public static int getAnalyticsDeleteMessagesCount(
+		long companyId, java.util.Date modifiedDate) {
+
+		return getService().getAnalyticsDeleteMessagesCount(
+			companyId, modifiedDate);
 	}
 
 	public static

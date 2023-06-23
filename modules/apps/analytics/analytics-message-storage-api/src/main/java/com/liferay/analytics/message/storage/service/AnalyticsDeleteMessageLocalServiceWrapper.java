@@ -55,6 +55,16 @@ public class AnalyticsDeleteMessageLocalServiceWrapper
 			analyticsDeleteMessage);
 	}
 
+	@Override
+	public com.liferay.analytics.message.storage.model.AnalyticsDeleteMessage
+		addAnalyticsDeleteMessage(
+			long companyId, java.util.Date createDate, String className,
+			long classPK, long userId) {
+
+		return _analyticsDeleteMessageLocalService.addAnalyticsDeleteMessage(
+			companyId, createDate, className, classPK, userId);
+	}
+
 	/**
 	 * Creates a new analytics delete message with the primary key. Does not add the analytics delete message to the database.
 	 *
@@ -288,6 +298,26 @@ public class AnalyticsDeleteMessageLocalServiceWrapper
 			start, end);
 	}
 
+	@Override
+	public java.util.List
+		<com.liferay.analytics.message.storage.model.AnalyticsDeleteMessage>
+			getAnalyticsDeleteMessages(
+				long companyId, java.util.Date modifiedDate, int start,
+				int end) {
+
+		return _analyticsDeleteMessageLocalService.getAnalyticsDeleteMessages(
+			companyId, modifiedDate, start, end);
+	}
+
+	@Override
+	public java.util.List
+		<com.liferay.analytics.message.storage.model.AnalyticsDeleteMessage>
+			getAnalyticsDeleteMessages(long companyId, int start, int end) {
+
+		return _analyticsDeleteMessageLocalService.getAnalyticsDeleteMessages(
+			companyId, start, end);
+	}
+
 	/**
 	 * Returns the number of analytics delete messages.
 	 *
@@ -297,6 +327,20 @@ public class AnalyticsDeleteMessageLocalServiceWrapper
 	public int getAnalyticsDeleteMessagesCount() {
 		return _analyticsDeleteMessageLocalService.
 			getAnalyticsDeleteMessagesCount();
+	}
+
+	@Override
+	public int getAnalyticsDeleteMessagesCount(long companyId) {
+		return _analyticsDeleteMessageLocalService.
+			getAnalyticsDeleteMessagesCount(companyId);
+	}
+
+	@Override
+	public int getAnalyticsDeleteMessagesCount(
+		long companyId, java.util.Date modifiedDate) {
+
+		return _analyticsDeleteMessageLocalService.
+			getAnalyticsDeleteMessagesCount(companyId, modifiedDate);
 	}
 
 	@Override

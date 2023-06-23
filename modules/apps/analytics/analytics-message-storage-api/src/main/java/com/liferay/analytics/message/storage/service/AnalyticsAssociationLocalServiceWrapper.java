@@ -54,6 +54,18 @@ public class AnalyticsAssociationLocalServiceWrapper
 			analyticsAssociation);
 	}
 
+	@Override
+	public com.liferay.analytics.message.storage.model.AnalyticsAssociation
+		addAnalyticsAssociation(
+			long companyId, java.util.Date createDate, long userId,
+			String associationClassName, long associationClassPK,
+			String className, long classPK) {
+
+		return _analyticsAssociationLocalService.addAnalyticsAssociation(
+			companyId, createDate, userId, associationClassName,
+			associationClassPK, className, classPK);
+	}
+
 	/**
 	 * Creates a new analytics association with the primary key. Does not add the analytics association to the database.
 	 *
@@ -118,6 +130,14 @@ public class AnalyticsAssociationLocalServiceWrapper
 
 		return _analyticsAssociationLocalService.deleteAnalyticsAssociation(
 			analyticsAssociationId);
+	}
+
+	@Override
+	public void deleteAnalyticsAssociations(
+		long companyId, String associationClassName, long associationClassPK) {
+
+		_analyticsAssociationLocalService.deleteAnalyticsAssociations(
+			companyId, associationClassName, associationClassPK);
 	}
 
 	/**
@@ -287,6 +307,28 @@ public class AnalyticsAssociationLocalServiceWrapper
 			start, end);
 	}
 
+	@Override
+	public java.util.List
+		<com.liferay.analytics.message.storage.model.AnalyticsAssociation>
+			getAnalyticsAssociations(
+				long companyId, java.util.Date modifiedDate,
+				String associationClassName, int start, int end) {
+
+		return _analyticsAssociationLocalService.getAnalyticsAssociations(
+			companyId, modifiedDate, associationClassName, start, end);
+	}
+
+	@Override
+	public java.util.List
+		<com.liferay.analytics.message.storage.model.AnalyticsAssociation>
+			getAnalyticsAssociations(
+				long companyId, String associationClassName, int start,
+				int end) {
+
+		return _analyticsAssociationLocalService.getAnalyticsAssociations(
+			companyId, associationClassName, start, end);
+	}
+
 	/**
 	 * Returns the number of analytics associations.
 	 *
@@ -296,6 +338,23 @@ public class AnalyticsAssociationLocalServiceWrapper
 	public int getAnalyticsAssociationsCount() {
 		return _analyticsAssociationLocalService.
 			getAnalyticsAssociationsCount();
+	}
+
+	@Override
+	public int getAnalyticsAssociationsCount(
+		long companyId, java.util.Date modifiedDate,
+		String associationClassName) {
+
+		return _analyticsAssociationLocalService.getAnalyticsAssociationsCount(
+			companyId, modifiedDate, associationClassName);
+	}
+
+	@Override
+	public int getAnalyticsAssociationsCount(
+		long companyId, String associationClassName) {
+
+		return _analyticsAssociationLocalService.getAnalyticsAssociationsCount(
+			companyId, associationClassName);
 	}
 
 	@Override

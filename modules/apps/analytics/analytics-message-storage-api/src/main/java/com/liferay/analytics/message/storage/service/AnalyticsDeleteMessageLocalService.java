@@ -34,6 +34,7 @@ import com.liferay.portal.kernel.util.OrderByComparator;
 
 import java.io.Serializable;
 
+import java.util.Date;
 import java.util.List;
 
 import org.osgi.annotation.versioning.ProviderType;
@@ -75,6 +76,10 @@ public interface AnalyticsDeleteMessageLocalService
 	@Indexable(type = IndexableType.REINDEX)
 	public AnalyticsDeleteMessage addAnalyticsDeleteMessage(
 		AnalyticsDeleteMessage analyticsDeleteMessage);
+
+	public AnalyticsDeleteMessage addAnalyticsDeleteMessage(
+		long companyId, Date createDate, String className, long classPK,
+		long userId);
 
 	/**
 	 * Creates a new analytics delete message with the primary key. Does not add the analytics delete message to the database.
@@ -235,6 +240,14 @@ public interface AnalyticsDeleteMessageLocalService
 	public List<AnalyticsDeleteMessage> getAnalyticsDeleteMessages(
 		int start, int end);
 
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<AnalyticsDeleteMessage> getAnalyticsDeleteMessages(
+		long companyId, Date modifiedDate, int start, int end);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<AnalyticsDeleteMessage> getAnalyticsDeleteMessages(
+		long companyId, int start, int end);
+
 	/**
 	 * Returns the number of analytics delete messages.
 	 *
@@ -242,6 +255,13 @@ public interface AnalyticsDeleteMessageLocalService
 	 */
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getAnalyticsDeleteMessagesCount();
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int getAnalyticsDeleteMessagesCount(long companyId);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int getAnalyticsDeleteMessagesCount(
+		long companyId, Date modifiedDate);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public IndexableActionableDynamicQuery getIndexableActionableDynamicQuery();
