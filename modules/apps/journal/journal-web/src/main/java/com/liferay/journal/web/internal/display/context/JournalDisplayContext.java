@@ -1194,12 +1194,6 @@ public class JournalDisplayContext {
 		}
 
 		if (isNavigationMine() || isNavigationRecent()) {
-			boolean includeOwner = true;
-
-			if (isNavigationMine()) {
-				includeOwner = false;
-			}
-
 			if (isNavigationRecent()) {
 				articleSearchContainer.setOrderByCol("modified-date");
 				articleSearchContainer.setOrderByType(getOrderByType());
@@ -1207,13 +1201,13 @@ public class JournalDisplayContext {
 
 			int total = JournalArticleServiceUtil.getGroupArticlesCount(
 				_themeDisplay.getScopeGroupId(), _themeDisplay.getUserId(),
-				getFolderId(), getStatus(), includeOwner);
+				getFolderId(), getStatus(), false);
 
 			articleSearchContainer.setTotal(total);
 
 			List results = JournalArticleServiceUtil.getGroupArticles(
 				_themeDisplay.getScopeGroupId(), _themeDisplay.getUserId(),
-				getFolderId(), getStatus(), includeOwner,
+				getFolderId(), getStatus(), false,
 				articleSearchContainer.getStart(),
 				articleSearchContainer.getEnd(),
 				articleSearchContainer.getOrderByComparator());
