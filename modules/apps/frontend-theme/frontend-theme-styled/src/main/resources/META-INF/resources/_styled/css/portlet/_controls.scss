@@ -84,11 +84,11 @@ body.portlet {
 		display: none;
 	}
 
-	.portlet-topper {
-		display: none !important;
-	}
-
 	.portlet-title-editable {
 		pointer-events: none;
+	}
+
+	.portlet-topper {
+		display: none !important;
 	}
 }
