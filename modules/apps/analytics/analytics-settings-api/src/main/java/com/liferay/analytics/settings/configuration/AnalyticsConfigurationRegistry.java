@@ -17,13 +17,10 @@ package com.liferay.analytics.settings.configuration;
 import java.util.Dictionary;
 import java.util.Map;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 /**
  * @author Rachael Koestartyo
  */
-@ProviderType
-public interface AnalyticsConfigurationTracker {
+public interface AnalyticsConfigurationRegistry {
 
 	public AnalyticsConfiguration getAnalyticsConfiguration(long companyId);
 
@@ -37,5 +34,9 @@ public interface AnalyticsConfigurationTracker {
 	public long getCompanyId(String pid);
 
 	public boolean isActive();
+
+	public void updateCompanyConfiguration(
+			long companyId, Map<String, Object> properties)
+		throws Exception;
 
 }

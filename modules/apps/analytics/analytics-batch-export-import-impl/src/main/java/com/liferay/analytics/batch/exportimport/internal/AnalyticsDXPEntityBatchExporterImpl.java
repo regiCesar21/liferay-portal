@@ -91,7 +91,8 @@ public class AnalyticsDXPEntityBatchExporterImpl
 				continue;
 			}
 
-			Date nextFireDate = dispatchTrigger.getNextFireDate();
+			Date nextFireDate = _dispatchTriggerLocalService.getNextFireDate(
+				dispatchTrigger.getDispatchTriggerId());
 
 			Instant instant = nextFireDate.toInstant();
 
@@ -155,7 +156,6 @@ public class AnalyticsDXPEntityBatchExporterImpl
 
 		DispatchTrigger dispatchTrigger =
 			_dispatchTriggerLocalService.addDispatchTrigger(
-				null,
 				_userLocalService.getUserIdByScreenName(
 					companyId,
 					AnalyticsSecurityConstants.SCREEN_NAME_ANALYTICS_ADMIN),
@@ -166,7 +166,7 @@ public class AnalyticsDXPEntityBatchExporterImpl
 			DispatchTaskClusterMode.NOT_APPLICABLE, 0, 0, 0, 0, 0, true, false,
 			localDateTime.getMonthValue() - 1, localDateTime.getDayOfMonth(),
 			localDateTime.getYear(), localDateTime.getHour(),
-			localDateTime.getMinute(), "UTC");
+			localDateTime.getMinute());
 	}
 
 	private static final String _CRON_EXPRESSION = "0 0 * * * ?";

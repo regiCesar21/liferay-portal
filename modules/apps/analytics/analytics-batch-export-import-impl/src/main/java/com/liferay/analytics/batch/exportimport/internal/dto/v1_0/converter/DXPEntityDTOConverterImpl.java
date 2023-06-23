@@ -14,7 +14,6 @@
 
 package com.liferay.analytics.batch.exportimport.internal.dto.v1_0.converter;
 
-import com.liferay.account.model.AccountEntry;
 import com.liferay.analytics.dxp.entity.rest.dto.v1_0.DXPEntity;
 import com.liferay.analytics.dxp.entity.rest.dto.v1_0.ExpandoField;
 import com.liferay.analytics.dxp.entity.rest.dto.v1_0.Field;
@@ -108,9 +107,7 @@ public class DXPEntityDTOConverterImpl implements DXPEntityDTOConverter {
 					if (entry.getValue() instanceof Date) {
 						Date date = (Date)entry.getValue();
 
-						if (date.getTime() > 0) {
-							value = String.valueOf(date.getTime());
-						}
+						value = String.valueOf(date.getTime());
 					}
 					else if (Validator.isNotNull(entry.getValue())) {
 						value = String.valueOf(entry.getValue());

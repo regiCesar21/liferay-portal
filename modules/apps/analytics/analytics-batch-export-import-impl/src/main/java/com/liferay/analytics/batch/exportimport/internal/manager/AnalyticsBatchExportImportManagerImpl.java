@@ -24,7 +24,6 @@ import com.liferay.batch.engine.BatchEngineImportTaskExecutor;
 import com.liferay.batch.engine.BatchEngineTaskContentType;
 import com.liferay.batch.engine.BatchEngineTaskExecuteStatus;
 import com.liferay.batch.engine.BatchEngineTaskOperation;
-import com.liferay.batch.engine.constants.BatchEngineImportTaskConstants;
 import com.liferay.batch.engine.model.BatchEngineExportTask;
 import com.liferay.batch.engine.model.BatchEngineImportTask;
 import com.liferay.batch.engine.service.BatchEngineExportTaskLocalService;
@@ -46,15 +45,13 @@ import com.liferay.portal.kernel.settings.CompanyServiceSettingsLocator;
 import com.liferay.portal.kernel.settings.Settings;
 import com.liferay.portal.kernel.settings.SettingsDescriptor;
 import com.liferay.portal.kernel.settings.SettingsFactory;
-import com.liferay.portal.kernel.settings.SettingsLocatorHelper;
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.FastDateFormatFactoryUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.Http;
-import com.liferay.portal.kernel.util.HttpComponentsUtil;
 import com.liferay.portal.kernel.util.PrefsPropsUtil;
 import com.liferay.portal.kernel.util.StringUtil;
-import com.liferay.portal.kernel.util.UnicodePropertiesBuilder;
+import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.util.Validator;
 
 import java.io.File;
@@ -96,7 +93,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Riccardo Ferrari
  */
-@Component(service = AnalyticsBatchExportImportManager.class)
+@Component(immediate = true, service = AnalyticsBatchExportImportManager.class)
 public class AnalyticsBatchExportImportManagerImpl
 	implements AnalyticsBatchExportImportManager {
 
@@ -140,7 +137,7 @@ public class AnalyticsBatchExportImportManagerImpl
 
 		BatchEngineExportTask batchEngineExportTask =
 			_batchEngineExportTaskLocalService.addBatchEngineExportTask(
-				null, companyId, userId, null, resourceName,
+				companyId, userId, null, resourceName,
 				BatchEngineTaskContentType.JSONL.name(),
 				BatchEngineTaskExecuteStatus.INITIAL.name(), fieldNamesList,
 				parameters, batchEngineExportTaskItemDelegateName);
@@ -153,19 +150,6 @@ public class AnalyticsBatchExportImportManagerImpl
 
 		if (batchEngineTaskExecuteStatus.equals(
 				BatchEngineTaskExecuteStatus.COMPLETED)) {
-
-			_notify(
-				StringBundler.concat(
-					"Exported ", batchEngineExportTask.getTotalItemsCount(),
-					" items for resource ", resourceName),
-				notificationUnsafeConsumer);
-
-			if (batchEngineExportTask.getTotalItemsCount() == 0) {
-				_notify(
-					"There are no items to upload", notificationUnsafeConsumer);
-
-				return;
-			}
 
 			_notify(
 				"Uploading resource " + resourceName,
@@ -222,11 +206,10 @@ public class AnalyticsBatchExportImportManagerImpl
 
 		BatchEngineImportTask batchEngineImportTask =
 			_batchEngineImportTaskLocalService.addBatchEngineImportTask(
-				null, companyId, userId, 50, null, resourceName,
+				companyId, userId, 50, null, resourceName,
 				Files.readAllBytes(resourceFile.toPath()),
 				BatchEngineTaskContentType.JSONL.name(),
 				BatchEngineTaskExecuteStatus.INITIAL.name(), fieldMapping,
-				BatchEngineImportTaskConstants.IMPORT_STRATEGY_ON_ERROR_FAIL,
 				BatchEngineTaskOperation.CREATE.name(), null,
 				batchEngineImportTaskItemDelegateName);
 
@@ -239,11 +222,7 @@ public class AnalyticsBatchExportImportManagerImpl
 		if (batchEngineTaskExecuteStatus.equals(
 				BatchEngineTaskExecuteStatus.COMPLETED)) {
 
-			_notify(
-				StringBundler.concat(
-					"Imported ", batchEngineImportTask.getTotalItemsCount(),
-					" items for resource ", resourceName),
-				notificationUnsafeConsumer);
+			_notify("Imported " + resourceName, notificationUnsafeConsumer);
 
 			_batchEngineImportTaskLocalService.deleteBatchEngineImportTask(
 				batchEngineImportTask);
@@ -384,16 +363,16 @@ public class AnalyticsBatchExportImportManagerImpl
 				return;
 			}
 
+			UnicodeProperties unicodeProperties = new UnicodeProperties(true);
+
+			unicodeProperties.put(
+				"liferayAnalyticsEndpointURL", liferayAnalyticsEndpointURL);
+			unicodeProperties.put(
+				"liferayAnalyticsFaroBackendURL",
+				liferayAnalyticsFaroBackendURL);
+
 			_companyLocalService.updatePreferences(
-				companyId,
-				UnicodePropertiesBuilder.create(
-					true
-				).put(
-					"liferayAnalyticsEndpointURL", liferayAnalyticsEndpointURL
-				).put(
-					"liferayAnalyticsFaroBackendURL",
-					liferayAnalyticsFaroBackendURL
-				).build());
+				companyId, unicodeProperties);
 
 			Dictionary<String, Object> configurationProperties =
 				_getConfigurationProperties(companyId);
@@ -424,7 +403,7 @@ public class AnalyticsBatchExportImportManagerImpl
 				companyId);
 
 		options.setLocation(
-			HttpComponentsUtil.addParameter(
+			_http.addParameter(
 				analyticsConfiguration.liferayAnalyticsEndpointURL() +
 					"/dxp-batch-entities",
 				"resourceName", resourceName));
@@ -525,7 +504,7 @@ public class AnalyticsBatchExportImportManagerImpl
 			new CompanyServiceSettingsLocator(companyId, ocd.id()));
 
 		SettingsDescriptor settingsDescriptor =
-			_settingsLocatorHelper.getSettingsDescriptor(ocd.id());
+			_settingsFactory.getSettingsDescriptor(ocd.id());
 
 		if (settingsDescriptor == null) {
 			return configurationProperties;
@@ -627,27 +606,20 @@ public class AnalyticsBatchExportImportManagerImpl
 		}
 
 		try {
+			UnicodeProperties unicodeProperties = new UnicodeProperties(true);
+
+			unicodeProperties.put("liferayAnalyticsConnectionType", "");
+			unicodeProperties.put("liferayAnalyticsDataSourceId", "");
+			unicodeProperties.put("liferayAnalyticsEndpointURL", "");
+			unicodeProperties.put(
+				"liferayAnalyticsFaroBackendSecuritySignature", "");
+			unicodeProperties.put("liferayAnalyticsFaroBackendURL", "");
+			unicodeProperties.put("liferayAnalyticsGroupIds", "");
+			unicodeProperties.put("liferayAnalyticsProjectId", "");
+			unicodeProperties.put("liferayAnalyticsURL", "");
+
 			_companyLocalService.updatePreferences(
-				companyId,
-				UnicodePropertiesBuilder.create(
-					true
-				).put(
-					"liferayAnalyticsConnectionType", ""
-				).put(
-					"liferayAnalyticsDataSourceId", ""
-				).put(
-					"liferayAnalyticsEndpointURL", ""
-				).put(
-					"liferayAnalyticsFaroBackendSecuritySignature", ""
-				).put(
-					"liferayAnalyticsFaroBackendURL", ""
-				).put(
-					"liferayAnalyticsGroupIds", ""
-				).put(
-					"liferayAnalyticsProjectId", ""
-				).put(
-					"liferayAnalyticsURL", ""
-				).build());
+				companyId, unicodeProperties);
 		}
 		catch (Exception exception) {
 			if (_log.isWarnEnabled()) {
@@ -777,8 +749,5 @@ public class AnalyticsBatchExportImportManagerImpl
 
 	@Reference
 	private SettingsFactory _settingsFactory;
-
-	@Reference
-	private SettingsLocatorHelper _settingsLocatorHelper;
 
 }

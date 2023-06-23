@@ -12,10 +12,10 @@
  * details.
  */
 
-package com.liferay.analytics.message.storage.internal.upgrade.registry;
+package com.liferay.analytics.message.storage.internal.upgrade;
 
-import com.liferay.analytics.message.storage.internal.upgrade.v1_1_0.util.AnalyticsDeleteMessageTable;
 import com.liferay.analytics.message.storage.internal.upgrade.v1_1_0.util.AnalyticsAssociationTable;
+import com.liferay.analytics.message.storage.internal.upgrade.v1_1_0.util.AnalyticsDeleteMessageTable;
 import com.liferay.analytics.message.storage.internal.upgrade.v1_1_0.util.AnalyticsMessageTable;
 import com.liferay.portal.upgrade.registry.UpgradeStepRegistrator;
 
@@ -25,7 +25,7 @@ import org.osgi.service.component.annotations.Component;
  * @author Marcos Martins
  */
 @Component(service = UpgradeStepRegistrator.class)
-public class AnalyticsMessageStorageServiceUpgradeStepRegistrator
+public class AnalyticsMessageStorageServiceUpgrade
 	implements UpgradeStepRegistrator {
 
 	@Override

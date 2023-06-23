@@ -30,7 +30,7 @@ import com.liferay.portal.kernel.service.CompanyService;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.StringUtil;
-import com.liferay.portal.kernel.util.UnicodePropertiesBuilder;
+import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.util.Validator;
 
 import java.util.Date;
@@ -92,7 +92,7 @@ public abstract class BaseAnalyticsDXPEntityModelListener
 			analyticsDeleteMessageLocalService.addAnalyticsDeleteMessage(
 				companyId, new Date(), model.getModelClassName(),
 				(long)model.getPrimaryKeyObj(),
-				userLocalService.getGuestUserId(companyId));
+				userLocalService.getDefaultUserId(companyId));
 		}
 		catch (Exception exception) {
 			if (_log.isWarnEnabled()) {
@@ -104,6 +104,10 @@ public abstract class BaseAnalyticsDXPEntityModelListener
 	}
 
 	protected T getModel(Object classPK) {
+		return null;
+	}
+
+	protected Class<T> getModelClass() {
 		return null;
 	}
 
@@ -134,14 +138,14 @@ public abstract class BaseAnalyticsDXPEntityModelListener
 
 		if (Validator.isNotNull(preferencePropertyName)) {
 			try {
-				companyService.updatePreferences(
-					companyId,
-					UnicodePropertiesBuilder.create(
-						true
-					).put(
-						preferencePropertyName,
-						StringUtil.merge(modelIds, StringPool.COMMA)
-					).build());
+				UnicodeProperties unicodeProperties = new UnicodeProperties(
+					true);
+
+				unicodeProperties.put(
+					preferencePropertyName,
+					StringUtil.merge(modelIds, StringPool.COMMA));
+
+				companyService.updatePreferences(companyId, unicodeProperties);
 			}
 			catch (Exception exception) {
 				if (_log.isWarnEnabled()) {
@@ -210,7 +214,7 @@ public abstract class BaseAnalyticsDXPEntityModelListener
 
 			analyticsAssociationLocalService.addAnalyticsAssociation(
 				companyId, new Date(),
-				userLocalService.getGuestUserId(companyId),
+				userLocalService.getDefaultUserId(companyId),
 				associationClassName, (long)associationClassPK,
 				modelClass.getName(), (long)classPK);
 		}

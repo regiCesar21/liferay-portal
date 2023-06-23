@@ -15,7 +15,7 @@
 package com.liferay.analytics.settings.internal.configuration.persistence.listener;
 
 import com.liferay.analytics.settings.configuration.AnalyticsConfiguration;
-import com.liferay.analytics.settings.configuration.AnalyticsConfigurationTracker;
+import com.liferay.analytics.settings.configuration.AnalyticsConfigurationRegistry;
 import com.liferay.portal.configuration.persistence.listener.ConfigurationModelListener;
 import com.liferay.portal.kernel.util.ArrayUtil;
 
@@ -40,7 +40,7 @@ public class AnalyticsConfigurationModelListener
 		String pid, Dictionary<String, Object> properties) {
 
 		AnalyticsConfiguration analyticsConfiguration =
-			_analyticsConfigurationTracker.getAnalyticsConfiguration(pid);
+			_analyticsConfigurationRegistry.getAnalyticsConfiguration(pid);
 
 		properties.put(
 			"previousSyncAllContacts",
@@ -70,6 +70,6 @@ public class AnalyticsConfigurationModelListener
 	}
 
 	@Reference
-	private AnalyticsConfigurationTracker _analyticsConfigurationTracker;
+	private AnalyticsConfigurationRegistry _analyticsConfigurationRegistry;
 
 }

@@ -20,9 +20,12 @@ import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
+import org.osgi.annotation.versioning.ProviderType;
+
 /**
  * @author Riccardo Ferrari
  */
+@ProviderType
 public interface AnalyticsBatchExportImportManager {
 
 	public void exportToAnalyticsCloud(

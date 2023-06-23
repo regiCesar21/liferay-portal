@@ -25,6 +25,8 @@ import com.liferay.dispatch.service.DispatchLogLocalService;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -41,9 +43,8 @@ public abstract class BaseAnalyticsDXPEntityExportDispatchTaskExecutor
 
 	@Override
 	public void doExecute(
-			DispatchTrigger dispatchTrigger,
-			DispatchTaskExecutorOutput dispatchTaskExecutorOutput)
-		throws Exception {
+		DispatchTrigger dispatchTrigger,
+		DispatchTaskExecutorOutput dispatchTaskExecutorOutput) {
 
 		if (!shouldExport(dispatchTrigger.getCompanyId())) {
 			return;
@@ -65,20 +66,27 @@ public abstract class BaseAnalyticsDXPEntityExportDispatchTaskExecutor
 			resourceLastModifiedDate = latestSuccessfulDispatchLog.getEndDate();
 		}
 
-		analyticsBatchExportImportManager.exportToAnalyticsCloud(
-			getBatchEngineExportTaskItemDelegateName(),
-			dispatchTrigger.getCompanyId(), null,
-			getFilterString(dispatchTrigger.getCompanyId()),
-			message -> _updateDispatchLog(
-				dispatchLog.getDispatchLogId(), dispatchTaskExecutorOutput,
-				message),
-			resourceLastModifiedDate, DXPEntity.class.getName(),
-			dispatchTrigger.getUserId());
+		try {
+			analyticsBatchExportImportManager.exportToAnalyticsCloud(
+				getBatchEngineExportTaskItemDelegateName(),
+				dispatchTrigger.getCompanyId(), null,
+				getFilterString(dispatchTrigger.getCompanyId()),
+				message -> _updateDispatchLog(
+					dispatchLog.getDispatchLogId(), dispatchTaskExecutorOutput,
+					message),
+				resourceLastModifiedDate, DXPEntity.class.getName(),
+				dispatchTrigger.getUserId());
+		}
+		catch (Exception exception) {
+			if (_log.isDebugEnabled()) {
+				_log.debug("Unable to export to Analytics Cloud", exception);
+			}
+		}
 	}
 
 	protected abstract String getBatchEngineExportTaskItemDelegateName();
 
-	protected String getFilterString(long companyId) throws PortalException {
+	protected String getFilterString(long companyId) {
 		return null;
 	}
 
@@ -117,6 +125,9 @@ public abstract class BaseAnalyticsDXPEntityExportDispatchTaskExecutor
 			dispatchTaskExecutorOutput.getOutput(),
 			DispatchTaskStatus.IN_PROGRESS);
 	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		BaseAnalyticsDXPEntityExportDispatchTaskExecutor.class);
 
 	private static final DateFormat _dateFormat = new SimpleDateFormat(
 		"yyyy-MM-dd'T'HH:mm:ss.SSSZ");

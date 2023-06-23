@@ -40,10 +40,16 @@ public interface AnalyticsConfiguration {
 	public String liferayAnalyticsDataSourceId();
 
 	@Meta.AD(required = false)
+	public boolean liferayAnalyticsEnableAllGroupIds();
+
+	@Meta.AD(required = false)
 	public String liferayAnalyticsEndpointURL();
 
 	@Meta.AD(required = false)
 	public String liferayAnalyticsFaroBackendSecuritySignature();
+
+	@Meta.AD(required = false)
+	public String liferayAnalyticsFaroBackendURL();
 
 	@Meta.AD(required = false)
 	public String liferayAnalyticsProjectId();
@@ -58,7 +64,16 @@ public interface AnalyticsConfiguration {
 	public String siteReportingGrouping();
 
 	@Meta.AD(required = false)
+	public String[] syncedAccountGroupIds();
+
+	@Meta.AD(required = false)
+	public boolean previousSyncAllContacts();
+
+	@Meta.AD(required = false)
 	public boolean syncAllContacts();
+
+	@Meta.AD(required = false)
+	public String[] previousSyncedContactFieldNames();
 
 	@Meta.AD(required = false)
 	public String[] syncedContactFieldNames();
@@ -67,10 +82,19 @@ public interface AnalyticsConfiguration {
 	public String[] syncedGroupIds();
 
 	@Meta.AD(required = false)
+	public String[] previousSyncedOrganizationIds();
+
+	@Meta.AD(required = false)
 	public String[] syncedOrganizationIds();
 
 	@Meta.AD(required = false)
+	public String[] previousSyncedUserFieldNames();
+
+	@Meta.AD(required = false)
 	public String[] syncedUserFieldNames();
+
+	@Meta.AD(required = false)
+	public String[] previousSyncedUserGroupIds();
 
 	@Meta.AD(required = false)
 	public String[] syncedUserGroupIds();

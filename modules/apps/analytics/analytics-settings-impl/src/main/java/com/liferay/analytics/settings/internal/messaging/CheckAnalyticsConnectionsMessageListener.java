@@ -14,9 +14,9 @@
 
 package com.liferay.analytics.settings.internal.messaging;
 
-import com.liferay.analytics.message.sender.client.AnalyticsMessageSenderClient;
+import com.liferay.analytics.batch.exportimport.manager.AnalyticsBatchExportImportManager;
 import com.liferay.analytics.settings.configuration.AnalyticsConfiguration;
-import com.liferay.analytics.settings.configuration.AnalyticsConfigurationTracker;
+import com.liferay.analytics.settings.configuration.AnalyticsConfigurationRegistry;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.messaging.BaseMessageListener;
@@ -72,7 +72,7 @@ public class CheckAnalyticsConnectionsMessageListener
 	@Override
 	protected void doReceive(Message message) throws Exception {
 		Map<Long, AnalyticsConfiguration> analyticsConfigurations =
-			_analyticsConfigurationTracker.getAnalyticsConfigurations();
+			_analyticsConfigurationRegistry.getAnalyticsConfigurations();
 
 		if (analyticsConfigurations.isEmpty()) {
 			return;
@@ -83,7 +83,7 @@ public class CheckAnalyticsConnectionsMessageListener
 					analyticsConfigurations.entrySet()) {
 
 			try {
-				_analyticsMessageSenderClient.validateConnection(
+				_analyticsBatchExportImportManager.validateConnection(
 					analyticsConfigurationEntry.getKey());
 			}
 			catch (Exception exception) {
@@ -106,10 +106,11 @@ public class CheckAnalyticsConnectionsMessageListener
 		CheckAnalyticsConnectionsMessageListener.class);
 
 	@Reference
-	private AnalyticsConfigurationTracker _analyticsConfigurationTracker;
+	private AnalyticsBatchExportImportManager
+		_analyticsBatchExportImportManager;
 
 	@Reference
-	private AnalyticsMessageSenderClient _analyticsMessageSenderClient;
+	private AnalyticsConfigurationRegistry _analyticsConfigurationRegistry;
 
 	@Reference
 	private SchedulerEngineHelper _schedulerEngineHelper;

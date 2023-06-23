@@ -16,7 +16,6 @@ package com.liferay.analytics.settings.internal.model.listener;
 
 import com.liferay.analytics.batch.exportimport.model.listener.BaseAnalyticsDXPEntityModelListener;
 import com.liferay.analytics.settings.configuration.AnalyticsConfiguration;
-import com.liferay.analytics.settings.configuration.AnalyticsConfigurationRegistry;
 import com.liferay.expando.kernel.model.ExpandoColumn;
 import com.liferay.expando.kernel.model.ExpandoTable;
 import com.liferay.expando.kernel.model.ExpandoTableConstants;
@@ -48,7 +47,7 @@ public class ExpandoColumnModelListener
 	public void onAfterRemove(ExpandoColumn expandoColumn) {
 		try {
 			AnalyticsConfiguration analyticsConfiguration =
-				_analyticsConfigurationRegistry.getAnalyticsConfiguration(
+				analyticsConfigurationRegistry.getAnalyticsConfiguration(
 					expandoColumn.getCompanyId());
 
 			String[] syncedUserFieldNames1 =
@@ -70,7 +69,7 @@ public class ExpandoColumnModelListener
 				}
 			}
 
-			_analyticsConfigurationRegistry.updateCompanyConfiguration(
+			analyticsConfigurationRegistry.updateCompanyConfiguration(
 				expandoColumn.getCompanyId(),
 				new HashMapBuilder<>().<String, Object>put(
 					"previousSyncedUserFieldNames", syncedUserFieldNames1
@@ -144,9 +143,6 @@ public class ExpandoColumnModelListener
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		ExpandoColumnModelListener.class);
-
-	@Reference
-	private AnalyticsConfigurationRegistry _analyticsConfigurationRegistry;
 
 	@Reference
 	private ClassNameLocalService _classNameLocalService;
