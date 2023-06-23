@@ -87,7 +87,7 @@ definition {
 			category = "Content & Data",
 			portlet = "Documents and Media");
 
-		LexiconEntry.changeDisplayStyle(displayStyle = "list");
+		Upgrade.changeDisplayStyle(displayStyle = "list");
 
 		DMNavigator.gotoAddRepositoryCP();
 

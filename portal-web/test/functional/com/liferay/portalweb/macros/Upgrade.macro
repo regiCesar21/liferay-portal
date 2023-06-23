@@ -3289,7 +3289,7 @@ definition {
 
 		Navigator.gotoPage(pageName = "Document");
 
-		ManagementBar.changeDisplayStyle(displayStyle = "List");
+		Upgrade.changeDisplayStyle(displayStyle = "List");
 
 		DMDocument.viewPG(dmDocumentTitle = "Document1");
 
@@ -3360,7 +3360,7 @@ definition {
 
 		Navigator.gotoPage(pageName = "Document");
 
-		LexiconEntry.changeDisplayStyle(displayStyle = "list");
+		Upgrade.changeDisplayStyle(displayStyle = "list");
 
 		DMDocument.viewPG(dmDocumentTitle = "Document1");
 
