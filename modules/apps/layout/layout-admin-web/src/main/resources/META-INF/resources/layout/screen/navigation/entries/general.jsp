@@ -242,24 +242,8 @@ renderResponse.setTitle(selLayout.getName(locale));
 	</c:otherwise>
 </c:choose>
 
-<aui:script>
-	var form = document.getElementById('<portlet:namespace />editLayoutFm');
-
-	form.addEventListener('submit', function (event) {
-		var applyLayoutPrototype = document.getElementById(
-			'<portlet:namespace />applyLayoutPrototype'
-		);
-
-		if (
-			!applyLayoutPrototype ||
-			applyLayoutPrototype.value === 'false' ||
-			(applyLayoutPrototype &&
-				applyLayoutPrototype.value === 'true' &&
-				confirm(
-					'<%= UnicodeLanguageUtil.get(request, "reactivating-inherited-changes-may-update-the-page-with-the-possible-changes-that-could-have-been-made-in-the-original-template") %>'
-				))
-		) {
-			submitForm(form);
-		}
-	});
-</aui:script>
+<liferay-frontend:component
+	componentId='<%= liferayPortletResponse.getNamespace() + "editLayout" %>'
+	context="<%= layoutsAdminDisplayContext.getProps() %>"
+	module="js/EditLayout"
+/>
