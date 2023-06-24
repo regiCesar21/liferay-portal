@@ -58,6 +58,8 @@ import com.liferay.portal.kernel.util.Http;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
+import com.liferay.portal.kernel.util.PrefsPropsUtil;
+import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.URLCodec;
 import com.liferay.portal.kernel.util.Validator;
@@ -423,8 +425,13 @@ public class EditUserMVCActionCommand extends BaseMVCActionCommand {
 		String emailAddress = BeanParamUtil.getString(
 			user, actionRequest, "emailAddress");
 
-		if (!screenName.equals(oldScreenName) ||
-			!emailAddress.equals(oldEmailAddress)) {
+		Company company = portal.getCompany(actionRequest);
+
+		if (PrefsPropsUtil.getBoolean(
+				company.getCompanyId(),
+				PropsKeys.COMPANY_SECURITY_UPDATE_PASSWORD_REQUIRED) &&
+			(!screenName.equals(oldScreenName) ||
+			 !emailAddress.equals(oldEmailAddress))) {
 
 			int authResult = _userLocalService.authenticateByUserId(
 				themeDisplay.getCompanyId(), portal.getUserId(actionRequest),
@@ -524,8 +531,6 @@ public class EditUserMVCActionCommand extends BaseMVCActionCommand {
 
 			updateLanguageId = true;
 		}
-
-		Company company = portal.getCompany(actionRequest);
 
 		if (company.isStrangersVerify() &&
 			!StringUtil.equalsIgnoreCase(oldEmailAddress, emailAddress)) {
