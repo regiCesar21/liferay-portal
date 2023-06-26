@@ -32,7 +32,7 @@ public class UpgradeExpandoColumn extends UpgradeProcess {
 
 		runSQL(
 			"update ExpandoColumn set modifiedDate = CURRENT_TIMESTAMP where " +
-			"modifiedDate is null");
+				"modifiedDate is null");
 	}
 
 }
