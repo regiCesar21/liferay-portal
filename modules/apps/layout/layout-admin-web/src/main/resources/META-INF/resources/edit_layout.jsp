@@ -47,3 +47,5 @@ renderResponse.setTitle(selLayout.getName(locale));
 	navCssClass="col-lg-3"
 	portletURL="<%= layoutsAdminDisplayContext.getScreenNavigationPortletURL() %>"
 />
+
+<%@ include file="/friendly_url_warning_message.jspf" %>
