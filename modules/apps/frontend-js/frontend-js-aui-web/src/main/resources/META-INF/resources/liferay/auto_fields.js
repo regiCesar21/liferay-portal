@@ -449,6 +449,8 @@ AUI.add(
 
 					var contentBox = instance._contentBox;
 
+					let computedStyle;
+
 					const visibleRows = contentBox
 						.all('.lfr-form-row')
 						.getDOMNodes()
