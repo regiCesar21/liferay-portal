@@ -245,6 +245,13 @@ public class DLFileEntryServiceUtil {
 		return getService().getFileEntry(groupId, folderId, title);
 	}
 
+	public static DLFileEntry getFileEntryByFileName(
+			long groupId, long folderId, String fileName)
+		throws PortalException {
+
+		return getService().getFileEntryByFileName(groupId, folderId, fileName);
+	}
+
 	public static DLFileEntry getFileEntryByUuidAndGroupId(
 			String uuid, long groupId)
 		throws PortalException {
