@@ -67,14 +67,14 @@ public class GetLayoutChildrenMVCActionCommand extends BaseMVCActionCommand {
 		LayoutsAdminDisplayContext layoutsAdminDisplayContext =
 			new LayoutsAdminDisplayContext(
 				_layoutConverterConfiguration, _layoutConverterRegistry,
-				_layoutCopyHelper,
+				_layoutCopyHelper, _layoutSetPrototypeHelper,
 				_portal.getLiferayPortletRequest(actionRequest),
 				_portal.getLiferayPortletResponse(actionResponse),
 				_stagingGroupHelper);
 
 		MillerColumnsDisplayContext millerColumnsDisplayContext =
 			new MillerColumnsDisplayContext(
-				_layoutSetPrototypeHelper,layoutsAdminDisplayContext,
+				_layoutSetPrototypeHelper, layoutsAdminDisplayContext,
 				_portal.getLiferayPortletRequest(actionRequest),
 				_portal.getLiferayPortletResponse(actionResponse));
 

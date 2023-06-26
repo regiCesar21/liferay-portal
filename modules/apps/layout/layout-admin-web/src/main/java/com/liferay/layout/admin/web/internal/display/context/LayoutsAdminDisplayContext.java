@@ -11,6 +11,7 @@ import com.liferay.asset.kernel.service.AssetVocabularyServiceUtil;
 import com.liferay.asset.list.model.AssetListEntry;
 import com.liferay.exportimport.kernel.staging.LayoutStagingUtil;
 import com.liferay.exportimport.kernel.staging.StagingUtil;
+import com.liferay.frontend.taglib.clay.servlet.taglib.LinkTag;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemListBuilder;
 import com.liferay.layout.admin.constants.LayoutAdminPortletKeys;
@@ -21,6 +22,7 @@ import com.liferay.layout.page.template.service.LayoutPageTemplateCollectionLoca
 import com.liferay.layout.page.template.service.LayoutPageTemplateEntryLocalServiceUtil;
 import com.liferay.layout.page.template.service.LayoutPageTemplateEntryServiceUtil;
 import com.liferay.layout.page.template.util.comparator.LayoutPageTemplateCollectionNameComparator;
+import com.liferay.layout.set.prototype.helper.LayoutSetPrototypeHelper;
 import com.liferay.layout.util.LayoutCopyHelper;
 import com.liferay.layout.util.comparator.LayoutCreateDateComparator;
 import com.liferay.layout.util.comparator.LayoutRelevanceComparator;
@@ -102,6 +104,7 @@ import javax.portlet.ResourceURL;
 import javax.portlet.WindowStateException;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.jsp.JspException;
 
 /**
  * @author Eudaldo Alonso
@@ -112,6 +115,7 @@ public class LayoutsAdminDisplayContext {
 		LayoutConverterConfiguration layoutConverterConfiguration,
 		LayoutConverterRegistry layoutConverterRegistry,
 		LayoutCopyHelper layoutCopyHelper,
+		LayoutSetPrototypeHelper layoutSetPrototypeHelper,
 		LiferayPortletRequest liferayPortletRequest,
 		LiferayPortletResponse liferayPortletResponse,
 		StagingGroupHelper stagingGroupHelper) {
@@ -119,6 +123,7 @@ public class LayoutsAdminDisplayContext {
 		_layoutConverterConfiguration = layoutConverterConfiguration;
 		_layoutConverterRegistry = layoutConverterRegistry;
 		_layoutCopyHelper = layoutCopyHelper;
+		_layoutSetPrototypeHelper = layoutSetPrototypeHelper;
 		_liferayPortletRequest = liferayPortletRequest;
 		_liferayPortletResponse = liferayPortletResponse;
 		_stagingGroupHelper = stagingGroupHelper;
@@ -495,6 +500,62 @@ public class LayoutsAdminDisplayContext {
 		}
 
 		return friendlyURLBase.toString();
+	}
+
+	public String getFriendlyURLWarningMessage() throws PortalException {
+		if (_warningMessage != null) {
+			return _warningMessage;
+		}
+
+		Layout layout = getSelLayout();
+
+		Group group = layout.getGroup();
+		LayoutSet layoutSet = layout.getLayoutSet();
+
+		if (!FeatureFlagManagerUtil.isEnabled("LPS-174417") ||
+			(!group.isLayoutSetPrototype() &&
+			 !layoutSet.isLayoutSetPrototypeLinkActive())) {
+
+			_warningMessage = StringPool.BLANK;
+
+			return _warningMessage;
+		}
+
+		List<Layout> layouts =
+			_layoutSetPrototypeHelper.getDuplicatedFriendlyURLLayouts(layout);
+
+		if (layouts.isEmpty()) {
+			_warningMessage = StringPool.BLANK;
+
+			return _warningMessage;
+		}
+
+		String heading;
+
+		if (group.isLayoutSetPrototype()) {
+			heading = LanguageUtil.get(
+				themeDisplay.getLocale(),
+				"the-site-template-page-friendly-url-is-conflicting-with-the-" +
+					"page-friendly-url-in-some-of-the-sites-created-from-" +
+						"this-template");
+		}
+		else {
+			heading = LanguageUtil.get(
+				themeDisplay.getLocale(),
+				"the-friendly-url-of-this-page-is-conflicting-with-a-" +
+					"friendly-url-of-a-page-in-the-site-template,-from-which-" +
+						"this-site-was-created");
+		}
+
+		List<String> list = new ArrayList<>();
+
+		for (Layout duplicatedFriendlyURLLayout : layouts) {
+			list.add(_getLayoutMessage(duplicatedFriendlyURLLayout));
+		}
+
+		_warningMessage = _getWarningMessageHTML(heading, list);
+
+		return _warningMessage;
 	}
 
 	public Group getGroup() {
@@ -1540,6 +1601,7 @@ public class LayoutsAdminDisplayContext {
 		return true;
 	}
 
+<<<<<<< HEAD
 	public boolean isShowOrphanPortletsAction(Layout layout)
 		throws PortalException {
 
@@ -1567,6 +1629,14 @@ public class LayoutsAdminDisplayContext {
 		}
 
 		return true;
+	}
+
+	public boolean isShowFriendlyURLWarningMessage() throws PortalException {
+		if (Validator.isNotNull(getFriendlyURLWarningMessage())) {
+			return true;
+		}
+
+		return false;
 	}
 
 	public boolean isShowPermissionsAction(Layout layout)
@@ -1832,6 +1902,53 @@ public class LayoutsAdminDisplayContext {
 		return new long[0];
 	}
 
+	private String _getLayoutMessage(Layout layout) throws PortalException {
+		if (LayoutPermissionUtil.containsLayoutUpdatePermission(
+				themeDisplay.getPermissionChecker(), layout)) {
+
+			LinkTag linkTag = new LinkTag();
+
+			linkTag.setCssClass("alert-link");
+			linkTag.setHref(getConfigureLayoutURL(layout));
+			linkTag.setLabel(
+				HtmlUtil.escape(layout.getName(themeDisplay.getLocale())));
+
+			try {
+				String link = linkTag.doTagAsString(
+					httpServletRequest,
+					PortalUtil.getHttpServletResponse(_liferayPortletResponse));
+
+				Group group = layout.getGroup();
+
+				return LanguageUtil.format(
+					themeDisplay.getLocale(), "page-x-of-x",
+					new String[] {
+						link.trim(), group.getName(themeDisplay.getLocale())
+					},
+					false);
+			}
+			catch (JspException jspException) {
+				_log.error(jspException);
+			}
+		}
+
+		Group group = layout.getGroup();
+
+		return com.liferay.portal.kernel.util.StringUtil.
+			appendParentheticalSuffix(
+				LanguageUtil.format(
+					themeDisplay.getLocale(), "page-x-of-x",
+					new String[] {
+						layout.getName(themeDisplay.getLocale()),
+						group.getName(themeDisplay.getLocale())
+					},
+					false),
+				LanguageUtil.get(
+					themeDisplay.getLocale(),
+					"please-contact-the-administrator-to-resolve-this-" +
+						"friendly-url-conflict"));
+	}
+
 	private String _getOrderByCol() {
 		if (Validator.isNotNull(_orderByCol)) {
 			return _orderByCol;
@@ -1922,6 +2039,23 @@ public class LayoutsAdminDisplayContext {
 		return _liveGroup;
 	}
 
+	private String _getWarningMessageHTML(String heading, List<String> list) {
+		StringBuilder sb = new StringBuilder();
+
+		sb.append(heading);
+		sb.append("<ul>");
+
+		for (String string : list) {
+			sb.append("<li>");
+			sb.append(string);
+			sb.append("</li>");
+		}
+
+		sb.append("</ul>");
+
+		return sb.toString();
+	}
+
 	private boolean _isShouldCheckFriendlyURL() {
 		if (!GetterUtil.getBoolean(PropsUtil.get(
 			"feature.flag.LPS-174417"))) {
@@ -1971,6 +2105,7 @@ public class LayoutsAdminDisplayContext {
 	private final LayoutCopyHelper _layoutCopyHelper;
 	private List<LayoutDescription> _layoutDescriptions;
 	private Long _layoutId;
+	private final LayoutSetPrototypeHelper _layoutSetPrototypeHelper;
 	private SearchContainer<Layout> _layoutsSearchContainer;
 	private final LiferayPortletRequest _liferayPortletRequest;
 	private final LiferayPortletResponse _liferayPortletResponse;
@@ -1987,5 +2122,6 @@ public class LayoutsAdminDisplayContext {
 	private final StagingGroupHelper _stagingGroupHelper;
 	private String _tabs1;
 	private String _themeId;
+	private String _warningMessage;
 
 }
