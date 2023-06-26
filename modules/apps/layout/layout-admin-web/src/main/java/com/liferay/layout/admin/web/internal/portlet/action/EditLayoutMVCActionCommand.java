@@ -9,6 +9,7 @@ import com.liferay.asset.kernel.model.AssetEntry;
 import com.liferay.asset.kernel.service.AssetEntryLocalService;
 import com.liferay.document.library.kernel.service.DLAppLocalService;
 import com.liferay.layout.admin.constants.LayoutAdminPortletKeys;
+import com.liferay.layout.set.prototype.helper.LayoutSetPrototypeHelper;
 import com.liferay.portal.events.EventsProcessorUtil;
 import com.liferay.portal.kernel.exception.ModelListenerException;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -262,6 +263,9 @@ public class EditLayoutMVCActionCommand extends BaseMVCActionCommand {
 			MultiSessionMessages.add(
 				actionRequest, portletResource + "layoutUpdated", layout);
 
+			ActionUtil.addFriendlyURLWarningSessionMessages(
+				layout, actionRequest, _layoutSetPrototypeHelper);
+
 			actionRequest.setAttribute(WebKeys.REDIRECT, redirect);
 		}
 		catch (ModelListenerException modelListenerException) {
@@ -284,6 +288,9 @@ public class EditLayoutMVCActionCommand extends BaseMVCActionCommand {
 
 	@Reference
 	private LayoutService _layoutService;
+
+	@Reference
+	private LayoutSetPrototypeHelper _layoutSetPrototypeHelper;
 
 	@Reference
 	private Portal _portal;

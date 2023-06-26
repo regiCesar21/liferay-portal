@@ -16,6 +16,7 @@ import com.liferay.layout.admin.web.internal.handler.LayoutExceptionRequestHandl
 import com.liferay.layout.page.template.importer.LayoutPageTemplatesImporter;
 import com.liferay.layout.page.template.model.LayoutPageTemplateStructure;
 import com.liferay.layout.page.template.service.LayoutPageTemplateStructureLocalService;
+import com.liferay.layout.set.prototype.helper.LayoutSetPrototypeHelper;
 import com.liferay.layout.util.structure.LayoutStructure;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -78,6 +79,9 @@ public class AddCollectionLayoutMVCActionCommand
 
 			MultiSessionMessages.add(
 				actionRequest, "collectionLayoutAdded", layout);
+
+			ActionUtil.addFriendlyURLWarningSessionMessages(
+				layout, actionRequest, _layoutSetPrototypeHelper);
 
 			JSONPortletResponseUtil.writeJSON(
 				actionRequest, actionResponse,
@@ -272,6 +276,9 @@ public class AddCollectionLayoutMVCActionCommand
 
 	@Reference
 	private LayoutService _layoutService;
+
+	@Reference
+	private LayoutSetPrototypeHelper _layoutSetPrototypeHelper;
 
 	@Reference
 	private Portal _portal;
