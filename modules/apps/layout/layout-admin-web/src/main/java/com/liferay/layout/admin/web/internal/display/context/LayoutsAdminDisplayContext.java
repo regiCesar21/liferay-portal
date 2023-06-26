@@ -67,12 +67,14 @@ import com.liferay.portal.kernel.theme.PortletDisplay;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.HttpUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
+import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
@@ -89,13 +91,14 @@ import com.liferay.taglib.security.PermissionsURLTag;
 
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
 import java.util.Objects;
 import java.util.TreeMap;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.PortletURL;
+import javax.portlet.ResourceURL;
 import javax.portlet.WindowStateException;
 
 import javax.servlet.http.HttpServletRequest;
@@ -818,6 +821,14 @@ public class LayoutsAdminDisplayContext {
 	public String getPreviewDraftURL(Layout layout) throws PortalException {
 		return PortalUtil.getLayoutFriendlyURL(
 			layout.fetchDraftLayout(), themeDisplay);
+	}
+
+	public Map<String, Object> getProps() {
+		return HashMapBuilder.<String, Object>put(
+			"getFriendlyURLWarningURL", () -> _getFriendlyURLWarningURL()
+		).put(
+			"shouldCheckFriendlyURL", () -> _isShouldCheckFriendlyURL()
+		).build();
 	}
 
 	public String getRedirect() {
@@ -1796,6 +1807,17 @@ public class LayoutsAdminDisplayContext {
 		return HttpUtil.setParameter(layoutFullURL, "p_l_mode", Constants.EDIT);
 	}
 
+	private String _getFriendlyURLWarningURL() {
+		ResourceURL resourceURL = _liferayPortletResponse.createResourceURL();
+
+		resourceURL.setParameter("groupId", String.valueOf(getGroupId()));
+		resourceURL.setParameter("plid", String.valueOf(getSelPlid()));
+		resourceURL.setParameter("privateLayout", String.valueOf(isPrivateLayout()));
+		resourceURL.setResourceID("/layout_admin/get_friendly_url_warning");
+
+		return resourceURL.toString();
+	}
+
 	private long[] _getGroupIds() {
 		try {
 			return PortalUtil.getCurrentAndAncestorSiteGroupIds(
@@ -1898,6 +1920,27 @@ public class LayoutsAdminDisplayContext {
 		_liveGroup = liveGroup;
 
 		return _liveGroup;
+	}
+
+	private boolean _isShouldCheckFriendlyURL() {
+		if (!GetterUtil.getBoolean(PropsUtil.get(
+			"feature.flag.LPS-174417"))) {
+			return false;
+		}
+
+		Group group = getGroup();
+
+		if (group.isLayoutSetPrototype()) {
+			return true;
+		}
+
+		LayoutSet layoutSet = getSelLayoutSet();
+
+		if (layoutSet.isLayoutSetPrototypeLinkEnabled()) {
+			return true;
+		}
+
+		return false;
 	}
 
 	private boolean _matchesHostname(

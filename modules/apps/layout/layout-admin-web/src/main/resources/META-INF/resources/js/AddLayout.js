@@ -12,7 +12,11 @@
  * details.
  */
 
-export default function ({namespace}) {
+export default function ({
+	 getFriendlyURLWarningURL,
+	 namespace,
+	 shouldCheckFriendlyURL,
+ }) {
 	const addButton = document.getElementById(`${namespace}addButton`);
 
 	const form = document.getElementById(`${namespace}fm`);
