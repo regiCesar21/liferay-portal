@@ -499,7 +499,7 @@ public class DefaultPortalLDAP implements PortalLDAP {
 	@Override
 	public Binding getUser(
 			long ldapServerId, long companyId, String screenName,
-			String emailAddress, boolean checkOriginalEmail)
+			String emailAddress, boolean checkOriginalEmailAddress)
 		throws Exception {
 
 		LdapContext ldapContext = getContext(ldapServerId, companyId);
@@ -585,7 +585,7 @@ public class DefaultPortalLDAP implements PortalLDAP {
 				return enumeration.nextElement();
 			}
 
-			if (checkOriginalEmail) {
+			if (checkOriginalEmailAddress) {
 				String originalEmailAddress =
 					UserImportTransactionThreadLocal.getOriginalEmailAddress();
 
