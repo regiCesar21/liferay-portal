@@ -482,7 +482,7 @@ public class SafePortalLDAPImpl implements SafePortalLDAP {
 	@Override
 	public Binding getUser(
 			long ldapServerId, long companyId, String screenName,
-			String emailAddress, boolean checkOriginalEmail,
+			String emailAddress, boolean checkOriginalEmailAddress,
 			boolean useUserSearchSafeLdapFilter)
 		throws Exception {
 
@@ -559,7 +559,7 @@ public class SafePortalLDAPImpl implements SafePortalLDAP {
 				return enumeration.nextElement();
 			}
 
-			if (checkOriginalEmail) {
+			if (checkOriginalEmailAddress) {
 				String originalEmailAddress =
 					UserImportTransactionThreadLocal.getOriginalEmailAddress();
 
