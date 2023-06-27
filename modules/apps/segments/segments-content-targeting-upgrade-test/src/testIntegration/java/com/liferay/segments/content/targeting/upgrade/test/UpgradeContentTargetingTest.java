@@ -106,6 +106,11 @@ public class UpgradeContentTargetingTest {
 
 	@After
 	public void tearDown() throws Exception {
+		if (_segmentsEntry != null) {
+			_segmentsEntryLocalService.deleteSegmentsEntry(
+				_segmentsEntry.getSegmentsEntryId());
+		}
+
 		dropContentTargetingTables();
 	}
 
@@ -122,15 +127,13 @@ public class UpgradeContentTargetingTest {
 
 		_upgradeContentTargeting.upgrade();
 
-		SegmentsEntry segmentsEntry =
-			_segmentsEntryLocalService.fetchSegmentsEntry(
-				_group.getGroupId(), "CT_" + contentTargetingUserSegmentId,
-				false);
+		_segmentsEntry = _segmentsEntryLocalService.fetchSegmentsEntry(
+			_group.getGroupId(), "CT_" + contentTargetingUserSegmentId, false);
 
-		Assert.assertNotNull(segmentsEntry);
+		Assert.assertNotNull(_segmentsEntry);
 
-		Assert.assertEquals(nameMap, segmentsEntry.getNameMap());
-		Assert.assertEquals(descriptionMap, segmentsEntry.getDescriptionMap());
+		Assert.assertEquals(nameMap, _segmentsEntry.getNameMap());
+		Assert.assertEquals(descriptionMap, _segmentsEntry.getDescriptionMap());
 	}
 
 	@Test
@@ -149,14 +152,12 @@ public class UpgradeContentTargetingTest {
 
 		_upgradeContentTargeting.upgrade();
 
-		SegmentsEntry segmentsEntry =
-			_segmentsEntryLocalService.fetchSegmentsEntry(
-				_group.getGroupId(), "CT_" + contentTargetingUserSegmentId,
-				false);
+		_segmentsEntry = _segmentsEntryLocalService.fetchSegmentsEntry(
+			_group.getGroupId(), "CT_" + contentTargetingUserSegmentId, false);
 
-		Assert.assertNotNull(segmentsEntry);
+		Assert.assertNotNull(_segmentsEntry);
 
-		Criteria criteriaObj = segmentsEntry.getCriteriaObj();
+		Criteria criteriaObj = _segmentsEntry.getCriteriaObj();
 
 		Assert.assertNotNull(criteriaObj);
 
@@ -194,14 +195,12 @@ public class UpgradeContentTargetingTest {
 
 		_upgradeContentTargeting.upgrade();
 
-		SegmentsEntry segmentsEntry =
-			_segmentsEntryLocalService.fetchSegmentsEntry(
-				_group.getGroupId(), "CT_" + contentTargetingUserSegmentId,
-				false);
+		_segmentsEntry = _segmentsEntryLocalService.fetchSegmentsEntry(
+			_group.getGroupId(), "CT_" + contentTargetingUserSegmentId, false);
 
-		Assert.assertNotNull(segmentsEntry);
+		Assert.assertNotNull(_segmentsEntry);
 
-		Criteria criteriaObj = segmentsEntry.getCriteriaObj();
+		Criteria criteriaObj = _segmentsEntry.getCriteriaObj();
 
 		Assert.assertNotNull(criteriaObj);
 
@@ -233,14 +232,12 @@ public class UpgradeContentTargetingTest {
 
 		_upgradeContentTargeting.upgrade();
 
-		SegmentsEntry segmentsEntry =
-			_segmentsEntryLocalService.fetchSegmentsEntry(
-				_group.getGroupId(), "CT_" + contentTargetingUserSegmentId,
-				false);
+		_segmentsEntry = _segmentsEntryLocalService.fetchSegmentsEntry(
+			_group.getGroupId(), "CT_" + contentTargetingUserSegmentId, false);
 
-		Assert.assertNotNull(segmentsEntry);
+		Assert.assertNotNull(_segmentsEntry);
 
-		Criteria criteriaObj = segmentsEntry.getCriteriaObj();
+		Criteria criteriaObj = _segmentsEntry.getCriteriaObj();
 
 		Assert.assertNotNull(criteriaObj);
 
@@ -281,14 +278,12 @@ public class UpgradeContentTargetingTest {
 
 		_upgradeContentTargeting.upgrade();
 
-		SegmentsEntry segmentsEntry =
-			_segmentsEntryLocalService.fetchSegmentsEntry(
-				_group.getGroupId(), "CT_" + contentTargetingUserSegmentId,
-				false);
+		_segmentsEntry = _segmentsEntryLocalService.fetchSegmentsEntry(
+			_group.getGroupId(), "CT_" + contentTargetingUserSegmentId, false);
 
-		Assert.assertNotNull(segmentsEntry);
+		Assert.assertNotNull(_segmentsEntry);
 
-		Criteria criteriaObj = segmentsEntry.getCriteriaObj();
+		Criteria criteriaObj = _segmentsEntry.getCriteriaObj();
 
 		Assert.assertNotNull(criteriaObj);
 
@@ -326,14 +321,12 @@ public class UpgradeContentTargetingTest {
 
 		_upgradeContentTargeting.upgrade();
 
-		SegmentsEntry segmentsEntry =
-			_segmentsEntryLocalService.fetchSegmentsEntry(
-				_group.getGroupId(), "CT_" + contentTargetingUserSegmentId,
-				false);
+		_segmentsEntry = _segmentsEntryLocalService.fetchSegmentsEntry(
+			_group.getGroupId(), "CT_" + contentTargetingUserSegmentId, false);
 
-		Assert.assertNotNull(segmentsEntry);
+		Assert.assertNotNull(_segmentsEntry);
 
-		Criteria criteriaObj = segmentsEntry.getCriteriaObj();
+		Criteria criteriaObj = _segmentsEntry.getCriteriaObj();
 
 		Assert.assertNotNull(criteriaObj);
 
@@ -365,14 +358,12 @@ public class UpgradeContentTargetingTest {
 
 		_upgradeContentTargeting.upgrade();
 
-		SegmentsEntry segmentsEntry =
-			_segmentsEntryLocalService.fetchSegmentsEntry(
-				_group.getGroupId(), "CT_" + contentTargetingUserSegmentId,
-				false);
+		_segmentsEntry = _segmentsEntryLocalService.fetchSegmentsEntry(
+			_group.getGroupId(), "CT_" + contentTargetingUserSegmentId, false);
 
-		Assert.assertNotNull(segmentsEntry);
+		Assert.assertNotNull(_segmentsEntry);
 
-		Criteria criteriaObj = segmentsEntry.getCriteriaObj();
+		Criteria criteriaObj = _segmentsEntry.getCriteriaObj();
 
 		Assert.assertNotNull(criteriaObj);
 
@@ -408,14 +399,12 @@ public class UpgradeContentTargetingTest {
 
 		_upgradeContentTargeting.upgrade();
 
-		SegmentsEntry segmentsEntry =
-			_segmentsEntryLocalService.fetchSegmentsEntry(
-				_group.getGroupId(), "CT_" + contentTargetingUserSegmentId,
-				false);
+		_segmentsEntry = _segmentsEntryLocalService.fetchSegmentsEntry(
+			_group.getGroupId(), "CT_" + contentTargetingUserSegmentId, false);
 
-		Assert.assertNotNull(segmentsEntry);
+		Assert.assertNotNull(_segmentsEntry);
 
-		Criteria criteriaObj = segmentsEntry.getCriteriaObj();
+		Criteria criteriaObj = _segmentsEntry.getCriteriaObj();
 
 		Assert.assertNotNull(criteriaObj);
 
@@ -446,14 +435,12 @@ public class UpgradeContentTargetingTest {
 
 		_upgradeContentTargeting.upgrade();
 
-		SegmentsEntry segmentsEntry =
-			_segmentsEntryLocalService.fetchSegmentsEntry(
-				_group.getGroupId(), "CT_" + contentTargetingUserSegmentId,
-				false);
+		_segmentsEntry = _segmentsEntryLocalService.fetchSegmentsEntry(
+			_group.getGroupId(), "CT_" + contentTargetingUserSegmentId, false);
 
-		Assert.assertNotNull(segmentsEntry);
+		Assert.assertNotNull(_segmentsEntry);
 
-		Criteria criteriaObj = segmentsEntry.getCriteriaObj();
+		Criteria criteriaObj = _segmentsEntry.getCriteriaObj();
 
 		Assert.assertNotNull(criteriaObj);
 
@@ -490,15 +477,13 @@ public class UpgradeContentTargetingTest {
 
 		_upgradeContentTargeting.upgrade();
 
-		SegmentsEntry segmentsEntry =
-			_segmentsEntryLocalService.fetchSegmentsEntry(
-				_group.getGroupId(), "CT_" + contentTargetingUserSegmentId,
-				false);
+		_segmentsEntry = _segmentsEntryLocalService.fetchSegmentsEntry(
+			_group.getGroupId(), "CT_" + contentTargetingUserSegmentId, false);
 
-		Assert.assertNotNull(segmentsEntry);
+		Assert.assertNotNull(_segmentsEntry);
 
-		Assert.assertEquals(nameMap, segmentsEntry.getNameMap());
-		Assert.assertEquals(descriptionMap, segmentsEntry.getDescriptionMap());
+		Assert.assertEquals(nameMap, _segmentsEntry.getNameMap());
+		Assert.assertEquals(descriptionMap, _segmentsEntry.getDescriptionMap());
 	}
 
 	@Test
@@ -517,14 +502,12 @@ public class UpgradeContentTargetingTest {
 
 		_upgradeContentTargeting.upgrade();
 
-		SegmentsEntry segmentsEntry =
-			_segmentsEntryLocalService.fetchSegmentsEntry(
-				_group.getGroupId(), "CT_" + contentTargetingUserSegmentId,
-				false);
+		_segmentsEntry = _segmentsEntryLocalService.fetchSegmentsEntry(
+			_group.getGroupId(), "CT_" + contentTargetingUserSegmentId, false);
 
-		Assert.assertNotNull(segmentsEntry);
+		Assert.assertNotNull(_segmentsEntry);
 
-		Criteria criteriaObj = segmentsEntry.getCriteriaObj();
+		Criteria criteriaObj = _segmentsEntry.getCriteriaObj();
 
 		Assert.assertNotNull(criteriaObj);
 
@@ -555,14 +538,12 @@ public class UpgradeContentTargetingTest {
 
 		_upgradeContentTargeting.upgrade();
 
-		SegmentsEntry segmentsEntry =
-			_segmentsEntryLocalService.fetchSegmentsEntry(
-				_group.getGroupId(), "CT_" + contentTargetingUserSegmentId,
-				false);
+		_segmentsEntry = _segmentsEntryLocalService.fetchSegmentsEntry(
+			_group.getGroupId(), "CT_" + contentTargetingUserSegmentId, false);
 
-		Assert.assertNotNull(segmentsEntry);
+		Assert.assertNotNull(_segmentsEntry);
 
-		Criteria criteriaObj = segmentsEntry.getCriteriaObj();
+		Criteria criteriaObj = _segmentsEntry.getCriteriaObj();
 
 		Assert.assertNotNull(criteriaObj);
 
@@ -593,14 +574,12 @@ public class UpgradeContentTargetingTest {
 
 		_upgradeContentTargeting.upgrade();
 
-		SegmentsEntry segmentsEntry =
-			_segmentsEntryLocalService.fetchSegmentsEntry(
-				_group.getGroupId(), "CT_" + contentTargetingUserSegmentId,
-				false);
+		_segmentsEntry = _segmentsEntryLocalService.fetchSegmentsEntry(
+			_group.getGroupId(), "CT_" + contentTargetingUserSegmentId, false);
 
-		Assert.assertNotNull(segmentsEntry);
+		Assert.assertNotNull(_segmentsEntry);
 
-		Criteria criteriaObj = segmentsEntry.getCriteriaObj();
+		Criteria criteriaObj = _segmentsEntry.getCriteriaObj();
 
 		Assert.assertNotNull(criteriaObj);
 
@@ -840,6 +819,8 @@ public class UpgradeContentTargetingTest {
 
 	@DeleteAfterTestRun
 	private Group _group;
+
+	private SegmentsEntry _segmentsEntry;
 
 	@Inject
 	private SegmentsEntryLocalService _segmentsEntryLocalService;
