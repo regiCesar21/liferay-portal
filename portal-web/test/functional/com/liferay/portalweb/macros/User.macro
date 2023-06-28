@@ -873,7 +873,7 @@ definition {
 			locator1 = "UsersAndOrganizationsEditUser#ROLES_ORGANIZATION_ROLES_SELECT_LINK",
 			value1 = "Select");
 
-		SelectFrame(locator1 = "IFrame#SELECT_ORGANIZATION_ROLE");
+		SelectFrame.selectFrameNoLoading(locator1 = "IFrame#SELECT_ORGANIZATION_ROLE");
 
 		var key_roleTitle = ${roleTitle};
 
