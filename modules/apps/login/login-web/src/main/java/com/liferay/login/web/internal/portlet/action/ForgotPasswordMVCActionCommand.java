@@ -388,8 +388,6 @@ public class ForgotPasswordMVCActionCommand extends BaseMVCActionCommand {
 			throw new UserActiveException("Inactive user " + user.getUuid());
 		}
 
-		_userLocalService.checkLockout(user);
-
 		return user;
 	}
 
