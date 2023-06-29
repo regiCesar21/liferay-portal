@@ -47,6 +47,7 @@ import com.liferay.fragment.service.FragmentEntryLinkLocalService;
 import com.liferay.friendly.url.model.FriendlyURLEntry;
 import com.liferay.friendly.url.service.FriendlyURLEntryLocalService;
 import com.liferay.item.selector.criteria.InfoListItemSelectorReturnType;
+import com.liferay.journal.service.JournalContentSearchLocalService;
 import com.liferay.layout.admin.web.internal.exportimport.data.handler.helper.LayoutPageTemplateStructureDataHandlerHelper;
 import com.liferay.layout.configuration.LayoutExportImportConfiguration;
 import com.liferay.layout.friendly.url.LayoutFriendlyURLEntryHelper;
@@ -1804,6 +1805,10 @@ public class LayoutStagedModelDataHandler
 		ServiceContext serviceContext =
 			ServiceContextThreadLocal.getServiceContext();
 
+		_journalContentSearchLocalService.deleteLayoutContentSearches(
+			layout.getGroupId(), layout.isPrivateLayout(),
+			layout.getLayoutId());
+
 		for (Element portletElement : portletsElement.elements()) {
 			String portletId = portletElement.attributeValue("portlet-id");
 
@@ -2913,6 +2918,10 @@ public class LayoutStagedModelDataHandler
 
 	private GroupLocalService _groupLocalService;
 	private ImageLocalService _imageLocalService;
+
+	@Reference
+	private JournalContentSearchLocalService _journalContentSearchLocalService;
+
 	private LayoutBranchLocalService _layoutBranchLocalService;
 
 	@Reference
