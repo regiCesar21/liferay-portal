@@ -101,6 +101,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>CONTENT_INLINE_IMAGE_1</td>
+	<td>//div[contains(@class,'content')]//img</td>
+	<td></td>
+</tr>
+<tr>
 	<td>CONTENT_HTML_BOLD</td>
 	<td>//div[contains(@class,'widget-mode-detail-text')]/p/b</td>
 	<td></td>
