@@ -731,21 +731,21 @@ public class FragmentCompositionPersistenceImpl
 
 		uuid = Objects.toString(uuid, "");
 
-		boolean productionMode = ctPersistenceHelper.isProductionMode(
-			FragmentComposition.class);
-
 		Object[] finderArgs = null;
 
-		if (useFinderCache && productionMode) {
+		if (useFinderCache) {
 			finderArgs = new Object[] {uuid, groupId};
 		}
 
 		Object result = null;
 
-		if (useFinderCache && productionMode) {
+		if (useFinderCache) {
 			result = finderCache.getResult(
 				_finderPathFetchByUUID_G, finderArgs, this);
 		}
+
+		boolean productionMode = ctPersistenceHelper.isProductionMode(
+			FragmentComposition.class);
 
 		if (result instanceof FragmentComposition) {
 			FragmentComposition fragmentComposition =
@@ -756,6 +756,15 @@ public class FragmentCompositionPersistenceImpl
 
 				result = null;
 			}
+			else if (!ctPersistenceHelper.isProductionMode(
+						FragmentComposition.class,
+						fragmentComposition.getPrimaryKey())) {
+
+				result = null;
+			}
+		}
+		else if (!productionMode && (result instanceof List<?>)) {
+			result = null;
 		}
 
 		if (result == null) {
@@ -3210,21 +3219,21 @@ public class FragmentCompositionPersistenceImpl
 
 		fragmentCompositionKey = Objects.toString(fragmentCompositionKey, "");
 
-		boolean productionMode = ctPersistenceHelper.isProductionMode(
-			FragmentComposition.class);
-
 		Object[] finderArgs = null;
 
-		if (useFinderCache && productionMode) {
+		if (useFinderCache) {
 			finderArgs = new Object[] {groupId, fragmentCompositionKey};
 		}
 
 		Object result = null;
 
-		if (useFinderCache && productionMode) {
+		if (useFinderCache) {
 			result = finderCache.getResult(
 				_finderPathFetchByG_FCK, finderArgs, this);
 		}
+
+		boolean productionMode = ctPersistenceHelper.isProductionMode(
+			FragmentComposition.class);
 
 		if (result instanceof FragmentComposition) {
 			FragmentComposition fragmentComposition =
@@ -3237,6 +3246,15 @@ public class FragmentCompositionPersistenceImpl
 
 				result = null;
 			}
+			else if (!ctPersistenceHelper.isProductionMode(
+						FragmentComposition.class,
+						fragmentComposition.getPrimaryKey())) {
+
+				result = null;
+			}
+		}
+		else if (!productionMode && (result instanceof List<?>)) {
+			result = null;
 		}
 
 		if (result == null) {

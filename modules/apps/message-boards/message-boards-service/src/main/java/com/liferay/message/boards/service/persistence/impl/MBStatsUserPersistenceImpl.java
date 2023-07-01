@@ -1177,21 +1177,21 @@ public class MBStatsUserPersistenceImpl
 	public MBStatsUser fetchByG_U(
 		long groupId, long userId, boolean useFinderCache) {
 
-		boolean productionMode = ctPersistenceHelper.isProductionMode(
-			MBStatsUser.class);
-
 		Object[] finderArgs = null;
 
-		if (useFinderCache && productionMode) {
+		if (useFinderCache) {
 			finderArgs = new Object[] {groupId, userId};
 		}
 
 		Object result = null;
 
-		if (useFinderCache && productionMode) {
+		if (useFinderCache) {
 			result = finderCache.getResult(
 				_finderPathFetchByG_U, finderArgs, this);
 		}
+
+		boolean productionMode = ctPersistenceHelper.isProductionMode(
+			MBStatsUser.class);
 
 		if (result instanceof MBStatsUser) {
 			MBStatsUser mbStatsUser = (MBStatsUser)result;
@@ -1201,6 +1201,14 @@ public class MBStatsUserPersistenceImpl
 
 				result = null;
 			}
+			else if (!ctPersistenceHelper.isProductionMode(
+						MBStatsUser.class, mbStatsUser.getPrimaryKey())) {
+
+				result = null;
+			}
+		}
+		else if (!productionMode && (result instanceof List<?>)) {
+			result = null;
 		}
 
 		if (result == null) {

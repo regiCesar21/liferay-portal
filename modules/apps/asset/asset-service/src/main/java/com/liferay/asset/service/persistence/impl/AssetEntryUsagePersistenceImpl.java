@@ -727,21 +727,21 @@ public class AssetEntryUsagePersistenceImpl
 
 		uuid = Objects.toString(uuid, "");
 
-		boolean productionMode = ctPersistenceHelper.isProductionMode(
-			AssetEntryUsage.class);
-
 		Object[] finderArgs = null;
 
-		if (useFinderCache && productionMode) {
+		if (useFinderCache) {
 			finderArgs = new Object[] {uuid, groupId};
 		}
 
 		Object result = null;
 
-		if (useFinderCache && productionMode) {
+		if (useFinderCache) {
 			result = finderCache.getResult(
 				_finderPathFetchByUUID_G, finderArgs, this);
 		}
+
+		boolean productionMode = ctPersistenceHelper.isProductionMode(
+			AssetEntryUsage.class);
 
 		if (result instanceof AssetEntryUsage) {
 			AssetEntryUsage assetEntryUsage = (AssetEntryUsage)result;
@@ -751,6 +751,15 @@ public class AssetEntryUsagePersistenceImpl
 
 				result = null;
 			}
+			else if (!ctPersistenceHelper.isProductionMode(
+						AssetEntryUsage.class,
+						assetEntryUsage.getPrimaryKey())) {
+
+				result = null;
+			}
+		}
+		else if (!productionMode && (result instanceof List<?>)) {
+			result = null;
 		}
 
 		if (result == null) {
@@ -3829,12 +3838,9 @@ public class AssetEntryUsagePersistenceImpl
 
 		containerKey = Objects.toString(containerKey, "");
 
-		boolean productionMode = ctPersistenceHelper.isProductionMode(
-			AssetEntryUsage.class);
-
 		Object[] finderArgs = null;
 
-		if (useFinderCache && productionMode) {
+		if (useFinderCache) {
 			finderArgs = new Object[] {
 				assetEntryId, containerType, containerKey, plid
 			};
@@ -3842,10 +3848,13 @@ public class AssetEntryUsagePersistenceImpl
 
 		Object result = null;
 
-		if (useFinderCache && productionMode) {
+		if (useFinderCache) {
 			result = finderCache.getResult(
 				_finderPathFetchByA_C_C_P, finderArgs, this);
 		}
+
+		boolean productionMode = ctPersistenceHelper.isProductionMode(
+			AssetEntryUsage.class);
 
 		if (result instanceof AssetEntryUsage) {
 			AssetEntryUsage assetEntryUsage = (AssetEntryUsage)result;
@@ -3858,6 +3867,15 @@ public class AssetEntryUsagePersistenceImpl
 
 				result = null;
 			}
+			else if (!ctPersistenceHelper.isProductionMode(
+						AssetEntryUsage.class,
+						assetEntryUsage.getPrimaryKey())) {
+
+				result = null;
+			}
+		}
+		else if (!productionMode && (result instanceof List<?>)) {
+			result = null;
 		}
 
 		if (result == null) {

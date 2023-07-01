@@ -713,22 +713,22 @@ public class FriendlyURLEntryLocalizationPersistenceImpl
 
 		languageId = Objects.toString(languageId, "");
 
-		boolean productionMode = ctPersistenceHelper.isProductionMode(
-			FriendlyURLEntryLocalization.class);
-
 		Object[] finderArgs = null;
 
-		if (useFinderCache && productionMode) {
+		if (useFinderCache) {
 			finderArgs = new Object[] {friendlyURLEntryId, languageId};
 		}
 
 		Object result = null;
 
-		if (useFinderCache && productionMode) {
+		if (useFinderCache) {
 			result = finderCache.getResult(
 				_finderPathFetchByFriendlyURLEntryId_LanguageId, finderArgs,
 				this);
 		}
+
+		boolean productionMode = ctPersistenceHelper.isProductionMode(
+			FriendlyURLEntryLocalization.class);
 
 		if (result instanceof FriendlyURLEntryLocalization) {
 			FriendlyURLEntryLocalization friendlyURLEntryLocalization =
@@ -741,6 +741,15 @@ public class FriendlyURLEntryLocalizationPersistenceImpl
 
 				result = null;
 			}
+			else if (!ctPersistenceHelper.isProductionMode(
+						FriendlyURLEntryLocalization.class,
+						friendlyURLEntryLocalization.getPrimaryKey())) {
+
+				result = null;
+			}
+		}
+		else if (!productionMode && (result instanceof List<?>)) {
+			result = null;
 		}
 
 		if (result == null) {
@@ -1007,21 +1016,21 @@ public class FriendlyURLEntryLocalizationPersistenceImpl
 
 		urlTitle = Objects.toString(urlTitle, "");
 
-		boolean productionMode = ctPersistenceHelper.isProductionMode(
-			FriendlyURLEntryLocalization.class);
-
 		Object[] finderArgs = null;
 
-		if (useFinderCache && productionMode) {
+		if (useFinderCache) {
 			finderArgs = new Object[] {groupId, classNameId, urlTitle};
 		}
 
 		Object result = null;
 
-		if (useFinderCache && productionMode) {
+		if (useFinderCache) {
 			result = finderCache.getResult(
 				_finderPathFetchByG_C_U, finderArgs, this);
 		}
+
+		boolean productionMode = ctPersistenceHelper.isProductionMode(
+			FriendlyURLEntryLocalization.class);
 
 		if (result instanceof FriendlyURLEntryLocalization) {
 			FriendlyURLEntryLocalization friendlyURLEntryLocalization =
@@ -1035,6 +1044,15 @@ public class FriendlyURLEntryLocalizationPersistenceImpl
 
 				result = null;
 			}
+			else if (!ctPersistenceHelper.isProductionMode(
+						FriendlyURLEntryLocalization.class,
+						friendlyURLEntryLocalization.getPrimaryKey())) {
+
+				result = null;
+			}
+		}
+		else if (!productionMode && (result instanceof List<?>)) {
+			result = null;
 		}
 
 		if (result == null) {

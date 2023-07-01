@@ -2263,12 +2263,9 @@ public class CTSContentPersistenceImpl
 		version = Objects.toString(version, "");
 		storeType = Objects.toString(storeType, "");
 
-		boolean productionMode = ctPersistenceHelper.isProductionMode(
-			CTSContent.class);
-
 		Object[] finderArgs = null;
 
-		if (useFinderCache && productionMode) {
+		if (useFinderCache) {
 			finderArgs = new Object[] {
 				companyId, repositoryId, path, version, storeType
 			};
@@ -2276,10 +2273,13 @@ public class CTSContentPersistenceImpl
 
 		Object result = null;
 
-		if (useFinderCache && productionMode) {
+		if (useFinderCache) {
 			result = finderCache.getResult(
 				_finderPathFetchByC_R_P_V_S, finderArgs, this);
 		}
+
+		boolean productionMode = ctPersistenceHelper.isProductionMode(
+			CTSContent.class);
 
 		if (result instanceof CTSContent) {
 			CTSContent ctsContent = (CTSContent)result;
@@ -2292,6 +2292,14 @@ public class CTSContentPersistenceImpl
 
 				result = null;
 			}
+			else if (!ctPersistenceHelper.isProductionMode(
+						CTSContent.class, ctsContent.getPrimaryKey())) {
+
+				result = null;
+			}
+		}
+		else if (!productionMode && (result instanceof List<?>)) {
+			result = null;
 		}
 
 		if (result == null) {

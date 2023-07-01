@@ -722,21 +722,21 @@ public class LayoutSEOSitePersistenceImpl
 
 		uuid = Objects.toString(uuid, "");
 
-		boolean productionMode = ctPersistenceHelper.isProductionMode(
-			LayoutSEOSite.class);
-
 		Object[] finderArgs = null;
 
-		if (useFinderCache && productionMode) {
+		if (useFinderCache) {
 			finderArgs = new Object[] {uuid, groupId};
 		}
 
 		Object result = null;
 
-		if (useFinderCache && productionMode) {
+		if (useFinderCache) {
 			result = finderCache.getResult(
 				_finderPathFetchByUUID_G, finderArgs, this);
 		}
+
+		boolean productionMode = ctPersistenceHelper.isProductionMode(
+			LayoutSEOSite.class);
 
 		if (result instanceof LayoutSEOSite) {
 			LayoutSEOSite layoutSEOSite = (LayoutSEOSite)result;
@@ -746,6 +746,14 @@ public class LayoutSEOSitePersistenceImpl
 
 				result = null;
 			}
+			else if (!ctPersistenceHelper.isProductionMode(
+						LayoutSEOSite.class, layoutSEOSite.getPrimaryKey())) {
+
+				result = null;
+			}
+		}
+		else if (!productionMode && (result instanceof List<?>)) {
+			result = null;
 		}
 
 		if (result == null) {
@@ -1572,21 +1580,21 @@ public class LayoutSEOSitePersistenceImpl
 	 */
 	@Override
 	public LayoutSEOSite fetchByGroupId(long groupId, boolean useFinderCache) {
-		boolean productionMode = ctPersistenceHelper.isProductionMode(
-			LayoutSEOSite.class);
-
 		Object[] finderArgs = null;
 
-		if (useFinderCache && productionMode) {
+		if (useFinderCache) {
 			finderArgs = new Object[] {groupId};
 		}
 
 		Object result = null;
 
-		if (useFinderCache && productionMode) {
+		if (useFinderCache) {
 			result = finderCache.getResult(
 				_finderPathFetchByGroupId, finderArgs, this);
 		}
+
+		boolean productionMode = ctPersistenceHelper.isProductionMode(
+			LayoutSEOSite.class);
 
 		if (result instanceof LayoutSEOSite) {
 			LayoutSEOSite layoutSEOSite = (LayoutSEOSite)result;
@@ -1594,6 +1602,14 @@ public class LayoutSEOSitePersistenceImpl
 			if (groupId != layoutSEOSite.getGroupId()) {
 				result = null;
 			}
+			else if (!ctPersistenceHelper.isProductionMode(
+						LayoutSEOSite.class, layoutSEOSite.getPrimaryKey())) {
+
+				result = null;
+			}
+		}
+		else if (!productionMode && (result instanceof List<?>)) {
+			result = null;
 		}
 
 		if (result == null) {

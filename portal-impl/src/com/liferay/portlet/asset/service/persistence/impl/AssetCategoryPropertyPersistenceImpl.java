@@ -1812,21 +1812,21 @@ public class AssetCategoryPropertyPersistenceImpl
 
 		key = Objects.toString(key, "");
 
-		boolean productionMode = CTPersistenceHelperUtil.isProductionMode(
-			AssetCategoryProperty.class);
-
 		Object[] finderArgs = null;
 
-		if (useFinderCache && productionMode) {
+		if (useFinderCache) {
 			finderArgs = new Object[] {categoryId, key};
 		}
 
 		Object result = null;
 
-		if (useFinderCache && productionMode) {
+		if (useFinderCache) {
 			result = FinderCacheUtil.getResult(
 				_finderPathFetchByCA_K, finderArgs, this);
 		}
+
+		boolean productionMode = CTPersistenceHelperUtil.isProductionMode(
+			AssetCategoryProperty.class);
 
 		if (result instanceof AssetCategoryProperty) {
 			AssetCategoryProperty assetCategoryProperty =
@@ -1837,6 +1837,15 @@ public class AssetCategoryPropertyPersistenceImpl
 
 				result = null;
 			}
+			else if (!CTPersistenceHelperUtil.isProductionMode(
+						AssetCategoryProperty.class,
+						assetCategoryProperty.getPrimaryKey())) {
+
+				result = null;
+			}
+		}
+		else if (!productionMode && (result instanceof List<?>)) {
+			result = null;
 		}
 
 		if (result == null) {

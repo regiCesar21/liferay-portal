@@ -744,21 +744,21 @@ public class LayoutPageTemplateCollectionPersistenceImpl
 
 		uuid = Objects.toString(uuid, "");
 
-		boolean productionMode = ctPersistenceHelper.isProductionMode(
-			LayoutPageTemplateCollection.class);
-
 		Object[] finderArgs = null;
 
-		if (useFinderCache && productionMode) {
+		if (useFinderCache) {
 			finderArgs = new Object[] {uuid, groupId};
 		}
 
 		Object result = null;
 
-		if (useFinderCache && productionMode) {
+		if (useFinderCache) {
 			result = finderCache.getResult(
 				_finderPathFetchByUUID_G, finderArgs, this);
 		}
+
+		boolean productionMode = ctPersistenceHelper.isProductionMode(
+			LayoutPageTemplateCollection.class);
 
 		if (result instanceof LayoutPageTemplateCollection) {
 			LayoutPageTemplateCollection layoutPageTemplateCollection =
@@ -769,6 +769,15 @@ public class LayoutPageTemplateCollectionPersistenceImpl
 
 				result = null;
 			}
+			else if (!ctPersistenceHelper.isProductionMode(
+						LayoutPageTemplateCollection.class,
+						layoutPageTemplateCollection.getPrimaryKey())) {
+
+				result = null;
+			}
+		}
+		else if (!productionMode && (result instanceof List<?>)) {
+			result = null;
 		}
 
 		if (result == null) {
@@ -2536,12 +2545,9 @@ public class LayoutPageTemplateCollectionPersistenceImpl
 		layoutPageTemplateCollectionKey = Objects.toString(
 			layoutPageTemplateCollectionKey, "");
 
-		boolean productionMode = ctPersistenceHelper.isProductionMode(
-			LayoutPageTemplateCollection.class);
-
 		Object[] finderArgs = null;
 
-		if (useFinderCache && productionMode) {
+		if (useFinderCache) {
 			finderArgs = new Object[] {
 				groupId, layoutPageTemplateCollectionKey
 			};
@@ -2549,10 +2555,13 @@ public class LayoutPageTemplateCollectionPersistenceImpl
 
 		Object result = null;
 
-		if (useFinderCache && productionMode) {
+		if (useFinderCache) {
 			result = finderCache.getResult(
 				_finderPathFetchByG_LPTCK, finderArgs, this);
 		}
+
+		boolean productionMode = ctPersistenceHelper.isProductionMode(
+			LayoutPageTemplateCollection.class);
 
 		if (result instanceof LayoutPageTemplateCollection) {
 			LayoutPageTemplateCollection layoutPageTemplateCollection =
@@ -2566,6 +2575,15 @@ public class LayoutPageTemplateCollectionPersistenceImpl
 
 				result = null;
 			}
+			else if (!ctPersistenceHelper.isProductionMode(
+						LayoutPageTemplateCollection.class,
+						layoutPageTemplateCollection.getPrimaryKey())) {
+
+				result = null;
+			}
+		}
+		else if (!productionMode && (result instanceof List<?>)) {
+			result = null;
 		}
 
 		if (result == null) {
@@ -2820,21 +2838,21 @@ public class LayoutPageTemplateCollectionPersistenceImpl
 
 		name = Objects.toString(name, "");
 
-		boolean productionMode = ctPersistenceHelper.isProductionMode(
-			LayoutPageTemplateCollection.class);
-
 		Object[] finderArgs = null;
 
-		if (useFinderCache && productionMode) {
+		if (useFinderCache) {
 			finderArgs = new Object[] {groupId, name};
 		}
 
 		Object result = null;
 
-		if (useFinderCache && productionMode) {
+		if (useFinderCache) {
 			result = finderCache.getResult(
 				_finderPathFetchByG_N, finderArgs, this);
 		}
+
+		boolean productionMode = ctPersistenceHelper.isProductionMode(
+			LayoutPageTemplateCollection.class);
 
 		if (result instanceof LayoutPageTemplateCollection) {
 			LayoutPageTemplateCollection layoutPageTemplateCollection =
@@ -2845,6 +2863,15 @@ public class LayoutPageTemplateCollectionPersistenceImpl
 
 				result = null;
 			}
+			else if (!ctPersistenceHelper.isProductionMode(
+						LayoutPageTemplateCollection.class,
+						layoutPageTemplateCollection.getPrimaryKey())) {
+
+				result = null;
+			}
+		}
+		else if (!productionMode && (result instanceof List<?>)) {
+			result = null;
 		}
 
 		if (result == null) {
