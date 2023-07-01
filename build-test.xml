@@ -231,6 +231,203 @@ module.framework.properties.osgi.console=11312</echo>
 		</sequential>
 	</macrodef>
 
+	<macrodef name="deploy-osgi-modules">
+		<attribute default="" name="java.jdk.type" />
+		<attribute default="" name="java.jdk.version" />
+		<attribute name="osgi.modules" />
+
+		<sequential>
+			<echo file="tools/sdk/build.${user.name}.properties">auto.deploy.dir=${liferay.home}/deploy</echo>
+
+			<property name="osgi.module.pattern" value="**" />
+
+			<antelope:stringutil property="osgi.modules.includes.pattern" string="${osgi.module.pattern}/@{osgi.modules}">
+				<antelope:replace regex="," replacement=",${osgi.module.pattern}/" />
+			</antelope:stringutil>
+
+			<pathconvert pathsep="," property="osgi.modules.paths">
+				<dirset
+					dir="modules"
+					excludes="**/node_modules/**"
+					includes="${osgi.modules.includes.pattern}"
+				>
+					<or>
+						<present targetdir="modules">
+							<mapper
+								from="*"
+								to="*/build.gradle"
+								type="glob"
+							/>
+						</present>
+						<present targetdir="modules">
+							<mapper
+								from="*"
+								to="*/build.xml"
+								type="glob"
+							/>
+						</present>
+					</or>
+				</dirset>
+			</pathconvert>
+
+			<local name="gradlew.suffix" />
+
+			<if>
+				<os family="unix" />
+				<then>
+					<property name="gradlew.suffix" value="" />
+
+					<chmod
+						file="${project.dir}/gradlew${gradlew.suffix}"
+						perm="a+x"
+					/>
+				</then>
+				<else>
+					<property name="gradlew.suffix" value=".bat" />
+				</else>
+			</if>
+
+			<local name="java.jdk.home" />
+
+			<if>
+				<and>
+					<not>
+						<equals arg1="@{java.jdk.type}" arg2="" />
+					</not>
+					<not>
+						<equals arg1="@{java.jdk.version}" arg2="" />
+					</not>
+				</and>
+				<then>
+					<get-java-jdk-home
+						type="@{java.jdk.type}"
+						version="@{java.jdk.version}"
+					/>
+				</then>
+				<else>
+					<condition property="java.jdk.home" value="${env.JAVA_HOME}">
+						<not>
+							<isset property="java.jdk.home" />
+						</not>
+					</condition>
+				</else>
+			</if>
+
+			<local name="java.jdk.opts" />
+
+			<if>
+				<and>
+					<not>
+						<equals arg1="@{java.jdk.type}" arg2="" />
+					</not>
+					<not>
+						<equals arg1="@{java.jdk.version}" arg2="" />
+					</not>
+				</and>
+				<then>
+					<get-java-jdk-opts
+						type="@{java.jdk.type}"
+						version="@{java.jdk.version}"
+					/>
+				</then>
+				<else>
+					<condition else="${env.JAVA_OPTS}" property="java.jdk.opts" value="${env.ANT_OPTS}">
+						<and>
+							<isset property="env.ANT_OPTS" />
+							<isset property="env.JENKINS_HOME" />
+							<not>
+								<os family="windows" />
+							</not>
+						</and>
+					</condition>
+				</else>
+			</if>
+
+			<local name="path" />
+
+			<propertyregex
+				defaultValue="${env.PATH}"
+				global="true"
+				input="${env.PATH}"
+				property="path"
+				regexp="${env.JAVA_HOME}"
+				replace="${java.jdk.home}"
+			/>
+
+			<echo></echo>
+			<echo>Build OSGi Modules: @{osgi.modules}</echo>
+
+			<execute>
+				${java.jdk.home}/bin/java -version
+			</execute>
+
+			<echo></echo>
+
+			<for list="${osgi.modules.paths}" param="osgi.module.path">
+				<sequential>
+					<local name="module.base.dir" />
+					<local name="osgi.module.command.prefix" />
+
+					<dirname file="@{osgi.module.path}" property="module.base.dir" />
+
+					<tstamp>
+						<format pattern="yyyyMMddkkmmssSSS" property="tstamp.value" />
+					</tstamp>
+
+					<trycatch>
+						<try>
+							<move
+								failonerror="false"
+								file="${module.base.dir}/settings.gradle"
+								tofile="${module.base.dir}/settings.gradle.temp"
+								verbose="true"
+							/>
+
+							<echo file="@{osgi.module.path}/${tstamp.value}.sh">
+								export PATH=${path}
+								export JAVA_HOME=${java.jdk.home}
+								export JAVA_OPTS='${java.jdk.opts}'
+
+								${project.dir}/gradlew${gradlew.suffix} \
+									\
+									-Pnodejs.node.env=development \
+									\
+									--max-workers=4 \
+									--profile \
+									--project-cache-dir=${project.dir}/.gradle \
+									--refresh-dependencies \
+									--stacktrace \
+									\
+									-Dapp.server.parent.dir=${app.server.parent.dir} \
+									-Dforced.cache.enabled=false \
+									-Dliferay.home=${liferay.home} \
+									-Dorg.gradle.internal.http.connectionTimeout=120000 \
+									-Dorg.gradle.internal.http.socketTimeout=120000 \
+									-Dorg.gradle.jvmargs='${java.jdk.opts}' \
+									\
+									clean \
+									deploy
+							</echo>
+
+							<exec dir="@{osgi.module.path}" executable="/bin/sh">
+								<arg line="${tstamp.value}.sh" />
+							</exec>
+						</try>
+						<finally>
+							<move
+								failonerror="false"
+								file="${module.base.dir}/settings.gradle.temp"
+								tofile="${module.base.dir}/settings.gradle"
+							/>
+
+							<delete failonerror="false" file="@{osgi.module.path}/${tstamp.value}.sh" />
+						</finally>
+					</trycatch>
+				</sequential>
+			</for>
+		</sequential>
+	</macrodef>
+
 	<macrodef name="docker-copy">
 		<attribute name="dest.path" />
 		<attribute name="src.path" />
@@ -9064,75 +9261,12 @@ go</echo>
 	</target>
 
 	<target name="deploy-osgi-modules">
-		<if>
-			<not>
-				<isset property="skip.get.testcase.osgi.modules.includes" />
-			</not>
-			<then>
-				<get-testcase-property property.name="osgi.modules.includes" />
-			</then>
-		</if>
+		<get-testcase-property property.name="osgi.modules.includes" />
 
 		<if>
 			<isset property="osgi.modules.includes" />
 			<then>
-				<echo file="tools/sdk/build.${user.name}.properties">auto.deploy.dir=${liferay.home}/deploy</echo>
-
-				<property name="osgi.module.pattern" value="**" />
-
-				<antelope:stringutil property="osgi.modules.includes.pattern" string="${osgi.module.pattern}/${osgi.modules.includes}">
-					<antelope:replace regex="," replacement=",${osgi.module.pattern}/" />
-				</antelope:stringutil>
-
-				<pathconvert pathsep="," property="osgi.modules.paths">
-					<dirset
-						dir="modules"
-						includes="${osgi.modules.includes.pattern}"
-					>
-						<or>
-							<present targetdir="modules">
-								<mapper
-									from="*"
-									to="*/build.gradle"
-									type="glob"
-								/>
-							</present>
-							<present targetdir="modules">
-								<mapper
-									from="*"
-									to="*/build.xml"
-									type="glob"
-								/>
-							</present>
-						</or>
-					</dirset>
-				</pathconvert>
-
-				<for list="${osgi.modules.paths}" parallel="true" param="osgi.module.path">
-					<sequential>
-						<local name="module.base.dir" />
-						<local name="osgi.module.command.prefix" />
-
-						<dirname file="@{osgi.module.path}" property="module.base.dir" />
-
-						<move
-							failonerror="false"
-							file="${module.base.dir}/settings.gradle"
-							tofile="${module.base.dir}/settings.gradle.temp"
-							verbose="true"
-						/>
-
-						<gradle-execute dir="@{osgi.module.path}" forcedcacheenabled="false" task="deploy">
-							<arg value="clean" />
-						</gradle-execute>
-
-						<move
-							failonerror="false"
-							file="${module.base.dir}/settings.gradle.temp"
-							tofile="${module.base.dir}/settings.gradle"
-						/>
-					</sequential>
-				</for>
+				<deploy-osgi-modules osgi.modules="${osgi.modules.includes}" />
 			</then>
 		</if>
 	</target>
