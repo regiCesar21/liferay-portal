@@ -825,17 +825,13 @@ ${httpUtil.URLtoString(request.getAttribute("CTX").getResource(".").toURI().crea
 			portletName = "Web Content Display",
 			scopeSelection = "Global");
 
-		Navigator.gotoSitePage(
-			pageName = "Web Content Display Page",
-			siteName = "Test Site Name");
+		IFrame.closeFrame();
 
 		WebContentDisplayPortlet.viewConfigureScopePG(
 			portletName = "Web Content Display",
 			scopeSelection = "Global");
 
-		Navigator.gotoSitePage(
-			pageName = "Web Content Display Page",
-			siteName = "Test Site Name");
+		IFrame.closeFrame();
 
 		WebContentDisplayPortlet.selectWebContent(webContentTitle = "WC WebContent Title");
 
