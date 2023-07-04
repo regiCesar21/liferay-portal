@@ -71,8 +71,9 @@ public class TextDDMFormFieldTemplateContextContributor
 		parameters.put(
 			"options", getOptions(ddmFormField, ddmFormFieldRenderingContext));
 
-		String predefinedValue = getPredefinedValue(
-			ddmFormField, ddmFormFieldRenderingContext);
+		String predefinedValue = DDMFormFieldTypeUtil.getPropertyValue(
+			ddmFormField, ddmFormFieldRenderingContext.getLocale(),
+			"predefinedValue");
 
 		if (predefinedValue != null) {
 			parameters.put("predefinedValue", predefinedValue);
