@@ -109,7 +109,35 @@ public class FriendlyURLServlet extends HttpServlet {
 		int pos = path.indexOf(CharPool.SLASH, 1);
 
 		if (pos != -1) {
-			groupFriendlyURL = path.substring(0, pos);
+			String friendlyURL = path.substring(pos);
+
+			Group group = null;
+
+			if (friendlyURL.startsWith(_PATH_DOCUMENTS)) {
+				String fileEntryFriendlyURL = friendlyURL.substring(
+					_PATH_DOCUMENTS.length() - 1);
+
+				try {
+					long groupId = Long.valueOf(
+						fileEntryFriendlyURL.substring(
+							1,
+							fileEntryFriendlyURL.indexOf(CharPool.SLASH, 1)));
+
+					group = groupLocalService.fetchGroup(groupId);
+				}
+				catch (Exception exception) {
+					if (_log.isDebugEnabled()) {
+						_log.debug("Unable to find group");
+					}
+				}
+			}
+
+			if (group == null) {
+				groupFriendlyURL = path.substring(0, pos);
+			}
+			else {
+				groupFriendlyURL = group.getFriendlyURL();
+			}
 		}
 
 		long companyId = PortalInstances.getCompanyId(httpServletRequest);
@@ -943,6 +971,8 @@ public class FriendlyURLServlet extends HttpServlet {
 
 		return normalizedFriendlyURL;
 	}
+
+	private static final String _PATH_DOCUMENTS = "/documents/";
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		FriendlyURLServlet.class);
