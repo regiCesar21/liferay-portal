@@ -127,14 +127,21 @@ public class LayoutFriendlyURLStagedModelDataHandler
 		layoutFriendlyURL = getUniqueLayoutFriendlyURL(
 			portletDataContext, layoutFriendlyURL, existingLayoutFriendlyURL);
 
+		boolean privateLayout = portletDataContext.isPrivateLayout();
+
+		Layout layout = _layoutLocalService.fetchLayout(plid);
+
+		if (layout != null) {
+			privateLayout = layout.isPrivateLayout();
+		}
+
 		if (existingLayoutFriendlyURL == null) {
 			serviceContext.setUuid(layoutFriendlyURL.getUuid());
 
 			importedLayoutFriendlyURL =
 				_layoutFriendlyURLLocalService.addLayoutFriendlyURL(
 					userId, portletDataContext.getCompanyId(),
-					portletDataContext.getScopeGroupId(), plid,
-					portletDataContext.isPrivateLayout(),
+					portletDataContext.getScopeGroupId(), plid, privateLayout,
 					layoutFriendlyURL.getFriendlyURL(),
 					layoutFriendlyURL.getLanguageId(), serviceContext);
 		}
@@ -142,8 +149,7 @@ public class LayoutFriendlyURLStagedModelDataHandler
 			importedLayoutFriendlyURL =
 				_layoutFriendlyURLLocalService.updateLayoutFriendlyURL(
 					userId, portletDataContext.getCompanyId(),
-					portletDataContext.getScopeGroupId(), plid,
-					portletDataContext.isPrivateLayout(),
+					portletDataContext.getScopeGroupId(), plid, privateLayout,
 					layoutFriendlyURL.getFriendlyURL(),
 					layoutFriendlyURL.getLanguageId(), serviceContext);
 		}
