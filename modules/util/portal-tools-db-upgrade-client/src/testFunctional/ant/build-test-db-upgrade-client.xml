@@ -177,8 +177,8 @@
 
 		<run-expect
 			db.upgrade.client.home="${db.upgrade.client.home}"
-			file.suffix.bat="${file.suffix.bat}"
 			expect.file="check-upgrade-client-gogoshell-command-output.expect"
+			file.suffix.bat="${file.suffix.bat}"
 		/>
 
 		<fail message="Prefix g! for command does not exist!">
@@ -261,8 +261,8 @@
 
 		<run-expect
 			db.upgrade.client.home="${db.upgrade.client.home}"
-			file.suffix.bat="${file.suffix.bat}"
 			expect.file="check-upgrade-client-gogoshell-help-output.expect"
+			file.suffix.bat="${file.suffix.bat}"
 		/>
 
 		<clean-database-upgrade-client />
@@ -529,8 +529,8 @@ upgrade.database.auto.run=false</echo>
 
 		<run-expect
 			db.upgrade.client.home="${db.upgrade.client.home}"
-			file.suffix.bat="${file.suffix.bat}"
 			expect.file="check-upgrade-properties-app-db-set.expect"
+			file.suffix.bat="${file.suffix.bat}"
 		/>
 
 		<fail message="Exception thrown, failing.">
@@ -554,8 +554,8 @@ upgrade.database.auto.run=false</echo>
 
 		<run-expect
 			db.upgrade.client.home="${db.upgrade.client.home}"
-			file.suffix.bat="${file.suffix.bat}"
 			expect.file="check-upgrade-properties-app-ext-set.expect"
+			file.suffix.bat="${file.suffix.bat}"
 		/>
 
 		<fail message="Exception thrown, failing.">
@@ -579,8 +579,8 @@ upgrade.database.auto.run=false</echo>
 
 		<run-expect
 			db.upgrade.client.home="${db.upgrade.client.home}"
-			file.suffix.bat="${file.suffix.bat}"
 			expect.file="check-upgrade-properties-db-ext-set.expect"
+			file.suffix.bat="${file.suffix.bat}"
 		/>
 
 		<fail message="Exception thrown, failing.">
@@ -608,8 +608,8 @@ upgrade.database.auto.run=false</echo>
 
 		<run-expect
 			db.upgrade.client.home="${db.upgrade.client.home}"
-			file.suffix.bat="${file.suffix.bat}"
 			expect.file="check-upgrade-properties-none-set.expect"
+			file.suffix.bat="${file.suffix.bat}"
 		/>
 
 		<fail message="Exception thrown, failing.">
