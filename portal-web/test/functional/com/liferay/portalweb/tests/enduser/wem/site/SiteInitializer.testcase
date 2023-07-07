@@ -190,7 +190,7 @@ definition {
 				actual = ${containerWidth},
 				expected = ${screenWidth});
 
-			for (var cardLink : list "wk1774476306-liferay-employee,lf1774476306-david-aragon,hl1774476306-david-aragon,au1774476306-volkswagen-golf-1-6,hm1774476306-sepulveda-blvd") {
+			for (var cardLink : list "wk1774476306-liferay-employee,lf1774476306-david-aragon,hl1774476306-david-aragon,au1774476306-volkswagen-golf-1.6,hm1774476306-sepulveda-blvd") {
 				AssertElementPresent(
 					key_card = ${cardLink},
 					locator1 = "Card#CARD_STYLE");
