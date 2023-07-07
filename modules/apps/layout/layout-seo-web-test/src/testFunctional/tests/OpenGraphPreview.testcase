@@ -284,8 +284,8 @@ definition {
 			openGraph = "true",
 			portalURL = ${portalURL},
 			siteNameURL = "test-site-name",
-			truncatedHTMLTitle = "true",
-			truncatedURL = "true");
+			validateTitleCSSStyle = "true",
+			validateURLCSSStyle = "true");
 
 		Button.click(button = "Save");
 
@@ -297,8 +297,8 @@ definition {
 			openGraph = "true",
 			portalURL = ${portalURL},
 			siteNameURL = "test-site-name",
-			truncatedHTMLTitle = "true",
-			truncatedURL = "true");
+			validateTitleCSSStyle = "true",
+			validateURLCSSStyle = "true");
 	}
 
 	@description = "This ensures that the OG preview is returned to default when deselecting the customize checkboxes."
