@@ -49,13 +49,9 @@ public class EditTagsBulkSelectionActionImpl
 			Map<String, Serializable> inputMap)
 		throws Exception {
 
-		String[] toAddTagNames = (String[])inputMap.getOrDefault(
-			"toAddTagNames", new String[0]);
-
-		Set<String> toAddTagNamesSet = SetUtil.fromArray(toAddTagNames);
-
-		Set<String> toRemoveTagNamesSet = SetUtil.fromArray(
-			(String[])inputMap.getOrDefault("toRemoveTagNames", new String[0]));
+		Set<String> toAddTagNamesSet = _toStringSet(inputMap, "toAddTagNames");
+		Set<String> toRemoveTagNamesSet = _toStringSet(
+			inputMap, "toRemoveTagNames");
 
 		PermissionChecker permissionChecker =
 			PermissionCheckerFactoryUtil.create(user);
@@ -67,7 +63,11 @@ public class EditTagsBulkSelectionActionImpl
 						return;
 					}
 
-					String[] newTagNames = toAddTagNames;
+					String[] newTagNames = new String[0];
+
+					if (SetUtil.isNotEmpty(toAddTagNamesSet)) {
+						newTagNames = (String[])inputMap.get("toAddTagNames");
+					}
 
 					if (MapUtil.getBoolean(inputMap, "append")) {
 						Set<String> currentTagNamesSet = SetUtil.fromArray(
@@ -110,6 +110,22 @@ public class EditTagsBulkSelectionActionImpl
 			permissionChecker, assetEntry.getGroupId(),
 			assetEntry.getClassName(), assetEntry.getClassPK(),
 			ActionKeys.UPDATE);
+	}
+
+	private Set<String> _toStringSet(
+		Map<String, Serializable> inputMap, String key) {
+
+		try {
+			return SetUtil.fromArray(
+				(String[])inputMap.getOrDefault(key, new String[0]));
+		}
+		catch (Exception exception) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(exception);
+			}
+		}
+
+		return SetUtil.fromArray(new String[0]);
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
