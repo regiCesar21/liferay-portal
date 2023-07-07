@@ -22,6 +22,9 @@ import com.liferay.portal.change.tracking.registry.CTModelRegistration;
 import com.liferay.portal.change.tracking.registry.CTModelRegistry;
 import com.liferay.portal.change.tracking.sql.CTSQLModeThreadLocal;
 import com.liferay.portal.change.tracking.sql.CTSQLTransformer;
+import com.liferay.portal.kernel.cache.PortalCache;
+import com.liferay.portal.kernel.cache.PortalCacheHelperUtil;
+import com.liferay.portal.kernel.cache.PortalCacheManagerNames;
 import com.liferay.portal.kernel.change.tracking.CTCollectionThreadLocal;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -30,10 +33,7 @@ import com.liferay.portal.kernel.service.ClassNameLocalServiceUtil;
 import com.liferay.portal.kernel.service.change.tracking.CTService;
 import com.liferay.portal.kernel.service.persistence.change.tracking.CTPersistence;
 import com.liferay.portal.kernel.util.FileUtil;
-import com.liferay.portal.kernel.util.GetterUtil;
-import com.liferay.portal.kernel.util.LRUMap;
 import com.liferay.portal.kernel.util.StringUtil;
-import com.liferay.portal.kernel.util.SystemProperties;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -45,7 +45,6 @@ import java.nio.ByteBuffer;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Deque;
-import java.util.HashMap;
 import java.util.LinkedHashSet;
 import java.util.LinkedList;
 import java.util.List;
@@ -197,9 +196,9 @@ public class CTSQLTransformerImpl implements CTSQLTransformer {
 	public void activate(BundleContext bundleContext) throws Exception {
 		_bundleContext = bundleContext;
 
-		_sqlCache = new LRUMap<>(
-			GetterUtil.getInteger(
-				SystemProperties.get("ct.sql.transformer.cache.size"), 10000));
+		_transformedSQLsPortalCache = PortalCacheHelperUtil.getPortalCache(
+			PortalCacheManagerNames.SINGLE_VM,
+			CTSQLTransformerImpl.class.getName());
 
 		_loadCache();
 
@@ -241,7 +240,7 @@ public class CTSQLTransformerImpl implements CTSQLTransformer {
 		long ctCollectionId = CTCollectionThreadLocal.getCTCollectionId();
 
 		if (ctCollectionId == 0) {
-			String transformedSQL = _sqlCache.get(sql);
+			String transformedSQL = _transformedSQLsPortalCache.get(sql);
 
 			if (transformedSQL != null) {
 				return transformedSQL;
@@ -259,7 +258,7 @@ public class CTSQLTransformerImpl implements CTSQLTransformer {
 		}
 
 		if (!foundTable) {
-			_sqlCache.put(sql, sql);
+			_transformedSQLsPortalCache.put(sql, sql);
 
 			return sql;
 		}
@@ -287,7 +286,7 @@ public class CTSQLTransformerImpl implements CTSQLTransformer {
 			}
 
 			if (ctCollectionId == 0) {
-				_sqlCache.put(sql, transformedSQL);
+				_transformedSQLsPortalCache.put(sql, transformedSQL);
 			}
 
 			return transformedSQL;
@@ -326,7 +325,7 @@ public class CTSQLTransformerImpl implements CTSQLTransformer {
 			int size = deserializer.readInt();
 
 			for (int i = 0; i < size; i++) {
-				_sqlCache.put(
+				_transformedSQLsPortalCache.put(
 					deserializer.readString(), deserializer.readString());
 			}
 		}
@@ -339,7 +338,9 @@ public class CTSQLTransformerImpl implements CTSQLTransformer {
 	}
 
 	private void _saveCache() {
-		if (_sqlCache.isEmpty()) {
+		List<String> sqlKeys = _transformedSQLsPortalCache.getKeys();
+
+		if (sqlKeys.isEmpty()) {
 			return;
 		}
 
@@ -349,14 +350,12 @@ public class CTSQLTransformerImpl implements CTSQLTransformer {
 
 		serializer.writeLong(bundle.getLastModified());
 
-		Map<String, String> snapshotSQLCache = new HashMap<>(_sqlCache);
+		serializer.writeInt(sqlKeys.size());
 
-		serializer.writeInt(snapshotSQLCache.size());
+		for (String key : sqlKeys) {
+			serializer.writeString(key);
 
-		for (Map.Entry<String, String> entry : snapshotSQLCache.entrySet()) {
-			serializer.writeString(entry.getKey());
-
-			serializer.writeString(entry.getValue());
+			serializer.writeString(_transformedSQLsPortalCache.get(key));
 		}
 
 		File sqlCacheFile = _bundleContext.getDataFile(_SQL_CACHE_FILE_NAME);
@@ -391,7 +390,7 @@ public class CTSQLTransformerImpl implements CTSQLTransformer {
 		new ConcurrentHashMap<>();
 	private ServiceTracker<?, ?> _ctServiceServiceTracker;
 	private ServiceTracker<?, ?> _releaseServiceTracker;
-	private LRUMap<String, String> _sqlCache;
+	private PortalCache<String, String> _transformedSQLsPortalCache;
 
 	private abstract static class BaseStatementVisitor
 		implements ExpressionVisitor, FromItemVisitor, ItemsListVisitor,
