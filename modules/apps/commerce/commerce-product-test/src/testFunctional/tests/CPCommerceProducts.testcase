@@ -96,6 +96,8 @@ definition {
 			productType = "Simple",
 			publishProduct = "false");
 
+		TestUtils.hardRefresh();
+
 		Click(
 			key_itemName = "",
 			locator1 = "CommerceEntry#SPECIFIC_MENU_ITEM");
