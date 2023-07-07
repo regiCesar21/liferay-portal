@@ -17,6 +17,7 @@ package com.liferay.portal.kernel.model;
 import java.io.Serializable;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -38,6 +39,7 @@ public class GroupSoap implements Serializable {
 		soapModel.setGroupId(model.getGroupId());
 		soapModel.setCompanyId(model.getCompanyId());
 		soapModel.setCreatorUserId(model.getCreatorUserId());
+		soapModel.setModifiedDate(model.getModifiedDate());
 		soapModel.setClassNameId(model.getClassNameId());
 		soapModel.setClassPK(model.getClassPK());
 		soapModel.setParentGroupId(model.getParentGroupId());
@@ -154,6 +156,14 @@ public class GroupSoap implements Serializable {
 
 	public void setCreatorUserId(long creatorUserId) {
 		_creatorUserId = creatorUserId;
+	}
+
+	public Date getModifiedDate() {
+		return _modifiedDate;
+	}
+
+	public void setModifiedDate(Date modifiedDate) {
+		_modifiedDate = modifiedDate;
 	}
 
 	public long getClassNameId() {
@@ -314,6 +324,7 @@ public class GroupSoap implements Serializable {
 	private long _groupId;
 	private long _companyId;
 	private long _creatorUserId;
+	private Date _modifiedDate;
 	private long _classNameId;
 	private long _classPK;
 	private long _parentGroupId;
