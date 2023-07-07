@@ -1,6 +1,5 @@
 definition {
 
-	@summary = "Helper function to get the child KB resource primKey"
 	macro _getChildKBResourcePrimKey {
 		if (!(isSet(site))) {
 			var site = "true";
@@ -48,7 +47,6 @@ definition {
 		}
 	}
 
-	@summary = "Helper function to get the KB resource primKey"
 	macro _getKBResourcePrimKey {
 		if (!(isSet(site))) {
 			var site = "true";
@@ -93,7 +91,6 @@ definition {
 		}
 	}
 
-	@summary = "This calls the JSON WS API to add a kB article"
 	macro addkBArticle {
 		var portalURL = JSONCompany.getPortalURL();
 
@@ -134,7 +131,6 @@ definition {
 		var messageId = JSONCurlUtil.post(${curl});
 	}
 
-	@summary = "This calls the JSON WS API to add a kB child article"
 	macro addkBChildArticle {
 		var portalURL = JSONCompany.getPortalURL();
 		var parentResourceClassNameId = JSONClassname._getClassNameId(value = "com.liferay.knowledge.base.model.KBArticle");
@@ -175,7 +171,6 @@ definition {
 		var messageId = JSONCurlUtil.post(${curl});
 	}
 
-	@summary = "This calls the JSON WS API to add a kB folder"
 	macro addkBFolder {
 		var portalURL = JSONCompany.getPortalURL();
 
@@ -222,7 +217,6 @@ definition {
 		var messageId = JSONCurlUtil.post(${curl});
 	}
 
-	@summary = "This calls the JSON WS API to add a kB grandchild article"
 	macro addkBGrandchildArticle {
 		var portalURL = JSONCompany.getPortalURL();
 		var parentResourceClassNameId = JSONClassname._getClassNameId(value = "com.liferay.knowledge.base.model.KBArticle");
@@ -265,7 +259,6 @@ definition {
 		var messageId = JSONCurlUtil.post(${curl});
 	}
 
-	@summary = "This calls the JSON WS API to add a kB template"
 	macro addkBTemplate {
 		var portalURL = JSONCompany.getPortalURL();
 
@@ -286,7 +279,6 @@ definition {
 		var messageId = JSONCurlUtil.post(${curl});
 	}
 
-	@summary = "Helper function to get the 'folderId' for the folder '${folderName}'"
 	macro getFolderIdByFolderName {
 		if (!(isSet(site))) {
 			var site = "true";

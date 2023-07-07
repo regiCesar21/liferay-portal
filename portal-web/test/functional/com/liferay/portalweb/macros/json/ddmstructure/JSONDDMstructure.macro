@@ -1,6 +1,5 @@
 definition {
 
-	@summary = "Get a structureId from ddmStructure"
 	macro _getStructureId {
 		Variables.assertDefined(parameterList = "${classNameId},${groupId},${structureName}");
 

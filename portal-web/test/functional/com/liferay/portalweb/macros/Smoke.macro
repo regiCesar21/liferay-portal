@@ -124,7 +124,6 @@ definition {
 		}
 	}
 
-	@summary = "View default welcome content page while signed in as '${userFirstName} ${userLastName}'"
 	macro viewWelcomeContentPage {
 		AssertTextPresent(
 			locator1 = "HelloWorld#PORTLET_TITLE",
@@ -139,7 +138,6 @@ definition {
 			locator1 = "Fragment#FRAGMENT_SECTION_BACKGROUND_IMAGE");
 	}
 
-	@summary = "View default welcome page while signed in as '${userFirstName} ${userLastName}'"
 	macro viewWelcomePage {
 		AssertTextPresent(
 			locator1 = "HelloWorld#PORTLET_TITLE",

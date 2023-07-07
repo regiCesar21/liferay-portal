@@ -1,6 +1,5 @@
 definition {
 
-	@summary = "Get all current companies in a JSON format"
 	macro _getPortalInstances {
 		var portalURL = JSONCompany.getPortalURL();
 
@@ -15,7 +14,6 @@ definition {
 		return ${JSON};
 	}
 
-	@summary = "Creates a new Portal Instance with domain = mailDomain, virtualHost = virtualHost, and portalInstanceId = webId"
 	macro addPortalInstance {
 		Variables.assertDefined(parameterList = "${domain},${virtualHost},${portalInstanceId}");
 
@@ -45,7 +43,6 @@ definition {
 		JSONCurlUtil.post(${curl});
 	}
 
-	@summary = "Clean up all Portal Instances that are not the default using Headless"
 	macro cleanAllPortalInstances {
 		var portalInstanceJSON = HeadlessPortalInstanceAPI._getPortalInstances();
 
@@ -58,7 +55,6 @@ definition {
 		}
 	}
 
-	@summary = "Deletes a Portal Instance with portalInstanceId resembling webId"
 	macro deletePortalInstance {
 		Variables.assertDefined(parameterList = ${portalInstanceId});
 

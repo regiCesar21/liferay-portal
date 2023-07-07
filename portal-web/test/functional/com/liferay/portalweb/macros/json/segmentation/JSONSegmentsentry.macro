@@ -1,6 +1,5 @@
 definition {
 
-	@summary = "Add a segment with a specific criteria"
 	macro addSegment {
 		Variables.assertDefined(parameterList = "${groupName},${segmentName},${fieldName},${operator}");
 

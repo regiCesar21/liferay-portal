@@ -1,6 +1,5 @@
 definition {
 
-	@summary = "This calls the JSON WS API to add a Depot entry"
 	macro addDepot {
 		var portalURL = JSONCompany.getPortalURL();
 
@@ -20,7 +19,6 @@ definition {
 		var messageId = JSONCurlUtil.post(${curl});
 	}
 
-	@summary = "This calls the JSON WS API to delete a Depot entry"
 	macro deleteDepot {
 		var depotId = JSONGroupAPI._getDepotIdByName(depotName = ${depotName});
 

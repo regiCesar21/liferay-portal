@@ -1,6 +1,5 @@
 definition {
 
-	@summary = "This calls the JSON WS API to add a redirect entry"
 	macro addRedirect {
 		Variables.assertDefined(parameterList = "${sourceURL},${destinationURL}");
 

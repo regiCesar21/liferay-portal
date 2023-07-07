@@ -1,6 +1,5 @@
 definition {
 
-	@summary = "Directly calls the JSON WS API to add a group"
 	macro _addGroup {
 		Variables.assertDefined(parameterList = ${groupNameMap});
 
@@ -44,7 +43,6 @@ definition {
 		com.liferay.poshi.runner.util.JSONCurlUtil.post(${curl});
 	}
 
-	@summary = "Directly calls the JSON WS API to assign a user a role"
 	macro _assignGroupRoleToUser {
 		Variables.assertDefined(parameterList = "${groupId},${roleId},${userId}");
 
@@ -61,7 +59,6 @@ definition {
 		com.liferay.poshi.runner.util.JSONCurlUtil.post(${curl});
 	}
 
-	@summary = "Directly calls the JSON WS API to add a user to a group"
 	macro _assignUserGroupToGroup {
 		Variables.assertDefined(parameterList = "${groupId},${userGroupId}");
 
@@ -75,7 +72,6 @@ definition {
 		com.liferay.poshi.runner.util.JSONCurlUtil.post(${curl});
 	}
 
-	@summary = "Directly calls the JSON WS API to add a user to a group"
 	macro _assignUserToGroup {
 		Variables.assertDefined(parameterList = "${groupId},${userId}");
 
@@ -91,7 +87,6 @@ definition {
 		com.liferay.poshi.runner.util.JSONCurlUtil.post(${curl});
 	}
 
-	@summary = "Directly calls the JSON WS API to delete a group"
 	macro _deleteGroup {
 		Variables.assertDefined(parameterList = ${groupId});
 
@@ -106,7 +101,6 @@ definition {
 		com.liferay.poshi.runner.util.JSONCurlUtil.post(${curl});
 	}
 
-	@summary = "Get the depotId from any existing depot by using depotName"
 	macro _getDepotIdByName {
 		Variables.assertDefined(parameterList = ${depotName});
 
@@ -131,7 +125,6 @@ definition {
 		return ${depotId};
 	}
 
-	@summary = "Get the groupId from any existing group by using groupKey"
 	macro _getGroupIdByGroupKey {
 		Variables.assertDefined(parameterList = "${groupKey},${site}");
 
@@ -159,7 +152,6 @@ definition {
 		return ${groupId};
 	}
 
-	@summary = "Get the groupId from any existing site by using groupName"
 	macro _getGroupIdByName {
 		Variables.assertDefined(parameterList = "${groupName},${site}");
 
@@ -187,7 +179,6 @@ definition {
 		return ${groupId};
 	}
 
-	@summary = "Get the groupName from any group by using groupId"
 	macro _getGroupName {
 		Variables.assertDefined(parameterList = ${groupId});
 
@@ -204,7 +195,6 @@ definition {
 		return ${groupNam};
 	}
 
-	@summary = "Get the parentGroupId from any existing site by using groupName"
 	macro _getParentGroupIdByName {
 		Variables.assertDefined(parameterList = ${groupName});
 
@@ -230,7 +220,6 @@ definition {
 		return ${groupId};
 	}
 
-	@summary = "Get the groupId from any existing parent or child site by using groupName"
 	macro _getSiteIdByGroupKey {
 		Variables.assertDefined(parameterList = ${groupName});
 

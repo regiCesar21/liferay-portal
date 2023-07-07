@@ -1,6 +1,5 @@
 definition {
 
-	@summary = "Add a displayPageTemplateEntry to an existing site"
 	macro addDisplayPageTemplateEntry {
 		Variables.assertDefined(parameterList = "${contentType},${displayPageTemplateEntryName},${groupName}");
 
@@ -70,7 +69,6 @@ definition {
 			serviceContext = ${serviceContext});
 	}
 
-	@summary = "Add a PageTemplateEntry to the Global site"
 	macro addGlobalPageTemplateEntry {
 		Variables.assertDefined(parameterList = "${pageTemplateEntryActive},${pageTemplateEntryName}");
 
@@ -90,7 +88,6 @@ definition {
 			serviceContext = ${serviceContext});
 	}
 
-	@summary = "Add a layoutPageTemplateCollection to an existing site"
 	macro addLayoutPageTemplateCollection {
 		Variables.assertDefined(parameterList = "${groupName},${layoutPageTemplateCollectionName}");
 
@@ -121,7 +118,6 @@ definition {
 			serviceContext = ${serviceContext});
 	}
 
-	@summary = "Add a layoutPageTemplateEntry to an existing site"
 	macro addLayoutPageTemplateEntry {
 		Variables.assertDefined(parameterList = "${groupName},${layoutPageTemplateEntryName},${layoutPageTemplateType},${layoutPageTemplateStatus}");
 
@@ -168,7 +164,6 @@ definition {
 			type = ${type});
 	}
 
-	@summary = "Add a masterPageTemplateEntry to an existing site"
 	macro addMasterPageTemplateEntry {
 		Variables.assertDefined(parameterList = "${groupName},${masterPageTemplateEntryName}");
 
@@ -190,7 +185,6 @@ definition {
 			serviceContext = ${serviceContext});
 	}
 
-	@summary = "Delete a layoutPageTemplateEntry under an existing site"
 	macro deleteLayoutPageTemplateEntry {
 		Variables.assertDefined(parameterList = "${groupName},${layoutPageTemplateEntryName}");
 

@@ -1,6 +1,5 @@
 definition {
 
-	@summary = "Add a basic tag"
 	macro addTag {
 		Variables.assertDefined(parameterList = "${groupName},${tagName}");
 
