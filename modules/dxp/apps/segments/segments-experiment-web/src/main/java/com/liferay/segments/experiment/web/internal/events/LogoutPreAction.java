@@ -24,6 +24,7 @@ import com.liferay.segments.experiment.web.internal.processor.SegmentsExperiment
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.liferay.segments.experiment.web.internal.util.SegmentsExperimentCookieCleaner;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
@@ -44,7 +45,7 @@ public class LogoutPreAction extends Action {
 			ProductNavigationControlMenuEntryConstants.SESSION_CLICKS_KEY,
 			"closed");
 
-		_segmentsExperimentSegmentsExperienceRequestProcessor.
+		SegmentsExperimentCookieCleaner.
 			cleanCookieLogoutAction(httpServletRequest, httpServletResponse);
 	}
 
