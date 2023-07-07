@@ -142,6 +142,8 @@ public class PortalUpgradeProcessRegistryImpl
 			new Version(8, 18, 4), new UpgradeAssetCategoryTitleDescription());
 
 		upgradeProcesses.put(new Version(8, 18, 5), new UpgradeExpandoColumn());
+
+		upgradeProcesses.put(new Version(8, 18, 6), new UpgradeGroup());
 	}
 
 }
