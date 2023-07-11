@@ -45,6 +45,12 @@ public class ExpandoColumnModelListener
 
 	@Override
 	public void onAfterRemove(ExpandoColumn expandoColumn) {
+		if (!analyticsConfigurationRegistry.isActive() ||
+			!isTracked(expandoColumn)) {
+
+			return;
+		}
+
 		try {
 			AnalyticsConfiguration analyticsConfiguration =
 				analyticsConfigurationRegistry.getAnalyticsConfiguration(
