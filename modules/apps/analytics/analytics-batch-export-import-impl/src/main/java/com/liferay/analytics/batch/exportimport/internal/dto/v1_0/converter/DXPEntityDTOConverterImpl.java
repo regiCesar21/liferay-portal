@@ -38,12 +38,12 @@ import com.liferay.portal.kernel.model.Organization;
 import com.liferay.portal.kernel.model.ShardedModel;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.ClassNameLocalService;
-import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.vulcan.dto.converter.DTOConverter;
 import com.liferay.portal.vulcan.dto.converter.DTOConverterContext;
+import com.liferay.portal.vulcan.util.TransformUtil;
 
 import java.io.Serializable;
 
@@ -183,8 +183,7 @@ public class DXPEntityDTOConverterImpl implements DXPEntityDTOConverter {
 					new Field() {
 						{
 							name = "columnId";
-							value = GetterUtil.getString(
-								expandoColumn.getColumnId());
+							value = String.valueOf(expandoColumn.getColumnId());
 						}
 					});
 				add(
@@ -201,8 +200,7 @@ public class DXPEntityDTOConverterImpl implements DXPEntityDTOConverter {
 
 							Date modifiedDate = expandoColumn.getModifiedDate();
 
-							value = GetterUtil.getString(
-								modifiedDate.getTime());
+							value = String.valueOf(modifiedDate.getTime());
 						}
 					});
 				add(
@@ -319,6 +317,42 @@ public class DXPEntityDTOConverterImpl implements DXPEntityDTOConverter {
 					ListUtil.fromArray(
 						analyticsConfiguration.syncedContactFieldNames()),
 					includeAttributeNames));
+
+			fields.add(
+				new Field() {
+					{
+						name = "groupIds";
+						value = _getGroupIds(user);
+					}
+				});
+			fields.add(
+				new Field() {
+					{
+						name = "organizationIds";
+						value = _getOrganizationIds(user);
+					}
+				});
+			fields.add(
+				new Field() {
+					{
+						name = "roleIds";
+						value = _getRoleIds(user);
+					}
+				});
+			fields.add(
+				new Field() {
+					{
+						name = "teamIds";
+						value = _getTeamIds(user);
+					}
+				});
+			fields.add(
+				new Field() {
+					{
+						name = "userGroupIds";
+						value = _getUserGroupIds(user);
+					}
+				});
 		}
 
 		_addFieldAttributes(baseModel, fields, includeAttributeNames);
@@ -352,6 +386,54 @@ public class DXPEntityDTOConverterImpl implements DXPEntityDTOConverter {
 		}
 
 		return fields.toArray(new Field[0]);
+	}
+
+	private String _getGroupIds(User user) {
+		try {
+			Long[] ids = TransformUtil.unsafeTransformToArray(
+				user.getSiteGroups(), Group::getGroupId, Long.class);
+
+			return "[" + StringUtil.merge(ids, ",") + "]";
+		}
+		catch (Exception exception) {
+			return "[]";
+		}
+	}
+
+	private String _getOrganizationIds(User user) {
+		try {
+			return "[" + StringUtil.merge(user.getOrganizationIds(), ",") + "]";
+		}
+		catch (Exception exception) {
+			return "[]";
+		}
+	}
+
+	private String _getRoleIds(User user) {
+		try {
+			return "[" + StringUtil.merge(user.getRoleIds(), ",") + "]";
+		}
+		catch (Exception exception) {
+			return "[]";
+		}
+	}
+
+	private String _getTeamIds(User user) {
+		try {
+			return "[" + StringUtil.merge(user.getTeamIds(), ",") + "]";
+		}
+		catch (Exception exception) {
+			return "[]";
+		}
+	}
+
+	private String _getUserGroupIds(User user) {
+		try {
+			return "[" + StringUtil.merge(user.getUserGroupIds(), ",") + "]";
+		}
+		catch (Exception exception) {
+			return "[]";
+		}
 	}
 
 	private boolean _isCustomField(String className, long tableId) {
