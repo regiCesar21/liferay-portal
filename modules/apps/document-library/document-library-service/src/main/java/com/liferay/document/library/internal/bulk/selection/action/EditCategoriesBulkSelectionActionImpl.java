@@ -106,11 +106,11 @@ public class EditCategoriesBulkSelectionActionImpl
 	}
 
 	private Set<Long> _toLongSet(
-		Map<String, Serializable> inputMap, String key) {
+		Map<String, Serializable> map, String key) {
 
 		try {
 			return SetUtil.fromArray(
-				(Long[])inputMap.getOrDefault(key, new Long[0]));
+				(Long[])map.getOrDefault(key, new Long[0]));
 		}
 		catch (Exception exception) {
 			if (_log.isDebugEnabled()) {
