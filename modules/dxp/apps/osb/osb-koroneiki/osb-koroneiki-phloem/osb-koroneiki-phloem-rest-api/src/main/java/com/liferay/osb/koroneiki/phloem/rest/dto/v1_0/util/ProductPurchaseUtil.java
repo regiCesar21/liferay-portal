@@ -14,6 +14,48 @@ import com.liferay.portal.vulcan.util.TransformUtil;
  */
 public class ProductPurchaseUtil {
 
+	public static
+		com.liferay.osb.koroneiki.phloem.rest.client.dto.v1_0.ProductPurchase
+				toClientProductPurchase(
+					com.liferay.osb.koroneiki.trunk.model.ProductPurchase
+						productPurchase)
+			throws Exception {
+
+		return new com.liferay.osb.koroneiki.phloem.rest.client.dto.v1_0.
+			ProductPurchase() {
+
+			{
+				accountKey = productPurchase.getAccountKey();
+				dateCreated = productPurchase.getCreateDate();
+				endDate = productPurchase.getEndDate();
+				externalLinks = TransformUtil.transformToArray(
+					productPurchase.getExternalLinks(),
+					ExternalLinkUtil::toClientExternalLink,
+					com.liferay.osb.koroneiki.phloem.rest.client.dto.v1_0.
+						ExternalLink.class);
+				key = productPurchase.getProductPurchaseKey();
+				originalEndDate = productPurchase.getOriginalEndDate();
+
+				if ((productPurchase.getEndDate() == null) &&
+					(productPurchase.getEndDate() == null)) {
+
+					perpetual = Boolean.TRUE;
+				}
+				else {
+					perpetual = Boolean.FALSE;
+				}
+
+				product = ProductUtil.toClientProduct(
+					productPurchase.getProductEntry());
+				productKey = productPurchase.getProductEntryKey();
+				properties = productPurchase.getProductFieldsMap();
+				quantity = productPurchase.getQuantity();
+				startDate = productPurchase.getStartDate();
+				status = Status.create(productPurchase.getStatusLabel());
+			}
+		};
+	}
+
 	public static ProductPurchase toProductPurchase(
 			com.liferay.osb.koroneiki.trunk.model.ProductPurchase
 				productPurchase)

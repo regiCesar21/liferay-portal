@@ -67,4 +67,59 @@ public class AccountUtil {
 		};
 	}
 
+	public static com.liferay.osb.koroneiki.phloem.rest.client.dto.v1_0.Account
+			toClientAccount(
+				com.liferay.osb.koroneiki.taproot.model.Account account)
+		throws Exception {
+
+		return new com.liferay.osb.koroneiki.phloem.rest.client.dto.v1_0.
+			Account() {
+
+			{
+				code = account.getCode();
+				contactEmailAddress = account.getContactEmailAddress();
+				dataRegion = DataRegion.create(account.getDataRegion());
+				dateCreated = account.getCreateDate();
+				dateModified = account.getModifiedDate();
+				description = account.getDescription();
+				entitlements = TransformUtil.transformToArray(
+					account.getEntitlements(),
+					EntitlementUtil::toClientEntitlement,
+					com.liferay.osb.koroneiki.phloem.rest.client.dto.v1_0.
+						Entitlement.class);
+				externalLinks = TransformUtil.transformToArray(
+					account.getExternalLinks(),
+					ExternalLinkUtil::toClientExternalLink,
+					com.liferay.osb.koroneiki.phloem.rest.client.dto.v1_0.
+						ExternalLink.class);
+				faxNumber = account.getFaxNumber();
+				internal = account.getInternal();
+				key = account.getAccountKey();
+				language = Language.create(account.getLanguage());
+				logoId = account.getLogoId();
+				name = account.getName();
+
+				com.liferay.osb.koroneiki.taproot.model.Account parentAccount =
+					account.getParentAccount();
+
+				if (parentAccount != null) {
+					parentAccountKey = parentAccount.getAccountKey();
+				}
+
+				phoneNumber = account.getPhoneNumber();
+				postalAddresses = TransformUtil.transformToArray(
+					account.getAddresses(),
+					address -> PostalAddressUtil.toClientPostalAddress(address),
+					com.liferay.osb.koroneiki.phloem.rest.client.dto.v1_0.
+						PostalAddress.class);
+				profileEmailAddress = account.getProfileEmailAddress();
+				properties = account.getAccountFieldsMap();
+				region = Region.create(account.getRegion());
+				status = Status.create(account.getStatus());
+				tier = Tier.create(account.getTier());
+				website = account.getWebsite();
+			}
+		};
+	}
+
 }

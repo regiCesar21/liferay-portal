@@ -7,6 +7,15 @@ package com.liferay.osb.koroneiki.xylem.distributed.messaging.internal.factory;
 
 import com.liferay.osb.distributed.messaging.Message;
 import com.liferay.osb.koroneiki.phloem.rest.client.dto.v1_0.Product;
+import com.liferay.osb.koroneiki.phloem.rest.dto.v1_0.converter.ContactDTOConverter;
+import com.liferay.osb.koroneiki.phloem.rest.dto.v1_0.util.AccountUtil;
+import com.liferay.osb.koroneiki.phloem.rest.dto.v1_0.util.ContactRoleUtil;
+import com.liferay.osb.koroneiki.phloem.rest.dto.v1_0.util.EntitlementUtil;
+import com.liferay.osb.koroneiki.phloem.rest.dto.v1_0.util.ProductConsumptionUtil;
+import com.liferay.osb.koroneiki.phloem.rest.dto.v1_0.util.ProductPurchaseUtil;
+import com.liferay.osb.koroneiki.phloem.rest.dto.v1_0.util.ProductUtil;
+import com.liferay.osb.koroneiki.phloem.rest.dto.v1_0.util.TeamRoleUtil;
+import com.liferay.osb.koroneiki.phloem.rest.dto.v1_0.util.TeamUtil;
 import com.liferay.osb.koroneiki.phytohormone.model.Entitlement;
 import com.liferay.osb.koroneiki.phytohormone.service.EntitlementLocalService;
 import com.liferay.osb.koroneiki.taproot.model.Account;
@@ -22,15 +31,6 @@ import com.liferay.osb.koroneiki.taproot.service.TeamRoleLocalService;
 import com.liferay.osb.koroneiki.trunk.model.ProductConsumption;
 import com.liferay.osb.koroneiki.trunk.model.ProductEntry;
 import com.liferay.osb.koroneiki.trunk.model.ProductPurchase;
-import com.liferay.osb.koroneiki.xylem.distributed.messaging.internal.rest.dto.util.AccountUtil;
-import com.liferay.osb.koroneiki.xylem.distributed.messaging.internal.rest.dto.util.ContactRoleUtil;
-import com.liferay.osb.koroneiki.xylem.distributed.messaging.internal.rest.dto.util.ContactUtil;
-import com.liferay.osb.koroneiki.xylem.distributed.messaging.internal.rest.dto.util.EntitlementUtil;
-import com.liferay.osb.koroneiki.xylem.distributed.messaging.internal.rest.dto.util.ProductConsumptionUtil;
-import com.liferay.osb.koroneiki.xylem.distributed.messaging.internal.rest.dto.util.ProductPurchaseUtil;
-import com.liferay.osb.koroneiki.xylem.distributed.messaging.internal.rest.dto.util.ProductUtil;
-import com.liferay.osb.koroneiki.xylem.distributed.messaging.internal.rest.dto.util.TeamRoleUtil;
-import com.liferay.osb.koroneiki.xylem.distributed.messaging.internal.rest.dto.util.TeamUtil;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
@@ -176,7 +176,7 @@ public class MessageFactory {
 		}
 
 		com.liferay.osb.koroneiki.phloem.rest.client.dto.v1_0.Account
-			dtoAccount = AccountUtil.toAccount(account);
+			dtoAccount = AccountUtil.toClientAccount(account);
 
 		return _jsonFactory.createJSONObject(dtoAccount.toString());
 	}
@@ -190,7 +190,7 @@ public class MessageFactory {
 		}
 
 		com.liferay.osb.koroneiki.phloem.rest.client.dto.v1_0.Contact
-			dtoContact = ContactUtil.toContact(contact);
+			dtoContact = _contactDTOConverter.toClientDTO(null, contact);
 
 		return _jsonFactory.createJSONObject(dtoContact.toString());
 	}
@@ -207,7 +207,7 @@ public class MessageFactory {
 		}
 
 		com.liferay.osb.koroneiki.phloem.rest.client.dto.v1_0.ContactRole
-			dtoContactRole = ContactRoleUtil.toContactRole(contactRole);
+			dtoContactRole = ContactRoleUtil.toClientContactRole(contactRole);
 
 		return _jsonFactory.createJSONObject(dtoContactRole.toString());
 	}
@@ -224,7 +224,7 @@ public class MessageFactory {
 		}
 
 		com.liferay.osb.koroneiki.phloem.rest.client.dto.v1_0.Entitlement
-			dtoEntitlement = EntitlementUtil.toEntitlement(entitlement);
+			dtoEntitlement = EntitlementUtil.toClientEntitlement(entitlement);
 
 		return _jsonFactory.createJSONObject(dtoEntitlement.toString());
 	}
@@ -233,8 +233,9 @@ public class MessageFactory {
 		throws Exception {
 
 		com.liferay.osb.koroneiki.phloem.rest.client.dto.v1_0.ProductConsumption
-			dtoProductConsumption = ProductConsumptionUtil.toProductConsumption(
-				productConsumption);
+			dtoProductConsumption =
+				ProductConsumptionUtil.toClientProductConsumption(
+					productConsumption);
 
 		return _jsonFactory.createJSONObject(dtoProductConsumption.toString());
 	}
@@ -242,7 +243,7 @@ public class MessageFactory {
 	protected JSONObject toJSONObject(ProductEntry productEntry)
 		throws Exception {
 
-		Product dtoProduct = ProductUtil.toProduct(productEntry);
+		Product dtoProduct = ProductUtil.toClientProduct(productEntry);
 
 		return _jsonFactory.createJSONObject(dtoProduct.toString());
 	}
@@ -251,7 +252,7 @@ public class MessageFactory {
 		throws Exception {
 
 		com.liferay.osb.koroneiki.phloem.rest.client.dto.v1_0.ProductPurchase
-			dtoProductPurchase = ProductPurchaseUtil.toProductPurchase(
+			dtoProductPurchase = ProductPurchaseUtil.toClientProductPurchase(
 				productPurchase);
 
 		return _jsonFactory.createJSONObject(dtoProductPurchase.toString());
@@ -265,14 +266,14 @@ public class MessageFactory {
 		}
 
 		com.liferay.osb.koroneiki.phloem.rest.client.dto.v1_0.Team dtoTeam =
-			TeamUtil.toTeam(team);
+			TeamUtil.toClientTeam(team);
 
 		return _jsonFactory.createJSONObject(dtoTeam.toString());
 	}
 
 	protected JSONObject toJSONObject(TeamRole teamRole) throws Exception {
 		com.liferay.osb.koroneiki.phloem.rest.client.dto.v1_0.TeamRole
-			dtoTeamRole = TeamRoleUtil.toTeamRole(teamRole);
+			dtoTeamRole = TeamRoleUtil.toClientTeamRole(teamRole);
 
 		return _jsonFactory.createJSONObject(dtoTeamRole.toString());
 	}
@@ -282,6 +283,9 @@ public class MessageFactory {
 
 	@Reference
 	private ClassNameLocalService _classNameLocalService;
+
+	@Reference
+	private ContactDTOConverter _contactDTOConverter;
 
 	@Reference
 	private ContactLocalService _contactLocalService;

@@ -324,6 +324,13 @@ components:
                     description:
                         The middle name of the contact.
                     type: string
+                phones:
+                    description:
+                        The contact's phones.
+                    items:
+                        $ref: "#/components/schemas/Phone"
+                    readOnly: true
+                    type: array
                 teams:
                     description:
                         The teams that the contact is assigned to.
@@ -671,6 +678,24 @@ components:
                     description:
                         The type of information the note contains.
                     enum: ["General", "Sales"]
+                    type: string
+            type: object
+        Phone:
+            description:
+                Represents a phone number.
+            properties:
+                number:
+                    description:
+                        The phone number.
+                    type: string
+                primary:
+                    description:
+                        A flag that identifies whether this is the main phone number of the contact.
+                    type: boolean
+                type:
+                    description:
+                        The phone number's type.
+                    enum: ["Mobile", "Other"]
                     type: string
             type: object
         PostalAddress:

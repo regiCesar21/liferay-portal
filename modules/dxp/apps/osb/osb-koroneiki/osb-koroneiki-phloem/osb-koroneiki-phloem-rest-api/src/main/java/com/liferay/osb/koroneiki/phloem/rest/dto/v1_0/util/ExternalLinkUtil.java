@@ -12,6 +12,27 @@ import com.liferay.osb.koroneiki.phloem.rest.dto.v1_0.ExternalLink;
  */
 public class ExternalLinkUtil {
 
+	public static
+		com.liferay.osb.koroneiki.phloem.rest.client.dto.v1_0.ExternalLink
+				toClientExternalLink(
+					com.liferay.osb.koroneiki.root.model.ExternalLink
+						externalLink)
+			throws Exception {
+
+		return new com.liferay.osb.koroneiki.phloem.rest.client.dto.v1_0.
+			ExternalLink() {
+
+			{
+				dateCreated = externalLink.getCreateDate();
+				domain = externalLink.getDomain();
+				entityId = externalLink.getEntityId();
+				entityName = externalLink.getEntityName();
+				key = externalLink.getExternalLinkKey();
+				url = externalLink.getUrl();
+			}
+		};
+	}
+
 	public static ExternalLink toExternalLink(
 			com.liferay.osb.koroneiki.root.model.ExternalLink externalLink)
 		throws Exception {

@@ -12,6 +12,25 @@ import com.liferay.osb.koroneiki.phloem.rest.dto.v1_0.TeamRole;
  */
 public class TeamRoleUtil {
 
+	public static com.liferay.osb.koroneiki.phloem.rest.client.dto.v1_0.TeamRole
+			toClientTeamRole(
+				com.liferay.osb.koroneiki.taproot.model.TeamRole teamRole)
+		throws Exception {
+
+		return new com.liferay.osb.koroneiki.phloem.rest.client.dto.v1_0.
+			TeamRole() {
+
+			{
+				dateCreated = teamRole.getCreateDate();
+				dateModified = teamRole.getModifiedDate();
+				description = teamRole.getDescription();
+				key = teamRole.getTeamRoleKey();
+				name = teamRole.getName();
+				type = Type.create(teamRole.getType());
+			}
+		};
+	}
+
 	public static TeamRole toTeamRole(
 			com.liferay.osb.koroneiki.taproot.model.TeamRole teamRole)
 		throws Exception {

@@ -14,6 +14,33 @@ import com.liferay.portal.vulcan.util.TransformUtil;
  */
 public class ContactRoleUtil {
 
+	public static
+		com.liferay.osb.koroneiki.phloem.rest.client.dto.v1_0.ContactRole
+				toClientContactRole(
+					com.liferay.osb.koroneiki.taproot.model.ContactRole
+						contactRole)
+			throws Exception {
+
+		return new com.liferay.osb.koroneiki.phloem.rest.client.dto.v1_0.
+			ContactRole() {
+
+			{
+				dateCreated = contactRole.getCreateDate();
+				dateModified = contactRole.getModifiedDate();
+				description = contactRole.getDescription();
+				externalLinks = TransformUtil.transformToArray(
+					contactRole.getExternalLinks(),
+					ExternalLinkUtil::toClientExternalLink,
+					com.liferay.osb.koroneiki.phloem.rest.client.dto.v1_0.
+						ExternalLink.class);
+				key = contactRole.getContactRoleKey();
+				name = contactRole.getName();
+				system = contactRole.getSystem();
+				type = Type.create(contactRole.getType());
+			}
+		};
+	}
+
 	public static ContactRole toContactRole(
 			com.liferay.osb.koroneiki.taproot.model.ContactRole contactRole)
 		throws Exception {

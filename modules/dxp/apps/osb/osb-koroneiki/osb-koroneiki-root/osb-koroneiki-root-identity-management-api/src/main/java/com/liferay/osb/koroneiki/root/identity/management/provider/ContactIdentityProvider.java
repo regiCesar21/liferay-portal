@@ -6,6 +6,7 @@
 package com.liferay.osb.koroneiki.root.identity.management.provider;
 
 import com.liferay.osb.koroneiki.taproot.model.Contact;
+import com.liferay.portal.kernel.json.JSONObject;
 
 /**
  * @author Amos Fong
@@ -16,6 +17,8 @@ public interface ContactIdentityProvider {
 		throws Exception;
 
 	public Contact fetchContactByUuid(String uuid) throws Exception;
+
+	public JSONObject fetchRawContactByUuid(String uuid) throws Exception;
 
 	public Contact getContactByEmailAddress(String emailAddress)
 		throws Exception;

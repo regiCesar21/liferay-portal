@@ -10,13 +10,12 @@ import com.liferay.osb.koroneiki.phloem.rest.dto.v1_0.Contact;
 import com.liferay.osb.koroneiki.phloem.rest.dto.v1_0.ContactPermission;
 import com.liferay.osb.koroneiki.phloem.rest.dto.v1_0.ContactRole;
 import com.liferay.osb.koroneiki.phloem.rest.dto.v1_0.Team;
-import com.liferay.osb.koroneiki.phloem.rest.dto.v1_0.util.ContactUtil;
+import com.liferay.osb.koroneiki.phloem.rest.dto.v1_0.converter.ContactDTOConverter;
 import com.liferay.osb.koroneiki.phloem.rest.internal.PhloemNestedFieldsContextThreadLocal;
 import com.liferay.osb.koroneiki.phloem.rest.internal.odata.entity.v1_0.ContactEntityModel;
 import com.liferay.osb.koroneiki.phloem.rest.internal.resource.v1_0.util.PhloemPermissionUtil;
 import com.liferay.osb.koroneiki.phloem.rest.internal.resource.v1_0.util.ServiceContextUtil;
 import com.liferay.osb.koroneiki.phloem.rest.resource.v1_0.ContactResource;
-import com.liferay.osb.koroneiki.root.identity.management.provider.ContactIdentityProvider;
 import com.liferay.osb.koroneiki.taproot.service.ContactLocalService;
 import com.liferay.osb.koroneiki.taproot.service.ContactService;
 import com.liferay.osb.koroneiki.taproot.service.TeamLocalService;
@@ -27,16 +26,24 @@ import com.liferay.portal.kernel.search.filter.Filter;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.odata.entity.EntityModel;
+import com.liferay.portal.vulcan.dto.converter.DTOConverterContext;
+import com.liferay.portal.vulcan.dto.converter.DefaultDTOConverterContext;
 import com.liferay.portal.vulcan.fields.NestedField;
 import com.liferay.portal.vulcan.fields.NestedFieldId;
 import com.liferay.portal.vulcan.fields.NestedFieldSupport;
+import com.liferay.portal.vulcan.fields.NestedFieldsContext;
+import com.liferay.portal.vulcan.fields.NestedFieldsContextThreadLocal;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
 import com.liferay.portal.vulcan.resource.EntityModelResource;
 import com.liferay.portal.vulcan.util.SearchUtil;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
 
 import javax.ws.rs.core.MultivaluedMap;
@@ -107,7 +114,7 @@ public class ContactResourceImpl
 				_contactService.getAccountContacts(
 					accountKey, null, pagination.getStartPosition(),
 					pagination.getEndPosition()),
-				contact -> ContactUtil.toContact(contact)),
+				contact -> _toContact(contact)),
 			pagination,
 			_contactService.getAccountContactsCount(accountKey, null));
 	}
@@ -122,7 +129,7 @@ public class ContactResourceImpl
 				_contactService.getAccountContacts(
 					accountKey, ContactRole.Type.ACCOUNT_CUSTOMER.toString(),
 					pagination.getStartPosition(), pagination.getEndPosition()),
-				contact -> ContactUtil.toContact(contact)),
+				contact -> _toContact(contact)),
 			pagination,
 			_contactService.getAccountContactsCount(
 				accountKey, ContactRole.Type.ACCOUNT_CUSTOMER.toString()));
@@ -138,7 +145,7 @@ public class ContactResourceImpl
 				_contactService.getAccountContacts(
 					accountKey, ContactRole.Type.ACCOUNT_WORKER.toString(),
 					pagination.getStartPosition(), pagination.getEndPosition()),
-				contact -> ContactUtil.toContact(contact)),
+				contact -> _toContact(contact)),
 			pagination,
 			_contactService.getAccountContactsCount(
 				accountKey, ContactRole.Type.ACCOUNT_WORKER.toString()));
@@ -157,7 +164,7 @@ public class ContactResourceImpl
 			_contactService.getAccountContacts(
 				accountKey, ContactRole.Type.ACCOUNT_CUSTOMER.toString(),
 				QueryUtil.ALL_POS, QueryUtil.ALL_POS),
-			contact -> ContactUtil.toContact(contact));
+			contact -> _toContact(contact));
 	}
 
 	@NestedField(parentClass = Account.class, value = "workerContacts")
@@ -173,14 +180,14 @@ public class ContactResourceImpl
 			_contactService.getAccountContacts(
 				accountKey, ContactRole.Type.ACCOUNT_WORKER.toString(),
 				QueryUtil.ALL_POS, QueryUtil.ALL_POS),
-			contact -> ContactUtil.toContact(contact));
+			contact -> _toContact(contact));
 	}
 
 	@Override
 	public Contact getContactByEmailAddresEmailAddress(String emailAddress)
 		throws Exception {
 
-		return ContactUtil.toContact(
+		return _toContact(
 			_contactService.getContactByEmailAddress(emailAddress));
 	}
 
@@ -188,8 +195,7 @@ public class ContactResourceImpl
 	public Contact getContactByUuidContactUuid(String contactUuid)
 		throws Exception {
 
-		return ContactUtil.toContact(
-			_contactService.getContactByUuid(contactUuid));
+		return _toContact(_contactService.getContactByUuid(contactUuid));
 	}
 
 	@Override
@@ -206,7 +212,7 @@ public class ContactResourceImpl
 				Field.ENTRY_CLASS_PK),
 			searchContext -> searchContext.setCompanyId(
 				contextCompany.getCompanyId()),
-			document -> ContactUtil.toContact(
+			document -> _toContact(
 				_contactLocalService.getContact(
 					GetterUtil.getLong(document.get(Field.ENTRY_CLASS_PK)))),
 			sorts);
@@ -225,7 +231,7 @@ public class ContactResourceImpl
 		return transform(
 			_contactService.getTeamContacts(
 				teamKey, QueryUtil.ALL_POS, QueryUtil.ALL_POS),
-			contact -> ContactUtil.toContact(contact));
+			contact -> _toContact(contact));
 	}
 
 	@Override
@@ -238,7 +244,7 @@ public class ContactResourceImpl
 				_contactService.getTeamContacts(
 					teamKey, pagination.getStartPosition(),
 					pagination.getEndPosition()),
-				contact -> ContactUtil.toContact(contact)),
+				contact -> _toContact(contact)),
 			pagination, _contactService.getTeamContactsCount(teamKey));
 	}
 
@@ -249,7 +255,7 @@ public class ContactResourceImpl
 
 		ServiceContextUtil.setAgentFields(agentName, agentUID);
 
-		return ContactUtil.toContact(
+		return _toContact(
 			_contactService.addContact(
 				contact.getUuid(), contact.getFirstName(),
 				contact.getMiddleName(), contact.getLastName(),
@@ -278,7 +284,7 @@ public class ContactResourceImpl
 			contact.getEmailAddressVerified(),
 			curContact.getEmailAddressVerified());
 
-		return ContactUtil.toContact(
+		return _toContact(
 			_contactService.updateContact(
 				curContact.getContactId(), uuid, contact.getFirstName(),
 				middleName, contact.getLastName(), contact.getEmailAddress(),
@@ -304,7 +310,7 @@ public class ContactResourceImpl
 			contact.getEmailAddressVerified(),
 			curContact.getEmailAddressVerified());
 
-		return ContactUtil.toContact(
+		return _toContact(
 			_contactService.updateContact(
 				curContact.getContactId(), curContact.getUuid(),
 				contact.getFirstName(), middleName, contact.getLastName(),
@@ -323,6 +329,40 @@ public class ContactResourceImpl
 			_contactLocalService.fetchContactByUuid(contactUuid);
 
 		_updateContactPermission(contact, "add", contactPermission);
+	}
+
+	private Contact _toContact(
+			com.liferay.osb.koroneiki.taproot.model.Contact contact)
+		throws Exception {
+
+		DTOConverterContext dtoConverterContext =
+			new DefaultDTOConverterContext(
+				false, new HashMap<>(), null, contact.getContactId(), null,
+				null, null);
+
+		if (contextHttpServletRequest != null) {
+			List<String> auxillaryFields = Arrays.asList(
+				StringUtil.split(
+					ParamUtil.getString(
+						contextHttpServletRequest, "auxillaryFields")));
+
+			dtoConverterContext.setAttribute(
+				"auxillaryFields", auxillaryFields);
+		}
+		else {
+			NestedFieldsContext nestedFieldsContext =
+				NestedFieldsContextThreadLocal.getNestedFieldsContext();
+
+			if (nestedFieldsContext != null) {
+				MultivaluedMap<String, String> queryParameters =
+					nestedFieldsContext.getQueryParameters();
+
+				dtoConverterContext.setAttribute(
+					"auxillaryFields", queryParameters.get("auxillaryFields"));
+			}
+		}
+
+		return _contactDTOConverter.toDTO(dtoConverterContext, contact);
 	}
 
 	private void _updateContactPermission(
@@ -365,8 +405,8 @@ public class ContactResourceImpl
 
 	private static final EntityModel _entityModel = new ContactEntityModel();
 
-	@Reference(target = "(provider=okta)")
-	private ContactIdentityProvider _contactIdentityProvider;
+	@Reference
+	private ContactDTOConverter _contactDTOConverter;
 
 	@Reference
 	private ContactLocalService _contactLocalService;

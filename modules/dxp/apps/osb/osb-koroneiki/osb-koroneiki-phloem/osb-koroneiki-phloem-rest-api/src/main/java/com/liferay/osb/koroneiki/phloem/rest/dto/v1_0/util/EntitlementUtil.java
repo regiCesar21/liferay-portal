@@ -12,6 +12,24 @@ import com.liferay.osb.koroneiki.phloem.rest.dto.v1_0.Entitlement;
  */
 public class EntitlementUtil {
 
+	public static
+		com.liferay.osb.koroneiki.phloem.rest.client.dto.v1_0.Entitlement
+				toClientEntitlement(
+					com.liferay.osb.koroneiki.phytohormone.model.Entitlement
+						entitlement)
+			throws Exception {
+
+		return new com.liferay.osb.koroneiki.phloem.rest.client.dto.v1_0.
+			Entitlement() {
+
+			{
+				entitlementDefinitionKey =
+					entitlement.getEntitlementDefinitionKey();
+				name = entitlement.getName();
+			}
+		};
+	}
+
 	public static Entitlement toEntitlement(
 			com.liferay.osb.koroneiki.phytohormone.model.Entitlement
 				entitlement)

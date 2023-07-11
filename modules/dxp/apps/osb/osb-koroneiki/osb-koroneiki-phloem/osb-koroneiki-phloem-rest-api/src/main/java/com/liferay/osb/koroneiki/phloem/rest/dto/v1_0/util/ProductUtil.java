@@ -15,6 +15,28 @@ import com.liferay.portal.vulcan.util.TransformUtil;
  */
 public class ProductUtil {
 
+	public static com.liferay.osb.koroneiki.phloem.rest.client.dto.v1_0.Product
+			toClientProduct(ProductEntry productEntry)
+		throws Exception {
+
+		return new com.liferay.osb.koroneiki.phloem.rest.client.dto.v1_0.
+			Product() {
+
+			{
+				dateCreated = productEntry.getCreateDate();
+				dateModified = productEntry.getModifiedDate();
+				externalLinks = TransformUtil.transformToArray(
+					productEntry.getExternalLinks(),
+					ExternalLinkUtil::toClientExternalLink,
+					com.liferay.osb.koroneiki.phloem.rest.client.dto.v1_0.
+						ExternalLink.class);
+				key = productEntry.getProductEntryKey();
+				name = productEntry.getName();
+				properties = productEntry.getProductFieldsMap();
+			}
+		};
+	}
+
 	public static Product toProduct(ProductEntry productEntry)
 		throws Exception {
 

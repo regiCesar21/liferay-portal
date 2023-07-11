@@ -17,6 +17,50 @@ import com.liferay.portal.kernel.util.LocaleUtil;
  */
 public class PostalAddressUtil {
 
+	public static
+		com.liferay.osb.koroneiki.phloem.rest.client.dto.v1_0.PostalAddress
+			toClientPostalAddress(Address address) {
+
+		ListType listType = address.getType();
+
+		return new com.liferay.osb.koroneiki.phloem.rest.client.dto.v1_0.
+			PostalAddress() {
+
+			{
+				addressLocality = address.getCity();
+				addressType = listType.getName();
+				id = address.getAddressId();
+				mailing = address.isMailing();
+				postalCode = address.getZip();
+				primary = address.isPrimary();
+				streetAddressLine1 = address.getStreet1();
+				streetAddressLine2 = address.getStreet2();
+				streetAddressLine3 = address.getStreet3();
+
+				setAddressCountry(
+					() -> {
+						if (address.getCountryId() <= 0) {
+							return null;
+						}
+
+						Country country = address.getCountry();
+
+						return country.getName(LocaleUtil.US);
+					});
+				setAddressRegion(
+					() -> {
+						if (address.getRegionId() <= 0) {
+							return null;
+						}
+
+						Region region = address.getRegion();
+
+						return region.getName();
+					});
+			}
+		};
+	}
+
 	public static PostalAddress toPostalAddress(Address address) {
 		ListType listType = address.getType();
 

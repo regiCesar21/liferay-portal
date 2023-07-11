@@ -14,6 +14,34 @@ import com.liferay.portal.vulcan.util.TransformUtil;
  */
 public class ProductConsumptionUtil {
 
+	public static
+		com.liferay.osb.koroneiki.phloem.rest.client.dto.v1_0.ProductConsumption
+				toClientProductConsumption(
+					com.liferay.osb.koroneiki.trunk.model.ProductConsumption
+						productConsumption)
+			throws Exception {
+
+		return new com.liferay.osb.koroneiki.phloem.rest.client.dto.v1_0.
+			ProductConsumption() {
+
+			{
+				accountKey = productConsumption.getAccountKey();
+				dateCreated = productConsumption.getCreateDate();
+				endDate = productConsumption.getEndDate();
+				externalLinks = TransformUtil.transformToArray(
+					productConsumption.getExternalLinks(),
+					ExternalLinkUtil::toClientExternalLink,
+					com.liferay.osb.koroneiki.phloem.rest.client.dto.v1_0.
+						ExternalLink.class);
+				key = productConsumption.getProductConsumptionKey();
+				productKey = productConsumption.getProductEntryKey();
+				productPurchaseKey = productConsumption.getProductPurchaseKey();
+				properties = productConsumption.getProductFieldsMap();
+				startDate = productConsumption.getStartDate();
+			}
+		};
+	}
+
 	public static ProductConsumption toProductConsumption(
 			com.liferay.osb.koroneiki.trunk.model.ProductConsumption
 				productConsumption)

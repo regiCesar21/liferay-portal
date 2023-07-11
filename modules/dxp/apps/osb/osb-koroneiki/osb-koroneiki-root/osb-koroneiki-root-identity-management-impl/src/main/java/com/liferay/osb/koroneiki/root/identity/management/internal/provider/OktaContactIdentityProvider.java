@@ -66,6 +66,24 @@ public class OktaContactIdentityProvider implements ContactIdentityProvider {
 		return contact;
 	}
 
+	public JSONObject fetchRawContactByUuid(String uuid) throws Exception {
+		StringBundler sb = new StringBundler(3);
+
+		sb.append(_URL_API_REST_USERS);
+		sb.append("?search=");
+		sb.append(_http.encodePath("profile.uuid eq \"" + uuid + "\""));
+
+		String response = _sendRequest(sb.toString());
+
+		JSONArray jsonArray = _jsonFactory.createJSONArray(response);
+
+		if (jsonArray.length() <= 0) {
+			return null;
+		}
+
+		return jsonArray.getJSONObject(0);
+	}
+
 	public Contact getContactByEmailAddress(String emailAddress)
 		throws Exception {
 
@@ -142,21 +160,11 @@ public class OktaContactIdentityProvider implements ContactIdentityProvider {
 	}
 
 	private Contact _importContactByUuid(String uuid) throws Exception {
-		StringBundler sb = new StringBundler(3);
+		JSONObject jsonObject = fetchRawContactByUuid(uuid);
 
-		sb.append(_URL_API_REST_USERS);
-		sb.append("?search=");
-		sb.append(_http.encodePath("profile.uuid eq \"" + uuid + "\""));
-
-		String response = _sendRequest(sb.toString());
-
-		JSONArray jsonArray = _jsonFactory.createJSONArray(response);
-
-		if (jsonArray.length() <= 0) {
+		if (jsonObject == null) {
 			return null;
 		}
-
-		JSONObject jsonObject = jsonArray.getJSONObject(0);
 
 		JSONObject profileJSONObject = jsonObject.getJSONObject("profile");
 

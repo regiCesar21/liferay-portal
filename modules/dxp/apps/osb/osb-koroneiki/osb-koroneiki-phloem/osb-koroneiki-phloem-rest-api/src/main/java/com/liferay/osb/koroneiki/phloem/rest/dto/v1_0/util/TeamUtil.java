@@ -14,6 +14,29 @@ import com.liferay.portal.vulcan.util.TransformUtil;
  */
 public class TeamUtil {
 
+	public static com.liferay.osb.koroneiki.phloem.rest.client.dto.v1_0.Team
+			toClientTeam(com.liferay.osb.koroneiki.taproot.model.Team team)
+		throws Exception {
+
+		return new com.liferay.osb.koroneiki.phloem.rest.client.dto.v1_0.
+			Team() {
+
+			{
+				accountKey = team.getAccountKey();
+				dateCreated = team.getCreateDate();
+				dateModified = team.getModifiedDate();
+				externalLinks = TransformUtil.transformToArray(
+					team.getExternalLinks(),
+					ExternalLinkUtil::toClientExternalLink,
+					com.liferay.osb.koroneiki.phloem.rest.client.dto.v1_0.
+						ExternalLink.class);
+				key = team.getTeamKey();
+				name = team.getName();
+				system = team.getSystem();
+			}
+		};
+	}
+
 	public static Team toTeam(com.liferay.osb.koroneiki.taproot.model.Team team)
 		throws Exception {
 
