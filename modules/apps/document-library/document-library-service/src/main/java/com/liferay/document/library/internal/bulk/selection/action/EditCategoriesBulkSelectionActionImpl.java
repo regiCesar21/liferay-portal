@@ -105,9 +105,7 @@ public class EditCategoriesBulkSelectionActionImpl
 		return ArrayUtil.toArray((Long[])map.getOrDefault(key, new Long[0]));
 	}
 
-	private Set<Long> _toLongSet(
-		Map<String, Serializable> map, String key) {
-
+	private Set<Long> _toLongSet(Map<String, Serializable> map, String key) {
 		try {
 			return SetUtil.fromArray(
 				(Long[])map.getOrDefault(key, new Long[0]));
