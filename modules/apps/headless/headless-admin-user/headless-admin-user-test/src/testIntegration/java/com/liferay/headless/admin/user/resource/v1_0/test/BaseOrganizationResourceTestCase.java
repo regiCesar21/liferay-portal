@@ -269,37 +269,36 @@ public abstract class BaseOrganizationResourceTestCase {
 	public void testGetOrganizationsPageWithFilterDoubleEquals()
 		throws Exception {
 
-		List<EntityField> entityFields = getEntityFields(
-			EntityField.Type.DOUBLE);
+		testGetOrganizationsPageWithFilter("eq", EntityField.Type.DOUBLE);
+	}
 
-		if (entityFields.isEmpty()) {
-			return;
-		}
+	@Test
+	public void testGetOrganizationsPageWithFilterStringContains()
+		throws Exception {
 
-		Organization organization1 = testGetOrganizationsPage_addOrganization(
-			randomOrganization());
-
-		@SuppressWarnings("PMD.UnusedLocalVariable")
-		Organization organization2 = testGetOrganizationsPage_addOrganization(
-			randomOrganization());
-
-		for (EntityField entityField : entityFields) {
-			Page<Organization> page = organizationResource.getOrganizationsPage(
-				null, null, getFilterString(entityField, "eq", organization1),
-				Pagination.of(1, 2), null);
-
-			assertEquals(
-				Collections.singletonList(organization1),
-				(List<Organization>)page.getItems());
-		}
+		testGetOrganizationsPageWithFilter("contains", EntityField.Type.STRING);
 	}
 
 	@Test
 	public void testGetOrganizationsPageWithFilterStringEquals()
 		throws Exception {
 
-		List<EntityField> entityFields = getEntityFields(
-			EntityField.Type.STRING);
+		testGetOrganizationsPageWithFilter("eq", EntityField.Type.STRING);
+	}
+
+	@Test
+	public void testGetOrganizationsPageWithFilterStringStartsWith()
+		throws Exception {
+
+		testGetOrganizationsPageWithFilter(
+			"startswith", EntityField.Type.STRING);
+	}
+
+	protected void testGetOrganizationsPageWithFilter(
+			String operator, EntityField.Type type)
+		throws Exception {
+
+		List<EntityField> entityFields = getEntityFields(type);
 
 		if (entityFields.isEmpty()) {
 			return;
@@ -314,7 +313,8 @@ public abstract class BaseOrganizationResourceTestCase {
 
 		for (EntityField entityField : entityFields) {
 			Page<Organization> page = organizationResource.getOrganizationsPage(
-				null, null, getFilterString(entityField, "eq", organization1),
+				null, null,
+				getFilterString(entityField, operator, organization1),
 				Pagination.of(1, 2), null);
 
 			assertEquals(
@@ -873,44 +873,39 @@ public abstract class BaseOrganizationResourceTestCase {
 	public void testGetOrganizationOrganizationsPageWithFilterDoubleEquals()
 		throws Exception {
 
-		List<EntityField> entityFields = getEntityFields(
-			EntityField.Type.DOUBLE);
+		testGetOrganizationOrganizationsPageWithFilter(
+			"eq", EntityField.Type.DOUBLE);
+	}
 
-		if (entityFields.isEmpty()) {
-			return;
-		}
+	@Test
+	public void testGetOrganizationOrganizationsPageWithFilterStringContains()
+		throws Exception {
 
-		String parentOrganizationId =
-			testGetOrganizationOrganizationsPage_getParentOrganizationId();
-
-		Organization organization1 =
-			testGetOrganizationOrganizationsPage_addOrganization(
-				parentOrganizationId, randomOrganization());
-
-		@SuppressWarnings("PMD.UnusedLocalVariable")
-		Organization organization2 =
-			testGetOrganizationOrganizationsPage_addOrganization(
-				parentOrganizationId, randomOrganization());
-
-		for (EntityField entityField : entityFields) {
-			Page<Organization> page =
-				organizationResource.getOrganizationOrganizationsPage(
-					parentOrganizationId, null, null,
-					getFilterString(entityField, "eq", organization1),
-					Pagination.of(1, 2), null);
-
-			assertEquals(
-				Collections.singletonList(organization1),
-				(List<Organization>)page.getItems());
-		}
+		testGetOrganizationOrganizationsPageWithFilter(
+			"contains", EntityField.Type.STRING);
 	}
 
 	@Test
 	public void testGetOrganizationOrganizationsPageWithFilterStringEquals()
 		throws Exception {
 
-		List<EntityField> entityFields = getEntityFields(
-			EntityField.Type.STRING);
+		testGetOrganizationOrganizationsPageWithFilter(
+			"eq", EntityField.Type.STRING);
+	}
+
+	@Test
+	public void testGetOrganizationOrganizationsPageWithFilterStringStartsWith()
+		throws Exception {
+
+		testGetOrganizationOrganizationsPageWithFilter(
+			"startswith", EntityField.Type.STRING);
+	}
+
+	protected void testGetOrganizationOrganizationsPageWithFilter(
+			String operator, EntityField.Type type)
+		throws Exception {
+
+		List<EntityField> entityFields = getEntityFields(type);
 
 		if (entityFields.isEmpty()) {
 			return;
@@ -932,7 +927,7 @@ public abstract class BaseOrganizationResourceTestCase {
 			Page<Organization> page =
 				organizationResource.getOrganizationOrganizationsPage(
 					parentOrganizationId, null, null,
-					getFilterString(entityField, "eq", organization1),
+					getFilterString(entityField, operator, organization1),
 					Pagination.of(1, 2), null);
 
 			assertEquals(
@@ -1738,9 +1733,47 @@ public abstract class BaseOrganizationResourceTestCase {
 		}
 
 		if (entityFieldName.equals("comment")) {
-			sb.append("'");
-			sb.append(String.valueOf(organization.getComment()));
-			sb.append("'");
+			Object object = organization.getComment();
+
+			String value = String.valueOf(object);
+
+			if (operator.equals("contains")) {
+				sb = new StringBundler();
+
+				sb.append("contains(");
+				sb.append(entityFieldName);
+				sb.append(",'");
+
+				if ((object != null) && (value.length() > 2)) {
+					sb.append(value.substring(1, value.length() - 1));
+				}
+				else {
+					sb.append(value);
+				}
+
+				sb.append("')");
+			}
+			else if (operator.equals("startswith")) {
+				sb = new StringBundler();
+
+				sb.append("startswith(");
+				sb.append(entityFieldName);
+				sb.append(",'");
+
+				if ((object != null) && (value.length() > 1)) {
+					sb.append(value.substring(0, value.length() - 1));
+				}
+				else {
+					sb.append(value);
+				}
+
+				sb.append("')");
+			}
+			else {
+				sb.append("'");
+				sb.append(value);
+				sb.append("'");
+			}
 
 			return sb.toString();
 		}
@@ -1817,17 +1850,93 @@ public abstract class BaseOrganizationResourceTestCase {
 		}
 
 		if (entityFieldName.equals("id")) {
-			sb.append("'");
-			sb.append(String.valueOf(organization.getId()));
-			sb.append("'");
+			Object object = organization.getId();
+
+			String value = String.valueOf(object);
+
+			if (operator.equals("contains")) {
+				sb = new StringBundler();
+
+				sb.append("contains(");
+				sb.append(entityFieldName);
+				sb.append(",'");
+
+				if ((object != null) && (value.length() > 2)) {
+					sb.append(value.substring(1, value.length() - 1));
+				}
+				else {
+					sb.append(value);
+				}
+
+				sb.append("')");
+			}
+			else if (operator.equals("startswith")) {
+				sb = new StringBundler();
+
+				sb.append("startswith(");
+				sb.append(entityFieldName);
+				sb.append(",'");
+
+				if ((object != null) && (value.length() > 1)) {
+					sb.append(value.substring(0, value.length() - 1));
+				}
+				else {
+					sb.append(value);
+				}
+
+				sb.append("')");
+			}
+			else {
+				sb.append("'");
+				sb.append(value);
+				sb.append("'");
+			}
 
 			return sb.toString();
 		}
 
 		if (entityFieldName.equals("image")) {
-			sb.append("'");
-			sb.append(String.valueOf(organization.getImage()));
-			sb.append("'");
+			Object object = organization.getImage();
+
+			String value = String.valueOf(object);
+
+			if (operator.equals("contains")) {
+				sb = new StringBundler();
+
+				sb.append("contains(");
+				sb.append(entityFieldName);
+				sb.append(",'");
+
+				if ((object != null) && (value.length() > 2)) {
+					sb.append(value.substring(1, value.length() - 1));
+				}
+				else {
+					sb.append(value);
+				}
+
+				sb.append("')");
+			}
+			else if (operator.equals("startswith")) {
+				sb = new StringBundler();
+
+				sb.append("startswith(");
+				sb.append(entityFieldName);
+				sb.append(",'");
+
+				if ((object != null) && (value.length() > 1)) {
+					sb.append(value.substring(0, value.length() - 1));
+				}
+				else {
+					sb.append(value);
+				}
+
+				sb.append("')");
+			}
+			else {
+				sb.append("'");
+				sb.append(value);
+				sb.append("'");
+			}
 
 			return sb.toString();
 		}
@@ -1843,9 +1952,47 @@ public abstract class BaseOrganizationResourceTestCase {
 		}
 
 		if (entityFieldName.equals("name")) {
-			sb.append("'");
-			sb.append(String.valueOf(organization.getName()));
-			sb.append("'");
+			Object object = organization.getName();
+
+			String value = String.valueOf(object);
+
+			if (operator.equals("contains")) {
+				sb = new StringBundler();
+
+				sb.append("contains(");
+				sb.append(entityFieldName);
+				sb.append(",'");
+
+				if ((object != null) && (value.length() > 2)) {
+					sb.append(value.substring(1, value.length() - 1));
+				}
+				else {
+					sb.append(value);
+				}
+
+				sb.append("')");
+			}
+			else if (operator.equals("startswith")) {
+				sb = new StringBundler();
+
+				sb.append("startswith(");
+				sb.append(entityFieldName);
+				sb.append(",'");
+
+				if ((object != null) && (value.length() > 1)) {
+					sb.append(value.substring(0, value.length() - 1));
+				}
+				else {
+					sb.append(value);
+				}
+
+				sb.append("')");
+			}
+			else {
+				sb.append("'");
+				sb.append(value);
+				sb.append("'");
+			}
 
 			return sb.toString();
 		}

@@ -336,41 +336,39 @@ public abstract class BaseDocumentResourceTestCase {
 	public void testGetAssetLibraryDocumentsPageWithFilterDoubleEquals()
 		throws Exception {
 
-		List<EntityField> entityFields = getEntityFields(
-			EntityField.Type.DOUBLE);
+		testGetAssetLibraryDocumentsPageWithFilter(
+			"eq", EntityField.Type.DOUBLE);
+	}
 
-		if (entityFields.isEmpty()) {
-			return;
-		}
+	@Test
+	public void testGetAssetLibraryDocumentsPageWithFilterStringContains()
+		throws Exception {
 
-		Long assetLibraryId =
-			testGetAssetLibraryDocumentsPage_getAssetLibraryId();
-
-		Document document1 = testGetAssetLibraryDocumentsPage_addDocument(
-			assetLibraryId, randomDocument());
-
-		@SuppressWarnings("PMD.UnusedLocalVariable")
-		Document document2 = testGetAssetLibraryDocumentsPage_addDocument(
-			assetLibraryId, randomDocument());
-
-		for (EntityField entityField : entityFields) {
-			Page<Document> page = documentResource.getAssetLibraryDocumentsPage(
-				assetLibraryId, null, null, null,
-				getFilterString(entityField, "eq", document1),
-				Pagination.of(1, 2), null);
-
-			assertEquals(
-				Collections.singletonList(document1),
-				(List<Document>)page.getItems());
-		}
+		testGetAssetLibraryDocumentsPageWithFilter(
+			"contains", EntityField.Type.STRING);
 	}
 
 	@Test
 	public void testGetAssetLibraryDocumentsPageWithFilterStringEquals()
 		throws Exception {
 
-		List<EntityField> entityFields = getEntityFields(
-			EntityField.Type.STRING);
+		testGetAssetLibraryDocumentsPageWithFilter(
+			"eq", EntityField.Type.STRING);
+	}
+
+	@Test
+	public void testGetAssetLibraryDocumentsPageWithFilterStringStartsWith()
+		throws Exception {
+
+		testGetAssetLibraryDocumentsPageWithFilter(
+			"startswith", EntityField.Type.STRING);
+	}
+
+	protected void testGetAssetLibraryDocumentsPageWithFilter(
+			String operator, EntityField.Type type)
+		throws Exception {
+
+		List<EntityField> entityFields = getEntityFields(type);
 
 		if (entityFields.isEmpty()) {
 			return;
@@ -389,7 +387,7 @@ public abstract class BaseDocumentResourceTestCase {
 		for (EntityField entityField : entityFields) {
 			Page<Document> page = documentResource.getAssetLibraryDocumentsPage(
 				assetLibraryId, null, null, null,
-				getFilterString(entityField, "eq", document1),
+				getFilterString(entityField, operator, document1),
 				Pagination.of(1, 2), null);
 
 			assertEquals(
@@ -736,42 +734,39 @@ public abstract class BaseDocumentResourceTestCase {
 	public void testGetDocumentFolderDocumentsPageWithFilterDoubleEquals()
 		throws Exception {
 
-		List<EntityField> entityFields = getEntityFields(
-			EntityField.Type.DOUBLE);
+		testGetDocumentFolderDocumentsPageWithFilter(
+			"eq", EntityField.Type.DOUBLE);
+	}
 
-		if (entityFields.isEmpty()) {
-			return;
-		}
+	@Test
+	public void testGetDocumentFolderDocumentsPageWithFilterStringContains()
+		throws Exception {
 
-		Long documentFolderId =
-			testGetDocumentFolderDocumentsPage_getDocumentFolderId();
-
-		Document document1 = testGetDocumentFolderDocumentsPage_addDocument(
-			documentFolderId, randomDocument());
-
-		@SuppressWarnings("PMD.UnusedLocalVariable")
-		Document document2 = testGetDocumentFolderDocumentsPage_addDocument(
-			documentFolderId, randomDocument());
-
-		for (EntityField entityField : entityFields) {
-			Page<Document> page =
-				documentResource.getDocumentFolderDocumentsPage(
-					documentFolderId, null, null, null,
-					getFilterString(entityField, "eq", document1),
-					Pagination.of(1, 2), null);
-
-			assertEquals(
-				Collections.singletonList(document1),
-				(List<Document>)page.getItems());
-		}
+		testGetDocumentFolderDocumentsPageWithFilter(
+			"contains", EntityField.Type.STRING);
 	}
 
 	@Test
 	public void testGetDocumentFolderDocumentsPageWithFilterStringEquals()
 		throws Exception {
 
-		List<EntityField> entityFields = getEntityFields(
-			EntityField.Type.STRING);
+		testGetDocumentFolderDocumentsPageWithFilter(
+			"eq", EntityField.Type.STRING);
+	}
+
+	@Test
+	public void testGetDocumentFolderDocumentsPageWithFilterStringStartsWith()
+		throws Exception {
+
+		testGetDocumentFolderDocumentsPageWithFilter(
+			"startswith", EntityField.Type.STRING);
+	}
+
+	protected void testGetDocumentFolderDocumentsPageWithFilter(
+			String operator, EntityField.Type type)
+		throws Exception {
+
+		List<EntityField> entityFields = getEntityFields(type);
 
 		if (entityFields.isEmpty()) {
 			return;
@@ -791,7 +786,7 @@ public abstract class BaseDocumentResourceTestCase {
 			Page<Document> page =
 				documentResource.getDocumentFolderDocumentsPage(
 					documentFolderId, null, null, null,
-					getFilterString(entityField, "eq", document1),
+					getFilterString(entityField, operator, document1),
 					Pagination.of(1, 2), null);
 
 			assertEquals(
@@ -1328,40 +1323,36 @@ public abstract class BaseDocumentResourceTestCase {
 	public void testGetSiteDocumentsPageWithFilterDoubleEquals()
 		throws Exception {
 
-		List<EntityField> entityFields = getEntityFields(
-			EntityField.Type.DOUBLE);
+		testGetSiteDocumentsPageWithFilter("eq", EntityField.Type.DOUBLE);
+	}
 
-		if (entityFields.isEmpty()) {
-			return;
-		}
+	@Test
+	public void testGetSiteDocumentsPageWithFilterStringContains()
+		throws Exception {
 
-		Long siteId = testGetSiteDocumentsPage_getSiteId();
-
-		Document document1 = testGetSiteDocumentsPage_addDocument(
-			siteId, randomDocument());
-
-		@SuppressWarnings("PMD.UnusedLocalVariable")
-		Document document2 = testGetSiteDocumentsPage_addDocument(
-			siteId, randomDocument());
-
-		for (EntityField entityField : entityFields) {
-			Page<Document> page = documentResource.getSiteDocumentsPage(
-				siteId, null, null, null,
-				getFilterString(entityField, "eq", document1),
-				Pagination.of(1, 2), null);
-
-			assertEquals(
-				Collections.singletonList(document1),
-				(List<Document>)page.getItems());
-		}
+		testGetSiteDocumentsPageWithFilter("contains", EntityField.Type.STRING);
 	}
 
 	@Test
 	public void testGetSiteDocumentsPageWithFilterStringEquals()
 		throws Exception {
 
-		List<EntityField> entityFields = getEntityFields(
-			EntityField.Type.STRING);
+		testGetSiteDocumentsPageWithFilter("eq", EntityField.Type.STRING);
+	}
+
+	@Test
+	public void testGetSiteDocumentsPageWithFilterStringStartsWith()
+		throws Exception {
+
+		testGetSiteDocumentsPageWithFilter(
+			"startswith", EntityField.Type.STRING);
+	}
+
+	protected void testGetSiteDocumentsPageWithFilter(
+			String operator, EntityField.Type type)
+		throws Exception {
+
+		List<EntityField> entityFields = getEntityFields(type);
 
 		if (entityFields.isEmpty()) {
 			return;
@@ -1379,7 +1370,7 @@ public abstract class BaseDocumentResourceTestCase {
 		for (EntityField entityField : entityFields) {
 			Page<Document> page = documentResource.getSiteDocumentsPage(
 				siteId, null, null, null,
-				getFilterString(entityField, "eq", document1),
+				getFilterString(entityField, operator, document1),
 				Pagination.of(1, 2), null);
 
 			assertEquals(
@@ -2711,25 +2702,139 @@ public abstract class BaseDocumentResourceTestCase {
 		}
 
 		if (entityFieldName.equals("assetLibraryKey")) {
-			sb.append("'");
-			sb.append(String.valueOf(document.getAssetLibraryKey()));
-			sb.append("'");
+			Object object = document.getAssetLibraryKey();
+
+			String value = String.valueOf(object);
+
+			if (operator.equals("contains")) {
+				sb = new StringBundler();
+
+				sb.append("contains(");
+				sb.append(entityFieldName);
+				sb.append(",'");
+
+				if ((object != null) && (value.length() > 2)) {
+					sb.append(value.substring(1, value.length() - 1));
+				}
+				else {
+					sb.append(value);
+				}
+
+				sb.append("')");
+			}
+			else if (operator.equals("startswith")) {
+				sb = new StringBundler();
+
+				sb.append("startswith(");
+				sb.append(entityFieldName);
+				sb.append(",'");
+
+				if ((object != null) && (value.length() > 1)) {
+					sb.append(value.substring(0, value.length() - 1));
+				}
+				else {
+					sb.append(value);
+				}
+
+				sb.append("')");
+			}
+			else {
+				sb.append("'");
+				sb.append(value);
+				sb.append("'");
+			}
 
 			return sb.toString();
 		}
 
 		if (entityFieldName.equals("contentUrl")) {
-			sb.append("'");
-			sb.append(String.valueOf(document.getContentUrl()));
-			sb.append("'");
+			Object object = document.getContentUrl();
+
+			String value = String.valueOf(object);
+
+			if (operator.equals("contains")) {
+				sb = new StringBundler();
+
+				sb.append("contains(");
+				sb.append(entityFieldName);
+				sb.append(",'");
+
+				if ((object != null) && (value.length() > 2)) {
+					sb.append(value.substring(1, value.length() - 1));
+				}
+				else {
+					sb.append(value);
+				}
+
+				sb.append("')");
+			}
+			else if (operator.equals("startswith")) {
+				sb = new StringBundler();
+
+				sb.append("startswith(");
+				sb.append(entityFieldName);
+				sb.append(",'");
+
+				if ((object != null) && (value.length() > 1)) {
+					sb.append(value.substring(0, value.length() - 1));
+				}
+				else {
+					sb.append(value);
+				}
+
+				sb.append("')");
+			}
+			else {
+				sb.append("'");
+				sb.append(value);
+				sb.append("'");
+			}
 
 			return sb.toString();
 		}
 
 		if (entityFieldName.equals("contentValue")) {
-			sb.append("'");
-			sb.append(String.valueOf(document.getContentValue()));
-			sb.append("'");
+			Object object = document.getContentValue();
+
+			String value = String.valueOf(object);
+
+			if (operator.equals("contains")) {
+				sb = new StringBundler();
+
+				sb.append("contains(");
+				sb.append(entityFieldName);
+				sb.append(",'");
+
+				if ((object != null) && (value.length() > 2)) {
+					sb.append(value.substring(1, value.length() - 1));
+				}
+				else {
+					sb.append(value);
+				}
+
+				sb.append("')");
+			}
+			else if (operator.equals("startswith")) {
+				sb = new StringBundler();
+
+				sb.append("startswith(");
+				sb.append(entityFieldName);
+				sb.append(",'");
+
+				if ((object != null) && (value.length() > 1)) {
+					sb.append(value.substring(0, value.length() - 1));
+				}
+				else {
+					sb.append(value);
+				}
+
+				sb.append("')");
+			}
+			else {
+				sb.append("'");
+				sb.append(value);
+				sb.append("'");
+			}
 
 			return sb.toString();
 		}
@@ -2807,9 +2912,47 @@ public abstract class BaseDocumentResourceTestCase {
 		}
 
 		if (entityFieldName.equals("description")) {
-			sb.append("'");
-			sb.append(String.valueOf(document.getDescription()));
-			sb.append("'");
+			Object object = document.getDescription();
+
+			String value = String.valueOf(object);
+
+			if (operator.equals("contains")) {
+				sb = new StringBundler();
+
+				sb.append("contains(");
+				sb.append(entityFieldName);
+				sb.append(",'");
+
+				if ((object != null) && (value.length() > 2)) {
+					sb.append(value.substring(1, value.length() - 1));
+				}
+				else {
+					sb.append(value);
+				}
+
+				sb.append("')");
+			}
+			else if (operator.equals("startswith")) {
+				sb = new StringBundler();
+
+				sb.append("startswith(");
+				sb.append(entityFieldName);
+				sb.append(",'");
+
+				if ((object != null) && (value.length() > 1)) {
+					sb.append(value.substring(0, value.length() - 1));
+				}
+				else {
+					sb.append(value);
+				}
+
+				sb.append("')");
+			}
+			else {
+				sb.append("'");
+				sb.append(value);
+				sb.append("'");
+			}
 
 			return sb.toString();
 		}
@@ -2825,17 +2968,93 @@ public abstract class BaseDocumentResourceTestCase {
 		}
 
 		if (entityFieldName.equals("encodingFormat")) {
-			sb.append("'");
-			sb.append(String.valueOf(document.getEncodingFormat()));
-			sb.append("'");
+			Object object = document.getEncodingFormat();
+
+			String value = String.valueOf(object);
+
+			if (operator.equals("contains")) {
+				sb = new StringBundler();
+
+				sb.append("contains(");
+				sb.append(entityFieldName);
+				sb.append(",'");
+
+				if ((object != null) && (value.length() > 2)) {
+					sb.append(value.substring(1, value.length() - 1));
+				}
+				else {
+					sb.append(value);
+				}
+
+				sb.append("')");
+			}
+			else if (operator.equals("startswith")) {
+				sb = new StringBundler();
+
+				sb.append("startswith(");
+				sb.append(entityFieldName);
+				sb.append(",'");
+
+				if ((object != null) && (value.length() > 1)) {
+					sb.append(value.substring(0, value.length() - 1));
+				}
+				else {
+					sb.append(value);
+				}
+
+				sb.append("')");
+			}
+			else {
+				sb.append("'");
+				sb.append(value);
+				sb.append("'");
+			}
 
 			return sb.toString();
 		}
 
 		if (entityFieldName.equals("fileExtension")) {
-			sb.append("'");
-			sb.append(String.valueOf(document.getFileExtension()));
-			sb.append("'");
+			Object object = document.getFileExtension();
+
+			String value = String.valueOf(object);
+
+			if (operator.equals("contains")) {
+				sb = new StringBundler();
+
+				sb.append("contains(");
+				sb.append(entityFieldName);
+				sb.append(",'");
+
+				if ((object != null) && (value.length() > 2)) {
+					sb.append(value.substring(1, value.length() - 1));
+				}
+				else {
+					sb.append(value);
+				}
+
+				sb.append("')");
+			}
+			else if (operator.equals("startswith")) {
+				sb = new StringBundler();
+
+				sb.append("startswith(");
+				sb.append(entityFieldName);
+				sb.append(",'");
+
+				if ((object != null) && (value.length() > 1)) {
+					sb.append(value.substring(0, value.length() - 1));
+				}
+				else {
+					sb.append(value);
+				}
+
+				sb.append("')");
+			}
+			else {
+				sb.append("'");
+				sb.append(value);
+				sb.append("'");
+			}
 
 			return sb.toString();
 		}
@@ -2882,9 +3101,47 @@ public abstract class BaseDocumentResourceTestCase {
 		}
 
 		if (entityFieldName.equals("title")) {
-			sb.append("'");
-			sb.append(String.valueOf(document.getTitle()));
-			sb.append("'");
+			Object object = document.getTitle();
+
+			String value = String.valueOf(object);
+
+			if (operator.equals("contains")) {
+				sb = new StringBundler();
+
+				sb.append("contains(");
+				sb.append(entityFieldName);
+				sb.append(",'");
+
+				if ((object != null) && (value.length() > 2)) {
+					sb.append(value.substring(1, value.length() - 1));
+				}
+				else {
+					sb.append(value);
+				}
+
+				sb.append("')");
+			}
+			else if (operator.equals("startswith")) {
+				sb = new StringBundler();
+
+				sb.append("startswith(");
+				sb.append(entityFieldName);
+				sb.append(",'");
+
+				if ((object != null) && (value.length() > 1)) {
+					sb.append(value.substring(0, value.length() - 1));
+				}
+				else {
+					sb.append(value);
+				}
+
+				sb.append("')");
+			}
+			else {
+				sb.append("'");
+				sb.append(value);
+				sb.append("'");
+			}
 
 			return sb.toString();
 		}

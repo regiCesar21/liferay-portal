@@ -314,44 +314,39 @@ public abstract class BaseAccountUserResourceTestCase {
 	public void testGetAccountUsersByExternalReferenceCodePageWithFilterDoubleEquals()
 		throws Exception {
 
-		List<EntityField> entityFields = getEntityFields(
-			EntityField.Type.DOUBLE);
+		testGetAccountUsersByExternalReferenceCodePageWithFilter(
+			"eq", EntityField.Type.DOUBLE);
+	}
 
-		if (entityFields.isEmpty()) {
-			return;
-		}
+	@Test
+	public void testGetAccountUsersByExternalReferenceCodePageWithFilterStringContains()
+		throws Exception {
 
-		String externalReferenceCode =
-			testGetAccountUsersByExternalReferenceCodePage_getExternalReferenceCode();
-
-		AccountUser accountUser1 =
-			testGetAccountUsersByExternalReferenceCodePage_addAccountUser(
-				externalReferenceCode, randomAccountUser());
-
-		@SuppressWarnings("PMD.UnusedLocalVariable")
-		AccountUser accountUser2 =
-			testGetAccountUsersByExternalReferenceCodePage_addAccountUser(
-				externalReferenceCode, randomAccountUser());
-
-		for (EntityField entityField : entityFields) {
-			Page<AccountUser> page =
-				accountUserResource.getAccountUsersByExternalReferenceCodePage(
-					externalReferenceCode, null,
-					getFilterString(entityField, "eq", accountUser1),
-					Pagination.of(1, 2), null);
-
-			assertEquals(
-				Collections.singletonList(accountUser1),
-				(List<AccountUser>)page.getItems());
-		}
+		testGetAccountUsersByExternalReferenceCodePageWithFilter(
+			"contains", EntityField.Type.STRING);
 	}
 
 	@Test
 	public void testGetAccountUsersByExternalReferenceCodePageWithFilterStringEquals()
 		throws Exception {
 
-		List<EntityField> entityFields = getEntityFields(
-			EntityField.Type.STRING);
+		testGetAccountUsersByExternalReferenceCodePageWithFilter(
+			"eq", EntityField.Type.STRING);
+	}
+
+	@Test
+	public void testGetAccountUsersByExternalReferenceCodePageWithFilterStringStartsWith()
+		throws Exception {
+
+		testGetAccountUsersByExternalReferenceCodePageWithFilter(
+			"startswith", EntityField.Type.STRING);
+	}
+
+	protected void testGetAccountUsersByExternalReferenceCodePageWithFilter(
+			String operator, EntityField.Type type)
+		throws Exception {
+
+		List<EntityField> entityFields = getEntityFields(type);
 
 		if (entityFields.isEmpty()) {
 			return;
@@ -373,7 +368,7 @@ public abstract class BaseAccountUserResourceTestCase {
 			Page<AccountUser> page =
 				accountUserResource.getAccountUsersByExternalReferenceCodePage(
 					externalReferenceCode, null,
-					getFilterString(entityField, "eq", accountUser1),
+					getFilterString(entityField, operator, accountUser1),
 					Pagination.of(1, 2), null);
 
 			assertEquals(
@@ -709,40 +704,36 @@ public abstract class BaseAccountUserResourceTestCase {
 	public void testGetAccountUsersPageWithFilterDoubleEquals()
 		throws Exception {
 
-		List<EntityField> entityFields = getEntityFields(
-			EntityField.Type.DOUBLE);
+		testGetAccountUsersPageWithFilter("eq", EntityField.Type.DOUBLE);
+	}
 
-		if (entityFields.isEmpty()) {
-			return;
-		}
+	@Test
+	public void testGetAccountUsersPageWithFilterStringContains()
+		throws Exception {
 
-		Long accountId = testGetAccountUsersPage_getAccountId();
-
-		AccountUser accountUser1 = testGetAccountUsersPage_addAccountUser(
-			accountId, randomAccountUser());
-
-		@SuppressWarnings("PMD.UnusedLocalVariable")
-		AccountUser accountUser2 = testGetAccountUsersPage_addAccountUser(
-			accountId, randomAccountUser());
-
-		for (EntityField entityField : entityFields) {
-			Page<AccountUser> page = accountUserResource.getAccountUsersPage(
-				accountId, null,
-				getFilterString(entityField, "eq", accountUser1),
-				Pagination.of(1, 2), null);
-
-			assertEquals(
-				Collections.singletonList(accountUser1),
-				(List<AccountUser>)page.getItems());
-		}
+		testGetAccountUsersPageWithFilter("contains", EntityField.Type.STRING);
 	}
 
 	@Test
 	public void testGetAccountUsersPageWithFilterStringEquals()
 		throws Exception {
 
-		List<EntityField> entityFields = getEntityFields(
-			EntityField.Type.STRING);
+		testGetAccountUsersPageWithFilter("eq", EntityField.Type.STRING);
+	}
+
+	@Test
+	public void testGetAccountUsersPageWithFilterStringStartsWith()
+		throws Exception {
+
+		testGetAccountUsersPageWithFilter(
+			"startswith", EntityField.Type.STRING);
+	}
+
+	protected void testGetAccountUsersPageWithFilter(
+			String operator, EntityField.Type type)
+		throws Exception {
+
+		List<EntityField> entityFields = getEntityFields(type);
 
 		if (entityFields.isEmpty()) {
 			return;
@@ -760,7 +751,7 @@ public abstract class BaseAccountUserResourceTestCase {
 		for (EntityField entityField : entityFields) {
 			Page<AccountUser> page = accountUserResource.getAccountUsersPage(
 				accountId, null,
-				getFilterString(entityField, "eq", accountUser1),
+				getFilterString(entityField, operator, accountUser1),
 				Pagination.of(1, 2), null);
 
 			assertEquals(
@@ -1497,25 +1488,139 @@ public abstract class BaseAccountUserResourceTestCase {
 		sb.append(" ");
 
 		if (entityFieldName.equals("emailAddress")) {
-			sb.append("'");
-			sb.append(String.valueOf(accountUser.getEmailAddress()));
-			sb.append("'");
+			Object object = accountUser.getEmailAddress();
+
+			String value = String.valueOf(object);
+
+			if (operator.equals("contains")) {
+				sb = new StringBundler();
+
+				sb.append("contains(");
+				sb.append(entityFieldName);
+				sb.append(",'");
+
+				if ((object != null) && (value.length() > 2)) {
+					sb.append(value.substring(1, value.length() - 1));
+				}
+				else {
+					sb.append(value);
+				}
+
+				sb.append("')");
+			}
+			else if (operator.equals("startswith")) {
+				sb = new StringBundler();
+
+				sb.append("startswith(");
+				sb.append(entityFieldName);
+				sb.append(",'");
+
+				if ((object != null) && (value.length() > 1)) {
+					sb.append(value.substring(0, value.length() - 1));
+				}
+				else {
+					sb.append(value);
+				}
+
+				sb.append("')");
+			}
+			else {
+				sb.append("'");
+				sb.append(value);
+				sb.append("'");
+			}
 
 			return sb.toString();
 		}
 
 		if (entityFieldName.equals("externalReferenceCode")) {
-			sb.append("'");
-			sb.append(String.valueOf(accountUser.getExternalReferenceCode()));
-			sb.append("'");
+			Object object = accountUser.getExternalReferenceCode();
+
+			String value = String.valueOf(object);
+
+			if (operator.equals("contains")) {
+				sb = new StringBundler();
+
+				sb.append("contains(");
+				sb.append(entityFieldName);
+				sb.append(",'");
+
+				if ((object != null) && (value.length() > 2)) {
+					sb.append(value.substring(1, value.length() - 1));
+				}
+				else {
+					sb.append(value);
+				}
+
+				sb.append("')");
+			}
+			else if (operator.equals("startswith")) {
+				sb = new StringBundler();
+
+				sb.append("startswith(");
+				sb.append(entityFieldName);
+				sb.append(",'");
+
+				if ((object != null) && (value.length() > 1)) {
+					sb.append(value.substring(0, value.length() - 1));
+				}
+				else {
+					sb.append(value);
+				}
+
+				sb.append("')");
+			}
+			else {
+				sb.append("'");
+				sb.append(value);
+				sb.append("'");
+			}
 
 			return sb.toString();
 		}
 
 		if (entityFieldName.equals("firstName")) {
-			sb.append("'");
-			sb.append(String.valueOf(accountUser.getFirstName()));
-			sb.append("'");
+			Object object = accountUser.getFirstName();
+
+			String value = String.valueOf(object);
+
+			if (operator.equals("contains")) {
+				sb = new StringBundler();
+
+				sb.append("contains(");
+				sb.append(entityFieldName);
+				sb.append(",'");
+
+				if ((object != null) && (value.length() > 2)) {
+					sb.append(value.substring(1, value.length() - 1));
+				}
+				else {
+					sb.append(value);
+				}
+
+				sb.append("')");
+			}
+			else if (operator.equals("startswith")) {
+				sb = new StringBundler();
+
+				sb.append("startswith(");
+				sb.append(entityFieldName);
+				sb.append(",'");
+
+				if ((object != null) && (value.length() > 1)) {
+					sb.append(value.substring(0, value.length() - 1));
+				}
+				else {
+					sb.append(value);
+				}
+
+				sb.append("')");
+			}
+			else {
+				sb.append("'");
+				sb.append(value);
+				sb.append("'");
+			}
 
 			return sb.toString();
 		}
@@ -1526,41 +1631,231 @@ public abstract class BaseAccountUserResourceTestCase {
 		}
 
 		if (entityFieldName.equals("lastName")) {
-			sb.append("'");
-			sb.append(String.valueOf(accountUser.getLastName()));
-			sb.append("'");
+			Object object = accountUser.getLastName();
+
+			String value = String.valueOf(object);
+
+			if (operator.equals("contains")) {
+				sb = new StringBundler();
+
+				sb.append("contains(");
+				sb.append(entityFieldName);
+				sb.append(",'");
+
+				if ((object != null) && (value.length() > 2)) {
+					sb.append(value.substring(1, value.length() - 1));
+				}
+				else {
+					sb.append(value);
+				}
+
+				sb.append("')");
+			}
+			else if (operator.equals("startswith")) {
+				sb = new StringBundler();
+
+				sb.append("startswith(");
+				sb.append(entityFieldName);
+				sb.append(",'");
+
+				if ((object != null) && (value.length() > 1)) {
+					sb.append(value.substring(0, value.length() - 1));
+				}
+				else {
+					sb.append(value);
+				}
+
+				sb.append("')");
+			}
+			else {
+				sb.append("'");
+				sb.append(value);
+				sb.append("'");
+			}
 
 			return sb.toString();
 		}
 
 		if (entityFieldName.equals("middleName")) {
-			sb.append("'");
-			sb.append(String.valueOf(accountUser.getMiddleName()));
-			sb.append("'");
+			Object object = accountUser.getMiddleName();
+
+			String value = String.valueOf(object);
+
+			if (operator.equals("contains")) {
+				sb = new StringBundler();
+
+				sb.append("contains(");
+				sb.append(entityFieldName);
+				sb.append(",'");
+
+				if ((object != null) && (value.length() > 2)) {
+					sb.append(value.substring(1, value.length() - 1));
+				}
+				else {
+					sb.append(value);
+				}
+
+				sb.append("')");
+			}
+			else if (operator.equals("startswith")) {
+				sb = new StringBundler();
+
+				sb.append("startswith(");
+				sb.append(entityFieldName);
+				sb.append(",'");
+
+				if ((object != null) && (value.length() > 1)) {
+					sb.append(value.substring(0, value.length() - 1));
+				}
+				else {
+					sb.append(value);
+				}
+
+				sb.append("')");
+			}
+			else {
+				sb.append("'");
+				sb.append(value);
+				sb.append("'");
+			}
 
 			return sb.toString();
 		}
 
 		if (entityFieldName.equals("prefix")) {
-			sb.append("'");
-			sb.append(String.valueOf(accountUser.getPrefix()));
-			sb.append("'");
+			Object object = accountUser.getPrefix();
+
+			String value = String.valueOf(object);
+
+			if (operator.equals("contains")) {
+				sb = new StringBundler();
+
+				sb.append("contains(");
+				sb.append(entityFieldName);
+				sb.append(",'");
+
+				if ((object != null) && (value.length() > 2)) {
+					sb.append(value.substring(1, value.length() - 1));
+				}
+				else {
+					sb.append(value);
+				}
+
+				sb.append("')");
+			}
+			else if (operator.equals("startswith")) {
+				sb = new StringBundler();
+
+				sb.append("startswith(");
+				sb.append(entityFieldName);
+				sb.append(",'");
+
+				if ((object != null) && (value.length() > 1)) {
+					sb.append(value.substring(0, value.length() - 1));
+				}
+				else {
+					sb.append(value);
+				}
+
+				sb.append("')");
+			}
+			else {
+				sb.append("'");
+				sb.append(value);
+				sb.append("'");
+			}
 
 			return sb.toString();
 		}
 
 		if (entityFieldName.equals("screenName")) {
-			sb.append("'");
-			sb.append(String.valueOf(accountUser.getScreenName()));
-			sb.append("'");
+			Object object = accountUser.getScreenName();
+
+			String value = String.valueOf(object);
+
+			if (operator.equals("contains")) {
+				sb = new StringBundler();
+
+				sb.append("contains(");
+				sb.append(entityFieldName);
+				sb.append(",'");
+
+				if ((object != null) && (value.length() > 2)) {
+					sb.append(value.substring(1, value.length() - 1));
+				}
+				else {
+					sb.append(value);
+				}
+
+				sb.append("')");
+			}
+			else if (operator.equals("startswith")) {
+				sb = new StringBundler();
+
+				sb.append("startswith(");
+				sb.append(entityFieldName);
+				sb.append(",'");
+
+				if ((object != null) && (value.length() > 1)) {
+					sb.append(value.substring(0, value.length() - 1));
+				}
+				else {
+					sb.append(value);
+				}
+
+				sb.append("')");
+			}
+			else {
+				sb.append("'");
+				sb.append(value);
+				sb.append("'");
+			}
 
 			return sb.toString();
 		}
 
 		if (entityFieldName.equals("suffix")) {
-			sb.append("'");
-			sb.append(String.valueOf(accountUser.getSuffix()));
-			sb.append("'");
+			Object object = accountUser.getSuffix();
+
+			String value = String.valueOf(object);
+
+			if (operator.equals("contains")) {
+				sb = new StringBundler();
+
+				sb.append("contains(");
+				sb.append(entityFieldName);
+				sb.append(",'");
+
+				if ((object != null) && (value.length() > 2)) {
+					sb.append(value.substring(1, value.length() - 1));
+				}
+				else {
+					sb.append(value);
+				}
+
+				sb.append("')");
+			}
+			else if (operator.equals("startswith")) {
+				sb = new StringBundler();
+
+				sb.append("startswith(");
+				sb.append(entityFieldName);
+				sb.append(",'");
+
+				if ((object != null) && (value.length() > 1)) {
+					sb.append(value.substring(0, value.length() - 1));
+				}
+				else {
+					sb.append(value);
+				}
+
+				sb.append("')");
+			}
+			else {
+				sb.append("'");
+				sb.append(value);
+				sb.append("'");
+			}
 
 			return sb.toString();
 		}
