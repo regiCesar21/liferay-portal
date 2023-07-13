@@ -270,6 +270,15 @@ public abstract class BaseProcessMetricResourceImpl
 		this.contextAcceptLanguage = contextAcceptLanguage;
 	}
 
+	public void setContextBatchUnsafeBiConsumer(
+		UnsafeBiConsumer
+			<Collection<ProcessMetric>,
+			 UnsafeFunction<ProcessMetric, ProcessMetric, Exception>, Exception>
+				contextBatchUnsafeBiConsumer) {
+
+		this.contextBatchUnsafeBiConsumer = contextBatchUnsafeBiConsumer;
+	}
+
 	public void setContextBatchUnsafeConsumer(
 		UnsafeBiConsumer
 			<Collection<ProcessMetric>,
@@ -526,6 +535,10 @@ public abstract class BaseProcessMetricResourceImpl
 	}
 
 	protected AcceptLanguage contextAcceptLanguage;
+	protected UnsafeBiConsumer
+		<Collection<ProcessMetric>,
+		 UnsafeFunction<ProcessMetric, ProcessMetric, Exception>, Exception>
+			contextBatchUnsafeBiConsumer;
 	protected UnsafeBiConsumer
 		<Collection<ProcessMetric>, UnsafeConsumer<ProcessMetric, Exception>,
 		 Exception> contextBatchUnsafeConsumer;

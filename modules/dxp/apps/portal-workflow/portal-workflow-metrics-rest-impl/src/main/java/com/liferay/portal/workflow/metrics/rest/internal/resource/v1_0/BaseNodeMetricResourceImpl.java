@@ -244,6 +244,15 @@ public abstract class BaseNodeMetricResourceImpl
 		this.contextAcceptLanguage = contextAcceptLanguage;
 	}
 
+	public void setContextBatchUnsafeBiConsumer(
+		UnsafeBiConsumer
+			<Collection<NodeMetric>,
+			 UnsafeFunction<NodeMetric, NodeMetric, Exception>, Exception>
+				contextBatchUnsafeBiConsumer) {
+
+		this.contextBatchUnsafeBiConsumer = contextBatchUnsafeBiConsumer;
+	}
+
 	public void setContextBatchUnsafeConsumer(
 		UnsafeBiConsumer
 			<Collection<NodeMetric>, UnsafeConsumer<NodeMetric, Exception>,
@@ -499,6 +508,10 @@ public abstract class BaseNodeMetricResourceImpl
 	}
 
 	protected AcceptLanguage contextAcceptLanguage;
+	protected UnsafeBiConsumer
+		<Collection<NodeMetric>,
+		 UnsafeFunction<NodeMetric, NodeMetric, Exception>, Exception>
+			contextBatchUnsafeBiConsumer;
 	protected UnsafeBiConsumer
 		<Collection<NodeMetric>, UnsafeConsumer<NodeMetric, Exception>,
 		 Exception> contextBatchUnsafeConsumer;

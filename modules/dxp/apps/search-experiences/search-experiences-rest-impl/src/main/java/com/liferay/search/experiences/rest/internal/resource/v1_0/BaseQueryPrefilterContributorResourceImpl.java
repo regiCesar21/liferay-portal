@@ -192,6 +192,17 @@ public abstract class BaseQueryPrefilterContributorResourceImpl
 		this.contextAcceptLanguage = contextAcceptLanguage;
 	}
 
+	public void setContextBatchUnsafeBiConsumer(
+		UnsafeBiConsumer
+			<Collection<QueryPrefilterContributor>,
+			 UnsafeFunction
+				 <QueryPrefilterContributor, QueryPrefilterContributor,
+				  Exception>,
+			 Exception> contextBatchUnsafeBiConsumer) {
+
+		this.contextBatchUnsafeBiConsumer = contextBatchUnsafeBiConsumer;
+	}
+
 	public void setContextBatchUnsafeConsumer(
 		UnsafeBiConsumer
 			<Collection<QueryPrefilterContributor>,
@@ -448,6 +459,11 @@ public abstract class BaseQueryPrefilterContributorResourceImpl
 	}
 
 	protected AcceptLanguage contextAcceptLanguage;
+	protected UnsafeBiConsumer
+		<Collection<QueryPrefilterContributor>,
+		 UnsafeFunction
+			 <QueryPrefilterContributor, QueryPrefilterContributor, Exception>,
+		 Exception> contextBatchUnsafeBiConsumer;
 	protected UnsafeBiConsumer
 		<Collection<QueryPrefilterContributor>,
 		 UnsafeConsumer<QueryPrefilterContributor, Exception>, Exception>

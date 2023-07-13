@@ -220,6 +220,15 @@ public abstract class BaseAssigneeMetricResourceImpl
 		this.contextAcceptLanguage = contextAcceptLanguage;
 	}
 
+	public void setContextBatchUnsafeBiConsumer(
+		UnsafeBiConsumer
+			<Collection<AssigneeMetric>,
+			 UnsafeFunction<AssigneeMetric, AssigneeMetric, Exception>,
+			 Exception> contextBatchUnsafeBiConsumer) {
+
+		this.contextBatchUnsafeBiConsumer = contextBatchUnsafeBiConsumer;
+	}
+
 	public void setContextBatchUnsafeConsumer(
 		UnsafeBiConsumer
 			<Collection<AssigneeMetric>,
@@ -476,6 +485,10 @@ public abstract class BaseAssigneeMetricResourceImpl
 	}
 
 	protected AcceptLanguage contextAcceptLanguage;
+	protected UnsafeBiConsumer
+		<Collection<AssigneeMetric>,
+		 UnsafeFunction<AssigneeMetric, AssigneeMetric, Exception>, Exception>
+			contextBatchUnsafeBiConsumer;
 	protected UnsafeBiConsumer
 		<Collection<AssigneeMetric>, UnsafeConsumer<AssigneeMetric, Exception>,
 		 Exception> contextBatchUnsafeConsumer;

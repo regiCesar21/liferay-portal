@@ -202,6 +202,15 @@ public abstract class BaseFieldMappingInfoResourceImpl
 		this.contextAcceptLanguage = contextAcceptLanguage;
 	}
 
+	public void setContextBatchUnsafeBiConsumer(
+		UnsafeBiConsumer
+			<Collection<FieldMappingInfo>,
+			 UnsafeFunction<FieldMappingInfo, FieldMappingInfo, Exception>,
+			 Exception> contextBatchUnsafeBiConsumer) {
+
+		this.contextBatchUnsafeBiConsumer = contextBatchUnsafeBiConsumer;
+	}
+
 	public void setContextBatchUnsafeConsumer(
 		UnsafeBiConsumer
 			<Collection<FieldMappingInfo>,
@@ -458,6 +467,10 @@ public abstract class BaseFieldMappingInfoResourceImpl
 	}
 
 	protected AcceptLanguage contextAcceptLanguage;
+	protected UnsafeBiConsumer
+		<Collection<FieldMappingInfo>,
+		 UnsafeFunction<FieldMappingInfo, FieldMappingInfo, Exception>,
+		 Exception> contextBatchUnsafeBiConsumer;
 	protected UnsafeBiConsumer
 		<Collection<FieldMappingInfo>,
 		 UnsafeConsumer<FieldMappingInfo, Exception>, Exception>

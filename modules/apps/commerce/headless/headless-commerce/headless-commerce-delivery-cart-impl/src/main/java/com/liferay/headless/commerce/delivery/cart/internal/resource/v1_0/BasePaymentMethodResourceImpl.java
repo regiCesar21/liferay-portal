@@ -221,6 +221,15 @@ public abstract class BasePaymentMethodResourceImpl
 		this.contextAcceptLanguage = contextAcceptLanguage;
 	}
 
+	public void setContextBatchUnsafeBiConsumer(
+		UnsafeBiConsumer
+			<Collection<PaymentMethod>,
+			 UnsafeFunction<PaymentMethod, PaymentMethod, Exception>, Exception>
+				contextBatchUnsafeBiConsumer) {
+
+		this.contextBatchUnsafeBiConsumer = contextBatchUnsafeBiConsumer;
+	}
+
 	public void setContextBatchUnsafeConsumer(
 		UnsafeBiConsumer
 			<Collection<PaymentMethod>,
@@ -477,6 +486,10 @@ public abstract class BasePaymentMethodResourceImpl
 	}
 
 	protected AcceptLanguage contextAcceptLanguage;
+	protected UnsafeBiConsumer
+		<Collection<PaymentMethod>,
+		 UnsafeFunction<PaymentMethod, PaymentMethod, Exception>, Exception>
+			contextBatchUnsafeBiConsumer;
 	protected UnsafeBiConsumer
 		<Collection<PaymentMethod>, UnsafeConsumer<PaymentMethod, Exception>,
 		 Exception> contextBatchUnsafeConsumer;

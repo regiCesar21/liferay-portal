@@ -231,6 +231,16 @@ public abstract class BaseDataDefinitionFieldLinkResourceImpl
 		this.contextAcceptLanguage = contextAcceptLanguage;
 	}
 
+	public void setContextBatchUnsafeBiConsumer(
+		UnsafeBiConsumer
+			<Collection<DataDefinitionFieldLink>,
+			 UnsafeFunction
+				 <DataDefinitionFieldLink, DataDefinitionFieldLink, Exception>,
+			 Exception> contextBatchUnsafeBiConsumer) {
+
+		this.contextBatchUnsafeBiConsumer = contextBatchUnsafeBiConsumer;
+	}
+
 	public void setContextBatchUnsafeConsumer(
 		UnsafeBiConsumer
 			<Collection<DataDefinitionFieldLink>,
@@ -487,6 +497,11 @@ public abstract class BaseDataDefinitionFieldLinkResourceImpl
 	}
 
 	protected AcceptLanguage contextAcceptLanguage;
+	protected UnsafeBiConsumer
+		<Collection<DataDefinitionFieldLink>,
+		 UnsafeFunction
+			 <DataDefinitionFieldLink, DataDefinitionFieldLink, Exception>,
+		 Exception> contextBatchUnsafeBiConsumer;
 	protected UnsafeBiConsumer
 		<Collection<DataDefinitionFieldLink>,
 		 UnsafeConsumer<DataDefinitionFieldLink, Exception>, Exception>

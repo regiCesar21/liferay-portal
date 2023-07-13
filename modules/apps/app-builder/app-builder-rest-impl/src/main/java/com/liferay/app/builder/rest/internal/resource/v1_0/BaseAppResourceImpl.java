@@ -635,30 +635,33 @@ public abstract class BaseAppResourceImpl
 			Collection<App> apps, Map<String, Serializable> parameters)
 		throws Exception {
 
-		UnsafeConsumer<App, Exception> appUnsafeConsumer = null;
+		UnsafeFunction<App, App, Exception> appUnsafeFunction = null;
 
 		String updateStrategy = (String)parameters.getOrDefault(
 			"updateStrategy", "UPDATE");
 
 		if (StringUtil.equalsIgnoreCase(updateStrategy, "UPDATE")) {
-			appUnsafeConsumer = app -> putApp(
+			appUnsafeFunction = app -> putApp(
 				app.getId() != null ? app.getId() :
 					_parseLong((String)parameters.get("appId")),
 				app);
 		}
 
-		if (appUnsafeConsumer == null) {
+		if (appUnsafeFunction == null) {
 			throw new NotSupportedException(
 				"Update strategy \"" + updateStrategy +
 					"\" is not supported for App");
 		}
 
-		if (contextBatchUnsafeConsumer != null) {
-			contextBatchUnsafeConsumer.accept(apps, appUnsafeConsumer);
+		if (contextBatchUnsafeBiConsumer != null) {
+			contextBatchUnsafeBiConsumer.accept(apps, appUnsafeFunction);
+		}
+		else if (contextBatchUnsafeConsumer != null) {
+			contextBatchUnsafeConsumer.accept(apps, appUnsafeFunction::apply);
 		}
 		else {
 			for (App app : apps) {
-				appUnsafeConsumer.accept(app);
+				appUnsafeFunction.apply(app);
 			}
 		}
 	}
@@ -681,6 +684,14 @@ public abstract class BaseAppResourceImpl
 
 	public void setContextAcceptLanguage(AcceptLanguage contextAcceptLanguage) {
 		this.contextAcceptLanguage = contextAcceptLanguage;
+	}
+
+	public void setContextBatchUnsafeBiConsumer(
+		UnsafeBiConsumer
+			<Collection<App>, UnsafeFunction<App, App, Exception>, Exception>
+				contextBatchUnsafeBiConsumer) {
+
+		this.contextBatchUnsafeBiConsumer = contextBatchUnsafeBiConsumer;
 	}
 
 	public void setContextBatchUnsafeConsumer(
@@ -938,6 +949,9 @@ public abstract class BaseAppResourceImpl
 	}
 
 	protected AcceptLanguage contextAcceptLanguage;
+	protected UnsafeBiConsumer
+		<Collection<App>, UnsafeFunction<App, App, Exception>, Exception>
+			contextBatchUnsafeBiConsumer;
 	protected UnsafeBiConsumer
 		<Collection<App>, UnsafeConsumer<App, Exception>, Exception>
 			contextBatchUnsafeConsumer;

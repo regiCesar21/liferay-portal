@@ -423,30 +423,34 @@ public abstract class BaseSXPBlueprintResourceImpl
 			Map<String, Serializable> parameters)
 		throws Exception {
 
-		UnsafeConsumer<SXPBlueprint, Exception> sxpBlueprintUnsafeConsumer =
-			null;
+		UnsafeFunction<SXPBlueprint, SXPBlueprint, Exception>
+			sxpBlueprintUnsafeFunction = null;
 
 		String createStrategy = (String)parameters.getOrDefault(
 			"createStrategy", "INSERT");
 
 		if (StringUtil.equalsIgnoreCase(createStrategy, "INSERT")) {
-			sxpBlueprintUnsafeConsumer = sxpBlueprint -> postSXPBlueprint(
+			sxpBlueprintUnsafeFunction = sxpBlueprint -> postSXPBlueprint(
 				sxpBlueprint);
 		}
 
-		if (sxpBlueprintUnsafeConsumer == null) {
+		if (sxpBlueprintUnsafeFunction == null) {
 			throw new NotSupportedException(
 				"Create strategy \"" + createStrategy +
 					"\" is not supported for SxpBlueprint");
 		}
 
-		if (contextBatchUnsafeConsumer != null) {
+		if (contextBatchUnsafeBiConsumer != null) {
+			contextBatchUnsafeBiConsumer.accept(
+				sxpBlueprints, sxpBlueprintUnsafeFunction);
+		}
+		else if (contextBatchUnsafeConsumer != null) {
 			contextBatchUnsafeConsumer.accept(
-				sxpBlueprints, sxpBlueprintUnsafeConsumer);
+				sxpBlueprints, sxpBlueprintUnsafeFunction::apply);
 		}
 		else {
 			for (SXPBlueprint sxpBlueprint : sxpBlueprints) {
-				sxpBlueprintUnsafeConsumer.accept(sxpBlueprint);
+				sxpBlueprintUnsafeFunction.apply(sxpBlueprint);
 			}
 		}
 	}
@@ -526,32 +530,36 @@ public abstract class BaseSXPBlueprintResourceImpl
 			Map<String, Serializable> parameters)
 		throws Exception {
 
-		UnsafeConsumer<SXPBlueprint, Exception> sxpBlueprintUnsafeConsumer =
-			null;
+		UnsafeFunction<SXPBlueprint, SXPBlueprint, Exception>
+			sxpBlueprintUnsafeFunction = null;
 
 		String updateStrategy = (String)parameters.getOrDefault(
 			"updateStrategy", "UPDATE");
 
 		if (StringUtil.equalsIgnoreCase(updateStrategy, "PARTIAL_UPDATE")) {
-			sxpBlueprintUnsafeConsumer = sxpBlueprint -> patchSXPBlueprint(
+			sxpBlueprintUnsafeFunction = sxpBlueprint -> patchSXPBlueprint(
 				sxpBlueprint.getId() != null ? sxpBlueprint.getId() :
 					_parseLong((String)parameters.get("sxpBlueprintId")),
 				sxpBlueprint);
 		}
 
-		if (sxpBlueprintUnsafeConsumer == null) {
+		if (sxpBlueprintUnsafeFunction == null) {
 			throw new NotSupportedException(
 				"Update strategy \"" + updateStrategy +
 					"\" is not supported for SxpBlueprint");
 		}
 
-		if (contextBatchUnsafeConsumer != null) {
+		if (contextBatchUnsafeBiConsumer != null) {
+			contextBatchUnsafeBiConsumer.accept(
+				sxpBlueprints, sxpBlueprintUnsafeFunction);
+		}
+		else if (contextBatchUnsafeConsumer != null) {
 			contextBatchUnsafeConsumer.accept(
-				sxpBlueprints, sxpBlueprintUnsafeConsumer);
+				sxpBlueprints, sxpBlueprintUnsafeFunction::apply);
 		}
 		else {
 			for (SXPBlueprint sxpBlueprint : sxpBlueprints) {
-				sxpBlueprintUnsafeConsumer.accept(sxpBlueprint);
+				sxpBlueprintUnsafeFunction.apply(sxpBlueprint);
 			}
 		}
 	}
@@ -566,6 +574,15 @@ public abstract class BaseSXPBlueprintResourceImpl
 
 	public void setContextAcceptLanguage(AcceptLanguage contextAcceptLanguage) {
 		this.contextAcceptLanguage = contextAcceptLanguage;
+	}
+
+	public void setContextBatchUnsafeBiConsumer(
+		UnsafeBiConsumer
+			<Collection<SXPBlueprint>,
+			 UnsafeFunction<SXPBlueprint, SXPBlueprint, Exception>, Exception>
+				contextBatchUnsafeBiConsumer) {
+
+		this.contextBatchUnsafeBiConsumer = contextBatchUnsafeBiConsumer;
 	}
 
 	public void setContextBatchUnsafeConsumer(
@@ -823,6 +840,10 @@ public abstract class BaseSXPBlueprintResourceImpl
 	}
 
 	protected AcceptLanguage contextAcceptLanguage;
+	protected UnsafeBiConsumer
+		<Collection<SXPBlueprint>,
+		 UnsafeFunction<SXPBlueprint, SXPBlueprint, Exception>, Exception>
+			contextBatchUnsafeBiConsumer;
 	protected UnsafeBiConsumer
 		<Collection<SXPBlueprint>, UnsafeConsumer<SXPBlueprint, Exception>,
 		 Exception> contextBatchUnsafeConsumer;

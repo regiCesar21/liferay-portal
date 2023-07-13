@@ -701,15 +701,15 @@ public abstract class BaseDataRecordCollectionResourceImpl
 			Map<String, Serializable> parameters)
 		throws Exception {
 
-		UnsafeConsumer<DataRecordCollection, Exception>
-			dataRecordCollectionUnsafeConsumer = null;
+		UnsafeFunction<DataRecordCollection, DataRecordCollection, Exception>
+			dataRecordCollectionUnsafeFunction = null;
 
 		String createStrategy = (String)parameters.getOrDefault(
 			"createStrategy", "INSERT");
 
 		if (StringUtil.equalsIgnoreCase(createStrategy, "INSERT")) {
 			if (parameters.containsKey("dataDefinitionId")) {
-				dataRecordCollectionUnsafeConsumer =
+				dataRecordCollectionUnsafeFunction =
 					dataRecordCollection ->
 						postDataDefinitionDataRecordCollection(
 							_parseLong(
@@ -722,21 +722,26 @@ public abstract class BaseDataRecordCollectionResourceImpl
 			}
 		}
 
-		if (dataRecordCollectionUnsafeConsumer == null) {
+		if (dataRecordCollectionUnsafeFunction == null) {
 			throw new NotSupportedException(
 				"Create strategy \"" + createStrategy +
 					"\" is not supported for DataRecordCollection");
 		}
 
-		if (contextBatchUnsafeConsumer != null) {
+		if (contextBatchUnsafeBiConsumer != null) {
+			contextBatchUnsafeBiConsumer.accept(
+				dataRecordCollections, dataRecordCollectionUnsafeFunction);
+		}
+		else if (contextBatchUnsafeConsumer != null) {
 			contextBatchUnsafeConsumer.accept(
-				dataRecordCollections, dataRecordCollectionUnsafeConsumer);
+				dataRecordCollections,
+				dataRecordCollectionUnsafeFunction::apply);
 		}
 		else {
 			for (DataRecordCollection dataRecordCollection :
 					dataRecordCollections) {
 
-				dataRecordCollectionUnsafeConsumer.accept(dataRecordCollection);
+				dataRecordCollectionUnsafeFunction.apply(dataRecordCollection);
 			}
 		}
 	}
@@ -826,14 +831,14 @@ public abstract class BaseDataRecordCollectionResourceImpl
 			Map<String, Serializable> parameters)
 		throws Exception {
 
-		UnsafeConsumer<DataRecordCollection, Exception>
-			dataRecordCollectionUnsafeConsumer = null;
+		UnsafeFunction<DataRecordCollection, DataRecordCollection, Exception>
+			dataRecordCollectionUnsafeFunction = null;
 
 		String updateStrategy = (String)parameters.getOrDefault(
 			"updateStrategy", "UPDATE");
 
 		if (StringUtil.equalsIgnoreCase(updateStrategy, "UPDATE")) {
-			dataRecordCollectionUnsafeConsumer =
+			dataRecordCollectionUnsafeFunction =
 				dataRecordCollection -> putDataRecordCollection(
 					dataRecordCollection.getId() != null ?
 						dataRecordCollection.getId() :
@@ -843,21 +848,26 @@ public abstract class BaseDataRecordCollectionResourceImpl
 					dataRecordCollection);
 		}
 
-		if (dataRecordCollectionUnsafeConsumer == null) {
+		if (dataRecordCollectionUnsafeFunction == null) {
 			throw new NotSupportedException(
 				"Update strategy \"" + updateStrategy +
 					"\" is not supported for DataRecordCollection");
 		}
 
-		if (contextBatchUnsafeConsumer != null) {
+		if (contextBatchUnsafeBiConsumer != null) {
+			contextBatchUnsafeBiConsumer.accept(
+				dataRecordCollections, dataRecordCollectionUnsafeFunction);
+		}
+		else if (contextBatchUnsafeConsumer != null) {
 			contextBatchUnsafeConsumer.accept(
-				dataRecordCollections, dataRecordCollectionUnsafeConsumer);
+				dataRecordCollections,
+				dataRecordCollectionUnsafeFunction::apply);
 		}
 		else {
 			for (DataRecordCollection dataRecordCollection :
 					dataRecordCollections) {
 
-				dataRecordCollectionUnsafeConsumer.accept(dataRecordCollection);
+				dataRecordCollectionUnsafeFunction.apply(dataRecordCollection);
 			}
 		}
 	}
@@ -1035,6 +1045,16 @@ public abstract class BaseDataRecordCollectionResourceImpl
 
 	public void setContextAcceptLanguage(AcceptLanguage contextAcceptLanguage) {
 		this.contextAcceptLanguage = contextAcceptLanguage;
+	}
+
+	public void setContextBatchUnsafeBiConsumer(
+		UnsafeBiConsumer
+			<Collection<DataRecordCollection>,
+			 UnsafeFunction
+				 <DataRecordCollection, DataRecordCollection, Exception>,
+			 Exception> contextBatchUnsafeBiConsumer) {
+
+		this.contextBatchUnsafeBiConsumer = contextBatchUnsafeBiConsumer;
 	}
 
 	public void setContextBatchUnsafeConsumer(
@@ -1293,6 +1313,10 @@ public abstract class BaseDataRecordCollectionResourceImpl
 	}
 
 	protected AcceptLanguage contextAcceptLanguage;
+	protected UnsafeBiConsumer
+		<Collection<DataRecordCollection>,
+		 UnsafeFunction<DataRecordCollection, DataRecordCollection, Exception>,
+		 Exception> contextBatchUnsafeBiConsumer;
 	protected UnsafeBiConsumer
 		<Collection<DataRecordCollection>,
 		 UnsafeConsumer<DataRecordCollection, Exception>, Exception>

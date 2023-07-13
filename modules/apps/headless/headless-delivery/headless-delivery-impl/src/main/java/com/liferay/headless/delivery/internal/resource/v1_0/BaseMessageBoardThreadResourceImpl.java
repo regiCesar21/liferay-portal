@@ -1032,15 +1032,15 @@ public abstract class BaseMessageBoardThreadResourceImpl
 			Map<String, Serializable> parameters)
 		throws Exception {
 
-		UnsafeConsumer<MessageBoardThread, Exception>
-			messageBoardThreadUnsafeConsumer = null;
+		UnsafeFunction<MessageBoardThread, MessageBoardThread, Exception>
+			messageBoardThreadUnsafeFunction = null;
 
 		String createStrategy = (String)parameters.getOrDefault(
 			"createStrategy", "INSERT");
 
 		if (StringUtil.equalsIgnoreCase(createStrategy, "INSERT")) {
 			if (parameters.containsKey("messageBoardSectionId")) {
-				messageBoardThreadUnsafeConsumer =
+				messageBoardThreadUnsafeFunction =
 					messageBoardThread ->
 						postMessageBoardSectionMessageBoardThread(
 							_parseLong(
@@ -1049,7 +1049,7 @@ public abstract class BaseMessageBoardThreadResourceImpl
 							messageBoardThread);
 			}
 			else if (parameters.containsKey("siteId")) {
-				messageBoardThreadUnsafeConsumer =
+				messageBoardThreadUnsafeFunction =
 					messageBoardThread -> postSiteMessageBoardThread(
 						(Long)parameters.get("siteId"), messageBoardThread);
 			}
@@ -1059,19 +1059,23 @@ public abstract class BaseMessageBoardThreadResourceImpl
 			}
 		}
 
-		if (messageBoardThreadUnsafeConsumer == null) {
+		if (messageBoardThreadUnsafeFunction == null) {
 			throw new NotSupportedException(
 				"Create strategy \"" + createStrategy +
 					"\" is not supported for MessageBoardThread");
 		}
 
-		if (contextBatchUnsafeConsumer != null) {
+		if (contextBatchUnsafeBiConsumer != null) {
+			contextBatchUnsafeBiConsumer.accept(
+				messageBoardThreads, messageBoardThreadUnsafeFunction);
+		}
+		else if (contextBatchUnsafeConsumer != null) {
 			contextBatchUnsafeConsumer.accept(
-				messageBoardThreads, messageBoardThreadUnsafeConsumer);
+				messageBoardThreads, messageBoardThreadUnsafeFunction::apply);
 		}
 		else {
 			for (MessageBoardThread messageBoardThread : messageBoardThreads) {
-				messageBoardThreadUnsafeConsumer.accept(messageBoardThread);
+				messageBoardThreadUnsafeFunction.apply(messageBoardThread);
 			}
 		}
 	}
@@ -1165,14 +1169,14 @@ public abstract class BaseMessageBoardThreadResourceImpl
 			Map<String, Serializable> parameters)
 		throws Exception {
 
-		UnsafeConsumer<MessageBoardThread, Exception>
-			messageBoardThreadUnsafeConsumer = null;
+		UnsafeFunction<MessageBoardThread, MessageBoardThread, Exception>
+			messageBoardThreadUnsafeFunction = null;
 
 		String updateStrategy = (String)parameters.getOrDefault(
 			"updateStrategy", "UPDATE");
 
 		if (StringUtil.equalsIgnoreCase(updateStrategy, "PARTIAL_UPDATE")) {
-			messageBoardThreadUnsafeConsumer =
+			messageBoardThreadUnsafeFunction =
 				messageBoardThread -> patchMessageBoardThread(
 					messageBoardThread.getId() != null ?
 						messageBoardThread.getId() :
@@ -1182,7 +1186,7 @@ public abstract class BaseMessageBoardThreadResourceImpl
 		}
 
 		if (StringUtil.equalsIgnoreCase(updateStrategy, "UPDATE")) {
-			messageBoardThreadUnsafeConsumer =
+			messageBoardThreadUnsafeFunction =
 				messageBoardThread -> putMessageBoardThread(
 					messageBoardThread.getId() != null ?
 						messageBoardThread.getId() :
@@ -1191,19 +1195,23 @@ public abstract class BaseMessageBoardThreadResourceImpl
 					messageBoardThread);
 		}
 
-		if (messageBoardThreadUnsafeConsumer == null) {
+		if (messageBoardThreadUnsafeFunction == null) {
 			throw new NotSupportedException(
 				"Update strategy \"" + updateStrategy +
 					"\" is not supported for MessageBoardThread");
 		}
 
-		if (contextBatchUnsafeConsumer != null) {
+		if (contextBatchUnsafeBiConsumer != null) {
+			contextBatchUnsafeBiConsumer.accept(
+				messageBoardThreads, messageBoardThreadUnsafeFunction);
+		}
+		else if (contextBatchUnsafeConsumer != null) {
 			contextBatchUnsafeConsumer.accept(
-				messageBoardThreads, messageBoardThreadUnsafeConsumer);
+				messageBoardThreads, messageBoardThreadUnsafeFunction::apply);
 		}
 		else {
 			for (MessageBoardThread messageBoardThread : messageBoardThreads) {
-				messageBoardThreadUnsafeConsumer.accept(messageBoardThread);
+				messageBoardThreadUnsafeFunction.apply(messageBoardThread);
 			}
 		}
 	}
@@ -1226,6 +1234,15 @@ public abstract class BaseMessageBoardThreadResourceImpl
 
 	public void setContextAcceptLanguage(AcceptLanguage contextAcceptLanguage) {
 		this.contextAcceptLanguage = contextAcceptLanguage;
+	}
+
+	public void setContextBatchUnsafeBiConsumer(
+		UnsafeBiConsumer
+			<Collection<MessageBoardThread>,
+			 UnsafeFunction<MessageBoardThread, MessageBoardThread, Exception>,
+			 Exception> contextBatchUnsafeBiConsumer) {
+
+		this.contextBatchUnsafeBiConsumer = contextBatchUnsafeBiConsumer;
 	}
 
 	public void setContextBatchUnsafeConsumer(
@@ -1489,6 +1506,10 @@ public abstract class BaseMessageBoardThreadResourceImpl
 	}
 
 	protected AcceptLanguage contextAcceptLanguage;
+	protected UnsafeBiConsumer
+		<Collection<MessageBoardThread>,
+		 UnsafeFunction<MessageBoardThread, MessageBoardThread, Exception>,
+		 Exception> contextBatchUnsafeBiConsumer;
 	protected UnsafeBiConsumer
 		<Collection<MessageBoardThread>,
 		 UnsafeConsumer<MessageBoardThread, Exception>, Exception>

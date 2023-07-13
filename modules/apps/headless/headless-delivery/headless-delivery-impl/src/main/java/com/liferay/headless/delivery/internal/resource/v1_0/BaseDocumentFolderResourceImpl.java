@@ -849,20 +849,20 @@ public abstract class BaseDocumentFolderResourceImpl
 			Map<String, Serializable> parameters)
 		throws Exception {
 
-		UnsafeConsumer<DocumentFolder, Exception> documentFolderUnsafeConsumer =
-			null;
+		UnsafeFunction<DocumentFolder, DocumentFolder, Exception>
+			documentFolderUnsafeFunction = null;
 
 		String createStrategy = (String)parameters.getOrDefault(
 			"createStrategy", "INSERT");
 
 		if (StringUtil.equalsIgnoreCase(createStrategy, "INSERT")) {
 			if (parameters.containsKey("assetLibraryId")) {
-				documentFolderUnsafeConsumer =
+				documentFolderUnsafeFunction =
 					documentFolder -> postAssetLibraryDocumentFolder(
 						(Long)parameters.get("assetLibraryId"), documentFolder);
 			}
 			else if (parameters.containsKey("siteId")) {
-				documentFolderUnsafeConsumer =
+				documentFolderUnsafeFunction =
 					documentFolder -> postSiteDocumentFolder(
 						(Long)parameters.get("siteId"), documentFolder);
 			}
@@ -872,19 +872,23 @@ public abstract class BaseDocumentFolderResourceImpl
 			}
 		}
 
-		if (documentFolderUnsafeConsumer == null) {
+		if (documentFolderUnsafeFunction == null) {
 			throw new NotSupportedException(
 				"Create strategy \"" + createStrategy +
 					"\" is not supported for DocumentFolder");
 		}
 
-		if (contextBatchUnsafeConsumer != null) {
+		if (contextBatchUnsafeBiConsumer != null) {
+			contextBatchUnsafeBiConsumer.accept(
+				documentFolders, documentFolderUnsafeFunction);
+		}
+		else if (contextBatchUnsafeConsumer != null) {
 			contextBatchUnsafeConsumer.accept(
-				documentFolders, documentFolderUnsafeConsumer);
+				documentFolders, documentFolderUnsafeFunction::apply);
 		}
 		else {
 			for (DocumentFolder documentFolder : documentFolders) {
-				documentFolderUnsafeConsumer.accept(documentFolder);
+				documentFolderUnsafeFunction.apply(documentFolder);
 			}
 		}
 	}
@@ -979,14 +983,14 @@ public abstract class BaseDocumentFolderResourceImpl
 			Map<String, Serializable> parameters)
 		throws Exception {
 
-		UnsafeConsumer<DocumentFolder, Exception> documentFolderUnsafeConsumer =
-			null;
+		UnsafeFunction<DocumentFolder, DocumentFolder, Exception>
+			documentFolderUnsafeFunction = null;
 
 		String updateStrategy = (String)parameters.getOrDefault(
 			"updateStrategy", "UPDATE");
 
 		if (StringUtil.equalsIgnoreCase(updateStrategy, "PARTIAL_UPDATE")) {
-			documentFolderUnsafeConsumer =
+			documentFolderUnsafeFunction =
 				documentFolder -> patchDocumentFolder(
 					documentFolder.getId() != null ? documentFolder.getId() :
 						_parseLong((String)parameters.get("documentFolderId")),
@@ -994,25 +998,29 @@ public abstract class BaseDocumentFolderResourceImpl
 		}
 
 		if (StringUtil.equalsIgnoreCase(updateStrategy, "UPDATE")) {
-			documentFolderUnsafeConsumer = documentFolder -> putDocumentFolder(
+			documentFolderUnsafeFunction = documentFolder -> putDocumentFolder(
 				documentFolder.getId() != null ? documentFolder.getId() :
 					_parseLong((String)parameters.get("documentFolderId")),
 				documentFolder);
 		}
 
-		if (documentFolderUnsafeConsumer == null) {
+		if (documentFolderUnsafeFunction == null) {
 			throw new NotSupportedException(
 				"Update strategy \"" + updateStrategy +
 					"\" is not supported for DocumentFolder");
 		}
 
-		if (contextBatchUnsafeConsumer != null) {
+		if (contextBatchUnsafeBiConsumer != null) {
+			contextBatchUnsafeBiConsumer.accept(
+				documentFolders, documentFolderUnsafeFunction);
+		}
+		else if (contextBatchUnsafeConsumer != null) {
 			contextBatchUnsafeConsumer.accept(
-				documentFolders, documentFolderUnsafeConsumer);
+				documentFolders, documentFolderUnsafeFunction::apply);
 		}
 		else {
 			for (DocumentFolder documentFolder : documentFolders) {
-				documentFolderUnsafeConsumer.accept(documentFolder);
+				documentFolderUnsafeFunction.apply(documentFolder);
 			}
 		}
 	}
@@ -1035,6 +1043,15 @@ public abstract class BaseDocumentFolderResourceImpl
 
 	public void setContextAcceptLanguage(AcceptLanguage contextAcceptLanguage) {
 		this.contextAcceptLanguage = contextAcceptLanguage;
+	}
+
+	public void setContextBatchUnsafeBiConsumer(
+		UnsafeBiConsumer
+			<Collection<DocumentFolder>,
+			 UnsafeFunction<DocumentFolder, DocumentFolder, Exception>,
+			 Exception> contextBatchUnsafeBiConsumer) {
+
+		this.contextBatchUnsafeBiConsumer = contextBatchUnsafeBiConsumer;
 	}
 
 	public void setContextBatchUnsafeConsumer(
@@ -1297,6 +1314,10 @@ public abstract class BaseDocumentFolderResourceImpl
 	}
 
 	protected AcceptLanguage contextAcceptLanguage;
+	protected UnsafeBiConsumer
+		<Collection<DocumentFolder>,
+		 UnsafeFunction<DocumentFolder, DocumentFolder, Exception>, Exception>
+			contextBatchUnsafeBiConsumer;
 	protected UnsafeBiConsumer
 		<Collection<DocumentFolder>, UnsafeConsumer<DocumentFolder, Exception>,
 		 Exception> contextBatchUnsafeConsumer;

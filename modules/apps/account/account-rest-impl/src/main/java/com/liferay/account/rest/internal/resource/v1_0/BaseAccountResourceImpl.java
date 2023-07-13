@@ -628,13 +628,14 @@ public abstract class BaseAccountResourceImpl
 			Collection<Account> accounts, Map<String, Serializable> parameters)
 		throws Exception {
 
-		UnsafeConsumer<Account, Exception> accountUnsafeConsumer = null;
+		UnsafeFunction<Account, Account, Exception> accountUnsafeFunction =
+			null;
 
 		String createStrategy = (String)parameters.getOrDefault(
 			"createStrategy", "INSERT");
 
 		if (StringUtil.equalsIgnoreCase(createStrategy, "INSERT")) {
-			accountUnsafeConsumer = account -> postAccount(account);
+			accountUnsafeFunction = account -> postAccount(account);
 		}
 
 		if (StringUtil.equalsIgnoreCase(createStrategy, "UPSERT")) {
@@ -642,41 +643,50 @@ public abstract class BaseAccountResourceImpl
 				"updateStrategy", "UPDATE");
 
 			if (StringUtil.equalsIgnoreCase(updateStrategy, "UPDATE")) {
-				accountUnsafeConsumer =
+				accountUnsafeFunction =
 					account -> putAccountByExternalReferenceCode(
 						account.getExternalReferenceCode(), account);
 			}
 
 			if (StringUtil.equalsIgnoreCase(updateStrategy, "PARTIAL_UPDATE")) {
-				accountUnsafeConsumer = account -> {
+				accountUnsafeFunction = account -> {
+					Account persistedAccount = null;
+
 					try {
 						Account getAccount = getAccountByExternalReferenceCode(
 							account.getExternalReferenceCode());
 
-						patchAccount(
+						persistedAccount = patchAccount(
 							getAccount.getId() != null ? getAccount.getId() :
 								_parseLong((String)parameters.get("accountId")),
 							account);
 					}
 					catch (NoSuchModelException noSuchModelException) {
-						postAccount(account);
+						persistedAccount = postAccount(account);
 					}
+
+					return persistedAccount;
 				};
 			}
 		}
 
-		if (accountUnsafeConsumer == null) {
+		if (accountUnsafeFunction == null) {
 			throw new NotSupportedException(
 				"Create strategy \"" + createStrategy +
 					"\" is not supported for Account");
 		}
 
-		if (contextBatchUnsafeConsumer != null) {
-			contextBatchUnsafeConsumer.accept(accounts, accountUnsafeConsumer);
+		if (contextBatchUnsafeBiConsumer != null) {
+			contextBatchUnsafeBiConsumer.accept(
+				accounts, accountUnsafeFunction);
+		}
+		else if (contextBatchUnsafeConsumer != null) {
+			contextBatchUnsafeConsumer.accept(
+				accounts, accountUnsafeFunction::apply);
 		}
 		else {
 			for (Account account : accounts) {
-				accountUnsafeConsumer.accept(account);
+				accountUnsafeFunction.apply(account);
 			}
 		}
 	}
@@ -755,37 +765,43 @@ public abstract class BaseAccountResourceImpl
 			Collection<Account> accounts, Map<String, Serializable> parameters)
 		throws Exception {
 
-		UnsafeConsumer<Account, Exception> accountUnsafeConsumer = null;
+		UnsafeFunction<Account, Account, Exception> accountUnsafeFunction =
+			null;
 
 		String updateStrategy = (String)parameters.getOrDefault(
 			"updateStrategy", "UPDATE");
 
 		if (StringUtil.equalsIgnoreCase(updateStrategy, "PARTIAL_UPDATE")) {
-			accountUnsafeConsumer = account -> patchAccount(
+			accountUnsafeFunction = account -> patchAccount(
 				account.getId() != null ? account.getId() :
 					_parseLong((String)parameters.get("accountId")),
 				account);
 		}
 
 		if (StringUtil.equalsIgnoreCase(updateStrategy, "UPDATE")) {
-			accountUnsafeConsumer = account -> putAccount(
+			accountUnsafeFunction = account -> putAccount(
 				account.getId() != null ? account.getId() :
 					_parseLong((String)parameters.get("accountId")),
 				account);
 		}
 
-		if (accountUnsafeConsumer == null) {
+		if (accountUnsafeFunction == null) {
 			throw new NotSupportedException(
 				"Update strategy \"" + updateStrategy +
 					"\" is not supported for Account");
 		}
 
-		if (contextBatchUnsafeConsumer != null) {
-			contextBatchUnsafeConsumer.accept(accounts, accountUnsafeConsumer);
+		if (contextBatchUnsafeBiConsumer != null) {
+			contextBatchUnsafeBiConsumer.accept(
+				accounts, accountUnsafeFunction);
+		}
+		else if (contextBatchUnsafeConsumer != null) {
+			contextBatchUnsafeConsumer.accept(
+				accounts, accountUnsafeFunction::apply);
 		}
 		else {
 			for (Account account : accounts) {
-				accountUnsafeConsumer.accept(account);
+				accountUnsafeFunction.apply(account);
 			}
 		}
 	}
@@ -800,6 +816,14 @@ public abstract class BaseAccountResourceImpl
 
 	public void setContextAcceptLanguage(AcceptLanguage contextAcceptLanguage) {
 		this.contextAcceptLanguage = contextAcceptLanguage;
+	}
+
+	public void setContextBatchUnsafeBiConsumer(
+		UnsafeBiConsumer
+			<Collection<Account>, UnsafeFunction<Account, Account, Exception>,
+			 Exception> contextBatchUnsafeBiConsumer) {
+
+		this.contextBatchUnsafeBiConsumer = contextBatchUnsafeBiConsumer;
 	}
 
 	public void setContextBatchUnsafeConsumer(
@@ -1060,6 +1084,9 @@ public abstract class BaseAccountResourceImpl
 	}
 
 	protected AcceptLanguage contextAcceptLanguage;
+	protected UnsafeBiConsumer
+		<Collection<Account>, UnsafeFunction<Account, Account, Exception>,
+		 Exception> contextBatchUnsafeBiConsumer;
 	protected UnsafeBiConsumer
 		<Collection<Account>, UnsafeConsumer<Account, Exception>, Exception>
 			contextBatchUnsafeConsumer;

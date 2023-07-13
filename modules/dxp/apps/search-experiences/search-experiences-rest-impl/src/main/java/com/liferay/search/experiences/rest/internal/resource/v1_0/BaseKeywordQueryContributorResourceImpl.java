@@ -192,6 +192,16 @@ public abstract class BaseKeywordQueryContributorResourceImpl
 		this.contextAcceptLanguage = contextAcceptLanguage;
 	}
 
+	public void setContextBatchUnsafeBiConsumer(
+		UnsafeBiConsumer
+			<Collection<KeywordQueryContributor>,
+			 UnsafeFunction
+				 <KeywordQueryContributor, KeywordQueryContributor, Exception>,
+			 Exception> contextBatchUnsafeBiConsumer) {
+
+		this.contextBatchUnsafeBiConsumer = contextBatchUnsafeBiConsumer;
+	}
+
 	public void setContextBatchUnsafeConsumer(
 		UnsafeBiConsumer
 			<Collection<KeywordQueryContributor>,
@@ -448,6 +458,11 @@ public abstract class BaseKeywordQueryContributorResourceImpl
 	}
 
 	protected AcceptLanguage contextAcceptLanguage;
+	protected UnsafeBiConsumer
+		<Collection<KeywordQueryContributor>,
+		 UnsafeFunction
+			 <KeywordQueryContributor, KeywordQueryContributor, Exception>,
+		 Exception> contextBatchUnsafeBiConsumer;
 	protected UnsafeBiConsumer
 		<Collection<KeywordQueryContributor>,
 		 UnsafeConsumer<KeywordQueryContributor, Exception>, Exception>

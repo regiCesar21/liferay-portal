@@ -363,6 +363,15 @@ public abstract class BaseAccountUserResourceImpl
 		this.contextAcceptLanguage = contextAcceptLanguage;
 	}
 
+	public void setContextBatchUnsafeBiConsumer(
+		UnsafeBiConsumer
+			<Collection<AccountUser>,
+			 UnsafeFunction<AccountUser, AccountUser, Exception>, Exception>
+				contextBatchUnsafeBiConsumer) {
+
+		this.contextBatchUnsafeBiConsumer = contextBatchUnsafeBiConsumer;
+	}
+
 	public void setContextBatchUnsafeConsumer(
 		UnsafeBiConsumer
 			<Collection<AccountUser>, UnsafeConsumer<AccountUser, Exception>,
@@ -618,6 +627,10 @@ public abstract class BaseAccountUserResourceImpl
 	}
 
 	protected AcceptLanguage contextAcceptLanguage;
+	protected UnsafeBiConsumer
+		<Collection<AccountUser>,
+		 UnsafeFunction<AccountUser, AccountUser, Exception>, Exception>
+			contextBatchUnsafeBiConsumer;
 	protected UnsafeBiConsumer
 		<Collection<AccountUser>, UnsafeConsumer<AccountUser, Exception>,
 		 Exception> contextBatchUnsafeConsumer;

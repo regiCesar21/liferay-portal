@@ -656,15 +656,15 @@ public abstract class BaseTaxonomyCategoryResourceImpl
 			Map<String, Serializable> parameters)
 		throws Exception {
 
-		UnsafeConsumer<TaxonomyCategory, Exception>
-			taxonomyCategoryUnsafeConsumer = null;
+		UnsafeFunction<TaxonomyCategory, TaxonomyCategory, Exception>
+			taxonomyCategoryUnsafeFunction = null;
 
 		String createStrategy = (String)parameters.getOrDefault(
 			"createStrategy", "INSERT");
 
 		if (StringUtil.equalsIgnoreCase(createStrategy, "INSERT")) {
 			if (parameters.containsKey("taxonomyVocabularyId")) {
-				taxonomyCategoryUnsafeConsumer =
+				taxonomyCategoryUnsafeFunction =
 					taxonomyCategory -> postTaxonomyVocabularyTaxonomyCategory(
 						_parseLong(
 							(String)parameters.get("taxonomyVocabularyId")),
@@ -676,19 +676,23 @@ public abstract class BaseTaxonomyCategoryResourceImpl
 			}
 		}
 
-		if (taxonomyCategoryUnsafeConsumer == null) {
+		if (taxonomyCategoryUnsafeFunction == null) {
 			throw new NotSupportedException(
 				"Create strategy \"" + createStrategy +
 					"\" is not supported for TaxonomyCategory");
 		}
 
-		if (contextBatchUnsafeConsumer != null) {
+		if (contextBatchUnsafeBiConsumer != null) {
+			contextBatchUnsafeBiConsumer.accept(
+				taxonomyCategories, taxonomyCategoryUnsafeFunction);
+		}
+		else if (contextBatchUnsafeConsumer != null) {
 			contextBatchUnsafeConsumer.accept(
-				taxonomyCategories, taxonomyCategoryUnsafeConsumer);
+				taxonomyCategories, taxonomyCategoryUnsafeFunction::apply);
 		}
 		else {
 			for (TaxonomyCategory taxonomyCategory : taxonomyCategories) {
-				taxonomyCategoryUnsafeConsumer.accept(taxonomyCategory);
+				taxonomyCategoryUnsafeFunction.apply(taxonomyCategory);
 			}
 		}
 	}
@@ -776,14 +780,14 @@ public abstract class BaseTaxonomyCategoryResourceImpl
 			Map<String, Serializable> parameters)
 		throws Exception {
 
-		UnsafeConsumer<TaxonomyCategory, Exception>
-			taxonomyCategoryUnsafeConsumer = null;
+		UnsafeFunction<TaxonomyCategory, TaxonomyCategory, Exception>
+			taxonomyCategoryUnsafeFunction = null;
 
 		String updateStrategy = (String)parameters.getOrDefault(
 			"updateStrategy", "UPDATE");
 
 		if (StringUtil.equalsIgnoreCase(updateStrategy, "PARTIAL_UPDATE")) {
-			taxonomyCategoryUnsafeConsumer =
+			taxonomyCategoryUnsafeFunction =
 				taxonomyCategory -> patchTaxonomyCategory(
 					taxonomyCategory.getId() != null ?
 						taxonomyCategory.getId() :
@@ -792,7 +796,7 @@ public abstract class BaseTaxonomyCategoryResourceImpl
 		}
 
 		if (StringUtil.equalsIgnoreCase(updateStrategy, "UPDATE")) {
-			taxonomyCategoryUnsafeConsumer =
+			taxonomyCategoryUnsafeFunction =
 				taxonomyCategory -> putTaxonomyCategory(
 					taxonomyCategory.getId() != null ?
 						taxonomyCategory.getId() :
@@ -800,19 +804,23 @@ public abstract class BaseTaxonomyCategoryResourceImpl
 					taxonomyCategory);
 		}
 
-		if (taxonomyCategoryUnsafeConsumer == null) {
+		if (taxonomyCategoryUnsafeFunction == null) {
 			throw new NotSupportedException(
 				"Update strategy \"" + updateStrategy +
 					"\" is not supported for TaxonomyCategory");
 		}
 
-		if (contextBatchUnsafeConsumer != null) {
+		if (contextBatchUnsafeBiConsumer != null) {
+			contextBatchUnsafeBiConsumer.accept(
+				taxonomyCategories, taxonomyCategoryUnsafeFunction);
+		}
+		else if (contextBatchUnsafeConsumer != null) {
 			contextBatchUnsafeConsumer.accept(
-				taxonomyCategories, taxonomyCategoryUnsafeConsumer);
+				taxonomyCategories, taxonomyCategoryUnsafeFunction::apply);
 		}
 		else {
 			for (TaxonomyCategory taxonomyCategory : taxonomyCategories) {
-				taxonomyCategoryUnsafeConsumer.accept(taxonomyCategory);
+				taxonomyCategoryUnsafeFunction.apply(taxonomyCategory);
 			}
 		}
 	}
@@ -827,6 +835,15 @@ public abstract class BaseTaxonomyCategoryResourceImpl
 
 	public void setContextAcceptLanguage(AcceptLanguage contextAcceptLanguage) {
 		this.contextAcceptLanguage = contextAcceptLanguage;
+	}
+
+	public void setContextBatchUnsafeBiConsumer(
+		UnsafeBiConsumer
+			<Collection<TaxonomyCategory>,
+			 UnsafeFunction<TaxonomyCategory, TaxonomyCategory, Exception>,
+			 Exception> contextBatchUnsafeBiConsumer) {
+
+		this.contextBatchUnsafeBiConsumer = contextBatchUnsafeBiConsumer;
 	}
 
 	public void setContextBatchUnsafeConsumer(
@@ -1090,6 +1107,10 @@ public abstract class BaseTaxonomyCategoryResourceImpl
 	}
 
 	protected AcceptLanguage contextAcceptLanguage;
+	protected UnsafeBiConsumer
+		<Collection<TaxonomyCategory>,
+		 UnsafeFunction<TaxonomyCategory, TaxonomyCategory, Exception>,
+		 Exception> contextBatchUnsafeBiConsumer;
 	protected UnsafeBiConsumer
 		<Collection<TaxonomyCategory>,
 		 UnsafeConsumer<TaxonomyCategory, Exception>, Exception>
