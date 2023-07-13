@@ -13,6 +13,7 @@ import com.liferay.frontend.taglib.clay.servlet.taglib.util.LabelItemListBuilder
 import com.liferay.portal.kernel.dao.search.RowChecker;
 import com.liferay.portal.kernel.model.BaseModel;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.style.book.constants.StyleBookActionKeys;
@@ -145,7 +146,7 @@ public class StyleBookVerticalCard
 
 	@Override
 	public String getTitle() {
-		return _styleBookEntry.getName();
+		return HtmlUtil.escape(_styleBookEntry.getName());
 	}
 
 	private final RenderRequest _renderRequest;
