@@ -1793,6 +1793,10 @@ public class LayoutStagedModelDataHandler
 			return;
 		}
 
+		_journalContentSearchLocalService.deleteLayoutContentSearches(
+			layout.getGroupId(), layout.isPrivateLayout(),
+			layout.getLayoutId());
+
 		long originalPlid = portletDataContext.getPlid();
 		String originalPortletId = portletDataContext.getPortletId();
 
@@ -1804,10 +1808,6 @@ public class LayoutStagedModelDataHandler
 
 		ServiceContext serviceContext =
 			ServiceContextThreadLocal.getServiceContext();
-
-		_journalContentSearchLocalService.deleteLayoutContentSearches(
-			layout.getGroupId(), layout.isPrivateLayout(),
-			layout.getLayoutId());
 
 		for (Element portletElement : portletsElement.elements()) {
 			String portletId = portletElement.attributeValue("portlet-id");
