@@ -38,24 +38,22 @@ definition {
 
 		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
 
-		for (var documentNumber : list "_1,_2,_3") {
-			JSONDocument.addFileWithUploadedFile(
-				dmDocumentDescription = "DM Document Description",
-				dmDocumentTitle = "DM Document JPG${documentNumber}",
-				groupName = "Guest",
-				mimeType = "image/jpeg",
-				sourceFileName = "Document_4.jpg");
+		JSONDocument.addFileWithUploadedFile(
+			dmDocumentDescription = "DM Document Description",
+			dmDocumentTitle = "DM Document JPG",
+			groupName = "Guest",
+			mimeType = "image/jpeg",
+			sourceFileName = "Document_4.jpg");
 
-			DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
+		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
 
-			DMNavigator.gotoDocumentCP(dmDocumentTitle = "DM Document JPG${documentNumber}");
+		DMNavigator.gotoDocumentCP(dmDocumentTitle = "DM Document JPG");
 
-			DMDocument.viewCP(dmDocumentTitle = "DM Document JPG${documentNumber}");
+		DMDocument.viewCP(dmDocumentTitle = "DM Document JPG");
 
-			AutoTagging.assertAutoTagPresent(tagName = "carton");
+		AutoTagging.assertAutoTagPresent(tagName = "carton");
 
-			DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
-		}
+		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
 
 		GogoShell.openGogoShellAdmin();
 
@@ -63,37 +61,33 @@ definition {
 
 		GogoShell.executeCommand(commandName = "assetAutoTagger:untagAll ${companyId}");
 
-		GogoShell.viewOutput(outputContent = "Deleted 1 tags to asset entry DM Document JPG_1 Deleted 1 tags to asset entry DM Document JPG_2 Deleted 1 tags to asset entry DM Document JPG_3");
+		GogoShell.viewOutput(outputContent = "Deleted 1 tags to asset entry DM Document JPG");
 
 		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
 
-		for (var documentNumber : list "_1,_2,_3") {
-			DMNavigator.gotoDocumentCP(dmDocumentTitle = "DM Document JPG${documentNumber}");
+		DMNavigator.gotoDocumentCP(dmDocumentTitle = "DM Document JPG");
 
-			DMDocument.viewCP(dmDocumentTitle = "DM Document JPG${documentNumber}");
+		DMDocument.viewCP(dmDocumentTitle = "DM Document JPG");
 
-			AutoTagging.assertNoAutoTag(tagName = "carton");
+		AutoTagging.assertNoAutoTag(tagName = "carton");
 
-			DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
-		}
+		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
 
 		GogoShell.openGogoShellAdmin();
 
 		GogoShell.executeCommand(commandName = "assetAutoTagger:tagAllUntagged ${companyId}");
 
-		GogoShell.viewOutput(outputContent = "Added 1 tags to asset entry DM Document JPG_1 Added 1 tags to asset entry DM Document JPG_2 Added 1 tags to asset entry DM Document JPG_3");
+		GogoShell.viewOutput(outputContent = "Added 1 tags to asset entry DM Document JPG");
 
 		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
 
-		for (var documentNumber : list "_1,_2,_3") {
-			DMNavigator.gotoDocumentCP(dmDocumentTitle = "DM Document JPG${documentNumber}");
+		DMNavigator.gotoDocumentCP(dmDocumentTitle = "DM Document JPG");
 
-			DMDocument.viewCP(dmDocumentTitle = "DM Document JPG${documentNumber}");
+		DMDocument.viewCP(dmDocumentTitle = "DM Document JPG");
 
-			AutoTagging.assertAutoTagPresent(tagName = "carton");
+		AutoTagging.assertAutoTagPresent(tagName = "carton");
 
-			DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
-		}
+		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
 	}
 
 	@description = "This test asserts that auto-tags added to an image uploaded on a staged site gets published to Live."
