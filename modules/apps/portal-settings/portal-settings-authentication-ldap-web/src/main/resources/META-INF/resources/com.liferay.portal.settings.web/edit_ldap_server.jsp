@@ -149,6 +149,8 @@ renderResponse.setTitle((ldapServerId == 0) ? LanguageUtil.get(resourceBundle, "
 			<aui:input cssClass="lfr-input-text-container" label="server-name" name='<%= "ldap--" + LDAPConstants.SERVER_NAME + "--" %>' type="text" value="<%= ldapServerName %>">
 				<aui:validator name="required" />
 			</aui:input>
+
+			<aui:input cssClass="lfr-input-text-container" helpMessage="ldap-clock-skew-description" label="clock-skew" name='<%= "ldap--" + LDAPConstants.CLOCK_SKEW + "--" %>' type="text" value="<%= ldapServerConfiguration.clockSkew() %>" />
 		</aui:fieldset>
 
 		<aui:fieldset>
