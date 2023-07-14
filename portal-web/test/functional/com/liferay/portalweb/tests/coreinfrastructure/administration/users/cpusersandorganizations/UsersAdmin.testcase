@@ -1809,6 +1809,8 @@ definition {
 	@description = "This is a use case for LPS-120825."
 	@priority = 4
 	test UpdateUserInformation {
+		property test.liferay.virtual.instance = "false";
+
 		ApplicationsMenu.gotoPortlet(
 			category = "Users",
 			panel = "Control Panel",
