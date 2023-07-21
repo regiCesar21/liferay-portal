@@ -9,3 +9,4 @@ Require-Capability:\
 	osgi.extender;\
 		filter:="(&(osgi.extender=jsp.taglib)(uri=http://liferay.com/tld/soy))"
 Web-ContextPath: /fragment-web
+-dsannotations-options: inherit
