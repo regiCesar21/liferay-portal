@@ -37,7 +37,7 @@ import com.liferay.document.library.web.internal.configuration.FFDocumentLibrary
 import com.liferay.document.library.web.internal.settings.DLPortletInstanceSettings;
 import com.liferay.dynamic.data.mapping.exception.StorageFieldRequiredException;
 import com.liferay.dynamic.data.mapping.form.values.factory.DDMFormValuesFactory;
-import com.liferay.dynamic.data.mapping.model.DDMStructure;
+import com.liferay.dynamic.data.mapping.kernel.DDMStructure;
 import com.liferay.dynamic.data.mapping.service.DDMStructureLinkLocalService;
 import com.liferay.dynamic.data.mapping.service.DDMStructureLocalService;
 import com.liferay.dynamic.data.mapping.storage.DDMFormValues;
@@ -92,6 +92,7 @@ import com.liferay.portal.kernel.util.TempFileEntryUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
+import com.liferay.portlet.documentlibrary.util.DLAppUtil;
 import com.liferay.trash.service.TrashEntryService;
 import com.liferay.upload.UploadResponseHandler;
 
@@ -973,9 +974,7 @@ public class EditFileEntryMVCActionCommand extends BaseMVCActionCommand {
 		DLFileEntryType dlFileEntryType =
 			_dlFileEntryTypeLocalService.getDLFileEntryType(fileEntryTypeId);
 
-		for (com.liferay.dynamic.data.mapping.kernel.DDMStructure ddmStructure :
-				dlFileEntryType.getDDMStructures()) {
-
+		for (DDMStructure ddmStructure : dlFileEntryType.getDDMStructures()) {
 			String className =
 				com.liferay.dynamic.data.mapping.kernel.DDMFormValues.class.
 					getName();
@@ -1078,8 +1077,11 @@ public class EditFileEntryMVCActionCommand extends BaseMVCActionCommand {
 				// Add file entry
 
 				fileEntry = _dlAppService.addFileEntry(
-					repositoryId, folderId, sourceFileName, contentType, title,
-					description, changeLog, inputStream, size, serviceContext);
+					repositoryId, folderId,
+					DLUtil.getSanitizedFileName(
+						title, DLAppUtil.getExtension(title, sourceFileName)),
+					contentType, title, description, changeLog, inputStream,
+					size, serviceContext);
 			}
 			else if (cmd.equals(Constants.ADD_DYNAMIC)) {
 
@@ -1104,18 +1106,22 @@ public class EditFileEntryMVCActionCommand extends BaseMVCActionCommand {
 				// Update file entry and checkin
 
 				fileEntry = _dlAppService.updateFileEntryAndCheckIn(
-					fileEntryId, sourceFileName, contentType, title,
-					description, changeLog, dlVersionNumberIncrease,
-					inputStream, size, serviceContext);
+					fileEntryId,
+					DLUtil.getSanitizedFileName(
+						title, DLAppUtil.getExtension(title, sourceFileName)),
+					contentType, title, description, changeLog,
+					dlVersionNumberIncrease, inputStream, size, serviceContext);
 			}
 			else {
 
 				// Update file entry
 
 				fileEntry = _dlAppService.updateFileEntry(
-					fileEntryId, sourceFileName, contentType, title,
-					description, changeLog, dlVersionNumberIncrease,
-					inputStream, size, serviceContext);
+					fileEntryId,
+					DLUtil.getSanitizedFileName(
+						title, DLAppUtil.getExtension(title, sourceFileName)),
+					contentType, title, description, changeLog,
+					dlVersionNumberIncrease, inputStream, size, serviceContext);
 			}
 
 			_assetDisplayPageEntryFormProcessor.process(
