@@ -327,14 +327,26 @@ public class AnalyticsBatchExportImportManagerImpl
 			JSONObject responseJSONObject = null;
 
 			try {
-				responseJSONObject = _jsonFactory.createJSONObject(
-					EntityUtils.toString(
-						closeableHttpResponse.getEntity(),
-						Charset.defaultCharset()));
+				String response = EntityUtils.toString(
+					closeableHttpResponse.getEntity(),
+					Charset.defaultCharset());
+
+				if (Validator.isNull(response)) {
+					throw new Exception("Response is null");
+				}
+
+				responseJSONObject = _jsonFactory.createJSONObject(response);
 			}
 			catch (Exception exception) {
 				_log.error(
 					"Unable to check Analytics Cloud endpoints", exception);
+
+				return;
+			}
+
+			if ((responseJSONObject == null) ||
+				!responseJSONObject.has("liferayAnalyticsEndpointURL") ||
+				!responseJSONObject.has("liferayAnalyticsFaroBackendURL")) {
 
 				return;
 			}
@@ -344,36 +356,46 @@ public class AnalyticsBatchExportImportManagerImpl
 			String liferayAnalyticsFaroBackendURL =
 				responseJSONObject.getString("liferayAnalyticsFaroBackendURL");
 
-			if (liferayAnalyticsEndpointURL.equals(
+			if (!liferayAnalyticsEndpointURL.equals(
 					PrefsPropsUtil.getString(
-						companyId, "liferayAnalyticsEndpointURL")) &&
-				liferayAnalyticsFaroBackendURL.equals(
+						companyId, "liferayAnalyticsEndpointURL")) ||
+				!liferayAnalyticsFaroBackendURL.equals(
 					PrefsPropsUtil.getString(
 						companyId, "liferayAnalyticsFaroBackendURL"))) {
 
-				return;
+				UnicodeProperties unicodeProperties = new UnicodeProperties(
+					true);
+
+				unicodeProperties.put(
+					"liferayAnalyticsEndpointURL", liferayAnalyticsEndpointURL);
+				unicodeProperties.put(
+					"liferayAnalyticsFaroBackendURL",
+					liferayAnalyticsFaroBackendURL);
+
+				_companyLocalService.updatePreferences(
+					companyId, unicodeProperties);
 			}
-
-			UnicodeProperties unicodeProperties = new UnicodeProperties(true);
-
-			unicodeProperties.put(
-				"liferayAnalyticsEndpointURL", liferayAnalyticsEndpointURL);
-			unicodeProperties.put(
-				"liferayAnalyticsFaroBackendURL",
-				liferayAnalyticsFaroBackendURL);
-
-			_companyLocalService.updatePreferences(
-				companyId, unicodeProperties);
 
 			Dictionary<String, Object> configurationProperties =
 				_getConfigurationProperties(companyId);
 
-			configurationProperties.put(
-				"liferayAnalyticsEndpointURL", liferayAnalyticsEndpointURL);
+			if (!liferayAnalyticsEndpointURL.equals(
+					configurationProperties.get(
+						"liferayAnalyticsEndpointURL")) ||
+				!liferayAnalyticsFaroBackendURL.equals(
+					configurationProperties.get(
+						"liferayAnalyticsFaroBackendURL"))) {
 
-			_configurationProvider.saveCompanyConfiguration(
-				AnalyticsConfiguration.class, companyId,
-				configurationProperties);
+				configurationProperties.put(
+					"liferayAnalyticsEndpointURL", liferayAnalyticsEndpointURL);
+				configurationProperties.put(
+					"liferayAnalyticsFaroBackendURL",
+					liferayAnalyticsFaroBackendURL);
+
+				_configurationProvider.saveCompanyConfiguration(
+					AnalyticsConfiguration.class, companyId,
+					configurationProperties);
+			}
 		}
 	}
 
