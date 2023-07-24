@@ -7777,7 +7777,7 @@
 			</library>
 			<library>
 				<file-name>lib/portal/reload4j.jar</file-name>
-				<version>1.2.19</version>
+				<version>1.2.25</version>
 				<project-name>Reload4j</project-name>
 				<project-url>https://reload4j.qos.ch</project-url>
 				<licenses>
