@@ -17,3 +17,8 @@
 # Bundle Version 4.0.7
 #
 43ad94c6aa257eb9017c958d8c23748077bbfa5e^..d47a2d72be223bcacf673f9278b53796dff6ff4f=COMMERCE-4052
+
+#
+# Bundle Version 4.0.10
+#
+d47a2d72be223bcacf673f9278b53796dff6ff4f^..c75fa3baa87c42af138f7745c6a9a8ef46bb8c3b=LPS-188912
