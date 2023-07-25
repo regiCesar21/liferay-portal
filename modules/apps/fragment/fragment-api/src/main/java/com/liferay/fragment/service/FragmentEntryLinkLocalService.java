@@ -6,6 +6,7 @@
 package com.liferay.fragment.service;
 
 import com.liferay.exportimport.kernel.lar.PortletDataContext;
+import com.liferay.fragment.model.FragmentEntry;
 import com.liferay.fragment.model.FragmentEntryLink;
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
@@ -522,6 +523,10 @@ public interface FragmentEntryLinkLocalService
 
 	public void updateFragmentEntryLinks(
 			Map<Long, String> fragmentEntryLinksEditableValuesMap)
+		throws PortalException;
+
+	public void updateLatestChanges(
+			FragmentEntry fragmentEntry, FragmentEntryLink fragmentEntryLink)
 		throws PortalException;
 
 	public void updateLatestChanges(long fragmentEntryLinkId)
