@@ -22,3 +22,8 @@
 # Bundle Version 1.0.11
 #
 6ba5d5194846ef71beecc88ee2122965df2d82c8^..ae68d4d5b82649e26a321bfadbd68d009272d887=LRCI-3616
+
+#
+# Bundle Version 1.0.12
+#
+ae68d4d5b82649e26a321bfadbd68d009272d887^..6baccda2682bdbe9d26532073133ee3f9bb93a62=LPS-188912
