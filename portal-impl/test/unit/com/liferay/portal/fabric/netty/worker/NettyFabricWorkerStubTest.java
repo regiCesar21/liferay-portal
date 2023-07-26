@@ -97,7 +97,7 @@ public class NettyFabricWorkerStubTest {
 				Collections.<Path, Path>emptyMap(), 0);
 
 		Assert.assertNotNull(
-			ReflectionTestUtil.getFieldValue(channelFuture, "listeners"));
+			ReflectionTestUtil.getFieldValue(channelFuture, "listener"));
 
 		NoticeableFuture<String> noticeableFuture =
 			nettyFabricWorkerStub.getProcessNoticeableFuture();
@@ -107,7 +107,7 @@ public class NettyFabricWorkerStubTest {
 		Assert.assertTrue(channelFuture.cancel(true));
 		Assert.assertTrue(noticeableFuture.isCancelled());
 		Assert.assertNull(
-			ReflectionTestUtil.getFieldValue(channelFuture, "listeners"));
+			ReflectionTestUtil.getFieldValue(channelFuture, "listener"));
 
 		channel = NettyTestUtil.createEmptyEmbeddedChannel();
 
@@ -120,7 +120,7 @@ public class NettyFabricWorkerStubTest {
 			Collections.<Path, Path>emptyMap(), 0);
 
 		Assert.assertNotNull(
-			ReflectionTestUtil.getFieldValue(channelFuture, "listeners"));
+			ReflectionTestUtil.getFieldValue(channelFuture, "listener"));
 
 		noticeableFuture = nettyFabricWorkerStub.getProcessNoticeableFuture();
 
