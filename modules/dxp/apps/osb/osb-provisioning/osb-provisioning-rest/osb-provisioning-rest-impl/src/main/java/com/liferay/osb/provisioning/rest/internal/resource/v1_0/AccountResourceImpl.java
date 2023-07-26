@@ -10,6 +10,7 @@ import com.liferay.osb.koroneiki.phloem.rest.client.dto.v1_0.Contact;
 import com.liferay.osb.koroneiki.phloem.rest.client.dto.v1_0.ContactRole;
 import com.liferay.osb.provisioning.auth.ProvisioningContactThreadLocal;
 import com.liferay.osb.provisioning.identity.management.provider.ContactIdentityProvider;
+import com.liferay.osb.provisioning.identity.management.validator.EmailAddressValidator;
 import com.liferay.osb.provisioning.koroneiki.constants.ContactRoleConstants;
 import com.liferay.osb.provisioning.koroneiki.constants.ProductPurchaseConstants;
 import com.liferay.osb.provisioning.koroneiki.exception.ContactAccountRoleAlreadyExistsException;
@@ -199,6 +200,13 @@ public class AccountResourceImpl extends BaseAccountResourceImpl {
 			if (Validator.isNull(firstName) || Validator.isNull(lastName)) {
 				throw new ValidationException(
 					"New contact creation needs first and last name");
+			}
+
+			if (!_emailAddressValidator.validateEmailAddress(
+					contactEmailAddress)) {
+
+				throw new ValidationException(
+					"New contact creation uses reserved domain");
 			}
 
 			String subscriptionState = _accountReader.getSubscriptionState(
@@ -404,5 +412,8 @@ public class AccountResourceImpl extends BaseAccountResourceImpl {
 
 	@Reference
 	private CustomerPortalRelease _customerPortalRelease;
+
+	@Reference(target = "(validation=reserved)")
+	private EmailAddressValidator _emailAddressValidator;
 
 }

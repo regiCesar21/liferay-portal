@@ -17,6 +17,7 @@ import com.liferay.osb.provisioning.exception.ContactRequiredException;
 import com.liferay.osb.provisioning.exception.DuplicateContactRoleException;
 import com.liferay.osb.provisioning.exception.RequiredContactRoleException;
 import com.liferay.osb.provisioning.identity.management.provider.ContactIdentityProvider;
+import com.liferay.osb.provisioning.identity.management.validator.EmailAddressValidator;
 import com.liferay.osb.provisioning.koroneiki.constants.ContactRoleConstants;
 import com.liferay.osb.provisioning.koroneiki.constants.ProductPurchaseConstants;
 import com.liferay.osb.provisioning.koroneiki.reader.AccountReader;
@@ -27,6 +28,7 @@ import com.liferay.osb.provisioning.koroneiki.web.service.ContactWebService;
 import com.liferay.osb.provisioning.search.FilterQuery;
 import com.liferay.osb.provisioning.util.CustomerPortalRelease;
 import com.liferay.osb.provisioning.web.internal.util.ZendeskValidator;
+import com.liferay.portal.kernel.exception.EmailAddressException;
 import com.liferay.portal.kernel.exception.NoSuchContactException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -110,6 +112,7 @@ public class AssignAccountContactRolesMVCActionCommand
 				exception instanceof ContactEmailAddressException ||
 				exception instanceof ContactNameException ||
 				exception instanceof DuplicateContactRoleException ||
+				exception instanceof EmailAddressException ||
 				exception instanceof IllegalArgumentException ||
 				exception instanceof NoSuchContactException ||
 				exception instanceof Problem.ProblemException ||
@@ -161,6 +164,11 @@ public class AssignAccountContactRolesMVCActionCommand
 			emailAddress, true);
 
 		if (contact == null) {
+			if (!_emailAddressValidator.validateEmailAddress(emailAddress)) {
+				throw new EmailAddressException(
+					"New contact creation uses reserved domain");
+			}
+
 			String subscriptionState = _accountReader.getSubscriptionState(
 				account);
 
@@ -383,6 +391,9 @@ public class AssignAccountContactRolesMVCActionCommand
 
 	@Reference
 	private CustomerPortalRelease _customerPortalRelease;
+
+	@Reference(target = "(validation=reserved)")
+	private EmailAddressValidator _emailAddressValidator;
 
 	@Reference
 	private ZendeskValidator _zendeskValidator;
