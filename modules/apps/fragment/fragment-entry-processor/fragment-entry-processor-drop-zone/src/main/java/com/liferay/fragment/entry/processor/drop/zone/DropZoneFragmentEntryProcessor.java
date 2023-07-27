@@ -23,9 +23,9 @@ import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ListUtil;
-import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.PropsUtil;
+import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import com.liferay.portal.kernel.util.Validator;
 
 import java.util.LinkedHashMap;
@@ -35,6 +35,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
+import java.util.ResourceBundle;
 import java.util.Set;
 
 import javax.servlet.http.HttpServletRequest;
@@ -251,9 +252,12 @@ public class DropZoneFragmentEntryProcessor implements FragmentEntryProcessor {
 		if (!elementDropZoneIds.isEmpty() &&
 			(elementDropZoneIds.size() != elements.size())) {
 
+			ResourceBundle resourceBundle = ResourceBundleUtil.getBundle(
+				"content.Language", getClass());
+
 			throw new FragmentEntryContentException(
 				_language.get(
-					_portal.getResourceBundle(LocaleUtil.getDefault()),
+					resourceBundle,
 					"you-must-define-a-unique-id-for-each-drop-zone"));
 		}
 	}
