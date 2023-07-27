@@ -7,11 +7,15 @@ package com.liferay.dynamic.data.lists.web.internal.exportimport.data.handler;
 
 import com.liferay.dynamic.data.lists.constants.DDLConstants;
 import com.liferay.dynamic.data.lists.constants.DDLPortletKeys;
+import com.liferay.dynamic.data.lists.model.DDLRecord;
+import com.liferay.dynamic.data.lists.model.DDLRecordSet;
 import com.liferay.exportimport.kernel.lar.BasePortletDataHandler;
 import com.liferay.exportimport.kernel.lar.DataLevel;
 import com.liferay.exportimport.kernel.lar.PortletDataContext;
+import com.liferay.exportimport.kernel.lar.PortletDataException;
 import com.liferay.exportimport.kernel.lar.PortletDataHandler;
-import com.liferay.exportimport.kernel.lar.PortletDataHandlerControl;
+import com.liferay.exportimport.kernel.lar.PortletDataHandlerBoolean;
+import com.liferay.exportimport.kernel.lar.StagedModelType;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.module.framework.ModuleServiceLifecycle;
 
@@ -31,6 +35,8 @@ import org.osgi.service.component.annotations.Reference;
 )
 public class DDLDisplayPortletDataHandler extends BasePortletDataHandler {
 
+	public static final String NAMESPACE = "dynamic_data_lists";
+
 	public static final String SCHEMA_VERSION = "1.0.0";
 
 	@Override
@@ -43,12 +49,37 @@ public class DDLDisplayPortletDataHandler extends BasePortletDataHandler {
 		return DDLConstants.SERVICE_NAME;
 	}
 
+	@Override
+	public boolean isDisplayPortlet() {
+		return false;
+	}
+
+	@Override
+	public void prepareManifestSummary(
+			PortletDataContext portletDataContext,
+			PortletPreferences portletPreferences)
+		throws PortletDataException {
+
+		_ddlPortletDataHandler.prepareManifestSummary(
+			portletDataContext, portletPreferences);
+	}
+
 	@Activate
 	protected void activate() {
 		setDataLevel(DataLevel.PORTLET_INSTANCE);
 		setDataPortletPreferences(
 			"displayDDMTemplateId", "formDDMTemplateId", "recordSetId");
-		setExportControls(new PortletDataHandlerControl[0]);
+		setDeletionSystemEventStagedModelTypes(
+			new StagedModelType(DDLRecord.class),
+			new StagedModelType(DDLRecordSet.class));
+		setExportControls(
+			new PortletDataHandlerBoolean(
+				NAMESPACE, "record-sets", true, false, null,
+				DDLRecordSet.class.getName()),
+			new PortletDataHandlerBoolean(
+				NAMESPACE, "records", true, false, null,
+				DDLRecord.class.getName()));
+		setStagingControls(getExportControls());
 	}
 
 	@Override
@@ -68,12 +99,18 @@ public class DDLDisplayPortletDataHandler extends BasePortletDataHandler {
 		portletPreferences.setValue("recordSetId", StringPool.BLANK);
 		portletPreferences.setValue("spreadsheet", Boolean.FALSE.toString());
 
-		return portletPreferences;
+		return _ddlPortletDataHandler.deleteData(
+			portletDataContext, portletId, portletPreferences);
 	}
 
 	@Reference(target = ModuleServiceLifecycle.PORTAL_INITIALIZED, unbind = "-")
 	protected void setModuleServiceLifecycle(
 		ModuleServiceLifecycle moduleServiceLifecycle) {
 	}
+
+	@Reference(
+		target = "(javax.portlet.name=" + DDLPortletKeys.DYNAMIC_DATA_LISTS + ")"
+	)
+	private PortletDataHandler _ddlPortletDataHandler;
 
 }
