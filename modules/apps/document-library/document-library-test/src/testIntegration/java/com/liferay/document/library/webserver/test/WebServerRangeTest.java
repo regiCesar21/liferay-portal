@@ -189,7 +189,7 @@ public class WebServerRangeTest extends BaseWebServerTestCase {
 			_SAMPLE_DATA.getBytes(), serviceContext);
 
 		String path = StringBundler.concat(
-			fileEntry.getGroupId(), "/", fileEntry.getFolderId(), "/",
+			"/", fileEntry.getGroupId(), "/", fileEntry.getFolderId(), "/",
 			fileEntry.getTitle());
 
 		Map<String, String> headers = new HashMap<>();
