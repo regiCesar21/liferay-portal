@@ -24,6 +24,7 @@ import com.liferay.osb.provisioning.distributed.messaging.internal.configuration
 import com.liferay.osb.provisioning.distributed.messaging.internal.constants.SalesforceConstants;
 import com.liferay.osb.provisioning.distributed.messaging.internal.subscribing.util.DossieraSubscriberUtil;
 import com.liferay.osb.provisioning.identity.management.provider.ContactIdentityProvider;
+import com.liferay.osb.provisioning.identity.management.validator.EmailAddressValidator;
 import com.liferay.osb.provisioning.koroneiki.constants.ContactRoleConstants;
 import com.liferay.osb.provisioning.koroneiki.constants.ProductConstants;
 import com.liferay.osb.provisioning.koroneiki.constants.TeamRoleConstants;
@@ -967,7 +968,10 @@ public class DossieraCreateMessageSubscriber extends BaseMessageSubscriber {
 						contact.getEmailAddress());
 
 				if (status == null) {
-					if (customerPortal2Account) {
+					if (customerPortal2Account &&
+						_emailAddressValidator.validateEmailAddress(
+							contact.getEmailAddress())) {
+
 						Contact newContact =
 							_contactIdentityProvider.createContact(
 								contact.getEmailAddress(),
@@ -2743,6 +2747,9 @@ public class DossieraCreateMessageSubscriber extends BaseMessageSubscriber {
 
 	@Reference
 	private DossieraSubscriberUtil _dossieraSubscriberUtil;
+
+	@Reference(target = "(validation=reserved)")
+	private EmailAddressValidator _emailAddressValidator;
 
 	@Reference
 	private GroupLocalService _groupLocalService;
