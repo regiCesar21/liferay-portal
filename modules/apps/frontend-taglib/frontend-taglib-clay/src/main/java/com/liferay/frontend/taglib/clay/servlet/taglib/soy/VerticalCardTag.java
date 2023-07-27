@@ -7,6 +7,7 @@ package com.liferay.frontend.taglib.clay.servlet.taglib.soy;
 
 import com.liferay.frontend.taglib.clay.servlet.taglib.soy.base.BaseClayCardTag;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.LabelItem;
+import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.Validator;
 
 import java.util.List;
@@ -93,7 +94,12 @@ public class VerticalCardTag extends BaseClayCardTag {
 	}
 
 	public void setTitle(String title) {
-		putValue("title", title);
+		if (_verticalCard.getHref() != null) {
+			putValue("title", HtmlUtil.escapeAttribute(title));
+		}
+		else {
+			putValue("title", title);
+		}
 	}
 
 	public void setVerticalCard(VerticalCard verticalCard) {

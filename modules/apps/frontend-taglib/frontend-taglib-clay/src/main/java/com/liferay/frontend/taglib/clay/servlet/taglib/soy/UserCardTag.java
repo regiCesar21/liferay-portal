@@ -6,6 +6,7 @@
 package com.liferay.frontend.taglib.clay.servlet.taglib.soy;
 
 import com.liferay.frontend.taglib.clay.servlet.taglib.soy.base.BaseClayCardTag;
+import com.liferay.portal.kernel.util.HtmlUtil;
 
 import java.util.Map;
 
@@ -34,7 +35,12 @@ public class UserCardTag extends BaseClayCardTag {
 	}
 
 	public void setName(String name) {
-		putValue("name", name);
+		if (_userCard.getName() != null) {
+			putValue("name", HtmlUtil.escapeAttribute(name));
+		}
+		else {
+			putValue("name", name);
+		}
 	}
 
 	public void setSubtitle(String subtitle) {

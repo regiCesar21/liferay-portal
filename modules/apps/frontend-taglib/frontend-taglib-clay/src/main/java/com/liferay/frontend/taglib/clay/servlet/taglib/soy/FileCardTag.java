@@ -7,6 +7,7 @@ package com.liferay.frontend.taglib.clay.servlet.taglib.soy;
 
 import com.liferay.frontend.taglib.clay.servlet.taglib.soy.base.BaseClayCardTag;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.LabelItem;
+import com.liferay.portal.kernel.util.HtmlUtil;
 
 import java.util.List;
 import java.util.Map;
@@ -78,7 +79,12 @@ public class FileCardTag extends BaseClayCardTag {
 	}
 
 	public void setTitle(String title) {
-		putValue("title", title);
+		if (_fileCard.getHref() != null) {
+			putValue("title", HtmlUtil.escapeAttribute(title));
+		}
+		else {
+			putValue("title", title);
+		}
 	}
 
 	private void _populateContext() {
