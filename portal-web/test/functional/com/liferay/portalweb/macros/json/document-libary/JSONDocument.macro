@@ -68,6 +68,9 @@ definition {
 		var dependenciesDir = PropsUtil.get("test.dependencies.dir.name");
 
 		var filePath = "${baseDir}${dependenciesDir}/${sourceFileName}";
+		var extension = StringUtil.extractLast(${sourceFileName}, ".");
+
+		var fileName = "${dmDocumentTitle}.${extension}";
 
 		if (isSet(dmDocumentDescription)) {
 			var description = ${dmDocumentDescription};
@@ -87,7 +90,7 @@ definition {
 				-u test@liferay.com:test \
 				-F repositoryId=${repositoryId} \
 				-F folderId=${folderId} \
-				-F sourceFileName=${sourceFileName} \
+				-F sourceFileName=${fileName} \
 				-F mimeType=${mimeType} \
 				-F title=${dmDocumentTitle} \
 				-F description=${description} \
