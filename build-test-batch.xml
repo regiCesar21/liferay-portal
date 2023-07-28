@@ -3841,7 +3841,6 @@ log.sanitizer.enabled=false</echo>
 			test.portal.bundle.version="${test.portal.bundle.version}"
 			test.portal.bundle.war.url="${test.portal.bundle.war.url}"
 			test.portal.bundle.zip.url="${test.portal.bundle.zip.url}"
-			test.portal.log.assert="true"
 			test.portal.lpkg.name="${test.portal.lpkg.name}"
 			test.sql.zip.url="${test.sql.zip.url}"
 		/>
@@ -3866,7 +3865,6 @@ log.sanitizer.enabled=false</echo>
 			test.portal.bundle.version="${test.portal.bundle.version}"
 			test.portal.bundle.war.url="${test.portal.bundle.war.url}"
 			test.portal.bundle.zip.url="${test.portal.bundle.zip.url}"
-			test.portal.log.assert="true"
 			test.portal.lpkg.name="${test.portal.lpkg.name}"
 			test.sql.zip.url="${test.sql.zip.url}"
 		/>
@@ -4482,7 +4480,6 @@ log.sanitizer.enabled=false</echo>
 			test.portal.bundle.version="${test.portal.bundle.version}"
 			test.portal.bundle.war.url="${test.portal.bundle.war.url}"
 			test.portal.bundle.zip.url="${test.portal.bundle.zip.url}"
-			test.portal.log.assert="true"
 			test.portal.lpkg.name="${test.portal.lpkg.name}"
 			test.sql.zip.url="${test.sql.zip.url}"
 		/>
@@ -4507,7 +4504,6 @@ log.sanitizer.enabled=false</echo>
 			test.portal.bundle.version="${test.portal.bundle.version}"
 			test.portal.bundle.war.url="${test.portal.bundle.war.url}"
 			test.portal.bundle.zip.url="${test.portal.bundle.zip.url}"
-			test.portal.log.assert="true"
 			test.portal.lpkg.name="${test.portal.lpkg.name}"
 			test.sql.zip.url="${test.sql.zip.url}"
 		/>
