@@ -9,7 +9,7 @@
 
 <%@ include file="/card/vertical_card/start.jspf" %>
 
-<img alt="" class="aspect-ratio-item-center-middle aspect-ratio-item-fluid" src="<%= imageUrl %>" />
+<img alt="<%= description %>" class="aspect-ratio-item-center-middle aspect-ratio-item-fluid" src="<%= imageUrl %>" />
 
 <c:if test="<%= Validator.isNotNull(stickerBottom) %>">
 	<%= stickerBottom %>

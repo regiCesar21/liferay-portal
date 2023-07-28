@@ -88,6 +88,10 @@ DLPortletInstanceSettingsHelper dlPortletInstanceSettingsHelper = new DLPortletI
 					title += " - " + description;
 				}
 
+				Map<String, Object> data = HashMapBuilder.<String, Object>put(
+					"description", description
+				).build();
+
 				row.setCssClass("card-page-item card-page-item-asset");
 				%>
 
@@ -111,6 +115,7 @@ DLPortletInstanceSettingsHelper dlPortletInstanceSettingsHelper = new DLPortletI
 									actionJspServletContext="<%= application %>"
 									cardCssClass="card-interactive card-interactive-secondary"
 									cssClass="entry-display-style"
+									data="<%= data %>"
 									imageUrl="<%= thumbnailSrc %>"
 									resultRow="<%= row %>"
 									title="<%= dlPortletInstanceSettingsHelper.isShowActions() ? fileEntry.getTitle() : StringPool.BLANK %>"

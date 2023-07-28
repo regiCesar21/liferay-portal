@@ -14,4 +14,6 @@ String onClick = (String)request.getAttribute("liferay-frontend:card:onClick");
 String stickerBottom = GetterUtil.getString(request.getAttribute("liferay-frontend:card:stickerBottom"));
 String subtitle = (String)request.getAttribute("liferay-frontend:card:subtitle");
 String title = (String)request.getAttribute("liferay-frontend:card:title");
+
+String description = Validator.isNotNull(data.get("description")) ? data.get("description").toString() : "" ;
 %>
