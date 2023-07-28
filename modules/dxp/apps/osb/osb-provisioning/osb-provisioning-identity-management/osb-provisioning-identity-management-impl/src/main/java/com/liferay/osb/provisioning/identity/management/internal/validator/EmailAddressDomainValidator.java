@@ -16,6 +16,7 @@ package com.liferay.osb.provisioning.identity.management.internal.validator;
 
 import com.liferay.osb.provisioning.identity.management.validator.EmailAddressValidator;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.exception.EmailAddressException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -30,31 +31,34 @@ import org.osgi.service.component.annotations.Component;
 /**
  * @author Will Newbury
  */
-@Component(
-	immediate = true, property = "validation=reserved",
-	service = EmailAddressValidator.class
-)
-public class ReservedDomainEmailAddressValidator
-	implements EmailAddressValidator {
+@Component(immediate = true, service = EmailAddressValidator.class)
+public class EmailAddressDomainValidator implements EmailAddressValidator {
 
-	public boolean validateEmailAddress(String emailAddress) throws Exception {
+	public boolean isLiferayEmailAddress(String emailAddress) throws Exception {
 		String domain = emailAddress.substring(
 			emailAddress.indexOf(StringPool.AT) + 1);
 
-		if (_reservedDomains.contains(domain)) {
+		if (_liferayDomains.contains(domain)) {
 			return false;
 		}
 
 		return true;
 	}
 
+	public void validateEmailAddress(String emailAddress) throws Exception {
+		if (!isLiferayEmailAddress(emailAddress)) {
+			throw new EmailAddressException(
+				"Email Address uses a reserved liferay domain");
+		}
+	}
+
 	@Activate
 	protected void activate(Map<String, Object> properties) throws Exception {
 		try {
 			StringUtil.readLines(
-				ReservedDomainEmailAddressValidator.class.getResourceAsStream(
-					"/dependencies/reserved_domains.txt"),
-				_reservedDomains);
+				EmailAddressDomainValidator.class.getResourceAsStream(
+					"/dependencies/liferay_domains.txt"),
+				_liferayDomains);
 		}
 		catch (Exception exception) {
 			_log.error(exception, exception);
@@ -62,8 +66,8 @@ public class ReservedDomainEmailAddressValidator
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
-		ReservedDomainEmailAddressValidator.class);
+		EmailAddressDomainValidator.class);
 
-	private final Set<String> _reservedDomains = new HashSet<>();
+	private final Set<String> _liferayDomains = new HashSet<>();
 
 }

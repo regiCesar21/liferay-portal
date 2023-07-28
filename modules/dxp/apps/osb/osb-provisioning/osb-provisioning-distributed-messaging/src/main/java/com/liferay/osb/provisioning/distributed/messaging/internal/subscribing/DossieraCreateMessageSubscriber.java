@@ -969,7 +969,7 @@ public class DossieraCreateMessageSubscriber extends BaseMessageSubscriber {
 
 				if (status == null) {
 					if (customerPortal2Account &&
-						_emailAddressValidator.validateEmailAddress(
+						_emailAddressValidator.isLiferayEmailAddress(
 							contact.getEmailAddress())) {
 
 						Contact newContact =
@@ -2748,7 +2748,7 @@ public class DossieraCreateMessageSubscriber extends BaseMessageSubscriber {
 	@Reference
 	private DossieraSubscriberUtil _dossieraSubscriberUtil;
 
-	@Reference(target = "(validation=reserved)")
+	@Reference
 	private EmailAddressValidator _emailAddressValidator;
 
 	@Reference

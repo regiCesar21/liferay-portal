@@ -164,10 +164,7 @@ public class AssignAccountContactRolesMVCActionCommand
 			emailAddress, true);
 
 		if (contact == null) {
-			if (!_emailAddressValidator.validateEmailAddress(emailAddress)) {
-				throw new EmailAddressException(
-					"New contact creation uses reserved domain");
-			}
+			_emailAddressValidator.validateEmailAddress(emailAddress);
 
 			String subscriptionState = _accountReader.getSubscriptionState(
 				account);
@@ -392,7 +389,7 @@ public class AssignAccountContactRolesMVCActionCommand
 	@Reference
 	private CustomerPortalRelease _customerPortalRelease;
 
-	@Reference(target = "(validation=reserved)")
+	@Reference
 	private EmailAddressValidator _emailAddressValidator;
 
 	@Reference

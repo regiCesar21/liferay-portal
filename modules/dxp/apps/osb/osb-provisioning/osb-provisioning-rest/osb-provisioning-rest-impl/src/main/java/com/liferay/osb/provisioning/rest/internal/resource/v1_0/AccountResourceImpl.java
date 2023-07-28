@@ -25,6 +25,7 @@ import com.liferay.osb.provisioning.rest.resource.v1_0.AccountResource;
 import com.liferay.osb.provisioning.util.CustomerPortalRelease;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.exception.EmailAddressException;
 import com.liferay.portal.kernel.exception.NoSuchModelException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -97,6 +98,7 @@ public class AccountResourceImpl extends BaseAccountResourceImpl {
 		}
 		catch (Exception exception) {
 			if (exception instanceof ContactAccountRoleAlreadyExistsException ||
+				exception instanceof EmailAddressException ||
 				exception instanceof NoSuchModelException ||
 				exception instanceof ValidationException) {
 
@@ -202,12 +204,7 @@ public class AccountResourceImpl extends BaseAccountResourceImpl {
 					"New contact creation needs first and last name");
 			}
 
-			if (!_emailAddressValidator.validateEmailAddress(
-					contactEmailAddress)) {
-
-				throw new ValidationException(
-					"New contact creation uses reserved domain");
-			}
+			_emailAddressValidator.validateEmailAddress(contactEmailAddress);
 
 			String subscriptionState = _accountReader.getSubscriptionState(
 				account);
@@ -413,7 +410,7 @@ public class AccountResourceImpl extends BaseAccountResourceImpl {
 	@Reference
 	private CustomerPortalRelease _customerPortalRelease;
 
-	@Reference(target = "(validation=reserved)")
+	@Reference
 	private EmailAddressValidator _emailAddressValidator;
 
 }

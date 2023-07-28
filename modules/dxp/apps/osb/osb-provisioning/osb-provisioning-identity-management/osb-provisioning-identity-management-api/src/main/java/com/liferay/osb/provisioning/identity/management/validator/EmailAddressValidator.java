@@ -19,6 +19,8 @@ package com.liferay.osb.provisioning.identity.management.validator;
  */
 public interface EmailAddressValidator {
 
-	public boolean validateEmailAddress(String emailAddress) throws Exception;
+	public boolean isLiferayEmailAddress(String emailAddress) throws Exception;
+
+	public void validateEmailAddress(String emailAddress) throws Exception;
 
 }
