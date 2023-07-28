@@ -142,6 +142,8 @@ definition {
 			menuItem = "Edit",
 			rowEntry = "DM Document Title");
 
+		WaitForPageLoad();
+
 		DMDocument.viewCategories(categoryNameList = "category");
 	}
 
