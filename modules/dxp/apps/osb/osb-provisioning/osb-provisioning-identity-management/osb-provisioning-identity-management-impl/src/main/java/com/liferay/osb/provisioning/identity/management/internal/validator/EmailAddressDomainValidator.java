@@ -48,7 +48,7 @@ public class EmailAddressDomainValidator implements EmailAddressValidator {
 	public void validateEmailAddress(String emailAddress) throws Exception {
 		if (!isLiferayEmailAddress(emailAddress)) {
 			throw new EmailAddressException(
-				"Email Address uses a reserved liferay domain");
+				"Email address uses a reserved Liferay domain");
 		}
 	}
 

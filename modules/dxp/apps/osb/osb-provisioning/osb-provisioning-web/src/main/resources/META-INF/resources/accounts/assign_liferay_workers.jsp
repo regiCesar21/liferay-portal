@@ -28,7 +28,7 @@ AccountDisplay accountDisplay = viewAccountLiferayWorkersDisplayContext.getAccou
 	<liferay-ui:error exception="<%= ContactEmailAddressException.class %>" message="please-enter-a-valid-email-address" />
 	<liferay-ui:error exception="<%= ContactNameException.class %>" message="the-contact-could-not-be-found" />
 	<liferay-ui:error exception="<%= DuplicateContactRoleException.class %>" message="primary-or-secondary-contact-is-already-assigned-to-another-user" />
-	<liferay-ui:error exception="<%= EmailAddressException.class %>" message="the-email-address-entered-uses-a-reserved-domain" />
+	<liferay-ui:error exception="<%= EmailAddressException.class %>" message="email-address-uses-a-reserved-liferay-domain" />
 
 	<liferay-ui:error exception="<%= Problem.ProblemException.class %>">
 
