@@ -110,16 +110,6 @@ public class FragmentRendererControllerImpl
 						exception.getMessage()),
 					exception);
 			}
-			else {
-				_log.error(
-					StringBundler.concat(
-						"Unable to render content of fragment entry ",
-						fragmentEntryLink.getFragmentEntryId(),
-						" with fragment entry link ",
-						fragmentEntryLink.getFragmentEntryLinkId(),
-						" and PLID ", fragmentEntryLink.getPlid(), ": ",
-						exception.getMessage()));
-			}
 
 			SessionErrors.add(
 				httpServletRequest, "fragmentEntryContentInvalid");
