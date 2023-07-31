@@ -73,14 +73,14 @@ dependencies {
 }
 
 writeReleases {
-	dependsOn configurations.compile
+	dependsOn configurations.compileClasspath
 
 	doLast {
 		File releasesTxtFile = new File(processResources.destinationDir, "com/liferay/portal/tools/sample/sql/builder/dependencies/releases.txt")
 
 		List<String> lines = []
 
-		(configurations.compile + configurations.compileInclude).each {
+		(configurations.compileClasspath + configurations.compileInclude).each {
 			JarFile jarFile = new JarFile(it)
 
 			Attributes mainAttributes = jarFile.manifest.mainAttributes
