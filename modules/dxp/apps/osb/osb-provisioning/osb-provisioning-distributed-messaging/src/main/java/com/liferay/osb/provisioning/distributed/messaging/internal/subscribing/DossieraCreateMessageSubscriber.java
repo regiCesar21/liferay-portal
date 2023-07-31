@@ -969,7 +969,7 @@ public class DossieraCreateMessageSubscriber extends BaseMessageSubscriber {
 
 				if (status == null) {
 					if (customerPortal2Account &&
-						!_emailAddressValidator.isLiferayEmailAddress(
+						!_emailAddressValidator.isLiferayDomain(
 							contact.getEmailAddress())) {
 
 						Contact newContact =

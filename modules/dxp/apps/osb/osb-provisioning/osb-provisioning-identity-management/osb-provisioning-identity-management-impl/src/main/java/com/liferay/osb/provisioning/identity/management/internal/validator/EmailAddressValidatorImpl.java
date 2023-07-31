@@ -32,9 +32,9 @@ import org.osgi.service.component.annotations.Component;
  * @author Will Newbury
  */
 @Component(immediate = true, service = EmailAddressValidator.class)
-public class EmailAddressDomainValidator implements EmailAddressValidator {
+public class EmailAddressValidatorImpl implements EmailAddressValidator {
 
-	public boolean isLiferayEmailAddress(String emailAddress) throws Exception {
+	public boolean isLiferayDomain(String emailAddress) throws Exception {
 		String domain = emailAddress.substring(
 			emailAddress.indexOf(StringPool.AT) + 1);
 
@@ -45,8 +45,8 @@ public class EmailAddressDomainValidator implements EmailAddressValidator {
 		return false;
 	}
 
-	public void validateEmailAddress(String emailAddress) throws Exception {
-		if (!isLiferayEmailAddress(emailAddress)) {
+	public void validateDomain(String emailAddress) throws Exception {
+		if (isLiferayDomain(emailAddress)) {
 			throw new EmailAddressException(
 				"Email address uses a reserved Liferay domain");
 		}
@@ -56,7 +56,7 @@ public class EmailAddressDomainValidator implements EmailAddressValidator {
 	protected void activate(Map<String, Object> properties) throws Exception {
 		try {
 			StringUtil.readLines(
-				EmailAddressDomainValidator.class.getResourceAsStream(
+				EmailAddressValidatorImpl.class.getResourceAsStream(
 					"/dependencies/liferay_domains.txt"),
 				_liferayDomains);
 		}
@@ -66,7 +66,7 @@ public class EmailAddressDomainValidator implements EmailAddressValidator {
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
-		EmailAddressDomainValidator.class);
+		EmailAddressValidatorImpl.class);
 
 	private final Set<String> _liferayDomains = new HashSet<>();
 

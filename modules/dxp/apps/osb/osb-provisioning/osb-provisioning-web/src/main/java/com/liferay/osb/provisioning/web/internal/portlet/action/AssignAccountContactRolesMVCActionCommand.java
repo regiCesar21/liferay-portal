@@ -164,7 +164,7 @@ public class AssignAccountContactRolesMVCActionCommand
 			emailAddress, true);
 
 		if (contact == null) {
-			_emailAddressValidator.validateEmailAddress(emailAddress);
+			_emailAddressValidator.validateDomain(emailAddress);
 
 			String subscriptionState = _accountReader.getSubscriptionState(
 				account);

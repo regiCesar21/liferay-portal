@@ -204,7 +204,7 @@ public class AccountResourceImpl extends BaseAccountResourceImpl {
 					"New contact creation needs first and last name");
 			}
 
-			_emailAddressValidator.validateEmailAddress(contactEmailAddress);
+			_emailAddressValidator.validateDomain(contactEmailAddress);
 
 			String subscriptionState = _accountReader.getSubscriptionState(
 				account);
