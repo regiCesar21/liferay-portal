@@ -10,6 +10,7 @@ import com.liferay.osb.koroneiki.phloem.rest.client.dto.v1_0.Contact;
 import com.liferay.osb.koroneiki.phloem.rest.client.dto.v1_0.ContactRole;
 import com.liferay.osb.koroneiki.phloem.rest.client.dto.v1_0.Entitlement;
 import com.liferay.osb.koroneiki.phloem.rest.client.dto.v1_0.ExternalLink;
+import com.liferay.osb.koroneiki.phloem.rest.client.dto.v1_0.Phone;
 import com.liferay.osb.koroneiki.phloem.rest.client.dto.v1_0.Team;
 import com.liferay.osb.koroneiki.phloem.rest.client.json.BaseJSONParser;
 
@@ -21,7 +22,6 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
 import java.util.TreeMap;
-import java.util.stream.Stream;
 
 import javax.annotation.Generated;
 
@@ -259,6 +259,26 @@ public class ContactSerDes {
 			sb.append("\"");
 		}
 
+		if (contact.getPhones() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"phones\": ");
+
+			sb.append("[");
+
+			for (int i = 0; i < contact.getPhones().length; i++) {
+				sb.append(String.valueOf(contact.getPhones()[i]));
+
+				if ((i + 1) < contact.getPhones().length) {
+					sb.append(", ");
+				}
+			}
+
+			sb.append("]");
+		}
+
 		if (contact.getTeams() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -412,6 +432,13 @@ public class ContactSerDes {
 			map.put("middleName", String.valueOf(contact.getMiddleName()));
 		}
 
+		if (contact.getPhones() == null) {
+			map.put("phones", null);
+		}
+		else {
+			map.put("phones", String.valueOf(contact.getPhones()));
+		}
+
 		if (contact.getTeams() == null) {
 			map.put("teams", null);
 		}
@@ -448,26 +475,34 @@ public class ContactSerDes {
 
 			if (Objects.equals(jsonParserFieldName, "accounts")) {
 				if (jsonParserFieldValue != null) {
-					contact.setAccounts(
-						Stream.of(
-							toStrings((Object[])jsonParserFieldValue)
-						).map(
-							object -> AccountSerDes.toDTO((String)object)
-						).toArray(
-							size -> new Account[size]
-						));
+					Object[] jsonParserFieldValues =
+						(Object[])jsonParserFieldValue;
+
+					Account[] accountsArray =
+						new Account[jsonParserFieldValues.length];
+
+					for (int i = 0; i < accountsArray.length; i++) {
+						accountsArray[i] = AccountSerDes.toDTO(
+							(String)jsonParserFieldValues[i]);
+					}
+
+					contact.setAccounts(accountsArray);
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "contactRoles")) {
 				if (jsonParserFieldValue != null) {
-					contact.setContactRoles(
-						Stream.of(
-							toStrings((Object[])jsonParserFieldValue)
-						).map(
-							object -> ContactRoleSerDes.toDTO((String)object)
-						).toArray(
-							size -> new ContactRole[size]
-						));
+					Object[] jsonParserFieldValues =
+						(Object[])jsonParserFieldValue;
+
+					ContactRole[] contactRolesArray =
+						new ContactRole[jsonParserFieldValues.length];
+
+					for (int i = 0; i < contactRolesArray.length; i++) {
+						contactRolesArray[i] = ContactRoleSerDes.toDTO(
+							(String)jsonParserFieldValues[i]);
+					}
+
+					contact.setContactRoles(contactRolesArray);
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "dateCreated")) {
@@ -497,26 +532,34 @@ public class ContactSerDes {
 			}
 			else if (Objects.equals(jsonParserFieldName, "entitlements")) {
 				if (jsonParserFieldValue != null) {
-					contact.setEntitlements(
-						Stream.of(
-							toStrings((Object[])jsonParserFieldValue)
-						).map(
-							object -> EntitlementSerDes.toDTO((String)object)
-						).toArray(
-							size -> new Entitlement[size]
-						));
+					Object[] jsonParserFieldValues =
+						(Object[])jsonParserFieldValue;
+
+					Entitlement[] entitlementsArray =
+						new Entitlement[jsonParserFieldValues.length];
+
+					for (int i = 0; i < entitlementsArray.length; i++) {
+						entitlementsArray[i] = EntitlementSerDes.toDTO(
+							(String)jsonParserFieldValues[i]);
+					}
+
+					contact.setEntitlements(entitlementsArray);
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "externalLinks")) {
 				if (jsonParserFieldValue != null) {
-					contact.setExternalLinks(
-						Stream.of(
-							toStrings((Object[])jsonParserFieldValue)
-						).map(
-							object -> ExternalLinkSerDes.toDTO((String)object)
-						).toArray(
-							size -> new ExternalLink[size]
-						));
+					Object[] jsonParserFieldValues =
+						(Object[])jsonParserFieldValue;
+
+					ExternalLink[] externalLinksArray =
+						new ExternalLink[jsonParserFieldValues.length];
+
+					for (int i = 0; i < externalLinksArray.length; i++) {
+						externalLinksArray[i] = ExternalLinkSerDes.toDTO(
+							(String)jsonParserFieldValues[i]);
+					}
+
+					contact.setExternalLinks(externalLinksArray);
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "firstName")) {
@@ -544,16 +587,35 @@ public class ContactSerDes {
 					contact.setMiddleName((String)jsonParserFieldValue);
 				}
 			}
+			else if (Objects.equals(jsonParserFieldName, "phones")) {
+				if (jsonParserFieldValue != null) {
+					Object[] jsonParserFieldValues =
+						(Object[])jsonParserFieldValue;
+
+					Phone[] phonesArray =
+						new Phone[jsonParserFieldValues.length];
+
+					for (int i = 0; i < phonesArray.length; i++) {
+						phonesArray[i] = PhoneSerDes.toDTO(
+							(String)jsonParserFieldValues[i]);
+					}
+
+					contact.setPhones(phonesArray);
+				}
+			}
 			else if (Objects.equals(jsonParserFieldName, "teams")) {
 				if (jsonParserFieldValue != null) {
-					contact.setTeams(
-						Stream.of(
-							toStrings((Object[])jsonParserFieldValue)
-						).map(
-							object -> TeamSerDes.toDTO((String)object)
-						).toArray(
-							size -> new Team[size]
-						));
+					Object[] jsonParserFieldValues =
+						(Object[])jsonParserFieldValue;
+
+					Team[] teamsArray = new Team[jsonParserFieldValues.length];
+
+					for (int i = 0; i < teamsArray.length; i++) {
+						teamsArray[i] = TeamSerDes.toDTO(
+							(String)jsonParserFieldValues[i]);
+					}
+
+					contact.setTeams(teamsArray);
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "uuid")) {

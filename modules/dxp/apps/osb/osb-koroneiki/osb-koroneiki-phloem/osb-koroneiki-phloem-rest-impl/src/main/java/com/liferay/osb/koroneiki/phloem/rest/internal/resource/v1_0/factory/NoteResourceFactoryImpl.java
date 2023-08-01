@@ -25,6 +25,7 @@ import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.odata.filter.ExpressionConvert;
 import com.liferay.portal.odata.filter.FilterParserProvider;
+import com.liferay.portal.odata.sort.SortParserProvider;
 import com.liferay.portal.vulcan.accept.language.AcceptLanguage;
 
 import java.lang.reflect.Constructor;
@@ -43,9 +44,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.osgi.service.component.ComponentServiceObjects;
-import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Deactivate;
 import org.osgi.service.component.annotations.Reference;
 import org.osgi.service.component.annotations.ReferenceScope;
 
@@ -53,7 +52,10 @@ import org.osgi.service.component.annotations.ReferenceScope;
  * @author Amos Fong
  * @generated
  */
-@Component(immediate = true, service = NoteResource.Factory.class)
+@Component(
+	property = "resource.locator.key=/koroneiki-rest/v1.0/Note",
+	service = NoteResource.Factory.class
+)
 @Generated("")
 public class NoteResourceFactoryImpl implements NoteResource.Factory {
 
@@ -126,16 +128,6 @@ public class NoteResourceFactoryImpl implements NoteResource.Factory {
 		};
 	}
 
-	@Activate
-	protected void activate() {
-		NoteResource.FactoryHolder.factory = this;
-	}
-
-	@Deactivate
-	protected void deactivate() {
-		NoteResource.FactoryHolder.factory = null;
-	}
-
 	private static Function<InvocationHandler, NoteResource>
 		_getProxyProviderFunction() {
 
@@ -205,6 +197,7 @@ public class NoteResourceFactoryImpl implements NoteResource.Factory {
 		noteResource.setResourcePermissionLocalService(
 			_resourcePermissionLocalService);
 		noteResource.setRoleLocalService(_roleLocalService);
+		noteResource.setSortParserProvider(_sortParserProvider);
 
 		try {
 			return method.invoke(noteResource, arguments);
@@ -252,6 +245,9 @@ public class NoteResourceFactoryImpl implements NoteResource.Factory {
 
 	@Reference
 	private RoleLocalService _roleLocalService;
+
+	@Reference
+	private SortParserProvider _sortParserProvider;
 
 	@Reference
 	private UserLocalService _userLocalService;

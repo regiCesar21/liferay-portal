@@ -44,6 +44,7 @@ import com.liferay.portal.search.test.util.SearchTestRule;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.vulcan.resource.EntityModelResource;
+import com.liferay.portal.vulcan.util.TransformUtil;
 
 import java.lang.reflect.Method;
 
@@ -59,8 +60,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 import javax.annotation.Generated;
 
@@ -217,7 +216,10 @@ public abstract class BaseTeamResourceTestCase {
 
 			assertEquals(
 				Arrays.asList(irrelevantTeam), (List<Team>)page.getItems());
-			assertValid(page);
+			assertValid(
+				page,
+				testGetAccountAccountKeyAssignedTeamsPage_getExpectedActions(
+					irrelevantAccountKey));
 		}
 
 		Team team1 = testGetAccountAccountKeyAssignedTeamsPage_addTeam(
@@ -233,7 +235,20 @@ public abstract class BaseTeamResourceTestCase {
 
 		assertEqualsIgnoringOrder(
 			Arrays.asList(team1, team2), (List<Team>)page.getItems());
-		assertValid(page);
+		assertValid(
+			page,
+			testGetAccountAccountKeyAssignedTeamsPage_getExpectedActions(
+				accountKey));
+	}
+
+	protected Map<String, Map<String, String>>
+			testGetAccountAccountKeyAssignedTeamsPage_getExpectedActions(
+				String accountKey)
+		throws Exception {
+
+		Map<String, Map<String, String>> expectedActions = new HashMap<>();
+
+		return expectedActions;
 	}
 
 	@Test
@@ -319,7 +334,10 @@ public abstract class BaseTeamResourceTestCase {
 
 			assertEquals(
 				Arrays.asList(irrelevantTeam), (List<Team>)page.getItems());
-			assertValid(page);
+			assertValid(
+				page,
+				testGetAccountAccountKeyTeamsPage_getExpectedActions(
+					irrelevantAccountKey));
 		}
 
 		Team team1 = testGetAccountAccountKeyTeamsPage_addTeam(
@@ -335,7 +353,19 @@ public abstract class BaseTeamResourceTestCase {
 
 		assertEqualsIgnoringOrder(
 			Arrays.asList(team1, team2), (List<Team>)page.getItems());
-		assertValid(page);
+		assertValid(
+			page,
+			testGetAccountAccountKeyTeamsPage_getExpectedActions(accountKey));
+	}
+
+	protected Map<String, Map<String, String>>
+			testGetAccountAccountKeyTeamsPage_getExpectedActions(
+				String accountKey)
+		throws Exception {
+
+		Map<String, Map<String, String>> expectedActions = new HashMap<>();
+
+		return expectedActions;
 	}
 
 	@Test
@@ -432,7 +462,16 @@ public abstract class BaseTeamResourceTestCase {
 
 		assertContains(team1, (List<Team>)page.getItems());
 		assertContains(team2, (List<Team>)page.getItems());
-		assertValid(page);
+		assertValid(page, testGetTeamsPage_getExpectedActions());
+	}
+
+	protected Map<String, Map<String, String>>
+			testGetTeamsPage_getExpectedActions()
+		throws Exception {
+
+		Map<String, Map<String, String>> expectedActions = new HashMap<>();
+
+		return expectedActions;
 	}
 
 	@Test
@@ -460,32 +499,29 @@ public abstract class BaseTeamResourceTestCase {
 
 	@Test
 	public void testGetTeamsPageWithFilterDoubleEquals() throws Exception {
-		List<EntityField> entityFields = getEntityFields(
-			EntityField.Type.DOUBLE);
+		testGetTeamsPageWithFilter("eq", EntityField.Type.DOUBLE);
+	}
 
-		if (entityFields.isEmpty()) {
-			return;
-		}
-
-		Team team1 = testGetTeamsPage_addTeam(randomTeam());
-
-		@SuppressWarnings("PMD.UnusedLocalVariable")
-		Team team2 = testGetTeamsPage_addTeam(randomTeam());
-
-		for (EntityField entityField : entityFields) {
-			Page<Team> page = teamResource.getTeamsPage(
-				null, getFilterString(entityField, "eq", team1),
-				Pagination.of(1, 2), null);
-
-			assertEquals(
-				Collections.singletonList(team1), (List<Team>)page.getItems());
-		}
+	@Test
+	public void testGetTeamsPageWithFilterStringContains() throws Exception {
+		testGetTeamsPageWithFilter("contains", EntityField.Type.STRING);
 	}
 
 	@Test
 	public void testGetTeamsPageWithFilterStringEquals() throws Exception {
-		List<EntityField> entityFields = getEntityFields(
-			EntityField.Type.STRING);
+		testGetTeamsPageWithFilter("eq", EntityField.Type.STRING);
+	}
+
+	@Test
+	public void testGetTeamsPageWithFilterStringStartsWith() throws Exception {
+		testGetTeamsPageWithFilter("startswith", EntityField.Type.STRING);
+	}
+
+	protected void testGetTeamsPageWithFilter(
+			String operator, EntityField.Type type)
+		throws Exception {
+
+		List<EntityField> entityFields = getEntityFields(type);
 
 		if (entityFields.isEmpty()) {
 			return;
@@ -498,7 +534,7 @@ public abstract class BaseTeamResourceTestCase {
 
 		for (EntityField entityField : entityFields) {
 			Page<Team> page = teamResource.getTeamsPage(
-				null, getFilterString(entityField, "eq", team1),
+				null, getFilterString(entityField, operator, team1),
 				Pagination.of(1, 2), null);
 
 			assertEquals(
@@ -714,7 +750,11 @@ public abstract class BaseTeamResourceTestCase {
 
 			assertEquals(
 				Arrays.asList(irrelevantTeam), (List<Team>)page.getItems());
-			assertValid(page);
+			assertValid(
+				page,
+				testGetTeamByExternalLinkDomainEntityNameEntityPage_getExpectedActions(
+					irrelevantDomain, irrelevantEntityName,
+					irrelevantEntityId));
 		}
 
 		Team team1 =
@@ -732,7 +772,20 @@ public abstract class BaseTeamResourceTestCase {
 
 		assertEqualsIgnoringOrder(
 			Arrays.asList(team1, team2), (List<Team>)page.getItems());
-		assertValid(page);
+		assertValid(
+			page,
+			testGetTeamByExternalLinkDomainEntityNameEntityPage_getExpectedActions(
+				domain, entityName, entityId));
+	}
+
+	protected Map<String, Map<String, String>>
+			testGetTeamByExternalLinkDomainEntityNameEntityPage_getExpectedActions(
+				String domain, String entityName, String entityId)
+		throws Exception {
+
+		Map<String, Map<String, String>> expectedActions = new HashMap<>();
+
+		return expectedActions;
 	}
 
 	@Test
@@ -1089,6 +1142,12 @@ public abstract class BaseTeamResourceTestCase {
 	}
 
 	protected void assertValid(Page<Team> page) {
+		assertValid(page, Collections.emptyMap());
+	}
+
+	protected void assertValid(
+		Page<Team> page, Map<String, Map<String, String>> expectedActions) {
+
 		boolean valid = false;
 
 		java.util.Collection<Team> teams = page.getItems();
@@ -1103,6 +1162,25 @@ public abstract class BaseTeamResourceTestCase {
 		}
 
 		Assert.assertTrue(valid);
+
+		assertValid(page.getActions(), expectedActions);
+	}
+
+	protected void assertValid(
+		Map<String, Map<String, String>> actions1,
+		Map<String, Map<String, String>> actions2) {
+
+		for (String key : actions2.keySet()) {
+			Map action = actions1.get(key);
+
+			Assert.assertNotNull(key + " does not contain an action", action);
+
+			Map<String, String> expectedAction = actions2.get(key);
+
+			Assert.assertEquals(
+				expectedAction.get("method"), action.get("method"));
+			Assert.assertEquals(expectedAction.get("href"), action.get("href"));
+		}
 	}
 
 	protected String[] getAdditionalAssertFieldNames() {
@@ -1302,14 +1380,16 @@ public abstract class BaseTeamResourceTestCase {
 	protected java.lang.reflect.Field[] getDeclaredFields(Class clazz)
 		throws Exception {
 
-		Stream<java.lang.reflect.Field> stream = Stream.of(
-			ReflectionUtil.getDeclaredFields(clazz));
+		return TransformUtil.transform(
+			ReflectionUtil.getDeclaredFields(clazz),
+			field -> {
+				if (field.isSynthetic()) {
+					return null;
+				}
 
-		return stream.filter(
-			field -> !field.isSynthetic()
-		).toArray(
-			java.lang.reflect.Field[]::new
-		);
+				return field;
+			},
+			java.lang.reflect.Field.class);
 	}
 
 	protected java.util.Collection<EntityField> getEntityFields()
@@ -1326,6 +1406,10 @@ public abstract class BaseTeamResourceTestCase {
 		EntityModel entityModel = entityModelResource.getEntityModel(
 			new MultivaluedHashMap());
 
+		if (entityModel == null) {
+			return Collections.emptyList();
+		}
+
 		Map<String, EntityField> entityFieldsMap =
 			entityModel.getEntityFieldsMap();
 
@@ -1335,18 +1419,18 @@ public abstract class BaseTeamResourceTestCase {
 	protected List<EntityField> getEntityFields(EntityField.Type type)
 		throws Exception {
 
-		java.util.Collection<EntityField> entityFields = getEntityFields();
+		return TransformUtil.transform(
+			getEntityFields(),
+			entityField -> {
+				if (!Objects.equals(entityField.getType(), type) ||
+					ArrayUtil.contains(
+						getIgnoredEntityFieldNames(), entityField.getName())) {
 
-		Stream<EntityField> stream = entityFields.stream();
+					return null;
+				}
 
-		return stream.filter(
-			entityField ->
-				Objects.equals(entityField.getType(), type) &&
-				!ArrayUtil.contains(
-					getIgnoredEntityFieldNames(), entityField.getName())
-		).collect(
-			Collectors.toList()
-		);
+				return entityField;
+			});
 	}
 
 	protected String getFilterString(
@@ -1368,9 +1452,47 @@ public abstract class BaseTeamResourceTestCase {
 		}
 
 		if (entityFieldName.equals("accountKey")) {
-			sb.append("'");
-			sb.append(String.valueOf(team.getAccountKey()));
-			sb.append("'");
+			Object object = team.getAccountKey();
+
+			String value = String.valueOf(object);
+
+			if (operator.equals("contains")) {
+				sb = new StringBundler();
+
+				sb.append("contains(");
+				sb.append(entityFieldName);
+				sb.append(",'");
+
+				if ((object != null) && (value.length() > 2)) {
+					sb.append(value.substring(1, value.length() - 1));
+				}
+				else {
+					sb.append(value);
+				}
+
+				sb.append("')");
+			}
+			else if (operator.equals("startswith")) {
+				sb = new StringBundler();
+
+				sb.append("startswith(");
+				sb.append(entityFieldName);
+				sb.append(",'");
+
+				if ((object != null) && (value.length() > 1)) {
+					sb.append(value.substring(0, value.length() - 1));
+				}
+				else {
+					sb.append(value);
+				}
+
+				sb.append("')");
+			}
+			else {
+				sb.append("'");
+				sb.append(value);
+				sb.append("'");
+			}
 
 			return sb.toString();
 		}
@@ -1448,17 +1570,93 @@ public abstract class BaseTeamResourceTestCase {
 		}
 
 		if (entityFieldName.equals("key")) {
-			sb.append("'");
-			sb.append(String.valueOf(team.getKey()));
-			sb.append("'");
+			Object object = team.getKey();
+
+			String value = String.valueOf(object);
+
+			if (operator.equals("contains")) {
+				sb = new StringBundler();
+
+				sb.append("contains(");
+				sb.append(entityFieldName);
+				sb.append(",'");
+
+				if ((object != null) && (value.length() > 2)) {
+					sb.append(value.substring(1, value.length() - 1));
+				}
+				else {
+					sb.append(value);
+				}
+
+				sb.append("')");
+			}
+			else if (operator.equals("startswith")) {
+				sb = new StringBundler();
+
+				sb.append("startswith(");
+				sb.append(entityFieldName);
+				sb.append(",'");
+
+				if ((object != null) && (value.length() > 1)) {
+					sb.append(value.substring(0, value.length() - 1));
+				}
+				else {
+					sb.append(value);
+				}
+
+				sb.append("')");
+			}
+			else {
+				sb.append("'");
+				sb.append(value);
+				sb.append("'");
+			}
 
 			return sb.toString();
 		}
 
 		if (entityFieldName.equals("name")) {
-			sb.append("'");
-			sb.append(String.valueOf(team.getName()));
-			sb.append("'");
+			Object object = team.getName();
+
+			String value = String.valueOf(object);
+
+			if (operator.equals("contains")) {
+				sb = new StringBundler();
+
+				sb.append("contains(");
+				sb.append(entityFieldName);
+				sb.append(",'");
+
+				if ((object != null) && (value.length() > 2)) {
+					sb.append(value.substring(1, value.length() - 1));
+				}
+				else {
+					sb.append(value);
+				}
+
+				sb.append("')");
+			}
+			else if (operator.equals("startswith")) {
+				sb = new StringBundler();
+
+				sb.append("startswith(");
+				sb.append(entityFieldName);
+				sb.append(",'");
+
+				if ((object != null) && (value.length() > 1)) {
+					sb.append(value.substring(0, value.length() - 1));
+				}
+				else {
+					sb.append(value);
+				}
+
+				sb.append("')");
+			}
+			else {
+				sb.append("'");
+				sb.append(value);
+				sb.append("'");
+			}
 
 			return sb.toString();
 		}

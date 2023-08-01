@@ -44,6 +44,7 @@ import com.liferay.portal.search.test.util.SearchTestRule;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.vulcan.resource.EntityModelResource;
+import com.liferay.portal.vulcan.util.TransformUtil;
 
 import java.lang.reflect.Method;
 
@@ -59,8 +60,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 import javax.annotation.Generated;
 
@@ -232,7 +231,10 @@ public abstract class BaseContactRoleResourceTestCase {
 			assertEquals(
 				Arrays.asList(irrelevantContactRole),
 				(List<ContactRole>)page.getItems());
-			assertValid(page);
+			assertValid(
+				page,
+				testGetAccountAccountKeyContactByEmailAddresContactEmailAddressRolesPage_getExpectedActions(
+					irrelevantAccountKey, irrelevantContactEmailAddress));
 		}
 
 		ContactRole contactRole1 =
@@ -253,7 +255,20 @@ public abstract class BaseContactRoleResourceTestCase {
 		assertEqualsIgnoringOrder(
 			Arrays.asList(contactRole1, contactRole2),
 			(List<ContactRole>)page.getItems());
-		assertValid(page);
+		assertValid(
+			page,
+			testGetAccountAccountKeyContactByEmailAddresContactEmailAddressRolesPage_getExpectedActions(
+				accountKey, contactEmailAddress));
+	}
+
+	protected Map<String, Map<String, String>>
+			testGetAccountAccountKeyContactByEmailAddresContactEmailAddressRolesPage_getExpectedActions(
+				String accountKey, String contactEmailAddress)
+		throws Exception {
+
+		Map<String, Map<String, String>> expectedActions = new HashMap<>();
+
+		return expectedActions;
 	}
 
 	@Test
@@ -384,7 +399,10 @@ public abstract class BaseContactRoleResourceTestCase {
 			assertEquals(
 				Arrays.asList(irrelevantContactRole),
 				(List<ContactRole>)page.getItems());
-			assertValid(page);
+			assertValid(
+				page,
+				testGetAccountAccountKeyContactByUuidContactUuidRolesPage_getExpectedActions(
+					irrelevantAccountKey, irrelevantContactUuid));
 		}
 
 		ContactRole contactRole1 =
@@ -405,7 +423,20 @@ public abstract class BaseContactRoleResourceTestCase {
 		assertEqualsIgnoringOrder(
 			Arrays.asList(contactRole1, contactRole2),
 			(List<ContactRole>)page.getItems());
-		assertValid(page);
+		assertValid(
+			page,
+			testGetAccountAccountKeyContactByUuidContactUuidRolesPage_getExpectedActions(
+				accountKey, contactUuid));
+	}
+
+	protected Map<String, Map<String, String>>
+			testGetAccountAccountKeyContactByUuidContactUuidRolesPage_getExpectedActions(
+				String accountKey, String contactUuid)
+		throws Exception {
+
+		Map<String, Map<String, String>> expectedActions = new HashMap<>();
+
+		return expectedActions;
 	}
 
 	@Test
@@ -537,7 +568,10 @@ public abstract class BaseContactRoleResourceTestCase {
 			assertEquals(
 				Arrays.asList(irrelevantContactRole),
 				(List<ContactRole>)page.getItems());
-			assertValid(page);
+			assertValid(
+				page,
+				testGetAccountAccountKeyCustomerContactByEmailAddresContactEmailAddressRolesPage_getExpectedActions(
+					irrelevantAccountKey, irrelevantContactEmailAddress));
 		}
 
 		ContactRole contactRole1 =
@@ -558,7 +592,20 @@ public abstract class BaseContactRoleResourceTestCase {
 		assertEqualsIgnoringOrder(
 			Arrays.asList(contactRole1, contactRole2),
 			(List<ContactRole>)page.getItems());
-		assertValid(page);
+		assertValid(
+			page,
+			testGetAccountAccountKeyCustomerContactByEmailAddresContactEmailAddressRolesPage_getExpectedActions(
+				accountKey, contactEmailAddress));
+	}
+
+	protected Map<String, Map<String, String>>
+			testGetAccountAccountKeyCustomerContactByEmailAddresContactEmailAddressRolesPage_getExpectedActions(
+				String accountKey, String contactEmailAddress)
+		throws Exception {
+
+		Map<String, Map<String, String>> expectedActions = new HashMap<>();
+
+		return expectedActions;
 	}
 
 	@Test
@@ -689,7 +736,10 @@ public abstract class BaseContactRoleResourceTestCase {
 			assertEquals(
 				Arrays.asList(irrelevantContactRole),
 				(List<ContactRole>)page.getItems());
-			assertValid(page);
+			assertValid(
+				page,
+				testGetAccountAccountKeyCustomerContactByUuidContactUuidRolesPage_getExpectedActions(
+					irrelevantAccountKey, irrelevantContactUuid));
 		}
 
 		ContactRole contactRole1 =
@@ -710,7 +760,20 @@ public abstract class BaseContactRoleResourceTestCase {
 		assertEqualsIgnoringOrder(
 			Arrays.asList(contactRole1, contactRole2),
 			(List<ContactRole>)page.getItems());
-		assertValid(page);
+		assertValid(
+			page,
+			testGetAccountAccountKeyCustomerContactByUuidContactUuidRolesPage_getExpectedActions(
+				accountKey, contactUuid));
+	}
+
+	protected Map<String, Map<String, String>>
+			testGetAccountAccountKeyCustomerContactByUuidContactUuidRolesPage_getExpectedActions(
+				String accountKey, String contactUuid)
+		throws Exception {
+
+		Map<String, Map<String, String>> expectedActions = new HashMap<>();
+
+		return expectedActions;
 	}
 
 	@Test
@@ -842,7 +905,10 @@ public abstract class BaseContactRoleResourceTestCase {
 			assertEquals(
 				Arrays.asList(irrelevantContactRole),
 				(List<ContactRole>)page.getItems());
-			assertValid(page);
+			assertValid(
+				page,
+				testGetAccountAccountKeyWorkerContactByEmailAddresContactEmailAddressRolesPage_getExpectedActions(
+					irrelevantAccountKey, irrelevantContactEmailAddress));
 		}
 
 		ContactRole contactRole1 =
@@ -863,7 +929,20 @@ public abstract class BaseContactRoleResourceTestCase {
 		assertEqualsIgnoringOrder(
 			Arrays.asList(contactRole1, contactRole2),
 			(List<ContactRole>)page.getItems());
-		assertValid(page);
+		assertValid(
+			page,
+			testGetAccountAccountKeyWorkerContactByEmailAddresContactEmailAddressRolesPage_getExpectedActions(
+				accountKey, contactEmailAddress));
+	}
+
+	protected Map<String, Map<String, String>>
+			testGetAccountAccountKeyWorkerContactByEmailAddresContactEmailAddressRolesPage_getExpectedActions(
+				String accountKey, String contactEmailAddress)
+		throws Exception {
+
+		Map<String, Map<String, String>> expectedActions = new HashMap<>();
+
+		return expectedActions;
 	}
 
 	@Test
@@ -994,7 +1073,10 @@ public abstract class BaseContactRoleResourceTestCase {
 			assertEquals(
 				Arrays.asList(irrelevantContactRole),
 				(List<ContactRole>)page.getItems());
-			assertValid(page);
+			assertValid(
+				page,
+				testGetAccountAccountKeyWorkerContactByUuidContactUuidRolesPage_getExpectedActions(
+					irrelevantAccountKey, irrelevantContactUuid));
 		}
 
 		ContactRole contactRole1 =
@@ -1015,7 +1097,20 @@ public abstract class BaseContactRoleResourceTestCase {
 		assertEqualsIgnoringOrder(
 			Arrays.asList(contactRole1, contactRole2),
 			(List<ContactRole>)page.getItems());
-		assertValid(page);
+		assertValid(
+			page,
+			testGetAccountAccountKeyWorkerContactByUuidContactUuidRolesPage_getExpectedActions(
+				accountKey, contactUuid));
+	}
+
+	protected Map<String, Map<String, String>>
+			testGetAccountAccountKeyWorkerContactByUuidContactUuidRolesPage_getExpectedActions(
+				String accountKey, String contactUuid)
+		throws Exception {
+
+		Map<String, Map<String, String>> expectedActions = new HashMap<>();
+
+		return expectedActions;
 	}
 
 	@Test
@@ -1128,7 +1223,16 @@ public abstract class BaseContactRoleResourceTestCase {
 
 		assertContains(contactRole1, (List<ContactRole>)page.getItems());
 		assertContains(contactRole2, (List<ContactRole>)page.getItems());
-		assertValid(page);
+		assertValid(page, testGetContactRolesPage_getExpectedActions());
+	}
+
+	protected Map<String, Map<String, String>>
+			testGetContactRolesPage_getExpectedActions()
+		throws Exception {
+
+		Map<String, Map<String, String>> expectedActions = new HashMap<>();
+
+		return expectedActions;
 	}
 
 	@Test
@@ -1161,37 +1265,36 @@ public abstract class BaseContactRoleResourceTestCase {
 	public void testGetContactRolesPageWithFilterDoubleEquals()
 		throws Exception {
 
-		List<EntityField> entityFields = getEntityFields(
-			EntityField.Type.DOUBLE);
+		testGetContactRolesPageWithFilter("eq", EntityField.Type.DOUBLE);
+	}
 
-		if (entityFields.isEmpty()) {
-			return;
-		}
+	@Test
+	public void testGetContactRolesPageWithFilterStringContains()
+		throws Exception {
 
-		ContactRole contactRole1 = testGetContactRolesPage_addContactRole(
-			randomContactRole());
-
-		@SuppressWarnings("PMD.UnusedLocalVariable")
-		ContactRole contactRole2 = testGetContactRolesPage_addContactRole(
-			randomContactRole());
-
-		for (EntityField entityField : entityFields) {
-			Page<ContactRole> page = contactRoleResource.getContactRolesPage(
-				null, getFilterString(entityField, "eq", contactRole1),
-				Pagination.of(1, 2), null);
-
-			assertEquals(
-				Collections.singletonList(contactRole1),
-				(List<ContactRole>)page.getItems());
-		}
+		testGetContactRolesPageWithFilter("contains", EntityField.Type.STRING);
 	}
 
 	@Test
 	public void testGetContactRolesPageWithFilterStringEquals()
 		throws Exception {
 
-		List<EntityField> entityFields = getEntityFields(
-			EntityField.Type.STRING);
+		testGetContactRolesPageWithFilter("eq", EntityField.Type.STRING);
+	}
+
+	@Test
+	public void testGetContactRolesPageWithFilterStringStartsWith()
+		throws Exception {
+
+		testGetContactRolesPageWithFilter(
+			"startswith", EntityField.Type.STRING);
+	}
+
+	protected void testGetContactRolesPageWithFilter(
+			String operator, EntityField.Type type)
+		throws Exception {
+
+		List<EntityField> entityFields = getEntityFields(type);
 
 		if (entityFields.isEmpty()) {
 			return;
@@ -1206,7 +1309,7 @@ public abstract class BaseContactRoleResourceTestCase {
 
 		for (EntityField entityField : entityFields) {
 			Page<ContactRole> page = contactRoleResource.getContactRolesPage(
-				null, getFilterString(entityField, "eq", contactRole1),
+				null, getFilterString(entityField, operator, contactRole1),
 				Pagination.of(1, 2), null);
 
 			assertEquals(
@@ -1560,7 +1663,10 @@ public abstract class BaseContactRoleResourceTestCase {
 			assertEquals(
 				Arrays.asList(irrelevantContactRole),
 				(List<ContactRole>)page.getItems());
-			assertValid(page);
+			assertValid(
+				page,
+				testGetTeamTeamKeyContactByEmailAddresEmailAddressRolesPage_getExpectedActions(
+					irrelevantTeamKey, irrelevantEmailAddress));
 		}
 
 		ContactRole contactRole1 =
@@ -1581,7 +1687,20 @@ public abstract class BaseContactRoleResourceTestCase {
 		assertEqualsIgnoringOrder(
 			Arrays.asList(contactRole1, contactRole2),
 			(List<ContactRole>)page.getItems());
-		assertValid(page);
+		assertValid(
+			page,
+			testGetTeamTeamKeyContactByEmailAddresEmailAddressRolesPage_getExpectedActions(
+				teamKey, emailAddress));
+	}
+
+	protected Map<String, Map<String, String>>
+			testGetTeamTeamKeyContactByEmailAddresEmailAddressRolesPage_getExpectedActions(
+				String teamKey, String emailAddress)
+		throws Exception {
+
+		Map<String, Map<String, String>> expectedActions = new HashMap<>();
+
+		return expectedActions;
 	}
 
 	@Test
@@ -1710,7 +1829,10 @@ public abstract class BaseContactRoleResourceTestCase {
 			assertEquals(
 				Arrays.asList(irrelevantContactRole),
 				(List<ContactRole>)page.getItems());
-			assertValid(page);
+			assertValid(
+				page,
+				testGetTeamTeamKeyContactByUuidContactUuidRolesPage_getExpectedActions(
+					irrelevantTeamKey, irrelevantContactUuid));
 		}
 
 		ContactRole contactRole1 =
@@ -1730,7 +1852,20 @@ public abstract class BaseContactRoleResourceTestCase {
 		assertEqualsIgnoringOrder(
 			Arrays.asList(contactRole1, contactRole2),
 			(List<ContactRole>)page.getItems());
-		assertValid(page);
+		assertValid(
+			page,
+			testGetTeamTeamKeyContactByUuidContactUuidRolesPage_getExpectedActions(
+				teamKey, contactUuid));
+	}
+
+	protected Map<String, Map<String, String>>
+			testGetTeamTeamKeyContactByUuidContactUuidRolesPage_getExpectedActions(
+				String teamKey, String contactUuid)
+		throws Exception {
+
+		Map<String, Map<String, String>> expectedActions = new HashMap<>();
+
+		return expectedActions;
 	}
 
 	@Test
@@ -1961,6 +2096,13 @@ public abstract class BaseContactRoleResourceTestCase {
 	}
 
 	protected void assertValid(Page<ContactRole> page) {
+		assertValid(page, Collections.emptyMap());
+	}
+
+	protected void assertValid(
+		Page<ContactRole> page,
+		Map<String, Map<String, String>> expectedActions) {
+
 		boolean valid = false;
 
 		java.util.Collection<ContactRole> contactRoles = page.getItems();
@@ -1975,6 +2117,25 @@ public abstract class BaseContactRoleResourceTestCase {
 		}
 
 		Assert.assertTrue(valid);
+
+		assertValid(page.getActions(), expectedActions);
+	}
+
+	protected void assertValid(
+		Map<String, Map<String, String>> actions1,
+		Map<String, Map<String, String>> actions2) {
+
+		for (String key : actions2.keySet()) {
+			Map action = actions1.get(key);
+
+			Assert.assertNotNull(key + " does not contain an action", action);
+
+			Map<String, String> expectedAction = actions2.get(key);
+
+			Assert.assertEquals(
+				expectedAction.get("method"), action.get("method"));
+			Assert.assertEquals(expectedAction.get("href"), action.get("href"));
+		}
 	}
 
 	protected String[] getAdditionalAssertFieldNames() {
@@ -2166,14 +2327,16 @@ public abstract class BaseContactRoleResourceTestCase {
 	protected java.lang.reflect.Field[] getDeclaredFields(Class clazz)
 		throws Exception {
 
-		Stream<java.lang.reflect.Field> stream = Stream.of(
-			ReflectionUtil.getDeclaredFields(clazz));
+		return TransformUtil.transform(
+			ReflectionUtil.getDeclaredFields(clazz),
+			field -> {
+				if (field.isSynthetic()) {
+					return null;
+				}
 
-		return stream.filter(
-			field -> !field.isSynthetic()
-		).toArray(
-			java.lang.reflect.Field[]::new
-		);
+				return field;
+			},
+			java.lang.reflect.Field.class);
 	}
 
 	protected java.util.Collection<EntityField> getEntityFields()
@@ -2190,6 +2353,10 @@ public abstract class BaseContactRoleResourceTestCase {
 		EntityModel entityModel = entityModelResource.getEntityModel(
 			new MultivaluedHashMap());
 
+		if (entityModel == null) {
+			return Collections.emptyList();
+		}
+
 		Map<String, EntityField> entityFieldsMap =
 			entityModel.getEntityFieldsMap();
 
@@ -2199,18 +2366,18 @@ public abstract class BaseContactRoleResourceTestCase {
 	protected List<EntityField> getEntityFields(EntityField.Type type)
 		throws Exception {
 
-		java.util.Collection<EntityField> entityFields = getEntityFields();
+		return TransformUtil.transform(
+			getEntityFields(),
+			entityField -> {
+				if (!Objects.equals(entityField.getType(), type) ||
+					ArrayUtil.contains(
+						getIgnoredEntityFieldNames(), entityField.getName())) {
 
-		Stream<EntityField> stream = entityFields.stream();
+					return null;
+				}
 
-		return stream.filter(
-			entityField ->
-				Objects.equals(entityField.getType(), type) &&
-				!ArrayUtil.contains(
-					getIgnoredEntityFieldNames(), entityField.getName())
-		).collect(
-			Collectors.toList()
-		);
+				return entityField;
+			});
 	}
 
 	protected String getFilterString(
@@ -2292,9 +2459,47 @@ public abstract class BaseContactRoleResourceTestCase {
 		}
 
 		if (entityFieldName.equals("description")) {
-			sb.append("'");
-			sb.append(String.valueOf(contactRole.getDescription()));
-			sb.append("'");
+			Object object = contactRole.getDescription();
+
+			String value = String.valueOf(object);
+
+			if (operator.equals("contains")) {
+				sb = new StringBundler();
+
+				sb.append("contains(");
+				sb.append(entityFieldName);
+				sb.append(",'");
+
+				if ((object != null) && (value.length() > 2)) {
+					sb.append(value.substring(1, value.length() - 1));
+				}
+				else {
+					sb.append(value);
+				}
+
+				sb.append("')");
+			}
+			else if (operator.equals("startswith")) {
+				sb = new StringBundler();
+
+				sb.append("startswith(");
+				sb.append(entityFieldName);
+				sb.append(",'");
+
+				if ((object != null) && (value.length() > 1)) {
+					sb.append(value.substring(0, value.length() - 1));
+				}
+				else {
+					sb.append(value);
+				}
+
+				sb.append("')");
+			}
+			else {
+				sb.append("'");
+				sb.append(value);
+				sb.append("'");
+			}
 
 			return sb.toString();
 		}
@@ -2305,17 +2510,93 @@ public abstract class BaseContactRoleResourceTestCase {
 		}
 
 		if (entityFieldName.equals("key")) {
-			sb.append("'");
-			sb.append(String.valueOf(contactRole.getKey()));
-			sb.append("'");
+			Object object = contactRole.getKey();
+
+			String value = String.valueOf(object);
+
+			if (operator.equals("contains")) {
+				sb = new StringBundler();
+
+				sb.append("contains(");
+				sb.append(entityFieldName);
+				sb.append(",'");
+
+				if ((object != null) && (value.length() > 2)) {
+					sb.append(value.substring(1, value.length() - 1));
+				}
+				else {
+					sb.append(value);
+				}
+
+				sb.append("')");
+			}
+			else if (operator.equals("startswith")) {
+				sb = new StringBundler();
+
+				sb.append("startswith(");
+				sb.append(entityFieldName);
+				sb.append(",'");
+
+				if ((object != null) && (value.length() > 1)) {
+					sb.append(value.substring(0, value.length() - 1));
+				}
+				else {
+					sb.append(value);
+				}
+
+				sb.append("')");
+			}
+			else {
+				sb.append("'");
+				sb.append(value);
+				sb.append("'");
+			}
 
 			return sb.toString();
 		}
 
 		if (entityFieldName.equals("name")) {
-			sb.append("'");
-			sb.append(String.valueOf(contactRole.getName()));
-			sb.append("'");
+			Object object = contactRole.getName();
+
+			String value = String.valueOf(object);
+
+			if (operator.equals("contains")) {
+				sb = new StringBundler();
+
+				sb.append("contains(");
+				sb.append(entityFieldName);
+				sb.append(",'");
+
+				if ((object != null) && (value.length() > 2)) {
+					sb.append(value.substring(1, value.length() - 1));
+				}
+				else {
+					sb.append(value);
+				}
+
+				sb.append("')");
+			}
+			else if (operator.equals("startswith")) {
+				sb = new StringBundler();
+
+				sb.append("startswith(");
+				sb.append(entityFieldName);
+				sb.append(",'");
+
+				if ((object != null) && (value.length() > 1)) {
+					sb.append(value.substring(0, value.length() - 1));
+				}
+				else {
+					sb.append(value);
+				}
+
+				sb.append("')");
+			}
+			else {
+				sb.append("'");
+				sb.append(value);
+				sb.append("'");
+			}
 
 			return sb.toString();
 		}

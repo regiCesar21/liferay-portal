@@ -19,7 +19,6 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
 import java.util.TreeMap;
-import java.util.stream.Stream;
 
 import javax.annotation.Generated;
 
@@ -332,14 +331,18 @@ public class TeamSerDes {
 			}
 			else if (Objects.equals(jsonParserFieldName, "contacts")) {
 				if (jsonParserFieldValue != null) {
-					team.setContacts(
-						Stream.of(
-							toStrings((Object[])jsonParserFieldValue)
-						).map(
-							object -> ContactSerDes.toDTO((String)object)
-						).toArray(
-							size -> new Contact[size]
-						));
+					Object[] jsonParserFieldValues =
+						(Object[])jsonParserFieldValue;
+
+					Contact[] contactsArray =
+						new Contact[jsonParserFieldValues.length];
+
+					for (int i = 0; i < contactsArray.length; i++) {
+						contactsArray[i] = ContactSerDes.toDTO(
+							(String)jsonParserFieldValues[i]);
+					}
+
+					team.setContacts(contactsArray);
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "dateCreated")) {
@@ -354,14 +357,18 @@ public class TeamSerDes {
 			}
 			else if (Objects.equals(jsonParserFieldName, "externalLinks")) {
 				if (jsonParserFieldValue != null) {
-					team.setExternalLinks(
-						Stream.of(
-							toStrings((Object[])jsonParserFieldValue)
-						).map(
-							object -> ExternalLinkSerDes.toDTO((String)object)
-						).toArray(
-							size -> new ExternalLink[size]
-						));
+					Object[] jsonParserFieldValues =
+						(Object[])jsonParserFieldValue;
+
+					ExternalLink[] externalLinksArray =
+						new ExternalLink[jsonParserFieldValues.length];
+
+					for (int i = 0; i < externalLinksArray.length; i++) {
+						externalLinksArray[i] = ExternalLinkSerDes.toDTO(
+							(String)jsonParserFieldValues[i]);
+					}
+
+					team.setExternalLinks(externalLinksArray);
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "key")) {
@@ -381,14 +388,18 @@ public class TeamSerDes {
 			}
 			else if (Objects.equals(jsonParserFieldName, "teamRoles")) {
 				if (jsonParserFieldValue != null) {
-					team.setTeamRoles(
-						Stream.of(
-							toStrings((Object[])jsonParserFieldValue)
-						).map(
-							object -> TeamRoleSerDes.toDTO((String)object)
-						).toArray(
-							size -> new TeamRole[size]
-						));
+					Object[] jsonParserFieldValues =
+						(Object[])jsonParserFieldValue;
+
+					TeamRole[] teamRolesArray =
+						new TeamRole[jsonParserFieldValues.length];
+
+					for (int i = 0; i < teamRolesArray.length; i++) {
+						teamRolesArray[i] = TeamRoleSerDes.toDTO(
+							(String)jsonParserFieldValues[i]);
+					}
+
+					team.setTeamRoles(teamRolesArray);
 				}
 			}
 		}

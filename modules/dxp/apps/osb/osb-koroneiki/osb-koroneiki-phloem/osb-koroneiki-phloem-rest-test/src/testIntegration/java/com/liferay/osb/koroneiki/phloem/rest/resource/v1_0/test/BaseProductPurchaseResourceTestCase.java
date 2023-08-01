@@ -44,6 +44,7 @@ import com.liferay.portal.search.test.util.SearchTestRule;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.vulcan.resource.EntityModelResource;
+import com.liferay.portal.vulcan.util.TransformUtil;
 
 import java.lang.reflect.Method;
 
@@ -59,8 +60,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 import javax.annotation.Generated;
 
@@ -224,7 +223,10 @@ public abstract class BaseProductPurchaseResourceTestCase {
 			assertEquals(
 				Arrays.asList(irrelevantProductPurchase),
 				(List<ProductPurchase>)page.getItems());
-			assertValid(page);
+			assertValid(
+				page,
+				testGetAccountAccountKeyProductPurchasesPage_getExpectedActions(
+					irrelevantAccountKey));
 		}
 
 		ProductPurchase productPurchase1 =
@@ -243,7 +245,20 @@ public abstract class BaseProductPurchaseResourceTestCase {
 		assertEqualsIgnoringOrder(
 			Arrays.asList(productPurchase1, productPurchase2),
 			(List<ProductPurchase>)page.getItems());
-		assertValid(page);
+		assertValid(
+			page,
+			testGetAccountAccountKeyProductPurchasesPage_getExpectedActions(
+				accountKey));
+	}
+
+	protected Map<String, Map<String, String>>
+			testGetAccountAccountKeyProductPurchasesPage_getExpectedActions(
+				String accountKey)
+		throws Exception {
+
+		Map<String, Map<String, String>> expectedActions = new HashMap<>();
+
+		return expectedActions;
 	}
 
 	@Test
@@ -372,7 +387,10 @@ public abstract class BaseProductPurchaseResourceTestCase {
 			assertEquals(
 				Arrays.asList(irrelevantProductPurchase),
 				(List<ProductPurchase>)page.getItems());
-			assertValid(page);
+			assertValid(
+				page,
+				testGetContactByUuidContactUuidProductPurchasesPage_getExpectedActions(
+					irrelevantContactUuid));
 		}
 
 		ProductPurchase productPurchase1 =
@@ -393,7 +411,20 @@ public abstract class BaseProductPurchaseResourceTestCase {
 		assertEqualsIgnoringOrder(
 			Arrays.asList(productPurchase1, productPurchase2),
 			(List<ProductPurchase>)page.getItems());
-		assertValid(page);
+		assertValid(
+			page,
+			testGetContactByUuidContactUuidProductPurchasesPage_getExpectedActions(
+				contactUuid));
+	}
+
+	protected Map<String, Map<String, String>>
+			testGetContactByUuidContactUuidProductPurchasesPage_getExpectedActions(
+				String contactUuid)
+		throws Exception {
+
+		Map<String, Map<String, String>> expectedActions = new HashMap<>();
+
+		return expectedActions;
 	}
 
 	@Test
@@ -498,7 +529,16 @@ public abstract class BaseProductPurchaseResourceTestCase {
 			productPurchase1, (List<ProductPurchase>)page.getItems());
 		assertContains(
 			productPurchase2, (List<ProductPurchase>)page.getItems());
-		assertValid(page);
+		assertValid(page, testGetProductPurchasesPage_getExpectedActions());
+	}
+
+	protected Map<String, Map<String, String>>
+			testGetProductPurchasesPage_getExpectedActions()
+		throws Exception {
+
+		Map<String, Map<String, String>> expectedActions = new HashMap<>();
+
+		return expectedActions;
 	}
 
 	@Test
@@ -534,40 +574,37 @@ public abstract class BaseProductPurchaseResourceTestCase {
 	public void testGetProductPurchasesPageWithFilterDoubleEquals()
 		throws Exception {
 
-		List<EntityField> entityFields = getEntityFields(
-			EntityField.Type.DOUBLE);
+		testGetProductPurchasesPageWithFilter("eq", EntityField.Type.DOUBLE);
+	}
 
-		if (entityFields.isEmpty()) {
-			return;
-		}
+	@Test
+	public void testGetProductPurchasesPageWithFilterStringContains()
+		throws Exception {
 
-		ProductPurchase productPurchase1 =
-			testGetProductPurchasesPage_addProductPurchase(
-				randomProductPurchase());
-
-		@SuppressWarnings("PMD.UnusedLocalVariable")
-		ProductPurchase productPurchase2 =
-			testGetProductPurchasesPage_addProductPurchase(
-				randomProductPurchase());
-
-		for (EntityField entityField : entityFields) {
-			Page<ProductPurchase> page =
-				productPurchaseResource.getProductPurchasesPage(
-					null, getFilterString(entityField, "eq", productPurchase1),
-					Pagination.of(1, 2), null);
-
-			assertEquals(
-				Collections.singletonList(productPurchase1),
-				(List<ProductPurchase>)page.getItems());
-		}
+		testGetProductPurchasesPageWithFilter(
+			"contains", EntityField.Type.STRING);
 	}
 
 	@Test
 	public void testGetProductPurchasesPageWithFilterStringEquals()
 		throws Exception {
 
-		List<EntityField> entityFields = getEntityFields(
-			EntityField.Type.STRING);
+		testGetProductPurchasesPageWithFilter("eq", EntityField.Type.STRING);
+	}
+
+	@Test
+	public void testGetProductPurchasesPageWithFilterStringStartsWith()
+		throws Exception {
+
+		testGetProductPurchasesPageWithFilter(
+			"startswith", EntityField.Type.STRING);
+	}
+
+	protected void testGetProductPurchasesPageWithFilter(
+			String operator, EntityField.Type type)
+		throws Exception {
+
+		List<EntityField> entityFields = getEntityFields(type);
 
 		if (entityFields.isEmpty()) {
 			return;
@@ -585,7 +622,8 @@ public abstract class BaseProductPurchaseResourceTestCase {
 		for (EntityField entityField : entityFields) {
 			Page<ProductPurchase> page =
 				productPurchaseResource.getProductPurchasesPage(
-					null, getFilterString(entityField, "eq", productPurchase1),
+					null,
+					getFilterString(entityField, operator, productPurchase1),
 					Pagination.of(1, 2), null);
 
 			assertEquals(
@@ -839,7 +877,11 @@ public abstract class BaseProductPurchaseResourceTestCase {
 			assertEquals(
 				Arrays.asList(irrelevantProductPurchase),
 				(List<ProductPurchase>)page.getItems());
-			assertValid(page);
+			assertValid(
+				page,
+				testGetProductPurchaseByExternalLinkDomainEntityNameEntityPage_getExpectedActions(
+					irrelevantDomain, irrelevantEntityName,
+					irrelevantEntityId));
 		}
 
 		ProductPurchase productPurchase1 =
@@ -860,7 +902,20 @@ public abstract class BaseProductPurchaseResourceTestCase {
 		assertEqualsIgnoringOrder(
 			Arrays.asList(productPurchase1, productPurchase2),
 			(List<ProductPurchase>)page.getItems());
-		assertValid(page);
+		assertValid(
+			page,
+			testGetProductPurchaseByExternalLinkDomainEntityNameEntityPage_getExpectedActions(
+				domain, entityName, entityId));
+	}
+
+	protected Map<String, Map<String, String>>
+			testGetProductPurchaseByExternalLinkDomainEntityNameEntityPage_getExpectedActions(
+				String domain, String entityName, String entityId)
+		throws Exception {
+
+		Map<String, Map<String, String>> expectedActions = new HashMap<>();
+
+		return expectedActions;
 	}
 
 	@Test
@@ -1247,6 +1302,13 @@ public abstract class BaseProductPurchaseResourceTestCase {
 	}
 
 	protected void assertValid(Page<ProductPurchase> page) {
+		assertValid(page, Collections.emptyMap());
+	}
+
+	protected void assertValid(
+		Page<ProductPurchase> page,
+		Map<String, Map<String, String>> expectedActions) {
+
 		boolean valid = false;
 
 		java.util.Collection<ProductPurchase> productPurchases =
@@ -1262,6 +1324,25 @@ public abstract class BaseProductPurchaseResourceTestCase {
 		}
 
 		Assert.assertTrue(valid);
+
+		assertValid(page.getActions(), expectedActions);
+	}
+
+	protected void assertValid(
+		Map<String, Map<String, String>> actions1,
+		Map<String, Map<String, String>> actions2) {
+
+		for (String key : actions2.keySet()) {
+			Map action = actions1.get(key);
+
+			Assert.assertNotNull(key + " does not contain an action", action);
+
+			Map<String, String> expectedAction = actions2.get(key);
+
+			Assert.assertEquals(
+				expectedAction.get("method"), action.get("method"));
+			Assert.assertEquals(expectedAction.get("href"), action.get("href"));
+		}
 	}
 
 	protected String[] getAdditionalAssertFieldNames() {
@@ -1524,14 +1605,16 @@ public abstract class BaseProductPurchaseResourceTestCase {
 	protected java.lang.reflect.Field[] getDeclaredFields(Class clazz)
 		throws Exception {
 
-		Stream<java.lang.reflect.Field> stream = Stream.of(
-			ReflectionUtil.getDeclaredFields(clazz));
+		return TransformUtil.transform(
+			ReflectionUtil.getDeclaredFields(clazz),
+			field -> {
+				if (field.isSynthetic()) {
+					return null;
+				}
 
-		return stream.filter(
-			field -> !field.isSynthetic()
-		).toArray(
-			java.lang.reflect.Field[]::new
-		);
+				return field;
+			},
+			java.lang.reflect.Field.class);
 	}
 
 	protected java.util.Collection<EntityField> getEntityFields()
@@ -1548,6 +1631,10 @@ public abstract class BaseProductPurchaseResourceTestCase {
 		EntityModel entityModel = entityModelResource.getEntityModel(
 			new MultivaluedHashMap());
 
+		if (entityModel == null) {
+			return Collections.emptyList();
+		}
+
 		Map<String, EntityField> entityFieldsMap =
 			entityModel.getEntityFieldsMap();
 
@@ -1557,18 +1644,18 @@ public abstract class BaseProductPurchaseResourceTestCase {
 	protected List<EntityField> getEntityFields(EntityField.Type type)
 		throws Exception {
 
-		java.util.Collection<EntityField> entityFields = getEntityFields();
+		return TransformUtil.transform(
+			getEntityFields(),
+			entityField -> {
+				if (!Objects.equals(entityField.getType(), type) ||
+					ArrayUtil.contains(
+						getIgnoredEntityFieldNames(), entityField.getName())) {
 
-		Stream<EntityField> stream = entityFields.stream();
+					return null;
+				}
 
-		return stream.filter(
-			entityField ->
-				Objects.equals(entityField.getType(), type) &&
-				!ArrayUtil.contains(
-					getIgnoredEntityFieldNames(), entityField.getName())
-		).collect(
-			Collectors.toList()
-		);
+				return entityField;
+			});
 	}
 
 	protected String getFilterString(
@@ -1586,9 +1673,47 @@ public abstract class BaseProductPurchaseResourceTestCase {
 		sb.append(" ");
 
 		if (entityFieldName.equals("accountKey")) {
-			sb.append("'");
-			sb.append(String.valueOf(productPurchase.getAccountKey()));
-			sb.append("'");
+			Object object = productPurchase.getAccountKey();
+
+			String value = String.valueOf(object);
+
+			if (operator.equals("contains")) {
+				sb = new StringBundler();
+
+				sb.append("contains(");
+				sb.append(entityFieldName);
+				sb.append(",'");
+
+				if ((object != null) && (value.length() > 2)) {
+					sb.append(value.substring(1, value.length() - 1));
+				}
+				else {
+					sb.append(value);
+				}
+
+				sb.append("')");
+			}
+			else if (operator.equals("startswith")) {
+				sb = new StringBundler();
+
+				sb.append("startswith(");
+				sb.append(entityFieldName);
+				sb.append(",'");
+
+				if ((object != null) && (value.length() > 1)) {
+					sb.append(value.substring(0, value.length() - 1));
+				}
+				else {
+					sb.append(value);
+				}
+
+				sb.append("')");
+			}
+			else {
+				sb.append("'");
+				sb.append(value);
+				sb.append("'");
+			}
 
 			return sb.toString();
 		}
@@ -1664,9 +1789,47 @@ public abstract class BaseProductPurchaseResourceTestCase {
 		}
 
 		if (entityFieldName.equals("key")) {
-			sb.append("'");
-			sb.append(String.valueOf(productPurchase.getKey()));
-			sb.append("'");
+			Object object = productPurchase.getKey();
+
+			String value = String.valueOf(object);
+
+			if (operator.equals("contains")) {
+				sb = new StringBundler();
+
+				sb.append("contains(");
+				sb.append(entityFieldName);
+				sb.append(",'");
+
+				if ((object != null) && (value.length() > 2)) {
+					sb.append(value.substring(1, value.length() - 1));
+				}
+				else {
+					sb.append(value);
+				}
+
+				sb.append("')");
+			}
+			else if (operator.equals("startswith")) {
+				sb = new StringBundler();
+
+				sb.append("startswith(");
+				sb.append(entityFieldName);
+				sb.append(",'");
+
+				if ((object != null) && (value.length() > 1)) {
+					sb.append(value.substring(0, value.length() - 1));
+				}
+				else {
+					sb.append(value);
+				}
+
+				sb.append("')");
+			}
+			else {
+				sb.append("'");
+				sb.append(value);
+				sb.append("'");
+			}
 
 			return sb.toString();
 		}
@@ -1721,9 +1884,47 @@ public abstract class BaseProductPurchaseResourceTestCase {
 		}
 
 		if (entityFieldName.equals("productKey")) {
-			sb.append("'");
-			sb.append(String.valueOf(productPurchase.getProductKey()));
-			sb.append("'");
+			Object object = productPurchase.getProductKey();
+
+			String value = String.valueOf(object);
+
+			if (operator.equals("contains")) {
+				sb = new StringBundler();
+
+				sb.append("contains(");
+				sb.append(entityFieldName);
+				sb.append(",'");
+
+				if ((object != null) && (value.length() > 2)) {
+					sb.append(value.substring(1, value.length() - 1));
+				}
+				else {
+					sb.append(value);
+				}
+
+				sb.append("')");
+			}
+			else if (operator.equals("startswith")) {
+				sb = new StringBundler();
+
+				sb.append("startswith(");
+				sb.append(entityFieldName);
+				sb.append(",'");
+
+				if ((object != null) && (value.length() > 1)) {
+					sb.append(value.substring(0, value.length() - 1));
+				}
+				else {
+					sb.append(value);
+				}
+
+				sb.append("')");
+			}
+			else {
+				sb.append("'");
+				sb.append(value);
+				sb.append("'");
+			}
 
 			return sb.toString();
 		}

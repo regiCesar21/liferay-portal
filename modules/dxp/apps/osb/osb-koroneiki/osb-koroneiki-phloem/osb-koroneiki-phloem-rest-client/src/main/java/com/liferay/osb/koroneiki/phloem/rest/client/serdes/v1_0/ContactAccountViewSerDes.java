@@ -14,7 +14,6 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
 import java.util.TreeMap;
-import java.util.stream.Stream;
 
 import javax.annotation.Generated;
 
@@ -187,28 +186,38 @@ public class ContactAccountViewSerDes {
 						jsonParserFieldName, "customerContactRoles")) {
 
 				if (jsonParserFieldValue != null) {
+					Object[] jsonParserFieldValues =
+						(Object[])jsonParserFieldValue;
+
+					ContactRole[] customerContactRolesArray =
+						new ContactRole[jsonParserFieldValues.length];
+
+					for (int i = 0; i < customerContactRolesArray.length; i++) {
+						customerContactRolesArray[i] = ContactRoleSerDes.toDTO(
+							(String)jsonParserFieldValues[i]);
+					}
+
 					contactAccountView.setCustomerContactRoles(
-						Stream.of(
-							toStrings((Object[])jsonParserFieldValue)
-						).map(
-							object -> ContactRoleSerDes.toDTO((String)object)
-						).toArray(
-							size -> new ContactRole[size]
-						));
+						customerContactRolesArray);
 				}
 			}
 			else if (Objects.equals(
 						jsonParserFieldName, "workerContactRoles")) {
 
 				if (jsonParserFieldValue != null) {
+					Object[] jsonParserFieldValues =
+						(Object[])jsonParserFieldValue;
+
+					ContactRole[] workerContactRolesArray =
+						new ContactRole[jsonParserFieldValues.length];
+
+					for (int i = 0; i < workerContactRolesArray.length; i++) {
+						workerContactRolesArray[i] = ContactRoleSerDes.toDTO(
+							(String)jsonParserFieldValues[i]);
+					}
+
 					contactAccountView.setWorkerContactRoles(
-						Stream.of(
-							toStrings((Object[])jsonParserFieldValue)
-						).map(
-							object -> ContactRoleSerDes.toDTO((String)object)
-						).toArray(
-							size -> new ContactRole[size]
-						));
+						workerContactRolesArray);
 				}
 			}
 		}

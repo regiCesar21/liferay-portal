@@ -17,7 +17,6 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
 import java.util.TreeMap;
-import java.util.stream.Stream;
 
 import javax.annotation.Generated;
 
@@ -241,14 +240,18 @@ public class ProductSerDes {
 			}
 			else if (Objects.equals(jsonParserFieldName, "externalLinks")) {
 				if (jsonParserFieldValue != null) {
-					product.setExternalLinks(
-						Stream.of(
-							toStrings((Object[])jsonParserFieldValue)
-						).map(
-							object -> ExternalLinkSerDes.toDTO((String)object)
-						).toArray(
-							size -> new ExternalLink[size]
-						));
+					Object[] jsonParserFieldValues =
+						(Object[])jsonParserFieldValue;
+
+					ExternalLink[] externalLinksArray =
+						new ExternalLink[jsonParserFieldValues.length];
+
+					for (int i = 0; i < externalLinksArray.length; i++) {
+						externalLinksArray[i] = ExternalLinkSerDes.toDTO(
+							(String)jsonParserFieldValues[i]);
+					}
+
+					product.setExternalLinks(externalLinksArray);
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "key")) {

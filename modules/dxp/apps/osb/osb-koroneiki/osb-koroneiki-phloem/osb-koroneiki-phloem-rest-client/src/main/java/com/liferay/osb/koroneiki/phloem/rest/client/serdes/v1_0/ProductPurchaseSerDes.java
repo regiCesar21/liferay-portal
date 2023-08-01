@@ -18,7 +18,6 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
 import java.util.TreeMap;
-import java.util.stream.Stream;
 
 import javax.annotation.Generated;
 
@@ -438,14 +437,18 @@ public class ProductPurchaseSerDes {
 			}
 			else if (Objects.equals(jsonParserFieldName, "externalLinks")) {
 				if (jsonParserFieldValue != null) {
-					productPurchase.setExternalLinks(
-						Stream.of(
-							toStrings((Object[])jsonParserFieldValue)
-						).map(
-							object -> ExternalLinkSerDes.toDTO((String)object)
-						).toArray(
-							size -> new ExternalLink[size]
-						));
+					Object[] jsonParserFieldValues =
+						(Object[])jsonParserFieldValue;
+
+					ExternalLink[] externalLinksArray =
+						new ExternalLink[jsonParserFieldValues.length];
+
+					for (int i = 0; i < externalLinksArray.length; i++) {
+						externalLinksArray[i] = ExternalLinkSerDes.toDTO(
+							(String)jsonParserFieldValues[i]);
+					}
+
+					productPurchase.setExternalLinks(externalLinksArray);
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "key")) {
@@ -474,15 +477,20 @@ public class ProductPurchaseSerDes {
 						jsonParserFieldName, "productConsumptions")) {
 
 				if (jsonParserFieldValue != null) {
+					Object[] jsonParserFieldValues =
+						(Object[])jsonParserFieldValue;
+
+					ProductConsumption[] productConsumptionsArray =
+						new ProductConsumption[jsonParserFieldValues.length];
+
+					for (int i = 0; i < productConsumptionsArray.length; i++) {
+						productConsumptionsArray[i] =
+							ProductConsumptionSerDes.toDTO(
+								(String)jsonParserFieldValues[i]);
+					}
+
 					productPurchase.setProductConsumptions(
-						Stream.of(
-							toStrings((Object[])jsonParserFieldValue)
-						).map(
-							object -> ProductConsumptionSerDes.toDTO(
-								(String)object)
-						).toArray(
-							size -> new ProductConsumption[size]
-						));
+						productConsumptionsArray);
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "productKey")) {

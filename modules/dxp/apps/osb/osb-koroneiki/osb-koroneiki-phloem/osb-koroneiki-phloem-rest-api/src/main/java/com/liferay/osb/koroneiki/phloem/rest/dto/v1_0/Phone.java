@@ -1,13 +1,24 @@
 /**
- * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
- * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
+ * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
+ *
+ * The contents of this file are subject to the terms of the Liferay Enterprise
+ * Subscription License ("License"). You may not use this file except in
+ * compliance with the License. You can obtain a copy of the License by
+ * contacting Liferay, Inc. See the License for the specific language governing
+ * permissions and limitations under the License, including but not limited to
+ * distribution rights of the Software.
+ *
+ *
+ *
  */
 
 package com.liferay.osb.koroneiki.phloem.rest.dto.v1_0;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonFilter;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonValue;
 
 import com.liferay.petra.function.UnsafeSupplier;
 import com.liferay.petra.string.StringBundler;
@@ -27,6 +38,8 @@ import java.util.Set;
 
 import javax.annotation.Generated;
 
+import javax.validation.Valid;
+
 import javax.xml.bind.annotation.XmlRootElement;
 
 /**
@@ -34,36 +47,34 @@ import javax.xml.bind.annotation.XmlRootElement;
  * @generated
  */
 @Generated("")
-@GraphQLName("ProductConsumptionPermission")
+@GraphQLName(description = "Represents a phone number.", value = "Phone")
 @JsonFilter("Liferay.Vulcan")
-@XmlRootElement(name = "ProductConsumptionPermission")
-public class ProductConsumptionPermission implements Serializable {
+@XmlRootElement(name = "Phone")
+public class Phone implements Serializable {
 
-	public static ProductConsumptionPermission toDTO(String json) {
-		return ObjectMapperUtil.readValue(
-			ProductConsumptionPermission.class, json);
+	public static Phone toDTO(String json) {
+		return ObjectMapperUtil.readValue(Phone.class, json);
 	}
 
-	public static ProductConsumptionPermission unsafeToDTO(String json) {
-		return ObjectMapperUtil.unsafeReadValue(
-			ProductConsumptionPermission.class, json);
+	public static Phone unsafeToDTO(String json) {
+		return ObjectMapperUtil.unsafeReadValue(Phone.class, json);
 	}
 
-	@Schema
-	public Boolean getDelete() {
-		return delete;
+	@Schema(description = "The phone number.")
+	public String getNumber() {
+		return number;
 	}
 
-	public void setDelete(Boolean delete) {
-		this.delete = delete;
+	public void setNumber(String number) {
+		this.number = number;
 	}
 
 	@JsonIgnore
-	public void setDelete(
-		UnsafeSupplier<Boolean, Exception> deleteUnsafeSupplier) {
+	public void setNumber(
+		UnsafeSupplier<String, Exception> numberUnsafeSupplier) {
 
 		try {
-			delete = deleteUnsafeSupplier.get();
+			number = numberUnsafeSupplier.get();
 		}
 		catch (RuntimeException re) {
 			throw re;
@@ -73,25 +84,27 @@ public class ProductConsumptionPermission implements Serializable {
 		}
 	}
 
-	@GraphQLField
+	@GraphQLField(description = "The phone number.")
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
-	protected Boolean delete;
+	protected String number;
 
-	@Schema
-	public Boolean getPermissions() {
-		return permissions;
+	@Schema(
+		description = "A flag that identifies whether this is the main phone number of the contact."
+	)
+	public Boolean getPrimary() {
+		return primary;
 	}
 
-	public void setPermissions(Boolean permissions) {
-		this.permissions = permissions;
+	public void setPrimary(Boolean primary) {
+		this.primary = primary;
 	}
 
 	@JsonIgnore
-	public void setPermissions(
-		UnsafeSupplier<Boolean, Exception> permissionsUnsafeSupplier) {
+	public void setPrimary(
+		UnsafeSupplier<Boolean, Exception> primaryUnsafeSupplier) {
 
 		try {
-			permissions = permissionsUnsafeSupplier.get();
+			primary = primaryUnsafeSupplier.get();
 		}
 		catch (RuntimeException re) {
 			throw re;
@@ -101,25 +114,35 @@ public class ProductConsumptionPermission implements Serializable {
 		}
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "A flag that identifies whether this is the main phone number of the contact."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
-	protected Boolean permissions;
+	protected Boolean primary;
 
-	@Schema
-	public String[] getRoleNames() {
-		return roleNames;
-	}
-
-	public void setRoleNames(String[] roleNames) {
-		this.roleNames = roleNames;
+	@Schema(description = "The phone number's type.")
+	@Valid
+	public Type getType() {
+		return type;
 	}
 
 	@JsonIgnore
-	public void setRoleNames(
-		UnsafeSupplier<String[], Exception> roleNamesUnsafeSupplier) {
+	public String getTypeAsString() {
+		if (type == null) {
+			return null;
+		}
 
+		return type.toString();
+	}
+
+	public void setType(Type type) {
+		this.type = type;
+	}
+
+	@JsonIgnore
+	public void setType(UnsafeSupplier<Type, Exception> typeUnsafeSupplier) {
 		try {
-			roleNames = roleNamesUnsafeSupplier.get();
+			type = typeUnsafeSupplier.get();
 		}
 		catch (RuntimeException re) {
 			throw re;
@@ -129,63 +152,9 @@ public class ProductConsumptionPermission implements Serializable {
 		}
 	}
 
-	@GraphQLField
+	@GraphQLField(description = "The phone number's type.")
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
-	protected String[] roleNames;
-
-	@Schema
-	public Boolean getUpdate() {
-		return update;
-	}
-
-	public void setUpdate(Boolean update) {
-		this.update = update;
-	}
-
-	@JsonIgnore
-	public void setUpdate(
-		UnsafeSupplier<Boolean, Exception> updateUnsafeSupplier) {
-
-		try {
-			update = updateUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
-	}
-
-	@GraphQLField
-	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
-	protected Boolean update;
-
-	@Schema
-	public Boolean getView() {
-		return view;
-	}
-
-	public void setView(Boolean view) {
-		this.view = view;
-	}
-
-	@JsonIgnore
-	public void setView(UnsafeSupplier<Boolean, Exception> viewUnsafeSupplier) {
-		try {
-			view = viewUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
-	}
-
-	@GraphQLField
-	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
-	protected Boolean view;
+	protected Type type;
 
 	@Override
 	public boolean equals(Object object) {
@@ -193,15 +162,13 @@ public class ProductConsumptionPermission implements Serializable {
 			return true;
 		}
 
-		if (!(object instanceof ProductConsumptionPermission)) {
+		if (!(object instanceof Phone)) {
 			return false;
 		}
 
-		ProductConsumptionPermission productConsumptionPermission =
-			(ProductConsumptionPermission)object;
+		Phone phone = (Phone)object;
 
-		return Objects.equals(
-			toString(), productConsumptionPermission.toString());
+		return Objects.equals(toString(), phone.toString());
 	}
 
 	@Override
@@ -216,68 +183,42 @@ public class ProductConsumptionPermission implements Serializable {
 
 		sb.append("{");
 
-		if (delete != null) {
+		if (number != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
 			}
 
-			sb.append("\"delete\": ");
+			sb.append("\"number\": ");
 
-			sb.append(delete);
+			sb.append("\"");
+
+			sb.append(_escape(number));
+
+			sb.append("\"");
 		}
 
-		if (permissions != null) {
+		if (primary != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
 			}
 
-			sb.append("\"permissions\": ");
+			sb.append("\"primary\": ");
 
-			sb.append(permissions);
+			sb.append(primary);
 		}
 
-		if (roleNames != null) {
+		if (type != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
 			}
 
-			sb.append("\"roleNames\": ");
+			sb.append("\"type\": ");
 
-			sb.append("[");
+			sb.append("\"");
 
-			for (int i = 0; i < roleNames.length; i++) {
-				sb.append("\"");
+			sb.append(type);
 
-				sb.append(_escape(roleNames[i]));
-
-				sb.append("\"");
-
-				if ((i + 1) < roleNames.length) {
-					sb.append(", ");
-				}
-			}
-
-			sb.append("]");
-		}
-
-		if (update != null) {
-			if (sb.length() > 1) {
-				sb.append(", ");
-			}
-
-			sb.append("\"update\": ");
-
-			sb.append(update);
-		}
-
-		if (view != null) {
-			if (sb.length() > 1) {
-				sb.append(", ");
-			}
-
-			sb.append("\"view\": ");
-
-			sb.append(view);
+			sb.append("\"");
 		}
 
 		sb.append("}");
@@ -287,10 +228,48 @@ public class ProductConsumptionPermission implements Serializable {
 
 	@Schema(
 		accessMode = Schema.AccessMode.READ_ONLY,
-		defaultValue = "com.liferay.osb.koroneiki.phloem.rest.dto.v1_0.ProductConsumptionPermission",
+		defaultValue = "com.liferay.osb.koroneiki.phloem.rest.dto.v1_0.Phone",
 		name = "x-class-name"
 	)
 	public String xClassName;
+
+	@GraphQLName("Type")
+	public static enum Type {
+
+		MOBILE("Mobile"), OTHER("Other");
+
+		@JsonCreator
+		public static Type create(String value) {
+			if ((value == null) || value.equals("")) {
+				return null;
+			}
+
+			for (Type type : values()) {
+				if (Objects.equals(type.getValue(), value)) {
+					return type;
+				}
+			}
+
+			throw new IllegalArgumentException("Invalid enum value: " + value);
+		}
+
+		@JsonValue
+		public String getValue() {
+			return _value;
+		}
+
+		@Override
+		public String toString() {
+			return _value;
+		}
+
+		private Type(String value) {
+			_value = value;
+		}
+
+		private final String _value;
+
+	}
 
 	private static String _escape(Object object) {
 		return StringUtil.replace(

@@ -39,6 +39,7 @@ import com.liferay.portal.odata.entity.EntityModel;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.vulcan.resource.EntityModelResource;
+import com.liferay.portal.vulcan.util.TransformUtil;
 
 import java.lang.reflect.Method;
 
@@ -46,6 +47,7 @@ import java.text.DateFormat;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -53,8 +55,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 import javax.annotation.Generated;
 
@@ -217,7 +217,10 @@ public abstract class BaseExternalLinkResourceTestCase {
 			assertEquals(
 				Arrays.asList(irrelevantExternalLink),
 				(List<ExternalLink>)page.getItems());
-			assertValid(page);
+			assertValid(
+				page,
+				testGetAccountAccountKeyExternalLinksPage_getExpectedActions(
+					irrelevantAccountKey));
 		}
 
 		ExternalLink externalLink1 =
@@ -236,7 +239,20 @@ public abstract class BaseExternalLinkResourceTestCase {
 		assertEqualsIgnoringOrder(
 			Arrays.asList(externalLink1, externalLink2),
 			(List<ExternalLink>)page.getItems());
-		assertValid(page);
+		assertValid(
+			page,
+			testGetAccountAccountKeyExternalLinksPage_getExpectedActions(
+				accountKey));
+	}
+
+	protected Map<String, Map<String, String>>
+			testGetAccountAccountKeyExternalLinksPage_getExpectedActions(
+				String accountKey)
+		throws Exception {
+
+		Map<String, Map<String, String>> expectedActions = new HashMap<>();
+
+		return expectedActions;
 	}
 
 	@Test
@@ -363,7 +379,10 @@ public abstract class BaseExternalLinkResourceTestCase {
 			assertEquals(
 				Arrays.asList(irrelevantExternalLink),
 				(List<ExternalLink>)page.getItems());
-			assertValid(page);
+			assertValid(
+				page,
+				testGetContactRoleContactRoleKeyExternalLinksPage_getExpectedActions(
+					irrelevantContactRoleKey));
 		}
 
 		ExternalLink externalLink1 =
@@ -383,7 +402,20 @@ public abstract class BaseExternalLinkResourceTestCase {
 		assertEqualsIgnoringOrder(
 			Arrays.asList(externalLink1, externalLink2),
 			(List<ExternalLink>)page.getItems());
-		assertValid(page);
+		assertValid(
+			page,
+			testGetContactRoleContactRoleKeyExternalLinksPage_getExpectedActions(
+				contactRoleKey));
+	}
+
+	protected Map<String, Map<String, String>>
+			testGetContactRoleContactRoleKeyExternalLinksPage_getExpectedActions(
+				String contactRoleKey)
+		throws Exception {
+
+		Map<String, Map<String, String>> expectedActions = new HashMap<>();
+
+		return expectedActions;
 	}
 
 	@Test
@@ -513,7 +545,10 @@ public abstract class BaseExternalLinkResourceTestCase {
 			assertEquals(
 				Arrays.asList(irrelevantExternalLink),
 				(List<ExternalLink>)page.getItems());
-			assertValid(page);
+			assertValid(
+				page,
+				testGetContactByUuidContactUuidExternalLinksPage_getExpectedActions(
+					irrelevantContactUuid));
 		}
 
 		ExternalLink externalLink1 =
@@ -533,7 +568,20 @@ public abstract class BaseExternalLinkResourceTestCase {
 		assertEqualsIgnoringOrder(
 			Arrays.asList(externalLink1, externalLink2),
 			(List<ExternalLink>)page.getItems());
-		assertValid(page);
+		assertValid(
+			page,
+			testGetContactByUuidContactUuidExternalLinksPage_getExpectedActions(
+				contactUuid));
+	}
+
+	protected Map<String, Map<String, String>>
+			testGetContactByUuidContactUuidExternalLinksPage_getExpectedActions(
+				String contactUuid)
+		throws Exception {
+
+		Map<String, Map<String, String>> expectedActions = new HashMap<>();
+
+		return expectedActions;
 	}
 
 	@Test
@@ -695,7 +743,10 @@ public abstract class BaseExternalLinkResourceTestCase {
 			assertEquals(
 				Arrays.asList(irrelevantExternalLink),
 				(List<ExternalLink>)page.getItems());
-			assertValid(page);
+			assertValid(
+				page,
+				testGetProductConsumptionProductConsumptionKeyExternalLinksPage_getExpectedActions(
+					irrelevantProductConsumptionKey));
 		}
 
 		ExternalLink externalLink1 =
@@ -716,7 +767,20 @@ public abstract class BaseExternalLinkResourceTestCase {
 		assertEqualsIgnoringOrder(
 			Arrays.asList(externalLink1, externalLink2),
 			(List<ExternalLink>)page.getItems());
-		assertValid(page);
+		assertValid(
+			page,
+			testGetProductConsumptionProductConsumptionKeyExternalLinksPage_getExpectedActions(
+				productConsumptionKey));
+	}
+
+	protected Map<String, Map<String, String>>
+			testGetProductConsumptionProductConsumptionKeyExternalLinksPage_getExpectedActions(
+				String productConsumptionKey)
+		throws Exception {
+
+		Map<String, Map<String, String>> expectedActions = new HashMap<>();
+
+		return expectedActions;
 	}
 
 	@Test
@@ -851,7 +915,10 @@ public abstract class BaseExternalLinkResourceTestCase {
 			assertEquals(
 				Arrays.asList(irrelevantExternalLink),
 				(List<ExternalLink>)page.getItems());
-			assertValid(page);
+			assertValid(
+				page,
+				testGetProductPurchaseProductPurchaseKeyExternalLinksPage_getExpectedActions(
+					irrelevantProductPurchaseKey));
 		}
 
 		ExternalLink externalLink1 =
@@ -872,7 +939,20 @@ public abstract class BaseExternalLinkResourceTestCase {
 		assertEqualsIgnoringOrder(
 			Arrays.asList(externalLink1, externalLink2),
 			(List<ExternalLink>)page.getItems());
-		assertValid(page);
+		assertValid(
+			page,
+			testGetProductPurchaseProductPurchaseKeyExternalLinksPage_getExpectedActions(
+				productPurchaseKey));
+	}
+
+	protected Map<String, Map<String, String>>
+			testGetProductPurchaseProductPurchaseKeyExternalLinksPage_getExpectedActions(
+				String productPurchaseKey)
+		throws Exception {
+
+		Map<String, Map<String, String>> expectedActions = new HashMap<>();
+
+		return expectedActions;
 	}
 
 	@Test
@@ -1001,7 +1081,10 @@ public abstract class BaseExternalLinkResourceTestCase {
 			assertEquals(
 				Arrays.asList(irrelevantExternalLink),
 				(List<ExternalLink>)page.getItems());
-			assertValid(page);
+			assertValid(
+				page,
+				testGetProductProductKeyExternalLinksPage_getExpectedActions(
+					irrelevantProductKey));
 		}
 
 		ExternalLink externalLink1 =
@@ -1020,7 +1103,20 @@ public abstract class BaseExternalLinkResourceTestCase {
 		assertEqualsIgnoringOrder(
 			Arrays.asList(externalLink1, externalLink2),
 			(List<ExternalLink>)page.getItems());
-		assertValid(page);
+		assertValid(
+			page,
+			testGetProductProductKeyExternalLinksPage_getExpectedActions(
+				productKey));
+	}
+
+	protected Map<String, Map<String, String>>
+			testGetProductProductKeyExternalLinksPage_getExpectedActions(
+				String productKey)
+		throws Exception {
+
+		Map<String, Map<String, String>> expectedActions = new HashMap<>();
+
+		return expectedActions;
 	}
 
 	@Test
@@ -1142,7 +1238,10 @@ public abstract class BaseExternalLinkResourceTestCase {
 			assertEquals(
 				Arrays.asList(irrelevantExternalLink),
 				(List<ExternalLink>)page.getItems());
-			assertValid(page);
+			assertValid(
+				page,
+				testGetTeamTeamKeyExternalLinksPage_getExpectedActions(
+					irrelevantTeamKey));
 		}
 
 		ExternalLink externalLink1 =
@@ -1161,7 +1260,19 @@ public abstract class BaseExternalLinkResourceTestCase {
 		assertEqualsIgnoringOrder(
 			Arrays.asList(externalLink1, externalLink2),
 			(List<ExternalLink>)page.getItems());
-		assertValid(page);
+		assertValid(
+			page,
+			testGetTeamTeamKeyExternalLinksPage_getExpectedActions(teamKey));
+	}
+
+	protected Map<String, Map<String, String>>
+			testGetTeamTeamKeyExternalLinksPage_getExpectedActions(
+				String teamKey)
+		throws Exception {
+
+		Map<String, Map<String, String>> expectedActions = new HashMap<>();
+
+		return expectedActions;
 	}
 
 	@Test
@@ -1380,6 +1491,13 @@ public abstract class BaseExternalLinkResourceTestCase {
 	}
 
 	protected void assertValid(Page<ExternalLink> page) {
+		assertValid(page, Collections.emptyMap());
+	}
+
+	protected void assertValid(
+		Page<ExternalLink> page,
+		Map<String, Map<String, String>> expectedActions) {
+
 		boolean valid = false;
 
 		java.util.Collection<ExternalLink> externalLinks = page.getItems();
@@ -1394,6 +1512,25 @@ public abstract class BaseExternalLinkResourceTestCase {
 		}
 
 		Assert.assertTrue(valid);
+
+		assertValid(page.getActions(), expectedActions);
+	}
+
+	protected void assertValid(
+		Map<String, Map<String, String>> actions1,
+		Map<String, Map<String, String>> actions2) {
+
+		for (String key : actions2.keySet()) {
+			Map action = actions1.get(key);
+
+			Assert.assertNotNull(key + " does not contain an action", action);
+
+			Map<String, String> expectedAction = actions2.get(key);
+
+			Assert.assertEquals(
+				expectedAction.get("method"), action.get("method"));
+			Assert.assertEquals(expectedAction.get("href"), action.get("href"));
+		}
 	}
 
 	protected String[] getAdditionalAssertFieldNames() {
@@ -1564,14 +1701,16 @@ public abstract class BaseExternalLinkResourceTestCase {
 	protected java.lang.reflect.Field[] getDeclaredFields(Class clazz)
 		throws Exception {
 
-		Stream<java.lang.reflect.Field> stream = Stream.of(
-			ReflectionUtil.getDeclaredFields(clazz));
+		return TransformUtil.transform(
+			ReflectionUtil.getDeclaredFields(clazz),
+			field -> {
+				if (field.isSynthetic()) {
+					return null;
+				}
 
-		return stream.filter(
-			field -> !field.isSynthetic()
-		).toArray(
-			java.lang.reflect.Field[]::new
-		);
+				return field;
+			},
+			java.lang.reflect.Field.class);
 	}
 
 	protected java.util.Collection<EntityField> getEntityFields()
@@ -1588,6 +1727,10 @@ public abstract class BaseExternalLinkResourceTestCase {
 		EntityModel entityModel = entityModelResource.getEntityModel(
 			new MultivaluedHashMap());
 
+		if (entityModel == null) {
+			return Collections.emptyList();
+		}
+
 		Map<String, EntityField> entityFieldsMap =
 			entityModel.getEntityFieldsMap();
 
@@ -1597,18 +1740,18 @@ public abstract class BaseExternalLinkResourceTestCase {
 	protected List<EntityField> getEntityFields(EntityField.Type type)
 		throws Exception {
 
-		java.util.Collection<EntityField> entityFields = getEntityFields();
+		return TransformUtil.transform(
+			getEntityFields(),
+			entityField -> {
+				if (!Objects.equals(entityField.getType(), type) ||
+					ArrayUtil.contains(
+						getIgnoredEntityFieldNames(), entityField.getName())) {
 
-		Stream<EntityField> stream = entityFields.stream();
+					return null;
+				}
 
-		return stream.filter(
-			entityField ->
-				Objects.equals(entityField.getType(), type) &&
-				!ArrayUtil.contains(
-					getIgnoredEntityFieldNames(), entityField.getName())
-		).collect(
-			Collectors.toList()
-		);
+				return entityField;
+			});
 	}
 
 	protected String getFilterString(
@@ -1658,41 +1801,231 @@ public abstract class BaseExternalLinkResourceTestCase {
 		}
 
 		if (entityFieldName.equals("domain")) {
-			sb.append("'");
-			sb.append(String.valueOf(externalLink.getDomain()));
-			sb.append("'");
+			Object object = externalLink.getDomain();
+
+			String value = String.valueOf(object);
+
+			if (operator.equals("contains")) {
+				sb = new StringBundler();
+
+				sb.append("contains(");
+				sb.append(entityFieldName);
+				sb.append(",'");
+
+				if ((object != null) && (value.length() > 2)) {
+					sb.append(value.substring(1, value.length() - 1));
+				}
+				else {
+					sb.append(value);
+				}
+
+				sb.append("')");
+			}
+			else if (operator.equals("startswith")) {
+				sb = new StringBundler();
+
+				sb.append("startswith(");
+				sb.append(entityFieldName);
+				sb.append(",'");
+
+				if ((object != null) && (value.length() > 1)) {
+					sb.append(value.substring(0, value.length() - 1));
+				}
+				else {
+					sb.append(value);
+				}
+
+				sb.append("')");
+			}
+			else {
+				sb.append("'");
+				sb.append(value);
+				sb.append("'");
+			}
 
 			return sb.toString();
 		}
 
 		if (entityFieldName.equals("entityId")) {
-			sb.append("'");
-			sb.append(String.valueOf(externalLink.getEntityId()));
-			sb.append("'");
+			Object object = externalLink.getEntityId();
+
+			String value = String.valueOf(object);
+
+			if (operator.equals("contains")) {
+				sb = new StringBundler();
+
+				sb.append("contains(");
+				sb.append(entityFieldName);
+				sb.append(",'");
+
+				if ((object != null) && (value.length() > 2)) {
+					sb.append(value.substring(1, value.length() - 1));
+				}
+				else {
+					sb.append(value);
+				}
+
+				sb.append("')");
+			}
+			else if (operator.equals("startswith")) {
+				sb = new StringBundler();
+
+				sb.append("startswith(");
+				sb.append(entityFieldName);
+				sb.append(",'");
+
+				if ((object != null) && (value.length() > 1)) {
+					sb.append(value.substring(0, value.length() - 1));
+				}
+				else {
+					sb.append(value);
+				}
+
+				sb.append("')");
+			}
+			else {
+				sb.append("'");
+				sb.append(value);
+				sb.append("'");
+			}
 
 			return sb.toString();
 		}
 
 		if (entityFieldName.equals("entityName")) {
-			sb.append("'");
-			sb.append(String.valueOf(externalLink.getEntityName()));
-			sb.append("'");
+			Object object = externalLink.getEntityName();
+
+			String value = String.valueOf(object);
+
+			if (operator.equals("contains")) {
+				sb = new StringBundler();
+
+				sb.append("contains(");
+				sb.append(entityFieldName);
+				sb.append(",'");
+
+				if ((object != null) && (value.length() > 2)) {
+					sb.append(value.substring(1, value.length() - 1));
+				}
+				else {
+					sb.append(value);
+				}
+
+				sb.append("')");
+			}
+			else if (operator.equals("startswith")) {
+				sb = new StringBundler();
+
+				sb.append("startswith(");
+				sb.append(entityFieldName);
+				sb.append(",'");
+
+				if ((object != null) && (value.length() > 1)) {
+					sb.append(value.substring(0, value.length() - 1));
+				}
+				else {
+					sb.append(value);
+				}
+
+				sb.append("')");
+			}
+			else {
+				sb.append("'");
+				sb.append(value);
+				sb.append("'");
+			}
 
 			return sb.toString();
 		}
 
 		if (entityFieldName.equals("key")) {
-			sb.append("'");
-			sb.append(String.valueOf(externalLink.getKey()));
-			sb.append("'");
+			Object object = externalLink.getKey();
+
+			String value = String.valueOf(object);
+
+			if (operator.equals("contains")) {
+				sb = new StringBundler();
+
+				sb.append("contains(");
+				sb.append(entityFieldName);
+				sb.append(",'");
+
+				if ((object != null) && (value.length() > 2)) {
+					sb.append(value.substring(1, value.length() - 1));
+				}
+				else {
+					sb.append(value);
+				}
+
+				sb.append("')");
+			}
+			else if (operator.equals("startswith")) {
+				sb = new StringBundler();
+
+				sb.append("startswith(");
+				sb.append(entityFieldName);
+				sb.append(",'");
+
+				if ((object != null) && (value.length() > 1)) {
+					sb.append(value.substring(0, value.length() - 1));
+				}
+				else {
+					sb.append(value);
+				}
+
+				sb.append("')");
+			}
+			else {
+				sb.append("'");
+				sb.append(value);
+				sb.append("'");
+			}
 
 			return sb.toString();
 		}
 
 		if (entityFieldName.equals("url")) {
-			sb.append("'");
-			sb.append(String.valueOf(externalLink.getUrl()));
-			sb.append("'");
+			Object object = externalLink.getUrl();
+
+			String value = String.valueOf(object);
+
+			if (operator.equals("contains")) {
+				sb = new StringBundler();
+
+				sb.append("contains(");
+				sb.append(entityFieldName);
+				sb.append(",'");
+
+				if ((object != null) && (value.length() > 2)) {
+					sb.append(value.substring(1, value.length() - 1));
+				}
+				else {
+					sb.append(value);
+				}
+
+				sb.append("')");
+			}
+			else if (operator.equals("startswith")) {
+				sb = new StringBundler();
+
+				sb.append("startswith(");
+				sb.append(entityFieldName);
+				sb.append(",'");
+
+				if ((object != null) && (value.length() > 1)) {
+					sb.append(value.substring(0, value.length() - 1));
+				}
+				else {
+					sb.append(value);
+				}
+
+				sb.append("')");
+			}
+			else {
+				sb.append("'");
+				sb.append(value);
+				sb.append("'");
+			}
 
 			return sb.toString();
 		}

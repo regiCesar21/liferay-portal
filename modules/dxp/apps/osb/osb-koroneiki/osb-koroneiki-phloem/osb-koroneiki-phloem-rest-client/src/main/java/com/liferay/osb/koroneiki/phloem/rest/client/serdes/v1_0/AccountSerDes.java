@@ -22,7 +22,6 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
 import java.util.TreeMap;
-import java.util.stream.Stream;
 
 import javax.annotation.Generated;
 
@@ -744,14 +743,18 @@ public class AccountSerDes {
 
 			if (Objects.equals(jsonParserFieldName, "assignedTeams")) {
 				if (jsonParserFieldValue != null) {
-					account.setAssignedTeams(
-						Stream.of(
-							toStrings((Object[])jsonParserFieldValue)
-						).map(
-							object -> TeamSerDes.toDTO((String)object)
-						).toArray(
-							size -> new Team[size]
-						));
+					Object[] jsonParserFieldValues =
+						(Object[])jsonParserFieldValue;
+
+					Team[] assignedTeamsArray =
+						new Team[jsonParserFieldValues.length];
+
+					for (int i = 0; i < assignedTeamsArray.length; i++) {
+						assignedTeamsArray[i] = TeamSerDes.toDTO(
+							(String)jsonParserFieldValues[i]);
+					}
+
+					account.setAssignedTeams(assignedTeamsArray);
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "code")) {
@@ -769,26 +772,34 @@ public class AccountSerDes {
 			}
 			else if (Objects.equals(jsonParserFieldName, "contacts")) {
 				if (jsonParserFieldValue != null) {
-					account.setContacts(
-						Stream.of(
-							toStrings((Object[])jsonParserFieldValue)
-						).map(
-							object -> ContactSerDes.toDTO((String)object)
-						).toArray(
-							size -> new Contact[size]
-						));
+					Object[] jsonParserFieldValues =
+						(Object[])jsonParserFieldValue;
+
+					Contact[] contactsArray =
+						new Contact[jsonParserFieldValues.length];
+
+					for (int i = 0; i < contactsArray.length; i++) {
+						contactsArray[i] = ContactSerDes.toDTO(
+							(String)jsonParserFieldValues[i]);
+					}
+
+					account.setContacts(contactsArray);
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "customerContacts")) {
 				if (jsonParserFieldValue != null) {
-					account.setCustomerContacts(
-						Stream.of(
-							toStrings((Object[])jsonParserFieldValue)
-						).map(
-							object -> ContactSerDes.toDTO((String)object)
-						).toArray(
-							size -> new Contact[size]
-						));
+					Object[] jsonParserFieldValues =
+						(Object[])jsonParserFieldValue;
+
+					Contact[] customerContactsArray =
+						new Contact[jsonParserFieldValues.length];
+
+					for (int i = 0; i < customerContactsArray.length; i++) {
+						customerContactsArray[i] = ContactSerDes.toDTO(
+							(String)jsonParserFieldValues[i]);
+					}
+
+					account.setCustomerContacts(customerContactsArray);
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "dataRegion")) {
@@ -817,26 +828,34 @@ public class AccountSerDes {
 			}
 			else if (Objects.equals(jsonParserFieldName, "entitlements")) {
 				if (jsonParserFieldValue != null) {
-					account.setEntitlements(
-						Stream.of(
-							toStrings((Object[])jsonParserFieldValue)
-						).map(
-							object -> EntitlementSerDes.toDTO((String)object)
-						).toArray(
-							size -> new Entitlement[size]
-						));
+					Object[] jsonParserFieldValues =
+						(Object[])jsonParserFieldValue;
+
+					Entitlement[] entitlementsArray =
+						new Entitlement[jsonParserFieldValues.length];
+
+					for (int i = 0; i < entitlementsArray.length; i++) {
+						entitlementsArray[i] = EntitlementSerDes.toDTO(
+							(String)jsonParserFieldValues[i]);
+					}
+
+					account.setEntitlements(entitlementsArray);
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "externalLinks")) {
 				if (jsonParserFieldValue != null) {
-					account.setExternalLinks(
-						Stream.of(
-							toStrings((Object[])jsonParserFieldValue)
-						).map(
-							object -> ExternalLinkSerDes.toDTO((String)object)
-						).toArray(
-							size -> new ExternalLink[size]
-						));
+					Object[] jsonParserFieldValues =
+						(Object[])jsonParserFieldValue;
+
+					ExternalLink[] externalLinksArray =
+						new ExternalLink[jsonParserFieldValues.length];
+
+					for (int i = 0; i < externalLinksArray.length; i++) {
+						externalLinksArray[i] = ExternalLinkSerDes.toDTO(
+							(String)jsonParserFieldValues[i]);
+					}
+
+					account.setExternalLinks(externalLinksArray);
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "faxNumber")) {
@@ -883,27 +902,34 @@ public class AccountSerDes {
 			}
 			else if (Objects.equals(jsonParserFieldName, "postalAddresses")) {
 				if (jsonParserFieldValue != null) {
-					account.setPostalAddresses(
-						Stream.of(
-							toStrings((Object[])jsonParserFieldValue)
-						).map(
-							object -> PostalAddressSerDes.toDTO((String)object)
-						).toArray(
-							size -> new PostalAddress[size]
-						));
+					Object[] jsonParserFieldValues =
+						(Object[])jsonParserFieldValue;
+
+					PostalAddress[] postalAddressesArray =
+						new PostalAddress[jsonParserFieldValues.length];
+
+					for (int i = 0; i < postalAddressesArray.length; i++) {
+						postalAddressesArray[i] = PostalAddressSerDes.toDTO(
+							(String)jsonParserFieldValues[i]);
+					}
+
+					account.setPostalAddresses(postalAddressesArray);
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "productPurchases")) {
 				if (jsonParserFieldValue != null) {
-					account.setProductPurchases(
-						Stream.of(
-							toStrings((Object[])jsonParserFieldValue)
-						).map(
-							object -> ProductPurchaseSerDes.toDTO(
-								(String)object)
-						).toArray(
-							size -> new ProductPurchase[size]
-						));
+					Object[] jsonParserFieldValues =
+						(Object[])jsonParserFieldValue;
+
+					ProductPurchase[] productPurchasesArray =
+						new ProductPurchase[jsonParserFieldValues.length];
+
+					for (int i = 0; i < productPurchasesArray.length; i++) {
+						productPurchasesArray[i] = ProductPurchaseSerDes.toDTO(
+							(String)jsonParserFieldValues[i]);
+					}
+
+					account.setProductPurchases(productPurchasesArray);
 				}
 			}
 			else if (Objects.equals(
@@ -945,14 +971,18 @@ public class AccountSerDes {
 			}
 			else if (Objects.equals(jsonParserFieldName, "workerContacts")) {
 				if (jsonParserFieldValue != null) {
-					account.setWorkerContacts(
-						Stream.of(
-							toStrings((Object[])jsonParserFieldValue)
-						).map(
-							object -> ContactSerDes.toDTO((String)object)
-						).toArray(
-							size -> new Contact[size]
-						));
+					Object[] jsonParserFieldValues =
+						(Object[])jsonParserFieldValue;
+
+					Contact[] workerContactsArray =
+						new Contact[jsonParserFieldValues.length];
+
+					for (int i = 0; i < workerContactsArray.length; i++) {
+						workerContactsArray[i] = ContactSerDes.toDTO(
+							(String)jsonParserFieldValues[i]);
+					}
+
+					account.setWorkerContacts(workerContactsArray);
 				}
 			}
 		}

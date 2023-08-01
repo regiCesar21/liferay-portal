@@ -447,6 +447,35 @@ public class Contact implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String middleName;
 
+	@Schema(description = "The contact's phones.")
+	@Valid
+	public Phone[] getPhones() {
+		return phones;
+	}
+
+	public void setPhones(Phone[] phones) {
+		this.phones = phones;
+	}
+
+	@JsonIgnore
+	public void setPhones(
+		UnsafeSupplier<Phone[], Exception> phonesUnsafeSupplier) {
+
+		try {
+			phones = phonesUnsafeSupplier.get();
+		}
+		catch (RuntimeException re) {
+			throw re;
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	@GraphQLField(description = "The contact's phones.")
+	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
+	protected Phone[] phones;
+
 	@Schema(description = "The teams that the contact is assigned to.")
 	@Valid
 	public Team[] getTeams() {
@@ -736,6 +765,26 @@ public class Contact implements Serializable {
 			sb.append("\"");
 		}
 
+		if (phones != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"phones\": ");
+
+			sb.append("[");
+
+			for (int i = 0; i < phones.length; i++) {
+				sb.append(String.valueOf(phones[i]));
+
+				if ((i + 1) < phones.length) {
+					sb.append(", ");
+				}
+			}
+
+			sb.append("]");
+		}
+
 		if (teams != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -864,5 +913,7 @@ public class Contact implements Serializable {
 		{"\\", "\"", "\b", "\f", "\n", "\r", "\t"},
 		{"\\\\", "\\\"", "\\b", "\\f", "\\n", "\\r", "\\t"}
 	};
+
+	private Map<String, Serializable> _extendedProperties;
 
 }

@@ -44,6 +44,7 @@ import com.liferay.portal.search.test.util.SearchTestRule;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.vulcan.resource.EntityModelResource;
+import com.liferay.portal.vulcan.util.TransformUtil;
 
 import java.lang.reflect.Method;
 
@@ -59,8 +60,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 import javax.annotation.Generated;
 
@@ -226,7 +225,10 @@ public abstract class BaseContactResourceTestCase {
 			assertEquals(
 				Arrays.asList(irrelevantContact),
 				(List<Contact>)page.getItems());
-			assertValid(page);
+			assertValid(
+				page,
+				testGetAccountAccountKeyContactsPage_getExpectedActions(
+					irrelevantAccountKey));
 		}
 
 		Contact contact1 = testGetAccountAccountKeyContactsPage_addContact(
@@ -242,7 +244,20 @@ public abstract class BaseContactResourceTestCase {
 
 		assertEqualsIgnoringOrder(
 			Arrays.asList(contact1, contact2), (List<Contact>)page.getItems());
-		assertValid(page);
+		assertValid(
+			page,
+			testGetAccountAccountKeyContactsPage_getExpectedActions(
+				accountKey));
+	}
+
+	protected Map<String, Map<String, String>>
+			testGetAccountAccountKeyContactsPage_getExpectedActions(
+				String accountKey)
+		throws Exception {
+
+		Map<String, Map<String, String>> expectedActions = new HashMap<>();
+
+		return expectedActions;
 	}
 
 	@Test
@@ -335,7 +350,10 @@ public abstract class BaseContactResourceTestCase {
 			assertEquals(
 				Arrays.asList(irrelevantContact),
 				(List<Contact>)page.getItems());
-			assertValid(page);
+			assertValid(
+				page,
+				testGetAccountAccountKeyCustomerContactsPage_getExpectedActions(
+					irrelevantAccountKey));
 		}
 
 		Contact contact1 =
@@ -353,7 +371,20 @@ public abstract class BaseContactResourceTestCase {
 
 		assertEqualsIgnoringOrder(
 			Arrays.asList(contact1, contact2), (List<Contact>)page.getItems());
-		assertValid(page);
+		assertValid(
+			page,
+			testGetAccountAccountKeyCustomerContactsPage_getExpectedActions(
+				accountKey));
+	}
+
+	protected Map<String, Map<String, String>>
+			testGetAccountAccountKeyCustomerContactsPage_getExpectedActions(
+				String accountKey)
+		throws Exception {
+
+		Map<String, Map<String, String>> expectedActions = new HashMap<>();
+
+		return expectedActions;
 	}
 
 	@Test
@@ -451,7 +482,10 @@ public abstract class BaseContactResourceTestCase {
 			assertEquals(
 				Arrays.asList(irrelevantContact),
 				(List<Contact>)page.getItems());
-			assertValid(page);
+			assertValid(
+				page,
+				testGetAccountAccountKeyWorkerContactsPage_getExpectedActions(
+					irrelevantAccountKey));
 		}
 
 		Contact contact1 =
@@ -469,7 +503,20 @@ public abstract class BaseContactResourceTestCase {
 
 		assertEqualsIgnoringOrder(
 			Arrays.asList(contact1, contact2), (List<Contact>)page.getItems());
-		assertValid(page);
+		assertValid(
+			page,
+			testGetAccountAccountKeyWorkerContactsPage_getExpectedActions(
+				accountKey));
+	}
+
+	protected Map<String, Map<String, String>>
+			testGetAccountAccountKeyWorkerContactsPage_getExpectedActions(
+				String accountKey)
+		throws Exception {
+
+		Map<String, Map<String, String>> expectedActions = new HashMap<>();
+
+		return expectedActions;
 	}
 
 	@Test
@@ -558,7 +605,16 @@ public abstract class BaseContactResourceTestCase {
 
 		assertContains(contact1, (List<Contact>)page.getItems());
 		assertContains(contact2, (List<Contact>)page.getItems());
-		assertValid(page);
+		assertValid(page, testGetContactsPage_getExpectedActions());
+	}
+
+	protected Map<String, Map<String, String>>
+			testGetContactsPage_getExpectedActions()
+		throws Exception {
+
+		Map<String, Map<String, String>> expectedActions = new HashMap<>();
+
+		return expectedActions;
 	}
 
 	@Test
@@ -587,33 +643,31 @@ public abstract class BaseContactResourceTestCase {
 
 	@Test
 	public void testGetContactsPageWithFilterDoubleEquals() throws Exception {
-		List<EntityField> entityFields = getEntityFields(
-			EntityField.Type.DOUBLE);
+		testGetContactsPageWithFilter("eq", EntityField.Type.DOUBLE);
+	}
 
-		if (entityFields.isEmpty()) {
-			return;
-		}
-
-		Contact contact1 = testGetContactsPage_addContact(randomContact());
-
-		@SuppressWarnings("PMD.UnusedLocalVariable")
-		Contact contact2 = testGetContactsPage_addContact(randomContact());
-
-		for (EntityField entityField : entityFields) {
-			Page<Contact> page = contactResource.getContactsPage(
-				null, getFilterString(entityField, "eq", contact1),
-				Pagination.of(1, 2), null);
-
-			assertEquals(
-				Collections.singletonList(contact1),
-				(List<Contact>)page.getItems());
-		}
+	@Test
+	public void testGetContactsPageWithFilterStringContains() throws Exception {
+		testGetContactsPageWithFilter("contains", EntityField.Type.STRING);
 	}
 
 	@Test
 	public void testGetContactsPageWithFilterStringEquals() throws Exception {
-		List<EntityField> entityFields = getEntityFields(
-			EntityField.Type.STRING);
+		testGetContactsPageWithFilter("eq", EntityField.Type.STRING);
+	}
+
+	@Test
+	public void testGetContactsPageWithFilterStringStartsWith()
+		throws Exception {
+
+		testGetContactsPageWithFilter("startswith", EntityField.Type.STRING);
+	}
+
+	protected void testGetContactsPageWithFilter(
+			String operator, EntityField.Type type)
+		throws Exception {
+
+		List<EntityField> entityFields = getEntityFields(type);
 
 		if (entityFields.isEmpty()) {
 			return;
@@ -626,7 +680,7 @@ public abstract class BaseContactResourceTestCase {
 
 		for (EntityField entityField : entityFields) {
 			Page<Contact> page = contactResource.getContactsPage(
-				null, getFilterString(entityField, "eq", contact1),
+				null, getFilterString(entityField, operator, contact1),
 				Pagination.of(1, 2), null);
 
 			assertEquals(
@@ -946,7 +1000,10 @@ public abstract class BaseContactResourceTestCase {
 			assertEquals(
 				Arrays.asList(irrelevantContact),
 				(List<Contact>)page.getItems());
-			assertValid(page);
+			assertValid(
+				page,
+				testGetTeamTeamKeyContactsPage_getExpectedActions(
+					irrelevantTeamKey));
 		}
 
 		Contact contact1 = testGetTeamTeamKeyContactsPage_addContact(
@@ -962,7 +1019,17 @@ public abstract class BaseContactResourceTestCase {
 
 		assertEqualsIgnoringOrder(
 			Arrays.asList(contact1, contact2), (List<Contact>)page.getItems());
-		assertValid(page);
+		assertValid(
+			page, testGetTeamTeamKeyContactsPage_getExpectedActions(teamKey));
+	}
+
+	protected Map<String, Map<String, String>>
+			testGetTeamTeamKeyContactsPage_getExpectedActions(String teamKey)
+		throws Exception {
+
+		Map<String, Map<String, String>> expectedActions = new HashMap<>();
+
+		return expectedActions;
 	}
 
 	@Test
@@ -1194,6 +1261,14 @@ public abstract class BaseContactResourceTestCase {
 				continue;
 			}
 
+			if (Objects.equals("phones", additionalAssertFieldName)) {
+				if (contact.getPhones() == null) {
+					valid = false;
+				}
+
+				continue;
+			}
+
 			if (Objects.equals("teams", additionalAssertFieldName)) {
 				if (contact.getTeams() == null) {
 					valid = false;
@@ -1219,6 +1294,12 @@ public abstract class BaseContactResourceTestCase {
 	}
 
 	protected void assertValid(Page<Contact> page) {
+		assertValid(page, Collections.emptyMap());
+	}
+
+	protected void assertValid(
+		Page<Contact> page, Map<String, Map<String, String>> expectedActions) {
+
 		boolean valid = false;
 
 		java.util.Collection<Contact> contacts = page.getItems();
@@ -1233,6 +1314,25 @@ public abstract class BaseContactResourceTestCase {
 		}
 
 		Assert.assertTrue(valid);
+
+		assertValid(page.getActions(), expectedActions);
+	}
+
+	protected void assertValid(
+		Map<String, Map<String, String>> actions1,
+		Map<String, Map<String, String>> actions2) {
+
+		for (String key : actions2.keySet()) {
+			Map action = actions1.get(key);
+
+			Assert.assertNotNull(key + " does not contain an action", action);
+
+			Map<String, String> expectedAction = actions2.get(key);
+
+			Assert.assertEquals(
+				expectedAction.get("method"), action.get("method"));
+			Assert.assertEquals(expectedAction.get("href"), action.get("href"));
+		}
 	}
 
 	protected String[] getAdditionalAssertFieldNames() {
@@ -1437,6 +1537,16 @@ public abstract class BaseContactResourceTestCase {
 				continue;
 			}
 
+			if (Objects.equals("phones", additionalAssertFieldName)) {
+				if (!Objects.deepEquals(
+						contact1.getPhones(), contact2.getPhones())) {
+
+					return false;
+				}
+
+				continue;
+			}
+
 			if (Objects.equals("teams", additionalAssertFieldName)) {
 				if (!Objects.deepEquals(
 						contact1.getTeams(), contact2.getTeams())) {
@@ -1494,14 +1604,16 @@ public abstract class BaseContactResourceTestCase {
 	protected java.lang.reflect.Field[] getDeclaredFields(Class clazz)
 		throws Exception {
 
-		Stream<java.lang.reflect.Field> stream = Stream.of(
-			ReflectionUtil.getDeclaredFields(clazz));
+		return TransformUtil.transform(
+			ReflectionUtil.getDeclaredFields(clazz),
+			field -> {
+				if (field.isSynthetic()) {
+					return null;
+				}
 
-		return stream.filter(
-			field -> !field.isSynthetic()
-		).toArray(
-			java.lang.reflect.Field[]::new
-		);
+				return field;
+			},
+			java.lang.reflect.Field.class);
 	}
 
 	protected java.util.Collection<EntityField> getEntityFields()
@@ -1518,6 +1630,10 @@ public abstract class BaseContactResourceTestCase {
 		EntityModel entityModel = entityModelResource.getEntityModel(
 			new MultivaluedHashMap());
 
+		if (entityModel == null) {
+			return Collections.emptyList();
+		}
+
 		Map<String, EntityField> entityFieldsMap =
 			entityModel.getEntityFieldsMap();
 
@@ -1527,18 +1643,18 @@ public abstract class BaseContactResourceTestCase {
 	protected List<EntityField> getEntityFields(EntityField.Type type)
 		throws Exception {
 
-		java.util.Collection<EntityField> entityFields = getEntityFields();
+		return TransformUtil.transform(
+			getEntityFields(),
+			entityField -> {
+				if (!Objects.equals(entityField.getType(), type) ||
+					ArrayUtil.contains(
+						getIgnoredEntityFieldNames(), entityField.getName())) {
 
-		Stream<EntityField> stream = entityFields.stream();
+					return null;
+				}
 
-		return stream.filter(
-			entityField ->
-				Objects.equals(entityField.getType(), type) &&
-				!ArrayUtil.contains(
-					getIgnoredEntityFieldNames(), entityField.getName())
-		).collect(
-			Collectors.toList()
-		);
+				return entityField;
+			});
 	}
 
 	protected String getFilterString(
@@ -1627,9 +1743,47 @@ public abstract class BaseContactResourceTestCase {
 		}
 
 		if (entityFieldName.equals("emailAddress")) {
-			sb.append("'");
-			sb.append(String.valueOf(contact.getEmailAddress()));
-			sb.append("'");
+			Object object = contact.getEmailAddress();
+
+			String value = String.valueOf(object);
+
+			if (operator.equals("contains")) {
+				sb = new StringBundler();
+
+				sb.append("contains(");
+				sb.append(entityFieldName);
+				sb.append(",'");
+
+				if ((object != null) && (value.length() > 2)) {
+					sb.append(value.substring(1, value.length() - 1));
+				}
+				else {
+					sb.append(value);
+				}
+
+				sb.append("')");
+			}
+			else if (operator.equals("startswith")) {
+				sb = new StringBundler();
+
+				sb.append("startswith(");
+				sb.append(entityFieldName);
+				sb.append(",'");
+
+				if ((object != null) && (value.length() > 1)) {
+					sb.append(value.substring(0, value.length() - 1));
+				}
+				else {
+					sb.append(value);
+				}
+
+				sb.append("')");
+			}
+			else {
+				sb.append("'");
+				sb.append(value);
+				sb.append("'");
+			}
 
 			return sb.toString();
 		}
@@ -1650,43 +1804,238 @@ public abstract class BaseContactResourceTestCase {
 		}
 
 		if (entityFieldName.equals("firstName")) {
-			sb.append("'");
-			sb.append(String.valueOf(contact.getFirstName()));
-			sb.append("'");
+			Object object = contact.getFirstName();
+
+			String value = String.valueOf(object);
+
+			if (operator.equals("contains")) {
+				sb = new StringBundler();
+
+				sb.append("contains(");
+				sb.append(entityFieldName);
+				sb.append(",'");
+
+				if ((object != null) && (value.length() > 2)) {
+					sb.append(value.substring(1, value.length() - 1));
+				}
+				else {
+					sb.append(value);
+				}
+
+				sb.append("')");
+			}
+			else if (operator.equals("startswith")) {
+				sb = new StringBundler();
+
+				sb.append("startswith(");
+				sb.append(entityFieldName);
+				sb.append(",'");
+
+				if ((object != null) && (value.length() > 1)) {
+					sb.append(value.substring(0, value.length() - 1));
+				}
+				else {
+					sb.append(value);
+				}
+
+				sb.append("')");
+			}
+			else {
+				sb.append("'");
+				sb.append(value);
+				sb.append("'");
+			}
 
 			return sb.toString();
 		}
 
 		if (entityFieldName.equals("key")) {
-			sb.append("'");
-			sb.append(String.valueOf(contact.getKey()));
-			sb.append("'");
+			Object object = contact.getKey();
+
+			String value = String.valueOf(object);
+
+			if (operator.equals("contains")) {
+				sb = new StringBundler();
+
+				sb.append("contains(");
+				sb.append(entityFieldName);
+				sb.append(",'");
+
+				if ((object != null) && (value.length() > 2)) {
+					sb.append(value.substring(1, value.length() - 1));
+				}
+				else {
+					sb.append(value);
+				}
+
+				sb.append("')");
+			}
+			else if (operator.equals("startswith")) {
+				sb = new StringBundler();
+
+				sb.append("startswith(");
+				sb.append(entityFieldName);
+				sb.append(",'");
+
+				if ((object != null) && (value.length() > 1)) {
+					sb.append(value.substring(0, value.length() - 1));
+				}
+				else {
+					sb.append(value);
+				}
+
+				sb.append("')");
+			}
+			else {
+				sb.append("'");
+				sb.append(value);
+				sb.append("'");
+			}
 
 			return sb.toString();
 		}
 
 		if (entityFieldName.equals("languageId")) {
-			sb.append("'");
-			sb.append(String.valueOf(contact.getLanguageId()));
-			sb.append("'");
+			Object object = contact.getLanguageId();
+
+			String value = String.valueOf(object);
+
+			if (operator.equals("contains")) {
+				sb = new StringBundler();
+
+				sb.append("contains(");
+				sb.append(entityFieldName);
+				sb.append(",'");
+
+				if ((object != null) && (value.length() > 2)) {
+					sb.append(value.substring(1, value.length() - 1));
+				}
+				else {
+					sb.append(value);
+				}
+
+				sb.append("')");
+			}
+			else if (operator.equals("startswith")) {
+				sb = new StringBundler();
+
+				sb.append("startswith(");
+				sb.append(entityFieldName);
+				sb.append(",'");
+
+				if ((object != null) && (value.length() > 1)) {
+					sb.append(value.substring(0, value.length() - 1));
+				}
+				else {
+					sb.append(value);
+				}
+
+				sb.append("')");
+			}
+			else {
+				sb.append("'");
+				sb.append(value);
+				sb.append("'");
+			}
 
 			return sb.toString();
 		}
 
 		if (entityFieldName.equals("lastName")) {
-			sb.append("'");
-			sb.append(String.valueOf(contact.getLastName()));
-			sb.append("'");
+			Object object = contact.getLastName();
+
+			String value = String.valueOf(object);
+
+			if (operator.equals("contains")) {
+				sb = new StringBundler();
+
+				sb.append("contains(");
+				sb.append(entityFieldName);
+				sb.append(",'");
+
+				if ((object != null) && (value.length() > 2)) {
+					sb.append(value.substring(1, value.length() - 1));
+				}
+				else {
+					sb.append(value);
+				}
+
+				sb.append("')");
+			}
+			else if (operator.equals("startswith")) {
+				sb = new StringBundler();
+
+				sb.append("startswith(");
+				sb.append(entityFieldName);
+				sb.append(",'");
+
+				if ((object != null) && (value.length() > 1)) {
+					sb.append(value.substring(0, value.length() - 1));
+				}
+				else {
+					sb.append(value);
+				}
+
+				sb.append("')");
+			}
+			else {
+				sb.append("'");
+				sb.append(value);
+				sb.append("'");
+			}
 
 			return sb.toString();
 		}
 
 		if (entityFieldName.equals("middleName")) {
-			sb.append("'");
-			sb.append(String.valueOf(contact.getMiddleName()));
-			sb.append("'");
+			Object object = contact.getMiddleName();
+
+			String value = String.valueOf(object);
+
+			if (operator.equals("contains")) {
+				sb = new StringBundler();
+
+				sb.append("contains(");
+				sb.append(entityFieldName);
+				sb.append(",'");
+
+				if ((object != null) && (value.length() > 2)) {
+					sb.append(value.substring(1, value.length() - 1));
+				}
+				else {
+					sb.append(value);
+				}
+
+				sb.append("')");
+			}
+			else if (operator.equals("startswith")) {
+				sb = new StringBundler();
+
+				sb.append("startswith(");
+				sb.append(entityFieldName);
+				sb.append(",'");
+
+				if ((object != null) && (value.length() > 1)) {
+					sb.append(value.substring(0, value.length() - 1));
+				}
+				else {
+					sb.append(value);
+				}
+
+				sb.append("')");
+			}
+			else {
+				sb.append("'");
+				sb.append(value);
+				sb.append("'");
+			}
 
 			return sb.toString();
+		}
+
+		if (entityFieldName.equals("phones")) {
+			throw new IllegalArgumentException(
+				"Invalid entity field " + entityFieldName);
 		}
 
 		if (entityFieldName.equals("teams")) {
@@ -1695,9 +2044,47 @@ public abstract class BaseContactResourceTestCase {
 		}
 
 		if (entityFieldName.equals("uuid")) {
-			sb.append("'");
-			sb.append(String.valueOf(contact.getUuid()));
-			sb.append("'");
+			Object object = contact.getUuid();
+
+			String value = String.valueOf(object);
+
+			if (operator.equals("contains")) {
+				sb = new StringBundler();
+
+				sb.append("contains(");
+				sb.append(entityFieldName);
+				sb.append(",'");
+
+				if ((object != null) && (value.length() > 2)) {
+					sb.append(value.substring(1, value.length() - 1));
+				}
+				else {
+					sb.append(value);
+				}
+
+				sb.append("')");
+			}
+			else if (operator.equals("startswith")) {
+				sb = new StringBundler();
+
+				sb.append("startswith(");
+				sb.append(entityFieldName);
+				sb.append(",'");
+
+				if ((object != null) && (value.length() > 1)) {
+					sb.append(value.substring(0, value.length() - 1));
+				}
+				else {
+					sb.append(value);
+				}
+
+				sb.append("')");
+			}
+			else {
+				sb.append("'");
+				sb.append(value);
+				sb.append("'");
+			}
 
 			return sb.toString();
 		}

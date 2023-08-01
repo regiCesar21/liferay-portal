@@ -297,6 +297,27 @@ public class Contact implements Cloneable, Serializable {
 
 	protected String middleName;
 
+	public Phone[] getPhones() {
+		return phones;
+	}
+
+	public void setPhones(Phone[] phones) {
+		this.phones = phones;
+	}
+
+	public void setPhones(
+		UnsafeSupplier<Phone[], Exception> phonesUnsafeSupplier) {
+
+		try {
+			phones = phonesUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	protected Phone[] phones;
+
 	public Team[] getTeams() {
 		return teams;
 	}

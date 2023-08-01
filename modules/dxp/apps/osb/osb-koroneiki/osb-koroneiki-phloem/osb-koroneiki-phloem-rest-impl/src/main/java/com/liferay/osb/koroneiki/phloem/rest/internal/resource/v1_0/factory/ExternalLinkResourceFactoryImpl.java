@@ -25,6 +25,7 @@ import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.odata.filter.ExpressionConvert;
 import com.liferay.portal.odata.filter.FilterParserProvider;
+import com.liferay.portal.odata.sort.SortParserProvider;
 import com.liferay.portal.vulcan.accept.language.AcceptLanguage;
 
 import java.lang.reflect.Constructor;
@@ -43,9 +44,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.osgi.service.component.ComponentServiceObjects;
-import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Deactivate;
 import org.osgi.service.component.annotations.Reference;
 import org.osgi.service.component.annotations.ReferenceScope;
 
@@ -53,7 +52,10 @@ import org.osgi.service.component.annotations.ReferenceScope;
  * @author Amos Fong
  * @generated
  */
-@Component(immediate = true, service = ExternalLinkResource.Factory.class)
+@Component(
+	property = "resource.locator.key=/koroneiki-rest/v1.0/ExternalLink",
+	service = ExternalLinkResource.Factory.class
+)
 @Generated("")
 public class ExternalLinkResourceFactoryImpl
 	implements ExternalLinkResource.Factory {
@@ -125,16 +127,6 @@ public class ExternalLinkResourceFactoryImpl
 			private User _user;
 
 		};
-	}
-
-	@Activate
-	protected void activate() {
-		ExternalLinkResource.FactoryHolder.factory = this;
-	}
-
-	@Deactivate
-	protected void deactivate() {
-		ExternalLinkResource.FactoryHolder.factory = null;
 	}
 
 	private static Function<InvocationHandler, ExternalLinkResource>
@@ -209,6 +201,7 @@ public class ExternalLinkResourceFactoryImpl
 		externalLinkResource.setResourcePermissionLocalService(
 			_resourcePermissionLocalService);
 		externalLinkResource.setRoleLocalService(_roleLocalService);
+		externalLinkResource.setSortParserProvider(_sortParserProvider);
 
 		try {
 			return method.invoke(externalLinkResource, arguments);
@@ -258,6 +251,9 @@ public class ExternalLinkResourceFactoryImpl
 
 	@Reference
 	private RoleLocalService _roleLocalService;
+
+	@Reference
+	private SortParserProvider _sortParserProvider;
 
 	@Reference
 	private UserLocalService _userLocalService;

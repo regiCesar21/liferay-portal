@@ -44,6 +44,7 @@ import com.liferay.portal.search.test.util.SearchTestRule;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.vulcan.resource.EntityModelResource;
+import com.liferay.portal.vulcan.util.TransformUtil;
 
 import java.lang.reflect.Method;
 
@@ -59,8 +60,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 import javax.annotation.Generated;
 
@@ -228,7 +227,10 @@ public abstract class BaseProductConsumptionResourceTestCase {
 			assertEquals(
 				Arrays.asList(irrelevantProductConsumption),
 				(List<ProductConsumption>)page.getItems());
-			assertValid(page);
+			assertValid(
+				page,
+				testGetAccountAccountKeyProductConsumptionsPage_getExpectedActions(
+					irrelevantAccountKey));
 		}
 
 		ProductConsumption productConsumption1 =
@@ -249,7 +251,20 @@ public abstract class BaseProductConsumptionResourceTestCase {
 		assertEqualsIgnoringOrder(
 			Arrays.asList(productConsumption1, productConsumption2),
 			(List<ProductConsumption>)page.getItems());
-		assertValid(page);
+		assertValid(
+			page,
+			testGetAccountAccountKeyProductConsumptionsPage_getExpectedActions(
+				accountKey));
+	}
+
+	protected Map<String, Map<String, String>>
+			testGetAccountAccountKeyProductConsumptionsPage_getExpectedActions(
+				String accountKey)
+		throws Exception {
+
+		Map<String, Map<String, String>> expectedActions = new HashMap<>();
+
+		return expectedActions;
 	}
 
 	@Test
@@ -384,7 +399,10 @@ public abstract class BaseProductConsumptionResourceTestCase {
 			assertEquals(
 				Arrays.asList(irrelevantProductConsumption),
 				(List<ProductConsumption>)page.getItems());
-			assertValid(page);
+			assertValid(
+				page,
+				testGetContactByUuidContactUuidProductConsumptionsPage_getExpectedActions(
+					irrelevantContactUuid));
 		}
 
 		ProductConsumption productConsumption1 =
@@ -405,7 +423,20 @@ public abstract class BaseProductConsumptionResourceTestCase {
 		assertEqualsIgnoringOrder(
 			Arrays.asList(productConsumption1, productConsumption2),
 			(List<ProductConsumption>)page.getItems());
-		assertValid(page);
+		assertValid(
+			page,
+			testGetContactByUuidContactUuidProductConsumptionsPage_getExpectedActions(
+				contactUuid));
+	}
+
+	protected Map<String, Map<String, String>>
+			testGetContactByUuidContactUuidProductConsumptionsPage_getExpectedActions(
+				String contactUuid)
+		throws Exception {
+
+		Map<String, Map<String, String>> expectedActions = new HashMap<>();
+
+		return expectedActions;
 	}
 
 	@Test
@@ -511,7 +542,16 @@ public abstract class BaseProductConsumptionResourceTestCase {
 			productConsumption1, (List<ProductConsumption>)page.getItems());
 		assertContains(
 			productConsumption2, (List<ProductConsumption>)page.getItems());
-		assertValid(page);
+		assertValid(page, testGetProductConsumptionsPage_getExpectedActions());
+	}
+
+	protected Map<String, Map<String, String>>
+			testGetProductConsumptionsPage_getExpectedActions()
+		throws Exception {
+
+		Map<String, Map<String, String>> expectedActions = new HashMap<>();
+
+		return expectedActions;
 	}
 
 	@Test
@@ -549,41 +589,37 @@ public abstract class BaseProductConsumptionResourceTestCase {
 	public void testGetProductConsumptionsPageWithFilterDoubleEquals()
 		throws Exception {
 
-		List<EntityField> entityFields = getEntityFields(
-			EntityField.Type.DOUBLE);
+		testGetProductConsumptionsPageWithFilter("eq", EntityField.Type.DOUBLE);
+	}
 
-		if (entityFields.isEmpty()) {
-			return;
-		}
+	@Test
+	public void testGetProductConsumptionsPageWithFilterStringContains()
+		throws Exception {
 
-		ProductConsumption productConsumption1 =
-			testGetProductConsumptionsPage_addProductConsumption(
-				randomProductConsumption());
-
-		@SuppressWarnings("PMD.UnusedLocalVariable")
-		ProductConsumption productConsumption2 =
-			testGetProductConsumptionsPage_addProductConsumption(
-				randomProductConsumption());
-
-		for (EntityField entityField : entityFields) {
-			Page<ProductConsumption> page =
-				productConsumptionResource.getProductConsumptionsPage(
-					null,
-					getFilterString(entityField, "eq", productConsumption1),
-					Pagination.of(1, 2), null);
-
-			assertEquals(
-				Collections.singletonList(productConsumption1),
-				(List<ProductConsumption>)page.getItems());
-		}
+		testGetProductConsumptionsPageWithFilter(
+			"contains", EntityField.Type.STRING);
 	}
 
 	@Test
 	public void testGetProductConsumptionsPageWithFilterStringEquals()
 		throws Exception {
 
-		List<EntityField> entityFields = getEntityFields(
-			EntityField.Type.STRING);
+		testGetProductConsumptionsPageWithFilter("eq", EntityField.Type.STRING);
+	}
+
+	@Test
+	public void testGetProductConsumptionsPageWithFilterStringStartsWith()
+		throws Exception {
+
+		testGetProductConsumptionsPageWithFilter(
+			"startswith", EntityField.Type.STRING);
+	}
+
+	protected void testGetProductConsumptionsPageWithFilter(
+			String operator, EntityField.Type type)
+		throws Exception {
+
+		List<EntityField> entityFields = getEntityFields(type);
 
 		if (entityFields.isEmpty()) {
 			return;
@@ -602,7 +638,7 @@ public abstract class BaseProductConsumptionResourceTestCase {
 			Page<ProductConsumption> page =
 				productConsumptionResource.getProductConsumptionsPage(
 					null,
-					getFilterString(entityField, "eq", productConsumption1),
+					getFilterString(entityField, operator, productConsumption1),
 					Pagination.of(1, 2), null);
 
 			assertEquals(
@@ -869,7 +905,11 @@ public abstract class BaseProductConsumptionResourceTestCase {
 			assertEquals(
 				Arrays.asList(irrelevantProductConsumption),
 				(List<ProductConsumption>)page.getItems());
-			assertValid(page);
+			assertValid(
+				page,
+				testGetProductConsumptionByExternalLinkDomainEntityNameEntityPage_getExpectedActions(
+					irrelevantDomain, irrelevantEntityName,
+					irrelevantEntityId));
 		}
 
 		ProductConsumption productConsumption1 =
@@ -890,7 +930,20 @@ public abstract class BaseProductConsumptionResourceTestCase {
 		assertEqualsIgnoringOrder(
 			Arrays.asList(productConsumption1, productConsumption2),
 			(List<ProductConsumption>)page.getItems());
-		assertValid(page);
+		assertValid(
+			page,
+			testGetProductConsumptionByExternalLinkDomainEntityNameEntityPage_getExpectedActions(
+				domain, entityName, entityId));
+	}
+
+	protected Map<String, Map<String, String>>
+			testGetProductConsumptionByExternalLinkDomainEntityNameEntityPage_getExpectedActions(
+				String domain, String entityName, String entityId)
+		throws Exception {
+
+		Map<String, Map<String, String>> expectedActions = new HashMap<>();
+
+		return expectedActions;
 	}
 
 	@Test
@@ -1241,6 +1294,13 @@ public abstract class BaseProductConsumptionResourceTestCase {
 	}
 
 	protected void assertValid(Page<ProductConsumption> page) {
+		assertValid(page, Collections.emptyMap());
+	}
+
+	protected void assertValid(
+		Page<ProductConsumption> page,
+		Map<String, Map<String, String>> expectedActions) {
+
 		boolean valid = false;
 
 		java.util.Collection<ProductConsumption> productConsumptions =
@@ -1256,6 +1316,25 @@ public abstract class BaseProductConsumptionResourceTestCase {
 		}
 
 		Assert.assertTrue(valid);
+
+		assertValid(page.getActions(), expectedActions);
+	}
+
+	protected void assertValid(
+		Map<String, Map<String, String>> actions1,
+		Map<String, Map<String, String>> actions2) {
+
+		for (String key : actions2.keySet()) {
+			Map action = actions1.get(key);
+
+			Assert.assertNotNull(key + " does not contain an action", action);
+
+			Map<String, String> expectedAction = actions2.get(key);
+
+			Assert.assertEquals(
+				expectedAction.get("method"), action.get("method"));
+			Assert.assertEquals(expectedAction.get("href"), action.get("href"));
+		}
 	}
 
 	protected String[] getAdditionalAssertFieldNames() {
@@ -1465,14 +1544,16 @@ public abstract class BaseProductConsumptionResourceTestCase {
 	protected java.lang.reflect.Field[] getDeclaredFields(Class clazz)
 		throws Exception {
 
-		Stream<java.lang.reflect.Field> stream = Stream.of(
-			ReflectionUtil.getDeclaredFields(clazz));
+		return TransformUtil.transform(
+			ReflectionUtil.getDeclaredFields(clazz),
+			field -> {
+				if (field.isSynthetic()) {
+					return null;
+				}
 
-		return stream.filter(
-			field -> !field.isSynthetic()
-		).toArray(
-			java.lang.reflect.Field[]::new
-		);
+				return field;
+			},
+			java.lang.reflect.Field.class);
 	}
 
 	protected java.util.Collection<EntityField> getEntityFields()
@@ -1489,6 +1570,10 @@ public abstract class BaseProductConsumptionResourceTestCase {
 		EntityModel entityModel = entityModelResource.getEntityModel(
 			new MultivaluedHashMap());
 
+		if (entityModel == null) {
+			return Collections.emptyList();
+		}
+
 		Map<String, EntityField> entityFieldsMap =
 			entityModel.getEntityFieldsMap();
 
@@ -1498,18 +1583,18 @@ public abstract class BaseProductConsumptionResourceTestCase {
 	protected List<EntityField> getEntityFields(EntityField.Type type)
 		throws Exception {
 
-		java.util.Collection<EntityField> entityFields = getEntityFields();
+		return TransformUtil.transform(
+			getEntityFields(),
+			entityField -> {
+				if (!Objects.equals(entityField.getType(), type) ||
+					ArrayUtil.contains(
+						getIgnoredEntityFieldNames(), entityField.getName())) {
 
-		Stream<EntityField> stream = entityFields.stream();
+					return null;
+				}
 
-		return stream.filter(
-			entityField ->
-				Objects.equals(entityField.getType(), type) &&
-				!ArrayUtil.contains(
-					getIgnoredEntityFieldNames(), entityField.getName())
-		).collect(
-			Collectors.toList()
-		);
+				return entityField;
+			});
 	}
 
 	protected String getFilterString(
@@ -1527,9 +1612,47 @@ public abstract class BaseProductConsumptionResourceTestCase {
 		sb.append(" ");
 
 		if (entityFieldName.equals("accountKey")) {
-			sb.append("'");
-			sb.append(String.valueOf(productConsumption.getAccountKey()));
-			sb.append("'");
+			Object object = productConsumption.getAccountKey();
+
+			String value = String.valueOf(object);
+
+			if (operator.equals("contains")) {
+				sb = new StringBundler();
+
+				sb.append("contains(");
+				sb.append(entityFieldName);
+				sb.append(",'");
+
+				if ((object != null) && (value.length() > 2)) {
+					sb.append(value.substring(1, value.length() - 1));
+				}
+				else {
+					sb.append(value);
+				}
+
+				sb.append("')");
+			}
+			else if (operator.equals("startswith")) {
+				sb = new StringBundler();
+
+				sb.append("startswith(");
+				sb.append(entityFieldName);
+				sb.append(",'");
+
+				if ((object != null) && (value.length() > 1)) {
+					sb.append(value.substring(0, value.length() - 1));
+				}
+				else {
+					sb.append(value);
+				}
+
+				sb.append("')");
+			}
+			else {
+				sb.append("'");
+				sb.append(value);
+				sb.append("'");
+			}
 
 			return sb.toString();
 		}
@@ -1607,26 +1730,139 @@ public abstract class BaseProductConsumptionResourceTestCase {
 		}
 
 		if (entityFieldName.equals("key")) {
-			sb.append("'");
-			sb.append(String.valueOf(productConsumption.getKey()));
-			sb.append("'");
+			Object object = productConsumption.getKey();
+
+			String value = String.valueOf(object);
+
+			if (operator.equals("contains")) {
+				sb = new StringBundler();
+
+				sb.append("contains(");
+				sb.append(entityFieldName);
+				sb.append(",'");
+
+				if ((object != null) && (value.length() > 2)) {
+					sb.append(value.substring(1, value.length() - 1));
+				}
+				else {
+					sb.append(value);
+				}
+
+				sb.append("')");
+			}
+			else if (operator.equals("startswith")) {
+				sb = new StringBundler();
+
+				sb.append("startswith(");
+				sb.append(entityFieldName);
+				sb.append(",'");
+
+				if ((object != null) && (value.length() > 1)) {
+					sb.append(value.substring(0, value.length() - 1));
+				}
+				else {
+					sb.append(value);
+				}
+
+				sb.append("')");
+			}
+			else {
+				sb.append("'");
+				sb.append(value);
+				sb.append("'");
+			}
 
 			return sb.toString();
 		}
 
 		if (entityFieldName.equals("productKey")) {
-			sb.append("'");
-			sb.append(String.valueOf(productConsumption.getProductKey()));
-			sb.append("'");
+			Object object = productConsumption.getProductKey();
+
+			String value = String.valueOf(object);
+
+			if (operator.equals("contains")) {
+				sb = new StringBundler();
+
+				sb.append("contains(");
+				sb.append(entityFieldName);
+				sb.append(",'");
+
+				if ((object != null) && (value.length() > 2)) {
+					sb.append(value.substring(1, value.length() - 1));
+				}
+				else {
+					sb.append(value);
+				}
+
+				sb.append("')");
+			}
+			else if (operator.equals("startswith")) {
+				sb = new StringBundler();
+
+				sb.append("startswith(");
+				sb.append(entityFieldName);
+				sb.append(",'");
+
+				if ((object != null) && (value.length() > 1)) {
+					sb.append(value.substring(0, value.length() - 1));
+				}
+				else {
+					sb.append(value);
+				}
+
+				sb.append("')");
+			}
+			else {
+				sb.append("'");
+				sb.append(value);
+				sb.append("'");
+			}
 
 			return sb.toString();
 		}
 
 		if (entityFieldName.equals("productPurchaseKey")) {
-			sb.append("'");
-			sb.append(
-				String.valueOf(productConsumption.getProductPurchaseKey()));
-			sb.append("'");
+			Object object = productConsumption.getProductPurchaseKey();
+
+			String value = String.valueOf(object);
+
+			if (operator.equals("contains")) {
+				sb = new StringBundler();
+
+				sb.append("contains(");
+				sb.append(entityFieldName);
+				sb.append(",'");
+
+				if ((object != null) && (value.length() > 2)) {
+					sb.append(value.substring(1, value.length() - 1));
+				}
+				else {
+					sb.append(value);
+				}
+
+				sb.append("')");
+			}
+			else if (operator.equals("startswith")) {
+				sb = new StringBundler();
+
+				sb.append("startswith(");
+				sb.append(entityFieldName);
+				sb.append(",'");
+
+				if ((object != null) && (value.length() > 1)) {
+					sb.append(value.substring(0, value.length() - 1));
+				}
+				else {
+					sb.append(value);
+				}
+
+				sb.append("')");
+			}
+			else {
+				sb.append("'");
+				sb.append(value);
+				sb.append("'");
+			}
 
 			return sb.toString();
 		}

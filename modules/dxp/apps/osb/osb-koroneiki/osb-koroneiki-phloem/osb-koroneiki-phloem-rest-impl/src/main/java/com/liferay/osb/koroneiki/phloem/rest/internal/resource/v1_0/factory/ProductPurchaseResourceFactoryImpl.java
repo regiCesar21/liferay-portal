@@ -25,6 +25,7 @@ import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.odata.filter.ExpressionConvert;
 import com.liferay.portal.odata.filter.FilterParserProvider;
+import com.liferay.portal.odata.sort.SortParserProvider;
 import com.liferay.portal.vulcan.accept.language.AcceptLanguage;
 
 import java.lang.reflect.Constructor;
@@ -43,9 +44,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.osgi.service.component.ComponentServiceObjects;
-import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Deactivate;
 import org.osgi.service.component.annotations.Reference;
 import org.osgi.service.component.annotations.ReferenceScope;
 
@@ -53,7 +52,10 @@ import org.osgi.service.component.annotations.ReferenceScope;
  * @author Amos Fong
  * @generated
  */
-@Component(immediate = true, service = ProductPurchaseResource.Factory.class)
+@Component(
+	property = "resource.locator.key=/koroneiki-rest/v1.0/ProductPurchase",
+	service = ProductPurchaseResource.Factory.class
+)
 @Generated("")
 public class ProductPurchaseResourceFactoryImpl
 	implements ProductPurchaseResource.Factory {
@@ -125,16 +127,6 @@ public class ProductPurchaseResourceFactoryImpl
 			private User _user;
 
 		};
-	}
-
-	@Activate
-	protected void activate() {
-		ProductPurchaseResource.FactoryHolder.factory = this;
-	}
-
-	@Deactivate
-	protected void deactivate() {
-		ProductPurchaseResource.FactoryHolder.factory = null;
 	}
 
 	private static Function<InvocationHandler, ProductPurchaseResource>
@@ -211,6 +203,7 @@ public class ProductPurchaseResourceFactoryImpl
 		productPurchaseResource.setResourcePermissionLocalService(
 			_resourcePermissionLocalService);
 		productPurchaseResource.setRoleLocalService(_roleLocalService);
+		productPurchaseResource.setSortParserProvider(_sortParserProvider);
 
 		try {
 			return method.invoke(productPurchaseResource, arguments);
@@ -260,6 +253,9 @@ public class ProductPurchaseResourceFactoryImpl
 
 	@Reference
 	private RoleLocalService _roleLocalService;
+
+	@Reference
+	private SortParserProvider _sortParserProvider;
 
 	@Reference
 	private UserLocalService _userLocalService;
