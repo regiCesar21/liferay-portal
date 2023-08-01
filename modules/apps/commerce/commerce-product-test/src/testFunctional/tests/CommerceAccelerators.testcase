@@ -130,14 +130,7 @@ definition {
 
 		ApplicationsMenu.gotoSite(site = "Minium");
 
-		JSONLayout.addPublicLayout(
-			groupName = "Minium",
-			layoutName = "Test Content Page Name",
-			type = "content");
-
-		ContentPagesNavigator.openEditContentPage(
-			pageName = "Test Content Page Name",
-			siteName = "Minium");
+		ContentPages.addPage(pageName = "Test Content Page Name");
 
 		PageEditor.addFragment(
 			collectionName = "Basic Components",
