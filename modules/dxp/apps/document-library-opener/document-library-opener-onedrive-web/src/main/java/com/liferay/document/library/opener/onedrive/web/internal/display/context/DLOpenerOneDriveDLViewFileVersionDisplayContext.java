@@ -46,7 +46,6 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 import java.util.ListIterator;
-import java.util.Objects;
 import java.util.ResourceBundle;
 import java.util.UUID;
 
@@ -189,25 +188,13 @@ public class DLOpenerOneDriveDLViewFileVersionDisplayContext
 
 		urlMenuItem.setLabel(LanguageUtil.get(_resourceBundle, _getLabelKey()));
 		urlMenuItem.setMethod(HttpMethods.POST);
-
-		if (Objects.equals(
-				request.getParameter("mvcRenderCommandName"),
-				"/document_library/view_file_entry")) {
-
-			urlMenuItem.setData(Collections.singletonMap("senna-off", "true"));
-			urlMenuItem.setURL(
-				_getEditURL(
-					cmd, "/document_library/edit_in_office365_and_redirect"));
-		}
-		else {
-			urlMenuItem.setURL(
-				StringBundler.concat(
-					"javascript:",
-					_portal.getPortletNamespace(_portal.getPortletId(request)),
-					"editOfficeDocument(\"",
-					_getEditURL(cmd, "/document_library/edit_in_office365"),
-					"\");"));
-		}
+		urlMenuItem.setURL(
+			StringBundler.concat(
+				"javascript:",
+				_portal.getPortletNamespace(_portal.getPortletId(request)),
+				"editOfficeDocument(\"",
+				_getEditURL(cmd, "/document_library/edit_in_office365"),
+				"\");"));
 
 		return urlMenuItem;
 	}
