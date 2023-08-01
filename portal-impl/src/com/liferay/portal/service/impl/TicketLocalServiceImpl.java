@@ -66,6 +66,11 @@ public class TicketLocalServiceImpl extends TicketLocalServiceBaseImpl {
 	}
 
 	@Override
+	public Ticket fetchTicket(long id) {
+		return ticketPersistence.fetchByPrimaryKey(id);
+	}
+
+	@Override
 	public Ticket fetchTicket(String key) {
 		return ticketPersistence.fetchByKey(key);
 	}
@@ -120,7 +125,6 @@ public class TicketLocalServiceImpl extends TicketLocalServiceBaseImpl {
 
 	@Override
 	public Ticket updateTicket(Ticket ticket) {
-
 		try {
 			ticket.setKey(PasswordEncryptorUtil.encrypt(ticket.getKey()));
 		}

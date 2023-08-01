@@ -3915,13 +3915,15 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 			TicketConstants.TYPE_PASSWORD, null, expirationDate,
 			serviceContext);
 
-		StringBundler sb = new StringBundler(6);
+		StringBundler sb = new StringBundler(8);
 
 		sb.append(serviceContext.getPortalURL());
 		sb.append(serviceContext.getPathMain());
 		sb.append("/portal/update_password?p_l_id=");
 		sb.append(serviceContext.getPlid());
 		sb.append("&ticketKey=");
+		sb.append(ticket.getTicketId());
+		sb.append("_");
 		sb.append(ticket.getKey());
 
 		String passwordResetURL = sb.toString();
