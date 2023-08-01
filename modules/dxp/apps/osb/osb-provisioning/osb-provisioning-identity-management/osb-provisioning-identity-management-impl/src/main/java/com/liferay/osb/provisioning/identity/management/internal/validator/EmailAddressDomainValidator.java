@@ -39,10 +39,10 @@ public class EmailAddressDomainValidator implements EmailAddressValidator {
 			emailAddress.indexOf(StringPool.AT) + 1);
 
 		if (_liferayDomains.contains(domain)) {
-			return false;
+			return true;
 		}
 
-		return true;
+		return false;
 	}
 
 	public void validateEmailAddress(String emailAddress) throws Exception {
