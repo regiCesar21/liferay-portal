@@ -960,7 +960,7 @@ public class JournalArticleIndexer extends BaseIndexer<JournalArticle> {
 				isCommitImmediately());
 		}
 		else {
-			Collection<String> articleUids = new ArrayList<>();
+			Collection<String> uids = new ArrayList<>();
 
 			JournalArticle latestIndexableArticle =
 				fetchLatestIndexableArticleVersion(resourcePrimKey);
@@ -978,13 +978,13 @@ public class JournalArticleIndexer extends BaseIndexer<JournalArticle> {
 						continue;
 					}
 
-					articleUids.add(uidFactory.getUID(journalArticle));
+					uids.add(uidFactory.getUID(journalArticle));
 				}
 			}
 
-			if (!articleUids.isEmpty()) {
+			if (!uids.isEmpty()) {
 				_indexWriterHelper.deleteDocuments(
-					getSearchEngineId(), article.getCompanyId(), articleUids,
+					getSearchEngineId(), article.getCompanyId(), uids,
 					isCommitImmediately());
 			}
 		}
