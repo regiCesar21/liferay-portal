@@ -102,6 +102,12 @@ definition {
 			locator1 = "Link#EDIT",
 			value1 = "Edit");
 
+		Panel.expandPanel(panel = "Configuration");
+
+		SelectNoError(
+			locator1 = "Wiki#ADD_PAGE_FORMAT_DROPDOWN",
+			value1 = "HTML");
+
 		var wikiPageContent = '''<!DOCTYPE html> <html lang="en"> <body> <h1>Edited My First Heading</h1> <p>Edited My first paragraph.</p> </body> </html>''';
 
 		CKEditor.addSourceContent(content = ${wikiPageContent});
