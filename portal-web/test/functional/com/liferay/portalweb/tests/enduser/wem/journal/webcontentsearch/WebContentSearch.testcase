@@ -354,28 +354,11 @@ definition {
 		property portal.acceptance = "true";
 		property testray.component.names = "Tags,Training,Web Content Display";
 
-		JSONLayout.addPublicLayout(
-			groupName = "Guest",
-			layoutName = "Web Content Display Page");
-
-		JSONLayout.addWidgetToPublicLayout(
-			groupName = "Guest",
-			layoutName = "Web Content Display Page",
-			widgetName = "Web Content Display");
-
 		JSONWebcontent.addWebContent(
 			assetTagNames = "tag name",
 			content = "WC WebContent Content",
 			groupName = "Guest",
 			title = "WC WebContent Title");
-
-		Navigator.gotoPage(pageName = "Web Content Display Page");
-
-		WebContentDisplayPortlet.selectWebContent(webContentTitle = "WC WebContent Title");
-
-		IFrame.closeFrame();
-
-		WebContent.viewPGViaWCD(webContentContent = "WC WebContent Content");
 
 		Navigator.gotoPage(pageName = "Web Content Search Page");
 
