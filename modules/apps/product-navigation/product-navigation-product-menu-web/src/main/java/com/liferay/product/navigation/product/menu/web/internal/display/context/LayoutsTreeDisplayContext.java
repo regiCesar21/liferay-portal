@@ -316,6 +316,8 @@ public class LayoutsTreeDisplayContext {
 			RenderRequest.RENDER_PHASE);
 
 		portletURL.setParameter("mvcPath", "/portlet/product_menu.jsp");
+		portletURL.setParameter("redirect", _getRedirect());
+		portletURL.setParameter("backURL", _getBackURL());
 		portletURL.setWindowState(LiferayWindowState.EXCLUSIVE);
 
 		return portletURL.toString();
