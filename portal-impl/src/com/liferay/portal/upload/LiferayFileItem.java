@@ -214,21 +214,11 @@ public class LiferayFileItem extends DiskFileItem implements FileItem {
 	}
 
 	@Override
-	public void setString(String encode) {
-		try {
-			_encodedString = getString(encode);
-		}
-		catch (UnsupportedEncodingException unsupportedEncodingException) {
-			_log.error(
-				unsupportedEncodingException, unsupportedEncodingException);
-		}
-	}
-
-	@Override
-	protected File getTempFile() {
+	public File getTempFile() {
 		if (_tempFile != null) {
 			return _tempFile;
 		}
+
 		String tempFileName = "upload_" + _getUniqueId();
 
 		String extension = getFileNameExtension();
@@ -237,7 +227,7 @@ public class LiferayFileItem extends DiskFileItem implements FileItem {
 			tempFileName += "." + extension;
 		}
 
-		_tempFile  = new File(_repository, tempFileName);
+		_tempFile = new File(_repository, tempFileName);
 
 		FinalizeManager.register(
 			_tempFile,
@@ -245,6 +235,17 @@ public class LiferayFileItem extends DiskFileItem implements FileItem {
 			FinalizeManager.PHANTOM_REFERENCE_FACTORY);
 
 		return _tempFile;
+	}
+
+	@Override
+	public void setString(String encode) {
+		try {
+			_encodedString = getString(encode);
+		}
+		catch (UnsupportedEncodingException unsupportedEncodingException) {
+			_log.error(
+				unsupportedEncodingException, unsupportedEncodingException);
+		}
 	}
 
 	private String _getUniqueId() {
@@ -273,4 +274,5 @@ public class LiferayFileItem extends DiskFileItem implements FileItem {
 	private final File _repository;
 	private final int _sizeThreshold;
 	private File _tempFile;
+
 }
