@@ -380,13 +380,13 @@ definition {
 			webContentContent = "WC WebContent Content",
 			webContentTitle = "WC WebContent Title");
 
-		WebContentSearchPortlet.search(webContentSearchTerm = "tag1");
+		WebContentSearchPortlet.search(webContentSearchTerm = "tagX");
 
-		WebContentSearchPortlet.viewNoResults(webContentSearchTerm = "tag1");
+		WebContentSearchPortlet.viewNoResults(webContentSearchTerm = "tagX");
 
-		WebContentSearchPortlet.search(webContentSearchTerm = "name1");
+		WebContentSearchPortlet.search(webContentSearchTerm = "nameX");
 
-		WebContentSearchPortlet.viewNoResults(webContentSearchTerm = "name1");
+		WebContentSearchPortlet.viewNoResults(webContentSearchTerm = "nameX");
 	}
 
 	@priority = 3
