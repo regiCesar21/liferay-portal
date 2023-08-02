@@ -35,6 +35,7 @@ import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.SessionClicks;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.product.navigation.product.menu.constants.ProductNavigationProductMenuPortletKeys;
 import com.liferay.product.navigation.product.menu.web.internal.constants.ProductNavigationProductMenuWebKeys;
@@ -101,12 +102,8 @@ public class LayoutsTreeDisplayContext {
 
 		addLayoutURL.setParameter("mvcPath", "/select_layout_collections.jsp");
 
-		Layout layout = _themeDisplay.getLayout();
-
-		addLayoutURL.setParameter(
-			"redirect", PortalUtil.getLayoutFullURL(layout, _themeDisplay));
-		addLayoutURL.setParameter(
-			"backURL", PortalUtil.getLayoutFullURL(layout, _themeDisplay));
+		addLayoutURL.setParameter("redirect", _getRedirect());
+		addLayoutURL.setParameter("backURL", _getBackURL());
 
 		addLayoutURL.setParameter(
 			"groupId", String.valueOf(_themeDisplay.getSiteGroupId()));
@@ -130,12 +127,8 @@ public class LayoutsTreeDisplayContext {
 		addLayoutURL.setParameter(
 			"mvcPath", "/select_layout_page_template_entry.jsp");
 
-		Layout layout = _themeDisplay.getLayout();
-
-		addLayoutURL.setParameter(
-			"redirect", PortalUtil.getLayoutFullURL(layout, _themeDisplay));
-		addLayoutURL.setParameter(
-			"backURL", PortalUtil.getLayoutFullURL(layout, _themeDisplay));
+		addLayoutURL.setParameter("redirect", _getRedirect());
+		addLayoutURL.setParameter("backURL", _getBackURL());
 
 		addLayoutURL.setParameter(
 			"groupId", String.valueOf(_themeDisplay.getSiteGroupId()));
@@ -165,12 +158,8 @@ public class LayoutsTreeDisplayContext {
 		configureLayoutSetURL.setParameter(
 			"mvcRenderCommandName", "/layout_admin/edit_layout_set");
 
-		Layout layout = _themeDisplay.getLayout();
-
-		configureLayoutSetURL.setParameter(
-			"redirect", PortalUtil.getLayoutFullURL(layout, _themeDisplay));
-		configureLayoutSetURL.setParameter(
-			"backURL", PortalUtil.getLayoutFullURL(layout, _themeDisplay));
+		configureLayoutSetURL.setParameter("redirect", _getRedirect());
+		configureLayoutSetURL.setParameter("backURL", _getBackURL());
 
 		configureLayoutSetURL.setParameter(
 			"groupId", String.valueOf(_themeDisplay.getScopeGroupId()));
@@ -437,6 +426,41 @@ public class LayoutsTreeDisplayContext {
 			layout.isPrivateLayout());
 	}
 
+	private String _getBackURL() {
+		if (_backURL != null) {
+			return _backURL;
+		}
+
+		String backURL = ParamUtil.getString(_renderRequest, "p_l_back_url");
+
+		if (Validator.isNull(backURL)) {
+			backURL = ParamUtil.getString(
+				PortalUtil.getOriginalServletRequest(
+					PortalUtil.getHttpServletRequest(_liferayPortletRequest)),
+				"p_l_back_url", _themeDisplay.getURLCurrent());
+		}
+
+		_backURL = backURL;
+
+		return backURL;
+	}
+
+	private String _getRedirect() {
+		if (_redirect != null) {
+			return _redirect;
+		}
+
+		String redirect = ParamUtil.getString(_renderRequest, "redirect");
+
+		if (Validator.isNull(redirect)) {
+			redirect = PortalUtil.escapeRedirect(_getBackURL());
+		}
+
+		_redirect = redirect;
+
+		return _redirect;
+	}
+
 	private String _setSelPlid(PortletURL portletURL) {
 		if (portletURL == null) {
 			return StringPool.BLANK;
@@ -448,9 +472,11 @@ public class LayoutsTreeDisplayContext {
 		return portletURL.toString();
 	}
 
+	private String _backURL;
 	private Long _groupId;
 	private final GroupProvider _groupProvider;
 	private final LiferayPortletRequest _liferayPortletRequest;
+	private String _redirect;
 	private final RenderRequest _renderRequest;
 	private final ThemeDisplay _themeDisplay;
 
