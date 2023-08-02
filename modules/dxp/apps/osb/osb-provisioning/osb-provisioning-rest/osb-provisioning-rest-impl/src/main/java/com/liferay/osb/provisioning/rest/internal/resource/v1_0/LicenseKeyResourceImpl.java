@@ -1465,6 +1465,12 @@ public class LicenseKeyResourceImpl
 
 							curSubscriptionTerm.setEndDate(
 								productPurchase.getOriginalEndDate());
+							curSubscriptionTerm.setLicenseKeyEndDates(
+								_getLicenseKeyEndDates(
+									productPurchase.getStartDate(),
+									productPurchase.getEndDate(),
+									productPurchase.getOriginalEndDate(),
+									allowPermanentLicenses));
 						}
 
 						isGroup = true;
