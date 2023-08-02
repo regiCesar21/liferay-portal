@@ -52,14 +52,15 @@ import javax.portlet.WindowStateException;
  */
 public class LayoutsTreeDisplayContext {
 
-	public LayoutsTreeDisplayContext(
-		LiferayPortletRequest liferayPortletRequest) {
+	public LayoutsTreeDisplayContext(RenderRequest renderRequest) {
+		_liferayPortletRequest = PortalUtil.getLiferayPortletRequest(
+			renderRequest);
 
-		_liferayPortletRequest = liferayPortletRequest;
+		_renderRequest = renderRequest;
 
-		_groupProvider = (GroupProvider)liferayPortletRequest.getAttribute(
+		_groupProvider = (GroupProvider)_liferayPortletRequest.getAttribute(
 			ApplicationListWebKeys.GROUP_PROVIDER);
-		_themeDisplay = (ThemeDisplay)liferayPortletRequest.getAttribute(
+		_themeDisplay = (ThemeDisplay)_liferayPortletRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 	}
 
@@ -450,6 +451,7 @@ public class LayoutsTreeDisplayContext {
 	private Long _groupId;
 	private final GroupProvider _groupProvider;
 	private final LiferayPortletRequest _liferayPortletRequest;
+	private final RenderRequest _renderRequest;
 	private final ThemeDisplay _themeDisplay;
 
 }

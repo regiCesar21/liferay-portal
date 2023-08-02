@@ -8,7 +8,7 @@
 <%@ include file="/portlet/init.jsp" %>
 
 <%
-LayoutsTreeDisplayContext layoutsTreeDisplayContext = new LayoutsTreeDisplayContext(liferayPortletRequest);
+LayoutsTreeDisplayContext layoutsTreeDisplayContext = new LayoutsTreeDisplayContext(renderRequest);
 %>
 
 <div id="<%= liferayPortletResponse.getNamespace() %>-layout-finder">
