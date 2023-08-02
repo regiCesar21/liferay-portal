@@ -1,6 +1,15 @@
 /**
- * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
- * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
+ * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
+ *
+ * The contents of this file are subject to the terms of the Liferay Enterprise
+ * Subscription License ("License"). You may not use this file except in
+ * compliance with the License. You can obtain a copy of the License by
+ * contacting Liferay, Inc. See the License for the specific language governing
+ * permissions and limitations under the License, including but not limited to
+ * distribution rights of the Software.
+ *
+ *
+ *
  */
 
 package routines;
@@ -17,6 +26,69 @@ import routines.system.JSONObject;
  */
 public class ContactRoleParser {
 
+	public static JSONArray getPhonesJSONArray(JSONArray curPhonesJSONArray, JSONObject userJSONObject) {
+		if (curPhonesJSONArray == null) {
+			curPhonesJSONArray = new JSONArray();
+		}
+		
+		JSONArray newPhonesJSONArray = new JSONArray();
+
+		if (!userJSONObject.has("phones")) {
+			return newPhonesJSONArray;
+		}
+
+		JSONArray phonesJSONArray = userJSONObject.getJSONArray("phones");
+
+		for (int j = 0; j < phonesJSONArray.length(); j++) {
+			JSONObject phoneJSONObject = phonesJSONArray.getJSONObject(j);
+	
+			String type = phoneJSONObject.optString("type");
+			boolean primary = phoneJSONObject.optBoolean("primary");
+
+			boolean updated = false;
+
+			for (int k = 0; k < curPhonesJSONArray.length(); k++) {
+				JSONObject curPhoneJSONObject = curPhonesJSONArray.getJSONObject(k);
+
+				String curType = curPhoneJSONObject.optString("phoneType");
+				boolean curPrimary = curPhoneJSONObject.optBoolean("primary");
+
+				if ((type.equals("Mobile") && curType.equals("mobile-phone")) ||
+					(type.equals("Other") && curType.equals("other") && primary && curPrimary)) {
+
+					JSONObject newPhoneJSONObject = new JSONObject(curPhoneJSONObject.toString());
+					
+					newPhoneJSONObject.put("phoneNumber", phoneJSONObject.getString("number"));
+
+					newPhonesJSONArray.put(newPhoneJSONObject);
+
+					updated = true;
+
+					break;
+				}
+			}
+
+			if (!updated) {
+				JSONObject curJSONObject = new JSONObject();
+
+				curJSONObject.put("phoneNumber", phoneJSONObject.getString("number"));
+
+				if (type.equals("Mobile")) {
+					curJSONObject.put("phoneType", "mobile-phone");
+				}
+				else {
+					curJSONObject.put("phoneType", "other");
+				}
+
+				curJSONObject.put("primary", primary);
+
+				newPhonesJSONArray.put(curJSONObject);
+			}
+		}
+	
+		return newPhonesJSONArray;
+	}
+	
 	public static JSONArray filterContactRoles(
 		JSONArray contactRolesJSONArray) {
 
@@ -33,13 +105,19 @@ public class ContactRoleParser {
 					ContactRoleConstants.
 						NAME_LIFERAY_CUSTOMER_SUCCESS_PROVISIONING) ||
 				name.equals(
+					ContactRoleConstants.NAME_CRITICAL_INCIDENT_CONTACT_PROVISIONING) ||
+				name.equals(
+					ContactRoleConstants.NAME_DATA_BREACH_CONTACT_PROVISIONING) ||
+				name.equals(
 					ContactRoleConstants.NAME_LIFERAY_SALES_PROVISIONING) ||
 				name.equals(ContactRoleConstants.NAME_MEMBER_PROVISIONING) ||
 				name.equals(
 					ContactRoleConstants.NAME_PARTNER_MANAGER_PROVISIONING) ||
 				name.equals(
 					ContactRoleConstants.NAME_PARTNER_MEMBER_PROVISIONING) ||
-				name.equals(ContactRoleConstants.NAME_REQUESTER_PROVISIONING)) {
+				name.equals(ContactRoleConstants.NAME_REQUESTER_PROVISIONING) ||
+				name.equals(
+					ContactRoleConstants.NAME_SECURITY_INCIDENT_CONTACT_PROVISIONING)) {
 
 				newJSONArray.put(jsonObject);
 			}
@@ -48,6 +126,23 @@ public class ContactRoleParser {
 		return newJSONArray;
 	}
 
+	public static void setAccountRoleId(
+			Map<String, String> accountRoleIdMap, String contactRoleName, long accountRoleId) {
+	
+		if (contactRoleName.equals(ContactRoleConstants.NAME_ADMINISTRATOR_CP) ||
+			contactRoleName.equals(ContactRoleConstants.NAME_CRITICAL_INCIDENT_CONTACT_CP) ||
+			contactRoleName.equals(ContactRoleConstants.NAME_DATA_BREACH_CONTACT_CP) ||
+			contactRoleName.equals(ContactRoleConstants.NAME_MEMBER_CP) ||
+			contactRoleName.equals(ContactRoleConstants.NAME_PARTNER_MANAGER_CP) ||
+			contactRoleName.equals(ContactRoleConstants.NAME_PARTNER_MEMBER_CP) ||
+			contactRoleName.equals(ContactRoleConstants.NAME_PROVISIONING_CP) ||
+			contactRoleName.equals(ContactRoleConstants.NAME_REQUESTER_CP) ||
+			contactRoleName.equals(ContactRoleConstants.NAME_SECURITY_INCIDENT_CONTACT_CP)) {
+			
+			accountRoleIdMap.put(contactRoleName, String.valueOf(accountRoleId));
+		}
+	}
+	
 	public static String getAccountRoleId(
 		Map<String, String> accountRoleIdMap, String contactRoleName) {
 
@@ -58,7 +153,17 @@ public class ContactRoleParser {
 		if (contactRoleName.equals(
 				ContactRoleConstants.NAME_ADMINISTRATOR_PROVISIONING)) {
 
-			return accountRoleIdMap.get("supportAdministratorRoleId");
+			return accountRoleIdMap.get(ContactRoleConstants.NAME_ADMINISTRATOR_CP);
+		}
+		else if (contactRoleName.equals(
+				ContactRoleConstants.NAME_CRITICAL_INCIDENT_CONTACT_PROVISIONING)) {
+
+			return accountRoleIdMap.get(ContactRoleConstants.NAME_CRITICAL_INCIDENT_CONTACT_CP);
+		}
+		else if (contactRoleName.equals(
+				ContactRoleConstants.NAME_DATA_BREACH_CONTACT_PROVISIONING)) {
+
+			return accountRoleIdMap.get(ContactRoleConstants.NAME_DATA_BREACH_CONTACT_CP);
 		}
 		else if (contactRoleName.equals(
 					ContactRoleConstants.
@@ -66,27 +171,32 @@ public class ContactRoleParser {
 				 contactRoleName.equals(
 					 ContactRoleConstants.NAME_LIFERAY_SALES_PROVISIONING)) {
 
-			return accountRoleIdMap.get("provisioningRoleId");
+			return accountRoleIdMap.get(ContactRoleConstants.NAME_PROVISIONING_CP);
 		}
 		else if (contactRoleName.equals(
 					ContactRoleConstants.NAME_MEMBER_PROVISIONING)) {
 
-			return accountRoleIdMap.get("supportUserRoleId");
+			return accountRoleIdMap.get(ContactRoleConstants.NAME_MEMBER_CP);
 		}
 		else if (contactRoleName.equals(
 					ContactRoleConstants.NAME_PARTNER_MANAGER_PROVISIONING)) {
 
-			return accountRoleIdMap.get("partnerManagerRoleId");
+			return accountRoleIdMap.get(ContactRoleConstants.NAME_PARTNER_MANAGER_CP);
 		}
 		else if (contactRoleName.equals(
 					ContactRoleConstants.NAME_PARTNER_MEMBER_PROVISIONING)) {
 
-			return accountRoleIdMap.get("partnerMemberRoleId");
+			return accountRoleIdMap.get(ContactRoleConstants.NAME_PARTNER_MEMBER_CP);
 		}
 		else if (contactRoleName.equals(
 					ContactRoleConstants.NAME_REQUESTER_PROVISIONING)) {
 
-			return accountRoleIdMap.get("supportRequesterRoleId");
+			return accountRoleIdMap.get(ContactRoleConstants.NAME_REQUESTER_CP);
+		}
+		else if (contactRoleName.equals(
+				ContactRoleConstants.NAME_SECURITY_INCIDENT_CONTACT_PROVISIONING)) {
+
+			return accountRoleIdMap.get(ContactRoleConstants.NAME_SECURITY_INCIDENT_CONTACT_CP);
 		}
 
 		return "";
@@ -104,8 +214,12 @@ public class ContactRoleParser {
 
 			String contactRoleName = jsonObject.getString("name");
 
-			accountRoleIdList.add(
-				getAccountRoleId(accountRoleMap, contactRoleName));
+			String accountRoleId = getAccountRoleId(
+				accountRoleMap, contactRoleName);
+			
+			if ((accountRoleId != null) && !accountRoleId.equals("")) {
+				accountRoleIdList.add(accountRoleId);
+			}
 		}
 
 		return accountRoleIdList;
