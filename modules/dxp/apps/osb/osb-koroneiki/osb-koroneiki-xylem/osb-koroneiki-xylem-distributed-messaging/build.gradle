@@ -7,6 +7,7 @@ dependencies {
 	compileOnly group: "com.rabbitmq", name: "amqp-client", version: "5.7.3"
 	compileOnly group: "javax.mail", name: "mail", version: "1.4"
 	compileOnly project(":dxp:apps:osb:osb-distributed-messaging:osb-distributed-messaging-api")
+	compileOnly project(":dxp:apps:osb:osb-distributed-messaging:osb-distributed-messaging-google-pubsub-connector")
 	compileOnly project(":dxp:apps:osb:osb-distributed-messaging:osb-distributed-messaging-publishing-api")
 	compileOnly project(":dxp:apps:osb:osb-distributed-messaging:osb-distributed-messaging-rabbitmq-connector")
 	compileOnly project(":dxp:apps:osb:osb-distributed-messaging:osb-distributed-messaging-subscribing-api")

@@ -16,7 +16,8 @@ import org.osgi.service.component.annotations.Reference;
  * @author Amos Fong
  */
 @Component(
-	immediate = true, property = {"exchange=", "publishing.topic.pattern=.*"},
+	immediate = true,
+	property = {"exchange=", "publishing.topic.pattern=koroneiki.*"},
 	service = XylemMessageBroker.class
 )
 public class XylemMessageBroker extends BaseMessageBroker {

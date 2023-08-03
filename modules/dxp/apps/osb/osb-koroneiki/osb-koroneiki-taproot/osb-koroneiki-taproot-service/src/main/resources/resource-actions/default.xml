@@ -3,6 +3,24 @@
 
 <resource-action-mapping>
 	<model-resource>
+		<model-name>com.liferay.osb.koroneiki.phloem.okta</model-name>
+		<portlet-ref>
+			<portlet-name>com_liferay_osb_koroneiki_taproot_web_portlet_ContactsAdminPortlet</portlet-name>
+		</portlet-ref>
+		<root>true</root>
+		<weight>1</weight>
+		<permissions>
+			<supports>
+				<action-key>ADD_USER</action-key>
+			</supports>
+			<site-member-defaults />
+			<guest-defaults />
+			<guest-unsupported>
+				<action-key>ADD_USER</action-key>
+			</guest-unsupported>
+		</permissions>
+	</model-resource>
+	<model-resource>
 		<model-name>com.liferay.osb.koroneiki.taproot.accounts</model-name>
 		<portlet-ref>
 			<portlet-name>com_liferay_osb_koroneiki_taproot_web_portlet_AccountsAdminPortlet</portlet-name>

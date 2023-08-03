@@ -13,6 +13,11 @@ import com.liferay.portal.kernel.json.JSONObject;
  */
 public interface ContactIdentityProvider {
 
+	public void createContact(
+			String emailAddress, String firstName, String middleName,
+			String lastName, String uuid)
+		throws Exception;
+
 	public Contact fetchContactByEmailAddress(String emailAddress)
 		throws Exception;
 

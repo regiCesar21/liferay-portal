@@ -5,13 +5,17 @@
 
 package com.liferay.osb.koroneiki.root.identity.management.internal.provider;
 
+import com.liferay.osb.distributed.messaging.Message;
+import com.liferay.osb.distributed.messaging.publishing.MessagePublisher;
 import com.liferay.osb.koroneiki.root.identity.management.provider.ContactIdentityProvider;
 import com.liferay.osb.koroneiki.taproot.exception.ContactEmailAddressException;
 import com.liferay.osb.koroneiki.taproot.exception.NoSuchContactException;
 import com.liferay.osb.koroneiki.taproot.model.Contact;
 import com.liferay.osb.koroneiki.taproot.service.ContactLocalService;
+import com.liferay.osb.koroneiki.xylem.distributed.messaging.constants.GooglePubsubConstants;
 import com.liferay.portal.instances.service.PortalInstancesLocalService;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.exception.RequiredFieldException;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
@@ -25,6 +29,7 @@ import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.kernel.uuid.PortalUUIDUtil;
 
 import java.util.Map;
 
@@ -42,6 +47,48 @@ import org.osgi.service.component.annotations.Reference;
 	service = ContactIdentityProvider.class
 )
 public class OktaContactIdentityProvider implements ContactIdentityProvider {
+
+	public void createContact(
+			String emailAddress, String firstName, String middleName,
+			String lastName, String uuid)
+		throws Exception {
+
+		if (Validator.isNull(emailAddress) ||
+			!Validator.isEmailAddress(emailAddress)) {
+
+			throw new RequiredFieldException("emailAddress", "emailAddress");
+		}
+
+		if (Validator.isNull(firstName)) {
+			throw new RequiredFieldException("firstName", "firstName");
+		}
+
+		if (Validator.isNull(lastName)) {
+			throw new RequiredFieldException("lastName", "lastName");
+		}
+
+		if (Validator.isNull(uuid)) {
+			uuid = PortalUUIDUtil.generate();
+		}
+
+		JSONObject jsonObject = _jsonFactory.createJSONObject();
+
+		jsonObject.put(
+			"emailAddress", emailAddress
+		).put(
+			"firstName", firstName
+		).put(
+			"lastName", lastName
+		).put(
+			"middleName", middleName
+		).put(
+			"uuid", uuid
+		);
+
+		_messagePublisher.publish(
+			GooglePubsubConstants.TOPIC_OKTA_USER_CREATE,
+			new Message(jsonObject.toString()));
+	}
 
 	public Contact fetchContactByEmailAddress(String emailAddress)
 		throws Exception {
@@ -252,6 +299,9 @@ public class OktaContactIdentityProvider implements ContactIdentityProvider {
 
 	@Reference
 	private JSONFactory _jsonFactory;
+
+	@Reference
+	private MessagePublisher _messagePublisher;
 
 	@Reference
 	private PortalInstancesLocalService _portalInstancesLocalService;

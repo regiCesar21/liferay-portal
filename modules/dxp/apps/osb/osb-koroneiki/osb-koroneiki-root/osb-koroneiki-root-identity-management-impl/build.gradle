@@ -8,6 +8,9 @@ dependencies {
 	compileOnly group: "org.hibernate", name: "hibernate-core", version: "3.6.10.Final"
 	compileOnly group: "org.osgi", name: "org.osgi.annotation.versioning", version: "1.1.0"
 	compileOnly group: "org.osgi", name: "osgi.core", version: "6.0.0"
+	compileOnly project(":dxp:apps:osb:osb-distributed-messaging:osb-distributed-messaging-api")
+	compileOnly project(":dxp:apps:osb:osb-distributed-messaging:osb-distributed-messaging-publishing-api")
 	compileOnly project(":dxp:apps:osb:osb-koroneiki:osb-koroneiki-root:osb-koroneiki-root-identity-management-api")
 	compileOnly project(":dxp:apps:osb:osb-koroneiki:osb-koroneiki-taproot:osb-koroneiki-taproot-api")
+	compileOnly project(":dxp:apps:osb:osb-koroneiki:osb-koroneiki-xylem:osb-koroneiki-xylem-distributed-messaging")
 }

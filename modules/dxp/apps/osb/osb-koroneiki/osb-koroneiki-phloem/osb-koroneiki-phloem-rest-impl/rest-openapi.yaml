@@ -680,6 +680,35 @@ components:
                     enum: ["General", "Sales"]
                     type: string
             type: object
+        OktaUser:
+            description:
+                Represents an Okta user.
+            properties:
+                emailAddress:
+                    description:
+                        The email address of the user.
+                    type: string
+                firstName:
+                    description:
+                        The first name of the user.
+                    type: string
+                lastName:
+                    description:
+                        The last name of the user.
+                    type: string
+                middleName:
+                    description:
+                        The middle name of the user.
+                    type: string
+                uuid:
+                    description:
+                        A universal identifier to reference this user.
+                    type: string
+            required:
+                - emailAddress
+                - firstName
+                - lastName
+            type: object
         Phone:
             description:
                 Represents a phone number.
@@ -3745,6 +3774,26 @@ paths:
                             schema:
                                 $ref: "#/components/schemas/Note"
             tags: ["Note"]
+    "/okta-users":
+        post:
+            parameters:
+                - $ref: "#/components/parameters/AgentName"
+                - $ref: "#/components/parameters/AgentUID"
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: "#/components/schemas/OktaUser"
+                    application/xml:
+                        schema:
+                            $ref: "#/components/schemas/OktaUser"
+                required: true
+            responses:
+                200:
+                    content:
+                        application/json: {}
+                        application/xml: {}
+            tags: ["OktaUser"]
     "/postal-addresses/{postalAddressId}":
         delete:
             operationId: deletePostalAddress
