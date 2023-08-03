@@ -1,11 +1,11 @@
 /**
- * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-FileCopyrightText: (c) 2023 Liferay, Inc. https://liferay.com
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
 package com.liferay.osb.koroneiki.phloem.rest.resource.v1_0;
 
-import com.liferay.osb.koroneiki.phloem.rest.dto.v1_0.CountryRegion;
+import com.liferay.osb.koroneiki.phloem.rest.dto.v1_0.OktaUser;
 import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.search.filter.Filter;
 import com.liferay.portal.kernel.service.GroupLocalService;
@@ -16,7 +16,6 @@ import com.liferay.portal.odata.filter.ExpressionConvert;
 import com.liferay.portal.odata.filter.FilterParserProvider;
 import com.liferay.portal.odata.sort.SortParserProvider;
 import com.liferay.portal.vulcan.accept.language.AcceptLanguage;
-import com.liferay.portal.vulcan.pagination.Page;
 
 import java.util.Collections;
 import java.util.List;
@@ -42,9 +41,11 @@ import org.osgi.annotation.versioning.ProviderType;
  */
 @Generated("")
 @ProviderType
-public interface CountryRegionResource {
+public interface OktaUserResource {
 
-	public Page<CountryRegion> getCountryRegionsPage() throws Exception;
+	public void postOktaUser(
+			String agentName, String agentUID, OktaUser oktaUser)
+		throws Exception;
 
 	public default void setContextAcceptLanguage(
 		AcceptLanguage contextAcceptLanguage) {
@@ -103,7 +104,7 @@ public interface CountryRegionResource {
 	@ProviderType
 	public interface Builder {
 
-		public CountryRegionResource build();
+		public OktaUserResource build();
 
 		public Builder checkPermissions(boolean checkPermissions);
 

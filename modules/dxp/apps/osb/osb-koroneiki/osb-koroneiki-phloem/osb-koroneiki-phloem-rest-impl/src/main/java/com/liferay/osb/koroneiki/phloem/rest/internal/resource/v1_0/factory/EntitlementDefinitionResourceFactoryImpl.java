@@ -43,6 +43,8 @@ import javax.annotation.Generated;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import javax.ws.rs.core.UriInfo;
+
 import org.osgi.service.component.ComponentServiceObjects;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -75,7 +77,7 @@ public class EntitlementDefinitionResourceFactoryImpl
 						(proxy, method, arguments) -> _invoke(
 							method, arguments, _checkPermissions,
 							_httpServletRequest, _httpServletResponse,
-							_preferredLocale, _user));
+							_preferredLocale, _uriInfo, _user));
 			}
 
 			@Override
@@ -115,6 +117,15 @@ public class EntitlementDefinitionResourceFactoryImpl
 			}
 
 			@Override
+			public EntitlementDefinitionResource.Builder uriInfo(
+				UriInfo uriInfo) {
+
+				_uriInfo = uriInfo;
+
+				return this;
+			}
+
+			@Override
 			public EntitlementDefinitionResource.Builder user(User user) {
 				_user = user;
 
@@ -125,6 +136,7 @@ public class EntitlementDefinitionResourceFactoryImpl
 			private HttpServletRequest _httpServletRequest;
 			private HttpServletResponse _httpServletResponse;
 			private Locale _preferredLocale;
+			private UriInfo _uriInfo;
 			private User _user;
 
 		};
@@ -162,7 +174,7 @@ public class EntitlementDefinitionResourceFactoryImpl
 			Method method, Object[] arguments, boolean checkPermissions,
 			HttpServletRequest httpServletRequest,
 			HttpServletResponse httpServletResponse, Locale preferredLocale,
-			User user)
+			UriInfo uriInfo, User user)
 		throws Throwable {
 
 		String name = PrincipalThreadLocal.getName();
@@ -195,6 +207,7 @@ public class EntitlementDefinitionResourceFactoryImpl
 			httpServletRequest);
 		entitlementDefinitionResource.setContextHttpServletResponse(
 			httpServletResponse);
+		entitlementDefinitionResource.setContextUriInfo(uriInfo);
 		entitlementDefinitionResource.setContextUser(user);
 		entitlementDefinitionResource.setExpressionConvert(_expressionConvert);
 		entitlementDefinitionResource.setFilterParserProvider(

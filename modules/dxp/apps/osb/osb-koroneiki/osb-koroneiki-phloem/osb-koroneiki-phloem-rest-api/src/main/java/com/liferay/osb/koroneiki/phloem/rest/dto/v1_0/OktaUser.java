@@ -5,11 +5,9 @@
 
 package com.liferay.osb.koroneiki.phloem.rest.dto.v1_0;
 
-import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonFilter;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.annotation.JsonValue;
 
 import com.liferay.petra.function.UnsafeSupplier;
 import com.liferay.petra.string.StringBundler;
@@ -29,7 +27,7 @@ import java.util.Set;
 
 import javax.annotation.Generated;
 
-import javax.validation.Valid;
+import javax.validation.constraints.NotEmpty;
 
 import javax.xml.bind.annotation.XmlRootElement;
 
@@ -38,34 +36,38 @@ import javax.xml.bind.annotation.XmlRootElement;
  * @generated
  */
 @Generated("")
-@GraphQLName(description = "Represents a phone number.", value = "Phone")
+@GraphQLName(description = "Represents an Okta user.", value = "OktaUser")
 @JsonFilter("Liferay.Vulcan")
-@XmlRootElement(name = "Phone")
-public class Phone implements Serializable {
+@Schema(
+	description = "Represents an Okta user.",
+	requiredProperties = {"emailAddress", "firstName", "lastName"}
+)
+@XmlRootElement(name = "OktaUser")
+public class OktaUser implements Serializable {
 
-	public static Phone toDTO(String json) {
-		return ObjectMapperUtil.readValue(Phone.class, json);
+	public static OktaUser toDTO(String json) {
+		return ObjectMapperUtil.readValue(OktaUser.class, json);
 	}
 
-	public static Phone unsafeToDTO(String json) {
-		return ObjectMapperUtil.unsafeReadValue(Phone.class, json);
+	public static OktaUser unsafeToDTO(String json) {
+		return ObjectMapperUtil.unsafeReadValue(OktaUser.class, json);
 	}
 
-	@Schema(description = "The phone number.")
-	public String getNumber() {
-		return number;
+	@Schema(description = "The email address of the user.")
+	public String getEmailAddress() {
+		return emailAddress;
 	}
 
-	public void setNumber(String number) {
-		this.number = number;
+	public void setEmailAddress(String emailAddress) {
+		this.emailAddress = emailAddress;
 	}
 
 	@JsonIgnore
-	public void setNumber(
-		UnsafeSupplier<String, Exception> numberUnsafeSupplier) {
+	public void setEmailAddress(
+		UnsafeSupplier<String, Exception> emailAddressUnsafeSupplier) {
 
 		try {
-			number = numberUnsafeSupplier.get();
+			emailAddress = emailAddressUnsafeSupplier.get();
 		}
 		catch (RuntimeException re) {
 			throw re;
@@ -75,27 +77,110 @@ public class Phone implements Serializable {
 		}
 	}
 
-	@GraphQLField(description = "The phone number.")
+	@GraphQLField(description = "The email address of the user.")
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
-	protected String number;
+	@NotEmpty
+	protected String emailAddress;
 
-	@Schema(
-		description = "A flag that identifies whether this is the main phone number of the contact."
-	)
-	public Boolean getPrimary() {
-		return primary;
+	@Schema(description = "The first name of the user.")
+	public String getFirstName() {
+		return firstName;
 	}
 
-	public void setPrimary(Boolean primary) {
-		this.primary = primary;
+	public void setFirstName(String firstName) {
+		this.firstName = firstName;
 	}
 
 	@JsonIgnore
-	public void setPrimary(
-		UnsafeSupplier<Boolean, Exception> primaryUnsafeSupplier) {
+	public void setFirstName(
+		UnsafeSupplier<String, Exception> firstNameUnsafeSupplier) {
 
 		try {
-			primary = primaryUnsafeSupplier.get();
+			firstName = firstNameUnsafeSupplier.get();
+		}
+		catch (RuntimeException re) {
+			throw re;
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	@GraphQLField(description = "The first name of the user.")
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	@NotEmpty
+	protected String firstName;
+
+	@Schema(description = "The last name of the user.")
+	public String getLastName() {
+		return lastName;
+	}
+
+	public void setLastName(String lastName) {
+		this.lastName = lastName;
+	}
+
+	@JsonIgnore
+	public void setLastName(
+		UnsafeSupplier<String, Exception> lastNameUnsafeSupplier) {
+
+		try {
+			lastName = lastNameUnsafeSupplier.get();
+		}
+		catch (RuntimeException re) {
+			throw re;
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	@GraphQLField(description = "The last name of the user.")
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	@NotEmpty
+	protected String lastName;
+
+	@Schema(description = "The middle name of the user.")
+	public String getMiddleName() {
+		return middleName;
+	}
+
+	public void setMiddleName(String middleName) {
+		this.middleName = middleName;
+	}
+
+	@JsonIgnore
+	public void setMiddleName(
+		UnsafeSupplier<String, Exception> middleNameUnsafeSupplier) {
+
+		try {
+			middleName = middleNameUnsafeSupplier.get();
+		}
+		catch (RuntimeException re) {
+			throw re;
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	@GraphQLField(description = "The middle name of the user.")
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	protected String middleName;
+
+	@Schema(description = "A universal identifier to reference this user.")
+	public String getUuid() {
+		return uuid;
+	}
+
+	public void setUuid(String uuid) {
+		this.uuid = uuid;
+	}
+
+	@JsonIgnore
+	public void setUuid(UnsafeSupplier<String, Exception> uuidUnsafeSupplier) {
+		try {
+			uuid = uuidUnsafeSupplier.get();
 		}
 		catch (RuntimeException re) {
 			throw re;
@@ -106,46 +191,10 @@ public class Phone implements Serializable {
 	}
 
 	@GraphQLField(
-		description = "A flag that identifies whether this is the main phone number of the contact."
+		description = "A universal identifier to reference this user."
 	)
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
-	protected Boolean primary;
-
-	@Schema(description = "The phone number's type.")
-	@Valid
-	public Type getType() {
-		return type;
-	}
-
-	@JsonIgnore
-	public String getTypeAsString() {
-		if (type == null) {
-			return null;
-		}
-
-		return type.toString();
-	}
-
-	public void setType(Type type) {
-		this.type = type;
-	}
-
-	@JsonIgnore
-	public void setType(UnsafeSupplier<Type, Exception> typeUnsafeSupplier) {
-		try {
-			type = typeUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
-	}
-
-	@GraphQLField(description = "The phone number's type.")
-	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
-	protected Type type;
+	protected String uuid;
 
 	@Override
 	public boolean equals(Object object) {
@@ -153,13 +202,13 @@ public class Phone implements Serializable {
 			return true;
 		}
 
-		if (!(object instanceof Phone)) {
+		if (!(object instanceof OktaUser)) {
 			return false;
 		}
 
-		Phone phone = (Phone)object;
+		OktaUser oktaUser = (OktaUser)object;
 
-		return Objects.equals(toString(), phone.toString());
+		return Objects.equals(toString(), oktaUser.toString());
 	}
 
 	@Override
@@ -174,40 +223,72 @@ public class Phone implements Serializable {
 
 		sb.append("{");
 
-		if (number != null) {
+		if (emailAddress != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
 			}
 
-			sb.append("\"number\": ");
+			sb.append("\"emailAddress\": ");
 
 			sb.append("\"");
 
-			sb.append(_escape(number));
+			sb.append(_escape(emailAddress));
 
 			sb.append("\"");
 		}
 
-		if (primary != null) {
+		if (firstName != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
 			}
 
-			sb.append("\"primary\": ");
-
-			sb.append(primary);
-		}
-
-		if (type != null) {
-			if (sb.length() > 1) {
-				sb.append(", ");
-			}
-
-			sb.append("\"type\": ");
+			sb.append("\"firstName\": ");
 
 			sb.append("\"");
 
-			sb.append(type);
+			sb.append(_escape(firstName));
+
+			sb.append("\"");
+		}
+
+		if (lastName != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"lastName\": ");
+
+			sb.append("\"");
+
+			sb.append(_escape(lastName));
+
+			sb.append("\"");
+		}
+
+		if (middleName != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"middleName\": ");
+
+			sb.append("\"");
+
+			sb.append(_escape(middleName));
+
+			sb.append("\"");
+		}
+
+		if (uuid != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"uuid\": ");
+
+			sb.append("\"");
+
+			sb.append(_escape(uuid));
 
 			sb.append("\"");
 		}
@@ -219,48 +300,10 @@ public class Phone implements Serializable {
 
 	@Schema(
 		accessMode = Schema.AccessMode.READ_ONLY,
-		defaultValue = "com.liferay.osb.koroneiki.phloem.rest.dto.v1_0.Phone",
+		defaultValue = "com.liferay.osb.koroneiki.phloem.rest.dto.v1_0.OktaUser",
 		name = "x-class-name"
 	)
 	public String xClassName;
-
-	@GraphQLName("Type")
-	public static enum Type {
-
-		MOBILE("Mobile"), OTHER("Other");
-
-		@JsonCreator
-		public static Type create(String value) {
-			if ((value == null) || value.equals("")) {
-				return null;
-			}
-
-			for (Type type : values()) {
-				if (Objects.equals(type.getValue(), value)) {
-					return type;
-				}
-			}
-
-			throw new IllegalArgumentException("Invalid enum value: " + value);
-		}
-
-		@JsonValue
-		public String getValue() {
-			return _value;
-		}
-
-		@Override
-		public String toString() {
-			return _value;
-		}
-
-		private Type(String value) {
-			_value = value;
-		}
-
-		private final String _value;
-
-	}
 
 	private static String _escape(Object object) {
 		return StringUtil.replace(

@@ -15,6 +15,7 @@ import com.liferay.osb.koroneiki.phloem.rest.dto.v1_0.ContactRolePermission;
 import com.liferay.osb.koroneiki.phloem.rest.dto.v1_0.EntitlementDefinition;
 import com.liferay.osb.koroneiki.phloem.rest.dto.v1_0.ExternalLink;
 import com.liferay.osb.koroneiki.phloem.rest.dto.v1_0.Note;
+import com.liferay.osb.koroneiki.phloem.rest.dto.v1_0.OktaUser;
 import com.liferay.osb.koroneiki.phloem.rest.dto.v1_0.PostalAddress;
 import com.liferay.osb.koroneiki.phloem.rest.dto.v1_0.Product;
 import com.liferay.osb.koroneiki.phloem.rest.dto.v1_0.ProductConsumption;
@@ -33,6 +34,7 @@ import com.liferay.osb.koroneiki.phloem.rest.resource.v1_0.ContactRoleResource;
 import com.liferay.osb.koroneiki.phloem.rest.resource.v1_0.EntitlementDefinitionResource;
 import com.liferay.osb.koroneiki.phloem.rest.resource.v1_0.ExternalLinkResource;
 import com.liferay.osb.koroneiki.phloem.rest.resource.v1_0.NoteResource;
+import com.liferay.osb.koroneiki.phloem.rest.resource.v1_0.OktaUserResource;
 import com.liferay.osb.koroneiki.phloem.rest.resource.v1_0.PostalAddressResource;
 import com.liferay.osb.koroneiki.phloem.rest.resource.v1_0.ProductConsumptionResource;
 import com.liferay.osb.koroneiki.phloem.rest.resource.v1_0.ProductPurchaseResource;
@@ -121,6 +123,14 @@ public class Mutation {
 
 		_noteResourceComponentServiceObjects =
 			noteResourceComponentServiceObjects;
+	}
+
+	public static void setOktaUserResourceComponentServiceObjects(
+		ComponentServiceObjects<OktaUserResource>
+			oktaUserResourceComponentServiceObjects) {
+
+		_oktaUserResourceComponentServiceObjects =
+			oktaUserResourceComponentServiceObjects;
 	}
 
 	public static void setPostalAddressResourceComponentServiceObjects(
@@ -967,6 +977,22 @@ public class Mutation {
 	}
 
 	@GraphQLField
+	public boolean createOktaUser(
+			@GraphQLName("agentName") String agentName,
+			@GraphQLName("agentUID") String agentUID,
+			@GraphQLName("oktaUser") OktaUser oktaUser)
+		throws Exception {
+
+		_applyVoidComponentServiceObjects(
+			_oktaUserResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			oktaUserResource -> oktaUserResource.postOktaUser(
+				agentName, agentUID, oktaUser));
+
+		return true;
+	}
+
+	@GraphQLField
 	public PostalAddress createAccountAccountKeyPostalAddress(
 			@GraphQLName("agentName") String agentName,
 			@GraphQLName("agentUID") String agentUID,
@@ -1707,6 +1733,19 @@ public class Mutation {
 		noteResource.setRoleLocalService(_roleLocalService);
 	}
 
+	private void _populateResourceContext(OktaUserResource oktaUserResource)
+		throws Exception {
+
+		oktaUserResource.setContextAcceptLanguage(_acceptLanguage);
+		oktaUserResource.setContextCompany(_company);
+		oktaUserResource.setContextHttpServletRequest(_httpServletRequest);
+		oktaUserResource.setContextHttpServletResponse(_httpServletResponse);
+		oktaUserResource.setContextUriInfo(_uriInfo);
+		oktaUserResource.setContextUser(_user);
+		oktaUserResource.setGroupLocalService(_groupLocalService);
+		oktaUserResource.setRoleLocalService(_roleLocalService);
+	}
+
 	private void _populateResourceContext(
 			PostalAddressResource postalAddressResource)
 		throws Exception {
@@ -1807,6 +1846,8 @@ public class Mutation {
 		_externalLinkResourceComponentServiceObjects;
 	private static ComponentServiceObjects<NoteResource>
 		_noteResourceComponentServiceObjects;
+	private static ComponentServiceObjects<OktaUserResource>
+		_oktaUserResourceComponentServiceObjects;
 	private static ComponentServiceObjects<PostalAddressResource>
 		_postalAddressResourceComponentServiceObjects;
 	private static ComponentServiceObjects<ProductResource>

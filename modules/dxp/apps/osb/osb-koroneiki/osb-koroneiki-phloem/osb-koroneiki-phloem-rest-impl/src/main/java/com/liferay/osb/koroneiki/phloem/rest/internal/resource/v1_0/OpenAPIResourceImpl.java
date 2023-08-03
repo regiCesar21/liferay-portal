@@ -105,6 +105,8 @@ public class OpenAPIResourceImpl {
 
 			add(NoteResourceImpl.class);
 
+			add(OktaUserResourceImpl.class);
+
 			add(PostalAddressResourceImpl.class);
 
 			add(ProductResourceImpl.class);

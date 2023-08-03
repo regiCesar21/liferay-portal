@@ -1,12 +1,12 @@
 /**
- * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-FileCopyrightText: (c) 2023 Liferay, Inc. https://liferay.com
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
 package com.liferay.osb.koroneiki.phloem.rest.internal.resource.v1_0.factory;
 
 import com.liferay.osb.koroneiki.phloem.rest.internal.security.permission.LiberalPermissionChecker;
-import com.liferay.osb.koroneiki.phloem.rest.resource.v1_0.PostalAddressResource;
+import com.liferay.osb.koroneiki.phloem.rest.resource.v1_0.OktaUserResource;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.search.filter.Filter;
@@ -55,24 +55,23 @@ import org.osgi.service.component.annotations.ReferenceScope;
  * @generated
  */
 @Component(
-	property = "resource.locator.key=/koroneiki-rest/v1.0/PostalAddress",
-	service = PostalAddressResource.Factory.class
+	property = "resource.locator.key=/koroneiki-rest/v1.0/OktaUser",
+	service = OktaUserResource.Factory.class
 )
 @Generated("")
-public class PostalAddressResourceFactoryImpl
-	implements PostalAddressResource.Factory {
+public class OktaUserResourceFactoryImpl implements OktaUserResource.Factory {
 
 	@Override
-	public PostalAddressResource.Builder create() {
-		return new PostalAddressResource.Builder() {
+	public OktaUserResource.Builder create() {
+		return new OktaUserResource.Builder() {
 
 			@Override
-			public PostalAddressResource build() {
+			public OktaUserResource build() {
 				if (_user == null) {
 					throw new IllegalArgumentException("User is not set");
 				}
 
-				return _postalAddressResourceProxyProviderFunction.apply(
+				return _oktaUserResourceProxyProviderFunction.apply(
 					(proxy, method, arguments) -> _invoke(
 						method, arguments, _checkPermissions,
 						_httpServletRequest, _httpServletResponse,
@@ -80,7 +79,7 @@ public class PostalAddressResourceFactoryImpl
 			}
 
 			@Override
-			public PostalAddressResource.Builder checkPermissions(
+			public OktaUserResource.Builder checkPermissions(
 				boolean checkPermissions) {
 
 				_checkPermissions = checkPermissions;
@@ -89,7 +88,7 @@ public class PostalAddressResourceFactoryImpl
 			}
 
 			@Override
-			public PostalAddressResource.Builder httpServletRequest(
+			public OktaUserResource.Builder httpServletRequest(
 				HttpServletRequest httpServletRequest) {
 
 				_httpServletRequest = httpServletRequest;
@@ -98,7 +97,7 @@ public class PostalAddressResourceFactoryImpl
 			}
 
 			@Override
-			public PostalAddressResource.Builder httpServletResponse(
+			public OktaUserResource.Builder httpServletResponse(
 				HttpServletResponse httpServletResponse) {
 
 				_httpServletResponse = httpServletResponse;
@@ -107,7 +106,7 @@ public class PostalAddressResourceFactoryImpl
 			}
 
 			@Override
-			public PostalAddressResource.Builder preferredLocale(
+			public OktaUserResource.Builder preferredLocale(
 				Locale preferredLocale) {
 
 				_preferredLocale = preferredLocale;
@@ -116,14 +115,14 @@ public class PostalAddressResourceFactoryImpl
 			}
 
 			@Override
-			public PostalAddressResource.Builder uriInfo(UriInfo uriInfo) {
+			public OktaUserResource.Builder uriInfo(UriInfo uriInfo) {
 				_uriInfo = uriInfo;
 
 				return this;
 			}
 
 			@Override
-			public PostalAddressResource.Builder user(User user) {
+			public OktaUserResource.Builder user(User user) {
 				_user = user;
 
 				return this;
@@ -139,16 +138,15 @@ public class PostalAddressResourceFactoryImpl
 		};
 	}
 
-	private static Function<InvocationHandler, PostalAddressResource>
+	private static Function<InvocationHandler, OktaUserResource>
 		_getProxyProviderFunction() {
 
 		Class<?> proxyClass = ProxyUtil.getProxyClass(
-			PostalAddressResource.class.getClassLoader(),
-			PostalAddressResource.class);
+			OktaUserResource.class.getClassLoader(), OktaUserResource.class);
 
 		try {
-			Constructor<PostalAddressResource> constructor =
-				(Constructor<PostalAddressResource>)proxyClass.getConstructor(
+			Constructor<OktaUserResource> constructor =
+				(Constructor<OktaUserResource>)proxyClass.getConstructor(
 					InvocationHandler.class);
 
 			return invocationHandler -> {
@@ -190,39 +188,38 @@ public class PostalAddressResourceFactoryImpl
 				new LiberalPermissionChecker(user));
 		}
 
-		PostalAddressResource postalAddressResource =
+		OktaUserResource oktaUserResource =
 			_componentServiceObjects.getService();
 
-		postalAddressResource.setContextAcceptLanguage(
+		oktaUserResource.setContextAcceptLanguage(
 			new AcceptLanguageImpl(httpServletRequest, preferredLocale, user));
 
 		Company company = _companyLocalService.getCompany(user.getCompanyId());
 
-		postalAddressResource.setContextCompany(company);
+		oktaUserResource.setContextCompany(company);
 
-		postalAddressResource.setContextHttpServletRequest(httpServletRequest);
-		postalAddressResource.setContextHttpServletResponse(
-			httpServletResponse);
-		postalAddressResource.setContextUriInfo(uriInfo);
-		postalAddressResource.setContextUser(user);
-		postalAddressResource.setExpressionConvert(_expressionConvert);
-		postalAddressResource.setFilterParserProvider(_filterParserProvider);
-		postalAddressResource.setGroupLocalService(_groupLocalService);
-		postalAddressResource.setResourceActionLocalService(
+		oktaUserResource.setContextHttpServletRequest(httpServletRequest);
+		oktaUserResource.setContextHttpServletResponse(httpServletResponse);
+		oktaUserResource.setContextUriInfo(uriInfo);
+		oktaUserResource.setContextUser(user);
+		oktaUserResource.setExpressionConvert(_expressionConvert);
+		oktaUserResource.setFilterParserProvider(_filterParserProvider);
+		oktaUserResource.setGroupLocalService(_groupLocalService);
+		oktaUserResource.setResourceActionLocalService(
 			_resourceActionLocalService);
-		postalAddressResource.setResourcePermissionLocalService(
+		oktaUserResource.setResourcePermissionLocalService(
 			_resourcePermissionLocalService);
-		postalAddressResource.setRoleLocalService(_roleLocalService);
-		postalAddressResource.setSortParserProvider(_sortParserProvider);
+		oktaUserResource.setRoleLocalService(_roleLocalService);
+		oktaUserResource.setSortParserProvider(_sortParserProvider);
 
 		try {
-			return method.invoke(postalAddressResource, arguments);
+			return method.invoke(oktaUserResource, arguments);
 		}
 		catch (InvocationTargetException invocationTargetException) {
 			throw invocationTargetException.getTargetException();
 		}
 		finally {
-			_componentServiceObjects.ungetService(postalAddressResource);
+			_componentServiceObjects.ungetService(oktaUserResource);
 
 			PrincipalThreadLocal.setName(name);
 
@@ -230,16 +227,14 @@ public class PostalAddressResourceFactoryImpl
 		}
 	}
 
-	private static final Function<InvocationHandler, PostalAddressResource>
-		_postalAddressResourceProxyProviderFunction =
-			_getProxyProviderFunction();
+	private static final Function<InvocationHandler, OktaUserResource>
+		_oktaUserResourceProxyProviderFunction = _getProxyProviderFunction();
 
 	@Reference
 	private CompanyLocalService _companyLocalService;
 
 	@Reference(scope = ReferenceScope.PROTOTYPE_REQUIRED)
-	private ComponentServiceObjects<PostalAddressResource>
-		_componentServiceObjects;
+	private ComponentServiceObjects<OktaUserResource> _componentServiceObjects;
 
 	@Reference
 	private PermissionCheckerFactory _defaultPermissionCheckerFactory;

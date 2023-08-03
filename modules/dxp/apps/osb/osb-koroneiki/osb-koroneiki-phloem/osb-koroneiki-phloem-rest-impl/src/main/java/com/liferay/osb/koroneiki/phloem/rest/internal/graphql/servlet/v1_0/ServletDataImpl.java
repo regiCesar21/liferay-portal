@@ -17,6 +17,7 @@ import com.liferay.osb.koroneiki.phloem.rest.internal.resource.v1_0.CountryResou
 import com.liferay.osb.koroneiki.phloem.rest.internal.resource.v1_0.EntitlementDefinitionResourceImpl;
 import com.liferay.osb.koroneiki.phloem.rest.internal.resource.v1_0.ExternalLinkResourceImpl;
 import com.liferay.osb.koroneiki.phloem.rest.internal.resource.v1_0.NoteResourceImpl;
+import com.liferay.osb.koroneiki.phloem.rest.internal.resource.v1_0.OktaUserResourceImpl;
 import com.liferay.osb.koroneiki.phloem.rest.internal.resource.v1_0.PostalAddressResourceImpl;
 import com.liferay.osb.koroneiki.phloem.rest.internal.resource.v1_0.ProductConsumptionResourceImpl;
 import com.liferay.osb.koroneiki.phloem.rest.internal.resource.v1_0.ProductPurchaseResourceImpl;
@@ -34,6 +35,7 @@ import com.liferay.osb.koroneiki.phloem.rest.resource.v1_0.CountryResource;
 import com.liferay.osb.koroneiki.phloem.rest.resource.v1_0.EntitlementDefinitionResource;
 import com.liferay.osb.koroneiki.phloem.rest.resource.v1_0.ExternalLinkResource;
 import com.liferay.osb.koroneiki.phloem.rest.resource.v1_0.NoteResource;
+import com.liferay.osb.koroneiki.phloem.rest.resource.v1_0.OktaUserResource;
 import com.liferay.osb.koroneiki.phloem.rest.resource.v1_0.PostalAddressResource;
 import com.liferay.osb.koroneiki.phloem.rest.resource.v1_0.ProductConsumptionResource;
 import com.liferay.osb.koroneiki.phloem.rest.resource.v1_0.ProductPurchaseResource;
@@ -80,6 +82,8 @@ public class ServletDataImpl implements ServletData {
 			_externalLinkResourceComponentServiceObjects);
 		Mutation.setNoteResourceComponentServiceObjects(
 			_noteResourceComponentServiceObjects);
+		Mutation.setOktaUserResourceComponentServiceObjects(
+			_oktaUserResourceComponentServiceObjects);
 		Mutation.setPostalAddressResourceComponentServiceObjects(
 			_postalAddressResourceComponentServiceObjects);
 		Mutation.setProductResourceComponentServiceObjects(
@@ -379,6 +383,10 @@ public class ServletDataImpl implements ServletData {
 						"mutation#updateNote",
 						new ObjectValuePair<>(
 							NoteResourceImpl.class, "putNote"));
+					put(
+						"mutation#createOktaUser",
+						new ObjectValuePair<>(
+							OktaUserResourceImpl.class, "postOktaUser"));
 					put(
 						"mutation#createAccountAccountKeyPostalAddress",
 						new ObjectValuePair<>(
@@ -1126,6 +1134,10 @@ public class ServletDataImpl implements ServletData {
 	@Reference(scope = ReferenceScope.PROTOTYPE_REQUIRED)
 	private ComponentServiceObjects<NoteResource>
 		_noteResourceComponentServiceObjects;
+
+	@Reference(scope = ReferenceScope.PROTOTYPE_REQUIRED)
+	private ComponentServiceObjects<OktaUserResource>
+		_oktaUserResourceComponentServiceObjects;
 
 	@Reference(scope = ReferenceScope.PROTOTYPE_REQUIRED)
 	private ComponentServiceObjects<PostalAddressResource>
