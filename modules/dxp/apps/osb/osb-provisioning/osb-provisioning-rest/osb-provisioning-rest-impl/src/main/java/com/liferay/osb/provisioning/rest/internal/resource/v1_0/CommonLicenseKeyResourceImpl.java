@@ -9,20 +9,28 @@ import com.liferay.osb.koroneiki.phloem.rest.client.dto.v1_0.Account;
 import com.liferay.osb.koroneiki.phloem.rest.client.dto.v1_0.Contact;
 import com.liferay.osb.koroneiki.phloem.rest.client.dto.v1_0.Product;
 import com.liferay.osb.koroneiki.phloem.rest.client.dto.v1_0.ProductPurchase;
+import com.liferay.osb.koroneiki.phloem.rest.client.dto.v1_0.Team;
+import com.liferay.osb.koroneiki.phloem.rest.client.dto.v1_0.TeamRole;
 import com.liferay.osb.provisioning.auth.ProvisioningContactThreadLocal;
 import com.liferay.osb.provisioning.koroneiki.constants.ProductConstants;
+import com.liferay.osb.provisioning.koroneiki.constants.TeamRoleConstants;
+import com.liferay.osb.provisioning.koroneiki.web.service.AccountWebService;
 import com.liferay.osb.provisioning.koroneiki.web.service.ProductPurchaseWebService;
+import com.liferay.osb.provisioning.koroneiki.web.service.TeamRoleWebService;
+import com.liferay.osb.provisioning.koroneiki.web.service.TeamWebService;
 import com.liferay.osb.provisioning.license.helper.constants.ProductEnvironment;
 import com.liferay.osb.provisioning.license.model.CommonLicenseKey;
 import com.liferay.osb.provisioning.license.service.CommonLicenseKeyLocalService;
 import com.liferay.osb.provisioning.rest.dto.v1_0.ProductGroup;
 import com.liferay.osb.provisioning.rest.resource.v1_0.CommonLicenseKeyResource;
 import com.liferay.osb.provisioning.search.FilterQuery;
+import com.liferay.osb.provisioning.util.CustomerPortalRelease;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
 import com.liferay.portal.kernel.util.MimeTypesUtil;
+import com.liferay.portal.kernel.util.Validator;
 
 import java.util.Date;
 import java.util.List;
@@ -50,7 +58,7 @@ public class CommonLicenseKeyResourceImpl
 				String productEnvironment, Date dateEnd, Date dateStart)
 		throws Exception {
 
-		_checkAccountMembership(accountKey);
+		_checkAccountViewPermission(accountKey);
 
 		_checkProductPurchases(
 			accountKey, productGroupName, productEnvironment, dateEnd);
@@ -80,16 +88,39 @@ public class CommonLicenseKeyResourceImpl
 		).build();
 	}
 
-	private void _checkAccountMembership(String accountKey)
-		throws PrincipalException {
+	private void _checkAccountViewPermission(String accountKey)
+		throws Exception {
 
 		Contact contact = ProvisioningContactThreadLocal.getContact();
 
-		if (contact != null) {
+		if ((contact != null) && !contact.equals(_getOmniContact())) {
 			for (Account account : contact.getAccounts()) {
 				if (accountKey.equals(account.getKey())) {
 					return;
 				}
+			}
+
+			FilterQuery filterQuery = new FilterQuery();
+
+			filterQuery.addLambdaEquals(
+				true, "contactUuids", contact.getUuid());
+			filterQuery.addLambdaEquals(
+				true, "accountKeyTeamRoleKeys",
+				accountKey + "_" + _getFLSTeamRoleKey());
+
+			List<Team> teams = _teamWebService.search(
+				StringPool.BLANK, filterQuery, 1, 1000, StringPool.BLANK);
+
+			if (!teams.isEmpty()) {
+				return;
+			}
+
+			Account account = _accountWebService.getAccount(accountKey);
+
+			if (_customerPortalRelease.hasAccountAccessPermission(
+					account, contact)) {
+
+				return;
 			}
 		}
 		else if (_isOmniAdmin()) {
@@ -192,6 +223,28 @@ public class CommonLicenseKeyResourceImpl
 		throw new PrincipalException();
 	}
 
+	private String _getFLSTeamRoleKey() throws Exception {
+		if (Validator.isNull(_flsTeamRoleKey)) {
+			TeamRole flsTeamRole = _teamRoleWebService.getTeamRole(
+				TeamRole.Type.ACCOUNT.toString(),
+				TeamRoleConstants.NAME_FIRST_LINE_SUPPORT);
+
+			_flsTeamRoleKey = flsTeamRole.getKey();
+		}
+
+		return _flsTeamRoleKey;
+	}
+
+	private Contact _getOmniContact() {
+		Contact contact = new Contact();
+
+		contact.setFirstName(contextUser.getFirstName());
+		contact.setLastName(contextUser.getLastName());
+		contact.setUuid(contextUser.getUuid());
+
+		return contact;
+	}
+
 	private boolean _isOmniAdmin() {
 		PermissionChecker permissionChecker =
 			PermissionThreadLocal.getPermissionChecker();
@@ -204,9 +257,23 @@ public class CommonLicenseKeyResourceImpl
 	}
 
 	@Reference
+	private AccountWebService _accountWebService;
+
+	@Reference
 	private CommonLicenseKeyLocalService _commonLicenseKeyLocalService;
 
 	@Reference
+	private CustomerPortalRelease _customerPortalRelease;
+
+	private String _flsTeamRoleKey;
+
+	@Reference
 	private ProductPurchaseWebService _productPurchaseWebService;
+
+	@Reference
+	private TeamRoleWebService _teamRoleWebService;
+
+	@Reference
+	private TeamWebService _teamWebService;
 
 }
