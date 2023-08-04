@@ -24,40 +24,40 @@ classes {
 }
 
 dependencies {
-	compile group: "com.liferay.portal", name: "com.liferay.util.java", version: "default"
-	compile group: "javax.portlet", name: "portlet-api", transitive: false, version: "3.0.1"
-	compile project(":apps:asset:asset-entry-rel-service")
-	compile project(":apps:blogs:blogs-api")
-	compile project(":apps:blogs:blogs-service")
-	compile project(":apps:commerce:commerce-currency-api")
-	compile project(":apps:commerce:commerce-currency-service")
-	compile project(":apps:commerce:commerce-product-api")
-	compile project(":apps:commerce:commerce-product-service")
-	compile project(":apps:document-library:document-library-api")
-	compile project(":apps:dynamic-data-lists:dynamic-data-lists-api")
-	compile project(":apps:dynamic-data-lists:dynamic-data-lists-service")
-	compile project(":apps:dynamic-data-mapping:dynamic-data-mapping-api")
-	compile project(":apps:dynamic-data-mapping:dynamic-data-mapping-service")
-	compile project(":apps:dynamic-data-mapping:dynamic-data-mapping-web")
-	compile project(":apps:fragment:fragment-api")
-	compile project(":apps:fragment:fragment-service")
-	compile project(":apps:friendly-url:friendly-url-api")
-	compile project(":apps:friendly-url:friendly-url-service")
-	compile project(":apps:hello-world:hello-world-web")
-	compile project(":apps:journal:journal-api")
-	compile project(":apps:journal:journal-service")
-	compile project(":apps:layout:layout-api")
-	compile project(":apps:layout:layout-page-template-api")
-	compile project(":apps:layout:layout-page-template-service")
-	compile project(":apps:login:login-web-api")
-	compile project(":apps:message-boards:message-boards-api")
-	compile project(":apps:message-boards:message-boards-service")
-	compile project(":apps:subscription:subscription-api")
-	compile project(":apps:subscription:subscription-service")
-	compile project(":apps:view-count:view-count-api")
-	compile project(":apps:view-count:view-count-service")
-	compile project(":apps:wiki:wiki-api")
-	compile project(":apps:wiki:wiki-service")
+	api group: "com.liferay.portal", name: "com.liferay.util.java", version: "default"
+	api group: "javax.portlet", name: "portlet-api", transitive: false, version: "3.0.1"
+	api project(":apps:asset:asset-entry-rel-service")
+	api project(":apps:blogs:blogs-api")
+	api project(":apps:blogs:blogs-service")
+	api project(":apps:commerce:commerce-currency-api")
+	api project(":apps:commerce:commerce-currency-service")
+	api project(":apps:commerce:commerce-product-api")
+	api project(":apps:commerce:commerce-product-service")
+	api project(":apps:document-library:document-library-api")
+	api project(":apps:dynamic-data-lists:dynamic-data-lists-api")
+	api project(":apps:dynamic-data-lists:dynamic-data-lists-service")
+	api project(":apps:dynamic-data-mapping:dynamic-data-mapping-api")
+	api project(":apps:dynamic-data-mapping:dynamic-data-mapping-service")
+	api project(":apps:dynamic-data-mapping:dynamic-data-mapping-web")
+	api project(":apps:fragment:fragment-api")
+	api project(":apps:fragment:fragment-service")
+	api project(":apps:friendly-url:friendly-url-api")
+	api project(":apps:friendly-url:friendly-url-service")
+	api project(":apps:hello-world:hello-world-web")
+	api project(":apps:journal:journal-api")
+	api project(":apps:journal:journal-service")
+	api project(":apps:layout:layout-api")
+	api project(":apps:layout:layout-page-template-api")
+	api project(":apps:layout:layout-page-template-service")
+	api project(":apps:login:login-web-api")
+	api project(":apps:message-boards:message-boards-api")
+	api project(":apps:message-boards:message-boards-service")
+	api project(":apps:subscription:subscription-api")
+	api project(":apps:subscription:subscription-service")
+	api project(":apps:view-count:view-count-api")
+	api project(":apps:view-count:view-count-service")
+	api project(":apps:wiki:wiki-api")
+	api project(":apps:wiki:wiki-service")
 
 	compileOnly group: "com.liferay", name: "org.freemarker", version: "2.3.29.LIFERAY-PATCHED-2"
 	compileOnly group: "com.liferay.portal", name: "com.liferay.portal.impl", version: "default"
@@ -67,9 +67,9 @@ dependencies {
 	compileOnly project(":core:petra:petra-reflect")
 	compileOnly project(":core:petra:petra-string")
 
-	testCompile group: "com.rometools", name: "rome", version: "1.16.0"
-	testCompile group: "log4j", name: "apache-log4j-extras", version: "1.2.17"
-	testCompile project(":apps:petra:petra-log4j")
+	testImplementation group: "com.rometools", name: "rome", version: "1.16.0"
+	testImplementation group: "log4j", name: "apache-log4j-extras", version: "1.2.17"
+	testImplementation project(":apps:petra:petra-log4j")
 }
 
 writeReleases {

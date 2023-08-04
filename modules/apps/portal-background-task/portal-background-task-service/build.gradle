@@ -19,5 +19,5 @@ dependencies {
 	compileOnly project(":core:petra:petra-sql-dsl-api")
 	compileOnly project(":core:petra:petra-string")
 
-	testCompile project(":core:registry-api")
+	testImplementation project(":core:registry-api")
 }
