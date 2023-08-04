@@ -142,6 +142,8 @@ public class UpdatePasswordAction implements Action {
 			String[] ticketParts = ticketParam.split("_");
 
 			if (ticketParts.length != 2) {
+				httpServletRequest.setAttribute("oldFormat", Boolean.TRUE);
+
 				return null;
 			}
 
