@@ -46,11 +46,11 @@ definition {
 	}
 
 	macro createNewAccountViaFront {
+		WaitForVisible(locator1 = "TextInput#SEARCH");
+
 		Click.mouseDownMouseUp(
 			key_text = "Add Account",
 			locator1 = "Button#ANY");
-
-		Pause(locator1 = 2000);
 
 		Type(
 			locator1 = "TextInput#NAME",
