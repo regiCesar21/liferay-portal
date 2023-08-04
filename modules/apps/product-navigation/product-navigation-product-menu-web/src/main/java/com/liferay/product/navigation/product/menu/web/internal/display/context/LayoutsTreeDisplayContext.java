@@ -54,10 +54,10 @@ import javax.portlet.WindowStateException;
 public class LayoutsTreeDisplayContext {
 
 	public LayoutsTreeDisplayContext(RenderRequest renderRequest) {
+		_renderRequest = renderRequest;
+
 		_liferayPortletRequest = PortalUtil.getLiferayPortletRequest(
 			renderRequest);
-
-		_renderRequest = renderRequest;
 
 		_groupProvider = (GroupProvider)_liferayPortletRequest.getAttribute(
 			ApplicationListWebKeys.GROUP_PROVIDER);
