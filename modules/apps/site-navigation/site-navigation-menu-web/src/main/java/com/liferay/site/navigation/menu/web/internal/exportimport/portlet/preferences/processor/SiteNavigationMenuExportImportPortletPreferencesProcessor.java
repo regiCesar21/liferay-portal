@@ -132,22 +132,28 @@ public class SiteNavigationMenuExportImportPortletPreferencesProcessor
 						portletDataContext.getPortletId());
 
 			if (!serviceBuilderPortletPreferencesList.isEmpty()) {
-				com.liferay.portal.kernel.model.PortletPreferences
-					serviceBuilderPortletPreferences =
-						serviceBuilderPortletPreferencesList.get(0);
+				for (com.liferay.portal.kernel.model.PortletPreferences
+						serviceBuilderPortletPreferences :
+							serviceBuilderPortletPreferencesList) {
 
-				PortletPreferences originalPortletPreferences =
-					_portletPreferencesLocalService.fetchPreferences(
-						serviceBuilderPortletPreferences.getCompanyId(),
-						serviceBuilderPortletPreferences.getOwnerId(),
-						serviceBuilderPortletPreferences.getOwnerType(),
-						serviceBuilderPortletPreferences.getPlid(),
-						serviceBuilderPortletPreferences.getPortletId());
+					if (serviceBuilderPortletPreferences.getCompanyId() ==
+							portletDataContext.getCompanyId()) {
 
-				if (originalPortletPreferences != null) {
-					siteNavigationMenuId = GetterUtil.getLong(
-						originalPortletPreferences.getValue(
-							"siteNavigationMenuId", "0"));
+						PortletPreferences originalPortletPreferences =
+							_portletPreferencesLocalService.fetchPreferences(
+								serviceBuilderPortletPreferences.getCompanyId(),
+								serviceBuilderPortletPreferences.getOwnerId(),
+								serviceBuilderPortletPreferences.getOwnerType(),
+								serviceBuilderPortletPreferences.getPlid(),
+								serviceBuilderPortletPreferences.
+									getPortletId());
+
+						if (originalPortletPreferences != null) {
+							siteNavigationMenuId = GetterUtil.getLong(
+								originalPortletPreferences.getValue(
+									"siteNavigationMenuId", "0"));
+						}
+					}
 				}
 			}
 
