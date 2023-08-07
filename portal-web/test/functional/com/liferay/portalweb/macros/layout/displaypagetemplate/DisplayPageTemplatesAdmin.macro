@@ -12,6 +12,10 @@ definition {
 				locator1 = "//div[contains(.,'Subtype')]/select",
 				value1 = ${subType});
 
+			Click(locator1 = "//select[contains(@name,'classTypeId')]");
+
+			takeScreenshot();
+
 			Select(
 				locator1 = "//div[contains(.,'Subtype')]/select",
 				value1 = ${subType});
