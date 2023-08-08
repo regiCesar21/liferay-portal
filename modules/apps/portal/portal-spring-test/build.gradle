@@ -3,5 +3,5 @@ dependencies {
 	testIntegrationImplementation group: "com.liferay", name: "org.hibernate.core", version: "3.6.10.LIFERAY-PATCHED-7"
 	testIntegrationImplementation group: "com.liferay.portal", name: "com.liferay.portal.impl", version: "default"
 	testIntegrationImplementation group: "org.springframework", name: "spring-orm", version: "4.3.22.RELEASE"
-	testIntegrationImplementation group: "org.springframework", name: "spring-tx", version: "5.2.20.RELEASE"
+	testIntegrationImplementation group: "org.springframework", name: "spring-tx", version: "5.2.24.RELEASE"
 }
