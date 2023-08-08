@@ -103,10 +103,10 @@ public class CommonLicenseKeyResourceImpl
 			FilterQuery filterQuery = new FilterQuery();
 
 			filterQuery.addLambdaEquals(
-				true, "contactUuids", contact.getUuid());
-			filterQuery.addLambdaEquals(
 				true, "accountKeyTeamRoleKeys",
 				accountKey + "_" + _getFLSTeamRoleKey());
+			filterQuery.addLambdaEquals(
+				true, "contactUuids", contact.getUuid());
 
 			List<Team> teams = _teamWebService.search(
 				StringPool.BLANK, filterQuery, 1, 1000, StringPool.BLANK);
