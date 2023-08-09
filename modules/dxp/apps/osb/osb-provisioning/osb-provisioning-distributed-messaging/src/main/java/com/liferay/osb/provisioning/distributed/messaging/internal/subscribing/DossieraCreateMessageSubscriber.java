@@ -1810,7 +1810,9 @@ public class DossieraCreateMessageSubscriber extends BaseMessageSubscriber {
 
 		JSONObject ownerJSONObject = jsonObject.getJSONObject("_owner");
 
-		if (ownerJSONObject != null) {
+		if ((ownerJSONObject != null) &&
+			Validator.isNotNull(ownerJSONObject.getString("_emailAddress"))) {
+
 			Contact contact = new Contact();
 
 			contact.setFirstName(ownerJSONObject.getString("_firstName"));
@@ -1878,12 +1880,18 @@ public class DossieraCreateMessageSubscriber extends BaseMessageSubscriber {
 		for (int i = 0; i < contactsJSONArray.length(); i++) {
 			JSONObject contactJSONObject = contactsJSONArray.getJSONObject(i);
 
+			String contactEmailAddress = contactJSONObject.getString(
+				"_emailAddress");
+
+			if (Validator.isNull(contactEmailAddress)) {
+				continue;
+			}
+
 			Contact contact = new Contact();
 
 			contact.setFirstName(contactJSONObject.getString("_firstName"));
 			contact.setLastName(contactJSONObject.getString("_lastName"));
-			contact.setEmailAddress(
-				contactJSONObject.getString("_emailAddress"));
+			contact.setEmailAddress(contactEmailAddress);
 			contact.setLanguageId(languageId);
 
 			String contactRoleName = null;
