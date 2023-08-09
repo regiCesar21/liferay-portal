@@ -351,6 +351,9 @@ function AddResultModal({
 								{selectedIds.length > 0 && (
 									<li className="nav-item nav-item-shrink">
 										<ClayButton
+											aria-label={Liferay.Language.get(
+												'clear-all-selected'
+											)}
 											className="btn-outline-borderless"
 											displayType="secondary"
 											onClick={_handleClearAllSelected}
