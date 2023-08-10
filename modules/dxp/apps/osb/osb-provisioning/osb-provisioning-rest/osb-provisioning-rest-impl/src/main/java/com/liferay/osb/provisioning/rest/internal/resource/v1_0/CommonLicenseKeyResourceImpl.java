@@ -154,7 +154,8 @@ public class CommonLicenseKeyResourceImpl
 			Date startDate = productPurchase.getStartDate();
 
 			if (((startDate == null) || dateEnd.after(startDate)) &&
-				((endDate == null) || dateEnd.before(endDate))) {
+				((endDate == null) || dateEnd.before(endDate) ||
+				 dateEnd.equals(endDate))) {
 
 				Product product = productPurchase.getProduct();
 
