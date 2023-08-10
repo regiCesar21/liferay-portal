@@ -6,8 +6,8 @@
     <contextParameter comment="" name="accountSyncFilter" prompt="accountSyncFilter?" promptNeeded="false" type="id_String" value=""/>
     <contextParameter comment="" name="customerPortalHost" prompt="customerPortalHost?" promptNeeded="false" type="id_String" value="&quot;http://localhost.com:8080&quot;"/>
     <contextParameter comment="" name="provisioningHost" prompt="provisioningHost?" promptNeeded="false" type="id_String" value="&quot;https://webserver-lrkoroneiki-uat.lfr.cloud&quot;"/>
-    <contextParameter comment="" name="customerPortalUserName" prompt="customerPortalUserName?" promptNeeded="false" type="id_String" value="&quot;id-474a3ee4-f62c-684c-44a2-13b8fef1727&quot;"/>
-    <contextParameter comment="" name="customerPortalPassword" prompt="customerPortalPassword?" promptNeeded="false" type="id_String" value="&quot;secret-4e36a35a-ccdf-6314-44cf-0b301b4c7&quot;"/>
+    <contextParameter comment="" name="customerPortalUserName" prompt="customerPortalUserName?" promptNeeded="false" type="id_String" value="&quot;id-82f95bae-7bc8-3679-d248-a5051d8f4d&quot;"/>
+    <contextParameter comment="" name="customerPortalPassword" prompt="customerPortalPassword?" promptNeeded="false" type="id_String" value="&quot;secret-721b769b-371a-9454-9a8e-f8fffd742&quot;"/>
     <contextParameter comment="" name="provisioningUserName" prompt="provisioningUserName?" promptNeeded="false" type="id_String" value="&quot;id-f655889a-3c3a-8888-65cd-e6712c12fb82&quot;"/>
     <contextParameter comment="" name="provisioningPassword" prompt="provisioningPassword?" promptNeeded="false" type="id_String" value="&quot;secret-8f59a264-e7e6-2cde-bb1a-e1454b10285&quot;"/>
     <contextParameter comment="" name="accountAccessUSTeamKey" prompt="accountAccessUSTeamKey?" promptNeeded="false" type="id_String" value="&quot;KOR-14041160&quot;"/>

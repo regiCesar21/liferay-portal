@@ -381,7 +381,7 @@ public class TransformProductPurchases {
 				}
 
 				if (now.after(subscriptionTerm.startDate) &&
-					now.before(subscriptionTerm.originalEndDate)) {
+					now.before(subscriptionTerm.endDate)) {
 
 					quantity += subscriptionTerm.quantity;
 				}
