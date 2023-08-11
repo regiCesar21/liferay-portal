@@ -37,7 +37,10 @@ if (Validator.isNull(icon)) {
 		</c:when>
 		<c:otherwise>
 			<a aria-expanded="false" aria-haspopup="true" class="direction-<%= direction %> dropdown-toggle icon-monospaced <%= triggerCssClass %>" href="javascript:;" id="<%= id %>" role="button" <%= ((message != null) && !message.isEmpty()) ? "title=\"" + message + "\"" : StringPool.BLANK %>>
-				<aui:icon image="<%= icon %>" markupView="lexicon" />
+				<span class="sr-only">
+					<liferay-ui:message key="show-actions" />
+				</span>
+				<aui:icon aria-hidden="true" image="<%= icon %>" markupView="lexicon" />
 			</a>
 		</c:otherwise>
 	</c:choose>
