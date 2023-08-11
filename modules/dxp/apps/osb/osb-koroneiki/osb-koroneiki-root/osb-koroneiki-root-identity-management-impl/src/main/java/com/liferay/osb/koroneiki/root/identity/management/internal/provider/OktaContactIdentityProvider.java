@@ -7,6 +7,7 @@ package com.liferay.osb.koroneiki.root.identity.management.internal.provider;
 
 import com.liferay.osb.distributed.messaging.Message;
 import com.liferay.osb.distributed.messaging.publishing.MessagePublisher;
+import com.liferay.osb.koroneiki.root.exception.DuplicateOktaUserException;
 import com.liferay.osb.koroneiki.root.identity.management.provider.ContactIdentityProvider;
 import com.liferay.osb.koroneiki.taproot.exception.ContactEmailAddressException;
 import com.liferay.osb.koroneiki.taproot.exception.NoSuchContactException;
@@ -52,6 +53,14 @@ public class OktaContactIdentityProvider implements ContactIdentityProvider {
 			String emailAddress, String firstName, String middleName,
 			String lastName, String uuid)
 		throws Exception {
+
+		String response = _sendRequest(_URL_API_REST_USERS + emailAddress);
+
+		JSONObject userJSONObject = _jsonFactory.createJSONObject(response);
+
+		if (!userJSONObject.has("errorCode") && userJSONObject.has("profile")) {
+			throw new DuplicateOktaUserException();
+		}
 
 		if (Validator.isNull(emailAddress) ||
 			!Validator.isEmailAddress(emailAddress)) {

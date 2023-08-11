@@ -101,6 +101,7 @@
 		</finder>
 	</entity>
 	<exceptions>
+		<exception>DuplicateOktaUser</exception>
 		<exception>ExternalLinkDomain</exception>
 		<exception>ExternalLinkEntityId</exception>
 		<exception>ExternalLinkEntityName</exception>
