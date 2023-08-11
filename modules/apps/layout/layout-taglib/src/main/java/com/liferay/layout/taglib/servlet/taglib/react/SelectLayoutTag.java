@@ -27,6 +27,7 @@ import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.WebKeys;
+import com.liferay.portal.util.PropsValues;
 import com.liferay.taglib.util.IncludeTag;
 
 import java.util.Collections;
@@ -172,8 +173,29 @@ public class SelectLayoutTag extends IncludeTag {
 		}
 	}
 
+	private Map<String, Object> _getConfigData() {
+		return HashMapBuilder.<String, Object>put(
+			"loadMoreItemsURL",
+			() -> {
+				HttpServletRequest httpServletRequest = getRequest();
+
+				ThemeDisplay themeDisplay =
+					(ThemeDisplay)httpServletRequest.getAttribute(
+						WebKeys.THEME_DISPLAY);
+
+				return themeDisplay.getPathMain() + "/portal/get_layouts";
+			}
+		).put(
+			"maxPageSize",
+			GetterUtil.getInteger(
+				PropsValues.LAYOUT_MANAGE_PAGES_INITIAL_CHILDREN)
+		).build();
+	}
+
 	private Map<String, Object> _getData() throws Exception {
 		return HashMapBuilder.<String, Object>put(
+			"config", this::_getConfigData
+		).put(
 			"followURLOnTitleClick", _followURLOnTitleClick
 		).put(
 			"itemSelectorSaveEvent", _itemSelectorSaveEvent
