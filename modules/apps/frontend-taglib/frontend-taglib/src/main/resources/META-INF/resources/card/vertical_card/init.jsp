@@ -17,7 +17,11 @@ String title = (String)request.getAttribute("liferay-frontend:card:title");
 
 String description = "";
 
-if (Validator.isNotNull(data.get("description"))) {
-	description = data.get("description").toString();
+if (Validator.isNotNull(data)) {
+	if (Validator.isNotNull(data.get("description"))) {
+		description = data.get(
+			"description"
+		).toString();
+	}
 }
 %>
