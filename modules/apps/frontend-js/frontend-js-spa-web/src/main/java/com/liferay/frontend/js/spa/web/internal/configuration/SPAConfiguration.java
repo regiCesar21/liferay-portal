@@ -41,7 +41,7 @@ public @interface SPAConfiguration {
 	public boolean disableInInternetExplorer11();
 
 	@Meta.AD(
-		deflt = ":not([target=\"_blank\"])|:not([data-senna-off])|:not([data-resource-href])",
+		deflt = ":not([target=\"_blank\"])|:not([data-senna-off])|:not([data-resource-href])|:not([href^=\"mailto:\"])",
 		description = "navigation-exception-selectors-description",
 		name = "navigation-exception-selectors-name", required = false
 	)
