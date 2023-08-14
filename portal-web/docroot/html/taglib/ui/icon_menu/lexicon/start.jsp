@@ -40,6 +40,7 @@ if (Validator.isNull(icon)) {
 				<span class="sr-only">
 					<liferay-ui:message key="show-actions" />
 				</span>
+
 				<aui:icon aria-hidden="true" image="<%= icon %>" markupView="lexicon" />
 			</a>
 		</c:otherwise>
