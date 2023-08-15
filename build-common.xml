@@ -987,7 +987,8 @@ information.
 								<arg if:set="env.FIX_PACKS_RELEASE_ENVIRONMENT" value="-Dpatcher.hotfix.dirs=${build.patcher.hotfix.dirs}" />
 								<arg if:set="env.FIX_PACKS_RELEASE_ENVIRONMENT" value="-Dpatcher.hotfix.qualifier=${build.patcher.hotfix.qualifier}" />
 								<arg line="@{task}" />
-								<arg if:set="test.name" line="${test.name}" />
+								<arg if:set="test.name" value="--tests" />
+								<arg if:set="test.name" value="${test.name}" />
 								<redirector errorproperty="${redirector.error.property}" outputproperty="${redirector.output.property}" unless:blank="${redirector.output.property}" />
 							</exec>
 						</try>
@@ -1024,7 +1025,8 @@ information.
 									<arg if:set="env.FIX_PACKS_RELEASE_ENVIRONMENT" value="-Dpatcher.hotfix.dirs=${build.patcher.hotfix.dirs}" />
 									<arg if:set="env.FIX_PACKS_RELEASE_ENVIRONMENT" value="-Dpatcher.hotfix.qualifier=${build.patcher.hotfix.qualifier}" />
 									<arg line="@{task}" />
-									<arg if:set="test.name" line="${test.name}" />
+									<arg if:set="test.name" value="--tests" />
+									<arg if:set="test.name" value="${test.name}" />
 									<redirector errorproperty="${redirector.error.property}" outputproperty="${redirector.output.property}" unless:blank="${redirector.output.property}" />
 								</exec>
 							</echoxml>
