@@ -2547,14 +2547,20 @@ log.sanitizer.enabled=false</echo>
 
 							<lstopwatch action="start" name="test.execution.duration" />
 
-							<gradle-execute dir="modules" refreshdependencies="@{refreshdependencies}" task="testIntegration">
-								<arg value="--continue" />
-								<arg value="-Dapp.server.start.executable.arg.line=${test.batch.app.server.start.executable.arg.line}" />
-								<arg value="-Ddatabase.type=@{database.type}" />
-								<arg value="-Dbuild.exclude.ant.plugin=true" />
-								<arg value="-Dbuild.exclude.dirs=dxp/apps/osb" />
-								<arg value="-Dtest.class.group.index=${axis.variable}" />
-							</gradle-execute>
+							<for list="${test.class.group}" param="test.class">
+								<sequential>
+									<get-test-project-information test.class="@{test.class}" />
+
+									<gradle-execute dir="modules" refreshdependencies="@{refreshdependencies}" task="${test.project.name}:testIntegration" test.name="${test.name}">
+										<arg value="--continue" />
+										<arg value="-Dapp.server.start.executable.arg.line=${test.batch.app.server.start.executable.arg.line}" />
+										<arg value="-Ddatabase.type=@{database.type}" />
+										<arg value="-Dbuild.exclude.ant.plugin=true" />
+										<arg value="-Dbuild.exclude.dirs=dxp/apps/osb" />
+										<arg value="-Dtest.class.group.index=${axis.variable}" />
+									</gradle-execute>
+								</sequential />
+							</for>
 
 							<lstopwatch action="total" name="test.execution.duration" />
 
