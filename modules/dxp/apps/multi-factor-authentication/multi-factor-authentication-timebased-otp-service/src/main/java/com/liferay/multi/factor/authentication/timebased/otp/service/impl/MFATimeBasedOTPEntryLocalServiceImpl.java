@@ -12,6 +12,7 @@ import com.liferay.multi.factor.authentication.timebased.otp.service.base.MFATim
 import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.service.UserLocalService;
 
 import java.util.Date;
 
@@ -107,5 +108,24 @@ public class MFATimeBasedOTPEntryLocalServiceImpl
 
 		return mfaTimeBasedOTPEntryPersistence.update(mfaTimeBasedOTPEntry);
 	}
+
+	public MFATimeBasedOTPEntry updateLastTOTP(
+			long userId, String lastValidTOTP)
+		throws PortalException {
+
+		MFATimeBasedOTPEntry mfaTimeBasedOTPEntry =
+			mfaTimeBasedOTPEntryPersistence.fetchByUserId(userId);
+
+		if (mfaTimeBasedOTPEntry == null) {
+			throw new NoSuchEntryException("User ID " + userId);
+		}
+
+		mfaTimeBasedOTPEntry.setLastValidTOTP(lastValidTOTP);
+
+		return mfaTimeBasedOTPEntryPersistence.update(mfaTimeBasedOTPEntry);
+	}
+
+	@Reference
+	private UserLocalService _userLocalService;
 
 }
