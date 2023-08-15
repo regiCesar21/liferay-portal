@@ -129,12 +129,21 @@ AccountDisplay accountDisplay = viewAccountDisplayContext.getAccountDisplay();
 			</aui:form>
 		</c:if>
 
+		<portlet:actionURL name="/accounts/sync_to_marketplace" var="syncToMarketplaceURL">
+			<portlet:param name="redirect" value="<%= currentURL %>" />
+			<portlet:param name="accountKey" value="<%= accountDisplay.getKey() %>" />
+		</portlet:actionURL>
+
+		<aui:form action="<%= syncToMarketplaceURL %>" method="post" name="fm2">
+			<aui:button cssClass="btn-secondary btn-sm" href="<%= syncToMarketplaceURL %>" value="sync-to-marketplace" />
+		</aui:form>
+
 		<portlet:actionURL name="/accounts/sync_to_zendesk" var="syncToZendeskURL">
 			<portlet:param name="redirect" value="<%= currentURL %>" />
 			<portlet:param name="accountKey" value="<%= accountDisplay.getKey() %>" />
 		</portlet:actionURL>
 
-		<aui:form action="<%= syncToZendeskURL %>" method="post" name="fm1">
+		<aui:form action="<%= syncToZendeskURL %>" method="post" name="fm3">
 			<aui:button cssClass="btn-secondary btn-sm" href="<%= syncToZendeskURL %>" value="sync-to-zendesk" />
 		</aui:form>
 
