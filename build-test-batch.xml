@@ -636,16 +636,16 @@ mariadb.executable=${mariadb.executable}]]></echo>
 		<attribute default="" name="test.class" />
 
 		<sequential>
-			<local name="test.class" />
+			<var name="test.name" unset="true" />
+			<var name="test.project.name" unset="true" />
+
 			<local name="test.class.file" />
 			<local name="test.class.file.path" />
 			<local name="test.class.java" />
 
-			<property name="test.class" value="@{test.class}" />
-
 			<propertyregex
 				casesensitive="false"
-				input="${test.class}"
+				input="@{test.class}"
 				property="test.class.java"
 				regexp=".class"
 				replace=".java"
@@ -672,6 +672,7 @@ mariadb.executable=${mariadb.executable}]]></echo>
 						if (file == null) {
 							return null;
 						}
+
 						File canonicalFile = JenkinsResultsParserUtil.getCanonicalFile(file);
 
 						File parentFile = canonicalFile.getParentFile();
@@ -679,6 +680,7 @@ mariadb.executable=${mariadb.executable}]]></echo>
 						if ((parentFile == null) || !parentFile.exists()) {
 							return file;
 						}
+
 						if (!canonicalFile.isDirectory()) {
 							return getBndFile(parentFile);
 						}
@@ -692,7 +694,19 @@ mariadb.executable=${mariadb.executable}]]></echo>
 						return bndFile;
 					}
 
-					public static String getProjectName(File bndFile) {
+					public static String getTestName(String testClassFilePath) {
+						Pattern pattern = Pattern.compile("/([^/]+)\\.java");
+
+						Matcher matcher = pattern.matcher(testClassFilePath);
+
+						if (matcher.find()) {
+							return matcher.group(1);
+						}
+
+						return null;
+					}
+
+					public static String getTestProjectName(File bndFile) {
 						Properties bndFileProperties = JenkinsResultsParserUtil.getProperties(new File[] {bndFile});
 
 						String bundleSymbolicName = bndFileProperties.getProperty("Bundle-SymbolicName");
@@ -704,24 +718,12 @@ mariadb.executable=${mariadb.executable}]]></echo>
 						return modulesProperties.getProperty("project.name[" + bundleSymbolicName + "]");
 					}
 
-					public static String getTestName(String filePath) {
-						Pattern pattern = Pattern.compile("/([^/]+)\\.java");
-
-						Matcher matcher = pattern.matcher(filePath);
-
-						if (matcher.find()) {
-							return matcher.group(1);
-						}
-
-						return null;
-					}
-
 					String testClassFilePath = project.getProperty("test.class.file.path");
 
 					File bndFile = getBndFile(new File(testClassFilePath));
 
 					project.setProperty("test.name", getTestName(testClassFilePath));
-					project.setProperty("test.project.name", getProjectName(bndFile));
+					project.setProperty("test.project.name", getTestProjectName(bndFile));
 				]]>
 			</beanshell>
 		</sequential>
@@ -2559,7 +2561,7 @@ log.sanitizer.enabled=false</echo>
 										<arg value="-Dbuild.exclude.dirs=dxp/apps/osb" />
 										<arg value="-Dtest.class.group.index=${axis.variable}" />
 									</gradle-execute>
-								</sequential />
+								</sequential>
 							</for>
 
 							<lstopwatch action="total" name="test.execution.duration" />
@@ -5151,7 +5153,7 @@ log.sanitizer.enabled=false</echo>
 							<arg value="-Djunit.code.coverage=${test.batch.code.coverage}" />
 							<arg value="-Dtest.class.group.index=${axis.variable}" />
 						</gradle-execute>
-					</sequential />
+					</sequential>
 				</for>
 
 				<lstopwatch action="total" name="test.execution.duration" />
