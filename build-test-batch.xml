@@ -7,6 +7,14 @@
 		<isset property="env.AXIS_VARIABLE" />
 	</condition>
 
+	<math
+		datatype="int"
+		operand1="${test.class.timeout.minutes}"
+		operand2="60"
+		operation="*"
+		result="test.class.timeout.seconds"
+	/>
+
 	<macrodef name="check-jenkins-console">
 		<sequential>
 			<if>
@@ -2561,18 +2569,22 @@ log.sanitizer.enabled=false</echo>
 
 							<for list="${test.class.group}" param="test.class">
 								<sequential>
+									<local name="test.timeout" />
+
 									<trycatch property="test.failure.message">
 										<try>
 											<get-test-project-information test.class="@{test.class}" />
 
-											<gradle-execute dir="modules" refreshdependencies="@{refreshdependencies}" task="${test.project.name}:testIntegration" test.name="${test.name}">
-												<arg value="--continue" />
-												<arg value="-Dapp.server.start.executable.arg.line=${test.batch.app.server.start.executable.arg.line}" />
-												<arg value="-Ddatabase.type=@{database.type}" />
-												<arg value="-Dbuild.exclude.ant.plugin=true" />
-												<arg value="-Dbuild.exclude.dirs=dxp/apps/osb" />
-												<arg value="-Dtest.class.group.index=${axis.variable}" />
-											</gradle-execute>
+											<limit failonerror="true" maxwait="${test.class.timeout.seconds}" property="test.timeout" value="FAILURE: ${test.project.name}:testIntegration --tests ${test.name} failed to complete in ${test.class.timeout.minutes} minutes">
+												<gradle-execute dir="modules" refreshdependencies="@{refreshdependencies}" task="${test.project.name}:testIntegration" test.name="${test.name}">
+													<arg value="--continue" />
+													<arg value="-Dapp.server.start.executable.arg.line=${test.batch.app.server.start.executable.arg.line}" />
+													<arg value="-Ddatabase.type=@{database.type}" />
+													<arg value="-Dbuild.exclude.ant.plugin=true" />
+													<arg value="-Dbuild.exclude.dirs=dxp/apps/osb" />
+													<arg value="-Dtest.class.group.index=${axis.variable}" />
+												</gradle-execute>
+											</limit>
 
 											<move
 												todir="modules/test-results"
@@ -2584,6 +2596,13 @@ log.sanitizer.enabled=false</echo>
 											</move>
 										</try>
 										<catch>
+											<if>
+												<isset property="test.timeout" />
+												<then>
+													<echo>${test.timeout}</echo>
+												</then>
+											</if>
+
 											<echo>${test.failure.message}</echo>
 										</catch>
 									</trycatch>
@@ -5169,18 +5188,22 @@ log.sanitizer.enabled=false</echo>
 
 				<for list="${test.class.group}" param="test.class">
 					<sequential>
+						<local name="test.timeout" />
+
 						<trycatch property="test.failure.message">
 							<try>
 								<get-test-project-information test.class="@{test.class}" />
 
-								<gradle-execute dir="modules" task="${test.project.name}:test" test.name="${test.name}">
-									<arg value="--continue" />
-									<arg value="-Dbuild.exclude.ant.plugin=true" />
-									<arg value="-Dbuild.exclude.dirs=dxp/apps/osb" />
-									<arg if:set="com.liferay.portal.search.solr.test.unit.started" value="-Dcom.liferay.portal.search.solr.test.unit.started=${com.liferay.portal.search.solr.test.unit.started}" />
-									<arg value="-Djunit.code.coverage=${test.batch.code.coverage}" />
-									<arg value="-Dtest.class.group.index=${axis.variable}" />
-								</gradle-execute>
+								<limit failonerror="true" maxwait="${test.class.timeout.seconds}" property="test.timeout" value="FAILURE: ${test.project.name}:test --tests ${test.name} failed to complete in ${test.class.timeout.minutes} minutes">
+									<gradle-execute dir="modules" task="${test.project.name}:test" test.name="${test.name}">
+										<arg value="--continue" />
+										<arg value="-Dbuild.exclude.ant.plugin=true" />
+										<arg value="-Dbuild.exclude.dirs=dxp/apps/osb" />
+										<arg if:set="com.liferay.portal.search.solr.test.unit.started" value="-Dcom.liferay.portal.search.solr.test.unit.started=${com.liferay.portal.search.solr.test.unit.started}" />
+										<arg value="-Djunit.code.coverage=${test.batch.code.coverage}" />
+										<arg value="-Dtest.class.group.index=${axis.variable}" />
+									</gradle-execute>
+								</limit>
 
 								<move
 									todir="modules/test-results"
@@ -5192,6 +5215,13 @@ log.sanitizer.enabled=false</echo>
 								</move>
 							</try>
 							<catch>
+								<if>
+									<isset property="test.timeout" />
+									<then>
+										<echo>${test.timeout}</echo>
+									</then>
+								</if>
+
 								<echo>${test.failure.message}</echo>
 							</catch>
 						</trycatch>
