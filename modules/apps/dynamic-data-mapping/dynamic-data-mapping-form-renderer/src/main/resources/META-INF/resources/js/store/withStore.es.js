@@ -253,7 +253,9 @@ export default Component => {
 		}
 
 		getFormTitle() {
-			const formTitle = document.querySelector('[data-form-title]');
+			const formTitle = this.getFormNode().querySelector(
+				'[data-form-title]'
+			);
 
 			if (!formTitle) {
 				return;
