@@ -17,7 +17,10 @@ export default function previousPage({
 	portletNamespace,
 	rules,
 }) {
-	const title = getFormTitle();
+	const formInstance = document.querySelector(
+		`[data-ddmforminstanceid="${formId}"]`
+	);
+	const title = getFormTitle(formInstance);
 
 	return (dispatch) => {
 		evaluate(null, {

@@ -18,7 +18,10 @@ export default function nextPage({
 	portletNamespace,
 	rules,
 }) {
-	const title = getFormTitle();
+	const formInstance = document.querySelector(
+		`[data-ddmforminstanceid="${formId}"]`
+	);
+	const title = getFormTitle(formInstance);
 
 	return (dispatch) => {
 		evaluate(null, {

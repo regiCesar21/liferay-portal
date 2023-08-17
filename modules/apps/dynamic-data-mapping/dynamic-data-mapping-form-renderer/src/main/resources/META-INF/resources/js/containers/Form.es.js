@@ -191,7 +191,7 @@ const Form = React.forwardRef(
 					formId: getFormId(getFormNode(containerRef.current)),
 					formPageTitle: pages[activePage].title,
 					page: activePage,
-					title: getFormTitle(),
+					title: getFormTitle(getFormNode(containerRef.current)),
 				});
 			}
 			// eslint-disable-next-line react-hooks/exhaustive-deps

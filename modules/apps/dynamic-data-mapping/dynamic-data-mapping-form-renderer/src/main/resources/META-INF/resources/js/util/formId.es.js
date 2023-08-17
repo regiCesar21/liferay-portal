@@ -9,5 +9,8 @@ export const getFormNode = (element) => dom.closest(element, 'form');
 
 export const getFormId = (form) => form?.dataset.ddmforminstanceid;
 
-export const getFormTitle = () =>
-	document.querySelector('[data-form-title]')?.dataset.formTitle;
+export const getFormTitle = (form = document) => {
+	const title = form.querySelector('[data-form-title]')?.dataset.formTitle;
+
+	return Liferay.Util.escapeHTML(title);
+};
