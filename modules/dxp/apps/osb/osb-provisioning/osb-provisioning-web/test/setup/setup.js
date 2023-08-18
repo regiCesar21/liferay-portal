@@ -4,6 +4,11 @@
  */
 
 /**
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
+ */
+
+/**
  * Mocks the
  * Liferay.Language.get() method and returns the value for a given language key.
  * Liferay.Service methods and returns a Promise of an array.
