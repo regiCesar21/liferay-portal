@@ -136,23 +136,25 @@ public class SiteNavigationMenuExportImportPortletPreferencesProcessor
 						serviceBuilderPortletPreferences :
 							serviceBuilderPortletPreferencesList) {
 
-					if (serviceBuilderPortletPreferences.getCompanyId() ==
+					if (serviceBuilderPortletPreferences.getCompanyId() !=
 							portletDataContext.getCompanyId()) {
 
-						PortletPreferences originalPortletPreferences =
-							_portletPreferencesLocalService.fetchPreferences(
-								serviceBuilderPortletPreferences.getCompanyId(),
-								serviceBuilderPortletPreferences.getOwnerId(),
-								serviceBuilderPortletPreferences.getOwnerType(),
-								serviceBuilderPortletPreferences.getPlid(),
-								serviceBuilderPortletPreferences.
-									getPortletId());
+							continue;
+					}
 
-						if (originalPortletPreferences != null) {
-							siteNavigationMenuId = GetterUtil.getLong(
-								originalPortletPreferences.getValue(
-									"siteNavigationMenuId", "0"));
-						}
+					PortletPreferences originalPortletPreferences =
+						_portletPreferencesLocalService.fetchPreferences(
+							serviceBuilderPortletPreferences.getCompanyId(),
+							serviceBuilderPortletPreferences.getOwnerId(),
+							serviceBuilderPortletPreferences.getOwnerType(),
+							serviceBuilderPortletPreferences.getPlid(),
+							serviceBuilderPortletPreferences.
+								getPortletId());
+
+					if (originalPortletPreferences != null) {
+						siteNavigationMenuId = GetterUtil.getLong(
+							originalPortletPreferences.getValue(
+								"siteNavigationMenuId", "0"));
 					}
 				}
 			}
