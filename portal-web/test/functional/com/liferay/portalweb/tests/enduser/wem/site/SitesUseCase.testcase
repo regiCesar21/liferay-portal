@@ -561,6 +561,7 @@ definition {
 	test ReturnWrongLayoutForSignedInUserWithVirtualHostsConfigured {
 		property custom.properties = "layout.default.template.id=2_columns_iii${line.separator}layout.user.private.layouts.enabled=false${line.separator}layout.user.private.layouts.auto.create=false${line.separator}layout.user.private.layouts.power.user.required=true${line.separator}layout.user.public.layouts.enabled=false${line.separator}layout.user.public.layouts.auto.create=false${line.separator}layout.user.public.layouts.power.user.required=true";
 		property test.name.skip.portal.instance = "SitesUsecase#ReturnWrongLayoutForSignedInUserWithVirtualHostsConfigured";
+		property test.smtp.server.enabled = "true";
 		property testray.component.names = "Site Administration";
 
 		var siteName = TestCase.getSiteName(siteName = ${siteName});
@@ -578,8 +579,6 @@ definition {
 			configurationScope = "Virtual Instance Scope");
 
 		PortalSettings.editConfigurationAuthenticationGeneral(enableRequireStrangers = "true");
-
-		PortalSettings.editConfigurationUsersEmailNotificationsCP();
 
 		PortalSettings.editConfigurationUsersEmailVerificationNotificationsCP();
 
@@ -601,91 +600,128 @@ definition {
 
 		SitePages.addPublicPage(pageName = "Site Page Name");
 
+		User.firstLoginUI(specificURL = "http://www.baker.com:8080");
+
 		ProductMenu.gotoPortlet(
-			category = "Configuration",
+			category = "Users",
 			panel = "Control Panel",
-			portlet = "Server Administration");
+			portlet = "Users and Organizations");
 
-		ServerAdministration.configureMailServerSettings(
-			userName = PropsUtil.get("email.address.2"),
-			userPassword = PropsUtil.get("email.password.2"));
+		User.addCP(
+			userEmailAddress = "user1@liferay.com",
+			userFirstName = "user1",
+			userLastName = "user1",
+			userScreenName = "user1");
 
-		Navigator.openSpecificURL(url = "http://www.able.com:8080/");
+		Navigator.openSpecificURL(url = "http://www.baker.com:8080");
 
-		Navigator.openSpecificURL(url = "http://www.baker.com:8080/");
+		ProductMenu.gotoPortlet(
+			category = "Users",
+			panel = "Control Panel",
+			portlet = "Users and Organizations");
 
-		User.logoutPG();
+		UserNavigator.gotoUser(userScreenName = "user1");
 
-		User.addCreateAccountPG(
-			newPassword = "password",
-			userEmailAddress = PropsUtil.get("email.address.3"),
-			userFirstName = "userfn",
-			userLastName = "userln",
-			userScreenName = "usersn");
+		UserNavigator.gotoPassword();
 
-		Pause(locator1 = 30000);
+		Type(
+			locator1 = "UsersAndOrganizationsEditUser#PASSWORD_NEW_PASSWORD_FIELD",
+			value1 = "password");
 
-		Gmail.login(
-			userEmailAddress = PropsUtil.get("email.address.3"),
-			userPassword = PropsUtil.get("email.password.3"));
+		Type(
+			locator1 = "UsersAndOrganizationsEditUser#PASSWORD_ENTER_AGAIN_FIELD",
+			value1 = "password");
 
-		Gmail.gotoHtmlMode();
+		Check(
+			checkboxName = "Require Password Reset",
+			locator1 = "Checkbox#ANY_CHECKBOX");
 
-		Gmail.gotoMail(
-			emailFromUserName = "Joe Bloggs",
-			gmailAssetType = "Address Verification",
-			gmailMessageTitle = "Email Address Verification");
+		PortletEntry.save();
 
-		var emailVerification = selenium.getText("Gmail#EMAIL_VERIFICATION_CODE");
+		UserBar.signOut();
 
-		Gmail.gotoHtmlMode();
+		User.firstLoginUI(
+			password = "password",
+			specificURL = "http://www.baker.com:8080",
+			userEmailAddress = "user1@liferay.com");
 
-		Gmail.deleteSpecificMail(gmailMessageTitleList = "Email Address Verification,Your New Account,Your New Password");
+		Button.click(button = "Send New Verification Code");
 
-		Navigator.openSpecificURL(url = "http://www.baker.com:8080/");
+		var emailVerification = MockMock.getHTMLBodyFormattedText(
+			newTab = "true",
+			recipient = "user1@",
+			sender = "Joe Bloggs",
+			subject = "http://www.baker.com:8080: Email Address Verification");
 
-		User.signInPG(
-			emailPassword = "password",
-			emailVerification = ${emailVerification},
-			userEmailAddress = PropsUtil.get("email.address.3"));
+		Close.closeWindow();
 
-		User.firstLoginPG(
-			password = "test",
-			userEmailAddress = "test@liferay.com");
+		Type(
+			locator1 = "SignInCreateAccount#EMAIL_VERIFICATION_CODE_FIELD",
+			value1 = ${emailVerification});
+
+		AssertClick(
+			locator1 = "Button#VERIFY",
+			value1 = "Verify");
+
+		User.resetPassword();
+
+		User.answerPasswordReminder();
+
+		AssertElementPresent(locator1 = "UserBar#USER_AVATAR_IMAGE");
+
+		UserBar.signOut();
+
+		MockMock.deleteMail(
+			asset = "http://www.baker.com:8080: Email Address Verification",
+			deleteAll = "true",
+			newTab = "true");
+
+		Close.closeWindow();
+
+		User.firstLoginUI(specificURL = "http://www.able.com:8080");
 
 		PortalSettings.gotoConfiguration(
 			configurationCategory = "Email",
 			configurationName = "Email Verification Notification",
 			configurationScope = "Virtual Instance Scope");
 
-		PortalSettings.editConfigurationUsersEmailVerificationNotificationsCP(emailVerificationURL = "true");
+		Type.typeEditor(
+			locator1 = "CKEditor#BODY_FIELD",
+			value1 = "[$EMAIL_VERIFICATION_URL$]");
 
-		Navigator.openSpecificURL(url = "http://www.baker.com:8080/");
+		PortletEntry.save();
 
-		User.editEmailViaMyAccount(userEmailAddress = PropsUtil.get("email.address.4"));
+		UserBar.signOut();
 
-		Gmail.logoutAndLogin(
-			userEmailAddress = PropsUtil.get("email.address.4"),
-			userPassword = PropsUtil.get("email.password.4"));
+		User.firstLoginUI(
+			specificURL = "http://www.baker.com:8080",
+			userEmailAddress = "user1@liferay.com");
 
-		Gmail.gotoHtmlMode();
+		Navigator.gotoAccountSettings();
 
-		Gmail.gotoMail(
-			emailFromUserName = "Joe Bloggs",
-			gmailAssetType = "Address Verification",
-			gmailMessageTitle = "Email Address Verification");
+		AssertElementPresent.assertElementPresent(locator1 = "TextInput#FIRST_NAME");
 
-		var emailAddressVerificationURL = selenium.getText("Gmail#EMAIL_ADDRESS_VERIFICATION_URL");
+		Type(
+			locator1 = "TextInput#EMAIL_ADDRESS",
+			value1 = "user2@liferay.com");
 
-		Click(locator1 = "Gmail#EMAIL_ADDRESS_VERIFICATION_URL");
+		Button.clickSave();
 
-		SelectWindow(locator1 = "title=Verify Email Address - ${siteName}");
+		var emailAddressVerificationURL = MockMock.getHTMLBodyFormattedText(
+			newTab = "true",
+			recipient = "user2@",
+			sender = "Joe Bloggs",
+			subject = "http://www.baker.com:8080: Email Address Verification");
 
-		AssertLocation(value1 = ${emailAddressVerificationURL});
+		Close.closeWindow();
 
-		Gmail.gotoHtmlMode();
+		Navigator.openSpecificURL(url = ${emailAddressVerificationURL});
 
-		Gmail.deleteSpecificMail(gmailMessageTitleList = "Email Address Verification,Your New Account,Your New Password");
+		AssertClick(
+			locator1 = "Button#VERIFY",
+			value1 = "Verify");
+
+		MockMock.deleteMail(asset = "http://www.baker.com:8080: Email Address Verification");
 	}
 
 	@priority = 3
