@@ -34,12 +34,12 @@ public class LicenseKeyEntityModel implements EntityModel {
 			new DateTimeEntityField(
 				"createDate",
 				locale -> Field.getSortableFieldName("createDate"),
-				locale -> Field.getSortableFieldName("createDate")),
+				locale -> "createDate"),
 			new StringEntityField("description", locale -> "description"),
 			new DateTimeEntityField(
 				"expirationDate",
 				locale -> Field.getSortableFieldName(Field.EXPIRATION_DATE),
-				locale -> Field.getSortableFieldName(Field.EXPIRATION_DATE)),
+				locale -> Field.EXPIRATION_DATE),
 			new StringEntityField("hostName", locale -> "hostName"),
 			new CollectionEntityField(
 				new StringEntityField("ipAddresses", locale -> "ipAddresses")),
@@ -53,7 +53,7 @@ public class LicenseKeyEntityModel implements EntityModel {
 			new DateTimeEntityField(
 				"modifiedDate",
 				locale -> Field.getSortableFieldName("modifiedDate"),
-				locale -> Field.getSortableFieldName("modifiedDate")),
+				locale -> "modifiedDate"),
 			new StringEntityField("name", locale -> "name"),
 			new StringEntityField(
 				"productName",
@@ -62,7 +62,7 @@ public class LicenseKeyEntityModel implements EntityModel {
 			new StringEntityField("sizing", locale -> "sizing"),
 			new DateTimeEntityField(
 				"startDate", locale -> Field.getSortableFieldName("startDate"),
-				locale -> Field.getSortableFieldName("startDate")),
+				locale -> "startDate"),
 			new CollectionEntityField(
 				new StringEntityField(
 					"subscriptionContactUuids",
