@@ -1711,9 +1711,15 @@ definition {
 				locator1 = "LexiconList#LIST_ENTRY_TITLE",
 				value1 = "Web Content With Text Title");
 
+			SelectFrameTop();
+
 			AssertTextEquals(
 				locator1 = "//div[contains(@class,'fragment_wctext')]",
-				value1 = "Web Content With Text Title Web Content Description Web Content Text");
+				value1 = "Web Content With Text Title Web Content Description");
+
+			AssertTextNotPresent(
+				locator1 = "//div[contains(@class,'fragment_wctext')]",
+				value1 = "Web Content Text");
 		}
 	}
 
