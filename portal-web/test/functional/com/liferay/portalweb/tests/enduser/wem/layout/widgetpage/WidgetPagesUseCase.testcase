@@ -928,7 +928,7 @@ definition {
 
 		SitePages.configurePage(
 			pageName = "Embedded Page",
-			pageTypeURL = "http://iscaliforniaonfire.com/",
+			pageTypeURL = "http://whereiscaliforniaonfire.com",
 			privacy = "Public Pages",
 			sitePageType = "Embedded");
 
