@@ -22,9 +22,9 @@ definition {
 	}
 
 	tearDown {
-		var testPortalInstance = PropsUtil.get("test.portal.instance");
+		var testLiferayVirtualInstance = PropsUtil.get("test.liferay.virtual.instance");
 
-		if (${testPortalInstance} == "true") {
+		if (${testLiferayVirtualInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
 		else {
@@ -41,7 +41,7 @@ definition {
 	test DeactivateCommerceAccount {
 		property portal.acceptance = "quarantine";
 		property portal.upstream = "quarantine";
-		property test.name.skip.portal.instance = "CommerceAccelerators#DeactivateCommerceAccount";
+		property test.liferay.virtual.instance = "false";
 
 		CommerceAccelerators.initializeAccelerator(siteName = "Minium");
 
@@ -119,7 +119,7 @@ definition {
 	@description = "This is a workaround for an issue with Minium's sidebar on CI"
 	test DeactivateCommerceAccountAdminLogOut {
 		property portal.acceptance = "true";
-		property test.name.skip.portal.instance = "CommerceAccelerators#DeactivateCommerceAccountAdminLogOut";
+		property test.liferay.virtual.instance = "false";
 
 		CommerceAccelerators.initializeAccelerator(siteName = "Minium");
 
@@ -200,7 +200,7 @@ definition {
 		property environment.acceptance = "true";
 		property operating.system.types = "alpine,amazonlinux,centos,debian,fedora,orcllinux,osx,redhat,solaris,suse,ubuntu,windows";
 		property portal.acceptance = "true";
-		property test.name.skip.portal.instance = "CommerceAccelerators#InitializeNewMiniumSite";
+		property test.liferay.virtual.instance = "false";
 
 		CommerceAccelerators.initializeAccelerator(siteName = "Minium");
 
@@ -254,7 +254,7 @@ definition {
 		property environment.acceptance = "true";
 		property operating.system.types = "alpine,amazonlinux,centos,debian,fedora,orcllinux,osx,redhat,solaris,suse,ubuntu,windows";
 		property portal.acceptance = "true";
-		property test.name.skip.portal.instance = "CommerceAccelerators#InitializeNewSpeedwellSite";
+		property test.liferay.virtual.instance = "false";
 
 		CommerceAccelerators.initializeAccelerator(siteName = "Speedwell");
 
@@ -307,7 +307,7 @@ definition {
 	test MiniumSiteFullFlow {
 		property portal.acceptance = "quarantine";
 		property portal.upstream = "quarantine";
-		property test.name.skip.portal.instance = "CommerceAccelerators#MiniumSiteFullFlow";
+		property test.liferay.virtual.instance = "false";
 
 		CommerceAccelerators.initializeAccelerator(siteName = "Minium");
 
@@ -465,7 +465,7 @@ definition {
 	@description = "This is a workaround for an issue with Minium's sidebar on CI"
 	test MiniumSiteFullFlowCheckingOutViaOrderDetails {
 		property portal.acceptance = "true";
-		property test.name.skip.portal.instance = "CommerceAccelerators#MiniumSiteFullFlowCheckingOutViaOrderDetails";
+		property test.liferay.virtual.instance = "false";
 
 		CommerceAccelerators.initializeAccelerator(siteName = "Minium");
 
@@ -624,7 +624,7 @@ definition {
 
 	test SpeedwellSiteFullFlow {
 		property portal.acceptance = "true";
-		property test.name.skip.portal.instance = "CommerceAccelerators#SpeedwellSiteFullFlow";
+		property test.liferay.virtual.instance = "false";
 
 		CommerceAccelerators.initializeAccelerator(siteName = "Speedwell");
 

@@ -16,9 +16,9 @@ definition {
 	}
 
 	tearDown {
-		var testPortalInstance = PropsUtil.get("test.portal.instance");
+		var testLiferayVirtualInstance = PropsUtil.get("test.liferay.virtual.instance");
 
-		if (${testPortalInstance} == "true") {
+		if (${testLiferayVirtualInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
 		else {
@@ -33,7 +33,7 @@ definition {
 	@description = "This test covers LPS-89073. It ensures that users can add and remove tags for existing images via Gogo Shell."
 	@priority = 4
 	test AddAndRemoveImageAutoTagViaGogoShell {
-		property test.name.skip.portal.instance = "DMAutoTagging#AddAndRemoveImageAutoTagViaGogoShell";
+		property test.liferay.virtual.instance = "false";
 
 		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
 
@@ -90,7 +90,7 @@ definition {
 	@description = "This test asserts that auto-tags added to an image uploaded on a staged site gets published to Live."
 	@priority = 4
 	test AssertImageAutoTagAfterPublishToLive {
-		property test.name.skip.portal.instance = "DMAutoTagging#AssertImageAutoTagAfterPublishToLive";
+		property test.liferay.virtual.instance = "false";
 
 		JSONGroup.addGroup(groupName = "Site Name");
 
@@ -156,7 +156,7 @@ definition {
 	@description = "This test asserts that no auto-tag is generated when an image is uploaded to a site that has auto-tagging disabled despite the auto-tagging functionality enabled at portal level."
 	@priority = 4
 	test ConfigureImageAutoTaggingPerSite {
-		property test.name.skip.portal.instance = "DMAutoTagging#ConfigureImageAutoTaggingPerSite";
+		property test.liferay.virtual.instance = "false";
 
 		JSONGroup.addGroup(groupName = "Site AutoTag Enabled");
 
@@ -208,7 +208,7 @@ definition {
 	@description = "This test covers LPS-101885. It asserts that an auto-tagged document can be deleted when OpenNLP Auto-Tagging is enabled."
 	@priority = 4
 	test DeleteAutoTaggedDocument {
-		property test.name.skip.portal.instance = "DMAutoTagging#DeleteAutoTaggedDocument";
+		property test.liferay.virtual.instance = "false";
 
 		AutoTagging.enableOpenNLP(
 			assetType = "Document",
@@ -233,7 +233,7 @@ definition {
 	@description = "This test asserts that the max number of tags at the instance level cannot be greater than the max number of tags at the portal level."
 	@priority = 4
 	test MaxNumberOfTagsCheckBetweenInstanceLevelAndPortalLevel {
-		property test.name.skip.portal.instance = "DMAutoTagging#MaxNumberOfTagsCheckBetweenInstanceLevelAndPortalLevel";
+		property test.liferay.virtual.instance = "false";
 
 		AutoTagging.enableAutoTagging(
 			enableAutoTaggingFor = "System Settings",
@@ -248,7 +248,7 @@ definition {
 	@description = "This test asserts that no auto-tags are generated for manually tagged images."
 	@priority = 4
 	test NoAutoTagForManuallyTaggedImage {
-		property test.name.skip.portal.instance = "DMAutoTagging#NoAutoTagForManuallyTaggedImage";
+		property test.liferay.virtual.instance = "false";
 
 		JSONLayout.addPublicLayout(
 			groupName = "Guest",
@@ -298,7 +298,7 @@ definition {
 	@description = "This test covers LPS-94208. It asserts that a document is auto tagged when OpenNLP Auto-Tagging is enabled."
 	@priority = 5
 	test OpenNLPSmoke {
-		property test.name.skip.portal.instance = "DMAutoTagging#OpenNLPSmoke";
+		property test.liferay.virtual.instance = "false";
 
 		AutoTagging.enableOpenNLP(
 			assetType = "Document",
@@ -325,7 +325,7 @@ definition {
 	@description = "This test asserts that auto-tags can be deleted."
 	@priority = 4
 	test RemoveImageAutoTag {
-		property test.name.skip.portal.instance = "DMAutoTagging#RemoveImageAutoTag";
+		property test.liferay.virtual.instance = "false";
 
 		JSONLayout.addPublicLayout(
 			groupName = "Guest",
@@ -371,7 +371,7 @@ definition {
 	@description = "This test covers LPS-94209. It asserts that OpenNLP auto-tags can be deleted."
 	@priority = 4
 	test RemoveOpenNLPAutoTag {
-		property test.name.skip.portal.instance = "DMAutoTagging#RemoveOpenNLPAutoTag";
+		property test.liferay.virtual.instance = "false";
 
 		AutoTagging.enableOpenNLP(
 			assetType = "Document",
@@ -433,7 +433,7 @@ definition {
 	@priority = 5
 	test Smoke {
 		property portal.acceptance = "true";
-		property test.name.skip.portal.instance = "DMAutoTagging#Smoke";
+		property test.liferay.virtual.instance = "false";
 
 		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
 

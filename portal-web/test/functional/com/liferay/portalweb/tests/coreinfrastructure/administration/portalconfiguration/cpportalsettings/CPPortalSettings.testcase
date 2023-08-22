@@ -13,9 +13,9 @@ definition {
 	}
 
 	tearDown {
-		var testPortalInstance = PropsUtil.get("test.portal.instance");
+		var testLiferayVirtualInstance = PropsUtil.get("test.liferay.virtual.instance");
 
-		if (${testPortalInstance} == "true") {
+		if (${testLiferayVirtualInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
 		else {
@@ -40,7 +40,7 @@ definition {
 	@description = "This is a use case for LPS-79394. This test check that system settings scope is corrected."
 	@priority = 5
 	test CheckSystemSettingsScopeIsCorrected {
-		property test.name.skip.portal.instance = "SystemSettings#CheckSystemSettingsScopeIsCorrected";
+		property test.liferay.virtual.instance = "false";
 
 		task ("Naviagte to System Settings") {
 			ProductMenu.gotoPortlet(
@@ -95,7 +95,7 @@ definition {
 
 	@priority = 5
 	test EditDefaultUserAssociationsOrganizationSites {
-		property test.name.skip.portal.instance = "CPPortalSettings#EditDefaultUserAssociationsOrganizationSites";
+		property test.liferay.virtual.instance = "false";
 
 		ProductMenu.gotoPortlet(
 			category = "Users",
@@ -139,7 +139,7 @@ definition {
 
 	@priority = 4
 	test EditDefaultUserAssociationsRoles {
-		property test.name.skip.portal.instance = "CPPortalSettings#EditDefaultUserAssociationsRoles";
+		property test.liferay.virtual.instance = "false";
 
 		ProductMenu.gotoPortlet(
 			category = "Users",
@@ -170,7 +170,7 @@ definition {
 
 	@priority = 4
 	test EditDefaultUserAssociationsSites {
-		property test.name.skip.portal.instance = "CPPortalSettings#EditDefaultUserAssociationsSites";
+		property test.liferay.virtual.instance = "false";
 
 		ProductMenu.gotoPortlet(
 			category = "Sites",
@@ -201,7 +201,7 @@ definition {
 
 	@priority = 4
 	test EditDefaultUserAssociationsUserGroups {
-		property test.name.skip.portal.instance = "CPPortalSettings#EditDefaultUserAssociationsUserGroups";
+		property test.liferay.virtual.instance = "false";
 
 		ProductMenu.gotoPortlet(
 			category = "Users",
@@ -233,7 +233,7 @@ definition {
 	@priority = 5
 	test EnterReservedEmailAddress {
 		property portal.acceptance = "true";
-		property test.name.skip.portal.instance = "CPPortalSettings#EnterReservedEmailAddress";
+		property test.liferay.virtual.instance = "false";
 
 		PortalSettings.enterReservedEmailAddressCP(userEmailAddress = "userea@liferay.com");
 
@@ -252,7 +252,7 @@ definition {
 	@priority = 5
 	test EnterReservedScreenName {
 		property portal.acceptance = "true";
-		property test.name.skip.portal.instance = "CPPortalSettings#EnterReservedScreenName";
+		property test.liferay.virtual.instance = "false";
 
 		PortalSettings.viewReservedCredentialsScreenNamesCP();
 
@@ -272,7 +272,7 @@ definition {
 
 	@priority = 4
 	test ViewContentSharingDisabledAcrossSitesViaAP {
-		property test.name.skip.portal.instance = "CPPortalSettings#ViewContentSharingDisabledAcrossSitesViaAP";
+		property test.liferay.virtual.instance = "false";
 
 		var siteName = TestCase.getSiteName(siteName = ${siteName});
 
@@ -385,7 +385,7 @@ definition {
 
 	@priority = 4
 	test ViewContentSharingEnabledAcrossSitesViaAP {
-		property test.name.skip.portal.instance = "CPPortalSettings#ViewContentSharingEnabledAcrossSitesViaAP";
+		property test.liferay.virtual.instance = "false";
 
 		var siteName = TestCase.getSiteName(siteName = ${siteName});
 
@@ -465,7 +465,7 @@ definition {
 
 	@priority = 3
 	test ViewDefaultUserAssociations {
-		property test.name.skip.portal.instance = "CPPortalSettings#ViewDefaultUserAssociations";
+		property test.liferay.virtual.instance = "false";
 
 		Navigator.openURL();
 
@@ -474,7 +474,7 @@ definition {
 
 	@priority = 3
 	test ViewEmailNotificationsAccountCreatedNotification {
-		property test.name.skip.portal.instance = "CPPortalSettings#ViewEmailNotificationsAccountCreatedNotification";
+		property test.liferay.virtual.instance = "false";
 
 		Navigator.openURL();
 
@@ -483,7 +483,7 @@ definition {
 
 	@priority = 3
 	test ViewEmailNotificationsPasswordChangedNotification {
-		property test.name.skip.portal.instance = "CPPortalSettings#ViewEmailNotificationsPasswordChangedNotification";
+		property test.liferay.virtual.instance = "false";
 
 		Navigator.openURL();
 
@@ -492,7 +492,7 @@ definition {
 
 	@priority = 3
 	test ViewEmailNotificationsSender {
-		property test.name.skip.portal.instance = "CPPortalSettings#ViewEmailNotificationsSender";
+		property test.liferay.virtual.instance = "false";
 
 		Navigator.openURL();
 
@@ -502,7 +502,7 @@ definition {
 	@description = "This is a use case for LPS-97907."
 	@priority = 5
 	test ViewSystemSettingsSavedByKeyboard {
-		property test.name.skip.portal.instance = "CPPortalSettings#ViewSystemSettingsSavedByKeyboard";
+		property test.liferay.virtual.instance = "false";
 
 		ProductMenu.gotoPortlet(
 			category = "Configuration",

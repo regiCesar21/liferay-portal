@@ -16,9 +16,9 @@ definition {
 	}
 
 	tearDown {
-		var testPortalInstance = PropsUtil.get("test.portal.instance");
+		var testLiferayVirtualInstance = PropsUtil.get("test.liferay.virtual.instance");
 
-		if (${testPortalInstance} == "true") {
+		if (${testLiferayVirtualInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
 		else {
@@ -32,7 +32,7 @@ definition {
 
 	@priority = 4
 	test AssertIndexOnStartup {
-		property test.name.skip.portal.instance = "Elasticsearch7#AssertIndexOnStartup";
+		property test.liferay.virtual.instance = "false";
 
 		JSONWebcontent.addWebContent(
 			content = "WC WebContent Content",
@@ -132,7 +132,7 @@ definition {
 	}
 
 	test AssertSearchAdmin {
-		property test.name.skip.portal.instance = "Elasticsearch7#AssertSearchAdmin";
+		property test.liferay.virtual.instance = "false";
 
 		ProductMenu.gotoPortlet(
 			category = "Configuration",
@@ -248,7 +248,7 @@ definition {
 		property elasticsearch.cluster.size = "2";
 		property portal.acceptance = "true";
 		property remote.elasticsearch7.enabled = "true";
-		property test.name.skip.portal.instance = "Elasticsearch7#ElasticsearchClusteringSmokeTest";
+		property test.liferay.virtual.instance = "false";
 
 		Elasticsearch.viewClusterStatusViaClusterHealthAPI(numberOfNodes = 2);
 
@@ -303,7 +303,7 @@ definition {
 	test HotDeployElasticsearch7App {
 		property hot.deploy.osgi.app.includes = "portal-search-elasticsearch7";
 		property test.assert.warning.exceptions = "true";
-		property test.name.skip.portal.instance = "Elasticsearch7#HotDeployElasticsearch7App";
+		property test.liferay.virtual.instance = "false";
 
 		var portalURL = JSONCompany.getPortalURL();
 
@@ -418,7 +418,7 @@ definition {
 
 	test SearchWithNonLiferayIndex {
 		property embedded.elasticsearch.only = "true";
-		property test.name.skip.portal.instance = "Elasticsearch7#SearchWithNonLiferayIndex";
+		property test.liferay.virtual.instance = "false";
 
 		AntCommands.runCommand("build-test-elasticsearch7.xml", "add-boston-dataset-index -Dbackup.index=boston311 -Delasticsearch.port=9200");
 
@@ -471,7 +471,7 @@ definition {
 	@priority = 3
 	test UpdateSystemSettingsWithoutPortalRestart {
 		property remote.elasticsearch7.enabled = "true";
-		property test.name.skip.portal.instance = "Elasticsearch7#UpdateSystemSettingsWithoutPortalRestart";
+		property test.liferay.virtual.instance = "false";
 
 		var elasticsearchVersion = Elasticsearch.getServerVersion();
 		var liferayHome = PropsUtil.get("liferay.home.dir.name");

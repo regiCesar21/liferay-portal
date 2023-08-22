@@ -15,9 +15,9 @@ definition {
 	}
 
 	tearDown {
-		var testPortalInstance = PropsUtil.get("test.portal.instance");
+		var testLiferayVirtualInstance = PropsUtil.get("test.liferay.virtual.instance");
 
-		if (${testPortalInstance} == "true") {
+		if (${testLiferayVirtualInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
 	}
@@ -667,7 +667,7 @@ definition {
 	test HotDeploySimilarResultsApp {
 		property hot.deploy.osgi.app.includes = "portal-search-similar-results";
 		property test.assert.warning.exceptions = "true";
-		property test.name.skip.portal.instance = "SimilarResultsES6#HotDeploySimilarResultsApp";
+		property test.liferay.virtual.instance = "false";
 
 		var appName = "Liferay Search Similar Results";
 

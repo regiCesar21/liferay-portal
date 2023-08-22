@@ -13,9 +13,9 @@ definition {
 	}
 
 	tearDown {
-		var testPortalInstance = PropsUtil.get("test.portal.instance");
+		var testLiferayVirtualInstance = PropsUtil.get("test.liferay.virtual.instance");
 
-		if (${testPortalInstance} == "true") {
+		if (${testLiferayVirtualInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
 		else {
@@ -26,7 +26,7 @@ definition {
 	@ignore = "true"
 	test CreateNewAvailabilityEstimate {
 		property portal.acceptance = "true";
-		property test.name.skip.portal.instance = "CPCommerceSettings#CreateNewAvailabilityEstimate";
+		property test.liferay.virtual.instance = "false";
 
 		ProductMenu.gotoPortlet(
 			category = "Commerce",
@@ -47,7 +47,7 @@ definition {
 	@ignore = "true"
 	test CreateNewCountry {
 		property portal.acceptance = "true";
-		property test.name.skip.portal.instance = "CPCommerceSettings#CreateNewCountry";
+		property test.liferay.virtual.instance = "false";
 
 		ProductMenu.gotoPortlet(
 			category = "Commerce",
@@ -80,7 +80,7 @@ definition {
 	@ignore = "true"
 	test CreateNewMeasurementUnits {
 		property portal.acceptance = "true";
-		property test.name.skip.portal.instance = "CPCommerceSettings#CreateNewMeasurementUnits";
+		property test.liferay.virtual.instance = "false";
 
 		ProductMenu.gotoPortlet(
 			category = "Commerce",
@@ -111,7 +111,7 @@ definition {
 	@ignore = "true"
 	test CreateNewNotificationTemplate {
 		property portal.acceptance = "true";
-		property test.name.skip.portal.instance = "CPCommerceSettings#CreateNewNotificationTemplate";
+		property test.liferay.virtual.instance = "false";
 
 		CommerceEntry.createNewAccountGroup(
 			criteriaType = "Users",

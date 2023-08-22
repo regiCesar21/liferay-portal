@@ -38,9 +38,9 @@ definition {
 	}
 
 	tearDown {
-		var testPortalInstance = PropsUtil.get("test.portal.instance");
+		var testLiferayVirtualInstance = PropsUtil.get("test.liferay.virtual.instance");
 
-		if (${testPortalInstance} == "true") {
+		if (${testLiferayVirtualInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
 		else {
@@ -327,7 +327,7 @@ definition {
 
 	@priority = 4
 	test AddMBThreadWithInvalidAttachmentSize {
-		property test.name.skip.portal.instance = "PGMessageboards#AddMBThreadWithInvalidAttachmentSize";
+		property test.liferay.virtual.instance = "false";
 
 		Navigator.gotoPage(pageName = "Message Boards Page");
 
@@ -493,7 +493,7 @@ definition {
 
 	@priority = 5
 	test EditMBThreadSubjectAndBody {
-		property test.name.skip.portal.instance = "PGMessageboards#EditMBThreadSubjectAndBody";
+		property test.liferay.virtual.instance = "false";
 
 		MessageboardsThread.addPG(
 			threadBody = "MB Thread Message Body",

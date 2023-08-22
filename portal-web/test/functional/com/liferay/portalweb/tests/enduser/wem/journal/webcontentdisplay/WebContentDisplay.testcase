@@ -26,9 +26,9 @@ definition {
 	}
 
 	tearDown {
-		var testPortalInstance = PropsUtil.get("test.portal.instance");
+		var testLiferayVirtualInstance = PropsUtil.get("test.liferay.virtual.instance");
 
-		if (${testPortalInstance} == "true") {
+		if (${testLiferayVirtualInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
 		else {
@@ -41,7 +41,7 @@ definition {
 		property custom.properties = "editor.wysiwyg.portal-impl.portlet.ddm.text_html.ftl=ckeditor${line.separator}xuggler.enabled=true";
 		property dummy.socket.proxy.disabled = "true";
 		property portal.acceptance = "true";
-		property test.name.skip.portal.instance = "WebContentDisplay#AddAudioViaWebContent";
+		property test.liferay.virtual.instance = "false";
 		property testray.component.names = "Training,Web Content Administration";
 
 		ServerAdministration.openServerAdmin();
@@ -255,7 +255,7 @@ definition {
 	test AddVideoViaWebContent {
 		property custom.properties = "editor.wysiwyg.portal-impl.portlet.ddm.text_html.ftl=ckeditor${line.separator}xuggler.enabled=true";
 		property dummy.socket.proxy.disabled = "true";
-		property test.name.skip.portal.instance = "WebContentDisplay#AddVideoViaWebContent";
+		property test.liferay.virtual.instance = "false";
 		property testray.component.names = "Web Content Administration";
 
 		ServerAdministration.openServerAdmin();
@@ -694,7 +694,7 @@ ${httpUtil.URLtoString(request.getAttribute("CTX").getResource(".").toURI().crea
 
 	@priority = 4
 	test LocalizeWebContent {
-		property test.name.skip.portal.instance = "WebContentDisplay#LocalizeWebContent";
+		property test.liferay.virtual.instance = "false";
 		property testray.component.names = "Localization,Web Content Display";
 
 		Navigator.gotoSitePage(
@@ -832,7 +832,7 @@ ${httpUtil.URLtoString(request.getAttribute("CTX").getResource(".").toURI().crea
 	@description = "This is a use case for LPS-71941."
 	@priority = 5
 	test UndeployWebContentDisplayModuleViaGogoShell {
-		property test.name.skip.portal.instance = "WebContentDisplay#UndeployWebContentDisplayModuleViaGogoShell";
+		property test.liferay.virtual.instance = "false";
 
 		GogoShell.openGogoShellAdmin();
 
@@ -991,7 +991,7 @@ ${runtimeInstance}
 
 	@priority = 4
 	test ViewAllFileTypesEnabled {
-		property test.name.skip.portal.instance = "WebContentDisplay#ViewAllFileTypesEnabled";
+		property test.liferay.virtual.instance = "false";
 		property testray.component.names = "Web Content Display";
 
 		Navigator.gotoSitePage(
@@ -1039,7 +1039,7 @@ ${runtimeInstance}
 
 	@priority = 4
 	test ViewAllSettingsEnabledWCDConfiguration {
-		property test.name.skip.portal.instance = "WebContentDisplay#ViewAllSettingsEnabledWCDConfiguration";
+		property test.liferay.virtual.instance = "false";
 		property testray.component.names = "Web Content Display";
 
 		Navigator.gotoSitePage(

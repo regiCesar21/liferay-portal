@@ -37,9 +37,9 @@ definition {
 	}
 
 	tearDown {
-		var testPortalInstance = PropsUtil.get("test.portal.instance");
+		var testLiferayVirtualInstance = PropsUtil.get("test.liferay.virtual.instance");
 
-		if (${testPortalInstance} == "true") {
+		if (${testLiferayVirtualInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
 		else {
@@ -50,7 +50,7 @@ definition {
 	@description = "This case ensures that the user can add a comment to a fragment of a content page."
 	@priority = 5
 	test AddComment {
-		property test.name.skip.portal.instance = "ContentPageReview#AddComment";
+		property test.liferay.virtual.instance = "false";
 
 		SitePages.openPagesAdmin(siteURLKey = "test-site-name");
 
@@ -73,7 +73,7 @@ definition {
 	@description = "This case ensures that the user can add a comment with escape characters to a fragment of a content page."
 	@priority = 4
 	test AddCommentWithEscapeCharacters {
-		property test.name.skip.portal.instance = "ContentPageReview#AddCommentWithEscapeCharacters";
+		property test.liferay.virtual.instance = "false";
 
 		SitePages.openPagesAdmin(siteURLKey = "test-site-name");
 
@@ -96,7 +96,7 @@ definition {
 	@description = "This case ensures a user can delete a fragment comment after publishing a content page."
 	@priority = 5
 	test DeleteComment {
-		property test.name.skip.portal.instance = "ContentPageReview#DeleteComment";
+		property test.liferay.virtual.instance = "false";
 
 		SitePages.openPagesAdmin(siteURLKey = "test-site-name");
 
@@ -141,7 +141,7 @@ definition {
 	@description = "This test ensures that Content Page Comments can be disabled at the instance level."
 	@priority = 4
 	test DisableContentPageCommentsAtInstanceScope {
-		property test.name.skip.portal.instance = "ContentPageReview#DisableContentPageCommentsAtInstanceScope";
+		property test.liferay.virtual.instance = "false";
 
 		SitePages.openPagesAdmin(siteURLKey = "test-site-name");
 
@@ -189,7 +189,7 @@ definition {
 	@description = "This case ensures a user can reopen a resolved comment after publishing a content page."
 	@priority = 4
 	test ReopenResolvedComment {
-		property test.name.skip.portal.instance = "ContentPageReview#ReopenResolvedComment";
+		property test.liferay.virtual.instance = "false";
 
 		SitePages.openPagesAdmin(siteURLKey = "test-site-name");
 
@@ -234,7 +234,7 @@ definition {
 	@description = "This case ensures a user can mark a fragment comment as resolved after publishing a content page."
 	@priority = 4
 	test ResolveComment {
-		property test.name.skip.portal.instance = "ContentPageReview#ResolveComment";
+		property test.liferay.virtual.instance = "false";
 
 		SitePages.openPagesAdmin(siteURLKey = "test-site-name");
 
@@ -271,7 +271,7 @@ definition {
 	@description = "This test ensures that Content Page Comments is being used once the proper configuration is enabled."
 	@priority = 5
 	test Smoke {
-		property test.name.skip.portal.instance = "ContentPageReview#Smoke";
+		property test.liferay.virtual.instance = "false";
 
 		SitePages.openPagesAdmin(siteURLKey = "test-site-name");
 
@@ -287,7 +287,7 @@ definition {
 	@description = "This case ensures that the user can see a fragment comment after publishing a content page."
 	@priority = 5
 	test ViewComment {
-		property test.name.skip.portal.instance = "ContentPageReview#ViewComment";
+		property test.liferay.virtual.instance = "false";
 
 		SitePages.openPagesAdmin(siteURLKey = "test-site-name");
 
@@ -326,7 +326,7 @@ definition {
 	@description = "This test covers LPS-101027. It ensures that a published comment should remain if staging is deactivated."
 	@priority = 3
 	test ViewCommentAfterDeactivatingStaging {
-		property test.name.skip.portal.instance = "ContentPageReview#ViewCommentAfterDeactivatingStaging";
+		property test.liferay.virtual.instance = "false";
 
 		Staging.openStagingAdmin(siteURLKey = "test-site-name");
 
@@ -387,7 +387,7 @@ definition {
 	@description = "This test covers LPS-99643. It ensures that the comment on the content page is not removed after the draft is discarded."
 	@priority = 4
 	test ViewCommentAfterDiscardedDraft {
-		property test.name.skip.portal.instance = "ContentPageReview#ViewCommentAfterDiscardedDraft";
+		property test.liferay.virtual.instance = "false";
 
 		SitePages.openPagesAdmin(siteURLKey = "test-site-name");
 
@@ -432,7 +432,7 @@ definition {
 	@description = "This test covers LPS-99063. It ensures that Edit and Delete actions should not appear for comment if a user did not create it."
 	@priority = 4
 	test ViewCommentAsNonCreator {
-		property test.name.skip.portal.instance = "ContentPageReview#ViewCommentByNonCreator";
+		property test.liferay.virtual.instance = "false";
 
 		JSONUser.addUser(
 			userEmailAddress = "user1@liferay.com",
@@ -504,7 +504,7 @@ definition {
 	@description = "This case ensures that users can view created comments when no fragment is selected and navigate to them."
 	@priority = 5
 	test ViewCommentList {
-		property test.name.skip.portal.instance = "ContentPageReview#ViewCommentList";
+		property test.liferay.virtual.instance = "false";
 
 		SitePages.openPagesAdmin(siteURLKey = "test-site-name");
 
@@ -564,7 +564,7 @@ definition {
 	@description = "This case ensures that comment list can be viewed and accessed via site navigation."
 	@priority = 5
 	test ViewCommentListNavigation {
-		property test.name.skip.portal.instance = "ContentPageReview#ViewCommentListNavigation";
+		property test.liferay.virtual.instance = "false";
 
 		SitePages.openPagesAdmin(siteURLKey = "test-site-name");
 
@@ -602,7 +602,7 @@ definition {
 	@description = "This test covers LPS-100024. It ensures that comments from different experiences are independent from one another."
 	@priority = 4
 	test ViewCommentOnDifferentExperience {
-		property test.name.skip.portal.instance = "ContentPageReview#CommentOnDifferentExperience";
+		property test.liferay.virtual.instance = "false";
 
 		SitePages.openPagesAdmin(siteURLKey = "test-site-name");
 
@@ -663,7 +663,7 @@ definition {
 	@description = "This case ensures that a comment can be added and viewed using the icon in the fragment topper."
 	@priority = 5
 	test ViewCommentViaFragment {
-		property test.name.skip.portal.instance = "ContentPageReview#ViewCommentViaFragment";
+		property test.liferay.virtual.instance = "false";
 
 		SitePages.openPagesAdmin(siteURLKey = "test-site-name");
 
@@ -701,7 +701,7 @@ definition {
 	@description = "This case ensures that the user can see an edited fragment comment after publishing a content page."
 	@priority = 4
 	test ViewEditedComment {
-		property test.name.skip.portal.instance = "ContentPageReview#ViewEditedComment";
+		property test.liferay.virtual.instance = "false";
 
 		SitePages.openPagesAdmin(siteURLKey = "test-site-name");
 
@@ -740,7 +740,7 @@ definition {
 	@description = "This case ensures that multiple comments can be added, viewed and accessed in the fragment list."
 	@priority = 4
 	test ViewMultipleCommentsList {
-		property test.name.skip.portal.instance = "ContentPageReview#ViewMultipleCommentsList";
+		property test.liferay.virtual.instance = "false";
 
 		SitePages.openPagesAdmin(siteURLKey = "test-site-name");
 
@@ -782,7 +782,7 @@ definition {
 	@description = "This case ensures that multiple replies can be added and viewed in a comment."
 	@priority = 4
 	test ViewMultipleReplies {
-		property test.name.skip.portal.instance = "ContentPageReview#ViewMultipleReplies";
+		property test.liferay.virtual.instance = "false";
 
 		SitePages.openPagesAdmin(siteURLKey = "test-site-name");
 
@@ -811,7 +811,7 @@ definition {
 	@description = "This test ensures that set the value of Content Page Comments from system settings will act as the default value for a virtual instance."
 	@priority = 4
 	test ViewVirtualInstanceCommentInheritsSystemConfiguration {
-		property test.name.skip.portal.instance = "ContentPageReview#ViewVirtualInstanceCommentInheritsSystemConfiguration";
+		property test.liferay.virtual.instance = "false";
 
 		ProductMenu.gotoPortlet(
 			category = "Configuration",

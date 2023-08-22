@@ -12,9 +12,9 @@ definition {
 	}
 
 	tearDown {
-		var testPortalInstance = PropsUtil.get("test.portal.instance");
+		var testLiferayVirtualInstance = PropsUtil.get("test.liferay.virtual.instance");
 
-		if (${testPortalInstance} == "true") {
+		if (${testLiferayVirtualInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
 		else {
@@ -26,7 +26,7 @@ definition {
 
 	@priority = 5
 	test AddPortalInstance {
-		property test.name.skip.portal.instance = "PortalconfigurationUsecase#AddPortalInstance";
+		property test.liferay.virtual.instance = "false";
 
 		ProductMenu.gotoPortlet(
 			category = "Configuration",
@@ -43,7 +43,7 @@ definition {
 
 	@priority = 5
 	test DeletePortalInstance {
-		property test.name.skip.portal.instance = "PortalconfigurationUsecase#DeletePortalInstance";
+		property test.liferay.virtual.instance = "false";
 
 		ProductMenu.gotoPortlet(
 			category = "Configuration",
@@ -60,7 +60,7 @@ definition {
 
 	@priority = 4
 	test PermissionCheckPortalInstances {
-		property test.name.skip.portal.instance = "PortalconfigurationUsecase#PermissionCheckPortalInstances";
+		property test.liferay.virtual.instance = "false";
 
 		ProductMenu.gotoPortlet(
 			category = "Configuration",
@@ -118,7 +118,7 @@ definition {
 
 	@priority = 5
 	test ViewDeactivatedPortalInstance {
-		property test.name.skip.portal.instance = "PortalconfigurationUsecase#ViewDeactivatedPortalInstance";
+		property test.liferay.virtual.instance = "false";
 
 		ProductMenu.gotoPortlet(
 			category = "Configuration",
@@ -234,7 +234,7 @@ definition {
 	@priority = 4
 	test ViewVirtualHostPrivateSitePage {
 		property custom.properties = "virtual.hosts.valid.hosts=localhost,127.0.0.1,www.able.com,www.baker.com,www.charlie.com";
-		property test.name.skip.portal.instance = "PortalconfigurationUsecase#ViewVirtualHostPrivateSitePage";
+		property test.liferay.virtual.instance = "false";
 
 		PortalSettings.gotoConfiguration(
 			configurationCategory = "Instance Configuration",
@@ -299,7 +299,7 @@ definition {
 
 	@priority = 4
 	test ViewVirtualInstanceInheritsSystemSettings {
-		property test.name.skip.portal.instance = "PortalconfigurationUsecase#ViewVirtualInstanceInheritsSystemSettings";
+		property test.liferay.virtual.instance = "false";
 
 		ProductMenu.gotoPortlet(
 			category = "Configuration",

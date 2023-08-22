@@ -12,9 +12,9 @@ definition {
 	}
 
 	tearDown {
-		var testPortalInstance = PropsUtil.get("test.portal.instance");
+		var testLiferayVirtualInstance = PropsUtil.get("test.liferay.virtual.instance");
 
-		if (${testPortalInstance} == "true") {
+		if (${testLiferayVirtualInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
 		else {
@@ -33,7 +33,7 @@ definition {
 		property database.types = "db2,hypersonic,mariadb,mysql,oracle,postgresql,sqlserver,sybase";
 		property environment.acceptance = "false";
 		property portal.acceptance = "true";
-		property test.name.skip.portal.instance = "LDAP#ImportLDAPUserWithBlankPassword";
+		property test.liferay.virtual.instance = "false";
 
 		PortalSettings.addLDAPServer(LDAPServerName = "ApacheDS Server");
 
@@ -81,7 +81,7 @@ definition {
 	test ResetFieldsValueForImportedLDAPUser {
 		property apacheds.enabled = "true";
 		property custom.properties = "field.enable.com.liferay.portal.kernel.model.Contact.male=true";
-		property test.name.skip.portal.instance = "LDAP#ResetFieldsValueForImportedLDAPUser";
+		property test.liferay.virtual.instance = "false";
 
 		PortalSettings.addLDAPServer(LDAPServerName = "ApacheDS Server");
 
@@ -169,7 +169,7 @@ definition {
 	@description = "This is a use case for LPS-73381."
 	@priority = 4
 	test ViewHiddenSecurityCredential {
-		property test.name.skip.portal.instance = "LDAP#ViewHiddenSecurityCredential";
+		property test.liferay.virtual.instance = "false";
 
 		ProductMenu.gotoPortlet(
 			category = "Configuration",
@@ -186,7 +186,7 @@ definition {
 
 	@priority = 3
 	test ViewLDAPInstanceSettingsDoNotAffectSystemSettings {
-		property test.name.skip.portal.instance = "LDAP#ViewInstanceSettingsEnableLDAPAuthNotAffectSystemSetting";
+		property test.liferay.virtual.instance = "false";
 
 		ProductMenu.gotoPortlet(
 			category = "Configuration",

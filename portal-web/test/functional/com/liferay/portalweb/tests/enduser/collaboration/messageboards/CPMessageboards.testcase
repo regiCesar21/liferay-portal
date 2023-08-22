@@ -12,9 +12,9 @@ definition {
 	}
 
 	tearDown {
-		var testPortalInstance = PropsUtil.get("test.portal.instance");
+		var testLiferayVirtualInstance = PropsUtil.get("test.liferay.virtual.instance");
 
-		if (${testPortalInstance} == "true") {
+		if (${testLiferayVirtualInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
 		else {
@@ -197,7 +197,7 @@ definition {
 
 	@priority = 3
 	test ViewAnonymousPostingAllowedCheckboxConfiguration {
-		property test.name.skip.portal.instance = "CPMessageboards#ViewAnonymousPostingAllowedCheckboxConfiguration";
+		property test.liferay.virtual.instance = "false";
 
 		MessageBoardsAdmin.openMessageBoardsAdmin(siteURLKey = "guest");
 
