@@ -1,12 +1,12 @@
 /**
- * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-FileCopyrightText: (c) 2023 Liferay, Inc. https://liferay.com
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
 package com.liferay.osb.provisioning.rest.internal.resource.v1_0.factory;
 
 import com.liferay.osb.provisioning.rest.internal.security.permission.LiberalPermissionChecker;
-import com.liferay.osb.provisioning.rest.resource.v1_0.CommonLicenseKeyResource;
+import com.liferay.osb.provisioning.rest.resource.v1_0.AppLicenseKeyResource;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.search.filter.Filter;
@@ -55,24 +55,24 @@ import org.osgi.service.component.annotations.ReferenceScope;
  * @generated
  */
 @Component(
-	property = "resource.locator.key=/provisioning-rest/v1.0/CommonLicenseKey",
-	service = CommonLicenseKeyResource.Factory.class
+	property = "resource.locator.key=/provisioning-rest/v1.0/AppLicenseKey",
+	service = AppLicenseKeyResource.Factory.class
 )
 @Generated("")
-public class CommonLicenseKeyResourceFactoryImpl
-	implements CommonLicenseKeyResource.Factory {
+public class AppLicenseKeyResourceFactoryImpl
+	implements AppLicenseKeyResource.Factory {
 
 	@Override
-	public CommonLicenseKeyResource.Builder create() {
-		return new CommonLicenseKeyResource.Builder() {
+	public AppLicenseKeyResource.Builder create() {
+		return new AppLicenseKeyResource.Builder() {
 
 			@Override
-			public CommonLicenseKeyResource build() {
+			public AppLicenseKeyResource build() {
 				if (_user == null) {
 					throw new IllegalArgumentException("User is not set");
 				}
 
-				return _commonLicenseKeyResourceProxyProviderFunction.apply(
+				return _appLicenseKeyResourceProxyProviderFunction.apply(
 					(proxy, method, arguments) -> _invoke(
 						method, arguments, _checkPermissions,
 						_httpServletRequest, _httpServletResponse,
@@ -80,7 +80,7 @@ public class CommonLicenseKeyResourceFactoryImpl
 			}
 
 			@Override
-			public CommonLicenseKeyResource.Builder checkPermissions(
+			public AppLicenseKeyResource.Builder checkPermissions(
 				boolean checkPermissions) {
 
 				_checkPermissions = checkPermissions;
@@ -89,7 +89,7 @@ public class CommonLicenseKeyResourceFactoryImpl
 			}
 
 			@Override
-			public CommonLicenseKeyResource.Builder httpServletRequest(
+			public AppLicenseKeyResource.Builder httpServletRequest(
 				HttpServletRequest httpServletRequest) {
 
 				_httpServletRequest = httpServletRequest;
@@ -98,7 +98,7 @@ public class CommonLicenseKeyResourceFactoryImpl
 			}
 
 			@Override
-			public CommonLicenseKeyResource.Builder httpServletResponse(
+			public AppLicenseKeyResource.Builder httpServletResponse(
 				HttpServletResponse httpServletResponse) {
 
 				_httpServletResponse = httpServletResponse;
@@ -107,7 +107,7 @@ public class CommonLicenseKeyResourceFactoryImpl
 			}
 
 			@Override
-			public CommonLicenseKeyResource.Builder preferredLocale(
+			public AppLicenseKeyResource.Builder preferredLocale(
 				Locale preferredLocale) {
 
 				_preferredLocale = preferredLocale;
@@ -116,14 +116,14 @@ public class CommonLicenseKeyResourceFactoryImpl
 			}
 
 			@Override
-			public CommonLicenseKeyResource.Builder uriInfo(UriInfo uriInfo) {
+			public AppLicenseKeyResource.Builder uriInfo(UriInfo uriInfo) {
 				_uriInfo = uriInfo;
 
 				return this;
 			}
 
 			@Override
-			public CommonLicenseKeyResource.Builder user(User user) {
+			public AppLicenseKeyResource.Builder user(User user) {
 				_user = user;
 
 				return this;
@@ -139,17 +139,17 @@ public class CommonLicenseKeyResourceFactoryImpl
 		};
 	}
 
-	private static Function<InvocationHandler, CommonLicenseKeyResource>
+	private static Function<InvocationHandler, AppLicenseKeyResource>
 		_getProxyProviderFunction() {
 
 		Class<?> proxyClass = ProxyUtil.getProxyClass(
-			CommonLicenseKeyResource.class.getClassLoader(),
-			CommonLicenseKeyResource.class);
+			AppLicenseKeyResource.class.getClassLoader(),
+			AppLicenseKeyResource.class);
 
 		try {
-			Constructor<CommonLicenseKeyResource> constructor =
-				(Constructor<CommonLicenseKeyResource>)
-					proxyClass.getConstructor(InvocationHandler.class);
+			Constructor<AppLicenseKeyResource> constructor =
+				(Constructor<AppLicenseKeyResource>)proxyClass.getConstructor(
+					InvocationHandler.class);
 
 			return invocationHandler -> {
 				try {
@@ -190,40 +190,39 @@ public class CommonLicenseKeyResourceFactoryImpl
 				new LiberalPermissionChecker(user));
 		}
 
-		CommonLicenseKeyResource commonLicenseKeyResource =
+		AppLicenseKeyResource appLicenseKeyResource =
 			_componentServiceObjects.getService();
 
-		commonLicenseKeyResource.setContextAcceptLanguage(
+		appLicenseKeyResource.setContextAcceptLanguage(
 			new AcceptLanguageImpl(httpServletRequest, preferredLocale, user));
 
 		Company company = _companyLocalService.getCompany(user.getCompanyId());
 
-		commonLicenseKeyResource.setContextCompany(company);
+		appLicenseKeyResource.setContextCompany(company);
 
-		commonLicenseKeyResource.setContextHttpServletRequest(
-			httpServletRequest);
-		commonLicenseKeyResource.setContextHttpServletResponse(
+		appLicenseKeyResource.setContextHttpServletRequest(httpServletRequest);
+		appLicenseKeyResource.setContextHttpServletResponse(
 			httpServletResponse);
-		commonLicenseKeyResource.setContextUriInfo(uriInfo);
-		commonLicenseKeyResource.setContextUser(user);
-		commonLicenseKeyResource.setExpressionConvert(_expressionConvert);
-		commonLicenseKeyResource.setFilterParserProvider(_filterParserProvider);
-		commonLicenseKeyResource.setGroupLocalService(_groupLocalService);
-		commonLicenseKeyResource.setResourceActionLocalService(
+		appLicenseKeyResource.setContextUriInfo(uriInfo);
+		appLicenseKeyResource.setContextUser(user);
+		appLicenseKeyResource.setExpressionConvert(_expressionConvert);
+		appLicenseKeyResource.setFilterParserProvider(_filterParserProvider);
+		appLicenseKeyResource.setGroupLocalService(_groupLocalService);
+		appLicenseKeyResource.setResourceActionLocalService(
 			_resourceActionLocalService);
-		commonLicenseKeyResource.setResourcePermissionLocalService(
+		appLicenseKeyResource.setResourcePermissionLocalService(
 			_resourcePermissionLocalService);
-		commonLicenseKeyResource.setRoleLocalService(_roleLocalService);
-		commonLicenseKeyResource.setSortParserProvider(_sortParserProvider);
+		appLicenseKeyResource.setRoleLocalService(_roleLocalService);
+		appLicenseKeyResource.setSortParserProvider(_sortParserProvider);
 
 		try {
-			return method.invoke(commonLicenseKeyResource, arguments);
+			return method.invoke(appLicenseKeyResource, arguments);
 		}
 		catch (InvocationTargetException invocationTargetException) {
 			throw invocationTargetException.getTargetException();
 		}
 		finally {
-			_componentServiceObjects.ungetService(commonLicenseKeyResource);
+			_componentServiceObjects.ungetService(appLicenseKeyResource);
 
 			PrincipalThreadLocal.setName(name);
 
@@ -231,15 +230,15 @@ public class CommonLicenseKeyResourceFactoryImpl
 		}
 	}
 
-	private static final Function<InvocationHandler, CommonLicenseKeyResource>
-		_commonLicenseKeyResourceProxyProviderFunction =
+	private static final Function<InvocationHandler, AppLicenseKeyResource>
+		_appLicenseKeyResourceProxyProviderFunction =
 			_getProxyProviderFunction();
 
 	@Reference
 	private CompanyLocalService _companyLocalService;
 
 	@Reference(scope = ReferenceScope.PROTOTYPE_REQUIRED)
-	private ComponentServiceObjects<CommonLicenseKeyResource>
+	private ComponentServiceObjects<AppLicenseKeyResource>
 		_componentServiceObjects;
 
 	@Reference

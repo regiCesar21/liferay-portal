@@ -1,5 +1,5 @@
 /**
- * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-FileCopyrightText: (c) 2023 Liferay, Inc. https://liferay.com
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
@@ -42,74 +42,20 @@ import javax.xml.bind.annotation.XmlRootElement;
  * @generated
  */
 @Generated("")
-@GraphQLName(description = "Represents a license key.", value = "LicenseKey")
+@GraphQLName(
+	description = "Represents a DXP App license key.", value = "AppLicenseKey"
+)
 @JsonFilter("Liferay.Vulcan")
-@XmlRootElement(name = "LicenseKey")
-public class LicenseKey implements Serializable {
+@XmlRootElement(name = "AppLicenseKey")
+public class AppLicenseKey implements Serializable {
 
-	public static LicenseKey toDTO(String json) {
-		return ObjectMapperUtil.readValue(LicenseKey.class, json);
+	public static AppLicenseKey toDTO(String json) {
+		return ObjectMapperUtil.readValue(AppLicenseKey.class, json);
 	}
 
-	public static LicenseKey unsafeToDTO(String json) {
-		return ObjectMapperUtil.unsafeReadValue(LicenseKey.class, json);
+	public static AppLicenseKey unsafeToDTO(String json) {
+		return ObjectMapperUtil.unsafeReadValue(AppLicenseKey.class, json);
 	}
-
-	@Schema(description = "The key of the license key's account.")
-	public String getAccountKey() {
-		return accountKey;
-	}
-
-	public void setAccountKey(String accountKey) {
-		this.accountKey = accountKey;
-	}
-
-	@JsonIgnore
-	public void setAccountKey(
-		UnsafeSupplier<String, Exception> accountKeyUnsafeSupplier) {
-
-		try {
-			accountKey = accountKeyUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
-	}
-
-	@GraphQLField(description = "The key of the license key's account.")
-	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
-	protected String accountKey;
-
-	@Schema(description = "The name of the license key's account.")
-	public String getAccountName() {
-		return accountName;
-	}
-
-	public void setAccountName(String accountName) {
-		this.accountName = accountName;
-	}
-
-	@JsonIgnore
-	public void setAccountName(
-		UnsafeSupplier<String, Exception> accountNameUnsafeSupplier) {
-
-		try {
-			accountName = accountNameUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
-	}
-
-	@GraphQLField(description = "The name of the license key's account.")
-	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
-	protected String accountName;
 
 	@Schema(description = "If the license key is active or not.")
 	public Boolean getActive() {
@@ -138,100 +84,6 @@ public class LicenseKey implements Serializable {
 	@GraphQLField(description = "If the license key is active or not.")
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Boolean active;
-
-	@Schema(description = "Any additional information for the license key.")
-	public String getAdditionalInfo() {
-		return additionalInfo;
-	}
-
-	public void setAdditionalInfo(String additionalInfo) {
-		this.additionalInfo = additionalInfo;
-	}
-
-	@JsonIgnore
-	public void setAdditionalInfo(
-		UnsafeSupplier<String, Exception> additionalInfoUnsafeSupplier) {
-
-		try {
-			additionalInfo = additionalInfoUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
-	}
-
-	@GraphQLField(
-		description = "Any additional information for the license key."
-	)
-	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
-	protected String additionalInfo;
-
-	@Schema(description = "The uuid of the asset receipt of the license key.")
-	public String getAssetReceiptLicenseUuid() {
-		return assetReceiptLicenseUuid;
-	}
-
-	public void setAssetReceiptLicenseUuid(String assetReceiptLicenseUuid) {
-		this.assetReceiptLicenseUuid = assetReceiptLicenseUuid;
-	}
-
-	@JsonIgnore
-	public void setAssetReceiptLicenseUuid(
-		UnsafeSupplier<String, Exception>
-			assetReceiptLicenseUuidUnsafeSupplier) {
-
-		try {
-			assetReceiptLicenseUuid =
-				assetReceiptLicenseUuidUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
-	}
-
-	@GraphQLField(
-		description = "The uuid of the asset receipt of the license key."
-	)
-	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
-	protected String assetReceiptLicenseUuid;
-
-	@Schema(
-		description = "The id of the cluster of the license key if applicable."
-	)
-	public Long getClusterId() {
-		return clusterId;
-	}
-
-	public void setClusterId(Long clusterId) {
-		this.clusterId = clusterId;
-	}
-
-	@JsonIgnore
-	public void setClusterId(
-		UnsafeSupplier<Long, Exception> clusterIdUnsafeSupplier) {
-
-		try {
-			clusterId = clusterIdUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
-	}
-
-	@GraphQLField(
-		description = "The id of the cluster of the license key if applicable."
-	)
-	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
-	protected Long clusterId;
 
 	@Schema(
 		description = "If the license key counts towards the customer's purchase."
@@ -459,30 +311,29 @@ public class LicenseKey implements Serializable {
 
 	@Schema(description = "The name of the license entry of the license key.")
 	@Valid
-	public LicenseEntryName getLicenseEntryName() {
-		return licenseEntryName;
+	public LicenseType getLicenseType() {
+		return licenseType;
 	}
 
 	@JsonIgnore
-	public String getLicenseEntryNameAsString() {
-		if (licenseEntryName == null) {
+	public String getLicenseTypeAsString() {
+		if (licenseType == null) {
 			return null;
 		}
 
-		return licenseEntryName.toString();
+		return licenseType.toString();
 	}
 
-	public void setLicenseEntryName(LicenseEntryName licenseEntryName) {
-		this.licenseEntryName = licenseEntryName;
+	public void setLicenseType(LicenseType licenseType) {
+		this.licenseType = licenseType;
 	}
 
 	@JsonIgnore
-	public void setLicenseEntryName(
-		UnsafeSupplier<LicenseEntryName, Exception>
-			licenseEntryNameUnsafeSupplier) {
+	public void setLicenseType(
+		UnsafeSupplier<LicenseType, Exception> licenseTypeUnsafeSupplier) {
 
 		try {
-			licenseEntryName = licenseEntryNameUnsafeSupplier.get();
+			licenseType = licenseTypeUnsafeSupplier.get();
 		}
 		catch (RuntimeException re) {
 			throw re;
@@ -496,78 +347,7 @@ public class LicenseKey implements Serializable {
 		description = "The name of the license entry of the license key."
 	)
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
-	protected LicenseEntryName licenseEntryName;
-
-	@Schema(description = "The type of the license entry of the license key.")
-	@Valid
-	public LicenseEntryType getLicenseEntryType() {
-		return licenseEntryType;
-	}
-
-	@JsonIgnore
-	public String getLicenseEntryTypeAsString() {
-		if (licenseEntryType == null) {
-			return null;
-		}
-
-		return licenseEntryType.toString();
-	}
-
-	public void setLicenseEntryType(LicenseEntryType licenseEntryType) {
-		this.licenseEntryType = licenseEntryType;
-	}
-
-	@JsonIgnore
-	public void setLicenseEntryType(
-		UnsafeSupplier<LicenseEntryType, Exception>
-			licenseEntryTypeUnsafeSupplier) {
-
-		try {
-			licenseEntryType = licenseEntryTypeUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
-	}
-
-	@GraphQLField(
-		description = "The type of the license entry of the license key."
-	)
-	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
-	protected LicenseEntryType licenseEntryType;
-
-	@Schema(description = "The portal's license version of the license key.")
-	public Integer getLicenseVersion() {
-		return licenseVersion;
-	}
-
-	public void setLicenseVersion(Integer licenseVersion) {
-		this.licenseVersion = licenseVersion;
-	}
-
-	@JsonIgnore
-	public void setLicenseVersion(
-		UnsafeSupplier<Integer, Exception> licenseVersionUnsafeSupplier) {
-
-		try {
-			licenseVersion = licenseVersionUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
-	}
-
-	@GraphQLField(
-		description = "The portal's license version of the license key."
-	)
-	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
-	protected Integer licenseVersion;
+	protected LicenseType licenseType;
 
 	@Schema(description = "The MAC addresses of the license key.")
 	public String getMacAddresses() {
@@ -596,100 +376,6 @@ public class LicenseKey implements Serializable {
 	@GraphQLField(description = "The MAC addresses of the license key.")
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String macAddresses;
-
-	@Schema(
-		description = "The maximum number of cluster nodes of the license key."
-	)
-	public Integer getMaxClusterNodes() {
-		return maxClusterNodes;
-	}
-
-	public void setMaxClusterNodes(Integer maxClusterNodes) {
-		this.maxClusterNodes = maxClusterNodes;
-	}
-
-	@JsonIgnore
-	public void setMaxClusterNodes(
-		UnsafeSupplier<Integer, Exception> maxClusterNodesUnsafeSupplier) {
-
-		try {
-			maxClusterNodes = maxClusterNodesUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
-	}
-
-	@GraphQLField(
-		description = "The maximum number of cluster nodes of the license key."
-	)
-	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
-	protected Integer maxClusterNodes;
-
-	@Schema(
-		description = "The maximum number of http sessions the license key can handle."
-	)
-	public Integer getMaxHttpSessions() {
-		return maxHttpSessions;
-	}
-
-	public void setMaxHttpSessions(Integer maxHttpSessions) {
-		this.maxHttpSessions = maxHttpSessions;
-	}
-
-	@JsonIgnore
-	public void setMaxHttpSessions(
-		UnsafeSupplier<Integer, Exception> maxHttpSessionsUnsafeSupplier) {
-
-		try {
-			maxHttpSessions = maxHttpSessionsUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
-	}
-
-	@GraphQLField(
-		description = "The maximum number of http sessions the license key can handle."
-	)
-	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
-	protected Integer maxHttpSessions;
-
-	@Schema(description = "The maximum number of servers of the license key.")
-	public Integer getMaxServers() {
-		return maxServers;
-	}
-
-	public void setMaxServers(Integer maxServers) {
-		this.maxServers = maxServers;
-	}
-
-	@JsonIgnore
-	public void setMaxServers(
-		UnsafeSupplier<Integer, Exception> maxServersUnsafeSupplier) {
-
-		try {
-			maxServers = maxServersUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
-	}
-
-	@GraphQLField(
-		description = "The maximum number of servers of the license key."
-	)
-	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
-	protected Integer maxServers;
 
 	@Schema(description = "The last date the license key was modified.")
 	public Date getModifiedDate() {
@@ -783,19 +469,21 @@ public class LicenseKey implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String modifiedUserUuid;
 
-	@Schema(description = "The name of the license key.")
-	public String getName() {
-		return name;
+	@Schema(description = "The order Id license key belongs to.")
+	public String getOrderId() {
+		return orderId;
 	}
 
-	public void setName(String name) {
-		this.name = name;
+	public void setOrderId(String orderId) {
+		this.orderId = orderId;
 	}
 
 	@JsonIgnore
-	public void setName(UnsafeSupplier<String, Exception> nameUnsafeSupplier) {
+	public void setOrderId(
+		UnsafeSupplier<String, Exception> orderIdUnsafeSupplier) {
+
 		try {
-			name = nameUnsafeSupplier.get();
+			orderId = orderIdUnsafeSupplier.get();
 		}
 		catch (RuntimeException re) {
 			throw re;
@@ -805,9 +493,9 @@ public class LicenseKey implements Serializable {
 		}
 	}
 
-	@GraphQLField(description = "The name of the license key.")
+	@GraphQLField(description = "The order Id license key belongs to.")
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
-	protected String name;
+	protected String orderId;
 
 	@Schema(description = "The owner of the license key.")
 	public String getOwner() {
@@ -865,34 +553,6 @@ public class LicenseKey implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String productId;
 
-	@Schema(description = "The key of the product of the license key.")
-	public String getProductKey() {
-		return productKey;
-	}
-
-	public void setProductKey(String productKey) {
-		this.productKey = productKey;
-	}
-
-	@JsonIgnore
-	public void setProductKey(
-		UnsafeSupplier<String, Exception> productKeyUnsafeSupplier) {
-
-		try {
-			productKey = productKeyUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
-	}
-
-	@GraphQLField(description = "The key of the product of the license key.")
-	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
-	protected String productKey;
-
 	@Schema(description = "The name of the product of the license key.")
 	public String getProductName() {
 		return productName;
@@ -920,36 +580,6 @@ public class LicenseKey implements Serializable {
 	@GraphQLField(description = "The name of the product of the license key.")
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String productName;
-
-	@Schema(description = "The key of the license key's product purchase.")
-	public String getProductPurchaseKey() {
-		return productPurchaseKey;
-	}
-
-	public void setProductPurchaseKey(String productPurchaseKey) {
-		this.productPurchaseKey = productPurchaseKey;
-	}
-
-	@JsonIgnore
-	public void setProductPurchaseKey(
-		UnsafeSupplier<String, Exception> productPurchaseKeyUnsafeSupplier) {
-
-		try {
-			productPurchaseKey = productPurchaseKeyUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
-	}
-
-	@GraphQLField(
-		description = "The key of the license key's product purchase."
-	)
-	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
-	protected String productPurchaseKey;
 
 	@Schema(description = "The version of the product of the license key.")
 	public String getProductVersion() {
@@ -980,72 +610,6 @@ public class LicenseKey implements Serializable {
 	)
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String productVersion;
-
-	@Schema(description = "The id of the server of the license key.")
-	public String getServerId() {
-		return serverId;
-	}
-
-	public void setServerId(String serverId) {
-		this.serverId = serverId;
-	}
-
-	@JsonIgnore
-	public void setServerId(
-		UnsafeSupplier<String, Exception> serverIdUnsafeSupplier) {
-
-		try {
-			serverId = serverIdUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
-	}
-
-	@GraphQLField(description = "The id of the server of the license key.")
-	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
-	protected String serverId;
-
-	@Schema(description = "The sizing of the license key.")
-	@Valid
-	public Sizing getSizing() {
-		return sizing;
-	}
-
-	@JsonIgnore
-	public String getSizingAsString() {
-		if (sizing == null) {
-			return null;
-		}
-
-		return sizing.toString();
-	}
-
-	public void setSizing(Sizing sizing) {
-		this.sizing = sizing;
-	}
-
-	@JsonIgnore
-	public void setSizing(
-		UnsafeSupplier<Sizing, Exception> sizingUnsafeSupplier) {
-
-		try {
-			sizing = sizingUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
-	}
-
-	@GraphQLField(description = "The sizing of the license key.")
-	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
-	protected Sizing sizing;
 
 	@Schema(description = "The date the license key can start being used.")
 	public Date getStartDate() {
@@ -1143,13 +707,13 @@ public class LicenseKey implements Serializable {
 			return true;
 		}
 
-		if (!(object instanceof LicenseKey)) {
+		if (!(object instanceof AppLicenseKey)) {
 			return false;
 		}
 
-		LicenseKey licenseKey = (LicenseKey)object;
+		AppLicenseKey appLicenseKey = (AppLicenseKey)object;
 
-		return Objects.equals(toString(), licenseKey.toString());
+		return Objects.equals(toString(), appLicenseKey.toString());
 	}
 
 	@Override
@@ -1167,34 +731,6 @@ public class LicenseKey implements Serializable {
 		DateFormat liferayToJSONDateFormat = new SimpleDateFormat(
 			"yyyy-MM-dd'T'HH:mm:ss'Z'");
 
-		if (accountKey != null) {
-			if (sb.length() > 1) {
-				sb.append(", ");
-			}
-
-			sb.append("\"accountKey\": ");
-
-			sb.append("\"");
-
-			sb.append(_escape(accountKey));
-
-			sb.append("\"");
-		}
-
-		if (accountName != null) {
-			if (sb.length() > 1) {
-				sb.append(", ");
-			}
-
-			sb.append("\"accountName\": ");
-
-			sb.append("\"");
-
-			sb.append(_escape(accountName));
-
-			sb.append("\"");
-		}
-
 		if (active != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -1203,44 +739,6 @@ public class LicenseKey implements Serializable {
 			sb.append("\"active\": ");
 
 			sb.append(active);
-		}
-
-		if (additionalInfo != null) {
-			if (sb.length() > 1) {
-				sb.append(", ");
-			}
-
-			sb.append("\"additionalInfo\": ");
-
-			sb.append("\"");
-
-			sb.append(_escape(additionalInfo));
-
-			sb.append("\"");
-		}
-
-		if (assetReceiptLicenseUuid != null) {
-			if (sb.length() > 1) {
-				sb.append(", ");
-			}
-
-			sb.append("\"assetReceiptLicenseUuid\": ");
-
-			sb.append("\"");
-
-			sb.append(_escape(assetReceiptLicenseUuid));
-
-			sb.append("\"");
-		}
-
-		if (clusterId != null) {
-			if (sb.length() > 1) {
-				sb.append(", ");
-			}
-
-			sb.append("\"clusterId\": ");
-
-			sb.append(clusterId);
 		}
 
 		if (complimentary != null) {
@@ -1347,42 +845,18 @@ public class LicenseKey implements Serializable {
 			sb.append("\"");
 		}
 
-		if (licenseEntryName != null) {
+		if (licenseType != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
 			}
 
-			sb.append("\"licenseEntryName\": ");
+			sb.append("\"licenseType\": ");
 
 			sb.append("\"");
 
-			sb.append(licenseEntryName);
+			sb.append(licenseType);
 
 			sb.append("\"");
-		}
-
-		if (licenseEntryType != null) {
-			if (sb.length() > 1) {
-				sb.append(", ");
-			}
-
-			sb.append("\"licenseEntryType\": ");
-
-			sb.append("\"");
-
-			sb.append(licenseEntryType);
-
-			sb.append("\"");
-		}
-
-		if (licenseVersion != null) {
-			if (sb.length() > 1) {
-				sb.append(", ");
-			}
-
-			sb.append("\"licenseVersion\": ");
-
-			sb.append(licenseVersion);
 		}
 
 		if (macAddresses != null) {
@@ -1397,36 +871,6 @@ public class LicenseKey implements Serializable {
 			sb.append(_escape(macAddresses));
 
 			sb.append("\"");
-		}
-
-		if (maxClusterNodes != null) {
-			if (sb.length() > 1) {
-				sb.append(", ");
-			}
-
-			sb.append("\"maxClusterNodes\": ");
-
-			sb.append(maxClusterNodes);
-		}
-
-		if (maxHttpSessions != null) {
-			if (sb.length() > 1) {
-				sb.append(", ");
-			}
-
-			sb.append("\"maxHttpSessions\": ");
-
-			sb.append(maxHttpSessions);
-		}
-
-		if (maxServers != null) {
-			if (sb.length() > 1) {
-				sb.append(", ");
-			}
-
-			sb.append("\"maxServers\": ");
-
-			sb.append(maxServers);
 		}
 
 		if (modifiedDate != null) {
@@ -1471,16 +915,16 @@ public class LicenseKey implements Serializable {
 			sb.append("\"");
 		}
 
-		if (name != null) {
+		if (orderId != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
 			}
 
-			sb.append("\"name\": ");
+			sb.append("\"orderId\": ");
 
 			sb.append("\"");
 
-			sb.append(_escape(name));
+			sb.append(_escape(orderId));
 
 			sb.append("\"");
 		}
@@ -1513,20 +957,6 @@ public class LicenseKey implements Serializable {
 			sb.append("\"");
 		}
 
-		if (productKey != null) {
-			if (sb.length() > 1) {
-				sb.append(", ");
-			}
-
-			sb.append("\"productKey\": ");
-
-			sb.append("\"");
-
-			sb.append(_escape(productKey));
-
-			sb.append("\"");
-		}
-
 		if (productName != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -1541,20 +971,6 @@ public class LicenseKey implements Serializable {
 			sb.append("\"");
 		}
 
-		if (productPurchaseKey != null) {
-			if (sb.length() > 1) {
-				sb.append(", ");
-			}
-
-			sb.append("\"productPurchaseKey\": ");
-
-			sb.append("\"");
-
-			sb.append(_escape(productPurchaseKey));
-
-			sb.append("\"");
-		}
-
 		if (productVersion != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -1565,34 +981,6 @@ public class LicenseKey implements Serializable {
 			sb.append("\"");
 
 			sb.append(_escape(productVersion));
-
-			sb.append("\"");
-		}
-
-		if (serverId != null) {
-			if (sb.length() > 1) {
-				sb.append(", ");
-			}
-
-			sb.append("\"serverId\": ");
-
-			sb.append("\"");
-
-			sb.append(_escape(serverId));
-
-			sb.append("\"");
-		}
-
-		if (sizing != null) {
-			if (sb.length() > 1) {
-				sb.append(", ");
-			}
-
-			sb.append("\"sizing\": ");
-
-			sb.append("\"");
-
-			sb.append(sizing);
 
 			sb.append("\"");
 		}
@@ -1646,106 +1034,26 @@ public class LicenseKey implements Serializable {
 
 	@Schema(
 		accessMode = Schema.AccessMode.READ_ONLY,
-		defaultValue = "com.liferay.osb.provisioning.rest.dto.v1_0.LicenseKey",
+		defaultValue = "com.liferay.osb.provisioning.rest.dto.v1_0.AppLicenseKey",
 		name = "x-class-name"
 	)
 	public String xClassName;
 
-	@GraphQLName("LicenseEntryName")
-	public static enum LicenseEntryName {
+	@GraphQLName("LicenseType")
+	public static enum LicenseType {
 
-		COMMERCE_SUBSCRIPTION_BACKUP("Commerce Subscription Backup"),
-		COMMERCE_SUBSCRIPTION_BACKUP_VIRTUAL_CLUSTER(
-			"Commerce Subscription Backup (Virtual Cluster)"),
-		COMMERCE_SUBSCRIPTION_DEVELOPMENT("Commerce Subscription Development"),
-		COMMERCE_SUBSCRIPTION_NON_PRODUCTION(
-			"Commerce Subscription Non-Production"),
-		COMMERCE_SUBSCRIPTION_NON_PRODUCTION_VIRTUAL_CLUSTER(
-			"Commerce Subscription Non-Production (Virtual Cluster)"),
-		COMMERCE_SUBSCRIPTION_PRODUCTION("Commerce Subscription Production"),
-		COMMERCE_SUBSCRIPTION_PRODUCTION_VIRTUAL_CLUSTER(
-			"Commerce Subscription Production (Virtual Cluster)"),
-		COMMERCE_SUBSCRIPTION_UNLIMITED_ENTERPRISE_WIDE(
-			"Commerce Subscription Unlimited Enterprise-Wide"),
-		DXP_BACKUP("DXP Backup"),
-		DXP_BACKUP_VIRTUAL_CLUSTER("DXP Backup (Virtual Cluster)"),
-		DXP_DEVELOPMENT("DXP Development"),
-		DXP_DEVELOPMENT_CLUSTER("DXP Development (Cluster)"),
-		DXP_FLEX("DXP Flex"), DXP_LIMITED("DXP Limited"),
-		DXP_NON_PRODUCTION("DXP Non-Production"),
-		DXP_NON_PRODUCTION_VIRTUAL_CLUSTER(
-			"DXP Non-Production (Virtual Cluster)"),
-		DXP_OEM("DXP OEM"), DXP_PRODUCTION("DXP Production"),
-		DXP_PRODUCTION_VIRTUAL_CLUSTER("DXP Production (Virtual Cluster)"),
-		DXP_UNLIMITED_ENTERPRISE_WIDE("DXP Unlimited Enterprise-Wide"),
-		PORTAL_BACKUP("Portal Backup"),
-		PORTAL_BACKUP_ADDITIONAL_JVM("Portal Backup (Additional JVM)"),
-		PORTAL_BACKUP_CLUSTER("Portal Backup (Cluster)"),
-		PORTAL_DEVELOPER("Portal Developer"),
-		PORTAL_DEVELOPER_CLUSTER("Portal Developer (Cluster)"),
-		PORTAL_ENTERPRISE("Portal Enterprise"),
-		PORTAL_LIMITED("Portal Limited"),
-		PORTAL_NON_PRODUCTION("Portal Non-Production"),
-		PORTAL_NON_PRODUCTION_ADDITIONAL_JVM(
-			"Portal Non-Production (Additional JVM)"),
-		PORTAL_NON_PRODUCTION_CLUSTER("Portal Non-Production (Cluster)"),
-		PORTAL_NON_PRODUCTION_ELASTIC("Portal Non-Production (Elastic)"),
-		PORTAL_NON_PRODUCTION_MONTHLY("Portal Non-Production (Monthly)"),
-		PORTAL_OEM("Portal OEM"), PORTAL_PER_USER("Portal Per User"),
-		PORTAL_PRODUCTION("Portal Production"),
-		PORTAL_PRODUCTION_ADDITIONAL_JVM("Portal Production (Additional JVM)"),
-		PORTAL_PRODUCTION_CLUSTER("Portal Production (Cluster)");
-
-		@JsonCreator
-		public static LicenseEntryName create(String value) {
-			if ((value == null) || value.equals("")) {
-				return null;
-			}
-
-			for (LicenseEntryName licenseEntryName : values()) {
-				if (Objects.equals(licenseEntryName.getValue(), value)) {
-					return licenseEntryName;
-				}
-			}
-
-			throw new IllegalArgumentException("Invalid enum value: " + value);
-		}
-
-		@JsonValue
-		public String getValue() {
-			return _value;
-		}
-
-		@Override
-		public String toString() {
-			return _value;
-		}
-
-		private LicenseEntryName(String value) {
-			_value = value;
-		}
-
-		private final String _value;
-
-	}
-
-	@GraphQLName("LicenseEntryType")
-	public static enum LicenseEntryType {
-
-		CLUSTER("cluster"), DEVELOPER("developer"),
-		DEVELOPER_CLUSTER("developer-cluster"), ENTERPRISE("enterprise"),
-		LIMITED("limited"), OEM("oem"), PER_USER("per-user"),
+		DEVELOPER("developer"), ENTERPRISE("enterprise"), OEM("oem"),
 		PRODUCTION("production"), VIRTUAL_CLUSTER("virtual-cluster");
 
 		@JsonCreator
-		public static LicenseEntryType create(String value) {
+		public static LicenseType create(String value) {
 			if ((value == null) || value.equals("")) {
 				return null;
 			}
 
-			for (LicenseEntryType licenseEntryType : values()) {
-				if (Objects.equals(licenseEntryType.getValue(), value)) {
-					return licenseEntryType;
+			for (LicenseType licenseType : values()) {
+				if (Objects.equals(licenseType.getValue(), value)) {
+					return licenseType;
 				}
 			}
 
@@ -1762,46 +1070,7 @@ public class LicenseKey implements Serializable {
 			return _value;
 		}
 
-		private LicenseEntryType(String value) {
-			_value = value;
-		}
-
-		private final String _value;
-
-	}
-
-	@GraphQLName("Sizing")
-	public static enum Sizing {
-
-		SIZING_1("Sizing 1"), SIZING_2("Sizing 2"), SIZING_3("Sizing 3"),
-		SIZING_4("Sizing 4");
-
-		@JsonCreator
-		public static Sizing create(String value) {
-			if ((value == null) || value.equals("")) {
-				return null;
-			}
-
-			for (Sizing sizing : values()) {
-				if (Objects.equals(sizing.getValue(), value)) {
-					return sizing;
-				}
-			}
-
-			throw new IllegalArgumentException("Invalid enum value: " + value);
-		}
-
-		@JsonValue
-		public String getValue() {
-			return _value;
-		}
-
-		@Override
-		public String toString() {
-			return _value;
-		}
-
-		private Sizing(String value) {
+		private LicenseType(String value) {
 			_value = value;
 		}
 

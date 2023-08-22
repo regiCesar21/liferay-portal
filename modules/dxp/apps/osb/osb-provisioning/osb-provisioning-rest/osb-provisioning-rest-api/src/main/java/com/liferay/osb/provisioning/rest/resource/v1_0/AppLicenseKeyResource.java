@@ -1,10 +1,11 @@
 /**
- * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-FileCopyrightText: (c) 2023 Liferay, Inc. https://liferay.com
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
 package com.liferay.osb.provisioning.rest.resource.v1_0;
 
+import com.liferay.osb.provisioning.rest.dto.v1_0.AppLicenseKey;
 import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.search.filter.Filter;
 import com.liferay.portal.kernel.service.GroupLocalService;
@@ -15,6 +16,8 @@ import com.liferay.portal.odata.filter.ExpressionConvert;
 import com.liferay.portal.odata.filter.FilterParserProvider;
 import com.liferay.portal.odata.sort.SortParserProvider;
 import com.liferay.portal.vulcan.accept.language.AcceptLanguage;
+import com.liferay.portal.vulcan.pagination.Page;
+import com.liferay.portal.vulcan.pagination.Pagination;
 
 import java.util.Collections;
 import java.util.List;
@@ -40,16 +43,10 @@ import org.osgi.annotation.versioning.ProviderType;
  */
 @Generated("")
 @ProviderType
-public interface AccountResource {
+public interface AppLicenseKeyResource {
 
-	public void deleteAccountContactByEmailAddresContactEmailAddressRole(
-			String accountKey, String contactEmailAddress,
-			String[] contactRoleNames)
-		throws Exception;
-
-	public void putAccountContactByEmailAddresContactEmailAddressRole(
-			String accountKey, String contactEmailAddress,
-			String[] contactRoleNames, String firstName, String lastName)
+	public Page<AppLicenseKey> getAppLicenseKeysPage(
+			String search, Filter filter, Pagination pagination, Sort[] sorts)
 		throws Exception;
 
 	public default void setContextAcceptLanguage(
@@ -109,7 +106,7 @@ public interface AccountResource {
 	@ProviderType
 	public interface Builder {
 
-		public AccountResource build();
+		public AppLicenseKeyResource build();
 
 		public Builder checkPermissions(boolean checkPermissions);
 
