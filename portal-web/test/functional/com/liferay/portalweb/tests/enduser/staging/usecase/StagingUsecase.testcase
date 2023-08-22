@@ -22,9 +22,9 @@ definition {
 	}
 
 	tearDown {
-		var testPortalInstance = PropsUtil.get("test.portal.instance");
+		var testLiferayVirtualInstance = PropsUtil.get("test.liferay.virtual.instance");
 
-		if (${testPortalInstance} == "true") {
+		if (${testLiferayVirtualInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
 		else {
@@ -34,7 +34,7 @@ definition {
 
 	@priority = 5
 	test ActivateStagingForSiteWithTheme {
-		property test.name.skip.portal.instance = "Theme#ActivateStagingForSiteWithTheme";
+		property test.liferay.virtual.instance = "false";
 
 		FileInstall.deployFileOnServer(liferayDependencyJars = "test-theme.war");
 
@@ -493,7 +493,7 @@ definition {
 
 	@priority = 4
 	test EditPublishTemplate {
-		property test.name.skip.portal.instance = "StagingUsecase#EditPublishTemplate";
+		property test.liferay.virtual.instance = "false";
 
 		SitePages.openPagesAdmin(siteURLKey = "site-name-staging");
 
@@ -903,7 +903,7 @@ definition {
 	@priority = 5
 	test PublishThemeFromStagedToLive {
 		property portal.upstream = "quarantine";
-		property test.name.skip.portal.instance = "StagingUsecase#PublishThemeFromStagedToLive";
+		property test.liferay.virtual.instance = "false";
 
 		FileInstall.deployFileOnServer(liferayDependencyJars = "test-theme.war");
 
@@ -1011,7 +1011,7 @@ definition {
 	@description = "This is a use case for LPS-82757."
 	@priority = 3
 	test PublishWebContentWithFeeds {
-		property test.name.skip.portal.instance = "StagingUsecase#PublishWebContentWithFeeds";
+		property test.liferay.virtual.instance = "false";
 		property testray.component.names = "Web Content Administration";
 
 		ApplicationsMenu.gotoPortlet(
@@ -1492,7 +1492,7 @@ definition {
 	@priority = 5
 	test TrashEntryReferencePublishing {
 		property portal.acceptance = "true";
-		property test.name.skip.portal.instance = "StagingUsecase#TrashEntryReferencePublishing";
+		property test.liferay.virtual.instance = "false";
 		property testray.component.names = "Training";
 
 		Navigator.gotoStagedSitePage(

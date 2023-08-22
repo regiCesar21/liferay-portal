@@ -16,9 +16,9 @@ definition {
 	}
 
 	tearDown {
-		var testPortalInstance = PropsUtil.get("test.portal.instance");
+		var testLiferayVirtualInstance = PropsUtil.get("test.liferay.virtual.instance");
 
-		if (${testPortalInstance} == "true") {
+		if (${testLiferayVirtualInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
 		else {
@@ -30,7 +30,7 @@ definition {
 	@priority = 5
 	test CanDeleteSiteScopedReadOnlyDeployedFragmentInThatSite {
 		property portal.acceptance = "true";
-		property test.name.skip.portal.instance = "FragmentsDeploy#CanDeleteSiteScopedReadOnlyDeployedFragmentInThatSite";
+		property test.liferay.virtual.instance = "false";
 
 		task ("Deploy fragments zip to Test Site Name") {
 			FragmentsDeploy.deployZipOnLiferayPortal(fragmentsZip = "card.zip");
@@ -68,7 +68,7 @@ definition {
 	@priority = 5
 	test CanDeleteSystemScopedReadOnlyDeployedFragmentInGlobalSiteOfDefaultInstance {
 		property portal.acceptance = "true";
-		property test.name.skip.portal.instance = "FragmentsDeploy#CanDeleteSystemScopedReadOnlyDeployedFragmentInGlobalSiteOfDefaultInstance";
+		property test.liferay.virtual.instance = "false";
 
 		task ("Deploy fragments zip are available in System wide") {
 			FragmentsDeploy.deployZipOnLiferayPortal(fragmentsZip = "image.zip");
@@ -106,7 +106,7 @@ definition {
 	@priority = 5
 	test CanDeleteVirtualInstanceScopedReadOnlyDeployedFragmentInGlobalSiteOfThatInstance {
 		property portal.acceptance = "true";
-		property test.name.skip.portal.instance = "FragmentsDeploy#CanDeleteVirtualInstanceScopedReadOnlyDeployedFragmentInGlobalSiteOfThatInstance";
+		property test.liferay.virtual.instance = "false";
 
 		task ("Deploy fragments zip are available in Liferay.com intance") {
 			FragmentsDeploy.deployZipOnLiferayPortal(fragmentsZip = "link.zip");
@@ -143,7 +143,7 @@ definition {
 	@description = "This is a test for LPS-106253. Can not delete read-only deployed fragments of virtual instance-scoped and system-scoped in normal site."
 	@priority = 3
 	test CannotDeleteSystemAndVirtualInstanceScopedReadOnlyDeployedFragmentInNormalSite {
-		property test.name.skip.portal.instance = "FragmentsDeploy#CannotDeleteSystemAndVirtualInstanceScopedReadOnlyDeployedFragmentInNormalSite";
+		property test.liferay.virtual.instance = "false";
 
 		task ("Deploy fragments zip are available in Liferay.com intance") {
 			FragmentsDeploy.deployZipOnLiferayPortal(fragmentsZip = "link.zip");
@@ -204,7 +204,7 @@ definition {
 	@priority = 3
 	test CannotDeleteSystemScopedReadOnlyDeployedFragmentInOtherVirtualInstance {
 		property custom.properties = "virtual.hosts.valid.hosts=localhost,127.0.0.1,www.able.com";
-		property test.name.skip.portal.instance = "FragmentsDeploy#CannotDeleteSystemScopedReadOnlyDeployedFragmentInOtherVirtualInstance";
+		property test.liferay.virtual.instance = "false";
 
 		task ("Add a new Virtual Instance") {
 			ApplicationsMenu.gotoPortlet(
@@ -260,7 +260,7 @@ definition {
 	@priority = 5
 	test DeployFragmentsToSpecificSite {
 		property portal.acceptance = "true";
-		property test.name.skip.portal.instance = "FragmentsDeploy#DeployFragmentsToSpecificSite";
+		property test.liferay.virtual.instance = "false";
 
 		task ("Deploy fragments zip to Test Site Name") {
 			FragmentsDeploy.deployZipOnLiferayPortal(fragmentsZip = "card.zip");
@@ -297,7 +297,7 @@ definition {
 	test DeployFragmentsToSpecificVirtualInstance {
 		property custom.properties = "virtual.hosts.valid.hosts=localhost,127.0.0.1,www.able.com";
 		property portal.acceptance = "true";
-		property test.name.skip.portal.instance = "FragmentsDeploy#DeployFragmentsToSpecificVirtualInstance";
+		property test.liferay.virtual.instance = "false";
 
 		task ("Add a new Virtual Instance") {
 			ApplicationsMenu.gotoPortlet(
@@ -395,7 +395,7 @@ definition {
 	@priority = 3
 	test ViewFragmentsDeployedToSystemWideAreAvailableForExistAndFutureVirtualInstance {
 		property custom.properties = "virtual.hosts.valid.hosts=localhost,127.0.0.1,www.able.com";
-		property test.name.skip.portal.instance = "FragmentsDeploy#ViewFragmentsDeployedToSystemWideAreAvailableForExistAndFutureVirtualInstance";
+		property test.liferay.virtual.instance = "false";
 
 		task ("Deploy fragments zip are available in System wide") {
 			FragmentsDeploy.deployZipOnLiferayPortal(fragmentsZip = "image.zip");

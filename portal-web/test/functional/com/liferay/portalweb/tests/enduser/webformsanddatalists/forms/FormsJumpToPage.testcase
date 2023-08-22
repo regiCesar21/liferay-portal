@@ -13,9 +13,9 @@ definition {
 	}
 
 	tearDown {
-		var testPortalInstance = PropsUtil.get("test.portal.instance");
+		var testLiferayVirtualInstance = PropsUtil.get("test.liferay.virtual.instance");
 
-		if (${testPortalInstance} == "true") {
+		if (${testLiferayVirtualInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
 		else {
@@ -35,7 +35,7 @@ definition {
 	@priority = 4
 	test ViewFormRulesSummary {
 		property portal.acceptance = "true";
-		property test.name.skip.portal.instance = "FormsJumpToPage#ViewFormRulesSummary";
+		property test.liferay.virtual.instance = "false";
 
 		Navigator.openURL();
 
@@ -164,7 +164,7 @@ definition {
 	@priority = 5
 	test ViewPagesAfterJump {
 		property portal.acceptance = "true";
-		property test.name.skip.portal.instance = "FormsJumpToPage#ViewPagesAfterJump";
+		property test.liferay.virtual.instance = "false";
 
 		Navigator.openURL();
 
@@ -340,7 +340,7 @@ definition {
 	@description = "This is a use case for LPS-68227."
 	@priority = 4
 	test ViewRuleAfterLabelEdit {
-		property test.name.skip.portal.instance = "FormsJumpToPage#ViewRuleAfterLabelEdit";
+		property test.liferay.virtual.instance = "false";
 
 		Navigator.openURL();
 
@@ -477,7 +477,7 @@ definition {
 	@priority = 3
 	test ViewRuleAfterOptionValueEdit {
 		property portal.acceptance = "true";
-		property test.name.skip.portal.instance = "FormsJumpToPage#ViewRuleAfterOptionValueEdit";
+		property test.liferay.virtual.instance = "false";
 
 		Navigator.openURL();
 
@@ -616,7 +616,7 @@ definition {
 	@priority = 4
 	test ViewRuleAfterPageNameChange {
 		property portal.acceptance = "true";
-		property test.name.skip.portal.instance = "FormsJumpToPage#ViewRuleAfterPageNameChange";
+		property test.liferay.virtual.instance = "false";
 
 		Navigator.openURL();
 

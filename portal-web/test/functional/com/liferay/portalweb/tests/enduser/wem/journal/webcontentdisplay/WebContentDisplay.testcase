@@ -29,9 +29,9 @@ definition {
 	}
 
 	tearDown {
-		var testPortalInstance = PropsUtil.get("test.portal.instance");
+		var testLiferayVirtualInstance = PropsUtil.get("test.liferay.virtual.instance");
 
-		if (${testPortalInstance} == "true") {
+		if (${testLiferayVirtualInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
 		else {
@@ -48,7 +48,7 @@ definition {
 		property environment.acceptance = "true";
 		property operating.system.types = "alpine,amazonlinux,centos,debian,fedora,orcllinux,osx,redhat,solaris,suse,ubuntu,windows";
 		property portal.acceptance = "true";
-		property test.name.skip.portal.instance = "WebContentDisplay#AddAudioViaWebContent";
+		property test.liferay.virtual.instance = "false";
 		property testray.component.names = "Training,Web Content Administration";
 
 		ServerAdministration.openServerAdmin();
@@ -249,7 +249,7 @@ definition {
 		property dummy.socket.proxy.disabled = "true";
 		property environment.acceptance = "true";
 		property operating.system.types = "alpine,amazonlinux,centos,debian,fedora,orcllinux,osx,redhat,solaris,suse,ubuntu,windows";
-		property test.name.skip.portal.instance = "WebContentDisplay#AddVideoViaWebContent";
+		property test.liferay.virtual.instance = "false";
 		property testray.component.names = "Web Content Administration";
 
 		ServerAdministration.openServerAdmin();
@@ -624,7 +624,7 @@ ${httpUtil.URLtoString(request.getAttribute("CTX").getResource(".").toURI().crea
 
 	@priority = 4
 	test ChangeTemplate {
-		property test.name.skip.portal.instance = "WebContentDisplay#ChangeTemplate";
+		property test.liferay.virtual.instance = "false";
 		property testray.component.names = "Web Content Display";
 
 		ApplicationsMenu.gotoPortlet(
@@ -699,7 +699,7 @@ ${httpUtil.URLtoString(request.getAttribute("CTX").getResource(".").toURI().crea
 
 	@priority = 4
 	test LocalizeWebContent {
-		property test.name.skip.portal.instance = "WebContentDisplay#LocalizeWebContent";
+		property test.liferay.virtual.instance = "false";
 		property testray.component.names = "Localization,Web Content Display";
 
 		JSONLayout.addWidgetToPublicLayout(
@@ -844,7 +844,7 @@ ${httpUtil.URLtoString(request.getAttribute("CTX").getResource(".").toURI().crea
 	@priority = 5
 	test UndeployWebContentDisplayModuleViaGogoShell {
 		property portal.acceptance = "true";
-		property test.name.skip.portal.instance = "WebContentDisplay#UndeployWebContentDisplayModuleViaGogoShell";
+		property test.liferay.virtual.instance = "false";
 
 		GogoShell.openGogoShellAdmin();
 
@@ -990,7 +990,7 @@ ${runtimeInstance}
 
 	@priority = 4
 	test ViewAllFileTypesEnabled {
-		property test.name.skip.portal.instance = "WebContentDisplay#ViewAllFileTypesEnabled";
+		property test.liferay.virtual.instance = "false";
 		property testray.component.names = "Web Content Display";
 
 		JSONWebcontent.addWebContent(
@@ -1045,7 +1045,7 @@ ${runtimeInstance}
 
 	@priority = 4
 	test ViewAllSettingsEnabledWCDConfiguration {
-		property test.name.skip.portal.instance = "WebContentDisplay#ViewAllSettingsEnabledWCDConfiguration";
+		property test.liferay.virtual.instance = "false";
 		property testray.component.names = "Web Content Display";
 
 		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");

@@ -12,9 +12,9 @@ definition {
 	}
 
 	tearDown {
-		var testPortalInstance = PropsUtil.get("test.portal.instance");
+		var testLiferayVirtualInstance = PropsUtil.get("test.liferay.virtual.instance");
 
-		if (${testPortalInstance} == "true") {
+		if (${testLiferayVirtualInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
 		else {
@@ -27,7 +27,7 @@ definition {
 	@priority = 5
 	test AccessGogoShellCommandViaPortlet {
 		property portal.acceptance = "true";
-		property test.name.skip.portal.instance = "GogoShell#AccessGogoShellCommandViaPortlet";
+		property test.liferay.virtual.instance = "false";
 
 		ApplicationsMenu.gotoPortlet(
 			category = "System",
@@ -48,7 +48,7 @@ definition {
 	@description = "This is a use case for LPS-83660."
 	@priority = 3
 	test GogoShellCommandDisconnectNotSupported {
-		property test.name.skip.portal.instance = "GogoShell#GogoShellCommandDisconnectNotSupported";
+		property test.liferay.virtual.instance = "false";
 
 		ApplicationsMenu.gotoPortlet(
 			category = "System",
@@ -64,7 +64,7 @@ definition {
 
 	@priority = 4
 	test GogoShellPortletOnlyOnMainInstance {
-		property test.name.skip.portal.instance = "GogoShell#GogoShellPortletOnlyOnMainInstance";
+		property test.liferay.virtual.instance = "false";
 
 		ApplicationsMenu.gotoPortlet(
 			category = "System",
@@ -98,7 +98,7 @@ definition {
 
 	@priority = 4
 	test OmniAdminCanAccessGogoShellCommandViaPortlet {
-		property test.name.skip.portal.instance = "GogoShell#OmniAdminCanAccessGogoShellCommandViaPortlet";
+		property test.liferay.virtual.instance = "false";
 
 		JSONUser.addUser(
 			userEmailAddress = "userea@liferay.com",
@@ -136,7 +136,7 @@ definition {
 
 	@priority = 4
 	test SiteAdminCannotAccessGogoShellPortlet {
-		property test.name.skip.portal.instance = "GogoShell#SiteAdminCannotAccessGogoShellPortlet";
+		property test.liferay.virtual.instance = "false";
 
 		JSONUser.addUser(
 			userEmailAddress = "userea@liferay.com",

@@ -30,9 +30,9 @@ definition {
 	}
 
 	tearDown {
-		var testPortalInstance = PropsUtil.get("test.portal.instance");
+		var testLiferayVirtualInstance = PropsUtil.get("test.liferay.virtual.instance");
 
-		if (${testPortalInstance} == "true") {
+		if (${testLiferayVirtualInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
 		else {
@@ -46,7 +46,7 @@ definition {
 
 	@priority = 4
 	test AddAnnouncementsEntry {
-		property test.name.skip.portal.instance = "PGAnnouncements#AddAnnouncementsEntry";
+		property test.liferay.virtual.instance = "false";
 
 		Navigator.gotoPage(pageName = "Announcements Page");
 
@@ -172,7 +172,7 @@ definition {
 	@priority = 5
 	test DeleteAnnouncementsEntry {
 		property portal.acceptance = "true";
-		property test.name.skip.portal.instance = "PGAnnouncements#DeleteAnnouncementsEntry";
+		property test.liferay.virtual.instance = "false";
 
 		JSONAnnouncement.addAnnouncement(
 			announcementContent = "Announcements Entry Content",
@@ -194,7 +194,7 @@ definition {
 	@priority = 5
 	test EditAnnouncementsEntry {
 		property portal.acceptance = "true";
-		property test.name.skip.portal.instance = "PGAnnouncements#EditAnnouncementsEntry";
+		property test.liferay.virtual.instance = "false";
 
 		JSONAnnouncement.addAnnouncement(
 			announcementContent = "Announcements Entry Content",
@@ -222,7 +222,7 @@ definition {
 	@priority = 5
 	test ViewPreviousAnnouncementEntries {
 		property portal.acceptance = "true";
-		property test.name.skip.portal.instance = "PGAnnouncements#ViewPreviousAnnouncementEntries";
+		property test.liferay.virtual.instance = "false";
 
 		Navigator.gotoPage(pageName = "Announcements Page");
 

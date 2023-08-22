@@ -12,9 +12,9 @@ definition {
 	}
 
 	tearDown {
-		var testPortalInstance = PropsUtil.get("test.portal.instance");
+		var testLiferayVirtualInstance = PropsUtil.get("test.liferay.virtual.instance");
 
-		if (${testPortalInstance} == "true") {
+		if (${testLiferayVirtualInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
 		else {
@@ -111,7 +111,7 @@ definition {
 
 	@priority = 3
 	test AddKBArticleViaTemplateCP {
-		property test.name.skip.portal.instance = "CPKnowledgebase#AddKBArticleViaTemplateCP";
+		property test.liferay.virtual.instance = "false";
 
 		JSONKnowledgeBase.addkBTemplate(
 			kbTemplateContent = "Knowledge Base Template Content",
@@ -151,7 +151,7 @@ definition {
 
 	@priority = 3
 	test AddKBArticleWithBlogsEntryRelatedAssetViaKBAdmin {
-		property test.name.skip.portal.instance = "CPKnowledgebase#AddKBArticleWithBlogsEntryRelatedAssetViaKBAdmin";
+		property test.liferay.virtual.instance = "false";
 
 		JSONBlog.addEntry(
 			entryContent = "Blogs Entry Content",
@@ -239,7 +239,7 @@ definition {
 
 	@priority = 3
 	test AddKBArticleWithInvalidAttachmentSize {
-		property test.name.skip.portal.instance = "CPKnowledgebase#AddKBArticleWithInvalidAttachmentSize";
+		property test.liferay.virtual.instance = "false";
 
 		SystemSettings.openSystemSettingsAdmin();
 
@@ -268,7 +268,7 @@ definition {
 
 	@priority = 3
 	test AddKBArticleWithoutRequiredCategory {
-		property test.name.skip.portal.instance = "CPKnowledgebase#AddKBArticleWithoutRequiredCategory";
+		property test.liferay.virtual.instance = "false";
 
 		Navigator.openURL();
 
@@ -345,7 +345,7 @@ definition {
 
 	@priority = 3
 	test CancelAddKBArticle {
-		property test.name.skip.portal.instance = "CPKnowledgebase#CancelAddKBArticle";
+		property test.liferay.virtual.instance = "false";
 
 		KBAdmin.openKBAdmin(siteURLKey = "guest");
 
@@ -358,7 +358,7 @@ definition {
 
 	@priority = 3
 	test CancelEditKBArticle {
-		property test.name.skip.portal.instance = "CPKnowledgebase#CancelEditKBArticle";
+		property test.liferay.virtual.instance = "false";
 
 		JSONKnowledgeBase.addkBArticle(
 			kbArticleContent = "Knowledge Base Article Content",
@@ -381,7 +381,7 @@ definition {
 
 	@priority = 3
 	test CannotAddDuplicateKBFolder {
-		property test.name.skip.portal.instance = "CPKnowledgebase#CannotAddDuplicateKBFolder";
+		property test.liferay.virtual.instance = "false";
 
 		KBAdmin.openKBAdmin(siteURLKey = "guest");
 
@@ -589,7 +589,7 @@ definition {
 
 	@priority = 3
 	test ViewChildArticleInKBArticleViaKBAdmin {
-		property test.name.skip.portal.instance = "CPKnowledgebase#ViewChildArticleInKBArticleViaKBAdmin";
+		property test.liferay.virtual.instance = "false";
 
 		KBAdmin.openKBAdmin(siteURLKey = "guest");
 
@@ -787,7 +787,7 @@ definition {
 
 	@priority = 3
 	test ViewKBTemplateViaAddKBArticleCP {
-		property test.name.skip.portal.instance = "CPKnowledgebase#ViewKBTemplateViaAddKBArticleCP";
+		property test.liferay.virtual.instance = "false";
 
 		KBAdmin.openKBAdmin(siteURLKey = "guest");
 
@@ -815,7 +815,7 @@ definition {
 
 	@priority = 3
 	test ViewPendingKBArticleContent {
-		property test.name.skip.portal.instance = "CPKnowledgebase#ViewPendingKBArticleContent";
+		property test.liferay.virtual.instance = "false";
 
 		Navigator.openURL();
 

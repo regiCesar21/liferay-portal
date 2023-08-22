@@ -14,9 +14,9 @@ definition {
 	}
 
 	tearDown {
-		var testPortalInstance = PropsUtil.get("test.portal.instance");
+		var testLiferayVirtualInstance = PropsUtil.get("test.liferay.virtual.instance");
 
-		if (${testPortalInstance} == "true") {
+		if (${testLiferayVirtualInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
 		else {
@@ -303,7 +303,7 @@ definition {
 	test AssertSuggestionsCannotOfferInvalidWordsAsSuggestion {
 		property custom.properties = "locales.enabled=de_DE,en_US${line.separator}locales=de_DE,en_US${line.separator}index.search.spell.checker.dictionary[de_DE]=spellchecker/dictionary_de_DE.txt${line.separator}index.search.spell.checker.supported.locales=en_US,es_ES,de_DE";
 		property index.search.spell.checker.enabled = "true";
-		property test.name.skip.portal.instance = "SolrSearch#AssertSuggestionsCannotOfferInvalidWordsAsSuggestion";
+		property test.liferay.virtual.instance = "false";
 
 		JSONWebcontent.addBasicWebContentLocalized(
 			contentMap = "en_US:WC Content,de_DE:ächten angreifen anmarschieren",
@@ -591,7 +591,7 @@ definition {
 
 	@priority = 4
 	test SearchBlogsEntryCategory {
-		property test.name.skip.portal.instance = "SolrSearch#SearchBlogsEntryCategory";
+		property test.liferay.virtual.instance = "false";
 
 		Navigator.openURL();
 
@@ -819,7 +819,7 @@ definition {
 
 	@priority = 4
 	test SearchBlogsEntryTag {
-		property test.name.skip.portal.instance = "SolrSearch#SearchBlogsEntryTag";
+		property test.liferay.virtual.instance = "false";
 
 		Navigator.openURL();
 
@@ -1305,7 +1305,7 @@ definition {
 
 	@priority = 4
 	test SearchUser {
-		property test.name.skip.portal.instance = "SolrSearch#SearchUser";
+		property test.liferay.virtual.instance = "false";
 
 		var siteName = TestCase.getSiteName(siteName = ${siteName});
 
@@ -1507,7 +1507,7 @@ definition {
 
 	@priority = 4
 	test SearchWebContent {
-		property test.name.skip.portal.instance = "SolrSearch#SearchWebContent";
+		property test.liferay.virtual.instance = "false";
 
 		JSONWebcontent.addWebContent(
 			content = "WC WebContent Content",
@@ -1957,7 +1957,7 @@ definition {
 	@description = "This is a use case for LPS-74299."
 	@priority = 3
 	test ViewFacetPersistence {
-		property test.name.skip.portal.instance = "SolrSearch#ViewFacetPersistence";
+		property test.liferay.virtual.instance = "false";
 
 		// Workaround for LPS-89026
 
@@ -2378,7 +2378,7 @@ definition {
 	@priority = 5
 	test ViewSearchResultDetails {
 		property portal.acceptance = "true";
-		property test.name.skip.portal.instance = "SolrSearch#ViewSearchResultDetails";
+		property test.liferay.virtual.instance = "false";
 
 		ApplicationsMenu.gotoPortlet(
 			category = "Configuration",

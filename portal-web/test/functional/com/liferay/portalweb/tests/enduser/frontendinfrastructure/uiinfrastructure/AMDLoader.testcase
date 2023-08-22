@@ -12,16 +12,16 @@ definition {
 	}
 
 	tearDown {
-		var testPortalInstance = PropsUtil.get("test.portal.instance");
+		var testLiferayVirtualInstance = PropsUtil.get("test.liferay.virtual.instance");
 
-		if (${testPortalInstance} == "true") {
+		if (${testLiferayVirtualInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
 	}
 
 	@priority = 5
 	test CheckAMDLoaderLogLevel {
-		property test.name.skip.portal.instance = "AMDLoader#CheckAMDLoaderLogLevel";
+		property test.liferay.virtual.instance = "false";
 
 		ApplicationsMenu.gotoPortlet(
 			category = "Configuration",

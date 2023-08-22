@@ -28,9 +28,9 @@ definition {
 	}
 
 	tearDown {
-		var testPortalInstance = PropsUtil.get("test.portal.instance");
+		var testLiferayVirtualInstance = PropsUtil.get("test.liferay.virtual.instance");
 
-		if (${testPortalInstance} == "true") {
+		if (${testLiferayVirtualInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
 		else {
@@ -41,7 +41,7 @@ definition {
 	@description = "This test ensures that a web content can be autotagged on a staging site and that the tags will be published to live successfully."
 	@priority = 4
 	test AssertAutoTagAfterPublishingToLive {
-		property test.name.skip.portal.instance = "WebContentAutoTagging#AssertAutoTagAfterPublishingToLive";
+		property test.liferay.virtual.instance = "false";
 
 		Navigator.openSiteURL(siteName = "Test Site Name");
 
@@ -102,7 +102,7 @@ definition {
 	@description = "This test asserts that an auto-tagged web content can be deleted when OpenNLP Auto-Tagging is enabled."
 	@priority = 4
 	test DeleteAssetWithTag {
-		property test.name.skip.portal.instance = "WebContentAutoTagging#DeleteAssetWithTag";
+		property test.liferay.virtual.instance = "false";
 
 		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
 
@@ -141,7 +141,7 @@ definition {
 	@description = "This test ensures that if a user manually adds a tag when adding a web content, the entry will not be autotagged."
 	@priority = 5
 	test NoAutoTagForManuallyAddedEntry {
-		property test.name.skip.portal.instance = "WebContentAutoTagging#NoAutoTagForManuallyAddedEntry";
+		property test.liferay.virtual.instance = "false";
 
 		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
 
@@ -177,7 +177,7 @@ definition {
 	@description = "This test asserts that a webcontent is auto tagged when it is published from draft status. "
 	@priority = 4
 	test PublishAutoTaggedDraft {
-		property test.name.skip.portal.instance = "WebContentAutoTagging#PublishAutoTaggedDraft";
+		property test.liferay.virtual.instance = "false";
 
 		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
 
@@ -213,7 +213,7 @@ definition {
 	@description = "This test asserts that a webcontent is auto tagged when OpenNLP Text Auto Tagging is enabled."
 	@priority = 5
 	test Smoke {
-		property test.name.skip.portal.instance = "WebContentAutoTagging#Smoke";
+		property test.liferay.virtual.instance = "false";
 
 		JSONLayout.addPublicLayout(
 			groupName = "Test Site Name",

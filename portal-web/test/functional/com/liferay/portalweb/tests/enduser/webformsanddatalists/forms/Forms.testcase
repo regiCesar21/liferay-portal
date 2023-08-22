@@ -13,9 +13,9 @@ definition {
 	}
 
 	tearDown {
-		var testPortalInstance = PropsUtil.get("test.portal.instance");
+		var testLiferayVirtualInstance = PropsUtil.get("test.liferay.virtual.instance");
 
-		if (${testPortalInstance} == "true") {
+		if (${testLiferayVirtualInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
 		else {
@@ -38,7 +38,7 @@ definition {
 	@priority = 4
 	test Add20Forms {
 		property portal.acceptance = "true";
-		property test.name.skip.portal.instance = "Forms#Add20Forms";
+		property test.liferay.virtual.instance = "false";
 
 		Navigator.openURL();
 
@@ -71,7 +71,7 @@ definition {
 	@priority = 4
 	test Add30Fields {
 		property portal.acceptance = "true";
-		property test.name.skip.portal.instance = "Forms#Add30Fields";
+		property test.liferay.virtual.instance = "false";
 
 		Navigator.openURL();
 
@@ -101,7 +101,7 @@ definition {
 	@priority = 5
 	test AddElementSetsWithTranslation {
 		property portal.acceptance = "true";
-		property test.name.skip.portal.instance = "Forms#AddElementSetsWithTranslation";
+		property test.liferay.virtual.instance = "false";
 		property testray.component.names = "Training";
 
 		Navigator.openURL();
@@ -379,7 +379,7 @@ definition {
 	@priority = 5
 	test AddFormInGlobal {
 		property portal.acceptance = "true";
-		property test.name.skip.portal.instance = "Forms#AddFormInGlobal";
+		property test.liferay.virtual.instance = "false";
 		property testray.component.names = "Training";
 
 		Navigator.openURL();
@@ -467,7 +467,7 @@ definition {
 	@priority = 3
 	test AddFormToUserSiteAndViewNoDuplicates {
 		property portal.acceptance = "true";
-		property test.name.skip.portal.instance = "Forms#AddFormToUserSiteAndViewNoDuplicates";
+		property test.liferay.virtual.instance = "false";
 
 		Navigator.openURL();
 
@@ -587,7 +587,7 @@ definition {
 	@priority = 4
 	test AddFormWithDuplicateTextFields {
 		property portal.acceptance = "true";
-		property test.name.skip.portal.instance = "Forms#AddFormWithDuplicateTextFields";
+		property test.liferay.virtual.instance = "false";
 
 		Navigator.openURL();
 
@@ -631,7 +631,7 @@ definition {
 	@priority = 5
 	test AddFormWithSpanishAsDefaultPortalLanguage {
 		property portal.acceptance = "true";
-		property test.name.skip.portal.instance = "Forms#AddFormWithSpanishAsDefaultPortalLanguage";
+		property test.liferay.virtual.instance = "false";
 
 		Navigator.openURL();
 
@@ -728,7 +728,7 @@ definition {
 	@description = "This is a use case for LPS-75457, LPS-75410, LPS-80246 and LPS-75393. Automate Numeric field with Decimal configurations."
 	@priority = 4
 	test AutomateNumericFieldWithDecimalConfigurations {
-		property test.name.skip.portal.instance = "Forms#AutomateNumericFieldWithDecimalConfigurations";
+		property test.liferay.virtual.instance = "false";
 
 		Navigator.openURL();
 
@@ -834,7 +834,7 @@ definition {
 	@priority = 4
 	test BelongsToRuleCanPairWithGuestUser {
 		property portal.acceptance = "true";
-		property test.name.skip.portal.instance = "Forms#BelongsToRuleCanPairWithGuestUser ";
+		property test.liferay.virtual.instance = "false";
 
 		Navigator.openURL();
 
@@ -957,7 +957,7 @@ definition {
 	@priority = 4
 	test ChangeFieldType {
 		property portal.acceptance = "true";
-		property test.name.skip.portal.instance = "Forms#ChangeFieldType";
+		property test.liferay.virtual.instance = "false";
 
 		Navigator.openURL();
 
@@ -1297,7 +1297,7 @@ definition {
 	@priority = 3
 	test ConfigureAutosave {
 		property portal.acceptance = "true";
-		property test.name.skip.portal.instance = "Forms#ConfigureAutosave";
+		property test.liferay.virtual.instance = "false";
 
 		Navigator.openURL();
 
@@ -1366,7 +1366,7 @@ definition {
 	@priority = 5
 	test CreateReadUpdateDeleteImageField {
 		property portal.acceptance = "true";
-		property test.name.skip.portal.instance = "Forms#SubmitFormWithRequiredImageField";
+		property test.liferay.virtual.instance = "false";
 
 		ProductMenu.gotoPortlet(
 			category = "Content & Data",
@@ -1421,7 +1421,7 @@ definition {
 	@priority = 4
 	test CreateRedirectForm {
 		property portal.acceptance = "true";
-		property test.name.skip.portal.instance = "Forms#CreateRedirectForm";
+		property test.liferay.virtual.instance = "false";
 
 		Navigator.openURL();
 
@@ -1494,7 +1494,7 @@ definition {
 	@priority = 3
 	test CreateUntitledForm {
 		property portal.acceptance = "true";
-		property test.name.skip.portal.instance = "Forms#CreateUntitledForm";
+		property test.liferay.virtual.instance = "false";
 
 		Navigator.openURL();
 
@@ -1525,7 +1525,7 @@ definition {
 	@priority = 4
 	test DeleteDateFieldAndViewEntries {
 		property portal.acceptance = "true";
-		property test.name.skip.portal.instance = "Forms#DeleteDateFieldAndViewEntries";
+		property test.liferay.virtual.instance = "false";
 
 		Navigator.openURL();
 
@@ -1635,7 +1635,7 @@ definition {
 	@priority = 5
 	test DeletePages {
 		property portal.acceptance = "true";
-		property test.name.skip.portal.instance = "Forms#DeletePages";
+		property test.liferay.virtual.instance = "false";
 
 		Navigator.openURL();
 
@@ -1692,7 +1692,7 @@ definition {
 	@priority = 4
 	test DeleteSelectFromListOptionAndViewEntries {
 		property portal.acceptance = "true";
-		property test.name.skip.portal.instance = "Forms#DeleteSelectFromListOptionAndViewEntries";
+		property test.liferay.virtual.instance = "false";
 
 		Navigator.openURL();
 
@@ -1793,7 +1793,7 @@ definition {
 	@description = "This is a use case for LPS-68362."
 	@priority = 3
 	test DeleteSelectFromListOptionValue {
-		property test.name.skip.portal.instance = "Forms#DeleteSelectFromListOptionValue";
+		property test.liferay.virtual.instance = "false";
 
 		Navigator.openURL();
 
@@ -1854,7 +1854,7 @@ definition {
 	@priority = 4
 	test EditAllFormFieldNames {
 		property portal.acceptance = "true";
-		property test.name.skip.portal.instance = "Forms#EditAllFormFieldNames";
+		property test.liferay.virtual.instance = "false";
 
 		Navigator.openURL();
 
@@ -1970,7 +1970,7 @@ definition {
 	@priority = 4
 	test EditAllFormFieldsTypesUsedBySystemSettings {
 		property portal.acceptance = "true";
-		property test.name.skip.portal.instance = "Forms#EditAllFormFieldsTypesUsedBySystemSettings";
+		property test.liferay.virtual.instance = "false";
 
 		Navigator.openURL();
 
@@ -2158,7 +2158,7 @@ definition {
 	@description = "This is a use case for LPS-59749"
 	@priority = 3
 	test EditFormsConfigurationViaSystemSettings {
-		property test.name.skip.portal.instance = "Forms#EditFormsConfigurationViaSystemSettings";
+		property test.liferay.virtual.instance = "false";
 
 		Navigator.openURL();
 
@@ -2221,7 +2221,7 @@ definition {
 	@priority = 2
 	test EditFormWithUpdatedSiteAndUserLocale {
 		property portal.acceptance = "true";
-		property test.name.skip.portal.instance = "Forms#EditFormWithUpdatedSiteAndUserLocale";
+		property test.liferay.virtual.instance = "false";
 
 		Navigator.openURL();
 
@@ -2301,7 +2301,7 @@ definition {
 	@priority = 4
 	test EditTranslatedGridField {
 		property portal.acceptance = "true";
-		property test.name.skip.portal.instance = "Forms#EditTranslatedGridField";
+		property test.liferay.virtual.instance = "false";
 
 		Navigator.openURL();
 
@@ -2534,7 +2534,7 @@ definition {
 	@priority = 4
 	test GuestUserCanNotSeeFormAfterPermissionRemoved {
 		property portal.acceptance = "true";
-		property test.name.skip.portal.instance = "Forms#GuestUserCanNotSeeFormAfterPermissionRemoved";
+		property test.liferay.virtual.instance = "false";
 
 		Navigator.openURL();
 
@@ -2593,7 +2593,7 @@ definition {
 	@priority = 5
 	test NavigateToCorrectForm {
 		property portal.acceptance = "true";
-		property test.name.skip.portal.instance = "Forms#NavigateToCorrectForm";
+		property test.liferay.virtual.instance = "false";
 
 		Navigator.openURL();
 
@@ -2777,7 +2777,7 @@ definition {
 	@priority = 3
 	test ReorderFieldOptions {
 		property portal.acceptance = "true";
-		property test.name.skip.portal.instance = "Forms#ReorderFieldOptions";
+		property test.liferay.virtual.instance = "false";
 
 		Navigator.openURL();
 
@@ -2917,7 +2917,7 @@ definition {
 	@priority = 4
 	test SearchFormRecordMultipleEntries {
 		property portal.acceptance = "true";
-		property test.name.skip.portal.instance = "Forms#SearchFormRecordMultipleEntries";
+		property test.liferay.virtual.instance = "false";
 
 		var fieldValueList = "testEntry1,exampleText,sampleAnswer";
 
@@ -3020,7 +3020,7 @@ definition {
 	@priority = 4
 	test SelectAndRemoveMultipleOptionsInSelectFromListField {
 		property portal.acceptance = "true";
-		property test.name.skip.portal.instance = "Forms#SelectAndRemoveMultipleOptionsInSelectFromListField";
+		property test.liferay.virtual.instance = "false";
 
 		Navigator.openURL();
 
@@ -3097,7 +3097,7 @@ definition {
 	@description = "LPS-90435 This is a test verifying that the Single Selection Form field added before default site language toggle can be loaded"
 	@priority = 4
 	test SingleSelectionFormFieldAddedBeforeDefaultSiteLanguageToggleCanBeLoaded {
-		property test.name.skip.portal.instance = "Forms#SingleSelectionFormFieldAddedBeforeDefaultSiteLanguageToggleCanBeLoaded";
+		property test.liferay.virtual.instance = "false";
 
 		JSONGroup.addGroup(groupName = "Site Name");
 
@@ -3147,7 +3147,7 @@ definition {
 
 	@description = "LPS-90435 This is a test verifying that the Single Selection Form field name and options can be added to non-English default site language site"
 	test SingleSelectionFormFieldNameAndOptionsCanBeAddedToNonEnglishDefaultSiteLanguageSite {
-		property test.name.skip.portal.instance = "Forms#SingleSelectionFormFieldNameAndOptionsCanBeAddedToNonEnglishDefaultSiteLanguageSite";
+		property test.liferay.virtual.instance = "false";
 
 		JSONGroup.addGroup(groupName = "Site Name");
 
@@ -3196,7 +3196,7 @@ definition {
 	@priority = 5
 	test SubmitFormAfterEditingFields {
 		property portal.acceptance = "true";
-		property test.name.skip.portal.instance = "Forms#SubmitFormAfterEditingFields";
+		property test.liferay.virtual.instance = "false";
 		property testray.component.names = "Training";
 
 		Navigator.openURL();
@@ -3575,7 +3575,7 @@ definition {
 	@priority = 4
 	test SubmitFormAndViewEmailNotification {
 		property portal.acceptance = "true";
-		property test.name.skip.portal.instance = "Forms#SubmitFormAndViewEmailNotification";
+		property test.liferay.virtual.instance = "false";
 		property test.smtp.server.enabled = "true";
 
 		Navigator.openURL();
@@ -3664,7 +3664,7 @@ definition {
 	test SubmitFormContainingCaptchaAndViewTextFieldValue {
 		property captcha.enabled = "true";
 		property portal.acceptance = "true";
-		property test.name.skip.portal.instance = "Forms#SubmitFormContainingCaptchaAndViewTextFieldValue";
+		property test.liferay.virtual.instance = "false";
 
 		Navigator.openURL();
 
@@ -3758,7 +3758,7 @@ definition {
 	@priority = 5
 	test SubmitFormWithAllFieldTypesAndThreePages {
 		property portal.acceptance = "true";
-		property test.name.skip.portal.instance = "Forms#SubmitFormWithAllFieldTypesAndThreePages";
+		property test.liferay.virtual.instance = "false";
 		property testray.component.names = "Training";
 
 		Navigator.openURL();
@@ -4099,7 +4099,7 @@ definition {
 	@priority = 5
 	test SubmitFormWithCustomTextContainingValidation {
 		property portal.acceptance = "true";
-		property test.name.skip.portal.instance = "Forms#SubmitFormWithCustomTextContainingValidation";
+		property test.liferay.virtual.instance = "false";
 
 		Navigator.openURL();
 
@@ -4190,7 +4190,7 @@ definition {
 	@priority = 4
 	test SubmitFormWithMultipleFieldsAndViewEntriesViaDescriptiveDisplay {
 		property portal.acceptance = "true";
-		property test.name.skip.portal.instance = "Forms#SubmitFormWithMultipleFieldsAndViewEntriesViaDescriptiveDisplay";
+		property test.liferay.virtual.instance = "false";
 
 		Navigator.openURL();
 
@@ -4375,7 +4375,7 @@ definition {
 	@priority = 4
 	test SubmitFormWithRequiredCheckboxField {
 		property portal.acceptance = "true";
-		property test.name.skip.portal.instance = "Forms#SubmitFormWithRequiredCheckboxField";
+		property test.liferay.virtual.instance = "false";
 
 		Navigator.openURL();
 
@@ -4463,7 +4463,7 @@ definition {
 	@priority = 5
 	test SubmitFormWithRequiredImageField {
 		property portal.acceptance = "true";
-		property test.name.skip.portal.instance = "Forms#SubmitFormWithRequiredImageField";
+		property test.liferay.virtual.instance = "false";
 
 		ProductMenu.gotoPortlet(
 			category = "Content & Data",
@@ -4561,7 +4561,7 @@ definition {
 	@description = "This is a use case for LPS-59997."
 	@priority = 3
 	test SubmitFormWithRequiredMultiLineTextField {
-		property test.name.skip.portal.instance = "Forms#SubmitFormWithRequiredMultiLineTextField";
+		property test.liferay.virtual.instance = "false";
 
 		Navigator.openURL();
 
@@ -4644,7 +4644,7 @@ definition {
 
 	@priority = 4
 	test SubmitFormWithRequiredRadioField {
-		property test.name.skip.portal.instance = "Forms#SubmitFormWithRequiredRadioField";
+		property test.liferay.virtual.instance = "false";
 
 		Navigator.openURL();
 
@@ -4736,7 +4736,7 @@ definition {
 	@priority = 5
 	test SubmitFormWithRequiredRepeatingTextField {
 		property portal.acceptance = "true";
-		property test.name.skip.portal.instance = "Forms#SubmitFormWithRequiredRepeatingTextField";
+		property test.liferay.virtual.instance = "false";
 
 		Navigator.openURL();
 
@@ -4816,7 +4816,7 @@ definition {
 	@priority = 5
 	test SubmitFormWithRequiredTextField {
 		property portal.acceptance = "true";
-		property test.name.skip.portal.instance = "Forms#SubmitFormWithRequiredTextField";
+		property test.liferay.virtual.instance = "false";
 		property testray.component.names = "Training";
 
 		Navigator.openURL();
@@ -4898,7 +4898,7 @@ definition {
 	@priority = 4
 	test SubmitFormWithSwitcherCheckboxField {
 		property portal.acceptance = "true";
-		property test.name.skip.portal.instance = "Forms#SubmitFormWithSwitcherCheckboxField";
+		property test.liferay.virtual.instance = "false";
 
 		Navigator.openURL();
 
@@ -4992,7 +4992,7 @@ definition {
 	@priority = 4
 	test SubmitFormWithUploadField {
 		property portal.acceptance = "true";
-		property test.name.skip.portal.instance = "Forms#SubmitFormWithUploadField";
+		property test.liferay.virtual.instance = "false";
 
 		Navigator.openURL();
 
@@ -5068,7 +5068,7 @@ definition {
 	test SubmitFormWithUploadFieldAsGuestUser {
 		property portal.acceptance = "false";
 		property portal.upstream = "true";
-		property test.name.skip.portal.instance = "Forms#SubmitFormWithUploadFieldAsGuestUser";
+		property test.liferay.virtual.instance = "false";
 
 		Navigator.openURL();
 
@@ -5250,7 +5250,7 @@ definition {
 	@priority = 4
 	test SubmitFormWithWorkflowAndViewNotification {
 		property portal.acceptance = "true";
-		property test.name.skip.portal.instance = "Forms#SubmitFormWithWorkflowAndViewNotification";
+		property test.liferay.virtual.instance = "false";
 
 		Navigator.openURL();
 
@@ -5319,7 +5319,7 @@ definition {
 	@priority = 4
 	test SubmitWithRequiredDateField {
 		property portal.acceptance = "true";
-		property test.name.skip.portal.instance = "Forms#SubmitWithRequiredDateField";
+		property test.liferay.virtual.instance = "false";
 
 		Navigator.openURL();
 
@@ -5408,7 +5408,7 @@ definition {
 	test TextFieldCanBeAutosaved {
 		property portal.acceptance = "false";
 		property portal.upstream = "true";
-		property test.name.skip.portal.instance = "Forms#TextFieldCanBeAutosaved";
+		property test.liferay.virtual.instance = "false";
 
 		Navigator.openURL();
 
@@ -5454,7 +5454,7 @@ definition {
 	test TitleAndDescriptionXSSUnescapedAfterUnpublish {
 		property portal.acceptance = "true";
 		property portal.upstream = "true";
-		property test.name.skip.portal.instance = "Forms#TitleAndDescriptionXSSUnescapedAfterUnpublish";
+		property test.liferay.virtual.instance = "false";
 
 		Navigator.openURL();
 
@@ -5514,7 +5514,7 @@ definition {
 	test UploadFileWithInvalidSizeAsGuestUser {
 		property portal.acceptance = "false";
 		property portal.upstream = "true";
-		property test.name.skip.portal.instance = "Forms#UploadFileWithInvalidSizeAsGuestUser";
+		property test.liferay.virtual.instance = "false";
 
 		Navigator.openURL();
 
@@ -5625,7 +5625,7 @@ definition {
 	@priority = 3
 	test ViewBlankLabelWhenAddingNewField {
 		property portal.acceptance = "true";
-		property test.name.skip.portal.instance = "Forms#ViewBlankLabelWhenAddingNewField";
+		property test.liferay.virtual.instance = "false";
 
 		Navigator.openURL();
 
@@ -5662,7 +5662,7 @@ definition {
 	@priority = 3
 	test ViewConfirmationWhenLeavingFormWithoutSaving {
 		property portal.acceptance = "true";
-		property test.name.skip.portal.instance = "Forms#ViewConfirmationWhenLeavingFormWithoutSaving";
+		property test.liferay.virtual.instance = "false";
 
 		Navigator.openURL();
 
@@ -5699,7 +5699,7 @@ definition {
 		property portal.acceptance = "true";
 		property test.assert.javascript.errors = "true";
 		property test.assert.warning.exceptions = "true";
-		property test.name.skip.portal.instance = "Forms#ViewDefaultFieldNamesWithPunctuationCharacters";
+		property test.liferay.virtual.instance = "false";
 
 		Navigator.openURL();
 
@@ -5762,7 +5762,7 @@ definition {
 	@priority = 4
 	test ViewFieldValidationIsNotBypassedWhenNextButtonIsHitTwice {
 		property portal.acceptance = "true";
-		property test.name.skip.portal.instance = "Forms#ViewFieldValidationIsNotBypassedWhenNextButtonIsHitTwice";
+		property test.liferay.virtual.instance = "false";
 
 		Navigator.openURL();
 
@@ -5849,7 +5849,7 @@ definition {
 	@priority = 3
 	test ViewFormWithMultipleSelectionFieldAsASwitcherAndHideLabel {
 		property portal.acceptance = "true";
-		property test.name.skip.portal.instance = "Forms#ViewFormWithMultipleSelectionFieldAsASwitcherAndHideLabel";
+		property test.liferay.virtual.instance = "false";
 
 		Navigator.openURL();
 
@@ -5922,7 +5922,7 @@ definition {
 	@priority = 4
 	test ViewRepeatableTextFieldLabel {
 		property portal.acceptance = "true";
-		property test.name.skip.portal.instance = "Forms#ViewRepeatableTextFieldLabel";
+		property test.liferay.virtual.instance = "false";
 
 		Navigator.openURL();
 
@@ -5985,7 +5985,7 @@ definition {
 	@priority = 3
 	test ViewSaveNotification {
 		property portal.acceptance = "true";
-		property test.name.skip.portal.instance = "Forms#ViewSaveNotification";
+		property test.liferay.virtual.instance = "false";
 
 		Navigator.openURL();
 
@@ -6017,7 +6017,7 @@ definition {
 	@description = "This is a use case for LPS-126817."
 	@priority = 5
 	test ViewSelectFromListOptionValueWithCharacter {
-		property test.name.skip.portal.instance = "Forms#ViewSelectFromListOptionValueWithCharacter";
+		property test.liferay.virtual.instance = "false";
 
 		Navigator.openURL();
 
@@ -6066,7 +6066,7 @@ definition {
 	@priority = 5
 	test ViewSuccessPage {
 		property portal.acceptance = "true";
-		property test.name.skip.portal.instance = "Forms#ViewSuccessPage";
+		property test.liferay.virtual.instance = "false";
 		property testray.component.names = "Training";
 
 		Navigator.openURL();

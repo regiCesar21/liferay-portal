@@ -19,9 +19,9 @@ definition {
 	}
 
 	tearDown {
-		var testPortalInstance = PropsUtil.get("test.portal.instance");
+		var testLiferayVirtualInstance = PropsUtil.get("test.liferay.virtual.instance");
 
-		if (${testPortalInstance} == "true") {
+		if (${testLiferayVirtualInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
 		else {
@@ -344,7 +344,7 @@ definition {
 	@description = "This ensures that the OG image tags will not appear when the HTTPS user disables Open Graph."
 	@priority = 5
 	test DisableAfterAddingImage {
-		property test.name.skip.portal.instance = "OpenGraphImages#DisableAfterAddingImage";
+		property test.liferay.virtual.instance = "false";
 
 		Navigator.openSpecificURL(url = "https://localhost:8443/web/test-site-name/test-page-name");
 
@@ -426,7 +426,7 @@ definition {
 	@priority = 5
 	test ViewImageWithMetaTags {
 		property portal.acceptance = "true";
-		property test.name.skip.portal.instance = "OpenGraphImages#ViewImageWithMetaTags";
+		property test.liferay.virtual.instance = "false";
 
 		Navigator.openSpecificURL(url = "https://localhost:8443/web/test-site-name/test-page-name");
 

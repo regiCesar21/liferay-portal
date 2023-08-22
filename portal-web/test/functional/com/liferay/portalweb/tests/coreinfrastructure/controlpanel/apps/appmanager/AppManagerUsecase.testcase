@@ -15,7 +15,7 @@ definition {
 
 	@priority = 5
 	test InstallUninstallApp {
-		property test.name.skip.portal.instance = "AppManagerUsecase#InstallUninstallApp";
+		property test.liferay.virtual.instance = "false";
 
 		var appName = "test-app-portlet";
 
@@ -41,7 +41,7 @@ definition {
 
 	@priority = 4
 	test ViewIndependentModulesIsNotNestedWithinItself {
-		property test.name.skip.portal.instance = "AppManagerUsecase#ViewIndependentModulesIsNotNestedWithinItself";
+		property test.liferay.virtual.instance = "false";
 
 		ApplicationsMenu.gotoPortlet(
 			category = "System",
@@ -58,7 +58,7 @@ definition {
 	@description = "This is a use case for LPS-99031."
 	@priority = 5
 	test ViewLicenseManager {
-		property test.name.skip.portal.instance = "AppManagerUsecase#ViewLicenseManager";
+		property test.liferay.virtual.instance = "false";
 
 		ApplicationsMenu.gotoPortlet(
 			category = "Marketplace",

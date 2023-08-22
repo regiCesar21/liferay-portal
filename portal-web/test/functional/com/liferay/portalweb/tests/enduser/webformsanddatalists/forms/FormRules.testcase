@@ -13,9 +13,9 @@ definition {
 	}
 
 	tearDown {
-		var testPortalInstance = PropsUtil.get("test.portal.instance");
+		var testLiferayVirtualInstance = PropsUtil.get("test.liferay.virtual.instance");
 
-		if (${testPortalInstance} == "true") {
+		if (${testLiferayVirtualInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
 		else {
@@ -38,7 +38,7 @@ definition {
 	@description = "LPS-89260 - Verify that rules are working for multiple selection fields"
 	@priority = 4
 	test CanUseRuleOnMultipleSelectionField {
-		property test.name.skip.portal.instance = "FormRules#CanUseRuleOnMultipleSelectionField";
+		property test.liferay.virtual.instance = "false";
 
 		Navigator.openURL();
 
@@ -108,7 +108,7 @@ definition {
 	test CanUtilizeDataProvidersInAutofillRule {
 		property portal.acceptance = "true";
 		property portal.upstream = "true";
-		property test.name.skip.portal.instance = "FormsRulesActions#CanUtilizeDataProvidersInAutofillRule";
+		property test.liferay.virtual.instance = "false";
 
 		var portalURL = PropsUtil.get("portal.url");
 
@@ -357,7 +357,7 @@ definition {
 	@priority = 5
 	test ConfigureAutofillRule {
 		property portal.upstream = "true";
-		property test.name.skip.portal.instance = "FormRules#ConfigureAutofillRule";
+		property test.liferay.virtual.instance = "false";
 
 		var portalURL = PropsUtil.get("portal.url");
 
@@ -481,7 +481,7 @@ definition {
 	@priority = 5
 	test ConfigureCalculateRule {
 		property portal.acceptance = "true";
-		property test.name.skip.portal.instance = "FormRules#ConfigureCalculateRule";
+		property test.liferay.virtual.instance = "false";
 
 		var portalURL = PropsUtil.get("portal.url");
 
@@ -593,7 +593,7 @@ definition {
 	@priority = 5
 	test ConfigureRequireRule {
 		property portal.acceptance = "true";
-		property test.name.skip.portal.instance = "FormRules#ConfigureRequireRule";
+		property test.liferay.virtual.instance = "false";
 
 		var portalURL = PropsUtil.get("portal.url");
 
@@ -682,7 +682,7 @@ definition {
 
 	@priority = 5
 	test ConfigureShowRuleUsingAndCondition {
-		property test.name.skip.portal.instance = "FormRules#ConfigureShowRuleUsingAndCondition";
+		property test.liferay.virtual.instance = "false";
 
 		var portalURL = PropsUtil.get("portal.url");
 
@@ -805,7 +805,7 @@ definition {
 	@priority = 4
 	test ConfigureUserBelongsToRule {
 		property portal.acceptance = "true";
-		property test.name.skip.portal.instance = "FormRules#ConfigureUserBelongsToRule";
+		property test.liferay.virtual.instance = "false";
 
 		Navigator.openURL();
 
@@ -1038,7 +1038,7 @@ definition {
 	@priority = 5
 	test EditRule {
 		property portal.acceptance = "true";
-		property test.name.skip.portal.instance = "FormRules#EditRule";
+		property test.liferay.virtual.instance = "false";
 
 		Navigator.openURL();
 
@@ -1119,7 +1119,7 @@ definition {
 	@priority = 5
 	test SyncBetweenFormAndRuleBuilder {
 		property portal.acceptance = "true";
-		property test.name.skip.portal.instance = "FormRules#SyncBetweenFormAndRuleBuilder";
+		property test.liferay.virtual.instance = "false";
 
 		Navigator.openURL();
 
@@ -1222,7 +1222,7 @@ definition {
 	@priority = 4
 	test UseIsNotEmptyRuleToShowField {
 		property portal.acceptance = "true";
-		property test.name.skip.portal.instance = "FormRules#UseIsNotEmptyRuleToShowField";
+		property test.liferay.virtual.instance = "false";
 
 		Navigator.openURL();
 
@@ -1383,7 +1383,7 @@ definition {
 	@priority = 2
 	test ViewPredefinedValueCanBeUsedToRequireAnotherField {
 		property portal.acceptance = "true";
-		property test.name.skip.portal.instance = "FormRules#ViewPredefinedValueCanBeUsedToRequireAnotherField";
+		property test.liferay.virtual.instance = "false";
 
 		Navigator.openURL();
 
@@ -1474,7 +1474,7 @@ definition {
 	@priority = 2
 	test ViewPreviousFormRuleIsCopiedToNewDuplicatedForm {
 		property portal.acceptance = "true";
-		property test.name.skip.portal.instance = "FormRules#ViewPreviousFormRuleIsCopiedToNewDuplicatedForm";
+		property test.liferay.virtual.instance = "false";
 
 		Navigator.openURL();
 
@@ -1545,7 +1545,7 @@ definition {
 	@priority = 2
 	test ViewRuleConditionOperatorFieldOptions {
 		property portal.acceptance = "true";
-		property test.name.skip.portal.instance = "FormRules#ViewRuleConditionOperatorFieldOptions";
+		property test.liferay.virtual.instance = "false";
 
 		Navigator.openURL();
 
@@ -1580,7 +1580,7 @@ definition {
 	@priority = 3
 	test ViewShowRuleActivationAfterInputtingUnrelatedField {
 		property portal.acceptance = "true";
-		property test.name.skip.portal.instance = "FormRules#ViewShowRuleActivationAfterInputtingUnrelatedField";
+		property test.liferay.virtual.instance = "false";
 
 		Navigator.openURL();
 

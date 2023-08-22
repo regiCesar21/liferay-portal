@@ -72,9 +72,9 @@ definition {
 	}
 
 	tearDown {
-		var testPortalInstance = PropsUtil.get("test.portal.instance");
+		var testLiferayVirtualInstance = PropsUtil.get("test.liferay.virtual.instance");
 
-		if (${testPortalInstance} == "true") {
+		if (${testLiferayVirtualInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
 		else {
@@ -91,7 +91,7 @@ definition {
 	@description = "This test ensures that an Excel sheet can be added via the OneDrive editor."
 	@priority = 5
 	test AddExcelSheet {
-		property test.name.skip.portal.instance = "OneDrive#AddExcelSheet";
+		property test.liferay.virtual.instance = "false";
 
 		OneDrive.deleteDocument(dmDocumentTitle = "Add Excel Sheet Title");
 
@@ -126,7 +126,7 @@ definition {
 	@description = "This test ensures that a Powerpoint presentation can be added via the OneDrive editor."
 	@priority = 5
 	test AddPowerPointPresentation {
-		property test.name.skip.portal.instance = "OneDrive#AddPowerPointPresentation";
+		property test.liferay.virtual.instance = "false";
 
 		OneDrive.deleteDocument(dmDocumentTitle = "Add PowerPoint Presentation Title");
 
@@ -161,7 +161,7 @@ definition {
 	@description = "This test ensures that a Word document can be added via the OneDrive editor. "
 	@priority = 5
 	test AddWordDocument {
-		property test.name.skip.portal.instance = "OneDrive#AddWordDocument";
+		property test.liferay.virtual.instance = "false";
 
 		OneDrive.deleteDocument(dmDocumentTitle = "Add Word Doc Title");
 
@@ -197,7 +197,7 @@ definition {
 	@priority = 4
 	test AutoCheckinDocumentAfterLockExpiration {
 		property custom.properties = "lock.expiration.time.com.liferay.document.library.kernel.model.DLFileEntry=80000";
-		property test.name.skip.portal.instance = "OneDrive#AutoCheckinDocumentAfterLockExpiration";
+		property test.liferay.virtual.instance = "false";
 
 		OneDrive.deleteDocument(dmDocumentTitle = "Auto Checkin Word Doc Title");
 
@@ -225,7 +225,7 @@ definition {
 	@description = "This test ensures that a Word Document is autotagged once checked in."
 	@priority = 4
 	test AutoTagWordDocument {
-		property test.name.skip.portal.instance = "OneDrive#AutoTagWordDocument";
+		property test.liferay.virtual.instance = "false";
 
 		OneDrive.deleteDocument(dmDocumentTitle = "Auto Tagging Word Doc Title");
 
@@ -258,7 +258,7 @@ definition {
 	@description = "This test ensures that no residual data is left in the Portal UI after canceling checkout under site admin on an Excel document during creation."
 	@priority = 4
 	test CancelCheckoutOnExcelSheet {
-		property test.name.skip.portal.instance = "OneDrive#CancelCheckoutOnExcelSheet";
+		property test.liferay.virtual.instance = "false";
 
 		OneDrive.deleteDocument(dmDocumentTitle = "Cancel Checkout Excel Sheet Title");
 
@@ -285,7 +285,7 @@ definition {
 	@description = "This test ensures that no residual data is left in the Portal UI after canceling checkout on a Word document during creation."
 	@priority = 4
 	test CancelCheckoutOnWordDocument {
-		property test.name.skip.portal.instance = "OneDrive#CancelCheckoutOnWordDocument";
+		property test.liferay.virtual.instance = "false";
 
 		OneDrive.deleteDocument(dmDocumentTitle = "Cancel Checkout Word Doc Title");
 
@@ -311,7 +311,7 @@ definition {
 	@description = "This test ensures that an Excel sheet can be deleted."
 	@priority = 5
 	test DeleteExcelSheet {
-		property test.name.skip.portal.instance = "OneDrive#DeleteExcelSheet";
+		property test.liferay.virtual.instance = "false";
 
 		OneDrive.deleteDocument(dmDocumentTitle = "Delete Excel Sheet Title");
 
@@ -337,7 +337,7 @@ definition {
 	@description = "This test ensures that a PowerPoint presentation can be deleted."
 	@priority = 5
 	test DeletePowerPointPresentation {
-		property test.name.skip.portal.instance = "OneDrive#DeletePowerPointPresentation";
+		property test.liferay.virtual.instance = "false";
 
 		OneDrive.deleteDocument(dmDocumentTitle = "Delete PowerPoint Presentation Title");
 
@@ -363,7 +363,7 @@ definition {
 	@description = "This test ensures that a Word document can be deleted."
 	@priority = 5
 	test DeleteWordDocument {
-		property test.name.skip.portal.instance = "OneDrive#DeleteWordDocument";
+		property test.liferay.virtual.instance = "false";
 
 		OneDrive.deleteDocument(dmDocumentTitle = "Delete Word Doc Title");
 
@@ -389,7 +389,7 @@ definition {
 	@description = "This test ensures that an Excel sheet title can be changed via the OneDrive editor."
 	@priority = 4
 	test EditExcelSheet {
-		property test.name.skip.portal.instance = "OneDrive#EditExcelSheet";
+		property test.liferay.virtual.instance = "false";
 
 		for (var documentTitle : list "Document_1,Excel Sheet Title Edited") {
 			OneDrive.deleteDocument(dmDocumentTitle = ${documentTitle});
@@ -431,7 +431,7 @@ definition {
 	@description = "This test ensures that a Powerpoint presentation title can be changed via the OneDrive editor."
 	@priority = 4
 	test EditPowerPointPresentation {
-		property test.name.skip.portal.instance = "OneDrive#EditPowerPointPresentation";
+		property test.liferay.virtual.instance = "false";
 
 		for (var documentTitle : list "Document_2,Powerpoint Presentation Title Edited") {
 			OneDrive.deleteDocument(dmDocumentTitle = ${documentTitle});
@@ -473,7 +473,7 @@ definition {
 	@description = "This test ensures that a Word document title can be changed via the OneDrive editor."
 	@priority = 4
 	test EditWordDocument {
-		property test.name.skip.portal.instance = "OneDrive#EditWordDocument";
+		property test.liferay.virtual.instance = "false";
 
 		for (var documentTitle : list "Document_3,Word Doc Title Edited") {
 			OneDrive.deleteDocument(dmDocumentTitle = ${documentTitle});

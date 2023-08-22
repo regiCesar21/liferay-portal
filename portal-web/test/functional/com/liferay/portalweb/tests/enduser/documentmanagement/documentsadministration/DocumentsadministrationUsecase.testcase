@@ -13,9 +13,9 @@ definition {
 	}
 
 	tearDown {
-		var testPortalInstance = PropsUtil.get("test.portal.instance");
+		var testLiferayVirtualInstance = PropsUtil.get("test.liferay.virtual.instance");
 
-		if (${testPortalInstance} == "true") {
+		if (${testLiferayVirtualInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
 		else {
@@ -82,7 +82,7 @@ definition {
 	@description = "This test covers LPS-94657. It ensures that auto complete for edit categories."
 	@priority = 5
 	test AddAutoAssertionCategoryViaDMDocument {
-		property test.name.skip.portal.instance = "DocumentsadministrationUsecase#AddAutoAssertionCategoryViaDMDocument";
+		property test.liferay.virtual.instance = "false";
 
 		JSONCategory.addVocabulary(
 			groupName = "Guest",
@@ -245,7 +245,7 @@ definition {
 	@description = "This is a use case for LPS-50760."
 	@priority = 4
 	test AssertFileSizeValidation {
-		property test.name.skip.portal.instance = "DocumentsadministrationUsecase#AssertFileSizeValidation";
+		property test.liferay.virtual.instance = "false";
 
 		JSONDocument.addFileWithUploadedFile(
 			dmDocumentDescription = "DM Document Description",
@@ -604,7 +604,7 @@ definition {
 	@description = "This test checks if the file extension upload restrictions in System Settings works as expected."
 	@priority = 5
 	test CheckValidationForFileEntries {
-		property test.name.skip.portal.instance = "DocumentsadministrationUsecase#CheckValidationForFileEntries";
+		property test.liferay.virtual.instance = "false";
 
 		SystemSettings.openSystemSettingsAdmin();
 
@@ -750,7 +750,7 @@ definition {
 		property custom.properties = "xuggler.enabled=true${line.separator}dl.file.entry.preview.video.width=0${line.separator}dl.file.entry.preview.video.height=0";
 		property dummy.socket.proxy.disabled = "true";
 		property test.assert.warning.exceptions = "false";
-		property test.name.skip.portal.instance = "DocumentsadministrationUsecase#ConfigureXugglerVideoPreviewSizePG";
+		property test.liferay.virtual.instance = "false";
 
 		ServerAdministration.openServerAdmin();
 
@@ -898,7 +898,7 @@ definition {
 	@description = "This test covers LPS-112571. It ensures that a gif file can be added to editor normally after disabling the gif mime type from the adaptive media of the system settings."
 	@priority = 3
 	test GifFileCanBeAddedToEditorAfterDisablingGifMimeTypeInAM {
-		property test.name.skip.portal.instance = "DocumentsadministrationUsecase#GifFileCanBeAddedToEditorAfterDisablingGifMimeTypeInAM";
+		property test.liferay.virtual.instance = "false";
 
 		SystemSettings.openSystemSettingsAdmin();
 
@@ -1310,7 +1310,7 @@ definition {
 	@priority = 5
 	test UpdateDocumentTypeWithPermissions {
 		property custom.properties = "jsonws.web.service.paths.excludes=";
-		property test.name.skip.portal.instance = "DocumentsadministrationUsecase#UpdateDocumentTypeWithPermissions";
+		property test.liferay.virtual.instance = "false";
 		property testray.component.names = "Training";
 
 		var siteName = TestCase.getSiteName(siteName = ${siteName});

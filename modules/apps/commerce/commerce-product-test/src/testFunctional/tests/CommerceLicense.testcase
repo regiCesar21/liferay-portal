@@ -14,9 +14,9 @@ definition {
 	}
 
 	tearDown {
-		var testPortalInstance = PropsUtil.get("test.portal.instance");
+		var testLiferayVirtualInstance = PropsUtil.get("test.liferay.virtual.instance");
 
-		if (${testPortalInstance} == "true") {
+		if (${testLiferayVirtualInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
 	}
@@ -25,7 +25,7 @@ definition {
 	@priority = 5
 	test CommerceRemainsActiveOnRestarts {
 		property commerce.enabled = "true";
-		property test.name.skip.portal.instance = "CommerceLicense#CommerceRemainsActiveOnRestarts";
+		property test.liferay.virtual.instance = "false";
 
 		CommerceLicense.viewCommerceAvailable();
 
@@ -43,7 +43,7 @@ definition {
 	@priority = 3
 	test DeactivateCommerce {
 		property commerce.enabled = "true";
-		property test.name.skip.portal.instance = "CommerceLicense#DeactivateCommerce";
+		property test.liferay.virtual.instance = "false";
 
 		ApplicationsMenuHelper.openApplicationsMenu();
 
@@ -65,7 +65,7 @@ definition {
 	@priority = 4
 	test DeleteEnterpriseLicenseModule {
 		property commerce.enabled = "true";
-		property test.name.skip.portal.instance = "CommerceLicense#DeleteEnterpriseLicenseModule";
+		property test.liferay.virtual.instance = "false";
 
 		Portlet.shutdownServer();
 
@@ -95,7 +95,7 @@ definition {
 	@priority = 5
 	test EnableCommerceAfterPortalStarts {
 		property commerce.enabled = "false";
-		property test.name.skip.portal.instance = "CommerceLicense#EnableCommerceAfterPortalStarts";
+		property test.liferay.virtual.instance = "false";
 
 		CommerceLicense.viewCommerceMissing();
 

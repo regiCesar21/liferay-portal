@@ -59,11 +59,11 @@ definition {
 	}
 
 	tearDown {
-		var testPortalInstance = PropsUtil.get("test.portal.instance");
+		var testLiferayVirtualInstance = PropsUtil.get("test.liferay.virtual.instance");
 
 		ACUtils.tearDownDXP();
 
-		if (${testPortalInstance} == "true") {
+		if (${testLiferayVirtualInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
 		else {
@@ -636,7 +636,7 @@ definition {
 	@description = "Feature ID: LRAC-4266 | Automation ID: LRAC-10311 | Test Summary: Events are in alphabetical order and attributes are in alphabetical order"
 	@priority = 4
 	test ViewEventsAreListedInAlphabeticalOrder {
-		property test.name.skip.portal.instance = "CustomEventsEventAnalysis#ViewEventsAreListedInAlphabeticalOrder";
+		property test.liferay.virtual.instance = "false";
 
 		var attributeName = "assetId";
 		var defaultEventName = "assetClicked";

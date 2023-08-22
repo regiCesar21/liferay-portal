@@ -20,11 +20,11 @@ definition {
 	}
 
 	tearDown {
-		var testPortalInstance = PropsUtil.get("test.portal.instance");
+		var testLiferayVirtualInstance = PropsUtil.get("test.liferay.virtual.instance");
 
 		ACUtils.tearDownDXP();
 
-		if (${testPortalInstance} == "true") {
+		if (${testLiferayVirtualInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
 		else {
@@ -294,7 +294,7 @@ definition {
 	@description = "Feature ID: Legacy | Automation ID: LRAC-9222 | Test Summary: Create a Web Behavior since X days"
 	@priority = 4
 	test CanCreateWebBehaviorSegmentSinceXdays {
-		property test.name.skip.portal.instance = "SegmentsCreationWebBehavior#CanCreateWebBehaviorSegmentSinceXdays";
+		property test.liferay.virtual.instance = "false";
 
 		ACUtils.createWCAndAddToPage();
 
@@ -943,7 +943,7 @@ definition {
 	@description = "Add segment using a web behavior 'since' some time"
 	@priority = 5
 	test CanCreateWebBehaviorSegmentUsingSince {
-		property test.name.skip.portal.instance = "SegmentsCreationWebBehavior#CanCreateWebBehaviorSegmentUsingSince";
+		property test.liferay.virtual.instance = "false";
 
 		ACUtils.createBlogsAndAddToPage();
 
@@ -1110,7 +1110,7 @@ definition {
 	@description = "Feature ID: Legacy | Automation ID: LRAC-9224 | Test Summary: Create a Web Behavior Segment of Viewing Document & Media in a Topic"
 	@priority = 4
 	test CanCreateWebBehaviorSegmentViewingDM {
-		property test.name.skip.portal.instance = "SegmentsCreationWebBehavior#CanCreateWebBehaviorSegmentViewingDM";
+		property test.liferay.virtual.instance = "false";
 
 		var username = "ac";
 

@@ -122,16 +122,16 @@ definition {
 	}
 
 	tearDown {
-		var testPortalInstance = PropsUtil.get("test.portal.instance");
+		var testLiferayVirtualInstance = PropsUtil.get("test.liferay.virtual.instance");
 
-		if (${testPortalInstance} == "true") {
+		if (${testLiferayVirtualInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
 	}
 
 	@priority = 4
 	test CheckinDocument {
-		property test.name.skip.portal.instance = "SharepointREST#CheckinDocument";
+		property test.liferay.virtual.instance = "false";
 
 		DMRepository.cleanRepository(dmDocumentTitle = "Document_3.txt");
 
@@ -176,7 +176,7 @@ definition {
 
 	@priority = 4
 	test DeleteDocumentInSubfolder {
-		property test.name.skip.portal.instance = "SharepointREST#DeleteDocumentInSubfolder";
+		property test.liferay.virtual.instance = "false";
 
 		DMRepository.cleanRepository(dmFolderName = "DM Folder3 Name");
 
@@ -225,7 +225,7 @@ definition {
 
 	@priority = 4
 	test DeleteSubfolder {
-		property test.name.skip.portal.instance = "SharepointREST#DeleteSubfolder";
+		property test.liferay.virtual.instance = "false";
 
 		DMRepository.cleanRepository(dmFolderName = "DM Folder Name");
 
@@ -248,7 +248,7 @@ definition {
 
 	@priority = 4
 	test EditDocumentFile {
-		property test.name.skip.portal.instance = "SharepointREST#EditDocumentFile";
+		property test.liferay.virtual.instance = "false";
 
 		DMRepository.cleanRepository(dmDocumentTitle = "Document_3.doc");
 
@@ -299,7 +299,7 @@ definition {
 
 	@priority = 4
 	test MoveCheckedoutDocumentToFolder {
-		property test.name.skip.portal.instance = "SharepointREST#MoveCheckedoutDocumentToFolder";
+		property test.liferay.virtual.instance = "false";
 
 		DMRepository.cleanRepository(dmFolderName = "Sharepoint Subfolder");
 
@@ -359,7 +359,7 @@ definition {
 
 	@priority = 4
 	test MoveDocumentToHome {
-		property test.name.skip.portal.instance = "SharepointREST#MoveDocumentToHome";
+		property test.liferay.virtual.instance = "false";
 
 		DMRepository.cleanRepository(dmDocumentTitle = "Document_1.odt");
 
@@ -386,7 +386,7 @@ definition {
 
 	@priority = 4
 	test SearchDocumentViaHome {
-		property test.name.skip.portal.instance = "SharepointREST#SearchDocumentViaHome";
+		property test.liferay.virtual.instance = "false";
 
 		DMRepository.cleanRepository(dmDocumentTitle = "Document_3.odt");
 
@@ -407,7 +407,7 @@ definition {
 
 	@priority = 4
 	test ViewDocumentAsGuest {
-		property test.name.skip.portal.instance = "SharepointREST#ViewDocumentAsGuest";
+		property test.liferay.virtual.instance = "false";
 
 		ProductMenu.gotoPortlet(
 			category = "Site Builder",
@@ -472,7 +472,7 @@ definition {
 
 	@priority = 4
 	test ViewEditedCheckedoutDocument {
-		property test.name.skip.portal.instance = "SharepointREST#ViewEditedCheckedoutDocument";
+		property test.liferay.virtual.instance = "false";
 
 		DMRepository.cleanRepository(dmDocumentTitle = "Document_1.xls");
 
@@ -515,7 +515,7 @@ definition {
 
 	@priority = 4
 	test ViewOriginalFileExtensionAfterUnsuccessfulExtensionChange {
-		property test.name.skip.portal.instance = "SharepointREST#ViewOriginalFileExtensionAfterUnsuccessfulExtensionChange";
+		property test.liferay.virtual.instance = "false";
 
 		DMRepository.cleanRepository(dmDocumentTitle = "Document_1.docx");
 
@@ -550,7 +550,7 @@ definition {
 
 	@priority = 4
 	test ViewOriginalFileExtensionAfterUnsuccessfulExtensionRemoval {
-		property test.name.skip.portal.instance = "SharepointREST#ViewOriginalFileExtensionAfterUnsuccessfulExtensionRemoval";
+		property test.liferay.virtual.instance = "false";
 
 		DMRepository.cleanRepository(dmDocumentTitle = "Document_3.docx");
 
@@ -586,7 +586,7 @@ definition {
 	@description = "This test ensures that repositories can be added both on site admin and on a content page."
 	@priority = 4
 	test ViewRepository {
-		property test.name.skip.portal.instance = "SharepointREST#ViewRepository";
+		property test.liferay.virtual.instance = "false";
 
 		Navigator.openSpecificURL(url = "https://localhost:8443/group/guest/~/control_panel/manage?p_p_id=com_liferay_document_library_web_portlet_DLAdminPortlet");
 

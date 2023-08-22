@@ -45,9 +45,9 @@ definition {
 	}
 
 	tearDown {
-		var testPortalInstance = PropsUtil.get("test.portal.instance");
+		var testLiferayVirtualInstance = PropsUtil.get("test.liferay.virtual.instance");
 
-		if (${testPortalInstance} == "true") {
+		if (${testLiferayVirtualInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
 		else {
@@ -67,7 +67,7 @@ definition {
 	@priority = 5
 	test DeleteImageInDepot {
 		property portal.acceptance = "true";
-		property test.name.skip.portal.instance = "DepotRemoteStagingDM#DeleteImageInDepot";
+		property test.liferay.virtual.instance = "false";
 
 		DepotNavigator.openDepotDocumentsAndMediaAdmin(depotName = "Test Depot Name");
 
@@ -168,7 +168,7 @@ definition {
 	@description = "This ensures that the blog small image from a depot can be edited and republished when enabling remote staging."
 	@priority = 5
 	test EditBlogSmallImage {
-		property test.name.skip.portal.instance = "DepotRemoteStagingDM#EditBlogSmallImage";
+		property test.liferay.virtual.instance = "false";
 
 		DepotNavigator.openDepotDocumentsAndMediaAdmin(depotName = "Test Depot Name");
 
@@ -265,7 +265,7 @@ definition {
 	@description = "This ensures that document in depot can be replaced and republished in AP through widget config manual selection when enabling remote staging."
 	@priority = 5
 	test EditDocumentInDepot {
-		property test.name.skip.portal.instance = "DepotRemoteStagingDM#EditDocumentInDepot";
+		property test.liferay.virtual.instance = "false";
 
 		DepotNavigator.openDepotDocumentsAndMediaAdmin(depotName = "Test Depot Name");
 
@@ -363,7 +363,7 @@ definition {
 	@description = "This ensures that a document using a custom document type from a depot can be published in the staging site when enabling remote staging."
 	@priority = 5
 	test PublishDMWithDocumentType {
-		property test.name.skip.portal.instance = "DepotRemoteStagingDM#PublishDMWithDocumentType";
+		property test.liferay.virtual.instance = "false";
 
 		DepotNavigator.openDepotDocumentsAndMediaAdmin(depotName = "Test Depot Name");
 
@@ -425,7 +425,7 @@ definition {
 	@description = "This ensures that a folder with a document in depot can be published in AP through widget config manual selection when enabling remote staging."
 	@priority = 5
 	test PublishDocumentFolder {
-		property test.name.skip.portal.instance = "DepotRemoteStagingDM#PublishDocumentFolder";
+		property test.liferay.virtual.instance = "false";
 
 		DepotNavigator.openDepotDocumentsAndMediaAdmin(depotName = "Test Depot Name");
 
@@ -487,7 +487,7 @@ definition {
 	@description = "This ensures that the shortcut to an image in the depot can be added and published in the staging site when enabling remote staging."
 	@priority = 5
 	test PublishImageShortcut {
-		property test.name.skip.portal.instance = "DepotRemoteStagingDM#PublishImageShortcut";
+		property test.liferay.virtual.instance = "false";
 
 		JSONDocument.addFileWithUploadedFile(
 			dmDocumentDescription = "DM Document Description",
@@ -540,7 +540,7 @@ definition {
 	@description = "This ensures that an image with custom field in depot can be published in remote staging site."
 	@priority = 5
 	test PublishImageWithCustomField {
-		property test.name.skip.portal.instance = "DepotRemoteStagingDM#PublishImageWithCustomField";
+		property test.liferay.virtual.instance = "false";
 
 		ApplicationsMenu.gotoPortlet(
 			category = "Configuration",
@@ -627,7 +627,7 @@ definition {
 	@description = "This ensures that the latest version of an image in a depot can be published in remote staging site."
 	@priority = 5
 	test PublishImageWithLatestVersion {
-		property test.name.skip.portal.instance = "DepotRemoteStagingDM#PublishImageWithLatestVersion";
+		property test.liferay.virtual.instance = "false";
 
 		DepotNavigator.openDepotDocumentsAndMediaAdmin(depotName = "Test Depot Name");
 
@@ -710,7 +710,7 @@ definition {
 	@description = "This ensures that the blog small image from a depot can be removed and republished when enabling remote staging."
 	@priority = 5
 	test RemoveBlogSmallImage {
-		property test.name.skip.portal.instance = "DepotRemoteStagingDM#RemoveBlogSmallImage";
+		property test.liferay.virtual.instance = "false";
 
 		DepotNavigator.openDepotDocumentsAndMediaAdmin(depotName = "Test Depot Name");
 
@@ -801,7 +801,7 @@ definition {
 	@description = "This ensures that an unavailable structure from a depot can not be viewed in the staged site when enabling remote staging."
 	@priority = 5
 	test SelectUnavailableStructure {
-		property test.name.skip.portal.instance = "DepotRemoteStagingDM#SelectUnavailableStructure";
+		property test.liferay.virtual.instance = "false";
 
 		DepotNavigator.openDepotDocumentsAndMediaAdmin(depotName = "Test Depot Name");
 
@@ -828,7 +828,7 @@ definition {
 	@description = "This ensures that a depot image cannot be found from the disconnected remote staging site."
 	@priority = 4
 	test ViewImageFromDisconnectedSite {
-		property test.name.skip.portal.instance = "DepotRemoteStagingDM#ViewImageFromDisconnectedSite";
+		property test.liferay.virtual.instance = "false";
 
 		Navigator.gotoSitePage(
 			pageName = "Test Page",
@@ -891,7 +891,7 @@ definition {
 	@description = "This ensures that a pending image in depot cannot be found in remote staging site."
 	@priority = 5
 	test ViewPendingImage {
-		property test.name.skip.portal.instance = "DepotRemoteStagingDM#ViewPendingImage";
+		property test.liferay.virtual.instance = "false";
 
 		DepotNavigator.openDepotDocumentsAndMediaAdmin(depotName = "Test Depot Name");
 

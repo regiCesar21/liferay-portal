@@ -13,7 +13,7 @@ definition {
 	test CASSSOSmoke {
 		property cas.enabled = "true";
 		property dummy.socket.proxy.disabled = "true";
-		property test.name.skip.portal.instance = "Login#CASSSOSmoke";
+		property test.liferay.virtual.instance = "false";
 
 		User.firstLoginPG();
 
@@ -51,7 +51,7 @@ definition {
 
 	@priority = 5
 	test DefaultPortalLandingPage {
-		property test.name.skip.portal.instance = "Login#DefaultPortalLandingPage";
+		property test.liferay.virtual.instance = "false";
 
 		User.firstLoginPG();
 
@@ -92,7 +92,7 @@ definition {
 	@priority = 5
 	test DefaultPortalLandingPageSetByProperty {
 		property custom.properties = "default.landing.page.path=/web/guest/landing${line.separator}company.default.home.url=";
-		property test.name.skip.portal.instance = "Login#DefaultPortalLandingPageSetByProperty";
+		property test.liferay.virtual.instance = "false";
 
 		User.firstLoginPG();
 
@@ -119,7 +119,7 @@ definition {
 	@priority = 4
 	test EnabledOpenIDConnectOnSystemLevel {
 		property dummy.socket.proxy.disabled = "true";
-		property test.name.skip.portal.instance = "Login#EnabledOpenIDConnectOnSystemLevel";
+		property test.liferay.virtual.instance = "false";
 
 		var openIDConnectClientID = PropsUtil.get("google.client.id.2");
 		var openIDConnectClientSecret = PropsUtil.get("google.client.secret.2");
@@ -189,7 +189,7 @@ definition {
 	@priority = 4
 	test FacebookSSOSmoke {
 		property dummy.socket.proxy.disabled = "true";
-		property test.name.skip.portal.instance = "Login#FacebookSSOSmoke";
+		property test.liferay.virtual.instance = "false";
 
 		var facebookApplicationID = PropsUtil.get("facebook.application.id");
 		var facebookApplicationSecret = PropsUtil.get("facebook.application.secret");
@@ -228,7 +228,7 @@ definition {
 	test GoogleSSOSmoke {
 		property dummy.socket.proxy.disabled = "true";
 		property osgi.modules.includes = "portal-security-sso-google";
-		property test.name.skip.portal.instance = "Login#GoogleSSOSmoke";
+		property test.liferay.virtual.instance = "false";
 
 		var googleClientID = PropsUtil.get("google.client.id.4");
 		var googleClientSecret = PropsUtil.get("google.client.secret.4");
@@ -262,7 +262,7 @@ definition {
 	@description = "This is a use case for LPS-72398."
 	@priority = 5
 	test LoginWithSpanishOnlyEnabledLocale {
-		property test.name.skip.portal.instance = "Login#LoginWithSpanishOnlyEnabledLocale";
+		property test.liferay.virtual.instance = "false";
 
 		User.firstLoginPG();
 
@@ -293,7 +293,7 @@ definition {
 	@priority = 4
 	test MultipleOpenIDConnectProvider {
 		property dummy.socket.proxy.disabled = "true";
-		property test.name.skip.portal.instance = "Login#MultipleOpenIDConnectProvider";
+		property test.liferay.virtual.instance = "false";
 
 		var openIDConnectClientID = PropsUtil.get("google.client.id.2");
 		var openIDConnectClientSecret = PropsUtil.get("google.client.secret.2");
@@ -403,7 +403,7 @@ definition {
 	@priority = 4
 	test OpenIDConnectOnInstanceLevelSmoke {
 		property dummy.socket.proxy.disabled = "true";
-		property test.name.skip.portal.instance = "Login#OpenIDConnectOnInstanceLevelSmoke";
+		property test.liferay.virtual.instance = "false";
 
 		var openIDConnectClientID = PropsUtil.get("google.client.id.1");
 		var openIDConnectClientSecret = PropsUtil.get("google.client.secret.1");
@@ -478,7 +478,7 @@ definition {
 	@priority = 4
 	test OpenIDConnectSmoke {
 		property dummy.socket.proxy.disabled = "true";
-		property test.name.skip.portal.instance = "Login#OpenIDConnectSmoke";
+		property test.liferay.virtual.instance = "false";
 
 		// LRQA-43729
 
@@ -533,7 +533,7 @@ definition {
 	test OpenSSOSmoke {
 		property dummy.socket.proxy.disabled = "true";
 		property openam.enabled = "true";
-		property test.name.skip.portal.instance = "Login#OpenSSOSmoke";
+		property test.liferay.virtual.instance = "false";
 
 		// LRQA-40534
 
@@ -590,7 +590,7 @@ definition {
 
 	@priority = 5
 	test TokenBasedSSOSmoke {
-		property test.name.skip.portal.instance = "Login#TokenBasedSSOSmoke";
+		property test.liferay.virtual.instance = "false";
 
 		User.firstLoginPG();
 

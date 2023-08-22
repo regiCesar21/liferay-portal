@@ -43,11 +43,11 @@ definition {
 	}
 
 	tearDown {
-		var testPortalInstance = PropsUtil.get("test.portal.instance");
+		var testLiferayVirtualInstance = PropsUtil.get("test.liferay.virtual.instance");
 
 		ACUtils.tearDownDXP();
 
-		if (${testPortalInstance} == "true") {
+		if (${testLiferayVirtualInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
 		else {
@@ -266,7 +266,7 @@ definition {
 	@priority = 4
 	test CanCreateDynamicIndividualsSegmentByDate {
 		property portal.upstream = "quarantine";
-		property test.name.skip.portal.instance = "SegmentsCreation#CanCreateDynamicIndividualsSegmentByDate";
+		property test.liferay.virtual.instance = "false";
 
 		var fullNameList = "userfn userln,user1 user1";
 
@@ -360,7 +360,7 @@ definition {
 	@priority = 4
 	test CanCreateDynamicSegmentWithIndividualCriteriaUsesBooleanAndDoesNotContain {
 		property portal.upstream = "quarantine";
-		property test.name.skip.portal.instance = "SegmentsCreation#CanCreateDynamicSegmentWithIndividualCriteriaUsesBooleanAndDoesNotContain";
+		property test.liferay.virtual.instance = "false";
 
 		var usernameList = "user1,user2,user3";
 		var emailList = "user1@liferay.com,user2@liferay.com,user3@liferay.com";
@@ -476,7 +476,7 @@ definition {
 	@priority = 4
 	test CanCreateDynamicSegmentWithIndividualCriteriaUsesIsKnownAndIsNot {
 		property portal.upstream = "quarantine";
-		property test.name.skip.portal.instance = "SegmentsCreation#CanCreateDynamicSegmentWithIndividualCriteriaUsesIsKnownAndIsNot";
+		property test.liferay.virtual.instance = "false";
 
 		var usernameList = "user1,user2,user3";
 		var emailList = "user1@liferay.com,user2@liferay.com,user3@liferay.com";
@@ -698,7 +698,7 @@ definition {
 	@priority = 3
 	test CanCreateNestedCriteria {
 		property portal.upstream = "quarantine";
-		property test.name.skip.portal.instance = "SegmentsCreation#CanCreateNestedCriteria";
+		property test.liferay.virtual.instance = "false";
 
 		// AC Refactor ticket: LRAC-9707
 

@@ -12,9 +12,9 @@ definition {
 	}
 
 	tearDown {
-		var testPortalInstance = PropsUtil.get("test.portal.instance");
+		var testLiferayVirtualInstance = PropsUtil.get("test.liferay.virtual.instance");
 
-		if (${testPortalInstance} == "true") {
+		if (${testLiferayVirtualInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
 		else {
@@ -31,7 +31,7 @@ definition {
 	@description = "This test adds five suborganizations to an organization"
 	@priority = 5
 	test AddMultipleSuborganizations {
-		property test.name.skip.portal.instance = "UsersandorganizationsUsecase#AddMultipleSuborganizations";
+		property test.liferay.virtual.instance = "false";
 		property testray.component.names = "Training";
 
 		ApplicationsMenu.gotoPortlet(
@@ -377,7 +377,7 @@ definition {
 	@priority = 5
 	test AddOrganizationTeam {
 		property portal.acceptance = "true";
-		property test.name.skip.portal.instance = "CPUsersandorganizations#AddOrganizationTeam";
+		property test.liferay.virtual.instance = "false";
 		property testray.component.names = "Training";
 
 		ApplicationsMenu.gotoPortlet(
@@ -597,7 +597,7 @@ definition {
 	@description = "Assign multiple members to an organization and searches for them under assignees"
 	@priority = 5
 	test AssignMultipleUsersToOrganization {
-		property test.name.skip.portal.instance = "UsersandorganizationsUsecase#AssignMultipleUsersToOrganization";
+		property test.liferay.virtual.instance = "false";
 		property testray.component.names = "Training";
 
 		ApplicationsMenu.gotoPortlet(
@@ -1320,7 +1320,7 @@ definition {
 
 	@priority = 3
 	test OrganizationSiteDefaultUserAssociations {
-		property test.name.skip.portal.instance = "UsersandorganizationsUsecase#OrganizationSiteDefaultUserAssociations";
+		property test.liferay.virtual.instance = "false";
 
 		ApplicationsMenu.gotoPortlet(
 			category = "Sites",
@@ -1525,7 +1525,7 @@ definition {
 	@description = "This test adds tags to organizations and asserts proper organization displays when tag is searched"
 	@priority = 4
 	test SearchTags {
-		property test.name.skip.portal.instance = "UsersandorganizationsUsecase#SearchTags";
+		property test.liferay.virtual.instance = "false";
 
 		ApplicationsMenu.gotoPortlet(
 			category = "Configuration",

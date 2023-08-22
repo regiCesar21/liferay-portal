@@ -32,9 +32,9 @@ definition {
 
 		AppBuilderAdmin.teardownAppBuilder();
 
-		var testPortalInstance = PropsUtil.get("test.portal.instance");
+		var testLiferayVirtualInstance = PropsUtil.get("test.liferay.virtual.instance");
 
-		if ((${testPortalInstance} == "true") && !(IsTestName(locator1 = "", value1 = ${testNameSkipPortalInstance}))) {
+		if ((${testLiferayVirtualInstance} == "true") && !(IsTestName(locator1 = "", value1 = ${testNameSkipPortalInstance}))) {
 			PortalInstances.tearDownCP();
 		}
 		else {
@@ -71,7 +71,7 @@ definition {
 	@priority = 5
 	test CreateRemoveUpdateDeleteEntriesOfProductMenuApp {
 		property portal.acceptance = "true";
-		property test.name.skip.portal.instance = "AppBuilder#CreateRemoveUpdateDeleteEntriesOfProductMenuApp";
+		property test.liferay.virtual.instance = "false";
 
 		var myFormViewName = "My Registration form";
 		var myTableViewName = "My display table";
@@ -375,7 +375,7 @@ definition {
 	@priority = 5
 	test CreateRemoveUpdateDeleteEntriesOfStandaloneApp {
 		property portal.acceptance = "true";
-		property test.name.skip.portal.instance = "AppBuilder#CreateRemoveUpdateDeleteEntriesOfStandaloneApp";
+		property test.liferay.virtual.instance = "false";
 
 		var myFormViewName = "My Registration form";
 		var myTableViewName = "My display table";
@@ -681,7 +681,7 @@ definition {
 	@priority = 5
 	test CreateRemoveUpdateDeleteEntriesOfWidgetApp {
 		property portal.acceptance = "true";
-		property test.name.skip.portal.instance = "AppBuilder#CreateRemoveUpdateDeleteEntriesOfWidgetApp";
+		property test.liferay.virtual.instance = "false";
 
 		var myFormViewName = "My Registration form";
 		var myTableViewName = "My display table";
@@ -892,7 +892,7 @@ definition {
 	@priority = 5
 	test CreateTableViewsWithFixedEntriesFilter {
 		property portal.acceptance = "true";
-		property test.name.skip.portal.instance = "AppBuilder#CreateTableViewsWithFixedEntriesFilter";
+		property test.liferay.virtual.instance = "false";
 
 		AppBuilderAdmin.addCustomObject(
 			customObjectName = "my custom object",
@@ -1287,7 +1287,7 @@ definition {
 	@priority = 5
 	test DeleteFormViewFieldFromObject {
 		property portal.acceptance = "true";
-		property test.name.skip.portal.instance = "AppBuilder#DeleteFormViewFieldFromObject";
+		property test.liferay.virtual.instance = "false";
 
 		AppBuilderAdmin.addCustomObject(
 			customObjectName = "my custom object",
@@ -1478,7 +1478,7 @@ definition {
 	@priority = 5
 	test ReuseExistingFormViewFields {
 		property portal.acceptance = "true";
-		property test.name.skip.portal.instance = "AppBuilder#ReuseExistingFormViewFields";
+		property test.liferay.virtual.instance = "false";
 
 		AppBuilderAdmin.addCustomObject(
 			customObjectName = "my custom object",

@@ -50,7 +50,7 @@ definition {
 	}
 
 	tearDown {
-		var testPortalInstance = PropsUtil.get("test.portal.instance");
+		var testLiferayVirtualInstance = PropsUtil.get("test.liferay.virtual.instance");
 
 		Click(locator1 = "ABTest#AB_TEST_BUTTON");
 
@@ -60,7 +60,7 @@ definition {
 
 		SitePages.deletePage(pageName = "Content Page");
 
-		if (${testPortalInstance} == "true") {
+		if (${testLiferayVirtualInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
 	}

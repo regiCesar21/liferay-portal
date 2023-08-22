@@ -16,9 +16,9 @@ definition {
 	}
 
 	tearDown {
-		var testPortalInstance = PropsUtil.get("test.portal.instance");
+		var testLiferayVirtualInstance = PropsUtil.get("test.liferay.virtual.instance");
 
-		if (${testPortalInstance} == "true") {
+		if (${testLiferayVirtualInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
 		else {
@@ -33,7 +33,7 @@ definition {
 	@description = "This is a use case for LPS-110309 and LPS-112805"
 	@priority = 4
 	test AssertDescriptionsForConfigurationEntries {
-		property test.name.skip.portal.instance = "MultiFactorAuthentication#AssertDescriptionsForConfigurationEntries";
+		property test.liferay.virtual.instance = "false";
 
 		ApplicationsMenu.gotoPortlet(
 			category = "Configuration",
@@ -60,7 +60,7 @@ definition {
 	@description = "This is a use case for LPS-109786"
 	@priority = 4
 	test AssertNotificationsAfterMFADisabledOrEnabled {
-		property test.name.skip.portal.instance = "MultiFactorAuthentication#AssertNotificationsAfterMFADisabledOrEnabled";
+		property test.liferay.virtual.instance = "false";
 
 		ApplicationsMenu.gotoPortlet(
 			category = "System",
@@ -144,7 +144,7 @@ definition {
 	@priority = 5
 	test BlockedAfterReachAllowedFailedAttempts {
 		property database.types = "db2,hypersonic,mariadb,mysql,oracle,postgresql,sqlserver,sybase";
-		property test.name.skip.portal.instance = "MultiFactorAuthentication#BlockedAfterReachAllowedFailedAttempts";
+		property test.liferay.virtual.instance = "false";
 
 		var portalURL = PropsUtil.get("portal.url");
 
@@ -196,7 +196,7 @@ definition {
 	@description = "This is a use case for LPS-86515"
 	@priority = 5
 	test CheckOrderOfMFAVerifier {
-		property test.name.skip.portal.instance = "MultiFactorAuthentication#CheckOrderOfMFAVerifier";
+		property test.liferay.virtual.instance = "false";
 
 		ApplicationsMenu.gotoPortlet(
 			category = "System",
@@ -266,7 +266,7 @@ definition {
 	@priority = 5
 	test DisabledBasicAuthenticationOnInstanceLevel {
 		property custom.properties = "access.control.sanitize.security.exception=false${line.separator}json.service.serialize.throwable=true";
-		property test.name.skip.portal.instance = "MultiFactorAuthentication#DisabledBasicAuthenticationOnInstanceLevel";
+		property test.liferay.virtual.instance = "false";
 
 		ApplicationsMenu.gotoPortlet(
 			category = "System",
@@ -327,7 +327,7 @@ definition {
 	@description = "This is a use case for LPS-102468"
 	@priority = 5
 	test DisableOTPForInstanceOnSystemLevel {
-		property test.name.skip.portal.instance = "MultiFactorAuthentication#DisableOTPForInstanceOnSystemLevel";
+		property test.liferay.virtual.instance = "false";
 
 		MultiFactorAuthentication.configureMFAOnSystemLevel(disabledMFA = "false");
 
@@ -396,7 +396,7 @@ definition {
 	@priority = 5
 	test EditEmailTemplate {
 		property database.types = "db2,hypersonic,mariadb,mysql,oracle,postgresql,sqlserver,sybase";
-		property test.name.skip.portal.instance = "MultiFactorAuthentication#EditEmailTemplate";
+		property test.liferay.virtual.instance = "false";
 
 		var portalURL = PropsUtil.get("portal.url");
 
@@ -444,7 +444,7 @@ definition {
 	@priority = 5
 	test EnableOTPForInstanceAsInstanceAdminUser {
 		property database.types = "db2,hypersonic,mariadb,mysql,oracle,postgresql,sqlserver,sybase";
-		property test.name.skip.portal.instance = "MultiFactorAuthentication#EnableOTPForInstanceAsInstanceAdminUser";
+		property test.liferay.virtual.instance = "false";
 
 		MultiFactorAuthentication.configureMFAOnSystemLevel(disabledMFA = "false");
 
@@ -569,7 +569,7 @@ definition {
 	@description = "This is a use case for LPS-102469"
 	@priority = 5
 	test LoginSuccessfulAfterResetPasswordAsEndUser {
-		property test.name.skip.portal.instance = "MultiFactorAuthentication#LoginSuccessfulAfterResetPasswordAsEndUser";
+		property test.liferay.virtual.instance = "false";
 
 		var portalURL = PropsUtil.get("portal.url");
 
@@ -624,7 +624,7 @@ definition {
 	@priority = 5
 	test LoginSuccessfulAfterRetryTimeout {
 		property database.types = "db2,hypersonic,mariadb,mysql,oracle,postgresql,sqlserver,sybase";
-		property test.name.skip.portal.instance = "MultiFactorAuthentication#LoginSuccessfulAfterRetryTimeout";
+		property test.liferay.virtual.instance = "false";
 
 		var portalURL = PropsUtil.get("portal.url");
 
@@ -672,7 +672,7 @@ definition {
 	@description = "This is a use case for LPS-101746"
 	@priority = 5
 	test LoginWithIPBasedVerifierEnabled {
-		property test.name.skip.portal.instance = "MultiFactorAuthentication#LoginWithIPBasedVerifierEnabled";
+		property test.liferay.virtual.instance = "false";
 
 		var portalURL = PropsUtil.get("portal.url");
 
@@ -765,7 +765,7 @@ definition {
 	@description = "This is a use case for LPS-101717"
 	@priority = 5
 	test LoginWithIPBasedVerifierFailedOnInstanceLevel {
-		property test.name.skip.portal.instance = "MultiFactorAuthentication#LoginWithIPBasedVerifierFailedOnInstanceLevel";
+		property test.liferay.virtual.instance = "false";
 
 		ApplicationsMenu.gotoPortlet(
 			category = "System",
@@ -846,7 +846,7 @@ definition {
 	@priority = 5
 	test LoginWithOTPEnabled {
 		property database.types = "db2,hypersonic,mariadb,mysql,oracle,postgresql,sqlserver,sybase";
-		property test.name.skip.portal.instance = "MultiFactorAuthentication#LoginWithOTPEnabled";
+		property test.liferay.virtual.instance = "false";
 
 		var portalURL = PropsUtil.get("portal.url");
 
@@ -893,7 +893,7 @@ definition {
 	@description = "This is a use case for LPS-98267"
 	@priority = 5
 	test LoginWithTOTPEnabledForEndUser {
-		property test.name.skip.portal.instance = "MultiFactorAuthentication#LoginWithTOTPEnabledForEndUser";
+		property test.liferay.virtual.instance = "false";
 
 		var portalURL = PropsUtil.get("portal.url");
 
@@ -974,7 +974,7 @@ definition {
 	@description = "This is a use case for LPS-115566"
 	@priority = 5
 	test RemoveAndAutoGenerateTOTP {
-		property test.name.skip.portal.instance = "MultiFactorAuthentication#RemoveAndAutoGenerateTOTP";
+		property test.liferay.virtual.instance = "false";
 
 		ApplicationsMenu.gotoPortlet(
 			category = "System",
@@ -1026,7 +1026,7 @@ definition {
 	@description = "This is a use case for LPS-115566"
 	@priority = 4
 	test RemoveCurrentTOTPWontAffectOthers {
-		property test.name.skip.portal.instance = "MultiFactorAuthentication#RemoveCurrentTOTPWontAffectOthers";
+		property test.liferay.virtual.instance = "false";
 
 		var portalURL = PropsUtil.get("portal.url");
 
@@ -1103,7 +1103,7 @@ definition {
 	@priority = 5
 	test UseCustomMFAVerifier {
 		property osgi.modules.includes = "multi-factor-authentication-sample";
-		property test.name.skip.portal.instance = "MultiFactorAuthentication#UseCustomMFAVerifier";
+		property test.liferay.virtual.instance = "false";
 
 		WaitForConsoleTextPresent(value1 = "STARTED com.liferay.multi.factor.authentication.sample_1.0.0");
 
@@ -1177,7 +1177,7 @@ definition {
 	@description = "This is a use case for LPS-89360"
 	@priority = 4
 	test ViewOrderOfOTPVerifier {
-		property test.name.skip.portal.instance = "MultiFactorAuthentication#ViewOrderOfOTPVerifier";
+		property test.liferay.virtual.instance = "false";
 
 		ApplicationsMenu.gotoPortlet(
 			category = "System",
@@ -1209,7 +1209,7 @@ definition {
 	@description = "This is a use case for LPS-92658"
 	@priority = 4
 	test ViewResourceActionsOfOTPVerificationFailure {
-		property test.name.skip.portal.instance = "MultiFactorAuthentication#ViewResourceActionsOfOTPVerificationFailure";
+		property test.liferay.virtual.instance = "false";
 
 		var portalURL = PropsUtil.get("portal.url");
 
@@ -1267,7 +1267,7 @@ definition {
 	@description = "This is a use case for LPS-86515"
 	@priority = 5
 	test ViewResourceActionsOfTOTPVerificationAttempts {
-		property test.name.skip.portal.instance = "MultiFactorAuthentication#ViewResourceActionsOfTOTPVerificationAttempts";
+		property test.liferay.virtual.instance = "false";
 
 		ApplicationsMenu.gotoPortlet(
 			category = "System",

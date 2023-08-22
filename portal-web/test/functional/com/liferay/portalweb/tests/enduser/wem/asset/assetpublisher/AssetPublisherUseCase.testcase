@@ -33,9 +33,9 @@ definition {
 	}
 
 	tearDown {
-		var testPortalInstance = PropsUtil.get("test.portal.instance");
+		var testLiferayVirtualInstance = PropsUtil.get("test.liferay.virtual.instance");
 
-		if (${testPortalInstance} == "true") {
+		if (${testLiferayVirtualInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
 		else {
@@ -52,7 +52,7 @@ definition {
 	@priority = 4
 	test AddAndEditAssetsViaVirtualHostOrganizations {
 		property custom.properties = "virtual.hosts.valid.hosts=localhost,127.0.0.1,www.able.com,www.baker.com";
-		property test.name.skip.portal.instance = "AssetPublisherUseCase#AddAndEditAssetsViaVirtualHostOrganizations";
+		property test.liferay.virtual.instance = "false";
 
 		JSONOrganization.addOrganization(
 			organizationName = "Organization Name",
@@ -237,7 +237,7 @@ definition {
 
 	@priority = 3
 	test AssetPublisherCategoriesLocalization {
-		property test.name.skip.portal.instance = "AssetPublisherUseCase#AssetPublisherCategoriesLocalization";
+		property test.liferay.virtual.instance = "false";
 
 		JSONCategory.addVocabulary(
 			groupName = "Test Site Name",
@@ -737,7 +737,7 @@ definition {
 
 	@priority = 3
 	test AssetPublisherHasOpenOfficeFileTypeLinks {
-		property test.name.skip.portal.instance = "AssetPublisherUseCase#AssetPublisherHasOpenOfficeFileTypeLinks";
+		property test.liferay.virtual.instance = "false";
 
 		SystemSettings.openSystemSettingsAdmin();
 
@@ -827,7 +827,7 @@ definition {
 	@priority = 5
 	test AssetPublisherSiteAndGlobalScopeAccessibility {
 		property portal.acceptance = "true";
-		property test.name.skip.portal.instance = "AssetPublisherUseCase#AssetPublisherSiteAndGlobalScopeAccessibility";
+		property test.liferay.virtual.instance = "false";
 
 		JSONGroup.addGroup(groupName = "Site Name");
 

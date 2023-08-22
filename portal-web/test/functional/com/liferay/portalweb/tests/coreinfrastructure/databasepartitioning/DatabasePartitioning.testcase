@@ -19,7 +19,7 @@ definition {
 	test AddMultipleCompanies {
 		property custom.properties = "database.partition.enabled=true${line.separator}database.partition.schema.name.prefix=testPartition";
 		property database.types = "mysql";
-		property test.name.skip.portal.instance = "DatabasePartitioning#AddMultipleCompanies";
+		property test.liferay.virtual.instance = "false";
 
 		PortalInstances.openVirtualInstancesAdmin();
 
@@ -89,7 +89,7 @@ definition {
 		property database.types = "mysql";
 		property portal.acceptance = "true";
 		property test.assert.warning.exceptions = "true";
-		property test.name.skip.portal.instance = "DatabasePartitioning#AddNewCompany";
+		property test.liferay.virtual.instance = "false";
 
 		PortalInstances.openVirtualInstancesAdmin();
 
@@ -132,7 +132,7 @@ definition {
 		property custom.properties = "cluster.link.enabled=true${line.separator}database.partition.enabled=true${line.separator}database.partition.schema.name.prefix=testPartition";
 		property database.types = "mysql";
 		property minimum.slave.ram = "24";
-		property test.name.skip.portal.instance = "DatabasePartitioning#AddNewCompanyWithCluster";
+		property test.liferay.virtual.instance = "false";
 
 		Clustering.viewClusterStatusInConsole();
 

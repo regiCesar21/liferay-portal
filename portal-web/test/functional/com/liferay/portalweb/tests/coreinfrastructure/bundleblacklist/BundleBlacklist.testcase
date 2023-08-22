@@ -14,16 +14,16 @@ definition {
 	}
 
 	tearDown {
-		var testPortalInstance = PropsUtil.get("test.portal.instance");
+		var testLiferayVirtualInstance = PropsUtil.get("test.liferay.virtual.instance");
 
-		if (${testPortalInstance} == "true") {
+		if (${testLiferayVirtualInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
 	}
 
 	@priority = 4
 	test BlacklistComponent {
-		property test.name.skip.portal.instance = "BundleBlacklist#BlacklistComponent";
+		property test.liferay.virtual.instance = "false";
 
 		ApplicationsMenu.gotoPortlet(
 			category = "Configuration",
@@ -49,7 +49,7 @@ definition {
 	@priority = 5
 	test BlacklistModuleBundleSymbolicName {
 		property portal.acceptance = "true";
-		property test.name.skip.portal.instance = "BundleBlacklist#BlacklistModuleJar";
+		property test.liferay.virtual.instance = "false";
 
 		ApplicationsMenu.gotoPortlet(
 			category = "System",
@@ -91,7 +91,7 @@ definition {
 	@priority = 5
 	test BlacklistModuleLPKG {
 		property portal.acceptance = "true";
-		property test.name.skip.portal.instance = "BundleBlacklist#BlacklistModuleLPKG";
+		property test.liferay.virtual.instance = "false";
 
 		var liferayHome = PropsUtil.get("liferay.home.dir.name");
 
@@ -146,7 +146,7 @@ definition {
 
 	@priority = 4
 	test BlacklistModuleWar {
-		property test.name.skip.portal.instance = "BundleBlacklist#BlacklistModuleWar";
+		property test.liferay.virtual.instance = "false";
 
 		Page.viewCurrentTheme(
 			page = "Public Pages",
@@ -184,7 +184,7 @@ definition {
 
 	@priority = 5
 	test ExportBundleBlacklistConfig {
-		property test.name.skip.portal.instance = "BundleBlacklist#ExportBundleBlacklistConfig";
+		property test.liferay.virtual.instance = "false";
 
 		ApplicationsMenu.gotoPortlet(
 			category = "Configuration",

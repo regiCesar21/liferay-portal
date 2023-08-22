@@ -27,9 +27,9 @@ definition {
 	}
 
 	tearDown {
-		var testPortalInstance = PropsUtil.get("test.portal.instance");
+		var testLiferayVirtualInstance = PropsUtil.get("test.liferay.virtual.instance");
 
-		if (${testPortalInstance} == "true") {
+		if (${testLiferayVirtualInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
 		else {
@@ -494,7 +494,7 @@ definition {
 	@description = "This test covers LPS-95711. It ensures that an image can be added to the front page via URL."
 	@priority = 4
 	test AddPageWithImageViaURL {
-		property test.name.skip.portal.instance = "PGWiki#AddPageWithImageViaURL";
+		property test.liferay.virtual.instance = "false";
 
 		JSONDocument.addFileWithUploadedFile(
 			dmDocumentDescription = "DM Document Description",
@@ -895,7 +895,7 @@ definition {
 
 	@priority = 3
 	test RemoveRedirectLinkFromPage {
-		property test.name.skip.portal.instance = "PGWiki#RemoveRedirectLinkFromWikiPage";
+		property test.liferay.virtual.instance = "false";
 
 		Navigator.gotoPage(pageName = "Wiki Test Page");
 

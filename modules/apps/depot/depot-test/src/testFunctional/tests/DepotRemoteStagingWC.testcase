@@ -45,9 +45,9 @@ definition {
 	}
 
 	tearDown {
-		var testPortalInstance = PropsUtil.get("test.portal.instance");
+		var testLiferayVirtualInstance = PropsUtil.get("test.liferay.virtual.instance");
 
-		if (${testPortalInstance} == "true") {
+		if (${testLiferayVirtualInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
 		else {
@@ -66,7 +66,7 @@ definition {
 	@description = "This ensures that image in basic article in depot can be deleted and republished in staging site when enabling remote staging."
 	@priority = 5
 	test DeleteImageInDepot {
-		property test.name.skip.portal.instance = "DepotRemoteStagingWC#DeleteImageInDepot";
+		property test.liferay.virtual.instance = "false";
 
 		DepotNavigator.openDepotDocumentsAndMediaAdmin(depotName = "Test Depot Name");
 
@@ -180,7 +180,7 @@ definition {
 	@description = "This ensures that friendly URL in basic article in depot can be edited and republished in staging site when enabling remote staging."
 	@priority = 5
 	test EditFriendlyURLInDepot {
-		property test.name.skip.portal.instance = "DepotRemoteStagingWC#EditFriendlyURLInDepot";
+		property test.liferay.virtual.instance = "false";
 
 		DepotNavigator.openDepotWebContentAdmin(depotName = "Test Depot Name");
 
@@ -299,7 +299,7 @@ definition {
 	@priority = 5
 	test EditImageInDepot {
 		property portal.acceptance = "true";
-		property test.name.skip.portal.instance = "DepotRemoteStagingWC#EditImageInDepot";
+		property test.liferay.virtual.instance = "false";
 
 		DepotNavigator.openDepotDocumentsAndMediaAdmin(depotName = "Test Depot Name");
 
@@ -401,7 +401,7 @@ definition {
 	@description = "This ensures that an article using a structure stored in depot can be deleted and republished in remote staging site."
 	@priority = 5
 	test PublishDeletedWCCustomization {
-		property test.name.skip.portal.instance = "DepotRemoteStagingWC#PublishDeletedWCCustomization";
+		property test.liferay.virtual.instance = "false";
 
 		DepotNavigator.openDepotAdmin();
 
@@ -490,7 +490,7 @@ definition {
 	@description = "This ensures that an article using a structure stored in depot can be edited and republished in remote staging site."
 	@priority = 5
 	test PublishEditedWCCustomization {
-		property test.name.skip.portal.instance = "DepotRemoteStagingWC#PublishEditedWCCustomization";
+		property test.liferay.virtual.instance = "false";
 
 		DepotNavigator.openDepotAdmin();
 
@@ -600,7 +600,7 @@ definition {
 	@description = "This test covers LPS-122790. It ensures that web content with a category in depot can be published in remote staging site."
 	@priority = 4
 	test PublishWCWithCategory {
-		property test.name.skip.portal.instance = "DepotRemoteStagingWC#PublishWCWithCategory";
+		property test.liferay.virtual.instance = "false";
 
 		DepotNavigator.openDepotCategoriesAdmin(depotName = "Test Depot Name");
 
@@ -663,7 +663,7 @@ definition {
 	@description = "This ensures that a web content folder with an article in depot can be published in AP through widget config manual selection when enabling remote staging."
 	@priority = 5
 	test PublishWebContentFolder {
-		property test.name.skip.portal.instance = "DepotRemoteStagingWC#PublishWebContentFolder";
+		property test.liferay.virtual.instance = "false";
 
 		DepotNavigator.openDepotWebContentAdmin(depotName = "Test Depot Name");
 

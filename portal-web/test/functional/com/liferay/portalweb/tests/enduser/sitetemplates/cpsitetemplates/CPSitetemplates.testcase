@@ -13,9 +13,9 @@ definition {
 	}
 
 	tearDown {
-		var testPortalInstance = PropsUtil.get("test.portal.instance");
+		var testLiferayVirtualInstance = PropsUtil.get("test.liferay.virtual.instance");
 
-		if (${testPortalInstance} == "true") {
+		if (${testLiferayVirtualInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
 		else {
@@ -171,7 +171,7 @@ definition {
 	@priority = 4
 	test AssertPartialSiteTemplatePropagation {
 		property database.types = "mysql";
-		property test.name.skip.portal.instance = "CPSitetemplates#AssertPartialSiteTemplatePropagation";
+		property test.liferay.virtual.instance = "false";
 
 		var siteName = TestCase.getSiteName(siteName = ${siteName});
 
@@ -412,7 +412,7 @@ definition {
 	@description = "This is a use case for LPS-98548."
 	@priority = 4
 	test DeleteSiteTemplateImportedToVirtualInstance {
-		property test.name.skip.portal.instance = "CPSitetemplates#DeleteSiteTemplateImportedToVirtualInstance";
+		property test.liferay.virtual.instance = "false";
 
 		SiteTemplates.addCP(
 			siteTemplateActive = "Yes",
@@ -524,7 +524,7 @@ definition {
 
 	@priority = 4
 	test LocalizeSiteTemplatesAdmin {
-		property test.name.skip.portal.instance = "CPSitetemplates#LocalizeSiteTemplatesAdmin";
+		property test.liferay.virtual.instance = "false";
 
 		SiteTemplates.addCP(siteTemplateName = "Site Template Name");
 
@@ -626,7 +626,7 @@ definition {
 	@priority = 5
 	test ResetPageChanges {
 		property portal.acceptance = "true";
-		property test.name.skip.portal.instance = "CPSitetemplates#ResetPageChanges";
+		property test.liferay.virtual.instance = "false";
 		property testray.component.names = "Training";
 
 		var siteName = TestCase.getSiteName(siteName = ${siteName});

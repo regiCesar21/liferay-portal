@@ -9,7 +9,7 @@ definition {
 	setUp {
 		TestCase.setUpPortalInstance();
 
-		var testPortalInstance = PropsUtil.get("test.portal.instance");
+		var testLiferayVirtualInstance = PropsUtil.get("test.liferay.virtual.instance");
 
 		User.firstLoginPG();
 
@@ -22,7 +22,7 @@ definition {
 	}
 
 	tearDown {
-		var testPortalInstance = PropsUtil.get("test.portal.instance");
+		var testLiferayVirtualInstance = PropsUtil.get("test.liferay.virtual.instance");
 		var siteName = TestCase.getSiteName(siteName = ${siteName});
 
 		BlogsEntry.tearDownCP();
@@ -43,7 +43,7 @@ definition {
 
 		Workflow.tearDownWorkflowDefinitions();
 
-		if (${testPortalInstance} == "true") {
+		if (${testLiferayVirtualInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
 		else {
@@ -266,7 +266,7 @@ definition {
 	@priority = 5
 	test ApplyFilterForPerformanceOfAllAssignees {
 		property portal.acceptance = "true";
-		property test.name.skip.portal.instance = "WorkflowMetrics#ApplyFilterForPerformanceOfAllAssignees";
+		property test.liferay.virtual.instance = "false";
 
 		var siteName = TestCase.getSiteName(siteName = ${siteName});
 
@@ -368,7 +368,7 @@ definition {
 	@priority = 5
 	test ApplyFilterForWorkloadDistribution {
 		property portal.upstream = "quarantine";
-		property test.name.skip.portal.instance = "WorkflowMetrics#ApplyFilterForWorkloadDistribution";
+		property test.liferay.virtual.instance = "false";
 
 		var siteName = TestCase.getSiteName(siteName = ${siteName});
 
@@ -491,7 +491,7 @@ definition {
 	@priority = 5
 	test ApplyPaginationOnBulkReassign {
 		property portal.acceptance = "true";
-		property test.name.skip.portal.instance = "WorkflowMetrics#ApplyPaginationOnBulkReassign";
+		property test.liferay.virtual.instance = "false";
 
 		var siteName = TestCase.getSiteName(siteName = ${siteName});
 
@@ -588,7 +588,7 @@ definition {
 	@priority = 5
 	test ApplySearchesForAllAssignees {
 		property portal.acceptance = "true";
-		property test.name.skip.portal.instance = "WorkflowMetrics#ApplySearchesForAllAssignees";
+		property test.liferay.virtual.instance = "false";
 
 		var siteName = TestCase.getSiteName(siteName = ${siteName});
 
@@ -684,7 +684,7 @@ definition {
 	@priority = 5
 	test BulkReassignWorkflowInstances {
 		property portal.acceptance = "true";
-		property test.name.skip.portal.instance = "WorkflowMetrics#BulkReassignWorkflowInstances";
+		property test.liferay.virtual.instance = "false";
 
 		WorkflowMetrics.bulkReassignSetup();
 
@@ -765,7 +765,7 @@ definition {
 	@description = "LRQA-55451 Exceptions Check"
 	@priority = 5
 	test BulkReassignWorkflowInstancesExceptions {
-		property test.name.skip.portal.instance = "WorkflowMetrics#BulkReassignWorkflowModalExceptions";
+		property test.liferay.virtual.instance = "false";
 
 		var siteName = TestCase.getSiteName(siteName = ${siteName});
 
@@ -805,7 +805,7 @@ definition {
 	@priority = 5
 	test BulkTransitionWorkflowTasks {
 		property portal.acceptance = "true";
-		property test.name.skip.portal.instance = "WorkflowMetrics#BulkTransitionWorkflowInstances";
+		property test.liferay.virtual.instance = "false";
 
 		var siteName = TestCase.getSiteName(siteName = ${siteName});
 
@@ -1373,7 +1373,7 @@ definition {
 	@description = "LRQA-53628 Automate LPS-98517 [Dashboard] Filter items list by assignee name"
 	@priority = 5
 	test FilterAllItemsListByAssigneeName {
-		property test.name.skip.portal.instance = "WorkflowMetrics#FilterAllItemsListByAssigneeName";
+		property test.liferay.virtual.instance = "false";
 
 		var siteName = TestCase.getSiteName(siteName = ${siteName});
 
@@ -1538,7 +1538,7 @@ definition {
 	@priority = 5
 	test SearchAndFilterOnPerformanceByStepPage {
 		property portal.upstream = "true";
-		property test.name.skip.portal.instance = "WorkflowMetrics#SearchAndFilterOnPerformanceByStepPage";
+		property test.liferay.virtual.instance = "false";
 
 		var siteName = TestCase.getSiteName(siteName = ${siteName});
 
@@ -1635,7 +1635,7 @@ definition {
 	@priority = 5
 	test SearchPerformanceOfAllAssignees {
 		property portal.upstream = "true";
-		property test.name.skip.portal.instance = "WorkflowMetrics#SearchPerformanceOfAllAssignees";
+		property test.liferay.virtual.instance = "false";
 
 		var siteName = TestCase.getSiteName(siteName = ${siteName});
 
@@ -1713,7 +1713,7 @@ definition {
 	@description = "LRQA-53647 Automate LPS-86638: [Reports] See a list of reports available for all running processes"
 	@priority = 5
 	test SeeListOfReports {
-		property test.name.skip.portal.instance = "WorkflowMetrics#SeeListOfReports";
+		property test.liferay.virtual.instance = "false";
 
 		var siteName = TestCase.getSiteName(siteName = ${siteName});
 		var key_testSLADefinitionDays = 0;
@@ -1786,7 +1786,7 @@ definition {
 	@priority = 5
 	test SingleTaskWorkflowTransition {
 		property portal.acceptance = "true";
-		property test.name.skip.portal.instance = "WorkflowMetrics#SingleTaskWorkflowTransition";
+		property test.liferay.virtual.instance = "false";
 
 		var siteName = TestCase.getSiteName(siteName = ${siteName});
 
@@ -2347,7 +2347,7 @@ definition {
 	@priority = 5
 	test ValidateWorkflowProcessListOnMetrics {
 		property portal.acceptance = "true";
-		property test.name.skip.portal.instance = "WorkflowMetrics#ValidateWorkflowProcessListOnMetrics";
+		property test.liferay.virtual.instance = "false";
 
 		ApplicationsMenu.gotoPortlet(
 			category = "Workflow",
@@ -2402,7 +2402,7 @@ definition {
 	@priority = 5
 	test VerifyAllItemsFilterFromMetrics {
 		property portal.acceptance = "true";
-		property test.name.skip.portal.instance = "WorkflowMetrics#VerifyAllItemsFilterFromMetrics";
+		property test.liferay.virtual.instance = "false";
 
 		var siteName = TestCase.getSiteName(siteName = ${siteName});
 		var key_workflowInstanceName = "Blog Entry Title";
@@ -2654,7 +2654,7 @@ definition {
 	@priority = 5
 	test VerifyMetricsIndexesInControlPanel {
 		property portal.acceptance = "true";
-		property test.name.skip.portal.instance = "WorkflowMetrics#VerifyMetricsIndexesInControlPanel";
+		property test.liferay.virtual.instance = "false";
 
 		var companyId = JSONCompany.getCompanyId();
 
@@ -2672,7 +2672,7 @@ definition {
 	@priority = 5
 	test VerifySLACustomCalendar {
 		property portal.acceptance = "true";
-		property test.name.skip.portal.instance = "WorkflowMetrics#VerifySLACustomCalendar";
+		property test.liferay.virtual.instance = "false";
 
 		var appName = "com.liferay.portal.workflow.metrics.calendar.sample_1.0.0";
 		var warFileName = "com.liferay.portal.workflow.metrics.sla.calendar.sample";
@@ -3090,7 +3090,7 @@ definition {
 	@priority = 5
 	test ViewPendingItems {
 		property portal.acceptance = "true";
-		property test.name.skip.portal.instance = "WorkflowMetrics#ViewPendingItems";
+		property test.liferay.virtual.instance = "false";
 
 		var siteName = TestCase.getSiteName(siteName = ${siteName});
 		var key_testSLADefinitionDays = 0;
@@ -3178,7 +3178,7 @@ definition {
 	@priority = 5
 	test ViewPerformanceByAssigneePage {
 		property portal.acceptance = "true";
-		property test.name.skip.portal.instance = "WorkflowMetrics#ViewPerformanceByAssigneePage";
+		property test.liferay.virtual.instance = "false";
 
 		var siteName = TestCase.getSiteName(siteName = ${siteName});
 
@@ -3241,7 +3241,7 @@ definition {
 	@description = "LRQA-53662 Automate LPS-92053 View process item detail page"
 	@priority = 5
 	test ViewProcessItemDetailPage {
-		property test.name.skip.portal.instance = "WorkflowMetrics#ViewProcessItemDetailPage";
+		property test.liferay.virtual.instance = "false";
 
 		var siteName = TestCase.getSiteName(siteName = ${siteName});
 
@@ -3311,7 +3311,7 @@ definition {
 	test ViewReports {
 		property environment.acceptance = "true";
 		property operating.system.types = "alpine,amazonlinux,centos,debian,fedora,orcllinux,osx,redhat,solaris,suse,ubuntu,windows";
-		property test.name.skip.portal.instance = "WorkflowMetrics#ViewReports";
+		property test.liferay.virtual.instance = "false";
 
 		var siteName = TestCase.getSiteName(siteName = ${siteName});
 
@@ -3351,7 +3351,7 @@ definition {
 	@priority = 5
 	test ViewSLABreachesOfTopSteps {
 		property portal.acceptance = "true";
-		property test.name.skip.portal.instance = "WorkflowMetrics#ViewSLABreachesOfTopSteps";
+		property test.liferay.virtual.instance = "false";
 
 		var siteName = TestCase.getSiteName(siteName = ${siteName});
 		var key_testSLADefinitionDays = 0;
@@ -3439,7 +3439,7 @@ definition {
 	@priority = 5
 	test ViewTopAsigneePerformance {
 		property portal.acceptance = "true";
-		property test.name.skip.portal.instance = "WorkflowMetrics#ViewTopAsigneePerformance";
+		property test.liferay.virtual.instance = "false";
 
 		var siteName = TestCase.getSiteName(siteName = ${siteName});
 
@@ -3540,7 +3540,7 @@ definition {
 	@priority = 5
 	test ViewWorkloadByAssigneeCard {
 		property portal.acceptance = "true";
-		property test.name.skip.portal.instance = "WorkflowMetrics#ViewWorkloadByAssigneeCard";
+		property test.liferay.virtual.instance = "false";
 
 		var siteName = TestCase.getSiteName(siteName = ${siteName});
 
@@ -3618,7 +3618,7 @@ definition {
 	@priority = 5
 	test ViewWorkloadByAssigneePage {
 		property portal.acceptance = "true";
-		property test.name.skip.portal.instance = "WorkflowMetrics#ViewWorkloadByAssigneePage";
+		property test.liferay.virtual.instance = "false";
 
 		var siteName = TestCase.getSiteName(siteName = ${siteName});
 

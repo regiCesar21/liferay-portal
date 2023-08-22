@@ -14,9 +14,9 @@ definition {
 	}
 
 	tearDown {
-		var testPortalInstance = PropsUtil.get("test.portal.instance");
+		var testLiferayVirtualInstance = PropsUtil.get("test.liferay.virtual.instance");
 
-		if (${testPortalInstance} == "true") {
+		if (${testLiferayVirtualInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
 		else {
@@ -31,7 +31,7 @@ definition {
 	test HotDeployLearningToRankApp {
 		property hot.deploy.osgi.app.includes = "portal-search-learning-to-rank";
 		property test.assert.warning.exceptions = "true";
-		property test.name.skip.portal.instance = "Elasticsearch7EE#HotDeployLearningToRankApp";
+		property test.liferay.virtual.instance = "false";
 
 		var appName = "Liferay Enterprise Search Learning to Rank";
 
@@ -82,7 +82,7 @@ definition {
 		property elasticsearch.ltr.enabled = "true";
 		property osgi.app.includes = "portal-search-learning-to-rank";
 		property remote.elasticsearch.enabled = "true";
-		property test.name.skip.portal.instance = "Elasticsearch7EE#LearningToRankSmoke";
+		property test.liferay.virtual.instance = "false";
 
 		AntCommand(
 			locator1 = "build-test-elasticsearch7.xml",
@@ -163,7 +163,7 @@ definition {
 		property cluster.enabled = "true";
 		property minimum.slave.ram = "24";
 		property remote.elasticsearch.enabled = "true";
-		property test.name.skip.portal.instance = "Elasticsearch7EE#PortalClusterSmokeTest";
+		property test.liferay.virtual.instance = "false";
 
 		Elasticsearch.viewClusterStatusViaClusterHealthAPI(
 			nodePort = 9200,
@@ -255,7 +255,7 @@ definition {
 		property elastic.xpack.enabled = "true";
 		property osgi.app.includes = "portal-search-elasticsearch-monitoring";
 		property remote.elasticsearch.enabled = "true";
-		property test.name.skip.portal.instance = "Elasticsearch7EE#XPackPkiAuthenticationSmokeTest";
+		property test.liferay.virtual.instance = "false";
 
 		JSONLayout.addPublicLayout(
 			groupName = "Guest",
@@ -286,7 +286,7 @@ definition {
 		property portal.suite.search.engine = "openjdk11";
 		property portal.upstream = "openjdk11";
 		property remote.elasticsearch.enabled = "true";
-		property test.name.skip.portal.instance = "Elasticsearch7EE#XPackPkiAuthenticationWithJDK11";
+		property test.liferay.virtual.instance = "false";
 
 		JSONLayout.addPublicLayout(
 			groupName = "Guest",
@@ -310,7 +310,7 @@ definition {
 		property elastic.xpack.enabled = "true";
 		property osgi.app.includes = "portal-search-elasticsearch-monitoring";
 		property remote.elasticsearch.enabled = "true";
-		property test.name.skip.portal.instance = "Elasticsearch7EE#XPackSmokeTest";
+		property test.liferay.virtual.instance = "false";
 
 		JSONWebcontent.addWebContent(
 			content = "WC Content",
@@ -362,7 +362,7 @@ definition {
 		property portal.suite.search.engine = "openjdk11";
 		property portal.upstream = "openjdk11";
 		property remote.elasticsearch.enabled = "true";
-		property test.name.skip.portal.instance = "Elasticsearch7EE#XPackWithJDK11";
+		property test.liferay.virtual.instance = "false";
 
 		JSONWebcontent.addWebContent(
 			content = "WC Content",
@@ -410,7 +410,7 @@ definition {
 		property elastic.xpack.enabled = "true";
 		property osgi.app.includes = "portal-search-elasticsearch-monitoring";
 		property remote.elasticsearch.enabled = "true";
-		property test.name.skip.portal.instance = "Elasticsearch7EE#XPackWithRestrictedCipherSuitesAndTLSVersions";
+		property test.liferay.virtual.instance = "false";
 
 		JSONLayout.addPublicLayout(
 			groupName = "Guest",

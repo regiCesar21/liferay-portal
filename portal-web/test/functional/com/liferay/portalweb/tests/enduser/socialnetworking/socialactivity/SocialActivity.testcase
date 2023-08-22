@@ -12,9 +12,9 @@ definition {
 	}
 
 	tearDown {
-		var testPortalInstance = PropsUtil.get("test.portal.instance");
+		var testLiferayVirtualInstance = PropsUtil.get("test.liferay.virtual.instance");
 
-		if (${testPortalInstance} == "true") {
+		if (${testLiferayVirtualInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
 		else {
@@ -29,7 +29,7 @@ definition {
 	@description = "It ensures that the user statistics are counted when social tracking is enabled."
 	@priority = 5
 	test CountUserStatisticsAfterEnablingSocialTracking {
-		property test.name.skip.portal.instance = "SocialActivity#CountUserStatisticsAfterEnablingSocialTracking";
+		property test.liferay.virtual.instance = "false";
 
 		ApplicationsMenu.gotoPortlet(
 			category = "Configuration",
@@ -76,7 +76,7 @@ definition {
 	@description = "It ensures that the user statistics are not counted when social tracking is disabled."
 	@priority = 5
 	test DisableSocialTracking {
-		property test.name.skip.portal.instance = "SocialActivity#DisableSocialTracking";
+		property test.liferay.virtual.instance = "false";
 
 		ApplicationsMenu.gotoPortlet(
 			category = "Configuration",

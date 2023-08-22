@@ -12,9 +12,9 @@ definition {
 	}
 
 	tearDown {
-		var testPortalInstance = PropsUtil.get("test.portal.instance");
+		var testLiferayVirtualInstance = PropsUtil.get("test.liferay.virtual.instance");
 
-		if (${testPortalInstance} == "true") {
+		if (${testLiferayVirtualInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
 	}
@@ -22,7 +22,7 @@ definition {
 	@priority = 3
 	test CustomizeFileFilter {
 		property custom.properties = "module.framework.properties.file.install.filter=^(?!test-theme).*\\..*";
-		property test.name.skip.portal.instance = "FileInstall#CustomizeFileFilter";
+		property test.liferay.virtual.instance = "false";
 
 		GogoShell.openGogoShellAdmin();
 
@@ -40,7 +40,7 @@ definition {
 	@priority = 3
 	test CustomizeNewWatchedDirectory {
 		property custom.properties = "module.framework.properties.file.install.dir=${liferay.home}/daploy,${liferay.home}/osgi/modules,${liferay.home}/osgi/war,${liferay.home}/osgi/configs,${liferay.home}/osgi/marketplace";
-		property test.name.skip.portal.instance = "FileInstall#CustomizeNewWatchedDirectory";
+		property test.liferay.virtual.instance = "false";
 
 		var liferayHome = PropsUtil.get("liferay.home.dir.name");
 
@@ -64,7 +64,7 @@ definition {
 	@priority = 3
 	test CustomizeRecursiveSubdirectoryMode {
 		property custom.properties = "module.framework.properties.file.install.subdir.mode=recurse";
-		property test.name.skip.portal.instance = "FileInstall#CustomizeRecursiveSubdirectoryMode";
+		property test.liferay.virtual.instance = "false";
 
 		var liferayHome = PropsUtil.get("liferay.home.dir.name");
 
@@ -90,7 +90,7 @@ definition {
 	@priority = 3
 	test CustomizeSkipSubdirectoryMode {
 		property custom.properties = "module.framework.properties.file.install.subdir.mode=skip";
-		property test.name.skip.portal.instance = "FileInstall#CustomizeSkipSubdirectoryMode";
+		property test.liferay.virtual.instance = "false";
 
 		var liferayHome = PropsUtil.get("liferay.home.dir.name");
 
@@ -135,7 +135,7 @@ definition {
 	@ignore = "true"
 	@priority = 4
 	test RestartingPortalDuplicatesOSGiConfiguration {
-		property test.name.skip.portal.instance = "FileInstall#RestartingPortalDuplicatesOSGiConfiguration";
+		property test.liferay.virtual.instance = "false";
 
 		var liferayHome = PropsUtil.get("liferay.home.dir.name");
 
@@ -168,7 +168,7 @@ definition {
 
 	@priority = 4
 	test UninstallJarOffline {
-		property test.name.skip.portal.instance = "FileInstall#UninstallJarOffline";
+		property test.liferay.virtual.instance = "false";
 
 		FileInstall.deployFileOnServer(liferayDependencyJars = "com.liferay.cluster.test.module.jar");
 
@@ -205,7 +205,7 @@ definition {
 	@ignore = "true"
 	@priority = 4
 	test UninstallWarOffline {
-		property test.name.skip.portal.instance = "FileInstall#UninstallWarOffline";
+		property test.liferay.virtual.instance = "false";
 
 		FileInstall.deployFileOnServer(liferayDependencyJars = "test-theme.war");
 

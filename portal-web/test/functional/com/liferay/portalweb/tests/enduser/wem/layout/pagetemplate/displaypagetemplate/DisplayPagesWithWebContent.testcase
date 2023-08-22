@@ -61,9 +61,9 @@ definition {
 	}
 
 	tearDown {
-		var testPortalInstance = PropsUtil.get("test.portal.instance");
+		var testLiferayVirtualInstance = PropsUtil.get("test.liferay.virtual.instance");
 
-		if (${testPortalInstance} == "true") {
+		if (${testLiferayVirtualInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
 		else {
@@ -205,7 +205,7 @@ definition {
 	@description = "This is a test for LPS-86191. A user can configure the page settings for each individual display page. This test changes the theme."
 	@priority = 4
 	test ConfigureDisplayPageTheme {
-		property test.name.skip.portal.instance = "DisplayPagesWithWebContent#ConfigureDisplayPageTheme";
+		property test.liferay.virtual.instance = "false";
 
 		ApplicationsMenu.gotoPortlet(
 			category = "System",

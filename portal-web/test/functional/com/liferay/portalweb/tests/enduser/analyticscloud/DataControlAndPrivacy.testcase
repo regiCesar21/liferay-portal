@@ -21,11 +21,11 @@ definition {
 	}
 
 	tearDown {
-		var testPortalInstance = PropsUtil.get("test.portal.instance");
+		var testLiferayVirtualInstance = PropsUtil.get("test.liferay.virtual.instance");
 
 		ACUtils.tearDownDXP();
 
-		if (${testPortalInstance} == "true") {
+		if (${testLiferayVirtualInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
 		else {
@@ -71,7 +71,7 @@ definition {
 	@priority = 5
 	test CanCreateAccessRequest {
 		property analytics.cloud.upstream = "false";
-		property test.name.skip.portal.instance = "DataControlAndPrivacy#CanCreateAccessRequest";
+		property test.liferay.virtual.instance = "false";
 
 		var userEmail = "dcp1@liferay.com";
 		var userName = "dcp1";
@@ -119,7 +119,7 @@ definition {
 	@priority = 5
 	test CanCreateDeleteRequest {
 		property analytics.cloud.upstream = "false";
-		property test.name.skip.portal.instance = "DataControlAndPrivacy#CanCreateDeleteRequest";
+		property test.liferay.virtual.instance = "false";
 
 		var userEmail = "dcp2@liferay.com";
 		var userName = "dcp2";
@@ -167,7 +167,7 @@ definition {
 	@priority = 5
 	test CanCreateSuppressRequest {
 		property analytics.cloud.upstream = "false";
-		property test.name.skip.portal.instance = "DataControlAndPrivacy#CanCreateSuppressRequest";
+		property test.liferay.virtual.instance = "false";
 
 		var userEmail = "dcp3@liferay.com";
 		var userName = "dcp3";

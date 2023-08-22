@@ -29,9 +29,9 @@ definition {
 	}
 
 	tearDown {
-		var testPortalInstance = PropsUtil.get("test.portal.instance");
+		var testLiferayVirtualInstance = PropsUtil.get("test.liferay.virtual.instance");
 
-		if (${testPortalInstance} == "true") {
+		if (${testLiferayVirtualInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
 		else {
@@ -337,7 +337,7 @@ definition {
 		property custom.properties = "xuggler.enabled=true";
 		property dummy.socket.proxy.disabled = "true";
 		property test.assert.warning.exceptions = "false";
-		property test.name.skip.portal.instance = "PGMediagallery#ViewVideoViaMediaGallery";
+		property test.liferay.virtual.instance = "false";
 
 		ServerAdministration.openServerAdmin();
 

@@ -19,9 +19,9 @@ definition {
 	}
 
 	tearDown {
-		var testPortalInstance = PropsUtil.get("test.portal.instance");
+		var testLiferayVirtualInstance = PropsUtil.get("test.liferay.virtual.instance");
 
-		if (${testPortalInstance} == "true") {
+		if (${testLiferayVirtualInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
 		else {
@@ -39,7 +39,7 @@ definition {
 
 	test CreateNewChannel {
 		property portal.acceptance = "quarantine";
-		property test.name.skip.portal.instance = "CPCommerceChannels#CreateNewChannel";
+		property test.liferay.virtual.instance = "false";
 
 		CommerceNavigator.gotoPortlet(
 			category = "Store Management",
@@ -69,7 +69,7 @@ definition {
 
 	test CreateNewNotificationTemplate {
 		property portal.acceptance = "quarantine";
-		property test.name.skip.portal.instance = "CPCommerceChannels#CreateNewNotificationTemplate";
+		property test.liferay.virtual.instance = "false";
 
 		CommerceNavigator.gotoPortlet(
 			category = "Store Management",

@@ -24,9 +24,9 @@ definition {
 	}
 
 	tearDown {
-		var testPortalInstance = PropsUtil.get("test.portal.instance");
+		var testLiferayVirtualInstance = PropsUtil.get("test.liferay.virtual.instance");
 
-		if (${testPortalInstance} == "true") {
+		if (${testLiferayVirtualInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
 		else {
@@ -288,7 +288,7 @@ definition {
 	@description = "This is a use case for LPS-108216. Assert Toggle Controls doesn't affect widget pages in other virtual instance scoped."
 	@priority = 4
 	test ToggleControlsOnlyAffectCurrentInstance {
-		property test.name.skip.portal.instance = "ToggleControls#ToggleControlsOnlyAffectCurrentInstance";
+		property test.liferay.virtual.instance = "false";
 
 		task ("Add a virtual instance") {
 			ApplicationsMenu.gotoPortlet(

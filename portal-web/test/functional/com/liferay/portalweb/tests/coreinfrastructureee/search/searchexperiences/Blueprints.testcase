@@ -15,9 +15,9 @@ definition {
 	}
 
 	tearDown {
-		var testPortalInstance = PropsUtil.get("test.portal.instance");
+		var testLiferayVirtualInstance = PropsUtil.get("test.liferay.virtual.instance");
 
-		if (${testPortalInstance} == "true") {
+		if (${testLiferayVirtualInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
 	}
@@ -62,7 +62,7 @@ definition {
 	}
 
 	test ApplyBlueprintIDToSearchViaLLSO {
-		property test.name.skip.portal.instance = "Blueprints#ApplyBlueprintToSearchViaLLSO";
+		property test.liferay.virtual.instance = "false";
 
 		Blueprints.openBlueprintsAdmin();
 
@@ -107,7 +107,7 @@ definition {
 	}
 
 	test ApplyBlueprintJSONToSearchViaLLSO {
-		property test.name.skip.portal.instance = "Blueprints#ApplyBlueprintJSONToSearchViaLLSO";
+		property test.liferay.virtual.instance = "false";
 
 		Search.openSearchPage();
 
@@ -188,7 +188,7 @@ definition {
 	}
 
 	test ApplyBlueprintToContentPageViaLLSO {
-		property test.name.skip.portal.instance = "Blueprints#ApplyBlueprintToContentPageViaLLSO";
+		property test.liferay.virtual.instance = "false";
 
 		JSONBlog.addEntry(
 			entryContent = "",
@@ -1729,7 +1729,7 @@ definition {
 	test HotDeploySearchExperiencesApp {
 		property hot.deploy.osgi.app.includes = "search-experiences";
 		property test.assert.warning.exceptions = "true";
-		property test.name.skip.portal.instance = "Blueprints#HotDeploySearchExperiencesApp";
+		property test.liferay.virtual.instance = "false";
 
 		var appName = "Liferay Enterprise Search Experiences";
 

@@ -15,9 +15,9 @@ definition {
 	}
 
 	tearDown {
-		var testPortalInstance = PropsUtil.get("test.portal.instance");
+		var testLiferayVirtualInstance = PropsUtil.get("test.liferay.virtual.instance");
 
-		if (${testPortalInstance} == "true") {
+		if (${testLiferayVirtualInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
 		else {
@@ -40,7 +40,7 @@ definition {
 	@priority = 5
 	test ConfigureAutocompleteWithTextField {
 		property portal.acceptance = "true";
-		property test.name.skip.portal.instance = "FormsDataProvider#ConfigureAutocompleteWithTextField";
+		property test.liferay.virtual.instance = "false";
 
 		var portalURL = PropsUtil.get("portal.url");
 
@@ -208,7 +208,7 @@ definition {
 	@priority = 5
 	test ConfigureWithSelectField {
 		property portal.acceptance = "true";
-		property test.name.skip.portal.instance = "FormsDataProvider#ConfigureWithSelectField";
+		property test.liferay.virtual.instance = "false";
 
 		var portalURL = PropsUtil.get("portal.url");
 
@@ -311,7 +311,7 @@ definition {
 	@priority = 5
 	test ViewDataRetrievedForGuestUser {
 		property portal.acceptance = "true";
-		property test.name.skip.portal.instance = "FormsDataProvider#ViewDataRetrievedForGuestUser";
+		property test.liferay.virtual.instance = "false";
 
 		var portalURL = PropsUtil.get("portal.url");
 

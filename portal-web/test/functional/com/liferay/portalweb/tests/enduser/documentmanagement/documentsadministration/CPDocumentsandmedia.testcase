@@ -12,9 +12,9 @@ definition {
 	}
 
 	tearDown {
-		var testPortalInstance = PropsUtil.get("test.portal.instance");
+		var testLiferayVirtualInstance = PropsUtil.get("test.liferay.virtual.instance");
 
-		if (${testPortalInstance} == "true") {
+		if (${testLiferayVirtualInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
 		else {
@@ -454,7 +454,7 @@ definition {
 	@description = "This test covers LPS-94820. This test ensures that only the last two checked in versions of a file are kept when the max version limit is set."
 	@priority = 4
 	test LimitCheckInMaxFileVersion {
-		property test.name.skip.portal.instance = "CPDocumentsandmedia#LimitCheckInMaxFileVersion";
+		property test.liferay.virtual.instance = "false";
 
 		SystemSettings.openSystemSettingsAdmin();
 
@@ -537,7 +537,7 @@ definition {
 	@description = "This test ensures that only the last two versions of a file are kept when the max version limit is set."
 	@priority = 5
 	test LimitMaxFileVersion {
-		property test.name.skip.portal.instance = "CPDocumentsandmedia#LimitMaxFileVersion";
+		property test.liferay.virtual.instance = "false";
 
 		SystemSettings.openSystemSettingsAdmin();
 
@@ -731,7 +731,7 @@ definition {
 	@description = "This is a test for LPS-91751. It ensures that a user cannot preview a file with size that exceeds the preview limit."
 	@priority = 4
 	test PreviewFileThatExceedsLimit {
-		property test.name.skip.portal.instance = "CPDocumentsandmedia#PreviewFileThatExceedsLimit";
+		property test.liferay.virtual.instance = "false";
 
 		SystemSettings.openSystemSettingsAdmin();
 

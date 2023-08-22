@@ -12,9 +12,9 @@ definition {
 	}
 
 	tearDown {
-		var testPortalInstance = PropsUtil.get("test.portal.instance");
+		var testLiferayVirtualInstance = PropsUtil.get("test.liferay.virtual.instance");
 
-		if (${testPortalInstance} == "true") {
+		if (${testLiferayVirtualInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
 		else {
@@ -84,7 +84,7 @@ definition {
 	@description = "This is a use case for LPS-50557."
 	@priority = 4
 	test AddListWithXSSWorkflowDefinition {
-		property test.name.skip.portal.instance = "DynamicdatalistUsecase#AddListWithXSSWorkflowDefinition";
+		property test.liferay.virtual.instance = "false";
 
 		ApplicationsMenu.gotoPortlet(
 			category = "Workflow",
@@ -1809,7 +1809,7 @@ definition {
 	@priority = 3
 	test EditDefaultLanguageAndPublishRecord {
 		property portal.upstream = "quarantine";
-		property test.name.skip.portal.instance = "DynamicdatalistUsecase#EditDefaultLanguageAndPublishRecord";
+		property test.liferay.virtual.instance = "false";
 
 		Navigator.openURL();
 
@@ -2076,7 +2076,7 @@ definition {
 
 	@priority = 4
 	test FormTemplateUniqueField {
-		property test.name.skip.portal.instance = "DynamicdatalistsUsecase#FormTemplateUniqueField";
+		property test.liferay.virtual.instance = "false";
 
 		Navigator.openURL();
 
@@ -2141,7 +2141,7 @@ definition {
 	@description = "This is a use case for LPS-65479."
 	@priority = 4
 	test RemoveRepeatableDateField {
-		property test.name.skip.portal.instance = "DynamicdatalistsUsecase#RemoveRepeatableDateField";
+		property test.liferay.virtual.instance = "false";
 
 		Navigator.openURL();
 
@@ -2427,7 +2427,7 @@ definition {
 	@description = "This is a use case for LPS-52865."
 	@priority = 4
 	test ViewCannotSaveWithDuplicateFieldNames {
-		property test.name.skip.portal.instance = "DynamicdatalistsUsecase#ViewCannotSaveWithDuplicateFieldNames";
+		property test.liferay.virtual.instance = "false";
 
 		Navigator.openURL();
 
@@ -2459,7 +2459,7 @@ definition {
 	@description = "This is a use case for LPS-66228."
 	@priority = 4
 	test ViewDisplayTemplateClassLinks {
-		property test.name.skip.portal.instance = "DynamicdatalistsUsecase#ViewDisplayTemplateClassLinks";
+		property test.liferay.virtual.instance = "false";
 
 		Navigator.openURL();
 
@@ -3097,7 +3097,7 @@ definition {
 	@description = "This is a use case for LPS-51684."
 	@priority = 4
 	test ViewUniqueFieldLabels {
-		property test.name.skip.portal.instance = "DynamicdatalistsUsecase#ViewUniqueFieldLabels";
+		property test.liferay.virtual.instance = "false";
 
 		Navigator.openURL();
 

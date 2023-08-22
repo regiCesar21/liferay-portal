@@ -13,9 +13,9 @@ definition {
 	}
 
 	tearDown {
-		var testPortalInstance = PropsUtil.get("test.portal.instance");
+		var testLiferayVirtualInstance = PropsUtil.get("test.liferay.virtual.instance");
 
-		if (${testPortalInstance} == "true") {
+		if (${testLiferayVirtualInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
 		else {
@@ -30,7 +30,7 @@ definition {
 	@priority = 4
 	test AssertIndexOnStartup {
 		property test.assert.warning.exceptions = "true";
-		property test.name.skip.portal.instance = "Elasticsearch7#AssertIndexOnStartup";
+		property test.liferay.virtual.instance = "false";
 
 		JSONWebcontent.addWebContent(
 			content = "WC WebContent Content",
@@ -132,7 +132,7 @@ definition {
 	}
 
 	test AssertSearchAdmin {
-		property test.name.skip.portal.instance = "Elasticsearch7#AssertSearchAdmin";
+		property test.liferay.virtual.instance = "false";
 
 		ApplicationsMenu.gotoPortlet(
 			category = "Configuration",
@@ -262,7 +262,7 @@ definition {
 		property embedded.elasticsearch.only = "true";
 		property minimum.slave.ram = "24";
 		property test.assert.warning.exceptions = "true";
-		property test.name.skip.portal.instance = "Elasticsearch7#AssertSidecarDoesNotCluster";
+		property test.liferay.virtual.instance = "false";
 
 		Clustering.viewClusterStatusInConsole();
 
@@ -365,7 +365,7 @@ definition {
 		property minimum.slave.ram = "24";
 		property portal.acceptance = "true";
 		property remote.elasticsearch.enabled = "true";
-		property test.name.skip.portal.instance = "Elasticsearch7#ElasticsearchClusteringSmokeTest";
+		property test.liferay.virtual.instance = "false";
 
 		Elasticsearch.viewClusterStatusViaClusterHealthAPI(
 			nodePort = 9200,
@@ -537,7 +537,7 @@ definition {
 	@priority = 3
 	test SearchAfterRedeployingElasticsearchConnector {
 		property test.assert.warning.exceptions = "true";
-		property test.name.skip.portal.instance = "Elasticsearch7#SearchAfterRedeployingElasticsearchConnector";
+		property test.liferay.virtual.instance = "false";
 
 		GogoShell.openGogoShellAdmin();
 
@@ -573,7 +573,7 @@ definition {
 
 	test SearchWithNonLiferayIndex {
 		property embedded.elasticsearch.only = "true";
-		property test.name.skip.portal.instance = "Elasticsearch7#SearchWithNonLiferayIndex";
+		property test.liferay.virtual.instance = "false";
 
 		var portalHostname = PropsUtil.get("portal.hostname");
 
@@ -632,7 +632,7 @@ definition {
 
 	test SwitchSidecarToRemote {
 		property embedded.elasticsearch.only = "true";
-		property test.name.skip.portal.instance = "Elasticsearch7#SwitchSidecarToRemote";
+		property test.liferay.virtual.instance = "false";
 
 		JSONWebcontent.addWebContent(
 			content = "WC WebContent Content",
@@ -704,7 +704,7 @@ definition {
 	@priority = 3
 	test UpdateSystemSettingsWithoutPortalRestart {
 		property embedded.elasticsearch.only = "true";
-		property test.name.skip.portal.instance = "Elasticsearch7#UpdateSystemSettingsWithoutPortalRestart";
+		property test.liferay.virtual.instance = "false";
 
 		JSONWebcontent.addWebContent(
 			content = "WC Content",

@@ -32,9 +32,9 @@ definition {
 
 		AppBuilderAdmin.teardownAppBuilder();
 
-		var testPortalInstance = PropsUtil.get("test.portal.instance");
+		var testLiferayVirtualInstance = PropsUtil.get("test.liferay.virtual.instance");
 
-		if ((${testPortalInstance} == "true") && !(IsTestName(locator1 = "", value1 = ${testNameSkipPortalInstance}))) {
+		if ((${testLiferayVirtualInstance} == "true") && !(IsTestName(locator1 = "", value1 = ${testNameSkipPortalInstance}))) {
 			PortalInstances.tearDownCP();
 		}
 		else {
@@ -121,7 +121,7 @@ definition {
 	@priority = 5
 	test AddMultipleFormViewsToTheSameObject {
 		property portal.acceptance = "true";
-		property test.name.skip.portal.instance = "AppBuilder#AddMultipleFormViewsToTheSameObject";
+		property test.liferay.virtual.instance = "false";
 
 		AppBuilderAdmin.addCustomObject(
 			customObjectName = "my custom object 1",
@@ -176,7 +176,7 @@ definition {
 	@priority = 5
 	test AddRulesViaFormView {
 		property portal.acceptance = "true";
-		property test.name.skip.portal.instance = "AppBuilder#AddRulesViaFormView";
+		property test.liferay.virtual.instance = "false";
 
 		var myFormViewName = "My Registration form";
 		var myTableViewName = "My display table";
@@ -315,7 +315,7 @@ definition {
 	@priority = 5
 	test AddSimpleFormViewWithSelectFromListField {
 		property portal.acceptance = "true";
-		property test.name.skip.portal.instance = "AppBuilder#AddSimpleFormViewWithSelectFromListField";
+		property test.liferay.virtual.instance = "false";
 
 		AppBuilderAdmin.addCustomObject(
 			customObjectName = "my custom object",
@@ -2114,7 +2114,7 @@ definition {
 	@priority = 5
 	test SearchColumnListInTableViewBuilder {
 		property portal.acceptance = "true";
-		property test.name.skip.portal.instance = "AppBuilder#SearchColumnListInTableViewBuilder";
+		property test.liferay.virtual.instance = "false";
 
 		AppBuilderAdmin.addCustomObject(
 			customObjectName = "Custom Object Title",

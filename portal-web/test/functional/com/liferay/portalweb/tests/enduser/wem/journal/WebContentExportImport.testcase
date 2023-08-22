@@ -14,9 +14,9 @@ definition {
 	}
 
 	tearDown {
-		var testPortalInstance = PropsUtil.get("test.portal.instance");
+		var testLiferayVirtualInstance = PropsUtil.get("test.liferay.virtual.instance");
 
-		if (${testPortalInstance} == "true") {
+		if (${testLiferayVirtualInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
 		else {
@@ -937,7 +937,7 @@ definition {
 	@description = "This test ensures that all the default values for an imported structure can be reset."
 	@priority = 4
 	test ResetImportedStructureDefaultValues {
-		property test.name.skip.portal.instance = "WebContentExportImport#ResetImportedStructureDefaultValues";
+		property test.liferay.virtual.instance = "false";
 		property testray.component.names = "Web Content Administration";
 
 		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");

@@ -12,9 +12,9 @@ definition {
 	}
 
 	tearDown {
-		var testPortalInstance = PropsUtil.get("test.portal.instance");
+		var testLiferayVirtualInstance = PropsUtil.get("test.liferay.virtual.instance");
 
-		if (${testPortalInstance} == "true") {
+		if (${testLiferayVirtualInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
 		else {
@@ -36,7 +36,7 @@ definition {
 	test AddChildSiteFromImportedSiteTemplate {
 		property portal.acceptance = "true";
 		property portal.upstream = "true";
-		property test.name.skip.portal.instance = "SitesUsecase#AddChildSiteFromImportedSiteTemplate";
+		property test.liferay.virtual.instance = "false";
 		property testray.component.names = "Training";
 
 		JSONOrganization.addOrganization(organizationName = "Space Program Academy of Continuing Education");
@@ -154,7 +154,7 @@ definition {
 	test AddOrganizationSitesAndDeactivate {
 		property custom.properties = "jsonws.web.service.paths.excludes=";
 		property portal.acceptance = "true";
-		property test.name.skip.portal.instance = "SitesUseCase#AddOrganizationSitesAndDeactivate";
+		property test.liferay.virtual.instance = "false";
 		property testray.component.names = "Site Administration,Training,Users and Organizations";
 
 		SystemSettings.openSystemSettingsAdmin();
@@ -460,7 +460,7 @@ definition {
 	@priority = 3
 	test ReturnWrongLayoutForSignedInUserWithVirtualHostsConfigured {
 		property custom.properties = "layout.default.template.id=2_columns_iii${line.separator}layout.user.private.layouts.enabled=false${line.separator}layout.user.private.layouts.auto.create=false${line.separator}layout.user.private.layouts.power.user.required=true${line.separator}layout.user.public.layouts.enabled=false${line.separator}layout.user.public.layouts.auto.create=false${line.separator}layout.user.public.layouts.power.user.required=true";
-		property test.name.skip.portal.instance = "SitesUsecase#ReturnWrongLayoutForSignedInUserWithVirtualHostsConfigured";
+		property test.liferay.virtual.instance = "false";
 		property test.smtp.server.enabled = "true";
 
 		PortalSettings.gotoConfiguration(
@@ -681,7 +681,7 @@ definition {
 	@priority = 3
 	test SitesDeactivated {
 		property custom.properties = "jsonws.web.service.paths.excludes=";
-		property test.name.skip.portal.instance = "SitesUsecase#SitesDeactivated";
+		property test.liferay.virtual.instance = "false";
 		property testray.component.names = "Site Administration";
 
 		SystemSettings.openSystemSettingsAdmin();
@@ -768,7 +768,7 @@ definition {
 	test SitesDemoSiteManagement {
 		property custom.properties = "jsonws.web.service.paths.excludes=";
 		property portal.release = "true";
-		property test.name.skip.portal.instance = "SitesUsecase#SitesDemoSiteManagement";
+		property test.liferay.virtual.instance = "false";
 		property testray.component.names = "Site Administration,Site Pages Administration";
 
 		var portalURL = PropsUtil.get("portal.url");
