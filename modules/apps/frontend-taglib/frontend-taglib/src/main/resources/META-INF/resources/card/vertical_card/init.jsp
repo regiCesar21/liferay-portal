@@ -15,11 +15,9 @@ String stickerBottom = GetterUtil.getString(request.getAttribute("liferay-fronte
 String subtitle = (String)request.getAttribute("liferay-frontend:card:subtitle");
 String title = (String)request.getAttribute("liferay-frontend:card:title");
 
-String description = "";
+String description = StringPool.BLANK;
 
-if (Validator.isNotNull(data) && Validator.isNotNull(data.get("description"))) {
-	description = data.get(
-		"description"
-	).toString();
+if (data != null) {
+	description = GetterUtil.getString(data.get("description"));
 }
 %>
