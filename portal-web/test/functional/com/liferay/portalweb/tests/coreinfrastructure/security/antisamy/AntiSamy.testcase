@@ -60,6 +60,7 @@ definition {
 	test AssertSpecificRulesWorksForModel {
 		property antisamy.enabled = "true";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		Pause(locator1 = 5000);
 

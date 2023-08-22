@@ -49,6 +49,7 @@ definition {
 		property operating.system.types = "alpine,amazonlinux,centos,debian,fedora,orcllinux,osx,redhat,solaris,suse,ubuntu,windows";
 		property portal.acceptance = "true";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 		property testray.component.names = "Training,Web Content Administration";
 
 		ServerAdministration.openServerAdmin();
@@ -250,6 +251,7 @@ definition {
 		property environment.acceptance = "true";
 		property operating.system.types = "alpine,amazonlinux,centos,debian,fedora,orcllinux,osx,redhat,solaris,suse,ubuntu,windows";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 		property testray.component.names = "Web Content Administration";
 
 		ServerAdministration.openServerAdmin();
@@ -625,6 +627,7 @@ ${httpUtil.URLtoString(request.getAttribute("CTX").getResource(".").toURI().crea
 	@priority = 4
 	test ChangeTemplate {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 		property testray.component.names = "Web Content Display";
 
 		ApplicationsMenu.gotoPortlet(
@@ -700,6 +703,7 @@ ${httpUtil.URLtoString(request.getAttribute("CTX").getResource(".").toURI().crea
 	@priority = 4
 	test LocalizeWebContent {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 		property testray.component.names = "Localization,Web Content Display";
 
 		JSONLayout.addWidgetToPublicLayout(
@@ -845,6 +849,7 @@ ${httpUtil.URLtoString(request.getAttribute("CTX").getResource(".").toURI().crea
 	test UndeployWebContentDisplayModuleViaGogoShell {
 		property portal.acceptance = "true";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		GogoShell.openGogoShellAdmin();
 
@@ -991,6 +996,7 @@ ${runtimeInstance}
 	@priority = 4
 	test ViewAllFileTypesEnabled {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 		property testray.component.names = "Web Content Display";
 
 		JSONWebcontent.addWebContent(
@@ -1046,6 +1052,7 @@ ${runtimeInstance}
 	@priority = 4
 	test ViewAllSettingsEnabledWCDConfiguration {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 		property testray.component.names = "Web Content Display";
 
 		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");

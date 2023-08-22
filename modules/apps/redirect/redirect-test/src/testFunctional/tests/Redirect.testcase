@@ -276,6 +276,7 @@ definition {
 	@priority = 4
 	test AddExpiredEntryFromActive404 {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		var portalURL = PropsUtil.get("portal.url");
 
@@ -319,6 +320,7 @@ definition {
 	@priority = 4
 	test AddExpiredEntryFromIgnored404 {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		var portalURL = PropsUtil.get("portal.url");
 
@@ -387,6 +389,7 @@ definition {
 	@priority = 5
 	test AddPermanentEntryFromActive404 {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		var portalURL = PropsUtil.get("portal.url");
 
@@ -429,6 +432,7 @@ definition {
 	@priority = 5
 	test AddPermanentEntryFromIgnored404 {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		var portalURL = PropsUtil.get("portal.url");
 
@@ -494,6 +498,7 @@ definition {
 	@priority = 5
 	test AddTempEntryFromActive404 {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		var portalURL = PropsUtil.get("portal.url");
 
@@ -535,6 +540,7 @@ definition {
 	@priority = 5
 	test AddTempEntryFromIgnored404 {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		var portalURL = PropsUtil.get("portal.url");
 
@@ -627,6 +633,7 @@ definition {
 	@priority = 5
 	test CannotView404ByDefault {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		var portalURL = PropsUtil.get("portal.url");
 
@@ -817,6 +824,7 @@ definition {
 	@priority = 4
 	test Disable404InSystemSettings {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		var portalURL = PropsUtil.get("portal.url");
 
@@ -904,6 +912,7 @@ definition {
 	@priority = 5
 	test IgnoreURLAfterReactivation {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		var portalURL = PropsUtil.get("portal.url");
 
@@ -959,6 +968,7 @@ definition {
 	@priority = 5
 	test Order404URLsByRequests {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		var portalURL = PropsUtil.get("portal.url");
 
@@ -1169,6 +1179,7 @@ definition {
 	@priority = 5
 	test View404URLsAfterReactivating {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		var portalURL = PropsUtil.get("portal.url");
 
@@ -1329,6 +1340,7 @@ definition {
 	@priority = 5
 	test ViewIgnoredURL {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		var portalURL = PropsUtil.get("portal.url");
 

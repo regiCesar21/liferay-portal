@@ -23,6 +23,7 @@ definition {
 	test CustomizeFileFilter {
 		property custom.properties = "module.framework.properties.file.install.filter=^(?!test-theme).*\\..*";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		GogoShell.openGogoShellAdmin();
 
@@ -41,6 +42,7 @@ definition {
 	test CustomizeNewWatchedDirectory {
 		property custom.properties = "module.framework.properties.file.install.dir=${liferay.home}/daploy,${liferay.home}/osgi/modules,${liferay.home}/osgi/war,${liferay.home}/osgi/configs,${liferay.home}/osgi/marketplace";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		var liferayHome = PropsUtil.get("liferay.home.dir.name");
 
@@ -65,6 +67,7 @@ definition {
 	test CustomizeRecursiveSubdirectoryMode {
 		property custom.properties = "module.framework.properties.file.install.subdir.mode=recurse";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		var liferayHome = PropsUtil.get("liferay.home.dir.name");
 
@@ -91,6 +94,7 @@ definition {
 	test CustomizeSkipSubdirectoryMode {
 		property custom.properties = "module.framework.properties.file.install.subdir.mode=skip";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		var liferayHome = PropsUtil.get("liferay.home.dir.name");
 
@@ -136,6 +140,7 @@ definition {
 	@priority = 4
 	test RestartingPortalDuplicatesOSGiConfiguration {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		var liferayHome = PropsUtil.get("liferay.home.dir.name");
 
@@ -169,6 +174,7 @@ definition {
 	@priority = 4
 	test UninstallJarOffline {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		FileInstall.deployFileOnServer(liferayDependencyJars = "com.liferay.cluster.test.module.jar");
 
@@ -206,6 +212,7 @@ definition {
 	@priority = 4
 	test UninstallWarOffline {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		FileInstall.deployFileOnServer(liferayDependencyJars = "test-theme.war");
 

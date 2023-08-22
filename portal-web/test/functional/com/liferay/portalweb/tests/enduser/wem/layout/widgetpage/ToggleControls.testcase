@@ -289,6 +289,7 @@ definition {
 	@priority = 4
 	test ToggleControlsOnlyAffectCurrentInstance {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("Add a virtual instance") {
 			ApplicationsMenu.gotoPortlet(

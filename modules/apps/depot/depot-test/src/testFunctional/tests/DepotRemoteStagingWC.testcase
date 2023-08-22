@@ -67,6 +67,7 @@ definition {
 	@priority = 5
 	test DeleteImageInDepot {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		DepotNavigator.openDepotDocumentsAndMediaAdmin(depotName = "Test Depot Name");
 
@@ -181,6 +182,7 @@ definition {
 	@priority = 5
 	test EditFriendlyURLInDepot {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		DepotNavigator.openDepotWebContentAdmin(depotName = "Test Depot Name");
 
@@ -300,6 +302,7 @@ definition {
 	test EditImageInDepot {
 		property portal.acceptance = "true";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		DepotNavigator.openDepotDocumentsAndMediaAdmin(depotName = "Test Depot Name");
 
@@ -402,6 +405,7 @@ definition {
 	@priority = 5
 	test PublishDeletedWCCustomization {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		DepotNavigator.openDepotAdmin();
 
@@ -491,6 +495,7 @@ definition {
 	@priority = 5
 	test PublishEditedWCCustomization {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		DepotNavigator.openDepotAdmin();
 
@@ -601,6 +606,7 @@ definition {
 	@priority = 4
 	test PublishWCWithCategory {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		DepotNavigator.openDepotCategoriesAdmin(depotName = "Test Depot Name");
 
@@ -664,6 +670,7 @@ definition {
 	@priority = 5
 	test PublishWebContentFolder {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		DepotNavigator.openDepotWebContentAdmin(depotName = "Test Depot Name");
 

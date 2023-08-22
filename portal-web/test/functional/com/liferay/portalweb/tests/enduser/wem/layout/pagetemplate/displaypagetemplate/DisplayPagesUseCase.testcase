@@ -879,6 +879,7 @@ definition {
 	@priority = 4
 	test ViewlanguageSelectorRedirect {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("Add a display page with a Language Selector widget and with a fragment mapped to Basic Web Content") {
 			JSONLayoutpagetemplate.addDisplayPageTemplateEntry(

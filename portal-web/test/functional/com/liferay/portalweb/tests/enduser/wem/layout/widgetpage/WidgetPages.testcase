@@ -283,6 +283,7 @@ definition {
 	test EditSitePage {
 		property portal.acceptance = "true";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 		property testray.component.names = "Site Pages Administration,Training";
 
 		JSONLayout.addPublicLayout(

@@ -32,6 +32,7 @@ definition {
 	@priority = 5
 	test AddMultipleSuborganizations {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 		property testray.component.names = "Training";
 
 		ApplicationsMenu.gotoPortlet(
@@ -378,6 +379,7 @@ definition {
 	test AddOrganizationTeam {
 		property portal.acceptance = "true";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 		property testray.component.names = "Training";
 
 		ApplicationsMenu.gotoPortlet(
@@ -598,6 +600,7 @@ definition {
 	@priority = 5
 	test AssignMultipleUsersToOrganization {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 		property testray.component.names = "Training";
 
 		ApplicationsMenu.gotoPortlet(
@@ -1321,6 +1324,7 @@ definition {
 	@priority = 3
 	test OrganizationSiteDefaultUserAssociations {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		ApplicationsMenu.gotoPortlet(
 			category = "Sites",
@@ -1526,6 +1530,7 @@ definition {
 	@priority = 4
 	test SearchTags {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		ApplicationsMenu.gotoPortlet(
 			category = "Configuration",
@@ -1669,6 +1674,7 @@ definition {
 	test ViewContentInCustomOrganizationTypeSite {
 		property custom.properties = "jsonws.web.service.paths.excludes=";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		var portalURL = PropsUtil.get("portal.url");
 		var siteName = TestCase.getSiteName(siteName = ${siteName});

@@ -39,6 +39,7 @@ definition {
 	@priority = 4
 	test CanUseRuleOnMultipleSelectionField {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		Navigator.openURL();
 
@@ -109,6 +110,7 @@ definition {
 		property portal.acceptance = "true";
 		property portal.upstream = "true";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		var portalURL = PropsUtil.get("portal.url");
 
@@ -358,6 +360,7 @@ definition {
 	test ConfigureAutofillRule {
 		property portal.upstream = "true";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		var portalURL = PropsUtil.get("portal.url");
 
@@ -482,6 +485,7 @@ definition {
 	test ConfigureCalculateRule {
 		property portal.acceptance = "true";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		var portalURL = PropsUtil.get("portal.url");
 
@@ -594,6 +598,7 @@ definition {
 	test ConfigureRequireRule {
 		property portal.acceptance = "true";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		var portalURL = PropsUtil.get("portal.url");
 
@@ -683,6 +688,7 @@ definition {
 	@priority = 5
 	test ConfigureShowRuleUsingAndCondition {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		var portalURL = PropsUtil.get("portal.url");
 
@@ -806,6 +812,7 @@ definition {
 	test ConfigureUserBelongsToRule {
 		property portal.acceptance = "true";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		Navigator.openURL();
 
@@ -1039,6 +1046,7 @@ definition {
 	test EditRule {
 		property portal.acceptance = "true";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		Navigator.openURL();
 
@@ -1120,6 +1128,7 @@ definition {
 	test SyncBetweenFormAndRuleBuilder {
 		property portal.acceptance = "true";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		Navigator.openURL();
 
@@ -1223,6 +1232,7 @@ definition {
 	test UseIsNotEmptyRuleToShowField {
 		property portal.acceptance = "true";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		Navigator.openURL();
 
@@ -1384,6 +1394,7 @@ definition {
 	test ViewPredefinedValueCanBeUsedToRequireAnotherField {
 		property portal.acceptance = "true";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		Navigator.openURL();
 
@@ -1475,6 +1486,7 @@ definition {
 	test ViewPreviousFormRuleIsCopiedToNewDuplicatedForm {
 		property portal.acceptance = "true";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		Navigator.openURL();
 
@@ -1546,6 +1558,7 @@ definition {
 	test ViewRuleConditionOperatorFieldOptions {
 		property portal.acceptance = "true";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		Navigator.openURL();
 
@@ -1581,6 +1594,7 @@ definition {
 	test ViewShowRuleActivationAfterInputtingUnrelatedField {
 		property portal.acceptance = "true";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		Navigator.openURL();
 

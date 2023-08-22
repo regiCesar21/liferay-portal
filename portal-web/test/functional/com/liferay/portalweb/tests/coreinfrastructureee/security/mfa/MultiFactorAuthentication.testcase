@@ -34,6 +34,7 @@ definition {
 	@priority = 4
 	test AssertDescriptionsForConfigurationEntries {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		ApplicationsMenu.gotoPortlet(
 			category = "Configuration",
@@ -61,6 +62,7 @@ definition {
 	@priority = 4
 	test AssertNotificationsAfterMFADisabledOrEnabled {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		ApplicationsMenu.gotoPortlet(
 			category = "System",
@@ -145,6 +147,7 @@ definition {
 	test BlockedAfterReachAllowedFailedAttempts {
 		property database.types = "db2,hypersonic,mariadb,mysql,oracle,postgresql,sqlserver,sybase";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		var portalURL = PropsUtil.get("portal.url");
 
@@ -197,6 +200,7 @@ definition {
 	@priority = 5
 	test CheckOrderOfMFAVerifier {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		ApplicationsMenu.gotoPortlet(
 			category = "System",
@@ -267,6 +271,7 @@ definition {
 	test DisabledBasicAuthenticationOnInstanceLevel {
 		property custom.properties = "access.control.sanitize.security.exception=false${line.separator}json.service.serialize.throwable=true";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		ApplicationsMenu.gotoPortlet(
 			category = "System",
@@ -328,6 +333,7 @@ definition {
 	@priority = 5
 	test DisableOTPForInstanceOnSystemLevel {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		MultiFactorAuthentication.configureMFAOnSystemLevel(disabledMFA = "false");
 
@@ -397,6 +403,7 @@ definition {
 	test EditEmailTemplate {
 		property database.types = "db2,hypersonic,mariadb,mysql,oracle,postgresql,sqlserver,sybase";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		var portalURL = PropsUtil.get("portal.url");
 
@@ -445,6 +452,7 @@ definition {
 	test EnableOTPForInstanceAsInstanceAdminUser {
 		property database.types = "db2,hypersonic,mariadb,mysql,oracle,postgresql,sqlserver,sybase";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		MultiFactorAuthentication.configureMFAOnSystemLevel(disabledMFA = "false");
 
@@ -570,6 +578,7 @@ definition {
 	@priority = 5
 	test LoginSuccessfulAfterResetPasswordAsEndUser {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		var portalURL = PropsUtil.get("portal.url");
 
@@ -625,6 +634,7 @@ definition {
 	test LoginSuccessfulAfterRetryTimeout {
 		property database.types = "db2,hypersonic,mariadb,mysql,oracle,postgresql,sqlserver,sybase";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		var portalURL = PropsUtil.get("portal.url");
 
@@ -673,6 +683,7 @@ definition {
 	@priority = 5
 	test LoginWithIPBasedVerifierEnabled {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		var portalURL = PropsUtil.get("portal.url");
 
@@ -766,6 +777,7 @@ definition {
 	@priority = 5
 	test LoginWithIPBasedVerifierFailedOnInstanceLevel {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		ApplicationsMenu.gotoPortlet(
 			category = "System",
@@ -847,6 +859,7 @@ definition {
 	test LoginWithOTPEnabled {
 		property database.types = "db2,hypersonic,mariadb,mysql,oracle,postgresql,sqlserver,sybase";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		var portalURL = PropsUtil.get("portal.url");
 
@@ -894,6 +907,7 @@ definition {
 	@priority = 5
 	test LoginWithTOTPEnabledForEndUser {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		var portalURL = PropsUtil.get("portal.url");
 
@@ -975,6 +989,7 @@ definition {
 	@priority = 5
 	test RemoveAndAutoGenerateTOTP {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		ApplicationsMenu.gotoPortlet(
 			category = "System",
@@ -1027,6 +1042,7 @@ definition {
 	@priority = 4
 	test RemoveCurrentTOTPWontAffectOthers {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		var portalURL = PropsUtil.get("portal.url");
 
@@ -1104,6 +1120,7 @@ definition {
 	test UseCustomMFAVerifier {
 		property osgi.modules.includes = "multi-factor-authentication-sample";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		WaitForConsoleTextPresent(value1 = "STARTED com.liferay.multi.factor.authentication.sample_1.0.0");
 
@@ -1178,6 +1195,7 @@ definition {
 	@priority = 4
 	test ViewOrderOfOTPVerifier {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		ApplicationsMenu.gotoPortlet(
 			category = "System",
@@ -1210,6 +1228,7 @@ definition {
 	@priority = 4
 	test ViewResourceActionsOfOTPVerificationFailure {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		var portalURL = PropsUtil.get("portal.url");
 
@@ -1268,6 +1287,7 @@ definition {
 	@priority = 5
 	test ViewResourceActionsOfTOTPVerificationAttempts {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		ApplicationsMenu.gotoPortlet(
 			category = "System",

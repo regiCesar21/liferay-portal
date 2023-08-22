@@ -101,6 +101,7 @@ definition {
 	@priority = 4
 	test WebContentArticleStructuresCanAppearAfterUncheckingSearchWithIndexConfiguration {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("Uncheck Search with Index Configuration") {
 			ApplicationsMenu.gotoPortlet(

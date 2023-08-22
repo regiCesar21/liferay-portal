@@ -28,6 +28,7 @@ definition {
 	@priority = 3
 	test AddConditionNodeEditNameAndDesciptionAndDeleteViaViewTab {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		ApplicationsMenu.gotoPortlet(
 			category = "Workflow",
@@ -52,6 +53,7 @@ definition {
 	@priority = 4
 	test AddEndNodeEditNameAndDesciptionAndDeleteViaViewTab {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		ApplicationsMenu.gotoPortlet(
 			category = "Workflow",
@@ -76,6 +78,7 @@ definition {
 	@priority = 3
 	test AddForkNodeEditNameAndDesciptionAndDeleteViaViewTab {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		ApplicationsMenu.gotoPortlet(
 			category = "Workflow",
@@ -100,6 +103,7 @@ definition {
 	@priority = 3
 	test AddJoinNodeEditNameAndDesciptionAndDeleteViaViewTab {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		ApplicationsMenu.gotoPortlet(
 			category = "Workflow",
@@ -124,6 +128,7 @@ definition {
 	@priority = 3
 	test AddJoinXORNodeEditNameAndDesciptionAndDeleteViaViewTab {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		ApplicationsMenu.gotoPortlet(
 			category = "Workflow",
@@ -148,6 +153,7 @@ definition {
 	@priority = 5
 	test AddJoinXORWorkflowDefinitionViaViewTab {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 		property testray.component.names = "Training";
 
 		ApplicationsMenu.gotoPortlet(
@@ -233,6 +239,7 @@ definition {
 	@priority = 5
 	test AddNewWorkflowDefinitionViaViewTab {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		ApplicationsMenu.gotoPortlet(
 			category = "Workflow",
@@ -294,6 +301,7 @@ definition {
 	@priority = 4
 	test AddStartNodeEditNameAndDesciptionAndDeleteViaViewTab {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		ApplicationsMenu.gotoPortlet(
 			category = "Workflow",
@@ -320,6 +328,7 @@ definition {
 	@priority = 3
 	test AddStateNodeEditNameAndDesciptionAndDeleteViaViewTab {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		ApplicationsMenu.gotoPortlet(
 			category = "Workflow",
@@ -347,6 +356,7 @@ definition {
 	@priority = 5
 	test AddTaskNodeEditNameAndDesciptionAndNotificationsAndDeleteViaViewTab {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 		property testray.component.names = "Training";
 
 		ApplicationsMenu.gotoPortlet(
@@ -398,6 +408,7 @@ definition {
 	@priority = 3
 	test AddTaskNodeViaSourceTabAndEditNameAndDesciptionAndDeleteViaViewTab {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		ApplicationsMenu.gotoPortlet(
 			category = "Workflow",
@@ -425,6 +436,7 @@ definition {
 	@priority = 5
 	test AssertReceiveNotificationAfterEditSingleApprover {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		ApplicationsMenu.gotoPortlet(
 			category = "Workflow",
@@ -470,6 +482,7 @@ definition {
 	@priority = 4
 	test ConfigureTaskTimersViaSourceTab {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		ApplicationsMenu.gotoPortlet(
 			category = "Workflow",
@@ -496,6 +509,7 @@ definition {
 	@priority = 4
 	test ConfigureTaskTimersViaViewTab {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		ApplicationsMenu.gotoPortlet(
 			category = "Workflow",
@@ -589,6 +603,7 @@ definition {
 	@priority = 5
 	test DeleteConnectors {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 		property testray.component.names = "Training";
 
 		ApplicationsMenu.gotoPortlet(
@@ -661,6 +676,7 @@ definition {
 	@priority = 3
 	test DeleteWorkflowDefinitionDraft {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		ApplicationsMenu.gotoPortlet(
 			category = "Workflow",
@@ -688,6 +704,7 @@ definition {
 	@priority = 5
 	test EditAssignmentsForTaskNodeKDCP {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 		property testray.component.names = "Training";
 
 		ApplicationsMenu.gotoPortlet(
@@ -722,6 +739,7 @@ definition {
 	@priority = 5
 	test PublishDefaultWorkflowDefinition {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		ApplicationsMenu.gotoPortlet(
 			category = "Workflow",
@@ -756,6 +774,7 @@ definition {
 	@priority = 3
 	test PublishFromSourceTabAndViewNameChange {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		ApplicationsMenu.gotoPortlet(
 			category = "Workflow",
@@ -789,6 +808,7 @@ definition {
 	@priority = 3
 	test PublishWorkflowDefinitionWithConnectorPointingToStartNodeAndViewErrorMessage {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		ApplicationsMenu.gotoPortlet(
 			category = "Workflow",
@@ -825,6 +845,7 @@ definition {
 	@priority = 3
 	test PublishWorkflowDefinitionWithInvalidConditionNodeAndViewErrorMessage {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		ApplicationsMenu.gotoPortlet(
 			category = "Workflow",
@@ -869,6 +890,7 @@ definition {
 	@priority = 3
 	test PublishWorkflowDefinitionWithInvalidConditionNodeSettingsAndViewErrorMessage {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		var nodeScript = '''
 	import com.liferay.portal.kernel.util.GetterUtil;${line.separator}
@@ -953,6 +975,7 @@ definition {
 	@priority = 3
 	test PublishWorkflowDefinitionWithInvalidForkNodeAndViewErrorMessage {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		ApplicationsMenu.gotoPortlet(
 			category = "Workflow",
@@ -997,6 +1020,7 @@ definition {
 	@priority = 3
 	test PublishWorkflowDefinitionWithInvalidJoinNodeAndViewErrorMessage {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		ApplicationsMenu.gotoPortlet(
 			category = "Workflow",
@@ -1041,6 +1065,7 @@ definition {
 	@priority = 3
 	test PublishWorkflowDefinitionWithInvalidJoinXORNodeAndViewErrorMessage {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		ApplicationsMenu.gotoPortlet(
 			category = "Workflow",
@@ -1085,6 +1110,7 @@ definition {
 	@priority = 4
 	test PublishWorkflowDefinitionWithMultipleStartNodesAndViewErrorMessage {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		ApplicationsMenu.gotoPortlet(
 			category = "Workflow",
@@ -1106,6 +1132,7 @@ definition {
 	test PublishWorkflowDefinitionWithNoConnectorsAndViewErrorMessage {
 		property portal.acceptance = "true";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		ApplicationsMenu.gotoPortlet(
 			category = "Workflow",
@@ -1123,6 +1150,7 @@ definition {
 	test PublishWorkflowDefinitionWithNoEndNodeAndViewErrorMessage {
 		property portal.acceptance = "true";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		ApplicationsMenu.gotoPortlet(
 			category = "Workflow",
@@ -1142,6 +1170,7 @@ definition {
 	test PublishWorkflowDefinitionWithNoStartNodeAndViewErrorMessage {
 		property portal.acceptance = "true";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		ApplicationsMenu.gotoPortlet(
 			category = "Workflow",
@@ -1160,6 +1189,7 @@ definition {
 	@priority = 3
 	test SaveInvalidWorkflowDefinitionAsDraft {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		ApplicationsMenu.gotoPortlet(
 			category = "Workflow",
@@ -1178,6 +1208,7 @@ definition {
 	@priority = 3
 	test UndoDraftDefinition {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		ApplicationsMenu.gotoPortlet(
 			category = "Workflow",
@@ -1275,6 +1306,7 @@ definition {
 	@priority = 4
 	test ViewAndPublishWorkflowDefinitionDraft {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		ApplicationsMenu.gotoPortlet(
 			category = "Workflow",
@@ -1319,6 +1351,7 @@ definition {
 	@priority = 4
 	test ViewSourceXMLNotErasedWhenInvalid {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		ApplicationsMenu.gotoPortlet(
 			category = "Workflow",
@@ -1350,6 +1383,7 @@ definition {
 	@priority = 3
 	test ViewWorkflowDefinitionButtons {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		ApplicationsMenu.gotoPortlet(
 			category = "Workflow",
@@ -1365,6 +1399,7 @@ definition {
 	@priority = 3
 	test ViewWorkflowDefinitionButtonsViaKaleoFormsAdmin {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		Navigator.openURL();
 

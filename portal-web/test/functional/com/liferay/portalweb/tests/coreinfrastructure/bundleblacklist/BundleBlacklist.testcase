@@ -24,6 +24,7 @@ definition {
 	@priority = 4
 	test BlacklistComponent {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		ApplicationsMenu.gotoPortlet(
 			category = "Configuration",
@@ -50,6 +51,7 @@ definition {
 	test BlacklistModuleBundleSymbolicName {
 		property portal.acceptance = "true";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		ApplicationsMenu.gotoPortlet(
 			category = "System",
@@ -92,6 +94,7 @@ definition {
 	test BlacklistModuleLPKG {
 		property portal.acceptance = "true";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		var liferayHome = PropsUtil.get("liferay.home.dir.name");
 
@@ -147,6 +150,7 @@ definition {
 	@priority = 4
 	test BlacklistModuleWar {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		Page.viewCurrentTheme(
 			page = "Public Pages",
@@ -185,6 +189,7 @@ definition {
 	@priority = 5
 	test ExportBundleBlacklistConfig {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		ApplicationsMenu.gotoPortlet(
 			category = "Configuration",

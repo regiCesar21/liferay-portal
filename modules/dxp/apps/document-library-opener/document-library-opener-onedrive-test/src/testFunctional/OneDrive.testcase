@@ -92,6 +92,7 @@ definition {
 	@priority = 5
 	test AddExcelSheet {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		OneDrive.deleteDocument(dmDocumentTitle = "Add Excel Sheet Title");
 
@@ -127,6 +128,7 @@ definition {
 	@priority = 5
 	test AddPowerPointPresentation {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		OneDrive.deleteDocument(dmDocumentTitle = "Add PowerPoint Presentation Title");
 
@@ -162,6 +164,7 @@ definition {
 	@priority = 5
 	test AddWordDocument {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		OneDrive.deleteDocument(dmDocumentTitle = "Add Word Doc Title");
 
@@ -198,6 +201,7 @@ definition {
 	test AutoCheckinDocumentAfterLockExpiration {
 		property custom.properties = "lock.expiration.time.com.liferay.document.library.kernel.model.DLFileEntry=80000";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		OneDrive.deleteDocument(dmDocumentTitle = "Auto Checkin Word Doc Title");
 
@@ -226,6 +230,7 @@ definition {
 	@priority = 4
 	test AutoTagWordDocument {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		OneDrive.deleteDocument(dmDocumentTitle = "Auto Tagging Word Doc Title");
 
@@ -259,6 +264,7 @@ definition {
 	@priority = 4
 	test CancelCheckoutOnExcelSheet {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		OneDrive.deleteDocument(dmDocumentTitle = "Cancel Checkout Excel Sheet Title");
 
@@ -286,6 +292,7 @@ definition {
 	@priority = 4
 	test CancelCheckoutOnWordDocument {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		OneDrive.deleteDocument(dmDocumentTitle = "Cancel Checkout Word Doc Title");
 
@@ -312,6 +319,7 @@ definition {
 	@priority = 5
 	test DeleteExcelSheet {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		OneDrive.deleteDocument(dmDocumentTitle = "Delete Excel Sheet Title");
 
@@ -338,6 +346,7 @@ definition {
 	@priority = 5
 	test DeletePowerPointPresentation {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		OneDrive.deleteDocument(dmDocumentTitle = "Delete PowerPoint Presentation Title");
 
@@ -364,6 +373,7 @@ definition {
 	@priority = 5
 	test DeleteWordDocument {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		OneDrive.deleteDocument(dmDocumentTitle = "Delete Word Doc Title");
 
@@ -390,6 +400,7 @@ definition {
 	@priority = 4
 	test EditExcelSheet {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		for (var documentTitle : list "Document_1,Excel Sheet Title Edited") {
 			OneDrive.deleteDocument(dmDocumentTitle = ${documentTitle});
@@ -432,6 +443,7 @@ definition {
 	@priority = 4
 	test EditPowerPointPresentation {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		for (var documentTitle : list "Document_2,Powerpoint Presentation Title Edited") {
 			OneDrive.deleteDocument(dmDocumentTitle = ${documentTitle});
@@ -474,6 +486,7 @@ definition {
 	@priority = 4
 	test EditWordDocument {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		for (var documentTitle : list "Document_3,Word Doc Title Edited") {
 			OneDrive.deleteDocument(dmDocumentTitle = ${documentTitle});

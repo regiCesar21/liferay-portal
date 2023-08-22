@@ -83,6 +83,7 @@ definition {
 	@priority = 5
 	test AddAutoAssertionCategoryViaDMDocument {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		JSONCategory.addVocabulary(
 			groupName = "Guest",
@@ -246,6 +247,7 @@ definition {
 	@priority = 4
 	test AssertFileSizeValidation {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		JSONDocument.addFileWithUploadedFile(
 			dmDocumentDescription = "DM Document Description",
@@ -605,6 +607,7 @@ definition {
 	@priority = 5
 	test CheckValidationForFileEntries {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		SystemSettings.openSystemSettingsAdmin();
 
@@ -751,6 +754,7 @@ definition {
 		property dummy.socket.proxy.disabled = "true";
 		property test.assert.warning.exceptions = "false";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		ServerAdministration.openServerAdmin();
 
@@ -899,6 +903,7 @@ definition {
 	@priority = 3
 	test GifFileCanBeAddedToEditorAfterDisablingGifMimeTypeInAM {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		SystemSettings.openSystemSettingsAdmin();
 
@@ -1311,6 +1316,7 @@ definition {
 	test UpdateDocumentTypeWithPermissions {
 		property custom.properties = "jsonws.web.service.paths.excludes=";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 		property testray.component.names = "Training";
 
 		var siteName = TestCase.getSiteName(siteName = ${siteName});

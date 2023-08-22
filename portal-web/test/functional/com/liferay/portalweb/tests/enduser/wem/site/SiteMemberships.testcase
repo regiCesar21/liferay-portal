@@ -98,6 +98,7 @@ definition {
 	test AddMembersSiteUser {
 		property portal.acceptance = "true";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 		property testray.component.names = "Site Administration,Users and Organizations";
 
 		JSONUser.addUser(
@@ -270,6 +271,7 @@ definition {
 	test OrganizationsView {
 		property portal.acceptance = "true";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 		property testray.component.names = "Site Administration,Users and Organizations";
 
 		ApplicationsMenu.gotoPortlet(

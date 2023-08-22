@@ -566,6 +566,7 @@ definition {
 	@priority = 4
 	test UpdateRSSFeedViaAssetpublisher {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 		property testray.component.names = "Asset Publisher,RSS";
 
 		ApplicationsMenu.gotoPortlet(

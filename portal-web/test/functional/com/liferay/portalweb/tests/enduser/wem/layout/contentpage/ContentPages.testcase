@@ -1667,6 +1667,7 @@ definition {
 	test ViewEditModeHeaderFooterTheme {
 		property portal.acceptance = "true";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("Add a widget page to the site") {
 			JSONLayout.addPublicLayout(

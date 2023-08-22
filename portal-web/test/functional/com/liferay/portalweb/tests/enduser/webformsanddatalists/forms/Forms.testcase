@@ -39,6 +39,7 @@ definition {
 	test Add20Forms {
 		property portal.acceptance = "true";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		Navigator.openURL();
 
@@ -72,6 +73,7 @@ definition {
 	test Add30Fields {
 		property portal.acceptance = "true";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		Navigator.openURL();
 
@@ -102,6 +104,7 @@ definition {
 	test AddElementSetsWithTranslation {
 		property portal.acceptance = "true";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 		property testray.component.names = "Training";
 
 		Navigator.openURL();
@@ -380,6 +383,7 @@ definition {
 	test AddFormInGlobal {
 		property portal.acceptance = "true";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 		property testray.component.names = "Training";
 
 		Navigator.openURL();
@@ -468,6 +472,7 @@ definition {
 	test AddFormToUserSiteAndViewNoDuplicates {
 		property portal.acceptance = "true";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		Navigator.openURL();
 
@@ -588,6 +593,7 @@ definition {
 	test AddFormWithDuplicateTextFields {
 		property portal.acceptance = "true";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		Navigator.openURL();
 
@@ -632,6 +638,7 @@ definition {
 	test AddFormWithSpanishAsDefaultPortalLanguage {
 		property portal.acceptance = "true";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		Navigator.openURL();
 
@@ -729,6 +736,7 @@ definition {
 	@priority = 4
 	test AutomateNumericFieldWithDecimalConfigurations {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		Navigator.openURL();
 
@@ -835,6 +843,7 @@ definition {
 	test BelongsToRuleCanPairWithGuestUser {
 		property portal.acceptance = "true";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		Navigator.openURL();
 
@@ -958,6 +967,7 @@ definition {
 	test ChangeFieldType {
 		property portal.acceptance = "true";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		Navigator.openURL();
 
@@ -1298,6 +1308,7 @@ definition {
 	test ConfigureAutosave {
 		property portal.acceptance = "true";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		Navigator.openURL();
 
@@ -1367,6 +1378,7 @@ definition {
 	test CreateReadUpdateDeleteImageField {
 		property portal.acceptance = "true";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		ProductMenu.gotoPortlet(
 			category = "Content & Data",
@@ -1422,6 +1434,7 @@ definition {
 	test CreateRedirectForm {
 		property portal.acceptance = "true";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		Navigator.openURL();
 
@@ -1495,6 +1508,7 @@ definition {
 	test CreateUntitledForm {
 		property portal.acceptance = "true";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		Navigator.openURL();
 
@@ -1526,6 +1540,7 @@ definition {
 	test DeleteDateFieldAndViewEntries {
 		property portal.acceptance = "true";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		Navigator.openURL();
 
@@ -1636,6 +1651,7 @@ definition {
 	test DeletePages {
 		property portal.acceptance = "true";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		Navigator.openURL();
 
@@ -1693,6 +1709,7 @@ definition {
 	test DeleteSelectFromListOptionAndViewEntries {
 		property portal.acceptance = "true";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		Navigator.openURL();
 
@@ -1794,6 +1811,7 @@ definition {
 	@priority = 3
 	test DeleteSelectFromListOptionValue {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		Navigator.openURL();
 
@@ -1855,6 +1873,7 @@ definition {
 	test EditAllFormFieldNames {
 		property portal.acceptance = "true";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		Navigator.openURL();
 
@@ -1971,6 +1990,7 @@ definition {
 	test EditAllFormFieldsTypesUsedBySystemSettings {
 		property portal.acceptance = "true";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		Navigator.openURL();
 
@@ -2159,6 +2179,7 @@ definition {
 	@priority = 3
 	test EditFormsConfigurationViaSystemSettings {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		Navigator.openURL();
 
@@ -2222,6 +2243,7 @@ definition {
 	test EditFormWithUpdatedSiteAndUserLocale {
 		property portal.acceptance = "true";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		Navigator.openURL();
 
@@ -2302,6 +2324,7 @@ definition {
 	test EditTranslatedGridField {
 		property portal.acceptance = "true";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		Navigator.openURL();
 
@@ -2535,6 +2558,7 @@ definition {
 	test GuestUserCanNotSeeFormAfterPermissionRemoved {
 		property portal.acceptance = "true";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		Navigator.openURL();
 
@@ -2594,6 +2618,7 @@ definition {
 	test NavigateToCorrectForm {
 		property portal.acceptance = "true";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		Navigator.openURL();
 
@@ -2778,6 +2803,7 @@ definition {
 	test ReorderFieldOptions {
 		property portal.acceptance = "true";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		Navigator.openURL();
 
@@ -2918,6 +2944,7 @@ definition {
 	test SearchFormRecordMultipleEntries {
 		property portal.acceptance = "true";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		var fieldValueList = "testEntry1,exampleText,sampleAnswer";
 
@@ -3021,6 +3048,7 @@ definition {
 	test SelectAndRemoveMultipleOptionsInSelectFromListField {
 		property portal.acceptance = "true";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		Navigator.openURL();
 
@@ -3098,6 +3126,7 @@ definition {
 	@priority = 4
 	test SingleSelectionFormFieldAddedBeforeDefaultSiteLanguageToggleCanBeLoaded {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		JSONGroup.addGroup(groupName = "Site Name");
 
@@ -3148,6 +3177,7 @@ definition {
 	@description = "LPS-90435 This is a test verifying that the Single Selection Form field name and options can be added to non-English default site language site"
 	test SingleSelectionFormFieldNameAndOptionsCanBeAddedToNonEnglishDefaultSiteLanguageSite {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		JSONGroup.addGroup(groupName = "Site Name");
 
@@ -3197,6 +3227,7 @@ definition {
 	test SubmitFormAfterEditingFields {
 		property portal.acceptance = "true";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 		property testray.component.names = "Training";
 
 		Navigator.openURL();
@@ -3576,6 +3607,7 @@ definition {
 	test SubmitFormAndViewEmailNotification {
 		property portal.acceptance = "true";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 		property test.smtp.server.enabled = "true";
 
 		Navigator.openURL();
@@ -3665,6 +3697,7 @@ definition {
 		property captcha.enabled = "true";
 		property portal.acceptance = "true";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		Navigator.openURL();
 
@@ -3759,6 +3792,7 @@ definition {
 	test SubmitFormWithAllFieldTypesAndThreePages {
 		property portal.acceptance = "true";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 		property testray.component.names = "Training";
 
 		Navigator.openURL();
@@ -4100,6 +4134,7 @@ definition {
 	test SubmitFormWithCustomTextContainingValidation {
 		property portal.acceptance = "true";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		Navigator.openURL();
 
@@ -4191,6 +4226,7 @@ definition {
 	test SubmitFormWithMultipleFieldsAndViewEntriesViaDescriptiveDisplay {
 		property portal.acceptance = "true";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		Navigator.openURL();
 
@@ -4376,6 +4412,7 @@ definition {
 	test SubmitFormWithRequiredCheckboxField {
 		property portal.acceptance = "true";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		Navigator.openURL();
 
@@ -4464,6 +4501,7 @@ definition {
 	test SubmitFormWithRequiredImageField {
 		property portal.acceptance = "true";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		ProductMenu.gotoPortlet(
 			category = "Content & Data",
@@ -4562,6 +4600,7 @@ definition {
 	@priority = 3
 	test SubmitFormWithRequiredMultiLineTextField {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		Navigator.openURL();
 
@@ -4645,6 +4684,7 @@ definition {
 	@priority = 4
 	test SubmitFormWithRequiredRadioField {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		Navigator.openURL();
 
@@ -4737,6 +4777,7 @@ definition {
 	test SubmitFormWithRequiredRepeatingTextField {
 		property portal.acceptance = "true";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		Navigator.openURL();
 
@@ -4817,6 +4858,7 @@ definition {
 	test SubmitFormWithRequiredTextField {
 		property portal.acceptance = "true";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 		property testray.component.names = "Training";
 
 		Navigator.openURL();
@@ -4899,6 +4941,7 @@ definition {
 	test SubmitFormWithSwitcherCheckboxField {
 		property portal.acceptance = "true";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		Navigator.openURL();
 
@@ -4993,6 +5036,7 @@ definition {
 	test SubmitFormWithUploadField {
 		property portal.acceptance = "true";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		Navigator.openURL();
 
@@ -5069,6 +5113,7 @@ definition {
 		property portal.acceptance = "false";
 		property portal.upstream = "true";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		Navigator.openURL();
 
@@ -5251,6 +5296,7 @@ definition {
 	test SubmitFormWithWorkflowAndViewNotification {
 		property portal.acceptance = "true";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		Navigator.openURL();
 
@@ -5320,6 +5366,7 @@ definition {
 	test SubmitWithRequiredDateField {
 		property portal.acceptance = "true";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		Navigator.openURL();
 
@@ -5409,6 +5456,7 @@ definition {
 		property portal.acceptance = "false";
 		property portal.upstream = "true";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		Navigator.openURL();
 
@@ -5455,6 +5503,7 @@ definition {
 		property portal.acceptance = "true";
 		property portal.upstream = "true";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		Navigator.openURL();
 
@@ -5515,6 +5564,7 @@ definition {
 		property portal.acceptance = "false";
 		property portal.upstream = "true";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		Navigator.openURL();
 
@@ -5626,6 +5676,7 @@ definition {
 	test ViewBlankLabelWhenAddingNewField {
 		property portal.acceptance = "true";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		Navigator.openURL();
 
@@ -5663,6 +5714,7 @@ definition {
 	test ViewConfirmationWhenLeavingFormWithoutSaving {
 		property portal.acceptance = "true";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		Navigator.openURL();
 
@@ -5700,6 +5752,7 @@ definition {
 		property test.assert.javascript.errors = "true";
 		property test.assert.warning.exceptions = "true";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		Navigator.openURL();
 
@@ -5763,6 +5816,7 @@ definition {
 	test ViewFieldValidationIsNotBypassedWhenNextButtonIsHitTwice {
 		property portal.acceptance = "true";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		Navigator.openURL();
 
@@ -5850,6 +5904,7 @@ definition {
 	test ViewFormWithMultipleSelectionFieldAsASwitcherAndHideLabel {
 		property portal.acceptance = "true";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		Navigator.openURL();
 
@@ -5923,6 +5978,7 @@ definition {
 	test ViewRepeatableTextFieldLabel {
 		property portal.acceptance = "true";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		Navigator.openURL();
 
@@ -5986,6 +6042,7 @@ definition {
 	test ViewSaveNotification {
 		property portal.acceptance = "true";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		Navigator.openURL();
 
@@ -6018,6 +6075,7 @@ definition {
 	@priority = 5
 	test ViewSelectFromListOptionValueWithCharacter {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		Navigator.openURL();
 
@@ -6067,6 +6125,7 @@ definition {
 	test ViewSuccessPage {
 		property portal.acceptance = "true";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 		property testray.component.names = "Training";
 
 		Navigator.openURL();

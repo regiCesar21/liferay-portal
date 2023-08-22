@@ -34,6 +34,7 @@ definition {
 		property environment.acceptance = "false";
 		property portal.upstream = "quarantine";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		PortalSettings.addLDAPServer(LDAPServerName = "ApacheDS Server");
 
@@ -83,6 +84,7 @@ definition {
 		property custom.properties = "field.enable.com.liferay.portal.kernel.model.Contact.male=true";
 		property portal.upstream = "quarantine";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		PortalSettings.addLDAPServer(LDAPServerName = "ApacheDS Server");
 
@@ -171,6 +173,7 @@ definition {
 	@priority = 4
 	test ViewHiddenSecurityCredential {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		ApplicationsMenu.gotoPortlet(
 			category = "Configuration",
@@ -190,6 +193,7 @@ definition {
 	@priority = 3
 	test ViewLDAPInstanceSettingsDoNotAffectSystemSettings {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		ApplicationsMenu.gotoPortlet(
 			category = "Configuration",

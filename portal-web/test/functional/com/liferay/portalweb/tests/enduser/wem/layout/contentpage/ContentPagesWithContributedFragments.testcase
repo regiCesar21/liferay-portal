@@ -1602,6 +1602,7 @@ definition {
 	@priority = 3
 	test OnlySelectWebContentBasedOnCustomStructureViaFragmentWhenSetItemSubtype {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("Add a WC based on Basic Web Content") {
 			JSONWebcontent.addWebContent(

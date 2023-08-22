@@ -14,6 +14,7 @@ definition {
 		property cas.enabled = "true";
 		property dummy.socket.proxy.disabled = "true";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		User.firstLoginPG();
 
@@ -52,6 +53,7 @@ definition {
 	@priority = 5
 	test DefaultPortalLandingPage {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		User.firstLoginPG();
 
@@ -93,6 +95,7 @@ definition {
 	test DefaultPortalLandingPageSetByProperty {
 		property custom.properties = "default.landing.page.path=/web/guest/landing${line.separator}company.default.home.url=";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		User.firstLoginPG();
 
@@ -120,6 +123,7 @@ definition {
 	test EnabledOpenIDConnectOnSystemLevel {
 		property dummy.socket.proxy.disabled = "true";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		var openIDConnectClientID = PropsUtil.get("google.client.id.2");
 		var openIDConnectClientSecret = PropsUtil.get("google.client.secret.2");
@@ -190,6 +194,7 @@ definition {
 	test FacebookSSOSmoke {
 		property dummy.socket.proxy.disabled = "true";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		var facebookApplicationID = PropsUtil.get("facebook.application.id");
 		var facebookApplicationSecret = PropsUtil.get("facebook.application.secret");
@@ -229,6 +234,7 @@ definition {
 		property dummy.socket.proxy.disabled = "true";
 		property osgi.modules.includes = "portal-security-sso-google";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		var googleClientID = PropsUtil.get("google.client.id.4");
 		var googleClientSecret = PropsUtil.get("google.client.secret.4");
@@ -263,6 +269,7 @@ definition {
 	@priority = 5
 	test LoginWithSpanishOnlyEnabledLocale {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		User.firstLoginPG();
 
@@ -294,6 +301,7 @@ definition {
 	test MultipleOpenIDConnectProvider {
 		property dummy.socket.proxy.disabled = "true";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		var openIDConnectClientID = PropsUtil.get("google.client.id.2");
 		var openIDConnectClientSecret = PropsUtil.get("google.client.secret.2");
@@ -404,6 +412,7 @@ definition {
 	test OpenIDConnectOnInstanceLevelSmoke {
 		property dummy.socket.proxy.disabled = "true";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		var openIDConnectClientID = PropsUtil.get("google.client.id.1");
 		var openIDConnectClientSecret = PropsUtil.get("google.client.secret.1");
@@ -479,6 +488,7 @@ definition {
 	test OpenIDConnectSmoke {
 		property dummy.socket.proxy.disabled = "true";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		// LRQA-43729
 
@@ -534,6 +544,7 @@ definition {
 		property dummy.socket.proxy.disabled = "true";
 		property openam.enabled = "true";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		// LRQA-40534
 
@@ -591,6 +602,7 @@ definition {
 	@priority = 5
 	test TokenBasedSSOSmoke {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		User.firstLoginPG();
 

@@ -79,6 +79,7 @@ definition {
 	@priority = 4
 	test CanAccessHiddenEvent {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		var defaultEventName = "assetDepthReached";
 		var attributeList = "assetId,canonicalUrl,category,depth,pageDescription,pageKeywords,pageTitle,referrer,sessionId,title,url";
@@ -120,6 +121,7 @@ definition {
 	@priority = 5
 	test CanHideDefaultAndCustomEvent {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		var defaultEventName = "assetDownloaded";
 
@@ -496,6 +498,7 @@ definition {
 	@priority = 5
 	test ViewIfDefaultEventsAreHidden {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		var defaultEventNameList = "assetDepthReached,blogDepthReached,fieldBlurred,fieldFocused,pageDepthReached,pageLoaded,pageUnloaded,posted,shared,tabBlurred,tabFocused,VOTE";
 

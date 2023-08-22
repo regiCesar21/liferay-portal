@@ -28,6 +28,7 @@ definition {
 	test AccessGogoShellCommandViaPortlet {
 		property portal.acceptance = "true";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		ApplicationsMenu.gotoPortlet(
 			category = "System",
@@ -49,6 +50,7 @@ definition {
 	@priority = 3
 	test GogoShellCommandDisconnectNotSupported {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		ApplicationsMenu.gotoPortlet(
 			category = "System",
@@ -65,6 +67,7 @@ definition {
 	@priority = 4
 	test GogoShellPortletOnlyOnMainInstance {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		ApplicationsMenu.gotoPortlet(
 			category = "System",
@@ -99,6 +102,7 @@ definition {
 	@priority = 4
 	test OmniAdminCanAccessGogoShellCommandViaPortlet {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		JSONUser.addUser(
 			userEmailAddress = "userea@liferay.com",
@@ -137,6 +141,7 @@ definition {
 	@priority = 4
 	test SiteAdminCannotAccessGogoShellPortlet {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		JSONUser.addUser(
 			userEmailAddress = "userea@liferay.com",

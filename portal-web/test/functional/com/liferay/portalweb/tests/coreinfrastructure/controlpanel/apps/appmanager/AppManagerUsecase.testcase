@@ -16,6 +16,7 @@ definition {
 	@priority = 5
 	test InstallUninstallApp {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		var appName = "test-app-portlet";
 
@@ -42,6 +43,7 @@ definition {
 	@priority = 4
 	test ViewIndependentModulesIsNotNestedWithinItself {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		ApplicationsMenu.gotoPortlet(
 			category = "System",
@@ -59,6 +61,7 @@ definition {
 	@priority = 5
 	test ViewLicenseManager {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		ApplicationsMenu.gotoPortlet(
 			category = "Marketplace",

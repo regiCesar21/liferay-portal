@@ -50,6 +50,7 @@ definition {
 	@priority = 4
 	test PublishDisplayPageMapWebContentWithAssetPublisher {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
 

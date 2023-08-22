@@ -84,6 +84,7 @@ definition {
 	test AddFolderSiteRoleDefinePermission {
 		property portal.acceptance = "true";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		Permissions.setUpSiteRoleCP(
 			page = "Public Pages",
@@ -236,6 +237,7 @@ definition {
 	test AddStructureSiteRoleDefinePermission {
 		property portal.acceptance = "true";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		Permissions.setUpSiteRoleCP(
 			page = "Public Pages",
@@ -321,6 +323,7 @@ definition {
 	test AddTemplateSiteRoleDefaultPermission {
 		property portal.acceptance = "true";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		Permissions.setUpSiteRoleCP(
 			page = "Public Pages",
@@ -367,6 +370,7 @@ definition {
 	test AddTemplateSiteRoleDefinePermission {
 		property portal.acceptance = "true";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		Permissions.setUpSiteRoleCP(
 			page = "Public Pages",
@@ -490,6 +494,7 @@ definition {
 	test AddWebContentSiteRoleDefinePermission {
 		property portal.acceptance = "true";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		Permissions.setUpSiteRoleCP(
 			page = "Public Pages",

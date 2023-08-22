@@ -42,6 +42,7 @@ definition {
 	@priority = 4
 	test AssertAutoTagAfterPublishingToLive {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		Navigator.openSiteURL(siteName = "Test Site Name");
 
@@ -103,6 +104,7 @@ definition {
 	@priority = 4
 	test DeleteAssetWithTag {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
 
@@ -142,6 +144,7 @@ definition {
 	@priority = 5
 	test NoAutoTagForManuallyAddedEntry {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
 
@@ -178,6 +181,7 @@ definition {
 	@priority = 4
 	test PublishAutoTaggedDraft {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
 
@@ -214,6 +218,7 @@ definition {
 	@priority = 5
 	test Smoke {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		JSONLayout.addPublicLayout(
 			groupName = "Test Site Name",

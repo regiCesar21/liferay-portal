@@ -20,6 +20,7 @@ definition {
 	@priority = 5
 	test AddUserInheritedRolesAsSAMLAttributeStatements {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		SAML.configureLiferaySAMLAsIdP(samlEntityID = "samlidp");
 
@@ -131,6 +132,7 @@ definition {
 	@priority = 5
 	test AssertInstanceAdminCannotConfigureIdPWhenDisableIdPRole {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		ApplicationsMenu.gotoPortlet(
 			category = "Configuration",
@@ -178,6 +180,7 @@ definition {
 	@priority = 4
 	test AssertKeepAliveToKeepMySAMLSessionAlive {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		User.logoutAndLoginPG(
 			nodePort = 9080,
@@ -290,6 +293,7 @@ definition {
 	@priority = 4
 	test AssertSAMLSPUserInformationUpdatesAfterChangingOnIdP {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		SAML.configureLiferaySAMLAsIdP(samlEntityID = "samlidp");
 
@@ -347,6 +351,7 @@ definition {
 	test AssertSignedSAMLMetadata {
 		property portal.upstream = "quarantine";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		SAML.configureLiferaySAMLAsIdP(samlEntityID = "samlidp");
 
@@ -376,6 +381,7 @@ definition {
 		property blacklist.saml.algorithms = "true";
 		property portal.upstream = "quarantine";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		SAML.configureLiferaySAMLAsIdP(samlEntityID = "samlidp");
 
@@ -413,6 +419,7 @@ definition {
 	@priority = 4
 	test AssertSSOIdleSessionTakesPrecedenceOverIdPSessionTimeout {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 		property web.xml.timeout = "2";
 
 		SAML.configureLiferaySAMLAsIdP(
@@ -499,6 +506,7 @@ definition {
 	@priority = 4
 	test AssertSSOSessionExistsAfterSPSessionTimeout {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 		property web.xml.timeout = "2";
 
 		SAML.configureLiferaySAMLAsIdP(samlEntityID = "samlidp");
@@ -539,6 +547,7 @@ definition {
 	@priority = 4
 	test AssertSSOSessionExpiresAfterMaximumSessionAge {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 		property web.xml.timeout = "2";
 
 		SAML.configureLiferaySAMLAsIdP(
@@ -591,6 +600,7 @@ definition {
 	test AssertSSOWithEncryptionAndDecryption {
 		property portal.upstream = "quarantine";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		SAML.configureLiferaySAMLAsIdP(samlEntityID = "samlidp");
 
@@ -657,6 +667,7 @@ definition {
 	@priority = 4
 	test AssertSSOWithSignAuthnRequests {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		SAML.configureLiferaySAMLAsIdP(samlEntityID = "samlidp");
 
@@ -804,6 +815,7 @@ definition {
 	test ConfigureSAMLToImportUsersFromLDAP {
 		property apacheds.enabled = "true";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		SAML.configureLiferaySAMLAsIdP(samlEntityID = "samlidp");
 
@@ -925,6 +937,7 @@ definition {
 	test HotDeploySAMLApp {
 		property hot.deploy.osgi.app.includes = "saml";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		AssertConsoleTextNotPresent(value1 = "The portal instance needs to be restarted");
 
@@ -952,6 +965,7 @@ definition {
 	@priority = 5
 	test ImportEncryptionCertificateFromPKCS12KeystoreFile {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		SAML.configureLiferaySAMLAsIdP(samlEntityID = "samlidp");
 
@@ -1006,6 +1020,7 @@ definition {
 	@priority = 5
 	test ImportSigningCertificateFromPKCS12KeystoreFile {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		SAML.configureLiferaySAMLAsIdP(samlEntityID = "samlidp");
 
@@ -1057,6 +1072,7 @@ definition {
 	@priority = 4
 	test SPInitiatedSSOWithScreenNameIdentifier {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		SAML.configureLiferaySAMLAsIdP(samlEntityID = "samlidp");
 
@@ -1094,6 +1110,7 @@ definition {
 	@priority = 5
 	test ValidateVulnerabilitiesXMLAttacks {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		SAML.configureLiferaySAMLAsIdP(samlEntityID = "samlidp");
 
@@ -1158,6 +1175,7 @@ definition {
 	@priority = 4
 	test ViewIdPInitiatedSSO {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		SAML.configureLiferaySAMLAsIdP(samlEntityID = "samlidp");
 
@@ -1204,6 +1222,7 @@ definition {
 	@priority = 4
 	test ViewIdPInitiatedSSOWithRememberMeChecked {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		SAML.configureLiferaySAMLAsIdP(samlEntityID = "samlidp");
 
@@ -1251,6 +1270,7 @@ definition {
 	@priority = 4
 	test ViewIdPSingleLogoutWithMultipleSPs {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		User.logoutAndLoginPG(
 			nodePort = 9080,
@@ -1365,6 +1385,7 @@ definition {
 	test ViewSingleLogoutAndForceAuthWithMultipleSPs {
 		property portal.upstream = "quarantine";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		User.logoutAndLoginPG(
 			nodePort = 9080,
@@ -1527,6 +1548,7 @@ definition {
 	@priority = 4
 	test ViewSingleLogoutHTTPPostBindingInConsole {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		SAML.configureLiferaySAMLAsIdP(samlEntityID = "samlidp");
 
@@ -1567,6 +1589,7 @@ definition {
 	@priority = 4
 	test ViewSPInitiatedSSO {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		SAML.configureLiferaySAMLAsIdP(samlEntityID = "samlidp");
 
@@ -1610,6 +1633,7 @@ definition {
 	@priority = 4
 	test ViewSPInitiatedSSOWithMultipleIdPsAndAssertRenderLoginPortletWithoutIdpsMatched {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		ApplicationsMenu.gotoPortlet(
 			category = "System",
@@ -1782,6 +1806,7 @@ definition {
 	@priority = 4
 	test ViewSPInitiatedSSOWithTransientNameId {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		// Add new virtual instance to be the SP site
 

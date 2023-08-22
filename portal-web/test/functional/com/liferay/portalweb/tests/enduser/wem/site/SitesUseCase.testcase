@@ -37,6 +37,7 @@ definition {
 		property portal.acceptance = "true";
 		property portal.upstream = "true";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 		property testray.component.names = "Training";
 
 		JSONOrganization.addOrganization(organizationName = "Space Program Academy of Continuing Education");
@@ -155,6 +156,7 @@ definition {
 		property custom.properties = "jsonws.web.service.paths.excludes=";
 		property portal.acceptance = "true";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 		property testray.component.names = "Site Administration,Training,Users and Organizations";
 
 		SystemSettings.openSystemSettingsAdmin();
@@ -461,6 +463,7 @@ definition {
 	test ReturnWrongLayoutForSignedInUserWithVirtualHostsConfigured {
 		property custom.properties = "layout.default.template.id=2_columns_iii${line.separator}layout.user.private.layouts.enabled=false${line.separator}layout.user.private.layouts.auto.create=false${line.separator}layout.user.private.layouts.power.user.required=true${line.separator}layout.user.public.layouts.enabled=false${line.separator}layout.user.public.layouts.auto.create=false${line.separator}layout.user.public.layouts.power.user.required=true";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 		property test.smtp.server.enabled = "true";
 
 		PortalSettings.gotoConfiguration(
@@ -682,6 +685,7 @@ definition {
 	test SitesDeactivated {
 		property custom.properties = "jsonws.web.service.paths.excludes=";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 		property testray.component.names = "Site Administration";
 
 		SystemSettings.openSystemSettingsAdmin();
@@ -769,6 +773,7 @@ definition {
 		property custom.properties = "jsonws.web.service.paths.excludes=";
 		property portal.release = "true";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 		property testray.component.names = "Site Administration,Site Pages Administration";
 
 		var portalURL = PropsUtil.get("portal.url");

@@ -99,6 +99,7 @@ definition {
 	test AdminCanNotAddASubpageOfAChildPageLinkedToSiteTemplatePage {
 		property portal.acceptance = "true";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		SiteTemplates.addCP(siteTemplateName = "Site Template Name");
 
@@ -210,6 +211,7 @@ definition {
 	@priority = 4
 	test ImportOldSchemaVerion {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		ApplicationsMenu.gotoPortlet(
 			category = "Sites",
@@ -484,6 +486,7 @@ definition {
 	test SiteTemplatePageLinkInWebContentRedirectCorrectly {
 		property portal.acceptance = "quarantine";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		var portalURL = PropsUtil.get("portal.url");
 		var siteName = TestCase.getSiteName(siteName = ${siteName});

@@ -31,6 +31,7 @@ definition {
 	@priority = 5
 	test ApplyThemeToSinglePage {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		User.firstLoginPG();
 
@@ -59,6 +60,7 @@ definition {
 	@priority = 5
 	test DeactivateAndReactivateTheme {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		var appName = "test-theme";
 
@@ -135,6 +137,7 @@ definition {
 	test StartPortalWithoutClassicTheme {
 		property skip.start-app-server = "true";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		AntCommand(
 			locator1 = "build-test.xml",
@@ -162,6 +165,7 @@ definition {
 	@priority = 5
 	test UninstallAndRedeployTheme {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		var appName = "test-theme";
 

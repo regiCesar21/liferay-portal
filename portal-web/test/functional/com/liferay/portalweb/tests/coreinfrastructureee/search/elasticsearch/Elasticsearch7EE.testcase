@@ -32,6 +32,7 @@ definition {
 		property hot.deploy.osgi.app.includes = "portal-search-learning-to-rank";
 		property test.assert.warning.exceptions = "true";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		var appName = "Liferay Enterprise Search Learning to Rank";
 
@@ -83,6 +84,7 @@ definition {
 		property osgi.app.includes = "portal-search-learning-to-rank";
 		property remote.elasticsearch.enabled = "true";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		AntCommand(
 			locator1 = "build-test-elasticsearch7.xml",
@@ -164,6 +166,7 @@ definition {
 		property minimum.slave.ram = "24";
 		property remote.elasticsearch.enabled = "true";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		Elasticsearch.viewClusterStatusViaClusterHealthAPI(
 			nodePort = 9200,
@@ -256,6 +259,7 @@ definition {
 		property osgi.app.includes = "portal-search-elasticsearch-monitoring";
 		property remote.elasticsearch.enabled = "true";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		JSONLayout.addPublicLayout(
 			groupName = "Guest",
@@ -287,6 +291,7 @@ definition {
 		property portal.upstream = "openjdk11";
 		property remote.elasticsearch.enabled = "true";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		JSONLayout.addPublicLayout(
 			groupName = "Guest",
@@ -311,6 +316,7 @@ definition {
 		property osgi.app.includes = "portal-search-elasticsearch-monitoring";
 		property remote.elasticsearch.enabled = "true";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		JSONWebcontent.addWebContent(
 			content = "WC Content",
@@ -363,6 +369,7 @@ definition {
 		property portal.upstream = "openjdk11";
 		property remote.elasticsearch.enabled = "true";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		JSONWebcontent.addWebContent(
 			content = "WC Content",
@@ -411,6 +418,7 @@ definition {
 		property osgi.app.includes = "portal-search-elasticsearch-monitoring";
 		property remote.elasticsearch.enabled = "true";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		JSONLayout.addPublicLayout(
 			groupName = "Guest",

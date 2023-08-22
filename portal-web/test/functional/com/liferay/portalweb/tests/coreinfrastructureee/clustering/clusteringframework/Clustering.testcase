@@ -33,6 +33,7 @@ definition {
 	test AddAndDeleteBlogEntriesOnSeparateNodes {
 		property portal.upstream = "quarantine";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		Clustering.viewClusterStatusInConsole();
 
@@ -158,6 +159,7 @@ definition {
 	@priority = 4
 	test CanInvokeMethods {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		Clustering.runGroovyScript(
 			nodePort = 8080,
@@ -228,6 +230,7 @@ definition {
 	test ShutdownAndStartupNodes {
 		property portal.upstream = "quarantine";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		Clustering.viewClusterStatusInConsole();
 
@@ -290,6 +293,7 @@ definition {
 	@priority = 4
 	test SlaveNodeCanBecomeMasterNode {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		Clustering.runGroovyScript(
 			nodePort = 8080,
@@ -344,6 +348,7 @@ definition {
 	test TCPControlChannelProperties {
 		property custom.properties = "cluster.link.channel.properties.control=tcp.xml";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		for (var serverPort : list "8080,9080") {
 			Clustering.viewTextPresentOnSpecificNode(
@@ -365,6 +370,7 @@ definition {
 	test UDPControlChannelProperties {
 		property custom.properties = "cluster.link.channel.properties.control=udp.xml${line.separator}cluster.link.channel.properties.transport.0=udp.xml";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		for (var serverPort : list "8080,9080") {
 			Clustering.viewTextPresentOnSpecificNode(
@@ -385,6 +391,7 @@ definition {
 	@priority = 4
 	test ValidateDocumentOnSeparateNodes {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		Clustering.viewClusterStatusInConsole();
 
@@ -441,6 +448,7 @@ definition {
 	test ValidateLiveUsers {
 		property custom.properties = "live.users.enabled=true";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		Clustering.viewClusterStatusInConsole();
 
@@ -494,6 +502,7 @@ definition {
 	@priority = 4
 	test ValidatePublishOnTwoNodes {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		Clustering.viewClusterStatusInConsole();
 
@@ -588,6 +597,7 @@ definition {
 	@priority = 4
 	test ValidateSchedulerOnSeparateNodes {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		var siteName = TestCase.getSiteName();
 

@@ -68,6 +68,7 @@ definition {
 	test DeleteImageInDepot {
 		property portal.acceptance = "true";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		DepotNavigator.openDepotDocumentsAndMediaAdmin(depotName = "Test Depot Name");
 
@@ -169,6 +170,7 @@ definition {
 	@priority = 5
 	test EditBlogSmallImage {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		DepotNavigator.openDepotDocumentsAndMediaAdmin(depotName = "Test Depot Name");
 
@@ -266,6 +268,7 @@ definition {
 	@priority = 5
 	test EditDocumentInDepot {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		DepotNavigator.openDepotDocumentsAndMediaAdmin(depotName = "Test Depot Name");
 
@@ -364,6 +367,7 @@ definition {
 	@priority = 5
 	test PublishDMWithDocumentType {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		DepotNavigator.openDepotDocumentsAndMediaAdmin(depotName = "Test Depot Name");
 
@@ -426,6 +430,7 @@ definition {
 	@priority = 5
 	test PublishDocumentFolder {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		DepotNavigator.openDepotDocumentsAndMediaAdmin(depotName = "Test Depot Name");
 
@@ -488,6 +493,7 @@ definition {
 	@priority = 5
 	test PublishImageShortcut {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		JSONDocument.addFileWithUploadedFile(
 			dmDocumentDescription = "DM Document Description",
@@ -541,6 +547,7 @@ definition {
 	@priority = 5
 	test PublishImageWithCustomField {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		ApplicationsMenu.gotoPortlet(
 			category = "Configuration",
@@ -628,6 +635,7 @@ definition {
 	@priority = 5
 	test PublishImageWithLatestVersion {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		DepotNavigator.openDepotDocumentsAndMediaAdmin(depotName = "Test Depot Name");
 
@@ -711,6 +719,7 @@ definition {
 	@priority = 5
 	test RemoveBlogSmallImage {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		DepotNavigator.openDepotDocumentsAndMediaAdmin(depotName = "Test Depot Name");
 
@@ -802,6 +811,7 @@ definition {
 	@priority = 5
 	test SelectUnavailableStructure {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		DepotNavigator.openDepotDocumentsAndMediaAdmin(depotName = "Test Depot Name");
 
@@ -829,6 +839,7 @@ definition {
 	@priority = 4
 	test ViewImageFromDisconnectedSite {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		Navigator.gotoSitePage(
 			pageName = "Test Page",
@@ -892,6 +903,7 @@ definition {
 	@priority = 5
 	test ViewPendingImage {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		DepotNavigator.openDepotDocumentsAndMediaAdmin(depotName = "Test Depot Name");
 

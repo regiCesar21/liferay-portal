@@ -310,6 +310,7 @@ definition {
 		property custom.properties = "jsonws.web.service.paths.excludes=";
 		property portal.acceptance = "true";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 		property testray.component.names = "Permissions,Roles,Site Pages Administration,Training";
 
 		SiteTemplates.addCP(siteTemplateName = "Site Template Name");
@@ -426,6 +427,7 @@ definition {
 	test ViewSecureContentAndPageAsGuest {
 		property custom.properties = "jsonws.web.service.paths.excludes=";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 		property test.smtp.server.enabled = "true";
 		property testray.component.names = "Message Boards,Site Pages Administration";
 
@@ -561,6 +563,7 @@ definition {
 	test ViewSecureContentAndPageAsSiteMember {
 		property custom.properties = "jsonws.web.service.paths.excludes=";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 		property test.smtp.server.enabled = "true";
 		property testray.component.names = "Message Boards,Site Pages Administration";
 
@@ -712,6 +715,7 @@ definition {
 	test ViewSecureContentAndPageAsUser {
 		property custom.properties = "jsonws.web.service.paths.excludes=";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 		property test.smtp.server.enabled = "true";
 		property testray.component.names = "Message Boards,Site Pages Administration,Training";
 

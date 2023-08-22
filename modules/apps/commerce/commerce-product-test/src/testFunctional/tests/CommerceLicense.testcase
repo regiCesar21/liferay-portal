@@ -26,6 +26,7 @@ definition {
 	test CommerceRemainsActiveOnRestarts {
 		property commerce.enabled = "true";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		CommerceLicense.viewCommerceAvailable();
 
@@ -44,6 +45,7 @@ definition {
 	test DeactivateCommerce {
 		property commerce.enabled = "true";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		ApplicationsMenuHelper.openApplicationsMenu();
 
@@ -66,6 +68,7 @@ definition {
 	test DeleteEnterpriseLicenseModule {
 		property commerce.enabled = "true";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		Portlet.shutdownServer();
 
@@ -96,6 +99,7 @@ definition {
 	test EnableCommerceAfterPortalStarts {
 		property commerce.enabled = "false";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		CommerceLicense.viewCommerceMissing();
 

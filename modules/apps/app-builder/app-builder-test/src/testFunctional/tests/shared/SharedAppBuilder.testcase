@@ -72,6 +72,7 @@ definition {
 	test CreateRemoveUpdateDeleteEntriesOfProductMenuApp {
 		property portal.acceptance = "true";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		var myFormViewName = "My Registration form";
 		var myTableViewName = "My display table";
@@ -376,6 +377,7 @@ definition {
 	test CreateRemoveUpdateDeleteEntriesOfStandaloneApp {
 		property portal.acceptance = "true";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		var myFormViewName = "My Registration form";
 		var myTableViewName = "My display table";
@@ -682,6 +684,7 @@ definition {
 	test CreateRemoveUpdateDeleteEntriesOfWidgetApp {
 		property portal.acceptance = "true";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		var myFormViewName = "My Registration form";
 		var myTableViewName = "My display table";
@@ -893,6 +896,7 @@ definition {
 	test CreateTableViewsWithFixedEntriesFilter {
 		property portal.acceptance = "true";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		AppBuilderAdmin.addCustomObject(
 			customObjectName = "my custom object",
@@ -1288,6 +1292,7 @@ definition {
 	test DeleteFormViewFieldFromObject {
 		property portal.acceptance = "true";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		AppBuilderAdmin.addCustomObject(
 			customObjectName = "my custom object",
@@ -1479,6 +1484,7 @@ definition {
 	test ReuseExistingFormViewFields {
 		property portal.acceptance = "true";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		AppBuilderAdmin.addCustomObject(
 			customObjectName = "my custom object",

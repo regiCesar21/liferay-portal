@@ -42,6 +42,7 @@ definition {
 	test AssertEmailVerificationIsRequiredByDefault {
 		property custom.properties = "jsonws.web.service.paths.excludes=${line.separator}company.security.strangers.verify=true${line.separator}mail.send.blacklist=noreply@liferay.com,noreply@domain.invalid,test@domain.invalid";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 		property test.smtp.server.enabled = "true";
 
 		var portalURL = PropsUtil.get("portal.url");
@@ -127,6 +128,7 @@ definition {
 	@priority = 5
 	test CheckSystemSettingsScopeIsCorrected {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("Naviagte to System Settings") {
 			ApplicationsMenu.gotoPortlet(
@@ -182,6 +184,7 @@ definition {
 	@priority = 5
 	test EditDefaultUserAssociationsOrganizationSites {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		ApplicationsMenu.gotoPortlet(
 			category = "Users",
@@ -226,6 +229,7 @@ definition {
 	@priority = 4
 	test EditDefaultUserAssociationsRoles {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		ApplicationsMenu.gotoPortlet(
 			category = "Users",
@@ -257,6 +261,7 @@ definition {
 	@priority = 4
 	test EditDefaultUserAssociationsSites {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		ApplicationsMenu.gotoPortlet(
 			category = "Sites",
@@ -288,6 +293,7 @@ definition {
 	@priority = 4
 	test EditDefaultUserAssociationsUserGroups {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		ApplicationsMenu.gotoPortlet(
 			category = "Users",
@@ -320,6 +326,7 @@ definition {
 	test EnterReservedEmailAddress {
 		property portal.acceptance = "true";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		PortalSettings.enterReservedEmailAddressCP(userEmailAddress = "userea@liferay.com");
 
@@ -339,6 +346,7 @@ definition {
 	test EnterReservedScreenName {
 		property portal.acceptance = "true";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		PortalSettings.viewReservedCredentialsScreenNamesCP();
 
@@ -359,6 +367,7 @@ definition {
 	@priority = 4
 	test ViewContentSharingDisabledAcrossSitesViaAP {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		var siteName = TestCase.getSiteName(siteName = ${siteName});
 
@@ -462,6 +471,7 @@ definition {
 	@priority = 4
 	test ViewContentSharingEnabledAcrossSitesViaAP {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		var siteName = TestCase.getSiteName(siteName = ${siteName});
 
@@ -540,6 +550,7 @@ definition {
 	@priority = 3
 	test ViewDefaultUserAssociations {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		Navigator.openURL();
 
@@ -549,6 +560,7 @@ definition {
 	@priority = 3
 	test ViewEmailNotificationsAccountCreatedNotification {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		Navigator.openURL();
 
@@ -558,6 +570,7 @@ definition {
 	@priority = 3
 	test ViewEmailNotificationsPasswordChangedNotification {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		Navigator.openURL();
 
@@ -567,6 +580,7 @@ definition {
 	@priority = 3
 	test ViewEmailNotificationsSender {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		Navigator.openURL();
 
@@ -577,6 +591,7 @@ definition {
 	@priority = 5
 	test ViewSystemSettingsSavedByKeyboard {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		ApplicationsMenu.gotoPortlet(
 			category = "Configuration",

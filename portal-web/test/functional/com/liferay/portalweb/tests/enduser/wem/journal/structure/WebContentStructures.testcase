@@ -132,6 +132,7 @@ definition {
 	@priority = 4
 	test AddStructureViaLocaleURL {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		var portalURL = PropsUtil.get("portal.url");
 
@@ -680,6 +681,7 @@ definition {
 	@priority = 4
 	test ValidateDDMNavigation {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 		property testray.component.names = "Web Content Administration";
 
 		ApplicationsMenu.gotoPortlet(

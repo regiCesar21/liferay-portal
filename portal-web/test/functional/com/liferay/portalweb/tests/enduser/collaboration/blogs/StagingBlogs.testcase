@@ -535,6 +535,7 @@ definition {
 	@priority = 3
 	test StagingBlogsWithScheduledPublishing {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		Navigator.gotoStagedSitePage(
 			pageName = "Staging Blogs Page",

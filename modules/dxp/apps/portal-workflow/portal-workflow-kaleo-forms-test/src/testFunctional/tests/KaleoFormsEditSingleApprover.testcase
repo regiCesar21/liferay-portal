@@ -101,6 +101,7 @@ definition {
 	test CompleteProcessAndViewEmailNotifications {
 		property test.assert.javascript.errors = "false";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 		property test.smtp.server.enabled = "true";
 
 		ApplicationsMenu.gotoPortlet(
@@ -409,6 +410,7 @@ definition {
 	test ViewApprovedProcessNotificationWithComments {
 		property portal.upstream = "quarantine";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		Navigator.openURL();
 

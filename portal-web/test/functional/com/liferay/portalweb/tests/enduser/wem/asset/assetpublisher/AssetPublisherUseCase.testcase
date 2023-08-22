@@ -53,6 +53,7 @@ definition {
 	test AddAndEditAssetsViaVirtualHostOrganizations {
 		property custom.properties = "virtual.hosts.valid.hosts=localhost,127.0.0.1,www.able.com,www.baker.com";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		JSONOrganization.addOrganization(
 			organizationName = "Organization Name",
@@ -238,6 +239,7 @@ definition {
 	@priority = 3
 	test AssetPublisherCategoriesLocalization {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		JSONCategory.addVocabulary(
 			groupName = "Test Site Name",
@@ -738,6 +740,7 @@ definition {
 	@priority = 3
 	test AssetPublisherHasOpenOfficeFileTypeLinks {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		SystemSettings.openSystemSettingsAdmin();
 
@@ -828,6 +831,7 @@ definition {
 	test AssetPublisherSiteAndGlobalScopeAccessibility {
 		property portal.acceptance = "true";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		JSONGroup.addGroup(groupName = "Site Name");
 

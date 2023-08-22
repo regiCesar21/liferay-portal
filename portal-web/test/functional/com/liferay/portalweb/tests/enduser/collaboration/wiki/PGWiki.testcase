@@ -495,6 +495,7 @@ definition {
 	@priority = 4
 	test AddPageWithImageViaURL {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		JSONDocument.addFileWithUploadedFile(
 			dmDocumentDescription = "DM Document Description",
@@ -896,6 +897,7 @@ definition {
 	@priority = 3
 	test RemoveRedirectLinkFromPage {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		Navigator.gotoPage(pageName = "Wiki Test Page");
 

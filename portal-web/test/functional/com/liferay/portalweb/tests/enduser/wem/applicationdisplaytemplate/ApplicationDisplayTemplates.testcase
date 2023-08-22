@@ -28,6 +28,7 @@ definition {
 	@priority = 5
 	test CannotAddTemplateButCanSaveChangesInExistingTemplateWhenDisableTemplateCreation {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("Add a widget template for Asset Publisher") {
 			ApplicationDisplayTemplates.openWidgetTemplatesAdmin(siteURLKey = "test-site-name");

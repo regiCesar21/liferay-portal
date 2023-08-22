@@ -295,6 +295,7 @@ definition {
 	@priority = 4
 	test CanCreateWebBehaviorSegmentSinceXdays {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		ACUtils.createWCAndAddToPage();
 
@@ -944,6 +945,7 @@ definition {
 	@priority = 5
 	test CanCreateWebBehaviorSegmentUsingSince {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		ACUtils.createBlogsAndAddToPage();
 
@@ -1111,6 +1113,7 @@ definition {
 	@priority = 4
 	test CanCreateWebBehaviorSegmentViewingDM {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		var username = "ac";
 

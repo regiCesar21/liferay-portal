@@ -637,6 +637,7 @@ definition {
 	@priority = 4
 	test ViewEventsAreListedInAlphabeticalOrder {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		var attributeName = "assetId";
 		var defaultEventName = "assetClicked";

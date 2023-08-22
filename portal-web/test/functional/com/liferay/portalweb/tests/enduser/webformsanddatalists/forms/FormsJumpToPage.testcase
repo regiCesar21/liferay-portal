@@ -36,6 +36,7 @@ definition {
 	test ViewFormRulesSummary {
 		property portal.acceptance = "true";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		Navigator.openURL();
 
@@ -165,6 +166,7 @@ definition {
 	test ViewPagesAfterJump {
 		property portal.acceptance = "true";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		Navigator.openURL();
 
@@ -341,6 +343,7 @@ definition {
 	@priority = 4
 	test ViewRuleAfterLabelEdit {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		Navigator.openURL();
 
@@ -478,6 +481,7 @@ definition {
 	test ViewRuleAfterOptionValueEdit {
 		property portal.acceptance = "true";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		Navigator.openURL();
 
@@ -617,6 +621,7 @@ definition {
 	test ViewRuleAfterPageNameChange {
 		property portal.acceptance = "true";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		Navigator.openURL();
 

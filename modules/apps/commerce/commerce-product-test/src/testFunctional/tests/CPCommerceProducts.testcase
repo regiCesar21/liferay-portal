@@ -42,6 +42,7 @@ definition {
 	test CheckTheFirstStatusForSingleApproverWorkflow {
 		property portal.acceptance = "false";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		ApplicationsMenu.gotoPortlet(
 			category = "Workflow",
@@ -84,6 +85,7 @@ definition {
 	test DuplicateADraftProduct {
 		property portal.acceptance = "false";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		CommerceNavigator.gotoPortlet(
 			category = "Product Management",
@@ -123,6 +125,7 @@ definition {
 	test DuplicateAnApprovedProduct {
 		property portal.acceptance = "false";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		CommerceNavigator.gotoPortlet(
 			category = "Product Management",
@@ -157,6 +160,7 @@ definition {
 		property environment.acceptance = "quarantine";
 		property portal.acceptance = "quarantine";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		CommerceNavigator.gotoPortlet(
 			category = "Product Management",
@@ -238,6 +242,7 @@ definition {
 	test SaveAsDraftAnAlreadyDraftProduct {
 		property portal.acceptance = "false";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		CommerceNavigator.gotoPortlet(
 			category = "Product Management",
@@ -272,6 +277,7 @@ definition {
 	test SaveAsDraftAnApprovedProduct {
 		property portal.acceptance = "false";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		CommerceNavigator.gotoPortlet(
 			category = "Product Management",
@@ -302,6 +308,7 @@ definition {
 	test TranslateProductName {
 		property portal.acceptance = "quarantine";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Minium");
 
@@ -440,6 +447,7 @@ definition {
 	test VerifyDraftStatus {
 		property portal.acceptance = "false";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		CommerceNavigator.gotoPortlet(
 			category = "Product Management",
@@ -466,6 +474,7 @@ definition {
 	test VerifyDraftStatusNormalWorkflow {
 		property portal.acceptance = "false";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		CommerceNavigator.gotoPortlet(
 			category = "Product Management",

@@ -93,6 +93,7 @@ definition {
 	@priority = 4
 	test EditExportTemplate {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		JSONBlog.addEntry(
 			entryContent = "Blogs Entry Content",
@@ -343,6 +344,7 @@ definition {
 	@priority = 5
 	test ExportImportDDLViaGlobal {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		JSONGroup.addGroup(groupName = "Site Name");
 
@@ -432,6 +434,7 @@ definition {
 	@priority = 4
 	test ExportImportDeletions {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		JSONWebcontent.addWebContent(
 			content = "Web Content Content",
@@ -476,6 +479,7 @@ definition {
 	test ExportImportGlobalDDMStructureViaInstances {
 		property portal.release = "false";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		LAR.openExportAdmin(siteScopeName = "Global");
 
@@ -527,6 +531,7 @@ definition {
 	test ExportImportGlobalPagesViaInstances {
 		property portal.release = "false";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		LAR.openExportAdmin(siteScopeName = "Global");
 
@@ -1157,6 +1162,7 @@ definition {
 	@priority = 3
 	test ExportImportSiteWithReferencedWebContent {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		JSONGroup.addGroup(groupName = "Site Name A");
 
@@ -1312,6 +1318,7 @@ definition {
 	test ExportImportValidation {
 		property portal.acceptance = "true";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 		property testray.component.names = "Training";
 
 		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
@@ -1655,6 +1662,7 @@ definition {
 	@priority = 4
 	test ExportImportWithExportTemplate {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		LAR.openExportAdmin(siteScopeName = "Guest");
 
@@ -1690,6 +1698,7 @@ definition {
 	test ExportViaGuest {
 		property portal.acceptance = "true";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		JSONUser.addUser(
 			userEmailAddress = "userea@liferay.com",
@@ -1725,6 +1734,7 @@ definition {
 	@priority = 4
 	test ExportWebContentWithDeletedReference {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		JSONGroup.addGroup(groupName = "Site Name");
 
@@ -1881,6 +1891,7 @@ definition {
 	@priority = 4
 	test ImportNavigationMenuItemWithMissingReferenceError {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("Add two new sites") {
 			JSONGroup.addGroup(groupName = "site1");
@@ -1935,6 +1946,7 @@ definition {
 	test ImportSiteWithMissingReferenceOfPreloadedEntry {
 		property portal.release = "false";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "Global");
 
@@ -2196,6 +2208,7 @@ ${webContentData}
 	@priority = 4
 	test ImportWCDReferenceAfterActivateStaging {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		JSONGroup.addGroup(groupName = "Site Name A");
 
@@ -2248,6 +2261,7 @@ ${webContentData}
 	@priority = 3
 	test PublishWebContentWithBrokenLink {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		ApplicationsMenu.gotoPortlet(
 			category = "Configuration",

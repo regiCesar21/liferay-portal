@@ -72,6 +72,7 @@ definition {
 	test CanCreateAccessRequest {
 		property analytics.cloud.upstream = "false";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		var userEmail = "dcp1@liferay.com";
 		var userName = "dcp1";
@@ -120,6 +121,7 @@ definition {
 	test CanCreateDeleteRequest {
 		property analytics.cloud.upstream = "false";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		var userEmail = "dcp2@liferay.com";
 		var userName = "dcp2";
@@ -168,6 +170,7 @@ definition {
 	test CanCreateSuppressRequest {
 		property analytics.cloud.upstream = "false";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		var userEmail = "dcp3@liferay.com";
 		var userName = "dcp3";
