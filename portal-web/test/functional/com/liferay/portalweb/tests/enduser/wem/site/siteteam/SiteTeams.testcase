@@ -8,6 +8,8 @@ definition {
 	setUp {
 		TestCase.setUpPortalInstance();
 
+		JSONGroup.addGroup(groupName = "Site Name");
+
 		User.firstLoginPG();
 	}
 
@@ -555,17 +557,7 @@ definition {
 		property portal.acceptance = "true";
 		property testray.component.names = "Site Administration";
 
-		ProductMenu.gotoPortlet(
-			category = "Sites",
-			panel = "Control Panel",
-			portlet = "Sites");
-
-		Site.addBlankCP(siteName = "Site Name");
-
-		ProductMenu.gotoPortlet(
-			category = "People",
-			panel = "Site Administration",
-			portlet = "Teams");
+		Site.openSiteTeamsAdmin(siteURLKey = "site-name");
 
 		Team.addCP(
 			teamDescription = "Site Team Description",
