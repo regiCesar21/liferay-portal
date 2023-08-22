@@ -81,6 +81,7 @@ definition {
 	@priority = 4
 	test AutoTagGoogleDoc {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		AutoTagging.enableOpenNLP(
 			assetType = "Document",
@@ -116,6 +117,7 @@ definition {
 	@priority = 5
 	test CancelGoogleDocCreation {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		Navigator.gotoPage(pageName = "Documents and Media Page");
 
@@ -135,6 +137,7 @@ definition {
 	@priority = 5
 	test CancelGoogleDocEdit {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		Navigator.gotoPage(pageName = "Documents and Media Page");
 
@@ -169,6 +172,7 @@ definition {
 	@priority = 5
 	test CancelGoogleSheetCreation {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		Navigator.gotoPage(pageName = "Documents and Media Page");
 
@@ -188,6 +192,7 @@ definition {
 	@priority = 5
 	test CancelGoogleSheetEdit {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		Navigator.gotoPage(pageName = "Documents and Media Page");
 
@@ -222,6 +227,7 @@ definition {
 	@priority = 5
 	test CancelGoogleSlideCreation {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		Navigator.gotoPage(pageName = "Documents and Media Page");
 
@@ -241,6 +247,7 @@ definition {
 	@priority = 5
 	test CancelGoogleSlideEdit {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		Navigator.gotoPage(pageName = "Documents and Media Page");
 
@@ -275,6 +282,7 @@ definition {
 	@priority = 4
 	test EditGoogleDoc {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		Navigator.gotoPage(pageName = "Documents and Media Page");
 
@@ -309,6 +317,7 @@ definition {
 	@priority = 4
 	test EditGoogleDocWithSpecialCharacters {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		Navigator.gotoPage(pageName = "Documents and Media Page");
 
@@ -347,6 +356,7 @@ definition {
 	@priority = 4
 	test EditGoogleSheet {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		Navigator.gotoPage(pageName = "Documents and Media Page");
 
@@ -381,6 +391,7 @@ definition {
 	@priority = 4
 	test EditGoogleSlide {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		Navigator.gotoPage(pageName = "Documents and Media Page");
 
@@ -415,6 +426,7 @@ definition {
 	@priority = 5
 	test GoogleDocSmoke {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		Navigator.gotoPage(pageName = "Documents and Media Page");
 
@@ -438,6 +450,7 @@ definition {
 	@priority = 5
 	test GoogleSheetSmoke {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		Navigator.gotoPage(pageName = "Documents and Media Page");
 
@@ -461,6 +474,7 @@ definition {
 	@priority = 5
 	test GoogleSlideSmoke {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		Navigator.gotoPage(pageName = "Documents and Media Page");
 
@@ -484,6 +498,7 @@ definition {
 	@priority = 5
 	test RevokeGoogleDriveCredentials {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		Navigator.gotoPage(pageName = "Documents and Media Page");
 
@@ -526,6 +541,7 @@ definition {
 	@priority = 5
 	test SaveGoogleDocAfterLoggingOut {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		var siteName = TestCase.getSiteName(siteName = ${siteName});
 

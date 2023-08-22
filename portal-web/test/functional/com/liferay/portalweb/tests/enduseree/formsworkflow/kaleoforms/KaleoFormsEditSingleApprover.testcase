@@ -102,6 +102,7 @@ definition {
 	test CompleteProcessAndViewEmailNotifications {
 		property test.assert.javascript.errors = "false";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 		property test.smtp.server.enabled = "true";
 
 		ProductMenu.gotoPortlet(
@@ -410,6 +411,7 @@ definition {
 	@priority = 3
 	test ViewApprovedProcessNotificationWithComments {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		Navigator.openURL();
 

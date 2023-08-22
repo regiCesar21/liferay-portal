@@ -34,6 +34,7 @@ definition {
 	@priority = 4
 	test AddAndRemoveImageAutoTagViaGogoShell {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
 
@@ -91,6 +92,7 @@ definition {
 	@priority = 4
 	test AssertImageAutoTagAfterPublishToLive {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		JSONGroup.addGroup(groupName = "Site Name");
 
@@ -157,6 +159,7 @@ definition {
 	@priority = 4
 	test ConfigureImageAutoTaggingPerSite {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		JSONGroup.addGroup(groupName = "Site AutoTag Enabled");
 
@@ -209,6 +212,7 @@ definition {
 	@priority = 4
 	test DeleteAutoTaggedDocument {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		AutoTagging.enableOpenNLP(
 			assetType = "Document",
@@ -234,6 +238,7 @@ definition {
 	@priority = 4
 	test MaxNumberOfTagsCheckBetweenInstanceLevelAndPortalLevel {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		AutoTagging.enableAutoTagging(
 			enableAutoTaggingFor = "System Settings",
@@ -249,6 +254,7 @@ definition {
 	@priority = 4
 	test NoAutoTagForManuallyTaggedImage {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		JSONLayout.addPublicLayout(
 			groupName = "Guest",
@@ -299,6 +305,7 @@ definition {
 	@priority = 5
 	test OpenNLPSmoke {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		AutoTagging.enableOpenNLP(
 			assetType = "Document",
@@ -326,6 +333,7 @@ definition {
 	@priority = 4
 	test RemoveImageAutoTag {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		JSONLayout.addPublicLayout(
 			groupName = "Guest",
@@ -372,6 +380,7 @@ definition {
 	@priority = 4
 	test RemoveOpenNLPAutoTag {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		AutoTagging.enableOpenNLP(
 			assetType = "Document",
@@ -434,6 +443,7 @@ definition {
 	test Smoke {
 		property portal.acceptance = "true";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
 

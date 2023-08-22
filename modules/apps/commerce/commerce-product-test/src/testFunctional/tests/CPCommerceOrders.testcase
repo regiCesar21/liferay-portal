@@ -42,6 +42,7 @@ definition {
 		property portal.acceptance = "quarantine";
 		property portal.upstream = "quarantine";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		CommerceAccelerators.initializeAccelerator(siteName = "Minium");
 
@@ -132,6 +133,7 @@ definition {
 	test EditOrderCheckingOutViaOrderDetails {
 		property portal.acceptance = "true";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		CommerceAccelerators.initializeAccelerator(siteName = "Minium");
 

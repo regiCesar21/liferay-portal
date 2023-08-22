@@ -438,6 +438,7 @@ definition {
 		property dummy.socket.proxy.disabled = "true";
 		property portal.acceptance = "quarantine";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		Blogs.addEntry(
 			entryContent = "Blogs Entry1 Content",
@@ -736,6 +737,7 @@ definition {
 	@priority = 4
 	test ViewBlogsEntriesAsGuestViaAP {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		Portlet.deletePG(portletName = "Blogs");
 
@@ -791,6 +793,7 @@ definition {
 	@priority = 4
 	test ViewBlogsEntryAsPublishedAfterFutureDisplayDateEditing {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		BlogsNavigator.gotoAddEntry();
 
@@ -824,6 +827,7 @@ definition {
 	@priority = 3
 	test ViewBlogsEntryAsPublishedViaAP {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		JSONLayout.addPublicLayout(
 			groupName = "Guest",
@@ -892,6 +896,7 @@ definition {
 	@priority = 3
 	test ViewBlogsEntryFriendlyURLViaBlogsPortletAndRecentBloggers {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		var portalURL = PropsUtil.get("portal.url");
 		var entryAuthor = "Test Test";
@@ -942,6 +947,7 @@ definition {
 	@priority = 4
 	test ViewBlogsEntryOnMultiplePagesWithDefaultAndPageScope {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		var siteName = TestCase.getSiteName(siteName = ${siteName});
 
@@ -1176,6 +1182,7 @@ definition {
 	@priority = 4
 	test ViewBlogsEntryWithCustomAbstract {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		BlogsNavigator.openBlogsAdmin(siteURLKey = "guest");
 
@@ -1203,6 +1210,7 @@ definition {
 	@priority = 4
 	test ViewBlogsEntryWithDefaultAbstract {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		BlogsNavigator.openBlogsAdmin(siteURLKey = "guest");
 
@@ -1395,6 +1403,7 @@ definition {
 	test ViewBlogsEntryWithSpecialCharactersOnPrivateVirtualHost {
 		property portal.acceptance = "quarantine";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		ProductMenu.gotoPortlet(
 			category = "Configuration",

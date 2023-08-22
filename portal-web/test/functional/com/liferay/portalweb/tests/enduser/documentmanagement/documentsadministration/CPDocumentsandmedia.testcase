@@ -448,6 +448,7 @@ definition {
 	@priority = 4
 	test LimitCheckInMaxFileVersion {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		SystemSettings.openSystemSettingsAdmin();
 
@@ -531,6 +532,7 @@ definition {
 	@priority = 5
 	test LimitMaxFileVersion {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		SystemSettings.openSystemSettingsAdmin();
 
@@ -721,6 +723,7 @@ definition {
 	@priority = 4
 	test PreviewFileThatExceedsLimit {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		SystemSettings.openSystemSettingsAdmin();
 

@@ -101,6 +101,7 @@ definition {
 	@priority = 3
 	test AddProcessWithNewFieldSetAndWorkflowViaSourceTab {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		Navigator.openURL();
 
@@ -171,6 +172,7 @@ definition {
 	@priority = 3
 	test DeactivateAndActivateWorkflowDefinition {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		Navigator.openURL();
 
@@ -230,6 +232,7 @@ definition {
 	@priority = 4
 	test DeactivateAndDeleteWorkflowDefinition {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		Navigator.openURL();
 
@@ -1475,6 +1478,7 @@ definition {
 	@priority = 5
 	test EditProcessNewWorkflowViaSourceTab {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		Navigator.openURL();
 
@@ -1628,6 +1632,7 @@ definition {
 	@priority = 5
 	test EditSingleApproverWorkflowViaSourceTabViaAddProcess {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		Navigator.openURL();
 
@@ -1700,6 +1705,7 @@ definition {
 	@priority = 3
 	test EditSingleApproverWorkflowViaViewTabViaAddProcess {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		Navigator.openURL();
 
@@ -1780,6 +1786,7 @@ definition {
 	@priority = 4
 	test EditUploadedWorkflowViaViewTabViaAddProcess {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		ProductMenu.gotoPortlet(
 			category = "Workflow",

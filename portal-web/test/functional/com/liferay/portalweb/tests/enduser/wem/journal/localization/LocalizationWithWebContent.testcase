@@ -109,6 +109,7 @@ definition {
 	@priority = 4
 	test AddWCWithMultipleTranslations {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 		property testray.component.names = "Localization,Web Content Administration";
 
 		JSONWebcontent.addBasicWebContentLocalized(
@@ -313,6 +314,7 @@ definition {
 	@priority = 5
 	test ChangeWebContentDefaultLanguage {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("Enable Changeable Default Language for Web Content") {
 			ProductMenu.gotoPortlet(
@@ -372,6 +374,7 @@ definition {
 	@priority = 4
 	test ViewChangedDefaultPortalLanguageViaWebContent {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 		property testray.component.names = "Localization";
 
 		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");

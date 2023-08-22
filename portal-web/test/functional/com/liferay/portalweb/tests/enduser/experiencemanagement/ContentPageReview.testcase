@@ -51,6 +51,7 @@ definition {
 	@priority = 5
 	test AddComment {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		SitePages.openPagesAdmin(siteURLKey = "test-site-name");
 
@@ -74,6 +75,7 @@ definition {
 	@priority = 4
 	test AddCommentWithEscapeCharacters {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		SitePages.openPagesAdmin(siteURLKey = "test-site-name");
 
@@ -97,6 +99,7 @@ definition {
 	@priority = 5
 	test DeleteComment {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		SitePages.openPagesAdmin(siteURLKey = "test-site-name");
 
@@ -142,6 +145,7 @@ definition {
 	@priority = 4
 	test DisableContentPageCommentsAtInstanceScope {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		SitePages.openPagesAdmin(siteURLKey = "test-site-name");
 
@@ -190,6 +194,7 @@ definition {
 	@priority = 4
 	test ReopenResolvedComment {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		SitePages.openPagesAdmin(siteURLKey = "test-site-name");
 
@@ -235,6 +240,7 @@ definition {
 	@priority = 4
 	test ResolveComment {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		SitePages.openPagesAdmin(siteURLKey = "test-site-name");
 
@@ -272,6 +278,7 @@ definition {
 	@priority = 5
 	test Smoke {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		SitePages.openPagesAdmin(siteURLKey = "test-site-name");
 
@@ -288,6 +295,7 @@ definition {
 	@priority = 5
 	test ViewComment {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		SitePages.openPagesAdmin(siteURLKey = "test-site-name");
 
@@ -327,6 +335,7 @@ definition {
 	@priority = 3
 	test ViewCommentAfterDeactivatingStaging {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		Staging.openStagingAdmin(siteURLKey = "test-site-name");
 
@@ -388,6 +397,7 @@ definition {
 	@priority = 4
 	test ViewCommentAfterDiscardedDraft {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		SitePages.openPagesAdmin(siteURLKey = "test-site-name");
 
@@ -433,6 +443,7 @@ definition {
 	@priority = 4
 	test ViewCommentAsNonCreator {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		JSONUser.addUser(
 			userEmailAddress = "user1@liferay.com",
@@ -505,6 +516,7 @@ definition {
 	@priority = 5
 	test ViewCommentList {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		SitePages.openPagesAdmin(siteURLKey = "test-site-name");
 
@@ -565,6 +577,7 @@ definition {
 	@priority = 5
 	test ViewCommentListNavigation {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		SitePages.openPagesAdmin(siteURLKey = "test-site-name");
 
@@ -603,6 +616,7 @@ definition {
 	@priority = 4
 	test ViewCommentOnDifferentExperience {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		SitePages.openPagesAdmin(siteURLKey = "test-site-name");
 
@@ -664,6 +678,7 @@ definition {
 	@priority = 5
 	test ViewCommentViaFragment {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		SitePages.openPagesAdmin(siteURLKey = "test-site-name");
 
@@ -702,6 +717,7 @@ definition {
 	@priority = 4
 	test ViewEditedComment {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		SitePages.openPagesAdmin(siteURLKey = "test-site-name");
 
@@ -741,6 +757,7 @@ definition {
 	@priority = 4
 	test ViewMultipleCommentsList {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		SitePages.openPagesAdmin(siteURLKey = "test-site-name");
 
@@ -783,6 +800,7 @@ definition {
 	@priority = 4
 	test ViewMultipleReplies {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		SitePages.openPagesAdmin(siteURLKey = "test-site-name");
 
@@ -812,6 +830,7 @@ definition {
 	@priority = 4
 	test ViewVirtualInstanceCommentInheritsSystemConfiguration {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		ProductMenu.gotoPortlet(
 			category = "Configuration",

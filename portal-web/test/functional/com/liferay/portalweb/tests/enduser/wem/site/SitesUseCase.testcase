@@ -35,6 +35,7 @@ definition {
 	@priority = 5
 	test AddChildSiteFromImportedSiteTemplate {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 		property testray.component.names = "Training";
 
 		ProductMenu.gotoPortlet(
@@ -131,6 +132,7 @@ definition {
 	@priority = 5
 	test AddOrganizationSitesAndDeactivate {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 		property testray.component.names = "Site Administration,Training,Users and Organizations";
 
 		ProductMenu.gotoPortlet(
@@ -561,6 +563,7 @@ definition {
 	test ReturnWrongLayoutForSignedInUserWithVirtualHostsConfigured {
 		property custom.properties = "layout.default.template.id=2_columns_iii${line.separator}layout.user.private.layouts.enabled=false${line.separator}layout.user.private.layouts.auto.create=false${line.separator}layout.user.private.layouts.power.user.required=true${line.separator}layout.user.public.layouts.enabled=false${line.separator}layout.user.public.layouts.auto.create=false${line.separator}layout.user.public.layouts.power.user.required=true";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 		property test.smtp.server.enabled = "true";
 		property testray.component.names = "Site Administration";
 
@@ -823,6 +826,7 @@ definition {
 	@priority = 3
 	test SitesDeactivated {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 		property testray.component.names = "Site Administration";
 
 		ProductMenu.gotoPortlet(
@@ -936,6 +940,7 @@ definition {
 	test SitesDemoSiteManagement {
 		property portal.release = "false";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 		property testray.component.names = "Site Administration,Site Pages Administration";
 
 		var portalURL = PropsUtil.get("portal.url");

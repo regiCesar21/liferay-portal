@@ -33,6 +33,7 @@ definition {
 	@priority = 4
 	test AssertIndexOnStartup {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		JSONWebcontent.addWebContent(
 			content = "WC WebContent Content",
@@ -133,6 +134,7 @@ definition {
 
 	test AssertSearchAdmin {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		ProductMenu.gotoPortlet(
 			category = "Configuration",
@@ -249,6 +251,7 @@ definition {
 		property portal.acceptance = "true";
 		property remote.elasticsearch7.enabled = "true";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		Elasticsearch.viewClusterStatusViaClusterHealthAPI(numberOfNodes = 2);
 
@@ -304,6 +307,7 @@ definition {
 		property hot.deploy.osgi.app.includes = "portal-search-elasticsearch7";
 		property test.assert.warning.exceptions = "true";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		var portalURL = JSONCompany.getPortalURL();
 
@@ -419,6 +423,7 @@ definition {
 	test SearchWithNonLiferayIndex {
 		property embedded.elasticsearch.only = "true";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		AntCommands.runCommand("build-test-elasticsearch7.xml", "add-boston-dataset-index -Dbackup.index=boston311 -Delasticsearch.port=9200");
 
@@ -472,6 +477,7 @@ definition {
 	test UpdateSystemSettingsWithoutPortalRestart {
 		property remote.elasticsearch7.enabled = "true";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		var elasticsearchVersion = Elasticsearch.getServerVersion();
 		var liferayHome = PropsUtil.get("liferay.home.dir.name");

@@ -198,6 +198,7 @@ definition {
 	@priority = 3
 	test ViewAnonymousPostingAllowedCheckboxConfiguration {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		MessageBoardsAdmin.openMessageBoardsAdmin(siteURLKey = "guest");
 

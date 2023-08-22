@@ -112,6 +112,7 @@ definition {
 	@priority = 3
 	test AddKBArticleViaTemplateCP {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		KBAdmin.openKBAdmin(siteURLKey = "guest");
 
@@ -153,6 +154,7 @@ definition {
 	@priority = 3
 	test AddKBArticleWithBlogsEntryRelatedAssetViaKBAdmin {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		JSONBlog.addEntry(
 			entryContent = "Blogs Entry Content",
@@ -245,6 +247,7 @@ definition {
 	@priority = 3
 	test AddKBArticleWithInvalidAttachmentSize {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		SystemSettings.openSystemSettingsAdmin();
 
@@ -274,6 +277,7 @@ definition {
 	@priority = 3
 	test AddKBArticleWithoutRequiredCategory {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		Navigator.openURL();
 
@@ -353,6 +357,7 @@ definition {
 	@priority = 3
 	test CancelAddKBArticle {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		KBAdmin.openKBAdmin(siteURLKey = "guest");
 
@@ -366,6 +371,7 @@ definition {
 	@priority = 3
 	test CancelEditKBArticle {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		KBAdmin.openKBAdmin(siteURLKey = "guest");
 
@@ -391,6 +397,7 @@ definition {
 	@priority = 3
 	test CannotAddDuplicateKBFolder {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		KBAdmin.openKBAdmin(siteURLKey = "guest");
 
@@ -604,6 +611,7 @@ definition {
 	@priority = 3
 	test ViewChildArticleInKBArticleViaKBAdmin {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		KBAdmin.openKBAdmin(siteURLKey = "guest");
 
@@ -802,6 +810,7 @@ definition {
 	@priority = 3
 	test ViewKBTemplateViaAddKBArticleCP {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		KBAdmin.openKBAdmin(siteURLKey = "guest");
 
@@ -830,6 +839,7 @@ definition {
 	@priority = 3
 	test ViewPendingKBArticleContent {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		Navigator.openURL();
 

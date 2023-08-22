@@ -42,6 +42,7 @@ definition {
 		property portal.acceptance = "quarantine";
 		property portal.upstream = "quarantine";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		CommerceAccelerators.initializeAccelerator(siteName = "Minium");
 
@@ -120,6 +121,7 @@ definition {
 	test DeactivateCommerceAccountAdminLogOut {
 		property portal.acceptance = "true";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		CommerceAccelerators.initializeAccelerator(siteName = "Minium");
 
@@ -201,6 +203,7 @@ definition {
 		property operating.system.types = "alpine,amazonlinux,centos,debian,fedora,orcllinux,osx,redhat,solaris,suse,ubuntu,windows";
 		property portal.acceptance = "true";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		CommerceAccelerators.initializeAccelerator(siteName = "Minium");
 
@@ -255,6 +258,7 @@ definition {
 		property operating.system.types = "alpine,amazonlinux,centos,debian,fedora,orcllinux,osx,redhat,solaris,suse,ubuntu,windows";
 		property portal.acceptance = "true";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		CommerceAccelerators.initializeAccelerator(siteName = "Speedwell");
 
@@ -308,6 +312,7 @@ definition {
 		property portal.acceptance = "quarantine";
 		property portal.upstream = "quarantine";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		CommerceAccelerators.initializeAccelerator(siteName = "Minium");
 
@@ -466,6 +471,7 @@ definition {
 	test MiniumSiteFullFlowCheckingOutViaOrderDetails {
 		property portal.acceptance = "true";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		CommerceAccelerators.initializeAccelerator(siteName = "Minium");
 
@@ -625,6 +631,7 @@ definition {
 	test SpeedwellSiteFullFlow {
 		property portal.acceptance = "true";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		CommerceAccelerators.initializeAccelerator(siteName = "Speedwell");
 

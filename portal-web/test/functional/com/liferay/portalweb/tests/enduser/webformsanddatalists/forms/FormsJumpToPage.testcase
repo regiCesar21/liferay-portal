@@ -123,6 +123,7 @@ definition {
 	@priority = 4
 	test ViewFormRulesSummary {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		FormsAdminNavigator.gotoRules();
 
@@ -147,6 +148,7 @@ definition {
 	@priority = 5
 	test ViewPagesAfterJump {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		Form.publishForm();
 
@@ -197,6 +199,7 @@ definition {
 	@priority = 4
 	test ViewRuleAfterLabelEdit {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		FormsAdminNavigator.gotoEditField(fieldName = "ChooseYourDestiny");
 
@@ -221,6 +224,7 @@ definition {
 	@priority = 3
 	test ViewRuleAfterOptionValueEdit {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		FormsAdminNavigator.gotoEditField(fieldName = "ChooseYourDestiny");
 
@@ -248,6 +252,7 @@ definition {
 	@priority = 4
 	test ViewRuleAfterPageNameChange {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		Form.gotoFormPage(formPageName = "Page 3");
 

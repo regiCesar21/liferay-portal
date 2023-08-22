@@ -368,6 +368,7 @@ definition {
 	test SearchForOtherCalendars {
 		property portal.acceptance = "true";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		var siteName = TestCase.getSiteName(siteName = ${siteName});
 
@@ -532,6 +533,7 @@ definition {
 	@priority = 4
 	test ViewAvailableCalendars {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		ProductMenu.gotoPortlet(
 			category = "Sites",

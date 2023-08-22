@@ -35,6 +35,7 @@ definition {
 	@priority = 4
 	test Add20Forms {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		Navigator.openURL();
 
@@ -72,6 +73,7 @@ definition {
 	@priority = 4
 	test Add30Fields {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		Navigator.openURL();
 
@@ -98,6 +100,7 @@ definition {
 	@priority = 5
 	test AddElementSetsWithTranslation {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 		property testray.component.names = "Training";
 
 		Navigator.openURL();
@@ -317,6 +320,7 @@ definition {
 	test AddFormInGlobal {
 		property portal.acceptance = "true";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 		property testray.component.names = "Training";
 
 		Navigator.openURL();
@@ -405,6 +409,7 @@ definition {
 	@priority = 3
 	test AddFormToUserSiteAndViewNoDuplicates {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		Navigator.openURL();
 
@@ -528,6 +533,7 @@ definition {
 	@priority = 4
 	test AddFormWithDuplicateTextFields {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		Navigator.openURL();
 
@@ -564,6 +570,7 @@ definition {
 	@priority = 5
 	test AddFormWithSpanishAsDefaultPortalLanguage {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		PortalSettings.gotoConfiguration(
 			configurationCategory = "Localization",
@@ -654,6 +661,7 @@ definition {
 	@priority = 4
 	test AutomateNumericFieldWithDecimalConfigurations {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		Navigator.openURL();
 
@@ -755,6 +763,7 @@ definition {
 	@priority = 4
 	test BelongsToRuleCanPairWithGuestUser {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		Navigator.openURL();
 
@@ -873,6 +882,7 @@ definition {
 	@priority = 4
 	test ChangeFieldType {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		Navigator.openURL();
 
@@ -1166,6 +1176,7 @@ definition {
 	@priority = 3
 	test ConfigureAutosave {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		Navigator.openURL();
 
@@ -1234,6 +1245,7 @@ definition {
 	test CreateRedirectForm {
 		property portal.acceptance = "true";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		Navigator.openURL();
 
@@ -1300,6 +1312,7 @@ definition {
 	@priority = 3
 	test CreateUntitledForm {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		Navigator.openURL();
 
@@ -1332,6 +1345,7 @@ definition {
 	@priority = 4
 	test DeleteDateFieldAndViewEntries {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		Navigator.openURL();
 
@@ -1437,6 +1451,7 @@ definition {
 	@priority = 5
 	test DeletePages {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		Navigator.openURL();
 
@@ -1486,6 +1501,7 @@ definition {
 	@priority = 4
 	test DeleteSelectFromListOptionAndViewEntries {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		Navigator.openURL();
 
@@ -1579,6 +1595,7 @@ definition {
 	@priority = 3
 	test DeleteSelectFromListOptionValue {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		Navigator.openURL();
 
@@ -1640,6 +1657,7 @@ definition {
 	@priority = 4
 	test EditAllFormFieldNames {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		Navigator.openURL();
 
@@ -1782,6 +1800,7 @@ definition {
 	@priority = 4
 	test EditAllFormFieldsTypesUsedBySystemSettings {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		Navigator.openURL();
 
@@ -1970,6 +1989,7 @@ definition {
 	@priority = 3
 	test EditFormsConfigurationViaSystemSettings {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		Navigator.openURL();
 
@@ -2031,6 +2051,7 @@ definition {
 	@priority = 2
 	test EditFormWithUpdatedSiteAndUserLocale {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		Navigator.openURL();
 
@@ -2114,6 +2135,7 @@ definition {
 	@priority = 4
 	test EditTranslatedGridField {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		Navigator.openURL();
 
@@ -2289,6 +2311,7 @@ definition {
 	@priority = 5
 	test NavigateToCorrectForm {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		Navigator.openURL();
 
@@ -2460,6 +2483,7 @@ definition {
 	@priority = 3
 	test ReorderFieldOptions {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		Navigator.openURL();
 
@@ -2532,6 +2556,7 @@ definition {
 	@priority = 4
 	test SearchFormRecordMultipleEntries {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		var fieldValueList = "testEntry1,exampleText,sampleAnswer";
 
@@ -2631,6 +2656,7 @@ definition {
 	@priority = 4
 	test SelectAndRemoveMultipleOptionsInSelectFromListField {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		Navigator.openURL();
 
@@ -2708,6 +2734,7 @@ definition {
 	@priority = 4
 	test SingleSelectionFormFieldAddedBeforeDefaultSiteLanguageToggleCanBeLoaded {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		JSONGroup.addGroup(groupName = "Site Name");
 
@@ -2761,6 +2788,7 @@ definition {
 	@description = "LPS-90435 This is a test verifying that the Single Selection Form field name and options can be added to non-English default site language site"
 	test SingleSelectionFormFieldNameAndOptionsCanBeAddedToNonEnglishDefaultSiteLanguageSite {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		JSONGroup.addGroup(groupName = "Site Name");
 
@@ -2813,6 +2841,7 @@ definition {
 	test SubmitFormAfterEditingFields {
 		property portal.acceptance = "false";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 		property testray.component.names = "Training";
 
 		Navigator.openURL();
@@ -3168,6 +3197,7 @@ definition {
 	@priority = 4
 	test SubmitFormAndViewEmailNotification {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 		property test.smtp.server.enabled = "true";
 
 		Navigator.openURL();
@@ -3255,6 +3285,7 @@ definition {
 		property captcha.enabled = "true";
 		property portal.acceptance = "true";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		Navigator.openURL();
 
@@ -3341,6 +3372,7 @@ definition {
 	test SubmitFormWithAllFieldTypesAndThreePages {
 		property portal.acceptance = "false";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 		property testray.component.names = "Training";
 
 		Navigator.openURL();
@@ -3624,6 +3656,7 @@ definition {
 	@priority = 5
 	test SubmitFormWithCustomTextContainingValidation {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		Navigator.openURL();
 
@@ -3711,6 +3744,7 @@ definition {
 	@priority = 4
 	test SubmitFormWithMultipleFieldsAndViewEntriesViaDescriptiveDisplay {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		Navigator.openURL();
 
@@ -3882,6 +3916,7 @@ definition {
 	@priority = 4
 	test SubmitFormWithRequiredCheckboxField {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		Navigator.openURL();
 
@@ -3964,6 +3999,7 @@ definition {
 	@priority = 3
 	test SubmitFormWithRequiredMultiLineTextField {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		Navigator.openURL();
 
@@ -4044,6 +4080,7 @@ definition {
 	@priority = 4
 	test SubmitFormWithRequiredRadioField {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		Navigator.openURL();
 
@@ -4130,6 +4167,7 @@ definition {
 	@priority = 5
 	test SubmitFormWithRequiredRepeatingTextField {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		Navigator.openURL();
 
@@ -4209,6 +4247,7 @@ definition {
 	test SubmitFormWithRequiredTextField {
 		property portal.acceptance = "true";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 		property testray.component.names = "Training";
 
 		Navigator.openURL();
@@ -4287,6 +4326,7 @@ definition {
 	@priority = 4
 	test SubmitFormWithSwitcherCheckboxField {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		Navigator.openURL();
 
@@ -4377,6 +4417,7 @@ definition {
 	@priority = 4
 	test SubmitFormWithUploadField {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		Navigator.openURL();
 
@@ -4440,6 +4481,7 @@ definition {
 	@priority = 4
 	test SubmitWithRequiredDateField {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		Navigator.openURL();
 
@@ -4515,6 +4557,7 @@ definition {
 	@priority = 5
 	test TextFieldCanBeAutosaved {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		Navigator.openURL();
 
@@ -4565,6 +4608,7 @@ definition {
 		property portal.acceptance = "true";
 		property portal.upstream = "true";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		Navigator.openURL();
 
@@ -4624,6 +4668,7 @@ definition {
 	@priority = 4
 	test ViewAltSuccessPagePagination {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		Navigator.openURL();
 
@@ -4717,6 +4762,7 @@ definition {
 	@priority = 3
 	test ViewBlankLabelWhenAddingNewField {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		Navigator.openURL();
 
@@ -4754,6 +4800,7 @@ definition {
 	@priority = 3
 	test ViewConfirmationWhenLeavingFormWithoutSaving {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		Navigator.openURL();
 
@@ -4791,6 +4838,7 @@ definition {
 		property test.assert.javascript.errors = "true";
 		property test.assert.warning.exceptions = "true";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		Navigator.openURL();
 
@@ -4877,6 +4925,7 @@ definition {
 	@priority = 4
 	test ViewFieldValidationIsNotBypassedWhenNextButtonIsHitTwice {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		Navigator.openURL();
 
@@ -4950,6 +4999,7 @@ definition {
 	@priority = 3
 	test ViewFormWithMultipleSelectionFieldAsASwitcherAndHideLabel {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		Navigator.openURL();
 
@@ -5018,6 +5068,7 @@ definition {
 	@priority = 4
 	test ViewRepeatableTextFieldLabel {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		Navigator.openURL();
 
@@ -5078,6 +5129,7 @@ definition {
 	@priority = 3
 	test ViewSaveNotification {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		Navigator.openURL();
 
@@ -5111,6 +5163,7 @@ definition {
 	@priority = 5
 	test ViewSelectFromListOptionValueWithCharacter {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		Navigator.openURL();
 
@@ -5157,6 +5210,7 @@ definition {
 	@priority = 5
 	test ViewSuccessPage {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 		property testray.component.names = "Training";
 
 		Navigator.openURL();

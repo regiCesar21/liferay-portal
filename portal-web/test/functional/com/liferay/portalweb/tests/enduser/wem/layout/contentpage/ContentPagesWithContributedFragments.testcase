@@ -33,6 +33,7 @@ definition {
 	test AddContentPageWithVideoFragment {
 		property portal.acceptance = "true";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		JSONLayout.addPublicLayout(
 			groupName = "Test Site Name",

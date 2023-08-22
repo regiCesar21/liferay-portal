@@ -279,6 +279,7 @@ definition {
 	@priority = 5
 	test ExportImportContentPageWithWCDOnFragment {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		FragmentsAdminNavigator.openFragmentsAdmin(siteURLKey = "test-site-name");
 

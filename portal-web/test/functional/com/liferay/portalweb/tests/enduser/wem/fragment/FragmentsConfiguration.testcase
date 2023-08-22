@@ -36,6 +36,7 @@ definition {
 	@priority = 4
 	test AddInvalidConfiguration {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		FragmentsAdmin.addSection(fragmentName = "Fragment Name");
 
@@ -56,6 +57,7 @@ definition {
 	@priority = 4
 	test AddValidConfiguration {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		FragmentsAdmin.addSection(fragmentName = "Fragment Name");
 

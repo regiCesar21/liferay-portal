@@ -36,6 +36,7 @@ definition {
 	@priority = 4
 	test AssertReplicationAfterReindex {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		JSONDocument.addFile(
 			dmDocumentDescription = "DM Description",
@@ -76,6 +77,7 @@ definition {
 	@priority = 3
 	test BreakWorkflowSLA {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		CrossClusterReplication.setupCrossClusterReplication();
 
@@ -147,6 +149,7 @@ definition {
 	@priority = 3
 	test CreateBlogsEntryWithNewWorkflow {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		CrossClusterReplication.setupCrossClusterReplication();
 
@@ -199,6 +202,7 @@ definition {
 		property osgi.app.includes = "portal-search-elasticsearch7";
 		property test.assert.warning.exceptions = "true";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		var appName = "Liferay Enterprise Search Cross-Cluster Replication";
 
@@ -259,6 +263,7 @@ definition {
 	@priority = 3
 	test SearchWithResultRankings {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		CrossClusterReplication.setupCrossClusterReplication();
 
@@ -301,6 +306,7 @@ definition {
 	@priority = 3
 	test SearchWithSynonyms {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		CrossClusterReplication.setupCrossClusterReplication();
 
@@ -337,6 +343,7 @@ definition {
 	@priority = 3
 	test SearchWithVirtualInstance {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		JSONDocument.addFile(
 			dmDocumentDescription = "DM Description",
@@ -390,6 +397,7 @@ definition {
 		property osgi.module.configuration.file.names = "com.liferay.portal.bundle.blacklist.internal.BundleBlacklistConfiguration.config";
 		property osgi.module.configurations = "blacklistBundleSymbolicNames=\"com.liferay.portal.mobile.device.detection.fiftyonedegrees.api,com.liferay.portal.mobile.device.detection.fiftyonedegrees.enterprise,com.liferay.portal.mobile.device.detection.fiftyonedegrees.enterprise.test.data,com.liferay.portal.mobile.device.detection.fiftyonedegrees,com.liferay.portal.search.elasticsearch6.impl,com.liferay.portal.search.elasticsearch6.spi,com.liferay.portal.search.elasticsearch6.api,com.liferay.portal.search.elasticsearch6.xpack.security.impl,com.liferay.portal.search.elasticsearch6.xpack.monitoring.web,com.liferay.portal.search.tuning.rankings.web\"";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		JSONDocument.addFile(
 			dmDocumentDescription = "DM Description",

@@ -252,6 +252,7 @@ definition {
 	@priority = 5
 	test PublishSubfolderWithDocumentsViaSAP {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		DMFolder.addCP(
 			dmFolderDescription = "DM Folder Description",

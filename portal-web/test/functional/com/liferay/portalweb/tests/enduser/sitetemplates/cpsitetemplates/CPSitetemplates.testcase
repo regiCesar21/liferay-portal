@@ -201,6 +201,7 @@ definition {
 	test AssertPartialSiteTemplatePropagation {
 		property database.types = "mysql";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		var siteName = TestCase.getSiteName(siteName = ${siteName});
 
@@ -475,6 +476,7 @@ definition {
 	@priority = 4
 	test DeleteSiteTemplateImportedToVirtualInstance {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		SiteTemplates.addCP(
 			siteTemplateActive = "Yes",
@@ -587,6 +589,7 @@ definition {
 	@priority = 4
 	test LocalizeDefaultSiteTemplates {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		ProductMenu.gotoPortlet(
 			category = "Sites",

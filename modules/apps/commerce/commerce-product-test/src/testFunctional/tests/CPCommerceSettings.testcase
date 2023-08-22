@@ -27,6 +27,7 @@ definition {
 	test CreateNewAvailabilityEstimate {
 		property portal.acceptance = "true";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		ProductMenu.gotoPortlet(
 			category = "Commerce",
@@ -48,6 +49,7 @@ definition {
 	test CreateNewCountry {
 		property portal.acceptance = "true";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		ProductMenu.gotoPortlet(
 			category = "Commerce",
@@ -81,6 +83,7 @@ definition {
 	test CreateNewMeasurementUnits {
 		property portal.acceptance = "true";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		ProductMenu.gotoPortlet(
 			category = "Commerce",
@@ -112,6 +115,7 @@ definition {
 	test CreateNewNotificationTemplate {
 		property portal.acceptance = "true";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		CommerceEntry.createNewAccountGroup(
 			criteriaType = "Users",

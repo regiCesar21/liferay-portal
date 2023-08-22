@@ -37,6 +37,7 @@ definition {
 	@priority = 4
 	test DisableSharingAtInstanceScope {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		SystemSettings.openSystemSettingsAdmin();
 
@@ -108,6 +109,7 @@ definition {
 	@priority = 4
 	test DisableSharingAtSystemScope {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		SystemSettings.openSystemSettingsAdmin();
 
@@ -179,6 +181,7 @@ definition {
 	@priority = 3
 	test FilterByAssetType {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		JSONLayout.addWidgetToPublicLayout(
 			groupName = "Test Site",
@@ -299,6 +302,7 @@ definition {
 	@priority = 3
 	test OrderBySharedDate {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		JSONLayout.addWidgetToPublicLayout(
 			groupName = "Test Site",

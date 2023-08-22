@@ -427,6 +427,7 @@ definition {
 		property custom.properties = "locales.enabled=de_DE,en_US${line.separator}locales=de_DE,en_US${line.separator}index.search.spell.checker.dictionary[de_DE]=spellchecker/dictionary_de_DE.txt${line.separator}index.search.spell.checker.supported.locales=en_US,es_ES,de_DE";
 		property index.search.spell.checker.enabled = "true";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		JSONWebcontent.addBasicWebContentLocalized(
 			contentMap = "en_US:WC Content,de_DE:ächten angreifen anmarschieren",
@@ -2494,6 +2495,7 @@ definition {
 	@priority = 3
 	test ViewFacetPersistence {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		// Workaround for LPS-89026
 
@@ -2907,6 +2909,7 @@ definition {
 	test ViewSearchResultDetails {
 		property portal.acceptance = "true";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		ProductMenu.gotoPortlet(
 			category = "Configuration",

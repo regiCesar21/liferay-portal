@@ -61,6 +61,7 @@ definition {
 	@priority = 5
 	test EscapeUrlRedirectWithGroovyScript {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		ProductMenu.gotoPortlet(
 			category = "Configuration",
@@ -84,6 +85,7 @@ out.println(PortalUtil.escapeRedirect("/"));
 	@priority = 5
 	test NoPermissionFromUnauthorizedURLAsPowerUser {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		ProductMenu.gotoPortlet(
 			category = "Users",
@@ -139,6 +141,7 @@ out.println(PortalUtil.escapeRedirect("/"));
 	@priority = 5
 	test UserCanAccessPermissionsWindowWithPermissionFromAdmin {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		var portalURL = PropsUtil.get("portal.url");
 
@@ -201,6 +204,7 @@ out.println(PortalUtil.escapeRedirect("/"));
 	@priority = 4
 	test ValidateCannotStealAdminAccount {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		var pAuth = Api.getPAuth();
 		var portalURL = PropsUtil.get("portal.url");

@@ -42,6 +42,7 @@ definition {
 		property dummy.socket.proxy.disabled = "true";
 		property portal.acceptance = "true";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 		property testray.component.names = "Training,Web Content Administration";
 
 		ServerAdministration.openServerAdmin();
@@ -256,6 +257,7 @@ definition {
 		property custom.properties = "editor.wysiwyg.portal-impl.portlet.ddm.text_html.ftl=ckeditor${line.separator}xuggler.enabled=true";
 		property dummy.socket.proxy.disabled = "true";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 		property testray.component.names = "Web Content Administration";
 
 		ServerAdministration.openServerAdmin();
@@ -695,6 +697,7 @@ ${httpUtil.URLtoString(request.getAttribute("CTX").getResource(".").toURI().crea
 	@priority = 4
 	test LocalizeWebContent {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 		property testray.component.names = "Localization,Web Content Display";
 
 		Navigator.gotoSitePage(
@@ -833,6 +836,7 @@ ${httpUtil.URLtoString(request.getAttribute("CTX").getResource(".").toURI().crea
 	@priority = 5
 	test UndeployWebContentDisplayModuleViaGogoShell {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		GogoShell.openGogoShellAdmin();
 
@@ -992,6 +996,7 @@ ${runtimeInstance}
 	@priority = 4
 	test ViewAllFileTypesEnabled {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 		property testray.component.names = "Web Content Display";
 
 		Navigator.gotoSitePage(
@@ -1040,6 +1045,7 @@ ${runtimeInstance}
 	@priority = 4
 	test ViewAllSettingsEnabledWCDConfiguration {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 		property testray.component.names = "Web Content Display";
 
 		Navigator.gotoSitePage(
