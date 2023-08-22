@@ -1085,12 +1085,10 @@ definition {
 			siteRoleName = "Site Administrator",
 			userScreenName = "usersn");
 
-		User.firstLoginPG(
+		User.firstLoginUI(
 			password = "test",
-			userEmailAddress = "userea@liferay.com",
-			virtualHostsURL = "www.baker.com:8080/group/russia2018");
-
-		Navigator.openSpecificURL(url = "http://www.baker.com:8080/group/russia2018");
+			specificURL = "http://www.baker.com:8080/group/russia2018",
+			userEmailAddress = "userea@liferay.com");
 
 		Page.viewSpecificPG(pageNameList = "Accomodations,Maps");
 
