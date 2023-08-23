@@ -317,56 +317,14 @@ definition {
 		var portalURL = PropsUtil.get("portal.url");
 		var siteName = TestCase.getSiteName(siteName = ${siteName});
 
-		Gmail.login(
-			userEmailAddress = PropsUtil.get("email.address.4"),
-			userPassword = PropsUtil.get("email.password.4"));
-
-		Gmail.gotoHtmlMode();
-
-		Gmail.deleteSpecificMail(gmailMessageTitleList = "Test Test has shared DM Document Title with you for viewing.,Your New Account,Your New Password");
-
-		Navigator.openSpecificURL(url = ${portalURL});
-
-		ApplicationsMenu.gotoPortlet(
-			category = "System",
-			panel = "Control Panel",
-			portlet = "Server Administration");
-
-		ServerAdministration.configureMailServerSettings(
-			needsReply = "true",
-			userName = PropsUtil.get("email.address.2"),
-			userPassword = PropsUtil.get("email.password.2"));
-
-		Navigator.openURL();
-
-		ApplicationsMenu.gotoPortlet(
-			category = "System",
-			panel = "Control Panel",
-			portlet = "Virtual Instances");
-
-		PortalInstances.editCP(
-			mailDomain = "gmail.com",
-			virtualHost = "localhost");
-
-		ApplicationsMenu.gotoPortlet(
-			category = "Users",
-			panel = "Control Panel",
-			portlet = "Users and Organizations");
-
-		JSONUser.addUser(
-			userEmailAddress = PropsUtil.get("email.address.4"),
-			userFirstName = "userfn1",
-			userLastName = "userln1",
-			userScreenName = "usersn1");
-
 		ApplicationsMenu.gotoPortlet(
 			category = "Users",
 			panel = "Control Panel",
 			portlet = "Users and Organizations");
 
 		User.editPasswordCP(
-			userEmailAddress = PropsUtil.get("email.address.4"),
-			userScreenName = "usersn1");
+			userEmailAddress = "userea@liferay.com",
+			userScreenName = "usersn");
 
 		Navigator.gotoPage(pageName = "Documents and Media Page");
 
@@ -378,30 +336,28 @@ definition {
 		DMNavigator.gotoShare(dmDocumentTitle = "DM Document Title");
 
 		DMDocument.sharePG(
-			userEmailAddress = PropsUtil.get("email.address.4"),
-			userName = "userfn1 userln1");
+			userEmailAddress = "userea@liferay.com",
+			userName = "userfn userln");
 
 		User.logoutPG();
 
 		User.loginUserPG(
 			password = "test",
-			userEmailAddress = PropsUtil.get("email.address.4"));
+			userEmailAddress = "userea@liferay.com");
 
-		Pause(locator1 = 30000);
+		MockMock.viewMail(
+			asset = "Test Test has shared DM Document Title with you for viewing",
+			content = "Test Test has shared DM Document Title with you for viewing",
+			recipient = "userfn userln",
+			sender = "Joe Bloggs",
+			subject = "Test Test has shared DM Document Title with you for viewing");
 
-		Gmail.gotoHtmlMode();
+		MockMock._gotoMail();
 
-		Gmail.viewMail(
-			emailFromUserName = "Joe Bloggs",
-			gmailAssetType = "DM Document Title",
-			gmailMessageBody = "Test Test has shared DM Document Title with you for viewing.",
-			gmailMessageTitle = "Test Test has shared DM Document Title with you for viewing.");
-
-		AssertClick(
-			locator1 = "Sharing#EMAIL_VIEW_DOCUMENT_BUTTON",
-			value1 = "View Document");
-
-		SelectWindow(locator1 = "title=- ${siteName}");
+		MockMock.clickBodyLink(
+			asset = "Test Test has shared DM Document Title with you for viewing",
+			bodyLink = "DM Document Title",
+			recipient = "userfn userln");
 
 		DMDocumentSharing.viewDocumentViaSharedContent(
 			contentSharingPermission = "View",
