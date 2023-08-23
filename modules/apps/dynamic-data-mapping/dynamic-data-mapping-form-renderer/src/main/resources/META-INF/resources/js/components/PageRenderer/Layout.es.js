@@ -30,7 +30,7 @@ export const Layout = ({
 	} = usePage();
 	const createFieldChange = useEvaluate(fieldChange);
 	const dispatch = useForm();
-	const title = getFormTitle();
+	const title = getFormTitle(getFormNode(containerElement.current));
 
 	return (
 		<Components.Rows
@@ -71,8 +71,9 @@ export const Layout = ({
 														containerElement.current
 													)
 												),
-												formPageTitle:
-													pages[activePage].title,
+												formPageTitle: Liferay.Util.escape(
+													pages[activePage].title
+												),
 												properties: event,
 												title,
 											})
@@ -94,8 +95,9 @@ export const Layout = ({
 														containerElement.current
 													)
 												),
-												formPageTitle:
-													pages[activePage].title,
+												formPageTitle: Liferay.Util.escape(
+													pages[activePage].title
+												),
 												properties: event,
 												title,
 											})
