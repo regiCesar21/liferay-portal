@@ -194,9 +194,22 @@ public class SelectLayoutTag extends IncludeTag {
 
 	private Map<String, Object> _getData() throws Exception {
 		return HashMapBuilder.<String, Object>put(
+			"checkDisplayPage", _checkDisplayPage
+		).put(
 			"config", this::_getConfigData
 		).put(
 			"followURLOnTitleClick", _followURLOnTitleClick
+		).put(
+			"groupId",
+			() -> {
+				HttpServletRequest httpServletRequest = getRequest();
+
+				ThemeDisplay themeDisplay =
+					(ThemeDisplay)httpServletRequest.getAttribute(
+						WebKeys.THEME_DISPLAY);
+
+				return themeDisplay.getScopeGroupId();
+			}
 		).put(
 			"itemSelectorSaveEvent", _itemSelectorSaveEvent
 		).put(
@@ -207,6 +220,8 @@ public class SelectLayoutTag extends IncludeTag {
 			"nodes", _getLayoutsJSONArray()
 		).put(
 			"pathThemeImages", _pathThemeImages
+		).put(
+			"privateLayout", _privateLayout
 		).put(
 			"viewType", _viewType
 		).build();
