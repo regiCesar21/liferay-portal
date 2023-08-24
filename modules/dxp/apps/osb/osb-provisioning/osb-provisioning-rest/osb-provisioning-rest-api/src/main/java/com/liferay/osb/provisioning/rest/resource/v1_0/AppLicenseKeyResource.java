@@ -29,6 +29,7 @@ import javax.annotation.Generated;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import javax.ws.rs.core.Response;
 import javax.ws.rs.core.UriInfo;
 
 import org.osgi.annotation.versioning.ProviderType;
@@ -47,6 +48,24 @@ public interface AppLicenseKeyResource {
 
 	public Page<AppLicenseKey> getAppLicenseKeysPage(
 			String search, Filter filter, Pagination pagination, Sort[] sorts)
+		throws Exception;
+
+	public AppLicenseKey postAppLicenseKey(
+			String agentName, String agentUID, AppLicenseKey appLicenseKey)
+		throws Exception;
+
+	public void putAppLicenseKeyActivate(
+			String agentName, String agentUID, Long[] appLicenseKeyIds)
+		throws Exception;
+
+	public void putAppLicenseKeyDeactivate(
+			String agentName, String agentUID, Long[] appLicenseKeyIds)
+		throws Exception;
+
+	public AppLicenseKey getAppLicenseKey(Long appLicenseKeyId)
+		throws Exception;
+
+	public Response getAppLicenseKeyDownload(Long appLicenseKeyId)
 		throws Exception;
 
 	public default void setContextAcceptLanguage(

@@ -569,6 +569,149 @@ public abstract class BaseAppLicenseKeyResourceTestCase {
 		return testGraphQLAppLicenseKey_addAppLicenseKey();
 	}
 
+	@Test
+	public void testPostAppLicenseKey() throws Exception {
+		AppLicenseKey randomAppLicenseKey = randomAppLicenseKey();
+
+		AppLicenseKey postAppLicenseKey =
+			testPostAppLicenseKey_addAppLicenseKey(randomAppLicenseKey);
+
+		assertEquals(randomAppLicenseKey, postAppLicenseKey);
+		assertValid(postAppLicenseKey);
+	}
+
+	protected AppLicenseKey testPostAppLicenseKey_addAppLicenseKey(
+			AppLicenseKey appLicenseKey)
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	@Test
+	public void testPutAppLicenseKeyActivate() throws Exception {
+		@SuppressWarnings("PMD.UnusedLocalVariable")
+		AppLicenseKey appLicenseKey =
+			testPutAppLicenseKeyActivate_addAppLicenseKey();
+
+		assertHttpResponseStatusCode(
+			204,
+			appLicenseKeyResource.putAppLicenseKeyActivateHttpResponse(
+				null, null, null));
+
+		assertHttpResponseStatusCode(
+			404,
+			appLicenseKeyResource.putAppLicenseKeyActivateHttpResponse(
+				null, null, null));
+	}
+
+	protected AppLicenseKey testPutAppLicenseKeyActivate_addAppLicenseKey()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	@Test
+	public void testPutAppLicenseKeyDeactivate() throws Exception {
+		@SuppressWarnings("PMD.UnusedLocalVariable")
+		AppLicenseKey appLicenseKey =
+			testPutAppLicenseKeyDeactivate_addAppLicenseKey();
+
+		assertHttpResponseStatusCode(
+			204,
+			appLicenseKeyResource.putAppLicenseKeyDeactivateHttpResponse(
+				null, null, null));
+
+		assertHttpResponseStatusCode(
+			404,
+			appLicenseKeyResource.putAppLicenseKeyDeactivateHttpResponse(
+				null, null, null));
+	}
+
+	protected AppLicenseKey testPutAppLicenseKeyDeactivate_addAppLicenseKey()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	@Test
+	public void testGetAppLicenseKey() throws Exception {
+		AppLicenseKey postAppLicenseKey =
+			testGetAppLicenseKey_addAppLicenseKey();
+
+		AppLicenseKey getAppLicenseKey = appLicenseKeyResource.getAppLicenseKey(
+			postAppLicenseKey.getId());
+
+		assertEquals(postAppLicenseKey, getAppLicenseKey);
+		assertValid(getAppLicenseKey);
+	}
+
+	protected AppLicenseKey testGetAppLicenseKey_addAppLicenseKey()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	@Test
+	public void testGraphQLGetAppLicenseKey() throws Exception {
+		AppLicenseKey appLicenseKey =
+			testGraphQLGetAppLicenseKey_addAppLicenseKey();
+
+		Assert.assertTrue(
+			equals(
+				appLicenseKey,
+				AppLicenseKeySerDes.toDTO(
+					JSONUtil.getValueAsString(
+						invokeGraphQLQuery(
+							new GraphQLField(
+								"appLicenseKey",
+								new HashMap<String, Object>() {
+									{
+										put(
+											"appLicenseKeyId",
+											appLicenseKey.getId());
+									}
+								},
+								getGraphQLFields())),
+						"JSONObject/data", "Object/appLicenseKey"))));
+	}
+
+	@Test
+	public void testGraphQLGetAppLicenseKeyNotFound() throws Exception {
+		Long irrelevantAppLicenseKeyId = RandomTestUtil.randomLong();
+
+		Assert.assertEquals(
+			"Not Found",
+			JSONUtil.getValueAsString(
+				invokeGraphQLQuery(
+					new GraphQLField(
+						"appLicenseKey",
+						new HashMap<String, Object>() {
+							{
+								put(
+									"appLicenseKeyId",
+									irrelevantAppLicenseKeyId);
+							}
+						},
+						getGraphQLFields())),
+				"JSONArray/errors", "Object/0", "JSONObject/extensions",
+				"Object/code"));
+	}
+
+	protected AppLicenseKey testGraphQLGetAppLicenseKey_addAppLicenseKey()
+		throws Exception {
+
+		return testGraphQLAppLicenseKey_addAppLicenseKey();
+	}
+
+	@Test
+	public void testGetAppLicenseKeyDownload() throws Exception {
+		Assert.assertTrue(false);
+	}
+
 	@Rule
 	public SearchTestRule searchTestRule = new SearchTestRule();
 

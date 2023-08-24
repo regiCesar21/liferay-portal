@@ -82,7 +82,7 @@ public class AppLicenseKey implements Serializable {
 	}
 
 	@GraphQLField(description = "If the license key is active or not.")
-	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Boolean active;
 
 	@Schema(
@@ -114,7 +114,7 @@ public class AppLicenseKey implements Serializable {
 	@GraphQLField(
 		description = "If the license key counts towards the customer's purchase."
 	)
-	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Boolean complimentary;
 
 	@Schema(description = "The create date of the license key.")
@@ -402,7 +402,7 @@ public class AppLicenseKey implements Serializable {
 	}
 
 	@GraphQLField(description = "The last date the license key was modified.")
-	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Date modifiedDate;
 
 	@Schema(
@@ -434,7 +434,7 @@ public class AppLicenseKey implements Serializable {
 	@GraphQLField(
 		description = "The name of the user who last modified the license key."
 	)
-	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected String modifiedUserName;
 
 	@Schema(
@@ -466,7 +466,7 @@ public class AppLicenseKey implements Serializable {
 	@GraphQLField(
 		description = "The uuid of the user who last modified the license key."
 	)
-	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected String modifiedUserUuid;
 
 	@Schema(description = "The order Id license key belongs to.")
