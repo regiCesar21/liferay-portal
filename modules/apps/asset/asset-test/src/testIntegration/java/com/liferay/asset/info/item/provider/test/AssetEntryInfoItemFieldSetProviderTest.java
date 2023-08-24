@@ -27,6 +27,7 @@ import com.liferay.info.field.InfoFieldValue;
 import com.liferay.info.type.categorization.Category;
 import com.liferay.journal.model.JournalArticle;
 import com.liferay.journal.test.util.JournalTestUtil;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.service.GroupLocalServiceUtil;
 import com.liferay.portal.kernel.service.ServiceContext;
@@ -50,7 +51,6 @@ import java.util.Objects;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.ClassRule;
-import org.junit.Ignore;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -203,14 +203,16 @@ public class AssetEntryInfoItemFieldSetProviderTest {
 		List<InfoFieldValue<Object>> filteredInfoFieldValues =
 			_getInfoFieldValues(assetEntry, assetVocabulary.getName());
 
-		Category category = _getCategory(filteredInfoFieldValues);
+		Category category = _getCategory(
+			filteredInfoFieldValues,
+			AssetVocabulary.class.getSimpleName() + StringPool.UNDERLINE +
+				assetVocabulary.getVocabularyId());
 
 		Assert.assertEquals(
 			category.getLabel(LocaleUtil.ENGLISH),
 			assetCategory.getTitle(LocaleUtil.ENGLISH));
 	}
 
-	@Ignore
 	@Test
 	public void testGetInfoFieldValuesJournalArticleAllAssetCategories()
 		throws Exception {
@@ -236,11 +238,9 @@ public class AssetEntryInfoItemFieldSetProviderTest {
 		List<InfoFieldValue<Object>> filteredInfoFieldValues =
 			_getInfoFieldValues(assetEntry, "categories");
 
-		Assert.assertEquals(
-			filteredInfoFieldValues.toString(), 1,
-			filteredInfoFieldValues.size());
-
-		Category category = _getCategory(filteredInfoFieldValues);
+		Category category = _getCategory(
+			filteredInfoFieldValues,
+			AssetCategory.class.getSimpleName() + "_categories");
 
 		Assert.assertEquals(
 			category.getLabel(LocaleUtil.ENGLISH),
@@ -282,11 +282,10 @@ public class AssetEntryInfoItemFieldSetProviderTest {
 		List<InfoFieldValue<Object>> filteredInfoFieldValues =
 			_getInfoFieldValues(assetEntry, assetVocabulary.getName());
 
-		Assert.assertEquals(
-			filteredInfoFieldValues.toString(), 1,
-			filteredInfoFieldValues.size());
-
-		Category category = _getCategory(filteredInfoFieldValues);
+		Category category = _getCategory(
+			filteredInfoFieldValues,
+			AssetVocabulary.class.getSimpleName() + StringPool.UNDERLINE +
+				assetVocabulary.getVocabularyId());
 
 		Assert.assertEquals(
 			category.getLabel(LocaleUtil.ENGLISH),
@@ -344,9 +343,23 @@ public class AssetEntryInfoItemFieldSetProviderTest {
 	}
 
 	private Category _getCategory(
-		List<InfoFieldValue<Object>> filteredInfoFieldValues) {
+		List<InfoFieldValue<Object>> filteredInfoFieldValues, String uniqueId) {
 
-		InfoFieldValue<Object> infoFieldValue = filteredInfoFieldValues.get(0);
+		InfoFieldValue<Object> infoFieldValue = null;
+
+		for (InfoFieldValue<Object> curInfoFieldValue :
+				filteredInfoFieldValues) {
+
+			InfoField infoField = curInfoFieldValue.getInfoField();
+
+			if (Objects.equals(infoField.getUniqueId(), uniqueId)) {
+				infoFieldValue = curInfoFieldValue;
+
+				break;
+			}
+		}
+
+		Assert.assertNotNull(infoFieldValue);
 
 		Object value = infoFieldValue.getValue(LocaleUtil.ENGLISH);
 
