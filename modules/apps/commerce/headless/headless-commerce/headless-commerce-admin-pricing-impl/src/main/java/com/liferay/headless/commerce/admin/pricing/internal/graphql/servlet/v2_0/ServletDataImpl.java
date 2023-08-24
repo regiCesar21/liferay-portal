@@ -1048,6 +1048,11 @@ public class ServletDataImpl implements ServletData {
 							ProductResourceImpl.class,
 							"getPriceEntryIdProduct"));
 					put(
+						"query#PriceEntry.idTierPrices",
+						new ObjectValuePair<>(
+							TierPriceResourceImpl.class,
+							"getPriceEntryIdTierPricesPage"));
+					put(
 						"query#Discount.byExternalReferenceCodeDiscountCategories",
 						new ObjectValuePair<>(
 							DiscountCategoryResourceImpl.class,

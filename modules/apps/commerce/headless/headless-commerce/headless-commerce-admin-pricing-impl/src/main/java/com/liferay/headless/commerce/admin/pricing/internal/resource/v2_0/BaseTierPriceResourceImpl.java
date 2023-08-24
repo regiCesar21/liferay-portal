@@ -155,7 +155,7 @@ public abstract class BaseTierPriceResourceImpl
 		value = {
 			@io.swagger.v3.oas.annotations.Parameter(
 				in = io.swagger.v3.oas.annotations.enums.ParameterIn.PATH,
-				name = "id"
+				name = "priceEntryId"
 			),
 			@io.swagger.v3.oas.annotations.Parameter(
 				in = io.swagger.v3.oas.annotations.enums.ParameterIn.QUERY,
@@ -176,8 +176,9 @@ public abstract class BaseTierPriceResourceImpl
 	@Override
 	public Page<TierPrice> getPriceEntryIdTierPricesPage(
 			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
-			@javax.validation.constraints.NotNull @javax.ws.rs.PathParam("id")
-			Long id,
+			@javax.validation.constraints.NotNull
+			@javax.ws.rs.PathParam("priceEntryId")
+			Long priceEntryId,
 			@javax.ws.rs.core.Context Pagination pagination)
 		throws Exception {
 
