@@ -24,6 +24,7 @@ components:
                 active:
                     description:
                         If the license key is active or not.
+                    readOnly: true
                     type: boolean
                 complimentary:
                     description:
