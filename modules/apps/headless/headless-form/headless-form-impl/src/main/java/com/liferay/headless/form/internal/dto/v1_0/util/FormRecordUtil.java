@@ -9,6 +9,7 @@ import com.liferay.document.library.kernel.service.DLAppService;
 import com.liferay.document.library.util.DLURLHelper;
 import com.liferay.dynamic.data.mapping.model.DDMFormInstanceRecord;
 import com.liferay.dynamic.data.mapping.model.Value;
+import com.liferay.dynamic.data.mapping.storage.DDMFormFieldValue;
 import com.liferay.dynamic.data.mapping.storage.DDMFormValues;
 import com.liferay.headless.form.dto.v1_0.FormDocument;
 import com.liferay.headless.form.dto.v1_0.FormFieldValue;
@@ -24,6 +25,8 @@ import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.vulcan.util.TransformUtil;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Locale;
 
 /**
@@ -39,6 +42,9 @@ public class FormRecordUtil {
 
 		DDMFormValues ddmFormValues = ddmFormInstanceRecord.getDDMFormValues();
 
+		List<DDMFormFieldValue> allFieldValues = _getAllFieldValues(
+			ddmFormValues.getDDMFormFieldValues());
+
 		return new FormRecord() {
 			{
 				creator = CreatorUtil.toCreator(
@@ -52,7 +58,7 @@ public class FormRecordUtil {
 					ddmFormInstanceRecord.getStatus() ==
 						WorkflowConstants.STATUS_DRAFT;
 				formFieldValues = TransformUtil.transformToArray(
-					ddmFormValues.getDDMFormFieldValues(),
+					allFieldValues,
 					ddmFormFieldValue -> {
 						Value localizedValue = ddmFormFieldValue.getValue();
 
@@ -74,6 +80,23 @@ public class FormRecordUtil {
 				id = ddmFormInstanceRecord.getFormInstanceRecordId();
 			}
 		};
+	}
+
+	private static List<DDMFormFieldValue> _getAllFieldValues(
+		List<DDMFormFieldValue> ddmFormValues) {
+
+		List<DDMFormFieldValue> allFieldValues = new ArrayList<>(ddmFormValues);
+
+		for (DDMFormFieldValue field : ddmFormValues) {
+			if (field.getNestedDDMFormFieldValues(
+				).size() > 0) {
+
+				allFieldValues.addAll(
+					_getAllFieldValues(field.getNestedDDMFormFieldValues()));
+			}
+		}
+
+		return allFieldValues;
 	}
 
 	private static FormDocument _toFormDocument(
