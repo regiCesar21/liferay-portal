@@ -174,7 +174,7 @@ public class LDAPUserImporterImpl implements LDAPUserImporter, UserImporter {
 		if ((user != null) &&
 			ldapImportContext.containsImportedUser(fullUserDN)) {
 
-			_importGroups(ldapImportContext, attributes, user);
+			importGroups(ldapImportContext, attributes, user);
 		}
 
 		return user;
