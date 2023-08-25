@@ -20,6 +20,7 @@ import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.search.Sort;
+import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 
 import java.util.ArrayList;
@@ -66,7 +67,7 @@ public class CommerceShippingAddressDataSetDataProvider
 			addresses.add(
 				new Address(
 					commerceAddress.getCommerceAddressId(),
-					commerceAddress.getName(),
+					HtmlUtil.escape(commerceAddress.getName()),
 					_getDescriptiveCommerceAddress(commerceAddress)));
 		}
 
@@ -101,17 +102,17 @@ public class CommerceShippingAddressDataSetDataProvider
 
 		StringBundler sb = new StringBundler((commerceRegion == null) ? 5 : 7);
 
-		sb.append(commerceAddress.getStreet1());
+		sb.append(HtmlUtil.escape(commerceAddress.getStreet1()));
 		sb.append(StringPool.SPACE);
-		sb.append(commerceAddress.getCity());
+		sb.append(HtmlUtil.escape(commerceAddress.getCity()));
 		sb.append(StringPool.NEW_LINE);
 
 		if (commerceRegion != null) {
-			sb.append(commerceRegion.getCode());
+			sb.append(HtmlUtil.escape(commerceRegion.getCode()));
 			sb.append(StringPool.SPACE);
 		}
 
-		sb.append(commerceAddress.getZip());
+		sb.append(HtmlUtil.escape(commerceAddress.getZip()));
 
 		return sb.toString();
 	}
