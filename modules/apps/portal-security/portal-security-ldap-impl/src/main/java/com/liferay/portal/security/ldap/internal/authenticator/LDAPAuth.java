@@ -414,7 +414,7 @@ public class LDAPAuth implements Authenticator {
 							"Rejecting authenticated user ", fullUserDN,
 							" because of failed import from LDAP server ",
 							ldapServerId, ", company ", companyId,
-							", and LDAP context ", safeLdapContext));
+							", and LDAP context ", ldapContext));
 				}
 
 				return FAILURE;

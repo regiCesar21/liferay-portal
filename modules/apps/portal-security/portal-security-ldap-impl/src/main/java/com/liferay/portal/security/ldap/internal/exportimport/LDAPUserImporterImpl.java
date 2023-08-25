@@ -151,7 +151,7 @@ public class LDAPUserImporterImpl implements LDAPUserImporter, UserImporter {
 			ldapImportContext.getContactExpandoMappings(), password);
 
 		if (!PropsValues.LDAP_IGNORE_USER_SEARCH_FILTER_FOR_AUTH &&
-			!_safePortalLDAP.hasUser(
+			!_portalLDAP.hasUser(
 				ldapServerId, companyId, ldapUser.getScreenName(),
 				ldapUser.getEmailAddress())) {
 
