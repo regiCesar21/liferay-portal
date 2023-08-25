@@ -40,7 +40,7 @@ public class DefaultFacetProcessor implements FacetProcessor<SolrQuery> {
 
 		int minCount = dataJSONObject.getInt("frequencyThreshold");
 
-		if (minCount > 0) {
+		if (minCount >= 0) {
 			jsonObject.put("mincount", minCount);
 		}
 	}
