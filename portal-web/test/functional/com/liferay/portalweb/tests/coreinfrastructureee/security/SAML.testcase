@@ -53,6 +53,8 @@ definition {
 
 		Site.addBlankCP(siteName = "Site Name");
 
+		Site.manageMembershipOptions(allowManualMembershipManagement = "true");
+
 		Navigator.openURL();
 
 		ApplicationsMenu.gotoPortlet(

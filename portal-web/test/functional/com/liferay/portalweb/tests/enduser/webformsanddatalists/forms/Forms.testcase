@@ -503,6 +503,8 @@ definition {
 
 		Site.addBlankCP(siteName = "Form Site");
 
+		Site.manageMembershipOptions(allowManualMembershipManagement = "true");
+
 		JSONLayout.addPublicLayout(
 			groupName = "Form Site",
 			layoutName = "Form Page");

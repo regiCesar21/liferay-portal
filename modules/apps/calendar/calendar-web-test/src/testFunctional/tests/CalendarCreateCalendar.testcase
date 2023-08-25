@@ -288,6 +288,8 @@ definition {
 
 			Site.addBlankCP(siteName = ${siteName});
 
+			Site.manageMembershipOptions(allowManualMembershipManagement = "true");
+
 			ApplicationsMenu.gotoPortlet(
 				category = "Users",
 				panel = "Control Panel",

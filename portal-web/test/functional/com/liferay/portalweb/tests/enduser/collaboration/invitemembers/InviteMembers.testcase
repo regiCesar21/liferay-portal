@@ -51,6 +51,8 @@ definition {
 
 		Site.addBlankCP(siteName = "Site Name");
 
+		Site.manageMembershipOptions(allowManualMembershipManagement = "true");
+
 		ProductMenu.gotoPortlet(
 			category = "Site Builder",
 			portlet = "Pages");

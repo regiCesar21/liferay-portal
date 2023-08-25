@@ -245,6 +245,10 @@ definition {
 	@description = "This is a use case for LPS-58754"
 	@priority = 3
 	test WithdrawWorkflowSubmissionFromRemovedUser {
+		Site.openSiteSettingsAdmin(siteURLKey = "site-name");
+
+		Site.manageMembershipOptions(allowManualMembershipManagement = "true");
+
 		ApplicationsMenu.gotoPortlet(
 			category = "Users",
 			panel = "Control Panel",

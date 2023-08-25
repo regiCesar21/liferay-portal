@@ -491,6 +491,8 @@ definition {
 
 		Site.addBlankCP(siteName = ${siteName});
 
+		Site.manageMembershipOptions(allowManualMembershipManagement = "true");
+
 		ProductMenu.gotoPortlet(
 			category = "People",
 			portlet = "Memberships");

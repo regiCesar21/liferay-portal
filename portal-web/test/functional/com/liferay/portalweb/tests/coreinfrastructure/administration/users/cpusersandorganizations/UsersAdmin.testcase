@@ -1247,6 +1247,10 @@ definition {
 
 		Site.addBlankCP(siteName = "Site Name");
 
+		Site.openSiteSettingsAdmin(siteURLKey = "site-name");
+
+		Site.manageMembershipOptions(allowManualMembershipManagement = "true");
+
 		ApplicationsMenu.gotoPortlet(
 			category = "Users",
 			panel = "Control Panel",
