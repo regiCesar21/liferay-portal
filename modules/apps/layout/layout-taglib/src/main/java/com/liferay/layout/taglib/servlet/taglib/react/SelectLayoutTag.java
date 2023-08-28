@@ -163,21 +163,19 @@ public class SelectLayoutTag extends IncludeTag {
 	}
 
 	private Map<String, Object> _getData() throws Exception {
+		HttpServletRequest httpServletRequest = getRequest();
+
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)httpServletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
+
 		return HashMapBuilder.<String, Object>put(
 			"checkDisplayPage", _checkDisplayPage
 		).put(
 			"config",
 			HashMapBuilder.<String, Object>put(
 				"loadMoreItemsURL",
-				() -> {
-					HttpServletRequest httpServletRequest = getRequest();
-
-					ThemeDisplay themeDisplay =
-						(ThemeDisplay)httpServletRequest.getAttribute(
-							WebKeys.THEME_DISPLAY);
-
-					return themeDisplay.getPathMain() + "/portal/get_layouts";
-				}
+				themeDisplay.getPathMain() + "/portal/get_layouts"
 			).put(
 				"maxPageSize",
 				GetterUtil.getInteger(
@@ -186,16 +184,7 @@ public class SelectLayoutTag extends IncludeTag {
 		).put(
 			"followURLOnTitleClick", _followURLOnTitleClick
 		).put(
-			"groupId",
-			() -> {
-				HttpServletRequest httpServletRequest = getRequest();
-
-				ThemeDisplay themeDisplay =
-					(ThemeDisplay)httpServletRequest.getAttribute(
-						WebKeys.THEME_DISPLAY);
-
-				return themeDisplay.getScopeGroupId();
-			}
+			"groupId", themeDisplay.getScopeGroupId()
 		).put(
 			"itemSelectorSaveEvent", _itemSelectorSaveEvent
 		).put(
@@ -203,7 +192,7 @@ public class SelectLayoutTag extends IncludeTag {
 		).put(
 			"namespace", _namespace
 		).put(
-			"nodes", _getLayoutsJSONArray()
+			"nodes", _getLayoutsJSONArray(themeDisplay)
 		).put(
 			"pathThemeImages", _pathThemeImages
 		).put(
@@ -213,14 +202,8 @@ public class SelectLayoutTag extends IncludeTag {
 		).build();
 	}
 
-	private JSONArray _getLayoutsJSONArray()
+	private JSONArray _getLayoutsJSONArray(ThemeDisplay themeDisplay)
 		throws Exception {
-
-		HttpServletRequest httpServletRequest = getRequest();
-
-		ThemeDisplay themeDisplay =
-			(ThemeDisplay)httpServletRequest.getAttribute(
-				WebKeys.THEME_DISPLAY);
 
 		Group group = themeDisplay.getScopeGroup();
 
