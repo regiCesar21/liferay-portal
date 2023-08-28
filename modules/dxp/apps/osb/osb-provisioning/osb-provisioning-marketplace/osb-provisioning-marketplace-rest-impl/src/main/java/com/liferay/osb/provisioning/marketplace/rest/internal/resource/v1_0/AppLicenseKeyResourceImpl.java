@@ -3,17 +3,17 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-package com.liferay.osb.provisioning.rest.internal.resource.v1_0;
+package com.liferay.osb.provisioning.marketplace.rest.internal.resource.v1_0;
 
 import com.liferay.osb.provisioning.license.exception.NoSuchLicenseKeyException;
 import com.liferay.osb.provisioning.license.exporter.LicenseKeyExporter;
 import com.liferay.osb.provisioning.license.helper.constants.ProductId;
 import com.liferay.osb.provisioning.license.model.LicenseKey;
 import com.liferay.osb.provisioning.license.service.LicenseKeyLocalService;
-import com.liferay.osb.provisioning.rest.dto.v1_0.AppLicenseKey;
-import com.liferay.osb.provisioning.rest.dto.v1_0.util.AppLicenseKeyUtil;
-import com.liferay.osb.provisioning.rest.internal.odata.entity.v1_0.AppLicenseKeyEntityModel;
-import com.liferay.osb.provisioning.rest.resource.v1_0.AppLicenseKeyResource;
+import com.liferay.osb.provisioning.marketplace.rest.dto.v1_0.AppLicenseKey;
+import com.liferay.osb.provisioning.marketplace.rest.dto.v1_0.util.AppLicenseKeyUtil;
+import com.liferay.osb.provisioning.marketplace.rest.internal.odata.entity.v1_0.AppLicenseKeyEntityModel;
+import com.liferay.osb.provisioning.marketplace.rest.resource.v1_0.AppLicenseKeyResource;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.search.BooleanClauseOccur;
 import com.liferay.portal.kernel.search.Field;

@@ -1,0 +1,11 @@
+apiDir: "../osb-provisioning-marketplace-rest-api/src/main/java"
+apiPackagePath: "com.liferay.osb.provisioning.marketplace.rest"
+application:
+    baseURI: "/provisioning-marketplace-rest"
+    className: "ProvisioningMarketplaceRESTApplication"
+    name: "Liferay.Provisioning.Marketplace.REST"
+author: "Amos Fong"
+clientDir: "../osb-provisioning-marketplace-rest-client/src/main/java"
+forcePredictableOperationId: true
+generateBatch: false
+testDir: "../osb-provisioning-marketplace-rest-test/src/testIntegration/java"
