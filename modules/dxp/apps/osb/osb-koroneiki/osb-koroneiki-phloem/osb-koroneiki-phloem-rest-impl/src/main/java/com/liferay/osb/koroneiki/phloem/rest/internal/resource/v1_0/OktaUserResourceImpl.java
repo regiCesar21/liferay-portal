@@ -11,6 +11,7 @@ import com.liferay.osb.koroneiki.root.identity.management.provider.ContactIdenti
 import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
+import com.liferay.portal.kernel.util.StringPool;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -44,8 +45,7 @@ public class OktaUserResourceImpl extends BaseOktaUserResourceImpl {
 
 		_contactIdentityProvider.createContact(
 			oktaUser.getEmailAddress(), oktaUser.getFirstName(),
-			oktaUser.getMiddleName(), oktaUser.getLastName(),
-			oktaUser.getUuid());
+			StringPool.BLANK, oktaUser.getLastName(), oktaUser.getUuid());
 	}
 
 	@Reference(target = "(provider=okta)")

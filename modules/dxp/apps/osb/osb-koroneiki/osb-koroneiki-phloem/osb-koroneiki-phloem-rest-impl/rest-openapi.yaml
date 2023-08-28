@@ -696,10 +696,6 @@ components:
                     description:
                         The last name of the user.
                     type: string
-                middleName:
-                    description:
-                        The middle name of the user.
-                    type: string
                 uuid:
                     description:
                         A universal identifier to reference this user.
