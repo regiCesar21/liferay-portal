@@ -7,7 +7,6 @@ package com.liferay.layout.taglib.internal.util;
 
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
-import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
@@ -78,7 +77,7 @@ public class LayoutUtil {
 			boolean checkDisplayPage, boolean enableCurrentPage, long groupId,
 			HttpServletRequest httpServletRequest, boolean privateLayout,
 			long parentLayoutId, String selectedLayoutUuid,
-			boolean showHiddenLayouts)
+			boolean showHiddenLayouts, int start, int end)
 		throws Exception {
 
 		ThemeDisplay themeDisplay =
@@ -88,8 +87,7 @@ public class LayoutUtil {
 		JSONArray jsonArray = JSONFactoryUtil.createJSONArray();
 
 		List<Layout> layouts = LayoutServiceUtil.getLayouts(
-			groupId, privateLayout, parentLayoutId, false, QueryUtil.ALL_POS,
-			QueryUtil.ALL_POS);
+			groupId, privateLayout, parentLayoutId, false, start, end);
 
 		for (Layout layout : layouts) {
 			if ((layout.isHidden() && !showHiddenLayouts) ||
@@ -102,8 +100,10 @@ public class LayoutUtil {
 
 			JSONArray childrenJSONArray = getLayoutsJSONArray(
 				checkDisplayPage, enableCurrentPage, groupId,
-				httpServletRequest, itemSelectorReturnType, privateLayout,
-				layout.getLayoutId(), selectedLayoutUuid, showHiddenLayouts);
+				httpServletRequest, privateLayout,
+				layout.getLayoutId(), selectedLayoutUuid, showHiddenLayouts, 0,
+				GetterUtil.getInteger(
+					PropsValues.LAYOUT_MANAGE_PAGES_INITIAL_CHILDREN));
 
 			if (childrenJSONArray.length() > 0) {
 				jsonObject.put("children", childrenJSONArray);

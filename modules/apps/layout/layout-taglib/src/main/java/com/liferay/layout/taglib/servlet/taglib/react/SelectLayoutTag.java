@@ -5,11 +5,6 @@
 
 package com.liferay.layout.taglib.servlet.taglib.react;
 
-import java.util.Map;
-
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.jsp.PageContext;
-
 import com.liferay.layout.taglib.internal.servlet.ServletContextUtil;
 import com.liferay.layout.taglib.internal.util.LayoutUtil;
 import com.liferay.portal.kernel.json.JSONArray;
@@ -18,6 +13,8 @@ import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Group;
+import com.liferay.portal.kernel.model.LayoutConstants;
+import com.liferay.portal.kernel.service.LayoutServiceUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
@@ -25,6 +22,11 @@ import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.util.PropsValues;
 import com.liferay.taglib.util.IncludeTag;
+
+import java.util.Map;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.jsp.PageContext;
 
 /**
  * @author Eudaldo Alonso
@@ -230,13 +232,25 @@ public class SelectLayoutTag extends IncludeTag {
 
 		String layoutUuid = ParamUtil.getString(request, "layoutUuid");
 
+		boolean paginated = false;
+
+		int layoutsCount = LayoutServiceUtil.getLayoutsCount(
+			themeDisplay.getScopeGroupId(), _privateLayout,
+			LayoutConstants.DEFAULT_PARENT_LAYOUT_ID);
+
+		if (layoutsCount > PropsValues.LAYOUT_MANAGE_PAGES_INITIAL_CHILDREN) {
+			paginated = true;
+		}
+
 		return JSONUtil.put(
 			JSONUtil.put(
 				"children",
 				LayoutUtil.getLayoutsJSONArray(
 					_checkDisplayPage, _enableCurrentPage,
 					themeDisplay.getScopeGroupId(), getRequest(),
-					_privateLayout, 0, layoutUuid, _showHiddenLayouts)
+					_privateLayout, 0, layoutUuid, _showHiddenLayouts, 0,
+					GetterUtil.getInteger(
+						PropsValues.LAYOUT_MANAGE_PAGES_INITIAL_CHILDREN))
 			).put(
 				"disabled", true
 			).put(
@@ -249,6 +263,8 @@ public class SelectLayoutTag extends IncludeTag {
 				"id", "0"
 			).put(
 				"name", themeDisplay.getScopeGroupName()
+			).put(
+				"paginated", paginated
 			));
 	}
 
