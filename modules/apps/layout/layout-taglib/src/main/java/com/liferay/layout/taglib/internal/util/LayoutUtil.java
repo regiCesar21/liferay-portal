@@ -110,7 +110,7 @@ public class LayoutUtil {
 			}
 
 			if ((checkDisplayPage && !layout.isContentDisplayPage()) ||
-				(enableCurrentPage &&
+				(!enableCurrentPage &&
 				 (layout.getPlid() == _getSelPlid(httpServletRequest)))) {
 
 				jsonObject.put("disabled", true);
