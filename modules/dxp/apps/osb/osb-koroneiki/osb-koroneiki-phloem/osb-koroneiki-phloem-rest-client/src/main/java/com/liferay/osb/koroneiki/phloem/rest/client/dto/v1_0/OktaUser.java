@@ -88,27 +88,6 @@ public class OktaUser implements Cloneable, Serializable {
 
 	protected String lastName;
 
-	public String getMiddleName() {
-		return middleName;
-	}
-
-	public void setMiddleName(String middleName) {
-		this.middleName = middleName;
-	}
-
-	public void setMiddleName(
-		UnsafeSupplier<String, Exception> middleNameUnsafeSupplier) {
-
-		try {
-			middleName = middleNameUnsafeSupplier.get();
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
-	}
-
-	protected String middleName;
-
 	public String getUuid() {
 		return uuid;
 	}

@@ -86,20 +86,6 @@ public class OktaUserSerDes {
 			sb.append("\"");
 		}
 
-		if (oktaUser.getMiddleName() != null) {
-			if (sb.length() > 1) {
-				sb.append(", ");
-			}
-
-			sb.append("\"middleName\": ");
-
-			sb.append("\"");
-
-			sb.append(_escape(oktaUser.getMiddleName()));
-
-			sb.append("\"");
-		}
-
 		if (oktaUser.getUuid() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -153,13 +139,6 @@ public class OktaUserSerDes {
 			map.put("lastName", String.valueOf(oktaUser.getLastName()));
 		}
 
-		if (oktaUser.getMiddleName() == null) {
-			map.put("middleName", null);
-		}
-		else {
-			map.put("middleName", String.valueOf(oktaUser.getMiddleName()));
-		}
-
 		if (oktaUser.getUuid() == null) {
 			map.put("uuid", null);
 		}
@@ -200,11 +179,6 @@ public class OktaUserSerDes {
 			else if (Objects.equals(jsonParserFieldName, "lastName")) {
 				if (jsonParserFieldValue != null) {
 					oktaUser.setLastName((String)jsonParserFieldValue);
-				}
-			}
-			else if (Objects.equals(jsonParserFieldName, "middleName")) {
-				if (jsonParserFieldValue != null) {
-					oktaUser.setMiddleName((String)jsonParserFieldValue);
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "uuid")) {

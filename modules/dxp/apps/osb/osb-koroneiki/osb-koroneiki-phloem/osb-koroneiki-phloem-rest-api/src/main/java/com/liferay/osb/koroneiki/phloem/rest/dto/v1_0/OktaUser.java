@@ -140,34 +140,6 @@ public class OktaUser implements Serializable {
 	@NotEmpty
 	protected String lastName;
 
-	@Schema(description = "The middle name of the user.")
-	public String getMiddleName() {
-		return middleName;
-	}
-
-	public void setMiddleName(String middleName) {
-		this.middleName = middleName;
-	}
-
-	@JsonIgnore
-	public void setMiddleName(
-		UnsafeSupplier<String, Exception> middleNameUnsafeSupplier) {
-
-		try {
-			middleName = middleNameUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
-	}
-
-	@GraphQLField(description = "The middle name of the user.")
-	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
-	protected String middleName;
-
 	@Schema(description = "A universal identifier to reference this user.")
 	public String getUuid() {
 		return uuid;
@@ -261,20 +233,6 @@ public class OktaUser implements Serializable {
 			sb.append("\"");
 
 			sb.append(_escape(lastName));
-
-			sb.append("\"");
-		}
-
-		if (middleName != null) {
-			if (sb.length() > 1) {
-				sb.append(", ");
-			}
-
-			sb.append("\"middleName\": ");
-
-			sb.append("\"");
-
-			sb.append(_escape(middleName));
 
 			sb.append("\"");
 		}

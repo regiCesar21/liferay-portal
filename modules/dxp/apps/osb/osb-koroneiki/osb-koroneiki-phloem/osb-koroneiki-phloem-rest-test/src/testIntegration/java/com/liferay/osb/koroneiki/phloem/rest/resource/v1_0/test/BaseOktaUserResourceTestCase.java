@@ -172,7 +172,6 @@ public abstract class BaseOktaUserResourceTestCase {
 		oktaUser.setEmailAddress(regex);
 		oktaUser.setFirstName(regex);
 		oktaUser.setLastName(regex);
-		oktaUser.setMiddleName(regex);
 		oktaUser.setUuid(regex);
 
 		String json = OktaUserSerDes.toJSON(oktaUser);
@@ -184,7 +183,6 @@ public abstract class BaseOktaUserResourceTestCase {
 		Assert.assertEquals(regex, oktaUser.getEmailAddress());
 		Assert.assertEquals(regex, oktaUser.getFirstName());
 		Assert.assertEquals(regex, oktaUser.getLastName());
-		Assert.assertEquals(regex, oktaUser.getMiddleName());
 		Assert.assertEquals(regex, oktaUser.getUuid());
 	}
 
@@ -280,14 +278,6 @@ public abstract class BaseOktaUserResourceTestCase {
 
 			if (Objects.equals("lastName", additionalAssertFieldName)) {
 				if (oktaUser.getLastName() == null) {
-					valid = false;
-				}
-
-				continue;
-			}
-
-			if (Objects.equals("middleName", additionalAssertFieldName)) {
-				if (oktaUser.getMiddleName() == null) {
 					valid = false;
 				}
 
@@ -442,16 +432,6 @@ public abstract class BaseOktaUserResourceTestCase {
 			if (Objects.equals("lastName", additionalAssertFieldName)) {
 				if (!Objects.deepEquals(
 						oktaUser1.getLastName(), oktaUser2.getLastName())) {
-
-					return false;
-				}
-
-				continue;
-			}
-
-			if (Objects.equals("middleName", additionalAssertFieldName)) {
-				if (!Objects.deepEquals(
-						oktaUser1.getMiddleName(), oktaUser2.getMiddleName())) {
 
 					return false;
 				}
@@ -710,52 +690,6 @@ public abstract class BaseOktaUserResourceTestCase {
 			return sb.toString();
 		}
 
-		if (entityFieldName.equals("middleName")) {
-			Object object = oktaUser.getMiddleName();
-
-			String value = String.valueOf(object);
-
-			if (operator.equals("contains")) {
-				sb = new StringBundler();
-
-				sb.append("contains(");
-				sb.append(entityFieldName);
-				sb.append(",'");
-
-				if ((object != null) && (value.length() > 2)) {
-					sb.append(value.substring(1, value.length() - 1));
-				}
-				else {
-					sb.append(value);
-				}
-
-				sb.append("')");
-			}
-			else if (operator.equals("startswith")) {
-				sb = new StringBundler();
-
-				sb.append("startswith(");
-				sb.append(entityFieldName);
-				sb.append(",'");
-
-				if ((object != null) && (value.length() > 1)) {
-					sb.append(value.substring(0, value.length() - 1));
-				}
-				else {
-					sb.append(value);
-				}
-
-				sb.append("')");
-			}
-			else {
-				sb.append("'");
-				sb.append(value);
-				sb.append("'");
-			}
-
-			return sb.toString();
-		}
-
 		if (entityFieldName.equals("uuid")) {
 			Object object = oktaUser.getUuid();
 
@@ -852,8 +786,6 @@ public abstract class BaseOktaUserResourceTestCase {
 				firstName = StringUtil.toLowerCase(
 					RandomTestUtil.randomString());
 				lastName = StringUtil.toLowerCase(
-					RandomTestUtil.randomString());
-				middleName = StringUtil.toLowerCase(
 					RandomTestUtil.randomString());
 				uuid = StringUtil.toLowerCase(RandomTestUtil.randomString());
 			}

@@ -47,7 +47,7 @@ public abstract class BaseOktaUserResourceImpl implements OktaUserResource {
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -X 'POST' 'http://localhost:8080/o/koroneiki-rest/v1.0/okta-users' -d $'{"emailAddress": ___, "firstName": ___, "lastName": ___, "middleName": ___, "uuid": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
+	 * curl -X 'POST' 'http://localhost:8080/o/koroneiki-rest/v1.0/okta-users' -d $'{"emailAddress": ___, "firstName": ___, "lastName": ___, "uuid": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
 	 */
 	@io.swagger.v3.oas.annotations.Parameters(
 		value = {
