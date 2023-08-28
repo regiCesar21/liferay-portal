@@ -9,6 +9,8 @@ import com.liferay.exportimport.kernel.staging.StagingUtil;
 import com.liferay.layout.taglib.internal.servlet.ServletContextUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
+import com.liferay.layout.taglib.internal.servlet.ServletContextUtil;
+import com.liferay.layout.taglib.internal.util.LayoutUtil;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
@@ -24,8 +26,10 @@ import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.HtmlUtil;
+import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.ParamUtil;
-import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.util.PropsValues;
 import com.liferay.taglib.util.IncludeTag;
@@ -34,7 +38,6 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
-import java.util.Objects;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.jsp.PageContext;
@@ -224,44 +227,14 @@ public class SelectLayoutTag extends IncludeTag {
 		).build();
 	}
 
-	private String _getLayoutBreadcrumb(Layout layout) throws Exception {
-		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
-			WebKeys.THEME_DISPLAY);
+	private JSONArray _getLayoutsJSONArray(String[] selectedLayoutIds)
+		throws Exception {
 
-		Locale locale = themeDisplay.getLocale();
+		HttpServletRequest httpServletRequest = getRequest();
 
-		List<Layout> ancestors = layout.getAncestors();
-
-		StringBundler sb = new StringBundler((4 * ancestors.size()) + 5);
-
-		if (layout.isPrivateLayout()) {
-			sb.append(LanguageUtil.get(request, "private-pages"));
-		}
-		else {
-			sb.append(LanguageUtil.get(request, "public-pages"));
-		}
-
-		sb.append(StringPool.SPACE);
-		sb.append(StringPool.GREATER_THAN);
-		sb.append(StringPool.SPACE);
-
-		Collections.reverse(ancestors);
-
-		for (Layout ancestor : ancestors) {
-			sb.append(HtmlUtil.escape(ancestor.getName(locale)));
-			sb.append(StringPool.SPACE);
-			sb.append(StringPool.GREATER_THAN);
-			sb.append(StringPool.SPACE);
-		}
-
-		sb.append(HtmlUtil.escape(layout.getName(locale)));
-
-		return sb.toString();
-	}
-
-	private JSONArray _getLayoutsJSONArray() throws Exception {
-		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
-			WebKeys.THEME_DISPLAY);
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)httpServletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
 
 		Group group = themeDisplay.getScopeGroup();
 
@@ -276,7 +249,7 @@ public class SelectLayoutTag extends IncludeTag {
 		return JSONUtil.put(
 			JSONUtil.put(
 				"children",
-				_getLayoutsJSONArray(
+				LayoutUtil.getLayoutsJSONArray(
 					themeDisplay.getScopeGroupId(), _privateLayout, 0,
 					layoutUuid)
 			).put(
@@ -292,116 +265,6 @@ public class SelectLayoutTag extends IncludeTag {
 			).put(
 				"name", themeDisplay.getScopeGroupName()
 			));
-	}
-
-	private JSONArray _getLayoutsJSONArray(
-			long groupId, boolean privateLayout, long parentLayoutId,
-			String selectedLayoutUuid)
-		throws Exception {
-
-		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
-			WebKeys.THEME_DISPLAY);
-
-		JSONArray jsonArray = JSONFactoryUtil.createJSONArray();
-
-		List<Layout> layouts = LayoutLocalServiceUtil.getLayouts(
-			groupId, privateLayout, parentLayoutId);
-
-		for (Layout layout : layouts) {
-			if ((layout.isHidden() && !_showHiddenLayouts) ||
-				_isContentLayoutDraft(layout) ||
-				StagingUtil.isIncomplete(layout)) {
-
-				continue;
-			}
-
-			JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
-
-			JSONArray childrenJSONArray = _getLayoutsJSONArray(
-				groupId, privateLayout, layout.getLayoutId(),
-				selectedLayoutUuid);
-
-			if (childrenJSONArray.length() > 0) {
-				jsonObject.put("children", childrenJSONArray);
-			}
-
-			if ((_checkDisplayPage && !layout.isContentDisplayPage()) ||
-				(_enableCurrentPage && (layout.getPlid() == _getSelPlid()))) {
-
-				jsonObject.put("disabled", true);
-			}
-
-			jsonObject.put(
-				"groupId", layout.getGroupId()
-			).put(
-				"hasChildren", layout.hasChildren()
-			).put(
-				"icon", "page"
-			).put(
-				"id", layout.getUuid()
-			).put(
-				"layoutId", layout.getLayoutId()
-			).put(
-				"name", layout.getName(themeDisplay.getLocale())
-			).put(
-				"paginated",
-				() -> {
-					int layoutsCount = LayoutServiceUtil.getLayoutsCount(
-						groupId, layout.isPrivateLayout(),
-						layout.getLayoutId());
-
-					if (layoutsCount >
-							PropsValues.
-								LAYOUT_MANAGE_PAGES_INITIAL_CHILDREN) {
-
-						return true;
-					}
-
-					return false;
-				}
-			).put(
-				"privateLayout", layout.isPrivateLayout()
-			).put(
-				"url",
-				PortalUtil.getLayoutRelativeURL(layout, themeDisplay, false)
-			);
-
-			if (Objects.equals(layout.getUuid(), selectedLayoutUuid)) {
-				jsonObject.put("selected", true);
-			}
-
-			jsonObject.put("value", _getLayoutBreadcrumb(layout));
-
-			jsonArray.put(jsonObject);
-		}
-
-		return jsonArray;
-	}
-
-	private long _getSelPlid() {
-		return ParamUtil.getLong(
-			request, "selPlid", LayoutConstants.DEFAULT_PLID);
-	}
-
-	private boolean _isContentLayoutDraft(Layout layout) {
-		if (!layout.isTypeContent()) {
-			return false;
-		}
-
-		Layout draftLayout = layout.fetchDraftLayout();
-
-		if (draftLayout != null) {
-			boolean published = GetterUtil.getBoolean(
-				draftLayout.getTypeSettingsProperty("published"));
-
-			return !published;
-		}
-
-		if (layout.isApproved() && !layout.isHidden() && !layout.isSystem()) {
-			return false;
-		}
-
-		return true;
 	}
 
 	private static final String _PAGE = "/select_layout/page.jsp";
