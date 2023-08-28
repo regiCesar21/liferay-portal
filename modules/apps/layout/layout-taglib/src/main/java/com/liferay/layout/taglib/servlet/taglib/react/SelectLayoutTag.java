@@ -5,27 +5,19 @@
 
 package com.liferay.layout.taglib.servlet.taglib.react;
 
-import com.liferay.exportimport.kernel.staging.StagingUtil;
-import com.liferay.layout.taglib.internal.servlet.ServletContextUtil;
-import com.liferay.petra.string.StringBundler;
-import com.liferay.petra.string.StringPool;
+import java.util.Map;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.jsp.PageContext;
+
 import com.liferay.layout.taglib.internal.servlet.ServletContextUtil;
 import com.liferay.layout.taglib.internal.util.LayoutUtil;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
-import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
-import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Group;
-import com.liferay.portal.kernel.model.Layout;
-import com.liferay.portal.kernel.model.LayoutConstants;
-import com.liferay.portal.kernel.service.LayoutLocalServiceUtil;
-import com.liferay.portal.kernel.theme.ThemeDisplay;
-import com.liferay.portal.kernel.util.GetterUtil;
-import com.liferay.portal.kernel.util.HashMapBuilder;
-import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
@@ -33,14 +25,6 @@ import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.util.PropsValues;
 import com.liferay.taglib.util.IncludeTag;
-
-import java.util.Collections;
-import java.util.List;
-import java.util.Locale;
-import java.util.Map;
-
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.jsp.PageContext;
 
 /**
  * @author Eudaldo Alonso
@@ -227,7 +211,7 @@ public class SelectLayoutTag extends IncludeTag {
 		).build();
 	}
 
-	private JSONArray _getLayoutsJSONArray(String[] selectedLayoutIds)
+	private JSONArray _getLayoutsJSONArray()
 		throws Exception {
 
 		HttpServletRequest httpServletRequest = getRequest();
@@ -250,8 +234,9 @@ public class SelectLayoutTag extends IncludeTag {
 			JSONUtil.put(
 				"children",
 				LayoutUtil.getLayoutsJSONArray(
-					themeDisplay.getScopeGroupId(), _privateLayout, 0,
-					layoutUuid)
+					_checkDisplayPage, _enableCurrentPage,
+					themeDisplay.getScopeGroupId(), getRequest(),
+					_privateLayout, 0, layoutUuid, _showHiddenLayouts)
 			).put(
 				"disabled", true
 			).put(

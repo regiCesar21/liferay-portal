@@ -5,21 +5,17 @@
 
 package com.liferay.layout.taglib.internal.util;
 
-import com.liferay.item.selector.criteria.UUIDItemSelectorReturnType;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
-import com.liferay.portal.kernel.json.JSONUtil;
+import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.LayoutConstants;
-import com.liferay.portal.kernel.security.auth.AuthTokenUtil;
 import com.liferay.portal.kernel.service.LayoutServiceUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
-import com.liferay.portal.kernel.util.ArrayUtil;
-import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
@@ -39,9 +35,13 @@ import javax.servlet.http.HttpServletRequest;
  */
 public class LayoutUtil {
 
-	public static String getLayoutBreadcrumb(Layout layout) throws Exception {
-		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
-			WebKeys.THEME_DISPLAY);
+	public static String getLayoutBreadcrumb(
+			Layout layout, HttpServletRequest httpServletRequest)
+		throws Exception {
+
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)httpServletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
 
 		Locale locale = themeDisplay.getLocale();
 
@@ -50,10 +50,10 @@ public class LayoutUtil {
 		StringBundler sb = new StringBundler((4 * ancestors.size()) + 5);
 
 		if (layout.isPrivateLayout()) {
-			sb.append(LanguageUtil.get(request, "private-pages"));
+			sb.append(LanguageUtil.get(httpServletRequest, "private-pages"));
 		}
 		else {
-			sb.append(LanguageUtil.get(request, "public-pages"));
+			sb.append(LanguageUtil.get(httpServletRequest, "public-pages"));
 		}
 
 		sb.append(StringPool.SPACE);
@@ -75,12 +75,15 @@ public class LayoutUtil {
 	}
 
 	public static JSONArray getLayoutsJSONArray(
-			long groupId, boolean privateLayout, long parentLayoutId,
-			String selectedLayoutUuid)
+			boolean checkDisplayPage, boolean enableCurrentPage, long groupId,
+			HttpServletRequest httpServletRequest, boolean privateLayout,
+			long parentLayoutId, String selectedLayoutUuid,
+			boolean showHiddenLayouts)
 		throws Exception {
 
-		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
-			WebKeys.THEME_DISPLAY);
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)httpServletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
 
 		JSONArray jsonArray = JSONFactoryUtil.createJSONArray();
 
@@ -89,7 +92,7 @@ public class LayoutUtil {
 			QueryUtil.ALL_POS);
 
 		for (Layout layout : layouts) {
-			if ((layout.isHidden() && !_showHiddenLayouts) ||
+			if ((layout.isHidden() && !showHiddenLayouts) ||
 				_isContentLayoutDraft(layout)) {
 
 				continue;
@@ -97,16 +100,18 @@ public class LayoutUtil {
 
 			JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
 
-			JSONArray childrenJSONArray = _getLayoutsJSONArray(
-				groupId, privateLayout, layout.getLayoutId(),
-				selectedLayoutUuid);
+			JSONArray childrenJSONArray = getLayoutsJSONArray(
+				checkDisplayPage, enableCurrentPage, groupId,
+				httpServletRequest, itemSelectorReturnType, privateLayout,
+				layout.getLayoutId(), selectedLayoutUuid, showHiddenLayouts);
 
 			if (childrenJSONArray.length() > 0) {
 				jsonObject.put("children", childrenJSONArray);
 			}
 
-			if ((_checkDisplayPage && !layout.isContentDisplayPage()) ||
-				(_enableCurrentPage && (layout.getPlid() == _getSelPlid()))) {
+			if ((checkDisplayPage && !layout.isContentDisplayPage()) ||
+				(enableCurrentPage &&
+				 (layout.getPlid() == _getSelPlid(httpServletRequest)))) {
 
 				jsonObject.put("disabled", true);
 			}
@@ -124,33 +129,31 @@ public class LayoutUtil {
 			).put(
 				"name", layout.getName(themeDisplay.getLocale())
 			).put(
-				"paginated",
-				() -> {
-					int layoutsCount = LayoutServiceUtil.getLayoutsCount(
-						groupId, layout.isPrivateLayout(),
-						layout.getLayoutId());
-
-					if (layoutsCount >
-							PropsValues.
-								LAYOUT_MANAGE_PAGES_INITIAL_CHILDREN) {
-
-						return true;
-					}
-
-					return false;
-				}
-			).put(
 				"privateLayout", layout.isPrivateLayout()
 			).put(
 				"url",
 				PortalUtil.getLayoutRelativeURL(layout, themeDisplay, false)
 			);
 
+			boolean paginated = false;
+
+			int layoutsCount = LayoutServiceUtil.getLayoutsCount(
+				groupId, layout.isPrivateLayout(), layout.getLayoutId());
+
+			if (layoutsCount >
+					PropsValues.LAYOUT_MANAGE_PAGES_INITIAL_CHILDREN) {
+
+				paginated = true;
+			}
+
+			jsonObject.put("paginated", paginated);
+
 			if (Objects.equals(layout.getUuid(), selectedLayoutUuid)) {
 				jsonObject.put("selected", true);
 			}
 
-			jsonObject.put("value", getLayoutBreadcrumb(layout));
+			jsonObject.put(
+				"value", getLayoutBreadcrumb(layout, httpServletRequest));
 
 			jsonArray.put(jsonObject);
 		}
@@ -158,9 +161,9 @@ public class LayoutUtil {
 		return jsonArray;
 	}
 
-	private static long _getSelPlid() {
+	private static long _getSelPlid(HttpServletRequest httpServletRequest) {
 		return ParamUtil.getLong(
-			request, "selPlid", LayoutConstants.DEFAULT_PLID);
+			httpServletRequest, "selPlid", LayoutConstants.DEFAULT_PLID);
 	}
 
 	private static boolean _isContentLayoutDraft(Layout layout) {
