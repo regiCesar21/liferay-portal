@@ -1237,11 +1237,21 @@ public class LicenseKeyResourceImpl
 			false, "productPurchaseKey", productPurchase.getKey());
 
 		if (includeDetached) {
+			String productPurchaseStatus = _getStatus(
+				productPurchase.getStartDate(),
+				productPurchase.getOriginalEndDate());
+
 			FilterQuery filterQuery3 = new FilterQuery();
 
 			if (productPurchase.getOriginalEndDate() != null) {
-				filterQuery3.addGreaterThanEquals(
-					true, "endDate", productPurchase.getOriginalEndDate());
+				if (productPurchaseStatus.equals("active")) {
+					filterQuery3.addGreaterThanEquals(
+						true, "endDate", new Date());
+				}
+				else {
+					filterQuery3.addGreaterThanEquals(
+						true, "endDate", productPurchase.getStartDate());
+				}
 			}
 			else {
 				filterQuery3.addEquals(true, "endDate", (String)null);
@@ -1252,8 +1262,15 @@ public class LicenseKeyResourceImpl
 			filterQuery3.addEquals(true, "productPurchaseKey", (String)null);
 
 			if (productPurchase.getStartDate() != null) {
-				filterQuery3.addLessThanEquals(
-					true, "startDate", productPurchase.getStartDate());
+				if (productPurchaseStatus.equals("active")) {
+					filterQuery3.addLessThanEquals(
+						true, "startDate", new Date());
+				}
+				else {
+					filterQuery3.addLessThanEquals(
+						true, "startDate",
+						productPurchase.getOriginalEndDate());
+				}
 			}
 			else {
 				filterQuery3.addEquals(true, "startDate", (String)null);
