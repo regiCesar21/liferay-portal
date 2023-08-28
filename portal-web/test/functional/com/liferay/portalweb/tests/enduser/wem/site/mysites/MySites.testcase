@@ -173,6 +173,8 @@ definition {
 			membershipType = "Restricted",
 			siteName = "Site Name");
 
+		Site.manageMembershipOptions(allowManualMembershipManagement = "true");
+
 		// Create a user and set its password
 
 		JSONUser.addUser(

@@ -285,6 +285,8 @@ definition {
 
 			Site.addBlankCP(siteName = ${siteName});
 
+			Site.manageMembershipOptions(allowManualMembershipManagement = "true");
+
 			ProductMenu.gotoPortlet(
 				category = "Users",
 				panel = "Control Panel",

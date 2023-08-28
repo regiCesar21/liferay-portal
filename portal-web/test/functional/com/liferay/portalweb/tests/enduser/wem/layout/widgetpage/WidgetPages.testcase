@@ -448,6 +448,8 @@ definition {
 
 		Site.addCommunityCP(siteName = "Site Name");
 
+		Site.manageMembershipOptions(allowManualMembershipManagement = "true");
+
 		Navigator.openSiteURL(siteName = "Site Name");
 
 		ProductMenu.gotoPortlet(

@@ -153,6 +153,8 @@ definition {
 
 		Site.addBlankCP(siteName = "Parent Site Name");
 
+		Site.manageMembershipOptions(allowManualMembershipManagement = "true");
+
 		ProductMenu.gotoPortlet(
 			category = "Sites",
 			panel = "Control Panel",
@@ -161,6 +163,8 @@ definition {
 		Site.addBlankCP(
 			parentSiteName = "Parent Site Name",
 			siteName = "Child SiteName");
+
+		Site.manageMembershipOptions(allowManualMembershipManagement = "true");
 
 		SitePages.openPagesAdmin(siteURLKey = "Parent Site Name");
 
@@ -277,6 +281,8 @@ definition {
 		Site.addBlankCP(
 			parentSiteName = "Site Name",
 			siteName = "Child SiteName1");
+
+		Site.manageMembershipOptions(allowManualMembershipManagement = "true");
 
 		SitePages.openPagesAdmin(siteURLKey = "Child SiteName1");
 

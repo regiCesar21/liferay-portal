@@ -219,6 +219,8 @@ definition {
 			siteName = "Community Site Name",
 			uncheckPropagation = "true");
 
+		Site.manageMembershipOptions(allowManualMembershipManagement = "true");
+
 		Navigator.openSiteURL(siteName = "Community Site Name");
 
 		ProductMenu.gotoPortlet(
@@ -336,6 +338,8 @@ definition {
 		Site.addCommunityCP(
 			siteName = "Community Site Name",
 			uncheckPropagation = "true");
+
+		Site.manageMembershipOptions(allowManualMembershipManagement = "true");
 
 		Navigator.openSiteURL(siteName = "Community Site Name");
 
@@ -568,6 +572,8 @@ definition {
 		Site.addCommunityCP(
 			siteName = "Community Site Name",
 			uncheckPropagation = "true");
+
+		Site.manageMembershipOptions(allowManualMembershipManagement = "true");
 
 		Navigator.openSiteURL(siteName = "Community Site Name");
 
@@ -830,6 +836,8 @@ definition {
 		Site.addCommunityCP(
 			siteName = "Community Site Name",
 			uncheckPropagation = "true");
+
+		Site.manageMembershipOptions(allowManualMembershipManagement = "true");
 
 		Navigator.openSiteURL(siteName = "Community Site Name");
 
@@ -1173,6 +1181,8 @@ definition {
 		Site.addCommunityCP(
 			siteName = "Community Site Name",
 			uncheckPropagation = "true");
+
+		Site.manageMembershipOptions(allowManualMembershipManagement = "true");
 
 		Navigator.openSiteURL(siteName = "Community Site Name");
 

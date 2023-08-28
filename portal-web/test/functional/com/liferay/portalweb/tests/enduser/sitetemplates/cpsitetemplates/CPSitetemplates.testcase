@@ -651,6 +651,8 @@ definition {
 			siteTemplateName = "Site Template Name",
 			siteType = "Site Template");
 
+		Site.manageMembershipOptions(allowManualMembershipManagement = "true");
+
 		Navigator.openSiteURL(siteName = "Site Template Site Name");
 
 		AssertElementPresent(locator1 = "ControlMenu#ADD");

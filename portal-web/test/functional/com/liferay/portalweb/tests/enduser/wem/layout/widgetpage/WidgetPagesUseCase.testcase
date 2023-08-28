@@ -355,6 +355,10 @@ definition {
 
 		Role.add(roleTitle = "Roles Regrole Name");
 
+		Site.openSiteSettingsAdmin(siteURLKey = "site-name");
+
+		Site.manageMembershipOptions(allowManualMembershipManagement = "true");
+
 		ProductMenu.gotoPortlet(
 			category = "Users",
 			panel = "Control Panel",

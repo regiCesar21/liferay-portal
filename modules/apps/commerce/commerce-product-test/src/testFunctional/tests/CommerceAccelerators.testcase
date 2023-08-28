@@ -646,6 +646,10 @@ definition {
 
 		Refresh();
 
+		Site.openSiteSettingsAdmin(siteURLKey = "speedwell");
+
+		Site.manageMembershipOptions(allowManualMembershipManagement = "true");
+
 		ProductMenu.gotoPortlet(
 			category = "Users",
 			panel = "Control Panel",

@@ -1436,6 +1436,8 @@ definition {
 
 		Site.addBlankCP(siteName = "Site Name");
 
+		Site.manageMembershipOptions(allowManualMembershipManagement = "true");
+
 		ProductMenu.gotoPortlet(
 			category = "Users",
 			panel = "Control Panel",

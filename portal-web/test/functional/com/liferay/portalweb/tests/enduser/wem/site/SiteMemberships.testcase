@@ -50,6 +50,8 @@ definition {
 
 		Site.addBlankCP(siteName = "Site Name");
 
+		Site.manageMembershipOptions(allowManualMembershipManagement = "true");
+
 		ProductMenu.gotoPortlet(
 			category = "People",
 			panel = "Site Administration",
@@ -156,6 +158,8 @@ definition {
 
 		Site.addBlankCP(siteName = "Site Name");
 
+		Site.manageMembershipOptions(allowManualMembershipManagement = "true");
+
 		ProductMenu.gotoPortlet(
 			category = "People",
 			panel = "Site Administration",
@@ -259,6 +263,8 @@ definition {
 
 		Site.addBlankCP(siteName = "Site Name");
 
+		Site.manageMembershipOptions(allowManualMembershipManagement = "true");
+
 		ProductMenu.gotoPortlet(
 			category = "Sites",
 			panel = "Control Panel",
@@ -267,6 +273,8 @@ definition {
 		Site.addBlankCP(
 			parentSiteName = "Site Name",
 			siteName = "Child SiteName");
+
+		Site.manageMembershipOptions(allowManualMembershipManagement = "true");
 
 		Site.limitMembership(siteLimitMembership = "Yes");
 
@@ -565,6 +573,8 @@ definition {
 
 		Site.addBlankCP(siteName = "Site Name");
 
+		Site.manageMembershipOptions(allowManualMembershipManagement = "true");
+
 		ProductMenu.gotoPortlet(
 			category = "People",
 			panel = "Site Administration",
@@ -676,6 +686,8 @@ definition {
 			portlet = "Sites");
 
 		Site.addBlankCP(siteName = "Site Name");
+
+		Site.manageMembershipOptions(allowManualMembershipManagement = "true");
 
 		ProductMenu.gotoPortlet(
 			category = "People",
@@ -968,6 +980,8 @@ definition {
 			Site.addBlankCP(
 				membershipType = "Restricted",
 				siteName = "Site Name ${i}");
+
+			Site.manageMembershipOptions(allowManualMembershipManagement = "true");
 		}
 
 		ProductMenu.gotoPortlet(

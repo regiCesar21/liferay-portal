@@ -317,6 +317,8 @@ definition {
 
 		Site.addBlankCP(siteName = ${siteName});
 
+		Site.manageMembershipOptions(allowManualMembershipManagement = "true");
+
 		SitePages.openPagesAdmin(siteURLKey = ${siteName});
 
 		ProductMenu.gotoPortlet(
@@ -460,6 +462,8 @@ definition {
 
 		Site.addBlankCP(siteName = ${siteName});
 
+		Site.manageMembershipOptions(allowManualMembershipManagement = "true");
+
 		ProductMenu.gotoPortlet(
 			category = "People",
 			panel = "Site Administration",
@@ -553,6 +557,8 @@ definition {
 			portlet = "Sites");
 
 		Site.addBlankCP(siteName = ${siteName});
+
+		Site.manageMembershipOptions(allowManualMembershipManagement = "true");
 
 		ProductMenu.gotoPortlet(
 			category = "People",

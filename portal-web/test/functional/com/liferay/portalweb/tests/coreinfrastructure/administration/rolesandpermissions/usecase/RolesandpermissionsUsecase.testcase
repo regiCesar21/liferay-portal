@@ -110,6 +110,8 @@ definition {
 
 		Site.addBlankCP(siteName = "Site Name");
 
+		Site.manageMembershipOptions(allowManualMembershipManagement = "true");
+
 		ProductMenu.gotoPortlet(
 			category = "Site Builder",
 			panel = "Site Administration",
@@ -387,6 +389,10 @@ definition {
 		User.editUserSiteCP(
 			siteName = ${siteName},
 			userScreenName = "usersn");
+
+		Site.openSiteSettingsAdmin(siteURLKey = "google.com-name");
+
+		Site.manageMembershipOptions(allowManualMembershipManagement = "true");
 
 		ProductMenu.gotoPortlet(
 			category = "Users",
@@ -1418,6 +1424,8 @@ definition {
 
 		Site.addBlankCP(siteName = "Site Name");
 
+		Site.manageMembershipOptions(allowManualMembershipManagement = "true");
+
 		ProductMenu.gotoPortlet(
 			category = "Site Builder",
 			panel = "Site Administration",
@@ -1843,6 +1851,8 @@ definition {
 
 		Site.addBlankCP(siteName = "Site Name");
 
+		Site.manageMembershipOptions(allowManualMembershipManagement = "true");
+
 		for (var userNumber : list "1,2") {
 			ProductMenu.gotoPortlet(
 				category = "Users",
@@ -2198,6 +2208,8 @@ definition {
 			portlet = "Sites");
 
 		Site.addBlankCP(siteName = "Site Name");
+
+		Site.manageMembershipOptions(allowManualMembershipManagement = "true");
 
 		ProductMenu.gotoPortlet(
 			category = "Site Builder",
