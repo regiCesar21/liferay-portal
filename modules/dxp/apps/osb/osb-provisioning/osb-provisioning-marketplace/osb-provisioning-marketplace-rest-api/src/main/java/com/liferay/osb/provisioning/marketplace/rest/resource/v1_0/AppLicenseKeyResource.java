@@ -3,9 +3,9 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-package com.liferay.osb.provisioning.rest.resource.v1_0;
+package com.liferay.osb.provisioning.marketplace.rest.resource.v1_0;
 
-import com.liferay.osb.provisioning.rest.dto.v1_0.AppLicenseKey;
+import com.liferay.osb.provisioning.marketplace.rest.dto.v1_0.AppLicenseKey;
 import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.search.filter.Filter;
 import com.liferay.portal.kernel.service.GroupLocalService;
@@ -37,9 +37,9 @@ import org.osgi.annotation.versioning.ProviderType;
 /**
  * To access this resource, run:
  *
- *     curl -u your@email.com:yourpassword -D - http://localhost:8080/o/provisioning-rest/v1.0
+ *     curl -u your@email.com:yourpassword -D - http://localhost:8080/o/provisioning-marketplace-rest/v1.0
  *
- * @author Kyle Bischof
+ * @author Amos Fong
  * @generated
  */
 @Generated("")

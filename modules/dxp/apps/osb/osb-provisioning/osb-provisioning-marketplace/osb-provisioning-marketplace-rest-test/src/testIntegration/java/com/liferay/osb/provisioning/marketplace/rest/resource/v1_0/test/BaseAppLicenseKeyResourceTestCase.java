@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-package com.liferay.osb.provisioning.rest.resource.v1_0.test;
+package com.liferay.osb.provisioning.marketplace.rest.resource.v1_0.test;
 
 import com.fasterxml.jackson.annotation.JsonAutoDetect;
 import com.fasterxml.jackson.annotation.JsonInclude;
@@ -13,13 +13,12 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
 import com.fasterxml.jackson.databind.util.ISO8601DateFormat;
 
-import com.liferay.osb.provisioning.rest.client.dto.v1_0.AppLicenseKey;
-import com.liferay.osb.provisioning.rest.client.dto.v1_0.Type;
-import com.liferay.osb.provisioning.rest.client.http.HttpInvoker;
-import com.liferay.osb.provisioning.rest.client.pagination.Page;
-import com.liferay.osb.provisioning.rest.client.pagination.Pagination;
-import com.liferay.osb.provisioning.rest.client.resource.v1_0.AppLicenseKeyResource;
-import com.liferay.osb.provisioning.rest.client.serdes.v1_0.AppLicenseKeySerDes;
+import com.liferay.osb.provisioning.marketplace.rest.client.dto.v1_0.AppLicenseKey;
+import com.liferay.osb.provisioning.marketplace.rest.client.http.HttpInvoker;
+import com.liferay.osb.provisioning.marketplace.rest.client.pagination.Page;
+import com.liferay.osb.provisioning.marketplace.rest.client.pagination.Pagination;
+import com.liferay.osb.provisioning.marketplace.rest.client.resource.v1_0.AppLicenseKeyResource;
+import com.liferay.osb.provisioning.marketplace.rest.client.serdes.v1_0.AppLicenseKeySerDes;
 import com.liferay.petra.function.UnsafeTriConsumer;
 import com.liferay.petra.reflect.ReflectionUtil;
 import com.liferay.petra.string.StringBundler;
@@ -75,7 +74,7 @@ import org.junit.Rule;
 import org.junit.Test;
 
 /**
- * @author Kyle Bischof
+ * @author Amos Fong
  * @generated
  */
 @Generated("")
@@ -1030,8 +1029,8 @@ public abstract class BaseAppLicenseKeyResourceTestCase {
 
 		for (java.lang.reflect.Field field :
 				getDeclaredFields(
-					com.liferay.osb.provisioning.rest.dto.v1_0.AppLicenseKey.
-						class)) {
+					com.liferay.osb.provisioning.marketplace.rest.dto.v1_0.
+						AppLicenseKey.class)) {
 
 			if (!ArrayUtil.contains(
 					getAdditionalAssertFieldNames(), field.getName())) {
@@ -2508,8 +2507,7 @@ public abstract class BaseAppLicenseKeyResourceTestCase {
 	private static DateFormat _dateFormat;
 
 	@Inject
-	private
-		com.liferay.osb.provisioning.rest.resource.v1_0.AppLicenseKeyResource
-			_appLicenseKeyResource;
+	private com.liferay.osb.provisioning.marketplace.rest.resource.v1_0.
+		AppLicenseKeyResource _appLicenseKeyResource;
 
 }

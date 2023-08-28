@@ -3,10 +3,10 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-package com.liferay.osb.provisioning.rest.internal.resource.v1_0.factory;
+package com.liferay.osb.provisioning.marketplace.rest.internal.resource.v1_0.factory;
 
-import com.liferay.osb.provisioning.rest.internal.security.permission.LiberalPermissionChecker;
-import com.liferay.osb.provisioning.rest.resource.v1_0.AppLicenseKeyResource;
+import com.liferay.osb.provisioning.marketplace.rest.internal.security.permission.LiberalPermissionChecker;
+import com.liferay.osb.provisioning.marketplace.rest.resource.v1_0.AppLicenseKeyResource;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.search.filter.Filter;
@@ -51,11 +51,11 @@ import org.osgi.service.component.annotations.Reference;
 import org.osgi.service.component.annotations.ReferenceScope;
 
 /**
- * @author Kyle Bischof
+ * @author Amos Fong
  * @generated
  */
 @Component(
-	property = "resource.locator.key=/provisioning-rest/v1.0/AppLicenseKey",
+	property = "resource.locator.key=/provisioning-marketplace-rest/v1.0/AppLicenseKey",
 	service = AppLicenseKeyResource.Factory.class
 )
 @Generated("")

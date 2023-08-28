@@ -43,8 +43,6 @@ import javax.annotation.Generated;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import javax.ws.rs.core.UriInfo;
-
 import org.osgi.service.component.ComponentServiceObjects;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -76,7 +74,7 @@ public class LicenseKeyResourceFactoryImpl
 					(proxy, method, arguments) -> _invoke(
 						method, arguments, _checkPermissions,
 						_httpServletRequest, _httpServletResponse,
-						_preferredLocale, _uriInfo, _user));
+						_preferredLocale, _user));
 			}
 
 			@Override
@@ -116,13 +114,6 @@ public class LicenseKeyResourceFactoryImpl
 			}
 
 			@Override
-			public LicenseKeyResource.Builder uriInfo(UriInfo uriInfo) {
-				_uriInfo = uriInfo;
-
-				return this;
-			}
-
-			@Override
 			public LicenseKeyResource.Builder user(User user) {
 				_user = user;
 
@@ -133,7 +124,6 @@ public class LicenseKeyResourceFactoryImpl
 			private HttpServletRequest _httpServletRequest;
 			private HttpServletResponse _httpServletResponse;
 			private Locale _preferredLocale;
-			private UriInfo _uriInfo;
 			private User _user;
 
 		};
@@ -171,7 +161,7 @@ public class LicenseKeyResourceFactoryImpl
 			Method method, Object[] arguments, boolean checkPermissions,
 			HttpServletRequest httpServletRequest,
 			HttpServletResponse httpServletResponse, Locale preferredLocale,
-			UriInfo uriInfo, User user)
+			User user)
 		throws Throwable {
 
 		String name = PrincipalThreadLocal.getName();
@@ -202,7 +192,6 @@ public class LicenseKeyResourceFactoryImpl
 
 		licenseKeyResource.setContextHttpServletRequest(httpServletRequest);
 		licenseKeyResource.setContextHttpServletResponse(httpServletResponse);
-		licenseKeyResource.setContextUriInfo(uriInfo);
 		licenseKeyResource.setContextUser(user);
 		licenseKeyResource.setExpressionConvert(_expressionConvert);
 		licenseKeyResource.setFilterParserProvider(_filterParserProvider);

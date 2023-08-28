@@ -3,14 +3,14 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-package com.liferay.osb.provisioning.rest.client.resource.v1_0;
+package com.liferay.osb.provisioning.marketplace.rest.client.resource.v1_0;
 
-import com.liferay.osb.provisioning.rest.client.dto.v1_0.AppLicenseKey;
-import com.liferay.osb.provisioning.rest.client.http.HttpInvoker;
-import com.liferay.osb.provisioning.rest.client.pagination.Page;
-import com.liferay.osb.provisioning.rest.client.pagination.Pagination;
-import com.liferay.osb.provisioning.rest.client.problem.Problem;
-import com.liferay.osb.provisioning.rest.client.serdes.v1_0.AppLicenseKeySerDes;
+import com.liferay.osb.provisioning.marketplace.rest.client.dto.v1_0.AppLicenseKey;
+import com.liferay.osb.provisioning.marketplace.rest.client.http.HttpInvoker;
+import com.liferay.osb.provisioning.marketplace.rest.client.pagination.Page;
+import com.liferay.osb.provisioning.marketplace.rest.client.pagination.Pagination;
+import com.liferay.osb.provisioning.marketplace.rest.client.problem.Problem;
+import com.liferay.osb.provisioning.marketplace.rest.client.serdes.v1_0.AppLicenseKeySerDes;
 
 import java.util.LinkedHashMap;
 import java.util.Locale;
@@ -22,7 +22,7 @@ import java.util.logging.Logger;
 import javax.annotation.Generated;
 
 /**
- * @author Kyle Bischof
+ * @author Amos Fong
  * @generated
  */
 @Generated("")
@@ -300,7 +300,7 @@ public interface AppLicenseKeyResource {
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
 					_builder._port + _builder._contextPath +
-						"/o/provisioning-rest/v1.0/app-license-keys");
+						"/o/provisioning-marketplace-rest/v1.0/app-license-keys");
 
 			httpInvoker.userNameAndPassword(
 				_builder._login + ":" + _builder._password);
@@ -413,7 +413,7 @@ public interface AppLicenseKeyResource {
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
 					_builder._port + _builder._contextPath +
-						"/o/provisioning-rest/v1.0/app-license-keys");
+						"/o/provisioning-marketplace-rest/v1.0/app-license-keys");
 
 			httpInvoker.userNameAndPassword(
 				_builder._login + ":" + _builder._password);
@@ -532,7 +532,7 @@ public interface AppLicenseKeyResource {
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
 					_builder._port + _builder._contextPath +
-						"/o/provisioning-rest/v1.0/app-license-keys/activate");
+						"/o/provisioning-marketplace-rest/v1.0/app-license-keys/activate");
 
 			httpInvoker.userNameAndPassword(
 				_builder._login + ":" + _builder._password);
@@ -651,7 +651,7 @@ public interface AppLicenseKeyResource {
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
 					_builder._port + _builder._contextPath +
-						"/o/provisioning-rest/v1.0/app-license-keys/deactivate");
+						"/o/provisioning-marketplace-rest/v1.0/app-license-keys/deactivate");
 
 			httpInvoker.userNameAndPassword(
 				_builder._login + ":" + _builder._password);
@@ -752,7 +752,7 @@ public interface AppLicenseKeyResource {
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
 					_builder._port + _builder._contextPath +
-						"/o/provisioning-rest/v1.0/app-license-keys/{appLicenseKeyId}");
+						"/o/provisioning-marketplace-rest/v1.0/app-license-keys/{appLicenseKeyId}");
 
 			httpInvoker.path("appLicenseKeyId", appLicenseKeyId);
 
@@ -844,7 +844,7 @@ public interface AppLicenseKeyResource {
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
 					_builder._port + _builder._contextPath +
-						"/o/provisioning-rest/v1.0/app-license-keys/{appLicenseKeyId}/download");
+						"/o/provisioning-marketplace-rest/v1.0/app-license-keys/{appLicenseKeyId}/download");
 
 			httpInvoker.path("appLicenseKeyId", appLicenseKeyId);
 

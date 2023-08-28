@@ -3,10 +3,10 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-package com.liferay.osb.provisioning.rest.internal.resource.v1_0;
+package com.liferay.osb.provisioning.marketplace.rest.internal.resource.v1_0;
 
-import com.liferay.osb.provisioning.rest.dto.v1_0.AppLicenseKey;
-import com.liferay.osb.provisioning.rest.resource.v1_0.AppLicenseKeyResource;
+import com.liferay.osb.provisioning.marketplace.rest.dto.v1_0.AppLicenseKey;
+import com.liferay.osb.provisioning.marketplace.rest.resource.v1_0.AppLicenseKeyResource;
 import com.liferay.petra.function.UnsafeFunction;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.GroupedModel;
@@ -42,7 +42,7 @@ import javax.ws.rs.core.Response;
 import javax.ws.rs.core.UriInfo;
 
 /**
- * @author Kyle Bischof
+ * @author Amos Fong
  * @generated
  */
 @Generated("")
@@ -53,7 +53,7 @@ public abstract class BaseAppLicenseKeyResourceImpl
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -X 'GET' 'http://localhost:8080/o/provisioning-rest/v1.0/app-license-keys'  -u 'test@liferay.com:test'
+	 * curl -X 'GET' 'http://localhost:8080/o/provisioning-marketplace-rest/v1.0/app-license-keys'  -u 'test@liferay.com:test'
 	 */
 	@io.swagger.v3.oas.annotations.Operation(
 		description = "Retrieves the app license keys. Results can be paginated, filtered, searched, and sorted."
@@ -106,7 +106,7 @@ public abstract class BaseAppLicenseKeyResourceImpl
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -X 'POST' 'http://localhost:8080/o/provisioning-rest/v1.0/app-license-keys' -d $'{"description": ___, "expirationDate": ___, "hostName": ___, "id": ___, "ipAddresses": ___, "licenseType": ___, "macAddresses": ___, "orderId": ___, "owner": ___, "productId": ___, "productName": ___, "productVersion": ___, "startDate": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
+	 * curl -X 'POST' 'http://localhost:8080/o/provisioning-marketplace-rest/v1.0/app-license-keys' -d $'{"description": ___, "expirationDate": ___, "hostName": ___, "id": ___, "ipAddresses": ___, "licenseType": ___, "macAddresses": ___, "orderId": ___, "owner": ___, "productId": ___, "productName": ___, "productVersion": ___, "startDate": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
 	 */
 	@io.swagger.v3.oas.annotations.Operation(
 		description = "Generates an app license key."
@@ -149,7 +149,7 @@ public abstract class BaseAppLicenseKeyResourceImpl
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -X 'PUT' 'http://localhost:8080/o/provisioning-rest/v1.0/app-license-keys/activate'  -u 'test@liferay.com:test'
+	 * curl -X 'PUT' 'http://localhost:8080/o/provisioning-marketplace-rest/v1.0/app-license-keys/activate'  -u 'test@liferay.com:test'
 	 */
 	@io.swagger.v3.oas.annotations.Operation(
 		description = "Activates app license keys."
@@ -196,7 +196,7 @@ public abstract class BaseAppLicenseKeyResourceImpl
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -X 'PUT' 'http://localhost:8080/o/provisioning-rest/v1.0/app-license-keys/deactivate'  -u 'test@liferay.com:test'
+	 * curl -X 'PUT' 'http://localhost:8080/o/provisioning-marketplace-rest/v1.0/app-license-keys/deactivate'  -u 'test@liferay.com:test'
 	 */
 	@io.swagger.v3.oas.annotations.Operation(
 		description = "Deactivates app license keys."
@@ -243,7 +243,7 @@ public abstract class BaseAppLicenseKeyResourceImpl
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -X 'GET' 'http://localhost:8080/o/provisioning-rest/v1.0/app-license-keys/{appLicenseKeyId}'  -u 'test@liferay.com:test'
+	 * curl -X 'GET' 'http://localhost:8080/o/provisioning-marketplace-rest/v1.0/app-license-keys/{appLicenseKeyId}'  -u 'test@liferay.com:test'
 	 */
 	@io.swagger.v3.oas.annotations.Operation(
 		description = "Retrieves the app license key."
@@ -278,7 +278,7 @@ public abstract class BaseAppLicenseKeyResourceImpl
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -X 'GET' 'http://localhost:8080/o/provisioning-rest/v1.0/app-license-keys/{appLicenseKeyId}/download'  -u 'test@liferay.com:test'
+	 * curl -X 'GET' 'http://localhost:8080/o/provisioning-marketplace-rest/v1.0/app-license-keys/{appLicenseKeyId}/download'  -u 'test@liferay.com:test'
 	 */
 	@io.swagger.v3.oas.annotations.Operation(
 		description = "Downloads an XML of the app license key."

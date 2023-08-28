@@ -3,10 +3,10 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-package com.liferay.osb.provisioning.rest.client.serdes.v1_0;
+package com.liferay.osb.provisioning.marketplace.rest.client.serdes.v1_0;
 
-import com.liferay.osb.provisioning.rest.client.dto.v1_0.AppLicenseKey;
-import com.liferay.osb.provisioning.rest.client.json.BaseJSONParser;
+import com.liferay.osb.provisioning.marketplace.rest.client.dto.v1_0.AppLicenseKey;
+import com.liferay.osb.provisioning.marketplace.rest.client.json.BaseJSONParser;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -20,7 +20,7 @@ import java.util.TreeMap;
 import javax.annotation.Generated;
 
 /**
- * @author Kyle Bischof
+ * @author Amos Fong
  * @generated
  */
 @Generated("")

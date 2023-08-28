@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-package com.liferay.osb.provisioning.rest.dto.v1_0;
+package com.liferay.osb.provisioning.marketplace.rest.dto.v1_0;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonFilter;
@@ -38,7 +38,7 @@ import javax.validation.Valid;
 import javax.xml.bind.annotation.XmlRootElement;
 
 /**
- * @author Kyle Bischof
+ * @author Amos Fong
  * @generated
  */
 @Generated("")
@@ -1034,7 +1034,7 @@ public class AppLicenseKey implements Serializable {
 
 	@Schema(
 		accessMode = Schema.AccessMode.READ_ONLY,
-		defaultValue = "com.liferay.osb.provisioning.rest.dto.v1_0.AppLicenseKey",
+		defaultValue = "com.liferay.osb.provisioning.marketplace.rest.dto.v1_0.AppLicenseKey",
 		name = "x-class-name"
 	)
 	public String xClassName;

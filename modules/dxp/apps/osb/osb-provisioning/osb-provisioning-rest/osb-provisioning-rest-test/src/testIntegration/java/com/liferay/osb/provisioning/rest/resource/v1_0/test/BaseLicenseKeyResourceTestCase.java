@@ -327,39 +327,8 @@ public abstract class BaseLicenseKeyResourceTestCase {
 	public void testGetAccountAccountKeyLicenseKeysPageWithFilterDoubleEquals()
 		throws Exception {
 
-		testGetAccountAccountKeyLicenseKeysPageWithFilter(
-			"eq", EntityField.Type.DOUBLE);
-	}
-
-	@Test
-	public void testGetAccountAccountKeyLicenseKeysPageWithFilterStringContains()
-		throws Exception {
-
-		testGetAccountAccountKeyLicenseKeysPageWithFilter(
-			"contains", EntityField.Type.STRING);
-	}
-
-	@Test
-	public void testGetAccountAccountKeyLicenseKeysPageWithFilterStringEquals()
-		throws Exception {
-
-		testGetAccountAccountKeyLicenseKeysPageWithFilter(
-			"eq", EntityField.Type.STRING);
-	}
-
-	@Test
-	public void testGetAccountAccountKeyLicenseKeysPageWithFilterStringStartsWith()
-		throws Exception {
-
-		testGetAccountAccountKeyLicenseKeysPageWithFilter(
-			"startswith", EntityField.Type.STRING);
-	}
-
-	protected void testGetAccountAccountKeyLicenseKeysPageWithFilter(
-			String operator, EntityField.Type type)
-		throws Exception {
-
-		List<EntityField> entityFields = getEntityFields(type);
+		List<EntityField> entityFields = getEntityFields(
+			EntityField.Type.DOUBLE);
 
 		if (entityFields.isEmpty()) {
 			return;
@@ -381,7 +350,43 @@ public abstract class BaseLicenseKeyResourceTestCase {
 			Page<LicenseKey> page =
 				licenseKeyResource.getAccountAccountKeyLicenseKeysPage(
 					accountKey, null,
-					getFilterString(entityField, operator, licenseKey1),
+					getFilterString(entityField, "eq", licenseKey1),
+					Pagination.of(1, 2), null);
+
+			assertEquals(
+				Collections.singletonList(licenseKey1),
+				(List<LicenseKey>)page.getItems());
+		}
+	}
+
+	@Test
+	public void testGetAccountAccountKeyLicenseKeysPageWithFilterStringEquals()
+		throws Exception {
+
+		List<EntityField> entityFields = getEntityFields(
+			EntityField.Type.STRING);
+
+		if (entityFields.isEmpty()) {
+			return;
+		}
+
+		String accountKey =
+			testGetAccountAccountKeyLicenseKeysPage_getAccountKey();
+
+		LicenseKey licenseKey1 =
+			testGetAccountAccountKeyLicenseKeysPage_addLicenseKey(
+				accountKey, randomLicenseKey());
+
+		@SuppressWarnings("PMD.UnusedLocalVariable")
+		LicenseKey licenseKey2 =
+			testGetAccountAccountKeyLicenseKeysPage_addLicenseKey(
+				accountKey, randomLicenseKey());
+
+		for (EntityField entityField : entityFields) {
+			Page<LicenseKey> page =
+				licenseKeyResource.getAccountAccountKeyLicenseKeysPage(
+					accountKey, null,
+					getFilterString(entityField, "eq", licenseKey1),
 					Pagination.of(1, 2), null);
 
 			assertEquals(
@@ -1195,19 +1200,14 @@ public abstract class BaseLicenseKeyResourceTestCase {
 
 		Assert.assertTrue(valid);
 
-		assertValid(page.getActions(), expectedActions);
-	}
+		Map<String, Map<String, String>> actions = page.getActions();
 
-	protected void assertValid(
-		Map<String, Map<String, String>> actions1,
-		Map<String, Map<String, String>> actions2) {
-
-		for (String key : actions2.keySet()) {
-			Map action = actions1.get(key);
+		for (String key : expectedActions.keySet()) {
+			Map action = actions.get(key);
 
 			Assert.assertNotNull(key + " does not contain an action", action);
 
-			Map<String, String> expectedAction = actions2.get(key);
+			Map expectedAction = expectedActions.get(key);
 
 			Assert.assertEquals(
 				expectedAction.get("method"), action.get("method"));
@@ -1902,93 +1902,17 @@ public abstract class BaseLicenseKeyResourceTestCase {
 		sb.append(" ");
 
 		if (entityFieldName.equals("accountKey")) {
-			Object object = licenseKey.getAccountKey();
-
-			String value = String.valueOf(object);
-
-			if (operator.equals("contains")) {
-				sb = new StringBundler();
-
-				sb.append("contains(");
-				sb.append(entityFieldName);
-				sb.append(",'");
-
-				if ((object != null) && (value.length() > 2)) {
-					sb.append(value.substring(1, value.length() - 1));
-				}
-				else {
-					sb.append(value);
-				}
-
-				sb.append("')");
-			}
-			else if (operator.equals("startswith")) {
-				sb = new StringBundler();
-
-				sb.append("startswith(");
-				sb.append(entityFieldName);
-				sb.append(",'");
-
-				if ((object != null) && (value.length() > 1)) {
-					sb.append(value.substring(0, value.length() - 1));
-				}
-				else {
-					sb.append(value);
-				}
-
-				sb.append("')");
-			}
-			else {
-				sb.append("'");
-				sb.append(value);
-				sb.append("'");
-			}
+			sb.append("'");
+			sb.append(String.valueOf(licenseKey.getAccountKey()));
+			sb.append("'");
 
 			return sb.toString();
 		}
 
 		if (entityFieldName.equals("accountName")) {
-			Object object = licenseKey.getAccountName();
-
-			String value = String.valueOf(object);
-
-			if (operator.equals("contains")) {
-				sb = new StringBundler();
-
-				sb.append("contains(");
-				sb.append(entityFieldName);
-				sb.append(",'");
-
-				if ((object != null) && (value.length() > 2)) {
-					sb.append(value.substring(1, value.length() - 1));
-				}
-				else {
-					sb.append(value);
-				}
-
-				sb.append("')");
-			}
-			else if (operator.equals("startswith")) {
-				sb = new StringBundler();
-
-				sb.append("startswith(");
-				sb.append(entityFieldName);
-				sb.append(",'");
-
-				if ((object != null) && (value.length() > 1)) {
-					sb.append(value.substring(0, value.length() - 1));
-				}
-				else {
-					sb.append(value);
-				}
-
-				sb.append("')");
-			}
-			else {
-				sb.append("'");
-				sb.append(value);
-				sb.append("'");
-			}
+			sb.append("'");
+			sb.append(String.valueOf(licenseKey.getAccountName()));
+			sb.append("'");
 
 			return sb.toString();
 		}
@@ -1999,93 +1923,17 @@ public abstract class BaseLicenseKeyResourceTestCase {
 		}
 
 		if (entityFieldName.equals("additionalInfo")) {
-			Object object = licenseKey.getAdditionalInfo();
-
-			String value = String.valueOf(object);
-
-			if (operator.equals("contains")) {
-				sb = new StringBundler();
-
-				sb.append("contains(");
-				sb.append(entityFieldName);
-				sb.append(",'");
-
-				if ((object != null) && (value.length() > 2)) {
-					sb.append(value.substring(1, value.length() - 1));
-				}
-				else {
-					sb.append(value);
-				}
-
-				sb.append("')");
-			}
-			else if (operator.equals("startswith")) {
-				sb = new StringBundler();
-
-				sb.append("startswith(");
-				sb.append(entityFieldName);
-				sb.append(",'");
-
-				if ((object != null) && (value.length() > 1)) {
-					sb.append(value.substring(0, value.length() - 1));
-				}
-				else {
-					sb.append(value);
-				}
-
-				sb.append("')");
-			}
-			else {
-				sb.append("'");
-				sb.append(value);
-				sb.append("'");
-			}
+			sb.append("'");
+			sb.append(String.valueOf(licenseKey.getAdditionalInfo()));
+			sb.append("'");
 
 			return sb.toString();
 		}
 
 		if (entityFieldName.equals("assetReceiptLicenseUuid")) {
-			Object object = licenseKey.getAssetReceiptLicenseUuid();
-
-			String value = String.valueOf(object);
-
-			if (operator.equals("contains")) {
-				sb = new StringBundler();
-
-				sb.append("contains(");
-				sb.append(entityFieldName);
-				sb.append(",'");
-
-				if ((object != null) && (value.length() > 2)) {
-					sb.append(value.substring(1, value.length() - 1));
-				}
-				else {
-					sb.append(value);
-				}
-
-				sb.append("')");
-			}
-			else if (operator.equals("startswith")) {
-				sb = new StringBundler();
-
-				sb.append("startswith(");
-				sb.append(entityFieldName);
-				sb.append(",'");
-
-				if ((object != null) && (value.length() > 1)) {
-					sb.append(value.substring(0, value.length() - 1));
-				}
-				else {
-					sb.append(value);
-				}
-
-				sb.append("')");
-			}
-			else {
-				sb.append("'");
-				sb.append(value);
-				sb.append("'");
-			}
+			sb.append("'");
+			sb.append(String.valueOf(licenseKey.getAssetReceiptLicenseUuid()));
+			sb.append("'");
 
 			return sb.toString();
 		}
@@ -2132,47 +1980,9 @@ public abstract class BaseLicenseKeyResourceTestCase {
 		}
 
 		if (entityFieldName.equals("description")) {
-			Object object = licenseKey.getDescription();
-
-			String value = String.valueOf(object);
-
-			if (operator.equals("contains")) {
-				sb = new StringBundler();
-
-				sb.append("contains(");
-				sb.append(entityFieldName);
-				sb.append(",'");
-
-				if ((object != null) && (value.length() > 2)) {
-					sb.append(value.substring(1, value.length() - 1));
-				}
-				else {
-					sb.append(value);
-				}
-
-				sb.append("')");
-			}
-			else if (operator.equals("startswith")) {
-				sb = new StringBundler();
-
-				sb.append("startswith(");
-				sb.append(entityFieldName);
-				sb.append(",'");
-
-				if ((object != null) && (value.length() > 1)) {
-					sb.append(value.substring(0, value.length() - 1));
-				}
-				else {
-					sb.append(value);
-				}
-
-				sb.append("')");
-			}
-			else {
-				sb.append("'");
-				sb.append(value);
-				sb.append("'");
-			}
+			sb.append("'");
+			sb.append(String.valueOf(licenseKey.getDescription()));
+			sb.append("'");
 
 			return sb.toString();
 		}
@@ -2211,47 +2021,9 @@ public abstract class BaseLicenseKeyResourceTestCase {
 		}
 
 		if (entityFieldName.equals("hostName")) {
-			Object object = licenseKey.getHostName();
-
-			String value = String.valueOf(object);
-
-			if (operator.equals("contains")) {
-				sb = new StringBundler();
-
-				sb.append("contains(");
-				sb.append(entityFieldName);
-				sb.append(",'");
-
-				if ((object != null) && (value.length() > 2)) {
-					sb.append(value.substring(1, value.length() - 1));
-				}
-				else {
-					sb.append(value);
-				}
-
-				sb.append("')");
-			}
-			else if (operator.equals("startswith")) {
-				sb = new StringBundler();
-
-				sb.append("startswith(");
-				sb.append(entityFieldName);
-				sb.append(",'");
-
-				if ((object != null) && (value.length() > 1)) {
-					sb.append(value.substring(0, value.length() - 1));
-				}
-				else {
-					sb.append(value);
-				}
-
-				sb.append("')");
-			}
-			else {
-				sb.append("'");
-				sb.append(value);
-				sb.append("'");
-			}
+			sb.append("'");
+			sb.append(String.valueOf(licenseKey.getHostName()));
+			sb.append("'");
 
 			return sb.toString();
 		}
@@ -2262,93 +2034,17 @@ public abstract class BaseLicenseKeyResourceTestCase {
 		}
 
 		if (entityFieldName.equals("ipAddresses")) {
-			Object object = licenseKey.getIpAddresses();
-
-			String value = String.valueOf(object);
-
-			if (operator.equals("contains")) {
-				sb = new StringBundler();
-
-				sb.append("contains(");
-				sb.append(entityFieldName);
-				sb.append(",'");
-
-				if ((object != null) && (value.length() > 2)) {
-					sb.append(value.substring(1, value.length() - 1));
-				}
-				else {
-					sb.append(value);
-				}
-
-				sb.append("')");
-			}
-			else if (operator.equals("startswith")) {
-				sb = new StringBundler();
-
-				sb.append("startswith(");
-				sb.append(entityFieldName);
-				sb.append(",'");
-
-				if ((object != null) && (value.length() > 1)) {
-					sb.append(value.substring(0, value.length() - 1));
-				}
-				else {
-					sb.append(value);
-				}
-
-				sb.append("')");
-			}
-			else {
-				sb.append("'");
-				sb.append(value);
-				sb.append("'");
-			}
+			sb.append("'");
+			sb.append(String.valueOf(licenseKey.getIpAddresses()));
+			sb.append("'");
 
 			return sb.toString();
 		}
 
 		if (entityFieldName.equals("key")) {
-			Object object = licenseKey.getKey();
-
-			String value = String.valueOf(object);
-
-			if (operator.equals("contains")) {
-				sb = new StringBundler();
-
-				sb.append("contains(");
-				sb.append(entityFieldName);
-				sb.append(",'");
-
-				if ((object != null) && (value.length() > 2)) {
-					sb.append(value.substring(1, value.length() - 1));
-				}
-				else {
-					sb.append(value);
-				}
-
-				sb.append("')");
-			}
-			else if (operator.equals("startswith")) {
-				sb = new StringBundler();
-
-				sb.append("startswith(");
-				sb.append(entityFieldName);
-				sb.append(",'");
-
-				if ((object != null) && (value.length() > 1)) {
-					sb.append(value.substring(0, value.length() - 1));
-				}
-				else {
-					sb.append(value);
-				}
-
-				sb.append("')");
-			}
-			else {
-				sb.append("'");
-				sb.append(value);
-				sb.append("'");
-			}
+			sb.append("'");
+			sb.append(String.valueOf(licenseKey.getKey()));
+			sb.append("'");
 
 			return sb.toString();
 		}
@@ -2370,47 +2066,9 @@ public abstract class BaseLicenseKeyResourceTestCase {
 		}
 
 		if (entityFieldName.equals("macAddresses")) {
-			Object object = licenseKey.getMacAddresses();
-
-			String value = String.valueOf(object);
-
-			if (operator.equals("contains")) {
-				sb = new StringBundler();
-
-				sb.append("contains(");
-				sb.append(entityFieldName);
-				sb.append(",'");
-
-				if ((object != null) && (value.length() > 2)) {
-					sb.append(value.substring(1, value.length() - 1));
-				}
-				else {
-					sb.append(value);
-				}
-
-				sb.append("')");
-			}
-			else if (operator.equals("startswith")) {
-				sb = new StringBundler();
-
-				sb.append("startswith(");
-				sb.append(entityFieldName);
-				sb.append(",'");
-
-				if ((object != null) && (value.length() > 1)) {
-					sb.append(value.substring(0, value.length() - 1));
-				}
-				else {
-					sb.append(value);
-				}
-
-				sb.append("')");
-			}
-			else {
-				sb.append("'");
-				sb.append(value);
-				sb.append("'");
-			}
+			sb.append("'");
+			sb.append(String.valueOf(licenseKey.getMacAddresses()));
+			sb.append("'");
 
 			return sb.toString();
 		}
@@ -2466,461 +2124,81 @@ public abstract class BaseLicenseKeyResourceTestCase {
 		}
 
 		if (entityFieldName.equals("modifiedUserName")) {
-			Object object = licenseKey.getModifiedUserName();
-
-			String value = String.valueOf(object);
-
-			if (operator.equals("contains")) {
-				sb = new StringBundler();
-
-				sb.append("contains(");
-				sb.append(entityFieldName);
-				sb.append(",'");
-
-				if ((object != null) && (value.length() > 2)) {
-					sb.append(value.substring(1, value.length() - 1));
-				}
-				else {
-					sb.append(value);
-				}
-
-				sb.append("')");
-			}
-			else if (operator.equals("startswith")) {
-				sb = new StringBundler();
-
-				sb.append("startswith(");
-				sb.append(entityFieldName);
-				sb.append(",'");
-
-				if ((object != null) && (value.length() > 1)) {
-					sb.append(value.substring(0, value.length() - 1));
-				}
-				else {
-					sb.append(value);
-				}
-
-				sb.append("')");
-			}
-			else {
-				sb.append("'");
-				sb.append(value);
-				sb.append("'");
-			}
+			sb.append("'");
+			sb.append(String.valueOf(licenseKey.getModifiedUserName()));
+			sb.append("'");
 
 			return sb.toString();
 		}
 
 		if (entityFieldName.equals("modifiedUserUuid")) {
-			Object object = licenseKey.getModifiedUserUuid();
-
-			String value = String.valueOf(object);
-
-			if (operator.equals("contains")) {
-				sb = new StringBundler();
-
-				sb.append("contains(");
-				sb.append(entityFieldName);
-				sb.append(",'");
-
-				if ((object != null) && (value.length() > 2)) {
-					sb.append(value.substring(1, value.length() - 1));
-				}
-				else {
-					sb.append(value);
-				}
-
-				sb.append("')");
-			}
-			else if (operator.equals("startswith")) {
-				sb = new StringBundler();
-
-				sb.append("startswith(");
-				sb.append(entityFieldName);
-				sb.append(",'");
-
-				if ((object != null) && (value.length() > 1)) {
-					sb.append(value.substring(0, value.length() - 1));
-				}
-				else {
-					sb.append(value);
-				}
-
-				sb.append("')");
-			}
-			else {
-				sb.append("'");
-				sb.append(value);
-				sb.append("'");
-			}
+			sb.append("'");
+			sb.append(String.valueOf(licenseKey.getModifiedUserUuid()));
+			sb.append("'");
 
 			return sb.toString();
 		}
 
 		if (entityFieldName.equals("name")) {
-			Object object = licenseKey.getName();
-
-			String value = String.valueOf(object);
-
-			if (operator.equals("contains")) {
-				sb = new StringBundler();
-
-				sb.append("contains(");
-				sb.append(entityFieldName);
-				sb.append(",'");
-
-				if ((object != null) && (value.length() > 2)) {
-					sb.append(value.substring(1, value.length() - 1));
-				}
-				else {
-					sb.append(value);
-				}
-
-				sb.append("')");
-			}
-			else if (operator.equals("startswith")) {
-				sb = new StringBundler();
-
-				sb.append("startswith(");
-				sb.append(entityFieldName);
-				sb.append(",'");
-
-				if ((object != null) && (value.length() > 1)) {
-					sb.append(value.substring(0, value.length() - 1));
-				}
-				else {
-					sb.append(value);
-				}
-
-				sb.append("')");
-			}
-			else {
-				sb.append("'");
-				sb.append(value);
-				sb.append("'");
-			}
+			sb.append("'");
+			sb.append(String.valueOf(licenseKey.getName()));
+			sb.append("'");
 
 			return sb.toString();
 		}
 
 		if (entityFieldName.equals("owner")) {
-			Object object = licenseKey.getOwner();
-
-			String value = String.valueOf(object);
-
-			if (operator.equals("contains")) {
-				sb = new StringBundler();
-
-				sb.append("contains(");
-				sb.append(entityFieldName);
-				sb.append(",'");
-
-				if ((object != null) && (value.length() > 2)) {
-					sb.append(value.substring(1, value.length() - 1));
-				}
-				else {
-					sb.append(value);
-				}
-
-				sb.append("')");
-			}
-			else if (operator.equals("startswith")) {
-				sb = new StringBundler();
-
-				sb.append("startswith(");
-				sb.append(entityFieldName);
-				sb.append(",'");
-
-				if ((object != null) && (value.length() > 1)) {
-					sb.append(value.substring(0, value.length() - 1));
-				}
-				else {
-					sb.append(value);
-				}
-
-				sb.append("')");
-			}
-			else {
-				sb.append("'");
-				sb.append(value);
-				sb.append("'");
-			}
+			sb.append("'");
+			sb.append(String.valueOf(licenseKey.getOwner()));
+			sb.append("'");
 
 			return sb.toString();
 		}
 
 		if (entityFieldName.equals("productId")) {
-			Object object = licenseKey.getProductId();
-
-			String value = String.valueOf(object);
-
-			if (operator.equals("contains")) {
-				sb = new StringBundler();
-
-				sb.append("contains(");
-				sb.append(entityFieldName);
-				sb.append(",'");
-
-				if ((object != null) && (value.length() > 2)) {
-					sb.append(value.substring(1, value.length() - 1));
-				}
-				else {
-					sb.append(value);
-				}
-
-				sb.append("')");
-			}
-			else if (operator.equals("startswith")) {
-				sb = new StringBundler();
-
-				sb.append("startswith(");
-				sb.append(entityFieldName);
-				sb.append(",'");
-
-				if ((object != null) && (value.length() > 1)) {
-					sb.append(value.substring(0, value.length() - 1));
-				}
-				else {
-					sb.append(value);
-				}
-
-				sb.append("')");
-			}
-			else {
-				sb.append("'");
-				sb.append(value);
-				sb.append("'");
-			}
+			sb.append("'");
+			sb.append(String.valueOf(licenseKey.getProductId()));
+			sb.append("'");
 
 			return sb.toString();
 		}
 
 		if (entityFieldName.equals("productKey")) {
-			Object object = licenseKey.getProductKey();
-
-			String value = String.valueOf(object);
-
-			if (operator.equals("contains")) {
-				sb = new StringBundler();
-
-				sb.append("contains(");
-				sb.append(entityFieldName);
-				sb.append(",'");
-
-				if ((object != null) && (value.length() > 2)) {
-					sb.append(value.substring(1, value.length() - 1));
-				}
-				else {
-					sb.append(value);
-				}
-
-				sb.append("')");
-			}
-			else if (operator.equals("startswith")) {
-				sb = new StringBundler();
-
-				sb.append("startswith(");
-				sb.append(entityFieldName);
-				sb.append(",'");
-
-				if ((object != null) && (value.length() > 1)) {
-					sb.append(value.substring(0, value.length() - 1));
-				}
-				else {
-					sb.append(value);
-				}
-
-				sb.append("')");
-			}
-			else {
-				sb.append("'");
-				sb.append(value);
-				sb.append("'");
-			}
+			sb.append("'");
+			sb.append(String.valueOf(licenseKey.getProductKey()));
+			sb.append("'");
 
 			return sb.toString();
 		}
 
 		if (entityFieldName.equals("productName")) {
-			Object object = licenseKey.getProductName();
-
-			String value = String.valueOf(object);
-
-			if (operator.equals("contains")) {
-				sb = new StringBundler();
-
-				sb.append("contains(");
-				sb.append(entityFieldName);
-				sb.append(",'");
-
-				if ((object != null) && (value.length() > 2)) {
-					sb.append(value.substring(1, value.length() - 1));
-				}
-				else {
-					sb.append(value);
-				}
-
-				sb.append("')");
-			}
-			else if (operator.equals("startswith")) {
-				sb = new StringBundler();
-
-				sb.append("startswith(");
-				sb.append(entityFieldName);
-				sb.append(",'");
-
-				if ((object != null) && (value.length() > 1)) {
-					sb.append(value.substring(0, value.length() - 1));
-				}
-				else {
-					sb.append(value);
-				}
-
-				sb.append("')");
-			}
-			else {
-				sb.append("'");
-				sb.append(value);
-				sb.append("'");
-			}
+			sb.append("'");
+			sb.append(String.valueOf(licenseKey.getProductName()));
+			sb.append("'");
 
 			return sb.toString();
 		}
 
 		if (entityFieldName.equals("productPurchaseKey")) {
-			Object object = licenseKey.getProductPurchaseKey();
-
-			String value = String.valueOf(object);
-
-			if (operator.equals("contains")) {
-				sb = new StringBundler();
-
-				sb.append("contains(");
-				sb.append(entityFieldName);
-				sb.append(",'");
-
-				if ((object != null) && (value.length() > 2)) {
-					sb.append(value.substring(1, value.length() - 1));
-				}
-				else {
-					sb.append(value);
-				}
-
-				sb.append("')");
-			}
-			else if (operator.equals("startswith")) {
-				sb = new StringBundler();
-
-				sb.append("startswith(");
-				sb.append(entityFieldName);
-				sb.append(",'");
-
-				if ((object != null) && (value.length() > 1)) {
-					sb.append(value.substring(0, value.length() - 1));
-				}
-				else {
-					sb.append(value);
-				}
-
-				sb.append("')");
-			}
-			else {
-				sb.append("'");
-				sb.append(value);
-				sb.append("'");
-			}
+			sb.append("'");
+			sb.append(String.valueOf(licenseKey.getProductPurchaseKey()));
+			sb.append("'");
 
 			return sb.toString();
 		}
 
 		if (entityFieldName.equals("productVersion")) {
-			Object object = licenseKey.getProductVersion();
-
-			String value = String.valueOf(object);
-
-			if (operator.equals("contains")) {
-				sb = new StringBundler();
-
-				sb.append("contains(");
-				sb.append(entityFieldName);
-				sb.append(",'");
-
-				if ((object != null) && (value.length() > 2)) {
-					sb.append(value.substring(1, value.length() - 1));
-				}
-				else {
-					sb.append(value);
-				}
-
-				sb.append("')");
-			}
-			else if (operator.equals("startswith")) {
-				sb = new StringBundler();
-
-				sb.append("startswith(");
-				sb.append(entityFieldName);
-				sb.append(",'");
-
-				if ((object != null) && (value.length() > 1)) {
-					sb.append(value.substring(0, value.length() - 1));
-				}
-				else {
-					sb.append(value);
-				}
-
-				sb.append("')");
-			}
-			else {
-				sb.append("'");
-				sb.append(value);
-				sb.append("'");
-			}
+			sb.append("'");
+			sb.append(String.valueOf(licenseKey.getProductVersion()));
+			sb.append("'");
 
 			return sb.toString();
 		}
 
 		if (entityFieldName.equals("serverId")) {
-			Object object = licenseKey.getServerId();
-
-			String value = String.valueOf(object);
-
-			if (operator.equals("contains")) {
-				sb = new StringBundler();
-
-				sb.append("contains(");
-				sb.append(entityFieldName);
-				sb.append(",'");
-
-				if ((object != null) && (value.length() > 2)) {
-					sb.append(value.substring(1, value.length() - 1));
-				}
-				else {
-					sb.append(value);
-				}
-
-				sb.append("')");
-			}
-			else if (operator.equals("startswith")) {
-				sb = new StringBundler();
-
-				sb.append("startswith(");
-				sb.append(entityFieldName);
-				sb.append(",'");
-
-				if ((object != null) && (value.length() > 1)) {
-					sb.append(value.substring(0, value.length() - 1));
-				}
-				else {
-					sb.append(value);
-				}
-
-				sb.append("')");
-			}
-			else {
-				sb.append("'");
-				sb.append(value);
-				sb.append("'");
-			}
+			sb.append("'");
+			sb.append(String.valueOf(licenseKey.getServerId()));
+			sb.append("'");
 
 			return sb.toString();
 		}
@@ -2962,93 +2240,17 @@ public abstract class BaseLicenseKeyResourceTestCase {
 		}
 
 		if (entityFieldName.equals("userName")) {
-			Object object = licenseKey.getUserName();
-
-			String value = String.valueOf(object);
-
-			if (operator.equals("contains")) {
-				sb = new StringBundler();
-
-				sb.append("contains(");
-				sb.append(entityFieldName);
-				sb.append(",'");
-
-				if ((object != null) && (value.length() > 2)) {
-					sb.append(value.substring(1, value.length() - 1));
-				}
-				else {
-					sb.append(value);
-				}
-
-				sb.append("')");
-			}
-			else if (operator.equals("startswith")) {
-				sb = new StringBundler();
-
-				sb.append("startswith(");
-				sb.append(entityFieldName);
-				sb.append(",'");
-
-				if ((object != null) && (value.length() > 1)) {
-					sb.append(value.substring(0, value.length() - 1));
-				}
-				else {
-					sb.append(value);
-				}
-
-				sb.append("')");
-			}
-			else {
-				sb.append("'");
-				sb.append(value);
-				sb.append("'");
-			}
+			sb.append("'");
+			sb.append(String.valueOf(licenseKey.getUserName()));
+			sb.append("'");
 
 			return sb.toString();
 		}
 
 		if (entityFieldName.equals("userUuid")) {
-			Object object = licenseKey.getUserUuid();
-
-			String value = String.valueOf(object);
-
-			if (operator.equals("contains")) {
-				sb = new StringBundler();
-
-				sb.append("contains(");
-				sb.append(entityFieldName);
-				sb.append(",'");
-
-				if ((object != null) && (value.length() > 2)) {
-					sb.append(value.substring(1, value.length() - 1));
-				}
-				else {
-					sb.append(value);
-				}
-
-				sb.append("')");
-			}
-			else if (operator.equals("startswith")) {
-				sb = new StringBundler();
-
-				sb.append("startswith(");
-				sb.append(entityFieldName);
-				sb.append(",'");
-
-				if ((object != null) && (value.length() > 1)) {
-					sb.append(value.substring(0, value.length() - 1));
-				}
-				else {
-					sb.append(value);
-				}
-
-				sb.append("')");
-			}
-			else {
-				sb.append("'");
-				sb.append(value);
-				sb.append("'");
-			}
+			sb.append("'");
+			sb.append(String.valueOf(licenseKey.getUserUuid()));
+			sb.append("'");
 
 			return sb.toString();
 		}
