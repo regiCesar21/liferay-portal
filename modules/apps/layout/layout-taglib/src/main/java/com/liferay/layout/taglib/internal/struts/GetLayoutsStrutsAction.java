@@ -57,13 +57,13 @@ public class GetLayoutsStrutsAction implements StrutsAction {
 		int end = ParamUtil.getInteger(
 			httpServletRequest, "end", start + pageSize);
 
-		int finalEnd = Math.max(start, end);
+		int startEndMax = Math.max(start, end);
 
 		boolean hasMoreElements = false;
 		int childLayoutsCount = _layoutService.getLayoutsCount(
 			groupId, privateLayout, parentLayoutId);
 
-		if (childLayoutsCount > finalEnd) {
+		if (childLayoutsCount > startEndMax) {
 			hasMoreElements = true;
 		}
 
