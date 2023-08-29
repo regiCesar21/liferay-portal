@@ -42,8 +42,9 @@ public class FormRecordUtil {
 
 		DDMFormValues ddmFormValues = ddmFormInstanceRecord.getDDMFormValues();
 
-		List<DDMFormFieldValue> allFieldValues = _getAllFieldValues(
-			ddmFormValues.getDDMFormFieldValues());
+		List<DDMFormFieldValue> allDDMFormFieldValues =
+			_getAllDDMFormFieldValues(
+				ddmFormValues.getDDMFormFieldValues());
 
 		return new FormRecord() {
 			{
@@ -58,7 +59,7 @@ public class FormRecordUtil {
 					ddmFormInstanceRecord.getStatus() ==
 						WorkflowConstants.STATUS_DRAFT;
 				formFieldValues = TransformUtil.transformToArray(
-					allFieldValues,
+					allDDMFormFieldValues,
 					ddmFormFieldValue -> {
 						Value localizedValue = ddmFormFieldValue.getValue();
 
@@ -82,21 +83,23 @@ public class FormRecordUtil {
 		};
 	}
 
-	private static List<DDMFormFieldValue> _getAllFieldValues(
+	private static List<DDMFormFieldValue> _getAllDDMFormFieldValues(
 		List<DDMFormFieldValue> ddmFormValues) {
 
-		List<DDMFormFieldValue> allFieldValues = new ArrayList<>(ddmFormValues);
+		List<DDMFormFieldValue> allDDMFormFieldValues = new ArrayList<>(
+			ddmFormValues);
 
 		for (DDMFormFieldValue field : ddmFormValues) {
 			if (field.getNestedDDMFormFieldValues(
 				).size() > 0) {
 
-				allFieldValues.addAll(
-					_getAllFieldValues(field.getNestedDDMFormFieldValues()));
+				allDDMFormFieldValues.addAll(
+					_getAllDDMFormFieldValues(
+						field.getNestedDDMFormFieldValues()));
 			}
 		}
 
-		return allFieldValues;
+		return allDDMFormFieldValues;
 	}
 
 	private static FormDocument _toFormDocument(
