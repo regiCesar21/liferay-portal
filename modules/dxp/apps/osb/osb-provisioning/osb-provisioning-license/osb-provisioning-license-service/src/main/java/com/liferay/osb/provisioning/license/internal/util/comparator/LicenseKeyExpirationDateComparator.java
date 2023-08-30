@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-package com.liferay.osb.util.comparator;
+package com.liferay.osb.provisioning.license.internal.util.comparator;
 
 import com.liferay.osb.provisioning.license.model.LicenseKey;
 import com.liferay.portal.kernel.util.DateUtil;
