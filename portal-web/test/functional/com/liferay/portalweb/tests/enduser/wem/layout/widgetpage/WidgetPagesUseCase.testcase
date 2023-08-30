@@ -956,13 +956,9 @@ definition {
 
 		SelectFrame.selectFrameNoLoading(locator1 = "IFrame#EMBEDDED_IFRAME");
 
-		AssertTextEquals.assertPartialText(
-			locator1 = "Embedded#EMBEDDED_TEXT_YES",
-			value1 = "Yes");
-
-		AssertTextEquals.assertPartialText(
-			locator1 = "Embedded#EMBEDDED_TEXT_UPDATED",
-			value1 = "updated");
+		AssertVisible(
+			key_title = "Fires",
+			locator1 = "Header#H1_TITLE");
 
 		SelectFrameTop(value1 = "relative=top");
 
