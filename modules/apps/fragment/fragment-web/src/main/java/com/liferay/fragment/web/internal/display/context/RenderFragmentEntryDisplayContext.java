@@ -63,6 +63,7 @@ public class RenderFragmentEntryDisplayContext {
 		fragmentEntryLink.setHtml(html);
 		fragmentEntryLink.setJs(js);
 		fragmentEntryLink.setConfiguration(configuration);
+		fragmentEntryLink.setNamespace("namespace");
 
 		DefaultFragmentRendererContext defaultFragmentRendererContext =
 			new DefaultFragmentRendererContext(fragmentEntryLink);
