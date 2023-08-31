@@ -12,10 +12,14 @@ public class ProductTypeConstants {
 
 	public static final String ADD_ON = "add-on";
 
+	public static final String MARKETPLACE_APP = "marketplace-app";
+
 	public static final String PRIMARY = "primary";
 
 	public static final String REGULAR = "regular";
 
-	public static final String[] TYPES = {ADD_ON, PRIMARY, REGULAR};
+	public static final String[] TYPES = {
+		ADD_ON, MARKETPLACE_APP, PRIMARY, REGULAR
+	};
 
 }
