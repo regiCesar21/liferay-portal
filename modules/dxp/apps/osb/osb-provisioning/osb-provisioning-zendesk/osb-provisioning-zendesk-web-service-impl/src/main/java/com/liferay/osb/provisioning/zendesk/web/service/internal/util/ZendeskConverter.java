@@ -10,8 +10,11 @@ import com.liferay.osb.provisioning.zendesk.model.ZendeskTicket;
 import com.liferay.osb.provisioning.zendesk.model.ZendeskUser;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.util.Validator;
 
+import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Map;
 import java.util.Set;
 
 import org.osgi.service.component.annotations.Component;
@@ -33,6 +36,8 @@ public class ZendeskConverter {
 		JSONObject organizationFieldsJSONObject = jsonObject.getJSONObject(
 			"organization_fields");
 
+		zendeskOrganization.setMajorCases(
+			organizationFieldsJSONObject.getString("major_cases"));
 		zendeskOrganization.setPartnerFirstLineSupport(
 			organizationFieldsJSONObject.getString(
 				"partner_first_line_support"));
@@ -58,6 +63,28 @@ public class ZendeskConverter {
 
 	public ZendeskTicket toZendeskTicket(JSONObject jsonObject) {
 		ZendeskTicket zendeskTicket = new ZendeskTicket();
+
+		JSONArray customFieldsJSONArray = jsonObject.getJSONArray(
+			"custom_fields");
+
+		if (customFieldsJSONArray != null) {
+			Map<Long, String> customFields = new HashMap<>();
+
+			for (int i = 0; i < customFieldsJSONArray.length(); i++) {
+				JSONObject customFieldJSONObject =
+					customFieldsJSONArray.getJSONObject(i);
+
+				String customFieldValue = customFieldJSONObject.getString(
+					"value");
+
+				if (Validator.isNotNull(customFieldValue)) {
+					customFields.put(
+						customFieldJSONObject.getLong("id"), customFieldValue);
+				}
+			}
+
+			zendeskTicket.setCustomFields(customFields);
+		}
 
 		zendeskTicket.setDescription(jsonObject.getString("description"));
 		zendeskTicket.setRequesterId(jsonObject.getLong("requester_id"));

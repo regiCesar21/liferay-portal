@@ -41,6 +41,8 @@ public abstract class BasePubsubSubscriber {
 			properties.get("messageFilter"));
 		String namespace = GetterUtil.getString(properties.get("namespace"));
 		String projectId = GetterUtil.getString(properties.get("projectId"));
+		String subscriptionName = GetterUtil.getString(
+			properties.get("subscription"));
 		String topic = GetterUtil.getString(properties.get("topic"));
 
 		SubscriptionAdminSettings subscriptionAdminSettings =
@@ -54,7 +56,9 @@ public abstract class BasePubsubSubscriber {
 
 		Class<?> clazz = getClass();
 
-		String subscriptionName = clazz.getName();
+		if (Validator.isNull(subscriptionName)) {
+			subscriptionName = clazz.getName();
+		}
 
 		if (Validator.isNotNull(namespace)) {
 			subscriptionName =
@@ -64,34 +68,39 @@ public abstract class BasePubsubSubscriber {
 		ProjectSubscriptionName projectSubscriptionName =
 			ProjectSubscriptionName.of(projectId, subscriptionName);
 
-		try {
-			subscriptionAdminClient.getSubscription(projectSubscriptionName);
+		if (subscriptionName.contains(clazz.getName())) {
+			try {
+				subscriptionAdminClient.getSubscription(
+					projectSubscriptionName);
 
-			if (_log.isDebugEnabled()) {
-				_log.debug(
-					"Found subscription " + projectSubscriptionName.toString());
+				if (_log.isDebugEnabled()) {
+					_log.debug(
+						"Found subscription " +
+							projectSubscriptionName.toString());
+				}
 			}
-		}
-		catch (NotFoundException notFoundException) {
-			TopicName topicName = TopicName.ofProjectTopicName(
-				projectId, topic);
+			catch (NotFoundException notFoundException) {
+				TopicName topicName = TopicName.ofProjectTopicName(
+					projectId, topic);
 
-			Subscription subscription = Subscription.newBuilder(
-			).setAckDeadlineSeconds(
-				30
-			).setFilter(
-				messageFilter
-			).setName(
-				projectSubscriptionName.toString()
-			).setTopic(
-				topicName.toString()
-			).build();
+				Subscription subscription = Subscription.newBuilder(
+				).setAckDeadlineSeconds(
+					30
+				).setFilter(
+					messageFilter
+				).setName(
+					projectSubscriptionName.toString()
+				).setTopic(
+					topicName.toString()
+				).build();
 
-			if (_log.isDebugEnabled()) {
-				_log.debug("Creating subscription " + subscription.toString());
+				if (_log.isDebugEnabled()) {
+					_log.debug(
+						"Creating subscription " + subscription.toString());
+				}
+
+				subscriptionAdminClient.createSubscription(subscription);
 			}
-
-			subscriptionAdminClient.createSubscription(subscription);
 		}
 
 		_subscriber = Subscriber.newBuilder(

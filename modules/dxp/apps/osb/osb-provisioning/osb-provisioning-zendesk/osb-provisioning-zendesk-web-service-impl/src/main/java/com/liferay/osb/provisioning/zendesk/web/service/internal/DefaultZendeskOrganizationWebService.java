@@ -10,9 +10,11 @@ import com.liferay.osb.provisioning.zendesk.connector.service.ZendeskBaseWebServ
 import com.liferay.osb.provisioning.zendesk.model.ZendeskOrganization;
 import com.liferay.osb.provisioning.zendesk.web.service.ZendeskOrganizationWebService;
 import com.liferay.osb.provisioning.zendesk.web.service.internal.util.ZendeskConverter;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.json.JSONUtil;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -50,6 +52,26 @@ public class DefaultZendeskOrganizationWebService
 
 		return zendeskConverter.toZendeskOrganization(
 			organizationsJSONArray.getJSONObject(0));
+	}
+
+	public void updateZendeskOrganization(
+			ZendeskOrganization zendeskOrganization)
+		throws PortalException {
+
+		String endpoint = StringBundler.concat(
+			ZendeskRESTEndpoints.URL_API_V2, "organizations/",
+			zendeskOrganization.getZendeskOrganizationId(), ".json");
+
+		JSONObject organizationFieldsJSONObject = JSONUtil.put(
+			"major_cases", zendeskOrganization.getMajorCases());
+
+		JSONObject organizationJSONObject = JSONUtil.put(
+			"organization_fields", organizationFieldsJSONObject);
+
+		JSONObject jsonObject = JSONUtil.put(
+			"organization", organizationJSONObject);
+
+		zendeskBaseWebService.put(endpoint, jsonObject.toString());
 	}
 
 	@Reference

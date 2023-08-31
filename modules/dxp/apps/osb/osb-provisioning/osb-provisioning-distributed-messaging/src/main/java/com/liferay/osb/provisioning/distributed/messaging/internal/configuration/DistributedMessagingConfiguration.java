@@ -69,4 +69,7 @@ public interface DistributedMessagingConfiguration {
 	@Meta.AD(required = false)
 	public Long zendeskCustomFieldSupportRegionId();
 
+	@Meta.AD(required = false)
+	public Long zendeskTicketCustomFieldMajorCasesId();
+
 }

@@ -19,4 +19,8 @@ public interface ZendeskOrganizationWebService {
 	public ZendeskOrganization getZendeskOrganization(String externalId)
 		throws PortalException;
 
+	public void updateZendeskOrganization(
+			ZendeskOrganization zendeskOrganization)
+		throws PortalException;
+
 }

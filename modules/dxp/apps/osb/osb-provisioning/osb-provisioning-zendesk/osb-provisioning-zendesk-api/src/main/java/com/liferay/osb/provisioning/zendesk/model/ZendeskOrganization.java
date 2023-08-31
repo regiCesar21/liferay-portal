@@ -27,6 +27,10 @@ public class ZendeskOrganization {
 		return _externalId;
 	}
 
+	public String getMajorCases() {
+		return _majorCases;
+	}
+
 	public String getName() {
 		return _name;
 	}
@@ -95,6 +99,10 @@ public class ZendeskOrganization {
 		_externalId = externalId;
 	}
 
+	public void setMajorCases(String majorCases) {
+		_majorCases = majorCases;
+	}
+
 	public void setName(String name) {
 		_name = name;
 	}
@@ -154,6 +162,7 @@ public class ZendeskOrganization {
 	private String _accountCode;
 	private String _details;
 	private String _externalId;
+	private String _majorCases;
 	private String _name;
 	private String _notes;
 	private String _partnerFirstLineSupport;

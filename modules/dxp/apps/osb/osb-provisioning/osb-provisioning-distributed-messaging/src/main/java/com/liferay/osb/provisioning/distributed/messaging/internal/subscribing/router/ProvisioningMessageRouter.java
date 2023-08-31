@@ -14,6 +14,7 @@ import com.liferay.osb.provisioning.distributed.messaging.internal.subscribing.E
 import com.liferay.osb.provisioning.distributed.messaging.internal.subscribing.EntitlementDeleteMessageSubscriber;
 import com.liferay.osb.provisioning.distributed.messaging.internal.subscribing.OktaUsersMessageSubscriber;
 import com.liferay.osb.provisioning.distributed.messaging.internal.subscribing.ProductMessageSubscriber;
+import com.liferay.osb.provisioning.distributed.messaging.internal.subscribing.ZendeskMessageSubscriber;
 
 import java.util.Map;
 
@@ -80,6 +81,14 @@ public class ProvisioningMessageRouter extends BaseMessageRouter {
 		Map<String, Object> properties) {
 
 		addRoute(productMessageSubscriber, properties);
+	}
+
+	@Reference(unbind = "-")
+	protected void setZendeskMessageSubscriber(
+		ZendeskMessageSubscriber zendeskMessageSubscriber,
+		Map<String, Object> properties) {
+
+		addRoute(zendeskMessageSubscriber, properties);
 	}
 
 }
