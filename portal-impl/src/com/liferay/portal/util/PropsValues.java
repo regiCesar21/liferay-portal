@@ -1538,6 +1538,13 @@ public class PropsValues {
 	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
 	 */
 	@Deprecated
+	public static final long LDAP_CLOCK_SKEW = GetterUtil.getLong(
+		PropsUtil.get(PropsKeys.LDAP_CLOCK_SKEW));
+
+	/**
+	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
+	 */
+	@Deprecated
 	public static final boolean LDAP_IGNORE_USER_SEARCH_FILTER_FOR_AUTH =
 		GetterUtil.getBoolean(
 			PropsUtil.get(PropsKeys.LDAP_IGNORE_USER_SEARCH_FILTER_FOR_AUTH));
