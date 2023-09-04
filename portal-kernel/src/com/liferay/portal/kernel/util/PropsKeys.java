@@ -1912,6 +1912,12 @@ public interface PropsKeys {
 	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
 	 */
 	@Deprecated
+	public static final String LDAP_CLOCK_SKEW = "ldap.clock.skew";
+
+	/**
+	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
+	 */
+	@Deprecated
 	public static final String LDAP_IGNORE_USER_SEARCH_FILTER_FOR_AUTH =
 		"ldap.ignore.user.search.filter.for.auth";
 

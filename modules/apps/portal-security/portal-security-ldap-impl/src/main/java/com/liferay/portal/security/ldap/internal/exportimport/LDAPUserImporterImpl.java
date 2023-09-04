@@ -1732,23 +1732,17 @@ public class LDAPUserImporterImpl implements LDAPUserImporter, UserImporter {
 			}
 
 			if (modifiedDate != null) {
-				LDAPServerConfiguration ldapServerConfiguration =
-					_ldapServerConfigurationProvider.getConfiguration(
-						ldapImportContext.getCompanyId(),
-						ldapImportContext.getLdapServerId());
-
 				Date expireDate = new Date(
-					System.currentTimeMillis() +
-						ldapServerConfiguration.clockSkew());
+					System.currentTimeMillis() + PropsValues.LDAP_CLOCK_SKEW);
 
 				if (modifiedDate.compareTo(expireDate) > 0) {
 					_log.error(
 						StringBundler.concat(
 							"User import failed because modified date is in ",
-							"the future. Increase clock skew value in LDAP ",
-							"server configuration to synchronize mismatched ",
-							"server times. Current date: ", new Date(),
-							" Modified date: ", modifiedDate));
+							"the future. Increase clock skew value using the ",
+							"ldap.clock.skew portal property to synchronize ",
+							"mismatched server times. Current date: ",
+							new Date(), " Modified date: ", modifiedDate));
 
 					return user;
 				}
