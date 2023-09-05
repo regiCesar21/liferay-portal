@@ -29,6 +29,7 @@ public class AppLicenseKeyEntityModel implements EntityModel {
 		_entityFieldsMap = Stream.of(
 			new BooleanEntityField("active", locale -> "active"),
 			new BooleanEntityField("complimentary", locale -> "complimentary"),
+			new StringEntityField("description", locale -> "description"),
 			new DateTimeEntityField(
 				"expirationDate", locale -> Field.EXPIRATION_DATE,
 				locale -> Field.EXPIRATION_DATE),
@@ -43,6 +44,7 @@ public class AppLicenseKeyEntityModel implements EntityModel {
 				"orderId",
 				locale -> Field.getSortableFieldName(
 					"assetReceiptLicenseUuid_String")),
+			new StringEntityField("owner", locale -> "owner"),
 			new StringEntityField(
 				"productId",
 				locale -> Field.getSortableFieldName("productId_String")),
