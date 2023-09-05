@@ -135,15 +135,10 @@ definition {
 
 		Alert.viewSuccessMessageText(successMessage = "Changes saved.");
 
-		ProductMenu.gotoPortlet(
-			category = "Content & Data",
-			portlet = "Documents and Media");
-
-		LexiconEntry.gotoEntryMenuItem(
-			menuItem = "Edit",
-			rowEntry = "DM Document Title");
-
-		WaitForPageLoad();
+		DMNavigator.openToEditEntryInSite(
+			dmDocumentTitle = "DM Document Title",
+			groupName = "Guest",
+			siteURLKey = "guest");
 
 		DMDocument.viewCategories(categoryNameList = "category");
 	}
