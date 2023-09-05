@@ -464,7 +464,7 @@ class ResultRankingsForm extends Component {
 			if (response.errors.length) {
 				response.errors.forEach(message => {
 					Liferay.Util.openToast({
-						message,
+						message: Liferay.Util.escapeHTML(message),
 						title: Liferay.Language.get('error'),
 						type: 'danger'
 					});
