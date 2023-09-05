@@ -371,9 +371,15 @@ public class TransformProductPurchases {
 				}
 
 				if ((endDate == null) ||
-					endDate.before(subscriptionTerm.originalEndDate)) {
+					endDate.before(subscriptionTerm.endDate)) {
 
-					endDate = subscriptionTerm.originalEndDate;
+					endDate = subscriptionTerm.endDate;
+				}
+				
+				if ((originalEndDate == null) ||
+					originalEndDate.before(subscriptionTerm.originalEndDate)) {
+
+					originalEndDate = subscriptionTerm.originalEndDate;
 				}
 
 				if (instanceSize == null) {
@@ -407,7 +413,7 @@ public class TransformProductPurchases {
 			jsonObject.put(
 				"accountSubscriptionGroupERC",
 				accountSubscriptionGroupExternalReferenceCode);
-			jsonObject.put("endDate", DateUtil.format(endDate));
+			jsonObject.put("endDate", DateUtil.format(originalEndDate));
 			jsonObject.put("externalReferenceCode", externalReferenceCode);
 			jsonObject.put("instanceSize", instanceSize);
 			jsonObject.put("name", name);
@@ -442,6 +448,7 @@ public class TransformProductPurchases {
 		public String externalReferenceCode;
 		public String instanceSize;
 		public String name;
+		public Date originalEndDate;
 		public String productKey;
 		public int quantity;
 		public Date startDate;
