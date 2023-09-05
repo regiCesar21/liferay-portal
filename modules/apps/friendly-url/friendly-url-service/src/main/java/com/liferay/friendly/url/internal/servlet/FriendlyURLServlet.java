@@ -113,9 +113,9 @@ public class FriendlyURLServlet extends HttpServlet {
 
 			Group group = null;
 
-			if (friendlyURL.startsWith(_DOCUMENT_PATH_PREFIX)) {
+			if (friendlyURL.startsWith(_PATH_PREFIX_DOCUMENT)) {
 				String fileEntryFriendlyURL = friendlyURL.substring(
-					_DOCUMENT_PATH_PREFIX.length() - 1);
+					_PATH_PREFIX_DOCUMENT.length() - 1);
 
 				try {
 					long groupId = Long.valueOf(
@@ -972,7 +972,7 @@ public class FriendlyURLServlet extends HttpServlet {
 		return normalizedFriendlyURL;
 	}
 
-	private static final String _DOCUMENT_PATH_PREFIX = "/documents/";
+	private static final String _PATH_PREFIX_DOCUMENT = "/documents/";
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		FriendlyURLServlet.class);
