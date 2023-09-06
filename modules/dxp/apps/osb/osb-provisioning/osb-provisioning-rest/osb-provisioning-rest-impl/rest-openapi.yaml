@@ -611,6 +611,28 @@ paths:
                                 format: binary
                                 type: string
             tags: ["LicenseKey"]
+    "/contacts/{contactEmailAddress}/validate":
+        get:
+            description:
+                Check if the provided email address exists or can be added.
+            parameters:
+                - in: path
+                  name: contactEmailAddress
+                  required: true
+                  schema:
+                      type: string
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                format: binary
+                                type: string
+                        application/xml:
+                            schema:
+                                format: binary
+                                type: string
+            tags: ["Contact"]
     "/license-keys/activate":
         put:
             description:
