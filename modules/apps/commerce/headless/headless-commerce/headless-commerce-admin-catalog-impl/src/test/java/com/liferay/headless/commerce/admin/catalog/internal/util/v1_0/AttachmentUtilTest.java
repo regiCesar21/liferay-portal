@@ -46,7 +46,6 @@ public class AttachmentUtilTest extends PowerMockito {
 		);
 	}
 
-	@Ignore
 	@Test
 	public void testGetTitleMapIfCPAttachmentFileEntryIsNull()
 		throws Exception {
