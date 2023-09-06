@@ -9,41 +9,40 @@ import com.liferay.headless.commerce.admin.catalog.dto.v1_0.Attachment;
 import com.liferay.headless.commerce.admin.catalog.dto.v1_0.AttachmentBase64;
 import com.liferay.headless.commerce.admin.catalog.dto.v1_0.AttachmentUrl;
 import com.liferay.headless.commerce.admin.catalog.internal.jaxrs.exception.MethodRequiredParameterMissingException;
+import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.HashMapBuilder;
+import com.liferay.portal.kernel.util.LocaleUtil;
+import com.liferay.portal.test.rule.LiferayUnitTestRule;
 
 import java.util.Locale;
 import java.util.Map;
 
 import org.junit.Assert;
 import org.junit.Before;
-import org.junit.Ignore;
+import org.junit.ClassRule;
+import org.junit.Rule;
 import org.junit.Test;
-import org.junit.runner.RunWith;
 
-import org.mockito.Matchers;
+import org.mockito.Mockito;
 
-import org.powermock.api.mockito.PowerMockito;
 import org.powermock.core.classloader.annotations.PrepareForTest;
-import org.powermock.modules.junit4.PowerMockRunner;
 
 /**
  * @author Igor Beslic
  */
 @PrepareForTest(LanguageUtil.class)
-@RunWith(PowerMockRunner.class)
-public class AttachmentUtilTest extends PowerMockito {
+public class AttachmentUtilTest {
+
+	@ClassRule
+	@Rule
+	public static final LiferayUnitTestRule liferayUnitTestRule =
+		LiferayUnitTestRule.INSTANCE;
 
 	@Before
 	public void setUp() {
-		mockStatic(LanguageUtil.class);
-
-		when(
-			LanguageUtil.isAvailableLocale(Matchers.any(Locale.class))
-		).thenReturn(
-			Boolean.TRUE
-		);
+		_setUpLanguageUtil();
 	}
 
 	@Test
@@ -86,12 +85,39 @@ public class AttachmentUtilTest extends PowerMockito {
 			null, null, new AttachmentUrl(), 0, 0, 0, new ServiceContext());
 	}
 
+	private void _setUpLanguageUtil() {
+		LanguageUtil languageUtil = new LanguageUtil();
+
+		_whenLanguageIsAvailableLocale(new Locale("hr", "HR"));
+		_whenLanguageIsAvailableLocale(LocaleUtil.ITALY);
+		_whenLanguageIsAvailableLocale(LocaleUtil.US);
+
+		languageUtil.setLanguage(_language);
+	}
+
+	private void _whenLanguageIsAvailableLocale(Locale locale) {
+		Mockito.when(
+			_language.isAvailableLocale(Mockito.eq(locale))
+		).thenReturn(
+			true
+		);
+
+		Mockito.when(
+			_language.isAvailableLocale(
+				Mockito.eq(LocaleUtil.toLanguageId(locale)))
+		).thenReturn(
+			true
+		);
+	}
+
 	private static final Map<String, String> _titleMap = HashMapBuilder.put(
 		"en_US", "Written in English"
 	).put(
 		"hr_HR", "Napisano na Hrvatskom"
 	).put(
-		"it", "Scritto nel Italiano"
+		"it_IT", "Scritto nel Italiano"
 	).build();
+
+	private final Language _language = Mockito.mock(Language.class);
 
 }
