@@ -40,7 +40,7 @@ public class DefaultFacetProcessor
 
 		JSONObject dataJSONObject = facetConfiguration.getData();
 
-		int minDocCount = dataJSONObject.getInt("frequencyThreshold");
+		int minDocCount = dataJSONObject.getInt("frequencyThreshold", -1);
 
 		if (minDocCount >= 0) {
 			termsAggregationBuilder.minDocCount(minDocCount);
