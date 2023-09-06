@@ -482,7 +482,12 @@ function deleteSegmentsExperienceReducer(state, action) {
 						segmentsExperienceId
 					);
 
-					nextState = _switchLayoutDataToDefault(nextState);
+					if (
+						experienceIdToSelect ==
+						nextState.defaultSegmentsExperienceId
+					) {
+						nextState = _switchLayoutDataToDefault(nextState);
+					}
 
 					nextState = setIn(
 						nextState,
