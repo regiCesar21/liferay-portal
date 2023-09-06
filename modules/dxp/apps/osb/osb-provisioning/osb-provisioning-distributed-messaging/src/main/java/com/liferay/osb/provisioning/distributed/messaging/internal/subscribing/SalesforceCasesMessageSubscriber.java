@@ -47,9 +47,9 @@ import org.osgi.service.component.annotations.Reference;
 @Component(
 	configurationPid = "com.liferay.osb.provisioning.distributed.messaging.internal.configuration.DistributedMessagingConfiguration",
 	immediate = true, property = "topic.pattern=ebenezer-support-case-entries",
-	service = ZendeskMessageSubscriber.class
+	service = SalesforceCasesMessageSubscriber.class
 )
-public class ZendeskMessageSubscriber extends BaseMessageSubscriber {
+public class SalesforceCasesMessageSubscriber extends BaseMessageSubscriber {
 
 	@Activate
 	protected void activate(Map<String, Object> properties) {
