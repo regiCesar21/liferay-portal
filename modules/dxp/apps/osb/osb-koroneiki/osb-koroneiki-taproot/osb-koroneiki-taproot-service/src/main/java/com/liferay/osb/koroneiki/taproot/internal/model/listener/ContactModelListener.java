@@ -16,6 +16,7 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.BaseModelListener;
 import com.liferay.portal.kernel.model.ModelListener;
 
+import java.util.Date;
 import java.util.List;
 
 import org.osgi.service.component.annotations.Component;
@@ -44,7 +45,9 @@ public class ContactModelListener extends BaseModelListener<Contact> {
 			contact.getContactId(), QueryUtil.ALL_POS, QueryUtil.ALL_POS);
 
 		for (Account account : accounts) {
-			_accountLocalService.reindex(account.getAccountId());
+			account.setModifiedDate(new Date());
+
+			_accountLocalService.updateAccount(account);
 		}
 	}
 
