@@ -28,7 +28,7 @@ public class ContactResourceImpl extends BaseContactResourceImpl {
 		throws Exception {
 
 		Contact contact = _contactIdentityProvider.fetchContactByEmailAddress(
-			contactEmailAddress, true);
+			contactEmailAddress, false);
 
 		if ((contact == null) &&
 			_emailAddressValidator.isLiferayDomain(contactEmailAddress)) {
