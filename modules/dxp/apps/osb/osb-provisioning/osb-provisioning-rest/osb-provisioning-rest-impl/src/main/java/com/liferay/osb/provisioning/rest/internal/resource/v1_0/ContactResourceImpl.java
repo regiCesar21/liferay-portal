@@ -27,18 +27,16 @@ public class ContactResourceImpl extends BaseContactResourceImpl {
 	public Boolean getContactValidate(String contactEmailAddress)
 		throws Exception {
 
-		boolean valid = true;
-
 		Contact contact = _contactIdentityProvider.fetchContactByEmailAddress(
 			contactEmailAddress, true);
 
 		if ((contact == null) &&
 			_emailAddressValidator.isLiferayDomain(contactEmailAddress)) {
 
-			valid = false;
+			return false;
 		}
 
-		return Boolean.valueOf(valid);
+		return true;
 	}
 
 	@Reference(target = "(provider=okta)")
