@@ -43,8 +43,7 @@ public class FormRecordUtil {
 		DDMFormValues ddmFormValues = ddmFormInstanceRecord.getDDMFormValues();
 
 		List<DDMFormFieldValue> allDDMFormFieldValues =
-			_getAllDDMFormFieldValues(
-				ddmFormValues.getDDMFormFieldValues());
+			_getAllDDMFormFieldValues(ddmFormValues.getDDMFormFieldValues());
 
 		return new FormRecord() {
 			{
