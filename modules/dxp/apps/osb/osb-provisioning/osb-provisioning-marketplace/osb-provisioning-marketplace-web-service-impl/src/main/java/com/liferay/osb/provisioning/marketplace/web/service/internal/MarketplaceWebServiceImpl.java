@@ -13,8 +13,10 @@ import com.liferay.osb.koroneiki.phloem.rest.client.dto.v1_0.PostalAddress;
 import com.liferay.osb.provisioning.koroneiki.constants.ContactRoleConstants;
 import com.liferay.osb.provisioning.koroneiki.constants.ProductPurchaseConstants;
 import com.liferay.osb.provisioning.koroneiki.reader.AccountReader;
+import com.liferay.osb.provisioning.koroneiki.web.service.AccountWebService;
 import com.liferay.osb.provisioning.marketplace.web.service.MarketplaceWebService;
 import com.liferay.osb.provisioning.marketplace.web.service.internal.configuration.MarketplaceConfiguration;
+import com.liferay.osb.provisioning.search.FilterQuery;
 import com.liferay.petra.json.web.service.client.BaseJSONWebServiceClientImpl;
 import com.liferay.petra.json.web.service.client.JSONWebServiceInvocationException;
 import com.liferay.petra.json.web.service.client.JSONWebServiceTransportException;
@@ -30,7 +32,6 @@ import com.liferay.portal.kernel.service.RegionService;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.CharPool;
 import com.liferay.portal.kernel.util.ContentTypes;
-import com.liferay.portal.kernel.util.Http;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.URLCodec;
@@ -167,12 +168,24 @@ public class MarketplaceWebServiceImpl
 			String emailAddress)
 		throws Exception {
 
-		String url = StringUtil.replace(
+		String assignURL = StringUtil.replace(
 			_URL_API_ACCOUNT_USER_ACCOUNTS_BY_EMAIL_ADDRESS,
-			new String[] {"{externalReferenceCode}", "{emailAddress}"},
-			new String[] {account.getKey(), URLCodec.encodeURL(emailAddress)});
+			new String[] {"{emailAddress}", "{externalReferenceCode}"},
+			new String[] {URLCodec.encodeURL(emailAddress), account.getKey()});
 
-		doPost(url, Collections.emptyList(), authHeaders);
+		doPost(assignURL, Collections.emptyList(), authHeaders);
+
+		String assignAccountRoleURL = StringUtil.replace(
+			_URL_API_ACCOUNT_ACCOUNT_ROLES,
+			new String[] {
+				"{accountRoleId}", "{emailAddress}", "{externalReferenceCode}"
+			},
+			new String[] {
+				_getAccountRoleAdminId(authHeaders),
+				URLCodec.encodeURL(emailAddress), account.getKey()
+			});
+
+		doPost(assignAccountRoleURL, Collections.emptyList(), authHeaders);
 	}
 
 	private JSONObject _createCustomFieldJSONObject(
@@ -197,15 +210,60 @@ public class MarketplaceWebServiceImpl
 			Collections.emptyList(), authHeaders);
 	}
 
-	private int _getAccountStatus(Account account) {
+	private String _getAccountRoleAdminId(List<NameValuePair> authHeaders)
+		throws Exception {
+
+		if (Validator.isNotNull(_accountRoleAdminId)) {
+			return _accountRoleAdminId;
+		}
+
+		String response = doGet(
+			_URL_API_ACCOUNT_ROLES,
+			Arrays.asList(
+				new BasicNameValuePair(
+					"filter", "name eq 'Account Administrator'"),
+				new BasicNameValuePair("pageSize", "1")),
+			authHeaders);
+
+		JSONObject jsonObject = _jsonFactory.createJSONObject(response);
+
+		JSONArray jsonArray = jsonObject.getJSONArray("items");
+
+		if (jsonArray.length() > 0) {
+			JSONObject accountRoleJSONObject = jsonArray.getJSONObject(0);
+
+			_accountRoleAdminId = accountRoleJSONObject.getString("id");
+		}
+
+		return _accountRoleAdminId;
+	}
+
+	private int _getAccountStatus(Account account) throws Exception {
 		String subscriptionState = _accountReader.getSubscriptionState(account);
 
 		if (subscriptionState.equals(ProductPurchaseConstants.STATE_ACTIVE)) {
 			return WorkflowConstants.STATUS_APPROVED;
 		}
-		else if (subscriptionState.equals(
-					ProductPurchaseConstants.STATE_EXPIRED)) {
 
+		FilterQuery filterQuery = new FilterQuery();
+
+		filterQuery.addEquals(true, "parentAccountKey", account.getKey());
+
+		List<Account> childAccounts = _accountWebService.search(
+			StringPool.BLANK, filterQuery, 1, 1000, null);
+
+		for (Account childAccount : childAccounts) {
+			String childSubscriptionState = _accountReader.getSubscriptionState(
+				childAccount);
+
+			if (childSubscriptionState.equals(
+					ProductPurchaseConstants.STATE_ACTIVE)) {
+
+				return WorkflowConstants.STATUS_APPROVED;
+			}
+		}
+
+		if (subscriptionState.equals(ProductPurchaseConstants.STATE_EXPIRED)) {
 			return WorkflowConstants.STATUS_EXPIRED;
 		}
 		else if (subscriptionState.equals(
@@ -514,13 +572,18 @@ public class MarketplaceWebServiceImpl
 
 		String url = StringUtil.replace(
 			_URL_API_ACCOUNT_USER_ACCOUNTS_BY_EMAIL_ADDRESS,
-			new String[] {"{externalReferenceCode}", "{emailAddress}"},
-			new String[] {account.getKey(), URLCodec.encodeURL(emailAddress)});
+			new String[] {"{emailAddress}", "{externalReferenceCode}"},
+			new String[] {URLCodec.encodeURL(emailAddress), account.getKey()});
 
 		doDelete(url, Collections.emptyList(), authHeaders);
 	}
 
 	private static final int _ADDRESS_TYPE_BILLING_AND_SHIPPING = 2;
+
+	private static final String _URL_API_ACCOUNT_ACCOUNT_ROLES =
+		"/o/headless-admin-user/v1.0/accounts/by-external-reference-code" +
+			"/{externalReferenceCode}/account-roles/{accountRoleId}" +
+				"/user-accounts/by-email-address/{emailAddress}";
 
 	private static final String _URL_API_ACCOUNT_ADDRESS =
 		"/o/headless-commerce-admin-account/v1.0/accountAddresses/{id}";
@@ -535,6 +598,9 @@ public class MarketplaceWebServiceImpl
 				"/by-externalReferenceCode/{externalReferenceCode}" +
 					"/accountAddresses";
 
+	private static final String _URL_API_ACCOUNT_ROLES =
+		"/o/headless-admin-user/v1.0/accounts/0/account-roles";
+
 	private static final String _URL_API_ACCOUNT_USER_ACCOUNTS =
 		"/o/headless-admin-user/v1.0/accounts/{accountId}/user-accounts";
 
@@ -548,6 +614,11 @@ public class MarketplaceWebServiceImpl
 
 	@Reference
 	private AccountReader _accountReader;
+
+	private String _accountRoleAdminId;
+
+	@Reference
+	private AccountWebService _accountWebService;
 
 	private String _clientId;
 	private String _clientSecret;
