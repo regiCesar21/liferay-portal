@@ -147,8 +147,8 @@ public class MetricResourceImpl extends BaseMetricResourceImpl {
 	private Histogram _createHistogram(LocalDateTime localDateTime) {
 		return new Histogram() {
 			{
-				setKey(localDateTime.toString());
-				setValue(0.0);
+				key = localDateTime.toString();
+				value = 0.0;
 			}
 		};
 	}
