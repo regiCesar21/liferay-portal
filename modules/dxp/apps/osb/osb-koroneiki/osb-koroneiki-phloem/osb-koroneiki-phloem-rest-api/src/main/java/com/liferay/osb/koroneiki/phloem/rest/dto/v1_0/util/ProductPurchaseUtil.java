@@ -29,16 +29,6 @@ public class ProductPurchaseUtil {
 					ExternalLinkUtil::toExternalLink, ExternalLink.class);
 				key = productPurchase.getProductPurchaseKey();
 				originalEndDate = productPurchase.getOriginalEndDate();
-
-				if ((productPurchase.getEndDate() == null) &&
-					(productPurchase.getEndDate() == null)) {
-
-					perpetual = Boolean.TRUE;
-				}
-				else {
-					perpetual = Boolean.FALSE;
-				}
-
 				product = ProductUtil.toProduct(
 					productPurchase.getProductEntry());
 				productKey = productPurchase.getProductEntryKey();
@@ -46,6 +36,17 @@ public class ProductPurchaseUtil {
 				quantity = productPurchase.getQuantity();
 				startDate = productPurchase.getStartDate();
 				status = Status.create(productPurchase.getStatusLabel());
+
+				setPerpetual(
+					() -> {
+						if ((productPurchase.getEndDate() == null) &&
+							(productPurchase.getEndDate() == null)) {
+
+							return Boolean.TRUE;
+						}
+
+						return Boolean.FALSE;
+					});
 			}
 		};
 	}

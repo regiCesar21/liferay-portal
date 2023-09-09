@@ -35,14 +35,6 @@ public class LicenseKeyUtil {
 				id = licenseKey.getLicenseKeyId();
 				ipAddresses = licenseKey.getIpAddresses();
 				key = licenseKey.getKey();
-
-				LicenseEntry licenseEntry = licenseKey.fetchLicenseEntry();
-
-				if (licenseEntry != null) {
-					licenseEntryName = LicenseEntryName.create(
-						licenseEntry.getName());
-				}
-
 				licenseEntryType = LicenseEntryType.create(
 					licenseKey.getLicenseEntryType());
 				licenseVersion = licenseKey.getLicenseVersion();
@@ -61,13 +53,23 @@ public class LicenseKeyUtil {
 				productPurchaseKey = licenseKey.getProductPurchaseKey();
 				productVersion = licenseKey.getProductVersion();
 				serverId = licenseKey.getServerId();
-
 				sizing = Sizing.create(
 					LicenseSizing.getLabel(licenseKey.getSizing()));
-
 				startDate = licenseKey.getStartDate();
 				userName = licenseKey.getUserName();
 				userUuid = licenseKey.getUserUuid();
+
+				setLicenseEntryName(
+					() -> {
+						LicenseEntry licenseEntry =
+							licenseKey.fetchLicenseEntry();
+
+						if (licenseEntry == null) {
+							return null;
+						}
+
+						return LicenseEntryName.create(licenseEntry.getName());
+					});
 			}
 		};
 	}

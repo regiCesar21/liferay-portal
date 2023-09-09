@@ -43,14 +43,6 @@ public class AuditEntryUtil {
 		return new AuditEntry() {
 			{
 				action = Action.create(auditEntry.getAction());
-
-				if (Validator.isNotNull(auditEntry.getAgentName())) {
-					agentName = auditEntry.getAgentName();
-				}
-				else {
-					agentName = "Auto";
-				}
-
 				agentUID = auditEntry.getAgentUID();
 				auditSetId = auditEntry.getAuditSetId();
 				dateCreated = auditEntry.getCreateDate();
@@ -63,6 +55,15 @@ public class AuditEntryUtil {
 				newValue = _getNewValue(auditEntry);
 				oldValue = _getOldValue(auditEntry);
 				summary = _getSummary(auditEntry);
+
+				setAgentName(
+					() -> {
+						if (Validator.isNotNull(auditEntry.getAgentName())) {
+							return auditEntry.getAgentName();
+						}
+
+						return "Auto";
+					});
 			}
 		};
 	}
