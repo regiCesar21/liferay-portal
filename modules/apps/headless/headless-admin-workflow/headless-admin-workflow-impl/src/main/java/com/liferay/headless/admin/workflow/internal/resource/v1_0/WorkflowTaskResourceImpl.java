@@ -485,15 +485,6 @@ public class WorkflowTaskResourceImpl extends BaseWorkflowTaskResourceImpl {
 
 		return new WorkflowTask() {
 			{
-				if (workflowTask.getAssigneeUserId() > 0) {
-					assigneePerson = CreatorUtil.toCreator(
-						_portal,
-						_userLocalService.fetchUser(
-							workflowTask.getAssigneeUserId()));
-					assigneeRoles = _getRoles(
-						workflowTask.getWorkflowTaskAssignees());
-				}
-
 				completed = workflowTask.isCompleted();
 				dateCompletion = workflowTask.getCompletionDate();
 				dateCreated = workflowTask.getCreateDate();
@@ -515,6 +506,27 @@ public class WorkflowTaskResourceImpl extends BaseWorkflowTaskResourceImpl {
 				workflowDefinitionVersion = String.valueOf(
 					workflowTask.getWorkflowDefinitionVersion());
 				workflowInstanceId = workflowTask.getWorkflowInstanceId();
+
+				setAssigneePerson(
+					() -> {
+						if (workflowTask.getAssigneeUserId() <= 0) {
+							return null;
+						}
+
+						return CreatorUtil.toCreator(
+							_portal,
+							_userLocalService.fetchUser(
+								workflowTask.getAssigneeUserId()));
+					});
+				setAssigneeRoles(
+					() -> {
+						if (workflowTask.getAssigneeUserId() <= 0) {
+							return new Role[0];
+						}
+
+						return _getRoles(
+							workflowTask.getWorkflowTaskAssignees());
+					});
 			}
 		};
 	}
