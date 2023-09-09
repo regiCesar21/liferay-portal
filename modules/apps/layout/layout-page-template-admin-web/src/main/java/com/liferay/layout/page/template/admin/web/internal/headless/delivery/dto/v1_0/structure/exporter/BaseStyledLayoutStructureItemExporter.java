@@ -483,6 +483,8 @@ public abstract class BaseStyledLayoutStructureItemExporter
 
 		return new FragmentViewport() {
 			{
+				id = viewportSize.getViewportSizeId();
+
 				setFragmentViewportStyle(
 					() -> new FragmentViewportStyle() {
 						{
@@ -504,7 +506,6 @@ public abstract class BaseStyledLayoutStructureItemExporter
 								"paddingTop", null);
 						}
 					});
-				setId(viewportSize.getViewportSizeId());
 			}
 		};
 	}
