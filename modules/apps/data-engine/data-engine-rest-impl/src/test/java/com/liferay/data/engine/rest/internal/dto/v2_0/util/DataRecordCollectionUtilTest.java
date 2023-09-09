@@ -90,22 +90,20 @@ public class DataRecordCollectionUtilTest extends PowerMockito {
 		Assert.assertEquals(
 			new DataRecordCollection() {
 				{
-					setDataDefinitionId(123L);
-					setDataRecordCollectionKey("RecordSetId");
-					setDescription(
-						HashMapBuilder.<String, Object>put(
-							"en_US", "Description"
-						).put(
-							"pt_BR", "Descrição"
-						).build());
-					setId(456L);
-					setName(
-						HashMapBuilder.<String, Object>put(
-							"en_US", "Name"
-						).put(
-							"pt_BR", "Nome"
-						).build());
-					setSiteId(789L);
+					dataDefinitionId = 123L;
+					dataRecordCollectionKey = "RecordSetId";
+					description = HashMapBuilder.<String, Object>put(
+						"en_US", "Description"
+					).put(
+						"pt_BR", "Descrição"
+					).build();
+					id = 456L;
+					name = HashMapBuilder.<String, Object>put(
+						"en_US", "Name"
+					).put(
+						"pt_BR", "Nome"
+					).build();
+					siteId = 789L;
 				}
 			},
 			DataRecordCollectionUtil.toDataRecordCollection(_ddlRecordSet));
@@ -160,22 +158,20 @@ public class DataRecordCollectionUtilTest extends PowerMockito {
 		Assert.assertNotEquals(
 			new DataRecordCollection() {
 				{
-					setDataDefinitionId(123L);
-					setDataRecordCollectionKey("RecordSetId");
-					setDescription(
-						HashMapBuilder.<String, Object>put(
-							"en_US", "Description"
-						).put(
-							"pt_BR", "Descrição"
-						).build());
-					setId(456L);
-					setName(
-						HashMapBuilder.<String, Object>put(
-							"en_US", "Name"
-						).put(
-							"pt_BR", "Nome"
-						).build());
-					setSiteId(789L);
+					dataDefinitionId = 123L;
+					dataRecordCollectionKey = "RecordSetId";
+					description = HashMapBuilder.<String, Object>put(
+						"en_US", "Description"
+					).put(
+						"pt_BR", "Descrição"
+					).build();
+					id = 456L;
+					name = HashMapBuilder.<String, Object>put(
+						"en_US", "Name"
+					).put(
+						"pt_BR", "Nome"
+					).build();
+					siteId = 789L;
 				}
 			},
 			DataRecordCollectionUtil.toDataRecordCollection(_ddlRecordSet));
