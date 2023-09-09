@@ -128,72 +128,66 @@ public class DataDefinitionUtilTest extends PowerMockito {
 			DataDefinitionUtil.toDDMForm(
 				new DataDefinition() {
 					{
-						setAvailableLanguageIds(
-							new String[] {"en_US", "pt_BR"});
-						setDataDefinitionFields(
-							new DataDefinitionField[] {
-								new DataDefinitionField() {
-									{
-										setDefaultValue(
-											HashMapBuilder.<String, Object>put(
-												"en_US", "enter a text"
-											).put(
-												"pt_BR", "insira um texto"
-											).build());
-										setFieldType("text");
-										setIndexType(IndexType.TEXT);
-										setLabel(
-											HashMapBuilder.<String, Object>put(
-												"en_US", "label1"
-											).put(
-												"pt_BR", "rótulo1"
-											).build());
-										setLocalizable(true);
-										setName("name1");
-										setReadOnly(true);
-										setRepeatable(true);
-										setRequired(true);
-										setShowLabel(true);
-										setTip(
-											HashMapBuilder.<String, Object>put(
-												"en_US", "tip1"
-											).put(
-												"pt_BR", "ajuda1"
-											).build());
-									}
-								},
-								new DataDefinitionField() {
-									{
-										setDefaultValue(
-											HashMapBuilder.<String, Object>put(
-												"en_US", "select an option"
-											).put(
-												"pt_BR", "selecione uma opção"
-											).build());
-										setFieldType("select");
-										setIndexType(IndexType.KEYWORD);
-										setLabel(
-											HashMapBuilder.<String, Object>put(
-												"en_US", "label2"
-											).put(
-												"pt_BR", "rótulo2"
-											).build());
-										setLocalizable(false);
-										setName("name2");
-										setReadOnly(false);
-										setRepeatable(false);
-										setRequired(false);
-										setShowLabel(false);
-										setTip(
-											HashMapBuilder.<String, Object>put(
-												"en_US", "tip2"
-											).put(
-												"pt_BR", "ajuda2"
-											).build());
-									}
+						availableLanguageIds = new String[] {"en_US", "pt_BR"};
+						dataDefinitionFields = new DataDefinitionField[] {
+							new DataDefinitionField() {
+								{
+									defaultValue =
+										HashMapBuilder.<String, Object>put(
+											"en_US", "enter a text"
+										).put(
+											"pt_BR", "insira um texto"
+										).build();
+									fieldType = "text";
+									indexType = IndexType.TEXT;
+									label = HashMapBuilder.<String, Object>put(
+										"en_US", "label1"
+									).put(
+										"pt_BR", "rótulo1"
+									).build();
+									localizable = true;
+									name = "name1";
+									readOnly = true;
+									repeatable = true;
+									required = true;
+									showLabel = true;
+									tip = HashMapBuilder.<String, Object>put(
+										"en_US", "tip1"
+									).put(
+										"pt_BR", "ajuda1"
+									).build();
 								}
-							});
-						setDefaultLanguageId("en_US");
+							},
+							new DataDefinitionField() {
+								{
+									defaultValue =
+										HashMapBuilder.<String, Object>put(
+											"en_US", "select an option"
+										).put(
+											"pt_BR", "selecione uma opção"
+										).build();
+									fieldType = "select";
+									indexType = IndexType.KEYWORD;
+									label = HashMapBuilder.<String, Object>put(
+										"en_US", "label2"
+									).put(
+										"pt_BR", "rótulo2"
+									).build();
+									localizable = false;
+									name = "name2";
+									readOnly = false;
+									repeatable = false;
+									required = false;
+									showLabel = false;
+									tip = HashMapBuilder.<String, Object>put(
+										"en_US", "tip2"
+									).put(
+										"pt_BR", "ajuda2"
+									).build();
+								}
+							}
+						};
+						defaultLanguageId = "en_US";
 					}
 				},
 				_ddmFormFieldTypeServicesTracker));
