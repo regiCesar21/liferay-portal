@@ -9,5 +9,6 @@
 	<source-check>
 		<suppress checks="JSONPackageJSONCheck" files="portal-workflow-kaleo-designer-web/package\.json" />
 		<suppress checks="JSONPackageJSONCheck" files="portal-workflow-metrics-web/package\.json" />
+		<suppress checks="PoshiPauseUsageCheck" files="portal-workflow-kaleo-designer-test/src/testFunctional/macros/KaleoDesigner\.macro" />
 	</source-check>
 </suppressions>
