@@ -1979,7 +1979,9 @@ public class LicenseKeyResourceImpl
 
 			int serverCount = 1;
 
-			if (licenseKey.getMaxClusterNodes() != null) {
+			if ((licenseKey.getMaxClusterNodes() != null) &&
+				(licenseKey.getMaxClusterNodes() > 1)) {
+
 				serverCount = licenseKey.getMaxClusterNodes();
 			}
 
