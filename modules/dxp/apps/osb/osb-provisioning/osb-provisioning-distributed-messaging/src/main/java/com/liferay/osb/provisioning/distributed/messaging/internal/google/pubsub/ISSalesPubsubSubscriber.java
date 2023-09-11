@@ -18,7 +18,8 @@ import org.osgi.service.component.annotations.Reference;
 	immediate = true,
 	property = {
 		"messageFilter=", "namespace=", "projectId=is-sales-uat",
-		"subscription=", "topic=ebenezer-support-case-entries"
+		"subscription=provisioning-support-case-entries",
+		"topic=ebenezer-support-case-entries"
 	},
 	service = ISSalesPubsubSubscriber.class
 )
