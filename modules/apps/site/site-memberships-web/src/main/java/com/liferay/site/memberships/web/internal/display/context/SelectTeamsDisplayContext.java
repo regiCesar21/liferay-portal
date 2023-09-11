@@ -5,13 +5,10 @@
 
 package com.liferay.site.memberships.web.internal.display.context;
 
-import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Team;
 import com.liferay.portal.kernel.portlet.SearchDisplayStyleUtil;
-import com.liferay.portal.kernel.portlet.SearchOrderByUtil;
-import com.liferay.portal.kernel.portlet.url.builder.PortletURLBuilder;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.service.TeamLocalServiceUtil;
 import com.liferay.portal.kernel.service.permission.TeamPermissionUtil;
@@ -19,9 +16,11 @@ import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
+import com.liferay.portal.vulcan.util.TransformUtil;
 import com.liferay.site.memberships.constants.SiteMembershipsPortletKeys;
 
 import java.util.LinkedHashMap;
+import java.util.List;
 
 import javax.portlet.PortletURL;
 import javax.portlet.RenderRequest;
@@ -99,10 +98,8 @@ public class SelectTeamsDisplayContext {
 			return _orderByCol;
 		}
 
-		_orderByCol = SearchOrderByUtil.getOrderByCol(
-			_httpServletRequest,
-			SiteMembershipsPortletKeys.SITE_MEMBERSHIPS_ADMIN,
-			"order-by-col-teams", "title");
+		_orderByCol = ParamUtil.getString(
+			_renderRequest, "orderByCol", "title");
 
 		return _orderByCol;
 	}
@@ -112,67 +109,44 @@ public class SelectTeamsDisplayContext {
 			return _orderByType;
 		}
 
-		_orderByType = SearchOrderByUtil.getOrderByType(
-			_httpServletRequest,
-			SiteMembershipsPortletKeys.SITE_MEMBERSHIPS_ADMIN,
-			"order-by-type-teams", "asc");
+		_orderByType = ParamUtil.getString(
+			_renderRequest, "orderByType", "asc");
 
 		return _orderByType;
 	}
 
 	public PortletURL getPortletURL() {
-		return PortletURLBuilder.createRenderURL(
-			_renderResponse
-		).setMVCPath(
-			"/select_team.jsp"
-		).setKeywords(
-			() -> {
-				String keywords = getKeywords();
+		PortletURL portletURL = _renderResponse.createRenderURL();
 
-				if (Validator.isNotNull(keywords)) {
-					return keywords;
-				}
+		portletURL.setParameter("mvcPath", "/select_team.jsp");
+		portletURL.setParameter("groupId", String.valueOf(getGroupId()));
+		portletURL.setParameter("eventName", getEventName());
 
-				return null;
-			}
-		).setParameter(
-			"displayStyle",
-			() -> {
-				String displayStyle = getDisplayStyle();
+		String displayStyle = getDisplayStyle();
 
-				if (Validator.isNotNull(displayStyle)) {
-					return displayStyle;
-				}
+		if (Validator.isNotNull(displayStyle)) {
+			portletURL.setParameter("displayStyle", displayStyle);
+		}
 
-				return null;
-			}
-		).setParameter(
-			"eventName", getEventName()
-		).setParameter(
-			"groupId", getGroupId()
-		).setParameter(
-			"orderByCol",
-			() -> {
-				String orderByCol = getOrderByCol();
+		String keywords = getKeywords();
 
-				if (Validator.isNotNull(orderByCol)) {
-					return orderByCol;
-				}
+		if (Validator.isNotNull(keywords)) {
+			portletURL.setParameter("keywords", keywords);
+		}
 
-				return null;
-			}
-		).setParameter(
-			"orderByType",
-			() -> {
-				String orderByType = getOrderByType();
+		String orderByCol = getOrderByCol();
 
-				if (Validator.isNotNull(orderByType)) {
-					return orderByType;
-				}
+		if (Validator.isNotNull(orderByCol)) {
+			portletURL.setParameter("orderByCol", orderByCol);
+		}
 
-				return null;
-			}
-		).buildPortletURL();
+		String orderByType = getOrderByType();
+
+		if (Validator.isNotNull(orderByType)) {
+			portletURL.setParameter("orderByType", orderByType);
+		}
+
+		return portletURL;
 	}
 
 	public SearchContainer<Team> getTeamSearchContainer()
@@ -189,22 +163,25 @@ public class SelectTeamsDisplayContext {
 		SearchContainer<Team> teamSearchContainer = new SearchContainer<>(
 			_renderRequest, getPortletURL(), null, "no-teams-were-found");
 
-		teamSearchContainer.setResultsAndTotal(
-			TransformUtil.transform(
-				TeamLocalServiceUtil.search(
-					getGroupId(), getKeywords(), getKeywords(),
-					new LinkedHashMap<>(), teamSearchContainer.getStart(),
-					teamSearchContainer.getEnd(), teamSearchContainer.getOrderByComparator()),
-				team -> {
-					if (!TeamPermissionUtil.contains(
-							themeDisplay.getPermissionChecker(), team,
-							ActionKeys.VIEW)) {
+		List<Team> teams = TransformUtil.transform(
+			TeamLocalServiceUtil.search(
+				getGroupId(), getKeywords(), getKeywords(),
+				new LinkedHashMap<>(), teamSearchContainer.getStart(),
+				teamSearchContainer.getEnd(),
+				teamSearchContainer.getOrderByComparator()),
+			team -> {
+				if (!TeamPermissionUtil.contains(
+						themeDisplay.getPermissionChecker(), team,
+						ActionKeys.VIEW)) {
 
-						return null;
-					}
+					return null;
+				}
 
-					return team;
-				}));
+				return team;
+			});
+
+		teamSearchContainer.setResults(teams);
+		teamSearchContainer.setTotal(teams.size());
 
 		_teamSearchContainer = teamSearchContainer;
 

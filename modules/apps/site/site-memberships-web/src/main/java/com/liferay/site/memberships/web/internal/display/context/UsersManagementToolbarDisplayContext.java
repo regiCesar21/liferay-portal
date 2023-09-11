@@ -269,14 +269,12 @@ public class UsersManagementToolbarDisplayContext
 		).add(
 			() -> team != null,
 			labelItem -> {
-				labelItem.putData(
-					"removeLabelURL",
-					PortletURLBuilder.create(
-						PortletURLUtil.clone(
-							currentURLObj, liferayPortletResponse)
-					).setParameter(
-						"teamId", "0"
-					).buildString());
+				PortletURL removeLabelURL = PortletURLUtil.clone(
+					currentURLObj, liferayPortletResponse);
+
+				removeLabelURL.setParameter("teamId", "0");
+
+				labelItem.putData("removeLabelURL", removeLabelURL.toString());
 
 				labelItem.setCloseable(true);
 				labelItem.setLabel(team.getName());
@@ -389,21 +387,26 @@ public class UsersManagementToolbarDisplayContext
 				dropdownItem.putData("action", "selectTeams");
 				dropdownItem.putData(
 					"selectTeamsURL", _getSelectorURL("/select_team.jsp"));
-				dropdownItem.putData(
-					"viewTeamURL",
-					PortletURLBuilder.createRenderURL(
-						liferayPortletResponse
-					).setMVCPath(
-						"/view.jsp"
-					).setRedirect(
-						_themeDisplay.getURLCurrent()
-					).setNavigation(
-						"teams"
-					).setTabs1(
-						"users"
-					).setParameter(
-						"groupId", _usersDisplayContext.getGroupId()
-					).buildString());
+
+				PortletURL viewTeamURL =
+					liferayPortletResponse.createRenderURL();
+
+				viewTeamURL.setParameter("mvcPath", "/view.jsp");
+				viewTeamURL.setParameter("tabs1", "users");
+				viewTeamURL.setParameter("navigation", "teams");
+
+				ThemeDisplay themeDisplay =
+					(ThemeDisplay)httpServletRequest.getAttribute(
+						WebKeys.THEME_DISPLAY);
+
+				viewTeamURL.setParameter(
+					"redirect", themeDisplay.getURLCurrent());
+
+				viewTeamURL.setParameter(
+					"groupId",
+					String.valueOf(_usersDisplayContext.getGroupId()));
+
+				dropdownItem.putData("viewTeamURL", viewTeamURL.toString());
 
 				dropdownItem.setActive(
 					Objects.equals(getNavigation(), "teams"));

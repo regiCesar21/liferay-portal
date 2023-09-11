@@ -9,7 +9,8 @@ import com.liferay.frontend.taglib.clay.servlet.taglib.display.context.SearchCon
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
-import com.liferay.portal.kernel.portlet.url.builder.PortletURLBuilder;
+
+import javax.portlet.PortletURL;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -35,11 +36,11 @@ public class SelectTeamsManagementToolbarDisplayContext
 
 	@Override
 	public String getClearResultsURL() {
-		return PortletURLBuilder.create(
-			getPortletURL()
-		).setKeywords(
-			StringPool.BLANK
-		).buildString();
+		PortletURL clearResultsURL = getPortletURL();
+
+		clearResultsURL.setParameter("keywords", StringPool.BLANK);
+
+		return clearResultsURL.toString();
 	}
 
 	@Override

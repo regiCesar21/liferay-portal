@@ -12,10 +12,10 @@ SelectTeamsDisplayContext selectTeamsDisplayContext = new SelectTeamsDisplayCont
 %>
 
 <clay:management-toolbar
-	managementToolbarDisplayContext="<%= new SelectTeamsManagementToolbarDisplayContext(request, liferayPortletRequest, liferayPortletResponse, selectTeamsDisplayContext) %>"
+	displayContext="<%= new SelectTeamsManagementToolbarDisplayContext(request, liferayPortletRequest, liferayPortletResponse, selectTeamsDisplayContext) %>"
 />
 
-<aui:form cssClass="container-fluid container-fluid-max-xl" name="fm">
+<aui:form cssClass="container-fluid-1280 portlet-site-memberships-select-team" name="fm">
 	<liferay-ui:search-container
 		id="teams"
 		searchContainer="<%= selectTeamsDisplayContext.getTeamSearchContainer() %>"
@@ -26,8 +26,20 @@ SelectTeamsDisplayContext selectTeamsDisplayContext = new SelectTeamsDisplayCont
 			keyProperty="teamId"
 			modelVar="team"
 		>
+
+			<%
+			Map<String, Object> data = HashMapBuilder.<String, Object>put(
+				"id", team.getTeamId()
+			).build();
+			%>
+
 			<c:choose>
 				<c:when test='<%= Objects.equals(selectTeamsDisplayContext.getDisplayStyle(), "icon") %>'>
+
+					<%
+					row.setCssClass("entry-card lfr-asset-item");
+					%>
+
 					<liferay-ui:search-container-column-text>
 						<clay:vertical-card
 							verticalCard="<%= new SelectTeamVerticalCard(team) %>"
@@ -39,12 +51,9 @@ SelectTeamsDisplayContext selectTeamsDisplayContext = new SelectTeamsDisplayCont
 						colspan="<%= 2 %>"
 					>
 						<h5>
-							<clay:link
-								cssClass="selector-button"
-								href="javascript:void(0);"
-								id="<%= String.valueOf(team.getTeamId()) %>"
-								title="<%= HtmlUtil.escape(team.getName()) %>"
-							/>
+							<aui:a cssClass="selector-button" data="<%= data %>" href="javascript:;">
+								<%= HtmlUtil.escape(team.getName()) %>
+							</aui:a>
 						</h5>
 
 						<h6 class="text-default">
@@ -54,20 +63,17 @@ SelectTeamsDisplayContext selectTeamsDisplayContext = new SelectTeamsDisplayCont
 				</c:when>
 				<c:when test='<%= Objects.equals(selectTeamsDisplayContext.getDisplayStyle(), "list") %>'>
 					<liferay-ui:search-container-column-text
-						cssClass="table-cell-expand"
+						cssClass="table-cell-content"
 						name="title"
 						truncate="<%= true %>"
 					>
-						<clay:link
-							cssClass="selector-button"
-							href="javascript:void(0);"
-							id="<%= String.valueOf(team.getTeamId()) %>"
-							title="<%= HtmlUtil.escape(team.getName()) %>"
-						/>
+						<aui:a cssClass="selector-button" data="<%= data %>" href="javascript:;">
+							<%= HtmlUtil.escape(team.getName()) %>
+						</aui:a>
 					</liferay-ui:search-container-column-text>
 
 					<liferay-ui:search-container-column-text
-						cssClass="table-cell-expand"
+						cssClass="table-cell-content"
 						name="description"
 						value="<%= HtmlUtil.escape(team.getDescription()) %>"
 					/>
@@ -81,3 +87,10 @@ SelectTeamsDisplayContext selectTeamsDisplayContext = new SelectTeamsDisplayCont
 		/>
 	</liferay-ui:search-container>
 </aui:form>
+
+<aui:script>
+	Liferay.Util.selectEntityHandler(
+		'#<portlet:namespace />fm',
+		'<%= HtmlUtil.escapeJS(selectTeamsDisplayContext.getEventName()) %>'
+	);
+</aui:script>
