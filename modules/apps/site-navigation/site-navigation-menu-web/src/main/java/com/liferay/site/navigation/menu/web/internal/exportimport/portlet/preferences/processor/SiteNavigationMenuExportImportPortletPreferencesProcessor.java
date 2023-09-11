@@ -139,7 +139,7 @@ public class SiteNavigationMenuExportImportPortletPreferencesProcessor
 					if (serviceBuilderPortletPreferences.getCompanyId() !=
 							portletDataContext.getCompanyId()) {
 
-							continue;
+						continue;
 					}
 
 					PortletPreferences originalPortletPreferences =
@@ -148,8 +148,7 @@ public class SiteNavigationMenuExportImportPortletPreferencesProcessor
 							serviceBuilderPortletPreferences.getOwnerId(),
 							serviceBuilderPortletPreferences.getOwnerType(),
 							serviceBuilderPortletPreferences.getPlid(),
-							serviceBuilderPortletPreferences.
-								getPortletId());
+							serviceBuilderPortletPreferences.getPortletId());
 
 					if (originalPortletPreferences != null) {
 						siteNavigationMenuId = GetterUtil.getLong(
