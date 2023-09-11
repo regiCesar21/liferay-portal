@@ -63,6 +63,20 @@ class UsersManagementToolbarDefaultEventHandler extends DefaultEventHandler {
 		});
 	}
 
+	selectTeams(itemData) {
+		openSelectionModal({
+			onSelect: (event) => {
+				location.href = addParams(
+					`${this.ns('teamId')}=${event.id}`,
+					itemData.viewTeamURL
+				);
+			},
+			selectEventName: this.ns('selectTeam'),
+			title: Liferay.Language.get('select-team'),
+			url: itemData.selectTeamsURL,
+		});
+	}
+
 	selectUsers(itemData) {
 		openSelectionModal({
 			buttonAddLabel: Liferay.Language.get('done'),
