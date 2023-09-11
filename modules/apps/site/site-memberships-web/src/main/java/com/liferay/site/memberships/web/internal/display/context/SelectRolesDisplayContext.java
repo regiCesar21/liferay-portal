@@ -24,6 +24,7 @@ import com.liferay.portlet.rolesadmin.search.RoleSearchTerms;
 import com.liferay.site.memberships.constants.SiteMembershipsPortletKeys;
 
 import java.util.List;
+import java.util.Objects;
 
 import javax.portlet.PortletURL;
 import javax.portlet.RenderRequest;
@@ -175,14 +176,9 @@ public class SelectRolesDisplayContext {
 				new Integer[] {getRoleType()}, QueryUtil.ALL_POS,
 				QueryUtil.ALL_POS, roleSearch.getOrderByComparator()),
 			role -> {
-				if (role.getName(
-					).equals(
-						RoleConstants.ORGANIZATION_USER
-					) ||
-					role.getName(
-					).equals(
-						RoleConstants.SITE_MEMBER
-					) ||
+				if (Objects.equals(
+						role.getName(), RoleConstants.ORGANIZATION_USER) ||
+					Objects.equals(role.getName(), RoleConstants.SITE_MEMBER) ||
 					!RolePermissionUtil.contains(
 						themeDisplay.getPermissionChecker(),
 						themeDisplay.getScopeGroupId(), role.getRoleId(),
