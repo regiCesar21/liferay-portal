@@ -3,8 +3,7 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import {isDef, isObject} from 'metal';
-
+import isObject from './../is_object';
 import getFormElement from './get_form_element.es';
 
 /**
@@ -16,7 +15,7 @@ import getFormElement from './get_form_element.es';
  */
 
 export default function setFormValues(form, data) {
-	if (!isDef(form) || form.nodeName !== 'FORM' || !isObject(data)) {
+	if (form === undefined || form.nodeName !== 'FORM' || !isObject(data)) {
 		return;
 	}
 

@@ -3,8 +3,6 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import {isDefAndNotNull, isString} from 'metal';
-
 // Constants for URL generation
 
 const AJAX_ACTION_VALUE = '0';
@@ -818,8 +816,8 @@ const validateForm = function(form) {
  * @review
  */
 
-const validateParameters = function(parameters) {
-	if (!isDefAndNotNull(parameters)) {
+const validateParameters = function (parameters) {
+	if (!(parameters !== undefined && parameters !== null)) {
 		throw new TypeError(`The parameter object is: ${typeof parameters}`);
 	}
 
@@ -867,7 +865,7 @@ const validateState = function(state = {}, portletData = {}) {
 
 	const portletMode = state.portletMode;
 
-	if (!isString(portletMode)) {
+	if (typeof portletMode !== 'string') {
 		throw new TypeError(
 			`Invalid parameters. portletMode is ${typeof portletMode}`
 		);
@@ -884,7 +882,7 @@ const validateState = function(state = {}, portletData = {}) {
 
 	const windowState = state.windowState;
 
-	if (!isString(windowState)) {
+	if (typeof windowState !== 'string') {
 		throw new TypeError(
 			`Invalid parameters. windowState is ${typeof windowState}`
 		);

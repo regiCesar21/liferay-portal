@@ -3,15 +3,13 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import {isFunction} from 'metal';
-
 /**
  * Returns a list of countries
  * @callback callback
  * @return {array} Array of countries
  */
 export default function getCountries(callback) {
-	if (!isFunction(callback)) {
+	if (!(typeof callback === 'function')) {
 		throw new TypeError('Parameter callback must be a function');
 	}
 

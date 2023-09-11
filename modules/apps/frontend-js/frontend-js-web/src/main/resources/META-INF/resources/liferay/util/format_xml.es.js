@@ -3,8 +3,6 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import {isString} from 'metal';
-
 const NEW_LINE = '\r\n';
 
 const REGEX_CDATA = /<!\[CDATA\[.*?\]\]>/gs;
@@ -66,7 +64,7 @@ export default function formatXML(content, options = {}) {
 		...options
 	};
 
-	if (!isString(content)) {
+	if (typeof content !== 'string') {
 		throw new TypeError('Parameter content must be a string');
 	}
 

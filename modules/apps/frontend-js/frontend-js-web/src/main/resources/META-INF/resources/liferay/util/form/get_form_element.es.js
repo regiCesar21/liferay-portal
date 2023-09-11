@@ -3,8 +3,6 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import {isDef, isString} from 'metal';
-
 /**
  * Returns a DOM element or elements in a form.
  * @param {!Element} form The form DOM element
@@ -17,7 +15,11 @@ import {isDef, isString} from 'metal';
 export default function getFormElement(form, elementName) {
 	let formElement = null;
 
-	if (isDef(form) && form.nodeName === 'FORM' && isString(elementName)) {
+	if (
+		form !== undefined &&
+		form.nodeName === 'FORM' &&
+		typeof elementName === 'string'
+	) {
 		const ns = form.dataset.fmNamespace || '';
 
 		formElement = form.elements[ns + elementName] || null;
