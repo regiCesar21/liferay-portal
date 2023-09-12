@@ -1489,15 +1489,13 @@ public class WebServerServlet extends HttpServlet {
 		return user.getGroup();
 	}
 
-	private static String _getPath(
-		HttpServletRequest httpServletRequest) {
-
-		String path = httpServletRequest.getRequestURI();
-		String location =
+	private static String _getPath(HttpServletRequest httpServletRequest) {
+		String requestURI = httpServletRequest.getRequestURI();
+		String path =
 			httpServletRequest.getContextPath() +
 				httpServletRequest.getServletPath();
 
-		return path.substring(location.length() + 1);
+		return requestURI.substring(path.length() + 1);
 	}
 
 	private static User _getUser(HttpServletRequest httpServletRequest)
