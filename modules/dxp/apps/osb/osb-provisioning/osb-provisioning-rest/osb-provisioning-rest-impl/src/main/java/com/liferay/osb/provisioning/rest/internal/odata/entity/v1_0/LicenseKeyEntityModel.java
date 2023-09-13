@@ -63,6 +63,13 @@ public class LicenseKeyEntityModel implements EntityModel {
 			new DateTimeEntityField(
 				"startDate", locale -> Field.getSortableFieldName("startDate"),
 				locale -> "startDate"),
+			new IntegerEntityField(
+				"subscriptionContactCount",
+				locale -> "subscriptionContactCount"),
+			new CollectionEntityField(
+				new StringEntityField(
+					"subscriptionContactEmailAddresses",
+					locale -> "subscriptionContactEmailAddresses")),
 			new CollectionEntityField(
 				new StringEntityField(
 					"subscriptionContactUuids",

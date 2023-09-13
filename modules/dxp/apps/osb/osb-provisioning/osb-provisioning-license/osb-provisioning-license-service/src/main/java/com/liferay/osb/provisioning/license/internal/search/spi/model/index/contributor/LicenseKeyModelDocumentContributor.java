@@ -6,7 +6,9 @@
 package com.liferay.osb.provisioning.license.internal.search.spi.model.index.contributor;
 
 import com.liferay.osb.koroneiki.phloem.rest.client.dto.v1_0.Account;
+import com.liferay.osb.koroneiki.phloem.rest.client.dto.v1_0.Contact;
 import com.liferay.osb.provisioning.koroneiki.web.service.AccountWebService;
+import com.liferay.osb.provisioning.koroneiki.web.service.ContactWebService;
 import com.liferay.osb.provisioning.license.model.LicenseEntry;
 import com.liferay.osb.provisioning.license.model.LicenseKey;
 import com.liferay.osb.provisioning.license.service.LicenseEntryLocalService;
@@ -126,9 +128,10 @@ public class LicenseKeyModelDocumentContributor
 		_contributeSubscriptions(document, licenseKey.getLicenseKeyId());
 	}
 
-	private void _contributeSubscriptions(
-		Document document, long licenseKeyId) {
+	private void _contributeSubscriptions(Document document, long licenseKeyId)
+		throws Exception {
 
+		Set<String> subscriptionContactEmailAddresses = new HashSet<>();
 		Set<String> subscriptionContactUuids = new HashSet<>();
 
 		long classNameId = _classNameLocalService.getClassNameId(
@@ -138,10 +141,22 @@ public class LicenseKeyModelDocumentContributor
 			_subscriptionEntryLocalService.getSubscriptionEntries(
 				classNameId, licenseKeyId);
 
+		document.addKeyword(
+			"subscriptionContactCount", subscriptionEntries.size());
+
 		for (SubscriptionEntry subscriptionEntry : subscriptionEntries) {
+			Contact contact = _contactWebService.getContactByUuid(
+				subscriptionEntry.getContactUuid());
+
+			subscriptionContactEmailAddresses.add(contact.getEmailAddress());
+
 			subscriptionContactUuids.add(subscriptionEntry.getContactUuid());
 		}
 
+		document.addKeyword(
+			"subscriptionContactEmailAddresses",
+			ArrayUtil.toStringArray(
+				subscriptionContactEmailAddresses.toArray()));
 		document.addKeyword(
 			"subscriptionContactUuids",
 			ArrayUtil.toStringArray(subscriptionContactUuids.toArray()));
@@ -155,6 +170,9 @@ public class LicenseKeyModelDocumentContributor
 
 	@Reference
 	private ClassNameLocalService _classNameLocalService;
+
+	@Reference
+	private ContactWebService _contactWebService;
 
 	@Reference
 	private LicenseEntryLocalService _licenseEntryLocalService;
