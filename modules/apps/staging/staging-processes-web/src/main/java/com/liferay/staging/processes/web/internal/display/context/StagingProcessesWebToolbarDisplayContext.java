@@ -26,6 +26,7 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.staging.constants.StagingProcessesPortletKeys;
 
 import java.util.List;
+import java.util.Objects;
 
 import javax.portlet.PortletURL;
 
@@ -220,7 +221,7 @@ public class StagingProcessesWebToolbarDisplayContext {
 	public String getSortingURL() {
 		PortletURL sortingURL = _getStagingRenderURL();
 
-		if (getSortingOrder().equals("asc")) {
+		if (Objects.equals(getSortingOrder(), "asc")) {
 			sortingURL.setParameter("orderByType", "desc");
 		}
 		else {

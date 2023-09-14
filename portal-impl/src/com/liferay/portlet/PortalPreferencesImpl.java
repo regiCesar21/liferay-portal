@@ -127,7 +127,8 @@ public class PortalPreferencesImpl
 
 		if ((getOwnerId() == portalPreferencesImpl.getOwnerId()) &&
 			(getOwnerType() == portalPreferencesImpl.getOwnerType()) &&
-			getPreferences().equals(portalPreferencesImpl.getPreferences())) {
+			Objects.equals(
+				getPreferences(), portalPreferencesImpl.getPreferences())) {
 
 			return true;
 		}
