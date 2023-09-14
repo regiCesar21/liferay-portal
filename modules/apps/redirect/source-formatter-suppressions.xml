@@ -1,0 +1,7 @@
+<?xml version="1.0"?>
+
+<suppressions>
+	<source-check>
+		<suppress checks="PoshiPauseUsageCheck" files="redirect-test/src/testFunctional/tests/Redirect\.testcase" />
+	</source-check>
+</suppressions>

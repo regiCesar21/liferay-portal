@@ -1,0 +1,17 @@
+<?xml version="1.0"?>
+
+<suppressions>
+	<source-check>
+		<suppress checks="PoshiPauseUsageCheck" files="depot-test/src/testFunctional/macros/Depot\.macro" />
+		<suppress checks="PoshiPauseUsageCheck" files="depot-test/src/testFunctional/macros/DepotNavigator\.macro" />
+		<suppress checks="PoshiPauseUsageCheck" files="depot-test/src/testFunctional/tests/DepotApplication\.testcase" />
+		<suppress checks="PoshiPauseUsageCheck" files="depot-test/src/testFunctional/tests/DepotDocumentIntegration\.testcase" />
+		<suppress checks="PoshiPauseUsageCheck" files="depot-test/src/testFunctional/tests/DepotEntry\.testcase" />
+		<suppress checks="PoshiPauseUsageCheck" files="depot-test/src/testFunctional/tests/DepotIntegration\.testcase" />
+		<suppress checks="PoshiPauseUsageCheck" files="depot-test/src/testFunctional/tests/DepotLocalization\.testcase" />
+		<suppress checks="PoshiPauseUsageCheck" files="depot-test/src/testFunctional/tests/DepotNavigation\.testcase" />
+		<suppress checks="PoshiPauseUsageCheck" files="depot-test/src/testFunctional/tests/DepotPermission\.testcase" />
+		<suppress checks="PoshiPauseUsageCheck" files="depot-test/src/testFunctional/tests/DepotRecycleBin\.testcase" />
+		<suppress checks="PoshiPauseUsageCheck" files="depot-test/src/testFunctional/tests/DepotWorkflow\.testcase" />
+	</source-check>
+</suppressions>

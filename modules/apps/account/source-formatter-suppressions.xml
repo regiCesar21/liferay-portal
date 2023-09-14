@@ -1,0 +1,10 @@
+<?xml version="1.0"?>
+
+<suppressions>
+	<source-check>
+		<suppress checks="PoshiPauseUsageCheck" files="account-test/src/testFunctional/macros/AccountGroups\.macro" />
+		<suppress checks="PoshiPauseUsageCheck" files="account-test/src/testFunctional/macros/Accounts\.macro" />
+		<suppress checks="PoshiPauseUsageCheck" files="account-test/src/testFunctional/macros/AccountUsers\.macro" />
+		<suppress checks="PoshiPauseUsageCheck" files="account-test/src/testFunctional/tests/Accounts\.testcase" />
+	</source-check>
+</suppressions>

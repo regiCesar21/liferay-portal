@@ -1,0 +1,9 @@
+<?xml version="1.0"?>
+
+<suppressions>
+	<source-check>
+		<suppress checks="PoshiPauseUsageCheck" files="layout-seo-web-test/src/testFunctional/macros/OpenGraph\.macro" />
+		<suppress checks="PoshiPauseUsageCheck" files="layout-seo-web-test/src/testFunctional/tests/OpenGraphImages\.testcase" />
+		<suppress checks="PoshiPauseUsageCheck" files="layout-seo-web-test/src/testFunctional/tests/OpenGraphPreview\.testcase" />
+	</source-check>
+</suppressions>
