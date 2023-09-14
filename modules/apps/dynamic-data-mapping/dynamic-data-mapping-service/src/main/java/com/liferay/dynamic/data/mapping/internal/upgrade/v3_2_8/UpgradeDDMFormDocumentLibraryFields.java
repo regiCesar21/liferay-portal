@@ -36,6 +36,7 @@ import java.sql.ResultSet;
 
 import java.util.List;
 import java.util.Locale;
+import java.util.Objects;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -112,10 +113,8 @@ public class UpgradeDDMFormDocumentLibraryFields extends UpgradeProcess {
 
 					List<DDMFormField> documentLibraryDDMFormFields =
 						stream.filter(
-							ddmFormField -> ddmFormField.getType(
-							).equals(
-								"ddm-documentlibrary"
-							)
+							ddmFormField -> Objects.equals(
+								ddmFormField.getType(), "ddm-documentlibrary")
 						).collect(
 							Collectors.toList()
 						);

@@ -98,6 +98,7 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Optional;
 import java.util.ResourceBundle;
 import java.util.Set;
@@ -1448,10 +1449,8 @@ public class DDMFormAdminDisplayContext {
 
 		ListUtil.filter(
 			ddmFormFieldTypes, availableDDMFormFieldTypes,
-			ddmFormFieldType -> !ddmFormFieldType.getName(
-			).equals(
-				"ddm-image"
-			));
+			ddmFormFieldType -> !Objects.equals(
+				ddmFormFieldType.getName(), "ddm-image"));
 
 		return Collections.unmodifiableList(availableDDMFormFieldTypes);
 	}

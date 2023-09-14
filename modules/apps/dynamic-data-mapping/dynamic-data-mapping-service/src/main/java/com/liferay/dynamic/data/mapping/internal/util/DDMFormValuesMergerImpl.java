@@ -19,6 +19,7 @@ import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
+import java.util.Objects;
 import java.util.stream.Stream;
 
 import org.osgi.service.component.annotations.Component;
@@ -78,10 +79,8 @@ public class DDMFormValuesMergerImpl implements DDMFormValuesMerger {
 				Stream<DDMFormField> stream = ddmFormFields.stream();
 
 				DDMFormField ddmFormField = stream.filter(
-					p -> p.getName(
-					).equals(
-						newDDMFormFieldValue.getName()
-					)
+					p -> Objects.equals(
+						p.getName(), newDDMFormFieldValue.getName())
 				).findFirst(
 				).orElseGet(
 					() -> null
