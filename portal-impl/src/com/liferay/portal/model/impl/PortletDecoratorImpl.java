@@ -10,6 +10,8 @@ import com.liferay.portal.kernel.model.PortletDecorator;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 
+import java.util.Objects;
+
 /**
  * @author Eduardo García
  */
@@ -48,7 +50,8 @@ public class PortletDecoratorImpl implements PortletDecorator {
 
 		PortletDecorator portletDecorator = (PortletDecorator)obj;
 
-		if (getPortletDecoratorId().equals(
+		if (Objects.equals(
+				getPortletDecoratorId(),
 				portletDecorator.getPortletDecoratorId())) {
 
 			return true;
