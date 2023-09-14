@@ -12,8 +12,8 @@
  * details.
  */
 
-import Disposable from './Disposable';
-import EventHandle from './EventHandle';
+import Disposable from './Disposable.es';
+import EventHandle from './EventHandle.es';
 
 const singleArray = [0];
 
@@ -22,7 +22,6 @@ const singleArray = [0];
  * @extends {Disposable}
  */
 class EventEmitter extends Disposable {
-
 	/**
 	 * EventEmitter constructor
 	 */
@@ -113,7 +112,7 @@ class EventEmitter extends Disposable {
 			listener = {
 				default: defaultListener,
 				fn: listener,
-				origin,
+				origin
 			};
 		}
 		this.events_ = this.events_ || {};
@@ -133,7 +132,7 @@ class EventEmitter extends Disposable {
 					facade.preventedDefault = true;
 				},
 				target: this,
-				type: event,
+				type: event
 			};
 
 			return facade;
@@ -196,7 +195,7 @@ class EventEmitter extends Disposable {
 	 * @return {Array} Array of listeners.
 	 */
 	listeners(event) {
-		return this.getRawListeners_(event).map((listener) =>
+		return this.getRawListeners_(event).map(listener =>
 			listener.fn ? listener.fn : listener
 		);
 	}

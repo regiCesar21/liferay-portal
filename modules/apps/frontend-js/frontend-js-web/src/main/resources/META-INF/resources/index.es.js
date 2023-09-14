@@ -32,8 +32,8 @@ export {default as KeyboardFocusManager} from './liferay/keyboard-focus/Keyboard
 export {default as CompatibilityEventProxy} from './liferay/CompatibilityEventProxy.es';
 
 export {default as DefaultEventHandler} from './liferay/DefaultEventHandler.es';
-export {default as Disposable} from './liferay/Disposable';
-export {default as EventEmitter} from './liferay/EventEmitter';
+export {default as Disposable} from './liferay/Disposable.es';
+export {default as EventEmitter} from './liferay/EventEmitter.es';
 export {default as ItemSelectorDialog} from './liferay/ItemSelectorDialog.es';
 export {default as PortletBase} from './liferay/PortletBase.es';
 
@@ -66,4 +66,5 @@ export {default as throttle} from './liferay/throttle.es';
 // Util API
 
 export {default as fetch} from './liferay/util/fetch.es';
+export {default as isObject} from './liferay/util/is_object.es';
 export {default as navigate} from './liferay/util/navigate.es';

@@ -12,7 +12,7 @@
  * details.
  */
 
-import Disposable from './Disposable';
+import Disposable from './Disposable.es';
 
 /**
  * EventHandle utility. Holds information about an event subscription, and
@@ -23,7 +23,6 @@ import Disposable from './Disposable';
  * @extends {Disposable}
  */
 class EventHandle extends Disposable {
-
 	/**
 	 * EventHandle constructor
 	 * @param {!EventEmitter} emitter Emitter the event was subscribed to.

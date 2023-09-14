@@ -5,8 +5,8 @@
 
 import uuidv1 from 'uuid/v1';
 
+import isObject from '../util/is_object.es';
 import fetch from './../util/fetch.es';
-import isObject from './../util/is_object';
 import RenderState from './RenderState.es';
 import PortletConstants from './portlet_constants.es';
 import {

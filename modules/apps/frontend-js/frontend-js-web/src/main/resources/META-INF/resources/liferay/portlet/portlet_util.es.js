@@ -816,7 +816,7 @@ const validateForm = function(form) {
  * @review
  */
 
-const validateParameters = function (parameters) {
+const validateParameters = function(parameters) {
 	if (!(parameters !== undefined && parameters !== null)) {
 		throw new TypeError(`The parameter object is: ${typeof parameters}`);
 	}

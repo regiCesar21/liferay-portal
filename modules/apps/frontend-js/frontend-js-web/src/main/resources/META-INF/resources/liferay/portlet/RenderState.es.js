@@ -3,8 +3,7 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import isObject from './../util/is_object';
-
+import isObject from '../util/is_object.es';
 import PortletConstants from './portlet_constants.es';
 
 class RenderState {
@@ -178,7 +177,11 @@ class RenderState {
 			throw new TypeError('Parameter name must be a string');
 		}
 
-		if (!(typeof value === 'string') && value !== null && !Array.isArray(value)) {
+		if (
+			!(typeof value === 'string') &&
+			value !== null &&
+			!Array.isArray(value)
+		) {
 			throw new TypeError(
 				'Parameter value must be a string, an array or null'
 			);
