@@ -15,6 +15,7 @@ import com.liferay.user.associated.data.web.internal.configuration.AnonymousUser
 import com.liferay.user.associated.data.web.internal.configuration.AnonymousUserConfigurationRetriever;
 
 import java.util.Dictionary;
+import java.util.Locale;
 import java.util.Optional;
 import java.util.ResourceBundle;
 
@@ -70,9 +71,14 @@ public class AnonymousUserConfigurationModelListener
 			return;
 		}
 
+		Locale locale = LocaleThreadLocal.getThemeDisplayLocale();
+
+		if (locale == null) {
+			locale = LocaleThreadLocal.getDefaultLocale();
+		}
+
 		ResourceBundle resourceBundle = ResourceBundleUtil.getBundle(
-			"content.Language", LocaleThreadLocal.getThemeDisplayLocale(),
-			getClass());
+			"content.Language", locale, getClass());
 
 		String message = ResourceBundleUtil.getString(
 			resourceBundle,
