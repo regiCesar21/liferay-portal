@@ -1,298 +1,286 @@
-<link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:200,200i,300,300i,400,400i,600,600i,700,700i,900,900i&display=swap" rel="stylesheet">
+<html>
+    <head>
+        <style>
+            a:active, a:link, a:visited {
+                color: #0b5fff;
+                text-decoration: none;
+            }
 
-<div class="body">
-	<div class="header">
-		<img src="https://support.liferay.com/documents/d/customer-portal/liferay-logo_full-color-digital"
-			alt="Liferay"
-			flex="none"
-			height="65"
-			width="235"
-		/>
-	</div>
+            .access-message {
+                color: #272833;
+                font-size: 16px;
+                font-weight: 600;
+                line-height: 150%;
+                margin-bottom: 8px;
+            }
 
-	<div class="divider"></div>
+            .body {
+                display: block;
+                font-family: 'Source Sans Pro', sans-serif;
+                font-style: normal;
+                padding: 0px;
+                position: relative;
+                width: 598px;
+            }
 
-	<div class="project-section">
-		<div class="invitation-message">
-			[$ACCOUNT_INVITATION_MESSAGE$]
-		</div>
+            .button {
+                align-items: center;
+                background: #0b5fff;
+                border-radius: 8px;
+                height: 40px;
+                justify-content: center;
+                margin-bottom: 8px;
+                padding: 16px 16px;
+            }
 
-		<div class="access-message">
-			Faça login ou crie uma conta em Liferay.com para:
-		</div>
+            .button-text {
+                color: #fff;
+                font-size: 16px;
+                font-weight: 600;
+                line-height: 150%;
+            }
 
-		<div class="services-message">
-			[$CONTACT_ROLE_ACTIONS_LIST$]
-		</div>
+            .caution-message {
+                color: #0b5fff;
+                font-size: 24px;
+                font-weight: 600;
+                line-height: 117%;
+                text-align: center;
+            }
 
-		<br />
+            .divider {
+                background: #6b6c7e;
+                height: 1px;
+                margin-bottom: 16px;
+                margin-top: 16px;
+                width: 598px;
+            }
 
-		<div class="get-started-button">
-			<a class="button" href="https://support.liferay.com/project/#/[$ACCOUNT_KEY$]">
-				<span class="button-text">Começar →</span>
-			</a>
-		</div>
+            .end-message {
+                color: #000000;
+                font-size: 24px;
+                font-weight: 700;
+                line-height: 125%;
+            }
 
-		<div class="get-started-message">
-			<p>
-				OU copie e cole o link abaixo em seu navegador
-			</p>
+            .end-message-box {
+                background: #f1f2f5;
+                border-radius: 4px;
+                margin-bottom: 8px;
+                margin-top: 8px;
+                padding: 40px 48px;
+                text-align: center;
+            }
 
-			<p>
-				<a href="https://support.liferay.com/project/#/[$ACCOUNT_KEY$]">
-					https://support.liferay.com/project/#/[$ACCOUNT_KEY$]
-				</a>
-			</p>
-		</div>
-	</div>
+            .footer {
+                text-align: center;
+                padding: 0px 48px;
+                margin-top: 8px;
+            }
 
-	<div class="end-message-box">
-		<div class="end-message">
-			Estamos ansiosos para ver as experiências que você criará com a Liferay.
-		</div>
+            .footer-message {
+                color: #6b6c7e;
+                font-size: 14px;
+                font-weight: 400;
+                line-height: 150%;
+                margin-bottom: 16px;
+                margin-top: 16px;
+            }
 
-		<br />
+            .footer-navigation {
+                color: #6b6c7e;
+                display: inline-block;
+                font-size: 12px;
+                font-weight: 400;
+                line-height: 150%;
+                margin-bottom: 32px;
+                margin-top: 32px;
+                padding: 0px;
+                text-align: center;
+            }
 
-		<div class="get-started-button">
-			<a class="button" href="https://support.liferay.com/project/#/[$ACCOUNT_KEY$]">
-				<span class="button-text">Começar →</span>
-			</a>
-		</div>
+            .get-started-message {
+                color: #6b6c7e;
+                font-size: 14px;
+                font-weight: 400;
+                line-height: 150%;
+                padding: 0px;
+            }
 
-		<div class="get-started-message">
-			<p>
-				OU copie e cole o link abaixo em seu navegador
-			</p>
+            .get-started-message a:active,
+            .get-started-message a:link,
+            .get-started-message a:visited {
+                color: #6b6c7e;
+                text-decoration: underline;
+            }
 
-			<p>
-				<a href="https://support.liferay.com/project/#/[$ACCOUNT_KEY$]">
-					https://support.liferay.com/project/#/[$ACCOUNT_KEY$]
-				</a>
-			</p>
-		</div>
-	</div>
+            .header {
+                margin-bottom: 16px;
+                text-align: center;
+                width: 598px;
+            }
 
-	<div class="info-message-box">
-		<div class="caution-message">
-			Por favor, leia com atenção.
-		</div>
+            .info-message-box {
+                background: #eef2fa;
+                border-radius: 10px;
+                color: #272833;
+                font-weight: 400;
+                font-size: 14px;
+                isolation: isolate;
+                line-height: 150%;
+                margin-bottom: 32px;
+                margin-top: 32px;
+                padding: 40px;
+            }
 
-		<p>
-			Contatos que não existam no sistema receberão um e-mail separadamente para ativar as contas. Em breve você receberá um e-mail nosso na sua caixa de entrada.
-		</p>
+            .info-message-box a:active,
+            .info-message-box a:link,
+            .info-message-box a:visited {
+                text-decoration-line: underline;
+            }
 
-		Caso você não receba o e-mail, por favor entre em <a href="mailto:customer.service@liferay.com">contato com o nosso suporte</a>.
-	</div>
+            .invitation-message {
+                border-radius: 4px;
+                color: #272833;
+                font-size: 30px;
+                font-weight: 700;
+                line-height: 112%;
+                margin-bottom: 8px;
+                padding: 0px;
+            }
 
-	<div class="divider"></div>
+            .project-section {
+                border-radius: 4px;
+                margin-bottom: 16px;
+                margin-top: 16px;
+                padding: 0px;
+            }
 
-	<div class="footer">
-		<div class="footer-message">
-			Este email fue enviado por <a href="https://liferay.com">Liferay, Inc.</a>
-		</div>
+            .services-message {
+                color: #272833;
+                font-size: 16px;
+                font-weight: 400;
+                line-height: 150%;
+                margin-bottom: 8px;
+                padding: 0px;
+            }
+        </style>
+    </head>
+    <body>
+        <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:200,200i,300,300i,400,400i,600,600i,700,700i,900,900i&display=swap" rel="stylesheet">
 
-		<img src="https://support.liferay.com/documents/d/customer-portal/liferay-logo_full-color-digital"
-			alt="Liferay"
-			flex="none"
-			height="57"
-			width="206"
-		/>
+        <div class="body">
+            <div class="header">
+                <img src="https://support.liferay.com/documents/d/customer-portal/liferay-logo_full-color-digital"
+                    alt="Liferay"
+                    flex="none"
+                    height="65"
+                    width="235"
+                />
+            </div>
 
-		<div class="footer-message">
-			Copyright © [$YEAR$] Liferay, Inc.<br />
-			1400 Montefino Ave<br />
-			Diamond Bar, CA 91765<br />
-		</div>
+            <div class="divider"></div>
 
-		<div class="footer-navigation">
-			<a href="mailto:customer-service@liferay.com">Contacta con Soporte</a> |
-			<a href="https://learn.liferay.com/">Documentación</a> |
-			<a href="https://help.liferay.com/hc/pt">Help Center</a> |
-			<a href="https://www.subscribepage.com/liferay">Anuncios</a> |
-			<a href="https://status.liferay.cloud/">Nivel de disponibilidad</a>
-		</div>
-	</div>
-</div>
+            <div class="project-section">
+                <div class="invitation-message">
+                    [$ACCOUNT_INVITATION_MESSAGE$]
+                </div>
 
-<style>
-	a:active, a:link, a:visited {
-		color: #0b5fff;
-		text-decoration: none;
-	}
+                <div class="access-message">
+                    Faça login ou crie uma conta em Liferay.com para:
+                </div>
 
-	.access-message {
-		color: #272833;
-		font-size: 16px;
-		font-weight: 600;
-		gap: 24px;
-		line-height: 150%;
-		margin-bottom: 8px;
-	}
+                <div class="services-message">
+                    [$CONTACT_ROLE_ACTIONS_LIST$]
+                </div>
 
-	.body {
-		align-items: flex-start;
-		display: flex;
-		flex-direction: column;
-		font-family: 'Source Sans Pro', sans-serif;
-		font-style: normal;
-		left: 48px;
-		padding: 0px;
-		position: relative;
-		top: 48px;
-		width: 598px;
-	}
+                <br />
 
-	.button {
-		align-items: center;
-		background: #0b5fff;
-		border-radius: 8px;
-		box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
-		gap: 8px;
-		height: 40px;
-		justify-content: center;
-		margin-bottom: 8px;
-		padding: 8px 16px;
-	}
+                <div class="get-started-button">
+                    <a class="button" href="https://support.liferay.com/project/#/[$ACCOUNT_KEY$]">
+                        <span class="button-text">Começar →</span>
+                    </a>
+                </div>
 
-	.button-text {
-		color: #fff;
-		font-size: 16px;
-		font-weight: 600;
-		line-height: 150%;
-	}
+                <div class="get-started-message">
+                    <p>
+                        OU copie e cole o link abaixo em seu navegador
+                    </p>
 
-	.caution-message {
-		color: #0b5fff;
-		font-size: 24px;
-		font-weight: 600;
-		line-height: 117%;
-		text-align: center;
-	}
+                    <p>
+                        <a href="https://support.liferay.com/project/#/[$ACCOUNT_KEY$]">
+                            https://support.liferay.com/project/#/[$ACCOUNT_KEY$]
+                        </a>
+                    </p>
+                </div>
+            </div>
 
-	.divider {
-		align-self: stretch;
-		background: #6b6c7e;
-		height: 1px;
-		margin-bottom: 16px;
-		margin-top: 16px;
-		width: 598px;
-	}
+            <div class="end-message-box">
+                <div class="end-message">
+                    Estamos ansiosos para ver as experiências que você criará com a Liferay.
+                </div>
 
-	.end-message {
-		font-size: 24px;
-		font-weight: 700;
-		line-height: 125%;
-	}
+                <br />
 
-	.end-message-box {
-		background: #f1f2f5;
-		border-radius: 4px;
-		gap: 24px;
-		margin-bottom: 8px;
-		margin-top: 8px;
-		padding: 40px 48px;
-		text-align: center;
-	}
+                <div class="get-started-button">
+                    <a class="button" href="https://support.liferay.com/project/#/[$ACCOUNT_KEY$]">
+                        <span class="button-text">Começar →</span>
+                    </a>
+                </div>
 
-	.footer {
-		text-align: center;
-		padding: 0px 48px;
-		gap: 32px;
-		margin-top: 8px;
-	}
+                <div class="get-started-message">
+                    <p>
+                        OU copie e cole o link abaixo em seu navegador
+                    </p>
 
-	.footer-message {
-		color: #6b6c7e;
-		font-size: 14px;
-		font-weight: 400;
-		line-height: 150%;
-		margin-bottom: 16px;
-		margin-top: 16px;
-	}
+                    <p>
+                        <a href="https://support.liferay.com/project/#/[$ACCOUNT_KEY$]">
+                            https://support.liferay.com/project/#/[$ACCOUNT_KEY$]
+                        </a>
+                    </p>
+                </div>
+            </div>
 
-	.footer-navigation {
-		align-items: flex-start;
-		color: #6b6c7e;
-		display: flex;
-		flex-direction: row;
-		font-size: 14px;
-		font-weight: 400;
-		gap: 6px;
-		line-height: 150%;
-		margin-bottom: 32px;
-		margin-top: 32px;
-		padding: 0px;
-		text-align: center;
-	}
+            <div class="info-message-box">
+                <div class="caution-message">
+                    Por favor, leia com atenção.
+                </div>
 
-	.get-started-message {
-		color: #6b6c7e;
-		gap: 8px;
-		font-size: 14px;
-		font-weight: 400;
-		line-height: 150%;
-		padding: 0px;
-	}
+                <p>
+                    Contatos que não existam no sistema receberão um e-mail separadamente para ativar as contas. Em breve você receberá um e-mail nosso na sua caixa de entrada.
+                </p>
 
-	.get-started-message a:active,
-	.get-started-message a:link,
-	.get-started-message a:visited {
-		color: #6b6c7e;
-		text-decoration: underline;
-	}
+                Caso você não receba o e-mail, por favor entre em <a href="mailto:customer.service@liferay.com">contato com o nosso suporte</a>.
+            </div>
 
-	.header {
-		margin-bottom: 16px;
-		text-align: center;
-		width: 598px;
-	}
+            <div class="divider"></div>
 
-	.info-message-box {
-		background: #eef2fa;
-		border-radius: 10px;
-		color: #272833;
-		font-weight: 400;
-		font-size: 14px;
-		gap: 16px;
-		isolation: isolate;
-		line-height: 150%;
-		margin-bottom: 32px;
-		margin-top: 32px;
-		padding: 40px;
-	}
+            <div class="footer">
+                <div class="footer-message">
+                    Este email fue enviado por <a href="https://liferay.com">Liferay, Inc.</a>
+                </div>
 
-	.info-message-box a:active,
-	.info-message-box a:link,
-	.info-message-box a:visited {
-		text-decoration-line: underline;
-	}
+                <img src="https://support.liferay.com/documents/d/customer-portal/liferay-logo_full-color-digital"
+                    alt="Liferay"
+                    flex="none"
+                    height="57"
+                    width="206"
+                />
 
-	.invitation-message {
-		border-radius: 4px;
-		color: #272833;
-		font-size: 30px;
-		font-weight: 700;
-		gap: 8px;
-		line-height: 112%;
-		margin-bottom: 8px;
-		padding: 0px;
-	}
+                <div class="footer-message">
+                    Copyright © [$YEAR$] Liferay, Inc.<br />
+                    1400 Montefino Ave<br />
+                    Diamond Bar, CA 91765<br />
+                </div>
 
-	.project-section {
-		border-radius: 4px;
-		gap: 24px;
-		margin-bottom: 16px;
-		margin-top: 16px;
-		padding: 0px;
-	}
-
-	.services-message {
-		color: #272833;
-		gap: 40px;
-		font-size: 16px;
-		font-weight: 400;
-		line-height: 150%;
-		margin-bottom: 8px;
-		padding: 0px;
-	}
-</style>
+                <div class="footer-navigation">
+                    <a href="mailto:customer-service@liferay.com">Contacta con Soporte</a> |
+                    <a href="https://learn.liferay.com/">Documentación</a> |
+                    <a href="https://help.liferay.com/hc/pt">Help Center</a> |
+                    <a href="https://www.subscribepage.com/liferay">Anuncios</a> |
+                    <a href="https://status.liferay.cloud/">Nivel de disponibilidad</a>
+                </div>
+            </div>
+        </div>
+    </body>
+</html>
