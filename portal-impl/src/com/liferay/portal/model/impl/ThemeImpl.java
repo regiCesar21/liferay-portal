@@ -91,7 +91,7 @@ public class ThemeImpl extends PluginBaseImpl implements Theme {
 
 		Theme theme = (Theme)object;
 
-		if (getThemeId().equals(theme.getThemeId())) {
+		if (Objects.equals(getThemeId(), theme.getThemeId())) {
 			return true;
 		}
 

@@ -13,6 +13,7 @@ import com.liferay.portal.kernel.util.ClassUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 
 import java.util.List;
+import java.util.Objects;
 
 import javax.mail.Message;
 
@@ -92,7 +93,7 @@ public class MessageListenerWrapper implements MessageListener {
 
 		MessageListenerWrapper messageListener = (MessageListenerWrapper)object;
 
-		return getId().equals(messageListener.getId());
+		return Objects.equals(getId(), messageListener.getId());
 	}
 
 	@Override
