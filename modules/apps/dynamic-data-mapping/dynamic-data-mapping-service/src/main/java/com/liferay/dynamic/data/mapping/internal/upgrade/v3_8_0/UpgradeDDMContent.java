@@ -24,6 +24,7 @@ import java.sql.ResultSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Set;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
@@ -75,10 +76,8 @@ public class UpgradeDDMContent extends UpgradeProcess {
 					Stream<DDMFormField> stream = ddmFormFields.stream();
 
 					List<DDMFormField> fieldSetDDMFormFields = stream.filter(
-						ddmFormField -> ddmFormField.getType(
-						).equals(
-							"fieldset"
-						)
+						ddmFormField -> Objects.equals(
+							ddmFormField.getType(), "fieldset")
 					).collect(
 						Collectors.toList()
 					);

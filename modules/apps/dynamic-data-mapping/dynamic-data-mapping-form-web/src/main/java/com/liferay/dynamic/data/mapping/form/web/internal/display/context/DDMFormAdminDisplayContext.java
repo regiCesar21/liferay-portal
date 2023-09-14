@@ -108,6 +108,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Optional;
 import java.util.ResourceBundle;
 import java.util.Set;
@@ -1645,22 +1646,11 @@ public class DDMFormAdminDisplayContext {
 		ListUtil.filter(
 			ddmFormFieldTypes, availableDDMFormFieldTypes,
 			ddmFormFieldType ->
-				!ddmFormFieldType.getName(
-				).equals(
-					"ddm-image"
-				) &&
-				!ddmFormFieldType.getName(
-				).equals(
-					"geolocation"
-				) &&
-				!ddmFormFieldType.getName(
-				).equals(
-					"journal_article"
-				) &&
-				!ddmFormFieldType.getName(
-				).equals(
-					"link_to_layout"
-				));
+				!Objects.equals(ddmFormFieldType.getName(), "ddm-image") &&
+				!Objects.equals(ddmFormFieldType.getName(), "geolocation") &&
+				!Objects.equals(
+					ddmFormFieldType.getName(), "journal_article") &&
+				!Objects.equals(ddmFormFieldType.getName(), "link_to_layout"));
 
 		return Collections.unmodifiableList(availableDDMFormFieldTypes);
 	}

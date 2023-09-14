@@ -20,6 +20,7 @@ import java.util.Collection;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
+import java.util.Objects;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.stream.Stream;
 
@@ -104,10 +105,8 @@ public class DDMFormValuesMergerImpl implements DDMFormValuesMerger {
 				Stream<DDMFormField> stream = ddmFormFields.stream();
 
 				DDMFormField ddmFormField = stream.filter(
-					p -> p.getName(
-					).equals(
-						newDDMFormFieldValue.getName()
-					)
+					p -> Objects.equals(
+						p.getName(), newDDMFormFieldValue.getName())
 				).findFirst(
 				).orElseGet(
 					() -> null
