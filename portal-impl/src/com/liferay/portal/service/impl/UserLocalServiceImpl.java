@@ -4021,6 +4021,8 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 
 		String passwordResetURL = sb.toString();
 
+		ticket.setKey(PasswordEncryptorUtil.encrypt(ticket.getKey()));
+
 		ticketLocalService.updateTicket(ticket);
 
 		sendPasswordNotification(
