@@ -33,7 +33,7 @@ definition {
 	@description = "This ensures that the expired entries can be removed automatically in the recycle bin."
 	@priority = 5
 	test CheckExpiredEntries {
-		property custom.properties = "trash.entry.check.interval=1${line.separator}trash.entries.max.age=1";
+		property custom.properties = "trash.entries.max.age=1${line.separator}trash.entry.check.interval=1";
 
 		JSONDocument.addFile(
 			dmDocumentDescription = "DM Document Description",
