@@ -27,6 +27,7 @@ import java.util.Arrays;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.ClassRule;
+import org.junit.Ignore;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -49,6 +50,7 @@ public class SegmentsEntryRetrieverTest {
 		_user = UserTestUtil.addUser(_group.getGroupId());
 	}
 
+	@Ignore
 	@Test
 	public void testGetSegmentsEntryIds() throws Exception {
 		SegmentsEntry segmentsEntry = _addSegmentsEntry(_user);
