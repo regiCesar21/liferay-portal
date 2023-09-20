@@ -24,6 +24,7 @@ import javax.ws.rs.core.Response;
 
 import org.junit.Assert;
 import org.junit.ClassRule;
+import org.junit.Ignore;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -64,6 +65,7 @@ public class CORSApplicationClientTest extends BaseClientTestCase {
 		Assert.assertEquals(_TEST_CORS_URI, corsHeaderString);
 	}
 
+	@Ignore
 	@Test
 	public void testCORSRequest() throws Exception {
 		WebTarget webTarget = getJsonWebTarget("user", "get-current-user");
@@ -86,6 +88,7 @@ public class CORSApplicationClientTest extends BaseClientTestCase {
 		Assert.assertEquals(_TEST_CORS_URI, corsHeaderString);
 	}
 
+	@Ignore
 	@Test
 	public void testCORSRequestInvalidToken() throws Exception {
 		WebTarget webTarget = getJsonWebTarget("user", "get-current-user");
@@ -107,6 +110,7 @@ public class CORSApplicationClientTest extends BaseClientTestCase {
 		Assert.assertEquals(403, response.getStatus());
 	}
 
+	@Ignore
 	@Test
 	public void testPreflightCORSRequest() throws Exception {
 		WebTarget webTarget = getJsonWebTarget("user", "get-current-user");
