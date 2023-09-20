@@ -328,6 +328,7 @@ definition {
 	@priority = 5
 	test ChangeLayoutSectionProperties {
 		property portal.acceptance = "true";
+		property portal.upstream = "quarantine";
 
 		task ("Add a content page") {
 			SitePages.openPagesAdmin(siteURLKey = "test-site-name");
