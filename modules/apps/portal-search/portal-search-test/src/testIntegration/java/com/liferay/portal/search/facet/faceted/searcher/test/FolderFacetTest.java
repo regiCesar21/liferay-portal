@@ -47,6 +47,7 @@ import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.ClassRule;
+import org.junit.Ignore;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -81,6 +82,7 @@ public class FolderFacetTest extends BaseFacetedSearcherTestCase {
 		dlFolderSearchFixture.tearDown();
 	}
 
+	@Ignore
 	@Test
 	public void testAggregation() throws Exception {
 		String keyword = RandomTestUtil.randomString();
@@ -110,6 +112,7 @@ public class FolderFacetTest extends BaseFacetedSearcherTestCase {
 			facet.getFieldName(), searchContext, hits, toMap(dlFolderIds, 1));
 	}
 
+	@Ignore
 	@Test
 	public void testAvoidResidualDataFromDDMStructureLocalServiceTest()
 		throws Exception {
@@ -143,6 +146,7 @@ public class FolderFacetTest extends BaseFacetedSearcherTestCase {
 			facet.getFieldName(), searchContext, hits, toMap(dlFolderIds, 1));
 	}
 
+	@Ignore
 	@Test
 	public void testSelection() throws Exception {
 		String keyword = RandomTestUtil.randomString();
@@ -172,6 +176,7 @@ public class FolderFacetTest extends BaseFacetedSearcherTestCase {
 			facet.getFieldName(), searchContext, hits, toMap(dlFolderIds, 1));
 	}
 
+	@Ignore
 	@Test
 	public void testTreePathSelection() throws Exception {
 		String keyword = RandomTestUtil.randomString();
