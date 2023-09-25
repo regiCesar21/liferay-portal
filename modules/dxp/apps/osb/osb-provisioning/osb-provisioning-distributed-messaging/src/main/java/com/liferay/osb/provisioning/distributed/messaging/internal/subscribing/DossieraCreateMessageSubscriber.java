@@ -514,15 +514,14 @@ public class DossieraCreateMessageSubscriber extends BaseMessageSubscriber {
 			if (parentAccount != null) {
 				account.setParentAccountKey(parentAccount.getKey());
 			}
-
-			account.setProperties(
-				_dossieraSubscriberUtil.getAccountProperties(
-					account, jsonObject));
 		}
 		else {
 			account.setName(name);
 			account.setCode(_getCode(name, null));
 		}
+
+		account.setProperties(
+			_dossieraSubscriberUtil.getAccountProperties(account, jsonObject));
 
 		name = account.getName();
 
