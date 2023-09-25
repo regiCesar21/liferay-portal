@@ -468,7 +468,7 @@ definition {
 		var key_roleTitle = StringUtil.lowerCase(${key_roleTitle});
 
 		if (IsElementPresent.isElementPresentAfterWait(locator1 = "IFrame#MODAL_BODY")) {
-			SelectFrame(locator1 = "IFrame#MODAL_BODY");
+			SelectFrame.selectFrameNoLoading(locator1 = "IFrame#MODAL_BODY");
 		}
 
 		Uncheck(locator1 = "Permissions#${permissionDefinitionKey}");
