@@ -5,6 +5,7 @@
 
 package com.liferay.portal.util;
 
+import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.util.PropsTestUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
@@ -19,10 +20,17 @@ import org.junit.BeforeClass;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
+import org.junit.runner.RunWith;
+
+import org.powermock.api.mockito.PowerMockito;
+import org.powermock.core.classloader.annotations.PrepareForTest;
+import org.powermock.modules.junit4.PowerMockRunner;
 
 /**
  * @author Tomas Polesovsky
  */
+@PrepareForTest(PrefsPropsUtil.class)
+@RunWith(PowerMockRunner.class)
 public class PortalImplEscapeRedirectTest {
 
 	@ClassRule
@@ -43,6 +51,15 @@ public class PortalImplEscapeRedirectTest {
 			).put(
 				PropsKeys.DNS_SECURITY_THREAD_LIMIT, String.valueOf(10)
 			).build());
+
+		PowerMockito.mockStatic(PrefsPropsUtil.class);
+		PowerMockito.when(
+			PrefsPropsUtil.getString(
+				CompanyThreadLocal.getCompanyId(), PropsKeys.CDN_HOST_HTTPS,
+				PropsValues.CDN_HOST_HTTPS)
+		).thenReturn(
+			PropsValues.CDN_HOST_HTTPS
+		);
 	}
 
 	@Test
