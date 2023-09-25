@@ -520,9 +520,6 @@ public class DossieraCreateMessageSubscriber extends BaseMessageSubscriber {
 			account.setCode(_getCode(name, null));
 		}
 
-		account.setProperties(
-			_dossieraSubscriberUtil.getAccountProperties(account, jsonObject));
-
 		name = account.getName();
 
 		FilterQuery filterQuery = new FilterQuery();
@@ -563,6 +560,9 @@ public class DossieraCreateMessageSubscriber extends BaseMessageSubscriber {
 		if (!productFamily.equals("P")) {
 			account.setTier(Account.Tier.T4);
 		}
+
+		account.setProperties(
+			_dossieraSubscriberUtil.getAccountProperties(account, jsonObject));
 
 		String soldBy = jsonObject.getString("_salesforceOpportunitySoldBy");
 
