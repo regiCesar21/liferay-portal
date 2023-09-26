@@ -278,7 +278,7 @@ public class TimeBasedOTPBrowserSetupMFAChecker
 				userId, remoteAddress, true);
 
 			_mfaTimeBasedOTPEntryLocalService.updateLastTOTP(
-					userId, mfaTimeBasedOTP);
+				userId, mfaTimeBasedOTP);
 
 			_routeAuditMessage(
 				_mfaTimeBasedOTPAuditMessageBuilder.
