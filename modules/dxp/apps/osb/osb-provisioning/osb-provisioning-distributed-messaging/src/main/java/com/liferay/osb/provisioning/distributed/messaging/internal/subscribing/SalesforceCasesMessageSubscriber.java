@@ -87,7 +87,17 @@ public class SalesforceCasesMessageSubscriber extends BaseMessageSubscriber {
 			String[] pairs = StringUtil.split(
 				curMajorCase, StringPool.COLON + StringPool.SPACE);
 
-			jsonObject.put(String.valueOf(pairs[0]), String.valueOf(pairs[1]));
+			if (pairs.length == 1) {
+				pairs = StringUtil.split(curMajorCase, StringPool.COLON);
+			}
+
+			String value = StringPool.BLANK;
+
+			if (pairs.length == 2) {
+				value = String.valueOf(pairs[1]);
+			}
+
+			jsonObject.put(String.valueOf(pairs[0]), value);
 		}
 
 		return jsonObject;
