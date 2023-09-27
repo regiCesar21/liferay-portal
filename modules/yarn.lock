@@ -10751,10 +10751,10 @@ lie@~3.3.0:
   dependencies:
     immediate "~3.0.5"
 
-liferay-ckeditor@4.18.0-liferay.1:
-  version "4.18.0-liferay.1"
-  resolved "https://registry.yarnpkg.com/liferay-ckeditor/-/liferay-ckeditor-4.18.0-liferay.1.tgz#124b42f55b5b52025cb516aaffcd3c9b702f3f09"
-  integrity sha512-+im3vim2ES8xRdWo6KYYktawsPAA7GjENSBeahTnPsA6I+lCkETqTeliWWMdsdjZi/oZ80EaJbKNsAyQZyVeSw==
+liferay-ckeditor@4.21.0-liferay.1:
+  version "4.21.0-liferay.1"
+  resolved "https://registry.yarnpkg.com/liferay-ckeditor/-/liferay-ckeditor-4.21.0-liferay.1.tgz#442c35172d813d2cbfcb80646a31678bf01d0090"
+  integrity sha512-TohBDjRPVu1vaiU2G7kjSJ9uTr+Biu8biENr0kHB8CU7RhU6HIE4RJb3JczYpK+SxvFbc1w0mKp6M/TIbPET8g==
 
 liferay-font-awesome@3.5.2:
   version "3.5.2"
