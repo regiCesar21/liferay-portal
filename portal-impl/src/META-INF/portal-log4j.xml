@@ -1096,6 +1096,10 @@
 		<priority value="ERROR" />
 	</category>
 
+	<category name="org.mariadb.jdbc.message.server.ErrorPacket">
+		<priority value="ERROR" />
+	</category>
+
 	<category name="org.openid4java">
 		<priority value="ERROR" />
 	</category>
