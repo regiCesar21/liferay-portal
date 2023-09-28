@@ -19,7 +19,6 @@ import com.liferay.layout.set.prototype.helper.LayoutSetPrototypeHelper;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.model.Group;
@@ -32,7 +31,9 @@ import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.service.LayoutSetLocalService;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.service.impl.LayoutLocalServiceHelper;
@@ -63,7 +64,7 @@ public class GetFriendlyURLWarningResourceCommand
 			ResourceRequest resourceRequest, ResourceResponse resourceResponse)
 		throws Exception {
 
-		if (!FeatureFlagManagerUtil.isEnabled("LPS-174417")) {
+		if (!GetterUtil.getBoolean(PropsUtil.get("feature.flag.LPS-174417"))) {
 			JSONPortletResponseUtil.writeJSON(
 				resourceRequest, resourceResponse,
 				JSONUtil.put("hasWarnings", false));
@@ -99,20 +100,18 @@ public class GetFriendlyURLWarningResourceCommand
 				return;
 			}
 
+			ThemeDisplay themeDisplay =
+				(ThemeDisplay)resourceRequest.getAttribute(
+					WebKeys.THEME_DISPLAY);
+
 			JSONPortletResponseUtil.writeJSON(
 				resourceRequest, resourceResponse,
 				JSONUtil.put(
 					"hasWarnings", true
 				).put(
 					"warningMessage",
-					() -> {
-						ThemeDisplay themeDisplay =
-							(ThemeDisplay)resourceRequest.getAttribute(
-								WebKeys.THEME_DISPLAY);
-
-						return _getWarningMessage(
-							layout.getGroup(), themeDisplay.getLocale());
-					}
+					_getWarningMessage(
+						layout.getGroup(), themeDisplay.getLocale())
 				));
 
 			return;
@@ -145,21 +144,18 @@ public class GetFriendlyURLWarningResourceCommand
 			return;
 		}
 
+		ThemeDisplay themeDisplay = (ThemeDisplay)resourceRequest.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
 		JSONPortletResponseUtil.writeJSON(
 			resourceRequest, resourceResponse,
 			JSONUtil.put(
 				"hasWarnings", true
 			).put(
 				"warningMessage",
-				() -> {
-					ThemeDisplay themeDisplay =
-						(ThemeDisplay)resourceRequest.getAttribute(
-							WebKeys.THEME_DISPLAY);
-
-					return _getWarningMessage(
-						_groupLocalService.getGroup(groupId),
-						themeDisplay.getLocale());
-				}
+				_getWarningMessage(
+					_groupLocalService.getGroup(groupId),
+					themeDisplay.getLocale())
 			));
 	}
 

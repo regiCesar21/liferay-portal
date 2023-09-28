@@ -287,7 +287,7 @@ public class LayoutsAdminDisplayContext {
 		return configureLayoutURL.toString();
 	}
 
-		public String getConvertLayoutURL(Layout layout) {
+	public String getConvertLayoutURL(Layout layout) {
 		PortletURL convertLayoutURL = _liferayPortletResponse.createActionURL();
 
 		convertLayoutURL.setParameter(
@@ -381,7 +381,6 @@ public class LayoutsAdminDisplayContext {
 
 		return _displayStyle;
 	}
-
 
 	public String getEditLayoutURL(Layout layout) throws Exception {
 		if (layout.isTypeContent()) {
@@ -512,7 +511,7 @@ public class LayoutsAdminDisplayContext {
 		Group group = layout.getGroup();
 		LayoutSet layoutSet = layout.getLayoutSet();
 
-		if (!FeatureFlagManagerUtil.isEnabled("LPS-174417") ||
+		if (!GetterUtil.getBoolean(PropsUtil.get("feature.flag.LPS-174417")) ||
 			(!group.isLayoutSetPrototype() &&
 			 !layoutSet.isLayoutSetPrototypeLinkActive())) {
 
@@ -1601,7 +1600,14 @@ public class LayoutsAdminDisplayContext {
 		return true;
 	}
 
-<<<<<<< HEAD
+	public boolean isShowFriendlyURLWarningMessage() throws PortalException {
+		if (Validator.isNotNull(getFriendlyURLWarningMessage())) {
+			return true;
+		}
+
+		return false;
+	}
+
 	public boolean isShowOrphanPortletsAction(Layout layout)
 		throws PortalException {
 
@@ -1629,14 +1635,6 @@ public class LayoutsAdminDisplayContext {
 		}
 
 		return true;
-	}
-
-	public boolean isShowFriendlyURLWarningMessage() throws PortalException {
-		if (Validator.isNotNull(getFriendlyURLWarningMessage())) {
-			return true;
-		}
-
-		return false;
 	}
 
 	public boolean isShowPermissionsAction(Layout layout)
@@ -1882,7 +1880,8 @@ public class LayoutsAdminDisplayContext {
 
 		resourceURL.setParameter("groupId", String.valueOf(getGroupId()));
 		resourceURL.setParameter("plid", String.valueOf(getSelPlid()));
-		resourceURL.setParameter("privateLayout", String.valueOf(isPrivateLayout()));
+		resourceURL.setParameter(
+			"privateLayout", String.valueOf(isPrivateLayout()));
 		resourceURL.setResourceID("/layout_admin/get_friendly_url_warning");
 
 		return resourceURL.toString();
@@ -1903,8 +1902,9 @@ public class LayoutsAdminDisplayContext {
 	}
 
 	private String _getLayoutMessage(Layout layout) throws PortalException {
-		if (LayoutPermissionUtil.containsLayoutUpdatePermission(
-				themeDisplay.getPermissionChecker(), layout)) {
+		if (LayoutPermissionUtil.contains(
+				themeDisplay.getPermissionChecker(), layout,
+				ActionKeys.UPDATE)) {
 
 			LinkTag linkTag = new LinkTag();
 
@@ -2019,6 +2019,25 @@ public class LayoutsAdminDisplayContext {
 		return _themeId;
 	}
 
+	private String _getWarningMessageHTML(
+		String heading, List<String> layoutMessages) {
+
+		StringBuilder sb = new StringBuilder();
+
+		sb.append(heading);
+		sb.append("<ul>");
+
+		for (String layoutMessage : layoutMessages) {
+			sb.append("<li>");
+			sb.append(layoutMessage);
+			sb.append("</li>");
+		}
+
+		sb.append("</ul>");
+
+		return sb.toString();
+	}
+
 	private boolean _isLiveGroup() {
 		if (_liveGroup != null) {
 			return _liveGroup;
@@ -2039,28 +2058,8 @@ public class LayoutsAdminDisplayContext {
 		return _liveGroup;
 	}
 
-	private String _getWarningMessageHTML(
-		String heading, List<String> layoutMessages) {
-
-		StringBuilder sb = new StringBuilder();
-
-		sb.append(heading);
-		sb.append("<ul>");
-
-		for (String layoutMessage : layoutMessages) {
-			sb.append("<li>");
-			sb.append(layoutMessage);
-			sb.append("</li>");
-		}
-
-		sb.append("</ul>");
-
-		return sb.toString();
-	}
-
 	private boolean _isShouldCheckFriendlyURL() {
-		if (!GetterUtil.getBoolean(PropsUtil.get(
-			"feature.flag.LPS-174417"))) {
+		if (!GetterUtil.getBoolean(PropsUtil.get("feature.flag.LPS-174417"))) {
 			return false;
 		}
 

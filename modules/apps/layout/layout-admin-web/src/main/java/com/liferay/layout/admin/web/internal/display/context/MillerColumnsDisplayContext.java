@@ -226,19 +226,7 @@ public class MillerColumnsDisplayContext {
 			LayoutType layoutType = layout.getLayoutType();
 
 			layoutJSONObject.put(
-				"hasDuplicatedFriendlyURL",
-				() -> {
-					if (!GetterUtil.getBoolean(PropsUtil.get(
-						"feature.flag.LPS-174417"))) {
-						return false;
-					}
-
-					List<Long> duplicatedFriendlyURLPlids =
-						_getDuplicatedFriendlyURLPlids();
-
-					return duplicatedFriendlyURLPlids.contains(
-						layout.getPlid());
-				}
+				"hasDuplicatedFriendlyURL", _isDuplicatedFriendlyURL(layout)
 			).put(
 				"parentable", layoutType.isParentable()
 			).put(
@@ -348,6 +336,37 @@ public class MillerColumnsDisplayContext {
 		return breadcrumbEntriesJSONArray;
 	}
 
+	private List<Long> _getDuplicatedFriendlyURLPlids() throws PortalException {
+		if (_duplicatedFriendlyURLPlids != null) {
+			return _duplicatedFriendlyURLPlids;
+		}
+
+		LayoutSet layoutSet = _layoutsAdminDisplayContext.getSelLayoutSet();
+
+		if (layoutSet.isLayoutSetPrototypeLinkEnabled()) {
+			_duplicatedFriendlyURLPlids =
+				_layoutSetPrototypeHelper.getDuplicatedFriendlyURLPlids(
+					layoutSet);
+
+			return _duplicatedFriendlyURLPlids;
+		}
+
+		Group group = _layoutsAdminDisplayContext.getSelGroup();
+
+		if (group.isLayoutSetPrototype()) {
+			_duplicatedFriendlyURLPlids =
+				_layoutSetPrototypeHelper.getDuplicatedFriendlyURLPlids(
+					LayoutSetPrototypeLocalServiceUtil.fetchLayoutSetPrototype(
+						group.getClassPK()));
+
+			return _duplicatedFriendlyURLPlids;
+		}
+
+		_duplicatedFriendlyURLPlids = Collections.emptyList();
+
+		return _duplicatedFriendlyURLPlids;
+	}
+
 	private JSONArray _getFirstLayoutColumnActionsJSONArray(
 			boolean privatePages)
 		throws Exception {
@@ -381,37 +400,6 @@ public class MillerColumnsDisplayContext {
 		}
 
 		return jsonArray;
-	}
-
-	private List<Long> _getDuplicatedFriendlyURLPlids() throws PortalException {
-		if (_duplicatedFriendlyURLPlids != null) {
-			return _duplicatedFriendlyURLPlids;
-		}
-
-		LayoutSet layoutSet = _layoutsAdminDisplayContext.getSelLayoutSet();
-
-		if (layoutSet.isLayoutSetPrototypeLinkEnabled()) {
-			_duplicatedFriendlyURLPlids =
-				_layoutSetPrototypeHelper.getDuplicatedFriendlyURLPlids(
-					layoutSet);
-
-			return _duplicatedFriendlyURLPlids;
-		}
-
-		Group group = _layoutsAdminDisplayContext.getSelGroup();
-
-		if (group.isLayoutSetPrototype()) {
-			_duplicatedFriendlyURLPlids =
-				_layoutSetPrototypeHelper.getDuplicatedFriendlyURLPlids(
-					LayoutSetPrototypeLocalServiceUtil.fetchLayoutSetPrototype(
-						group.getClassPK()));
-
-			return _duplicatedFriendlyURLPlids;
-		}
-
-		_duplicatedFriendlyURLPlids = Collections.emptyList();
-
-		return _duplicatedFriendlyURLPlids;
 	}
 
 	private JSONArray _getFirstLayoutColumnJSONArray() throws Exception {
@@ -853,6 +841,19 @@ public class MillerColumnsDisplayContext {
 		}
 
 		return draftLayout.hasScopeGroup();
+	}
+
+	private boolean _isDuplicatedFriendlyURL(Layout layout)
+		throws PortalException {
+
+		if (!GetterUtil.getBoolean(PropsUtil.get("feature.flag.LPS-174417"))) {
+			return false;
+		}
+
+		List<Long> duplicatedFriendlyURLPlids =
+			_getDuplicatedFriendlyURLPlids();
+
+		return duplicatedFriendlyURLPlids.contains(layout.getPlid());
 	}
 
 	private List<Long> _duplicatedFriendlyURLPlids;
