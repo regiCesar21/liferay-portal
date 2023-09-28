@@ -376,76 +376,6 @@
 				</licenses>
 			</library>
 			<library>
-				<file-name>com.liferay.comment.sanitizer.jar!checker-qual.jar</file-name>
-				<version>3.11.0</version>
-				<project-name>Checker Qual</project-name>
-				<project-url>https://checkerframework.org</project-url>
-				<licenses>
-					<license>
-						<license-name>The MIT License</license-name>
-						<license-url>http://opensource.org/licenses/MIT</license-url>
-					</license>
-				</licenses>
-			</library>
-			<library>
-				<file-name>com.liferay.comment.sanitizer.jar!error_prone_annotations.jar</file-name>
-				<version>2.2.0</version>
-				<project-name>error-prone annotations</project-name>
-				<licenses>
-					<license>
-						<license-name>Apache 2.0</license-name>
-						<license-url>http://www.apache.org/licenses/LICENSE-2.0.txt</license-url>
-					</license>
-				</licenses>
-			</library>
-			<library>
-				<file-name>com.liferay.comment.sanitizer.jar!failureaccess.jar</file-name>
-				<version>1.0.1</version>
-				<project-name>Guava InternalFutureFailureAccess and InternalFutures</project-name>
-				<project-url>https://github.com/google/guava/</project-url>
-				<licenses>
-					<license>
-						<license-name>The Apache Software License, Version 2.0</license-name>
-						<license-url>http://www.apache.org/licenses/LICENSE-2.0.txt</license-url>
-					</license>
-				</licenses>
-			</library>
-			<library>
-				<file-name>com.liferay.comment.sanitizer.jar!guava.jar</file-name>
-				<version>30.1.1-jre</version>
-				<project-name>Guava: Google Core Libraries for Java</project-name>
-				<project-url>https://github.com/google/guava/</project-url>
-				<licenses>
-					<license>
-						<license-name>Apache License, Version 2.0</license-name>
-						<license-url>http://www.apache.org/licenses/LICENSE-2.0.txt</license-url>
-					</license>
-				</licenses>
-			</library>
-			<library>
-				<file-name>com.liferay.comment.sanitizer.jar!j2objc-annotations.jar</file-name>
-				<version>1.3</version>
-				<project-name>J2ObjC Annotations</project-name>
-				<project-url>https://github.com/google/j2objc/</project-url>
-				<licenses>
-					<license>
-						<license-name>The Apache Software License, Version 2.0</license-name>
-						<license-url>http://www.apache.org/licenses/LICENSE-2.0.txt</license-url>
-					</license>
-				</licenses>
-			</library>
-			<library>
-				<file-name>com.liferay.comment.sanitizer.jar!listenablefuture.jar</file-name>
-				<version>9999.0-empty-to-avoid-conflict-with-guava</version>
-				<project-name>Guava ListenableFuture only</project-name>
-				<licenses>
-					<license>
-						<license-name>The Apache Software License, Version 2.0</license-name>
-						<license-url>http://www.apache.org/licenses/LICENSE-2.0.txt</license-url>
-					</license>
-				</licenses>
-			</library>
-			<library>
 				<file-name>com.liferay.comment.sanitizer.jar!owasp-java-html-sanitizer.jar</file-name>
 				<version>20211018.2</version>
 				<project-name>OWASP Java HTML Sanitizer</project-name>
@@ -742,17 +672,6 @@
 				</licenses>
 			</library>
 			<library>
-				<file-name>com.liferay.document.library.opener.google.drive.web.jar!error_prone_annotations.jar</file-name>
-				<version>2.5.1</version>
-				<project-name>error-prone annotations</project-name>
-				<licenses>
-					<license>
-						<license-name>Apache 2.0</license-name>
-						<license-url>http://www.apache.org/licenses/LICENSE-2.0.txt</license-url>
-					</license>
-				</licenses>
-			</library>
-			<library>
 				<file-name>com.liferay.document.library.opener.google.drive.web.jar!google-api-client-jackson2.jar</file-name>
 				<version>1.23.0</version>
 				<project-name>Jackson 2 extensions to the Google APIs Client Library for Java</project-name>
@@ -873,18 +792,6 @@
 					<license>
 						<license-name>The Apache Software License, Version 2.0</license-name>
 						<license-url>https://www.apache.org/licenses/LICENSE-2.0.txt</license-url>
-					</license>
-				</licenses>
-			</library>
-			<library>
-				<file-name>com.liferay.document.library.opener.google.drive.web.jar!guava.jar</file-name>
-				<version>30.1.1-jre</version>
-				<project-name>Guava: Google Core Libraries for Java</project-name>
-				<project-url>https://github.com/google/guava/</project-url>
-				<licenses>
-					<license>
-						<license-name>Apache License, Version 2.0</license-name>
-						<license-url>http://www.apache.org/licenses/LICENSE-2.0.txt</license-url>
 					</license>
 				</licenses>
 			</library>
@@ -3736,29 +3643,6 @@
 				</licenses>
 			</library>
 			<library>
-				<file-name>com.liferay.portal.store.gcs.jar!error_prone_annotations.jar</file-name>
-				<version>2.5.1</version>
-				<project-name>error-prone annotations</project-name>
-				<licenses>
-					<license>
-						<license-name>Apache 2.0</license-name>
-						<license-url>http://www.apache.org/licenses/LICENSE-2.0.txt</license-url>
-					</license>
-				</licenses>
-			</library>
-			<library>
-				<file-name>com.liferay.portal.store.gcs.jar!failureaccess.jar</file-name>
-				<version>1.0.1</version>
-				<project-name>Guava InternalFutureFailureAccess and InternalFutures</project-name>
-				<project-url>https://github.com/google/guava/</project-url>
-				<licenses>
-					<license>
-						<license-name>The Apache Software License, Version 2.0</license-name>
-						<license-url>http://www.apache.org/licenses/LICENSE-2.0.txt</license-url>
-					</license>
-				</licenses>
-			</library>
-			<library>
 				<file-name>com.liferay.portal.store.gcs.jar!gax-httpjson.jar</file-name>
 				<version>0.79.0</version>
 				<project-name>GAX (Google Api eXtensions) for Java</project-name>
@@ -3941,18 +3825,6 @@
 					<license>
 						<license-name>Apache 2.0</license-name>
 						<license-url>https://opensource.org/licenses/Apache-2.0</license-url>
-					</license>
-				</licenses>
-			</library>
-			<library>
-				<file-name>com.liferay.portal.store.gcs.jar!guava.jar</file-name>
-				<version>30.1.1-jre</version>
-				<project-name>Guava: Google Core Libraries for Java</project-name>
-				<project-url>https://github.com/google/guava/</project-url>
-				<licenses>
-					<license>
-						<license-name>Apache License, Version 2.0</license-name>
-						<license-url>http://www.apache.org/licenses/LICENSE-2.0.txt</license-url>
 					</license>
 				</licenses>
 			</library>
@@ -4279,18 +4151,6 @@
 				</licenses>
 			</library>
 			<library>
-				<file-name>com.liferay.portal.template.soy.impl.jar!checker-qual.jar</file-name>
-				<version>2.5.2</version>
-				<project-name>Checker Qual</project-name>
-				<project-url>https://checkerframework.org</project-url>
-				<licenses>
-					<license>
-						<license-name>The MIT License</license-name>
-						<license-url>http://opensource.org/licenses/MIT</license-url>
-					</license>
-				</licenses>
-			</library>
-			<library>
 				<file-name>com.liferay.portal.template.soy.impl.jar!commons-lang3.jar</file-name>
 				<version>3.4</version>
 				<project-name>Apache Commons Lang</project-name>
@@ -4303,17 +4163,6 @@
 				</licenses>
 			</library>
 			<library>
-				<file-name>com.liferay.portal.template.soy.impl.jar!error_prone_annotations.jar</file-name>
-				<version>2.2.0</version>
-				<project-name>error-prone annotations</project-name>
-				<licenses>
-					<license>
-						<license-name>Apache 2.0</license-name>
-						<license-url>http://www.apache.org/licenses/LICENSE-2.0.txt</license-url>
-					</license>
-				</licenses>
-			</library>
-			<library>
 				<file-name>com.liferay.portal.template.soy.impl.jar!failureaccess.jar</file-name>
 				<version>1.0.1</version>
 				<project-name>Guava InternalFutureFailureAccess and InternalFutures</project-name>
@@ -4321,18 +4170,6 @@
 				<licenses>
 					<license>
 						<license-name>The Apache Software License, Version 2.0</license-name>
-						<license-url>http://www.apache.org/licenses/LICENSE-2.0.txt</license-url>
-					</license>
-				</licenses>
-			</library>
-			<library>
-				<file-name>com.liferay.portal.template.soy.impl.jar!guava.jar</file-name>
-				<version>30.1.1-jre</version>
-				<project-name>Guava: Google Core Libraries for Java</project-name>
-				<project-url>https://github.com/google/guava/</project-url>
-				<licenses>
-					<license>
-						<license-name>Apache License, Version 2.0</license-name>
 						<license-url>http://www.apache.org/licenses/LICENSE-2.0.txt</license-url>
 					</license>
 				</licenses>
@@ -4374,18 +4211,6 @@
 				</licenses>
 			</library>
 			<library>
-				<file-name>com.liferay.portal.template.soy.impl.jar!j2objc-annotations.jar</file-name>
-				<version>1.1</version>
-				<project-name>J2ObjC Annotations</project-name>
-				<project-url>https://github.com/google/j2objc/</project-url>
-				<licenses>
-					<license>
-						<license-name>The Apache Software License, Version 2.0</license-name>
-						<license-url>http://www.apache.org/licenses/LICENSE-2.0.txt</license-url>
-					</license>
-				</licenses>
-			</library>
-			<library>
 				<file-name>com.liferay.portal.template.soy.impl.jar!javax.inject.jar</file-name>
 				<version>1</version>
 				<project-name>javax.inject</project-name>
@@ -4402,17 +4227,6 @@
 				<version>3.0.2</version>
 				<project-name>FindBugs-jsr305</project-name>
 				<project-url>http://findbugs.sourceforge.net/</project-url>
-				<licenses>
-					<license>
-						<license-name>The Apache Software License, Version 2.0</license-name>
-						<license-url>http://www.apache.org/licenses/LICENSE-2.0.txt</license-url>
-					</license>
-				</licenses>
-			</library>
-			<library>
-				<file-name>com.liferay.portal.template.soy.impl.jar!listenablefuture.jar</file-name>
-				<version>9999.0-empty-to-avoid-conflict-with-guava</version>
-				<project-name>Guava ListenableFuture only</project-name>
 				<licenses>
 					<license>
 						<license-name>The Apache Software License, Version 2.0</license-name>
@@ -4607,18 +4421,6 @@
 				</licenses>
 			</library>
 			<library>
-				<file-name>com.liferay.portal.vulcan.impl.jar!failureaccess.jar</file-name>
-				<version>1.0.1</version>
-				<project-name>Guava InternalFutureFailureAccess and InternalFutures</project-name>
-				<project-url>https://github.com/google/guava/</project-url>
-				<licenses>
-					<license>
-						<license-name>The Apache Software License, Version 2.0</license-name>
-						<license-url>http://www.apache.org/licenses/LICENSE-2.0.txt</license-url>
-					</license>
-				</licenses>
-			</library>
-			<library>
 				<file-name>com.liferay.portal.vulcan.impl.jar!graphql-java-annotations.jar</file-name>
 				<version>9.1</version>
 				<project-name>graphql-java-annotations</project-name>
@@ -4675,18 +4477,6 @@
 					<license>
 						<license-name>MIT</license-name>
 						<license-url>https://github.com/graphql-java/graphql-java/blob/master/LICENSE.md</license-url>
-					</license>
-				</licenses>
-			</library>
-			<library>
-				<file-name>com.liferay.portal.vulcan.impl.jar!guava.jar</file-name>
-				<version>30.1.1-jre</version>
-				<project-name>Guava: Google Core Libraries for Java</project-name>
-				<project-url>https://github.com/google/guava/</project-url>
-				<licenses>
-					<license>
-						<license-name>Apache License, Version 2.0</license-name>
-						<license-url>http://www.apache.org/licenses/LICENSE-2.0.txt</license-url>
 					</license>
 				</licenses>
 			</library>
@@ -5223,6 +5013,88 @@
 				</licenses>
 			</library>
 			<library>
+				<file-name>com.liferay.shared.dependencies.guava.jar!checker-qual.jar</file-name>
+				<version>3.33.0</version>
+				<project-name>Checker Qual</project-name>
+				<project-url>https://checkerframework.org/</project-url>
+				<licenses>
+					<license>
+						<license-name>The MIT License</license-name>
+						<license-url>http://opensource.org/licenses/MIT</license-url>
+					</license>
+				</licenses>
+			</library>
+			<library>
+				<file-name>com.liferay.shared.dependencies.guava.jar!error_prone_annotations.jar</file-name>
+				<version>2.18.0</version>
+				<project-name>error-prone annotations</project-name>
+				<licenses>
+					<license>
+						<license-name>Apache 2.0</license-name>
+						<license-url>http://www.apache.org/licenses/LICENSE-2.0.txt</license-url>
+					</license>
+				</licenses>
+			</library>
+			<library>
+				<file-name>com.liferay.shared.dependencies.guava.jar!failureaccess.jar</file-name>
+				<version>1.0.1</version>
+				<project-name>Guava InternalFutureFailureAccess and InternalFutures</project-name>
+				<project-url>https://github.com/google/guava/</project-url>
+				<licenses>
+					<license>
+						<license-name>The Apache Software License, Version 2.0</license-name>
+						<license-url>http://www.apache.org/licenses/LICENSE-2.0.txt</license-url>
+					</license>
+				</licenses>
+			</library>
+			<library>
+				<file-name>com.liferay.shared.dependencies.guava.jar!guava.jar</file-name>
+				<version>32.0.1-jre</version>
+				<project-name>Guava: Google Core Libraries for Java</project-name>
+				<project-url>https://github.com/google/guava/</project-url>
+				<licenses>
+					<license>
+						<license-name>Apache License, Version 2.0</license-name>
+						<license-url>http://www.apache.org/licenses/LICENSE-2.0.txt</license-url>
+					</license>
+				</licenses>
+			</library>
+			<library>
+				<file-name>com.liferay.shared.dependencies.guava.jar!j2objc-annotations.jar</file-name>
+				<version>2.8</version>
+				<project-name>J2ObjC Annotations</project-name>
+				<project-url>https://github.com/google/j2objc/</project-url>
+				<licenses>
+					<license>
+						<license-name>Apache License, Version 2.0</license-name>
+						<license-url>http://www.apache.org/licenses/LICENSE-2.0.txt</license-url>
+					</license>
+				</licenses>
+			</library>
+			<library>
+				<file-name>com.liferay.shared.dependencies.guava.jar!jsr305.jar</file-name>
+				<version>3.0.2</version>
+				<project-name>FindBugs-jsr305</project-name>
+				<project-url>http://findbugs.sourceforge.net/</project-url>
+				<licenses>
+					<license>
+						<license-name>The Apache Software License, Version 2.0</license-name>
+						<license-url>http://www.apache.org/licenses/LICENSE-2.0.txt</license-url>
+					</license>
+				</licenses>
+			</library>
+			<library>
+				<file-name>com.liferay.shared.dependencies.guava.jar!listenablefuture.jar</file-name>
+				<version>9999.0-empty-to-avoid-conflict-with-guava</version>
+				<project-name>Guava ListenableFuture only</project-name>
+				<licenses>
+					<license>
+						<license-name>The Apache Software License, Version 2.0</license-name>
+						<license-url>http://www.apache.org/licenses/LICENSE-2.0.txt</license-url>
+					</license>
+				</licenses>
+			</library>
+			<library>
 				<file-name>com.liferay.sync.security.jar!commons-codec.jar</file-name>
 				<version>1.15</version>
 				<project-name>Apache Commons Codec</project-name>
@@ -5688,7 +5560,7 @@
 			</library>
 			<library>
 				<file-name>lib/development/guava.jar</file-name>
-				<version>30.1.1-jre</version>
+				<version>32.0.1-jre</version>
 				<project-name>Guava</project-name>
 				<project-url>https://opensource.google.com/projects/guava</project-url>
 				<licenses>
