@@ -59,6 +59,7 @@ const noop = () => {};
 
 const MillerColumns = ({
 	actionHandlers,
+	featureFlags,
 	initialColumns = [],
 	isLayoutSetPrototype,
 	namespace,
@@ -258,6 +259,7 @@ const MillerColumns = ({
 						actionHandlers={actionHandlers}
 						columnItems={column.items}
 						columnsContainer={ref}
+						featureFlags={featureFlags}
 						isLayoutSetPrototype={isLayoutSetPrototype}
 						items={items}
 						key={index}

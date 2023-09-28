@@ -11,10 +11,11 @@ import MillerColumns from '../miller_columns/MillerColumns';
 import actionHandlers from './actionHandlers';
 
 const Layout = ({
+	featureFlags,
 	getItemChildrenURL,
 	initialBreadcrumbEntries,
 	initialLayoutColumns,
-	isSiteTemplate,
+	isLayoutSetPrototype,
 	languageDirection,
 	languageId,
 	moveItemURL,
@@ -165,8 +166,9 @@ const Layout = ({
 			<Breadcrumbs entries={breadcrumbEntries} />
 			<MillerColumns
 				actionHandlers={actionHandlers}
+				featureFlags={featureFlags}
 				initialColumns={layoutColumns}
-				isSiteTemplate={isSiteTemplate}
+				isLayoutSetPrototype={isLayoutSetPrototype}
 				namespace={namespace}
 				onColumnsChange={updateBreadcrumbs}
 				onItemMove={saveData}
@@ -182,6 +184,7 @@ export default function ({
 	context: {namespace},
 	props: {
 		breadcrumbEntries,
+		featureFlags = [],
 		getItemChildrenURL,
 		languageDirection,
 		isLayoutSetPrototype = false,
@@ -193,6 +196,7 @@ export default function ({
 }) {
 	return (
 		<Layout
+			featureFlags={featureFlags}
 			getItemChildrenURL={getItemChildrenURL}
 			initialBreadcrumbEntries={breadcrumbEntries}
 			initialLayoutColumns={layoutColumns}

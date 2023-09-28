@@ -43,6 +43,7 @@ import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.util.LayoutTypeControllerTracker;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
@@ -137,6 +138,8 @@ public class MillerColumnsDisplayContext {
 			"props",
 			HashMapBuilder.<String, Object>put(
 				"breadcrumbEntries", _getBreadcrumbEntriesJSONArray()
+			).put(
+				"featureFlags", _getFeatureFlags()
 			).put(
 				"getItemChildrenURL", getLayoutChildrenURL()
 			).put(
@@ -365,6 +368,16 @@ public class MillerColumnsDisplayContext {
 		_duplicatedFriendlyURLPlids = Collections.emptyList();
 
 		return _duplicatedFriendlyURLPlids;
+	}
+
+	private List<String> _getFeatureFlags() {
+		List<String> featureFlags = new ArrayList<>();
+
+		if (GetterUtil.getBoolean(PropsUtil.get("feature.flag.LPS-174417"))) {
+			featureFlags.add("LPS-174417");
+		}
+
+		return featureFlags;
 	}
 
 	private JSONArray _getFirstLayoutColumnActionsJSONArray(

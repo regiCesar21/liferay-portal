@@ -50,6 +50,7 @@ const MillerColumnsColumn = ({
 	actionHandlers,
 	columnItems = [],
 	columnsContainer,
+	featureFlags,
 	isLayoutSetPrototype,
 	items,
 	namespace,
@@ -104,6 +105,7 @@ const MillerColumnsColumn = ({
 			{columnItems.map((item, index) => (
 				<MillerColumnsItem
 					actionHandlers={actionHandlers}
+					featureFlags={featureFlags}
 					isLayoutSetPrototype={isLayoutSetPrototype}
 					item={{...item, itemIndex: index}}
 					items={items}

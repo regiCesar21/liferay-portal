@@ -11,7 +11,6 @@ import ClayLabel from '@clayui/label';
 import ClayLayout from '@clayui/layout';
 import ClayLink from '@clayui/link';
 import classNames from 'classnames';
-import {sub} from 'frontend-js-web';
 import React, {useEffect, useMemo, useRef, useState} from 'react';
 import {useDrag, useDrop} from 'react-dnd';
 import {getEmptyImage} from 'react-dnd-html5-backend';
@@ -112,6 +111,7 @@ const getItemIndex = (item = {}, items) => {
 const noop = () => {};
 
 const MillerColumnsItem = ({
+	featureFlags = [],
 	isLayoutSetPrototype,
 	item: {
 		actions = [],
@@ -313,11 +313,11 @@ const MillerColumnsItem = ({
 
 	const warningMessage = isLayoutSetPrototype
 		? Liferay.Language.get(
-			'there-is-a-page-with-the-same-friendly-url-in-a-site-using-this-site-template'
-		)
+				'there-is-a-page-with-the-same-friendly-url-in-a-site-using-this-site-template'
+		  )
 		: Liferay.Language.get(
-			'there-is-a-page-with-the-same-friendly-url-in-the-site-template'
-		);
+				'there-is-a-page-with-the-same-friendly-url-in-the-site-template'
+		  );
 
 	return (
 		<ClayLayout.ContentRow
@@ -346,7 +346,7 @@ const MillerColumnsItem = ({
 			{selectable && (
 				<ClayLayout.ContentCol>
 					<ClayCheckbox
-						aria-label={sub(
+						aria-label={Liferay.Util.sub(
 							Liferay.Language.get('select-x'),
 							title
 						)}
@@ -363,7 +363,7 @@ const MillerColumnsItem = ({
 					{viewUrl ? (
 						<ClayLink
 							aria-label={
-								Liferay.FeatureFlags['LPS-174417'] &&
+								featureFlags.indexOf('LPS-174417') > -1 &&
 								hasDuplicatedFriendlyURL
 									? `${title}. ${warningMessage}`
 									: title
@@ -377,7 +377,7 @@ const MillerColumnsItem = ({
 						<span className="text-truncate">{title}</span>
 					)}
 
-					{Liferay.FeatureFlags['LPS-174417'] &&
+					{featureFlags.indexOf('LPS-174417') > -1 &&
 					hasDuplicatedFriendlyURL ? (
 						<ClayIcon
 							className="align-self-center c-ml-2 flex-shrink-0 icon-warning lfr-portal-tooltip text-warning"
