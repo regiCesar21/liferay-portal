@@ -118,6 +118,7 @@ if (Validator.isNotNull(keywords)) {
 
 				AssetEntryQuery assetEntryQuery = new AssetEntryQuery();
 
+				assetEntryQuery.setAttribute("showNonindexable", Boolean.TRUE);
 				assetEntryQuery.setClassNameIds(availableClassNameIds);
 				assetEntryQuery.setEnd(delta);
 				assetEntryQuery.setGroupIds(new long[] {scopeGroupId});
