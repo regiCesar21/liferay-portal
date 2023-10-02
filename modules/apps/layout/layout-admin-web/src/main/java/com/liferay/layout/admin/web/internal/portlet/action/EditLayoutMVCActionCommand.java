@@ -246,7 +246,8 @@ public class EditLayoutMVCActionCommand extends BaseMVCActionCommand {
 				stagingGroupId, layout.isPrivateLayout(), layout.getLayoutId(),
 				layout.getTypeSettingsProperties());
 
-			String redirect = ParamUtil.getString(actionRequest, "redirect");
+			String redirect = _portal.escapeRedirect(
+				ParamUtil.getString(actionRequest, "redirect"));
 
 			if (Validator.isNull(redirect) ||
 				(redirect.contains(oldFriendlyURL) &&
