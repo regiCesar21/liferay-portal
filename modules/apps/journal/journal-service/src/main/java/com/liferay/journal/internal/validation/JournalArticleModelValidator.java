@@ -7,7 +7,6 @@ package com.liferay.journal.internal.validation;
 
 import com.liferay.depot.model.DepotEntry;
 import com.liferay.depot.service.DepotEntryLocalService;
-import com.liferay.dynamic.data.mapping.exception.NoSuchStructureException;
 import com.liferay.dynamic.data.mapping.exception.NoSuchTemplateException;
 import com.liferay.dynamic.data.mapping.exception.StorageFieldNameException;
 import com.liferay.dynamic.data.mapping.exception.StorageFieldRequiredException;
@@ -452,16 +451,9 @@ public class JournalArticleModelValidator
 		long classNameId = _classNameLocalService.getClassNameId(
 			JournalArticle.class.getName());
 
-		if (Validator.isNotNull(ddmStructureKey)) {
-			DDMStructure ddmStructure =
-				_ddmStructureLocalService.fetchStructure(
-					_portal.getSiteGroupId(groupId), classNameId,
-					ddmStructureKey, true);
-
-			if (ddmStructure == null) {
-				throw new NoSuchStructureException();
-			}
-		}
+		_ddmStructureLocalService.getStructure(
+			_portal.getSiteGroupId(groupId), classNameId, ddmStructureKey,
+			true);
 
 		classNameId = _classNameLocalService.getClassNameId(
 			DDMStructure.class.getName());
