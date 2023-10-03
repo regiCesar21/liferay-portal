@@ -407,9 +407,9 @@ public class JournalArticleModelValidator
 
 		try {
 			validateReferences(
-				article.getGroupId(), ddmStructureKey, ddmTemplateKey,
-				article.getLayoutUuid(), smallImage, smallImageURL,
-				smallImageBytes, article.getSmallImageId(),
+				article.getGroupId(), article.getFolderId(), ddmStructureKey,
+				ddmTemplateKey, article.getLayoutUuid(), smallImage,
+				smallImageURL, smallImageBytes, article.getSmallImageId(),
 				article.getContent());
 		}
 		catch (ExportImportContentValidationException
@@ -441,10 +441,13 @@ public class JournalArticleModelValidator
 	}
 
 	public void validateReferences(
-			long groupId, String ddmStructureKey, String ddmTemplateKey,
-			String layoutUuid, boolean smallImage, String smallImageURL,
-			byte[] smallImageBytes, long smallImageId, String content)
+			long groupId, long folderId, String ddmStructureKey,
+			String ddmTemplateKey, String layoutUuid, boolean smallImage,
+			String smallImageURL, byte[] smallImageBytes, long smallImageId,
+			String content)
 		throws PortalException {
+
+		_journalFolderLocalService.getFolder(folderId);
 
 		long classNameId = _classNameLocalService.getClassNameId(
 			JournalArticle.class.getName());
