@@ -446,7 +446,9 @@ public class JournalArticleModelValidator
 			String content)
 		throws PortalException {
 
-		_journalFolderLocalService.getFolder(folderId);
+		if (folderId != 0) {
+			_journalFolderLocalService.getFolder(folderId);
+		}
 
 		long classNameId = _classNameLocalService.getClassNameId(
 			JournalArticle.class.getName());
