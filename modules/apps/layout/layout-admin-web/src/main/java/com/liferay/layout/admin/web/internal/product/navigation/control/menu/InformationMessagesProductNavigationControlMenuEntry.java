@@ -5,6 +5,9 @@
 
 package com.liferay.layout.admin.web.internal.product.navigation.control.menu;
 
+import com.liferay.layout.page.template.constants.LayoutPageTemplateEntryTypeConstants;
+import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
+import com.liferay.layout.page.template.service.LayoutPageTemplateEntryLocalService;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -103,11 +106,28 @@ public class InformationMessagesProductNavigationControlMenuEntry
 
 		Layout layout = themeDisplay.getLayout();
 
-		if (layout.isTypeControlPanel()) {
-			return false;
+		LayoutPageTemplateEntry layoutPageTemplateEntry =
+			_layoutPageTemplateEntryLocalService.
+				fetchLayoutPageTemplateEntryByPlid(layout.getPlid());
+
+		if (layoutPageTemplateEntry == null) {
+			layoutPageTemplateEntry =
+				_layoutPageTemplateEntryLocalService.
+					fetchLayoutPageTemplateEntryByPlid(layout.getClassPK());
 		}
 
-		if (!isLinkedLayout(themeDisplay) && !isModifiedLayout(themeDisplay)) {
+		int layoutType = -1;
+
+		if (layoutPageTemplateEntry != null) {
+			layoutType = layoutPageTemplateEntry.getType();
+		}
+
+		if (layout.isTypeControlPanel() || layout.isTypeAssetDisplay() ||
+			(layoutType ==
+				LayoutPageTemplateEntryTypeConstants.TYPE_MASTER_LAYOUT) ||
+			(layoutType == LayoutPageTemplateEntryTypeConstants.TYPE_BASIC) ||
+			(!isLinkedLayout(themeDisplay) &&
+			 !isModifiedLayout(themeDisplay))) {
 			return false;
 		}
 
@@ -170,4 +190,7 @@ public class InformationMessagesProductNavigationControlMenuEntry
 	private static final Log _log = LogFactoryUtil.getLog(
 		InformationMessagesProductNavigationControlMenuEntry.class);
 
+	@Reference
+	private LayoutPageTemplateEntryLocalService
+		_layoutPageTemplateEntryLocalService;
 }
