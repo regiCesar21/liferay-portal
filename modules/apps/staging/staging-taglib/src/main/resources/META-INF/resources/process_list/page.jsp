@@ -24,7 +24,7 @@
 
 	<liferay-ui:search-container
 		emptyResultsMessage="no-publication-processes-were-found"
-		id="<%= searchContainerId %>"
+		id="<%= HtmlUtil.escapeJS(searchContainerId) %>"
 		iteratorURL="<%= renderURL %>"
 		orderByCol="<%= orderByCol %>"
 		orderByComparator="<%= orderByComparator %>"
