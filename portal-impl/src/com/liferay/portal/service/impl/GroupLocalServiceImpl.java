@@ -1078,19 +1078,6 @@ public class GroupLocalServiceImpl extends GroupLocalServiceBaseImpl {
 						resourcePermission);
 				}
 
-				try {
-					resourceLocalService.deleteResource(
-						group.getCompanyId(), Group.class.getName(),
-						ResourceConstants.SCOPE_INDIVIDUAL, group.getGroupId());
-				}
-				catch (Exception exception) {
-					if (_log.isWarnEnabled()) {
-						_log.warn(
-							"No resources found for group " +
-								group.getGroupId());
-					}
-				}
-
 				long companyId = group.getCompanyId();
 				long[] userIds = getUserPrimaryKeys(group.getGroupId());
 
