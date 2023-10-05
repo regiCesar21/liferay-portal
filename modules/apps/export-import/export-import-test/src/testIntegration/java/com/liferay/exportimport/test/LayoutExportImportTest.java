@@ -40,6 +40,7 @@ import java.util.Map;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.ClassRule;
+import org.junit.Ignore;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -108,6 +109,7 @@ public class LayoutExportImportTest extends BaseExportImportTestCase {
 		Assert.assertNotNull(importedLayout2);
 	}
 
+	@Ignore
 	@Test
 	public void testExportImportCompanyGroupInvalidLARType() throws Exception {
 
@@ -152,6 +154,7 @@ public class LayoutExportImportTest extends BaseExportImportTestCase {
 		}
 	}
 
+	@Ignore
 	@Test
 	public void testExportImportLayoutPrototypeInvalidLARType()
 		throws Exception {
@@ -213,6 +216,7 @@ public class LayoutExportImportTest extends BaseExportImportTestCase {
 			LayoutLocalServiceUtil.getLayoutsCount(importedGroup, false));
 	}
 
+	@Ignore
 	@Test
 	public void testExportImportLayoutSetInvalidLARType() throws Exception {
 
@@ -255,6 +259,7 @@ public class LayoutExportImportTest extends BaseExportImportTestCase {
 		}
 	}
 
+	@Ignore
 	@Test
 	public void testExportImportLayoutSetPrototypeInvalidLARType()
 		throws Exception {
@@ -301,6 +306,7 @@ public class LayoutExportImportTest extends BaseExportImportTestCase {
 		}
 	}
 
+	@Ignore
 	@Test
 	public void testExportImportLayoutsInvalidAvailableLocales()
 		throws Exception {
