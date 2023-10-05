@@ -23,6 +23,7 @@ import java.io.InputStream;
 
 import java.net.URL;
 
+import java.util.ArrayList;
 import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.List;
@@ -135,6 +136,32 @@ public class Log4JUtil {
 		return new HashMap<>(_customLogSettings);
 	}
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
+	 */
+	@Deprecated
+	public static List<URL> getLog4JURLs(ClassLoader classLoader) {
+		List<URL> urls = new ArrayList<>();
+
+		urls.add(classLoader.getResource("META-INF/portal-log4j.xml"));
+
+		try {
+			Enumeration<URL> enumeration = classLoader.getResources(
+				"META-INF/portal-log4j-ext.xml");
+
+			while (enumeration.hasMoreElements()) {
+				urls.add(enumeration.nextElement());
+			}
+		}
+		catch (IOException ioException) {
+			if (_log.isWarnEnabled()) {
+				_log.warn("Unable to load portal-log4j-ext.xml", ioException);
+			}
+		}
+
+		return urls;
+	}
+
 	public static String getOriginalLevel(String className) {
 		Level level = Level.ALL;
 
@@ -164,6 +191,36 @@ public class Log4JUtil {
 		_liferayHome = _escapeXMLAttribute(liferayHome);
 
 		configureLog4J(classLoader);
+
+		try {
+			LogFactoryUtil.setLogFactory(logFactory);
+		}
+		catch (Exception exception) {
+			_log.error(exception, exception);
+		}
+
+		for (Map.Entry<String, String> entry : customLogSettings.entrySet()) {
+			setLevel(entry.getKey(), entry.getValue(), false);
+		}
+	}
+
+	/**
+	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
+	 */
+	@Deprecated
+	public static void initLog4J(
+		String serverId, String liferayHome, List<URL> urls,
+		LogFactory logFactory, Map<String, String> customLogSettings) {
+
+		System.setProperty(
+			ServerDetector.SYSTEM_PROPERTY_KEY_SERVER_DETECTOR_SERVER_ID,
+			serverId);
+
+		_liferayHome = _escapeXMLAttribute(liferayHome);
+
+		for (URL url : urls) {
+			configureLog4J(url);
+		}
 
 		try {
 			LogFactoryUtil.setLogFactory(logFactory);
