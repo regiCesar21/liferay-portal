@@ -43,6 +43,8 @@ import com.liferay.portal.util.PropsValues;
 import java.io.File;
 import java.io.InputStream;
 
+import java.net.URL;
+
 import java.util.List;
 import java.util.Map;
 import java.util.Properties;
@@ -354,6 +356,8 @@ public class AudioProcessorImpl
 
 		try {
 			if (PropsValues.DL_FILE_ENTRY_PREVIEW_FORK_PROCESS_ENABLED) {
+				Class<?> clazz = getClass();
+
 				ProcessCallable<String> processCallable =
 					new LiferayAudioProcessCallable(
 						ServerDetector.getServerId(),
@@ -365,7 +369,8 @@ public class AudioProcessorImpl
 						).build(),
 						srcFile, destFile, containerType,
 						PropsUtil.getProperties(
-							PropsKeys.DL_FILE_ENTRY_PREVIEW_AUDIO, false));
+							PropsKeys.DL_FILE_ENTRY_PREVIEW_AUDIO, false),
+						Log4JUtil.getLog4JURLs(clazz.getClassLoader()));
 
 				ProcessChannel<String> processChannel =
 					_processExecutor.execute(
@@ -487,8 +492,8 @@ public class AudioProcessorImpl
 		public LiferayAudioProcessCallable(
 			String serverId, String liferayHome,
 			Map<String, String> customLogSettings, File inputFile,
-			File outputFile, String audioContainer,
-			Properties audioProperties) {
+			File outputFile, String audioContainer, Properties audioProperties,
+			List<URL> urls) {
 
 			_serverId = serverId;
 			_liferayHome = liferayHome;
@@ -497,6 +502,7 @@ public class AudioProcessorImpl
 			_outputFile = outputFile;
 			_audioContainer = audioContainer;
 			_audioProperties = audioProperties;
+			_urls = urls;
 		}
 
 		@Override
@@ -507,11 +513,9 @@ public class AudioProcessorImpl
 
 			SystemEnv.setProperties(systemProperties);
 
-			Class<?> clazz = getClass();
-
 			Log4JUtil.initLog4J(
-				_serverId, _liferayHome, clazz.getClassLoader(),
-				new Log4jLogFactoryImpl(), _customLogSettings);
+				_serverId, _liferayHome, _urls, new Log4jLogFactoryImpl(),
+				_customLogSettings);
 
 			try {
 				LiferayConverter liferayConverter = new LiferayAudioConverter(
@@ -543,6 +547,7 @@ public class AudioProcessorImpl
 		private final File _outputFile;
 
 		private final String _serverId;
+		private final List<URL> _urls;
 
 	}
 

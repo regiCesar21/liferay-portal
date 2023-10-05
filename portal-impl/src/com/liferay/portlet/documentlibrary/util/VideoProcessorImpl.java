@@ -50,6 +50,8 @@ import java.awt.image.RenderedImage;
 import java.io.File;
 import java.io.InputStream;
 
+import java.net.URL;
+
 import java.util.List;
 import java.util.Map;
 import java.util.Properties;
@@ -324,6 +326,8 @@ public class VideoProcessorImpl
 		try {
 			try {
 				if (PropsValues.DL_FILE_ENTRY_PREVIEW_FORK_PROCESS_ENABLED) {
+					Class<?> clazz = getClass();
+
 					ProcessCallable<String> processCallable =
 						new LiferayVideoThumbnailProcessCallable(
 							ServerDetector.getServerId(),
@@ -336,7 +340,8 @@ public class VideoProcessorImpl
 							file, thumbnailTempFile, THUMBNAIL_TYPE, height,
 							width,
 							PropsValues.
-								DL_FILE_ENTRY_THUMBNAIL_VIDEO_FRAME_PERCENTAGE);
+								DL_FILE_ENTRY_THUMBNAIL_VIDEO_FRAME_PERCENTAGE,
+							Log4JUtil.getLog4JURLs(clazz.getClassLoader()));
 
 					ProcessChannel<String> processChannel =
 						_processExecutor.execute(
@@ -499,6 +504,8 @@ public class VideoProcessorImpl
 
 		try {
 			if (PropsValues.DL_FILE_ENTRY_PREVIEW_FORK_PROCESS_ENABLED) {
+				Class<?> clazz = getClass();
+
 				ProcessCallable<String> processCallable =
 					new LiferayVideoProcessCallable(
 						ServerDetector.getServerId(),
@@ -508,7 +515,8 @@ public class VideoProcessorImpl
 						PropsUtil.getProperties(
 							PropsKeys.DL_FILE_ENTRY_PREVIEW_VIDEO, false),
 						PropsUtil.getProperties(
-							PropsKeys.XUGGLER_FFPRESET, true));
+							PropsKeys.XUGGLER_FFPRESET, true),
+						Log4JUtil.getLog4JURLs(clazz.getClassLoader()));
 
 				ProcessChannel<String> processChannel =
 					_processExecutor.execute(
@@ -668,7 +676,7 @@ public class VideoProcessorImpl
 			String serverId, String liferayHome,
 			Map<String, String> customLogSettings, File inputFile,
 			File outputFile, String videoContainer, Properties videoProperties,
-			Properties ffpresetProperties) {
+			Properties ffpresetProperties, List<URL> urls) {
 
 			_serverId = serverId;
 			_liferayHome = liferayHome;
@@ -678,6 +686,7 @@ public class VideoProcessorImpl
 			_videoContainer = videoContainer;
 			_videoProperties = videoProperties;
 			_ffpresetProperties = ffpresetProperties;
+			_urls = urls;
 		}
 
 		@Override
@@ -688,11 +697,9 @@ public class VideoProcessorImpl
 
 			SystemEnv.setProperties(systemProperties);
 
-			Class<?> clazz = getClass();
-
 			Log4JUtil.initLog4J(
-				_serverId, _liferayHome, clazz.getClassLoader(),
-				new Log4jLogFactoryImpl(), _customLogSettings);
+				_serverId, _liferayHome, _urls, new Log4jLogFactoryImpl(),
+				_customLogSettings);
 
 			try {
 				LiferayConverter liferayConverter = new LiferayVideoConverter(
@@ -726,6 +733,7 @@ public class VideoProcessorImpl
 		private File _outputFile;
 
 		private String _serverId;
+		private final List<URL> _urls;
 		private final String _videoContainer;
 		private final Properties _videoProperties;
 
@@ -738,7 +746,7 @@ public class VideoProcessorImpl
 			String serverId, String liferayHome,
 			Map<String, String> customLogSettings, File inputFile,
 			File outputFile, String extension, int height, int width,
-			int percentage) {
+			int percentage, List<URL> urls) {
 
 			_serverId = serverId;
 			_liferayHome = liferayHome;
@@ -749,22 +757,19 @@ public class VideoProcessorImpl
 			_height = height;
 			_width = width;
 			_percentage = percentage;
+			_urls = urls;
 		}
 
 		@Override
 		public String call() throws ProcessException {
 			XugglerAutoInstallUtil.installNativeLibraries();
 
-			Class<?> clazz = getClass();
-
-			ClassLoader classLoader = clazz.getClassLoader();
-
 			Properties systemProperties = System.getProperties();
 
 			SystemEnv.setProperties(systemProperties);
 
 			Log4JUtil.initLog4J(
-				_serverId, _liferayHome, classLoader, new Log4jLogFactoryImpl(),
+				_serverId, _liferayHome, _urls, new Log4jLogFactoryImpl(),
 				_customLogSettings);
 
 			try {
@@ -801,6 +806,7 @@ public class VideoProcessorImpl
 
 		private final int _percentage;
 		private String _serverId;
+		private final List<URL> _urls;
 		private final int _width;
 
 	}

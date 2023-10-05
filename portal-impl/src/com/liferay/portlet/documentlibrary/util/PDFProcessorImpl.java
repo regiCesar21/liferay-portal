@@ -52,6 +52,8 @@ import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 
+import java.net.URL;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
@@ -682,6 +684,8 @@ public class PDFProcessorImpl
 
 			try {
 				if (PropsValues.DL_FILE_ENTRY_PREVIEW_FORK_PROCESS_ENABLED) {
+					Class<?> clazz = getClass();
+
 					ProcessCallable<String> processCallable =
 						new LiferayPDFBoxProcessCallable(
 							ServerDetector.getServerId(),
@@ -699,7 +703,8 @@ public class PDFProcessorImpl
 								DL_FILE_ENTRY_PREVIEW_DOCUMENT_MAX_HEIGHT,
 							PropsValues.
 								DL_FILE_ENTRY_PREVIEW_DOCUMENT_MAX_WIDTH,
-							generatePreview, generateThumbnail);
+							generatePreview, generateThumbnail,
+							Log4JUtil.getLog4JURLs(clazz.getClassLoader()));
 
 					ProcessChannel<String> processChannel =
 						_processExecutor.execute(
@@ -1082,7 +1087,8 @@ public class PDFProcessorImpl
 			Map<String, String> customLogSettings, File inputFile,
 			File thumbnailFile, File[] previewFiles, String extension,
 			String thumbnailExtension, int dpi, int height, int width,
-			boolean generatePreview, boolean generateThumbnail) {
+			boolean generatePreview, boolean generateThumbnail,
+			List<URL> urls) {
 
 			_serverId = serverId;
 			_liferayHome = liferayHome;
@@ -1097,6 +1103,7 @@ public class PDFProcessorImpl
 			_width = width;
 			_generatePreview = generatePreview;
 			_generateThumbnail = generateThumbnail;
+			_urls = urls;
 		}
 
 		@Override
@@ -1105,11 +1112,9 @@ public class PDFProcessorImpl
 
 			SystemEnv.setProperties(systemProperties);
 
-			Class<?> clazz = getClass();
-
 			Log4JUtil.initLog4J(
-				_serverId, _liferayHome, clazz.getClassLoader(),
-				new Log4jLogFactoryImpl(), _customLogSettings);
+				_serverId, _liferayHome, _urls, new Log4jLogFactoryImpl(),
+				_customLogSettings);
 
 			try {
 				LiferayPDFBoxConverter liferayConverter =
@@ -1150,6 +1155,7 @@ public class PDFProcessorImpl
 		@OutputResource
 		private final File _thumbnailFile;
 
+		private final List<URL> _urls;
 		private final int _width;
 
 	}
