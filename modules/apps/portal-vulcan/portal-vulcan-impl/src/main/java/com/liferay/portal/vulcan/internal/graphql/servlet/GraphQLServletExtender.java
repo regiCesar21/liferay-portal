@@ -31,7 +31,7 @@ import com.liferay.portal.vulcan.internal.configuration.util.ConfigurationUtil;
 import com.liferay.portal.vulcan.internal.graphql.data.fetcher.LiferayMethodDataFetcher;
 import com.liferay.portal.vulcan.internal.graphql.data.processor.LiferayMethodDataFetchingProcessor;
 import com.liferay.portal.vulcan.internal.graphql.exception.QueryDepthLimitExceededException;
-import com.liferay.portal.vulcan.internal.graphql.servlet.instrumentation.MaxQueryDepthInstrumentation;
+import com.liferay.portal.vulcan.internal.graphql.servlet.instrumentation.QueryDepthLimitInstrumentation;
 import com.liferay.portal.vulcan.internal.graphql.util.GraphQLUtil;
 import com.liferay.portal.vulcan.multipart.MultipartBody;
 import com.liferay.portal.vulcan.util.TransformUtil;
@@ -816,7 +816,7 @@ public class GraphQLServletExtender {
 				).withExecutionStrategyProvider(
 					executionStrategyProvider
 				).withInstrumentation(
-					() -> _getMaxQueryDepthInstrumentation(companyId)
+					() -> _getQueryDepthLimitInstrumentation(companyId)
 				).build();
 
 			graphQLConfigurationBuilder.with(graphQLQueryInvoker);
@@ -851,7 +851,7 @@ public class GraphQLServletExtender {
 		}
 	}
 
-	private MaxQueryDepthInstrumentation _getMaxQueryDepthInstrumentation(
+	private QueryDepthLimitInstrumentation _getQueryDepthLimitInstrumentation(
 		long companyId) {
 
 		try {
@@ -859,7 +859,7 @@ public class GraphQLServletExtender {
 				_configurationProvider.getCompanyConfiguration(
 					HeadlessAPICompanyConfiguration.class, companyId);
 
-			return new MaxQueryDepthInstrumentation(
+			return new QueryDepthLimitInstrumentation(
 				headlessAPICompanyConfiguration.queryDepthLimit());
 		}
 		catch (Exception exception) {
