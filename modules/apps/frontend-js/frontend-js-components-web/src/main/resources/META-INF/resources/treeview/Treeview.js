@@ -124,6 +124,7 @@ function init({
 	initialNodes,
 	initialSelectedNodeIds,
 	multiSelection,
+	onLoadMore,
 }) {
 	const selectedNodeIds = new Set(initialSelectedNodeIds);
 
@@ -160,6 +161,7 @@ function init({
 		multiSelection,
 		nodeMap,
 		nodes,
+		onLoadMore,
 		selectedNodeIds,
 	};
 }
@@ -643,6 +645,20 @@ function reducer(state, action) {
 			};
 		}
 
+		case 'INSERT_NODES': {
+			return {
+				...state,
+				nodes: updateNode(state, action.nodeId, (node) => {
+					return node.children
+						? {
+								...node,
+								children: [...node.children, ...action.nodes],
+						  }
+						: node;
+				}),
+			};
+		}
+
 		default:
 			break;
 	}
@@ -711,6 +727,7 @@ function Treeview({
 	initialSelectedNodeIds,
 	multiSelection,
 	nodes: initialNodes,
+	onLoadMore,
 	onSelectedNodesChange,
 }) {
 	const delay = useTimeout();
@@ -727,6 +744,7 @@ function Treeview({
 			initialNodes,
 			initialSelectedNodeIds,
 			multiSelection,
+			onLoadMore,
 		},
 		init
 	);

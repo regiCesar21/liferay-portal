@@ -14,7 +14,9 @@ import useFocus from './useFocus';
 import useKeyboardNavigation from './useKeyboardNavigation';
 
 export default function NodeListItem({NodeComponent, node}) {
-	const {dispatch} = useContext(TreeviewContext);
+	const {dispatch, state} = useContext(TreeviewContext);
+
+	const {onLoadMore} = state;
 
 	const focusable = useFocus(node.id);
 
@@ -33,6 +35,31 @@ export default function NodeListItem({NodeComponent, node}) {
 	const toggleExpanded = (event) => {
 		if (node.children.length) {
 			event.stopPropagation();
+
+			if (!node.expanded && onLoadMore) {
+				onLoadMore(node)
+					.then((items) => {
+						if (items) {
+							const alreadyExistingIds = node.children.map(
+								(item) => item.id
+							);
+							const nodesToInsert = items.filter(
+								(item) => !alreadyExistingIds.includes(item.id)
+							);
+
+							if (nodesToInsert) {
+								dispatch({
+									nodeId: node.id,
+									nodes: nodesToInsert,
+									type: 'INSERT_NODES',
+								});
+							}
+						}
+					})
+					.catch((error) => {
+						console.error(error);
+					});
+			}
 
 			dispatch({nodeId: node.id, type: 'TOGGLE_EXPANDED'});
 		}
