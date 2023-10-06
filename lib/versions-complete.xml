@@ -6501,7 +6501,7 @@
 			</library>
 			<library>
 				<file-name>lib/portal/commons-validator.jar</file-name>
-				<version>1.5.1</version>
+				<version>1.7</version>
 				<project-name>Commons Validator</project-name>
 				<project-url>http://commons.apache.org/validator</project-url>
 				<licenses>
