@@ -4015,9 +4015,9 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 		sb.append("/portal/update_password?p_l_id=");
 		sb.append(serviceContext.getPlid());
 		sb.append("&ticketKey=");
-		sb.append(ticket.getTicketId());
-		sb.append(StringPool.UNDERLINE);
 		sb.append(ticket.getKey());
+		sb.append("&ticketId=");
+		sb.append(ticket.getTicketId());
 
 		String passwordResetURL = sb.toString();
 
