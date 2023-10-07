@@ -753,6 +753,14 @@ public class LicenseKeyResourceImpl
 
 			if (licenseKey.getComplimentary() != null) {
 				complimentary = licenseKey.getComplimentary();
+
+				Account account = _accountWebService.getAccount(accountKey);
+
+				Map<String, String> properties = account.getProperties();
+
+				properties.put("allowComplimentary", StringPool.FALSE);
+
+				account.setProperties(properties);
 			}
 
 			com.liferay.osb.provisioning.license.model.LicenseKey
@@ -1879,12 +1887,22 @@ public class LicenseKeyResourceImpl
 				properties.get("allowPermanentLicenses"), true);
 		}
 
+		boolean complimentaryConsumed = false;
+
 		for (LicenseKey licenseKey : licenseKeys) {
 			if ((licenseKey.getComplimentary() != null) &&
 				licenseKey.getComplimentary()) {
 
+				if (complimentaryConsumed) {
+					throw new PrincipalException(
+						"Only one complimentary license key can be " +
+							"provisioned at one time");
+				}
+
 				_validateComplimentary(
 					accountKey, account.getProperties(), licenseKey);
+
+				complimentaryConsumed = true;
 
 				continue;
 			}
