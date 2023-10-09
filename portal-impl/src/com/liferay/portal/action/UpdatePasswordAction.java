@@ -25,6 +25,7 @@ import com.liferay.portal.kernel.servlet.HttpMethods;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.Constants;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
@@ -141,7 +142,7 @@ public class UpdatePasswordAction implements Action {
 
 		try {
 			Ticket ticket = TicketLocalServiceUtil.fetchTicket(
-				Long.parseLong(ticketId));
+				GetterUtil.getLong(ticketId));
 
 			if ((ticket == null) ||
 				(ticket.getType() != TicketConstants.TYPE_PASSWORD)) {
