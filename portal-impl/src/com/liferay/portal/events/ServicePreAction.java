@@ -894,7 +894,7 @@ public class ServicePreAction extends Action {
 		}
 
 		if (!user.isActive()) {
-			user = company.getGuestUser();
+			user = company.getDefaultUser();
 
 			if (realUser == null) {
 				session.invalidate();
