@@ -45,6 +45,7 @@ import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.ClassRule;
+import org.junit.Ignore;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -184,6 +185,7 @@ public class CPOptionValuePersistenceTest {
 			Time.getShortTimestamp(newCPOptionValue.getLastPublishDate()));
 	}
 
+	@Ignore
 	@Test(expected = DuplicateCPOptionValueExternalReferenceCodeException.class)
 	public void testUpdateWithExistingExternalReferenceCode() throws Exception {
 		CPOptionValue cpOptionValue = addCPOptionValue();

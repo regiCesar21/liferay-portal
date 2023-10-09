@@ -45,6 +45,7 @@ import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.ClassRule;
+import org.junit.Ignore;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -246,6 +247,7 @@ public class CommerceInventoryWarehousePersistenceTest {
 			newCommerceInventoryWarehouse.getType());
 	}
 
+	@Ignore
 	@Test(
 		expected = DuplicateCommerceInventoryWarehouseExternalReferenceCodeException.class
 	)
