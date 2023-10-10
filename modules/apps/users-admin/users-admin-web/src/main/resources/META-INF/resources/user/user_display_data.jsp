@@ -108,6 +108,7 @@ User selUser = (User)request.getAttribute(UsersAdminWebKeys.SELECTED_USER);
 				<aui:input disabled="<%= true %>" name="emailAddress" />
 			</c:when>
 			<c:otherwise>
+				<aui:input name="password" type="hidden" value="" />
 
 				<%
 				User displayEmailAddressUser = null;
