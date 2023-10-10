@@ -753,21 +753,6 @@ public class LicenseKeyResourceImpl
 
 			if (licenseKey.getComplimentary() != null) {
 				complimentary = licenseKey.getComplimentary();
-
-				Account account = _accountWebService.getAccount(accountKey);
-
-				Map<String, String> properties = account.getProperties();
-
-				if (properties == null) {
-					properties = new HashMap<>();
-				}
-
-				properties.put("allowComplimentary", StringPool.FALSE);
-
-				account.setProperties(properties);
-
-				_accountWebService.updateAccount(
-					StringPool.BLANK, StringPool.BLANK, accountKey, account);
 			}
 
 			com.liferay.osb.provisioning.license.model.LicenseKey
@@ -783,6 +768,23 @@ public class LicenseKeyResourceImpl
 					licenseKey.getIpAddresses(), licenseKey.getMacAddresses(),
 					licenseKey.getStartDate(), licenseKey.getExpirationDate(),
 					complimentary, true);
+
+			if (complimentary) {
+				Account account = _accountWebService.getAccount(accountKey);
+
+				Map<String, String> properties = account.getProperties();
+
+				if (properties == null) {
+					properties = new HashMap<>();
+				}
+
+				properties.put("allowComplimentary", StringPool.FALSE);
+
+				account.setProperties(properties);
+
+				_accountWebService.updateAccount(
+					StringPool.BLANK, StringPool.BLANK, accountKey, account);
+			}
 
 			curLicenseKeys.add(LicenseKeyUtil.toLicenseKey(curLicenseKey));
 		}
