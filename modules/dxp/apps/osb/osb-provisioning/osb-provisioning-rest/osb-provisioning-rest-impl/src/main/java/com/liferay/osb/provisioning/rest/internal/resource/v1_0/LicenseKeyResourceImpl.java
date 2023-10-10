@@ -765,6 +765,9 @@ public class LicenseKeyResourceImpl
 				properties.put("allowComplimentary", StringPool.FALSE);
 
 				account.setProperties(properties);
+
+				_accountWebService.updateAccount(
+					StringPool.BLANK, StringPool.BLANK, accountKey, account);
 			}
 
 			com.liferay.osb.provisioning.license.model.LicenseKey
