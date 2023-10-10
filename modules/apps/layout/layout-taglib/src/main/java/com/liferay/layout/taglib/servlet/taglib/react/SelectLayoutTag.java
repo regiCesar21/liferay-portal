@@ -320,6 +320,8 @@ public class SelectLayoutTag extends IncludeTag {
 			jsonObject.put(
 				"groupId", layout.getGroupId()
 			).put(
+				"hasChildren", layout.hasChildren()
+			).put(
 				"icon", "page"
 			).put(
 				"id", layout.getUuid()
@@ -327,6 +329,22 @@ public class SelectLayoutTag extends IncludeTag {
 				"layoutId", layout.getLayoutId()
 			).put(
 				"name", layout.getName(themeDisplay.getLocale())
+			).put(
+				"paginated",
+				() -> {
+					int layoutsCount = LayoutServiceUtil.getLayoutsCount(
+						groupId, layout.isPrivateLayout(),
+						layout.getLayoutId());
+
+					if (layoutsCount >
+							PropsValues.
+								LAYOUT_MANAGE_PAGES_INITIAL_CHILDREN) {
+
+						return true;
+					}
+
+					return false;
+				}
 			).put(
 				"privateLayout", layout.isPrivateLayout()
 			).put(
