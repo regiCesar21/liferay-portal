@@ -34,10 +34,12 @@ function visit(nodes, callback) {
 const SelectLayout = ({
 	config,
 	followURLOnTitleClick,
+	groupId,
 	itemSelectorSaveEvent,
 	multiSelection,
 	namespace,
 	nodes,
+	privateLayout,
 }) => {
 	const {loadMoreItemsURL, maxPageSize, namespace} = config;
 
@@ -98,7 +100,10 @@ const SelectLayout = ({
 
 			return fetch(loadMoreItemsURL, {
 				body: Liferay.Util.objectToURLSearchParams({
+					[`${namespace}groupId`]: groupId,
+					[`${namespace}layoutUuid`]: item.id,
 					[`${namespace}parentLayoutId`]: item.layoutId,
+					[`${namespace}privateLayout`]: privateLayout,
 					[`${namespace}redirect`]:
 						window.location.pathname + window.location.search,
 					[`${namespace}start`]: cursor * maxPageSize,
@@ -120,7 +125,13 @@ const SelectLayout = ({
 					})
 				);
 		},
-		[loadMoreItemsURL, maxPageSize, namespace]
+		[
+			groupId,
+			loadMoreItemsURL,
+			privateLayout,
+			maxPageSize,
+			namespace,
+		]
 	);
 
 
