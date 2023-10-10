@@ -769,24 +769,11 @@ public class LicenseKeyResourceImpl
 					licenseKey.getStartDate(), licenseKey.getExpirationDate(),
 					complimentary, true);
 
-			if (complimentary) {
-				Account account = _accountWebService.getAccount(accountKey);
-
-				Map<String, String> properties = account.getProperties();
-
-				if (properties == null) {
-					properties = new HashMap<>();
-				}
-
-				properties.put("allowComplimentary", StringPool.FALSE);
-
-				account.setProperties(properties);
-
-				_accountWebService.updateAccount(
-					StringPool.BLANK, StringPool.BLANK, accountKey, account);
-			}
-
 			curLicenseKeys.add(LicenseKeyUtil.toLicenseKey(curLicenseKey));
+
+			if (complimentary) {
+				_resetComplimentaryProperty(accountKey);
+			}
 		}
 
 		return Page.of(curLicenseKeys);
@@ -1746,6 +1733,25 @@ public class LicenseKeyResourceImpl
 		}
 
 		_log.error(sb.toString());
+	}
+
+	private void _resetComplimentaryProperty(String accountKey)
+		throws Exception {
+
+		Account account = _accountWebService.getAccount(accountKey);
+
+		Map<String, String> properties = account.getProperties();
+
+		if (properties == null) {
+			properties = new HashMap<>();
+		}
+
+		properties.put("allowComplimentary", StringPool.FALSE);
+
+		account.setProperties(properties);
+
+		_accountWebService.updateAccount(
+			StringPool.BLANK, StringPool.BLANK, accountKey, account);
 	}
 
 	private String _toCsv(
