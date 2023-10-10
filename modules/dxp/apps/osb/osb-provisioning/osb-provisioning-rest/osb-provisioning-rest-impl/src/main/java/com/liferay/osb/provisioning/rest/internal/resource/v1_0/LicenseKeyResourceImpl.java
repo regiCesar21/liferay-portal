@@ -758,6 +758,10 @@ public class LicenseKeyResourceImpl
 
 				Map<String, String> properties = account.getProperties();
 
+				if (properties == null) {
+					properties = new HashMap<>();
+				}
+
 				properties.put("allowComplimentary", StringPool.FALSE);
 
 				account.setProperties(properties);
@@ -1887,22 +1891,22 @@ public class LicenseKeyResourceImpl
 				properties.get("allowPermanentLicenses"), true);
 		}
 
-		boolean complimentaryConsumed = false;
+		boolean multipleComplimentary = false;
 
 		for (LicenseKey licenseKey : licenseKeys) {
 			if ((licenseKey.getComplimentary() != null) &&
 				licenseKey.getComplimentary()) {
 
-				if (complimentaryConsumed) {
+				if (multipleComplimentary) {
 					throw new PrincipalException(
 						"Only one complimentary license key can be " +
-							"provisioned at one time");
+							"provisioned at a time");
 				}
 
 				_validateComplimentary(
 					accountKey, account.getProperties(), licenseKey);
 
-				complimentaryConsumed = true;
+				multipleComplimentary = true;
 
 				continue;
 			}
