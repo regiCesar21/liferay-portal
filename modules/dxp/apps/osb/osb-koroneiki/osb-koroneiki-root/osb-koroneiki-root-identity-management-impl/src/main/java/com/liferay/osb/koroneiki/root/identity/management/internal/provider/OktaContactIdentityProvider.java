@@ -129,11 +129,9 @@ public class OktaContactIdentityProvider implements ContactIdentityProvider {
 		sb.append("?search=");
 		sb.append(_http.encodePath("profile.uuid eq \"" + uuid + "\""));
 
-		String response = _sendRequest(sb.toString());
+		JSONArray jsonArray = _sendRequestToJSONArray(sb.toString());
 
-		JSONArray jsonArray = _jsonFactory.createJSONArray(response);
-
-		if (jsonArray.length() <= 0) {
+		if ((jsonArray == null) || (jsonArray.length() <= 0)) {
 			return null;
 		}
 
@@ -284,6 +282,28 @@ public class OktaContactIdentityProvider implements ContactIdentityProvider {
 		}
 
 		return response;
+	}
+
+	private JSONArray _sendRequestToJSONArray(String endpoint) {
+		String response = null;
+
+		try {
+			response = _sendRequest(endpoint);
+
+			return _jsonFactory.createJSONArray(response);
+		}
+		catch (Exception exception) {
+			StringBundler sb = new StringBundler(4);
+
+			sb.append("Error response from Okta for ");
+			sb.append(endpoint);
+			sb.append(": ");
+			sb.append(response);
+
+			_log.error(sb.toString(), exception);
+		}
+
+		return null;
 	}
 
 	private static final String[] _STATUSES_VERIFIED = {
