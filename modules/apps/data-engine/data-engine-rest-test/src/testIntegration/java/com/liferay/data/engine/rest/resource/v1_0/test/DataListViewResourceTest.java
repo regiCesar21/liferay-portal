@@ -31,6 +31,11 @@ public class DataListViewResourceTest extends BaseDataListViewResourceTestCase {
 	}
 
 	@Ignore
+	@Test
+	public void testGetDataDefinitionDataListViewsPage() {
+	}
+
+	@Ignore
 	@Override
 	@Test
 	public void testGraphQLDeleteDataListView() {

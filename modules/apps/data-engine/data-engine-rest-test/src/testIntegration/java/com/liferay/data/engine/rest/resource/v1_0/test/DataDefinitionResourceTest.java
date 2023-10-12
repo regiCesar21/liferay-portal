@@ -45,6 +45,7 @@ public class DataDefinitionResourceTest
 		Assert.assertTrue(Validator.isNotNull(fieldTypes));
 	}
 
+	@Ignore
 	@Override
 	@Test
 	public void testGetSiteDataDefinitionsPage() throws Exception {

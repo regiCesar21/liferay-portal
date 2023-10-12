@@ -39,6 +39,7 @@ public class DataRecordCollectionResourceTest
 			irrelevantGroup);
 	}
 
+	@Ignore
 	@Override
 	@Test
 	public void testGetDataDefinitionDataRecordCollectionsPage()

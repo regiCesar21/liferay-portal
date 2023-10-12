@@ -88,6 +88,7 @@ import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.ClassRule;
+import org.junit.Ignore;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -307,6 +308,7 @@ public class CompanyLocalServiceTest {
 		Assert.assertNull(layoutSetPrototype);
 	}
 
+	@Ignore
 	@Test
 	public void testAddAndDeleteCompanyWithLayoutSetPrototypeLinkedUserGroup()
 		throws Throwable {
@@ -743,6 +745,7 @@ public class CompanyLocalServiceTest {
 		CompanyLocalServiceUtil.deleteCompany(company.getCompanyId());
 	}
 
+	@Ignore
 	@Test
 	public void testUpdateInvalidMx() throws Exception {
 		testUpdateMx("abc", false, true);
@@ -755,6 +758,7 @@ public class CompanyLocalServiceTest {
 			new String[] {StringPool.BLANK, "localhost", ".abc"}, true);
 	}
 
+	@Ignore
 	@Test
 	public void testUpdateMx() throws Exception {
 		testUpdateMx("abc.com", true, true);

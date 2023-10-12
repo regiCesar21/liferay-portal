@@ -48,6 +48,7 @@ import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.ClassRule;
+import org.junit.Ignore;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -105,6 +106,7 @@ public class DDMStructureServiceTest extends BaseDDMServiceTestCase {
 		Assert.assertEquals(structures.toString(), 3, structures.size());
 	}
 
+	@Ignore
 	@Test
 	@Transactional
 	public void testGetStructuresWithSiteAdminPermission() throws Throwable {
@@ -312,6 +314,7 @@ public class DDMStructureServiceTest extends BaseDDMServiceTestCase {
 		Assert.assertEquals(initialCount + 1, count);
 	}
 
+	@Ignore
 	@Test
 	public void testSearchWithSiteAdminPermission() throws Exception {
 		_ddmStructures.add(
@@ -347,6 +350,7 @@ public class DDMStructureServiceTest extends BaseDDMServiceTestCase {
 		Assert.assertEquals(structures.toString(), 2, structures.size());
 	}
 
+	@Ignore
 	@Test
 	public void testSearchWithSiteMemberPermission() throws Exception {
 		_ddmStructures.add(

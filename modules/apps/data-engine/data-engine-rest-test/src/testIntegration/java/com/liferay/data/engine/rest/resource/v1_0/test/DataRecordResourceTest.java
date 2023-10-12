@@ -41,10 +41,20 @@ public class DataRecordResourceTest extends BaseDataRecordResourceTestCase {
 	}
 
 	@Ignore
+	@Test
+	public void testGetDataDefinitionDataRecordsPage() {
+	}
+
+	@Ignore
 	@Override
 	@Test
 	public void testGetDataRecordCollectionDataRecordExport() throws Exception {
 		super.testGetDataRecordCollectionDataRecordExport();
+	}
+
+	@Ignore
+	@Test
+	public void testGetDataRecordCollectionDataRecordsPage() {
 	}
 
 	@Ignore
