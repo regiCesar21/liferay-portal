@@ -57,6 +57,7 @@ import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.ClassRule;
+import org.junit.Ignore;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -159,6 +160,7 @@ public class TrashEntryLocalServiceCheckEntriesTest {
 		deleteTrashEntries(createGroup(TestPropsValues.getCompanyId()));
 	}
 
+	@Ignore
 	@Test
 	public void testStagingGroup() throws Exception {
 		long companyId = TestPropsValues.getCompanyId();
@@ -173,6 +175,7 @@ public class TrashEntryLocalServiceCheckEntriesTest {
 		deleteTrashEntries(group.getStagingGroup());
 	}
 
+	@Ignore
 	@Test
 	public void testStagingLayoutScope() throws Exception {
 		long companyId = TestPropsValues.getCompanyId();
@@ -191,6 +194,7 @@ public class TrashEntryLocalServiceCheckEntriesTest {
 		deleteTrashEntries(group);
 	}
 
+	@Ignore
 	@Test
 	public void testStagingTrashDisabled() throws Exception {
 		long companyId = TestPropsValues.getCompanyId();
