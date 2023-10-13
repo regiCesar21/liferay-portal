@@ -1,6 +1,6 @@
 Bundle-Name: Liferay Segments API
 Bundle-SymbolicName: com.liferay.segments.api
-Bundle-Version: 2.13.3
+Bundle-Version: 2.14.0
 Export-Package:\
 	com.liferay.segments,\
 	com.liferay.segments.configuration,\
@@ -9,6 +9,7 @@ Export-Package:\
 	com.liferay.segments.context.contributor,\
 	com.liferay.segments.criteria,\
 	com.liferay.segments.criteria.contributor,\
+	com.liferay.segments.display.context,\
 	com.liferay.segments.exception,\
 	com.liferay.segments.field,\
 	com.liferay.segments.field.customizer,\
