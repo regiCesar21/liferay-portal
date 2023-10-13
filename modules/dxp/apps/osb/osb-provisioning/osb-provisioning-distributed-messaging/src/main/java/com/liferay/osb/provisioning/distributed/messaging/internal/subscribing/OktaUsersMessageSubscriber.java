@@ -11,6 +11,7 @@ import com.liferay.osb.koroneiki.phloem.rest.client.dto.v1_0.Account;
 import com.liferay.osb.koroneiki.phloem.rest.client.dto.v1_0.Contact;
 import com.liferay.osb.koroneiki.phloem.rest.client.dto.v1_0.ContactRole;
 import com.liferay.osb.koroneiki.phloem.rest.client.dto.v1_0.Team;
+import com.liferay.osb.provisioning.identity.management.provider.ContactIdentityProvider;
 import com.liferay.osb.provisioning.koroneiki.constants.ContactRoleConstants;
 import com.liferay.osb.provisioning.koroneiki.web.service.AccountWebService;
 import com.liferay.osb.provisioning.koroneiki.web.service.ContactRoleWebService;
@@ -40,7 +41,10 @@ public class OktaUsersMessageSubscriber extends BaseMessageSubscriber {
 	protected void doParse(JSONObject jsonObject) throws Exception {
 		String eventType = jsonObject.getString("eventType");
 
-		if (eventType.equals(_EVENT_TYPE_DEACTIVATE)) {
+		if (eventType.equals(_EVENT_TYPE_ACTIVATE)) {
+			_syncContact(jsonObject.getJSONObject("user"));
+		}
+		else if (eventType.equals(_EVENT_TYPE_DEACTIVATE)) {
 			_unassignAllContactMemberships(jsonObject.getJSONObject("user"));
 		}
 		else if (eventType.equals(_EVENT_TYPE_GROUP_ADD)) {
@@ -135,6 +139,18 @@ public class OktaUsersMessageSubscriber extends BaseMessageSubscriber {
 		return false;
 	}
 
+	private void _syncContact(JSONObject jsonObject) throws Exception {
+		JSONObject profileJSONObject = jsonObject.getJSONObject("profile");
+
+		Contact contact = _fetchContact(profileJSONObject);
+
+		if (contact == null) {
+			return;
+		}
+
+		_contactIdentityProvider.syncContact(contact);
+	}
+
 	private void _unassignAllContactMemberships(JSONObject jsonObject)
 		throws Exception {
 
@@ -226,6 +242,9 @@ public class OktaUsersMessageSubscriber extends BaseMessageSubscriber {
 			StringPool.BLANK, StringPool.BLANK, contact.getUuid(), contact);
 	}
 
+	private static final String _EVENT_TYPE_ACTIVATE =
+		"user.lifecycle.activate";
+
 	private static final String _EVENT_TYPE_DEACTIVATE =
 		"user.lifecycle.deactivate";
 
@@ -247,6 +266,9 @@ public class OktaUsersMessageSubscriber extends BaseMessageSubscriber {
 
 	@Reference
 	private AccountWebService _accountWebService;
+
+	@Reference(target = "(provider=okta)")
+	private ContactIdentityProvider _contactIdentityProvider;
 
 	@Reference
 	private ContactRoleWebService _contactRoleWebService;

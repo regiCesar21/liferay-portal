@@ -57,6 +57,20 @@ import org.osgi.service.component.annotations.Reference;
 )
 public class OktaContactIdentityProvider implements ContactIdentityProvider {
 
+	public void activateUser(String emailAddress) throws Exception {
+		JSONObject jsonObject = _jsonFactory.createJSONObject();
+
+		jsonObject.put(
+			"action", "ACTIVATE"
+		).put(
+			"login", emailAddress
+		);
+
+		_messagePublisher.publish(
+			GooglePubsubConstants.TOPIC_OKTA_USER_UPDATE,
+			new Message(jsonObject.toString()));
+	}
+
 	public void addMembership(String groupId, String emailAddress)
 		throws Exception {
 
@@ -137,6 +151,12 @@ public class OktaContactIdentityProvider implements ContactIdentityProvider {
 			contact = _toContact(jsonObject);
 
 			if (sync) {
+				String status = jsonObject.getString("status");
+
+				if (ArrayUtil.contains(_STATUSES_DEACTIVATED, status)) {
+					activateUser(emailAddress);
+				}
+
 				contact = _contactWebService.addContact(
 					StringPool.BLANK, StringPool.BLANK, contact);
 			}
@@ -254,7 +274,7 @@ public class OktaContactIdentityProvider implements ContactIdentityProvider {
 				GooglePubsubConstants.TOPIC_OKTA_USER_CREATE,
 				new Message(contact.toString()));
 
-			_syncGroups(contact, Collections.emptyList());
+			_syncGroups(contact, Collections.emptyList(), null);
 		}
 		else {
 			JSONObject profileJSONObject = jsonObject.getJSONObject("profile");
@@ -297,7 +317,7 @@ public class OktaContactIdentityProvider implements ContactIdentityProvider {
 					agentName, agentUID, contact.getEmailAddress(), contact);
 			}
 
-			_syncGroups(contact, _getGroups(contact.getEmailAddress()));
+			_syncGroups(contact, _getGroups(contact.getEmailAddress()), status);
 		}
 
 		return contact;
@@ -415,6 +435,16 @@ public class OktaContactIdentityProvider implements ContactIdentityProvider {
 		return null;
 	}
 
+	private boolean _isDeactivated(String status) {
+		if (Validator.isNotNull(status) &&
+			ArrayUtil.contains(_STATUSES_DEACTIVATED, status)) {
+
+			return true;
+		}
+
+		return false;
+	}
+
 	private boolean _isEmailAddressVerified(String status) {
 		if (Validator.isNotNull(status) &&
 			ArrayUtil.contains(_STATUSES_VERIFIED, status)) {
@@ -450,7 +480,8 @@ public class OktaContactIdentityProvider implements ContactIdentityProvider {
 		return response;
 	}
 
-	private void _syncGroups(Contact contact, List<String> groups)
+	private void _syncGroups(
+			Contact contact, List<String> groups, String status)
 		throws Exception {
 
 		List<String> entitlements = new ArrayList<>();
@@ -464,8 +495,14 @@ public class OktaContactIdentityProvider implements ContactIdentityProvider {
 		if (entitlements.contains(EntitlementConstants.CUSTOMER) &&
 			!groups.contains(OktaConstants.GROUP_NAME_CUSTOMERS)) {
 
-			addMembership(
-				OktaConstants.GROUP_NAME_CUSTOMERS, contact.getEmailAddress());
+			if (_isDeactivated(status)) {
+				activateUser(contact.getEmailAddress());
+			}
+			else {
+				addMembership(
+					OktaConstants.GROUP_NAME_CUSTOMERS,
+					contact.getEmailAddress());
+			}
 		}
 		else if (groups.contains(OktaConstants.GROUP_NAME_CUSTOMERS) &&
 				 !entitlements.contains(EntitlementConstants.CUSTOMER)) {
@@ -477,8 +514,14 @@ public class OktaContactIdentityProvider implements ContactIdentityProvider {
 		if (entitlements.contains(EntitlementConstants.PARTNER) &&
 			!groups.contains(OktaConstants.GROUP_NAME_PARTNERS)) {
 
-			addMembership(
-				OktaConstants.GROUP_NAME_PARTNERS, contact.getEmailAddress());
+			if (_isDeactivated(status)) {
+				activateUser(contact.getEmailAddress());
+			}
+			else {
+				addMembership(
+					OktaConstants.GROUP_NAME_PARTNERS,
+					contact.getEmailAddress());
+			}
 		}
 		else if (groups.contains(OktaConstants.GROUP_NAME_PARTNERS) &&
 				 !entitlements.contains(EntitlementConstants.PARTNER)) {

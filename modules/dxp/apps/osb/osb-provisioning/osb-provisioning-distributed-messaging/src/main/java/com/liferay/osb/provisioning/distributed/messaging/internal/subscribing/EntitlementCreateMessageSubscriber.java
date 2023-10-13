@@ -9,6 +9,7 @@ import com.liferay.osb.provisioning.identity.management.constants.OktaConstants;
 import com.liferay.osb.provisioning.identity.management.provider.ContactIdentityProvider;
 import com.liferay.osb.provisioning.koroneiki.constants.EntitlementConstants;
 import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.workflow.WorkflowConstants;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -35,15 +36,31 @@ public class EntitlementCreateMessageSubscriber extends BaseMessageSubscriber {
 
 		String name = entitlementJSONObject.getString("name");
 
-		if (name.equals(EntitlementConstants.CUSTOMER)) {
-			_contactIdentityProvider.addMembership(
-				OktaConstants.GROUP_NAME_CUSTOMERS,
+		Integer status =
+			_contactIdentityProvider.fetchContactStatusByEmailAddress(
 				contactJSONObject.getString("emailAddress"));
+
+		if (name.equals(EntitlementConstants.CUSTOMER)) {
+			if (status == WorkflowConstants.STATUS_INACTIVE) {
+				_contactIdentityProvider.activateUser(
+					contactJSONObject.getString("emailAddress"));
+			}
+			else {
+				_contactIdentityProvider.addMembership(
+					OktaConstants.GROUP_NAME_CUSTOMERS,
+					contactJSONObject.getString("emailAddress"));
+			}
 		}
 		else if (name.equals(EntitlementConstants.PARTNER)) {
-			_contactIdentityProvider.addMembership(
-				OktaConstants.GROUP_NAME_PARTNERS,
-				contactJSONObject.getString("emailAddress"));
+			if (status == WorkflowConstants.STATUS_INACTIVE) {
+				_contactIdentityProvider.activateUser(
+					contactJSONObject.getString("emailAddress"));
+			}
+			else {
+				_contactIdentityProvider.addMembership(
+					OktaConstants.GROUP_NAME_PARTNERS,
+					contactJSONObject.getString("emailAddress"));
+			}
 		}
 	}
 

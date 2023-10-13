@@ -15,4 +15,6 @@ public class GooglePubsubConstants {
 	public static final String TOPIC_OKTA_USER_GROUP_UPDATE =
 		"okta-user-group-update";
 
+	public static final String TOPIC_OKTA_USER_UPDATE = "okta-user-update";
+
 }

@@ -14,6 +14,8 @@ import java.util.List;
  */
 public interface ContactIdentityProvider {
 
+	public void activateUser(String emailAddress) throws Exception;
+
 	public void addMembership(String groupId, String emailAddress)
 		throws Exception;
 
