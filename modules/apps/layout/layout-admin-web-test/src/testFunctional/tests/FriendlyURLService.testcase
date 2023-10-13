@@ -28,6 +28,40 @@ definition {
 		}
 	}
 
+	@description = "This ensures that the permanent redirection can be performed when accessing the old friendly URL of a page."
+	@priority = 4
+	test PermanentRedirectionCanBePerformedWhenAccessingPageOldFriendlyURL {
+		property custom.properties = "locale.prepend.friendly.url.style=0";
+		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
+
+		var portalURL = PropsUtil.get("portal.url");
+
+		Redirect.configureFriendlyURLRedirection(
+			redirectionType = "permanent",
+			systemSettingsInstanceScope = "true");
+
+		SitePages.openPagesAdmin(siteURLKey = "test-site-name");
+
+		SitePages.gotoPageMenuItem(
+			menuItem = "Configure",
+			pageName = "Test Source Page");
+
+		Page.editFriendlyURL(friendlyURLEdit = "/new-page-url");
+
+		Navigator.openSpecificURL(url = "${portalURL}/web/test-site-name/test-source-page");
+
+		AssertLocation(value1 = "${portalURL}/web/test-site-name/new-page-url");
+
+		AssertVisible(
+			key_pageName = "Test Source Page",
+			locator1 = "Home#PAGE_ACTIVE");
+
+		Redirect.viewURLRedirectionType(
+			permanent = "true",
+			url = "${portalURL}/web/test-site-name/test-source-page");
+	}
+
 	@description = "This ensures that a user is redirected to the updated friendlyURL when he accesses the former friendlyURL."
 	@priority = 5
 	test RedirectToUpdatedFriendlyURL {
@@ -232,6 +266,38 @@ definition {
 		AssertVisible(
 			key_pageName = "Pagina de prueba",
 			locator1 = "Home#PAGE_ACTIVE");
+	}
+
+	@description = "This ensures that the temporary redirection can be performed when accessing the old friendly URL of a page."
+	@priority = 4
+	test TemporaryRedirectionCanBePerformedWhenAccessingPageOldFriendlyURL {
+		property custom.properties = "locale.prepend.friendly.url.style=0";
+		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
+
+		var portalURL = PropsUtil.get("portal.url");
+
+		Redirect.configureFriendlyURLRedirection(redirectionType = "temporary");
+
+		SitePages.openPagesAdmin(siteURLKey = "test-site-name");
+
+		SitePages.gotoPageMenuItem(
+			menuItem = "Configure",
+			pageName = "Test Source Page");
+
+		Page.editFriendlyURL(friendlyURLEdit = "/new-page-url");
+
+		Navigator.openSpecificURL(url = "${portalURL}/web/test-site-name/test-source-page");
+
+		AssertLocation(value1 = "${portalURL}/web/test-site-name/new-page-url");
+
+		AssertVisible(
+			key_pageName = "Test Source Page",
+			locator1 = "Home#PAGE_ACTIVE");
+
+		Redirect.viewURLRedirectionType(
+			temporary = "true",
+			url = "${portalURL}/web/test-site-name/test-source-page");
 	}
 
 	@description = "This ensures that both the active URL and old friendlyURL can be viewed from the history."
