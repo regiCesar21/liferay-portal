@@ -2730,7 +2730,7 @@ jdbc.default.password=${database.password}</echo>
 				srcFile="${patching.tool.latest.txt}"
 			>
 				<filterchain>
-					<striplinebreaks/>
+					<striplinebreaks />
 					<trim />
 				</filterchain>
 			</loadfile>
@@ -10364,7 +10364,7 @@ ${update.properties}</echo>
 				<isset property="portal.version" />
 			</not>
 			<then>
-				<prepare-portal-search-osgi-configuration/>
+				<prepare-portal-search-osgi-configuration />
 			</then>
 		</if>
 

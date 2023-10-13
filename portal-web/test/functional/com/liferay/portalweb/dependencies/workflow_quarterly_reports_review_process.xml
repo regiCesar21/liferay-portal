@@ -76,7 +76,7 @@
 				<template-language>text</template-language>
 				<notification-type>user-notification</notification-type>
 				<recipients>
-					<user/>
+					<user />
 				</recipients>
 				<execution-type>onEntry</execution-type>
 			</notification>
@@ -162,7 +162,7 @@
 				<template-language>text</template-language>
 				<notification-type>user-notification</notification-type>
 				<recipients>
-					<assignees/>
+					<assignees />
 				</recipients>
 				<execution-type>onAssignment</execution-type>
 			</notification>
@@ -193,7 +193,7 @@
 						<template-language>text</template-language>
 						<notification-type>user-notification</notification-type>
 						<recipients>
-							<user/>
+							<user />
 						</recipients>
 					</timer-notification>
 				</timer-actions>
@@ -231,7 +231,7 @@
 				<template-language>text</template-language>
 				<notification-type>user-notification</notification-type>
 				<recipients>
-					<assignees/>
+					<assignees />
 				</recipients>
 				<execution-type>onAssignment</execution-type>
 			</notification>
@@ -262,7 +262,7 @@
 						<template-language>text</template-language>
 						<notification-type>user-notification</notification-type>
 						<recipients>
-							<user/>
+							<user />
 						</recipients>
 					</timer-notification>
 				</timer-actions>
@@ -300,7 +300,7 @@
 				<template-language>text</template-language>
 				<notification-type>user-notification</notification-type>
 				<recipients>
-					<assignees/>
+					<assignees />
 				</recipients>
 				<execution-type>onAssignment</execution-type>
 			</notification>
@@ -331,7 +331,7 @@
 						<template-language>text</template-language>
 						<notification-type>user-notification</notification-type>
 						<recipients>
-							<user/>
+							<user />
 						</recipients>
 					</timer-notification>
 				</timer-actions>
@@ -369,7 +369,7 @@
 				<template-language>text</template-language>
 				<notification-type>user-notification</notification-type>
 				<recipients>
-					<assignees/>
+					<assignees />
 				</recipients>
 				<execution-type>onAssignment</execution-type>
 			</notification>
@@ -400,7 +400,7 @@
 						<template-language>text</template-language>
 						<notification-type>user-notification</notification-type>
 						<recipients>
-							<user/>
+							<user />
 						</recipients>
 					</timer-notification>
 				</timer-actions>
@@ -427,7 +427,7 @@
 			]]>
 		</metadata>
 		<assignments>
-			<user/>
+			<user />
 		</assignments>
 		<transitions>
 			<transition>
@@ -450,7 +450,7 @@
 			]]>
 		</metadata>
 		<assignments>
-			<user/>
+			<user />
 		</assignments>
 		<transitions>
 			<transition>
