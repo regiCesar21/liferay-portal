@@ -133,9 +133,9 @@ public class GroupModelListener extends BaseModelListener<Group> {
 						depotEntryGroupRel.getGroupId());
 
 				stagedDepotEntryGroupRel.setDdmStructuresAvailable(
-					depotEntryGroupRel.getDdmStructuresAvailable());
+					depotEntryGroupRel.isDdmStructuresAvailable());
 				stagedDepotEntryGroupRel.setSearchable(
-					depotEntryGroupRel.getSearchable());
+					depotEntryGroupRel.isSearchable());
 
 				_depotEntryGroupRelLocalService.updateDepotEntryGroupRel(
 					stagedDepotEntryGroupRel);
