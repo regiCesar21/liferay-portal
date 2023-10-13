@@ -98,14 +98,6 @@ public class AccountUtil {
 				language = Language.create(account.getLanguage());
 				logoId = account.getLogoId();
 				name = account.getName();
-
-				com.liferay.osb.koroneiki.taproot.model.Account parentAccount =
-					account.getParentAccount();
-
-				if (parentAccount != null) {
-					parentAccountKey = parentAccount.getAccountKey();
-				}
-
 				phoneNumber = account.getPhoneNumber();
 				postalAddresses = TransformUtil.transformToArray(
 					account.getAddresses(),
@@ -118,6 +110,18 @@ public class AccountUtil {
 				status = Status.create(account.getStatus());
 				tier = Tier.create(account.getTier());
 				website = account.getWebsite();
+
+				setParentAccountKey(
+					() -> {
+						com.liferay.osb.koroneiki.taproot.model.Account
+							parentAccount = account.getParentAccount();
+
+						if (parentAccount == null) {
+							return null;
+						}
+
+						return parentAccount.getAccountKey();
+					});
 			}
 		};
 	}
