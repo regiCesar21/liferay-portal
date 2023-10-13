@@ -545,6 +545,8 @@
 				}
 			}
 		);
+
+		addOtherCalendarInput.removeAttribute('aria-expanded');
 	</c:if>
 
 	A.one('#<portlet:namespace />columnToggler').on('click', function (event) {
