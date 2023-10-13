@@ -95,11 +95,11 @@ public class LinkedHashMapBuilderTest {
 		Map<String, String> map1 = new LinkedHashMap<>();
 
 		for (String s : list) {
-			map1.put(s, StringUtil.trim(s.toLowerCase()));
+			map1.put(s, StringUtil.trim(StringUtil.toLowerCase(s)));
 		}
 
 		Map<String, String> map2 = LinkedHashMapBuilder.put(
-			list, s -> StringUtil.trim(s.toLowerCase())
+			list, s -> StringUtil.trim(StringUtil.toLowerCase(s))
 		).build();
 
 		Assert.assertEquals(map1, map2);
