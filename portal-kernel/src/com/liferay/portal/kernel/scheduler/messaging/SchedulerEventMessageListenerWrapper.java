@@ -48,14 +48,12 @@ public class SchedulerEventMessageListenerWrapper
 		String jobName = message.getString(SchedulerEngine.JOB_NAME);
 		String groupName = message.getString(SchedulerEngine.GROUP_NAME);
 
-		if (destinationName.equals(DestinationNames.SCHEDULER_DISPATCH)) {
-			Trigger trigger = _schedulerEntry.getTrigger();
+		Trigger trigger = _schedulerEntry.getTrigger();
 
-			if (!jobName.equals(trigger.getJobName()) ||
-				!groupName.equals(trigger.getGroupName())) {
+		if (!jobName.equals(trigger.getJobName()) ||
+			!groupName.equals(trigger.getGroupName())) {
 
-				return;
-			}
+			return;
 		}
 
 		if (_SCHEDULER_EVENT_MESSAGE_LISTENER_LOCK_TIMEOUT <= 0) {
