@@ -14,11 +14,14 @@ import com.liferay.portal.kernel.model.PasswordPolicy;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.service.CompanyLocalService;
+import com.liferay.portal.kernel.service.ContactLocalService;
 import com.liferay.portal.kernel.service.PasswordPolicyLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.util.HashMapDictionary;
 import com.liferay.portal.kernel.util.LocaleThreadLocal;
+import com.liferay.portal.kernel.util.LocaleUtil;
+import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.security.pwd.PwdToolkitUtil;
 import com.liferay.user.associated.data.web.internal.configuration.AnonymousUserConfiguration;
@@ -64,18 +67,16 @@ public class UADAnonymizerHelper {
 	}
 
 	private User _createAnonymousUser(long companyId) throws Exception {
-		long creatorUserId = 0;
+		User user = _userLocalService.createUser(
+			_counterLocalService.increment());
 
 		PasswordPolicy passwordPolicy =
 			_passwordPolicyLocalService.getDefaultPasswordPolicy(companyId);
 
 		String password = PwdToolkitUtil.generate(passwordPolicy);
 
-		boolean autoPassword = false;
 		String password1 = password;
 		String password2 = password;
-		boolean autoScreenName = false;
-
 		long counter = _counterLocalService.increment(
 			UADAnonymizerHelper.class.getName());
 
@@ -100,26 +101,27 @@ public class UADAnonymizerHelper {
 		int birthdayYear = 1970;
 		String jobTitle = StringPool.BLANK;
 
-		User anonymousUser = _userLocalService.addUserWithWorkflow(
-			creatorUserId, companyId, autoPassword, password1, password2,
-			autoScreenName, screenName, emailAddress, facebookId, openId,
-			locale, firstName, middleName, lastName, prefixId, suffixId, true,
-			birthdayMonth, birthdayDay, birthdayYear, jobTitle, null, null,
-			null, null, false, null);
-
-		anonymousUser.setComments(
+		user.setCompanyId(companyId);
+		user.setPassword(randomString);
+		user.setScreenName(screenName);
+		user.setEmailAddress(emailAddress);
+		user.setLanguageId(LocaleUtil.toLanguageId(locale));
+		user.setComments(
 			StringBundler.concat(
 				"This user is automatically created by the UAD application. ",
 				"Application data anonymized by Personal Data Erasure will be ",
 				"assigned to this user."));
+		user.setFirstName(firstName);
+		user.setMiddleName(middleName);
+		user.setLastName(lastName);
+		user.setJobTitle(jobTitle);
+		user.setStatus(WorkflowConstants.STATUS_INCOMPLETE);
+		user.setFacebookId(facebookId);
+		user.setOpenId(openId);
 
-		_userLocalService.updateUser(anonymousUser);
+		_userLocalService.addUser(user);
 
-		_userLocalService.updateStatus(
-			anonymousUser.getUserId(), WorkflowConstants.STATUS_INACTIVE,
-			new ServiceContext());
-
-		return anonymousUser;
+		return user;
 	}
 
 	private User _getAnonymousUser(long companyId) throws Exception {
@@ -140,6 +142,8 @@ public class UADAnonymizerHelper {
 			properties.put("userId", anonymousUser.getUserId());
 
 			configuration.update(properties);
+
+			_updateStatus(anonymousUser);
 
 			return anonymousUser;
 		}
@@ -165,7 +169,15 @@ public class UADAnonymizerHelper {
 
 		configuration.update(properties);
 
+		_updateStatus(anonymousUser);
+
 		return anonymousUser;
+	}
+
+	private void _updateStatus(User anonymousUser) throws Exception {
+		_userLocalService.updateStatus(
+			anonymousUser.getUserId(), WorkflowConstants.STATUS_INACTIVE,
+			new ServiceContext());
 	}
 
 	@Reference
@@ -179,10 +191,16 @@ public class UADAnonymizerHelper {
 	private ConfigurationAdmin _configurationAdmin;
 
 	@Reference
+	private ContactLocalService _contactLocalService;
+
+	@Reference
 	private CounterLocalService _counterLocalService;
 
 	@Reference
 	private PasswordPolicyLocalService _passwordPolicyLocalService;
+
+	@Reference
+	private Portal _portal;
 
 	@Reference
 	private UserLocalService _userLocalService;
