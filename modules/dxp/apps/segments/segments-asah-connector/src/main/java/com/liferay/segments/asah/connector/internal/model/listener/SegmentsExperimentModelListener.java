@@ -14,10 +14,12 @@ import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.util.Portal;
+import com.liferay.segments.asah.connector.internal.cache.AsahExperimentCache;
 import com.liferay.segments.asah.connector.internal.client.AsahFaroBackendClientImpl;
 import com.liferay.segments.asah.connector.internal.client.JSONWebServiceClient;
 import com.liferay.segments.asah.connector.internal.processor.AsahSegmentsExperimentProcessor;
 import com.liferay.segments.asah.connector.internal.util.AsahUtil;
+import com.liferay.segments.constants.SegmentsExperimentConstants;
 import com.liferay.segments.model.SegmentsExperiment;
 import com.liferay.segments.service.SegmentsEntryLocalService;
 import com.liferay.segments.service.SegmentsExperienceLocalService;
@@ -41,12 +43,20 @@ public class SegmentsExperimentModelListener
 
 		if (AsahUtil.isSkipAsahEvent(
 				segmentsExperiment.getCompanyId(),
-				segmentsExperiment.getGroupId())) {
+				segmentsExperiment.getGroupId()) ||
+			(segmentsExperiment.getStatus() ==
+				SegmentsExperimentConstants.STATUS_FINISHED_NO_WINNER) ||
+			(segmentsExperiment.getStatus() ==
+				SegmentsExperimentConstants.STATUS_FINISHED_WINNER)) {
 
 			return;
 		}
 
 		try {
+			_asahExperimentCache.removeExperiment(
+				segmentsExperiment.getCompanyId(),
+				segmentsExperiment.getSegmentsExperimentKey());
+
 			_asahSegmentsExperimentProcessor.processUpdateSegmentsExperiment(
 				segmentsExperiment);
 		}
@@ -109,7 +119,8 @@ public class SegmentsExperimentModelListener
 	@Activate
 	protected void activate() {
 		_asahSegmentsExperimentProcessor = new AsahSegmentsExperimentProcessor(
-			new AsahFaroBackendClientImpl(_jsonWebServiceClient),
+			new AsahFaroBackendClientImpl(
+				_asahExperimentCache, _jsonWebServiceClient),
 			_companyLocalService, _groupLocalService, _layoutLocalService,
 			_portal, _segmentsEntryLocalService,
 			_segmentsExperienceLocalService);
@@ -122,6 +133,9 @@ public class SegmentsExperimentModelListener
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		SegmentsExperimentModelListener.class);
+
+	@Reference
+	private AsahExperimentCache _asahExperimentCache;
 
 	private AsahSegmentsExperimentProcessor _asahSegmentsExperimentProcessor;
 
