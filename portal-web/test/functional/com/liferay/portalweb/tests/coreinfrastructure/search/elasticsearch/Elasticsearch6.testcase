@@ -290,6 +290,7 @@ definition {
 		property osgi.module.configuration.file.names = "com.liferay.portal.search.elasticsearch6.configuration.ElasticsearchConfiguration.config";
 		property osgi.module.configurations = "clusterName=\"LiferayElasticsearchCluster1\"";
 		property portal.acceptance = "true";
+		property portal.upstream = "quarantine";
 
 		var portalHostname = PropsUtil.get("portal.hostname");
 
