@@ -175,9 +175,7 @@ public class UADAnonymizerHelper {
 
 			configuration.update(properties);
 
-			_updateStatus(anonymousUser);
-
-			return anonymousUser;
+			return _updateStatus(anonymousUser);
 		}
 
 		Configuration configuration = configurationOptional.get();
@@ -201,13 +199,11 @@ public class UADAnonymizerHelper {
 
 		configuration.update(properties);
 
-		_updateStatus(anonymousUser);
-
-		return anonymousUser;
+		return _updateStatus(anonymousUser);
 	}
 
-	private void _updateStatus(User anonymousUser) throws Exception {
-		_userLocalService.updateStatus(
+	private User _updateStatus(User anonymousUser) throws Exception {
+		return _userLocalService.updateStatus(
 			anonymousUser.getUserId(), WorkflowConstants.STATUS_INACTIVE,
 			new ServiceContext());
 	}
