@@ -10,6 +10,8 @@ import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.model.Company;
+import com.liferay.portal.kernel.model.Contact;
+import com.liferay.portal.kernel.model.ContactConstants;
 import com.liferay.portal.kernel.model.GroupConstants;
 import com.liferay.portal.kernel.model.PasswordPolicy;
 import com.liferay.portal.kernel.model.User;
@@ -102,6 +104,7 @@ public class UADAnonymizerHelper {
 		String jobTitle = StringPool.BLANK;
 
 		user.setCompanyId(companyId);
+		user.setContactId(_counterLocalService.increment());
 		user.setPassword(randomString);
 		user.setScreenName(screenName);
 		user.setEmailAddress(emailAddress);
@@ -127,6 +130,28 @@ public class UADAnonymizerHelper {
 			GroupConstants.DEFAULT_LIVE_GROUP_ID, null, null, 0, true,
 			GroupConstants.DEFAULT_MEMBERSHIP_RESTRICTION,
 			StringPool.SLASH + screenName, false, true, null);
+
+		Contact contact = _contactLocalService.createContact(
+			user.getContactId());
+
+		contact.setCompanyId(companyId);
+		contact.setUserId(user.getUserId());
+		contact.setUserName(user.getFullName());
+		contact.setClassName(User.class.getName());
+		contact.setClassPK(user.getUserId());
+		contact.setParentContactId(ContactConstants.DEFAULT_PARENT_CONTACT_ID);
+		contact.setEmailAddress(user.getEmailAddress());
+		contact.setFirstName(firstName);
+		contact.setMiddleName(middleName);
+		contact.setLastName(lastName);
+		contact.setPrefixId(prefixId);
+		contact.setSuffixId(suffixId);
+		contact.setMale(true);
+		contact.setBirthday(
+			_portal.getDate(birthdayMonth, birthdayDay, birthdayYear));
+		contact.setJobTitle(jobTitle);
+
+		_contactLocalService.addContact(contact);
 
 		return user;
 	}
