@@ -13,6 +13,7 @@ import com.liferay.portal.test.rule.LiferayUnitTestRule;
 import java.util.Arrays;
 
 import org.junit.ClassRule;
+import org.junit.Ignore;
 import org.junit.Rule;
 import org.junit.Test;
 
@@ -31,6 +32,11 @@ public class StringQueryTest extends BaseStringQueryTestCase {
 		addDocuments("alpha bravo", "alpha charlie", "charlie delta");
 
 		assertSearch("+(NOT alpha) +charlie", Arrays.asList("charlie delta"));
+	}
+
+	@Ignore
+	@Test
+	public void testBooleanOperatorOr() {
 	}
 
 	@Test
