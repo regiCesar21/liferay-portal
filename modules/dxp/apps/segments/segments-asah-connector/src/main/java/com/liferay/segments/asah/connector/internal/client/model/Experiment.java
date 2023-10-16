@@ -143,6 +143,11 @@ public final class Experiment {
 		return new Date(_startedDate.getTime());
 	}
 
+	@JsonProperty("winnerDXPVariantId")
+	public String getWinnerDXPVariantId() {
+		return _winnerDXPVariantId;
+	}
+
 	public void setChannelId(String channelId) {
 		_channelId = channelId;
 	}
@@ -241,6 +246,10 @@ public final class Experiment {
 		}
 	}
 
+	public void setWinnerDXPVariantId(String winnerDXPVariantId) {
+		_winnerDXPVariantId = winnerDXPVariantId;
+	}
+
 	private String _channelId;
 	private Double _confidenceLevel;
 	private Date _createDate;
@@ -264,5 +273,6 @@ public final class Experiment {
 	private String _pageURL;
 	private String _publishedDXPVariantId;
 	private Date _startedDate;
+	private String _winnerDXPVariantId;
 
 }

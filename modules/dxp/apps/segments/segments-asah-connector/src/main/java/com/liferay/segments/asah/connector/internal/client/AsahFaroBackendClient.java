@@ -64,6 +64,8 @@ public interface AsahFaroBackendClient {
 	 */
 	public String getDataSourceId(long companyId);
 
+	public Experiment getExperiment(long companyId, String experimentId);
+
 	/**
 	 * Returns the individual matching the primary key for the data source
 	 * {@link #getDataSourceId(long)}.

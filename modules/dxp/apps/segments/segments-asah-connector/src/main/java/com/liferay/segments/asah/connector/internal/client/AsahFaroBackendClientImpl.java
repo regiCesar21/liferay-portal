@@ -14,7 +14,9 @@ import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.segments.asah.connector.internal.cache.AsahExperimentCache;
 import com.liferay.segments.asah.connector.internal.client.constants.FilterConstants;
+import com.liferay.segments.asah.connector.internal.client.data.binding.ExperimentJSONObjectMapper;
 import com.liferay.segments.asah.connector.internal.client.data.binding.IndividualJSONObjectMapper;
 import com.liferay.segments.asah.connector.internal.client.data.binding.IndividualSegmentJSONObjectMapper;
 import com.liferay.segments.asah.connector.internal.client.data.binding.InterestTermsJSONObjectMapper;
@@ -45,7 +47,17 @@ import javax.ws.rs.core.MultivaluedMap;
 public class AsahFaroBackendClientImpl implements AsahFaroBackendClient {
 
 	public AsahFaroBackendClientImpl(
+		AsahExperimentCache asahExperimentCache,
 		JSONWebServiceClient jsonWebServiceClient) {
+
+		_asahExperimentCache = asahExperimentCache;
+		_jsonWebServiceClient = jsonWebServiceClient;
+	}
+
+	public AsahFaroBackendClientImpl(
+		JSONWebServiceClient jsonWebServiceClient) {
+
+		_asahExperimentCache = null;
 
 		_jsonWebServiceClient = jsonWebServiceClient;
 	}
@@ -105,6 +117,42 @@ public class AsahFaroBackendClientImpl implements AsahFaroBackendClient {
 	@Override
 	public String getDataSourceId(long companyId) {
 		return AsahUtil.getAsahFaroBackendDataSourceId(companyId);
+	}
+
+	@Override
+	public Experiment getExperiment(long companyId, String experimentId) {
+		if (experimentId == null) {
+			return null;
+		}
+
+		try {
+			if (_asahExperimentCache != null) {
+				String experimentJSON = _asahExperimentCache.getExperiment(
+					companyId, experimentId);
+
+				if (experimentJSON != null) {
+					return _experimentJSONObjectMapper.map(experimentJSON);
+				}
+			}
+
+			String response = _jsonWebServiceClient.doGet(
+				_getBaseURI(companyId),
+				StringUtil.replace(
+					_PATH_EXPERIMENTS_EXPERIMENT, "{experimentId}",
+					experimentId),
+				new MultivaluedHashMap<>(), _getHeaders(companyId));
+
+			if (_asahExperimentCache != null) {
+				_asahExperimentCache.putExperiment(
+					companyId, experimentId, response);
+			}
+
+			return _experimentJSONObjectMapper.map(response);
+		}
+		catch (IOException ioException) {
+			throw new NestableRuntimeException(
+				_ERROR_MSG + ioException.getMessage(), ioException);
+		}
 	}
 
 	@Override
@@ -224,6 +272,11 @@ public class AsahFaroBackendClientImpl implements AsahFaroBackendClient {
 	public void updateExperiment(long companyId, Experiment experiment) {
 		if (Validator.isNull(experiment.getId())) {
 			throw new IllegalArgumentException("Experiment ID is null");
+		}
+
+		if (_asahExperimentCache != null) {
+			_asahExperimentCache.removeExperiment(
+				companyId, experiment.getId());
 		}
 
 		_jsonWebServiceClient.doPatch(
@@ -362,6 +415,8 @@ public class AsahFaroBackendClientImpl implements AsahFaroBackendClient {
 	private static final Log _log = LogFactoryUtil.getLog(
 		AsahFaroBackendClientImpl.class);
 
+	private static final ExperimentJSONObjectMapper
+		_experimentJSONObjectMapper = new ExperimentJSONObjectMapper();
 	private static final IndividualJSONObjectMapper
 		_individualJSONObjectMapper = new IndividualJSONObjectMapper();
 	private static final IndividualSegmentJSONObjectMapper
@@ -370,6 +425,7 @@ public class AsahFaroBackendClientImpl implements AsahFaroBackendClient {
 	private static final InterestTermsJSONObjectMapper
 		_interestTermsJSONObjectMapper = new InterestTermsJSONObjectMapper();
 
+	private final AsahExperimentCache _asahExperimentCache;
 	private final JSONWebServiceClient _jsonWebServiceClient;
 
 }
