@@ -95,24 +95,17 @@ public class UADAnonymizerHelper {
 		String lastName = "Anonymous";
 		long prefixId = 0;
 		long suffixId = 0;
-		boolean male = true;
 		int birthdayMonth = Calendar.JANUARY;
 		int birthdayDay = 1;
 		int birthdayYear = 1970;
 		String jobTitle = StringPool.BLANK;
-		long[] groupIds = null;
-		long[] organizationIds = null;
-		long[] roleIds = null;
-		long[] userGroupIds = null;
-		boolean sendEmail = false;
-		ServiceContext serviceContext = null;
 
 		User anonymousUser = _userLocalService.addUserWithWorkflow(
 			creatorUserId, companyId, autoPassword, password1, password2,
 			autoScreenName, screenName, emailAddress, facebookId, openId,
-			locale, firstName, middleName, lastName, prefixId, suffixId, male,
-			birthdayMonth, birthdayDay, birthdayYear, jobTitle, groupIds,
-			organizationIds, roleIds, userGroupIds, sendEmail, serviceContext);
+			locale, firstName, middleName, lastName, prefixId, suffixId, true,
+			birthdayMonth, birthdayDay, birthdayYear, jobTitle, null, null,
+			null, null, false, null);
 
 		anonymousUser.setComments(
 			StringBundler.concat(
