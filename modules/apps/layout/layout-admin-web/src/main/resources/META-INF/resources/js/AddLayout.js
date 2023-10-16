@@ -1,4 +1,9 @@
 /**
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
+ */
+
+/**
  * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
  *
  * This library is free software; you can redistribute it and/or modify it under
@@ -12,11 +17,13 @@
  * details.
  */
 
+import {checkFriendlyURL} from './checkFriendlyURL';
+
 export default function ({
-	 getFriendlyURLWarningURL,
-	 namespace,
-	 shouldCheckFriendlyURL,
- }) {
+	getFriendlyURLWarningURL,
+	namespace,
+	shouldCheckFriendlyURL,
+}) {
 	const addButton = document.getElementById(`${namespace}addButton`);
 
 	const form = document.getElementById(`${namespace}fm`);
@@ -33,37 +40,86 @@ export default function ({
 
 		const formData = new FormData(form);
 
-		Liferay.Util.fetch(form.action, {
-			body: formData,
-			method: 'POST',
-		})
-			.then((response) => {
-				return response.json();
+		if (shouldCheckFriendlyURL) {
+			checkFriendlyURL(getFriendlyURLWarningURL, formData).then(
+				(response) => {
+					if (!response.shouldSubmit) {
+						addButton.disabled = false;
+
+						return;
+					}
+
+					Liferay.Util.fetch(form.action, {
+						body: formData,
+						method: 'POST',
+					})
+						.then((response) => {
+							return response.json();
+						})
+						.then((response) => {
+							if (response.redirectURL) {
+								const redirectURL = new URL(
+									response.redirectURL,
+									window.location.origin
+								);
+
+								redirectURL.searchParams.set(
+									'p_p_state',
+									'normal'
+								);
+
+								const opener = Liferay.Util.getOpener();
+
+								opener.Liferay.fire('closeModal', {
+									id: `${namespace}addLayoutDialog`,
+									redirect: redirectURL.toString(),
+								});
+							}
+							else {
+								Liferay.Util.openToast({
+									message: response.errorMessage,
+									type: 'danger',
+								});
+
+								addButton.disabled = false;
+							}
+						});
+				}
+			);
+		}
+		else {
+			Liferay.Util.fetch(form.action, {
+				body: formData,
+				method: 'POST',
 			})
-			.then((response) => {
-				if (response.redirectURL) {
-					const redirectURL = new URL(
-						response.redirectURL,
-						window.location.origin
-					);
+				.then((response) => {
+					return response.json();
+				})
+				.then((response) => {
+					if (response.redirectURL) {
+						const redirectURL = new URL(
+							response.redirectURL,
+							window.location.origin
+						);
 
-					redirectURL.searchParams.set('p_p_state', 'normal');
+						redirectURL.searchParams.set('p_p_state', 'normal');
 
-					const opener = Liferay.Util.getOpener();
+						const opener = Liferay.Util.getOpener();
 
-					opener.Liferay.fire('closeModal', {
-						id: `${namespace}addLayoutDialog`,
-						redirect: redirectURL.toString(),
-					});
-				}
-				else {
-					Liferay.Util.openToast({
-						message: response.errorMessage,
-						type: 'danger',
-					});
+						opener.Liferay.fire('closeModal', {
+							id: `${namespace}addLayoutDialog`,
+							redirect: redirectURL.toString(),
+						});
+					}
+					else {
+						Liferay.Util.openToast({
+							message: response.errorMessage,
+							type: 'danger',
+						});
 
-					addButton.disabled = false;
-				}
-			});
+						addButton.disabled = false;
+					}
+				});
+		}
 	});
 }

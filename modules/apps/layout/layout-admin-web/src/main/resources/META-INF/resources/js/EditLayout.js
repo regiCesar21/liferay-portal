@@ -1,4 +1,9 @@
 /**
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
+ */
+
+/**
  * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
  *
  * This library is free software; you can redistribute it and/or modify it under
@@ -12,30 +17,77 @@
  * details.
  */
 
-export default function EditLayout({namespace}) {
-	const form = document.getElementById(
-		`${namespace}editLayoutFm`
-	);
+import {checkFriendlyURL} from './checkFriendlyURL';
 
-	const onSubmit = () => {
-		const applyLayoutPrototype = document.getElementById(
-			`${namespace}applyLayoutPrototype`
-		);
+export default function EditLayout({
+	getFriendlyURLWarningURL,
+	namespace,
+	shouldCheckFriendlyURL,
+}) {
+	const form = document.getElementById(`${namespace}editLayoutFm`);
 
-		if (!applyLayoutPrototype || applyLayoutPrototype.value === 'false') {
+	const onSubmit = (event) => {
+		event.preventDefault();
+		event.stopPropagation();
 
-			submitForm(form);
+		if (shouldCheckFriendlyURL) {
+			checkFriendlyURL(getFriendlyURLWarningURL, new FormData(form)).then(
+				(resp) => {
+					if (!resp.shouldSubmit) {
+						return;
+					}
+
+					const applyLayoutPrototype = document.getElementById(
+						`${namespace}applyLayoutPrototype`
+					);
+
+					if (
+						!applyLayoutPrototype ||
+						applyLayoutPrototype.value === 'false'
+					) {
+						return submitForm(form);
+					}
+					else if (
+						applyLayoutPrototype &&
+						applyLayoutPrototype.value === 'true'
+					) {
+						if (
+							confirm(
+								Liferay.Language.get(
+									'reactivating-inherited-changes-may-update-the-page-with-the-possible-changes-that-could-have-been-made-in-the-original-template'
+								)
+							)
+						) {
+							return submitForm(form);
+						}
+					}
+				}
+			);
 		}
-		else if (
-			applyLayoutPrototype &&
-			applyLayoutPrototype.value === 'true'
-		) {
-			if(confirm(
-				Liferay.Language.get(
-					'reactivating-inherited-changes-may-update-the-page-with-the-possible-changes-that-could-have-been-made-in-the-original-template'
-				)))
-			{
+		else {
+			const applyLayoutPrototype = document.getElementById(
+				`${namespace}applyLayoutPrototype`
+			);
+
+			if (
+				!applyLayoutPrototype ||
+				applyLayoutPrototype.value === 'false'
+			) {
 				submitForm(form);
+			}
+			else if (
+				applyLayoutPrototype &&
+				applyLayoutPrototype.value === 'true'
+			) {
+				if (
+					confirm(
+						Liferay.Language.get(
+							'reactivating-inherited-changes-may-update-the-page-with-the-possible-changes-that-could-have-been-made-in-the-original-template'
+						)
+					)
+				) {
+					submitForm(form);
+				}
 			}
 		}
 	};
