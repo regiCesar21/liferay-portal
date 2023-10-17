@@ -2098,7 +2098,7 @@
 			</library>
 			<library>
 				<file-name>com.liferay.portal.odata.impl.jar!netty-codec-http.jar</file-name>
-				<version>4.1.94.Final</version>
+				<version>4.1.100.Final</version>
 				<project-name>Netty/Codec/HTTP</project-name>
 				<project-url>https://netty.io/</project-url>
 				<licenses>
@@ -2110,7 +2110,7 @@
 			</library>
 			<library>
 				<file-name>com.liferay.portal.odata.impl.jar!netty-common.jar</file-name>
-				<version>4.1.94.Final</version>
+				<version>4.1.100.Final</version>
 				<project-name>Netty/Common</project-name>
 				<project-url>https://netty.io/</project-url>
 				<licenses>
@@ -4040,7 +4040,7 @@
 			</library>
 			<library>
 				<file-name>com.liferay.portal.vulcan.impl.jar!graphql-java.jar</file-name>
-				<version>17.4</version>
+				<version>17.5</version>
 				<project-name>graphql-java</project-name>
 				<project-url>https://github.com/graphql-java/graphql-java</project-url>
 				<licenses>
@@ -4262,7 +4262,7 @@
 			</library>
 			<library>
 				<file-name>com.liferay.push.notifications.sender.apple.jar!netty-codec-dns.jar</file-name>
-				<version>4.1.94.Final</version>
+				<version>4.1.100.Final</version>
 				<project-name>Netty/Codec/DNS</project-name>
 				<project-url>https://netty.io/</project-url>
 				<licenses>
@@ -4274,7 +4274,7 @@
 			</library>
 			<library>
 				<file-name>com.liferay.push.notifications.sender.apple.jar!netty-codec-http.jar</file-name>
-				<version>4.1.94.Final</version>
+				<version>4.1.100.Final</version>
 				<project-name>Netty/Codec/HTTP</project-name>
 				<project-url>https://netty.io/</project-url>
 				<licenses>
@@ -4286,7 +4286,7 @@
 			</library>
 			<library>
 				<file-name>com.liferay.push.notifications.sender.apple.jar!netty-codec-http2.jar</file-name>
-				<version>4.1.94.Final</version>
+				<version>4.1.100.Final</version>
 				<project-name>Netty/Codec/HTTP2</project-name>
 				<project-url>https://netty.io/</project-url>
 				<licenses>
@@ -4298,7 +4298,7 @@
 			</library>
 			<library>
 				<file-name>com.liferay.push.notifications.sender.apple.jar!netty-codec-socks.jar</file-name>
-				<version>4.1.94.Final</version>
+				<version>4.1.100.Final</version>
 				<project-name>Netty/Codec/Socks</project-name>
 				<project-url>https://netty.io/</project-url>
 				<licenses>
@@ -4310,7 +4310,7 @@
 			</library>
 			<library>
 				<file-name>com.liferay.push.notifications.sender.apple.jar!netty-common.jar</file-name>
-				<version>4.1.94.Final</version>
+				<version>4.1.100.Final</version>
 				<project-name>Netty/Common</project-name>
 				<project-url>https://netty.io/</project-url>
 				<licenses>
@@ -4322,7 +4322,7 @@
 			</library>
 			<library>
 				<file-name>com.liferay.push.notifications.sender.apple.jar!netty-handler-proxy.jar</file-name>
-				<version>4.1.94.Final</version>
+				<version>4.1.100.Final</version>
 				<project-name>Netty/Handler/Proxy</project-name>
 				<project-url>https://netty.io/</project-url>
 				<licenses>
@@ -4334,7 +4334,7 @@
 			</library>
 			<library>
 				<file-name>com.liferay.push.notifications.sender.apple.jar!netty-resolver-dns.jar</file-name>
-				<version>4.1.94.Final</version>
+				<version>4.1.100.Final</version>
 				<project-name>Netty/Resolver/DNS</project-name>
 				<project-url>https://netty.io/</project-url>
 				<licenses>
@@ -7446,7 +7446,7 @@
 			</library>
 			<library>
 				<file-name>lib/portal/netty-all.jar</file-name>
-				<version>4.1.94.Final</version>
+				<version>4.1.100.Final</version>
 				<project-name>Netty</project-name>
 				<project-url>http://netty.io</project-url>
 				<licenses>
@@ -7458,7 +7458,7 @@
 			</library>
 			<library>
 				<file-name>lib/portal/netty-buffer.jar</file-name>
-				<version>4.1.94.Final</version>
+				<version>4.1.100.Final</version>
 				<project-name>Netty</project-name>
 				<project-url>http://netty.io</project-url>
 				<licenses>
@@ -7470,7 +7470,7 @@
 			</library>
 			<library>
 				<file-name>lib/portal/netty-codec.jar</file-name>
-				<version>4.1.94.Final</version>
+				<version>4.1.100.Final</version>
 				<project-name>Netty</project-name>
 				<project-url>http://netty.io</project-url>
 				<licenses>
@@ -7482,7 +7482,7 @@
 			</library>
 			<library>
 				<file-name>lib/portal/netty-common.jar</file-name>
-				<version>4.1.94.Final</version>
+				<version>4.1.100.Final</version>
 				<project-name>Netty</project-name>
 				<project-url>http://netty.io</project-url>
 				<licenses>
@@ -7494,7 +7494,7 @@
 			</library>
 			<library>
 				<file-name>lib/portal/netty-handler.jar</file-name>
-				<version>4.1.94.Final</version>
+				<version>4.1.100.Final</version>
 				<project-name>Netty</project-name>
 				<project-url>http://netty.io</project-url>
 				<licenses>
@@ -7506,7 +7506,7 @@
 			</library>
 			<library>
 				<file-name>lib/portal/netty-resolver.jar</file-name>
-				<version>4.1.94.Final</version>
+				<version>4.1.100.Final</version>
 				<project-name>Netty</project-name>
 				<project-url>http://netty.io</project-url>
 				<licenses>
@@ -7518,7 +7518,7 @@
 			</library>
 			<library>
 				<file-name>lib/portal/netty-transport.jar</file-name>
-				<version>4.1.94.Final</version>
+				<version>4.1.100.Final</version>
 				<project-name>Netty</project-name>
 				<project-url>http://netty.io</project-url>
 				<licenses>
