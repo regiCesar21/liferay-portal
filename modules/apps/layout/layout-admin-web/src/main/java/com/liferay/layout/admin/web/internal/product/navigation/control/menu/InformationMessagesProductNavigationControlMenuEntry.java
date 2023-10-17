@@ -197,4 +197,5 @@ public class InformationMessagesProductNavigationControlMenuEntry
 	@Reference
 	private LayoutPageTemplateEntryLocalService
 		_layoutPageTemplateEntryLocalService;
+
 }
