@@ -1302,6 +1302,20 @@ definition {
 		return ${dmFileEntryID};
 	}
 
+	macro getFileResponseHeader {
+		WaitForElementPresent(
+			key_dmDocumentFileName = ${dmDocumentFileName},
+			locator1 = "DocumentsAndMediaDocument#DOCUMENT_DETAILS_IMAGE_PREVIEW");
+
+		var dmDocumentURL = selenium.getAttribute("//img[contains(@class,'preview-file-image') and contains(@src,'${dmDocumentFileName}')]@src");
+
+		var curl = '''${dmDocumentURL} -I''';
+
+		var responseHeader = JSONCurlUtil.post(${curl});
+
+		return ${responseHeader};
+	}
+
 	macro gotoEntry {
 		LexiconCard.clickCardTitle(card = ${dmDocumentTitle});
 	}
