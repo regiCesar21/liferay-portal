@@ -72,7 +72,12 @@ public class AppWorkflowResourceFactoryImpl
 					throw new IllegalArgumentException("User is not set");
 				}
 
-				return _appWorkflowResourceProxyProviderFunction.apply(
+				Function<InvocationHandler, AppWorkflowResource>
+					appWorkflowResourceProxyProviderFunction =
+						ResourceProxyProviderFunctionHolder.
+							_appWorkflowResourceProxyProviderFunction;
+
+				return appWorkflowResourceProxyProviderFunction.apply(
 					(proxy, method, arguments) -> _invoke(
 						method, arguments, _checkPermissions,
 						_httpServletRequest, _httpServletResponse,
@@ -229,9 +234,6 @@ public class AppWorkflowResourceFactoryImpl
 		}
 	}
 
-	private static final Function<InvocationHandler, AppWorkflowResource>
-		_appWorkflowResourceProxyProviderFunction = _getProxyProviderFunction();
-
 	@Reference
 	private CompanyLocalService _companyLocalService;
 
@@ -267,6 +269,14 @@ public class AppWorkflowResourceFactoryImpl
 
 	@Reference
 	private UserLocalService _userLocalService;
+
+	private static class ResourceProxyProviderFunctionHolder {
+
+		private static final Function<InvocationHandler, AppWorkflowResource>
+			_appWorkflowResourceProxyProviderFunction =
+				_getProxyProviderFunction();
+
+	}
 
 	private class AcceptLanguageImpl implements AcceptLanguage {
 

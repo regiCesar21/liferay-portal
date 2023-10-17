@@ -71,7 +71,12 @@ public class AppResourceFactoryImpl implements AppResource.Factory {
 					throw new IllegalArgumentException("User is not set");
 				}
 
-				return _appResourceProxyProviderFunction.apply(
+				Function<InvocationHandler, AppResource>
+					appResourceProxyProviderFunction =
+						ResourceProxyProviderFunctionHolder.
+							_appResourceProxyProviderFunction;
+
+				return appResourceProxyProviderFunction.apply(
 					(proxy, method, arguments) -> _invoke(
 						method, arguments, _checkPermissions,
 						_httpServletRequest, _httpServletResponse,
@@ -223,9 +228,6 @@ public class AppResourceFactoryImpl implements AppResource.Factory {
 		}
 	}
 
-	private static final Function<InvocationHandler, AppResource>
-		_appResourceProxyProviderFunction = _getProxyProviderFunction();
-
 	@Reference
 	private CompanyLocalService _companyLocalService;
 
@@ -260,6 +262,13 @@ public class AppResourceFactoryImpl implements AppResource.Factory {
 
 	@Reference
 	private UserLocalService _userLocalService;
+
+	private static class ResourceProxyProviderFunctionHolder {
+
+		private static final Function<InvocationHandler, AppResource>
+			_appResourceProxyProviderFunction = _getProxyProviderFunction();
+
+	}
 
 	private class AcceptLanguageImpl implements AcceptLanguage {
 
