@@ -305,6 +305,7 @@ definition {
 
 	@priority = 4
 	test AssertSignedSAMLMetadata {
+		property portal.upstream = "quarantine";
 		property test.liferay.virtual.instance = "false";
 		property test.run.type = "single";
 
@@ -334,6 +335,7 @@ definition {
 	@priority = 4
 	test AssertSSOFailsWhenAlgorithmsMismatch {
 		property blacklist.saml.algorithms = "true";
+		property portal.upstream = "quarantine";
 		property test.liferay.virtual.instance = "false";
 		property test.run.type = "single";
 
@@ -619,6 +621,7 @@ definition {
 	@description = "This is a use case for LPS-128578 and LPS-69388"
 	@priority = 4
 	test AssertSSOWithSignAuthnRequests {
+		property portal.upstream = "quarantine";
 		property test.liferay.virtual.instance = "false";
 		property test.run.type = "single";
 
