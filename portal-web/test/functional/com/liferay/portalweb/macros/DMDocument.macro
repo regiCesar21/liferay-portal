@@ -803,6 +803,53 @@ definition {
 			value1 = "You now have a lock on this document. No one else can edit this document until you unlock it. This lock will automatically expire in 1 day.");
 	}
 
+	macro configureCacheControl {
+		SystemSettings.openSystemSettingsAdmin();
+
+		SystemSettings.gotoConfiguration(
+			configurationCategory = "Documents and Media",
+			configurationName = "Cache Control",
+			configurationScope = "System Scope");
+
+		WaitForPageLoad();
+
+		if (isSet(cacheControl)) {
+			Click(locator1 = "Dropdown#TRIGGER");
+
+			DropdownMenuItem.click(menuItem = ${cacheControl});
+
+			AssertTextEquals(
+				locator1 = "Dropdown#SELECTED_VALUE",
+				value1 = ${cacheControl});
+		}
+
+		if (isSet(maxAge)) {
+			Type(
+				key_text = "Max Age",
+				locator1 = "TextInput#ANY",
+				value1 = ${maxAge});
+		}
+
+		if (isSet(uncacheableMimeTypes)) {
+			var count = 1;
+
+			for (var uncacheableMimeType : list ${uncacheableMimeTypes}) {
+				if (${count} != 1) {
+					Click(locator1 = "Icon#PLUS_LAST");
+				}
+
+				Type(
+					key_position = ${count},
+					locator1 = "DDMField#CUSTOM_TEXT_BOX",
+					value1 = ${uncacheableMimeType});
+
+				var count = ${count} + 1;
+			}
+		}
+
+		SystemSettings.saveConfiguration();
+	}
+
 	macro deleteCP {
 		if (isSet(recycleBinDisabled)) {
 			LexiconEntry.delete(rowEntry = ${dmDocumentTitle});
