@@ -6,12 +6,16 @@
 package com.liferay.segments.asah.connector.internal.client;
 
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.util.PrefsProps;
 import com.liferay.portal.kernel.util.PrefsPropsUtil;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
+import com.liferay.segments.asah.connector.internal.client.model.Experiment;
 import com.liferay.segments.asah.connector.internal.client.model.ExperimentSettings;
+
+import javax.ws.rs.core.MultivaluedHashMap;
 
 import org.junit.Assert;
 import org.junit.Before;
@@ -98,6 +102,32 @@ public class AsahFaroBackendClientImplTest {
 			_asahFaroBackendClient.calculateExperimentEstimatedDaysDuration(
 				RandomTestUtil.randomLong(), RandomTestUtil.randomString(),
 				new ExperimentSettings()));
+	}
+
+	@Test
+	public void testGetExperiment() throws Exception {
+		String experimentId = RandomTestUtil.randomString();
+
+		Mockito.when(
+			_jsonWebServiceClient.doGet(
+				Mockito.anyString(), Mockito.anyString(),
+				Mockito.any(MultivaluedHashMap.class),
+				Mockito.anyMapOf(String.class, String.class))
+		).thenReturn(
+			JSONUtil.put(
+				"channelId", "637850400632477181"
+			).put(
+				"goal", JSONUtil.put("metric", "BOUNCE_RATE")
+			).put(
+				"status", "RUNNING"
+			).toString()
+		);
+
+		Experiment experiment = _asahFaroBackendClient.getExperiment(
+			RandomTestUtil.randomLong(), experimentId);
+
+		Assert.assertEquals(
+			"RUNNING", String.valueOf(experiment.getExperimentStatus()));
 	}
 
 	private AsahFaroBackendClient _asahFaroBackendClient;
