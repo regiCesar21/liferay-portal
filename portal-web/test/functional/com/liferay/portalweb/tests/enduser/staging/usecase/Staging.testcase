@@ -671,9 +671,12 @@ definition {
 			groupName = "Site Name",
 			layoutName = "Search");
 
-		Navigator.openWithAppendToBaseURL(urlAppend = "web/site-name/search");
+		SearchPortlets.addWidgets(
+			groupName = "Site Name",
+			layoutName = "Search",
+			searchPortletList = "Search Results");
 
-		SearchPortlets.addWidgets(searchPortletList = "Search Results");
+		Navigator.openWithAppendToBaseURL(urlAppend = "web/site-name/search");
 
 		Staging.openStagingAdmin(siteURLKey = "site-name");
 

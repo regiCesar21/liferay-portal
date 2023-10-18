@@ -84,11 +84,14 @@ definition {
 
 		Portlet.addPG(portletName = "Web Content Display");
 
+		SearchPortlets.addWidgets(
+			groupName = "Test Site Name",
+			layoutName = "Category Page Name",
+			searchPortletList = "Search Bar,Search Results");
+
 		Navigator.gotoSitePage(
 			pageName = "Category Page Name",
 			siteName = "Test Site Name");
-
-		SearchPortlets.addWidgets(searchPortletList = "Search Bar,Search Results");
 
 		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
 

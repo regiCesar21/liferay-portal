@@ -365,15 +365,15 @@ definition {
 	test ModifyPaginationPortalProperties {
 		property custom.properties = "search.container.page.default.delta=2";
 
-		ProductMenu.gotoPortlet(
-			category = "Site Builder",
-			portlet = "Pages");
+		JSONLayout.addPublicLayout(
+			groupName = "Guest",
+			layoutName = "Search Page");
 
-		SitePages.addPublicPage(pageName = "Search Page");
+		SearchPortlets.addWidgets(
+			layoutName = "Search Page",
+			searchPortletList = "Search Results");
 
 		Navigator.gotoPage(pageName = "Search Page");
-
-		SearchPortlets.addWidgets(searchPortletList = "Search Results");
 
 		Portlet.gotoPortletOptions(
 			portletName = "Search Results",
@@ -450,15 +450,15 @@ definition {
 			entryContent = "This is a blog about Potatoes",
 			entryTitle = "Potato Blog");
 
-		ProductMenu.gotoPortlet(
-			category = "Site Builder",
-			portlet = "Pages");
+		JSONLayout.addPublicLayout(
+			groupName = "Guest",
+			layoutName = "Search Page");
 
-		SitePages.addPublicPage(pageName = "Search Page");
+		SearchPortlets.addWidgets(
+			layoutName = "Search Page",
+			searchPortletList = "Type Facet,Search Results,Search Bar");
 
 		Navigator.gotoPage(pageName = "Search Page");
-
-		SearchPortlets.addWidgets(searchPortletList = "Type Facet,Search Results,Search Bar");
 
 		SearchPortlets.configureSearchBarWidget(
 			keywordsParameterName = "keywordparameter",
@@ -1974,17 +1974,15 @@ definition {
 
 		SearchAdministration.executeSearchActions(actionsDescription = "Reindex all search indexes.");
 
-		Navigator.openURL();
+		JSONLayout.addPublicLayout(
+			groupName = "Guest",
+			layoutName = "Search Page");
 
-		ProductMenu.gotoPortlet(
-			category = "Site Builder",
-			portlet = "Pages");
-
-		SitePages.addPublicPage(pageName = "Search Page");
+		SearchPortlets.addWidgets(
+			layoutName = "Search Page",
+			searchPortletList = "Site Facet,Search Results,Search Bar");
 
 		Navigator.gotoPage(pageName = "Search Page");
-
-		SearchPortlets.addWidgets(searchPortletList = "Site Facet,Search Results,Search Bar");
 
 		SearchPortlets.configureSearchBarWidget(searchScope = "Everything");
 
@@ -2112,15 +2110,15 @@ definition {
 			password = "test",
 			userEmailAddress = "test@liferay.com");
 
-		ProductMenu.gotoPortlet(
-			category = "Site Builder",
-			portlet = "Pages");
+		JSONLayout.addPublicLayout(
+			groupName = "Guest",
+			layoutName = "Search Page");
 
-		SitePages.addPublicPage(pageName = ${searchPage});
+		SearchPortlets.addWidgets(
+			layoutName = "Search Page",
+			searchPortletList = "Category Facet,Folder Facet,Site Facet,Tag Facet,Type Facet,User Facet,Search Results,Search Bar");
 
 		Navigator.gotoPage(pageName = ${searchPage});
-
-		SearchPortlets.addWidgets(searchPortletList = "Category Facet,Folder Facet,Site Facet,Tag Facet,Type Facet,User Facet,Search Results,Search Bar");
 
 		JSONLayout.addWidgetToPublicLayout(
 			column = 2,
