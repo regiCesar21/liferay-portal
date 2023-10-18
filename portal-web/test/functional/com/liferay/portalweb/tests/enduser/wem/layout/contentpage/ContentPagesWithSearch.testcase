@@ -28,9 +28,12 @@ definition {
 				groupName = "Test Site Name",
 				layoutName = "Search");
 
-			Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/search");
+			SearchPortlets.addWidgets(
+				groupName = "Test Site Name",
+				layoutName = "Search",
+				searchPortletList = "Search Results,Type Facet");
 
-			SearchPortlets.addWidgets(searchPortletList = "Search Results,Type Facet");
+			Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/search");
 		}
 
 		task ("Import test fragments from dependencies folder") {

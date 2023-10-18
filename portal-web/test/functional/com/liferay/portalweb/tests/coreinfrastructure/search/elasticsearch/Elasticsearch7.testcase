@@ -441,9 +441,11 @@ definition {
 
 		var portalURL = PropsUtil.get("portal.url");
 
-		Navigator.openSpecificURL(url = "${portalURL}/web/guest/search-page");
+		SearchPortlets.addWidgets(
+			layoutName = "Search Page",
+			searchPortletList = "Custom Filter,Low Level Search Options,Search Results,Search Bar");
 
-		SearchPortlets.addWidgets(searchPortletList = "Custom Filter,Low Level Search Options,Search Results,Search Bar");
+		Navigator.openSpecificURL(url = "${portalURL}/web/guest/search-page");
 
 		SearchPortlets.configureCustomFilter(
 			customParameterName = "q",
