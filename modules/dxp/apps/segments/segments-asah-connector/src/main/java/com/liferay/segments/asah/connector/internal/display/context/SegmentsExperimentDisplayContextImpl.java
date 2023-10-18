@@ -536,7 +536,7 @@ public class SegmentsExperimentDisplayContextImpl
 		}
 		catch (RuntimeException runtimeException) {
 			if (_log.isWarnEnabled()) {
-				_log.warn("Unable to fetch Experiment", runtimeException);
+				_log.warn("Unable to fetch experiment", runtimeException);
 			}
 		}
 
