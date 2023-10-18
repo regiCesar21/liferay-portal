@@ -111,9 +111,9 @@ definition {
 		property test.liferay.virtual.instance = "false";
 		property test.run.type = "single";
 
-		Search.openSearchPage();
-
 		SearchPortlets.addWidgets(searchPortletList = "Search Insights,Low Level Search Options");
+
+		Search.openSearchPage();
 
 		var blueprintJson = '''{"configuration":{"generalConfiguration":{"includeResponseString":false}}}''';
 
@@ -3910,9 +3910,9 @@ definition {
 
 		Close.closeAndSelectWindow(value1 = "View Element - ${siteName}");
 
-		Search.openSearchPage();
-
 		SearchPortlets.addWidgets(searchPortletList = "Blueprints Options");
+
+		Search.openSearchPage();
 
 		Portlet.gotoPortletOptions(
 			portletName = "Blueprints Options",

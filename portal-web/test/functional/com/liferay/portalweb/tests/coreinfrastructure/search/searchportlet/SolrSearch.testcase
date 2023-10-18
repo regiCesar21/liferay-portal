@@ -311,9 +311,9 @@ definition {
 			groupName = "Guest",
 			titleMap = "en_US:WC Title,de_DE:WC Titel");
 
-		Search.openSearchPage();
-
 		SearchPortlets.addWidgets(searchPortletList = "Suggestions");
+
+		Search.openSearchPage();
 
 		SearchPortlets.gotoConfigureSuggestionsOptions();
 
@@ -1442,9 +1442,9 @@ definition {
 			version = "1.0",
 			webContentTitle = "WebContent Title 1");
 
-		Search.openSearchPage();
-
 		SearchPortlets.addWidgets(searchPortletList = "Custom Facet");
+
+		Search.openSearchPage();
 
 		SearchFacetPortlet.configureCustomFacet(aggregationField = "version");
 

@@ -126,9 +126,9 @@ definition {
 	@description = "This is a use case for LPS-138720."
 	@priority = 4
 	test AssertCustomFacetNoXSS {
-		Search.openSearchPage();
-
 		SearchPortlets.addWidgets(searchPortletList = "Custom Facet");
+
+		Search.openSearchPage();
 
 		SearchFacetPortlet.configureCustomFacet(
 			aggregationField = "title_sortable",
@@ -439,9 +439,9 @@ definition {
 			groupName = "Guest",
 			titleMap = "en_US:WC Title,de_DE:WC Titel");
 
-		Search.openSearchPage();
-
 		SearchPortlets.addWidgets(searchPortletList = "Suggestions");
+
+		Search.openSearchPage();
 
 		SearchPortlets.gotoConfigureSuggestionsOptions();
 
@@ -576,6 +576,8 @@ definition {
 			searchAssetType = "Web Content Article");
 
 		SearchPortlets.addWidgets(searchPortletList = "Custom Facet");
+
+		Refresh();
 
 		var port = Elasticsearch.getServerPort();
 		var portalHostname = PropsUtil.get("portal.hostname");
@@ -1968,9 +1970,9 @@ definition {
 			version = "1.0",
 			webContentTitle = "WebContent Title 1");
 
-		Search.openSearchPage();
-
 		SearchPortlets.addWidgets(searchPortletList = "Custom Facet");
+
+		Search.openSearchPage();
 
 		SearchFacetPortlet.configureCustomFacet(aggregationField = "version");
 
@@ -2084,9 +2086,9 @@ definition {
 
 		var aggregationField = "ddm__keyword__${classTypeId}__Text";
 
-		Search.openSearchPage();
-
 		SearchPortlets.addWidgets(searchPortletList = "Custom Facet");
+
+		Search.openSearchPage();
 
 		SearchFacetPortlet.configureCustomFacet(aggregationField = ${aggregationField});
 
