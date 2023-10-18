@@ -28,7 +28,25 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro addWidgetsViaUI {
+	macro addWidgetsViaContentPageUI {
+		for (var portletName : list ${searchPortletList}) {
+			if (isSet(previousPortletName)) {
+				PageEditor.addWidget(
+					portletName = ${portletName},
+					targetFragmentName = ${previousPortletName});
+			}
+			else {
+				PageEditor.addWidget(portletName = ${portletName});
+			}
+
+			AssertElementNotPresent(locator1 = "Message#ERROR");
+
+			var previousPortletName = ${portletName};
+		}
+	}
+
+	@summary = "Default summary"
+	macro addWidgetsViaWidgetPageUI {
 		if (IsNotVisible(locator1 = "ControlMenuAddPanel#CLOSE_ADD_PANEL")) {
 			Click.clickAt(locator1 = "ControlMenu#ADD");
 		}
