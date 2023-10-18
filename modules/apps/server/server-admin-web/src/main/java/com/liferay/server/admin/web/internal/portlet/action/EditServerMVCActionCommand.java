@@ -360,6 +360,19 @@ public class EditServerMVCActionCommand extends BaseMVCActionCommand {
 			ActionableDynamicQuery actionableDynamicQuery =
 				_portletPreferencesLocalService.getActionableDynamicQuery();
 
+			actionableDynamicQuery.setAddCriteriaMethod(
+				dynamicQuery -> {
+					Property plidProperty = PropertyFactoryUtil.forName("plid");
+
+					DynamicQuery layoutRevisionDynamicQuery =
+						_layoutRevisionLocalService.dynamicQuery();
+
+					layoutRevisionDynamicQuery.setProjection(
+						ProjectionFactoryUtil.property("layoutRevisionId"));
+
+					dynamicQuery.add(
+						plidProperty.notIn(layoutRevisionDynamicQuery));
+				});
 			actionableDynamicQuery.setParallel(true);
 			actionableDynamicQuery.setPerformActionMethod(
 				(com.liferay.portal.kernel.model.PortletPreferences pref) -> {
