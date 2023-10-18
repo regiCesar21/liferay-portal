@@ -129,7 +129,7 @@ definition {
 	test AssertCustomFacetNoXSS {
 		Search.openSearchPage();
 
-		SearchPortlets.addWidgets(searchPortletList = "Custom Facet");
+		SearchPortlets.addWidgetsViaUI(searchPortletList = "Custom Facet");
 
 		SearchFacetPortlet.configureCustomFacet(
 			aggregationField = "title_sortable",
@@ -153,7 +153,7 @@ definition {
 
 		Navigator.openSpecificURL(url = "${portalURL}/web/guest/search-page");
 
-		SearchPortlets.addWidgets(searchPortletList = "Category Facet,Custom Facet,Custom Filter,Folder Facet,Low Level Search Options,Modified Facet,Search Insights,Search Options,Search Results,Similar Results,Site Facet,Sort,Suggestions,Tag Facet,Type Facet,User Facet,Search Bar");
+		SearchPortlets.addWidgetsViaUI(searchPortletList = "Category Facet,Custom Facet,Custom Filter,Folder Facet,Low Level Search Options,Modified Facet,Search Insights,Search Options,Search Results,Similar Results,Site Facet,Sort,Suggestions,Tag Facet,Type Facet,User Facet,Search Bar");
 
 		User.logoutPG();
 
@@ -397,7 +397,7 @@ definition {
 	test AssertSortWidgetNoXSS {
 		Search.openSearchPage();
 
-		SearchPortlets.addWidgets(searchPortletList = "Sort");
+		SearchPortlets.addWidgetsViaUI(searchPortletList = "Sort");
 
 		Portlet.gotoPortletOptions(
 			portletName = "Sort",
@@ -572,7 +572,7 @@ definition {
 			searchAssetTitle = "WC Title",
 			searchAssetType = "Web Content Article");
 
-		SearchPortlets.addWidgets(searchPortletList = "Custom Facet");
+		SearchPortlets.addWidgetsViaUI(searchPortletList = "Custom Facet");
 
 		var aggregationField = "ddm__keyword__${structureId}__Text_en_US";
 
@@ -642,7 +642,7 @@ definition {
 
 		SearchPortlets.searchEmbedded(searchTerm = "Apple");
 
-		SearchPortlets.addWidgets(searchPortletList = "Sort");
+		SearchPortlets.addWidgetsViaUI(searchPortletList = "Sort");
 
 		Refresh();
 
@@ -1910,7 +1910,7 @@ definition {
 
 		Search.openSearchPage();
 
-		SearchPortlets.addWidgets(searchPortletList = "Custom Facet");
+		SearchPortlets.addWidgetsViaUI(searchPortletList = "Custom Facet");
 
 		SearchFacetPortlet.configureCustomFacet(aggregationField = ${aggregationField});
 
@@ -2355,7 +2355,7 @@ definition {
 
 		Navigator.gotoPage(pageName = "Search Page");
 
-		SearchPortlets.addWidgets(searchPortletList = "Custom Filter,Sort,Suggestions,Search Results,Search Bar");
+		SearchPortlets.addWidgetsViaUI(searchPortletList = "Custom Filter,Sort,Suggestions,Search Results,Search Bar");
 
 		PermissionsInline.gotoConfigurationPG(portletName = "Search Results");
 
@@ -2955,7 +2955,7 @@ definition {
 
 		SearchPortlets.searchEmbedded(searchTerm = "Content");
 
-		SearchPortlets.addWidgets(searchPortletList = "Sort");
+		SearchPortlets.addWidgetsViaUI(searchPortletList = "Sort");
 
 		Refresh();
 
