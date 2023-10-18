@@ -37,14 +37,10 @@ public class ExperimentJSONObjectMapperTest {
 			_read("get-experiment.json"));
 
 		Assert.assertNotNull(experiment);
-
 		Assert.assertEquals("637850400632477181", experiment.getChannelId());
-
 		Assert.assertEquals(
 			Double.valueOf(95.0), experiment.getConfidenceLevel());
-
 		Assert.assertEquals("MyExperience", experiment.getDXPExperienceName());
-
 		Assert.assertEquals("37087", experiment.getWinnerDXPVariantId());
 	}
 
