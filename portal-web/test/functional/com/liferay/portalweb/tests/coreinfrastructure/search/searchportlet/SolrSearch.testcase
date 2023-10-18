@@ -135,7 +135,7 @@ definition {
 
 		Navigator.openSpecificURL(url = "${portalURL}/web/guest/search-page");
 
-		SearchPortlets.addWidgets(searchPortletList = "Category Facet,Custom Facet,Custom Filter,Folder Facet,Low Level Search Options,Modified Facet,Search Insights,Search Options,Search Results,Site Facet,Sort,Suggestions,Tag Facet,Type Facet,User Facet,Search Bar");
+		SearchPortlets.addWidgetsViaUI(searchPortletList = "Category Facet,Custom Facet,Custom Filter,Folder Facet,Low Level Search Options,Modified Facet,Search Insights,Search Options,Search Results,Site Facet,Sort,Suggestions,Tag Facet,Type Facet,User Facet,Search Bar");
 
 		var testRunEnvironment = PropsUtil.get("test.run.environment");
 
@@ -1823,7 +1823,7 @@ definition {
 
 		Navigator.gotoPage(pageName = "Search Page");
 
-		SearchPortlets.addWidgets(searchPortletList = "Custom Filter,Sort,Suggestions,Search Results,Search Bar");
+		SearchPortlets.addWidgetsViaUI(searchPortletList = "Custom Filter,Sort,Suggestions,Search Results,Search Bar");
 
 		PermissionsInline.gotoConfigurationPG(portletName = "Search Results");
 
@@ -2431,7 +2431,7 @@ definition {
 
 		SearchPortlets.searchEmbedded(searchTerm = "Content");
 
-		SearchPortlets.addWidgets(searchPortletList = "Sort");
+		SearchPortlets.addWidgetsViaUI(searchPortletList = "Sort");
 
 		Refresh();
 
