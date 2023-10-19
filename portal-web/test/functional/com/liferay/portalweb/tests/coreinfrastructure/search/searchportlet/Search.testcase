@@ -479,6 +479,33 @@ definition {
 		}
 	}
 
+	test CanAddSearchWidgetsViaUIOnWidgetPage {
+		task ("Add a widget page and navigate to said page") {
+			ProductMenu.gotoPortlet(
+				category = "Site Builder",
+				panel = "Site Administration",
+				portlet = "Pages");
+
+			SitePages.addPublicPage(
+				pageName = "Test Widget Page",
+				sitePageType = "Widget Page");
+
+			SitePages.configurePage(
+				columnName = "1 Column",
+				pageName = "Test Widget Page",
+				privacy = "Public Pages",
+				sitePageType = "Widget Page");
+
+			Navigator.openURL();
+
+			Navigator.gotoPage(pageName = "Test Widget Page");
+		}
+
+		task ("Add each search widget via the UI and assert no error is present for each") {
+			SearchPortlets.addWidgetsViaWidgetPageUI(searchPortletList = "Category Facet,Custom Facet,Custom Filter,Folder Facet,Low Level Search Options,Modified Facet,Search Bar,Search Insights,Search Options,Search Results,Similar Results,Site Facet,Sort,Suggestions,Tag Facet,Type Facet,User Facet,X-Pack Monitoring");
+		}
+	}
+
 	@description = "This is a use case for LPS-131302."
 	@priority = 3
 	test CanDownloadDocumentsThroughSearchResultsPreview {
