@@ -479,6 +479,21 @@ definition {
 		}
 	}
 
+	test CanAddSearchWidgetsViaUIOnContentPage {
+		task ("Add a content page and navigate to said page") {
+			ProductMenu.gotoPortlet(
+				category = "Site Builder",
+				panel = "Site Administration",
+				portlet = "Pages");
+
+			ContentPages.addPage(pageName = "Test Content Page");
+		}
+
+		task ("Add each search widget via the UI and assert no error is present for each") {
+			SearchPortlets.addWidgetsViaContentPageUI(searchPortletList = "Category Facet,Custom Facet,Custom Filter,Folder Facet,Low Level Search Options,Modified Facet,Search Bar,Search Insights,Search Options,Search Results,Similar Results,Site Facet,Sort,Suggestions,Tag Facet,Type Facet,User Facet,X-Pack Monitoring");
+		}
+	}
+
 	test CanAddSearchWidgetsViaUIOnWidgetPage {
 		task ("Add a widget page and navigate to said page") {
 			ProductMenu.gotoPortlet(
