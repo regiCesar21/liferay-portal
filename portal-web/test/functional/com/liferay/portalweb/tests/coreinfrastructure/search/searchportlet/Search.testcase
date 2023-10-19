@@ -439,9 +439,9 @@ definition {
 			groupName = "Guest",
 			titleMap = "en_US:WC Title,de_DE:WC Titel");
 
-		SearchPortlets.addWidgets(searchPortletList = "Suggestions");
-
 		Search.openSearchPage();
+
+		SearchPortlets.addWidgetsViaWidgetPageUI(searchPortletList = "Suggestions");
 
 		SearchPortlets.gotoConfigureSuggestionsOptions();
 
@@ -607,9 +607,7 @@ definition {
 			searchAssetTitle = "WC Title",
 			searchAssetType = "Web Content Article");
 
-		SearchPortlets.addWidgets(searchPortletList = "Custom Facet");
-
-		Refresh();
+		SearchPortlets.addWidgetsViaWidgetPageUI(searchPortletList = "Custom Facet");
 
 		var port = Elasticsearch.getServerPort();
 		var portalHostname = PropsUtil.get("portal.hostname");
@@ -2002,9 +2000,9 @@ definition {
 			version = "1.0",
 			webContentTitle = "WebContent Title 1");
 
-		SearchPortlets.addWidgets(searchPortletList = "Custom Facet");
-
 		Search.openSearchPage();
+
+		SearchPortlets.addWidgetsViaWidgetPageUI(searchPortletList = "Custom Facet");
 
 		SearchFacetPortlet.configureCustomFacet(aggregationField = "version");
 
@@ -2118,9 +2116,9 @@ definition {
 
 		var aggregationField = "ddm__keyword__${classTypeId}__Text";
 
-		SearchPortlets.addWidgets(searchPortletList = "Custom Facet");
-
 		Search.openSearchPage();
+
+		SearchPortlets.addWidgetsViaWidgetPageUI(searchPortletList = "Custom Facet");
 
 		SearchFacetPortlet.configureCustomFacet(aggregationField = ${aggregationField});
 

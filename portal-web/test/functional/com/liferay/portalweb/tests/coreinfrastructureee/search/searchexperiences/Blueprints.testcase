@@ -92,7 +92,7 @@ definition {
 			searchAssetTitle = "apple",
 			searchAssetType = "Web Content Article");
 
-		SearchPortlets.addWidgets(searchPortletList = "Low Level Search Options");
+		SearchPortlets.addWidgetsViaWidgetPageUI(searchPortletList = "Low Level Search Options");
 
 		var blueprintId = Blueprints.getBlueprintID(title = "Test Blueprint");
 
@@ -111,9 +111,9 @@ definition {
 		property test.liferay.virtual.instance = "false";
 		property test.run.type = "single";
 
-		SearchPortlets.addWidgets(searchPortletList = "Search Insights,Low Level Search Options");
-
 		Search.openSearchPage();
+
+		SearchPortlets.addWidgetsViaWidgetPageUI(searchPortletList = "Search Insights,Low Level Search Options");
 
 		var blueprintJson = '''{"configuration":{"generalConfiguration":{"includeResponseString":false}}}''';
 
@@ -3910,9 +3910,9 @@ definition {
 
 		Close.closeAndSelectWindow(value1 = "View Element - ${siteName}");
 
-		SearchPortlets.addWidgets(searchPortletList = "Blueprints Options");
-
 		Search.openSearchPage();
+
+		SearchPortlets.addWidgetsViaWidgetPageUI(searchPortletList = "Blueprints Options");
 
 		Portlet.gotoPortletOptions(
 			portletName = "Blueprints Options",

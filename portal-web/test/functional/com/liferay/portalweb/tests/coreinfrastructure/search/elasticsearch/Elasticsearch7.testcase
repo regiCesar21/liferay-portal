@@ -181,9 +181,9 @@ definition {
 			groupName = "Guest",
 			title = "apple");
 
-		SearchPortlets.addWidgets(searchPortletList = "Search Insights");
-
 		Search.openSearchPage();
+
+		SearchPortlets.addWidgetsViaWidgetPageUI(searchPortletList = "Search Insights");
 
 		Portlet.gotoPortletOptions(
 			portletName = "Search Insights",
