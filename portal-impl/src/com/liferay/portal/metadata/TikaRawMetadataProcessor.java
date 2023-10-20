@@ -129,7 +129,7 @@ public class TikaRawMetadataProcessor extends XugglerRawMetadataProcessor {
 			metadata.set(
 				"Content-Type",
 				StringUtil.replace(
-					mimeType, ContentTypes.TEXT_PLAIN,
+					contentType, ContentTypes.TEXT_PLAIN,
 					ContentTypes.IMAGE_SVG_XML));
 		}
 
