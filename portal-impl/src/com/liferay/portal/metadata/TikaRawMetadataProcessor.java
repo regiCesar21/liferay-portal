@@ -21,27 +21,25 @@ import com.liferay.portal.kernel.util.ServiceProxyFactory;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.util.PortalClassPathUtil;
 import com.liferay.portal.util.PropsValues;
-
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.IOException;
-import java.io.InputStream;
-
-import java.util.concurrent.Future;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-
 import org.apache.commons.compress.archivers.zip.UnsupportedZipFeatureException;
 import org.apache.commons.lang.exception.ExceptionUtils;
 import org.apache.poi.EncryptedDocumentException;
 import org.apache.tika.exception.TikaException;
+import org.apache.tika.metadata.HttpHeaders;
 import org.apache.tika.metadata.Metadata;
 import org.apache.tika.metadata.XMPDM;
 import org.apache.tika.parser.ParseContext;
 import org.apache.tika.parser.Parser;
 import org.apache.tika.sax.WriteOutContentHandler;
-
 import org.xml.sax.ContentHandler;
+
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.util.concurrent.Future;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  * @author Miguel Pastor
@@ -133,6 +131,16 @@ public class TikaRawMetadataProcessor extends XugglerRawMetadataProcessor {
 				StringUtil.replace(
 					mimeType, ContentTypes.TEXT_PLAIN,
 					ContentTypes.IMAGE_SVG_XML));
+		}
+
+		if (mimeType.endsWith(ContentTypes.APPLICATION_JAVASCRIPT) &&
+			contentType.startsWith(ContentTypes.TEXT_XMATLAB)) {
+
+			metadata.set(
+				HttpHeaders.CONTENT_TYPE,
+				StringUtil.replace(
+					contentType, ContentTypes.TEXT_XMATLAB,
+					ContentTypes.APPLICATION_JAVASCRIPT));
 		}
 
 		return metadata;

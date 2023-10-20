@@ -14,6 +14,8 @@ public interface ContentTypes {
 
 	public static final String APPLICATION_GZIP = "application/gzip";
 
+	public static final String APPLICATION_JAVASCRIPT = "application/javascript";
+
 	public static final String APPLICATION_JSON = "application/json";
 
 	public static final String APPLICATION_MSWORD = "application/msword";
@@ -98,6 +100,8 @@ public interface ContentTypes {
 	public static final String TEXT_PLAIN_UTF8 = "text/plain; charset=UTF-8";
 
 	public static final String TEXT_WML = "text/wml";
+
+	public static final String TEXT_XMATLAB = "text/x-matlab";
 
 	public static final String TEXT_XML = "text/xml";
 
