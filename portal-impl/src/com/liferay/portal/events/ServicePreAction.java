@@ -893,12 +893,8 @@ public class ServicePreAction extends Action {
 			realUser = UserLocalServiceUtil.getUserById(realUserId.longValue());
 		}
 
-		if (!user.isActive()) {
-			user = company.getDefaultUser();
-
-			if (realUser == null) {
-				session.invalidate();
-			}
+		if (!user.isActive() && (realUserId == user.getUserId())) {
+			session.invalidate();
 		}
 
 		boolean signedIn = !user.isDefaultUser();
