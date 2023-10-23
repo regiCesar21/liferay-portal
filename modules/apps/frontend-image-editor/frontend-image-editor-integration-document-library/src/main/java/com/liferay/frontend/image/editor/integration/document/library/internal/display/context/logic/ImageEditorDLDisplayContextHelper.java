@@ -14,11 +14,13 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.model.Image;
+import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.portlet.LiferayWindowState;
 import com.liferay.portal.kernel.portlet.PortletProvider;
 import com.liferay.portal.kernel.portlet.PortletProviderUtil;
 import com.liferay.portal.kernel.portlet.PortletURLFactoryUtil;
+import com.liferay.portal.kernel.portlet.PortletURLUtil;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.repository.model.FileVersion;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
@@ -181,13 +183,24 @@ public class ImageEditorDLDisplayContextHelper {
 
 		template.put("namespace", liferayPortletResponse.getNamespace());
 
-		template.put("redirectURL", _themeDisplay.getURLCurrent());
+		PortletURL portletURL = PortletURLUtil.getCurrent(
+			_getLiferayPortletRequest(), _getLiferayPortletResponse());
+
+		template.put("redirectURL", portletURL.toString());
 
 		UnsyncStringWriter unsyncStringWriter = new UnsyncStringWriter();
 
 		template.processTemplate(unsyncStringWriter);
 
 		return unsyncStringWriter.toString();
+	}
+
+	private LiferayPortletRequest _getLiferayPortletRequest() {
+		PortletRequest portletRequest =
+			(PortletRequest)_httpServletRequest.getAttribute(
+				JavaConstants.JAVAX_PORTLET_REQUEST);
+
+		return PortalUtil.getLiferayPortletRequest(portletRequest);
 	}
 
 	private LiferayPortletResponse _getLiferayPortletResponse() {
