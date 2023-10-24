@@ -305,8 +305,6 @@ definition {
 			Calendar._viewEmailHeader(header = ${calendarName});
 		}
 
-		Pause(locator1 = 5000);
-
 		if (${inviteEmail} == "true") {
 			AssertElementPresent(locator1 = "CalendarEditCalendar#NOTIFICATION_TEMPLATES_INVITE_EMAIL_TAB_ACTIVE");
 		}
@@ -419,8 +417,6 @@ definition {
 		LexiconEntry.openEntryMenu(rowEntry = ${calendarName});
 
 		MenuItem.click(menuItem = "Export");
-
-		Pause(locator1 = 5000);
 
 		AssertConsoleTextNotPresent(value1 = "ClassNotFoundException");
 	}
@@ -791,8 +787,6 @@ definition {
 		AssertElementPresent(locator1 = "Calendar#SCHEDULER_VIEW_MONTH_WEEK_NUMBER");
 
 		SelectFrame(value1 = "relative=top");
-
-		Pause(locator1 = 3000);
 
 		var key_weekNumber = ${weekNumber} + 1;
 
