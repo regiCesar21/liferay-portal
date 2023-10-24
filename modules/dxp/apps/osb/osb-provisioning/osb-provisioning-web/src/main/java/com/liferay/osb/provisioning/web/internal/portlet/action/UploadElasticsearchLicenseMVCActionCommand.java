@@ -77,6 +77,11 @@ public class UploadElasticsearchLicenseMVCActionCommand
 					JSONObject licenseJSONObject = jsonObject.getJSONObject(
 						"license");
 
+					Date startDate = new Date(
+						licenseJSONObject.getLong("start_date_in_millis"));
+					Date endDate = new Date(
+						licenseJSONObject.getLong("expiry_date_in_millis"));
+
 					String issuedTo = licenseJSONObject.getString("issued_to");
 
 					String productEnvironment = null;
@@ -88,15 +93,19 @@ public class UploadElasticsearchLicenseMVCActionCommand
 								ProductEnvironment.NON_PRODUCTION)) {
 
 						productEnvironment = ProductEnvironment.NON_PRODUCTION;
+
+						String fileName = StringUtil.replace(
+							fileItem.getFileName(), "non_production", "backup");
+
+						_commonLicenseKeyLocalService.addCommonLicenseKey(
+							themeDisplay.getUserId(),
+							ProductGroup.Name.ENTERPRISE_SEARCH.toString(),
+							ProductEnvironment.BACKUP, StringPool.BLANK,
+							startDate, endDate, fileName, fileContent);
 					}
 					else {
 						productEnvironment = ProductEnvironment.PRODUCTION;
 					}
-
-					Date startDate = new Date(
-						licenseJSONObject.getLong("start_date_in_millis"));
-					Date endDate = new Date(
-						licenseJSONObject.getLong("expiry_date_in_millis"));
 
 					_commonLicenseKeyLocalService.addCommonLicenseKey(
 						themeDisplay.getUserId(),
