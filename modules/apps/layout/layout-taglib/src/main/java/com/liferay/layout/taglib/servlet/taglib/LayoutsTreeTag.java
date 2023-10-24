@@ -6,6 +6,10 @@
 package com.liferay.layout.taglib.servlet.taglib;
 
 import com.liferay.layout.taglib.internal.servlet.ServletContextUtil;
+import com.liferay.portal.kernel.dao.orm.DynamicQuery;
+import com.liferay.portal.kernel.dao.orm.ProjectionFactoryUtil;
+import com.liferay.portal.kernel.dao.orm.Property;
+import com.liferay.portal.kernel.dao.orm.PropertyFactoryUtil;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
@@ -255,15 +259,26 @@ public class LayoutsTreeTag extends IncludeTag {
 			}
 		}
 		else {
-			for (long checkedLayoutId : checkedLayoutIdsArray) {
-				Layout checkedLayout = LayoutLocalServiceUtil.fetchLayout(
-					_groupId, _privateLayout, checkedLayoutId);
+			DynamicQuery dynamicQuery = LayoutLocalServiceUtil.dynamicQuery();
 
-				if (checkedLayout != null) {
-					checkedNodesJSONArray.put(
-						String.valueOf(checkedLayout.getPlid()));
-				}
-			}
+			dynamicQuery.setProjection(ProjectionFactoryUtil.property("plid"));
+
+			Property groupIdProperty = PropertyFactoryUtil.forName("groupId");
+
+			dynamicQuery.add(groupIdProperty.eq(_groupId));
+
+			Property privateLayoutProperty = PropertyFactoryUtil.forName(
+				"privateLayout");
+
+			dynamicQuery.add(privateLayoutProperty.eq(_privateLayout));
+
+			Property layoutIdProperty = PropertyFactoryUtil.forName("layoutId");
+
+			dynamicQuery.add(layoutIdProperty.in(checkedLayoutIdsArray));
+
+			JSONUtil.addToStringCollection(
+				LayoutLocalServiceUtil.dynamicQuery(dynamicQuery),
+				checkedNodesJSONArray);
 		}
 
 		return checkedNodesJSONArray.toString();
