@@ -8,8 +8,9 @@ import {ClayInput} from '@clayui/form';
 import ClayLayout from '@clayui/layout';
 import ClayManagementToolbar from '@clayui/management-toolbar';
 import {Treeview} from 'frontend-js-components-web';
+import {fetch, openToast} from 'frontend-js-web';
 import PropTypes from 'prop-types';
-import React, {useState} from 'react';
+import React, {useCallback, useState} from 'react';
 
 function visit(nodes, callback) {
 	nodes.forEach((node) => {
@@ -31,12 +32,15 @@ function visit(nodes, callback) {
  */
 
 const SelectLayout = ({
+	config,
 	followURLOnTitleClick,
 	itemSelectorSaveEvent,
 	multiSelection,
 	namespace,
 	nodes,
 }) => {
+	const {loadMoreItemsURL, maxPageSize, namespace} = config;
+
 	const [filterQuery, setFilterQuery] = useState();
 
 	const handleSelectionChange = (selectedNodeIds) => {
@@ -78,6 +82,47 @@ const SelectLayout = ({
 	};
 
 	const empty = nodes.length === 0;
+
+	const onLoadMore = useCallback(
+		(item) => {
+			if (!item.hasChildren) {
+				return Promise.resolve({
+					cursor: null,
+					items: null,
+				});
+			}
+
+			const cursor = item.children
+				? Math.floor(item.children.length / maxPageSize)
+				: 0;
+
+			return fetch(loadMoreItemsURL, {
+				body: Liferay.Util.objectToURLSearchParams({
+					[`${namespace}parentLayoutId`]: item.layoutId,
+					[`${namespace}redirect`]:
+						window.location.pathname + window.location.search,
+					[`${namespace}start`]: cursor * maxPageSize,
+				}),
+				method: 'post',
+			})
+				.then((response) => response.json())
+				.then(({hasMoreElements, items: nextItems}) => ({
+					cursor: hasMoreElements ? cursor + 1 : null,
+					items: nextItems,
+				}))
+				.catch(() =>
+					openToast({
+						message: Liferay.Language.get(
+							'an-unexpected-error-occurred'
+						),
+						title: Liferay.Language.get('error'),
+						type: 'danger',
+					})
+				);
+		},
+		[loadMoreItemsURL, maxPageSize, namespace]
+	);
+
 
 	return (
 		<div className="select-layout">
@@ -136,6 +181,7 @@ const SelectLayout = ({
 								filterQuery={filterQuery}
 								multiSelection={multiSelection}
 								nodes={nodes}
+								onLoadMore={onLoadMore}
 								onSelectedNodesChange={handleSelectionChange}
 							/>
 						</div>
