@@ -183,7 +183,7 @@ definition {
 
 		Search.openSearchPage();
 
-		SearchPortlets.addWidgetsViaWidgetPageUI(searchPortletList = "Search Insights");
+		SearchPortlets.addWidgetsOnWidgetPageViaUI(searchPortletList = "Search Insights");
 
 		Portlet.gotoPortletOptions(
 			portletName = "Search Insights",

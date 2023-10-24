@@ -156,7 +156,7 @@ definition {
 
 		Navigator.openSpecificURL(url = "${portalURL}/web/guest/search-page");
 
-		SearchPortlets.addWidgetsViaWidgetPageUI(searchPortletList = "Sort");
+		SearchPortlets.addWidgetsOnWidgetPageViaUI(searchPortletList = "Sort");
 
 		var testRunEnvironment = PropsUtil.get("test.run.environment");
 
@@ -406,7 +406,7 @@ definition {
 	test AssertSortWidgetNoXSS {
 		Search.openSearchPage();
 
-		SearchPortlets.addWidgetsViaWidgetPageUI(searchPortletList = "Sort");
+		SearchPortlets.addWidgetsOnWidgetPageViaUI(searchPortletList = "Sort");
 
 		Portlet.gotoPortletOptions(
 			portletName = "Sort",
@@ -445,7 +445,7 @@ definition {
 
 		Search.openSearchPage();
 
-		SearchPortlets.addWidgetsViaWidgetPageUI(searchPortletList = "Suggestions");
+		SearchPortlets.addWidgetsOnWidgetPageViaUI(searchPortletList = "Suggestions");
 
 		SearchPortlets.gotoConfigureSuggestionsOptions();
 
@@ -505,7 +505,7 @@ definition {
 		}
 
 		task ("Add each search widget via the UI and assert no error is present for each") {
-			SearchPortlets.addWidgetsViaContentPageUI(searchPortletList = "Blueprints Options,Category Facet,Custom Facet,Custom Filter,Elasticsearch Monitoring,Folder Facet,Low Level Search Options,Modified Facet,Search Bar,Search Insights,Search Options,Search Results,Similar Results,Site Facet,Sort,Suggestions,Tag Facet,Type Facet,User Facet");
+			SearchPortlets.addWidgetsOnContentPageViaUI(searchPortletList = "Blueprints Options,Category Facet,Custom Facet,Custom Filter,Elasticsearch Monitoring,Folder Facet,Low Level Search Options,Modified Facet,Search Bar,Search Insights,Search Options,Search Results,Similar Results,Site Facet,Sort,Suggestions,Tag Facet,Type Facet,User Facet");
 		}
 	}
 
@@ -521,7 +521,7 @@ definition {
 		}
 
 		task ("Add each search widget via the UI and assert no error is present for each") {
-			SearchPortlets.addWidgetsViaWidgetPageUI(searchPortletList = "Blueprints Options,Category Facet,Custom Facet,Custom Filter,Elasticsearch Monitoring,Folder Facet,Low Level Search Options,Modified Facet,Search Bar,Search Insights,Search Options,Search Results,Similar Results,Site Facet,Sort,Suggestions,Tag Facet,Type Facet,User Facet");
+			SearchPortlets.addWidgetsOnWidgetPageViaUI(searchPortletList = "Blueprints Options,Category Facet,Custom Facet,Custom Filter,Elasticsearch Monitoring,Folder Facet,Low Level Search Options,Modified Facet,Search Bar,Search Insights,Search Options,Search Results,Similar Results,Site Facet,Sort,Suggestions,Tag Facet,Type Facet,User Facet");
 		}
 	}
 
@@ -612,7 +612,7 @@ definition {
 			searchAssetTitle = "WC Title",
 			searchAssetType = "Web Content Article");
 
-		SearchPortlets.addWidgetsViaWidgetPageUI(searchPortletList = "Custom Facet");
+		SearchPortlets.addWidgetsOnWidgetPageViaUI(searchPortletList = "Custom Facet");
 
 		var port = Elasticsearch.getServerPort();
 		var portalHostname = PropsUtil.get("portal.hostname");
@@ -780,7 +780,7 @@ definition {
 
 		SearchPortlets.searchEmbedded(searchTerm = "Apple");
 
-		SearchPortlets.addWidgetsViaWidgetPageUI(searchPortletList = "Sort");
+		SearchPortlets.addWidgetsOnWidgetPageViaUI(searchPortletList = "Sort");
 
 		Refresh();
 
@@ -2007,7 +2007,7 @@ definition {
 
 		Search.openSearchPage();
 
-		SearchPortlets.addWidgetsViaWidgetPageUI(searchPortletList = "Custom Facet");
+		SearchPortlets.addWidgetsOnWidgetPageViaUI(searchPortletList = "Custom Facet");
 
 		SearchFacetPortlet.configureCustomFacet(aggregationField = "version");
 
@@ -2123,7 +2123,7 @@ definition {
 
 		Search.openSearchPage();
 
-		SearchPortlets.addWidgetsViaWidgetPageUI(searchPortletList = "Custom Facet");
+		SearchPortlets.addWidgetsOnWidgetPageViaUI(searchPortletList = "Custom Facet");
 
 		SearchFacetPortlet.configureCustomFacet(aggregationField = ${aggregationField});
 
@@ -2572,7 +2572,7 @@ definition {
 
 		Navigator.gotoPage(pageName = "Search Page");
 
-		SearchPortlets.addWidgetsViaWidgetPageUI(searchPortletList = "Sort");
+		SearchPortlets.addWidgetsOnWidgetPageViaUI(searchPortletList = "Sort");
 
 		PermissionsInline.gotoConfigurationPG(portletName = "Search Results");
 
@@ -3178,7 +3178,7 @@ definition {
 
 		SearchPortlets.searchEmbedded(searchTerm = "Content");
 
-		SearchPortlets.addWidgetsViaWidgetPageUI(searchPortletList = "Sort");
+		SearchPortlets.addWidgetsOnWidgetPageViaUI(searchPortletList = "Sort");
 
 		Refresh();
 

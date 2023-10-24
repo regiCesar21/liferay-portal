@@ -139,7 +139,7 @@ definition {
 
 		Navigator.openSpecificURL(url = "${portalURL}/web/guest/search-page");
 
-		SearchPortlets.addWidgetsViaWidgetPageUI(searchPortletList = "Sort");
+		SearchPortlets.addWidgetsOnWidgetPageViaUI(searchPortletList = "Sort");
 
 		var testRunEnvironment = PropsUtil.get("test.run.environment");
 
@@ -317,7 +317,7 @@ definition {
 
 		Search.openSearchPage();
 
-		SearchPortlets.addWidgetsViaWidgetPageUI(searchPortletList = "Suggestions");
+		SearchPortlets.addWidgetsOnWidgetPageViaUI(searchPortletList = "Suggestions");
 
 		SearchPortlets.gotoConfigureSuggestionsOptions();
 
@@ -1448,7 +1448,7 @@ definition {
 
 		Search.openSearchPage();
 
-		SearchPortlets.addWidgetsViaWidgetPageUI(searchPortletList = "Custom Facet");
+		SearchPortlets.addWidgetsOnWidgetPageViaUI(searchPortletList = "Custom Facet");
 
 		SearchFacetPortlet.configureCustomFacet(aggregationField = "version");
 
@@ -1831,7 +1831,7 @@ definition {
 
 		Navigator.gotoPage(pageName = "Search Page");
 
-		SearchPortlets.addWidgetsViaWidgetPageUI(searchPortletList = "Sort");
+		SearchPortlets.addWidgetsOnWidgetPageViaUI(searchPortletList = "Sort");
 
 		PermissionsInline.gotoConfigurationPG(portletName = "Search Results");
 
@@ -2437,7 +2437,7 @@ definition {
 
 		SearchPortlets.searchEmbedded(searchTerm = "Content");
 
-		SearchPortlets.addWidgetsViaWidgetPageUI(searchPortletList = "Sort");
+		SearchPortlets.addWidgetsOnWidgetPageViaUI(searchPortletList = "Sort");
 
 		Refresh();
 

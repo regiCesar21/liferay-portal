@@ -44,7 +44,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro addWidgetsViaContentPageUI(searchPortletList = null) {
+	macro addWidgetsOnContentPageViaUI(searchPortletList = null) {
 		for (var portletName : list ${searchPortletList}) {
 			if (isSet(previousPortletName)) {
 				PageEditor.addWidget(
@@ -62,7 +62,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro addWidgetsViaWidgetPageUI(searchPortletList = null) {
+	macro addWidgetsOnWidgetPageViaUI(searchPortletList = null) {
 		if (IsNotVisible(locator1 = "ControlMenuAddPanel#CLOSE_ADD_PANEL")) {
 			Click.clickAt(locator1 = "ControlMenu#ADD");
 		}
