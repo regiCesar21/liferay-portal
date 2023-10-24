@@ -51,12 +51,13 @@ function Purchases({detached, purchased}) {
 }
 
 function Detached({detached}) {
-	const [{licenseEntry}] = useNewLicense();
+	const [{allowPermanentLicenses, licenseEntry}] = useNewLicense();
 
 	let licenseDates = {};
 
 	if (detached) {
-		licenseDates = getDetachedLicenseDates(licenseEntry.licenseEntryType);
+		licenseDates = getDetachedLicenseDates(
+		    licenseEntry.licenseEntryType, allowPermanentLicenses);
 	}
 
 	return (

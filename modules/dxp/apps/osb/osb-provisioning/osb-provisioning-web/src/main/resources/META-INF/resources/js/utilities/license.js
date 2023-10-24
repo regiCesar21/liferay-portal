@@ -78,12 +78,16 @@ export function deriveLicenseDates(
  * @returns {Object} An object of dates representing the start and expiration
  * dates of a detached license.
  */
-export function getDetachedLicenseDates(type) {
+export function getDetachedLicenseDates(
+    type,
+    allowPermanentLicenses = true
+) {
+
 	const restricted = RESTRICTED_EXPIRATION_DATE_TYPES.find(
 		restrictedType => restrictedType === type
 	);
 
-	if (restricted) {
+	if (restricted || !allowPermanentLicenses) {
 		return {
 			licenseExpirationDate: generateNewDateByYear(CURRENT_TIME),
 			licenseStartDate: CURRENT_TIME

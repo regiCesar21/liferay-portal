@@ -26,6 +26,7 @@ import com.liferay.portal.kernel.portlet.PortletURLFactoryUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.FastDateFormatFactoryUtil;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.Validator;
@@ -155,6 +156,8 @@ public class ExtendLicenseKeysDisplayContext {
 		return JSONUtil.put(
 			"accountName", licenseKey.getAccountName()
 		).put(
+			"allowPermanentLicenses", _isAllowPermanentLicenses()
+		).put(
 			"expirationDate", _formatDate(licenseKey.getExpirationDate())
 		).put(
 			"indefinite",
@@ -234,6 +237,17 @@ public class ExtendLicenseKeysDisplayContext {
 		}
 
 		return null;
+	}
+
+	private boolean _isAllowPermanentLicenses() {
+		Map<String, String> properties = _account.getProperties();
+
+		if (properties != null) {
+			return GetterUtil.getBoolean(
+				properties.get("allowPermanentLicenses"), true);
+		}
+
+		return true;
 	}
 
 	private boolean _isIndefinite(Date startDate, Date expirationDate) {

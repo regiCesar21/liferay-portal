@@ -11,6 +11,7 @@ import {getDetachedLicenseDates} from '../utilities/license';
 
 export const LicenseRecord = Record({
 	accountName: '',
+	allowPermanentLicenses: true,
 	expirationDate: '',
 	indefinite: false,
 	licenseKeyId: '',
@@ -28,7 +29,9 @@ const ExtendLicensesContext = createContext();
 
 function createLicenseRecord(license) {
 	if (!license.terms) {
-		const licenseDates = getDetachedLicenseDates(license.licenseType);
+		const licenseDates = getDetachedLicenseDates(
+		    license.licenseType, license.allowPermanentLicenses
+        );
 		const {
 			licenseExpirationDate: expirationDate,
 			licenseStartDate: startDate
