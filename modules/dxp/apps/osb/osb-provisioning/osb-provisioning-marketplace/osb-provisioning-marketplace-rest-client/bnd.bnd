@@ -1,0 +1,11 @@
+Bundle-Name: Liferay OSB Provisioning Marketplace REST Client
+Bundle-SymbolicName: com.liferay.osb.provisioning.marketplace.rest.client
+Bundle-Version: 1.0.0
+Export-Package:\
+	com.liferay.osb.provisioning.marketplace.rest.client.dto.v1_0,\
+	com.liferay.osb.provisioning.marketplace.rest.client.function,\
+	com.liferay.osb.provisioning.marketplace.rest.client.http,\
+	com.liferay.osb.provisioning.marketplace.rest.client.pagination,\
+	com.liferay.osb.provisioning.marketplace.rest.client.problem,\
+	com.liferay.osb.provisioning.marketplace.rest.client.resource.v1_0,\
+	com.liferay.osb.provisioning.marketplace.rest.client.serdes.v1_0
