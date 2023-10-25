@@ -273,7 +273,7 @@ definition {
 		}
 
 		if (isSet(webContentContent)) {
-			Pause(locator1 = 3000);
+			AssertElementPresent.assertVisible(locator1 = "CKEditor#BODY_FIELD_IFRAME_2");
 
 			SelectFrame.selectFrameNoLoading(locator1 = "CKEditor#BODY_FIELD_IFRAME_2");
 
@@ -291,7 +291,7 @@ definition {
 		}
 
 		if (isSet(webContentDescription)) {
-			Pause(locator1 = 3000);
+			AssertElementPresent.assertVisible(locator1 = "CKEditor#BODY_FIELD_IFRAME");
 
 			SelectFrame.selectFrameNoLoading(locator1 = "CKEditor#BODY_FIELD_IFRAME");
 
