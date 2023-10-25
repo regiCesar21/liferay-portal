@@ -1,8 +1,6 @@
 definition {
 
 	macro _gotoPendingFilter {
-		Pause(locator1 = 5000);
-
 		Click(locator1 = "Dropdown#FILTER_AND_ORDER");
 
 		MenuItem.click(menuItem = "Pending");
@@ -133,8 +131,6 @@ definition {
 
 		Workflow.confirmWorkflowAction();
 
-		Pause(locator1 = 1000);
-
 		Workflow.viewCompletedTask(
 			ddlDataDefinitionName = ${ddlDataDefinitionName},
 			multipleTasks = ${multipleTasks},
@@ -143,15 +139,11 @@ definition {
 			workflowAssetType = ${workflowAssetType},
 			workflowTask = ${workflowTask});
 
-		Pause(locator1 = 1000);
-
 		if (isSet(workflowActivityComment)) {
 			Workflow.gotoCompletedFilter();
 
 			if (isSet(workflowOrder)) {
 				Click(locator1 = "MyWorkflowTasksTask#ORDER");
-
-				Pause(locator1 = 1000);
 			}
 
 			Workflow._viewActivities(
@@ -176,8 +168,6 @@ definition {
 		LexiconEntry.gotoEllipsisMenuItem(menuItem = "Approve");
 
 		Workflow.confirmWorkflowAction();
-
-		Pause(locator1 = 1000);
 
 		Workflow.viewCompletedTask(
 			ddlDataDefinitionName = ${ddlDataDefinitionName},
@@ -221,15 +211,9 @@ definition {
 
 		IFrame.selectConfigurationFrame();
 
-		Click(locator1 = "MyWorkflowTasks#DIALOG_BOX_ASSIGN_TO_SELECT");
-
-		Pause(locator1 = 1000);
-
-		Click.clickNoMouseOver(
-			key_user = ${user},
-			locator1 = "MyWorkflowTasks#DIALOG_BOX_ASSIGN_TO_VALUE");
-
-		Pause(locator1 = 1000);
+		Select(
+			locator1 = "MyWorkflowTasks#DIALOG_BOX_ASSIGN_TO_SELECT",
+			value1 = ${user});
 
 		if (isSet(comment)) {
 			Type(
@@ -355,7 +339,7 @@ definition {
 	}
 
 	macro configureWCWorkflowViaFolderInfo {
-		Pause(locator1 = 5000);
+		WaitForElementPresent(locator1 = "Icon#INFO");
 
 		Click.pauseClickAt(locator1 = "Icon#INFO");
 
@@ -511,8 +495,6 @@ definition {
 	}
 
 	macro gotoCompletedFilter {
-		Pause(locator1 = 2000);
-
 		Click(locator1 = "Dropdown#FILTER_AND_ORDER");
 
 		MenuItem.click(menuItem = "Completed");
@@ -647,8 +629,6 @@ definition {
 
 		Workflow.confirmWorkflowAction();
 
-		Pause(locator1 = 1000);
-
 		Workflow.viewCompletedTask(
 			ddlDataDefinitionName = ${ddlDataDefinitionName},
 			workflowAssetTitle = ${workflowAssetTitle},
@@ -672,8 +652,6 @@ definition {
 		LexiconEntry.gotoEllipsisMenuItem(menuItem = "Reject");
 
 		Workflow.confirmWorkflowAction();
-
-		Pause(locator1 = 1000);
 
 		Workflow.viewCompletedTask(
 			ddlDataDefinitionName = ${ddlDataDefinitionName},
@@ -931,8 +909,6 @@ definition {
 		}
 
 		Workflow.confirmWorkflowAction();
-
-		Pause(locator1 = 1000);
 
 		Workflow.viewTaskAssignedToMyRoles(
 			ddlDataDefinitionName = ${ddlDataDefinitionName},
@@ -1328,8 +1304,6 @@ definition {
 			Refresh();
 
 			Workflow._gotoPendingFilter();
-
-			Pause(locator1 = 1000);
 		}
 
 		if (${multipleTasks} == "true") {
@@ -1409,8 +1383,6 @@ definition {
 			Navigator.gotoNavTab(navTab = "Assigned to Me");
 
 			Navigator.gotoNavTab(navTab = "Assigned to My Roles");
-
-			Pause(locator1 = 1000);
 		}
 
 		AssertTextEquals(
@@ -1486,8 +1458,6 @@ definition {
 	}
 
 	macro webContentGoToAddCP {
-		Pause(locator1 = 3000);
-
 		LexiconEntry.gotoAdd();
 
 		MenuItem.click(menuItem = "Basic Web Content");
@@ -1497,7 +1467,7 @@ definition {
 		AssertVisible(locator1 = "TextInput#TITLE");
 
 		while (IsElementNotPresent(locator1 = "WCEditWebContent#SIDEBAR")) {
-			Pause(locator1 = 1000);
+			WaitForElementPresent(locator1 = "WCEditWebContent#SIDEBAR");
 		}
 	}
 
