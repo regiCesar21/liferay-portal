@@ -104,8 +104,6 @@ definition {
 			entryContent = "Blogs Entry Content",
 			entryTitle = "Blogs Entry Title");
 
-		Pause(locator1 = 3000);
-
 		Ratings.rateThumb(ratingResult = "Rate this as good");
 
 		Comments.addPG(entryComment = "Blogs Entry Comment");
