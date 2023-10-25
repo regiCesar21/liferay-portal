@@ -1,7 +1,7 @@
 definition {
 
 	macro addEntry {
-		Pause(locator1 = 3000);
+		WaitForElementPresent(locator1 = "CommerceEntry#NAME_FIELD");
 
 		AssertElementPresent(locator1 = "CommerceEntry#NAME_FIELD");
 

@@ -166,8 +166,6 @@ definition {
 			category = "Product Management",
 			portlet = "Options");
 
-		Pause(locator1 = 2000);
-
 		CPCommerceCatalog.newOptionsEntry(
 			optionDescription = "Option Description",
 			optionFieldType = "Select from List",

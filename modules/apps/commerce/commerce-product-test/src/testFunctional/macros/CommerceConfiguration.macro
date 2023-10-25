@@ -46,8 +46,6 @@ definition {
 			CommerceEntry.deleteCommerceEntry();
 		}
 
-		Pause(locator1 = 3000);
-
 		if (isSet(userScreenName)) {
 			ApplicationsMenu.gotoPortlet(
 				category = "Users",
@@ -309,8 +307,6 @@ definition {
 		CommerceNavigator.gotoPortlet(
 			category = "Settings",
 			portlet = "Options");
-
-		Pause(locator1 = 3000);
 
 		CommerceOptions.deleteOptionsEntries();
 
