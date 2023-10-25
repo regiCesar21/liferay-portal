@@ -484,13 +484,15 @@ definition {
 	}
 
 	test CanAddSearchWidgetsViaUIOnContentPage {
-		task ("Add a content page and navigate to said page") {
-			ProductMenu.gotoPortlet(
-				category = "Site Builder",
-				panel = "Site Administration",
-				portlet = "Pages");
+		task ("Add a content page and navigate to the edit screen of said page") {
+			JSONLayout.addPublicLayout(
+				groupName = "Guest",
+				layoutName = "Test Content Page",
+				type = "content");
 
-			ContentPages.addPage(pageName = "Test Content Page");
+			ContentPagesNavigator.openEditContentPage(
+				pageName = "Test Content Page",
+				siteName = "Guest");
 		}
 
 		task ("Add each search widget via the UI and assert no error is present for each") {
@@ -500,24 +502,13 @@ definition {
 
 	test CanAddSearchWidgetsViaUIOnWidgetPage {
 		task ("Add a widget page and navigate to said page") {
-			ProductMenu.gotoPortlet(
-				category = "Site Builder",
-				panel = "Site Administration",
-				portlet = "Pages");
+			JSONLayout.addPublicLayout(
+				groupName = "Guest",
+				layoutName = "Test Widget Page");
 
-			SitePages.addPublicPage(
+			Navigator.openSitePage(
 				pageName = "Test Widget Page",
-				sitePageType = "Widget Page");
-
-			SitePages.configurePage(
-				columnName = "1 Column",
-				pageName = "Test Widget Page",
-				privacy = "Public Pages",
-				sitePageType = "Widget Page");
-
-			Navigator.openURL();
-
-			Navigator.gotoPage(pageName = "Test Widget Page");
+				siteName = "Guest");
 		}
 
 		task ("Add each search widget via the UI and assert no error is present for each") {
