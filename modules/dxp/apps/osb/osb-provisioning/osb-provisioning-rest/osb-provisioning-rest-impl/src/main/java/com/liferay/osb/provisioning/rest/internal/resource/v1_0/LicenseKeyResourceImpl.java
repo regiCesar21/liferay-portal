@@ -805,10 +805,6 @@ public class LicenseKeyResourceImpl
 
 		for (LicenseKey licenseKey : licenseKeys) {
 			com.liferay.osb.provisioning.license.model.LicenseKey
-				oldLicenseKey = _licenseKeyLocalService.getLicenseKey(
-					licenseKey.getId());
-
-			com.liferay.osb.provisioning.license.model.LicenseKey
 				curLicenseKey = _licenseKeyLocalService.extendLicenseKey(
 					StringBundler.concat(
 						contact.getFirstName(), StringPool.SPACE,
@@ -818,8 +814,6 @@ public class LicenseKeyResourceImpl
 					licenseKey.getStartDate(), licenseKey.getExpirationDate());
 
 			curLicenseKeys.add(LicenseKeyUtil.toLicenseKey(curLicenseKey));
-
-			_extendLicenseKeySubscription(oldLicenseKey, curLicenseKey);
 		}
 
 		return Page.of(curLicenseKeys);
@@ -1047,25 +1041,6 @@ public class LicenseKeyResourceImpl
 			if ((nextTermedCount == null) || !nextTermDate.equals(endDate)) {
 				termedCountsMap.put(endDate, curTermCount);
 			}
-		}
-	}
-
-	private void _extendLicenseKeySubscription(
-			com.liferay.osb.provisioning.license.model.LicenseKey oldLicenseKey,
-			com.liferay.osb.provisioning.license.model.LicenseKey curLicenseKey)
-		throws Exception {
-
-		long classNameId = _classNameLocalService.getClassNameId(
-			com.liferay.osb.provisioning.license.model.LicenseKey.class);
-
-		List<SubscriptionEntry> subscriptionEntries =
-			_subscriptionEntryLocalService.getSubscriptionEntries(
-				classNameId, oldLicenseKey.getLicenseKeyId());
-
-		for (SubscriptionEntry subscriptionEntry : subscriptionEntries) {
-			_subscriptionEntryLocalService.addSubscriptionEntry(
-				classNameId, curLicenseKey.getLicenseKeyId(),
-				subscriptionEntry.getContactUuid());
 		}
 	}
 

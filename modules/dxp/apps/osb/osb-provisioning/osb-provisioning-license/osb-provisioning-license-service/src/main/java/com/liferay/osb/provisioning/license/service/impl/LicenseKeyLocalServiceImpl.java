@@ -39,6 +39,8 @@ import com.liferay.osb.provisioning.license.model.LicenseEntry;
 import com.liferay.osb.provisioning.license.model.LicenseKey;
 import com.liferay.osb.provisioning.license.service.LicenseEntryLocalService;
 import com.liferay.osb.provisioning.license.service.base.LicenseKeyLocalServiceBaseImpl;
+import com.liferay.osb.provisioning.subscription.model.SubscriptionEntry;
+import com.liferay.osb.provisioning.subscription.service.SubscriptionEntryLocalService;
 import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.aop.AopService;
@@ -359,7 +361,7 @@ public class LicenseKeyLocalServiceImpl extends LicenseKeyLocalServiceBaseImpl {
 			licenseKey.getProductKey());
 		LicenseEntry licenseEntry = licenseKey.getLicenseEntry();
 
-		return doAddLicenseKeyVersion3_4(
+		LicenseKey newLicenseKey = doAddLicenseKeyVersion3_4(
 			new Date(), userName, userUuid, licenseKey.getLicenseEntry(),
 			product, licenseKey.getAccountKey(), productPurchaseKey,
 			licenseKey.getAccountName(), licenseEntry.getType(),
@@ -374,6 +376,11 @@ public class LicenseKeyLocalServiceImpl extends LicenseKeyLocalServiceBaseImpl {
 			new String[] {licenseKey.getMacAddresses()},
 			new String[] {licenseKey.getServerId()}, startDate, expirationDate,
 			licenseKey.getAdditionalInfo(), licenseKey.isComplimentary(), true);
+
+		extendLicenseKeySubscription(
+			licenseKeyId, newLicenseKey.getLicenseKeyId());
+
+		return newLicenseKey;
 	}
 
 	public List<LicenseKey> getAssetReceiptLicenseLicenseKeys(
@@ -1069,6 +1076,24 @@ public class LicenseKeyLocalServiceImpl extends LicenseKeyLocalServiceBaseImpl {
 		return licenseKey;
 	}
 
+	protected void extendLicenseKeySubscription(
+			long oldLicenseKeyId, long newLicenseKeyId)
+		throws Exception {
+
+		long classNameId = classNameLocalService.getClassNameId(
+			LicenseKey.class);
+
+		List<SubscriptionEntry> subscriptionEntries =
+			_subscriptionEntryLocalService.getSubscriptionEntries(
+				classNameId, oldLicenseKeyId);
+
+		for (SubscriptionEntry subscriptionEntry : subscriptionEntries) {
+			_subscriptionEntryLocalService.addSubscriptionEntry(
+				classNameId, newLicenseKeyId,
+				subscriptionEntry.getContactUuid());
+		}
+	}
+
 	protected String getCounterName(String productPurchaseKey) {
 		return LicenseKey.class.getName(
 		).concat(
@@ -1288,5 +1313,8 @@ public class LicenseKeyLocalServiceImpl extends LicenseKeyLocalServiceBaseImpl {
 
 	@Reference
 	private ProductWebService _productWebService;
+
+	@Reference
+	private SubscriptionEntryLocalService _subscriptionEntryLocalService;
 
 }
