@@ -1247,8 +1247,6 @@ definition {
 
 		for (var redirectURL : list "${portalURL}/web/test-site-name/test-source-page,${portalURL}/web/test-site-name/test-destination-page") {
 			Redirect.viewEntryFloatingURL(redirectURL = ${redirectURL});
-
-			Pause(locator1 = 2000);
 		}
 
 		Check(
