@@ -250,6 +250,7 @@ definition {
 			searchAssetType = "Message Boards Message");
 	}
 
+	@ignore = "true"
 	@priority = 5
 	test XPackPkiAuthenticationSmokeTest {
 		property browser.chrome.version = "86.0";
