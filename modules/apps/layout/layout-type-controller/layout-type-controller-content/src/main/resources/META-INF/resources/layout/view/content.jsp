@@ -8,7 +8,6 @@
 <%@ include file="/layout/view/init.jsp" %>
 
 <%
-String mode = ParamUtil.getString(request, "liferay-layout:render-fragment-layout:mode", FragmentEntryLinkConstants.VIEW);
 String ppid = ParamUtil.getString(request, "p_p_id");
 %>
 
@@ -44,7 +43,7 @@ String ppid = ParamUtil.getString(request, "p_p_id");
 	<c:otherwise>
 		<liferay-layout:render-fragment-layout
 			groupId="<%= layout.getGroupId() %>"
-			mode="<%= mode %>"
+			mode='<%= ParamUtil.getString(request, "liferay-layout:render-fragment-layout:mode", FragmentEntryLinkConstants.VIEW) %>'
 			plid="<%= layout.getPlid() %>"
 			showPreview="<%= true %>"
 		/>

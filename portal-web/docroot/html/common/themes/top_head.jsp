@@ -68,7 +68,13 @@ if (layoutTypePortlet != null) {
 if (layout != null) {
 	String ppid = ParamUtil.getString(request, "p_p_id");
 
-	if (layout.isTypeAssetDisplay() || layout.isTypeContent()) {
+	LayoutTypeController layoutTypeController = LayoutTypeControllerTracker.getLayoutTypeController(layout.getType());
+
+	boolean isTypeAssetDisplay = Objects.equals(layout.getType(), LayoutConstants.TYPE_ASSET_DISPLAY) || Objects.equals(layoutTypeController.getType(), LayoutConstants.TYPE_ASSET_DISPLAY);
+
+	boolean isTypeContent = Objects.equals(layout.getType(), "collection") || Objects.equals(layout.getType(), LayoutConstants.TYPE_CONTENT) || Objects.equals(layoutTypeController.getType(), LayoutConstants.TYPE_CONTENT);
+
+	if (isTypeAssetDisplay || isTypeContent) {
 		List<com.liferay.portal.kernel.model.PortletPreferences> portletPreferencesList = PortletPreferencesLocalServiceUtil.getPortletPreferences(PortletKeys.PREFS_OWNER_ID_DEFAULT, PortletKeys.PREFS_OWNER_TYPE_LAYOUT, layout.getPlid());
 
 		for (com.liferay.portal.kernel.model.PortletPreferences portletPreferences : portletPreferencesList) {
