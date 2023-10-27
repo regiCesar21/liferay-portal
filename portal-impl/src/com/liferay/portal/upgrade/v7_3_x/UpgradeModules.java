@@ -22,7 +22,7 @@ public class UpgradeModules
 	}
 
 	private static final String[] _BUNDLE_SYMBOLIC_NAMES = {
-		"com.liferay.layout.service"
+		"com.liferay.layout.service", "com.liferay.user.associated.data.web"
 	};
 
 	private static final String[][] _CONVERTED_LEGACY_MODULES = {};
