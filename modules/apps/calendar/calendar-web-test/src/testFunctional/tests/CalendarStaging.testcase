@@ -305,6 +305,10 @@ definition {
 			pageName = "Staging Test Page",
 			siteName = "Site Name");
 
+		while ((IsElementNotPresent(key_eventTitle = "Site Name Staged Event", locator1 = "Calendar#SCHEDULER_EVENT_SPECIFIC")) && (maxIterations = "200")) {
+			Refresh();
+		}
+
 		CalendarEvent.viewToday(eventTitle = "Site Name Staged Event");
 
 		CalendarEvent.viewToday(eventTitle = "Test Test Live Event");
