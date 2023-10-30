@@ -953,7 +953,7 @@ definition {
 			webContentContent = "WebContent Content 1",
 			webContentTitle = "WebContent Title 1");
 
-		Pause(locator1 = 65000);
+		Pause(value1 = 65000);
 
 		Navigator.gotoSitePage(
 			pageName = "Asset Publisher Page",
@@ -963,7 +963,7 @@ definition {
 			webContentContent = "WebContent Content 2",
 			webContentTitle = "WebContent Title 2");
 
-		Pause(locator1 = 65000);
+		Pause(value1 = 65000);
 
 		Navigator.gotoSitePage(
 			pageName = "Asset Publisher Page",

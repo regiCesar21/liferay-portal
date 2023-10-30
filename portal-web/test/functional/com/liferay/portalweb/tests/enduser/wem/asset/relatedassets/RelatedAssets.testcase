@@ -49,7 +49,7 @@ definition {
 
 		WebContentNavigator.openWebContentAdmin(siteURLKey = "site-name-staging");
 
-		Pause(locator1 = 3000);
+		Pause(value1 = 3000);
 
 		WebContentNavigator.gotoAddCP();
 

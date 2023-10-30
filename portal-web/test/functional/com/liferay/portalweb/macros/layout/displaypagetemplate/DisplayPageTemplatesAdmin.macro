@@ -36,7 +36,7 @@ definition {
 
 	@summary = "Default summary"
 	macro deleteDisplayPage(displayPageName = null) {
-		Pause(locator = 5000);
+		Pause(value = 5000);
 
 		LexiconCard.delete(card = ${displayPageName});
 	}
@@ -48,7 +48,7 @@ definition {
 
 	@summary = "Default summary"
 	macro gotoDisplayPageEllipsisItem(item = null, displayPageName = null) {
-		Pause(locator = 1000);
+		Pause(value = 1000);
 
 		LexiconCard.clickEllipsisItem(
 			card = ${displayPageName},

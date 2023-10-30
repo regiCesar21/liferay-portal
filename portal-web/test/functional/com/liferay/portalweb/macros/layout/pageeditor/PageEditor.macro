@@ -257,7 +257,7 @@ definition {
 	macro clickDiscardDraft() {
 		Button.clickNoError(button = "Discard Draft");
 
-		Confirm();
+		Confirm(value1 = "null");
 	}
 
 	@summary = "Default summary"
@@ -542,7 +542,7 @@ definition {
 			locator1 = "TextInput#FILE",
 			value1 = ${fileName});
 
-		Pause(locator1 = 3000);
+		Pause(value1 = 3000);
 
 		SelectFrameTop();
 
@@ -1119,7 +1119,7 @@ definition {
 
 	@summary = "Default summary"
 	macro waitForAutoSave() {
-		Pause(locator1 = 1000);
+		Pause(value1 = 1000);
 
 		AssertTextEquals.assertPartialText(
 			locator1 = "PageEditor#AUTOSAVE_MESSAGE",

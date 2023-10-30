@@ -906,7 +906,7 @@ definition {
 	@summary = "Default summary"
 	macro editTitle(eventTitle = null) {
 		while (IsNotEditable(locator1 = "TextInput#TITLE")) {
-			Pause(locator1 = 5000);
+			Pause(value1 = 5000);
 		}
 
 		PortletEntry.inputTitle(title = ${eventTitle});

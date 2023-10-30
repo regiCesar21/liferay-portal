@@ -207,12 +207,12 @@ definition {
 				locator1 = "FormFields#TEXT_FIELD",
 				value1 = ${fieldValue});
 
-			Pause(locator1 = 5000);
+			Pause(value1 = 5000);
 
 			takeScreenshot();
 		}
 		else {
-			Pause(locator1 = 1000);
+			Pause(value1 = 1000);
 
 			Type(
 				key_fieldName = ${fieldName},
@@ -223,7 +223,7 @@ definition {
 
 	@summary = "Default summary"
 	macro editTextAlt(fieldName = null, fieldValue = null) {
-		Pause(locator1 = 1000);
+		Pause(value1 = 1000);
 
 		Type(
 			key_fieldName = ${fieldName},
@@ -233,7 +233,7 @@ definition {
 
 	@summary = "Default summary"
 	macro editTextFieldWithEnterKey(fieldName = null) {
-		Pause(locator1 = 1000);
+		Pause(value1 = 1000);
 
 		KeyPress(
 			key_fieldName = ${fieldName},
@@ -243,7 +243,7 @@ definition {
 
 	@summary = "Default summary"
 	macro editTextMultiline(fieldName = null, fieldValue = null) {
-		Pause(locator1 = 1000);
+		Pause(value1 = 1000);
 
 		Type(
 			key_fieldName = ${fieldName},
@@ -253,7 +253,7 @@ definition {
 
 	@summary = "Default summary"
 	macro editTextWithBackspace(fieldName = null) {
-		Pause(locator1 = 1000);
+		Pause(value1 = 1000);
 
 		var key_fieldName = ${fieldName};
 
@@ -263,12 +263,12 @@ definition {
 			locator1 = "FormFields#TEXT_FIELD",
 			value1 = "\BACK_SPACE");
 
-		Pause(locator1 = 3000);
+		Pause(value1 = 3000);
 	}
 
 	@summary = "Default summary"
 	macro editTextWithDataProvider(fieldName = null, fieldValue = null) {
-		Pause(locator1 = 1000);
+		Pause(value1 = 1000);
 
 		Type.sendKeys(
 			key_fieldName = ${fieldName},
@@ -278,7 +278,7 @@ definition {
 
 	@summary = "Default summary"
 	macro editValidation(validationErrorMessage = null, validationArgument = null, validationInput = null) {
-		Pause(locator1 = 1000);
+		Pause(value1 = 1000);
 
 		Click(locator1 = "FormFields#VALIDATION_ARGUMENT");
 
@@ -309,13 +309,13 @@ definition {
 
 	@summary = "Default summary"
 	macro enableSwitcher(fieldName = null) {
-		Pause(locator1 = 2000);
+		Pause(value1 = 2000);
 
 		Click(
 			key_fieldName = ${fieldName},
 			locator1 = "FormFields#SWITCHER");
 
-		Pause(locator1 = 2000);
+		Pause(value1 = 2000);
 
 		//FormFields.viewSwitcherChecked(fieldName = "${fieldName}");
 
@@ -323,7 +323,7 @@ definition {
 
 	@summary = "Default summary"
 	macro getFieldName() {
-		Pause(locator1 = 3000);
+		Pause(value1 = 3000);
 
 		var fieldName = selenium.getElementValue("FormFields#FIELD_NAME_EDIT");
 

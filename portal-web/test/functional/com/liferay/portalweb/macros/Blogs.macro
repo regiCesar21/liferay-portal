@@ -83,7 +83,7 @@ definition {
 			imageFileName = ${imageFileName},
 			navTab = ${navTab});
 
-		Pause(locator1 = 1000);
+		Pause(value1 = 1000);
 
 		Button.clickPublish();
 	}
@@ -180,7 +180,7 @@ definition {
 	macro addEntryWithUploadedCoverImage(navTab = null, uploadFileName = null, coverImageName = null, uploadedFileName = null, entrySubtitle = null, entryTitle = null, entryContent = null) {
 		BlogsNavigator.gotoAddEntry();
 
-		Pause(locator1 = 5000);
+		Pause(value1 = 5000);
 
 		BlogsNavigator.gotoSelectFile();
 
@@ -195,7 +195,7 @@ definition {
 				uploadFileName = ${uploadFileName});
 		}
 
-		Pause(locator1 = 5000);
+		Pause(value1 = 5000);
 
 		if (isSet(captionField)) {
 			AssertElementPresent(locator1 = "BlogsEntry#ENTRY_COVER_IMAGE_CAPTION");
@@ -227,7 +227,7 @@ definition {
 
 		SelectFrameTop(value1 = "relative=top");
 
-		Pause(locator1 = 5000);
+		Pause(value1 = 5000);
 
 		var key_assetTitle = ${entryTitle};
 
@@ -256,7 +256,7 @@ definition {
 
 		SelectFrameTop(value1 = "relative=top");
 
-		Pause(locator1 = 5000);
+		Pause(value1 = 5000);
 
 		var key_assetTitle = ${entryTitle};
 
@@ -378,7 +378,7 @@ definition {
 			locator1 = "Button#SUBMIT_FOR_PUBLICATION",
 			value1 = "Submit for Publication");
 
-		Pause(locator1 = 5000);
+		Pause(value1 = 5000);
 
 		SelectFrame(value1 = "relative=top");
 	}

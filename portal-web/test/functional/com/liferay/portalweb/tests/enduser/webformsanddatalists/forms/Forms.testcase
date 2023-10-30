@@ -922,7 +922,7 @@ definition {
 
 		FormsAdminNavigator.gotoEditField(fieldName = "Testing Title");
 
-		Pause(locator1 = 2000);
+		Pause(value1 = 2000);
 
 		FormFields.changeFieldType(selectOption = "Text Field");
 
@@ -1217,7 +1217,7 @@ definition {
 
 		Form.closeSidebar();
 
-		Pause(locator1 = 60000);
+		Pause(value1 = 60000);
 
 		FormsAdminNavigator.gotoBack();
 
@@ -1233,7 +1233,7 @@ definition {
 
 		Form.closeSidebar();
 
-		Pause(locator1 = 120000);
+		Pause(value1 = 120000);
 
 		FormsAdminNavigator.gotoBack();
 
@@ -2810,7 +2810,7 @@ definition {
 
 		FormsAdminNavigator.gotoAddForm();
 
-		Pause(locator1 = 2000);
+		Pause(value1 = 2000);
 
 		Form.gotoAddField(
 			fieldPositionNumber = 1,
@@ -3130,7 +3130,7 @@ definition {
 
 		LAR.exportPortlet(larFileName = "FormsExport.lar");
 
-		Pause(locator1 = 5000);
+		Pause(value1 = 5000);
 
 		ProductMenu.gotoPortlet(
 			category = "Sites",
@@ -3273,7 +3273,7 @@ definition {
 			asset = "Form Subject",
 			bodyLink = "Click here to access the form");
 
-		SelectWindow.selectPopUp(locator1 = "null");
+		SelectWindow.selectPopUp(value1 = "null");
 
 		FormsAdmin.viewTextEntry(
 			fieldLabel = "Text Field",
@@ -4586,7 +4586,7 @@ definition {
 
 		Form.enableAutocompleteConfiguration();
 
-		Pause(locator1 = 60000);
+		Pause(value1 = 60000);
 
 		FormsAdminNavigator.gotoBack();
 
@@ -5150,7 +5150,7 @@ definition {
 
 		Form.closeSidebar();
 
-		Pause(locator1 = 60000);
+		Pause(value1 = 60000);
 
 		Form.viewSaveNotification();
 

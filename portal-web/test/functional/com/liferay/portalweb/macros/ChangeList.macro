@@ -73,7 +73,7 @@ definition {
 
 	@summary = "Default summary"
 	macro enableChangeList() {
-		Pause(locator1 = 2000);
+		Pause(value1 = 2000);
 
 		Check.checkToggleSwitch(locator1 = "ChangeListSettings#CHANGE_LISTS_TOGGLE_SWITCH");
 
@@ -121,7 +121,7 @@ definition {
 			locator1 = "ChangeList#OVERVIEW_PAGE_TITLE",
 			value1 = "History");
 
-		Pause(locator1 = 5000);
+		Pause(value1 = 5000);
 
 		Refresh();
 

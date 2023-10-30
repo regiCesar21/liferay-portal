@@ -61,7 +61,7 @@ definition {
 	macro addManualViaRSS() {
 		SelectFrame(locator1 = "IFrame#DIALOG");
 
-		Pause(locator1 = 5000);
+		Pause(value1 = 5000);
 
 		if (IsElementPresent(locator1 = "Configuration#SETUP_DISPLAY_SETTINGS")) {
 			AssertClick(
@@ -100,7 +100,7 @@ definition {
 
 		SelectFrame(locator1 = "IFrame#CONFIGURATION");
 
-		Pause(locator1 = 5000);
+		Pause(value1 = 5000);
 
 		if (IsElementPresent(key_tab = "Display Settings", locator1 = "NavTab#TAB_LINK")) {
 			Navigator.gotoNavTab(navTab = "Display Settings");
@@ -150,7 +150,7 @@ definition {
 
 		SelectFrame(locator1 = "IFrame#CONFIGURATION");
 
-		Pause(locator1 = 5000);
+		Pause(value1 = 5000);
 
 		if (IsElementPresent(key_tab = "Display Settings", locator1 = "NavTab#TAB_LINK")) {
 			Navigator.gotoNavTab(navTab = "Display Settings");
@@ -196,7 +196,7 @@ definition {
 
 		SelectFrame(locator1 = "IFrame#CONFIGURATION");
 
-		Pause(locator1 = 3000);
+		Pause(value1 = 3000);
 
 		AssertClick.assertPartialTextClickAt(
 			locator1 = "ApplicationDisplayTemplatesConfiguration#MANAGE_DISPLAY_TEMPLATES_LINK",

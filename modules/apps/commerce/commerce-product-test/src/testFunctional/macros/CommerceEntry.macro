@@ -61,7 +61,7 @@ definition {
 	macro addNewChannelsEntry {
 		IFrame.selectModalFrame();
 
-		Pause(locator1 = 3000);
+		Pause(value1 = 3000);
 
 		Type(
 			locator1 = "TextInput#NAME",
@@ -100,7 +100,7 @@ definition {
 			Button.clickSave();
 		}
 
-		Pause(locator1 = 5000);
+		Pause(value1 = 5000);
 	}
 
 	macro addNewCountriesEntry {
@@ -308,7 +308,7 @@ definition {
 
 		Click(locator1 = "Button#SUBMIT");
 
-		Pause(locator1 = 2000);
+		Pause(value1 = 2000);
 
 		Refresh();
 
@@ -493,7 +493,7 @@ definition {
 				value1 = ${status});
 		}
 
-		Pause(locator1 = 3000);
+		Pause(value1 = 3000);
 	}
 
 	macro publishProductImage {
@@ -507,7 +507,7 @@ definition {
 
 		AssertElementPresent(locator1 = "Message#SUCCESS");
 
-		Pause(locator1 = 3000);
+		Pause(value1 = 3000);
 	}
 
 	macro saveEntry {
@@ -515,7 +515,7 @@ definition {
 
 		AssertElementPresent(locator1 = "Message#SUCCESS");
 
-		Pause(locator1 = 3000);
+		Pause(value1 = 3000);
 	}
 
 	macro saveEntryAsDraft {
@@ -531,7 +531,7 @@ definition {
 				value1 = ${status});
 		}
 
-		Pause(locator1 = 3000);
+		Pause(value1 = 3000);
 	}
 
 	macro selectAssociatedOptionsValue {

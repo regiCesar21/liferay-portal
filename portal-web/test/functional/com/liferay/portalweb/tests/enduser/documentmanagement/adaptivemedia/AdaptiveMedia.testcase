@@ -263,7 +263,7 @@ definition {
 			dmDocumentFile = "high_resolution_photo.jpg",
 			dmDocumentTitle = "high_resolution_photo.jpg");
 
-		Pause(locator1 = 3000);
+		Pause(value1 = 3000);
 
 		ProductMenu.gotoPortlet(
 			category = "Content & Data",
@@ -280,7 +280,7 @@ definition {
 			imageFileName = "high_resolution_photo.jpg",
 			navTab = "Documents and Media");
 
-		Pause(locator1 = 2000);
+		Pause(value1 = 2000);
 
 		AdaptiveMedia.viewImageVariantURL(imageName = "high_resolution_photo.jpg");
 
@@ -344,7 +344,7 @@ definition {
 			dmDocumentFile = "Document_1.svg",
 			dmDocumentTitle = "Document_1.svg");
 
-		Pause(locator1 = 3000);
+		Pause(value1 = 3000);
 
 		ProductMenu.gotoPortlet(
 			category = "Content & Data",
@@ -361,7 +361,7 @@ definition {
 			imageFileName = "Document_1.svg",
 			navTab = "Documents and Media");
 
-		Pause(locator1 = 2000);
+		Pause(value1 = 2000);
 
 		AdaptiveMedia.viewImageVariantURL(imageName = "Document_1.svg");
 

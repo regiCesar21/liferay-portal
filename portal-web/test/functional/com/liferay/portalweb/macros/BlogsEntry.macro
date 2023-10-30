@@ -182,7 +182,7 @@ definition {
 			entryContent = ${entryContent},
 			entryTitle = ${entryTitle});
 
-		Pause(locator1 = 3000);
+		Pause(value1 = 3000);
 
 		WaitForSPARefresh();
 
@@ -776,7 +776,7 @@ definition {
 		var key_entrySubtitle = ${entrySubtitle};
 		var key_entryTitle = ${entryTitle};
 
-		Pause(locator1 = 3000);
+		Pause(value1 = 3000);
 
 		AssertTextEquals(
 			locator1 = "BlogsEntry#TITLE",
@@ -1184,9 +1184,9 @@ definition {
 			locator1 = "Button#ANY",
 			value1 = "RSS");
 
-		Pause(locator1 = 3000);
+		Pause(value1 = 3000);
 
-		SelectWindow.selectPopUp(locator1 = "null");
+		SelectWindow.selectPopUp(value1 = "null");
 
 		AssertLocation.assertPartialLocation(value1 = "blogs/rss");
 
@@ -1352,7 +1352,7 @@ definition {
 			locator1 = "BlogsEntry#TITLE_LINK",
 			value1 = ${entryTitle});
 
-		Pause(locator1 = 3000);
+		Pause(value1 = 3000);
 
 		AssertTextEquals(
 			locator1 = "BlogsEntry#TITLE",
@@ -1383,7 +1383,7 @@ definition {
 			locator1 = "BlogsEntry#TITLE_LINK",
 			value1 = ${entryTitle});
 
-		Pause(locator1 = 3000);
+		Pause(value1 = 3000);
 
 		AssertTextEquals(
 			locator1 = "BlogsEntry#TITLE",

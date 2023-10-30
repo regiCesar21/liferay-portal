@@ -375,7 +375,7 @@ definition {
 		var key_imageFileName = ${dmDocumentTitle};
 		var key_imageFileName = StringUtil.replace(${dmDocumentTitle}, " ", "+");
 
-		Pause(locator1 = 1000);
+		Pause(value1 = 1000);
 
 		if (isSet(siteName)) {
 			Click(locator1 = "ItemSelector#SITES_NAVIGATION");
@@ -930,7 +930,7 @@ definition {
 
 		Click(locator1 = "WCEditWebContent#DISPLAY_PAGE_CHOOSE_BUTTON");
 
-		Pause(locator1 = 5000);
+		Pause(value1 = 5000);
 
 		SelectFrameTop();
 
@@ -975,7 +975,7 @@ definition {
 			pageName = ${displayPageName},
 			pageType = ${pageType});
 
-		Pause(locator1 = 3000);
+		Pause(value1 = 3000);
 
 		SelectFrame(value1 = "relative=top");
 	}
@@ -1258,7 +1258,7 @@ definition {
 
 		ClickNoError(locator1 = "Icon#MOVE_TO_RECYCLE_BIN");
 
-		Confirm();
+		Confirm(value1 = "null");
 
 		AssertElementPresent(locator1 = "Message#SUCCESS");
 	}
@@ -1377,7 +1377,7 @@ definition {
 
 		Panel.expandPanel(panel = "Default Template");
 
-		Pause(locator1 = 3000);
+		Pause(value1 = 3000);
 
 		AssertClick(
 			locator1 = "WCEditWebContent#SELECT_TEMPLATE",
@@ -1387,13 +1387,13 @@ definition {
 
 		SelectFrame(locator1 = "IFrame#DIALOG");
 
-		Pause(locator1 = 3000);
+		Pause(value1 = 3000);
 
 		LexiconCard.clickCardWithConfirmation(card = ${templateName});
 
 		IFrame.selectTopFrame();
 
-		Pause(locator1 = 3000);
+		Pause(value1 = 3000);
 
 		Panel.expandPanel(panel = "Default Template");
 
@@ -1404,11 +1404,11 @@ definition {
 
 	@summary = "Default summary"
 	macro subscribeToCurrentFolderCP() {
-		Pause(locator1 = 3000);
+		Pause(value1 = 3000);
 
 		Click.clickAt(locator1 = "Icon#INFO");
 
-		Pause(locator1 = 1000);
+		Pause(value1 = 1000);
 
 		Click(locator1 = "Icon#SUBSCRIBE");
 

@@ -108,7 +108,7 @@ definition {
 			panel = "Site Administration",
 			portlet = "Blogs");
 
-		Pause(locator = 5000);
+		Pause(value = 5000);
 
 		BlogsNavigator.gotoBlogsEntryPermissionsCP(entryTitle = "Blogs Entry Title");
 

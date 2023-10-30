@@ -580,7 +580,7 @@ definition {
 
 		Navigator.gotoPage(pageName = "Blog and Message Board Page");
 
-		Pause(locator1 = 30000);
+		Pause(value1 = 30000);
 
 		Gmail.login(
 			userEmailAddress = PropsUtil.get("email.address.2"),
@@ -603,7 +603,7 @@ definition {
 
 		Close();
 
-		SelectWindow(locator1 = "null");
+		SelectWindow(value1 = "null");
 
 		Navigator.gotoPage(pageName = "Blog and Message Board Page");
 
@@ -625,7 +625,7 @@ definition {
 
 		Close();
 
-		SelectWindow(locator1 = "null");
+		SelectWindow(value1 = "null");
 
 		Navigator.gotoPage(pageName = "Blog and Message Board Page");
 
@@ -787,7 +787,7 @@ definition {
 
 		Navigator.gotoPage(pageName = "Blog and Message Board Page");
 
-		Pause(locator1 = 30000);
+		Pause(value1 = 30000);
 
 		Gmail.login(
 			userEmailAddress = PropsUtil.get("email.address.2"),
@@ -810,7 +810,7 @@ definition {
 
 		Close();
 
-		SelectWindow(locator1 = "null");
+		SelectWindow(value1 = "null");
 
 		Navigator.gotoPage(pageName = "Blog and Message Board Page");
 
@@ -832,7 +832,7 @@ definition {
 
 		Close();
 
-		SelectWindow(locator1 = "null");
+		SelectWindow(value1 = "null");
 
 		Navigator.gotoPage(pageName = "Blog and Message Board Page");
 
@@ -993,7 +993,7 @@ definition {
 
 		Navigator.gotoPage(pageName = "Blog and Message Board Page");
 
-		Pause(locator1 = 30000);
+		Pause(value1 = 30000);
 
 		Gmail.login(
 			userEmailAddress = PropsUtil.get("email.address.2"),
@@ -1016,7 +1016,7 @@ definition {
 
 		Close();
 
-		SelectWindow(locator1 = "null");
+		SelectWindow(value1 = "null");
 
 		Navigator.gotoPage(pageName = "Blog and Message Board Page");
 
@@ -1038,7 +1038,7 @@ definition {
 
 		Close();
 
-		SelectWindow(locator1 = "null");
+		SelectWindow(value1 = "null");
 
 		Navigator.gotoPage(pageName = "Blog and Message Board Page");
 

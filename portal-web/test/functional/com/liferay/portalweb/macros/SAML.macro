@@ -168,7 +168,7 @@ definition {
 				userEmailAddress = ${userEmailAddress});
 		}
 
-		Pause(locator1 = 2000);
+		Pause(value1 = 2000);
 
 		AssertLocation.assertPartialLocation(value1 = ${spURL});
 	}
@@ -191,7 +191,7 @@ definition {
 				userEmailAddress = "test@liferay.com");
 		}
 
-		Pause(locator1 = 2000);
+		Pause(value1 = 2000);
 
 		AssertLocation.assertPartialLocation(value1 = ${specificURL});
 	}
@@ -202,7 +202,7 @@ definition {
 
 		WaitForElementPresent(locator1 = "Header#H3_TITLE");
 
-		Pause(locator1 = 5000);
+		Pause(value1 = 5000);
 	}
 
 }

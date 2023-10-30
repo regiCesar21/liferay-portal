@@ -19,7 +19,7 @@ definition {
 
 	@summary = "Default summary"
 	macro configureSetupPG(userToolNameList = null, metadataNameList = null, enableViewCountIncrement = null) {
-		Pause(locator1 = 3000);
+		Pause(value1 = 3000);
 
 		if (isSet(userToolNameList)) {
 			SelectFrame(locator1 = "IFrame#DIALOG");
@@ -43,7 +43,7 @@ definition {
 			Click(locator1 = "WCDConfiguration#CONTENT_METADATA_SELECT");
 
 			for (var key_toggleCardLabel : list ${metadataNameList}) {
-				Pause(locator1 = 1000);
+				Pause(value1 = 1000);
 
 				SelectFrameTop();
 
@@ -101,7 +101,7 @@ definition {
 			SelectFrame(value1 = "relative=top");
 		}
 		else {
-			Pause(locator1 = 2000);
+			Pause(value1 = 2000);
 
 			Click(locator1 = "Button#CLOSE_IFRAME");
 
@@ -289,7 +289,7 @@ definition {
 
 		SelectFrame(locator1 = "IFrame#DIALOG");
 
-		Pause(locator1 = 3000);
+		Pause(value1 = 3000);
 
 		AssertClick(
 			locator1 = "WCDConfiguration#SELECT_WEB_CONTENT_BUTTON",
