@@ -27,10 +27,6 @@ public final class DDMFormEvaluatorEvaluateRequest {
 		return _ddmFormValues;
 	}
 
-	public boolean getEditing() {
-		return _editing;
-	}
-
 	public long getGroupId() {
 		return _groupId;
 	}
@@ -41,6 +37,10 @@ public final class DDMFormEvaluatorEvaluateRequest {
 
 	public long getUserId() {
 		return _userId;
+	}
+
+	public boolean isEditingFieldValue() {
+		return _editingFieldValue;
 	}
 
 	public boolean isViewMode() {
@@ -65,8 +65,9 @@ public final class DDMFormEvaluatorEvaluateRequest {
 			return this;
 		}
 
-		public Builder withEditing(boolean editing) {
-			_ddmFormEvaluatorEvaluateRequest._editing = editing;
+		public Builder withEditingFieldValue(boolean editingFieldValue) {
+			_ddmFormEvaluatorEvaluateRequest._editingFieldValue =
+				editingFieldValue;
 
 			return this;
 		}
@@ -109,7 +110,7 @@ public final class DDMFormEvaluatorEvaluateRequest {
 	private long _companyId;
 	private DDMForm _ddmForm;
 	private DDMFormValues _ddmFormValues;
-	private boolean _editing;
+	private boolean _editingFieldValue;
 	private long _groupId;
 	private Locale _locale;
 	private long _userId;

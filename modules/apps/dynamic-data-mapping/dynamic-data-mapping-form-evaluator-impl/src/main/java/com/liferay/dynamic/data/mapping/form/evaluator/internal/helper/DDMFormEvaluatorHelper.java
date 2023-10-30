@@ -680,8 +680,9 @@ public class DDMFormEvaluatorHelper {
 									(DDMFormFieldValueEditingAware)
 										ddmFormFieldValueLocalizer;
 
-							ddmFormFieldValueEditingAware.setEditing(
-								_ddmFormEvaluatorEvaluateRequest.getEditing());
+							ddmFormFieldValueEditingAware.setEditingFieldValue(
+								_ddmFormEvaluatorEvaluateRequest.
+									isEditingFieldValue());
 						}
 
 						value.addString(
