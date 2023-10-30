@@ -1,6 +1,7 @@
 definition {
 
-	macro _deleteAllSegments {
+	@summary = "Default summary"
+	macro _deleteAllSegments() {
 		while (IsElementPresent(locator1 = "Icon#BODY_VERTICAL_ELLIPSIS")) {
 			LexiconEntry.gotoEllipsisMenuItemNoError(menuItem = "Delete");
 
@@ -10,7 +11,8 @@ definition {
 		}
 	}
 
-	macro addProperties {
+	@summary = "Default summary"
+	macro addProperties(propertyOption = null) {
 		var key_propertyOption = ${propertyOption};
 
 		Click(locator1 = "Segmentation#PROPERTIES_SEARCH");
@@ -21,7 +23,8 @@ definition {
 			value1 = ${propertyOption});
 	}
 
-	macro changeCriterionInputEmailAddress {
+	@summary = "Default summary"
+	macro changeCriterionInputEmailAddress(criterionInputOption = null) {
 		var key_criterionInputOption = ${criterionInputOption};
 
 		Click(locator1 = "Segmentation#CRITERION_INPUT");
@@ -31,13 +34,15 @@ definition {
 			locator1 = "Segmentation#CRITERION_INPUT_OPTION");
 	}
 
-	macro editSegment {
+	@summary = "Default summary"
+	macro editSegment() {
 		while (IsElementPresent(locator1 = "Icon#BODY_VERTICAL_ELLIPSIS")) {
 			LexiconEntry.gotoEllipsisMenuItemNoError(menuItem = "Edit");
 		}
 	}
 
-	macro fillEmailAddress {
+	@summary = "Default summary"
+	macro fillEmailAddress(emailAddressField = null) {
 		Click(locator1 = "Segmentation#EMAIL_ADDRESS_FIELD");
 
 		Type(
@@ -45,7 +50,8 @@ definition {
 			value1 = ${emailAddressField});
 	}
 
-	macro fillProperty {
+	@summary = "Default summary"
+	macro fillProperty(PropertyField = null) {
 		Click(locator1 = "Segmentation#PROPERTY_FIELD");
 
 		Type(
@@ -53,7 +59,8 @@ definition {
 			value1 = ${PropertyField});
 	}
 
-	macro fillTitle {
+	@summary = "Default summary"
+	macro fillTitle(titleField = null) {
 		Click(locator1 = "Segmentation#TITLE_FIELD");
 
 		Type(
@@ -61,7 +68,8 @@ definition {
 			value1 = ${titleField});
 	}
 
-	macro tearDown {
+	@summary = "Default summary"
+	macro tearDown() {
 		while (IsElementPresent(locator1 = "Segmentation#SEGMENT_LIST")) {
 			Segmentation._deleteAllSegments();
 		}

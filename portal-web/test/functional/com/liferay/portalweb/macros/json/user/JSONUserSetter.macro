@@ -1,6 +1,7 @@
 definition {
 
-	macro setGroupId {
+	@summary = "Default summary"
+	macro setGroupId(groupName = null) {
 		Variables.assertDefined(parameterList = ${groupName});
 
 		var groupId = JSONGroupAPI._getGroupIdByName(groupName = ${groupName});
@@ -8,7 +9,8 @@ definition {
 		return ${groupId};
 	}
 
-	macro setLocale {
+	@summary = "Default summary"
+	macro setLocale() {
 		if (!(isSet(locale))) {
 			var locale = "";
 		}
@@ -19,7 +21,8 @@ definition {
 		return ${locale};
 	}
 
-	macro setNewPassword {
+	@summary = "Default summary"
+	macro setNewPassword() {
 		if (!(isSet(newPassword))) {
 			var newPassword = "test";
 		}
@@ -27,7 +30,8 @@ definition {
 		return ${newPassword};
 	}
 
-	macro setRequireReset {
+	@summary = "Default summary"
+	macro setRequireReset() {
 		if (!(isSet(requireReset))) {
 			var requireReset = "true";
 		}
@@ -35,7 +39,8 @@ definition {
 		return ${requireReset};
 	}
 
-	macro setUserFirstName {
+	@summary = "Default summary"
+	macro setUserFirstName() {
 		Variables.assertDefined(parameterList = ${userFirstName});
 
 		var userFirstName = URLUtil.encodeUTF8(${userFirstName});
@@ -43,7 +48,8 @@ definition {
 		return ${userFirstName};
 	}
 
-	macro setUserId {
+	@summary = "Default summary"
+	macro setUserId(userEmailAddress = null) {
 		Variables.assertDefined(parameterList = ${userEmailAddress});
 
 		var userId = JSONUserAPI._getUserIdByEmailAddress(userEmailAddress = ${userEmailAddress});
@@ -51,7 +57,8 @@ definition {
 		return ${userId};
 	}
 
-	macro setUserLastName {
+	@summary = "Default summary"
+	macro setUserLastName() {
 		Variables.assertDefined(parameterList = ${userLastName});
 
 		var userLastName = URLUtil.encodeUTF8(${userLastName});

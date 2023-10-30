@@ -1,6 +1,7 @@
 definition {
 
-	macro assertCssValueIsGreaterThan {
+	@summary = "Default summary"
+	macro assertCssValueIsGreaterThan(expected = null, attribute = null, element = null) {
 		var actual = Css.getCssValue(
 			attribute = ${attribute},
 			element = ${element});
@@ -12,7 +13,8 @@ definition {
 			expected = ${expected});
 	}
 
-	macro getCssValue {
+	@summary = "Default summary"
+	macro getCssValue(attribute = null, element = null) {
 		WaitForSPARefresh();
 
 		var javascript = '''
@@ -31,7 +33,8 @@ return computedStyle.getPropertyValue("${attribute}");
 		return ${cssValue};
 	}
 
-	macro getElementPropertyValue {
+	@summary = "Default summary"
+	macro getElementPropertyValue(property = null, element = null) {
 		WaitForSPARefresh();
 
 		var javascript = '''
@@ -45,7 +48,8 @@ return value.toString();
 		return ${propertyValue};
 	}
 
-	macro getPseudoElementCssValue {
+	@summary = "Default summary"
+	macro getPseudoElementCssValue(attribute = null, pseudo = null, element = null) {
 		WaitForSPARefresh();
 
 		var javascript = '''

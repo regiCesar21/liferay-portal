@@ -1,6 +1,7 @@
 definition {
 
-	macro configureSearchResults {
+	@summary = "Default summary"
+	macro configureSearchResults(displayDocumentForm = null, disableHighlighting = null, federatedSearchKey = null, fieldsToDisplay = null, paginationDelta = null, index = null) {
 		if (isSet(index)) {
 			SearchResultPortlet.gotoWidgetOptionsSpecific(
 				index = ${index},
@@ -52,7 +53,8 @@ definition {
 		IFrame.closeFrame();
 	}
 
-	macro gotoWidgetOptionsSpecific {
+	@summary = "Default summary"
+	macro gotoWidgetOptionsSpecific(index = null, portletOption = null) {
 		MouseOver.mouseOverNotVisible(
 			key_index = ${index},
 			locator1 = "SearchResults#RESULTS_PORTLET_WIDGET_ELLIPSIS_ICON_SPECIFIC");
@@ -68,7 +70,8 @@ definition {
 		}
 	}
 
-	macro paginateAndViewSearchResults {
+	@summary = "Default summary"
+	macro paginateAndViewSearchResults() {
 		var key_searchAssetTitle = ${searchAssetTitle};
 		var key_searchAssetType = ${searchAssetType};
 		var searchAssetTitle = ${searchAssetTitle};
@@ -85,7 +88,8 @@ definition {
 			searchTerm = ${searchTerm});
 	}
 
-	macro viewMultipleSearchResults {
+	@summary = "Default summary"
+	macro viewMultipleSearchResults(resultsList = null, searchTerm = null) {
 		if (!(contains(${resultsList}, "/"))) {
 			fail("You must pass in a list with title and type separated by '/'.");
 		}
@@ -101,7 +105,8 @@ definition {
 		}
 	}
 
-	macro viewMultipleSearchResultsNotPresent {
+	@summary = "Default summary"
+	macro viewMultipleSearchResultsNotPresent(noResultsList = null) {
 		if (!(contains(${noResultsList}, "/"))) {
 			fail("You must pass in a list with title and type separated by '/'.");
 		}
@@ -116,20 +121,23 @@ definition {
 		}
 	}
 
-	macro viewNoSearchResults {
+	@summary = "Default summary"
+	macro viewNoSearchResults(searchTerm = null) {
 		AssertTextEquals(
 			locator1 = "Message#EMPTY_INFO",
 			value1 = "No results were found that matched the keywords: ${searchTerm}.");
 	}
 
-	macro viewSearchResultNotPresent {
+	@summary = "Default summary"
+	macro viewSearchResultNotPresent(searchAssetType = null, searchAssetTitle = null) {
 		AssertElementNotPresent(
 			key_searchAssetTitle = ${searchAssetTitle},
 			key_searchAssetType = ${searchAssetType},
 			locator1 = "SearchResults#ASSET_ENTRY_TABLE_TYPE_SPECIFIC");
 	}
 
-	macro viewSearchResults {
+	@summary = "Default summary"
+	macro viewSearchResults(searchAssetType = null, searchTerm = null, entryDate = null, searchAssetTitle = null, searchAssetSummary = null) {
 		var key_searchAssetTitle = ${searchAssetTitle};
 		var key_searchAssetType = ${searchAssetType};
 
@@ -160,7 +168,8 @@ definition {
 		}
 	}
 
-	macro viewSearchResultsSpecificOrder {
+	@summary = "Default summary"
+	macro viewSearchResultsSpecificOrder(resultsList = null) {
 		var resultOrder = 0;
 
 		for (var searchAssetTitle : list ${resultsList}) {
