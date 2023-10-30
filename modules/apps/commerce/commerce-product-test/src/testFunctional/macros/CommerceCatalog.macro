@@ -1,6 +1,7 @@
 definition {
 
-	macro addEntry {
+	@summary = "Default summary"
+	macro addEntry(productTitle = null, productShortDescription = null, productFullDescription = null, plusMenu = null) {
 		Click(locator1 = "Button#PLUS");
 
 		AssertClick(

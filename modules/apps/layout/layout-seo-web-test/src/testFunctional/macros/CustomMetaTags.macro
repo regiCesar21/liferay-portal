@@ -1,6 +1,7 @@
 definition {
 
-	macro addMultipleTags {
+	@summary = "Default summary"
+	macro addMultipleTags(customTagsList = null) {
 		for (var customTag : list ${customTagsList}) {
 			Click(locator1 = "Icon#PLUS_LAST");
 
@@ -16,7 +17,8 @@ definition {
 		Button.click(button = "Save");
 	}
 
-	macro addTag {
+	@summary = "Default summary"
+	macro addTag(customContent = null, customProperty = null) {
 		Type(
 			locator1 = "TextInput#CUSTOM_META_TAGS_PROPERTY",
 			value1 = ${customProperty});
@@ -28,7 +30,8 @@ definition {
 		Button.click(button = "Save");
 	}
 
-	macro changeLocale {
+	@summary = "Default summary"
+	macro changeLocale(locale = null) {
 		Click.clickNoMouseOver(locator1 = "Button#LOCALIZATION_GENERIC");
 
 		Click(
@@ -36,7 +39,8 @@ definition {
 			locator1 = "Translation#LOCALIZATION_NAME");
 	}
 
-	macro editMultipleTags {
+	@summary = "Default summary"
+	macro editMultipleTags(newCustomProperty = null, customContentsList = null, newCustomContent = null, customPropertiesList = null) {
 		if (isSet(newCustomProperty)) {
 			for (var customProperty : list ${customPropertiesList}) {
 				Type(
@@ -60,7 +64,8 @@ definition {
 		}
 	}
 
-	macro editTag {
+	@summary = "Default summary"
+	macro editTag(newCustomProperty = null, customContent = null, newCustomContent = null, customProperty = null) {
 		if (isSet(newCustomProperty)) {
 			Type(
 				key_customProperty = ${customProperty},
@@ -78,7 +83,8 @@ definition {
 		Button.click(button = "Save");
 	}
 
-	macro removeTag {
+	@summary = "Default summary"
+	macro removeTag(tagNum = null) {
 		Click(
 			key_tagNum = ${tagNum},
 			locator1 = "Icon#DELETE_CUSTOM_META_TAG");
@@ -86,13 +92,15 @@ definition {
 		Button.click(button = "Save");
 	}
 
-	macro viewNoTags {
+	@summary = "Default summary"
+	macro viewNoTags(customMetaTagsList = null) {
 		for (var customMetaTag : list ${customMetaTagsList}) {
 			AssertHTMLSourceTextNotPresent(value1 = ${customMetaTag});
 		}
 	}
 
-	macro viewTags {
+	@summary = "Default summary"
+	macro viewTags(customMetaTagsList = null) {
 		for (var customMetaTag : list ${customMetaTagsList}) {
 			AssertHTMLSourceTextPresent(value1 = ${customMetaTag});
 		}

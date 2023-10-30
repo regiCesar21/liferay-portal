@@ -1,7 +1,7 @@
 @default = "waitForConsoleTextPresent"
 definition {
 
-	function waitForConsoleTextPresent() {
+	function waitForConsoleTextPresent(value1) {
 		WaitForSPARefresh();
 
 		selenium.waitForConsoleTextPresent(${value1});

@@ -1,6 +1,7 @@
 definition {
 
-	macro addEntry {
+	@summary = "Default summary"
+	macro addEntry(productShortDescription = null, publishProduct = null, key_menuItem = null, compileDescription = null, productFullDescription = null, productType = null, productName = null) {
 		Click(locator1 = "Button#PLUS");
 
 		Click(
@@ -21,7 +22,8 @@ definition {
 			publishProduct = ${publishProduct});
 	}
 
-	macro deleteEntries {
+	@summary = "Default summary"
+	macro deleteEntries(deleteMessage = null) {
 		ClickNoError.clickNoMouseOver(locator1 = "CommerceNavigation#SELECT_ALL_CHECKBOX");
 
 		ClickNoError(locator1 = "Button#DELETE");
@@ -29,7 +31,8 @@ definition {
 		Confirm(value1 = ${deleteMessage});
 	}
 
-	macro deleteProductsEntry {
+	@summary = "Default summary"
+	macro deleteProductsEntry() {
 		ClickNoError(locator1 = "CommerceEntry#BODY_VERTICAL_ELLIPSIS");
 
 		CommerceEntry.clickNoError(menuItem = "Delete");
@@ -39,13 +42,15 @@ definition {
 		AssertElementNotPresent(locator1 = "Message#ERROR");
 	}
 
-	macro moveCatalogEntriesToRecycleBin {
+	@summary = "Default summary"
+	macro moveCatalogEntriesToRecycleBin() {
 		Click(locator1 = "CommerceNavigation#SELECT_ALL_CHECKBOX");
 
 		Click(locator1 = "Button#MOVE_TO_RECYCLE_BIN");
 	}
 
-	macro searchProduct {
+	@summary = "Default summary"
+	macro searchProduct(search = null) {
 		Type(
 			locator1 = "CommerceNavigation#SEARCH_FIELD",
 			value1 = ${search});
