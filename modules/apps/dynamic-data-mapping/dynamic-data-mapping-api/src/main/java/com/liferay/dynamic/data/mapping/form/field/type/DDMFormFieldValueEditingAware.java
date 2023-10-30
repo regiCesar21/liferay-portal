@@ -18,6 +18,8 @@ package com.liferay.dynamic.data.mapping.form.field.type;
  * @author Marcos Martins
  */
 public interface DDMFormFieldValueEditingAware {
+	
+	public boolean isEditingFieldValue();
 
 	public void setEditingFieldValue(boolean editing);
 
