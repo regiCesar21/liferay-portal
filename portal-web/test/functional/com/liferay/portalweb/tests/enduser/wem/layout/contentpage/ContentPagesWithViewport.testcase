@@ -71,14 +71,14 @@ definition {
 				key_deviceType = "Tablet",
 				locator1 = "PageEditor#DEVICE_TYPE");
 
-			Pause(locator1 = 3000);
+			Pause(value1 = 3000);
 
 			Select(
 				key_fieldLabel = "Layout",
 				locator1 = "Select#GENERIC_SELECT_FIELD",
 				value1 = "3 Modules per Row");
 
-			Pause(locator1 = 3000);
+			Pause(value1 = 3000);
 		}
 
 		task ("Select the 6 Modules per Row as Layout in Landscape Phone viewport") {
@@ -86,14 +86,14 @@ definition {
 				key_deviceType = "Landscape Phone",
 				locator1 = "PageEditor#DEVICE_TYPE");
 
-			Pause(locator1 = 3000);
+			Pause(value1 = 3000);
 
 			Select(
 				key_fieldLabel = "Layout",
 				locator1 = "Select#GENERIC_SELECT_FIELD",
 				value1 = "6 Modules per Row");
 
-			Pause(locator1 = 3000);
+			Pause(value1 = 3000);
 		}
 
 		task ("Select the 1 Module per Row as Layout in Portrait Phone viewport") {
@@ -101,14 +101,14 @@ definition {
 				key_deviceType = "Portrait Phone",
 				locator1 = "PageEditor#DEVICE_TYPE");
 
-			Pause(locator1 = 3000);
+			Pause(value1 = 3000);
 
 			Select(
 				key_fieldLabel = "Layout",
 				locator1 = "Select#GENERIC_SELECT_FIELD",
 				value1 = "1 Module per Row");
 
-			Pause(locator1 = 3000);
+			Pause(value1 = 3000);
 		}
 
 		task ("Assert the Layout of Grid is 2 Modules per Row and the height of module is greater than 20px in Desktop viewport") {
@@ -116,7 +116,7 @@ definition {
 				key_deviceType = "Desktop",
 				locator1 = "PageEditor#DEVICE_TYPE");
 
-			Pause(locator1 = 3000);
+			Pause(value1 = 3000);
 
 			PageEditor.viewGridStyle(
 				columnCount = 6,
@@ -137,7 +137,7 @@ definition {
 				key_deviceType = "Tablet",
 				locator1 = "PageEditor#DEVICE_TYPE");
 
-			Pause(locator1 = 3000);
+			Pause(value1 = 3000);
 
 			SelectFrame.selectFrameNoLoading(locator1 = "IFrame#PAGE_EDITOR_GLOBAL_CONTEXT_IFRAME");
 
@@ -162,7 +162,7 @@ definition {
 				key_deviceType = "Landscape Phone",
 				locator1 = "PageEditor#DEVICE_TYPE");
 
-			Pause(locator1 = 3000);
+			Pause(value1 = 3000);
 
 			SelectFrame.selectFrameNoLoading(locator1 = "IFrame#PAGE_EDITOR_GLOBAL_CONTEXT_IFRAME");
 
@@ -187,7 +187,7 @@ definition {
 				key_deviceType = "Portrait Phone",
 				locator1 = "PageEditor#DEVICE_TYPE");
 
-			Pause(locator1 = 3000);
+			Pause(value1 = 3000);
 
 			SelectFrame.selectFrameNoLoading(locator1 = "IFrame#PAGE_EDITOR_GLOBAL_CONTEXT_IFRAME");
 
@@ -252,7 +252,7 @@ definition {
 					key_deviceType = ${deviceType},
 					locator1 = "PageEditor#DEVICE_TYPE");
 
-				Pause(locator1 = 3000);
+				Pause(value1 = 3000);
 
 				SelectFrame.selectFrameNoLoading(locator1 = "IFrame#PAGE_EDITOR_GLOBAL_CONTEXT_IFRAME");
 
@@ -332,7 +332,7 @@ definition {
 		task ("Assert all common fragment style fieldsets are available on Desktop viewport") {
 			PageEditor.clickConfigurableField(fragmentName = "Heading");
 
-			Pause(locator1 = 3000);
+			Pause(value1 = 3000);
 
 			AssertClick(
 				key_navItem = "Styles",
@@ -352,7 +352,7 @@ definition {
 					key_deviceType = ${deviceType},
 					locator1 = "PageEditor#DEVICE_TYPE");
 
-				Pause(locator1 = 3000);
+				Pause(value1 = 3000);
 
 				for (var fieldSetLabel : list "Margin,Padding") {
 					AssertElementPresent(

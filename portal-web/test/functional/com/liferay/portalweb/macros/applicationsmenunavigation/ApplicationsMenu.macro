@@ -48,7 +48,7 @@ definition {
 
 		SelectFrame(locator1 = "IFrame#MODAL_BODY");
 
-		Pause(locator1 = 3000);
+		Pause(value1 = 3000);
 
 		if (isSet(depotName)) {
 			Navigator.gotoNavItem(navItem = "Asset Libraries");

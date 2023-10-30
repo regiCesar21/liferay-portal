@@ -2031,7 +2031,7 @@ definition {
 
 		AppBuilderAdmin.openStandAloneApp(itemName = ${myAppName_1});
 
-		SelectWindow.selectPopUp(locator1 = "null");
+		SelectWindow.selectPopUp(value1 = "null");
 
 		AppBuilderAdmin.addEntry();
 
@@ -2049,7 +2049,7 @@ definition {
 
 		AppBuilderAdmin.openStandAloneApp(itemName = ${myAppName_2});
 
-		SelectWindow.selectPopUp(locator1 = "null");
+		SelectWindow.selectPopUp(value1 = "null");
 
 		AppBuilderAdmin.addEntry();
 
@@ -2067,7 +2067,7 @@ definition {
 
 		AppBuilderAdmin.openStandAloneApp(itemName = ${myAppName_3});
 
-		SelectWindow.selectPopUp(locator1 = "null");
+		SelectWindow.selectPopUp(value1 = "null");
 
 		AppBuilderAdmin.validateItemNameOnTable(itemName = "Content from Form 2");
 
@@ -2651,7 +2651,7 @@ definition {
 
 		AppBuilderAdmin.openStandAloneApp(itemName = "Test App C");
 
-		SelectWindow.selectPopUp(locator1 = "null");
+		SelectWindow.selectPopUp(value1 = "null");
 
 		AppBuilderAdmin.validateStandAloneApp();
 
@@ -2736,7 +2736,7 @@ definition {
 
 		AppBuilderAdmin.openStandAloneApp(itemName = "Test App C");
 
-		SelectWindow.selectPopUp(locator1 = "null");
+		SelectWindow.selectPopUp(value1 = "null");
 
 		AppBuilderAdmin.validateStandAloneApp();
 
@@ -2820,7 +2820,7 @@ definition {
 
 		AppBuilderAdmin.openStandAloneApp(itemName = "Test App B");
 
-		SelectWindow.selectPopUp(locator1 = "null");
+		SelectWindow.selectPopUp(value1 = "null");
 
 		AppBuilderAdmin.validateStandAloneApp();
 
@@ -2842,7 +2842,7 @@ definition {
 
 		AppBuilderAdmin.openStandAloneApp(itemName = "Changed Name");
 
-		SelectWindow.selectPopUp(locator1 = "null");
+		SelectWindow.selectPopUp(value1 = "null");
 
 		AppBuilderAdmin.validateStandAloneApp();
 
@@ -2904,7 +2904,7 @@ definition {
 
 		AppBuilderAdmin.openStandAloneApp(itemName = "Changed Name");
 
-		SelectWindow.selectPopUp(locator1 = "null");
+		SelectWindow.selectPopUp(value1 = "null");
 
 		AppBuilderAdmin.validateStandAloneApp();
 
@@ -3565,7 +3565,7 @@ definition {
 
 		AppBuilderAdmin.openStandAloneApp(itemName = "My App");
 
-		SelectWindow.selectPopUp(locator1 = "null");
+		SelectWindow.selectPopUp(value1 = "null");
 
 		AppBuilderAdmin.addEntry();
 

@@ -44,7 +44,7 @@ definition {
 
 		echo("Creating new Option complete with Values...");
 
-		Pause(locator1 = 2000);
+		Pause(value1 = 2000);
 
 		CPCommerceCatalog.newOptionsEntry(
 			optionDescription = "Option Description",

@@ -99,7 +99,7 @@ definition {
 			locator1 = "APConfiguration#SOURCE_SCOPE_ASSET_TYPE_SELECT",
 			value1 = ${selectedAsset});
 
-		Pause(locator1 = 3000);
+		Pause(value1 = 3000);
 
 		PortletEntry.save();
 
@@ -153,7 +153,7 @@ definition {
 			locator1 = "APConfiguration#SOURCE_SCOPE_ASSET_SUBTYPE_SELECT",
 			value1 = ${selectedSubtype});
 
-		Pause(locator1 = 3000);
+		Pause(value1 = 3000);
 
 		PortletEntry.save();
 	}
@@ -166,7 +166,7 @@ definition {
 			locator1 = "APConfiguration#SOURCE_SCOPE_ASSET_TYPE_SELECT",
 			value1 = ${selectedAsset});
 
-		Pause(locator1 = 3000);
+		Pause(value1 = 3000);
 
 		PortletEntry.save();
 	}
@@ -175,11 +175,11 @@ definition {
 	macro configureFilterByField(fieldName = null) {
 		Check.checkToggleSwitch(locator1 = "APConfiguration#SOURCE_SCOPE_FILTER_BY_FIELD_CHECKBOX");
 
-		Pause(locator1 = 3000);
+		Pause(value1 = 3000);
 
 		Click(locator1 = "APConfiguration#SOURCE_SCOPE_FILTER_BY_FIELD_SELECT_BUTTON");
 
-		Pause(locator1 = 3000);
+		Pause(value1 = 3000);
 
 		SelectFrame(locator1 = "IFrame#MODAL_BODY");
 
@@ -195,7 +195,7 @@ definition {
 				locator1 = "APConfiguration#SOURCE_SCOPE_ASSET_TYPE_SELECT",
 				value1 = ${itemType});
 
-			Pause(locator1 = 3000);
+			Pause(value1 = 3000);
 		}
 
 		if (isSet(itemSubtype)) {
@@ -203,7 +203,7 @@ definition {
 				locator1 = "APConfiguration#SOURCE_SCOPE_ASSET_SUBTYPE_SELECT",
 				value1 = ${itemSubtype});
 
-			Pause(locator1 = 3000);
+			Pause(value1 = 3000);
 		}
 
 		PortletEntry.save();
@@ -352,7 +352,7 @@ definition {
 
 		Click(locator1 = "AssetLists#ASSET_LIST_ENTRY_TITLE");
 
-		Pause(locator1 = 3000);
+		Pause(value1 = 3000);
 
 		if (IsElementPresent(locator1 = "APConfiguration#SOURCE_SCOPE_ASSET_TYPE_SELECT")) {
 			AssetListsAdmin.configureItemTypeInManualCollection(
@@ -366,7 +366,7 @@ definition {
 
 		SelectFrame(locator1 = "IFrame#MODAL_BODY");
 
-		Pause(locator1 = 3000);
+		Pause(value1 = 3000);
 
 		if (isSet(depotName)) {
 			AssertClick(
@@ -386,7 +386,7 @@ definition {
 			for (var assetName : list ${entryList}) {
 				LexiconEntry.selectEntry(rowEntry = ${assetName});
 
-				Pause(locator1 = 3000);
+				Pause(value1 = 3000);
 			}
 		}
 		else {
@@ -434,7 +434,7 @@ definition {
 						value1 = ${itemSubtype});
 				}
 
-				Pause(locator1 = 3000);
+				Pause(value1 = 3000);
 
 				PortletEntry.save();
 			}

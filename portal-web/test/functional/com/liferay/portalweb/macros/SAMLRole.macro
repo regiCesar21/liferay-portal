@@ -153,7 +153,7 @@ definition {
 
 		Click(locator1 = "CPSAMLAdmin#IMPORT_CERTIFICATE");
 
-		Pause(locator1 = 1000);
+		Pause(value1 = 1000);
 
 		AssertElementPresent(locator1 = "Button#SELECT_FILE");
 

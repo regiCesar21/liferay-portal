@@ -545,7 +545,7 @@ definition {
 			category = "Site Builder",
 			portlet = "Pages");
 
-		Pause(locator1 = 5000);
+		Pause(value1 = 5000);
 
 		while (IsElementPresent(key_index = 4, locator1 = "SitePages#LIST_GROUP_ITEM_ROW_ELLIPSIS")) {
 			Click.waitForMenuToggleJSClick(
@@ -628,11 +628,11 @@ definition {
 			locator1 = "TextInput#FILE",
 			value1 = ${logoFile});
 
-		Pause(locator1 = 10000);
+		Pause(value1 = 10000);
 
 		Button.clickDone();
 
-		Pause(locator1 = 5000);
+		Pause(value1 = 5000);
 
 		SelectFrameTop();
 
@@ -798,7 +798,7 @@ definition {
 
 	@summary = "Default summary"
 	macro viewFriendlyURLLanguageOptionsPG(currentLanguageList = null, assertUnavailableLanguages = null, fieldName = null, unavailableLanguageList = null) {
-		Pause(locator1 = 3000);
+		Pause(value1 = 3000);
 
 		Click(
 			key_fieldName = ${fieldName},
@@ -1296,7 +1296,7 @@ definition {
 
 	@summary = "Default summary"
 	macro viewWithWorkflowPG(livePage = null, workflowStatus = null, pageName = null) {
-		Pause(locator1 = 5000);
+		Pause(value1 = 5000);
 
 		if (${workflowStatus} == "Ready for Publication") {
 			AssertElementPresent(locator1 = "Staging#STAGING_MENU_READY_FOR_PUBLICATION");

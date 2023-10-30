@@ -85,7 +85,7 @@ definition {
 		while (IsElementNotPresent(key_menuItem = "Assign to", locator1 = "MenuItem#ANY_MENU_ITEM")) {
 			Refresh();
 
-			Pause(locator1 = 3000);
+			Pause(value1 = 3000);
 
 			Click(
 				key_itemName = ${itemName},
@@ -117,7 +117,7 @@ definition {
 		while (IsElementNotPresent(key_menuItem = "Assign to", locator1 = "MenuItem#ANY_MENU_ITEM")) {
 			Refresh();
 
-			Pause(locator1 = 3000);
+			Pause(value1 = 3000);
 
 			Click(
 				key_itemName = ${itemName},
@@ -293,7 +293,7 @@ definition {
 
 	macro submit {
 		while (IsElementNotPresent(key_text = "Submit", locator1 = "Button#ANY")) {
-			Pause(locator1 = 3000);
+			Pause(value1 = 3000);
 		}
 
 		Button.click(button = "Submit");
@@ -347,7 +347,7 @@ definition {
 		while (IsElementNotPresent(key_menuItem = "Assign to", locator1 = "MenuItem#ANY_MENU_ITEM")) {
 			Refresh();
 
-			Pause(locator1 = 3000);
+			Pause(value1 = 3000);
 
 			Click(
 				key_itemName = ${itemName},
@@ -362,13 +362,13 @@ definition {
 
 	macro waitForButtonNotPresent {
 		while (IsElementPresent(key_text = ${buttonName}, locator1 = "Button#ANY")) {
-			Pause(locator1 = 1000);
+			Pause(value1 = 1000);
 		}
 	}
 
 	macro waitForButtonPresent {
 		while (IsElementNotPresent(key_text = ${buttonName}, locator1 = "Button#ANY")) {
-			Pause(locator1 = 1000);
+			Pause(value1 = 1000);
 		}
 	}
 

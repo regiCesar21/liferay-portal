@@ -419,7 +419,7 @@ definition {
 
 		LexiconEntry.gotoAdd();
 
-		Pause(locator1 = 3000);
+		Pause(value1 = 3000);
 
 		SelectFrame(
 			key_accountName = "Account with Domain",

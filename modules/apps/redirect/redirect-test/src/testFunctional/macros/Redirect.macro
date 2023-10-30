@@ -22,7 +22,7 @@ definition {
 		if (isSet(checkDestinationURL)) {
 			Click(locator1 = "Button#TRY_REDIRECTION");
 
-			SelectWindow(locator1 = "title=${destinationPageName} - ${groupName} - ${portalName}");
+			SelectWindow(value1 = "title=${destinationPageName} - ${groupName} - ${portalName}");
 
 			AssertLocation(value1 = ${destinationURL});
 
@@ -151,7 +151,7 @@ definition {
 			var portlet = "InstanceSettingsPortlet";
 		}
 
-		Open(locator1 = "${baseURL}/group/control_panel/manage?p_p_id=com_liferay_configuration_admin_web_portlet_${portlet}&p_p_lifecycle=0&p_p_state=maximized&p_p_mode=view&_com_liferay_configuration_admin_web_portlet_${portlet}_factoryPid=com.liferay.friendly.url.internal.configuration.FriendlyURLRedirectionConfiguration&_com_liferay_configuration_admin_web_portlet_${portlet}_mvcRenderCommandName=%2Fconfiguration_admin%2Fedit_configuration&_com_liferay_configuration_admin_web_portlet_${portlet}_pid=com.liferay.friendly.url.internal.configuration.FriendlyURLRedirectionConfiguration");
+		Open(value1 = "${baseURL}/group/control_panel/manage?p_p_id=com_liferay_configuration_admin_web_portlet_${portlet}&p_p_lifecycle=0&p_p_state=maximized&p_p_mode=view&_com_liferay_configuration_admin_web_portlet_${portlet}_factoryPid=com.liferay.friendly.url.internal.configuration.FriendlyURLRedirectionConfiguration&_com_liferay_configuration_admin_web_portlet_${portlet}_mvcRenderCommandName=%2Fconfiguration_admin%2Fedit_configuration&_com_liferay_configuration_admin_web_portlet_${portlet}_pid=com.liferay.friendly.url.internal.configuration.FriendlyURLRedirectionConfiguration");
 
 		Click(locator1 = "Dropdown#TRIGGER");
 
@@ -332,7 +332,7 @@ definition {
 	macro openToConfigInSystemSettings {
 		var baseURL = PropsUtil.get("portal.url");
 
-		Open(locator1 = "${baseURL}/group/control_panel/manage?p_p_id=com_liferay_configuration_admin_web_portlet_SystemSettingsPortlet&_com_liferay_configuration_admin_web_portlet_SystemSettingsPortlet_factoryPid=com.liferay.redirect.internal.configuration.RedirectConfiguration&_com_liferay_configuration_admin_web_portlet_SystemSettingsPortlet_mvcRenderCommandName=%2Fconfiguration_admin%2Fedit_configuration");
+		Open(value1 = "${baseURL}/group/control_panel/manage?p_p_id=com_liferay_configuration_admin_web_portlet_SystemSettingsPortlet&_com_liferay_configuration_admin_web_portlet_SystemSettingsPortlet_factoryPid=com.liferay.redirect.internal.configuration.RedirectConfiguration&_com_liferay_configuration_admin_web_portlet_SystemSettingsPortlet_mvcRenderCommandName=%2Fconfiguration_admin%2Fedit_configuration");
 	}
 
 	macro view404URLs {

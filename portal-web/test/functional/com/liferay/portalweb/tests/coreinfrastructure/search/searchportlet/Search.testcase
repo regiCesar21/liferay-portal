@@ -3122,14 +3122,14 @@ definition {
 			groupName = "Guest",
 			title = "Apple");
 
-		Pause(locator1 = 1000);
+		Pause(value1 = 1000);
 
 		JSONWebcontent.addWebContent(
 			content = "Content",
 			groupName = "Guest",
 			title = "Banana");
 
-		Pause(locator1 = 1000);
+		Pause(value1 = 1000);
 
 		JSONWebcontent.addWebContent(
 			content = "Content",

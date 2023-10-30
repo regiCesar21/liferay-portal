@@ -444,7 +444,7 @@ definition {
 				menuItem = "View Collection Items",
 				pageName = "Content Collection Page Name");
 
-			Pause(locator1 = 5000);
+			Pause(value1 = 5000);
 
 			SelectFrame(locator1 = "IFrame#MODAL_BODY");
 
@@ -476,7 +476,7 @@ definition {
 				item = "View Collection Items",
 				pageName = "Content Collection Page Name");
 
-			Pause(locator1 = 5000);
+			Pause(value1 = 5000);
 
 			SelectFrame(locator1 = "IFrame#MODAL_BODY");
 
@@ -532,7 +532,7 @@ definition {
 			menuItem = "View Collection Items",
 			pageName = "Content Collection Page Name");
 
-		Pause(locator1 = 5000);
+		Pause(value1 = 5000);
 
 		SelectFrame(locator1 = "IFrame#MODAL_BODY");
 
@@ -552,7 +552,7 @@ definition {
 			menuItem = "View Collection Items",
 			pageName = "Content Collection Page Name");
 
-		Pause(locator1 = 5000);
+		Pause(value1 = 5000);
 
 		SelectFrame(locator1 = "IFrame#MODAL_BODY");
 
@@ -575,7 +575,7 @@ definition {
 			menuItem = "View Collection Items",
 			pageName = "Content Collection Page Name");
 
-		Pause(locator1 = 5000);
+		Pause(value1 = 5000);
 
 		SelectFrame(locator1 = "IFrame#MODAL_BODY");
 
@@ -605,7 +605,7 @@ definition {
 			item = "View Collection Items",
 			pageName = "Content Collection Page Name");
 
-		Pause(locator1 = 5000);
+		Pause(value1 = 5000);
 
 		SelectFrame(locator1 = "IFrame#MODAL_BODY");
 
@@ -627,7 +627,7 @@ definition {
 			item = "View Collection Items",
 			pageName = "Content Collection Page Name");
 
-		Pause(locator1 = 5000);
+		Pause(value1 = 5000);
 
 		SelectFrame(locator1 = "IFrame#MODAL_BODY");
 
@@ -652,7 +652,7 @@ definition {
 			item = "View Collection Items",
 			pageName = "Content Collection Page Name");
 
-		Pause(locator1 = 5000);
+		Pause(value1 = 5000);
 
 		SelectFrame(locator1 = "IFrame#MODAL_BODY");
 
@@ -1256,7 +1256,7 @@ definition {
 			item = "View Collection Items",
 			pageName = "Content Collection Page Name");
 
-		Pause(locator1 = 5000);
+		Pause(value1 = 5000);
 
 		SelectFrame(locator1 = "IFrame#MODAL_BODY");
 
@@ -1288,7 +1288,7 @@ definition {
 			menuItem = "View Collection Items",
 			pageName = "Content Collection Page Name");
 
-		Pause(locator1 = 5000);
+		Pause(value1 = 5000);
 
 		SelectFrame(locator1 = "IFrame#MODAL_BODY");
 
@@ -1336,7 +1336,7 @@ definition {
 			menuItem = "View Collection Items",
 			pageName = "Content Collection Page Name");
 
-		Pause(locator1 = 5000);
+		Pause(value1 = 5000);
 
 		SelectFrame(locator1 = "IFrame#MODAL_BODY");
 

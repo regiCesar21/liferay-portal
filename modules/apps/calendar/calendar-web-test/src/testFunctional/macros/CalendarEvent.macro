@@ -889,7 +889,7 @@ definition {
 
 	macro editTitle {
 		while (IsNotEditable(locator1 = "TextInput#TITLE")) {
-			Pause(locator1 = 5000);
+			Pause(value1 = 5000);
 		}
 
 		PortletEntry.inputTitle(title = ${eventTitle});
@@ -1568,7 +1568,7 @@ definition {
 
 		Click(locator1 = "Calendar#CURRENT_SITE_CALENDARS_CALENDAR");
 
-		Pause(locator1 = 5000);
+		Pause(value1 = 5000);
 
 		if (IsElementPresent(locator1 = "Calendar#CURRENT_SITE_CALENDARS_CALENDAR_PRIMARY_COLOR_DEFAULT")) {
 			Click(locator1 = "Calendar#CURRENT_SITE_CALENDARS_CALENDAR");
@@ -1799,7 +1799,7 @@ definition {
 		var key_siteCalendarName = ${siteCalendarName};
 		var key_siteName = ${siteName};
 
-		Pause(locator1 = 5000);
+		Pause(value1 = 5000);
 
 		if (IsElementNotPresent(locator1 = "Calendar#CURRENT_SITE_CALENDARS_CALENDAR_PRIMARY_COLOR_DEFAULT")) {
 			Click(locator1 = "Calendar#CURRENT_SITE_CALENDARS_CALENDAR");

@@ -892,7 +892,7 @@ definition {
 				locator1 = "ACUtils#GENERIC_TEXT");
 
 			task ("Switch to the documentation tab") {
-				SelectWindow(locator1 = "title=Events Analysis — Liferay Learn");
+				SelectWindow(value1 = "title=Events Analysis — Liferay Learn");
 			}
 
 			ACUtils.viewGenericText(textValueList = "Documentation,Events Analysis");

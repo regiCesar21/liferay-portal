@@ -142,7 +142,7 @@ definition {
 			panel = "Applications",
 			portlet = "Content Dashboard");
 
-		Pause(locator1 = 3000);
+		Pause(value1 = 3000);
 
 		ContentDashboard.uncheckCheckbox(checkboxName = "Stage 1");
 
@@ -182,7 +182,7 @@ definition {
 			panel = "Applications",
 			portlet = "Content Dashboard");
 
-		Pause(locator1 = 3000);
+		Pause(value1 = 3000);
 
 		ContentDashboard.editWebContent(webContentTitle = "WC Title Edited");
 
@@ -214,11 +214,11 @@ definition {
 			panel = "Applications",
 			portlet = "Content Dashboard");
 
-		Pause(locator1 = 5000);
+		Pause(value1 = 5000);
 
 		ContentDashboard.filterByAuthorTable(filterOption = "Author");
 
-		Pause(locator1 = 3000);
+		Pause(value1 = 3000);
 
 		AssertTextPresent(
 			locator1 = "ContentDashboard#FIRST_ELEMENT_LISTED",
@@ -228,7 +228,7 @@ definition {
 
 		ContentDashboard.filterByAuthorList(filterOption = "Author");
 
-		Pause(locator1 = 3000);
+		Pause(value1 = 3000);
 
 		AssertTextPresent(
 			locator1 = "ContentDashboard#FIRST_ELEMENT_LISTED",
@@ -238,7 +238,7 @@ definition {
 
 		ContentDashboard.filterByAuthorCard(filterOption = "Author");
 
-		Pause(locator1 = 3000);
+		Pause(value1 = 3000);
 
 		AssertTextPresent(
 			locator1 = "ContentDashboard#FIRST_ELEMENT_LISTED",
@@ -278,11 +278,11 @@ definition {
 			panel = "Applications",
 			portlet = "Content Dashboard");
 
-		Pause(locator1 = 5000);
+		Pause(value1 = 5000);
 
 		ContentDashboard.filterByCategory(filterOption = "Categories");
 
-		Pause(locator1 = 3000);
+		Pause(value1 = 3000);
 
 		AssertTextPresent(
 			locator1 = "ContentDashboard#FIRST_ELEMENT_LISTED",
@@ -314,7 +314,7 @@ definition {
 			panel = "Applications",
 			portlet = "Content Dashboard");
 
-		Pause(locator1 = 3000);
+		Pause(value1 = 3000);
 
 		ContentDashboard.filterBySiteGlobal(filterOption = "Site or Asset Library");
 
@@ -348,7 +348,7 @@ definition {
 			panel = "Applications",
 			portlet = "Content Dashboard");
 
-		Pause(locator1 = 3000);
+		Pause(value1 = 3000);
 
 		ContentDashboard.filterByStatusAny(filterOption = "Any");
 
@@ -392,7 +392,7 @@ definition {
 			panel = "Applications",
 			portlet = "Content Dashboard");
 
-		Pause(locator1 = 3000);
+		Pause(value1 = 3000);
 
 		ContentDashboard.filterByStatusApproved(filterOption = "Approved");
 
@@ -421,7 +421,7 @@ definition {
 			panel = "Applications",
 			portlet = "Content Dashboard");
 
-		Pause(locator1 = 3000);
+		Pause(value1 = 3000);
 
 		ContentDashboard.filterByStatusDraft(filterOption = "Draft");
 
@@ -478,7 +478,7 @@ definition {
 			panel = "Applications",
 			portlet = "Content Dashboard");
 
-		Pause(locator1 = 3000);
+		Pause(value1 = 3000);
 
 		ContentDashboard.filterByStatusScheduled(filterOption = "Scheduled");
 
@@ -514,13 +514,13 @@ definition {
 			panel = "Applications",
 			portlet = "Content Dashboard");
 
-		Pause(locator1 = 3000);
+		Pause(value1 = 3000);
 
 		ContentDashboard.filterByTag(filterOption = "Tags");
 
 		ContentDashboard.searchValue(webContentTitle = "Web Content Title");
 
-		Pause(locator1 = 3000);
+		Pause(value1 = 3000);
 
 		AssertTextPresent(
 			locator1 = "ContentDashboard#FIRST_ELEMENT_LISTED_TAGS",
@@ -570,7 +570,7 @@ definition {
 			panel = "Applications",
 			portlet = "Content Dashboard");
 
-		Pause(locator1 = 3000);
+		Pause(value1 = 3000);
 
 		ContentDashboard.orderByModificationDate(filterOption = "Modified Date");
 
@@ -580,7 +580,7 @@ definition {
 
 		Click(locator1 = "ContentDashboard#REVERSE_SORT_DIRECTION_BUTTON");
 
-		Pause(locator1 = 3000);
+		Pause(value1 = 3000);
 
 		AssertTextPresent(
 			locator1 = "ContentDashboard#FIRST_ELEMENT_LISTED",
@@ -614,7 +614,7 @@ definition {
 			panel = "Applications",
 			portlet = "Content Dashboard");
 
-		Pause(locator1 = 3000);
+		Pause(value1 = 3000);
 
 		ContentDashboard.orderByTitle(filterOption = "Title");
 
@@ -624,7 +624,7 @@ definition {
 
 		Click(locator1 = "ContentDashboard#REVERSE_SORT_DIRECTION_BUTTON");
 
-		Pause(locator1 = 3000);
+		Pause(value1 = 3000);
 
 		AssertTextPresent(
 			locator1 = "ContentDashboard#FIRST_ELEMENT_LISTED",
@@ -658,7 +658,7 @@ definition {
 			panel = "Applications",
 			portlet = "Content Dashboard");
 
-		Pause(locator1 = 3000);
+		Pause(value1 = 3000);
 
 		ContentDashboard.openInfoPanelByDropdownMenu();
 

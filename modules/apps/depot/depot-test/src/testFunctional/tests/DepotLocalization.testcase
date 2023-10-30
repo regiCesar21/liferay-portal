@@ -89,7 +89,7 @@ definition {
 
 		DepotNavigator.gotoGeneral(depotName = "Test Depot Name");
 
-		Pause(locator1 = 3000);
+		Pause(value1 = 3000);
 
 		for (var fieldName : list "Name,Description") {
 			Click(
@@ -225,7 +225,7 @@ definition {
 
 		DepotNavigator.gotoGeneral(depotName = "Test Depot Name");
 
-		Pause(locator1 = 3000);
+		Pause(value1 = 3000);
 
 		for (var fieldName : list "Name,Description") {
 			Click(

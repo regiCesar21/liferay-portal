@@ -436,23 +436,23 @@ definition {
 
 			Theme.configureLookAndFeelShowFooter(showFooter = "false");
 
-			Pause(locator1 = 3000);
+			Pause(value1 = 3000);
 
 			Theme.configureLookAndFeelShowHeader(showHeader = "false");
 
-			Pause(locator1 = 3000);
+			Pause(value1 = 3000);
 
 			Theme.configureLookAndFeelShowHeaderSearch(showHeaderSearch = "false");
 
-			Pause(locator1 = 3000);
+			Pause(value1 = 3000);
 
 			Theme.configureLookAndFeelShowMaxMinAppLinks(showMaxMinAppLinks = "true");
 
-			Pause(locator1 = 3000);
+			Pause(value1 = 3000);
 
 			Theme.configureLookAndFeelWrapWidgetPageContent(wrapWidgetPageContent = "false");
 
-			Pause(locator1 = 3000);
+			Pause(value1 = 3000);
 
 			PortletEntry.save();
 
@@ -496,7 +496,7 @@ definition {
 
 			Click(locator1 = "PageEditor#MORE_LINK");
 
-			Pause(locator1 = 3000);
+			Pause(value1 = 3000);
 
 			AssertChecked.assertCheckedNotVisible(locator1 = "Radio#SPECIFIC_LOOK");
 

@@ -45,7 +45,7 @@ definition {
 
 			SelectFrame(locator1 = "IFrame#MODAL_BODY");
 
-			Pause(locator1 = 3000);
+			Pause(value1 = 3000);
 
 			AssertElementPresent(locator1 = "ItemSelector#SELECT_FILE_UPLOAD_IMAGE");
 
@@ -60,7 +60,7 @@ definition {
 					locator1 = "TextInput#FILE",
 					value1 = ${uploadFileName});
 
-				Pause(locator1 = 2000);
+				Pause(value1 = 2000);
 
 				AssertElementPresent.pauseAssertVisible(
 					locator1 = "ItemSelector#ADD_BUTTON",

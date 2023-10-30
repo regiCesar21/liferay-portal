@@ -189,7 +189,7 @@ definition {
 
 		Portlet.addPG(portletName = "Asset Publisher");
 
-		Close.closeAndSelectWindow(locator1 = "Site Templates - ${siteName}");
+		Close.closeAndSelectWindow(value1 = "Site Templates - ${siteName}");
 
 		Site.openSitesAdmin();
 
@@ -658,7 +658,7 @@ definition {
 			columnNumberTo = 2,
 			portletName = "Asset Publisher");
 
-		Close.closeAndSelectWindow(locator1 = "Site Templates - ${siteName}");
+		Close.closeAndSelectWindow(value1 = "Site Templates - ${siteName}");
 
 		ApplicationsMenu.gotoPortlet(
 			category = "Sites",

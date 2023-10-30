@@ -43,7 +43,7 @@ definition {
 			entry = ${entry},
 			item = "Move to Recycle Bin");
 
-		Confirm();
+		Confirm(value1 = "null");
 	}
 
 	@summary = "Default summary"

@@ -402,7 +402,7 @@ definition {
 
 		ClickNoError(locator1 = "Staging#STAGING_PUBLISH_TO_LIVE_BUTTON");
 
-		Pause(locator1 = 3000);
+		Pause(value1 = 3000);
 
 		AssertTextEquals(
 			locator1 = "Staging#PROCESS_SUCCESSFUL",

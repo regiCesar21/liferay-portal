@@ -46,7 +46,7 @@ definition {
 				locator1 = "TextInput#FILE",
 				value1 = ${uploadFileName});
 
-			Pause(locator1 = 5000);
+			Pause(value1 = 5000);
 
 			AssertElementPresent.pauseAssertVisible(
 				locator1 = "ItemSelector#ADD_BUTTON",
@@ -75,7 +75,7 @@ definition {
 			key_contentName = ${entryTitle},
 			locator1 = "PageEditor#ITEM_SELECTOR_CONTENT_INPUT");
 
-		Pause(locator1 = 3000);
+		Pause(value1 = 3000);
 	}
 
 	@summary = "Default summary"
@@ -105,7 +105,7 @@ definition {
 			locator1 = "PageEditor#NAV_ITEM_BUTTON",
 			value1 = "Mapping");
 
-		Pause(locator1 = 3000);
+		Pause(value1 = 3000);
 
 		Select(
 			key_fieldLabel = "Field",
@@ -132,14 +132,14 @@ definition {
 			locator1 = "Select#GENERIC_SELECT_FIELD",
 			value1 = ${source});
 
-		Pause(locator1 = 3000);
+		Pause(value1 = 3000);
 
 		Select(
 			key_fieldLabel = "Field",
 			locator1 = "Select#GENERIC_SELECT_FIELD",
 			value1 = ${field});
 
-		Pause(locator1 = 3000);
+		Pause(value1 = 3000);
 
 		PageEditor.waitForAutoSave();
 	}

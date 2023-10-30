@@ -12,7 +12,7 @@ definition {
 
 		MenuItem.click(menuItem = "Configuration");
 
-		Pause(locator1 = 10000);
+		Pause(value1 = 10000);
 
 		SelectFrame(locator1 = "IFrame#CONFIGURATION");
 
@@ -38,7 +38,7 @@ definition {
 
 		MenuItem.click(menuItem = "Configuration");
 
-		Pause(locator1 = 10000);
+		Pause(value1 = 10000);
 
 		SelectFrame(locator1 = "IFrame#CONFIGURATION");
 

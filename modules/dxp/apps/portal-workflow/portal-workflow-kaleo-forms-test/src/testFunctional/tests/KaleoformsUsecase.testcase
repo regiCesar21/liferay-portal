@@ -4881,7 +4881,7 @@ definition {
 
 		Click(locator1 = "MyWorkflowTasksTask#ORDER");
 
-		Pause(locator1 = 1000);
+		Pause(value1 = 1000);
 
 		Workflow._viewActivities(
 			workflowActivityComment = "Test Test completed the task Review.",

@@ -36,7 +36,7 @@ definition {
 			AssertConfirm(value1 = ${confirmationText});
 		}
 		else {
-			Confirm();
+			Confirm(value1 = "null");
 		}
 
 		if (isSet(failure)) {
@@ -67,7 +67,7 @@ definition {
 		}
 		else {
 			if (IsElementPresent(locator1 = "//button[.//*[contains(@class,'icon-plus')]]")) {
-				Pause(locator1 = 3000);
+				Pause(value1 = 3000);
 			}
 
 			Click(locator1 = "Button#PLUS");

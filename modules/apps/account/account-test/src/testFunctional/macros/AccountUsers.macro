@@ -32,7 +32,7 @@ definition {
 	macro addUsers {
 		LexiconEntry.gotoAdd();
 
-		Pause(locator1 = 3000);
+		Pause(value1 = 3000);
 
 		SelectFrame(locator1 = "IFrame#SELECT_ACCOUNT");
 
@@ -179,7 +179,7 @@ definition {
 			locator1 = "Button#ANY",
 			value1 = "View Valid Domains");
 
-		Pause(locator1 = 3000);
+		Pause(value1 = 3000);
 
 		SelectFrame(locator1 = "IFrame#VALID_DOMAINS");
 

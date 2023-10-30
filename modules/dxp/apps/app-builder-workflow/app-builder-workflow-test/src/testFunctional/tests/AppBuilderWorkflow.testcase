@@ -539,7 +539,7 @@ definition {
 
 		AppBuilderAdmin.openStandAloneApp(itemName = "Standalone Workflow App");
 
-		SelectWindow.selectPopUp(locator1 = "null");
+		SelectWindow.selectPopUp(value1 = "null");
 
 		Button.viewPresent(button = "New Entry");
 
@@ -1211,7 +1211,7 @@ definition {
 
 		AppBuilderAdmin.openStandAloneApp(itemName = "Standalone App");
 
-		SelectWindow.selectPopUp(locator1 = "null");
+		SelectWindow.selectPopUp(value1 = "null");
 
 		AppBuilderAdmin.validateStandAloneApp();
 
@@ -1341,7 +1341,7 @@ definition {
 
 		AppBuilderAppAdmin.clickOnCreateObjectShortLink();
 
-		SelectWindow.selectPopUp(locator1 = "null");
+		SelectWindow.selectPopUp(value1 = "null");
 
 		AppBuilderAdmin.assertNewButtonIsVisible(buttonValue = "New Custom Object");
 
@@ -1366,7 +1366,7 @@ definition {
 
 		AppBuilderAppAdmin.clickOnCreateObjectShortLink();
 
-		SelectWindow.selectPopUp(locator1 = "null");
+		SelectWindow.selectPopUp(value1 = "null");
 
 		AppBuilderAdmin.assertNewButtonIsVisible(buttonValue = "New Custom Object");
 
@@ -1394,7 +1394,7 @@ definition {
 
 		AppBuilderAppAdmin.clickOnCreateObjectShortLink();
 
-		SelectWindow.selectPopUp(locator1 = "null");
+		SelectWindow.selectPopUp(value1 = "null");
 
 		AppBuilderAdmin.validateItemNameOnTable(itemName = "my custom object");
 
@@ -1421,7 +1421,7 @@ definition {
 
 		AppBuilderAppAdmin.clickOnCreateObjectShortLink();
 
-		SelectWindow.selectPopUp(locator1 = "null");
+		SelectWindow.selectPopUp(value1 = "null");
 
 		AppBuilderAdmin.validateItemNameOnTable(itemName = "my custom object");
 
@@ -1656,7 +1656,7 @@ definition {
 
 		AppBuilderAdmin.openStandAloneApp(itemName = "My Workflow App Standalone");
 
-		SelectWindow.selectPopUp(locator1 = "null");
+		SelectWindow.selectPopUp(value1 = "null");
 
 		AppBuilderAdmin.addEntry();
 

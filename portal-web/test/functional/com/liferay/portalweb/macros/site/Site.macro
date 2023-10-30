@@ -28,7 +28,7 @@ definition {
 
 		SelectFrameTop();
 
-		Pause(locator1 = 3000);
+		Pause(value1 = 3000);
 
 		AssertClick(
 			locator1 = "Button#DONE",
@@ -405,7 +405,7 @@ definition {
 			SelectFrame(locator1 = "IFrame#ADD_USERS_TO_SITE");
 		}
 
-		Pause(locator1 = 3000);
+		Pause(value1 = 3000);
 
 		LexiconEntry.changeDisplayStyle(displayStyle = "cards");
 
@@ -433,7 +433,7 @@ definition {
 
 		SelectFrame(locator1 = "IFrame#MODAL_BODY");
 
-		Pause(locator1 = 3000);
+		Pause(value1 = 3000);
 
 		LexiconEntry.selectEntry(rowEntry = ${userGroupName});
 
@@ -554,7 +554,7 @@ definition {
 		}
 		else {
 			while (IsElementNotPresent(locator1 = "Button#SAVE")) {
-				Pause(locator1 = 1000);
+				Pause(value1 = 1000);
 			}
 
 			Click(locator1 = "Button#SAVE");
@@ -676,7 +676,7 @@ definition {
 			locator1 = "SiteSettingsSiteURL#SITE_URL_FRIENDLY_URL_LABEL",
 			value1 = "Friendly URL");
 
-		Pause(locator1 = 5000);
+		Pause(value1 = 5000);
 
 		Type(
 			locator1 = "TextInput#FRIENDLY_URL_SITE_SETTINGS",
@@ -796,7 +796,7 @@ definition {
 
 		Navigator.gotoNavItem(navItem = "Available Sites");
 
-		Pause(locator1 = 3000);
+		Pause(value1 = 3000);
 
 		if (${membershipType} == "Private") {
 			LexiconList.viewListEntryNotPresent(listEntry = ${siteName});
@@ -913,7 +913,7 @@ definition {
 			category = "Configuration",
 			portlet = "Site Settings");
 
-		Pause(locator1 = 5000);
+		Pause(value1 = 5000);
 
 		if (${selectMembershipType} == "true") {
 			AssertTextEquals(
@@ -976,7 +976,7 @@ definition {
 			card = ${userScreenName},
 			item = "Remove Membership");
 
-		Confirm();
+		Confirm(value1 = "null");
 
 		Alert.viewSuccessMessage();
 	}
@@ -1002,7 +1002,7 @@ definition {
 				tableEntry = ${orgName});
 		}
 
-		Confirm();
+		Confirm(value1 = "null");
 
 		Alert.viewSuccessMessage();
 	}
@@ -1030,7 +1030,7 @@ definition {
 			MenuItem.clickNoError(menuItem = "Remove Membership");
 		}
 
-		Confirm();
+		Confirm(value1 = "null");
 
 		Alert.viewSuccessMessage();
 	}
@@ -1297,7 +1297,7 @@ definition {
 
 		SelectFrame(locator1 = "IFrame#MODAL_BODY");
 
-		Pause(locator1 = 3000);
+		Pause(value1 = 3000);
 
 		Navigator.gotoNavItem(navItem = "My Sites");
 

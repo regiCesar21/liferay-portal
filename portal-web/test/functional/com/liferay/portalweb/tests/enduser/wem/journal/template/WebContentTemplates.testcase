@@ -193,15 +193,15 @@ definition {
 
 			LexiconEntry.gotoAdd();
 
-			Pause(locator1 = 3000);
+			Pause(value1 = 3000);
 		}
 
 		task ("Disable Template Creation") {
-			Open.openInTheNewTab(locator1 = "http://localhost:8080");
+			Open.openInTheNewTab(value1 = "http://localhost:8080");
 
 			var siteName = TestCase.getSiteName(siteName = ${siteName});
 
-			SelectWindow(locator1 = "title=Home - ${siteName}");
+			SelectWindow(value1 = "title=Home - ${siteName}");
 
 			ApplicationsMenu.gotoPortlet(
 				category = "Configuration",
@@ -224,7 +224,7 @@ definition {
 		}
 
 		task ("View template creation failure") {
-			Close.closeAndSelectWindow(locator1 = "title=New Template - Test Site Name - ${siteName}");
+			Close.closeAndSelectWindow(value1 = "title=New Template - Test Site Name - ${siteName}");
 
 			WebContentTemplates.inputTemplateAddScreenFields(
 				structureName = "Basic Web Content",

@@ -73,7 +73,7 @@ definition {
 
 		Staging.publishToLive(remoteStaging = "true");
 
-		Pause(locator1 = 5000);
+		Pause(value1 = 5000);
 
 		AssertConsoleTextNotPresent(value1 = "RuntimeException");
 
@@ -173,7 +173,7 @@ definition {
 
 		Staging.publishToLive(remoteStaging = "true");
 
-		Pause(locator1 = 5000);
+		Pause(value1 = 5000);
 
 		AssertConsoleTextNotPresent(value1 = "RuntimeException");
 
@@ -237,7 +237,7 @@ definition {
 
 		Button.clickPublish();
 
-		Pause(locator1 = 10000);
+		Pause(value1 = 10000);
 
 		Staging.gotoPublishToLive();
 

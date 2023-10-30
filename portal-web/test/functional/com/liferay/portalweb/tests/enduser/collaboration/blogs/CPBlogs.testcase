@@ -506,7 +506,7 @@ definition {
 
 		Button.clickPublish();
 
-		Pause(locator1 = 30000);
+		Pause(value1 = 30000);
 
 		BlogsNavigator.gotoEntryCP(entryTitle = "Blogs Entry Title");
 
@@ -535,7 +535,7 @@ definition {
 
 		Button.clickPublish();
 
-		Pause(locator1 = 30000);
+		Pause(value1 = 30000);
 
 		BlogsNavigator.gotoEntryCP(entryTitle = "Blogs Entry Title");
 
@@ -598,7 +598,7 @@ definition {
 			navTab = "Blog Images",
 			uploadFileName = "Document_1.jpg");
 
-		Pause(locator1 = 1000);
+		Pause(value1 = 1000);
 
 		BlogsEntry.saveAsDraft();
 
@@ -637,7 +637,7 @@ definition {
 
 		Button.clickPublish();
 
-		Pause(locator1 = 30000);
+		Pause(value1 = 30000);
 
 		BlogsNavigator.gotoEntryCP(entryTitle = "Blogs Entry Title");
 

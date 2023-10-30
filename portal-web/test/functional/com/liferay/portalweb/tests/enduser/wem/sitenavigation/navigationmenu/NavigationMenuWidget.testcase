@@ -195,7 +195,7 @@ definition {
 		task ("Edit Global Navigation Menu via Navigation Menu widget") {
 			NavigationMenusWidget.gotoEditNavigationMenuEntry();
 
-			Pause(locator1 = 5000);
+			Pause(value1 = 5000);
 
 			var portalURL = PropsUtil.get("portal.url");
 
@@ -272,7 +272,7 @@ definition {
 
 			NavigationMenusWidget.selectNavigation(menuType = "Primary Navigation");
 
-			Pause(locator1 = 3000);
+			Pause(value1 = 3000);
 
 			Portlet.saveAndCloseConfig();
 		}

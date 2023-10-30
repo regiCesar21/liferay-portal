@@ -536,7 +536,7 @@ definition {
 
 		Navigator.openURL();
 
-		Pause(locator1 = 70000);
+		Pause(value1 = 70000);
 
 		var searchTerms = "banana,red apple,fruit";
 

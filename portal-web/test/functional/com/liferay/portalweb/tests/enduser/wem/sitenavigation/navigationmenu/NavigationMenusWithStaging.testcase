@@ -265,7 +265,7 @@ definition {
 				locator1 = "Staging#STAGING_PUBLISH_TO_LIVE_BUTTON",
 				value1 = "Publish to Live");
 
-			Pause(locator1 = 30000);
+			Pause(value1 = 30000);
 
 			AssertTextEquals(
 				locator1 = "Staging#PROCESS_RESULT",
@@ -412,7 +412,7 @@ definition {
 				locator1 = "Staging#STAGING_PUBLISH_TO_LIVE_BUTTON",
 				value1 = "Publish to Live");
 
-			Pause(locator1 = 30000);
+			Pause(value1 = 30000);
 
 			AssertTextEquals(
 				locator1 = "Staging#PROCESS_RESULT",
@@ -648,7 +648,7 @@ definition {
 				locator1 = "Staging#STAGING_PUBLISH_TO_LIVE_BUTTON",
 				value1 = "Publish to Live");
 
-			Pause(locator1 = 30000);
+			Pause(value1 = 30000);
 
 			AssertTextEquals(
 				locator1 = "Staging#PROCESS_RESULT",
@@ -888,7 +888,7 @@ definition {
 				locator1 = "Staging#STAGING_PUBLISH_TO_LIVE_BUTTON",
 				value1 = "Publish to Live");
 
-			Pause(locator1 = 30000);
+			Pause(value1 = 30000);
 
 			AssertTextEquals(
 				locator1 = "Staging#PROCESS_RESULT",
@@ -959,11 +959,11 @@ definition {
 
 			NavigationMenusWidget.selectNavigation(menuType = "Public Pages Hierarchy");
 
-			Pause(locator1 = 3000);
+			Pause(value1 = 3000);
 
 			NavigationMenusWidget.selectDisplayTemplate(templateName = "Bar minimally styled");
 
-			Pause(locator1 = 3000);
+			Pause(value1 = 3000);
 
 			Portlet.saveAndCloseConfig();
 		}

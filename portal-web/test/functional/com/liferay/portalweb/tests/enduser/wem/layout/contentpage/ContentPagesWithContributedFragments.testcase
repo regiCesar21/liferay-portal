@@ -375,7 +375,7 @@ definition {
 			fragmentName = "Heading",
 			id = "element-text");
 
-		Pause(locator1 = 1000);
+		Pause(value1 = 1000);
 
 		AssertCssValue(
 			id = "element-text",
@@ -395,7 +395,7 @@ definition {
 			key_fragmentName = "Heading",
 			locator1 = "Fragment#CONTRIBUTED_FRAGMENT_EDITABLE_FIELD");
 
-		Pause(locator1 = 1000);
+		Pause(value1 = 1000);
 
 		AssertCssValue(
 			id = "element-text",
@@ -833,7 +833,7 @@ definition {
 				entry = "First Web Content",
 				menuItem = "View History");
 
-			Pause(locator1 = 3000);
+			Pause(value1 = 3000);
 
 			var firstModifiedDate = selenium.getAttribute("//td[contains(@class,'modified-date')]/span[contains(@class,'tooltip')]@title");
 
@@ -843,7 +843,7 @@ definition {
 				entry = "Second Web Content",
 				menuItem = "View History");
 
-			Pause(locator1 = 3000);
+			Pause(value1 = 3000);
 
 			var secondModifiedDate = selenium.getAttribute("//td[contains(@class,'modified-date')]/span[contains(@class,'tooltip')]@title");
 
@@ -853,7 +853,7 @@ definition {
 				entry = "Third Web Content",
 				menuItem = "View History");
 
-			Pause(locator1 = 3000);
+			Pause(value1 = 3000);
 
 			var thirdModifiedDate = selenium.getAttribute("//td[contains(@class,'modified-date')]/span[contains(@class,'tooltip')]@title");
 		}
@@ -982,7 +982,7 @@ definition {
 				entry = "First Web Content",
 				menuItem = "View History");
 
-			Pause(locator1 = 3000);
+			Pause(value1 = 3000);
 
 			var firstModifiedDate = selenium.getAttribute("//tr[2]//td[contains(@class,'modified-date')]/span[contains(@class,'tooltip')]@title");
 		}
@@ -2196,13 +2196,13 @@ definition {
 				navTab = "Blog Images",
 				uploadFileName = "Document_1.jpg");
 
-			Pause(locator1 = 3000);
+			Pause(value1 = 3000);
 
 			Panel.expandPanel(panel = "Configuration");
 
 			BlogsEntry.addCustomAbstract(entryAbstractDescription = "This is a description for blogs entry");
 
-			Pause(locator1 = 3000);
+			Pause(value1 = 3000);
 
 			PortletEntry.publish();
 
@@ -2979,7 +2979,7 @@ definition {
 				navTab = "Blog Images",
 				uploadFileName = "Document_1.jpg");
 
-			Pause(locator1 = 3000);
+			Pause(value1 = 3000);
 
 			PortletEntry.publish();
 

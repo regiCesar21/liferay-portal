@@ -76,7 +76,7 @@ definition {
 
 		Questions.gotoCategory(categoryName = "Question ListOfTagsAppearsInTheTagsTab");
 
-		Pause(locator = 3000);
+		Pause(value = 3000);
 
 		Questions.gotoTab(questionTabField = "Tags");
 
@@ -166,7 +166,7 @@ definition {
 
 		Questions.gotoCategory(categoryName = "Question TagCardRedirectTheUserToTheQuestionsThatAreUsingThisTag");
 
-		Pause(locator = 3000);
+		Pause(value = 3000);
 
 		Click(
 			key_questionTabField = "Tags",
@@ -205,7 +205,7 @@ definition {
 			searchKey = "tag1",
 			searchTag = "true");
 
-		Pause(locator = 3000);
+		Pause(value = 3000);
 
 		Questions.viewTags(tagName = "tag1");
 
@@ -223,7 +223,7 @@ definition {
 			searchKey = "tag2",
 			searchTag = "true");
 
-		Pause(locator = 3000);
+		Pause(value = 3000);
 
 		Questions.viewTags(tagName = "tag2");
 
@@ -244,7 +244,7 @@ definition {
 
 			Questions.gotoTab(questionTabField = "Questions");
 
-			Pause(locator1 = 2000);
+			Pause(value1 = 2000);
 
 			Questions.addRootTopic(
 				rootTopicDescription = "Description",
@@ -264,7 +264,7 @@ definition {
 
 		Questions.gotoCategory(categoryName = "Question ValidateTagsOccurrences1");
 
-		Pause(locator = 3000);
+		Pause(value = 3000);
 
 		Click(
 			key_questionTabField = "Tags",

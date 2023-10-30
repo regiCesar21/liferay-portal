@@ -78,7 +78,7 @@ definition {
 		task ("Assert the order of element nodes in the Selection panel") {
 			PageEditor.gotoTab(tabName = "Selection");
 
-			Pause(locator1 = 3000);
+			Pause(value1 = 3000);
 
 			var n = 1;
 
@@ -97,7 +97,7 @@ definition {
 				locator1 = "//div[contains(@class,'list-item__node')][contains(.,'Asset Publisher')]//div[@role='button'][@draggable='true']",
 				locator2 = "//div[contains(@class,'list-item__node')][contains(.,'Container')]//div[@role='button'][@draggable='true']");
 
-			Pause(locator1 = 3000);
+			Pause(value1 = 3000);
 		}
 
 		task ("Assert the order of element nodes in the Selection panel") {
@@ -130,7 +130,7 @@ definition {
 				locator1 = "//div[contains(@class,'list-item__node')][contains(.,'Container')]//div[@role='button'][@draggable='true']",
 				locator2 = "//div[contains(@class,'list-item__node')][contains(.,'Heading')]//div[@role='button'][@draggable='true']");
 
-			Pause(locator1 = 3000);
+			Pause(value1 = 3000);
 		}
 
 		task ("Assert the order of element nodes in the Selection panel") {
@@ -209,13 +209,13 @@ definition {
 		task ("Move the Button into the Container via the Selection panel") {
 			PageEditor.gotoTab(tabName = "Selection");
 
-			Pause(locator1 = 3000);
+			Pause(value1 = 3000);
 
 			DragAndDrop.javaScriptDragAndDropToObject(
 				locator1 = "//div[contains(@class,'list-item__node')][contains(.,'Button')]//div[@role='button'][@draggable='true']",
 				locator2 = "//div[contains(@class,'list-item__node')][contains(.,'Container')]//div[@role='button'][@draggable='true']");
 
-			Pause(locator1 = 3000);
+			Pause(value1 = 3000);
 
 			AssertElementPresent(
 				key_elementHeader = "//div[contains(@class,'page-editor')]//li[contains(.,'Button')]",
@@ -232,7 +232,7 @@ definition {
 				locator1 = "//div[contains(@class,'list-item__node')][contains(.,'Asset Publisher')]//div[@role='button'][@draggable='true']",
 				locator2 = "//div[contains(@class,'treeview-node-list')][@role='group']/div[contains(@role,'treeitem')][1]//div[@role='button'][contains(@aria-label,'Module')]");
 
-			Pause(locator1 = 3000);
+			Pause(value1 = 3000);
 
 			AssertElementPresent(
 				key_columnNumber = 1,
@@ -280,13 +280,13 @@ definition {
 		}
 
 		task ("Move the Heading fragment to the cell of Collection Display via Selection panel") {
-			Pause(locator1 = 3000);
+			Pause(value1 = 3000);
 
 			DragAndDrop.javaScriptDragAndDropToObject(
 				locator1 = "//div[contains(@class,'list-item__node')][contains(.,'Heading')]//div[@role='button'][@draggable='true']",
 				locator2 = "//div[contains(@class,'treeview-node-list')][@role='group']/div[contains(@role,'treeitem')]//div[@role='button'][contains(@aria-label,'Collection Item')]");
 
-			Pause(locator1 = 3000);
+			Pause(value1 = 3000);
 
 			for (var n : list "1,2,3") {
 				AssertElementPresent(

@@ -50,7 +50,7 @@ definition {
 			key_fragmentName = "Button",
 			locator1 = "Fragment#FRAGMENT_HEADER");
 
-		Pause(locator1 = 3000);
+		Pause(value1 = 3000);
 
 		var key_navItem = "General";
 
@@ -202,7 +202,7 @@ definition {
 				key_fragmentName = "Text Fragment Example",
 				locator1 = "Fragment#FRAGMENT_HEADER");
 
-			Pause(locator1 = 3000);
+			Pause(value1 = 3000);
 
 			AssertClick(
 				key_navItem = "General",

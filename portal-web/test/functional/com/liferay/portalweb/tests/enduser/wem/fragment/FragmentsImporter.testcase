@@ -52,7 +52,7 @@ definition {
 		}
 
 		task ("Assert the form validator displays an error that the file is not a zip file") {
-			Pause(locator1 = 10000);
+			Pause(value1 = 10000);
 
 			AssertTextEquals(
 				locator1 = "Message#ERROR_FORM_VALIDATION",
@@ -83,13 +83,13 @@ definition {
 
 			FragmentsEditor.gotoConfigurationTab();
 
-			Pause(locator1 = 3000);
+			Pause(value1 = 3000);
 
 			FragmentsEditor.typeFileContent(fileName = "fragment_button_configuration.json");
 
 			FragmentsEditor.gotoCodeTab();
 
-			Pause(locator1 = 3000);
+			Pause(value1 = 3000);
 
 			FragmentsEditor.typeFileContent(fileName = "fragment_button_configuration.html");
 
@@ -621,7 +621,7 @@ definition {
 
 				var n = ${n} + 1;
 
-				Pause(locator1 = 3000);
+				Pause(value1 = 3000);
 			}
 		}
 	}
@@ -660,7 +660,7 @@ definition {
 				locator2 = "PageEditor#GRID_COLUMN",
 				value1 = "");
 
-			Pause(locator1 = 5000);
+			Pause(value1 = 5000);
 
 			AssertElementPresent(
 				key_columnNumber = 1,
@@ -837,7 +837,7 @@ definition {
 				locator2 = "PageEditor#GRID_COLUMN",
 				value1 = "");
 
-			Pause(locator1 = 5000);
+			Pause(value1 = 5000);
 
 			AssertElementPresent(
 				key_columnNumber = 1,

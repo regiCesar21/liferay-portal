@@ -52,7 +52,7 @@ definition {
 
 		ArchiveUtil.archive("${testBaseDirName}/${testDependenciesDirName}/com.liferay.cluster.test.module.jar", "${deployDir}/com.liferay.cluster.test.module.jar");
 
-		Pause(locator1 = 10000);
+		Pause(value1 = 10000);
 
 		GogoShell.openGogoShellAdmin();
 
@@ -77,7 +77,7 @@ definition {
 
 		ArchiveUtil.archive("${testBaseDirName}/${testDependenciesDirName}/com.liferay.cluster.test.module.jar", "${deployDir}/com.liferay.cluster.test.module.jar");
 
-		Pause(locator1 = 10000);
+		Pause(value1 = 10000);
 
 		AssertConsoleTextPresent(value1 = "STARTED com.liferay.cluster.test.module_");
 
@@ -104,7 +104,7 @@ definition {
 
 		ArchiveUtil.archive("${testBaseDirName}/${testDependenciesDirName}/com.liferay.cluster.test.module.jar", "${deployDir}/com.liferay.cluster.test.module.jar");
 
-		Pause(locator1 = 10000);
+		Pause(value1 = 10000);
 
 		GogoShell.openGogoShellAdmin();
 

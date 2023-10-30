@@ -60,7 +60,7 @@ definition {
 
 		BlogsNavigator.gotoAddEntry();
 
-		Pause(locator1 = 3000);
+		Pause(value1 = 3000);
 
 		BlogsNavigator.gotoSelectFile();
 
@@ -78,7 +78,7 @@ definition {
 
 		Button.clickPublish();
 
-		Pause(locator1 = 10000);
+		Pause(value1 = 10000);
 
 		BlogsNavigator.gotoEntryCP(entryTitle = "Blogs Entry Title");
 

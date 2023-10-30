@@ -336,13 +336,13 @@ definition {
 			productName = "ABS Sensor",
 			productQuantity = 2);
 
-		Pause(locator1 = 5000);
+		Pause(value1 = 5000);
 
 		CommerceNavigator.gotoMiniCart();
 
 		Button.click(button = "Submit");
 
-		Pause(locator1 = 3000);
+		Pause(value1 = 3000);
 
 		CommerceCheckout.initializersCheckout(
 			newAddressAddress = "Test Address",
@@ -499,7 +499,7 @@ definition {
 			productName = "ABS Sensor",
 			productQuantity = 2);
 
-		Pause(locator1 = 5000);
+		Pause(value1 = 5000);
 
 		Refresh();
 
@@ -507,7 +507,7 @@ definition {
 
 		Button.click(button = "Submit");
 
-		Pause(locator1 = 3000);
+		Pause(value1 = 3000);
 
 		CommerceCheckout.initializersCheckout(
 			newAddressAddress = "Test Address",

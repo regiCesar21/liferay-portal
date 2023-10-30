@@ -1,7 +1,7 @@
 definition {
 
 	macro _gotoPendingFilter {
-		Pause(locator1 = 5000);
+		Pause(value1 = 5000);
 
 		Click(locator1 = "Dropdown#FILTER_AND_ORDER");
 
@@ -133,7 +133,7 @@ definition {
 
 		Workflow.confirmWorkflowAction();
 
-		Pause(locator1 = 1000);
+		Pause(value1 = 1000);
 
 		Workflow.viewCompletedTask(
 			ddlDataDefinitionName = ${ddlDataDefinitionName},
@@ -143,7 +143,7 @@ definition {
 			workflowAssetType = ${workflowAssetType},
 			workflowTask = ${workflowTask});
 
-		Pause(locator1 = 1000);
+		Pause(value1 = 1000);
 
 		if (isSet(workflowActivityComment)) {
 			Workflow.gotoCompletedFilter();
@@ -151,7 +151,7 @@ definition {
 			if (isSet(workflowOrder)) {
 				Click(locator1 = "MyWorkflowTasksTask#ORDER");
 
-				Pause(locator1 = 1000);
+				Pause(value1 = 1000);
 			}
 
 			Workflow._viewActivities(
@@ -177,7 +177,7 @@ definition {
 
 		Workflow.confirmWorkflowAction();
 
-		Pause(locator1 = 1000);
+		Pause(value1 = 1000);
 
 		Workflow.viewCompletedTask(
 			ddlDataDefinitionName = ${ddlDataDefinitionName},
@@ -223,13 +223,13 @@ definition {
 
 		Click(locator1 = "MyWorkflowTasks#DIALOG_BOX_ASSIGN_TO_SELECT");
 
-		Pause(locator1 = 1000);
+		Pause(value1 = 1000);
 
 		Click.clickNoMouseOver(
 			key_user = ${user},
 			locator1 = "MyWorkflowTasks#DIALOG_BOX_ASSIGN_TO_VALUE");
 
-		Pause(locator1 = 1000);
+		Pause(value1 = 1000);
 
 		if (isSet(comment)) {
 			Type(
@@ -355,7 +355,7 @@ definition {
 	}
 
 	macro configureWCWorkflowViaFolderInfo {
-		Pause(locator1 = 5000);
+		Pause(value1 = 5000);
 
 		Click.pauseClickAt(locator1 = "Icon#INFO");
 
@@ -511,7 +511,7 @@ definition {
 	}
 
 	macro gotoCompletedFilter {
-		Pause(locator1 = 2000);
+		Pause(value1 = 2000);
 
 		Click(locator1 = "Dropdown#FILTER_AND_ORDER");
 
@@ -647,7 +647,7 @@ definition {
 
 		Workflow.confirmWorkflowAction();
 
-		Pause(locator1 = 1000);
+		Pause(value1 = 1000);
 
 		Workflow.viewCompletedTask(
 			ddlDataDefinitionName = ${ddlDataDefinitionName},
@@ -673,7 +673,7 @@ definition {
 
 		Workflow.confirmWorkflowAction();
 
-		Pause(locator1 = 1000);
+		Pause(value1 = 1000);
 
 		Workflow.viewCompletedTask(
 			ddlDataDefinitionName = ${ddlDataDefinitionName},
@@ -932,7 +932,7 @@ definition {
 
 		Workflow.confirmWorkflowAction();
 
-		Pause(locator1 = 1000);
+		Pause(value1 = 1000);
 
 		Workflow.viewTaskAssignedToMyRoles(
 			ddlDataDefinitionName = ${ddlDataDefinitionName},
@@ -1329,7 +1329,7 @@ definition {
 
 			Workflow._gotoPendingFilter();
 
-			Pause(locator1 = 1000);
+			Pause(value1 = 1000);
 		}
 
 		if (${multipleTasks} == "true") {
@@ -1410,7 +1410,7 @@ definition {
 
 			Navigator.gotoNavTab(navTab = "Assigned to My Roles");
 
-			Pause(locator1 = 1000);
+			Pause(value1 = 1000);
 		}
 
 		AssertTextEquals(
@@ -1486,7 +1486,7 @@ definition {
 	}
 
 	macro webContentGoToAddCP {
-		Pause(locator1 = 3000);
+		Pause(value1 = 3000);
 
 		LexiconEntry.gotoAdd();
 
@@ -1497,7 +1497,7 @@ definition {
 		AssertVisible(locator1 = "TextInput#TITLE");
 
 		while (IsElementNotPresent(locator1 = "WCEditWebContent#SIDEBAR")) {
-			Pause(locator1 = 1000);
+			Pause(value1 = 1000);
 		}
 	}
 

@@ -559,7 +559,7 @@ definition {
 		while ((IsElementNotPresent(locator1 = "TextInput#TEXT")) && (${pauseCount} != 20)) {
 			Refresh();
 
-			Pause(locator1 = 30000);
+			Pause(value1 = 30000);
 
 			var pauseCount = ${pauseCount} + 1;
 
@@ -572,7 +572,7 @@ definition {
 
 		User.firstLoginPG();
 
-		Pause(locator1 = 30000);
+		Pause(value1 = 30000);
 
 		PortalSettings.gotoConfiguration(
 			configurationCategory = "SSO",

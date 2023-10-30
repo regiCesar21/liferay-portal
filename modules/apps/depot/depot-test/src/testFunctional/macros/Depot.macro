@@ -1,7 +1,7 @@
 definition {
 
 	macro activateStaging {
-		Pause(locator1 = 3000);
+		Pause(value1 = 3000);
 
 		if (${remoteStaging} == "true") {
 			Check.checkHiddenToggleSwitch(locator1 = "SiteSettingsStaging#STAGING_REMOTE_LIVE");
@@ -37,14 +37,14 @@ definition {
 			AssertConfirm(value1 = "Are you sure you want to activate remote staging for ${depotName}?");
 
 			while (IsElementNotPresent(locator1 = "Staging#PROCESS_SUCCESSFUL")) {
-				Pause(locator1 = 1000);
+				Pause(value1 = 1000);
 			}
 		}
 		else {
 			AssertConfirm(value1 = "Are you sure you want to activate local staging for ${depotName}?");
 
 			while (IsElementNotPresent(locator1 = "Staging#PROCESS_SUCCESSFUL")) {
-				Pause(locator1 = 1000);
+				Pause(value1 = 1000);
 			}
 
 			AssertTextEquals(
@@ -142,7 +142,7 @@ definition {
 			SelectFrame(locator1 = "IFrame#ADD_USERS_TO_SITE");
 		}
 
-		Pause(locator1 = 3000);
+		Pause(value1 = 3000);
 
 		LexiconEntry.changeDisplayStyle(displayStyle = "cards");
 
@@ -163,13 +163,13 @@ definition {
 	macro assignUserGroupAsMember {
 		Navigator.gotoNavItem(navItem = "User Groups");
 
-		Pause(locator1 = 3000);
+		Pause(value1 = 3000);
 
 		LexiconEntry.gotoAdd();
 
 		SelectFrame(locator1 = "IFrame#MODAL_BODY");
 
-		Pause(locator1 = 3000);
+		Pause(value1 = 3000);
 
 		LexiconEntry.selectEntry(rowEntry = ${userGroupName});
 
@@ -387,7 +387,7 @@ definition {
 
 			SelectFrame(locator1 = "IFrame#SELECT_SITES");
 
-			Pause(locator1 = 3000);
+			Pause(value1 = 3000);
 
 			Navigator.gotoNavItem(navItem = "My Sites");
 
@@ -602,7 +602,7 @@ definition {
 			card = ${userScreenName},
 			item = "Remove Membership");
 
-		Confirm();
+		Confirm(value1 = "null");
 
 		Alert.viewSuccessMessage();
 	}
@@ -627,7 +627,7 @@ definition {
 				tableEntry = ${orgName});
 		}
 
-		Confirm();
+		Confirm(value1 = "null");
 
 		Alert.viewSuccessMessage();
 	}
@@ -654,7 +654,7 @@ definition {
 			MenuItem.clickNoError(menuItem = "Remove Membership");
 		}
 
-		Confirm();
+		Confirm(value1 = "null");
 
 		Alert.viewSuccessMessage();
 	}

@@ -84,7 +84,7 @@ definition {
 		}
 
 		task ("Wait for sending requests") {
-			Pause(locator1 = 15000);
+			Pause(value1 = 15000);
 		}
 
 		task ("View the identity request properties value") {
@@ -147,7 +147,7 @@ definition {
 		}
 
 		task ("Wait for sending requests") {
-			Pause(locator1 = 5000);
+			Pause(value1 = 5000);
 		}
 
 		task ("View the identity request properties value") {
@@ -200,7 +200,7 @@ definition {
 		}
 
 		task ("Wait for sending requests") {
-			Pause(locator1 = 5000);
+			Pause(value1 = 5000);
 		}
 
 		task ("View the identity request properties value") {

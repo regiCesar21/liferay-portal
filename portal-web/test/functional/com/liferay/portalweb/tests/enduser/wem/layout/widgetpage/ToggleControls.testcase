@@ -184,7 +184,7 @@ definition {
 
 			Navigator.gotoNavTab(navTab = "Widgets");
 
-			Pause(locator1 = 5000);
+			Pause(value1 = 5000);
 
 			Type.sendKeysApplicationSearch(
 				locator1 = "NavBar#APPLICATION_SEARCH_FIELD",

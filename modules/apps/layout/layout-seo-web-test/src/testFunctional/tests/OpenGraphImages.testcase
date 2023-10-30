@@ -182,7 +182,7 @@ definition {
 			customImage = "true",
 			uploadFileName = "Document_1.jpg");
 
-		Pause(locator1 = 1000);
+		Pause(value1 = 1000);
 
 		AssertVisible(
 			key_imageName = "Document_1.jpg",

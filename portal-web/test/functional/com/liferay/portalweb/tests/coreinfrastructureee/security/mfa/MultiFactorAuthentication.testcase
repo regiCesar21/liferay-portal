@@ -187,7 +187,7 @@ definition {
 			key_fieldName = "emailOTPSentSubject",
 			locator1 = "Message#ERROR");
 
-		Pause(locator1 = 5000);
+		Pause(value1 = 5000);
 
 		MultiFactorAuthentication.verifyOTP(
 			portalURL = ${portalURL},
@@ -670,7 +670,7 @@ definition {
 			userPassword = "test",
 			validOTP = "false");
 
-		Pause(locator1 = 11000);
+		Pause(value1 = 11000);
 
 		MultiFactorAuthentication.verifyOTP(
 			portalURL = ${portalURL},

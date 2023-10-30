@@ -2,7 +2,7 @@ definition {
 
 	@summary = "Default summary"
 	macro addToContentPage(targetFragmentName = null, portletName = null) {
-		Pause(locator1 = 10000);
+		Pause(value1 = 10000);
 
 		PageEditor.gotoTab(tabName = "Fragments and Widgets");
 
@@ -174,7 +174,7 @@ definition {
 
 		if (${retrySearch} == "true") {
 			while ((IsElementNotPresent(locator1 = "SearchResults#ASSET_ENTRY_TABLE_TITLE")) && (maxIterations = "6")) {
-				Pause(locator1 = 5000);
+				Pause(value1 = 5000);
 
 				Refresh();
 			}
@@ -216,7 +216,7 @@ definition {
 
 			if (${retrySearch} == "true") {
 				while ((IsElementNotPresent(key_searchAssetTitle = ${searchAssetTitle}, locator1 = "SearchResults#ASSET_ENTRY_TABLE_TITLE")) && (maxIterations = "6")) {
-					Pause(locator1 = 5000);
+					Pause(value1 = 5000);
 
 					Refresh();
 				}

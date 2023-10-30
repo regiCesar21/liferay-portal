@@ -398,7 +398,7 @@ definition {
 
 			StyleBooks.waitForAutoSave();
 
-			Pause(locator1 = 3000);
+			Pause(value1 = 3000);
 
 			StyleBooks.expandSection(sectionName = "Button Secondary");
 
@@ -410,7 +410,7 @@ definition {
 
 			StyleBooks.waitForAutoSave();
 
-			Pause(locator1 = 3000);
+			Pause(value1 = 3000);
 
 			StyleBooks.expandSection(sectionName = "Button Outline Secondary");
 
@@ -767,7 +767,7 @@ definition {
 				item = "Edit",
 				styleBookName = "Test Style Book Name");
 
-			Pause(locator1 = 3000);
+			Pause(value1 = 3000);
 
 			StyleBooks.selectForm(formName = "Buttons");
 

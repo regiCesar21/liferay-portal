@@ -125,7 +125,7 @@ definition {
 		}
 
 		task ("Stay 2 seconds") {
-			Pause(locator1 = 2000);
+			Pause(value1 = 2000);
 		}
 
 		task ("Navigate to the Submit button via Tab key") {
@@ -136,7 +136,7 @@ definition {
 		}
 
 		task ("Wait for sending requests") {
-			Pause(locator1 = 5000);
+			Pause(value1 = 5000);
 		}
 
 		task ("View the formId of fieldBlurred event") {
@@ -233,7 +233,7 @@ definition {
 		}
 
 		task ("Stay 2 seconds") {
-			Pause(locator1 = 2000);
+			Pause(value1 = 2000);
 		}
 
 		task ("Click the header title") {
@@ -243,7 +243,7 @@ definition {
 		}
 
 		task ("Wait for sending requests") {
-			Pause(locator1 = 5000);
+			Pause(value1 = 5000);
 		}
 
 		task ("View the formId of fieldBlurred event") {
@@ -340,7 +340,7 @@ definition {
 		}
 
 		task ("Wait for sending requests") {
-			Pause(locator1 = 5000);
+			Pause(value1 = 5000);
 		}
 
 		task ("View the formId of fieldFocused event") {
@@ -441,7 +441,7 @@ definition {
 		}
 
 		task ("Wait for sending requests") {
-			Pause(locator1 = 5000);
+			Pause(value1 = 5000);
 		}
 
 		task ("View the formId of fieldFocused event") {
@@ -523,7 +523,7 @@ definition {
 		}
 
 		task ("Wait for sending requests") {
-			Pause(locator1 = 10000);
+			Pause(value1 = 10000);
 		}
 
 		task ("View the formId of formSubmitted event") {
@@ -595,7 +595,7 @@ definition {
 		}
 
 		task ("Wait for sending requests") {
-			Pause(locator1 = 10000);
+			Pause(value1 = 10000);
 		}
 
 		task ("View the formId of formViewed event") {
@@ -673,7 +673,7 @@ definition {
 		}
 
 		task ("Wait for sending requests") {
-			Pause(locator1 = 5000);
+			Pause(value1 = 5000);
 		}
 
 		task ("Start Har recording") {
@@ -685,7 +685,7 @@ definition {
 		}
 
 		task ("Wait for sending requests") {
-			Pause(locator1 = 5000);
+			Pause(value1 = 5000);
 		}
 
 		task ("View the formId of formViewed event") {

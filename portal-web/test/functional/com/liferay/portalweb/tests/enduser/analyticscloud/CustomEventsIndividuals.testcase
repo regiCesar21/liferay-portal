@@ -235,7 +235,7 @@ definition {
 
 			// Pause is necessary because poshi logs in from one user to another very quickly.
 
-			Pause(locator1 = 5000);
+			Pause(value1 = 5000);
 		}
 
 		task ("Sign in as new user") {

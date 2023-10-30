@@ -72,13 +72,13 @@ definition {
 				key_textValue = "Click here",
 				locator1 = "ACUtils#GENERIC_TEXT");
 
-			SelectWindow(locator1 = "title=Connecting Liferay DXP to Analytics Cloud — Liferay Learn");
+			SelectWindow(value1 = "title=Connecting Liferay DXP to Analytics Cloud — Liferay Learn");
 
 			ACUtils.viewGenericText(textValueList = "Documentation,Connecting Liferay DXP to Analytics Cloud");
 		}
 
 		task ("Switch to the AC tab") {
-			SelectWindow(locator1 = "title=No Properties Available - Analytics Cloud");
+			SelectWindow(value1 = "title=No Properties Available - Analytics Cloud");
 		}
 
 		task ("Copy the token from AC") {
@@ -138,7 +138,7 @@ definition {
 				key_textValue = "Click here",
 				locator1 = "ACUtils#GENERIC_TEXT");
 
-			SelectWindow(locator1 = "title=Connecting Liferay DXP to Analytics Cloud — Liferay Learn");
+			SelectWindow(value1 = "title=Connecting Liferay DXP to Analytics Cloud — Liferay Learn");
 
 			ACUtils.viewGenericText(textValueList = "Documentation,Connecting Liferay DXP to Analytics Cloud");
 		}

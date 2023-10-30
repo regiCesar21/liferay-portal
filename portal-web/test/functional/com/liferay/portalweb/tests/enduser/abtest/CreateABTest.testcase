@@ -86,7 +86,7 @@ definition {
 			locator1 = "ABTest#AB_TEST_TITLE_AC_SIDE",
 			value1 = "Create A/B Test Title");
 
-		SelectWindow(locator1 = "title=Content Page - Liferay DXP");
+		SelectWindow(value1 = "title=Content Page - Liferay DXP");
 
 		ABTest.terminateTest();
 	}

@@ -51,11 +51,11 @@ definition {
 		else {
 			LexiconEntry.changeDisplayStyle(displayStyle = "cards");
 
-			Pause(locator1 = 5000);
+			Pause(value1 = 5000);
 
 			LexiconCard.checkCardCheckbox(card = ${userScreenName});
 
-			Pause(locator1 = 5000);
+			Pause(value1 = 5000);
 
 			SelectFrameTop();
 
@@ -105,7 +105,7 @@ definition {
 
 			SelectFrameTop();
 
-			Pause(locator1 = 3000);
+			Pause(value1 = 3000);
 
 			Button.clickAdd();
 

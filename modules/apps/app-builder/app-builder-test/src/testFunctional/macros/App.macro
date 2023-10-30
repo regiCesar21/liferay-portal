@@ -144,7 +144,7 @@ definition {
 
 	macro waitForDeployButtonNotVisible {
 		while (IsElementPresent(locator1 = "AppBuilder#DEPLOY_BUTTON")) {
-			Pause(locator1 = 1000);
+			Pause(value1 = 1000);
 		}
 	}
 

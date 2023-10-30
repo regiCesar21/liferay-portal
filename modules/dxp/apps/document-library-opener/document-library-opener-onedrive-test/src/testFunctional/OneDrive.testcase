@@ -217,7 +217,7 @@ definition {
 
 		Navigator.gotoPage(pageName = "Documents and Media Page");
 
-		Pause(locator1 = 100000);
+		Pause(value1 = 100000);
 
 		Refresh();
 

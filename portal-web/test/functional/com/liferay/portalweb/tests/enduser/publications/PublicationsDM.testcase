@@ -160,7 +160,7 @@ definition {
 
 		IFrame.closeFrame();
 
-		Pause(locator1 = 3000);
+		Pause(value1 = 3000);
 
 		Publications.discardChanges(
 			changeCategory = "Asset",

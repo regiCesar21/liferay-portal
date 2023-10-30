@@ -474,7 +474,7 @@ definition {
 
 		IFrame.closeFrame();
 
-		Pause(locator1 = 3000);
+		Pause(value1 = 3000);
 
 		Publications.discardChanges(
 			changeCategory = "Asset",
@@ -843,7 +843,7 @@ definition {
 
 		Publications.schedulePublication(publicationName = "Publication Name 1");
 
-		Pause(locator1 = 240000);
+		Pause(value1 = 240000);
 
 		Publications.assertScheduledPublicationPublished(publicationName = "Publication Name 1");
 
@@ -867,7 +867,7 @@ definition {
 			gotoManagePublications = "true",
 			publicationName = "Publication Name 2");
 
-		Pause(locator1 = 240000);
+		Pause(value1 = 240000);
 
 		Publications.assertScheduledPublicationPublished(publicationName = "Publication Name 2");
 
@@ -891,7 +891,7 @@ definition {
 			gotoReviewChanges = "true",
 			publicationName = "Publication Name 3");
 
-		Pause(locator1 = 240000);
+		Pause(value1 = 240000);
 
 		Publications.assertScheduledPublicationPublished(publicationName = "Publication Name 3");
 	}

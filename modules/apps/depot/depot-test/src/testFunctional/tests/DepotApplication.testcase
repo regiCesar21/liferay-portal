@@ -311,7 +311,7 @@ definition {
 
 		SelectFrame(locator1 = "IFrame#MODAL_BODY");
 
-		Pause(locator1 = 3000);
+		Pause(value1 = 3000);
 
 		Click(locator1 = "Button#CHANGE");
 
@@ -382,7 +382,7 @@ definition {
 
 		Button.clickPublish();
 
-		Pause(locator1 = 10000);
+		Pause(value1 = 10000);
 
 		DepotNavigator.openDepotAdmin();
 

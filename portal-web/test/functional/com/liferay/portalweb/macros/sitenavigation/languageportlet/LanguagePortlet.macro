@@ -99,7 +99,7 @@ definition {
 			locator1 = "Select#DISPLAY_TEMPLATE",
 			value1 = ${displayStyle});
 
-		Pause(locator1 = 1000);
+		Pause(value1 = 1000);
 
 		AssertSelectedLabel(
 			key_fieldLabel = "Display Template",
