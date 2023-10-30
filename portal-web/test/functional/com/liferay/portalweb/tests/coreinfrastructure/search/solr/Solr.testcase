@@ -51,9 +51,9 @@ definition {
 			groupName = "Guest",
 			title = "apple");
 
-		Search.openSearchPage();
+		SearchPortlets.addWidgets(searchPortletList = "Search Insights");
 
-		SearchPortlets.addWidgetsOnWidgetPageViaUI(searchPortletList = "Search Insights");
+		Search.openSearchPage();
 
 		Portlet.gotoPortletOptions(
 			portletName = "Search Insights",

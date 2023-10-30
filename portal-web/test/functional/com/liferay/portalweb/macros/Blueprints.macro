@@ -24,7 +24,9 @@ definition {
 	@summary = "Default summary"
 	macro applyBlueprintViaOptionsWidget(blueprintTitle = null) {
 		if (!(IsElementPresent(key_portletName = "Blueprints Options", locator1 = "Portlet#SPECIFIC_BORDERLESS_ELLIPSIS_ICON"))) {
-			SearchPortlets.addWidgetsOnWidgetPageViaUI(searchPortletList = "Blueprints Options");
+			SearchPortlets.addWidgets(searchPortletList = "Blueprints Options");
+
+			Refresh();
 		}
 
 		Portlet.gotoPortletOptions(
