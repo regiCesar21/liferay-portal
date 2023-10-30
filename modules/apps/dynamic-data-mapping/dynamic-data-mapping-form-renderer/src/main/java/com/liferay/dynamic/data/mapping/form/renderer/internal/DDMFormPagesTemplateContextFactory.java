@@ -28,6 +28,7 @@ import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.Validator;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -36,6 +37,8 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Set;
+
+import javax.servlet.http.HttpServletRequest;
 
 /**
  * @author Marcellus Tavares
@@ -319,14 +322,20 @@ public class DDMFormPagesTemplateContextFactory {
 					DDMFormEvaluatorEvaluateRequest.Builder.newBuilder(
 						_ddmForm, _ddmFormValues, _locale);
 
+			HttpServletRequest httpServletRequest =
+				_ddmFormRenderingContext.getHttpServletRequest();
+
 			formEvaluatorEvaluateRequestBuilder.withCompanyId(
-				PortalUtil.getCompanyId(
-					_ddmFormRenderingContext.getHttpServletRequest()));
+				PortalUtil.getCompanyId(httpServletRequest));
+
+			formEvaluatorEvaluateRequestBuilder.withEditing(
+				Validator.isNotNull(
+					httpServletRequest.getParameter("trigger")));
+
 			formEvaluatorEvaluateRequestBuilder.withGroupId(
 				_ddmFormRenderingContext.getGroupId());
 			formEvaluatorEvaluateRequestBuilder.withUserId(
-				PortalUtil.getUserId(
-					_ddmFormRenderingContext.getHttpServletRequest()));
+				PortalUtil.getUserId(httpServletRequest));
 			formEvaluatorEvaluateRequestBuilder.withViewMode(_isViewMode());
 
 			_ddmFormEvaluatorEvaluateResponse = _ddmFormEvaluator.evaluate(
