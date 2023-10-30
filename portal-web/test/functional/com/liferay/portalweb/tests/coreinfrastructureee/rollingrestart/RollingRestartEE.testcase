@@ -17,6 +17,8 @@ definition {
 		User.firstLoginPG();
 	}
 
+	@description = "This is ignored by LRQA-83568."
+	@ignore = "true"
 	@priority = 5
 	test InstallFixPackViaRollingRestart {
 		property portal.fixpack.release = "true";
@@ -165,6 +167,8 @@ definition {
 			webContentTitle = "WC WebContent Title");
 	}
 
+	@description = "This is ignored by LRQA-83568."
+	@ignore = "true"
 	@priority = 5
 	test InstallFixPackWithMultipleClusters {
 		property app.server.bundles.size = "2";
@@ -603,6 +607,8 @@ definition {
 		WebContent.viewTitle(webContentTitle = "WC WebContent Title Cluster1");
 	}
 
+	@description = "This is ignored by LRQA-83568."
+	@ignore = "true"
 	@priority = 5
 	test RevertFixPackWithMultipleClusters {
 		property app.server.bundles.size = "2";
