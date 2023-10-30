@@ -8,8 +8,6 @@ definition {
 
 	macro closePortalLocalizationWarning {
 		Alert.closeMessage(messageType = "PORTAL_LOCALIZATION");
-
-		Pause(locator1 = 2000);
 	}
 
 	macro confirmSecurity {
