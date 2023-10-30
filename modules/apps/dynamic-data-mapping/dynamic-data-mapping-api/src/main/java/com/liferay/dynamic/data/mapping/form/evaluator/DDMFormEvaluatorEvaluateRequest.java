@@ -27,6 +27,10 @@ public final class DDMFormEvaluatorEvaluateRequest {
 		return _ddmFormValues;
 	}
 
+	public boolean getEditing() {
+		return _editing;
+	}
+
 	public long getGroupId() {
 		return _groupId;
 	}
@@ -57,6 +61,12 @@ public final class DDMFormEvaluatorEvaluateRequest {
 
 		public Builder withCompanyId(long companyId) {
 			_ddmFormEvaluatorEvaluateRequest._companyId = companyId;
+
+			return this;
+		}
+
+		public Builder withEditing(boolean editing) {
+			_ddmFormEvaluatorEvaluateRequest._editing = editing;
 
 			return this;
 		}
@@ -99,6 +109,7 @@ public final class DDMFormEvaluatorEvaluateRequest {
 	private long _companyId;
 	private DDMForm _ddmForm;
 	private DDMFormValues _ddmFormValues;
+	private boolean _editing;
 	private long _groupId;
 	private Locale _locale;
 	private long _userId;
