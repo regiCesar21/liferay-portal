@@ -415,7 +415,8 @@ public class ProvisioningWebComponentProvider {
 
 		return new ExtendLicenseKeysDisplayContext(
 			renderRequest, renderResponse, httpServletRequest,
-			_licenseKeyPermission, _productPurchaseViewWebService);
+			_accountWebService, _licenseKeyPermission,
+			_productPurchaseViewWebService);
 	}
 
 	private LicenseKeySearchDisplayContext _getLicenseKeySearchDisplayContext(

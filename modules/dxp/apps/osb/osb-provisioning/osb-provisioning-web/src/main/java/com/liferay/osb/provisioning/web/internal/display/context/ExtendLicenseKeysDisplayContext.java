@@ -12,6 +12,7 @@ import com.liferay.osb.koroneiki.phloem.rest.client.dto.v1_0.ProductPurchaseView
 import com.liferay.osb.provisioning.constants.ProvisioningActionKeys;
 import com.liferay.osb.provisioning.constants.ProvisioningPortletKeys;
 import com.liferay.osb.provisioning.constants.ProvisioningWebKeys;
+import com.liferay.osb.provisioning.koroneiki.web.service.AccountWebService;
 import com.liferay.osb.provisioning.koroneiki.web.service.ProductPurchaseViewWebService;
 import com.liferay.osb.provisioning.license.helper.constants.LicenseLifetime;
 import com.liferay.osb.provisioning.license.model.LicenseKey;
@@ -55,6 +56,7 @@ public class ExtendLicenseKeysDisplayContext {
 	public ExtendLicenseKeysDisplayContext(
 			RenderRequest renderRequest, RenderResponse renderResponse,
 			HttpServletRequest httpServletRequest,
+			AccountWebService accountWebService,
 			LicenseKeyPermission licenseKeyPermission,
 			ProductPurchaseViewWebService productPurchaseViewWebService)
 		throws Exception {
@@ -62,6 +64,7 @@ public class ExtendLicenseKeysDisplayContext {
 		_renderRequest = renderRequest;
 		_renderResponse = renderResponse;
 		_httpServletRequest = httpServletRequest;
+		_accountWebService = accountWebService;
 		_licenseKeyPermission = licenseKeyPermission;
 		_productPurchaseViewWebService = productPurchaseViewWebService;
 
@@ -239,8 +242,18 @@ public class ExtendLicenseKeysDisplayContext {
 		return null;
 	}
 
-	private boolean _isAllowPermanentLicenses() {
-		Map<String, String> properties = _account.getProperties();
+	private boolean _isAllowPermanentLicenses() throws Exception {
+		Map<String, String> properties = null;
+
+		if (_account == null) {
+			Account account = _accountWebService.getAccount(
+				_licenseKey.getAccountKey());
+
+			properties = account.getProperties();
+		}
+		else {
+			properties = _account.getProperties();
+		}
 
 		if (properties != null) {
 			return GetterUtil.getBoolean(
@@ -261,6 +274,7 @@ public class ExtendLicenseKeysDisplayContext {
 	}
 
 	private final Account _account;
+	private final AccountWebService _accountWebService;
 	private final HttpServletRequest _httpServletRequest;
 	private final LicenseKey _licenseKey;
 	private final LicenseKeyPermission _licenseKeyPermission;
