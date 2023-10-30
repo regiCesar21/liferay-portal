@@ -1,6 +1,7 @@
 definition {
 
-	macro addDepot {
+	@summary = "Default summary"
+	macro addDepot(depotName = null, depotDescription = null) {
 		var portalURL = JSONCompany.getPortalURL();
 
 		var curl = '''
@@ -19,7 +20,8 @@ definition {
 		var messageId = JSONCurlUtil.post(${curl});
 	}
 
-	macro deleteDepot {
+	@summary = "Default summary"
+	macro deleteDepot(depotName = null, portalURL = null) {
 		var depotId = JSONGroupAPI._getDepotIdByName(depotName = ${depotName});
 
 		var curl = '''

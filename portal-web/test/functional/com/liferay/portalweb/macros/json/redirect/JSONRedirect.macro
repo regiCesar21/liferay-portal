@@ -1,6 +1,7 @@
 definition {
 
-	macro addRedirect {
+	@summary = "Default summary"
+	macro addRedirect(sourceURL = null, groupName = null) {
 		Variables.assertDefined(parameterList = "${sourceURL},${destinationURL}");
 
 		if (!(isSet(site))) {

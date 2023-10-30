@@ -1,6 +1,7 @@
 definition {
 
-	macro acceptConditions {
+	@summary = "Default summary"
+	macro acceptConditions() {
 		if (IsElementPresent.pauseIsElementPresent(locator1 = "GoogleLogin#ALLOW")) {
 			Click(locator1 = "GoogleLogin#ALLOW");
 		}
@@ -20,7 +21,8 @@ definition {
 		}
 	}
 
-	macro accountSignIn {
+	@summary = "Default summary"
+	macro accountSignIn(userPassword = null, specificURL = null, userEmailAddress = null) {
 		if (isSet(specificURL)) {
 			Navigator.openSpecificURL(url = ${specificURL});
 		}
@@ -54,7 +56,8 @@ definition {
 		}
 	}
 
-	macro addProvider {
+	@summary = "Default summary"
+	macro addProvider(openIDConnectClientSecret = null, openIDConnectClientID = null, providerName = null) {
 		Button.clickAdd();
 
 		FormFields.editTextMultiline(
@@ -76,7 +79,8 @@ definition {
 		PortletEntry.save();
 	}
 
-	macro viewProvider {
+	@summary = "Default summary"
+	macro viewProvider() {
 		AssertClick(
 			locator1 = "UserBar#USER_SIGN_IN",
 			value1 = "Sign In");

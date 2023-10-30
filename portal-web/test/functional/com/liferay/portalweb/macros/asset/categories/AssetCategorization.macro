@@ -1,6 +1,7 @@
 definition {
 
-	macro _addTag {
+	@summary = "Default summary"
+	macro _addTag(tagName = null) {
 		Type(
 			locator1 = "AssetCategorization#TAGS_FIELD",
 			value1 = ${tagName});
@@ -19,7 +20,8 @@ definition {
 		}
 	}
 
-	macro addCategory {
+	@summary = "Default summary"
+	macro addCategory(vocabularyName = null, categoryName = null) {
 		var key_categoryName = ${categoryName};
 
 		Type(
@@ -34,7 +36,8 @@ definition {
 			value1 = ${categoryName});
 	}
 
-	macro addDuplicateTag {
+	@summary = "Default summary"
+	macro addDuplicateTag(tagName = null) {
 		AssetCategorization._addTag(tagName = ${tagName});
 
 		AssertTextEquals(
@@ -42,7 +45,8 @@ definition {
 			value1 = "Duplicate Tag: ${tagName}");
 	}
 
-	macro addMultipleCategories {
+	@summary = "Default summary"
+	macro addMultipleCategories(vocabularyName = null, categoryNameList = null) {
 		for (var categoryName : list ${categoryNameList}) {
 			AssetCategorization.addCategory(
 				categoryName = ${categoryName},
@@ -50,7 +54,8 @@ definition {
 		}
 	}
 
-	macro addTag {
+	@summary = "Default summary"
+	macro addTag(tagName = null) {
 		AssetCategorization._addTag(tagName = ${tagName});
 
 		AssertTextEquals(
@@ -59,7 +64,8 @@ definition {
 			value1 = ${tagName});
 	}
 
-	macro gotoSelectCategory {
+	@summary = "Default summary"
+	macro gotoSelectCategory() {
 		SelectFrameTop();
 
 		if (IsElementPresent(locator1 = "IFrame#SELECT_CATEGORY")) {
@@ -71,7 +77,8 @@ definition {
 		Portlet.expandTree();
 	}
 
-	macro removeTag {
+	@summary = "Default summary"
+	macro removeTag(tagName = null) {
 		var key_tagName = ${tagName};
 
 		AssertTextEquals(
@@ -83,7 +90,8 @@ definition {
 		AssertElementNotPresent(locator1 = "AssetCategorization#TAG");
 	}
 
-	macro selectCategory {
+	@summary = "Default summary"
+	macro selectCategory(categoryName = null) {
 		AssetCategorization.gotoSelectCategory();
 
 		Pause(locator1 = 3000);
@@ -113,7 +121,8 @@ definition {
 		}
 	}
 
-	macro selectTag {
+	@summary = "Default summary"
+	macro selectTag(tagNameList = null) {
 		Click(locator1 = "AssetCategorization#TAGS_SELECT_BUTTON");
 
 		IFrame.selectTagFrame();
@@ -140,14 +149,16 @@ definition {
 			value1 = ${tagName});
 	}
 
-	macro viewCategory {
+	@summary = "Default summary"
+	macro viewCategory(categoryName = null) {
 		AssertTextEquals(
 			key_categoryName = ${categoryName},
 			locator1 = "AssetCategorization#CATEGORY",
 			value1 = ${categoryName});
 	}
 
-	macro viewVocabulary {
+	@summary = "Default summary"
+	macro viewVocabulary(vocabularyName = null) {
 		AssertTextEquals(
 			key_vocabularyName = ${vocabularyName},
 			locator1 = "UsersAndOrganizationsEditUser#VOCABULARY_LABEL",

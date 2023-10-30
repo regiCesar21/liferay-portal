@@ -1,6 +1,7 @@
 definition {
 
-	macro saveAsFragment {
+	@summary = "Default summary"
+	macro saveAsFragment(saveInlineContent = null, saveMappingConfiguration = null, fragmentName = null, collectionName = null) {
 		SelectFrameTop();
 
 		Type(

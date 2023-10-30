@@ -1,6 +1,7 @@
 definition {
 
-	macro addAutoTaggedBlogsEntry {
+	@summary = "Default summary"
+	macro addAutoTaggedBlogsEntry() {
 		BlogsNavigator.openBlogsAdmin(siteURLKey = "site-name");
 
 		Blogs.addEntry(
@@ -19,7 +20,8 @@ definition {
 			tagName = "adventures");
 	}
 
-	macro addAutoTaggedDM {
+	@summary = "Default summary"
+	macro addAutoTaggedDM(dmDocumentTitle = null, dmDocumentFile = null, tagName = null) {
 		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "site-name");
 
 		DMDocument.addCP(
@@ -36,7 +38,8 @@ definition {
 		AutoTagging.assertAutoTagPresent(tagName = ${tagName});
 	}
 
-	macro addAutoTaggedWebContent {
+	@summary = "Default summary"
+	macro addAutoTaggedWebContent() {
 		WebContentNavigator.openWebContentAdmin(siteURLKey = "site-name");
 
 		WebContentNavigator.gotoAddCP();
@@ -59,7 +62,8 @@ definition {
 			value1 = "alice");
 	}
 
-	macro addContentPage {
+	@summary = "Default summary"
+	macro addContentPage() {
 		task ("Add a content page in Test Site Name site") {
 			SitePages.openPagesAdmin(siteURLKey = "test-site-name");
 
@@ -186,7 +190,8 @@ definition {
 		}
 	}
 
-	macro addDataDefinitionWithDB2 {
+	@summary = "Default summary"
+	macro addDataDefinitionWithDB2(site = null) {
 		ProductMenu.gotoPortlet(
 			category = "Content & Data",
 			portlet = "Dynamic Data Lists",
@@ -234,7 +239,8 @@ definition {
 		AssertConsoleTextNotPresent(value1 = "SQLCODE=-727");
 	}
 
-	macro addForm {
+	@summary = "Default summary"
+	macro addForm(site = null) {
 		Navigator.openURL();
 
 		ProductMenu.gotoPortlet(
@@ -293,7 +299,8 @@ definition {
 			fieldName = ${fieldName});
 	}
 
-	macro addMessageBoards {
+	@summary = "Default summary"
+	macro addMessageBoards() {
 		Navigator.gotoPage(pageName = "Message Boards");
 
 		MessageboardsThread.addPG(
@@ -301,7 +308,8 @@ definition {
 			threadSubject = "Message Boards Subject 3");
 	}
 
-	macro addOneDriveDocument {
+	@summary = "Default summary"
+	macro addOneDriveDocument(dmDocumentTypeName = null) {
 		Navigator.openURL();
 
 		Navigator.gotoPage(pageName = "Documents and Media Page");
@@ -330,7 +338,8 @@ definition {
 			value1 = "${dmDocumentTypeName} Title After Upgrade");
 	}
 
-	macro addOrganization {
+	@summary = "Default summary"
+	macro addOrganization() {
 		ApplicationsMenu.gotoPortlet(
 			category = "Users",
 			panel = "Control Panel",
@@ -341,7 +350,8 @@ definition {
 			orgType = "Organization");
 	}
 
-	macro addUserAndSuborganization {
+	@summary = "Default summary"
+	macro addUserAndSuborganization() {
 		JSONOrganization.addOrganization(organizationName = "Organization2");
 
 		JSONOrganization.addOrganization(
@@ -508,7 +518,8 @@ definition {
 			orgType = "Organization");
 	}
 
-	macro addWCStructureAndTemplate {
+	@summary = "Default summary"
+	macro addWCStructureAndTemplate() {
 		Navigator.openURL();
 
 		ProductMenu.gotoPortlet(
@@ -566,7 +577,8 @@ definition {
 			webContentTitle = "WC WebContent Title");
 	}
 
-	macro approveWorkflow {
+	@summary = "Default summary"
+	macro approveWorkflow() {
 		Navigator.openURL();
 
 		ProductMenu.gotoPortlet(
@@ -732,7 +744,8 @@ definition {
 		BlogsEntry.viewStatus(entryStatus = "Approved");
 	}
 
-	macro configurePageEditor {
+	@summary = "Default summary"
+	macro configurePageEditor() {
 		task ("View fragment persists and could add anther fragment in react edtor") {
 			FragmentsAdminNavigator.openFragmentsAdmin(siteURLKey = "test-site-name");
 
@@ -890,7 +903,8 @@ definition {
 		}
 	}
 
-	macro publishStagedSite {
+	@summary = "Default summary"
+	macro publishStagedSite() {
 		Navigator.openSiteURL(siteName = "Staging Site Staging");
 
 		AssertElementNotPresent(locator1 = "Home#PORTLET");
@@ -912,7 +926,8 @@ definition {
 			webContentTitle = "Web Content Title");
 	}
 
-	macro publishWCDraft {
+	@summary = "Default summary"
+	macro publishWCDraft() {
 		Navigator.openURL();
 
 		ProductMenu.gotoPortlet(
@@ -943,7 +958,8 @@ definition {
 			webContentTitle = "Web Content Title");
 	}
 
-	macro publishWorkflowDefinition {
+	@summary = "Default summary"
+	macro publishWorkflowDefinition() {
 		var testRunEnvironment = PropsUtil.get("test.run.environment");
 
 		if (${testRunEnvironment} == "EE") {
@@ -962,7 +978,8 @@ definition {
 		}
 	}
 
-	macro resetTestUserPassword {
+	@summary = "Default summary"
+	macro resetTestUserPassword(administratorEmail = null) {
 		Type(
 			locator1 = "TextInput#EMAIL",
 			value1 = ${administratorEmail});
@@ -998,7 +1015,8 @@ definition {
 			userEmailAddress = "test@liferay.com");
 	}
 
-	macro revertAndPublishPublications {
+	@summary = "Default summary"
+	macro revertAndPublishPublications() {
 		AssertTextPresent(
 			key_publicationName = "Publication 2 Name",
 			locator1 = "Publications#PUBLICATIONS_INDICATOR_TITLE",
@@ -1043,7 +1061,8 @@ definition {
 		/*Publications.publishPublication(publicationName = "Publication 2 Name");*/
 	}
 
-	macro submitNewWorkflow {
+	@summary = "Default summary"
+	macro submitNewWorkflow() {
 		Navigator.openURL();
 
 		ProductMenu.gotoPortlet(
@@ -1130,7 +1149,8 @@ definition {
 			entryTitle = "New Blog After Upgrade");
 	}
 
-	macro viewAndDeleteAutoTaggedBlogsEntry {
+	@summary = "Default summary"
+	macro viewAndDeleteAutoTaggedBlogsEntry() {
 		Navigator.openWithAppendToBaseURL(urlAppend = "web/site-name/test-page");
 
 		BlogsNavigator.gotoEntryPG(
@@ -1153,7 +1173,8 @@ definition {
 			entryTitle = "Digital Transformation or Digital Experience?");
 	}
 
-	macro viewAndDeleteAutoTaggedDM {
+	@summary = "Default summary"
+	macro viewAndDeleteAutoTaggedDM(dmDocumentTitle = null, tagName = null) {
 		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "site-name");
 
 		DMNavigator.gotoDocumentCP(dmDocumentTitle = ${dmDocumentTitle});
@@ -1167,7 +1188,8 @@ definition {
 		DMDocument.deleteCP(dmDocumentTitle = ${dmDocumentTitle});
 	}
 
-	macro viewAndDeleteAutoTaggedWebContent {
+	@summary = "Default summary"
+	macro viewAndDeleteAutoTaggedWebContent() {
 		WebContentNavigator.openWebContentAdmin(siteURLKey = "site-name");
 
 		WebContentNavigator.gotoEditCP(webContentTitle = "Digital Transformation or Digital Experience?");
@@ -1186,7 +1208,8 @@ definition {
 			webContentTitle = "Digital Transformation or Digital Experience?");
 	}
 
-	macro viewAndDeleteFormEntry {
+	@summary = "Default summary"
+	macro viewAndDeleteFormEntry() {
 		Navigator.openURL();
 
 		Navigator.gotoPage(pageName = "Form Page");
@@ -1266,7 +1289,8 @@ definition {
 		FormsAdmin.viewNoFormEntries();
 	}
 
-	macro viewAndDeleteGoogleDriveDocuments {
+	@summary = "Default summary"
+	macro viewAndDeleteGoogleDriveDocuments() {
 		Navigator.gotoPage(pageName = "Documents and Media Page");
 
 		DMDocument.deletePG(dmDocumentTitle = "Edited Google Document");
@@ -1280,7 +1304,8 @@ definition {
 		DMDocument.deletePG(dmDocumentTitle = "Edited Google Slide");
 	}
 
-	macro viewAndDeleteOneDriveDocument {
+	@summary = "Default summary"
+	macro viewAndDeleteOneDriveDocument(dmDocumentTypeName = null) {
 		Navigator.openURL();
 
 		Navigator.gotoPage(pageName = "Documents and Media Page");
@@ -1293,7 +1318,8 @@ definition {
 		DMDocument.deletePG(dmDocumentTitle = "OneDrive ${dmDocumentTypeName} Title");
 	}
 
-	macro viewAndEditContentPageReview {
+	@summary = "Default summary"
+	macro viewAndEditContentPageReview() {
 		Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/test-content-page-name");
 
 		ContentPages.clickPencil();
@@ -1345,7 +1371,8 @@ definition {
 			user = "Test Test");
 	}
 
-	macro viewAndEditCustomMetaTag {
+	@summary = "Default summary"
+	macro viewAndEditCustomMetaTag() {
 		var portalURL = PropsUtil.get("portal.url");
 
 		User.logoutPG();
@@ -1383,7 +1410,8 @@ definition {
 		CustomMetaTags.viewTags(customMetaTagsList = '''property="custom Tag 1 property edit" content="custom Tag 1 content edit",property="custom Tag 3 property" content="custom Tag 3 content"''');
 	}
 
-	macro viewAndEditGoogleDriveDocuments {
+	@summary = "Default summary"
+	macro viewAndEditGoogleDriveDocuments() {
 		Navigator.gotoPage(pageName = "Documents and Media Page");
 
 		var key_dmDocumentTitle = "Untitled (1)";
@@ -1443,7 +1471,8 @@ definition {
 			value1 = "Edited Google Document");
 	}
 
-	macro viewAndEditOpenGraph {
+	@summary = "Default summary"
+	macro viewAndEditOpenGraph() {
 		var portalURL = PropsUtil.get("portal.url");
 		var siteName = TestCase.getSiteName(siteName = ${siteName});
 
@@ -1505,7 +1534,8 @@ definition {
 		OpenGraph.viewOpenGraphProperties(ogPropertyList = '''"og:title" content="This is a custom title edit","og:description" content="This is a custom description edit","og:image" content="${portalURL}/documents/${siteID}/0/Document_2.jpg''');
 	}
 
-	macro viewAndEditSERPPreview {
+	@summary = "Default summary"
+	macro viewAndEditSERPPreview() {
 		var portalURL = PropsUtil.get("portal.url");
 		var siteName = TestCase.getSiteName(siteName = ${siteName});
 
@@ -1538,7 +1568,8 @@ definition {
 			portalURL = ${portalURL});
 	}
 
-	macro viewAndEditUser {
+	@summary = "Default summary"
+	macro viewAndEditUser() {
 		ApplicationsMenu.gotoPortlet(
 			category = "Users",
 			panel = "Control Panel",
@@ -1829,7 +1860,8 @@ definition {
 		Organization.deleteCP(orgName = "Organization1");
 	}
 
-	macro viewAssetPublisher {
+	@summary = "Default summary"
+	macro viewAssetPublisher(categoryName = null) {
 		Navigator.gotoPage(pageName = "Asset Publisher");
 
 		AssetPublisherPortlet.configureAssetLinkBehaviorPG(assetLinkBehavior = "Show Full Content");
@@ -1861,7 +1893,8 @@ definition {
 		}
 	}
 
-	macro viewCalendar {
+	@summary = "Default summary"
+	macro viewCalendar() {
 		Navigator.gotoPage(pageName = "Calendar");
 
 		ProductMenuHelper.closeProductMenu();
@@ -1896,7 +1929,8 @@ definition {
 		CalendarEvent.view(eventTitle = "Post Upgrade Calendar Event");
 	}
 
-	macro viewClassicSearchPortletConfiguration {
+	@summary = "Default summary"
+	macro viewClassicSearchPortletConfiguration() {
 		Navigator.gotoSitePage(
 			pageName = "Site Page",
 			siteName = "Site Name");
@@ -1935,7 +1969,8 @@ definition {
 		AssertElementNotPresent(locator1 = "SearchResults#USER_FACET_ANY_USER");
 	}
 
-	macro viewContributedFragmentStyle {
+	@summary = "Default summary"
+	macro viewContributedFragmentStyle() {
 		task ("Navigate to page in view mode") {
 			ApplicationsMenu.gotoSite(site = "Test Site Name");
 
@@ -2222,7 +2257,8 @@ definition {
 		}
 	}
 
-	macro viewDefaultPage {
+	@summary = "Default summary"
+	macro viewDefaultPage() {
 		Navigator.openURL();
 
 		// Assert the Home/Welcome page is a widget page in the default site when upgrade from 7.2/7.1/7.0
@@ -2232,7 +2268,8 @@ definition {
 		AssertVisible(locator1 = "ControlMenu#ADD");
 	}
 
-	macro viewDocument {
+	@summary = "Default summary"
+	macro viewDocument() {
 		Navigator.gotoPage(pageName = "Document");
 
 		LexiconEntry.changeDisplayStyle(displayStyle = "list");
@@ -2256,7 +2293,8 @@ definition {
 			metadataLabel = "Creator");
 	}
 
-	macro ViewDroolsAppManager {
+	@summary = "Default summary"
+	macro ViewDroolsAppManager() {
 		ApplicationsMenu.gotoPortlet(
 			category = "System",
 			panel = "Control Panel",
@@ -2273,7 +2311,8 @@ definition {
 			searchTerm = "Drools");
 	}
 
-	macro viewInstanceSettings {
+	@summary = "Default summary"
+	macro viewInstanceSettings() {
 		PortalSettings.gotoConfiguration(
 			configurationCategory = "Instance Configuration",
 			configurationName = "General",
@@ -2393,7 +2432,8 @@ definition {
 			value1 = "(UTC +03:00) Eastern European Time");
 	}
 
-	macro viewLDAPConfiguration {
+	@summary = "Default summary"
+	macro viewLDAPConfiguration() {
 		ApplicationsMenu.gotoPortlet(
 			category = "Configuration",
 			panel = "Control Panel",
@@ -2433,13 +2473,15 @@ definition {
 		FormFields.viewCheckboxChecked(fieldName = "exportEnabled");
 	}
 
-	macro viewMessageBoards {
+	@summary = "Default summary"
+	macro viewMessageBoards() {
 		Navigator.gotoPage(pageName = "Message Boards");
 
 		MessageboardsThread.viewLockedPG(threadSubject = "Message Boards Subject 2");
 	}
 
-	macro viewMSBUpgrade {
+	@summary = "Default summary"
+	macro viewMSBUpgrade() {
 		task ("Assert the fragments survived") {
 			FragmentsAdminNavigator.openFragmentsAdmin(siteURLKey = "test-site-name");
 
@@ -2570,7 +2612,8 @@ definition {
 		}
 	}
 
-	macro viewNestedPortlets {
+	@summary = "Default summary"
+	macro viewNestedPortlets() {
 		Navigator.gotoPage(pageName = "Nested Portlets");
 
 		AssertTextEquals(
@@ -2587,7 +2630,8 @@ definition {
 			portletName = "Web Content Display");
 	}
 
-	macro viewNotifications {
+	@summary = "Default summary"
+	macro viewNotifications() {
 		Navigator.gotoPage(pageName = "Welcome");
 
 		Notifications.gotoNotifications();
@@ -2638,7 +2682,8 @@ definition {
 			threadSubject = "Message Boards Subject 3");
 	}
 
-	macro viewPolls {
+	@summary = "Default summary"
+	macro viewPolls() {
 		Navigator.gotoPage(pageName = "Polls");
 
 		AssertElementNotPresent(locator1 = "Message#INFO");
@@ -2660,7 +2705,8 @@ definition {
 			pollsQuestionVotePercent = "100%");
 	}
 
-	macro viewPortalCORS {
+	@summary = "Default summary"
+	macro viewPortalCORS(name = null, header = null, urlPattern = null) {
 		LexiconEntry.gotoEntryMenuItem(
 			menuItem = "Edit",
 			rowEntry = ${name});
@@ -2676,7 +2722,8 @@ definition {
 			value1 = ${header});
 	}
 
-	macro ViewPortletsPermissions {
+	@summary = "Default summary"
+	macro ViewPortletsPermissions() {
 		User.logoutAndLoginPG(
 			userLoginEmailAddress = "userea1@liferay.com",
 			userLoginFullName = "userfn1 userln1");
@@ -2745,7 +2792,8 @@ definition {
 		Portlet.viewNoPermissionPG();
 	}
 
-	macro viewSAMLGeneralConfiguration {
+	@summary = "Default summary"
+	macro viewSAMLGeneralConfiguration(samlRoleType = null) {
 		ApplicationsMenu.gotoPortlet(
 			category = "Security",
 			panel = "Control Panel",
@@ -2764,7 +2812,8 @@ definition {
 			value1 = "samlidp");
 	}
 
-	macro viewSAMLSPConnectionConfiguration {
+	@summary = "Default summary"
+	macro viewSAMLSPConnectionConfiguration() {
 		SAMLNavigation.gotoServiceProviderConnection();
 
 		Click(locator1 = "CPSAMLAdminServiceProviderConnections#SERVICE_PROVIDER_CONNECTION_DROPDOWN");
@@ -2794,7 +2843,8 @@ definition {
 			value1 = "emailAddress");
 	}
 
-	macro viewSearchPortletsConfiguration {
+	@summary = "Default summary"
+	macro viewSearchPortletsConfiguration() {
 		Navigator.gotoSitePage(
 			pageName = "Site Page",
 			siteName = "Site Name");
@@ -2874,7 +2924,8 @@ definition {
 		AssertElementNotPresent(locator1 = "Search#SEARCH_TYPE_FACET_TERM_COUNT");
 	}
 
-	macro viewSharedBlog {
+	@summary = "Default summary"
+	macro viewSharedBlog() {
 		User.logoutPG();
 
 		User.loginUserPG(
@@ -2897,7 +2948,8 @@ definition {
 			entryTitle = "Blogs Entry Title");
 	}
 
-	macro viewSharedDocument {
+	@summary = "Default summary"
+	macro viewSharedDocument() {
 		User.logoutPG();
 
 		User.loginUserPG(
@@ -2919,7 +2971,8 @@ definition {
 			dmDocumentTitle = "DM Document Title 1");
 	}
 
-	macro viewSpecificDisplayPageTemplateViaAssetPublisher {
+	@summary = "Default summary"
+	macro viewSpecificDisplayPageTemplateViaAssetPublisher() {
 		Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/Document Display Page");
 
 		AssetPublisherPortlet.clickAssetTitle(assetTitle = "DM Document Title");
@@ -2929,7 +2982,8 @@ definition {
 			locator1 = "Fragment#EDITABLE_FIELD_CONTENT");
 	}
 
-	macro viewStagingNestedPortlets {
+	@summary = "Default summary"
+	macro viewStagingNestedPortlets() {
 		Navigator.gotoStagedSitePage(
 			pageName = "Staging Test Page",
 			siteName = "Staging Site");
@@ -2952,7 +3006,8 @@ definition {
 			portletName = "Blogs");
 	}
 
-	macro viewSXPBlueprintAndElements {
+	@summary = "Default summary"
+	macro viewSXPBlueprintAndElements() {
 		Blueprints.openBlueprintsAdmin();
 
 		Navigator.gotoNavItem(navItem = "Elements");
@@ -3067,7 +3122,8 @@ definition {
 		AssertElementNotPresent(locator1 = "Message#ERROR");
 	}
 
-	macro viewSystemSettings {
+	@summary = "Default summary"
+	macro viewSystemSettings() {
 		ApplicationsMenu.gotoPortlet(
 			category = "Configuration",
 			panel = "Control Panel",
@@ -3264,7 +3320,8 @@ definition {
 		FormFields.viewCheckboxNotChecked(fieldName = "autogenerateTemplateKey");*/
 	}
 
-	macro viewUpgrade {
+	@summary = "Default summary"
+	macro viewUpgrade() {
 		Navigator.gotoPage(pageName = "Web Content");
 
 		WebContent.viewPGViaWCD(webContentContent = "Web Content Content");
@@ -3402,7 +3459,8 @@ definition {
 		SignIn.signIn();
 	}
 
-	macro viewWebContentWithAllFields {
+	@summary = "Default summary"
+	macro viewWebContentWithAllFields() {
 		var siteName = TestCase.getSiteName(siteName = ${siteName});
 
 		ProductMenu.gotoPortlet(
@@ -3514,7 +3572,8 @@ definition {
 		AssertVisible(locator1 = "Button#PREVIEW");
 	}
 
-	macro viewWebContentWithPredefinedValueInWebContentField {
+	@summary = "Default summary"
+	macro viewWebContentWithPredefinedValueInWebContentField() {
 		var siteName = TestCase.getSiteName(siteName = ${siteName});
 
 		ProductMenu.gotoPortlet(
@@ -3534,7 +3593,8 @@ definition {
 			webContentWebContentFieldName = "WebContent");
 	}
 
-	macro viewWebContextsCORS {
+	@summary = "Default summary"
+	macro viewWebContextsCORS(filter = null, urlPattern = null) {
 		LexiconEntry.gotoEntryMenuItem(
 			menuItem = "Edit",
 			rowEntry = ${filter});

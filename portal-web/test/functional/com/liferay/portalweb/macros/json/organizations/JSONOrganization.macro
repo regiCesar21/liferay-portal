@@ -1,6 +1,7 @@
 definition {
 
-	macro addOrganization {
+	@summary = "Default summary"
+	macro addOrganization(organizationType = null, organizationName = null, organizationSite = null, parentOrganizationName = null) {
 		Variables.assertDefined(parameterList = ${organizationName});
 
 		if (isSet(parentOrganizationName)) {
@@ -14,7 +15,8 @@ definition {
 			parentOrganizationId = ${parentOrganizationId});
 	}
 
-	macro addOrganizationToDepot {
+	@summary = "Default summary"
+	macro addOrganizationToDepot(depotName = null, organizationName = null) {
 		Variables.assertDefined(parameterList = "${organizationName},${depotName}");
 
 		var organizationId = JSONOrganization.getOrganizationIdByName(organizationName = ${organizationName});
@@ -27,7 +29,8 @@ definition {
 			organizationId = ${organizationId});
 	}
 
-	macro addOrganizationToSite {
+	@summary = "Default summary"
+	macro addOrganizationToSite(organizationName = null, siteName = null) {
 		Variables.assertDefined(parameterList = "${organizationName},${siteName}");
 
 		var organizationId = JSONOrganization.getOrganizationIdByName(organizationName = ${organizationName});
@@ -38,7 +41,8 @@ definition {
 			organizationId = ${organizationId});
 	}
 
-	macro assignUserToOrganization {
+	@summary = "Default summary"
+	macro assignUserToOrganization(organizationName = null, userEmailAddress = null) {
 		Variables.assertDefined(parameterList = "${organizationName},${userEmailAddress}");
 
 		var organizationId = JSONOrganization.getOrganizationIdByName(organizationName = ${organizationName});
@@ -49,7 +53,8 @@ definition {
 			userId = ${userId});
 	}
 
-	macro deleteOrganizationByName {
+	@summary = "Default summary"
+	macro deleteOrganizationByName(organizationName = null) {
 		Variables.assertDefined(parameterList = ${organizationName});
 
 		var organizationId = JSONOrganization.getOrganizationIdByName(organizationName = ${organizationName});
@@ -57,7 +62,8 @@ definition {
 		JSONOrganizationAPI._deleteOrganization(organizationId = ${organizationId});
 	}
 
-	macro getOrganizationIdByName {
+	@summary = "Default summary"
+	macro getOrganizationIdByName(organizationName = null) {
 		Variables.assertDefined(parameterList = ${organizationName});
 
 		var companyId = JSONCompany.getCompanyId();
@@ -77,7 +83,8 @@ definition {
 		return ${organizationId};
 	}
 
-	macro getOrganizationName {
+	@summary = "Default summary"
+	macro getOrganizationName(organizationId = null) {
 		Variables.assertDefined(parameterList = ${organizationId});
 
 		var portalURL = JSONCompany.getPortalURL();

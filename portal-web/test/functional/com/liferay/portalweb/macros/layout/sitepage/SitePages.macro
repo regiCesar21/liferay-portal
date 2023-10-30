@@ -1,6 +1,7 @@
 definition {
 
-	macro _addPage {
+	@summary = "Default summary"
+	macro _addPage(sitePageType = null, pageTypeURL = null, pageTemplateName = null, vocabularyName = null, customTitle = null, pageName = null, categoryName = null, linkPageName = null, collectionName = null, assertCheckboxMissing = null, inheritChanges = null, customDescription = null, portlet = null, componentName = null, navigationMenus = null) {
 		SitePages._selectPageType(
 			collectionName = ${collectionName},
 			pageTemplateName = ${pageTemplateName},
@@ -76,7 +77,8 @@ definition {
 		Button.click(button = "Save");
 	}
 
-	macro _addPageToNavigationMenu {
+	@summary = "Default summary"
+	macro _addPageToNavigationMenu(assertCheckboxMissing = null, navigationMenus = null) {
 		if (isSet(navigationMenus)) {
 			Pause(locator1 = 5000);
 
@@ -99,7 +101,8 @@ definition {
 		}
 	}
 
-	macro _configureOpenGraph {
+	@summary = "Default summary"
+	macro _configureOpenGraph(customDescription = null, customTitle = null) {
 		Navigator.gotoNavTab(navTab = "Open Graph");
 
 		var checkboxName = "Use Custom Title";
@@ -124,7 +127,8 @@ definition {
 			value1 = ${customDescription});
 	}
 
-	macro _configurePage {
+	@summary = "Default summary"
+	macro _configurePage(sitePageType = null, pageTypeURL = null, portlet = null, componentName = null, layoutPageTemplateName = null, columnName = null) {
 		if (${sitePageType} == "Embedded") {
 			Page._addPageTypeEmbedded(pageTypeURL = ${pageTypeURL});
 		}
@@ -146,7 +150,8 @@ definition {
 		}
 	}
 
-	macro _selectPageType {
+	@summary = "Default summary"
+	macro _selectPageType(pageTemplateName = null, collectionName = null) {
 		if (isSet(pageTemplateName)) {
 			var sitePageType = ${pageTemplateName};
 
@@ -171,7 +176,8 @@ definition {
 		LexiconCard.clickCard(card = ${sitePageType});
 	}
 
-	macro addChildPage {
+	@summary = "Default summary"
+	macro addChildPage(assertCheckboxMissing = null, parentPageName = null, sitePageType = null, childPageName = null, pageTemplateName = null, navigationMenus = null) {
 		MouseOver(
 			key_itemName = ${parentPageName},
 			locator1 = "SitePages#LIST_GROUP_ITEM");
@@ -190,7 +196,8 @@ definition {
 			sitePageType = ${sitePageType});
 	}
 
-	macro addPrivateChildPage {
+	@summary = "Default summary"
+	macro addPrivateChildPage(assertCheckboxMissing = null, parentPageName = null, sitePageType = null, childPageName = null, pageTemplateName = null, navigationMenus = null) {
 		if (IsTextNotEqual(locator1 = "ControlMenu#HEADING", value1 = "Pages")) {
 			ProductMenu.gotoPortlet(
 				category = "Site Builder",
@@ -208,7 +215,8 @@ definition {
 			sitePageType = ${sitePageType});
 	}
 
-	macro addPrivatePage {
+	@summary = "Default summary"
+	macro addPrivatePage(assertCheckboxMissing = null, sitePageType = null, siteTemplate = null, pageTemplateName = null, navigationMenus = null, pageName = null) {
 		if (IsTextNotEqual(locator1 = "ControlMenu#HEADING", value1 = "Pages")) {
 			ProductMenu.gotoPortlet(
 				category = "Site Builder",
@@ -241,7 +249,8 @@ definition {
 			sitePageType = ${sitePageType});
 	}
 
-	macro addPublicChildPage {
+	@summary = "Default summary"
+	macro addPublicChildPage(assertCheckboxMissing = null, parentPageName = null, sitePageType = null, childPageName = null, pageTemplateName = null, navigationMenus = null) {
 		if (IsTextNotEqual(locator1 = "ControlMenu#HEADING", value1 = "Pages")) {
 			ProductMenu.gotoPortlet(
 				category = "Site Builder",
@@ -259,7 +268,8 @@ definition {
 			sitePageType = ${sitePageType});
 	}
 
-	macro addPublicPage {
+	@summary = "Default summary"
+	macro addPublicPage(pageTypeURL = null, sitePageType = null, customTitle = null, pageTemplateName = null, vocabularyName = null, categoryName = null, linkPageName = null, pageName = null, collectionName = null, assertCheckboxMissing = null, inheritChanges = null, customDescription = null, portlet = null, componentName = null, openGraph = null, navigationMenus = null) {
 		if (IsTextNotEqual(locator1 = "ControlMenu#HEADING", value1 = "Pages")) {
 			ProductMenu.gotoPortlet(
 				category = "Site Builder",
@@ -300,7 +310,8 @@ definition {
 			vocabularyName = ${vocabularyName});
 	}
 
-	macro addPublicPageUnderSitePagesVariation {
+	@summary = "Default summary"
+	macro addPublicPageUnderSitePagesVariation(sitePageType = null, pageTemplateName = null, pageName = null, collectionName = null) {
 		LexiconEntry.gotoAddMenuItem(menuItem = "Public Page");
 
 		SitePages._selectPageType(
@@ -325,13 +336,15 @@ definition {
 		WaitForSPARefresh();
 	}
 
-	macro checkPage {
+	@summary = "Default summary"
+	macro checkPage(pageName = null) {
 		var key_pageName = ${pageName};
 
 		Check.checkNotVisible(locator1 = "SitePages#LIST_GROUP_ITEM_CHECKBOX");
 	}
 
-	macro configureChildPage {
+	@summary = "Default summary"
+	macro configureChildPage(pageTypeURL = null, sitePageType = null, parentPagesHierarchy = null, portlet = null, componentName = null, layoutPageTemplateName = null, pageName = null, columnName = null) {
 		if (IsTextNotEqual(locator1 = "ControlMenu#HEADING", value1 = "Pages")) {
 			ProductMenu.gotoPortlet(
 				category = "Site Builder",
@@ -354,7 +367,8 @@ definition {
 		PortletEntry.save();
 	}
 
-	macro configurePage {
+	@summary = "Default summary"
+	macro configurePage(pageTypeURL = null, sitePageType = null, privacy = null, portlet = null, componentName = null, layoutPageTemplateName = null, pageName = null, columnName = null) {
 		if (IsTextNotEqual(locator1 = "ControlMenu#HEADING", value1 = "Pages")) {
 			ProductMenu.gotoPortlet(
 				category = "Site Builder",
@@ -378,7 +392,8 @@ definition {
 		PortletEntry.save();
 	}
 
-	macro deletePage {
+	@summary = "Default summary"
+	macro deletePage(failure = null, pageName = null) {
 		WaitForPageLoad();
 
 		Click(
@@ -413,7 +428,8 @@ definition {
 		}
 	}
 
-	macro expandPageTree {
+	@summary = "Default summary"
+	macro expandPageTree() {
 		if (!(isSet(depth))) {
 			var depth = 1;
 		}
@@ -431,7 +447,8 @@ definition {
 		}
 	}
 
-	macro gotoAddFirstPage {
+	@summary = "Default summary"
+	macro gotoAddFirstPage(pageType = null) {
 		var key_menuItem = ${pageType};
 
 		Refresh();
@@ -443,7 +460,8 @@ definition {
 		Click(locator1 = "MenuItem#DROPDOWN_MENU_ITEM");
 	}
 
-	macro gotoPageMenuItem {
+	@summary = "Default summary"
+	macro gotoPageMenuItem(parentPagesHierarchy = null, menuItem = null, pageName = null, browserType = null) {
 		WaitForPageLoad();
 
 		if (isSet(parentPagesHierarchy)) {
@@ -468,7 +486,8 @@ definition {
 		MenuItem.click(menuItem = ${menuItem});
 	}
 
-	macro movePageToPageUp {
+	@summary = "Default summary"
+	macro movePageToPageUp(pageNameTo = null, pageName = null) {
 		var key_pageName = ${pageName};
 		var key_pageNameTo = ${pageNameTo};
 
@@ -478,7 +497,8 @@ definition {
 			value1 = "");
 	}
 
-	macro openPagesAdmin {
+	@summary = "Default summary"
+	macro openPagesAdmin(baseURL = null) {
 		var siteURLKey = StringUtil.replace(${siteURLKey}, " ", "-");
 
 		var siteURLKey = StringUtil.lowerCase(${siteURLKey});
@@ -488,7 +508,8 @@ definition {
 			urlAppend = "group/${siteURLKey}/~/control_panel/manage?p_p_id=com_liferay_layout_admin_web_portlet_GroupPagesPortlet");
 	}
 
-	macro togglePrivacy {
+	@summary = "Default summary"
+	macro togglePrivacy(privacy = null) {
 		WaitForPageLoad();
 
 		if (IsElementNotPresent(key_breadcrumbName = ${privacy}, locator1 = "Breadcrumb#BREADCRUMB_ENTRY_EXACT_MATCH")) {
@@ -498,13 +519,15 @@ definition {
 		}
 	}
 
-	macro viewCheckboxChecked {
+	@summary = "Default summary"
+	macro viewCheckboxChecked(pageName = null) {
 		AssertChecked.assertCheckedNotVisible(
 			key_pageName = ${pageName},
 			locator1 = "SitePages#LIST_GROUP_ITEM_CHECKBOX");
 	}
 
-	macro viewPageItems {
+	@summary = "Default summary"
+	macro viewPageItems(pageName = null) {
 		AssertVisible(
 			key_pageName = ${pageName},
 			locator1 = "SitePages#LIST_GROUP_ITEM_ENTRY_TITLE");

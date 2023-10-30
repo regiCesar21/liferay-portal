@@ -1,6 +1,7 @@
 definition {
 
-	macro addCollection {
+	@summary = "Default summary"
+	macro addCollection(collectionDescription = null, collectionName = null) {
 		FragmentsAdminNavigator.gotoAddCollection();
 
 		Collection.editCollection(
@@ -10,7 +11,8 @@ definition {
 		Button.clickSave();
 	}
 
-	macro addFragment {
+	@summary = "Default summary"
+	macro addFragment(fragmentName = null) {
 		LexiconEntry.gotoAdd();
 
 		AssertTextEquals(
@@ -22,7 +24,8 @@ definition {
 		Button.clickSave();
 	}
 
-	macro addResource {
+	@summary = "Default summary"
+	macro addResource(resourceFile = null) {
 		LexiconEntry.gotoAdd();
 
 		IFrame.selectConfigurationFrame();
@@ -40,17 +43,20 @@ definition {
 		Button.clickAdd();
 	}
 
-	macro deleteEntry {
+	@summary = "Default summary"
+	macro deleteEntry(entry = null) {
 		LexiconCard.delete(card = ${entry});
 	}
 
-	macro exportCollection {
+	@summary = "Default summary"
+	macro exportCollection(collectionName = null) {
 		Navigator.gotoNavNested(navNested = ${collectionName});
 
 		LexiconEntry.gotoEllipsisMenuItem(menuItem = "Export");
 	}
 
-	macro exportMultipleCollections {
+	@summary = "Default summary"
+	macro exportMultipleCollections(collectionNameList = null) {
 		for (var collectionName : list ${collectionNameList}) {
 			Check(
 				key_tableEntry = ${collectionName},
@@ -66,7 +72,8 @@ definition {
 		Alert.viewSuccessMessage();
 	}
 
-	macro importCollectionFromDependenciesFolder {
+	@summary = "Default summary"
+	macro importCollectionFromDependenciesFolder(collectionZipFile = null) {
 		FragmentsAdminNavigator.gotoImportCollection();
 
 		UploadCommonFile(
@@ -86,7 +93,8 @@ definition {
 		IFrame.closeFrame();
 	}
 
-	macro importCollectionFromTempFolder {
+	@summary = "Default summary"
+	macro importCollectionFromTempFolder() {
 		FragmentsAdminNavigator.gotoImportCollection();
 
 		var collectionsZipFileName = TestCase.getDownloadedTempFileName(fileNamePattern = "collections-*.zip");
@@ -108,25 +116,30 @@ definition {
 		IFrame.closeFrame();
 	}
 
-	macro openFragmentsAdmin {
+	@summary = "Default summary"
+	macro openFragmentsAdmin(siteURLKey = null) {
 		Navigator.openWithAppendToBaseURL(urlAppend = "group/${siteURLKey}/~/control_panel/manage/-/fragments");
 	}
 
-	macro selectCollection {
+	@summary = "Default summary"
+	macro selectCollection(collectionName = null) {
 		SelectFrame(locator1 = "IFrame#MODAL_BODY");
 
 		LexiconCard.clickCard(card = ${collectionName});
 	}
 
-	macro viewEntryNotPresent {
+	@summary = "Default summary"
+	macro viewEntryNotPresent(entry = null) {
 		LexiconCard.viewCardNotPresent(card = ${entry});
 	}
 
-	macro viewEntryPresent {
+	@summary = "Default summary"
+	macro viewEntryPresent(entry = null) {
 		LexiconCard.viewCardPresent(card = ${entry});
 	}
 
-	macro viewEntryWorkflowStatus {
+	@summary = "Default summary"
+	macro viewEntryWorkflowStatus(entry = null, workflowStatus = null) {
 		LexiconCard.viewCardLabel(
 			card = ${entry},
 			cardLabel = ${workflowStatus});

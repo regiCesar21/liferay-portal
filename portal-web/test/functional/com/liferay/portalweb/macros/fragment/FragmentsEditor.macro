@@ -1,6 +1,7 @@
 definition {
 
-	macro assertFragmentPreview {
+	@summary = "Default summary"
+	macro assertFragmentPreview(fragmentLocator = null, text = null) {
 		SelectFrame.selectFrameNoLoading(locator1 = "FragmentEditor#PREVIEW_IFRAME");
 
 		if (isSet(text)) {
@@ -15,7 +16,8 @@ definition {
 		SelectFrame.selectFrameTop();
 	}
 
-	macro autocompleteFragmentHTML {
+	@summary = "Default summary"
+	macro autocompleteFragmentHTML(fragmentHTML = null, htmlSnippet = null, autocompleteField = null) {
 		FragmentsEditor.typeHtmlEditor(content = "");
 
 		Type.sendKeysAceEditor(
@@ -31,31 +33,37 @@ definition {
 			value1 = ${fragmentHTML});
 	}
 
-	macro gotoCodeTab {
+	@summary = "Default summary"
+	macro gotoCodeTab() {
 		Button.click(button = "Code");
 	}
 
-	macro gotoConfigurationTab {
+	@summary = "Default summary"
+	macro gotoConfigurationTab() {
 		Button.click(button = "Configuration");
 	}
 
-	macro publish {
+	@summary = "Default summary"
+	macro publish() {
 		PortletEntry.publish();
 	}
 
-	macro typeConfigurationEditor {
+	@summary = "Default summary"
+	macro typeConfigurationEditor(content = null) {
 		Type.typeCodeMirrorEditorNoError(
 			locator1 = "FragmentEditor#CONFIGURATION_EDITOR",
 			value1 = ${content});
 	}
 
-	macro typeCssEditor {
+	@summary = "Default summary"
+	macro typeCssEditor(content = null) {
 		Type.typeCodeMirrorEditorNoError(
 			locator1 = "FragmentEditor#CSS_EDITOR",
 			value1 = ${content});
 	}
 
-	macro typeFileContent {
+	@summary = "Default summary"
+	macro typeFileContent(fileName = null) {
 		var content = TestCase.getFileContent(fileName = ${fileName});
 		var fileExtension = File.getFileExtension(fileName = ${fileName});
 
@@ -76,13 +84,15 @@ definition {
 		}
 	}
 
-	macro typeHtmlEditor {
+	@summary = "Default summary"
+	macro typeHtmlEditor(content = null) {
 		Type.typeCodeMirrorEditorNoError(
 			locator1 = "FragmentEditor#HTML_EDITOR",
 			value1 = ${content});
 	}
 
-	macro typeJsEditor {
+	@summary = "Default summary"
+	macro typeJsEditor(content = null) {
 		Type.typeCodeMirrorEditorNoError(
 			locator1 = "FragmentEditor#JS_EDITOR",
 			value1 = ${content});

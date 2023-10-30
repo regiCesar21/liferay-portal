@@ -1,10 +1,12 @@
 definition {
 
-	macro clearFilters {
+	@summary = "Default summary"
+	macro clearFilters() {
 		Click(locator1 = "ContentDashboard#CLEAR_FILTERS_BUTTON");
 	}
 
-	macro editWebContent {
+	@summary = "Default summary"
+	macro editWebContent(webContentTitle = null) {
 		Click(locator1 = "ContentDashboard#WEB_CONTENT_MENU_DROPDOWN_BUTTON");
 
 		Click(locator1 = "ContentDashboard#EDIT_OPTION");
@@ -20,7 +22,8 @@ definition {
 		Button.clickPublish();
 	}
 
-	macro filterByAuthorCard {
+	@summary = "Default summary"
+	macro filterByAuthorCard(filterOption = null) {
 		if (IsElementPresent(locator1 = "ContentDashboard#FILTER_AND_ORDER_DROPDOWN")) {
 			AssertClickNoError(
 				locator1 = "ContentDashboard#FILTER_AND_ORDER_DROPDOWN",
@@ -58,7 +61,8 @@ definition {
 		SelectFrame(value1 = "relative=top");
 	}
 
-	macro filterByAuthorList {
+	@summary = "Default summary"
+	macro filterByAuthorList(filterOption = null) {
 		if (IsElementPresent(locator1 = "ContentDashboard#FILTER_AND_ORDER_DROPDOWN")) {
 			AssertClickNoError(
 				locator1 = "ContentDashboard#FILTER_AND_ORDER_DROPDOWN",
@@ -96,7 +100,8 @@ definition {
 		SelectFrame(value1 = "relative=top");
 	}
 
-	macro filterByAuthorTable {
+	@summary = "Default summary"
+	macro filterByAuthorTable(filterOption = null) {
 		if (IsElementPresent(locator1 = "ContentDashboard#FILTER_AND_ORDER_DROPDOWN")) {
 			AssertClickNoError(
 				locator1 = "ContentDashboard#FILTER_AND_ORDER_DROPDOWN",
@@ -134,7 +139,8 @@ definition {
 		SelectFrame(value1 = "relative=top");
 	}
 
-	macro filterByCategory {
+	@summary = "Default summary"
+	macro filterByCategory(filterOption = null) {
 		if (IsElementPresent(locator1 = "ContentDashboard#FILTER_AND_ORDER_DROPDOWN")) {
 			AssertClickNoError(
 				locator1 = "ContentDashboard#FILTER_AND_ORDER_DROPDOWN",
@@ -166,7 +172,8 @@ definition {
 		SelectFrame(value1 = "relative=top");
 	}
 
-	macro filterBySiteGlobal {
+	@summary = "Default summary"
+	macro filterBySiteGlobal(filterOption = null) {
 		if (IsElementPresent(locator1 = "ContentDashboard#FILTER_AND_ORDER_DROPDOWN")) {
 			AssertClickNoError(
 				locator1 = "ContentDashboard#FILTER_AND_ORDER_DROPDOWN",
@@ -186,7 +193,8 @@ definition {
 		SelectFrame(value1 = "relative=top");
 	}
 
-	macro filterByStatusAny {
+	@summary = "Default summary"
+	macro filterByStatusAny(filterOption = null) {
 		if (IsElementPresent(locator1 = "ContentDashboard#FILTER_AND_ORDER_DROPDOWN")) {
 			AssertClickNoError(
 				locator1 = "ContentDashboard#FILTER_AND_ORDER_DROPDOWN",
@@ -198,7 +206,8 @@ definition {
 		Click(locator1 = "ContentDashboard#FILTER_BY_OPTION");
 	}
 
-	macro filterByStatusApproved {
+	@summary = "Default summary"
+	macro filterByStatusApproved(filterOption = null) {
 		if (IsElementPresent(locator1 = "ContentDashboard#FILTER_AND_ORDER_DROPDOWN")) {
 			AssertClickNoError(
 				locator1 = "ContentDashboard#FILTER_AND_ORDER_DROPDOWN",
@@ -210,7 +219,8 @@ definition {
 		Click(locator1 = "ContentDashboard#FILTER_BY_OPTION");
 	}
 
-	macro filterByStatusDraft {
+	@summary = "Default summary"
+	macro filterByStatusDraft(filterOption = null) {
 		if (IsElementPresent(locator1 = "ContentDashboard#FILTER_AND_ORDER_DROPDOWN")) {
 			AssertClickNoError(
 				locator1 = "ContentDashboard#FILTER_AND_ORDER_DROPDOWN",
@@ -222,7 +232,8 @@ definition {
 		Click(locator1 = "ContentDashboard#FILTER_BY_OPTION");
 	}
 
-	macro filterByStatusScheduled {
+	@summary = "Default summary"
+	macro filterByStatusScheduled(filterOption = null) {
 		if (IsElementPresent(locator1 = "ContentDashboard#FILTER_AND_ORDER_DROPDOWN")) {
 			AssertClickNoError(
 				locator1 = "ContentDashboard#FILTER_AND_ORDER_DROPDOWN",
@@ -234,7 +245,8 @@ definition {
 		Click(locator1 = "ContentDashboard#FILTER_BY_OPTION");
 	}
 
-	macro filterByTag {
+	@summary = "Default summary"
+	macro filterByTag(filterOption = null) {
 		if (IsElementPresent(locator1 = "ContentDashboard#FILTER_AND_ORDER_DROPDOWN")) {
 			AssertClickNoError(
 				locator1 = "ContentDashboard#FILTER_AND_ORDER_DROPDOWN",
@@ -260,13 +272,15 @@ definition {
 		SelectFrame(value1 = "relative=top");
 	}
 
-	macro openInfoPanelByDropdownMenu {
+	@summary = "Default summary"
+	macro openInfoPanelByDropdownMenu() {
 		Click(locator1 = "ContentDashboard#WEB_CONTENT_MENU_DROPDOWN_BUTTON");
 
 		Click(locator1 = "ContentDashboard#INFO_OPTION");
 	}
 
-	macro orderByModificationDate {
+	@summary = "Default summary"
+	macro orderByModificationDate(filterOption = null) {
 		if (IsElementPresent(locator1 = "ContentDashboard#FILTER_AND_ORDER_DROPDOWN")) {
 			AssertClickNoError(
 				locator1 = "ContentDashboard#FILTER_AND_ORDER_DROPDOWN",
@@ -278,7 +292,8 @@ definition {
 		Click(locator1 = "ContentDashboard#FILTER_BY_OPTION");
 	}
 
-	macro orderByTitle {
+	@summary = "Default summary"
+	macro orderByTitle(filterOption = null) {
 		if (IsElementPresent(locator1 = "ContentDashboard#FILTER_AND_ORDER_DROPDOWN")) {
 			AssertClickNoError(
 				locator1 = "ContentDashboard#FILTER_AND_ORDER_DROPDOWN",
@@ -290,7 +305,8 @@ definition {
 		Click(locator1 = "ContentDashboard#FILTER_BY_OPTION");
 	}
 
-	macro searchValue {
+	@summary = "Default summary"
+	macro searchValue(webContentTitle = null) {
 		Click(locator1 = "ContentDashboard#SEARCH_FIELD");
 
 		Type(
@@ -302,7 +318,8 @@ definition {
 			value1 = "\ENTER");
 	}
 
-	macro uncheckCheckbox {
+	@summary = "Default summary"
+	macro uncheckCheckbox() {
 		ClickNoError(locator1 = "ContentDashboard#AUDIT_GRAPH_CATEGORY_CHECKBOX");
 	}
 

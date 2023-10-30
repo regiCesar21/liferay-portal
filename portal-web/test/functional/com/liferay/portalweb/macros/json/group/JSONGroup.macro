@@ -1,6 +1,7 @@
 definition {
 
-	macro addChildSite {
+	@summary = "Default summary"
+	macro addChildSite(groupName = null, groupDescription = null, grandParentGroupName = null, parentGroupName = null) {
 		Variables.assertDefined(parameterList = "${groupName},${parentGroupName}");
 
 		var groupDescriptionMap = JSONGroupSetter.setGroupDescriptionMap(groupDescription = ${groupDescription});
@@ -15,7 +16,8 @@ definition {
 			parentGroupId = ${parentGroupId});
 	}
 
-	macro addGroup {
+	@summary = "Default summary"
+	macro addGroup(groupName = null, groupDescription = null, portalURL = null, manualMembership = null, type = null, parentGroupName = null) {
 		Variables.assertDefined(parameterList = ${groupName});
 
 		var groupDescriptionMap = JSONGroupSetter.setGroupDescriptionMap(groupDescription = ${groupDescription});
@@ -31,7 +33,8 @@ definition {
 			type = ${type});
 	}
 
-	macro assignGroupRoleToUser {
+	@summary = "Default summary"
+	macro assignGroupRoleToUser(groupName = null, roleTitle = null, userEmailAddress = null) {
 		Variables.assertDefined(parameterList = "${groupName},${roleTitle},${userEmailAddress}");
 
 		var groupId = JSONGroupSetter.setGroupId(groupName = ${groupName});
@@ -44,7 +47,8 @@ definition {
 			userId = ${userId});
 	}
 
-	macro assignUserGroupToGroup {
+	@summary = "Default summary"
+	macro assignUserGroupToGroup(groupName = null, userGroupName = null) {
 		Variables.assertDefined(parameterList = "${groupName},${userGroupName}");
 
 		var groupId = JSONGroupSetter.setGroupId(groupName = ${groupName});
@@ -55,7 +59,8 @@ definition {
 			userGroupId = ${userGroupId});
 	}
 
-	macro assignUserToGroup {
+	@summary = "Default summary"
+	macro assignUserToGroup(groupName = null, userEmailAddress = null) {
 		Variables.assertDefined(parameterList = "${groupName},${userEmailAddress}");
 
 		var groupId = JSONGroupSetter.setGroupId(groupName = ${groupName});
@@ -66,7 +71,8 @@ definition {
 			userId = ${userId});
 	}
 
-	macro deleteGroupByName {
+	@summary = "Default summary"
+	macro deleteGroupByName(groupName = null) {
 		Variables.assertDefined(parameterList = ${groupName});
 
 		var groupId = JSONGroupSetter.setGroupId(groupName = ${groupName});

@@ -2,7 +2,8 @@ definition {
 
 	var assetType = "Documents Folder";
 
-	macro addCP {
+	@summary = "Default summary"
+	macro addCP(dmFolderDescription = null, dmFolder = null, siteName = null, dmFolderName = null) {
 		var key_dmFolderName = ${dmFolderName};
 
 		LexiconEntry.gotoAdd();
@@ -45,7 +46,8 @@ definition {
 		DMFolder.viewEntryPresent(dmFolderName = ${dmFolderName});
 	}
 
-	macro addPG {
+	@summary = "Default summary"
+	macro addPG(viewableBy = null, dmFolderDescription = null, dmFolder = null, dmFolderName = null) {
 		if (isSet(contentPage)) {
 			LexiconEntry.gotoAdd();
 		}
@@ -93,7 +95,8 @@ definition {
 		}
 	}
 
-	macro addPGViaMG {
+	@summary = "Default summary"
+	macro addPGViaMG(mgFolderName = null, mgFolderDescription = null) {
 		Portlet.clickPortletPlusIconPG(portletName = "Media Gallery");
 
 		AssertClick.assertTextClickAt(
@@ -114,13 +117,15 @@ definition {
 		DMFolder.viewEntryPresent(dmFolderName = ${mgFolderName});
 	}
 
-	macro cannotViewCP {
+	@summary = "Default summary"
+	macro cannotViewCP(dmFolderName = null) {
 		var key_dmFolderName = ${dmFolderName};
 
 		LexiconCard.viewCardNotPresent(card = ${dmFolderName});
 	}
 
-	macro configureWorkflowCP {
+	@summary = "Default summary"
+	macro configureWorkflowCP(workflowRestriction = null, workflowDefinition = null, dmDocumentTypeName = null, dmFolderName = null) {
 		DMFolder.gotoEditCP(folderName = ${dmFolderName});
 
 		if (IsElementNotPresent.isNotVisible(locator1 = "Radio#WORKFLOW_PARENT_FOLDER")) {
@@ -175,7 +180,8 @@ definition {
 		Alert.viewSuccessMessage();
 	}
 
-	macro deleteCP {
+	@summary = "Default summary"
+	macro deleteCP(dmFolderName = null) {
 		var key_dmFolderName = ${dmFolderName};
 
 		Click(locator1 = "DocumentsAndMedia#DESCRIPTIVE_LIST_VERTICAL_ELLIPSIS");
@@ -194,7 +200,8 @@ definition {
 		}
 	}
 
-	macro deletePG {
+	@summary = "Default summary"
+	macro deletePG(dmFolderName = null) {
 		var key_dmFolderName = ${dmFolderName};
 
 		AssertTextEquals(
@@ -210,7 +217,8 @@ definition {
 		AssertElementNotPresent(locator1 = "DocumentsAndMedia#DESCRIPTIVE_LIST_FOLDER_ICON");
 	}
 
-	macro editCP {
+	@summary = "Default summary"
+	macro editCP(dmFolderNameEdit = null, dmFolderName = null, dmFolderDescriptionEdit = null) {
 		var key_dmFolderName = ${dmFolderName};
 
 		DMFolder.viewEntryPresent(dmFolderName = ${dmFolderName});
@@ -230,7 +238,8 @@ definition {
 		DMFolder.viewEntryPresent(dmFolderName = ${dmFolderName});
 	}
 
-	macro editPG {
+	@summary = "Default summary"
+	macro editPG(dmFolderNameEdit = null, dmFolderName = null, dmFolderDescriptionEdit = null) {
 		var key_dmFolderName = ${dmFolderName};
 
 		AssertTextEquals(
@@ -256,7 +265,8 @@ definition {
 			value1 = ${dmFolderNameEdit});
 	}
 
-	macro editPGViaMG {
+	@summary = "Default summary"
+	macro editPGViaMG(mgFolderNameEdit = null, mgFolderName = null, mgFolderDescriptionEdit = null) {
 		LexiconEntry.gotoEllipsisMenuItem(menuItem = "Edit");
 
 		PortletEntry.inputName(name = ${mgFolderNameEdit});
@@ -270,7 +280,8 @@ definition {
 		DMFolder.viewEntryPresent(dmFolderName = ${mgFolderNameEdit});
 	}
 
-	macro gotoEditCP {
+	@summary = "Default summary"
+	macro gotoEditCP(folderName = null) {
 		var key_dmFolderName = ${folderName};
 
 		DMFolder.viewEntryPresent(dmFolderName = ${folderName});
@@ -280,11 +291,13 @@ definition {
 		MenuItem.click(menuItem = "Edit");
 	}
 
-	macro gotoEntry {
+	@summary = "Default summary"
+	macro gotoEntry(dmFolderName = null) {
 		LexiconCard.clickCard(card = ${dmFolderName});
 	}
 
-	macro gotoPGViaMG {
+	@summary = "Default summary"
+	macro gotoPGViaMG(mgFolderName = null) {
 		var key_mgFolderName = ${mgFolderName};
 
 		DMFolder.gotoEntry(dmFolderName = ${mgFolderName});
@@ -294,7 +307,8 @@ definition {
 			value1 = ${mgFolderName});
 	}
 
-	macro moveToFolderCP {
+	@summary = "Default summary"
+	macro moveToFolderCP(dmFolderName1 = null, dmFolderName = null, dmFolderName2 = null) {
 		LexiconEntry.changeDisplayStyle(displayStyle = "list");
 
 		var key_dmFolderName = ${dmFolderName};
@@ -335,7 +349,8 @@ definition {
 			locator1 = "DocumentsAndMedia#DESCRIPTIVE_LIST_FOLDER_TITLE");
 	}
 
-	macro moveToRecycleBinCP {
+	@summary = "Default summary"
+	macro moveToRecycleBinCP(dmFolderName = null) {
 		var key_dmFolderName = ${dmFolderName};
 
 		DMFolder.viewEntryPresent(dmFolderName = ${dmFolderName});
@@ -353,7 +368,8 @@ definition {
 			value1 = "There are no documents or media files in this folder.");
 	}
 
-	macro removePermissions {
+	@summary = "Default summary"
+	macro removePermissions(roleTitle = null, dmFolder = null, permissionNameList = null) {
 		DMFolder.viewFolderPermissionsPG(
 			dmFolder = ${dmFolder},
 			key_roleTitle = ${roleTitle});
@@ -367,7 +383,8 @@ definition {
 		PortletEntry.save();
 	}
 
-	macro subscribePG {
+	@summary = "Default summary"
+	macro subscribePG() {
 		Click(locator1 = "Icon#INFO");
 
 		Click(locator1 = "Icon#SUBSCRIBE");
@@ -375,7 +392,8 @@ definition {
 		Alert.viewSuccessMessage();
 	}
 
-	macro tearDownCP {
+	@summary = "Default summary"
+	macro tearDownCP(site = null) {
 		Navigator.openURL();
 
 		ProductMenu.gotoPortlet(
@@ -404,7 +422,8 @@ definition {
 		RecycleBin.emptyCP();
 	}
 
-	macro tearDownPGViaMG {
+	@summary = "Default summary"
+	macro tearDownPGViaMG(pageName = null) {
 		Navigator.gotoPage(pageName = ${pageName});
 
 		while (IsElementPresent(locator1 = "MediaGallery#ENTRIES_FOLDER")) {
@@ -426,7 +445,8 @@ definition {
 		RecycleBin.emptyCP();
 	}
 
-	macro viewCP {
+	@summary = "Default summary"
+	macro viewCP(displayStyle = null, dmFolderName = null, specificNameFolder = null) {
 		var key_dmFolderName = ${dmFolderName};
 
 		if (IsElementPresent(key_displayStyle = "list", locator1 = "Icon#CURRENT_DISPLAY_STYLE_ACTIVE")) {
@@ -458,7 +478,8 @@ definition {
 			value1 = ${dmFolderName});
 	}
 
-	macro viewDefaultCP {
+	@summary = "Default summary"
+	macro viewDefaultCP() {
 		AssertElementNotPresent(locator1 = "DocumentsAndMedia#ICON_DOCUMENT_GENERIC");
 
 		AssertTextEquals(
@@ -466,11 +487,13 @@ definition {
 			value1 = "There are no documents or media files in this folder.");
 	}
 
-	macro viewEntryPresent {
+	@summary = "Default summary"
+	macro viewEntryPresent(dmFolderName = null) {
 		LexiconCard.viewCardPresent(card = ${dmFolderName});
 	}
 
-	macro viewFolderPermissionsPG {
+	@summary = "Default summary"
+	macro viewFolderPermissionsPG(dmFolder = null) {
 		var key_dmFolderName = ${dmFolder};
 		var key_roleTitle = StringUtil.lowerCase(${key_roleTitle});
 
@@ -483,7 +506,8 @@ definition {
 		IFrame.selectPermissionsFrame();
 	}
 
-	macro viewPG {
+	@summary = "Default summary"
+	macro viewPG(dmFolderName = null) {
 		var key_dmFolderName = ${dmFolderName};
 
 		AssertTextEquals.assertPartialText(
@@ -491,7 +515,8 @@ definition {
 			value1 = ${dmFolderName});
 	}
 
-	macro viewPGViaMG {
+	@summary = "Default summary"
+	macro viewPGViaMG(mgFolderName = null) {
 		var key_mgFolderName = ${mgFolderName};
 
 		DMFolder.gotoEntry(dmFolderName = ${mgFolderName});

@@ -1,6 +1,7 @@
 definition {
 
-	macro expandPanel {
+	@summary = "Default summary"
+	macro expandPanel(panel = null) {
 		Portlet.waitForForm();
 
 		var key_panel = ${panel};

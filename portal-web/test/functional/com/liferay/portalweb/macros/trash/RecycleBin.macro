@@ -1,6 +1,7 @@
 definition {
 
-	macro bulkRestoreCP {
+	@summary = "Default summary"
+	macro bulkRestoreCP(assetList = null) {
 		WaitForPageLoad();
 
 		for (var assetName : list ${assetList}) {
@@ -16,13 +17,15 @@ definition {
 		Alert.viewSuccessMessage();
 	}
 
-	macro clickEllipsisItem {
+	@summary = "Default summary"
+	macro clickEllipsisItem(item = null, assetName = null) {
 		LexiconTable.clickEllipsisItem(
 			item = ${item},
 			tableEntry = ${assetName});
 	}
 
-	macro deleteCP {
+	@summary = "Default summary"
+	macro deleteCP(assetName = null, multipleAssets = null, assetType = null) {
 		var key_assetName = ${assetName};
 
 		LexiconTable.viewTableEntryTitle(tableEntry = ${assetName});
@@ -47,7 +50,8 @@ definition {
 		LexiconTable.viewTableEntryNotPresent(tableEntry = ${assetName});
 	}
 
-	macro disableRecycleBinViaSiteSettings {
+	@summary = "Default summary"
+	macro disableRecycleBinViaSiteSettings() {
 		Navigator.gotoNavTab(navTab = "Advanced");
 
 		Panel.expandPanel(panel = "Recycle Bin");
@@ -61,7 +65,8 @@ definition {
 		PortletEntry.save();
 	}
 
-	macro emptyCP {
+	@summary = "Default summary"
+	macro emptyCP() {
 		Click(locator1 = "Icon#HEADER_VERTICAL_ELLIPSIS");
 
 		if (IsElementPresent(locator1 = "RecycleBin#EMPTY_RECYCLE_BIN")) {
@@ -77,7 +82,8 @@ definition {
 		}
 	}
 
-	macro gotoEntryViaSuccessMessage {
+	@summary = "Default summary"
+	macro gotoEntryViaSuccessMessage(assetName = null) {
 		var key_assetName = ${assetName};
 
 		AssertClick(
@@ -87,11 +93,13 @@ definition {
 		SiteAdmin.viewPortletTitle(portletTitle = "Recycle Bin");
 	}
 
-	macro openRecycleBinAdmin {
+	@summary = "Default summary"
+	macro openRecycleBinAdmin(siteURLKey = null) {
 		Navigator.openWithAppendToBaseURL(urlAppend = "group/${siteURLKey}/~/control_panel/manage/-/recycle_bin/entries");
 	}
 
-	macro restoreContentFromFolderCP {
+	@summary = "Default summary"
+	macro restoreContentFromFolderCP(assetType2 = null, assetName = null, documentName = null, assetType = null, assetRestoreLocation = null) {
 		var key_assetName = ${assetName};
 
 		LexiconTable.viewTableEntryTitle(tableEntry = ${assetName});
@@ -128,7 +136,8 @@ definition {
 			value1 = "The ${assetType2} ${documentName} was restored to ${assetRestoreLocation}.");
 	}
 
-	macro restoreContentWithoutOriginalFolder {
+	@summary = "Default summary"
+	macro restoreContentWithoutOriginalFolder(assetName = null, assetType = null, assetRestoreLocation = null) {
 		LexiconTable.viewTableEntryTitle(tableEntry = ${assetName});
 
 		RecycleBin.clickEllipsisItem(
@@ -152,7 +161,8 @@ definition {
 			value1 = "The ${assetType} ${assetName} was restored to ${assetRestoreLocation}.");
 	}
 
-	macro restoreCP {
+	@summary = "Default summary"
+	macro restoreCP(assetName = null, multipleAssets = null, assetType = null, assetRestoreLocation = null) {
 		var key_assetName = ${assetName};
 
 		LexiconTable.viewTableEntryTitle(tableEntry = ${assetName});
@@ -190,7 +200,8 @@ definition {
 		LexiconTable.viewTableEntryNotPresent(tableEntry = ${assetName});
 	}
 
-	macro restoreOverwriteCP {
+	@summary = "Default summary"
+	macro restoreOverwriteCP(assetName = null) {
 		RecycleBin.clickEllipsisItem(
 			assetName = ${assetName},
 			item = "Restore");
@@ -202,7 +213,8 @@ definition {
 		PortletEntry.save();
 	}
 
-	macro restoreRenameCP {
+	@summary = "Default summary"
+	macro restoreRenameCP(newName = null, assetName = null) {
 		RecycleBin.clickEllipsisItem(
 			assetName = ${assetName},
 			item = "Restore");
@@ -220,13 +232,15 @@ definition {
 		PortletEntry.save();
 	}
 
-	macro undoMoveToRecycleBin {
+	@summary = "Default summary"
+	macro undoMoveToRecycleBin() {
 		AssertClick(
 			locator1 = "Button#UNDO",
 			value1 = "Undo");
 	}
 
-	macro viewCP {
+	@summary = "Default summary"
+	macro viewCP(deleteUser = null, assetName = null, assetType = null) {
 		var key_assetName = ${assetName};
 
 		LexiconTable.viewTableEntryTitleLink(tableEntry = ${assetName});
@@ -248,7 +262,8 @@ definition {
 			locator1 = "LexiconTable#TABLE_ENTRY_ELLIPSIS");
 	}
 
-	macro viewDefaultCP {
+	@summary = "Default summary"
+	macro viewDefaultCP(assetName = null) {
 		AssertTextEquals(
 			locator1 = "Message#EMPTY_INFO",
 			value1 = "The Recycle Bin is empty.");
@@ -256,7 +271,8 @@ definition {
 		LexiconTable.viewTableEntryNotPresent(tableEntry = ${assetName});
 	}
 
-	macro viewDuplicateNames {
+	@summary = "Default summary"
+	macro viewDuplicateNames(assetName = null) {
 		var key_assetName = ${assetName};
 		var key_rowNumber = 1;
 
@@ -271,7 +287,8 @@ definition {
 			value1 = ${assetName});
 	}
 
-	macro viewEntry {
+	@summary = "Default summary"
+	macro viewEntry(assetName = null) {
 		var key_assetName = ${assetName};
 
 		LexiconTable.viewTableEntryTitle(tableEntry = ${assetName});

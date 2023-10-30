@@ -4,7 +4,8 @@ definition {
 	var ddlDataDefinitionName = "Data Definition Name";
 	var ddlListName = "List Name";
 
-	macro _showDetails {
+	@summary = "Default summary"
+	macro _showDetails() {
 		if (IsElementNotPresent.isNotVisible(locator1 = "DDMEditTemplate#DETAILS_LANGUAGE_SELECT")) {
 			Click(locator1 = "DDMEditTemplate#DETAILS_TOGGLE");
 
@@ -16,7 +17,8 @@ definition {
 		AssertVisible(locator1 = "DDMEditTemplate#DETAILS_LANGUAGE_SELECT");
 	}
 
-	macro addDisplayTemplateCP {
+	@summary = "Default summary"
+	macro addDisplayTemplateCP(ddlDataDefinitionName = null, ddlDisplayTemplateTextFieldScript = null, ddlDisplayTemplateName = null, ddlDisplayTemplateScriptFile = null, ddlDisplayTemplateLanguage = null, ddlDisplayTemplateScript = null) {
 		DDLNavigator.gotoManageDataDefinitions();
 
 		Click(locator1 = "TextInput#SEARCH");
@@ -78,7 +80,8 @@ definition {
 		PortletEntry.save();
 	}
 
-	macro addDisplayTemplateTemplateViaDDLDisplayPG {
+	@summary = "Default summary"
+	macro addDisplayTemplateTemplateViaDDLDisplayPG(ddlDisplayTemplateName = null, ddlDisplayTemplateLanguage = null, ddlDisplayTemplateScript = null) {
 		Click(locator1 = "DDL#PORTLET_ACTIONS_ADD_DISPLAY_TEMPLATE");
 
 		SelectFrame(locator1 = "IFrame#MODAL_BODY");
@@ -102,7 +105,8 @@ definition {
 		SelectFrame(value1 = "relative=top");
 	}
 
-	macro addFormTemplateCP {
+	@summary = "Default summary"
+	macro addFormTemplateCP(ddlDataDefinitionName = null, ddlFormTemplateName = null) {
 		DDLNavigator.gotoManageDataDefinitions();
 
 		Search.searchCP(searchTerm = ${ddlDataDefinitionName});
@@ -130,7 +134,8 @@ definition {
 			value1 = ${ddlFormTemplateName});
 	}
 
-	macro addFormTemplateViaBackButton {
+	@summary = "Default summary"
+	macro addFormTemplateViaBackButton(ddlFormTemplateName = null) {
 		DynamicDataMapping.selectDynamicDataMappingFrame();
 
 		Click(locator1 = "Icon#ANGLE_LEFT_BACK");
@@ -144,7 +149,8 @@ definition {
 			value1 = ${ddlFormTemplateName});
 	}
 
-	macro addFormTemplateViaDDLDisplayPG {
+	@summary = "Default summary"
+	macro addFormTemplateViaDDLDisplayPG(ddlFormTemplateName = null) {
 		Click(locator1 = "DDL#PORTLET_ACTIONS_ADD_FORM_TEMPLATE");
 
 		SelectFrame(locator1 = "IFrame#MODAL_BODY");
@@ -152,7 +158,8 @@ definition {
 		PortletEntry.inputName(name = ${ddlFormTemplateName});
 	}
 
-	macro deleteTemplateCP {
+	@summary = "Default summary"
+	macro deleteTemplateCP(ddlDataDefinitionName = null, ddlTemplateName = null) {
 		DDLNavigator.gotoManageDataDefinitions();
 
 		Search.searchCP(searchTerm = ${ddlDataDefinitionName});
@@ -188,7 +195,8 @@ definition {
 		Portlet.viewEmptyMessage(message = "There are no templates.");
 	}
 
-	macro editDisplayTemplateCP {
+	@summary = "Default summary"
+	macro editDisplayTemplateCP(ddlDataDefinitionName = null, ddlDisplayTemplateTextFieldScriptEdit = null, ddlDisplayTemplateName = null, ddlDisplayTemplateNameEdit = null, ddlDisplayTemplateLanguage = null) {
 		DDLNavigator.gotoManageDataDefinitions();
 
 		Search.searchCP(searchTerm = ${ddlDataDefinitionName});
@@ -220,7 +228,8 @@ definition {
 		PortletEntry.save();
 	}
 
-	macro editFormTemplateCP {
+	@summary = "Default summary"
+	macro editFormTemplateCP(ddlDataDefinitionName = null, ddlFormTemplateName = null, ddlFormTemplateNameEdit = null) {
 		DDLNavigator.gotoManageDataDefinitions();
 
 		Search.searchCP(searchTerm = ${ddlDataDefinitionName});
@@ -238,7 +247,8 @@ definition {
 		PortletEntry.inputName(name = ${ddlFormTemplateNameEdit});
 	}
 
-	macro editFormTemplateModeCP {
+	@summary = "Default summary"
+	macro editFormTemplateModeCP(ddlFormTemplateMode = null) {
 		if (IsElementNotPresent.isNotVisible(locator1 = "DDMEditStructure#DETAILS_MODE_SELECT")) {
 			Click(locator1 = "DDMEditTemplate#DETAILS_TOGGLE");
 		}
@@ -252,7 +262,8 @@ definition {
 		Pause(locator1 = 3000);
 	}
 
-	macro saveAndContinueFormTemplateCP {
+	@summary = "Default summary"
+	macro saveAndContinueFormTemplateCP() {
 		AssertClick(
 			locator1 = "Button#SAVE_AND_CONTINUE",
 			value1 = "Save and Continue");
@@ -260,7 +271,8 @@ definition {
 		Alert.viewSuccessMessage();
 	}
 
-	macro saveFormTemplateViaDDLDisplayPG {
+	@summary = "Default summary"
+	macro saveFormTemplateViaDDLDisplayPG() {
 		DynamicDataMapping.selectDynamicDataMappingFrame();
 
 		Button.clickSave();
@@ -268,7 +280,8 @@ definition {
 		SelectFrame(value1 = "relative=top");
 	}
 
-	macro selectDisplayTemplateViaDDLDisplayPG {
+	@summary = "Default summary"
+	macro selectDisplayTemplateViaDDLDisplayPG(ddlDisplayTemplateName = null) {
 		DDLNavigator.gotoOptionalConfiguration();
 
 		Select(
@@ -288,7 +301,8 @@ definition {
 		SelectFrameTop();
 	}
 
-	macro selectFormTemplateViaDDLDisplayPG {
+	@summary = "Default summary"
+	macro selectFormTemplateViaDDLDisplayPG(ddlFormTemplateName = null) {
 		DDLNavigator.gotoOptionalConfiguration();
 
 		Select(
@@ -308,7 +322,8 @@ definition {
 		SelectFrameTop();
 	}
 
-	macro tearDownTemplateCP {
+	@summary = "Default summary"
+	macro tearDownTemplateCP() {
 		Navigator.openURL();
 
 		ProductMenu.gotoPortlet(
@@ -340,7 +355,8 @@ definition {
 		}
 	}
 
-	macro viewDisplayTemplateCP {
+	@summary = "Default summary"
+	macro viewDisplayTemplateCP(ddlDataDefinitionName = null, ddlTemplateName = null) {
 		DDLNavigator.gotoManageTemplates(ddlDataDefinitionName = ${ddlDataDefinitionName});
 
 		var key_ddlTemplateName = ${ddlTemplateName};
@@ -360,7 +376,8 @@ definition {
 			value1 = ${ddlTemplateName});
 	}
 
-	macro viewFormTemplateCP {
+	@summary = "Default summary"
+	macro viewFormTemplateCP(ddlDataDefinitionName = null, ddlTemplateName = null) {
 		DDLNavigator.gotoManageTemplates(ddlDataDefinitionName = ${ddlDataDefinitionName});
 
 		var key_ddlTemplateName = ${ddlTemplateName};
@@ -378,7 +395,8 @@ definition {
 			value1 = ${ddlTemplateName});
 	}
 
-	macro viewNoDuplicateTemplateCP {
+	@summary = "Default summary"
+	macro viewNoDuplicateTemplateCP(ddlDataDefinitionName = null, ddlTemplateName = null) {
 		DDLNavigator.gotoManageTemplates(ddlDataDefinitionName = ${ddlDataDefinitionName});
 
 		var key_ddlTemplateName = ${ddlTemplateName};
@@ -390,7 +408,8 @@ definition {
 		AssertElementNotPresent(locator1 = "DDMSelectTemplate#TEMPLATE_TABLE_DUPLICATE_TEMPLATE_NAME");
 	}
 
-	macro viewNoTemplateCP {
+	@summary = "Default summary"
+	macro viewNoTemplateCP(ddlDataDefinitionName = null, ddlTemplateName = null) {
 		DDLNavigator.gotoManageTemplates(ddlDataDefinitionName = ${ddlDataDefinitionName});
 
 		var key_ddlTemplateName = ${ddlTemplateName};

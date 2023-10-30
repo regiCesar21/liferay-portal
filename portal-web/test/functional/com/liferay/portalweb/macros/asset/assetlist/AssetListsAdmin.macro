@@ -1,6 +1,7 @@
 definition {
 
-	macro addDynamicSelection {
+	@summary = "Default summary"
+	macro addDynamicSelection(assetListTitle = null) {
 		if (isSet(depotName)) {
 			Click(locator1 = "Message#EMPTY_INFO_TAGLIB");
 
@@ -23,7 +24,8 @@ definition {
 		Alert.viewSuccessMessage();
 	}
 
-	macro addKeywordsFilter {
+	@summary = "Default summary"
+	macro addKeywordsFilter(keyWords = null, queryContains = null, queryAndOperator = null) {
 		Panel.expandPanel(panel = "Source");
 
 		if (!(IsSelectedLabel(locator1 = "APConfiguration#SOURCE_SCOPE_ASSET_TYPE_SELECT", value1 = "All Types"))) {
@@ -57,7 +59,8 @@ definition {
 			value1 = ${keyWords});
 	}
 
-	macro addManualSelection {
+	@summary = "Default summary"
+	macro addManualSelection(assetListTitle = null) {
 		if (isSet(depotName)) {
 			Click(locator1 = "Message#EMPTY_INFO_TAGLIB");
 
@@ -80,7 +83,8 @@ definition {
 		Alert.viewSuccessMessage();
 	}
 
-	macro addSelection {
+	@summary = "Default summary"
+	macro addSelection(menuItem = null, collectionName = null, selectedAsset = null) {
 		Click(locator1 = "Button#NEW");
 
 		MenuItem.click(menuItem = ${menuItem});
@@ -102,7 +106,8 @@ definition {
 		Alert.viewSuccessMessage();
 	}
 
-	macro addTagsFilter {
+	@summary = "Default summary"
+	macro addTagsFilter(queryContains = null, queryAndOperator = null, tagNameList = null) {
 		Panel.expandPanel(panel = "Filter");
 
 		if (isSet(queryAndOperator)) {
@@ -140,7 +145,8 @@ definition {
 		PortletEntry.save();
 	}
 
-	macro configureAssetEntrySubtype {
+	@summary = "Default summary"
+	macro configureAssetEntrySubtype(selectedSubtype = null) {
 		Panel.expandPanel(panel = "Source");
 
 		Select(
@@ -152,7 +158,8 @@ definition {
 		PortletEntry.save();
 	}
 
-	macro configureAssetEntryType {
+	@summary = "Default summary"
+	macro configureAssetEntryType(selectedAsset = null) {
 		Panel.expandPanel(panel = "Source");
 
 		Select(
@@ -164,7 +171,8 @@ definition {
 		PortletEntry.save();
 	}
 
-	macro configureFilterByField {
+	@summary = "Default summary"
+	macro configureFilterByField(fieldName = null) {
 		Check.checkToggleSwitch(locator1 = "APConfiguration#SOURCE_SCOPE_FILTER_BY_FIELD_CHECKBOX");
 
 		Pause(locator1 = 3000);
@@ -180,7 +188,8 @@ definition {
 			locator1 = "APConfigurationFilterbyfield#FIELD_FILTER_RADIO_BUTTON");
 	}
 
-	macro configureItemTypeInManualCollection {
+	@summary = "Default summary"
+	macro configureItemTypeInManualCollection(itemType = null, itemSubtype = null) {
 		if (isSet(itemType)) {
 			Select(
 				locator1 = "APConfiguration#SOURCE_SCOPE_ASSET_TYPE_SELECT",
@@ -200,7 +209,8 @@ definition {
 		PortletEntry.save();
 	}
 
-	macro configureScope {
+	@summary = "Default summary"
+	macro configureScope(otherSite = null, assetListTitle = null, defaultSite = null, selectedAsset = null) {
 		Click(
 			key_title = ${assetListTitle},
 			locator1 = "AssetLists#ASSET_LIST_ENTRY_TITLE");
@@ -249,13 +259,15 @@ definition {
 		PortletEntry.save();
 	}
 
-	macro deleteEntry {
+	@summary = "Default summary"
+	macro deleteEntry(assetListTitle = null) {
 		LexiconList.delete(listEntry = ${assetListTitle});
 
 		Alert.viewSuccessMessage();
 	}
 
-	macro deleteManualSelectionAssets {
+	@summary = "Default summary"
+	macro deleteManualSelectionAssets(assetsList = null) {
 		for (var assetName : list ${assetsList}) {
 			Click(
 				key_entryName = ${assetName},
@@ -263,25 +275,29 @@ definition {
 		}
 	}
 
-	macro editAssetList {
+	@summary = "Default summary"
+	macro editAssetList(assetListTitle = null) {
 		AssetListsAdmin.gotoEntryMenuItem(
 			assetListTitle = ${assetListTitle},
 			item = "Edit");
 	}
 
-	macro gotoEntry {
+	@summary = "Default summary"
+	macro gotoEntry(assetListName = null) {
 		Click(
 			key_title = ${assetListName},
 			locator1 = "AssetLists#ASSET_LIST_ENTRY_TITLE");
 	}
 
-	macro gotoEntryMenuItem {
+	@summary = "Default summary"
+	macro gotoEntryMenuItem(item = null, assetListTitle = null) {
 		LexiconList.clickEllipsisItem(
 			item = ${item},
 			listEntry = ${assetListTitle});
 	}
 
-	macro gotoPersonalizationMenuItem {
+	@summary = "Default summary"
+	macro gotoPersonalizationMenuItem() {
 		Click(locator1 = "AssetLists#PERSONALIZATION_DROPDOWN");
 
 		Click(
@@ -289,11 +305,13 @@ definition {
 			locator1 = "AssetLists#PERSONALIZATION_DROPDOWN_ITEM");
 	}
 
-	macro openAssetListsAdmin {
+	@summary = "Default summary"
+	macro openAssetListsAdmin(siteURLKey = null) {
 		Navigator.openWithAppendToBaseURL(urlAppend = "group/${siteURLKey}/~/control_panel/manage?p_p_id=com_liferay_asset_list_web_portlet_AssetListPortlet");
 	}
 
-	macro removeScope {
+	@summary = "Default summary"
+	macro removeScope(scopeName = null, assetListTitle = null) {
 		Click(
 			key_title = ${assetListTitle},
 			locator1 = "AssetLists#ASSET_LIST_ENTRY_TITLE");
@@ -314,7 +332,8 @@ definition {
 		SelectFrameTop();
 	}
 
-	macro renameAssetList {
+	@summary = "Default summary"
+	macro renameAssetList(newAssetListTitle = null, oldAssetListTitle = null) {
 		AssetListsAdmin.gotoEntryMenuItem(
 			assetListTitle = ${oldAssetListTitle},
 			item = "Rename");
@@ -326,7 +345,8 @@ definition {
 		Button.clickSave();
 	}
 
-	macro selectAsset {
+	@summary = "Default summary"
+	macro selectAsset(itemType = null, depotName = null, entryList = null, itemSubtype = null, assetListName = null, assetType = null) {
 		var key_title = ${assetListName};
 		var key_assetType = ${assetType};
 
@@ -380,7 +400,8 @@ definition {
 		Alert.viewSuccessMessage();
 	}
 
-	macro viewAssetList {
+	@summary = "Default summary"
+	macro viewAssetList(assetListTitle = null, type = null) {
 		var key_title = ${assetListTitle};
 		var key_type = ${type};
 
@@ -393,7 +414,8 @@ definition {
 			value1 = ${type});
 	}
 
-	macro viewAssetTypeList {
+	@summary = "Default summary"
+	macro viewAssetTypeList(itemType = null, itemSubtype = null, assetListName = null) {
 		var key_title = ${assetListName};
 
 		Click(locator1 = "AssetLists#ASSET_LIST_ENTRY_TITLE");
@@ -453,7 +475,8 @@ definition {
 		}
 	}
 
-	macro viewCollectionItems {
+	@summary = "Default summary"
+	macro viewCollectionItems(assetTitleList = null, assetListTitle = null) {
 		AssetListsAdmin.gotoEntry(assetListName = ${assetListTitle});
 
 		WaitForLiferayEvent.initializeLiferayEventLog();
@@ -478,7 +501,8 @@ definition {
 		Click(locator1 = "Icon#CLOSE");
 	}
 
-	macro viewContent {
+	@summary = "Default summary"
+	macro viewContent(assetTitle = null, assetListTitle = null, assetType = null) {
 		Click(
 			key_title = ${assetListTitle},
 			locator1 = "AssetLists#ASSET_LIST_ENTRY_TITLE");
@@ -506,7 +530,8 @@ definition {
 		Click(locator1 = "Icon#CLOSE");
 	}
 
-	macro viewNoContent {
+	@summary = "Default summary"
+	macro viewNoContent(assetTitle = null, assetListTitle = null) {
 		Click(
 			key_title = ${assetListTitle},
 			locator1 = "AssetLists#ASSET_LIST_ENTRY_TITLE");
@@ -530,7 +555,8 @@ definition {
 		Click(locator1 = "Icon#CLOSE");
 	}
 
-	macro viewUsages {
+	@summary = "Default summary"
+	macro viewUsages(assetListTitle = null) {
 		AssetListsAdmin.gotoEntryMenuItem(
 			assetListTitle = ${assetListTitle},
 			item = "View Usages");

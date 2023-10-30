@@ -1,7 +1,7 @@
 @default = "dragOver"
 definition {
 
-	function dragOver {
+	function dragOver(locator2, locator1) {
 		WaitForSPARefresh();
 
 		var javaScript = '''
@@ -38,7 +38,7 @@ Simulate.dragOver(arguments[0], arguments[1]);
 
 		selenium.executeJavaScript(${javaScript}, ${locator1}, ${locator2});
 
-		selenium.assertJavaScriptErrors();
+		selenium.assertJavaScriptErrors(${value1});
 
 		selenium.assertLiferayErrors();
 	}

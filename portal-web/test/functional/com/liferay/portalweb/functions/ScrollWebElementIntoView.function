@@ -1,22 +1,22 @@
 @default = "scrollWebElementIntoView"
 definition {
 
-	function scrollWebElementIntoView {
+	function scrollWebElementIntoView() {
 		WaitForSPARefresh();
 
-		selenium.waitForElementPresent();
+		selenium.waitForElementPresent(${locator1}, ${value1});
 
-		selenium.scrollWebElementIntoView();
+		selenium.scrollWebElementIntoView(${locator1});
 
-		selenium.assertJavaScriptErrors();
+		selenium.assertJavaScriptErrors(${value1});
 
 		selenium.assertLiferayErrors();
 	}
 
-	function scrollWebElementIntoViewTop {
+	function scrollWebElementIntoViewTop(locator1) {
 		WaitForSPARefresh();
 
-		selenium.waitForElementPresent();
+		selenium.waitForElementPresent(${locator1}, ${value1});
 
 		var javascript = '''
 var element = document.evaluate("${locator1}", document, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null).singleNodeValue;
@@ -24,9 +24,9 @@ var element = document.evaluate("${locator1}", document, null, XPathResult.FIRST
 element.scrollIntoView(true);
 		''';
 
-		selenium.executeJavaScript(${javascript});
+		selenium.executeJavaScript(${value1}, ${value2}, ${value3});
 
-		selenium.assertJavaScriptErrors();
+		selenium.assertJavaScriptErrors(${value1});
 
 		selenium.assertLiferayErrors();
 	}

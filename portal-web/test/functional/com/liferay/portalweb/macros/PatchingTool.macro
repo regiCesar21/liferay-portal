@@ -1,6 +1,7 @@
 definition {
 
-	macro installPatch {
+	@summary = "Default summary"
+	macro installPatch(patchFileZipURL = null) {
 		if (!(contains(${patchFileZipURL}, "dxp-0-"))) {
 			AntCommand(
 				locator1 = "build-test.xml",
@@ -11,7 +12,8 @@ definition {
 		}
 	}
 
-	macro installPatchOnSpecificServer {
+	@summary = "Default summary"
+	macro installPatchOnSpecificServer(nodePort = null, patchFileZipURL = null) {
 		var leadingPortNumber = StringUtil.replace(${nodePort}, 080, "");
 
 		var bundleIndex = ${leadingPortNumber} - 8;
@@ -26,13 +28,15 @@ definition {
 		}
 	}
 
-	macro uninstallPatches {
+	@summary = "Default summary"
+	macro uninstallPatches() {
 		AntCommand(
 			locator1 = "build-test.xml",
 			value1 = "uninstall-patches");
 	}
 
-	macro uninstallPatchOnSpecificServer {
+	@summary = "Default summary"
+	macro uninstallPatchOnSpecificServer(nodePort = null) {
 		var leadingPortNumber = StringUtil.replace(${nodePort}, 080, "");
 
 		var bundleIndex = ${leadingPortNumber} - 8;
@@ -42,7 +46,8 @@ definition {
 			value1 = "uninstall-patches -Duninstall.patch.cluster.node.index=${bundleIndex}");
 	}
 
-	macro updateConfigurationOnSpecificServer {
+	@summary = "Default summary"
+	macro updateConfigurationOnSpecificServer(nodePort = null, updateConfiguration = null) {
 		var leadingPortNumber = StringUtil.replace(${nodePort}, 080, "");
 
 		var bundleIndex = ${leadingPortNumber} - 8;

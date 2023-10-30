@@ -1,6 +1,7 @@
 definition {
 
-	macro accountSignIn {
+	@summary = "Default summary"
+	macro accountSignIn() {
 		var key_userEmail = PropsUtil.get("sharepoint.oauth.user.name");
 		var key_userPassword = PropsUtil.get("sharepoint.oauth.user.password");
 
@@ -46,7 +47,8 @@ definition {
 		}
 	}
 
-	macro confirmMicrosoftApp {
+	@summary = "Default summary"
+	macro confirmMicrosoftApp() {
 		Pause(locator1 = 3000);
 
 		if (IsElementPresent(locator1 = "MicrosoftLogin#LOGIN_STAY_SIGNED_IN_CONFIRMATION")) {
@@ -56,7 +58,8 @@ definition {
 		}
 	}
 
-	macro confirmSharepointApp {
+	@summary = "Default summary"
+	macro confirmSharepointApp(dmRepositoryName = null) {
 		Pause(locator1 = 3000);
 
 		var app_name = "SharePoint Online";
