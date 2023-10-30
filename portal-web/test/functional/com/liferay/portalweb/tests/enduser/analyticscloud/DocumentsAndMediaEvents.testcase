@@ -106,7 +106,7 @@ definition {
 				locator1 = "Button#DOWNLOAD_SIDEBAR",
 				value1 = "Download");
 
-			Pause(locator1 = 5000);
+			ACUtils.waitForSendingRequest();
 		}
 
 		task ("View the Document events triggered") {
@@ -158,8 +158,6 @@ definition {
 
 			ACNavigation.goToSettings();
 
-			Pause(locator1 = 10000);
-
 			var expectedChannelId = ACSettings.getPropertyId(propertyName = ${assignedPropertyName});
 		}
 
@@ -198,7 +196,7 @@ definition {
 				key_card = "New Document",
 				locator1 = "Card#CARD_TITLE");
 
-			Pause(locator1 = 10000);
+			ACUtils.waitForSendingRequest();
 		}
 
 		task ("View the Document events triggered") {

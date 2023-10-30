@@ -84,7 +84,7 @@ definition {
 		}
 
 		task ("Wait for sending requests") {
-			Pause(locator1 = 15000);
+			ACUtils.waitForSendingRequest();
 		}
 
 		task ("View the identity request properties value") {
@@ -147,7 +147,7 @@ definition {
 		}
 
 		task ("Wait for sending requests") {
-			Pause(locator1 = 5000);
+			ACUtils.waitForSendingRequest();
 		}
 
 		task ("View the identity request properties value") {
@@ -200,7 +200,7 @@ definition {
 		}
 
 		task ("Wait for sending requests") {
-			Pause(locator1 = 5000);
+			ACUtils.waitForSendingRequest();
 		}
 
 		task ("View the identity request properties value") {

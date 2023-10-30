@@ -108,7 +108,7 @@ definition {
 		}
 
 		task ("Wait for sending requests") {
-			Pause(locator1 = 5000);
+			ACUtils.waitForSendingRequest();
 		}
 
 		task ("View the depth of pageDepthReached event is 25") {
@@ -168,7 +168,7 @@ definition {
 		}
 
 		task ("Wait for sending requests") {
-			Pause(locator1 = 5000);
+			ACUtils.waitForSendingRequest();
 		}
 
 		task ("View the depth of pageDepthReached event is 50") {
@@ -228,7 +228,7 @@ definition {
 		}
 
 		task ("Wait for sending requests") {
-			Pause(locator1 = 5000);
+			ACUtils.waitForSendingRequest();
 		}
 
 		task ("View the depth of pageDepthReached event is 75") {
@@ -286,7 +286,7 @@ definition {
 		}
 
 		task ("Wait for sending requests") {
-			Pause(locator1 = 10000);
+			ACUtils.waitForSendingRequest();
 		}
 
 		task ("View the depth of pageDepthReached event is 100") {
@@ -346,7 +346,7 @@ definition {
 		}
 
 		task ("Wait for sending requests") {
-			Pause(locator1 = 10000);
+			ACUtils.waitForSendingRequest();
 		}
 
 		task ("View the depth of pageDepthReached event is 100") {
@@ -395,10 +395,6 @@ definition {
 				siteName = "Site Name");
 		}
 
-		task ("Stay 5 seconds") {
-			Pause(locator1 = 5000);
-		}
-
 		task ("Start Har recording") {
 			ProxyUtil.startHarRecording("pageEvents");
 		}
@@ -408,7 +404,7 @@ definition {
 		}
 
 		task ("Wait for sending requests") {
-			Pause(locator1 = 10000);
+			ACUtils.waitForSendingRequest();
 		}
 
 		task ("View the pageUnloaded event triggered") {
@@ -483,10 +479,6 @@ definition {
 				siteName = "Site Name");
 		}
 
-		task ("Stay 5 seconds") {
-			Pause(locator1 = 5000);
-		}
-
 		task ("Start Har recording") {
 			ProxyUtil.startHarRecording("pageEvents");
 		}
@@ -496,7 +488,7 @@ definition {
 		}
 
 		task ("Wait for sending requests") {
-			Pause(locator1 = 10000);
+			ACUtils.waitForSendingRequest();
 		}
 
 		task ("View the pageUnloaded event triggered") {
@@ -576,7 +568,7 @@ definition {
 		}
 
 		task ("Wait for sending requests") {
-			Pause(locator1 = 5000);
+			ACUtils.waitForSendingRequest();
 		}
 
 		task ("View the pageLoadTime of pageLoaded event is greater than 0 ms") {
@@ -633,7 +625,7 @@ definition {
 		}
 
 		task ("Wait for sending requests") {
-			Pause(locator1 = 5000);
+			ACUtils.waitForSendingRequest();
 		}
 
 		task ("View the pageUnloaded event not triggered") {
@@ -685,7 +677,7 @@ definition {
 		}
 
 		task ("Stay 5 seconds") {
-			Pause(locator1 = 5000);
+			ACUtils.waitForSendingRequest();
 		}
 
 		task ("Start Har recording") {
@@ -697,7 +689,7 @@ definition {
 		}
 
 		task ("Wait for sending requests") {
-			Pause(locator1 = 5000);
+			ACUtils.waitForSendingRequest();
 		}
 
 		task ("View the viewDuration of pageUnloaded event is greater than 0 ms") {
@@ -754,7 +746,7 @@ definition {
 		}
 
 		task ("Wait for sending requests") {
-			Pause(locator1 = 5000);
+			ACUtils.waitForSendingRequest();
 		}
 
 		task ("View the pageViewed event triggered") {
@@ -818,7 +810,7 @@ definition {
 		}
 
 		task ("Wait for sending requests") {
-			Pause(locator1 = 5000);
+			ACUtils.waitForSendingRequest();
 		}
 
 		task ("View the tabBlurred event triggered") {
@@ -882,7 +874,7 @@ definition {
 		}
 
 		task ("Wait for sending requests") {
-			Pause(locator1 = 5000);
+			ACUtils.waitForSendingRequest();
 		}
 
 		task ("View the tabFocused event triggered") {

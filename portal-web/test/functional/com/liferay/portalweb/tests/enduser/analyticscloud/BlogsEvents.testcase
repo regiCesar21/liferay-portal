@@ -54,8 +54,6 @@ definition {
 
 			ACNavigation.goToSettings();
 
-			Pause(locator1 = 10000);
-
 			var expectedChannelId = ACSettings.getPropertyId(propertyName = ${assignedPropertyName});
 		}
 
@@ -87,8 +85,6 @@ definition {
 
 		task ("Start Har recording") {
 			ProxyUtil.startHarRecording("blogClicked");
-
-			Pause(locator1 = 5000);
 		}
 
 		task ("View the properties of blogClicked event") {
@@ -128,8 +124,6 @@ definition {
 
 			ACNavigation.goToSettings();
 
-			Pause(locator1 = 10000);
-
 			var expectedChannelId = ACSettings.getPropertyId(propertyName = ${assignedPropertyName});
 		}
 
@@ -161,8 +155,6 @@ definition {
 
 		task ("Start Har recording") {
 			ProxyUtil.startHarRecording("blogClicked");
-
-			Pause(locator1 = 5000);
 		}
 
 		task ("View the properties of blogClicked event") {
@@ -202,8 +194,6 @@ definition {
 
 			ACNavigation.goToSettings();
 
-			Pause(locator1 = 10000);
-
 			var expectedChannelId = ACSettings.getPropertyId(propertyName = ${assignedPropertyName});
 		}
 
@@ -233,7 +223,7 @@ definition {
 
 			ProxyUtil.startHarRecording("blogDepthReached");
 
-			Pause(locator1 = 40000);
+			ACUtils.waitForSendingRequest();
 		}
 
 		task ("Get entryId of blog entry") {
@@ -279,8 +269,6 @@ definition {
 
 			ACNavigation.goToSettings();
 
-			Pause(locator1 = 10000);
-
 			var expectedChannelId = ACSettings.getPropertyId(propertyName = ${assignedPropertyName});
 		}
 
@@ -310,7 +298,7 @@ definition {
 
 			ProxyUtil.startHarRecording("blogDepthReached");
 
-			Pause(locator1 = 40000);
+			ACUtils.waitForSendingRequest();
 		}
 
 		task ("Get entryId of blog entry") {
@@ -356,8 +344,6 @@ definition {
 
 			ACNavigation.goToSettings();
 
-			Pause(locator1 = 10000);
-
 			var expectedChannelId = ACSettings.getPropertyId(propertyName = ${assignedPropertyName});
 		}
 
@@ -387,7 +373,7 @@ definition {
 
 			ProxyUtil.startHarRecording("blogDepthReached");
 
-			Pause(locator1 = 5000);
+			ACUtils.waitForSendingRequest();
 		}
 
 		task ("Get entryId of blog entry") {
@@ -433,8 +419,6 @@ definition {
 
 			ACNavigation.goToSettings();
 
-			Pause(locator1 = 10000);
-
 			var expectedChannelId = ACSettings.getPropertyId(propertyName = ${assignedPropertyName});
 		}
 
@@ -463,8 +447,6 @@ definition {
 			ScrollBy(value1 = "0, 2700");
 
 			ProxyUtil.startHarRecording("blogDepthReached");
-
-			Pause(locator1 = 40000);
 		}
 
 		task ("Get entryId of blog entry") {
@@ -510,8 +492,6 @@ definition {
 
 			ACNavigation.goToSettings();
 
-			Pause(locator1 = 10000);
-
 			var expectedChannelId = ACSettings.getPropertyId(propertyName = ${assignedPropertyName});
 		}
 
@@ -535,8 +515,6 @@ definition {
 
 		task ("Start Har recording") {
 			ProxyUtil.startHarRecording("BlogViewed");
-
-			Pause(locator1 = 5000);
 		}
 
 		task ("View the BlogViewed event not triggered") {
@@ -561,8 +539,6 @@ definition {
 			ACUtils.launchAC();
 
 			ACNavigation.goToSettings();
-
-			Pause(locator1 = 10000);
 
 			var expectedChannelId = ACSettings.getPropertyId(propertyName = ${assignedPropertyName});
 		}
@@ -591,8 +567,6 @@ definition {
 
 		task ("Start Har recording") {
 			ProxyUtil.startHarRecording("blogViewed");
-
-			Pause(locator1 = 5000);
 		}
 
 		task ("View the properties of blogClicked event") {
