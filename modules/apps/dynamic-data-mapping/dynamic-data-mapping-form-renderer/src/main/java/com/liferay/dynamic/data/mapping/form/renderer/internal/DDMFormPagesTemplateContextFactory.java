@@ -327,11 +327,9 @@ public class DDMFormPagesTemplateContextFactory {
 
 			formEvaluatorEvaluateRequestBuilder.withCompanyId(
 				PortalUtil.getCompanyId(httpServletRequest));
-
 			formEvaluatorEvaluateRequestBuilder.withEditingFieldValue(
 				Validator.isNotNull(
 					httpServletRequest.getParameter("trigger")));
-
 			formEvaluatorEvaluateRequestBuilder.withGroupId(
 				_ddmFormRenderingContext.getGroupId());
 			formEvaluatorEvaluateRequestBuilder.withUserId(
