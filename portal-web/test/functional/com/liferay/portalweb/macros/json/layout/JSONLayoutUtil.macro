@@ -41,20 +41,32 @@ definition {
 		else if (${widgetName} == "Bookmarks") {
 			var portletId = "com_liferay_bookmarks_web_portlet_BookmarksPortlet";
 		}
+		else if (${widgetName} == "Blueprints Options") {
+			var portletId = "com_liferay_search_experiences_web_internal_blueprint_options_portlet_SXPBlueprintOptionsPortlet";
+		}
 		else if (${widgetName} == "Breadcrumb") {
 			var portletId = "com_liferay_site_navigation_breadcrumb_web_portlet_SiteNavigationBreadcrumbPortlet";
 		}
 		else if (${widgetName} == "Categories Navigation") {
 			var portletId = "com_liferay_asset_categories_navigation_web_portlet_AssetCategoriesNavigationPortlet";
 		}
+		else if (${widgetName} == "Category Facet") {
+			var portletId = "com_liferay_portal_search_web_category_facet_portlet_CategoryFacetPortlet";
+		}
 		else if (${widgetName} == "Contacts Center") {
 			var portletId = "com_liferay_contacts_web_portlet_ContactsCenterPortlet";
+		}
+		else if (${widgetName} == "Custom Facet") {
+			var portletId = "com_liferay_portal_search_web_custom_facet_portlet_CustomFacetPortlet";
 		}
 		else if (${widgetName} == "Custom Filter") {
 			var portletId = "com_liferay_portal_search_web_internal_custom_filter_portlet_CustomFilterPortlet";
 		}
 		else if (${widgetName} == "Documents and Media") {
 			var portletId = "com_liferay_document_library_web_portlet_DLPortlet";
+		}
+		else if (${widgetName} == "Folder Facet") {
+			var portletId = "com_liferay_portal_search_web_folder_facet_portlet_FolderFacetPortlet";
 		}
 		else if (${widgetName} == "Form") {
 			var portletId = "com_liferay_dynamic_data_mapping_form_web_portlet_DDMFormPortlet";
@@ -83,6 +95,9 @@ definition {
 		else if (${widgetName} == "Message Boards") {
 			var portletId = "com_liferay_message_boards_web_portlet_MBPortlet";
 		}
+		else if (${widgetName} == "Modified Facet") {
+			var portletId = "com_liferay_portal_search_web_modified_facet_portlet_ModifiedFacetPortlet";
+		}
 		else if (${widgetName} == "Most Viewed Assets") {
 			var portletId = "com_liferay_asset_publisher_web_portlet_MostViewedAssetsPortlet";
 		}
@@ -107,6 +122,9 @@ definition {
 		else if (${widgetName} == "Search Bar") {
 			var portletId = "com_liferay_portal_search_web_search_bar_portlet_SearchBarPortlet";
 		}
+		else if (${widgetName} == "Search Insights") {
+			var portletId = "com_liferay_portal_search_web_search_insights_portlet_SearchInsightsPortlet";
+		}
 		else if (${widgetName} == "Search Options") {
 			var portletId = "com_liferay_portal_search_web_search_options_portlet_SearchOptionsPortlet";
 		}
@@ -119,17 +137,29 @@ definition {
 		else if (${widgetName} == "Similar Results") {
 			var portletId = "com_liferay_portal_search_similar_results_web_portlet_SimilarResultsPortlet";
 		}
+		else if (${widgetName} == "Site Facet") {
+			var portletId = "com_liferay_portal_search_web_site_facet_portlet_SiteFacetPortlet";
+		}
 		else if (${widgetName} == "Site Map") {
 			var portletId = "com_liferay_site_navigation_site_map_web_portlet_SiteNavigationSiteMapPortlet";
 		}
 		else if (${widgetName} == "Sites Directory") {
 			var portletId = "com_liferay_site_navigation_directory_web_portlet_SitesDirectoryPortlet";
 		}
+		else if (${widgetName} == "Suggestions") {
+			var portletId = "com_liferay_portal_search_web_suggestions_portlet_SuggestionsPortlet";
+		}
+		else if (${widgetName} == "Tag Facet") {
+			var portletId = "com_liferay_portal_search_web_tag_facet_portlet_TagFacetPortlet";
+		}
 		else if (${widgetName} == "Tags Navigation") {
 			var portletId = "com_liferay_asset_tags_navigation_web_portlet_AssetTagsNavigationPortlet";
 		}
 		else if (${widgetName} == "Type Facet") {
 			var portletId = "com_liferay_portal_search_web_type_facet_portlet_TypeFacetPortlet";
+		}
+		else if (${widgetName} == "User Facet") {
+			var portletId = "com_liferay_portal_search_web_user_facet_portlet_UserFacetPortlet";
 		}
 		else if (${widgetName} == "User Statistics") {
 			var portletId = "com_liferay_social_user_statistics_web_portlet_SocialUserStatisticsPortlet";
