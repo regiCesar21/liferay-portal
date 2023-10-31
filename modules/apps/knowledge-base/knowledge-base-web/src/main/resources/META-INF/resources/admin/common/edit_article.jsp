@@ -341,7 +341,7 @@ if (portletTitleBasedNavigation) {
 				'<input id="<portlet:namespace />selectedFileName' +
 					i +
 					'" name="<portlet:namespace />selectedFileName" type="hidden" value="' +
-					filesChecked[i].value +
+					Liferay.Util.escapeHTML(filesChecked[i].value) +
 					'" />'
 			);
 		}
