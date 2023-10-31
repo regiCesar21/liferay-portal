@@ -16,6 +16,7 @@ import com.liferay.portal.convert.ConvertProcess;
 import com.liferay.portal.kernel.cache.CacheRegistryUtil;
 import com.liferay.portal.kernel.cache.MultiVMPool;
 import com.liferay.portal.kernel.cache.SingleVMPool;
+import com.liferay.portal.kernel.configuration.Filter;
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
 import com.liferay.portal.kernel.dao.orm.ProjectionFactoryUtil;
@@ -82,6 +83,7 @@ import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.PortalClassLoaderUtil;
 import com.liferay.portal.kernel.util.PortletKeys;
 import com.liferay.portal.kernel.util.PropsKeys;
+import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.ThreadUtil;
@@ -490,9 +492,15 @@ public class EditServerMVCActionCommand extends BaseMVCActionCommand {
 			ActionRequest actionRequest, ActionResponse actionResponse)
 		throws Exception {
 
-		String jarName = ParamUtil.getString(actionRequest, "jarName");
+		String xugglerOption = ParamUtil.getString(
+			actionRequest, "xugglerOption");
 
-		XugglerUtil.installNativeLibraries(jarName);
+		String jarFile = PropsUtil.get(
+			PropsKeys.XUGGLER_JAR_FILE, new Filter(xugglerOption));
+		String sha1 = PropsUtil.get(
+			PropsKeys.XUGGLER_JAR_SHA1, new Filter(xugglerOption));
+
+		XugglerUtil.installNativeLibraries(jarFile, sha1);
 	}
 
 	protected void runScript(
