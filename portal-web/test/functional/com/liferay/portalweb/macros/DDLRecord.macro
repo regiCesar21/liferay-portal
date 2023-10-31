@@ -259,7 +259,7 @@ definition {
 		}
 
 		while (IsElementNotPresent(locator1 = "DocumentsAndMediaSelectDocument#SELECT_DOCUMENT_IFRAME")) {
-			Pause(locator1 = 1000);
+			WaitForElementPresent(locator1 = "DocumentsAndMediaSelectDocument#SELECT_DOCUMENT_IFRAME");
 		}
 
 		SelectFrame(locator1 = "DocumentsAndMediaSelectDocument#SELECT_DOCUMENT_IFRAME");
@@ -288,8 +288,6 @@ definition {
 		AssertClick(
 			locator1 = "DDLEditRecord#FIELD_LABEL",
 			value1 = ${fieldName});
-
-		Pause(locator1 = 2000);
 
 		AssertElementPresent(locator1 = "DDLEditRecord#GEOLOCATION_GOOGLE_MAP");
 	}

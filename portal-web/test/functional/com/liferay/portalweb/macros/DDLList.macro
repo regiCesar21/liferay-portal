@@ -140,8 +140,6 @@ definition {
 
 	macro saveViaDDLDisplayPG {
 		DDLDataDefinition.save();
-
-		Pause(locator1 = 5000);
 	}
 
 	macro selectViaDDLDisplayPG {

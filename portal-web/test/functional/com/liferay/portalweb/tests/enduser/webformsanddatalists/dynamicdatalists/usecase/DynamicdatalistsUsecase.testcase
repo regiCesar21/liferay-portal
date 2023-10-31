@@ -1257,15 +1257,11 @@ definition {
 
 		DDLNavigator.gotoView();
 
-		Pause(locator1 = 1000);
-
 		var adminViewURL = Navigator.getCurrentURL(adminViewURL = ${adminViewURL});
 
 		Navigator.gotoPage(pageName = "Dynamic Data Lists Display Page");
 
 		DDLRecord.editPG();
-
-		Pause(locator1 = 1000);
 
 		var adminEditURL = Navigator.getCurrentURL(adminEditURL = ${adminEditURL});
 
