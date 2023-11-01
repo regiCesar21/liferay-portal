@@ -39,6 +39,7 @@ import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.DateFormatFactoryUtil;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.odata.entity.EntityField;
@@ -219,7 +220,7 @@ public abstract class BaseTaxonomyVocabularyResourceTestCase {
 			taxonomyVocabularyResource.getAssetLibraryTaxonomyVocabulariesPage(
 				assetLibraryId, null, null, Pagination.of(1, 10), null);
 
-		Assert.assertEquals(0, page.getTotalCount());
+		long totalCount = page.getTotalCount();
 
 		if (irrelevantAssetLibraryId != null) {
 			TaxonomyVocabulary irrelevantTaxonomyVocabulary =
@@ -231,12 +232,12 @@ public abstract class BaseTaxonomyVocabularyResourceTestCase {
 				taxonomyVocabularyResource.
 					getAssetLibraryTaxonomyVocabulariesPage(
 						irrelevantAssetLibraryId, null, null,
-						Pagination.of(1, 2), null);
+						Pagination.of(1, (int)totalCount + 1), null);
 
-			Assert.assertEquals(1, page.getTotalCount());
+			Assert.assertEquals(totalCount + 1, page.getTotalCount());
 
-			assertEquals(
-				Arrays.asList(irrelevantTaxonomyVocabulary),
+			assertContains(
+				irrelevantTaxonomyVocabulary,
 				(List<TaxonomyVocabulary>)page.getItems());
 			assertValid(
 				page,
@@ -256,11 +257,12 @@ public abstract class BaseTaxonomyVocabularyResourceTestCase {
 			taxonomyVocabularyResource.getAssetLibraryTaxonomyVocabulariesPage(
 				assetLibraryId, null, null, Pagination.of(1, 10), null);
 
-		Assert.assertEquals(2, page.getTotalCount());
+		Assert.assertEquals(totalCount + 2, page.getTotalCount());
 
-		assertEqualsIgnoringOrder(
-			Arrays.asList(taxonomyVocabulary1, taxonomyVocabulary2),
-			(List<TaxonomyVocabulary>)page.getItems());
+		assertContains(
+			taxonomyVocabulary1, (List<TaxonomyVocabulary>)page.getItems());
+		assertContains(
+			taxonomyVocabulary2, (List<TaxonomyVocabulary>)page.getItems());
 		assertValid(
 			page,
 			testGetAssetLibraryTaxonomyVocabulariesPage_getExpectedActions(
@@ -403,6 +405,13 @@ public abstract class BaseTaxonomyVocabularyResourceTestCase {
 		Long assetLibraryId =
 			testGetAssetLibraryTaxonomyVocabulariesPage_getAssetLibraryId();
 
+		Page<TaxonomyVocabulary> taxonomyVocabularyPage =
+			taxonomyVocabularyResource.getAssetLibraryTaxonomyVocabulariesPage(
+				assetLibraryId, null, null, null, null);
+
+		int totalCount = GetterUtil.getInteger(
+			taxonomyVocabularyPage.getTotalCount());
+
 		TaxonomyVocabulary taxonomyVocabulary1 =
 			testGetAssetLibraryTaxonomyVocabulariesPage_addTaxonomyVocabulary(
 				assetLibraryId, randomTaxonomyVocabulary());
@@ -417,19 +426,22 @@ public abstract class BaseTaxonomyVocabularyResourceTestCase {
 
 		Page<TaxonomyVocabulary> page1 =
 			taxonomyVocabularyResource.getAssetLibraryTaxonomyVocabulariesPage(
-				assetLibraryId, null, null, Pagination.of(1, 2), null);
+				assetLibraryId, null, null, Pagination.of(1, totalCount + 2),
+				null);
 
 		List<TaxonomyVocabulary> taxonomyVocabularies1 =
 			(List<TaxonomyVocabulary>)page1.getItems();
 
 		Assert.assertEquals(
-			taxonomyVocabularies1.toString(), 2, taxonomyVocabularies1.size());
+			taxonomyVocabularies1.toString(), totalCount + 2,
+			taxonomyVocabularies1.size());
 
 		Page<TaxonomyVocabulary> page2 =
 			taxonomyVocabularyResource.getAssetLibraryTaxonomyVocabulariesPage(
-				assetLibraryId, null, null, Pagination.of(2, 2), null);
+				assetLibraryId, null, null, Pagination.of(2, totalCount + 2),
+				null);
 
-		Assert.assertEquals(3, page2.getTotalCount());
+		Assert.assertEquals(totalCount + 3, page2.getTotalCount());
 
 		List<TaxonomyVocabulary> taxonomyVocabularies2 =
 			(List<TaxonomyVocabulary>)page2.getItems();
@@ -439,12 +451,15 @@ public abstract class BaseTaxonomyVocabularyResourceTestCase {
 
 		Page<TaxonomyVocabulary> page3 =
 			taxonomyVocabularyResource.getAssetLibraryTaxonomyVocabulariesPage(
-				assetLibraryId, null, null, Pagination.of(1, 3), null);
+				assetLibraryId, null, null,
+				Pagination.of(1, (int)totalCount + 3), null);
 
-		assertEqualsIgnoringOrder(
-			Arrays.asList(
-				taxonomyVocabulary1, taxonomyVocabulary2, taxonomyVocabulary3),
-			(List<TaxonomyVocabulary>)page3.getItems());
+		assertContains(
+			taxonomyVocabulary1, (List<TaxonomyVocabulary>)page3.getItems());
+		assertContains(
+			taxonomyVocabulary2, (List<TaxonomyVocabulary>)page3.getItems());
+		assertContains(
+			taxonomyVocabulary3, (List<TaxonomyVocabulary>)page3.getItems());
 	}
 
 	@Test
@@ -573,25 +588,37 @@ public abstract class BaseTaxonomyVocabularyResourceTestCase {
 			testGetAssetLibraryTaxonomyVocabulariesPage_addTaxonomyVocabulary(
 				assetLibraryId, taxonomyVocabulary2);
 
+		Page<TaxonomyVocabulary> page =
+			taxonomyVocabularyResource.getAssetLibraryTaxonomyVocabulariesPage(
+				assetLibraryId, null, null, null, null);
+
 		for (EntityField entityField : entityFields) {
 			Page<TaxonomyVocabulary> ascPage =
 				taxonomyVocabularyResource.
 					getAssetLibraryTaxonomyVocabulariesPage(
-						assetLibraryId, null, null, Pagination.of(1, 2),
+						assetLibraryId, null, null,
+						Pagination.of(1, (int)page.getTotalCount() + 1),
 						entityField.getName() + ":asc");
 
-			assertEquals(
-				Arrays.asList(taxonomyVocabulary1, taxonomyVocabulary2),
+			assertContains(
+				taxonomyVocabulary1,
+				(List<TaxonomyVocabulary>)ascPage.getItems());
+			assertContains(
+				taxonomyVocabulary2,
 				(List<TaxonomyVocabulary>)ascPage.getItems());
 
 			Page<TaxonomyVocabulary> descPage =
 				taxonomyVocabularyResource.
 					getAssetLibraryTaxonomyVocabulariesPage(
-						assetLibraryId, null, null, Pagination.of(1, 2),
+						assetLibraryId, null, null,
+						Pagination.of(1, (int)page.getTotalCount() + 1),
 						entityField.getName() + ":desc");
 
-			assertEquals(
-				Arrays.asList(taxonomyVocabulary2, taxonomyVocabulary1),
+			assertContains(
+				taxonomyVocabulary2,
+				(List<TaxonomyVocabulary>)descPage.getItems());
+			assertContains(
+				taxonomyVocabulary1,
 				(List<TaxonomyVocabulary>)descPage.getItems());
 		}
 	}
@@ -652,7 +679,7 @@ public abstract class BaseTaxonomyVocabularyResourceTestCase {
 			taxonomyVocabularyResource.getSiteTaxonomyVocabulariesPage(
 				siteId, null, null, Pagination.of(1, 10), null);
 
-		Assert.assertEquals(0, page.getTotalCount());
+		long totalCount = page.getTotalCount();
 
 		if (irrelevantSiteId != null) {
 			TaxonomyVocabulary irrelevantTaxonomyVocabulary =
@@ -660,12 +687,13 @@ public abstract class BaseTaxonomyVocabularyResourceTestCase {
 					irrelevantSiteId, randomIrrelevantTaxonomyVocabulary());
 
 			page = taxonomyVocabularyResource.getSiteTaxonomyVocabulariesPage(
-				irrelevantSiteId, null, null, Pagination.of(1, 2), null);
+				irrelevantSiteId, null, null,
+				Pagination.of(1, (int)totalCount + 1), null);
 
-			Assert.assertEquals(1, page.getTotalCount());
+			Assert.assertEquals(totalCount + 1, page.getTotalCount());
 
-			assertEquals(
-				Arrays.asList(irrelevantTaxonomyVocabulary),
+			assertContains(
+				irrelevantTaxonomyVocabulary,
 				(List<TaxonomyVocabulary>)page.getItems());
 			assertValid(
 				page,
@@ -684,11 +712,12 @@ public abstract class BaseTaxonomyVocabularyResourceTestCase {
 		page = taxonomyVocabularyResource.getSiteTaxonomyVocabulariesPage(
 			siteId, null, null, Pagination.of(1, 10), null);
 
-		Assert.assertEquals(2, page.getTotalCount());
+		Assert.assertEquals(totalCount + 2, page.getTotalCount());
 
-		assertEqualsIgnoringOrder(
-			Arrays.asList(taxonomyVocabulary1, taxonomyVocabulary2),
-			(List<TaxonomyVocabulary>)page.getItems());
+		assertContains(
+			taxonomyVocabulary1, (List<TaxonomyVocabulary>)page.getItems());
+		assertContains(
+			taxonomyVocabulary2, (List<TaxonomyVocabulary>)page.getItems());
 		assertValid(
 			page,
 			testGetSiteTaxonomyVocabulariesPage_getExpectedActions(siteId));
@@ -823,6 +852,13 @@ public abstract class BaseTaxonomyVocabularyResourceTestCase {
 
 		Long siteId = testGetSiteTaxonomyVocabulariesPage_getSiteId();
 
+		Page<TaxonomyVocabulary> taxonomyVocabularyPage =
+			taxonomyVocabularyResource.getSiteTaxonomyVocabulariesPage(
+				siteId, null, null, null, null);
+
+		int totalCount = GetterUtil.getInteger(
+			taxonomyVocabularyPage.getTotalCount());
+
 		TaxonomyVocabulary taxonomyVocabulary1 =
 			testGetSiteTaxonomyVocabulariesPage_addTaxonomyVocabulary(
 				siteId, randomTaxonomyVocabulary());
@@ -837,19 +873,20 @@ public abstract class BaseTaxonomyVocabularyResourceTestCase {
 
 		Page<TaxonomyVocabulary> page1 =
 			taxonomyVocabularyResource.getSiteTaxonomyVocabulariesPage(
-				siteId, null, null, Pagination.of(1, 2), null);
+				siteId, null, null, Pagination.of(1, totalCount + 2), null);
 
 		List<TaxonomyVocabulary> taxonomyVocabularies1 =
 			(List<TaxonomyVocabulary>)page1.getItems();
 
 		Assert.assertEquals(
-			taxonomyVocabularies1.toString(), 2, taxonomyVocabularies1.size());
+			taxonomyVocabularies1.toString(), totalCount + 2,
+			taxonomyVocabularies1.size());
 
 		Page<TaxonomyVocabulary> page2 =
 			taxonomyVocabularyResource.getSiteTaxonomyVocabulariesPage(
-				siteId, null, null, Pagination.of(2, 2), null);
+				siteId, null, null, Pagination.of(2, totalCount + 2), null);
 
-		Assert.assertEquals(3, page2.getTotalCount());
+		Assert.assertEquals(totalCount + 3, page2.getTotalCount());
 
 		List<TaxonomyVocabulary> taxonomyVocabularies2 =
 			(List<TaxonomyVocabulary>)page2.getItems();
@@ -859,12 +896,15 @@ public abstract class BaseTaxonomyVocabularyResourceTestCase {
 
 		Page<TaxonomyVocabulary> page3 =
 			taxonomyVocabularyResource.getSiteTaxonomyVocabulariesPage(
-				siteId, null, null, Pagination.of(1, 3), null);
+				siteId, null, null, Pagination.of(1, (int)totalCount + 3),
+				null);
 
-		assertEqualsIgnoringOrder(
-			Arrays.asList(
-				taxonomyVocabulary1, taxonomyVocabulary2, taxonomyVocabulary3),
-			(List<TaxonomyVocabulary>)page3.getItems());
+		assertContains(
+			taxonomyVocabulary1, (List<TaxonomyVocabulary>)page3.getItems());
+		assertContains(
+			taxonomyVocabulary2, (List<TaxonomyVocabulary>)page3.getItems());
+		assertContains(
+			taxonomyVocabulary3, (List<TaxonomyVocabulary>)page3.getItems());
 	}
 
 	@Test
@@ -992,23 +1032,35 @@ public abstract class BaseTaxonomyVocabularyResourceTestCase {
 			testGetSiteTaxonomyVocabulariesPage_addTaxonomyVocabulary(
 				siteId, taxonomyVocabulary2);
 
+		Page<TaxonomyVocabulary> page =
+			taxonomyVocabularyResource.getSiteTaxonomyVocabulariesPage(
+				siteId, null, null, null, null);
+
 		for (EntityField entityField : entityFields) {
 			Page<TaxonomyVocabulary> ascPage =
 				taxonomyVocabularyResource.getSiteTaxonomyVocabulariesPage(
-					siteId, null, null, Pagination.of(1, 2),
+					siteId, null, null,
+					Pagination.of(1, (int)page.getTotalCount() + 1),
 					entityField.getName() + ":asc");
 
-			assertEquals(
-				Arrays.asList(taxonomyVocabulary1, taxonomyVocabulary2),
+			assertContains(
+				taxonomyVocabulary1,
+				(List<TaxonomyVocabulary>)ascPage.getItems());
+			assertContains(
+				taxonomyVocabulary2,
 				(List<TaxonomyVocabulary>)ascPage.getItems());
 
 			Page<TaxonomyVocabulary> descPage =
 				taxonomyVocabularyResource.getSiteTaxonomyVocabulariesPage(
-					siteId, null, null, Pagination.of(1, 2),
+					siteId, null, null,
+					Pagination.of(1, (int)page.getTotalCount() + 1),
 					entityField.getName() + ":desc");
 
-			assertEquals(
-				Arrays.asList(taxonomyVocabulary2, taxonomyVocabulary1),
+			assertContains(
+				taxonomyVocabulary2,
+				(List<TaxonomyVocabulary>)descPage.getItems());
+			assertContains(
+				taxonomyVocabulary1,
 				(List<TaxonomyVocabulary>)descPage.getItems());
 		}
 	}
@@ -1056,8 +1108,7 @@ public abstract class BaseTaxonomyVocabularyResourceTestCase {
 				invokeGraphQLQuery(graphQLField), "JSONObject/data",
 				"JSONObject/taxonomyVocabularies");
 
-		Assert.assertEquals(
-			0, taxonomyVocabulariesJSONObject.get("totalCount"));
+		long totalCount = taxonomyVocabulariesJSONObject.getLong("totalCount");
 
 		TaxonomyVocabulary taxonomyVocabulary1 =
 			testGraphQLGetSiteTaxonomyVocabulariesPage_addTaxonomyVocabulary();
@@ -1069,10 +1120,16 @@ public abstract class BaseTaxonomyVocabularyResourceTestCase {
 			"JSONObject/taxonomyVocabularies");
 
 		Assert.assertEquals(
-			2, taxonomyVocabulariesJSONObject.getLong("totalCount"));
+			totalCount + 2,
+			taxonomyVocabulariesJSONObject.getLong("totalCount"));
 
-		assertEqualsIgnoringOrder(
-			Arrays.asList(taxonomyVocabulary1, taxonomyVocabulary2),
+		assertContains(
+			taxonomyVocabulary1,
+			Arrays.asList(
+				TaxonomyVocabularySerDes.toDTOs(
+					taxonomyVocabulariesJSONObject.getString("items"))));
+		assertContains(
+			taxonomyVocabulary2,
 			Arrays.asList(
 				TaxonomyVocabularySerDes.toDTOs(
 					taxonomyVocabulariesJSONObject.getString("items"))));

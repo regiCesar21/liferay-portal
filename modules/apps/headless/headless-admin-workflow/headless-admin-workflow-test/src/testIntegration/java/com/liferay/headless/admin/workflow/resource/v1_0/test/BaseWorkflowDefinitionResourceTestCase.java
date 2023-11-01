@@ -235,10 +235,11 @@ public abstract class BaseWorkflowDefinitionResourceTestCase {
 	public void testGetWorkflowDefinitionsPageWithPagination()
 		throws Exception {
 
-		Page<WorkflowDefinition> totalPage =
+		Page<WorkflowDefinition> workflowDefinitionPage =
 			workflowDefinitionResource.getWorkflowDefinitionsPage(null);
 
-		int totalCount = GetterUtil.getInteger(totalPage.getTotalCount());
+		int totalCount = GetterUtil.getInteger(
+			workflowDefinitionPage.getTotalCount());
 
 		WorkflowDefinition workflowDefinition1 =
 			testGetWorkflowDefinitionsPage_addWorkflowDefinition(
@@ -277,7 +278,7 @@ public abstract class BaseWorkflowDefinitionResourceTestCase {
 
 		Page<WorkflowDefinition> page3 =
 			workflowDefinitionResource.getWorkflowDefinitionsPage(
-				Pagination.of(1, totalCount + 3));
+				Pagination.of(1, (int)totalCount + 3));
 
 		assertContains(
 			workflowDefinition1, (List<WorkflowDefinition>)page3.getItems());

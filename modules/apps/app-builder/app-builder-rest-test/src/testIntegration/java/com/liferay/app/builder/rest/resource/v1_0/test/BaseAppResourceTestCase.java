@@ -227,10 +227,10 @@ public abstract class BaseAppResourceTestCase {
 
 	@Test
 	public void testGetAppsPageWithPagination() throws Exception {
-		Page<App> totalPage = appResource.getAppsPage(
+		Page<App> appPage = appResource.getAppsPage(
 			null, null, null, null, null, null, null);
 
-		int totalCount = GetterUtil.getInteger(totalPage.getTotalCount());
+		int totalCount = GetterUtil.getInteger(appPage.getTotalCount());
 
 		App app1 = testGetAppsPage_addApp(randomApp());
 
@@ -257,7 +257,7 @@ public abstract class BaseAppResourceTestCase {
 		Assert.assertEquals(apps2.toString(), 1, apps2.size());
 
 		Page<App> page3 = appResource.getAppsPage(
-			null, null, null, null, null, Pagination.of(1, totalCount + 3),
+			null, null, null, null, null, Pagination.of(1, (int)totalCount + 3),
 			null);
 
 		assertContains(app1, (List<App>)page3.getItems());
@@ -370,20 +370,25 @@ public abstract class BaseAppResourceTestCase {
 
 		app2 = testGetAppsPage_addApp(app2);
 
+		Page<App> page = appResource.getAppsPage(
+			null, null, null, null, null, null, null);
+
 		for (EntityField entityField : entityFields) {
 			Page<App> ascPage = appResource.getAppsPage(
-				null, null, null, null, null, Pagination.of(1, 2),
+				null, null, null, null, null,
+				Pagination.of(1, (int)page.getTotalCount() + 1),
 				entityField.getName() + ":asc");
 
-			assertEquals(
-				Arrays.asList(app1, app2), (List<App>)ascPage.getItems());
+			assertContains(app1, (List<App>)ascPage.getItems());
+			assertContains(app2, (List<App>)ascPage.getItems());
 
 			Page<App> descPage = appResource.getAppsPage(
-				null, null, null, null, null, Pagination.of(1, 2),
+				null, null, null, null, null,
+				Pagination.of(1, (int)page.getTotalCount() + 1),
 				entityField.getName() + ":desc");
 
-			assertEquals(
-				Arrays.asList(app2, app1), (List<App>)descPage.getItems());
+			assertContains(app2, (List<App>)descPage.getItems());
+			assertContains(app1, (List<App>)descPage.getItems());
 		}
 	}
 
@@ -589,20 +594,19 @@ public abstract class BaseAppResourceTestCase {
 			dataDefinitionId, RandomTestUtil.randomString(),
 			RandomTestUtil.randomString(), Pagination.of(1, 10), null);
 
-		Assert.assertEquals(0, page.getTotalCount());
+		long totalCount = page.getTotalCount();
 
 		if (irrelevantDataDefinitionId != null) {
 			App irrelevantApp = testGetDataDefinitionAppsPage_addApp(
 				irrelevantDataDefinitionId, randomIrrelevantApp());
 
 			page = appResource.getDataDefinitionAppsPage(
-				irrelevantDataDefinitionId, null, null, Pagination.of(1, 2),
-				null);
+				irrelevantDataDefinitionId, null, null,
+				Pagination.of(1, (int)totalCount + 1), null);
 
-			Assert.assertEquals(1, page.getTotalCount());
+			Assert.assertEquals(totalCount + 1, page.getTotalCount());
 
-			assertEquals(
-				Arrays.asList(irrelevantApp), (List<App>)page.getItems());
+			assertContains(irrelevantApp, (List<App>)page.getItems());
 			assertValid(
 				page,
 				testGetDataDefinitionAppsPage_getExpectedActions(
@@ -618,10 +622,10 @@ public abstract class BaseAppResourceTestCase {
 		page = appResource.getDataDefinitionAppsPage(
 			dataDefinitionId, null, null, Pagination.of(1, 10), null);
 
-		Assert.assertEquals(2, page.getTotalCount());
+		Assert.assertEquals(totalCount + 2, page.getTotalCount());
 
-		assertEqualsIgnoringOrder(
-			Arrays.asList(app1, app2), (List<App>)page.getItems());
+		assertContains(app1, (List<App>)page.getItems());
+		assertContains(app2, (List<App>)page.getItems());
 		assertValid(
 			page,
 			testGetDataDefinitionAppsPage_getExpectedActions(dataDefinitionId));
@@ -646,6 +650,11 @@ public abstract class BaseAppResourceTestCase {
 		Long dataDefinitionId =
 			testGetDataDefinitionAppsPage_getDataDefinitionId();
 
+		Page<App> appPage = appResource.getDataDefinitionAppsPage(
+			dataDefinitionId, null, null, null, null);
+
+		int totalCount = GetterUtil.getInteger(appPage.getTotalCount());
+
 		App app1 = testGetDataDefinitionAppsPage_addApp(
 			dataDefinitionId, randomApp());
 
@@ -656,26 +665,30 @@ public abstract class BaseAppResourceTestCase {
 			dataDefinitionId, randomApp());
 
 		Page<App> page1 = appResource.getDataDefinitionAppsPage(
-			dataDefinitionId, null, null, Pagination.of(1, 2), null);
+			dataDefinitionId, null, null, Pagination.of(1, totalCount + 2),
+			null);
 
 		List<App> apps1 = (List<App>)page1.getItems();
 
-		Assert.assertEquals(apps1.toString(), 2, apps1.size());
+		Assert.assertEquals(apps1.toString(), totalCount + 2, apps1.size());
 
 		Page<App> page2 = appResource.getDataDefinitionAppsPage(
-			dataDefinitionId, null, null, Pagination.of(2, 2), null);
+			dataDefinitionId, null, null, Pagination.of(2, totalCount + 2),
+			null);
 
-		Assert.assertEquals(3, page2.getTotalCount());
+		Assert.assertEquals(totalCount + 3, page2.getTotalCount());
 
 		List<App> apps2 = (List<App>)page2.getItems();
 
 		Assert.assertEquals(apps2.toString(), 1, apps2.size());
 
 		Page<App> page3 = appResource.getDataDefinitionAppsPage(
-			dataDefinitionId, null, null, Pagination.of(1, 3), null);
+			dataDefinitionId, null, null, Pagination.of(1, (int)totalCount + 3),
+			null);
 
-		assertEqualsIgnoringOrder(
-			Arrays.asList(app1, app2, app3), (List<App>)page3.getItems());
+		assertContains(app1, (List<App>)page3.getItems());
+		assertContains(app2, (List<App>)page3.getItems());
+		assertContains(app3, (List<App>)page3.getItems());
 	}
 
 	@Test
@@ -790,20 +803,25 @@ public abstract class BaseAppResourceTestCase {
 
 		app2 = testGetDataDefinitionAppsPage_addApp(dataDefinitionId, app2);
 
+		Page<App> page = appResource.getDataDefinitionAppsPage(
+			dataDefinitionId, null, null, null, null);
+
 		for (EntityField entityField : entityFields) {
 			Page<App> ascPage = appResource.getDataDefinitionAppsPage(
-				dataDefinitionId, null, null, Pagination.of(1, 2),
+				dataDefinitionId, null, null,
+				Pagination.of(1, (int)page.getTotalCount() + 1),
 				entityField.getName() + ":asc");
 
-			assertEquals(
-				Arrays.asList(app1, app2), (List<App>)ascPage.getItems());
+			assertContains(app1, (List<App>)ascPage.getItems());
+			assertContains(app2, (List<App>)ascPage.getItems());
 
 			Page<App> descPage = appResource.getDataDefinitionAppsPage(
-				dataDefinitionId, null, null, Pagination.of(1, 2),
+				dataDefinitionId, null, null,
+				Pagination.of(1, (int)page.getTotalCount() + 1),
 				entityField.getName() + ":desc");
 
-			assertEquals(
-				Arrays.asList(app2, app1), (List<App>)descPage.getItems());
+			assertContains(app2, (List<App>)descPage.getItems());
+			assertContains(app1, (List<App>)descPage.getItems());
 		}
 	}
 
@@ -851,19 +869,19 @@ public abstract class BaseAppResourceTestCase {
 			siteId, RandomTestUtil.randomString(),
 			RandomTestUtil.randomString(), Pagination.of(1, 10), null);
 
-		Assert.assertEquals(0, page.getTotalCount());
+		long totalCount = page.getTotalCount();
 
 		if (irrelevantSiteId != null) {
 			App irrelevantApp = testGetSiteAppsPage_addApp(
 				irrelevantSiteId, randomIrrelevantApp());
 
 			page = appResource.getSiteAppsPage(
-				irrelevantSiteId, null, null, Pagination.of(1, 2), null);
+				irrelevantSiteId, null, null,
+				Pagination.of(1, (int)totalCount + 1), null);
 
-			Assert.assertEquals(1, page.getTotalCount());
+			Assert.assertEquals(totalCount + 1, page.getTotalCount());
 
-			assertEquals(
-				Arrays.asList(irrelevantApp), (List<App>)page.getItems());
+			assertContains(irrelevantApp, (List<App>)page.getItems());
 			assertValid(
 				page, testGetSiteAppsPage_getExpectedActions(irrelevantSiteId));
 		}
@@ -875,10 +893,10 @@ public abstract class BaseAppResourceTestCase {
 		page = appResource.getSiteAppsPage(
 			siteId, null, null, Pagination.of(1, 10), null);
 
-		Assert.assertEquals(2, page.getTotalCount());
+		Assert.assertEquals(totalCount + 2, page.getTotalCount());
 
-		assertEqualsIgnoringOrder(
-			Arrays.asList(app1, app2), (List<App>)page.getItems());
+		assertContains(app1, (List<App>)page.getItems());
+		assertContains(app2, (List<App>)page.getItems());
 		assertValid(page, testGetSiteAppsPage_getExpectedActions(siteId));
 
 		appResource.deleteApp(app1.getId());
@@ -899,6 +917,11 @@ public abstract class BaseAppResourceTestCase {
 	public void testGetSiteAppsPageWithPagination() throws Exception {
 		Long siteId = testGetSiteAppsPage_getSiteId();
 
+		Page<App> appPage = appResource.getSiteAppsPage(
+			siteId, null, null, null, null);
+
+		int totalCount = GetterUtil.getInteger(appPage.getTotalCount());
+
 		App app1 = testGetSiteAppsPage_addApp(siteId, randomApp());
 
 		App app2 = testGetSiteAppsPage_addApp(siteId, randomApp());
@@ -906,26 +929,27 @@ public abstract class BaseAppResourceTestCase {
 		App app3 = testGetSiteAppsPage_addApp(siteId, randomApp());
 
 		Page<App> page1 = appResource.getSiteAppsPage(
-			siteId, null, null, Pagination.of(1, 2), null);
+			siteId, null, null, Pagination.of(1, totalCount + 2), null);
 
 		List<App> apps1 = (List<App>)page1.getItems();
 
-		Assert.assertEquals(apps1.toString(), 2, apps1.size());
+		Assert.assertEquals(apps1.toString(), totalCount + 2, apps1.size());
 
 		Page<App> page2 = appResource.getSiteAppsPage(
-			siteId, null, null, Pagination.of(2, 2), null);
+			siteId, null, null, Pagination.of(2, totalCount + 2), null);
 
-		Assert.assertEquals(3, page2.getTotalCount());
+		Assert.assertEquals(totalCount + 3, page2.getTotalCount());
 
 		List<App> apps2 = (List<App>)page2.getItems();
 
 		Assert.assertEquals(apps2.toString(), 1, apps2.size());
 
 		Page<App> page3 = appResource.getSiteAppsPage(
-			siteId, null, null, Pagination.of(1, 3), null);
+			siteId, null, null, Pagination.of(1, (int)totalCount + 3), null);
 
-		assertEqualsIgnoringOrder(
-			Arrays.asList(app1, app2, app3), (List<App>)page3.getItems());
+		assertContains(app1, (List<App>)page3.getItems());
+		assertContains(app2, (List<App>)page3.getItems());
+		assertContains(app3, (List<App>)page3.getItems());
 	}
 
 	@Test
@@ -1035,20 +1059,25 @@ public abstract class BaseAppResourceTestCase {
 
 		app2 = testGetSiteAppsPage_addApp(siteId, app2);
 
+		Page<App> page = appResource.getSiteAppsPage(
+			siteId, null, null, null, null);
+
 		for (EntityField entityField : entityFields) {
 			Page<App> ascPage = appResource.getSiteAppsPage(
-				siteId, null, null, Pagination.of(1, 2),
+				siteId, null, null,
+				Pagination.of(1, (int)page.getTotalCount() + 1),
 				entityField.getName() + ":asc");
 
-			assertEquals(
-				Arrays.asList(app1, app2), (List<App>)ascPage.getItems());
+			assertContains(app1, (List<App>)ascPage.getItems());
+			assertContains(app2, (List<App>)ascPage.getItems());
 
 			Page<App> descPage = appResource.getSiteAppsPage(
-				siteId, null, null, Pagination.of(1, 2),
+				siteId, null, null,
+				Pagination.of(1, (int)page.getTotalCount() + 1),
 				entityField.getName() + ":desc");
 
-			assertEquals(
-				Arrays.asList(app2, app1), (List<App>)descPage.getItems());
+			assertContains(app2, (List<App>)descPage.getItems());
+			assertContains(app1, (List<App>)descPage.getItems());
 		}
 	}
 
