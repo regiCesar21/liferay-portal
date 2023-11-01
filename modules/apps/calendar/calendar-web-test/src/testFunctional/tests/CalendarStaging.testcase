@@ -301,7 +301,7 @@ definition {
 			checkContentNameList = "Calendar",
 			scheduleTitleName = "Staging Schedule Title");
 
-		Pause(value1 = 180000);
+		Pause(locator1 = 180000);
 
 		Navigator.gotoSitePage(
 			pageName = "Staging Test Page",

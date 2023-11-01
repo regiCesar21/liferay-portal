@@ -522,7 +522,7 @@ definition {
 		}
 
 		task ("Go to property via URL") {
-			Open(value1 = ${propertyURL});
+			Open(locator1 = ${propertyURL});
 
 			ACProperties.assertNewCreatedProperty(propertyName = ${myProperty});
 		}

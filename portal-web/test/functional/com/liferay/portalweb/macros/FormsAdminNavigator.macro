@@ -31,7 +31,7 @@ definition {
 
 			Button.clickSave();
 
-			Pause(value1 = 5000);
+			Pause(locator1 = 5000);
 		}
 	}
 
@@ -195,7 +195,7 @@ definition {
 	macro openPublishURL() {
 		FormsAdminNavigator.gotoPublishCopyURLLink();
 
-		Pause(value1 = 2000);
+		Pause(locator1 = 2000);
 
 		var publishFormURL = selenium.getElementValue("Form#PUBLISH_FORM_PUBLIC_URL");
 

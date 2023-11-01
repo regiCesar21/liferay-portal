@@ -40,7 +40,7 @@ definition {
 			key_card = ${card},
 			locator1 = "Card#CARD");
 
-		Confirm(value1 = "null");
+		Confirm();
 	}
 
 	@summary = "Default summary"
@@ -58,7 +58,7 @@ definition {
 			card = ${card},
 			item = "Delete");
 
-		Confirm(value1 = "null");
+		Confirm();
 	}
 
 	@summary = "Default summary"

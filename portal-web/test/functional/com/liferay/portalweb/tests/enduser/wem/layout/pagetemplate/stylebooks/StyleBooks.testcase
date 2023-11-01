@@ -481,7 +481,7 @@ definition {
 
 			StyleBooks.waitForAutoSave();
 
-			Pause(value1 = 3000);
+			Pause(locator1 = 3000);
 
 			StyleBooks.expandSection(sectionName = "Button Secondary");
 

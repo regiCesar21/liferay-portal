@@ -269,7 +269,7 @@ definition {
 
 				MenuItem.click(menuItem = "Content Editing");
 
-				Pause(value1 = 3000);
+				Pause(locator1 = 3000);
 			}
 		}
 
