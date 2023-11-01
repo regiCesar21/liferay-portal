@@ -1,7 +1,6 @@
 definition {
 
-	@summary = "Default summary"
-	macro gotoAddCollection() {
+	macro gotoAddCollection {
 		var browserType = PropsUtil.get("browser.type");
 
 		if (${browserType} == "internetexplorer") {
@@ -19,27 +18,23 @@ definition {
 		}
 	}
 
-	@summary = "Default summary"
-	macro gotoCollection(collectionName = null) {
+	macro gotoCollection {
 		AssertClick.assertPartialTextClickAt(
 			locator1 = "FragmentAdmin#FRAGMENT_COLLECTION",
 			value1 = ${collectionName});
 	}
 
-	@summary = "Default summary"
-	macro gotoEntry(entry = null) {
+	macro gotoEntry {
 		LexiconCard.clickCardTitle(card = ${entry});
 	}
 
-	@summary = "Default summary"
-	macro gotoEntryEllipsisItem(entry = null, item = null) {
+	macro gotoEntryEllipsisItem {
 		LexiconCard.clickEllipsisItem(
 			card = ${entry},
 			item = ${item});
 	}
 
-	@summary = "Default summary"
-	macro gotoImportCollection() {
+	macro gotoImportCollection {
 		if (IsElementPresent(locator1 = "NavNested#NAV_NESTED_ELLIPSIS")) {
 			Click.waitForMenuToggleJSClick(locator1 = "NavNested#NAV_NESTED_ELLIPSIS");
 		}
@@ -52,8 +47,7 @@ definition {
 		IFrame.selectConfigurationFrame();
 	}
 
-	@summary = "Default summary"
-	macro openFragmentsAdmin(siteURLKey = null) {
+	macro openFragmentsAdmin {
 		Navigator.openWithAppendToBaseURL(urlAppend = "group/${siteURLKey}/~/control_panel/manage/-/fragments");
 	}
 

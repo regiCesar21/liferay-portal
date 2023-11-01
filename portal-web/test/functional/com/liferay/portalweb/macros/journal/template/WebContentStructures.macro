@@ -1,7 +1,6 @@
 definition {
 
-	@summary = "Default summary"
-	macro addCP(structureName = null, structureDescription = null) {
+	macro addCP {
 		LexiconEntry.gotoAdd();
 
 		AssertVisible(locator1 = "DDMEditStructure#FORM_BUILDER");
@@ -15,8 +14,7 @@ definition {
 		SelectFrame(value1 = "relative=top");
 	}
 
-	@summary = "Default summary"
-	macro addFavoriteStructure(structureName = null) {
+	macro addFavoriteStructure {
 		AssertTextEquals.assertPartialText(
 			locator1 = "Message#INFO",
 			value1 = "You can add as many as 7 favorites in your quick menu.");
@@ -28,8 +26,7 @@ definition {
 		Alert.viewSuccessMessage();
 	}
 
-	@summary = "Default summary"
-	macro addLocalization(locale2 = null, localization2Name = null, locale = null, localization1Name = null) {
+	macro addLocalization {
 		PortletEntry.changeLocale(locale = ${locale});
 
 		WebContentStructures.addName(structureName = ${localization1Name});
@@ -41,15 +38,13 @@ definition {
 		}
 	}
 
-	@summary = "Default summary"
-	macro addName(structureName = null) {
+	macro addName {
 		Type.clickAtType(
 			locator1 = "TextInput#NAME",
 			value1 = ${structureName});
 	}
 
-	@summary = "Default summary"
-	macro addNullCP() {
+	macro addNullCP {
 		LexiconEntry.gotoAdd();
 
 		AssertElementNotPresent(locator1 = "TextInput#REQUIRED_ALERT");
@@ -61,8 +56,7 @@ definition {
 		SelectFrame(value1 = "relative=top");
 	}
 
-	@summary = "Default summary"
-	macro addSubstructure(parentStructureName = null) {
+	macro addSubstructure {
 		AssertClick(
 			locator1 = "Button#SELECT",
 			value1 = "Select");
@@ -80,8 +74,7 @@ definition {
 		SelectFrame(value1 = "relative=top");
 	}
 
-	@summary = "Default summary"
-	macro deleteCP(structureName = null, webContentHasReference = null) {
+	macro deleteCP {
 		Navigator.gotoNavItem(navItem = "Structures");
 
 		var key_ddlDataDefinitionName = ${structureName};
@@ -104,8 +97,7 @@ definition {
 		}
 	}
 
-	@summary = "Default summary"
-	macro editSubstructureDefaultValuesCP(substructureName = null, editSubstructureFieldNames = null) {
+	macro editSubstructureDefaultValuesCP {
 		var key_ddlDataDefinitionName = ${substructureName};
 
 		Search.searchCP(searchTerm = ${substructureName});
@@ -149,13 +141,11 @@ definition {
 		SelectFrameTop();
 	}
 
-	@summary = "Default summary"
-	macro openWebContentStructuresAdmin(siteURLKey = null) {
+	macro openWebContentStructuresAdmin {
 		Navigator.openWithAppendToBaseURL(urlAppend = "group/${siteURLKey}/~/control_panel/manage?p_p_id=com_liferay_journal_web_portlet_JournalPortlet&_com_liferay_journal_web_portlet_JournalPortlet_mvcPath=%2Fview_ddm_structures.jsp");
 	}
 
-	@summary = "Default summary"
-	macro resetStructureDefaultValuesCP(templateName = null, assetTitle = null) {
+	macro resetStructureDefaultValuesCP {
 		ClickNoError(locator1 = "Button#RESET_VALUES");
 
 		AssertConfirm(value1 = "Are you sure you want to reset the default values?");
@@ -185,8 +175,7 @@ definition {
 		SelectFrameTop();
 	}
 
-	@summary = "Default summary"
-	macro saveCP(changeListEnabled = null, addRoleViewPermissions = null, structureName = null) {
+	macro saveCP {
 		DDLDataDefinition.save(changeListEnabled = ${changeListEnabled});
 
 		if (isSet(addRoleViewPermissions)) {
@@ -204,8 +193,7 @@ definition {
 		}
 	}
 
-	@summary = "Default summary"
-	macro tearDownCP() {
+	macro tearDownCP {
 		Navigator.openURL();
 
 		ProductMenu.gotoPortlet(
@@ -242,8 +230,7 @@ definition {
 		Portlet.viewEmptyMessage(message = "There are no results.");
 	}
 
-	@summary = "Default summary"
-	macro viewCP(structureName = null, structureDescription = null) {
+	macro viewCP {
 		var key_ddlDataDefinitionName = ${structureName};
 
 		if (isSet(structureName)) {
@@ -261,8 +248,7 @@ definition {
 		SelectFrame(value1 = "relative=top");
 	}
 
-	@summary = "Default summary"
-	macro viewFavoriteStructureViaIFrame(structureName = null, indexNumber = null) {
+	macro viewFavoriteStructureViaIFrame {
 		AssertTextEquals(
 			locator1 = "WC#ADD_TO_FAVORITES",
 			value1 = "Add to Favorites (${indexNumber})");
@@ -274,8 +260,7 @@ definition {
 			locator1 = "Icon#REMOVE_FAVORITE");
 	}
 
-	@summary = "Default summary"
-	macro viewFavoriteStructureViaPlusButton(structureName = null) {
+	macro viewFavoriteStructureViaPlusButton {
 		LexiconEntry.gotoAdd();
 
 		MenuItem.viewPresent(menuItem = "More");
@@ -285,23 +270,20 @@ definition {
 		MenuItem.viewPresent(menuItem = ${structureName});
 	}
 
-	@summary = "Default summary"
-	macro viewNoFavoriteStructure() {
+	macro viewNoFavoriteStructure {
 		AssertTextEquals(
 			locator1 = "WC#ADD_TO_FAVORITES",
 			value1 = "Add to Favorites (0)");
 	}
 
-	@summary = "Default summary"
-	macro viewStructuresViaMoreIFrame(structureName = null) {
+	macro viewStructuresViaMoreIFrame {
 		AssertTextEquals(
 			key_rowEntry = ${structureName},
 			locator1 = "ContentRow#ENTRY_CONTENT_ENTRY_NAME_LINK",
 			value1 = ${structureName});
 	}
 
-	@summary = "Default summary"
-	macro viewTableEntryCP(structureName = null, structureDescription = null) {
+	macro viewTableEntryCP {
 		var key_ddlDataDefinitionName = ${structureName};
 
 		AssertTextEquals(

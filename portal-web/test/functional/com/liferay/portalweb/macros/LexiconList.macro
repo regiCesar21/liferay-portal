@@ -1,7 +1,6 @@
 definition {
 
-	@summary = "Default summary"
-	macro clickEllipsis(userRole = null, listEntry = null) {
+	macro clickEllipsis {
 		if (${userRole} == "Guest") {
 			Click(
 				key_listEntry = ${listEntry},
@@ -14,8 +13,7 @@ definition {
 		}
 	}
 
-	@summary = "Default summary"
-	macro clickEllipsisItem(item = null, userRole = null, listEntry = null) {
+	macro clickEllipsisItem {
 		LexiconList.clickEllipsis(
 			listEntry = ${listEntry},
 			userRole = ${userRole});
@@ -23,15 +21,13 @@ definition {
 		MenuItem.clickNoError(menuItem = ${item});
 	}
 
-	@summary = "Default summary"
-	macro clickListEntryTitle(listEntry = null) {
+	macro clickListEntryTitle {
 		Click(
 			key_listEntry = ${listEntry},
 			locator1 = "LexiconList#LIST_ENTRY_TITLE_LINK");
 	}
 
-	@summary = "Default summary"
-	macro delete(listEntry = null) {
+	macro delete {
 		LexiconList.clickEllipsisItem(
 			item = "Delete",
 			listEntry = ${listEntry});
@@ -39,8 +35,7 @@ definition {
 		Confirm();
 	}
 
-	@summary = "Default summary"
-	macro viewListEntryLabel(listEntryLabel = null, listEntry = null) {
+	macro viewListEntryLabel {
 		AssertTextEquals(
 			key_listEntry = ${listEntry},
 			key_listEntryLabel = ${listEntryLabel},
@@ -48,22 +43,19 @@ definition {
 			value1 = ${listEntryLabel});
 	}
 
-	@summary = "Default summary"
-	macro viewListEntryNotPresent(listEntry = null) {
+	macro viewListEntryNotPresent {
 		AssertElementNotPresent(
 			key_listEntry = ${listEntry},
 			locator1 = "LexiconList#LIST_ENTRY");
 	}
 
-	@summary = "Default summary"
-	macro viewListEntryPresent(listEntry = null) {
+	macro viewListEntryPresent {
 		AssertVisible(
 			key_listEntry = ${listEntry},
 			locator1 = "LexiconList#LIST_ENTRY");
 	}
 
-	@summary = "Default summary"
-	macro viewListEntrySubtitle(listEntrySubtitle = null, listEntry = null) {
+	macro viewListEntrySubtitle {
 		AssertTextEquals(
 			key_listEntry = ${listEntry},
 			key_listEntrySubtitle = ${listEntrySubtitle},
@@ -71,16 +63,14 @@ definition {
 			value1 = ${listEntrySubtitle});
 	}
 
-	@summary = "Default summary"
-	macro viewListEntryTitle(listEntry = null) {
+	macro viewListEntryTitle {
 		AssertTextEquals(
 			key_listEntry = ${listEntry},
 			locator1 = "LexiconList#LIST_ENTRY_TITLE",
 			value1 = ${listEntry});
 	}
 
-	@summary = "Default summary"
-	macro viewListEntryTitleLink(listEntry = null) {
+	macro viewListEntryTitleLink {
 		AssertTextEquals(
 			key_listEntry = ${listEntry},
 			locator1 = "LexiconList#LIST_ENTRY_TITLE_LINK",

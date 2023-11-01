@@ -1,7 +1,6 @@
 definition {
 
-	@summary = "Default summary"
-	macro click(menuBar = null) {
+	macro click {
 		var key_menuBar = ${menuBar};
 
 		if (IsElementNotPresent(locator1 = "MenuBar#ACTIVE_NAV_LINK")) {
@@ -13,38 +12,31 @@ definition {
 		MenuBar.viewActive(menuBar = ${menuBar});
 	}
 
-	@summary = "Default summary"
-	macro gotoAddresses() {
+	macro gotoAddresses {
 		MenuBar.click(menuBar = "Addresses");
 	}
 
-	@summary = "Default summary"
-	macro gotoContactInformation() {
+	macro gotoContactInformation {
 		MenuBar.click(menuBar = "Contact Information");
 	}
 
-	@summary = "Default summary"
-	macro gotoInformation() {
+	macro gotoInformation {
 		MenuBar.click(menuBar = "Information");
 	}
 
-	@summary = "Default summary"
-	macro gotoOpeningHours() {
+	macro gotoOpeningHours {
 		MenuBar.click(menuBar = "Opening Hours");
 	}
 
-	@summary = "Default summary"
-	macro gotoOrganizationSite() {
+	macro gotoOrganizationSite {
 		MenuBar.click(menuBar = "Organization Site");
 	}
 
-	@summary = "Default summary"
-	macro gotoSecurityQuestions() {
+	macro gotoSecurityQuestions {
 		MenuBar.click(menuBar = "Security Questions");
 	}
 
-	@summary = "Default summary"
-	macro viewActive(menuBar = null) {
+	macro viewActive {
 		AssertElementPresent(
 			key_menuBar = ${menuBar},
 			locator1 = "MenuBar#ACTIVE_NAV_LINK");

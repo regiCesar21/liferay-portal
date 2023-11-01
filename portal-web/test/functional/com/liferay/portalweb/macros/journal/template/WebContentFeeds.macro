@@ -1,7 +1,6 @@
 definition {
 
-	@summary = "Default summary"
-	macro addCP(pageFriendlyUrl = null, structureName = null, feedTitle = null) {
+	macro addCP {
 		LexiconEntry.gotoAdd();
 
 		Type(
@@ -21,8 +20,7 @@ definition {
 		PortletEntry.save();
 	}
 
-	@summary = "Default summary"
-	macro selectStructure(structureName = null) {
+	macro selectStructure {
 		var key_ddlDataDefinitionName = ${structureName};
 
 		AssertClick(
@@ -38,8 +36,7 @@ definition {
 		AssertConfirm(value1 = "Selecting a new structure changes the available templates and available feed item content. Do you want to proceed?");
 	}
 
-	@summary = "Default summary"
-	macro viewTableEntryCP(feedName = null) {
+	macro viewTableEntryCP {
 		var key_feedName = ${feedName};
 
 		AssertTextEquals(

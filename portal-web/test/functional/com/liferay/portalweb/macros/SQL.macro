@@ -1,7 +1,6 @@
 definition {
 
-	@summary = "Default summary"
-	macro executeMySQLStatement(mysqlStatement = null) {
+	macro executeMySQLStatement {
 		Variables.assertDefined(parameterList = ${mysqlStatement});
 
 		var liferayHome = PropsUtil.get("liferay.home.dir.name");

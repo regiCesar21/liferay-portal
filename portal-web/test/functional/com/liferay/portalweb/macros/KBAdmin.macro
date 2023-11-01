@@ -1,7 +1,6 @@
 definition {
 
-	@summary = "Default summary"
-	macro openKBAdmin(siteURLKey = null) {
+	macro openKBAdmin {
 		Navigator.openWithAppendToBaseURL(urlAppend = "group/${siteURLKey}/~/control_panel/manage?p_p_id=com_liferay_knowledge_base_web_portlet_AdminPortlet");
 	}
 

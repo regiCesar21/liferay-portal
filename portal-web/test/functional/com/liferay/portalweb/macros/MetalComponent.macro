@@ -1,28 +1,24 @@
 definition {
 
-	@summary = "Default summary"
-	macro waitForCard(card = null) {
+	macro waitForCard {
 		AssertVisible(locator1 = "//div[contains(@class,'card')][contains(.,'${card}')]");
 
 		MetalComponent.waitForMetalComponent(id = selenium.getAttribute("//div[contains(@class,'card')][contains(.,'${card}')]@id"));
 	}
 
-	@summary = "Default summary"
-	macro waitForLayout() {
+	macro waitForLayout {
 		AssertVisible(locator1 = "//div[@class='portlet-body']/form/div");
 
 		MetalComponent.waitForMetalComponent(id = '''document.querySelector("div.portlet-body > form > div").id''');
 	}
 
-	@summary = "Default summary"
-	macro waitForManagementBar() {
+	macro waitForManagementBar {
 		AssertVisible(locator1 = "//nav[contains(@class,'management-bar')]");
 
 		MetalComponent.waitForMetalComponent(id = '''document.querySelector("nav.management-bar").parentNode.id''');
 	}
 
-	@summary = "Default summary"
-	macro waitForMetalComponent(id = null) {
+	macro waitForMetalComponent {
 		var javaScript = '''
 var metalComponent = Liferay.component(${id});
 
@@ -47,8 +43,7 @@ else {
 		}
 	}
 
-	@summary = "Default summary"
-	macro waitForReportsManagementBar() {
+	macro waitForReportsManagementBar {
 		AssertVisible(locator1 = "//div[contains(@class,'management-bar')]");
 
 		MetalComponent.waitForMetalComponent(id = '''document.querySelector("div.management-bar").parentNode.id''');

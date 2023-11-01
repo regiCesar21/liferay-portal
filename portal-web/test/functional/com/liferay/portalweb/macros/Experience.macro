@@ -1,12 +1,10 @@
 definition {
 
-	@summary = "Default summary"
-	macro addBannerCenterElement() {
+	macro addBannerCenterElement {
 		Click(locator1 = "Experience#BANNER_CENTER");
 	}
 
-	@summary = "Default summary"
-	macro clickBasicSections() {
+	macro clickBasicSections {
 		Click(locator1 = "Experience#BASIC_SECTIONS");
 	}
 

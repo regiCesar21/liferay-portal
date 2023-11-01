@@ -1,21 +1,18 @@
 definition {
 
-	@summary = "Default summary"
-	macro assertAutoTagPresent(tagName = null) {
+	macro assertAutoTagPresent {
 		var key_tagName = ${tagName};
 
 		AssertElementPresent(locator1 = "DocumentsAndMedia#TAG");
 	}
 
-	@summary = "Default summary"
-	macro assertNoAutoTag(tagName = null) {
+	macro assertNoAutoTag {
 		var key_tagName = ${tagName};
 
 		AssertElementNotPresent(locator1 = "DocumentsAndMedia#TAG");
 	}
 
-	@summary = "Default summary"
-	macro disableAutoTagging(disableAutoTaggingFor = null) {
+	macro disableAutoTagging {
 		if (${disableAutoTaggingFor} == "System Settings") {
 			ProductMenu.gotoPortlet(
 				category = "Configuration",
@@ -56,8 +53,7 @@ definition {
 		}
 	}
 
-	@summary = "Default summary"
-	macro enableAutoTagging(maximumNumberOfTags = null, enableAutoTaggingFor = null, validationError = null) {
+	macro enableAutoTagging {
 		if (${enableAutoTaggingFor} == "System Settings") {
 			ProductMenu.gotoPortlet(
 				category = "Configuration",
@@ -126,8 +122,7 @@ definition {
 		}
 	}
 
-	@summary = "Default summary"
-	macro enableOpenNLP(confidenceThreshold = null, assetType = null) {
+	macro enableOpenNLP {
 		ProductMenu.gotoPortlet(
 			category = "Configuration",
 			panel = "Control Panel",
@@ -159,8 +154,7 @@ definition {
 		}
 	}
 
-	@summary = "Default summary"
-	macro enableTensorFlow() {
+	macro enableTensorFlow {
 		ProductMenu.gotoPortlet(
 			category = "Configuration",
 			panel = "Control Panel",

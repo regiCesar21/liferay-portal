@@ -1,7 +1,6 @@
 definition {
 
-	@summary = "Default summary"
-	macro expandPanel(panel = null) {
+	macro expandPanel {
 		Portlet.waitForForm();
 
 		var key_panel = ${panel};
@@ -19,8 +18,7 @@ definition {
 		AssertElementPresent(locator1 = "Panel#PANEL_EXPANDED");
 	}
 
-	@summary = "Default summary"
-	macro expandSidebarApplicationsPanel() {
+	macro expandSidebarApplicationsPanel {
 		if ((IsElementPresent(locator1 = "ControlMenuAddPanel#SIDEBAR_APPLICATIONS_PANEL_COLLAPSED")) && (IsVisible(locator1 = "ControlMenuAddPanel#SIDEBAR_APPLICATIONS_PANEL_COLLAPSED"))) {
 			AssertClick(
 				locator1 = "ControlMenuAddPanel#SIDEBAR_APPLICATIONS_PANEL_COLLAPSED",
@@ -30,8 +28,7 @@ definition {
 		}
 	}
 
-	@summary = "Default summary"
-	macro expandSidebarContentPanel() {
+	macro expandSidebarContentPanel {
 		if ((IsElementPresent(locator1 = "ControlMenuAddPanel#SIDEBAR_CONTENT_PANEL_COLLAPSED")) && (IsVisible(locator1 = "ControlMenuAddPanel#SIDEBAR_CONTENT_PANEL_COLLAPSED"))) {
 			AssertClick(
 				locator1 = "ControlMenuAddPanel#SIDEBAR_CONTENT_PANEL_COLLAPSED",

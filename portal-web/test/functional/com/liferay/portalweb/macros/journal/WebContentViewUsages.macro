@@ -1,35 +1,30 @@
 definition {
 
-	@summary = "Default summary"
-	macro clickEllipsisItem(item = null, page = null) {
+	macro clickEllipsisItem {
 		LexiconTable.clickEllipsisItem(
 			item = ${item},
 			tableEntry = ${page});
 	}
 
-	@summary = "Default summary"
-	macro previewDraftInPage(page = null) {
+	macro previewDraftInPage {
 		WebContentViewUsages.clickEllipsisItem(
 			item = "Preview Draft in Page",
 			page = ${page});
 	}
 
-	@summary = "Default summary"
-	macro previewPendingInPage(page = null) {
+	macro previewPendingInPage {
 		WebContentViewUsages.clickEllipsisItem(
 			item = "Preview Pending in Page",
 			page = ${page});
 	}
 
-	@summary = "Default summary"
-	macro previewScheduledInPage(page = null) {
+	macro previewScheduledInPage {
 		WebContentViewUsages.clickEllipsisItem(
 			item = "Preview Scheduled in Page",
 			page = ${page});
 	}
 
-	@summary = "Default summary"
-	macro viewInPage(page = null) {
+	macro viewInPage {
 		WebContentViewUsages.clickEllipsisItem(
 			item = "View in Page",
 			page = ${page});

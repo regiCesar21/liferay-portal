@@ -1,7 +1,6 @@
 definition {
 
-	@summary = "Default summary"
-	macro setColumn() {
+	macro setColumn {
 		if (!(isSet(column))) {
 			var column = 1;
 		}
@@ -9,8 +8,7 @@ definition {
 		return ${column};
 	}
 
-	@summary = "Default summary"
-	macro setFriendlyURL() {
+	macro setFriendlyURL {
 		if (!(isSet(friendlyURL))) {
 			var friendlyURL = "";
 		}
@@ -18,8 +16,7 @@ definition {
 		return ${friendlyURL};
 	}
 
-	@summary = "Default summary"
-	macro setGroupId(groupName = null, grandParentGroupName = null, parentGroupName = null, groupKey = null) {
+	macro setGroupId {
 		JSONUtil2._exclusiveOrCheck(
 			A = ${groupName},
 			B = ${groupKey},
@@ -41,8 +38,7 @@ definition {
 		return ${groupId};
 	}
 
-	@summary = "Default summary"
-	macro setLayoutId(groupId = null, privateLayout = null, layoutName = null) {
+	macro setLayoutId {
 		Variables.assertDefined(parameterList = "${groupId},${layoutName},${privateLayout}");
 
 		var layoutId = JSONLayoutAPI._getLayoutIdByName(
@@ -53,8 +49,7 @@ definition {
 		return ${layoutId};
 	}
 
-	@summary = "Default summary"
-	macro setParentLayoutId(parentLayoutName = null, groupId = null) {
+	macro setParentLayoutId {
 		var privateLayout = JSONLayoutSetter.setPrivateLayout(privateLayout = ${privateLayout});
 
 		if (isSet(parentLayoutName)) {
@@ -72,8 +67,7 @@ definition {
 		return ${parentLayoutId};
 	}
 
-	@summary = "Default summary"
-	macro setPrivateLayout() {
+	macro setPrivateLayout {
 		if (!(isSet(privateLayout))) {
 			var privateLayout = "false";
 		}
@@ -81,8 +75,7 @@ definition {
 		return ${privateLayout};
 	}
 
-	@summary = "Default summary"
-	macro setServiceContext(assetCategoryIds = null, assetTagNames = null, workflowAction = null) {
+	macro setServiceContext {
 		if (!(isSet(serviceContext))) {
 			var serviceContext = JSONServiceContextUtil.setServiceContext(
 				addGuestPermissions = "true",
@@ -94,8 +87,7 @@ definition {
 		return ${serviceContext};
 	}
 
-	@summary = "Default summary"
-	macro setSite() {
+	macro setSite {
 		if (!(isSet(site))) {
 			var site = "true";
 		}
@@ -103,8 +95,7 @@ definition {
 		return ${site};
 	}
 
-	@summary = "Default summary"
-	macro setType() {
+	macro setType {
 		if (!(isSet(type))) {
 			var type = "portlet";
 		}
@@ -112,8 +103,7 @@ definition {
 		return ${type};
 	}
 
-	@summary = "Default summary"
-	macro setTypeSettings(widgetName = null, groupId = null, column = null, layoutTemplate = null, privateLayout = null, layoutName = null) {
+	macro setTypeSettings {
 		Variables.assertDefined(parameterList = "${groupId},${layoutName},${privateLayout}");
 
 		var typeSettings = JSONLayoutAPI._getTypeSettingsByName(

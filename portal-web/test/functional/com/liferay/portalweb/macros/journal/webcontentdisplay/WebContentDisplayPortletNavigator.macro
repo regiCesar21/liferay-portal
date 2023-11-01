@@ -1,7 +1,6 @@
 definition {
 
-	@summary = "Default summary"
-	macro gotoAdd(portletNameScoped = null, portletNameTranslation = null) {
+	macro gotoAdd {
 		var portletName = "Web Content Display";
 
 		if (isSet(portletNameScoped)) {
@@ -30,8 +29,7 @@ definition {
 		AssertVisible(locator1 = "TextInput#TITLE");
 	}
 
-	@summary = "Default summary"
-	macro gotoArticleEllipsisMenu(webContentTitle = null) {
+	macro gotoArticleEllipsisMenu {
 		if (IsElementPresent(locator1 = "WCD#WEB_CONTENT_CONTENT")) {
 			MouseOver(locator1 = "WCD#WEB_CONTENT_CONTENT");
 		}
@@ -45,8 +43,7 @@ definition {
 			locator1 = "WCD#ARTICLE_ELLIPSIS_ICON");
 	}
 
-	@summary = "Default summary"
-	macro gotoEdit(webContentTitle = null, menuItem = null) {
+	macro gotoEdit {
 		WebContentDisplayPortletNavigator.gotoArticleEllipsisMenu(webContentTitle = ${webContentTitle});
 
 		MenuItem.click(menuItem = ${menuItem});

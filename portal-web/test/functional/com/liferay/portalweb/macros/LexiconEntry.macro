@@ -1,7 +1,6 @@
 definition {
 
-	@summary = "Default summary"
-	macro changeDisplayStyle(displayStyle = null) {
+	macro changeDisplayStyle {
 		var browserType = PropsUtil.get("browser.type");
 
 		if (${browserType} == "chrome") {
@@ -23,8 +22,7 @@ definition {
 		MenuItem.click(menuItem = StringUtil.upperCaseFirstLetter(${displayStyle}));
 	}
 
-	@summary = "Default summary"
-	macro changeExportDisplayStyle(displayStyle = null) {
+	macro changeExportDisplayStyle {
 		Click.clickNoMouseOverNoWaitForVisible(locator1 = "Icon#CURRENT_DISPLAY_STYLE");
 
 		Click.clickNoMouseOverNoWaitForVisible(
@@ -32,8 +30,7 @@ definition {
 			locator1 = "MenuItem#ANY_MENU_ITEM");
 	}
 
-	@summary = "Default summary"
-	macro delete(rowEntry = null, failure = null, confirmationText = null) {
+	macro delete {
 		LexiconEntry.gotoEntryMenuItemNoError(
 			menuItem = "Delete",
 			rowEntry = ${rowEntry});
@@ -64,8 +61,7 @@ definition {
 		}
 	}
 
-	@summary = "Default summary"
-	macro gotoAdd() {
+	macro gotoAdd {
 		var browserType = PropsUtil.get("browser.type");
 
 		if (${browserType} == "chrome") {
@@ -80,22 +76,19 @@ definition {
 		}
 	}
 
-	@summary = "Default summary"
-	macro gotoAddDropdownMenuItem(menuItem = null) {
+	macro gotoAddDropdownMenuItem {
 		LexiconEntry.gotoAdd();
 
 		DropdownMenuItem.click(menuItem = ${menuItem});
 	}
 
-	@summary = "Default summary"
-	macro gotoAddMenuItem(menuItem = null) {
+	macro gotoAddMenuItem {
 		LexiconEntry.gotoAdd();
 
 		MenuItem.click(menuItem = ${menuItem});
 	}
 
-	@summary = "Default summary"
-	macro gotoAddReport() {
+	macro gotoAddReport {
 		var browserType = PropsUtil.get("browser.type");
 
 		if (${browserType} == "chrome") {
@@ -105,8 +98,7 @@ definition {
 		Click(locator1 = "Button#PLUS");
 	}
 
-	@summary = "Default summary"
-	macro gotoEllipsisMenuItem(menuItem = null) {
+	macro gotoEllipsisMenuItem {
 		var browserType = PropsUtil.get("browser.type");
 
 		if (${browserType} == "internetexplorer") {
@@ -119,15 +111,13 @@ definition {
 		MenuItem.click(menuItem = ${menuItem});
 	}
 
-	@summary = "Default summary"
-	macro gotoEllipsisMenuItemNoError(menuItem = null) {
+	macro gotoEllipsisMenuItemNoError {
 		Click.waitForMenuToggleJSClick(locator1 = "Icon#BODY_VERTICAL_ELLIPSIS");
 
 		MenuItem.clickNoError(menuItem = ${menuItem});
 	}
 
-	@summary = "Default summary"
-	macro gotoEntry(rowEntry = null) {
+	macro gotoEntry {
 		if (IsElementPresent(key_displayStyle = "cards", locator1 = "Icon#DISPLAY_STYLE_ACTIVE")) {
 			AssertClick(
 				key_cardText = ${rowEntry},
@@ -142,36 +132,31 @@ definition {
 		}
 	}
 
-	@summary = "Default summary"
-	macro gotoEntryMenuItem(rowEntry = null, menuItem = null) {
+	macro gotoEntryMenuItem {
 		LexiconEntry.openEntryMenu(rowEntry = ${rowEntry});
 
 		MenuItem.click(menuItem = ${menuItem});
 	}
 
-	@summary = "Default summary"
-	macro gotoEntryMenuItemNoError(rowEntry = null, menuItem = null) {
+	macro gotoEntryMenuItemNoError {
 		LexiconEntry.openEntryMenu(rowEntry = ${rowEntry});
 
 		MenuItem.clickNoError(menuItem = ${menuItem});
 	}
 
-	@summary = "Default summary"
-	macro gotoEntryMenuItemNoWait(rowEntry = null, menuItem = null) {
+	macro gotoEntryMenuItemNoWait {
 		LexiconEntry.openEntryMenu(rowEntry = ${rowEntry});
 
 		MenuItem.click(menuItem = ${menuItem});
 	}
 
-	@summary = "Default summary"
-	macro gotoEntryMenuItemNoWaitNoError(rowEntry = null, menuItem = null) {
+	macro gotoEntryMenuItemNoWaitNoError {
 		LexiconEntry.openEntryMenu(rowEntry = ${rowEntry});
 
 		MenuItem.clickNoError(menuItem = ${menuItem});
 	}
 
-	@summary = "Default summary"
-	macro gotoHeaderMenuItem(menuItem = null) {
+	macro gotoHeaderMenuItem {
 		var browserType = PropsUtil.get("browser.type");
 
 		if (${browserType} == "internetexplorer") {
@@ -184,15 +169,13 @@ definition {
 		MenuItem.click(menuItem = ${menuItem});
 	}
 
-	@summary = "Default summary"
-	macro gotoVerticalEllipsisMenuItemNoError(menuItem = null) {
+	macro gotoVerticalEllipsisMenuItemNoError {
 		Click.waitForMenuToggleJSClick(locator1 = "Icon#VERTICAL_ELLIPSIS_BUTTON");
 
 		MenuItem.clickNoError(menuItem = ${menuItem});
 	}
 
-	@summary = "Default summary"
-	macro openEntryMenu(rowEntry = null) {
+	macro openEntryMenu {
 		var browserType = PropsUtil.get("browser.type");
 
 		if (${browserType} == "internetexplorer") {
@@ -207,22 +190,19 @@ definition {
 		}
 	}
 
-	@summary = "Default summary"
-	macro selectEntry(rowEntry = null) {
+	macro selectEntry {
 		Check(
 			key_rowEntry = ${rowEntry},
 			locator1 = "ContentRow#ENTRY_CONTENT_ENTRY_CHECKBOX");
 	}
 
-	@summary = "Default summary"
-	macro viewActiveDisplayStyle(displayStyle = null) {
+	macro viewActiveDisplayStyle {
 		AssertElementPresent(
 			key_displayStyle = ${displayStyle},
 			locator1 = "Icon#CURRENT_DISPLAY_STYLE_ACTIVE");
 	}
 
-	@summary = "Default summary"
-	macro viewEntryName(rowEntry = null) {
+	macro viewEntryName {
 		var browserType = PropsUtil.get("browser.type");
 
 		if (${browserType} == "chrome") {
@@ -239,22 +219,19 @@ definition {
 		}
 	}
 
-	@summary = "Default summary"
-	macro viewNoEntry(rowEntry = null) {
+	macro viewNoEntry {
 		AssertElementNotPresent(
 			key_rowEntry = ${rowEntry},
 			locator1 = "ContentRow#ENTRY_CONTENT_ENTRY_NAME");
 	}
 
-	@summary = "Default summary"
-	macro viewNoEntryMenu(rowEntry = null) {
+	macro viewNoEntryMenu {
 		AssertElementNotPresent(
 			key_rowEntry = ${rowEntry},
 			locator1 = "Icon#ROW_VERTICAL_ELLIPSIS");
 	}
 
-	@summary = "Default summary"
-	macro viewNoEntryMenuItem(rowEntry = null, menuItem = null) {
+	macro viewNoEntryMenuItem {
 		LexiconEntry.openEntryMenu(rowEntry = ${rowEntry});
 
 		AssertElementNotPresent(

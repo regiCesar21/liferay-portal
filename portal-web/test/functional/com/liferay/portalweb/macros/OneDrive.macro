@@ -1,7 +1,6 @@
 definition {
 
-	@summary = "Default summary"
-	macro AddDocument(dmDocumentTitle = null, dmDocumentTypeName = null, dmDocumentContent = null) {
+	macro AddDocument {
 		Alert.viewInfoMessageSpecific(infoMessage = "The document has been checked out, please on finish editing check in the document to save changes into the document library.");
 
 		Type(
@@ -57,8 +56,7 @@ definition {
 		SelectFrameTop();
 	}
 
-	@summary = "Default summary"
-	macro deleteDocument(dmDocumentTitle = null) {
+	macro deleteDocument {
 		var key_documentTitle = ${dmDocumentTitle};
 
 		if (IsElementPresent(locator1 = "OneDrive#FILES_TITLE")) {
@@ -70,8 +68,7 @@ definition {
 		}
 	}
 
-	@summary = "Default summary"
-	macro editTitle(dmDocumentTitle = null) {
+	macro editTitle {
 		Pause(locator1 = 10000);
 
 		SelectWindow.selectPopUp(locator1 = "null");
@@ -93,8 +90,7 @@ definition {
 		SelectFrameTop();
 	}
 
-	@summary = "Default summary"
-	macro gotoEdit(dmDocumentTitle = null) {
+	macro gotoEdit {
 		var key_dmDocumentTitle = ${dmDocumentTitle};
 
 		Click(locator1 = "DocumentsAndMedia#DESCRIPTIVE_LIST_DOCUMENT_VERTICAL_ELLIPSIS");
@@ -102,8 +98,7 @@ definition {
 		MenuItem.click(menuItem = "Edit in Office 365");
 	}
 
-	@summary = "Default summary"
-	macro goToOneDrive(userPassword = null, userName = null) {
+	macro goToOneDrive {
 		Navigator.openSpecificURL(url = "https://liferaycolab-my.sharepoint.com/personal/sharepoint_liferaycolab_onmicrosoft_com/_layouts/15/onedrive.aspx?view=0");
 
 		Pause(locator1 = 10000);

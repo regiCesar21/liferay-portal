@@ -1,7 +1,6 @@
 definition {
 
-	@summary = "Default summary"
-	macro getAMDLoaderLogLevel() {
+	macro getAMDLoaderLogLevel {
 		WaitForSPARefresh();
 
 		var javaScript = '''

@@ -1,14 +1,12 @@
 definition {
 
-	@summary = "Default summary"
-	macro assertAssetTypeUnselectable() {
+	macro assertAssetTypeUnselectable {
 		PageEditor.gotoTab(tabName = "Mapping");
 
 		Button.viewNotPresent(button = "Select");
 	}
 
-	@summary = "Default summary"
-	macro gotoEditableFieldMapping(fragmentName = null, id = null) {
+	macro gotoEditableFieldMapping {
 		PageEditor.clickEditableField(
 			fragmentName = ${fragmentName},
 			id = ${id});
@@ -16,8 +14,7 @@ definition {
 		Click(locator1 = "PageEditor#EDITABLE_FIELD_TOOLBAR_MAP_BUTTON");
 	}
 
-	@summary = "Default summary"
-	macro mapEditableFieldToAsset(webContentTitle = null, assetField = null) {
+	macro mapEditableFieldToAsset {
 		Click(locator1 = "PageEditor#EDITABLE_FIELD_TOOLBAR_MAP_DROPDOWN");
 
 		Click(
@@ -44,8 +41,7 @@ definition {
 		PageEditor.waitForAutoSave();
 	}
 
-	@summary = "Default summary"
-	macro mapEditableTextToField(field = null, fragmentName = null, id = null, source = null) {
+	macro mapEditableTextToField {
 		PageEditorMapping.gotoEditableFieldMapping(
 			fragmentName = ${fragmentName},
 			id = ${id});

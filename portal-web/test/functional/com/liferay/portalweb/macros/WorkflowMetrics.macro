@@ -1,7 +1,6 @@
 definition {
 
-	@summary = "Default summary"
-	macro _deleteAllSLAs() {
+	macro _deleteAllSLAs {
 		while (IsElementPresent(locator1 = "WorkflowMetricsSLA#SLA_ELLIPSIS_BUTTON")) {
 			Click(locator1 = "WorkflowMetricsSLA#SLA_ELLIPSIS_BUTTON");
 
@@ -11,8 +10,7 @@ definition {
 		}
 	}
 
-	@summary = "Default summary"
-	macro AssertChartIsPresent(chartVelocityUnit = null) {
+	macro AssertChartIsPresent {
 		MouseOver(locator1 = "WorkflowMetrics#METRICS_COMPLETION_VELOCITY_CHART");
 
 		AssertTextPresent(
@@ -20,8 +18,7 @@ definition {
 			value1 = ${chartVelocityUnit});
 	}
 
-	@summary = "Default summary"
-	macro assertDefaultChartRangesAndUnits() {
+	macro assertDefaultChartRangesAndUnits {
 		AssertTextEquals(
 			locator1 = "WorkflowMetrics#METRICS_COMPLETED_ITEMS_DATE_RANGE_DROPDOWN",
 			value1 = "Last 30 Days");
@@ -39,8 +36,7 @@ definition {
 			value1 = "inst / day");
 	}
 
-	@summary = "Default summary"
-	macro checkPendingWorkflowValues(key_ontime = null, key_overdue = null, key_untracked = null, key_pending = null) {
+	macro checkPendingWorkflowValues {
 		AssertTextEquals(
 			locator1 = "WorkflowMetrics#DASHBOARD_TOTAL_OVERDUE_ITEMS_VALUE",
 			value1 = ${key_overdue});
@@ -58,8 +54,7 @@ definition {
 			value1 = ${key_untracked});
 	}
 
-	@summary = "Default summary"
-	macro fillSLAForm(slaDefinitionHours = null, slaDefinitionStart = null, slaDefinitionEnd = null, slaDefinitionDays = null, slaDefinitionDescription = null, slaDefinitionName = null) {
+	macro fillSLAForm {
 		var key_slaDefinitionDays = ${slaDefinitionDays};
 		var key_slaDefinitionDescription = ${slaDefinitionDescription};
 		var key_slaDefinitionEnd = ${slaDefinitionEnd};
@@ -96,8 +91,7 @@ definition {
 			value1 = ${key_slaDefinitionHours});
 	}
 
-	@summary = "Default summary"
-	macro goToCreatedSLAForm(workflowSLAName = null) {
+	macro goToCreatedSLAForm {
 		var key_workflowSLAName = ${workflowSLAName};
 
 		Click(
@@ -105,8 +99,7 @@ definition {
 			value1 = ${workflowSLAName});
 	}
 
-	@summary = "Default summary"
-	macro goToDashboardAllItemsWithFilter(workflowFilterOption = null, workflowMetricsTab = null, workflowProcess = null) {
+	macro goToDashboardAllItemsWithFilter {
 		var key_workflowProcess = ${workflowProcess};
 		var key_workflowMetricsTab = ${workflowMetricsTab};
 		var key_workflowFilterOption = ${workflowFilterOption};
@@ -124,8 +117,7 @@ definition {
 		Click(locator1 = "WorkflowMetrics#DASHBOARD_TOTAL_${key_workflowFilterOption}_ITEMS_TITLE");
 	}
 
-	@summary = "Default summary"
-	macro goToWorkflowProcessMetrics(workflowProcessName = null) {
+	macro goToWorkflowProcessMetrics {
 		var key_workflowProcessName = ${workflowProcessName};
 
 		ProductMenu.gotoPortlet(
@@ -138,8 +130,7 @@ definition {
 			value1 = ${workflowProcessName});
 	}
 
-	@summary = "Default summary"
-	macro goToWorkflowSLASettings(workflowProcessName = null) {
+	macro goToWorkflowSLASettings {
 		var key_workflowProcessName = ${workflowProcessName};
 
 		WorkflowMetrics.goToWorkflowProcessMetrics(workflowProcessName = ${workflowProcessName});
@@ -149,8 +140,7 @@ definition {
 		Click(locator1 = "WorkflowMetricsSLA#METRICS_SLA_SETTINGS");
 	}
 
-	@summary = "Default summary"
-	macro tearDown() {
+	macro tearDown {
 		WorkflowMetrics.goToWorkflowSLASettings(workflowProcessName = "Single Approver");
 
 		if (IsElementPresent(locator1 = "WorkflowMetricsSLA#SLA_TABLE")) {
@@ -158,8 +148,7 @@ definition {
 		}
 	}
 
-	@summary = "Default summary"
-	macro verifyDefaultUnitsForEachDateRange(isPresent = null, isNotPresent = null, completionVelocityDateRange = null) {
+	macro verifyDefaultUnitsForEachDateRange {
 		var key_completionVelocityDateRange = ${completionVelocityDateRange};
 
 		for (var isUnitPresent : list ${isPresent}) {
@@ -233,15 +222,13 @@ definition {
 		}
 	}
 
-	@summary = "Default summary"
-	macro verifyFiltersFromDashboard(isFilterOptionPresent = null) {
+	macro verifyFiltersFromDashboard {
 		for (var key_workflowFilterValue : list ${isFilterOptionPresent}) {
 			AssertElementPresent(locator1 = "WorkflowAllItems#WORKFLOW_ALL_ITEMS_FILTER_VALUE");
 		}
 	}
 
-	@summary = "Default summary"
-	macro waitForSLA(key_expectedValue = null, key_status = null) {
+	macro waitForSLA {
 		while ((IsTextEqual(locator1 = "WorkflowMetrics#DASHBOARD_TOTAL_${key_status}_ITEMS_VALUE", value1 = ${key_expectedValue})) && (maxIterations = "24")) {
 			echo("Waiting 5 seconds to recheck");
 

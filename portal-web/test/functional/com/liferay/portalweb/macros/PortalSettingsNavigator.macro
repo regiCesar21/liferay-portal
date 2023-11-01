@@ -1,7 +1,6 @@
 definition {
 
-	@summary = "Default summary"
-	macro expandAuthenticationPanel() {
+	macro expandAuthenticationPanel {
 		Panel.expandPanel(panel = "Authentication");
 	}
 

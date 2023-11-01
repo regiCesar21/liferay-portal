@@ -1,7 +1,6 @@
 definition {
 
-	@summary = "Default summary"
-	macro _clickAddPortlet() {
+	macro _clickAddPortlet {
 		var browserType = PropsUtil.get("browser.type");
 
 		if (${browserType} == "safari") {
@@ -18,8 +17,7 @@ definition {
 			value1 = "Add");
 	}
 
-	@summary = "Default summary"
-	macro addDuplicatePG() {
+	macro addDuplicatePG {
 		var portletTypeKey = "PORTLET";
 
 		if (${portletName} == "Map") {
@@ -48,8 +46,7 @@ definition {
 		AssertElementPresent(locator1 = "Home#${portletTypeKey}");
 	}
 
-	@summary = "Default summary"
-	macro addPG() {
+	macro addPG {
 		if (${portletName} == "Map") {
 			var portletName = "Where are the Liferay members?";
 		}
@@ -74,8 +71,7 @@ definition {
 		AssertElementPresent(locator1 = "Home#PORTLET");
 	}
 
-	@summary = "Default summary"
-	macro addPGCmd() {
+	macro addPGCmd {
 		if (${portletName} == "Where are the Liferay members?") {
 			var portletName = "Map";
 		}
@@ -103,15 +99,13 @@ definition {
 		AssertElementPresent(locator1 = "Portlet#LOADED");
 	}
 
-	@summary = "Default summary"
-	macro assertPortletHeader(portletName = null) {
+	macro assertPortletHeader {
 		var key_portletTitleName = ${portletName};
 
 		AssertVisible(locator1 = "Home#PORTLET_HEADER");
 	}
 
-	@summary = "Default summary"
-	macro assertServerShutdown() {
+	macro assertServerShutdown {
 		var shutdownPauseCount = 0;
 
 		while ((IsElementPresent(locator1 = "//body")) && (${shutdownPauseCount} != 12)) {
@@ -125,8 +119,7 @@ definition {
 		}
 	}
 
-	@summary = "Default summary"
-	macro assertServerStartup() {
+	macro assertServerStartup {
 		var startupPauseCount = 0;
 
 		while (!(IsElementPresent(locator1 = "UserBar#USER_SIGN_IN")) && (${startupPauseCount} != 12)) {
@@ -140,8 +133,7 @@ definition {
 		}
 	}
 
-	@summary = "Default summary"
-	macro changeDisplayStyle(displayStyle = null) {
+	macro changeDisplayStyle {
 		if (IsElementNotPresent(key_displayStyle = StringUtil.toLowerCase(${displayStyle}), locator1 = "Icon#DISPLAY_STYLE_ACTIVE")) {
 			Click(
 				key_displayStyle = StringUtil.toLowerCase(${displayStyle}),
@@ -153,15 +145,13 @@ definition {
 			locator1 = "Icon#DISPLAY_STYLE_ACTIVE");
 	}
 
-	@summary = "Default summary"
-	macro clickAddPortletSpecific(portletCategory = null, portletName = null) {
+	macro clickAddPortletSpecific {
 		Variables.assertDefined(parameterList = "${portletCategory},${portletName}");
 
 		Click(locator1 = "ControlMenuAddPanel#ADD_PORTLET_LINK_SPECIFIC");
 	}
 
-	@summary = "Default summary"
-	macro clickPortletPlusIconPG(portletName = null) {
+	macro clickPortletPlusIconPG {
 		var browserType = PropsUtil.get("browser.type");
 		var key_portletName = ${portletName};
 
@@ -181,8 +171,7 @@ definition {
 		}
 	}
 
-	@summary = "Default summary"
-	macro configureApplicationDecoratorViaLookandfeelPG(applicationDecorator = null) {
+	macro configureApplicationDecoratorViaLookandfeelPG {
 		Navigator.gotoNavTab(navTab = "General");
 
 		Select(
@@ -190,8 +179,7 @@ definition {
 			value1 = ${applicationDecorator});
 	}
 
-	@summary = "Default summary"
-	macro configureCustomBorderStylesViaLookandfeelPG(borderColorAttributeList = null, borderStyleAttributeList = null, sameForAllFieldsetLabelList = null, colorLeftLabel = null, borderWidthAttributeList = null, borderWidthUnitList = null) {
+	macro configureCustomBorderStylesViaLookandfeelPG {
 		Navigator.gotoNavTab(navTab = "Border Styles");
 
 		if (isSet(sameForAllFieldsetLabelList)) {
@@ -254,8 +242,7 @@ definition {
 		PortletEntry.save();
 	}
 
-	@summary = "Default summary"
-	macro configureCustomStylesViaLookandfeelPG() {
+	macro configureCustomStylesViaLookandfeelPG {
 		Navigator.gotoNavTab(navTab = "Text Styles");
 
 		Select(
@@ -273,8 +260,7 @@ definition {
 			value1 = 20);
 	}
 
-	@summary = "Default summary"
-	macro configureCustomTitlePG(portletTitleName = null) {
+	macro configureCustomTitlePG {
 		var key_portletTitleName = ${portletTitleName};
 
 		AssertElementPresent(locator1 = "Portlet#SPECIFIC_TITLE");
@@ -288,8 +274,7 @@ definition {
 		Click(locator1 = "Icon#OK");
 	}
 
-	@summary = "Default summary"
-	macro configureCustomTitleViaLookandfeelPG(portletName = null) {
+	macro configureCustomTitleViaLookandfeelPG {
 		IFrame.selectConfigurationFrame();
 
 		Navigator.gotoNavTab(navTab = "General");
@@ -301,8 +286,7 @@ definition {
 			value1 = "${portletName} Custom");
 	}
 
-	@summary = "Default summary"
-	macro deletePG(portletName = null) {
+	macro deletePG {
 		var key_portletName = ${portletName};
 
 		MouseOver.mouseOverNotVisible(locator1 = "Portlet#SPECIFIC_ELLIPSIS_ICON");
@@ -314,8 +298,7 @@ definition {
 		AssertConfirm(value1 = "Are you sure you want to remove this component?");
 	}
 
-	@summary = "Default summary"
-	macro dragAndDropPortletToColumnPG(columnNumberTo = null, columnNumberFrom = null, portletName = null) {
+	macro dragAndDropPortletToColumnPG {
 		var key_portletTitleName = ${portletName};
 
 		AssertTextEquals(
@@ -332,8 +315,7 @@ definition {
 			value1 = ${portletName});
 	}
 
-	@summary = "Default summary"
-	macro expandTree() {
+	macro expandTree {
 		while (IsElementPresent(locator1 = "Treeview#NODE_COLLAPSED")) {
 			Click(locator1 = "Treeview#NODE_COLLAPSED");
 		}
@@ -341,8 +323,7 @@ definition {
 		AssertElementNotPresent(locator1 = "Treeview#NODE_COLLAPSED");
 	}
 
-	@summary = "Default summary"
-	macro gotoPortletOptions(siteTemplate = null, portletName = null, portletOption = null) {
+	macro gotoPortletOptions {
 		if (isSet(portletName)) {
 			var key_portletName = ${portletName};
 			var browserType = PropsUtil.get("browser.type");
@@ -378,8 +359,7 @@ definition {
 		}
 	}
 
-	@summary = "Default summary"
-	macro gotoSpecificPortletOptions(siteTemplate = null, portletName = null, portletOption = null) {
+	macro gotoSpecificPortletOptions {
 		if (isSet(portletName)) {
 			var key_portletName = ${portletName};
 			var browserType = PropsUtil.get("browser.type");
@@ -411,15 +391,13 @@ definition {
 		}
 	}
 
-	@summary = "Default summary"
-	macro mouseOverPortletTitle(portletTitleName = null) {
+	macro mouseOverPortletTitle {
 		var key_portletTitleName = ${portletTitleName};
 
 		MouseOver(locator1 = "Portlet#SPECIFIC_TITLE");
 	}
 
-	@summary = "Default summary"
-	macro saveAndCloseConfig() {
+	macro saveAndCloseConfig {
 		Button.clickSave();
 
 		SelectFrameTop();
@@ -429,15 +407,13 @@ definition {
 		WaitForElementNotPresent(locator1 = "IFrame#DIALOG");
 	}
 
-	@summary = "Default summary"
-	macro selectApplicationDecorator(decorator = null) {
+	macro selectApplicationDecorator {
 		Select(
 			locator1 = "Select#APPLICATION_DECORATORS",
 			value1 = ${decorator});
 	}
 
-	@summary = "Default summary"
-	macro selectScope(scope = null) {
+	macro selectScope {
 		Navigator.gotoNavTab(navTab = "Scope");
 
 		Select(
@@ -447,8 +423,7 @@ definition {
 		Portlet.saveAndCloseConfig();
 	}
 
-	@summary = "Default summary"
-	macro selectTreeNode(nodeName = null, vocabularyName = null) {
+	macro selectTreeNode {
 		if (IsElementPresent(key_nodeName = ${nodeName}, locator1 = "Treeview#NODE_UNSELECTED")) {
 			AssertClick.assertPartialTextClickAt(
 				key_nodeName = ${nodeName},
@@ -467,13 +442,11 @@ definition {
 			locator1 = "Treeview#NODE_SELECTED");
 	}
 
-	@summary = "Default summary"
-	macro shutdownServer() {
+	macro shutdownServer {
 		AntCommands.runCommand("build-test.xml", "stop-app-server");
 	}
 
-	@summary = "Default summary"
-	macro startServer(keepOSGiState = null, deleteLiferayHome = null, keepCachedAppServerData = null) {
+	macro startServer {
 		if (${deleteLiferayHome} == "false") {
 			AntCommands.runCommand("build-test.xml", "start-app-server -Ddelete.liferay.home=false");
 		}
@@ -488,15 +461,13 @@ definition {
 		}
 	}
 
-	@summary = "Default summary"
-	macro viewApplicationDecorator(decorator = null) {
+	macro viewApplicationDecorator {
 		AssertElementPresent(
 			key_decorator = StringUtil.lowerCase(${decorator}),
 			locator1 = "Portlet#PORTLET_BORDER_DECORATOR");
 	}
 
-	@summary = "Default summary"
-	macro viewBody(portletBody = null, portletName = null) {
+	macro viewBody {
 		var key_portletName = ${portletName};
 
 		AssertTextEquals.assertPartialText(
@@ -504,8 +475,7 @@ definition {
 			value1 = ${portletBody});
 	}
 
-	@summary = "Default summary"
-	macro viewCannotAddPG(portletName = null) {
+	macro viewCannotAddPG {
 		if (IsNotVisible(locator1 = "ControlMenuAddPanel#CLOSE_ADD_PANEL")) {
 			Click.clickAt(locator1 = "ControlMenu#ADD");
 		}
@@ -527,28 +497,23 @@ definition {
 			portletName = ${portletName});
 	}
 
-	@summary = "Default summary"
-	macro viewCannotEdit() {
+	macro viewCannotEdit {
 		AssertElementNotPresent(locator1 = "Button#EDIT");
 	}
 
-	@summary = "Default summary"
-	macro viewCannotPublish() {
+	macro viewCannotPublish {
 		AssertElementNotPresent(locator1 = "Button#PUBLISH");
 	}
 
-	@summary = "Default summary"
-	macro viewCannotSaveAsDraft() {
+	macro viewCannotSaveAsDraft {
 		AssertElementNotPresent(locator1 = "Button#SAVE_AS_DRAFT");
 	}
 
-	@summary = "Default summary"
-	macro viewCustomStylesViaLookandfeelPG() {
+	macro viewCustomStylesViaLookandfeelPG {
 		SikuliClick(locator1 = "Portlet#SIGN_IN_CUSTOM_LOOK_AND_FEEL");
 	}
 
-	@summary = "Default summary"
-	macro viewDuplicatePG(totalPortletCount = null, portletName = null) {
+	macro viewDuplicatePG {
 		var i = 0;
 
 		while (${i} != ${totalPortletCount}) {
@@ -558,22 +523,19 @@ definition {
 		}
 	}
 
-	@summary = "Default summary"
-	macro viewEmptyMessage(message = null) {
+	macro viewEmptyMessage {
 		AssertTextEquals.assertPartialText(
 			locator1 = "Message#EMPTY_INFO",
 			value1 = ${message});
 	}
 
-	@summary = "Default summary"
-	macro viewNoPermissionPG() {
+	macro viewNoPermissionPG {
 		AssertTextEquals(
 			locator1 = "Message#ERROR",
 			value1 = "You do not have the roles required to access this portlet.");
 	}
 
-	@summary = "Default summary"
-	macro viewNoPortletsPresentCP(portlet = null, panel = null, category = null) {
+	macro viewNoPortletsPresentCP {
 		ProductMenuHelper.expandPanel(panel = ${panel});
 
 		ProductMenuHelper.expandCategory(category = ${category});
@@ -584,20 +546,17 @@ definition {
 			value1 = ${portlet});
 	}
 
-	@summary = "Default summary"
-	macro viewNoPortletsPresentPG() {
+	macro viewNoPortletsPresentPG {
 		AssertElementNotPresent(locator1 = "Portlet#PORTLET_CONTENT");
 	}
 
-	@summary = "Default summary"
-	macro viewNoSpecificPG(portletName = null) {
+	macro viewNoSpecificPG {
 		AssertElementNotPresent(
 			key_portletTitleName = ${portletName},
 			locator1 = "Portlet#SPECIFIC_TITLE");
 	}
 
-	@summary = "Default summary"
-	macro viewPG(portletBody = null, portletName = null) {
+	macro viewPG {
 		Portlet.viewTitle(portletName = ${portletName});
 
 		if (isSet(portletBody)) {
@@ -607,8 +566,7 @@ definition {
 		}
 	}
 
-	@summary = "Default summary"
-	macro viewPortletOptions(OptionsName = null) {
+	macro viewPortletOptions {
 		MouseOver.mouseOverNotVisible(locator1 = "Portlet#OPTIONS_ICON");
 
 		Click(locator1 = "Portlet#OPTIONS_ICON");
@@ -619,8 +577,7 @@ definition {
 			value1 = ${OptionsName});
 	}
 
-	@summary = "Default summary"
-	macro viewPortletOptionsMenulist() {
+	macro viewPortletOptionsMenulist {
 		MouseOver.mouseOverNotVisible(locator1 = "Portlet#OPTIONS_ICON");
 
 		Click(locator1 = "Portlet#OPTIONS_ICON");
@@ -656,8 +613,7 @@ definition {
 			value1 = "Remove");
 	}
 
-	@summary = "Default summary"
-	macro viewSpecificPG(portletName = null) {
+	macro viewSpecificPG {
 		var key_portletTitleName = ${portletName};
 
 		AssertTextEquals(
@@ -665,8 +621,7 @@ definition {
 			value1 = ${portletName});
 	}
 
-	@summary = "Default summary"
-	macro viewTitle(portletName = null) {
+	macro viewTitle {
 		var key_portletName = ${portletName};
 
 		AssertTextEquals(
@@ -674,15 +629,13 @@ definition {
 			value1 = ${portletName});
 	}
 
-	@summary = "Default summary"
-	macro viewUndeployMessage() {
+	macro viewUndeployMessage {
 		AssertTextEquals.assertPartialText(
 			locator1 = "Portlet#PORTLET_CONTENT",
 			value1 = "This portlet could not be found. Please redeploy it or remove it from the page.");
 	}
 
-	@summary = "Default summary"
-	macro waitForForm() {
+	macro waitForForm {
 		AssertElementNotPresent(locator1 = "//fieldset[@disabled]");
 	}
 

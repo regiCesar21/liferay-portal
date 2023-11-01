@@ -1,7 +1,6 @@
 definition {
 
-	@summary = "Default summary"
-	macro _selectCard(pageTemplateName = null, collectionName = null) {
+	macro _selectCard {
 		if (isSet(collectionName)) {
 			Navigator.gotoNavNested(navNested = ${collectionName});
 
@@ -14,8 +13,7 @@ definition {
 		}
 	}
 
-	@summary = "Default summary"
-	macro addPage(pageTemplateName = null, vocabularyName = null, pageName = null, categoryName = null, collectionName = null) {
+	macro addPage {
 		var key_breadcrumbName = "Pages";
 
 		Pause(locator1 = 3000);
@@ -52,8 +50,7 @@ definition {
 		PageEditor.assertFragmentSidebarLoaded();
 	}
 
-	@summary = "Default summary"
-	macro clickPencil() {
+	macro clickPencil {
 		Click(locator1 = "Icon#EDIT_PENCIL");
 	}
 

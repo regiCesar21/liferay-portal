@@ -1,14 +1,12 @@
 definition {
 
-	@summary = "Default summary"
-	macro adaptAllImages() {
+	macro adaptAllImages {
 		LexiconEntry.gotoHeaderMenuItem(menuItem = "Adapt All Images");
 
 		Alert.viewSuccessMessage();
 	}
 
-	@summary = "Default summary"
-	macro adaptRemainingImages(imageName = null) {
+	macro adaptRemainingImages {
 		var key_imageName = ${imageName};
 
 		if (IsElementNotPresent(locator1 = "AdaptiveMediaTable#PROGRESS_SUCCESS")) {
@@ -24,8 +22,7 @@ definition {
 		Alert.closeMessage(messageType = "GENERIC");
 	}
 
-	@summary = "Default summary"
-	macro addImageResolution(imageName = null, maxHeight = null, description = null, customID = null, maxWidth = null) {
+	macro addImageResolution {
 		LexiconEntry.gotoAdd();
 
 		PortletEntry.inputName(name = ${imageName});
@@ -74,8 +71,7 @@ definition {
 		}
 	}
 
-	@summary = "Default summary"
-	macro addNonNumericImageResolution(imageName = null, maxHeight = null, maxWidth = null) {
+	macro addNonNumericImageResolution {
 		LexiconEntry.gotoAdd();
 
 		PortletEntry.inputName(name = ${imageName});
@@ -99,8 +95,7 @@ definition {
 			value1 = "At least one value is required.");
 	}
 
-	@summary = "Default summary"
-	macro deleteImageResolution(imageName = null) {
+	macro deleteImageResolution {
 		var key_imageName = ${imageName};
 
 		Click(locator1 = "AdaptiveMediaTable#IMAGE_RESOLUTION_OPTIONS");
@@ -114,8 +109,7 @@ definition {
 		AssertElementNotPresent(locator1 = "AdaptiveMediaTable#NAME");
 	}
 
-	@summary = "Default summary"
-	macro disableImageResolution(imageState = null, imageName = null) {
+	macro disableImageResolution {
 		var key_imageName = ${imageName};
 
 		Click(locator1 = "AdaptiveMediaTable#IMAGE_RESOLUTION_OPTIONS");
@@ -131,8 +125,7 @@ definition {
 		AssertElementPresent(locator1 = "AdaptiveMediaTable#PROGRESS_DISABLED");
 	}
 
-	@summary = "Default summary"
-	macro editImageResolution(imageName = null, maxHeightEdit = null, imageNameEdit = null, backspaceCount = null, maxWidthEdit = null, imageIDEdit = null) {
+	macro editImageResolution {
 		var key_imageName = ${imageName};
 
 		Click(locator1 = "AdaptiveMediaTable#IMAGE_RESOLUTION_OPTIONS");
@@ -216,8 +209,7 @@ definition {
 		}
 	}
 
-	@summary = "Default summary"
-	macro enableImageResolution(imageState = null, imageName = null) {
+	macro enableImageResolution {
 		var key_imageName = ${imageName};
 
 		Click(locator1 = "AdaptiveMediaTable#IMAGE_RESOLUTION_OPTIONS");
@@ -231,8 +223,7 @@ definition {
 			value1 = "Enabled");
 	}
 
-	@summary = "Default summary"
-	macro gotoImageVariantEntry(imageName = null) {
+	macro gotoImageVariantEntry {
 		var key_imageName = ${imageName};
 
 		AssertClick(
@@ -240,15 +231,13 @@ definition {
 			value1 = ${imageName});
 	}
 
-	@summary = "Default summary"
-	macro selectAdaptiveMediaImage(imageName = null) {
+	macro selectAdaptiveMediaImage {
 		var key_imageName = ${imageName};
 
 		Check(locator1 = "Checkbox#ADAPTIVE_MEDIA_IMAGE");
 	}
 
-	@summary = "Default summary"
-	macro viewImageResolutionTableEntry(imageState = null, imageName = null, maxHeight = null, percentAdapted = null, maxWidth = null) {
+	macro viewImageResolutionTableEntry {
 		var key_imageName = ${imageName};
 
 		AssertTextEquals(
@@ -278,36 +267,31 @@ definition {
 			value1 = ${maxHeight});
 	}
 
-	@summary = "Default summary"
-	macro viewImageVariantDescription(description = null) {
+	macro viewImageVariantDescription {
 		AssertTextEquals(
 			locator1 = "TextArea#DESCRIPTION",
 			value1 = ${description});
 	}
 
-	@summary = "Default summary"
-	macro viewImageVariantID(imageVariantID = null) {
+	macro viewImageVariantID {
 		AssertTextEquals(
 			locator1 = "TextInput#IMAGE_ID",
 			value1 = ${imageVariantID});
 	}
 
-	@summary = "Default summary"
-	macro viewImageVariantURL(imageName = null) {
+	macro viewImageVariantURL {
 		var key_imageName = ${imageName};
 
 		AssertElementPresent(locator1 = "AdaptiveMedia#IMAGE_VARIANT_SOURCE_URL");
 	}
 
-	@summary = "Default summary"
-	macro viewNoImageResolution(imageName = null) {
+	macro viewNoImageResolution {
 		var key_imageName = ${imageName};
 
 		AssertElementNotPresent(locator1 = "AdaptiveMediaTable#NAME");
 	}
 
-	@summary = "Default summary"
-	macro viewNumberOfAdaptedImages(numberOfAdaptedImages = null) {
+	macro viewNumberOfAdaptedImages {
 		Click(locator1 = "AdaptiveMediaTable#INFO_ICON");
 
 		var key_numberOfAdaptedImages = ${numberOfAdaptedImages};

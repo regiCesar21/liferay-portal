@@ -1,7 +1,6 @@
 definition {
 
-	@summary = "Default summary"
-	macro addNewChangeList(changeListDescription = null, changeListName = null) {
+	macro addNewChangeList {
 		Click(locator1 = "Button#PLUS");
 
 		Type(
@@ -15,8 +14,7 @@ definition {
 		Button.clickSave();
 	}
 
-	@summary = "Default summary"
-	macro cancelChangeListCreation() {
+	macro cancelChangeListCreation {
 		Click(locator1 = "Button#PLUS");
 
 		Button.clickCancel();
@@ -26,8 +24,7 @@ definition {
 			value1 = "Select Change List");
 	}
 
-	@summary = "Default summary"
-	macro changeUserSettingsPopuConfirmation(changeUserPopupConfirmation = null) {
+	macro changeUserSettingsPopuConfirmation {
 		Click(locator1 = "ChangeList#CHANGE_LIST_NAVIGATION_USER_SETTINGS");
 
 		if (${changeUserPopupConfirmation} == "enable") {
@@ -44,13 +41,11 @@ definition {
 		Click(locator1 = "ChangeList#CHANGE_LIST_NAVIGATION_GLOBAL_SETTINGS");
 	}
 
-	@summary = "Default summary"
-	macro confirmSwitchingChangeList(changeListName = null) {
+	macro confirmSwitchingChangeList {
 		AssertConfirm.assertPartialConfirmation(value1 = "Do you want to switch to ${changeListName} change list?");
 	}
 
-	@summary = "Default summary"
-	macro deleteChangeListFromOverviewScreen(changeListName = null) {
+	macro deleteChangeListFromOverviewScreen {
 		ClickNoError(locator1 = "Icon#DELETE");
 
 		AssertConfirm(value1 = "Are you sure you want to delete '${changeListName}' change list?");
@@ -62,8 +57,7 @@ definition {
 		Alert.viewSuccessMessageText(successMessage = "Production has been checked out. All your modifications will be added to the live site immediately.");
 	}
 
-	@summary = "Default summary"
-	macro disableChangeList() {
+	macro disableChangeList {
 		Uncheck.uncheckToggleSwitch(locator1 = "ChangeListSettings#CHANGE_LISTS_TOGGLE_SWITCH");
 
 		Click(locator1 = "Button#SAVE");
@@ -71,8 +65,7 @@ definition {
 		Alert.viewSuccessMessage();
 	}
 
-	@summary = "Default summary"
-	macro enableChangeList() {
+	macro enableChangeList {
 		Pause(locator1 = 2000);
 
 		Check.checkToggleSwitch(locator1 = "ChangeListSettings#CHANGE_LISTS_TOGGLE_SWITCH");
@@ -87,8 +80,7 @@ definition {
 		Alert.viewSuccessMessage();
 	}
 
-	@summary = "Default summary"
-	macro gotoActivate(rowEntry = null) {
+	macro gotoActivate {
 		Click.waitForMenuToggleJSClick(
 			key_rowEntry = ${rowEntry},
 			locator1 = "Icon#TABLE_VERTICAL_ELLIPSIS");
@@ -96,8 +88,7 @@ definition {
 		MenuItem.clickNoError(menuItem = "Activate");
 	}
 
-	@summary = "Default summary"
-	macro gotoDelete(rowEntry = null) {
+	macro gotoDelete {
 		Click.waitForMenuToggleJSClick(
 			key_rowEntry = ${rowEntry},
 			locator1 = "Icon#TABLE_VERTICAL_ELLIPSIS");
@@ -107,8 +98,7 @@ definition {
 		AssertConfirm(value1 = "Are you sure you want to delete '${rowEntry}' change list?");
 	}
 
-	@summary = "Default summary"
-	macro publishChangeList(changeListName = null) {
+	macro publishChangeList {
 		Click(locator1 = "Button#PUBLISH");
 
 		SelectFrame.selectFrameTop();
@@ -132,8 +122,7 @@ definition {
 			value1 = "Published");
 	}
 
-	@summary = "Default summary"
-	macro searchForChangeList(changeListName = null) {
+	macro searchForChangeList {
 		Search.searchCP(searchTerm = ${changeListName});
 
 		var key_changeListName = ${changeListName};
@@ -143,8 +132,7 @@ definition {
 			value1 = ${changeListName});
 	}
 
-	@summary = "Default summary"
-	macro selectChangeList(changeListName = null, changeListConfirmEnabled = null) {
+	macro selectChangeList {
 		Click(locator1 = "ChangeList#SELECT_CHANGE_LIST_DROPDOWN");
 
 		var key_changeListName = ${changeListName};
@@ -171,22 +159,19 @@ definition {
 		}
 	}
 
-	@summary = "Default summary"
-	macro selectChangeListMenuItem(rowEntry = null, menuItem = null) {
+	macro selectChangeListMenuItem {
 		LexiconEntry.gotoEntryMenuItem(
 			menuItem = ${menuItem},
 			rowEntry = ${rowEntry});
 	}
 
-	@summary = "Default summary"
-	macro viewAddedItemCounter(nbrOfAddedItems = null) {
+	macro viewAddedItemCounter {
 		AssertTextEquals(
 			locator1 = "ChangeList#CHANGE_LIST_ADDED",
 			value1 = ${nbrOfAddedItems});
 	}
 
-	@summary = "Default summary"
-	macro viewChangeOnOverview(contentTitle = null, contentType = null, contentChangeType = null) {
+	macro viewChangeOnOverview {
 		var key_contentTitle = ${contentTitle};
 
 		AssertTextEquals(
@@ -206,8 +191,7 @@ definition {
 			value1 = ${contentChangeType});
 	}
 
-	@summary = "Default summary"
-	macro viewContentTypeOnOverview(contentTitle = null, contentType = null) {
+	macro viewContentTypeOnOverview {
 		var key_contentTitle = ${contentTitle};
 
 		AssertTextEquals(
@@ -215,22 +199,19 @@ definition {
 			value1 = ${contentType});
 	}
 
-	@summary = "Default summary"
-	macro viewDeletedItemCounter(nbrOfDeletedItems = null) {
+	macro viewDeletedItemCounter {
 		AssertTextEquals(
 			locator1 = "ChangeList#CHANGE_LIST_DELETED",
 			value1 = ${nbrOfDeletedItems});
 	}
 
-	@summary = "Default summary"
-	macro viewModifiedItemCounter(nbrOfModifiedItems = null) {
+	macro viewModifiedItemCounter {
 		AssertTextEquals(
 			locator1 = "ChangeList#CHANGE_LIST_MODIFIED",
 			value1 = ${nbrOfModifiedItems});
 	}
 
-	@summary = "Default summary"
-	macro viewNoChangeListInSelectDropdown(changeListName = null) {
+	macro viewNoChangeListInSelectDropdown {
 		Click(locator1 = "ChangeList#SELECT_CHANGE_LIST_DROPDOWN");
 
 		AssertElementNotPresent(
@@ -238,8 +219,7 @@ definition {
 			locator1 = "ChangeList#SELECT_CHANGE_LIST_VALUE");
 	}
 
-	@summary = "Default summary"
-	macro viewNoStagingMenuitemsNotAvailable() {
+	macro viewNoStagingMenuitemsNotAvailable {
 		AssertElementNotPresent(locator1 = "Icon#HEADER_VERTICAL_ELLIPSIS");
 
 		ProductMenu.gotoPortlet(
@@ -250,8 +230,7 @@ definition {
 		Alert.viewWarningSpecific(warningMessage = "Change lists are enabled for the current virtual instance. Staging and change lists cannot be used together.");
 	}
 
-	@summary = "Default summary"
-	macro viewPublishedChangeListDetails(changeListDescription = null, changeListName = null, changeListPublishedBy = null) {
+	macro viewPublishedChangeListDetails {
 		AssertTextEquals(
 			locator1 = "ChangeList#OVERVIEW_CHANGE_LIST_NAME",
 			value1 = ${changeListName});
@@ -265,8 +244,7 @@ definition {
 			value1 = ${changeListPublishedBy});
 	}
 
-	@summary = "Default summary"
-	macro viewSpecificChangeListHistory(changeListName = null, contentTitle = null) {
+	macro viewSpecificChangeListHistory {
 		var key_contentTitle = ${contentTitle};
 
 		AssertTextEquals(
@@ -274,8 +252,7 @@ definition {
 			value1 = ${changeListName});
 	}
 
-	@summary = "Default summary"
-	macro viewWarningOnPortletExport(portletName = null) {
+	macro viewWarningOnPortletExport {
 		ProductMenu.gotoPortlet(
 			category = "Content & Data",
 			panel = "Site Administration",
@@ -290,8 +267,7 @@ definition {
 		IFrame.closeFrame();
 	}
 
-	@summary = "Default summary"
-	macro viewWarningOnPortletImport(portletName = null) {
+	macro viewWarningOnPortletImport {
 		ProductMenu.gotoPortlet(
 			category = "Content & Data",
 			panel = "Site Administration",
@@ -308,8 +284,7 @@ definition {
 		IFrame.closeFrame();
 	}
 
-	@summary = "Default summary"
-	macro viewWarningOnSiteExportImport(portletName = null) {
+	macro viewWarningOnSiteExportImport {
 		ProductMenu.gotoPortlet(
 			category = "Publishing",
 			panel = "Site Administration",
@@ -318,8 +293,7 @@ definition {
 		Alert.viewWarningSpecific(warningMessage = "Change lists are enabled for the current virtual instance. Export/Import and change lists cannot be used together.");
 	}
 
-	@summary = "Default summary"
-	macro workOnProduction(changeListConfirmEnabled = null) {
+	macro workOnProduction {
 		if (IsTextEqual(locator1 = "ChangeList#OVERVIEW_PAGE_TITLE", value1 = "Overview")) {
 			Click(locator1 = "ChangeList#SELECT_CHANGE_LIST_DROPDOWN");
 
