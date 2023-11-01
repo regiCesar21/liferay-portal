@@ -411,7 +411,7 @@ definition {
 
 		ClickNoError(locator1 = "Icon#DELETE");
 
-		Confirm(value1 = "null");
+		Confirm();
 
 		AssertElementNotPresent(
 			key_rowEntry = "phone2, mobile2",
@@ -431,7 +431,7 @@ definition {
 
 		ClickNoError(locator1 = "Icon#DELETE");
 
-		Confirm(value1 = "null");
+		Confirm();
 
 		for (var counter : list "1,2,3,4,5,6") {
 			AssertElementNotPresent(

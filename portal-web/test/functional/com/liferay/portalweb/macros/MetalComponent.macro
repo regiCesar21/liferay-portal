@@ -43,7 +43,7 @@ else {
 		while ((${metalComponentReady} != "ready") && (maxIterations = "30")) {
 			var metalComponentReady = selenium.getEval(${javaScript});
 
-			Pause(value1 = 1000);
+			Pause(locator1 = 1000);
 		}
 	}
 

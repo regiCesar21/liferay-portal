@@ -42,7 +42,7 @@ definition {
 			AssertConfirm(value1 = ${confirmationText});
 		}
 		else {
-			Confirm(value1 = "null");
+			Confirm();
 		}
 
 		if (isSet(failure)) {

@@ -528,7 +528,7 @@ definition {
 			panel = "Site Administration",
 			portlet = "Memberships");
 
-		Pause(value1 = 5000);
+		Pause(locator1 = 5000);
 
 		Site.assignSiteRoleCP(
 			resourceName = "${userFirstName} ${userLastName}",

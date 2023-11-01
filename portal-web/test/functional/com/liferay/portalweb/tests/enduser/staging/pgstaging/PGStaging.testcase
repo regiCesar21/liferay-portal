@@ -415,7 +415,7 @@ definition {
 			locator1 = "Button#SUBMIT",
 			value1 = "Publish");
 
-		Pause(value1 = 3000);
+		Pause(locator1 = 3000);
 
 		AssertTextEquals(
 			locator1 = "Staging#PROCESS_SUCCESSFUL",
