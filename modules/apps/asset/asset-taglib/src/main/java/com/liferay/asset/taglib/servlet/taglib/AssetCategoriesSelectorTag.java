@@ -38,6 +38,7 @@ import com.liferay.taglib.util.IncludeTag;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.UUID;
 
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletResponse;
@@ -274,10 +275,14 @@ public class AssetCategoriesSelectorTag extends IncludeTag {
 				return null;
 			}
 
+			String uuid = UUID.randomUUID(
+			).toString();
+
 			portletURL.setParameter("eventName", getEventName());
 			portletURL.setParameter(
 				"selectedCategories", "{selectedCategories}");
 			portletURL.setParameter("singleSelect", "{singleSelect}");
+			portletURL.setParameter("uuid", uuid);
 			portletURL.setParameter("vocabularyIds", "{vocabularyIds}");
 
 			portletURL.setWindowState(LiferayWindowState.POP_UP);

@@ -170,10 +170,34 @@ public class AssetCategoriesSelectorDisplayContext {
 			return _selectedCategoryIds;
 		}
 
-		_selectedCategoryIds = Arrays.asList(
+		String selectedCategoriesCookie = ParamUtil.getString(
+			_httpServletRequest, "selectedCategories");
+
+		String uuid = ParamUtil.getString(_httpServletRequest, "uuid");
+
+		List<String> cookies = Arrays.asList(
 			StringUtil.split(
-				ParamUtil.getString(
-					_httpServletRequest, "selectedCategories")));
+				_httpServletRequest.getHeader("cookie"),
+				StringPool.SEMICOLON + StringPool.SPACE));
+
+		if (cookies != null) {
+			for (String cookie : cookies) {
+				if (cookie.startsWith(selectedCategoriesCookie + uuid)) {
+					cookie = StringUtil.removeSubstring(
+						cookie,
+						selectedCategoriesCookie + uuid + StringPool.EQUAL);
+
+					_selectedCategoryIds = Arrays.asList(
+						StringUtil.split(cookie, StringPool.COMMA));
+
+					break;
+				}
+			}
+		}
+
+		if (_selectedCategoryIds == null) {
+			_selectedCategoryIds = new ArrayList<>();
+		}
 
 		return _selectedCategoryIds;
 	}

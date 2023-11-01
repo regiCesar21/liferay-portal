@@ -126,10 +126,25 @@ function AssetVocabulariesCategoriesSelector({
 		const sub = (str, obj) => str.replace(/\{([^}]+)\}/g, (_, m) => obj[m]);
 
 		const url = sub(decodeURIComponent(portletURL), {
-			selectedCategories: selectedItems.map((item) => item.value).join(),
+			selectedCategories: 'selectedCategoriesCookie',
 			singleSelect,
 			vocabularyIds: sourceItemsVocabularyIds.concat(),
 		});
+
+		const expires = new Date(Date.now() + 30000).toUTCString();
+		const uuid = new URLSearchParams(url).get(
+			'_com_liferay_asset_categories_selector_web_portlet_AssetCategoriesSelectorPortlet_uuid'
+		);
+
+		const selectedCategoriesCookie = 'selectedCategoriesCookie' + uuid;
+
+		document.cookie =
+			selectedCategoriesCookie +
+			'=' +
+			selectedItems.map((item) => item.value).join() +
+			'; expires=' +
+			expires +
+			';path=/;';
 
 		const itemSelectorDialog = new ItemSelectorDialog({
 			buttonAddLabel: Liferay.Language.get('done'),
