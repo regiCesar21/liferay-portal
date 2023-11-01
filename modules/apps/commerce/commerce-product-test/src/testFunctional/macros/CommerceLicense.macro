@@ -1,7 +1,6 @@
 definition {
 
-	@summary = "Default summary"
-	macro executeSmoke() {
+	macro executeSmoke {
 		CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Speedwell");
 
 		CommerceNavigator.gotoPortlet(
@@ -17,8 +16,7 @@ definition {
 		CommerceNavigator.gotoSpeedwellTopbarItem(menuItem = "Catalog");
 	}
 
-	@summary = "Default summary"
-	macro viewCommerceAvailable() {
+	macro viewCommerceAvailable {
 		ApplicationsMenuHelper.openApplicationsMenu();
 
 		AssertElementPresent(
@@ -30,8 +28,7 @@ definition {
 			locator1 = "ApplicationsMenu#PANEL");
 	}
 
-	@summary = "Default summary"
-	macro viewCommerceMissing() {
+	macro viewCommerceMissing {
 		ApplicationsMenuHelper.openApplicationsMenu();
 
 		AssertElementPresent(

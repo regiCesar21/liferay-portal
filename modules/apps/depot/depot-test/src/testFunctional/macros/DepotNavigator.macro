@@ -1,7 +1,6 @@
 definition {
 
-	@summary = "Default summary"
-	macro gotoDefineCustomLanguages(depotName = null) {
+	macro gotoDefineCustomLanguages {
 		DepotNavigator.gotoEdit(depotName = ${depotName});
 
 		DepotNavigator.gotoLanguages(depotName = ${depotName});
@@ -13,8 +12,7 @@ definition {
 			locator1 = "Radio#DEPOT_LANGUAGES_OPTION");
 	}
 
-	@summary = "Default summary"
-	macro gotoDepot(depotName = null) {
+	macro gotoDepot {
 		if (isSet(listView)) {
 			var key_listEntry = ${depotName};
 
@@ -56,8 +54,7 @@ definition {
 		}
 	}
 
-	@summary = "Default summary"
-	macro gotoDepotPortlet(depotName = null, portlet = null) {
+	macro gotoDepotPortlet {
 		if (isSet(listView)) {
 			var key_listEntry = ${depotName};
 
@@ -87,8 +84,7 @@ definition {
 		AssertElementNotPresent(locator1 = "ProductMenu#TOGGLE");
 	}
 
-	@summary = "Default summary"
-	macro gotoDepotPortletViaBreadcrumb(depotName = null, portlet = null, otherDepotName = null) {
+	macro gotoDepotPortletViaBreadcrumb {
 		if (isSet(otherDepotName)) {
 			Click(
 				key_breadcrumbName = "Asset Libraries",
@@ -123,8 +119,7 @@ definition {
 			value1 = ${portlet});
 	}
 
-	@summary = "Default summary"
-	macro gotoEdit(depotName = null) {
+	macro gotoEdit {
 		var key_card = ${depotName};
 
 		LexiconEntry.gotoEntryMenuItem(
@@ -132,8 +127,7 @@ definition {
 			rowEntry = ${depotName});
 	}
 
-	@summary = "Default summary"
-	macro gotoGeneral() {
+	macro gotoGeneral {
 		Click(
 			key_tab = "General",
 			locator1 = "NavTab#TAB_LINK");
@@ -144,8 +138,7 @@ definition {
 			value1 = "General");
 	}
 
-	@summary = "Default summary"
-	macro gotoLanguages() {
+	macro gotoLanguages {
 		Click(
 			key_tab = "Languages",
 			locator1 = "NavTab#TAB_LINK");
@@ -156,8 +149,7 @@ definition {
 			value1 = "Languages");
 	}
 
-	@summary = "Default summary"
-	macro gotoPortlet(depotName = null, portlet = null) {
+	macro gotoPortlet {
 		Click(
 			key_card = ${portlet},
 			locator1 = "Card#CARD");
@@ -174,8 +166,7 @@ definition {
 		}
 	}
 
-	@summary = "Default summary"
-	macro gotoShare(dmDocumentTitle = null) {
+	macro gotoShare {
 		LexiconEntry.changeDisplayStyle(displayStyle = "list");
 
 		AssertElementPresent.pauseAssertVisible(
@@ -191,8 +182,7 @@ definition {
 		MenuItem.click(menuItem = "Share");
 	}
 
-	@summary = "Default summary"
-	macro gotoShareFromInfoPanel(dmDocumentTitle = null) {
+	macro gotoShareFromInfoPanel {
 		var key_dmDocumentTitle = ${dmDocumentTitle};
 
 		LexiconEntry.gotoEntry(rowEntry = ${dmDocumentTitle});
@@ -206,8 +196,7 @@ definition {
 		Click(locator1 = "Button#SHARE_SIDEBAR");
 	}
 
-	@summary = "Default summary"
-	macro gotoSites() {
+	macro gotoSites {
 		Click(
 			key_tab = "Sites",
 			locator1 = "NavTab#TAB_LINK");
@@ -217,97 +206,83 @@ definition {
 			locator1 = "Header#H3_TITLE");
 	}
 
-	@summary = "Default summary"
-	macro openDepotAdmin() {
+	macro openDepotAdmin {
 		Navigator.openWithAppendToBaseURL(urlAppend = "group/control_panel/manage?p_p_id=com_liferay_depot_web_portlet_DepotAdminPortlet");
 	}
 
-	@summary = "Default summary"
-	macro openDepotAssetListsAdmin(depotName = null) {
+	macro openDepotAssetListsAdmin {
 		var depotId = JSONGroupAPI._getDepotIdByName(depotName = ${depotName});
 
 		Navigator.openWithAppendToBaseURL(urlAppend = "group/asset-library-${depotId}/~/control_panel/manage?p_p_id=com_liferay_asset_list_web_portlet_AssetListPortlet");
 	}
 
-	@summary = "Default summary"
-	macro openDepotAssetListsAdminStaging(depotName = null) {
+	macro openDepotAssetListsAdminStaging {
 		var depotId = JSONGroupAPI._getDepotIdByName(depotName = ${depotName});
 
 		Navigator.openWithAppendToBaseURL(urlAppend = "group/asset-library-${depotId}-staging/~/control_panel/manage?p_p_id=com_liferay_asset_list_web_portlet_AssetListPortlet");
 	}
 
-	@summary = "Default summary"
-	macro openDepotCategoriesAdmin(depotName = null) {
+	macro openDepotCategoriesAdmin {
 		var depotId = JSONGroupAPI._getDepotIdByName(depotName = ${depotName});
 
 		Navigator.openWithAppendToBaseURL(urlAppend = "group/asset-library-${depotId}/~/control_panel/manage/-/categories_admin/vocabularies");
 	}
 
-	@summary = "Default summary"
-	macro openDepotCategoriesAdminStaging(depotName = null) {
+	macro openDepotCategoriesAdminStaging {
 		var depotId = JSONGroupAPI._getDepotIdByName(depotName = ${depotName});
 
 		Navigator.openWithAppendToBaseURL(urlAppend = "group/asset-library-${depotId}-staging/~/control_panel/manage/-/categories_admin/vocabularies");
 	}
 
-	@summary = "Default summary"
-	macro openDepotDashboard(depotName = null) {
+	macro openDepotDashboard {
 		var depotId = JSONGroupAPI._getDepotIdByName(depotName = ${depotName});
 
 		Navigator.openWithAppendToBaseURL(urlAppend = "group/asset-library-${depotId}/~/control_panel/manage?p_p_id=com_liferay_depot_web_portlet_DepotAdminPortlet&p_p_lifecycle=0&p_p_state=maximized&_com_liferay_depot_web_portlet_DepotAdminPortlet_mvcRenderCommandName=%2Fdepot%2Fview_depot_dashboard&_com_liferay_depot_web_portlet_DepotAdminPortlet_depotEntryId=${depotId}&p_p_auth=IhHOQ7UJ");
 	}
 
-	@summary = "Default summary"
-	macro openDepotDocumentsAndMediaAdmin(depotName = null) {
+	macro openDepotDocumentsAndMediaAdmin {
 		var depotId = JSONGroupAPI._getDepotIdByName(depotName = ${depotName});
 
 		Navigator.openWithAppendToBaseURL(urlAppend = "group/asset-library-${depotId}/~/control_panel/manage?p_p_id=com_liferay_document_library_web_portlet_DLAdminPortlet");
 	}
 
-	@summary = "Default summary"
-	macro openDepotDocumentsAndMediaAdminStaging(depotName = null) {
+	macro openDepotDocumentsAndMediaAdminStaging {
 		var depotId = JSONGroupAPI._getDepotIdByName(depotName = ${depotName});
 
 		Navigator.openWithAppendToBaseURL(urlAppend = "group/asset-library-${depotId}-staging/~/control_panel/manage?p_p_id=com_liferay_document_library_web_portlet_DLAdminPortlet");
 	}
 
-	@summary = "Default summary"
-	macro openDepotMembershipsAdmin(depotName = null) {
+	macro openDepotMembershipsAdmin {
 		var depotId = JSONGroupAPI._getDepotIdByName(depotName = ${depotName});
 
 		Navigator.openWithAppendToBaseURL(urlAppend = "group/asset-library-${depotId}/~/control_panel/manage/-/site_memberships");
 	}
 
-	@summary = "Default summary"
-	macro openDepotRecycleBinAdmin(depotName = null) {
+	macro openDepotRecycleBinAdmin {
 		var depotId = JSONGroupAPI._getDepotIdByName(depotName = ${depotName});
 
 		Navigator.openWithAppendToBaseURL(urlAppend = "group/asset-library-${depotId}/~/control_panel/manage/-/recycle_bin/entries");
 	}
 
-	@summary = "Default summary"
-	macro openDepotRecycleBinAdminStaging(depotName = null) {
+	macro openDepotRecycleBinAdminStaging {
 		var depotId = JSONGroupAPI._getDepotIdByName(depotName = ${depotName});
 
 		Navigator.openWithAppendToBaseURL(urlAppend = "group/asset-library-${depotId}-staging/~/control_panel/manage/-/recycle_bin/entries");
 	}
 
-	@summary = "Default summary"
-	macro openDepotWebContentAdmin(depotName = null) {
+	macro openDepotWebContentAdmin {
 		var depotId = JSONGroupAPI._getDepotIdByName(depotName = ${depotName});
 
 		Navigator.openWithAppendToBaseURL(urlAppend = "group/asset-library-${depotId}/~/control_panel/manage?p_p_id=com_liferay_journal_web_portlet_JournalPortlet");
 	}
 
-	@summary = "Default summary"
-	macro openDepotWebContentAdminStaging(depotName = null) {
+	macro openDepotWebContentAdminStaging {
 		var depotId = JSONGroupAPI._getDepotIdByName(depotName = ${depotName});
 
 		Navigator.openWithAppendToBaseURL(urlAppend = "group/asset-library-${depotId}-staging/~/control_panel/manage?p_p_id=com_liferay_journal_web_portlet_JournalPortlet");
 	}
 
-	@summary = "Default summary"
-	macro switchStagingStatus(stagingItem = null) {
+	macro switchStagingStatus {
 		Click(locator1 = "Button#STAGING_INDICATOR");
 
 		DropdownMenuItem.click(menuItem = ${stagingItem});

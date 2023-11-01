@@ -1,7 +1,6 @@
 definition {
 
-	@summary = "Default summary"
-	macro editPriceListEntryPrice(priceListEntryPrice = null) {
+	macro editPriceListEntryPrice {
 		SelectFrame.selectFrameNoLoading(locator1 = "CommerceEntry#IFRAME_SIDE_PANEL");
 
 		Type(

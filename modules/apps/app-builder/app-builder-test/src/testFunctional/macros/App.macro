@@ -1,7 +1,6 @@
 definition {
 
-	@summary = "Default summary"
-	macro add(formViewName = null, menuOption = null, tableViewName = null, appTitle = null, deployOption = null, siteOptionList = null) {
+	macro add {
 		AppBuilderAdmin.switchTab(tabName = "Apps");
 
 		AppBuilderAdmin.add();
@@ -29,32 +28,27 @@ definition {
 		VerifyElementPresent(locator1 = "Message#SUCCESS_DISMISSIBLE");
 	}
 
-	@summary = "Default summary"
-	macro clickDeploy() {
+	macro clickDeploy {
 		Button.click(button = "Deploy");
 
 		App.waitForDeployButtonNotVisible();
 	}
 
-	@summary = "Default summary"
-	macro clickNewAppButton() {
+	macro clickNewAppButton {
 		AssertClick(
 			locator1 = "AppBuilder#BUTTON_ADD_NEW_ITEM",
 			value1 = "New App");
 	}
 
-	@summary = "Default summary"
-	macro clickNext() {
+	macro clickNext {
 		Button.click(button = "Next");
 	}
 
-	@summary = "Default summary"
-	macro clickPrevious() {
+	macro clickPrevious {
 		Button.click(button = "Previous");
 	}
 
-	@summary = "Default summary"
-	macro editSiteDeployed(menuOption = null, appTitle = null, siteOptionList = null) {
+	macro editSiteDeployed {
 		AppBuilderAdmin.openItem(itemName = ${appTitle});
 
 		App.toggleUndeploy(deployOption = "Product Menu");
@@ -74,23 +68,19 @@ definition {
 		VerifyElementPresent(locator1 = "Message#SUCCESS_DISMISSIBLE");
 	}
 
-	@summary = "Default summary"
-	macro openProductMenuPlaceItDropdown() {
+	macro openProductMenuPlaceItDropdown {
 		Click(locator1 = "AppBuilder#PRODUCT_MENU_PLACE_IT_DROPDOWN");
 	}
 
-	@summary = "Default summary"
-	macro openProductMenuSiteOption() {
+	macro openProductMenuSiteOption {
 		Click(locator1 = "AppBuilder#PRODUCT_MENU_SITE_DROPDOWN");
 	}
 
-	@summary = "Default summary"
-	macro saveApp() {
+	macro saveApp {
 		AppBuilderAdmin.save();
 	}
 
-	@summary = "Default summary"
-	macro selectFormView(formViewName = null) {
+	macro selectFormView {
 		Click(
 			key_itemName = ${formViewName},
 			locator1 = "AppBuilder#ITEM_ON_THE_TABLE_CLICK");
@@ -98,8 +88,7 @@ definition {
 		Button.clickNext();
 	}
 
-	@summary = "Default summary"
-	macro selectProductMenuPlaceItDropdownOption(menuOption = null) {
+	macro selectProductMenuPlaceItDropdownOption {
 		App.openProductMenuPlaceItDropdown();
 
 		Click.clickNoMouseOver(
@@ -107,15 +96,13 @@ definition {
 			locator1 = "AppBuilder#PRODUCT_MENU_PLACE_IT_DROPDOWN_OPTION");
 	}
 
-	@summary = "Default summary"
-	macro selectProductMenuSiteOption(siteOption = null) {
+	macro selectProductMenuSiteOption {
 		Click(
 			key_dropdownOption = ${siteOption},
 			locator1 = "AppBuilder#PRODUCT_MENU_SITE_DROPDOWN_OPTION");
 	}
 
-	@summary = "Default summary"
-	macro selectTableView(tableViewName = null) {
+	macro selectTableView {
 		Click(
 			key_itemName = ${tableViewName},
 			locator1 = "AppBuilder#ITEM_ON_THE_TABLE_CLICK");
@@ -123,15 +110,13 @@ definition {
 		Button.clickNext();
 	}
 
-	@summary = "Default summary"
-	macro toggleDeploy(deployOption = null) {
+	macro toggleDeploy {
 		Check.checkToggleSwitch(
 			key_deployOption = ${deployOption},
 			locator1 = "AppBuilder#DEPLOY_APP_TOGGLE");
 	}
 
-	@summary = "Default summary"
-	macro toggleUndeploy(deployOption = null) {
+	macro toggleUndeploy {
 		Button.clickNext();
 
 		Button.clickNext();
@@ -141,27 +126,23 @@ definition {
 			locator1 = "AppBuilder#DEPLOY_APP_TOGGLE");
 	}
 
-	@summary = "Default summary"
-	macro validateDeployedAs(title = null) {
+	macro validateDeployedAs {
 		AssertTextEquals(
 			locator1 = "AppBuilder#DEPLOYED_AS",
 			value1 = ${title});
 	}
 
-	@summary = "Default summary"
-	macro validateProductMenuPlaceItDropdownList(menuOption = null) {
+	macro validateProductMenuPlaceItDropdownList {
 		AssertElementPresent(
 			key_dropdownOption = ${menuOption},
 			locator1 = "AppBuilder#PRODUCT_MENU_PLACE_IT_DROPDOWN_OPTION");
 	}
 
-	@summary = "Default summary"
-	macro validateProductMenuSiteDropdownPresent() {
+	macro validateProductMenuSiteDropdownPresent {
 		AssertElementPresent(locator1 = "AppBuilder#PRODUCT_MENU_SITE_DROPDOWN");
 	}
 
-	@summary = "Default summary"
-	macro waitForDeployButtonNotVisible() {
+	macro waitForDeployButtonNotVisible {
 		while (IsElementPresent(locator1 = "AppBuilder#DEPLOY_BUTTON")) {
 			Pause(value1 = 1000);
 		}

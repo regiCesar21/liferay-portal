@@ -1,7 +1,6 @@
 definition {
 
-	@summary = "Default summary"
-	macro addOptionValues(optionEntryName = null, valuePriority = null) {
+	macro addOptionValues {
 		var optionValuesList = ${optionValuesList};
 
 		CommerceNavigator.gotoOptionValues(optionEntryName = ${optionEntryName});
@@ -21,8 +20,7 @@ definition {
 		Click(locator1 = "CommerceEntry#MODAL_CLOSE");
 	}
 
-	@summary = "Default summary"
-	macro newOptionsEntry(optionFieldType = null, valuePriority = null, optionDescription = null, optionName = null, optionValues = null, optionValuesList = null) {
+	macro newOptionsEntry {
 		if (IsElementPresent(locator1 = "Button#DELETE")) {
 			Click(locator1 = "CommerceEntry#ADD_BUTTON");
 		}
@@ -50,8 +48,7 @@ definition {
 		}
 	}
 
-	@summary = "Default summary"
-	macro newProductsEntry(publishProduct = null, compileDescription = null, productName = null, productType = null, productCatalog = null) {
+	macro newProductsEntry {
 		CommerceProducts.addEntry(
 			compileDescription = ${compileDescription},
 			productCatalog = ${productCatalog},

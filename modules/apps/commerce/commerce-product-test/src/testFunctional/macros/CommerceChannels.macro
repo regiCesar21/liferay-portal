@@ -1,7 +1,6 @@
 definition {
 
-	@summary = "Default summary"
-	macro activatePaymentMethod(paymentMethod = null) {
+	macro activatePaymentMethod {
 		Click(
 			key_entryName = ${paymentMethod},
 			key_table = "Payment Methods",

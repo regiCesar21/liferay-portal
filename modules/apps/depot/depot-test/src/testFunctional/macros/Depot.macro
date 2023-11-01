@@ -1,7 +1,6 @@
 definition {
 
-	@summary = "Default summary"
-	macro activateStaging(depotName = null, remotePort = null, depotID = null, remoteStaging = null) {
+	macro activateStaging {
 		Pause(value1 = 3000);
 
 		if (${remoteStaging} == "true") {
@@ -54,8 +53,7 @@ definition {
 		}
 	}
 
-	@summary = "Default summary"
-	macro addDepot(depotName = null, depot = null, depotDescription = null) {
+	macro addDepot {
 		LexiconEntry.gotoAdd();
 
 		Type(
@@ -90,8 +88,7 @@ definition {
 		}
 	}
 
-	@summary = "Default summary"
-	macro assignAssetLibraryRole(roleTitle = null, resourceName = null) {
+	macro assignAssetLibraryRole {
 		LexiconCard.clickEllipsisItem(
 			card = ${resourceName},
 			item = "Assign Roles");
@@ -107,8 +104,7 @@ definition {
 		Alert.viewSuccessMessage();
 	}
 
-	@summary = "Default summary"
-	macro assignOrganizationAsMember(orgName = null) {
+	macro assignOrganizationAsMember {
 		var key_card = ${orgName};
 
 		Navigator.gotoNavItem(navItem = "Organizations");
@@ -132,8 +128,7 @@ definition {
 		Alert.viewSuccessMessage();
 	}
 
-	@summary = "Default summary"
-	macro assignUserAsMember(userLastName = null, userScreenName = null, userMiddleName = null, userFirstName = null) {
+	macro assignUserAsMember {
 		var key_cardText = ${userScreenName};
 
 		LexiconEntry.gotoAdd();
@@ -165,8 +160,7 @@ definition {
 		Alert.viewSuccessMessage();
 	}
 
-	@summary = "Default summary"
-	macro assignUserGroupAsMember(userGroupName = null) {
+	macro assignUserGroupAsMember {
 		Navigator.gotoNavItem(navItem = "User Groups");
 
 		Pause(value1 = 3000);
@@ -186,8 +180,7 @@ definition {
 		Alert.viewSuccessMessage();
 	}
 
-	@summary = "Default summary"
-	macro changeLanguagesOrder(toRowNumber = null, fromRowNumber = null) {
+	macro changeLanguagesOrder {
 		var key_fromRowNumber = ${fromRowNumber};
 		var key_toRowNumber = ${toRowNumber};
 
@@ -197,8 +190,7 @@ definition {
 			value1 = "");
 	}
 
-	@summary = "Default summary"
-	macro configureApplication(status = null) {
+	macro configureApplication {
 		if (${status} == "Enabled") {
 			for (var applicationList : list ${applicationList}) {
 				Check(
@@ -217,8 +209,7 @@ definition {
 		PortletEntry.save();
 	}
 
-	@summary = "Default summary"
-	macro configureAutoTagging(autoTagging = null) {
+	macro configureAutoTagging {
 		if (${autoTagging} == "Enabled") {
 			Check.checkToggleSwitch(
 				key_toggleSwitchLabel = "Enable Auto Tagging of Assets on This Asset Library",
@@ -233,8 +224,7 @@ definition {
 		PortletEntry.save();
 	}
 
-	@summary = "Default summary"
-	macro configureCurrentLanguages(currentLanguages = null, defaultDepotLanguage = null) {
+	macro configureCurrentLanguages {
 		for (var language : list "English (United States),Arabic (Saudi Arabia),Catalan (Spain),Chinese (China),Dutch (Netherlands),Finnish (Finland),French (France),German (Germany),Hungarian (Hungary),Japanese (Japan),Portuguese (Brazil),Spanish (Spain),Swedish (Sweden)") {
 			if (${language} != ${defaultDepotLanguage}) {
 				if (IsElementPresent(key_language = ${language}, locator1 = "Checkbox#DEPOT_LANGUAGE_CHECKBOX_CHECKED")) {
@@ -256,8 +246,7 @@ definition {
 		Button.click(button = "Done");
 	}
 
-	@summary = "Default summary"
-	macro configureDDMStructures(depotName = null, siteName = null, tableEntryText = null) {
+	macro configureDDMStructures {
 		DepotNavigator.gotoEdit(depotName = ${depotName});
 
 		DepotNavigator.gotoSites(depotName = ${depotName});
@@ -304,8 +293,7 @@ definition {
 		}
 	}
 
-	@summary = "Default summary"
-	macro configureDefaultLanguage(defaultDepotLanguage = null, locale = null) {
+	macro configureDefaultLanguage {
 		Click(
 			key_language = ${defaultDepotLanguage},
 			locator1 = "Icon#DEPOT_LANGUAGES_ELLIPSIS");
@@ -322,8 +310,7 @@ definition {
 			value1 = ${defaultDepotLanguage});
 	}
 
-	@summary = "Default summary"
-	macro configureDirectoryIndexing(directoryIndexing = null) {
+	macro configureDirectoryIndexing {
 		if (${directoryIndexing} == "Enabled") {
 			Check.checkToggleSwitch(
 				key_toggleSwitchLabel = "Enable Directory Indexing",
@@ -338,8 +325,7 @@ definition {
 		PortletEntry.save();
 	}
 
-	@summary = "Default summary"
-	macro configureRecycleBin(recycleBin = null) {
+	macro configureRecycleBin {
 		Panel.expandPanel(panel = "Recycle Bin");
 
 		if (${recycleBin} == "Enabled") {
@@ -358,8 +344,7 @@ definition {
 		PortletEntry.save();
 	}
 
-	@summary = "Default summary"
-	macro configureSearch(depotName = null, item = null, tableEntryText = null, siteList = null) {
+	macro configureSearch {
 		for (var siteName : list ${siteList}) {
 			DepotNavigator.gotoEdit(depotName = ${depotName});
 
@@ -381,8 +366,7 @@ definition {
 		}
 	}
 
-	@summary = "Default summary"
-	macro configureSharing(sharing = null) {
+	macro configureSharing {
 		if (${sharing} == "Enabled") {
 			Check.checkToggleSwitch(
 				key_toggleSwitchLabel = "Enable Sharing",
@@ -397,8 +381,7 @@ definition {
 		PortletEntry.save();
 	}
 
-	@summary = "Default summary"
-	macro connectSite(siteList = null) {
+	macro connectSite {
 		for (var siteName : list ${siteList}) {
 			Button.clickAdd();
 
@@ -420,8 +403,7 @@ definition {
 		}
 	}
 
-	@summary = "Default summary"
-	macro deleteContentViaBulkEditing() {
+	macro deleteContentViaBulkEditing {
 		if (isSet(recycleBinDisabled)) {
 			ClickNoError(locator1 = "Icon#DELETE");
 
@@ -440,8 +422,7 @@ definition {
 		}
 	}
 
-	@summary = "Default summary"
-	macro deleteCP(depotName = null) {
+	macro deleteCP {
 		if (isSet(deletions)) {
 			ClickNoError(locator1 = "Icon#DELETE");
 		}
@@ -456,8 +437,7 @@ definition {
 		Alert.viewSuccessMessage();
 	}
 
-	@summary = "Default summary"
-	macro disconnectSite(siteList = null) {
+	macro disconnectSite {
 		for (var siteName : list ${siteList}) {
 			LexiconTable.clickEllipsisItem(
 				item = "Disconnect",
@@ -469,8 +449,7 @@ definition {
 		}
 	}
 
-	@summary = "Default summary"
-	macro editDepot(depotName = null, depotDescriptionEdit = null, depot = null, language = null, depotNameEdit = null) {
+	macro editDepot {
 		if (isSet(listView)) {
 			LexiconEntry.changeDisplayStyle(displayStyle = "list");
 
@@ -531,8 +510,7 @@ definition {
 		}
 	}
 
-	@summary = "Default summary"
-	macro getDepotID(depotName = null) {
+	macro getDepotID {
 		ApplicationsMenu.gotoPortlet(
 			category = "Content",
 			panel = "Applications",
@@ -547,8 +525,7 @@ definition {
 		return ${depotID};
 	}
 
-	@summary = "Default summary"
-	macro moveLanguage(depotLanguage = null, moveDown = null) {
+	macro moveLanguage {
 		Click(
 			key_language = ${depotLanguage},
 			locator1 = "Icon#DEPOT_LANGUAGES_ELLIPSIS");
@@ -565,8 +542,7 @@ definition {
 		Alert.viewSuccessMessage();
 	}
 
-	@summary = "Default summary"
-	macro remoteStagingSetUp(depotName = null, remotePort = null) {
+	macro remoteStagingSetUp {
 		if (isSet(remotePort)) {
 			User.loginPG(
 				nodePort = ${remotePort},
@@ -606,8 +582,7 @@ definition {
 			remoteStaging = "true");
 	}
 
-	@summary = "Default summary"
-	macro removeMember(userLastName = null, userScreenName = null, userMiddleName = null, userFirstName = null) {
+	macro removeMember {
 		var key_cardText = ${userScreenName};
 
 		Search.searchCP(searchTerm = ${userScreenName});
@@ -632,8 +607,7 @@ definition {
 		Alert.viewSuccessMessage();
 	}
 
-	@summary = "Default summary"
-	macro removeOrganization(userGroupName = null, orgNameList = null) {
+	macro removeOrganization {
 		LexiconEntry.changeDisplayStyle(displayStyle = "table");
 
 		if (isSet(bulkEditing)) {
@@ -658,8 +632,7 @@ definition {
 		Alert.viewSuccessMessage();
 	}
 
-	@summary = "Default summary"
-	macro removeUserGroup(userGroupNameList = null) {
+	macro removeUserGroup {
 		LexiconEntry.changeDisplayStyle(displayStyle = "table");
 
 		if (isSet(bulkEditing)) {
@@ -686,8 +659,7 @@ definition {
 		Alert.viewSuccessMessage();
 	}
 
-	@summary = "Default summary"
-	macro tearDownCP() {
+	macro tearDownCP {
 		DepotNavigator.openDepotAdmin();
 
 		if (IsElementNotPresent(locator1 = "Message#EMPTY_INFO")) {
@@ -705,8 +677,7 @@ definition {
 		}
 	}
 
-	@summary = "Default summary"
-	macro view4LanguagesOrder(localizationName4 = null, localizationName1 = null, localizationName2 = null, localizationName3 = null) {
+	macro view4LanguagesOrder {
 		AssertTextEquals.assertPartialText(
 			locator1 = "LanguageConfiguration#DEPOT_LANGUAGE_LOCALIZATION_NAME_1",
 			value1 = ${localizationName1});
@@ -724,8 +695,7 @@ definition {
 			value1 = ${localizationName4});
 	}
 
-	@summary = "Default summary"
-	macro viewApplication(depotName = null) {
+	macro viewApplication {
 		LexiconEntry.changeDisplayStyle(displayStyle = "cards");
 
 		Click(
@@ -748,8 +718,7 @@ definition {
 		}
 	}
 
-	@summary = "Default summary"
-	macro viewConnectedSite(siteList = null) {
+	macro viewConnectedSite {
 		for (var siteName : list ${siteList}) {
 			AssertElementPresent(
 				key_tableEntry = ${siteName},
@@ -763,8 +732,7 @@ definition {
 		}
 	}
 
-	@summary = "Default summary"
-	macro viewConnectedSiteNumber(depotName = null, connectedSiteNumber = null) {
+	macro viewConnectedSiteNumber {
 		if (isSet(tableView)) {
 			LexiconEntry.changeDisplayStyle(displayStyle = "table");
 
@@ -804,8 +772,7 @@ definition {
 		}
 	}
 
-	@summary = "Default summary"
-	macro viewCurrentLanguages(currentLanguages = null) {
+	macro viewCurrentLanguages {
 		for (var currentLanguage : list ${currentLanguages}) {
 			AssertTextEquals.assertPartialText(
 				key_language = ${currentLanguage},
@@ -824,15 +791,13 @@ definition {
 		Click(locator1 = "Icon#TIMES");
 	}
 
-	@summary = "Default summary"
-	macro viewDefaultCP() {
+	macro viewDefaultCP {
 		AssertTextEquals(
 			locator1 = "Message#EMPTY_INFO",
 			value1 = "No asset libraries were found.");
 	}
 
-	@summary = "Default summary"
-	macro viewDefaultLanguage(defaultDepotLanguage = null) {
+	macro viewDefaultLanguage {
 		AssertTextEquals.assertPartialText(
 			key_language = ${defaultDepotLanguage},
 			locator1 = "LanguageConfiguration#DEPOT_DEFAULT_LANGUAGE",
@@ -852,8 +817,7 @@ definition {
 		Click(locator1 = "Icon#TIMES");
 	}
 
-	@summary = "Default summary"
-	macro viewDefaultLanguagesConfiguration() {
+	macro viewDefaultLanguagesConfiguration {
 		AssertChecked.assertCheckedNotVisible(
 			key_languagesOption = "Use the default language options.",
 			locator1 = "Radio#DEPOT_LANGUAGES_OPTION");
@@ -877,8 +841,7 @@ definition {
 		AssertElementPresent(locator1 = "Button#SAVE");
 	}
 
-	@summary = "Default summary"
-	macro viewDMWorkflowPresent(dmFolderName = null) {
+	macro viewDMWorkflowPresent {
 		DMFolder.gotoEditCP(folderName = ${dmFolderName});
 
 		if (IsElementNotPresent.isNotVisible(locator1 = "Radio#WORKFLOW_PARENT_FOLDER")) {
@@ -892,8 +855,7 @@ definition {
 		AssertVisible(locator1 = "Radio#WORKFLOW_DEFAULT_WORKFLOW");
 	}
 
-	@summary = "Default summary"
-	macro viewDocumentInFTP(dmDocumentTitle = null, depotName = null, dmFolderName = null) {
+	macro viewDocumentInFTP {
 		var portalURL = PropsUtil.get("portal.url");
 		var depotId = JSONGroupAPI._getDepotIdByName(depotName = ${depotName});
 
@@ -911,8 +873,7 @@ definition {
 			value1 = ${dmDocumentTitle});
 	}
 
-	@summary = "Default summary"
-	macro viewGeneralLanguageOptions(currentLanguageList = null) {
+	macro viewGeneralLanguageOptions {
 		Page.viewFriendlyURLLanguageOptionsPG(
 			currentLanguageList = ${currentLanguageList},
 			fieldName = "Name");
@@ -922,8 +883,7 @@ definition {
 			fieldName = "Description");
 	}
 
-	@summary = "Default summary"
-	macro viewLanguageItems(firstLanguageItem = null, lastLanguageItem = null, depotLanguage = null) {
+	macro viewLanguageItems {
 		Click(
 			key_language = ${depotLanguage},
 			locator1 = "Icon#DEPOT_LANGUAGES_ELLIPSIS");
@@ -945,8 +905,7 @@ definition {
 		}
 	}
 
-	@summary = "Default summary"
-	macro viewLanguageOrderInWebContent(localizationName4 = null, localizationName1 = null, localizationName2 = null, localizationName3 = null) {
+	macro viewLanguageOrderInWebContent {
 		Click(locator1 = "Button#LOCALIZATION_GENERIC");
 
 		Depot.view4LanguagesOrder(
@@ -990,8 +949,7 @@ definition {
 			localizationName4 = ${localizationName4});
 	}
 
-	@summary = "Default summary"
-	macro viewMember(userLastName = null, userScreenName = null, userFirstName = null) {
+	macro viewMember {
 		LexiconCard.viewCardPresent(card = "${userFirstName} ${userLastName}");
 
 		LexiconCard.viewCardTitle(card = "${userFirstName} ${userLastName}");
@@ -1012,8 +970,7 @@ definition {
 		}
 	}
 
-	@summary = "Default summary"
-	macro viewMemberOrganization(orgName = null, toolTip = null) {
+	macro viewMemberOrganization {
 		var key_tableEntry = ${orgName};
 
 		Navigator.gotoNavItem(navItem = "Organizations");
@@ -1033,8 +990,7 @@ definition {
 		}
 	}
 
-	@summary = "Default summary"
-	macro viewMemberUserGroup(userGroupName = null) {
+	macro viewMemberUserGroup {
 		Navigator.gotoNavItem(navItem = "User Groups");
 
 		AssertTextEquals(
@@ -1043,15 +999,13 @@ definition {
 			value1 = ${userGroupName});
 	}
 
-	@summary = "Default summary"
-	macro viewNoConnectedSiteCP() {
+	macro viewNoConnectedSiteCP {
 		AssertTextEquals(
 			locator1 = "Message#EMPTY_INFO_DEPOT",
 			value1 = "No sites are connected yet.");
 	}
 
-	@summary = "Default summary"
-	macro viewNoDocumentInFTP(dmDocumentTitle = null, depotName = null, dmFolderName = null) {
+	macro viewNoDocumentInFTP {
 		var portalURL = PropsUtil.get("portal.url");
 		var depotId = JSONGroupAPI._getDepotIdByName(depotName = ${depotName});
 
@@ -1068,22 +1022,19 @@ definition {
 			locator1 = "Link#ANY");
 	}
 
-	@summary = "Default summary"
-	macro viewNoPanel(panelName = null) {
+	macro viewNoPanel {
 		AssertElementNotPresent(
 			key_panel = ${panelName},
 			locator1 = "Panel#PANEL");
 	}
 
-	@summary = "Default summary"
-	macro viewNoWorkflowResource() {
+	macro viewNoWorkflowResource {
 		AssertTextEquals(
 			locator1 = "Message#EMPTY_INFO",
 			value1 = "No entries were found.");
 	}
 
-	@summary = "Default summary"
-	macro viewSearchResult(resultCount = null, searchTerm = null, includedResults = null, excludedResults = null) {
+	macro viewSearchResult {
 		if (${resultCount} != 1) {
 			AssertTextEquals.assertPartialText(
 				locator1 = "ManagementBar#SEARCH_RESULT_SUMMARY",

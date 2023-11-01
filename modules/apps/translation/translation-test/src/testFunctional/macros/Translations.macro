@@ -1,7 +1,6 @@
 definition {
 
-	@summary = "Default summary"
-	macro assertFileNameFromTempFolder(webContentTitle = null) {
+	macro assertFileNameFromTempFolder {
 		var translationZipFileName = TestCase.getDownloadedTempFileName(fileNamePattern = "${webContentTitle}*.zip");
 
 		echo("## translationZipFileName: ${translationZipFileName}");
@@ -14,8 +13,7 @@ definition {
 		}
 	}
 
-	@summary = "Default summary"
-	macro changeBaseLocale(currentBaseLocale = null, newBaseLocale = null) {
+	macro changeBaseLocale {
 		Portlet.waitForForm();
 
 		Click.clickNoMouseOver(
@@ -31,8 +29,7 @@ definition {
 			locator1 = "Translation#CONTENT_TITLE");
 	}
 
-	@summary = "Default summary"
-	macro changeTargetLocale(newTargetLocale = null, currentTargetLocale = null) {
+	macro changeTargetLocale {
 		Portlet.waitForForm();
 
 		Click.clickNoMouseOver(
@@ -48,8 +45,7 @@ definition {
 			locator1 = "Translation#CONTENT_TITLE");
 	}
 
-	@summary = "Default summary"
-	macro exportTranslation(defaultLanguage = null, exportFileFormat = null) {
+	macro exportTranslation {
 		AssertElementPresent(locator1 = "Language#EXPORT_TRANSLATION_ORIGIN_LANGUAGE");
 
 		AssertElementPresent(
@@ -75,8 +71,7 @@ definition {
 		DownloadTempFile();
 	}
 
-	@summary = "Default summary"
-	macro gotoExportTranslation(webContentTitle = null) {
+	macro gotoExportTranslation {
 		LexiconEntry.changeDisplayStyle(displayStyle = "list");
 
 		Click.waitForMenuToggleJSClick(
@@ -86,8 +81,7 @@ definition {
 		MenuItem.click(menuItem = "Export for Translation");
 	}
 
-	@summary = "Default summary"
-	macro gotoImportTranslation(webContentTitle = null) {
+	macro gotoImportTranslation {
 		Click.waitForMenuToggleJSClick(
 			key_webContentTitle = ${webContentTitle},
 			locator1 = "WC#ENTRY_LIST_MENULIST_ICON");
@@ -95,8 +89,7 @@ definition {
 		MenuItem.click(menuItem = "Import Translation");
 	}
 
-	@summary = "Default summary"
-	macro gotoTranslate(webContentTitle = null) {
+	macro gotoTranslate {
 		Click.waitForMenuToggleJSClick(
 			key_webContentTitle = ${webContentTitle},
 			locator1 = "WC#ENTRY_LIST_MENULIST_ICON");
@@ -104,8 +97,7 @@ definition {
 		MenuItem.click(menuItem = "Translate");
 	}
 
-	@summary = "Default summary"
-	macro importTranslation(fileName = null, webContentTitle = null, workflow = null, workflowResubmit = null) {
+	macro importTranslation {
 		Translations.gotoImportTranslation(webContentTitle = ${webContentTitle});
 
 		AssertClick(
@@ -127,8 +119,7 @@ definition {
 		}
 	}
 
-	@summary = "Default summary"
-	macro translateFields(webContentDescription = null, webContentSourceHTML = null, webContentText = null, webContentInteger = null, webContentTitle = null, webContentContent = null, webContentTextBox = null, webContentNumber = null, webContentDecimal = null) {
+	macro translateFields {
 		if (isSet(webContentTitle)) {
 			Type(
 				locator1 = "TextInput#TITLE_NOT_READONLY",
@@ -199,15 +190,13 @@ definition {
 		}
 	}
 
-	@summary = "Default summary"
-	macro translateFile(webContentDescription = null, translationFileName = null, translationZipFileName = null, webContentTitle = null, contentTranslateion = null, translationFileRename = null, descriptionTranslateion = null, webContentContent = null, encoding = null, titleTranslation = null) {
+	macro translateFile {
 		AntCommand(
 			locator1 = "build-test.xml",
 			value1 = "update-translation-file -Dtranslation.content.target=<![CDATA[${contentTranslateion}]]></target> -Dtranslation.content.target.original=<![CDATA[${webContentContent}]]></target> -Dtranslation.description.target=<![CDATA[${descriptionTranslateion}]]></target> -Dtranslation.description.target.original=<![CDATA[${webContentDescription}]]></target> -Dtranslation.file.encoding=${encoding} -Dtranslation.file.name=${translationFileName} -Dtranslation.file.rename=${translationFileRename} -Dtranslation.title.target=<![CDATA[${titleTranslation}]]></target> -Dtranslation.title.target.original=<![CDATA[${webContentTitle}]]></target> -Dtranslation.zip.file.name=${translationZipFileName}");
 	}
 
-	@summary = "Default summary"
-	macro viewBaseFields(webContentDescription = null, webContentText = null, webContentInteger = null, webContentTitle = null, webContentContent = null, webContentTextBox = null, webContentNumber = null, webContentHTML = null, webContentDecimal = null) {
+	macro viewBaseFields {
 		if (isSet(webContentTitle)) {
 			AssertElementPresent(
 				key_fieldName = "Title",
@@ -275,8 +264,7 @@ definition {
 		}
 	}
 
-	@summary = "Default summary"
-	macro viewTargetFields(webContentDescription = null, webContentText = null, webContentInteger = null, webContentTitle = null, webContentContent = null, webContentTextBox = null, webContentNumber = null, webContentHTML = null, webContentDecimal = null) {
+	macro viewTargetFields {
 		if (isSet(webContentTitle)) {
 			AssertElementPresent(
 				key_fieldName = "Title",
@@ -366,8 +354,7 @@ definition {
 		}
 	}
 
-	@summary = "Default summary"
-	macro viewTargetLocales(currentTargetLocale = null) {
+	macro viewTargetLocales {
 		Portlet.waitForForm();
 
 		Click.clickNoMouseOver(
@@ -389,8 +376,7 @@ definition {
 		}
 	}
 
-	@summary = "Default summary"
-	macro viewTranslationOptions(webContentTitle = null) {
+	macro viewTranslationOptions {
 		LexiconEntry.changeDisplayStyle(displayStyle = "list");
 
 		Click.waitForMenuToggleJSClick(

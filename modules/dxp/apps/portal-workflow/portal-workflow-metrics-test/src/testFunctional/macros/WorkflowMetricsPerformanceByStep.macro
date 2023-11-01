@@ -1,7 +1,6 @@
 definition {
 
-	@summary = "Default summary"
-	macro searchForStep(stepName = null) {
+	macro searchForStep {
 		var key_stepName = ${stepName};
 
 		Click(
@@ -17,8 +16,7 @@ definition {
 			value1 = "\RETURN");
 	}
 
-	@summary = "Default summary"
-	macro selectDateRangeFilter(dateRange = null) {
+	macro selectDateRangeFilter {
 		var key_dateRange = ${dateRange};
 
 		Click(locator1 = "WorkflowMetricsPerformanceByStep#DATE_RANGE_DROPDOWN");
@@ -26,8 +24,7 @@ definition {
 		Click(locator1 = "WorkflowMetricsPerformanceByStep#DATE_RANGE_DROPDOWN_OPTION");
 	}
 
-	@summary = "Default summary"
-	macro viewPerformanceByStepValues(avgCompletionTimeValue = null, stepName = null, isNotPresent = null, slaBreachedValue = null) {
+	macro viewPerformanceByStepValues {
 		var key_stepName = ${stepName};
 
 		AssertElementPresent(locator1 = "WorkflowMetricsPerformanceByStep#METRICS_PERFORMANCE_BY_STEP_PAGE_TABLE_STEP_NAME");

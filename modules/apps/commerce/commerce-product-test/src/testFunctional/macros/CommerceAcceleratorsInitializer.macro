@@ -1,7 +1,6 @@
 definition {
 
-	@summary = "Default summary"
-	macro addPortlet() {
+	macro addPortlet {
 		if (${portletName} == "Where are the Liferay members?") {
 			var portletName = "Map";
 		}
@@ -38,8 +37,7 @@ definition {
 		Refresh();
 	}
 
-	@summary = "Default summary"
-	macro changeProductsSorting(sortingType = null) {
+	macro changeProductsSorting {
 		Click(locator1 = "CommerceAccelerators#SORT_BY_DROPDOWN");
 
 		Click(
@@ -47,8 +45,7 @@ definition {
 			locator1 = "CommerceEntry#ANY_MENU_ITEM");
 	}
 
-	@summary = "Default summary"
-	macro createNewAccountViaFront(accountName = null, adminEmailAddress = null) {
+	macro createNewAccountViaFront {
 		WaitForVisible(locator1 = "TextInput#SEARCH");
 
 		Click.mouseDownMouseUp(
@@ -68,8 +65,7 @@ definition {
 			locator1 = "CommerceAccelerators#ANY_BUTTON");
 	}
 
-	@summary = "Default summary"
-	macro createNewOrderFromAccountSelectorDropdown() {
+	macro createNewOrderFromAccountSelectorDropdown {
 		Click(locator1 = "Button#ANGLE_DOWN");
 
 		Click(
@@ -77,8 +73,7 @@ definition {
 			locator1 = "CommerceAccelerators#ANY_BUTTON");
 	}
 
-	@summary = "Default summary"
-	macro deactivateCommerceAccountViaFront(accountName = null) {
+	macro deactivateCommerceAccountViaFront {
 		Click(
 			key_entryName = ${accountName},
 			locator1 = "CommerceEntry#ENTRY_NAME_BODY_VERTICAL_ELLIPSIS");
@@ -88,15 +83,13 @@ definition {
 		Alert.viewSuccessMessage();
 	}
 
-	@summary = "Default summary"
-	macro gotoMiniumProductDetailsPage(productName = null) {
+	macro gotoMiniumProductDetailsPage {
 		Click(
 			key_productName = ${productName},
 			locator1 = "CommerceAccelerators#MINIUM_CARD_NAME");
 	}
 
-	@summary = "Default summary"
-	macro inviteNewMemberWithRoleToAccount(emailAddress = null, role = null) {
+	macro inviteNewMemberWithRoleToAccount {
 		Click(
 			key_text = "Invite user",
 			locator1 = "Button#ANY");
@@ -131,8 +124,7 @@ definition {
 			locator1 = "CommerceAccelerators#ANY_BUTTON");
 	}
 
-	@summary = "Default summary"
-	macro reviewOrder(orderAuthor = null, productSKU = null, productQuantity = null, productDiscount = null, productUnitPrice = null, productName = null, productPrice = null) {
+	macro reviewOrder {
 		Click(
 			key_orderAuthor = ${orderAuthor},
 			locator1 = "CommerceAccelerators#ORDERS_ENTRY_VIEW_BUTTON");
@@ -164,8 +156,7 @@ definition {
 			value1 = "$ ${productPrice}");
 	}
 
-	@summary = "Default summary"
-	macro selectAccountFromAccountSelector(accountName = null) {
+	macro selectAccountFromAccountSelector {
 		Click.clickNoMouseOver(locator1 = "CommerceAccelerators#ACCOUNT_SELECTOR_DROPDOWN");
 
 		Click(locator1 = "CommerceAccelerators#ACCOUNT_SWITCHER_BACK_BUTTON");
@@ -177,8 +168,7 @@ definition {
 		Click.clickNoMouseOver(locator1 = "CommerceAccelerators#ACCOUNT_SELECTOR_DROPDOWN");
 	}
 
-	@summary = "Default summary"
-	macro viewAllAccountsFromAccountSelector() {
+	macro viewAllAccountsFromAccountSelector {
 		Click(locator1 = "CommerceAccelerators#ACCOUNT_SELECTOR_DROPDOWN");
 
 		Click(
@@ -186,15 +176,13 @@ definition {
 			locator1 = "CommerceAccelerators#ANY_BUTTON");
 	}
 
-	@summary = "Default summary"
-	macro viewDisabledAddToCartButton(productName = null) {
+	macro viewDisabledAddToCartButton {
 		AssertElementPresent(
 			key_productName = ${productName},
 			locator1 = "CommerceAccelerators#ADD_TO_CART_BUTTON_DISABLED");
 	}
 
-	@summary = "Default summary"
-	macro viewDiscountedProductDetailsPage(discountPercentage = null, productDiscountedPrice = null, productListPrice = null) {
+	macro viewDiscountedProductDetailsPage {
 		AssertTextEquals.assertPartialText(
 			locator1 = "CommerceAccelerators#PRODUCT_DETAILS_LIST_PRICE_INACTIVE",
 			value1 = ${productListPrice});
@@ -208,23 +196,20 @@ definition {
 			value1 = ${productDiscountedPrice});
 	}
 
-	@summary = "Default summary"
-	macro viewEnabledAddToCartButton(productName = null) {
+	macro viewEnabledAddToCartButton {
 		AssertElementPresent(
 			key_productName = ${productName},
 			locator1 = "CommerceAccelerators#ADD_TO_CART_BUTTON_ENABLED");
 	}
 
-	@summary = "Default summary"
-	macro viewMiniumCardName(productName = null) {
+	macro viewMiniumCardName {
 		AssertTextEquals(
 			key_productName = ${productName},
 			locator1 = "CommerceAccelerators#MINIUM_CARD_NAME",
 			value1 = ${productName});
 	}
 
-	@summary = "Default summary"
-	macro viewMiniumSelectedAccount(selectedAccount = null) {
+	macro viewMiniumSelectedAccount {
 		Click.clickNoMouseOver(locator1 = "CommerceAccelerators#ACCOUNT_SELECTOR_DROPDOWN");
 
 		AssertTextEquals(
@@ -234,8 +219,7 @@ definition {
 		Click.clickNoMouseOver(locator1 = "CommerceAccelerators#ACCOUNT_SELECTOR_DROPDOWN");
 	}
 
-	@summary = "Default summary"
-	macro viewSpeedwellAccount(userLastName = null, userScreenName = null, userEmailAddress = null, userFirstName = null) {
+	macro viewSpeedwellAccount {
 		AssertTextEquals(
 			locator1 = "UsersAndOrganizationsEditUser#DETAILS_SCREEN_NAME_FIELD",
 			value1 = ${userScreenName});

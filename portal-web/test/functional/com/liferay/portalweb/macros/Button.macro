@@ -38,7 +38,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro clickConfirm() {
+	macro clickConfirm(value1 = "null") {
 		Click(locator1 = "Button#CONFIRM");
 	}
 

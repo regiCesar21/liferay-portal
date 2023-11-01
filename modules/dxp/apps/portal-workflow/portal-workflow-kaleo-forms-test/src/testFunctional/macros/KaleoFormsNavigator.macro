@@ -1,7 +1,6 @@
 definition {
 
-	@summary = "Default summary"
-	macro gotoManageFieldSets() {
+	macro gotoManageFieldSets {
 		ProductMenu.gotoPortlet(
 			category = "Content & Data",
 			portlet = "Kaleo Forms Admin");
@@ -13,8 +12,7 @@ definition {
 			value1 = "Field Sets");
 	}
 
-	@summary = "Default summary"
-	macro gotoManageForms(kfFieldSetName = null) {
+	macro gotoManageForms {
 		KaleoFormsNavigator.gotoManageFieldSets();
 
 		Search.searchCP(searchTerm = ${kfFieldSetName});

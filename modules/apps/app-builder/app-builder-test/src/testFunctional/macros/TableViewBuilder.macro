@@ -1,7 +1,6 @@
 definition {
 
-	@summary = "Default summary"
-	macro addBasicTableView(tableViewName = null, fieldType = null) {
+	macro addBasicTableView {
 		AppBuilderAdmin.switchTab(tabName = "Table Views");
 
 		AppBuilderAdmin.add();
@@ -13,8 +12,7 @@ definition {
 		TableViewBuilder.save();
 	}
 
-	@summary = "Default summary"
-	macro addColumnByDoubleClick(fieldType = null) {
+	macro addColumnByDoubleClick {
 		var key_fieldLabel = ${fieldType};
 
 		DoubleClick(locator1 = "FormViewBuilder#SIDEBAR_FIELD_LABEL");
@@ -24,8 +22,7 @@ definition {
 		TableViewBuilder.validateColumnLabelAtSidebar(columnLabel = ${fieldType});
 	}
 
-	@summary = "Default summary"
-	macro addColumnByDragAndDrop(fieldType = null) {
+	macro addColumnByDragAndDrop {
 		Pause(value1 = 10000);
 
 		var key_fieldLabel = ${fieldType};
@@ -40,13 +37,11 @@ definition {
 		TableViewBuilder.validateColumnLabelAtSidebar(columnLabel = ${fieldType});
 	}
 
-	@summary = "Default summary"
-	macro clearSearch() {
+	macro clearSearch {
 		Click(locator1 = "TableViewBuilder#CLEAR_SEARCH");
 	}
 
-	@summary = "Default summary"
-	macro clickOnClearFilters(columnLabel = null) {
+	macro clickOnClearFilters {
 		TableViewBuilder.openFilterDropdown(columnLabel = ${columnLabel});
 
 		Click(locator1 = "TableViewBuilder#FILTER_CLEAR");
@@ -54,8 +49,7 @@ definition {
 		TableViewBuilder.selectTab(tabName = "Filters");
 	}
 
-	@summary = "Default summary"
-	macro clickOnSelectAllFilters(columnLabel = null) {
+	macro clickOnSelectAllFilters {
 		TableViewBuilder.openFilterDropdown(columnLabel = ${columnLabel});
 
 		Click(locator1 = "TableViewBuilder#FILTER_SELECT_ALL");
@@ -63,13 +57,11 @@ definition {
 		TableViewBuilder.selectTab(tabName = "Filters");
 	}
 
-	@summary = "Default summary"
-	macro closeColumnSidebar() {
+	macro closeColumnSidebar {
 		Click(locator1 = "TableViewBuilder#CLOSE_COLUMN_SIDEBAR");
 	}
 
-	@summary = "Default summary"
-	macro deleteSelectedColumnByName(columnLabel = null) {
+	macro deleteSelectedColumnByName {
 		Click(locator1 = "TableViewBuilder#COLUMN_LABEL");
 
 		Click(locator1 = "TableViewBuilder#DELETE_COLUMN_BY_NAME");
@@ -79,27 +71,23 @@ definition {
 			value1 = ${columnLabel});
 	}
 
-	@summary = "Default summary"
-	macro openFilterDropdown(columnLabel = null) {
+	macro openFilterDropdown {
 		Click(
 			key_columnLabel = ${columnLabel},
 			locator1 = "TableViewBuilder#FILTER_DROPDOWN");
 	}
 
-	@summary = "Default summary"
-	macro save() {
+	macro save {
 		AppBuilderAdmin.save();
 	}
 
-	@summary = "Default summary"
-	macro searchByItem(itemName = null) {
+	macro searchByItem {
 		Type(
 			locator1 = "AppBuilder#SEARCH_BAR_INPUT",
 			value1 = ${itemName});
 	}
 
-	@summary = "Default summary"
-	macro selectFilterDropdownItem(columnLabel = null, dropdownItemList = null) {
+	macro selectFilterDropdownItem {
 		TableViewBuilder.openFilterDropdown(columnLabel = ${columnLabel});
 
 		for (var dropdownItem : list ${dropdownItemList}) {
@@ -111,56 +99,48 @@ definition {
 		TableViewBuilder.selectTab(tabName = "Filters");
 	}
 
-	@summary = "Default summary"
-	macro selectTab(tabName = null) {
+	macro selectTab {
 		Click(
 			key_tabName = ${tabName},
 			locator1 = "TableViewBuilder#TAB_LABEL");
 	}
 
-	@summary = "Default summary"
-	macro setName(tableViewName = null) {
+	macro setName {
 		AppBuilderAdmin.setName(title = ${tableViewName});
 	}
 
-	@summary = "Default summary"
-	macro validateColumnLabel(columnLabel = null) {
+	macro validateColumnLabel {
 		AssertTextEquals(
 			locator1 = "TableViewBuilder#COLUMN_LABEL",
 			value1 = ${columnLabel});
 	}
 
-	@summary = "Default summary"
-	macro validateColumnLabelAtSidebar(columnLabel = null) {
+	macro validateColumnLabelAtSidebar {
 		AssertTextEquals(
 			locator1 = "TableViewBuilder#COLUMN_LABEL_AT_SIDEBAR",
 			value1 = ${columnLabel});
 	}
 
-	@summary = "Default summary"
-	macro validateDisabledField(fieldType = null) {
+	macro validateDisabledField {
 		AssertElementPresent(
 			locator1 = "TableViewBuilder#DISABLED_COLUMN",
 			value1 = ${fieldType});
 	}
 
-	@summary = "Default summary"
-	macro validateFilterDropdownList(columnLabel = null, itemList = null) {
+	macro validateFilterDropdownList {
 		AssertTextEquals(
 			key_columnLabel = ${columnLabel},
 			locator1 = "TableViewBuilder#FILTER_DROPDOWN",
 			value1 = ${itemList});
 	}
 
-	@summary = "Default summary"
-	macro validateNoColumnLabel(columnLabel = null) {
+	macro validateNoColumnLabel {
 		AssertElementNotPresent(
 			locator1 = "TableViewBuilder#COLUMN_LABEL",
 			value1 = ${columnLabel});
 	}
 
-	@summary = "Default summary"
-	macro validateNoColumnLabelAtSidebar(columnLabel = null) {
+	macro validateNoColumnLabelAtSidebar {
 		AssertElementNotPresent(
 			locator1 = "TableViewBuilder#COLUMN_LABEL_AT_SIDEBAR",
 			value1 = ${columnLabel});

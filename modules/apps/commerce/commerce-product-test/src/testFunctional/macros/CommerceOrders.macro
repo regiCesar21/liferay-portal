@@ -1,7 +1,6 @@
 definition {
 
-	@summary = "Default summary"
-	macro editOrderItemDetails(orderItemDeliveryGroup = null, orderItemSKU = null, orderItemPrice = null, orderItemRequestedDeliveryDate = null, orderItemQuantity = null) {
+	macro editOrderItemDetails {
 		CommerceNavigator.gotoEntry(entryName = ${orderItemSKU});
 
 		SelectFrame.selectFrameNoLoading(locator1 = "CommerceEntry#IFRAME_SIDE_PANEL");
@@ -43,8 +42,7 @@ definition {
 		IFrame.selectTopFrame();
 	}
 
-	@summary = "Default summary"
-	macro viewOrdersEntry(addressZipCode = null, addressAddress = null, productSKU = null, productQuantity = null, productTotalPrice = null, productDiscount = null, paymentMethod = null, productListPrice = null, productName = null, addressCity = null) {
+	macro viewOrdersEntry {
 		if (isSet(addressAddress) && isSet(addressCity) && isSet(addressZipCode)) {
 			AssertTextEquals.assertPartialText(
 				key_addressInfo = ${addressAddress},

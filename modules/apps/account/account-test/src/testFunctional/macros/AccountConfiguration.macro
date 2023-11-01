@@ -1,7 +1,6 @@
 definition {
 
-	@summary = "Default summary"
-	macro addAccountManager(orgName = null, accountName = null, userLastName = null, userScreenName = null, userEmailAddress = null, orgRoleTitle = null, userFirstName = null) {
+	macro addAccountManager {
 		JSONUser.addUser(
 			userEmailAddress = ${userEmailAddress},
 			userFirstName = ${userFirstName},
@@ -43,8 +42,7 @@ definition {
 			assigneeType = "Organizations");
 	}
 
-	@summary = "Default summary"
-	macro addBlockedEmailDomain(settingValues = null) {
+	macro addBlockedEmailDomain {
 		PortalSettings.gotoConfiguration(
 			configurationCategory = "Accounts",
 			configurationName = "Email Domains",
@@ -57,8 +55,7 @@ definition {
 		SystemSettings.saveConfiguration();
 	}
 
-	@summary = "Default summary"
-	macro enableAccountEmailDomain() {
+	macro enableAccountEmailDomain {
 		PortalSettings.gotoConfiguration(
 			configurationCategory = "Accounts",
 			configurationName = "Email Domains",

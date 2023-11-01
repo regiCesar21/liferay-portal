@@ -1,7 +1,6 @@
 definition {
 
-	@summary = "Default summary"
-	macro add(formViewName = null, menuOption = null, tableViewName = null, appTitle = null, deployOption = null, siteOptionList = null) {
+	macro add {
 		App.selectFormView(formViewName = ${formViewName});
 
 		App.selectTableView(tableViewName = ${tableViewName});
@@ -25,8 +24,7 @@ definition {
 		VerifyElementPresent(locator1 = "Message#SUCCESS_DISMISSIBLE");
 	}
 
-	@summary = "Default summary"
-	macro clickBackButton() {
+	macro clickBackButton {
 		Click(locator1 = "AppBuilderStandardApp#BACK_BUTTON");
 	}
 
