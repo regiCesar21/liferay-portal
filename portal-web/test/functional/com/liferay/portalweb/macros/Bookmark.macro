@@ -2,8 +2,7 @@ definition {
 
 	var assetType = "Bookmarks Entry";
 
-	@summary = "Default summary"
-	macro addBookmarkViaAP(bookmarkFolderName = null, bookmarkDescription = null, bookmarkName = null, bookmarkURL = null) {
+	macro addBookmarkViaAP {
 		AssetPublisherPortlet.addAsset(assetType = "Bookmarks Entry");
 
 		if (isSet(bookmarkFolderName)) {
@@ -37,8 +36,7 @@ definition {
 			value1 = "Save");
 	}
 
-	@summary = "Default summary"
-	macro addCategoryCP(bookmarkName = null, vocabularyName = null, categoryName = null) {
+	macro addCategoryCP {
 		LexiconEntry.gotoEntryMenuItem(
 			menuItem = "Edit",
 			rowEntry = ${bookmarkName});
@@ -52,8 +50,7 @@ definition {
 		PortletEntry.save();
 	}
 
-	@summary = "Default summary"
-	macro addCP(bookmarkDescription = null) {
+	macro addCP {
 		var bookmarkName = ${bookmarkName};
 		var bookmarkURL = ${bookmarkURL};
 
@@ -84,8 +81,7 @@ definition {
 			key_assetName = ${bookmarkName});
 	}
 
-	@summary = "Default summary"
-	macro addIncorrectURLCP(bookmarkDescription = null, bookmarkURLInvalid = null, bookmarkName = null) {
+	macro addIncorrectURLCP {
 		LexiconEntry.gotoAdd();
 
 		MenuItem.click(menuItem = "Bookmark");
@@ -105,8 +101,7 @@ definition {
 			value1 = "Please enter a valid URL.");
 	}
 
-	@summary = "Default summary"
-	macro addInvalidURLPG(bookmarkDescription = null, bookmarkURLInvalid = null, bookmarkName = null) {
+	macro addInvalidURLPG {
 		Portlet.clickPortletPlusIconPG(portletName = "Bookmarks");
 
 		MenuItem.click(menuItem = "Bookmark");
@@ -128,8 +123,7 @@ definition {
 			value1 = "Please enter a valid URL.");
 	}
 
-	@summary = "Default summary"
-	macro addNullCP(bookmarkDescription = null, bookmarkName = null) {
+	macro addNullCP {
 		LexiconEntry.gotoAdd();
 
 		MenuItem.click(menuItem = "Bookmark");
@@ -149,8 +143,7 @@ definition {
 			value1 = "This field is required.");
 	}
 
-	@summary = "Default summary"
-	macro addPG(bookmarkDescription = null, bookmarkViewableBy = null) {
+	macro addPG {
 		var bookmarkName = ${bookmarkName};
 		var bookmarkURL = ${bookmarkURL};
 
@@ -189,8 +182,7 @@ definition {
 			key_assetName = ${bookmarkName});
 	}
 
-	@summary = "Default summary"
-	macro addRelatedAssetBookmarksEntryPG(bookmarkName = null, bookmarkURL = null) {
+	macro addRelatedAssetBookmarksEntryPG {
 		SelectFrame(locator1 = "AssetRelatedAssets#SELECT_ASSET_IFRAME");
 
 		LexiconEntry.gotoAdd();
@@ -206,8 +198,7 @@ definition {
 		SelectFrame(value1 = "relative=top");
 	}
 
-	@summary = "Default summary"
-	macro addToSubfolderCP(bookmarkDescription = null, subfolderName = null, folderName = null) {
+	macro addToSubfolderCP {
 		var bookmarkName = ${bookmarkName};
 		var bookmarkURL = ${bookmarkURL};
 		var key_assetName = ${folderName};
@@ -246,8 +237,7 @@ definition {
 			key_bookmarkName = ${bookmarkName});
 	}
 
-	@summary = "Default summary"
-	macro addWithTagCP(bookmarkDescription = null) {
+	macro addWithTagCP {
 		var bookmarkName = ${bookmarkName};
 		var bookmarkURL = ${bookmarkURL};
 		var tagNameList = ${tagNameList};
@@ -287,8 +277,7 @@ definition {
 		}
 	}
 
-	@summary = "Default summary"
-	macro deletePG(bookmarkName = null) {
+	macro deletePG {
 		var key_assetName = ${bookmarkName};
 
 		AssertTextEquals(
@@ -310,8 +299,7 @@ definition {
 		RecycleBin.emptyCP();
 	}
 
-	@summary = "Default summary"
-	macro editCP(editBookmarkURL = null, editBookmarkName = null, editBookmarkDescription = null) {
+	macro editCP {
 		var bookmarkName = ${bookmarkName};
 		var bookmarkURL = ${bookmarkURL};
 
@@ -337,8 +325,7 @@ definition {
 			key_assetName = ${editBookmarkName});
 	}
 
-	@summary = "Default summary"
-	macro editPG(bookmarkURLEdit = null, bookmarkNameEdit = null) {
+	macro editPG {
 		var bookmarkName = ${bookmarkName};
 		var bookmarkURL = ${bookmarkURL};
 
@@ -360,8 +347,7 @@ definition {
 			key_assetName = ${bookmarkNameEdit});
 	}
 
-	@summary = "Default summary"
-	macro gotoPG(bookmarkName = null) {
+	macro gotoPG {
 		var key_assetName = ${bookmarkName};
 
 		AssertTextEquals(
@@ -369,8 +355,7 @@ definition {
 			value1 = ${bookmarkName});
 	}
 
-	@summary = "Default summary"
-	macro moveToFolderPG(bookmarkName = null, folderName = null, folderName2 = null) {
+	macro moveToFolderPG {
 		if (isSet(folderName)) {
 			BookmarksFolder.gotoPG(folderName = ${folderName});
 		}
@@ -404,8 +389,7 @@ definition {
 			value1 = "There are no bookmarks in this folder.");
 	}
 
-	@summary = "Default summary"
-	macro moveToHomeCP(subfolderName = null, bookmarkName = null, folderName = null) {
+	macro moveToHomeCP {
 		var key_assetName = ${folderName};
 
 		AssertClick(
@@ -471,8 +455,7 @@ definition {
 			value1 = ${bookmarkName});
 	}
 
-	@summary = "Default summary"
-	macro moveToRecycleBinCP(bookmarkName = null, bookmarkURL = null) {
+	macro moveToRecycleBinCP {
 		Navigator.openURL();
 
 		ProductMenu.gotoPortlet(
@@ -496,8 +479,7 @@ definition {
 			value1 = ${bookmarkURL});
 	}
 
-	@summary = "Default summary"
-	macro moveToRecycleBinPG(bookmarkName = null) {
+	macro moveToRecycleBinPG {
 		LexiconEntry.gotoEntryMenuItem(
 			menuItem = "Move to Recycle Bin",
 			rowEntry = ${bookmarkName});
@@ -505,8 +487,7 @@ definition {
 		VerifyElementPresent(locator1 = "Message#SUCCESS");
 	}
 
-	@summary = "Default summary"
-	macro searchNullCP(bookmarkName = null, nullBookmarkName = null, bookmar2Name = null) {
+	macro searchNullCP {
 		Search.searchCP(searchTerm = ${nullBookmarkName});
 
 		var key_bookmarkName = ${nullBookmarkName};
@@ -520,8 +501,7 @@ definition {
 			value1 = ${bookmar2Name});
 	}
 
-	@summary = "Default summary"
-	macro tearDownCP() {
+	macro tearDownCP {
 		Navigator.openURL();
 
 		ProductMenu.gotoPortlet(
@@ -547,8 +527,7 @@ definition {
 		RecycleBin.emptyCP();
 	}
 
-	@summary = "Default summary"
-	macro viewBookmark(bookmarkName = null, bookmarkURL = null) {
+	macro viewBookmark {
 		var key_assetName = ${bookmarkName};
 
 		AssertTextEquals.assertPartialText(
@@ -562,8 +541,7 @@ definition {
 		AssertLocation(value1 = "${bookmarkURL}/");
 	}
 
-	@summary = "Default summary"
-	macro viewBookmarkViaAP(bookmarkName = null) {
+	macro viewBookmarkViaAP {
 		var key_assetTitle = ${bookmarkName};
 		var key_bookmarkName = ${bookmarkName};
 
@@ -582,8 +560,7 @@ definition {
 		Close(locator1 = "title=Digital Experience Software Tailored to Your Needs | Liferay");
 	}
 
-	@summary = "Default summary"
-	macro viewEntry(bookmarkName = null, bookmarkURL = null) {
+	macro viewEntry {
 		LexiconEntry.changeDisplayStyle(displayStyle = "table");
 
 		var key_bookmarkName = ${bookmarkName};
@@ -598,8 +575,7 @@ definition {
 			value1 = ${bookmarkURL});
 	}
 
-	@summary = "Default summary"
-	macro viewNoCategoryCP() {
+	macro viewNoCategoryCP {
 		LexiconEntry.gotoAdd();
 
 		MenuItem.click(menuItem = "Bookmark");
@@ -609,8 +585,7 @@ definition {
 		AssertElementNotPresent(locator1 = "AssetCategorization#VOCABULARY");
 	}
 
-	@summary = "Default summary"
-	macro viewNoPG(bookmarkName = null, bookmarkURL = null) {
+	macro viewNoPG {
 		AssertTextNotPresent(value1 = ${bookmarkName});
 
 		AssertTextNotPresent(value1 = ${bookmarkURL});

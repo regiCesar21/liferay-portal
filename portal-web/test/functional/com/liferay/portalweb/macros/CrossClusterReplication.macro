@@ -1,7 +1,6 @@
 definition {
 
-	@summary = "Default summary"
-	macro cleanWorkflowIndex(workflowIndexName = null) {
+	macro cleanWorkflowIndex {
 		var companyId = JSONCompany.getCompanyId();
 
 		var cleanCurl = '''
@@ -17,8 +16,7 @@ definition {
 		com.liferay.poshi.runner.util.JSONCurlUtil.post(${cleanCurl});
 	}
 
-	@summary = "Default summary"
-	macro setupCrossClusterReplication() {
+	macro setupCrossClusterReplication {
 		ApplicationsMenu.gotoPortlet(
 			category = "Configuration",
 			panel = "Control Panel",
@@ -82,8 +80,7 @@ definition {
 		}
 	}
 
-	@summary = "Default summary"
-	macro setupWorkflow() {
+	macro setupWorkflow {
 		Navigator.openURL();
 
 		ProductMenu.gotoPortlet(

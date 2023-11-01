@@ -1,7 +1,6 @@
 definition {
 
-	@summary = "Default summary"
-	macro searchCP(resourceAction = null, resourceId = null, searchTerm = null, resourceName = null, userName = null, userId = null) {
+	macro searchCP {
 		if (${searchTerm} == ${resourceAction}) {
 			var reportFieldKey = "RESOURCE_ACTION";
 		}
@@ -39,8 +38,7 @@ definition {
 			value1 = ${searchTerm});
 	}
 
-	@summary = "Default summary"
-	macro searchViaKeywords(searchTerm = null, resourceName = null) {
+	macro searchViaKeywords {
 		AssertElementPresent(locator1 = "TextInput#SITE_SEARCH_KEYWORDS");
 
 		Type(
@@ -55,8 +53,7 @@ definition {
 			locator1 = "AuditReports#REPORTS_TABLE_RESOURCE_NAME");
 	}
 
-	@summary = "Default summary"
-	macro viewAuditDetails(resourceAction = null, additionalInformation = null, clientIP = null, resourceName = null, userName = null) {
+	macro viewAuditDetails {
 		var key_resourceAction = ${resourceAction};
 		var key_resourceName = ${resourceName};
 

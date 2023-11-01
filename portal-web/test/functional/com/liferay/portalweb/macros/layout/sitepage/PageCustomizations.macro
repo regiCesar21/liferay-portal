@@ -1,7 +1,6 @@
 definition {
 
-	@summary = "Default summary"
-	macro enableSectionCustomizableCP(columnIdList = null, pageName = null) {
+	macro enableSectionCustomizableCP {
 		SitePages.gotoPageMenuItem(
 			menuItem = "Configure",
 			pageName = ${pageName});
@@ -28,8 +27,7 @@ definition {
 		Button.clickSave();
 	}
 
-	@summary = "Default summary"
-	macro gotoCustomizedPageInfo() {
+	macro gotoCustomizedPageInfo {
 		Click(locator1 = "Icon#PAGE_CUSTOMIZATION_ELLIPSIS");
 
 		if (isSet(viewDefaultPage)) {
@@ -46,8 +44,7 @@ definition {
 		}
 	}
 
-	@summary = "Default summary"
-	macro viewCustomizablePagePG() {
+	macro viewCustomizablePagePG {
 		Click(locator1 = "Icon#PAGE_CUSTOMIZATION_ELLIPSIS");
 
 		AssertTextEquals.assertPartialText(

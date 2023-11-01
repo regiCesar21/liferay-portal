@@ -1,7 +1,6 @@
 definition {
 
-	@summary = "Default summary"
-	macro addArticleCP(webContentTitle = null, webContentContent = null) {
+	macro addArticleCP {
 		WebContentNavigator.gotoAddCP();
 
 		WebContent.addCP(
@@ -11,8 +10,7 @@ definition {
 		PortletEntry.publish();
 	}
 
-	@summary = "Default summary"
-	macro addCP(viewableBy = null, webContentTitle = null, imageFileName = null, webContentContent = null, siteName = null, webContentId = null) {
+	macro addCP {
 		AssertVisible(locator1 = "WCEditWebContent#SIDEBAR");
 
 		if (isSet(webContentTitle)) {
@@ -68,8 +66,7 @@ definition {
 		}
 	}
 
-	@summary = "Default summary"
-	macro addDraft(webContentTitle = null, webContentContent = null) {
+	macro addDraft {
 		WebContent.addCP(
 			webContentContent = ${webContentContent},
 			webContentTitle = ${webContentTitle});
@@ -77,8 +74,7 @@ definition {
 		Button.clickSaveAsDraft();
 	}
 
-	@summary = "Default summary"
-	macro addDraftPGViaAP(webContentTitle = null, webContentContent = null) {
+	macro addDraftPGViaAP {
 		AssetPublisherPortlet.addAsset(assetType = "Basic Web Content");
 
 		WebContent.addCP(
@@ -88,8 +84,7 @@ definition {
 		WebContent.saveAsDraftViaAP();
 	}
 
-	@summary = "Default summary"
-	macro addDraftPGViaWCD(webContentTitle = null, webContentContent = null) {
+	macro addDraftPGViaWCD {
 		WebContentDisplayPortletNavigator.gotoAdd();
 
 		WebContent.addDraft(
@@ -97,8 +92,7 @@ definition {
 			webContentTitle = ${webContentTitle});
 	}
 
-	@summary = "Default summary"
-	macro addExistingRelatedAssetCP(scopeSite = null, webContentTitle = null, assetTitle = null, siteName = null, assetType = null) {
+	macro addExistingRelatedAssetCP {
 		var key_webContentTitle = ${webContentTitle};
 
 		RelatedAssets.selectAsset(
@@ -129,8 +123,7 @@ definition {
 		PortletEntry.publish();
 	}
 
-	@summary = "Default summary"
-	macro addExpirationDateCP(expirationDate = null) {
+	macro addExpirationDateCP {
 		Panel.expandPanel(panel = "Schedule");
 
 		AssertChecked(
@@ -146,8 +139,7 @@ definition {
 			value1 = ${expirationDate});
 	}
 
-	@summary = "Default summary"
-	macro addFailWithoutRequiredCategoryAssetTypeCP(vocabularyName = null) {
+	macro addFailWithoutRequiredCategoryAssetTypeCP {
 		PortletEntry.inputTitle(title = "Web Content Title");
 
 		Type.typeEditorWaitForEditor(
@@ -170,8 +162,7 @@ definition {
 			value1 = "Please select at least one category for ${vocabularyName}.");
 	}
 
-	@summary = "Default summary"
-	macro addFeaturedImageFromURL(imageSourceURL = null) {
+	macro addFeaturedImageFromURL {
 		Panel.expandPanel(panel = "Featured Image");
 
 		Select(
@@ -183,8 +174,7 @@ definition {
 			value1 = ${imageSourceURL});
 	}
 
-	@summary = "Default summary"
-	macro addLocalizedPGViaWCD(webContentTitle = null, portletNameTranslation = null, localizedBasicWebContent = null, webContentContent = null) {
+	macro addLocalizedPGViaWCD {
 		WebContentDisplayPortletNavigator.gotoAdd(
 			portletNameTranslation = ${portletNameTranslation},
 			structureName = ${localizedBasicWebContent});
@@ -198,8 +188,7 @@ definition {
 		SelectFrame(value1 = "relative=top");
 	}
 
-	@summary = "Default summary"
-	macro addMultipleArticlesCP() {
+	macro addMultipleArticlesCP {
 		var articleCount = ${articleCount} + 1;
 		var count = 1;
 
@@ -212,8 +201,7 @@ definition {
 		}
 	}
 
-	@summary = "Default summary"
-	macro addNullCP(webContentContent = null) {
+	macro addNullCP {
 		AssertElementNotPresent(locator1 = "TextInput#REQUIRED_ALERT");
 
 		if (isSet(webContentContent)) {
@@ -230,8 +218,7 @@ definition {
 		AssertElementPresent(locator1 = "TextInput#REQUIRED_ALERT");
 	}
 
-	@summary = "Default summary"
-	macro addPGViaAP(webContentTitle = null, webContentContent = null) {
+	macro addPGViaAP {
 		AssetPublisherPortlet.addAsset(assetType = "Basic Web Content");
 
 		WebContent.addCP(
@@ -261,8 +248,7 @@ definition {
 			value1 = ${webContentContent});
 	}
 
-	@summary = "Default summary"
-	macro addPGViaAPWithoutAsserts(webContentTitle = null, webContentContent = null) {
+	macro addPGViaAPWithoutAsserts {
 		AssetPublisherPortlet.addAsset(assetType = "Basic Web Content");
 
 		WebContent.addCP(
@@ -278,8 +264,7 @@ definition {
 		var key_assetTitle = ${webContentTitle};
 	}
 
-	@summary = "Default summary"
-	macro addPGViaWCD(embedImage = null, webContentTitle = null, portletNameScoped = null, templateName = null, imageFileName = null, webContentContent = null, siteName = null) {
+	macro addPGViaWCD {
 		WebContentDisplayPortletNavigator.gotoAdd(portletNameScoped = ${portletNameScoped});
 
 		WebContent.addCP(
@@ -300,8 +285,7 @@ definition {
 		Button.clickPublish();
 	}
 
-	@summary = "Default summary"
-	macro addPriority(priority = null) {
+	macro addPriority {
 		Panel.expandPanel(panel = "Categorization");
 
 		Type(
@@ -309,8 +293,7 @@ definition {
 			value1 = ${priority});
 	}
 
-	@summary = "Default summary"
-	macro addStructuredPGViaWCD(webContentText = null, webContentTitle = null, templateName = null, structureName = null, structureFieldName = null, webContentTextBox = null, textBoxFieldName = null) {
+	macro addStructuredPGViaWCD {
 		WebContentDisplayPortletNavigator.gotoAdd(structureName = ${structureName});
 
 		AssertVisible(locator1 = "WCEditWebContent#SIDEBAR");
@@ -344,8 +327,7 @@ definition {
 		SelectFrame(value1 = "relative=top");
 	}
 
-	@summary = "Default summary"
-	macro addTagPGViaWCD(tagName = null) {
+	macro addTagPGViaWCD {
 		Panel.expandPanel(panel = "Categorization");
 
 		Type(
@@ -368,8 +350,7 @@ definition {
 		SelectFrame(value1 = "relative=top");
 	}
 
-	@summary = "Default summary"
-	macro addViaCKEditor(webContentTitle = null, webContentContent = null) {
+	macro addViaCKEditor {
 		AssertVisible(locator1 = "WCEditWebContent#SIDEBAR");
 
 		PortletEntry.inputTitle(title = ${webContentTitle});
@@ -380,8 +361,7 @@ definition {
 			value1 = ${webContentContent});
 	}
 
-	@summary = "Default summary"
-	macro addWithCategoryCP(userSegmentDetailTitle = null, webContentTitle = null, webContentContent = null, vocabularyName = null, categoryName = null) {
+	macro addWithCategoryCP {
 		for (var key_panel : list "Basic Information,Default Template,Display Page Template,Featured Image ") {
 			if ((IsElementPresent(locator1 = "Panel#PANEL_EXPANDED")) && (IsVisible(locator1 = "Panel#PANEL_EXPANDED"))) {
 				AssertClick(
@@ -402,8 +382,7 @@ definition {
 		PortletEntry.publish();
 	}
 
-	@summary = "Default summary"
-	macro addWithDocumentCP(dmDocumentTitle = null, webContentTitle = null, webContentContent = null, siteName = null) {
+	macro addWithDocumentCP {
 		WebContent.addCP(
 			webContentContent = ${webContentContent},
 			webContentTitle = ${webContentTitle});
@@ -436,8 +415,7 @@ definition {
 		PortletEntry.publish();
 	}
 
-	@summary = "Default summary"
-	macro addWithFriendlyURL(webContentTitle = null, webContentContent = null, friendlyUrl = null) {
+	macro addWithFriendlyURL {
 		WebContent.addCP(
 			webContentContent = ${webContentContent},
 			webContentTitle = ${webContentTitle});
@@ -451,8 +429,7 @@ definition {
 		PortletEntry.publish();
 	}
 
-	@summary = "Default summary"
-	macro addWithGlobalStructurePGViaWCD(fieldName = null, webContentTitle = null, templateName = null, embeddedPortletTitle = null, structureName = null, webContentJavascript = null, webContentContent = null) {
+	macro addWithGlobalStructurePGViaWCD {
 		WebContentDisplayPortletNavigator.gotoAdd(structureName = ${structureName});
 
 		WebContent.addCP(webContentTitle = ${webContentTitle});
@@ -492,8 +469,7 @@ definition {
 		}
 	}
 
-	@summary = "Default summary"
-	macro addWithMultipleCategories(allowMultipleCategories = null, webContentTitle = null, webContentContent = null, vocabularyName = null, categoryNameList = null) {
+	macro addWithMultipleCategories {
 		for (var key_panel : list "Basic Information,Default Template,Display Page Template,Featured Image ") {
 			if ((IsElementPresent(locator1 = "Panel#PANEL_EXPANDED")) && (IsVisible(locator1 = "Panel#PANEL_EXPANDED"))) {
 				AssertClick(
@@ -522,8 +498,7 @@ definition {
 		}
 	}
 
-	@summary = "Default summary"
-	macro addWithPriorityCP(webContentTitle = null, webContentContent = null, assetPriority = null) {
+	macro addWithPriorityCP {
 		WebContent.addCP(
 			webContentContent = ${webContentContent},
 			webContentTitle = ${webContentTitle});
@@ -537,8 +512,7 @@ definition {
 		PortletEntry.publish();
 	}
 
-	@summary = "Default summary"
-	macro addWithStructureAndWorkflowCP(webContentText = null, webContentTitle = null) {
+	macro addWithStructureAndWorkflowCP {
 		WebContent.addCP(webContentTitle = ${webContentTitle});
 
 		if (isSet(webContentText)) {
@@ -555,8 +529,7 @@ definition {
 		Alert.viewSuccessMessage();
 	}
 
-	@summary = "Default summary"
-	macro addWithStructureCP(fieldName = null, fieldName2 = null, saveAsDraft = null, available = null, description = null, webContentImageDescription = null, webContentDocumentsAndMedia = null, webContentHTML = null, webContentSourceHTML = null, webContentText = null, webContentInteger = null, webContentSelectWCFile = null, webContentImage = null, webContentTextBoxList = null, webContentNumber = null, depotName = null, webContentImageUnderDocumentsAndMedia = null, webContentTextBox2 = null, webContentColor = null, structureName = null, webContentDate = null, webContentDecimal = null, webContentRadio = null, linkedPageName = null, webContentTitle = null, templateName = null, imageFileName = null, linkFieldName = null, webContentSelect = null, folderName = null) {
+	macro addWithStructureCP {
 		AssertVisible(locator1 = "WCEditWebContent#SIDEBAR");
 
 		PortletEntry.inputTitle(title = ${webContentTitle});
@@ -807,8 +780,7 @@ definition {
 		}
 	}
 
-	@summary = "Default summary"
-	macro addWithTagCP(webContentTitle = null, webContentContent = null, tagNameList = null) {
+	macro addWithTagCP {
 		for (var key_panel : list "Basic Information,Default Template,Display Page Template,Featured Image ") {
 			if ((IsElementPresent(locator1 = "Panel#PANEL_EXPANDED")) && (IsVisible(locator1 = "Panel#PANEL_EXPANDED"))) {
 				AssertClick(
@@ -830,8 +802,7 @@ definition {
 		PortletEntry.publish();
 	}
 
-	@summary = "Default summary"
-	macro addWithWorkflowCP(webContentTitle = null, webContentContent = null) {
+	macro addWithWorkflowCP {
 		WebContent.addCP(
 			webContentContent = ${webContentContent},
 			webContentTitle = ${webContentTitle});
@@ -841,8 +812,7 @@ definition {
 		Alert.viewSuccessMessage();
 	}
 
-	@summary = "Default summary"
-	macro addWithWorkflowPGViaAP(webContentTitle = null, webContentContent = null) {
+	macro addWithWorkflowPGViaAP {
 		AssetPublisherPortlet.addAsset(assetType = "Basic Web Content");
 
 		WebContent.addCP(
@@ -862,8 +832,7 @@ definition {
 			value1 = "There are no results.");
 	}
 
-	@summary = "Default summary"
-	macro addWithWorkflowPGViaWCD(webContentTitle = null, webContentContent = null, selectStructureName = null) {
+	macro addWithWorkflowPGViaWCD {
 		WebContentDisplayPortletNavigator.gotoAdd(structureName = ${selectStructureName});
 
 		WebContent.addCP(
@@ -881,15 +850,13 @@ definition {
 			value1 = "${webContentTitle} is not approved.");
 	}
 
-	@summary = "Default summary"
-	macro changeDefaultLanguage(defaultLanguage = null) {
+	macro changeDefaultLanguage {
 		Click(locator1 = "Button#CHANGE");
 
 		MenuItem.click(menuItem = ${defaultLanguage});
 	}
 
-	@summary = "Default summary"
-	macro clickMarginOfContentContainer() {
+	macro clickMarginOfContentContainer {
 		var elementHeight = selenium.getElementHeight("WCEditWebContent#CONTENT_CONTAINER");
 
 		var offSetY = 50 * ${elementHeight};
@@ -906,8 +873,7 @@ definition {
 			value1 = "${offSetX},${offSetY}");
 	}
 
-	@summary = "Default summary"
-	macro copyCP(webContentTitle = null) {
+	macro copyCP {
 		WebContentNavigator.gotoEntryMenuItem(
 			entry = ${webContentTitle},
 			menuItem = "Copy");
@@ -915,8 +881,7 @@ definition {
 		Alert.viewSuccessMessage();
 	}
 
-	@summary = "Default summary"
-	macro deleteCP(depotName = null, webContentTitle = null, webContentTitleEscapeCharacter = null, siteURLKey = null) {
+	macro deleteCP {
 		WebContent.moveToRecycleBinCP(
 			assetType = "Web Content Article",
 			webContentTitle = ${webContentTitle},
@@ -940,8 +905,7 @@ definition {
 		AssertTextNotPresent(value1 = ${webContentTitle});
 	}
 
-	@summary = "Default summary"
-	macro deleteStagedCP(webContentTitle = null, webContentTitleEscapeCharacter = null, siteName = null, pageName = null) {
+	macro deleteStagedCP {
 		WebContent.moveToRecycleBinCP(
 			assetType = "Web Content Article",
 			webContentTitle = ${webContentTitle},
@@ -968,8 +932,7 @@ definition {
 		AssertTextNotPresent(value1 = ${webContentTitle});
 	}
 
-	@summary = "Default summary"
-	macro deleteWithDisabledRB(entryTitle = null) {
+	macro deleteWithDisabledRB {
 		WebContentNavigator.gotoEntryMenuItem(
 			entry = ${entryTitle},
 			menuItem = "Delete");
@@ -979,8 +942,7 @@ definition {
 		Alert.viewSuccessMessage();
 	}
 
-	@summary = "Default summary"
-	macro editCP(fieldName = null, saveAsDraft = null, webContentContentEdit = null, webContentSelectWCFile = null, webContentTitleEdit = null) {
+	macro editCP {
 		WebContent.addCP(webContentTitle = ${webContentTitleEdit});
 
 		if (isSet(webContentContentEdit)) {
@@ -1029,8 +991,7 @@ definition {
 		}
 	}
 
-	@summary = "Default summary"
-	macro editDisplayDate(displayDate = null) {
+	macro editDisplayDate {
 		Panel.expandPanel(panel = "Schedule");
 
 		Type.clickAtType(
@@ -1038,8 +999,7 @@ definition {
 			value1 = ${displayDate});
 	}
 
-	@summary = "Default summary"
-	macro editDisplayPage(pageType = null, pageName = null) {
+	macro editDisplayPage {
 		Panel.expandPanel(panel = "Display Page Template");
 
 		Select(
@@ -1089,8 +1049,7 @@ definition {
 		}
 	}
 
-	@summary = "Default summary"
-	macro editDisplayPagePGViaAP(pageType = null, displayPageName = null, assetTitle = null) {
+	macro editDisplayPagePGViaAP {
 		AssetPublisherPortlet.gotoEditAssetPG(assetTitle = ${assetTitle});
 
 		WebContent.editDisplayPage(
@@ -1102,8 +1061,7 @@ definition {
 		SelectFrame(value1 = "relative=top");
 	}
 
-	@summary = "Default summary"
-	macro editFriendlyURL(webContentFriendlyURL = null) {
+	macro editFriendlyURL {
 		Panel.expandPanel(panel = "Friendly URL");
 
 		Type.typePause(
@@ -1111,8 +1069,7 @@ definition {
 			value1 = ${webContentFriendlyURL});
 	}
 
-	@summary = "Default summary"
-	macro editInReview(webContentImage = null, webContentTitleEdit = null) {
+	macro editInReview {
 		WebContent.addCP(webContentTitle = ${webContentTitleEdit});
 
 		if (isSet(webContentImage)) {
@@ -1138,8 +1095,7 @@ definition {
 		}
 	}
 
-	@summary = "Default summary"
-	macro editNullCP(webContentContent = null) {
+	macro editNullCP {
 		AssertElementNotPresent(locator1 = "TextInput#REQUIRED_ALERT");
 
 		WebContent.addCP(webContentTitle = "");
@@ -1158,8 +1114,7 @@ definition {
 		AssertElementPresent(locator1 = "TextInput#REQUIRED_ALERT");
 	}
 
-	@summary = "Default summary"
-	macro editPGViaWCD(webContentText = null, embeddedPortletTitle = null, webContentJavascript = null, webContentContentEdit = null, webContentTitleEdit = null) {
+	macro editPGViaWCD {
 		WebContent.addCP(webContentTitle = ${webContentTitleEdit});
 
 		if (isSet(webContentText)) {
@@ -1198,8 +1153,7 @@ definition {
 		}
 	}
 
-	@summary = "Default summary"
-	macro editViaContentPanel(fieldName = null, webContentTitle = null, saveAsDraft = null, webContentContentEdit = null, webContentSelectWCFile = null, webContentTitleEdit = null) {
+	macro editViaContentPanel {
 		PageEditor.gotoTab(tabName = "Contents");
 
 		LexiconEntry.gotoFragmentPageContentEllipsisMenuItem(
@@ -1244,8 +1198,7 @@ definition {
 		}
 	}
 
-	@summary = "Default summary"
-	macro expireCP(webContentTitleList = null) {
+	macro expireCP {
 		for (var webContentTitle : list ${webContentTitleList}) {
 			Check(
 				key_webContentTitle = ${webContentTitle},
@@ -1257,8 +1210,7 @@ definition {
 		Alert.viewSuccessMessage();
 	}
 
-	@summary = "Default summary"
-	macro expireSpecificVersionCP(webContentList = null) {
+	macro expireSpecificVersionCP {
 		WebContentNavigator.gotoEntryMenuItem(
 			entry = ${webContentTitle},
 			menuItem = "View History");
@@ -1281,8 +1233,7 @@ definition {
 		AssertConfirm(value1 = "Are you sure you want to expire the selected version?");
 	}
 
-	@summary = "Default summary"
-	macro getAssetId(folderAsset = null, webContentAsset = null) {
+	macro getAssetId {
 		if (isSet(webContentAsset)) {
 			var webContentId = selenium.getAttribute("//*[contains(@data-title,'${webContentAsset}')]//input@value");
 
@@ -1296,8 +1247,7 @@ definition {
 		}
 	}
 
-	@summary = "Default summary"
-	macro moveArticlesToFolderCP(webContentArticlesList = null, folderName = null) {
+	macro moveArticlesToFolderCP {
 		for (var webContentTitle : list ${webContentArticlesList}) {
 			Check(
 				key_webContentTitle = ${webContentTitle},
@@ -1327,8 +1277,7 @@ definition {
 		Alert.viewSuccessMessage();
 	}
 
-	@summary = "Default summary"
-	macro moveMultipleToFolderCP(folderName = null, rowEntryCheckList = null) {
+	macro moveMultipleToFolderCP {
 		LexiconEntry.changeDisplayStyle(displayStyle = "list");
 
 		for (var rowEntry : list ${rowEntryCheckList}) {
@@ -1358,8 +1307,7 @@ definition {
 		Alert.viewSuccessMessage();
 	}
 
-	@summary = "Default summary"
-	macro moveToFolderCP(webContentTitle = null, folderName = null) {
+	macro moveToFolderCP {
 		WebContentNavigator.gotoEntryMenuItem(
 			entry = ${webContentTitle},
 			menuItem = "Move");
@@ -1388,8 +1336,7 @@ definition {
 		Alert.viewSuccessMessage();
 	}
 
-	@summary = "Default summary"
-	macro moveToRecycleBinCP(webContentTitle = null, webContentTitleEscapeCharacter = null) {
+	macro moveToRecycleBinCP {
 		WebContent.viewTitle(
 			webContentTitle = ${webContentTitle},
 			webContentTitleEscapeCharacter = ${webContentTitleEscapeCharacter});
@@ -1418,8 +1365,7 @@ definition {
 			locator1 = "WC#ENTRY_LIST_TITLE");
 	}
 
-	@summary = "Default summary"
-	macro moveToRecycleBinViaDeleteIconCP() {
+	macro moveToRecycleBinViaDeleteIconCP {
 		LexiconEntry.changeDisplayStyle(displayStyle = "list");
 
 		PortletEntry.selectAll();
@@ -1431,8 +1377,7 @@ definition {
 		VerifyElementPresent(locator1 = "Message#SUCCESS");
 	}
 
-	@summary = "Default summary"
-	macro paginateRelatedAssets(webContentTitle = null, itemsPerPage = null, assetType = null) {
+	macro paginateRelatedAssets {
 		WebContentNavigator.gotoEditCP(webContentTitle = ${webContentTitle});
 
 		Panel.expandPanel(panel = "Related Assets");
@@ -1455,15 +1400,13 @@ definition {
 		MenuItem.click(menuItem = ${itemsPerPage});
 	}
 
-	@summary = "Default summary"
-	macro publishViaWCD() {
+	macro publishViaWCD {
 		Button.clickPublish();
 
 		AssertVisible(locator1 = "WCD#WEB_CONTENT_CONTENT");
 	}
 
-	@summary = "Default summary"
-	macro saveAsDraftViaAP() {
+	macro saveAsDraftViaAP {
 		Button.clickSaveAsDraft();
 
 		Pause(locator1 = 5000);
@@ -1473,8 +1416,7 @@ definition {
 		AssertElementNotPresent(locator1 = "AP#ASSET_ABSTRACT_GENERIC");
 	}
 
-	@summary = "Default summary"
-	macro searchCP(webContentTitle = null) {
+	macro searchCP {
 		Search.searchCP(searchTerm = ${webContentTitle});
 
 		AssertTextEquals(
@@ -1483,8 +1425,7 @@ definition {
 			value1 = ${webContentTitle});
 	}
 
-	@summary = "Default summary"
-	macro searchNoResultsCP(webContentTitle = null, searchQuery = null) {
+	macro searchNoResultsCP {
 		Search.searchCP(searchTerm = ${searchQuery});
 
 		AssertTextEquals(
@@ -1504,8 +1445,7 @@ definition {
 			value1 = ${webContentTitle});
 	}
 
-	@summary = "Default summary"
-	macro selectCategory(userSegmentDetailTitle = null, vocabularyName = null, categoryName = null) {
+	macro selectCategory {
 		Panel.expandPanel(panel = "Categorization");
 
 		if (isSet(userSegmentDetailTitle)) {
@@ -1520,8 +1460,7 @@ definition {
 			vocabularyName = ${vocabularyName});
 	}
 
-	@summary = "Default summary"
-	macro selectRepositoryWC(depotName = null, available = null, folderName = null, contentName = null) {
+	macro selectRepositoryWC {
 		var key_contentName = ${contentName};
 
 		ItemSelector.changeWorkspaces(workspacesType = "Asset Library");
@@ -1540,8 +1479,7 @@ definition {
 		}
 	}
 
-	@summary = "Default summary"
-	macro selectTemplateCP(templateName = null, structureName = null) {
+	macro selectTemplateCP {
 		ScrollBy(value1 = "0, 50");
 
 		AssertTextEquals.assertPartialText(
@@ -1575,8 +1513,7 @@ definition {
 			value1 = ${templateName});
 	}
 
-	@summary = "Default summary"
-	macro subscribeToCurrentFolderCP() {
+	macro subscribeToCurrentFolderCP {
 		Pause(locator1 = 3000);
 
 		Click.clickAt(locator1 = "Icon#INFO");
@@ -1588,8 +1525,7 @@ definition {
 		Alert.viewSuccessMessage();
 	}
 
-	@summary = "Default summary"
-	macro subscribeToSpecificArticle(webContentTitle = null) {
+	macro subscribeToSpecificArticle {
 		WebContentNavigator.gotoEntryMenuItem(
 			entry = ${webContentTitle},
 			menuItem = "Subscribe");
@@ -1597,8 +1533,7 @@ definition {
 		Alert.viewSuccessMessage();
 	}
 
-	@summary = "Default summary"
-	macro tearDownCP() {
+	macro tearDownCP {
 		Navigator.openURL();
 
 		ProductMenu.gotoPortlet(
@@ -1624,8 +1559,7 @@ definition {
 		RecycleBin.emptyCP();
 	}
 
-	@summary = "Default summary"
-	macro uploadAudio(navTab = null, dmDocumentURL = null) {
+	macro uploadAudio {
 		Click.pauseClickAt(locator1 = "WCEditWebContent#AUDIO_BUTTON");
 
 		ItemSelector.addFromURL(
@@ -1642,8 +1576,7 @@ definition {
 		IFrame.selectTopFrame();
 	}
 
-	@summary = "Default summary"
-	macro uploadVideo(navTab = null, dmDocumentURL = null) {
+	macro uploadVideo {
 		Click.pauseClickAt(locator1 = "WCEditWebContent#VIDEO_BUTTON");
 
 		ItemSelector.addFromURL(
@@ -1660,8 +1593,7 @@ definition {
 		IFrame.selectTopFrame();
 	}
 
-	@summary = "Default summary"
-	macro viewApprovedStatus(webContentTitle = null) {
+	macro viewApprovedStatus {
 		var key_webContentTitle = ${webContentTitle};
 
 		LexiconEntry.changeDisplayStyle(displayStyle = "table");
@@ -1671,13 +1603,11 @@ definition {
 			value1 = "APPROVED");
 	}
 
-	@summary = "Default summary"
-	macro viewAudioViaWCD() {
+	macro viewAudioViaWCD {
 		AssertElementPresent(locator1 = "WCD#WEB_CONTENT_AUDIO");
 	}
 
-	@summary = "Default summary"
-	macro viewAvailableLanguagesPGViaWCD(locale2 = null, locale1 = null) {
+	macro viewAvailableLanguagesPGViaWCD {
 		Click(locator1 = "Button#LOCALIZATION_GENERIC");
 
 		AssertElementPresent(
@@ -1689,8 +1619,7 @@ definition {
 			locator1 = "Translation#LOCALIZATION_NAME");
 	}
 
-	@summary = "Default summary"
-	macro viewCategorizationCategoryCP(categoryNameList = null) {
+	macro viewCategorizationCategoryCP {
 		Panel.expandPanel(panel = "Categorization");
 
 		for (var categoryName : list ${categoryNameList}) {
@@ -1701,8 +1630,7 @@ definition {
 		}
 	}
 
-	@summary = "Default summary"
-	macro viewCategorizationCategoryNotVisibleCP(categoryNameList = null) {
+	macro viewCategorizationCategoryNotVisibleCP {
 		Panel.expandPanel(panel = "Categorization");
 
 		for (var categoryName : list ${categoryNameList}) {
@@ -1712,8 +1640,7 @@ definition {
 		}
 	}
 
-	@summary = "Default summary"
-	macro viewCategorizationVocabularyCP(vocabularyNameList = null) {
+	macro viewCategorizationVocabularyCP {
 		Panel.expandPanel(panel = "Categorization");
 
 		for (var vocabularyName : list ${vocabularyNameList}) {
@@ -1724,8 +1651,7 @@ definition {
 		}
 	}
 
-	@summary = "Default summary"
-	macro viewChangeDefaultLanguageCP(webContentDescription = null, webContentText = null, webContentInteger = null, webContentTitle = null, webContentTitleEscapeCharacter = null, webContentContent = null, otherLocaleSummary = null, webContentNumber = null, webContentTextBox = null, webContentDocumentsAndMedia = null, webContentHTML = null, webContentDecimal = null) {
+	macro viewChangeDefaultLanguageCP {
 		if (isSet(webContentTitleEscapeCharacter)) {
 			var key_webContentTitle = ${webContentTitleEscapeCharacter};
 		}
@@ -1832,8 +1758,7 @@ definition {
 		}
 	}
 
-	@summary = "Default summary"
-	macro viewCompareVersions(newContent = null, version = null) {
+	macro viewCompareVersions {
 		SelectFrame(locator1 = "IFrame#MODAL_BODY");
 
 		LexiconEntry.gotoEntry(rowEntry = ${version});
@@ -1845,8 +1770,7 @@ definition {
 			value1 = ${newContent});
 	}
 
-	@summary = "Default summary"
-	macro viewConversionLinksPGViaAP(webContentTitle = null, author = null, documentTypes = null, webContentContent = null) {
+	macro viewConversionLinksPGViaAP {
 		WebContent.viewPGViaAP(
 			author = ${author},
 			webContentContent = ${webContentContent},
@@ -1863,8 +1787,7 @@ definition {
 		}
 	}
 
-	@summary = "Default summary"
-	macro viewCP(webContentDescription = null, webContentText = null, webContentInteger = null, webContentTitle = null, webContentTitleEscapeCharacter = null, webContentContent = null, otherLocaleSummary = null, webContentNumber = null, webContentTextBox = null, webContentDocumentsAndMedia = null, webContentHTML = null, webContentDecimal = null) {
+	macro viewCP {
 		if (isSet(webContentTitleEscapeCharacter)) {
 			var key_webContentTitle = ${webContentTitleEscapeCharacter};
 		}
@@ -1971,8 +1894,7 @@ definition {
 		}
 	}
 
-	@summary = "Default summary"
-	macro viewCPWithoutContentField(fieldName = null, webContentTitle = null, field = null, fieldData = null, fieldFieldLabel = null, webContentImage = null) {
+	macro viewCPWithoutContentField {
 		AssertTextEquals(
 			locator1 = "TextInput#TITLE",
 			value1 = ${webContentTitle});
@@ -2006,8 +1928,7 @@ definition {
 		}
 	}
 
-	@summary = "Default summary"
-	macro viewDefaultCP(webContentTitle = null) {
+	macro viewDefaultCP {
 		LexiconEntry.changeDisplayStyle(displayStyle = "list");
 
 		AssertTextEquals(
@@ -2021,15 +1942,13 @@ definition {
 		AssertElementNotPresent(locator1 = "WC#ENTRY_LIST_TITLE");
 	}
 
-	@summary = "Default summary"
-	macro viewDefaultLanguage(defaultLanguage = null) {
+	macro viewDefaultLanguage {
 		AssertVisible(
 			defaultLanguage = ${defaultLanguage},
 			locator1 = "WCEditWebContent#DEFAULT_LANGUAGE");
 	}
 
-	@summary = "Default summary"
-	macro viewDisplayStyleCP(webContentTitle = null) {
+	macro viewDisplayStyleCP {
 		LexiconEntry.changeDisplayStyle(displayStyle = "cards");
 
 		AssertElementPresent.pauseAssertVisible(
@@ -2049,8 +1968,7 @@ definition {
 			locator1 = "WC#ENTRY_TABLE_TITLE");
 	}
 
-	@summary = "Default summary"
-	macro viewEditWCViaWCD(webContentTitle = null) {
+	macro viewEditWCViaWCD {
 		AssertElementPresent(locator1 = "WCD#WEB_CONTENT_CONTENT");
 
 		WebContentDisplayPortletNavigator.gotoArticleEllipsisMenu(webContentTitle = ${webContentTitle});
@@ -2061,8 +1979,7 @@ definition {
 			value1 = "Edit Web Content");
 	}
 
-	@summary = "Default summary"
-	macro viewEmailConfigurationCP(webContentWorkflowEnabled = null) {
+	macro viewEmailConfigurationCP {
 		SiteAdmin.gotoPortletConfiguration();
 
 		Navigator.gotoNavTab(navTab = "Email From");
@@ -2101,8 +2018,7 @@ definition {
 		}
 	}
 
-	@summary = "Default summary"
-	macro viewEntryAsWorkflowAsset(webContentTitle = null, webContentContent = null) {
+	macro viewEntryAsWorkflowAsset {
 		SiteAdmin.viewPortletTitle(portletTitle = ${webContentTitle});
 
 		AssertTextEquals(
@@ -2111,8 +2027,7 @@ definition {
 			value1 = ${webContentContent});
 	}
 
-	@summary = "Default summary"
-	macro viewExpirationDateCP(expirationDate = null) {
+	macro viewExpirationDateCP {
 		Panel.expandPanel(panel = "Schedule");
 
 		AssertNotChecked(
@@ -2124,8 +2039,7 @@ definition {
 			value1 = ${expirationDate});
 	}
 
-	@summary = "Default summary"
-	macro viewFieldRepeated(ddlRecordFieldData = null, fieldName = null) {
+	macro viewFieldRepeated {
 		AssertTextEquals(
 			locator1 = "xpath=(//div[@data-fieldname='${fieldName}'][1]//a[contains(@class,'ddm-repeatable-add-button')]/../div//input)",
 			value1 = ${ddlRecordFieldData});
@@ -2145,8 +2059,7 @@ definition {
 		}
 	}
 
-	@summary = "Default summary"
-	macro viewFriendlyURLCP(friendlyUrl = null) {
+	macro viewFriendlyURLCP {
 		Panel.expandPanel(panel = "Friendly URL");
 
 		AssertTextEquals(
@@ -2154,8 +2067,7 @@ definition {
 			value1 = ${friendlyUrl});
 	}
 
-	@summary = "Default summary"
-	macro viewLinkedAssetPGViaAP(webContentTitle = null, webContentContent = null) {
+	macro viewLinkedAssetPGViaAP {
 		AssertClick.assertPartialTextClickAt(
 			key_assetTitle = ${webContentTitle},
 			locator1 = "AP#ASSET_ABSTRACT_TITLE",
@@ -2172,8 +2084,7 @@ definition {
 			value1 = ${webContentContent});
 	}
 
-	@summary = "Default summary"
-	macro viewNestedField(fieldName = null, nestedField = null, nestedFieldData = null) {
+	macro viewNestedField {
 		AssertTextEquals(
 			key_fieldName = ${fieldName},
 			key_nestedFieldName = ${nestedField},
@@ -2181,8 +2092,7 @@ definition {
 			value1 = ${nestedFieldData});
 	}
 
-	@summary = "Default summary"
-	macro viewNoContentAsGuestPGViaWCD() {
+	macro viewNoContentAsGuestPGViaWCD {
 		AssertTextNotPresent(
 			locator1 = "Message#ERROR",
 			value1 = "The selected web content no longer exists.");
@@ -2192,8 +2102,7 @@ definition {
 			locator1 = "Portlet#BODY");
 	}
 
-	@summary = "Default summary"
-	macro viewNoConversionLinksPGViaAP(webContentTitle = null, author = null, documentTypes = null, webContentContent = null) {
+	macro viewNoConversionLinksPGViaAP {
 		WebContent.viewPGViaAP(
 			author = ${author},
 			webContentContent = ${webContentContent},
@@ -2208,8 +2117,7 @@ definition {
 		}
 	}
 
-	@summary = "Default summary"
-	macro viewNoEditWCCP(webContentTitle = null) {
+	macro viewNoEditWCCP {
 		var key_webContentTitle = ${webContentTitle};
 
 		LexiconEntry.changeDisplayStyle(displayStyle = "list");
@@ -2221,8 +2129,7 @@ definition {
 			locator1 = "MenuItem#ANY_MENU_ITEM");
 	}
 
-	@summary = "Default summary"
-	macro viewNoEditWCViaAP(assetTitle = null) {
+	macro viewNoEditWCViaAP {
 		AssertElementPresent(
 			key_assetTitle = ${assetTitle},
 			locator1 = "AP#ASSET_ABSTRACT_TITLE");
@@ -2232,8 +2139,7 @@ definition {
 			locator1 = "AP#ASSET_ELLIPSIS_ICON");
 	}
 
-	@summary = "Default summary"
-	macro viewNoEditWCViaWCD() {
+	macro viewNoEditWCViaWCD {
 		AssertElementPresent(locator1 = "WCD#WEB_CONTENT_CONTENT");
 
 		AssertElementNotPresent(
@@ -2241,8 +2147,7 @@ definition {
 			locator1 = "Portlet#SPECIFIC_BORDERLESS_ELLIPSIS_ICON");
 	}
 
-	@summary = "Default summary"
-	macro viewNoPermissionCP() {
+	macro viewNoPermissionCP {
 		SiteAdmin.viewPortletTitle(portletTitle = "Web Content");
 
 		AssertElementPresent(locator1 = "NavBar#CONTAINER");
@@ -2252,20 +2157,17 @@ definition {
 			value1 = "No web content was found.");
 	}
 
-	@summary = "Default summary"
-	macro viewNotPresentCP() {
+	macro viewNotPresentCP {
 		AssertElementNotPresent(locator1 = "TextInput#TITLE");
 	}
 
-	@summary = "Default summary"
-	macro viewPageBreak() {
+	macro viewPageBreak {
 		AssertTextEquals.assertPartialText(
 			locator1 = "Pagination#PAGES",
 			value1 = "Pages");
 	}
 
-	@summary = "Default summary"
-	macro viewPaginateRelatedAssets(numberOfPages = null, itemsPerPage = null) {
+	macro viewPaginateRelatedAssets {
 		AssertTextEquals.assertPartialText(
 			locator1 = "Pagination#ITEMS_PER_PAGE_SELECT",
 			value1 = ${itemsPerPage});
@@ -2275,8 +2177,7 @@ definition {
 			value1 = ${numberOfPages});
 	}
 
-	@summary = "Default summary"
-	macro viewPGViaAP(webContentTitle = null, author = null, webContentContent = null) {
+	macro viewPGViaAP {
 		var key_assetContent = ${webContentContent};
 		var key_assetTitle = ${webContentTitle};
 
@@ -2306,8 +2207,7 @@ definition {
 			value1 = ${webContentContent});
 	}
 
-	@summary = "Default summary"
-	macro viewPGViaWCD(image = null, webContentTitle = null, imageOnLive = null, linkToPage = null, draft = null, webContentContent = null, expiredContent = null, linkName = null) {
+	macro viewPGViaWCD {
 		if (${draft} == "true") {
 			AssertTextEquals(
 				locator1 = "Message#ERROR_3",
@@ -2338,24 +2238,21 @@ definition {
 		}
 	}
 
-	@summary = "Default summary"
-	macro viewRelatedAssetsPGViaWCD(relatedAssetTitle = null) {
+	macro viewRelatedAssetsPGViaWCD {
 		AssertTextEquals(
 			key_relatedAssetTitle = ${relatedAssetTitle},
 			locator1 = "AssetRelatedAssets#ASSET_TITLE",
 			value1 = ${relatedAssetTitle});
 	}
 
-	@summary = "Default summary"
-	macro viewRTLLayout() {
+	macro viewRTLLayout {
 		AssertCssValue(
 			locator1 = "TextInput#TITLE",
 			locator2 = "direction",
 			value1 = "rtl");
 	}
 
-	@summary = "Default summary"
-	macro viewSelectedTemplateCP(templateName = null) {
+	macro viewSelectedTemplateCP {
 		Panel.expandPanel(panel = "Default Template");
 
 		AssertTextEquals(
@@ -2363,8 +2260,7 @@ definition {
 			value1 = ${templateName});
 	}
 
-	@summary = "Default summary"
-	macro viewSpecificVersionHistoryCP(webContentTitle = null, webContentStatus = null) {
+	macro viewSpecificVersionHistoryCP {
 		var key_webContentTitle = ${webContentTitle};
 
 		AssertTextEquals(
@@ -2376,8 +2272,7 @@ definition {
 			value1 = ${webContentStatus});
 	}
 
-	@summary = "Default summary"
-	macro viewStatus(webContentTitle = null, webContentContent = null, webContentStatus = null) {
+	macro viewStatus {
 		AssertTextEquals(
 			key_status = ${webContentStatus},
 			locator1 = "WCEditWebContent#WORKFLOW_STATUS",
@@ -2398,8 +2293,7 @@ definition {
 		SelectFrameTop();
 	}
 
-	@summary = "Default summary"
-	macro viewStructureAndTemplateLocalization(structureLocalizationName = null, panel = null, templateLocalizationName = null) {
+	macro viewStructureAndTemplateLocalization {
 		if (isSet(structureLocalizationName)) {
 			AssertTextEquals.assertPartialText(
 				locator1 = "WCEditWebContent#SELECTED_STRUCTURE",
@@ -2415,8 +2309,7 @@ definition {
 		}
 	}
 
-	@summary = "Default summary"
-	macro viewStructureViaAddMenuCP(structureName = null) {
+	macro viewStructureViaAddMenuCP {
 		LexiconEntry.gotoAdd();
 
 		AssertTextEquals(
@@ -2425,8 +2318,7 @@ definition {
 			value1 = ${structureName});
 	}
 
-	@summary = "Default summary"
-	macro viewStructureWithWorkflowPendingCP(webContentTitle = null) {
+	macro viewStructureWithWorkflowPendingCP {
 		WebContentNavigator.gotoViewStatus(
 			webContentStatus = "PENDING",
 			webContentTitle = ${webContentTitle});
@@ -2440,8 +2332,7 @@ definition {
 			value1 = ${webContentTitle});
 	}
 
-	@summary = "Default summary"
-	macro viewTitle(webContentTitle = null, webContentTitleEscapeCharacter = null, onLive = null) {
+	macro viewTitle {
 		if (isSet(webContentTitleEscapeCharacter)) {
 			var key_webContentTitle = ${webContentTitleEscapeCharacter};
 		}
@@ -2461,8 +2352,7 @@ definition {
 		}
 	}
 
-	@summary = "Default summary"
-	macro viewTranslationStatusWithWorkflowCP(webContentTitle = null, webContentContent = null) {
+	macro viewTranslationStatusWithWorkflowCP {
 		WebContentNavigator.gotoViewStatus(
 			translationStatus = "true",
 			webContentStatus = "PENDING",
@@ -2488,8 +2378,7 @@ definition {
 		SelectFrameTop();
 	}
 
-	@summary = "Default summary"
-	macro viewUserEditCP(userFirstLast = null, webContentTitle = null) {
+	macro viewUserEditCP {
 		AssertTextEquals.assertPartialText(
 			key_webContentTitle = ${webContentTitle},
 			locator1 = "WC#ENTRY_LIST_LAST_MODIFIED",
@@ -2500,8 +2389,7 @@ definition {
 			webContentTitle = ${webContentTitle});
 	}
 
-	@summary = "Default summary"
-	macro viewVersion(webContentTitle = null, version = null) {
+	macro viewVersion {
 		var key_panel = "Basic Information";
 
 		WebContentNavigator.gotoEditCP(webContentTitle = ${webContentTitle});
@@ -2519,13 +2407,11 @@ definition {
 			value1 = ${version});
 	}
 
-	@summary = "Default summary"
-	macro viewVideoViaWCD() {
+	macro viewVideoViaWCD {
 		AssertElementPresent(locator1 = "WCD#WEB_CONTENT_VIDEO");
 	}
 
-	@summary = "Default summary"
-	macro viewWCViewableByPermissions() {
+	macro viewWCViewableByPermissions {
 		PortletEntry.inputTitle(title = "Web Content Title");
 
 		Panel.expandPanel(panel = "Permissions");
@@ -2535,8 +2421,7 @@ definition {
 			value1 = "Site Members");
 	}
 
-	@summary = "Default summary"
-	macro viewWithStructureCP(fieldName = null, fieldName2 = null, webContentTitleEscapeCharacter = null, webContentWebContentFieldName = null, description = null, webContentLinkToPage = null, webContentDocumentsAndMedia = null, webContentHTML = null, webContentText = null, webContentInteger = null, webContentImage = null, webContentTextBoxList = null, webContentNumber = null, webContentTextBoxFieldName = null, webContentTextBox2 = null, webContentColor = null, webContentDate = null, webContentWebContent = null, webContentDecimal = null, webContentLinkToPageFieldName = null, webContentRadio = null, webContentBoolean = null, webContentTitle = null, webContentDocumentsAndMediaFieldName = null, webContentSelect = null) {
+	macro viewWithStructureCP {
 		if (!(isSet(predefinedValue))) {
 			LexiconEntry.changeDisplayStyle(displayStyle = "list");
 
@@ -2726,8 +2611,7 @@ definition {
 		}
 	}
 
-	@summary = "Default summary"
-	macro viewWithWorkflowCP(webContentTitle = null, webContentContent = null) {
+	macro viewWithWorkflowCP {
 		WebContentNavigator.gotoViewStatus(
 			webContentStatus = "PENDING",
 			webContentTitle = ${webContentTitle});
@@ -2752,13 +2636,11 @@ definition {
 		SelectFrameTop();
 	}
 
-	@summary = "Default summary"
-	macro viewWithWorkflowPGViaAP(webContentTitle = null) {
+	macro viewWithWorkflowPGViaAP {
 		AssertTextNotPresent(value1 = ${webContentTitle});
 	}
 
-	@summary = "Default summary"
-	macro viewWithWorkflowPGViaWCD(webContentTitle = null, webContentContent = null) {
+	macro viewWithWorkflowPGViaWCD {
 		AssertTextEquals(
 			locator1 = "Message#ERROR_3",
 			value1 = "${webContentTitle} is not approved.");

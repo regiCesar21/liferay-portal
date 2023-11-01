@@ -1,7 +1,6 @@
 definition {
 
-	@summary = "Default summary"
-	macro _getClassNameId(value = null) {
+	macro _getClassNameId {
 		Variables.assertDefined(parameterList = ${value});
 
 		var portalURL = JSONCompany.getPortalURL();

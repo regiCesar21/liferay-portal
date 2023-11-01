@@ -1,14 +1,12 @@
 definition {
 
-	@summary = "Default summary"
-	macro addDefaultPortalCORS() {
+	macro addDefaultPortalCORS {
 		Button.clickAdd();
 
 		Button.clickSave();
 	}
 
-	@summary = "Default summary"
-	macro configureDisplayStyle(displayStyle = null) {
+	macro configureDisplayStyle {
 		Click(locator1 = "Dropdown#TRIGGER");
 
 		DropdownMenuItem.click(menuItem = ${displayStyle});
@@ -20,8 +18,7 @@ definition {
 		SystemSettings.saveConfiguration();
 	}
 
-	@summary = "Default summary"
-	macro configureDynamicExportLimit(exportLimitNumber = null) {
+	macro configureDynamicExportLimit {
 		Type(
 			locator1 = "SystemSettings#ASSETS_DYNAMIC_EXPORT_LIMIT",
 			value1 = ${exportLimitNumber});
@@ -29,8 +26,7 @@ definition {
 		SystemSettings.saveConfiguration();
 	}
 
-	@summary = "Default summary"
-	macro configureSystemSetting(enableSetting = null, settingFieldName = null) {
+	macro configureSystemSetting {
 		var key_settingFieldName = ${settingFieldName};
 
 		if (${enableSetting} == "true") {
@@ -49,8 +45,7 @@ definition {
 		}
 	}
 
-	@summary = "Default summary"
-	macro configureSystemSettingWithRefresh(enableSetting = null, settingFieldName = null) {
+	macro configureSystemSettingWithRefresh {
 		var key_settingFieldName = ${settingFieldName};
 
 		if (${enableSetting} == "true") {
@@ -73,8 +68,7 @@ definition {
 		}
 	}
 
-	@summary = "Default summary"
-	macro deleteConfiguration() {
+	macro deleteConfiguration {
 		Click.waitForMenuToggleJSClick(locator1 = "Icon#BODY_VERTICAL_ELLIPSIS");
 
 		MenuItem.click(menuItem = "Delete");
@@ -82,8 +76,7 @@ definition {
 		Alert.viewSuccessMessage();
 	}
 
-	@summary = "Default summary"
-	macro editSecurityCredential(securityCredential = null) {
+	macro editSecurityCredential {
 		Type(
 			locator1 = "SystemSettings#SECURITY_CREDENTIAL_FIELD",
 			value1 = ${securityCredential});
@@ -106,16 +99,14 @@ definition {
 			value2 = 70);
 	}
 
-	@summary = "Default summary"
-	macro editTextAreaSetting(settingValue = null, settingName = null) {
+	macro editTextAreaSetting {
 		Type(
 			key_label = ${settingName},
 			locator1 = "TextArea#ANY_LABELED",
 			value1 = ${settingValue});
 	}
 
-	@summary = "Default summary"
-	macro editTextAreaSettingMultiLines(settingValues = null, settingName = null) {
+	macro editTextAreaSettingMultiLines {
 		for (var settingValue : list ${settingValues}) {
 			Type.sendKeys(
 				key_label = ${settingName},
@@ -129,21 +120,18 @@ definition {
 		}
 	}
 
-	@summary = "Default summary"
-	macro editTextSetting(settingValue = null, settingName = null) {
+	macro editTextSetting {
 		Type(
 			key_fieldLabel = ${settingName},
 			locator1 = "TextInput#GENERIC_TEXT_INPUT",
 			value1 = ${settingValue});
 	}
 
-	@summary = "Default summary"
-	macro exitEditConfiguration() {
+	macro exitEditConfiguration {
 		Click(locator1 = "Icon#ANGLE_LEFT_BACK");
 	}
 
-	@summary = "Default summary"
-	macro exportConfiguration() {
+	macro exportConfiguration {
 		Click.waitForMenuToggleJSClick(locator1 = "Icon#BODY_VERTICAL_ELLIPSIS");
 
 		MenuItem.click(menuItem = "Export");
@@ -151,8 +139,7 @@ definition {
 		DownloadTempFile();
 	}
 
-	@summary = "Default summary"
-	macro getCurrentUserEmailResquestDenied(curl = null) {
+	macro getCurrentUserEmailResquestDenied {
 		var output = JSONCurlUtil.post(${curl});
 
 		if (contains(${output}, "Access denied to com.liferay.portal.kernel.service.UserService#getCurrentUser")) {
@@ -163,8 +150,7 @@ definition {
 		}
 	}
 
-	@summary = "Default summary"
-	macro getUserEmailAddressRequestDenied(curl = null) {
+	macro getUserEmailAddressRequestDenied {
 		var output = JSONCurlUtil.post(${curl});
 
 		if (contains(${output}, "Access denied to com.liferay.portal.kernel.service.UserService#getUserByEmailAddress")) {
@@ -175,8 +161,7 @@ definition {
 		}
 	}
 
-	@summary = "Default summary"
-	macro getUserEmailSuccessfully(curl = null, companyId = null) {
+	macro getUserEmailSuccessfully {
 		Variables.assertDefined(parameterList = "${curl},${companyId}");
 
 		var output = JSONCurlUtil.post(${curl});
@@ -192,8 +177,7 @@ definition {
 		}
 	}
 
-	@summary = "Default summary"
-	macro getViewUserEmailPermissionDenied(curl = null, userId = null) {
+	macro getViewUserEmailPermissionDenied {
 		Variables.assertDefined(parameterList = "${curl},${userId}");
 
 		var output = JSONCurlUtil.post(${curl});
@@ -203,8 +187,7 @@ definition {
 		}
 	}
 
-	@summary = "Default summary"
-	macro gotoConfiguration(configurationScope = null, configurationName = null, configurationCategory = null) {
+	macro gotoConfiguration {
 		Click(
 			key_itemName = ${configurationCategory},
 			locator1 = "ListGroupItem#ITEM_TEXT");
@@ -225,20 +208,17 @@ definition {
 			locator1 = "Header#H2_TITLE");
 	}
 
-	@summary = "Default summary"
-	macro gotoConfigurationEntry(configurationEntry = null) {
+	macro gotoConfigurationEntry {
 		Click(
 			key_configurationEntry = ${configurationEntry},
 			locator1 = "SystemSettings#CONFIGURATION_ENTRY");
 	}
 
-	@summary = "Default summary"
-	macro openSystemSettingsAdmin() {
+	macro openSystemSettingsAdmin {
 		Navigator.openWithAppendToBaseURL(urlAppend = "group/control_panel/manage?p_p_id=com_liferay_configuration_admin_web_portlet_SystemSettingsPortlet");
 	}
 
-	@summary = "Default summary"
-	macro resetConfiguration() {
+	macro resetConfiguration {
 		Click.waitForMenuToggleJSClick(locator1 = "Icon#BODY_VERTICAL_ELLIPSIS");
 
 		MenuItem.click(menuItem = "Reset Default Values");
@@ -246,8 +226,7 @@ definition {
 		Alert.viewSuccessMessage();
 	}
 
-	@summary = "Default summary"
-	macro saveConfiguration() {
+	macro saveConfiguration {
 		if (IsElementPresent(locator1 = "Button#SAVE")) {
 			PortletEntry.save();
 		}
@@ -258,8 +237,7 @@ definition {
 		}
 	}
 
-	@summary = "Default summary"
-	macro selectOptionSetting(fieldName = null, selectOption = null) {
+	macro selectOptionSetting {
 		Click(
 			key_fieldLabel = ${fieldName},
 			locator1 = "SystemSettings#DROPDOWN_MENU");
@@ -269,16 +247,14 @@ definition {
 			locator1 = "SystemSettings#DROPDOWN_MENU_OPTION");
 	}
 
-	@summary = "Default summary"
-	macro viewTextareaPartialText(settingValue = null, settingName = null) {
+	macro viewTextareaPartialText {
 		AssertTextEquals.assertPartialText(
 			key_label = ${settingName},
 			locator1 = "TextArea#ANY_LABELED",
 			value1 = ${settingValue});
 	}
 
-	@summary = "Default summary"
-	macro viewTextareaValue(fieldName = null, fieldValue = null, repeatableFieldNumber = null) {
+	macro viewTextareaValue {
 		if (isSet(repeatableFieldNumber)) {
 			AssertTextEquals.assertValue(
 				key_fieldName = ${fieldName},

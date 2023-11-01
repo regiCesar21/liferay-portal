@@ -1,7 +1,6 @@
 definition {
 
-	@summary = "Default summary"
-	macro addDocumentum(dmCabinetName = null, dmRepositoryFieldName = null) {
+	macro addDocumentum {
 		Panel.expandPanel(panel = "Repository Configuration");
 
 		Select(
@@ -17,8 +16,7 @@ definition {
 			value1 = ${dmRepositoryFieldName});
 	}
 
-	@summary = "Default summary"
-	macro addSharepoint(permissionDefinitionKey = null, dmRepositorySiteURL = null, dmRepositoryLibraryPath = null, roleTitle = null, dmServerVersion = null, dmRepositoryName = null, dmRepositorySiteAbsoluteURL = null, dmRepositoryLibraryName = null) {
+	macro addSharepoint {
 		Panel.expandPanel(panel = "Repository Configuration");
 
 		Select(
@@ -70,8 +68,7 @@ definition {
 		}
 	}
 
-	@summary = "Default summary"
-	macro cleanRepository(dmDocumentTitle = null, dmFolderName = null) {
+	macro cleanRepository {
 		Navigator.openSpecificURL(url = "https://localhost:8443/group/guest/~/control_panel/manage?p_p_id=com_liferay_document_library_web_portlet_DLAdminPortlet");
 
 		DMRepository.gotoCP(dmRepositoryName = "Collaboration Test Application");
@@ -94,13 +91,11 @@ definition {
 		}
 	}
 
-	@summary = "Default summary"
-	macro edit(dmRepositoryName = null) {
+	macro edit {
 		PortletEntry.inputName(name = ${dmRepositoryName});
 	}
 
-	@summary = "Default summary"
-	macro gotoCP(dmRepositoryName = null) {
+	macro gotoCP {
 		var key_dmRepositoryName = ${dmRepositoryName};
 
 		AssertClick.assertTextClickAtAndPause(
@@ -116,8 +111,7 @@ definition {
 			value1 = ${dmRepositoryName});
 	}
 
-	@summary = "Default summary"
-	macro tearDownCP() {
+	macro tearDownCP {
 		Navigator.openURL();
 
 		ProductMenu.gotoPortlet(
@@ -155,8 +149,7 @@ definition {
 		}
 	}
 
-	@summary = "Default summary"
-	macro viewBreadcrumb(dmRepositoryName = null) {
+	macro viewBreadcrumb {
 		var key_dmFolderName = ${dmRepositoryName};
 
 		AssertTextEquals(

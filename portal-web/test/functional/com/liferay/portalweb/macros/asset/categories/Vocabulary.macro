@@ -1,7 +1,6 @@
 definition {
 
-	@summary = "Default summary"
-	macro addAssociatedAssetType(required = null, assetType = null) {
+	macro addAssociatedAssetType {
 		Panel.expandPanel(panel = "Associated Asset Types");
 
 		if (!(isSet(rowNumber))) {
@@ -20,8 +19,7 @@ definition {
 		}
 	}
 
-	@summary = "Default summary"
-	macro addCP(allowMultipleCategories = null, localizationName = null, locale2 = null, vocabularyDescription = null, localization2Name = null, vocabularyName = null, locale = null) {
+	macro addCP {
 		Vocabulary.gotoAddVocabulary();
 
 		PortletEntry.inputName(name = ${vocabularyName});
@@ -57,8 +55,7 @@ definition {
 		Alert.viewSuccessMessage();
 	}
 
-	@summary = "Default summary"
-	macro addInternalVocabulary(vocabularyName = null) {
+	macro addInternalVocabulary {
 		Vocabulary.gotoAddVocabulary();
 
 		PortletEntry.inputName(name = ${vocabularyName});
@@ -72,8 +69,7 @@ definition {
 		Alert.viewSuccessMessage();
 	}
 
-	@summary = "Default summary"
-	macro addViewableByCP(viewableBy = null, vocabularyName = null) {
+	macro addViewableByCP {
 		Vocabulary.gotoAddVocabulary();
 
 		PortletEntry.inputName(name = ${vocabularyName});
@@ -96,8 +92,7 @@ definition {
 			value1 = ${vocabularyName});
 	}
 
-	@summary = "Default summary"
-	macro addVocabularyWithNullTitle() {
+	macro addVocabularyWithNullTitle {
 		Vocabulary.gotoAddVocabulary();
 
 		PortletEntry.inputName(name = " ");
@@ -107,8 +102,7 @@ definition {
 		Alert.viewRequiredField();
 	}
 
-	@summary = "Default summary"
-	macro addWithAssociatedAssetTypeCP(assetSubtype = null, vocabularyName = null, rowNumber = null, required = null, assetType = null) {
+	macro addWithAssociatedAssetTypeCP {
 		Vocabulary.gotoAddVocabulary();
 
 		PortletEntry.inputName(name = ${vocabularyName});
@@ -136,8 +130,7 @@ definition {
 			value1 = ${vocabularyName});
 	}
 
-	@summary = "Default summary"
-	macro deleteAssociatedAssetTypeViaVocabularyCP(vocabularyName = null) {
+	macro deleteAssociatedAssetTypeViaVocabularyCP {
 		Navigator.gotoNavNested(navNested = ${vocabularyName});
 
 		LexiconEntry.gotoEllipsisMenuItem(menuItem = "Edit");
@@ -149,8 +142,7 @@ definition {
 		PortletEntry.save();
 	}
 
-	@summary = "Default summary"
-	macro deleteByIconCP(vocabularyName = null) {
+	macro deleteByIconCP {
 		WaitForLiferayEvent.initializeLiferayEventLog();
 
 		Click.waitForMenuToggleJSClick(locator1 = "NavNested#NAV_NESTED_ELLIPSIS");
@@ -182,8 +174,7 @@ definition {
 			value1 = ${vocabularyName});
 	}
 
-	@summary = "Default summary"
-	macro deleteByMenuCP(vocabularyName = null) {
+	macro deleteByMenuCP {
 		WaitForLiferayEvent.initializeLiferayEventLog();
 
 		Click.waitForMenuToggleJSClick(locator1 = "NavNested#NAV_NESTED_ELLIPSIS");
@@ -212,8 +203,7 @@ definition {
 			value1 = ${vocabularyName});
 	}
 
-	@summary = "Default summary"
-	macro editCP(allowMultipleCategories = null, vocabularyNameEdit = null, vocabularyName = null) {
+	macro editCP {
 		Navigator.gotoNavNested(navNested = ${vocabularyName});
 
 		LexiconEntry.gotoEllipsisMenuItem(menuItem = "Edit");
@@ -240,8 +230,7 @@ definition {
 		}
 	}
 
-	@summary = "Default summary"
-	macro gotoAddVocabulary() {
+	macro gotoAddVocabulary {
 		if (IsElementPresent(locator1 = "//*[contains(@class,'taglib-empty-result-message-title')][normalize-space(text())='No Vocabularies yet.']")) {
 			Button.click(button = "Add Vocabulary");
 		}
@@ -257,8 +246,7 @@ definition {
 		}
 	}
 
-	@summary = "Default summary"
-	macro tearDownCP() {
+	macro tearDownCP {
 		Navigator.openURL();
 
 		ProductMenu.gotoPortlet(
@@ -284,8 +272,7 @@ definition {
 		AssertConfirm(value1 = "Are you sure you want to delete the selected entries? They will be deleted immediately.");
 	}
 
-	@summary = "Default summary"
-	macro viewCP(allowMultipleCategories = null, vocabularyName = null) {
+	macro viewCP {
 		AssertTextEquals(
 			key_navNested = ${vocabularyName},
 			locator1 = "NavNested#NAV_NESTED_LINK",
@@ -300,8 +287,7 @@ definition {
 		}
 	}
 
-	@summary = "Default summary"
-	macro viewVocabularyPermissionsCP(viewableBy = null, vocabularyName = null) {
+	macro viewVocabularyPermissionsCP {
 		Navigator.gotoNavNested(navNested = ${vocabularyName});
 
 		WaitForLiferayEvent.initializeLiferayEventLog();
@@ -323,8 +309,7 @@ definition {
 		SelectFrameTop(value1 = "relative=top");
 	}
 
-	@summary = "Default summary"
-	macro viewWithAssociatedAssetTypeCP(vocabularyName = null, vocabularyAssociatedAssetType = null) {
+	macro viewWithAssociatedAssetTypeCP {
 		Navigator.gotoNavNested(navNested = ${vocabularyName});
 
 		LexiconEntry.gotoEllipsisMenuItem(menuItem = "Edit");

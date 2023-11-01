@@ -1,7 +1,6 @@
 definition {
 
-	@summary = "Default summary"
-	macro _addGroup(parentGroupId = null, groupDescriptionMap = null, groupNameMap = null) {
+	macro _addGroup {
 		Variables.assertDefined(parameterList = ${groupNameMap});
 
 		if (!(isSet(portalURL))) {
@@ -44,8 +43,7 @@ definition {
 		com.liferay.poshi.runner.util.JSONCurlUtil.post(${curl});
 	}
 
-	@summary = "Default summary"
-	macro _assignGroupRoleToUser(roleId = null, groupId = null, userId = null) {
+	macro _assignGroupRoleToUser {
 		Variables.assertDefined(parameterList = "${groupId},${roleId},${userId}");
 
 		var portalURL = JSONCompany.getPortalURL();
@@ -61,8 +59,7 @@ definition {
 		com.liferay.poshi.runner.util.JSONCurlUtil.post(${curl});
 	}
 
-	@summary = "Default summary"
-	macro _assignUserGroupToGroup(userGroupId = null, groupId = null) {
+	macro _assignUserGroupToGroup {
 		Variables.assertDefined(parameterList = "${groupId},${userGroupId}");
 
 		var portalURL = JSONCompany.getPortalURL();
@@ -75,8 +72,7 @@ definition {
 		com.liferay.poshi.runner.util.JSONCurlUtil.post(${curl});
 	}
 
-	@summary = "Default summary"
-	macro _assignUserToGroup(groupId = null, userId = null) {
+	macro _assignUserToGroup {
 		Variables.assertDefined(parameterList = "${groupId},${userId}");
 
 		var portalURL = JSONCompany.getPortalURL();
@@ -91,8 +87,7 @@ definition {
 		com.liferay.poshi.runner.util.JSONCurlUtil.post(${curl});
 	}
 
-	@summary = "Default summary"
-	macro _deleteGroup(groupId = null) {
+	macro _deleteGroup {
 		Variables.assertDefined(parameterList = ${groupId});
 
 		var portalURL = JSONCompany.getPortalURL();
@@ -106,8 +101,7 @@ definition {
 		com.liferay.poshi.runner.util.JSONCurlUtil.post(${curl});
 	}
 
-	@summary = "Default summary"
-	macro _getDepotIdByName(depotName = null) {
+	macro _getDepotIdByName {
 		Variables.assertDefined(parameterList = ${depotName});
 
 		var companyId = JSONCompany.getCompanyId();
@@ -131,8 +125,7 @@ definition {
 		return ${depotId};
 	}
 
-	@summary = "Default summary"
-	macro _getGroupIdByGroupKey(site = null, grandParentGroupName = null, parentGroupName = null, groupKey = null) {
+	macro _getGroupIdByGroupKey {
 		Variables.assertDefined(parameterList = "${groupKey},${site}");
 
 		var companyId = JSONCompany.getCompanyId();
@@ -159,8 +152,7 @@ definition {
 		return ${groupId};
 	}
 
-	@summary = "Default summary"
-	macro _getGroupIdByName(groupName = null, site = null) {
+	macro _getGroupIdByName {
 		Variables.assertDefined(parameterList = "${groupName},${site}");
 
 		if (!(isSet(portalURL))) {
@@ -187,8 +179,7 @@ definition {
 		return ${groupId};
 	}
 
-	@summary = "Default summary"
-	macro _getGroupName(groupNam = null, groupId = null) {
+	macro _getGroupName {
 		Variables.assertDefined(parameterList = ${groupId});
 
 		var companyId = JSONCompany.getCompanyId();
@@ -204,8 +195,7 @@ definition {
 		return ${groupNam};
 	}
 
-	@summary = "Default summary"
-	macro _getParentGroupIdByName(groupName = null, grandParentGroupName = null) {
+	macro _getParentGroupIdByName {
 		Variables.assertDefined(parameterList = ${groupName});
 
 		var companyId = JSONCompany.getCompanyId();
@@ -230,8 +220,7 @@ definition {
 		return ${groupId};
 	}
 
-	@summary = "Default summary"
-	macro _getSiteIdByGroupKey(groupName = null) {
+	macro _getSiteIdByGroupKey {
 		Variables.assertDefined(parameterList = ${groupName});
 
 		var companyId = JSONCompany.getCompanyId();

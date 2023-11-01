@@ -1,7 +1,6 @@
 definition {
 
-	@summary = "Default summary"
-	macro _addDisplayPageTemplateEntry(displayPageTemplateEntryName = null, groupId = null, masterLayoutPlid = null, classNameId = null, serviceContext = null, classTypeId = null) {
+	macro _addDisplayPageTemplateEntry {
 		Variables.assertDefined(parameterList = "${classNameId},${classTypeId},${displayPageTemplateEntryName},${groupId},${masterLayoutPlid},${serviceContext}");
 
 		var portalURL = JSONCompany.getPortalURL();
@@ -22,8 +21,7 @@ definition {
 		com.liferay.poshi.runner.util.JSONCurlUtil.post(${curl});
 	}
 
-	@summary = "Default summary"
-	macro _addGlobalPageTemplateEntry(nameMap = null, active = null, descriptionMap = null, serviceContext = null) {
+	macro _addGlobalPageTemplateEntry {
 		Variables.assertDefined(parameterList = "${active},${descriptionMap},${nameMap},${serviceContext}");
 
 		var portalURL = JSONCompany.getPortalURL();
@@ -40,8 +38,7 @@ definition {
 		com.liferay.poshi.runner.util.JSONCurlUtil.post(${curl});
 	}
 
-	@summary = "Default summary"
-	macro _addLayoutPageTemplateCollection(layoutPageTemplateCollectionName = null, groupId = null, description = null, serviceContext = null) {
+	macro _addLayoutPageTemplateCollection {
 		Variables.assertDefined(parameterList = "${description},${groupId},${layoutPageTemplateCollectionName},${serviceContext}");
 
 		var portalURL = JSONCompany.getPortalURL();
@@ -58,8 +55,7 @@ definition {
 		com.liferay.poshi.runner.util.JSONCurlUtil.post(${curl});
 	}
 
-	@summary = "Default summary"
-	macro _addLayoutPageTemplateEntry(groupId = null, layoutPageTemplateCollectionId = null, masterLayoutPlid = null, layoutPageTemplateEntryName = null, serviceContext = null, type = null, status = null) {
+	macro _addLayoutPageTemplateEntry {
 		Variables.assertDefined(parameterList = "${groupId},${layoutPageTemplateCollectionId},${layoutPageTemplateEntryName},${masterLayoutPlid},${serviceContext},${status},${type}");
 
 		var portalURL = JSONCompany.getPortalURL();
@@ -79,8 +75,7 @@ definition {
 		com.liferay.poshi.runner.util.JSONCurlUtil.post(${curl});
 	}
 
-	@summary = "Default summary"
-	macro _addMasterPageTemplateEntry(groupId = null, masterPageTemplateEntryName = null, serviceContext = null) {
+	macro _addMasterPageTemplateEntry {
 		Variables.assertDefined(parameterList = "${groupId},${masterPageTemplateEntryName},${serviceContext}");
 
 		var portalURL = JSONCompany.getPortalURL();
@@ -99,8 +94,7 @@ definition {
 		com.liferay.poshi.runner.util.JSONCurlUtil.post(${curl});
 	}
 
-	@summary = "Default summary"
-	macro _deleteLayoutPageTemplateEntry(layoutPageTemplateEntryId = null) {
+	macro _deleteLayoutPageTemplateEntry {
 		Variables.assertDefined(parameterList = ${layoutPageTemplateEntryId});
 
 		var portalURL = JSONCompany.getPortalURL();
@@ -114,8 +108,7 @@ definition {
 		com.liferay.poshi.runner.util.JSONCurlUtil.post(${curl});
 	}
 
-	@summary = "Default summary"
-	macro _getLayoutPageTemplateCollectionIdByName(layoutPageTemplateCollectionName = null, groupId = null) {
+	macro _getLayoutPageTemplateCollectionIdByName {
 		Variables.assertDefined(parameterList = "${groupId},${layoutPageTemplateCollectionName}");
 
 		var portalURL = JSONCompany.getPortalURL();
@@ -139,8 +132,7 @@ definition {
 		return ${layoutPageTemplateCollectionId};
 	}
 
-	@summary = "Default summary"
-	macro _getLayoutPageTemplateEntryIdByName(groupId = null, layoutPageTemplateEntryName = null, type = null) {
+	macro _getLayoutPageTemplateEntryIdByName {
 		Variables.assertDefined(parameterList = "${groupId},${layoutPageTemplateEntryName},${type}");
 
 		var portalURL = JSONCompany.getPortalURL();
@@ -168,8 +160,7 @@ definition {
 		return ${layoutPageTemplateEntryId};
 	}
 
-	@summary = "Default summary"
-	macro _getMasterLayoutPlidByName(groupId = null, masterLayoutEntryName = null) {
+	macro _getMasterLayoutPlidByName {
 		Variables.assertDefined(parameterList = "${groupId},${masterLayoutEntryName}");
 
 		var portalURL = JSONCompany.getPortalURL();

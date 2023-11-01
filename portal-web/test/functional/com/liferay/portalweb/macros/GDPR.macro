@@ -1,7 +1,6 @@
 definition {
 
-	@summary = "Default summary"
-	macro addExportProcessCP(userLastName = null, userFirstName = null, applications = null) {
+	macro addExportProcessCP {
 		var key_application = ${application};
 
 		LexiconEntry.gotoAdd();
@@ -56,8 +55,7 @@ definition {
 		}
 	}
 
-	@summary = "Default summary"
-	macro anonymizeDataViaReviewData(application = null) {
+	macro anonymizeDataViaReviewData {
 		var key_application = ${application};
 
 		if (isSet(application)) {
@@ -93,8 +91,7 @@ definition {
 		Alert.viewSuccessMessage();
 	}
 
-	@summary = "Default summary"
-	macro deleteEntryCP(rowEntry = null) {
+	macro deleteEntryCP {
 		if (isSet(rowEntry)) {
 			LexiconEntry.gotoEntryMenuItemNoError(
 				menuItem = "Delete",
@@ -124,8 +121,7 @@ definition {
 		Alert.viewSuccessMessage();
 	}
 
-	@summary = "Default summary"
-	macro downloadExportedPersonalData(applications = null) {
+	macro downloadExportedPersonalData {
 		for (var application : list ${applications}) {
 			var key_rowEntry = ${application};
 
@@ -137,8 +133,7 @@ definition {
 		}
 	}
 
-	@summary = "Default summary"
-	macro editEntryCP(rowEntry = null, applications = null) {
+	macro editEntryCP {
 		LexiconEntry.gotoEntryMenuItemNoError(
 			menuItem = "Edit",
 			rowEntry = ${rowEntry});
@@ -148,8 +143,7 @@ definition {
 			locator1 = "ProductMenu#PORTLET_ACTIVE");
 	}
 
-	@summary = "Default summary"
-	macro filterByApplications(itemsCount = null, applications = null) {
+	macro filterByApplications {
 		Click.clickNoWaitForVisible(
 			key_selectData = ${applications},
 			locator1 = "DataErasure#REVIEW_DATA_SELECT");
@@ -169,8 +163,7 @@ definition {
 			value1 = "Remaining Items: ${itemsCount}");
 	}
 
-	@summary = "Default summary"
-	macro filterByScope(scope = null) {
+	macro filterByScope {
 		Click.clickNoWaitForVisible(
 			key_selectData = ${scope},
 			locator1 = "DataErasure#REVIEW_DATA_SELECT");
@@ -180,8 +173,7 @@ definition {
 			locator1 = "DataErasure#REVIEW_DATA_SELECTED");
 	}
 
-	@summary = "Default summary"
-	macro viewEntryRowInApplicationCP(tableEntry = null, tableEntryPartialTextList = null) {
+	macro viewEntryRowInApplicationCP {
 		for (var tableEntryPartialText : list ${tableEntryPartialTextList}) {
 			LexiconTable.viewTableEntryPartialText(
 				tableEntry = ${tableEntry},
@@ -189,8 +181,7 @@ definition {
 		}
 	}
 
-	@summary = "Default summary"
-	macro viewNoEntryInApplicationCP(applications = null) {
+	macro viewNoEntryInApplicationCP {
 		if (IsElementNotPresent(key_tab = "Review Data", locator1 = "NavTab#ACTIVE_TAB_LINK")) {
 			Navigator.gotoNavTab(navTab = "Review Data");
 		}

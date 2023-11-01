@@ -1,7 +1,6 @@
 definition {
 
-	@summary = "Default summary"
-	macro addSegment(date = null, fieldName = null, description = null, workflowAction = null, segmentName = null, operator = null, groupName = null, site = null, assetCategoryIds = null, assetTagNames = null, text = null) {
+	macro addSegment {
 		Variables.assertDefined(parameterList = "${groupName},${segmentName},${fieldName},${operator}");
 
 		var descriptionMap = JSONSegmentsentrySetter.setDescriptionMap(description = ${description});
@@ -27,8 +26,7 @@ definition {
 			serviceContext = ${serviceContext});
 	}
 
-	@summary = "Default summary"
-	macro getSegmentId(segmentName = null) {
+	macro getSegmentId {
 		Variables.assertDefined(parameterList = ${segmentName});
 
 		if (!(isSet(groupName))) {

@@ -2,8 +2,7 @@ definition {
 
 	var assetType = "Wiki Node";
 
-	@summary = "Default summary"
-	macro addCP(wikiNodeName = null) {
+	macro addCP {
 		LexiconEntry.gotoAdd();
 
 		PortletEntry.inputName(name = ${wikiNodeName});
@@ -15,8 +14,7 @@ definition {
 		Alert.viewSuccessMessage();
 	}
 
-	@summary = "Default summary"
-	macro addMainCP() {
+	macro addMainCP {
 		Navigator.openURL();
 
 		ProductMenu.gotoPortlet(
@@ -28,8 +26,7 @@ definition {
 		}
 	}
 
-	@summary = "Default summary"
-	macro configureEmailCP(bodyContent = null) {
+	macro configureEmailCP {
 		Click(locator1 = "Portlet#OPTIONS_ICON");
 
 		MenuItem.click(menuItem = "Configuration");
@@ -55,8 +52,7 @@ definition {
 		}
 	}
 
-	@summary = "Default summary"
-	macro deleteCP(wikiNodeName = null) {
+	macro deleteCP {
 		LexiconEntry.changeDisplayStyle(displayStyle = "table");
 
 		var key_wikiNodeName = ${wikiNodeName};
@@ -74,8 +70,7 @@ definition {
 		RecycleBin.emptyCP();
 	}
 
-	@summary = "Default summary"
-	macro editCP(wikiNodeName = null, wikiNodeNameEdit = null, wikiNodeDescriptionEdit = null) {
+	macro editCP {
 		var key_wikiNodeName = ${wikiNodeName};
 
 		LexiconEntry.changeDisplayStyle(displayStyle = "table");
@@ -99,8 +94,7 @@ definition {
 		Alert.viewSuccessMessage();
 	}
 
-	@summary = "Default summary"
-	macro tearDownCP() {
+	macro tearDownCP {
 		Navigator.openURL();
 
 		ProductMenu.gotoPortlet(
@@ -120,8 +114,7 @@ definition {
 		RecycleBin.emptyCP();
 	}
 
-	@summary = "Default summary"
-	macro viewCP(wikiNodeName = null, numberOfWikiPages = null) {
+	macro viewCP {
 		var key_wikiNodeName = ${wikiNodeName};
 
 		LexiconEntry.changeDisplayStyle(displayStyle = "table");
@@ -141,8 +134,7 @@ definition {
 		SiteAdmin.viewPortletTitle(portletTitle = ${wikiNodeName});
 	}
 
-	@summary = "Default summary"
-	macro viewMainNode(wikiNodeName = null) {
+	macro viewMainNode {
 		var key_wikiNodeName = ${wikiNodeName};
 
 		AssertTextEquals(

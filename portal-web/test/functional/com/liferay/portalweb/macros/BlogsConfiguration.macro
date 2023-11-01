@@ -1,7 +1,6 @@
 definition {
 
-	@summary = "Default summary"
-	macro enableReadingTime() {
+	macro enableReadingTime {
 		ApplicationsMenu.gotoPortlet(
 			category = "Configuration",
 			panel = "Control Panel",
@@ -25,8 +24,7 @@ definition {
 		Alert.viewSuccessMessage();
 	}
 
-	@summary = "Default summary"
-	macro enableSocialBookmarkSites(enableSocialBookmarkSites = null) {
+	macro enableSocialBookmarkSites {
 		for (var socialBookmarkSite : list ${enableSocialBookmarkSites}) {
 			AddSelection(
 				locator1 = "SocialBookmarks#ENABLE_SOCIAL_BOOKMARK_AVAILABLE_SELECT",
@@ -40,49 +38,41 @@ definition {
 		}
 	}
 
-	@summary = "Default summary"
-	macro gotoRSS() {
+	macro gotoRSS {
 		AssertClick(
 			locator1 = "Configuration#NAVIGATION_RSS",
 			value1 = "RSS");
 	}
 
-	@summary = "Default summary"
-	macro selectConfigurationIFrame() {
+	macro selectConfigurationIFrame {
 		SelectFrame(locator1 = "IFrame#MODAL_BODY");
 	}
 
-	@summary = "Default summary"
-	macro selectDisplayTemplate(displayTemplate = null) {
+	macro selectDisplayTemplate {
 		Select(
 			locator1 = "Select#DISPLAY_TEMPLATE",
 			value1 = ${displayTemplate});
 	}
 
-	@summary = "Default summary"
-	macro selectMaximumItemstoDisplay(maximumItemsToDisplay = null) {
+	macro selectMaximumItemstoDisplay {
 		Select(
 			locator1 = "Select#PAGE_DELTA",
 			value1 = ${maximumItemsToDisplay});
 	}
 
-	@summary = "Default summary"
-	macro uncheckComments() {
+	macro uncheckComments {
 		Uncheck(locator1 = "Checkbox#ENABLE_COMMENTS");
 	}
 
-	@summary = "Default summary"
-	macro uncheckRelatedAssets() {
+	macro uncheckRelatedAssets {
 		Uncheck(locator1 = "Checkbox#SHOW_RELATED_ASSETS");
 	}
 
-	@summary = "Default summary"
-	macro uncheckRSSSubscriptionCheckbox() {
+	macro uncheckRSSSubscriptionCheckbox {
 		Uncheck.uncheckToggleSwitch(locator1 = "Checkbox#ENABLE_RSS_SUBSCRIPTION");
 	}
 
-	@summary = "Default summary"
-	macro viewAsSiteMemberPG() {
+	macro viewAsSiteMemberPG {
 		var key_portletName = "Blogs";
 
 		AssertElementPresent(locator1 = "Portlet#TITLE");
@@ -108,8 +98,7 @@ definition {
 			value1 = "RSS");
 	}
 
-	@summary = "Default summary"
-	macro viewDefaultConfiguration() {
+	macro viewDefaultConfiguration {
 		AssertTextEquals.assertValue(
 			locator1 = "Select#PAGE_DELTA",
 			value1 = 20);
@@ -143,8 +132,7 @@ definition {
 			value1 = "Facebook");
 	}
 
-	@summary = "Default summary"
-	macro viewDefaultConfigurationRSS() {
+	macro viewDefaultConfigurationRSS {
 		Check.checkToggleSwitch(locator1 = "Checkbox#ENABLE_RSS_SUBSCRIPTION");
 
 		AssertTextEquals.assertValue(
@@ -160,8 +148,7 @@ definition {
 			value1 = "atom_1.0");
 	}
 
-	@summary = "Default summary"
-	macro viewNoPermissionCP() {
+	macro viewNoPermissionCP {
 		var key_portletTitle = "Blogs";
 
 		AssertTextEquals(
@@ -175,8 +162,7 @@ definition {
 			value1 = "No entries were found.");
 	}
 
-	@summary = "Default summary"
-	macro viewNoPermissionPG() {
+	macro viewNoPermissionPG {
 		var key_text = "New Entry";
 
 		AssertElementNotPresent(locator1 = "Button#ANY");
@@ -204,13 +190,11 @@ definition {
 		}
 	}
 
-	@summary = "Default summary"
-	macro viewNoSubscribePG() {
+	macro viewNoSubscribePG {
 		AssertElementNotPresent(locator1 = "Blogs#SUBSCRIBE_LINK");
 	}
 
-	@summary = "Default summary"
-	macro viewPermissionsPG() {
+	macro viewPermissionsPG {
 		Click.mouseOverClick(locator1 = "Portlet#OPTIONS_ICON");
 
 		if (IsElementPresent(locator1 = "Portlet#OPTIONS_MENULIST_PERMISSIONS")) {
@@ -222,8 +206,7 @@ definition {
 		MenuItem.viewPresent(menuItem = "Permissions");
 	}
 
-	@summary = "Default summary"
-	macro viewScopeDefaultNoEntryCP(contentScopeName = null) {
+	macro viewScopeDefaultNoEntryCP {
 		Navigator.openURL();
 
 		ProductMenu.gotoPortlet(
@@ -241,15 +224,13 @@ definition {
 			value1 = "No entries were found.");
 	}
 
-	@summary = "Default summary"
-	macro viewScopeSelection(scopeSelection = null) {
+	macro viewScopeSelection {
 		AssertSelectedLabel(
 			locator1 = "Select#SCOPE",
 			value1 = ${scopeSelection});
 	}
 
-	@summary = "Default summary"
-	macro viewSubscribePG() {
+	macro viewSubscribePG {
 		AssertTextEquals(
 			locator1 = "Blogs#SUBSCRIBE_LINK",
 			value1 = "Subscribe");

@@ -1,7 +1,6 @@
 definition {
 
-	@summary = "Default summary"
-	macro assertDatabaseCount(databaseSubstring = null, databaseFilter = null, expectedCount = null) {
+	macro assertDatabaseCount {
 		Variables.assertDefined(parameterList = "${databaseFilter},${databaseSubstring},${expectedCount}");
 
 		var mysqlStatement = "SHOW DATABASES LIKE '${databaseFilter}';";
@@ -15,8 +14,7 @@ definition {
 		}
 	}
 
-	@summary = "Default summary"
-	macro assertTextInMySQLStatementResult(text = null, mysqlStatement = null) {
+	macro assertTextInMySQLStatementResult {
 		var sqlResults = SQL.executeMySQLStatement(mysqlStatement = ${mysqlStatement});
 
 		if (!(contains(${sqlResults}, ${text}))) {
@@ -24,8 +22,7 @@ definition {
 		}
 	}
 
-	@summary = "Default summary"
-	macro executeMySQLStatement(mysqlStatement = null) {
+	macro executeMySQLStatement {
 		Variables.assertDefined(parameterList = ${mysqlStatement});
 
 		var liferayHome = PropsUtil.get("liferay.home.dir.name");

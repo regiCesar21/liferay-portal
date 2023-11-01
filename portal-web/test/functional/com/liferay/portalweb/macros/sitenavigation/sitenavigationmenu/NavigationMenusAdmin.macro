@@ -1,7 +1,6 @@
 definition {
 
-	@summary = "Default summary"
-	macro _addItemPage(pageNames = null) {
+	macro _addItemPage {
 		IFrame.selectConfigurationFrame();
 
 		if (!(isSet(privacy))) {
@@ -17,13 +16,11 @@ definition {
 		}
 	}
 
-	@summary = "Default summary"
-	macro _addItemSubmenu(submenuName = null) {
+	macro _addItemSubmenu {
 		PortletEntry.inputName(name = ${submenuName});
 	}
 
-	@summary = "Default summary"
-	macro _addItemURL(urlName = null, url = null) {
+	macro _addItemURL {
 		PortletEntry.inputName(name = ${urlName});
 
 		Type(
@@ -31,8 +28,7 @@ definition {
 			value1 = ${url});
 	}
 
-	@summary = "Default summary"
-	macro _editItemPage(name = null) {
+	macro _editItemPage {
 		Check.checkToggleSwitch(locator1 = "SiteNavigationMenu#USE_CUSTOM_NAME_CHECKBOX");
 
 		if (isSet(name)) {
@@ -42,8 +38,7 @@ definition {
 		}
 	}
 
-	@summary = "Default summary"
-	macro _editItemSubmenu(name = null) {
+	macro _editItemSubmenu {
 		if (isSet(name)) {
 			Type(
 				locator1 = "TextInput#NAME",
@@ -51,8 +46,7 @@ definition {
 		}
 	}
 
-	@summary = "Default summary"
-	macro _editItemURL(name = null, URL = null) {
+	macro _editItemURL {
 		if (isSet(name)) {
 			Type(
 				locator1 = "TextInput#NAME",
@@ -65,8 +59,7 @@ definition {
 		}
 	}
 
-	@summary = "Default summary"
-	macro addItem(item = null, urlName = null, submenuName = null, privacy = null, url = null, pageNames = null) {
+	macro addItem {
 		WaitForLiferayEvent.initializeLiferayEventLog();
 
 		Click(locator1 = "Button#PLUS");
@@ -100,8 +93,7 @@ definition {
 		IFrame.selectTopFrame();
 	}
 
-	@summary = "Default summary"
-	macro addMenu(menuName = null) {
+	macro addMenu {
 		LexiconEntry.gotoAdd();
 
 		PortletEntry.inputName(name = ${menuName});
@@ -109,8 +101,7 @@ definition {
 		Modal.save();
 	}
 
-	@summary = "Default summary"
-	macro addTranslation(itemName = null, translation = null, locale = null) {
+	macro addTranslation {
 		NavigationMenusAdmin.openItemSidebar(itemName = ${itemName});
 
 		Pause(locator1 = 3000);
@@ -128,8 +119,7 @@ definition {
 		Button.clickSave();
 	}
 
-	@summary = "Default summary"
-	macro configureMenuType(menuType = null, navigationMenu = null, oldPrimaryNavigationMenu = null) {
+	macro configureMenuType {
 		if (${menuType} == "Primary Navigation") {
 			LexiconEntry.gotoEntryMenuItemNoError(
 				menuItem = ${menuType},
@@ -151,15 +141,13 @@ definition {
 			locator1 = "ContentRow#ENTRY_CONTENT_ENTRY_TEXT");
 	}
 
-	@summary = "Default summary"
-	macro deleteItem(itemName = null) {
+	macro deleteItem {
 		Click(
 			key_itemName = ${itemName},
 			locator1 = "SiteNavigationMenu#ITEM_ENTRY_CLOSE");
 	}
 
-	@summary = "Default summary"
-	macro editItem(itemName = null, item = null, submenuName = null, name = null, url = null, pageNames = null) {
+	macro editItem {
 		NavigationMenusAdmin.openItemSidebar(itemName = ${itemName});
 
 		if (${item} == "Page") {
@@ -198,8 +186,7 @@ definition {
 		PortletEntry.save();
 	}
 
-	@summary = "Default summary"
-	macro markAsPrimaryNavigation(newMenuName = null, oldMenuName = null) {
+	macro markAsPrimaryNavigation {
 		LexiconEntry.gotoEntryMenuItemNoError(
 			menuItem = "Primary Navigation",
 			rowEntry = ${newMenuName});
@@ -207,8 +194,7 @@ definition {
 		AssertConfirm(value1 = "Do you want to replace ${newMenuName} for ${oldMenuName} as primary navigation? This action will affect all the pages using primary navigation.");
 	}
 
-	@summary = "Default summary"
-	macro openItemSidebar(itemName = null) {
+	macro openItemSidebar {
 		Refresh();
 
 		Click(
@@ -223,13 +209,11 @@ definition {
 		AssertElementPresent(locator1 = "SiteNavigationMenu#SIDEBAR");
 	}
 
-	@summary = "Default summary"
-	macro openNavigationMenusAdmin(siteURLKey = null) {
+	macro openNavigationMenusAdmin {
 		Navigator.openWithAppendToBaseURL(urlAppend = "group/${siteURLKey}/~/control_panel/manage?p_p_id=com_liferay_site_navigation_admin_web_portlet_SiteNavigationAdminPortlet");
 	}
 
-	@summary = "Default summary"
-	macro toggleAutomaticallyAddNewPagesToMenu(toggleValue = null) {
+	macro toggleAutomaticallyAddNewPagesToMenu {
 		WaitForPageLoad();
 
 		Click(locator1 = "SiteNavigationMenu#SIDEBAR_COG");
@@ -251,15 +235,13 @@ definition {
 		Button.clickSave();
 	}
 
-	@summary = "Default summary"
-	macro viewItem(itemName = null) {
+	macro viewItem {
 		AssertElementPresent(
 			key_itemName = ${itemName},
 			locator1 = "SiteNavigationMenu#ITEM_ENTRY");
 	}
 
-	@summary = "Default summary"
-	macro viewItemNested(groupName = null, site = null, itemName = null, parentItemName = null, siteNavigationMenuName = null) {
+	macro viewItemNested {
 		var parentItemId = JSONSitenavigationSetter.setSiteNavigationMenuItemId(
 			groupName = ${groupName},
 			site = ${site},
@@ -272,29 +254,25 @@ definition {
 			locator1 = "SiteNavigationMenu#ITEM_ENTRY_NESTED");
 	}
 
-	@summary = "Default summary"
-	macro viewItemNotNested(itemName = null) {
+	macro viewItemNotNested {
 		AssertElementPresent(
 			key_itemName = ${itemName},
 			key_parentItemId = 0,
 			locator1 = "SiteNavigationMenu#ITEM_ENTRY_NESTED");
 	}
 
-	@summary = "Default summary"
-	macro viewItemOrder(itemName = null, index = null) {
+	macro viewItemOrder {
 		AssertTextEquals.assertPartialText(
 			key_index = ${index},
 			locator1 = "SiteNavigationMenu#ITEM_ENTRY_N",
 			value1 = ${itemName});
 	}
 
-	@summary = "Default summary"
-	macro viewMenuTitle(navigationMenu = null) {
+	macro viewMenuTitle {
 		LexiconTable.viewTableEntryTitle(tableEntry = ${navigationMenu});
 	}
 
-	@summary = "Default summary"
-	macro viewMenuType(rowEntry = null, menuType = null) {
+	macro viewMenuType {
 		AssertTextEquals(
 			key_markedAs = ${menuType},
 			key_rowEntry = ${rowEntry},
@@ -302,8 +280,7 @@ definition {
 			value1 = ${menuType});
 	}
 
-	@summary = "Default summary"
-	macro viewNoItem(itemName = null) {
+	macro viewNoItem {
 		AssertElementNotPresent(
 			key_itemName = ${itemName},
 			locator1 = "SiteNavigationMenu#ITEM_ENTRY");

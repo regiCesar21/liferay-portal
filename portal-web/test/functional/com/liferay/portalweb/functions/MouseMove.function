@@ -1,14 +1,14 @@
 @default = "mouseMoveAt"
 definition {
 
-	function mouseMoveAt(locator1, value1) {
+	function mouseMoveAt {
 		WaitForSPARefresh();
 
-		selenium.waitForVisible(${locator1}, ${value1});
+		selenium.waitForVisible();
 
 		selenium.mouseMoveAt(${locator1}, ${value1});
 
-		selenium.assertJavaScriptErrors(${value1});
+		selenium.assertJavaScriptErrors();
 
 		selenium.assertLiferayErrors();
 	}

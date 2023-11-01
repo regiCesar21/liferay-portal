@@ -1,14 +1,12 @@
 definition {
 
-	@summary = "Default summary"
-	macro assertAssetTypeUnselectable() {
+	macro assertAssetTypeUnselectable {
 		PageEditor.gotoTab(tabName = "Mapping");
 
 		Button.viewNotPresent(button = "Select");
 	}
 
-	@summary = "Default summary"
-	macro gotoEditableFieldMapping(fragmentName = null, id = null, contributed = null) {
+	macro gotoEditableFieldMapping {
 		PageEditor.clickEditableField(
 			contributed = ${contributed},
 			fragmentName = ${fragmentName},
@@ -22,8 +20,7 @@ definition {
 			value1 = "Mapping");
 	}
 
-	@summary = "Default summary"
-	macro mapEditableFieldToAsset(uploadFileName = null, navItem = null, contentItem = null, entryTitle = null) {
+	macro mapEditableFieldToAsset {
 		Click(locator1 = "PageEditor#EDITABLE_FIELD_TOOLBAR_MAP_ASSET_SELECT_POPUP_BUTTON");
 
 		if (IsElementPresent(key_menuItem = "Select Content", locator1 = "MenuItem#ANY_MENU_ITEM")) {
@@ -78,8 +75,7 @@ definition {
 		Pause(locator1 = 3000);
 	}
 
-	@summary = "Default summary"
-	macro mapEditableFieldToCollectionItems(field = null, fragmentName = null, id = null) {
+	macro mapEditableFieldToCollectionItems {
 		var lowerCase = StringUtil.lowerCase(${fragmentName});
 
 		Click(locator1 = "PageEditor#CONTENT_PAGE_DISABLED_HEADER");
@@ -120,8 +116,7 @@ definition {
 			value1 = ${field});
 	}
 
-	@summary = "Default summary"
-	macro mapEditableTextToField(field = null, fragmentName = null, id = null, source = null, contributed = null) {
+	macro mapEditableTextToField {
 		PageEditorMapping.gotoEditableFieldMapping(
 			contributed = ${contributed},
 			fragmentName = ${fragmentName},

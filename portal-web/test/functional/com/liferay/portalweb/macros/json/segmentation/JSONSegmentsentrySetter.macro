@@ -1,7 +1,6 @@
 definition {
 
-	@summary = "Default summary"
-	macro setCriteria(date = null, field = null, text = null, operator = null) {
+	macro setCriteria {
 		Variables.assertDefined(parameterList = "${field},${operator}");
 
 		if (${operator} == "equals") {
@@ -30,8 +29,7 @@ definition {
 		return ${criteria};
 	}
 
-	@summary = "Default summary"
-	macro setDescriptionMap(description = null) {
+	macro setDescriptionMap {
 		if (isSet(description)) {
 			var descriptionMap = '''{"en_US":"${description}"}''';
 		}
@@ -42,8 +40,7 @@ definition {
 		return ${descriptionMap};
 	}
 
-	@summary = "Default summary"
-	macro setField(fieldName = null) {
+	macro setField {
 		Variables.assertDefined(parameterList = ${fieldName});
 
 		if (${fieldName} == "Browser") {
@@ -98,8 +95,7 @@ definition {
 		return ${field};
 	}
 
-	@summary = "Default summary"
-	macro setNameMap(name = null) {
+	macro setNameMap {
 		Variables.assertDefined(parameterList = ${name});
 
 		var nameMap = '''{"en_US":"${name}"}''';
@@ -107,8 +103,7 @@ definition {
 		return ${nameMap};
 	}
 
-	@summary = "Default summary"
-	macro setServiceContext(groupName = null, site = null, assetCategoryIds = null, assetTagNames = null, workflowAction = null) {
+	macro setServiceContext {
 		if (isSet(groupName)) {
 			var serviceContext = JSONServiceContextUtil.setServiceContext(
 				addGroupPermissions = "true",

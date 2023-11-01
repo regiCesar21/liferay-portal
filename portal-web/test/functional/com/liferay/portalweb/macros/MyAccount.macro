@@ -1,7 +1,6 @@
 definition {
 
-	@summary = "Default summary"
-	macro addOrganization(organizationName = null) {
+	macro addOrganization {
 		LexiconEntry.gotoAdd();
 
 		PortletEntry.inputName(name = ${organizationName});
@@ -9,8 +8,7 @@ definition {
 		PortletEntry.save();
 	}
 
-	@summary = "Default summary"
-	macro changeUserLanguage(saveButton = null, languageName = null) {
+	macro changeUserLanguage {
 		Select(
 			locator1 = "MyAccount#LANGUAGE_SELECT",
 			value1 = ${languageName});
@@ -28,8 +26,7 @@ definition {
 		VerifyElementPresent(locator1 = "Message#SUCCESS");
 	}
 
-	@summary = "Default summary"
-	macro configureDisplaySettingsLanguage(languageName = null) {
+	macro configureDisplaySettingsLanguage {
 		Navigator.openURL();
 
 		Navigator.gotoAccountSettings();
@@ -45,8 +42,7 @@ definition {
 		VerifyElementPresent(locator1 = "Message#SUCCESS");
 	}
 
-	@summary = "Default summary"
-	macro configureDisplaySettingsLanguageLocalized(portlet = null, category = null, saveButton = null, languageName = null) {
+	macro configureDisplaySettingsLanguageLocalized {
 		ProductMenu.gotoPortlet(
 			category = ${category},
 			panel = "User",
@@ -65,8 +61,7 @@ definition {
 		VerifyElementPresent(locator1 = "Message#SUCCESS");
 	}
 
-	@summary = "Default summary"
-	macro editPasswordInvalidCP(newPassword = null, changeable = null, currentPassword = null) {
+	macro editPasswordInvalidCP {
 		UserNavigator.gotoPassword();
 
 		if (isSet(currentPassword)) {
@@ -102,13 +97,11 @@ definition {
 		}
 	}
 
-	@summary = "Default summary"
-	macro openMyAccountAdmin() {
+	macro openMyAccountAdmin {
 		Navigator.openWithAppendToBaseURL(urlAppend = "group/control_panel/manage?p_p_id=com_liferay_my_account_web_portlet_MyAccountPortlet");
 	}
 
-	@summary = "Default summary"
-	macro view() {
+	macro view {
 		AssertElementPresent(locator1 = "UsersAndOrganizationsEditUser#CATEGORIZATION_LABEL");
 
 		UserNavigator.gotoOrganizations();

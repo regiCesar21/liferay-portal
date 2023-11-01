@@ -1,7 +1,6 @@
 definition {
 
-	@summary = "Default summary"
-	macro addCategory(groupName = null, site = null, description = null, vocabularyName = null, title = null) {
+	macro addCategory {
 		Variables.assertDefined(parameterList = "${groupName},${vocabularyName}");
 
 		JSONUtil2._exclusiveOrCheck(
@@ -33,8 +32,7 @@ definition {
 		return ${categoryId};
 	}
 
-	@summary = "Default summary"
-	macro addSubcategory(groupName = null, parentCategoryName = null, description = null, vocabularyName = null, title = null) {
+	macro addSubcategory {
 		Variables.assertDefined(parameterList = "${groupName},${parentCategoryName},${vocabularyName}");
 
 		JSONUtil2._exclusiveOrCheck(
@@ -67,8 +65,7 @@ definition {
 			vocabularyId = ${vocabularyId});
 	}
 
-	@summary = "Default summary"
-	macro addVocabulary(groupName = null, site = null, description = null, title = null) {
+	macro addVocabulary {
 		Variables.assertDefined(parameterList = ${groupName});
 
 		JSONUtil2._exclusiveOrCheck(
@@ -92,8 +89,7 @@ definition {
 			titleMap = ${titleMap});
 	}
 
-	@summary = "Default summary"
-	macro getCategoryId(groupName = null, site = null, vocabularyName = null, categoryName = null) {
+	macro getCategoryId {
 		Variables.assertDefined(parameterList = "${groupName},${categoryName},${vocabularyName}");
 
 		var groupId = JSONCategorySetter.setGroupId(
@@ -112,8 +108,7 @@ definition {
 		return ${categoryId};
 	}
 
-	@summary = "Default summary"
-	macro updateCategoryName(groupName = null, description = null, vocabularyName = null, title = null, categoryName = null) {
+	macro updateCategoryName {
 		Variables.assertDefined(parameterList = "${groupName},${categoryName},${vocabularyName}");
 
 		JSONUtil2._exclusiveOrCheck(

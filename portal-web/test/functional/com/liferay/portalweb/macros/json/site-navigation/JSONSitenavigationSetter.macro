@@ -1,7 +1,6 @@
 definition {
 
-	@summary = "Default summary"
-	macro setGroupId(groupName = null) {
+	macro setGroupId {
 		Variables.assertDefined(parameterList = ${groupName});
 
 		if (!(isSet(site))) {
@@ -15,8 +14,7 @@ definition {
 		return ${groupId};
 	}
 
-	@summary = "Default summary"
-	macro setSiteNavigationMenuId(groupName = null, siteNavigationMenuName = null) {
+	macro setSiteNavigationMenuId {
 		Variables.assertDefined(parameterList = "${groupName},${siteNavigationMenuName}");
 
 		var groupId = JSONSitenavigationSetter.setGroupId(groupName = ${groupName});
@@ -28,8 +26,7 @@ definition {
 		return ${siteNavigationMenuId};
 	}
 
-	@summary = "Default summary"
-	macro setSiteNavigationMenuItemId(groupName = null, siteNavigationMenuName = null, siteNavigationMenuItemName = null) {
+	macro setSiteNavigationMenuItemId {
 		Variables.assertDefined(parameterList = "${groupName},${siteNavigationMenuItemName},${siteNavigationMenuName}");
 
 		var groupId = JSONSitenavigationSetter.setGroupId(groupName = ${groupName});

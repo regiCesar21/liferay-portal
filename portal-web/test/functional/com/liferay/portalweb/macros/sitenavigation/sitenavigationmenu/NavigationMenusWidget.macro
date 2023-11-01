@@ -1,7 +1,6 @@
 definition {
 
-	@summary = "Default summary"
-	macro chooseMenu(menuName = null) {
+	macro chooseMenu {
 		Click(locator1 = "Radio#CHOOSE_MENU");
 
 		Click.pauseClickAt(locator1 = "Button#SELECT");
@@ -21,8 +20,7 @@ definition {
 			value1 = ${menuName});
 	}
 
-	@summary = "Default summary"
-	macro gotoEditNavigationMenuEntry() {
+	macro gotoEditNavigationMenuEntry {
 		MouseOver.mouseOverNotVisible(locator1 = "Icon#EDIT_PENCIL");
 
 		Click.waitForMenuToggleJSClick(locator1 = "Icon#EDIT_PENCIL");
@@ -30,8 +28,7 @@ definition {
 		MenuItem.click(menuItem = "Edit");
 	}
 
-	@summary = "Default summary"
-	macro gotoNavigationMenuWidgetConfig() {
+	macro gotoNavigationMenuWidgetConfig {
 		WaitForElementPresent(locator1 = "//script[contains(@src,'/o/frontend-js-aui-web/liferay/menu_toggle.js')]");
 
 		Portlet.gotoPortletOptions(
@@ -41,8 +38,7 @@ definition {
 		IFrame.selectModalFrame();
 	}
 
-	@summary = "Default summary"
-	macro gotoSublevel(itemName = null, type = null, pageName = null) {
+	macro gotoSublevel {
 		if (${type} == "Drop Down") {
 			WaitForElementPresent(locator1 = "//script[contains(@src,'/o/frontend-js-aui-web/liferay/menu_toggle.js')]");
 
@@ -59,23 +55,20 @@ definition {
 		}
 	}
 
-	@summary = "Default summary"
-	macro selectDisplayTemplate(templateName = null) {
+	macro selectDisplayTemplate {
 		Select(
 			locator1 = "Select#DISPLAY_TEMPLATE",
 			value1 = ${templateName});
 	}
 
-	@summary = "Default summary"
-	macro selectLevelsToDisplay(levels = null) {
+	macro selectLevelsToDisplay {
 		Select(
 			key_selectFieldLabel = "Levels to Display",
 			locator1 = "Select#ANY",
 			value1 = ${levels});
 	}
 
-	@summary = "Default summary"
-	macro selectNavigation(menuType = null) {
+	macro selectNavigation {
 		Select(
 			locator1 = "NavigationMenusWidget#SELECT_NAVIGATION",
 			value1 = ${menuType});

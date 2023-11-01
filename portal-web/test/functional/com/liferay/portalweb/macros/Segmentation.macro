@@ -1,7 +1,6 @@
 definition {
 
-	@summary = "Default summary"
-	macro _deleteAllSegments() {
+	macro _deleteAllSegments {
 		while (IsElementPresent(locator1 = "Icon#BODY_VERTICAL_ELLIPSIS")) {
 			LexiconEntry.gotoEllipsisMenuItemNoError(menuItem = "Delete");
 
@@ -11,8 +10,7 @@ definition {
 		}
 	}
 
-	@summary = "Default summary"
-	macro addProperties(propertyOption = null) {
+	macro addProperties {
 		var key_propertyOption = ${propertyOption};
 
 		Click(locator1 = "Segmentation#PROPERTIES_SEARCH");
@@ -23,8 +21,7 @@ definition {
 			value1 = ${propertyOption});
 	}
 
-	@summary = "Default summary"
-	macro changeCriterionInputEmailAddress(criterionInputOption = null) {
+	macro changeCriterionInputEmailAddress {
 		var key_criterionInputOption = ${criterionInputOption};
 
 		Click(locator1 = "Segmentation#CRITERION_INPUT");
@@ -34,20 +31,17 @@ definition {
 			locator1 = "AppBuilder#PRODUCT_MENU_PLACE_IT_DROPDOWN_OPTION");
 	}
 
-	@summary = "Default summary"
-	macro deleteProperties() {
+	macro deleteProperties {
 		Click(locator1 = "Segmentation#DELETE_SEGMENT");
 	}
 
-	@summary = "Default summary"
-	macro editSegment() {
+	macro editSegment {
 		while (IsElementPresent(locator1 = "Icon#BODY_VERTICAL_ELLIPSIS")) {
 			LexiconEntry.gotoEllipsisMenuItemNoError(menuItem = "Edit");
 		}
 	}
 
-	@summary = "Default summary"
-	macro fillProperty(PropertyField = null) {
+	macro fillProperty {
 		Click(locator1 = "Segmentation#PROPERTY_FIELD");
 
 		Type(
@@ -55,8 +49,7 @@ definition {
 			value1 = ${PropertyField});
 	}
 
-	@summary = "Default summary"
-	macro fillTitle(titleField = null) {
+	macro fillTitle {
 		Click(locator1 = "Segmentation#TITLE_FIELD");
 
 		Type(
@@ -64,23 +57,19 @@ definition {
 			value1 = ${titleField});
 	}
 
-	@summary = "Default summary"
-	macro openSegmentsAdmin(siteURLKey = null) {
+	macro openSegmentsAdmin {
 		Navigator.openWithAppendToBaseURL(urlAppend = "group/${siteURLKey}/~/control_panel/manage?p_p_id=com_liferay_segments_web_internal_portlet_SegmentsPortlet");
 	}
 
-	@summary = "Default summary"
-	macro selectOrganization() {
+	macro selectOrganization {
 		Click(locator1 = "Segmentation#ORGANIZATION_MENU");
 	}
 
-	@summary = "Default summary"
-	macro selectSession() {
+	macro selectSession {
 		Click(locator1 = "Segmentation#SESSION_MENU");
 	}
 
-	@summary = "Default summary"
-	macro selectTag(tagOption = null) {
+	macro selectTag {
 		Click(locator1 = "Segmentation#ADD_TAG_BUTTON");
 
 		SelectFrame(locator1 = "IFrame#MODAL_BODY");
@@ -100,8 +89,7 @@ definition {
 		SelectFrameTop();
 	}
 
-	@summary = "Default summary"
-	macro tearDown() {
+	macro tearDown {
 		while (IsElementPresent(locator1 = "Segmentation#SEGMENT_LIST")) {
 			Segmentation._deleteAllSegments();
 		}

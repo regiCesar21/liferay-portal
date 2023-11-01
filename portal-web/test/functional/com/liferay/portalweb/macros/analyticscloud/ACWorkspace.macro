@@ -1,7 +1,6 @@
 definition {
 
-	@summary = "Default summary"
-	macro changeLanguage(languageOption = null, language = null) {
+	macro changeLanguage {
 		var key_languageOption = ${languageOption};
 		var key_language = ${language};
 
@@ -18,8 +17,7 @@ definition {
 		TestUtils.hardRefresh();
 	}
 
-	@summary = "Default summary"
-	macro configureWorkspaceSettings(timezone = null, timezoneId = null, workspaceName = null) {
+	macro configureWorkspaceSettings {
 		if (isSet(workspaceName)) {
 			Type(
 				key_text = "Workspace Name",
@@ -70,8 +68,7 @@ definition {
 		}
 	}
 
-	@summary = "Default summary"
-	macro createWorkspace(emailList = null, workspaceName = null) {
+	macro createWorkspace {
 		ACUtils.clickAnyButton(button = "Start Free Trial");
 
 		Type(
@@ -97,8 +94,7 @@ definition {
 			locator1 = "ACUtils#GENERIC_TEXT");
 	}
 
-	@summary = "Default summary"
-	macro openWorkspace(workspaceName = null) {
+	macro openWorkspace {
 		if (isSet(workspaceName)) {
 			var key_workspaceName = ${workspaceName};
 
@@ -116,8 +112,7 @@ definition {
 		ACUtils.dismissOnboardingModal();
 	}
 
-	@summary = "Default summary"
-	macro setFriendlyURL(urlName = null, friendlyURL = null) {
+	macro setFriendlyURL {
 		var key_friendlyURL = ${friendlyURL};
 
 		Type(
@@ -160,8 +155,7 @@ definition {
 		}
 	}
 
-	@summary = "Default summary"
-	macro signOut() {
+	macro signOut {
 		if (IsElementPresent(locator1 = "ACSettings#SETTINGS_PAGE")) {
 			Click(locator1 = "ACSettings#EXIT_SETTINGS_BUTTON");
 		}
@@ -171,8 +165,7 @@ definition {
 		Click(locator1 = "ACWorkspace#LOGOUT_WORKSPACE_OPTION");
 	}
 
-	@summary = "Default summary"
-	macro switchWorkspace(workspaceName = null) {
+	macro switchWorkspace {
 		Click(locator1 = "ACWorkspace#USER_MENU_OPTION");
 
 		Click(locator1 = "ACWorkspace#SWITCH_WORKSPACE_OPTION");
@@ -180,8 +173,7 @@ definition {
 		ACWorkspace.openWorkspace(workspaceName = ${workspaceName});
 	}
 
-	@summary = "Default summary"
-	macro viewWorkspaceSettings(timezone = null, timezoneId = null, workspaceName = null) {
+	macro viewWorkspaceSettings {
 		if (isSet(workspaceName)) {
 			AssertTextEquals(
 				key_text = "Workspace Name",

@@ -1,7 +1,6 @@
 definition {
 
-	@summary = "Default summary"
-	macro addBookmarks(groupName = null, site = null, assetCategoryIds = null, name = null, assetTagNames = null, description = null, folderName = null, workflowAction = null) {
+	macro addBookmarks {
 		Variables.assertDefined(parameterList = "${groupName},${name},${url}");
 
 		var groupId = JSONBookmarksSetter.setGroupId(
@@ -26,8 +25,7 @@ definition {
 			url = ${url});
 	}
 
-	@summary = "Default summary"
-	macro addFolder(parentFolderName = null, groupName = null, site = null, assetCategoryIds = null, folderDescription = null, assetTagNames = null, folderName = null, workflowAction = null) {
+	macro addFolder {
 		Variables.assertDefined(parameterList = "${folderName},${groupName}");
 
 		var groupId = JSONBookmarksSetter.setGroupId(

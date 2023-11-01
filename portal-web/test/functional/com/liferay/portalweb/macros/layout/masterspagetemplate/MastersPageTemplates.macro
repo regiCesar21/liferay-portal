@@ -1,21 +1,18 @@
 definition {
 
-	@summary = "Default summary"
-	macro propagateChange() {
+	macro propagateChange {
 		Button.clickNoError(button = "Publish Master");
 
 		AssertConfirm(value1 = "Changes made to this master are going to be propagated to all page templates, display page templates, and pages using it. Are you sure you want to proceed?");
 	}
 
-	@summary = "Default summary"
-	macro searchAllowedFragments(searchValue = null) {
+	macro searchAllowedFragments {
 		Type(
 			locator1 = "TextInput#FRAGMENTS_SEARCH",
 			value1 = ${searchValue});
 	}
 
-	@summary = "Default summary"
-	macro selectAllowedFragments(fragmentNameList = null) {
+	macro selectAllowedFragments {
 		SelectFrame(value1 = "relative=top");
 
 		Uncheck.uncheckToggleSwitch(locator1 = "Checkbox#ALL_FRAGMENTS");
@@ -35,8 +32,7 @@ definition {
 		Button.clickSave();
 	}
 
-	@summary = "Default summary"
-	macro selectMaster(masterLayoutName = null) {
+	macro selectMaster {
 		SelectFrame(locator1 = "IFrame#MODAL_BODY");
 
 		LexiconCard.clickCardTitle(card = ${masterLayoutName});
@@ -50,8 +46,7 @@ definition {
 		Button.clickDone();
 	}
 
-	@summary = "Default summary"
-	macro selectMasterViaPageDesignOptions(masterLayoutName = null) {
+	macro selectMasterViaPageDesignOptions {
 		Navigator.gotoNavTab(navTab = "Master");
 
 		WaitForPageLoad();

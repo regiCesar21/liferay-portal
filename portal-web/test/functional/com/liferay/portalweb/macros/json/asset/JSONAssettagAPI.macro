@@ -1,7 +1,6 @@
 definition {
 
-	@summary = "Default summary"
-	macro _addTag(groupId = null, tagName = null) {
+	macro _addTag {
 		Variables.assertDefined(parameterList = "${groupId},${tagName}");
 
 		var portalURL = JSONCompany.getPortalURL();

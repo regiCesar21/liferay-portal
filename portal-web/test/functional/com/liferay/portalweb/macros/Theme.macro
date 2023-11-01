@@ -1,15 +1,13 @@
 definition {
 
-	@summary = "Default summary"
-	macro configureLookAndFeelCustomCSS(cssText = null) {
+	macro configureLookAndFeelCustomCSS {
 		Type(
 			key_text = "regularCss",
 			locator1 = "TextArea#ANY",
 			value1 = ${cssText});
 	}
 
-	@summary = "Default summary"
-	macro configureLookAndFeelShowFooter(showFooter = null) {
+	macro configureLookAndFeelShowFooter {
 		if (${showFooter} == "true") {
 			Check.checkToggleSwitch(
 				key_toggleSwitchLabel = "Show Footer",
@@ -22,8 +20,7 @@ definition {
 		}
 	}
 
-	@summary = "Default summary"
-	macro configureLookAndFeelShowHeader(showHeader = null) {
+	macro configureLookAndFeelShowHeader {
 		if (${showHeader} == "true") {
 			Check.checkToggleSwitch(
 				key_toggleSwitchLabel = "Show Header",
@@ -36,8 +33,7 @@ definition {
 		}
 	}
 
-	@summary = "Default summary"
-	macro configureLookAndFeelShowHeaderSearch(showHeaderSearch = null) {
+	macro configureLookAndFeelShowHeaderSearch {
 		if (${showHeaderSearch} == "true") {
 			Check.checkToggleSwitch(
 				key_toggleSwitchLabel = "Show Header Search",
@@ -50,8 +46,7 @@ definition {
 		}
 	}
 
-	@summary = "Default summary"
-	macro configureLookAndFeelShowMaxMinAppLinks(showMaxMinAppLinks = null) {
+	macro configureLookAndFeelShowMaxMinAppLinks {
 		if (${showMaxMinAppLinks} == "true") {
 			Check.checkToggleSwitch(
 				key_toggleSwitchLabel = "Show Maximize/Minimize Application Links",
@@ -64,13 +59,11 @@ definition {
 		}
 	}
 
-	@summary = "Default summary"
-	macro configureLookAndFeelSpecificLook() {
+	macro configureLookAndFeelSpecificLook {
 		Click(locator1 = "Radio#SPECIFIC_LOOK");
 	}
 
-	@summary = "Default summary"
-	macro configureLookAndFeelWrapWidgetPageContent(wrapWidgetPageContent = null) {
+	macro configureLookAndFeelWrapWidgetPageContent {
 		if (${wrapWidgetPageContent} == "true") {
 			Check.checkToggleSwitch(
 				key_toggleSwitchLabel = "Wrap Widget Page Content",
@@ -83,8 +76,7 @@ definition {
 		}
 	}
 
-	@summary = "Default summary"
-	macro deployThemeWar(themeName = null) {
+	macro deployThemeWar {
 		AntCommand(
 			locator1 = "build-test.xml",
 			value1 = "deploy-dependency-war -Dliferay.dependency.war=${themeName}.war");
@@ -108,8 +100,7 @@ definition {
 		}
 	}
 
-	@summary = "Default summary"
-	macro viewClassicThemeBackgroundColor() {
+	macro viewClassicThemeBackgroundColor {
 		AssertCssValue(
 			locator1 = "//body",
 			locator2 = "background-color",
@@ -118,24 +109,21 @@ definition {
 		takeScreenshot();
 	}
 
-	@summary = "Default summary"
-	macro viewMaxPortletOption() {
+	macro viewMaxPortletOption {
 		AssertTextEquals(
 			key_menuItem = "Maximize",
 			locator1 = "MenuItem#ANY_MENU_ITEM",
 			value1 = "Maximize");
 	}
 
-	@summary = "Default summary"
-	macro viewMinPortlet() {
+	macro viewMinPortlet {
 		AssertClick(
 			key_menuItem = "Minimize",
 			locator1 = "MenuItem#ANY_MENU_ITEM",
 			value1 = "Minimize");
 	}
 
-	@summary = "Default summary"
-	macro viewRestorePortlet() {
+	macro viewRestorePortlet {
 		Click(
 			key_menuItem = "Restore",
 			locator1 = "MenuItem#ANY_MENU_ITEM",
@@ -146,8 +134,7 @@ definition {
 		Refresh();
 	}
 
-	@summary = "Default summary"
-	macro viewTestThemeBackgroundColor() {
+	macro viewTestThemeBackgroundColor {
 		AssertCssValue(
 			locator1 = "//body",
 			locator2 = "background-color",

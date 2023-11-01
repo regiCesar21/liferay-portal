@@ -1,26 +1,22 @@
 definition {
 
-	@summary = "Default summary"
-	macro gotoAlertsAndAnnouncementsDelivery() {
+	macro gotoAlertsAndAnnouncementsDelivery {
 		UserNavigator.gotoPreferences();
 
 		Navigator.gotoNavNested(navNested = "Alerts and Announcements Delivery");
 	}
 
-	@summary = "Default summary"
-	macro gotoContact() {
+	macro gotoContact {
 		Navigator.gotoNavUnderline(navUnderline = "Contact");
 	}
 
-	@summary = "Default summary"
-	macro gotoDisplaySettings() {
+	macro gotoDisplaySettings {
 		UserNavigator.gotoPreferences();
 
 		Navigator.gotoNavNested(navNested = "Display Settings");
 	}
 
-	@summary = "Default summary"
-	macro gotoEdit(rowEntry = null) {
+	macro gotoEdit {
 		Click.waitForMenuToggleJSClick(
 			key_rowEntry = ${rowEntry},
 			locator1 = "Icon#TABLE_VERTICAL_ELLIPSIS");
@@ -28,8 +24,7 @@ definition {
 		MenuItem.click(menuItem = "Edit");
 	}
 
-	@summary = "Default summary"
-	macro gotoGeneral() {
+	macro gotoGeneral {
 		var key_navUnderline = "General";
 
 		if (IsElementNotPresent(locator1 = "NavUnderline#ACTIVE_NAV_UNDERLINE_LINK")) {
@@ -37,8 +32,7 @@ definition {
 		}
 	}
 
-	@summary = "Default summary"
-	macro gotoMemberships() {
+	macro gotoMemberships {
 		UserNavigator.gotoGeneral();
 
 		Navigator.gotoNavNested(navNested = "Memberships");
@@ -46,22 +40,19 @@ definition {
 		WaitForLiferayEvent.initializeLiferayEventLog();
 	}
 
-	@summary = "Default summary"
-	macro gotoOrganizations() {
+	macro gotoOrganizations {
 		UserNavigator.gotoGeneral();
 
 		Navigator.gotoNavNested(navNested = "Organizations");
 	}
 
-	@summary = "Default summary"
-	macro gotoPassword() {
+	macro gotoPassword {
 		UserNavigator.gotoGeneral();
 
 		Navigator.gotoNavNested(navNested = "Password");
 	}
 
-	@summary = "Default summary"
-	macro gotoPermissions(rowEntry = null) {
+	macro gotoPermissions {
 		Click.waitForMenuToggleJSClick(
 			key_rowEntry = ${rowEntry},
 			locator1 = "Icon#TABLE_VERTICAL_ELLIPSIS");
@@ -69,27 +60,23 @@ definition {
 		MenuItem.click(menuItem = "Permissions");
 	}
 
-	@summary = "Default summary"
-	macro gotoPreferences() {
+	macro gotoPreferences {
 		Navigator.gotoNavUnderline(navUnderline = "Preferences");
 	}
 
-	@summary = "Default summary"
-	macro gotoProfileAndDashboard() {
+	macro gotoProfileAndDashboard {
 		UserNavigator.gotoGeneral();
 
 		Navigator.gotoNavNested(navNested = "Profile and Dashboard");
 	}
 
-	@summary = "Default summary"
-	macro gotoRoles() {
+	macro gotoRoles {
 		UserNavigator.gotoGeneral();
 
 		Navigator.gotoNavNested(navNested = "Roles");
 	}
 
-	@summary = "Default summary"
-	macro gotoUser(userScreenName = null) {
+	macro gotoUser {
 		AssertClick(
 			key_userScreenName = ${userScreenName},
 			locator1 = "UsersAndOrganizations#USER_TABLE_SCREEN_NAME",

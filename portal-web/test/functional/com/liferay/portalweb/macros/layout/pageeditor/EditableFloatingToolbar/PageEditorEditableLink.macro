@@ -1,14 +1,12 @@
 definition {
 
-	@summary = "Default summary"
-	macro _gotoFromContentField() {
+	macro _gotoFromContentField {
 		Select(
 			locator1 = "PageEditorEditableLink#LINK_TYPE",
 			value1 = "From Content Field");
 	}
 
-	@summary = "Default summary"
-	macro _selectContent(navItem = null, entryTitle = null) {
+	macro _selectContent {
 		Click(locator1 = "PageEditor#EDITABLE_FIELD_TOOLBAR_MAP_ASSET_SELECT_POPUP_BUTTON");
 
 		SelectFrame(locator1 = "IFrame#MODAL_BODY");
@@ -26,15 +24,13 @@ definition {
 		SelectFrameTop();
 	}
 
-	@summary = "Default summary"
-	macro _selectField(field = null) {
+	macro _selectField {
 		Select(
 			locator1 = "PageEditorEditableLink#FIELD",
 			value1 = ${field});
 	}
 
-	@summary = "Default summary"
-	macro gotoEditableFieldLink(fragmentName = null, id = null, contributed = null) {
+	macro gotoEditableFieldLink {
 		PageEditor.clickEditableField(
 			contributed = ${contributed},
 			fragmentName = ${fragmentName},
@@ -48,8 +44,7 @@ definition {
 			value1 = "Link");
 	}
 
-	@summary = "Default summary"
-	macro mapURLToAsset(navItem = null, field = null, entryTitle = null) {
+	macro mapURLToAsset {
 		Variables.assertDefined(parameterList = "${entryTitle},${field},${navItem}");
 
 		PageEditorEditableLink._gotoFromContentField();
@@ -61,8 +56,7 @@ definition {
 		PageEditorEditableLink._selectField(field = ${field});
 	}
 
-	@summary = "Default summary"
-	macro updateURL(url = null, target = null) {
+	macro updateURL {
 		Variables.assertDefined(parameterList = ${url});
 
 		Type(

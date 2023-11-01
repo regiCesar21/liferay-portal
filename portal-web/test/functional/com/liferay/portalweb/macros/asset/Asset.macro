@@ -1,7 +1,6 @@
 definition {
 
-	@summary = "Default summary"
-	macro changePermission(userName = null, selectPermission = null) {
+	macro changePermission {
 		SelectFrame(locator1 = "IFrame#MODAL_IFRAME");
 
 		var key_userName = ${userName};
@@ -25,8 +24,7 @@ definition {
 		Alert.viewSuccessMessageText(successMessage = "Permissions Changed");
 	}
 
-	@summary = "Default summary"
-	macro gotoManageCollaboratorsViaSharedByMe(contentTitle = null) {
+	macro gotoManageCollaboratorsViaSharedByMe {
 		var key_contentTitle = ${contentTitle};
 
 		Click(
@@ -36,8 +34,7 @@ definition {
 		MenuItem.click(menuItem = "Manage Collaborators");
 	}
 
-	@summary = "Default summary"
-	macro share(sharingPermissions = null, userEmailAddress = null, userName = null) {
+	macro share {
 		IFrame.selectModalFrame();
 
 		if (isSet(noAutocomplete)) {

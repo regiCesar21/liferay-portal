@@ -1,27 +1,23 @@
 definition {
 
-	@summary = "Default summary"
-	macro clearSearchResult() {
+	macro clearSearchResult {
 		Click(locator1 = "Link#CLEAR");
 
 		AssertElementNotPresent(locator1 = "Search#SEARCH_INFO");
 	}
 
-	@summary = "Default summary"
-	macro gotoResultAssetViaTitle(searchAssetTitle = null) {
+	macro gotoResultAssetViaTitle {
 		AssertClick(
 			key_searchAssetTitle = ${searchAssetTitle},
 			locator1 = "SearchResults#ASSET_ENTRY_TABLE_TITLE",
 			value1 = ${searchAssetTitle});
 	}
 
-	@summary = "Default summary"
-	macro openSearchAdmin(siteURLKey = null) {
+	macro openSearchAdmin {
 		Navigator.openWithAppendToBaseURL(urlAppend = "group/${siteURLKey}/~/control_panel/manage?p_p_id=com_liferay_portal_search_admin_web_portlet_SearchAdminPortlet");
 	}
 
-	@summary = "Default summary"
-	macro openSearchPage() {
+	macro openSearchPage {
 		if (!(isSet(siteURLKey))) {
 			var siteURLKey = "guest";
 		}
@@ -29,8 +25,7 @@ definition {
 		Navigator.openWithAppendToBaseURL(urlAppend = "web/${siteURLKey}/search");
 	}
 
-	@summary = "Default summary"
-	macro searchCP(searchTerm = null) {
+	macro searchCP {
 		AssertElementPresent(locator1 = "TextInput#SEARCH");
 
 		AssertElementPresent(locator1 = "Icon#BASIC_SEARCH");
@@ -46,8 +41,7 @@ definition {
 		WaitForLiferayEvent.initializeLiferayEventLog();
 	}
 
-	@summary = "Default summary"
-	macro searchPG(searchTerm = null, portletName = null) {
+	macro searchPG {
 		var key_portletName = ${portletName};
 
 		AssertElementPresent(locator1 = "Portlet#SEARCH_FIELD");
@@ -63,15 +57,13 @@ definition {
 		WaitForLiferayEvent.initializeLiferayEventLog();
 	}
 
-	@summary = "Default summary"
-	macro viewNoResultAssetTitle(searchAssetTitle = null) {
+	macro viewNoResultAssetTitle {
 		AssertElementNotPresent(
 			key_searchAssetTitle = ${searchAssetTitle},
 			locator1 = "SearchResults#ASSET_ENTRY_TABLE_TITLE");
 	}
 
-	@summary = "Default summary"
-	macro viewResultAssetTitle(searchAssetTitle = null) {
+	macro viewResultAssetTitle {
 		AssertTextEquals(
 			key_searchAssetTitle = ${searchAssetTitle},
 			locator1 = "SearchResults#ASSET_ENTRY_TABLE_TITLE",

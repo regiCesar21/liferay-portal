@@ -1,7 +1,6 @@
 definition {
 
-	@summary = "Default summary"
-	macro assertDiscardIsUnavailableForInactivePublication(changeCategory = null, changeTitle = null, publicationName = null) {
+	macro assertDiscardIsUnavailableForInactivePublication {
 		if (isSet(changeOrder)) {
 			var changeOrder = ${changeOrder};
 		}
@@ -23,8 +22,7 @@ definition {
 		AssertElementNotPresent(locator1 = "PublicationsChanges#PUBLICATIONS_ELLIPSIS");
 	}
 
-	@summary = "Default summary"
-	macro assertScheduledPublicationPublished(publicationName = null) {
+	macro assertScheduledPublicationPublished {
 		Click(
 			key_navBarTitle = "History",
 			locator1 = "Publications#MANGE_PUBLICATIONS_NAVBAR_TITLE");
@@ -38,8 +36,7 @@ definition {
 			value1 = "Published");
 	}
 
-	@summary = "Default summary"
-	macro cancelPublicationCreation(publicationName = null) {
+	macro cancelPublicationCreation {
 		ApplicationsMenu.gotoPortlet(
 			category = "Publications",
 			panel = "Applications",
@@ -54,8 +51,7 @@ definition {
 		Button.clickCancel();
 	}
 
-	@summary = "Default summary"
-	macro createNewPublication(publicationDescription = null, gotoManagePublications = null, publicationName = null) {
+	macro createNewPublication {
 		if (${gotoManagePublications} == "true") {
 			ApplicationsMenu.gotoPortlet(
 				category = "Publications",
@@ -87,8 +83,7 @@ definition {
 		Pause(locator1 = 5000);
 	}
 
-	@summary = "Default summary"
-	macro deletePublication(publicationName = null) {
+	macro deletePublication {
 		LexiconEntry.changeDisplayStyle(displayStyle = "list");
 
 		Click(
@@ -108,8 +103,7 @@ definition {
 		Alert.viewSuccessMessage();
 	}
 
-	@summary = "Default summary"
-	macro disablePublications() {
+	macro disablePublications {
 		Uncheck.uncheckToggleSwitch(locator1 = "PublicationsSettings#PUBLICATIONS_TOGGLE_SWITCH");
 
 		Click(locator1 = "Button#SAVE");
@@ -117,8 +111,7 @@ definition {
 		Alert.viewSuccessMessage();
 	}
 
-	@summary = "Default summary"
-	macro discardChanges(conflictingChanges = null, changeCategory = null, changeTitle = null, entryTitle = null) {
+	macro discardChanges {
 		if (isSet(changeOrder)) {
 			var changeOrder = ${changeOrder};
 		}
@@ -166,8 +159,7 @@ definition {
 		Alert.viewSuccessMessage();
 	}
 
-	@summary = "Default summary"
-	macro enablePublications() {
+	macro enablePublications {
 		Pause(locator1 = 2000);
 
 		Check.checkToggleSwitch(locator1 = "PublicationsSettings#PUBLICATIONS_TOGGLE_SWITCH");
@@ -182,8 +174,7 @@ definition {
 		Alert.viewSuccessMessage();
 	}
 
-	@summary = "Default summary"
-	macro enableSandboxOnly() {
+	macro enableSandboxOnly {
 		ApplicationsMenu.gotoPortlet(
 			category = "Configuration",
 			panel = "Control Panel",
@@ -201,8 +192,7 @@ definition {
 		Alert.viewSuccessMessage();
 	}
 
-	@summary = "Default summary"
-	macro generateSandboxedPublicationName(userScreenName = null) {
+	macro generateSandboxedPublicationName {
 		var sandboxTime = DateUtil.getFormattedCurrentDate("h:mm", "UTC");
 		var sandboxDate = DateUtil.getFormattedCurrentDate("M/d/yy", "UTC");
 
@@ -211,8 +201,7 @@ definition {
 		return ${sandboxedPublicationName};
 	}
 
-	@summary = "Default summary"
-	macro gotoPublish(gotoManagePublications = null, publicationName = null, gotoReviewChanges = null) {
+	macro gotoPublish {
 		if (${gotoManagePublications} == "true") {
 			ApplicationsMenu.gotoPortlet(
 				category = "Publications",
@@ -239,8 +228,7 @@ definition {
 		}
 	}
 
-	@summary = "Default summary"
-	macro gotoReviewChanges(gotoManagePublications = null, publicationName = null) {
+	macro gotoReviewChanges {
 		if (${gotoManagePublications} == "true") {
 			ApplicationsMenu.gotoPortlet(
 				category = "Publications",
@@ -262,8 +250,7 @@ definition {
 		Pause(locator1 = 3000);
 	}
 
-	@summary = "Default summary"
-	macro gotoScheduledPublications() {
+	macro gotoScheduledPublications {
 		ApplicationsMenu.gotoPortlet(
 			category = "Publications",
 			panel = "Applications",
@@ -274,8 +261,7 @@ definition {
 			locator1 = "Publications#MANGE_PUBLICATIONS_NAVBAR_TITLE");
 	}
 
-	@summary = "Default summary"
-	macro gotoViewDiffInConflictingPublications(entryTitle = null) {
+	macro gotoViewDiffInConflictingPublications {
 		if (IsElementNotPresent(locator1 = "Publications#NEEDS_MANUAL_RESOLUTION_HEADER_EXPANDED")) {
 			Click(locator1 = "Publications#NEEDS_MANUAL_RESOLUTION_HEADER_COLLAPSED");
 		}
@@ -293,8 +279,7 @@ definition {
 		SelectFrame.selectFrameNoLoading(locator1 = "Publications#CONFLICTING_CHANGES_DIFF_IFRAME");
 	}
 
-	@summary = "Default summary"
-	macro publishPublication(publicationName = null) {
+	macro publishPublication {
 		Click(locator1 = "Publications#PUBLISH_BUTTON");
 
 		Alert.viewSuccessMessage();
@@ -318,8 +303,7 @@ definition {
 			value1 = "Published");
 	}
 
-	@summary = "Default summary"
-	macro revertPublication(publishNow = null, publicationName = null) {
+	macro revertPublication {
 		LexiconEntry.changeDisplayStyle(displayStyle = "list");
 
 		var key_publicationName = ${publicationName};
@@ -363,8 +347,7 @@ definition {
 			value1 = "Revert \"${publicationName}\"");
 	}
 
-	@summary = "Default summary"
-	macro schedulePublication(reschedule = null, utcMinutes = null, gotoManagePublications = null, publicationName = null, gotoReviewChanges = null) {
+	macro schedulePublication {
 		if (${gotoManagePublications} == "true") {
 			ApplicationsMenu.gotoPortlet(
 				category = "Publications",
@@ -458,8 +441,7 @@ definition {
 		Alert.viewSuccessMessage();
 	}
 
-	@summary = "Default summary"
-	macro search(publicationName = null) {
+	macro search {
 		Search.searchCP(searchTerm = ${publicationName});
 
 		var key_publicationName = ${publicationName};
@@ -469,8 +451,7 @@ definition {
 			value1 = ${publicationName});
 	}
 
-	@summary = "Default summary"
-	macro selectPublication(gotoManagePublications = null, publicationName = null) {
+	macro selectPublication {
 		if (${gotoManagePublications} == "true") {
 			ApplicationsMenu.gotoPortlet(
 				category = "Publications",
@@ -506,8 +487,7 @@ definition {
 			value1 = ${publicationName});
 	}
 
-	@summary = "Default summary"
-	macro unschedulePublication(publicationName = null) {
+	macro unschedulePublication {
 		Publications.gotoScheduledPublications();
 
 		LexiconEntry.changeDisplayStyle(displayStyle = "list");
@@ -519,8 +499,7 @@ definition {
 		MenuItem.click(menuItem = "Unschedule");
 	}
 
-	@summary = "Default summary"
-	macro viewAutomaticallyResolved(entryTitle = null, successMessage = null) {
+	macro viewAutomaticallyResolved {
 		AssertElementPresent(locator1 = "Publications#AUTOMATICALLY_RESOLVED_TABLE");
 
 		AssertElementPresent(
@@ -529,8 +508,7 @@ definition {
 			locator1 = "Publications#CONFLICTING_CHANGES_SUCCESS_CONTENT");
 	}
 
-	@summary = "Default summary"
-	macro viewNeedsManualResolution(warningMessage = null, entryTitle = null) {
+	macro viewNeedsManualResolution {
 		AssertElementPresent(locator1 = "Publications#NEEDS_MANUAL_RESOLUTION_TABLE");
 
 		AssertElementPresent(
@@ -541,8 +519,7 @@ definition {
 		AssertVisible(locator1 = "Publications#DISABLED_PUBLISH_BUTTON");
 	}
 
-	@summary = "Default summary"
-	macro viewPublicationOrderInHistory(publicationList = null) {
+	macro viewPublicationOrderInHistory {
 		if (!(isSet(paginationView))) {
 			LexiconEntry.changeDisplayStyle(displayStyle = "list");
 		}
@@ -560,8 +537,7 @@ definition {
 		}
 	}
 
-	@summary = "Default summary"
-	macro viewPublicationPublished(publicationName = null) {
+	macro viewPublicationPublished {
 		ApplicationsMenu.gotoPortlet(
 			category = "Publications",
 			panel = "Applications",
@@ -586,8 +562,7 @@ definition {
 			value1 = "Published");
 	}
 
-	@summary = "Default summary"
-	macro viewPublicationsDiff(columnValueInPublication = null, publicationName = null, entryTitle = null, columnValueInProduction = null, columnName = null) {
+	macro viewPublicationsDiff {
 		if (contains(${entryTitle}, "modified")) {
 			AssertTextEquals.assertPartialText(
 				key_publicationName = "Production",
@@ -615,8 +590,7 @@ definition {
 		}
 	}
 
-	@summary = "Default summary"
-	macro viewSandboxedPublication(sandboxedUser = null, sandboxedPublicationName = null) {
+	macro viewSandboxedPublication {
 		var key_publicationName = ${sandboxedPublicationName};
 
 		if (${sandboxedUser} == "true") {
@@ -637,8 +611,7 @@ definition {
 			value1 = ${sandboxedPublicationName});
 	}
 
-	@summary = "Default summary"
-	macro workOnProduction() {
+	macro workOnProduction {
 		Click(locator1 = "Publications#PUBLICATIONS_INDICATOR_BUTTON");
 
 		ClickNoError(

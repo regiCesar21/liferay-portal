@@ -1,7 +1,6 @@
 definition {
 
-	@summary = "Default summary"
-	macro configureRatingType(ratingType = null, siteName = null, applications = null) {
+	macro configureRatingType {
 		if (isSet(siteName)) {
 			Site.openSiteSettingsAdmin(siteURLKey = ${siteName});
 		}
@@ -28,15 +27,13 @@ definition {
 			value1 = ${ratingType});
 	}
 
-	@summary = "Default summary"
-	macro rateLike() {
+	macro rateLike {
 		Click(locator1 = "Ratings#LIKE");
 
 		AssertElementPresent(locator1 = "Ratings#YOUR_RATING_LIKE_RESULT");
 	}
 
-	@summary = "Default summary"
-	macro rateStackedStars(ratingStarCount = null) {
+	macro rateStackedStars {
 		Click(
 			key_ratingStarCount = ${ratingStarCount},
 			locator1 = "Ratings#YOUR_RATING_STACKED_STAR_COUNT");
@@ -54,8 +51,7 @@ definition {
 		}
 	}
 
-	@summary = "Default summary"
-	macro rateStar(ratingStarCount = null) {
+	macro rateStar {
 		Click(locator1 = "Ratings#YOUR_RATING_STAR");
 
 		if (isSet(checkDeleteButton)) {
@@ -71,8 +67,7 @@ definition {
 			locator1 = "Ratings#YOUR_RATING_STAR_RESULT");
 	}
 
-	@summary = "Default summary"
-	macro rateStarCollectionItem(colPosition = null, ratingStarCount = null, rowPosition = null) {
+	macro rateStarCollectionItem {
 		Click(
 			key_colPosition = ${colPosition},
 			key_rowPosition = ${rowPosition},
@@ -93,8 +88,7 @@ definition {
 			locator1 = "PageEditor#COLLECTION_ITEM_YOUR_RATING_STAR_RESULT");
 	}
 
-	@summary = "Default summary"
-	macro rateThumb(threadSubject = null, ratingResult = null) {
+	macro rateThumb {
 		if (isSet(blogCommentRating)) {
 			Click.javaScriptClick(
 				key_ratingResult = ${ratingResult},
@@ -125,15 +119,13 @@ definition {
 		}
 	}
 
-	@summary = "Default summary"
-	macro revokeStackedStarsRating() {
+	macro revokeStackedStarsRating {
 		Click(locator1 = "Icon#DELETE");
 
 		AssertElementNotPresent(locator1 = "Icon#DELETE");
 	}
 
-	@summary = "Default summary"
-	macro revokeStarsRating() {
+	macro revokeStarsRating {
 		Click(locator1 = "Ratings#YOUR_RATING_STAR");
 
 		Click.clickNoMouseOver(locator1 = "Ratings#YOUR_RATING_STAR_DELETE");
@@ -141,8 +133,7 @@ definition {
 		AssertElementPresent(locator1 = "Ratings#YOUR_RATING_STAR_EMPTY");
 	}
 
-	@summary = "Default summary"
-	macro viewNoRateStackedStar(averageStarCount = null) {
+	macro viewNoRateStackedStar {
 		for (var ratingStarCount : list "1,2,3,4,5") {
 			AssertElementNotPresent(
 				key_ratingStarCount = ${ratingStarCount},
@@ -154,8 +145,7 @@ definition {
 			locator1 = "Ratings#AVERAGE_STACKED_STAR_RESULT");
 	}
 
-	@summary = "Default summary"
-	macro viewRateLike(ratingLikeCount = null) {
+	macro viewRateLike {
 		AssertElementPresent(locator1 = "Ratings#YOUR_RATING_LIKE_RESULT");
 
 		AssertTextEquals(
@@ -163,8 +153,7 @@ definition {
 			value1 = ${ratingLikeCount});
 	}
 
-	@summary = "Default summary"
-	macro viewRateStackedStar(averageStarCount = null, ratingStarCount = null) {
+	macro viewRateStackedStar {
 		var count = 0;
 
 		while (${count} != ${ratingStarCount}) {
@@ -182,8 +171,7 @@ definition {
 			locator1 = "Ratings#AVERAGE_STACKED_STAR_RESULT");
 	}
 
-	@summary = "Default summary"
-	macro viewRateStar(averageRatingStarCount = null, ratingStarCount = null) {
+	macro viewRateStar {
 		AssertElementPresent(
 			key_ratingStarCount = ${ratingStarCount},
 			locator1 = "Ratings#YOUR_RATING_STAR_RESULT");
@@ -198,8 +186,7 @@ definition {
 			value1 = ${averageRatingStarCount});
 	}
 
-	@summary = "Default summary"
-	macro viewRateStarReadOnly() {
+	macro viewRateStarReadOnly {
 		AssertElementNotPresent(locator1 = "Ratings#YOUR_RATING_STAR_EMPTY");
 
 		AssertElementPresent(locator1 = "Ratings#YOUR_RATING_STAR_DISABLE");
@@ -207,8 +194,7 @@ definition {
 		AssertElementPresent(locator1 = "Ratings#AVERAGE_STAR");
 	}
 
-	@summary = "Default summary"
-	macro viewRateThumb(ratingResult = null, voteCount = null) {
+	macro viewRateThumb {
 		if (isSet(ratingResult)) {
 			if (isSet(commentRating)) {
 				AssertTextEquals(
@@ -225,8 +211,7 @@ definition {
 		}
 	}
 
-	@summary = "Default summary"
-	macro viewRateThumbReadOnly() {
+	macro viewRateThumbReadOnly {
 		AssertElementNotPresent(
 			key_ratingResult = "Rate this as good",
 			locator1 = "Ratings#THUMB");

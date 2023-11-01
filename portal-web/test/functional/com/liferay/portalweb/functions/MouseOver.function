@@ -2,50 +2,50 @@
 @summary = "Mouse over '${locator1}'"
 definition {
 
-	function javaScriptMouseOver() {
+	function javaScriptMouseOver {
 		WaitForSPARefresh();
 
-		selenium.javaScriptMouseOver(${locator1});
+		selenium.javaScriptMouseOver();
 
-		selenium.assertJavaScriptErrors(${value1});
+		selenium.assertJavaScriptErrors();
 
 		selenium.assertLiferayErrors();
 	}
 
-	function mouseOver() {
+	function mouseOver {
 		WaitForSPARefresh();
 
-		selenium.waitForVisible(${locator1}, ${value1});
+		selenium.waitForVisible();
 
-		selenium.mouseOver(${locator1});
+		selenium.mouseOver();
 
-		selenium.assertJavaScriptErrors(${value1});
+		selenium.assertJavaScriptErrors();
 
 		selenium.assertLiferayErrors();
 	}
 
-	function mouseOverInvisible() {
+	function mouseOverInvisible {
 		WaitForSPARefresh();
 
-		selenium.waitForElementPresent(${locator1}, ${value1});
+		selenium.waitForElementPresent();
 
-		selenium.mouseOver(${locator1});
+		selenium.mouseOver();
 
-		selenium.assertJavaScriptErrors(${value1});
+		selenium.assertJavaScriptErrors();
 
 		selenium.assertLiferayErrors();
 	}
 
-	function mouseOverNotVisible() {
+	function mouseOverNotVisible {
 		WaitForSPARefresh();
 
-		selenium.waitForElementPresent(${locator1}, ${value1});
+		selenium.waitForElementPresent();
 
-		selenium.mouseOver(${locator1});
+		selenium.mouseOver();
 
-		selenium.waitForVisible(${locator1}, ${value1});
+		selenium.waitForVisible();
 
-		selenium.assertJavaScriptErrors(${value1});
+		selenium.assertJavaScriptErrors();
 
 		selenium.assertLiferayErrors();
 	}

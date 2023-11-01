@@ -1,7 +1,6 @@
 definition {
 
-	@summary = "Default summary"
-	macro addTag(groupName = null, site = null, tagName = null) {
+	macro addTag {
 		Variables.assertDefined(parameterList = "${groupName},${tagName}");
 
 		var groupId = JSONAssettagSetter.setGroupId(

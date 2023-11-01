@@ -1,7 +1,6 @@
 definition {
 
-	@summary = "Default summary"
-	macro _addQuestion(bodyField = null, tagField = null, titleField = null, categoryId = null) {
+	macro _addQuestion {
 		Variables.assertDefined(parameterList = "${categoryId},${tagField},${titleField},${bodyField}");
 
 		var portalURL = JSONCompany.getPortalURL();
@@ -32,8 +31,7 @@ definition {
 		var messageId = JSONCurlUtil.post(${curl});
 	}
 
-	@summary = "Default summary"
-	macro _addQuestionWithoutTag(bodyField = null, titleField = null, categoryId = null) {
+	macro _addQuestionWithoutTag {
 		Variables.assertDefined(parameterList = "${categoryId},${titleField},${bodyField}");
 
 		var portalURL = JSONCompany.getPortalURL();

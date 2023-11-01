@@ -2,8 +2,7 @@ definition {
 
 	var orgName = "Organization Name";
 
-	@summary = "Default summary"
-	macro activateMemberCP(orgName = null, userFirstName = null) {
+	macro activateMemberCP {
 		Organization.gotoMemberActionsCmd(
 			memberName = ${userFirstName},
 			orgName = ${orgName});
@@ -19,8 +18,7 @@ definition {
 			value1 = "Active");
 	}
 
-	@summary = "Default summary"
-	macro addCategorizationCP(tagName = null) {
+	macro addCategorizationCP {
 		AssetCategorization.addTag(tagName = ${tagName});
 
 		PortletEntry.save();
@@ -33,8 +31,7 @@ definition {
 			value1 = ${tagName});
 	}
 
-	@summary = "Default summary"
-	macro addCommentCP(orgComment = null) {
+	macro addCommentCP {
 		AssertElementPresent(locator1 = "TextArea#COMMENTS");
 
 		Type(
@@ -48,8 +45,7 @@ definition {
 			value1 = ${orgComment});
 	}
 
-	@summary = "Default summary"
-	macro addContactInformation(country = null, extension = null, address = null, city = null, addressType = null, postalCode = null, mondayClose = null, contactType = null, mondayOpen = null, makePrimary = null, url = null, number = null, street1 = null, region = null) {
+	macro addContactInformation {
 		if (isSet(contactType)) {
 			var key_contactType = ${contactType};
 
@@ -149,8 +145,7 @@ definition {
 		Alert.viewSuccessMessage();
 	}
 
-	@summary = "Default summary"
-	macro addCP(orgType = null, orgName = null, organizationName = null) {
+	macro addCP {
 		AssertClick(
 			locator1 = "NavBar#ORGANIZATIONS",
 			value1 = "Organizations");
@@ -198,8 +193,7 @@ definition {
 		}
 	}
 
-	@summary = "Default summary"
-	macro addSecurityQuestionsCP(securityQuestions = null, localizedLanguage = null, localizedSecurityQuestions = null) {
+	macro addSecurityQuestionsCP {
 		MenuBar.gotoSecurityQuestions();
 
 		Type(
@@ -235,8 +229,7 @@ definition {
 		}
 	}
 
-	@summary = "Default summary"
-	macro addSiteCP(checkEnablePropagationCheckbox = null, orgName = null, siteTemplateName = null) {
+	macro addSiteCP {
 		Organization.editOrganizationCP(orgName = ${orgName});
 
 		UsersAndOrganizationsNavigator.gotoMenuBarOrganizationSite();
@@ -261,8 +254,7 @@ definition {
 		PortletEntry.save();
 	}
 
-	@summary = "Default summary"
-	macro addSitePG(checkEnablePropagationCheckbox = null, orgName = null, organizationSite = null) {
+	macro addSitePG {
 		Organization.editOrganizationPG(orgName = ${orgName});
 
 		UsersAndOrganizationsNavigator.gotoMenuBarOrganizationSite();
@@ -287,8 +279,7 @@ definition {
 		PortletEntry.save();
 	}
 
-	@summary = "Default summary"
-	macro addWithLocalizedCountryCP(navItem = null, localizedOption = null, orgName = null, countryName = null, saveButton = null) {
+	macro addWithLocalizedCountryCP {
 		Navigator.gotoNavItem(navItem = ${navItem});
 
 		LexiconEntry.gotoAdd();
@@ -314,8 +305,7 @@ definition {
 		Alert.viewSuccessMessage();
 	}
 
-	@summary = "Default summary"
-	macro assignOrgRoleCP(orgName = null, roleTitle = null, userLastName = null, userScreenName = null, userFirstName = null) {
+	macro assignOrgRoleCP {
 		Organization.gotoActionsCmd(orgName = ${orgName});
 
 		Pause(locator1 = 3000);
@@ -369,8 +359,7 @@ definition {
 		Click(locator1 = "Icon#CLOSE");
 	}
 
-	@summary = "Default summary"
-	macro assignUser(orgName = null, userScreenName = null) {
+	macro assignUser {
 		Organization.gotoCP(
 			orgName = ${orgName},
 			searchToken = ${orgName});
@@ -403,8 +392,7 @@ definition {
 		Alert.viewSuccessMessage();
 	}
 
-	@summary = "Default summary"
-	macro deactivateMemberCP(orgName = null, userFirstName = null) {
+	macro deactivateMemberCP {
 		Organization.gotoMemberActionsCmd(
 			memberName = ${userFirstName},
 			orgName = ${orgName});
@@ -422,8 +410,7 @@ definition {
 			value1 = "Inactive");
 	}
 
-	@summary = "Default summary"
-	macro deleteCP(orgName = null) {
+	macro deleteCP {
 		Organization.gotoActionsCmd(orgName = ${orgName});
 
 		var key_orgName = ${orgName};
@@ -437,8 +424,7 @@ definition {
 		AssertElementNotPresent(locator1 = "UsersAndOrganizations#ORGANIZATION_TABLE_NAME");
 	}
 
-	@summary = "Default summary"
-	macro deletePG(orgName = null) {
+	macro deletePG {
 		var key_orgName = ${orgName};
 
 		Search.searchPG(
@@ -460,8 +446,7 @@ definition {
 		AssertElementNotPresent(locator1 = "UsersAndOrganizations#ORGANIZATION_TABLE_NAME");
 	}
 
-	@summary = "Default summary"
-	macro editOrganizationCP(orgName = null) {
+	macro editOrganizationCP {
 		UsersAndOrganizationsNavigator.gotoOrganizations();
 
 		Organization.gotoActionsCmd(orgName = ${orgName});
@@ -471,8 +456,7 @@ definition {
 		MenuItem.click(menuItem = "Edit");
 	}
 
-	@summary = "Default summary"
-	macro editOrganizationPG(orgName = null) {
+	macro editOrganizationPG {
 		var key_orgName = ${orgName};
 
 		Search.searchPG(
@@ -488,8 +472,7 @@ definition {
 		MenuItem.clickNoError(menuItem = "Edit");
 	}
 
-	@summary = "Default summary"
-	macro editSiteCP(orgName = null, orgNameEdit = null) {
+	macro editSiteCP {
 		Organization.gotoActionsCmd(orgName = ${orgName});
 
 		var key_orgName = ${orgName};
@@ -507,8 +490,7 @@ definition {
 			value1 = ${orgNameEdit});
 	}
 
-	@summary = "Default summary"
-	macro gotoActionsCmd(orgName = null) {
+	macro gotoActionsCmd {
 		Pause(locator1 = 1000);
 
 		Search.searchCP(searchTerm = ${orgName});
@@ -524,13 +506,11 @@ definition {
 		LexiconEntry.openEntryMenu(rowEntry = ${orgName});
 	}
 
-	@summary = "Default summary"
-	macro gotoContact() {
+	macro gotoContact {
 		Navigator.gotoNavTab(navTab = "Contact");
 	}
 
-	@summary = "Default summary"
-	macro gotoCP(orgName = null, searchToken = null) {
+	macro gotoCP {
 		Search.searchCP(searchTerm = ${searchToken});
 
 		var key_orgName = ${orgName};
@@ -546,8 +526,7 @@ definition {
 		Breadcrumb.viewActiveEntry(breadcrumbName = ${orgName});
 	}
 
-	@summary = "Default summary"
-	macro gotoMemberActionsCmd(orgName = null, memberName = null) {
+	macro gotoMemberActionsCmd {
 		Organization.gotoCP(
 			orgName = ${orgName},
 			searchToken = ${orgName});
@@ -557,8 +536,7 @@ definition {
 		LexiconEntry.openEntryMenu(rowEntry = ${memberName});
 	}
 
-	@summary = "Default summary"
-	macro removeMemberCP(orgName = null, userFullName = null) {
+	macro removeMemberCP {
 		Organization.gotoMemberActionsCmd(
 			memberName = ${userFullName},
 			orgName = ${orgName});
@@ -572,8 +550,7 @@ definition {
 			value1 = "No results were found.");
 	}
 
-	@summary = "Default summary"
-	macro searchCP(searchTerm = null, orgName = null) {
+	macro searchCP {
 		Search.searchCP(searchTerm = ${searchTerm});
 
 		var key_orgName = ${orgName};
@@ -583,8 +560,7 @@ definition {
 			value1 = ${orgName});
 	}
 
-	@summary = "Default summary"
-	macro selectParentOrganizationCP(orgName = null, parentOrgName = null) {
+	macro selectParentOrganizationCP {
 		var key_orgName = ${orgName};
 
 		LexiconEntry.openEntryMenu(rowEntry = ${orgName});
@@ -616,8 +592,7 @@ definition {
 		PortletEntry.save();
 	}
 
-	@summary = "Default summary"
-	macro tearDownCP(orgName = null) {
+	macro tearDownCP {
 		ApplicationsMenu.gotoPortlet(
 			category = "Users",
 			panel = "Control Panel",
@@ -677,8 +652,7 @@ definition {
 		}
 	}
 
-	@summary = "Default summary"
-	macro viewAssignMemberCP(userLastName = null, userMiddleName = null, userFirstName = null, userName = null) {
+	macro viewAssignMemberCP {
 		if (isSet(userMiddleName)) {
 			var key_userName = "${userFirstName} ${userMiddleName} ${userLastName}";
 
@@ -695,8 +669,7 @@ definition {
 		}
 	}
 
-	@summary = "Default summary"
-	macro viewCP(orgType = null, orgName = null) {
+	macro viewCP {
 		var key_orgName = ${orgName};
 
 		AssertTextEquals(
@@ -726,8 +699,7 @@ definition {
 			value1 = ${orgType});
 	}
 
-	@summary = "Default summary"
-	macro viewLocalizedCountryCP(editLocalized = null, navItem = null, orgName = null, countryName = null) {
+	macro viewLocalizedCountryCP {
 		AssertClick(
 			key_navItem = ${navItem},
 			locator1 = "NavBar#NAV_ITEM_LINK",
@@ -743,22 +715,19 @@ definition {
 			value1 = ${countryName});
 	}
 
-	@summary = "Default summary"
-	macro viewMembersNotFoundCP() {
+	macro viewMembersNotFoundCP {
 		AssertTextEquals(
 			locator1 = "Message#EMPTY_INFO",
 			value1 = "No results were found.");
 	}
 
-	@summary = "Default summary"
-	macro viewNoOrganizationsFoundCP() {
+	macro viewNoOrganizationsFoundCP {
 		AssertTextEquals(
 			locator1 = "Message#EMPTY_INFO",
 			value1 = "No organizations were found.");
 	}
 
-	@summary = "Default summary"
-	macro viewParentOrganizationCP(orgName = null, subOrgName = null, parentOrgName = null) {
+	macro viewParentOrganizationCP {
 		Organization.gotoActionsCmd(orgName = ${orgName});
 
 		var key_orgName = ${orgName};
@@ -801,8 +770,7 @@ definition {
 		IFrame.closeFrame();
 	}
 
-	@summary = "Default summary"
-	macro viewRemoveMemberCP(orgName = null, userFirstName = null) {
+	macro viewRemoveMemberCP {
 		Search.searchCP(searchTerm = ${orgName});
 
 		var key_orgName = ${orgName};
@@ -818,8 +786,7 @@ definition {
 		AssertTextNotPresent(value1 = ${userFirstName});
 	}
 
-	@summary = "Default summary"
-	macro viewSubOrganizationCP(orgType = null, orgName = null, suborgType = null, suborgName = null) {
+	macro viewSubOrganizationCP {
 		var key_orgName = ${orgName};
 
 		AssertTextEquals(

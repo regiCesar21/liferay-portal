@@ -1,12 +1,10 @@
 definition {
 
-	@summary = "Default summary"
-	macro assertNoApplicationsMenu() {
+	macro assertNoApplicationsMenu {
 		AssertElementNotPresent(locator1 = "ApplicationsMenu#APPLICATIONS_MENU");
 	}
 
-	@summary = "Default summary"
-	macro closeApplicationsMenu() {
+	macro closeApplicationsMenu {
 		if (IsElementPresent(locator1 = "ApplicationsMenu#APPLICATIONS_MENU")) {
 			Click(locator1 = "ApplicationsMenu#TOGGLE");
 		}
@@ -14,16 +12,14 @@ definition {
 		WaitForElementNotPresent(locator1 = "ApplicationsMenu#APPLICATIONS_MENU");
 	}
 
-	@summary = "Default summary"
-	macro gotoPortlet(portlet = null, category = null) {
+	macro gotoPortlet {
 		Click(
 			key_category = ${category},
 			key_portlet = ${portlet},
 			locator1 = "ApplicationsMenu#PORTLET");
 	}
 
-	@summary = "Default summary"
-	macro openApplicationsMenu() {
+	macro openApplicationsMenu {
 		SelectFrameTop();
 
 		if (IsElementNotPresent(locator1 = "ApplicationsMenu#APPLICATIONS_MENU")) {
@@ -33,8 +29,7 @@ definition {
 		WaitForElementPresent(locator1 = "ApplicationsMenu#APPLICATIONS_MENU");
 	}
 
-	@summary = "Default summary"
-	macro openWorkspace() {
+	macro openWorkspace {
 		if (IsElementNotPresent(locator1 = "Portlet#MODAL_TITLE")) {
 			Click(locator1 = "ApplicationsMenu#VIEW_ALL_LINK");
 

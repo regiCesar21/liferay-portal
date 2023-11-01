@@ -1,7 +1,6 @@
 definition {
 
-	@summary = "Default summary"
-	macro configureDisplaySettingsPG(enableDisplaySettingsRelatedAssets = null, currentDisplayStyleViews = null, entriesToDisplayCount = null, enableDisplaySettingsShowSearch = null, portletName = null) {
+	macro configureDisplaySettingsPG {
 		Portlet.gotoPortletOptions(
 			portletName = ${portletName},
 			portletOption = "Configuration");
@@ -72,8 +71,7 @@ definition {
 		}
 	}
 
-	@summary = "Default summary"
-	macro configureRootFolderPG(dmFolderName = null) {
+	macro configureRootFolderPG {
 		Portlet.gotoPortletOptions(
 			portletName = "Documents and Media",
 			portletOption = "Configuration");
@@ -111,8 +109,7 @@ definition {
 		SelectFrame(value1 = "relative=top");
 	}
 
-	@summary = "Default summary"
-	macro configureScopetoGlobalPG() {
+	macro configureScopetoGlobalPG {
 		Portlet.gotoPortletOptions(
 			portletName = "Documents and Media",
 			portletOption = "Configuration");
@@ -134,8 +131,7 @@ definition {
 		Alert.viewSuccessMessage();
 	}
 
-	@summary = "Default summary"
-	macro viewDefaultConfigurationDisplaySettingsPG(portletName = null) {
+	macro viewDefaultConfigurationDisplaySettingsPG {
 		Portlet.gotoPortletOptions(
 			portletName = ${portletName},
 			portletOption = "Configuration");
@@ -159,8 +155,7 @@ definition {
 		SelectFrame(value1 = "relative=top");
 	}
 
-	@summary = "Default summary"
-	macro viewDefaultPG() {
+	macro viewDefaultPG {
 		var key_portletName = "Documents and Media";
 
 		AssertTextEquals(
@@ -172,8 +167,7 @@ definition {
 			value1 = "There are no documents or media files in this folder.");
 	}
 
-	@summary = "Default summary"
-	macro viewNoPermissionCP() {
+	macro viewNoPermissionCP {
 		var key_portletTitle = "Documents and Media";
 
 		AssertTextEquals(

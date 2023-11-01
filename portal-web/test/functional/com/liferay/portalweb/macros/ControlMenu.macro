@@ -1,7 +1,6 @@
 definition {
 
-	@summary = "Default summary"
-	macro viewHeaderTitle(headerTitle = null) {
+	macro viewHeaderTitle {
 		AssertTextEquals(
 			locator1 = "ControlMenu#HEADING",
 			value1 = ${headerTitle});

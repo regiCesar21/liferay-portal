@@ -1,14 +1,12 @@
 definition {
 
-	@summary = "Default summary"
-	macro checkAnalyticsCloudInfo() {
+	macro checkAnalyticsCloudInfo {
 		Click(locator1 = "ABTest#CONTROL_VARIANT");
 
 		Click(locator1 = "ABTest#VIEW_DATA_ANALYTICS_CLOUD_BUTTON");
 	}
 
-	@summary = "Default summary"
-	macro createABTestByBounceRate(testTitle = null) {
+	macro createABTestByBounceRate {
 		Click(locator1 = "ABTest#AB_TEST_BUTTON");
 
 		Click(locator1 = "ABTest#CREATE_TEST_BUTTON");
@@ -22,8 +20,7 @@ definition {
 		Click(locator1 = "ABTest#SAVE_AB_TEST_BUTTON");
 	}
 
-	@summary = "Default summary"
-	macro createVariant(variantName = null) {
+	macro createVariant {
 		Click(locator1 = "ABTest#CREATE_VARIANT_BUTTON");
 
 		Click(locator1 = "ABTest#VARIANT_NAME_FIELD");
@@ -35,8 +32,7 @@ definition {
 		Click(locator1 = "ABTest#SAVE_VARIANT_NAME_BUTTON");
 	}
 
-	@summary = "Default summary"
-	macro deleteVariant() {
+	macro deleteVariant {
 		Click(locator1 = "ABTest#VARIANT_DROPDOWN");
 
 		ClickNoError(locator1 = "ABTest#DELETE_VARIANT_BUTTON");
@@ -46,8 +42,7 @@ definition {
 		Alert.viewSuccessMessage();
 	}
 
-	@summary = "Default summary"
-	macro runTest() {
+	macro runTest {
 		Click(locator1 = "ABTest#REVIEW_AND_RUN_TEST_BUTTON");
 
 		if (IsElementPresent(locator1 = "ABTest#RUN_TEST_BUTTON")) {
@@ -57,8 +52,7 @@ definition {
 		}
 	}
 
-	@summary = "Default summary"
-	macro terminateTest() {
+	macro terminateTest {
 		ClickNoError(locator1 = "ABTest#TERMINATE_TEST_BUTTON");
 
 		AssertConfirm.assertConfirmationNoError(value1 = "Are you sure you want to terminate this test?");

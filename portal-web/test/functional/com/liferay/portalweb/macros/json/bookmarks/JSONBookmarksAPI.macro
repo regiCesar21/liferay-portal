@@ -1,7 +1,6 @@
 definition {
 
-	@summary = "Default summary"
-	macro _addBookmarks(groupId = null, name = null, serviceContext = null, folderId = null, url = null) {
+	macro _addBookmarks {
 		Variables.assertDefined(parameterList = "${groupId},${folderId},${serviceContext},${url}");
 
 		var portalURL = JSONCompany.getPortalURL();
@@ -27,8 +26,7 @@ definition {
 		com.liferay.poshi.runner.util.JSONCurlUtil.post(${curl});
 	}
 
-	@summary = "Default summary"
-	macro _addFolder(folderDescription = null, parentFolderId = null, folderName = null, serviceContext = null) {
+	macro _addFolder {
 		Variables.assertDefined(parameterList = "${folderName},${parentFolderId},${serviceContext}");
 
 		var portalURL = JSONCompany.getPortalURL();
@@ -52,8 +50,7 @@ definition {
 		com.liferay.poshi.runner.util.JSONCurlUtil.post(${curl});
 	}
 
-	@summary = "Default summary"
-	macro _getFolderIdByFolderName(groupId = null, folderName = null) {
+	macro _getFolderIdByFolderName {
 		Variables.assertDefined(parameterList = "${groupId},${folderName}");
 
 		var portalURL = JSONCompany.getPortalURL();

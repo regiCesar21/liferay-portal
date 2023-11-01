@@ -1,7 +1,6 @@
 definition {
 
-	@summary = "Default summary"
-	macro deleteStatus(entryContent = null) {
+	macro deleteStatus {
 		var key_actionType = "Delete";
 		var key_entryContent = ${entryContent};
 
@@ -16,8 +15,7 @@ definition {
 		AssertElementNotPresent(locator1 = "Microblogs#TIMELINE_ENTRY_CONTENT");
 	}
 
-	@summary = "Default summary"
-	macro editStatus(entryContentEdit = null, entryContent = null) {
+	macro editStatus {
 		var key_actionType = "Edit";
 		var key_entryContent = ${entryContent};
 
@@ -38,8 +36,7 @@ definition {
 			value1 = "Post");
 	}
 
-	@summary = "Default summary"
-	macro gotoTimelineTab() {
+	macro gotoTimelineTab {
 		Navigator.gotoNavTab(navTab = "Timeline");
 
 		AssertTextEquals(
@@ -47,8 +44,7 @@ definition {
 			value1 = "Timeline");
 	}
 
-	@summary = "Default summary"
-	macro updateStatus(entryContent = null) {
+	macro updateStatus {
 		AssertTextEquals(
 			locator1 = "Microblogs#COUNTDOWN_HOLDER",
 			value1 = 150);
@@ -74,8 +70,7 @@ definition {
 		AssertElementNotPresent(locator1 = "Button#POST");
 	}
 
-	@summary = "Default summary"
-	macro viewEntry(userName = null, entryContent = null) {
+	macro viewEntry {
 		var key_entryContent = ${entryContent};
 
 		AssertTextEquals(

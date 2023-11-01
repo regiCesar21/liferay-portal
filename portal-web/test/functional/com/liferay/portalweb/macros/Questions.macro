@@ -1,7 +1,6 @@
 definition {
 
-	@summary = "Default summary"
-	macro _deleteAllQuestions() {
+	macro _deleteAllQuestions {
 		while (IsElementPresent(locator1 = "Icon#BODY_VERTICAL_ELLIPSIS")) {
 			LexiconEntry.gotoEllipsisMenuItemNoError(menuItem = "Move to Recycle Bin");
 
@@ -9,8 +8,7 @@ definition {
 		}
 	}
 
-	@summary = "Default summary"
-	macro addQuestionByAPI(bodyField = null, tagField = null, titleField = null, categoryName = null) {
+	macro addQuestionByAPI {
 		Navigator.openURL();
 
 		ProductMenu.gotoPortlet(
@@ -32,8 +30,7 @@ definition {
 			titleField = ${titleField});
 	}
 
-	@summary = "Default summary"
-	macro addQuestionWithoutTagByAPI(bodyField = null, titleField = null, categoryName = null, subCategoryName = null) {
+	macro addQuestionWithoutTagByAPI {
 		Navigator.openURL();
 
 		ProductMenu.gotoPortlet(
@@ -59,8 +56,7 @@ definition {
 			titleField = ${titleField});
 	}
 
-	@summary = "Default summary"
-	macro addRootTopic(rootTopicDescription = null, rootTopicName = null) {
+	macro addRootTopic {
 		if (IsElementPresent(key_text = "New Topic", locator1 = "Button#ANY")) {
 			Click(
 				key_text = "New Topic",
@@ -90,8 +86,7 @@ definition {
 			value1 = ${rootTopicName});
 	}
 
-	@summary = "Default summary"
-	macro addSubTopic(subTopicDescription = null, subTopicName = null) {
+	macro addSubTopic {
 		Click(locator1 = "Questions#NEW_TOPIC");
 
 		Type(
@@ -112,8 +107,7 @@ definition {
 			value1 = ${subTopicName});
 	}
 
-	@summary = "Default summary"
-	macro addTags(tagLocator = null) {
+	macro addTags {
 		Type(
 			locator1 = "Questions#ASK_QUESTION_TAG_FIELD",
 			value1 = ${tagLocator});
@@ -123,8 +117,7 @@ definition {
 			value1 = "\RETURN");
 	}
 
-	@summary = "Default summary"
-	macro answerQuestion(contentField = null) {
+	macro answerQuestion {
 		CKEditor.addContent(content = ${contentField});
 
 		Click(locator1 = "Questions#ASK_QUESTION_POST_YOUR_QUESTION_BUTTON");
@@ -134,8 +127,7 @@ definition {
 			locator1 = "Questions#ANSWER_BODY");
 	}
 
-	@summary = "Default summary"
-	macro askQuestionFillingTheMandatoryFields(tagLocatorList = null, password = null, depotName = null, titleField = null, imageFileName = null, userEmailAddress = null, contentField = null) {
+	macro askQuestionFillingTheMandatoryFields {
 		Click(locator1 = "Questions#ASK_QUESTION_BUTTON");
 
 		if (isSet(anonymousUser)) {
@@ -191,15 +183,13 @@ definition {
 		Click(locator1 = "Questions#ASK_QUESTION_POST_YOUR_QUESTION_BUTTON");
 	}
 
-	@summary = "Default summary"
-	macro changeDisplayStyle(displayStyle = null) {
+	macro changeDisplayStyle {
 		Click(locator1 = "Questions#CREATE_QUESTIONS_DISPLAY_STYLE_SELECTOR");
 
 		MenuItem.click(menuItem = StringUtil.upperCaseFirstLetter(${displayStyle}));
 	}
 
-	@summary = "Default summary"
-	macro changePagination(itemsPerPage = null) {
+	macro changePagination {
 		Click(locator1 = "Questions#ITEMS_PER_PAGE_SELECT");
 
 		var key_itemsPerPage = ${itemsPerPage};
@@ -211,8 +201,7 @@ definition {
 			value1 = ${itemsPerPage});
 	}
 
-	@summary = "Default summary"
-	macro changeTopic(gotoParentTopic = null, parentTopicName = null, subTopicName = null) {
+	macro changeTopic {
 		if (isSet(gotoParentTopic)) {
 			if (isSet(multipleSubTopics)) {
 				Click(locator1 = "Questions#QUESTIONS_BREADCRUMB_ELLIPSIS");
@@ -248,8 +237,7 @@ definition {
 		}
 	}
 
-	@summary = "Default summary"
-	macro clearSearchResults() {
+	macro clearSearchResults {
 		Click(locator1 = "Questions#SEARCH_RESULTS_CLEAR_BUTTON");
 
 		AssertElementNotPresent(locator1 = "Search#SEARCH_INFO");
@@ -257,8 +245,7 @@ definition {
 		AssertElementNotPresent(locator1 = "Questions#SEARCH_RESULTS_CLEAR_BUTTON");
 	}
 
-	@summary = "Default summary"
-	macro configureFilter(filterBy = null) {
+	macro configureFilter {
 		Click(locator1 = "Questions#QUESTIONS_SELECT_FILTER");
 
 		Pause(locator1 = 1000);
@@ -270,8 +257,7 @@ definition {
 		Pause(locator1 = 1000);
 	}
 
-	@summary = "Default summary"
-	macro configureLandingPageTopicNavigation(toggleValue = null) {
+	macro configureLandingPageTopicNavigation {
 		Portlet.gotoPortletOptions(
 			portletName = "Questions",
 			portletOption = "Configuration");
@@ -293,8 +279,7 @@ definition {
 		PortletEntry.save();
 	}
 
-	@summary = "Default summary"
-	macro configureRootTopic(parentCategoryName = null, categoryName = null, subCategoryName = null) {
+	macro configureRootTopic {
 		Portlet.gotoPortletOptions(
 			portletName = "Questions",
 			portletOption = "Configuration");
@@ -342,8 +327,7 @@ definition {
 		}
 	}
 
-	@summary = "Default summary"
-	macro configureTagsFilter(filterBy = null) {
+	macro configureTagsFilter {
 		Click(locator1 = "Questions#QUESTIONS_TAGS_SELECT_FILTER");
 
 		Pause(locator1 = 1000);
@@ -353,8 +337,7 @@ definition {
 			locator1 = "Questions#QUESTIONS_SELECT_FILTER_VALUE");
 	}
 
-	@summary = "Default summary"
-	macro createSomethingInMessageBoards(displayStyleOption = null, nameField = null, menuItem = null) {
+	macro createSomethingInMessageBoards {
 		LexiconEntry.gotoAdd();
 
 		MenuItem.click(menuItem = ${menuItem});
@@ -368,8 +351,7 @@ definition {
 		Alert.viewSuccessMessage();
 	}
 
-	@summary = "Default summary"
-	macro fillName(nameField = null) {
+	macro fillName {
 		Click(locator1 = "Questions#CREATE_QUESTIONS_NAME_FIELD");
 
 		Type(
@@ -377,8 +359,7 @@ definition {
 			value1 = ${nameField});
 	}
 
-	@summary = "Default summary"
-	macro gotoCategory(categoryName = null) {
+	macro gotoCategory {
 		Click(
 			key_questionNameField = ${categoryName},
 			locator1 = "Questions#QUESTIONS_NAME_FIELD");
@@ -392,8 +373,7 @@ definition {
 			locator1 = "Questions#QUESTIONS_CATEGORY_TITLE");
 	}
 
-	@summary = "Default summary"
-	macro gotoDetails(questionTitle = null) {
+	macro gotoDetails {
 		Click(
 			key_questionTitle = ${questionTitle},
 			locator1 = "Questions#QUESTIONS_TITLE");
@@ -404,8 +384,7 @@ definition {
 			value1 = ${questionTitle});
 	}
 
-	@summary = "Default summary"
-	macro gotoTab(questionTabField = null) {
+	macro gotoTab {
 		Click(
 			key_questionTabField = ${questionTabField},
 			locator1 = "Questions#QUESTIONS_LIST_TAB_FIELD");
@@ -415,8 +394,7 @@ definition {
 			locator1 = "Questions#QUESTIONS_LIST_ACTIVE_TAB_FIELD");
 	}
 
-	@summary = "Default summary"
-	macro removeRootTopicConfiguration() {
+	macro removeRootTopicConfiguration {
 		Portlet.gotoPortletOptions(
 			portletName = "Questions",
 			portletOption = "Configuration");
@@ -428,8 +406,7 @@ definition {
 		PortletEntry.save();
 	}
 
-	@summary = "Default summary"
-	macro search(resultsInfo = null, searchKey = null) {
+	macro search {
 		if (isSet(searchTag)) {
 			Type(
 				locator1 = "Questions#SEARCH_QUESTION_FIELD",
@@ -456,13 +433,11 @@ definition {
 		}
 	}
 
-	@summary = "Default summary"
-	macro subscribeQuestion() {
+	macro subscribeQuestion {
 		Click(locator1 = "Questions#QUESTIONS_BELL_BUTTON");
 	}
 
-	@summary = "Default summary"
-	macro subscribeTopic() {
+	macro subscribeTopic {
 		AssertClick(
 			locator1 = "Button#SUBSCRIBE",
 			value1 = "Subscribe");
@@ -470,8 +445,7 @@ definition {
 		AssertElementPresent(locator1 = "Questions#QUESTIONS_SUBSCRIBED_BUTTON");
 	}
 
-	@summary = "Default summary"
-	macro tearDown() {
+	macro tearDown {
 		while (IsElementPresent(locator1 = "Questions#QUESTIONS_LIST")) {
 			Questions._deleteAllQuestions();
 		}
@@ -479,8 +453,7 @@ definition {
 		AssertElementNotPresent(locator1 = "Questions#QUESTIONS_LIST");
 	}
 
-	@summary = "Default summary"
-	macro unSubscribeQuestion(questionTitle = null) {
+	macro unSubscribeQuestion {
 		Click.waitForMenuToggleJSClick(
 			key_questionTitle = ${questionTitle},
 			locator1 = "Questions#QUESTIONS_ELLIPSIS_ICON");
@@ -488,15 +461,13 @@ definition {
 		MenuItem.clickNoError(menuItem = "Unsubscribe");
 	}
 
-	@summary = "Default summary"
-	macro unSubscribeTopic(topicName = null) {
+	macro unSubscribeTopic {
 		LexiconCard.clickEllipsisItem(
 			card = ${topicName},
 			item = "Unsubscribe");
 	}
 
-	@summary = "Default summary"
-	macro viewFilterResults(questionTitle = null, lastQuestionTitle = null) {
+	macro viewFilterResults {
 		AssertTextEquals(
 			key_questionTitle = ${questionTitle},
 			locator1 = "Questions#QUESTIONS_TITLE",
@@ -508,8 +479,7 @@ definition {
 			value1 = ${lastQuestionTitle});
 	}
 
-	@summary = "Default summary"
-	macro viewHomeTopicsList(topicsName = null) {
+	macro viewHomeTopicsList {
 		Click(locator1 = "Questions#QUESTIONS_BREADCRUMB_HOME_DROPDOWN_TOGGLE");
 
 		for (var topicName : list ${topicsName}) {
@@ -520,8 +490,7 @@ definition {
 		}
 	}
 
-	@summary = "Default summary"
-	macro viewList(unlistedQuestions = null, listedQuestions = null) {
+	macro viewList {
 		if (isSet(unlistedQuestions)) {
 			for (var unlistedQuestion : list ${unlistedQuestions}) {
 				AssertElementNotPresent(
@@ -540,8 +509,7 @@ definition {
 		}
 	}
 
-	@summary = "Default summary"
-	macro viewLockedQuestion(questionTitle = null) {
+	macro viewLockedQuestion {
 		AssertElementPresent(
 			key_questionTitle = ${questionTitle},
 			locator1 = "Questions#QUESTIONS_LOCKED_ICON");
@@ -571,8 +539,7 @@ definition {
 		}
 	}
 
-	@summary = "Default summary"
-	macro viewNoSearchResults(questionsList = null) {
+	macro viewNoSearchResults {
 		for (var questionTitle : list ${questionsList}) {
 			AssertElementNotPresent(
 				key_questionTitle = ${questionTitle},
@@ -580,8 +547,7 @@ definition {
 		}
 	}
 
-	@summary = "Default summary"
-	macro viewNoTags(tagsList = null) {
+	macro viewNoTags {
 		for (var tagName : list ${tagsList}) {
 			AssertElementNotPresent(
 				key_tagName = ${tagName},
@@ -589,15 +555,13 @@ definition {
 		}
 	}
 
-	@summary = "Default summary"
-	macro viewPaginationResults(results = null) {
+	macro viewPaginationResults {
 		AssertTextEquals(
 			locator1 = "Questions#PAGINATION_RESULTS",
 			value1 = ${results});
 	}
 
-	@summary = "Default summary"
-	macro viewSearchResults(questionsList = null) {
+	macro viewSearchResults {
 		for (var questionTitle : list ${questionsList}) {
 			AssertTextEquals(
 				key_questionTitle = ${questionTitle},
@@ -606,8 +570,7 @@ definition {
 		}
 	}
 
-	@summary = "Default summary"
-	macro viewStatistics(headerName = null, userName = null) {
+	macro viewStatistics {
 		MouseOver(
 			key_userName = ${userName},
 			locator1 = "Questions#QUESTIONS_STATISTICS_USER_NAME");
@@ -623,8 +586,7 @@ definition {
 		}
 	}
 
-	@summary = "Default summary"
-	macro viewSubscribedQuestion(subscribedQuestion = null) {
+	macro viewSubscribedQuestion {
 		if (isSet(subscribedQuestion)) {
 			AssertTextEquals(
 				key_questionTitle = ${subscribedQuestion},
@@ -638,8 +600,7 @@ definition {
 		}
 	}
 
-	@summary = "Default summary"
-	macro viewSubscribedTopic(subscribedTopic = null) {
+	macro viewSubscribedTopic {
 		if (isSet(subscribedTopic)) {
 			AssertTextEquals(
 				key_subscribedTopic = ${subscribedTopic},
@@ -653,8 +614,7 @@ definition {
 		}
 	}
 
-	@summary = "Default summary"
-	macro viewTags(tagName = null, amountOfUsedTimes = null) {
+	macro viewTags {
 		if (isSet(noTagResults)) {
 			AssertTextEquals(
 				locator1 = "Questions#TAGS_LIST_TAB_NO_RESULTS",
@@ -674,8 +634,7 @@ definition {
 		}
 	}
 
-	@summary = "Default summary"
-	macro viewTagsFilterResults(usedTimes = null, position = null, tagName = null) {
+	macro viewTagsFilterResults {
 		AssertTextEquals.assertPartialText(
 			key_position = ${position},
 			locator1 = "Questions#TAGS_POSITION",
@@ -695,8 +654,7 @@ definition {
 		}
 	}
 
-	@summary = "Default summary"
-	macro viewUnlockedQuestion(questionTitle = null) {
+	macro viewUnlockedQuestion {
 		AssertElementNotPresent(
 			key_questionTitle = ${questionTitle},
 			locator1 = "Questions#QUESTIONS_LOCKED_ICON");
@@ -722,8 +680,7 @@ definition {
 		}
 	}
 
-	@summary = "Default summary"
-	macro voteQuestion(currentVotedCount = null) {
+	macro voteQuestion {
 		AssertTextEquals(
 			key_votedResult = ${currentVotedCount},
 			locator1 = "Questions#VOTED_RESULT",

@@ -1,7 +1,6 @@
 definition {
 
-	@summary = "Default summary"
-	macro createNewExportSchedule(endDate = null, startTime = null, endTime = null, type = null, startDate = null, token = null) {
+	macro createNewExportSchedule {
 		var analyticsCloudURL = PropsUtil.get("analytics.cloud.url");
 
 		var curl = '''
@@ -14,8 +13,7 @@ definition {
 		return ${apiResponse};
 	}
 
-	@summary = "Default summary"
-	macro getTokenValue() {
+	macro getTokenValue {
 		if (IsElementNotPresent(locator1 = "ACSettings#COPY_TOKEN_BUTTON")) {
 			ACUtils.clickAnyButton(button = "Generate Token");
 		}
@@ -29,8 +27,7 @@ definition {
 		return ${token};
 	}
 
-	@summary = "Default summary"
-	macro viewApiResponseForError(apiResponse = null, message = null) {
+	macro viewApiResponseForError {
 
 		// Checks if the API response message explains the reason for the error
 
@@ -51,8 +48,7 @@ definition {
 		}
 	}
 
-	@summary = "Default summary"
-	macro viewApiResponseForExportProcess(endDate = null, apiResponse = null, upperCaseType = null, startTime = null, endTime = null, message = null, startDate = null, status = null) {
+	macro viewApiResponseForExportProcess {
 
 		// Checks if the API response message is correct
 

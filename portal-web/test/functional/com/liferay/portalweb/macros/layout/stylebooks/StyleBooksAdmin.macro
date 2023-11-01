@@ -1,7 +1,6 @@
 definition {
 
-	@summary = "Default summary"
-	macro addStyleBooks(styleBookName = null) {
+	macro addStyleBooks {
 		LexiconEntry.gotoAdd();
 
 		PortletEntry.inputName(name = ${styleBookName});
@@ -9,25 +8,21 @@ definition {
 		Button.clickSave();
 	}
 
-	@summary = "Default summary"
-	macro gotoStyleBook(styleBookName = null) {
+	macro gotoStyleBook {
 		LexiconCard.clickCardTitle(card = ${styleBookName});
 	}
 
-	@summary = "Default summary"
-	macro gotoStyleBookEllipsisItem(item = null, styleBookName = null) {
+	macro gotoStyleBookEllipsisItem {
 		LexiconCard.clickEllipsisItem(
 			card = ${styleBookName},
 			item = ${item});
 	}
 
-	@summary = "Default summary"
-	macro openStyleBooksAdmin(siteURLKey = null) {
+	macro openStyleBooksAdmin {
 		Navigator.openWithAppendToBaseURL(urlAppend = "group/${siteURLKey}/~/control_panel/manage?p_p_id=com_liferay_style_book_web_internal_portlet_StyleBookPortlet");
 	}
 
-	@summary = "Default summary"
-	macro viewStyleBooksPresent(styleBookName = null) {
+	macro viewStyleBooksPresent {
 		LexiconCard.viewCardPresent(card = ${styleBookName});
 	}
 

@@ -2,8 +2,7 @@ definition {
 
 	var validationErrorMessage = "This field is required.";
 
-	@summary = "Default summary"
-	macro changeLocale(locale = null) {
+	macro changeLocale {
 		Click(locator1 = "FormPortlet#LOCALIZATION_BUTTON");
 
 		Click(
@@ -11,22 +10,19 @@ definition {
 			locator1 = "FormPortlet#LOCALIZATION_OPTION");
 	}
 
-	@summary = "Default summary"
-	macro clickNextPage() {
+	macro clickNextPage {
 		AssertClick(
 			locator1 = "Button#NEXT",
 			value1 = "Next");
 	}
 
-	@summary = "Default summary"
-	macro clickSubmit() {
+	macro clickSubmit {
 		AssertClick(
 			locator1 = "Button#MAIN_CONTENT_SUBMIT",
 			value1 = "Submit");
 	}
 
-	@summary = "Default summary"
-	macro nextPage(formPageCurrent = null, formPageNext = null) {
+	macro nextPage {
 		AssertClick(
 			locator1 = "Button#NEXT",
 			value1 = "Next");
@@ -44,13 +40,11 @@ definition {
 			value1 = ${formPageNext});
 	}
 
-	@summary = "Default summary"
-	macro previousPage() {
+	macro previousPage {
 		Click(locator1 = "Button#PREVIOUS");
 	}
 
-	@summary = "Default summary"
-	macro submit() {
+	macro submit {
 		if (IsElementPresent(locator1 = "FormPortlet#PORTLET_CONTENT")) {
 			Click(locator1 = "FormPortlet#PORTLET_CONTENT");
 		}
@@ -63,8 +57,7 @@ definition {
 		FormPortlet.clickSubmit();
 	}
 
-	@summary = "Default summary"
-	macro submitLocalizedSuccessfully(buttonName = null) {
+	macro submitLocalizedSuccessfully {
 		AssertClick(
 			locator1 = "Button#MAIN_CONTENT_SUBMIT",
 			value1 = ${buttonName});
@@ -74,8 +67,7 @@ definition {
 		Alert.viewSuccessMessage();
 	}
 
-	@summary = "Default summary"
-	macro submitSuccessfully() {
+	macro submitSuccessfully {
 		FormPortlet.submit();
 
 		WaitForElementPresent(locator1 = "Message#SUCCESS_DISMISSIBLE");
@@ -83,8 +75,7 @@ definition {
 		Alert.viewSuccessMessage();
 	}
 
-	@summary = "Default summary"
-	macro submitWithError(errorMessage = null) {
+	macro submitWithError {
 		FormPortlet.submit();
 
 		WaitForElementPresent(
@@ -94,15 +85,13 @@ definition {
 		Alert.viewErrorMessage(errorMessage = ${errorMessage});
 	}
 
-	@summary = "Default summary"
-	macro submitWithValidationError(validationErrorMessage = null) {
+	macro submitWithValidationError {
 		FormPortlet.submit();
 
 		FormPortlet.viewValidationErrorMessage(validationErrorMessage = ${validationErrorMessage});
 	}
 
-	@summary = "Default summary"
-	macro viewSuccessPage(successPageDescription = null, successPageTitle = null) {
+	macro viewSuccessPage {
 		var key_successPageTitle = ${successPageTitle};
 
 		AssertTextEquals(
@@ -116,8 +105,7 @@ definition {
 			value1 = ${successPageDescription});
 	}
 
-	@summary = "Default summary"
-	macro viewValidationErrorMessage(validationErrorMessage = null) {
+	macro viewValidationErrorMessage {
 		WaitForElementPresent(
 			locator1 = "Message#ERROR_FORM_FIELD_REQUIRED",
 			value1 = ${validationErrorMessage});
@@ -127,8 +115,7 @@ definition {
 			value1 = ${validationErrorMessage});
 	}
 
-	@summary = "Default summary"
-	macro waitFormRenderer(text = null) {
+	macro waitFormRenderer {
 		var key_text = ${text};
 
 		WaitForElementPresent(locator1 = "Button#ANY_ENABLED");
@@ -136,8 +123,7 @@ definition {
 		Pause(locator1 = 2500);
 	}
 
-	@summary = "Default summary"
-	macro waitForValidationErrorNotPresent(validationErrorMessage = null) {
+	macro waitForValidationErrorNotPresent {
 		WaitForElementNotPresent(
 			locator1 = "Message#ERROR_FORM_FIELD_REQUIRED",
 			value1 = ${validationErrorMessage});

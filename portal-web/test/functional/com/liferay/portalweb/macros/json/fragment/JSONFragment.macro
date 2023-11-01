@@ -1,7 +1,6 @@
 definition {
 
-	@summary = "Default summary"
-	macro addFragmentCollection(groupName = null, site = null, name = null, description = null, groupKey = null) {
+	macro addFragmentCollection {
 		Variables.assertDefined(parameterList = ${name});
 
 		var groupId = JSONFragmentSetter.setGroupId(
@@ -15,8 +14,7 @@ definition {
 			name = ${name});
 	}
 
-	@summary = "Default summary"
-	macro addSection(groupName = null, site = null, fragmentStatus = null, name = null, groupKey = null, collectionName = null) {
+	macro addSection {
 		Variables.assertDefined(parameterList = "${collectionName},${name}");
 
 		var groupId = JSONFragmentSetter.setGroupId(
@@ -42,8 +40,7 @@ definition {
 			type = ${type});
 	}
 
-	@summary = "Default summary"
-	macro assertFragmentCollectionInGroup(groupName = null, site = null, groupKey = null, collectionName = null) {
+	macro assertFragmentCollectionInGroup {
 		Variables.assertDefined(parameterList = ${collectionName});
 
 		var groupId = JSONFragmentSetter.setGroupId(
@@ -60,8 +57,7 @@ definition {
 		}
 	}
 
-	@summary = "Default summary"
-	macro assertFragmentCollectionNotInGroup(groupName = null, site = null, groupKey = null, collectionName = null) {
+	macro assertFragmentCollectionNotInGroup {
 		Variables.assertDefined(parameterList = ${collectionName});
 
 		var groupId = JSONFragmentSetter.setGroupId(
@@ -78,8 +74,7 @@ definition {
 		}
 	}
 
-	@summary = "Default summary"
-	macro assertFragmentInGroup(groupName = null, site = null, fragmentName = null, groupKey = null, collectionName = null) {
+	macro assertFragmentInGroup {
 		Variables.assertDefined(parameterList = "${collectionName},${fragmentName}");
 
 		var groupId = JSONFragmentSetter.setGroupId(
@@ -101,8 +96,7 @@ definition {
 		}
 	}
 
-	@summary = "Default summary"
-	macro assertFragmentNotInGroup(groupName = null, site = null, fragmentName = null, groupKey = null, collectionName = null) {
+	macro assertFragmentNotInGroup {
 		Variables.assertDefined(parameterList = "${collectionName},${fragmentName}");
 
 		var groupId = JSONFragmentSetter.setGroupId(

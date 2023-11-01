@@ -2,14 +2,14 @@
 @summary = "Verify that '${locator1}' is visible"
 definition {
 
-	function verifyVisible(locator1) {
+	function verifyVisible {
 		WaitForSPARefresh();
 
 		selenium.waitForVisible(${locator1}, "false");
 
-		selenium.verifyVisible(${locator1});
+		selenium.verifyVisible();
 
-		selenium.assertJavaScriptErrors(${value1});
+		selenium.assertJavaScriptErrors();
 
 		selenium.assertLiferayErrors();
 	}

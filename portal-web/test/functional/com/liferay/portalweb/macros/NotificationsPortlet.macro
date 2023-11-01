@@ -1,7 +1,6 @@
 definition {
 
-	@summary = "Default summary"
-	macro configureNotificationPG(menuItem = null) {
+	macro configureNotificationPG {
 		MouseOver.mouseOverNotVisible(locator1 = "Notifications#NOTIFICATIONS_PORTLET_VERTICAL_ELLIPSIS");
 
 		Click(locator1 = "Notifications#NOTIFICATIONS_PORTLET_VERTICAL_ELLIPSIS");
@@ -13,8 +12,7 @@ definition {
 			value1 = ${menuItem});
 	}
 
-	@summary = "Default summary"
-	macro disableUserDeliveries(actionType = null, notificationType = null, contentType = null) {
+	macro disableUserDeliveries {
 		var key_contentType = ${contentType};
 		var key_panel = ${contentType};
 
@@ -40,8 +38,7 @@ definition {
 		Button.clickSave();
 	}
 
-	@summary = "Default summary"
-	macro gotoNotificationDelivery(notificationPG = null) {
+	macro gotoNotificationDelivery {
 		Navigator.gotoNotifications();
 
 		if (${notificationPG} == "true") {
@@ -52,8 +49,7 @@ definition {
 		}
 	}
 
-	@summary = "Default summary"
-	macro tearDownUserDeliveries() {
+	macro tearDownUserDeliveries {
 		var actionList = "adds,updates";
 		var contentList = "Wiki,Message Boards,Comments,Documents and Media,Bookmarks,Web Content,Blogs";
 		var notificationList = "Email,Website";
@@ -75,8 +71,7 @@ definition {
 		}
 	}
 
-	@summary = "Default summary"
-	macro viewDefaultNotificationDeliveries() {
+	macro viewDefaultNotificationDeliveries {
 		var key_contentType = "Blogs";
 
 		AssertTextEquals(

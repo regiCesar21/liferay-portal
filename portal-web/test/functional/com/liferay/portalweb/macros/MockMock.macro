@@ -1,14 +1,12 @@
 definition {
 
-	@summary = "Default summary"
-	macro _backtoInbox() {
+	macro _backtoInbox {
 		AssertClick.assertPartialTextClickAt(
 			locator1 = "MockMock#MOCKMOCK_HOME_LINK",
 			value1 = "Home");
 	}
 
-	@summary = "Default summary"
-	macro _gotoMail(newTab = null) {
+	macro _gotoMail {
 		if (${newTab} == "true") {
 			Open.openInTheNewTab(locator1 = "http://localhost:8282");
 		}
@@ -21,8 +19,7 @@ definition {
 			value1 = "MockMock");
 	}
 
-	@summary = "Default summary"
-	macro _gotoMailMessage(recipient = null, asset = null) {
+	macro _gotoMailMessage {
 		var key_columnEntry = ${asset};
 
 		if (isSet(recipient)) {
@@ -39,8 +36,7 @@ definition {
 		}
 	}
 
-	@summary = "Default summary"
-	macro _viewMailFromInbox(sender = null, recipient = null, asset = null) {
+	macro _viewMailFromInbox {
 		var key_columnEntry = ${asset};
 		var key_recipient = ${recipient};
 		var key_sender = ${sender};
@@ -62,8 +58,7 @@ definition {
 			value1 = ${asset});
 	}
 
-	@summary = "Default summary"
-	macro _viewMailMessage(subject = null, content = null) {
+	macro _viewMailMessage {
 		var key_asset = ${subject};
 
 		AssertTextEquals.assertPartialText(
@@ -75,8 +70,7 @@ definition {
 			value1 = ${content});
 	}
 
-	@summary = "Default summary"
-	macro clickBodyLink(bodyLink = null, asset = null) {
+	macro clickBodyLink {
 		MockMock._gotoMailMessage(asset = ${asset});
 
 		var key_bodyLink = ${bodyLink};
@@ -86,8 +80,7 @@ definition {
 			value1 = ${bodyLink});
 	}
 
-	@summary = "Default summary"
-	macro deleteMail(asset = null, newTab = null) {
+	macro deleteMail {
 		var key_columnEntry = ${asset};
 
 		MockMock._gotoMail(newTab = ${newTab});
@@ -103,8 +96,7 @@ definition {
 		AssertElementNotPresent(locator1 = "MockMock#MOCKMOCK_SUBJECT_FIELD_LINK");
 	}
 
-	@summary = "Default summary"
-	macro getBodySpecificText(specificText = null, subject = null, extractFirstText = null, asset = null, content = null) {
+	macro getBodySpecificText {
 		var key_asset = ${asset};
 		var key_columnEntry = ${asset};
 
@@ -142,8 +134,7 @@ definition {
 		}
 	}
 
-	@summary = "Default summary"
-	macro getHTMLBodyFormattedText(sender = null, subject = null, recipient = null, newTab = null) {
+	macro getHTMLBodyFormattedText {
 		MockMock._gotoMail(newTab = ${newTab});
 
 		AssertVisible(
@@ -167,8 +158,7 @@ definition {
 		return ${text};
 	}
 
-	@summary = "Default summary"
-	macro openBodyLink(subject = null, asset = null, content = null) {
+	macro openBodyLink {
 		var key_asset = ${asset};
 
 		MockMock._gotoMail();
@@ -188,8 +178,7 @@ definition {
 		Navigator.openSpecificURL(url = ${bodyURL});
 	}
 
-	@summary = "Default summary"
-	macro openCalendatBodyLink(subject = null, asset = null, content = null) {
+	macro openCalendatBodyLink {
 		var key_asset = ${asset};
 
 		MockMock._gotoMail();
@@ -209,8 +198,7 @@ definition {
 		Navigator.openSpecificURL(url = ${bodyURL});
 	}
 
-	@summary = "Default summary"
-	macro viewMail(sender = null, subject = null, recipient = null, asset = null, content = null) {
+	macro viewMail {
 		MockMock._gotoMail();
 
 		MockMock._viewMailFromInbox(
@@ -229,8 +217,7 @@ definition {
 		MockMock._backtoInbox();
 	}
 
-	@summary = "Default summary"
-	macro viewMailForOTP(sender = null, subject = null, content = null) {
+	macro viewMailForOTP {
 		MockMock._gotoMail();
 
 		var key_columnEntry = ${subject};

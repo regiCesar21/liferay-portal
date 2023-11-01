@@ -1,7 +1,6 @@
 definition {
 
-	@summary = "Default summary"
-	macro gotoLocalizedSite(site = null) {
+	macro gotoLocalizedSite {
 		ApplicationsMenuHelper.openApplicationsMenu();
 
 		Click(
@@ -9,8 +8,7 @@ definition {
 			locator1 = "ApplicationsMenu#SITE_LINK");
 	}
 
-	@summary = "Default summary"
-	macro gotoPanel(panel = null) {
+	macro gotoPanel {
 		var key_panel = ${panel};
 
 		Click(locator1 = "ApplicationsMenu#PANEL");
@@ -20,8 +18,7 @@ definition {
 		WaitForLiferayEvent.initializeLiferayEventLog();
 	}
 
-	@summary = "Default summary"
-	macro gotoPortlet(portlet = null, panel = null, category = null) {
+	macro gotoPortlet {
 		ApplicationsMenuHelper.openApplicationsMenu();
 
 		ApplicationsMenu.gotoPanel(panel = ${panel});
@@ -31,8 +28,7 @@ definition {
 			portlet = ${portlet});
 	}
 
-	@summary = "Default summary"
-	macro gotoSite(site = null) {
+	macro gotoSite {
 		ApplicationsMenuHelper.openApplicationsMenu();
 
 		Click(
@@ -40,8 +36,7 @@ definition {
 			locator1 = "ApplicationsMenu#SITE_LINK");
 	}
 
-	@summary = "Default summary"
-	macro gotoSiteViaViewAll(depotName = null, site = null) {
+	macro gotoSiteViaViewAll {
 		ApplicationsMenuHelper.openApplicationsMenu();
 
 		ApplicationsMenuHelper.openWorkspace();

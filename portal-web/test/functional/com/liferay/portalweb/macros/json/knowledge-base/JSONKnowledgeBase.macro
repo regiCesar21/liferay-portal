@@ -1,7 +1,6 @@
 definition {
 
-	@summary = "Default summary"
-	macro _getChildKBResourcePrimKey(groupName = null, kbChildArticleTitle = null, folderName = null, kbArticleTitle = null) {
+	macro _getChildKBResourcePrimKey {
 		if (!(isSet(site))) {
 			var site = "true";
 		}
@@ -48,8 +47,7 @@ definition {
 		}
 	}
 
-	@summary = "Default summary"
-	macro _getKBResourcePrimKey(groupName = null, folderName = null, kbArticleTitle = null) {
+	macro _getKBResourcePrimKey {
 		if (!(isSet(site))) {
 			var site = "true";
 		}
@@ -93,8 +91,7 @@ definition {
 		}
 	}
 
-	@summary = "Default summary"
-	macro addkBArticle(groupName = null, folderName = null, kbArticleContent = null, kbArticleTitle = null) {
+	macro addkBArticle {
 		var portalURL = JSONCompany.getPortalURL();
 
 		if (isSet(folderName)) {
@@ -134,8 +131,7 @@ definition {
 		var messageId = JSONCurlUtil.post(${curl});
 	}
 
-	@summary = "Default summary"
-	macro addkBChildArticle(groupName = null, kbChildArticleContent = null, kbChildArticleTitle = null, folderName = null, kbArticleTitle = null) {
+	macro addkBChildArticle {
 		var portalURL = JSONCompany.getPortalURL();
 		var parentResourceClassNameId = JSONClassname._getClassNameId(value = "com.liferay.knowledge.base.model.KBArticle");
 
@@ -175,8 +171,7 @@ definition {
 		var messageId = JSONCurlUtil.post(${curl});
 	}
 
-	@summary = "Default summary"
-	macro addkBFolder(parentFolderName = null, kbFolderName = null, groupName = null, kbFolderDescription = null, folderName = null) {
+	macro addkBFolder {
 		var portalURL = JSONCompany.getPortalURL();
 
 		if (isSet(parentFolderName)) {
@@ -222,8 +217,7 @@ definition {
 		var messageId = JSONCurlUtil.post(${curl});
 	}
 
-	@summary = "Default summary"
-	macro addkBGrandchildArticle(kbGrandchildArticleTitle = null, groupName = null, kbGrandchildArticleContent = null, kbChildArticleTitle = null, folderName = null, kbArticleTitle = null) {
+	macro addkBGrandchildArticle {
 		var portalURL = JSONCompany.getPortalURL();
 		var parentResourceClassNameId = JSONClassname._getClassNameId(value = "com.liferay.knowledge.base.model.KBArticle");
 
@@ -265,8 +259,7 @@ definition {
 		var messageId = JSONCurlUtil.post(${curl});
 	}
 
-	@summary = "Default summary"
-	macro addkBTemplate(kbTemplateTitle = null, kbTemplateContent = null) {
+	macro addkBTemplate {
 		var portalURL = JSONCompany.getPortalURL();
 
 		var curl = '''
@@ -286,8 +279,7 @@ definition {
 		var messageId = JSONCurlUtil.post(${curl});
 	}
 
-	@summary = "Default summary"
-	macro getFolderIdByFolderName(groupName = null, folderName = null) {
+	macro getFolderIdByFolderName {
 		if (!(isSet(site))) {
 			var site = "true";
 		}

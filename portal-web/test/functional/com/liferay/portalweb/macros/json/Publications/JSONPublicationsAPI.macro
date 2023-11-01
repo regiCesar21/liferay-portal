@@ -1,7 +1,6 @@
 definition {
 
-	@summary = "Default summary"
-	macro _addPublication(publicationDescription = null, publicationName = null) {
+	macro _addPublication {
 		Variables.assertDefined(parameterList = "${publicationDescription},${publicationName}");
 
 		var portalURL = JSONCompany.getPortalURL();
@@ -20,8 +19,7 @@ definition {
 		com.liferay.poshi.runner.util.JSONCurlUtil.post(${curl});
 	}
 
-	@summary = "Default summary"
-	macro _enablePublications() {
+	macro _enablePublications {
 		var portalURL = JSONCompany.getPortalURL();
 		var companyId = JSONCompany.getCompanyId();
 
@@ -36,8 +34,7 @@ definition {
 		com.liferay.poshi.runner.util.JSONCurlUtil.post(${curl});
 	}
 
-	@summary = "Default summary"
-	macro _getCTCollectionId(publicationName = null) {
+	macro _getCTCollectionId {
 		Variables.assertDefined(parameterList = ${publicationName});
 
 		var portalURL = JSONCompany.getPortalURL();
@@ -66,8 +63,7 @@ definition {
 		return ${ctCollectionId};
 	}
 
-	@summary = "Default summary"
-	macro _publishPublication(ctCollectionId = null) {
+	macro _publishPublication {
 		Variables.assertDefined(parameterList = ${ctCollectionId});
 
 		var portalURL = JSONCompany.getPortalURL();
@@ -84,8 +80,7 @@ definition {
 		com.liferay.poshi.runner.util.JSONCurlUtil.post(${curl});
 	}
 
-	@summary = "Default summary"
-	macro _selectPublication(ctCollectionId = null) {
+	macro _selectPublication {
 		Variables.assertDefined(parameterList = ${ctCollectionId});
 
 		var portalURL = JSONCompany.getPortalURL();

@@ -1,7 +1,6 @@
 definition {
 
-	@summary = "Default summary"
-	macro addCP(sourceURL = null) {
+	macro addCP {
 		SelectFrame(locator1 = "IFrame#CONFIGURATION");
 
 		Type(
@@ -13,27 +12,23 @@ definition {
 		SelectFrame(value1 = "relative=top");
 	}
 
-	@summary = "Default summary"
-	macro closeFrame() {
+	macro closeFrame {
 		SelectFrame(value1 = "relative=top");
 
 		Click(locator1 = "Modal#CLOSE_BUTTON");
 	}
 
-	@summary = "Default summary"
-	macro saveConfiguration() {
+	macro saveConfiguration {
 		PortletEntry.save();
 
 		SelectFrame(value1 = "relative=top");
 	}
 
-	@summary = "Default summary"
-	macro selectCategoryFrame() {
+	macro selectCategoryFrame {
 		SelectFrame(locator1 = "IFrame#SELECT_CATEGORY");
 	}
 
-	@summary = "Default summary"
-	macro selectConfigurationFrame() {
+	macro selectConfigurationFrame {
 		if (IsElementPresent(locator1 = "IFrame#MODAL_BODY")) {
 			echo("Selecting configuration iframe");
 
@@ -41,30 +36,25 @@ definition {
 		}
 	}
 
-	@summary = "Default summary"
-	macro selectEditAssetFrame() {
+	macro selectEditAssetFrame {
 		SelectFrame(locator1 = "IFrame#EDIT_ASSET");
 	}
 
-	@summary = "Default summary"
-	macro selectModalFrame() {
+	macro selectModalFrame {
 		SelectFrame(locator1 = "IFrame#MODAL_IFRAME");
 	}
 
-	@summary = "Default summary"
-	macro selectPermissionsFrame() {
+	macro selectPermissionsFrame {
 		while (IsElementPresent(locator1 = "IFrame#MODAL_BODY")) {
 			SelectFrame(locator1 = "IFrame#MODAL_BODY");
 		}
 	}
 
-	@summary = "Default summary"
-	macro selectTagFrame() {
+	macro selectTagFrame {
 		SelectFrame(locator1 = "IFrame#SELECT_TAG");
 	}
 
-	@summary = "Default summary"
-	macro selectTopFrame() {
+	macro selectTopFrame {
 		SelectFrame(value1 = "relative=top");
 	}
 

@@ -1,7 +1,6 @@
 definition {
 
-	@summary = "Default summary"
-	macro getUTCDay() {
+	macro getUTCDay {
 		var javaScript = '''
 		var utcDate = new Date().getUTCDate().toString();
 
@@ -13,8 +12,7 @@ definition {
 		return ${utcDate};
 	}
 
-	@summary = "Default summary"
-	macro getUTCHours() {
+	macro getUTCHours {
 		var javaScript = '''
 		var utcHours = new Date().getUTCHours().toString();
 
@@ -26,8 +24,7 @@ definition {
 		return ${utcHours};
 	}
 
-	@summary = "Default summary"
-	macro getUTCMinutes() {
+	macro getUTCMinutes {
 		var javaScript = '''
 		var utcMinutes = new Date().getUTCMinutes().toString();
 
@@ -39,8 +36,7 @@ definition {
 		return ${utcMinutes};
 	}
 
-	@summary = "Default summary"
-	macro getUTCMonth() {
+	macro getUTCMonth {
 		var javaScript = '''
 		var utcMonth = new Date().getUTCMonth().toString();
 
@@ -54,8 +50,7 @@ definition {
 		return ${utcMonth};
 	}
 
-	@summary = "Default summary"
-	macro getUTCYear() {
+	macro getUTCYear {
 		var javaScript = '''
 		var utcYear = new Date().getUTCFullYear().toString();
 

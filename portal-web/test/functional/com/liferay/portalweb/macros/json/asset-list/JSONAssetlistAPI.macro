@@ -1,7 +1,6 @@
 definition {
 
-	@summary = "Default summary"
-	macro _addAssetListEntry(groupId = null, title = null, type = null) {
+	macro _addAssetListEntry {
 		Variables.assertDefined(parameterList = "${groupId},${title},${type}");
 
 		var portalURL = JSONCompany.getPortalURL();
@@ -17,8 +16,7 @@ definition {
 		com.liferay.poshi.runner.util.JSONCurlUtil.post(${curl});
 	}
 
-	@summary = "Default summary"
-	macro _addDynamicAssetListEntry(groupId = null, title = null) {
+	macro _addDynamicAssetListEntry {
 		Variables.assertDefined(parameterList = "${groupId},${itemType},${title}");
 
 		var portalURL = JSONCompany.getPortalURL();

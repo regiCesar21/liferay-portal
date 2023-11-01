@@ -1,7 +1,6 @@
 definition {
 
-	@summary = "Default summary"
-	macro deleteLicenseFile(licenseFileName = null) {
+	macro deleteLicenseFile {
 		var liferayHome = PropsUtil.get("liferay.home.dir.name");
 
 		AntCommand(

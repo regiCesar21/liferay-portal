@@ -1,7 +1,6 @@
 definition {
 
-	@summary = "Default summary"
-	macro _getPortalInstances() {
+	macro _getPortalInstances {
 		var portalURL = JSONCompany.getPortalURL();
 
 		var curl = '''
@@ -15,8 +14,7 @@ definition {
 		return ${JSON};
 	}
 
-	@summary = "Default summary"
-	macro addPortalInstance(domain = null, portalInstanceId = null, virtualHost = null) {
+	macro addPortalInstance {
 		Variables.assertDefined(parameterList = "${domain},${virtualHost},${portalInstanceId}");
 
 		var portalURL = JSONCompany.getPortalURL();
@@ -45,8 +43,7 @@ definition {
 		JSONCurlUtil.post(${curl});
 	}
 
-	@summary = "Default summary"
-	macro cleanAllPortalInstances() {
+	macro cleanAllPortalInstances {
 		var portalInstanceJSON = HeadlessPortalInstanceAPI._getPortalInstances();
 
 		var portalInstanceIds = JSONUtil.getWithJSONPath(${portalInstanceJSON}, "$.items..portalInstanceId");
@@ -58,8 +55,7 @@ definition {
 		}
 	}
 
-	@summary = "Default summary"
-	macro deletePortalInstance() {
+	macro deletePortalInstance {
 		Variables.assertDefined(parameterList = ${portalInstanceId});
 
 		var portalURL = JSONCompany.getPortalURL();

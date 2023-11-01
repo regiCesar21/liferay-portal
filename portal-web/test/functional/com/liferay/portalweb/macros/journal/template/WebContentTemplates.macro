@@ -1,7 +1,6 @@
 definition {
 
-	@summary = "Default summary"
-	macro _addFields(templateFieldNames = null) {
+	macro _addFields {
 		if (isSet(templateFieldNames)) {
 			for (var fieldName : list ${templateFieldNames}) {
 				var key_fieldName = ${fieldName};
@@ -13,8 +12,7 @@ definition {
 		}
 	}
 
-	@summary = "Default summary"
-	macro _addGeneralVariables(generalVariables = null) {
+	macro _addGeneralVariables {
 		if (isSet(generalVariables)) {
 			for (var generalVariable : list ${generalVariables}) {
 				var key_generalVariable = ${generalVariable};
@@ -26,15 +24,13 @@ definition {
 		}
 	}
 
-	@summary = "Default summary"
-	macro _inputDescription(templateDescription = null) {
+	macro _inputDescription {
 		if (isSet(templateDescription)) {
 			PortletEntry.inputDescription(description = ${templateDescription});
 		}
 	}
 
-	@summary = "Default summary"
-	macro _inputStructure(structureName = null) {
+	macro _inputStructure {
 		if (isSet(structureName)) {
 			AssertClick(
 				locator1 = "DDMEditTemplate#DETAILS_SELECT_STRUCTURE",
@@ -61,8 +57,7 @@ definition {
 		}
 	}
 
-	@summary = "Default summary"
-	macro _inputTemplateFile(templateFile = null) {
+	macro _inputTemplateFile {
 		if (isSet(templateFile)) {
 			UploadCommonFile(
 				locator1 = "DDMEditTemplate#SCRIPT_FILE_FIELD",
@@ -70,8 +65,7 @@ definition {
 		}
 	}
 
-	@summary = "Default summary"
-	macro addCP(templateScript = null, templateName = null, structureName = null, publicationsEnabled = null, templateDescription = null, generalVariables = null, templateLanguage = null, templateFile = null, templateFieldNames = null, imageSourceURL = null) {
+	macro addCP {
 		LexiconEntry.gotoAdd();
 
 		WebContentTemplates.inputTemplateAddScreenFields(
@@ -88,8 +82,7 @@ definition {
 		DDLDataDefinition.save(publicationsEnabled = ${publicationsEnabled});
 	}
 
-	@summary = "Default summary"
-	macro addNullCP() {
+	macro addNullCP {
 		LexiconEntry.gotoAdd();
 
 		AssertElementNotPresent(locator1 = "TextInput#REQUIRED_ALERT");
@@ -101,8 +94,7 @@ definition {
 		SelectFrame(value1 = "relative=top");
 	}
 
-	@summary = "Default summary"
-	macro addRoleViewPermissions(templateName = null, roles = null) {
+	macro addRoleViewPermissions {
 		WebContentTemplates.gotoTemplateEllipsisItem(
 			item = "Permissions",
 			templateName = ${templateName});
@@ -116,8 +108,7 @@ definition {
 		SelectFrameTop();
 	}
 
-	@summary = "Default summary"
-	macro deleteCP(templateName = null, webContentHasReference = null) {
+	macro deleteCP {
 		var key_ddlTemplateName = ${templateName};
 
 		Click(locator1 = "Icon#VERTICAL_ELLIPSIS_BUTTON");
@@ -138,15 +129,13 @@ definition {
 		}
 	}
 
-	@summary = "Default summary"
-	macro gotoTemplateEllipsisItem(item = null, templateName = null) {
+	macro gotoTemplateEllipsisItem {
 		LexiconCard.clickEllipsisItem(
 			card = ${templateName},
 			item = ${item});
 	}
 
-	@summary = "Default summary"
-	macro inputScript(templateScript = null) {
+	macro inputScript {
 		if (isSet(templateScript)) {
 			Type.typeAceEditor(
 				locator1 = "DDMEditTemplate#SCRIPT_CONTENT_FIELD",
@@ -154,8 +143,7 @@ definition {
 		}
 	}
 
-	@summary = "Default summary"
-	macro inputTemplateAddScreenFields(templateScript = null, templateName = null, structureName = null, templateDescription = null, generalVariables = null, templateLanguage = null, templateFile = null, templateFieldNames = null, imageSourceURL = null) {
+	macro inputTemplateAddScreenFields {
 		if (isSet(templateName)) {
 			PortletEntry.inputName(name = ${templateName});
 		}
@@ -184,8 +172,7 @@ definition {
 		}
 	}
 
-	@summary = "Default summary"
-	macro localizeTemplateName(locale2 = null, templateName = null, localization2Name = null, locale = null, localization1Name = null) {
+	macro localizeTemplateName {
 		LexiconEntry.changeDisplayStyle(displayStyle = "table");
 
 		var key_ddlTemplateName = ${templateName};
@@ -211,8 +198,7 @@ definition {
 		}
 	}
 
-	@summary = "Default summary"
-	macro modifyTemplate(templateScript = null, templatePreviousName = null, templateName = null, publicationsEnabled = null, templateDescription = null, templateLanguage = null, templateFile = null, templateFieldNames = null, imageSourceURL = null) {
+	macro modifyTemplate {
 		WebContentTemplates.gotoTemplateEllipsisItem(
 			item = "Edit",
 			templateName = ${templatePreviousName});
@@ -229,13 +215,11 @@ definition {
 		DDLDataDefinition.save(publicationsEnabled = ${publicationsEnabled});
 	}
 
-	@summary = "Default summary"
-	macro openWebContentTemplatesAdmin(siteURLKey = null) {
+	macro openWebContentTemplatesAdmin {
 		Navigator.openWithAppendToBaseURL(urlAppend = "group/${siteURLKey}/~/control_panel/manage?p_p_id=com_liferay_journal_web_portlet_JournalPortlet&_com_liferay_journal_web_portlet_JournalPortlet_mvcPath=%2Fview_ddm_templates.jsp");
 	}
 
-	@summary = "Default summary"
-	macro tearDownCP() {
+	macro tearDownCP {
 		Navigator.openURL();
 
 		ProductMenu.gotoPortlet(
@@ -271,8 +255,7 @@ definition {
 		Portlet.viewEmptyMessage(message = "There are no results.");
 	}
 
-	@summary = "Default summary"
-	macro viewCardsEntryCP(templateName = null, templateSmallImage = null) {
+	macro viewCardsEntryCP {
 		var key_ddlTemplateName = ${templateName};
 
 		AssertTextEquals(
@@ -286,8 +269,7 @@ definition {
 		}
 	}
 
-	@summary = "Default summary"
-	macro viewCP(templateScript = null, templateName = null, structureName = null, templateDescription = null, templateLanguage = null, userEditPermission = null) {
+	macro viewCP {
 		var key_ddlStructureName = ${structureName};
 		var key_ddlTemplateDescription = ${templateDescription};
 		var key_ddlTemplateName = ${templateName};
@@ -365,8 +347,7 @@ definition {
 		}
 	}
 
-	@summary = "Default summary"
-	macro viewTableEntryCP(templateName = null, templateDescription = null, templateSmallImage = null) {
+	macro viewTableEntryCP {
 		var key_ddlTemplateName = ${templateName};
 
 		AssertTextEquals(

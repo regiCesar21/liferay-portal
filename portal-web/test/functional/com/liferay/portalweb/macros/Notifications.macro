@@ -1,7 +1,6 @@
 definition {
 
-	@summary = "Default summary"
-	macro acceptRequest(requestsTitle = null) {
+	macro acceptRequest {
 		var key_requestsTitle = ${requestsTitle};
 
 		AssertTextEquals(
@@ -13,8 +12,7 @@ definition {
 			value1 = "Confirm");
 	}
 
-	@summary = "Default summary"
-	macro deleteNotification(contentBody = null) {
+	macro deleteNotification {
 		var key_contentBody = ${contentBody};
 
 		Click(locator1 = "Notifications#NOTIFICATIONS_VERTICAL_ELLIPSIS");
@@ -24,15 +22,13 @@ definition {
 		AssertElementNotPresent(locator1 = "Notifications#NOTIFICATIONS_CONTENT");
 	}
 
-	@summary = "Default summary"
-	macro goToFilterValues(filterValues = null) {
+	macro goToFilterValues {
 		Click(locator1 = "Dropdown#FILTER_AND_ORDER");
 
 		MenuItem.click(menuItem = ${filterValues});
 	}
 
-	@summary = "Default summary"
-	macro gotoNotifications() {
+	macro gotoNotifications {
 		if (IsElementPresent(locator1 = "Notifications#USER_BAR_BADGE_COUNT")) {
 			Click(locator1 = "Notifications#USER_BAR_BADGE_COUNT");
 		}
@@ -54,8 +50,7 @@ definition {
 		}
 	}
 
-	@summary = "Default summary"
-	macro navigateToContent(contentBody = null) {
+	macro navigateToContent {
 		var key_contentBody = ${contentBody};
 
 		AssertClick.assertPartialTextClickAt(
@@ -63,8 +58,7 @@ definition {
 			value1 = ${contentBody});
 	}
 
-	@summary = "Default summary"
-	macro tearDownUnreadNotifications(contentBody = null) {
+	macro tearDownUnreadNotifications {
 		Navigator.gotoNotifications();
 
 		var key_contentBody = ${contentBody};
@@ -76,8 +70,7 @@ definition {
 		}
 	}
 
-	@summary = "Default summary"
-	macro viewBadgeCount(notificationCount = null) {
+	macro viewBadgeCount {
 		if (IsElementPresent(locator1 = "Notifications#USER_BAR_BADGE_COUNT")) {
 			AssertTextEquals(
 				locator1 = "Notifications#USER_BAR_BADGE_COUNT",
@@ -111,15 +104,13 @@ definition {
 		}
 	}
 
-	@summary = "Default summary"
-	macro viewDefaultContent() {
+	macro viewDefaultContent {
 		AssertTextEquals(
 			locator1 = "Message#EMPTY_INFO",
 			value1 = "You do not have any notifications.");
 	}
 
-	@summary = "Default summary"
-	macro viewNewComment(fragmentName = null, user = null, contentBody = null, content = null) {
+	macro viewNewComment {
 		var assetType = StringUtil.lowerCase(${assetType});
 		var key_contentBody = ${contentBody};
 
@@ -148,8 +139,7 @@ definition {
 			value1 = ${contentBody});
 	}
 
-	@summary = "Default summary"
-	macro viewNewContent(user = null, contentBody = null) {
+	macro viewNewContent {
 		var assetType = StringUtil.lowerCase(${assetType});
 		var key_contentBody = ${contentBody};
 
@@ -162,8 +152,7 @@ definition {
 			value1 = ${contentBody});
 	}
 
-	@summary = "Default summary"
-	macro viewNewSharedContent(ownerName = null, contentSharingPermission = null, contentTitle = null) {
+	macro viewNewSharedContent {
 		var key_contentSharingPermission = ${contentSharingPermission};
 		var key_contentTitle = ${contentTitle};
 		var key_ownerName = ${ownerName};
@@ -186,8 +175,7 @@ definition {
 		}
 	}
 
-	@summary = "Default summary"
-	macro viewNoNotificationEntry() {
+	macro viewNoNotificationEntry {
 		AssertElementNotPresent(locator1 = "Notifications#USER_BAR_BADGE_COUNT");
 
 		AssertElementNotPresent(locator1 = "Notifications#NOTIFICATIONS_CONTENT_GENERIC");
@@ -195,8 +183,7 @@ definition {
 		AssertElementNotPresent(locator1 = "Notifications#NOTIFICATIONS_TITLE");
 	}
 
-	@summary = "Default summary"
-	macro viewNoNotifications(activePanel = null) {
+	macro viewNoNotifications {
 		if (${activePanel} == "Profile") {
 			AssertElementNotPresent(locator1 = "Notifications#PROFILE_BADGE_COUNT");
 		}
@@ -210,15 +197,13 @@ definition {
 		}
 	}
 
-	@summary = "Default summary"
-	macro viewNoRequest() {
+	macro viewNoRequest {
 		AssertElementNotPresent(locator1 = "Button#CONFIRM");
 
 		AssertElementNotPresent(locator1 = "Button#IGNORE");
 	}
 
-	@summary = "Default summary"
-	macro viewRequest(requestsTitle = null) {
+	macro viewRequest {
 		var key_navLinkOption = "Requests List";
 
 		Click(locator1 = "Notifications#REQUESTS_LIST_TAB");
@@ -228,8 +213,7 @@ definition {
 			value1 = ${requestsTitle});
 	}
 
-	@summary = "Default summary"
-	macro viewSuccessfulPublication(publicationType = null, contentBody = null, portletName = null) {
+	macro viewSuccessfulPublication {
 		var key_contentBody = ${contentBody};
 		var key_portletName = ${portletName};
 		var key_publicationType = ${publicationType};
@@ -239,8 +223,7 @@ definition {
 			value1 = "${portletName} ${publicationType} ${contentBody}");
 	}
 
-	@summary = "Default summary"
-	macro viewUpdatedContent(user = null, contentBody = null) {
+	macro viewUpdatedContent {
 		var assetType = StringUtil.lowerCase(${assetType});
 		var key_contentBody = ${contentBody};
 

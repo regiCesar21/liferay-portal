@@ -1,7 +1,6 @@
 definition {
 
-	@summary = "Default summary"
-	macro addDisplayPageTemplateEntry(displayPageTemplateEntryName = null, grandParentGroupName = null, masterLayoutEntryName = null, workflowAction = null, parentGroupName = null, groupName = null, site = null, assetCategoryIds = null, assetTagNames = null, subType = null, contentType = null) {
+	macro addDisplayPageTemplateEntry {
 		Variables.assertDefined(parameterList = "${contentType},${displayPageTemplateEntryName},${groupName}");
 
 		var groupId = JSONLayoutpagetemplateSetter.setGroupId(
@@ -70,8 +69,7 @@ definition {
 			serviceContext = ${serviceContext});
 	}
 
-	@summary = "Default summary"
-	macro addGlobalPageTemplateEntry(pageTemplateEntryName = null, pageTemplateEntryActive = null, assetCategoryIds = null, pageTemplateEntryDescription = null, assetTagNames = null, workflowAction = null) {
+	macro addGlobalPageTemplateEntry {
 		Variables.assertDefined(parameterList = "${pageTemplateEntryActive},${pageTemplateEntryName}");
 
 		var nameMap = JSONLayoutpagetemplateSetter.setNameMap(name = ${pageTemplateEntryName});
@@ -90,8 +88,7 @@ definition {
 			serviceContext = ${serviceContext});
 	}
 
-	@summary = "Default summary"
-	macro addLayoutPageTemplateCollection(groupName = null, site = null, assetCategoryIds = null, layoutPageTemplateCollectionName = null, grandParentGroupName = null, assetTagNames = null, workflowAction = null, parentGroupName = null) {
+	macro addLayoutPageTemplateCollection {
 		Variables.assertDefined(parameterList = "${groupName},${layoutPageTemplateCollectionName}");
 
 		var groupId = JSONLayoutpagetemplateSetter.setGroupId(
@@ -121,8 +118,7 @@ definition {
 			serviceContext = ${serviceContext});
 	}
 
-	@summary = "Default summary"
-	macro addLayoutPageTemplateEntry(layoutPageTemplateType = null, grandParentGroupName = null, masterLayoutEntryName = null, workflowAction = null, parentGroupName = null, groupName = null, site = null, assetCategoryIds = null, layoutPageTemplateCollectionName = null, assetTagNames = null, layoutPageTemplateStatus = null, layoutPageTemplateEntryName = null) {
+	macro addLayoutPageTemplateEntry {
 		Variables.assertDefined(parameterList = "${groupName},${layoutPageTemplateEntryName},${layoutPageTemplateType},${layoutPageTemplateStatus}");
 
 		var groupId = JSONLayoutpagetemplateSetter.setGroupId(
@@ -168,8 +164,7 @@ definition {
 			type = ${type});
 	}
 
-	@summary = "Default summary"
-	macro addMasterPageTemplateEntry(groupName = null, site = null, assetCategoryIds = null, grandParentGroupName = null, assetTagNames = null, masterPageTemplateEntryName = null, workflowAction = null, parentGroupName = null) {
+	macro addMasterPageTemplateEntry {
 		Variables.assertDefined(parameterList = "${groupName},${masterPageTemplateEntryName}");
 
 		var groupId = JSONLayoutpagetemplateSetter.setGroupId(
@@ -190,8 +185,7 @@ definition {
 			serviceContext = ${serviceContext});
 	}
 
-	@summary = "Default summary"
-	macro deleteLayoutPageTemplateEntry(groupName = null, site = null, layoutPageTemplateEntryName = null) {
+	macro deleteLayoutPageTemplateEntry {
 		Variables.assertDefined(parameterList = "${groupName},${layoutPageTemplateEntryName}");
 
 		var groupId = JSONLayoutpagetemplateSetter.setGroupId(
