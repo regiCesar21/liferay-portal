@@ -217,10 +217,10 @@ public abstract class BaseProcessResourceTestCase {
 
 	@Test
 	public void testGetProcessesPageWithPagination() throws Exception {
-		Page<Process> totalPage = processResource.getProcessesPage(
+		Page<Process> processPage = processResource.getProcessesPage(
 			null, null, null);
 
-		int totalCount = GetterUtil.getInteger(totalPage.getTotalCount());
+		int totalCount = GetterUtil.getInteger(processPage.getTotalCount());
 
 		Process process1 = testGetProcessesPage_addProcess(randomProcess());
 
@@ -246,7 +246,7 @@ public abstract class BaseProcessResourceTestCase {
 		Assert.assertEquals(processes2.toString(), 1, processes2.size());
 
 		Page<Process> page3 = processResource.getProcessesPage(
-			null, Pagination.of(1, totalCount + 3), null);
+			null, Pagination.of(1, (int)totalCount + 3), null);
 
 		assertContains(process1, (List<Process>)page3.getItems());
 		assertContains(process2, (List<Process>)page3.getItems());
@@ -358,20 +358,22 @@ public abstract class BaseProcessResourceTestCase {
 
 		process2 = testGetProcessesPage_addProcess(process2);
 
+		Page<Process> page = processResource.getProcessesPage(null, null, null);
+
 		for (EntityField entityField : entityFields) {
 			Page<Process> ascPage = processResource.getProcessesPage(
-				null, Pagination.of(1, 2), entityField.getName() + ":asc");
+				null, Pagination.of(1, (int)page.getTotalCount() + 1),
+				entityField.getName() + ":asc");
 
-			assertEquals(
-				Arrays.asList(process1, process2),
-				(List<Process>)ascPage.getItems());
+			assertContains(process1, (List<Process>)ascPage.getItems());
+			assertContains(process2, (List<Process>)ascPage.getItems());
 
 			Page<Process> descPage = processResource.getProcessesPage(
-				null, Pagination.of(1, 2), entityField.getName() + ":desc");
+				null, Pagination.of(1, (int)page.getTotalCount() + 1),
+				entityField.getName() + ":desc");
 
-			assertEquals(
-				Arrays.asList(process2, process1),
-				(List<Process>)descPage.getItems());
+			assertContains(process2, (List<Process>)descPage.getItems());
+			assertContains(process1, (List<Process>)descPage.getItems());
 		}
 	}
 

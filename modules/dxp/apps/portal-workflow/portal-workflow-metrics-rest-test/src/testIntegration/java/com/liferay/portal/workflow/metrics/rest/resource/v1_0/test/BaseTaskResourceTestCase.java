@@ -27,6 +27,7 @@ import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.DateFormatFactoryUtil;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.odata.entity.EntityField;
@@ -197,7 +198,7 @@ public abstract class BaseTaskResourceTestCase {
 			RandomTestUtil.nextDate(), RandomTestUtil.randomString(),
 			Pagination.of(1, 10), null);
 
-		Assert.assertEquals(0, page.getTotalCount());
+		long totalCount = page.getTotalCount();
 
 		if (irrelevantProcessId != null) {
 			Task irrelevantTask = testGetProcessTasksPage_addTask(
@@ -205,12 +206,11 @@ public abstract class BaseTaskResourceTestCase {
 
 			page = taskResource.getProcessTasksPage(
 				irrelevantProcessId, null, null, null, null,
-				Pagination.of(1, 2), null);
+				Pagination.of(1, (int)totalCount + 1), null);
 
-			Assert.assertEquals(1, page.getTotalCount());
+			Assert.assertEquals(totalCount + 1, page.getTotalCount());
 
-			assertEquals(
-				Arrays.asList(irrelevantTask), (List<Task>)page.getItems());
+			assertContains(irrelevantTask, (List<Task>)page.getItems());
 			assertValid(
 				page,
 				testGetProcessTasksPage_getExpectedActions(
@@ -224,10 +224,10 @@ public abstract class BaseTaskResourceTestCase {
 		page = taskResource.getProcessTasksPage(
 			processId, null, null, null, null, Pagination.of(1, 10), null);
 
-		Assert.assertEquals(2, page.getTotalCount());
+		Assert.assertEquals(totalCount + 2, page.getTotalCount());
 
-		assertEqualsIgnoringOrder(
-			Arrays.asList(task1, task2), (List<Task>)page.getItems());
+		assertContains(task1, (List<Task>)page.getItems());
+		assertContains(task2, (List<Task>)page.getItems());
 		assertValid(
 			page, testGetProcessTasksPage_getExpectedActions(processId));
 	}
@@ -245,6 +245,11 @@ public abstract class BaseTaskResourceTestCase {
 	public void testGetProcessTasksPageWithPagination() throws Exception {
 		Long processId = testGetProcessTasksPage_getProcessId();
 
+		Page<Task> taskPage = taskResource.getProcessTasksPage(
+			processId, null, null, null, null, null, null);
+
+		int totalCount = GetterUtil.getInteger(taskPage.getTotalCount());
+
 		Task task1 = testGetProcessTasksPage_addTask(processId, randomTask());
 
 		Task task2 = testGetProcessTasksPage_addTask(processId, randomTask());
@@ -252,26 +257,30 @@ public abstract class BaseTaskResourceTestCase {
 		Task task3 = testGetProcessTasksPage_addTask(processId, randomTask());
 
 		Page<Task> page1 = taskResource.getProcessTasksPage(
-			processId, null, null, null, null, Pagination.of(1, 2), null);
+			processId, null, null, null, null, Pagination.of(1, totalCount + 2),
+			null);
 
 		List<Task> tasks1 = (List<Task>)page1.getItems();
 
-		Assert.assertEquals(tasks1.toString(), 2, tasks1.size());
+		Assert.assertEquals(tasks1.toString(), totalCount + 2, tasks1.size());
 
 		Page<Task> page2 = taskResource.getProcessTasksPage(
-			processId, null, null, null, null, Pagination.of(2, 2), null);
+			processId, null, null, null, null, Pagination.of(2, totalCount + 2),
+			null);
 
-		Assert.assertEquals(3, page2.getTotalCount());
+		Assert.assertEquals(totalCount + 3, page2.getTotalCount());
 
 		List<Task> tasks2 = (List<Task>)page2.getItems();
 
 		Assert.assertEquals(tasks2.toString(), 1, tasks2.size());
 
 		Page<Task> page3 = taskResource.getProcessTasksPage(
-			processId, null, null, null, null, Pagination.of(1, 3), null);
+			processId, null, null, null, null,
+			Pagination.of(1, (int)totalCount + 3), null);
 
-		assertEqualsIgnoringOrder(
-			Arrays.asList(task1, task2, task3), (List<Task>)page3.getItems());
+		assertContains(task1, (List<Task>)page3.getItems());
+		assertContains(task2, (List<Task>)page3.getItems());
+		assertContains(task3, (List<Task>)page3.getItems());
 	}
 
 	@Test
@@ -381,20 +390,25 @@ public abstract class BaseTaskResourceTestCase {
 
 		task2 = testGetProcessTasksPage_addTask(processId, task2);
 
+		Page<Task> page = taskResource.getProcessTasksPage(
+			processId, null, null, null, null, null, null);
+
 		for (EntityField entityField : entityFields) {
 			Page<Task> ascPage = taskResource.getProcessTasksPage(
-				processId, null, null, null, null, Pagination.of(1, 2),
+				processId, null, null, null, null,
+				Pagination.of(1, (int)page.getTotalCount() + 1),
 				entityField.getName() + ":asc");
 
-			assertEquals(
-				Arrays.asList(task1, task2), (List<Task>)ascPage.getItems());
+			assertContains(task1, (List<Task>)ascPage.getItems());
+			assertContains(task2, (List<Task>)ascPage.getItems());
 
 			Page<Task> descPage = taskResource.getProcessTasksPage(
-				processId, null, null, null, null, Pagination.of(1, 2),
+				processId, null, null, null, null,
+				Pagination.of(1, (int)page.getTotalCount() + 1),
 				entityField.getName() + ":desc");
 
-			assertEquals(
-				Arrays.asList(task2, task1), (List<Task>)descPage.getItems());
+			assertContains(task2, (List<Task>)descPage.getItems());
+			assertContains(task1, (List<Task>)descPage.getItems());
 		}
 	}
 

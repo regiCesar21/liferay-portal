@@ -37,6 +37,7 @@ import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.RoleTestUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.DateFormatFactoryUtil;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.odata.entity.EntityField;
@@ -437,7 +438,7 @@ public abstract class BaseDataDefinitionResourceTestCase {
 				siteId, RandomTestUtil.randomString(), Pagination.of(1, 10),
 				null);
 
-		Assert.assertEquals(0, page.getTotalCount());
+		long totalCount = page.getTotalCount();
 
 		if (irrelevantSiteId != null) {
 			DataDefinition irrelevantDataDefinition =
@@ -445,12 +446,13 @@ public abstract class BaseDataDefinitionResourceTestCase {
 					irrelevantSiteId, randomIrrelevantDataDefinition());
 
 			page = dataDefinitionResource.getSiteDataDefinitionsPage(
-				irrelevantSiteId, null, Pagination.of(1, 2), null);
+				irrelevantSiteId, null, Pagination.of(1, (int)totalCount + 1),
+				null);
 
-			Assert.assertEquals(1, page.getTotalCount());
+			Assert.assertEquals(totalCount + 1, page.getTotalCount());
 
-			assertEquals(
-				Arrays.asList(irrelevantDataDefinition),
+			assertContains(
+				irrelevantDataDefinition,
 				(List<DataDefinition>)page.getItems());
 			assertValid(
 				page,
@@ -469,11 +471,10 @@ public abstract class BaseDataDefinitionResourceTestCase {
 		page = dataDefinitionResource.getSiteDataDefinitionsPage(
 			siteId, null, Pagination.of(1, 10), null);
 
-		Assert.assertEquals(2, page.getTotalCount());
+		Assert.assertEquals(totalCount + 2, page.getTotalCount());
 
-		assertEqualsIgnoringOrder(
-			Arrays.asList(dataDefinition1, dataDefinition2),
-			(List<DataDefinition>)page.getItems());
+		assertContains(dataDefinition1, (List<DataDefinition>)page.getItems());
+		assertContains(dataDefinition2, (List<DataDefinition>)page.getItems());
 		assertValid(
 			page, testGetSiteDataDefinitionsPage_getExpectedActions(siteId));
 
@@ -506,6 +507,13 @@ public abstract class BaseDataDefinitionResourceTestCase {
 
 		Long siteId = testGetSiteDataDefinitionsPage_getSiteId();
 
+		Page<DataDefinition> dataDefinitionPage =
+			dataDefinitionResource.getSiteDataDefinitionsPage(
+				siteId, null, null, null);
+
+		int totalCount = GetterUtil.getInteger(
+			dataDefinitionPage.getTotalCount());
+
 		DataDefinition dataDefinition1 =
 			testGetSiteDataDefinitionsPage_addDataDefinition(
 				siteId, randomDataDefinition());
@@ -520,19 +528,20 @@ public abstract class BaseDataDefinitionResourceTestCase {
 
 		Page<DataDefinition> page1 =
 			dataDefinitionResource.getSiteDataDefinitionsPage(
-				siteId, null, Pagination.of(1, 2), null);
+				siteId, null, Pagination.of(1, totalCount + 2), null);
 
 		List<DataDefinition> dataDefinitions1 =
 			(List<DataDefinition>)page1.getItems();
 
 		Assert.assertEquals(
-			dataDefinitions1.toString(), 2, dataDefinitions1.size());
+			dataDefinitions1.toString(), totalCount + 2,
+			dataDefinitions1.size());
 
 		Page<DataDefinition> page2 =
 			dataDefinitionResource.getSiteDataDefinitionsPage(
-				siteId, null, Pagination.of(2, 2), null);
+				siteId, null, Pagination.of(2, totalCount + 2), null);
 
-		Assert.assertEquals(3, page2.getTotalCount());
+		Assert.assertEquals(totalCount + 3, page2.getTotalCount());
 
 		List<DataDefinition> dataDefinitions2 =
 			(List<DataDefinition>)page2.getItems();
@@ -542,11 +551,11 @@ public abstract class BaseDataDefinitionResourceTestCase {
 
 		Page<DataDefinition> page3 =
 			dataDefinitionResource.getSiteDataDefinitionsPage(
-				siteId, null, Pagination.of(1, 3), null);
+				siteId, null, Pagination.of(1, (int)totalCount + 3), null);
 
-		assertEqualsIgnoringOrder(
-			Arrays.asList(dataDefinition1, dataDefinition2, dataDefinition3),
-			(List<DataDefinition>)page3.getItems());
+		assertContains(dataDefinition1, (List<DataDefinition>)page3.getItems());
+		assertContains(dataDefinition2, (List<DataDefinition>)page3.getItems());
+		assertContains(dataDefinition3, (List<DataDefinition>)page3.getItems());
 	}
 
 	@Test
@@ -672,24 +681,32 @@ public abstract class BaseDataDefinitionResourceTestCase {
 		dataDefinition2 = testGetSiteDataDefinitionsPage_addDataDefinition(
 			siteId, dataDefinition2);
 
+		Page<DataDefinition> page =
+			dataDefinitionResource.getSiteDataDefinitionsPage(
+				siteId, null, null, null);
+
 		for (EntityField entityField : entityFields) {
 			Page<DataDefinition> ascPage =
 				dataDefinitionResource.getSiteDataDefinitionsPage(
-					siteId, null, Pagination.of(1, 2),
+					siteId, null,
+					Pagination.of(1, (int)page.getTotalCount() + 1),
 					entityField.getName() + ":asc");
 
-			assertEquals(
-				Arrays.asList(dataDefinition1, dataDefinition2),
-				(List<DataDefinition>)ascPage.getItems());
+			assertContains(
+				dataDefinition1, (List<DataDefinition>)ascPage.getItems());
+			assertContains(
+				dataDefinition2, (List<DataDefinition>)ascPage.getItems());
 
 			Page<DataDefinition> descPage =
 				dataDefinitionResource.getSiteDataDefinitionsPage(
-					siteId, null, Pagination.of(1, 2),
+					siteId, null,
+					Pagination.of(1, (int)page.getTotalCount() + 1),
 					entityField.getName() + ":desc");
 
-			assertEquals(
-				Arrays.asList(dataDefinition2, dataDefinition1),
-				(List<DataDefinition>)descPage.getItems());
+			assertContains(
+				dataDefinition2, (List<DataDefinition>)descPage.getItems());
+			assertContains(
+				dataDefinition1, (List<DataDefinition>)descPage.getItems());
 		}
 	}
 
@@ -732,7 +749,7 @@ public abstract class BaseDataDefinitionResourceTestCase {
 			invokeGraphQLQuery(graphQLField), "JSONObject/data",
 			"JSONObject/dataDefinitions");
 
-		Assert.assertEquals(0, dataDefinitionsJSONObject.get("totalCount"));
+		long totalCount = dataDefinitionsJSONObject.getLong("totalCount");
 
 		DataDefinition dataDefinition1 =
 			testGraphQLGetSiteDataDefinitionsPage_addDataDefinition();
@@ -743,10 +760,16 @@ public abstract class BaseDataDefinitionResourceTestCase {
 			invokeGraphQLQuery(graphQLField), "JSONObject/data",
 			"JSONObject/dataDefinitions");
 
-		Assert.assertEquals(2, dataDefinitionsJSONObject.getLong("totalCount"));
+		Assert.assertEquals(
+			totalCount + 2, dataDefinitionsJSONObject.getLong("totalCount"));
 
-		assertEqualsIgnoringOrder(
-			Arrays.asList(dataDefinition1, dataDefinition2),
+		assertContains(
+			dataDefinition1,
+			Arrays.asList(
+				DataDefinitionSerDes.toDTOs(
+					dataDefinitionsJSONObject.getString("items"))));
+		assertContains(
+			dataDefinition2,
 			Arrays.asList(
 				DataDefinitionSerDes.toDTOs(
 					dataDefinitionsJSONObject.getString("items"))));

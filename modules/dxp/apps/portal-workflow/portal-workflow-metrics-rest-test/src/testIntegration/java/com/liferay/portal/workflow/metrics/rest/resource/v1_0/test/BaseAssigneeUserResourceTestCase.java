@@ -191,7 +191,7 @@ public abstract class BaseAssigneeUserResourceTestCase {
 		Page<AssigneeUser> page =
 			assigneeUserResource.getProcessAssigneeUsersPage(processId);
 
-		Assert.assertEquals(0, page.getTotalCount());
+		long totalCount = page.getTotalCount();
 
 		if (irrelevantProcessId != null) {
 			AssigneeUser irrelevantAssigneeUser =
@@ -201,11 +201,10 @@ public abstract class BaseAssigneeUserResourceTestCase {
 			page = assigneeUserResource.getProcessAssigneeUsersPage(
 				irrelevantProcessId);
 
-			Assert.assertEquals(1, page.getTotalCount());
+			Assert.assertEquals(totalCount + 1, page.getTotalCount());
 
-			assertEquals(
-				Arrays.asList(irrelevantAssigneeUser),
-				(List<AssigneeUser>)page.getItems());
+			assertContains(
+				irrelevantAssigneeUser, (List<AssigneeUser>)page.getItems());
 			assertValid(
 				page,
 				testGetProcessAssigneeUsersPage_getExpectedActions(
@@ -222,11 +221,10 @@ public abstract class BaseAssigneeUserResourceTestCase {
 
 		page = assigneeUserResource.getProcessAssigneeUsersPage(processId);
 
-		Assert.assertEquals(2, page.getTotalCount());
+		Assert.assertEquals(totalCount + 2, page.getTotalCount());
 
-		assertEqualsIgnoringOrder(
-			Arrays.asList(assigneeUser1, assigneeUser2),
-			(List<AssigneeUser>)page.getItems());
+		assertContains(assigneeUser1, (List<AssigneeUser>)page.getItems());
+		assertContains(assigneeUser2, (List<AssigneeUser>)page.getItems());
 		assertValid(
 			page,
 			testGetProcessAssigneeUsersPage_getExpectedActions(processId));

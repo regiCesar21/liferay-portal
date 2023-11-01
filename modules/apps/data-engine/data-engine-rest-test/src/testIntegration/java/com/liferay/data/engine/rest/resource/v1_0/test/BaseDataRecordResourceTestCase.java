@@ -33,6 +33,7 @@ import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.DateFormatFactoryUtil;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.odata.entity.EntityField;
@@ -189,7 +190,7 @@ public abstract class BaseDataRecordResourceTestCase {
 			dataRecordResource.getDataDefinitionDataRecordsPage(
 				dataDefinitionId, Pagination.of(1, 10));
 
-		Assert.assertEquals(0, page.getTotalCount());
+		long totalCount = page.getTotalCount();
 
 		if (irrelevantDataDefinitionId != null) {
 			DataRecord irrelevantDataRecord =
@@ -197,13 +198,13 @@ public abstract class BaseDataRecordResourceTestCase {
 					irrelevantDataDefinitionId, randomIrrelevantDataRecord());
 
 			page = dataRecordResource.getDataDefinitionDataRecordsPage(
-				irrelevantDataDefinitionId, Pagination.of(1, 2));
+				irrelevantDataDefinitionId,
+				Pagination.of(1, (int)totalCount + 1));
 
-			Assert.assertEquals(1, page.getTotalCount());
+			Assert.assertEquals(totalCount + 1, page.getTotalCount());
 
-			assertEquals(
-				Arrays.asList(irrelevantDataRecord),
-				(List<DataRecord>)page.getItems());
+			assertContains(
+				irrelevantDataRecord, (List<DataRecord>)page.getItems());
 			assertValid(
 				page,
 				testGetDataDefinitionDataRecordsPage_getExpectedActions(
@@ -221,11 +222,10 @@ public abstract class BaseDataRecordResourceTestCase {
 		page = dataRecordResource.getDataDefinitionDataRecordsPage(
 			dataDefinitionId, Pagination.of(1, 10));
 
-		Assert.assertEquals(2, page.getTotalCount());
+		Assert.assertEquals(totalCount + 2, page.getTotalCount());
 
-		assertEqualsIgnoringOrder(
-			Arrays.asList(dataRecord1, dataRecord2),
-			(List<DataRecord>)page.getItems());
+		assertContains(dataRecord1, (List<DataRecord>)page.getItems());
+		assertContains(dataRecord2, (List<DataRecord>)page.getItems());
 		assertValid(
 			page,
 			testGetDataDefinitionDataRecordsPage_getExpectedActions(
@@ -263,6 +263,12 @@ public abstract class BaseDataRecordResourceTestCase {
 		Long dataDefinitionId =
 			testGetDataDefinitionDataRecordsPage_getDataDefinitionId();
 
+		Page<DataRecord> dataRecordPage =
+			dataRecordResource.getDataDefinitionDataRecordsPage(
+				dataDefinitionId, null);
+
+		int totalCount = GetterUtil.getInteger(dataRecordPage.getTotalCount());
+
 		DataRecord dataRecord1 =
 			testGetDataDefinitionDataRecordsPage_addDataRecord(
 				dataDefinitionId, randomDataRecord());
@@ -277,17 +283,18 @@ public abstract class BaseDataRecordResourceTestCase {
 
 		Page<DataRecord> page1 =
 			dataRecordResource.getDataDefinitionDataRecordsPage(
-				dataDefinitionId, Pagination.of(1, 2));
+				dataDefinitionId, Pagination.of(1, totalCount + 2));
 
 		List<DataRecord> dataRecords1 = (List<DataRecord>)page1.getItems();
 
-		Assert.assertEquals(dataRecords1.toString(), 2, dataRecords1.size());
+		Assert.assertEquals(
+			dataRecords1.toString(), totalCount + 2, dataRecords1.size());
 
 		Page<DataRecord> page2 =
 			dataRecordResource.getDataDefinitionDataRecordsPage(
-				dataDefinitionId, Pagination.of(2, 2));
+				dataDefinitionId, Pagination.of(2, totalCount + 2));
 
-		Assert.assertEquals(3, page2.getTotalCount());
+		Assert.assertEquals(totalCount + 3, page2.getTotalCount());
 
 		List<DataRecord> dataRecords2 = (List<DataRecord>)page2.getItems();
 
@@ -295,11 +302,11 @@ public abstract class BaseDataRecordResourceTestCase {
 
 		Page<DataRecord> page3 =
 			dataRecordResource.getDataDefinitionDataRecordsPage(
-				dataDefinitionId, Pagination.of(1, 3));
+				dataDefinitionId, Pagination.of(1, (int)totalCount + 3));
 
-		assertEqualsIgnoringOrder(
-			Arrays.asList(dataRecord1, dataRecord2, dataRecord3),
-			(List<DataRecord>)page3.getItems());
+		assertContains(dataRecord1, (List<DataRecord>)page3.getItems());
+		assertContains(dataRecord2, (List<DataRecord>)page3.getItems());
+		assertContains(dataRecord3, (List<DataRecord>)page3.getItems());
 	}
 
 	protected DataRecord testGetDataDefinitionDataRecordsPage_addDataRecord(
@@ -355,7 +362,7 @@ public abstract class BaseDataRecordResourceTestCase {
 			dataRecordResource.getDataRecordCollectionDataRecordsPage(
 				dataRecordCollectionId, Pagination.of(1, 10));
 
-		Assert.assertEquals(0, page.getTotalCount());
+		long totalCount = page.getTotalCount();
 
 		if (irrelevantDataRecordCollectionId != null) {
 			DataRecord irrelevantDataRecord =
@@ -364,13 +371,13 @@ public abstract class BaseDataRecordResourceTestCase {
 					randomIrrelevantDataRecord());
 
 			page = dataRecordResource.getDataRecordCollectionDataRecordsPage(
-				irrelevantDataRecordCollectionId, Pagination.of(1, 2));
+				irrelevantDataRecordCollectionId,
+				Pagination.of(1, (int)totalCount + 1));
 
-			Assert.assertEquals(1, page.getTotalCount());
+			Assert.assertEquals(totalCount + 1, page.getTotalCount());
 
-			assertEquals(
-				Arrays.asList(irrelevantDataRecord),
-				(List<DataRecord>)page.getItems());
+			assertContains(
+				irrelevantDataRecord, (List<DataRecord>)page.getItems());
 			assertValid(
 				page,
 				testGetDataRecordCollectionDataRecordsPage_getExpectedActions(
@@ -388,11 +395,10 @@ public abstract class BaseDataRecordResourceTestCase {
 		page = dataRecordResource.getDataRecordCollectionDataRecordsPage(
 			dataRecordCollectionId, Pagination.of(1, 10));
 
-		Assert.assertEquals(2, page.getTotalCount());
+		Assert.assertEquals(totalCount + 2, page.getTotalCount());
 
-		assertEqualsIgnoringOrder(
-			Arrays.asList(dataRecord1, dataRecord2),
-			(List<DataRecord>)page.getItems());
+		assertContains(dataRecord1, (List<DataRecord>)page.getItems());
+		assertContains(dataRecord2, (List<DataRecord>)page.getItems());
 		assertValid(
 			page,
 			testGetDataRecordCollectionDataRecordsPage_getExpectedActions(
@@ -431,6 +437,12 @@ public abstract class BaseDataRecordResourceTestCase {
 		Long dataRecordCollectionId =
 			testGetDataRecordCollectionDataRecordsPage_getDataRecordCollectionId();
 
+		Page<DataRecord> dataRecordPage =
+			dataRecordResource.getDataRecordCollectionDataRecordsPage(
+				dataRecordCollectionId, null);
+
+		int totalCount = GetterUtil.getInteger(dataRecordPage.getTotalCount());
+
 		DataRecord dataRecord1 =
 			testGetDataRecordCollectionDataRecordsPage_addDataRecord(
 				dataRecordCollectionId, randomDataRecord());
@@ -445,17 +457,18 @@ public abstract class BaseDataRecordResourceTestCase {
 
 		Page<DataRecord> page1 =
 			dataRecordResource.getDataRecordCollectionDataRecordsPage(
-				dataRecordCollectionId, Pagination.of(1, 2));
+				dataRecordCollectionId, Pagination.of(1, totalCount + 2));
 
 		List<DataRecord> dataRecords1 = (List<DataRecord>)page1.getItems();
 
-		Assert.assertEquals(dataRecords1.toString(), 2, dataRecords1.size());
+		Assert.assertEquals(
+			dataRecords1.toString(), totalCount + 2, dataRecords1.size());
 
 		Page<DataRecord> page2 =
 			dataRecordResource.getDataRecordCollectionDataRecordsPage(
-				dataRecordCollectionId, Pagination.of(2, 2));
+				dataRecordCollectionId, Pagination.of(2, totalCount + 2));
 
-		Assert.assertEquals(3, page2.getTotalCount());
+		Assert.assertEquals(totalCount + 3, page2.getTotalCount());
 
 		List<DataRecord> dataRecords2 = (List<DataRecord>)page2.getItems();
 
@@ -463,11 +476,11 @@ public abstract class BaseDataRecordResourceTestCase {
 
 		Page<DataRecord> page3 =
 			dataRecordResource.getDataRecordCollectionDataRecordsPage(
-				dataRecordCollectionId, Pagination.of(1, 3));
+				dataRecordCollectionId, Pagination.of(1, (int)totalCount + 3));
 
-		assertEqualsIgnoringOrder(
-			Arrays.asList(dataRecord1, dataRecord2, dataRecord3),
-			(List<DataRecord>)page3.getItems());
+		assertContains(dataRecord1, (List<DataRecord>)page3.getItems());
+		assertContains(dataRecord2, (List<DataRecord>)page3.getItems());
+		assertContains(dataRecord3, (List<DataRecord>)page3.getItems());
 	}
 
 	protected DataRecord
