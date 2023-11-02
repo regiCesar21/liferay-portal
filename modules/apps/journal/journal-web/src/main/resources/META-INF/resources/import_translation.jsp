@@ -30,7 +30,7 @@ renderResponse.setTitle(LanguageUtil.get(resourceBundle, "import-translation"));
 	<portlet:param name="version" value="<%= String.valueOf(article.getVersion()) %>" />
 </portlet:actionURL>
 
-<aui:form action="<%= importTranslationURL %>" cssClass="import-translation" name="fm">
+<aui:form action="<%= importTranslationURL %>" cssClass="import-translation" enctype="multipart/form-data" name="fm">
 	<aui:input name="redirect" type="hidden" value="<%= redirect %>" />
 	<aui:input name="workflowAction" type="hidden" value="<%= WorkflowConstants.ACTION_PUBLISH %>" />
 
