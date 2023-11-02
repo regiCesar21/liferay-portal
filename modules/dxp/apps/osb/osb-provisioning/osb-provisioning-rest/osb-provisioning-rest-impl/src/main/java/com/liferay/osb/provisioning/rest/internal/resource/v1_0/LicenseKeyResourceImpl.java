@@ -2175,6 +2175,17 @@ public class LicenseKeyResourceImpl
 			int productionConsumptionsCount = _getProductConsumptionsCount(
 				productPurchase, true);
 
+			for (ProductPurchase curProductPurchase : activeProductPurchases) {
+				String curProductPurchaseKey = curProductPurchase.getKey();
+
+				if (curProductPurchaseKey.equals(productPurchase.getKey())) {
+					continue;
+				}
+
+				productionConsumptionsCount += _getProductConsumptionsCount(
+					curProductPurchase, false);
+			}
+
 			int serverCount = 1;
 
 			if ((licenseKey.getMaxClusterNodes() != null) &&
