@@ -144,8 +144,7 @@ public class DossieraCreateMessageSubscriber extends BaseMessageSubscriber {
 
 		newProductPurchase.setQuantity(productPurchase.getQuantity());
 
-		ExternalLink externalLink = getSalesforceOpportunityExternalLink(
-			jsonObject);
+		ExternalLink externalLink = getOpportunityExternalLink(jsonObject);
 
 		if (externalLink != null) {
 			newProductPurchase.setExternalLinks(
@@ -179,29 +178,28 @@ public class DossieraCreateMessageSubscriber extends BaseMessageSubscriber {
 			String accountKey, Account account, Account partnerAccount,
 			boolean analyticsCloud, boolean partnerFirstLineSupport,
 			List<Contact> inactiveContacts, List<Contact> missingContacts,
-			Set<ProductPurchase> productPurchases,
-			String salesforceOpportunityTypeName, int salesforceOpportunityType,
-			JSONObject jsonObject)
+			Set<ProductPurchase> productPurchases, String opportunityTypeName,
+			int opportunityType, JSONObject jsonObject)
 		throws Exception {
 
 		if (Validator.isNull(accountKey) &&
-			(salesforceOpportunityType ==
+			(opportunityType ==
 				SalesforceConstants.OPPORTUNITY_TYPE_EXISTING_BUSINESS)) {
 
 			_logWarning(
-				"The opportunity type is " + salesforceOpportunityTypeName +
+				"The opportunity type is " + opportunityTypeName +
 					" and the project does not exist.");
 		}
 
 		if (Validator.isNotNull(accountKey) &&
-			((salesforceOpportunityType ==
+			((opportunityType ==
 				SalesforceConstants.OPPORTUNITY_TYPE_NEW_BUSINESS) ||
-			 (salesforceOpportunityType ==
+			 (opportunityType ==
 				 SalesforceConstants.
 					 OPPORTUNITY_TYPE_NEW_PROJECT_EXISTING_BUSINESS))) {
 
 			_logWarning(
-				"The opportunity type is " + salesforceOpportunityTypeName +
+				"The opportunity type is " + opportunityTypeName +
 					" and the project already exists.");
 		}
 
@@ -428,7 +426,7 @@ public class DossieraCreateMessageSubscriber extends BaseMessageSubscriber {
 			}
 		}
 
-		boolean renewal = jsonObject.getBoolean("_renewal");
+		boolean renewal = jsonObject.getBoolean("renewal");
 
 		if (renewal) {
 			if (analyticsCloud) {
@@ -500,13 +498,13 @@ public class DossieraCreateMessageSubscriber extends BaseMessageSubscriber {
 
 		Account account = new Account();
 
-		JSONObject accountJSONObject = jsonObject.getJSONObject("_account");
-		JSONObject projectJSONObject = jsonObject.getJSONObject("_project");
+		JSONObject accountJSONObject = jsonObject.getJSONObject("account");
+		JSONObject projectJSONObject = jsonObject.getJSONObject("project");
 
-		String name = accountJSONObject.getString("_name");
+		String name = accountJSONObject.getString("name");
 
 		if (projectJSONObject != null) {
-			String projectName = projectJSONObject.getString("_name");
+			String projectName = projectJSONObject.getString("name");
 
 			account.setName(projectName);
 			account.setCode(_getCode(name, projectName));
@@ -537,11 +535,11 @@ public class DossieraCreateMessageSubscriber extends BaseMessageSubscriber {
 			_logWarning("Account name must not contain the | character");
 		}
 
-		JSONObject ownerJSONObject = jsonObject.getJSONObject("_owner");
+		JSONObject ownerJSONObject = jsonObject.getJSONObject("owner");
 
 		if (ownerJSONObject != null) {
 			account.setContactEmailAddress(
-				ownerJSONObject.getString("_emailAddress"));
+				ownerJSONObject.getString("emailAddress"));
 		}
 
 		account.setContacts(contacts);
@@ -554,8 +552,7 @@ public class DossieraCreateMessageSubscriber extends BaseMessageSubscriber {
 				region, postalAddress.getAddressCountry()));
 		account.setLanguage(language);
 
-		String productFamily = jsonObject.getString(
-			"_salesforceOpportunityProductFamily");
+		String productFamily = jsonObject.getString("opportunityProductFamily");
 
 		if (!productFamily.equals("P")) {
 			account.setTier(Account.Tier.T4);
@@ -564,7 +561,7 @@ public class DossieraCreateMessageSubscriber extends BaseMessageSubscriber {
 		account.setProperties(
 			_dossieraSubscriberUtil.getAccountProperties(account, jsonObject));
 
-		String soldBy = jsonObject.getString("_salesforceOpportunitySoldBy");
+		String soldBy = jsonObject.getString("opportunitySoldBy");
 
 		if (soldBy.equals("Liferay Brazil") || soldBy.equals("Liferay China") ||
 			soldBy.equals("Liferay India")) {
@@ -601,12 +598,11 @@ public class DossieraCreateMessageSubscriber extends BaseMessageSubscriber {
 	protected Account createParentAccount(JSONObject jsonObject)
 		throws Exception {
 
-		JSONObject accountJSONObject = jsonObject.getJSONObject("_account");
+		JSONObject accountJSONObject = jsonObject.getJSONObject("account");
 
-		String dossieraAccountKey = accountJSONObject.getString(
-			"_dossieraAccountKey");
+		String dossieraAccountKey = accountJSONObject.getString("accountKey");
 
-		String name = accountJSONObject.getString("_name");
+		String name = accountJSONObject.getString("name");
 
 		Account parentAccount = _dossieraSubscriberUtil.fetchAccount(
 			dossieraAccountKey);
@@ -637,8 +633,7 @@ public class DossieraCreateMessageSubscriber extends BaseMessageSubscriber {
 			ExternalLinkEntityName.DOSSIERA_ACCOUNT);
 		dossieraExternalLink.setEntityId(dossieraAccountKey);
 
-		String salesforceAccountKey = jsonObject.getString(
-			"_salesforceAccountKey");
+		String salesforceAccountKey = jsonObject.getString("accountKey");
 
 		ExternalLink salesforceExternalLink = new ExternalLink();
 
@@ -671,10 +666,8 @@ public class DossieraCreateMessageSubscriber extends BaseMessageSubscriber {
 
 	protected void createZendeskTicket(
 			Account account, PostalAddress postalAddress,
-			Set<ProductPurchase> productPurchases,
-			String salesforceOpportunityTypeName,
-			String salesforceOpportunityKey,
-			String salesforceOpportunityOwnerEmailAddress)
+			Set<ProductPurchase> productPurchases, String opportunityTypeName,
+			String opportunityKey, String opportunityOwnerEmailAddress)
 		throws Exception {
 
 		ZendeskTicket zendeskTicket = new ZendeskTicket();
@@ -688,7 +681,7 @@ public class DossieraCreateMessageSubscriber extends BaseMessageSubscriber {
 		customFields.put(
 			_distributedMessagingConfiguration.
 				zendeskCustomFieldOpportunityOwnerId(),
-			salesforceOpportunityOwnerEmailAddress);
+			opportunityOwnerEmailAddress);
 		customFields.put(
 			_distributedMessagingConfiguration.
 				zendeskCustomFieldPrimaryAddressCountryId(),
@@ -718,7 +711,7 @@ public class DossieraCreateMessageSubscriber extends BaseMessageSubscriber {
 		sb.append("<br />Account Code: ");
 		sb.append(account.getCode());
 		sb.append("<br />Opportunity Type: ");
-		sb.append(salesforceOpportunityTypeName);
+		sb.append(opportunityTypeName);
 		sb.append("<br />Date Created: ");
 		sb.append(account.getDateCreated());
 		sb.append("<br />Provisioning Account Link: <a href='");
@@ -743,7 +736,7 @@ public class DossieraCreateMessageSubscriber extends BaseMessageSubscriber {
 
 		sb.append("'>Provisioning Account</a><br />Salesforce Opportunity ");
 		sb.append("Link: <a href='https://login.salesforce.com/");
-		sb.append(salesforceOpportunityKey);
+		sb.append(opportunityKey);
 		sb.append("'>Salesforce Opportunity</a>");
 
 		StringBundler subjectSB = new StringBundler(
@@ -777,7 +770,7 @@ public class DossieraCreateMessageSubscriber extends BaseMessageSubscriber {
 			}
 		}
 
-		subjectSB.append(salesforceOpportunityTypeName);
+		subjectSB.append(opportunityTypeName);
 		subjectSB.append(": ");
 
 		Set<String> renewedAccountNames =
@@ -860,9 +853,9 @@ public class DossieraCreateMessageSubscriber extends BaseMessageSubscriber {
 
 		zendeskTicket.setDescription(sb.toString());
 
-		if (Validator.isNotNull(salesforceOpportunityOwnerEmailAddress)) {
+		if (Validator.isNotNull(opportunityOwnerEmailAddress)) {
 			zendeskTicket.setEmailCCs(
-				new String[] {salesforceOpportunityOwnerEmailAddress});
+				new String[] {opportunityOwnerEmailAddress});
 		}
 
 		zendeskTicket.setRequesterId(
@@ -895,18 +888,14 @@ public class DossieraCreateMessageSubscriber extends BaseMessageSubscriber {
 		_renewedEWSAAccountNamesThreadLocal.set(new HashSet<>());
 		_warningMessagesThreadLocal.set(new ArrayList<>());
 
-		String salesforceOpportunityStageName = jsonObject.getString(
-			"_salesforceOpportunityStageName");
+		String opportunityStageName = jsonObject.getString(
+			"opportunityStageName");
 
-		String salesforceOpportunityTypeName = jsonObject.getString(
-			"_salesforceOpportunityType");
+		String opportunityTypeName = jsonObject.getString("opportunityType");
 
-		int salesforceOpportunityType = getSalesforceOpportunityType(
-			salesforceOpportunityTypeName);
+		int opportunityType = getOpportunityType(opportunityTypeName);
 
-		if (!_isValidOpportunity(
-				salesforceOpportunityStageName, salesforceOpportunityType)) {
-
+		if (!_isValidOpportunity(opportunityStageName, opportunityType)) {
 			if (_log.isDebugEnabled()) {
 				_log.debug(
 					"Skipping message because opportunity is not closed won " +
@@ -937,7 +926,7 @@ public class DossieraCreateMessageSubscriber extends BaseMessageSubscriber {
 		String languageId = _getLanguageId(language);
 
 		Account.Region region = getSupportRegion(
-			jsonObject.getString("_salesforceOpportunitySoldBy"),
+			jsonObject.getString("opportunitySoldBy"),
 			postalAddress.getAddressCountry());
 
 		boolean customerPortal2Account = _customerPortalRelease.isEnabled(
@@ -949,16 +938,16 @@ public class DossieraCreateMessageSubscriber extends BaseMessageSubscriber {
 		Map<Contact, List<ContactRole>> customerPortal2ContactsMap =
 			new HashMap<>();
 
-		if ((salesforceOpportunityType ==
+		if ((opportunityType ==
 				SalesforceConstants.OPPORTUNITY_TYPE_EXISTING_BUSINESS) ||
-			(salesforceOpportunityType ==
+			(opportunityType ==
 				SalesforceConstants.OPPORTUNITY_TYPE_NEW_BUSINESS) ||
-			(salesforceOpportunityType ==
+			(opportunityType ==
 				SalesforceConstants.
 					OPPORTUNITY_TYPE_NEW_PROJECT_EXISTING_BUSINESS)) {
 
 			List<Contact> contacts = parseContacts(
-				jsonObject, accountKey, salesforceOpportunityType, languageId,
+				jsonObject, accountKey, opportunityType, languageId,
 				customerPortal2Account);
 
 			for (Contact contact : contacts) {
@@ -1020,15 +1009,14 @@ public class DossieraCreateMessageSubscriber extends BaseMessageSubscriber {
 		Account partnerAccount = parsePartnerAccount(jsonObject);
 
 		boolean partnerFirstLineSupport = jsonObject.getBoolean(
-			"_partnerFirstLineSupport");
+			"partnerFirstLineSupport");
 
-		String salesforceOpportunityKey = jsonObject.getString(
-			"_salesforceOpportunityKey");
+		String opportunityKey = jsonObject.getString("opportunityKey");
 
-		if (isProvisionMessage(salesforceOpportunityKey, jsonObject)) {
+		if (isProvisionMessage(opportunityKey, jsonObject)) {
 			Account parentAccount = null;
 
-			JSONObject projectJSONObject = jsonObject.getJSONObject("_project");
+			JSONObject projectJSONObject = jsonObject.getJSONObject("project");
 
 			if (projectJSONObject != null) {
 				parentAccount = createParentAccount(jsonObject);
@@ -1069,9 +1057,9 @@ public class DossieraCreateMessageSubscriber extends BaseMessageSubscriber {
 			}
 
 			if (customerPortal2Account) {
-				if ((salesforceOpportunityType ==
+				if ((opportunityType ==
 						SalesforceConstants.OPPORTUNITY_TYPE_NEW_BUSINESS) ||
-					(salesforceOpportunityType ==
+					(opportunityType ==
 						SalesforceConstants.
 							OPPORTUNITY_TYPE_NEW_PROJECT_EXISTING_BUSINESS)) {
 
@@ -1108,26 +1096,24 @@ public class DossieraCreateMessageSubscriber extends BaseMessageSubscriber {
 		checkWarnings(
 			accountKey, account, partnerAccount, analyticsCloud,
 			partnerFirstLineSupport, inactiveContacts, missingContacts,
-			productPurchases, salesforceOpportunityTypeName,
-			salesforceOpportunityType, jsonObject);
+			productPurchases, opportunityTypeName, opportunityType, jsonObject);
 
-		String salesforceOpportunityProductFamily = jsonObject.getString(
-			"_salesforceOpportunityProductFamily");
+		String opportunityProductFamily = jsonObject.getString(
+			"opportunityProductFamily");
 
-		if (!salesforceOpportunityProductFamily.equals("P")) {
-			String salesforceOpportunityOwnerEmailAddress = StringPool.BLANK;
+		if (!opportunityProductFamily.equals("P")) {
+			String opportunityOwnerEmailAddress = StringPool.BLANK;
 
-			JSONObject ownerJSONObject = jsonObject.getJSONObject("_owner");
+			JSONObject ownerJSONObject = jsonObject.getJSONObject("owner");
 
 			if (ownerJSONObject != null) {
-				salesforceOpportunityOwnerEmailAddress =
-					ownerJSONObject.getString("_emailAddress");
+				opportunityOwnerEmailAddress = ownerJSONObject.getString(
+					"emailAddress");
 			}
 
 			createZendeskTicket(
-				account, postalAddress, productPurchases,
-				salesforceOpportunityTypeName, salesforceOpportunityKey,
-				salesforceOpportunityOwnerEmailAddress);
+				account, postalAddress, productPurchases, opportunityTypeName,
+				opportunityKey, opportunityOwnerEmailAddress);
 		}
 	}
 
@@ -1180,7 +1166,7 @@ public class DossieraCreateMessageSubscriber extends BaseMessageSubscriber {
 	protected Account.Language getLanguage(
 		JSONObject jsonObject, String country) {
 
-		String soldBy = jsonObject.getString("_salesforceOpportunitySoldBy");
+		String soldBy = jsonObject.getString("opportunitySoldBy");
 
 		if (Validator.isNull(soldBy)) {
 			_logWarning(
@@ -1298,16 +1284,16 @@ public class DossieraCreateMessageSubscriber extends BaseMessageSubscriber {
 			sb.append(StringPool.NEW_LINE);
 		}
 
-		JSONObject ownerJSONObject = jsonObject.getJSONObject("_owner");
+		JSONObject ownerJSONObject = jsonObject.getJSONObject("owner");
 
 		sb.append("Owner: ");
-		sb.append(ownerJSONObject.getString("_firstName"));
+		sb.append(ownerJSONObject.getString("firstName"));
 		sb.append(StringPool.SPACE);
-		sb.append(ownerJSONObject.getString("_lastName"));
+		sb.append(ownerJSONObject.getString("lastName"));
 		sb.append(StringPool.NEW_LINE);
 
 		sb.append("SFDC: https://login.salesforce.com/");
-		sb.append(jsonObject.getString("_salesforceOpportunityKey"));
+		sb.append(jsonObject.getString("opportunityKey"));
 
 		return sb.toString();
 	}
@@ -1370,26 +1356,67 @@ public class DossieraCreateMessageSubscriber extends BaseMessageSubscriber {
 		return sb.toString();
 	}
 
+	protected ExternalLink getOpportunityExternalLink(JSONObject jsonObject) {
+		String opportunityKey = jsonObject.getString("OpportunityKey");
+
+		ExternalLink externalLink = null;
+
+		if (Validator.isNotNull(opportunityKey)) {
+			externalLink = new ExternalLink();
+
+			externalLink.setDomain(ExternalLinkDomain.SALESFORCE);
+			externalLink.setEntityName(
+				ExternalLinkEntityName.SALESFORCE_OPPORTUNITY);
+			externalLink.setEntityId(opportunityKey);
+		}
+
+		return externalLink;
+	}
+
+	protected int getOpportunityType(String opportunityTypeName) {
+		if (StringUtil.equalsIgnoreCase(
+				opportunityTypeName, "Existing Business")) {
+
+			return SalesforceConstants.OPPORTUNITY_TYPE_EXISTING_BUSINESS;
+		}
+		else if (StringUtil.equalsIgnoreCase(
+					opportunityTypeName, "New Business")) {
+
+			return SalesforceConstants.OPPORTUNITY_TYPE_NEW_BUSINESS;
+		}
+		else if (StringUtil.equalsIgnoreCase(opportunityTypeName, "Renewal")) {
+			return SalesforceConstants.OPPORTUNITY_TYPE_RENEWAL;
+		}
+		else if (StringUtil.equalsIgnoreCase(
+					opportunityTypeName, "New Project Existing Business")) {
+
+			return SalesforceConstants.
+				OPPORTUNITY_TYPE_NEW_PROJECT_EXISTING_BUSINESS;
+		}
+
+		return 0;
+	}
+
 	protected PostalAddress getPostalAddress(JSONObject jsonObject) {
 		PostalAddress postalAddress = new PostalAddress();
 
-		String city = jsonObject.getString("_city");
+		String city = jsonObject.getString("city");
 
 		city = ModelHintsUtil.trimString(Address.class.getName(), "city", city);
 
 		postalAddress.setAddressLocality(city);
 
-		String countryName = jsonObject.getString("_country");
+		String countryName = jsonObject.getString("country");
 
 		if (Validator.isNotNull(countryName)) {
 			postalAddress.setAddressCountry(countryName);
 
-			String regionName = jsonObject.getString("_region");
+			String regionName = jsonObject.getString("region");
 
 			postalAddress.setAddressRegion(regionName);
 		}
 
-		String street = jsonObject.getString("_street");
+		String street = jsonObject.getString("street");
 
 		String street1 = street;
 
@@ -1419,7 +1446,7 @@ public class DossieraCreateMessageSubscriber extends BaseMessageSubscriber {
 		postalAddress.setStreetAddressLine2(street2);
 		postalAddress.setStreetAddressLine3(street3);
 
-		postalAddress.setPostalCode(jsonObject.getString("_postalCode"));
+		postalAddress.setPostalCode(jsonObject.getString("postalCode"));
 
 		return postalAddress;
 	}
@@ -1462,55 +1489,6 @@ public class DossieraCreateMessageSubscriber extends BaseMessageSubscriber {
 
 		return _distributedMessagingConfiguration.
 			provisioningEmailAddressGlobal();
-	}
-
-	protected ExternalLink getSalesforceOpportunityExternalLink(
-		JSONObject jsonObject) {
-
-		String salesforceOpportunityKey = jsonObject.getString(
-			"_salesforceOpportunityKey");
-
-		ExternalLink externalLink = null;
-
-		if (Validator.isNotNull(salesforceOpportunityKey)) {
-			externalLink = new ExternalLink();
-
-			externalLink.setDomain(ExternalLinkDomain.SALESFORCE);
-			externalLink.setEntityName(
-				ExternalLinkEntityName.SALESFORCE_OPPORTUNITY);
-			externalLink.setEntityId(salesforceOpportunityKey);
-		}
-
-		return externalLink;
-	}
-
-	protected int getSalesforceOpportunityType(
-		String salesforceOpportunityTypeName) {
-
-		if (StringUtil.equalsIgnoreCase(
-				salesforceOpportunityTypeName, "Existing Business")) {
-
-			return SalesforceConstants.OPPORTUNITY_TYPE_EXISTING_BUSINESS;
-		}
-		else if (StringUtil.equalsIgnoreCase(
-					salesforceOpportunityTypeName, "New Business")) {
-
-			return SalesforceConstants.OPPORTUNITY_TYPE_NEW_BUSINESS;
-		}
-		else if (StringUtil.equalsIgnoreCase(
-					salesforceOpportunityTypeName, "Renewal")) {
-
-			return SalesforceConstants.OPPORTUNITY_TYPE_RENEWAL;
-		}
-		else if (StringUtil.equalsIgnoreCase(
-					salesforceOpportunityTypeName,
-					"New Project Existing Business")) {
-
-			return SalesforceConstants.
-				OPPORTUNITY_TYPE_NEW_PROJECT_EXISTING_BUSINESS;
-		}
-
-		return 0;
 	}
 
 	protected Account.Region getSupportRegion(
@@ -1639,17 +1617,15 @@ public class DossieraCreateMessageSubscriber extends BaseMessageSubscriber {
 	}
 
 	protected boolean hasOpportunityProductFamily(JSONObject jsonObject) {
-		String salesforceOpportunityProductFamily = jsonObject.getString(
-			"_salesforceOpportunityProductFamily");
+		String opportunityProductFamily = jsonObject.getString(
+			"opportunityProductFamily");
 
-		if (Validator.isNull(salesforceOpportunityProductFamily)) {
+		if (Validator.isNull(opportunityProductFamily)) {
 			return false;
 		}
 
 		for (String productFamilyToken : _PRODUCT_FAMILY_TOKENS) {
-			if (salesforceOpportunityProductFamily.contains(
-					productFamilyToken)) {
-
+			if (opportunityProductFamily.contains(productFamilyToken)) {
 				return true;
 			}
 		}
@@ -1658,9 +1634,9 @@ public class DossieraCreateMessageSubscriber extends BaseMessageSubscriber {
 	}
 
 	protected boolean isParseMessage(Message message) {
-		String salesforceOpportunityKey = _getSalesforceOpportunityKey(message);
+		String opportunityKey = _getOpportunityKey(message);
 
-		if (Validator.isNull(salesforceOpportunityKey)) {
+		if (Validator.isNull(opportunityKey)) {
 			return false;
 		}
 
@@ -1674,7 +1650,7 @@ public class DossieraCreateMessageSubscriber extends BaseMessageSubscriber {
 		}
 
 		Lock lock = _lockLocalService.lock(
-			Message.class.getName(), salesforceOpportunityKey, owner);
+			Message.class.getName(), opportunityKey, owner);
 
 		if (!lock.isNew()) {
 			if (_log.isDebugEnabled()) {
@@ -1688,34 +1664,34 @@ public class DossieraCreateMessageSubscriber extends BaseMessageSubscriber {
 	}
 
 	protected boolean isProvisionMessage(
-			String salesforceOpportunityKey, JSONObject jsonObject)
+			String opportunityKey, JSONObject jsonObject)
 		throws Exception {
 
-		if (Validator.isNull(salesforceOpportunityKey)) {
+		if (Validator.isNull(opportunityKey)) {
 			return false;
 		}
 
 		Account account = null;
 
-		JSONObject projectJSONObject = jsonObject.getJSONObject("_project");
+		JSONObject projectJSONObject = jsonObject.getJSONObject("project");
 
 		if (projectJSONObject != null) {
 			List<Account> accounts = _accountWebService.getAccounts(
 				ExternalLinkDomain.SALESFORCE,
 				ExternalLinkEntityName.SALESFORCE_PROJECT,
-				projectJSONObject.getString("_salesforceProjectKey"), 1, 1);
+				projectJSONObject.getString("projectKey"), 1, 1);
 
 			if (!accounts.isEmpty()) {
 				account = accounts.get(0);
 			}
 		}
 		else {
-			JSONObject accountJSONObject = jsonObject.getJSONObject("_account");
+			JSONObject accountJSONObject = jsonObject.getJSONObject("account");
 
 			List<Account> accounts = _accountWebService.getAccounts(
 				ExternalLinkDomain.DOSSIERA,
 				ExternalLinkEntityName.DOSSIERA_ACCOUNT,
-				accountJSONObject.getString("_dossieraAccountKey"), 1, 1);
+				accountJSONObject.getString("accountKey"), 1, 1);
 
 			if (!accounts.isEmpty()) {
 				account = accounts.get(0);
@@ -1734,7 +1710,7 @@ public class DossieraCreateMessageSubscriber extends BaseMessageSubscriber {
 		sb.append(StringPool.UNDERLINE);
 		sb.append(ExternalLinkEntityName.SALESFORCE_OPPORTUNITY);
 		sb.append(StringPool.UNDERLINE);
-		sb.append(salesforceOpportunityKey);
+		sb.append(opportunityKey);
 
 		filterQuery.addLambdaEquals(
 			true, "externalLinkEntityIds", sb.toString());
@@ -1749,8 +1725,7 @@ public class DossieraCreateMessageSubscriber extends BaseMessageSubscriber {
 				_log.debug(
 					StringBundler.concat(
 						"Product purchase already exists with opportunity key ",
-						salesforceOpportunityKey, " and account key ",
-						account.getKey()));
+						opportunityKey, " and account key ", account.getKey()));
 			}
 
 			_logWarning(
@@ -1766,9 +1741,9 @@ public class DossieraCreateMessageSubscriber extends BaseMessageSubscriber {
 
 	protected PostalAddress parseAddress(JSONObject jsonObject) {
 		JSONObject billingAddressJSONObject = jsonObject.getJSONObject(
-			"_billingAddress");
+			"billingAddress");
 		JSONObject shippingAddressJSONObject = jsonObject.getJSONObject(
-			"_shippingAddress");
+			"shippingAddress");
 
 		PostalAddress postalAddress = null;
 
@@ -1800,25 +1775,24 @@ public class DossieraCreateMessageSubscriber extends BaseMessageSubscriber {
 	}
 
 	protected List<Contact> parseContacts(
-			JSONObject jsonObject, String accountKey,
-			int salesforceOpportunityType, String languageId,
-			boolean customerPortal2Account)
+			JSONObject jsonObject, String accountKey, int opportunityType,
+			String languageId, boolean customerPortal2Account)
 		throws Exception {
 
 		List<Contact> contacts = new ArrayList<>();
 
-		JSONObject ownerJSONObject = jsonObject.getJSONObject("_owner");
+		JSONObject ownerJSONObject = jsonObject.getJSONObject("owner");
 
 		if ((ownerJSONObject != null) &&
-			Validator.isNotNull(ownerJSONObject.getString("_emailAddress"))) {
+			Validator.isNotNull(ownerJSONObject.getString("emailAddress"))) {
 
 			Contact contact = new Contact();
 
-			contact.setFirstName(ownerJSONObject.getString("_firstName"));
-			contact.setLastName(ownerJSONObject.getString("_lastName"));
+			contact.setFirstName(ownerJSONObject.getString("firstName"));
+			contact.setLastName(ownerJSONObject.getString("lastName"));
 
 			String ownerEmailAddress = ownerJSONObject.getString(
-				"_emailAddress");
+				"emailAddress");
 
 			contact.setEmailAddress(ownerEmailAddress);
 
@@ -1862,25 +1836,25 @@ public class DossieraCreateMessageSubscriber extends BaseMessageSubscriber {
 			contacts.add(contact);
 		}
 
-		if (salesforceOpportunityType ==
+		if (opportunityType ==
 				SalesforceConstants.OPPORTUNITY_TYPE_EXISTING_BUSINESS) {
 
 			return contacts;
 		}
 
-		JSONArray contactsJSONArray = jsonObject.getJSONArray("_contacts");
+		JSONArray contactsJSONArray = jsonObject.getJSONArray("contacts");
 
 		if (contactsJSONArray == null) {
 			return contacts;
 		}
 
-		String soldBy = jsonObject.getString("_salesforceOpportunitySoldBy");
+		String soldBy = jsonObject.getString("opportunitySoldBy");
 
 		for (int i = 0; i < contactsJSONArray.length(); i++) {
 			JSONObject contactJSONObject = contactsJSONArray.getJSONObject(i);
 
 			String contactEmailAddress = contactJSONObject.getString(
-				"_emailAddress");
+				"emailAddress");
 
 			if (Validator.isNull(contactEmailAddress)) {
 				continue;
@@ -1888,8 +1862,8 @@ public class DossieraCreateMessageSubscriber extends BaseMessageSubscriber {
 
 			Contact contact = new Contact();
 
-			contact.setFirstName(contactJSONObject.getString("_firstName"));
-			contact.setLastName(contactJSONObject.getString("_lastName"));
+			contact.setFirstName(contactJSONObject.getString("firstName"));
+			contact.setLastName(contactJSONObject.getString("lastName"));
 			contact.setEmailAddress(contactEmailAddress);
 			contact.setLanguageId(languageId);
 
@@ -1917,8 +1891,7 @@ public class DossieraCreateMessageSubscriber extends BaseMessageSubscriber {
 	}
 
 	protected ExternalLink[] parseExternalLinks(JSONObject jsonObject) {
-		String salesforceAccountKey = jsonObject.getString(
-			"_salesforceAccountKey");
+		String salesforceAccountKey = jsonObject.getString("accountKey");
 
 		ExternalLink accountExternalLink = new ExternalLink();
 
@@ -1929,11 +1902,11 @@ public class DossieraCreateMessageSubscriber extends BaseMessageSubscriber {
 
 		ExternalLink dossieraExternalLink = new ExternalLink();
 
-		JSONObject projectJSONObject = jsonObject.getJSONObject("_project");
+		JSONObject projectJSONObject = jsonObject.getJSONObject("project");
 
 		if (projectJSONObject != null) {
 			String dossieraProjectKey = projectJSONObject.getString(
-				"_dossieraProjectKey");
+				"dossieraProjectKey");
 
 			dossieraExternalLink.setDomain(ExternalLinkDomain.DOSSIERA);
 			dossieraExternalLink.setEntityName(
@@ -1941,7 +1914,7 @@ public class DossieraCreateMessageSubscriber extends BaseMessageSubscriber {
 			dossieraExternalLink.setEntityId(dossieraProjectKey);
 
 			String salesforceProjectKey = projectJSONObject.getString(
-				"_salesforceProjectKey");
+				"projectKey");
 
 			ExternalLink projectExternalLink = new ExternalLink();
 
@@ -1955,10 +1928,9 @@ public class DossieraCreateMessageSubscriber extends BaseMessageSubscriber {
 			};
 		}
 
-		JSONObject accountJSONObject = jsonObject.getJSONObject("_account");
+		JSONObject accountJSONObject = jsonObject.getJSONObject("account");
 
-		String dossieraAccountKey = accountJSONObject.getString(
-			"_dossieraAccountKey");
+		String dossieraAccountKey = accountJSONObject.getString("accountKey");
 
 		dossieraExternalLink.setDomain(ExternalLinkDomain.DOSSIERA);
 		dossieraExternalLink.setEntityName(
@@ -1972,14 +1944,14 @@ public class DossieraCreateMessageSubscriber extends BaseMessageSubscriber {
 		throws Exception {
 
 		JSONObject partnerAccountJSONObject = jsonObject.getJSONObject(
-			"_partnerAccount");
+			"partnerAccount");
 
 		if (partnerAccountJSONObject == null) {
 			return null;
 		}
 
 		String dossieraAccountKey = partnerAccountJSONObject.getString(
-			"_dossieraAccountKey");
+			"accountKey");
 
 		if (Validator.isNull(dossieraAccountKey)) {
 			return null;
@@ -2049,7 +2021,7 @@ public class DossieraCreateMessageSubscriber extends BaseMessageSubscriber {
 		throws Exception {
 
 		JSONArray bundledProductsJSONArray = jsonObject.getJSONArray(
-			"_bundledProducts");
+			"bundledProducts");
 
 		if (bundledProductsJSONArray == null) {
 			return Collections.emptySet();
@@ -2057,22 +2029,21 @@ public class DossieraCreateMessageSubscriber extends BaseMessageSubscriber {
 
 		Map<ProductPurchase, Integer> productPurchasesMap = new HashMap<>();
 
-		ExternalLink externalLink = getSalesforceOpportunityExternalLink(
-			jsonObject);
+		ExternalLink externalLink = getOpportunityExternalLink(jsonObject);
 
 		for (int i = 0; i < bundledProductsJSONArray.length(); i++) {
 			JSONObject bundledProductJSONObject =
 				bundledProductsJSONArray.getJSONObject(i);
 
 			JSONArray purchasedProductsJSONArray =
-				bundledProductJSONObject.getJSONArray("_purchasedProducts");
+				bundledProductJSONObject.getJSONArray("purchasedProducts");
 
 			for (int j = 0; j < purchasedProductsJSONArray.length(); j++) {
 				JSONObject purchasedProductJSONObject =
 					purchasedProductsJSONArray.getJSONObject(j);
 
 				String productName = purchasedProductJSONObject.getString(
-					"_name");
+					"name");
 
 				if (ArrayUtil.contains(_IGNORE_PRODUCT_NAMES, productName)) {
 					continue;
@@ -2087,14 +2058,14 @@ public class DossieraCreateMessageSubscriber extends BaseMessageSubscriber {
 				ProductPurchase productPurchase = new ProductPurchase();
 
 				Date startDate = _portal.getDate(
-					purchasedProductJSONObject.getInt("_startMonth") - 1,
-					purchasedProductJSONObject.getInt("_startDay"),
-					purchasedProductJSONObject.getInt("_startYear"));
+					purchasedProductJSONObject.getInt("startMonth") - 1,
+					purchasedProductJSONObject.getInt("startDay"),
+					purchasedProductJSONObject.getInt("startYear"));
 
 				Date originalEndDate = _portal.getDate(
-					purchasedProductJSONObject.getInt("_endMonth") - 1,
-					purchasedProductJSONObject.getInt("_endDay"),
-					purchasedProductJSONObject.getInt("_endYear"));
+					purchasedProductJSONObject.getInt("endMonth") - 1,
+					purchasedProductJSONObject.getInt("endDay"),
+					purchasedProductJSONObject.getInt("endYear"));
 
 				if ((startDate != null) && (originalEndDate != null)) {
 					productPurchase.setStartDate(startDate);
@@ -2118,20 +2089,20 @@ public class DossieraCreateMessageSubscriber extends BaseMessageSubscriber {
 				Map<String, String> properties = new HashMap<>();
 
 				String environment = purchasedProductJSONObject.getString(
-					"_environment");
+					"environment");
 
 				if (Validator.isNotNull(environment)) {
 					properties.put("environment", environment);
 				}
 
 				String productType = purchasedProductJSONObject.getString(
-					"_productType");
+					"productType");
 
 				if (Validator.isNotNull(productType)) {
 					properties.put("productType", productType);
 				}
 
-				String sizing = purchasedProductJSONObject.getString("_sizing");
+				String sizing = purchasedProductJSONObject.getString("sizing");
 
 				if (Validator.isNotNull(sizing) &&
 					sizing.startsWith("Sizing ")) {
@@ -2161,7 +2132,7 @@ public class DossieraCreateMessageSubscriber extends BaseMessageSubscriber {
 					quantity = 1;
 				}
 				else {
-					quantity += purchasedProductJSONObject.getInt("_quantity");
+					quantity += purchasedProductJSONObject.getInt("quantity");
 				}
 
 				productPurchasesMap.put(productPurchase, quantity);
@@ -2185,14 +2156,13 @@ public class DossieraCreateMessageSubscriber extends BaseMessageSubscriber {
 
 	@Override
 	protected void postParseMessage(Message message) {
-		String salesforceOpportunityKey = _getSalesforceOpportunityKey(message);
+		String opportunityKey = _getOpportunityKey(message);
 
-		if (Validator.isNull(salesforceOpportunityKey)) {
+		if (Validator.isNull(opportunityKey)) {
 			return;
 		}
 
-		_lockLocalService.unlock(
-			Message.class.getName(), salesforceOpportunityKey);
+		_lockLocalService.unlock(Message.class.getName(), opportunityKey);
 	}
 
 	protected void sendUserCreationEmail(
@@ -2262,7 +2232,7 @@ public class DossieraCreateMessageSubscriber extends BaseMessageSubscriber {
 		Map<String, String> newProperties =
 			_dossieraSubscriberUtil.getAccountProperties(account, jsonObject);
 
-		JSONObject projectJSONObject = jsonObject.getJSONObject("_project");
+		JSONObject projectJSONObject = jsonObject.getJSONObject("project");
 
 		if (((projectJSONObject != null) &&
 			 !oldProperties.equals(newProperties)) ||
@@ -2274,11 +2244,11 @@ public class DossieraCreateMessageSubscriber extends BaseMessageSubscriber {
 			}
 
 			if (Validator.isNull(account.getContactEmailAddress())) {
-				JSONObject ownerJSONObject = jsonObject.getJSONObject("_owner");
+				JSONObject ownerJSONObject = jsonObject.getJSONObject("owner");
 
 				if (ownerJSONObject != null) {
 					account.setContactEmailAddress(
-						ownerJSONObject.getString("_emailAddress"));
+						ownerJSONObject.getString("emailAddress"));
 				}
 			}
 
@@ -2613,6 +2583,31 @@ public class DossieraCreateMessageSubscriber extends BaseMessageSubscriber {
 		return StringPool.BLANK;
 	}
 
+	private String _getOpportunityKey(Message message) {
+		try {
+			JSONObject jsonObject = jsonFactory.createJSONObject(
+				(String)message.getPayload());
+
+			return jsonObject.getString("opportunityKey");
+		}
+		catch (JSONException jsonException1) {
+			try {
+				JSONArray jsonArray = jsonFactory.createJSONArray(
+					(String)message.getPayload());
+
+				for (int i = 0; i < jsonArray.length(); i++) {
+					JSONObject jsonObject = jsonArray.getJSONObject(i);
+
+					return jsonObject.getString("opportunityKey");
+				}
+			}
+			catch (JSONException jsonException2) {
+			}
+		}
+
+		return StringPool.BLANK;
+	}
+
 	private Product _getProduct(String productName) throws Exception {
 		List<Product> products = _productWebService.getProducts(
 			ExternalLinkDomain.DOSSIERA,
@@ -2623,31 +2618,6 @@ public class DossieraCreateMessageSubscriber extends BaseMessageSubscriber {
 		}
 
 		return null;
-	}
-
-	private String _getSalesforceOpportunityKey(Message message) {
-		try {
-			JSONObject jsonObject = jsonFactory.createJSONObject(
-				(String)message.getPayload());
-
-			return jsonObject.getString("_salesforceOpportunityKey");
-		}
-		catch (JSONException jsonException1) {
-			try {
-				JSONArray jsonArray = jsonFactory.createJSONArray(
-					(String)message.getPayload());
-
-				for (int i = 0; i < jsonArray.length(); i++) {
-					JSONObject jsonObject = jsonArray.getJSONObject(i);
-
-					return jsonObject.getString("_salesforceOpportunityKey");
-				}
-			}
-			catch (JSONException jsonException2) {
-			}
-		}
-
-		return StringPool.BLANK;
 	}
 
 	private void _handleProductPurchaseError(
@@ -2682,20 +2652,18 @@ public class DossieraCreateMessageSubscriber extends BaseMessageSubscriber {
 	}
 
 	private boolean _isValidOpportunity(
-		String salesforceOpportunityStageName, int salesforceOpportunityType) {
+		String opportunityStageName, int opportunityType) {
 
-		if (salesforceOpportunityStageName.equals(
+		if (opportunityStageName.equals(
 				SalesforceConstants.OPPORTUNITY_STAGE_CLOSED_LOST) &&
-			(salesforceOpportunityType ==
-				SalesforceConstants.OPPORTUNITY_TYPE_RENEWAL)) {
+			(opportunityType == SalesforceConstants.OPPORTUNITY_TYPE_RENEWAL)) {
 
 			return true;
 		}
 
-		if (salesforceOpportunityStageName.equals(
+		if (opportunityStageName.equals(
 				SalesforceConstants.OPPORTUNITY_STAGE_CLOSED_WON) &&
-			(salesforceOpportunityType !=
-				SalesforceConstants.OPPORTUNITY_TYPE_RENEWAL)) {
+			(opportunityType != SalesforceConstants.OPPORTUNITY_TYPE_RENEWAL)) {
 
 			return true;
 		}
