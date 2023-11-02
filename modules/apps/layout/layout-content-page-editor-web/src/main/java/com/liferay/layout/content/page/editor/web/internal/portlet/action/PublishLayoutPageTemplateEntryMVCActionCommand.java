@@ -131,6 +131,8 @@ public class PublishLayoutPageTemplateEntryMVCActionCommand
 			layoutPageTemplateEntry.getLayoutPageTemplateEntryId(),
 			WorkflowConstants.STATUS_APPROVED);
 
+		layout = _layoutLocalService.fetchLayout(layout.getPlid());
+
 		layout.setStatus(WorkflowConstants.STATUS_APPROVED);
 
 		layout = _layoutLocalService.updateLayout(layout);
