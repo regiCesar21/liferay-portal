@@ -32,11 +32,11 @@ import org.osgi.service.component.annotations.Reference;
 @Component(
 	property = {
 		"javax.portlet.name=" + ProvisioningPortletKeys.ADMIN,
-		"mvc.command.name=/admin/debug_rabbitmq"
+		"mvc.command.name=/admin/debug_message_queue"
 	},
 	service = MVCActionCommand.class
 )
-public class DebugRabbitMQMVCActionCommand extends BaseMVCActionCommand {
+public class DebugMessageQueueMVCActionCommand extends BaseMVCActionCommand {
 
 	@Override
 	protected void doProcessAction(
@@ -70,7 +70,7 @@ public class DebugRabbitMQMVCActionCommand extends BaseMVCActionCommand {
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
-		DebugRabbitMQMVCActionCommand.class);
+		DebugMessageQueueMVCActionCommand.class);
 
 	@Reference
 	private MessageRouter _messageRouter;

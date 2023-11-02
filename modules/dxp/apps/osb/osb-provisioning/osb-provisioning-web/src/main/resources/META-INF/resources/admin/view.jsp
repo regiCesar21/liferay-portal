@@ -24,9 +24,9 @@ String tabs = ParamUtil.getString(request, "tabs", "common-license-keys");
 					});
 				add(
 					navigationItem -> {
-						navigationItem.setActive(tabs.equals("rabbitmq"));
-						navigationItem.setHref(renderResponse.createRenderURL(), "tabs", "rabbitmq");
-						navigationItem.setLabel(LanguageUtil.get(request, "rabbitmq"));
+						navigationItem.setActive(tabs.equals("messageQueue"));
+						navigationItem.setHref(renderResponse.createRenderURL(), "tabs", "messageQueue");
+						navigationItem.setLabel(LanguageUtil.get(request, "message-queue"));
 					});
 			}
 		}
@@ -39,14 +39,14 @@ String tabs = ParamUtil.getString(request, "tabs", "common-license-keys");
 			<liferay-util:include page="/admin/view_common_license_keys.jsp" servletContext="<%= application %>" />
 		</c:when>
 		<c:otherwise>
-			<portlet:actionURL name="/admin/debug_rabbitmq" var="debugRabbitMQURL">
+			<portlet:actionURL name="/admin/debug_message_queue" var="debugMessageQueueURL">
 				<portlet:param name="redirect" value="<%= currentURL %>" />
 			</portlet:actionURL>
 
-			<aui:form action="<%= debugRabbitMQURL %>" cssClass="container-fluid container-fluid-max-xl" method="post">
+			<aui:form action="<%= debugMessageQueueURL %>" cssClass="container-fluid container-fluid-max-xl" method="post">
 				<aui:fieldset-group>
 					<aui:fieldset>
-						<aui:input name="routingKey" type="text" value="dossiera.provisioning.create" />
+						<aui:input name="routingKey" type="text" value="ebenezer-support-opportunity-entries" />
 
 						<aui:input name="message" type="textarea" />
 
