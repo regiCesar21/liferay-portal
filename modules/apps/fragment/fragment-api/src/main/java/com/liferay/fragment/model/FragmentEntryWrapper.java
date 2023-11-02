@@ -676,6 +676,13 @@ public class FragmentEntryWrapper
 	}
 
 	@Override
+	public void populateVersionModel(
+		FragmentEntryVersion fragmentEntryVersion) {
+
+		model.populateVersionModel(fragmentEntryVersion);
+	}
+
+	@Override
 	public void populateZipWriter(
 			com.liferay.portal.kernel.zip.ZipWriter zipWriter, String path)
 		throws Exception {
@@ -1015,13 +1022,6 @@ public class FragmentEntryWrapper
 	@Override
 	public boolean isHead() {
 		return model.isHead();
-	}
-
-	@Override
-	public void populateVersionModel(
-		FragmentEntryVersion fragmentEntryVersion) {
-
-		model.populateVersionModel(fragmentEntryVersion);
 	}
 
 	@Override
