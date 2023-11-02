@@ -116,7 +116,6 @@ public class UADAnonymousUserProviderImpl implements UADAnonymousUserProvider {
 		user.setMiddleName(middleName);
 		user.setLastName(lastName);
 		user.setJobTitle(jobTitle);
-		user.setType(UserConstants.TYPE_REGULAR);
 		user.setStatus(WorkflowConstants.STATUS_INCOMPLETE);
 
 		_userLocalService.addUser(user);
@@ -141,8 +140,8 @@ public class UADAnonymousUserProviderImpl implements UADAnonymousUserProvider {
 		contact.setFirstName(firstName);
 		contact.setMiddleName(middleName);
 		contact.setLastName(lastName);
-		contact.setPrefixListTypeId(prefixListTypeId);
-		contact.setSuffixListTypeId(suffixListTypeId);
+		contact.setPrefixId(prefixId);
+		contact.setSuffixId(suffixId);
 		contact.setMale(true);
 		contact.setBirthday(
 			_portal.getDate(birthdayMonth, birthdayDay, birthdayYear));
