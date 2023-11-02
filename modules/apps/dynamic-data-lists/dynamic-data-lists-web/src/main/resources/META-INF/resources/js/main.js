@@ -505,7 +505,7 @@ AUI.add(
 					}
 				},
 
-				_normalizeFieldData(item, record, normalized, field) {
+				_normalizeFieldData(item, record, normalized, field, update) {
 					var instance = this;
 
 					var type = item.type;
@@ -540,27 +540,31 @@ AUI.add(
 						fieldValue['value'] = value;
 					}
 
-					normalized['fieldValues'].push(fieldValue);
+					if (field && !update) {
+						if (!field['nestedFieldValues']) {
+							field['nestedFieldValues'] = [];
+						}
+
+						field['nestedFieldValues'].push(fieldValue);
+					}
+					else {
+						normalized['fieldValues'].push(fieldValue);
+					}
 
 					if (isArray(item.fields) && !!item.fields.length) {
-						fieldValue['nestedFieldValues'] = [];
-
 						item.fields.forEach((nestedItem) => {
 							instance._normalizeFieldData(
 								nestedItem,
 								record,
 								normalized,
-								fieldValue
+								fieldValue,
+								update
 							);
 						});
 					}
-
-					if (field) {
-						field['nestedFieldValues'].push(fieldValue);
-					}
 				},
 
-				_normalizeRecordData(record) {
+				_normalizeRecordData(record, update) {
 					var instance = this;
 
 					var structure = instance.get('structure');
@@ -572,17 +576,13 @@ AUI.add(
 					};
 
 					structure.forEach((item) => {
-						instance._normalizeFieldData(item, record, normalized);
-
-						if (item.fields) {
-							item.fields.forEach((nestedField) =>
-								instance._normalizeFieldData(
-									nestedField,
-									record,
-									normalized
-								)
-							);
-						}
+						instance._normalizeFieldData(
+							item,
+							record,
+							normalized,
+							null,
+							update
+						);
 					});
 
 					delete normalized.displayIndex;
@@ -647,15 +647,13 @@ AUI.add(
 
 						var recordId = record.get('recordId');
 
-						var fieldsMap = instance._normalizeRecordData(record);
-
 						var recordIndex = data.indexOf(record);
 
 						if (recordId > 0) {
 							SpreadSheet.updateRecord(
 								recordId,
 								recordIndex,
-								fieldsMap,
+								instance._normalizeRecordData(record, true),
 								false,
 								instance.get('portletNamespace'),
 								instance.get('updateRecordURL')
@@ -671,7 +669,7 @@ AUI.add(
 										});
 									}
 								},
-								fieldsMap,
+								instance._normalizeRecordData(record, false),
 								recordIndex,
 								instance.get('portletNamespace'),
 								recordsetId
