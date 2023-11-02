@@ -20,9 +20,13 @@ import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClass
 public interface CacheControlConfiguration {
 
 	@Meta.AD(
-		deflt = "private", name = "cache-control",
-		optionLabels = {"private", "public"},
-		optionValues = {"private", "public"}, required = false
+		deflt = "private, no-cache, no-store, must-revalidate",
+		name = "cache-control",
+		optionLabels = {"no-cache", "private", "public"},
+		optionValues = {
+			"private, no-cache, no-store, must-revalidate", "private", "public"
+		},
+		required = false
 	)
 	public String cacheControl();
 
