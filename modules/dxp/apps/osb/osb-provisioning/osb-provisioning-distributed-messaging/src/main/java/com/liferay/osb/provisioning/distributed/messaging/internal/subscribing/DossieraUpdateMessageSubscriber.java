@@ -38,15 +38,14 @@ public class DossieraUpdateMessageSubscriber extends BaseMessageSubscriber {
 			_log.debug("Parsing message: " + jsonObject.toString());
 		}
 
-		String salesforceProjectKey = jsonObject.getString(
-			"salesforceProjectKey");
+		String projectKey = jsonObject.getString("projectKey");
 
-		if (Validator.isNull(salesforceProjectKey)) {
+		if (Validator.isNull(projectKey)) {
 			return;
 		}
 
 		String accountKey = _dossieraSubscriberUtil.getAccountKey(
-			salesforceProjectKey);
+			projectKey);
 
 		if (accountKey != null) {
 			Account account = _accountWebService.getAccount(accountKey);

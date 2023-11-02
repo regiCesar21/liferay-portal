@@ -50,11 +50,11 @@ public class DossieraSubscriberUtil {
 	}
 
 	public String getAccountKey(JSONObject jsonObject) throws Exception {
-		JSONObject projectJSONObject = jsonObject.getJSONObject("_project");
+		JSONObject projectJSONObject = jsonObject.getJSONObject("project");
 
 		if (projectJSONObject != null) {
 			String dossieraProjectKey = projectJSONObject.getString(
-				"_dossieraProjectKey");
+				"dossieraProjectKey");
 
 			List<Account> accounts = _accountWebService.getAccounts(
 				ExternalLinkDomain.DOSSIERA,
@@ -68,10 +68,10 @@ public class DossieraSubscriberUtil {
 			}
 		}
 		else {
-			JSONObject accountJSONObject = jsonObject.getJSONObject("_account");
+			JSONObject accountJSONObject = jsonObject.getJSONObject("account");
 
 			String dossieraAccountKey = accountJSONObject.getString(
-				"_dossieraAccountKey");
+				"accountKey");
 
 			Account account = fetchAccount(dossieraAccountKey);
 
@@ -83,11 +83,10 @@ public class DossieraSubscriberUtil {
 		return null;
 	}
 
-	public String getAccountKey(String salesforceProjectKey) throws Exception {
+	public String getAccountKey(String projectKey) throws Exception {
 		List<Account> accounts = _accountWebService.getAccounts(
 			ExternalLinkDomain.SALESFORCE,
-			ExternalLinkEntityName.SALESFORCE_PROJECT, salesforceProjectKey, 1,
-			1);
+			ExternalLinkEntityName.SALESFORCE_PROJECT, projectKey, 1, 1);
 
 		if (!accounts.isEmpty()) {
 			Account account = accounts.get(0);
@@ -107,26 +106,26 @@ public class DossieraSubscriberUtil {
 			properties = account.getProperties();
 		}
 
-		JSONObject projectJSONObject = jsonObject.getJSONObject("_project");
+		JSONObject projectJSONObject = jsonObject.getJSONObject("project");
 
 		String liferayVersion = null;
 		String projectSolution = null;
 
 		if (projectJSONObject != null) {
-			if (projectJSONObject.getBoolean("_gsInvolved")) {
+			if (projectJSONObject.getBoolean("gsInvolved")) {
 				properties.put("gsOpportunity", "true");
 			}
 			else {
 				properties.remove("gsOpportunity");
 			}
 
-			liferayVersion = projectJSONObject.getString("_liferayVersion");
+			liferayVersion = projectJSONObject.getString("liferayVersion");
 
 			if (Validator.isNotNull(liferayVersion)) {
 				properties.put("liferayVersion", liferayVersion);
 			}
 
-			projectSolution = projectJSONObject.getString("_projectSolution");
+			projectSolution = projectJSONObject.getString("projectSolution");
 		}
 		else {
 			liferayVersion = jsonObject.getString("currentLiferayVersion");
