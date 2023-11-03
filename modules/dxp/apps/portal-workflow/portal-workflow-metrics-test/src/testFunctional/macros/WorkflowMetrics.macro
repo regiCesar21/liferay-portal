@@ -22,8 +22,6 @@ definition {
 				WaitForSPARefresh();
 
 				Click(locator1 = "WorkflowAllItems#WORKFLOW_ALL_ITEMS_FILTER_BY");
-
-				Pause(locator1 = 6000);
 			}
 
 			if (IsElementNotPresent(locator1 = "WorkflowAllItems#WORKFLOW_ALL_ITEMS_FILTER_BY_ASSIGNEE_VALUE")) {
@@ -47,8 +45,6 @@ definition {
 				Refresh();
 
 				WaitForSPARefresh();
-
-				Pause(locator1 = 6000);
 			}
 
 			if (IsElementNotPresent(locator1 = "WorkflowMetrics#METRICS_ALL_ITEMS_TABLE_NAME")) {
@@ -538,8 +534,6 @@ definition {
 
 		while ((IsElementNotPresent(locator1 = "WorkflowMetricsIndex#METRICS_INDEX_SETTINGS")) && (maxIterations = "5")) {
 			Click(locator1 = "WorkflowMetricsIndex#METRICS_MENU_INDEX");
-
-			Pause(locator1 = 1000);
 		}
 
 		if (IsElementNotPresent(locator1 = "WorkflowMetricsIndex#METRICS_INDEX_SETTINGS")) {
@@ -730,8 +724,6 @@ definition {
 	}
 
 	macro goToUpdateDueDateTasks {
-		Pause(locator1 = 2000);
-
 		PortletEntry.selectAll();
 
 		Click(
@@ -760,8 +752,6 @@ definition {
 				category = "Workflow",
 				panel = "Applications",
 				portlet = "Metrics");
-
-			Pause(locator1 = 6000);
 		}
 
 		if (IsElementNotPresent(locator1 = "WorkflowMetrics#METRICS_WORKFLOW_PROCESS_NAME")) {
@@ -972,8 +962,6 @@ definition {
 			ScrollWebElementIntoView(locator1 = "WorkflowMetrics#METRICS_PERFORMANCE_BY_ASSIGNEE_VIEW_STEPS_DROPDOWN");
 
 			Click(locator1 = "WorkflowMetrics#METRICS_PERFORMANCE_BY_ASSIGNEE_VIEW_STEPS_DROPDOWN");
-
-			Pause(locator1 = 6000);
 		}
 
 		if (IsElementNotPresent(locator1 = "WorkflowMetrics#METRICS_PERFORMANCE_BY_ASSIGNEE_DROPDOWN_STEP_${velocityUnit}")) {
@@ -1007,8 +995,6 @@ definition {
 				Refresh();
 
 				Click(locator1 = "WorkflowMetrics#METRICS_WORKLOAD_BY_ASSIGNEE_CARD_FILTER");
-
-				Pause(locator1 = 6000);
 			}
 
 			if (IsElementNotPresent(locator1 = "WorkflowMetrics#METRICS_WORKLOAD_BY_ASSIGNEE_CARD_FILTER_OPTION")) {
@@ -1032,8 +1018,6 @@ definition {
 			Refresh();
 
 			Click(locator1 = "WorkflowMetrics#METRICS_WORKLOAD_BY_ASSIGNEE_CARD_FILTER_PROCESS_STEP");
-
-			Pause(locator1 = 6000);
 		}
 
 		if (IsElementNotPresent(locator1 = "WorkflowMetrics#METRICS_WORKLOAD_BY_ASSIGNEE_CARD_FILTER_OPTION")) {
@@ -1428,6 +1412,8 @@ definition {
 		while ((IsTextEqual(locator1 = "WorkflowMetrics#DASHBOARD_TOTAL_${key_status}_ITEMS_VALUE", value1 = ${key_expectedValue})) && (maxIterations = "24")) {
 			echo("Waiting 5 seconds, until the Completed SLA shows up");
 
+			// Pausing 5 seconds due to reasons here. See LRQA-53650
+
 			Pause(locator1 = 5000);
 
 			WorkflowMetrics.goToWorkflowProcessMetrics(workflowProcessName = "Single Approver");
@@ -1443,6 +1429,8 @@ definition {
 	macro waitForSLA {
 		while ((IsTextEqual(locator1 = "WorkflowMetrics#DASHBOARD_TOTAL_${key_status}_ITEMS_VALUE", value1 = ${key_expectedValue})) && (maxIterations = "24")) {
 			echo("Waiting 5 seconds to recheck");
+
+			// Pausing 5 seconds due to reasons here. See LRQA-53650
 
 			Pause(locator1 = 5000);
 
@@ -1461,6 +1449,8 @@ definition {
 			var count = ${count} + 1;
 
 			echo("Waiting 5 seconds to recheck");
+
+			// Pausing 5 seconds due to reasons here. See LRQA-53650
 
 			Pause(locator1 = 5000);
 

@@ -4881,7 +4881,9 @@ definition {
 
 		Click(locator1 = "MyWorkflowTasksTask#ORDER");
 
-		Pause(locator1 = 1000);
+		WaitForElementPresent(
+			locator1 = "MyWorkflowTasks#TABLE_GENERIC_ASSET_TITLE",
+			value1 = "Kaleo Forms Process");
 
 		Workflow._viewActivities(
 			workflowActivityComment = "Test Test completed the task Review.",
