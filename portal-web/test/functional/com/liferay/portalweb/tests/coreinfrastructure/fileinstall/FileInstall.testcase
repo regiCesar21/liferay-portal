@@ -52,8 +52,6 @@ definition {
 
 		ArchiveUtil.archive("${testBaseDirName}/${testDependenciesDirName}/com.liferay.cluster.test.module.jar", "${deployDir}/com.liferay.cluster.test.module.jar");
 
-		Pause(locator1 = 10000);
-
 		GogoShell.openGogoShellAdmin();
 
 		GogoShell.executeCommand(commandName = "lb | grep 'Test Module'");
@@ -76,8 +74,6 @@ definition {
 		var testDependenciesDirName = PropsUtil.get("test.dependencies.dir.name");
 
 		ArchiveUtil.archive("${testBaseDirName}/${testDependenciesDirName}/com.liferay.cluster.test.module.jar", "${deployDir}/com.liferay.cluster.test.module.jar");
-
-		Pause(locator1 = 10000);
 
 		AssertConsoleTextPresent(value1 = "STARTED com.liferay.cluster.test.module_");
 
@@ -103,8 +99,6 @@ definition {
 		var testDependenciesDirName = PropsUtil.get("test.dependencies.dir.name");
 
 		ArchiveUtil.archive("${testBaseDirName}/${testDependenciesDirName}/com.liferay.cluster.test.module.jar", "${deployDir}/com.liferay.cluster.test.module.jar");
-
-		Pause(locator1 = 10000);
 
 		GogoShell.openGogoShellAdmin();
 
