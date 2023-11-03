@@ -95,8 +95,6 @@ definition {
 
 		DepotNavigator.gotoSites(depotName = "Test Depot Name");
 
-		Pause(locator1 = 3000);
-
 		Depot.connectSite(siteList = "Site Name");
 
 		DepotNavigator.openDepotAdmin();
@@ -265,8 +263,6 @@ definition {
 		DepotNavigator.gotoEdit(depotName = "Test Depot Name");
 
 		DepotNavigator.gotoSites(depotName = "Test Depot Name");
-
-		Pause(locator1 = 3000);
 
 		Depot.connectSite(siteList = "Site Name");
 
@@ -651,8 +647,6 @@ definition {
 		DepotNavigator.gotoEdit(depotName = "Test Depot Name");
 
 		DepotNavigator.gotoSites(depotName = "Test Depot Name");
-
-		Pause(locator1 = 3000);
 
 		Depot.connectSite(siteList = "Site Name");
 

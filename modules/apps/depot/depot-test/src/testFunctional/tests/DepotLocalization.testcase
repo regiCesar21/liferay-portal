@@ -89,8 +89,6 @@ definition {
 
 		DepotNavigator.gotoGeneral(depotName = "Test Depot Name");
 
-		Pause(locator1 = 3000);
-
 		for (var fieldName : list "Name,Description") {
 			Click(
 				key_fieldName = ${fieldName},
@@ -224,8 +222,6 @@ definition {
 		DepotNavigator.gotoEdit(depotName = "Test Depot Name");
 
 		DepotNavigator.gotoGeneral(depotName = "Test Depot Name");
-
-		Pause(locator1 = 3000);
 
 		for (var fieldName : list "Name,Description") {
 			Click(

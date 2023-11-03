@@ -1,8 +1,6 @@
 definition {
 
 	macro activateStaging {
-		Pause(locator1 = 3000);
-
 		if (${remoteStaging} == "true") {
 			Check.checkHiddenToggleSwitch(locator1 = "SiteSettingsStaging#STAGING_REMOTE_LIVE");
 
@@ -37,14 +35,14 @@ definition {
 			AssertConfirm(value1 = "Are you sure you want to activate remote staging for ${depotName}?");
 
 			while (IsElementNotPresent(locator1 = "Staging#PROCESS_SUCCESSFUL")) {
-				Pause(locator1 = 1000);
+				WaitForElementPresent(locator1 = "Staging#PROCESS_SUCCESSFUL");
 			}
 		}
 		else {
 			AssertConfirm(value1 = "Are you sure you want to activate local staging for ${depotName}?");
 
 			while (IsElementNotPresent(locator1 = "Staging#PROCESS_SUCCESSFUL")) {
-				Pause(locator1 = 1000);
+				WaitForElementPresent(locator1 = "Staging#PROCESS_SUCCESSFUL");
 			}
 
 			AssertTextEquals(
@@ -142,8 +140,6 @@ definition {
 			SelectFrame(locator1 = "IFrame#ADD_USERS_TO_SITE");
 		}
 
-		Pause(locator1 = 3000);
-
 		LexiconEntry.changeDisplayStyle(displayStyle = "cards");
 
 		if (isSet(userMiddleName)) {
@@ -163,13 +159,9 @@ definition {
 	macro assignUserGroupAsMember {
 		Navigator.gotoNavItem(navItem = "User Groups");
 
-		Pause(locator1 = 3000);
-
 		LexiconEntry.gotoAdd();
 
 		SelectFrame(locator1 = "IFrame#MODAL_BODY");
-
-		Pause(locator1 = 3000);
 
 		LexiconEntry.selectEntry(rowEntry = ${userGroupName});
 
@@ -386,8 +378,6 @@ definition {
 			Button.clickAdd();
 
 			SelectFrame(locator1 = "IFrame#SELECT_SITES");
-
-			Pause(locator1 = 3000);
 
 			Navigator.gotoNavItem(navItem = "My Sites");
 

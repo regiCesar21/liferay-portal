@@ -74,8 +74,6 @@ definition {
 
 		SelectFrame(locator1 = "IFrame#MODAL_BODY");
 
-		Pause(locator1 = 3000);
-
 		AssertElementNotPresent(
 			locator1 = "NavBar#NAV_ITEM_LINK",
 			navItem = "Asset Libraries",

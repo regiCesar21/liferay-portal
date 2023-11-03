@@ -60,8 +60,6 @@ definition {
 
 		BlogsNavigator.gotoAddEntry();
 
-		Pause(locator1 = 3000);
-
 		BlogsNavigator.gotoSelectFile();
 
 		ItemSelector.selectRepositoryImage(
@@ -77,8 +75,6 @@ definition {
 			entryTitle = "Blogs Entry Title");
 
 		Button.clickPublish();
-
-		Pause(locator1 = 10000);
 
 		BlogsNavigator.gotoEntryCP(entryTitle = "Blogs Entry Title");
 

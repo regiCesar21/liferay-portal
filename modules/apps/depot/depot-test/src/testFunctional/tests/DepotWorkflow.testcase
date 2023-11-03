@@ -73,8 +73,6 @@ definition {
 
 		BlogsNavigator.gotoAddEntry();
 
-		Pause(locator1 = 5000);
-
 		BlogsNavigator.gotoSelectFile();
 
 		SelectFrame(locator1 = "ItemSelector#ITEM_SELECTOR_IFRAME");
