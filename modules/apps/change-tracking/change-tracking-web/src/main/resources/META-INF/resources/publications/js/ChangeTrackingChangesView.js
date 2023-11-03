@@ -418,7 +418,7 @@ class ChangeTrackingChangesView extends React.Component {
 					workflowStatusA < workflowStatusB ||
 					workflowStatusA === null
 				) {
-					if (ascendingState) {
+					if (ascending) {
 						return -1;
 					}
 
@@ -429,7 +429,7 @@ class ChangeTrackingChangesView extends React.Component {
 					workflowStatusA > workflowStatusB ||
 					workflowStatusB === null
 				) {
-					if (ascendingState) {
+					if (ascending) {
 						return 1;
 					}
 
@@ -1782,6 +1782,14 @@ class ChangeTrackingChangesView extends React.Component {
 					label: Liferay.Language.get('site'),
 					onClick: () =>
 						this._handleSortColumnChange(this.COLUMN_SITE),
+				},
+				{
+					active: this._getColumn() === this.COLUMN_WORKFLOW_STATUS,
+					label: Liferay.Language.get('status'),
+					onClick: () =>
+						this._handleSortColumnChange(
+							this.COLUMN_WORKFLOW_STATUS
+						),
 				},
 				{
 					active: this._getColumn() === this.COLUMN_USER,
