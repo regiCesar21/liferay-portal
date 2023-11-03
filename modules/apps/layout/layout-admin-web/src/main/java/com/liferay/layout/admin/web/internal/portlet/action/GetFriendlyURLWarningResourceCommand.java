@@ -18,7 +18,6 @@ import com.liferay.layout.admin.constants.LayoutAdminPortletKeys;
 import com.liferay.layout.set.prototype.helper.LayoutSetPrototypeHelper;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
-import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.model.Group;
@@ -159,9 +158,7 @@ public class GetFriendlyURLWarningResourceCommand
 			));
 	}
 
-	private String _getWarningMessage(Group group, Locale locale)
-		throws PortalException {
-
+	private String _getWarningMessage(Group group, Locale locale) {
 		if (group.isLayoutSetPrototype()) {
 			return _language.get(
 				locale,

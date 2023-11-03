@@ -49,6 +49,7 @@ import com.liferay.portal.kernel.model.LayoutTypePortlet;
 import com.liferay.portal.kernel.model.role.RoleConstants;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
+import com.liferay.portal.kernel.portlet.LiferayPortletURL;
 import com.liferay.portal.kernel.portlet.LiferayWindowState;
 import com.liferay.portal.kernel.portlet.PortletProvider;
 import com.liferay.portal.kernel.portlet.PortletProviderUtil;
@@ -77,6 +78,7 @@ import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.PropsUtil;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
@@ -100,7 +102,6 @@ import java.util.TreeMap;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.PortletURL;
-import javax.portlet.ResourceURL;
 import javax.portlet.WindowStateException;
 
 import javax.servlet.http.HttpServletRequest;
@@ -1876,8 +1877,10 @@ public class LayoutsAdminDisplayContext {
 	}
 
 	private String _getFriendlyURLWarningURL() {
-		ResourceURL resourceURL = _liferayPortletResponse.createResourceURL();
+		LiferayPortletURL resourceURL =
+			(LiferayPortletURL)_liferayPortletResponse.createResourceURL();
 
+		resourceURL.setCopyCurrentRenderParameters(false);
 		resourceURL.setParameter("groupId", String.valueOf(getGroupId()));
 		resourceURL.setParameter("plid", String.valueOf(getSelPlid()));
 		resourceURL.setParameter(
@@ -1934,19 +1937,18 @@ public class LayoutsAdminDisplayContext {
 
 		Group group = layout.getGroup();
 
-		return com.liferay.portal.kernel.util.StringUtil.
-			appendParentheticalSuffix(
-				LanguageUtil.format(
-					themeDisplay.getLocale(), "page-x-of-x",
-					new String[] {
-						layout.getName(themeDisplay.getLocale()),
-						group.getName(themeDisplay.getLocale())
-					},
-					false),
-				LanguageUtil.get(
-					themeDisplay.getLocale(),
-					"please-contact-the-administrator-to-resolve-this-" +
-						"friendly-url-conflict"));
+		return StringUtil.appendParentheticalSuffix(
+			LanguageUtil.format(
+				themeDisplay.getLocale(), "page-x-of-x",
+				new String[] {
+					layout.getName(themeDisplay.getLocale()),
+					group.getName(themeDisplay.getLocale())
+				},
+				false),
+			LanguageUtil.get(
+				themeDisplay.getLocale(),
+				"please-contact-the-administrator-to-resolve-this-friendly-" +
+					"url-conflict"));
 	}
 
 	private String _getOrderByCol() {
