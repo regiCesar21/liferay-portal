@@ -311,6 +311,7 @@
 		<suppress checks="PoshiPauseUsageCheck" files="portal-web/test/functional/com/liferay/portalweb/tests/enduseree/collaborationanddocmanagement/documentmanagement/connectors/sharepoint/CPSharepoint\.testcase" />
 		<suppress checks="PoshiPauseUsageCheck" files="portal-web/test/functional/com/liferay/portalweb/tests/enduseree/collaborationanddocmanagement/documentmanagement/connectors/sharepoint/CPSharepoint2013\.testcase" />
 		<suppress checks="PoshiPauseUsageCheck" files="portal-web/test/functional/com/liferay/portalweb/tests/enduseree/collaborationanddocmanagement/documentmanagement/connectors/sharepoint/SharepointREST\.testcase" />
+		<suppress checks="PoshiPropertiesOrderCheck" files="portal-web/test/functional/com/liferay/portalweb/tests/coreinfrastructure/search/searchportlet/Search\.testcase" />
 		<suppress checks="PrimitiveWrapperInstantiationCheck" files="portal-impl/src/com/liferay/portal/json/jabsorb/serializer/LiferaySerializer\.java" />
 		<suppress checks="PropertiesEmptyLinesCheck" files="build\.properties" />
 		<suppress checks="PropertiesLongLinesCheck" files="portal-impl/src/system\.properties" />
