@@ -494,9 +494,8 @@ public class DDMFormInstanceLocalServiceImpl
 
 		boolean updateVersion = false;
 
-		if ((latestDDMFormInstanceVersion.getStatus() ==
-				WorkflowConstants.STATUS_DRAFT) &&
-			(status == WorkflowConstants.STATUS_DRAFT)) {
+		if (latestDDMFormInstanceVersion.getStatus() ==
+				WorkflowConstants.STATUS_DRAFT) {
 
 			updateVersion = true;
 		}
@@ -530,7 +529,7 @@ public class DDMFormInstanceLocalServiceImpl
 
 		if (updateVersion) {
 			updateFormInstanceVersion(
-				ddmStructureVersionId, user, ddmFormInstance);
+				ddmStructureVersionId, user, ddmFormInstance, status);
 		}
 		else {
 			addFormInstanceVersion(
@@ -643,7 +642,7 @@ public class DDMFormInstanceLocalServiceImpl
 
 	protected void updateFormInstanceVersion(
 			long ddmStructureVersionId, User user,
-			DDMFormInstance ddmFormInstance)
+			DDMFormInstance ddmFormInstance, int status)
 		throws PortalException {
 
 		DDMFormInstanceVersion ddmFormInstanceVersion =
@@ -656,6 +655,7 @@ public class DDMFormInstanceLocalServiceImpl
 		ddmFormInstanceVersion.setName(ddmFormInstance.getName());
 		ddmFormInstanceVersion.setDescription(ddmFormInstance.getDescription());
 		ddmFormInstanceVersion.setSettings(ddmFormInstance.getSettings());
+		ddmFormInstanceVersion.setStatus(status);
 		ddmFormInstanceVersion.setStatusByUserId(user.getUserId());
 		ddmFormInstanceVersion.setStatusByUserName(user.getFullName());
 		ddmFormInstanceVersion.setStatusDate(ddmFormInstance.getModifiedDate());
