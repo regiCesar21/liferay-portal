@@ -187,8 +187,6 @@ definition {
 			key_fieldName = "emailOTPSentSubject",
 			locator1 = "Message#ERROR");
 
-		Pause(locator1 = 5000);
-
 		MultiFactorAuthentication.verifyOTP(
 			portalURL = ${portalURL},
 			recipient = "Test Test",
@@ -669,8 +667,6 @@ definition {
 			userEmailAddress = "test@liferay.com",
 			userPassword = "test",
 			validOTP = "false");
-
-		Pause(locator1 = 11000);
 
 		MultiFactorAuthentication.verifyOTP(
 			portalURL = ${portalURL},
