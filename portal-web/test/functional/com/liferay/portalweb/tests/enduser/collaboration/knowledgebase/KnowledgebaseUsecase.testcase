@@ -118,8 +118,6 @@ definition {
 			kbArticleTitle = "Knowledge Base Child Article Title",
 			saveAsDraft = "true");
 
-		Pause(locator1 = 3000);
-
 		Navigator.gotoPage(pageName = "Knowledge Base Page");
 
 		KBArticle.viewPG(
