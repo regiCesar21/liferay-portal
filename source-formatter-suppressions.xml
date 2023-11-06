@@ -232,7 +232,6 @@
 		<suppress checks="PoshiPauseUsageCheck" files="portal-web/test/functional/com/liferay/portalweb/tests/coreinfrastructureee/clustering/clusteringframework/ClusteringLicense\.testcase" />
 		<suppress checks="PoshiPauseUsageCheck" files="portal-web/test/functional/com/liferay/portalweb/tests/coreinfrastructureee/clustering/clusteringframework/ClusteringMissingPlugins\.testcase" />
 		<suppress checks="PoshiPauseUsageCheck" files="portal-web/test/functional/com/liferay/portalweb/tests/coreinfrastructureee/search/elasticsearch/CrossClusterReplicationES7\.testcase" />
-		<suppress checks="PoshiPauseUsageCheck" files="portal-web/test/functional/com/liferay/portalweb/tests/coreinfrastructureee/security/mfa/MultiFactorAuthentication\.testcase" />
 		<suppress checks="PoshiPauseUsageCheck" files="portal-web/test/functional/com/liferay/portalweb/tests/coreinfrastructureee/security/SAML\.testcase" />
 		<suppress checks="PoshiPauseUsageCheck" files="portal-web/test/functional/com/liferay/portalweb/tests/enduser/collaboration/announcements/PGAnnouncements\.testcase" />
 		<suppress checks="PoshiPauseUsageCheck" files="portal-web/test/functional/com/liferay/portalweb/tests/enduser/collaboration/blogs/BlogsUsecase\.testcase" />
