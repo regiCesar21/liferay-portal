@@ -424,6 +424,7 @@ public class StructuredContentResourceImpl
 				null,
 				_createServiceContext(
 					_getAssetCategoryIds(journalArticle, structuredContent),
+					_getAssetTags(journalArticle, structuredContent),
 					structuredContentId, structuredContent, 0L)));
 	}
 
@@ -531,6 +532,7 @@ public class StructuredContentResourceImpl
 				null,
 				_createServiceContext(
 					_getAssetCategoryIds(journalArticle, structuredContent),
+					_getAssetTags(journalArticle, structuredContent),
 					structuredContentId, structuredContent, 0L)));
 	}
 
@@ -641,8 +643,9 @@ public class StructuredContentResourceImpl
 				0, true, 0, 0, 0, 0, 0, true, true, false, null, null, null,
 				null,
 				_createServiceContext(
-					structuredContent.getTaxonomyCategoryIds(), 0L,
-					structuredContent, siteId)));
+					structuredContent.getTaxonomyCategoryIds(),
+					structuredContent.getKeywords(), 0L, structuredContent,
+					siteId)));
 	}
 
 	private DDMStructure _checkDDMStructurePermission(
@@ -702,8 +705,9 @@ public class StructuredContentResourceImpl
 	}
 
 	private ServiceContext _createServiceContext(
-			Long[] assetCategoryIds, Long structuredContentId,
-			StructuredContent structuredContent, Long siteId)
+			Long[] assetCategoryIds, String[] assetTags,
+			Long structuredContentId, StructuredContent structuredContent,
+			Long siteId)
 		throws Exception {
 
 		ServiceContext serviceContext = null;
@@ -713,7 +717,7 @@ public class StructuredContentResourceImpl
 				_journalArticleService.getLatestArticle(structuredContentId);
 
 			serviceContext = ServiceContextRequestUtil.createServiceContext(
-				assetCategoryIds, structuredContent.getKeywords(),
+				assetCategoryIds, assetTags,
 				_getExpandoBridgeAttributes(structuredContent),
 				journalArticle.getGroupId(), contextHttpServletRequest,
 				structuredContent.getViewableByAsString());
@@ -729,7 +733,7 @@ public class StructuredContentResourceImpl
 		}
 		else {
 			serviceContext = ServiceContextRequestUtil.createServiceContext(
-				assetCategoryIds, structuredContent.getKeywords(),
+				assetCategoryIds, assetTags,
 				_getExpandoBridgeAttributes(structuredContent), siteId,
 				contextHttpServletRequest,
 				structuredContent.getViewableByAsString());
@@ -776,6 +780,27 @@ public class StructuredContentResourceImpl
 			journalArticle.getResourcePrimKey());
 
 		return ArrayUtil.toLongArray(assetEntry.getCategoryIds());
+	}
+
+	private String[] _getAssetTags(
+			JournalArticle journalArticle, StructuredContent structuredContent)
+		throws Exception {
+
+		if ((journalArticle == null) ||
+			(structuredContent.getKeywords() != null)) {
+
+			return structuredContent.getKeywords();
+		}
+
+		AssetRendererFactory<?> assetRendererFactory =
+			AssetRendererFactoryRegistryUtil.getAssetRendererFactoryByClass(
+				JournalArticle.class);
+
+		AssetEntry assetEntry = assetRendererFactory.getAssetEntry(
+			JournalArticle.class.getName(),
+			journalArticle.getResourcePrimKey());
+
+		return ArrayUtil.toStringArray(assetEntry.getTagNames());
 	}
 
 	private DDMFormField _getDDMFormField(
