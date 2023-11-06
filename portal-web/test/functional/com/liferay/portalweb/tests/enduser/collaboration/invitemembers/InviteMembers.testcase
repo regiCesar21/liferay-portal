@@ -83,8 +83,6 @@ definition {
 			password = "test",
 			userEmailAddress = "userea@liferay.com");
 
-		Pause(locator1 = 1000);
-
 		AssertVisible(locator1 = "Notifications#PROFILE_BADGE_COUNT");
 
 		Notifications.viewBadgeCount(notificationCount = 1);
