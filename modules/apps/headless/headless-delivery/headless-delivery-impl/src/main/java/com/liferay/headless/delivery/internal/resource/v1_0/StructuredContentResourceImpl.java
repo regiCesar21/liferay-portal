@@ -424,7 +424,7 @@ public class StructuredContentResourceImpl
 				null,
 				_createServiceContext(
 					_getAssetCategoryIds(journalArticle, structuredContent),
-					_getAssetTags(journalArticle, structuredContent),
+					_getAssetTagsNames(journalArticle, structuredContent),
 					structuredContentId, structuredContent, 0L)));
 	}
 
@@ -532,7 +532,7 @@ public class StructuredContentResourceImpl
 				null,
 				_createServiceContext(
 					_getAssetCategoryIds(journalArticle, structuredContent),
-					_getAssetTags(journalArticle, structuredContent),
+					_getAssetTagsNames(journalArticle, structuredContent),
 					structuredContentId, structuredContent, 0L)));
 	}
 
@@ -705,7 +705,7 @@ public class StructuredContentResourceImpl
 	}
 
 	private ServiceContext _createServiceContext(
-			Long[] assetCategoryIds, String[] assetTags,
+			Long[] assetCategoryIds, String[] assetTagsNames,
 			Long structuredContentId, StructuredContent structuredContent,
 			Long siteId)
 		throws Exception {
@@ -717,7 +717,7 @@ public class StructuredContentResourceImpl
 				_journalArticleService.getLatestArticle(structuredContentId);
 
 			serviceContext = ServiceContextRequestUtil.createServiceContext(
-				assetCategoryIds, assetTags,
+				assetCategoryIds, assetTagsNames,
 				_getExpandoBridgeAttributes(structuredContent),
 				journalArticle.getGroupId(), contextHttpServletRequest,
 				structuredContent.getViewableByAsString());
@@ -733,7 +733,7 @@ public class StructuredContentResourceImpl
 		}
 		else {
 			serviceContext = ServiceContextRequestUtil.createServiceContext(
-				assetCategoryIds, assetTags,
+				assetCategoryIds, assetTagsNames,
 				_getExpandoBridgeAttributes(structuredContent), siteId,
 				contextHttpServletRequest,
 				structuredContent.getViewableByAsString());
@@ -782,7 +782,7 @@ public class StructuredContentResourceImpl
 		return ArrayUtil.toLongArray(assetEntry.getCategoryIds());
 	}
 
-	private String[] _getAssetTags(
+	private String[] _getAssetTagsNames(
 			JournalArticle journalArticle, StructuredContent structuredContent)
 		throws Exception {
 
