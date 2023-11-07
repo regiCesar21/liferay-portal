@@ -57,42 +57,33 @@ public class ZendeskHeatScoreServlet extends ZendeskBaseServlet {
 
 		long days = ChronoUnit.DAYS.between(created, Instant.now());
 
-		int ageScore = ZendeskHeatScoreConstants.getAgeScore(days);
-
-		String businessPriority = fieldsJSONObject.getString(
-			"businessPriority");
-
-		int businessPriorityScore =
-			ZendeskHeatScoreConstants.getBusinessPriorityScore(
-				businessPriority);
-
-		String casMetrics = fieldsJSONObject.getString("casMetrics");
-
-		int casMetricsScore = ZendeskHeatScoreConstants.getCASMetricsScore(
-			casMetrics);
+		double ageScore = ZendeskHeatScoreConstants.getAgeScore(days);
 
 		String environment = fieldsJSONObject.getString("environment");
 
 		int environmentScore = ZendeskHeatScoreConstants.getEnvironmentScore(
 			environment);
 
+		String heatTag = fieldsJSONObject.getString("heatTag");
+
+		int heatTagScore = ZendeskHeatScoreConstants.getHeatTagScore(heatTag);
+
 		String priority = fieldsJSONObject.getString("priority");
 
 		int priorityScore = ZendeskHeatScoreConstants.getPriorityScore(
 			priority);
 
-		String subStatus = fieldsJSONObject.getString("subStatus");
+		String product = fieldsJSONObject.getString("product");
 
-		int subStatusScore = ZendeskHeatScoreConstants.getSubStatusScore(
-			subStatus);
+		int productScore = ZendeskHeatScoreConstants.getProductScore(product);
 
 		long zendeskTicketId = fieldsJSONObject.getLong("ticketId");
 		long heatScoreFieldId = fieldsJSONObject.getLong("heatScoreFieldId");
 		int heatScore = fieldsJSONObject.getInt("heatScore", 0);
 
-		int totalHeatScore =
-			ageScore + businessPriorityScore + casMetricsScore +
-				environmentScore + priorityScore + subStatusScore;
+		int totalHeatScore = (int)Math.ceil(
+			(ageScore + environmentScore + heatTagScore + productScore) *
+				priorityScore);
 
 		if (totalHeatScore != heatScore) {
 			updateZendeskTicketHeatScore(
