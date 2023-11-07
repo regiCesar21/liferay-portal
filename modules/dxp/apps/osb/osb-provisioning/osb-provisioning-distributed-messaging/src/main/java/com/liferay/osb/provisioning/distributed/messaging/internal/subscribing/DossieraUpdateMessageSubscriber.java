@@ -27,7 +27,7 @@ import org.osgi.service.component.annotations.Reference;
 @Component(
 	configurationPid = "com.liferay.osb.provisioning.distributed.messaging.internal.configuration.DistributedMessagingConfiguration",
 	immediate = true,
-	property = "topic.pattern=dossiera.provisioning.project.update",
+	property = "topic.pattern=ebenezer-support-project-entries",
 	service = DossieraUpdateMessageSubscriber.class
 )
 public class DossieraUpdateMessageSubscriber extends BaseMessageSubscriber {
@@ -44,8 +44,7 @@ public class DossieraUpdateMessageSubscriber extends BaseMessageSubscriber {
 			return;
 		}
 
-		String accountKey = _dossieraSubscriberUtil.getAccountKey(
-			projectKey);
+		String accountKey = _dossieraSubscriberUtil.getAccountKey(projectKey);
 
 		if (accountKey != null) {
 			Account account = _accountWebService.getAccount(accountKey);

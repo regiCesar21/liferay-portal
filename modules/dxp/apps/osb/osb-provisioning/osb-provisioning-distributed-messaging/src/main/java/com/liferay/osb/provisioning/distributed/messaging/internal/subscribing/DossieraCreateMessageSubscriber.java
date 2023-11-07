@@ -107,7 +107,8 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(
 	configurationPid = "com.liferay.osb.provisioning.distributed.messaging.internal.configuration.DistributedMessagingConfiguration",
-	immediate = true, property = "topic.pattern=dossiera.provisioning.create",
+	immediate = true,
+	property = "topic.pattern=ebenezer-support-opportunity-entries",
 	service = DossieraCreateMessageSubscriber.class
 )
 public class DossieraCreateMessageSubscriber extends BaseMessageSubscriber {
