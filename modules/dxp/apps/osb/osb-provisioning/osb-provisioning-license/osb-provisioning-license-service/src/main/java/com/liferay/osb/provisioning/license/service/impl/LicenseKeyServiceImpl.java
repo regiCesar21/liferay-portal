@@ -76,6 +76,7 @@ public class LicenseKeyServiceImpl extends LicenseKeyServiceBaseImpl {
 
 		return licenseKeyLocalService.addLicenseKey(
 			StringPool.BLANK, userUuid, assetReceiptLicenseUuid,
+			StringPool.BLANK, StringPool.BLANK, StringPool.BLANK,
 			licenseEntryType, productEntryName, productId,
 			String.valueOf(productVersion), owner, maxUsers, description,
 			hostName, ipAddresses, macAddresses, serverId, startDate,

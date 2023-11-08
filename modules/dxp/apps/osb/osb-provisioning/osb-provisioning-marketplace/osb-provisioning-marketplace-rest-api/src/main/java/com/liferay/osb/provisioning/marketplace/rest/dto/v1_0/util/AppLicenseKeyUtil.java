@@ -18,6 +18,7 @@ public class AppLicenseKeyUtil {
 
 		return new AppLicenseKey() {
 			{
+				accountKey = licenseKey.getAccountKey();
 				active = licenseKey.isActive();
 				complimentary = licenseKey.isComplimentary();
 				createDate = licenseKey.getCreateDate();
@@ -36,7 +37,9 @@ public class AppLicenseKeyUtil {
 				orderId = licenseKey.getAssetReceiptLicenseUuid();
 				owner = licenseKey.getOwner();
 				productId = licenseKey.getProductId();
+				productKey = licenseKey.getProductKey();
 				productName = licenseKey.getProductName();
+				productPurchaseKey = licenseKey.getProductPurchaseKey();
 				productVersion = licenseKey.getProductVersion();
 				startDate = licenseKey.getStartDate();
 				userName = licenseKey.getUserName();

@@ -5,6 +5,8 @@
 
 package com.liferay.osb.provisioning.marketplace.rest.internal.resource.v1_0;
 
+import com.liferay.osb.koroneiki.phloem.rest.client.dto.v1_0.ProductPurchase;
+import com.liferay.osb.provisioning.koroneiki.web.service.ProductPurchaseWebService;
 import com.liferay.osb.provisioning.license.exception.NoSuchLicenseKeyException;
 import com.liferay.osb.provisioning.license.exporter.LicenseKeyExporter;
 import com.liferay.osb.provisioning.license.helper.constants.ProductId;
@@ -137,6 +139,10 @@ public class AppLicenseKeyResourceImpl
 
 		_checkPermission();
 
+		ProductPurchase productPurchase =
+			_productPurchaseWebService.getProductPurchase(
+				appLicenseKey.getProductPurchaseKey());
+
 		String description = appLicenseKey.getDescription();
 
 		if (Validator.isNull(description)) {
@@ -145,6 +151,8 @@ public class AppLicenseKeyResourceImpl
 
 		LicenseKey licenseKey = _licenseKeyLocalService.addLicenseKey(
 			agentName, agentUID, appLicenseKey.getOrderId(),
+			productPurchase.getAccountKey(), productPurchase.getKey(),
+			productPurchase.getProductKey(),
 			appLicenseKey.getLicenseTypeAsString(),
 			appLicenseKey.getProductName(), appLicenseKey.getProductId(),
 			appLicenseKey.getProductVersion(), appLicenseKey.getOwner(), 0,
@@ -211,5 +219,8 @@ public class AppLicenseKeyResourceImpl
 
 	@Reference
 	private LicenseKeyLocalService _licenseKeyLocalService;
+
+	@Reference
+	private ProductPurchaseWebService _productPurchaseWebService;
 
 }

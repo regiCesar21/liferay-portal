@@ -183,7 +183,37 @@ public class LicenseKeyLocalServiceImpl extends LicenseKeyLocalServiceBaseImpl {
 	}
 
 	public LicenseKey addLicenseKey(
+			String userName, String userUuid, String licenseEntryType,
+			String productKey, String accountKey, String productPurchaseKey,
+			String productVersion, String name, String owner,
+			int maxClusterNodes, String sizing, String description,
+			String hostName, String ipAddresses, String macAddresses,
+			Date startDate, Date expirationDate, boolean complimentary,
+			boolean active)
+		throws Exception {
+
+		LicenseEntry licenseEntry = _licenseEntryLocalService.getLicenseEntry(
+			productKey, licenseEntryType);
+
+		validate(
+			licenseEntryType, productPurchaseKey, hostName, ipAddresses,
+			macAddresses, startDate, expirationDate);
+
+		Account account = _accountWebService.getAccount(accountKey);
+
+		return addLicenseKey(
+			userName, userUuid, licenseEntry,
+			_productWebService.getProduct(productKey), accountKey,
+			productPurchaseKey, account.getName(), productVersion, 0, name,
+			owner, maxClusterNodes, 0, 0, 0, 0, sizing, description,
+			new String[] {hostName}, new String[] {ipAddresses},
+			new String[] {macAddresses}, startDate, expirationDate,
+			StringPool.BLANK, complimentary, active);
+	}
+
+	public LicenseKey addLicenseKey(
 			String userName, String userUuid, String assetReceiptLicenseUuid,
+			String accountKey, String productPurchaseKey, String productKey,
 			String licenseEntryType, String productName, String productId,
 			String productVersion, String owner, long maxUsers,
 			String description, String hostName, String ipAddresses,
@@ -230,6 +260,9 @@ public class LicenseKeyLocalServiceImpl extends LicenseKeyLocalServiceBaseImpl {
 		licenseKey.setModifiedUserName(userName);
 		licenseKey.setModifiedDate(now);
 		licenseKey.setAssetReceiptLicenseUuid(assetReceiptLicenseUuid);
+		licenseKey.setAccountKey(accountKey);
+		licenseKey.setProductPurchaseKey(productPurchaseKey);
+		licenseKey.setProductKey(productKey);
 		licenseKey.setLicenseEntryType(licenseEntryType);
 		licenseKey.setLicenseVersion(licenseVersion);
 		licenseKey.setProductName(productName);
@@ -248,36 +281,9 @@ public class LicenseKeyLocalServiceImpl extends LicenseKeyLocalServiceBaseImpl {
 		licenseKey.setComplimentary(false);
 		licenseKey.setActive(true);
 
+		addProductConsumption(userName, userUuid, licenseKey);
+
 		return licenseKeyPersistence.update(licenseKey);
-	}
-
-	public LicenseKey addLicenseKey(
-			String userName, String userUuid, String licenseEntryType,
-			String productKey, String accountKey, String productPurchaseKey,
-			String productVersion, String name, String owner,
-			int maxClusterNodes, String sizing, String description,
-			String hostName, String ipAddresses, String macAddresses,
-			Date startDate, Date expirationDate, boolean complimentary,
-			boolean active)
-		throws Exception {
-
-		LicenseEntry licenseEntry = _licenseEntryLocalService.getLicenseEntry(
-			productKey, licenseEntryType);
-
-		validate(
-			licenseEntryType, productPurchaseKey, hostName, ipAddresses,
-			macAddresses, startDate, expirationDate);
-
-		Account account = _accountWebService.getAccount(accountKey);
-
-		return addLicenseKey(
-			userName, userUuid, licenseEntry,
-			_productWebService.getProduct(productKey), accountKey,
-			productPurchaseKey, account.getName(), productVersion, 0, name,
-			owner, maxClusterNodes, 0, 0, 0, 0, sizing, description,
-			new String[] {hostName}, new String[] {ipAddresses},
-			new String[] {macAddresses}, startDate, expirationDate,
-			StringPool.BLANK, complimentary, active);
 	}
 
 	public void addProductConsumption(
@@ -450,12 +456,14 @@ public class LicenseKeyLocalServiceImpl extends LicenseKeyLocalServiceBaseImpl {
 
 			return addLicenseKey(
 				userName, userUuid, licenseKey.getAssetReceiptLicenseUuid(),
-				licenseKey.getLicenseEntryType(), licenseKey.getProductName(),
-				licenseKey.getProductId(), licenseKey.getProductVersion(),
-				licenseKey.getOwner(), licenseKey.getMaxUsers(),
-				licenseKey.getDescription(), licenseKey.getHostName(),
-				licenseKey.getIpAddresses(), licenseKey.getMacAddresses(),
-				licenseKey.getServerId(), startDate, expirationDate);
+				licenseKey.getAccountKey(), licenseKey.getProductPurchaseKey(),
+				licenseKey.getProductKey(), licenseKey.getLicenseEntryType(),
+				licenseKey.getProductName(), licenseKey.getProductId(),
+				licenseKey.getProductVersion(), licenseKey.getOwner(),
+				licenseKey.getMaxUsers(), licenseKey.getDescription(),
+				licenseKey.getHostName(), licenseKey.getIpAddresses(),
+				licenseKey.getMacAddresses(), licenseKey.getServerId(),
+				startDate, expirationDate);
 		}
 
 		updateLicenseKey(

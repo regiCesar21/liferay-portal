@@ -21,6 +21,10 @@ components:
             description:
                 Represents a DXP App license key.
             properties:
+                accountKey:
+                    description:
+                        The key of the license key's account.
+                    type: string
                 active:
                     description:
                         If the license key is active or not.
@@ -101,9 +105,17 @@ components:
                     description:
                         The id of the product of the license key.
                     type: string
+                productKey:
+                    description:
+                        The key of the product of the license key.
+                    type: string
                 productName:
                     description:
                         The name of the product of the license key.
+                    type: string
+                productPurchaseKey:
+                    description:
+                        The key of the license key's product purchase.
                     type: string
                 productVersion:
                     description:
@@ -124,6 +136,8 @@ components:
                         The uuid of the user who created the license key.
                     readOnly: true
                     type: string
+            required:
+                - productPurchaseKey
             type: object
 info:
     description:
