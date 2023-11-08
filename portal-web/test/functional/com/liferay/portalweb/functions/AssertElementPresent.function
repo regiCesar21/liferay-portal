@@ -31,7 +31,7 @@ definition {
 
 		selenium.pause(2000);
 
-		AssertElementPresent.assertVisible();
+		AssertElementPresent.assertVisible(locator1 = ${locator1});
 
 		selenium.assertJavaScriptErrors("true");
 
