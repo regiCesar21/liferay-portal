@@ -97,7 +97,7 @@ definition {
 	macro assignMemberCP(userGroupName = null, userScreenName = null) {
 		Search.searchCP(searchTerm = ${userGroupName});
 
-		Pause(locator1 = 5000);
+		Pause(value1 = 5000);
 
 		var key_rowEntry = ${userGroupName};
 
@@ -121,7 +121,7 @@ definition {
 
 		Check(locator1 = "UserGroupsAssignUsers#USER_TABLE_CHECKBOX");
 
-		Pause(locator1 = 5000);
+		Pause(value1 = 5000);
 
 		SelectFrameTop();
 
@@ -140,7 +140,7 @@ definition {
 	macro deleteCP(userGroupName = null) {
 		Search.searchCP(searchTerm = ${userGroupName});
 
-		Pause(locator1 = 5000);
+		Pause(value1 = 5000);
 
 		var key_userGroupName = ${userGroupName};
 
@@ -163,7 +163,7 @@ definition {
 	macro deleteUserCP(userGroupName = null) {
 		Search.searchCP(searchTerm = ${userGroupName});
 
-		Pause(locator1 = 5000);
+		Pause(value1 = 5000);
 
 		var key_userGroupName = ${userGroupName};
 
@@ -186,7 +186,7 @@ definition {
 
 	@summary = "Default summary"
 	macro editCP(userGroupNameEdit = null) {
-		Pause(locator1 = 5000);
+		Pause(value1 = 5000);
 
 		LexiconEntry.gotoEllipsisMenuItem(menuItem = "Edit");
 
@@ -199,7 +199,7 @@ definition {
 	macro gotoActionsCmd(userGroupName = null) {
 		Search.searchCP(searchTerm = ${userGroupName});
 
-		Pause(locator1 = 5000);
+		Pause(value1 = 5000);
 
 		LexiconEntry.viewEntryName(rowEntry = ${userGroupName});
 	}
@@ -217,7 +217,7 @@ definition {
 	macro removeMemberCP(userGroupName = null, userScreenName = null) {
 		Search.searchCP(searchTerm = ${userGroupName});
 
-		Pause(locator1 = 5000);
+		Pause(value1 = 5000);
 
 		LexiconEntry.viewEntryName(rowEntry = ${userGroupName});
 
@@ -289,7 +289,7 @@ definition {
 	macro viewCP(userGroupName = null) {
 		Search.searchCP(searchTerm = ${userGroupName});
 
-		Pause(locator1 = 5000);
+		Pause(value1 = 5000);
 
 		var key_userGroupName = ${userGroupName};
 
@@ -319,7 +319,7 @@ definition {
 
 	@summary = "Default summary"
 	macro viewPG(userGroupName = null, siteName = null, portletName = null) {
-		Pause(locator1 = 5000);
+		Pause(value1 = 5000);
 
 		var key_userGroupName = ${userGroupName};
 
@@ -329,7 +329,7 @@ definition {
 			locator1 = "UserGroupsEditUserGroup#PUBLIC_PAGES_OPEN_PAGES",
 			value1 = "Open Pages");
 
-		SelectWindow(locator1 = "Home - ${userGroupName} - ${siteName}");
+		SelectWindow(value1 = "Home - ${userGroupName} - ${siteName}");
 
 		AssertTextEquals(
 			locator1 = "Home#SITE_NAME",

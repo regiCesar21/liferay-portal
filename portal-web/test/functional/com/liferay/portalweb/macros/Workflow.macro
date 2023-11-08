@@ -2,7 +2,7 @@ definition {
 
 	@summary = "Default summary"
 	macro _gotoPendingFilter() {
-		Pause(locator1 = 5000);
+		Pause(value1 = 5000);
 
 		Click(locator1 = "Dropdown#FILTER_AND_ORDER");
 
@@ -129,7 +129,7 @@ definition {
 
 		Workflow.confirmWorkflowAction();
 
-		Pause(locator1 = 1000);
+		Pause(value1 = 1000);
 
 		Workflow.viewCompletedTask(
 			ddlDataDefinitionName = ${ddlDataDefinitionName},
@@ -137,7 +137,7 @@ definition {
 			workflowAssetType = ${workflowAssetType},
 			workflowTask = ${workflowTask});
 
-		Pause(locator1 = 1000);
+		Pause(value1 = 1000);
 
 		if (isSet(workflowActivityComment)) {
 			Workflow.gotoCompletedFilter();
@@ -145,7 +145,7 @@ definition {
 			if (isSet(workflowOrder)) {
 				Click(locator1 = "MyWorkflowTasksTask#ORDER");
 
-				Pause(locator1 = 1000);
+				Pause(value1 = 1000);
 			}
 
 			Workflow._viewActivities(
@@ -172,7 +172,7 @@ definition {
 
 		Workflow.confirmWorkflowAction();
 
-		Pause(locator1 = 1000);
+		Pause(value1 = 1000);
 
 		Workflow.viewCompletedTask(
 			ddlDataDefinitionName = ${ddlDataDefinitionName},
@@ -193,13 +193,13 @@ definition {
 
 		Click(locator1 = "MyWorkflowTasks#DIALOG_BOX_ASSIGN_TO_SELECT");
 
-		Pause(locator1 = 1000);
+		Pause(value1 = 1000);
 
 		Click.clickNoMouseOver(
 			key_user = ${user},
 			locator1 = "MyWorkflowTasks#DIALOG_BOX_ASSIGN_TO_VALUE");
 
-		Pause(locator1 = 1000);
+		Pause(value1 = 1000);
 
 		if (isSet(comment)) {
 			Type(
@@ -435,7 +435,7 @@ definition {
 
 	@summary = "Default summary"
 	macro gotoCompletedFilter() {
-		Pause(locator1 = 5000);
+		Pause(value1 = 5000);
 
 		Click(locator1 = "Dropdown#FILTER_AND_ORDER");
 
@@ -576,7 +576,7 @@ definition {
 
 		Workflow.confirmWorkflowAction();
 
-		Pause(locator1 = 1000);
+		Pause(value1 = 1000);
 
 		Workflow.viewCompletedTask(
 			ddlDataDefinitionName = ${ddlDataDefinitionName},
@@ -603,7 +603,7 @@ definition {
 
 		Workflow.confirmWorkflowAction();
 
-		Pause(locator1 = 1000);
+		Pause(value1 = 1000);
 
 		Workflow.viewCompletedTask(
 			ddlDataDefinitionName = ${ddlDataDefinitionName},
@@ -849,7 +849,7 @@ definition {
 
 		Workflow.confirmWorkflowAction();
 
-		Pause(locator1 = 1000);
+		Pause(value1 = 1000);
 
 		Workflow.viewTaskAssignedToMyRoles(
 			ddlDataDefinitionName = ${ddlDataDefinitionName},

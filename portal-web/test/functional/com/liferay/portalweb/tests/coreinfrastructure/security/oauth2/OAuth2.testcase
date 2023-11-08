@@ -803,7 +803,7 @@ definition {
 
 		AntCommands.runCommand("build-test.xml", "deploy-dependency-jars -Dliferay.dependency.jars=com.liferay.oauth2.provider.sample.jar");
 
-		Pause(locator1 = 10000);
+		Pause(value1 = 10000);
 
 		LexiconEntry.gotoEntryMenuItem(
 			menuItem = "Edit",

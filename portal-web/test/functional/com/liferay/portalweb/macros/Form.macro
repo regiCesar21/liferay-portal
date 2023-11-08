@@ -163,11 +163,11 @@ definition {
 
 	@summary = "Default summary"
 	macro closeSidebar() {
-		Pause(locator1 = 1000);
+		Pause(value1 = 1000);
 
 		Click(locator1 = "Form#SIDEBAR_CLOSE");
 
-		Pause(locator1 = 1000);
+		Pause(value1 = 1000);
 
 		AssertElementNotPresent(locator1 = "Form#SIDEBAR_CLOSE");
 	}
@@ -274,7 +274,7 @@ definition {
 			fieldName = "dataSourceType",
 			radioOption = "From Data Provider");
 
-		Pause(locator1 = 2000);
+		Pause(value1 = 2000);
 
 		FormFields.selectSelectOption(
 			fieldName = "Choose a Data Provider",
@@ -480,7 +480,7 @@ definition {
 				value1 = "Advanced");
 		}
 
-		Pause(locator1 = 1000);
+		Pause(value1 = 1000);
 	}
 
 	@summary = "Default summary"
@@ -489,7 +489,7 @@ definition {
 			locator1 = "Form#SIDEBAR_AUTOCOMPLETE_TAB",
 			value1 = "Autocomplete");
 
-		Pause(locator1 = 1000);
+		Pause(value1 = 1000);
 	}
 
 	@summary = "Default summary"
@@ -505,7 +505,7 @@ definition {
 				value1 = "Basic");
 		}
 
-		Pause(locator1 = 1000);
+		Pause(value1 = 1000);
 	}
 
 	@summary = "Default summary"

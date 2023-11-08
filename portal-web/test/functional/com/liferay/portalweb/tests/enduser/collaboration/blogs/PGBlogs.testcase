@@ -83,7 +83,7 @@ definition {
 			entryContent = "Blogs Entry Content",
 			entryTitle = "Blogs Entry Title");
 
-		Pause(locator1 = 3000);
+		Pause(value1 = 3000);
 
 		Comments.addPG(entryComment = "Blogs Entry Comment");
 
@@ -241,7 +241,7 @@ definition {
 			entryContent = "Blogs Entry1 Content",
 			entryTitle = "Blogs Entry1 Title");
 
-		Pause(locator1 = 3000);
+		Pause(value1 = 3000);
 
 		Portlet.viewTitle(portletName = "Blogs");
 
@@ -1574,7 +1574,7 @@ definition {
 
 		Navigator.gotoPage(pageName = "Blogs Page");
 
-		Pause(locator1 = 3000);
+		Pause(value1 = 3000);
 
 		BlogsEntry.viewRSS(
 			entryContent = "Blogs Entry Content",
@@ -1810,7 +1810,7 @@ definition {
 
 		Button.clickPublish();
 
-		Pause(locator1 = 30000);
+		Pause(value1 = 30000);
 
 		Navigator.gotoPage(pageName = "Blogs Page");
 

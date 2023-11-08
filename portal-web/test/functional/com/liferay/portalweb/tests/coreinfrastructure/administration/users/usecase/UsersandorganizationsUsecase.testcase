@@ -747,7 +747,7 @@ definition {
 
 		Close.closeWindow(locator1 = "title=Welcome - ${siteName}");
 
-		SelectWindow(locator1 = "title=Users and Organizations - Control Panel - ${siteName}");
+		SelectWindow(value1 = "title=Users and Organizations - Control Panel - ${siteName}");
 
 		ProductMenu.gotoPortlet(
 			category = "Users",
@@ -792,7 +792,7 @@ definition {
 
 		Close.closeWindow(locator1 = "title=Welcome - ${siteName}");
 
-		SelectWindow(locator1 = "title=Users and Organizations - Control Panel - ${siteName}");
+		SelectWindow(value1 = "title=Users and Organizations - Control Panel - ${siteName}");
 
 		ProductMenu.gotoPortlet(
 			category = "Users",
@@ -805,7 +805,7 @@ definition {
 
 		Close.closeWindow(locator1 = "title=Welcome - ${siteName}");
 
-		SelectWindow(locator1 = "title=Users and Organizations - Control Panel - ${siteName}");
+		SelectWindow(value1 = "title=Users and Organizations - Control Panel - ${siteName}");
 
 		ProductMenu.gotoPortlet(
 			category = "Users",
@@ -818,7 +818,7 @@ definition {
 
 		Close.closeWindow(locator1 = "title=Welcome - ${siteName}");
 
-		SelectWindow(locator1 = "title=Users and Organizations - Control Panel - ${siteName}");
+		SelectWindow(value1 = "title=Users and Organizations - Control Panel - ${siteName}");
 	}
 
 	@priority = 5
@@ -1100,7 +1100,7 @@ definition {
 
 		Site.gotoSiteViaMySitesPG(siteName = "Organization Name 2");
 
-		SelectWindow(locator1 = "Home - Organization Name 2 - ${siteName}");
+		SelectWindow(value1 = "Home - Organization Name 2 - ${siteName}");
 
 		Page.viewSpecificPG(pageNameList = "Home,Wiki");
 

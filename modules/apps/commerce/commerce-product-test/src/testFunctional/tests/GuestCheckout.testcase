@@ -22,7 +22,7 @@ definition {
 
 		SearchAdministration.executeSearchActions(actionsDescription = "Reindex all search indexes.");
 
-		Pause(locator1 = 5000);
+		Pause(value1 = 5000);
 	}
 
 	tearDown {
@@ -120,7 +120,7 @@ definition {
 			productName = "U-Joint",
 			productQuantity = 1);
 
-		Pause(locator1 = 5000);
+		Pause(value1 = 5000);
 
 		CommerceNavigator.gotoMiniCart();
 
@@ -229,7 +229,7 @@ definition {
 			productName = "U-Joint",
 			productQuantity = 1);
 
-		Pause(locator1 = 5000);
+		Pause(value1 = 5000);
 
 		CommerceNavigator.gotoMiniCart();
 
@@ -254,7 +254,7 @@ definition {
 			productName = "U-Joint",
 			productQuantity = 5);
 
-		Pause(locator1 = 5000);
+		Pause(value1 = 5000);
 
 		CommerceNavigator.gotoMiniCart();
 
@@ -365,7 +365,7 @@ definition {
 			productName = "U-Joint",
 			productQuantity = 1);
 
-		Pause(locator1 = 5000);
+		Pause(value1 = 5000);
 
 		CommerceNavigator.gotoMiniCart();
 
@@ -390,7 +390,7 @@ definition {
 			productName = "Transmission Cooler Line Assembly",
 			productQuantity = 5);
 
-		Pause(locator1 = 5000);
+		Pause(value1 = 5000);
 
 		CommerceNavigator.gotoMiniCart();
 
@@ -468,7 +468,7 @@ definition {
 			productName = "U-Joint",
 			productQuantity = 1);
 
-		Pause(locator1 = 5000);
+		Pause(value1 = 5000);
 
 		CommerceNavigator.gotoMiniCart();
 
@@ -752,7 +752,7 @@ definition {
 			productName = "U-Joint",
 			productQuantity = 1);
 
-		Pause(locator1 = 5000);
+		Pause(value1 = 5000);
 
 		CommerceNavigator.gotoMiniCart();
 

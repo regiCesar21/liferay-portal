@@ -69,7 +69,7 @@ definition {
 
 		FormsAdminNavigator.gotoPublishCopyURLLink();
 
-		Pause(locator1 = 2000);
+		Pause(value1 = 2000);
 
 		var publishFormURL = selenium.getElementValue("Form#PUBLISH_FORM_PUBLIC_URL");
 
@@ -81,7 +81,7 @@ definition {
 
 		FormPortlet.submitLocalizedSuccessfully(buttonName = "Submit for Publication");
 
-		Pause(locator1 = 120000);
+		Pause(value1 = 120000);
 
 		Navigator.openSpecificURL(url = ${publishFormURL});
 

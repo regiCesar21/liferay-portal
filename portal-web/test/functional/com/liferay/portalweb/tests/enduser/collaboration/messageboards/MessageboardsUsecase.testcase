@@ -535,7 +535,7 @@ definition {
 			threadBody = "MB Thread Message Body",
 			threadSubject = "MB Thread Message Subject GMMB1");
 
-		Pause(locator1 = 15000);
+		Pause(value1 = 15000);
 
 		Gmail.login(
 			userEmailAddress = PropsUtil.get("email.address.3"),
@@ -553,7 +553,7 @@ definition {
 
 		Navigator.openSpecificURL(url = ${portalURL});
 
-		Pause(locator1 = 30000);
+		Pause(value1 = 30000);
 
 		Refresh();
 

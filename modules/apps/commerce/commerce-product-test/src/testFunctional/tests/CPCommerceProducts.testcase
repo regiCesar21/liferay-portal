@@ -18,7 +18,7 @@ definition {
 
 		SearchAdministration.executeSearchActions(actionsDescription = "Reindex all search indexes.");
 
-		Pause(locator1 = 5000);
+		Pause(value1 = 5000);
 	}
 
 	tearDown {
@@ -53,7 +53,7 @@ definition {
 
 		CommerceNavigator.gotoCommercePortletNavItem(navItem = "Options");
 
-		Pause(locator1 = 2000);
+		Pause(value1 = 2000);
 
 		CPCommerceCatalog.newOptionsEntry(
 			optionDescription = "Option Description",

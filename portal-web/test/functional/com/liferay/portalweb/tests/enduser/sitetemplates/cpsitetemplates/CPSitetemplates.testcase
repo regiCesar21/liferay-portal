@@ -218,7 +218,7 @@ definition {
 
 		Portlet.addPG(portletName = "Asset Publisher");
 
-		Close.closeAndSelectWindow(locator1 = "title=Site Templates - Control Panel - ${siteName}");
+		Close.closeAndSelectWindow(value1 = "title=Site Templates - Control Panel - ${siteName}");
 
 		Site.openSitesAdmin();
 

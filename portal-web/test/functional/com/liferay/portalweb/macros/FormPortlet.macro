@@ -62,7 +62,7 @@ definition {
 
 		FormPortlet.clickSubmit();
 
-		Pause(locator1 = 5000);
+		Pause(value1 = 5000);
 	}
 
 	@summary = "Default summary"
@@ -118,7 +118,7 @@ definition {
 
 		WaitForElementPresent(locator1 = "Button#ANY_ENABLED");
 
-		Pause(locator1 = 2500);
+		Pause(value1 = 2500);
 	}
 
 }

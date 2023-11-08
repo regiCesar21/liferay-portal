@@ -42,14 +42,14 @@ definition {
 
 		AssertVisible(locator1 = "TextInput#NAME");
 
-		Pause(locator1 = 1000);
+		Pause(value1 = 1000);
 
 		var browserType = PropsUtil.get("browser.type");
 
 		if (${browserType} == "internetexplorer") {
 			VerifyElementPresent(locator1 = "Message#SUCCESS_DISMISSIBLE");
 
-			Pause(locator1 = 10000);
+			Pause(value1 = 10000);
 		}
 		else {
 			Alert.closeMessage(messageType = "SUCCESS");
@@ -128,7 +128,7 @@ definition {
 
 		LexiconCard.viewCardPresent(card = ${sitePageType});
 
-		Pause(locator1 = 3000);
+		Pause(value1 = 3000);
 
 		LexiconCard.clickCardTitle(card = ${sitePageType});
 	}
@@ -166,7 +166,7 @@ definition {
 
 	@summary = "Default summary"
 	macro addPrivatePage(assertCheckboxMissing = null, sitePageType = null, siteTemplate = null, pageTemplateName = null, navigationMenus = null, pageName = null) {
-		Pause(locator1 = 3000);
+		Pause(value1 = 3000);
 
 		var key_breadcrumbName = "Pages";
 
@@ -207,7 +207,7 @@ definition {
 
 	@summary = "Default summary"
 	macro addPublicPage(assertCheckboxMissing = null, inheritChanges = null, pageTypeURL = null, sitePageType = null, pageTemplateName = null, vocabularyName = null, categoryName = null, navigationMenus = null, pageName = null, collectionName = null) {
-		Pause(locator1 = 3000);
+		Pause(value1 = 3000);
 
 		var key_breadcrumbName = "Pages";
 
@@ -261,7 +261,7 @@ definition {
 
 		AssertVisible(locator1 = "TextInput#NAME");
 
-		Pause(locator1 = 1000);
+		Pause(value1 = 1000);
 
 		Alert.closeMessage(messageType = "SUCCESS");
 

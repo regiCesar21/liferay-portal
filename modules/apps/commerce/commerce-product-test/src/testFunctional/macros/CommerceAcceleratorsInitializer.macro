@@ -20,7 +20,7 @@ definition {
 
 		Navigator.gotoNavTab(navTab = "Widgets");
 
-		Pause(locator1 = 5000);
+		Pause(value1 = 5000);
 
 		Type(
 			locator1 = "NavBar#APPLICATION_SEARCH_FIELD",
@@ -50,7 +50,7 @@ definition {
 			key_text = "Add Account",
 			locator1 = "Button#ANY");
 
-		Pause(locator1 = 2000);
+		Pause(value1 = 2000);
 
 		Type(
 			locator1 = "TextInput#NAME",

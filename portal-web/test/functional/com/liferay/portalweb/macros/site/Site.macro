@@ -377,7 +377,7 @@ definition {
 
 		SelectFrame(locator1 = "IFrame#DIALOG");
 
-		Pause(locator1 = 3000);
+		Pause(value1 = 3000);
 
 		if (isSet(userMiddleName)) {
 			LexiconCard.checkCardCheckbox(card = "${userFirstName} ${userMiddleName} ${userLastName}");
@@ -403,7 +403,7 @@ definition {
 
 		SelectFrame(locator1 = "IFrame#DIALOG");
 
-		Pause(locator1 = 3000);
+		Pause(value1 = 3000);
 
 		LexiconEntry.selectEntry(rowEntry = ${userGroupName});
 
@@ -776,7 +776,7 @@ definition {
 
 		Navigator.gotoNavItem(navItem = "Available Sites");
 
-		Pause(locator1 = 3000);
+		Pause(value1 = 3000);
 
 		if (${membershipType} == "Private") {
 			LexiconList.viewListEntryNotPresent(listEntry = ${siteName});
@@ -955,7 +955,7 @@ definition {
 			card = ${userScreenName},
 			item = "Remove Membership");
 
-		Confirm();
+		Confirm(value1 = "null");
 
 		Alert.viewSuccessMessage();
 	}
