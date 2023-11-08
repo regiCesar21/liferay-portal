@@ -25,7 +25,6 @@ import com.liferay.dynamic.data.mapping.service.DDMStructureLocalService;
 import com.liferay.dynamic.data.mapping.storage.DDMFormFieldValue;
 import com.liferay.dynamic.data.mapping.storage.DDMFormValues;
 import com.liferay.petra.string.StringPool;
-import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
@@ -52,37 +51,32 @@ import org.osgi.service.component.annotations.Reference;
 )
 public class AddFormInstanceRecordMVCCommandHelper {
 
-	public void updateRequiredFieldsAccordingToVisibility(
+	public void updateNonevaluableDDMFormFields(
 			ActionRequest actionRequest, DDMForm ddmForm,
 			DDMFormValues ddmFormValues, Locale locale)
 		throws Exception {
 
 		DDMFormEvaluatorEvaluateResponse ddmFormEvaluatorEvaluateResponse =
-			evaluate(actionRequest, ddmForm, ddmFormValues, locale);
+			_evaluate(actionRequest, ddmForm, ddmFormValues, locale);
 
-		Set<String> invisibleFields = getInvisibleFields(
+		Set<String> nonevaluableFieldNames = _getNonevaluableFieldNames(
 			ddmFormEvaluatorEvaluateResponse);
 
-		Set<String> fieldsFromDisabledPages = getFieldNamesFromDisabledPages(
-			ddmFormEvaluatorEvaluateResponse, getDDMFormLayout(actionRequest));
+		Set<String> fieldNamesFromDisabledPages =
+			_getFieldNamesFromDisabledPages(
+				_getDDMFormLayout(actionRequest),
+				ddmFormEvaluatorEvaluateResponse.getDisabledPagesIndexes());
 
-		invisibleFields.addAll(fieldsFromDisabledPages);
+		nonevaluableFieldNames.addAll(fieldNamesFromDisabledPages);
 
-		removeValue(ddmFormValues, invisibleFields);
-
-		removeDDMValidationExpression(
-			ddmForm.getDDMFormFields(), invisibleFields);
-
-		List<DDMFormField> requiredFields = getRequiredFields(ddmForm);
-
-		if (requiredFields.isEmpty() || invisibleFields.isEmpty()) {
-			return;
-		}
-
-		removeRequiredProperty(invisibleFields, requiredFields);
+		_removeDDMFormFieldValues(
+			ddmFormValues.getDDMFormFieldValuesMap(true),
+			nonevaluableFieldNames);
+		_updateNonevaluableDDMFormFields(
+			ddmForm.getDDMFormFieldsMap(true), nonevaluableFieldNames);
 	}
 
-	protected DDMFormEvaluatorEvaluateResponse evaluate(
+	private DDMFormEvaluatorEvaluateResponse _evaluate(
 			ActionRequest actionRequest, DDMForm ddmForm,
 			DDMFormValues ddmFormValues, Locale locale)
 		throws Exception {
@@ -101,33 +95,27 @@ public class AddFormInstanceRecordMVCCommandHelper {
 			).build());
 	}
 
-	protected DDMFormLayout getDDMFormLayout(ActionRequest actionRequest)
-		throws PortalException {
+	private DDMFormLayout _getDDMFormLayout(ActionRequest actionRequest)
+		throws Exception {
 
-		long formInstanceId = ParamUtil.getLong(
-			actionRequest, "formInstanceId");
-
-		DDMFormInstance formInstance = _ddmFormInstanceService.getFormInstance(
-			formInstanceId);
+		DDMFormInstance ddmFormInstance =
+			_ddmFormInstanceService.getFormInstance(
+				ParamUtil.getLong(actionRequest, "formInstanceId"));
 
 		DDMStructure ddmStructure = _ddmStructureLocalService.getStructure(
-			formInstance.getStructureId());
+			ddmFormInstance.getStructureId());
 
 		return ddmStructure.getDDMFormLayout();
 	}
 
-	protected Set<String> getFieldNamesFromDisabledPages(
-		DDMFormEvaluatorEvaluateResponse ddmFormEvaluatorEvaluateResponse,
-		DDMFormLayout ddmFormLayout) {
+	private Set<String> _getFieldNamesFromDisabledPages(
+		DDMFormLayout ddmFormLayout, Set<Integer> disabledPagesIndexes) {
 
-		Set<Integer> disabledPagesIndexes =
-			ddmFormEvaluatorEvaluateResponse.getDisabledPagesIndexes();
+		Stream<Integer> stream = disabledPagesIndexes.stream();
 
-		Stream<Integer> disabledPagesIndexesStream =
-			disabledPagesIndexes.stream();
-
-		return disabledPagesIndexesStream.map(
-			index -> getFieldNamesFromPage(index, ddmFormLayout)
+		return stream.map(
+			index -> _getFieldNamesFromPage(
+				ddmFormLayout.getDDMFormLayoutPage(index))
 		).flatMap(
 			field -> field.stream()
 		).collect(
@@ -135,18 +123,14 @@ public class AddFormInstanceRecordMVCCommandHelper {
 		);
 	}
 
-	protected Set<String> getFieldNamesFromPage(
-		int index, DDMFormLayout ddmFormLayout) {
-
-		DDMFormLayoutPage ddmFormLayoutPage =
-			ddmFormLayout.getDDMFormLayoutPage(index);
-
-		List<DDMFormLayoutRow> ddmFormLayoutRows =
-			ddmFormLayoutPage.getDDMFormLayoutRows();
+	private Set<String> _getFieldNamesFromPage(
+		DDMFormLayoutPage ddmFormLayoutPage) {
 
 		Set<String> fieldNames = new HashSet<>();
 
-		for (DDMFormLayoutRow ddmFormLayoutRow : ddmFormLayoutRows) {
+		for (DDMFormLayoutRow ddmFormLayoutRow :
+				ddmFormLayoutPage.getDDMFormLayoutRows()) {
+
 			for (DDMFormLayoutColumn ddmFormLayoutColumn :
 					ddmFormLayoutRow.getDDMFormLayoutColumns()) {
 
@@ -157,7 +141,7 @@ public class AddFormInstanceRecordMVCCommandHelper {
 		return fieldNames;
 	}
 
-	protected Set<String> getInvisibleFields(
+	private Set<String> _getNonevaluableFieldNames(
 		DDMFormEvaluatorEvaluateResponse ddmFormEvaluatorEvaluateResponse) {
 
 		Map<DDMFormEvaluatorFieldContextKey, Map<String, Object>>
@@ -174,97 +158,24 @@ public class AddFormInstanceRecordMVCCommandHelper {
 		return stream.filter(
 			result -> !MapUtil.getBoolean(result.getValue(), "visible", true)
 		).map(
-			result -> {
-				DDMFormEvaluatorFieldContextKey ddmFormFieldContextKey =
-					result.getKey();
-
-				return ddmFormFieldContextKey.getName();
-			}
+			result -> result.getKey()
+		).map(
+			DDMFormEvaluatorFieldContextKey::getName
 		).collect(
 			Collectors.toSet()
 		);
 	}
 
-	protected List<DDMFormField> getRequiredFields(DDMForm ddmForm) {
-		Map<String, DDMFormField> ddmFormFieldsMap =
-			ddmForm.getDDMFormFieldsMap(true);
-
-		Collection<DDMFormField> ddmFormFields = ddmFormFieldsMap.values();
-
-		Stream<DDMFormField> stream = ddmFormFields.stream();
-
-		return stream.filter(
-			ddmFormField -> ddmFormField.isRequired()
-		).collect(
-			Collectors.toList()
-		);
-	}
-
-	protected void removeDDMValidationExpression(DDMFormField ddmFormField) {
-		ddmFormField.setDDMFormFieldValidation(null);
-	}
-
-	protected void removeDDMValidationExpression(
-		List<DDMFormField> ddmFormFields, Set<String> invisibleFields) {
-
-		Stream<DDMFormField> stream = ddmFormFields.stream();
-
-		stream.filter(
-			ddmFormField -> invisibleFields.contains(ddmFormField.getName())
-		).forEach(
-			this::removeDDMValidationExpression
-		);
-	}
-
-	protected void removeRequiredProperty(DDMFormField ddmFormField) {
-		ddmFormField.setRequired(false);
-	}
-
-	protected void removeRequiredProperty(
-		Set<String> invisibleFields, List<DDMFormField> requiredFields) {
-
-		Stream<DDMFormField> stream = requiredFields.stream();
-
-		stream.filter(
-			field -> invisibleFields.contains(field.getName())
-		).forEach(
-			this::removeRequiredProperty
-		);
-	}
-
-	protected void removeValue(
-		DDMFormValues ddmFormValues, Set<String> invisibleFields) {
-
-		List<DDMFormFieldValue> ddmFormFieldValues =
-			ddmFormValues.getDDMFormFieldValues();
-
-		Stream<DDMFormFieldValue> stream = ddmFormFieldValues.stream();
-
-		stream.filter(
-			ddmFormFieldValue ->
-				invisibleFields.contains(ddmFormFieldValue.getName()) &&
-				(ddmFormFieldValue.getValue() != null)
-		).forEach(
-			ddmFormFieldValue -> {
-				Value value = ddmFormFieldValue.getValue();
-
-				removeValue(
-					value.getAvailableLocales(), ddmFormFieldValue,
-					value.getDefaultLocale());
-			}
-		);
-	}
-
-	protected void removeValue(
-		Set<Locale> availableLocales, DDMFormFieldValue ddmFormFieldValue,
-		Locale defaultLocale) {
-
+	private void _removeDDMFormFieldValue(DDMFormFieldValue ddmFormFieldValue) {
 		DDMFormField ddmFormField = ddmFormFieldValue.getDDMFormField();
 
 		if (ddmFormField.isLocalizable()) {
-			LocalizedValue localizedValue = new LocalizedValue(defaultLocale);
+			Value value = ddmFormFieldValue.getValue();
 
-			for (Locale availableLocale : availableLocales) {
+			LocalizedValue localizedValue = new LocalizedValue(
+				value.getDefaultLocale());
+
+			for (Locale availableLocale : value.getAvailableLocales()) {
 				localizedValue.addString(availableLocale, StringPool.BLANK);
 			}
 
@@ -273,6 +184,42 @@ public class AddFormInstanceRecordMVCCommandHelper {
 		else {
 			ddmFormFieldValue.setValue(new UnlocalizedValue(StringPool.BLANK));
 		}
+	}
+
+	private void _removeDDMFormFieldValues(
+		Map<String, List<DDMFormFieldValue>> ddmFormFieldValuesMap,
+		Set<String> nonevaluableFieldNames) {
+
+		Stream<String> stream = nonevaluableFieldNames.stream();
+
+		stream.map(
+			ddmFormFieldValuesMap::get
+		).flatMap(
+			List::stream
+		).filter(
+			ddmFormFieldValue -> ddmFormFieldValue.getValue() != null
+		).forEach(
+			this::_removeDDMFormFieldValue
+		);
+	}
+
+	private void _updateNonevaluableDDMFormFields(
+		Map<String, DDMFormField> ddmFormFieldsMap,
+		Set<String> nonevaluableFieldNames) {
+
+		Collection<DDMFormField> ddmFormFields = ddmFormFieldsMap.values();
+
+		Stream<DDMFormField> stream = ddmFormFields.stream();
+
+		stream.filter(
+			ddmFormField -> nonevaluableFieldNames.contains(
+				ddmFormField.getName())
+		).forEach(
+			ddmFormField -> {
+				ddmFormField.setDDMFormFieldValidation(null);
+				ddmFormField.setRequired(false);
+			}
+		);
 	}
 
 	@Reference
