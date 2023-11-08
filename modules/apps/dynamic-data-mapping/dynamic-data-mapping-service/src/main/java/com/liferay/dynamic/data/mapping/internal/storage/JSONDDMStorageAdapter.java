@@ -14,7 +14,9 @@ import com.liferay.dynamic.data.mapping.io.DDMFormValuesSerializerSerializeReque
 import com.liferay.dynamic.data.mapping.io.DDMFormValuesSerializerSerializeResponse;
 import com.liferay.dynamic.data.mapping.model.DDMContent;
 import com.liferay.dynamic.data.mapping.model.DDMForm;
+import com.liferay.dynamic.data.mapping.model.DDMFormField;
 import com.liferay.dynamic.data.mapping.service.DDMContentLocalService;
+import com.liferay.dynamic.data.mapping.storage.DDMFormFieldValue;
 import com.liferay.dynamic.data.mapping.storage.DDMFormValues;
 import com.liferay.dynamic.data.mapping.storage.DDMStorageAdapter;
 import com.liferay.dynamic.data.mapping.storage.DDMStorageAdapterDeleteRequest;
@@ -24,8 +26,13 @@ import com.liferay.dynamic.data.mapping.storage.DDMStorageAdapterGetResponse;
 import com.liferay.dynamic.data.mapping.storage.DDMStorageAdapterSaveRequest;
 import com.liferay.dynamic.data.mapping.storage.DDMStorageAdapterSaveResponse;
 import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.StringUtil;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
+import java.util.Map;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -163,8 +170,20 @@ public class JSONDDMStorageAdapter implements DDMStorageAdapter {
 
 			ddmContent.setModifiedDate(new Date());
 
-			ddmContent.setData(
-				serialize(ddmStorageAdapterSaveRequest.getDDMFormValues()));
+			DDMFormValues newDDMFormValues =
+				ddmStorageAdapterSaveRequest.getDDMFormValues();
+
+			DDMForm ddmForm = newDDMFormValues.getDDMForm();
+
+			DDMFormValues oldDDMFormValues = deserialize(
+				ddmContent.getData(), ddmForm);
+
+			_persistReadOnlyValues(
+				ddmForm.getDDMFormFieldsMap(true),
+				newDDMFormValues.getDDMFormFieldValues(),
+				oldDDMFormValues.getDDMFormFieldValues());
+
+			ddmContent.setData(serialize(newDDMFormValues));
 
 			ddmContentLocalService.updateContent(
 				ddmContent.getPrimaryKey(), ddmContent.getName(),
@@ -190,5 +209,53 @@ public class JSONDDMStorageAdapter implements DDMStorageAdapter {
 
 	@Reference(target = "(ddm.form.values.serializer.type=json)")
 	protected DDMFormValuesSerializer jsonDDMFormValuesSerializer;
+
+	private void _persistReadOnlyValues(
+		Map<String, DDMFormField> ddmFormFieldsMap,
+		List<DDMFormFieldValue> newDDMFormFieldValues,
+		List<DDMFormFieldValue> oldDDMFormFieldValues) {
+
+		for (DDMFormFieldValue newDDMFormFieldValue :
+				new ArrayList<>(newDDMFormFieldValues)) {
+
+			for (DDMFormFieldValue oldDDMFormFieldValue :
+					new ArrayList<>(oldDDMFormFieldValues)) {
+
+				if (!StringUtil.equals(
+						newDDMFormFieldValue.getName(),
+						oldDDMFormFieldValue.getName())) {
+
+					continue;
+				}
+
+				if (StringUtil.equals(
+						newDDMFormFieldValue.getInstanceId(),
+						oldDDMFormFieldValue.getInstanceId())) {
+
+					_persistReadOnlyValues(
+						ddmFormFieldsMap,
+						newDDMFormFieldValue.getNestedDDMFormFieldValues(),
+						oldDDMFormFieldValue.getNestedDDMFormFieldValues());
+				}
+
+				DDMFormField ddmFormField = ddmFormFieldsMap.get(
+					newDDMFormFieldValue.getName());
+
+				if ((ddmFormField == null) ||
+					!GetterUtil.getBoolean(
+						ddmFormField.getProperty("persistReadOnlyValue"))) {
+
+					continue;
+				}
+
+				if (newDDMFormFieldValues.contains(newDDMFormFieldValue)) {
+					newDDMFormFieldValues.remove(newDDMFormFieldValue);
+				}
+
+				newDDMFormFieldValues.add(oldDDMFormFieldValue);
+				oldDDMFormFieldValues.remove(oldDDMFormFieldValue);
+			}
+		}
+	}
 
 }

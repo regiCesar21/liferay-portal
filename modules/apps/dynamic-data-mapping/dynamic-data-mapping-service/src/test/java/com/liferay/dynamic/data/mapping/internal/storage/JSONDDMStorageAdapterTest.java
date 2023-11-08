@@ -261,6 +261,27 @@ public class JSONDDMStorageAdapterTest extends PowerMockito {
 
 		DDMFormValues ddmFormValues = mock(DDMFormValues.class);
 
+		DDMForm ddmForm = mock(DDMForm.class);
+
+		when(
+			ddmFormValues.getDDMForm()
+		).thenReturn(
+			ddmForm
+		);
+
+		DDMFormValuesDeserializerDeserializeResponse
+			ddmFormValuesDeserializerDeserializeResponse =
+				DDMFormValuesDeserializerDeserializeResponse.Builder.newBuilder(
+					ddmFormValues
+				).build();
+
+		when(
+			_ddmFormValuesDeserializer.deserialize(
+				Mockito.any(DDMFormValuesDeserializerDeserializeRequest.class))
+		).thenReturn(
+			ddmFormValuesDeserializerDeserializeResponse
+		);
+
 		DDMFormValuesSerializerSerializeResponse
 			ddmFormValuesSerializerSerializeResponse =
 				DDMFormValuesSerializerSerializeResponse.Builder.newBuilder(
