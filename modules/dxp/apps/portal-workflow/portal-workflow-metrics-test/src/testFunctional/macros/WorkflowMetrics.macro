@@ -1414,7 +1414,7 @@ definition {
 
 			// Pausing 5 seconds due to reasons here. See LRQA-53650
 
-			Pause(locator1 = 5000);
+			Pause(value1 = 5000);
 
 			WorkflowMetrics.goToWorkflowProcessMetrics(workflowProcessName = "Single Approver");
 
@@ -1432,7 +1432,7 @@ definition {
 
 			// Pausing 5 seconds due to reasons here. See LRQA-53650
 
-			Pause(locator1 = 5000);
+			Pause(value1 = 5000);
 
 			WorkflowMetrics.goToWorkflowProcessMetrics(workflowProcessName = "Single Approver");
 		}
@@ -1452,7 +1452,7 @@ definition {
 
 			// Pausing 5 seconds due to reasons here. See LRQA-53650
 
-			Pause(locator1 = 5000);
+			Pause(value1 = 5000);
 
 			WorkflowMetrics.goToWorkflowProcessMetrics(workflowProcessName = "Single Approver");
 		}

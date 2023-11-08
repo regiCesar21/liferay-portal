@@ -19,7 +19,7 @@ definition {
 
 		MessageboardsCategory.gotoPG(categoryName = ${categoryName});
 
-		Pause(locator = 3000);
+		Pause(value = 3000);
 
 		var categoryId = JSONMBMessage.getCategoryId();
 
@@ -47,7 +47,7 @@ definition {
 			MessageboardsCategory.gotoPG(categoryName = ${subCategoryName});
 		}
 
-		Pause(locator = 3000);
+		Pause(value = 3000);
 
 		var categoryId = JSONMBMessage.getCategoryId();
 
@@ -261,13 +261,13 @@ definition {
 	macro configureFilter(filterBy = null) {
 		Click(locator1 = "Questions#QUESTIONS_SELECT_FILTER");
 
-		Pause(locator1 = 1000);
+		Pause(value1 = 1000);
 
 		Click.clickNoMouseOver(
 			key_filter = ${filterBy},
 			locator1 = "Questions#QUESTIONS_SELECT_FILTER_VALUE");
 
-		Pause(locator1 = 1000);
+		Pause(value1 = 1000);
 	}
 
 	@summary = "Default summary"
@@ -346,7 +346,7 @@ definition {
 	macro configureTagsFilter(filterBy = null) {
 		Click(locator1 = "Questions#QUESTIONS_TAGS_SELECT_FILTER");
 
-		Pause(locator1 = 1000);
+		Pause(value1 = 1000);
 
 		Click.clickNoMouseOver(
 			key_filter = ${filterBy},
@@ -385,7 +385,7 @@ definition {
 
 		AssertElementPresent(locator1 = "Questions#QUESTIONS_HOME_ICON");
 
-		Pause(locator1 = 3000);
+		Pause(value1 = 3000);
 
 		AssertVisible(
 			key_categoryTitle = ${categoryName},

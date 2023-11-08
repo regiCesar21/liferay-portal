@@ -4,7 +4,7 @@ definition {
 	macro addComment(fragmentName = null, mentionsUserScreenName = null, fragmentClass = null, fragmentComment = null, content = null) {
 		PageEditor.gotoTab(tabName = "Comments");
 
-		Pause(locator1 = 3000);
+		Pause(value1 = 3000);
 
 		if (IsElementNotPresent(key_fragmentName = ${fragmentName}, locator1 = "PageEditor#FRAGMENT_SIDEBAR_COMMENT_SECTION_NAME")) {
 			Click(
@@ -153,7 +153,7 @@ definition {
 					value1 = ${portletName});
 			}
 
-			Pause(locator1 = 5000);
+			Pause(value1 = 5000);
 
 			PageEditor.waitForAutoSave();
 
@@ -216,7 +216,7 @@ definition {
 				locator2 = "PageEditor#CONTAINER_CONTAINER",
 				value1 = ${portletName});
 
-			Pause(locator1 = 5000);
+			Pause(value1 = 5000);
 
 			PageEditor.waitForAutoSave();
 
@@ -278,7 +278,7 @@ definition {
 				locator2 = "PageEditor#FRAGMENT_WITH_DROP_TARGET",
 				value1 = ${portletName});
 
-			Pause(locator1 = 5000);
+			Pause(value1 = 5000);
 
 			PageEditor.waitForAutoSave();
 
@@ -556,7 +556,7 @@ definition {
 				value1 = ${portletName});
 		}
 
-		Pause(locator1 = 5000);
+		Pause(value1 = 5000);
 
 		AssertElementPresent(
 			key_fragmentName = ${portletName},
@@ -692,7 +692,7 @@ definition {
 				locator1 = "Select#GENERIC_SELECT_FIELD",
 				value1 = ${alignment});
 
-			Pause(locator1 = 3000);
+			Pause(value1 = 3000);
 		}
 
 		if (isSet(backgroundColor)) {
@@ -700,7 +700,7 @@ definition {
 				colorSwatchItem = ${backgroundColor},
 				fieldLabel = "Background Color");
 
-			Pause(locator1 = 3000);
+			Pause(value1 = 3000);
 		}
 
 		if (isSet(borderColor)) {
@@ -708,7 +708,7 @@ definition {
 				colorSwatchItem = ${borderColor},
 				fieldLabel = "Border Color");
 
-			Pause(locator1 = 3000);
+			Pause(value1 = 3000);
 		}
 
 		if (isSet(borderRadius)) {
@@ -717,7 +717,7 @@ definition {
 				locator1 = "Select#GENERIC_SELECT_FIELD",
 				value1 = ${borderRadius});
 
-			Pause(locator1 = 3000);
+			Pause(value1 = 3000);
 		}
 
 		if (isSet(bottomSpacing)) {
@@ -726,7 +726,7 @@ definition {
 				locator1 = "Select#GENERIC_SELECT_FIELD",
 				value1 = ${bottomSpacing});
 
-			Pause(locator1 = 3000);
+			Pause(value1 = 3000);
 		}
 
 		if (isSet(boxShadow)) {
@@ -735,7 +735,7 @@ definition {
 				locator1 = "Select#GENERIC_SELECT_FIELD",
 				value1 = ${boxShadow});
 
-			Pause(locator1 = 3000);
+			Pause(value1 = 3000);
 		}
 
 		if (isSet(headingLevel)) {
@@ -744,7 +744,7 @@ definition {
 				locator1 = "Select#GENERIC_SELECT_FIELD",
 				value1 = ${headingLevel});
 
-			Pause(locator1 = 3000);
+			Pause(value1 = 3000);
 		}
 
 		if (isSet(height)) {
@@ -753,7 +753,7 @@ definition {
 				locator1 = "PageEditor#CUSTOM_STYLES_SELECT_FIELD",
 				value1 = ${height});
 
-			Pause(locator1 = 3000);
+			Pause(value1 = 3000);
 		}
 
 		if (isSet(imageSize)) {
@@ -762,7 +762,7 @@ definition {
 				locator1 = "Select#GENERIC_SELECT_FIELD",
 				value1 = ${imageSize});
 
-			Pause(locator1 = 3000);
+			Pause(value1 = 3000);
 		}
 
 		if (isSet(marginBottom)) {
@@ -772,7 +772,7 @@ definition {
 				locator1 = "Select#BORDER_BOTTOM_SELECT_FIELD",
 				value1 = ${marginBottom});
 
-			Pause(locator1 = 3000);
+			Pause(value1 = 3000);
 		}
 
 		if (isSet(marginLeft)) {
@@ -782,7 +782,7 @@ definition {
 				locator1 = "Select#BORDER_BOTTOM_SELECT_FIELD",
 				value1 = ${marginLeft});
 
-			Pause(locator1 = 3000);
+			Pause(value1 = 3000);
 		}
 
 		if (isSet(marginRight)) {
@@ -792,7 +792,7 @@ definition {
 				locator1 = "Select#BORDER_BOTTOM_SELECT_FIELD",
 				value1 = ${marginRight});
 
-			Pause(locator1 = 3000);
+			Pause(value1 = 3000);
 		}
 
 		if (isSet(marginTop)) {
@@ -802,7 +802,7 @@ definition {
 				locator1 = "Select#BORDER_BOTTOM_SELECT_FIELD",
 				value1 = ${marginTop});
 
-			Pause(locator1 = 3000);
+			Pause(value1 = 3000);
 		}
 
 		if (isSet(numberOfTabs)) {
@@ -828,7 +828,7 @@ definition {
 				locator1 = "Select#BORDER_BOTTOM_SELECT_FIELD",
 				value1 = ${paddingBottom});
 
-			Pause(locator1 = 3000);
+			Pause(value1 = 3000);
 		}
 
 		if (isSet(paddingLeft)) {
@@ -838,7 +838,7 @@ definition {
 				locator1 = "Select#BORDER_BOTTOM_SELECT_FIELD",
 				value1 = ${paddingLeft});
 
-			Pause(locator1 = 3000);
+			Pause(value1 = 3000);
 		}
 
 		if (isSet(paddingRight)) {
@@ -848,7 +848,7 @@ definition {
 				locator1 = "Select#BORDER_BOTTOM_SELECT_FIELD",
 				value1 = ${paddingRight});
 
-			Pause(locator1 = 3000);
+			Pause(value1 = 3000);
 		}
 
 		if (isSet(paddingTop)) {
@@ -858,7 +858,7 @@ definition {
 				locator1 = "Select#BORDER_BOTTOM_SELECT_FIELD",
 				value1 = ${paddingTop});
 
-			Pause(locator1 = 3000);
+			Pause(value1 = 3000);
 		}
 
 		if (isSet(separatorColor)) {
@@ -867,7 +867,7 @@ definition {
 				key_paletteItem = ${separatorColor},
 				locator1 = "Button#BORDER_BOTTOM_PALETTE_ITEM");
 
-			Pause(locator1 = 3000);
+			Pause(value1 = 3000);
 		}
 
 		if (isSet(size)) {
@@ -876,7 +876,7 @@ definition {
 				locator1 = "Select#GENERIC_SELECT_FIELD",
 				value1 = ${size});
 
-			Pause(locator1 = 3000);
+			Pause(value1 = 3000);
 		}
 
 		if (isSet(textColor)) {
@@ -884,7 +884,7 @@ definition {
 				colorSwatchItem = ${textColor},
 				fieldLabel = "Text Color");
 
-			Pause(locator1 = 3000);
+			Pause(value1 = 3000);
 		}
 
 		if (isSet(type)) {
@@ -893,7 +893,7 @@ definition {
 				locator1 = "Select#GENERIC_SELECT_FIELD",
 				value1 = ${type});
 
-			Pause(locator1 = 3000);
+			Pause(value1 = 3000);
 		}
 
 		PageEditor.waitForAutoSave();
@@ -1008,7 +1008,7 @@ definition {
 				locator1 = "Select#GENERIC_SELECT_FIELD",
 				value1 = ${layout});
 
-			Pause(locator1 = 3000);
+			Pause(value1 = 3000);
 
 			AssertSelectedLabel(
 				key_fieldLabel = "Layout",
@@ -1028,7 +1028,7 @@ definition {
 				locator1 = "Select#GENERIC_SELECT_FIELD",
 				value1 = ${listStyle});
 
-			Pause(locator1 = 3000);
+			Pause(value1 = 3000);
 
 			AssertSelectedLabel(
 				key_fieldLabel = "List Style",
@@ -1041,7 +1041,7 @@ definition {
 					locator1 = "Select#GENERIC_SELECT_FIELD",
 					value1 = ${listItemStyle});
 
-				Pause(locator1 = 3000);
+				Pause(value1 = 3000);
 
 				AssertSelectedLabel(
 					key_fieldLabel = "List Item Style",
@@ -1103,7 +1103,7 @@ definition {
 				locator1 = "Select#GENERIC_SELECT_FIELD",
 				value1 = ${templateOption});
 
-			Pause(locator1 = 3000);
+			Pause(value1 = 3000);
 
 			AssertSelectedLabel(
 				key_fieldLabel = "Template",
@@ -1297,7 +1297,7 @@ definition {
 				locator1 = "TextInput#FILE",
 				value1 = ${fileName});
 
-			Pause(locator1 = 3000);
+			Pause(value1 = 3000);
 
 			Button.clickAdd();
 		}
@@ -1307,13 +1307,13 @@ definition {
 		PageEditor.waitForAutoSave();
 
 		if (isSet(imageDescription)) {
-			Pause(locator1 = 3000);
+			Pause(value1 = 3000);
 
 			Type(
 				locator1 = "TextInput#IMAGE_DESCRIPTION",
 				value1 = ${imageDescription});
 
-			Pause(locator1 = 3000);
+			Pause(value1 = 3000);
 
 			AssertTextEquals.assertValue(
 				locator1 = "TextInput#IMAGE_DESCRIPTION",
@@ -1390,7 +1390,7 @@ definition {
 					colorSwatchItem = ${backgroundColor},
 					fieldLabel = "Background Color");
 
-				Pause(locator1 = 3000);
+				Pause(value1 = 3000);
 			}
 
 			if (isSet(backgroundImage)) {
@@ -1452,7 +1452,7 @@ definition {
 					SelectFrame(value1 = "relative=top");
 				}
 
-				Pause(locator1 = 3000);
+				Pause(value1 = 3000);
 			}
 
 			if (isSet(borderColor)) {
@@ -1460,7 +1460,7 @@ definition {
 					colorSwatchItem = ${borderColor},
 					fieldLabel = "Border Color");
 
-				Pause(locator1 = 3000);
+				Pause(value1 = 3000);
 			}
 
 			if (isSet(borderRadius)) {
@@ -1469,7 +1469,7 @@ definition {
 					locator1 = "Select#GENERIC_SELECT_FIELD",
 					value1 = ${borderRadius});
 
-				Pause(locator1 = 3000);
+				Pause(value1 = 3000);
 			}
 
 			if (isSet(borderWidth)) {
@@ -1487,7 +1487,7 @@ definition {
 					key_sidebarButton = "Selection",
 					locator1 = "PageEditor#FRAGMENT_SIDEBAR_TITLE");
 
-				Pause(locator1 = 3000);
+				Pause(value1 = 3000);
 			}
 
 			if (isSet(boxShadow)) {
@@ -1496,7 +1496,7 @@ definition {
 					locator1 = "Select#GENERIC_SELECT_FIELD",
 					value1 = ${boxShadow});
 
-				Pause(locator1 = 3000);
+				Pause(value1 = 3000);
 			}
 
 			if (isSet(containerWidth)) {
@@ -1505,7 +1505,7 @@ definition {
 					locator1 = "Select#GENERIC_SELECT_FIELD",
 					value1 = ${containerWidth});
 
-				Pause(locator1 = 3000);
+				Pause(value1 = 3000);
 			}
 
 			if (isSet(contentDisplay)) {
@@ -1514,7 +1514,7 @@ definition {
 					locator1 = "Select#GENERIC_SELECT_FIELD",
 					value1 = ${contentDisplay});
 
-				Pause(locator1 = 3000);
+				Pause(value1 = 3000);
 
 				if (${contentDisplay} == "Flex") {
 					if (isSet(horizontalAlign)) {
@@ -1523,7 +1523,7 @@ definition {
 							locator1 = "Select#GENERIC_SELECT_FIELD",
 							value1 = ${horizontalAlign});
 
-						Pause(locator1 = 3000);
+						Pause(value1 = 3000);
 					}
 
 					if (isSet(verticalAlign)) {
@@ -1532,7 +1532,7 @@ definition {
 							locator1 = "Select#GENERIC_SELECT_FIELD",
 							value1 = ${verticalAlign});
 
-						Pause(locator1 = 3000);
+						Pause(value1 = 3000);
 					}
 				}
 			}
@@ -1544,7 +1544,7 @@ definition {
 					locator1 = "Select#BORDER_BOTTOM_SELECT_FIELD",
 					value1 = ${marginBottom});
 
-				Pause(locator1 = 3000);
+				Pause(value1 = 3000);
 			}
 
 			if (isSet(marginLeft)) {
@@ -1554,7 +1554,7 @@ definition {
 					locator1 = "Select#BORDER_BOTTOM_SELECT_FIELD",
 					value1 = ${marginLeft});
 
-				Pause(locator1 = 3000);
+				Pause(value1 = 3000);
 			}
 
 			if (isSet(marginRight)) {
@@ -1564,7 +1564,7 @@ definition {
 					locator1 = "Select#BORDER_BOTTOM_SELECT_FIELD",
 					value1 = ${marginRight});
 
-				Pause(locator1 = 3000);
+				Pause(value1 = 3000);
 			}
 
 			if (isSet(marginTop)) {
@@ -1574,7 +1574,7 @@ definition {
 					locator1 = "Select#BORDER_BOTTOM_SELECT_FIELD",
 					value1 = ${marginTop});
 
-				Pause(locator1 = 3000);
+				Pause(value1 = 3000);
 			}
 
 			if (isSet(opacity)) {
@@ -1592,7 +1592,7 @@ definition {
 					key_sidebarButton = "Selection",
 					locator1 = "PageEditor#FRAGMENT_SIDEBAR_TITLE");
 
-				Pause(locator1 = 3000);
+				Pause(value1 = 3000);
 			}
 
 			if (isSet(paddingBottom)) {
@@ -1602,7 +1602,7 @@ definition {
 					locator1 = "Select#BORDER_BOTTOM_SELECT_FIELD",
 					value1 = ${paddingBottom});
 
-				Pause(locator1 = 3000);
+				Pause(value1 = 3000);
 			}
 
 			if (isSet(paddingLeft)) {
@@ -1612,7 +1612,7 @@ definition {
 					locator1 = "Select#BORDER_BOTTOM_SELECT_FIELD",
 					value1 = ${paddingLeft});
 
-				Pause(locator1 = 3000);
+				Pause(value1 = 3000);
 			}
 
 			if (isSet(paddingRight)) {
@@ -1622,7 +1622,7 @@ definition {
 					locator1 = "Select#BORDER_BOTTOM_SELECT_FIELD",
 					value1 = ${paddingRight});
 
-				Pause(locator1 = 3000);
+				Pause(value1 = 3000);
 			}
 
 			if (isSet(paddingTop)) {
@@ -1632,7 +1632,7 @@ definition {
 					locator1 = "Select#BORDER_BOTTOM_SELECT_FIELD",
 					value1 = ${paddingTop});
 
-				Pause(locator1 = 3000);
+				Pause(value1 = 3000);
 			}
 		}
 
@@ -1648,7 +1648,7 @@ definition {
 					locator1 = "Select#GENERIC_SELECT_FIELD",
 					value1 = ${link});
 
-				Pause(locator1 = 3000);
+				Pause(value1 = 3000);
 
 				PageEditorMapping.mapEditableFieldToAsset(
 					entryTitle = ${entryTitle},
@@ -1682,7 +1682,7 @@ definition {
 					locator1 = "Select#GENERIC_SELECT_FIELD",
 					value1 = ${target});
 
-				Pause(locator1 = 3000);
+				Pause(value1 = 3000);
 			}
 		}
 
@@ -1712,7 +1712,7 @@ definition {
 					locator1 = "Select#GENERIC_SELECT_FIELD",
 					value1 = ${columnCount});
 
-				Pause(locator1 = 3000);
+				Pause(value1 = 3000);
 			}
 
 			if (${spaceBetweenColumns} == "true") {
@@ -1743,7 +1743,7 @@ definition {
 					locator1 = "Select#GENERIC_SELECT_FIELD",
 					value1 = ${layout});
 
-				Pause(locator1 = 3000);
+				Pause(value1 = 3000);
 			}
 
 			if (isSet(verticalAlignment)) {
@@ -1752,7 +1752,7 @@ definition {
 					locator1 = "Select#GENERIC_SELECT_FIELD",
 					value1 = ${verticalAlignment});
 
-				Pause(locator1 = 3000);
+				Pause(value1 = 3000);
 			}
 
 			if (${inverseOrder} == "true") {
@@ -1762,7 +1762,7 @@ definition {
 						locator1 = "Checkbox#CHECKBOX_LABEL");
 				}
 
-				Pause(locator1 = 3000);
+				Pause(value1 = 3000);
 			}
 
 			if (${inverseOrder} == "false") {
@@ -1772,7 +1772,7 @@ definition {
 						locator1 = "Checkbox#CHECKBOX_LABEL");
 				}
 
-				Pause(locator1 = 3000);
+				Pause(value1 = 3000);
 			}
 		}
 
@@ -1823,7 +1823,7 @@ definition {
 
 		Click(locator1 = "Fragment#FRAGMENT_COMMENT_ICON");
 
-		Pause(locator1 = 3000);
+		Pause(value1 = 3000);
 
 		if (IsElementNotPresent(locator1 = "PageEditor#FRAGMENT_SIDEBAR_COMMENT_SECTION_NAME")) {
 			Click(
@@ -1948,7 +1948,7 @@ definition {
 
 	@summary = "Default summary"
 	macro gotoTab(tabName = null) {
-		Pause(locator1 = 3000);
+		Pause(value1 = 3000);
 
 		if (IsElementNotPresent(key_sidebarButton = ${tabName}, locator1 = "PageEditor#FRAGMENT_SIDEBAR_TITLE")) {
 			Click.clickNoMouseOver(
@@ -2075,7 +2075,7 @@ definition {
 			locator1 = "PageEditor#CONFIGURATION_PANEL_HANDLE",
 			value1 = ${position});
 
-		Pause(locator1 = 3000);
+		Pause(value1 = 3000);
 
 		var updatedHeight = selenium.getElementHeight("PageEditor#CONFIGURATION_PANEL_CONFIGURATION");
 
@@ -2726,7 +2726,7 @@ definition {
 
 	@summary = "Default summary"
 	macro waitForAutoSave() {
-		Pause(locator1 = 1000);
+		Pause(value1 = 1000);
 
 		AssertTextEquals.assertPartialText(
 			locator1 = "PageEditor#AUTOSAVE_MESSAGE",

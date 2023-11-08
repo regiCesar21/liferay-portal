@@ -13,7 +13,7 @@ definition {
 			key_publicationName = ${publicationName},
 			locator1 = "Publications#PUBLISHED_PUBLICATION_NAME");
 
-		Pause(locator1 = 1000);
+		Pause(value1 = 1000);
 
 		var key_changeCategory = ${changeCategory};
 		var key_changeTitle = ${changeTitle};
@@ -84,7 +84,7 @@ definition {
 
 		Button.click(button = "Create");
 
-		Pause(locator1 = 5000);
+		Pause(value1 = 5000);
 	}
 
 	@summary = "Default summary"
@@ -148,7 +148,7 @@ definition {
 			MenuItem.click(menuItem = "Discard");
 		}
 
-		Pause(locator1 = 3000);
+		Pause(value1 = 3000);
 
 		AssertElementPresent(locator1 = "Publications#DISCARDED_CHANGES_TITLE");
 
@@ -168,7 +168,7 @@ definition {
 
 	@summary = "Default summary"
 	macro enablePublications() {
-		Pause(locator1 = 2000);
+		Pause(value1 = 2000);
 
 		Check.checkToggleSwitch(locator1 = "PublicationsSettings#PUBLICATIONS_TOGGLE_SWITCH");
 
@@ -259,7 +259,7 @@ definition {
 
 		MenuItem.click(menuItem = "Review Changes");
 
-		Pause(locator1 = 3000);
+		Pause(value1 = 3000);
 	}
 
 	@summary = "Default summary"
@@ -284,7 +284,7 @@ definition {
 			key_entryTitle = ${entryTitle},
 			locator1 = "Publications#CONFLICTING_CHANGES_CONTENT_LINK");
 
-		Pause(locator1 = 1000);
+		Pause(value1 = 1000);
 
 		AssertElementPresent(
 			key_iframeTitle = ${entryTitle},
@@ -397,7 +397,7 @@ definition {
 
 			// Workaround LPS-123416
 
-			Pause(locator1 = 1000);
+			Pause(value1 = 1000);
 
 			Click.mouseOverClick(locator1 = "Publications#DELETE_THE_ENTERED_TIME_BUTTON");
 		}

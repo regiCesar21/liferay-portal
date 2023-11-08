@@ -44,7 +44,7 @@ definition {
 			menuItem = "Convert to content page...",
 			pageName = "Test Page Name");
 
-		Pause(locator1 = 3000);
+		Pause(value1 = 3000);
 
 		PageEditor.assertFragmentSidebarLoaded();
 
@@ -254,7 +254,7 @@ definition {
 			menuItem = "Convert to content page...",
 			pageName = "Test Page Name");
 
-		Pause(locator1 = 3000);
+		Pause(value1 = 3000);
 
 		Button.clickPublish();
 

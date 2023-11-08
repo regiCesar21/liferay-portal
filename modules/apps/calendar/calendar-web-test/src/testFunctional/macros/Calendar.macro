@@ -41,7 +41,7 @@ definition {
 			value1 = ${menuListOption});
 
 		if (${menuListOption} == "RSS") {
-			SelectWindow.selectPopUp(locator1 = "null");
+			SelectWindow.selectPopUp(value1 = "null");
 		}
 	}
 
@@ -644,7 +644,7 @@ definition {
 	macro viewNoRSS {
 		Navigator.openSpecificURL(url = ${rssURL});
 
-		SelectWindow.selectPopUp(locator1 = "null");
+		SelectWindow.selectPopUp(value1 = "null");
 
 		AssertElementNotPresent(locator1 = "RSS#FEED_TITLE");
 	}
@@ -713,7 +713,7 @@ definition {
 			siteCalendarName = ${siteCalendarName},
 			siteName = ${siteName});
 
-		SelectWindow(locator1 = "title=${siteName}");
+		SelectWindow(value1 = "title=${siteName}");
 
 		AssertTextEquals(
 			locator1 = "RSS#FEED_TITLE",
@@ -732,7 +732,7 @@ definition {
 			siteCalendarName = ${siteCalendarName},
 			siteName = ${siteName});
 
-		SelectWindow(locator1 = "title=${siteName}");
+		SelectWindow(value1 = "title=${siteName}");
 
 		AssertTextEquals(
 			locator1 = "RSS#FEED_TITLE",

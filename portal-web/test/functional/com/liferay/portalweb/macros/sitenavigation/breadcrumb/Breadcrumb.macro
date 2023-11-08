@@ -4,7 +4,7 @@ definition {
 	macro configureBreadcrumb(selectADTType = null, configureWithoutSave = null) {
 		SelectFrame(locator1 = "IFrame#CONFIGURATION");
 
-		Pause(locator1 = 3000);
+		Pause(value1 = 3000);
 
 		if (isSet(checkSetupName)) {
 			for (var checkSetupName : list ${checkSetupName}) {
@@ -28,7 +28,7 @@ definition {
 				value1 = ${selectADTType});
 		}
 
-		Pause(locator1 = 3000);
+		Pause(value1 = 3000);
 
 		if (${configureWithoutSave} == "true") {
 			echo("Configuring Breadcrumb without saving to check bug.");

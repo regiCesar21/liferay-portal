@@ -69,7 +69,7 @@ definition {
 
 	@summary = "Default summary"
 	macro waitForAutoSave() {
-		Pause(locator1 = 1000);
+		Pause(value1 = 1000);
 
 		AssertVisible(locator1 = "StyleBookEditor#DRAFT_SAVED_MESSAGE");
 	}

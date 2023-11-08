@@ -8,7 +8,7 @@ definition {
 
 		SelectFrame(locator1 = "IFrame#MODAL_BODY");
 
-		Pause(locator1 = 3000);
+		Pause(value1 = 3000);
 
 		Click(locator1 = "Button#CHANGE");
 
@@ -67,13 +67,13 @@ definition {
 
 	@summary = "Default summary"
 	macro configureSetupPG(userToolNameList = null, metadataNameList = null, enableViewCountIncrement = null) {
-		Pause(locator1 = 3000);
+		Pause(value1 = 3000);
 
 		SelectFrame(locator1 = "IFrame#MODAL_BODY");
 
 		if (isSet(userToolNameList)) {
 			for (var userToolName : list ${userToolNameList}) {
-				Pause(locator1 = 3000);
+				Pause(value1 = 3000);
 
 				Check.checkToggleSwitch(
 					key_fieldName = ${userToolName},
@@ -83,7 +83,7 @@ definition {
 
 		if (isSet(metadataNameList)) {
 			for (var metadataName : list ${metadataNameList}) {
-				Pause(locator1 = 3000);
+				Pause(value1 = 3000);
 
 				Check.checkToggleSwitch(
 					key_fieldName = ${metadataName},
@@ -135,7 +135,7 @@ definition {
 			SelectFrame(value1 = "relative=top");
 		}
 		else {
-			Pause(locator1 = 2000);
+			Pause(value1 = 2000);
 
 			Click(locator1 = "Button#CLOSE_IFRAME");
 
@@ -339,13 +339,13 @@ definition {
 
 		SelectFrame(locator1 = "IFrame#MODAL_BODY");
 
-		Pause(locator1 = 3000);
+		Pause(value1 = 3000);
 
 		AssertClick(
 			locator1 = "WCDConfiguration#SELECT_WEB_CONTENT_BUTTON",
 			value1 = "Select");
 
-		Pause(locator1 = 5000);
+		Pause(value1 = 5000);
 
 		SelectFrame.selectSecondFrame(locator1 = "IFrame#MODAL_BODY");
 

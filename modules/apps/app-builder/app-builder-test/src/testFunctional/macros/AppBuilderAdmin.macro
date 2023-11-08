@@ -402,7 +402,7 @@ definition {
 			panel = "Applications",
 			portlet = "Objects");
 
-		Pause(locator1 = 2000);
+		Pause(value1 = 2000);
 
 		while (IsElementPresent(locator1 = "Icon#VERTICAL_ELLIPSIS_BUTTON")) {
 			LexiconEntry.gotoVerticalEllipsisMenuItemNoError(menuItem = "Delete");
@@ -630,23 +630,23 @@ definition {
 
 	macro waitForContinueButtonNotVisible {
 		while (IsElementPresent(locator1 = "AppBuilder#BUTTON_CONTINUE")) {
-			Pause(locator1 = 1000);
+			Pause(value1 = 1000);
 		}
 
-		Pause(locator1 = 1000);
+		Pause(value1 = 1000);
 	}
 
 	macro waitForSaveButtonNotVisible {
 		while (IsElementPresent(locator1 = "AppBuilder#SAVE_BUTTON")) {
-			Pause(locator1 = 1000);
+			Pause(value1 = 1000);
 		}
 
-		Pause(locator1 = 1000);
+		Pause(value1 = 1000);
 	}
 
 	macro waitForSaveButtonVisible {
 		while (IsElementNotPresent(locator1 = "AppBuilder#SAVE_BUTTON")) {
-			Pause(locator1 = 1000);
+			Pause(value1 = 1000);
 		}
 	}
 

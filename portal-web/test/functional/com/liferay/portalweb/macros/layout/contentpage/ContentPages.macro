@@ -84,7 +84,7 @@ definition {
 
 		var key_breadcrumbName = "Pages";
 
-		Pause(locator1 = 3000);
+		Pause(value1 = 3000);
 
 		if (IsElementPresent(locator1 = "Message#EMPTY_INFO_TAGLIB")) {
 			SitePages.gotoAddFirstPage(pageType = "Public Page");
@@ -136,7 +136,7 @@ definition {
 
 		var key_breadcrumbName = "Pages";
 
-		Pause(locator1 = 3000);
+		Pause(value1 = 3000);
 
 		if (IsElementPresent(locator1 = "Message#EMPTY_INFO_TAGLIB")) {
 			SitePages.gotoAddFirstPage(pageType = "Private Page");
@@ -174,7 +174,7 @@ definition {
 				portlet = "Pages");
 		}
 
-		Pause(locator1 = 3000);
+		Pause(value1 = 3000);
 
 		LexiconEntry.gotoAdd();
 

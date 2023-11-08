@@ -52,7 +52,7 @@ definition {
 			imageSourceURL = "http://localhost:8080/webdav/guest/document_library/Document_2.jpg",
 			navTab = "URL");
 
-		Pause(locator1 = 1000);
+		Pause(value1 = 1000);
 
 		PortletEntry.publish();
 
@@ -756,11 +756,11 @@ definition {
 
 		ImageEditor.rotateImage(rotateDirection = "right");
 
-		Pause(locator1 = 3000);
+		Pause(value1 = 3000);
 
 		ImageEditor.applyChangesAndSaveFile();
 
-		Pause(locator1 = 3000);
+		Pause(value1 = 3000);
 
 		SelectFrameTop(value1 = "relative=top");
 
@@ -778,7 +778,7 @@ definition {
 			locator1 = "Button#PUBLISH",
 			value1 = "Publish");
 
-		Pause(locator1 = 3000);
+		Pause(value1 = 3000);
 
 		AssertTextEquals(
 			locator1 = "Portlet#HEADER",

@@ -44,13 +44,13 @@ definition {
 
 		AssertElementNotPresent(locator1 = "UserBar#USER_SIGN_IN");
 
-		Pause(locator1 = 60000);
+		Pause(value1 = 60000);
 
 		AssertTextEquals.assertPartialText(
 			locator1 = "Home#ERROR_MESSAGE_EXPIRED_SESSION",
 			value1 = "Due to inactivity, your session will expire");
 
-		Pause(locator1 = 60000);
+		Pause(value1 = 60000);
 
 		AssertElementPresent(locator1 = "UserBar#USER_SIGN_IN");
 
@@ -67,7 +67,7 @@ definition {
 
 		AssertElementNotPresent(locator1 = "UserBar#USER_SIGN_IN");
 
-		Pause(locator1 = 120000);
+		Pause(value1 = 120000);
 
 		AssertTextEquals(
 			locator1 = "Home#ERROR_MESSAGE_EXPIRED_SESSION",
@@ -81,7 +81,7 @@ definition {
 
 		Navigator.openURL();
 
-		Pause(locator1 = 120000);
+		Pause(value1 = 120000);
 
 		AssertElementNotPresent(locator1 = "Home#ERROR_MESSAGE_EXPIRED_SESSION");
 
@@ -101,7 +101,7 @@ definition {
 
 		AssertElementNotPresent(locator1 = "UserBar#USER_SIGN_IN");
 
-		Pause(locator1 = 120000);
+		Pause(value1 = 120000);
 
 		AssertTextEquals(
 			locator1 = "Home#ERROR_MESSAGE_EXPIRED_SESSION",

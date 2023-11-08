@@ -9,7 +9,7 @@ definition {
 
 		com.liferay.poshi.runner.util.ArchiveUtil.archive("${testBaseDirName}/${testDependenciesDirName}/${fragmentsZip}", "${liferayHome}/deploy/${fragmentsZip}");
 
-		Pause(locator1 = 10000);
+		Pause(value1 = 10000);
 	}
 
 }

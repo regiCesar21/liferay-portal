@@ -318,7 +318,7 @@ definition {
 	macro assignOrgRoleCP(orgName = null, roleTitle = null, userLastName = null, userScreenName = null, userFirstName = null) {
 		Organization.gotoActionsCmd(orgName = ${orgName});
 
-		Pause(locator1 = 3000);
+		Pause(value1 = 3000);
 
 		MenuItem.click(menuItem = "Assign Organization Roles");
 
@@ -392,7 +392,7 @@ definition {
 			key_userScreenName = ${userScreenName},
 			locator1 = "UserGroupsAssignUsers#USER_TABLE_CHECKBOX");
 
-		Pause(locator1 = 3000);
+		Pause(value1 = 3000);
 
 		SelectFrameTop();
 
@@ -509,7 +509,7 @@ definition {
 
 	@summary = "Default summary"
 	macro gotoActionsCmd(orgName = null) {
-		Pause(locator1 = 1000);
+		Pause(value1 = 1000);
 
 		Search.searchCP(searchTerm = ${orgName});
 

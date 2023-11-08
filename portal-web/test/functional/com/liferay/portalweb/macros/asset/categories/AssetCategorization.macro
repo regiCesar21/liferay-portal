@@ -72,7 +72,7 @@ definition {
 			IFrame.selectCategoryFrame();
 		}
 
-		Pause(locator1 = 3000);
+		Pause(value1 = 3000);
 
 		Portlet.expandTree();
 	}
@@ -94,7 +94,7 @@ definition {
 	macro selectCategory(categoryName = null) {
 		AssetCategorization.gotoSelectCategory();
 
-		Pause(locator1 = 3000);
+		Pause(value1 = 3000);
 
 		Portlet.selectTreeNode(nodeName = ${categoryName});
 
@@ -114,7 +114,7 @@ definition {
 			Click(locator1 = "Icon#CLOSE");
 		}
 
-		Pause(locator1 = 3000);
+		Pause(value1 = 3000);
 
 		if (IsElementPresent(locator1 = "IFrame#MODAL_IFRAME")) {
 			IFrame.selectModalFrame();

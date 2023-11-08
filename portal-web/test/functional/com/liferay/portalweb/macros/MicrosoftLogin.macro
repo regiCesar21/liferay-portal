@@ -5,10 +5,10 @@ definition {
 		var key_userEmail = PropsUtil.get("sharepoint.oauth.user.name");
 		var key_userPassword = PropsUtil.get("sharepoint.oauth.user.password");
 
-		Pause(locator1 = 10000);
+		Pause(value1 = 10000);
 
 		if (isSet(windowTitle)) {
-			SelectWindow(locator1 = "MicrosoftLogin#LOGIN_PAGE_TITLE");
+			SelectWindow(value1 = "MicrosoftLogin#LOGIN_PAGE_TITLE");
 		}
 
 		if (IsElementPresent.pauseIsElementPresent(locator1 = "MicrosoftLogin#LOGIN_USER_CHOOSER")) {
@@ -49,7 +49,7 @@ definition {
 
 	@summary = "Default summary"
 	macro confirmMicrosoftApp() {
-		Pause(locator1 = 3000);
+		Pause(value1 = 3000);
 
 		if (IsElementPresent(locator1 = "MicrosoftLogin#LOGIN_STAY_SIGNED_IN_CONFIRMATION")) {
 			AssertClick(
@@ -60,7 +60,7 @@ definition {
 
 	@summary = "Default summary"
 	macro confirmSharepointApp(dmRepositoryName = null) {
-		Pause(locator1 = 3000);
+		Pause(value1 = 3000);
 
 		var app_name = "SharePoint Online";
 
@@ -69,7 +69,7 @@ definition {
 				locator1 = "MicrosoftLogin#LOGIN_YES_BUTTON",
 				value1 = "Yes");
 
-			Pause(locator1 = 5000);
+			Pause(value1 = 5000);
 		}
 
 		if (IsElementPresent(locator1 = "MicrosoftLogin#SHAREPOINT_NOTIFICATION")) {
@@ -77,7 +77,7 @@ definition {
 				locator1 = "MicrosoftLogin#SHAREPOINT_TRUST_IT_BUTTON",
 				value1 = "Trust It");
 
-			Pause(locator1 = 5000);
+			Pause(value1 = 5000);
 		}
 
 		if (IsElementPresent(locator1 = "Portlet#HEADER")) {

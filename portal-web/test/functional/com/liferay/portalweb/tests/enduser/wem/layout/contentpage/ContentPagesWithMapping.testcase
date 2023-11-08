@@ -236,7 +236,7 @@ definition {
 				locator1 = "Select#GENERIC_SELECT_FIELD",
 				value1 = "Text");
 
-			Pause(locator1 = 3000);
+			Pause(value1 = 3000);
 
 			PageEditor.waitForAutoSave();
 
@@ -266,7 +266,7 @@ definition {
 				locator1 = "Select#GENERIC_SELECT_FIELD",
 				value1 = "Text");
 
-			Pause(locator1 = 3000);
+			Pause(value1 = 3000);
 
 			PageEditor.waitForAutoSave();
 
@@ -769,11 +769,11 @@ definition {
 
 			var siteName = TestCase.getSiteName(siteName = ${siteName});
 
-			SelectWindow.selectPopUp(locator1 = "null");
+			SelectWindow.selectPopUp(value1 = "null");
 
 			AssertLocation.assertPartialLocation(value1 = "https://www.liferay.com");
 
-			SelectWindow(locator1 = "title=Content Page Name - Test Site Name - ${siteName}");
+			SelectWindow(value1 = "title=Content Page Name - Test Site Name - ${siteName}");
 		}
 	}
 
@@ -891,7 +891,7 @@ definition {
 				entryTitle = "Web Content Title",
 				navItem = "Web Content");
 
-			Pause(locator1 = 3000);
+			Pause(value1 = 3000);
 
 			Select(
 				locator1 = "PageEditorEditableLink#FIELD",
@@ -913,7 +913,7 @@ definition {
 				entryTitle = "Blogs Entry Title",
 				navItem = "Blogs");
 
-			Pause(locator1 = 3000);
+			Pause(value1 = 3000);
 
 			Select(
 				locator1 = "PageEditorEditableLink#FIELD",
@@ -935,7 +935,7 @@ definition {
 				entryTitle = "Document Title",
 				navItem = "Documents and Media");
 
-			Pause(locator1 = 3000);
+			Pause(value1 = 3000);
 
 			Select(
 				locator1 = "PageEditorEditableLink#FIELD",
@@ -1799,7 +1799,7 @@ definition {
 				key_rowPosition = 1,
 				locator1 = "PageEditor#COLLECTION_CELL_NESTED_ELEMENT");
 
-			Pause(locator1 = 3000);
+			Pause(value1 = 3000);
 
 			AssertClick(
 				key_navItem = "Mapping",
@@ -1872,7 +1872,7 @@ definition {
 				key_rowPosition = 1,
 				locator1 = "PageEditor#COLLECTION_CELL_NESTED_ELEMENT");
 
-			Pause(locator1 = 3000);
+			Pause(value1 = 3000);
 
 			AssertClick(
 				key_navItem = "Mapping",
@@ -1935,7 +1935,7 @@ definition {
 				key_rowPosition = 1,
 				locator1 = "PageEditor#COLLECTION_CELL_NESTED_ELEMENT");
 
-			Pause(locator1 = 3000);
+			Pause(value1 = 3000);
 
 			AssertClick(
 				key_navItem = "Mapping",

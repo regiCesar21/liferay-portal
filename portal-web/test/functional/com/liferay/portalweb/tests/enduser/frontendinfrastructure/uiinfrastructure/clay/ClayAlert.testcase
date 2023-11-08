@@ -40,7 +40,7 @@ definition {
 
 		takeScreenshot();
 
-		Pause(locator1 = 5000);
+		Pause(value1 = 5000);
 
 		takeScreenshot();
 

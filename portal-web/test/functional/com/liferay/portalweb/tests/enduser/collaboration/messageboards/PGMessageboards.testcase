@@ -377,7 +377,7 @@ definition {
 				locator1 = "TextInput#FILE",
 				value1 = ${mbThreadAttachment});
 
-			Pause(locator1 = 5000);
+			Pause(value1 = 5000);
 
 			AssertTextEquals(
 				key_attachmentName = ${mbThreadAttachment},
@@ -691,7 +691,7 @@ definition {
 
 		MessageboardsThread.downloadAttachmentPG();
 
-		Pause(locator1 = 3000);
+		Pause(value1 = 3000);
 
 		MessageboardsThread.downloadAttachmentPG();
 

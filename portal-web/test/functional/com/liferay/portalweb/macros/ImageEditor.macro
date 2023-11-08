@@ -18,7 +18,7 @@ definition {
 	macro applyChangesAndSaveFile() {
 		ImageEditor._applyChanges();
 
-		Pause(locator1 = 3000);
+		Pause(value1 = 3000);
 
 		ImageEditor._saveFile();
 	}
@@ -31,7 +31,7 @@ definition {
 
 		MenuItem.click(menuItem = "Edit With Image Editor");
 
-		Pause(locator1 = 5000);
+		Pause(value1 = 5000);
 
 		SelectFrame(locator1 = "ImageEditor#IMAGE_EDITOR_IFRAME");
 	}
@@ -55,7 +55,7 @@ definition {
 
 		var key_imageFileName = StringUtil.replace(${imageFileName}, " ", "+");
 
-		Pause(locator1 = 1000);
+		Pause(value1 = 1000);
 
 		Click(locator1 = "Icon#EYE_PREVIEW");
 

@@ -41,7 +41,7 @@ definition {
 
 			Button.clickPublish();
 
-			Pause(locator1 = 10000);
+			Pause(value1 = 10000);
 		}
 
 		BlogsNavigator.openBlogsAdmin(siteURLKey = "guest");
@@ -100,7 +100,7 @@ definition {
 
 		BlogsNavigator.gotoAddEntry();
 
-		Pause(locator1 = 3000);
+		Pause(value1 = 3000);
 
 		BlogsNavigator.gotoSelectFile();
 
@@ -163,7 +163,7 @@ definition {
 
 		Button.clickPublish();
 
-		Pause(locator1 = 10000);
+		Pause(value1 = 10000);
 
 		BlogsNavigator.openBlogsAdmin(siteURLKey = "guest");
 
@@ -201,7 +201,7 @@ definition {
 
 		ImageEditor.rotateImage(rotateDirection = "left");
 
-		Pause(locator1 = 3000);
+		Pause(value1 = 3000);
 
 		ImageEditor.applyChangesAndSaveFile();
 

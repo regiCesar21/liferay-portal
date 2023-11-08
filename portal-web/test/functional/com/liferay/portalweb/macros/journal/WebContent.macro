@@ -106,7 +106,7 @@ definition {
 			assetType = ${assetType},
 			scopeSite = ${scopeSite});
 
-		Pause(locator1 = 3000);
+		Pause(value1 = 3000);
 
 		SelectFrame(value1 = "relative=top");
 
@@ -242,7 +242,7 @@ definition {
 			locator1 = "Button#PUBLISH",
 			value1 = "Publish");
 
-		Pause(locator1 = 5000);
+		Pause(value1 = 5000);
 
 		var key_assetTitle = ${webContentTitle};
 
@@ -273,7 +273,7 @@ definition {
 			locator1 = "Button#PUBLISH",
 			value1 = "Publish");
 
-		Pause(locator1 = 5000);
+		Pause(value1 = 5000);
 
 		var key_assetTitle = ${webContentTitle};
 	}
@@ -415,7 +415,7 @@ definition {
 		var key_imageFileName = ${dmDocumentTitle};
 		var key_imageFileName = StringUtil.replace(${dmDocumentTitle}, " ", "+");
 
-		Pause(locator1 = 1000);
+		Pause(value1 = 1000);
 
 		if (isSet(siteName)) {
 			AssertClick(
@@ -853,7 +853,7 @@ definition {
 			locator1 = "Button#SUBMIT_FOR_PUBLICATION",
 			value1 = "Submit for Publication");
 
-		Pause(locator1 = 5000);
+		Pause(value1 = 5000);
 
 		SelectFrame();
 
@@ -1048,7 +1048,7 @@ definition {
 
 		Click.javaScriptClick(locator1 = "WCEditWebContent#DISPLAY_PAGE_CHOOSE_BUTTON");
 
-		Pause(locator1 = 5000);
+		Pause(value1 = 5000);
 
 		SelectFrameTop();
 
@@ -1097,7 +1097,7 @@ definition {
 			pageName = ${displayPageName},
 			pageType = ${pageType});
 
-		Pause(locator1 = 3000);
+		Pause(value1 = 3000);
 
 		SelectFrame(value1 = "relative=top");
 	}
@@ -1314,7 +1314,7 @@ definition {
 
 		SelectFrame(locator1 = "IFrame#MODAL_BODY");
 
-		Pause(locator1 = 3000);
+		Pause(value1 = 3000);
 
 		WebContentFolder.selectFolderTreeNode(nodeName = ${folderName});
 
@@ -1345,7 +1345,7 @@ definition {
 
 		SelectFrame(locator1 = "IFrame#MODAL_BODY");
 
-		Pause(locator1 = 3000);
+		Pause(value1 = 3000);
 
 		WebContentFolder.selectFolderTreeNode(nodeName = ${folderName});
 
@@ -1375,7 +1375,7 @@ definition {
 
 		SelectFrame(locator1 = "IFrame#MODAL_BODY");
 
-		Pause(locator1 = 3000);
+		Pause(value1 = 3000);
 
 		WebContentFolder.selectFolderTreeNode(nodeName = ${folderName});
 
@@ -1426,7 +1426,7 @@ definition {
 
 		ClickNoError(locator1 = "Icon#MOVE_TO_RECYCLE_BIN");
 
-		Confirm();
+		Confirm(value1 = "null");
 
 		VerifyElementPresent(locator1 = "Message#SUCCESS");
 	}
@@ -1466,7 +1466,7 @@ definition {
 	macro saveAsDraftViaAP() {
 		Button.clickSaveAsDraft();
 
-		Pause(locator1 = 5000);
+		Pause(value1 = 5000);
 
 		Refresh();
 
@@ -1550,7 +1550,7 @@ definition {
 
 		Panel.expandPanel(panel = "Default Template");
 
-		Pause(locator1 = 3000);
+		Pause(value1 = 3000);
 
 		AssertClick(
 			locator1 = "WCEditWebContent#SELECT_TEMPLATE",
@@ -1560,13 +1560,13 @@ definition {
 
 		SelectFrame(locator1 = "IFrame#MODAL_BODY");
 
-		Pause(locator1 = 3000);
+		Pause(value1 = 3000);
 
 		LexiconCard.clickCardWithConfirmation(card = ${templateName});
 
 		IFrame.selectTopFrame();
 
-		Pause(locator1 = 3000);
+		Pause(value1 = 3000);
 
 		Panel.expandPanel(panel = "Default Template");
 
@@ -1577,11 +1577,11 @@ definition {
 
 	@summary = "Default summary"
 	macro subscribeToCurrentFolderCP() {
-		Pause(locator1 = 3000);
+		Pause(value1 = 3000);
 
 		Click.clickAt(locator1 = "Icon#INFO");
 
-		Pause(locator1 = 1000);
+		Pause(value1 = 1000);
 
 		Click(locator1 = "Icon#SUBSCRIBE");
 

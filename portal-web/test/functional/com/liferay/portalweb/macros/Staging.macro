@@ -8,7 +8,7 @@ definition {
 			locator1 = "ProductMenu#PRODUCT_MENU_PANEL_SITE_ADMINISTRATION_SITE_NAME",
 			value1 = ${siteName});
 
-		Pause(locator1 = 3000);
+		Pause(value1 = 3000);
 
 		if (${remoteStaging} == "true") {
 			Check.checkHiddenToggleSwitch(locator1 = "SiteSettingsStaging#STAGING_REMOTE_LIVE");
@@ -109,7 +109,7 @@ definition {
 			AssertConfirm(value1 = "Are you sure you want to activate remote staging for ${siteName}?");
 
 			while (IsElementNotPresent(locator1 = "Message#SUCCESS")) {
-				Pause(locator1 = 1000);
+				Pause(value1 = 1000);
 			}
 
 			if (IsElementPresent(locator1 = "Button#CLOSE_MESSAGE")) {
@@ -129,7 +129,7 @@ definition {
 			AssertConfirm(value1 = "Are you sure you want to activate local staging for ${siteName}?");
 
 			while (IsElementNotPresent(locator1 = "Staging#PROCESS_SUCCESSFUL")) {
-				Pause(locator1 = 1000);
+				Pause(value1 = 1000);
 			}
 
 			AssertTextEquals(
@@ -161,7 +161,7 @@ definition {
 
 	@summary = "Default summary"
 	macro addCustomPublication(publishTemplateName = null) {
-		Pause(locator1 = 3000);
+		Pause(value1 = 3000);
 
 		LexiconEntry.gotoAdd();
 
@@ -174,7 +174,7 @@ definition {
 
 	@summary = "Default summary"
 	macro addPageVariationPG(pageVariationName = null) {
-		Pause(locator1 = 3000);
+		Pause(value1 = 3000);
 
 		Click(locator1 = "Icon#STAGING_BAR_VERTICAL_ELLIPSIS");
 
@@ -205,7 +205,7 @@ definition {
 	macro addPublishTemplate(publishTemplateDescription = null, publishTemplateName = null) {
 		LexiconEntry.gotoHeaderMenuItem(menuItem = "Publish Templates");
 
-		Pause(locator1 = 3000);
+		Pause(value1 = 3000);
 
 		LexiconEntry.gotoAdd();
 
@@ -450,7 +450,7 @@ definition {
 				key_contentName = ${mainContent},
 				locator1 = "PagesConfiguration#CONTENT_CHOOSE_CONTENT_CONTENT_CHECKBOX");
 
-			Pause(locator1 = 3000);
+			Pause(value1 = 3000);
 
 			ContentConfiguration.uncheckSubContent(
 				mainContent = ${mainContent},
@@ -549,7 +549,7 @@ definition {
 
 		ClickNoError(locator1 = "Staging#COPY_FROM_LIVE");
 
-		Pause(locator1 = 2000);
+		Pause(value1 = 2000);
 
 		AssertClickNoError.assertPartialTextClickAt(
 			locator1 = "Button#SUBMIT",
@@ -727,7 +727,7 @@ definition {
 
 		Button.clickSave();
 
-		Pause(locator1 = 5000);
+		Pause(value1 = 5000);
 	}
 
 	@summary = "Default summary"
@@ -894,7 +894,7 @@ definition {
 		}
 
 		while (IsElementNotPresent(locator1 = "Staging#PROCESS_RESULT")) {
-			Pause(locator1 = 1000);
+			Pause(value1 = 1000);
 		}
 
 		if (isSet(failureExpected)) {
@@ -925,7 +925,7 @@ definition {
 			ClickNoError(locator1 = "Staging#STAGING_PUBLISH_TO_LIVE_BUTTON");
 		}
 
-		Pause(locator1 = 5000);
+		Pause(value1 = 5000);
 
 		if (isSet(failureExpected)) {
 			AssertTextEquals(
@@ -955,7 +955,7 @@ definition {
 	macro publishToLiveNowViaPortletCP(replicateIndividualDeletions = null) {
 		LexiconEntry.gotoHeaderMenuItem(menuItem = "Staging");
 
-		Pause(locator1 = 3000);
+		Pause(value1 = 3000);
 
 		SelectFrame(locator1 = "IFrame#CONFIGURATION_DIALOG");
 
@@ -971,7 +971,7 @@ definition {
 
 		Confirm(value1 = "Are you sure you want to publish to live and update the existing application data?");
 
-		Pause(locator1 = 5000);
+		Pause(value1 = 5000);
 
 		AssertTextEquals(
 			locator1 = "Staging#STAGING_STATUS_PORTLET",
@@ -994,7 +994,7 @@ definition {
 
 		AssertConfirm(value1 = "Are you sure you want to publish to live and update the existing application data?");
 
-		Pause(locator1 = 5000);
+		Pause(value1 = 5000);
 
 		AssertTextEquals(
 			locator1 = "Staging#STAGING_STATUS_PORTLET",
@@ -1024,7 +1024,7 @@ definition {
 			value1 = "Publish to Live");
 
 		while ((IsElementNotPresent(locator1 = "Staging#PROCESS_SUCCESSFUL")) && (IsElementNotPresent(locator1 = "Staging#LATEST_PROCESS_RESULT"))) {
-			Pause(locator1 = 1000);
+			Pause(value1 = 1000);
 		}
 
 		if (IsElementPresent(locator1 = "Staging#PROCESS_SUCCESSFUL")) {
@@ -1074,7 +1074,7 @@ definition {
 			locator1 = "Staging#STAGING_PUBLISH_TO_REMOTE_LIVE_BUTTON",
 			value1 = "Publish to Remote Live");
 
-		Pause(locator1 = 5000);
+		Pause(value1 = 5000);
 
 		AssertTextEquals(
 			locator1 = "Staging#PROCESS_RESULT",
@@ -1275,14 +1275,14 @@ definition {
 
 		SelectFrameTop(value1 = "relative=top");
 
-		Pause(locator1 = 5000);
+		Pause(value1 = 5000);
 	}
 
 	@summary = "Default summary"
 	macro searchPublishTemplate(searchTerm = null) {
 		LexiconEntry.gotoHeaderMenuItem(menuItem = "Publish Templates");
 
-		Pause(locator1 = 3000);
+		Pause(value1 = 3000);
 
 		Search.searchCP(searchTerm = ${searchTerm});
 

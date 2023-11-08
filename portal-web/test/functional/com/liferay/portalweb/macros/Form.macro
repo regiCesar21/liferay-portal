@@ -80,13 +80,13 @@ definition {
 
 	@summary = "Default summary"
 	macro closeSidebar() {
-		Pause(locator1 = 1000);
+		Pause(value1 = 1000);
 
 		Click(locator1 = "Form#SIDEBAR_CLOSE");
 
 		ScrollBy(value1 = "0, 230");
 
-		Pause(locator1 = 1000);
+		Pause(value1 = 1000);
 	}
 
 	@summary = "Default summary"
@@ -243,7 +243,7 @@ definition {
 			fieldName = "dataSourceType",
 			selectOption = "From Data Provider");
 
-		Pause(locator1 = 2000);
+		Pause(value1 = 2000);
 
 		FormFields.selectSelectOption(
 			fieldName = "Choose a Data Provider",
@@ -278,7 +278,7 @@ definition {
 
 	@summary = "Default summary"
 	macro editName(formName = null) {
-		Pause(locator1 = 2000);
+		Pause(value1 = 2000);
 
 		WaitForElementPresent(locator1 = "Form#NAME_FIELD");
 
@@ -340,7 +340,7 @@ definition {
 			fieldName = "dataSourceType",
 			radioOption = "From Data Provider");
 
-		Pause(locator1 = 2000);
+		Pause(value1 = 2000);
 
 		FormFields.selectSelectOption(
 			fieldName = "Choose a Data Provider",
@@ -436,7 +436,7 @@ definition {
 				value1 = "Advanced");
 		}
 
-		Pause(locator1 = 1000);
+		Pause(value1 = 1000);
 	}
 
 	@summary = "Default summary"
@@ -445,7 +445,7 @@ definition {
 			locator1 = "Form#SIDEBAR_AUTOCOMPLETE_TAB",
 			value1 = "Autocomplete");
 
-		Pause(locator1 = 1000);
+		Pause(value1 = 1000);
 	}
 
 	@summary = "Default summary"
@@ -461,7 +461,7 @@ definition {
 				value1 = "Basic");
 		}
 
-		Pause(locator1 = 1000);
+		Pause(value1 = 1000);
 	}
 
 	@summary = "Default summary"
@@ -512,7 +512,7 @@ definition {
 				value1 = "Properties");
 		}
 
-		Pause(locator1 = 1000);
+		Pause(value1 = 1000);
 	}
 
 	@summary = "Default summary"
@@ -533,7 +533,7 @@ definition {
 	macro previewForm(fieldName = null, formName = null, fieldLabel = null, fieldValue = null) {
 		Navigator.selectSpecificWindow(windowTitle = "Form - Forms");
 
-		Pause(locator1 = 5000);
+		Pause(value1 = 5000);
 
 		var key_formName = ${formName};
 
@@ -592,7 +592,7 @@ definition {
 
 		Alert.viewSuccessMessage();
 
-		Pause(locator1 = 2000);
+		Pause(value1 = 2000);
 	}
 
 	@summary = "Default summary"
@@ -622,7 +622,7 @@ definition {
 
 		Alert.viewSuccessMessage();
 
-		Pause(locator1 = 2000);
+		Pause(value1 = 2000);
 	}
 
 	@summary = "Default summary"

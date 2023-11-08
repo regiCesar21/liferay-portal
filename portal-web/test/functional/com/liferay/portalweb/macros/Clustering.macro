@@ -269,7 +269,7 @@ definition {
 			locator1 = "build-test.xml",
 			value1 = "wait-for-server-shutdown -Dapp.server.port.number=${nodePort}");
 
-		Pause(locator1 = 30000);
+		Pause(value1 = 30000);
 	}
 
 }

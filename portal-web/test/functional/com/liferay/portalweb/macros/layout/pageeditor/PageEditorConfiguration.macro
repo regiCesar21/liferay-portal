@@ -65,7 +65,7 @@ definition {
 			fieldName = ${textConfigName},
 			fieldValue = ${editableText});
 
-		Pause(locator1 = 3000);
+		Pause(value1 = 3000);
 
 		Click(
 			key_sidebarButton = "Selection",

@@ -156,7 +156,7 @@ definition {
 					key_pageName = ${pageName},
 					locator1 = "Home#PAGE");
 
-				Pause(locator1 = 3000);
+				Pause(value1 = 3000);
 
 				ControlMenu.viewHeaderTitle(headerTitle = ${pageName});
 			}
@@ -456,7 +456,7 @@ definition {
 
 			AssertLocation(value1 = "${portalURL}/web/test-site-name");
 
-			Open(locator1 = "${portalURL}/group/test-site-name");
+			Open(value1 = "${portalURL}/group/test-site-name");
 
 			SignIn._signIn(
 				userEmailAddress = "test@liferay.com",

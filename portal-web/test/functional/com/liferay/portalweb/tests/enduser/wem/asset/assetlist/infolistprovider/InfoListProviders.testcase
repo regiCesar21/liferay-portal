@@ -135,7 +135,7 @@ definition {
 				locator1 = "APConfiguration#SELECT_COLLECTION_PROVIDER_FIELD",
 				value1 = "Related Assets");
 
-			Pause(locator1 = 3000);
+			Pause(value1 = 3000);
 
 			PortletEntry.save();
 

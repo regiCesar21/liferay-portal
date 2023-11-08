@@ -11,7 +11,7 @@ definition {
 
 		Click(locator1 = "ContentDashboard#EDIT_OPTION");
 
-		Pause(locator1 = 3000);
+		Pause(value1 = 3000);
 
 		if (isSet(webContentTitle)) {
 			Click(locator1 = "TextInput#TITLE");
@@ -267,7 +267,7 @@ definition {
 
 		Click(locator1 = "ContentDashboard#SELECT_TAGS_BUTTON");
 
-		Pause(locator1 = 3000);
+		Pause(value1 = 3000);
 
 		SelectFrame(value1 = "relative=top");
 	}

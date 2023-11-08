@@ -579,7 +579,7 @@ definition {
 
 		Blogs.viewNoEntryCP();
 
-		Pause(locator1 = 180000);
+		Pause(value1 = 180000);
 
 		Refresh();
 
@@ -699,7 +699,7 @@ definition {
 
 		Button.clickPublish();
 
-		Pause(locator1 = 3000);
+		Pause(value1 = 3000);
 
 		Alert.viewSuccessMessage();
 
@@ -712,7 +712,7 @@ definition {
 			navTab = "Blog Images",
 			uploadFileName = "Document_2.jpg");
 
-		Pause(locator1 = 3000);
+		Pause(value1 = 3000);
 
 		PortletEntry.publish();
 

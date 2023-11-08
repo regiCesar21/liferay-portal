@@ -133,13 +133,13 @@ definition {
 			WaitForLiferayEvent.initializeLiferayEventLog();
 		}
 
-		Pause(locator1 = 3000);
+		Pause(value1 = 3000);
 	}
 
 	@summary = "Default summary"
 	macro _importSite(checkContentNameList = null, contentDeletion = null, mirrorWithOverwriting = null, importPermissions = null, privateLayout = null, copyAsNew = null) {
 		while (IsElementNotPresent(locator1 = "Button#CONTINUE")) {
-			Pause(locator1 = 1000);
+			Pause(value1 = 1000);
 		}
 
 		Click(locator1 = "Button#CONTINUE");
@@ -176,7 +176,7 @@ definition {
 			locator1 = "SitePagesImport#IMPORT_BUTTON",
 			value1 = "Import");
 
-		Pause(locator1 = 5000);
+		Pause(value1 = 5000);
 
 		AssertTextEquals(
 			locator1 = "SitePagesImport#CURRENT_AND_PREVIOUS_STATUS_1",
@@ -214,7 +214,7 @@ definition {
 		}
 
 		while ((IsElementNotPresent(locator1 = "Button#CONTINUE")) && (IsElementNotPresent(locator1 = "SitePagesImport#VALIDATION_ERROR_MESSAGE_HEADER"))) {
-			Pause(locator1 = 1000);
+			Pause(value1 = 1000);
 		}
 
 		if (${cannotImport} == "true") {
@@ -245,7 +245,7 @@ definition {
 				locator1 = "Button#CONTINUE",
 				value1 = "Continue");
 
-			Pause(locator1 = 5000);
+			Pause(value1 = 5000);
 
 			if (${copyAsNew} == "true") {
 				LAR._copyAsNew();
@@ -296,7 +296,7 @@ definition {
 		LexiconEntry.gotoAdd();
 
 		while (IsElementNotPresent(locator1 = "Button#SELECT_FILE")) {
-			Pause(locator1 = 1000);
+			Pause(value1 = 1000);
 		}
 
 		AssertElementPresent(locator1 = "Button#SELECT_FILE");
@@ -314,7 +314,7 @@ definition {
 
 		if (isSet(importValidationMissingItem) || isSet(importCampaignValidationError) || isSet(importCampaignValidationError)) {
 			while ((IsElementNotPresent(locator1 = "SitePagesImport#VALIDATION_ERROR_MESSAGE")) && (IsElementNotPresent(locator1 = "ExportImport#CURRENT_AND_PREVIOUS_STATUS_1"))) {
-				Pause(locator1 = 1000);
+				Pause(value1 = 1000);
 			}
 		}
 
@@ -557,7 +557,7 @@ definition {
 
 	@summary = "Default summary"
 	macro filterCompletedProcesses() {
-		Pause(locator1 = 3000);
+		Pause(value1 = 3000);
 
 		Click(locator1 = "Dropdown#FILTER_AND_ORDER");
 
@@ -671,7 +671,7 @@ definition {
 			var baseURL = PropsUtil.get("portal.url");
 		}
 
-		Open(locator1 = "${baseURL}/group/asset-library-${depotId}/~/control_panel/manage?p_p_id=com_liferay_exportimport_web_portlet_ExportPortlet");
+		Open(value1 = "${baseURL}/group/asset-library-${depotId}/~/control_panel/manage?p_p_id=com_liferay_exportimport_web_portlet_ExportPortlet");
 	}
 
 	@summary = "Default summary"
@@ -683,7 +683,7 @@ definition {
 			var baseURL = PropsUtil.get("portal.url");
 		}
 
-		Open(locator1 = "${baseURL}/group/asset-library-${depotId}/~/control_panel/manage?p_p_id=com_liferay_exportimport_web_portlet_ImportPortlet");
+		Open(value1 = "${baseURL}/group/asset-library-${depotId}/~/control_panel/manage?p_p_id=com_liferay_exportimport_web_portlet_ImportPortlet");
 	}
 
 	@summary = "Default summary"
@@ -697,7 +697,7 @@ definition {
 			var baseURL = PropsUtil.get("portal.url");
 		}
 
-		Open(locator1 = "${baseURL}/group/${siteNameURL}/~/control_panel/manage?p_p_id=com_liferay_exportimport_web_portlet_ExportPortlet");
+		Open(value1 = "${baseURL}/group/${siteNameURL}/~/control_panel/manage?p_p_id=com_liferay_exportimport_web_portlet_ExportPortlet");
 	}
 
 	@summary = "Default summary"
@@ -711,7 +711,7 @@ definition {
 			var baseURL = PropsUtil.get("portal.url");
 		}
 
-		Open(locator1 = "${baseURL}/group/${siteNameURL}/~/control_panel/manage?p_p_id=com_liferay_exportimport_web_portlet_ImportPortlet");
+		Open(value1 = "${baseURL}/group/${siteNameURL}/~/control_panel/manage?p_p_id=com_liferay_exportimport_web_portlet_ImportPortlet");
 	}
 
 	@summary = "Default summary"

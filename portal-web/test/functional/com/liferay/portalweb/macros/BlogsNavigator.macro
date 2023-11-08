@@ -25,7 +25,7 @@ definition {
 
 	@summary = "Default summary"
 	macro gotoBlogsEntryPermissionsCP(entryTitle = null) {
-		Pause(locator = 1000);
+		Pause(value = 1000);
 
 		LexiconCard.clickEllipsisItem(
 			card = ${entryTitle},
@@ -181,7 +181,7 @@ definition {
 
 	@summary = "Default summary"
 	macro gotoSelectFile() {
-		Pause(locator1 = 5000);
+		Pause(value1 = 5000);
 
 		AssertClick(
 			locator1 = "BlogsEntry#ENTRY_COVER_IMAGE_SELECT_FILE",
@@ -229,7 +229,7 @@ definition {
 			var baseURL = PropsUtil.get("portal.url");
 		}
 
-		Open(locator1 = "${baseURL}/group/${siteURLKey}/~/control_panel/manage?p_p_id=com_liferay_blogs_web_portlet_BlogsAdminPortlet&_com_liferay_blogs_web_portlet_BlogsAdminPortlet_mvcRenderCommandName=%2Fblogs%2Fedit_entry");
+		Open(value1 = "${baseURL}/group/${siteURLKey}/~/control_panel/manage?p_p_id=com_liferay_blogs_web_portlet_BlogsAdminPortlet&_com_liferay_blogs_web_portlet_BlogsAdminPortlet_mvcRenderCommandName=%2Fblogs%2Fedit_entry");
 	}
 
 }

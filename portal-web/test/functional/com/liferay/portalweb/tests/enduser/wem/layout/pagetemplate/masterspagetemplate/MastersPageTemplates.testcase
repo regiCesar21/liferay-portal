@@ -923,7 +923,7 @@ definition {
 				item = "Edit",
 				pageTemplateName = "Page Template Name");
 
-			Pause(locator1 = 3000);
+			Pause(value1 = 3000);
 		}
 
 		task ("Assert can change master from Blank to custom master") {

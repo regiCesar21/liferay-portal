@@ -377,7 +377,7 @@ definition {
 				locator1 = "Message#ERROR",
 				value1 = "The layout could not be duplicated because it contains a widget (Language Selector) that can only appear once in the page.");
 
-			Pause(locator1 = 3000);
+			Pause(value1 = 3000);
 		}
 	}
 
@@ -892,7 +892,7 @@ definition {
 				locator2 = "PageEditor#GRID_COLUMN",
 				value1 = "Web Content Display");
 
-			Pause(locator1 = 5000);
+			Pause(value1 = 5000);
 
 			AssertElementPresent(
 				key_columnNumber = 1,

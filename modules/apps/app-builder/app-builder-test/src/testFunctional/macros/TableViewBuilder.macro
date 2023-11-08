@@ -23,7 +23,7 @@ definition {
 	}
 
 	macro addColumnByDragAndDrop {
-		Pause(locator1 = 10000);
+		Pause(value1 = 10000);
 
 		var key_fieldLabel = ${fieldType};
 

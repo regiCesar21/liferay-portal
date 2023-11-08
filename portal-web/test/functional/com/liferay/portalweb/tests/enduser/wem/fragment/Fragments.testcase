@@ -1268,7 +1268,7 @@ NO CSS
 				locator2 = "//div[contains(@class,'page-editor__topper__bar') and contains(.,'Image')]//following-sibling::div[contains(@class,'page-editor__topper__content')]",
 				value1 = "Asset Publisher");
 
-			Pause(locator1 = 5000);
+			Pause(value1 = 5000);
 
 			AssertElementPresent(
 				key_elementHeader = "//div[contains(@class,'page-editor')]//li[contains(.,'Asset Publisher')]",
@@ -1447,7 +1447,7 @@ NO CSS
 				entry = "Fragment Name",
 				item = "Edit");
 
-			Pause(locator1 = 3000);
+			Pause(value1 = 3000);
 
 			PortletEntry.publish();
 		}

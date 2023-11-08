@@ -124,7 +124,7 @@ definition {
 			menuItem = "Delete",
 			title = ${title});
 
-		Confirm();
+		Confirm(value1 = "null");
 
 		Alert.viewSuccessMessage();
 	}

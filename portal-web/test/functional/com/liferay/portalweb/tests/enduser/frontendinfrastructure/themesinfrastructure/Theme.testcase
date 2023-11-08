@@ -227,7 +227,7 @@ definition {
 
 		FileInstall.deployFileOnServer(liferayDependencyJars = "${appName}.war");
 
-		Pause(locator1 = 30000);
+		Pause(value1 = 30000);
 
 		Navigator.openSitePage(
 			pageName = "Theme Test Page",

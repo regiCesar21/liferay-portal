@@ -478,7 +478,7 @@ definition {
 
 		AppBuilderAdmin.openStandAloneApp(itemName = "My Registration app");
 
-		SelectWindow.selectPopUp(locator1 = "null");
+		SelectWindow.selectPopUp(value1 = "null");
 
 		AppBuilderAdmin.addEntry();
 

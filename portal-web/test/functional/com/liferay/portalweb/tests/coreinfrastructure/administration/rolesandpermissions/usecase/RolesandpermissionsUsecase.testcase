@@ -797,7 +797,7 @@ definition {
 			defaultURL = "false",
 			portletName = "Message Boards");
 
-		Close.closeAndSelectWindow(locator1 = "Site Templates - ${siteName}");
+		Close.closeAndSelectWindow(value1 = "Site Templates - ${siteName}");
 
 		ApplicationsMenu.gotoPortlet(
 			category = "Users",
@@ -1961,11 +1961,11 @@ definition {
 
 		AssertVisible(locator1 = "Button#PLUS");
 
-		Pause(locator1 = 3000);
+		Pause(value1 = 3000);
 
 		LexiconEntry.gotoAdd();
 
-		Pause(locator1 = 3000);
+		Pause(value1 = 3000);
 
 		WebContent.viewWCViewableByPermissions();
 	}

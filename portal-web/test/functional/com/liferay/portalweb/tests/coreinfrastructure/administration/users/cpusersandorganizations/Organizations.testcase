@@ -1711,7 +1711,7 @@ definition {
 			defaultURL = "false",
 			portletName = "Message Boards");
 
-		Close.closeAndSelectWindow(locator1 = "Site Templates - ${siteName}");
+		Close.closeAndSelectWindow(value1 = "Site Templates - ${siteName}");
 
 		JSONOrganization.addOrganization(organizationName = "North America");
 

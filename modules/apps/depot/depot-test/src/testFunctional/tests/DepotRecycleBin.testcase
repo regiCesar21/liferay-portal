@@ -78,7 +78,7 @@ definition {
 
 		// Pausing 2 minutes due to reasons here. See LPS-157957
 
-		Pause(locator1 = 120000);
+		Pause(value1 = 120000);
 
 		Refresh();
 

@@ -238,7 +238,7 @@ definition {
 
 		Button.click(button = "Authorize");
 
-		Pause(locator1 = 3000);
+		Pause(value1 = 3000);
 
 		var currentURL = selenium.getCurrentUrl();
 
@@ -346,7 +346,7 @@ definition {
 
 			SelectFrame(locator1 = "IFrame#MODAL_BODY");
 
-			Pause(locator1 = 2000);
+			Pause(value1 = 2000);
 
 			Click(
 				key_clientCredentialsUser = ${clientCredentialsUser},

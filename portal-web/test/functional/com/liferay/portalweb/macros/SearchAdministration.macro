@@ -50,7 +50,7 @@ definition {
 				var elasticsearchTasks = JSONCurlUtil.get(${curl});
 
 				while (!(contains(${elasticsearchTasks}, "indices:data/write/bulk")) && (${reindexStartTime} != 60)) {
-					Pause.pauseNoSPARefresh(locator1 = 5000);
+					Pause.pauseNoSPARefresh(value1 = 5000);
 
 					var reindexStartTime = ${reindexStartTime} + 5;
 
@@ -67,7 +67,7 @@ definition {
 				}
 
 				while (((contains(${elasticsearchTasks}, "indices:data/write/bulk") || (IsElementPresent.pauseIsElementPresent(locator1 = "ControlMenu#RELOAD_TOOLTIP"))) && (${reindexElapsedTime} != 480)) && (maxIterations = "48")) {
-					Pause.pauseNoSPARefresh(locator1 = 10000);
+					Pause.pauseNoSPARefresh(value1 = 10000);
 
 					var reindexElapsedTime = ${reindexElapsedTime} + 10;
 
@@ -77,11 +77,11 @@ definition {
 				}
 			}
 			else if (contains(${searchEngineVendor}, "Solr") && contains(${actionsDescription}, "spell check")) {
-				Pause.pauseNoSPARefresh(locator1 = 60000);
+				Pause.pauseNoSPARefresh(value1 = 60000);
 			}
 			else if (contains(${searchEngineVendor}, "Solr")) {
 				while ((IsElementNotPresent(locator1 = "ControlMenu#RELOAD_TOOLTIP")) && (${reindexStartTime} != 60)) {
-					Pause.pauseNoSPARefresh(locator1 = 5000);
+					Pause.pauseNoSPARefresh(value1 = 5000);
 
 					var reindexStartTime = ${reindexStartTime} + 5;
 				}
@@ -94,7 +94,7 @@ definition {
 				}
 
 				while (((IsElementPresent(locator1 = "ControlMenu#RELOAD_TOOLTIP")) && (${reindexElapsedTime} != 480)) && (maxIterations = "48")) {
-					Pause.pauseNoSPARefresh(locator1 = 10000);
+					Pause.pauseNoSPARefresh(value1 = 10000);
 
 					var reindexElapsedTime = ${reindexElapsedTime} + 10;
 				}

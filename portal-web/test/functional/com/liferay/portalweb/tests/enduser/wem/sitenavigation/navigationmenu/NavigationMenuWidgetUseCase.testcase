@@ -185,7 +185,7 @@ definition {
 				locator1 = "SiteNavigationMenu#ITEM_ENTRY_DRAG_ICON",
 				locator2 = "SiteNavigationMenu#ITEM_ENTRY");
 
-			Pause(locator1 = 5000);
+			Pause(value1 = 5000);
 
 			NavigationMenusAdmin.viewItemNested(
 				groupName = "Guest",
@@ -202,12 +202,12 @@ definition {
 					locator1 = "SiteNavigationMenu#ITEM_ENTRY_DRAG_ICON",
 					locator2 = "SiteNavigationMenu#ITEM_ENTRY");
 
-				Pause(locator1 = 1000);
+				Pause(value1 = 1000);
 
 				var i = ${i} + 1;
 			}
 
-			Pause(locator1 = 5000);
+			Pause(value1 = 5000);
 
 			NavigationMenusAdmin.viewItemNested(
 				groupName = "Guest",
@@ -224,12 +224,12 @@ definition {
 					locator1 = "SiteNavigationMenu#ITEM_ENTRY_DRAG_ICON",
 					locator2 = "SiteNavigationMenu#ITEM_ENTRY");
 
-				Pause(locator1 = 1000);
+				Pause(value1 = 1000);
 
 				var i = ${i} + 1;
 			}
 
-			Pause(locator1 = 5000);
+			Pause(value1 = 5000);
 
 			NavigationMenusAdmin.viewItemNested(
 				groupName = "Guest",
@@ -247,11 +247,11 @@ definition {
 
 			NavigationMenusWidget.chooseMenu(menuName = "Navigation Menu Name");
 
-			Pause(locator1 = 3000);
+			Pause(value1 = 3000);
 
 			NavigationMenusWidget.selectDisplayTemplate(templateName = "Bar minimally styled");
 
-			Pause(locator1 = 3000);
+			Pause(value1 = 3000);
 
 			Portlet.saveAndCloseConfig();
 		}
@@ -321,11 +321,11 @@ definition {
 
 			NavigationMenusWidget.selectNavigation(menuType = "Public Pages Hierarchy");
 
-			Pause(locator1 = 3000);
+			Pause(value1 = 3000);
 
 			NavigationMenusWidget.selectDisplayTemplate(templateName = "Bar minimally styled");
 
-			Pause(locator1 = 3000);
+			Pause(value1 = 3000);
 
 			Portlet.saveAndCloseConfig();
 		}
@@ -393,11 +393,11 @@ definition {
 
 			NavigationMenusWidget.selectNavigation(menuType = "Public Pages Hierarchy");
 
-			Pause(locator1 = 3000);
+			Pause(value1 = 3000);
 
 			NavigationMenusWidget.selectDisplayTemplate(templateName = "List Menu");
 
-			Pause(locator1 = 3000);
+			Pause(value1 = 3000);
 
 			Portlet.saveAndCloseConfig();
 		}
@@ -467,7 +467,7 @@ definition {
 
 			NavigationMenusWidget.selectLevelsToDisplay(levels = 2);
 
-			Pause(locator1 = 3000);
+			Pause(value1 = 3000);
 
 			Portlet.saveAndCloseConfig();
 		}
@@ -495,7 +495,7 @@ definition {
 
 			NavigationMenusWidget.selectLevelsToDisplay(levels = 3);
 
-			Pause(locator1 = 3000);
+			Pause(value1 = 3000);
 
 			Portlet.saveAndCloseConfig();
 		}

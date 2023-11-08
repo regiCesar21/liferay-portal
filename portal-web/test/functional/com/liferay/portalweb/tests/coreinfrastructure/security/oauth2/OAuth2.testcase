@@ -780,7 +780,7 @@ definition {
 
 		Button.click(button = "Obtain OAuth2 Access");
 
-		Pause(locator1 = 6000);
+		Pause(value1 = 6000);
 
 		Button.click(button = "Launch Request");
 
@@ -854,7 +854,7 @@ definition {
 			key_activity = "Last Access",
 			locator1 = "OAuth2#USER_CONNECTED_APP_ACTIVITY");
 
-		Pause(locator1 = 20000);
+		Pause(value1 = 20000);
 
 		Refresh();
 
@@ -862,7 +862,7 @@ definition {
 			locator1 = "OAuth2#USER_CONNECTED_APP_EXPIRATION_VALUE",
 			value1 = "Within");
 
-		Pause(locator1 = 30000);
+		Pause(value1 = 30000);
 
 		Refresh();
 
@@ -870,7 +870,7 @@ definition {
 			locator1 = "OAuth2#USER_CONNECTED_APP_EXPIRATION_VALUE",
 			value1 = "Seconds Ago");
 
-		Pause(locator1 = 30000);
+		Pause(value1 = 30000);
 
 		Refresh();
 

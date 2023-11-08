@@ -912,14 +912,14 @@ definition {
 			groupName = "Test Site Name",
 			title = "WebContent Title 1");
 
-		Pause(locator1 = 65000);
+		Pause(value1 = 65000);
 
 		JSONWebcontent.addWebContent(
 			content = "WebContent Content 2",
 			groupName = "Test Site Name",
 			title = "WebContent Title 2");
 
-		Pause(locator1 = 65000);
+		Pause(value1 = 65000);
 
 		JSONWebcontent.addWebContent(
 			content = "WebContent Content 3",

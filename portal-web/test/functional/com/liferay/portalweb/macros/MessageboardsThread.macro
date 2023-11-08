@@ -9,7 +9,7 @@ definition {
 
 		MenuItem.click(menuItem = "Thread");
 
-		Pause(locator1 = 3000);
+		Pause(value1 = 3000);
 
 		AssertElementPresent(locator1 = "TextInput#SUBJECT");
 
@@ -46,7 +46,7 @@ definition {
 				locator1 = "TextInput#FILE",
 				value1 = ${mbAttachmentFile});
 
-			Pause(locator1 = 3000);
+			Pause(value1 = 3000);
 
 			if (IsNotChecked.isNotCheckedNotVisible(key_fileName = ${mbAttachmentFile}, locator1 = "Checkbox#UPLOAD_FILE_ENTRY")) {
 				Check.checkNotVisible(
@@ -64,7 +64,7 @@ definition {
 			locator1 = "Button#NEW_THREAD",
 			value1 = "New Thread");
 
-		Pause(locator1 = 3000);
+		Pause(value1 = 3000);
 
 		Type(
 			locator1 = "TextInput#SUBJECT",
@@ -93,7 +93,7 @@ definition {
 			locator1 = "Button#NEW_THREAD",
 			value1 = "New Thread");
 
-		Pause(locator1 = 3000);
+		Pause(value1 = 3000);
 
 		AssertElementPresent(locator1 = "TextInput#SUBJECT");
 
@@ -639,7 +639,7 @@ definition {
 			locator1 = "Button#SELECT",
 			value1 = "Select");
 
-		Pause(locator1 = 3000);
+		Pause(value1 = 3000);
 
 		SelectFrame(locator1 = "MessageBoardsSelectCategory#IFRAME");
 
@@ -854,7 +854,7 @@ definition {
 			locator1 = "Button#NEW_THREAD",
 			value1 = "New Thread");
 
-		Pause(locator1 = 3000);
+		Pause(value1 = 3000);
 
 		Type(
 			locator1 = "TextInput#SUBJECT",

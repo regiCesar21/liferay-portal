@@ -713,7 +713,7 @@ definition {
 
 		Questions.gotoCategory(categoryName = "Questions Test Category");
 
-		Pause(locator = 3000);
+		Pause(value = 3000);
 
 		Questions.search(
 			resultsInfo = '''1 Results for "questions title 5"''',
@@ -1241,7 +1241,7 @@ definition {
 
 		Questions.gotoCategory(categoryName = "Questions Test Category");
 
-		Pause(locator = 3000);
+		Pause(value = 3000);
 
 		Questions.viewPaginationResults(results = "Showing 1 to 10 of 10");
 
@@ -1288,7 +1288,7 @@ definition {
 
 		Questions.gotoCategory(categoryName = "Questions Test Category");
 
-		Pause(locator = 3000);
+		Pause(value = 3000);
 
 		Questions.configureFilter(filterBy = "Latest Edited");
 

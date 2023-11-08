@@ -104,7 +104,7 @@ definition {
 				fail("${layoutTemplateId} is not in 'typeSettings'");
 			}
 
-			Pause(locator1 = 3000);
+			Pause(value1 = 3000);
 		}
 	}
 
