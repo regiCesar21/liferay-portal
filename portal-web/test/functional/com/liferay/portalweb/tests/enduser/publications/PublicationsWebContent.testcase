@@ -300,6 +300,7 @@ definition {
 	test PublishWebContentWithDMAndImageFields {
 
 		// Workaround LPS-121020
+
 		//property test.assert.warning.exceptions = "true";
 
 		JSONPublications.addPublication(publicationName = "Publication Name");

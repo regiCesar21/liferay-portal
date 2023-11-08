@@ -1,6 +1,7 @@
 definition {
 
-	macro addAssignee {
+	@summary = "Default summary"
+	macro addAssignee(accountGroupName = null, assigneeNames = null, assigneeType = null) {
 		LexiconEntry.gotoAdd();
 
 		SelectFrame(
@@ -37,7 +38,8 @@ definition {
 		}
 	}
 
-	macro addCP {
+	@summary = "Default summary"
+	macro addCP(accountGroupDescription = null, accountGroupName = null) {
 		LexiconEntry.gotoAdd();
 
 		AssertTextEquals(
@@ -55,7 +57,8 @@ definition {
 		Alert.viewSuccessMessage();
 	}
 
-	macro removeAccount {
+	@summary = "Default summary"
+	macro removeAccount(removeType = null, accountGroupName = null) {
 		Search.searchCP(searchTerm = ${accountGroupName});
 
 		if (${removeType} == "Toolbar Remove Icon") {
@@ -91,7 +94,8 @@ definition {
 		LexiconEntry.viewNoEntry(rowEntry = ${accountGroupName});
 	}
 
-	macro viewAssignee {
+	@summary = "Default summary"
+	macro viewAssignee(assigneeName = null) {
 		AssertElementPresent(
 			key_tab = "Accounts",
 			locator1 = "NavTab#ACTIVE_TAB_LINK");
@@ -102,7 +106,8 @@ definition {
 			value1 = ${assigneeName});
 	}
 
-	macro viewDefault {
+	@summary = "Default summary"
+	macro viewDefault() {
 		if (IsElementPresent(locator1 = "NavTab#ACTIVE_TAB_LINK")) {
 			AssertElementPresent(
 				key_tab = ${tabName},

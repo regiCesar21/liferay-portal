@@ -1,32 +1,38 @@
 definition {
 
-	macro assertFormView {
+	@summary = "Default summary"
+	macro assertFormView(formViewName = null) {
 		AssertElementPresent(
 			formViewName = ${formViewName},
 			locator1 = "DetailsView#FORM_VIEW_NAME");
 	}
 
-	macro assertStatus {
+	@summary = "Default summary"
+	macro assertStatus(status = null) {
 		AssertElementPresent(
 			key_status = ${status},
 			locator1 = "DetailsView#STATUS_INFO");
 	}
 
-	macro assertStep {
+	@summary = "Default summary"
+	macro assertStep(step = null) {
 		AssertElementPresent(
 			key_step = ${step},
 			locator1 = "DetailsView#STEP_INFO");
 	}
 
-	macro backButton {
+	@summary = "Default summary"
+	macro backButton() {
 		Click(locator1 = "DetailsView#BACK_BUTTON");
 	}
 
-	macro backToTableView {
+	@summary = "Default summary"
+	macro backToTableView() {
 		Click(locator1 = "DetailsView#BACK_TO_TABLE_VIEW");
 	}
 
-	macro deleteEntry {
+	@summary = "Default summary"
+	macro deleteEntry(itemName = null) {
 		WaitForElementPresent(locator1 = "DetailsView#DELETE_ENTRY");
 
 		ClickNoError.clickNoMouseOver(locator1 = "DetailsView#DELETE_ENTRY");
@@ -40,21 +46,25 @@ definition {
 			value1 = ${itemName});
 	}
 
-	macro editEntry {
+	@summary = "Default summary"
+	macro editEntry() {
 		WaitForElementPresent(locator1 = "DetailsView#EDIT_ENTRY");
 
 		Click.clickNoMouseOver(locator1 = "DetailsView#EDIT_ENTRY");
 	}
 
-	macro nextEntry {
+	@summary = "Default summary"
+	macro nextEntry() {
 		Click(locator1 = "DetailsView#NEXT_ENTRY");
 	}
 
-	macro previousEntry {
+	@summary = "Default summary"
+	macro previousEntry() {
 		Click(locator1 = "DetailsView#PREVIOUS_ENTRY");
 	}
 
-	macro validateEntry {
+	@summary = "Default summary"
+	macro validateEntry(entry = null) {
 		AssertTextEquals(
 			locator1 = "DetailsView#VIEW_ENTRY",
 			value1 = ${entry});

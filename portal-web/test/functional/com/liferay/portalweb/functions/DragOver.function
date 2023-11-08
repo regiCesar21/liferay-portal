@@ -36,7 +36,10 @@ Simulate = {
 Simulate.dragOver(arguments[0], arguments[1]);
 		''';
 
-		ExecuteJavaScript(value1 = ${javaScript}, value2 = ${locator1}, value3 = ${locator2});
+		ExecuteJavaScript(
+			value1 = ${javaScript},
+			value2 = ${locator1},
+			value3 = ${locator2});
 
 		selenium.assertJavaScriptErrors("true");
 

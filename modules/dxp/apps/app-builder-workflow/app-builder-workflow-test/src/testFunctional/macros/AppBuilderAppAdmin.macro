@@ -1,33 +1,40 @@
 definition {
 
-	macro assertCreateObjectShortLinkPresent {
+	@summary = "Default summary"
+	macro assertCreateObjectShortLinkPresent() {
 		AssertElementPresent(locator1 = "AppBuilderAppAdmin#CREATE_NEW_OBJECT_SHORT_LINK");
 	}
 
-	macro assertWorkflowAppVersion {
+	@summary = "Default summary"
+	macro assertWorkflowAppVersion(workflowAppName = null, versionNumber = null) {
 		AssertElementPresent(
 			key_versionNumber = ${versionNumber},
 			key_workflowAppName = ${workflowAppName},
 			locator1 = "AppBuilderAppAdmin#WORKFLOW_APP_VERSION");
 	}
 
-	macro clickOnCreateNewAppButton {
+	@summary = "Default summary"
+	macro clickOnCreateNewAppButton() {
 		Button.click(button = "Create New App");
 	}
 
-	macro clickOnCreateObjectShortLink {
+	@summary = "Default summary"
+	macro clickOnCreateObjectShortLink() {
 		Click(locator1 = "AppBuilderAppAdmin#CREATE_NEW_OBJECT_SHORT_LINK");
 	}
 
-	macro clickOnPlusButton {
+	@summary = "Default summary"
+	macro clickOnPlusButton() {
 		Click(locator1 = "AppBuilderAppAdmin#PLUS_BUTTON");
 	}
 
-	macro clickOnSelectObject {
+	@summary = "Default summary"
+	macro clickOnSelectObject() {
 		Click(locator1 = "AppBuilderAppAdmin#SELECT_OBJECT_BUTTON");
 	}
 
-	macro createBasicWorkflowApp {
+	@summary = "Default summary"
+	macro createBasicWorkflowApp(formViewName = null, objectName = null, workflowAppName = null, tableViewName = null, isCreatingViaPlusIcon = null, deployOption = null) {
 		AppBuilderAppAdmin.goToWorkflowPoweredTab();
 
 		if (${isCreatingViaPlusIcon} == "true") {
@@ -53,7 +60,8 @@ definition {
 		AppBuilderWorkflow.waitForButtonNotPresent(buttonName = "Done");
 	}
 
-	macro createBasicWorkflowAppWith1ExtraStep {
+	@summary = "Default summary"
+	macro createBasicWorkflowAppWith1ExtraStep(formViewName = null, objectName = null, workflowAppName = null, tableViewName = null, assignee = null, isCreatingViaPlusIcon = null, deployOption = null) {
 		AppBuilderAppAdmin.goToWorkflowPoweredTab();
 
 		if (${isCreatingViaPlusIcon} == "true") {
@@ -85,25 +93,29 @@ definition {
 		AppBuilderWorkflow.waitForButtonNotPresent(buttonName = "Done");
 	}
 
-	macro goToStandardTab {
+	@summary = "Default summary"
+	macro goToStandardTab() {
 		Click(
 			key_tabName = "standard",
 			locator1 = "AppBuilderAppAdmin#APP_TAB");
 	}
 
-	macro goToWorkflowPoweredTab {
+	@summary = "Default summary"
+	macro goToWorkflowPoweredTab() {
 		Click(
 			key_tabName = "workflow",
 			locator1 = "AppBuilderAppAdmin#APP_TAB");
 	}
 
-	macro searchItem {
+	@summary = "Default summary"
+	macro searchItem(itemName = null) {
 		Type(
 			locator1 = "AppBuilderAppAdmin#SEARCH_BOX",
 			value1 = ${itemName});
 	}
 
-	macro selectObject {
+	@summary = "Default summary"
+	macro selectObject(objectName = null) {
 		Click(
 			key_objectName = ${objectName},
 			locator1 = "AppBuilderAppAdmin#OBJECT_ITEM");
@@ -111,29 +123,34 @@ definition {
 		Button.click(button = "Continue");
 	}
 
-	macro validateCreateNewAppButtonPresent {
+	@summary = "Default summary"
+	macro validateCreateNewAppButtonPresent() {
 		AssertElementPresent(
 			key_text = "Create New App",
 			locator1 = "Button#ANY");
 	}
 
-	macro validateNoObjectResultMessage {
+	@summary = "Default summary"
+	macro validateNoObjectResultMessage() {
 		AssertElementPresent(locator1 = "AppBuilderAppAdmin#SEARCH_BOX_OBJECT_NO_RESULT_MESSAGE");
 	}
 
-	macro validateObjectResultNotPresent {
+	@summary = "Default summary"
+	macro validateObjectResultNotPresent(objectName = null) {
 		AssertElementNotPresent(
 			key_objectName = ${objectName},
 			locator1 = "AppBuilderAppAdmin#OBJECT_ITEM");
 	}
 
-	macro validateObjectResultPresent {
+	@summary = "Default summary"
+	macro validateObjectResultPresent(objectName = null) {
 		AssertElementPresent(
 			key_objectName = ${objectName},
 			locator1 = "AppBuilderAppAdmin#OBJECT_ITEM");
 	}
 
-	macro validateObjectSearchBoxDisabled {
+	@summary = "Default summary"
+	macro validateObjectSearchBoxDisabled() {
 		AppBuilderAppAdmin.clickOnCreateNewAppButton();
 
 		AppBuilderAppAdmin.clickOnSelectObject();
@@ -141,13 +158,15 @@ definition {
 		AssertElementPresent(locator1 = "AppBuilderAppAdmin#SEARCH_BOX_DISABLED");
 	}
 
-	macro validateSearchItemCount {
+	@summary = "Default summary"
+	macro validateSearchItemCount(itemName = null, itemCount = null) {
 		AssertTextEquals(
 			locator1 = "AppBuilder#VALIDATE_SEARCH_RESULTS_BAR",
 			value1 = "${itemCount} Results for ${itemName}");
 	}
 
-	macro validateStandardAppColumns {
+	@summary = "Default summary"
+	macro validateStandardAppColumns() {
 		AssertTextEquals(
 			locator1 = "AppBuilderAppAdmin#COLUMN_ITEM",
 			value1 = "Name");
@@ -173,7 +192,8 @@ definition {
 			value1 = "Status");
 	}
 
-	macro validateTabsPresent {
+	@summary = "Default summary"
+	macro validateTabsPresent() {
 		AssertTextEquals.assertPartialText(
 			key_tabName = "standard",
 			locator1 = "AppBuilderAppAdmin#APP_TAB",
@@ -185,7 +205,8 @@ definition {
 			value1 = "Workflow Powered");
 	}
 
-	macro validateWorkflowAppColumns {
+	@summary = "Default summary"
+	macro validateWorkflowAppColumns() {
 		AssertTextEquals(
 			locator1 = "AppBuilderAppAdmin#COLUMN_ITEM",
 			value1 = "Name");
@@ -215,7 +236,8 @@ definition {
 			value1 = "Status");
 	}
 
-	macro waitForItemPresentOnTable {
+	@summary = "Default summary"
+	macro waitForItemPresentOnTable(itemName = null) {
 		while (IsElementNotPresent(locator1 = "AppBuilder#ITEM_ON_THE_TABLE", value1 = ${itemName})) {
 			Pause(value1 = 3000);
 

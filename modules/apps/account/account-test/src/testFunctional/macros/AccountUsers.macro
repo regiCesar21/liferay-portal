@@ -1,6 +1,7 @@
 definition {
 
-	macro addUserInfos {
+	@summary = "Default summary"
+	macro addUserInfos(domainValidation = null, emailDomainName = null, validDomainNames = null, accountName = null, userLastName = null, userScreenName = null, userEmailAddress = null, userFirstName = null) {
 		Type(
 			locator1 = "UsersAndOrganizationsEditUser#DETAILS_SCREEN_NAME_FIELD",
 			value1 = ${userScreenName});
@@ -29,7 +30,8 @@ definition {
 		}
 	}
 
-	macro addUsers {
+	@summary = "Default summary"
+	macro addUsers(domainValidation = null, emailDomainName = null, validDomainNames = null, accountName = null, userLastName = null, userScreenName = null, userEmailAddress = null, userFirstName = null) {
 		LexiconEntry.gotoAdd();
 
 		SelectFrame(locator1 = "IFrame#SELECT_ACCOUNT");
@@ -62,7 +64,8 @@ definition {
 		Alert.viewSuccessMessage();
 	}
 
-	macro deactivateUser {
+	@summary = "Default summary"
+	macro deactivateUser(userFirstName = null) {
 		Search.searchCP(searchTerm = ${userFirstName});
 
 		LexiconEntry.gotoEntryMenuItemNoError(
@@ -74,7 +77,8 @@ definition {
 		Alert.viewSuccessMessage();
 	}
 
-	macro editUser {
+	@summary = "Default summary"
+	macro editUser(password = null, editFirstName = null, accountUser = null, editScreenName = null, editEmailAddress = null) {
 		LexiconEntry.gotoEntryMenuItem(
 			menuItem = "Edit",
 			rowEntry = ${accountUser});
@@ -110,7 +114,8 @@ definition {
 		Alert.viewSuccessMessage();
 	}
 
-	macro removeAccount {
+	@summary = "Default summary"
+	macro removeAccount(accountName = null, accountUser = null) {
 		LexiconEntry.gotoEntry(rowEntry = ${accountUser});
 
 		Navigator.gotoNavUnderline(navUnderline = "General");
@@ -128,7 +133,8 @@ definition {
 		LexiconEntry.viewNoEntry(rowEntry = ${accountName});
 	}
 
-	macro selectAccounts {
+	@summary = "Default summary"
+	macro selectAccounts(accountName = null) {
 		SelectFrame(locator1 = "IFrame#SELECT_ACCOUNTS");
 
 		Check(
@@ -142,7 +148,8 @@ definition {
 		AssertElementPresent(locator1 = "Search#SEARCH_INFO");
 	}
 
-	macro viewEmailDomainValidation {
+	@summary = "Default summary"
+	macro viewEmailDomainValidation(domainValidation = null, emailDomainName = null, accountName = null) {
 		if (${domainValidation} == "Blocked") {
 			AssertTextEquals(
 				key_alertMessage = "${emailDomainName} is a blocked domain. Account administrators cannot add users with this domain to their accounts. You can still manually assign this email address to this user.",
@@ -162,14 +169,16 @@ definition {
 		}
 	}
 
-	macro viewEntryAccounts {
+	@summary = "Default summary"
+	macro viewEntryAccounts(accountUserName = null, accountName = null) {
 		AssertElementPresent(
 			key_rowEntry = ${accountUserName},
 			key_rowEntryAccount = ${accountName},
 			locator1 = "Account#ENTRY_CONTENT_ENTRY_ACCOUNTS");
 	}
 
-	macro viewValidDomains {
+	@summary = "Default summary"
+	macro viewValidDomains(validDomainNames = null) {
 		WaitForLiferayEvent.initializeLiferayEventLog();
 
 		AssertClick(

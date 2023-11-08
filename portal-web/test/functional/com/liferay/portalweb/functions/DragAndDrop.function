@@ -1,7 +1,7 @@
 @default = "dragAndDropToObject"
 definition {
 
-	function dragAndDrop() {
+	function dragAndDrop(locator1, value1) {
 		WaitForSPARefresh();
 
 		selenium.dragAndDrop(${locator1}, ${value1});
@@ -223,7 +223,10 @@ Simulate = {
 Simulate.dragAndDrop(arguments[0], arguments[1]);
 		''';
 
-		ExecuteJavaScript(value1 = ${javaScript}, value2 = ${locator1}, value3 = ${locator2});
+		ExecuteJavaScript(
+			value1 = ${javaScript},
+			value2 = ${locator1},
+			value3 = ${locator2});
 
 		selenium.assertJavaScriptErrors("true");
 
@@ -266,7 +269,10 @@ Simulate = {
 Simulate.dragAndDrop(arguments[0], arguments[1]);
 		''';
 
-		ExecuteJavaScript(value1 = ${javaScript}, value2 = ${locator1}, value3 = ${locator2});
+		ExecuteJavaScript(
+			value1 = ${javaScript},
+			value2 = ${locator1},
+			value3 = ${locator2});
 
 		selenium.assertJavaScriptErrors("true");
 
@@ -305,7 +311,10 @@ Simulate = {
 Simulate.dragAndDrop(arguments[0], arguments[1]);
 		''';
 
-		ExecuteJavaScript(value1 = ${javaScript}, value2 = ${locator1}, value3 = ${locator2});
+		ExecuteJavaScript(
+			value1 = ${javaScript},
+			value2 = ${locator1},
+			value3 = ${locator2});
 
 		selenium.assertJavaScriptErrors("true");
 
@@ -344,7 +353,10 @@ Simulate = {
 Simulate.dragAndDrop(arguments[0], arguments[1]);
 		''';
 
-		ExecuteJavaScript(value1 = ${javaScript}, value2 = ${locator1}, value3 = ${locator2});
+		ExecuteJavaScript(
+			value1 = ${javaScript},
+			value2 = ${locator1},
+			value3 = ${locator2});
 
 		selenium.assertJavaScriptErrors("true");
 
@@ -387,7 +399,10 @@ Simulate = {
 Simulate.dragAndDrop(arguments[0], arguments[1]);
 		''';
 
-		ExecuteJavaScript(value1 = ${javaScript}, value2 = ${locator1}, value3 = ${locator2});
+		ExecuteJavaScript(
+			value1 = ${javaScript},
+			value2 = ${locator1},
+			value3 = ${locator2});
 
 		selenium.assertJavaScriptErrors("true");
 

@@ -60,6 +60,7 @@ definition {
 		Navigator.openStagingSiteURL(defaultSite = "true");
 
 		// Workaround for LPS-110206
+
 		//Theme.viewTestThemeBackgroundColor();
 
 		takeScreenshot();
@@ -930,6 +931,7 @@ definition {
 		Button.clickPublish();
 
 		// Workaround for LPS-110206
+
 		//Theme.viewTestThemeBackgroundColor();
 
 		takeScreenshot();

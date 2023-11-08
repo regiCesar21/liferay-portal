@@ -1,6 +1,7 @@
 definition {
 
-	macro addAssignee {
+	@summary = "Default summary"
+	macro addAssignee(domainValidation = null, emailDomainName = null, validDomainNames = null, accountName = null, assigneeName = null, userLastName = null, userScreenName = null, userEmailAddress = null, assigneeType = null, userFirstName = null) {
 		LexiconEntry.gotoAdd();
 
 		SelectFrame(
@@ -47,7 +48,8 @@ definition {
 		}
 	}
 
-	macro addCP {
+	@summary = "Default summary"
+	macro addCP(accountStatus = null, accountTaxID = null, accountDescription = null, accountLogo = null, accountName = null, accountType = null, domainNames = null) {
 		LexiconEntry.gotoAdd();
 
 		AssertTextEquals(
@@ -104,7 +106,8 @@ definition {
 		Alert.viewSuccessMessage();
 	}
 
-	macro addDomains {
+	@summary = "Default summary"
+	macro addDomains(domainNames = null) {
 		AssertElementPresent(locator1 = "Account#DOMAIN_SECTION");
 
 		AssertClick(
@@ -126,7 +129,8 @@ definition {
 		}
 	}
 
-	macro deleteAccount {
+	@summary = "Default summary"
+	macro deleteAccount(accountName = null, deleteType = null) {
 		Search.searchCP(searchTerm = ${accountName});
 
 		if (${deleteType} == "Delete Icon") {
@@ -162,7 +166,8 @@ definition {
 		LexiconEntry.viewNoEntry(rowEntry = ${accountName});
 	}
 
-	macro editCP {
+	@summary = "Default summary"
+	macro editCP(accountDescriptionEdit = null, accountName = null, accountNameEdit = null, accountLogoEdit = null, accountStatusEdit = null) {
 		Accounts.gotoEdit(accountName = ${accountName});
 
 		PortletEntry.inputName(name = ${accountNameEdit});
@@ -191,11 +196,13 @@ definition {
 		Alert.viewSuccessMessage();
 	}
 
-	macro gotoAssigneeTab {
+	@summary = "Default summary"
+	macro gotoAssigneeTab(assigneeTab = null) {
 		Navigator.gotoNavTab(navTab = ${assigneeTab});
 	}
 
-	macro gotoEdit {
+	@summary = "Default summary"
+	macro gotoEdit(accountName = null) {
 		ApplicationsMenu.gotoPortlet(
 			category = "Accounts",
 			panel = "Applications",
@@ -212,7 +219,8 @@ definition {
 			value1 = "Edit ${accountName}");
 	}
 
-	macro inactiveAccount {
+	@summary = "Default summary"
+	macro inactiveAccount(deactivateType = null, accountName = null) {
 		Search.searchCP(searchTerm = ${accountName});
 
 		if (${deactivateType} == "Hide Icon") {
@@ -248,7 +256,8 @@ definition {
 		LexiconEntry.viewNoEntry(rowEntry = ${accountName});
 	}
 
-	macro removeDomain {
+	@summary = "Default summary"
+	macro removeDomain(accountName = null, domainName = null) {
 		LexiconEntry.gotoEntry(rowEntry = ${accountName});
 
 		Click(
@@ -262,7 +271,8 @@ definition {
 			locator1 = "Account#DOMAIN_REMOVE_DOMAIN");
 	}
 
-	macro selectUser {
+	@summary = "Default summary"
+	macro selectUser(domainValidation = null, emailDomainName = null, validDomainNames = null, accountName = null, accountUserName = null, userLastName = null, userScreenName = null, userEmailAddress = null) {
 		AssertElementPresent(locator1 = "Account#USER_SELECT");
 
 		if (!(IsElementPresent(locator1 = "Message#EMPTY_INFO_DEPOT_HIDE"))) {
@@ -316,7 +326,8 @@ definition {
 			locator1 = "Account#USER_TABLE_NAME");
 	}
 
-	macro tearDownCP {
+	@summary = "Default summary"
+	macro tearDownCP() {
 		ApplicationsMenu.gotoPortlet(
 			category = "Accounts",
 			panel = "Applications",
@@ -331,7 +342,8 @@ definition {
 		Alert.viewSuccessMessage();
 	}
 
-	macro unassignAssignee {
+	@summary = "Default summary"
+	macro unassignAssignee(assigneeName = null) {
 		var key_assigneeName = ${assigneeName};
 
 		Search.searchCP(searchTerm = ${assigneeName});
@@ -352,7 +364,8 @@ definition {
 		Alert.viewSuccessMessage();
 	}
 
-	macro viewAccountDetails {
+	@summary = "Default summary"
+	macro viewAccountDetails(accountTaxID = null, accountDescription = null, accountName = null, accountType = null, domainName = null, parentAccount = null) {
 		LexiconEntry.gotoEntry(rowEntry = ${accountName});
 
 		AssertTextEquals(
@@ -397,20 +410,23 @@ definition {
 		}
 	}
 
-	macro viewAssignee {
+	@summary = "Default summary"
+	macro viewAssignee(assigneeName = null) {
 		AssertTextEquals.assertPartialText(
 			key_tableEntry = ${assigneeName},
 			locator1 = "LexiconTable#TABLE_ENTRY",
 			value1 = ${assigneeName});
 	}
 
-	macro viewAssigneeTab {
+	@summary = "Default summary"
+	macro viewAssigneeTab(navTab = null) {
 		AssertElementPresent(
 			key_tab = ${navTab},
 			locator1 = "NavTab#TAB_LINK");
 	}
 
-	macro viewInactiveAccount {
+	@summary = "Default summary"
+	macro viewInactiveAccount(accountName = null) {
 		ManagementBar.setFilterAndOrder(filterBy = "Inactive");
 
 		Search.searchCP(searchTerm = ${accountName});
@@ -420,7 +436,8 @@ definition {
 			rowStatus = "Inactive");
 	}
 
-	macro viewNoAssignee {
+	@summary = "Default summary"
+	macro viewNoAssignee(accountName = null) {
 		LexiconEntry.gotoEntry(rowEntry = ${accountName});
 
 		Accounts.gotoAssigneeTab(assigneeTab = ${assigneeType});
@@ -432,7 +449,8 @@ definition {
 			value1 = "There are no ${assigneeType} associated with this account.");
 	}
 
-	macro viewNoAssigneeTab {
+	@summary = "Default summary"
+	macro viewNoAssigneeTab(navTab = null) {
 		AssertElementNotPresent(
 			key_tab = ${navTab},
 			locator1 = "NavTab#TAB_LINK");

@@ -2,7 +2,7 @@
 @summary = "ant -f ${locator1} ${value1}"
 definition {
 
-	function antCommand() {
+	function antCommand(locator1, value1) {
 		selenium.antCommand(${locator1}, ${value1});
 
 		selenium.assertJavaScriptErrors("true");

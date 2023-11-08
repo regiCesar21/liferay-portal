@@ -1,13 +1,15 @@
 definition {
 
-	macro gotoCommercePortletNavItem {
+	@summary = "Default summary"
+	macro gotoCommercePortletNavItem(navItem = null) {
 		AssertClick(
 			key_navItem = ${navItem},
 			locator1 = "NavBar#NAV_ITEM_LINK",
 			value1 = ${navItem});
 	}
 
-	macro gotoEntry {
+	@summary = "Default summary"
+	macro gotoEntry(entryName = null) {
 		SelectFrameTop();
 
 		AssertClickNoError(
@@ -16,7 +18,8 @@ definition {
 			value1 = ${entryName});
 	}
 
-	macro gotoFrontStoreProductPage {
+	@summary = "Default summary"
+	macro gotoFrontStoreProductPage() {
 		var productName = StringUtil.replace(${productName}, " ", "-");
 
 		var productName = StringUtil.lowerCase(${productName});
@@ -24,17 +27,20 @@ definition {
 		Navigator.openSpecificURL(url = "localhost:8080/web/guest/p/${productName}");
 	}
 
-	macro gotoMiniCart {
+	@summary = "Default summary"
+	macro gotoMiniCart() {
 		Click.clickNoMouseOver(locator1 = "CommerceAccelerators#MINI_CART_BUTTON");
 	}
 
-	macro gotoMiniumSidebarItem {
+	@summary = "Default summary"
+	macro gotoMiniumSidebarItem(menuItem = null) {
 		Click(
 			key_menuItem = ${menuItem},
 			locator1 = "CommerceAccelerators#MINIUM_SIDEBAR_MENU_ITEM");
 	}
 
-	macro gotoOptionValues {
+	@summary = "Default summary"
+	macro gotoOptionValues(optionEntryName = null) {
 		Click(
 			key_optionEntryName = ${optionEntryName},
 			locator1 = "CommerceNavigation#OPTION_VALUES_LINK",
@@ -45,7 +51,8 @@ definition {
 		AssertElementPresent(locator1 = "CommerceEntry#NAME_FIELD");
 	}
 
-	macro gotoOrderEntryViaAdmin {
+	@summary = "Default summary"
+	macro gotoOrderEntryViaAdmin(status = null) {
 		ClickNoError(
 			key_value = ${status},
 			locator1 = "CommerceEntry#BODY_VERTICAL_ELLIPSIS");
@@ -53,14 +60,16 @@ definition {
 		CommerceEntry.clickNoError(menuItem = "View");
 	}
 
-	macro gotoPortlet {
+	@summary = "Default summary"
+	macro gotoPortlet(portlet = null, category = null) {
 		ApplicationsMenu.gotoPortlet(
 			category = ${category},
 			panel = "Commerce",
 			portlet = ${portlet});
 	}
 
-	macro gotoSpeedwellAccountDropdownItem {
+	@summary = "Default summary"
+	macro gotoSpeedwellAccountDropdownItem(dropdownItem = null) {
 		Click(locator1 = "CommerceAccelerators#SPEEDWELL_ACCOUNT_DROPDOWN");
 
 		Click(
@@ -68,13 +77,15 @@ definition {
 			locator1 = "CommerceAccelerators#SPEEDWELL_ACCOUNT_DROPDOWN_ITEM");
 	}
 
-	macro gotoSpeedwellDashboardItem {
+	@summary = "Default summary"
+	macro gotoSpeedwellDashboardItem(dashboardItem = null) {
 		Click(
 			key_dashboardItem = ${dashboardItem},
 			locator1 = "CommerceAccelerators#SPEEDWELL_ACCOUNT_DASHBOARD_ITEM");
 	}
 
-	macro gotoSpeedwellTopbarItem {
+	@summary = "Default summary"
+	macro gotoSpeedwellTopbarItem(menuItem = null) {
 		Click(locator1 = "CommerceAccelerators#SPEEDWELL_TOPBAR_BUTTON");
 
 		Click(
@@ -82,13 +93,15 @@ definition {
 			locator1 = "CommerceAccelerators#SPEEDWELL_TOPBAR_MENU_ITEM");
 	}
 
-	macro gotoTableListEntry {
+	@summary = "Default summary"
+	macro gotoTableListEntry(entryName = null) {
 		Click(
 			key_entryName = ${entryName},
 			locator1 = "CommerceEntry#TABLE_LIST_TITLE");
 	}
 
-	macro searchEntry {
+	@summary = "Default summary"
+	macro searchEntry(entryName = null) {
 		AssertElementPresent(locator1 = "CommerceNavigation#SEARCH_FIELD");
 
 		Type(

@@ -1,6 +1,7 @@
 definition {
 
-	macro changeLocale {
+	@summary = "Default summary"
+	macro changeLocale(fieldName = null, locale = null) {
 		Click.clickNoMouseOver(
 			key_fieldName = ${fieldName},
 			locator1 = "Button#LOCALIZATION_OPEN_GRAPH");
@@ -10,7 +11,8 @@ definition {
 			locator1 = "Translation#LOCALIZATION_NAME");
 	}
 
-	macro configureOpenGraph {
+	@summary = "Default summary"
+	macro configureOpenGraph(uploadFileName = null, depotName = null, customDescription = null, customImage = null, customTitle = null, altDescription = null) {
 		if (isSet(customTitle)) {
 			var checkboxName = "Use Custom Title";
 
@@ -90,7 +92,8 @@ definition {
 		}
 	}
 
-	macro disableOpenGraphAtSiteLevel {
+	@summary = "Default summary"
+	macro disableOpenGraphAtSiteLevel() {
 		ProductMenu.gotoPortlet(
 			category = "Configuration",
 			portlet = "Site Settings");
@@ -108,7 +111,8 @@ definition {
 		Button.click(button = "Save");
 	}
 
-	macro mapEditableTextToField {
+	@summary = "Default summary"
+	macro mapEditableTextToField(field = null, mappedField = null) {
 		Click(
 			key_mappedField = ${mappedField},
 			locator1 = "PageEditor#EDITABLE_FIELD_TOOLBAR_MAP_BUTTON_SPECIFIC");
@@ -123,7 +127,8 @@ definition {
 			locator1 = "PageEditor#EDITABLE_FIELD_TOOLBAR_MAP_BUTTON_SPECIFIC");
 	}
 
-	macro viewDefaultConfiguration {
+	@summary = "Default summary"
+	macro viewDefaultConfiguration() {
 		task ("Assert open graph title") {
 			AssertTextEquals(
 				key_title = "Open Graph",
@@ -166,7 +171,8 @@ definition {
 		}
 	}
 
-	macro viewMappedField {
+	@summary = "Default summary"
+	macro viewMappedField(mappedFieldValue = null, mappedField = null) {
 		AssertTextEquals(
 			key_mappedField = ${mappedField},
 			locator1 = "TextInput#SEO_MAPPED_FIELD",
@@ -184,13 +190,15 @@ definition {
 		}
 	}
 
-	macro viewNoOpenGraphProperties {
+	@summary = "Default summary"
+	macro viewNoOpenGraphProperties(ogPropertyList = null) {
 		for (var ogProperty : list ${ogPropertyList}) {
 			AssertHTMLSourceTextNotPresent(value1 = ${ogProperty});
 		}
 	}
 
-	macro viewOpenGraphProperties {
+	@summary = "Default summary"
+	macro viewOpenGraphProperties(ogPropertyList = null) {
 		for (var ogProperty : list ${ogPropertyList}) {
 			AssertHTMLSourceTextPresent(value1 = ${ogProperty});
 		}
