@@ -1,6 +1,7 @@
 definition {
 
-	macro deleteJarOffline {
+	@summary = "Default summary"
+	macro deleteJarOffline(liferayDependencyJars = null) {
 		var liferayHome = PropsUtil.get("liferay.home.dir.name");
 
 		AntCommand(
@@ -8,7 +9,8 @@ definition {
 			value1 = "delete-dependency-file  -Dliferay.dependency.jars=${liferayDependencyJars} -Dliferay.home=${liferayHome}");
 	}
 
-	macro deleteWarOffline {
+	@summary = "Default summary"
+	macro deleteWarOffline(liferayDependencyWars = null) {
 		var liferayHome = PropsUtil.get("liferay.home.dir.name");
 
 		AntCommand(
@@ -16,7 +18,8 @@ definition {
 			value1 = "delete-dependency-file  -Dliferay.dependency.wars=${liferayDependencyWars} -Dliferay.home=${liferayHome}");
 	}
 
-	macro deployFileOnServer {
+	@summary = "Default summary"
+	macro deployFileOnServer(liferayDependencyJars = null, bundleIndex = null) {
 		var liferayHome = PropsUtil.get("liferay.home.dir.name");
 		var testBaseDirName = PropsUtil.get("test.base.dir.name");
 		var testDependenciesDirName = PropsUtil.get("test.dependencies.dir.name");

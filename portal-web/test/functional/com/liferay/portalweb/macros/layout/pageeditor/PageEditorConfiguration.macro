@@ -1,6 +1,7 @@
 definition {
 
-	macro changeConfigColor {
+	@summary = "Default summary"
+	macro changeConfigColor(fragmentName = null, colorPalette = null) {
 		var key_fragmentName = ${fragmentName};
 
 		if (IsNotVisible(locator1 = "Fragment#FRAGMENT_HEADER")) {
@@ -21,7 +22,8 @@ definition {
 		PageEditor.waitForAutoSave();
 	}
 
-	macro changeConfigSelection {
+	@summary = "Default summary"
+	macro changeConfigSelection(fragmentName = null, optionValue = null) {
 		var key_fragmentName = ${fragmentName};
 
 		if (IsNotVisible(locator1 = "Fragment#FRAGMENT_HEADER")) {
@@ -44,7 +46,8 @@ definition {
 		PageEditor.waitForAutoSave();
 	}
 
-	macro changeConfigText {
+	@summary = "Default summary"
+	macro changeConfigText(fragmentName = null, editableText = null, textConfigName = null) {
 		var key_fragmentName = ${fragmentName};
 
 		if (IsNotVisible(locator1 = "Fragment#FRAGMENT_HEADER")) {
@@ -71,7 +74,8 @@ definition {
 		PageEditor.waitForAutoSave();
 	}
 
-	macro checkConfigCheckbox {
+	@summary = "Default summary"
+	macro checkConfigCheckbox(fragmentName = null, checkboxName = null) {
 		var key_fragmentName = ${fragmentName};
 
 		Click(locator1 = "PageEditor#CONTENT_PAGE_DISABLED_HEADER");

@@ -1,6 +1,7 @@
 definition {
 
-	macro gotoAddCollection {
+	@summary = "Default summary"
+	macro gotoAddCollection() {
 		var browserType = PropsUtil.get("browser.type");
 
 		if (${browserType} == "internetexplorer") {
@@ -18,7 +19,8 @@ definition {
 		}
 	}
 
-	macro gotoCollection {
+	@summary = "Default summary"
+	macro gotoCollection(collectionName = null) {
 		SelectFrameTop();
 
 		AssertClick.assertPartialTextClickAt(
@@ -26,17 +28,20 @@ definition {
 			value1 = ${collectionName});
 	}
 
-	macro gotoEntry {
+	@summary = "Default summary"
+	macro gotoEntry(entry = null) {
 		LexiconCard.clickCardTitle(card = ${entry});
 	}
 
-	macro gotoEntryEllipsisItem {
+	@summary = "Default summary"
+	macro gotoEntryEllipsisItem(entry = null, item = null) {
 		LexiconCard.clickEllipsisItem(
 			card = ${entry},
 			item = ${item});
 	}
 
-	macro gotoExportCollection {
+	@summary = "Default summary"
+	macro gotoExportCollection() {
 		var browserType = PropsUtil.get("browser.type");
 
 		if (${browserType} == "internetexplorer") {
@@ -53,7 +58,8 @@ definition {
 		SelectFrame.selectFrameNoLoading(locator1 = "IFrame#MODAL_IFRAME");
 	}
 
-	macro gotoImportCollection {
+	@summary = "Default summary"
+	macro gotoImportCollection() {
 		var browserType = PropsUtil.get("browser.type");
 
 		if (${browserType} == "internetexplorer") {
@@ -75,13 +81,15 @@ definition {
 		SelectFrame.selectFrameNoLoading(locator1 = "IFrame#MODAL_IFRAME");
 	}
 
-	macro gotoSpecificScopeCollection {
+	@summary = "Default summary"
+	macro gotoSpecificScopeCollection(collectionName = null) {
 		AssertClick.assertPartialTextClickAt(
 			locator1 = "FragmentAdmin#FRAGMENT_COLLECTION_SPECIFIC_SCOPE",
 			value1 = ${collectionName});
 	}
 
-	macro openFragmentsAdmin {
+	@summary = "Default summary"
+	macro openFragmentsAdmin(baseURL = null, siteURLKey = null) {
 		Navigator.openWithAppendToBaseURL(
 			baseURL = ${baseURL},
 			urlAppend = "group/${siteURLKey}/~/control_panel/manage/-/fragments");

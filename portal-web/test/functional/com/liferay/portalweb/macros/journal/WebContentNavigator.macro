@@ -1,6 +1,7 @@
 definition {
 
-	macro _openDescriptiveMenulistCP {
+	@summary = "Default summary"
+	macro _openDescriptiveMenulistCP(webContentTitle = null, webContentTitleEscapeCharacter = null, liveSite = null) {
 		if (isSet(webContentTitleEscapeCharacter)) {
 			var key_webContentTitle = ${webContentTitleEscapeCharacter};
 		}
@@ -24,7 +25,8 @@ definition {
 		Click.waitForMenuToggleJSClick(locator1 = "WC#ENTRY_LIST_MENULIST_ICON");
 	}
 
-	macro gotoAddCP {
+	@summary = "Default summary"
+	macro gotoAddCP() {
 		Pause(locator1 = 3000);
 
 		LexiconEntry.gotoAdd();
@@ -38,7 +40,8 @@ definition {
 		}
 	}
 
-	macro gotoAddWithStructureCP {
+	@summary = "Default summary"
+	macro gotoAddWithStructureCP(structureName = null) {
 		LexiconEntry.gotoAdd();
 
 		if (IsElementPresent(key_menuItem = ${structureName}, locator1 = "MenuItem#ANY_MENU_ITEM")) {
@@ -55,7 +58,8 @@ definition {
 		}
 	}
 
-	macro gotoEditCP {
+	@summary = "Default summary"
+	macro gotoEditCP(webContentTitle = null, webContentTitleEscapeCharacter = null) {
 		WebContentNavigator._openDescriptiveMenulistCP(
 			webContentTitle = ${webContentTitle},
 			webContentTitleEscapeCharacter = ${webContentTitleEscapeCharacter});
@@ -65,7 +69,8 @@ definition {
 		AssertElementPresent(locator1 = "Icon#BACK");
 	}
 
-	macro gotoEditFeed {
+	@summary = "Default summary"
+	macro gotoEditFeed(feedName = null) {
 		AssertClick(
 			key_feedName = ${feedName},
 			locator1 = "DDMSelectFeed#FEED_TABLE_NAME_LINK",
@@ -74,7 +79,8 @@ definition {
 		SelectFrame(value1 = "relative=top");
 	}
 
-	macro gotoEditStructure {
+	@summary = "Default summary"
+	macro gotoEditStructure(structureName = null) {
 		AssertClick(
 			key_ddlDataDefinitionName = ${structureName},
 			locator1 = "DDMSelectStructure#DDM_STRUCTURE_TABLE_NAME_LINK",
@@ -83,7 +89,8 @@ definition {
 		SelectFrame(value1 = "relative=top");
 	}
 
-	macro gotoEntryMenuItem {
+	@summary = "Default summary"
+	macro gotoEntryMenuItem(entry = null, menuItem = null) {
 		Pause(locator1 = 3000);
 
 		Click.waitForMenuToggleJSClick(
@@ -93,7 +100,8 @@ definition {
 		MenuItem.clickNoError(menuItem = ${menuItem});
 	}
 
-	macro gotoManageTemplatesViaStructures {
+	@summary = "Default summary"
+	macro gotoManageTemplatesViaStructures(structureName = null) {
 		LexiconEntry.gotoEntryMenuItem(
 			menuItem = "Manage Templates",
 			rowEntry = ${structureName});
@@ -101,7 +109,8 @@ definition {
 		SiteAdmin.viewPortletTitle(portletTitle = "Templates for Structure: ${structureName}");
 	}
 
-	macro gotoMoreStructuresViaPlusButton {
+	@summary = "Default summary"
+	macro gotoMoreStructuresViaPlusButton(pageMod = null) {
 		LexiconEntry.gotoAdd();
 
 		if (IsElementPresent(key_text = "More", locator1 = "Button#ANY")) {
@@ -115,7 +124,8 @@ definition {
 		SelectFrame(locator1 = "IFrame#MODAL_BODY");
 	}
 
-	macro gotoPreviewEntryCP {
+	@summary = "Default summary"
+	macro gotoPreviewEntryCP(webContentTitle = null, webContentTitleEscapeCharacter = null, liveSite = null) {
 		WebContentNavigator._openDescriptiveMenulistCP(
 			liveSite = ${liveSite},
 			webContentTitle = ${webContentTitle},
@@ -124,7 +134,8 @@ definition {
 		MenuItem.click(menuItem = "Preview");
 	}
 
-	macro gotoViewStatus {
+	@summary = "Default summary"
+	macro gotoViewStatus(webContentTitle = null, translationStatus = null, webContentStatus = null) {
 		var key_webContentTitle = ${webContentTitle};
 
 		LexiconEntry.changeDisplayStyle(displayStyle = "list");
@@ -145,7 +156,8 @@ definition {
 		WebContentNavigator.gotoEditCP(webContentTitle = ${webContentTitle});
 	}
 
-	macro gotoViewTemplate {
+	@summary = "Default summary"
+	macro gotoViewTemplate(templateName = null) {
 		AssertClick(
 			key_ddlTemplateName = ${templateName},
 			locator1 = "DDMSelectTemplate#TEMPLATE_TABLE_NAME_LINK",
@@ -154,7 +166,8 @@ definition {
 
 	// You can use this navigation when you need to access the configuration quickly without checking the UI.
 
-	macro openToAddBasicArticle {
+	@summary = "Default summary"
+	macro openToAddBasicArticle(groupName = null, site = null, siteURLKey = null, folderName = null) {
 		if (!(isSet(baseURL))) {
 			var baseURL = PropsUtil.get("portal.url");
 		}
@@ -183,7 +196,8 @@ definition {
 		}
 	}
 
-	macro openWebContentAdmin {
+	@summary = "Default summary"
+	macro openWebContentAdmin(baseURL = null, siteURLKey = null) {
 		Navigator.openWithAppendToBaseURL(
 			baseURL = ${baseURL},
 			urlAppend = "group/${siteURLKey}/~/control_panel/manage?p_p_id=com_liferay_journal_web_portlet_JournalPortlet");

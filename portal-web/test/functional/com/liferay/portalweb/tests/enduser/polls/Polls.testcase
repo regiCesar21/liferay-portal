@@ -68,7 +68,7 @@ definition {
 	@priority = 4
 	test AddPollsQuestionWithSpecialCharacters {
 		property portal.acceptance = "true";
-		property portal.upstream = "true";		
+		property portal.upstream = "true";
 
 		var pollsQuestionChoiceA = '''"Black"''';
 		var pollsQuestionChoiceB = '''"Brown"''';

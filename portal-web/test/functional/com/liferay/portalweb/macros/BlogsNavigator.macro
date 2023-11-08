@@ -1,6 +1,7 @@
 definition {
 
-	macro gotoAddEntry {
+	@summary = "Default summary"
+	macro gotoAddEntry() {
 		if (IsElementPresent(locator1 = "Blogs#ADD_BLOGS_ENTRY")) {
 			Click(locator1 = "Blogs#ADD_BLOGS_ENTRY");
 		}
@@ -15,13 +16,15 @@ definition {
 		AssertVisible(locator1 = "BlogsEntry#ENTRY_COVER_IMAGE_SELECT_FILE");
 	}
 
-	macro gotoBlogsEntriesPermissionsCP {
+	@summary = "Default summary"
+	macro gotoBlogsEntriesPermissionsCP() {
 		LexiconEntry.gotoHeaderMenuItem(menuItem = "Entries Permissions");
 
 		SelectFrame(locator1 = "IFrame#MODAL_BODY");
 	}
 
-	macro gotoBlogsEntryPermissionsCP {
+	@summary = "Default summary"
+	macro gotoBlogsEntryPermissionsCP(entryTitle = null) {
 		Pause(locator = 1000);
 
 		LexiconCard.clickEllipsisItem(
@@ -31,7 +34,8 @@ definition {
 		SelectFrame(locator1 = "IFrame#MODAL_BODY");
 	}
 
-	macro gotoBlogsEntryPermissionsPG {
+	@summary = "Default summary"
+	macro gotoBlogsEntryPermissionsPG(entryTitle = null) {
 		Portlet.mouseOverPortletTitle(portletTitleName = "Blogs");
 
 		Blogs.clickEllipsisItemPG(
@@ -41,21 +45,25 @@ definition {
 		SelectFrame(locator1 = "IFrame#MODAL_BODY");
 	}
 
-	macro gotoBrowseImage {
+	@summary = "Default summary"
+	macro gotoBrowseImage() {
 		Click(locator1 = "Button#BROWSE_IMAGE");
 	}
 
-	macro gotoConfigurationScopePG {
+	@summary = "Default summary"
+	macro gotoConfigurationScopePG() {
 		Navigator.gotoNavItem(navItem = "Scope");
 	}
 
-	macro gotoConfigurationSetupPG {
+	@summary = "Default summary"
+	macro gotoConfigurationSetupPG() {
 		Portlet.gotoPortletOptions(portletOption = "Configuration");
 
 		SelectFrame(locator1 = "IFrame#MODAL_BODY");
 	}
 
-	macro gotoEditCP {
+	@summary = "Default summary"
+	macro gotoEditCP(entryTitle = null) {
 		LexiconEntry.changeDisplayStyle(displayStyle = "list");
 
 		var key_entryTitle = ${entryTitle};
@@ -75,7 +83,8 @@ definition {
 			locator1 = "TextArea#ANY");
 	}
 
-	macro gotoEditPG {
+	@summary = "Default summary"
+	macro gotoEditPG(entryTitle = null) {
 		var key_entryTitle = ${entryTitle};
 
 		AssertTextEquals(
@@ -101,7 +110,8 @@ definition {
 		}
 	}
 
-	macro gotoEntryCP {
+	@summary = "Default summary"
+	macro gotoEntryCP(entryStatus = null, entryTitle = null) {
 		LexiconEntry.changeDisplayStyle(displayStyle = "list");
 
 		var key_entryTitle = ${entryTitle};
@@ -115,7 +125,8 @@ definition {
 		LexiconList.clickListEntryTitle(listEntry = ${entryTitle});
 	}
 
-	macro gotoEntryPG {
+	@summary = "Default summary"
+	macro gotoEntryPG(entryTitle = null, entryContent = null) {
 		var key_entryContent = ${entryContent};
 		var key_entryTitle = ${entryTitle};
 
@@ -132,7 +143,8 @@ definition {
 			value1 = ${entryTitle});
 	}
 
-	macro gotoEntryWithAbstractPG {
+	@summary = "Default summary"
+	macro gotoEntryWithAbstractPG(entryAbstractDescription = null, entryTitle = null) {
 		var key_entryAbstractDescription = ${entryAbstractDescription};
 		var key_entryTitle = ${entryTitle};
 
@@ -149,7 +161,8 @@ definition {
 			value1 = ${entryTitle});
 	}
 
-	macro gotoPG {
+	@summary = "Default summary"
+	macro gotoPG(blogEntryURL = null, entryTitle = null) {
 		var key_entryTitle = ${entryTitle};
 
 		if (isSet(blogEntryURL)) {
@@ -166,7 +179,8 @@ definition {
 			value1 = ${entryTitle});
 	}
 
-	macro gotoSelectFile {
+	@summary = "Default summary"
+	macro gotoSelectFile() {
 		Pause(locator1 = 5000);
 
 		AssertClick(
@@ -174,7 +188,8 @@ definition {
 			value1 = "Select File");
 	}
 
-	macro gotoShare {
+	@summary = "Default summary"
+	macro gotoShare(entryTitle = null) {
 		WaitForLiferayEvent.initializeLiferayEventLog();
 
 		LexiconEntry.gotoEntryMenuItem(
@@ -182,7 +197,8 @@ definition {
 			rowEntry = ${entryTitle});
 	}
 
-	macro moveToRecycleBinCP {
+	@summary = "Default summary"
+	macro moveToRecycleBinCP(entryTitle = null) {
 		LexiconEntry.changeDisplayStyle(displayStyle = "list");
 
 		var key_entryTitle = ${entryTitle};
@@ -200,11 +216,13 @@ definition {
 		VerifyElementPresent(locator1 = "Message#SUCCESS");
 	}
 
-	macro openBlogsAdmin {
+	@summary = "Default summary"
+	macro openBlogsAdmin(siteURLKey = null) {
 		Navigator.openWithAppendToBaseURL(urlAppend = "group/${siteURLKey}/~/control_panel/manage?p_p_id=com_liferay_blogs_web_portlet_BlogsAdminPortlet");
 	}
 
-	macro openToAddEntry {
+	@summary = "Default summary"
+	macro openToAddEntry(siteURLKey = null) {
 		var baseURL = ${baseURL};
 
 		if (!(isSet(baseURL))) {

@@ -3,7 +3,8 @@ definition {
 	var formName = "Created Form Name";
 	var rowIndexNumber = 1;
 
-	macro enableLocalNetworkDataProvider {
+	@summary = "Default summary"
+	macro enableLocalNetworkDataProvider() {
 		Navigator.openURL();
 
 		ApplicationsMenu.gotoPortlet(
@@ -34,19 +35,23 @@ definition {
 		}
 	}
 
-	macro gotoAddDataProvider {
+	@summary = "Default summary"
+	macro gotoAddDataProvider() {
 		LexiconEntry.gotoAdd();
 	}
 
-	macro gotoAddElementSet {
+	@summary = "Default summary"
+	macro gotoAddElementSet() {
 		LexiconEntry.gotoAdd();
 	}
 
-	macro gotoAddForm {
+	@summary = "Default summary"
+	macro gotoAddForm() {
 		LexiconEntry.gotoAdd();
 	}
 
-	macro gotoBack {
+	@summary = "Default summary"
+	macro gotoBack() {
 		Navigator.gotoBack();
 
 		if (IsElementPresent(locator1 = "Button#LEAVE")) {
@@ -54,7 +59,8 @@ definition {
 		}
 	}
 
-	macro gotoDeleteField {
+	@summary = "Default summary"
+	macro gotoDeleteField(fieldName = null) {
 		FormsAdminNavigator.gotoEditField(fieldName = ${fieldName});
 
 		var key_fieldName = ${fieldName};
@@ -68,7 +74,8 @@ definition {
 		Click(locator1 = "Form#SIDEBAR_MENUITEM_REMOVE_FIELD");
 	}
 
-	macro gotoEditField {
+	@summary = "Default summary"
+	macro gotoEditField(fieldPositionNumber = null, fieldName = null) {
 		var key_fieldName = ${fieldName};
 		var key_fieldPositionNumber = ${fieldPositionNumber};
 
@@ -86,14 +93,16 @@ definition {
 		AssertElementPresent(locator1 = "Form#SIDEBAR_BASIC_TAB");
 	}
 
-	macro gotoEditFormByName {
+	@summary = "Default summary"
+	macro gotoEditFormByName(formName = null) {
 		AssertClick(
 			key_formName = ${formName},
 			locator1 = "FormsAdmin#FORMS_TABLE_NAME",
 			value1 = ${formName});
 	}
 
-	macro gotoFormBuilder {
+	@summary = "Default summary"
+	macro gotoFormBuilder() {
 		var key_assetTitle = "Form";
 
 		WaitForElementPresent(
@@ -105,7 +114,8 @@ definition {
 			value1 = "Form");
 	}
 
-	macro gotoPermissions {
+	@summary = "Default summary"
+	macro gotoPermissions(formName = null) {
 		LexiconEntry.gotoEntryMenuItem(
 			menuItem = "Permissions",
 			rowEntry = ${formName});
@@ -113,7 +123,8 @@ definition {
 		SelectFrame(locator1 = "IFrame#MODAL_BODY");
 	}
 
-	macro gotoPreviewForm {
+	@summary = "Default summary"
+	macro gotoPreviewForm() {
 		WaitForElementPresent(
 			locator1 = "Form#PREVIEW_FORM_BUTTON",
 			value1 = "Preview");
@@ -123,13 +134,15 @@ definition {
 			value1 = "Preview");
 	}
 
-	macro gotoPublishCopyURLLink {
+	@summary = "Default summary"
+	macro gotoPublishCopyURLLink() {
 		WaitForElementPresent(locator1 = "Form#PUBLISH_ICON");
 
 		Click(locator1 = "Form#PUBLISH_ICON");
 	}
 
-	macro gotoPublishedForm {
+	@summary = "Default summary"
+	macro gotoPublishedForm() {
 		FormsAdminNavigator.gotoPublishCopyURLLink();
 
 		var publishedFormPublicURL = Form.getPublishedFormPublicURL(publishedFormPublicURL = ${publishedFormPublicURL});
@@ -137,7 +150,8 @@ definition {
 		Navigator.openSpecificURL(url = ${publishedFormPublicURL});
 	}
 
-	macro gotoRules {
+	@summary = "Default summary"
+	macro gotoRules() {
 		var key_assetTitle = "Rules";
 
 		WaitForElementPresent(
@@ -149,13 +163,15 @@ definition {
 			value1 = "Rules");
 	}
 
-	macro gotoSettings {
+	@summary = "Default summary"
+	macro gotoSettings() {
 		AssertElementPresent(locator1 = "Form#NAME_FIELD");
 
 		LexiconEntry.gotoHeaderMenuItem(menuItem = "Settings");
 	}
 
-	macro gotoView {
+	@summary = "Default summary"
+	macro gotoView(rowIndexNumber = null) {
 		var key_rowIndexNumber = ${rowIndexNumber};
 
 		AssertElementPresent(locator1 = "Icon#ROW_VERTICAL_ELLIPSIS_N");
@@ -163,7 +179,8 @@ definition {
 		LexiconEntry.gotoEllipsisMenuItem(menuItem = "View");
 	}
 
-	macro gotoViewEntries {
+	@summary = "Default summary"
+	macro gotoViewEntries() {
 		if (IsElementNotPresent(locator1 = "Icon#BODY_VERTICAL_ELLIPSIS")) {
 			AssertElementPresent(locator1 = "Icon#BODY_VERTICAL_ELLIPSIS_IE");
 		}
@@ -174,7 +191,8 @@ definition {
 		LexiconEntry.gotoEllipsisMenuItem(menuItem = "View Entries");
 	}
 
-	macro openPublishURL {
+	@summary = "Default summary"
+	macro openPublishURL() {
 		FormsAdminNavigator.gotoPublishCopyURLLink();
 
 		Pause(locator1 = 2000);

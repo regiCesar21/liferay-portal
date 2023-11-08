@@ -1,6 +1,7 @@
 definition {
 
-	macro assertEquals {
+	@summary = "Default summary"
+	macro assertEquals(actual = null, expected = null) {
 		echo(${expected});
 
 		echo(${actual});
@@ -13,7 +14,8 @@ definition {
 		}
 	}
 
-	macro assertNotEquals {
+	@summary = "Default summary"
+	macro assertNotEquals(actual = null, expected = null) {
 		echo(${expected});
 
 		echo(${actual});
@@ -26,7 +28,8 @@ definition {
 		}
 	}
 
-	macro fail {
+	@summary = "Default summary"
+	macro fail() {
 		if (!(isSet(message))) {
 			var message = "FAIL";
 		}
@@ -36,7 +39,8 @@ definition {
 		fail(${message});
 	}
 
-	macro getElementTextContent {
+	@summary = "Default summary"
+	macro getElementTextContent() {
 		WaitForSPARefresh();
 
 		var javascript = '''
@@ -50,7 +54,8 @@ return element.textContent;
 		return ${textContent};
 	}
 
-	macro getScreenHeight {
+	@summary = "Default summary"
+	macro getScreenHeight() {
 		WaitForSPARefresh();
 
 		var screenHeight = selenium.getEval("return	screen.height.toString();");
@@ -58,7 +63,8 @@ return element.textContent;
 		return ${screenHeight};
 	}
 
-	macro getScreenWidth {
+	@summary = "Default summary"
+	macro getScreenWidth() {
 		WaitForSPARefresh();
 
 		var screenWidth = selenium.getEval("return screen.width.toString();");
@@ -66,7 +72,8 @@ return element.textContent;
 		return ${screenWidth};
 	}
 
-	macro hardRefresh {
+	@summary = "Default summary"
+	macro hardRefresh() {
 		var mac = OSDetector.isApple();
 
 		if (${mac} == "true") {
@@ -79,7 +86,8 @@ return element.textContent;
 		WaitForPageLoad();
 	}
 
-	macro isGreaterThan {
+	@summary = "Default summary"
+	macro isGreaterThan(actual = null, expected = null) {
 		echo(${expected});
 
 		echo(${actual});
@@ -94,7 +102,8 @@ return element.textContent;
 		}
 	}
 
-	macro pass {
+	@summary = "Default summary"
+	macro pass() {
 		if (!(isSet(message))) {
 			var message = "PASS";
 		}
@@ -102,7 +111,8 @@ return element.textContent;
 		echo(${message});
 	}
 
-	macro typeIntoField {
+	@summary = "Default summary"
+	macro typeIntoField() {
 		Navigator.openURL();
 
 		ProductMenu.gotoPortlet(

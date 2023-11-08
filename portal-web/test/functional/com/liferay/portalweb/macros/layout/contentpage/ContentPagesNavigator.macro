@@ -1,6 +1,7 @@
 definition {
 
-	macro _convertNameToKey {
+	@summary = "Default summary"
+	macro _convertNameToKey(name = null) {
 		Variables.assertDefined(parameterList = ${name});
 
 		var key = StringUtil.replace(${name}, " ", "-");
@@ -10,7 +11,8 @@ definition {
 		return ${key};
 	}
 
-	macro openEditContentPage {
+	@summary = "Default summary"
+	macro openEditContentPage(siteName = null, pageName = null) {
 		if (!(isSet(siteURLKey))) {
 			var siteURLKey = ContentPagesNavigator._convertNameToKey(name = ${siteName});
 		}
@@ -24,7 +26,8 @@ definition {
 		PageEditor.assertFragmentSidebarLoaded();
 	}
 
-	macro openViewContentPage {
+	@summary = "Default summary"
+	macro openViewContentPage(siteName = null, pageName = null) {
 		if (!(isSet(siteURLKey))) {
 			var siteURLKey = ContentPagesNavigator._convertNameToKey(name = ${siteName});
 		}

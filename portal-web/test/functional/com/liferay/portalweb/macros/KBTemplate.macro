@@ -1,6 +1,7 @@
 definition {
 
-	macro addCP {
+	@summary = "Default summary"
+	macro addCP(kbTemplateTitle = null, kbTemplateContent = null) {
 		Navigator.gotoNavItem(navItem = "Templates");
 
 		LexiconEntry.gotoAdd();
@@ -14,7 +15,8 @@ definition {
 		PortletEntry.publish();
 	}
 
-	macro gotoCP {
+	@summary = "Default summary"
+	macro gotoCP(kbTemplateTitle = null) {
 		Navigator.gotoNavItem(navItem = "Templates");
 
 		LexiconEntry.gotoEntryMenuItem(
@@ -22,7 +24,8 @@ definition {
 			rowEntry = ${kbTemplateTitle});
 	}
 
-	macro tearDownCP {
+	@summary = "Default summary"
+	macro tearDownCP() {
 		Navigator.openURL();
 
 		ProductMenu.gotoPortlet(
@@ -44,7 +47,8 @@ definition {
 		}
 	}
 
-	macro viewCP {
+	@summary = "Default summary"
+	macro viewCP(kbTemplateTitle = null, kbTemplateContent = null) {
 		KBTemplate.gotoCP(kbTemplateTitle = ${kbTemplateTitle});
 
 		AssertTextEquals(
@@ -56,7 +60,8 @@ definition {
 			value1 = ${kbTemplateContent});
 	}
 
-	macro viewCPViaAddTemplate {
+	@summary = "Default summary"
+	macro viewCPViaAddTemplate(kbTemplateTitle = null, kbTemplateContent = null) {
 		LexiconEntry.gotoAddMenuItem(menuItem = ${kbTemplateTitle});
 
 		AssertTextEquals(

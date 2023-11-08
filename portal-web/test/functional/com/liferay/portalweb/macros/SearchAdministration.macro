@@ -1,6 +1,7 @@
 definition {
 
-	macro assertEngineVendorAndVersions {
+	@summary = "Default summary"
+	macro assertEngineVendorAndVersions(serverVersion = null, engineVendor = null, clientVersion = null) {
 		AssertTextEquals.assertPartialText(
 			locator1 = "SearchAdmin#SEARCH_ENGINE_VENDOR",
 			value1 = ${engineVendor});
@@ -16,7 +17,8 @@ definition {
 			value1 = ${serverVersion});
 	}
 
-	macro executeSearchActions {
+	@summary = "Default summary"
+	macro executeSearchActions(actionsDescription = null) {
 		AssertTextEquals(
 			locator1 = "Portlet#HEADER",
 			value1 = "Search");
@@ -109,7 +111,8 @@ definition {
 		}
 	}
 
-	macro getServerVersion {
+	@summary = "Default summary"
+	macro getServerVersion() {
 		ApplicationsMenu.gotoPortlet(
 			category = "Configuration",
 			panel = "Control Panel",

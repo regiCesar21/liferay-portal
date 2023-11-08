@@ -1,6 +1,7 @@
 definition {
 
-	macro _selectCard {
+	@summary = "Default summary"
+	macro _selectCard(pageTemplateName = null, masterLayoutName = null, collectionName = null) {
 		if (isSet(collectionName)) {
 			Navigator.gotoNavNested(navNested = ${collectionName});
 
@@ -18,7 +19,8 @@ definition {
 		}
 	}
 
-	macro addChildPage {
+	@summary = "Default summary"
+	macro addChildPage(parentPageName = null, basicTemplate = null, pageTemplateName = null, childPageName = null, vocabularyName = null, categoryName = null, masterLayoutName = null, collectionName = null, categoryNameList = null) {
 		MouseOver(
 			key_itemName = ${parentPageName},
 			locator1 = "SitePages#LIST_GROUP_ITEM");
@@ -56,7 +58,8 @@ definition {
 		PageEditor.assertFragmentSidebarLoaded();
 	}
 
-	macro addCollectionItemInCollectionPage {
+	@summary = "Default summary"
+	macro addCollectionItemInCollectionPage(itemSubtype = null, title = null) {
 		if (isSet(itemSubtype)) {
 			Click(
 				key_title = ${title},
@@ -71,7 +74,8 @@ definition {
 		}
 	}
 
-	macro addPage {
+	@summary = "Default summary"
+	macro addPage(basicTemplate = null, pageTemplateName = null, vocabularyName = null, pageName = null, categoryName = null, masterLayoutName = null, collectionName = null, categoryNameList = null) {
 		if (IsTextNotEqual(locator1 = "ControlMenu#HEADING", value1 = "Pages")) {
 			ProductMenu.gotoPortlet(
 				category = "Site Builder",
@@ -122,7 +126,8 @@ definition {
 		PageEditor.assertFragmentSidebarLoaded();
 	}
 
-	macro addPrivatePage {
+	@summary = "Default summary"
+	macro addPrivatePage(basicTemplate = null, pageTemplateName = null, pageName = null, masterLayoutName = null, collectionName = null) {
 		if (IsTextNotEqual(locator1 = "ControlMenu#HEADING", value1 = "Pages")) {
 			ProductMenu.gotoPortlet(
 				category = "Site Builder",
@@ -161,7 +166,8 @@ definition {
 		PageEditor.assertFragmentSidebarLoaded();
 	}
 
-	macro addPublicCollectionPage {
+	@summary = "Default summary"
+	macro addPublicCollectionPage(tabName = null, vocabularyName = null, menuItem = null, pageName = null, categoryName = null, masterLayoutName = null, collectionName = null, selectedAsset = null, categoryNameList = null) {
 		if (IsTextNotEqual(locator1 = "ControlMenu#HEADING", value1 = "Pages")) {
 			ProductMenu.gotoPortlet(
 				category = "Site Builder",
@@ -231,7 +237,8 @@ definition {
 			locator1 = "Fragment#FRAGMENT_HEADER");
 	}
 
-	macro clickPencil {
+	@summary = "Default summary"
+	macro clickPencil() {
 		Click(locator1 = "Icon#EDIT_PENCIL");
 
 		PageEditor.assertFragmentSidebarLoaded();

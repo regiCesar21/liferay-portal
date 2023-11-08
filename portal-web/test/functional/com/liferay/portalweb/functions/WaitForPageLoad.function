@@ -1,7 +1,7 @@
 @default = "waitForPageLoad"
 definition {
 
-	function waitForPageLoad {
+	function waitForPageLoad() {
 		var javascript = '''
 			return document.readyState === "complete";
 		''';

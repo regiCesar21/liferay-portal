@@ -1,6 +1,7 @@
 definition {
 
-	macro addContent {
+	@summary = "Default summary"
+	macro addContent(kbArticleContentEdit = null, content = null) {
 		SelectFrame.selectFrameNoLoading(locator1 = "CKEditor#BODY_FIELD_IFRAME");
 
 		if (isSet(kbArticleContentEdit)) {
@@ -17,7 +18,8 @@ definition {
 		SelectFrame(value1 = "relative=top");
 	}
 
-	macro addContentInWebContent {
+	@summary = "Default summary"
+	macro addContentInWebContent(fieldLabel = null, content = null) {
 		SelectFrame.selectFrameNoLoading(
 			key_fieldLabel = ${fieldLabel},
 			locator1 = "CKEditor#BODY_FIELD_IFRAME_WEB_CONTENT_ARTICLE");
@@ -29,7 +31,8 @@ definition {
 		SelectFrame(value1 = "relative=top");
 	}
 
-	macro addEntryExternalURL {
+	@summary = "Default summary"
+	macro addEntryExternalURL(entryExternalURL = null, displayText = null, fieldLabel = null) {
 		Click(
 			key_fieldLabel = ${fieldLabel},
 			locator1 = "CKEditor#TOOLBAR_LINK_BUTTON");
@@ -47,7 +50,8 @@ definition {
 		Click(locator1 = "CKEditor#OK_BUTTON");
 	}
 
-	macro addSourceContent {
+	@summary = "Default summary"
+	macro addSourceContent(content = null) {
 		Click(locator1 = "CKEditor#TOOLBAR_SOURCE_BUTTON");
 
 		Type.typeCodeMirrorEditorNoError(
@@ -55,7 +59,8 @@ definition {
 			value1 = ${content});
 	}
 
-	macro addTextWithLink {
+	@summary = "Default summary"
+	macro addTextWithLink(displayText = null, dmDocumentTitle = null, fieldLabel = null, pageName = null) {
 		SelectFrame.selectFrameNoLoading(
 			key_fieldLabel = ${fieldLabel},
 			locator1 = "CKEditor#BODY_FIELD_IFRAME_WEB_CONTENT_ARTICLE");
@@ -99,23 +104,27 @@ definition {
 		Click(locator1 = "CKEditor#OK_BUTTON");
 	}
 
-	macro assertEditorPresent {
+	@summary = "Default summary"
+	macro assertEditorPresent() {
 		AssertElementPresent(locator1 = "CKEditor#BODY_FIELD");
 	}
 
-	macro assertSourceContent {
+	@summary = "Default summary"
+	macro assertSourceContent() {
 		Click(locator1 = "CKEditor#TOOLBAR_SOURCE_BUTTON");
 
 		AssertElementPresent(locator1 = "CKEditor#BODY_SOURCE_VALUE_1");
 	}
 
-	macro viewEntryContent {
+	@summary = "Default summary"
+	macro viewEntryContent(content = null) {
 		AssertTextEquals(
 			locator1 = "CKEditor#BODY",
 			value1 = ${content});
 	}
 
-	macro viewEntryContentImage {
+	@summary = "Default summary"
+	macro viewEntryContentImage(contentImageName = null) {
 		SelectFrame.selectFrameNoLoading(locator1 = "CKEditor#BODY_FIELD_IFRAME");
 
 		AssertVisible(

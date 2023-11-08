@@ -1,6 +1,7 @@
 definition {
 
-	macro addNewPG {
+	@summary = "Default summary"
+	macro addNewPG(assetType = null) {
 		Click.clickAt(locator1 = "ControlMenu#ADD");
 
 		AssertElementPresent(locator1 = "ControlMenuAddPanel#SIDEBAR_HEADER");
@@ -16,7 +17,8 @@ definition {
 			locator1 = "ControlMenuAddPanel#ASSET_ITEM");
 	}
 
-	macro addPG {
+	@summary = "Default summary"
+	macro addPG(assetTitle = null) {
 		Click.clickAt(locator1 = "ControlMenu#ADD");
 
 		AssertElementPresent(locator1 = "ControlMenuAddPanel#SIDEBAR_HEADER");

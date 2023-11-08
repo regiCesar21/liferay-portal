@@ -1,36 +1,44 @@
 definition {
 
-	macro addBasicWebContent {
+	@summary = "Default summary"
+	macro addBasicWebContent() {
 		ManagementBar.clickAddMenuItem(menuItem = "Basic Web Content");
 	}
 
-	macro addFolder {
+	@summary = "Default summary"
+	macro addFolder() {
 		ManagementBar.clickAddMenuItem(menuItem = "Folder");
 	}
 
-	macro changeDisplayStyle {
+	@summary = "Default summary"
+	macro changeDisplayStyle(displayStyle = null) {
 		ManagementBar.changeDisplayStyle(displayStyle = ${displayStyle});
 	}
 
-	macro clickEntryEllipsis {
+	@summary = "Default summary"
+	macro clickEntryEllipsis(entry = null) {
 		LexiconList.clickEllipsis(listEntry = ${entry});
 	}
 
-	macro clickEntryEllipsisItem {
+	@summary = "Default summary"
+	macro clickEntryEllipsisItem(entry = null, item = null) {
 		LexiconList.clickEllipsisItem(
 			item = ${item},
 			listEntry = ${entry});
 	}
 
-	macro clickSelectAllCheckbox {
+	@summary = "Default summary"
+	macro clickSelectAllCheckbox() {
 		ManagementBar.clickSelectAllCheckbox();
 	}
 
-	macro gotoEntry {
+	@summary = "Default summary"
+	macro gotoEntry(entry = null) {
 		LexiconList.clickListEntryTitle(listEntry = ${entry});
 	}
 
-	macro moveEntryToRecycleBin {
+	@summary = "Default summary"
+	macro moveEntryToRecycleBin(entry = null) {
 		WebContentAdmin.clickEntryEllipsisItem(
 			entry = ${entry},
 			item = "Move to Recycle Bin");
@@ -38,15 +46,18 @@ definition {
 		Confirm();
 	}
 
-	macro viewEntryNotPresent {
+	@summary = "Default summary"
+	macro viewEntryNotPresent(entry = null) {
 		LexiconList.viewListEntryNotPresent(listEntry = ${entry});
 	}
 
-	macro viewEntryTitle {
+	@summary = "Default summary"
+	macro viewEntryTitle(entry = null) {
 		LexiconList.viewListEntryTitle(listEntry = ${entry});
 	}
 
-	macro viewEntryWorkflowStatus {
+	@summary = "Default summary"
+	macro viewEntryWorkflowStatus(entry = null, workflowStatus = null) {
 		LexiconList.viewListEntryLabel(
 			listEntry = ${entry},
 			listEntryLabel = ${workflowStatus});

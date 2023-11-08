@@ -1,6 +1,7 @@
 definition {
 
-	macro _manageCollaborators {
+	@summary = "Default summary"
+	macro _manageCollaborators() {
 		DMDocument.expandInfo();
 
 		var key_text = "Manage Collaborators";
@@ -10,7 +11,8 @@ definition {
 			value1 = "Manage Collaborators");
 	}
 
-	macro addDocumentWithOnlyOwnerPermissions {
+	@summary = "Default summary"
+	macro addDocumentWithOnlyOwnerPermissions(dmDocumentTitle = null, dmDocumentFile = null, dmDocumentDescription = null) {
 		DMDocument.addPG(
 			dmDocumentDescription = ${dmDocumentDescription},
 			dmDocumentFile = ${dmDocumentFile},
@@ -26,7 +28,8 @@ definition {
 		IFrame.closeFrame();
 	}
 
-	macro changePermission {
+	@summary = "Default summary"
+	macro changePermission(dmDocumentTitle = null, dmDocumentDescription = null, userName = null, selectPermission = null) {
 		if (isSet(depotName)) {
 			DMDocument.viewCP(dmDocumentTitle = ${dmDocumentTitle});
 		}
@@ -61,7 +64,8 @@ definition {
 		Alert.viewSuccessMessageText(successMessage = "Permissions Changed");
 	}
 
-	macro removeCollaborator {
+	@summary = "Default summary"
+	macro removeCollaborator(collaboratorList = null) {
 		DMDocumentSharing._manageCollaborators();
 
 		SelectFrame(locator1 = "IFrame#MODAL_IFRAME");
@@ -83,7 +87,8 @@ definition {
 		Alert.viewSuccessMessageText(successMessage = "Permissions Changed");
 	}
 
-	macro viewCollaborators {
+	@summary = "Default summary"
+	macro viewCollaborators(collaboratorList = null) {
 		DMDocument.expandInfo();
 
 		for (var collaborator : list ${collaboratorList}) {
@@ -95,7 +100,8 @@ definition {
 		}
 	}
 
-	macro viewDocumentViaSharedContent {
+	@summary = "Default summary"
+	macro viewDocumentViaSharedContent(dmDocumentTitle = null, contentSharingPermission = null) {
 		AssertTextEquals(
 			locator1 = "Portlet#HEADER",
 			value1 = "Shared Content");
@@ -114,7 +120,8 @@ definition {
 			value1 = ${dmDocumentTitle});
 	}
 
-	macro viewSharedFlag {
+	@summary = "Default summary"
+	macro viewSharedFlag() {
 		if (isSet(detailsView)) {
 			AssertVisible(locator1 = "DocumentsAndMedia#ICON_DOCUMENT_SHARED");
 		}

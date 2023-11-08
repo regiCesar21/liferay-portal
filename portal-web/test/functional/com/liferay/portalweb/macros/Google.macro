@@ -1,6 +1,7 @@
 definition {
 
-	macro signIn {
+	@summary = "Default summary"
+	macro signIn(userPassword = null, userEmailAddress = null) {
 		if (isSet(windowTitle)) {
 			SelectWindow(locator1 = "GoogleLogin#PAGE_TITLE");
 

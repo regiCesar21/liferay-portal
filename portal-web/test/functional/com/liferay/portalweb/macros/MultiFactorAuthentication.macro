@@ -1,6 +1,7 @@
 definition {
 
-	macro assertDescriptions {
+	@summary = "Default summary"
+	macro assertDescriptions() {
 		AssertTextEquals(
 			key_fieldName = "enabled",
 			locator1 = "MultiFactorAuthentication#EMAIL_OTP_CONFIG_TEXT",
@@ -32,7 +33,8 @@ definition {
 			value1 = "Set the time in seconds to block requests after reaching the limit for failed attempts allowed.");
 	}
 
-	macro configureIPAddress {
+	@summary = "Default summary"
+	macro configureIPAddress(enableIP = null, allowedIP = null) {
 		if (${enableIP} == "true") {
 			FormFields.enableCheckbox(fieldName = "enabled");
 
@@ -54,7 +56,8 @@ definition {
 		}
 	}
 
-	macro configureMFAOnSystemLevel {
+	@summary = "Default summary"
+	macro configureMFAOnSystemLevel(disabledMFA = null) {
 		if (${disabledMFA} == "true") {
 			ApplicationsMenu.gotoPortlet(
 				category = "Configuration",
@@ -90,7 +93,8 @@ definition {
 		}
 	}
 
-	macro configureOTP {
+	@summary = "Default summary"
+	macro configureOTP(enableOTP = null, order = null) {
 		if (${enableOTP} == "true") {
 			FormFields.enableCheckbox(fieldName = "enabled");
 		}
@@ -113,7 +117,8 @@ definition {
 		}
 	}
 
-	macro configureOTPEmailSender {
+	@summary = "Default summary"
+	macro configureOTPEmailSender(emailAddress = null, emailSenderName = null) {
 		Type(
 			locator1 = "MultiFactorAuthentication#EMAIL_OTP_SENDER_ADDRESS_FIELD",
 			value1 = ${emailAddress});
@@ -130,7 +135,8 @@ definition {
 		}
 	}
 
-	macro configureTOTP {
+	@summary = "Default summary"
+	macro configureTOTP(enableTOTP = null) {
 		if (${enableTOTP} == "true") {
 			FormFields.enableCheckbox(fieldName = "enabled");
 		}
@@ -146,7 +152,8 @@ definition {
 		}
 	}
 
-	macro emailOTPConfiguration {
+	@summary = "Default summary"
+	macro emailOTPConfiguration() {
 		var failedAttemptsAllowed = ${failedAttemptsAllowed};
 
 		if (isSet(failedAttemptsAllowed)) {
@@ -191,7 +198,8 @@ definition {
 		}
 	}
 
-	macro getTOTP {
+	@summary = "Default summary"
+	macro getTOTP(secretKeyUnchanged = null) {
 		if (isSet(secretKeyUnchanged)) {
 			var totp = AuthenticationUtil.generateTimeBasedOTP(${secretKeyUnchanged});
 
@@ -223,7 +231,8 @@ definition {
 		}
 	}
 
-	macro sendOTPEmailPG {
+	@summary = "Default summary"
+	macro sendOTPEmailPG() {
 		AssertElementPresent(locator1 = "MultiFactorAuthentication#EMAIL_OTP_VERIFY_INFO_MESSAGE");
 
 		AssertClick(
@@ -235,7 +244,8 @@ definition {
 			value1 = "Your one-time password has been sent by email.");
 	}
 
-	macro verifyCustomOTP {
+	@summary = "Default summary"
+	macro verifyCustomOTP(userPassword = null, verificationText = null, specificURL = null, userEmailAddress = null) {
 		if (isSet(specificURL)) {
 			Navigator.openSpecificURL(url = ${specificURL});
 		}
@@ -264,7 +274,8 @@ definition {
 		AssertElementPresent(locator1 = "UserBar#USER_AVATAR_IMAGE");
 	}
 
-	macro verifyOTP {
+	@summary = "Default summary"
+	macro verifyOTP(userPassword = null, validOTP = null, portalURL = null, recipient = null, specificURL = null, userEmailAddress = null) {
 		if (isSet(specificURL)) {
 			Navigator.openSpecificURL(url = ${specificURL});
 		}
@@ -320,7 +331,8 @@ definition {
 		}
 	}
 
-	macro viewOTPEmailSenderCP {
+	@summary = "Default summary"
+	macro viewOTPEmailSenderCP(emailAddress = null, emailSenderName = null) {
 		AssertTextEquals(
 			locator1 = "MultiFactorAuthentication#EMAIL_OTP_SENDER_ADDRESS_FIELD",
 			value1 = ${emailAddress});

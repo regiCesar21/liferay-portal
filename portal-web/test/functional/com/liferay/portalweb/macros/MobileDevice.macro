@@ -1,6 +1,7 @@
 definition {
 
-	macro addClassificationRuleCP {
+	@summary = "Default summary"
+	macro addClassificationRuleCP(deviceType = null, classificationName = null, classificationDescription = null, ruleOSScope = null) {
 
 		// Workaround for LPS-92682
 
@@ -31,7 +32,8 @@ definition {
 		Alert.viewSuccessMessage();
 	}
 
-	macro addDeviceFamilyCP {
+	@summary = "Default summary"
+	macro addDeviceFamilyCP(deviceDescription = null, deviceFamilyName = null) {
 		Click(locator1 = "Button#PLUS");
 
 		AssertTextEquals.assertPartialText(
@@ -49,7 +51,8 @@ definition {
 		Alert.viewSuccessMessage();
 	}
 
-	macro assertRedirectActionPG {
+	@summary = "Default summary"
+	macro assertRedirectActionPG(redirectPageName = null, pageName = null) {
 		var key_pageName = ${pageName};
 
 		AssertClick(
@@ -61,7 +64,8 @@ definition {
 		AssertVisible(locator1 = "Home#PAGE_ACTIVE");
 	}
 
-	macro gotoMobileDeviceFamily {
+	@summary = "Default summary"
+	macro gotoMobileDeviceFamily(mobileDeviceFamilyName = null) {
 		var key_deviceFamilyName = ${mobileDeviceFamilyName};
 
 		AssertClick(
@@ -69,11 +73,13 @@ definition {
 			value1 = ${mobileDeviceFamilyName});
 	}
 
-	macro openMobileDeviceAdmin {
+	@summary = "Default summary"
+	macro openMobileDeviceAdmin(siteURLKey = null) {
 		Navigator.openWithAppendToBaseURL(urlAppend = "group/${siteURLKey}/~/control_panel/manage?p_p_id=com_liferay_mobile_device_rules_web_portlet_MDRPortlet");
 	}
 
-	macro previewPG {
+	@summary = "Default summary"
+	macro previewPG(deviceType = null) {
 		Click(locator1 = "ControlMenu#SIMULATION");
 
 		Pause(locator1 = 2000);

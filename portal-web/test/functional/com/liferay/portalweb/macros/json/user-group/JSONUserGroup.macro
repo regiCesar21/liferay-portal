@@ -1,6 +1,7 @@
 definition {
 
-	macro addUserGroup {
+	@summary = "Default summary"
+	macro addUserGroup(userGroupName = null, userGroupDescription = null) {
 		Variables.assertDefined(parameterList = ${userGroupName});
 
 		JSONUserGroupAPI._addUserGroup(
@@ -8,7 +9,8 @@ definition {
 			userGroupName = ${userGroupName});
 	}
 
-	macro assignGroupRoleToUserGroup {
+	@summary = "Default summary"
+	macro assignGroupRoleToUserGroup(groupName = null, roleTitle = null, userGroupName = null) {
 		Variables.assertDefined(parameterList = "${groupName},${roleTitle},${userGroupName}");
 
 		var groupId = JSONGroupSetter.setGroupId(groupName = ${groupName});

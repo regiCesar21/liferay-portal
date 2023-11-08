@@ -1,10 +1,12 @@
 definition {
 
-	macro clickPencil {
+	@summary = "Default summary"
+	macro clickPencil() {
 		Click(locator1 = "Button#PENCIL");
 	}
 
-	macro clickPencilItem {
+	@summary = "Default summary"
+	macro clickPencilItem(item = null) {
 		DisplayPageTemplate.clickPencil();
 
 		MenuItem.clickNoError(menuItem = ${item});

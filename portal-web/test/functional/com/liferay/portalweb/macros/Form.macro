@@ -4,13 +4,15 @@ definition {
 	var formName = "Created Form Name";
 	var rowNumber = 1;
 
-	macro _addField {
+	@summary = "Default summary"
+	macro _addField() {
 		if (IsElementNotPresent(locator1 = "Form#SIDEBAR_CLOSE")) {
 			Click(locator1 = "Form#ADD_FIELD");
 		}
 	}
 
-	macro addFieldFromSidebarToFieldsGroup {
+	@summary = "Default summary"
+	macro addFieldFromSidebarToFieldsGroup(key_fieldType = null, key_fieldLabel = null) {
 		Form._addField();
 
 		DragAndDrop.dragAndDropWithMouseMove(
@@ -20,7 +22,8 @@ definition {
 			locator2 = "FormFields#LABEL");
 	}
 
-	macro addPage {
+	@summary = "Default summary"
+	macro addPage(formAddNewPageNumber = null) {
 		var key_formAddNewPageNumber = ${formAddNewPageNumber};
 
 		ScrollBy(value1 = "0, 230");
@@ -30,7 +33,8 @@ definition {
 			value1 = "New Page");
 	}
 
-	macro addSuccessPage {
+	@summary = "Default summary"
+	macro addSuccessPage() {
 		Click(locator1 = "Form#PAGE_CONTROLS_ELLIPSIS_ICON");
 
 		ScrollBy(value1 = "0, 230");
@@ -40,13 +44,15 @@ definition {
 			value1 = "Add Success Page");
 	}
 
-	macro addTextField {
+	@summary = "Default summary"
+	macro addTextField(fieldPositionNumber = null) {
 		Form.gotoAddField(
 			fieldType = "Text",
 			key_fieldPositionNumber = ${fieldPositionNumber});
 	}
 
-	macro addTranslation {
+	@summary = "Default summary"
+	macro addTranslation(localizedLanguage = null) {
 		ScrollWebElementIntoView(locator1 = "Translation#ADD");
 
 		Click(locator1 = "Translation#ADD");
@@ -58,11 +64,13 @@ definition {
 			value1 = ${localizedLanguage});
 	}
 
-	macro assertFormWasPublished {
+	@summary = "Default summary"
+	macro assertFormWasPublished() {
 		AssertVisible(locator1 = "Form#PUBLISH_URL_ICON");
 	}
 
-	macro changeFieldTypeModalConfirmation {
+	@summary = "Default summary"
+	macro changeFieldTypeModalConfirmation(selectOption = null) {
 		FormFields.changeFieldType(selectOption = ${selectOption});
 
 		while (IsElementPresent(locator1 = "Form#VALIDATE_CHANGE_FIELD_TYPE_MODAL_MESSAGE")) {
@@ -70,7 +78,8 @@ definition {
 		}
 	}
 
-	macro closeSidebar {
+	@summary = "Default summary"
+	macro closeSidebar() {
 		Pause(locator1 = 1000);
 
 		Click(locator1 = "Form#SIDEBAR_CLOSE");
@@ -80,7 +89,8 @@ definition {
 		Pause(locator1 = 1000);
 	}
 
-	macro configureEmailNotifications {
+	@summary = "Default summary"
+	macro configureEmailNotifications(subject = null, fromName = null, fromAddress = null, toAddress = null) {
 		AssertClick(
 			locator1 = "Form#SETTINGS_TAB_EMAIL_NOTIFICATIONS",
 			value1 = "Email Notifications");
@@ -106,13 +116,15 @@ definition {
 		Button.clickDone();
 	}
 
-	macro configureRequireCaptcha {
+	@summary = "Default summary"
+	macro configureRequireCaptcha() {
 		FormFields.enableSwitcher(fieldName = "requireCaptcha");
 
 		Button.clickDone();
 	}
 
-	macro configureWorkflow {
+	@summary = "Default summary"
+	macro configureWorkflow(workflowDefinition = null) {
 		Click(locator1 = "Form#SETTINGS_TAB_WORKFLOW_CONFIGURATION_FIELD");
 
 		var key_workflowDefinition = ${workflowDefinition};
@@ -124,7 +136,8 @@ definition {
 		Button.clickDone();
 	}
 
-	macro deleteCurrentLastPage {
+	@summary = "Default summary"
+	macro deleteCurrentLastPage(formDropDownNumber = null, formPageNumber = null) {
 		var key_formDropDownNumber = ${formDropDownNumber};
 		var key_formPageNumber = ${formPageNumber};
 
@@ -139,7 +152,8 @@ definition {
 		AssertElementNotPresent(locator1 = "FormPortlet#FORM_PAGE");
 	}
 
-	macro deleteCurrentPage {
+	@summary = "Default summary"
+	macro deleteCurrentPage(formDropDownNumber = null, formPageNumber = null) {
 		var key_formDropDownNumber = ${formDropDownNumber};
 		var key_formPageNumber = ${formPageNumber};
 
@@ -154,7 +168,8 @@ definition {
 		AssertElementNotPresent(locator1 = "FormPortlet#FORM_PAGE");
 	}
 
-	macro deleteFieldModalConfirmation {
+	@summary = "Default summary"
+	macro deleteFieldModalConfirmation(fieldName = null, fieldLabel = null) {
 		FormsAdminNavigator.gotoDeleteField(
 			fieldLabel = ${fieldLabel},
 			fieldName = ${fieldName});
@@ -166,7 +181,8 @@ definition {
 		Form.validateNoFieldLabel(fieldLabel = ${fieldLabel});
 	}
 
-	macro deleteSuccessPage {
+	@summary = "Default summary"
+	macro deleteSuccessPage(formPageNumber = null) {
 		var key_formPageNumber = ${formPageNumber};
 
 		//AssertElementPresent(locator1 = "FormPortlet#FORM_PAGE_ACTIVE");
@@ -180,21 +196,25 @@ definition {
 		AssertElementNotPresent(locator1 = "FormPortlet#FORM_PAGE");
 	}
 
-	macro disableAutocompleteConfiguration {
+	@summary = "Default summary"
+	macro disableAutocompleteConfiguration() {
 		FormFields.disableSwitcher(fieldName = "Autocomplete");
 	}
 
-	macro disableAutocompleteSwitcherTextField {
+	@summary = "Default summary"
+	macro disableAutocompleteSwitcherTextField() {
 		Click(locator1 = "FormFields#SWITCHER_TEXTFIELD");
 	}
 
-	macro duplicate {
+	@summary = "Default summary"
+	macro duplicate(formName = null) {
 		LexiconEntry.gotoEntryMenuItem(
 			menuItem = "Duplicate",
 			rowEntry = ${formName});
 	}
 
-	macro editDescription {
+	@summary = "Default summary"
+	macro editDescription(formDescription = null) {
 		WaitForElementPresent(locator1 = "Form#DESCRIPTION_FIELD");
 
 		Click(locator1 = "Form#DESCRIPTION_FIELD");
@@ -204,7 +224,8 @@ definition {
 			value1 = ${formDescription});
 	}
 
-	macro editElementSetFieldLabel {
+	@summary = "Default summary"
+	macro editElementSetFieldLabel(fieldValue = null) {
 		while ((IsTextNotEqual(key_fieldName = "label", locator1 = "FormFields#TEXT_FIELD", value1 = "")) && (maxIterations = "10")) {
 			FormFields.editTextWithBackspace(fieldName = "label");
 		}
@@ -216,7 +237,8 @@ definition {
 		Form.editFieldLabelMetal(fieldValue = ${fieldValue});
 	}
 
-	macro editFieldDataProvider {
+	@summary = "Default summary"
+	macro editFieldDataProvider(dataProviderOutput = null, dataProvider = null) {
 		FormFields.selectSelectOption(
 			fieldName = "dataSourceType",
 			selectOption = "From Data Provider");
@@ -232,7 +254,8 @@ definition {
 			selectOption = ${dataProviderOutput});
 	}
 
-	macro editFieldLabelMetal {
+	@summary = "Default summary"
+	macro editFieldLabelMetal(fieldValue = null) {
 		FormFields.editText(
 			fieldName = "label",
 			fieldValue = ${fieldValue});
@@ -244,7 +267,8 @@ definition {
 			value1 = ${fieldValue});
 	}
 
-	macro editImageDescription {
+	@summary = "Default summary"
+	macro editImageDescription(descriptionContent = null) {
 		var descriptionPosition = ${descriptionPosition};
 
 		Type(
@@ -252,7 +276,8 @@ definition {
 			value1 = ${descriptionContent});
 	}
 
-	macro editName {
+	@summary = "Default summary"
+	macro editName(formName = null) {
 		Pause(locator1 = 2000);
 
 		WaitForElementPresent(locator1 = "Form#NAME_FIELD");
@@ -268,7 +293,8 @@ definition {
 			value1 = ${formName});
 	}
 
-	macro editNameLocalized {
+	@summary = "Default summary"
+	macro editNameLocalized(formName = null) {
 		WaitForElementPresent(locator1 = "Form#NAME_FIELD");
 
 		AssertVisible(locator1 = "Form#ADD_FIELD");
@@ -282,7 +308,8 @@ definition {
 			value1 = ${formName});
 	}
 
-	macro editPageTitle {
+	@summary = "Default summary"
+	macro editPageTitle(formPageName = null, formTitleNumber = null) {
 		var key_titleNumber = ${formTitleNumber};
 
 		ScrollWebElementIntoView(locator1 = "Form#PAGE_TITLE_FIELD");
@@ -296,7 +323,8 @@ definition {
 			value1 = ${formPageName});
 	}
 
-	macro editSuccessPage {
+	@summary = "Default summary"
+	macro editSuccessPage(successPageDescription = null, successPageTitle = null) {
 		Type(
 			locator1 = "Form#SUCCESS_PAGE_TITLE_FIELD",
 			value1 = ${successPageTitle});
@@ -306,7 +334,8 @@ definition {
 			value1 = ${successPageDescription});
 	}
 
-	macro editTextFieldDataProvider {
+	@summary = "Default summary"
+	macro editTextFieldDataProvider(dataProviderOutput = null, dataProvider = null) {
 		FormFields.selectRadioOption(
 			fieldName = "dataSourceType",
 			radioOption = "From Data Provider");
@@ -322,17 +351,20 @@ definition {
 			selectOption = ${dataProviderOutput});
 	}
 
-	macro enableAutocompleteConfiguration {
+	@summary = "Default summary"
+	macro enableAutocompleteConfiguration() {
 		Click(locator1 = "FormFields#SWITCHER_TEXTFIELD");
 	}
 
-	macro getPublishedFormPublicURL {
+	@summary = "Default summary"
+	macro getPublishedFormPublicURL() {
 		var publicURL = selenium.getElementValue("Form#PUBLISH_FORM_PUBLIC_URL");
 
 		return ${publicURL};
 	}
 
-	macro gotoAddElementSet {
+	@summary = "Default summary"
+	macro gotoAddElementSet(fieldPositionNumber = null, elementSetTitle = null) {
 		Form._addField();
 
 		Form.gotoElementSetsTab();
@@ -348,7 +380,8 @@ definition {
 			value1 = ${elementSetTitle});
 	}
 
-	macro gotoAddField {
+	@summary = "Default summary"
+	macro gotoAddField(fieldPositionNumber = null, localeBasic = null, localeElements = null, key_fieldPositionNumber = null, fieldType = null) {
 		Form._addField();
 
 		if (isSet(localeElements)) {
@@ -390,7 +423,8 @@ definition {
 		}
 	}
 
-	macro gotoAdvancedTab {
+	@summary = "Default summary"
+	macro gotoAdvancedTab(key_localeAdvanced = null) {
 		if (isSet(key_localeAdvanced)) {
 			AssertClick(
 				locator1 = "Form#SIDEBAR_ADVANCED_TAB_LOCALE",
@@ -405,7 +439,8 @@ definition {
 		Pause(locator1 = 1000);
 	}
 
-	macro gotoAutocompleteTab {
+	@summary = "Default summary"
+	macro gotoAutocompleteTab() {
 		AssertClick(
 			locator1 = "Form#SIDEBAR_AUTOCOMPLETE_TAB",
 			value1 = "Autocomplete");
@@ -413,7 +448,8 @@ definition {
 		Pause(locator1 = 1000);
 	}
 
-	macro gotoBasicTab {
+	@summary = "Default summary"
+	macro gotoBasicTab(key_localeBasic = null) {
 		if (isSet(key_localeBasic)) {
 			AssertClick(
 				locator1 = "Form#SIDEBAR_BASIC_TAB_LOCALE",
@@ -428,13 +464,15 @@ definition {
 		Pause(locator1 = 1000);
 	}
 
-	macro gotoElementSetsTab {
+	@summary = "Default summary"
+	macro gotoElementSetsTab() {
 		AssertClick(
 			locator1 = "Form#SIDEBAR_ELEMENT_SETS_TAB",
 			value1 = "Element Sets");
 	}
 
-	macro gotoElementsTab {
+	@summary = "Default summary"
+	macro gotoElementsTab(key_localeElements = null) {
 		if (isSet(key_localeElements)) {
 			AssertClick(
 				locator1 = "Form#SIDEBAR_ELEMENTS_TAB_LOCALE",
@@ -447,19 +485,22 @@ definition {
 		}
 	}
 
-	macro gotoFormPage {
+	@summary = "Default summary"
+	macro gotoFormPage(formPageName = null) {
 		var key_formPageName = ${formPageName};
 
 		Click(locator1 = "Form#FORM_PAGE");
 	}
 
-	macro gotoPageAltPagination {
+	@summary = "Default summary"
+	macro gotoPageAltPagination(page = null) {
 		var key_page = ${page};
 
 		Click(locator1 = "Form#ALT_PAGINATION_PAGE");
 	}
 
-	macro gotoPropertiesTab {
+	@summary = "Default summary"
+	macro gotoPropertiesTab() {
 		if (isSet(key_localeAdvanced)) {
 			AssertClick(
 				locator1 = "Form#SIDEBAR_PROPERTIES_TAB",
@@ -474,19 +515,22 @@ definition {
 		Pause(locator1 = 1000);
 	}
 
-	macro movePageDown {
+	@summary = "Default summary"
+	macro movePageDown(formPageName = null) {
 		Click(
 			key_formPageName = ${formPageName},
 			locator1 = "Form#PAGE_MOVE_DOWN_ENABLED");
 	}
 
-	macro movePageUp {
+	@summary = "Default summary"
+	macro movePageUp(formPageName = null) {
 		Click(
 			key_formPageName = ${formPageName},
 			locator1 = "Form#PAGE_MOVE_UP_ENABLED");
 	}
 
-	macro previewForm {
+	@summary = "Default summary"
+	macro previewForm(fieldName = null, formName = null, fieldLabel = null, fieldValue = null) {
 		Navigator.selectSpecificWindow(windowTitle = "Form - Forms");
 
 		Pause(locator1 = 5000);
@@ -512,7 +556,8 @@ definition {
 		AssertElementNotPresent(locator1 = "FormPortlet#SUBMIT_BUTTON");
 	}
 
-	macro publishForm {
+	@summary = "Default summary"
+	macro publishForm() {
 		WaitForElementPresent(locator1 = "Form#PUBLISH_FORM_BUTTON");
 
 		AssertElementPresent(locator1 = "Form#NAME_FIELD");
@@ -522,7 +567,8 @@ definition {
 		Form.assertFormWasPublished();
 	}
 
-	macro save {
+	@summary = "Default summary"
+	macro save(localeSaveForm = null) {
 		if (isSet(localeSaveForm)) {
 			var key_localeSaveForm = ${localeSaveForm};
 
@@ -549,7 +595,8 @@ definition {
 		Pause(locator1 = 2000);
 	}
 
-	macro saveElementSet {
+	@summary = "Default summary"
+	macro saveElementSet() {
 		WaitForElementPresent(
 			locator1 = "Form#SAVE_ELEMENT_SET_BUTTON",
 			value1 = "Save");
@@ -561,7 +608,8 @@ definition {
 		VerifyElementPresent(locator1 = "Message#SUCCESS_DISMISSIBLE");
 	}
 
-	macro saveLocalized {
+	@summary = "Default summary"
+	macro saveLocalized(saveButton = null) {
 		var key_saveButton = ${saveButton};
 
 		WaitForElementPresent(
@@ -577,7 +625,8 @@ definition {
 		Pause(locator1 = 2000);
 	}
 
-	macro selectTranslation {
+	@summary = "Default summary"
+	macro selectTranslation(localizedLanguage = null) {
 		var key_localizedLanguage = ${localizedLanguage};
 
 		ScrollWebElementIntoView(locator1 = "Translation#UNSELECTED_LOCALE_ICON");
@@ -585,7 +634,8 @@ definition {
 		Click(locator1 = "Translation#UNSELECTED_LOCALE_ICON");
 	}
 
-	macro submitFormPublish {
+	@summary = "Default summary"
+	macro submitFormPublish(fieldName = null, fieldLabel = null, fieldValue = null) {
 		Form.viewFormPublish(
 			fieldLabel = ${fieldLabel},
 			fieldName = ${fieldName});
@@ -602,7 +652,8 @@ definition {
 		Alert.viewSuccessMessage();
 	}
 
-	macro switchPaginationMode {
+	@summary = "Default summary"
+	macro switchPaginationMode() {
 		Click(locator1 = "Form#PAGE_CONTROLS_ELLIPSIS_ICON");
 
 		AssertClick(
@@ -610,7 +661,8 @@ definition {
 			value1 = "Switch Pagination");
 	}
 
-	macro switchPaginationModeToBottom {
+	@summary = "Default summary"
+	macro switchPaginationModeToBottom() {
 		Click(locator1 = "Form#PAGE_CONTROLS_ELLIPSIS_ICON");
 
 		AssertClick(
@@ -618,7 +670,8 @@ definition {
 			value1 = "Switch Pagination to Bottom");
 	}
 
-	macro switchPaginationModeToTop {
+	@summary = "Default summary"
+	macro switchPaginationModeToTop() {
 		Click(locator1 = "Form#PAGE_CONTROLS_ELLIPSIS_ICON");
 
 		AssertClick(
@@ -626,7 +679,8 @@ definition {
 			value1 = "Switch Pagination to Top");
 	}
 
-	macro unpublishForm {
+	@summary = "Default summary"
+	macro unpublishForm() {
 		WaitForElementPresent(locator1 = "Form#UNPUBLISH_FORM_BUTTON");
 
 		AssertElementPresent(locator1 = "Form#NAME_FIELD");
@@ -638,54 +692,63 @@ definition {
 		AssertElementPresent(locator1 = "Message#UNIQUE_SUCCESS");
 	}
 
-	macro validateNoFieldLabel {
+	@summary = "Default summary"
+	macro validateNoFieldLabel(fieldLabel = null) {
 		AssertElementNotPresent(
 			locator1 = "Form#FIELD_LABEL",
 			value1 = ${fieldLabel});
 	}
 
-	macro viewAltPagePagination {
+	@summary = "Default summary"
+	macro viewAltPagePagination(page = null) {
 		var key_page = ${page};
 
 		AssertElementPresent(locator1 = "Form#ALT_PAGINATION_PAGE");
 	}
 
-	macro viewAltSuccessPagePagination {
+	@summary = "Default summary"
+	macro viewAltSuccessPagePagination() {
 		AssertElementPresent(locator1 = "Form#ALT_PAGINATION_SUCCESS_PAGE");
 	}
 
-	macro viewButtonPageDisabled {
+	@summary = "Default summary"
+	macro viewButtonPageDisabled(formPageName = null, pageMove = null) {
 		AssertElementPresent(
 			key_formPageName = ${formPageName},
 			key_movePage = "Move Page ${pageMove}",
 			locator1 = "Form#PAGE_MOVE_DISABLED");
 	}
 
-	macro viewButtonPageDownEnabled {
+	@summary = "Default summary"
+	macro viewButtonPageDownEnabled(formPageName = null) {
 		AssertElementPresent(
 			key_formPageName = ${formPageName},
 			locator1 = "Form#PAGE_MOVE_DOWN_ENABLED");
 	}
 
-	macro viewButtonPageUpEnabled {
+	@summary = "Default summary"
+	macro viewButtonPageUpEnabled(formPageName = null) {
 		AssertElementPresent(
 			key_formPageName = ${formPageName},
 			locator1 = "Form#PAGE_MOVE_UP_ENABLED");
 	}
 
-	macro viewFormDescription {
+	@summary = "Default summary"
+	macro viewFormDescription(formDescription = null) {
 		AssertTextEquals(
 			locator1 = "Form#DESCRIPTION_FIELD",
 			value1 = ${formDescription});
 	}
 
-	macro viewFormName {
+	@summary = "Default summary"
+	macro viewFormName(formName = null) {
 		AssertTextEquals(
 			locator1 = "Form#NAME_FIELD",
 			value1 = ${formName});
 	}
 
-	macro viewFormNotPublished {
+	@summary = "Default summary"
+	macro viewFormNotPublished() {
 		WaitForElementPresent(locator1 = "Form#PUBLISH_ICON");
 
 		Click(locator1 = "Form#PUBLISH_ICON");
@@ -701,7 +764,8 @@ definition {
 			value1 = "This form is not available or it was not published.");
 	}
 
-	macro viewFormPublish {
+	@summary = "Default summary"
+	macro viewFormPublish(fieldName = null, formName = null, fieldLabel = null) {
 		FormsAdminNavigator.openPublishURL();
 
 		var key_formName = ${formName};
@@ -715,13 +779,15 @@ definition {
 			fieldName = ${fieldName});
 	}
 
-	macro viewPublishFormSuccessMessage {
+	@summary = "Default summary"
+	macro viewPublishFormSuccessMessage() {
 		var key_alertMessage = "The form was published successfully! Access it with this URL";
 
 		AssertVisible(locator1 = "Form#PUBLISH_UNPUBLISH_ICON_CLOSE");
 	}
 
-	macro viewRedirectedURL {
+	@summary = "Default summary"
+	macro viewRedirectedURL(friendlyURL = null) {
 		WaitForElementPresent(
 			key_navItem = "Home",
 			locator1 = "NavBar#NAV_ITEM_LINK");
@@ -729,7 +795,8 @@ definition {
 		AssertLocation(value1 = ${friendlyURL});
 	}
 
-	macro viewReorderPageAndVerifyField {
+	@summary = "Default summary"
+	macro viewReorderPageAndVerifyField(fieldPositionNumber = null, fieldName = null, formPageNumber = null) {
 		AssertElementPresent(
 			key_fieldName = ${fieldName},
 			key_fieldPositionNumber = ${fieldPositionNumber},
@@ -737,7 +804,8 @@ definition {
 			locator1 = "Form#FIELD_BODY_IN_SPECIFIC_POSITION_2");
 	}
 
-	macro viewSaveNotification {
+	@summary = "Default summary"
+	macro viewSaveNotification() {
 		AssertTextEquals.assertPartialText(
 			locator1 = "Form#SAVE_NOTIFICATION",
 			value1 = "Draft");
