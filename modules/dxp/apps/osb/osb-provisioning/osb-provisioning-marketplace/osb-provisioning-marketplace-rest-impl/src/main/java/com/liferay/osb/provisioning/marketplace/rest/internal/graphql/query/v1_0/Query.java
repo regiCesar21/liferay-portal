@@ -80,7 +80,7 @@ public class Query {
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {appLicenseKey(appLicenseKeyId: ___){active, complimentary, createDate, description, expirationDate, hostName, id, ipAddresses, key, licenseType, macAddresses, modifiedDate, modifiedUserName, modifiedUserUuid, orderId, owner, productId, productName, productVersion, startDate, userName, userUuid}}"}' -u 'test@liferay.com:test'
+	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {appLicenseKey(appLicenseKeyId: ___){accountKey, active, complimentary, createDate, description, expirationDate, hostName, id, ipAddresses, key, licenseType, macAddresses, modifiedDate, modifiedUserName, modifiedUserUuid, orderId, owner, productId, productKey, productName, productPurchaseKey, productVersion, startDate, userName, userUuid}}"}' -u 'test@liferay.com:test'
 	 */
 	@GraphQLField(description = "Retrieves the app license key.")
 	public AppLicenseKey appLicenseKey(

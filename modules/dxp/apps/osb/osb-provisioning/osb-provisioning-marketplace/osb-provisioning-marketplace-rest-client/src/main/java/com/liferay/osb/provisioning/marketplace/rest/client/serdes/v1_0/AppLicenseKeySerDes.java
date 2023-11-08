@@ -52,6 +52,20 @@ public class AppLicenseKeySerDes {
 		DateFormat liferayToJSONDateFormat = new SimpleDateFormat(
 			"yyyy-MM-dd'T'HH:mm:ssXX");
 
+		if (appLicenseKey.getAccountKey() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"accountKey\": ");
+
+			sb.append("\"");
+
+			sb.append(_escape(appLicenseKey.getAccountKey()));
+
+			sb.append("\"");
+		}
+
 		if (appLicenseKey.getActive() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -283,6 +297,20 @@ public class AppLicenseKeySerDes {
 			sb.append("\"");
 		}
 
+		if (appLicenseKey.getProductKey() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"productKey\": ");
+
+			sb.append("\"");
+
+			sb.append(_escape(appLicenseKey.getProductKey()));
+
+			sb.append("\"");
+		}
+
 		if (appLicenseKey.getProductName() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -293,6 +321,20 @@ public class AppLicenseKeySerDes {
 			sb.append("\"");
 
 			sb.append(_escape(appLicenseKey.getProductName()));
+
+			sb.append("\"");
+		}
+
+		if (appLicenseKey.getProductPurchaseKey() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"productPurchaseKey\": ");
+
+			sb.append("\"");
+
+			sb.append(_escape(appLicenseKey.getProductPurchaseKey()));
 
 			sb.append("\"");
 		}
@@ -375,6 +417,14 @@ public class AppLicenseKeySerDes {
 
 		DateFormat liferayToJSONDateFormat = new SimpleDateFormat(
 			"yyyy-MM-dd'T'HH:mm:ssXX");
+
+		if (appLicenseKey.getAccountKey() == null) {
+			map.put("accountKey", null);
+		}
+		else {
+			map.put(
+				"accountKey", String.valueOf(appLicenseKey.getAccountKey()));
+		}
 
 		if (appLicenseKey.getActive() == null) {
 			map.put("active", null);
@@ -514,12 +564,29 @@ public class AppLicenseKeySerDes {
 			map.put("productId", String.valueOf(appLicenseKey.getProductId()));
 		}
 
+		if (appLicenseKey.getProductKey() == null) {
+			map.put("productKey", null);
+		}
+		else {
+			map.put(
+				"productKey", String.valueOf(appLicenseKey.getProductKey()));
+		}
+
 		if (appLicenseKey.getProductName() == null) {
 			map.put("productName", null);
 		}
 		else {
 			map.put(
 				"productName", String.valueOf(appLicenseKey.getProductName()));
+		}
+
+		if (appLicenseKey.getProductPurchaseKey() == null) {
+			map.put("productPurchaseKey", null);
+		}
+		else {
+			map.put(
+				"productPurchaseKey",
+				String.valueOf(appLicenseKey.getProductPurchaseKey()));
 		}
 
 		if (appLicenseKey.getProductVersion() == null) {
@@ -575,7 +642,12 @@ public class AppLicenseKeySerDes {
 			AppLicenseKey appLicenseKey, String jsonParserFieldName,
 			Object jsonParserFieldValue) {
 
-			if (Objects.equals(jsonParserFieldName, "active")) {
+			if (Objects.equals(jsonParserFieldName, "accountKey")) {
+				if (jsonParserFieldValue != null) {
+					appLicenseKey.setAccountKey((String)jsonParserFieldValue);
+				}
+			}
+			else if (Objects.equals(jsonParserFieldName, "active")) {
 				if (jsonParserFieldValue != null) {
 					appLicenseKey.setActive((Boolean)jsonParserFieldValue);
 				}
@@ -669,9 +741,22 @@ public class AppLicenseKeySerDes {
 					appLicenseKey.setProductId((String)jsonParserFieldValue);
 				}
 			}
+			else if (Objects.equals(jsonParserFieldName, "productKey")) {
+				if (jsonParserFieldValue != null) {
+					appLicenseKey.setProductKey((String)jsonParserFieldValue);
+				}
+			}
 			else if (Objects.equals(jsonParserFieldName, "productName")) {
 				if (jsonParserFieldValue != null) {
 					appLicenseKey.setProductName((String)jsonParserFieldValue);
+				}
+			}
+			else if (Objects.equals(
+						jsonParserFieldName, "productPurchaseKey")) {
+
+				if (jsonParserFieldValue != null) {
+					appLicenseKey.setProductPurchaseKey(
+						(String)jsonParserFieldValue);
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "productVersion")) {

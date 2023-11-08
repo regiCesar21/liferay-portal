@@ -34,6 +34,7 @@ import java.util.Set;
 import javax.annotation.Generated;
 
 import javax.validation.Valid;
+import javax.validation.constraints.NotEmpty;
 
 import javax.xml.bind.annotation.XmlRootElement;
 
@@ -46,6 +47,10 @@ import javax.xml.bind.annotation.XmlRootElement;
 	description = "Represents a DXP App license key.", value = "AppLicenseKey"
 )
 @JsonFilter("Liferay.Vulcan")
+@Schema(
+	description = "Represents a DXP App license key.",
+	requiredProperties = {"productPurchaseKey"}
+)
 @XmlRootElement(name = "AppLicenseKey")
 public class AppLicenseKey implements Serializable {
 
@@ -56,6 +61,34 @@ public class AppLicenseKey implements Serializable {
 	public static AppLicenseKey unsafeToDTO(String json) {
 		return ObjectMapperUtil.unsafeReadValue(AppLicenseKey.class, json);
 	}
+
+	@Schema(description = "The key of the license key's account.")
+	public String getAccountKey() {
+		return accountKey;
+	}
+
+	public void setAccountKey(String accountKey) {
+		this.accountKey = accountKey;
+	}
+
+	@JsonIgnore
+	public void setAccountKey(
+		UnsafeSupplier<String, Exception> accountKeyUnsafeSupplier) {
+
+		try {
+			accountKey = accountKeyUnsafeSupplier.get();
+		}
+		catch (RuntimeException re) {
+			throw re;
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	@GraphQLField(description = "The key of the license key's account.")
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	protected String accountKey;
 
 	@Schema(description = "If the license key is active or not.")
 	public Boolean getActive() {
@@ -553,6 +586,34 @@ public class AppLicenseKey implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String productId;
 
+	@Schema(description = "The key of the product of the license key.")
+	public String getProductKey() {
+		return productKey;
+	}
+
+	public void setProductKey(String productKey) {
+		this.productKey = productKey;
+	}
+
+	@JsonIgnore
+	public void setProductKey(
+		UnsafeSupplier<String, Exception> productKeyUnsafeSupplier) {
+
+		try {
+			productKey = productKeyUnsafeSupplier.get();
+		}
+		catch (RuntimeException re) {
+			throw re;
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	@GraphQLField(description = "The key of the product of the license key.")
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	protected String productKey;
+
 	@Schema(description = "The name of the product of the license key.")
 	public String getProductName() {
 		return productName;
@@ -580,6 +641,37 @@ public class AppLicenseKey implements Serializable {
 	@GraphQLField(description = "The name of the product of the license key.")
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String productName;
+
+	@Schema(description = "The key of the license key's product purchase.")
+	public String getProductPurchaseKey() {
+		return productPurchaseKey;
+	}
+
+	public void setProductPurchaseKey(String productPurchaseKey) {
+		this.productPurchaseKey = productPurchaseKey;
+	}
+
+	@JsonIgnore
+	public void setProductPurchaseKey(
+		UnsafeSupplier<String, Exception> productPurchaseKeyUnsafeSupplier) {
+
+		try {
+			productPurchaseKey = productPurchaseKeyUnsafeSupplier.get();
+		}
+		catch (RuntimeException re) {
+			throw re;
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	@GraphQLField(
+		description = "The key of the license key's product purchase."
+	)
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	@NotEmpty
+	protected String productPurchaseKey;
 
 	@Schema(description = "The version of the product of the license key.")
 	public String getProductVersion() {
@@ -730,6 +822,20 @@ public class AppLicenseKey implements Serializable {
 
 		DateFormat liferayToJSONDateFormat = new SimpleDateFormat(
 			"yyyy-MM-dd'T'HH:mm:ss'Z'");
+
+		if (accountKey != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"accountKey\": ");
+
+			sb.append("\"");
+
+			sb.append(_escape(accountKey));
+
+			sb.append("\"");
+		}
 
 		if (active != null) {
 			if (sb.length() > 1) {
@@ -957,6 +1063,20 @@ public class AppLicenseKey implements Serializable {
 			sb.append("\"");
 		}
 
+		if (productKey != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"productKey\": ");
+
+			sb.append("\"");
+
+			sb.append(_escape(productKey));
+
+			sb.append("\"");
+		}
+
 		if (productName != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -967,6 +1087,20 @@ public class AppLicenseKey implements Serializable {
 			sb.append("\"");
 
 			sb.append(_escape(productName));
+
+			sb.append("\"");
+		}
+
+		if (productPurchaseKey != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"productPurchaseKey\": ");
+
+			sb.append("\"");
+
+			sb.append(_escape(productPurchaseKey));
 
 			sb.append("\"");
 		}

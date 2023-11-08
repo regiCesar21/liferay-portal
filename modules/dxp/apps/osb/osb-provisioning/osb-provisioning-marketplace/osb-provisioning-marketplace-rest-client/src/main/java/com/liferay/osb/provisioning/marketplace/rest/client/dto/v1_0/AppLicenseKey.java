@@ -26,6 +26,27 @@ public class AppLicenseKey implements Cloneable, Serializable {
 		return AppLicenseKeySerDes.toDTO(json);
 	}
 
+	public String getAccountKey() {
+		return accountKey;
+	}
+
+	public void setAccountKey(String accountKey) {
+		this.accountKey = accountKey;
+	}
+
+	public void setAccountKey(
+		UnsafeSupplier<String, Exception> accountKeyUnsafeSupplier) {
+
+		try {
+			accountKey = accountKeyUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	protected String accountKey;
+
 	public Boolean getActive() {
 		return active;
 	}
@@ -387,6 +408,27 @@ public class AppLicenseKey implements Cloneable, Serializable {
 
 	protected String productId;
 
+	public String getProductKey() {
+		return productKey;
+	}
+
+	public void setProductKey(String productKey) {
+		this.productKey = productKey;
+	}
+
+	public void setProductKey(
+		UnsafeSupplier<String, Exception> productKeyUnsafeSupplier) {
+
+		try {
+			productKey = productKeyUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	protected String productKey;
+
 	public String getProductName() {
 		return productName;
 	}
@@ -407,6 +449,27 @@ public class AppLicenseKey implements Cloneable, Serializable {
 	}
 
 	protected String productName;
+
+	public String getProductPurchaseKey() {
+		return productPurchaseKey;
+	}
+
+	public void setProductPurchaseKey(String productPurchaseKey) {
+		this.productPurchaseKey = productPurchaseKey;
+	}
+
+	public void setProductPurchaseKey(
+		UnsafeSupplier<String, Exception> productPurchaseKeyUnsafeSupplier) {
+
+		try {
+			productPurchaseKey = productPurchaseKeyUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	protected String productPurchaseKey;
 
 	public String getProductVersion() {
 		return productVersion;

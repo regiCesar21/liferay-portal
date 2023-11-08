@@ -97,15 +97,6 @@ public interface LicenseKeyLocalService
 		throws Exception;
 
 	public LicenseKey addLicenseKey(
-			String userName, String userUuid, String assetReceiptLicenseUuid,
-			String licenseEntryType, String productName, String productId,
-			String productVersion, String owner, long maxUsers,
-			String description, String hostName, String ipAddresses,
-			String macAddresses, String serverId, Date startDate,
-			Date expirationDate)
-		throws Exception;
-
-	public LicenseKey addLicenseKey(
 			String userName, String userUuid, String licenseEntryType,
 			String productKey, String accountKey, String productPurchaseKey,
 			String productVersion, String name, String owner,
@@ -113,6 +104,16 @@ public interface LicenseKeyLocalService
 			String hostName, String ipAddresses, String macAddresses,
 			Date startDate, Date expirationDate, boolean complimentary,
 			boolean active)
+		throws Exception;
+
+	public LicenseKey addLicenseKey(
+			String userName, String userUuid, String assetReceiptLicenseUuid,
+			String accountKey, String productPurchaseKey, String productKey,
+			String licenseEntryType, String productName, String productId,
+			String productVersion, String owner, long maxUsers,
+			String description, String hostName, String ipAddresses,
+			String macAddresses, String serverId, Date startDate,
+			Date expirationDate)
 		throws Exception;
 
 	public void addProductConsumption(

@@ -175,6 +175,7 @@ public abstract class BaseAppLicenseKeyResourceTestCase {
 
 		AppLicenseKey appLicenseKey = randomAppLicenseKey();
 
+		appLicenseKey.setAccountKey(regex);
 		appLicenseKey.setDescription(regex);
 		appLicenseKey.setHostName(regex);
 		appLicenseKey.setIpAddresses(regex);
@@ -185,7 +186,9 @@ public abstract class BaseAppLicenseKeyResourceTestCase {
 		appLicenseKey.setOrderId(regex);
 		appLicenseKey.setOwner(regex);
 		appLicenseKey.setProductId(regex);
+		appLicenseKey.setProductKey(regex);
 		appLicenseKey.setProductName(regex);
+		appLicenseKey.setProductPurchaseKey(regex);
 		appLicenseKey.setProductVersion(regex);
 		appLicenseKey.setUserName(regex);
 		appLicenseKey.setUserUuid(regex);
@@ -196,6 +199,7 @@ public abstract class BaseAppLicenseKeyResourceTestCase {
 
 		appLicenseKey = AppLicenseKeySerDes.toDTO(json);
 
+		Assert.assertEquals(regex, appLicenseKey.getAccountKey());
 		Assert.assertEquals(regex, appLicenseKey.getDescription());
 		Assert.assertEquals(regex, appLicenseKey.getHostName());
 		Assert.assertEquals(regex, appLicenseKey.getIpAddresses());
@@ -206,7 +210,9 @@ public abstract class BaseAppLicenseKeyResourceTestCase {
 		Assert.assertEquals(regex, appLicenseKey.getOrderId());
 		Assert.assertEquals(regex, appLicenseKey.getOwner());
 		Assert.assertEquals(regex, appLicenseKey.getProductId());
+		Assert.assertEquals(regex, appLicenseKey.getProductKey());
 		Assert.assertEquals(regex, appLicenseKey.getProductName());
+		Assert.assertEquals(regex, appLicenseKey.getProductPurchaseKey());
 		Assert.assertEquals(regex, appLicenseKey.getProductVersion());
 		Assert.assertEquals(regex, appLicenseKey.getUserName());
 		Assert.assertEquals(regex, appLicenseKey.getUserUuid());
@@ -801,6 +807,14 @@ public abstract class BaseAppLicenseKeyResourceTestCase {
 		for (String additionalAssertFieldName :
 				getAdditionalAssertFieldNames()) {
 
+			if (Objects.equals("accountKey", additionalAssertFieldName)) {
+				if (appLicenseKey.getAccountKey() == null) {
+					valid = false;
+				}
+
+				continue;
+			}
+
 			if (Objects.equals("active", additionalAssertFieldName)) {
 				if (appLicenseKey.getActive() == null) {
 					valid = false;
@@ -929,8 +943,26 @@ public abstract class BaseAppLicenseKeyResourceTestCase {
 				continue;
 			}
 
+			if (Objects.equals("productKey", additionalAssertFieldName)) {
+				if (appLicenseKey.getProductKey() == null) {
+					valid = false;
+				}
+
+				continue;
+			}
+
 			if (Objects.equals("productName", additionalAssertFieldName)) {
 				if (appLicenseKey.getProductName() == null) {
+					valid = false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals(
+					"productPurchaseKey", additionalAssertFieldName)) {
+
+				if (appLicenseKey.getProductPurchaseKey() == null) {
 					valid = false;
 				}
 
@@ -1087,6 +1119,17 @@ public abstract class BaseAppLicenseKeyResourceTestCase {
 
 		for (String additionalAssertFieldName :
 				getAdditionalAssertFieldNames()) {
+
+			if (Objects.equals("accountKey", additionalAssertFieldName)) {
+				if (!Objects.deepEquals(
+						appLicenseKey1.getAccountKey(),
+						appLicenseKey2.getAccountKey())) {
+
+					return false;
+				}
+
+				continue;
+			}
 
 			if (Objects.equals("active", additionalAssertFieldName)) {
 				if (!Objects.deepEquals(
@@ -1272,10 +1315,34 @@ public abstract class BaseAppLicenseKeyResourceTestCase {
 				continue;
 			}
 
+			if (Objects.equals("productKey", additionalAssertFieldName)) {
+				if (!Objects.deepEquals(
+						appLicenseKey1.getProductKey(),
+						appLicenseKey2.getProductKey())) {
+
+					return false;
+				}
+
+				continue;
+			}
+
 			if (Objects.equals("productName", additionalAssertFieldName)) {
 				if (!Objects.deepEquals(
 						appLicenseKey1.getProductName(),
 						appLicenseKey2.getProductName())) {
+
+					return false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals(
+					"productPurchaseKey", additionalAssertFieldName)) {
+
+				if (!Objects.deepEquals(
+						appLicenseKey1.getProductPurchaseKey(),
+						appLicenseKey2.getProductPurchaseKey())) {
 
 					return false;
 				}
@@ -1429,6 +1496,52 @@ public abstract class BaseAppLicenseKeyResourceTestCase {
 		sb.append(" ");
 		sb.append(operator);
 		sb.append(" ");
+
+		if (entityFieldName.equals("accountKey")) {
+			Object object = appLicenseKey.getAccountKey();
+
+			String value = String.valueOf(object);
+
+			if (operator.equals("contains")) {
+				sb = new StringBundler();
+
+				sb.append("contains(");
+				sb.append(entityFieldName);
+				sb.append(",'");
+
+				if ((object != null) && (value.length() > 2)) {
+					sb.append(value.substring(1, value.length() - 1));
+				}
+				else {
+					sb.append(value);
+				}
+
+				sb.append("')");
+			}
+			else if (operator.equals("startswith")) {
+				sb = new StringBundler();
+
+				sb.append("startswith(");
+				sb.append(entityFieldName);
+				sb.append(",'");
+
+				if ((object != null) && (value.length() > 1)) {
+					sb.append(value.substring(0, value.length() - 1));
+				}
+				else {
+					sb.append(value);
+				}
+
+				sb.append("')");
+			}
+			else {
+				sb.append("'");
+				sb.append(value);
+				sb.append("'");
+			}
+
+			return sb.toString();
+		}
 
 		if (entityFieldName.equals("active")) {
 			throw new IllegalArgumentException(
@@ -2010,8 +2123,100 @@ public abstract class BaseAppLicenseKeyResourceTestCase {
 			return sb.toString();
 		}
 
+		if (entityFieldName.equals("productKey")) {
+			Object object = appLicenseKey.getProductKey();
+
+			String value = String.valueOf(object);
+
+			if (operator.equals("contains")) {
+				sb = new StringBundler();
+
+				sb.append("contains(");
+				sb.append(entityFieldName);
+				sb.append(",'");
+
+				if ((object != null) && (value.length() > 2)) {
+					sb.append(value.substring(1, value.length() - 1));
+				}
+				else {
+					sb.append(value);
+				}
+
+				sb.append("')");
+			}
+			else if (operator.equals("startswith")) {
+				sb = new StringBundler();
+
+				sb.append("startswith(");
+				sb.append(entityFieldName);
+				sb.append(",'");
+
+				if ((object != null) && (value.length() > 1)) {
+					sb.append(value.substring(0, value.length() - 1));
+				}
+				else {
+					sb.append(value);
+				}
+
+				sb.append("')");
+			}
+			else {
+				sb.append("'");
+				sb.append(value);
+				sb.append("'");
+			}
+
+			return sb.toString();
+		}
+
 		if (entityFieldName.equals("productName")) {
 			Object object = appLicenseKey.getProductName();
+
+			String value = String.valueOf(object);
+
+			if (operator.equals("contains")) {
+				sb = new StringBundler();
+
+				sb.append("contains(");
+				sb.append(entityFieldName);
+				sb.append(",'");
+
+				if ((object != null) && (value.length() > 2)) {
+					sb.append(value.substring(1, value.length() - 1));
+				}
+				else {
+					sb.append(value);
+				}
+
+				sb.append("')");
+			}
+			else if (operator.equals("startswith")) {
+				sb = new StringBundler();
+
+				sb.append("startswith(");
+				sb.append(entityFieldName);
+				sb.append(",'");
+
+				if ((object != null) && (value.length() > 1)) {
+					sb.append(value.substring(0, value.length() - 1));
+				}
+				else {
+					sb.append(value);
+				}
+
+				sb.append("')");
+			}
+			else {
+				sb.append("'");
+				sb.append(value);
+				sb.append("'");
+			}
+
+			return sb.toString();
+		}
+
+		if (entityFieldName.equals("productPurchaseKey")) {
+			Object object = appLicenseKey.getProductPurchaseKey();
 
 			String value = String.valueOf(object);
 
@@ -2270,6 +2475,8 @@ public abstract class BaseAppLicenseKeyResourceTestCase {
 	protected AppLicenseKey randomAppLicenseKey() throws Exception {
 		return new AppLicenseKey() {
 			{
+				accountKey = StringUtil.toLowerCase(
+					RandomTestUtil.randomString());
 				active = RandomTestUtil.randomBoolean();
 				complimentary = RandomTestUtil.randomBoolean();
 				createDate = RandomTestUtil.nextDate();
@@ -2293,7 +2500,11 @@ public abstract class BaseAppLicenseKeyResourceTestCase {
 				owner = StringUtil.toLowerCase(RandomTestUtil.randomString());
 				productId = StringUtil.toLowerCase(
 					RandomTestUtil.randomString());
+				productKey = StringUtil.toLowerCase(
+					RandomTestUtil.randomString());
 				productName = StringUtil.toLowerCase(
+					RandomTestUtil.randomString());
+				productPurchaseKey = StringUtil.toLowerCase(
 					RandomTestUtil.randomString());
 				productVersion = StringUtil.toLowerCase(
 					RandomTestUtil.randomString());

@@ -72,7 +72,12 @@ public class AppLicenseKeyResourceFactoryImpl
 					throw new IllegalArgumentException("User is not set");
 				}
 
-				return _appLicenseKeyResourceProxyProviderFunction.apply(
+				Function<InvocationHandler, AppLicenseKeyResource>
+					appLicenseKeyResourceProxyProviderFunction =
+						ResourceProxyProviderFunctionHolder.
+							_appLicenseKeyResourceProxyProviderFunction;
+
+				return appLicenseKeyResourceProxyProviderFunction.apply(
 					(proxy, method, arguments) -> _invoke(
 						method, arguments, _checkPermissions,
 						_httpServletRequest, _httpServletResponse,
@@ -230,10 +235,6 @@ public class AppLicenseKeyResourceFactoryImpl
 		}
 	}
 
-	private static final Function<InvocationHandler, AppLicenseKeyResource>
-		_appLicenseKeyResourceProxyProviderFunction =
-			_getProxyProviderFunction();
-
 	@Reference
 	private CompanyLocalService _companyLocalService;
 
@@ -269,6 +270,14 @@ public class AppLicenseKeyResourceFactoryImpl
 
 	@Reference
 	private UserLocalService _userLocalService;
+
+	private static class ResourceProxyProviderFunctionHolder {
+
+		private static final Function<InvocationHandler, AppLicenseKeyResource>
+			_appLicenseKeyResourceProxyProviderFunction =
+				_getProxyProviderFunction();
+
+	}
 
 	private class AcceptLanguageImpl implements AcceptLanguage {
 

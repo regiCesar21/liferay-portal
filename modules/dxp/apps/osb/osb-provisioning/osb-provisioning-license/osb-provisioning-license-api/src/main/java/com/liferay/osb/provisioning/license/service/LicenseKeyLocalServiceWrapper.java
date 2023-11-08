@@ -90,23 +90,6 @@ public class LicenseKeyLocalServiceWrapper
 
 	@Override
 	public com.liferay.osb.provisioning.license.model.LicenseKey addLicenseKey(
-			String userName, String userUuid, String assetReceiptLicenseUuid,
-			String licenseEntryType, String productName, String productId,
-			String productVersion, String owner, long maxUsers,
-			String description, String hostName, String ipAddresses,
-			String macAddresses, String serverId, java.util.Date startDate,
-			java.util.Date expirationDate)
-		throws Exception {
-
-		return _licenseKeyLocalService.addLicenseKey(
-			userName, userUuid, assetReceiptLicenseUuid, licenseEntryType,
-			productName, productId, productVersion, owner, maxUsers,
-			description, hostName, ipAddresses, macAddresses, serverId,
-			startDate, expirationDate);
-	}
-
-	@Override
-	public com.liferay.osb.provisioning.license.model.LicenseKey addLicenseKey(
 			String userName, String userUuid, String licenseEntryType,
 			String productKey, String accountKey, String productPurchaseKey,
 			String productVersion, String name, String owner,
@@ -121,6 +104,24 @@ public class LicenseKeyLocalServiceWrapper
 			productPurchaseKey, productVersion, name, owner, maxClusterNodes,
 			sizing, description, hostName, ipAddresses, macAddresses, startDate,
 			expirationDate, complimentary, active);
+	}
+
+	@Override
+	public com.liferay.osb.provisioning.license.model.LicenseKey addLicenseKey(
+			String userName, String userUuid, String assetReceiptLicenseUuid,
+			String accountKey, String productPurchaseKey, String productKey,
+			String licenseEntryType, String productName, String productId,
+			String productVersion, String owner, long maxUsers,
+			String description, String hostName, String ipAddresses,
+			String macAddresses, String serverId, java.util.Date startDate,
+			java.util.Date expirationDate)
+		throws Exception {
+
+		return _licenseKeyLocalService.addLicenseKey(
+			userName, userUuid, assetReceiptLicenseUuid, accountKey,
+			productPurchaseKey, productKey, licenseEntryType, productName,
+			productId, productVersion, owner, maxUsers, description, hostName,
+			ipAddresses, macAddresses, serverId, startDate, expirationDate);
 	}
 
 	@Override

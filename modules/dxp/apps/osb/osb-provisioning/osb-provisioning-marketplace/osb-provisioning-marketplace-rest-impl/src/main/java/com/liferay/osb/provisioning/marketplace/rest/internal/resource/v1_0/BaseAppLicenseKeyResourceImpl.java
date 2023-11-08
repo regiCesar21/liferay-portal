@@ -8,6 +8,7 @@ package com.liferay.osb.provisioning.marketplace.rest.internal.resource.v1_0;
 import com.liferay.osb.provisioning.marketplace.rest.dto.v1_0.AppLicenseKey;
 import com.liferay.osb.provisioning.marketplace.rest.resource.v1_0.AppLicenseKeyResource;
 import com.liferay.petra.function.UnsafeFunction;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.GroupedModel;
 import com.liferay.portal.kernel.search.Sort;
@@ -17,6 +18,8 @@ import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.ResourceActionLocalService;
 import com.liferay.portal.kernel.service.ResourcePermissionLocalService;
 import com.liferay.portal.kernel.service.RoleLocalService;
+import com.liferay.portal.kernel.servlet.ServletContextPool;
+import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.odata.filter.ExpressionConvert;
 import com.liferay.portal.odata.filter.FilterParserProvider;
 import com.liferay.portal.odata.sort.SortParserProvider;
@@ -106,7 +109,7 @@ public abstract class BaseAppLicenseKeyResourceImpl
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -X 'POST' 'http://localhost:8080/o/provisioning-marketplace-rest/v1.0/app-license-keys' -d $'{"description": ___, "expirationDate": ___, "hostName": ___, "id": ___, "ipAddresses": ___, "licenseType": ___, "macAddresses": ___, "orderId": ___, "owner": ___, "productId": ___, "productName": ___, "productVersion": ___, "startDate": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
+	 * curl -X 'POST' 'http://localhost:8080/o/provisioning-marketplace-rest/v1.0/app-license-keys' -d $'{"accountKey": ___, "description": ___, "expirationDate": ___, "hostName": ___, "id": ___, "ipAddresses": ___, "licenseType": ___, "macAddresses": ___, "orderId": ___, "owner": ___, "productId": ___, "productKey": ___, "productName": ___, "productPurchaseKey": ___, "productVersion": ___, "startDate": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
 	 */
 	@io.swagger.v3.oas.annotations.Operation(
 		description = "Generates an app license key."
@@ -324,6 +327,13 @@ public abstract class BaseAppLicenseKeyResourceImpl
 
 	public void setContextHttpServletRequest(
 		HttpServletRequest contextHttpServletRequest) {
+
+		if ((contextHttpServletRequest != null) &&
+			(contextHttpServletRequest.getAttribute(WebKeys.CTX) == null)) {
+
+			contextHttpServletRequest.setAttribute(
+				WebKeys.CTX, ServletContextPool.get(StringPool.BLANK));
+		}
 
 		this.contextHttpServletRequest = contextHttpServletRequest;
 	}
