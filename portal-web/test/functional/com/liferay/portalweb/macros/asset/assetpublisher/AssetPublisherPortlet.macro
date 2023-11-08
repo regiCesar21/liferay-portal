@@ -1,6 +1,7 @@
 definition {
 
-	macro addAsset {
+	@summary = "Default summary"
+	macro addAsset(siteScope = null, assetType = null) {
 		Portlet.clickPortletPlusIconPG(portletName = "Asset Publisher");
 
 		if (isSet(siteScope)) {
@@ -21,7 +22,8 @@ definition {
 		}
 	}
 
-	macro assertSiteScopeSearch {
+	@summary = "Default summary"
+	macro assertSiteScopeSearch(siteName = null) {
 		AssetPublisherPortlet.gotoConfigurationPG();
 
 		Navigator.gotoNavTab(navTab = "Asset Selection");
@@ -41,7 +43,8 @@ definition {
 		SiteSelector.viewSite(site = ${siteName});
 	}
 
-	macro changePagination {
+	@summary = "Default summary"
+	macro changePagination(currentPageNumber = null, paginationItem = null) {
 		Click(locator1 = "Pagination#CURRENT_PAGE_MENU");
 
 		MenuItem.click(menuItem = ${paginationItem});
@@ -51,13 +54,15 @@ definition {
 			value1 = "Page ${currentPageNumber}");
 	}
 
-	macro clickAssetTitle {
+	@summary = "Default summary"
+	macro clickAssetTitle(assetTitle = null) {
 		Click(
 			key_assetTitle = ${assetTitle},
 			locator1 = "AP#ASSET_ABSTRACT_TITLE");
 	}
 
-	macro configureAddSiteScopes {
+	@summary = "Default summary"
+	macro configureAddSiteScopes(otherSite = null) {
 		AssetPublisherPortlet.gotoConfigurationPG();
 
 		Navigator.gotoNavTab(navTab = "Asset Selection");
@@ -95,7 +100,8 @@ definition {
 		Alert.viewSuccessMessage();
 	}
 
-	macro configureAPSelectMoreThanOnePG {
+	@summary = "Default summary"
+	macro configureAPSelectMoreThanOnePG(selectContent = null, moveSelected = null, portletName = null) {
 		AssetPublisherPortlet.gotoConfigurationPG(portletName = ${portletName});
 
 		Navigator.gotoNavTab(navTab = "Asset Selection");
@@ -122,7 +128,8 @@ definition {
 		PortletEntry.save();
 	}
 
-	macro configureAssetDisplayOrderPG {
+	@summary = "Default summary"
+	macro configureAssetDisplayOrderPG(fieldNameOrder = null, sortOrder = null) {
 		AssetPublisherPortlet.gotoConfigurationPG();
 
 		Navigator.gotoNavTab(navTab = "Asset Selection");
@@ -144,7 +151,8 @@ definition {
 		PortletEntry.save();
 	}
 
-	macro configureAssetLinkBehaviorPG {
+	@summary = "Default summary"
+	macro configureAssetLinkBehaviorPG(disableConfiguration = null, assetLinkBehavior = null) {
 		AssetPublisherPortlet.gotoConfigurationPG();
 
 		Navigator.gotoNavTab(navTab = "Display Settings");
@@ -166,7 +174,8 @@ definition {
 		IFrame.closeFrame();
 	}
 
-	macro configureAssetTypePG {
+	@summary = "Default summary"
+	macro configureAssetTypePG(selectMoreThanOneSubtype = null, assetSubtype = null, selectContent = null, moveSelected = null, selectedAsset = null) {
 		AssetPublisherPortlet.gotoConfigurationPG();
 
 		Navigator.gotoNavTab(navTab = "Asset Selection");
@@ -206,7 +215,8 @@ definition {
 		PortletEntry.save();
 	}
 
-	macro configureCategoriesFilterPG {
+	@summary = "Default summary"
+	macro configureCategoriesFilterPG(queryAndOperator = null, categoryName = null, portletName = null) {
 		AssetPublisherPortlet.gotoConfigurationPG(portletName = ${portletName});
 
 		Navigator.gotoNavTab(navTab = "Asset Selection");
@@ -239,7 +249,8 @@ definition {
 		IFrame.selectTopFrame();
 	}
 
-	macro configureDisplayConversionsPG {
+	@summary = "Default summary"
+	macro configureDisplayConversionsPG(documentTypes = null, check = null, uncheck = null) {
 		AssetPublisherPortlet.gotoConfigurationPG();
 
 		Navigator.gotoNavTab(navTab = "Display Settings");
@@ -260,7 +271,8 @@ definition {
 		PortletEntry.save();
 	}
 
-	macro configureDisplaySettings {
+	@summary = "Default summary"
+	macro configureDisplaySettings(displaySettings = null, enableSocialBookmarkSites = null, displayPage = null, portletName = null) {
 		if (${displayPage} == "true") {
 			var key_portletName = ${portletName};
 
@@ -301,7 +313,8 @@ definition {
 		SelectFrame(value1 = "relative=top");
 	}
 
-	macro configureDisplayTemplatePG {
+	@summary = "Default summary"
+	macro configureDisplayTemplatePG(displayTemplate = null) {
 		SelectFrame(locator1 = "IFrame#DIALOG");
 
 		Navigator.gotoNavTab(navTab = "Display Settings");
@@ -315,7 +328,8 @@ definition {
 		SelectFrame(value1 = "relative=top");
 	}
 
-	macro configureFilterByFieldPG {
+	@summary = "Default summary"
+	macro configureFilterByFieldPG(assetSubtype = null, fieldFilter = null, fieldValue = null, selectedAsset = null) {
 		AssetPublisherPortlet.gotoConfigurationPG();
 
 		Navigator.gotoNavTab(navTab = "Asset Selection");
@@ -379,7 +393,8 @@ definition {
 			value1 = ${assetSubtype});
 	}
 
-	macro configureManualAssetSelectionPG {
+	@summary = "Default summary"
+	macro configureManualAssetSelectionPG(assetTitle = null, portletName = null, assetType = null) {
 		AssetPublisherPortlet.gotoConfigurationPG(portletName = ${portletName});
 
 		Navigator.gotoNavTab(navTab = "Asset Selection");
@@ -419,7 +434,8 @@ definition {
 		SelectFrameTop();
 	}
 
-	macro configurePaginationPG {
+	@summary = "Default summary"
+	macro configurePaginationPG(paginationNumber = null, paginationType = null, contentPage = null) {
 		AssetPublisherPortlet.gotoConfigurationPG(contentPage = ${contentPage});
 
 		Navigator.gotoNavTab(navTab = "Display Settings");
@@ -435,7 +451,8 @@ definition {
 		PortletEntry.save();
 	}
 
-	macro configureSelectedPG {
+	@summary = "Default summary"
+	macro configureSelectedPG(selectedAsset = null) {
 		AssetPublisherPortlet.gotoConfigurationPG();
 
 		Navigator.gotoNavTab(navTab = "Asset Selection");
@@ -449,7 +466,8 @@ definition {
 		PortletEntry.save();
 	}
 
-	macro configureShowMetadataFieldsPG {
+	@summary = "Default summary"
+	macro configureShowMetadataFieldsPG(removeMetadata = null, metadataFieldList = null, addMetadata = null, portletName = null) {
 		AssetPublisherPortlet.gotoConfigurationPG(portletName = ${portletName});
 
 		Navigator.gotoNavTab(navTab = "Display Settings");
@@ -501,7 +519,8 @@ definition {
 		SelectFrameTop();
 	}
 
-	macro configureSiteScopePG {
+	@summary = "Default summary"
+	macro configureSiteScopePG(siteScopeType = null, siteName = null) {
 		var key_siteName = ${siteName};
 
 		AssetPublisherPortlet.gotoConfigurationPG();
@@ -574,7 +593,8 @@ definition {
 		SelectFrameTop();
 	}
 
-	macro configureSiteScopeRemoveSitePG {
+	@summary = "Default summary"
+	macro configureSiteScopeRemoveSitePG(siteScopeType = null, siteName = null, portletName = null) {
 		var key_siteName = ${siteName};
 
 		AssetPublisherPortlet.gotoConfigurationPG(portletName = ${portletName});
@@ -600,7 +620,8 @@ definition {
 		SelectFrameTop();
 	}
 
-	macro configureTagsFilterPG {
+	@summary = "Default summary"
+	macro configureTagsFilterPG(queryContains = null, queryAndOperator = null, tagNameList = null) {
 		AssetPublisherPortlet.gotoConfigurationPG();
 
 		Navigator.gotoNavTab(navTab = "Asset Selection");
@@ -632,7 +653,8 @@ definition {
 		IFrame.selectTopFrame();
 	}
 
-	macro deleteConfigurationTemplatePG {
+	@summary = "Default summary"
+	macro deleteConfigurationTemplatePG(configurationName = null) {
 		Portlet.gotoPortletOptions(
 			portletName = "Asset Publisher",
 			portletOption = "Configuration Templates");
@@ -650,7 +672,8 @@ definition {
 		PortletEntry.viewEmptyMessage(entity = "Configuration Templates");
 	}
 
-	macro editConfigureCategoriesFilterPG {
+	@summary = "Default summary"
+	macro editConfigureCategoriesFilterPG(categoryNames = null, queryContains = null) {
 		AssetPublisherPortlet.gotoConfigurationPG();
 
 		Navigator.gotoNavTab(navTab = "Asset Selection");
@@ -682,7 +705,8 @@ definition {
 		PortletEntry.save();
 	}
 
-	macro editConfigureTagsFilterPG {
+	@summary = "Default summary"
+	macro editConfigureTagsFilterPG(queryContains = null, queryAndOperator = null, tagNameList = null) {
 		AssetPublisherPortlet.gotoConfigurationPG();
 
 		Navigator.gotoNavTab(navTab = "Asset Selection");
@@ -712,7 +736,8 @@ definition {
 		IFrame.selectTopFrame();
 	}
 
-	macro enableRSSSubscription {
+	@summary = "Default summary"
+	macro enableRSSSubscription() {
 		SelectFrame(locator1 = "IFrame#DIALOG");
 
 		Navigator.gotoNavTab(navTab = "Subscriptions");
@@ -724,7 +749,8 @@ definition {
 		Check.checkToggleSwitch(locator1 = "APConfiguration#SUBSCRIPTIONS_ENABLE_RSS_SUBSCRIPTION");
 	}
 
-	macro enableUserSegementFilter {
+	@summary = "Default summary"
+	macro enableUserSegementFilter() {
 		AssetPublisherPortlet.gotoConfigurationPG();
 
 		Navigator.gotoNavTab(navTab = "Asset Selection");
@@ -742,7 +768,8 @@ definition {
 		SelectFrameTop();
 	}
 
-	macro gotoConfigurationPG {
+	@summary = "Default summary"
+	macro gotoConfigurationPG() {
 		if (!(isSet(portletName))) {
 			var portletName = "Asset Publisher";
 		}
@@ -765,7 +792,8 @@ definition {
 		SelectFrame(locator1 = "IFrame#DIALOG");
 	}
 
-	macro gotoEditAssetPG {
+	@summary = "Default summary"
+	macro gotoEditAssetPG(assetTitle = null) {
 		MouseOver(
 			key_assetTitle = ${assetTitle},
 			locator1 = "APAsset#ASSET_TITLE");
@@ -777,13 +805,15 @@ definition {
 		MenuItem.click(menuItem = "Edit");
 	}
 
-	macro gotoViewInContext {
+	@summary = "Default summary"
+	macro gotoViewInContext() {
 		AssertClick(
 			locator1 = "Link#VIEW_IN_CONTEXT",
 			value1 = "View in Context »");
 	}
 
-	macro rateAssetPG {
+	@summary = "Default summary"
+	macro rateAssetPG(rating = null) {
 		MouseOver.mouseOverNotVisible(
 			key_emptyStarPosition = ${rating},
 			locator1 = "Ratings#YOUR_RATING_STAR_EMPTY");
@@ -793,7 +823,8 @@ definition {
 			locator1 = "Ratings#YOUR_RATING_STAR_EMPTY");
 	}
 
-	macro removeSiteScope {
+	@summary = "Default summary"
+	macro removeSiteScope(removeSiteScopes = null) {
 		AssetPublisherPortlet.gotoConfigurationPG();
 
 		Navigator.gotoNavTab(navTab = "Asset Selection");
@@ -811,7 +842,8 @@ definition {
 		SelectFrameTop();
 	}
 
-	macro restoreConfigurationTemplatePG {
+	@summary = "Default summary"
+	macro restoreConfigurationTemplatePG(configurationName = null) {
 		Portlet.gotoPortletOptions(
 			portletName = "Asset Publisher",
 			portletOption = "Configuration Templates");
@@ -825,7 +857,8 @@ definition {
 		Alert.viewSuccessMessage();
 	}
 
-	macro saveConfigurationTemplatePG {
+	@summary = "Default summary"
+	macro saveConfigurationTemplatePG(configurationName = null) {
 		Portlet.gotoPortletOptions(
 			portletName = "Asset Publisher",
 			portletOption = "Configuration Templates");
@@ -853,7 +886,8 @@ definition {
 		SelectFrameTop();
 	}
 
-	macro selectAssetList {
+	@summary = "Default summary"
+	macro selectAssetList(assetListName = null) {
 		Portlet.gotoPortletOptions(
 			portletName = "Asset Publisher",
 			portletOption = "Configuration");
@@ -887,7 +921,8 @@ definition {
 		SelectFrameTop();
 	}
 
-	macro viewAssetDetailsPG {
+	@summary = "Default summary"
+	macro viewAssetDetailsPG(assetContent = null, assetTitle = null) {
 		var key_assetTitle = ${assetTitle};
 
 		AssertTextEquals(
@@ -905,7 +940,8 @@ definition {
 			value1 = ${assetContent});
 	}
 
-	macro viewAssetMetadataPG {
+	@summary = "Default summary"
+	macro viewAssetMetadataPG(categoryName = null) {
 		var key_categoryName = ${categoryName};
 
 		AssertTextEquals.assertPartialText(
@@ -913,7 +949,8 @@ definition {
 			value1 = ${categoryName});
 	}
 
-	macro viewAssetNotPresentDisabledContentPG {
+	@summary = "Default summary"
+	macro viewAssetNotPresentDisabledContentPG(assetTitle = null) {
 		var key_assetTitle = ${assetTitle};
 
 		AssertElementNotPresent(
@@ -921,7 +958,8 @@ definition {
 			value1 = ${assetTitle});
 	}
 
-	macro viewAssetNotPresentPG {
+	@summary = "Default summary"
+	macro viewAssetNotPresentPG(assetContent = null, assetTitle = null) {
 		var key_assetTitle = ${assetTitle};
 
 		AssertTextNotPresent(
@@ -933,7 +971,8 @@ definition {
 			value1 = ${assetContent});
 	}
 
-	macro viewAssetPG {
+	@summary = "Default summary"
+	macro viewAssetPG(assetContent = null, assetTitle = null) {
 		var key_assetTitle = ${assetTitle};
 
 		AssertTextEquals(
@@ -945,7 +984,8 @@ definition {
 			value1 = ${assetContent});
 	}
 
-	macro viewAssetRatingPG {
+	@summary = "Default summary"
+	macro viewAssetRatingPG(rating = null) {
 		if (${rating} == 0) {
 			AssertElementNotPresent(
 				key_ratingStarPosition = 1,
@@ -990,7 +1030,8 @@ definition {
 		}
 	}
 
-	macro viewAssetRelatedAssets {
+	@summary = "Default summary"
+	macro viewAssetRelatedAssets(relatedAssetTitles = null) {
 		AssertTextEquals(
 			locator1 = "AssetRelatedAssets#HEADER",
 			value1 = "Related Assets");
@@ -1003,7 +1044,8 @@ definition {
 		}
 	}
 
-	macro viewAssetTypeNotAvailable {
+	@summary = "Default summary"
+	macro viewAssetTypeNotAvailable(assetType = null) {
 		SelectFrame(locator1 = "IFrame#CONFIGURATION");
 
 		Panel.expandPanel(panel = "Source");
@@ -1015,7 +1057,8 @@ definition {
 		SelectFrameTop();
 	}
 
-	macro viewAssetViewCount {
+	@summary = "Default summary"
+	macro viewAssetViewCount(assetTitle = null, viewCount = null) {
 		AssertTextEquals.assertPartialText(
 			key_assetTitle = ${assetTitle},
 			key_viewCount = ${viewCount},
@@ -1023,7 +1066,8 @@ definition {
 			value1 = ${viewCount});
 	}
 
-	macro viewAverageRatingPG {
+	@summary = "Default summary"
+	macro viewAverageRatingPG(averageRating = null) {
 		if (${averageRating} == 0) {
 			AssertElementNotPresent(
 				key_averageRatingStar = 1,
@@ -1072,7 +1116,8 @@ definition {
 			value1 = "Average (1 Vote)");
 	}
 
-	macro viewConfigureAPDisplayTemplateTableBookmarksPG {
+	@summary = "Default summary"
+	macro viewConfigureAPDisplayTemplateTableBookmarksPG(bookmarkDescription = null, assetTitle = null, bookmarkName = null) {
 		var key_assetTitle = ${assetTitle};
 		var key_bookmarkName = ${bookmarkName};
 
@@ -1085,7 +1130,8 @@ definition {
 		AssertElementNotPresent(locator1 = "AP#ASSET_ABSTRACT_BOOKMARK_TABLE_DISPLAY_TEMPLATE_BOOKMARK_ICON");
 	}
 
-	macro viewConfigureAPDisplayTemplateTitleListBookmarksPG {
+	@summary = "Default summary"
+	macro viewConfigureAPDisplayTemplateTitleListBookmarksPG(bookmarkDescription = null, assetTitle = null, bookmarkName = null) {
 		var key_assetTitle = ${assetTitle};
 		var key_bookmarkName = ${bookmarkName};
 
@@ -1096,7 +1142,8 @@ definition {
 			value1 = ${bookmarkDescription});
 	}
 
-	macro viewConfigureAPMoveToAvailablePG {
+	@summary = "Default summary"
+	macro viewConfigureAPMoveToAvailablePG(assetTitle = null) {
 		var key_assetTitle = ${assetTitle};
 
 		AssertTextNotPresent(
@@ -1104,7 +1151,8 @@ definition {
 			value1 = ${assetTitle});
 	}
 
-	macro viewConfigureAPMoveToSelectedPG {
+	@summary = "Default summary"
+	macro viewConfigureAPMoveToSelectedPG(assetTitle = null) {
 		var key_assetTitle = ${assetTitle};
 
 		AssertTextEquals(
@@ -1112,7 +1160,8 @@ definition {
 			value1 = ${assetTitle});
 	}
 
-	macro viewConfigureSiteScope {
+	@summary = "Default summary"
+	macro viewConfigureSiteScope(siteName = null) {
 		var key_siteName = ${siteName};
 
 		AssetPublisherPortlet.gotoConfigurationPG();
@@ -1126,7 +1175,8 @@ definition {
 			value1 = ${siteName});
 	}
 
-	macro viewConfigureSiteScopeContentSharingPG {
+	@summary = "Default summary"
+	macro viewConfigureSiteScopeContentSharingPG(contentSharingAcrossSitesEnabled = null, childSite = null, liferaySiteName = null, liferaySiteType = null) {
 		AssetPublisherPortlet.gotoConfigurationPG();
 
 		Navigator.gotoNavTab(navTab = "Asset Selection");
@@ -1190,7 +1240,8 @@ definition {
 		SelectFrame(value1 = "relative=top");
 	}
 
-	macro viewContentSharingPG {
+	@summary = "Default summary"
+	macro viewContentSharingPG(siteScope1 = null, siteScope2 = null, assetContent = null, assetTitle = null) {
 		MouseOver.mouseOverNotVisible(locator1 = "AP#ADD_ASSET_PLUS_ICON");
 
 		Click(locator1 = "AP#ADD_ASSET_PLUS_ICON");
@@ -1222,7 +1273,8 @@ definition {
 			assetTitle = ${assetTitle});
 	}
 
-	macro viewCustomADTRichSummaryPG {
+	@summary = "Default summary"
+	macro viewCustomADTRichSummaryPG(assetTitle = null, assetDescription = null) {
 		var key_assetTitle = ${assetTitle};
 
 		AssertTextEquals(
@@ -1254,7 +1306,8 @@ definition {
 		SocialBookmarks.viewDefaultSharableBookmarks();
 	}
 
-	macro viewDefaultWithAllDisplaySettingsCheckboxesPG {
+	@summary = "Default summary"
+	macro viewDefaultWithAllDisplaySettingsCheckboxesPG(assetTitle = null, assetDescription = null) {
 		var key_assetTitle = ${assetTitle};
 
 		AssertTextEquals(
@@ -1268,14 +1321,16 @@ definition {
 			value1 = ${assetDescription});
 	}
 
-	macro viewDisplayOrderPG {
+	@summary = "Default summary"
+	macro viewDisplayOrderPG(assetTitle = null, rowNumber = null) {
 		AssertTextEquals(
 			key_rowNumber = ${rowNumber},
 			locator1 = "APAsset#ASSET_ROW_ENTRY_TITLE",
 			value1 = ${assetTitle});
 	}
 
-	macro viewDisplaySettings {
+	@summary = "Default summary"
+	macro viewDisplaySettings(displaySettings = null, portletName = null) {
 		AssetPublisherPortlet.gotoConfigurationPG(portletName = ${portletName});
 
 		Navigator.gotoNavTab(navTab = "Display Settings");
@@ -1298,7 +1353,8 @@ definition {
 		SelectFrame(value1 = "relative=top");
 	}
 
-	macro viewDynamicAssetSelectionConfigurationPG {
+	@summary = "Default summary"
+	macro viewDynamicAssetSelectionConfigurationPG(portletName = null) {
 		AssetPublisherPortlet.gotoConfigurationPG(portletName = ${portletName});
 
 		Navigator.gotoNavTab(navTab = "Asset Selection");
@@ -1314,7 +1370,8 @@ definition {
 		SelectFrameTop();
 	}
 
-	macro viewEditLinkPG {
+	@summary = "Default summary"
+	macro viewEditLinkPG(entryTitle = null, entryContent = null) {
 		var key_assetTitle = ${entryTitle};
 
 		AssertTextEquals(
@@ -1328,7 +1385,8 @@ definition {
 		AssertElementPresent(locator1 = "AP#ASSET_ABSTRACT_EDIT");
 	}
 
-	macro viewFilterAndFieldsPG {
+	@summary = "Default summary"
+	macro viewFilterAndFieldsPG(assetSubtype = null, assetSubtypeFields = null, noneIndexable = null, portletName = null, selectedAsset = null) {
 		AssetPublisherPortlet.gotoConfigurationPG(portletName = ${portletName});
 
 		Navigator.gotoNavTab(navTab = "Asset Selection");
@@ -1371,7 +1429,8 @@ definition {
 		SelectFrameTop();
 	}
 
-	macro viewManualAssetSelectionConfigurationPG {
+	@summary = "Default summary"
+	macro viewManualAssetSelectionConfigurationPG(portletName = null) {
 		AssetPublisherPortlet.gotoConfigurationPG(portletName = ${portletName});
 
 		Navigator.gotoNavTab(navTab = "Asset Selection");
@@ -1399,7 +1458,8 @@ definition {
 		SelectFrameTop();
 	}
 
-	macro viewManualAssetTypesPG {
+	@summary = "Default summary"
+	macro viewManualAssetTypesPG(assetEntryTypes = null) {
 		SelectFrame(locator1 = "IFrame#DIALOG");
 
 		Panel.expandPanel(panel = "Asset Entries");
@@ -1416,14 +1476,16 @@ definition {
 		IFrame.selectTopFrame();
 	}
 
-	macro viewManualNoAssetsMessagePG {
+	@summary = "Default summary"
+	macro viewManualNoAssetsMessagePG() {
 		AssertTextEquals(
 			key_widgetName = "Asset Publisher",
 			locator1 = "Message#INFO_SPECIFIC_WIDGET",
 			value1 = "There are no results.");
 	}
 
-	macro viewMultipleAssetOrderPGViaAP {
+	@summary = "Default summary"
+	macro viewMultipleAssetOrderPGViaAP(assetTitle2 = null, assetTitle3 = null, assetTitle1 = null) {
 		AssertTextEquals(
 			locator1 = "AP#ASSET_ABSTRACT_GENERIC_TITLE_1",
 			value1 = ${assetTitle1});
@@ -1437,7 +1499,8 @@ definition {
 			value1 = ${assetTitle3});
 	}
 
-	macro viewMultipleDDLRecordsViaAP {
+	@summary = "Default summary"
+	macro viewMultipleDDLRecordsViaAP(ddlRecordFieldData2 = null, ddlRecordFieldData1 = null, ddlRecordFieldData3 = null) {
 		AssertTextEquals.assertPartialText(
 			locator1 = "AP#ASSET_ABSTRACT_DDL_RECORD_1",
 			value1 = ${ddlRecordFieldData1});
@@ -1451,7 +1514,8 @@ definition {
 			value1 = ${ddlRecordFieldData3});
 	}
 
-	macro viewMultipleSiteScopesAddDropdowns {
+	@summary = "Default summary"
+	macro viewMultipleSiteScopesAddDropdowns(siteName1 = null, siteName2 = null) {
 		var key_siteScope = ${siteName1};
 
 		MouseOver.mouseOverNotVisible(locator1 = "AP#ADD_ASSET_PLUS_ICON");
@@ -1479,7 +1543,8 @@ definition {
 			value1 = ${siteName2});
 	}
 
-	macro viewNoEditLinkPG {
+	@summary = "Default summary"
+	macro viewNoEditLinkPG(entryTitle = null, entryContent = null) {
 		var key_assetTitle = ${entryTitle};
 
 		AssertTextEquals(
@@ -1495,7 +1560,8 @@ definition {
 		AssertElementNotPresent(locator1 = "AP#ASSET_EDIT");
 	}
 
-	macro viewOrderedFieldPG {
+	@summary = "Default summary"
+	macro viewOrderedFieldPG(firstAsset = null, secondAsset = null, thirdAsset = null) {
 		AssertTextEquals(
 			locator1 = "AP#ASSET_ORDER_FIRST",
 			value1 = ${firstAsset});
@@ -1509,7 +1575,8 @@ definition {
 			value1 = ${thirdAsset});
 	}
 
-	macro viewPaginatedAssetsPG {
+	@summary = "Default summary"
+	macro viewPaginatedAssetsPG(paginationNumber = null, pageNumber = null, nextPageClick = null, pageMod = null) {
 		var key_pageMod = ${pageMod};
 		var key_pageNumber = ${pageNumber};
 		var key_paginationNumber = ${paginationNumber};
@@ -1533,7 +1600,8 @@ definition {
 		}
 	}
 
-	macro viewPG {
+	@summary = "Default summary"
+	macro viewPG(assetContent = null, assetTitle = null, assetPriority = null, relatedAssetTitles = null, tagName = null, relatedAssetTitleHidden = null) {
 		var key_assetContent = ${assetContent};
 		var key_assetTitle = ${assetTitle};
 
@@ -1580,17 +1648,20 @@ definition {
 		}
 	}
 
-	macro viewPlusIconNotPresentPG {
+	@summary = "Default summary"
+	macro viewPlusIconNotPresentPG() {
 		AssertElementNotPresent(locator1 = "AP#ADD_ASSET_PLUS_ICON");
 	}
 
-	macro viewReadMoreLinkNotPresentPG {
+	@summary = "Default summary"
+	macro viewReadMoreLinkNotPresentPG() {
 		AssertTextNotPresent(
 			locator1 = "Link#READ_MORE",
 			value1 = "Read More");
 	}
 
-	macro viewRestoredSetupPG {
+	@summary = "Default summary"
+	macro viewRestoredSetupPG(portletName = null) {
 		AssetPublisherPortlet.gotoConfigurationPG(portletName = ${portletName});
 
 		Navigator.gotoNavTab(navTab = "Asset Selection");
@@ -1604,7 +1675,8 @@ definition {
 		SelectFrameTop();
 	}
 
-	macro viewSelectedPG {
+	@summary = "Default summary"
+	macro viewSelectedPG(selectedAssetConfiguration = null, assetSubtypeConfiguration = null, selectedAsset = null) {
 		Portlet.clickPortletPlusIconPG(portletName = "Asset Publisher");
 
 		AssertTextEquals(
@@ -1633,7 +1705,8 @@ definition {
 		SelectFrameTop();
 	}
 
-	macro viewTagFocusPG {
+	@summary = "Default summary"
+	macro viewTagFocusPG(nonTaggedAsset = null, assetTitleList = null) {
 		for (var assetTitle : list ${assetTitleList}) {
 			var key_assetTitle = ${assetTitle};
 

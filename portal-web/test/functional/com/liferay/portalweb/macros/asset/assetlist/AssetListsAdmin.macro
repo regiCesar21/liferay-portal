@@ -1,6 +1,7 @@
 definition {
 
-	macro addDynamicSelection {
+	@summary = "Default summary"
+	macro addDynamicSelection(assetListTitle = null) {
 		LexiconEntry.gotoAddMenuItem(menuItem = "Dynamic Selection");
 
 		PortletEntry.inputText(
@@ -12,7 +13,8 @@ definition {
 		Alert.viewSuccessMessage();
 	}
 
-	macro addManualSelection {
+	@summary = "Default summary"
+	macro addManualSelection(assetListTitle = null) {
 		LexiconEntry.gotoAddMenuItem(menuItem = "Manual Selection");
 
 		PortletEntry.inputText(
@@ -24,19 +26,22 @@ definition {
 		Alert.viewSuccessMessage();
 	}
 
-	macro deleteEntry {
+	@summary = "Default summary"
+	macro deleteEntry(assetListTitle = null) {
 		LexiconList.delete(listEntry = ${assetListTitle});
 
 		Alert.viewSuccessMessage();
 	}
 
-	macro gotoEntryMenuItem {
+	@summary = "Default summary"
+	macro gotoEntryMenuItem(item = null, assetListTitle = null) {
 		LexiconList.clickEllipsisItem(
 			item = ${item},
 			listEntry = ${assetListTitle});
 	}
 
-	macro gotoPersonalizationMenuItem {
+	@summary = "Default summary"
+	macro gotoPersonalizationMenuItem() {
 		Click(locator1 = "AssetLists#PERSONALIZATION_DROPDOWN");
 
 		Click(
@@ -44,11 +49,13 @@ definition {
 			locator1 = "AssetLists#PERSONALIZATION_DROPDOWN_ITEM");
 	}
 
-	macro openAssetListsAdmin {
+	@summary = "Default summary"
+	macro openAssetListsAdmin(siteURLKey = null) {
 		Navigator.openWithAppendToBaseURL(urlAppend = "group/${siteURLKey}/~/control_panel/manage?p_p_id=com_liferay_asset_list_web_portlet_AssetListPortlet");
 	}
 
-	macro renameAssetList {
+	@summary = "Default summary"
+	macro renameAssetList(newAssetListTitle = null, oldAssetListTitle = null) {
 		AssetListsAdmin.gotoEntryMenuItem(
 			assetListTitle = ${oldAssetListTitle},
 			item = "Rename");
@@ -60,7 +67,8 @@ definition {
 		Button.clickSave();
 	}
 
-	macro selectAsset {
+	@summary = "Default summary"
+	macro selectAsset(assetName = null, assetListName = null, assetType = null) {
 		var key_title = ${assetListName};
 		var key_assetType = ${assetType};
 
@@ -81,7 +89,8 @@ definition {
 		Alert.viewSuccessMessage();
 	}
 
-	macro viewAssetList {
+	@summary = "Default summary"
+	macro viewAssetList(assetListTitle = null, type = null) {
 		var key_title = ${assetListTitle};
 		var key_type = ${type};
 
@@ -94,7 +103,8 @@ definition {
 			value1 = ${type});
 	}
 
-	macro viewContent {
+	@summary = "Default summary"
+	macro viewContent(assetTitle = null, assetListTitle = null, assetType = null) {
 		Click(
 			key_title = ${assetListTitle},
 			locator1 = "AssetLists#ASSET_LIST_ENTRY_TITLE");
@@ -116,7 +126,8 @@ definition {
 		Click(locator1 = "Icon#CLOSE");
 	}
 
-	macro viewUsages {
+	@summary = "Default summary"
+	macro viewUsages(assetListTitle = null) {
 		AssetListsAdmin.gotoEntryMenuItem(
 			assetListTitle = ${assetListTitle},
 			item = "View Usages");

@@ -1,6 +1,7 @@
 definition {
 
-	macro getCurrentMetric {
+	@summary = "Default summary"
+	macro getCurrentMetric() {
 		WaitForVisible(
 			key_cardTitle = "Visitors Behavior",
 			locator1 = "ACCards#CARD_TITLE");
@@ -10,7 +11,8 @@ definition {
 		return ${current};
 	}
 
-	macro viewActivitiesDuration {
+	@summary = "Default summary"
+	macro viewActivitiesDuration(date = null) {
 		var valueNumber = "";
 		var timeUnit = "";
 		var flag = 1;
@@ -36,14 +38,16 @@ definition {
 		}
 	}
 
-	macro viewActivitiesPercentage {
+	@summary = "Default summary"
+	macro viewActivitiesPercentage(valueNumber = null, entryName = null) {
 		AssertElementPresent(
 			key_entry = ${entryName},
 			key_number = ${valueNumber},
 			locator1 = "ACSites#ACTIVITIES_CARD_ATRIBUTE_AND_VALUE");
 	}
 
-	macro viewGeomapAnalyticsLocationNames {
+	@summary = "Default summary"
+	macro viewGeomapAnalyticsLocationNames(locationList = null) {
 		for (var locationName : list ${locationList}) {
 			AssertElementPresent(
 				key_entry = ${locationName},
@@ -51,7 +55,8 @@ definition {
 		}
 	}
 
-	macro viewSiteOverviewDashboardCards {
+	@summary = "Default summary"
+	macro viewSiteOverviewDashboardCards() {
 		WaitForElementPresent(locator1 = "ACSites#ACTIVITIES_CARD");
 
 		AssertElementPresent(locator1 = "ACSites#TOP_PAGES_CARD");
@@ -71,7 +76,8 @@ definition {
 		AssertElementPresent(locator1 = "ACSites#COHORT_ANALYSIS_CARD");
 	}
 
-	macro viewVisitedTopPages {
+	@summary = "Default summary"
+	macro viewVisitedTopPages(pageNameList = null, positionList = null) {
 		var list1 = ListUtil.newListFromString(${pageNameList});
 		var list2 = ListUtil.newListFromString(${positionList});
 		var size = ListUtil.size(${list1});
@@ -100,7 +106,8 @@ definition {
 		}
 	}
 
-	macro viewVisitorsOnGraph {
+	@summary = "Default summary"
+	macro viewVisitorsOnGraph(visitorsTypeList = null, valueVisitorsList = null) {
 		ACTimeFilter.clickTimeFilterButton();
 
 		ACTimeFilter.setLast24Hours();

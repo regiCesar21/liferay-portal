@@ -1,6 +1,7 @@
 definition {
 
-	macro assertEngineVendorAndVersions {
+	@summary = "Default summary"
+	macro assertEngineVendorAndVersions(serverVersion = null, engineVendor = null, clientVersion = null) {
 		AssertTextEquals.assertPartialText(
 			locator1 = "SearchAdmin#SEARCH_ENGINE_INFORMATION",
 			position = 1,
@@ -20,7 +21,8 @@ definition {
 			value1 = ${serverVersion});
 	}
 
-	macro executeSearchActions {
+	@summary = "Default summary"
+	macro executeSearchActions(actionsDescription = null) {
 		var reindexElapsedTime = 0;
 
 		while (((${reindexElapsedTime} == 0) || (${reindexElapsedTime} == 10) || (${reindexElapsedTime} == 480)) && (maxIterations = "2")) {
@@ -112,7 +114,8 @@ definition {
 		}
 	}
 
-	macro getServerVersion {
+	@summary = "Default summary"
+	macro getServerVersion() {
 		ProductMenu.gotoPortlet(
 			category = "Configuration",
 			panel = "Control Panel",
@@ -125,7 +128,8 @@ definition {
 		return ${serverVersion};
 	}
 
-	macro viewActiveConnectionsError {
+	@summary = "Default summary"
+	macro viewActiveConnectionsError() {
 		if (IsTextEqual.isPartialText(locator1 = "Message#ERROR", value1 = "are available")) {
 			AssertTextEquals.assertPartialText(
 				locator1 = "Message#ERROR",

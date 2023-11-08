@@ -1,6 +1,7 @@
 definition {
 
-	macro _selectMappingTypes {
+	@summary = "Default summary"
+	macro _selectMappingTypes() {
 		if (!(isSet(contentType))) {
 			var contentType = "Web Content Article";
 		}
@@ -18,7 +19,8 @@ definition {
 			value1 = ${subType});
 	}
 
-	macro addDisplayPage {
+	@summary = "Default summary"
+	macro addDisplayPage(displayPageName = null, subType = null, contentType = null) {
 		LexiconEntry.gotoAdd();
 
 		PortletEntry.inputName(name = ${displayPageName});
@@ -32,17 +34,20 @@ definition {
 		PageEditor.assertFragmentSidebarLoaded();
 	}
 
-	macro deleteDisplayPage {
+	@summary = "Default summary"
+	macro deleteDisplayPage(displayPageName = null) {
 		Pause(locator = 5000);
 
 		LexiconCard.delete(card = ${displayPageName});
 	}
 
-	macro gotoDisplayPage {
+	@summary = "Default summary"
+	macro gotoDisplayPage(displayPageName = null) {
 		LexiconCard.clickCardTitle(card = ${displayPageName});
 	}
 
-	macro gotoDisplayPageEllipsisItem {
+	@summary = "Default summary"
+	macro gotoDisplayPageEllipsisItem(item = null, displayPageName = null) {
 		Pause(locator = 1000);
 
 		LexiconCard.clickEllipsisItem(
@@ -50,7 +55,8 @@ definition {
 			item = ${item});
 	}
 
-	macro markDisplayPageAsDefault {
+	@summary = "Default summary"
+	macro markDisplayPageAsDefault(displayPageName = null) {
 		DisplayPageTemplatesAdmin.gotoDisplayPageEllipsisItem(
 			displayPageName = ${displayPageName},
 			item = "Mark As Default");
@@ -60,11 +66,13 @@ definition {
 			locator1 = "LexiconCard#CARD_STICKER");
 	}
 
-	macro openDisplayPagesAdmin {
+	@summary = "Default summary"
+	macro openDisplayPagesAdmin(siteURLKey = null) {
 		Navigator.openWithAppendToBaseURL(urlAppend = "group/${siteURLKey}/~/control_panel/manage?p_p_id=com_liferay_layout_admin_web_portlet_GroupPagesPortlet&_com_liferay_layout_admin_web_portlet_GroupPagesPortlet_tabs1=display-page-templates");
 	}
 
-	macro renameDisplayPage {
+	@summary = "Default summary"
+	macro renameDisplayPage(newDisplayPageName = null, displayPageName = null) {
 		DisplayPageTemplatesAdmin.gotoDisplayPageEllipsisItem(
 			displayPageName = ${displayPageName},
 			item = "Rename");
@@ -74,15 +82,18 @@ definition {
 		Modal.save();
 	}
 
-	macro viewDisplayPageNotPresent {
+	@summary = "Default summary"
+	macro viewDisplayPageNotPresent(displayPageName = null) {
 		LexiconCard.viewCardNotPresent(card = ${displayPageName});
 	}
 
-	macro viewDisplayPagePresent {
+	@summary = "Default summary"
+	macro viewDisplayPagePresent(displayPageName = null) {
 		LexiconCard.viewCardPresent(card = ${displayPageName});
 	}
 
-	macro viewPGViaAP {
+	@summary = "Default summary"
+	macro viewPGViaAP(webContentTitle = null, webContentContent = null, contentList = null) {
 		var key_assetContent = ${webContentContent};
 		var key_assetTitle = ${webContentTitle};
 

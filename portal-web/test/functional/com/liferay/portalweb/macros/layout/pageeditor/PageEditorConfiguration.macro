@@ -1,10 +1,12 @@
 definition {
 
-	macro _toggleConfigurationFloatingToolbar {
+	@summary = "Default summary"
+	macro _toggleConfigurationFloatingToolbar() {
 		Click.clickNoMouseOver(locator1 = "FragmentEditor#FRAGMENTS_EDITOR_FLOATING_TOOLBAR_CONFIGURATION");
 	}
 
-	macro changeConfigColor {
+	@summary = "Default summary"
+	macro changeConfigColor(fragmentName = null, colorPalette = null) {
 		Click(
 			fragment_name = ${fragmentName},
 			locator1 = "PageEditor#SECTION_NAME");
@@ -18,7 +20,8 @@ definition {
 		PageEditorConfiguration._toggleConfigurationFloatingToolbar();
 	}
 
-	macro changeConfigSelection {
+	@summary = "Default summary"
+	macro changeConfigSelection(fragmentName = null, optionValue = null) {
 		Click(
 			fragment_name = ${fragmentName},
 			locator1 = "PageEditor#SECTION_NAME");
@@ -32,7 +35,8 @@ definition {
 		PageEditorConfiguration._toggleConfigurationFloatingToolbar();
 	}
 
-	macro changeConfigText {
+	@summary = "Default summary"
+	macro changeConfigText(fragmentName = null, editableText = null, textConfigName = null) {
 		Click(
 			fragment_name = ${fragmentName},
 			locator1 = "PageEditor#SECTION_NAME");
@@ -48,7 +52,8 @@ definition {
 		PageEditorConfiguration._toggleConfigurationFloatingToolbar();
 	}
 
-	macro checkConfigCheckbox {
+	@summary = "Default summary"
+	macro checkConfigCheckbox(fragmentName = null, checkboxName = null) {
 		Click(
 			fragment_name = ${fragmentName},
 			locator1 = "PageEditor#SECTION_NAME");
@@ -62,7 +67,8 @@ definition {
 		PageEditorConfiguration._toggleConfigurationFloatingToolbar();
 	}
 
-	macro restoreConfigValues {
+	@summary = "Default summary"
+	macro restoreConfigValues(fragmentName = null) {
 		Click(
 			fragment_name = ${fragmentName},
 			locator1 = "PageEditor#SECTION_NAME");

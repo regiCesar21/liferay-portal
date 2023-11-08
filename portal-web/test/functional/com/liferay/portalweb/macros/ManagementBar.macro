@@ -1,6 +1,7 @@
 definition {
 
-	macro changeDisplayStyle {
+	@summary = "Default summary"
+	macro changeDisplayStyle(displayStyle = null) {
 		var browserType = PropsUtil.get("browser.type");
 
 		if (${browserType} == "chrome") {
@@ -14,7 +15,8 @@ definition {
 		ManagementBar.viewDisplayStyle(displayStyle = ${displayStyle});
 	}
 
-	macro clickAdd {
+	@summary = "Default summary"
+	macro clickAdd() {
 		var browserType = PropsUtil.get("browser.type");
 
 		if (${browserType} == "chrome") {
@@ -24,19 +26,22 @@ definition {
 		Click.clickNoMouseOver(locator1 = "Button#PLUS");
 	}
 
-	macro clickAddMenuItem {
+	@summary = "Default summary"
+	macro clickAddMenuItem(menuItem = null) {
 		ManagementBar.clickAdd();
 
 		MenuItem.click(menuItem = ${menuItem});
 	}
 
-	macro clickSelectAllCheckbox {
+	@summary = "Default summary"
+	macro clickSelectAllCheckbox() {
 		Click(locator1 = "Checkbox#LEXICON_SELECT_ALL_CONTAINER");
 
 		AssertChecked.assertCheckedNotVisible(locator1 = "Checkbox#LEXICON_SELECT_ALL_INPUT");
 	}
 
-	macro setFilterAndOrder {
+	@summary = "Default summary"
+	macro setFilterAndOrder(orderBy = null, filterBy = null) {
 		if (isSet(filterBy)) {
 			var menuItem = ${filterBy};
 		}
@@ -49,7 +54,8 @@ definition {
 		MenuItem.click(menuItem = ${menuItem});
 	}
 
-	macro toggleViewOrder {
+	@summary = "Default summary"
+	macro toggleViewOrder(order = null) {
 		if (IsElementNotPresent(key_order = ${order}, locator1 = "ManagementBar#ORDER_ICON_SPECIFIC")) {
 			Click(locator1 = "ManagementBar#ORDER_ICON_GENERIC");
 
@@ -61,7 +67,8 @@ definition {
 			locator1 = "ManagementBar#ORDER_ICON_SPECIFIC");
 	}
 
-	macro viewDisplayStyle {
+	@summary = "Default summary"
+	macro viewDisplayStyle(displayStyle = null) {
 		var displayStyleKey = StringUtil.lowerCaseFirstLetter(${displayStyle});
 
 		AssertVisible(
@@ -69,7 +76,8 @@ definition {
 			locator1 = "Icon#CURRENT_DISPLAY_STYLE_ACTIVE");
 	}
 
-	macro viewFilterAndOrderItem {
+	@summary = "Default summary"
+	macro viewFilterAndOrderItem(menuItem = null) {
 		Click(locator1 = "ManagementBar#FILTER_AND_ORDER");
 
 		AssertElementPresent(
@@ -77,7 +85,8 @@ definition {
 			locator1 = "ManagementBar#FILTER_AND_ORDER_ITEM");
 	}
 
-	macro viewFilterAndOrderNoItem {
+	@summary = "Default summary"
+	macro viewFilterAndOrderNoItem(menuItem = null) {
 		Click(locator1 = "ManagementBar#FILTER_AND_ORDER");
 
 		AssertElementNotPresent(

@@ -1,6 +1,7 @@
 definition {
 
-	macro addBasicComponent {
+	@summary = "Default summary"
+	macro addBasicComponent(fragmentName = null) {
 		PageEditor.gotoTab(tabName = "Section Builder");
 
 		PageEditor.expandFragmentCollection(collectionName = "Basic Components");
@@ -18,7 +19,8 @@ definition {
 		PageEditor.waitForAutoSave();
 	}
 
-	macro addComment {
+	@summary = "Default summary"
+	macro addComment(fragmentName = null, fragmentClass = null, fragmentComment = null, position = null, content = null) {
 		PageEditor.gotoTab(tabName = "Comments");
 
 		Click(
@@ -44,7 +46,8 @@ definition {
 			locator1 = "PageEditor#FRAGMENT_SIDEBAR_COMMENT_ENTRY_INPUT");
 	}
 
-	macro addCommentViaFragment {
+	@summary = "Default summary"
+	macro addCommentViaFragment(fragmentName = null, fragmentClass = null, fragmentComment = null, position = null, content = null) {
 		PageEditor.gotoCommentViaFragment(
 			key_content = ${content},
 			key_fragmentClass = ${fragmentClass},
@@ -67,7 +70,8 @@ definition {
 			locator1 = "PageEditor#FRAGMENT_SIDEBAR_COMMENT_ENTRY_INPUT");
 	}
 
-	macro addEntryWithLink {
+	@summary = "Default summary"
+	macro addEntryWithLink(entryExternalURL = null, fragmentName = null, id = null, contributed = null) {
 		PageEditor.gotoEditableFieldEdit(
 			contributed = ${contributed},
 			fragmentName = ${fragmentName},
@@ -90,7 +94,8 @@ definition {
 		PageEditor.waitForAutoSave();
 	}
 
-	macro addExperience {
+	@summary = "Default summary"
+	macro addExperience(experienceName = null, segmentName = null) {
 		var key_experienceName = ${experienceName};
 		var key_segmentName = ${segmentName};
 
@@ -125,7 +130,8 @@ definition {
 			locator1 = "PageEditor#EXPERIENCE_SELECT_ITEM");
 	}
 
-	macro addFragment {
+	@summary = "Default summary"
+	macro addFragment(fragmentName = null, collectionName = null) {
 		PageEditor.expandFragmentCollection(collectionName = ${collectionName});
 
 		Click.clickNoMouseOverNoWaitForVisible(
@@ -139,7 +145,8 @@ definition {
 		PageEditor.waitForAutoSave();
 	}
 
-	macro addLayoutSection {
+	@summary = "Default summary"
+	macro addLayoutSection(columnCount = null) {
 		PageEditor.gotoTab(tabName = "Section Builder");
 
 		PageEditor.expandFragmentCollection(collectionName = "Layouts");
@@ -154,7 +161,8 @@ definition {
 			locator1 = "PageEditor#SECTION");
 	}
 
-	macro addVideoFragmentURL {
+	@summary = "Default summary"
+	macro addVideoFragmentURL(videoLink = null) {
 		FormFields.editText(
 			fieldName = "url",
 			fieldValue = ${videoLink});
@@ -164,7 +172,8 @@ definition {
 		PageEditor.waitForAutoSave();
 	}
 
-	macro addWidget {
+	@summary = "Default summary"
+	macro addWidget(portletName = null) {
 		PageEditor.gotoTab(tabName = "Widgets");
 
 		Type.sendKeysApplicationSearch(
@@ -187,7 +196,8 @@ definition {
 		PageEditor.closeSidebar(tabName = "Widgets");
 	}
 
-	macro addWidgetSpecific {
+	@summary = "Default summary"
+	macro addWidgetSpecific(portletCategory = null, portletName = null) {
 		Variables.assertDefined(parameterList = "${portletCategory},${portletName}");
 
 		PageEditor.gotoTab(tabName = "Widgets");
@@ -213,11 +223,13 @@ definition {
 		PageEditor.closeSidebar(tabName = "Widgets");
 	}
 
-	macro assertFragmentSidebarLoaded {
+	@summary = "Default summary"
+	macro assertFragmentSidebarLoaded() {
 		AssertVisible(locator1 = "PageEditor#FRAGMENT_SIDEBAR_LOADED");
 	}
 
-	macro changeExperience {
+	@summary = "Default summary"
+	macro changeExperience(newExperience = null) {
 		var key_experienceName = ${newExperience};
 
 		Click(locator1 = "PageEditor#EXPERIENCE_LABEL");
@@ -229,23 +241,27 @@ definition {
 		AssertElementPresent(locator1 = "PageEditor#EXPERIENCE_BUTTON_NAME");
 	}
 
-	macro clickBack {
+	@summary = "Default summary"
+	macro clickBack() {
 		Click(locator1 = "Icon#ANGLE_LEFT_BACK");
 	}
 
-	macro clickConfigurableField {
+	@summary = "Default summary"
+	macro clickConfigurableField(fragmentName = null) {
 		Click(
 			key_fragmentName = ${fragmentName},
 			locator1 = "Fragment#CONFIGURABLE_FIELD");
 	}
 
-	macro clickDiscardDraft {
+	@summary = "Default summary"
+	macro clickDiscardDraft() {
 		Button.clickNoError(button = "Discard Draft");
 
 		Confirm();
 	}
 
-	macro clickEditableField {
+	@summary = "Default summary"
+	macro clickEditableField(fragmentName = null, id = null) {
 		Click(
 			key_fragmentName = ${fragmentName},
 			locator1 = "Fragment#FRAGMENT_BODY");
@@ -256,7 +272,8 @@ definition {
 			locator1 = "Fragment#EDITABLE_FIELD");
 	}
 
-	macro clickFragmentTopper {
+	@summary = "Default summary"
+	macro clickFragmentTopper(fragmentName = null) {
 		PageEditor.clickConfigurableField(fragmentName = ${fragmentName});
 
 		Click(
@@ -264,11 +281,13 @@ definition {
 			locator1 = "Fragment#FRAGMENT_TOPPER");
 	}
 
-	macro clickPublish {
+	@summary = "Default summary"
+	macro clickPublish() {
 		Button.click(button = "Publish");
 	}
 
-	macro closeSidebar {
+	@summary = "Default summary"
+	macro closeSidebar(tabName = null) {
 		Click(
 			key_tabName = ${tabName},
 			locator1 = "PageEditor#FRAGMENT_SIDEBAR_TAB_BUTTON");
@@ -276,7 +295,8 @@ definition {
 		AssertElementPresent(locator1 = "PageEditor#FRAGMENT_SIDEBAR_COLLAPSED");
 	}
 
-	macro configureFragment {
+	@summary = "Default summary"
+	macro configureFragment(boxShadow = null, borderColor = null, textAlign = null, type = null, textColor = null, borderRadius = null, size = null, bottomSpacing = null, imageSize = null, alignment = null, headingLevel = null, verticalSpace = null, height = null) {
 		if (isSet(alignment)) {
 			Select(
 				key_fieldLabel = "Align",
@@ -369,7 +389,8 @@ definition {
 		PageEditor.waitForAutoSave();
 	}
 
-	macro deleteComment {
+	@summary = "Default summary"
+	macro deleteComment(fragmentComment = null) {
 		MouseOver(locator1 = "PageEditor#FRAGMENT_SIDEBAR_ELLIPSIS");
 
 		Click(locator1 = "PageEditor#FRAGMENT_SIDEBAR_ELLIPSIS");
@@ -396,7 +417,8 @@ definition {
 		AssertTextNotPresent(value1 = ${fragmentComment});
 	}
 
-	macro deleteExperience {
+	@summary = "Default summary"
+	macro deleteExperience(newExperience = null) {
 		var key_experienceName = ${newExperience};
 
 		Click(locator1 = "PageEditor#EXPERIENCE_DEFAULT_BUTTON_NAME");
@@ -416,7 +438,8 @@ definition {
 		Click(locator1 = "PageEditor#EXPERIENCE_DEFAULT_BUTTON_NAME");
 	}
 
-	macro duplicateExperience {
+	@summary = "Default summary"
+	macro duplicateExperience(experienceName = null) {
 		var key_experienceName = ${experienceName};
 
 		AssertTextEquals(
@@ -434,7 +457,8 @@ definition {
 			locator1 = "PageEditor#EXPERIENCE_SELECT_ITEM");
 	}
 
-	macro editComment {
+	@summary = "Default summary"
+	macro editComment(fragmentCommentEdit = null) {
 		MouseOver(locator1 = "PageEditor#FRAGMENT_SIDEBAR_ELLIPSIS");
 
 		Click(locator1 = "PageEditor#FRAGMENT_SIDEBAR_ELLIPSIS");
@@ -450,7 +474,8 @@ definition {
 		Click(locator1 = "Button#UPDATE");
 	}
 
-	macro editExperience {
+	@summary = "Default summary"
+	macro editExperience(newExperience = null) {
 		var key_experienceName = ${newExperience};
 
 		Click(locator1 = "PageEditor#EXPERIENCE_DEFAULT_BUTTON_NAME");
@@ -484,7 +509,8 @@ definition {
 		Click(locator1 = "PageEditor#EXPERIENCE_DEFAULT_BUTTON_NAME");
 	}
 
-	macro editFragmentHTML {
+	@summary = "Default summary"
+	macro editFragmentHTML(fileName = null, fragmentName = null, editableId = null) {
 		PageEditor.gotoEditableFieldEdit(
 			fragmentName = ${fragmentName},
 			id = ${editableId});
@@ -500,7 +526,8 @@ definition {
 		PageEditor.waitForAutoSave();
 	}
 
-	macro editFragmentImage {
+	@summary = "Default summary"
+	macro editFragmentImage(fileName = null, fragmentName = null, id = null) {
 		PageEditor.gotoEditableFieldImageProperties(
 			fragmentName = ${fragmentName},
 			id = ${id});
@@ -524,7 +551,8 @@ definition {
 		PageEditor.waitForAutoSave();
 	}
 
-	macro editFragmentText {
+	@summary = "Default summary"
+	macro editFragmentText(fragmentName = null, style = null, id = null, text = null) {
 		PageEditor.gotoEditableFieldEdit(
 			fragmentName = ${fragmentName},
 			id = ${id});
@@ -552,7 +580,8 @@ definition {
 		PageEditor.waitForAutoSave();
 	}
 
-	macro editLayoutSectionImage {
+	@summary = "Default summary"
+	macro editLayoutSectionImage(webContentTitle = null, assetField = null) {
 		Click(
 			key_position = 1,
 			locator1 = "PageEditor#SECTION");
@@ -589,7 +618,8 @@ definition {
 		PageEditor.waitForAutoSave();
 	}
 
-	macro editLayoutSectionSpacing {
+	@summary = "Default summary"
+	macro editLayoutSectionSpacing(container = null, paddingH = null, paddingV = null, numberOfColumns = null, spaceBetweenColumns = null) {
 		Click(
 			key_position = 1,
 			locator1 = "PageEditor#SECTION");
@@ -641,7 +671,8 @@ definition {
 		PageEditor.waitForAutoSave();
 	}
 
-	macro expandFragmentCollection {
+	@summary = "Default summary"
+	macro expandFragmentCollection(collectionName = null) {
 		AssertVisible(
 			key_collectionName = ${collectionName},
 			locator1 = "PageEditor#FRAGMENT_SIDEBAR_COLLECTION_PANEL");
@@ -658,7 +689,8 @@ definition {
 			locator1 = "PageEditor#FRAGMENT_SIDEBAR_COLLECTION_PANEL_EXPANDED");
 	}
 
-	macro gotoCommentList {
+	@summary = "Default summary"
+	macro gotoCommentList() {
 		Click(locator1 = "PageEditor#FRAGMENT_SIDEBAR_BACK");
 
 		AssertTextEquals(
@@ -666,7 +698,8 @@ definition {
 			value1 = "Comments");
 	}
 
-	macro gotoCommentViaFragment {
+	@summary = "Default summary"
+	macro gotoCommentViaFragment(fragmentClass = null, position = null, content = null) {
 		PageEditor.gotoTab(tabName = "Comments");
 
 		Click(
@@ -676,7 +709,8 @@ definition {
 			locator1 = "Fragment#FRAGMENT");
 	}
 
-	macro gotoConfiguration {
+	@summary = "Default summary"
+	macro gotoConfiguration(fragmentName = null) {
 		PageEditor.clickConfigurableField(fragmentName = ${fragmentName});
 
 		PageEditor.gotoTab(tabName = "Page Structure");
@@ -688,7 +722,8 @@ definition {
 		Click(locator1 = "PageEditor#EDITABLE_FIELD_TOOLBAR_CONFIGURATION_BUTTON");
 	}
 
-	macro gotoDuplicate {
+	@summary = "Default summary"
+	macro gotoDuplicate(fragmentName = null) {
 		PageEditor.clickConfigurableField(fragmentName = ${fragmentName});
 
 		PageEditor.gotoTab(tabName = "Page Structure");
@@ -700,7 +735,8 @@ definition {
 		Click(locator1 = "PageEditor#EDITABLE_FIELD_TOOLBAR_DUPLICATE_BUTTON");
 	}
 
-	macro gotoEditableFieldEdit {
+	@summary = "Default summary"
+	macro gotoEditableFieldEdit(fragmentName = null, id = null) {
 		PageEditor.clickEditableField(
 			fragmentName = ${fragmentName},
 			id = ${id});
@@ -708,7 +744,8 @@ definition {
 		Click(locator1 = "PageEditor#EDITABLE_FIELD_TOOLBAR_EDIT_BUTTON");
 	}
 
-	macro gotoEditableFieldImageProperties {
+	@summary = "Default summary"
+	macro gotoEditableFieldImageProperties(fragmentName = null, id = null) {
 		PageEditor.clickEditableField(
 			fragmentName = ${fragmentName},
 			id = ${id});
@@ -716,7 +753,8 @@ definition {
 		Click(locator1 = "PageEditor#EDITABLE_FIELD_TOOLBAR_IMAGE_PROPERTIES_BUTTON");
 	}
 
-	macro gotoTab {
+	@summary = "Default summary"
+	macro gotoTab(tabName = null) {
 		if (IsElementNotPresent(key_tabName = ${tabName}, locator1 = "PageEditor#FRAGMENT_SIDEBAR_TAB_BUTTON_ACTIVE")) {
 			Click(
 				key_tabName = ${tabName},
@@ -724,11 +762,13 @@ definition {
 		}
 	}
 
-	macro openExperienceMenu {
+	@summary = "Default summary"
+	macro openExperienceMenu() {
 		Click(locator1 = "PageEditor#EXPERIENCE_DEFAULT_BUTTON_NAME");
 	}
 
-	macro removeFragment {
+	@summary = "Default summary"
+	macro removeFragment(fragmentName = null) {
 		MouseOver.mouseOverNotVisible(
 			key_fragmentName = ${fragmentName},
 			locator1 = "Fragment#FRAGMENT_HEADER");
@@ -744,7 +784,8 @@ definition {
 		PageEditor.waitForAutoSave();
 	}
 
-	macro removeFragmentWithContentPageCommentEnable {
+	@summary = "Default summary"
+	macro removeFragmentWithContentPageCommentEnable(fragmentName = null) {
 		MouseOver.mouseOverNotVisible(
 			key_fragmentName = ${fragmentName},
 			locator1 = "Fragment#FRAGMENT_HEADER");
@@ -760,7 +801,8 @@ definition {
 		PageEditor.waitForAutoSave();
 	}
 
-	macro removeSection {
+	@summary = "Default summary"
+	macro removeSection(position = null) {
 		MouseOver.mouseOverNotVisible(
 			key_position = ${position},
 			locator1 = "PageEditor#SECTION");
@@ -772,7 +814,8 @@ definition {
 		PageEditor.waitForAutoSave();
 	}
 
-	macro reopenResolvedComment {
+	@summary = "Default summary"
+	macro reopenResolvedComment(commentReply = null, fragmentComment = null) {
 		AssertElementPresent(locator1 = "PageEditor#FRAGMENT_SIDEBAR_SHOW_RESOLVED_COMMENTS_CHECKBOX_UNCHECKED");
 
 		MouseOver(locator1 = "PageEditor#FRAGMENT_SIDEBAR_SHOW_RESOLVED_COMMENTS_LABEL");
@@ -796,7 +839,8 @@ definition {
 		AssertElementPresent(locator1 = "PageEditor#FRAGMENT_SIDEBAR_SHOW_RESOLVED_COMMENTS_CHECKBOX_DISABLED");
 	}
 
-	macro replyToComment {
+	@summary = "Default summary"
+	macro replyToComment(commentReply = null) {
 		AssertClick(
 			locator1 = "Button#REPLY",
 			value1 = "Reply");
@@ -810,7 +854,8 @@ definition {
 			value1 = "Reply");
 	}
 
-	macro resolveComment {
+	@summary = "Default summary"
+	macro resolveComment(fragmentComment = null) {
 		AssertElementPresent(locator1 = "PageEditor#FRAGMENT_SIDEBAR_SHOW_RESOLVED_COMMENTS_CHECKBOX_DISABLED");
 
 		Click.clickNoMouseOver(locator1 = "Button#RESOLVE");
@@ -818,7 +863,8 @@ definition {
 		AssertTextNotPresent(value1 = ${fragmentComment});
 	}
 
-	macro selectColorSwatchItem {
+	@summary = "Default summary"
+	macro selectColorSwatchItem(fieldLabel = null, colorSwatchItem = null, colorLeftLabel = null) {
 		Click(
 			inputFieldId = ${fieldLabel},
 			locator1 = "TextInput#INPUT_ID");
@@ -835,19 +881,22 @@ definition {
 		}
 	}
 
-	macro viewAutoSaveMessage {
+	@summary = "Default summary"
+	macro viewAutoSaveMessage() {
 		AssertTextEquals.assertPartialText(
 			locator1 = "PageEditor#AUTOSAVE_MESSAGE",
 			value1 = "Draft saved at");
 	}
 
-	macro viewCollectionNotPresent {
+	@summary = "Default summary"
+	macro viewCollectionNotPresent(collectionName = null) {
 		AssertElementNotPresent(
 			key_collectionName = ${collectionName},
 			locator1 = "PageEditor#FRAGMENT_SIDEBAR_COLLECTION_PANEL");
 	}
 
-	macro viewComment {
+	@summary = "Default summary"
+	macro viewComment(fragmentComment = null) {
 		if (isSet(fragmentComment)) {
 			if (isSet(fromNotifications)) {
 				AssertTextEquals(
@@ -883,7 +932,8 @@ definition {
 		}
 	}
 
-	macro viewCommentList {
+	@summary = "Default summary"
+	macro viewCommentList(fragmentName = null, commentCount = null) {
 		AssertTextEquals(
 			key_fragmentName = ${fragmentName},
 			locator1 = "PageEditor#FRAGMENT_SIDEBAR_COMMENT_LIST_HEADING",
@@ -901,7 +951,8 @@ definition {
 		}
 	}
 
-	macro viewCommentReply {
+	@summary = "Default summary"
+	macro viewCommentReply(commentReply = null, user = null) {
 		if (isSet(fromNotifications)) {
 			AssertTextEquals(
 				key_commentReply = ${commentReply},
@@ -921,23 +972,27 @@ definition {
 			value1 = ${user});
 	}
 
-	macro viewDuplicateFragment {
+	@summary = "Default summary"
+	macro viewDuplicateFragment(fragmentName = null) {
 		AssertElementPresent(
 			key_fragmentName = ${fragmentName},
 			locator1 = "Fragment#FRAGMENT_HEADER_2");
 	}
 
-	macro viewEditorEmpty {
+	@summary = "Default summary"
+	macro viewEditorEmpty() {
 		AssertElementPresent(locator1 = "PageEditor#EMPTY_MESSAGE");
 	}
 
-	macro viewFragment {
+	@summary = "Default summary"
+	macro viewFragment(fragmentName = null) {
 		AssertElementPresent(
 			key_fragmentName = ${fragmentName},
 			locator1 = "Fragment#FRAGMENT_HEADER");
 	}
 
-	macro viewFragmentEditableText {
+	@summary = "Default summary"
+	macro viewFragmentEditableText(fragmentName = null, editableText = null, style = null, id = null, position = null) {
 		AssertTextEquals(
 			key_fragmentName = ${fragmentName},
 			key_id = ${id},
@@ -954,14 +1009,16 @@ definition {
 		}
 	}
 
-	macro viewFragmentOrder {
+	@summary = "Default summary"
+	macro viewFragmentOrder(fragmentName = null, position = null) {
 		AssertElementPresent(
 			key_fragmentName = ${fragmentName},
 			key_position = ${position},
 			locator1 = "Fragment#FRAGMENT_HEADER_POSITION");
 	}
 
-	macro viewFragmentStyle {
+	@summary = "Default summary"
+	macro viewFragmentStyle(boxShadow = null, borderColor = null, textAlign = null, contentAlign = null, type = null, textColor = null, borderRadius = null, size = null, fragmentName = null, bottomSpacing = null, imageSize = null, alignment = null, headingLevel = null, verticalSpace = null, height = null) {
 		if (isSet(alignment)) {
 			AssertElementPresent(
 				key_alignment = ${alignment},
@@ -1060,7 +1117,8 @@ definition {
 		}
 	}
 
-	macro waitForAutoSave {
+	@summary = "Default summary"
+	macro waitForAutoSave() {
 		Pause(locator1 = 1000);
 
 		AssertTextEquals.assertPartialText(

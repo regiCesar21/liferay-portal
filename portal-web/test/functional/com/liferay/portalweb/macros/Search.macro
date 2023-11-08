@@ -1,10 +1,12 @@
 definition {
 
-	macro openSearchAdmin {
+	@summary = "Default summary"
+	macro openSearchAdmin(siteURLKey = null) {
 		Navigator.openWithAppendToBaseURL(urlAppend = "group/${siteURLKey}/~/control_panel/manage?p_p_id=com_liferay_portal_search_admin_web_portlet_SearchAdminPortlet");
 	}
 
-	macro openSearchPage {
+	@summary = "Default summary"
+	macro openSearchPage() {
 		if (!(isSet(siteURLKey))) {
 			var siteURLKey = "guest";
 		}
@@ -12,7 +14,8 @@ definition {
 		Navigator.openWithAppendToBaseURL(urlAppend = "web/${siteURLKey}/search");
 	}
 
-	macro searchCP {
+	@summary = "Default summary"
+	macro searchCP(searchTerm = null) {
 		AssertElementPresent(locator1 = "TextInput#SEARCH");
 
 		AssertElementPresent(locator1 = "Icon#BASIC_SEARCH");
@@ -26,7 +29,8 @@ definition {
 			value1 = "\RETURN");
 	}
 
-	macro searchPG {
+	@summary = "Default summary"
+	macro searchPG(searchTerm = null, portletName = null) {
 		var key_portletName = ${portletName};
 
 		AssertElementPresent(locator1 = "Portlet#SEARCH_FIELD");
@@ -40,13 +44,15 @@ definition {
 			value1 = "\RETURN");
 	}
 
-	macro viewNoResultAssetTitle {
+	@summary = "Default summary"
+	macro viewNoResultAssetTitle(searchAssetTitle = null) {
 		AssertElementNotPresent(
 			key_searchAssetTitle = ${searchAssetTitle},
 			locator1 = "SearchResults#ASSET_ENTRY_TABLE_TITLE");
 	}
 
-	macro viewResultAssetTitle {
+	@summary = "Default summary"
+	macro viewResultAssetTitle(searchAssetTitle = null) {
 		var key_searchAssetTitle = ${searchAssetTitle};
 
 		AssertTextEquals(

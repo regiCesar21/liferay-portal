@@ -1,6 +1,7 @@
 definition {
 
-	macro addServiceAccessPolicy {
+	@summary = "Default summary"
+	macro addServiceAccessPolicy(serviceClass = null, policyName = null, methodName = null, title = null, enabled = null) {
 		LexiconEntry.gotoAdd();
 
 		FormFields.editText(
@@ -30,7 +31,8 @@ definition {
 		PortletEntry.save();
 	}
 
-	macro editServiceAccessPolicy {
+	@summary = "Default summary"
+	macro editServiceAccessPolicy(newName = null, serviceClass = null, policyName = null, methodName = null, allowedServiceSignature = null, title = null, enabled = null) {
 		ServiceAccessPolicy.gotoServiceAccessPolicy(policyName = ${policyName});
 
 		if (isSet(allowedServiceSignature)) {
@@ -77,7 +79,8 @@ definition {
 		PortletEntry.save();
 	}
 
-	macro gotoServiceAccessPolicy {
+	@summary = "Default summary"
+	macro gotoServiceAccessPolicy(policyName = null) {
 		AssertClick(
 			key_policyName = ${policyName},
 			locator1 = "ServiceAccessPolicy#POLICY_NAME",

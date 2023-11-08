@@ -1,6 +1,7 @@
 definition {
 
-	macro addOrRemoveSubscribePermissionFromAllRoles {
+	@summary = "Default summary"
+	macro addOrRemoveSubscribePermissionFromAllRoles(addOrRemoveViewPermission = null, roleList = null) {
 		for (var roleTitle : list ${roleList}) {
 			var roleTitle = ${roleTitle};
 
@@ -23,7 +24,8 @@ definition {
 			value1 = "Your request completed successfully.");
 	}
 
-	macro addOrRemoveViewPermissionFromAllRoles {
+	@summary = "Default summary"
+	macro addOrRemoveViewPermissionFromAllRoles(addOrRemoveViewPermission = null, roleList = null) {
 		for (var roleTitle : list ${roleList}) {
 			var roleTitle = ${roleTitle};
 
@@ -46,7 +48,8 @@ definition {
 			value1 = "Your request completed successfully.");
 	}
 
-	macro assertDefaultPG {
+	@summary = "Default summary"
+	macro assertDefaultPG(roleList = null) {
 		for (var roleTitle : list ${roleList}) {
 			var roleTitle = ${roleTitle};
 
@@ -81,7 +84,8 @@ definition {
 		}
 	}
 
-	macro gotoConfigurationPG {
+	@summary = "Default summary"
+	macro gotoConfigurationPG(siteTemplate = null, portletOption = null, portletName = null) {
 		if (isSet(portletOption)) {
 			var optionName = ${portletOption};
 		}
@@ -97,7 +101,8 @@ definition {
 		SelectFrame(locator1 = "IFrame#DIALOG");
 	}
 
-	macro gotoDocumentsAndMediaDocumentPG {
+	@summary = "Default summary"
+	macro gotoDocumentsAndMediaDocumentPG(dmDocumentTitle = null) {
 		LexiconEntry.gotoEntryMenuItem(
 			menuItem = "Permissions",
 			rowEntry = ${dmDocumentTitle});
@@ -105,7 +110,8 @@ definition {
 		SelectFrame(locator1 = "IFrame#DIALOG");
 	}
 
-	macro gotoDocumentsAndMediaHomeFolderPG {
+	@summary = "Default summary"
+	macro gotoDocumentsAndMediaHomeFolderPG(siteName = null, pageName = null) {
 		Navigator.gotoSitePage(
 			pageName = ${pageName},
 			siteName = ${siteName});
@@ -123,7 +129,8 @@ definition {
 		SelectFrame(locator1 = "IFrame#DIALOG");
 	}
 
-	macro gotoMessageBoardsCategoryPG {
+	@summary = "Default summary"
+	macro gotoMessageBoardsCategoryPG(categoryName = null) {
 		AssertClick(
 			key_categoryName = ${categoryName},
 			locator1 = "MessageBoards#CATEGORY_LIST_CATEGORY",
@@ -136,7 +143,8 @@ definition {
 		SelectFrame(locator1 = "IFrame#DIALOG");
 	}
 
-	macro gotoMessageBoardsPG {
+	@summary = "Default summary"
+	macro gotoMessageBoardsPG(pageName = null) {
 		Navigator.gotoPage(pageName = ${pageName});
 
 		Click(locator1 = "Icon#BODY_VERTICAL_ELLIPSIS");
@@ -146,7 +154,8 @@ definition {
 		SelectFrame(locator1 = "IFrame#DIALOG");
 	}
 
-	macro gotoMessageBoardsThreadPG {
+	@summary = "Default summary"
+	macro gotoMessageBoardsThreadPG(threadSubject = null) {
 		LexiconEntry.gotoEntryMenuItem(
 			menuItem = "Permissions",
 			rowEntry = ${threadSubject});
@@ -154,7 +163,8 @@ definition {
 		SelectFrame(locator1 = "IFrame#DIALOG");
 	}
 
-	macro gotoMessageBoardsThreadReplyPG {
+	@summary = "Default summary"
+	macro gotoMessageBoardsThreadReplyPG(threadSubject = null, siteName = null, pageName = null, threadReplyBody = null) {
 		Navigator.gotoSitePage(
 			pageName = ${pageName},
 			siteName = ${siteName});
@@ -173,7 +183,8 @@ definition {
 		SelectFrame(locator1 = "IFrame#DIALOG");
 	}
 
-	macro gotoPagePG {
+	@summary = "Default summary"
+	macro gotoPagePG(pageName = null) {
 		ProductMenu.gotoPortlet(
 			category = "Site Builder",
 			panel = "Site Administration",
@@ -186,7 +197,8 @@ definition {
 		SelectFrame(locator1 = "IFrame#DIALOG");
 	}
 
-	macro gotoPollPermissionsCP {
+	@summary = "Default summary"
+	macro gotoPollPermissionsCP(pollsQuestionTitle = null) {
 		LexiconEntry.gotoEntryMenuItem(
 			menuItem = "Permissions",
 			rowEntry = ${pollsQuestionTitle});
@@ -194,7 +206,8 @@ definition {
 		SelectFrame(locator1 = "IFrame#DIALOG");
 	}
 
-	macro gotoSitepageCP {
+	@summary = "Default summary"
+	macro gotoSitepageCP(privacy = null, pageName = null) {
 		SitePages.togglePrivacy(privacy = ${privacy});
 
 		SitePages.gotoPageMenuItem(
@@ -204,7 +217,8 @@ definition {
 		IFrame.selectPermissionsFrame();
 	}
 
-	macro gotoSiteTeamsCP {
+	@summary = "Default summary"
+	macro gotoSiteTeamsCP(teamName = null, siteScopeName = null, portletName = null) {
 		Navigator.openSiteURL(siteName = ${siteScopeName});
 
 		ProductMenu.gotoPortlet(
@@ -219,7 +233,8 @@ definition {
 		SelectFrame(locator1 = "IFrame#DIALOG");
 	}
 
-	macro gotoSiteTemplateCP {
+	@summary = "Default summary"
+	macro gotoSiteTemplateCP(page = null) {
 		ProductMenu.gotoPortlet(
 			category = "Site Builder",
 			panel = "Site Administration",
@@ -230,7 +245,8 @@ definition {
 			pageName = ${page});
 	}
 
-	macro gotoUserGroupSitePermissionsCP {
+	@summary = "Default summary"
+	macro gotoUserGroupSitePermissionsCP(userGroupName = null) {
 		ProductMenu.gotoPortlet(
 			category = "Users",
 			panel = "Control Panel",
@@ -241,7 +257,8 @@ definition {
 		MenuItem.click(menuItem = "User Group Pages Permissions");
 	}
 
-	macro gotoWCArticle {
+	@summary = "Default summary"
+	macro gotoWCArticle(webContentTitle = null) {
 		LexiconList.clickEllipsisItem(
 			item = "Permissions",
 			listEntry = ${webContentTitle});
@@ -249,7 +266,8 @@ definition {
 		IFrame.selectPermissionsFrame();
 	}
 
-	macro viewPermissionsChecked {
+	@summary = "Default summary"
+	macro viewPermissionsChecked(permissionDefinitionKey = null, roleTitle = null) {
 		var key_roleTitle = StringUtil.replace(${roleTitle}, " ", "-");
 
 		var key_roleTitle = StringUtil.lowerCase(${key_roleTitle});
@@ -257,7 +275,8 @@ definition {
 		AssertChecked(locator1 = "Permissions#${permissionDefinitionKey}");
 	}
 
-	macro viewPermissionsRemoved {
+	@summary = "Default summary"
+	macro viewPermissionsRemoved(permissionDefinitionKey = null, roleTitle = null) {
 		var key_roleTitle = StringUtil.replace(${roleTitle}, " ", "-");
 
 		var key_roleTitle = StringUtil.lowerCase(${key_roleTitle});

@@ -1,6 +1,7 @@
 definition {
 
-	macro setGrandParentGroupId {
+	@summary = "Default summary"
+	macro setGrandParentGroupId(grandParentGroupName = null) {
 		if (isSet(grandParentGroupName)) {
 			var grandParentGroupId = JSONGroupAPI._getGroupIdByName(groupName = ${grandParentGroupName});
 		}
@@ -11,7 +12,8 @@ definition {
 		return ${grandParentGroupId};
 	}
 
-	macro setGroupDescriptionMap {
+	@summary = "Default summary"
+	macro setGroupDescriptionMap(groupDescriptionEncoded = null) {
 		if (isSet(groupDescription)) {
 			var groupDescription = URLUtil.encodeUTF8(${groupDescription});
 			var groupDescriptionMap = '''{"en_US":"${groupDescriptionEncoded}"}''';
@@ -23,7 +25,8 @@ definition {
 		return ${groupDescriptionMap};
 	}
 
-	macro setGroupId {
+	@summary = "Default summary"
+	macro setGroupId(groupName = null) {
 		Variables.assertDefined(parameterList = ${groupName});
 
 		var groupId = JSONGroupAPI._getGroupIdByName(groupName = ${groupName});
@@ -31,7 +34,8 @@ definition {
 		return ${groupId};
 	}
 
-	macro setGroupNameMap {
+	@summary = "Default summary"
+	macro setGroupNameMap(groupName = null) {
 		Variables.assertDefined(parameterList = ${groupName});
 
 		var groupNameMap = URLUtil.encodeUTF8(${groupName});
@@ -40,7 +44,8 @@ definition {
 		return ${groupNameMap};
 	}
 
-	macro setParentGroupId {
+	@summary = "Default summary"
+	macro setParentGroupId(grandParentGroupName = null, parentGroupName = null) {
 		if (isSet(parentGroupName)) {
 			var parentGroupId = JSONGroupAPI._getParentGroupIdByName(
 				grandParentGroupName = ${grandParentGroupName},

@@ -4,7 +4,8 @@ definition {
 		For searches that do not use the search portlet (e.g. searches within the product menu), use the macros within Search.macro instead.'Embedded' refers to the search bar in the page header whereas 'Widget' refers to the search bar within the page.
 	 */
 
-	macro addWidgets {
+	@summary = "Default summary"
+	macro addWidgets(searchPortletList = null) {
 		if (IsNotVisible(locator1 = "ControlMenuAddPanel#CLOSE_ADD_PANEL")) {
 			Click.clickAt(locator1 = "ControlMenu#ADD");
 		}
@@ -36,7 +37,8 @@ definition {
 		}
 	}
 
-	macro chooseEmbeddedScope {
+	@summary = "Default summary"
+	macro chooseEmbeddedScope(searchScope = null) {
 		if ((${searchScope} == "Everything") || (${searchScope} == "This Site")) {
 			Select(
 				locator1 = "Search#EMBEDDED_SEARCH_BAR_SCOPE_SELECT",
@@ -47,7 +49,8 @@ definition {
 		}
 	}
 
-	macro chooseSortOption {
+	@summary = "Default summary"
+	macro chooseSortOption(sortOption = null) {
 		Click(locator1 = "Search#SORT_PORTLET_DROPDOWN");
 
 		Click.clickNoMouseOver(
@@ -55,7 +58,8 @@ definition {
 			sortOption = ${sortOption});
 	}
 
-	macro chooseWidgetScope {
+	@summary = "Default summary"
+	macro chooseWidgetScope(searchScope = null) {
 		if ((${searchScope} == "Everything") || (${searchScope} == "This Site")) {
 			Select(
 				locator1 = "Search#SEARCH_BAR_WIDGET_SCOPE_SELECT",
@@ -66,7 +70,8 @@ definition {
 		}
 	}
 
-	macro configureCustomFilter {
+	@summary = "Default summary"
+	macro configureCustomFilter(federatedSearchKey = null, filterQueryType = null, customParameterName = null, filterField = null) {
 		Portlet.gotoPortletOptions(
 			portletName = "Custom Filter",
 			portletOption = "Configuration");
@@ -106,7 +111,8 @@ definition {
 		IFrame.closeFrame();
 	}
 
-	macro configureEmbeddedSearchBar {
+	@summary = "Default summary"
+	macro configureEmbeddedSearchBar(searchScope = null) {
 		SearchPortlets.gotoEmbeddedOptions(portletOption = "Configuration");
 
 		SelectFrame(locator1 = "IFrame#CONFIGURATION");
@@ -139,7 +145,8 @@ definition {
 		IFrame.closeFrame();
 	}
 
-	macro configureLowLevelSearchOptions {
+	@summary = "Default summary"
+	macro configureLowLevelSearchOptions(federatedSearchKey = null, indexes = null) {
 		Portlet.gotoPortletOptions(
 			portletName = "Low Level Search Options",
 			portletOption = "Configuration");
@@ -165,7 +172,8 @@ definition {
 		IFrame.closeFrame();
 	}
 
-	macro configureSearchBarWidget {
+	@summary = "Default summary"
+	macro configureSearchBarWidget(federatedSearchKey = null, scopeParameterName = null, searchScope = null, keywordsParameterName = null, index = null) {
 		if (isSet(index)) {
 			SearchPortlets.gotoWidgetOptionsSpecific(
 				index = ${index},
@@ -212,7 +220,8 @@ definition {
 		IFrame.closeFrame();
 	}
 
-	macro configureSearchOptions {
+	@summary = "Default summary"
+	macro configureSearchOptions(allowEmptySearches = null, basicFacetSelection = null) {
 		Portlet.gotoPortletOptions(
 			portletName = "Search Options",
 			portletOption = "Configuration");
@@ -236,7 +245,8 @@ definition {
 		IFrame.closeFrame();
 	}
 
-	macro configureSimilarResults {
+	@summary = "Default summary"
+	macro configureSimilarResults(maximumQueryTerms = null, stopWords = null, displayTemplate = null, minimumWordLength = null, analyzer = null, maximumItemDisplay = null, fields = null, minimumDocumentFrequency = null, minimumTermFrequency = null, maximumDocumentFrequency = null, maximumWordLength = null, minimumShouldMatch = null) {
 		Portlet.gotoPortletOptions(
 			portletName = "Similar Results",
 			portletOption = "Configuration");
@@ -331,7 +341,8 @@ definition {
 		IFrame.closeFrame();
 	}
 
-	macro configureWidgetScope {
+	@summary = "Default summary"
+	macro configureWidgetScope(searchScope = null) {
 		SearchPortlets.gotoWidgetOptions(portletOption = "Configuration");
 
 		if ((${searchScope} == "Everything") || (${searchScope} == "Let the User Choose") || (${searchScope} == "This Site")) {
@@ -350,7 +361,8 @@ definition {
 		IFrame.closeFrame();
 	}
 
-	macro getSearchTermURL {
+	@summary = "Default summary"
+	macro getSearchTermURL(searchTerm = null) {
 		if (contains(${searchPage}, " ")) {
 			var searchPage = StringUtil.replace(${searchPage}, " ", "-");
 		}
@@ -365,7 +377,8 @@ definition {
 		return ${searchURL};
 	}
 
-	macro gotoEmbeddedOptions {
+	@summary = "Default summary"
+	macro gotoEmbeddedOptions(portletOption = null) {
 		MouseOver.mouseOverNotVisible(locator1 = "Search#EMBEDDED_SEARCH_BAR_ELLIPSIS_ICON");
 
 		Click(locator1 = "Search#EMBEDDED_SEARCH_BAR_ELLIPSIS_ICON");
@@ -377,7 +390,8 @@ definition {
 		}
 	}
 
-	macro gotoResultDetails {
+	@summary = "Default summary"
+	macro gotoResultDetails(searchAssetTitle = null) {
 		var key_searchAssetTitle = ${searchAssetTitle};
 
 		AssertClick(
@@ -385,7 +399,8 @@ definition {
 			value1 = ${searchAssetTitle});
 	}
 
-	macro gotoWidgetOptions {
+	@summary = "Default summary"
+	macro gotoWidgetOptions(portletOption = null) {
 		MouseOver.mouseOverNotVisible(locator1 = "Search#SEARCH_BAR_WIDGET_ELLIPSIS_ICON");
 
 		Click(locator1 = "Search#SEARCH_BAR_WIDGET_ELLIPSIS_ICON");
@@ -397,7 +412,8 @@ definition {
 		}
 	}
 
-	macro gotoWidgetOptionsSpecific {
+	@summary = "Default summary"
+	macro gotoWidgetOptionsSpecific(index = null, portletOption = null) {
 		MouseOver.mouseOverNotVisible(
 			key_index = ${index},
 			locator1 = "Search#SEARCH_BAR_WIDGET_ELLIPSIS_ICON_SPECIFIC");
@@ -413,7 +429,8 @@ definition {
 		}
 	}
 
-	macro searchEmbedded {
+	@summary = "Default summary"
+	macro searchEmbedded(searchTerm = null) {
 		AssertElementPresent(locator1 = "Search#EMBEDDED_SEARCH_BAR");
 
 		Type(
@@ -425,7 +442,8 @@ definition {
 			value1 = "\RETURN");
 	}
 
-	macro searchWidget {
+	@summary = "Default summary"
+	macro searchWidget(searchTerm = null) {
 		Type(
 			locator1 = "Search#SEARCH_BAR_WIDGET",
 			value1 = ${searchTerm});
@@ -435,7 +453,8 @@ definition {
 			value1 = "\RETURN");
 	}
 
-	macro setupSimilarResultsPage {
+	@summary = "Default summary"
+	macro setupSimilarResultsPage() {
 		JSONLayout.addPublicLayout(
 			groupName = "Guest",
 			layoutName = "Similar Results Page");
@@ -451,13 +470,15 @@ definition {
 		Portlet.addPG(portletName = "Similar Results");
 	}
 
-	macro viewResultDetails {
+	@summary = "Default summary"
+	macro viewResultDetails(searchAssetTitle = null) {
 		AssertTextEquals(
 			locator1 = "SearchResults#ASSET_DETAILS_TITLE",
 			value1 = ${searchAssetTitle});
 	}
 
-	macro viewUserResultDetails {
+	@summary = "Default summary"
+	macro viewUserResultDetails(userName = null, pageName = null) {
 		AssertTextEquals(
 			locator1 = "Home#SITE_NAME",
 			value1 = ${userName});
