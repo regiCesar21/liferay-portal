@@ -8,6 +8,9 @@ package com.liferay.dynamic.data.mapping.form.web.internal.portlet.action;
 import com.liferay.captcha.util.CaptchaUtil;
 import com.liferay.dynamic.data.mapping.constants.DDMPortletKeys;
 import com.liferay.dynamic.data.mapping.exception.FormInstanceNotPublishedException;
+import com.liferay.dynamic.data.mapping.form.evaluator.DDMFormEvaluator;
+import com.liferay.dynamic.data.mapping.form.evaluator.DDMFormEvaluatorEvaluateRequest;
+import com.liferay.dynamic.data.mapping.form.evaluator.DDMFormEvaluatorEvaluateResponse;
 import com.liferay.dynamic.data.mapping.form.values.factory.DDMFormValuesFactory;
 import com.liferay.dynamic.data.mapping.form.web.internal.constants.DDMFormWebKeys;
 import com.liferay.dynamic.data.mapping.form.web.internal.instance.lifecycle.AddDefaultSharedFormLayoutPortalInstanceLifecycleListener;
@@ -95,18 +98,36 @@ public class AddFormInstanceRecordMVCActionCommand
 		DDMFormValues ddmFormValues = _ddmFormValuesFactory.create(
 			actionRequest, ddmForm);
 
-		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
-			WebKeys.THEME_DISPLAY);
+		DDMFormEvaluatorEvaluateResponse ddmFormEvaluatorEvaluateResponse =
+			_ddmFormEvaluator.evaluate(
+				DDMFormEvaluatorEvaluateRequest.Builder.newBuilder(
+					ddmForm, ddmFormValues,
+					LocaleUtil.fromLanguageId(
+						LanguageUtil.getLanguageId(actionRequest))
+				).withCompanyId(
+					_portal.getCompanyId(actionRequest)
+				).withGroupId(
+					ParamUtil.getLong(actionRequest, "groupId")
+				).withUserId(
+					_portal.getUserId(actionRequest)
+				).build());
+
+		DDMStructure ddmStructure = ddmFormInstance.getStructure();
 
 		_addFormInstanceMVCCommandHelper.updateNonevaluableDDMFormFields(
-			actionRequest, ddmForm, ddmFormValues,
-			LocaleUtil.fromLanguageId(
-				LanguageUtil.getLanguageId(actionRequest)));
+			ddmForm.getDDMFormFieldsMap(true),
+			ddmFormEvaluatorEvaluateResponse.getDDMFormFieldsPropertyChanges(),
+			ddmFormValues.getDDMFormFieldValuesMap(true),
+			ddmStructure.getDDMFormLayout(),
+			ddmFormEvaluatorEvaluateResponse.getDisabledPagesIndexes());
 
 		ServiceContext serviceContext = ServiceContextFactory.getInstance(
 			DDMFormInstanceRecord.class.getName(), actionRequest);
 
 		serviceContext.setRequest(_portal.getHttpServletRequest(actionRequest));
+
+		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
+			WebKeys.THEME_DISPLAY);
 
 		_updateFormInstanceRecord(
 			actionRequest, ddmFormInstance, ddmFormValues, groupId,
@@ -246,6 +267,9 @@ public class AddFormInstanceRecordMVCActionCommand
 	@Reference
 	private AddFormInstanceRecordMVCCommandHelper
 		_addFormInstanceMVCCommandHelper;
+
+	@Reference
+	private DDMFormEvaluator _ddmFormEvaluator;
 
 	private DDMFormInstanceRecordService _ddmFormInstanceRecordService;
 
