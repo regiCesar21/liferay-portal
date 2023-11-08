@@ -37,7 +37,6 @@ import java.util.List;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.ClassRule;
-import org.junit.Ignore;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -272,7 +271,6 @@ public class AssetDisplayPageEntryLocalServiceTest {
 			persistedAssetDisplayPageEntry.getType());
 	}
 
-	@Ignore
 	@Test
 	public void testUpdateAssetDisplayPageEntryUpdatesLayoutPageTemplate()
 		throws PortalException {
@@ -292,6 +290,13 @@ public class AssetDisplayPageEntryLocalServiceTest {
 				_layoutPageTemplateEntry.getLayoutPageTemplateEntryId());
 
 		Date originalModifiedDate = layoutPageTemplateEntry.getModifiedDate();
+
+		originalModifiedDate.setTime(originalModifiedDate.getTime() - 1000);
+
+		layoutPageTemplateEntry.setModifiedDate(originalModifiedDate);
+
+		_layoutPageTemplateEntryLocalService.updateLayoutPageTemplateEntry(
+			layoutPageTemplateEntry);
 
 		_assetDisplayPageEntryLocalService.updateAssetDisplayPageEntry(
 			assetDisplayPageEntry.getAssetDisplayPageEntryId(),
