@@ -14,7 +14,6 @@ import com.liferay.dynamic.data.mapping.model.DDMFormField;
 import com.liferay.dynamic.data.mapping.model.DDMFormInstance;
 import com.liferay.dynamic.data.mapping.model.DDMFormLayout;
 import com.liferay.dynamic.data.mapping.model.DDMStructure;
-import com.liferay.dynamic.data.mapping.model.LocalizedValue;
 import com.liferay.dynamic.data.mapping.model.UnlocalizedValue;
 import com.liferay.dynamic.data.mapping.model.Value;
 import com.liferay.dynamic.data.mapping.service.DDMFormInstanceService;
@@ -26,6 +25,7 @@ import com.liferay.dynamic.data.mapping.test.util.DDMFormValuesTestUtil;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.Portal;
@@ -34,9 +34,9 @@ import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import com.liferay.portal.util.PropsImpl;
 
 import java.util.Collections;
+import java.util.List;
 import java.util.Locale;
 import java.util.Map;
-import java.util.Objects;
 
 import javax.portlet.ActionRequest;
 
@@ -65,194 +65,178 @@ public class AddFormInstanceRecordMVCCommandHelperTest extends PowerMockito {
 	@BeforeClass
 	public static void setUpClass() throws Exception {
 		PropsUtil.setProps(new PropsImpl());
+
+		_setUpLanguageUtil();
+		_setUpResourceBundleUtil();
 	}
 
 	@Before
 	public void setUp() throws Exception {
-		setUpAddRecordMVCCommandHelper();
-		setUpLanguageUtil();
-		setUpResourceBundleUtil();
+		_setUpAddFormInstanceRecordMVCCommandHelper();
 
-		mockGetDDMFormLayout();
+		_mockGetDDMFormLayout();
 	}
 
 	@Test
 	public void testInvisibleAndLocalizableField() throws Exception {
-		mockDDMFormEvaluator(
-			HashMapBuilder.<String, Object>put(
-				"visible", false
-			).build());
-
-		_ddmFormField.setLocalizable(true);
-
-		_ddmFormValues = DDMFormValuesTestUtil.createDDMFormValues(_ddmForm);
-
-		LocalizedValue localizedValue =
+		_updateNonevaluableDDMFormFields(
+			true, "visible", false, RandomTestUtil.randomBoolean(),
 			DDMFormValuesTestUtil.createLocalizedValue(
-				"Test", "Teste", LocaleUtil.US);
+				"Test", "Teste", LocaleUtil.US));
 
-		DDMFormFieldValue ddmFormFieldValue =
-			DDMFormValuesTestUtil.createDDMFormFieldValue(
-				_FIELD_NAME, localizedValue);
-
-		_ddmFormValues.addDDMFormFieldValue(ddmFormFieldValue);
-
-		_addRecordMVCCommandHelper.updateNonevaluableDDMFormFields(
-			_actionRequest, _ddmForm, _ddmFormValues, LocaleUtil.US);
-
-		Value value = getFieldValue();
+		Value value = _getFieldValue(_FIELD_NAME);
 
 		Assert.assertEquals(
 			StringPool.BLANK, value.getString(LocaleUtil.BRAZIL));
+		Assert.assertEquals(StringPool.BLANK, value.getString(LocaleUtil.US));
 
+		value = _getFieldValue(_NESTED_FIELD_NAME);
+
+		Assert.assertEquals(
+			StringPool.BLANK, value.getString(LocaleUtil.BRAZIL));
 		Assert.assertEquals(StringPool.BLANK, value.getString(LocaleUtil.US));
 	}
 
 	@Test
+	public void testInvisibleField() throws Exception {
+		_updateNonevaluableDDMFormFields(
+			false, "visible", false, RandomTestUtil.randomBoolean(),
+			new UnlocalizedValue(_STRING_VALUE));
+
+		_assertDDMFormFields(false, new UnlocalizedValue(StringPool.BLANK));
+	}
+
+	@Test
 	public void testInvisibleFieldWithNullValue() throws Exception {
-		mockDDMFormEvaluator(
-			HashMapBuilder.<String, Object>put(
-				"visible", false
-			).build());
+		_updateNonevaluableDDMFormFields(
+			RandomTestUtil.randomBoolean(), "visible", false,
+			RandomTestUtil.randomBoolean(), null);
 
+		_assertDDMFormFields(false, null);
+	}
+
+	@Test
+	public void testVisibleField() throws Exception {
+		boolean required = RandomTestUtil.randomBoolean();
+
+		_updateNonevaluableDDMFormFields(
+			false, "visible", true, required,
+			new UnlocalizedValue(_STRING_VALUE));
+
+		_assertDDMFormFields(required, new UnlocalizedValue(_STRING_VALUE));
+	}
+
+	private static void _setUpLanguageUtil() {
+		LanguageUtil languageUtil = new LanguageUtil();
+
+		languageUtil.setLanguage(mock(Language.class));
+	}
+
+	private static void _setUpResourceBundleUtil() {
+		mockStatic(ResourceBundleUtil.class);
+
+		when(
+			ResourceBundleUtil.getBundle(
+				Matchers.anyString(), Matchers.any(Locale.class),
+				Matchers.any(ClassLoader.class))
+		).thenReturn(
+			ResourceBundleUtil.EMPTY_RESOURCE_BUNDLE
+		);
+	}
+
+	private void _assertDDMFormFields(
+		boolean expectedRequired, Value expectedValue) {
+
+		Assert.assertEquals(expectedRequired, _ddmFormField.isRequired());
+		Assert.assertEquals(expectedValue, _getFieldValue(_FIELD_NAME));
+		Assert.assertEquals(expectedValue, _getFieldValue(_NESTED_FIELD_NAME));
+	}
+
+	private void _createDDMFormFields(boolean localizable, boolean required) {
+		_ddmForm = DDMFormTestUtil.createDDMForm();
+
+		_ddmFormField = DDMFormTestUtil.createTextDDMFormField(
+			_FIELD_NAME, localizable, false, required);
+
+		_ddmForm.addDDMFormField(_ddmFormField);
+
+		DDMFormField ddmFormField = DDMFormTestUtil.createDDMFormField(
+			RandomTestUtil.randomString(), null, null, null, false, false,
+			false);
+
+		ddmFormField.addNestedDDMFormField(
+			DDMFormTestUtil.createTextDDMFormField(
+				_NESTED_FIELD_NAME, localizable, false, required));
+
+		_ddmForm.addDDMFormField(ddmFormField);
+	}
+
+	private void _createDDMFormValues(Value value) {
 		_ddmFormValues = DDMFormValuesTestUtil.createDDMFormValues(_ddmForm);
 
-		DDMFormFieldValue ddmFormFieldValue =
-			DDMFormValuesTestUtil.createDDMFormFieldValue(_FIELD_NAME, null);
-
-		_ddmFormValues.addDDMFormFieldValue(ddmFormFieldValue);
-
-		_addRecordMVCCommandHelper.updateNonevaluableDDMFormFields(
-			_actionRequest, _ddmForm, _ddmFormValues, LocaleUtil.US);
-
-		Assert.assertNull(getFieldValue());
-	}
-
-	@Test
-	public void testNotRequiredAndInvisibleField() throws Exception {
-		mockDDMFormEvaluator(
-			HashMapBuilder.<String, Object>put(
-				"visible", false
-			).build());
-
-		_ddmFormField.setRequired(false);
-
-		_addRecordMVCCommandHelper.updateNonevaluableDDMFormFields(
-			_actionRequest, _ddmForm, _ddmFormValues, LocaleUtil.US);
-
-		Assert.assertEquals(
-			new UnlocalizedValue(StringPool.BLANK), getFieldValue());
-		Assert.assertFalse(_ddmFormField.isRequired());
-	}
-
-	@Test
-	public void testNotRequiredAndVisibleField() throws Exception {
-		mockDDMFormEvaluator(
-			HashMapBuilder.<String, Object>put(
-				"visible", true
-			).build());
-
-		_ddmFormField.setRequired(false);
-
-		_addRecordMVCCommandHelper.updateNonevaluableDDMFormFields(
-			_actionRequest, _ddmForm, _ddmFormValues, LocaleUtil.US);
-
-		Assert.assertEquals(
-			new UnlocalizedValue(_STRING_VALUE), getFieldValue());
-		Assert.assertFalse(_ddmFormField.isRequired());
-	}
-
-	@Test
-	public void testRequiredAndInvisibleField() throws Exception {
-		mockDDMFormEvaluator(
-			HashMapBuilder.<String, Object>put(
-				"visible", false
-			).build());
-
-		_addRecordMVCCommandHelper.updateNonevaluableDDMFormFields(
-			_actionRequest, _ddmForm, _ddmFormValues, LocaleUtil.US);
-
-		Assert.assertEquals(
-			new UnlocalizedValue(StringPool.BLANK), getFieldValue());
-		Assert.assertFalse(_ddmFormField.isRequired());
-	}
-
-	@Test
-	public void testRequiredAndVisibleField() throws Exception {
-		mockDDMFormEvaluator(
-			HashMapBuilder.<String, Object>put(
-				"visible", true
-			).build());
-
-		_addRecordMVCCommandHelper.updateNonevaluableDDMFormFields(
-			_actionRequest, _ddmForm, _ddmFormValues, LocaleUtil.US);
-
-		Assert.assertEquals(
-			new UnlocalizedValue(_STRING_VALUE), getFieldValue());
-		Assert.assertTrue(_ddmFormField.isRequired());
-	}
-
-	protected Value getFieldValue() {
-		for (DDMFormFieldValue ddmFormFieldValue :
-				_ddmFormValues.getDDMFormFieldValues()) {
-
-			if (Objects.equals(ddmFormFieldValue.getName(), _FIELD_NAME)) {
-				return ddmFormFieldValue.getValue();
-			}
-		}
-
-		return null;
-	}
-
-	protected void mockDDMFormEvaluator(
-			Map<String, Object> fieldChangesProperties)
-		throws Exception {
-
-		_ddmForm = DDMFormTestUtil.createDDMForm(_FIELD_NAME);
-
-		Map<String, DDMFormField> ddmFormFields = _ddmForm.getDDMFormFieldsMap(
-			true);
-
-		_ddmFormField = ddmFormFields.get(_FIELD_NAME);
-
-		_ddmFormField.setLocalizable(false);
-
-		_ddmFormField.setRequired(true);
-
-		_ddmFormValues = DDMFormValuesTestUtil.createDDMFormValues(_ddmForm);
+		_ddmFormValues.addDDMFormFieldValue(
+			DDMFormValuesTestUtil.createDDMFormFieldValue(
+				_FIELD_INSTANCE_ID, _FIELD_NAME, value));
 
 		DDMFormFieldValue ddmFormFieldValue =
 			DDMFormValuesTestUtil.createUnlocalizedDDMFormFieldValue(
-				_FIELD_NAME, _STRING_VALUE);
+				RandomTestUtil.randomString(), null);
+
+		ddmFormFieldValue.addNestedDDMFormFieldValue(
+			DDMFormValuesTestUtil.createDDMFormFieldValue(
+				_NESTED_FIELD_INSTANCE_ID, _NESTED_FIELD_NAME, value));
 
 		_ddmFormValues.addDDMFormFieldValue(ddmFormFieldValue);
+	}
 
-		DDMFormEvaluatorEvaluateResponse.Builder builder =
-			DDMFormEvaluatorEvaluateResponse.Builder.newBuilder(
-				HashMapBuilder.
-					<DDMFormEvaluatorFieldContextKey, Map<String, Object>>put(
-						new DDMFormEvaluatorFieldContextKey(
-							_FIELD_NAME, ddmFormFieldValue.getInstanceId()),
-						fieldChangesProperties
-					).build());
+	private Value _getFieldValue(String fieldName) {
+		Map<String, List<DDMFormFieldValue>> ddmFormFieldValuesMap =
+			_ddmFormValues.getDDMFormFieldValuesMap(true);
 
-		builder.withDisabledPagesIndexes(Collections.emptySet());
+		if (!ddmFormFieldValuesMap.containsKey(fieldName)) {
+			return null;
+		}
+
+		List<DDMFormFieldValue> ddmFormFieldValues = ddmFormFieldValuesMap.get(
+			fieldName);
+
+		DDMFormFieldValue ddmFormFieldValue = ddmFormFieldValues.get(0);
+
+		return ddmFormFieldValue.getValue();
+	}
+
+	private void _mockDDMFormEvaluator(
+			Map<String, Object> fieldChangesProperties)
+		throws Exception {
 
 		when(
 			_ddmFormEvaluator.evaluate(
 				Matchers.any(DDMFormEvaluatorEvaluateRequest.class))
 		).thenReturn(
-			builder.build()
+			DDMFormEvaluatorEvaluateResponse.Builder.newBuilder(
+				HashMapBuilder.
+					<DDMFormEvaluatorFieldContextKey, Map<String, Object>>put(
+						new DDMFormEvaluatorFieldContextKey(
+							_FIELD_NAME, _FIELD_INSTANCE_ID),
+						fieldChangesProperties
+					).put(
+						new DDMFormEvaluatorFieldContextKey(
+							_NESTED_FIELD_NAME, _NESTED_FIELD_INSTANCE_ID),
+						fieldChangesProperties
+					).build()
+			).withDisabledPagesIndexes(
+				Collections.emptySet()
+			).build()
 		);
 	}
 
-	protected void mockGetDDMFormLayout() throws Exception {
-		DDMFormInstance formInstance = mock(DDMFormInstance.class);
+	private void _mockGetDDMFormLayout() throws Exception {
+		DDMFormInstance ddmFormInstance = mock(DDMFormInstance.class);
 
 		when(
 			_ddmFormInstanceService, "getFormInstance", Matchers.anyLong()
 		).thenReturn(
-			formInstance
+			ddmFormInstance
 		);
 
 		DDMStructure ddmStructure = mock(DDMStructure.class);
@@ -270,34 +254,36 @@ public class AddFormInstanceRecordMVCCommandHelperTest extends PowerMockito {
 		);
 	}
 
-	protected void setUpAddRecordMVCCommandHelper() throws Exception {
-		_addRecordMVCCommandHelper =
+	private void _setUpAddFormInstanceRecordMVCCommandHelper()
+		throws Exception {
+
+		_addFormInstanceRecordMVCCommandHelper =
 			new AddFormInstanceRecordMVCCommandHelper();
+
+		field(
+			AddFormInstanceRecordMVCCommandHelper.class, "_ddmFormEvaluator"
+		).set(
+			_addFormInstanceRecordMVCCommandHelper, _ddmFormEvaluator
+		);
 
 		field(
 			AddFormInstanceRecordMVCCommandHelper.class,
 			"_ddmFormInstanceService"
 		).set(
-			_addRecordMVCCommandHelper, _ddmFormInstanceService
-		);
-
-		field(
-			AddFormInstanceRecordMVCCommandHelper.class, "_ddmFormEvaluator"
-		).set(
-			_addRecordMVCCommandHelper, _ddmFormEvaluator
+			_addFormInstanceRecordMVCCommandHelper, _ddmFormInstanceService
 		);
 
 		field(
 			AddFormInstanceRecordMVCCommandHelper.class,
 			"_ddmStructureLocalService"
 		).set(
-			_addRecordMVCCommandHelper, _ddmStructureLocalService
+			_addFormInstanceRecordMVCCommandHelper, _ddmStructureLocalService
 		);
 
 		field(
 			AddFormInstanceRecordMVCCommandHelper.class, "_portal"
 		).set(
-			_addRecordMVCCommandHelper, _portal
+			_addFormInstanceRecordMVCCommandHelper, _portal
 		);
 
 		when(
@@ -307,32 +293,43 @@ public class AddFormInstanceRecordMVCCommandHelperTest extends PowerMockito {
 		);
 	}
 
-	protected void setUpLanguageUtil() {
-		LanguageUtil languageUtil = new LanguageUtil();
+	private void _updateNonevaluableDDMFormFields(
+			boolean localizable, String propertyName, Object propertyValue,
+			boolean required, Value value)
+		throws Exception {
 
-		languageUtil.setLanguage(mock(Language.class));
+		_createDDMFormFields(localizable, required);
+
+		_createDDMFormValues(value);
+
+		_mockDDMFormEvaluator(
+			HashMapBuilder.<String, Object>put(
+				propertyName, propertyValue
+			).build());
+
+		_addFormInstanceRecordMVCCommandHelper.updateNonevaluableDDMFormFields(
+			_actionRequest, _ddmForm, _ddmFormValues, LocaleUtil.US);
 	}
 
-	protected void setUpResourceBundleUtil() {
-		mockStatic(ResourceBundleUtil.class);
+	private static final String _FIELD_INSTANCE_ID =
+		RandomTestUtil.randomString();
 
-		when(
-			ResourceBundleUtil.getBundle(
-				Matchers.anyString(), Matchers.any(Locale.class),
-				Matchers.any(ClassLoader.class))
-		).thenReturn(
-			ResourceBundleUtil.EMPTY_RESOURCE_BUNDLE
-		);
-	}
+	private static final String _FIELD_NAME = RandomTestUtil.randomString();
 
-	private static final String _FIELD_NAME = "field0";
+	private static final String _NESTED_FIELD_INSTANCE_ID =
+		RandomTestUtil.randomString();
 
-	private static final String _STRING_VALUE = "string value";
+	private static final String _NESTED_FIELD_NAME =
+		RandomTestUtil.randomString();
+
+	private static final String _STRING_VALUE = RandomTestUtil.randomString();
+
+	private static AddFormInstanceRecordMVCCommandHelper
+		_addFormInstanceRecordMVCCommandHelper;
 
 	@Mock
 	private ActionRequest _actionRequest;
 
-	private AddFormInstanceRecordMVCCommandHelper _addRecordMVCCommandHelper;
 	private DDMForm _ddmForm;
 
 	@Mock
