@@ -43,7 +43,7 @@ CATALINA_OPTS=&quot;${CATALINA_OPTS} -Djavax.net.ssl.trustStore=${solr.dir}/serv
 					<pathconvert pathsep="," property="commerce.modules">
 						<path>
 							<fileset
-								dir="${liferay.home}/osgi/modules"
+								dir="${liferay.home}/osgi/portal"
 							>
 								<include name="com.liferay.commerce.*" />
 								<include name="com.liferay.headless.commerce.*" />
