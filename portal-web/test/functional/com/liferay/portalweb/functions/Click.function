@@ -195,8 +195,6 @@ definition {
 
 		selenium.selectFrame("relative=top");
 
-		selenium.waitForElementPresent(${locator1}, "true");
-
 		if (selenium.isElementPresent("//iframe")) {
 			selenium.selectFrame("//iframe");
 		}

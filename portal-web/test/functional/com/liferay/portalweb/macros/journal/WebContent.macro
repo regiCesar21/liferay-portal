@@ -2173,9 +2173,9 @@ definition {
 
 		if (isSet(webContentColor)) {
 			AssertAttributeValue(
-				value1 = "style",
 				key_fieldName = "Color",
 				locator1 = "TextInput#SELECTOR_INPUT",
+				value1 = "style",
 				value2 = ${webContentColor});
 		}
 
@@ -2195,9 +2195,9 @@ definition {
 
 		if (isSet(webContentDocumentsAndMedia)) {
 			AssertAttributeValue(
-				value1 = "value",
 				key_fieldName = ${webContentDocumentsAndMediaFieldName},
 				locator1 = "TextInput#SELECTOR_INPUT",
+				value1 = "value",
 				value2 = ${webContentDocumentsAndMedia});
 		}
 
@@ -2210,9 +2210,9 @@ definition {
 
 		if (isSet(webContentImage)) {
 			AssertAttributeValue(
-				value1 = "value",
 				key_fieldName = "Image",
 				locator1 = "TextInput#SELECTOR_INPUT",
+				value1 = "value",
 				value2 = ${webContentImage});
 
 			AssertVisible(locator1 = "Button#PREVIEW");
@@ -2227,9 +2227,9 @@ definition {
 
 		if (isSet(webContentLinkToPage)) {
 			AssertAttributeValue(
-				value1 = "value",
 				key_fieldName = ${webContentLinkToPageFieldName},
 				locator1 = "TextInput#SELECTOR_INPUT",
+				value1 = "value",
 				value2 = ${webContentLinkToPage});
 		}
 
@@ -2310,9 +2310,9 @@ definition {
 
 		if (isSet(webContentWebContent)) {
 			AssertAttributeValue(
-				value1 = "value",
 				key_fieldName = ${webContentWebContentFieldName},
 				locator1 = "TextInput#SELECTOR_INPUT",
+				value1 = "value",
 				value2 = ${webContentWebContent});
 		}
 	}
