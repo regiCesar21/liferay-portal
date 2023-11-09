@@ -37,7 +37,6 @@ const SelectLayout = ({
 	groupId,
 	itemSelectorSaveEvent,
 	multiSelection,
-	namespace,
 	nodes,
 	privateLayout,
 }) => {
