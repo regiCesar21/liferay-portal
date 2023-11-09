@@ -14,6 +14,8 @@ import com.liferay.headless.delivery.client.problem.Problem;
 import com.liferay.headless.delivery.client.serdes.v1_0.MessageBoardThreadSerDes;
 import com.liferay.headless.delivery.client.serdes.v1_0.RatingSerDes;
 
+import java.net.URL;
+
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 
@@ -262,6 +264,10 @@ public interface MessageBoardThreadResource {
 			_scheme = scheme;
 
 			return this;
+		}
+
+		public Builder endpoint(URL url) {
+			return endpoint(url.getHost(), url.getPort(), url.getProtocol());
 		}
 
 		public Builder header(String key, String value) {
