@@ -109,9 +109,9 @@ import org.osgi.service.component.annotations.Reference;
 	configurationPid = "com.liferay.osb.provisioning.distributed.messaging.internal.configuration.DistributedMessagingConfiguration",
 	immediate = true,
 	property = "topic.pattern=ebenezer-support-opportunity-entries",
-	service = DossieraCreateMessageSubscriber.class
+	service = OpportunityMessageSubscriber.class
 )
-public class DossieraCreateMessageSubscriber extends BaseMessageSubscriber {
+public class OpportunityMessageSubscriber extends BaseMessageSubscriber {
 
 	@Activate
 	protected void activate(Map<String, Object> properties) {
@@ -1358,7 +1358,7 @@ public class DossieraCreateMessageSubscriber extends BaseMessageSubscriber {
 	}
 
 	protected ExternalLink getOpportunityExternalLink(JSONObject jsonObject) {
-		String opportunityKey = jsonObject.getString("OpportunityKey");
+		String opportunityKey = jsonObject.getString("opportunityKey");
 
 		ExternalLink externalLink = null;
 
@@ -2507,7 +2507,7 @@ public class DossieraCreateMessageSubscriber extends BaseMessageSubscriber {
 		String templateName, String defaultTemplateName) {
 
 		ClassLoader classLoader =
-			DossieraCreateMessageSubscriber.class.getClassLoader();
+			OpportunityMessageSubscriber.class.getClassLoader();
 
 		String templateDirName =
 			"com/liferay/osb/provisioning/distributed/messaging/internal" +
@@ -2517,12 +2517,12 @@ public class DossieraCreateMessageSubscriber extends BaseMessageSubscriber {
 
 		if (url != null) {
 			return ContentUtil.get(
-				DossieraCreateMessageSubscriber.class.getClassLoader(),
+				OpportunityMessageSubscriber.class.getClassLoader(),
 				templateDirName + templateName);
 		}
 
 		return ContentUtil.get(
-			DossieraCreateMessageSubscriber.class.getClassLoader(),
+			OpportunityMessageSubscriber.class.getClassLoader(),
 			templateDirName + defaultTemplateName);
 	}
 
@@ -2685,19 +2685,19 @@ public class DossieraCreateMessageSubscriber extends BaseMessageSubscriber {
 	private static final String[] _PRODUCT_FAMILY_TOKENS = {"E", "P", "S"};
 
 	private static final Log _log = LogFactoryUtil.getLog(
-		DossieraCreateMessageSubscriber.class);
+		OpportunityMessageSubscriber.class);
 
 	private static final ThreadLocal<List<Exception>>
 		_productPurchaseExceptionsThreadLocal = new CentralizedThreadLocal<>(
-			DossieraCreateMessageSubscriber.class +
+			OpportunityMessageSubscriber.class +
 				"._productPurchaseExceptionsThreadLocal");
 	private static final ThreadLocal<Set<String>>
 		_renewedEWSAAccountNamesThreadLocal = new CentralizedThreadLocal<>(
-			DossieraCreateMessageSubscriber.class +
+			OpportunityMessageSubscriber.class +
 				"._renewedAccountNamesThreadLocal");
 	private static final ThreadLocal<ArrayList<String>>
 		_warningMessagesThreadLocal = new CentralizedThreadLocal<>(
-			DossieraCreateMessageSubscriber.class +
+			OpportunityMessageSubscriber.class +
 				"._warningMessagesThreadLocal");
 
 	@Reference

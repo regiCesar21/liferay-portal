@@ -28,9 +28,9 @@ import org.osgi.service.component.annotations.Reference;
 	configurationPid = "com.liferay.osb.provisioning.distributed.messaging.internal.configuration.DistributedMessagingConfiguration",
 	immediate = true,
 	property = "topic.pattern=ebenezer-support-project-entries",
-	service = DossieraUpdateMessageSubscriber.class
+	service = ProjectMessageSubscriber.class
 )
-public class DossieraUpdateMessageSubscriber extends BaseMessageSubscriber {
+public class ProjectMessageSubscriber extends BaseMessageSubscriber {
 
 	@Override
 	protected void doParse(JSONObject jsonObject) throws Exception {
@@ -69,7 +69,7 @@ public class DossieraUpdateMessageSubscriber extends BaseMessageSubscriber {
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
-		DossieraUpdateMessageSubscriber.class);
+		ProjectMessageSubscriber.class);
 
 	@Reference
 	private AccountWebService _accountWebService;

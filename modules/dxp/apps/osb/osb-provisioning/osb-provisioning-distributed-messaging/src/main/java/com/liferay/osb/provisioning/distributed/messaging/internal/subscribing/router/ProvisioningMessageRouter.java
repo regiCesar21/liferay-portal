@@ -8,12 +8,12 @@ package com.liferay.osb.provisioning.distributed.messaging.internal.subscribing.
 import com.liferay.osb.distributed.messaging.subscribing.router.BaseMessageRouter;
 import com.liferay.osb.distributed.messaging.subscribing.router.MessageRouter;
 import com.liferay.osb.provisioning.distributed.messaging.internal.subscribing.ContactMessageSubscriber;
-import com.liferay.osb.provisioning.distributed.messaging.internal.subscribing.DossieraCreateMessageSubscriber;
-import com.liferay.osb.provisioning.distributed.messaging.internal.subscribing.DossieraUpdateMessageSubscriber;
 import com.liferay.osb.provisioning.distributed.messaging.internal.subscribing.EntitlementCreateMessageSubscriber;
 import com.liferay.osb.provisioning.distributed.messaging.internal.subscribing.EntitlementDeleteMessageSubscriber;
 import com.liferay.osb.provisioning.distributed.messaging.internal.subscribing.OktaUsersMessageSubscriber;
+import com.liferay.osb.provisioning.distributed.messaging.internal.subscribing.OpportunityMessageSubscriber;
 import com.liferay.osb.provisioning.distributed.messaging.internal.subscribing.ProductMessageSubscriber;
+import com.liferay.osb.provisioning.distributed.messaging.internal.subscribing.ProjectMessageSubscriber;
 import com.liferay.osb.provisioning.distributed.messaging.internal.subscribing.SalesforceCasesMessageSubscriber;
 
 import java.util.Map;
@@ -33,22 +33,6 @@ public class ProvisioningMessageRouter extends BaseMessageRouter {
 		Map<String, Object> properties) {
 
 		addRoute(contactMessageSubscriber, properties);
-	}
-
-	@Reference(unbind = "-")
-	protected void setDossieraCreateMessageSubscriber(
-		DossieraCreateMessageSubscriber dossieraCreateMessageSubscriber,
-		Map<String, Object> properties) {
-
-		addRoute(dossieraCreateMessageSubscriber, properties);
-	}
-
-	@Reference(unbind = "-")
-	protected void setDossieraUpdateMessageSubscriber(
-		DossieraUpdateMessageSubscriber dossieraUpdateMessageSubscriber,
-		Map<String, Object> properties) {
-
-		addRoute(dossieraUpdateMessageSubscriber, properties);
 	}
 
 	@Reference(unbind = "-")
@@ -76,11 +60,27 @@ public class ProvisioningMessageRouter extends BaseMessageRouter {
 	}
 
 	@Reference(unbind = "-")
+	protected void setOpportunityMessageSubscriber(
+		OpportunityMessageSubscriber opportunityMessageSubscriber,
+		Map<String, Object> properties) {
+
+		addRoute(opportunityMessageSubscriber, properties);
+	}
+
+	@Reference(unbind = "-")
 	protected void setProductMessageSubscriber(
 		ProductMessageSubscriber productMessageSubscriber,
 		Map<String, Object> properties) {
 
 		addRoute(productMessageSubscriber, properties);
+	}
+
+	@Reference(unbind = "-")
+	protected void setProjectMessageSubscriber(
+		ProjectMessageSubscriber projectMessageSubscriber,
+		Map<String, Object> properties) {
+
+		addRoute(projectMessageSubscriber, properties);
 	}
 
 	@Reference(unbind = "-")
