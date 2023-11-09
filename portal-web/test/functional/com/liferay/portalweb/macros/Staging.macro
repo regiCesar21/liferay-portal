@@ -969,7 +969,7 @@ definition {
 
 		ClickNoError(locator1 = "Staging#STAGING_PUBLISH_TO_LIVE_BUTTON");
 
-		Confirm(value1 = "Are you sure you want to publish to live and update the existing application data?");
+		AssertConfirm(value1 = "Are you sure you want to publish to live and update the existing application data?");
 
 		Pause(value1 = 5000);
 

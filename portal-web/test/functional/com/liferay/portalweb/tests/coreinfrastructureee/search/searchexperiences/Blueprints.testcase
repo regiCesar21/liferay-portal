@@ -2666,8 +2666,8 @@ definition {
 			locator1 = "Blueprints#BLUEPRINTS_ADMIN_ENTRY_CHECKBOX");
 
 		AssertAttributeValue.assertAttributeValueNotVisible(
-			value1 = "indeterminate",
 			locator1 = "Blueprints#BLUEPRINTS_ADMIN_SELECT_ALL_CHECKBOX",
+			value1 = "indeterminate",
 			value2 = "true");
 
 		Click.clickAtNotVisible(locator1 = "Blueprints#BLUEPRINTS_ADMIN_SELECT_ALL_CHECKBOX");
@@ -3630,8 +3630,8 @@ definition {
 			locator1 = "Blueprints#BLUEPRINTS_ADMIN_ENTRY_CHECKBOX");
 
 		AssertAttributeValue.assertAttributeValueNotVisible(
-			value1 = "indeterminate",
 			locator1 = "Blueprints#BLUEPRINTS_ADMIN_SELECT_ALL_CHECKBOX",
+			value1 = "indeterminate",
 			value2 = "true");
 
 		Click.clickAtNotVisible(locator1 = "Blueprints#BLUEPRINTS_ADMIN_SELECT_ALL_CHECKBOX");

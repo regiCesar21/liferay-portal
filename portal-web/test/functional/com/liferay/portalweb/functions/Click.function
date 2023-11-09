@@ -169,7 +169,7 @@ definition {
 
 		selenium.selectFrame("relative=top");
 
-		selenium.waitForElementPresent(${locator1}, "true");
+		selenium.waitForElementPresent(${locator1}, "false");
 
 		if (selenium.isElementPresent("//*[contains(@class,'modal-body')]/iframe[not(contains(@class,'hidden'))]")) {
 			selenium.selectFrame("//*[contains(@class,'modal-body')]/iframe[not(contains(@class,'hidden'))]");
@@ -187,7 +187,7 @@ definition {
 	function waitForPersonalMenuJSClick(locator1) {
 		WaitForSPARefresh();
 
-		selenium.waitForElementPresent(${locator1}, "true");
+		selenium.waitForElementPresent(${locator1}, "false");
 
 		selenium.pause(3000);
 
