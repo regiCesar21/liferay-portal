@@ -108,10 +108,10 @@ definition {
 			fieldValue = "English (United States) Title");
 
 		AssertAttributeValue(
-			attribute1 = "value",
+			value1 = "value",
 			key_fieldName = "Image",
 			locator1 = "TextInput#SELECTOR_INPUT",
-			value1 = "Document_3.png");
+			value2 = "Document_3.png");
 
 		FormFields.viewTextValueAlt(
 			fieldName = "Image",
@@ -124,10 +124,10 @@ definition {
 			fieldValue = "Spanish (Spain) Title");
 
 		AssertAttributeValue(
-			attribute1 = "value",
+			value1 = "value",
 			key_fieldName = "Image",
 			locator1 = "TextInput#SELECTOR_INPUT",
-			value1 = "Document_3.png");
+			value2 = "Document_3.png");
 
 		FormFields.viewTextValueAlt(
 			fieldName = "Image",
@@ -140,10 +140,10 @@ definition {
 			fieldValue = "Portuguese (Brazil) Title");
 
 		AssertAttributeValue(
-			attribute1 = "value",
+			value1 = "value",
 			key_fieldName = "Image",
 			locator1 = "TextInput#SELECTOR_INPUT",
-			value1 = "Document_3.png");
+			value2 = "Document_3.png");
 
 		FormFields.viewTextValueAlt(
 			fieldName = "Image",

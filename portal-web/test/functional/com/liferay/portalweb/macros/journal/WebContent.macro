@@ -2572,18 +2572,18 @@ definition {
 
 		if (isSet(webContentColor)) {
 			AssertAttributeValue(
-				attribute1 = "style",
+				value1 = "style",
 				key_fieldName = "Color",
 				locator1 = "TextInput#SELECTOR_INPUT",
-				value1 = ${webContentColor});
+				value2 = ${webContentColor});
 		}
 
 		if (isSet(webContentDate)) {
 			AssertAttributeValue(
-				attribute1 = "value",
+				value1 = "value",
 				key_fieldLabel = "Date",
 				locator1 = "WCEditWebContent#TEXT_INPUT_FIELD",
-				value1 = ${webContentDate});
+				value2 = ${webContentDate});
 		}
 
 		if (isSet(webContentDecimal)) {
@@ -2595,10 +2595,10 @@ definition {
 
 		if (isSet(webContentDocumentsAndMedia)) {
 			AssertAttributeValue(
-				attribute1 = "value",
+				value1 = "value",
 				key_fieldName = ${webContentDocumentsAndMediaFieldName},
 				locator1 = "TextInput#SELECTOR_INPUT",
-				value1 = ${webContentDocumentsAndMedia});
+				value2 = ${webContentDocumentsAndMedia});
 		}
 
 		if (isSet(webContentHTML)) {
@@ -2615,10 +2615,10 @@ definition {
 
 		if (isSet(webContentImage)) {
 			AssertAttributeValue(
-				attribute1 = "value",
+				value1 = "value",
 				key_fieldName = "Image",
 				locator1 = "TextInput#SELECTOR_INPUT",
-				value1 = ${webContentImage});
+				value2 = ${webContentImage});
 
 			AssertVisible(locator1 = "Button#PREVIEW");
 		}
@@ -2632,10 +2632,10 @@ definition {
 
 		if (isSet(webContentLinkToPage)) {
 			AssertAttributeValue(
-				attribute1 = "value",
+				value1 = "value",
 				key_fieldName = ${webContentLinkToPageFieldName},
 				locator1 = "TextInput#SELECTOR_INPUT",
-				value1 = ${webContentLinkToPage});
+				value2 = ${webContentLinkToPage});
 		}
 
 		if (isSet(webContentNumber)) {
@@ -2719,10 +2719,10 @@ definition {
 
 		if (isSet(webContentWebContent)) {
 			AssertAttributeValue(
-				attribute1 = "value",
+				value1 = "value",
 				key_fieldName = ${webContentWebContentFieldName},
 				locator1 = "TextInput#SELECTOR_INPUT",
-				value1 = ${webContentWebContent});
+				value2 = ${webContentWebContent});
 		}
 	}
 
