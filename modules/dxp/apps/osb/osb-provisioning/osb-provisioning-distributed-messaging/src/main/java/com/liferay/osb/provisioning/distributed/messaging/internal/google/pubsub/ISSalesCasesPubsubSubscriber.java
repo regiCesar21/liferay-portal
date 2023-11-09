@@ -21,9 +21,9 @@ import org.osgi.service.component.annotations.Reference;
 		"subscription=provisioning-support-case-entries",
 		"topic=ebenezer-support-case-entries"
 	},
-	service = ISSalesPubsubSubscriber.class
+	service = ISSalesCasesPubsubSubscriber.class
 )
-public class ISSalesPubsubSubscriber extends BasePubsubSubscriber {
+public class ISSalesCasesPubsubSubscriber extends BasePubsubSubscriber {
 
 	@Override
 	protected ServiceAccountCredentialsProvider

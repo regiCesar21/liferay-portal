@@ -18,13 +18,12 @@ import org.osgi.service.component.annotations.Reference;
 	immediate = true,
 	property = {
 		"messageFilter=", "namespace=", "projectId=is-sales-uat",
-		"subscription=provisioning-support-project-entries",
-		"topic=ebenezer-support-project-entries"
+		"subscription=provisioning-support-opportunity-entries",
+		"topic=ebenezer-support-opportunity-entries"
 	},
-	service = DossieraUpdateMessagePubsubSubscriber.class
+	service = ISSalesOpportunityPubsubSubscriber.class
 )
-public class DossieraUpdateMessagePubsubSubscriber
-	extends BasePubsubSubscriber {
+public class ISSalesOpportunityPubsubSubscriber extends BasePubsubSubscriber {
 
 	@Override
 	protected ServiceAccountCredentialsProvider
