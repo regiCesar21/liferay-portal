@@ -41,7 +41,7 @@ public interface ZendeskHeatScoreConstants {
 	public static final String HEAT_TAG_SECURITY_EXPERIENCING_ATTACK =
 		"security_experiencing_attack";
 
-	public static final String HEAT_TAG_SECURITY_RERPORTED_VULNERABILITIES =
+	public static final String HEAT_TAG_SECURITY_REPORTED_VULNERABILITIES =
 		"security_reported_vulnerabilities";
 
 	public static final String HEAT_TAG_SECURITY_SCAN_RESULT_CONCERNS =
@@ -121,7 +121,7 @@ public interface ZendeskHeatScoreConstants {
 		else if (heatTag.equals(HEAT_TAG_SECURITY_EXPERIENCING_ATTACK)) {
 			return 21;
 		}
-		else if (heatTag.equals(HEAT_TAG_SECURITY_RERPORTED_VULNERABILITIES)) {
+		else if (heatTag.equals(HEAT_TAG_SECURITY_REPORTED_VULNERABILITIES)) {
 			return 13;
 		}
 		else if (heatTag.equals(HEAT_TAG_SECURITY_SCAN_RESULT_CONCERNS)) {
