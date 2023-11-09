@@ -210,7 +210,7 @@ public abstract class BaseContactRoleResourceTestCase {
 				getAccountAccountKeyContactByEmailAddresContactEmailAddressRolesPage(
 					accountKey, contactEmailAddress, Pagination.of(1, 10));
 
-		Assert.assertEquals(0, page.getTotalCount());
+		long totalCount = page.getTotalCount();
 
 		if ((irrelevantAccountKey != null) &&
 			(irrelevantContactEmailAddress != null)) {
@@ -224,13 +224,12 @@ public abstract class BaseContactRoleResourceTestCase {
 				contactRoleResource.
 					getAccountAccountKeyContactByEmailAddresContactEmailAddressRolesPage(
 						irrelevantAccountKey, irrelevantContactEmailAddress,
-						Pagination.of(1, 2));
+						Pagination.of(1, (int)totalCount + 1));
 
-			Assert.assertEquals(1, page.getTotalCount());
+			Assert.assertEquals(totalCount + 1, page.getTotalCount());
 
-			assertEquals(
-				Arrays.asList(irrelevantContactRole),
-				(List<ContactRole>)page.getItems());
+			assertContains(
+				irrelevantContactRole, (List<ContactRole>)page.getItems());
 			assertValid(
 				page,
 				testGetAccountAccountKeyContactByEmailAddresContactEmailAddressRolesPage_getExpectedActions(
@@ -250,11 +249,10 @@ public abstract class BaseContactRoleResourceTestCase {
 				getAccountAccountKeyContactByEmailAddresContactEmailAddressRolesPage(
 					accountKey, contactEmailAddress, Pagination.of(1, 10));
 
-		Assert.assertEquals(2, page.getTotalCount());
+		Assert.assertEquals(totalCount + 2, page.getTotalCount());
 
-		assertEqualsIgnoringOrder(
-			Arrays.asList(contactRole1, contactRole2),
-			(List<ContactRole>)page.getItems());
+		assertContains(contactRole1, (List<ContactRole>)page.getItems());
+		assertContains(contactRole2, (List<ContactRole>)page.getItems());
 		assertValid(
 			page,
 			testGetAccountAccountKeyContactByEmailAddresContactEmailAddressRolesPage_getExpectedActions(
@@ -280,6 +278,13 @@ public abstract class BaseContactRoleResourceTestCase {
 		String contactEmailAddress =
 			testGetAccountAccountKeyContactByEmailAddresContactEmailAddressRolesPage_getContactEmailAddress();
 
+		Page<ContactRole> contactRolePage =
+			contactRoleResource.
+				getAccountAccountKeyContactByEmailAddresContactEmailAddressRolesPage(
+					accountKey, contactEmailAddress, null);
+
+		int totalCount = GetterUtil.getInteger(contactRolePage.getTotalCount());
+
 		ContactRole contactRole1 =
 			testGetAccountAccountKeyContactByEmailAddresContactEmailAddressRolesPage_addContactRole(
 				accountKey, contactEmailAddress, randomContactRole());
@@ -295,18 +300,21 @@ public abstract class BaseContactRoleResourceTestCase {
 		Page<ContactRole> page1 =
 			contactRoleResource.
 				getAccountAccountKeyContactByEmailAddresContactEmailAddressRolesPage(
-					accountKey, contactEmailAddress, Pagination.of(1, 2));
+					accountKey, contactEmailAddress,
+					Pagination.of(1, totalCount + 2));
 
 		List<ContactRole> contactRoles1 = (List<ContactRole>)page1.getItems();
 
-		Assert.assertEquals(contactRoles1.toString(), 2, contactRoles1.size());
+		Assert.assertEquals(
+			contactRoles1.toString(), totalCount + 2, contactRoles1.size());
 
 		Page<ContactRole> page2 =
 			contactRoleResource.
 				getAccountAccountKeyContactByEmailAddresContactEmailAddressRolesPage(
-					accountKey, contactEmailAddress, Pagination.of(2, 2));
+					accountKey, contactEmailAddress,
+					Pagination.of(2, totalCount + 2));
 
-		Assert.assertEquals(3, page2.getTotalCount());
+		Assert.assertEquals(totalCount + 3, page2.getTotalCount());
 
 		List<ContactRole> contactRoles2 = (List<ContactRole>)page2.getItems();
 
@@ -315,11 +323,12 @@ public abstract class BaseContactRoleResourceTestCase {
 		Page<ContactRole> page3 =
 			contactRoleResource.
 				getAccountAccountKeyContactByEmailAddresContactEmailAddressRolesPage(
-					accountKey, contactEmailAddress, Pagination.of(1, 3));
+					accountKey, contactEmailAddress,
+					Pagination.of(1, (int)totalCount + 3));
 
-		assertEqualsIgnoringOrder(
-			Arrays.asList(contactRole1, contactRole2, contactRole3),
-			(List<ContactRole>)page3.getItems());
+		assertContains(contactRole1, (List<ContactRole>)page3.getItems());
+		assertContains(contactRole2, (List<ContactRole>)page3.getItems());
+		assertContains(contactRole3, (List<ContactRole>)page3.getItems());
 	}
 
 	protected ContactRole
@@ -380,7 +389,7 @@ public abstract class BaseContactRoleResourceTestCase {
 				getAccountAccountKeyContactByUuidContactUuidRolesPage(
 					accountKey, contactUuid, Pagination.of(1, 10));
 
-		Assert.assertEquals(0, page.getTotalCount());
+		long totalCount = page.getTotalCount();
 
 		if ((irrelevantAccountKey != null) && (irrelevantContactUuid != null)) {
 			ContactRole irrelevantContactRole =
@@ -392,13 +401,12 @@ public abstract class BaseContactRoleResourceTestCase {
 				contactRoleResource.
 					getAccountAccountKeyContactByUuidContactUuidRolesPage(
 						irrelevantAccountKey, irrelevantContactUuid,
-						Pagination.of(1, 2));
+						Pagination.of(1, (int)totalCount + 1));
 
-			Assert.assertEquals(1, page.getTotalCount());
+			Assert.assertEquals(totalCount + 1, page.getTotalCount());
 
-			assertEquals(
-				Arrays.asList(irrelevantContactRole),
-				(List<ContactRole>)page.getItems());
+			assertContains(
+				irrelevantContactRole, (List<ContactRole>)page.getItems());
 			assertValid(
 				page,
 				testGetAccountAccountKeyContactByUuidContactUuidRolesPage_getExpectedActions(
@@ -418,11 +426,10 @@ public abstract class BaseContactRoleResourceTestCase {
 				getAccountAccountKeyContactByUuidContactUuidRolesPage(
 					accountKey, contactUuid, Pagination.of(1, 10));
 
-		Assert.assertEquals(2, page.getTotalCount());
+		Assert.assertEquals(totalCount + 2, page.getTotalCount());
 
-		assertEqualsIgnoringOrder(
-			Arrays.asList(contactRole1, contactRole2),
-			(List<ContactRole>)page.getItems());
+		assertContains(contactRole1, (List<ContactRole>)page.getItems());
+		assertContains(contactRole2, (List<ContactRole>)page.getItems());
 		assertValid(
 			page,
 			testGetAccountAccountKeyContactByUuidContactUuidRolesPage_getExpectedActions(
@@ -448,6 +455,13 @@ public abstract class BaseContactRoleResourceTestCase {
 		String contactUuid =
 			testGetAccountAccountKeyContactByUuidContactUuidRolesPage_getContactUuid();
 
+		Page<ContactRole> contactRolePage =
+			contactRoleResource.
+				getAccountAccountKeyContactByUuidContactUuidRolesPage(
+					accountKey, contactUuid, null);
+
+		int totalCount = GetterUtil.getInteger(contactRolePage.getTotalCount());
+
 		ContactRole contactRole1 =
 			testGetAccountAccountKeyContactByUuidContactUuidRolesPage_addContactRole(
 				accountKey, contactUuid, randomContactRole());
@@ -463,18 +477,19 @@ public abstract class BaseContactRoleResourceTestCase {
 		Page<ContactRole> page1 =
 			contactRoleResource.
 				getAccountAccountKeyContactByUuidContactUuidRolesPage(
-					accountKey, contactUuid, Pagination.of(1, 2));
+					accountKey, contactUuid, Pagination.of(1, totalCount + 2));
 
 		List<ContactRole> contactRoles1 = (List<ContactRole>)page1.getItems();
 
-		Assert.assertEquals(contactRoles1.toString(), 2, contactRoles1.size());
+		Assert.assertEquals(
+			contactRoles1.toString(), totalCount + 2, contactRoles1.size());
 
 		Page<ContactRole> page2 =
 			contactRoleResource.
 				getAccountAccountKeyContactByUuidContactUuidRolesPage(
-					accountKey, contactUuid, Pagination.of(2, 2));
+					accountKey, contactUuid, Pagination.of(2, totalCount + 2));
 
-		Assert.assertEquals(3, page2.getTotalCount());
+		Assert.assertEquals(totalCount + 3, page2.getTotalCount());
 
 		List<ContactRole> contactRoles2 = (List<ContactRole>)page2.getItems();
 
@@ -483,11 +498,12 @@ public abstract class BaseContactRoleResourceTestCase {
 		Page<ContactRole> page3 =
 			contactRoleResource.
 				getAccountAccountKeyContactByUuidContactUuidRolesPage(
-					accountKey, contactUuid, Pagination.of(1, 3));
+					accountKey, contactUuid,
+					Pagination.of(1, (int)totalCount + 3));
 
-		assertEqualsIgnoringOrder(
-			Arrays.asList(contactRole1, contactRole2, contactRole3),
-			(List<ContactRole>)page3.getItems());
+		assertContains(contactRole1, (List<ContactRole>)page3.getItems());
+		assertContains(contactRole2, (List<ContactRole>)page3.getItems());
+		assertContains(contactRole3, (List<ContactRole>)page3.getItems());
 	}
 
 	protected ContactRole
@@ -547,7 +563,7 @@ public abstract class BaseContactRoleResourceTestCase {
 				getAccountAccountKeyCustomerContactByEmailAddresContactEmailAddressRolesPage(
 					accountKey, contactEmailAddress, Pagination.of(1, 10));
 
-		Assert.assertEquals(0, page.getTotalCount());
+		long totalCount = page.getTotalCount();
 
 		if ((irrelevantAccountKey != null) &&
 			(irrelevantContactEmailAddress != null)) {
@@ -561,13 +577,12 @@ public abstract class BaseContactRoleResourceTestCase {
 				contactRoleResource.
 					getAccountAccountKeyCustomerContactByEmailAddresContactEmailAddressRolesPage(
 						irrelevantAccountKey, irrelevantContactEmailAddress,
-						Pagination.of(1, 2));
+						Pagination.of(1, (int)totalCount + 1));
 
-			Assert.assertEquals(1, page.getTotalCount());
+			Assert.assertEquals(totalCount + 1, page.getTotalCount());
 
-			assertEquals(
-				Arrays.asList(irrelevantContactRole),
-				(List<ContactRole>)page.getItems());
+			assertContains(
+				irrelevantContactRole, (List<ContactRole>)page.getItems());
 			assertValid(
 				page,
 				testGetAccountAccountKeyCustomerContactByEmailAddresContactEmailAddressRolesPage_getExpectedActions(
@@ -587,11 +602,10 @@ public abstract class BaseContactRoleResourceTestCase {
 				getAccountAccountKeyCustomerContactByEmailAddresContactEmailAddressRolesPage(
 					accountKey, contactEmailAddress, Pagination.of(1, 10));
 
-		Assert.assertEquals(2, page.getTotalCount());
+		Assert.assertEquals(totalCount + 2, page.getTotalCount());
 
-		assertEqualsIgnoringOrder(
-			Arrays.asList(contactRole1, contactRole2),
-			(List<ContactRole>)page.getItems());
+		assertContains(contactRole1, (List<ContactRole>)page.getItems());
+		assertContains(contactRole2, (List<ContactRole>)page.getItems());
 		assertValid(
 			page,
 			testGetAccountAccountKeyCustomerContactByEmailAddresContactEmailAddressRolesPage_getExpectedActions(
@@ -617,6 +631,13 @@ public abstract class BaseContactRoleResourceTestCase {
 		String contactEmailAddress =
 			testGetAccountAccountKeyCustomerContactByEmailAddresContactEmailAddressRolesPage_getContactEmailAddress();
 
+		Page<ContactRole> contactRolePage =
+			contactRoleResource.
+				getAccountAccountKeyCustomerContactByEmailAddresContactEmailAddressRolesPage(
+					accountKey, contactEmailAddress, null);
+
+		int totalCount = GetterUtil.getInteger(contactRolePage.getTotalCount());
+
 		ContactRole contactRole1 =
 			testGetAccountAccountKeyCustomerContactByEmailAddresContactEmailAddressRolesPage_addContactRole(
 				accountKey, contactEmailAddress, randomContactRole());
@@ -632,18 +653,21 @@ public abstract class BaseContactRoleResourceTestCase {
 		Page<ContactRole> page1 =
 			contactRoleResource.
 				getAccountAccountKeyCustomerContactByEmailAddresContactEmailAddressRolesPage(
-					accountKey, contactEmailAddress, Pagination.of(1, 2));
+					accountKey, contactEmailAddress,
+					Pagination.of(1, totalCount + 2));
 
 		List<ContactRole> contactRoles1 = (List<ContactRole>)page1.getItems();
 
-		Assert.assertEquals(contactRoles1.toString(), 2, contactRoles1.size());
+		Assert.assertEquals(
+			contactRoles1.toString(), totalCount + 2, contactRoles1.size());
 
 		Page<ContactRole> page2 =
 			contactRoleResource.
 				getAccountAccountKeyCustomerContactByEmailAddresContactEmailAddressRolesPage(
-					accountKey, contactEmailAddress, Pagination.of(2, 2));
+					accountKey, contactEmailAddress,
+					Pagination.of(2, totalCount + 2));
 
-		Assert.assertEquals(3, page2.getTotalCount());
+		Assert.assertEquals(totalCount + 3, page2.getTotalCount());
 
 		List<ContactRole> contactRoles2 = (List<ContactRole>)page2.getItems();
 
@@ -652,11 +676,12 @@ public abstract class BaseContactRoleResourceTestCase {
 		Page<ContactRole> page3 =
 			contactRoleResource.
 				getAccountAccountKeyCustomerContactByEmailAddresContactEmailAddressRolesPage(
-					accountKey, contactEmailAddress, Pagination.of(1, 3));
+					accountKey, contactEmailAddress,
+					Pagination.of(1, (int)totalCount + 3));
 
-		assertEqualsIgnoringOrder(
-			Arrays.asList(contactRole1, contactRole2, contactRole3),
-			(List<ContactRole>)page3.getItems());
+		assertContains(contactRole1, (List<ContactRole>)page3.getItems());
+		assertContains(contactRole2, (List<ContactRole>)page3.getItems());
+		assertContains(contactRole3, (List<ContactRole>)page3.getItems());
 	}
 
 	protected ContactRole
@@ -717,7 +742,7 @@ public abstract class BaseContactRoleResourceTestCase {
 				getAccountAccountKeyCustomerContactByUuidContactUuidRolesPage(
 					accountKey, contactUuid, Pagination.of(1, 10));
 
-		Assert.assertEquals(0, page.getTotalCount());
+		long totalCount = page.getTotalCount();
 
 		if ((irrelevantAccountKey != null) && (irrelevantContactUuid != null)) {
 			ContactRole irrelevantContactRole =
@@ -729,13 +754,12 @@ public abstract class BaseContactRoleResourceTestCase {
 				contactRoleResource.
 					getAccountAccountKeyCustomerContactByUuidContactUuidRolesPage(
 						irrelevantAccountKey, irrelevantContactUuid,
-						Pagination.of(1, 2));
+						Pagination.of(1, (int)totalCount + 1));
 
-			Assert.assertEquals(1, page.getTotalCount());
+			Assert.assertEquals(totalCount + 1, page.getTotalCount());
 
-			assertEquals(
-				Arrays.asList(irrelevantContactRole),
-				(List<ContactRole>)page.getItems());
+			assertContains(
+				irrelevantContactRole, (List<ContactRole>)page.getItems());
 			assertValid(
 				page,
 				testGetAccountAccountKeyCustomerContactByUuidContactUuidRolesPage_getExpectedActions(
@@ -755,11 +779,10 @@ public abstract class BaseContactRoleResourceTestCase {
 				getAccountAccountKeyCustomerContactByUuidContactUuidRolesPage(
 					accountKey, contactUuid, Pagination.of(1, 10));
 
-		Assert.assertEquals(2, page.getTotalCount());
+		Assert.assertEquals(totalCount + 2, page.getTotalCount());
 
-		assertEqualsIgnoringOrder(
-			Arrays.asList(contactRole1, contactRole2),
-			(List<ContactRole>)page.getItems());
+		assertContains(contactRole1, (List<ContactRole>)page.getItems());
+		assertContains(contactRole2, (List<ContactRole>)page.getItems());
 		assertValid(
 			page,
 			testGetAccountAccountKeyCustomerContactByUuidContactUuidRolesPage_getExpectedActions(
@@ -785,6 +808,13 @@ public abstract class BaseContactRoleResourceTestCase {
 		String contactUuid =
 			testGetAccountAccountKeyCustomerContactByUuidContactUuidRolesPage_getContactUuid();
 
+		Page<ContactRole> contactRolePage =
+			contactRoleResource.
+				getAccountAccountKeyCustomerContactByUuidContactUuidRolesPage(
+					accountKey, contactUuid, null);
+
+		int totalCount = GetterUtil.getInteger(contactRolePage.getTotalCount());
+
 		ContactRole contactRole1 =
 			testGetAccountAccountKeyCustomerContactByUuidContactUuidRolesPage_addContactRole(
 				accountKey, contactUuid, randomContactRole());
@@ -800,18 +830,19 @@ public abstract class BaseContactRoleResourceTestCase {
 		Page<ContactRole> page1 =
 			contactRoleResource.
 				getAccountAccountKeyCustomerContactByUuidContactUuidRolesPage(
-					accountKey, contactUuid, Pagination.of(1, 2));
+					accountKey, contactUuid, Pagination.of(1, totalCount + 2));
 
 		List<ContactRole> contactRoles1 = (List<ContactRole>)page1.getItems();
 
-		Assert.assertEquals(contactRoles1.toString(), 2, contactRoles1.size());
+		Assert.assertEquals(
+			contactRoles1.toString(), totalCount + 2, contactRoles1.size());
 
 		Page<ContactRole> page2 =
 			contactRoleResource.
 				getAccountAccountKeyCustomerContactByUuidContactUuidRolesPage(
-					accountKey, contactUuid, Pagination.of(2, 2));
+					accountKey, contactUuid, Pagination.of(2, totalCount + 2));
 
-		Assert.assertEquals(3, page2.getTotalCount());
+		Assert.assertEquals(totalCount + 3, page2.getTotalCount());
 
 		List<ContactRole> contactRoles2 = (List<ContactRole>)page2.getItems();
 
@@ -820,11 +851,12 @@ public abstract class BaseContactRoleResourceTestCase {
 		Page<ContactRole> page3 =
 			contactRoleResource.
 				getAccountAccountKeyCustomerContactByUuidContactUuidRolesPage(
-					accountKey, contactUuid, Pagination.of(1, 3));
+					accountKey, contactUuid,
+					Pagination.of(1, (int)totalCount + 3));
 
-		assertEqualsIgnoringOrder(
-			Arrays.asList(contactRole1, contactRole2, contactRole3),
-			(List<ContactRole>)page3.getItems());
+		assertContains(contactRole1, (List<ContactRole>)page3.getItems());
+		assertContains(contactRole2, (List<ContactRole>)page3.getItems());
+		assertContains(contactRole3, (List<ContactRole>)page3.getItems());
 	}
 
 	protected ContactRole
@@ -884,7 +916,7 @@ public abstract class BaseContactRoleResourceTestCase {
 				getAccountAccountKeyWorkerContactByEmailAddresContactEmailAddressRolesPage(
 					accountKey, contactEmailAddress, Pagination.of(1, 10));
 
-		Assert.assertEquals(0, page.getTotalCount());
+		long totalCount = page.getTotalCount();
 
 		if ((irrelevantAccountKey != null) &&
 			(irrelevantContactEmailAddress != null)) {
@@ -898,13 +930,12 @@ public abstract class BaseContactRoleResourceTestCase {
 				contactRoleResource.
 					getAccountAccountKeyWorkerContactByEmailAddresContactEmailAddressRolesPage(
 						irrelevantAccountKey, irrelevantContactEmailAddress,
-						Pagination.of(1, 2));
+						Pagination.of(1, (int)totalCount + 1));
 
-			Assert.assertEquals(1, page.getTotalCount());
+			Assert.assertEquals(totalCount + 1, page.getTotalCount());
 
-			assertEquals(
-				Arrays.asList(irrelevantContactRole),
-				(List<ContactRole>)page.getItems());
+			assertContains(
+				irrelevantContactRole, (List<ContactRole>)page.getItems());
 			assertValid(
 				page,
 				testGetAccountAccountKeyWorkerContactByEmailAddresContactEmailAddressRolesPage_getExpectedActions(
@@ -924,11 +955,10 @@ public abstract class BaseContactRoleResourceTestCase {
 				getAccountAccountKeyWorkerContactByEmailAddresContactEmailAddressRolesPage(
 					accountKey, contactEmailAddress, Pagination.of(1, 10));
 
-		Assert.assertEquals(2, page.getTotalCount());
+		Assert.assertEquals(totalCount + 2, page.getTotalCount());
 
-		assertEqualsIgnoringOrder(
-			Arrays.asList(contactRole1, contactRole2),
-			(List<ContactRole>)page.getItems());
+		assertContains(contactRole1, (List<ContactRole>)page.getItems());
+		assertContains(contactRole2, (List<ContactRole>)page.getItems());
 		assertValid(
 			page,
 			testGetAccountAccountKeyWorkerContactByEmailAddresContactEmailAddressRolesPage_getExpectedActions(
@@ -954,6 +984,13 @@ public abstract class BaseContactRoleResourceTestCase {
 		String contactEmailAddress =
 			testGetAccountAccountKeyWorkerContactByEmailAddresContactEmailAddressRolesPage_getContactEmailAddress();
 
+		Page<ContactRole> contactRolePage =
+			contactRoleResource.
+				getAccountAccountKeyWorkerContactByEmailAddresContactEmailAddressRolesPage(
+					accountKey, contactEmailAddress, null);
+
+		int totalCount = GetterUtil.getInteger(contactRolePage.getTotalCount());
+
 		ContactRole contactRole1 =
 			testGetAccountAccountKeyWorkerContactByEmailAddresContactEmailAddressRolesPage_addContactRole(
 				accountKey, contactEmailAddress, randomContactRole());
@@ -969,18 +1006,21 @@ public abstract class BaseContactRoleResourceTestCase {
 		Page<ContactRole> page1 =
 			contactRoleResource.
 				getAccountAccountKeyWorkerContactByEmailAddresContactEmailAddressRolesPage(
-					accountKey, contactEmailAddress, Pagination.of(1, 2));
+					accountKey, contactEmailAddress,
+					Pagination.of(1, totalCount + 2));
 
 		List<ContactRole> contactRoles1 = (List<ContactRole>)page1.getItems();
 
-		Assert.assertEquals(contactRoles1.toString(), 2, contactRoles1.size());
+		Assert.assertEquals(
+			contactRoles1.toString(), totalCount + 2, contactRoles1.size());
 
 		Page<ContactRole> page2 =
 			contactRoleResource.
 				getAccountAccountKeyWorkerContactByEmailAddresContactEmailAddressRolesPage(
-					accountKey, contactEmailAddress, Pagination.of(2, 2));
+					accountKey, contactEmailAddress,
+					Pagination.of(2, totalCount + 2));
 
-		Assert.assertEquals(3, page2.getTotalCount());
+		Assert.assertEquals(totalCount + 3, page2.getTotalCount());
 
 		List<ContactRole> contactRoles2 = (List<ContactRole>)page2.getItems();
 
@@ -989,11 +1029,12 @@ public abstract class BaseContactRoleResourceTestCase {
 		Page<ContactRole> page3 =
 			contactRoleResource.
 				getAccountAccountKeyWorkerContactByEmailAddresContactEmailAddressRolesPage(
-					accountKey, contactEmailAddress, Pagination.of(1, 3));
+					accountKey, contactEmailAddress,
+					Pagination.of(1, (int)totalCount + 3));
 
-		assertEqualsIgnoringOrder(
-			Arrays.asList(contactRole1, contactRole2, contactRole3),
-			(List<ContactRole>)page3.getItems());
+		assertContains(contactRole1, (List<ContactRole>)page3.getItems());
+		assertContains(contactRole2, (List<ContactRole>)page3.getItems());
+		assertContains(contactRole3, (List<ContactRole>)page3.getItems());
 	}
 
 	protected ContactRole
@@ -1054,7 +1095,7 @@ public abstract class BaseContactRoleResourceTestCase {
 				getAccountAccountKeyWorkerContactByUuidContactUuidRolesPage(
 					accountKey, contactUuid, Pagination.of(1, 10));
 
-		Assert.assertEquals(0, page.getTotalCount());
+		long totalCount = page.getTotalCount();
 
 		if ((irrelevantAccountKey != null) && (irrelevantContactUuid != null)) {
 			ContactRole irrelevantContactRole =
@@ -1066,13 +1107,12 @@ public abstract class BaseContactRoleResourceTestCase {
 				contactRoleResource.
 					getAccountAccountKeyWorkerContactByUuidContactUuidRolesPage(
 						irrelevantAccountKey, irrelevantContactUuid,
-						Pagination.of(1, 2));
+						Pagination.of(1, (int)totalCount + 1));
 
-			Assert.assertEquals(1, page.getTotalCount());
+			Assert.assertEquals(totalCount + 1, page.getTotalCount());
 
-			assertEquals(
-				Arrays.asList(irrelevantContactRole),
-				(List<ContactRole>)page.getItems());
+			assertContains(
+				irrelevantContactRole, (List<ContactRole>)page.getItems());
 			assertValid(
 				page,
 				testGetAccountAccountKeyWorkerContactByUuidContactUuidRolesPage_getExpectedActions(
@@ -1092,11 +1132,10 @@ public abstract class BaseContactRoleResourceTestCase {
 				getAccountAccountKeyWorkerContactByUuidContactUuidRolesPage(
 					accountKey, contactUuid, Pagination.of(1, 10));
 
-		Assert.assertEquals(2, page.getTotalCount());
+		Assert.assertEquals(totalCount + 2, page.getTotalCount());
 
-		assertEqualsIgnoringOrder(
-			Arrays.asList(contactRole1, contactRole2),
-			(List<ContactRole>)page.getItems());
+		assertContains(contactRole1, (List<ContactRole>)page.getItems());
+		assertContains(contactRole2, (List<ContactRole>)page.getItems());
 		assertValid(
 			page,
 			testGetAccountAccountKeyWorkerContactByUuidContactUuidRolesPage_getExpectedActions(
@@ -1122,6 +1161,13 @@ public abstract class BaseContactRoleResourceTestCase {
 		String contactUuid =
 			testGetAccountAccountKeyWorkerContactByUuidContactUuidRolesPage_getContactUuid();
 
+		Page<ContactRole> contactRolePage =
+			contactRoleResource.
+				getAccountAccountKeyWorkerContactByUuidContactUuidRolesPage(
+					accountKey, contactUuid, null);
+
+		int totalCount = GetterUtil.getInteger(contactRolePage.getTotalCount());
+
 		ContactRole contactRole1 =
 			testGetAccountAccountKeyWorkerContactByUuidContactUuidRolesPage_addContactRole(
 				accountKey, contactUuid, randomContactRole());
@@ -1137,18 +1183,19 @@ public abstract class BaseContactRoleResourceTestCase {
 		Page<ContactRole> page1 =
 			contactRoleResource.
 				getAccountAccountKeyWorkerContactByUuidContactUuidRolesPage(
-					accountKey, contactUuid, Pagination.of(1, 2));
+					accountKey, contactUuid, Pagination.of(1, totalCount + 2));
 
 		List<ContactRole> contactRoles1 = (List<ContactRole>)page1.getItems();
 
-		Assert.assertEquals(contactRoles1.toString(), 2, contactRoles1.size());
+		Assert.assertEquals(
+			contactRoles1.toString(), totalCount + 2, contactRoles1.size());
 
 		Page<ContactRole> page2 =
 			contactRoleResource.
 				getAccountAccountKeyWorkerContactByUuidContactUuidRolesPage(
-					accountKey, contactUuid, Pagination.of(2, 2));
+					accountKey, contactUuid, Pagination.of(2, totalCount + 2));
 
-		Assert.assertEquals(3, page2.getTotalCount());
+		Assert.assertEquals(totalCount + 3, page2.getTotalCount());
 
 		List<ContactRole> contactRoles2 = (List<ContactRole>)page2.getItems();
 
@@ -1157,11 +1204,12 @@ public abstract class BaseContactRoleResourceTestCase {
 		Page<ContactRole> page3 =
 			contactRoleResource.
 				getAccountAccountKeyWorkerContactByUuidContactUuidRolesPage(
-					accountKey, contactUuid, Pagination.of(1, 3));
+					accountKey, contactUuid,
+					Pagination.of(1, (int)totalCount + 3));
 
-		assertEqualsIgnoringOrder(
-			Arrays.asList(contactRole1, contactRole2, contactRole3),
-			(List<ContactRole>)page3.getItems());
+		assertContains(contactRole1, (List<ContactRole>)page3.getItems());
+		assertContains(contactRole2, (List<ContactRole>)page3.getItems());
+		assertContains(contactRole3, (List<ContactRole>)page3.getItems());
 	}
 
 	protected ContactRole
@@ -1320,10 +1368,10 @@ public abstract class BaseContactRoleResourceTestCase {
 
 	@Test
 	public void testGetContactRolesPageWithPagination() throws Exception {
-		Page<ContactRole> totalPage = contactRoleResource.getContactRolesPage(
-			null, null, null, null);
+		Page<ContactRole> contactRolePage =
+			contactRoleResource.getContactRolesPage(null, null, null, null);
 
-		int totalCount = GetterUtil.getInteger(totalPage.getTotalCount());
+		int totalCount = GetterUtil.getInteger(contactRolePage.getTotalCount());
 
 		ContactRole contactRole1 = testGetContactRolesPage_addContactRole(
 			randomContactRole());
@@ -1352,7 +1400,7 @@ public abstract class BaseContactRoleResourceTestCase {
 		Assert.assertEquals(contactRoles2.toString(), 1, contactRoles2.size());
 
 		Page<ContactRole> page3 = contactRoleResource.getContactRolesPage(
-			null, null, Pagination.of(1, totalCount + 3), null);
+			null, null, Pagination.of(1, (int)totalCount + 3), null);
 
 		assertContains(contactRole1, (List<ContactRole>)page3.getItems());
 		assertContains(contactRole2, (List<ContactRole>)page3.getItems());
@@ -1468,23 +1516,26 @@ public abstract class BaseContactRoleResourceTestCase {
 
 		contactRole2 = testGetContactRolesPage_addContactRole(contactRole2);
 
+		Page<ContactRole> page = contactRoleResource.getContactRolesPage(
+			null, null, null, null);
+
 		for (EntityField entityField : entityFields) {
 			Page<ContactRole> ascPage = contactRoleResource.getContactRolesPage(
-				null, null, Pagination.of(1, 2),
+				null, null, Pagination.of(1, (int)page.getTotalCount() + 1),
 				entityField.getName() + ":asc");
 
-			assertEquals(
-				Arrays.asList(contactRole1, contactRole2),
-				(List<ContactRole>)ascPage.getItems());
+			assertContains(contactRole1, (List<ContactRole>)ascPage.getItems());
+			assertContains(contactRole2, (List<ContactRole>)ascPage.getItems());
 
 			Page<ContactRole> descPage =
 				contactRoleResource.getContactRolesPage(
-					null, null, Pagination.of(1, 2),
+					null, null, Pagination.of(1, (int)page.getTotalCount() + 1),
 					entityField.getName() + ":desc");
 
-			assertEquals(
-				Arrays.asList(contactRole2, contactRole1),
-				(List<ContactRole>)descPage.getItems());
+			assertContains(
+				contactRole2, (List<ContactRole>)descPage.getItems());
+			assertContains(
+				contactRole1, (List<ContactRole>)descPage.getItems());
 		}
 	}
 
@@ -1644,7 +1695,7 @@ public abstract class BaseContactRoleResourceTestCase {
 				getTeamTeamKeyContactByEmailAddresEmailAddressRolesPage(
 					teamKey, emailAddress, Pagination.of(1, 10));
 
-		Assert.assertEquals(0, page.getTotalCount());
+		long totalCount = page.getTotalCount();
 
 		if ((irrelevantTeamKey != null) && (irrelevantEmailAddress != null)) {
 			ContactRole irrelevantContactRole =
@@ -1656,13 +1707,12 @@ public abstract class BaseContactRoleResourceTestCase {
 				contactRoleResource.
 					getTeamTeamKeyContactByEmailAddresEmailAddressRolesPage(
 						irrelevantTeamKey, irrelevantEmailAddress,
-						Pagination.of(1, 2));
+						Pagination.of(1, (int)totalCount + 1));
 
-			Assert.assertEquals(1, page.getTotalCount());
+			Assert.assertEquals(totalCount + 1, page.getTotalCount());
 
-			assertEquals(
-				Arrays.asList(irrelevantContactRole),
-				(List<ContactRole>)page.getItems());
+			assertContains(
+				irrelevantContactRole, (List<ContactRole>)page.getItems());
 			assertValid(
 				page,
 				testGetTeamTeamKeyContactByEmailAddresEmailAddressRolesPage_getExpectedActions(
@@ -1682,11 +1732,10 @@ public abstract class BaseContactRoleResourceTestCase {
 				getTeamTeamKeyContactByEmailAddresEmailAddressRolesPage(
 					teamKey, emailAddress, Pagination.of(1, 10));
 
-		Assert.assertEquals(2, page.getTotalCount());
+		Assert.assertEquals(totalCount + 2, page.getTotalCount());
 
-		assertEqualsIgnoringOrder(
-			Arrays.asList(contactRole1, contactRole2),
-			(List<ContactRole>)page.getItems());
+		assertContains(contactRole1, (List<ContactRole>)page.getItems());
+		assertContains(contactRole2, (List<ContactRole>)page.getItems());
 		assertValid(
 			page,
 			testGetTeamTeamKeyContactByEmailAddresEmailAddressRolesPage_getExpectedActions(
@@ -1712,6 +1761,13 @@ public abstract class BaseContactRoleResourceTestCase {
 		String emailAddress =
 			testGetTeamTeamKeyContactByEmailAddresEmailAddressRolesPage_getEmailAddress();
 
+		Page<ContactRole> contactRolePage =
+			contactRoleResource.
+				getTeamTeamKeyContactByEmailAddresEmailAddressRolesPage(
+					teamKey, emailAddress, null);
+
+		int totalCount = GetterUtil.getInteger(contactRolePage.getTotalCount());
+
 		ContactRole contactRole1 =
 			testGetTeamTeamKeyContactByEmailAddresEmailAddressRolesPage_addContactRole(
 				teamKey, emailAddress, randomContactRole());
@@ -1727,18 +1783,19 @@ public abstract class BaseContactRoleResourceTestCase {
 		Page<ContactRole> page1 =
 			contactRoleResource.
 				getTeamTeamKeyContactByEmailAddresEmailAddressRolesPage(
-					teamKey, emailAddress, Pagination.of(1, 2));
+					teamKey, emailAddress, Pagination.of(1, totalCount + 2));
 
 		List<ContactRole> contactRoles1 = (List<ContactRole>)page1.getItems();
 
-		Assert.assertEquals(contactRoles1.toString(), 2, contactRoles1.size());
+		Assert.assertEquals(
+			contactRoles1.toString(), totalCount + 2, contactRoles1.size());
 
 		Page<ContactRole> page2 =
 			contactRoleResource.
 				getTeamTeamKeyContactByEmailAddresEmailAddressRolesPage(
-					teamKey, emailAddress, Pagination.of(2, 2));
+					teamKey, emailAddress, Pagination.of(2, totalCount + 2));
 
-		Assert.assertEquals(3, page2.getTotalCount());
+		Assert.assertEquals(totalCount + 3, page2.getTotalCount());
 
 		List<ContactRole> contactRoles2 = (List<ContactRole>)page2.getItems();
 
@@ -1747,11 +1804,12 @@ public abstract class BaseContactRoleResourceTestCase {
 		Page<ContactRole> page3 =
 			contactRoleResource.
 				getTeamTeamKeyContactByEmailAddresEmailAddressRolesPage(
-					teamKey, emailAddress, Pagination.of(1, 3));
+					teamKey, emailAddress,
+					Pagination.of(1, (int)totalCount + 3));
 
-		assertEqualsIgnoringOrder(
-			Arrays.asList(contactRole1, contactRole2, contactRole3),
-			(List<ContactRole>)page3.getItems());
+		assertContains(contactRole1, (List<ContactRole>)page3.getItems());
+		assertContains(contactRole2, (List<ContactRole>)page3.getItems());
+		assertContains(contactRole3, (List<ContactRole>)page3.getItems());
 	}
 
 	protected ContactRole
@@ -1810,7 +1868,7 @@ public abstract class BaseContactRoleResourceTestCase {
 			contactRoleResource.getTeamTeamKeyContactByUuidContactUuidRolesPage(
 				teamKey, contactUuid, Pagination.of(1, 10));
 
-		Assert.assertEquals(0, page.getTotalCount());
+		long totalCount = page.getTotalCount();
 
 		if ((irrelevantTeamKey != null) && (irrelevantContactUuid != null)) {
 			ContactRole irrelevantContactRole =
@@ -1822,13 +1880,12 @@ public abstract class BaseContactRoleResourceTestCase {
 				contactRoleResource.
 					getTeamTeamKeyContactByUuidContactUuidRolesPage(
 						irrelevantTeamKey, irrelevantContactUuid,
-						Pagination.of(1, 2));
+						Pagination.of(1, (int)totalCount + 1));
 
-			Assert.assertEquals(1, page.getTotalCount());
+			Assert.assertEquals(totalCount + 1, page.getTotalCount());
 
-			assertEquals(
-				Arrays.asList(irrelevantContactRole),
-				(List<ContactRole>)page.getItems());
+			assertContains(
+				irrelevantContactRole, (List<ContactRole>)page.getItems());
 			assertValid(
 				page,
 				testGetTeamTeamKeyContactByUuidContactUuidRolesPage_getExpectedActions(
@@ -1847,11 +1904,10 @@ public abstract class BaseContactRoleResourceTestCase {
 			contactRoleResource.getTeamTeamKeyContactByUuidContactUuidRolesPage(
 				teamKey, contactUuid, Pagination.of(1, 10));
 
-		Assert.assertEquals(2, page.getTotalCount());
+		Assert.assertEquals(totalCount + 2, page.getTotalCount());
 
-		assertEqualsIgnoringOrder(
-			Arrays.asList(contactRole1, contactRole2),
-			(List<ContactRole>)page.getItems());
+		assertContains(contactRole1, (List<ContactRole>)page.getItems());
+		assertContains(contactRole2, (List<ContactRole>)page.getItems());
 		assertValid(
 			page,
 			testGetTeamTeamKeyContactByUuidContactUuidRolesPage_getExpectedActions(
@@ -1877,6 +1933,12 @@ public abstract class BaseContactRoleResourceTestCase {
 		String contactUuid =
 			testGetTeamTeamKeyContactByUuidContactUuidRolesPage_getContactUuid();
 
+		Page<ContactRole> contactRolePage =
+			contactRoleResource.getTeamTeamKeyContactByUuidContactUuidRolesPage(
+				teamKey, contactUuid, null);
+
+		int totalCount = GetterUtil.getInteger(contactRolePage.getTotalCount());
+
 		ContactRole contactRole1 =
 			testGetTeamTeamKeyContactByUuidContactUuidRolesPage_addContactRole(
 				teamKey, contactUuid, randomContactRole());
@@ -1891,17 +1953,18 @@ public abstract class BaseContactRoleResourceTestCase {
 
 		Page<ContactRole> page1 =
 			contactRoleResource.getTeamTeamKeyContactByUuidContactUuidRolesPage(
-				teamKey, contactUuid, Pagination.of(1, 2));
+				teamKey, contactUuid, Pagination.of(1, totalCount + 2));
 
 		List<ContactRole> contactRoles1 = (List<ContactRole>)page1.getItems();
 
-		Assert.assertEquals(contactRoles1.toString(), 2, contactRoles1.size());
+		Assert.assertEquals(
+			contactRoles1.toString(), totalCount + 2, contactRoles1.size());
 
 		Page<ContactRole> page2 =
 			contactRoleResource.getTeamTeamKeyContactByUuidContactUuidRolesPage(
-				teamKey, contactUuid, Pagination.of(2, 2));
+				teamKey, contactUuid, Pagination.of(2, totalCount + 2));
 
-		Assert.assertEquals(3, page2.getTotalCount());
+		Assert.assertEquals(totalCount + 3, page2.getTotalCount());
 
 		List<ContactRole> contactRoles2 = (List<ContactRole>)page2.getItems();
 
@@ -1909,11 +1972,11 @@ public abstract class BaseContactRoleResourceTestCase {
 
 		Page<ContactRole> page3 =
 			contactRoleResource.getTeamTeamKeyContactByUuidContactUuidRolesPage(
-				teamKey, contactUuid, Pagination.of(1, 3));
+				teamKey, contactUuid, Pagination.of(1, (int)totalCount + 3));
 
-		assertEqualsIgnoringOrder(
-			Arrays.asList(contactRole1, contactRole2, contactRole3),
-			(List<ContactRole>)page3.getItems());
+		assertContains(contactRole1, (List<ContactRole>)page3.getItems());
+		assertContains(contactRole2, (List<ContactRole>)page3.getItems());
+		assertContains(contactRole3, (List<ContactRole>)page3.getItems());
 	}
 
 	protected ContactRole

@@ -72,7 +72,12 @@ public class CountryRegionResourceFactoryImpl
 					throw new IllegalArgumentException("User is not set");
 				}
 
-				return _countryRegionResourceProxyProviderFunction.apply(
+				Function<InvocationHandler, CountryRegionResource>
+					countryRegionResourceProxyProviderFunction =
+						ResourceProxyProviderFunctionHolder.
+							_countryRegionResourceProxyProviderFunction;
+
+				return countryRegionResourceProxyProviderFunction.apply(
 					(proxy, method, arguments) -> _invoke(
 						method, arguments, _checkPermissions,
 						_httpServletRequest, _httpServletResponse,
@@ -230,10 +235,6 @@ public class CountryRegionResourceFactoryImpl
 		}
 	}
 
-	private static final Function<InvocationHandler, CountryRegionResource>
-		_countryRegionResourceProxyProviderFunction =
-			_getProxyProviderFunction();
-
 	@Reference
 	private CompanyLocalService _companyLocalService;
 
@@ -269,6 +270,14 @@ public class CountryRegionResourceFactoryImpl
 
 	@Reference
 	private UserLocalService _userLocalService;
+
+	private static class ResourceProxyProviderFunctionHolder {
+
+		private static final Function<InvocationHandler, CountryRegionResource>
+			_countryRegionResourceProxyProviderFunction =
+				_getProxyProviderFunction();
+
+	}
 
 	private class AcceptLanguageImpl implements AcceptLanguage {
 

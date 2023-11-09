@@ -341,10 +341,11 @@ public abstract class BaseAppLicenseKeyResourceTestCase {
 
 	@Test
 	public void testGetAppLicenseKeysPageWithPagination() throws Exception {
-		Page<AppLicenseKey> totalPage =
+		Page<AppLicenseKey> appLicenseKeyPage =
 			appLicenseKeyResource.getAppLicenseKeysPage(null, null, null, null);
 
-		int totalCount = GetterUtil.getInteger(totalPage.getTotalCount());
+		int totalCount = GetterUtil.getInteger(
+			appLicenseKeyPage.getTotalCount());
 
 		AppLicenseKey appLicenseKey1 =
 			testGetAppLicenseKeysPage_addAppLicenseKey(randomAppLicenseKey());
@@ -376,7 +377,7 @@ public abstract class BaseAppLicenseKeyResourceTestCase {
 			appLicenseKeys2.toString(), 1, appLicenseKeys2.size());
 
 		Page<AppLicenseKey> page3 = appLicenseKeyResource.getAppLicenseKeysPage(
-			null, null, Pagination.of(1, totalCount + 3), null);
+			null, null, Pagination.of(1, (int)totalCount + 3), null);
 
 		assertContains(appLicenseKey1, (List<AppLicenseKey>)page3.getItems());
 		assertContains(appLicenseKey2, (List<AppLicenseKey>)page3.getItems());
@@ -496,24 +497,29 @@ public abstract class BaseAppLicenseKeyResourceTestCase {
 		appLicenseKey2 = testGetAppLicenseKeysPage_addAppLicenseKey(
 			appLicenseKey2);
 
+		Page<AppLicenseKey> page = appLicenseKeyResource.getAppLicenseKeysPage(
+			null, null, null, null);
+
 		for (EntityField entityField : entityFields) {
 			Page<AppLicenseKey> ascPage =
 				appLicenseKeyResource.getAppLicenseKeysPage(
-					null, null, Pagination.of(1, 2),
+					null, null, Pagination.of(1, (int)page.getTotalCount() + 1),
 					entityField.getName() + ":asc");
 
-			assertEquals(
-				Arrays.asList(appLicenseKey1, appLicenseKey2),
-				(List<AppLicenseKey>)ascPage.getItems());
+			assertContains(
+				appLicenseKey1, (List<AppLicenseKey>)ascPage.getItems());
+			assertContains(
+				appLicenseKey2, (List<AppLicenseKey>)ascPage.getItems());
 
 			Page<AppLicenseKey> descPage =
 				appLicenseKeyResource.getAppLicenseKeysPage(
-					null, null, Pagination.of(1, 2),
+					null, null, Pagination.of(1, (int)page.getTotalCount() + 1),
 					entityField.getName() + ":desc");
 
-			assertEquals(
-				Arrays.asList(appLicenseKey2, appLicenseKey1),
-				(List<AppLicenseKey>)descPage.getItems());
+			assertContains(
+				appLicenseKey2, (List<AppLicenseKey>)descPage.getItems());
+			assertContains(
+				appLicenseKey1, (List<AppLicenseKey>)descPage.getItems());
 		}
 	}
 

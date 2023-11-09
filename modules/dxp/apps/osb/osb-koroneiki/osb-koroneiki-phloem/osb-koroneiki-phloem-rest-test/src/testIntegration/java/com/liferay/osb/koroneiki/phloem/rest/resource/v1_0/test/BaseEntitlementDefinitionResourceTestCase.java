@@ -243,11 +243,12 @@ public abstract class BaseEntitlementDefinitionResourceTestCase {
 	public void testGetAccountEntitlementDefinitionsPageWithPagination()
 		throws Exception {
 
-		Page<EntitlementDefinition> totalPage =
+		Page<EntitlementDefinition> entitlementDefinitionPage =
 			entitlementDefinitionResource.getAccountEntitlementDefinitionsPage(
 				null, null);
 
-		int totalCount = GetterUtil.getInteger(totalPage.getTotalCount());
+		int totalCount = GetterUtil.getInteger(
+			entitlementDefinitionPage.getTotalCount());
 
 		EntitlementDefinition entitlementDefinition1 =
 			testGetAccountEntitlementDefinitionsPage_addEntitlementDefinition(
@@ -287,7 +288,7 @@ public abstract class BaseEntitlementDefinitionResourceTestCase {
 
 		Page<EntitlementDefinition> page3 =
 			entitlementDefinitionResource.getAccountEntitlementDefinitionsPage(
-				null, Pagination.of(1, totalCount + 3));
+				null, Pagination.of(1, (int)totalCount + 3));
 
 		assertContains(
 			entitlementDefinition1,
@@ -377,11 +378,12 @@ public abstract class BaseEntitlementDefinitionResourceTestCase {
 	public void testGetContactEntitlementDefinitionsPageWithPagination()
 		throws Exception {
 
-		Page<EntitlementDefinition> totalPage =
+		Page<EntitlementDefinition> entitlementDefinitionPage =
 			entitlementDefinitionResource.getContactEntitlementDefinitionsPage(
 				null, null);
 
-		int totalCount = GetterUtil.getInteger(totalPage.getTotalCount());
+		int totalCount = GetterUtil.getInteger(
+			entitlementDefinitionPage.getTotalCount());
 
 		EntitlementDefinition entitlementDefinition1 =
 			testGetContactEntitlementDefinitionsPage_addEntitlementDefinition(
@@ -421,7 +423,7 @@ public abstract class BaseEntitlementDefinitionResourceTestCase {
 
 		Page<EntitlementDefinition> page3 =
 			entitlementDefinitionResource.getContactEntitlementDefinitionsPage(
-				null, Pagination.of(1, totalCount + 3));
+				null, Pagination.of(1, (int)totalCount + 3));
 
 		assertContains(
 			entitlementDefinition1,

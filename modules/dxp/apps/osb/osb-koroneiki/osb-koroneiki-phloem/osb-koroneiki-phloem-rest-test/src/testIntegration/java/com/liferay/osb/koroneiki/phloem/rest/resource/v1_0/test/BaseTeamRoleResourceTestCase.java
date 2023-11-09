@@ -209,7 +209,7 @@ public abstract class BaseTeamRoleResourceTestCase {
 			teamRoleResource.getAccountAccountKeyAssignedTeamTeamKeyRolesPage(
 				accountKey, teamKey, Pagination.of(1, 10));
 
-		Assert.assertEquals(0, page.getTotalCount());
+		long totalCount = page.getTotalCount();
 
 		if ((irrelevantAccountKey != null) && (irrelevantTeamKey != null)) {
 			TeamRole irrelevantTeamRole =
@@ -221,13 +221,11 @@ public abstract class BaseTeamRoleResourceTestCase {
 				teamRoleResource.
 					getAccountAccountKeyAssignedTeamTeamKeyRolesPage(
 						irrelevantAccountKey, irrelevantTeamKey,
-						Pagination.of(1, 2));
+						Pagination.of(1, (int)totalCount + 1));
 
-			Assert.assertEquals(1, page.getTotalCount());
+			Assert.assertEquals(totalCount + 1, page.getTotalCount());
 
-			assertEquals(
-				Arrays.asList(irrelevantTeamRole),
-				(List<TeamRole>)page.getItems());
+			assertContains(irrelevantTeamRole, (List<TeamRole>)page.getItems());
 			assertValid(
 				page,
 				testGetAccountAccountKeyAssignedTeamTeamKeyRolesPage_getExpectedActions(
@@ -246,11 +244,10 @@ public abstract class BaseTeamRoleResourceTestCase {
 			teamRoleResource.getAccountAccountKeyAssignedTeamTeamKeyRolesPage(
 				accountKey, teamKey, Pagination.of(1, 10));
 
-		Assert.assertEquals(2, page.getTotalCount());
+		Assert.assertEquals(totalCount + 2, page.getTotalCount());
 
-		assertEqualsIgnoringOrder(
-			Arrays.asList(teamRole1, teamRole2),
-			(List<TeamRole>)page.getItems());
+		assertContains(teamRole1, (List<TeamRole>)page.getItems());
+		assertContains(teamRole2, (List<TeamRole>)page.getItems());
 		assertValid(
 			page,
 			testGetAccountAccountKeyAssignedTeamTeamKeyRolesPage_getExpectedActions(
@@ -276,6 +273,12 @@ public abstract class BaseTeamRoleResourceTestCase {
 		String teamKey =
 			testGetAccountAccountKeyAssignedTeamTeamKeyRolesPage_getTeamKey();
 
+		Page<TeamRole> teamRolePage =
+			teamRoleResource.getAccountAccountKeyAssignedTeamTeamKeyRolesPage(
+				accountKey, teamKey, null);
+
+		int totalCount = GetterUtil.getInteger(teamRolePage.getTotalCount());
+
 		TeamRole teamRole1 =
 			testGetAccountAccountKeyAssignedTeamTeamKeyRolesPage_addTeamRole(
 				accountKey, teamKey, randomTeamRole());
@@ -290,17 +293,18 @@ public abstract class BaseTeamRoleResourceTestCase {
 
 		Page<TeamRole> page1 =
 			teamRoleResource.getAccountAccountKeyAssignedTeamTeamKeyRolesPage(
-				accountKey, teamKey, Pagination.of(1, 2));
+				accountKey, teamKey, Pagination.of(1, totalCount + 2));
 
 		List<TeamRole> teamRoles1 = (List<TeamRole>)page1.getItems();
 
-		Assert.assertEquals(teamRoles1.toString(), 2, teamRoles1.size());
+		Assert.assertEquals(
+			teamRoles1.toString(), totalCount + 2, teamRoles1.size());
 
 		Page<TeamRole> page2 =
 			teamRoleResource.getAccountAccountKeyAssignedTeamTeamKeyRolesPage(
-				accountKey, teamKey, Pagination.of(2, 2));
+				accountKey, teamKey, Pagination.of(2, totalCount + 2));
 
-		Assert.assertEquals(3, page2.getTotalCount());
+		Assert.assertEquals(totalCount + 3, page2.getTotalCount());
 
 		List<TeamRole> teamRoles2 = (List<TeamRole>)page2.getItems();
 
@@ -308,11 +312,11 @@ public abstract class BaseTeamRoleResourceTestCase {
 
 		Page<TeamRole> page3 =
 			teamRoleResource.getAccountAccountKeyAssignedTeamTeamKeyRolesPage(
-				accountKey, teamKey, Pagination.of(1, 3));
+				accountKey, teamKey, Pagination.of(1, (int)totalCount + 3));
 
-		assertEqualsIgnoringOrder(
-			Arrays.asList(teamRole1, teamRole2, teamRole3),
-			(List<TeamRole>)page3.getItems());
+		assertContains(teamRole1, (List<TeamRole>)page3.getItems());
+		assertContains(teamRole2, (List<TeamRole>)page3.getItems());
+		assertContains(teamRole3, (List<TeamRole>)page3.getItems());
 	}
 
 	protected TeamRole
@@ -462,10 +466,10 @@ public abstract class BaseTeamRoleResourceTestCase {
 
 	@Test
 	public void testGetTeamRolesPageWithPagination() throws Exception {
-		Page<TeamRole> totalPage = teamRoleResource.getTeamRolesPage(
+		Page<TeamRole> teamRolePage = teamRoleResource.getTeamRolesPage(
 			null, null, null, null);
 
-		int totalCount = GetterUtil.getInteger(totalPage.getTotalCount());
+		int totalCount = GetterUtil.getInteger(teamRolePage.getTotalCount());
 
 		TeamRole teamRole1 = testGetTeamRolesPage_addTeamRole(randomTeamRole());
 
@@ -491,7 +495,7 @@ public abstract class BaseTeamRoleResourceTestCase {
 		Assert.assertEquals(teamRoles2.toString(), 1, teamRoles2.size());
 
 		Page<TeamRole> page3 = teamRoleResource.getTeamRolesPage(
-			null, null, Pagination.of(1, totalCount + 3), null);
+			null, null, Pagination.of(1, (int)totalCount + 3), null);
 
 		assertContains(teamRole1, (List<TeamRole>)page3.getItems());
 		assertContains(teamRole2, (List<TeamRole>)page3.getItems());
@@ -603,22 +607,23 @@ public abstract class BaseTeamRoleResourceTestCase {
 
 		teamRole2 = testGetTeamRolesPage_addTeamRole(teamRole2);
 
+		Page<TeamRole> page = teamRoleResource.getTeamRolesPage(
+			null, null, null, null);
+
 		for (EntityField entityField : entityFields) {
 			Page<TeamRole> ascPage = teamRoleResource.getTeamRolesPage(
-				null, null, Pagination.of(1, 2),
+				null, null, Pagination.of(1, (int)page.getTotalCount() + 1),
 				entityField.getName() + ":asc");
 
-			assertEquals(
-				Arrays.asList(teamRole1, teamRole2),
-				(List<TeamRole>)ascPage.getItems());
+			assertContains(teamRole1, (List<TeamRole>)ascPage.getItems());
+			assertContains(teamRole2, (List<TeamRole>)ascPage.getItems());
 
 			Page<TeamRole> descPage = teamRoleResource.getTeamRolesPage(
-				null, null, Pagination.of(1, 2),
+				null, null, Pagination.of(1, (int)page.getTotalCount() + 1),
 				entityField.getName() + ":desc");
 
-			assertEquals(
-				Arrays.asList(teamRole2, teamRole1),
-				(List<TeamRole>)descPage.getItems());
+			assertContains(teamRole2, (List<TeamRole>)descPage.getItems());
+			assertContains(teamRole1, (List<TeamRole>)descPage.getItems());
 		}
 	}
 

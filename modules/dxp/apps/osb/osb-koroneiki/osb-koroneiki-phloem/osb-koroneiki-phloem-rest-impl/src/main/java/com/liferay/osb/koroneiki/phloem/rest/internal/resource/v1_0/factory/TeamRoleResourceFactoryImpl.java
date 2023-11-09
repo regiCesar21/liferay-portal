@@ -71,7 +71,12 @@ public class TeamRoleResourceFactoryImpl implements TeamRoleResource.Factory {
 					throw new IllegalArgumentException("User is not set");
 				}
 
-				return _teamRoleResourceProxyProviderFunction.apply(
+				Function<InvocationHandler, TeamRoleResource>
+					teamRoleResourceProxyProviderFunction =
+						ResourceProxyProviderFunctionHolder.
+							_teamRoleResourceProxyProviderFunction;
+
+				return teamRoleResourceProxyProviderFunction.apply(
 					(proxy, method, arguments) -> _invoke(
 						method, arguments, _checkPermissions,
 						_httpServletRequest, _httpServletResponse,
@@ -227,9 +232,6 @@ public class TeamRoleResourceFactoryImpl implements TeamRoleResource.Factory {
 		}
 	}
 
-	private static final Function<InvocationHandler, TeamRoleResource>
-		_teamRoleResourceProxyProviderFunction = _getProxyProviderFunction();
-
 	@Reference
 	private CompanyLocalService _companyLocalService;
 
@@ -264,6 +266,14 @@ public class TeamRoleResourceFactoryImpl implements TeamRoleResource.Factory {
 
 	@Reference
 	private UserLocalService _userLocalService;
+
+	private static class ResourceProxyProviderFunctionHolder {
+
+		private static final Function<InvocationHandler, TeamRoleResource>
+			_teamRoleResourceProxyProviderFunction =
+				_getProxyProviderFunction();
+
+	}
 
 	private class AcceptLanguageImpl implements AcceptLanguage {
 

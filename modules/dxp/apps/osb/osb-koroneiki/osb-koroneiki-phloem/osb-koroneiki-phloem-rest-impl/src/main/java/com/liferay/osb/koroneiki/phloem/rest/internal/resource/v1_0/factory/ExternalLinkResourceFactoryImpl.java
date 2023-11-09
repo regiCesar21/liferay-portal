@@ -72,7 +72,12 @@ public class ExternalLinkResourceFactoryImpl
 					throw new IllegalArgumentException("User is not set");
 				}
 
-				return _externalLinkResourceProxyProviderFunction.apply(
+				Function<InvocationHandler, ExternalLinkResource>
+					externalLinkResourceProxyProviderFunction =
+						ResourceProxyProviderFunctionHolder.
+							_externalLinkResourceProxyProviderFunction;
+
+				return externalLinkResourceProxyProviderFunction.apply(
 					(proxy, method, arguments) -> _invoke(
 						method, arguments, _checkPermissions,
 						_httpServletRequest, _httpServletResponse,
@@ -229,10 +234,6 @@ public class ExternalLinkResourceFactoryImpl
 		}
 	}
 
-	private static final Function<InvocationHandler, ExternalLinkResource>
-		_externalLinkResourceProxyProviderFunction =
-			_getProxyProviderFunction();
-
 	@Reference
 	private CompanyLocalService _companyLocalService;
 
@@ -268,6 +269,14 @@ public class ExternalLinkResourceFactoryImpl
 
 	@Reference
 	private UserLocalService _userLocalService;
+
+	private static class ResourceProxyProviderFunctionHolder {
+
+		private static final Function<InvocationHandler, ExternalLinkResource>
+			_externalLinkResourceProxyProviderFunction =
+				_getProxyProviderFunction();
+
+	}
 
 	private class AcceptLanguageImpl implements AcceptLanguage {
 

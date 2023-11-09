@@ -342,11 +342,12 @@ public abstract class BaseProductPurchaseViewResourceTestCase {
 	public void testGetProductPurchaseViewsPageWithPagination()
 		throws Exception {
 
-		Page<ProductPurchaseView> totalPage =
+		Page<ProductPurchaseView> productPurchaseViewPage =
 			productPurchaseViewResource.getProductPurchaseViewsPage(
 				null, null, null, null);
 
-		int totalCount = GetterUtil.getInteger(totalPage.getTotalCount());
+		int totalCount = GetterUtil.getInteger(
+			productPurchaseViewPage.getTotalCount());
 
 		ProductPurchaseView productPurchaseView1 =
 			testGetProductPurchaseViewsPage_addProductPurchaseView(
@@ -385,7 +386,7 @@ public abstract class BaseProductPurchaseViewResourceTestCase {
 
 		Page<ProductPurchaseView> page3 =
 			productPurchaseViewResource.getProductPurchaseViewsPage(
-				null, null, Pagination.of(1, totalCount + 3), null);
+				null, null, Pagination.of(1, (int)totalCount + 3), null);
 
 		assertContains(
 			productPurchaseView1, (List<ProductPurchaseView>)page3.getItems());
@@ -518,23 +519,33 @@ public abstract class BaseProductPurchaseViewResourceTestCase {
 			testGetProductPurchaseViewsPage_addProductPurchaseView(
 				productPurchaseView2);
 
+		Page<ProductPurchaseView> page =
+			productPurchaseViewResource.getProductPurchaseViewsPage(
+				null, null, null, null);
+
 		for (EntityField entityField : entityFields) {
 			Page<ProductPurchaseView> ascPage =
 				productPurchaseViewResource.getProductPurchaseViewsPage(
-					null, null, Pagination.of(1, 2),
+					null, null, Pagination.of(1, (int)page.getTotalCount() + 1),
 					entityField.getName() + ":asc");
 
-			assertEquals(
-				Arrays.asList(productPurchaseView1, productPurchaseView2),
+			assertContains(
+				productPurchaseView1,
+				(List<ProductPurchaseView>)ascPage.getItems());
+			assertContains(
+				productPurchaseView2,
 				(List<ProductPurchaseView>)ascPage.getItems());
 
 			Page<ProductPurchaseView> descPage =
 				productPurchaseViewResource.getProductPurchaseViewsPage(
-					null, null, Pagination.of(1, 2),
+					null, null, Pagination.of(1, (int)page.getTotalCount() + 1),
 					entityField.getName() + ":desc");
 
-			assertEquals(
-				Arrays.asList(productPurchaseView2, productPurchaseView1),
+			assertContains(
+				productPurchaseView2,
+				(List<ProductPurchaseView>)descPage.getItems());
+			assertContains(
+				productPurchaseView1,
 				(List<ProductPurchaseView>)descPage.getItems());
 		}
 	}

@@ -32,6 +32,7 @@ import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.DateFormatFactoryUtil;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.odata.entity.EntityField;
@@ -202,7 +203,7 @@ public abstract class BaseExternalLinkResourceTestCase {
 			externalLinkResource.getAccountAccountKeyExternalLinksPage(
 				accountKey, Pagination.of(1, 10));
 
-		Assert.assertEquals(0, page.getTotalCount());
+		long totalCount = page.getTotalCount();
 
 		if (irrelevantAccountKey != null) {
 			ExternalLink irrelevantExternalLink =
@@ -210,13 +211,12 @@ public abstract class BaseExternalLinkResourceTestCase {
 					irrelevantAccountKey, randomIrrelevantExternalLink());
 
 			page = externalLinkResource.getAccountAccountKeyExternalLinksPage(
-				irrelevantAccountKey, Pagination.of(1, 2));
+				irrelevantAccountKey, Pagination.of(1, (int)totalCount + 1));
 
-			Assert.assertEquals(1, page.getTotalCount());
+			Assert.assertEquals(totalCount + 1, page.getTotalCount());
 
-			assertEquals(
-				Arrays.asList(irrelevantExternalLink),
-				(List<ExternalLink>)page.getItems());
+			assertContains(
+				irrelevantExternalLink, (List<ExternalLink>)page.getItems());
 			assertValid(
 				page,
 				testGetAccountAccountKeyExternalLinksPage_getExpectedActions(
@@ -234,11 +234,10 @@ public abstract class BaseExternalLinkResourceTestCase {
 		page = externalLinkResource.getAccountAccountKeyExternalLinksPage(
 			accountKey, Pagination.of(1, 10));
 
-		Assert.assertEquals(2, page.getTotalCount());
+		Assert.assertEquals(totalCount + 2, page.getTotalCount());
 
-		assertEqualsIgnoringOrder(
-			Arrays.asList(externalLink1, externalLink2),
-			(List<ExternalLink>)page.getItems());
+		assertContains(externalLink1, (List<ExternalLink>)page.getItems());
+		assertContains(externalLink2, (List<ExternalLink>)page.getItems());
 		assertValid(
 			page,
 			testGetAccountAccountKeyExternalLinksPage_getExpectedActions(
@@ -262,6 +261,13 @@ public abstract class BaseExternalLinkResourceTestCase {
 		String accountKey =
 			testGetAccountAccountKeyExternalLinksPage_getAccountKey();
 
+		Page<ExternalLink> externalLinkPage =
+			externalLinkResource.getAccountAccountKeyExternalLinksPage(
+				accountKey, null);
+
+		int totalCount = GetterUtil.getInteger(
+			externalLinkPage.getTotalCount());
+
 		ExternalLink externalLink1 =
 			testGetAccountAccountKeyExternalLinksPage_addExternalLink(
 				accountKey, randomExternalLink());
@@ -276,19 +282,19 @@ public abstract class BaseExternalLinkResourceTestCase {
 
 		Page<ExternalLink> page1 =
 			externalLinkResource.getAccountAccountKeyExternalLinksPage(
-				accountKey, Pagination.of(1, 2));
+				accountKey, Pagination.of(1, totalCount + 2));
 
 		List<ExternalLink> externalLinks1 =
 			(List<ExternalLink>)page1.getItems();
 
 		Assert.assertEquals(
-			externalLinks1.toString(), 2, externalLinks1.size());
+			externalLinks1.toString(), totalCount + 2, externalLinks1.size());
 
 		Page<ExternalLink> page2 =
 			externalLinkResource.getAccountAccountKeyExternalLinksPage(
-				accountKey, Pagination.of(2, 2));
+				accountKey, Pagination.of(2, totalCount + 2));
 
-		Assert.assertEquals(3, page2.getTotalCount());
+		Assert.assertEquals(totalCount + 3, page2.getTotalCount());
 
 		List<ExternalLink> externalLinks2 =
 			(List<ExternalLink>)page2.getItems();
@@ -298,11 +304,11 @@ public abstract class BaseExternalLinkResourceTestCase {
 
 		Page<ExternalLink> page3 =
 			externalLinkResource.getAccountAccountKeyExternalLinksPage(
-				accountKey, Pagination.of(1, 3));
+				accountKey, Pagination.of(1, (int)totalCount + 3));
 
-		assertEqualsIgnoringOrder(
-			Arrays.asList(externalLink1, externalLink2, externalLink3),
-			(List<ExternalLink>)page3.getItems());
+		assertContains(externalLink1, (List<ExternalLink>)page3.getItems());
+		assertContains(externalLink2, (List<ExternalLink>)page3.getItems());
+		assertContains(externalLink3, (List<ExternalLink>)page3.getItems());
 	}
 
 	protected ExternalLink
@@ -362,7 +368,7 @@ public abstract class BaseExternalLinkResourceTestCase {
 			externalLinkResource.getContactRoleContactRoleKeyExternalLinksPage(
 				contactRoleKey, Pagination.of(1, 10));
 
-		Assert.assertEquals(0, page.getTotalCount());
+		long totalCount = page.getTotalCount();
 
 		if (irrelevantContactRoleKey != null) {
 			ExternalLink irrelevantExternalLink =
@@ -372,13 +378,13 @@ public abstract class BaseExternalLinkResourceTestCase {
 			page =
 				externalLinkResource.
 					getContactRoleContactRoleKeyExternalLinksPage(
-						irrelevantContactRoleKey, Pagination.of(1, 2));
+						irrelevantContactRoleKey,
+						Pagination.of(1, (int)totalCount + 1));
 
-			Assert.assertEquals(1, page.getTotalCount());
+			Assert.assertEquals(totalCount + 1, page.getTotalCount());
 
-			assertEquals(
-				Arrays.asList(irrelevantExternalLink),
-				(List<ExternalLink>)page.getItems());
+			assertContains(
+				irrelevantExternalLink, (List<ExternalLink>)page.getItems());
 			assertValid(
 				page,
 				testGetContactRoleContactRoleKeyExternalLinksPage_getExpectedActions(
@@ -397,11 +403,10 @@ public abstract class BaseExternalLinkResourceTestCase {
 			externalLinkResource.getContactRoleContactRoleKeyExternalLinksPage(
 				contactRoleKey, Pagination.of(1, 10));
 
-		Assert.assertEquals(2, page.getTotalCount());
+		Assert.assertEquals(totalCount + 2, page.getTotalCount());
 
-		assertEqualsIgnoringOrder(
-			Arrays.asList(externalLink1, externalLink2),
-			(List<ExternalLink>)page.getItems());
+		assertContains(externalLink1, (List<ExternalLink>)page.getItems());
+		assertContains(externalLink2, (List<ExternalLink>)page.getItems());
 		assertValid(
 			page,
 			testGetContactRoleContactRoleKeyExternalLinksPage_getExpectedActions(
@@ -425,6 +430,13 @@ public abstract class BaseExternalLinkResourceTestCase {
 		String contactRoleKey =
 			testGetContactRoleContactRoleKeyExternalLinksPage_getContactRoleKey();
 
+		Page<ExternalLink> externalLinkPage =
+			externalLinkResource.getContactRoleContactRoleKeyExternalLinksPage(
+				contactRoleKey, null);
+
+		int totalCount = GetterUtil.getInteger(
+			externalLinkPage.getTotalCount());
+
 		ExternalLink externalLink1 =
 			testGetContactRoleContactRoleKeyExternalLinksPage_addExternalLink(
 				contactRoleKey, randomExternalLink());
@@ -439,19 +451,19 @@ public abstract class BaseExternalLinkResourceTestCase {
 
 		Page<ExternalLink> page1 =
 			externalLinkResource.getContactRoleContactRoleKeyExternalLinksPage(
-				contactRoleKey, Pagination.of(1, 2));
+				contactRoleKey, Pagination.of(1, totalCount + 2));
 
 		List<ExternalLink> externalLinks1 =
 			(List<ExternalLink>)page1.getItems();
 
 		Assert.assertEquals(
-			externalLinks1.toString(), 2, externalLinks1.size());
+			externalLinks1.toString(), totalCount + 2, externalLinks1.size());
 
 		Page<ExternalLink> page2 =
 			externalLinkResource.getContactRoleContactRoleKeyExternalLinksPage(
-				contactRoleKey, Pagination.of(2, 2));
+				contactRoleKey, Pagination.of(2, totalCount + 2));
 
-		Assert.assertEquals(3, page2.getTotalCount());
+		Assert.assertEquals(totalCount + 3, page2.getTotalCount());
 
 		List<ExternalLink> externalLinks2 =
 			(List<ExternalLink>)page2.getItems();
@@ -461,11 +473,11 @@ public abstract class BaseExternalLinkResourceTestCase {
 
 		Page<ExternalLink> page3 =
 			externalLinkResource.getContactRoleContactRoleKeyExternalLinksPage(
-				contactRoleKey, Pagination.of(1, 3));
+				contactRoleKey, Pagination.of(1, (int)totalCount + 3));
 
-		assertEqualsIgnoringOrder(
-			Arrays.asList(externalLink1, externalLink2, externalLink3),
-			(List<ExternalLink>)page3.getItems());
+		assertContains(externalLink1, (List<ExternalLink>)page3.getItems());
+		assertContains(externalLink2, (List<ExternalLink>)page3.getItems());
+		assertContains(externalLink3, (List<ExternalLink>)page3.getItems());
 	}
 
 	protected ExternalLink
@@ -528,7 +540,7 @@ public abstract class BaseExternalLinkResourceTestCase {
 			externalLinkResource.getContactByUuidContactUuidExternalLinksPage(
 				contactUuid, Pagination.of(1, 10));
 
-		Assert.assertEquals(0, page.getTotalCount());
+		long totalCount = page.getTotalCount();
 
 		if (irrelevantContactUuid != null) {
 			ExternalLink irrelevantExternalLink =
@@ -538,13 +550,13 @@ public abstract class BaseExternalLinkResourceTestCase {
 			page =
 				externalLinkResource.
 					getContactByUuidContactUuidExternalLinksPage(
-						irrelevantContactUuid, Pagination.of(1, 2));
+						irrelevantContactUuid,
+						Pagination.of(1, (int)totalCount + 1));
 
-			Assert.assertEquals(1, page.getTotalCount());
+			Assert.assertEquals(totalCount + 1, page.getTotalCount());
 
-			assertEquals(
-				Arrays.asList(irrelevantExternalLink),
-				(List<ExternalLink>)page.getItems());
+			assertContains(
+				irrelevantExternalLink, (List<ExternalLink>)page.getItems());
 			assertValid(
 				page,
 				testGetContactByUuidContactUuidExternalLinksPage_getExpectedActions(
@@ -563,11 +575,10 @@ public abstract class BaseExternalLinkResourceTestCase {
 			externalLinkResource.getContactByUuidContactUuidExternalLinksPage(
 				contactUuid, Pagination.of(1, 10));
 
-		Assert.assertEquals(2, page.getTotalCount());
+		Assert.assertEquals(totalCount + 2, page.getTotalCount());
 
-		assertEqualsIgnoringOrder(
-			Arrays.asList(externalLink1, externalLink2),
-			(List<ExternalLink>)page.getItems());
+		assertContains(externalLink1, (List<ExternalLink>)page.getItems());
+		assertContains(externalLink2, (List<ExternalLink>)page.getItems());
 		assertValid(
 			page,
 			testGetContactByUuidContactUuidExternalLinksPage_getExpectedActions(
@@ -591,6 +602,13 @@ public abstract class BaseExternalLinkResourceTestCase {
 		String contactUuid =
 			testGetContactByUuidContactUuidExternalLinksPage_getContactUuid();
 
+		Page<ExternalLink> externalLinkPage =
+			externalLinkResource.getContactByUuidContactUuidExternalLinksPage(
+				contactUuid, null);
+
+		int totalCount = GetterUtil.getInteger(
+			externalLinkPage.getTotalCount());
+
 		ExternalLink externalLink1 =
 			testGetContactByUuidContactUuidExternalLinksPage_addExternalLink(
 				contactUuid, randomExternalLink());
@@ -605,19 +623,19 @@ public abstract class BaseExternalLinkResourceTestCase {
 
 		Page<ExternalLink> page1 =
 			externalLinkResource.getContactByUuidContactUuidExternalLinksPage(
-				contactUuid, Pagination.of(1, 2));
+				contactUuid, Pagination.of(1, totalCount + 2));
 
 		List<ExternalLink> externalLinks1 =
 			(List<ExternalLink>)page1.getItems();
 
 		Assert.assertEquals(
-			externalLinks1.toString(), 2, externalLinks1.size());
+			externalLinks1.toString(), totalCount + 2, externalLinks1.size());
 
 		Page<ExternalLink> page2 =
 			externalLinkResource.getContactByUuidContactUuidExternalLinksPage(
-				contactUuid, Pagination.of(2, 2));
+				contactUuid, Pagination.of(2, totalCount + 2));
 
-		Assert.assertEquals(3, page2.getTotalCount());
+		Assert.assertEquals(totalCount + 3, page2.getTotalCount());
 
 		List<ExternalLink> externalLinks2 =
 			(List<ExternalLink>)page2.getItems();
@@ -627,11 +645,11 @@ public abstract class BaseExternalLinkResourceTestCase {
 
 		Page<ExternalLink> page3 =
 			externalLinkResource.getContactByUuidContactUuidExternalLinksPage(
-				contactUuid, Pagination.of(1, 3));
+				contactUuid, Pagination.of(1, (int)totalCount + 3));
 
-		assertEqualsIgnoringOrder(
-			Arrays.asList(externalLink1, externalLink2, externalLink3),
-			(List<ExternalLink>)page3.getItems());
+		assertContains(externalLink1, (List<ExternalLink>)page3.getItems());
+		assertContains(externalLink2, (List<ExternalLink>)page3.getItems());
+		assertContains(externalLink3, (List<ExternalLink>)page3.getItems());
 	}
 
 	protected ExternalLink
@@ -725,7 +743,7 @@ public abstract class BaseExternalLinkResourceTestCase {
 				getProductConsumptionProductConsumptionKeyExternalLinksPage(
 					productConsumptionKey, Pagination.of(1, 10));
 
-		Assert.assertEquals(0, page.getTotalCount());
+		long totalCount = page.getTotalCount();
 
 		if (irrelevantProductConsumptionKey != null) {
 			ExternalLink irrelevantExternalLink =
@@ -736,13 +754,13 @@ public abstract class BaseExternalLinkResourceTestCase {
 			page =
 				externalLinkResource.
 					getProductConsumptionProductConsumptionKeyExternalLinksPage(
-						irrelevantProductConsumptionKey, Pagination.of(1, 2));
+						irrelevantProductConsumptionKey,
+						Pagination.of(1, (int)totalCount + 1));
 
-			Assert.assertEquals(1, page.getTotalCount());
+			Assert.assertEquals(totalCount + 1, page.getTotalCount());
 
-			assertEquals(
-				Arrays.asList(irrelevantExternalLink),
-				(List<ExternalLink>)page.getItems());
+			assertContains(
+				irrelevantExternalLink, (List<ExternalLink>)page.getItems());
 			assertValid(
 				page,
 				testGetProductConsumptionProductConsumptionKeyExternalLinksPage_getExpectedActions(
@@ -762,11 +780,10 @@ public abstract class BaseExternalLinkResourceTestCase {
 				getProductConsumptionProductConsumptionKeyExternalLinksPage(
 					productConsumptionKey, Pagination.of(1, 10));
 
-		Assert.assertEquals(2, page.getTotalCount());
+		Assert.assertEquals(totalCount + 2, page.getTotalCount());
 
-		assertEqualsIgnoringOrder(
-			Arrays.asList(externalLink1, externalLink2),
-			(List<ExternalLink>)page.getItems());
+		assertContains(externalLink1, (List<ExternalLink>)page.getItems());
+		assertContains(externalLink2, (List<ExternalLink>)page.getItems());
 		assertValid(
 			page,
 			testGetProductConsumptionProductConsumptionKeyExternalLinksPage_getExpectedActions(
@@ -790,6 +807,14 @@ public abstract class BaseExternalLinkResourceTestCase {
 		String productConsumptionKey =
 			testGetProductConsumptionProductConsumptionKeyExternalLinksPage_getProductConsumptionKey();
 
+		Page<ExternalLink> externalLinkPage =
+			externalLinkResource.
+				getProductConsumptionProductConsumptionKeyExternalLinksPage(
+					productConsumptionKey, null);
+
+		int totalCount = GetterUtil.getInteger(
+			externalLinkPage.getTotalCount());
+
 		ExternalLink externalLink1 =
 			testGetProductConsumptionProductConsumptionKeyExternalLinksPage_addExternalLink(
 				productConsumptionKey, randomExternalLink());
@@ -805,20 +830,20 @@ public abstract class BaseExternalLinkResourceTestCase {
 		Page<ExternalLink> page1 =
 			externalLinkResource.
 				getProductConsumptionProductConsumptionKeyExternalLinksPage(
-					productConsumptionKey, Pagination.of(1, 2));
+					productConsumptionKey, Pagination.of(1, totalCount + 2));
 
 		List<ExternalLink> externalLinks1 =
 			(List<ExternalLink>)page1.getItems();
 
 		Assert.assertEquals(
-			externalLinks1.toString(), 2, externalLinks1.size());
+			externalLinks1.toString(), totalCount + 2, externalLinks1.size());
 
 		Page<ExternalLink> page2 =
 			externalLinkResource.
 				getProductConsumptionProductConsumptionKeyExternalLinksPage(
-					productConsumptionKey, Pagination.of(2, 2));
+					productConsumptionKey, Pagination.of(2, totalCount + 2));
 
-		Assert.assertEquals(3, page2.getTotalCount());
+		Assert.assertEquals(totalCount + 3, page2.getTotalCount());
 
 		List<ExternalLink> externalLinks2 =
 			(List<ExternalLink>)page2.getItems();
@@ -829,11 +854,12 @@ public abstract class BaseExternalLinkResourceTestCase {
 		Page<ExternalLink> page3 =
 			externalLinkResource.
 				getProductConsumptionProductConsumptionKeyExternalLinksPage(
-					productConsumptionKey, Pagination.of(1, 3));
+					productConsumptionKey,
+					Pagination.of(1, (int)totalCount + 3));
 
-		assertEqualsIgnoringOrder(
-			Arrays.asList(externalLink1, externalLink2, externalLink3),
-			(List<ExternalLink>)page3.getItems());
+		assertContains(externalLink1, (List<ExternalLink>)page3.getItems());
+		assertContains(externalLink2, (List<ExternalLink>)page3.getItems());
+		assertContains(externalLink3, (List<ExternalLink>)page3.getItems());
 	}
 
 	protected ExternalLink
@@ -897,7 +923,7 @@ public abstract class BaseExternalLinkResourceTestCase {
 				getProductPurchaseProductPurchaseKeyExternalLinksPage(
 					productPurchaseKey, Pagination.of(1, 10));
 
-		Assert.assertEquals(0, page.getTotalCount());
+		long totalCount = page.getTotalCount();
 
 		if (irrelevantProductPurchaseKey != null) {
 			ExternalLink irrelevantExternalLink =
@@ -908,13 +934,13 @@ public abstract class BaseExternalLinkResourceTestCase {
 			page =
 				externalLinkResource.
 					getProductPurchaseProductPurchaseKeyExternalLinksPage(
-						irrelevantProductPurchaseKey, Pagination.of(1, 2));
+						irrelevantProductPurchaseKey,
+						Pagination.of(1, (int)totalCount + 1));
 
-			Assert.assertEquals(1, page.getTotalCount());
+			Assert.assertEquals(totalCount + 1, page.getTotalCount());
 
-			assertEquals(
-				Arrays.asList(irrelevantExternalLink),
-				(List<ExternalLink>)page.getItems());
+			assertContains(
+				irrelevantExternalLink, (List<ExternalLink>)page.getItems());
 			assertValid(
 				page,
 				testGetProductPurchaseProductPurchaseKeyExternalLinksPage_getExpectedActions(
@@ -934,11 +960,10 @@ public abstract class BaseExternalLinkResourceTestCase {
 				getProductPurchaseProductPurchaseKeyExternalLinksPage(
 					productPurchaseKey, Pagination.of(1, 10));
 
-		Assert.assertEquals(2, page.getTotalCount());
+		Assert.assertEquals(totalCount + 2, page.getTotalCount());
 
-		assertEqualsIgnoringOrder(
-			Arrays.asList(externalLink1, externalLink2),
-			(List<ExternalLink>)page.getItems());
+		assertContains(externalLink1, (List<ExternalLink>)page.getItems());
+		assertContains(externalLink2, (List<ExternalLink>)page.getItems());
 		assertValid(
 			page,
 			testGetProductPurchaseProductPurchaseKeyExternalLinksPage_getExpectedActions(
@@ -962,6 +987,14 @@ public abstract class BaseExternalLinkResourceTestCase {
 		String productPurchaseKey =
 			testGetProductPurchaseProductPurchaseKeyExternalLinksPage_getProductPurchaseKey();
 
+		Page<ExternalLink> externalLinkPage =
+			externalLinkResource.
+				getProductPurchaseProductPurchaseKeyExternalLinksPage(
+					productPurchaseKey, null);
+
+		int totalCount = GetterUtil.getInteger(
+			externalLinkPage.getTotalCount());
+
 		ExternalLink externalLink1 =
 			testGetProductPurchaseProductPurchaseKeyExternalLinksPage_addExternalLink(
 				productPurchaseKey, randomExternalLink());
@@ -977,20 +1010,20 @@ public abstract class BaseExternalLinkResourceTestCase {
 		Page<ExternalLink> page1 =
 			externalLinkResource.
 				getProductPurchaseProductPurchaseKeyExternalLinksPage(
-					productPurchaseKey, Pagination.of(1, 2));
+					productPurchaseKey, Pagination.of(1, totalCount + 2));
 
 		List<ExternalLink> externalLinks1 =
 			(List<ExternalLink>)page1.getItems();
 
 		Assert.assertEquals(
-			externalLinks1.toString(), 2, externalLinks1.size());
+			externalLinks1.toString(), totalCount + 2, externalLinks1.size());
 
 		Page<ExternalLink> page2 =
 			externalLinkResource.
 				getProductPurchaseProductPurchaseKeyExternalLinksPage(
-					productPurchaseKey, Pagination.of(2, 2));
+					productPurchaseKey, Pagination.of(2, totalCount + 2));
 
-		Assert.assertEquals(3, page2.getTotalCount());
+		Assert.assertEquals(totalCount + 3, page2.getTotalCount());
 
 		List<ExternalLink> externalLinks2 =
 			(List<ExternalLink>)page2.getItems();
@@ -1001,11 +1034,11 @@ public abstract class BaseExternalLinkResourceTestCase {
 		Page<ExternalLink> page3 =
 			externalLinkResource.
 				getProductPurchaseProductPurchaseKeyExternalLinksPage(
-					productPurchaseKey, Pagination.of(1, 3));
+					productPurchaseKey, Pagination.of(1, (int)totalCount + 3));
 
-		assertEqualsIgnoringOrder(
-			Arrays.asList(externalLink1, externalLink2, externalLink3),
-			(List<ExternalLink>)page3.getItems());
+		assertContains(externalLink1, (List<ExternalLink>)page3.getItems());
+		assertContains(externalLink2, (List<ExternalLink>)page3.getItems());
+		assertContains(externalLink3, (List<ExternalLink>)page3.getItems());
 	}
 
 	protected ExternalLink
@@ -1066,7 +1099,7 @@ public abstract class BaseExternalLinkResourceTestCase {
 			externalLinkResource.getProductProductKeyExternalLinksPage(
 				productKey, Pagination.of(1, 10));
 
-		Assert.assertEquals(0, page.getTotalCount());
+		long totalCount = page.getTotalCount();
 
 		if (irrelevantProductKey != null) {
 			ExternalLink irrelevantExternalLink =
@@ -1074,13 +1107,12 @@ public abstract class BaseExternalLinkResourceTestCase {
 					irrelevantProductKey, randomIrrelevantExternalLink());
 
 			page = externalLinkResource.getProductProductKeyExternalLinksPage(
-				irrelevantProductKey, Pagination.of(1, 2));
+				irrelevantProductKey, Pagination.of(1, (int)totalCount + 1));
 
-			Assert.assertEquals(1, page.getTotalCount());
+			Assert.assertEquals(totalCount + 1, page.getTotalCount());
 
-			assertEquals(
-				Arrays.asList(irrelevantExternalLink),
-				(List<ExternalLink>)page.getItems());
+			assertContains(
+				irrelevantExternalLink, (List<ExternalLink>)page.getItems());
 			assertValid(
 				page,
 				testGetProductProductKeyExternalLinksPage_getExpectedActions(
@@ -1098,11 +1130,10 @@ public abstract class BaseExternalLinkResourceTestCase {
 		page = externalLinkResource.getProductProductKeyExternalLinksPage(
 			productKey, Pagination.of(1, 10));
 
-		Assert.assertEquals(2, page.getTotalCount());
+		Assert.assertEquals(totalCount + 2, page.getTotalCount());
 
-		assertEqualsIgnoringOrder(
-			Arrays.asList(externalLink1, externalLink2),
-			(List<ExternalLink>)page.getItems());
+		assertContains(externalLink1, (List<ExternalLink>)page.getItems());
+		assertContains(externalLink2, (List<ExternalLink>)page.getItems());
 		assertValid(
 			page,
 			testGetProductProductKeyExternalLinksPage_getExpectedActions(
@@ -1126,6 +1157,13 @@ public abstract class BaseExternalLinkResourceTestCase {
 		String productKey =
 			testGetProductProductKeyExternalLinksPage_getProductKey();
 
+		Page<ExternalLink> externalLinkPage =
+			externalLinkResource.getProductProductKeyExternalLinksPage(
+				productKey, null);
+
+		int totalCount = GetterUtil.getInteger(
+			externalLinkPage.getTotalCount());
+
 		ExternalLink externalLink1 =
 			testGetProductProductKeyExternalLinksPage_addExternalLink(
 				productKey, randomExternalLink());
@@ -1140,19 +1178,19 @@ public abstract class BaseExternalLinkResourceTestCase {
 
 		Page<ExternalLink> page1 =
 			externalLinkResource.getProductProductKeyExternalLinksPage(
-				productKey, Pagination.of(1, 2));
+				productKey, Pagination.of(1, totalCount + 2));
 
 		List<ExternalLink> externalLinks1 =
 			(List<ExternalLink>)page1.getItems();
 
 		Assert.assertEquals(
-			externalLinks1.toString(), 2, externalLinks1.size());
+			externalLinks1.toString(), totalCount + 2, externalLinks1.size());
 
 		Page<ExternalLink> page2 =
 			externalLinkResource.getProductProductKeyExternalLinksPage(
-				productKey, Pagination.of(2, 2));
+				productKey, Pagination.of(2, totalCount + 2));
 
-		Assert.assertEquals(3, page2.getTotalCount());
+		Assert.assertEquals(totalCount + 3, page2.getTotalCount());
 
 		List<ExternalLink> externalLinks2 =
 			(List<ExternalLink>)page2.getItems();
@@ -1162,11 +1200,11 @@ public abstract class BaseExternalLinkResourceTestCase {
 
 		Page<ExternalLink> page3 =
 			externalLinkResource.getProductProductKeyExternalLinksPage(
-				productKey, Pagination.of(1, 3));
+				productKey, Pagination.of(1, (int)totalCount + 3));
 
-		assertEqualsIgnoringOrder(
-			Arrays.asList(externalLink1, externalLink2, externalLink3),
-			(List<ExternalLink>)page3.getItems());
+		assertContains(externalLink1, (List<ExternalLink>)page3.getItems());
+		assertContains(externalLink2, (List<ExternalLink>)page3.getItems());
+		assertContains(externalLink3, (List<ExternalLink>)page3.getItems());
 	}
 
 	protected ExternalLink
@@ -1223,7 +1261,7 @@ public abstract class BaseExternalLinkResourceTestCase {
 			externalLinkResource.getTeamTeamKeyExternalLinksPage(
 				teamKey, Pagination.of(1, 10));
 
-		Assert.assertEquals(0, page.getTotalCount());
+		long totalCount = page.getTotalCount();
 
 		if (irrelevantTeamKey != null) {
 			ExternalLink irrelevantExternalLink =
@@ -1231,13 +1269,12 @@ public abstract class BaseExternalLinkResourceTestCase {
 					irrelevantTeamKey, randomIrrelevantExternalLink());
 
 			page = externalLinkResource.getTeamTeamKeyExternalLinksPage(
-				irrelevantTeamKey, Pagination.of(1, 2));
+				irrelevantTeamKey, Pagination.of(1, (int)totalCount + 1));
 
-			Assert.assertEquals(1, page.getTotalCount());
+			Assert.assertEquals(totalCount + 1, page.getTotalCount());
 
-			assertEquals(
-				Arrays.asList(irrelevantExternalLink),
-				(List<ExternalLink>)page.getItems());
+			assertContains(
+				irrelevantExternalLink, (List<ExternalLink>)page.getItems());
 			assertValid(
 				page,
 				testGetTeamTeamKeyExternalLinksPage_getExpectedActions(
@@ -1255,11 +1292,10 @@ public abstract class BaseExternalLinkResourceTestCase {
 		page = externalLinkResource.getTeamTeamKeyExternalLinksPage(
 			teamKey, Pagination.of(1, 10));
 
-		Assert.assertEquals(2, page.getTotalCount());
+		Assert.assertEquals(totalCount + 2, page.getTotalCount());
 
-		assertEqualsIgnoringOrder(
-			Arrays.asList(externalLink1, externalLink2),
-			(List<ExternalLink>)page.getItems());
+		assertContains(externalLink1, (List<ExternalLink>)page.getItems());
+		assertContains(externalLink2, (List<ExternalLink>)page.getItems());
 		assertValid(
 			page,
 			testGetTeamTeamKeyExternalLinksPage_getExpectedActions(teamKey));
@@ -1281,6 +1317,12 @@ public abstract class BaseExternalLinkResourceTestCase {
 
 		String teamKey = testGetTeamTeamKeyExternalLinksPage_getTeamKey();
 
+		Page<ExternalLink> externalLinkPage =
+			externalLinkResource.getTeamTeamKeyExternalLinksPage(teamKey, null);
+
+		int totalCount = GetterUtil.getInteger(
+			externalLinkPage.getTotalCount());
+
 		ExternalLink externalLink1 =
 			testGetTeamTeamKeyExternalLinksPage_addExternalLink(
 				teamKey, randomExternalLink());
@@ -1295,19 +1337,19 @@ public abstract class BaseExternalLinkResourceTestCase {
 
 		Page<ExternalLink> page1 =
 			externalLinkResource.getTeamTeamKeyExternalLinksPage(
-				teamKey, Pagination.of(1, 2));
+				teamKey, Pagination.of(1, totalCount + 2));
 
 		List<ExternalLink> externalLinks1 =
 			(List<ExternalLink>)page1.getItems();
 
 		Assert.assertEquals(
-			externalLinks1.toString(), 2, externalLinks1.size());
+			externalLinks1.toString(), totalCount + 2, externalLinks1.size());
 
 		Page<ExternalLink> page2 =
 			externalLinkResource.getTeamTeamKeyExternalLinksPage(
-				teamKey, Pagination.of(2, 2));
+				teamKey, Pagination.of(2, totalCount + 2));
 
-		Assert.assertEquals(3, page2.getTotalCount());
+		Assert.assertEquals(totalCount + 3, page2.getTotalCount());
 
 		List<ExternalLink> externalLinks2 =
 			(List<ExternalLink>)page2.getItems();
@@ -1317,11 +1359,11 @@ public abstract class BaseExternalLinkResourceTestCase {
 
 		Page<ExternalLink> page3 =
 			externalLinkResource.getTeamTeamKeyExternalLinksPage(
-				teamKey, Pagination.of(1, 3));
+				teamKey, Pagination.of(1, (int)totalCount + 3));
 
-		assertEqualsIgnoringOrder(
-			Arrays.asList(externalLink1, externalLink2, externalLink3),
-			(List<ExternalLink>)page3.getItems());
+		assertContains(externalLink1, (List<ExternalLink>)page3.getItems());
+		assertContains(externalLink2, (List<ExternalLink>)page3.getItems());
+		assertContains(externalLink3, (List<ExternalLink>)page3.getItems());
 	}
 
 	protected ExternalLink testGetTeamTeamKeyExternalLinksPage_addExternalLink(

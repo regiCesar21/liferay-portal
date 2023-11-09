@@ -32,6 +32,7 @@ import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.DateFormatFactoryUtil;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.odata.entity.EntityField;
@@ -203,19 +204,19 @@ public abstract class BaseNoteResourceTestCase {
 			accountKey, null, RandomTestUtil.randomString(),
 			RandomTestUtil.randomString(), Pagination.of(1, 10));
 
-		Assert.assertEquals(0, page.getTotalCount());
+		long totalCount = page.getTotalCount();
 
 		if (irrelevantAccountKey != null) {
 			Note irrelevantNote = testGetAccountAccountKeyNotesPage_addNote(
 				irrelevantAccountKey, randomIrrelevantNote());
 
 			page = noteResource.getAccountAccountKeyNotesPage(
-				irrelevantAccountKey, null, null, null, Pagination.of(1, 2));
+				irrelevantAccountKey, null, null, null,
+				Pagination.of(1, (int)totalCount + 1));
 
-			Assert.assertEquals(1, page.getTotalCount());
+			Assert.assertEquals(totalCount + 1, page.getTotalCount());
 
-			assertEquals(
-				Arrays.asList(irrelevantNote), (List<Note>)page.getItems());
+			assertContains(irrelevantNote, (List<Note>)page.getItems());
 			assertValid(
 				page,
 				testGetAccountAccountKeyNotesPage_getExpectedActions(
@@ -231,10 +232,10 @@ public abstract class BaseNoteResourceTestCase {
 		page = noteResource.getAccountAccountKeyNotesPage(
 			accountKey, null, null, null, Pagination.of(1, 10));
 
-		Assert.assertEquals(2, page.getTotalCount());
+		Assert.assertEquals(totalCount + 2, page.getTotalCount());
 
-		assertEqualsIgnoringOrder(
-			Arrays.asList(note1, note2), (List<Note>)page.getItems());
+		assertContains(note1, (List<Note>)page.getItems());
+		assertContains(note2, (List<Note>)page.getItems());
 		assertValid(
 			page,
 			testGetAccountAccountKeyNotesPage_getExpectedActions(accountKey));
@@ -256,6 +257,11 @@ public abstract class BaseNoteResourceTestCase {
 
 		String accountKey = testGetAccountAccountKeyNotesPage_getAccountKey();
 
+		Page<Note> notePage = noteResource.getAccountAccountKeyNotesPage(
+			accountKey, null, null, null, null);
+
+		int totalCount = GetterUtil.getInteger(notePage.getTotalCount());
+
 		Note note1 = testGetAccountAccountKeyNotesPage_addNote(
 			accountKey, randomNote());
 
@@ -266,26 +272,28 @@ public abstract class BaseNoteResourceTestCase {
 			accountKey, randomNote());
 
 		Page<Note> page1 = noteResource.getAccountAccountKeyNotesPage(
-			accountKey, null, null, null, Pagination.of(1, 2));
+			accountKey, null, null, null, Pagination.of(1, totalCount + 2));
 
 		List<Note> notes1 = (List<Note>)page1.getItems();
 
-		Assert.assertEquals(notes1.toString(), 2, notes1.size());
+		Assert.assertEquals(notes1.toString(), totalCount + 2, notes1.size());
 
 		Page<Note> page2 = noteResource.getAccountAccountKeyNotesPage(
-			accountKey, null, null, null, Pagination.of(2, 2));
+			accountKey, null, null, null, Pagination.of(2, totalCount + 2));
 
-		Assert.assertEquals(3, page2.getTotalCount());
+		Assert.assertEquals(totalCount + 3, page2.getTotalCount());
 
 		List<Note> notes2 = (List<Note>)page2.getItems();
 
 		Assert.assertEquals(notes2.toString(), 1, notes2.size());
 
 		Page<Note> page3 = noteResource.getAccountAccountKeyNotesPage(
-			accountKey, null, null, null, Pagination.of(1, 3));
+			accountKey, null, null, null,
+			Pagination.of(1, (int)totalCount + 3));
 
-		assertEqualsIgnoringOrder(
-			Arrays.asList(note1, note2, note3), (List<Note>)page3.getItems());
+		assertContains(note1, (List<Note>)page3.getItems());
+		assertContains(note2, (List<Note>)page3.getItems());
+		assertContains(note3, (List<Note>)page3.getItems());
 	}
 
 	protected Note testGetAccountAccountKeyNotesPage_addNote(

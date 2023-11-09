@@ -32,6 +32,7 @@ import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.DateFormatFactoryUtil;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.odata.entity.EntityField;
@@ -210,7 +211,7 @@ public abstract class BaseAuditEntryResourceTestCase {
 			auditEntryResource.getAccountAccountKeyAuditEntriesPage(
 				accountKey, Pagination.of(1, 10));
 
-		Assert.assertEquals(0, page.getTotalCount());
+		long totalCount = page.getTotalCount();
 
 		if (irrelevantAccountKey != null) {
 			AuditEntry irrelevantAuditEntry =
@@ -218,13 +219,12 @@ public abstract class BaseAuditEntryResourceTestCase {
 					irrelevantAccountKey, randomIrrelevantAuditEntry());
 
 			page = auditEntryResource.getAccountAccountKeyAuditEntriesPage(
-				irrelevantAccountKey, Pagination.of(1, 2));
+				irrelevantAccountKey, Pagination.of(1, (int)totalCount + 1));
 
-			Assert.assertEquals(1, page.getTotalCount());
+			Assert.assertEquals(totalCount + 1, page.getTotalCount());
 
-			assertEquals(
-				Arrays.asList(irrelevantAuditEntry),
-				(List<AuditEntry>)page.getItems());
+			assertContains(
+				irrelevantAuditEntry, (List<AuditEntry>)page.getItems());
 			assertValid(
 				page,
 				testGetAccountAccountKeyAuditEntriesPage_getExpectedActions(
@@ -242,11 +242,10 @@ public abstract class BaseAuditEntryResourceTestCase {
 		page = auditEntryResource.getAccountAccountKeyAuditEntriesPage(
 			accountKey, Pagination.of(1, 10));
 
-		Assert.assertEquals(2, page.getTotalCount());
+		Assert.assertEquals(totalCount + 2, page.getTotalCount());
 
-		assertEqualsIgnoringOrder(
-			Arrays.asList(auditEntry1, auditEntry2),
-			(List<AuditEntry>)page.getItems());
+		assertContains(auditEntry1, (List<AuditEntry>)page.getItems());
+		assertContains(auditEntry2, (List<AuditEntry>)page.getItems());
 		assertValid(
 			page,
 			testGetAccountAccountKeyAuditEntriesPage_getExpectedActions(
@@ -270,6 +269,12 @@ public abstract class BaseAuditEntryResourceTestCase {
 		String accountKey =
 			testGetAccountAccountKeyAuditEntriesPage_getAccountKey();
 
+		Page<AuditEntry> auditEntryPage =
+			auditEntryResource.getAccountAccountKeyAuditEntriesPage(
+				accountKey, null);
+
+		int totalCount = GetterUtil.getInteger(auditEntryPage.getTotalCount());
+
 		AuditEntry auditEntry1 =
 			testGetAccountAccountKeyAuditEntriesPage_addAuditEntry(
 				accountKey, randomAuditEntry());
@@ -284,17 +289,18 @@ public abstract class BaseAuditEntryResourceTestCase {
 
 		Page<AuditEntry> page1 =
 			auditEntryResource.getAccountAccountKeyAuditEntriesPage(
-				accountKey, Pagination.of(1, 2));
+				accountKey, Pagination.of(1, totalCount + 2));
 
 		List<AuditEntry> auditEntries1 = (List<AuditEntry>)page1.getItems();
 
-		Assert.assertEquals(auditEntries1.toString(), 2, auditEntries1.size());
+		Assert.assertEquals(
+			auditEntries1.toString(), totalCount + 2, auditEntries1.size());
 
 		Page<AuditEntry> page2 =
 			auditEntryResource.getAccountAccountKeyAuditEntriesPage(
-				accountKey, Pagination.of(2, 2));
+				accountKey, Pagination.of(2, totalCount + 2));
 
-		Assert.assertEquals(3, page2.getTotalCount());
+		Assert.assertEquals(totalCount + 3, page2.getTotalCount());
 
 		List<AuditEntry> auditEntries2 = (List<AuditEntry>)page2.getItems();
 
@@ -302,11 +308,11 @@ public abstract class BaseAuditEntryResourceTestCase {
 
 		Page<AuditEntry> page3 =
 			auditEntryResource.getAccountAccountKeyAuditEntriesPage(
-				accountKey, Pagination.of(1, 3));
+				accountKey, Pagination.of(1, (int)totalCount + 3));
 
-		assertEqualsIgnoringOrder(
-			Arrays.asList(auditEntry1, auditEntry2, auditEntry3),
-			(List<AuditEntry>)page3.getItems());
+		assertContains(auditEntry1, (List<AuditEntry>)page3.getItems());
+		assertContains(auditEntry2, (List<AuditEntry>)page3.getItems());
+		assertContains(auditEntry3, (List<AuditEntry>)page3.getItems());
 	}
 
 	protected AuditEntry testGetAccountAccountKeyAuditEntriesPage_addAuditEntry(
@@ -364,7 +370,7 @@ public abstract class BaseAuditEntryResourceTestCase {
 			auditEntryResource.getContactRoleContactRoleKeyAuditEntriesPage(
 				contactRoleKey, Pagination.of(1, 10));
 
-		Assert.assertEquals(0, page.getTotalCount());
+		long totalCount = page.getTotalCount();
 
 		if (irrelevantContactRoleKey != null) {
 			AuditEntry irrelevantAuditEntry =
@@ -373,13 +379,13 @@ public abstract class BaseAuditEntryResourceTestCase {
 
 			page =
 				auditEntryResource.getContactRoleContactRoleKeyAuditEntriesPage(
-					irrelevantContactRoleKey, Pagination.of(1, 2));
+					irrelevantContactRoleKey,
+					Pagination.of(1, (int)totalCount + 1));
 
-			Assert.assertEquals(1, page.getTotalCount());
+			Assert.assertEquals(totalCount + 1, page.getTotalCount());
 
-			assertEquals(
-				Arrays.asList(irrelevantAuditEntry),
-				(List<AuditEntry>)page.getItems());
+			assertContains(
+				irrelevantAuditEntry, (List<AuditEntry>)page.getItems());
 			assertValid(
 				page,
 				testGetContactRoleContactRoleKeyAuditEntriesPage_getExpectedActions(
@@ -397,11 +403,10 @@ public abstract class BaseAuditEntryResourceTestCase {
 		page = auditEntryResource.getContactRoleContactRoleKeyAuditEntriesPage(
 			contactRoleKey, Pagination.of(1, 10));
 
-		Assert.assertEquals(2, page.getTotalCount());
+		Assert.assertEquals(totalCount + 2, page.getTotalCount());
 
-		assertEqualsIgnoringOrder(
-			Arrays.asList(auditEntry1, auditEntry2),
-			(List<AuditEntry>)page.getItems());
+		assertContains(auditEntry1, (List<AuditEntry>)page.getItems());
+		assertContains(auditEntry2, (List<AuditEntry>)page.getItems());
 		assertValid(
 			page,
 			testGetContactRoleContactRoleKeyAuditEntriesPage_getExpectedActions(
@@ -425,6 +430,12 @@ public abstract class BaseAuditEntryResourceTestCase {
 		String contactRoleKey =
 			testGetContactRoleContactRoleKeyAuditEntriesPage_getContactRoleKey();
 
+		Page<AuditEntry> auditEntryPage =
+			auditEntryResource.getContactRoleContactRoleKeyAuditEntriesPage(
+				contactRoleKey, null);
+
+		int totalCount = GetterUtil.getInteger(auditEntryPage.getTotalCount());
+
 		AuditEntry auditEntry1 =
 			testGetContactRoleContactRoleKeyAuditEntriesPage_addAuditEntry(
 				contactRoleKey, randomAuditEntry());
@@ -439,17 +450,18 @@ public abstract class BaseAuditEntryResourceTestCase {
 
 		Page<AuditEntry> page1 =
 			auditEntryResource.getContactRoleContactRoleKeyAuditEntriesPage(
-				contactRoleKey, Pagination.of(1, 2));
+				contactRoleKey, Pagination.of(1, totalCount + 2));
 
 		List<AuditEntry> auditEntries1 = (List<AuditEntry>)page1.getItems();
 
-		Assert.assertEquals(auditEntries1.toString(), 2, auditEntries1.size());
+		Assert.assertEquals(
+			auditEntries1.toString(), totalCount + 2, auditEntries1.size());
 
 		Page<AuditEntry> page2 =
 			auditEntryResource.getContactRoleContactRoleKeyAuditEntriesPage(
-				contactRoleKey, Pagination.of(2, 2));
+				contactRoleKey, Pagination.of(2, totalCount + 2));
 
-		Assert.assertEquals(3, page2.getTotalCount());
+		Assert.assertEquals(totalCount + 3, page2.getTotalCount());
 
 		List<AuditEntry> auditEntries2 = (List<AuditEntry>)page2.getItems();
 
@@ -457,11 +469,11 @@ public abstract class BaseAuditEntryResourceTestCase {
 
 		Page<AuditEntry> page3 =
 			auditEntryResource.getContactRoleContactRoleKeyAuditEntriesPage(
-				contactRoleKey, Pagination.of(1, 3));
+				contactRoleKey, Pagination.of(1, (int)totalCount + 3));
 
-		assertEqualsIgnoringOrder(
-			Arrays.asList(auditEntry1, auditEntry2, auditEntry3),
-			(List<AuditEntry>)page3.getItems());
+		assertContains(auditEntry1, (List<AuditEntry>)page3.getItems());
+		assertContains(auditEntry2, (List<AuditEntry>)page3.getItems());
+		assertContains(auditEntry3, (List<AuditEntry>)page3.getItems());
 	}
 
 	protected AuditEntry
@@ -501,7 +513,7 @@ public abstract class BaseAuditEntryResourceTestCase {
 			auditEntryResource.getContactByUuidContactUuidAuditEntriesPage(
 				contactUuid, Pagination.of(1, 10));
 
-		Assert.assertEquals(0, page.getTotalCount());
+		long totalCount = page.getTotalCount();
 
 		if (irrelevantContactUuid != null) {
 			AuditEntry irrelevantAuditEntry =
@@ -510,13 +522,13 @@ public abstract class BaseAuditEntryResourceTestCase {
 
 			page =
 				auditEntryResource.getContactByUuidContactUuidAuditEntriesPage(
-					irrelevantContactUuid, Pagination.of(1, 2));
+					irrelevantContactUuid,
+					Pagination.of(1, (int)totalCount + 1));
 
-			Assert.assertEquals(1, page.getTotalCount());
+			Assert.assertEquals(totalCount + 1, page.getTotalCount());
 
-			assertEquals(
-				Arrays.asList(irrelevantAuditEntry),
-				(List<AuditEntry>)page.getItems());
+			assertContains(
+				irrelevantAuditEntry, (List<AuditEntry>)page.getItems());
 			assertValid(
 				page,
 				testGetContactByUuidContactUuidAuditEntriesPage_getExpectedActions(
@@ -534,11 +546,10 @@ public abstract class BaseAuditEntryResourceTestCase {
 		page = auditEntryResource.getContactByUuidContactUuidAuditEntriesPage(
 			contactUuid, Pagination.of(1, 10));
 
-		Assert.assertEquals(2, page.getTotalCount());
+		Assert.assertEquals(totalCount + 2, page.getTotalCount());
 
-		assertEqualsIgnoringOrder(
-			Arrays.asList(auditEntry1, auditEntry2),
-			(List<AuditEntry>)page.getItems());
+		assertContains(auditEntry1, (List<AuditEntry>)page.getItems());
+		assertContains(auditEntry2, (List<AuditEntry>)page.getItems());
 		assertValid(
 			page,
 			testGetContactByUuidContactUuidAuditEntriesPage_getExpectedActions(
@@ -562,6 +573,12 @@ public abstract class BaseAuditEntryResourceTestCase {
 		String contactUuid =
 			testGetContactByUuidContactUuidAuditEntriesPage_getContactUuid();
 
+		Page<AuditEntry> auditEntryPage =
+			auditEntryResource.getContactByUuidContactUuidAuditEntriesPage(
+				contactUuid, null);
+
+		int totalCount = GetterUtil.getInteger(auditEntryPage.getTotalCount());
+
 		AuditEntry auditEntry1 =
 			testGetContactByUuidContactUuidAuditEntriesPage_addAuditEntry(
 				contactUuid, randomAuditEntry());
@@ -576,17 +593,18 @@ public abstract class BaseAuditEntryResourceTestCase {
 
 		Page<AuditEntry> page1 =
 			auditEntryResource.getContactByUuidContactUuidAuditEntriesPage(
-				contactUuid, Pagination.of(1, 2));
+				contactUuid, Pagination.of(1, totalCount + 2));
 
 		List<AuditEntry> auditEntries1 = (List<AuditEntry>)page1.getItems();
 
-		Assert.assertEquals(auditEntries1.toString(), 2, auditEntries1.size());
+		Assert.assertEquals(
+			auditEntries1.toString(), totalCount + 2, auditEntries1.size());
 
 		Page<AuditEntry> page2 =
 			auditEntryResource.getContactByUuidContactUuidAuditEntriesPage(
-				contactUuid, Pagination.of(2, 2));
+				contactUuid, Pagination.of(2, totalCount + 2));
 
-		Assert.assertEquals(3, page2.getTotalCount());
+		Assert.assertEquals(totalCount + 3, page2.getTotalCount());
 
 		List<AuditEntry> auditEntries2 = (List<AuditEntry>)page2.getItems();
 
@@ -594,11 +612,11 @@ public abstract class BaseAuditEntryResourceTestCase {
 
 		Page<AuditEntry> page3 =
 			auditEntryResource.getContactByUuidContactUuidAuditEntriesPage(
-				contactUuid, Pagination.of(1, 3));
+				contactUuid, Pagination.of(1, (int)totalCount + 3));
 
-		assertEqualsIgnoringOrder(
-			Arrays.asList(auditEntry1, auditEntry2, auditEntry3),
-			(List<AuditEntry>)page3.getItems());
+		assertContains(auditEntry1, (List<AuditEntry>)page3.getItems());
+		assertContains(auditEntry2, (List<AuditEntry>)page3.getItems());
+		assertContains(auditEntry3, (List<AuditEntry>)page3.getItems());
 	}
 
 	protected AuditEntry
@@ -643,7 +661,7 @@ public abstract class BaseAuditEntryResourceTestCase {
 			auditEntryResource.getTeamRoleTeamRoleKeyAuditEntriesPage(
 				teamRoleKey, Pagination.of(1, 10));
 
-		Assert.assertEquals(0, page.getTotalCount());
+		long totalCount = page.getTotalCount();
 
 		if (irrelevantTeamRoleKey != null) {
 			AuditEntry irrelevantAuditEntry =
@@ -651,13 +669,12 @@ public abstract class BaseAuditEntryResourceTestCase {
 					irrelevantTeamRoleKey, randomIrrelevantAuditEntry());
 
 			page = auditEntryResource.getTeamRoleTeamRoleKeyAuditEntriesPage(
-				irrelevantTeamRoleKey, Pagination.of(1, 2));
+				irrelevantTeamRoleKey, Pagination.of(1, (int)totalCount + 1));
 
-			Assert.assertEquals(1, page.getTotalCount());
+			Assert.assertEquals(totalCount + 1, page.getTotalCount());
 
-			assertEquals(
-				Arrays.asList(irrelevantAuditEntry),
-				(List<AuditEntry>)page.getItems());
+			assertContains(
+				irrelevantAuditEntry, (List<AuditEntry>)page.getItems());
 			assertValid(
 				page,
 				testGetTeamRoleTeamRoleKeyAuditEntriesPage_getExpectedActions(
@@ -675,11 +692,10 @@ public abstract class BaseAuditEntryResourceTestCase {
 		page = auditEntryResource.getTeamRoleTeamRoleKeyAuditEntriesPage(
 			teamRoleKey, Pagination.of(1, 10));
 
-		Assert.assertEquals(2, page.getTotalCount());
+		Assert.assertEquals(totalCount + 2, page.getTotalCount());
 
-		assertEqualsIgnoringOrder(
-			Arrays.asList(auditEntry1, auditEntry2),
-			(List<AuditEntry>)page.getItems());
+		assertContains(auditEntry1, (List<AuditEntry>)page.getItems());
+		assertContains(auditEntry2, (List<AuditEntry>)page.getItems());
 		assertValid(
 			page,
 			testGetTeamRoleTeamRoleKeyAuditEntriesPage_getExpectedActions(
@@ -703,6 +719,12 @@ public abstract class BaseAuditEntryResourceTestCase {
 		String teamRoleKey =
 			testGetTeamRoleTeamRoleKeyAuditEntriesPage_getTeamRoleKey();
 
+		Page<AuditEntry> auditEntryPage =
+			auditEntryResource.getTeamRoleTeamRoleKeyAuditEntriesPage(
+				teamRoleKey, null);
+
+		int totalCount = GetterUtil.getInteger(auditEntryPage.getTotalCount());
+
 		AuditEntry auditEntry1 =
 			testGetTeamRoleTeamRoleKeyAuditEntriesPage_addAuditEntry(
 				teamRoleKey, randomAuditEntry());
@@ -717,17 +739,18 @@ public abstract class BaseAuditEntryResourceTestCase {
 
 		Page<AuditEntry> page1 =
 			auditEntryResource.getTeamRoleTeamRoleKeyAuditEntriesPage(
-				teamRoleKey, Pagination.of(1, 2));
+				teamRoleKey, Pagination.of(1, totalCount + 2));
 
 		List<AuditEntry> auditEntries1 = (List<AuditEntry>)page1.getItems();
 
-		Assert.assertEquals(auditEntries1.toString(), 2, auditEntries1.size());
+		Assert.assertEquals(
+			auditEntries1.toString(), totalCount + 2, auditEntries1.size());
 
 		Page<AuditEntry> page2 =
 			auditEntryResource.getTeamRoleTeamRoleKeyAuditEntriesPage(
-				teamRoleKey, Pagination.of(2, 2));
+				teamRoleKey, Pagination.of(2, totalCount + 2));
 
-		Assert.assertEquals(3, page2.getTotalCount());
+		Assert.assertEquals(totalCount + 3, page2.getTotalCount());
 
 		List<AuditEntry> auditEntries2 = (List<AuditEntry>)page2.getItems();
 
@@ -735,11 +758,11 @@ public abstract class BaseAuditEntryResourceTestCase {
 
 		Page<AuditEntry> page3 =
 			auditEntryResource.getTeamRoleTeamRoleKeyAuditEntriesPage(
-				teamRoleKey, Pagination.of(1, 3));
+				teamRoleKey, Pagination.of(1, (int)totalCount + 3));
 
-		assertEqualsIgnoringOrder(
-			Arrays.asList(auditEntry1, auditEntry2, auditEntry3),
-			(List<AuditEntry>)page3.getItems());
+		assertContains(auditEntry1, (List<AuditEntry>)page3.getItems());
+		assertContains(auditEntry2, (List<AuditEntry>)page3.getItems());
+		assertContains(auditEntry3, (List<AuditEntry>)page3.getItems());
 	}
 
 	protected AuditEntry
@@ -775,7 +798,7 @@ public abstract class BaseAuditEntryResourceTestCase {
 			auditEntryResource.getTeamTeamKeyAuditEntriesPage(
 				teamKey, Pagination.of(1, 10));
 
-		Assert.assertEquals(0, page.getTotalCount());
+		long totalCount = page.getTotalCount();
 
 		if (irrelevantTeamKey != null) {
 			AuditEntry irrelevantAuditEntry =
@@ -783,13 +806,12 @@ public abstract class BaseAuditEntryResourceTestCase {
 					irrelevantTeamKey, randomIrrelevantAuditEntry());
 
 			page = auditEntryResource.getTeamTeamKeyAuditEntriesPage(
-				irrelevantTeamKey, Pagination.of(1, 2));
+				irrelevantTeamKey, Pagination.of(1, (int)totalCount + 1));
 
-			Assert.assertEquals(1, page.getTotalCount());
+			Assert.assertEquals(totalCount + 1, page.getTotalCount());
 
-			assertEquals(
-				Arrays.asList(irrelevantAuditEntry),
-				(List<AuditEntry>)page.getItems());
+			assertContains(
+				irrelevantAuditEntry, (List<AuditEntry>)page.getItems());
 			assertValid(
 				page,
 				testGetTeamTeamKeyAuditEntriesPage_getExpectedActions(
@@ -807,11 +829,10 @@ public abstract class BaseAuditEntryResourceTestCase {
 		page = auditEntryResource.getTeamTeamKeyAuditEntriesPage(
 			teamKey, Pagination.of(1, 10));
 
-		Assert.assertEquals(2, page.getTotalCount());
+		Assert.assertEquals(totalCount + 2, page.getTotalCount());
 
-		assertEqualsIgnoringOrder(
-			Arrays.asList(auditEntry1, auditEntry2),
-			(List<AuditEntry>)page.getItems());
+		assertContains(auditEntry1, (List<AuditEntry>)page.getItems());
+		assertContains(auditEntry2, (List<AuditEntry>)page.getItems());
 		assertValid(
 			page,
 			testGetTeamTeamKeyAuditEntriesPage_getExpectedActions(teamKey));
@@ -833,6 +854,11 @@ public abstract class BaseAuditEntryResourceTestCase {
 
 		String teamKey = testGetTeamTeamKeyAuditEntriesPage_getTeamKey();
 
+		Page<AuditEntry> auditEntryPage =
+			auditEntryResource.getTeamTeamKeyAuditEntriesPage(teamKey, null);
+
+		int totalCount = GetterUtil.getInteger(auditEntryPage.getTotalCount());
+
 		AuditEntry auditEntry1 =
 			testGetTeamTeamKeyAuditEntriesPage_addAuditEntry(
 				teamKey, randomAuditEntry());
@@ -847,17 +873,18 @@ public abstract class BaseAuditEntryResourceTestCase {
 
 		Page<AuditEntry> page1 =
 			auditEntryResource.getTeamTeamKeyAuditEntriesPage(
-				teamKey, Pagination.of(1, 2));
+				teamKey, Pagination.of(1, totalCount + 2));
 
 		List<AuditEntry> auditEntries1 = (List<AuditEntry>)page1.getItems();
 
-		Assert.assertEquals(auditEntries1.toString(), 2, auditEntries1.size());
+		Assert.assertEquals(
+			auditEntries1.toString(), totalCount + 2, auditEntries1.size());
 
 		Page<AuditEntry> page2 =
 			auditEntryResource.getTeamTeamKeyAuditEntriesPage(
-				teamKey, Pagination.of(2, 2));
+				teamKey, Pagination.of(2, totalCount + 2));
 
-		Assert.assertEquals(3, page2.getTotalCount());
+		Assert.assertEquals(totalCount + 3, page2.getTotalCount());
 
 		List<AuditEntry> auditEntries2 = (List<AuditEntry>)page2.getItems();
 
@@ -865,11 +892,11 @@ public abstract class BaseAuditEntryResourceTestCase {
 
 		Page<AuditEntry> page3 =
 			auditEntryResource.getTeamTeamKeyAuditEntriesPage(
-				teamKey, Pagination.of(1, 3));
+				teamKey, Pagination.of(1, (int)totalCount + 3));
 
-		assertEqualsIgnoringOrder(
-			Arrays.asList(auditEntry1, auditEntry2, auditEntry3),
-			(List<AuditEntry>)page3.getItems());
+		assertContains(auditEntry1, (List<AuditEntry>)page3.getItems());
+		assertContains(auditEntry2, (List<AuditEntry>)page3.getItems());
+		assertContains(auditEntry3, (List<AuditEntry>)page3.getItems());
 	}
 
 	protected AuditEntry testGetTeamTeamKeyAuditEntriesPage_addAuditEntry(

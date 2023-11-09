@@ -72,12 +72,16 @@ public class EntitlementDefinitionResourceFactoryImpl
 					throw new IllegalArgumentException("User is not set");
 				}
 
-				return _entitlementDefinitionResourceProxyProviderFunction.
-					apply(
-						(proxy, method, arguments) -> _invoke(
-							method, arguments, _checkPermissions,
-							_httpServletRequest, _httpServletResponse,
-							_preferredLocale, _uriInfo, _user));
+				Function<InvocationHandler, EntitlementDefinitionResource>
+					entitlementDefinitionResourceProxyProviderFunction =
+						ResourceProxyProviderFunctionHolder.
+							_entitlementDefinitionResourceProxyProviderFunction;
+
+				return entitlementDefinitionResourceProxyProviderFunction.apply(
+					(proxy, method, arguments) -> _invoke(
+						method, arguments, _checkPermissions,
+						_httpServletRequest, _httpServletResponse,
+						_preferredLocale, _uriInfo, _user));
 			}
 
 			@Override
@@ -237,11 +241,6 @@ public class EntitlementDefinitionResourceFactoryImpl
 		}
 	}
 
-	private static final Function
-		<InvocationHandler, EntitlementDefinitionResource>
-			_entitlementDefinitionResourceProxyProviderFunction =
-				_getProxyProviderFunction();
-
 	@Reference
 	private CompanyLocalService _companyLocalService;
 
@@ -277,6 +276,15 @@ public class EntitlementDefinitionResourceFactoryImpl
 
 	@Reference
 	private UserLocalService _userLocalService;
+
+	private static class ResourceProxyProviderFunctionHolder {
+
+		private static final Function
+			<InvocationHandler, EntitlementDefinitionResource>
+				_entitlementDefinitionResourceProxyProviderFunction =
+					_getProxyProviderFunction();
+
+	}
 
 	private class AcceptLanguageImpl implements AcceptLanguage {
 

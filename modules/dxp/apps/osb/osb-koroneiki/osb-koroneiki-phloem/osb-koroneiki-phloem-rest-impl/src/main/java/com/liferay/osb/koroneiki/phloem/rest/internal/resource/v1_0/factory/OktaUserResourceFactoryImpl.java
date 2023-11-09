@@ -71,7 +71,12 @@ public class OktaUserResourceFactoryImpl implements OktaUserResource.Factory {
 					throw new IllegalArgumentException("User is not set");
 				}
 
-				return _oktaUserResourceProxyProviderFunction.apply(
+				Function<InvocationHandler, OktaUserResource>
+					oktaUserResourceProxyProviderFunction =
+						ResourceProxyProviderFunctionHolder.
+							_oktaUserResourceProxyProviderFunction;
+
+				return oktaUserResourceProxyProviderFunction.apply(
 					(proxy, method, arguments) -> _invoke(
 						method, arguments, _checkPermissions,
 						_httpServletRequest, _httpServletResponse,
@@ -227,9 +232,6 @@ public class OktaUserResourceFactoryImpl implements OktaUserResource.Factory {
 		}
 	}
 
-	private static final Function<InvocationHandler, OktaUserResource>
-		_oktaUserResourceProxyProviderFunction = _getProxyProviderFunction();
-
 	@Reference
 	private CompanyLocalService _companyLocalService;
 
@@ -264,6 +266,14 @@ public class OktaUserResourceFactoryImpl implements OktaUserResource.Factory {
 
 	@Reference
 	private UserLocalService _userLocalService;
+
+	private static class ResourceProxyProviderFunctionHolder {
+
+		private static final Function<InvocationHandler, OktaUserResource>
+			_oktaUserResourceProxyProviderFunction =
+				_getProxyProviderFunction();
+
+	}
 
 	private class AcceptLanguageImpl implements AcceptLanguage {
 

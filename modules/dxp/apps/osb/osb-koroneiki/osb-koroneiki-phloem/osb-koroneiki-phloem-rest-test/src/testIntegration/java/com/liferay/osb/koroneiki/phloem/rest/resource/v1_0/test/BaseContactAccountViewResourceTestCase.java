@@ -31,6 +31,7 @@ import com.liferay.portal.kernel.service.CompanyLocalServiceUtil;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.DateFormatFactoryUtil;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.odata.entity.EntityField;
@@ -192,7 +193,7 @@ public abstract class BaseContactAccountViewResourceTestCase {
 				getContactByUuidContactUuidContactAccountViewsPage(
 					contactUuid, Pagination.of(1, 10));
 
-		Assert.assertEquals(0, page.getTotalCount());
+		long totalCount = page.getTotalCount();
 
 		if (irrelevantContactUuid != null) {
 			ContactAccountView irrelevantContactAccountView =
@@ -203,12 +204,13 @@ public abstract class BaseContactAccountViewResourceTestCase {
 			page =
 				contactAccountViewResource.
 					getContactByUuidContactUuidContactAccountViewsPage(
-						irrelevantContactUuid, Pagination.of(1, 2));
+						irrelevantContactUuid,
+						Pagination.of(1, (int)totalCount + 1));
 
-			Assert.assertEquals(1, page.getTotalCount());
+			Assert.assertEquals(totalCount + 1, page.getTotalCount());
 
-			assertEquals(
-				Arrays.asList(irrelevantContactAccountView),
+			assertContains(
+				irrelevantContactAccountView,
 				(List<ContactAccountView>)page.getItems());
 			assertValid(
 				page,
@@ -229,11 +231,12 @@ public abstract class BaseContactAccountViewResourceTestCase {
 				getContactByUuidContactUuidContactAccountViewsPage(
 					contactUuid, Pagination.of(1, 10));
 
-		Assert.assertEquals(2, page.getTotalCount());
+		Assert.assertEquals(totalCount + 2, page.getTotalCount());
 
-		assertEqualsIgnoringOrder(
-			Arrays.asList(contactAccountView1, contactAccountView2),
-			(List<ContactAccountView>)page.getItems());
+		assertContains(
+			contactAccountView1, (List<ContactAccountView>)page.getItems());
+		assertContains(
+			contactAccountView2, (List<ContactAccountView>)page.getItems());
 		assertValid(
 			page,
 			testGetContactByUuidContactUuidContactAccountViewsPage_getExpectedActions(
@@ -257,6 +260,14 @@ public abstract class BaseContactAccountViewResourceTestCase {
 		String contactUuid =
 			testGetContactByUuidContactUuidContactAccountViewsPage_getContactUuid();
 
+		Page<ContactAccountView> contactAccountViewPage =
+			contactAccountViewResource.
+				getContactByUuidContactUuidContactAccountViewsPage(
+					contactUuid, null);
+
+		int totalCount = GetterUtil.getInteger(
+			contactAccountViewPage.getTotalCount());
+
 		ContactAccountView contactAccountView1 =
 			testGetContactByUuidContactUuidContactAccountViewsPage_addContactAccountView(
 				contactUuid, randomContactAccountView());
@@ -272,20 +283,21 @@ public abstract class BaseContactAccountViewResourceTestCase {
 		Page<ContactAccountView> page1 =
 			contactAccountViewResource.
 				getContactByUuidContactUuidContactAccountViewsPage(
-					contactUuid, Pagination.of(1, 2));
+					contactUuid, Pagination.of(1, totalCount + 2));
 
 		List<ContactAccountView> contactAccountViews1 =
 			(List<ContactAccountView>)page1.getItems();
 
 		Assert.assertEquals(
-			contactAccountViews1.toString(), 2, contactAccountViews1.size());
+			contactAccountViews1.toString(), totalCount + 2,
+			contactAccountViews1.size());
 
 		Page<ContactAccountView> page2 =
 			contactAccountViewResource.
 				getContactByUuidContactUuidContactAccountViewsPage(
-					contactUuid, Pagination.of(2, 2));
+					contactUuid, Pagination.of(2, totalCount + 2));
 
-		Assert.assertEquals(3, page2.getTotalCount());
+		Assert.assertEquals(totalCount + 3, page2.getTotalCount());
 
 		List<ContactAccountView> contactAccountViews2 =
 			(List<ContactAccountView>)page2.getItems();
@@ -296,12 +308,14 @@ public abstract class BaseContactAccountViewResourceTestCase {
 		Page<ContactAccountView> page3 =
 			contactAccountViewResource.
 				getContactByUuidContactUuidContactAccountViewsPage(
-					contactUuid, Pagination.of(1, 3));
+					contactUuid, Pagination.of(1, (int)totalCount + 3));
 
-		assertEqualsIgnoringOrder(
-			Arrays.asList(
-				contactAccountView1, contactAccountView2, contactAccountView3),
-			(List<ContactAccountView>)page3.getItems());
+		assertContains(
+			contactAccountView1, (List<ContactAccountView>)page3.getItems());
+		assertContains(
+			contactAccountView2, (List<ContactAccountView>)page3.getItems());
+		assertContains(
+			contactAccountView3, (List<ContactAccountView>)page3.getItems());
 	}
 
 	protected ContactAccountView

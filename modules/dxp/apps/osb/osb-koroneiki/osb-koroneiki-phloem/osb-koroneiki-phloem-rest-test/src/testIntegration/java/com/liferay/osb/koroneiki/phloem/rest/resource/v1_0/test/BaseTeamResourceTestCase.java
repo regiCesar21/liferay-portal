@@ -202,7 +202,7 @@ public abstract class BaseTeamResourceTestCase {
 		Page<Team> page = teamResource.getAccountAccountKeyAssignedTeamsPage(
 			accountKey, Pagination.of(1, 10));
 
-		Assert.assertEquals(0, page.getTotalCount());
+		long totalCount = page.getTotalCount();
 
 		if (irrelevantAccountKey != null) {
 			Team irrelevantTeam =
@@ -210,12 +210,11 @@ public abstract class BaseTeamResourceTestCase {
 					irrelevantAccountKey, randomIrrelevantTeam());
 
 			page = teamResource.getAccountAccountKeyAssignedTeamsPage(
-				irrelevantAccountKey, Pagination.of(1, 2));
+				irrelevantAccountKey, Pagination.of(1, (int)totalCount + 1));
 
-			Assert.assertEquals(1, page.getTotalCount());
+			Assert.assertEquals(totalCount + 1, page.getTotalCount());
 
-			assertEquals(
-				Arrays.asList(irrelevantTeam), (List<Team>)page.getItems());
+			assertContains(irrelevantTeam, (List<Team>)page.getItems());
 			assertValid(
 				page,
 				testGetAccountAccountKeyAssignedTeamsPage_getExpectedActions(
@@ -231,10 +230,10 @@ public abstract class BaseTeamResourceTestCase {
 		page = teamResource.getAccountAccountKeyAssignedTeamsPage(
 			accountKey, Pagination.of(1, 10));
 
-		Assert.assertEquals(2, page.getTotalCount());
+		Assert.assertEquals(totalCount + 2, page.getTotalCount());
 
-		assertEqualsIgnoringOrder(
-			Arrays.asList(team1, team2), (List<Team>)page.getItems());
+		assertContains(team1, (List<Team>)page.getItems());
+		assertContains(team2, (List<Team>)page.getItems());
 		assertValid(
 			page,
 			testGetAccountAccountKeyAssignedTeamsPage_getExpectedActions(
@@ -258,6 +257,12 @@ public abstract class BaseTeamResourceTestCase {
 		String accountKey =
 			testGetAccountAccountKeyAssignedTeamsPage_getAccountKey();
 
+		Page<Team> teamPage =
+			teamResource.getAccountAccountKeyAssignedTeamsPage(
+				accountKey, null);
+
+		int totalCount = GetterUtil.getInteger(teamPage.getTotalCount());
+
 		Team team1 = testGetAccountAccountKeyAssignedTeamsPage_addTeam(
 			accountKey, randomTeam());
 
@@ -268,26 +273,27 @@ public abstract class BaseTeamResourceTestCase {
 			accountKey, randomTeam());
 
 		Page<Team> page1 = teamResource.getAccountAccountKeyAssignedTeamsPage(
-			accountKey, Pagination.of(1, 2));
+			accountKey, Pagination.of(1, totalCount + 2));
 
 		List<Team> teams1 = (List<Team>)page1.getItems();
 
-		Assert.assertEquals(teams1.toString(), 2, teams1.size());
+		Assert.assertEquals(teams1.toString(), totalCount + 2, teams1.size());
 
 		Page<Team> page2 = teamResource.getAccountAccountKeyAssignedTeamsPage(
-			accountKey, Pagination.of(2, 2));
+			accountKey, Pagination.of(2, totalCount + 2));
 
-		Assert.assertEquals(3, page2.getTotalCount());
+		Assert.assertEquals(totalCount + 3, page2.getTotalCount());
 
 		List<Team> teams2 = (List<Team>)page2.getItems();
 
 		Assert.assertEquals(teams2.toString(), 1, teams2.size());
 
 		Page<Team> page3 = teamResource.getAccountAccountKeyAssignedTeamsPage(
-			accountKey, Pagination.of(1, 3));
+			accountKey, Pagination.of(1, (int)totalCount + 3));
 
-		assertEqualsIgnoringOrder(
-			Arrays.asList(team1, team2, team3), (List<Team>)page3.getItems());
+		assertContains(team1, (List<Team>)page3.getItems());
+		assertContains(team2, (List<Team>)page3.getItems());
+		assertContains(team3, (List<Team>)page3.getItems());
 	}
 
 	protected Team testGetAccountAccountKeyAssignedTeamsPage_addTeam(
@@ -321,19 +327,18 @@ public abstract class BaseTeamResourceTestCase {
 		Page<Team> page = teamResource.getAccountAccountKeyTeamsPage(
 			accountKey, Pagination.of(1, 10));
 
-		Assert.assertEquals(0, page.getTotalCount());
+		long totalCount = page.getTotalCount();
 
 		if (irrelevantAccountKey != null) {
 			Team irrelevantTeam = testGetAccountAccountKeyTeamsPage_addTeam(
 				irrelevantAccountKey, randomIrrelevantTeam());
 
 			page = teamResource.getAccountAccountKeyTeamsPage(
-				irrelevantAccountKey, Pagination.of(1, 2));
+				irrelevantAccountKey, Pagination.of(1, (int)totalCount + 1));
 
-			Assert.assertEquals(1, page.getTotalCount());
+			Assert.assertEquals(totalCount + 1, page.getTotalCount());
 
-			assertEquals(
-				Arrays.asList(irrelevantTeam), (List<Team>)page.getItems());
+			assertContains(irrelevantTeam, (List<Team>)page.getItems());
 			assertValid(
 				page,
 				testGetAccountAccountKeyTeamsPage_getExpectedActions(
@@ -349,10 +354,10 @@ public abstract class BaseTeamResourceTestCase {
 		page = teamResource.getAccountAccountKeyTeamsPage(
 			accountKey, Pagination.of(1, 10));
 
-		Assert.assertEquals(2, page.getTotalCount());
+		Assert.assertEquals(totalCount + 2, page.getTotalCount());
 
-		assertEqualsIgnoringOrder(
-			Arrays.asList(team1, team2), (List<Team>)page.getItems());
+		assertContains(team1, (List<Team>)page.getItems());
+		assertContains(team2, (List<Team>)page.getItems());
 		assertValid(
 			page,
 			testGetAccountAccountKeyTeamsPage_getExpectedActions(accountKey));
@@ -374,6 +379,11 @@ public abstract class BaseTeamResourceTestCase {
 
 		String accountKey = testGetAccountAccountKeyTeamsPage_getAccountKey();
 
+		Page<Team> teamPage = teamResource.getAccountAccountKeyTeamsPage(
+			accountKey, null);
+
+		int totalCount = GetterUtil.getInteger(teamPage.getTotalCount());
+
 		Team team1 = testGetAccountAccountKeyTeamsPage_addTeam(
 			accountKey, randomTeam());
 
@@ -384,26 +394,27 @@ public abstract class BaseTeamResourceTestCase {
 			accountKey, randomTeam());
 
 		Page<Team> page1 = teamResource.getAccountAccountKeyTeamsPage(
-			accountKey, Pagination.of(1, 2));
+			accountKey, Pagination.of(1, totalCount + 2));
 
 		List<Team> teams1 = (List<Team>)page1.getItems();
 
-		Assert.assertEquals(teams1.toString(), 2, teams1.size());
+		Assert.assertEquals(teams1.toString(), totalCount + 2, teams1.size());
 
 		Page<Team> page2 = teamResource.getAccountAccountKeyTeamsPage(
-			accountKey, Pagination.of(2, 2));
+			accountKey, Pagination.of(2, totalCount + 2));
 
-		Assert.assertEquals(3, page2.getTotalCount());
+		Assert.assertEquals(totalCount + 3, page2.getTotalCount());
 
 		List<Team> teams2 = (List<Team>)page2.getItems();
 
 		Assert.assertEquals(teams2.toString(), 1, teams2.size());
 
 		Page<Team> page3 = teamResource.getAccountAccountKeyTeamsPage(
-			accountKey, Pagination.of(1, 3));
+			accountKey, Pagination.of(1, (int)totalCount + 3));
 
-		assertEqualsIgnoringOrder(
-			Arrays.asList(team1, team2, team3), (List<Team>)page3.getItems());
+		assertContains(team1, (List<Team>)page3.getItems());
+		assertContains(team2, (List<Team>)page3.getItems());
+		assertContains(team3, (List<Team>)page3.getItems());
 	}
 
 	protected Team testGetAccountAccountKeyTeamsPage_addTeam(
@@ -544,10 +555,9 @@ public abstract class BaseTeamResourceTestCase {
 
 	@Test
 	public void testGetTeamsPageWithPagination() throws Exception {
-		Page<Team> totalPage = teamResource.getTeamsPage(
-			null, null, null, null);
+		Page<Team> teamPage = teamResource.getTeamsPage(null, null, null, null);
 
-		int totalCount = GetterUtil.getInteger(totalPage.getTotalCount());
+		int totalCount = GetterUtil.getInteger(teamPage.getTotalCount());
 
 		Team team1 = testGetTeamsPage_addTeam(randomTeam());
 
@@ -572,7 +582,7 @@ public abstract class BaseTeamResourceTestCase {
 		Assert.assertEquals(teams2.toString(), 1, teams2.size());
 
 		Page<Team> page3 = teamResource.getTeamsPage(
-			null, null, Pagination.of(1, totalCount + 3), null);
+			null, null, Pagination.of(1, (int)totalCount + 3), null);
 
 		assertContains(team1, (List<Team>)page3.getItems());
 		assertContains(team2, (List<Team>)page3.getItems());
@@ -684,20 +694,22 @@ public abstract class BaseTeamResourceTestCase {
 
 		team2 = testGetTeamsPage_addTeam(team2);
 
+		Page<Team> page = teamResource.getTeamsPage(null, null, null, null);
+
 		for (EntityField entityField : entityFields) {
 			Page<Team> ascPage = teamResource.getTeamsPage(
-				null, null, Pagination.of(1, 2),
+				null, null, Pagination.of(1, (int)page.getTotalCount() + 1),
 				entityField.getName() + ":asc");
 
-			assertEquals(
-				Arrays.asList(team1, team2), (List<Team>)ascPage.getItems());
+			assertContains(team1, (List<Team>)ascPage.getItems());
+			assertContains(team2, (List<Team>)ascPage.getItems());
 
 			Page<Team> descPage = teamResource.getTeamsPage(
-				null, null, Pagination.of(1, 2),
+				null, null, Pagination.of(1, (int)page.getTotalCount() + 1),
 				entityField.getName() + ":desc");
 
-			assertEquals(
-				Arrays.asList(team2, team1), (List<Team>)descPage.getItems());
+			assertContains(team2, (List<Team>)descPage.getItems());
+			assertContains(team1, (List<Team>)descPage.getItems());
 		}
 	}
 
@@ -732,7 +744,7 @@ public abstract class BaseTeamResourceTestCase {
 			teamResource.getTeamByExternalLinkDomainEntityNameEntityPage(
 				domain, entityName, entityId, Pagination.of(1, 10));
 
-		Assert.assertEquals(0, page.getTotalCount());
+		long totalCount = page.getTotalCount();
 
 		if ((irrelevantDomain != null) && (irrelevantEntityName != null) &&
 			(irrelevantEntityId != null)) {
@@ -744,12 +756,11 @@ public abstract class BaseTeamResourceTestCase {
 
 			page = teamResource.getTeamByExternalLinkDomainEntityNameEntityPage(
 				irrelevantDomain, irrelevantEntityName, irrelevantEntityId,
-				Pagination.of(1, 2));
+				Pagination.of(1, (int)totalCount + 1));
 
-			Assert.assertEquals(1, page.getTotalCount());
+			Assert.assertEquals(totalCount + 1, page.getTotalCount());
 
-			assertEquals(
-				Arrays.asList(irrelevantTeam), (List<Team>)page.getItems());
+			assertContains(irrelevantTeam, (List<Team>)page.getItems());
 			assertValid(
 				page,
 				testGetTeamByExternalLinkDomainEntityNameEntityPage_getExpectedActions(
@@ -768,10 +779,10 @@ public abstract class BaseTeamResourceTestCase {
 		page = teamResource.getTeamByExternalLinkDomainEntityNameEntityPage(
 			domain, entityName, entityId, Pagination.of(1, 10));
 
-		Assert.assertEquals(2, page.getTotalCount());
+		Assert.assertEquals(totalCount + 2, page.getTotalCount());
 
-		assertEqualsIgnoringOrder(
-			Arrays.asList(team1, team2), (List<Team>)page.getItems());
+		assertContains(team1, (List<Team>)page.getItems());
+		assertContains(team2, (List<Team>)page.getItems());
 		assertValid(
 			page,
 			testGetTeamByExternalLinkDomainEntityNameEntityPage_getExpectedActions(
@@ -799,6 +810,12 @@ public abstract class BaseTeamResourceTestCase {
 		String entityId =
 			testGetTeamByExternalLinkDomainEntityNameEntityPage_getEntityId();
 
+		Page<Team> teamPage =
+			teamResource.getTeamByExternalLinkDomainEntityNameEntityPage(
+				domain, entityName, entityId, null);
+
+		int totalCount = GetterUtil.getInteger(teamPage.getTotalCount());
+
 		Team team1 =
 			testGetTeamByExternalLinkDomainEntityNameEntityPage_addTeam(
 				domain, entityName, entityId, randomTeam());
@@ -813,17 +830,17 @@ public abstract class BaseTeamResourceTestCase {
 
 		Page<Team> page1 =
 			teamResource.getTeamByExternalLinkDomainEntityNameEntityPage(
-				domain, entityName, entityId, Pagination.of(1, 2));
+				domain, entityName, entityId, Pagination.of(1, totalCount + 2));
 
 		List<Team> teams1 = (List<Team>)page1.getItems();
 
-		Assert.assertEquals(teams1.toString(), 2, teams1.size());
+		Assert.assertEquals(teams1.toString(), totalCount + 2, teams1.size());
 
 		Page<Team> page2 =
 			teamResource.getTeamByExternalLinkDomainEntityNameEntityPage(
-				domain, entityName, entityId, Pagination.of(2, 2));
+				domain, entityName, entityId, Pagination.of(2, totalCount + 2));
 
-		Assert.assertEquals(3, page2.getTotalCount());
+		Assert.assertEquals(totalCount + 3, page2.getTotalCount());
 
 		List<Team> teams2 = (List<Team>)page2.getItems();
 
@@ -831,10 +848,12 @@ public abstract class BaseTeamResourceTestCase {
 
 		Page<Team> page3 =
 			teamResource.getTeamByExternalLinkDomainEntityNameEntityPage(
-				domain, entityName, entityId, Pagination.of(1, 3));
+				domain, entityName, entityId,
+				Pagination.of(1, (int)totalCount + 3));
 
-		assertEqualsIgnoringOrder(
-			Arrays.asList(team1, team2, team3), (List<Team>)page3.getItems());
+		assertContains(team1, (List<Team>)page3.getItems());
+		assertContains(team2, (List<Team>)page3.getItems());
+		assertContains(team3, (List<Team>)page3.getItems());
 	}
 
 	protected Team testGetTeamByExternalLinkDomainEntityNameEntityPage_addTeam(

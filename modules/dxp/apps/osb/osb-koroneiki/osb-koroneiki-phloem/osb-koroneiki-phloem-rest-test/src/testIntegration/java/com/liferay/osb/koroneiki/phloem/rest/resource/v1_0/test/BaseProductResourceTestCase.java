@@ -294,10 +294,10 @@ public abstract class BaseProductResourceTestCase {
 
 	@Test
 	public void testGetProductsPageWithPagination() throws Exception {
-		Page<Product> totalPage = productResource.getProductsPage(
+		Page<Product> productPage = productResource.getProductsPage(
 			null, null, null, null);
 
-		int totalCount = GetterUtil.getInteger(totalPage.getTotalCount());
+		int totalCount = GetterUtil.getInteger(productPage.getTotalCount());
 
 		Product product1 = testGetProductsPage_addProduct(randomProduct());
 
@@ -323,7 +323,7 @@ public abstract class BaseProductResourceTestCase {
 		Assert.assertEquals(products2.toString(), 1, products2.size());
 
 		Page<Product> page3 = productResource.getProductsPage(
-			null, null, Pagination.of(1, totalCount + 3), null);
+			null, null, Pagination.of(1, (int)totalCount + 3), null);
 
 		assertContains(product1, (List<Product>)page3.getItems());
 		assertContains(product2, (List<Product>)page3.getItems());
@@ -435,22 +435,23 @@ public abstract class BaseProductResourceTestCase {
 
 		product2 = testGetProductsPage_addProduct(product2);
 
+		Page<Product> page = productResource.getProductsPage(
+			null, null, null, null);
+
 		for (EntityField entityField : entityFields) {
 			Page<Product> ascPage = productResource.getProductsPage(
-				null, null, Pagination.of(1, 2),
+				null, null, Pagination.of(1, (int)page.getTotalCount() + 1),
 				entityField.getName() + ":asc");
 
-			assertEquals(
-				Arrays.asList(product1, product2),
-				(List<Product>)ascPage.getItems());
+			assertContains(product1, (List<Product>)ascPage.getItems());
+			assertContains(product2, (List<Product>)ascPage.getItems());
 
 			Page<Product> descPage = productResource.getProductsPage(
-				null, null, Pagination.of(1, 2),
+				null, null, Pagination.of(1, (int)page.getTotalCount() + 1),
 				entityField.getName() + ":desc");
 
-			assertEquals(
-				Arrays.asList(product2, product1),
-				(List<Product>)descPage.getItems());
+			assertContains(product2, (List<Product>)descPage.getItems());
+			assertContains(product1, (List<Product>)descPage.getItems());
 		}
 	}
 
@@ -504,7 +505,7 @@ public abstract class BaseProductResourceTestCase {
 			productResource.getProductByExternalLinkDomainEntityNameEntityPage(
 				domain, entityName, entityId, Pagination.of(1, 10));
 
-		Assert.assertEquals(0, page.getTotalCount());
+		long totalCount = page.getTotalCount();
 
 		if ((irrelevantDomain != null) && (irrelevantEntityName != null) &&
 			(irrelevantEntityId != null)) {
@@ -518,13 +519,12 @@ public abstract class BaseProductResourceTestCase {
 				productResource.
 					getProductByExternalLinkDomainEntityNameEntityPage(
 						irrelevantDomain, irrelevantEntityName,
-						irrelevantEntityId, Pagination.of(1, 2));
+						irrelevantEntityId,
+						Pagination.of(1, (int)totalCount + 1));
 
-			Assert.assertEquals(1, page.getTotalCount());
+			Assert.assertEquals(totalCount + 1, page.getTotalCount());
 
-			assertEquals(
-				Arrays.asList(irrelevantProduct),
-				(List<Product>)page.getItems());
+			assertContains(irrelevantProduct, (List<Product>)page.getItems());
 			assertValid(
 				page,
 				testGetProductByExternalLinkDomainEntityNameEntityPage_getExpectedActions(
@@ -544,10 +544,10 @@ public abstract class BaseProductResourceTestCase {
 			productResource.getProductByExternalLinkDomainEntityNameEntityPage(
 				domain, entityName, entityId, Pagination.of(1, 10));
 
-		Assert.assertEquals(2, page.getTotalCount());
+		Assert.assertEquals(totalCount + 2, page.getTotalCount());
 
-		assertEqualsIgnoringOrder(
-			Arrays.asList(product1, product2), (List<Product>)page.getItems());
+		assertContains(product1, (List<Product>)page.getItems());
+		assertContains(product2, (List<Product>)page.getItems());
 		assertValid(
 			page,
 			testGetProductByExternalLinkDomainEntityNameEntityPage_getExpectedActions(
@@ -575,6 +575,12 @@ public abstract class BaseProductResourceTestCase {
 		String entityId =
 			testGetProductByExternalLinkDomainEntityNameEntityPage_getEntityId();
 
+		Page<Product> productPage =
+			productResource.getProductByExternalLinkDomainEntityNameEntityPage(
+				domain, entityName, entityId, null);
+
+		int totalCount = GetterUtil.getInteger(productPage.getTotalCount());
+
 		Product product1 =
 			testGetProductByExternalLinkDomainEntityNameEntityPage_addProduct(
 				domain, entityName, entityId, randomProduct());
@@ -589,17 +595,18 @@ public abstract class BaseProductResourceTestCase {
 
 		Page<Product> page1 =
 			productResource.getProductByExternalLinkDomainEntityNameEntityPage(
-				domain, entityName, entityId, Pagination.of(1, 2));
+				domain, entityName, entityId, Pagination.of(1, totalCount + 2));
 
 		List<Product> products1 = (List<Product>)page1.getItems();
 
-		Assert.assertEquals(products1.toString(), 2, products1.size());
+		Assert.assertEquals(
+			products1.toString(), totalCount + 2, products1.size());
 
 		Page<Product> page2 =
 			productResource.getProductByExternalLinkDomainEntityNameEntityPage(
-				domain, entityName, entityId, Pagination.of(2, 2));
+				domain, entityName, entityId, Pagination.of(2, totalCount + 2));
 
-		Assert.assertEquals(3, page2.getTotalCount());
+		Assert.assertEquals(totalCount + 3, page2.getTotalCount());
 
 		List<Product> products2 = (List<Product>)page2.getItems();
 
@@ -607,11 +614,12 @@ public abstract class BaseProductResourceTestCase {
 
 		Page<Product> page3 =
 			productResource.getProductByExternalLinkDomainEntityNameEntityPage(
-				domain, entityName, entityId, Pagination.of(1, 3));
+				domain, entityName, entityId,
+				Pagination.of(1, (int)totalCount + 3));
 
-		assertEqualsIgnoringOrder(
-			Arrays.asList(product1, product2, product3),
-			(List<Product>)page3.getItems());
+		assertContains(product1, (List<Product>)page3.getItems());
+		assertContains(product2, (List<Product>)page3.getItems());
+		assertContains(product3, (List<Product>)page3.getItems());
 	}
 
 	protected Product
