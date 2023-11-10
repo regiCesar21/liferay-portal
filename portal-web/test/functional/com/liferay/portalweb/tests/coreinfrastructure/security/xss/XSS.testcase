@@ -361,7 +361,7 @@ definition {
 
 		Site.editPiwikCP(piwik = '''<script>alert(123);</script>''');
 
-		Open.openNoError(locator1 = ${portalURL});
+		Open.openNoError(value1 = ${portalURL});
 
 		AssertConfirm(value1 = 123);
 	}

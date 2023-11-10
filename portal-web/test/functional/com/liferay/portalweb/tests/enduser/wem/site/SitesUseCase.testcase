@@ -831,13 +831,13 @@ definition {
 			javaScript = "alert('Welcome to Russia.');",
 			pageName = "Arenas");
 
-		Open.openNoError(locator1 = "${portalURL}/web/russia2018/Arenas");
+		Open.openNoError(value1 = "${portalURL}/web/russia2018/Arenas");
 
 		AssertConfirm(value1 = "Welcome to Russia.");
 
 		User.logoutPG();
 
-		Open.openNoError(locator1 = "${portalURL}/web/russia2018/Arenas");
+		Open.openNoError(value1 = "${portalURL}/web/russia2018/Arenas");
 
 		AssertConfirm(value1 = "Welcome to Russia.");
 
@@ -845,7 +845,7 @@ definition {
 			password = "test",
 			userEmailAddress = "test@liferay.com");
 
-		Open.openNoError(locator1 = "${portalURL}/web/russia2018");
+		Open.openNoError(value1 = "${portalURL}/web/russia2018");
 
 		Page.viewCustomLogoPG();
 
@@ -857,7 +857,7 @@ definition {
 				viewChildPageDropdown = "PAGE_2");
 		}
 
-		Open.openNoError(locator1 = "${portalURL}/web/russia2018");
+		Open.openNoError(value1 = "${portalURL}/web/russia2018");
 
 		ProductMenu.gotoPortlet(
 			category = "Site Builder",

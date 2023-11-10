@@ -206,7 +206,7 @@ definition {
 
 	@summary = "Default summary"
 	macro logOutPortalURL(url = null) {
-		Open.openNoError(locator1 = ${url});
+		Open.openNoError(value1 = ${url});
 
 		Alert.confirmSecurity();
 	}

@@ -349,7 +349,7 @@ definition {
 		}
 
 		task ("Open an inexistent workspace in a new tab") {
-			Open.openNoError(locator1 = ${workspaceURL});
+			Open.openNoError(value1 = ${workspaceURL});
 		}
 
 		task ("Assert the error message") {
@@ -836,7 +836,7 @@ definition {
 		}
 
 		task ("Open URL and LogIn") {
-			Open.openNoError(locator1 = ${workspaceURL});
+			Open.openNoError(value1 = ${workspaceURL});
 
 			ACLogin.loginAs(
 				emailAddress = "test@liferay.com",
