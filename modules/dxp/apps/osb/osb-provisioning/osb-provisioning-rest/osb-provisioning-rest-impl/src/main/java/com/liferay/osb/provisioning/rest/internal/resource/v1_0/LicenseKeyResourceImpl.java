@@ -1006,8 +1006,8 @@ public class LicenseKeyResourceImpl
 		List<LicenseKey> consolidatedLicenseKeys = new ArrayList<>();
 
 		for (LicenseKey licenseKey : licenseKeys) {
-			List<ProductPurchase> productPurchases = _getActiveProductPurchases(
-				accountKey, licenseKey.getProductKey());
+			List<ProductPurchase> productPurchases =
+				_getGroupedProductPurchases(accountKey, licenseKey);
 
 			List<String> availableProductPurchaseKeys =
 				_getAvailableProductPurchaseKeys(productPurchases);
@@ -1106,49 +1106,6 @@ public class LicenseKeyResourceImpl
 		return sb.toString();
 	}
 
-	private List<ProductPurchase> _getActiveProductPurchases(
-			String accountKey, String productKey)
-		throws Exception {
-
-		FilterQuery filterQuery = new FilterQuery();
-
-		filterQuery.addEquals(true, "accountKey", accountKey);
-		filterQuery.addEquals(true, "property_licenses", "true");
-		filterQuery.addEquals(true, "productKey", productKey);
-
-		List<ProductPurchaseView> productPurchaseViews =
-			_productPurchaseViewWebService.search(
-				StringPool.BLANK, filterQuery, 1, 1, StringPool.BLANK);
-
-		if (productPurchaseViews.isEmpty()) {
-			return new ArrayList<>();
-		}
-
-		List<ProductPurchase> productPurchases = new ArrayList<>();
-
-		for (ProductPurchaseView productPurchaseView : productPurchaseViews) {
-			for (ProductPurchase productPurchase :
-					productPurchaseView.getProductPurchases()) {
-
-				if (productPurchase.getStatus() !=
-						ProductPurchase.Status.APPROVED) {
-
-					continue;
-				}
-
-				String productPurchaseStatus = _getStatus(
-					productPurchase.getStartDate(),
-					productPurchase.getOriginalEndDate());
-
-				if (productPurchaseStatus.equals("active")) {
-					productPurchases.add(productPurchase);
-				}
-			}
-		}
-
-		return productPurchases;
-	}
-
 	private List<String> _getAvailableProductPurchaseKeys(
 			List<ProductPurchase> productPurchases)
 		throws Exception {
@@ -1182,6 +1139,57 @@ public class LicenseKeyResourceImpl
 		}
 
 		return _flsTeamRoleKey;
+	}
+
+	private List<ProductPurchase> _getGroupedProductPurchases(
+			String accountKey, LicenseKey licenseKey)
+		throws Exception {
+
+		FilterQuery filterQuery = new FilterQuery();
+
+		filterQuery.addEquals(true, "accountKey", accountKey);
+		filterQuery.addEquals(true, "property_licenses", "true");
+		filterQuery.addEquals(true, "productKey", licenseKey.getProductKey());
+
+		List<ProductPurchaseView> productPurchaseViews =
+			_productPurchaseViewWebService.search(
+				StringPool.BLANK, filterQuery, 1, 1, StringPool.BLANK);
+
+		Date licenseKeyStartDate = licenseKey.getStartDate();
+
+		String status = "active";
+
+		if (licenseKeyStartDate.after(new Date())) {
+			status = "future";
+		}
+
+		if (productPurchaseViews.isEmpty()) {
+			return new ArrayList<>();
+		}
+
+		List<ProductPurchase> productPurchases = new ArrayList<>();
+
+		for (ProductPurchaseView productPurchaseView : productPurchaseViews) {
+			for (ProductPurchase productPurchase :
+					productPurchaseView.getProductPurchases()) {
+
+				if (productPurchase.getStatus() !=
+						ProductPurchase.Status.APPROVED) {
+
+					continue;
+				}
+
+				String productPurchaseStatus = _getStatus(
+					productPurchase.getStartDate(),
+					productPurchase.getOriginalEndDate());
+
+				if (productPurchaseStatus.equals(status)) {
+					productPurchases.add(productPurchase);
+				}
+			}
+		}
+
+		return productPurchases;
 	}
 
 	private LicenseKeyEndDate[] _getLicenseKeyEndDates(
@@ -2128,16 +2136,16 @@ public class LicenseKeyResourceImpl
 				}
 			}
 
-			List<ProductPurchase> activeProductPurchases =
-				_getActiveProductPurchases(accountKey, productKey);
+			List<ProductPurchase> groupedProductPurchases =
+				_getGroupedProductPurchases(accountKey, licenseKey);
 
 			Date productPurchaseStartDate = productPurchase.getStartDate();
 
-			for (ProductPurchase curProductPurchase : activeProductPurchases) {
+			for (ProductPurchase curProductPurchase : groupedProductPurchases) {
 				Date curStartDate = curProductPurchase.getStartDate();
 
 				if ((curStartDate != null) &&
-					curStartDate.before(productPurchase.getStartDate())) {
+					curStartDate.before(productPurchaseStartDate)) {
 
 					productPurchaseStartDate = curStartDate;
 				}
@@ -2175,7 +2183,7 @@ public class LicenseKeyResourceImpl
 			int productionConsumptionsCount = _getProductConsumptionsCount(
 				productPurchase, true);
 
-			for (ProductPurchase curProductPurchase : activeProductPurchases) {
+			for (ProductPurchase curProductPurchase : groupedProductPurchases) {
 				String curProductPurchaseKey = curProductPurchase.getKey();
 
 				if (curProductPurchaseKey.equals(productPurchase.getKey())) {
@@ -2195,7 +2203,7 @@ public class LicenseKeyResourceImpl
 			}
 
 			if ((productionConsumptionsCount + serverCount) >
-					_getTotalProductQuantity(activeProductPurchases)) {
+					_getTotalProductQuantity(groupedProductPurchases)) {
 
 				throw new PrincipalException(
 					"The subscriptions have no more available licenses");
