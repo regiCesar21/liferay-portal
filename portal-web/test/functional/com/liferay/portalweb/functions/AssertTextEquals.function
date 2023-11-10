@@ -33,7 +33,7 @@ definition {
 	function assertText(locator1, value1) {
 		WaitForSPARefresh();
 
-		selenium.waitForVisible(${locator1}, "true");
+		selenium.waitForVisible(${locator1}, "false");
 
 		selenium.waitForTextCaseInsensitive(${locator1}, ${value1});
 
@@ -72,7 +72,7 @@ definition {
 	function assertValue(locator1, value1) {
 		WaitForSPARefresh();
 
-		selenium.waitForVisible(${locator1}, "true");
+		selenium.waitForVisible(${locator1}, "false");
 
 		selenium.waitForValue(${locator1}, ${value1});
 
