@@ -378,6 +378,7 @@ exports[`Grid is not required 1`] = `
                   <label>
                     <input
                       aria-label="row: row, column: col1"
+                      aria-required="false"
                       class="custom-control-input form-builder-grid-field"
                       data-name="jehf"
                       name="undefined_jehf"

@@ -51,6 +51,7 @@ const Radio = ({
 			<div className="ddm-radio" onBlur={onBlur} onFocus={onFocus}>
 				{options.map((option, index) => (
 					<ClayRadio
+						aria-required={otherProps.required}
 						checked={currentValue === option.value}
 						disabled={disabled}
 						inline={inline}

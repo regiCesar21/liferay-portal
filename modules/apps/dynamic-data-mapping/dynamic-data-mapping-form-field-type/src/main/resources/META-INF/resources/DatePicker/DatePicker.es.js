@@ -164,6 +164,7 @@ const WeekdayShort = [
 ];
 
 const DatePicker = ({
+	accessibleProps,
 	defaultLanguageId,
 	disabled,
 	formatInEditingLocale,
@@ -267,6 +268,7 @@ const DatePicker = ({
 				value={getValueForHidden(value, locale)}
 			/>
 			<ClayDatePicker
+				{...accessibleProps}
 				dateFormat={dateMask}
 				disabled={disabled}
 				expanded={expanded}
@@ -350,6 +352,9 @@ const Main = ({
 		style={null}
 	>
 		<DatePicker
+			accessibleProps={{
+				'aria-required': otherProps.required,
+			}}
 			defaultLanguageId={defaultLanguageId}
 			disabled={readOnly}
 			formatInEditingLocale={

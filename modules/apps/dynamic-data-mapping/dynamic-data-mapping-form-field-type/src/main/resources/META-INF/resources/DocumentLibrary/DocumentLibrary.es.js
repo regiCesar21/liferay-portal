@@ -56,6 +56,7 @@ function transformFileEntryProperties({fileEntryTitle, fileEntryURL, value}) {
 }
 
 const DocumentLibrary = ({
+	accessibleProps,
 	fileEntryTitle = '',
 	fileEntryURL = '',
 	id,
@@ -99,6 +100,7 @@ const DocumentLibrary = ({
 
 					<ClayInput.GroupItem append shrink>
 						<ClayButton
+							{...accessibleProps}
 							className="select-button"
 							disabled={readOnly}
 							displayType="secondary"
@@ -140,6 +142,7 @@ const DocumentLibrary = ({
 };
 
 const GuestUploadFile = ({
+	accessibleProps,
 	fileEntryTitle = '',
 	fileEntryURL = '',
 	id,
@@ -187,6 +190,7 @@ const GuestUploadFile = ({
 						{Liferay.Language.get('select')}
 					</label>
 					<input
+						{...accessibleProps}
 						className="input-file"
 						disabled={readOnly}
 						id={`${name}inputFileGuestUpload`}
@@ -470,6 +474,7 @@ const Main = ({
 		>
 			{allowGuestUsers && !isSignedIn ? (
 				<GuestUploadFile
+					accessibleProps={{'aria-required': otherProps.required}}
 					fileEntryTitle={fileEntryTitle}
 					fileEntryURL={fileEntryURL}
 					id={id}
@@ -499,6 +504,7 @@ const Main = ({
 				/>
 			) : (
 				<DocumentLibrary
+					accessibleProps={{'aria-required': otherProps.required}}
 					fileEntryTitle={fileEntryTitle}
 					fileEntryURL={fileEntryURL}
 					id={id}

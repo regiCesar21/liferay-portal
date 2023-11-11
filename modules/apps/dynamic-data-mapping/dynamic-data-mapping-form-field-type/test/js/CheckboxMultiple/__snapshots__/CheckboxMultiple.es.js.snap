@@ -635,6 +635,7 @@ exports[`Field Checkbox Multiple is not required 1`] = `
           class="simple-toggle-switch toggle-switch"
         >
           <input
+            aria-required="false"
             class="toggle-switch-check"
             name="undefined_0"
             type="checkbox"
@@ -662,6 +663,7 @@ exports[`Field Checkbox Multiple is not required 1`] = `
           class="simple-toggle-switch toggle-switch"
         >
           <input
+            aria-required="false"
             class="toggle-switch-check"
             name="undefined_1"
             type="checkbox"

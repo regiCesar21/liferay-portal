@@ -28,6 +28,7 @@ const TableHead = ({columns}) => (
 );
 
 const TableBodyColumns = ({
+	accessibleProps,
 	columns,
 	disabled,
 	name,
@@ -44,7 +45,10 @@ const TableBodyColumns = ({
 		return (
 			<ClayTable.Cell key={`cell-${column.value}-${colIndex}`}>
 				<ClayRadio
-					aria-label={`${rowLabel}: ${row.label}, ${columnLabel}: ${column.label}`}
+					{...{
+						...accessibleProps,
+						'aria-label': `${rowLabel}: ${row.label}, ${columnLabel}: ${column.label}`,
+					}}
 					checked={column.value === value[row.value]}
 					className="form-builder-grid-field"
 					data-name={row.value}
@@ -61,6 +65,7 @@ const TableBodyColumns = ({
 };
 
 const Grid = ({
+	accessibleProps,
 	columns = [{label: 'col1', value: 'fieldId'}],
 	disabled,
 	name,
@@ -101,6 +106,7 @@ const Grid = ({
 							<ClayTable.Cell>{row.label}</ClayTable.Cell>
 
 							<TableBodyColumns
+								accessibleProps={accessibleProps}
 								columns={columns}
 								disabled={disabled}
 								name={`${name}_${row.value}`}
@@ -134,6 +140,9 @@ const Main = ({
 	return (
 		<FieldBase {...otherProps} name={name} readOnly={readOnly} style={null}>
 			<Grid
+				accessibleProps={{
+					'aria-required': otherProps.required,
+				}}
 				columns={columns}
 				disabled={readOnly}
 				name={name}

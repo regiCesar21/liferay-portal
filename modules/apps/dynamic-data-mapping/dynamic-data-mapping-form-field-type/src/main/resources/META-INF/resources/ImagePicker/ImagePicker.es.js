@@ -15,6 +15,7 @@ import {useSyncValue} from '../hooks/useSyncValue.es';
 const defaultValue = {description: '', title: '', url: ''};
 
 const ImagePicker = ({
+	accessibleProps,
 	id,
 	inputValue,
 	itemSelectorURL,
@@ -115,6 +116,7 @@ const ImagePicker = ({
 
 					<ClayInput.GroupItem append shrink>
 						<ClayButton
+							{...accessibleProps}
 							disabled={readOnly}
 							displayType="secondary"
 							onBlur={onBlur}
@@ -273,6 +275,9 @@ const Main = ({
 			valid={isSignedIn ? valid : false}
 		>
 			<ImagePicker
+				accessibleProps={{
+					'aria-required': otherProps.required,
+				}}
 				id={id}
 				inputValue={
 					transformValue(inputValue) ??

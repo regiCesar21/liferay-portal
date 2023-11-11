@@ -420,6 +420,7 @@ exports[`Field DocumentLibrary is not required 1`] = `
           class="input-group-item input-group-append input-group-item-shrink"
         >
           <button
+            aria-required="false"
             class="select-button btn btn-secondary"
             type="button"
           >

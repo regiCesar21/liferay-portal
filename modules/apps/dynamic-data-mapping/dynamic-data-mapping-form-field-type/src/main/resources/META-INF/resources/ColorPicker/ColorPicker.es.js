@@ -24,6 +24,7 @@ const DEFAULT_COLORS = [
 ];
 
 const ClayColorPickerWithState = ({
+	accessibleProps,
 	inputValue,
 	name,
 	onBlur,
@@ -46,6 +47,7 @@ const ClayColorPickerWithState = ({
 
 	return (
 		<ClayColorPicker
+			{...accessibleProps}
 			colors={customColors}
 			disabled={readOnly}
 			label={Liferay.Language.get('color-field-type-label')}
@@ -137,6 +139,9 @@ const ColorPicker = ({
 			style={null}
 		>
 			<ClayColorPickerWithState
+				accessibleProps={{
+					'aria-required': otherProps.required,
+				}}
 				inputValue={value ? value : predefinedValue}
 				name={name}
 				onBlur={onBlur}

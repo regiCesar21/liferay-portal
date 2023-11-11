@@ -20,6 +20,7 @@ const Switcher = ({
 	onChange,
 	onFocus,
 	value,
+	...otherProps
 }) => (
 	<div
 		className={classNames('lfr-ddm-form-field-checkbox-switch', {
@@ -28,6 +29,7 @@ const Switcher = ({
 	>
 		<label className="simple-toggle-switch toggle-switch">
 			<input
+				{...otherProps}
 				checked={checked}
 				className="toggle-switch-check"
 				disabled={disabled}
@@ -47,6 +49,7 @@ const Switcher = ({
 );
 
 const CheckboxMultiple = ({
+	accessibleProps,
 	disabled,
 	inline,
 	isSwitcher,
@@ -85,6 +88,7 @@ const CheckboxMultiple = ({
 		<div className="lfr-ddm-checkbox-multiple">
 			{options.map((option, index) => (
 				<Toggle
+					{...accessibleProps}
 					checked={displayValues.includes(option.value)}
 					disabled={disabled}
 					inline={inline}
@@ -127,6 +131,9 @@ const Main = ({
 }) => (
 	<FieldBase {...otherProps} name={name} readOnly={readOnly} style={null}>
 		<CheckboxMultiple
+			accessibleProps={{
+				'aria-required': otherProps.required,
+			}}
 			disabled={readOnly}
 			inline={inline}
 			isSwitcher={showAsSwitcher}
