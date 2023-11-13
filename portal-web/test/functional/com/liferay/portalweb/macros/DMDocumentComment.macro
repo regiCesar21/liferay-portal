@@ -10,13 +10,9 @@ definition {
 			locator1 = "Comments#COMMENT_FIELD",
 			value1 = ${commentBody});
 
-		Pause(locator1 = 3000);
-
 		AssertClick(
 			locator1 = "Button#REPLY",
 			value1 = "Reply");
-
-		Pause(locator1 = 3000);
 
 		Alert.viewSuccessMessage();
 	}

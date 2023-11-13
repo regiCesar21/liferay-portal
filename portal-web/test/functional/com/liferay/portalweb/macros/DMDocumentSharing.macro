@@ -24,8 +24,6 @@ definition {
 			roleTitle = "Guest");
 
 		IFrame.closeFrame();
-
-		Pause(locator1 = 5000);
 	}
 
 	macro changePermission {

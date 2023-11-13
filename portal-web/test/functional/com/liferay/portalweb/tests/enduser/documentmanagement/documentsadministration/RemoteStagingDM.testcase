@@ -231,8 +231,6 @@ definition {
 
 		Staging.publishToLive(remoteStaging = "true");
 
-		Pause(locator1 = 5000);
-
 		AssertConsoleTextNotPresent(value1 = "RuntimeException");
 
 		Navigator.gotoSitePage(

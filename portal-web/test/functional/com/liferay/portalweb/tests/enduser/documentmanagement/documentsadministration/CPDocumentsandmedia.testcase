@@ -808,6 +808,8 @@ definition {
 			locator1 = "Message#INFO",
 			value1 = "Generating preview will take a few minutes.");
 
+		// Pausing 60 seconds due to reasons here. See LPS-88785
+
 		Pause(locator1 = 60000);
 
 		Refresh();

@@ -1786,8 +1786,6 @@ definition {
 			panel = "Control Panel",
 			portlet = "Search");
 
-		Pause(locator1 = 3000);
-
 		SearchAdministration.executeSearchActions(actionsDescription = "Reindex all search indexes.");
 
 		ApplicationsMenu.gotoPortlet(
@@ -1947,8 +1945,6 @@ definition {
 			roleTitle = "Guest");
 
 		IFrame.closeFrame();
-
-		Pause(locator1 = 3000);
 
 		SitePages.openPagesAdmin(siteURLKey = "Site Name 1");
 
