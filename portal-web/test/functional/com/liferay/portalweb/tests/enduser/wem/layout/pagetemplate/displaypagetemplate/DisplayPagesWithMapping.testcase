@@ -448,8 +448,6 @@ definition {
 				locator1 = "Select#GENERIC_SELECT_FIELD",
 				value1 = "Web Content Article");
 
-			Pause(locator1 = 3000);
-
 			for (var subtype : list "Basic Web Content,WC Structure Name") {
 				AssertElementPresent(
 					key_fieldLabel = "Subtype",
@@ -461,8 +459,6 @@ definition {
 				key_fieldLabel = "Content Type",
 				locator1 = "Select#GENERIC_SELECT_FIELD",
 				value1 = "Document");
-
-			Pause(locator1 = 3000);
 
 			for (var subtype : list "Basic Document,Google Drive Shortcut,DM Document Type Name") {
 				AssertElementPresent(
