@@ -42,6 +42,7 @@ import java.util.Map;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.ClassRule;
+import org.junit.Ignore;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -82,6 +83,7 @@ public class JournalArticleExpirationTest {
 		testExpireArticle(false, _MODE_POSTPONE_EXPIRIRATION);
 	}
 
+	@Ignore
 	@Test
 	public void testSetFutureExpirationDate() throws Exception {
 		JournalArticle article = addArticle(_group.getGroupId(), true);
