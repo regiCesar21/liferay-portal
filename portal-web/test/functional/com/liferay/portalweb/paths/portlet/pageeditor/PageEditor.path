@@ -537,6 +537,11 @@
 	<td>//li[contains(@class,'page-editor__fragments-widgets__tab-item')][normalize-space()='${key_fragmentName}']</td>
 	<td></td>
 </tr>
+<tr>
+	<td>FRAGMENTS_AND_WIDGETS_SEARCH_FIELD</td>
+	<td>//div[contains(@class,'page-editor__sidebar')]//div[@role='search']//input[contains(@placeholder,'Search')]</td>
+	<td></td>
+</tr>
 
 <!--FOOTER_FRAGMENT-->
 
