@@ -1167,24 +1167,48 @@ public class LicenseKeyResourceImpl
 			return new ArrayList<>();
 		}
 
+		ProductPurchase productPurchase =
+			_productPurchaseWebService.getProductPurchase(
+				licenseKey.getProductPurchaseKey());
+
+		Map<String, String> properties = productPurchase.getProperties();
+
+		Integer sizing = null;
+
+		if ((properties != null) && properties.containsKey("sizing")) {
+			sizing = GetterUtil.getInteger(properties.get("sizing"));
+		}
+
 		List<ProductPurchase> productPurchases = new ArrayList<>();
 
 		for (ProductPurchaseView productPurchaseView : productPurchaseViews) {
-			for (ProductPurchase productPurchase :
+			for (ProductPurchase curProductPurchase :
 					productPurchaseView.getProductPurchases()) {
 
-				if (productPurchase.getStatus() !=
+				if (curProductPurchase.getStatus() !=
 						ProductPurchase.Status.APPROVED) {
 
 					continue;
 				}
 
-				String productPurchaseStatus = _getStatus(
-					productPurchase.getStartDate(),
-					productPurchase.getOriginalEndDate());
+				Map<String, String> curProperties =
+					curProductPurchase.getProperties();
 
-				if (productPurchaseStatus.equals(status)) {
-					productPurchases.add(productPurchase);
+				Integer curSizing = null;
+
+				if ((curProperties != null) &&
+					curProperties.containsKey("sizing")) {
+
+					curSizing = GetterUtil.getInteger(
+						curProperties.get("sizing"));
+				}
+
+				String curStatus = _getStatus(
+					curProductPurchase.getStartDate(),
+					curProductPurchase.getOriginalEndDate());
+
+				if (curStatus.equals(status) && (curSizing == sizing)) {
+					productPurchases.add(curProductPurchase);
 				}
 			}
 		}
