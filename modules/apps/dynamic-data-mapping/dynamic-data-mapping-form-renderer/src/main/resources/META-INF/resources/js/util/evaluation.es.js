@@ -30,6 +30,8 @@ const doEvaluate = debounce((fieldName, evaluatorContext, callback) => {
 		controller = new AbortController();
 	}
 
+	sanitizePagesCaptchaHTML(pages);
+
 	makeFetch({
 		body: convertToFormData({
 			languageId: editingLanguageId,
@@ -59,6 +61,15 @@ const doEvaluate = debounce((fieldName, evaluatorContext, callback) => {
 		.catch(error => callback(error));
 }, 600);
 
+const sanitizePagesCaptchaHTML = pages => {
+	const visitor = new PagesVisitor(pages);
+
+	visitor.mapFields(field => {
+		if (field.fieldName === '_CAPTCHA_') {
+			delete field.html;
+		}
+	});
+};
 export const evaluate = (fieldName, evaluatorContext) => {
 	return new Promise((resolve, reject) => {
 		doEvaluate(fieldName, evaluatorContext, (error, pages) => {
