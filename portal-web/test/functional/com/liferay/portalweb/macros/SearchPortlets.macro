@@ -29,19 +29,26 @@ definition {
 
 	@summary = "Default summary"
 	macro addWidgetsOnContentPageViaUI {
+		PageEditor.assertFragmentSidebarLoaded();
+
+		Click(
+			key_tabName = "Widgets",
+			locator1 = "PageEditor#FRAGMENT_SIDEBAR_TAB_BUTTON");
+
+		Type.sendKeysApplicationSearch(
+			locator1 = "PageEditor#WIDGETS_APPLICATION_SEARCH_FIELD",
+			value1 = "Search");
+
 		for (var portletName : list ${searchPortletList}) {
-			if (isSet(previousPortletName)) {
-				PageEditor.addWidget(
-					portletName = ${portletName},
-					targetFragmentName = ${previousPortletName});
-			}
-			else {
-				PageEditor.addWidget(portletName = ${portletName});
-			}
+			DragAndDrop(
+				key_portletName = ${portletName},
+				locator1 = "PageEditor#WIDGETS_ADD_PORTLET_DRAG_LINK",
+				locator2 = "PageEditor#FRAGMENT_DROP_TARGET",
+				value1 = ${portletName});
 
 			AssertElementNotPresent(locator1 = "Message#ERROR");
 
-			var previousPortletName = ${portletName};
+			PageEditor.viewFragment(fragmentName = ${portletName});
 		}
 	}
 
