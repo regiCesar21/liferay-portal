@@ -357,7 +357,11 @@ definition {
 	test ModifyPaginationPortalProperties {
 		property custom.properties = "search.container.page.default.delta=2";
 
-		SearchPortlets.addWidgets(searchPortletList = "Search Results");
+		SearchPortlets.addWidgets(
+			layoutName = "Home",
+			searchPortletList = "Search Results");
+
+		Refresh();
 
 		Portlet.gotoPortletOptions(
 			portletName = "Search Results",

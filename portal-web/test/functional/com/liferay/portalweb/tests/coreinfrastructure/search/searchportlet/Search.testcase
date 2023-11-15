@@ -695,7 +695,11 @@ definition {
 		property operating.system.types = "alpine,amazonlinux,centos,debian,fedora,orcllinux,osx,redhat,solaris,suse,ubuntu,windows";
 		property portal.acceptance = "true";
 
-		SearchPortlets.addWidgets(searchPortletList = "Search Results");
+		SearchPortlets.addWidgets(
+			layoutName = "Home",
+			searchPortletList = "Search Results");
+
+		Refresh();
 
 		Portlet.gotoPortletOptions(
 			portletName = "Search Results",
@@ -717,10 +721,6 @@ definition {
 		}
 
 		SearchPortlets.searchEmbedded(searchTerm = "WC Title");
-
-		while (IsElementNotPresent(key_searchAssetTitle = "WC Title 1", locator1 = "SearchResults#ASSET_ENTRY_TABLE_TITLE")) {
-			Pause(value1 = 5000);
-		}
 
 		Portlet.gotoPortletOptions(
 			portletName = "Search Results",
