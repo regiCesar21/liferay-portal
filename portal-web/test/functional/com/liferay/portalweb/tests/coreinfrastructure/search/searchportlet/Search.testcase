@@ -160,9 +160,9 @@ definition {
 	@description = "This is a use case for LPS-138720."
 	@priority = 4
 	test AssertCustomFacetNoXSS {
-		Search.openSearchPage();
+		SearchPortlets.addWidgets(searchPortletList = "Custom Facet");
 
-		SearchPortlets.addWidgetsOnWidgetPageViaUI(searchPortletList = "Custom Facet");
+		Search.openSearchPage();
 
 		SearchFacetPortlet.configureCustomFacet(
 			aggregationField = "title_sortable",
@@ -609,7 +609,9 @@ definition {
 			searchAssetTitle = "WC Title",
 			searchAssetType = "Web Content Article");
 
-		SearchPortlets.addWidgetsOnWidgetPageViaUI(searchPortletList = "Custom Facet");
+		SearchPortlets.addWidgets(searchPortletList = "Custom Facet");
+
+		Refresh();
 
 		var aggregationField = "ddm__keyword__${structureId}__Text_en_US";
 
@@ -1944,9 +1946,9 @@ definition {
 
 		var aggregationField = "ddm__keyword__${classTypeId}__Text";
 
-		Search.openSearchPage();
+		SearchPortlets.addWidgets(searchPortletList = "Custom Facet");
 
-		SearchPortlets.addWidgetsOnWidgetPageViaUI(searchPortletList = "Custom Facet");
+		Search.openSearchPage();
 
 		SearchFacetPortlet.configureCustomFacet(aggregationField = ${aggregationField});
 
@@ -2553,7 +2555,7 @@ definition {
 		SearchPortlets.addWidgets(
 			layoutName = "Search Page",
 			searchPortletList = "Site Facet,Search Results,Search Bar");
-		
+
 		Navigator.gotoPage(pageName = "Search Page");
 
 		SearchPortlets.configureSearchBarWidget(searchScope = "Everything");
