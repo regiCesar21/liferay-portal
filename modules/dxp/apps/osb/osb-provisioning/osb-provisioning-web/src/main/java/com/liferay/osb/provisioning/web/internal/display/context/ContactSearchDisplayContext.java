@@ -53,15 +53,25 @@ public class ContactSearchDisplayContext {
 	}
 
 	public String getCurrentURL() {
-		return _currentURLObj.toString();
+		PortletURL currentPageURL = _currentURLObj;
+
+		currentPageURL.setParameter(
+			"keywords", ParamUtil.getString(_renderRequest, "keywords"));
+
+		return currentPageURL.toString();
 	}
 
 	public SearchContainer getSearchContainer() throws Exception {
+		String keywords = ParamUtil.getString(_renderRequest, "keywords");
+
+		PortletURL searchURL = PortletURLUtil.clone(
+			_currentURLObj, _renderResponse);
+
+		searchURL.setParameter("keywords", keywords);
+
 		SearchContainer searchContainer = new SearchContainer(
 			_renderRequest, _currentURLObj, Collections.emptyList(),
 			"no-contacts-were-found");
-
-		String keywords = ParamUtil.getString(_renderRequest, "keywords");
 
 		List<Contact> contacts = _contactWebService.search(
 			keywords, null, searchContainer.getCur(),
