@@ -71,26 +71,30 @@ public class ContactDTOConverterImpl implements ContactDTOConverter {
 				languageId = contact.getLanguageId();
 				lastName = contact.getLastName();
 				middleName = contact.getMiddleName();
-
-				List<String> auxillaryFields = null;
-
-				if (dtoConverterContext != null) {
-					auxillaryFields =
-						(List<String>)dtoConverterContext.getAttribute(
-							"auxillaryFields");
-				}
-
-				if ((auxillaryFields != null) &&
-					auxillaryFields.contains("contact.phones")) {
-
-					phones = _getClientPhones(contact.getUuid());
-				}
-
 				teams = TransformUtil.transformToArray(
 					contact.getTeams(), TeamUtil::toClientTeam,
 					com.liferay.osb.koroneiki.phloem.rest.client.dto.v1_0.Team.
 						class);
 				uuid = contact.getUuid();
+
+				setPhones(
+					() -> {
+						List<String> auxillaryFields = null;
+
+						if (dtoConverterContext != null) {
+							auxillaryFields =
+								(List<String>)dtoConverterContext.getAttribute(
+									"auxillaryFields");
+						}
+
+						if ((auxillaryFields != null) &&
+							auxillaryFields.contains("contact.phones")) {
+
+							return _getClientPhones(contact.getUuid());
+						}
+
+						return null;
+					});
 			}
 		};
 	}
