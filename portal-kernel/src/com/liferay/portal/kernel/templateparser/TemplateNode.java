@@ -200,7 +200,7 @@ public class TemplateNode extends LinkedHashMap<String, Object> {
 
 		String data = (String)get("data");
 
-		if (JSONUtil.isValid(data)) {
+		if (Validator.isNotNull(data) && JSONUtil.isValid(data)) {
 			try {
 				JSONObject jsonObject = JSONFactoryUtil.createJSONObject(data);
 
