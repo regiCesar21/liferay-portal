@@ -1565,6 +1565,12 @@ public class LicenseKeyResourceImpl
 			for (ProductPurchase productPurchase :
 					productPurchaseView.getProductPurchases()) {
 
+				if (productPurchase.getStatus() ==
+						ProductPurchase.Status.CANCELLED) {
+
+					continue;
+				}
+
 				SubscriptionTerm subscriptionTerm = new SubscriptionTerm();
 
 				Map<String, String> properties =
