@@ -5,7 +5,7 @@ definition {
 	 */
 
 	@summary = "Default summary"
-	macro addWidgets {
+	macro addWidgets(searchPortletList = null) {
 		if (!(isSet(column))) {
 			var column = 1;
 		}
@@ -28,7 +28,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro addWidgetsOnContentPageViaUI {
+	macro addWidgetsOnContentPageViaUI(searchPortletList = null) {
 		PageEditor.assertFragmentSidebarLoaded();
 
 		Click(
@@ -53,7 +53,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro addWidgetsOnWidgetPageViaUI {
+	macro addWidgetsOnWidgetPageViaUI(searchPortletList = null) {
 		if (IsNotVisible(locator1 = "ControlMenuAddPanel#CLOSE_ADD_PANEL")) {
 			Click.clickAt(locator1 = "ControlMenu#ADD");
 		}
