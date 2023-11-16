@@ -1167,16 +1167,18 @@ public class LicenseKeyResourceImpl
 			return new ArrayList<>();
 		}
 
-		ProductPurchase productPurchase =
-			_productPurchaseWebService.getProductPurchase(
-				licenseKey.getProductPurchaseKey());
-
-		Map<String, String> properties = productPurchase.getProperties();
-
 		Integer sizing = null;
 
-		if ((properties != null) && properties.containsKey("sizing")) {
-			sizing = GetterUtil.getInteger(properties.get("sizing"));
+		if (Validator.isNotNull(licenseKey.getProductPurchaseKey())) {
+			ProductPurchase productPurchase =
+				_productPurchaseWebService.getProductPurchase(
+					licenseKey.getProductPurchaseKey());
+
+			Map<String, String> properties = productPurchase.getProperties();
+
+			if ((properties != null) && properties.containsKey("sizing")) {
+				sizing = GetterUtil.getInteger(properties.get("sizing"));
+			}
 		}
 
 		List<ProductPurchase> productPurchases = new ArrayList<>();
