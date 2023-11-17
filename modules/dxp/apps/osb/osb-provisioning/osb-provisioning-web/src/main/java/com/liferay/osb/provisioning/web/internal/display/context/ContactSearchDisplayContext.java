@@ -64,11 +64,6 @@ public class ContactSearchDisplayContext {
 	public SearchContainer getSearchContainer() throws Exception {
 		String keywords = ParamUtil.getString(_renderRequest, "keywords");
 
-		PortletURL searchURL = PortletURLUtil.clone(
-			_currentURLObj, _renderResponse);
-
-		searchURL.setParameter("keywords", keywords);
-
 		SearchContainer searchContainer = new SearchContainer(
 			_renderRequest, _currentURLObj, Collections.emptyList(),
 			"no-contacts-were-found");
