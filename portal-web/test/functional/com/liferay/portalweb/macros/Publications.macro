@@ -13,8 +13,6 @@ definition {
 			key_publicationName = ${publicationName},
 			locator1 = "Publications#PUBLISHED_PUBLICATION_NAME");
 
-		Pause(value1 = 1000);
-
 		var key_changeCategory = ${changeCategory};
 		var key_changeTitle = ${changeTitle};
 
@@ -25,6 +23,11 @@ definition {
 
 	@summary = "Default summary"
 	macro assertScheduledPublicationPublished(publicationName = null) {
+
+		// This pause is required to allow the test to wait for the scheduled Publication to be published. See LRQA-70977 for more details.
+
+		Pause(value1 = 240000);
+
 		Click(
 			key_navBarTitle = "History",
 			locator1 = "Publications#MANGE_PUBLICATIONS_NAVBAR_TITLE");
@@ -84,7 +87,7 @@ definition {
 
 		Button.click(button = "Create");
 
-		Pause(value1 = 5000);
+		Alert.viewSuccessMessage();
 	}
 
 	@summary = "Default summary"
@@ -148,8 +151,6 @@ definition {
 			MenuItem.click(menuItem = "Discard");
 		}
 
-		Pause(value1 = 3000);
-
 		AssertElementPresent(locator1 = "Publications#DISCARDED_CHANGES_TITLE");
 
 		var key_changeCategory = ${changeCategory};
@@ -168,8 +169,6 @@ definition {
 
 	@summary = "Default summary"
 	macro enablePublications() {
-		Pause(value1 = 2000);
-
 		Check.checkToggleSwitch(locator1 = "PublicationsSettings#PUBLICATIONS_TOGGLE_SWITCH");
 
 		if (isSet(gotoOverview)) {
@@ -258,8 +257,6 @@ definition {
 		}
 
 		MenuItem.click(menuItem = "Review Changes");
-
-		Pause(value1 = 3000);
 	}
 
 	@summary = "Default summary"
@@ -283,8 +280,6 @@ definition {
 		Click(
 			key_entryTitle = ${entryTitle},
 			locator1 = "Publications#CONFLICTING_CHANGES_CONTENT_LINK");
-
-		Pause(value1 = 1000);
 
 		AssertElementPresent(
 			key_iframeTitle = ${entryTitle},
@@ -396,8 +391,6 @@ definition {
 			MenuItem.click(menuItem = "Reschedule");
 
 			// Workaround LPS-123416
-
-			Pause(value1 = 1000);
 
 			Click.mouseOverClick(locator1 = "Publications#DELETE_THE_ENTERED_TIME_BUTTON");
 		}

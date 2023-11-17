@@ -474,8 +474,6 @@ definition {
 
 		IFrame.closeFrame();
 
-		Pause(value1 = 3000);
-
 		Publications.discardChanges(
 			changeCategory = "Asset",
 			changeTitle = "WC WebContent Title 2 Edit",
@@ -843,8 +841,6 @@ definition {
 
 		Publications.schedulePublication(publicationName = "Publication Name 1");
 
-		Pause(value1 = 240000);
-
 		Publications.assertScheduledPublicationPublished(publicationName = "Publication Name 1");
 
 		Publications.createNewPublication(publicationName = "Publication Name 2");
@@ -867,8 +863,6 @@ definition {
 			gotoManagePublications = "true",
 			publicationName = "Publication Name 2");
 
-		Pause(value1 = 240000);
-
 		Publications.assertScheduledPublicationPublished(publicationName = "Publication Name 2");
 
 		Publications.createNewPublication(publicationName = "Publication Name 3");
@@ -890,8 +884,6 @@ definition {
 		Publications.schedulePublication(
 			gotoReviewChanges = "true",
 			publicationName = "Publication Name 3");
-
-		Pause(value1 = 240000);
 
 		Publications.assertScheduledPublicationPublished(publicationName = "Publication Name 3");
 	}

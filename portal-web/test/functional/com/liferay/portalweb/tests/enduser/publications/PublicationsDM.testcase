@@ -160,8 +160,6 @@ definition {
 
 		IFrame.closeFrame();
 
-		Pause(value1 = 3000);
-
 		Publications.discardChanges(
 			changeCategory = "Asset",
 			changeTitle = "DM Document Title Edit",

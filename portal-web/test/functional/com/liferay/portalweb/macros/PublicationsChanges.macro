@@ -22,8 +22,6 @@ definition {
 			Check.checkToggleSwitch(locator1 = "PublicationsSettings#SHOW_ALL_ITEMS_TOGGLE_SWITCH");
 		}
 
-		Pause(value1 = 3000);
-
 		var key_changeCategory = ${changeCategory};
 		var key_changeUser = ${changeUser};
 		var key_changeSite = ${changeSite};
@@ -57,8 +55,6 @@ definition {
 	@summary = "Default summary"
 	macro viewChangesViaContextStyle(changeCategory = null, changeDescription = null, changeTitle = null) {
 		PublicationsChanges.changeDisplayStyle(displayStyle = "Context");
-
-		Pause(value1 = 3000);
 
 		var key_changeCategory = ${changeCategory};
 		var key_changeDescription = ${changeDescription};
