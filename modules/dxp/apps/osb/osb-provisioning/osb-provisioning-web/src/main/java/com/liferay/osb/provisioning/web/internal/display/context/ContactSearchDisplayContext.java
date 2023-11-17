@@ -62,11 +62,11 @@ public class ContactSearchDisplayContext {
 	}
 
 	public SearchContainer getSearchContainer() throws Exception {
-		String keywords = ParamUtil.getString(_renderRequest, "keywords");
-
 		SearchContainer searchContainer = new SearchContainer(
 			_renderRequest, _currentURLObj, Collections.emptyList(),
 			"no-contacts-were-found");
+
+		String keywords = ParamUtil.getString(_renderRequest, "keywords");
 
 		List<Contact> contacts = _contactWebService.search(
 			keywords, null, searchContainer.getCur(),
