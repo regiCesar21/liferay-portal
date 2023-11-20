@@ -15,6 +15,10 @@
 		}
 	}
 
+	> div {
+		pointer-events: none;
+	}
+
 	.taglib-vertical-card-footer {
 		min-height: 3.6em;
 	}
