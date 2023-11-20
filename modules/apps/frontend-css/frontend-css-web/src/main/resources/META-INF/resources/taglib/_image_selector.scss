@@ -58,6 +58,10 @@
 	}
 
 	&.draggable-image {
+		> div {
+			pointer-events: none;
+		}
+
 		&.vertical .current-image {
 			left: 0 !important;
 			max-height: inherit;
