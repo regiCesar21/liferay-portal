@@ -13,6 +13,7 @@ import {usePrevious} from 'frontend-js-react-web';
 import {ItemSelectorDialog} from 'frontend-js-web';
 import PropTypes from 'prop-types';
 import React, {useEffect, useState} from 'react';
+import uuidv1 from 'uuid/v1';
 
 import Lang from '../utils/lang.es';
 
@@ -125,18 +126,18 @@ function AssetVocabulariesCategoriesSelector({
 	const handleSelectButtonClick = () => {
 		const sub = (str, obj) => str.replace(/\{([^}]+)\}/g, (_, m) => obj[m]);
 
+		const uuidValue = uuidv1();
+
 		const url = sub(decodeURIComponent(portletURL), {
 			selectedCategories: 'selectedCategoriesCookie',
 			singleSelect,
+			uuid: uuidValue,
 			vocabularyIds: sourceItemsVocabularyIds.concat(),
 		});
 
 		const expires = new Date(Date.now() + 30000).toUTCString();
-		const uuid = new URLSearchParams(url).get(
-			'_com_liferay_asset_categories_selector_web_portlet_AssetCategoriesSelectorPortlet_uuid'
-		);
 
-		const selectedCategoriesCookie = 'selectedCategoriesCookie' + uuid;
+		const selectedCategoriesCookie = 'selectedCategoriesCookie' + uuidValue;
 
 		document.cookie =
 			selectedCategoriesCookie +

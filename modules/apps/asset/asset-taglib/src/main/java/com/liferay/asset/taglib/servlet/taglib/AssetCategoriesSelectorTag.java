@@ -282,7 +282,7 @@ public class AssetCategoriesSelectorTag extends IncludeTag {
 			portletURL.setParameter(
 				"selectedCategories", "{selectedCategories}");
 			portletURL.setParameter("singleSelect", "{singleSelect}");
-			portletURL.setParameter("uuid", uuid);
+			portletURL.setParameter("uuid", "{uuid}");
 			portletURL.setParameter("vocabularyIds", "{vocabularyIds}");
 
 			portletURL.setWindowState(LiferayWindowState.POP_UP);
