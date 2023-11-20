@@ -1976,8 +1976,6 @@ definition {
 
 			Navigator._gotoPage(pageName = "Test Fragment Content Page");
 
-			Pause(value1 = 5000);
-
 			Refresh();
 
 			WaitForPageLoad();
