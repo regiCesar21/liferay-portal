@@ -196,8 +196,6 @@ definition {
 			reportFormat = "pdf",
 			reportsDefinitionName = "Reports Definition Name");
 
-		Pause(value1 = 30000);
-
 		Gmail.login(
 			userEmailAddress = PropsUtil.get("email.address.4"),
 			userPassword = PropsUtil.get("email.password.4"));

@@ -50,8 +50,6 @@ definition {
 			value1 = "Generate");
 
 		Alert.viewSuccessMessage();
-
-		Pause(value1 = 5000);
 	}
 
 	@summary = "Default summary"
@@ -109,8 +107,6 @@ definition {
 			value1 = "Schedule");
 
 		Alert.viewSuccessMessage();
-
-		Pause(value1 = 5000);
 	}
 
 	@summary = "Default summary"
@@ -269,8 +265,6 @@ definition {
 		AssertClick(
 			locator1 = "ReportsAdminViewReportEntry#ENTRY_FILE_MENULIST_DOWNLOAD",
 			value1 = "Download");
-
-		Pause(value1 = 2000);
 
 		takeScreenshot();
 
