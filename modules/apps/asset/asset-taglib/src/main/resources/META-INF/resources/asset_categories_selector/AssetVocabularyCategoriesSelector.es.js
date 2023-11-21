@@ -13,7 +13,6 @@ import {usePrevious} from 'frontend-js-react-web';
 import {ItemSelectorDialog} from 'frontend-js-web';
 import PropTypes from 'prop-types';
 import React, {useEffect, useState} from 'react';
-import uuidv1 from 'uuid/v1';
 
 import Lang from '../utils/lang.es';
 
@@ -126,18 +125,19 @@ function AssetVocabulariesCategoriesSelector({
 	const handleSelectButtonClick = () => {
 		const sub = (str, obj) => str.replace(/\{([^}]+)\}/g, (_, m) => obj[m]);
 
-		const uuidValue = uuidv1();
+		const randomIntValue = Math.ceil(Math.random() * new Date().getTime());
 
 		const url = sub(decodeURIComponent(portletURL), {
+			randomInt: randomIntValue,
 			selectedCategories: 'selectedCategoriesCookie',
 			singleSelect,
-			uuid: uuidValue,
 			vocabularyIds: sourceItemsVocabularyIds.concat(),
 		});
 
 		const expires = new Date(Date.now() + 30000).toUTCString();
 
-		const selectedCategoriesCookie = 'selectedCategoriesCookie' + uuidValue;
+		const selectedCategoriesCookie =
+			'selectedCategoriesCookie' + randomIntValue;
 
 		document.cookie =
 			selectedCategoriesCookie +

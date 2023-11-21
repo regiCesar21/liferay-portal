@@ -104,7 +104,6 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
-import java.util.UUID;
 
 import javax.portlet.PortletConfig;
 import javax.portlet.PortletPreferences;
@@ -732,10 +731,10 @@ public class AssetPublisherDisplayContext {
 			portletURL.setParameter(
 				"eventName",
 				_portletResponse.getNamespace() + "selectCategory");
+			portletURL.setParameter("randomInt", "{randomInt}");
 			portletURL.setParameter(
 				"selectedCategories", "{selectedCategories}");
 			portletURL.setParameter("singleSelect", "{singleSelect}");
-			portletURL.setParameter("uuid", "{uuid}");
 			portletURL.setParameter("vocabularyIds", "{vocabularyIds}");
 
 			portletURL.setWindowState(LiferayWindowState.POP_UP);

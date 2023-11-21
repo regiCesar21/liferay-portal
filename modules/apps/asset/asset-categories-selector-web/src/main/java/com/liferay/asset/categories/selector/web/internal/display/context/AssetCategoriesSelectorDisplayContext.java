@@ -173,7 +173,8 @@ public class AssetCategoriesSelectorDisplayContext {
 		String selectedCategoriesCookie = ParamUtil.getString(
 			_httpServletRequest, "selectedCategories");
 
-		String uuid = ParamUtil.getString(_httpServletRequest, "uuid");
+		String randomInt = ParamUtil.getString(
+			_httpServletRequest, "randomInt");
 
 		List<String> cookies = Arrays.asList(
 			StringUtil.split(
@@ -182,10 +183,11 @@ public class AssetCategoriesSelectorDisplayContext {
 
 		if (cookies != null) {
 			for (String cookie : cookies) {
-				if (cookie.startsWith(selectedCategoriesCookie + uuid)) {
+				if (cookie.startsWith(selectedCategoriesCookie + randomInt)) {
 					cookie = StringUtil.removeSubstring(
 						cookie,
-						selectedCategoriesCookie + uuid + StringPool.EQUAL);
+						selectedCategoriesCookie + randomInt +
+							StringPool.EQUAL);
 
 					_selectedCategoryIds = Arrays.asList(
 						StringUtil.split(cookie, StringPool.COMMA));
