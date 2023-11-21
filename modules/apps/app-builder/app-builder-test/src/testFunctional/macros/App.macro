@@ -33,7 +33,7 @@ definition {
 	macro clickDeploy() {
 		Button.click(button = "Deploy");
 
-		App.waitForDeployButtonNotVisible();
+		WaitForElementNotPresent(locator1 = "AppBuilder#DEPLOY_BUTTON");
 	}
 
 	@summary = "Default summary"
@@ -158,13 +158,6 @@ definition {
 	@summary = "Default summary"
 	macro validateProductMenuSiteDropdownPresent() {
 		AssertElementPresent(locator1 = "AppBuilder#PRODUCT_MENU_SITE_DROPDOWN");
-	}
-
-	@summary = "Default summary"
-	macro waitForDeployButtonNotVisible() {
-		while (IsElementPresent(locator1 = "AppBuilder#DEPLOY_BUTTON")) {
-			Pause(value1 = 1000);
-		}
 	}
 
 }

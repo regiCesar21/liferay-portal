@@ -9,8 +9,6 @@ definition {
 		while ((IsElementNotPresent(locator1 = "FormViewBuilder#SIDEBAR_BASIC_TAB")) && (${iterator} != ${maxRetryNumber})) {
 			DoubleClick(locator1 = "FormViewBuilder#SIDEBAR_FIELD_LABEL");
 
-			Pause(value1 = 1000);
-
 			if (${iterator} == ${maxRetryNumber}) {
 				echo("Couldn't add the field by double-click action, maximum retries number reached: ${iterator}");
 			}
@@ -32,8 +30,6 @@ definition {
 
 	@summary = "Default summary"
 	macro addFieldByDragAndDrop(fieldType = null) {
-		Pause(value1 = 10000);
-
 		var key_fieldLabel = ${fieldType};
 
 		DragAndDrop.javaScriptDragAndDropToObject(
@@ -58,7 +54,7 @@ definition {
 	@summary = "Default summary"
 	macro addFormView(formViewName = null, fieldType = null) {
 		while ((IsElementNotPresent(locator1 = "AppBuilder#NAVBAR")) || (IsElementNotPresent(locator1 = "FormViewBuilder#SIDEBAR_FIELDS_TAB"))) {
-			Pause(value1 = 1000);
+			AssertElementPresent(locator1 = "UserBar#USER_AVATAR_ICON");
 		}
 
 		if (IsElementPresent(locator1 = "AppBuilder#NAVBAR")) {
@@ -448,8 +444,6 @@ definition {
 
 		for (var selectOption : list ${selectOptionsList}) {
 			FormViewBuilder.enableCheckboxPredefined(fieldName = ${selectOption});
-
-			Pause(value1 = 500);
 		}
 	}
 

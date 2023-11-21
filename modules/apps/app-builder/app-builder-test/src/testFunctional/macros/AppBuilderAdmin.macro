@@ -41,14 +41,14 @@ definition {
 
 		AppBuilderAdmin.continueNewCustomObject();
 
-		AppBuilderAdmin.waitForContinueButtonNotVisible();
+		WaitForElementNotPresent(locator1 = "AppBuilder#BUTTON_CONTINUE");
 	}
 
 	@summary = "Default summary"
 	macro addEntry() {
 		AppBuilderAdmin.add();
 
-		AppBuilderAdmin.waitForSaveButtonVisible();
+		WaitForElementNotPresent(locator1 = "AppBuilder#SAVE_BUTTON");
 	}
 
 	@summary = "Default summary"
@@ -406,7 +406,7 @@ definition {
 	macro save() {
 		Click(locator1 = "AppBuilder#SAVE_BUTTON");
 
-		AppBuilderAdmin.waitForSaveButtonNotVisible();
+		WaitForElementNotPresent(locator1 = "AppBuilder#SAVE_BUTTON");
 	}
 
 	@summary = "Default summary"
@@ -439,7 +439,7 @@ definition {
 			panel = "Applications",
 			portlet = "Objects");
 
-		Pause(value1 = 2000);
+		WaitForElementPresent(locator1 = "Icon#VERTICAL_ELLIPSIS_BUTTON");
 
 		while (IsElementPresent(locator1 = "Icon#VERTICAL_ELLIPSIS_BUTTON")) {
 			LexiconEntry.gotoVerticalEllipsisMenuItemNoError(menuItem = "Delete");
@@ -691,31 +691,6 @@ definition {
 		AppBuilderAdmin.openActionMenu(itemName = ${itemName});
 
 		MenuItem.clickNoError(menuItem = "View");
-	}
-
-	@summary = "Default summary"
-	macro waitForContinueButtonNotVisible() {
-		while (IsElementPresent(locator1 = "AppBuilder#BUTTON_CONTINUE")) {
-			Pause(value1 = 1000);
-		}
-
-		Pause(value1 = 1000);
-	}
-
-	@summary = "Default summary"
-	macro waitForSaveButtonNotVisible() {
-		while (IsElementPresent(locator1 = "AppBuilder#SAVE_BUTTON")) {
-			Pause(value1 = 1000);
-		}
-
-		Pause(value1 = 1000);
-	}
-
-	@summary = "Default summary"
-	macro waitForSaveButtonVisible() {
-		while (IsElementNotPresent(locator1 = "AppBuilder#SAVE_BUTTON")) {
-			Pause(value1 = 1000);
-		}
 	}
 
 }

@@ -26,8 +26,6 @@ definition {
 
 	@summary = "Default summary"
 	macro addColumnByDragAndDrop(fieldType = null) {
-		Pause(value1 = 10000);
-
 		var key_fieldLabel = ${fieldType};
 
 		DragAndDrop.javaScriptDragAndDropToObject(
