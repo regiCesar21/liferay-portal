@@ -52,8 +52,6 @@ definition {
 			imageSourceURL = "http://localhost:8080/webdav/guest/document_library/Document_2.jpg",
 			navTab = "URL");
 
-		Pause(value1 = 1000);
-
 		PortletEntry.publish();
 
 		BlogsNavigator.openBlogsAdmin(siteURLKey = "guest");
@@ -756,11 +754,7 @@ definition {
 
 		ImageEditor.rotateImage(rotateDirection = "right");
 
-		Pause(value1 = 3000);
-
 		ImageEditor.applyChangesAndSaveFile();
-
-		Pause(value1 = 3000);
 
 		SelectFrameTop(value1 = "relative=top");
 
@@ -777,8 +771,6 @@ definition {
 		AssertClick(
 			locator1 = "Button#PUBLISH",
 			value1 = "Publish");
-
-		Pause(value1 = 3000);
 
 		AssertTextEquals(
 			locator1 = "Portlet#HEADER",

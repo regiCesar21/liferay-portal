@@ -40,8 +40,6 @@ definition {
 				uploadFileName = "Document_${i}.jpg");
 
 			Button.clickPublish();
-
-			Pause(value1 = 10000);
 		}
 
 		BlogsNavigator.openBlogsAdmin(siteURLKey = "guest");
@@ -99,8 +97,6 @@ definition {
 		BlogsNavigator.openBlogsAdmin(siteURLKey = "guest");
 
 		BlogsNavigator.gotoAddEntry();
-
-		Pause(value1 = 3000);
 
 		BlogsNavigator.gotoSelectFile();
 
@@ -163,8 +159,6 @@ definition {
 
 		Button.clickPublish();
 
-		Pause(value1 = 10000);
-
 		BlogsNavigator.openBlogsAdmin(siteURLKey = "guest");
 
 		BlogsNavigator.gotoAddEntry();
@@ -200,8 +194,6 @@ definition {
 		ImageEditor.gotoImageEditorViaDM(dmDocumentTitle = "Document_2.jpg");
 
 		ImageEditor.rotateImage(rotateDirection = "left");
-
-		Pause(value1 = 3000);
 
 		ImageEditor.applyChangesAndSaveFile();
 

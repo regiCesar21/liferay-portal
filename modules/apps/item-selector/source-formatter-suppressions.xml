@@ -4,8 +4,4 @@
 	<checkstyle>
 		<suppress checks="GenericTypeCheck" files="item-selector-api/src/main/java/com/liferay/item/selector/BaseItemSelectorCriterionHandler\.java" />
 	</checkstyle>
-	<source-check>
-		<suppress checks="PoshiPauseUsageCheck" files="item-selector-test/src/testFunctional/ItemSelector\.testcase" />
-		<suppress checks="PoshiPauseUsageCheck" files="item-selector-test/src/testFunctional/tests/ImageSelector\.testcase" />
-	</source-check>
 </suppressions>
