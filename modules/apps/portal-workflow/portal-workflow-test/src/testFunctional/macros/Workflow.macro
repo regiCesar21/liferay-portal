@@ -220,9 +220,9 @@ definition {
 
 		IFrame.selectConfigurationFrame();
 
-		Select(
-			locator1 = "MyWorkflowTasks#DIALOG_BOX_ASSIGN_TO_SELECT",
-			value1 = ${user});
+		Click.clickNoMouseOver(
+			key_user = ${user},
+			locator1 = "MyWorkflowTasks#DIALOG_BOX_ASSIGN_TO_VALUE");
 
 		if (isSet(comment)) {
 			Type(
