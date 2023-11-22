@@ -64,8 +64,6 @@ public class FragmentEntryLinkEditorConfigContributor
 		).put(
 			"documentBrowseLinkUrl", itemSelectorURL.toString()
 		).put(
-			"enterMode", 2
-		).put(
 			"extraPlugins", getExtraPluginsLists()
 		).put(
 			"filebrowserImageBrowseLinkUrl", imageSelectorURL.toString()
