@@ -125,7 +125,8 @@ public class EditAccountMVCActionCommand extends BaseMVCActionCommand {
 
 		try {
 			if (Validator.isNotNull(accountKey)) {
-				updateAccount(actionRequest, actionResponse, accountKey, user);
+				updateAccount(
+					actionRequest, actionResponse, accountKey, user, tabs1);
 			}
 			else {
 				accountKey = addAccount(actionRequest, actionResponse, user);
@@ -183,88 +184,19 @@ public class EditAccountMVCActionCommand extends BaseMVCActionCommand {
 
 	protected void updateAccount(
 			ActionRequest actionRequest, ActionResponse actionResponse,
-			String accountKey, User user)
+			String accountKey, User user, String tabs1)
 		throws Exception {
 
 		boolean updateAccount = ParamUtil.getBoolean(
 			actionRequest, "updateAccount");
 
 		if (updateAccount) {
-			String name = ParamUtil.getString(actionRequest, "name");
-			String code = ParamUtil.getString(actionRequest, "code");
-			String tier = ParamUtil.getString(actionRequest, "tier");
-			String region = ParamUtil.getString(actionRequest, "region");
-			String dataRegion = ParamUtil.getString(
-				actionRequest, "dataRegion");
-			String liferayVersion = ParamUtil.getString(
-				actionRequest, "liferayVersion");
-			boolean allowComplimentary = ParamUtil.getBoolean(
-				actionRequest, "allowComplimentary");
-			boolean allowPermanentLicenses = ParamUtil.getBoolean(
-				actionRequest, "allowPermanentLicenses");
-			boolean allowSelfProvisioning = ParamUtil.getBoolean(
-				actionRequest, "allowSelfProvisioning");
-
-			validate(code);
-
-			Account account = _accountWebService.getAccount(accountKey);
-
-			account.setName(name);
-
-			if (Validator.isNotNull(code)) {
-				account.setCode(code);
+			if (tabs1.equals("details")) {
+				updateAccountDetails(actionRequest, accountKey, user);
 			}
-
-			if (Validator.isNotNull(tier)) {
-				account.setTier(Account.Tier.create(tier));
+			else if (tabs1.equals("support")) {
+				updateAccountSupport(actionRequest, accountKey, user);
 			}
-
-			if (Validator.isNotNull(region)) {
-				account.setRegion(Account.Region.create(region));
-			}
-
-			if (Validator.isNotNull(dataRegion)) {
-				account.setDataRegion(Account.DataRegion.create(dataRegion));
-			}
-
-			Map<String, String> properties = account.getProperties();
-
-			if (properties == null) {
-				properties = new HashMap<>();
-			}
-
-			if (Validator.isNotNull(liferayVersion)) {
-				properties.put("liferayVersion", liferayVersion);
-			}
-			else {
-				properties.remove("liferayVersion");
-			}
-
-			if (allowComplimentary) {
-				properties.put("allowComplimentary", StringPool.TRUE);
-			}
-			else {
-				properties.remove("allowComplimentary");
-			}
-
-			if (!allowPermanentLicenses) {
-				properties.put("allowPermanentLicenses", StringPool.FALSE);
-			}
-			else {
-				properties.remove("allowPermanentLicenses");
-			}
-
-			if (!allowSelfProvisioning) {
-				properties.put("allowSelfProvisioning", StringPool.FALSE);
-			}
-			else {
-				properties.remove("allowSelfProvisioning");
-			}
-
-			account.setProperties(properties);
-
-			_accountWebService.updateAccount(
-				user.getFullName(), user.getUuid(), accountKey, account);
 		}
 
 		boolean updatePartner = ParamUtil.getBoolean(
@@ -290,6 +222,97 @@ public class EditAccountMVCActionCommand extends BaseMVCActionCommand {
 				user, accountKey, firstLineSupportTeamKey,
 				TeamRoleConstants.NAME_FIRST_LINE_SUPPORT);
 		}
+	}
+
+	protected void updateAccountDetails(
+			ActionRequest actionRequest, String accountKey, User user)
+		throws Exception {
+
+		String name = ParamUtil.getString(actionRequest, "name");
+		String code = ParamUtil.getString(actionRequest, "code");
+		String tier = ParamUtil.getString(actionRequest, "tier");
+
+		String dataRegion = ParamUtil.getString(actionRequest, "dataRegion");
+		String liferayVersion = ParamUtil.getString(
+			actionRequest, "liferayVersion");
+		boolean allowComplimentary = ParamUtil.getBoolean(
+			actionRequest, "allowComplimentary");
+		boolean allowPermanentLicenses = ParamUtil.getBoolean(
+			actionRequest, "allowPermanentLicenses");
+		boolean allowSelfProvisioning = ParamUtil.getBoolean(
+			actionRequest, "allowSelfProvisioning");
+
+		validate(code);
+
+		Account account = _accountWebService.getAccount(accountKey);
+
+		account.setName(name);
+
+		if (Validator.isNotNull(code)) {
+			account.setCode(code);
+		}
+
+		if (Validator.isNotNull(tier)) {
+			account.setTier(Account.Tier.create(tier));
+		}
+
+		if (Validator.isNotNull(dataRegion)) {
+			account.setDataRegion(Account.DataRegion.create(dataRegion));
+		}
+
+		Map<String, String> properties = account.getProperties();
+
+		if (properties == null) {
+			properties = new HashMap<>();
+		}
+
+		if (Validator.isNotNull(liferayVersion)) {
+			properties.put("liferayVersion", liferayVersion);
+		}
+		else {
+			properties.remove("liferayVersion");
+		}
+
+		if (allowComplimentary) {
+			properties.put("allowComplimentary", StringPool.TRUE);
+		}
+		else {
+			properties.remove("allowComplimentary");
+		}
+
+		if (!allowPermanentLicenses) {
+			properties.put("allowPermanentLicenses", StringPool.FALSE);
+		}
+		else {
+			properties.remove("allowPermanentLicenses");
+		}
+
+		if (!allowSelfProvisioning) {
+			properties.put("allowSelfProvisioning", StringPool.FALSE);
+		}
+		else {
+			properties.remove("allowSelfProvisioning");
+		}
+
+		account.setProperties(properties);
+
+		_accountWebService.updateAccount(
+			user.getFullName(), user.getUuid(), accountKey, account);
+	}
+
+	protected void updateAccountSupport(
+			ActionRequest actionRequest, String accountKey, User user)
+		throws Exception {
+
+		String region = ParamUtil.getString(actionRequest, "region");
+		Account account = _accountWebService.getAccount(accountKey);
+
+		if (Validator.isNotNull(region)) {
+			account.setRegion(Account.Region.create(region));
+		}
+
+		_accountWebService.updateAccount(
+			user.getFullName(), user.getUuid(), accountKey, account);
 	}
 
 	protected void updateAssignedTeam(
