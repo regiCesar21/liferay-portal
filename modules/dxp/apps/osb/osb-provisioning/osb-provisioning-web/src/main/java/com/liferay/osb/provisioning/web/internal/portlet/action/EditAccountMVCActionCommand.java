@@ -305,14 +305,15 @@ public class EditAccountMVCActionCommand extends BaseMVCActionCommand {
 		throws Exception {
 
 		String region = ParamUtil.getString(actionRequest, "region");
+
 		Account account = _accountWebService.getAccount(accountKey);
 
 		if (Validator.isNotNull(region)) {
 			account.setRegion(Account.Region.create(region));
-		}
 
-		_accountWebService.updateAccount(
-			user.getFullName(), user.getUuid(), accountKey, account);
+			_accountWebService.updateAccount(
+				user.getFullName(), user.getUuid(), accountKey, account);
+		}
 	}
 
 	protected void updateAssignedTeam(
