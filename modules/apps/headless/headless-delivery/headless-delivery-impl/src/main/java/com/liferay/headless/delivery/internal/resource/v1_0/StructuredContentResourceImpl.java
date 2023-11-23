@@ -601,8 +601,8 @@ public class StructuredContentResourceImpl
 				null,
 				_createServiceContext(
 					structuredContent.getTaxonomyCategoryIds(),
-					structuredContent.getKeywords(),0L,
-					structuredContent, siteId)));
+					structuredContent.getKeywords(), 0L, structuredContent,
+					siteId)));
 	}
 
 	private DDMStructure _checkDDMStructurePermission(
@@ -662,8 +662,9 @@ public class StructuredContentResourceImpl
 	}
 
 	private ServiceContext _createServiceContext(
-			Long[] assetCategoryIds, String[] assetTags, Long structuredContentId,
-			StructuredContent structuredContent, Long siteId)
+			Long[] assetCategoryIds, String[] assetTags,
+			Long structuredContentId, StructuredContent structuredContent,
+			Long siteId)
 		throws Exception {
 
 		ServiceContext serviceContext = null;
@@ -719,7 +720,7 @@ public class StructuredContentResourceImpl
 	}
 
 	private String[] _getAssetTags(
-		JournalArticle journalArticle, StructuredContent structuredContent)
+			JournalArticle journalArticle, StructuredContent structuredContent)
 		throws Exception {
 
 		if ((journalArticle == null) ||
