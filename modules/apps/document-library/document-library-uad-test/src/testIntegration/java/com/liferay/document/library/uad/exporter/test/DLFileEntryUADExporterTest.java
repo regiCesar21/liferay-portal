@@ -75,15 +75,9 @@ public class DLFileEntryUADExporterTest
 	}
 
 	@Override
-	protected String getPrimaryKeyName() {
-		return "fileEntryId";
-	}
-
-	@Override
 	protected UADExporter getUADExporter() {
 		return _uadExporter;
 	}
-
 	@Inject
 	private DLAppLocalService _dlAppLocalService;
 
