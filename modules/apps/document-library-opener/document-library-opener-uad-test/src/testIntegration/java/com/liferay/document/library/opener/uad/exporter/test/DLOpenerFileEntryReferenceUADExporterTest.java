@@ -42,11 +42,6 @@ public class DLOpenerFileEntryReferenceUADExporterTest
 	}
 
 	@Override
-	protected String getPrimaryKeyName() {
-		return "dlOpenerFileEntryReferenceId";
-	}
-
-	@Override
 	protected UADExporter getUADExporter() {
 		return _uadExporter;
 	}
