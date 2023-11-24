@@ -204,7 +204,6 @@ public class SocialRelationLocalServiceTest {
 
 		Set<Long> groupIds = SetUtil.intersect(
 			dlc3User.getGroupIds(), dlc4User.getGroupIds());
-
 		Set<Long> userGroupIds = SetUtil.intersect(
 			dlc3User.getUserGroupIds(), dlc4User.getUserGroupIds());
 
