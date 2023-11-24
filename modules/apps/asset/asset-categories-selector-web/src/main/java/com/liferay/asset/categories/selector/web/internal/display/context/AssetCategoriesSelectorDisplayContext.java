@@ -170,24 +170,22 @@ public class AssetCategoriesSelectorDisplayContext {
 			return _selectedCategoryIds;
 		}
 
-		String selectedCategoriesCookie = ParamUtil.getString(
-			_httpServletRequest, "selectedCategories");
-
-		String randomInt = ParamUtil.getString(
-			_httpServletRequest, "randomInt");
-
 		List<String> cookies = Arrays.asList(
 			StringUtil.split(
 				_httpServletRequest.getHeader("cookie"),
 				StringPool.SEMICOLON + StringPool.SPACE));
 
 		if (cookies != null) {
+			String randomInt = ParamUtil.getString(
+				_httpServletRequest, "randomInt");
+			String selectedCategories = ParamUtil.getString(
+				_httpServletRequest, "selectedCategories");
+
 			for (String cookie : cookies) {
-				if (cookie.startsWith(selectedCategoriesCookie + randomInt)) {
+				if (cookie.startsWith(selectedCategories + randomInt)) {
 					cookie = StringUtil.removeSubstring(
 						cookie,
-						selectedCategoriesCookie + randomInt +
-							StringPool.EQUAL);
+						selectedCategories + randomInt + StringPool.EQUAL);
 
 					_selectedCategoryIds = Arrays.asList(
 						StringUtil.split(cookie, StringPool.COMMA));
