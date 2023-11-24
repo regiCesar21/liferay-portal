@@ -120,7 +120,7 @@ public class EditRoleAssignmentsManagementToolbarDisplayContext {
 			});
 	}
 
-	public String getClearResultsURL() {
+	public String getClearResultsURL() throws PortalException {
 		PortletURL clearResultsURL = getPortletURL();
 
 		clearResultsURL.setParameter("keywords", StringPool.BLANK);
@@ -128,7 +128,7 @@ public class EditRoleAssignmentsManagementToolbarDisplayContext {
 		return clearResultsURL.toString();
 	}
 
-	public CreationMenu getCreationMenu() {
+	public CreationMenu getCreationMenu() throws PortalException {
 		if (!_tabs2.equals("segments")) {
 			return null;
 		}
@@ -220,7 +220,9 @@ public class EditRoleAssignmentsManagementToolbarDisplayContext {
 			});
 	}
 
-	public SearchContainer<Group> getGroupSearchContainer() {
+	public SearchContainer<Group> getGroupSearchContainer()
+		throws PortalException {
+
 		GroupSearch groupSearch = new GroupSearch(
 			_renderRequest, getPortletURL());
 
@@ -368,7 +370,7 @@ public class EditRoleAssignmentsManagementToolbarDisplayContext {
 		return organizationSearch;
 	}
 
-	public PortletURL getPortletURL() {
+	public PortletURL getPortletURL() throws PortalException {
 		PortletURL portletURL = _renderResponse.createRenderURL();
 
 		if (_tabs3.equals("current")) {
@@ -407,7 +409,7 @@ public class EditRoleAssignmentsManagementToolbarDisplayContext {
 		return portletURL;
 	}
 
-	public String getSearchActionURL() {
+	public String getSearchActionURL() throws PortalException {
 		PortletURL searchActionURL = getPortletURL();
 
 		PortletURL currentURL = PortletURLUtil.getCurrent(
@@ -443,7 +445,7 @@ public class EditRoleAssignmentsManagementToolbarDisplayContext {
 		return _searchContainer;
 	}
 
-	public String getSortingURL() {
+	public String getSortingURL() throws PortalException {
 		PortletURL sortingURL = getPortletURL();
 
 		sortingURL.setParameter(
@@ -470,7 +472,9 @@ public class EditRoleAssignmentsManagementToolbarDisplayContext {
 		return _tabs2;
 	}
 
-	public SearchContainer<UserGroup> getUserGroupSearchContainer() {
+	public SearchContainer<UserGroup> getUserGroupSearchContainer()
+		throws PortalException {
+
 		UserGroupSearch userGroupSearch = new UserGroupSearch(
 			_renderRequest, getPortletURL());
 
@@ -518,7 +522,9 @@ public class EditRoleAssignmentsManagementToolbarDisplayContext {
 		return userGroupSearch;
 	}
 
-	public SearchContainer<User> getUserSearchContainer() {
+	public SearchContainer<User> getUserSearchContainer()
+		throws PortalException {
+
 		UserSearch userSearch = new UserSearch(_renderRequest, getPortletURL());
 
 		if (_tabs3.equals("available")) {
@@ -558,7 +564,7 @@ public class EditRoleAssignmentsManagementToolbarDisplayContext {
 		return userSearch;
 	}
 
-	public List<ViewTypeItem> getViewTypeItems() {
+	public List<ViewTypeItem> getViewTypeItems() throws PortalException {
 		if (_tabs2.equals("segments")) {
 			return null;
 		}
