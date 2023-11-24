@@ -276,9 +276,11 @@ public class LayoutsTreeTag extends IncludeTag {
 
 			dynamicQuery.add(layoutIdProperty.in(checkedLayoutIdsArray));
 
-			JSONUtil.addToStringCollection(
-				LayoutLocalServiceUtil.dynamicQuery(dynamicQuery),
-				checkedNodesJSONArray);
+			for (Object plid :
+					LayoutLocalServiceUtil.dynamicQuery(dynamicQuery)) {
+
+				checkedNodesJSONArray.put(String.valueOf(plid));
+			}
 		}
 
 		return checkedNodesJSONArray.toString();
