@@ -407,7 +407,7 @@ public class StructuredContentResourceImpl
 				null,
 				_createServiceContext(
 					_getAssetCategoryIds(journalArticle, structuredContent),
-					_getAssetTags(journalArticle, structuredContent),
+					_getAssetTagsNames(journalArticle, structuredContent),
 					structuredContentId, structuredContent, 0L)));
 	}
 
@@ -507,7 +507,7 @@ public class StructuredContentResourceImpl
 				null,
 				_createServiceContext(
 					_getAssetCategoryIds(journalArticle, structuredContent),
-					_getAssetTags(journalArticle, structuredContent),
+					_getAssetTagsNames(journalArticle, structuredContent),
 					structuredContentId, structuredContent, 0L)));
 	}
 
@@ -719,7 +719,7 @@ public class StructuredContentResourceImpl
 		return ArrayUtil.toLongArray(assetEntry.getCategoryIds());
 	}
 
-	private String[] _getAssetTags(
+	private String[] _getAssetTagsNames(
 			JournalArticle journalArticle, StructuredContent structuredContent)
 		throws Exception {
 
