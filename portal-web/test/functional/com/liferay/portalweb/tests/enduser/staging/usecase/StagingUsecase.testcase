@@ -1577,7 +1577,26 @@ definition {
 			uncheckPages = "true",
 			uncheckSubContent = "Referenced Content");
 
-		Staging.publishToLive(failureExpected = "true");
+		Staging.publishToLive(
+			failureExpected = "true",
+			publicationName = "Publication Name",
+			validateErrorMessage = "The publication process did not start due to validation errors.");
+
+		Navigator.openStagingSiteURL(siteName = "Site Name");
+
+		ProductMenu.gotoPortlet(
+			category = "Publishing",
+			portlet = "Staging");
+
+		LexiconEntry.gotoEntryMenuItem(
+			menuItem = "Summary",
+			rowEntry = "Publication Name");
+
+		SelectFrame(locator1 = "IFrame#MODAL_BODY");
+
+		WaitForElementPresent(locator1 = "//div[contains(@class,'sheet-subtitle')][normalize-space(text())='Pages']");
+
+		AssertElementPresent(locator1 = "//div[contains(@class,'sheet-subtitle')][normalize-space(text())='Content']");
 
 		Navigator.gotoStagedSitePage(
 			pageName = "Staging Test Page",
