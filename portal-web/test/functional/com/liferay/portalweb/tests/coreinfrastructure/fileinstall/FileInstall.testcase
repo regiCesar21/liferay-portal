@@ -75,7 +75,7 @@ definition {
 
 		ArchiveUtil.archive("${testBaseDirName}/${testDependenciesDirName}/com.liferay.cluster.test.module.jar", "${deployDir}/com.liferay.cluster.test.module.jar");
 
-		AssertConsoleTextPresent(value1 = "STARTED com.liferay.cluster.test.module_");
+		WaitForConsoleTextPresent(value1 = "STARTED com.liferay.cluster.test.module_");
 
 		GogoShell.openGogoShellAdmin();
 
