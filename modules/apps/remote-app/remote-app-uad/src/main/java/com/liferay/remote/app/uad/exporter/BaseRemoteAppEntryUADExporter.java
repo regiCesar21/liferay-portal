@@ -53,14 +53,6 @@ public abstract class BaseRemoteAppEntryUADExporter
 		sb.append("</model-name>");
 
 		sb.append(
-			"<column><column-name>remoteAppEntryId</column-name><column-value><![CDATA[");
-		sb.append(remoteAppEntry.getRemoteAppEntryId());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>userId</column-name><column-value><![CDATA[");
-		sb.append(remoteAppEntry.getUserId());
-		sb.append("]]></column-value></column>");
-		sb.append(
 			"<column><column-name>userName</column-name><column-value><![CDATA[");
 		sb.append(remoteAppEntry.getUserName());
 		sb.append("]]></column-value></column>");
