@@ -10,9 +10,6 @@ function ExternalLink({link}) {
 	let icon = '#logo-custom-link';
 
 	switch (link.domain) {
-		case 'dossiera':
-			icon = '#logo-dossiera';
-			break;
 		case 'salesforce':
 			icon = '#logo-salesforce';
 			break;
