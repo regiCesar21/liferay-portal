@@ -10,7 +10,6 @@ export const getFormNode = (element) => dom.closest(element, 'form');
 export const getFormId = (form) => form?.dataset.ddmforminstanceid;
 
 export const getFormTitle = (form = document) => {
-	const title = form?.querySelector('[data-form-title]')?.dataset.formTitle;
-
-	return Liferay.Util.escape(title);
+	return form?.querySelector('.ddm-form-basic-info .ddm-form-name')
+		?.innerHTML;
 };
