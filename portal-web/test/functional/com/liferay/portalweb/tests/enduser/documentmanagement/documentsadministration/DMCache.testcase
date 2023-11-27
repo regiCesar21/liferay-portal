@@ -62,7 +62,7 @@ definition {
 
 		WaitForPageLoad();
 
-		var responseHeader = DMDocument.getFileResponseHeader(dmDocumentFileName = "DM%20Document%20Title.jpg");
+		var responseHeader = DMDocument.getFileResponseHeader(dmDocumentFileName = "DM+Document+Title.jpg");
 
 		DMDocument.viewCacheControlConfigurationInConsole(
 			cacheControl = "private",
@@ -93,7 +93,7 @@ definition {
 
 		DMNavigator.gotoDocumentPG(dmDocumentTitle = "DM Document Title");
 
-		var responseHeader = DMDocument.getFileResponseHeader(dmDocumentFileName = "DM%20Document%20Title.jpg");
+		var responseHeader = DMDocument.getFileResponseHeader(dmDocumentFileName = "DM+Document+Title.jpg");
 
 		DMDocument.viewCacheControlConfigurationInConsole(
 			cacheControl = "public",
@@ -121,7 +121,7 @@ definition {
 
 		DMNavigator.gotoDocumentPG(dmDocumentTitle = "DM Document Title");
 
-		var responseHeader = DMDocument.getFileResponseHeader(dmDocumentFileName = "DM%20Document%20Title.jpg");
+		var responseHeader = DMDocument.getFileResponseHeader(dmDocumentFileName = "DM+Document+Title.jpg");
 
 		DMDocument.viewCacheControlConfigurationInConsole(
 			responseHeader = ${responseHeader},

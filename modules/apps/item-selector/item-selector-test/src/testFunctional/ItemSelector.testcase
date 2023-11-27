@@ -766,7 +766,7 @@ definition {
 
 		SelectFrameTop();
 
-		BlogsEntry.viewInlineImage(uploadFileName = '''Document_2%20%281%29.jpg''');
+		BlogsEntry.viewInlineImage(uploadFileName = '''Document_2+%281%29.jpg''');
 
 		AssertClick(
 			locator1 = "Button#PUBLISH",
@@ -792,7 +792,7 @@ definition {
 			entryContent = "Blogs Entry Content",
 			entryTitle = "Blogs Entry Title");
 
-		BlogsEntry.viewInlineImage(uploadFileName = '''Document_2%20%281%29.jpg''');
+		BlogsEntry.viewInlineImage(uploadFileName = '''Document_2+%281%29.jpg''');
 
 		ScrollWebElementIntoView(locator1 = "Button#SUBSCRIBE");
 
