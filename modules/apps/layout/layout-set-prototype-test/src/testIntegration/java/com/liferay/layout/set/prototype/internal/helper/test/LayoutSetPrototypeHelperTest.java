@@ -60,7 +60,7 @@ public class LayoutSetPrototypeHelperTest {
 
 		_layoutSetPrototypeGroup = _layoutSetPrototype.getGroup();
 
-		_prototypeLayout = LayoutTestUtil.addTypePortletLayout(
+		_prototypeLayout = LayoutTestUtil.addLayout(
 			_layoutSetPrototypeGroup, true);
 
 		setLinkEnabled();
@@ -75,14 +75,13 @@ public class LayoutSetPrototypeHelperTest {
 
 		for (String name : RandomTestUtil.randomStrings(3)) {
 			layouts.add(
-				LayoutTestUtil.addTypePortletLayout(
-					_group.getGroupId(), name, false));
+				LayoutTestUtil.addLayout(_group.getGroupId(), name, false));
 
-			LayoutTestUtil.addTypePortletLayout(
+			LayoutTestUtil.addLayout(
 				_group.getGroupId(), RandomTestUtil.randomString(5), false);
-			LayoutTestUtil.addTypePortletLayout(
+			LayoutTestUtil.addLayout(
 				_layoutSetPrototypeGroup.getGroupId(), name, true);
-			LayoutTestUtil.addTypePortletLayout(
+			LayoutTestUtil.addLayout(
 				_layoutSetPrototypeGroup.getGroupId(),
 				RandomTestUtil.randomString(5), true);
 		}
@@ -108,16 +107,15 @@ public class LayoutSetPrototypeHelperTest {
 		List<Layout> layouts = new ArrayList<>();
 
 		for (String name : RandomTestUtil.randomStrings(3)) {
-			LayoutTestUtil.addTypePortletLayout(
-				_group.getGroupId(), name, false);
-			LayoutTestUtil.addTypePortletLayout(
+			LayoutTestUtil.addLayout(_group.getGroupId(), name, false);
+			LayoutTestUtil.addLayout(
 				_group.getGroupId(), RandomTestUtil.randomString(5), false);
 
 			layouts.add(
-				LayoutTestUtil.addTypePortletLayout(
+				LayoutTestUtil.addLayout(
 					_layoutSetPrototypeGroup.getGroupId(), name, true));
 
-			LayoutTestUtil.addTypePortletLayout(
+			LayoutTestUtil.addLayout(
 				_layoutSetPrototypeGroup.getGroupId(),
 				RandomTestUtil.randomString(5), true);
 		}
@@ -140,9 +138,9 @@ public class LayoutSetPrototypeHelperTest {
 	public void testLayoutSetPrototypeLayoutFriendlyURLConflictDetectionBeforeChange()
 		throws Exception {
 
-		LayoutTestUtil.addTypePortletLayout(_group.getGroupId(), "test", false);
+		LayoutTestUtil.addLayout(_group.getGroupId(), "test", false);
 
-		Layout layoutSetPrototypeLayout = LayoutTestUtil.addTypePortletLayout(
+		Layout layoutSetPrototypeLayout = LayoutTestUtil.addLayout(
 			_layoutSetPrototypeGroup.getGroupId(), "testNoConflict", true);
 
 		boolean hasConflicts =
@@ -158,7 +156,7 @@ public class LayoutSetPrototypeHelperTest {
 	public void testLayoutSetPrototypeLayoutFriendlyURLConflictDetectionBeforeCreate()
 		throws Exception {
 
-		LayoutTestUtil.addTypePortletLayout(_group.getGroupId(), "test", false);
+		LayoutTestUtil.addLayout(_group.getGroupId(), "test", false);
 
 		boolean hasConflicts =
 			_layoutSetPrototypeHelper.hasDuplicatedFriendlyURLs(
@@ -171,10 +169,10 @@ public class LayoutSetPrototypeHelperTest {
 	public void testLayoutSetPrototypeLayoutFriendlyURLConflictDetectionBeforePropagate()
 		throws Exception {
 
-		Layout siteLayout = LayoutTestUtil.addTypePortletLayout(
+		Layout siteLayout = LayoutTestUtil.addLayout(
 			_group.getGroupId(), "test", false);
 
-		Layout layoutSetPrototypeLayout = LayoutTestUtil.addTypePortletLayout(
+		Layout layoutSetPrototypeLayout = LayoutTestUtil.addLayout(
 			_layoutSetPrototypeGroup.getGroupId(), "test", true);
 
 		List<Layout> conflictLayouts =
@@ -206,10 +204,10 @@ public class LayoutSetPrototypeHelperTest {
 	public void testSiteLayoutFriendlyURLConflictDetectionBeforeChange()
 		throws Exception {
 
-		Layout siteLayout = LayoutTestUtil.addTypePortletLayout(
+		Layout siteLayout = LayoutTestUtil.addLayout(
 			_group.getGroupId(), "testNoConflict", false);
 
-		LayoutTestUtil.addTypePortletLayout(
+		LayoutTestUtil.addLayout(
 			_layoutSetPrototypeGroup.getGroupId(), "test", true);
 
 		boolean hasConflicts =
@@ -224,7 +222,7 @@ public class LayoutSetPrototypeHelperTest {
 	public void testSiteLayoutFriendlyURLConflictDetectionBeforeCreate()
 		throws Exception {
 
-		LayoutTestUtil.addTypePortletLayout(
+		LayoutTestUtil.addLayout(
 			_layoutSetPrototypeGroup.getGroupId(), "test", true);
 
 		boolean hasConflicts =
@@ -238,10 +236,10 @@ public class LayoutSetPrototypeHelperTest {
 	public void testSiteLayoutFriendlyURLConflictDetectionBeforePropagate()
 		throws Exception {
 
-		Layout siteLayout = LayoutTestUtil.addTypePortletLayout(
+		Layout siteLayout = LayoutTestUtil.addLayout(
 			_group.getGroupId(), "test", false);
 
-		Layout layoutSetPrototypeLayout = LayoutTestUtil.addTypePortletLayout(
+		Layout layoutSetPrototypeLayout = LayoutTestUtil.addLayout(
 			_layoutSetPrototypeGroup.getGroupId(), "test", true);
 
 		List<Layout> conflicts =
