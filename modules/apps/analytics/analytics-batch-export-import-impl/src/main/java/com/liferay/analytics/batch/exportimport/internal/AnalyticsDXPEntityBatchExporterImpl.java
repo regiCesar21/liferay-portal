@@ -10,6 +10,7 @@ import com.liferay.analytics.settings.security.constants.AnalyticsSecurityConsta
 import com.liferay.dispatch.constants.DispatchConstants;
 import com.liferay.dispatch.executor.DispatchTaskClusterMode;
 import com.liferay.dispatch.model.DispatchTrigger;
+import com.liferay.dispatch.service.DispatchLogLocalService;
 import com.liferay.dispatch.service.DispatchTriggerLocalService;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.log.Log;
@@ -81,6 +82,9 @@ public class AnalyticsDXPEntityBatchExporterImpl
 
 				continue;
 			}
+
+			_dispatchLogLocalService.deleteDispatchLogs(
+				dispatchTrigger.getDispatchTriggerId());
 
 			Date nextFireDate = _dispatchTriggerLocalService.getNextFireDate(
 				dispatchTrigger.getDispatchTriggerId());
@@ -169,6 +173,9 @@ public class AnalyticsDXPEntityBatchExporterImpl
 		target = "(destination.name=" + DispatchConstants.EXECUTOR_DESTINATION_NAME + ")"
 	)
 	private Destination _destination;
+
+	@Reference
+	private DispatchLogLocalService _dispatchLogLocalService;
 
 	@Reference
 	private DispatchTriggerLocalService _dispatchTriggerLocalService;

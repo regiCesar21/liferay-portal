@@ -20,6 +20,7 @@ import com.liferay.batch.engine.model.BatchEngineImportTask;
 import com.liferay.batch.engine.service.BatchEngineExportTaskLocalService;
 import com.liferay.batch.engine.service.BatchEngineImportTaskLocalService;
 import com.liferay.petra.function.UnsafeConsumer;
+import com.liferay.petra.io.StreamUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -38,7 +39,9 @@ import com.liferay.portal.kernel.settings.SettingsDescriptor;
 import com.liferay.portal.kernel.settings.SettingsFactory;
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.FastDateFormatFactoryUtil;
+import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.Http;
 import com.liferay.portal.kernel.util.PrefsPropsUtil;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -46,6 +49,8 @@ import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.util.Validator;
 
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
 import java.io.InputStream;
 import java.io.Serializable;
 
@@ -58,6 +63,7 @@ import java.nio.file.Files;
 
 import java.text.Format;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.Dictionary;
 import java.util.HashMap;
@@ -66,6 +72,9 @@ import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
+import java.util.zip.ZipEntry;
+import java.util.zip.ZipInputStream;
+import java.util.zip.ZipOutputStream;
 
 import org.apache.http.HttpStatus;
 import org.apache.http.StatusLine;
@@ -87,6 +96,106 @@ import org.osgi.service.component.annotations.Reference;
 @Component(immediate = true, service = AnalyticsBatchExportImportManager.class)
 public class AnalyticsBatchExportImportManagerImpl
 	implements AnalyticsBatchExportImportManager {
+
+	@Override
+	public void exportToAnalyticsCloud(
+			List<String> batchEngineExportTaskItemDelegateNames, long companyId,
+			UnsafeConsumer<String, Exception> notificationUnsafeConsumer,
+			Date resourceLastModifiedDate, String resourceName, long userId)
+		throws Exception {
+
+		_notify(
+			"Exporting resource " + resourceName, notificationUnsafeConsumer);
+
+		File tempFile = FileUtil.createTempFile();
+
+		ZipOutputStream zipOutputStream = new ZipOutputStream(
+			new FileOutputStream(tempFile));
+
+		zipOutputStream.putNextEntry(new ZipEntry("export.jsonl"));
+
+		List<BatchEngineExportTask> batchEngineExportTasks = new ArrayList<>();
+
+		for (String batchEngineExportTaskItemDelegateName :
+				batchEngineExportTaskItemDelegateNames) {
+
+			BatchEngineExportTask batchEngineExportTask =
+				_batchEngineExportTaskLocalService.addBatchEngineExportTask(
+					companyId, userId, null, resourceName,
+					BatchEngineTaskContentType.JSONL.name(),
+					BatchEngineTaskExecuteStatus.INITIAL.name(), null,
+					HashMapBuilder.<String, Serializable>put(
+						"resourceLastModifiedDate", resourceLastModifiedDate
+					).build(),
+					batchEngineExportTaskItemDelegateName);
+
+			batchEngineExportTasks.add(batchEngineExportTask);
+
+			_batchEngineExportTaskExecutor.execute(batchEngineExportTask);
+
+			BatchEngineTaskExecuteStatus batchEngineTaskExecuteStatus =
+				BatchEngineTaskExecuteStatus.valueOf(
+					batchEngineExportTask.getExecuteStatus());
+
+			if (batchEngineTaskExecuteStatus.equals(
+					BatchEngineTaskExecuteStatus.COMPLETED)) {
+
+				_notify(
+					"Exported items from task " +
+						batchEngineExportTaskItemDelegateName,
+					notificationUnsafeConsumer);
+
+				try (ZipInputStream zipInputStream = new ZipInputStream(
+						_batchEngineExportTaskLocalService.
+							openContentInputStream(
+								batchEngineExportTask.
+									getBatchEngineExportTaskId()))) {
+
+					zipInputStream.getNextEntry();
+
+					StreamUtil.transfer(zipInputStream, zipOutputStream, false);
+				}
+			}
+			else {
+				throw new PortalException(
+					"Unable to export resource " +
+						batchEngineExportTaskItemDelegateName);
+			}
+		}
+
+		StreamUtil.cleanUp(zipOutputStream);
+
+		_notify(
+			"Uploading resources " + resourceName, notificationUnsafeConsumer);
+
+		try (FileInputStream fileInputStream = new FileInputStream(tempFile)) {
+			_upload(
+				companyId, fileInputStream, resourceLastModifiedDate,
+				resourceName);
+		}
+
+		_notify(
+			"Completed uploading resources " + resourceName,
+			notificationUnsafeConsumer);
+
+		for (BatchEngineExportTask batchEngineExportTask :
+				batchEngineExportTasks) {
+
+			_batchEngineExportTaskLocalService.deleteBatchEngineExportTask(
+				batchEngineExportTask);
+		}
+
+		boolean deleted = tempFile.delete();
+
+		if (_log.isDebugEnabled()) {
+			if (deleted) {
+				_log.debug("Deleted temp file: " + tempFile.getName());
+			}
+			else {
+				_log.debug("Unable to delete temp file: " + tempFile.getName());
+			}
+		}
+	}
 
 	@Override
 	public void exportToAnalyticsCloud(
@@ -247,9 +356,6 @@ public class AnalyticsBatchExportImportManagerImpl
 
 		_execute(analyticsConfiguration, companyId, httpUriRequest);
 	}
-
-	@Reference
-	protected BatchEngineExportTaskExecutor batchEngineExportTaskExecutor;
 
 	private HttpUriRequest _buildHttpUriRequest(
 		String body, String dataSourceId, String faroBackendSecuritySignature,

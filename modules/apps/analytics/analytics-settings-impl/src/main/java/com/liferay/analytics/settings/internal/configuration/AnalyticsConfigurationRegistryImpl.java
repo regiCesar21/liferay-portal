@@ -25,7 +25,6 @@ import com.liferay.portal.kernel.service.RoleLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.settings.SettingsFactory;
-import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.HashMapDictionary;
@@ -313,13 +312,10 @@ public class AnalyticsConfigurationRegistryImpl
 			if (companyId != CompanyConstants.SYSTEM) {
 				_analyticsDXPEntityBatchExporter.unscheduleExportTriggers(
 					companyId,
-					ArrayUtil.append(
+					new String[] {
 						AnalyticsDXPEntityBatchExporterConstants.
-							DISPATCH_TRIGGER_NAMES_DXP_ENTITIES,
-						new String[] {
-							AnalyticsDXPEntityBatchExporterConstants.
-								DISPATCH_TRIGGER_NAME_USER_DXP_ENTITIES
-						}));
+							DISPATCH_TRIGGER_NAME_DXP_ENTITIES
+					});
 
 				_deleteAnalyticsAdmin(companyId);
 				_deleteSAPEntry(companyId);
@@ -389,12 +385,12 @@ public class AnalyticsConfigurationRegistryImpl
 					if (_syncedContactSettingsEnabled(companyId)) {
 						refreshDispatchTriggerNames.add(
 							AnalyticsDXPEntityBatchExporterConstants.
-								DISPATCH_TRIGGER_NAME_USER_DXP_ENTITIES);
+								DISPATCH_TRIGGER_NAME_DXP_ENTITIES);
 					}
 					else {
 						unscheduleDispatchTriggerNames.add(
 							AnalyticsDXPEntityBatchExporterConstants.
-								DISPATCH_TRIGGER_NAME_USER_DXP_ENTITIES);
+								DISPATCH_TRIGGER_NAME_DXP_ENTITIES);
 					}
 				}
 
@@ -403,7 +399,7 @@ public class AnalyticsConfigurationRegistryImpl
 
 					refreshDispatchTriggerNames.add(
 						AnalyticsDXPEntityBatchExporterConstants.
-							DISPATCH_TRIGGER_NAME_USER_DXP_ENTITIES);
+							DISPATCH_TRIGGER_NAME_DXP_ENTITIES);
 				}
 
 				if (!refreshDispatchTriggerNames.isEmpty()) {
@@ -415,7 +411,7 @@ public class AnalyticsConfigurationRegistryImpl
 						companyId,
 						new String[] {
 							AnalyticsDXPEntityBatchExporterConstants.
-								DISPATCH_TRIGGER_NAME_USER_DXP_ENTITIES
+								DISPATCH_TRIGGER_NAME_DXP_ENTITIES
 						});
 				}
 
@@ -432,13 +428,7 @@ public class AnalyticsConfigurationRegistryImpl
 					Collections.addAll(
 						dispatchTriggerNames,
 						AnalyticsDXPEntityBatchExporterConstants.
-							DISPATCH_TRIGGER_NAMES_DXP_ENTITIES);
-
-					if (_syncedContactSettingsEnabled(companyId)) {
-						dispatchTriggerNames.add(
-							AnalyticsDXPEntityBatchExporterConstants.
-								DISPATCH_TRIGGER_NAME_USER_DXP_ENTITIES);
-					}
+							DISPATCH_TRIGGER_NAME_DXP_ENTITIES);
 
 					_analyticsDXPEntityBatchExporter.scheduleExportTriggers(
 						companyId, dispatchTriggerNames.toArray(new String[0]));

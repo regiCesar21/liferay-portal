@@ -10,18 +10,7 @@ package com.liferay.analytics.batch.exportimport.constants;
  */
 public class AnalyticsDXPEntityBatchExporterConstants {
 
-	public static final String DISPATCH_TRIGGER_NAME_USER_DXP_ENTITIES =
-		"export-user-analytics-dxp-entities";
-
-	public static final String[] DISPATCH_TRIGGER_NAMES_DXP_ENTITIES = {
-		"export-analytics-association-analytics-dxp-entities",
-		"export-analytics-delete-message-analytics-dxp-entities",
-		"export-expando-column-analytics-dxp-entities",
-		"export-group-analytics-dxp-entities",
-		"export-organization-analytics-dxp-entities",
-		"export-role-analytics-dxp-entities",
-		"export-team-analytics-dxp-entities",
-		"export-user-group-analytics-dxp-entities"
-	};
+	public static final String DISPATCH_TRIGGER_NAME_DXP_ENTITIES =
+		"export-analytics-dxp-entities";
 
 }

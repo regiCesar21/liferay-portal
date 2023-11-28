@@ -13,24 +13,28 @@ import com.liferay.analytics.settings.security.constants.AnalyticsSecurityConsta
 import com.liferay.batch.engine.BatchEngineTaskItemDelegate;
 import com.liferay.batch.engine.pagination.Page;
 import com.liferay.batch.engine.pagination.Pagination;
+import com.liferay.petra.sql.dsl.DSLQueryFactoryUtil;
+import com.liferay.petra.sql.dsl.expression.Predicate;
+import com.liferay.petra.sql.dsl.query.DSLQuery;
+import com.liferay.petra.sql.dsl.query.JoinStep;
 import com.liferay.portal.kernel.model.BaseModel;
 import com.liferay.portal.kernel.model.User;
-import com.liferay.portal.kernel.search.BooleanClauseOccur;
-import com.liferay.portal.kernel.search.Field;
+import com.liferay.portal.kernel.model.UserTable;
+import com.liferay.portal.kernel.model.Users_OrgsTable;
+import com.liferay.portal.kernel.model.Users_UserGroupsTable;
 import com.liferay.portal.kernel.search.Sort;
-import com.liferay.portal.kernel.search.filter.BooleanFilter;
 import com.liferay.portal.kernel.search.filter.Filter;
-import com.liferay.portal.kernel.search.filter.TermFilter;
-import com.liferay.portal.kernel.search.filter.TermsFilter;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.util.ArrayUtil;
-import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.vulcan.dto.converter.DTOConverter;
-import com.liferay.portal.vulcan.util.SearchUtil;
+import com.liferay.portal.vulcan.util.TransformUtil;
 
 import java.io.Serializable;
 
+import java.util.Collections;
+import java.util.Date;
+import java.util.List;
 import java.util.Map;
 
 import org.osgi.service.component.annotations.Component;
@@ -52,80 +56,186 @@ public class UserAnalyticsDXPEntityBatchEngineTaskItemDelegate
 			Map<String, Serializable> parameters, String search)
 		throws Exception {
 
-		com.liferay.portal.vulcan.pagination.Pagination vulcanPagination =
-			com.liferay.portal.vulcan.pagination.Pagination.of(
-				pagination.getPage(), pagination.getPageSize());
-
-		com.liferay.portal.vulcan.pagination.Page<DXPEntity> page =
-			SearchUtil.search(
-				null, booleanQuery -> booleanQuery.getPreBooleanFilter(),
-				_createBooleanFilter(contextCompany.getCompanyId(), filter),
-				User.class.getName(), null, vulcanPagination,
-				queryConfig -> queryConfig.setSelectedFieldNames(
-					Field.ENTRY_CLASS_PK),
-				this::getSearchContext, sorts,
-				document -> _dxpEntityDTOConverter.toDTO(
-					_userLocalService.getUser(
-						GetterUtil.getLong(
-							document.get(Field.ENTRY_CLASS_PK)))));
-
-		return Page.of(
-			page.getItems(),
-			Pagination.of(pagination.getPage(), pagination.getPageSize()),
-			page.getTotalCount());
-	}
-
-	private BooleanFilter _createBooleanFilter(long companyId, Filter filter) {
-		BooleanFilter booleanFilter = new BooleanFilter();
-
-		if (filter != null) {
-			booleanFilter.add(filter, BooleanClauseOccur.MUST);
+		if (!_syncedContactSettingsEnabled(contextCompany.getCompanyId())) {
+			return Page.of(
+				Collections.emptyList(),
+				Pagination.of(pagination.getPage(), pagination.getPageSize()),
+				0);
 		}
 
-		booleanFilter.add(
-			new TermFilter(
-				"screenName",
-				AnalyticsSecurityConstants.SCREEN_NAME_ANALYTICS_ADMIN),
-			BooleanClauseOccur.MUST_NOT);
-		booleanFilter.add(
-			new TermFilter(
-				"status", String.valueOf(WorkflowConstants.STATUS_INACTIVE)),
-			BooleanClauseOccur.MUST_NOT);
+		return Page.of(
+			TransformUtil.transform(
+				_userLocalService.<List<User>>dslQuery(
+					_createSelectDSLQuery(
+						contextCompany.getCompanyId(), pagination, parameters)),
+				user -> _dxpEntityDTOConverter.toDTO(user)),
+			Pagination.of(pagination.getPage(), pagination.getPageSize()),
+			_userLocalService.dslQuery(
+				_createCountDSLQuery(
+					contextCompany.getCompanyId(), parameters)));
+	}
+
+	private Predicate _buildPredicate(
+		UserTable userTable, long companyId,
+		Map<String, Serializable> parameters) {
+
+		Predicate predicate = userTable.companyId.eq(companyId);
+
+		Serializable resourceLastModifiedDate = parameters.get(
+			"resourceLastModifiedDate");
+
+		if (resourceLastModifiedDate == null) {
+			return predicate;
+		}
+
+		return predicate.and(
+			userTable.modifiedDate.gt((Date)resourceLastModifiedDate));
+	}
+
+	private DSLQuery _createCountDSLQuery(
+		long companyId, Map<String, Serializable> parameters) {
+
+		UserTable userTableAlias = UserTable.INSTANCE.as("userTable");
+
+		JoinStep joinStep = DSLQueryFactoryUtil.count(
+		).from(
+			userTableAlias
+		);
+
+		Predicate predicate = null;
 
 		AnalyticsConfiguration analyticsConfiguration =
 			_analyticsConfigurationRegistry.getAnalyticsConfiguration(
 				companyId);
 
-		if (analyticsConfiguration.syncAllContacts()) {
-			return booleanFilter;
+		if (!analyticsConfiguration.syncAllContacts()) {
+			String[] syncedOrganizationIds =
+				analyticsConfiguration.syncedOrganizationIds();
+
+			if (!ArrayUtil.isEmpty(syncedOrganizationIds)) {
+				joinStep = joinStep.leftJoinOn(
+					Users_OrgsTable.INSTANCE,
+					Users_OrgsTable.INSTANCE.userId.eq(userTableAlias.userId));
+
+				predicate = Users_OrgsTable.INSTANCE.organizationId.in(
+					TransformUtil.transform(
+						syncedOrganizationIds, Long::parseLong, Long.class));
+			}
+
+			String[] syncedUserGroupIds =
+				analyticsConfiguration.syncedUserGroupIds();
+
+			if (!ArrayUtil.isEmpty(syncedUserGroupIds)) {
+				joinStep = joinStep.leftJoinOn(
+					Users_UserGroupsTable.INSTANCE,
+					Users_UserGroupsTable.INSTANCE.userId.eq(
+						userTableAlias.userId));
+
+				predicate = Predicate.or(
+					predicate,
+					Users_UserGroupsTable.INSTANCE.userGroupId.in(
+						TransformUtil.transform(
+							syncedUserGroupIds, Long::parseLong, Long.class)));
+			}
 		}
 
-		BooleanFilter innerBooleanFilter = new BooleanFilter();
+		return joinStep.where(
+			Predicate.and(
+				_buildPredicate(userTableAlias, companyId, parameters),
+				userTableAlias.screenName.neq(
+					AnalyticsSecurityConstants.SCREEN_NAME_ANALYTICS_ADMIN
+				).and(
+					userTableAlias.status.neq(WorkflowConstants.STATUS_INACTIVE)
+				).and(
+					Predicate.withParentheses(predicate)
+				)));
+	}
+
+	private DSLQuery _createSelectDSLQuery(
+		long companyId, Pagination pagination,
+		Map<String, Serializable> parameters) {
+
+		UserTable userTableAlias = UserTable.INSTANCE.as("userTable");
+
+		JoinStep joinStep = DSLQueryFactoryUtil.select(
+			userTableAlias
+		).from(
+			userTableAlias
+		);
+
+		Predicate predicate = null;
+
+		AnalyticsConfiguration analyticsConfiguration =
+			_analyticsConfigurationRegistry.getAnalyticsConfiguration(
+				companyId);
+
+		if (!analyticsConfiguration.syncAllContacts()) {
+			String[] syncedOrganizationIds =
+				analyticsConfiguration.syncedOrganizationIds();
+
+			if (!ArrayUtil.isEmpty(syncedOrganizationIds)) {
+				joinStep = joinStep.leftJoinOn(
+					Users_OrgsTable.INSTANCE,
+					Users_OrgsTable.INSTANCE.userId.eq(userTableAlias.userId));
+
+				predicate = Users_OrgsTable.INSTANCE.organizationId.in(
+					TransformUtil.transform(
+						syncedOrganizationIds, Long::parseLong, Long.class));
+			}
+
+			String[] syncedUserGroupIds =
+				analyticsConfiguration.syncedUserGroupIds();
+
+			if (!ArrayUtil.isEmpty(syncedUserGroupIds)) {
+				joinStep = joinStep.leftJoinOn(
+					Users_UserGroupsTable.INSTANCE,
+					Users_UserGroupsTable.INSTANCE.userId.eq(
+						userTableAlias.userId));
+
+				predicate = Predicate.or(
+					predicate,
+					Users_UserGroupsTable.INSTANCE.userGroupId.in(
+						TransformUtil.transform(
+							syncedUserGroupIds, Long::parseLong, Long.class)));
+			}
+		}
+
+		return joinStep.where(
+			Predicate.and(
+				_buildPredicate(userTableAlias, companyId, parameters),
+				userTableAlias.screenName.neq(
+					AnalyticsSecurityConstants.SCREEN_NAME_ANALYTICS_ADMIN
+				).and(
+					userTableAlias.status.neq(WorkflowConstants.STATUS_INACTIVE)
+				).and(
+					Predicate.withParentheses(predicate)
+				))
+		).limit(
+			(pagination.getPage() - 1) * pagination.getPageSize(),
+			pagination.getPage() * pagination.getPageSize()
+		);
+	}
+
+	private boolean _syncedContactSettingsEnabled(long companyId)
+		throws Exception {
+
+		AnalyticsConfiguration analyticsConfiguration =
+			_analyticsConfigurationRegistry.getAnalyticsConfiguration(
+				companyId);
 
 		String[] syncedOrganizationIds =
 			analyticsConfiguration.syncedOrganizationIds();
+		String[] syncedUserGroupIds =
+			analyticsConfiguration.syncedUserGroupIds();
 
-		if (!ArrayUtil.isEmpty(syncedOrganizationIds)) {
-			TermsFilter termsFilter = new TermsFilter("organizationIds");
+		if (analyticsConfiguration.syncAllContacts() ||
+			(syncedOrganizationIds.length != 0) ||
+			(syncedUserGroupIds.length != 0)) {
 
-			termsFilter.addValues(syncedOrganizationIds);
-
-			innerBooleanFilter.add(termsFilter);
+			return true;
 		}
 
-		String[] syncedGroupIds = analyticsConfiguration.syncedUserGroupIds();
-
-		if (!ArrayUtil.isEmpty(syncedGroupIds)) {
-			TermsFilter termsFilter = new TermsFilter("userGroupIds");
-
-			termsFilter.addValues(syncedGroupIds);
-
-			innerBooleanFilter.add(termsFilter);
-		}
-
-		booleanFilter.add(innerBooleanFilter, BooleanClauseOccur.MUST);
-
-		return booleanFilter;
+		return false;
 	}
 
 	@Reference
