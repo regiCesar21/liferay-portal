@@ -19,6 +19,7 @@ import com.liferay.osb.koroneiki.phloem.rest.client.dto.v1_0.ProductPurchase;
 import com.liferay.osb.koroneiki.phloem.rest.client.dto.v1_0.ProductPurchaseView;
 import com.liferay.osb.koroneiki.phloem.rest.client.dto.v1_0.Team;
 import com.liferay.osb.koroneiki.phloem.rest.client.dto.v1_0.TeamRole;
+import com.liferay.osb.provisioning.constants.ProductTypeConstants;
 import com.liferay.osb.provisioning.constants.ProvisioningPortletKeys;
 import com.liferay.osb.provisioning.distributed.messaging.internal.configuration.DistributedMessagingConfiguration;
 import com.liferay.osb.provisioning.distributed.messaging.internal.constants.SalesforceConstants;
@@ -2387,7 +2388,11 @@ public class OpportunityMessageSubscriber extends BaseMessageSubscriber {
 						filterQuery3, 1, 1000, StringPool.BLANK);
 
 				for (ProductPurchase productPurchase : activeProductPurchases) {
+					boolean isEligibleEWSARenewal = _isEligibleEWSARenewal(
+						productPurchase.getProduct());
+
 					if ((ewsaProductPurchase != null) &&
+						isEligibleEWSARenewal &&
 						(!accountKey.equals(siblingAccount.getKey()) ||
 						 !_containsProduct(
 							 productPurchases,
@@ -2401,7 +2406,8 @@ public class OpportunityMessageSubscriber extends BaseMessageSubscriber {
 					}
 
 					if ((((ewsaProductPurchase != null) &&
-						  !accountKey.equals(siblingAccount.getKey())) ||
+						  !accountKey.equals(siblingAccount.getKey()) &&
+						  isEligibleEWSARenewal) ||
 						 prevActiveProductPurchases.contains(
 							 productPurchase)) &&
 						(productPurchase.getEndDate() != null) &&
@@ -2449,9 +2455,10 @@ public class OpportunityMessageSubscriber extends BaseMessageSubscriber {
 						Product product =
 							expiredProductPurchaseView.getProduct();
 
-						if (accountKey.equals(siblingAccount.getKey()) &&
-							_containsProduct(
-								productPurchases, product.getKey())) {
+						if ((accountKey.equals(siblingAccount.getKey()) &&
+							 _containsProduct(
+								 productPurchases, product.getKey())) ||
+							_isEligibleEWSARenewal(product)) {
 
 							continue;
 						}
@@ -2524,6 +2531,22 @@ public class OpportunityMessageSubscriber extends BaseMessageSubscriber {
 		return ContentUtil.get(
 			OpportunityMessageSubscriber.class.getClassLoader(),
 			templateDirName + defaultTemplateName);
+	}
+
+	private static boolean _isEligibleEWSARenewal(Product product) {
+		Map<String, String> properties = product.getProperties();
+
+		String productType = properties.get("type");
+
+		if ((productType != null) &&
+			(productType.equals(ProductTypeConstants.ADD_ON) ||
+			 ArrayUtil.contains(
+				 ProductConstants.NAMES_EWSA_AUTO_RENEW, product.getName()))) {
+
+			return true;
+		}
+
+		return false;
 	}
 
 	private String _getCode(String parentAccountName, String accountName)
