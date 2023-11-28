@@ -662,7 +662,7 @@ public class StructuredContentResourceImpl
 	}
 
 	private ServiceContext _createServiceContext(
-			Long[] assetCategoryIds, String[] assetTags,
+			Long[] assetCategoryIds, String[] assetTagNames,
 			Long structuredContentId, StructuredContent structuredContent,
 			Long siteId)
 		throws Exception {
@@ -674,7 +674,7 @@ public class StructuredContentResourceImpl
 				_journalArticleService.getLatestArticle(structuredContentId);
 
 			serviceContext = ServiceContextUtil.createServiceContext(
-				assetCategoryIds, assetTags,
+				assetCategoryIds, assetTagNames,
 				_getExpandoBridgeAttributes(structuredContent),
 				journalArticle.getGroupId(),
 				structuredContent.getViewableByAsString());
@@ -690,7 +690,7 @@ public class StructuredContentResourceImpl
 		}
 		else {
 			serviceContext = ServiceContextUtil.createServiceContext(
-				assetCategoryIds, assetTags,
+				assetCategoryIds, assetTagNames,
 				_getExpandoBridgeAttributes(structuredContent), siteId,
 				structuredContent.getViewableByAsString());
 		}
