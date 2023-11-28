@@ -21,6 +21,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>MESSAGE_NO_CHANGES</td>
+	<td>//div[contains(@class, 'taglib-empty-result-message')]/div[contains(.,'No changes were found.')] | //div[contains(@class, 'taglib-empty-result-message')]/div[contains(.,'There are no changes to display in this view.')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>CONTEXT_CHANGE_CATEGORY_RADIO</td>
 	<td>//input[contains(@type,'radio') and contains(@value,'${key_changeCategory}')]</td>
 	<td></td>
