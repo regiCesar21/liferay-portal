@@ -57,6 +57,8 @@ public class ProductConstants {
 
 	public static final String NAME_DXP = "DXP";
 
+	public static final String NAME_DXP_BACKUP = "DXP Backup";
+
 	public static final String NAME_DXP_CLOUD = "DXP Cloud";
 
 	public static final String NAME_DXP_CLOUD_INSTANCE_PRODUCTION =
@@ -68,9 +70,13 @@ public class ProductConstants {
 	public static final String NAME_DXP_CLOUD_SUBSCRIPTION_STD_PRODUCTION =
 		"DXP Cloud Subscription Std Production";
 
+	public static final String NAME_DXP_DEVELOPMENT = "DXP Development";
+
 	public static final String NAME_DXP_EWSA = "DXP Unlimited Enterprise-Wide";
 
 	public static final String NAME_DXP_FLEX = "DXP Flex";
+
+	public static final String NAME_DXP_NON_PRODUCTION = "DXP Non-Production";
 
 	public static final String NAME_DXP_OEM = "DXP OEM";
 
@@ -178,6 +184,15 @@ public class ProductConstants {
 
 	public static final String NAME_VALUE_ADDED_RESELLER_PARTNERSHIP =
 		"Value-Added Reseller Partnership";
+
+	public static final String[] NAMES_EWSA_AUTO_RENEW = {
+		NAME_ANALYTICS_CLOUD_BASIC, NAME_COMMERCE_SUBSCRIPTION,
+		NAME_COMMERCE_SUBSCRIPTION_BACKUP,
+		NAME_COMMERCE_SUBSCRIPTION_NON_PRODUCTION,
+		NAME_COMMERCE_SUBSCRIPTION_PRODUCTION, NAME_DXP_PRODUCTION,
+		NAME_DXP_BACKUP, NAME_DXP_EWSA, NAME_DXP_DEVELOPMENT,
+		NAME_DXP_NON_PRODUCTION
+	};
 
 	public static final String[] NAMES_PARTNERSHIP = {
 		NAME_BASIC_RESELLER_PARTNERSHIP, NAME_DISTRIBUTION_PARTNERSHIP,
