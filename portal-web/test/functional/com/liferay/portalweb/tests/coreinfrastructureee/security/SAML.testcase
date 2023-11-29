@@ -448,11 +448,7 @@ definition {
 
 		Navigator.openURL();
 
-		Pause(value1 = 120000);
-
-		AssertTextEquals(
-			locator1 = "Home#ERROR_MESSAGE_EXPIRED_SESSION",
-			value1 = "Danger:Due to inactivity, your session has expired. Please save any data you may have entered before refreshing the page.");
+		SAML.viewSessionExpired(timer = 120000);
 
 		Refresh();
 
@@ -482,6 +478,8 @@ definition {
 
 		Navigator.openURL();
 
+		// This pause is waiting to test how the login behaves when timeout is reached. See LRQA-35814 for more details.
+
 		Pause(value1 = 60000);
 
 		SAML.executeIdPInitiatedSSO(
@@ -494,11 +492,7 @@ definition {
 
 		Navigator.openURL();
 
-		Pause(value1 = 120000);
-
-		AssertTextEquals(
-			locator1 = "Home#ERROR_MESSAGE_EXPIRED_SESSION",
-			value1 = "Danger:Due to inactivity, your session has expired. Please save any data you may have entered before refreshing the page.");
+		SAML.viewSessionExpired(timer = 120000);
 
 		Refresh();
 
@@ -531,11 +525,7 @@ definition {
 
 		User.viewLoggedInPG();
 
-		Pause(value1 = 120000);
-
-		AssertTextEquals(
-			locator1 = "Home#ERROR_MESSAGE_EXPIRED_SESSION",
-			value1 = "Danger:Due to inactivity, your session has expired. Please save any data you may have entered before refreshing the page.");
+		SAML.viewSessionExpired(timer = 120000);
 
 		Refresh();
 
@@ -576,21 +566,13 @@ definition {
 
 		Navigator.openURL();
 
-		Pause(value1 = 120000);
-
-		AssertTextEquals(
-			locator1 = "Home#ERROR_MESSAGE_EXPIRED_SESSION",
-			value1 = "Danger:Due to inactivity, your session has expired. Please save any data you may have entered before refreshing the page.");
+		SAML.viewSessionExpired(timer = 120000);
 
 		Refresh();
 
 		User.viewLoggedInPG();
 
-		Pause(value1 = 120000);
-
-		AssertTextEquals(
-			locator1 = "Home#ERROR_MESSAGE_EXPIRED_SESSION",
-			value1 = "Danger:Due to inactivity, your session has expired. Please save any data you may have entered before refreshing the page.");
+		SAML.viewSessionExpired(timer = 120000);
 
 		Refresh();
 

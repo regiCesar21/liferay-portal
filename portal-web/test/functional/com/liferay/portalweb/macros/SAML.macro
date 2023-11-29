@@ -178,7 +178,7 @@ definition {
 				userEmailAddress = ${userEmailAddress});
 		}
 
-		Pause(value1 = 1000);
+		WaitForPageLoad();
 
 		AssertLocation.assertPartialLocation(value1 = ${spURL});
 	}
@@ -201,9 +201,21 @@ definition {
 				userEmailAddress = "test@liferay.com");
 		}
 
-		Pause(value1 = 1000);
+		WaitForPageLoad();
 
 		AssertLocation.assertPartialLocation(value1 = ${specificURL});
+	}
+
+	@summary = "Default summary"
+	macro viewSessionExpired(timer = null) {
+
+		// This pause is required to allow the test to wait for the session to expire.
+
+		Pause(value1 = ${timer});
+
+		AssertTextEquals(
+			locator1 = "Home#ERROR_MESSAGE_EXPIRED_SESSION",
+			value1 = "Danger:Due to inactivity, your session has expired. Please save any data you may have entered before refreshing the page.");
 	}
 
 	@summary = "Default summary"
@@ -212,7 +224,7 @@ definition {
 
 		WaitForElementPresent(locator1 = "Header#H3_TITLE");
 
-		Pause(value1 = 5000);
+		WaitForElementNotPresent(locator1 = "UserBar#USER_AVATAR_IMAGE");
 	}
 
 }
