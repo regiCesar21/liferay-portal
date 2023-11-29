@@ -444,12 +444,13 @@ public class WorkflowMetricsSLAProcessor {
 				workflowMetricsSLADefinitionVersion.getStartNodeKeys()));
 
 		if (Objects.equals(
-			workfowMetricsSLAStatus, WorkfowMetricsSLAStatus.NEW) &&
-				 startTimeMarkers.containsKey(startNodeId)) {
+				workfowMetricsSLAStatus, WorkfowMetricsSLAStatus.NEW) &&
+			startTimeMarkers.containsKey(startNodeId)) {
+
 			workflowMetricsSLAStopwatch.run(createDateLocalDateTime);
 		}
 		else if (Objects.equals(
-			workfowMetricsSLAStatus, WorkfowMetricsSLAStatus.RUNNING)) {
+					workfowMetricsSLAStatus, WorkfowMetricsSLAStatus.RUNNING)) {
 
 			workflowMetricsSLAStopwatch.run(lastCheckLocalDateTime);
 		}

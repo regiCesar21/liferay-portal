@@ -85,6 +85,7 @@ public class SLAProcessResultWorkflowMetricsIndexer
 		document.addKeyword("deleted", false);
 		document.addKeyword(
 			"elapsedTime", workflowMetricsSLAProcessResult.getElapsedTime());
+
 		KaleoInstance kaleoInstance =
 			_kaleoInstanceLocalService.fetchKaleoInstance(
 				workflowMetricsSLAProcessResult.getInstanceId());
@@ -93,6 +94,7 @@ public class SLAProcessResultWorkflowMetricsIndexer
 			document.addKeyword(
 				"instanceCompleted", kaleoInstance.isCompleted());
 		}
+
 		document.addKeyword(
 			"instanceId", workflowMetricsSLAProcessResult.getInstanceId());
 		document.addDateSortable(
@@ -191,9 +193,6 @@ public class SLAProcessResultWorkflowMetricsIndexer
 			}
 		}
 	}
-
-	@Reference
-	private KaleoInstanceLocalService _kaleoInstanceLocalService;
 
 	@Reference
 	protected KaleoNodeLocalService kaleoNodeLocalService;
@@ -396,6 +395,9 @@ public class SLAProcessResultWorkflowMetricsIndexer
 	@Reference(target = "(workflow.metrics.index.entity.name=instance)")
 	private WorkflowMetricsIndexNameBuilder
 		_instanceWorkflowMetricsIndexNameBuilder;
+
+	@Reference
+	private KaleoInstanceLocalService _kaleoInstanceLocalService;
 
 	@Reference(
 		target = "(workflow.metrics.index.entity.name=sla-process-result)"
