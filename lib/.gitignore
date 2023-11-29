@@ -221,7 +221,7 @@
 /portal/oro.jar
 /portal/pdfbox.jar
 /portal/poi-ooxml.jar
-/portal/poi-ooxml-schemas.jar
+/portal/poi-ooxml-lite.jar
 /portal/poi-scratchpad.jar
 /portal/poi.jar
 /portal/portletmvc4spring-framework.jar
