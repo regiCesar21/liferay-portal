@@ -36,6 +36,7 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
+import java.util.Objects;
 import java.util.concurrent.TimeUnit;
 
 import org.apache.commons.codec.digest.DigestUtils;
@@ -209,13 +210,15 @@ public class WorkflowMetricsRESTTestHelper {
 		_invokeAddDocument(
 			_getIndexer(_CLASS_NAME_SLA_PROCESS_RESULT_INDEXER),
 			_creatWorkflowMetricsSLAProcessResultDocument(
-				companyId, instance.getId(), onTime, instance.getProcessId(),
+				companyId, Objects.nonNull(instance.getDateCompletion()),
+				instance.getId(), onTime, instance.getProcessId(),
 				slaDefinitionId));
 
 		_retryAssertCount(
 			_slaProcessResultWorkflowMetricsIndexNameBuilder.getIndexName(
 				companyId),
-			"companyId", companyId, "deleted", false, "instanceId",
+			"companyId", companyId, "deleted", false, "instanceCompleted",
+			Objects.nonNull(instance.getDateCompletion()), "instanceId",
 			instance.getId(), "onTime", onTime, "processId",
 			instance.getProcessId(), "slaDefinitionId", slaDefinitionId);
 	}
@@ -547,8 +550,8 @@ public class WorkflowMetricsRESTTestHelper {
 	}
 
 	private Document _creatWorkflowMetricsSLAProcessResultDocument(
-		long companyId, long instanceId, boolean onTime, long processId,
-		long slaDefinitionId) {
+		long companyId, boolean instanceCompleted, long instanceId,
+		boolean onTime, long processId, long slaDefinitionId) {
 
 		Document document = new DocumentImpl();
 
@@ -558,6 +561,7 @@ public class WorkflowMetricsRESTTestHelper {
 		document.addKeyword("companyId", companyId);
 		document.addKeyword("deleted", false);
 		document.addKeyword("elapsedTime", onTime ? 1000 : -1000);
+		document.addKeyword("instanceCompleted", instanceCompleted);
 		document.addKeyword("instanceId", instanceId);
 		document.addKeyword("onTime", onTime);
 		document.addKeyword("processId", processId);
