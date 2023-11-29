@@ -78,6 +78,7 @@ public class DLFileEntryUADExporterTest
 	protected UADExporter getUADExporter() {
 		return _uadExporter;
 	}
+
 	@Inject
 	private DLAppLocalService _dlAppLocalService;
 
