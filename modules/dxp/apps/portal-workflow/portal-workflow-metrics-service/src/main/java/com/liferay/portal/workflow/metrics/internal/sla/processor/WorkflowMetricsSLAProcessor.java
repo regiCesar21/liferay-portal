@@ -444,14 +444,14 @@ public class WorkflowMetricsSLAProcessor {
 				workflowMetricsSLADefinitionVersion.getStartNodeKeys()));
 
 		if (Objects.equals(
-			workfowMetricsSLAStatus, WorkfowMetricsSLAStatus.RUNNING)) {
-
-			workflowMetricsSLAStopwatch.run(lastCheckLocalDateTime);
-		}
-		else if (Objects.equals(
 			workfowMetricsSLAStatus, WorkfowMetricsSLAStatus.NEW) &&
 				 startTimeMarkers.containsKey(startNodeId)) {
 			workflowMetricsSLAStopwatch.run(createDateLocalDateTime);
+		}
+		else if (Objects.equals(
+			workfowMetricsSLAStatus, WorkfowMetricsSLAStatus.RUNNING)) {
+
+			workflowMetricsSLAStopwatch.run(lastCheckLocalDateTime);
 		}
 
 		Map<Long, String> pauseTimeMarkers = _getTimeMarkers(
