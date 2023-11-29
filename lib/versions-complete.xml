@@ -161,6 +161,18 @@
 				</licenses>
 			</library>
 			<library>
+				<file-name>com.liferay.batch.engine.service.jar!commons-io.jar</file-name>
+				<version>2.8.0</version>
+				<project-name>Apache Commons IO</project-name>
+				<project-url>https://commons.apache.org/proper/commons-io/</project-url>
+				<licenses>
+					<license>
+						<license-name>Apache License, Version 2.0</license-name>
+						<license-url>https://www.apache.org/licenses/LICENSE-2.0.txt</license-url>
+					</license>
+				</licenses>
+			</library>
+			<library>
 				<file-name>com.liferay.batch.engine.service.jar!httpclient.jar</file-name>
 				<version>4.5.13</version>
 				<project-name>Apache HttpClient</project-name>
@@ -180,54 +192,6 @@
 				<licenses>
 					<license>
 						<license-name>Apache License, Version 2.0</license-name>
-						<license-url>http://www.apache.org/licenses/LICENSE-2.0.txt</license-url>
-					</license>
-				</licenses>
-			</library>
-			<library>
-				<file-name>com.liferay.batch.engine.service.jar!poi-ooxml-schemas.jar</file-name>
-				<version>4.1.2</version>
-				<project-name>Apache POI</project-name>
-				<project-url>http://poi.apache.org/</project-url>
-				<licenses>
-					<license>
-						<license-name>Apache License, Version 2.0</license-name>
-						<license-url>http://www.apache.org/licenses/LICENSE-2.0.txt</license-url>
-					</license>
-				</licenses>
-			</library>
-			<library>
-				<file-name>com.liferay.batch.engine.service.jar!poi-ooxml.jar</file-name>
-				<version>4.1.2</version>
-				<project-name>Apache POI</project-name>
-				<project-url>http://poi.apache.org/</project-url>
-				<licenses>
-					<license>
-						<license-name>Apache License, Version 2.0</license-name>
-						<license-url>http://www.apache.org/licenses/LICENSE-2.0.txt</license-url>
-					</license>
-				</licenses>
-			</library>
-			<library>
-				<file-name>com.liferay.batch.engine.service.jar!poi.jar</file-name>
-				<version>4.1.2</version>
-				<project-name>Apache POI</project-name>
-				<project-url>http://poi.apache.org/</project-url>
-				<licenses>
-					<license>
-						<license-name>Apache License, Version 2.0</license-name>
-						<license-url>http://www.apache.org/licenses/LICENSE-2.0.txt</license-url>
-					</license>
-				</licenses>
-			</library>
-			<library>
-				<file-name>com.liferay.batch.engine.service.jar!xmlbeans.jar</file-name>
-				<version>3.1.0</version>
-				<project-name>XmlBeans</project-name>
-				<project-url>https://xmlbeans.apache.org/</project-url>
-				<licenses>
-					<license>
-						<license-name>The Apache Software License, Version 2.0</license-name>
 						<license-url>http://www.apache.org/licenses/LICENSE-2.0.txt</license-url>
 					</license>
 				</licenses>
@@ -1091,42 +1055,6 @@
 				</licenses>
 			</library>
 			<library>
-				<file-name>com.liferay.dynamic.data.lists.service.jar!poi-ooxml-schemas.jar</file-name>
-				<version>4.1.2</version>
-				<project-name>Apache POI</project-name>
-				<project-url>http://poi.apache.org/</project-url>
-				<licenses>
-					<license>
-						<license-name>Apache License, Version 2.0</license-name>
-						<license-url>http://www.apache.org/licenses/LICENSE-2.0.txt</license-url>
-					</license>
-				</licenses>
-			</library>
-			<library>
-				<file-name>com.liferay.dynamic.data.lists.service.jar!poi-ooxml.jar</file-name>
-				<version>4.1.2</version>
-				<project-name>Apache POI</project-name>
-				<project-url>http://poi.apache.org/</project-url>
-				<licenses>
-					<license>
-						<license-name>Apache License, Version 2.0</license-name>
-						<license-url>http://www.apache.org/licenses/LICENSE-2.0.txt</license-url>
-					</license>
-				</licenses>
-			</library>
-			<library>
-				<file-name>com.liferay.dynamic.data.lists.service.jar!poi.jar</file-name>
-				<version>4.1.2</version>
-				<project-name>Apache POI</project-name>
-				<project-url>http://poi.apache.org/</project-url>
-				<licenses>
-					<license>
-						<license-name>Apache License, Version 2.0</license-name>
-						<license-url>http://www.apache.org/licenses/LICENSE-2.0.txt</license-url>
-					</license>
-				</licenses>
-			</library>
-			<library>
 				<file-name>com.liferay.dynamic.data.lists.service.jar!xmlbeans.jar</file-name>
 				<version>3.1.0</version>
 				<project-name>XmlBeans</project-name>
@@ -1332,42 +1260,6 @@
 				<version>3.6.1</version>
 				<project-name>Apache Commons Math</project-name>
 				<project-url>http://commons.apache.org/proper/commons-math/</project-url>
-				<licenses>
-					<license>
-						<license-name>Apache License, Version 2.0</license-name>
-						<license-url>http://www.apache.org/licenses/LICENSE-2.0.txt</license-url>
-					</license>
-				</licenses>
-			</library>
-			<library>
-				<file-name>com.liferay.dynamic.data.mapping.service.jar!poi-ooxml-schemas.jar</file-name>
-				<version>4.1.2</version>
-				<project-name>Apache POI</project-name>
-				<project-url>http://poi.apache.org/</project-url>
-				<licenses>
-					<license>
-						<license-name>Apache License, Version 2.0</license-name>
-						<license-url>http://www.apache.org/licenses/LICENSE-2.0.txt</license-url>
-					</license>
-				</licenses>
-			</library>
-			<library>
-				<file-name>com.liferay.dynamic.data.mapping.service.jar!poi-ooxml.jar</file-name>
-				<version>4.1.2</version>
-				<project-name>Apache POI</project-name>
-				<project-url>http://poi.apache.org/</project-url>
-				<licenses>
-					<license>
-						<license-name>Apache License, Version 2.0</license-name>
-						<license-url>http://www.apache.org/licenses/LICENSE-2.0.txt</license-url>
-					</license>
-				</licenses>
-			</library>
-			<library>
-				<file-name>com.liferay.dynamic.data.mapping.service.jar!poi.jar</file-name>
-				<version>4.1.2</version>
-				<project-name>Apache POI</project-name>
-				<project-url>http://poi.apache.org/</project-url>
 				<licenses>
 					<license>
 						<license-name>Apache License, Version 2.0</license-name>
@@ -4658,6 +4550,102 @@
 				<file-name>com.liferay.shared.dependencies.guava.jar!listenablefuture.jar</file-name>
 				<version>9999.0-empty-to-avoid-conflict-with-guava</version>
 				<project-name>Guava ListenableFuture only</project-name>
+				<licenses>
+					<license>
+						<license-name>The Apache Software License, Version 2.0</license-name>
+						<license-url>http://www.apache.org/licenses/LICENSE-2.0.txt</license-url>
+					</license>
+				</licenses>
+			</library>
+			<library>
+				<file-name>com.liferay.shared.dependencies.poi.jar!SparseBitSet.jar</file-name>
+				<version>1.2</version>
+				<project-name>SparseBitSet</project-name>
+				<project-url>https://github.com/brettwooldridge/SparseBitSet</project-url>
+				<licenses>
+					<license>
+						<license-name>The Apache Software License, Version 2.0</license-name>
+						<license-url>http://www.apache.org/licenses/LICENSE-2.0.txt</license-url>
+					</license>
+				</licenses>
+			</library>
+			<library>
+				<file-name>com.liferay.shared.dependencies.poi.jar!commons-collections4.jar</file-name>
+				<version>4.4</version>
+				<project-name>Apache Commons Collections</project-name>
+				<project-url>https://commons.apache.org/proper/commons-collections/</project-url>
+				<licenses>
+					<license>
+						<license-name>Apache License, Version 2.0</license-name>
+						<license-url>https://www.apache.org/licenses/LICENSE-2.0.txt</license-url>
+					</license>
+				</licenses>
+			</library>
+			<library>
+				<file-name>com.liferay.shared.dependencies.poi.jar!log4j-api.jar</file-name>
+				<version>2.17.1</version>
+				<project-name>Apache Log4j API</project-name>
+				<project-url>https://www.apache.org/</project-url>
+				<licenses>
+					<license>
+						<license-name>Apache License, Version 2.0</license-name>
+						<license-url>https://www.apache.org/licenses/LICENSE-2.0.txt</license-url>
+					</license>
+				</licenses>
+			</library>
+			<library>
+				<file-name>com.liferay.shared.dependencies.poi.jar!log4j-core.jar</file-name>
+				<version>2.17.1</version>
+				<project-name>Apache Log4j Core</project-name>
+				<project-url>https://www.apache.org/</project-url>
+				<licenses>
+					<license>
+						<license-name>Apache License, Version 2.0</license-name>
+						<license-url>https://www.apache.org/licenses/LICENSE-2.0.txt</license-url>
+					</license>
+				</licenses>
+			</library>
+			<library>
+				<file-name>com.liferay.shared.dependencies.poi.jar!poi-ooxml-lite.jar</file-name>
+				<version>5.2.2</version>
+				<project-name>Apache POI</project-name>
+				<project-url>https://poi.apache.org/</project-url>
+				<licenses>
+					<license>
+						<license-name>Apache License, Version 2.0</license-name>
+						<license-url>http://www.apache.org/licenses/LICENSE-2.0.txt</license-url>
+					</license>
+				</licenses>
+			</library>
+			<library>
+				<file-name>com.liferay.shared.dependencies.poi.jar!poi-ooxml.jar</file-name>
+				<version>5.2.2</version>
+				<project-name>Apache POI - API based on OPC and OOXML schemas</project-name>
+				<project-url>https://poi.apache.org/</project-url>
+				<licenses>
+					<license>
+						<license-name>Apache License, Version 2.0</license-name>
+						<license-url>http://www.apache.org/licenses/LICENSE-2.0.txt</license-url>
+					</license>
+				</licenses>
+			</library>
+			<library>
+				<file-name>com.liferay.shared.dependencies.poi.jar!poi.jar</file-name>
+				<version>5.2.2</version>
+				<project-name>Apache POI - Common</project-name>
+				<project-url>https://poi.apache.org/</project-url>
+				<licenses>
+					<license>
+						<license-name>Apache License, Version 2.0</license-name>
+						<license-url>http://www.apache.org/licenses/LICENSE-2.0.txt</license-url>
+					</license>
+				</licenses>
+			</library>
+			<library>
+				<file-name>com.liferay.shared.dependencies.poi.jar!xmlbeans.jar</file-name>
+				<version>5.0.3</version>
+				<project-name>XmlBeans</project-name>
+				<project-url>https://xmlbeans.apache.org/</project-url>
 				<licenses>
 					<license>
 						<license-name>The Apache Software License, Version 2.0</license-name>
