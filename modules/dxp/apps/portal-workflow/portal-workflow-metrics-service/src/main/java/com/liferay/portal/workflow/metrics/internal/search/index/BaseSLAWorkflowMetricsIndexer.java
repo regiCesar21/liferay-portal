@@ -66,6 +66,7 @@ public abstract class BaseSLAWorkflowMetricsIndexer
 			companyId,
 			document -> new DocumentImpl() {
 				{
+					addKeyword("instanceCompleted", true);
 					addKeyword(
 						"status", WorkfowMetricsSLAStatus.EXPIRED.name());
 					addKeyword(Field.UID, document.getString(Field.UID));

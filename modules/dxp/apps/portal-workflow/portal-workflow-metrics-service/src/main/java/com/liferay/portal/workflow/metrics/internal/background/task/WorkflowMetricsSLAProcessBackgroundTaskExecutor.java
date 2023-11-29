@@ -27,7 +27,6 @@ import com.liferay.portal.search.hits.SearchHit;
 import com.liferay.portal.search.hits.SearchHits;
 import com.liferay.portal.search.query.BooleanQuery;
 import com.liferay.portal.search.query.Queries;
-import com.liferay.portal.search.query.TermsQuery;
 import com.liferay.portal.workflow.metrics.internal.search.index.SLAProcessResultWorkflowMetricsIndexer;
 import com.liferay.portal.workflow.metrics.internal.search.index.SLATaskResultWorkflowMetricsIndexer;
 import com.liferay.portal.workflow.metrics.internal.sla.processor.WorkflowMetricsSLAProcessResult;
@@ -118,8 +117,7 @@ public class WorkflowMetricsSLAProcessBackgroundTaskExecutor
 			workflowMetricsSLADefinitionVersion);
 
 		_processCompletedInstances(
-			createLocalDateTimes.keySet(), startNodeId,
-			workflowMetricsSLADefinitionVersion);
+			startNodeId, workflowMetricsSLADefinitionVersion);
 
 		return BackgroundTaskResult.SUCCESS;
 	}
@@ -211,25 +209,9 @@ public class WorkflowMetricsSLAProcessBackgroundTaskExecutor
 	}
 
 	private BooleanQuery _createSLAProcessResultsBooleanQuery(
-		long companyId, Set<Long> instanceIds, long processId,
-		long slaDefinitionId) {
+		long companyId, long processId, long slaDefinitionId) {
 
 		BooleanQuery booleanQuery = _queries.booleanQuery();
-
-		if (!instanceIds.isEmpty()) {
-			TermsQuery termsQuery = _queries.terms("instanceId");
-
-			Stream<Long> stream = instanceIds.stream();
-
-			termsQuery.addValues(
-				stream.map(
-					String::valueOf
-				).toArray(
-					String[]::new
-				));
-
-			booleanQuery.addMustNotQueryClauses(termsQuery);
-		}
 
 		booleanQuery.addMustNotQueryClauses(
 			_queries.term("slaDefinitionId", "0"),
@@ -238,6 +220,7 @@ public class WorkflowMetricsSLAProcessBackgroundTaskExecutor
 		return booleanQuery.addMustQueryClauses(
 			_queries.term("companyId", companyId),
 			_queries.term("deleted", false),
+			_queries.term("instanceCompleted", true),
 			_queries.term("processId", processId),
 			_queries.term("slaDefinitionId", slaDefinitionId));
 	}
@@ -366,7 +349,7 @@ public class WorkflowMetricsSLAProcessBackgroundTaskExecutor
 	}
 
 	private void _processCompletedInstances(
-		Set<Long> instanceIds, long startNodeId,
+		long startNodeId,
 		WorkflowMetricsSLADefinitionVersion
 			workflowMetricsSLADefinitionVersion) {
 
@@ -377,7 +360,7 @@ public class WorkflowMetricsSLAProcessBackgroundTaskExecutor
 				workflowMetricsSLADefinitionVersion.getCompanyId()));
 		searchSearchRequest.setQuery(
 			_createSLAProcessResultsBooleanQuery(
-				workflowMetricsSLADefinitionVersion.getCompanyId(), instanceIds,
+				workflowMetricsSLADefinitionVersion.getCompanyId(),
 				workflowMetricsSLADefinitionVersion.getProcessId(),
 				workflowMetricsSLADefinitionVersion.
 					getWorkflowMetricsSLADefinitionId()));
