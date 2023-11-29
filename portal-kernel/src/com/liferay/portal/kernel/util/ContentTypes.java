@@ -14,7 +14,8 @@ public interface ContentTypes {
 
 	public static final String APPLICATION_GZIP = "application/gzip";
 
-	public static final String APPLICATION_JAVASCRIPT = "application/javascript";
+	public static final String APPLICATION_JAVASCRIPT =
+		"application/javascript";
 
 	public static final String APPLICATION_JSON = "application/json";
 
