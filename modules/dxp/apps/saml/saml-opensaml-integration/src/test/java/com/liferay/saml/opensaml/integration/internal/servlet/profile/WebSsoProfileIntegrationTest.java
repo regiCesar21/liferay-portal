@@ -8,9 +8,11 @@ package com.liferay.saml.opensaml.integration.internal.servlet.profile;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.HttpUtil;
+import com.liferay.portal.uuid.PortalUUIDImpl;
 import com.liferay.saml.constants.SamlWebKeys;
 import com.liferay.saml.opensaml.integration.internal.BaseSamlTestCase;
 import com.liferay.saml.opensaml.integration.internal.bootstrap.SecurityConfigurationBootstrap;
+import com.liferay.saml.opensaml.integration.internal.helper.RelayStateHelperImpl;
 import com.liferay.saml.opensaml.integration.internal.metadata.MetadataManagerImpl;
 import com.liferay.saml.opensaml.integration.internal.util.OpenSamlUtil;
 import com.liferay.saml.opensaml.integration.internal.util.SamlUtil;
@@ -109,6 +111,12 @@ public class WebSsoProfileIntegrationTest extends BaseSamlTestCase {
 	public void setUp() throws Exception {
 		super.setUp();
 
+		ReflectionTestUtil.setFieldValue(
+			_relayStateHelperImpl, "_portalUUID", new PortalUUIDImpl());
+
+		ReflectionTestUtil.setFieldValue(
+			_webSsoProfileImpl, "_relayStateHelper", _relayStateHelperImpl);
+
 		_samlSpAuthRequestLocalService = getMockPortletService(
 			SamlSpAuthRequestLocalServiceUtil.class,
 			SamlSpAuthRequestLocalService.class);
@@ -144,6 +152,9 @@ public class WebSsoProfileIntegrationTest extends BaseSamlTestCase {
 
 		_webSsoProfileImpl.setSamlSpIdpConnectionLocalService(
 			samlSpIdpConnectionLocalService);
+
+		ReflectionTestUtil.invoke(
+			_relayStateHelperImpl, "activate", new Class<?>[0]);
 
 		_webSsoProfileImpl.activate(new HashMap<String, Object>());
 
@@ -468,7 +479,10 @@ public class WebSsoProfileIntegrationTest extends BaseSamlTestCase {
 		SAMLBindingContext samlBindingContext = messageContext.getSubcontext(
 			SAMLBindingContext.class);
 
-		Assert.assertEquals(RELAY_STATE, samlBindingContext.getRelayState());
+		Assert.assertEquals(
+			RELAY_STATE,
+			_relayStateHelperImpl.getRedirectFromRelayStateToken(
+				samlBindingContext.getRelayState()));
 
 		Assert.assertNull(
 			mockSession.getAttribute(SamlWebKeys.SAML_SSO_REQUEST_CONTEXT));
@@ -560,7 +574,10 @@ public class WebSsoProfileIntegrationTest extends BaseSamlTestCase {
 		SAMLBindingContext samlBindingContext = messageContext.getSubcontext(
 			SAMLBindingContext.class);
 
-		Assert.assertEquals(RELAY_STATE, samlBindingContext.getRelayState());
+		Assert.assertEquals(
+			RELAY_STATE,
+			_relayStateHelperImpl.getRedirectFromRelayStateToken(
+				samlBindingContext.getRelayState()));
 
 		InOutOperationContext<?, ?> inOutOperationContext =
 			messageContext.getSubcontext(InOutOperationContext.class);
@@ -1253,6 +1270,8 @@ public class WebSsoProfileIntegrationTest extends BaseSamlTestCase {
 			metadataManagerImpl.getSignatureTrustEngine());
 	}
 
+	private final RelayStateHelperImpl _relayStateHelperImpl =
+		new RelayStateHelperImpl();
 	private SamlSpAuthRequestLocalService _samlSpAuthRequestLocalService;
 	private SamlSpSessionLocalService _samlSpSessionLocalService;
 	private final WebSsoProfileImpl _webSsoProfileImpl =
