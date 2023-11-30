@@ -57,7 +57,7 @@ public class ExportImportHelperUtil {
 	}
 
 	public static List<Portlet> getDataSiteAndInstanceLevelPortlets(
-		long companyId)
+			long companyId)
 		throws Exception {
 
 		return _exportImportHelper.getDataSiteAndInstanceLevelPortlets(
@@ -65,7 +65,7 @@ public class ExportImportHelperUtil {
 	}
 
 	public static List<Portlet> getDataSiteAndInstanceLevelPortlets(
-		long companyId, boolean excludeDataAlwaysStaged)
+			long companyId, boolean excludeDataAlwaysStaged)
 		throws Exception {
 
 		return _exportImportHelper.getDataSiteAndInstanceLevelPortlets(

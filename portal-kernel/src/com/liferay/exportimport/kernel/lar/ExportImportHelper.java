@@ -128,6 +128,7 @@ public interface ExportImportHelper {
 	public Calendar getCalendar(
 		PortletRequest portletRequest, String paramPrefix,
 		boolean timeZoneSensitive);
+
 	public List<Portlet> getDataSiteAndInstanceLevelPortlets(long companyId)
 		throws Exception;
 
