@@ -18,16 +18,15 @@ import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.service.GroupLocalServiceUtil;
 import com.liferay.portal.kernel.service.OrganizationLocalServiceUtil;
-import com.liferay.portal.kernel.service.UserNotificationEventLocalServiceUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
-import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.MapUtil;
-import com.liferay.portal.kernel.util.PortletKeys;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
+import com.liferay.portal.kernel.workflow.WorkflowException;
 import com.liferay.portal.kernel.workflow.WorkflowHandler;
 import com.liferay.portal.kernel.workflow.WorkflowHandlerRegistryUtil;
 import com.liferay.portal.kernel.workflow.WorkflowTask;
 import com.liferay.portal.kernel.workflow.WorkflowTaskAssignee;
+import com.liferay.portal.kernel.workflow.WorkflowTaskManagerUtil;
 
 import java.io.Serializable;
 
@@ -62,20 +61,22 @@ public class WorkflowTaskPermissionChecker {
 			return true;
 		}
 
-		int userNotificationEventsCount =
-			UserNotificationEventLocalServiceUtil.
-				getUserNotificationEventsCount(
-					permissionChecker.getUserId(), PortletKeys.MY_WORKFLOW_TASK,
-					HashMapBuilder.put(
-						"workflowInstanceId",
-						String.valueOf(workflowTask.getWorkflowInstanceId())
-					).put(
-						"workflowTaskId",
-						String.valueOf(workflowTask.getWorkflowTaskId())
-					).build());
+		boolean assignableUser = false;
+
+		try {
+			long[] pooledActorsIds = WorkflowTaskManagerUtil.getPooledActorsIds(
+				permissionChecker.getCompanyId(),
+				workflowTask.getWorkflowTaskId());
+
+			assignableUser = ArrayUtil.contains(
+				pooledActorsIds, permissionChecker.getUserId());
+		}
+		catch (WorkflowException workflowException) {
+			_log.error(workflowException);
+		}
 
 		if (hasAssetViewPermission(workflowTask, permissionChecker) &&
-			((userNotificationEventsCount > 0) ||
+			(assignableUser ||
 			 (workflowTask.isCompleted() &&
 			  (workflowTask.getAssigneeUserId() ==
 				  permissionChecker.getUserId())))) {
