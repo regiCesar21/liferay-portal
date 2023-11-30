@@ -95,11 +95,9 @@ public class UserAnalyticsDXPEntityBatchEngineTaskItemDelegate
 	private DSLQuery _createCountDSLQuery(
 		long companyId, Map<String, Serializable> parameters) {
 
-		UserTable userTableAlias = UserTable.INSTANCE.as("userTable");
-
 		JoinStep joinStep = DSLQueryFactoryUtil.count(
 		).from(
-			userTableAlias
+			UserTable.INSTANCE
 		);
 
 		Predicate predicate = null;
@@ -115,7 +113,8 @@ public class UserAnalyticsDXPEntityBatchEngineTaskItemDelegate
 			if (!ArrayUtil.isEmpty(syncedOrganizationIds)) {
 				joinStep = joinStep.leftJoinOn(
 					Users_OrgsTable.INSTANCE,
-					Users_OrgsTable.INSTANCE.userId.eq(userTableAlias.userId));
+					Users_OrgsTable.INSTANCE.userId.eq(
+						UserTable.INSTANCE.userId));
 
 				predicate = Users_OrgsTable.INSTANCE.organizationId.in(
 					TransformUtil.transform(
@@ -129,7 +128,7 @@ public class UserAnalyticsDXPEntityBatchEngineTaskItemDelegate
 				joinStep = joinStep.leftJoinOn(
 					Users_UserGroupsTable.INSTANCE,
 					Users_UserGroupsTable.INSTANCE.userId.eq(
-						userTableAlias.userId));
+						UserTable.INSTANCE.userId));
 
 				predicate = Predicate.or(
 					predicate,
@@ -141,11 +140,12 @@ public class UserAnalyticsDXPEntityBatchEngineTaskItemDelegate
 
 		return joinStep.where(
 			Predicate.and(
-				_buildPredicate(userTableAlias, companyId, parameters),
-				userTableAlias.screenName.neq(
+				_buildPredicate(UserTable.INSTANCE, companyId, parameters),
+				UserTable.INSTANCE.screenName.neq(
 					AnalyticsSecurityConstants.SCREEN_NAME_ANALYTICS_ADMIN
 				).and(
-					userTableAlias.status.neq(WorkflowConstants.STATUS_INACTIVE)
+					UserTable.INSTANCE.status.neq(
+						WorkflowConstants.STATUS_INACTIVE)
 				).and(
 					Predicate.withParentheses(predicate)
 				)));
@@ -155,12 +155,10 @@ public class UserAnalyticsDXPEntityBatchEngineTaskItemDelegate
 		long companyId, Pagination pagination,
 		Map<String, Serializable> parameters) {
 
-		UserTable userTableAlias = UserTable.INSTANCE.as("userTable");
-
 		JoinStep joinStep = DSLQueryFactoryUtil.select(
-			userTableAlias
+			UserTable.INSTANCE
 		).from(
-			userTableAlias
+			UserTable.INSTANCE
 		);
 
 		Predicate predicate = null;
@@ -176,7 +174,8 @@ public class UserAnalyticsDXPEntityBatchEngineTaskItemDelegate
 			if (!ArrayUtil.isEmpty(syncedOrganizationIds)) {
 				joinStep = joinStep.leftJoinOn(
 					Users_OrgsTable.INSTANCE,
-					Users_OrgsTable.INSTANCE.userId.eq(userTableAlias.userId));
+					Users_OrgsTable.INSTANCE.userId.eq(
+						UserTable.INSTANCE.userId));
 
 				predicate = Users_OrgsTable.INSTANCE.organizationId.in(
 					TransformUtil.transform(
@@ -190,7 +189,7 @@ public class UserAnalyticsDXPEntityBatchEngineTaskItemDelegate
 				joinStep = joinStep.leftJoinOn(
 					Users_UserGroupsTable.INSTANCE,
 					Users_UserGroupsTable.INSTANCE.userId.eq(
-						userTableAlias.userId));
+						UserTable.INSTANCE.userId));
 
 				predicate = Predicate.or(
 					predicate,
@@ -202,11 +201,12 @@ public class UserAnalyticsDXPEntityBatchEngineTaskItemDelegate
 
 		return joinStep.where(
 			Predicate.and(
-				_buildPredicate(userTableAlias, companyId, parameters),
-				userTableAlias.screenName.neq(
+				_buildPredicate(UserTable.INSTANCE, companyId, parameters),
+				UserTable.INSTANCE.screenName.neq(
 					AnalyticsSecurityConstants.SCREEN_NAME_ANALYTICS_ADMIN
 				).and(
-					userTableAlias.status.neq(WorkflowConstants.STATUS_INACTIVE)
+					UserTable.INSTANCE.status.neq(
+						WorkflowConstants.STATUS_INACTIVE)
 				).and(
 					Predicate.withParentheses(predicate)
 				))
