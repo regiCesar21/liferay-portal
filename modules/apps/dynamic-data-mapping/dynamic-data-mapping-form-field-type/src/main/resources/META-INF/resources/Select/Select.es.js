@@ -184,7 +184,8 @@ const DropdownItem = ({
 }) => (
 	<>
 		<ClayDropDown.Item
-			active={expand && currentValue === option.label}
+			active={expand && currentValue.includes(option.value)}
+			aria-label={option.label}
 			data-testid={`dropdownItem-${index}`}
 			label={option.label}
 			onClick={(event) => {
@@ -198,10 +199,12 @@ const DropdownItem = ({
 					option,
 				});
 			}}
+			role="option"
 			value={options.value}
 		>
 			{multiple ? (
 				<ClayCheckbox
+					aria-checked={currentValue.includes(option.value)}
 					aria-label={option.label}
 					checked={currentValue.includes(option.value)}
 					data-testid={`labelItem-${option.value}`}
@@ -242,6 +245,7 @@ const DropdownList = ({
 				onSelect={handleSelect}
 				option={option}
 				options={options}
+				role="option"
 			/>
 		))}
 	</ClayDropDown.ItemList>
@@ -281,7 +285,10 @@ const DropdownListWithSearch = ({
 	return (
 		<>
 			<ClayDropDown.Search
-				onChange={(event) => setQuery(event.target.value)}
+				onChange={(event) => {
+					setQuery(event.target.value);
+				}}
+				tabIndex={0}
 				value={query}
 			/>
 			{filteredOptions.length > 0 ? (
@@ -349,6 +356,23 @@ const Select = ({
 
 	const [currentValue, setCurrentValue] = useSyncValue(value, false);
 	const [expand, setExpand] = useState(false);
+
+	useEffect(() => {
+		if (expand) {
+			let firstElement;
+
+			if (options?.length > MAX_ITEMS) {
+				firstElement = menuElementRef.current.querySelector('input');
+			}
+			else {
+				firstElement = menuElementRef.current.querySelector('button');
+			}
+
+			firstElement.focus();
+		}
+
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, [expand]);
 
 	useEffect(() => {
 		const getDocumentHeight = () => {
@@ -438,6 +462,7 @@ const Select = ({
 	return (
 		<>
 			<Trigger
+				expand={expand}
 				multiple={multiple}
 				onCloseButtonClicked={({event, value}) => {
 					const newValue = removeValue({
@@ -498,13 +523,17 @@ const Select = ({
 				predefinedValue={predefinedValue}
 				readOnly={readOnly}
 				ref={triggerElementRef}
+				setExpand={setExpand}
 				value={currentValue}
 				{...otherProps}
 			/>
 			<ClayDropDown.Menu
 				active={expand}
 				alignElementRef={triggerElementRef}
+				aria-label={Liferay.Language.get('choose-an-option')}
+				aria-required={otherProps.required}
 				className="ddm-btn-full ddm-select-dropdown"
+				id={`ddm-select-dropdown${otherProps.name}`}
 				onKeyDown={(event) => {
 					switch (event.keyCode) {
 						case KEYCODES.ARROW_DOWN:
@@ -522,6 +551,7 @@ const Select = ({
 				}}
 				onSetActive={setExpand}
 				ref={menuElementRef}
+				role="listbox"
 			>
 				{options.length > MAX_ITEMS ? (
 					<DropdownListWithSearch

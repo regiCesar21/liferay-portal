@@ -8,17 +8,57 @@ import ClayLabel from '@clayui/label';
 import classNames from 'classnames';
 import React, {forwardRef} from 'react';
 
-const LabelOptionListItem = ({onCloseButtonClicked, option, readOnly}) => (
+/**
+ * Mapping to be used to match keyCodes
+ * returned from keydown events.
+ */
+const KEYCODES = {
+	ARROW_DOWN: 40,
+	ARROW_UP: 38,
+	ENTER: 13,
+	SHIFT: 16,
+	SPACE: 32,
+	TAB: 9,
+};
+
+const LabelOptionListItem = ({
+	onCloseButtonClicked,
+	option,
+	readOnly,
+	setExpand,
+}) => (
 	<li>
 		<ClayLabel
 			className="ddm-select-option-label"
 			closeButtonProps={{
+				'aria-label': Liferay.Util.sub(
+					Liferay.Language.get('remove-x'),
+					option.label
+				),
 				'data-testid': `closeButton${option.value}`,
 				onClick: (event) => {
 					event.preventDefault();
 					event.stopPropagation();
 
 					onCloseButtonClicked({event, value: option.value});
+				},
+				onKeyDown: (event) => {
+					if (
+						event.keyCode === KEYCODES.ENTER ||
+						(event.keyCode === KEYCODES.SPACE && !event.shiftKey)
+					) {
+						event.preventDefault();
+						event.stopPropagation();
+
+						onCloseButtonClicked({event, value: option.value});
+					}
+
+					if (
+						event.keyCode === KEYCODES.ARROW_DOWN &&
+						!event.shiftKey
+					) {
+						setExpand(true);
+					}
 				},
 			}}
 			value={option.value}
@@ -43,6 +83,7 @@ const VisibleSelectInput = forwardRef(
 	(
 		{
 			className,
+			expand,
 			id,
 			multiple,
 			onClick,
@@ -50,6 +91,7 @@ const VisibleSelectInput = forwardRef(
 			onKeyDown,
 			options,
 			readOnly,
+			setExpand,
 			value,
 		},
 		ref
@@ -83,6 +125,9 @@ const VisibleSelectInput = forwardRef(
 				ref={ref}
 			>
 				<div
+					aria-expanded={expand}
+					aria-haspopup="listbox"
+					aria-label={selectedLabel()}
 					className={classNames(
 						'form-control results-chosen select-field-trigger',
 						{
@@ -92,6 +137,7 @@ const VisibleSelectInput = forwardRef(
 					)}
 					disabled={readOnly}
 					id={id}
+					role="combobox"
 					tabIndex="0"
 				>
 					{isValueEmpty || (value.length === 1 && !multiple) ? (
@@ -111,6 +157,7 @@ const VisibleSelectInput = forwardRef(
 									onCloseButtonClicked={onCloseButtonClicked}
 									option={option}
 									readOnly={readOnly}
+									setExpand={setExpand}
 								/>
 							);
 						})
