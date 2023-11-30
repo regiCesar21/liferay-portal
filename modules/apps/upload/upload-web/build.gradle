@@ -14,6 +14,6 @@ dependencies {
 
 	testImplementation group: "com.liferay.portal", name: "com.liferay.portal.impl", version: "default"
 	testImplementation group: "com.liferay.portal", name: "com.liferay.util.java", version: "default"
-	testImplementation group: "org.apache.tika", name: "tika-core", version: "1.26"
+	testImplementation group: "org.apache.tika", name: "tika-core", version: "1.28.5"
 	testImplementation project(":core:petra:petra-lang")
 }
