@@ -206,6 +206,9 @@ definition {
 		var key_feedHeading = ${feedHeading};
 
 		if (isSet(updateFeed)) {
+
+			// We need this pause to check issue due to the minimum feed time is 1 min. See LPS-159280
+
 			Pause(value1 = 60000);
 
 			Navigator._gotoPage(pageName = ${pageName});
