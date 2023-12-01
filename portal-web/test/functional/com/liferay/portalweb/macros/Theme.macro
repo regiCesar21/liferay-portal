@@ -98,8 +98,6 @@ definition {
 		var logContent = FileUtil.read("${projectDir}/log");
 
 		while (!(contains(${logContent}, "STARTED ${themeName}"))) {
-			Pause(value1 = 3000);
-
 			AntCommand(
 				locator1 = "build-test.xml",
 				value1 = "copy-log-file");
