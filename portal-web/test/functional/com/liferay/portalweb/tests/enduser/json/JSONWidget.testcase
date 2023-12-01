@@ -103,8 +103,6 @@ definition {
 			if (!(contains(${typeSettings}, ${layoutTemplateId}))) {
 				fail("${layoutTemplateId} is not in 'typeSettings'");
 			}
-
-			Pause(value1 = 3000);
 		}
 	}
 
