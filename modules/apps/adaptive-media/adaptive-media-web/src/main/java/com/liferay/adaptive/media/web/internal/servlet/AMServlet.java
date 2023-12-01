@@ -18,6 +18,7 @@ import com.liferay.portal.kernel.servlet.HttpHeaders;
 import com.liferay.portal.kernel.servlet.ServletResponseUtil;
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.util.PropsValues;
 
 import java.io.IOException;
 
@@ -76,7 +77,7 @@ public class AMServlet extends HttpServlet {
 			boolean download = ParamUtil.getBoolean(
 				httpServletRequest, "download");
 
-			String cacheControlValue = HttpHeaders.CACHE_CONTROL_PRIVATE_VALUE;
+			String cacheControlValue = PropsValues.DL_CACHE_CONTROL_VALUE;
 
 			if (download) {
 				cacheControlValue = HttpHeaders.CACHE_CONTROL_NO_CACHE_VALUE;

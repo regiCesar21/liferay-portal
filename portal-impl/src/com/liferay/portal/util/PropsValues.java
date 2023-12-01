@@ -893,6 +893,13 @@ public class PropsValues {
 		GetterUtil.getBoolean(
 			PropsUtil.get(PropsKeys.DISCUSSION_SUBSCRIBE_BY_DEFAULT));
 
+	/**
+	 *  @deprecated As of Mueller (7.2.x), with no direct replacement
+	 */
+	@Deprecated
+	public static final String DL_CACHE_CONTROL_VALUE = PropsUtil.get(
+		PropsKeys.DL_CACHE_CONTROL_VALUE);
+
 	public static final String[] DL_CHAR_BLACKLIST = PropsUtil.getArray(
 		PropsKeys.DL_CHAR_BLACKLIST);
 

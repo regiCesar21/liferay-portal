@@ -1170,7 +1170,7 @@ public class WebServerServlet extends HttpServlet {
 
 		// Send file
 
-		String cacheControlValue = HttpHeaders.CACHE_CONTROL_PRIVATE_VALUE;
+		String cacheControlValue = PropsValues.DL_CACHE_CONTROL_VALUE;
 
 		boolean download = ParamUtil.getBoolean(httpServletRequest, "download");
 
@@ -1208,6 +1208,9 @@ public class WebServerServlet extends HttpServlet {
 
 		FileEntry fileEntry = DLAppServiceUtil.getFileEntry(
 			groupId, folderId, title);
+
+		httpServletResponse.addHeader(
+			HttpHeaders.CACHE_CONTROL, PropsValues.DL_CACHE_CONTROL_VALUE);
 
 		ServletResponseUtil.sendFile(
 			null, httpServletResponse, title, fileEntry.getContentStream(),
@@ -1294,6 +1297,9 @@ public class WebServerServlet extends HttpServlet {
 		if (fileEntry.isInTrash()) {
 			fileName = TrashUtil.getOriginalTitle(fileName);
 		}
+
+		httpServletResponse.addHeader(
+			HttpHeaders.CACHE_CONTROL, PropsValues.DL_CACHE_CONTROL_VALUE);
 
 		boolean download = ParamUtil.getBoolean(httpServletRequest, "download");
 

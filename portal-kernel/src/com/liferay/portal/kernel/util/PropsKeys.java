@@ -940,6 +940,13 @@ public interface PropsKeys {
 
 	public static final String DL_ACTIONS_VISIBLE = "dl.actions.visible";
 
+	/**
+	 *  @deprecated As of Mueller (7.2.x), with no direct replacement
+	 */
+	@Deprecated
+	public static final String DL_CACHE_CONTROL_VALUE =
+		"dl.cache.control.value";
+
 	public static final String DL_CHAR_BLACKLIST = "dl.char.blacklist";
 
 	public static final String DL_CHAR_LAST_BLACKLIST =
