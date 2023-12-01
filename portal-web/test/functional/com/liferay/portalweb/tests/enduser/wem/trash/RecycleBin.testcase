@@ -335,6 +335,8 @@ definition {
 			customMaxAge = "1 minute",
 			deleteUser = "Test Test");
 
+		// Pausing 2 minutes due to reasons here. See LPS-157883
+
 		Pause(value1 = 120000);
 
 		Refresh();
