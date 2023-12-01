@@ -82,8 +82,6 @@ definition {
 	macro previewPG(deviceType = null) {
 		Click(locator1 = "ControlMenu#SIMULATION");
 
-		Pause(value1 = 2000);
-
 		AssertElementNotPresent(locator1 = "IFrame#LOADING_MESSAGE");
 
 		var key_deviceType = ${deviceType};
