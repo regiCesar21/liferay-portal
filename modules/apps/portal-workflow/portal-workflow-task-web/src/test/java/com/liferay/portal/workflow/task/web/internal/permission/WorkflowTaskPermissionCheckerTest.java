@@ -13,8 +13,6 @@ import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.service.GroupLocalServiceUtil;
 import com.liferay.portal.kernel.service.GroupLocalServiceWrapper;
 import com.liferay.portal.kernel.service.ServiceContext;
-import com.liferay.portal.kernel.service.UserNotificationEventLocalServiceUtil;
-import com.liferay.portal.kernel.service.UserNotificationEventLocalServiceWrapper;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.util.ProxyFactory;
@@ -26,7 +24,9 @@ import com.liferay.portal.kernel.workflow.WorkflowHandler;
 import com.liferay.portal.kernel.workflow.WorkflowHandlerRegistryUtil;
 import com.liferay.portal.kernel.workflow.WorkflowTask;
 import com.liferay.portal.kernel.workflow.WorkflowTaskAssignee;
+import com.liferay.portal.kernel.workflow.WorkflowTaskManagerUtil;
 import com.liferay.portal.security.permission.SimplePermissionChecker;
+import com.liferay.portal.workflow.WorkflowTaskManagerProxyBean;
 import com.liferay.registry.BasicRegistryImpl;
 import com.liferay.registry.RegistryUtil;
 import com.liferay.registry.collections.ServiceReferenceMapper;
@@ -73,7 +73,7 @@ public class WorkflowTaskPermissionCheckerTest extends PowerMockito {
 	public void setUp() {
 		_setUpServiceTrackerCollections();
 
-		mockUserNotificationEventLocalServiceUtil(0);
+		_mockWorkflowTaskManager(Collections.emptyList());
 	}
 
 	@Test
@@ -215,7 +215,7 @@ public class WorkflowTaskPermissionCheckerTest extends PowerMockito {
 	@Test
 	public void testNotContentReviewerWithAssetViewPermissionHasPermissionOnPendingTaskWithNotification() {
 		mockAssetRendererHasViewPermission(true);
-		mockUserNotificationEventLocalServiceUtil(1);
+		_mockWorkflowTaskManager(Collections.singletonList(_user));
 
 		Assert.assertTrue(
 			_workflowTaskPermissionChecker.hasPermission(
@@ -346,6 +346,12 @@ public class WorkflowTaskPermissionCheckerTest extends PowerMockito {
 		long userId, long[] roleIds, boolean companyAdmin,
 		boolean contentReviewer, boolean paraOmniadmin) {
 
+		Mockito.when(
+			_user.getUserId()
+		).thenReturn(
+			userId
+		);
+
 		return new SimplePermissionChecker() {
 
 			@Override
@@ -356,6 +362,11 @@ public class WorkflowTaskPermissionCheckerTest extends PowerMockito {
 			@Override
 			public long[] getRoleIds(long userId, long groupId) {
 				return roleIds;
+			}
+
+			@Override
+			public User getUser() {
+				return _user;
 			}
 
 			@Override
@@ -379,22 +390,6 @@ public class WorkflowTaskPermissionCheckerTest extends PowerMockito {
 			}
 
 		};
-	}
-
-	protected void mockUserNotificationEventLocalServiceUtil(int count) {
-		ReflectionTestUtil.setFieldValue(
-			UserNotificationEventLocalServiceUtil.class, "_service",
-			new UserNotificationEventLocalServiceWrapper(null) {
-
-				@Override
-				public int getUserNotificationEventsCount(
-					long userId, String type,
-					Map<String, String> payloadParameter) {
-
-					return count;
-				}
-
-			});
 	}
 
 	protected WorkflowTask mockWorkflowTask() {
@@ -452,6 +447,21 @@ public class WorkflowTaskPermissionCheckerTest extends PowerMockito {
 				@Override
 				public Group getGroup(long groupId) {
 					return ProxyFactory.newDummyInstance(Group.class);
+				}
+
+			});
+	}
+
+	private void _mockWorkflowTaskManager(List<User> users) {
+		ReflectionTestUtil.setFieldValue(
+			WorkflowTaskManagerUtil.class, "_workflowTaskManager",
+			new WorkflowTaskManagerProxyBean() {
+
+				@Override
+				public List<User> getAssignableUsers(
+					long companyId, long workflowTaskId) {
+
+					return users;
 				}
 
 			});
@@ -522,6 +532,8 @@ public class WorkflowTaskPermissionCheckerTest extends PowerMockito {
 
 	private static final String _TEST_CONTEXT_ENTRY_CLASS_NAME =
 		"TEST_CONTEXT_ENTRY_CLASS_NAME";
+
+	private static final User _user = Mockito.mock(User.class);
 
 	private final WorkflowTaskPermissionChecker _workflowTaskPermissionChecker =
 		new WorkflowTaskPermissionChecker();
