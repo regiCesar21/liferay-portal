@@ -19,8 +19,6 @@ definition {
 
 		ScrollWebElementIntoView(locator1 = "Button#SAVE_LOCALIZED");
 
-		Pause(value1 = 2000);
-
 		AssertClick(
 			locator1 = "Button#SAVE_LOCALIZED",
 			value1 = ${saveButton});
