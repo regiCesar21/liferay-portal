@@ -49,32 +49,6 @@ public class WorkflowTaskUserNotificationHandler
 	}
 
 	@Override
-	public boolean isApplicable(
-		UserNotificationEvent userNotificationEvent,
-		ServiceContext serviceContext) {
-
-		try {
-			JSONObject jsonObject = JSONFactoryUtil.createJSONObject(
-				userNotificationEvent.getPayload());
-
-			for (User user :
-					WorkflowTaskManagerUtil.getNotifiableUsers(
-						jsonObject.getLong("companyId"),
-						jsonObject.getLong("workflowTaskId"))) {
-
-				if (user.getUserId() == serviceContext.getUserId()) {
-					return true;
-				}
-			}
-		}
-		catch (PortalException portalException) {
-			_log.error(portalException);
-		}
-
-		return false;
-	}
-
-	@Override
 	protected String getBody(
 			UserNotificationEvent userNotificationEvent,
 			ServiceContext serviceContext)
@@ -105,6 +79,10 @@ public class WorkflowTaskUserNotificationHandler
 			UserNotificationEvent userNotificationEvent,
 			ServiceContext serviceContext)
 		throws Exception {
+
+		if (!_isNotifiable(userNotificationEvent, serviceContext)) {
+			return StringPool.BLANK;
+		}
 
 		JSONObject jsonObject = JSONFactoryUtil.createJSONObject(
 			userNotificationEvent.getPayload());
@@ -173,6 +151,31 @@ public class WorkflowTaskUserNotificationHandler
 
 		return _workflowTaskPermissionChecker.hasPermission(
 			groupId, workflowTask, themeDisplay.getPermissionChecker());
+	}
+
+	private boolean _isNotifiable(
+		UserNotificationEvent userNotificationEvent,
+		ServiceContext serviceContext) {
+
+		try {
+			JSONObject jsonObject = JSONFactoryUtil.createJSONObject(
+				userNotificationEvent.getPayload());
+
+			for (User user :
+					WorkflowTaskManagerUtil.getNotifiableUsers(
+						serviceContext.getCompanyId(),
+						jsonObject.getLong("workflowTaskId"))) {
+
+				if (user.getUserId() == serviceContext.getUserId()) {
+					return true;
+				}
+			}
+		}
+		catch (PortalException portalException) {
+			_log.error(portalException);
+		}
+
+		return false;
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
