@@ -12,6 +12,7 @@ import {InstanceListContext} from '../../../../InstanceListPageProvider.es';
 import {ModalContext} from '../../../ModalProvider.es';
 
 const useFetchTasks = ({
+	callback,
 	page = 1,
 	pageSize = 10000,
 	withoutUnassigned,
@@ -49,6 +50,7 @@ const useFetchTasks = ({
 			slaStatuses,
 			taskNames,
 		},
+		callback,
 		params: {
 			page,
 			pageSize,
