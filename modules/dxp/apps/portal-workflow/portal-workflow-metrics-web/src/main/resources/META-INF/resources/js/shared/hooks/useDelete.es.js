@@ -3,16 +3,20 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import {useCallback, useContext} from 'react';
+import {fetch} from 'frontend-js-web';
+import {useCallback} from 'react';
 
-import {AppContext} from '../../components/AppContext.es';
+import {adminBaseURL, headers, metricsBaseURL} from '../rest/fetch.es';
 
-const useDelete = ({admin = false, url}) => {
-	const {getClient} = useContext(AppContext);
+const useDelete = ({admin = false, callback = () => {}, url}) => {
+	const fetchURL = admin
+		? `${adminBaseURL}${url}`
+		: `${metricsBaseURL}${url}`;
 
-	const client = getClient(admin);
-
-	return useCallback(() => client.delete(url), [client, url]);
+	return useCallback(
+		() => fetch(fetchURL, {headers, method: 'DELETE'}).then(callback),
+		[callback, fetchURL]
+	);
 };
 
 export {useDelete};
