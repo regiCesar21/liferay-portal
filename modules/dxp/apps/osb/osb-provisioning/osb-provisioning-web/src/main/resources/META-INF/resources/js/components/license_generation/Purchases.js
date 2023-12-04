@@ -57,7 +57,9 @@ function Detached({detached}) {
 
 	if (detached) {
 		licenseDates = getDetachedLicenseDates(
-		    licenseEntry.licenseEntryType, allowPermanentLicenses);
+			licenseEntry.licenseEntryType,
+			allowPermanentLicenses
+		);
 	}
 
 	return (
