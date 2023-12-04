@@ -4,7 +4,7 @@
  */
 
 import '@testing-library/jest-dom/extend-expect';
-import {cleanup, render} from '@testing-library/react';
+import {act, cleanup, render} from '@testing-library/react';
 import React from 'react';
 
 import HeaderReindexStatus from '../../../../src/main/resources/META-INF/resources/js/shared/components/header/HeaderReindexStatus.es';
@@ -16,7 +16,7 @@ describe('The HeaderTitle component should', () => {
 
 	afterEach(cleanup);
 
-	beforeEach(() => {
+	beforeEach(async () => {
 		document.body.innerHTML = '';
 
 		const body = document.createElement('div');
@@ -27,6 +27,10 @@ describe('The HeaderTitle component should', () => {
 		document.body.appendChild(body);
 
 		containerWrapper = document.getElementById('workflow');
+
+		await act(async () => {
+			jest.runAllTimers();
+		});
 	});
 
 	test('Not render without statuses', () => {

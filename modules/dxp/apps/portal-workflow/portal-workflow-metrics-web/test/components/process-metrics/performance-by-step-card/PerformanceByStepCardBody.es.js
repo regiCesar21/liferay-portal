@@ -4,7 +4,7 @@
  */
 
 import '@testing-library/jest-dom/extend-expect';
-import {cleanup, render} from '@testing-library/react';
+import {act, cleanup, render} from '@testing-library/react';
 import React from 'react';
 
 import {AppContext} from '../../../../src/main/resources/META-INF/resources/js/components/AppContext.es';
@@ -46,7 +46,7 @@ describe('The performance by step body component should', () => {
 
 	afterEach(cleanup);
 
-	beforeEach(() => {
+	beforeEach(async () => {
 		const wrapper = ({children}) => (
 			<AppContext.Provider value={{defaultDelta: 20}}>
 				<MockRouter>{children}</MockRouter>
@@ -62,6 +62,10 @@ describe('The performance by step body component should', () => {
 
 		container = renderResult.container;
 		getAllByRole = renderResult.getAllByRole;
+
+		await act(async () => {
+			jest.runAllTimers();
+		});
 	});
 
 	test('Be rendered with "Review" and "Update" names', () => {

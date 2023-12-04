@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import {cleanup, fireEvent, render} from '@testing-library/react';
+import {act, cleanup, fireEvent, render} from '@testing-library/react';
 import React, {useState} from 'react';
 
 import {InstanceListContext} from '../../../../../../src/main/resources/META-INF/resources/js/components/instance-list-page/InstanceListPageProvider.es';
@@ -12,11 +12,6 @@ import SingleReassignModal from '../../../../../../src/main/resources/META-INF/r
 import {MockRouter} from '../../../../../mock/MockRouter.es';
 
 const ContainerMock = ({children}) => {
-	const clientMock = {
-		get: jest
-			.fn()
-			.mockResolvedValue({data: {items: [{id: 1, name: 'Test'}]}}),
-	};
 	const [selectedItem, setSelectedItem] = useState({
 		assetTitle: 'Blog1',
 		assetType: 'Blogs Entry',
@@ -28,7 +23,7 @@ const ContainerMock = ({children}) => {
 	const [selectedItems, setSelectedItems] = useState([]);
 
 	return (
-		<MockRouter client={clientMock}>
+		<MockRouter>
 			<InstanceListContext.Provider
 				value={{
 					selectedItem,
@@ -76,6 +71,10 @@ describe('The SingleReassignModalTable component should', () => {
 	const setAssigneeId = jest.fn();
 
 	test('Render with statuses Completed and Overdue', () => {
+		fetch.mockResolvedValueOnce({
+			json: () => Promise.resolve({items: [{id: 1, name: 'Test'}]}),
+		});
+
 		const {container} = render(
 			<SingleReassignModal.Table
 				data={data}
@@ -171,17 +170,16 @@ describe('The SingleReassignModalTable component should', () => {
 
 describe('The AssigneeInput component should', () => {
 	const setReassignMock = jest.fn();
-	const clientMock = {
-		get: jest
-			.fn()
-			.mockResolvedValue({data: {items: [{id: 1, name: 'Test'}]}}),
-	};
 
-	test('Render change assignee input text to Test', () => {
+	test('Render change assignee input text to Test', async () => {
 		cleanup();
 
+		fetch.mockResolvedValueOnce({
+			json: () => Promise.resolve({items: [{id: 1, name: 'Test'}]}),
+		});
+
 		render(
-			<MockRouter client={clientMock}>
+			<MockRouter>
 				<SingleReassignModal.Table.AssigneeInput
 					reassignedTasks={{
 						tasks: [{assigneeId: 20124, id: 39347}],
@@ -196,20 +194,22 @@ describe('The AssigneeInput component should', () => {
 
 		fireEvent.change(autocompleteInput, {target: {value: 'Test'}});
 
+		await act(async () => {
+			jest.runAllTimers();
+		});
+
 		expect(autocompleteInput.value).toBe('Test');
 	});
 
-	test('Change its text to "Test"', () => {
+	test('Change its text to "Test"', async () => {
 		cleanup();
 
-		const clientMock = {
-			get: jest
-				.fn()
-				.mockResolvedValue({data: {items: [{id: 1, name: 'Test'}]}}),
-		};
+		fetch.mockResolvedValueOnce({
+			json: () => Promise.resolve({items: [{id: 1, name: 'Test'}]}),
+		});
 
 		render(
-			<MockRouter client={clientMock}>
+			<MockRouter>
 				<SingleReassignModal.Table.AssigneeInput
 					reassignedTasks={{
 						tasks: [{assigneeId: 20124, id: 39347}],
@@ -220,14 +220,22 @@ describe('The AssigneeInput component should', () => {
 			</MockRouter>
 		);
 
-		expect(clientMock.get).toHaveBeenCalled();
+		await act(async () => {
+			jest.runAllTimers();
+		});
+
+		expect(fetch).toHaveBeenCalled();
 	});
 
-	test('Select a new assignee', () => {
+	test('Select a new assignee', async () => {
 		cleanup();
 
+		fetch.mockResolvedValueOnce({
+			json: () => Promise.resolve({items: [{id: 1, name: 'Test'}]}),
+		});
+
 		render(
-			<MockRouter client={clientMock}>
+			<MockRouter>
 				<SingleReassignModal.Table.AssigneeInput
 					reassignedTasks={{tasks: []}}
 					setReassignedTasks={setReassignMock}
@@ -240,6 +248,10 @@ describe('The AssigneeInput component should', () => {
 
 		fireEvent.change(autocompleteInput, {target: {value: 'Test'}});
 
+		await act(async () => {
+			jest.runAllTimers();
+		});
+
 		fireEvent.blur(autocompleteInput);
 
 		const dropDownListItem = document.querySelector('.dropdown-item');
@@ -247,11 +259,15 @@ describe('The AssigneeInput component should', () => {
 		fireEvent.click(dropDownListItem);
 	});
 
-	test('Select a new assignee with input already filled', () => {
+	test('Select a new assignee with input already filled', async () => {
 		cleanup();
 
+		fetch.mockResolvedValueOnce({
+			json: () => Promise.resolve({items: [{id: 1, name: 'Test'}]}),
+		});
+
 		render(
-			<MockRouter client={clientMock}>
+			<MockRouter>
 				<SingleReassignModal.Table.AssigneeInput
 					reassignedTasks={{tasks: [{assigneeId: 20124, id: 39347}]}}
 					setReassignedTasks={setReassignMock}
@@ -263,6 +279,10 @@ describe('The AssigneeInput component should', () => {
 		const autocompleteInput = document.querySelector('input.form-control');
 
 		fireEvent.change(autocompleteInput, {target: {value: 'Test'}});
+
+		await act(async () => {
+			jest.runAllTimers();
+		});
 
 		fireEvent.blur(autocompleteInput);
 

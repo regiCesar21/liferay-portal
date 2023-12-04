@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import {cleanup, render} from '@testing-library/react';
+import {act, cleanup, render} from '@testing-library/react';
 import React from 'react';
 
 import WorkloadByAssigneeCard from '../../../../src/main/resources/META-INF/resources/js/components/process-metrics/workload-by-assignee-card/WorkloadByAssigneeCard.es';
@@ -31,25 +31,24 @@ describe('The workload by assignee card should', () => {
 		},
 	];
 
-	const jestMock = jest
-		.fn()
-		.mockResolvedValue({data: {items, totalCount: 2}});
-
-	const clientMock = {
-		post: jestMock,
-		request: jestMock,
-	};
-
 	afterEach(cleanup);
 
-	beforeEach(() => {
+	beforeEach(async () => {
+		fetch.mockResolvedValue({
+			json: () => Promise.resolve({items, totalCount: 2}),
+		});
+
 		const renderResult = render(
-			<MockRouter client={clientMock}>
+			<MockRouter>
 				<WorkloadByAssigneeCard routeParams={{processId: 12345}} />
 			</MockRouter>
 		);
 
 		getByText = renderResult.getByText;
+
+		await act(async () => {
+			jest.runAllTimers();
+		});
 	});
 
 	test('Be rendered with "User 1" and "User 2" items', async () => {

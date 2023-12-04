@@ -4,7 +4,7 @@
  */
 
 import '@testing-library/jest-dom/extend-expect';
-import {cleanup, render} from '@testing-library/react';
+import {act, cleanup, render} from '@testing-library/react';
 import React from 'react';
 
 import WorkloadByAssigneePage from '../../../src/main/resources/META-INF/resources/js/components/workload-by-assignee-page/WorkloadByAssigneePage.es';
@@ -39,7 +39,7 @@ describe('The workload by assignee page body should', () => {
 
 	afterEach(cleanup);
 
-	beforeEach(() => {
+	beforeEach(async () => {
 		const renderResult = render(
 			<WorkloadByAssigneePage.Body
 				{...{items, totalCount: items.length}}
@@ -50,6 +50,10 @@ describe('The workload by assignee page body should', () => {
 		);
 
 		getAllByRole = renderResult.getAllByRole;
+
+		await act(async () => {
+			jest.runAllTimers();
+		});
 	});
 
 	test('Be rendered with "User 1" and "User 2" names', () => {

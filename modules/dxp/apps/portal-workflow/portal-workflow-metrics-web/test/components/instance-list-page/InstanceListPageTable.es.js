@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import {cleanup, render} from '@testing-library/react';
+import {act, cleanup, render} from '@testing-library/react';
 import React from 'react';
 
 import {InstanceListContext} from '../../../src/main/resources/META-INF/resources/js/components/instance-list-page/InstanceListPageProvider.es';
@@ -47,7 +47,7 @@ describe('The instance list table should', () => {
 		cleanup();
 	});
 
-	beforeEach(() => {
+	beforeEach(async () => {
 		fetchMock.mock();
 
 		const renderResult = render(
@@ -65,6 +65,10 @@ describe('The instance list table should', () => {
 		);
 
 		getAllByRole = renderResult.getAllByRole;
+
+		await act(async () => {
+			jest.runAllTimers();
+		});
 	});
 
 	test('Be rendered with two items', () => {

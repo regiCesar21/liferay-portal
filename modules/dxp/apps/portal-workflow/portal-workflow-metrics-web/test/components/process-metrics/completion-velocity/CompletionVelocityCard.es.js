@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import {render} from '@testing-library/react';
+import {act, render} from '@testing-library/react';
 import React from 'react';
 
 import CompletionVelocityCard from '../../../../src/main/resources/META-INF/resources/js/components/process-metrics/completion-velocity/CompletionVelocityCard.es';
@@ -79,15 +79,15 @@ const timeRangeData = {
 describe('The completion velocity card component should', () => {
 	let container, getAllByText, getByText;
 
-	beforeAll(() => {
+	beforeAll(async () => {
 		jsonSessionStorage.set('timeRanges', timeRangeData);
 
-		const clientMock = {
-			get: jest.fn().mockResolvedValue({data}),
-		};
+		fetch.mockResolvedValueOnce({
+			json: () => Promise.resolve(data),
+		});
 
 		const renderResult = render(
-			<MockRouter client={clientMock} query={query}>
+			<MockRouter query={query}>
 				<CompletionVelocityCard routeParams={{processId}} />
 			</MockRouter>
 		);
@@ -95,6 +95,10 @@ describe('The completion velocity card component should', () => {
 		container = renderResult.container;
 		getAllByText = renderResult.getAllByText;
 		getByText = renderResult.getByText;
+
+		await act(async () => {
+			jest.runAllTimers();
+		});
 	});
 
 	test('Be rendered with time range filter', () => {

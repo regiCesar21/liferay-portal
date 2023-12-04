@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import {render} from '@testing-library/react';
+import {act, render} from '@testing-library/react';
 import React from 'react';
 
 import PerformanceByStepPage from '../../../src/main/resources/META-INF/resources/js/components/performance-by-step-page/PerformanceByStepPage.es';
@@ -56,22 +56,26 @@ describe('The PerformanceByStepPage component having data should', () => {
 		totalCount: 2,
 	};
 
-	const clientMock = {
-		get: jest.fn().mockResolvedValue({data}).mockResolvedValueOnce({data}),
-	};
+	const wrapper = ({children}) => <MockRouter>{children}</MockRouter>;
 
-	const wrapper = ({children}) => (
-		<MockRouter client={clientMock}>{children}</MockRouter>
-	);
-
-	beforeAll(() => {
+	beforeAll(async () => {
 		jsonSessionStorage.set('timeRanges', timeRangeData);
+
+		fetch.mockResolvedValue({
+			json: () => Promise.resolve(data),
+			text: () => Promise.resolve(),
+		});
+
 		const renderResult = render(
 			<PerformanceByStepPage routeParams={{processId: '1234'}} />,
 			{wrapper}
 		);
 
 		getAllByRole = renderResult.getAllByRole;
+
+		await act(async () => {
+			jest.runAllTimers();
+		});
 	});
 
 	test('Be rendered with step names', async () => {

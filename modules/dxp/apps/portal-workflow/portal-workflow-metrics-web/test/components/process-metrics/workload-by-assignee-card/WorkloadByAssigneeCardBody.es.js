@@ -4,7 +4,7 @@
  */
 
 import '@testing-library/jest-dom/extend-expect';
-import {cleanup, render} from '@testing-library/react';
+import {act, cleanup, render} from '@testing-library/react';
 import React from 'react';
 
 import {AppContext} from '../../../../src/main/resources/META-INF/resources/js/components/AppContext.es';
@@ -45,7 +45,7 @@ describe('The workload by assignee body should', () => {
 	afterEach(cleanup);
 
 	describe('be rendered with overdue tab active', () => {
-		beforeEach(() => {
+		beforeEach(async () => {
 			const renderResult = render(
 				<WorkloadByAssigneeCard.Body
 					currentTab="onTime"
@@ -56,6 +56,10 @@ describe('The workload by assignee body should', () => {
 			);
 
 			getByText = renderResult.getByText;
+
+			await act(async () => {
+				jest.runAllTimers();
+			});
 		});
 
 		test('Be rendered with "User 1" and "User 2" items', () => {
@@ -84,7 +88,7 @@ describe('The workload by assignee body should', () => {
 	});
 
 	describe('be rendered with total tab active', () => {
-		beforeEach(() => {
+		beforeEach(async () => {
 			const renderResult = render(
 				<WorkloadByAssigneeCard.Body
 					currentTab="total"
@@ -96,6 +100,10 @@ describe('The workload by assignee body should', () => {
 			);
 
 			getByText = renderResult.getByText;
+
+			await act(async () => {
+				jest.runAllTimers();
+			});
 		});
 
 		test('and with "User 1" item', () => {
@@ -118,7 +126,7 @@ describe('The workload by assignee body should', () => {
 	});
 
 	describe('be rendered with onTime tab active', () => {
-		beforeEach(() => {
+		beforeEach(async () => {
 			const renderResult = render(
 				<WorkloadByAssigneeCard.Body
 					currentTab="onTime"
@@ -130,6 +138,10 @@ describe('The workload by assignee body should', () => {
 			);
 
 			getByText = renderResult.getByText;
+
+			await act(async () => {
+				jest.runAllTimers();
+			});
 		});
 
 		test('and with "User 2" item', () => {

@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import {cleanup, fireEvent, render} from '@testing-library/react';
+import {act, cleanup, fireEvent, render} from '@testing-library/react';
 import React from 'react';
 
 import TimeRangeFilter from '../../../src/main/resources/META-INF/resources/js/components/filter/TimeRangeFilter.es';
@@ -50,7 +50,7 @@ describe('The time range filter component should', () => {
 	describe('Render without custom range date option selected', () => {
 		afterEach(cleanup);
 
-		beforeEach(() => {
+		beforeEach(async () => {
 			jsonSessionStorage.set('timeRanges', data);
 
 			const renderResult = render(
@@ -59,6 +59,10 @@ describe('The time range filter component should', () => {
 			);
 
 			container = renderResult.container;
+
+			await act(async () => {
+				jest.runAllTimers();
+			});
 		});
 
 		test('Be rendered with filter item names', () => {

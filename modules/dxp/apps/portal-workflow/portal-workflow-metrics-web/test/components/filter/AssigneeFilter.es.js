@@ -4,7 +4,7 @@
  */
 
 import '@testing-library/jest-dom/extend-expect';
-import {cleanup, render} from '@testing-library/react';
+import {act, cleanup, render} from '@testing-library/react';
 import React from 'react';
 
 import AssigneeFilter from '../../../src/main/resources/META-INF/resources/js/components/filter/AssigneeFilter.es';
@@ -17,16 +17,8 @@ const items = [
 	{id: 2, name: 'User 2'},
 ];
 
-const clientMock = {
-	request: jest
-		.fn()
-		.mockResolvedValue({data: {items, totalCount: items.length}}),
-};
-
 const wrapper = ({children}) => (
-	<MockRouter client={clientMock} query={query}>
-		{children}
-	</MockRouter>
+	<MockRouter query={query}>{children}</MockRouter>
 );
 
 describe('The assignee filter component should', () => {
@@ -34,12 +26,20 @@ describe('The assignee filter component should', () => {
 
 	afterEach(cleanup);
 
-	beforeEach(() => {
+	beforeEach(async () => {
+		fetch.mockResolvedValueOnce({
+			json: () => Promise.resolve({items, totalCount: items.length}),
+		});
+
 		const renderResult = render(<AssigneeFilter processId={12345} />, {
 			wrapper,
 		});
 
 		container = renderResult.container;
+
+		await act(async () => {
+			jest.runAllTimers();
+		});
 	});
 
 	test('Be rendered with filter item names', () => {

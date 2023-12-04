@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import {cleanup, render} from '@testing-library/react';
+import {act, cleanup, render} from '@testing-library/react';
 import React from 'react';
 
 import PendingItemsCard from '../../../../src/main/resources/META-INF/resources/js/components/process-metrics/process-items/PendingItemsCard.es';
@@ -23,14 +23,12 @@ describe('The pending items card component should', () => {
 
 	afterEach(cleanup);
 
-	beforeEach(() => {
-		const clientMock = {
-			get: jest.fn().mockResolvedValue({data}),
-		};
+	beforeEach(async () => {
+		fetch.mockResolvedValueOnce({
+			json: () => Promise.resolve(data),
+		});
 
-		const wrapper = ({children}) => (
-			<MockRouter client={clientMock}>{children}</MockRouter>
-		);
+		const wrapper = ({children}) => <MockRouter>{children}</MockRouter>;
 
 		const renderResult = render(
 			<PendingItemsCard routeParams={{processId: 12345}} />,
@@ -38,6 +36,10 @@ describe('The pending items card component should', () => {
 		);
 
 		container = renderResult.container;
+
+		await act(async () => {
+			jest.runAllTimers();
+		});
 	});
 
 	test('Be rendered with overdue count "1"', () => {

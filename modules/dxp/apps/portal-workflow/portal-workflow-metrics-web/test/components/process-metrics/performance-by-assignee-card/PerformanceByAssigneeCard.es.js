@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import {cleanup, render} from '@testing-library/react';
+import {act, cleanup, render} from '@testing-library/react';
 import React from 'react';
 
 import PerformanceByAssigneeCard from '../../../../src/main/resources/META-INF/resources/js/components/process-metrics/performance-by-assignee-card/PerformanceByAssigneeCard.es';
@@ -47,7 +47,6 @@ const items = [
 		taskCount: 1,
 	},
 ];
-const data = {items, totalCount: items.length};
 const processStepsData = {
 	items: [
 		{
@@ -92,16 +91,18 @@ describe('The performance by assignee card component should', () => {
 	describe('Be rendered with results', () => {
 		afterEach(cleanup);
 
-		beforeEach(() => {
-			const clientMock = {
-				post: jest.fn().mockResolvedValue({data}),
-				request: jest.fn().mockResolvedValue({data: processStepsData}),
-			};
+		beforeEach(async () => {
+			fetch
+				.mockResolvedValueOnce({
+					json: () =>
+						Promise.resolve({items, totalCount: items.length}),
+				})
+				.mockResolvedValueOnce({
+					json: () => Promise.resolve(processStepsData),
+				});
 
 			const wrapper = ({children}) => (
-				<MockRouter client={clientMock} query={query}>
-					{children}
-				</MockRouter>
+				<MockRouter query={query}>{children}</MockRouter>
 			);
 
 			const renderResult = render(
@@ -111,6 +112,10 @@ describe('The performance by assignee card component should', () => {
 
 			container = renderResult.container;
 			getByText = renderResult.getByText;
+
+			await act(async () => {
+				jest.runAllTimers();
+			});
 		});
 
 		test('Be rendered with "View All Assignees" button and total "(3)"', () => {
@@ -140,22 +145,25 @@ describe('The performance by assignee card component should', () => {
 	});
 
 	describe('Be rendered without results', () => {
-		beforeAll(() => {
-			const clientMock = {
-				post: jest
-					.fn()
-					.mockResolvedValue({data: {items: [], totalCount: 0}}),
-				request: jest.fn().mockResolvedValue({data: processStepsData}),
-			};
+		beforeAll(async () => {
+			fetch
+				.mockResolvedValueOnce({
+					json: () => Promise.resolve({items: [], totalCount: 0}),
+				})
+				.mockResolvedValueOnce({
+					json: () => Promise.resolve(processStepsData),
+				});
 
 			const wrapper = ({children}) => (
-				<MockRouter client={clientMock} query={query}>
-					{children}
-				</MockRouter>
+				<MockRouter query={query}>{children}</MockRouter>
 			);
 
 			render(<PerformanceByAssigneeCard routeParams={{processId}} />, {
 				wrapper,
+			});
+
+			await act(async () => {
+				jest.runAllTimers();
 			});
 		});
 

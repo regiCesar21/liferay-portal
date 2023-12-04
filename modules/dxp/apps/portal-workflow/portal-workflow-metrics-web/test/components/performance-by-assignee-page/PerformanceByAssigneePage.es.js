@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import {render} from '@testing-library/react';
+import {act, render} from '@testing-library/react';
 import React from 'react';
 
 import PerformanceByAssigneePage from '../../../src/main/resources/META-INF/resources/js/components/performance-by-assignee-page/PerformanceByAssigneePage.es';
@@ -65,20 +65,17 @@ const timeRangeData = {
 describe('The PerformanceByAssigneePage component having data should', () => {
 	let getAllByRole, rows;
 
-	beforeAll(() => {
+	beforeAll(async () => {
 		jsonSessionStorage.set('timeRanges', timeRangeData);
 
-		const clientMock = {
-			get: jest.fn().mockResolvedValue({data}),
-			post: jest.fn().mockResolvedValue({data}),
-			request: jest.fn().mockResolvedValue({data}),
-		};
-
 		const wrapper = ({children}) => (
-			<MockRouter client={clientMock} query={query}>
-				{children}
-			</MockRouter>
+			<MockRouter query={query}>{children}</MockRouter>
 		);
+
+		fetch.mockResolvedValue({
+			json: () => Promise.resolve(data),
+			text: () => Promise.resolve(),
+		});
 
 		const renderResult = render(
 			<PerformanceByAssigneePage routeParams={{processId}} />,
@@ -86,6 +83,10 @@ describe('The PerformanceByAssigneePage component having data should', () => {
 		);
 
 		getAllByRole = renderResult.getAllByRole;
+
+		await act(async () => {
+			jest.runAllTimers();
+		});
 	});
 
 	test('Be rendered with user avatar or lexicon user icon', async () => {

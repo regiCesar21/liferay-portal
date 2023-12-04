@@ -4,7 +4,7 @@
  */
 
 import '@testing-library/jest-dom/extend-expect';
-import {cleanup, render} from '@testing-library/react';
+import {act, cleanup, render} from '@testing-library/react';
 import React from 'react';
 
 import WorkloadByAssigneePage from '../../../src/main/resources/META-INF/resources/js/components/workload-by-assignee-page/WorkloadByAssigneePage.es';
@@ -25,24 +25,12 @@ const items = [
 	},
 ];
 
-const jestMock = jest.fn().mockResolvedValue({data: {items, totalCount: 2}});
-
-const clientMock = {
-	get: jestMock,
-	post: jestMock,
-	request: jestMock,
-};
-
-const MockContext = ({children}) => (
-	<MockRouter client={clientMock}>{children}</MockRouter>
-);
-
 describe('The workload by assignee page body should', () => {
 	let getAllByRole;
 
 	afterEach(cleanup);
 
-	beforeEach(() => {
+	beforeEach(async () => {
 		const routeParams = {
 			page: '1',
 			pageSize: '5',
@@ -50,13 +38,22 @@ describe('The workload by assignee page body should', () => {
 			sort: 'overdueTaskCount:desc',
 		};
 
+		fetch.mockResolvedValue({
+			json: () => Promise.resolve({items, totalCount: 2}),
+			text: () => Promise.resolve(),
+		});
+
 		const renderResult = render(
-			<MockContext>
+			<MockRouter>
 				<WorkloadByAssigneePage routeParams={routeParams} />
-			</MockContext>
+			</MockRouter>
 		);
 
 		getAllByRole = renderResult.getAllByRole;
+
+		await act(async () => {
+			jest.runAllTimers();
+		});
 	});
 
 	test('Be rendered with "User 1" and "User 2" names', async () => {

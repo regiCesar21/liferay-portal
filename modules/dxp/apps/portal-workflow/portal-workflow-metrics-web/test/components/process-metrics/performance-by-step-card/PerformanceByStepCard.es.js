@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import {cleanup, render} from '@testing-library/react';
+import {act, cleanup, render} from '@testing-library/react';
 import React from 'react';
 
 import PerformanceByStepCard from '../../../../src/main/resources/META-INF/resources/js/components/process-metrics/performance-by-step-card/PerformanceByStepCard.es';
@@ -47,7 +47,6 @@ const items = [
 		},
 	},
 ];
-const data = {items, totalCount: items.length};
 const query = stringify({filters});
 const timeRangeData = {
 	items: [
@@ -77,15 +76,13 @@ describe('The performance by step card component should', () => {
 	});
 
 	describe('Be rendered with results', () => {
-		beforeAll(() => {
-			const clientMock = {
-				get: jest.fn().mockResolvedValue({data}),
-			};
+		beforeAll(async () => {
+			fetch.mockResolvedValue({
+				json: () => Promise.resolve({items, totalCount: items.length}),
+			});
 
 			const wrapper = ({children}) => (
-				<MockRouter client={clientMock} query={query}>
-					{children}
-				</MockRouter>
+				<MockRouter query={query}>{children}</MockRouter>
 			);
 
 			const renderResult = render(
@@ -96,6 +93,10 @@ describe('The performance by step card component should', () => {
 			container = renderResult.container;
 			getAllByText = renderResult.getAllByText;
 			getByText = renderResult.getByText;
+
+			await act(async () => {
+				jest.runAllTimers();
+			});
 		});
 
 		test('Be rendered with time range filter', async () => {
@@ -118,17 +119,13 @@ describe('The performance by step card component should', () => {
 	describe('Be rendered without results', () => {
 		afterEach(cleanup);
 
-		beforeEach(() => {
-			const clientMock = {
-				get: jest
-					.fn()
-					.mockResolvedValue({data: {items: [], totalCount: 0}}),
-			};
+		beforeEach(async () => {
+			fetch.mockResolvedValue({
+				json: () => Promise.resolve({items: [], totalCount: 0}),
+			});
 
 			const wrapper = ({children}) => (
-				<MockRouter client={clientMock} query={query}>
-					{children}
-				</MockRouter>
+				<MockRouter query={query}>{children}</MockRouter>
 			);
 
 			const renderResult = render(
@@ -137,6 +134,10 @@ describe('The performance by step card component should', () => {
 			);
 
 			getByText = renderResult.getByText;
+
+			await act(async () => {
+				jest.runAllTimers();
+			});
 		});
 
 		test('Be rendered with empty state view', () => {

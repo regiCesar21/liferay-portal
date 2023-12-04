@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import {cleanup, fireEvent, render} from '@testing-library/react';
+import {act, cleanup, fireEvent, render} from '@testing-library/react';
 import React from 'react';
 
 import SLAInfo from '../../../src/main/resources/META-INF/resources/js/components/process-metrics/SLAInfo.es';
@@ -15,21 +15,23 @@ describe('The SLAInfo component should', () => {
 	let container, getByText;
 
 	describe('SLA count 0', () => {
-		const clientMock = {
-			get: jest
-				.fn()
-				.mockResolvedValue({data: {items: [], totalCount: 0}}),
-		};
+		beforeAll(async () => {
+			fetch.mockResolvedValue({
+				json: () => Promise.resolve({items: [], totalCount: 0}),
+			});
 
-		beforeAll(() => {
 			const renderResult = render(
-				<MockRouter client={clientMock}>
+				<MockRouter>
 					<SLAInfo processId="1" />
 				</MockRouter>
 			);
 
 			container = renderResult.container;
 			getByText = renderResult.getByText;
+
+			await act(async () => {
+				jest.runAllTimers();
+			});
 		});
 
 		test('Show alert with correct data', () => {
@@ -50,21 +52,23 @@ describe('The SLAInfo component should', () => {
 	});
 
 	describe('SLA blocked count 1', () => {
-		const clientMock = {
-			get: jest
-				.fn()
-				.mockResolvedValue({data: {items: [], totalCount: 1}}),
-		};
+		beforeAll(async () => {
+			fetch.mockResolvedValue({
+				json: () => Promise.resolve({items: [], totalCount: 1}),
+			});
 
-		beforeAll(() => {
 			const renderResult = render(
-				<MockRouter client={clientMock}>
+				<MockRouter>
 					<SLAInfo processId="1" />
 				</MockRouter>
 			);
 
 			container = renderResult.container;
 			getByText = renderResult.getByText;
+
+			await act(async () => {
+				jest.runAllTimers();
+			});
 		});
 
 		test('Show alert with correct data', () => {
@@ -85,21 +89,23 @@ describe('The SLAInfo component should', () => {
 	});
 
 	describe('SLA blocked count greater than 1', () => {
-		const clientMock = {
-			get: jest
-				.fn()
-				.mockResolvedValue({data: {items: [], totalCount: 2}}),
-		};
+		beforeAll(async () => {
+			fetch.mockResolvedValue({
+				json: () => Promise.resolve({items: [], totalCount: 2}),
+			});
 
-		beforeAll(() => {
 			const renderResult = render(
-				<MockRouter client={clientMock}>
+				<MockRouter>
 					<SLAInfo processId="1" />
 				</MockRouter>
 			);
 
 			container = renderResult.container;
 			getByText = renderResult.getByText;
+
+			await act(async () => {
+				jest.runAllTimers();
+			});
 		});
 
 		test('Show alert with correct data', () => {

@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import {cleanup, render} from '@testing-library/react';
+import {act, cleanup, render} from '@testing-library/react';
 import React from 'react';
 
 import WorkloadByStepCard from '../../../../src/main/resources/META-INF/resources/js/components/process-metrics/workload-by-step-card/WorkloadByStepCard.es';
@@ -37,18 +37,22 @@ describe('The WorkloadByStepCard component should', () => {
 		totalCount: 1,
 	};
 
-	const clientMock = {
-		get: jest.fn().mockResolvedValue({data}),
-	};
+	beforeEach(async () => {
+		fetch.mockResolvedValueOnce({
+			json: () => Promise.resolve(data),
+		});
 
-	beforeAll(() => {
 		const renderResult = render(
-			<MockRouter client={clientMock} withoutRouterProps>
+			<MockRouter withoutRouterProps>
 				<WorkloadByStepCard {...mockProps} routeParams={mockProps} />
 			</MockRouter>
 		);
 
 		container = renderResult.container;
+
+		await act(async () => {
+			jest.runAllTimers();
+		});
 	});
 
 	test('Load table component with request data and navigation links', () => {

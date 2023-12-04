@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import {cleanup, render} from '@testing-library/react';
+import {act, cleanup, render} from '@testing-library/react';
 import React from 'react';
 
 import {CustomTimeRangeForm} from '../../../src/main/resources/META-INF/resources/js/components/filter/CustomTimeRangeForm.es';
@@ -17,7 +17,7 @@ describe('The performance by assignee card component should', () => {
 
 	afterEach(cleanup);
 
-	beforeEach(() => {
+	beforeEach(async () => {
 		const wrapper = ({children}) => (
 			<MockRouter query={query}>{children}</MockRouter>
 		);
@@ -27,6 +27,10 @@ describe('The performance by assignee card component should', () => {
 		});
 
 		getAllByPlaceholderText = renderResult.getAllByPlaceholderText;
+
+		await act(async () => {
+			jest.runAllTimers();
+		});
 	});
 
 	test('Be redered with default custom dates', () => {

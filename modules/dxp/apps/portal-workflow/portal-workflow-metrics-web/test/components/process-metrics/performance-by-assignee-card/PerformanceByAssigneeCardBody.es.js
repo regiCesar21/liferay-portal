@@ -4,7 +4,7 @@
  */
 
 import '@testing-library/jest-dom/extend-expect';
-import {cleanup, render} from '@testing-library/react';
+import {act, cleanup, render} from '@testing-library/react';
 import React from 'react';
 
 import {AppContext} from '../../../../src/main/resources/META-INF/resources/js/components/AppContext.es';
@@ -49,13 +49,17 @@ describe('The performance by assignee body component with data should', () => {
 
 	afterEach(cleanup);
 
-	beforeEach(() => {
+	beforeEach(async () => {
 		const renderResult = render(
 			<PerformanceByAssigneeCard.Body {...data} />,
 			{wrapper}
 		);
 
 		container = renderResult.container;
+
+		await act(async () => {
+			jest.runAllTimers();
+		});
 	});
 
 	test('Be rendered with user avatar or lexicon user icon', () => {
@@ -100,13 +104,17 @@ describe('The performance by assignee body component without data should', () =>
 
 	afterEach(cleanup);
 
-	beforeEach(() => {
+	beforeEach(async () => {
 		const renderResult = render(
 			<PerformanceByAssigneeCard.Body {...data} />,
 			{wrapper}
 		);
 
 		getByText = renderResult.getByText;
+
+		await act(async () => {
+			jest.runAllTimers();
+		});
 	});
 
 	test('Render empty state', () => {

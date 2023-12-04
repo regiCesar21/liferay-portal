@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import {cleanup, render} from '@testing-library/react';
+import {act, cleanup, render} from '@testing-library/react';
 import React from 'react';
 
 import HeaderBackButton from '../../../../src/main/resources/META-INF/resources/js/shared/components/header/HeaderBackButton.es';
@@ -16,7 +16,7 @@ describe('The HeaderBackButton component should', () => {
 
 	afterEach(cleanup);
 
-	beforeEach(() => {
+	beforeEach(async () => {
 		const body = document.createElement('div');
 
 		document.body.innerHTML = '';
@@ -27,6 +27,10 @@ describe('The HeaderBackButton component should', () => {
 		document.body.appendChild(body);
 
 		containerWrapper = document.getElementById('workflow');
+
+		await act(async () => {
+			jest.runAllTimers();
+		});
 	});
 
 	test('Not render when pathname is equal to basePath', () => {

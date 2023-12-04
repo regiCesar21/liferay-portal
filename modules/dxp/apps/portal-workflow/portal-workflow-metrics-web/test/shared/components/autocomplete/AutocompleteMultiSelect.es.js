@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import {cleanup, fireEvent, render} from '@testing-library/react';
+import {act, cleanup, fireEvent, render} from '@testing-library/react';
 import React, {cloneElement, useState} from 'react';
 
 import {AutocompleteMultiSelect} from '../../../../src/main/resources/META-INF/resources/js/shared/components/autocomplete/AutocompleteMultiSelect.es';
@@ -26,13 +26,17 @@ describe('The AutocompleteMultiSelect component should', () => {
 
 	afterEach(cleanup);
 
-	beforeEach(() => {
+	beforeEach(async () => {
 		const autocomplete = render(<AutocompleteMultiSelect items={items} />, {
 			wrapper: ContainerMock,
 		});
 
 		container = autocomplete.container;
 		getByText = autocomplete.getByText;
+
+		await act(async () => {
+			jest.runAllTimers();
+		});
 	});
 
 	test('Show the dropdown list on focus input', () => {

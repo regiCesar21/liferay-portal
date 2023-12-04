@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import {cleanup, fireEvent, render} from '@testing-library/react';
+import {act, cleanup, fireEvent, render} from '@testing-library/react';
 import React from 'react';
 
 import {Autocomplete} from '../../../../src/main/resources/META-INF/resources/js/shared/components/autocomplete/Autocomplete.es';
@@ -24,7 +24,7 @@ describe('The Autocomplete component should', () => {
 
 	afterEach(cleanup);
 
-	beforeEach(() => {
+	beforeEach(async () => {
 		const autocomplete = render(
 			<Autocomplete
 				items={items}
@@ -34,6 +34,10 @@ describe('The Autocomplete component should', () => {
 		);
 
 		container = autocomplete.container;
+
+		await act(async () => {
+			jest.runAllTimers();
+		});
 	});
 
 	test('Show the dropdown list on focus input', () => {
@@ -134,7 +138,7 @@ describe('The Autocomplete component with children should', () => {
 
 	afterEach(cleanup);
 
-	beforeEach(() => {
+	beforeEach(async () => {
 		const autocomplete = render(
 			<Autocomplete items={items}>
 				<span>Mock child</span>
@@ -142,6 +146,10 @@ describe('The Autocomplete component with children should', () => {
 		);
 
 		getByText = autocomplete.getByText;
+
+		await act(async () => {
+			jest.runAllTimers();
+		});
 	});
 
 	test('Render the children', () => {
@@ -156,10 +164,14 @@ describe('The Autocomplete component should be render with no items', () => {
 
 	afterEach(cleanup);
 
-	beforeEach(() => {
+	beforeEach(async () => {
 		const autocomplete = render(<Autocomplete items={[]} />);
 
 		getByText = autocomplete.getByText;
+
+		await act(async () => {
+			jest.runAllTimers();
+		});
 	});
 
 	test('Render with "no results were found" message', () => {
