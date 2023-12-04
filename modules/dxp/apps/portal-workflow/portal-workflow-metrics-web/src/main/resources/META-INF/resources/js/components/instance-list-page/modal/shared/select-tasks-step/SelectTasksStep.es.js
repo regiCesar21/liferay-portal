@@ -45,6 +45,12 @@ const SelectTasksStep = ({setErrorToast, withoutUnassigned}) => {
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [bulkAssigneeIds, bulkTaskNames]);
 
+	useEffect(() => {
+		fetchTasks();
+
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, [page, pageSize, bulkAssigneeIds, bulkTaskNames]);
+
 	const [retry, setRetry] = useState(0);
 
 	const promises = useMemo(() => {
