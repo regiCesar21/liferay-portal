@@ -12,6 +12,7 @@ const usePageTitle = (pageTitle) => {
 
 	useEffect(() => {
 		setTitle(pageTitle);
+
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [pageTitle]);
 };
