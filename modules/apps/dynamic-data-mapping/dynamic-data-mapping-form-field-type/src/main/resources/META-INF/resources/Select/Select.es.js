@@ -26,11 +26,6 @@ const KEYCODES = {
 };
 
 /**
- * Maximum number of items to be shown without the Search bar
- */
-const MAX_ITEMS = 11;
-
-/**
  * Appends a new value on the current value state
  * @param options {Object}
  * @param options.value {Array|String}
@@ -186,6 +181,7 @@ const DropdownItem = ({
 		<ClayDropDown.Item
 			active={expand && currentValue.includes(option.value)}
 			aria-label={option.label}
+			aria-selected={expand && currentValue.includes(option.value)}
 			data-testid={`dropdownItem-${index}`}
 			label={option.label}
 			onClick={(event) => {
@@ -251,63 +247,6 @@ const DropdownList = ({
 	</ClayDropDown.ItemList>
 );
 
-const DropdownListWithSearch = ({
-	currentValue,
-	expand,
-	handleSelect,
-	multiple,
-	options,
-	showEmptyOption,
-}) => {
-	const [query, setQuery] = useState('');
-	const [filteredOptions, setFilteredOptions] = useState([]);
-
-	useEffect(() => {
-		let result = options.filter(
-			(option) =>
-				option.value &&
-				option.label.toLowerCase().includes(query.toLowerCase())
-		);
-
-		if (showEmptyOption && !multiple) {
-			const emptyOption = {
-				label: Liferay.Language.get('choose-an-option'),
-				value: null,
-			};
-
-			result = [emptyOption, ...result];
-		}
-
-		setFilteredOptions(result);
-		// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, [options, query]);
-
-	return (
-		<>
-			<ClayDropDown.Search
-				onChange={(event) => {
-					setQuery(event.target.value);
-				}}
-				tabIndex={0}
-				value={query}
-			/>
-			{filteredOptions.length > 0 ? (
-				<DropdownList
-					currentValue={currentValue}
-					expand={expand}
-					handleSelect={handleSelect}
-					multiple={multiple}
-					options={filteredOptions}
-				/>
-			) : (
-				<div className="dropdown-section text-muted">
-					{Liferay.Language.get('empty-list')}
-				</div>
-			)}
-		</>
-	);
-};
-
 const Trigger = forwardRef(
 	(
 		{
@@ -347,7 +286,6 @@ const Select = ({
 	options,
 	predefinedValue,
 	readOnly,
-	showEmptyOption,
 	value,
 	...otherProps
 }) => {
@@ -361,8 +299,10 @@ const Select = ({
 		if (expand) {
 			let firstElement;
 
-			if (options?.length > MAX_ITEMS) {
-				firstElement = menuElementRef.current.querySelector('input');
+			if (menuElementRef.current.querySelector('[aria-selected=true]')) {
+				firstElement = menuElementRef.current.querySelector(
+					'[aria-selected=true] button'
+				);
 			}
 			else {
 				firstElement = menuElementRef.current.querySelector('button');
@@ -553,24 +493,13 @@ const Select = ({
 				ref={menuElementRef}
 				role="listbox"
 			>
-				{options.length > MAX_ITEMS ? (
-					<DropdownListWithSearch
-						currentValue={currentValue}
-						expand={expand}
-						handleSelect={handleSelect}
-						multiple={multiple}
-						options={options}
-						showEmptyOption={showEmptyOption}
-					/>
-				) : (
-					<DropdownList
-						currentValue={currentValue}
-						expand={expand}
-						handleSelect={handleSelect}
-						multiple={multiple}
-						options={options}
-					/>
-				)}
+				<DropdownList
+					currentValue={currentValue}
+					expand={expand}
+					handleSelect={handleSelect}
+					multiple={multiple}
+					options={options}
+				/>
 			</ClayDropDown.Menu>
 		</>
 	);
