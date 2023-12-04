@@ -30,9 +30,7 @@ else {
 EditRoleAssignmentsManagementToolbarDisplayContext editRoleAssignmentsManagementToolbarDisplayContext = new EditRoleAssignmentsManagementToolbarDisplayContext(request, renderRequest, renderResponse, displayStyle, "current");
 
 SearchContainer<?> searchContainer = editRoleAssignmentsManagementToolbarDisplayContext.getSearchContainer();
-
 PortletURL portletURL = editRoleAssignmentsManagementToolbarDisplayContext.getPortletURL();
-
 String tabs2 = editRoleAssignmentsManagementToolbarDisplayContext.getTabs2();
 
 portletDisplay.setShowBackIcon(true);

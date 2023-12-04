@@ -85,6 +85,7 @@ public class RoleDisplayContext {
 			{
 				for (String assigneeTypeName :
 						_getAssigneeTypeNamesByRole(portletURL)) {
+
 					add(
 						navigationItem -> {
 							navigationItem.setActive(
@@ -171,26 +172,26 @@ public class RoleDisplayContext {
 	private String[] _getAssigneeTypeNamesByRole(PortletURL portletURL)
 		throws Exception {
 
-		String[] assigneeTypeNamesByRole = _ASSIGNEE_TYPE_NAMES;
+		String[] assigneeTypeNames = _ASSIGNEE_TYPE_NAMES;
 
 		Map<String, String[]> parameterMap = portletURL.getParameterMap();
 
-		String[] roleIdParameter = parameterMap.get("roleId");
+		String[] roleIds = parameterMap.get("roleId");
 
-		if (roleIdParameter.length > 0) {
-			long roleId = GetterUtil.getLong(roleIdParameter[0]);
+		if (roleIds.length > 0) {
+			long roleId = GetterUtil.getLong(roleIds[0]);
 
 			Role role = RoleServiceUtil.fetchRole(roleId);
 
 			if (Objects.equals(RoleConstants.ADMINISTRATOR, role.getName())) {
-				assigneeTypeNamesByRole = ArrayUtil.filter(
-					assigneeTypeNamesByRole, name -> !name.equals("segments"));
+				assigneeTypeNames = ArrayUtil.filter(
+					assigneeTypeNames, name -> !name.equals("segments"));
 			}
 		}
 
-		return assigneeTypeNamesByRole;
+		return assigneeTypeNames;
 	}
-	
+
 	private List<String> _getTabsNames() throws Exception {
 		List<String> tabsNames = new ArrayList<>();
 
