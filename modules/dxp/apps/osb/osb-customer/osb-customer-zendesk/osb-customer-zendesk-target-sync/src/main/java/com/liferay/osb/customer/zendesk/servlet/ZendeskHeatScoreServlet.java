@@ -89,6 +89,35 @@ public class ZendeskHeatScoreServlet extends ZendeskBaseServlet {
 			updateZendeskTicketHeatScore(
 				zendeskTicketId, heatScoreFieldId, totalHeatScore);
 		}
+
+		boolean automation = fieldsJSONObject.getBoolean("automation");
+
+		if (automation) {
+			removeZendeskAutoHeatScoreTag(zendeskTicketId);
+		}
+	}
+
+	protected JSONObject removeZendeskAutoHeatScoreTag(long zendeskTicketId)
+		throws PortalException {
+
+		JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
+
+		jsonObject.put("safe_update", true);
+
+		JSONArray tagsJSONArray = JSONFactoryUtil.createJSONArray();
+
+		tagsJSONArray.put("auto_heat_score");
+
+		jsonObject.put("tags", tagsJSONArray);
+
+		SimpleDateFormat updateStampFormat = new SimpleDateFormat(
+			"yyyy-MM-dd'T'HH:mm:ss'Z'");
+
+		jsonObject.put("updated_stamp", updateStampFormat.format(new Date()));
+
+		return _zendeskBaseWebService.delete(
+			"/api/v2/tickets/" + zendeskTicketId + "/tags.json",
+			jsonObject.toString());
 	}
 
 	protected JSONObject updateZendeskTicketHeatScore(
