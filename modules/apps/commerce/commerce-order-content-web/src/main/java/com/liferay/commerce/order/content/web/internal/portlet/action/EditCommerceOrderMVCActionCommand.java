@@ -374,9 +374,17 @@ public class EditCommerceOrderMVCActionCommand extends BaseMVCActionCommand {
 			ActionRequest actionRequest, long commerceOrderId)
 		throws Exception {
 
-		_commerceOrderHttpHelper.setCurrentCommerceOrder(
-			_portal.getHttpServletRequest(actionRequest),
-			_commerceOrderService.getCommerceOrder(commerceOrderId));
+		CommerceOrder currentCommerceOrder =
+			_commerceOrderHttpHelper.getCurrentCommerceOrder(
+				_portal.getHttpServletRequest(actionRequest));
+
+		if ((currentCommerceOrder == null) ||
+			(commerceOrderId != currentCommerceOrder.getCommerceOrderId())) {
+
+			_commerceOrderHttpHelper.setCurrentCommerceOrder(
+				_portal.getHttpServletRequest(actionRequest),
+				_commerceOrderService.getCommerceOrder(commerceOrderId));
+		}
 	}
 
 	protected void updateCommerceOrder(ActionRequest actionRequest)
