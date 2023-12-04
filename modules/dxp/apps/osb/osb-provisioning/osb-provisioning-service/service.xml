@@ -52,6 +52,7 @@
 		<exception>DuplicateContactRole</exception>
 		<exception>DuplicateDossieraKey</exception>
 		<exception>DuplicateDXPCloudProjectId</exception>
+		<exception>DuplicateSalesforceProjectKey</exception>
 		<exception>MultipleDossieraKeys</exception>
 		<exception>ProductBundleName</exception>
 		<exception>ProductPurchaseQuantity</exception>

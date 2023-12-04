@@ -14,6 +14,7 @@ import com.liferay.osb.provisioning.constants.ProvisioningPortletKeys;
 import com.liferay.osb.provisioning.exception.DuplicateAnalyticsCloudGroupIdException;
 import com.liferay.osb.provisioning.exception.DuplicateDXPCloudProjectIdException;
 import com.liferay.osb.provisioning.exception.DuplicateDossieraKeyException;
+import com.liferay.osb.provisioning.exception.DuplicateSalesforceProjectKeyException;
 import com.liferay.osb.provisioning.exception.MultipleDossieraKeysException;
 import com.liferay.osb.provisioning.koroneiki.web.service.AccountWebService;
 import com.liferay.osb.provisioning.koroneiki.web.service.ExternalLinkWebService;
@@ -85,6 +86,7 @@ public class EditExternalLinkMVCActionCommand extends BaseMVCActionCommand {
 			if (exception instanceof DuplicateAnalyticsCloudGroupIdException ||
 				exception instanceof DuplicateDossieraKeyException ||
 				exception instanceof DuplicateDXPCloudProjectIdException ||
+				exception instanceof DuplicateSalesforceProjectKeyException ||
 				exception instanceof MultipleDossieraKeysException ||
 				exception instanceof Problem.ProblemException) {
 
@@ -145,7 +147,8 @@ public class EditExternalLinkMVCActionCommand extends BaseMVCActionCommand {
 
 		if (!domain.equals(ExternalLinkDomain.ANALYTICS_CLOUD) &&
 			!domain.equals(ExternalLinkDomain.DOSSIERA) &&
-			!domain.equals(ExternalLinkDomain.DXP_CLOUD)) {
+			!domain.equals(ExternalLinkDomain.DXP_CLOUD) &&
+			!domain.equals(ExternalLinkDomain.SALESFORCE)) {
 
 			return;
 		}
@@ -162,6 +165,9 @@ public class EditExternalLinkMVCActionCommand extends BaseMVCActionCommand {
 			}
 			else if (domain.equals(ExternalLinkDomain.DXP_CLOUD)) {
 				throw new DuplicateDXPCloudProjectIdException();
+			}
+			else if (domain.equals(ExternalLinkDomain.SALESFORCE)) {
+				throw new DuplicateSalesforceProjectKeyException();
 			}
 		}
 

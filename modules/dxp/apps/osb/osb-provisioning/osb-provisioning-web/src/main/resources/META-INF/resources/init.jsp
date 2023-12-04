@@ -45,6 +45,7 @@ page import="com.liferay.osb.provisioning.exception.DuplicateAnalyticsCloudGroup
 page import="com.liferay.osb.provisioning.exception.DuplicateContactRoleException" %><%@
 page import="com.liferay.osb.provisioning.exception.DuplicateDXPCloudProjectIdException" %><%@
 page import="com.liferay.osb.provisioning.exception.DuplicateDossieraKeyException" %><%@
+page import="com.liferay.osb.provisioning.exception.DuplicateSalesforceProjectKeyException" %><%@
 page import="com.liferay.osb.provisioning.exception.MultipleDossieraKeysException" %><%@
 page import="com.liferay.osb.provisioning.exception.ProductBundleNameException" %><%@
 page import="com.liferay.osb.provisioning.exception.ProductPurchaseQuantityException" %><%@
