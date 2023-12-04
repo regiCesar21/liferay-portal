@@ -66,7 +66,7 @@ const InstanceDetailsModal = () => {
 		}
 
 		return [];
-	}, [instanceId, fetchData, retry]);
+	}, [instanceId, retry]);
 
 	const {observer} = useModal({
 		onClose: () => {

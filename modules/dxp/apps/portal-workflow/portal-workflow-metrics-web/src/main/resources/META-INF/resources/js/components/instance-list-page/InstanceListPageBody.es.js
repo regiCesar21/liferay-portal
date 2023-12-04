@@ -22,13 +22,14 @@ import BulkUpdateDueDateModal from './modal/update-due-date/BulkUpdateDueDateMod
 import SingleUpdateDueDateModal from './modal/update-due-date/SingleUpdateDueDateModal.es';
 
 const Body = ({
-	data: {items, totalCount},
+	data: {items, totalCount} = {},
 	fetchData,
 	filtered,
 	routeParams,
 }) => {
 	const {fetchOnClose, visibleModal} = useContext(ModalContext);
 	const previousFetchData = usePrevious(fetchData);
+
 	const promises = useMemo(() => {
 		if (
 			(previousFetchData !== fetchData || fetchOnClose) &&
@@ -38,8 +39,9 @@ const Body = ({
 		}
 
 		return [];
+
 		// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, [fetchData, visibleModal]);
+	}, [routeParams, visibleModal]);
 
 	const statesProps = useMemo(
 		() => ({

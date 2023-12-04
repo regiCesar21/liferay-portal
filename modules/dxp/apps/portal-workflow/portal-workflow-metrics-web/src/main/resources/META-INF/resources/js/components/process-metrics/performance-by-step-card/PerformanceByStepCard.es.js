@@ -68,7 +68,9 @@ const PerformanceByStepCard = ({routeParams}) => {
 		}
 
 		return [new Promise((_, reject) => reject(filtersError))];
-	}, [fetchData, filtersError, timeRange.dateEnd, timeRange.dateStart]);
+
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, [filtersError, routeParams, timeRange.dateEnd, timeRange.dateStart]);
 
 	return (
 		<Panel elementClasses="dashboard-card">
@@ -76,16 +78,16 @@ const PerformanceByStepCard = ({routeParams}) => {
 				<PerformanceByStepCard.Header
 					disableFilters={filtersError}
 					prefixKey={prefixKey}
-					totalCount={data.totalCount}
+					totalCount={data?.totalCount}
 				/>
 
 				<PerformanceByStepCard.Body {...data} />
 
-				{data.totalCount > 0 && (
+				{data?.totalCount > 0 && (
 					<PerformanceByStepCard.Footer
 						processId={processId}
 						timeRange={{key, ...timeRange}}
-						totalCount={data.totalCount}
+						totalCount={data?.totalCount}
 					/>
 				)}
 			</PromisesResolver>

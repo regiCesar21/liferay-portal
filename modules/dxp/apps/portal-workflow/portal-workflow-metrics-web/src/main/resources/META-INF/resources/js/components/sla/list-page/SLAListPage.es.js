@@ -45,7 +45,9 @@ const SLAListPage = ({page, pageSize, processId}) => {
 		}
 
 		return [];
-	}, [fetchData, visible]);
+
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, [visible]);
 
 	return (
 		<SLAListPageContext.Provider value={slaContextState}>

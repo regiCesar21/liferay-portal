@@ -17,16 +17,16 @@ const CompletedItemsCard = ({routeParams}) => {
 
 	const {
 		filterValues: {
-			completedDateEnd,
-			completedDateStart,
-			completedTimeRange: [key] = [],
+			completionDateEnd,
+			completionDateStart,
+			completionTimeRange: [key] = [],
 		},
 		filtersError,
 	} = useFilter({filterKeys, prefixKeys});
 
 	const timeRange = useMemo(
-		() => getTimeRangeParams(completedDateStart, completedDateEnd),
-		[completedDateEnd, completedDateStart]
+		() => getTimeRangeParams(completionDateStart, completionDateEnd),
+		[completionDateEnd, completionDateStart]
 	);
 
 	return (

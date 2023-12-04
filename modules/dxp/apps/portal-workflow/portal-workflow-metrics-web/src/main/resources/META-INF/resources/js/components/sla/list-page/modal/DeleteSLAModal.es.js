@@ -13,7 +13,6 @@ import {SLAListPageContext} from '../SLAListPage.es';
 
 const DeleteSLAModal = () => {
 	const {itemToRemove, setVisible, visible} = useContext(SLAListPageContext);
-	const deleteSLA = useDelete({url: `/slas/${itemToRemove}`});
 	const toaster = useToaster();
 
 	const {observer, onClose} = useModal({
@@ -22,15 +21,18 @@ const DeleteSLAModal = () => {
 		},
 	});
 
+	const deleteSLA = useDelete({
+		callback: () => {
+			onClose();
+			toaster.success(Liferay.Language.get('sla-was-deleted'));
+		},
+		url: `/slas/${itemToRemove}`,
+	});
+
 	const removeItem = () => {
-		deleteSLA()
-			.then(() => {
-				onClose();
-				toaster.success(Liferay.Language.get('sla-was-deleted'));
-			})
-			.catch(() =>
-				toaster.danger(Liferay.Language.get('your-request-has-failed'))
-			);
+		deleteSLA().catch(() =>
+			toaster.danger(Liferay.Language.get('your-request-has-failed'))
+		);
 	};
 
 	return (

@@ -71,7 +71,12 @@ const WorkloadByAssigneeCard = ({routeParams}) => {
 		url: `/processes/${processId}/assignees/metrics`,
 	});
 
-	const promises = useMemo(() => [postData()], [postData]);
+	const promises = useMemo(
+		() => [postData()],
+
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+		[routeParams]
+	);
 
 	const tabs = [
 		{name: Liferay.Language.get('overdue'), tabKey: 'overdue'},

@@ -18,11 +18,8 @@ const SLAInfo = ({processId}) => {
 
 	const url = `/processes/${processId}/slas?page=1&pageSize=1`;
 
-	const {fetchData} = useFetch({url});
-	const {fetchData: fetchSLABlocked} = useFetch({url: `${url}&status=2`});
-
-	const getSLABlockedCount = () => {
-		fetchSLABlocked().then(({totalCount}) => {
+	const {fetchData: fetchSLABlocked} = useFetch({
+		callback: ({totalCount}) => {
 			if (totalCount > 0) {
 				setAlert({
 					content: `${sub(
@@ -37,11 +34,12 @@ const SLAInfo = ({processId}) => {
 					linkText: Liferay.Language.get('set-up-slas'),
 				});
 			}
-		});
-	};
+		},
+		url: `${url}&status=2`,
+	});
 
-	const getSLACount = () => {
-		fetchData().then(({totalCount}) => {
+	const {fetchData} = useFetch({
+		callback: ({totalCount}) => {
 			if (totalCount === 0) {
 				setAlert({
 					content: `${Liferay.Language.get(
@@ -52,13 +50,15 @@ const SLAInfo = ({processId}) => {
 				});
 			}
 			else {
-				getSLABlockedCount();
+				fetchSLABlocked();
 			}
-		});
-	};
+		},
+		url,
+	});
 
 	useEffect(() => {
-		getSLACount();
+		fetchData();
+
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, []);
 

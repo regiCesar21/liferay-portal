@@ -10,7 +10,7 @@ import {useFetch} from '../../../../shared/hooks/useFetch.es';
 const useCalendars = () => {
 	const {data, fetchData: fetchCalendars} = useFetch({url: '/calendars'});
 
-	const calendars = useMemo(() => data.items || [], [data]);
+	const calendars = useMemo(() => data?.items || [], [data]);
 
 	const defaultCalendar = useMemo(
 		() => calendars.find(({defaultCalendar}) => defaultCalendar),

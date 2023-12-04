@@ -96,7 +96,9 @@ const PerformanceByAssigneeCard = ({routeParams}) => {
 		}
 
 		return [new Promise((_, reject) => reject(filtersError))];
-	}, [filtersError, postData, timeRange.dateEnd, timeRange.dateStart]);
+
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, [filtersError, routeParams, timeRange.dateEnd, timeRange.dateStart]);
 
 	return (
 		<Panel elementClasses="dashboard-card">
@@ -115,7 +117,7 @@ const PerformanceByAssigneeCard = ({routeParams}) => {
 				<PerformanceByAssigneeCard.Footer
 					processStep={taskName}
 					timeRange={{key, ...timeRange}}
-					totalCount={data.totalCount}
+					totalCount={data?.totalCount}
 					{...routeParams}
 				/>
 			</PromisesResolver>

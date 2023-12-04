@@ -28,12 +28,21 @@ const BulkTransitionModal = () => {
 		setSelectTasks,
 		visibleModal,
 	} = useContext(ModalContext);
-	const {clearFilters, fetchTasks} = useFetchTasks({withoutUnassigned: true});
 	const [currentStep, setCurrentStep] = useState('selectTasks');
 	const [errorToast, setErrorToast] = useState(null);
 	const [fetching, setFetching] = useState(false);
 	const [transitioning, setTransitioning] = useState(false);
 	const toaster = useToaster();
+
+	const {clearFilters, fetchTasks} = useFetchTasks({
+		callback: ({items}) => {
+			setFetching(false);
+			setSelectTasks({selectAll, tasks: items});
+
+			setCurrentStep('selectTransitions');
+		},
+		withoutUnassigned: true,
+	});
 
 	const clearContext = useCallback(() => {
 		setBulkTransition({
@@ -58,6 +67,22 @@ const BulkTransitionModal = () => {
 	const {patchData} = usePatch({
 		admin: true,
 		body: transitionTasks,
+		callback: () => {
+			toaster.success(
+				transitionTasks.length > 1
+					? Liferay.Language.get(
+							'the-selected-steps-have-transitioned-successfully'
+					  )
+					: Liferay.Language.get(
+							'the-selected-step-has-transitioned-successfully'
+					  )
+			);
+
+			onCloseModal(true);
+			setSelectedItems([]);
+			setSelectAll(false);
+			setTransitioning(false);
+		},
 		url: '/workflow-tasks/change-transition',
 	});
 
@@ -70,31 +95,14 @@ const BulkTransitionModal = () => {
 		if (!Object.values(errors).some((error) => error)) {
 			setTransitioning(true);
 
-			patchData()
-				.then(() => {
-					toaster.success(
-						transitionTasks.length > 1
-							? Liferay.Language.get(
-									'the-selected-steps-have-transitioned-successfully'
-							  )
-							: Liferay.Language.get(
-									'the-selected-step-has-transitioned-successfully'
-							  )
-					);
-
-					onCloseModal(true);
-					setSelectedItems([]);
-					setSelectAll(false);
-					setTransitioning(false);
-				})
-				.catch(() => {
-					setErrorToast(
-						`${Liferay.Language.get(
-							'your-request-has-failed'
-						)} ${Liferay.Language.get('select-done-to-retry')}`
-					);
-					setTransitioning(false);
-				});
+			patchData().catch(() => {
+				setErrorToast(
+					`${Liferay.Language.get(
+						'your-request-has-failed'
+					)} ${Liferay.Language.get('select-done-to-retry')}`
+				);
+				setTransitioning(false);
+			});
 		}
 		else {
 			setErrorToast(
@@ -103,6 +111,7 @@ const BulkTransitionModal = () => {
 				)
 			);
 		}
+
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [errors, transitionTasks]);
 
@@ -110,24 +119,19 @@ const BulkTransitionModal = () => {
 		if (selectAll) {
 			setFetching(true);
 
-			fetchTasks()
-				.then(({items}) => {
-					setFetching(false);
-					setSelectTasks({selectAll, tasks: items});
-
-					setCurrentStep('selectTransitions');
-				})
-				.catch(() => {
-					setErrorToast(
-						`${Liferay.Language.get('your-request-has-failed')}`
-					);
-					setFetching(false);
-				});
+			fetchTasks().catch(() => {
+				setErrorToast(
+					`${Liferay.Language.get('your-request-has-failed')}`
+				);
+				setFetching(false);
+			});
 		}
 		else {
 			setCurrentStep('selectTransitions');
 		}
-	}, [fetchTasks, selectAll, setSelectTasks]);
+
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, [selectAll]);
 
 	const handlePrevious = useCallback(() => {
 		clearContext();

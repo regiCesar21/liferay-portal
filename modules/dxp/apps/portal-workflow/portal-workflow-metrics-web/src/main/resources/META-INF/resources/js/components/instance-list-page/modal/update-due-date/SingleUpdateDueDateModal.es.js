@@ -58,13 +58,24 @@ const SingleUpdateDueDateModal = () => {
 	});
 
 	const {dateDue, id: taskId} = useMemo(
-		() => (data.items && data.items[0] ? data.items[0] : {}),
+		() => (data?.items && data?.items[0] ? data?.items[0] : {}),
 		[data]
 	);
 
 	const {postData} = usePost({
 		admin: true,
 		body: {comment, dueDate},
+		callback: () => {
+			toaster.success(
+				Liferay.Language.get(
+					'the-due-date-for-this-task-has-been-updated'
+				)
+			);
+
+			onCloseModal(true);
+			setSendingPost(false);
+			setErrorToast(false);
+		},
 		url: `/workflow-tasks/${taskId}/update-due-date`,
 	});
 
@@ -72,28 +83,17 @@ const SingleUpdateDueDateModal = () => {
 		setSendingPost(true);
 		setErrorToast(false);
 
-		postData()
-			.then(() => {
-				toaster.success(
-					Liferay.Language.get(
-						'the-due-date-for-this-task-has-been-updated'
-					)
-				);
+		postData().catch(({response}) => {
+			const errorMessage = `${Liferay.Language.get(
+				'your-request-has-failed'
+			)} ${Liferay.Language.get('select-done-to-retry')}`;
 
-				onCloseModal(true);
-				setSendingPost(false);
-				setErrorToast(false);
-			})
-			.catch(({response}) => {
-				const errorMessage = `${Liferay.Language.get(
-					'your-request-has-failed'
-				)} ${Liferay.Language.get('select-done-to-retry')}`;
+			setErrorToast(response?.data?.title ?? errorMessage);
+			setSendingPost(false);
+		});
 
-				setErrorToast(response?.data.title ?? errorMessage);
-				setSendingPost(false);
-			});
 		// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, [postData]);
+	}, [toaster]);
 
 	const promises = useMemo(() => {
 		setErrorToast(false);
@@ -111,8 +111,9 @@ const SingleUpdateDueDateModal = () => {
 		}
 
 		return [];
+
 		// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, [fetchData, retry, visibleModal]);
+	}, [retry, selectedInstance, visibleModal]);
 
 	const statesProps = useMemo(
 		() => ({

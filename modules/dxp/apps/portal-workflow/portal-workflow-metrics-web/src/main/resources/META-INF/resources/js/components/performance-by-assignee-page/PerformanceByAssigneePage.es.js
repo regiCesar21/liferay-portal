@@ -53,7 +53,9 @@ const PerformanceByAssigneePage = ({query, routeParams}) => {
 		}
 
 		return [new Promise((_, reject) => reject())];
-	}, [postData, timeRange.dateEnd, timeRange.dateStart]);
+
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, [routeParams, timeRange.dateEnd, timeRange.dateStart]);
 
 	return (
 		<PromisesResolver promises={promises}>
@@ -61,7 +63,7 @@ const PerformanceByAssigneePage = ({query, routeParams}) => {
 				filterKeys={prefixedKeys}
 				routeParams={{...routeParams, search}}
 				selectedFilters={selectedFilters}
-				totalCount={data.totalCount}
+				totalCount={data?.totalCount}
 			/>
 
 			<PerformanceByAssigneePage.Body

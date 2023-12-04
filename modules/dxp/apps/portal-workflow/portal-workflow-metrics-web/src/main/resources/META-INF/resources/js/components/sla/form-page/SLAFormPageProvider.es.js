@@ -32,7 +32,9 @@ const SLAFormPageProvider = ({children, id, processId}) => {
 		}
 
 		return promises;
-	}, [fetchCalendars, fetchNodes, fetchSLA, id]);
+
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, [id]);
 
 	return (
 		<PromisesResolver promises={promises}>

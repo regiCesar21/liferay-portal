@@ -17,7 +17,12 @@ const WorkloadByStepCard = ({processId, routeParams}) => {
 		url: `/processes/${processId}/nodes/metrics`,
 	});
 
-	const promises = useMemo(() => [fetchData()], [fetchData]);
+	const promises = useMemo(
+		() => [fetchData()],
+
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+		[routeParams]
+	);
 
 	return (
 		<PromisesResolver promises={promises}>

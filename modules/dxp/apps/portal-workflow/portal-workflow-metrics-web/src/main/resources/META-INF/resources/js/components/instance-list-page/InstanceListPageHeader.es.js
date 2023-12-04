@@ -122,11 +122,13 @@ const Header = ({
 			]);
 			setSelectAll(items.length === remainingItems.length);
 		}
+
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [items]);
 
 	useEffect(() => {
 		setSelectAll(totalCount > 0 && totalCount === selectedItems.length);
+
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [totalCount]);
 
@@ -144,6 +146,7 @@ const Header = ({
 			setSelectAll(totalCount > 0 && totalCount === updatedItems.length);
 			setSelectedItems(updatedItems);
 		},
+
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 		[items, remainingItems, selectedItems]
 	);
