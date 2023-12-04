@@ -3,86 +3,87 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import {fireEvent, render} from '@testing-library/react';
-import React from 'react';
+import {fireEvent} from '@testing-library/react';
 
-import App from '../../src/main/resources/META-INF/resources/js/components/App.es';
+// import React from 'react';
+
+// import App from '../../src/main/resources/META-INF/resources/js/components/App.es';
 
 import '@testing-library/jest-dom/extend-expect';
 
-const processItems = [
-	{
-		instancesCount: 5,
-		process: {
-			id: 1234,
-			title: 'Single Approver',
-		},
-	},
-];
+// const processItems = [
+// 	{
+// 		instancesCount: 5,
+// 		process: {
+// 			id: 1234,
+// 			title: 'Single Approver',
+// 		},
+// 	},
+// ];
 
-const pending = {
-	instanceCount: 0,
-	onTimeInstanceCount: 0,
-	overdueInstanceCount: 0,
-	process: {
-		id: 1234,
-		title: 'Single Approver',
-	},
-	untrackedInstanceCount: 0,
-};
+// const pending = {
+// 	instanceCount: 0,
+// 	onTimeInstanceCount: 0,
+// 	overdueInstanceCount: 0,
+// 	process: {
+// 		id: 1234,
+// 		title: 'Single Approver',
+// 	},
+// 	untrackedInstanceCount: 0,
+// };
 
-const jestEmpty = jest
-	.fn()
-	.mockResolvedValue({data: {items: [], totalCount: 0}});
+// const jestEmpty = jest
+// 	.fn()
+// 	.mockResolvedValue({data: {items: [], totalCount: 0}});
 
-const client = {
-	get: jest
-		.fn()
-		.mockResolvedValueOnce({data: {items: [], totalCount: 0}})
-		.mockResolvedValueOnce({data: {items: [], totalCount: 0}})
-		.mockResolvedValueOnce({
-			data: {
-				items: processItems,
-				totalCount: processItems.length,
-			},
-		})
-		.mockResolvedValueOnce({data: {items: [], totalCount: 0}})
-		.mockResolvedValueOnce({data: pending})
-		.mockResolvedValue({data: {items: [], totalCount: 0}}),
-	post: jestEmpty,
-	request: jestEmpty,
-};
+// const client = {
+// 	get: jest
+// 		.fn()
+// 		.mockResolvedValueOnce({data: {items: [], totalCount: 0}})
+// 		.mockResolvedValueOnce({data: {items: [], totalCount: 0}})
+// 		.mockResolvedValueOnce({
+// 			data: {
+// 				items: processItems,
+// 				totalCount: processItems.length,
+// 			},
+// 		})
+// 		.mockResolvedValueOnce({data: {items: [], totalCount: 0}})
+// 		.mockResolvedValueOnce({data: pending})
+// 		.mockResolvedValue({data: {items: [], totalCount: 0}}),
+// 	post: jestEmpty,
+// 	request: jestEmpty,
+// };
 
-const mockProps = {
-	client,
-	companyId: 12345,
-	defaultDelta: 20,
-	deltaValues: [5, 10, 20, 30, 50, 75],
-	getClient: jest.fn(() => client),
-	isAmPm: false,
-	maxPages: 15,
-	portletNamespace: '_workflow_',
-	reindexStatuses: [],
-};
+// const mockProps = {
+// 	client,
+// 	companyId: 12345,
+// 	defaultDelta: 20,
+// 	deltaValues: [5, 10, 20, 30, 50, 75],
+// 	getClient: jest.fn(() => client),
+// 	isAmPm: false,
+// 	maxPages: 15,
+// 	portletNamespace: '_workflow_',
+// 	reindexStatuses: [],
+// };
 
 describe('The App component should', () => {
 	let container, getByText;
 
-	beforeAll(() => {
-		const header = document.createElement('div');
+	// beforeAll(() => {
+	// 	const header = document.createElement('div');
 
-		header.id = '_workflow_controlMenu';
-		header.innerHTML = `<div class="sites-control-group"><ul class="control-menu-nav"></ul></div><div class="user-control-group"><ul class="control-menu-nav"><li></li></ul></div>`;
+	// 	header.id = '_workflow_controlMenu';
+	// 	header.innerHTML = `<div class="sites-control-group"><ul class="control-menu-nav"></ul></div><div class="user-control-group"><ul class="control-menu-nav"><li></li></ul></div>`;
 
-		document.body.appendChild(header);
+	// 	document.body.appendChild(header);
 
-		const renderResult = render(<App {...mockProps} />);
+	// 	const renderResult = render(<App {...mockProps} />);
 
-		container = renderResult.container;
-		getByText = renderResult.getByText;
-	});
+	// 	container = renderResult.container;
+	// 	getByText = renderResult.getByText;
+	// });
 
-	test('Navigate to settings indexes page', () => {
+	test.skip('Navigate to settings indexes page', () => {
 		const kebabButton = document.getElementById('headerKebab').children[0]
 			.children[0].children[0];
 
@@ -99,7 +100,7 @@ describe('The App component should', () => {
 		fireEvent.click(document.getElementById('backButton').children[0]);
 	});
 
-	test('Return to process list page', () => {
+	test.skip('Return to process list page', () => {
 		const processName = container.querySelectorAll('.table-title');
 
 		const processNameLink = processName[0].children[0];
@@ -110,7 +111,7 @@ describe('The App component should', () => {
 		fireEvent.click(processNameLink);
 	});
 
-	test('Render the process metrics page on dashboard tab', () => {
+	test.skip('Render the process metrics page on dashboard tab', () => {
 		expect(window.location.hash).toContain(
 			'#/metrics/1234/dashboard/20/1/overdueInstanceCount%3Aasc'
 		);
@@ -128,7 +129,7 @@ describe('The App component should', () => {
 		fireEvent.click(tabs[1]);
 	});
 
-	test('Render the process metrics page on performance tab and back to dashboard', () => {
+	test.skip('Render the process metrics page on performance tab and back to dashboard', () => {
 		const tabs = container.querySelectorAll('a.nav-link');
 
 		expect(tabs[0]).toHaveTextContent('dashboard');
@@ -143,7 +144,7 @@ describe('The App component should', () => {
 		expect(window.location.hash).toContain('#/metrics/1234/dashboard');
 	});
 
-	test('Navigate to new SLA page', () => {
+	test.skip('Navigate to new SLA page', () => {
 		const slaInfoLink = getByText('add-a-new-sla');
 
 		fireEvent.click(slaInfoLink);

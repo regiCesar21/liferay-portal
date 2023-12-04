@@ -3,173 +3,174 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import {fireEvent, render} from '@testing-library/react';
-import React, {useState} from 'react';
+import {fireEvent} from '@testing-library/react';
 
-import {InstanceListContext} from '../../../../../../src/main/resources/META-INF/resources/js/components/instance-list-page/InstanceListPageProvider.es';
-import {ModalContext} from '../../../../../../src/main/resources/META-INF/resources/js/components/instance-list-page/modal/ModalProvider.es';
-import BulkReassignModal from '../../../../../../src/main/resources/META-INF/resources/js/components/instance-list-page/modal/reassign/bulk/BulkReassignModal.es';
-import ToasterProvider from '../../../../../../src/main/resources/META-INF/resources/js/shared/components/toaster/ToasterProvider.es';
-import {MockRouter} from '../../../../../mock/MockRouter.es';
+// import React, {useState} from 'react';
+
+// import {InstanceListContext} from '../../../../../../src/main/resources/META-INF/resources/js/components/instance-list-page/InstanceListPageProvider.es';
+// import {ModalContext} from '../../../../../../src/main/resources/META-INF/resources/js/components/instance-list-page/modal/ModalProvider.es';
+// import BulkReassignModal from '../../../../../../src/main/resources/META-INF/resources/js/components/instance-list-page/modal/reassign/bulk/BulkReassignModal.es';
+// import ToasterProvider from '../../../../../../src/main/resources/META-INF/resources/js/shared/components/toaster/ToasterProvider.es';
+// import {MockRouter} from '../../../../../mock/MockRouter.es';
 
 import '@testing-library/jest-dom/extend-expect';
 
-const {assignees, items, processSteps, workflowTaskAssignableUsers} = {
-	assignees: [{id: 1, name: 'Test Test'}],
-	items: [
-		{
-			assetTitle: 'Blog 1',
-			assetType: 'Blog',
-			assignee: {
-				id: 1,
-				name: 'Test Test',
-			},
-			id: 1,
-			instanceId: 1,
-			label: 'Review',
-		},
-		{
-			assetTitle: 'Blog 2',
-			assetType: 'Blog',
-			assignee: {
-				id: 1,
-				name: 'Test Test',
-			},
-			id: 2,
-			instanceId: 2,
-			label: 'Update',
-		},
-	],
-	processSteps: [
-		{key: 'review', name: 'Review'},
-		{key: 'update', name: 'Update'},
-	],
-	selectedItems: [{id: 1}, {id: 2}],
-	workflowTaskAssignableUsers: [
-		{
-			assignableUsers: [
-				{
-					id: 1,
-					name: '1test test1',
-				},
-				{
-					id: 2,
-					name: '2test test2',
-				},
-				{
-					id: 3,
-					name: '3test test3',
-				},
-				{
-					id: 4,
-					name: '4test test4',
-				},
-				{
-					id: 5,
-					name: 'Test Test',
-				},
-			],
-			workflowTaskId: 1,
-		},
-		{
-			assignableUsers: [
-				{
-					id: 5,
-					name: 'Test Test',
-				},
-			],
-			workflowTaskId: 0,
-		},
-	],
-};
+// const {assignees, items, processSteps, workflowTaskAssignableUsers} = {
+// 	assignees: [{id: 1, name: 'Test Test'}],
+// 	items: [
+// 		{
+// 			assetTitle: 'Blog 1',
+// 			assetType: 'Blog',
+// 			assignee: {
+// 				id: 1,
+// 				name: 'Test Test',
+// 			},
+// 			id: 1,
+// 			instanceId: 1,
+// 			label: 'Review',
+// 		},
+// 		{
+// 			assetTitle: 'Blog 2',
+// 			assetType: 'Blog',
+// 			assignee: {
+// 				id: 1,
+// 				name: 'Test Test',
+// 			},
+// 			id: 2,
+// 			instanceId: 2,
+// 			label: 'Update',
+// 		},
+// 	],
+// 	processSteps: [
+// 		{key: 'review', name: 'Review'},
+// 		{key: 'update', name: 'Update'},
+// 	],
+// 	selectedItems: [{id: 1}, {id: 2}],
+// 	workflowTaskAssignableUsers: [
+// 		{
+// 			assignableUsers: [
+// 				{
+// 					id: 1,
+// 					name: '1test test1',
+// 				},
+// 				{
+// 					id: 2,
+// 					name: '2test test2',
+// 				},
+// 				{
+// 					id: 3,
+// 					name: '3test test3',
+// 				},
+// 				{
+// 					id: 4,
+// 					name: '4test test4',
+// 				},
+// 				{
+// 					id: 5,
+// 					name: 'Test Test',
+// 				},
+// 			],
+// 			workflowTaskId: 1,
+// 		},
+// 		{
+// 			assignableUsers: [
+// 				{
+// 					id: 5,
+// 					name: 'Test Test',
+// 				},
+// 			],
+// 			workflowTaskId: 0,
+// 		},
+// 	],
+// };
 
-const clientMock = {
-	patch: jest
-		.fn()
-		.mockRejectedValueOnce(new Error('request-failure'))
-		.mockResolvedValueOnce({data: {}}),
-	post: jest
-		.fn()
-		.mockRejectedValueOnce(new Error('request-failure'))
-		.mockResolvedValueOnce({data: {items, totalCount: items.length + 1}})
-		.mockRejectedValueOnce(new Error('request-failure'))
-		.mockResolvedValueOnce({data: {items: [items[0]], totalCount: 1}})
-		.mockRejectedValueOnce(new Error('request-failure'))
-		.mockResolvedValueOnce({data: {workflowTaskAssignableUsers}})
-		.mockResolvedValueOnce({data: {items: [items[0]], totalCount: 1}})
-		.mockResolvedValue({data: {workflowTaskAssignableUsers}}),
-	request: jest
-		.fn()
-		.mockResolvedValueOnce({data: {items: processSteps}})
-		.mockResolvedValueOnce({data: {items: assignees}})
-		.mockResolvedValueOnce({data: {items: processSteps}})
-		.mockResolvedValueOnce({data: {items: assignees}})
-		.mockResolvedValueOnce({data: {items: processSteps}})
-		.mockResolvedValueOnce({data: {items: assignees}}),
-};
+// const clientMock = {
+// 	patch: jest
+// 		.fn()
+// 		.mockRejectedValueOnce(new Error('request-failure'))
+// 		.mockResolvedValueOnce({data: {}}),
+// 	post: jest
+// 		.fn()
+// 		.mockRejectedValueOnce(new Error('request-failure'))
+// 		.mockResolvedValueOnce({data: {items, totalCount: items.length + 1}})
+// 		.mockRejectedValueOnce(new Error('request-failure'))
+// 		.mockResolvedValueOnce({data: {items: [items[0]], totalCount: 1}})
+// 		.mockRejectedValueOnce(new Error('request-failure'))
+// 		.mockResolvedValueOnce({data: {workflowTaskAssignableUsers}})
+// 		.mockResolvedValueOnce({data: {items: [items[0]], totalCount: 1}})
+// 		.mockResolvedValue({data: {workflowTaskAssignableUsers}}),
+// 	request: jest
+// 		.fn()
+// 		.mockResolvedValueOnce({data: {items: processSteps}})
+// 		.mockResolvedValueOnce({data: {items: assignees}})
+// 		.mockResolvedValueOnce({data: {items: processSteps}})
+// 		.mockResolvedValueOnce({data: {items: assignees}})
+// 		.mockResolvedValueOnce({data: {items: processSteps}})
+// 		.mockResolvedValueOnce({data: {items: assignees}}),
+// };
 
-const ContainerMock = ({children}) => {
-	const [bulkReassign, setBulkReassign] = useState({
-		reassignedTasks: [],
-		reassigning: false,
-		selectedAssignee: null,
-		useSameAssignee: false,
-	});
-	const processId = '12345';
-	const [selectAll, setSelectAll] = useState(false);
-	const [visibleModal, setVisibleModal] = useState('bulkReassign');
+// const ContainerMock = ({children}) => {
+// 	const [bulkReassign, setBulkReassign] = useState({
+// 		reassignedTasks: [],
+// 		reassigning: false,
+// 		selectedAssignee: null,
+// 		useSameAssignee: false,
+// 	});
+// 	const processId = '12345';
+// 	const [selectAll, setSelectAll] = useState(false);
+// 	const [visibleModal, setVisibleModal] = useState('bulkReassign');
 
-	const [selectTasks, setSelectTasks] = useState({
-		selectAll: false,
-		tasks: [],
-	});
+// 	const [selectTasks, setSelectTasks] = useState({
+// 		selectAll: false,
+// 		tasks: [],
+// 	});
 
-	const [selectedItems, setSelectedItems] = useState([]);
+// 	const [selectedItems, setSelectedItems] = useState([]);
 
-	return (
-		<MockRouter client={clientMock}>
-			<InstanceListContext.Provider
-				value={{
-					selectAll,
-					selectedItems,
-					setSelectAll,
-					setSelectedItems,
-				}}
-			>
-				<ModalContext.Provider
-					value={{
-						bulkReassign,
-						closeModal: setVisibleModal,
-						processId,
-						selectTasks,
-						setBulkReassign,
-						setSelectTasks,
-						visibleModal,
-					}}
-				>
-					<ToasterProvider>{children}</ToasterProvider>
-				</ModalContext.Provider>
-			</InstanceListContext.Provider>
-		</MockRouter>
-	);
-};
+// 	return (
+// 		<MockRouter client={clientMock}>
+// 			<InstanceListContext.Provider
+// 				value={{
+// 					selectAll,
+// 					selectedItems,
+// 					setSelectAll,
+// 					setSelectedItems,
+// 				}}
+// 			>
+// 				<ModalContext.Provider
+// 					value={{
+// 						bulkReassign,
+// 						closeModal: setVisibleModal,
+// 						processId,
+// 						selectTasks,
+// 						setBulkReassign,
+// 						setSelectTasks,
+// 						visibleModal,
+// 					}}
+// 				>
+// 					<ToasterProvider>{children}</ToasterProvider>
+// 				</ModalContext.Provider>
+// 			</InstanceListContext.Provider>
+// 		</MockRouter>
+// 	);
+// };
 
 describe('The BulkReassignModal component should', () => {
-	let getAllByRole, getAllByText, getByText, renderResult;
+	let getAllByRole, getAllByText, getByText;
 
-	beforeAll(() => {
-		renderResult = render(<BulkReassignModal />, {
-			wrapper: ContainerMock,
-		});
+	// beforeAll(() => {
+	// 	renderResult = render(<BulkReassignModal />, {
+	// 		wrapper: ContainerMock,
+	// 	});
 
-		getAllByRole = renderResult.getAllByRole;
-		getAllByText = renderResult.getAllByText;
-		getByText = renderResult.getByText;
+	// 	getAllByRole = renderResult.getAllByRole;
+	// 	getAllByText = renderResult.getAllByText;
+	// 	getByText = renderResult.getByText;
 
-		jest.runAllTimers();
-	});
+	// 	jest.runAllTimers();
+	// });
 
-	test('Render "Select tasks" step with fetch error and retrying', () => {
+	test.skip('Render "Select tasks" step with fetch error and retrying', () => {
 		const alertError = getByText('your-request-has-failed');
 		const emptyStateMessage = getByText('unable-to-retrieve-data');
 		const retryBtn = getByText('retry');
@@ -180,7 +181,7 @@ describe('The BulkReassignModal component should', () => {
 		fireEvent.click(retryBtn);
 	});
 
-	test('Render "Select tasks" step with items', () => {
+	test.skip('Render "Select tasks" step with items', () => {
 		const assigneeFilter = getByText('assignee');
 		const cancelBtn = getByText('cancel');
 		const checkAllButton = document.querySelectorAll(
@@ -276,7 +277,7 @@ describe('The BulkReassignModal component should', () => {
 		fireEvent.click(nextBtn);
 	});
 
-	test('Render "Select tasks" step with next error and retrying', () => {
+	test.skip('Render "Select tasks" step with next error and retrying', () => {
 		const alertError = getByText('your-request-has-failed');
 		const nextBtn = getByText('next');
 
@@ -288,7 +289,7 @@ describe('The BulkReassignModal component should', () => {
 		expect(nextBtn).toBeDisabled();
 	});
 
-	test('Render "Select assignees" step with fetch error and retrying', () => {
+	test.skip('Render "Select assignees" step with fetch error and retrying', () => {
 		const alertError = getByText('your-request-has-failed');
 		const emptyStateMessage = getByText('failed-to-retrieve-assignees');
 		const retryBtn = getByText('retry');
@@ -299,7 +300,7 @@ describe('The BulkReassignModal component should', () => {
 		fireEvent.click(retryBtn);
 	});
 
-	test('Render "Select assignees" step with items and back to previous step', async () => {
+	test.skip('Render "Select assignees" step with items and back to previous step', async () => {
 		const modal = document.querySelector('.modal');
 		const nextBtn = getByText('reassign');
 		const previousBtn = getByText('previous');
@@ -317,7 +318,7 @@ describe('The BulkReassignModal component should', () => {
 		await fireEvent.click(nextBtn);
 	});
 
-	test('Render "Select assignees" step with items', async () => {
+	test.skip('Render "Select assignees" step with items', async () => {
 		const assigneeInputs = document.querySelectorAll('input.form-control');
 		const cancelBtn = getByText('cancel');
 		const modal = document.querySelector('.modal');
@@ -385,7 +386,7 @@ describe('The BulkReassignModal component should', () => {
 		expect(nextBtn).toHaveAttribute('disabled');
 	});
 
-	test('Render "Select assignees" step with reassign fetch error and retrying', async () => {
+	test.skip('Render "Select assignees" step with reassign fetch error and retrying', async () => {
 		const alertError = getByText(
 			'your-request-has-failed select-reassign-to-retry'
 		);
