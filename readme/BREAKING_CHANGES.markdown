@@ -1085,3 +1085,26 @@ Use `getSegmentsEntryIds` in `FragmentEntryProcessorContext`, `DefaultFragmentEn
 This change was made so that a collection's variations can be retrieved when using collections in a fragment.
 
 ---------------------------------------
+
+## The support of Apache SOAP 2.2 has been removed.
+- **Date:** 2023-Dec-4
+- **JIRA Ticket:** [LPS-164220](https://liferay.atlassian.net/browse/LPS-164220)
+
+### What changed?
+
+This change was made to address vulnerabilities in outdated libraries that are no longer
+maintained.
+
+### Who is affected?
+
+This will affect you if you are using SOAP web service
+
+### How should I update my code?
+
+Move soap services to JSON Web Services
+
+### Why was this change made?
+
+Apache SOAP is no longer maintained and will not receive any updates
+
+---------------------------------------
