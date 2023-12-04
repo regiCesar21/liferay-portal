@@ -274,22 +274,26 @@ const APIGUI = () => {
 					</ClayModal>
 				)}
 
-				{!showGraphQL && (
-					<SwaggerUI
-						displayOperationId={true}
-						requestInterceptor={requestInterceptor}
-						supportedSubmitMethods={[
-							'get',
-							'put',
-							'post',
-							'delete',
-							'patch'
-						]}
-						url={
-							endpoint ||
-							endpoints.find(url => url.includes('delivery'))
-						}
-					/>
+				{!endpoint.startsWith('http://localhost:8080') ? (
+					<>Error!!</>
+				) : (
+					!showGraphQL && (
+						<SwaggerUI
+							displayOperationId={true}
+							requestInterceptor={requestInterceptor}
+							supportedSubmitMethods={[
+								'get',
+								'put',
+								'post',
+								'delete',
+								'patch'
+							]}
+							url={
+								endpoint ||
+								endpoints.find(url => url.includes('delivery'))
+							}
+						/>
+					)
 				)}
 				{showGraphQL && (
 					<ClayLayout.Row className="vh-100">
