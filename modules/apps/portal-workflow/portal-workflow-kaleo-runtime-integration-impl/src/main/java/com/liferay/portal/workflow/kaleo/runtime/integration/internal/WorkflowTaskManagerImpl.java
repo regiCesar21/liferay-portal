@@ -37,6 +37,7 @@ import com.liferay.portal.workflow.kaleo.model.KaleoInstanceToken;
 import com.liferay.portal.workflow.kaleo.model.KaleoNode;
 import com.liferay.portal.workflow.kaleo.model.KaleoTask;
 import com.liferay.portal.workflow.kaleo.model.KaleoTaskAssignment;
+import com.liferay.portal.workflow.kaleo.model.KaleoTaskAssignmentInstance;
 import com.liferay.portal.workflow.kaleo.model.KaleoTaskInstanceToken;
 import com.liferay.portal.workflow.kaleo.model.KaleoTransition;
 import com.liferay.portal.workflow.kaleo.runtime.ExecutionContext;
@@ -46,6 +47,7 @@ import com.liferay.portal.workflow.kaleo.runtime.assignment.TaskAssignmentSelect
 import com.liferay.portal.workflow.kaleo.runtime.assignment.TaskAssignmentSelectorRegistry;
 import com.liferay.portal.workflow.kaleo.runtime.util.WorkflowContextUtil;
 import com.liferay.portal.workflow.kaleo.runtime.util.comparator.KaleoTaskInstanceTokenOrderByComparator;
+import com.liferay.portal.workflow.kaleo.service.KaleoTaskAssignmentInstanceLocalService;
 import com.liferay.portal.workflow.kaleo.service.KaleoTaskAssignmentLocalService;
 import com.liferay.portal.workflow.kaleo.service.KaleoTaskInstanceTokenLocalService;
 
@@ -828,6 +830,8 @@ public class WorkflowTaskManagerImpl implements WorkflowTaskManager {
 				return new long[0];
 			}
 
+			long assignedUserId = getAssignedUserId(workflowTaskInstanceId);
+
 			List<KaleoTaskAssignment> calculatedKaleoTaskAssignments =
 				getCalculatedKaleoTaskAssignments(kaleoTaskInstanceToken);
 
@@ -837,7 +841,7 @@ public class WorkflowTaskManagerImpl implements WorkflowTaskManager {
 					calculatedKaleoTaskAssignments) {
 
 				populateUsers(
-					actionType, calculatedKaleoTaskAssignment,
+					actionType, assignedUserId, calculatedKaleoTaskAssignment,
 					kaleoTaskInstanceToken, users);
 			}
 
@@ -853,6 +857,29 @@ public class WorkflowTaskManagerImpl implements WorkflowTaskManager {
 		catch (Exception exception) {
 			throw new WorkflowException(exception);
 		}
+	}
+
+	protected long getAssignedUserId(long kaleoTaskInstanceTokenId) {
+		List<Long> assignedUserIds = new ArrayList<>();
+
+		for (KaleoTaskAssignmentInstance kaleoTaskAssignmentInstance :
+				_kaleoTaskAssignmentInstanceLocalService.
+					getKaleoTaskAssignmentInstances(kaleoTaskInstanceTokenId)) {
+
+			if (Objects.equals(
+					User.class.getName(),
+					kaleoTaskAssignmentInstance.getAssigneeClassName())) {
+
+				assignedUserIds.add(
+					kaleoTaskAssignmentInstance.getAssigneeClassPK());
+			}
+		}
+
+		if (assignedUserIds.size() == 1) {
+			return assignedUserIds.get(0);
+		}
+
+		return 0L;
 	}
 
 	protected List<KaleoTaskAssignment> getCalculatedKaleoTaskAssignments(
@@ -974,7 +1001,8 @@ public class WorkflowTaskManagerImpl implements WorkflowTaskManager {
 	}
 
 	protected void populateUsers(
-			String actionType, KaleoTaskAssignment kaleoTaskAssignment,
+			String actionType, long assignedUserId,
+			KaleoTaskAssignment kaleoTaskAssignment,
 			KaleoTaskInstanceToken kaleoTaskInstanceToken, Set<User> users)
 		throws PortalException {
 
@@ -1138,6 +1166,10 @@ public class WorkflowTaskManagerImpl implements WorkflowTaskManager {
 
 	@Reference
 	private KaleoSignaler _kaleoSignaler;
+
+	@Reference
+	private KaleoTaskAssignmentInstanceLocalService
+		_kaleoTaskAssignmentInstanceLocalService;
 
 	@Reference
 	private KaleoTaskAssignmentLocalService _kaleoTaskAssignmentLocalService;
