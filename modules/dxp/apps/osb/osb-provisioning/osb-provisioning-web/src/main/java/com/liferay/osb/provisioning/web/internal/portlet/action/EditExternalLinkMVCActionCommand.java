@@ -166,7 +166,10 @@ public class EditExternalLinkMVCActionCommand extends BaseMVCActionCommand {
 			else if (domain.equals(ExternalLinkDomain.DXP_CLOUD)) {
 				throw new DuplicateDXPCloudProjectIdException();
 			}
-			else if (domain.equals(ExternalLinkDomain.SALESFORCE)) {
+			else if (domain.equals(ExternalLinkDomain.SALESFORCE) &&
+					 entityName.equals(
+						 ExternalLinkEntityName.SALESFORCE_PROJECT)) {
+
 				throw new DuplicateSalesforceProjectKeyException();
 			}
 		}
