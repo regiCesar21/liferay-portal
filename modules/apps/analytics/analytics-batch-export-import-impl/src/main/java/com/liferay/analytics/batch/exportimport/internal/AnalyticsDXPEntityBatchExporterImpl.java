@@ -12,6 +12,7 @@ import com.liferay.dispatch.executor.DispatchTaskClusterMode;
 import com.liferay.dispatch.model.DispatchTrigger;
 import com.liferay.dispatch.service.DispatchLogLocalService;
 import com.liferay.dispatch.service.DispatchTriggerLocalService;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -86,10 +87,25 @@ public class AnalyticsDXPEntityBatchExporterImpl
 			_dispatchLogLocalService.deleteDispatchLogs(
 				dispatchTrigger.getDispatchTriggerId());
 
-			Date nextFireDate = _dispatchTriggerLocalService.getNextFireDate(
-				dispatchTrigger.getDispatchTriggerId());
+			Date date = new Date();
 
-			Instant instant = nextFireDate.toInstant();
+			Instant instant = date.toInstant();
+
+			try {
+				Date nextFireDate =
+					_dispatchTriggerLocalService.getNextFireDate(
+						dispatchTrigger.getDispatchTriggerId());
+
+				if (nextFireDate != null) {
+					instant = nextFireDate.toInstant();
+				}
+			}
+			catch (PortalException portalException) {
+				_log.error(
+					"Unable to resolve next fire date for dispatch trigger " +
+						"ID " + dispatchTrigger.getDispatchTriggerId(),
+					portalException);
+			}
 
 			ZonedDateTime zonedDateTime = instant.atZone(ZoneId.of("UTC"));
 
