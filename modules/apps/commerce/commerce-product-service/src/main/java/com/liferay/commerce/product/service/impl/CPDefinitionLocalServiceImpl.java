@@ -7,6 +7,11 @@ package com.liferay.commerce.product.service.impl;
 
 import com.liferay.asset.kernel.model.AssetEntry;
 import com.liferay.asset.kernel.model.AssetLinkConstants;
+import com.liferay.commerce.price.list.constants.CommercePriceListConstants;
+import com.liferay.commerce.price.list.model.CommercePriceEntry;
+import com.liferay.commerce.price.list.model.CommercePriceList;
+import com.liferay.commerce.price.list.service.CommercePriceEntryLocalServiceUtil;
+import com.liferay.commerce.price.list.service.CommercePriceListLocalServiceUtil;
 import com.liferay.commerce.product.configuration.CProductVersionConfiguration;
 import com.liferay.commerce.product.constants.CPAttachmentFileEntryConstants;
 import com.liferay.commerce.product.exception.CPDefinitionDisplayDateException;
@@ -836,6 +841,14 @@ public class CPDefinitionLocalServiceImpl
 			newCPInstance.setCPInstanceUuid(PortalUUIDUtil.generate());
 
 			newCPInstance.setCPDefinitionId(newCPDefinitionId);
+
+			_updateCommercePriceEntry(
+				newCPInstance, CommercePriceListConstants.TYPE_PRICE_LIST,
+				newCPInstance.getPrice(), serviceContext);
+
+			_updateCommercePriceEntry(
+				newCPInstance, CommercePriceListConstants.TYPE_PROMOTION,
+				newCPInstance.getPromoPrice(), serviceContext);
 
 			cpInstancePersistence.update(newCPInstance);
 		}
@@ -2680,6 +2693,36 @@ public class CPDefinitionLocalServiceImpl
 		}
 
 		return false;
+	}
+
+	private void _updateCommercePriceEntry(
+			CPInstance cpInstance, String type, BigDecimal price,
+			ServiceContext serviceContext)
+		throws PortalException {
+
+		CommercePriceList commercePriceList =
+			CommercePriceListLocalServiceUtil.
+				getCatalogBaseCommercePriceListByType(
+					cpInstance.getGroupId(), type);
+
+		CommercePriceEntry commercePriceEntry =
+			CommercePriceEntryLocalServiceUtil.fetchCommercePriceEntry(
+				commercePriceList.getCommercePriceListId(),
+				cpInstance.getCPInstanceUuid());
+
+		if (commercePriceEntry == null) {
+			CPDefinition cpDefinition = cpInstance.getCPDefinition();
+
+			CommercePriceEntryLocalServiceUtil.addCommercePriceEntry(
+				cpDefinition.getCProductId(), cpInstance.getCPInstanceUuid(),
+				commercePriceList.getCommercePriceListId(), price, null,
+				serviceContext);
+		}
+		else {
+			CommercePriceEntryLocalServiceUtil.updateCommercePriceEntry(
+				commercePriceEntry.getCommercePriceEntryId(), price, null,
+				serviceContext);
+		}
 	}
 
 	private List<CPDefinitionLocalization> _updateCPDefinitionLocalizedFields(
