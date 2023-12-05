@@ -314,7 +314,9 @@ definition {
 			fieldName = ${textFieldRequiredName2},
 			fieldValue = "文本再次输入中文");
 
-		FormPortlet.submitLocalizedSuccessfully(buttonName = "提交");
+		FormPortlet.submit();
+
+		Alert.viewSuccessMessage();
 
 		Navigator.openURL();
 
@@ -693,7 +695,7 @@ definition {
 
 		Navigator.gotoPage(pageName = "Form Page");
 
-		FormPortlet.waitFormRenderer(text = "Enviar");
+		FormPortlet.waitFormRenderer(text = "Submit");
 
 		FormFields.viewTextLabel(
 			fieldLabel = "Text Field On Spanish Portal",
@@ -703,7 +705,9 @@ definition {
 			fieldName = ${fieldTextField},
 			fieldValue = "Text Field Value");
 
-		FormPortlet.submitLocalizedSuccessfully(buttonName = "Enviar");
+		FormPortlet.submit();
+
+		Alert.viewSuccessMessage();
 
 		Navigator.openURL();
 
@@ -816,7 +820,7 @@ definition {
 			fieldName = ${fieldNumericField},
 			fieldValue = "1,1");
 
-		FormPortlet.submitLocalizedSuccessfully(buttonName = "Submeter");
+		FormPortlet.submitSuccessfully();
 
 		Navigator.openURL();
 
@@ -2169,6 +2173,8 @@ definition {
 			configurationCategory = "Infrastructure",
 			configurationName = "JavaScript Loader",
 			configurationScope = "System Scope");
+
+		Refresh();
 
 		for (var fieldName : list "applyVersioning,exposeGlobal") {
 			FormFields.viewCheckboxNotChecked(fieldName = ${fieldName});
