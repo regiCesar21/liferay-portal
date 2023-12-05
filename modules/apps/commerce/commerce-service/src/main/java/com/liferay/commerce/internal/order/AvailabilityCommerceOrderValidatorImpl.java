@@ -155,9 +155,10 @@ public class AvailabilityCommerceOrderValidatorImpl
 				commerceOrderItem.getCommerceOrderItemId(), false,
 				_getLocalizedMessage(locale, "that-quantity-is-unavailable"));
 		}
-		else if ((commerceInventoryBookedQuantity != null) &&
-				 (orderQuantity !=
-					 commerceInventoryBookedQuantity.getQuantity())) {
+
+		if ((commerceInventoryBookedQuantity != null) &&
+			(commerceOrderItem.getQuantity() !=
+				commerceInventoryBookedQuantity.getQuantity())) {
 
 			return new CommerceOrderValidatorResult(
 				commerceOrderItem.getCommerceOrderItemId(), false,
