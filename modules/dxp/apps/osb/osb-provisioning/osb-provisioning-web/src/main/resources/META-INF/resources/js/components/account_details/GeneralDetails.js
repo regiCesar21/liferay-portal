@@ -35,6 +35,7 @@ function GeneralDetails({
 		allowSelfProvisioning: details.allowSelfProvisioning,
 		code: convertDashToEmptyString(details.code),
 		dataRegion: convertDashToEmptyString(details.dataRegion),
+		internal: details.internal,
 		liferayVersion: convertDashToEmptyString(details.liferayVersion),
 		name: convertDashToEmptyString(details.name),
 		region: convertDashToEmptyString(details.region),
@@ -195,6 +196,20 @@ function GeneralDetails({
 				}
 				value={details.allowSelfProvisioning}
 			/>
+
+			<DetailField
+				displayAs="toggle"
+				fieldLabel={Liferay.Language.get('internal')}
+				fieldName="internal"
+				formAction={details.editAccountURL}
+				formData={formData}
+				type={
+					updatePermission
+						? FIELD_TYPE_TOGGLE
+						: FIELD_TYPE_NONEDITABLE
+				}
+				value={details.internal}
+			/>
 		</ClayList>
 	);
 }
@@ -213,6 +228,7 @@ GeneralDetails.propTypes = {
 		editAccountHierarchyURL: PropTypes.string,
 		editAccountURL: PropTypes.string,
 		firstLineSupportTeamName: PropTypes.string,
+		internal: PropTypes.bool,
 		key: PropTypes.string,
 		liferayVersion: PropTypes.string,
 		name: PropTypes.string,

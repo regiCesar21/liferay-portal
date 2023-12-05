@@ -101,6 +101,7 @@ AccountDetails.propTypes = {
 		editAccountHierarchyURL: PropTypes.string,
 		editAccountURL: PropTypes.string,
 		firstLineSupportTeamName: PropTypes.string,
+		internal: PropTypes.bool,
 		key: PropTypes.string,
 		liferayVersion: PropTypes.string,
 		name: PropTypes.string,

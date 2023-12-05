@@ -241,6 +241,7 @@ public class EditAccountMVCActionCommand extends BaseMVCActionCommand {
 			actionRequest, "allowPermanentLicenses");
 		boolean allowSelfProvisioning = ParamUtil.getBoolean(
 			actionRequest, "allowSelfProvisioning");
+		boolean internal = ParamUtil.getBoolean(actionRequest, "internal");
 
 		validate(code);
 
@@ -258,6 +259,10 @@ public class EditAccountMVCActionCommand extends BaseMVCActionCommand {
 
 		if (Validator.isNotNull(dataRegion)) {
 			account.setDataRegion(Account.DataRegion.create(dataRegion));
+		}
+
+		if (internal) {
+			account.setInternal(internal);
 		}
 
 		Map<String, String> properties = account.getProperties();

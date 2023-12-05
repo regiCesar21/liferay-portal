@@ -24,6 +24,7 @@ function renderGeneralDetails(permission = true) {
 					dateCreated: CURRENT_TIME.toLocaleString('en-US'),
 					dateModified: CURRENT_TIME.toLocaleString('en-US'),
 					firstLineSupportTeamName: 'Test Support Team',
+					internal: false,
 					key: '123',
 					liferayVersion: 'DXP 7.0',
 					name: 'Test Account',
@@ -124,6 +125,13 @@ describe('GeneralDetails', () => {
 
 		getByText('self-provisioning');
 		expect(getByLabelText('allowSelfProvisioning').checked).toBeFalsy();
+	});
+
+	it('shows Internal field', () => {
+		const {getByLabelText, getByText} = renderGeneralDetails();
+
+		getByText('internal');
+		expect(getByLabelText('internal').checked).toBeFalsy();
 	});
 
 	describe('General Details with full editing privilege', () => {

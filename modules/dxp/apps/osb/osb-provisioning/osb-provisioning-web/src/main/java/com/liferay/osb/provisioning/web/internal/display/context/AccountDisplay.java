@@ -483,6 +483,10 @@ public class AccountDisplay {
 		return true;
 	}
 
+	public boolean isInternal() {
+		return _account.getInternal();
+	}
+
 	public boolean isPartner() {
 		Entitlement[] entitlements = _account.getEntitlements();
 
