@@ -699,7 +699,7 @@ public class SiteAdminPortlet extends MVCPortlet {
 			descriptionMap = LocalizationUtil.getLocalizationMap(
 				actionRequest, "description");
 			type = ParamUtil.getInteger(
-				actionRequest, "type", GroupConstants.TYPE_SITE_OPEN);
+				actionRequest, "type", GroupConstants.TYPE_SITE_RESTRICTED);
 			friendlyURL = ParamUtil.getString(actionRequest, "friendlyURL");
 			manualMembership = ParamUtil.getBoolean(
 				actionRequest, "manualMembership", true);
