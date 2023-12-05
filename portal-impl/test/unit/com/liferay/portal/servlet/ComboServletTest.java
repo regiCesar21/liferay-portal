@@ -251,6 +251,17 @@ public class ComboServletTest extends PowerMockito {
 	}
 
 	@Test
+	public void testServiceWithNoncanonicalPaths() throws Exception {
+		_testService(null, "/../js/aui.js", _portalServletContext);
+
+		_testService("/js/aui.js", "/./js/aui.js", _portalServletContext);
+
+		_testService("/js/aui.js", "/js/./aui.js", _portalServletContext);
+
+		_testService("/js/aui.js", "/js/down/../aui.js", _portalServletContext);
+	}
+
+	@Test
 	public void testValidateInValidModuleExtension() throws Exception {
 		boolean valid = _comboServlet.validateModuleExtension(
 			_TEST_PORTLET_ID +
@@ -353,6 +364,27 @@ public class ComboServletTest extends PowerMockito {
 			}
 
 		};
+	}
+
+	private void _testService(
+			String path, String queryString, ServletContext servletContext)
+		throws Exception {
+
+		MockHttpServletRequest mockHttpServletRequest =
+			new MockHttpServletRequest();
+
+		mockHttpServletRequest.setQueryString(queryString);
+
+		_comboServlet.service(
+			mockHttpServletRequest, new MockHttpServletResponse());
+
+		Mockito.verify(
+			servletContext, Mockito.times((path == null) ? 0 : 1)
+		).getRequestDispatcher(
+			path
+		);
+
+		Mockito.reset(servletContext);
 	}
 
 	private static final String _NONEXISTING_PORTLET_ID = "2345678";
