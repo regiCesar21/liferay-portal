@@ -50,10 +50,9 @@
 		<exception>ContactRequired</exception>
 		<exception>DuplicateAnalyticsCloudGroupId</exception>
 		<exception>DuplicateContactRole</exception>
-		<exception>DuplicateDossieraKey</exception>
 		<exception>DuplicateDXPCloudProjectId</exception>
 		<exception>DuplicateSalesforceProjectKey</exception>
-		<exception>MultipleDossieraKeys</exception>
+		<exception>DuplicateRelatedSalesforceProjectKey</exception>
 		<exception>ProductBundleName</exception>
 		<exception>ProductPurchaseQuantity</exception>
 		<exception>RequiredContactRole</exception>

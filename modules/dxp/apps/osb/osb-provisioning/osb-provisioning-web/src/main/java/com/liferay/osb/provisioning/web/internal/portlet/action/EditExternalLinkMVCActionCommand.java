@@ -13,9 +13,8 @@ import com.liferay.osb.koroneiki.phloem.rest.client.problem.Problem;
 import com.liferay.osb.provisioning.constants.ProvisioningPortletKeys;
 import com.liferay.osb.provisioning.exception.DuplicateAnalyticsCloudGroupIdException;
 import com.liferay.osb.provisioning.exception.DuplicateDXPCloudProjectIdException;
-import com.liferay.osb.provisioning.exception.DuplicateDossieraKeyException;
 import com.liferay.osb.provisioning.exception.DuplicateSalesforceProjectKeyException;
-import com.liferay.osb.provisioning.exception.MultipleDossieraKeysException;
+import com.liferay.osb.provisioning.exception.DuplicateRelatedSalesforceProjectKeyException;
 import com.liferay.osb.provisioning.koroneiki.web.service.AccountWebService;
 import com.liferay.osb.provisioning.koroneiki.web.service.ExternalLinkWebService;
 import com.liferay.portal.kernel.log.Log;
@@ -84,10 +83,10 @@ public class EditExternalLinkMVCActionCommand extends BaseMVCActionCommand {
 			_log.error(exception, exception);
 
 			if (exception instanceof DuplicateAnalyticsCloudGroupIdException ||
-				exception instanceof DuplicateDossieraKeyException ||
 				exception instanceof DuplicateDXPCloudProjectIdException ||
 				exception instanceof DuplicateSalesforceProjectKeyException ||
-				exception instanceof MultipleDossieraKeysException ||
+				exception instanceof
+					DuplicateRelatedSalesforceProjectKeyException ||
 				exception instanceof Problem.ProblemException) {
 
 				SessionErrors.add(
@@ -120,8 +119,10 @@ public class EditExternalLinkMVCActionCommand extends BaseMVCActionCommand {
 		String accountKey = ParamUtil.getString(actionRequest, "accountKey");
 		String domain = ParamUtil.getString(actionRequest, "domain");
 		String entityName = ParamUtil.getString(actionRequest, "entityName");
+		String parentAccountKey = ParamUtil.getString(
+			actionRequest, "parentAccountKey");
 
-		_validate(accountKey, domain, entityName, entityId);
+		_validate(accountKey, domain, entityName, entityId, parentAccountKey);
 
 		ExternalLink externalLink = new ExternalLink();
 
@@ -142,11 +143,10 @@ public class EditExternalLinkMVCActionCommand extends BaseMVCActionCommand {
 
 	private void _validate(
 			String accountKey, String domain, String entityName,
-			String entityId)
+			String entityId, String parentAccountKey)
 		throws Exception {
 
 		if (!domain.equals(ExternalLinkDomain.ANALYTICS_CLOUD) &&
-			!domain.equals(ExternalLinkDomain.DOSSIERA) &&
 			!domain.equals(ExternalLinkDomain.DXP_CLOUD) &&
 			!domain.equals(ExternalLinkDomain.SALESFORCE)) {
 
@@ -160,41 +160,37 @@ public class EditExternalLinkMVCActionCommand extends BaseMVCActionCommand {
 			if (domain.equals(ExternalLinkDomain.ANALYTICS_CLOUD)) {
 				throw new DuplicateAnalyticsCloudGroupIdException();
 			}
-			else if (domain.equals(ExternalLinkDomain.DOSSIERA)) {
-				throw new DuplicateDossieraKeyException();
-			}
 			else if (domain.equals(ExternalLinkDomain.DXP_CLOUD)) {
 				throw new DuplicateDXPCloudProjectIdException();
 			}
-			else if (domain.equals(ExternalLinkDomain.SALESFORCE) &&
-					 entityName.equals(
-						 ExternalLinkEntityName.SALESFORCE_PROJECT)) {
+			else if (domain.equals(ExternalLinkDomain.SALESFORCE)) {
+				if (entityName.equals(
+						ExternalLinkEntityName.SALESFORCE_PROJECT)) {
 
-				throw new DuplicateSalesforceProjectKeyException();
+					throw new DuplicateSalesforceProjectKeyException();
+				}
+				else if (entityName.equals(
+						ExternalLinkEntityName.RELATED_SALESFORCE_PROJECT)) {
+
+					_validateDuplicatedRelatedSalesforceProjectKey(
+						accounts, parentAccountKey);
+				}
 			}
 		}
+	}
 
-		List<ExternalLink> externalLinks =
-			_externalLinkWebService.getExternalLinks(accountKey, 1, 1000);
+	private void _validateDuplicatedRelatedSalesforceProjectKey(
+			List<Account> accounts, String parentAccountKey)
+		throws Exception {
 
-		for (ExternalLink externalLink : externalLinks) {
-			String curDomain = externalLink.getDomain();
+		for (Account account : accounts) {
+			String curParentAccountKey = account.getParentAccountKey();
 
-			if (!curDomain.equals(ExternalLinkDomain.DOSSIERA)) {
+			if (curParentAccountKey.equals(parentAccountKey)) {
 				continue;
 			}
 
-			String curEntityName = externalLink.getEntityName();
-
-			if ((entityName.equals(ExternalLinkEntityName.DOSSIERA_ACCOUNT) &&
-				 curEntityName.equals(
-					 ExternalLinkEntityName.DOSSIERA_PROJECT)) ||
-				(entityName.equals(ExternalLinkEntityName.DOSSIERA_PROJECT) &&
-				 curEntityName.equals(
-					 ExternalLinkEntityName.DOSSIERA_ACCOUNT))) {
-
-				throw new MultipleDossieraKeysException();
-			}
+			throw new DuplicateRelatedSalesforceProjectKeyException();
 		}
 	}
 

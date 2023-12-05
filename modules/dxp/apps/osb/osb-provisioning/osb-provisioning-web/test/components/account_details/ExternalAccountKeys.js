@@ -16,15 +16,17 @@ function renderExternalAccountKeys(permission = true) {
 				details={{
 					analyticsCloudGroupId: 'testAnalyticsCloudGroupId',
 					dossieraAccountKey: 'testDossieraAccountKey',
-					dossieraProjectKey: 'testDossieraProjectKey',
 					dxpCloudProjectId: 'testDxpCloudProjectId',
 					key: '123',
+					relatedSalesforceProjectKey:
+						'testRelatedSalesforceProjectKey',
 					salesforceProjectKey: 'testSalesForceProjectKey',
 					updateAnalyticsCloudGroupURL:
 						'/update/analytics-cloud/group',
 					updateDossieraAccountURL: '/update/dossiera/account',
-					updateDossieraProjectURL: '/update/dossiera/project',
 					updateDxpCloudProjectURL: '/update/dxp-cloud/project',
+					updateRelatedSalesforceProjectURL:
+						'/update/salesforce/related-project',
 					updateSalesforceProjectURL: '/update/salesforce/project'
 				}}
 			/>
@@ -55,18 +57,18 @@ describe('ExternalAccountKeys', () => {
 		getByText('testDossieraAccountKey');
 	});
 
-	it('displays Dossiera Project field with the correct value', () => {
-		const {getByText} = renderExternalAccountKeys();
-
-		getByText('dossiera-project');
-		getByText('testDossieraProjectKey');
-	});
-
 	it('displays DXP Cloud Project field with the correct value', () => {
 		const {getByText} = renderExternalAccountKeys();
 
 		getByText('dxp-cloud-project');
 		getByText('testDxpCloudProjectId');
+	});
+
+	it('displays Related Salesforce Project field with the correct value', () => {
+		const {getByText} = renderExternalAccountKeys();
+
+		getByText('related-salesforce-project');
+		getByText('testRelatedSalesforceProjectKey');
 	});
 
 	it('displays Salesforce Project field with the correct value', () => {

@@ -9,7 +9,7 @@ import React from 'react';
 import ExternalLinksTabPane from '../../../src/main/resources/META-INF/resources/js/components/side_panel/ExternalLinksTabPane';
 
 const defaultProp = [
-	{domain: 'dossiera', key: '123', label: 'dossiera-project', url: '/'}
+	{domain: 'salesforce', key: '123', label: 'salesforce-project', url: '/'}
 ];
 
 function renderExternalLinksTabPane(props) {
@@ -22,7 +22,7 @@ describe('ExternalLinksTabPane', () => {
 	it('renders', () => {
 		const {getByText} = renderExternalLinksTabPane(defaultProp);
 
-		getByText('dossiera-project');
+		getByText('salesforce-project');
 	});
 
 	it('displays a message when there are no external links added for the account', () => {
@@ -40,9 +40,9 @@ describe('ExternalLinksTabPane', () => {
 	it('displays no external link icon on hover when a url is not provided', () => {
 		const {queryByLabelText} = renderExternalLinksTabPane([
 			{
-				domain: 'dossiera',
+				domain: 'salesforce',
 				key: '123',
-				label: 'dossiera-project'
+				label: 'salesforce-project'
 			}
 		]);
 

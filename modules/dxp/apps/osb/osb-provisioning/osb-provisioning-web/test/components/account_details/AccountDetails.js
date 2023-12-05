@@ -63,7 +63,6 @@ function renderAccountDetails(props) {
 				dateCreated: CURRENT_TIME.toLocaleString('en-US'),
 				dateModified: CURRENT_TIME.toLocaleString('en-US'),
 				dossieraAccountKey: 'testDossieraAccountKey',
-				dossieraProjectKey: 'testDossieraProjectKey',
 				dxpCloudProjectId: 'testDxpCloudProjectId',
 				editAccountURL: 'edit/account/url',
 				firstLineSupportTeamKey: 'first-line-123',
@@ -75,14 +74,16 @@ function renderAccountDetails(props) {
 				partnerTeamName: 'Test Partner Team',
 				postalAddressDisplays: [],
 				region: 'US',
+				relatedSalesforceProjectKey: 'testRelatedSalesforceProjectKey',
 				salesforceProjectKey: 'TestSalesForceProjectKey',
 				subscriptionState: 'Active',
 				subscriptionStateStyle: 'label-success',
 				tier: 'Regular',
 				updateAnalyticsCloudGroupURL: '/update/analytics-cloud/group',
 				updateDossieraAccountURL: '/update/dossiera/account',
-				updateDossieraProjectURL: '/update/dossiera/project',
 				updateDxpCloudProjectURL: '/update/dxp-cloud/project',
+				updateRelatedSalesforceProjectURL:
+					'/update/salesforce/related-project',
 				updateSalesforceProjectURL: '/update/salesforce/project'
 			}}
 			liferayVersionNames={[

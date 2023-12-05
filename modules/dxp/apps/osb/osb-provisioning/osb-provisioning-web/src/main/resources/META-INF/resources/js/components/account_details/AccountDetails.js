@@ -96,7 +96,6 @@ AccountDetails.propTypes = {
 		dateCreated: PropTypes.string,
 		dateModified: PropTypes.string,
 		dossieraAccountKey: PropTypes.string,
-		dossieraProjectKey: PropTypes.string,
 		dxpCloudProjectId: PropTypes.string,
 		editAccountHierarchyURL: PropTypes.string,
 		editAccountURL: PropTypes.string,
@@ -105,6 +104,7 @@ AccountDetails.propTypes = {
 		key: PropTypes.string,
 		liferayVersion: PropTypes.string,
 		name: PropTypes.string,
+		parentAccountKey: PropTypes.string,
 		parterTeamName: PropTypes.string,
 		postalAddressDisplays: PropTypes.arrayOf(
 			PropTypes.shape({
@@ -122,14 +122,15 @@ AccountDetails.propTypes = {
 			})
 		),
 		region: PropTypes.string,
+		relatedSalesforceProjectKey: PropTypes.string,
 		salesforceProjectKey: PropTypes.string,
 		subscriptionState: PropTypes.string,
 		subscriptionStateStyle: PropTypes.string,
 		tier: PropTypes.string,
 		updateAnalyticsCloudGroupURL: PropTypes.string,
 		updateDossieraAccountURL: PropTypes.string,
-		updateDossieraProjectURL: PropTypes.string,
 		updateDxpCloudProjectURL: PropTypes.string,
+		updateRelatedSalesforceProjectURL: PropTypes.string,
 		updateSalesforceProjectURL: PropTypes.string
 	}),
 	hasManageAccountsPermission: PropTypes.bool,
