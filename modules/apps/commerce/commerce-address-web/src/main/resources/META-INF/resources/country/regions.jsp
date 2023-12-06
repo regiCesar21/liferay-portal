@@ -84,7 +84,6 @@ CommerceRegionsDisplayContext commerceRegionsDisplayContext = (CommerceRegionsDi
 					PortletURL rowURL = renderResponse.createRenderURL();
 
 					rowURL.setParameter("mvcRenderCommandName", "/commerce_country/edit_commerce_region");
-					rowURL.setParameter("redirect", currentURL);
 					rowURL.setParameter("commerceCountryId", String.valueOf(commerceRegion.getCommerceCountryId()));
 					rowURL.setParameter("commerceRegionId", String.valueOf(commerceRegion.getCommerceRegionId()));
 					%>

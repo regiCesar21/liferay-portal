@@ -24,6 +24,8 @@ import com.liferay.portal.kernel.util.StringUtil;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
+import javax.portlet.PortletRequest;
+import javax.portlet.PortletURL;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -72,7 +74,12 @@ public class EditCommerceRegionMVCActionCommand extends BaseMVCActionCommand {
 
 		try {
 			if (cmd.equals(Constants.ADD) || cmd.equals(Constants.UPDATE)) {
-				updateCommerceRegion(actionRequest);
+				CommerceRegion region = updateCommerceRegion(actionRequest);
+
+				String redirect = _getSaveAndContinueRedirect(
+					actionRequest, region);
+
+				sendRedirect(actionRequest, actionResponse, redirect);
 			}
 			else if (cmd.equals(Constants.DELETE)) {
 				deleteCommerceRegions(actionRequest);
@@ -146,6 +153,30 @@ public class EditCommerceRegionMVCActionCommand extends BaseMVCActionCommand {
 		}
 
 		return commerceRegion;
+	}
+
+	private String _getSaveAndContinueRedirect(
+			ActionRequest actionRequest, CommerceRegion commerceRegion)
+		throws Exception {
+
+		PortletURL portletURL = _portal.getControlPanelPortletURL(
+			actionRequest, CommercePortletKeys.COMMERCE_COUNTRY,
+			PortletRequest.RENDER_PHASE);
+
+		portletURL.setParameter(
+			"countryId",
+			String.valueOf(ParamUtil.getLong(actionRequest, "countryId")));
+
+		if (commerceRegion != null) {
+			portletURL.setParameter(
+				"mvcRenderCommandName",
+				"/commerce_country/edit_commerce_region");
+			portletURL.setParameter(
+				"regionId",
+				String.valueOf(commerceRegion.getCommerceRegionId()));
+		}
+
+		return portletURL.toString();
 	}
 
 	@Reference

@@ -12,9 +12,15 @@ import com.liferay.commerce.service.CommerceRegionService;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.servlet.SessionErrors;
+import com.liferay.portal.kernel.theme.PortletDisplay;
+import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.WebKeys;
 
 import javax.portlet.PortletException;
+import javax.portlet.PortletRequest;
+import javax.portlet.PortletURL;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
 
@@ -58,7 +64,31 @@ public class EditCommerceRegionMVCRenderCommand implements MVCRenderCommand {
 			}
 		}
 
+		_populatePortletDisplay(renderRequest);
+
 		return "/edit_region.jsp";
+	}
+
+	private void _populatePortletDisplay(RenderRequest renderRequest) {
+		ThemeDisplay themeDisplay = (ThemeDisplay)renderRequest.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
+		PortletDisplay portletDisplay = themeDisplay.getPortletDisplay();
+
+		portletDisplay.setShowBackIcon(true);
+
+		PortletURL portletURL = _portal.getControlPanelPortletURL(
+			renderRequest, CommercePortletKeys.COMMERCE_COUNTRY,
+			PortletRequest.RENDER_PHASE);
+
+		portletURL.setParameter(
+			"mvcRenderCommandName", "/commerce_country/edit_commerce_country");
+		portletURL.setParameter(
+			"countryId",
+			String.valueOf(ParamUtil.getLong(renderRequest, "countryId")));
+		portletURL.setParameter("screenNavigationCategoryKey", "regions");
+
+		portletDisplay.setURLBack(portletURL.toString());
 	}
 
 	@Reference
@@ -66,5 +96,8 @@ public class EditCommerceRegionMVCRenderCommand implements MVCRenderCommand {
 
 	@Reference
 	private CommerceRegionService _commerceRegionService;
+
+	@Reference
+	private Portal _portal;
 
 }

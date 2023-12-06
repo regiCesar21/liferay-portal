@@ -25,8 +25,6 @@ CommerceCountry commerceCountry = (CommerceCountry)row.getObject();
 	<c:if test="<%= commerceCountriesDisplayContext.hasPermission(CommerceActionKeys.MANAGE_COMMERCE_COUNTRIES) %>">
 		<portlet:renderURL var="editURL">
 			<portlet:param name="mvcRenderCommandName" value="/commerce_country/edit_commerce_country" />
-			<portlet:param name="redirect" value="<%= currentURL %>" />
-			<portlet:param name="backURL" value="<%= backURL %>" />
 			<portlet:param name="commerceCountryId" value="<%= String.valueOf(commerceCountry.getCommerceCountryId()) %>" />
 		</portlet:renderURL>
 
@@ -50,7 +48,6 @@ CommerceCountry commerceCountry = (CommerceCountry)row.getObject();
 		<portlet:actionURL name="/commerce_country/edit_commerce_country" var="deleteURL">
 			<portlet:param name="<%= Constants.CMD %>" value="<%= Constants.DELETE %>" />
 			<portlet:param name="redirect" value="<%= currentURL %>" />
-			<portlet:param name="backURL" value="<%= backURL %>" />
 			<portlet:param name="commerceCountryId" value="<%= String.valueOf(commerceCountry.getCommerceCountryId()) %>" />
 		</portlet:actionURL>
 

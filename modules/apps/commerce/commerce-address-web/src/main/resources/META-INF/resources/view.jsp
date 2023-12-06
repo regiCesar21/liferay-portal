@@ -90,7 +90,6 @@ CommerceCountriesDisplayContext commerceCountriesDisplayContext = (CommerceCount
 					PortletURL rowURL = renderResponse.createRenderURL();
 
 					rowURL.setParameter("mvcRenderCommandName", "/commerce_country/edit_commerce_country");
-					rowURL.setParameter("redirect", currentURL);
 					rowURL.setParameter("commerceCountryId", String.valueOf(commerceCountry.getCommerceCountryId()));
 					%>
 
