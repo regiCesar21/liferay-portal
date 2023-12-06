@@ -85,6 +85,20 @@ public class WorkflowInstanceManagerImplTest {
 				StringPool.BLANK, StringPool.BLANK, StringPool.BLANK,
 				StringPool.BLANK, workflowDefinition.getName(), false));
 
+		Assert.assertEquals(
+			0,
+			_workflowInstanceManager.searchCount(
+				TestPropsValues.getCompanyId(), TestPropsValues.getUserId(),
+				StringPool.BLANK, StringPool.BLANK, StringPool.BLANK,
+				StringPool.BLANK, workflowDefinition.getName(), true));
+
+		Assert.assertEquals(
+			1,
+			_workflowInstanceManager.searchCount(
+				TestPropsValues.getCompanyId(), TestPropsValues.getUserId(),
+				StringPool.BLANK, StringPool.BLANK, StringPool.BLANK,
+				StringPool.BLANK, workflowDefinition.getName(), null));
+
 		workflowHandlerServiceRegistration.unregister();
 	}
 
