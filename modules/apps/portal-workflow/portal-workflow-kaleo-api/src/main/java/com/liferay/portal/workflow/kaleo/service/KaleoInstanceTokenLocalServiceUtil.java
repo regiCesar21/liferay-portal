@@ -282,6 +282,12 @@ public class KaleoInstanceTokenLocalServiceUtil {
 	}
 
 	public static List<KaleoInstanceToken> getKaleoInstanceTokens(
+		long kaleoInstanceId) {
+
+		return getService().getKaleoInstanceTokens(kaleoInstanceId);
+	}
+
+	public static List<KaleoInstanceToken> getKaleoInstanceTokens(
 		long parentKaleoInstanceTokenId, java.util.Date completionDate,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext) {
 
