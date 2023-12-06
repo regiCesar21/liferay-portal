@@ -20,16 +20,13 @@ import com.liferay.portal.kernel.workflow.WorkflowDefinition;
 import com.liferay.portal.kernel.workflow.WorkflowDefinitionManager;
 import com.liferay.portal.kernel.workflow.WorkflowHandler;
 import com.liferay.portal.kernel.workflow.WorkflowHandlerRegistryUtil;
-import com.liferay.portal.kernel.workflow.WorkflowInstance;
 import com.liferay.portal.kernel.workflow.WorkflowInstanceManager;
-import com.liferay.portal.kernel.workflow.comparator.WorkflowComparatorFactoryUtil;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 
 import java.io.InputStream;
 import java.io.Serializable;
 
-import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 
@@ -83,6 +80,20 @@ public class WorkflowInstanceManagerImplTest {
 				TestPropsValues.getCompanyId(), TestPropsValues.getUserId(),
 				StringPool.BLANK, StringPool.BLANK, StringPool.BLANK,
 				StringPool.BLANK, workflowDefinition.getName(), false));
+
+		Assert.assertEquals(
+			0,
+			_workflowInstanceManager.searchCount(
+				TestPropsValues.getCompanyId(), TestPropsValues.getUserId(),
+				StringPool.BLANK, StringPool.BLANK, StringPool.BLANK,
+				StringPool.BLANK, workflowDefinition.getName(), true));
+
+		Assert.assertEquals(
+			1,
+			_workflowInstanceManager.searchCount(
+				TestPropsValues.getCompanyId(), TestPropsValues.getUserId(),
+				StringPool.BLANK, StringPool.BLANK, StringPool.BLANK,
+				StringPool.BLANK, workflowDefinition.getName(), null));
 
 		workflowHandlerServiceRegistration.unregister();
 	}
