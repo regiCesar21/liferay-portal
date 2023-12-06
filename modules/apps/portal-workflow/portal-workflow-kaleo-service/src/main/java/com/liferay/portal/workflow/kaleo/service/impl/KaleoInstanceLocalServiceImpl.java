@@ -508,7 +508,7 @@ public class KaleoInstanceLocalServiceImpl
 		Long userId, String assetTitle, String assetDescription,
 		String currentKaleoNodeName, String kaleoDefinitionName,
 		Integer kaleoDefinitionVersion, String[] classNames, Long classPK,
-		boolean completed, ServiceContext serviceContext) {
+		Boolean completed, ServiceContext serviceContext) {
 
 		KaleoInstanceQuery kaleoInstanceQuery = new KaleoInstanceQuery(
 			serviceContext);
