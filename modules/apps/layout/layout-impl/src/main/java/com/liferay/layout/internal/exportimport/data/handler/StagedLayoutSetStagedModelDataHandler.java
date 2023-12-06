@@ -18,6 +18,7 @@ import com.liferay.exportimport.kernel.lar.StagedModelDataHandler;
 import com.liferay.exportimport.kernel.lar.StagedModelDataHandlerUtil;
 import com.liferay.exportimport.kernel.lar.StagedModelType;
 import com.liferay.exportimport.kernel.staging.LayoutStagingUtil;
+import com.liferay.exportimport.kernel.staging.MergeLayoutPrototypesThreadLocal;
 import com.liferay.exportimport.lar.ThemeExporter;
 import com.liferay.exportimport.lar.ThemeImporter;
 import com.liferay.layout.internal.exportimport.staged.model.repository.StagedLayoutSetStagedModelRepository;
@@ -651,9 +652,13 @@ public class StagedLayoutSetStagedModelDataHandler
 						portletDataContext, stagedLayoutSet,
 						layoutSet.getCss());
 
-			layoutSet.setCss(css);
+			if (!css.isEmpty() ||
+				!MergeLayoutPrototypesThreadLocal.isInProgress()) {
 
-			_themeImporter.importTheme(portletDataContext, layoutSet);
+				layoutSet.setCss(css);
+
+				_themeImporter.importTheme(portletDataContext, layoutSet);
+			}
 		}
 		catch (Exception exception) {
 			if (_log.isWarnEnabled()) {
