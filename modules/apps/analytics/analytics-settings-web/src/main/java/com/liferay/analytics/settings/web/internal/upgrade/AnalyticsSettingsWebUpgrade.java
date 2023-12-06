@@ -5,7 +5,11 @@
 
 package com.liferay.analytics.settings.web.internal.upgrade;
 
+import com.liferay.analytics.settings.web.internal.upgrade.v1_0_2.AnalyticsDispatchTriggersUpgradeProcess;
+import com.liferay.dispatch.service.DispatchLogLocalService;
+import com.liferay.dispatch.service.DispatchTriggerLocalService;
 import com.liferay.portal.kernel.service.CompanyLocalService;
+import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.upgrade.registry.UpgradeStepRegistrator;
 
 import org.osgi.service.cm.ConfigurationAdmin;
@@ -35,6 +39,12 @@ public class AnalyticsSettingsWebUpgrade implements UpgradeStepRegistrator {
 			new com.liferay.analytics.settings.web.internal.upgrade.v1_0_1.
 				UpgradeAnalyticsConfigurationPreferences(
 					_companyLocalService, _configurationAdmin));
+
+		registry.register(
+			"1.0.1", "1.0.2",
+			new AnalyticsDispatchTriggersUpgradeProcess(
+				_configurationAdmin, _dispatchLogLocalService,
+				_dispatchTriggerLocalService, _userLocalService));
 	}
 
 	@Reference
@@ -42,5 +52,14 @@ public class AnalyticsSettingsWebUpgrade implements UpgradeStepRegistrator {
 
 	@Reference
 	private ConfigurationAdmin _configurationAdmin;
+
+	@Reference
+	private DispatchLogLocalService _dispatchLogLocalService;
+
+	@Reference
+	private DispatchTriggerLocalService _dispatchTriggerLocalService;
+
+	@Reference
+	private UserLocalService _userLocalService;
 
 }
