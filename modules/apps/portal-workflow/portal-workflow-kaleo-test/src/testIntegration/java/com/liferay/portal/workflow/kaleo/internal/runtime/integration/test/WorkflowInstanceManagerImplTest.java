@@ -7,6 +7,7 @@ package com.liferay.portal.workflow.kaleo.internal.runtime.integration.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.model.WorkflowInstanceLink;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.WorkflowDefinitionLinkLocalService;
 import com.liferay.portal.kernel.service.WorkflowInstanceLinkLocalService;
@@ -20,9 +21,11 @@ import com.liferay.portal.kernel.workflow.WorkflowDefinition;
 import com.liferay.portal.kernel.workflow.WorkflowDefinitionManager;
 import com.liferay.portal.kernel.workflow.WorkflowHandler;
 import com.liferay.portal.kernel.workflow.WorkflowHandlerRegistryUtil;
+import com.liferay.portal.kernel.workflow.WorkflowInstance;
 import com.liferay.portal.kernel.workflow.WorkflowInstanceManager;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
+import com.liferay.portal.workflow.kaleo.service.KaleoInstanceLocalService;
 
 import java.io.InputStream;
 import java.io.Serializable;
@@ -74,6 +77,22 @@ public class WorkflowInstanceManagerImplTest {
 			TestPropsValues.getCompanyId(), 0, TestPropsValues.getUserId(),
 			clazz.getName(), 1, null, new ServiceContext());
 
+		WorkflowInstanceLink workflowInstanceLink =
+			_workflowInstanceLinkLocalService.getWorkflowInstanceLink(
+				TestPropsValues.getCompanyId(), 0, clazz.getName(), 1);
+
+		WorkflowInstance workflowInstance =
+			_workflowInstanceManager.getWorkflowInstance(
+				workflowInstanceLink.getCompanyId(),
+				workflowInstanceLink.getWorkflowInstanceId());
+
+		_kaleoInstanceLocalService.completeKaleoInstance(
+			workflowInstance.getWorkflowInstanceId());
+
+		WorkflowHandlerRegistryUtil.startWorkflowInstance(
+			TestPropsValues.getCompanyId(), 0, TestPropsValues.getUserId(),
+			clazz.getName(), 2, null, new ServiceContext());
+
 		Assert.assertEquals(
 			1,
 			_workflowInstanceManager.searchCount(
@@ -82,14 +101,14 @@ public class WorkflowInstanceManagerImplTest {
 				StringPool.BLANK, workflowDefinition.getName(), false));
 
 		Assert.assertEquals(
-			0,
+			1,
 			_workflowInstanceManager.searchCount(
 				TestPropsValues.getCompanyId(), TestPropsValues.getUserId(),
 				StringPool.BLANK, StringPool.BLANK, StringPool.BLANK,
 				StringPool.BLANK, workflowDefinition.getName(), true));
 
 		Assert.assertEquals(
-			1,
+			2,
 			_workflowInstanceManager.searchCount(
 				TestPropsValues.getCompanyId(), TestPropsValues.getUserId(),
 				StringPool.BLANK, StringPool.BLANK, StringPool.BLANK,
@@ -160,6 +179,9 @@ public class WorkflowInstanceManagerImplTest {
 				"model.class.name=", clazz.getName()
 			).build());
 	}
+
+	@Inject
+	private KaleoInstanceLocalService _kaleoInstanceLocalService;
 
 	@Inject
 	private WorkflowDefinitionLinkLocalService
