@@ -2,6 +2,7 @@
  * SPDX-FileCopyrightText: (c) 2023 Liferay, Inc. https://liferay.com
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
+
 package com.liferay.osb.provisioning.exception;
 
 import com.liferay.portal.kernel.exception.PortalException;
@@ -9,7 +10,8 @@ import com.liferay.portal.kernel.exception.PortalException;
 /**
  * @author Brian Wing Shun Chan
  */
-public class DuplicateRelatedSalesforceProjectKeyException extends PortalException {
+public class DuplicateRelatedSalesforceProjectKeyException
+	extends PortalException {
 
 	public DuplicateRelatedSalesforceProjectKeyException() {
 	}
@@ -18,7 +20,9 @@ public class DuplicateRelatedSalesforceProjectKeyException extends PortalExcepti
 		super(msg);
 	}
 
-	public DuplicateRelatedSalesforceProjectKeyException(String msg, Throwable throwable) {
+	public DuplicateRelatedSalesforceProjectKeyException(
+		String msg, Throwable throwable) {
+
 		super(msg, throwable);
 	}
 

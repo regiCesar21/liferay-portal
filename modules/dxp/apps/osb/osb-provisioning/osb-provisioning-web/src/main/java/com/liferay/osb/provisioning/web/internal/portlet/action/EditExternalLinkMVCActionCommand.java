@@ -13,8 +13,8 @@ import com.liferay.osb.koroneiki.phloem.rest.client.problem.Problem;
 import com.liferay.osb.provisioning.constants.ProvisioningPortletKeys;
 import com.liferay.osb.provisioning.exception.DuplicateAnalyticsCloudGroupIdException;
 import com.liferay.osb.provisioning.exception.DuplicateDXPCloudProjectIdException;
-import com.liferay.osb.provisioning.exception.DuplicateSalesforceProjectKeyException;
 import com.liferay.osb.provisioning.exception.DuplicateRelatedSalesforceProjectKeyException;
+import com.liferay.osb.provisioning.exception.DuplicateSalesforceProjectKeyException;
 import com.liferay.osb.provisioning.koroneiki.web.service.AccountWebService;
 import com.liferay.osb.provisioning.koroneiki.web.service.ExternalLinkWebService;
 import com.liferay.portal.kernel.log.Log;
@@ -84,9 +84,9 @@ public class EditExternalLinkMVCActionCommand extends BaseMVCActionCommand {
 
 			if (exception instanceof DuplicateAnalyticsCloudGroupIdException ||
 				exception instanceof DuplicateDXPCloudProjectIdException ||
-				exception instanceof DuplicateSalesforceProjectKeyException ||
 				exception instanceof
 					DuplicateRelatedSalesforceProjectKeyException ||
+				exception instanceof DuplicateSalesforceProjectKeyException ||
 				exception instanceof Problem.ProblemException) {
 
 				SessionErrors.add(
@@ -117,12 +117,13 @@ public class EditExternalLinkMVCActionCommand extends BaseMVCActionCommand {
 		}
 
 		String accountKey = ParamUtil.getString(actionRequest, "accountKey");
+
 		String domain = ParamUtil.getString(actionRequest, "domain");
 		String entityName = ParamUtil.getString(actionRequest, "entityName");
 		String parentAccountKey = ParamUtil.getString(
 			actionRequest, "parentAccountKey");
 
-		_validate(accountKey, domain, entityName, entityId, parentAccountKey);
+		_validate(domain, entityName, entityId, parentAccountKey);
 
 		ExternalLink externalLink = new ExternalLink();
 
@@ -142,8 +143,8 @@ public class EditExternalLinkMVCActionCommand extends BaseMVCActionCommand {
 	}
 
 	private void _validate(
-			String accountKey, String domain, String entityName,
-			String entityId, String parentAccountKey)
+			String domain, String entityName, String entityId,
+			String parentAccountKey)
 		throws Exception {
 
 		if (!domain.equals(ExternalLinkDomain.ANALYTICS_CLOUD) &&
@@ -165,15 +166,15 @@ public class EditExternalLinkMVCActionCommand extends BaseMVCActionCommand {
 			}
 			else if (domain.equals(ExternalLinkDomain.SALESFORCE)) {
 				if (entityName.equals(
-						ExternalLinkEntityName.SALESFORCE_PROJECT)) {
-
-					throw new DuplicateSalesforceProjectKeyException();
-				}
-				else if (entityName.equals(
 						ExternalLinkEntityName.RELATED_SALESFORCE_PROJECT)) {
 
 					_validateDuplicatedRelatedSalesforceProjectKey(
 						accounts, parentAccountKey);
+				}
+				else if (entityName.equals(
+							ExternalLinkEntityName.SALESFORCE_PROJECT)) {
+
+					throw new DuplicateSalesforceProjectKeyException();
 				}
 			}
 		}

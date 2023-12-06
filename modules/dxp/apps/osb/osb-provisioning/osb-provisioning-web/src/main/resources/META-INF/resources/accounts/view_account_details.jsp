@@ -14,8 +14,8 @@ ViewAccountDisplayContext viewAccountDisplayContext = ProvisioningWebComponentPr
 <liferay-ui:error exception="<%= AccountCodeException.class %>" message="please-enter-a-valid-code" />
 <liferay-ui:error exception="<%= DuplicateAnalyticsCloudGroupIdException.class %>" message="analytics-cloud-group-id-must-be-unique" />
 <liferay-ui:error exception="<%= DuplicateDXPCloudProjectIdException.class %>" message="dxp-cloud-project-id-must-be-unique" />
-<liferay-ui:error exception="<%= DuplicateSalesforceProjectKeyException.class %>" message="salesforce-project-key-must-be-unique" />
 <liferay-ui:error exception="<%= DuplicateRelatedSalesforceProjectKeyException.class %>" message="related-salesforce-project-key-from-different-parents-must-be-unique" />
+<liferay-ui:error exception="<%= DuplicateSalesforceProjectKeyException.class %>" message="salesforce-project-key-must-be-unique" />
 
 <liferay-ui:error exception="<%= Problem.ProblemException.class %>">
 
