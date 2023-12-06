@@ -73,6 +73,8 @@ import javax.portlet.ActionResponse;
 import javax.portlet.PortletPreferences;
 import javax.portlet.ReadOnlyException;
 
+import org.apache.commons.validator.routines.UrlValidator;
+
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
@@ -271,6 +273,20 @@ public class EditCompanyMVCActionCommand extends BaseFormMVCActionCommand {
 					PropsKeys.ADMIN_EMAIL_FROM_ADDRESS))) {
 
 			throw new EmailAddressException();
+		}
+
+		UrlValidator urlValidator = new UrlValidator();
+
+		String http = unicodeProperties.getProperty(PropsKeys.CDN_HOST_HTTP);
+
+		if (!Validator.isBlank(http) && !urlValidator.isValid(http)) {
+			throw new WebsiteURLException(http);
+		}
+
+		String https = unicodeProperties.getProperty(PropsKeys.CDN_HOST_HTTPS);
+
+		if (!Validator.isBlank(https) && !urlValidator.isValid(https)) {
+			throw new WebsiteURLException(https);
 		}
 
 		String[] discardLegacyKeys = ParamUtil.getStringValues(
