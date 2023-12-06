@@ -1212,6 +1212,16 @@ definition {
 	macro viewAndDeleteFormEntry() {
 		Navigator.openURL();
 
+		ProductMenu.gotoPortlet(
+			category = "Content & Data",
+			portlet = "Forms");
+
+		FormsAdminNavigator.gotoEditFormByName(formName = "Created Form Name");
+
+		Form.publishForm();
+
+		Navigator.openURL();
+
 		Navigator.gotoPage(pageName = "Form Page");
 
 		FormFields.viewParagraphField(
