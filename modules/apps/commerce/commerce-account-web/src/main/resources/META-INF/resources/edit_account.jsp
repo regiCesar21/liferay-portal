@@ -110,9 +110,7 @@ if (commerceAddress != null) {
 		</section>
 
 		<div class="commerce-cta is-visible">
-			<c:if test="<%= Validator.isNotNull(backURL) %>">
-				<aui:button cssClass="btn-lg btn-secondary" href="<%= backURL %>" value="cancel" />
-			</c:if>
+			<aui:button cssClass="btn-lg btn-secondary" href="<%= portletDisplay.getURLBack() %>" value="cancel" />
 
 			<aui:button cssClass="btn-lg" primary="<%= true %>" type="submit" />
 		</div>

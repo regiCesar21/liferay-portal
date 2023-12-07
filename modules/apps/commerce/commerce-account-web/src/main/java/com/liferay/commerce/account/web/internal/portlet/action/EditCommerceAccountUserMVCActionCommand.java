@@ -12,7 +12,6 @@ import com.liferay.commerce.account.constants.CommerceAccountPortletKeys;
 import com.liferay.commerce.account.model.CommerceAccount;
 import com.liferay.commerce.account.permission.CommerceAccountPermission;
 import com.liferay.commerce.account.service.CommerceAccountService;
-import com.liferay.commerce.account.web.internal.servlet.taglib.ui.constants.CommerceAccountScreenNavigationConstants;
 import com.liferay.commerce.product.service.CommerceChannelLocalService;
 import com.liferay.document.library.kernel.service.DLAppLocalService;
 import com.liferay.portal.kernel.bean.BeanParamUtil;
@@ -36,7 +35,6 @@ import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.module.configuration.ConfigurationProvider;
 import com.liferay.portal.kernel.portlet.PortletProvider;
 import com.liferay.portal.kernel.portlet.PortletProviderUtil;
-import com.liferay.portal.kernel.portlet.PortletQName;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.repository.model.FileEntry;
@@ -185,34 +183,6 @@ public class EditCommerceAccountUserMVCActionCommand
 		PortletURL portletURL = PortletProviderUtil.getPortletURL(
 			actionRequest, CommerceAccount.class.getName(),
 			PortletProvider.Action.VIEW);
-
-		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
-			WebKeys.THEME_DISPLAY);
-
-		long commerceAccountId = ParamUtil.getLong(
-			actionRequest, "commerceAccountId");
-
-		PortletURL backPortletURL = PortletProviderUtil.getPortletURL(
-			actionRequest, CommerceAccount.class.getName(),
-			PortletProvider.Action.MANAGE);
-
-		if (_commerceAccountPermission.contains(
-				themeDisplay.getPermissionChecker(), commerceAccountId,
-				CommerceAccountActionKeys.MANAGE_MEMBERS)) {
-
-			backPortletURL.setParameter(
-				"mvcRenderCommandName",
-				"/commerce_account/view_commerce_account");
-
-			backPortletURL.setParameter(
-				"screenNavigationCategoryKey",
-				CommerceAccountScreenNavigationConstants.
-					ENTRY_KEY_ACCOUNT_MEMBERS);
-		}
-
-		portletURL.setParameter(
-			PortletQName.PUBLIC_RENDER_PARAMETER_NAMESPACE + "backURL",
-			backPortletURL.toString());
 
 		String cmd = ParamUtil.getString(actionRequest, Constants.CMD);
 

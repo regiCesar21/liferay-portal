@@ -44,7 +44,6 @@ page import="com.liferay.portal.kernel.language.LanguageUtil" %><%@
 page import="com.liferay.portal.kernel.model.PasswordPolicy" %><%@
 page import="com.liferay.portal.kernel.model.User" %><%@
 page import="com.liferay.portal.kernel.model.UserConstants" %><%@
-page import="com.liferay.portal.kernel.portlet.PortletQName" %><%@
 page import="com.liferay.portal.kernel.security.auth.ScreenNameValidator" %><%@
 page import="com.liferay.portal.kernel.security.permission.ActionKeys" %><%@
 page import="com.liferay.portal.kernel.util.Constants" %><%@
@@ -52,7 +51,6 @@ page import="com.liferay.portal.kernel.util.FastDateFormatConstants" %><%@
 page import="com.liferay.portal.kernel.util.FastDateFormatFactoryUtil" %><%@
 page import="com.liferay.portal.kernel.util.HashMapBuilder" %><%@
 page import="com.liferay.portal.kernel.util.HtmlUtil" %><%@
-page import="com.liferay.portal.kernel.util.ParamUtil" %><%@
 page import="com.liferay.portal.kernel.util.PrefsPropsUtil" %><%@
 page import="com.liferay.portal.kernel.util.PropsKeys" %><%@
 page import="com.liferay.portal.kernel.util.TextFormatter" %><%@
@@ -75,9 +73,3 @@ page import="java.util.TimeZone" %>
 <liferay-theme:defineObjects />
 
 <portlet:defineObjects />
-
-<%
-String redirect = ParamUtil.getString(request, "redirect");
-
-String backURL = ParamUtil.getString(request, PortletQName.PUBLIC_RENDER_PARAMETER_NAMESPACE + "backURL", redirect);
-%>

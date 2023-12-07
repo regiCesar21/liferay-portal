@@ -26,7 +26,6 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.module.configuration.ConfigurationProvider;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
-import com.liferay.portal.kernel.portlet.PortletQName;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.service.permission.PortalPermissionUtil;
@@ -208,20 +207,6 @@ public class CommerceAccountDisplayContext {
 			_commerceAccountRequestHelper.getLiferayPortletResponse();
 
 		PortletURL portletURL = liferayPortletResponse.createRenderURL();
-
-		HttpServletRequest httpServletRequest =
-			PortalUtil.getOriginalServletRequest(
-				_commerceAccountRequestHelper.getRequest());
-
-		String backURL = ParamUtil.getString(
-			httpServletRequest,
-			PortletQName.PUBLIC_RENDER_PARAMETER_NAMESPACE + "backURL");
-
-		if (Validator.isNotNull(backURL)) {
-			portletURL.setParameter(
-				PortletQName.PUBLIC_RENDER_PARAMETER_NAMESPACE + "backURL",
-				backURL);
-		}
 
 		String redirect = ParamUtil.getString(
 			_commerceAccountRequestHelper.getRequest(), "redirect");

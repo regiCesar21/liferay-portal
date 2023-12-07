@@ -14,9 +14,13 @@ import com.liferay.commerce.service.CommerceCountryService;
 import com.liferay.commerce.service.CommerceRegionService;
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.module.configuration.ConfigurationProvider;
+import com.liferay.portal.kernel.portlet.PortletURLFactoryUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
 import com.liferay.portal.kernel.service.UserLocalService;
+import com.liferay.portal.kernel.theme.PortletDisplay;
+import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.users.admin.configuration.UserFileUploadsConfiguration;
@@ -24,6 +28,8 @@ import com.liferay.users.admin.configuration.UserFileUploadsConfiguration;
 import java.util.Map;
 
 import javax.portlet.PortletException;
+import javax.portlet.PortletRequest;
+import javax.portlet.PortletURL;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
 
@@ -63,6 +69,8 @@ public class EditCommerceAccountMVCRenderCommand implements MVCRenderCommand {
 		renderRequest.setAttribute(
 			WebKeys.PORTLET_DISPLAY_CONTEXT, commerceAccountDisplayContext);
 
+		_populatePortletDisplay(renderRequest);
+
 		return "/edit_account.jsp";
 	}
 
@@ -71,6 +79,31 @@ public class EditCommerceAccountMVCRenderCommand implements MVCRenderCommand {
 	protected void activate(Map<String, Object> properties) {
 		_userFileUploadsConfiguration = ConfigurableUtil.createConfigurable(
 			UserFileUploadsConfiguration.class, properties);
+	}
+
+	private void _populatePortletDisplay(RenderRequest renderRequest) {
+		ThemeDisplay themeDisplay = (ThemeDisplay)renderRequest.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
+		PortletDisplay portletDisplay = themeDisplay.getPortletDisplay();
+
+		portletDisplay.setShowBackIcon(true);
+
+		PortletURL portletURL = PortletURLFactoryUtil.create(
+			themeDisplay.getRequest(),
+			CommerceAccountPortletKeys.COMMERCE_ACCOUNT, themeDisplay.getPlid(),
+			PortletRequest.RENDER_PHASE);
+
+		portletURL.setParameter(
+			"mvcRenderCommandName", "/commerce_account/view_commerce_account");
+
+		long commerceAccountId = ParamUtil.getLong(
+			renderRequest, "commerceAccountId");
+
+		portletURL.setParameter(
+			"commerceAccountId", String.valueOf(commerceAccountId));
+
+		portletDisplay.setURLBack(portletURL.toString());
 	}
 
 	@Reference

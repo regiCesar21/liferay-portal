@@ -22,7 +22,6 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.portlet.PortletProvider;
 import com.liferay.portal.kernel.portlet.PortletProviderUtil;
-import com.liferay.portal.kernel.portlet.PortletQName;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.repository.model.FileEntry;
@@ -123,10 +122,6 @@ public class EditCommerceAccountMVCActionCommand extends BaseMVCActionCommand {
 			ActionRequest actionRequest, CommerceAccount commerceAccount)
 		throws PortalException {
 
-		PortletURL managePortletURL = PortletProviderUtil.getPortletURL(
-			actionRequest, CommerceAccount.class.getName(),
-			PortletProvider.Action.MANAGE);
-
 		PortletURL portletURL = PortletProviderUtil.getPortletURL(
 			actionRequest, CommerceAccount.class.getName(),
 			PortletProvider.Action.VIEW);
@@ -134,10 +129,6 @@ public class EditCommerceAccountMVCActionCommand extends BaseMVCActionCommand {
 		portletURL.setParameter(
 			"commerceAccountId",
 			String.valueOf(commerceAccount.getCommerceAccountId()));
-
-		portletURL.setParameter(
-			PortletQName.PUBLIC_RENDER_PARAMETER_NAMESPACE + "backURL",
-			managePortletURL.toString());
 
 		return portletURL.toString();
 	}

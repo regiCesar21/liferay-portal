@@ -28,7 +28,6 @@ portletURL.setParameter("userId", String.valueOf(selectedUser.getUserId()));
 	<portlet:param name="mvcRenderCommandName" value="/commerce_account/edit_commerce_account_user" />
 	<portlet:param name="commerceAccountId" value="<%= (commerceAccount != null) ? String.valueOf(commerceAccount.getCommerceAccountId()) : StringPool.BLANK %>" />
 	<portlet:param name="userId" value="<%= String.valueOf(selectedUser.getUserId()) %>" />
-	<portlet:param name='<%= PortletQName.PUBLIC_RENDER_PARAMETER_NAMESPACE + "backURL" %>' value="<%= portletURL.toString() %>" />
 </portlet:renderURL>
 
 <div class="account-management">

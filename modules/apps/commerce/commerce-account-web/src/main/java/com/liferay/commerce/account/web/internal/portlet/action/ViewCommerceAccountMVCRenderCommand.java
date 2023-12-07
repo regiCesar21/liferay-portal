@@ -13,13 +13,18 @@ import com.liferay.commerce.service.CommerceAddressService;
 import com.liferay.commerce.service.CommerceCountryService;
 import com.liferay.commerce.service.CommerceRegionService;
 import com.liferay.portal.kernel.module.configuration.ConfigurationProvider;
+import com.liferay.portal.kernel.portlet.PortletURLFactoryUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
 import com.liferay.portal.kernel.service.UserLocalService;
+import com.liferay.portal.kernel.theme.PortletDisplay;
+import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.WebKeys;
 
 import javax.portlet.PortletException;
+import javax.portlet.PortletRequest;
+import javax.portlet.PortletURL;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
 
@@ -55,7 +60,25 @@ public class ViewCommerceAccountMVCRenderCommand implements MVCRenderCommand {
 		renderRequest.setAttribute(
 			WebKeys.PORTLET_DISPLAY_CONTEXT, commerceAccountDisplayContext);
 
+		_populatePortletDisplay(renderRequest);
+
 		return "/view_account.jsp";
+	}
+
+	private void _populatePortletDisplay(RenderRequest renderRequest) {
+		ThemeDisplay themeDisplay = (ThemeDisplay)renderRequest.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
+		PortletDisplay portletDisplay = themeDisplay.getPortletDisplay();
+
+		portletDisplay.setShowBackIcon(true);
+
+		PortletURL portletURL = PortletURLFactoryUtil.create(
+			themeDisplay.getRequest(),
+			CommerceAccountPortletKeys.COMMERCE_ACCOUNT, themeDisplay.getPlid(),
+			PortletRequest.RENDER_PHASE);
+
+		portletDisplay.setURLBack(portletURL.toString());
 	}
 
 	@Reference

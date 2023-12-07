@@ -34,7 +34,6 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.portlet.PortletProvider;
 import com.liferay.portal.kernel.portlet.PortletProviderUtil;
-import com.liferay.portal.kernel.portlet.PortletQName;
 import com.liferay.portal.kernel.portlet.PortletURLFactory;
 import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
@@ -276,14 +275,6 @@ public class CommerceAccountClayDataSetDataSetDisplayView
 
 		viewURL.setParameter(
 			"commerceAccountId", String.valueOf(commerceAccountId));
-
-		PortletURL backURL = PortletProviderUtil.getPortletURL(
-			httpServletRequest, CommerceAccount.class.getName(),
-			PortletProvider.Action.MANAGE);
-
-		viewURL.setParameter(
-			PortletQName.PUBLIC_RENDER_PARAMETER_NAMESPACE + "backURL",
-			backURL.toString());
 
 		return viewURL.toString();
 	}
