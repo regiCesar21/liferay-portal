@@ -96,9 +96,3 @@ page import="java.util.Objects" %>
 <liferay-theme:defineObjects />
 
 <portlet:defineObjects />
-
-<%
-String redirect = ParamUtil.getString(request, "redirect");
-
-String backURL = ParamUtil.getString(request, "backURL", redirect);
-%>

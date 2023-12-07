@@ -264,8 +264,6 @@ public class CommercePriceListDisplayContext
 		portletURL.setParameter(
 			"mvcRenderCommandName",
 			"/commerce_price_list/edit_commerce_price_list");
-		portletURL.setParameter(
-			"redirect", commercePricingRequestHelper.getCurrentURL());
 		portletURL.setParameter("commercePriceListId", "{id}");
 		portletURL.setParameter(
 			"screenNavigationCategoryKey",

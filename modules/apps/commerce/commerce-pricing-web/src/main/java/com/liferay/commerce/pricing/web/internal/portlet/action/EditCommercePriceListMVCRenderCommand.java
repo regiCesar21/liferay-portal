@@ -15,10 +15,14 @@ import com.liferay.commerce.pricing.web.internal.display.context.CommercePriceLi
 import com.liferay.commerce.product.service.CommerceCatalogService;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
+import com.liferay.portal.kernel.theme.PortletDisplay;
+import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.WebKeys;
 
 import javax.portlet.PortletException;
+import javax.portlet.PortletRequest;
+import javax.portlet.PortletURL;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
 
@@ -55,7 +59,24 @@ public class EditCommercePriceListMVCRenderCommand implements MVCRenderCommand {
 		renderRequest.setAttribute(
 			WebKeys.PORTLET_DISPLAY_CONTEXT, commercePriceListDisplayContext);
 
+		_populatePortletDisplay(renderRequest);
+
 		return "/price_lists/edit_commerce_price_list.jsp";
+	}
+
+	private void _populatePortletDisplay(RenderRequest renderRequest) {
+		ThemeDisplay themeDisplay = (ThemeDisplay)renderRequest.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
+		PortletDisplay portletDisplay = themeDisplay.getPortletDisplay();
+
+		portletDisplay.setShowBackIcon(true);
+
+		PortletURL portletURL = _portal.getControlPanelPortletURL(
+			renderRequest, portletDisplay.getPortletName(),
+			PortletRequest.RENDER_PHASE);
+
+		portletDisplay.setURLBack(portletURL.toString());
 	}
 
 	@Reference
