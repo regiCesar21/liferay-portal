@@ -516,35 +516,6 @@ public class DDMFormDisplayContextTest extends PowerMockito {
 		return formInstance;
 	}
 
-	private DDMFormInstance _mockDDMFormInstance(
-			DDMFormInstanceSettings ddmFormInstanceSettings)
-		throws Exception {
-
-		DDMFormInstance ddmFormInstance = mock(DDMFormInstance.class);
-
-		when(
-			ddmFormInstance.getSettingsModel()
-		).thenReturn(
-			ddmFormInstanceSettings
-		);
-
-		DDMStructure ddmStructure = _mockDDMStructure();
-
-		when(
-			ddmFormInstance.getStructure()
-		).thenReturn(
-			ddmStructure
-		);
-
-		when(
-			_ddmFormInstanceService.fetchFormInstance(Matchers.anyLong())
-		).thenReturn(
-			ddmFormInstance
-		);
-
-		return ddmFormInstance;
-	}
-
 	protected DDMFormInstanceSettings
 			mockDDMFormInstanceSettingsAutosaveWithNondefaultUser()
 		throws Exception {
@@ -709,6 +680,35 @@ public class DDMFormDisplayContextTest extends PowerMockito {
 		ddmForm.setDefaultLocale(locale);
 
 		return ddmForm;
+	}
+
+	private DDMFormInstance _mockDDMFormInstance(
+			DDMFormInstanceSettings ddmFormInstanceSettings)
+		throws Exception {
+
+		DDMFormInstance ddmFormInstance = mock(DDMFormInstance.class);
+
+		when(
+			ddmFormInstance.getSettingsModel()
+		).thenReturn(
+			ddmFormInstanceSettings
+		);
+
+		DDMStructure ddmStructure = _mockDDMStructure();
+
+		when(
+			ddmFormInstance.getStructure()
+		).thenReturn(
+			ddmStructure
+		);
+
+		when(
+			_ddmFormInstanceService.fetchFormInstance(Matchers.anyLong())
+		).thenReturn(
+			ddmFormInstance
+		);
+
+		return ddmFormInstance;
 	}
 
 	private DDMFormInstanceVersionLocalService

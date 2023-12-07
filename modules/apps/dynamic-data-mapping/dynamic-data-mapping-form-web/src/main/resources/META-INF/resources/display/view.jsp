@@ -74,10 +74,6 @@ long formInstanceId = ddmFormDisplayContext.getFormInstanceId();
 			<c:when test="<%= formAvailable || preview %>">
 				<portlet:actionURL name="/dynamic_data_mapping_form/add_form_instance_record" var="addFormInstanceRecordActionURL" />
 
-				<%
-				DDMFormInstance formInstance = ddmFormDisplayContext.getFormInstance();
-				%>
-
 				<div class="portlet-forms">
 					<aui:form action="<%= addFormInstanceRecordActionURL %>" data-DDMFormInstanceId="<%= formInstanceId %>" data-senna-off="true" method="post" name="fm">
 						<aui:input name="currentURL" type="hidden" value="<%= currentURL %>" />
