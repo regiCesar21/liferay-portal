@@ -5,6 +5,7 @@
 
 import ClayDropDown from '@clayui/drop-down';
 import {ClayCheckbox} from '@clayui/form';
+import classNames from 'classnames';
 import React, {forwardRef, useEffect, useMemo, useRef, useState} from 'react';
 
 import {FieldBase} from '../FieldBase/ReactFieldBase.es';
@@ -20,6 +21,7 @@ const KEYCODES = {
 	ARROW_DOWN: 40,
 	ARROW_UP: 38,
 	ENTER: 13,
+	ESCAPE: 27,
 	SHIFT: 16,
 	SPACE: 32,
 	TAB: 9,
@@ -179,7 +181,6 @@ const DropdownItem = ({
 }) => (
 	<>
 		<ClayDropDown.Item
-			active={expand && currentValue.includes(option.value)}
 			aria-label={option.label}
 			aria-selected={expand && currentValue.includes(option.value)}
 			data-testid={`dropdownItem-${index}`}
@@ -223,33 +224,10 @@ const DropdownItem = ({
 	</>
 );
 
-const DropdownList = ({
-	currentValue,
-	expand,
-	handleSelect,
-	multiple,
-	options,
-}) => (
-	<ClayDropDown.ItemList>
-		{options.map((option, index) => (
-			<DropdownItem
-				currentValue={currentValue}
-				expand={expand}
-				index={index}
-				key={`${option.value}-${index}`}
-				multiple={multiple}
-				onSelect={handleSelect}
-				option={option}
-				options={options}
-				role="option"
-			/>
-		))}
-	</ClayDropDown.ItemList>
-);
-
 const Trigger = forwardRef(
 	(
 		{
+			ariaControls,
 			onCloseButtonClicked,
 			onTriggerClicked,
 			onTriggerKeyDown,
@@ -265,6 +243,7 @@ const Trigger = forwardRef(
 					<HiddenSelectInput value={value} {...otherProps} />
 				)}
 				<VisibleSelectInput
+					ariaControls={ariaControls}
 					onClick={onTriggerClicked}
 					onCloseButtonClicked={onCloseButtonClicked}
 					onKeyDown={onTriggerKeyDown}
@@ -291,6 +270,11 @@ const Select = ({
 }) => {
 	const menuElementRef = useRef(null);
 	const triggerElementRef = useRef(null);
+
+	const timeoutIdRef = useRef();
+	const stringRef = useRef('');
+	const prevIndexRef = useRef(-1);
+	const matchIndexRef = useRef(null);
 
 	const [currentValue, setCurrentValue] = useSyncValue(value, false);
 	const [expand, setExpand] = useState(false);
@@ -402,6 +386,7 @@ const Select = ({
 	return (
 		<>
 			<Trigger
+				ariaControls={`ddm-select-dropdown${otherProps.name}`}
 				expand={expand}
 				multiple={multiple}
 				onCloseButtonClicked={({event, value}) => {
@@ -467,13 +452,14 @@ const Select = ({
 				value={currentValue}
 				{...otherProps}
 			/>
-			<ClayDropDown.Menu
-				active={expand}
-				alignElementRef={triggerElementRef}
-				aria-label={Liferay.Language.get('choose-an-option')}
-				aria-required={otherProps.required}
-				className="ddm-btn-full ddm-select-dropdown"
-				id={`ddm-select-dropdown${otherProps.name}`}
+			<div
+				className={classNames(
+					'dropdown-menu dropdown-menu-indicator-start dropdown-menu-select ddm-btn-full ddm-select-dropdown',
+					{
+						show: expand,
+					}
+				)}
+				onBlur={() => setExpand(false)}
 				onKeyDown={(event) => {
 					switch (event.keyCode) {
 						case KEYCODES.ARROW_DOWN:
@@ -485,22 +471,121 @@ const Select = ({
 						case KEYCODES.TAB:
 							handleFocus(event, event.shiftKey);
 							break;
-						default:
+						case KEYCODES.ESCAPE:
+							setExpand(false);
+							triggerElementRef.current.focus();
 							break;
+						default: {
+							const target = event.target;
+
+							if (
+								target.tagName === 'INPUT' ||
+								event.key === KEYCODES.TAB
+							) {
+								return;
+							}
+
+							if (
+								event.currentTarget &&
+								!event.currentTarget.contains(target)
+							) {
+								return;
+							}
+
+							if (
+								stringRef.current.length > 0 &&
+								stringRef.current[0] !== KEYCODES.SPACE
+							) {
+								if (event.key === KEYCODES.SPACE) {
+									event.preventDefault();
+									event.stopPropagation();
+								}
+							}
+
+							if (
+								event.key.length !== 1 ||
+								event.ctrlKey ||
+								event.metaKey ||
+								event.altKey
+							) {
+								return;
+							}
+
+							event.stopPropagation();
+
+							const items = Array.from(
+								menuElementRef.current.querySelectorAll(
+									'button'
+								)
+							);
+
+							if (stringRef.current === event.key) {
+								stringRef.current = '';
+								prevIndexRef.current = matchIndexRef.current;
+							}
+
+							stringRef.current += event.key;
+
+							clearTimeout(timeoutIdRef.current);
+
+							timeoutIdRef.current = setTimeout(() => {
+								stringRef.current = '';
+								prevIndexRef.current = matchIndexRef.current;
+							}, 1000);
+
+							const prevIndex = prevIndexRef.current;
+
+							const orderedList = [
+								...items.slice((prevIndex ?? 0) + 1),
+								...items.slice(0, (prevIndex ?? 0) + 1),
+							];
+
+							const item = orderedList.find((item) => {
+								const value =
+									item.innerText ?? item.textContent;
+
+								return (
+									value
+										?.toLowerCase()
+										.indexOf(
+											stringRef.current.toLocaleLowerCase()
+										) === 0
+								);
+							});
+
+							if (item) {
+								event.preventDefault();
+
+								matchIndexRef.current = items.indexOf(item);
+								item.focus();
+							}
+							break;
+						}
 					}
 				}}
-				onSetActive={setExpand}
 				ref={menuElementRef}
-				role="listbox"
+				role="presentation"
 			>
-				<DropdownList
-					currentValue={currentValue}
-					expand={expand}
-					handleSelect={handleSelect}
-					multiple={multiple}
-					options={options}
-				/>
-			</ClayDropDown.Menu>
+				<ClayDropDown.ItemList
+					aria-label={Liferay.Language.get('choose-an-option')}
+					id={`ddm-select-dropdown${otherProps.name}`}
+					role="listbox"
+				>
+					{options.map((option, index) => (
+						<DropdownItem
+							currentValue={currentValue}
+							expand={expand}
+							index={index}
+							key={`${option.value}-${index}`}
+							multiple={multiple}
+							onSelect={handleSelect}
+							option={option}
+							options={options}
+							role="option"
+						/>
+					))}
+				</ClayDropDown.ItemList>
+			</div>
 		</>
 	);
 };

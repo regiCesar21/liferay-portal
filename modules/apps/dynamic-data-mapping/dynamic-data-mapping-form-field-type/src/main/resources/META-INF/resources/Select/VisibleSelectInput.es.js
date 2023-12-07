@@ -82,6 +82,7 @@ const OptionSelected = ({isPlaceholder, label}) => (
 const VisibleSelectInput = forwardRef(
 	(
 		{
+			ariaControls,
 			className,
 			expand,
 			id,
@@ -125,6 +126,7 @@ const VisibleSelectInput = forwardRef(
 				ref={ref}
 			>
 				<div
+					aria-controls={ariaControls}
 					aria-expanded={expand}
 					aria-haspopup="listbox"
 					aria-label={selectedLabel()}
