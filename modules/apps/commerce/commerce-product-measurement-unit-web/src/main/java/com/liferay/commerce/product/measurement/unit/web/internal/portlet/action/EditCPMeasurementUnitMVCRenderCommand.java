@@ -7,12 +7,20 @@ package com.liferay.commerce.product.measurement.unit.web.internal.portlet.actio
 
 import com.liferay.commerce.product.constants.CPPortletKeys;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;
+import com.liferay.portal.kernel.theme.PortletDisplay;
+import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.util.Portal;
+import com.liferay.portal.kernel.util.WebKeys;
 
 import javax.portlet.PortletException;
+import javax.portlet.PortletRequest;
+import javax.portlet.PortletURL;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Alessio Antonio Rendina
@@ -32,7 +40,44 @@ public class EditCPMeasurementUnitMVCRenderCommand implements MVCRenderCommand {
 			RenderRequest renderRequest, RenderResponse renderResponse)
 		throws PortletException {
 
+		_populatePortletDisplay(renderRequest);
+
 		return "/edit_cp_measurement_unit.jsp";
 	}
+
+	private void _populatePortletDisplay(RenderRequest renderRequest) {
+		ThemeDisplay themeDisplay = (ThemeDisplay)renderRequest.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
+		PortletDisplay portletDisplay = themeDisplay.getPortletDisplay();
+
+		portletDisplay.setShowBackIcon(true);
+
+		PortletURL portletURL = _portal.getControlPanelPortletURL(
+			renderRequest, CPPortletKeys.CP_MEASUREMENT_UNIT,
+			PortletRequest.RENDER_PHASE);
+
+		int type = ParamUtil.getInteger(renderRequest, "type");
+
+		String toolbarItem = "view-all-dimension-product-measurement-units";
+
+		if (type == 1) {
+			toolbarItem = "view-all-weight-product-measurement-units";
+		}
+		else if (type == 2) {
+			toolbarItem = "view-all-unit-product-measurement-units";
+		}
+
+		portletURL.setParameter("toolbarItem", toolbarItem);
+
+		portletURL.setParameter(
+			"type",
+			String.valueOf(ParamUtil.getInteger(renderRequest, "type")));
+
+		portletDisplay.setURLBack(portletURL.toString());
+	}
+
+	@Reference
+	private Portal _portal;
 
 }

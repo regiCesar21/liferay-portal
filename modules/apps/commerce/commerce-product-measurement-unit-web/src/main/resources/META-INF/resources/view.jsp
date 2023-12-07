@@ -89,7 +89,6 @@ CPMeasurementUnitsDisplayContext cpMeasurementUnitsDisplayContext = (CPMeasureme
 					PortletURL rowURL = renderResponse.createRenderURL();
 
 					rowURL.setParameter("mvcRenderCommandName", "/cp_measurement_unit/edit_cp_measurement_unit");
-					rowURL.setParameter("redirect", currentURL);
 					rowURL.setParameter("cpMeasurementUnitId", String.valueOf(cpMeasurementUnit.getCPMeasurementUnitId()));
 					rowURL.setParameter("type", String.valueOf(cpMeasurementUnitsDisplayContext.getType()));
 					%>
