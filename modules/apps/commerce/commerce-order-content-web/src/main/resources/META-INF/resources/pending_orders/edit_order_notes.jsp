@@ -12,6 +12,11 @@ CommerceOrder commerceOrder = commerceOrderContentDisplayContext.getCommerceOrde
 
 boolean manageNotesPermission = commerceOrderContentDisplayContext.hasModelPermission(commerceOrder, CommerceOrderActionKeys.MANAGE_COMMERCE_ORDER_NOTES);
 boolean manageRestrictedNotesPermission = commerceOrderContentDisplayContext.hasModelPermission(commerceOrder, CommerceOrderActionKeys.MANAGE_COMMERCE_ORDER_RESTRICTED_NOTES);
+
+PortletURL backURL = renderResponse.createRenderURL();
+
+backURL.setParameter("mvcRenderCommandName", "/commerce_open_order_content/edit_commerce_order");
+backURL.setParameter("commerceOrderId", String.valueOf(commerceOrder.getCommerceOrderId()));
 %>
 
 <portlet:actionURL name="/commerce_open_order_content/edit_commerce_order_note" var="editCommerceOrderNoteURL">
@@ -22,7 +27,7 @@ boolean manageRestrictedNotesPermission = commerceOrderContentDisplayContext.has
 	<div class="autofit-float autofit-row header-title-bar">
 		<div class="autofit-col autofit-col-expand">
 			<liferay-ui:header
-				backURL="<%= redirect %>"
+				backURL="<%= String.valueOf(backURL) %>"
 				title='<%= LanguageUtil.format(request, "order-x", commerceOrder.getCommerceOrderId()) %>'
 			/>
 		</div>
