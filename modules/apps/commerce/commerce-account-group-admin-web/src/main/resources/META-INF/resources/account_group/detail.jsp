@@ -19,7 +19,6 @@ long commerceAccountGroupId = commerceAccountGroupAdminDisplayContext.getCommerc
 <aui:form action="<%= editCommerceAccountGroupActionURL %>" cssClass="container-fluid-1280" method="post" name="fm">
 	<aui:input name="<%= Constants.CMD %>" type="hidden" value="<%= (commerceAccountGroup == null) ? Constants.ADD : Constants.UPDATE %>" />
 	<aui:input name="redirect" type="hidden" value="<%= currentURL %>" />
-	<aui:input name="backURL" type="hidden" value="<%= backURL %>" />
 	<aui:input name="commerceAccountGroupId" type="hidden" value="<%= commerceAccountGroupId %>" />
 
 	<aui:model-context bean="<%= commerceAccountGroup %>" model="<%= CommerceAccountGroup.class %>" />
@@ -49,7 +48,7 @@ long commerceAccountGroupId = commerceAccountGroupAdminDisplayContext.getCommerc
 						<aui:button cssClass="btn-lg" type="submit" value="save" />
 					</c:if>
 
-					<aui:button cssClass="btn-lg" href="<%= backURL %>" type="cancel" />
+					<aui:button cssClass="btn-lg" href="<%= portletDisplay.getURLBack() %>" type="cancel" />
 				</aui:button-row>
 			</aui:fieldset>
 		</aui:fieldset-group>
