@@ -15,11 +15,15 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.servlet.SessionErrors;
+import com.liferay.portal.kernel.theme.PortletDisplay;
+import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.WebKeys;
 
 import javax.portlet.PortletException;
+import javax.portlet.PortletRequest;
+import javax.portlet.PortletURL;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
 
@@ -55,6 +59,7 @@ public class EditCPOptionCategoryMVCRenderCommand implements MVCRenderCommand {
 				cpOptionCategoryDisplayContext);
 
 			setCPOptionCategoryRequestAttribute(renderRequest);
+			_populatePortletDisplay(renderRequest);
 		}
 		catch (Exception exception) {
 			if (exception instanceof NoSuchCPOptionCategoryException ||
@@ -87,6 +92,27 @@ public class EditCPOptionCategoryMVCRenderCommand implements MVCRenderCommand {
 
 		renderRequest.setAttribute(
 			CPWebKeys.CP_OPTION_CATEGORY, cpOptionCategory);
+	}
+
+	private void _populatePortletDisplay(RenderRequest renderRequest) {
+		ThemeDisplay themeDisplay = (ThemeDisplay)renderRequest.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
+		PortletDisplay portletDisplay = themeDisplay.getPortletDisplay();
+
+		portletDisplay.setShowBackIcon(true);
+
+		PortletURL portletURL = _portal.getControlPanelPortletURL(
+			renderRequest, CPPortletKeys.CP_SPECIFICATION_OPTIONS,
+			PortletRequest.RENDER_PHASE);
+
+		portletURL.setParameter(
+			"mvcRenderCommandName",
+			"/cp_specification_options/view_cp_option_categories");
+
+		portletURL.setParameter("toolbarItem", "specification-groups");
+
+		portletDisplay.setURLBack(portletURL.toString());
 	}
 
 	@Reference

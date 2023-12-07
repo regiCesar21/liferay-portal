@@ -128,6 +128,7 @@ renderResponse.setTitle(LanguageUtil.get(request, "specifications"));
 							rowURL.setParameter("mvcRenderCommandName", "/cp_specification_options/edit_cp_option_category");
 							rowURL.setParameter("redirect", currentURL);
 							rowURL.setParameter("cpOptionCategoryId", String.valueOf(cpOptionCategory.getCPOptionCategoryId()));
+							rowURL.setParameter("toolbarItem", "specification-groups");
 							%>
 
 							<liferay-ui:search-container-column-text

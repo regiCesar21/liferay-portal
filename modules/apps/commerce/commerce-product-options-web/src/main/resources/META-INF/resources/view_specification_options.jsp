@@ -135,6 +135,7 @@ renderResponse.setTitle(LanguageUtil.get(request, "specifications"));
 							rowURL.setParameter("mvcRenderCommandName", "/cp_specification_options/edit_cp_specification_option");
 							rowURL.setParameter("redirect", currentURL);
 							rowURL.setParameter("cpSpecificationOptionId", String.valueOf(cpSpecificationOption.getCPSpecificationOptionId()));
+							rowURL.setParameter("toolbarItem", "specification-labels");
 							%>
 
 							<liferay-ui:search-container-column-text
