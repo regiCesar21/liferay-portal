@@ -12,9 +12,15 @@ import com.liferay.commerce.service.CommerceOrderNoteService;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.servlet.SessionErrors;
+import com.liferay.portal.kernel.theme.PortletDisplay;
+import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.WebKeys;
 
 import javax.portlet.PortletException;
+import javax.portlet.PortletRequest;
+import javax.portlet.PortletURL;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
 
@@ -40,6 +46,8 @@ public class EditCommerceOrderNoteMVCRenderCommand implements MVCRenderCommand {
 		throws PortletException {
 
 		try {
+			_populatePortletDisplay(renderRequest);
+
 			CommerceOrderNoteEditDisplayContext
 				commerceOrderNoteEditDisplayContext =
 					new CommerceOrderNoteEditDisplayContext(
@@ -64,7 +72,33 @@ public class EditCommerceOrderNoteMVCRenderCommand implements MVCRenderCommand {
 		return "/edit_order_note.jsp";
 	}
 
+	private void _populatePortletDisplay(RenderRequest renderRequest) {
+		ThemeDisplay themeDisplay = (ThemeDisplay)renderRequest.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
+		PortletDisplay portletDisplay = themeDisplay.getPortletDisplay();
+
+		portletDisplay.setShowBackIcon(true);
+
+		PortletURL portletURL = _portal.getControlPanelPortletURL(
+			renderRequest, CommercePortletKeys.COMMERCE_ORDER,
+			PortletRequest.RENDER_PHASE);
+
+		portletURL.setParameter(
+			"mvcRenderCommandName", "/commerce_order/edit_commerce_order");
+		portletURL.setParameter(
+			"commerceOrderId",
+			String.valueOf(
+				ParamUtil.getLong(renderRequest, "commerceOrderId")));
+		portletURL.setParameter("screenNavigationCategoryKey", "notes");
+
+		portletDisplay.setURLBack(portletURL.toString());
+	}
+
 	@Reference
 	private CommerceOrderNoteService _commerceOrderNoteService;
+
+	@Reference
+	private Portal _portal;
 
 }
