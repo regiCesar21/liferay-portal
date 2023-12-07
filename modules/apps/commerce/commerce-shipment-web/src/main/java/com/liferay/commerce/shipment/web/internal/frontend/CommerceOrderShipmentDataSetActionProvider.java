@@ -88,7 +88,9 @@ public class CommerceOrderShipmentDataSetActionProvider
 			"mvcRenderCommandName",
 			"/commerce_shipment/delete_commerce_shipment");
 		portletURL.setParameter(
-			"redirect", _portal.getCurrentURL(httpServletRequest));
+			"commerceOrderId",
+			String.valueOf(
+				ParamUtil.getLong(httpServletRequest, "commerceOrderId")));
 		portletURL.setParameter(
 			"commerceShipmentId", String.valueOf(commerceShipmentId));
 

@@ -18,7 +18,6 @@ taglib uri="http://liferay.com/tld/theme" prefix="liferay-theme" %><%@
 taglib uri="http://liferay.com/tld/ui" prefix="liferay-ui" %>
 
 <%@ page import="com.liferay.commerce.account.model.CommerceAccount" %><%@
-page import="com.liferay.commerce.constants.CommercePortletKeys" %><%@
 page import="com.liferay.commerce.constants.CommerceShipmentDataSetConstants" %><%@
 page import="com.liferay.commerce.exception.CommerceShipmentExpectedDateException" %><%@
 page import="com.liferay.commerce.exception.CommerceShipmentItemQuantityException" %><%@
@@ -44,7 +43,6 @@ page import="com.liferay.portal.kernel.util.FastDateFormatFactoryUtil" %><%@
 page import="com.liferay.portal.kernel.util.HashMapBuilder" %><%@
 page import="com.liferay.portal.kernel.util.HtmlUtil" %><%@
 page import="com.liferay.portal.kernel.util.ParamUtil" %><%@
-page import="com.liferay.portal.kernel.util.PortalUtil" %><%@
 page import="com.liferay.portal.kernel.util.Validator" %><%@
 page import="com.liferay.portal.kernel.util.WebKeys" %>
 
@@ -60,11 +58,3 @@ page import="java.util.List" %>
 <liferay-theme:defineObjects />
 
 <portlet:defineObjects />
-
-<%
-String lifecycle = (String)request.getAttribute(liferayPortletRequest.LIFECYCLE_PHASE);
-
-String shipmentsURL = String.valueOf(PortalUtil.getControlPanelPortletURL(request, CommercePortletKeys.COMMERCE_SHIPMENT, lifecycle));
-
-String redirect = ParamUtil.getString(request, "redirect", shipmentsURL);
-%>

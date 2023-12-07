@@ -13,15 +13,6 @@ CommerceShipmentDisplayContext commerceShipmentDisplayContext = (CommerceShipmen
 CommerceShipment commerceShipment = commerceShipmentDisplayContext.getCommerceShipment();
 
 CommerceAccount commerceAccount = commerceShipment.getCommerceAccount();
-
-portletDisplay.setShowBackIcon(true);
-
-if (Validator.isNull(redirect)) {
-	portletDisplay.setURLBack(String.valueOf(renderResponse.createRenderURL()));
-}
-else {
-	portletDisplay.setURLBack(redirect);
-}
 %>
 
 <liferay-ui:error embed="<%= false %>" exception="<%= CommerceShipmentStatusException.class %>" message="please-select-a-valid-warehouse-and-quantity-for-all-shipment-items" />

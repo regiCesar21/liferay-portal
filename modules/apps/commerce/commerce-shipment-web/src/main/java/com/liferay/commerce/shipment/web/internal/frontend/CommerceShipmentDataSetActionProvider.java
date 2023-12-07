@@ -19,7 +19,6 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.portlet.LiferayWindowState;
 import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
 import com.liferay.portal.kernel.service.permission.PortalPermissionUtil;
-import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
 
 import java.util.List;
@@ -115,12 +114,6 @@ public class CommerceShipmentDataSetActionProvider
 		portletURL.setParameter(
 			"mvcRenderCommandName",
 			"/commerce_shipment/edit_commerce_shipment");
-
-		String redirect = ParamUtil.getString(
-			httpServletRequest, "currentUrl",
-			_portal.getCurrentURL(httpServletRequest));
-
-		portletURL.setParameter("redirect", redirect);
 
 		portletURL.setParameter(
 			"commerceShipmentId", String.valueOf(commerceShipmentId));

@@ -15,10 +15,15 @@ import com.liferay.commerce.service.CommerceOrderLocalService;
 import com.liferay.commerce.service.CommerceRegionService;
 import com.liferay.commerce.shipment.web.internal.display.context.CommerceShipmentDisplayContext;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;
+import com.liferay.portal.kernel.theme.PortletDisplay;
+import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.WebKeys;
 
 import javax.portlet.PortletException;
+import javax.portlet.PortletRequest;
+import javax.portlet.PortletURL;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
 
@@ -54,7 +59,45 @@ public class EditCommerceShipmentMVCRenderCommand implements MVCRenderCommand {
 		renderRequest.setAttribute(
 			WebKeys.PORTLET_DISPLAY_CONTEXT, commerceShipmentDisplayContext);
 
+		_populatePortletDisplay(renderRequest);
+
 		return "/edit_commerce_shipment.jsp";
+	}
+
+	private void _populatePortletDisplay(RenderRequest renderRequest) {
+		ThemeDisplay themeDisplay = (ThemeDisplay)renderRequest.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
+		PortletDisplay portletDisplay = themeDisplay.getPortletDisplay();
+
+		portletDisplay.setShowBackIcon(true);
+
+		long commerceOrderId = ParamUtil.getLong(
+			renderRequest, "commerceOrderId");
+
+		PortletURL portletURL = null;
+
+		if (commerceOrderId > 0) {
+			portletURL = _portal.getControlPanelPortletURL(
+				renderRequest, CommercePortletKeys.COMMERCE_ORDER,
+				PortletRequest.RENDER_PHASE);
+
+			portletURL.setParameter(
+				"mvcRenderCommandName", "/commerce_order/edit_commerce_order");
+
+			portletURL.setParameter(
+				"commerceOrderId", String.valueOf(commerceOrderId));
+			portletURL.setParameter("screenNavigationCategoryKey", "shipments");
+
+			portletDisplay.setURLBack(portletURL.toString());
+		}
+		else {
+			portletURL = _portal.getControlPanelPortletURL(
+				renderRequest, CommercePortletKeys.COMMERCE_SHIPMENT,
+				PortletRequest.RENDER_PHASE);
+
+			portletDisplay.setURLBack(portletURL.toString());
+		}
 	}
 
 	@Reference
