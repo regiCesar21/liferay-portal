@@ -9,7 +9,6 @@ import com.liferay.commerce.account.constants.CommerceAccountConstants;
 import com.liferay.commerce.account.model.CommerceAccount;
 import com.liferay.commerce.account.service.CommerceAccountService;
 import com.liferay.commerce.account.web.internal.model.Account;
-import com.liferay.commerce.constants.CommerceWebKeys;
 import com.liferay.commerce.context.CommerceContext;
 import com.liferay.commerce.context.CommerceContextFactory;
 import com.liferay.commerce.frontend.model.LabelField;
@@ -122,9 +121,17 @@ public class CommerceAccountClayDataSetDataSetDisplayView
 			}
 		).add(
 			() -> {
+				ThemeDisplay themeDisplay =
+					(ThemeDisplay)httpServletRequest.getAttribute(
+						WebKeys.THEME_DISPLAY);
+
 				CommerceContext commerceContext =
-					(CommerceContext)httpServletRequest.getAttribute(
-						CommerceWebKeys.COMMERCE_CONTEXT);
+					_commerceContextFactory.create(
+						themeDisplay.getCompanyId(),
+						_commerceChannelLocalService.
+							getCommerceChannelGroupIdBySiteGroupId(
+								themeDisplay.getScopeGroupId()),
+						_portal.getUserId(httpServletRequest), 0, 0);
 
 				CommerceAccount currentCommerceAccount =
 					commerceContext.getCommerceAccount();
