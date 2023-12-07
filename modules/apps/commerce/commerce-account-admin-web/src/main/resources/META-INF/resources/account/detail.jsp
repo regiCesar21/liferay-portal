@@ -123,7 +123,7 @@ long commerceAccountId = commerceAccountAdminDisplayContext.getCommerceAccountId
 				<aui:button-row>
 					<aui:button cssClass="btn-lg" type="submit" value="save" />
 
-					<aui:button cssClass="btn-lg" href="<%= backURL %>" type="cancel" />
+					<aui:button cssClass="btn-lg" href="<%= portletDisplay.getURLBack() %>" type="cancel" />
 				</aui:button-row>
 			</aui:fieldset>
 		</aui:fieldset-group>

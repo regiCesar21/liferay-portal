@@ -7,12 +7,19 @@ package com.liferay.commerce.account.admin.web.internal.portlet.action;
 
 import com.liferay.commerce.account.constants.CommerceAccountPortletKeys;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;
+import com.liferay.portal.kernel.theme.PortletDisplay;
+import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.Portal;
+import com.liferay.portal.kernel.util.WebKeys;
 
 import javax.portlet.PortletException;
+import javax.portlet.PortletRequest;
+import javax.portlet.PortletURL;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Alessio Antonio Rendina
@@ -32,7 +39,27 @@ public class EditCommerceAccountMVCRenderCommand implements MVCRenderCommand {
 			RenderRequest renderRequest, RenderResponse renderResponse)
 		throws PortletException {
 
+		_populatePortletDisplay(renderRequest);
+
 		return "/edit_account.jsp";
 	}
+
+	private void _populatePortletDisplay(RenderRequest renderRequest) {
+		ThemeDisplay themeDisplay = (ThemeDisplay)renderRequest.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
+		PortletDisplay portletDisplay = themeDisplay.getPortletDisplay();
+
+		portletDisplay.setShowBackIcon(true);
+
+		PortletURL portletURL = _portal.getControlPanelPortletURL(
+			renderRequest, CommerceAccountPortletKeys.COMMERCE_ACCOUNT_ADMIN,
+			PortletRequest.RENDER_PHASE);
+
+		portletDisplay.setURLBack(portletURL.toString());
+	}
+
+	@Reference
+	private Portal _portal;
 
 }

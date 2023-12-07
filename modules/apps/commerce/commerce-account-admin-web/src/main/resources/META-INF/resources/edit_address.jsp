@@ -24,8 +24,7 @@ if (commerceAddress != null) {
 <div class="container-fluid-1280 mt-4 sheet">
 	<aui:form action="<%= editCommerceAddressActionURL %>" method="post" name="fm">
 		<aui:input name="<%= Constants.CMD %>" type="hidden" value="<%= (commerceAddress == null) ? Constants.ADD : Constants.UPDATE %>" />
-		<aui:input name="redirect" type="hidden" value="<%= redirect %>" />
-		<aui:input name="backURL" type="hidden" value="<%= backURL %>" />
+		<aui:input name="redirect" type="hidden" value="<%= portletDisplay.getURLBack() %>" />
 		<aui:input name="commerceAddressId" type="hidden" value="<%= commerceAccountAddressAdminDisplayContext.getCommerceAddressId() %>" />
 		<aui:input name="commerceAccountId" type="hidden" value="<%= (commerceAddress == null) ? commerceAccountAddressAdminDisplayContext.getCommerceAccountId() : commerceAddress.getClassPK() %>" />
 
@@ -109,7 +108,7 @@ if (commerceAddress != null) {
 				<aui:button-row>
 					<aui:button cssClass="btn-lg" type="submit" />
 
-					<aui:button cssClass="btn-lg" href="<%= backURL %>" type="cancel" />
+					<aui:button cssClass="btn-lg" href="<%= portletDisplay.getURLBack() %>" type="cancel" />
 				</aui:button-row>
 			</div>
 		</div>

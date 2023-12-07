@@ -23,9 +23,6 @@ if (commerceAccount != null) {
 }
 
 renderResponse.setTitle(title);
-
-portletDisplay.setShowBackIcon(true);
-portletDisplay.setURLBack(backURL);
 %>
 
 <liferay-frontend:screen-navigation

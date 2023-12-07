@@ -136,8 +136,6 @@ public class EditCommerceAccountMVCActionCommand extends BaseMVCActionCommand {
 			PortletRequest.RENDER_PHASE);
 
 		if (commerceAccount != null) {
-			portletURL.setParameter("backURL", portletURL.toString());
-
 			portletURL.setParameter(
 				"mvcRenderCommandName",
 				"/commerce_account_admin/edit_commerce_account");
