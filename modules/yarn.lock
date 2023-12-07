@@ -10555,10 +10555,10 @@ liferay-amd-loader@4.0.0-alpha.5:
   version "4.0.0-alpha.5"
   resolved "https://registry.yarnpkg.com/liferay-amd-loader/-/liferay-amd-loader-4.0.0-alpha.5.tgz#cf2f3d8b2922d11a35e297113cf859e5241ad443"
 
-liferay-ckeditor@4.18.0-liferay.1:
-  version "4.18.0-liferay.1"
-  resolved "https://registry.yarnpkg.com/liferay-ckeditor/-/liferay-ckeditor-4.18.0-liferay.1.tgz#124b42f55b5b52025cb516aaffcd3c9b702f3f09"
-  integrity sha512-+im3vim2ES8xRdWo6KYYktawsPAA7GjENSBeahTnPsA6I+lCkETqTeliWWMdsdjZi/oZ80EaJbKNsAyQZyVeSw==
+liferay-ckeditor@4.21.0-liferay.1:
+  version "4.21.0-liferay.1"
+  resolved "https://registry.yarnpkg.com/liferay-ckeditor/-/liferay-ckeditor-4.21.0-liferay.1.tgz#442c35172d813d2cbfcb80646a31678bf01d0090"
+  integrity sha512-TohBDjRPVu1vaiU2G7kjSJ9uTr+Biu8biENr0kHB8CU7RhU6HIE4RJb3JczYpK+SxvFbc1w0mKp6M/TIbPET8g==
 
 liferay-css-parse@~1.7.1:
   version "1.7.1"
@@ -12085,14 +12085,10 @@ mocha@^2.2.5:
     supports-color "1.2.0"
     to-iso-string "0.0.2"
 
-moment@2.29.4:
+moment@2.29.4, moment@^2.22.2:
   version "2.29.4"
   resolved "https://registry.yarnpkg.com/moment/-/moment-2.29.4.tgz#3dbe052889fe7c1b2ed966fcb3a77328964ef108"
   integrity sha512-5LC9SOxjSc2HF6vO2CyuTDNivEdoz2IvyJJGj6X8DJ0eFyfszE0QiEd+iXmBvUP3WHxSjFH/vIsA0EN00cgr8w==
-
-moment@^2.22.2:
-  version "2.24.0"
-  resolved "https://registry.yarnpkg.com/moment/-/moment-2.24.0.tgz#0d055d53f5052aa653c9f6eb68bb5d12bf5c2b5b"
 
 move-concurrently@^1.0.1:
   version "1.0.1"
