@@ -8,7 +8,6 @@ package com.liferay.layout.admin.web.internal.display.context;
 import com.liferay.exportimport.kernel.staging.LayoutStagingUtil;
 import com.liferay.layout.set.prototype.helper.LayoutSetPrototypeHelper;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
-import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
@@ -339,7 +338,7 @@ public class MillerColumnsDisplayContext {
 		return breadcrumbEntriesJSONArray;
 	}
 
-	private List<Long> _getDuplicatedFriendlyURLPlids() throws PortalException {
+	private List<Long> _getDuplicatedFriendlyURLPlids() throws Exception {
 		if (_duplicatedFriendlyURLPlids != null) {
 			return _duplicatedFriendlyURLPlids;
 		}
@@ -856,9 +855,7 @@ public class MillerColumnsDisplayContext {
 		return draftLayout.hasScopeGroup();
 	}
 
-	private boolean _isDuplicatedFriendlyURL(Layout layout)
-		throws PortalException {
-
+	private boolean _isDuplicatedFriendlyURL(Layout layout) throws Exception {
 		if (!GetterUtil.getBoolean(PropsUtil.get("feature.flag.LPS-174417"))) {
 			return false;
 		}
