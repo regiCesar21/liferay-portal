@@ -146,21 +146,12 @@ definition {
 
 	@summary = "Default summary"
 	macro setUpPortalInstance(authenticationMethod = null) {
-		var testNameSkipPortalInstance = PropsUtil.get("test.name.skip.portal.instance");
-		var testPortalInstance = PropsUtil.get("test.portal.instance");
-
-		if ((${testPortalInstance} == "true") && !(IsTestName(locator1 = "", value1 = ${testNameSkipPortalInstance}))) {
-			SignIn.signInPortalInstanceSetUp();
-		}
-
 		var testLiferayVirtualInstance = PropsUtil.get("test.liferay.virtual.instance");
 
 		if (${testLiferayVirtualInstance} == "true") {
 			HeadlessPortalInstanceAPI.cleanAllPortalInstances(authenticationMethod = ${authenticationMethod});
 
-			if (${testPortalInstance} == "true") {
-				SignIn.signInPortalInstanceSetUp();
-			}
+			SignIn.signInPortalInstanceSetUp();
 		}
 	}
 
