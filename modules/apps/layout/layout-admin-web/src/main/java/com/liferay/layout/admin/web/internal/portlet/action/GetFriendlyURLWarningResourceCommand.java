@@ -24,11 +24,13 @@ import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PropsUtil;
+import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.service.impl.LayoutLocalServiceHelper;
 
 import java.util.Locale;
+import java.util.ResourceBundle;
 
 import javax.portlet.ResourceRequest;
 import javax.portlet.ResourceResponse;
@@ -150,9 +152,12 @@ public class GetFriendlyURLWarningResourceCommand
 	}
 
 	private String _getWarningMessage(Group group, Locale locale) {
+		ResourceBundle resourceBundle = ResourceBundleUtil.getBundle(
+			"content.Language", locale, getClass());
+
 		if (group.isLayoutSetPrototype()) {
 			return _language.get(
-				locale,
+				resourceBundle,
 				StringBundler.concat(
 					"the-friendly-url-of-the-site-template-page-you-are-",
 					"trying-to-save-conflicts-with-some-of-the-own-pages-of-",
@@ -162,7 +167,7 @@ public class GetFriendlyURLWarningResourceCommand
 		}
 
 		return _language.get(
-			locale,
+			resourceBundle,
 			StringBundler.concat(
 				"the-friendly-url-of-the-page-you-are-trying-to-save-",
 				"conflicts-with-a-friendly-url-of-a-page-in-the-site-",
