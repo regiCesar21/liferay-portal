@@ -613,6 +613,14 @@ public class PropsValues {
 	public static final int COUNTER_INCREMENT = GetterUtil.getInteger(
 		PropsUtil.get(PropsKeys.COUNTER_INCREMENT));
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
+	 */
+	@Deprecated
+	public static final boolean CT_ALLOW_UNAPPROVED_CHANGES =
+		GetterUtil.getBoolean(
+			PropsUtil.get(PropsKeys.CT_ALLOW_UNAPPROVED_CHANGES));
+
 	public static final String CUSTOM_SQL_FUNCTION_ISNOTNULL = PropsUtil.get(
 		PropsKeys.CUSTOM_SQL_FUNCTION_ISNOTNULL);
 

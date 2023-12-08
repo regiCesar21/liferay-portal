@@ -26,10 +26,4 @@ public interface CTSettingsConfiguration {
 	@Meta.AD(deflt = "false", name = "sandbox-enabled", required = false)
 	public boolean sandboxEnabled();
 
-	@Meta.AD(
-		deflt = "false", description = "allow-unapproved-changes-help",
-		name = "allow-unapproved-changes", required = false
-	)
-	public boolean unapprovedChangesAllowed();
-
 }

@@ -646,6 +646,13 @@ public interface PropsKeys {
 
 	public static final String COUNTER_INCREMENT_PREFIX = "counter.increment.";
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
+	 */
+	@Deprecated
+	public static final String CT_ALLOW_UNAPPROVED_CHANGES =
+		"ct.allow.unapproved.changes";
+
 	public static final String CUSTOM_SQL_AUTO_ESCAPE_WILDCARDS_ENABLED =
 		"custom.sql.auto.escape.wildcards.enabled";
 

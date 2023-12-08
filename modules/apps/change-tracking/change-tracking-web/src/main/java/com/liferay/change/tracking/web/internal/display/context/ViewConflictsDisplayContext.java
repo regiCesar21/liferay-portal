@@ -5,7 +5,6 @@
 
 package com.liferay.change.tracking.web.internal.display.context;
 
-import com.liferay.change.tracking.configuration.CTSettingsConfiguration;
 import com.liferay.change.tracking.conflict.ConflictInfo;
 import com.liferay.change.tracking.constants.CTConstants;
 import com.liferay.change.tracking.model.CTCollection;
@@ -21,11 +20,8 @@ import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.language.Language;
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.BaseModel;
 import com.liferay.portal.kernel.model.Layout;
-import com.liferay.portal.kernel.module.configuration.ConfigurationProviderUtil;
 import com.liferay.portal.kernel.portlet.LiferayWindowState;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.HashMapBuilder;
@@ -33,6 +29,7 @@ import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
+import com.liferay.portal.util.PropsValues;
 
 import java.time.Instant;
 
@@ -209,24 +206,7 @@ public class ViewConflictsDisplayContext {
 			}
 		).put(
 			"unapprovedChangesAllowed",
-			() -> {
-				boolean unapprovedChangesAllowed = false;
-
-				try {
-					CTSettingsConfiguration ctSettingsConfiguration =
-						ConfigurationProviderUtil.getCompanyConfiguration(
-							CTSettingsConfiguration.class,
-							_themeDisplay.getCompanyId());
-
-					unapprovedChangesAllowed =
-						ctSettingsConfiguration.unapprovedChangesAllowed();
-				}
-				catch (Exception exception) {
-					_log.error(exception);
-				}
-
-				return unapprovedChangesAllowed;
-			}
+			() -> PropsValues.CT_ALLOW_UNAPPROVED_CHANGES
 		).put(
 			"unresolvedConflicts", unresolvedConflictsJSONArray
 		).build();
@@ -428,9 +408,6 @@ public class ViewConflictsDisplayContext {
 
 		return viewURL.toString();
 	}
-
-	private static final Log _log = LogFactoryUtil.getLog(
-		ViewConflictsDisplayContext.class);
 
 	private final long _activeCtCollectionId;
 	private final Map<Long, List<ConflictInfo>> _conflictInfoMap;
