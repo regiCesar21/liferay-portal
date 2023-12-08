@@ -357,4 +357,24 @@ definition {
 			roleTitle = "Remove Regrole Assignee");
 	}
 
+	@description = "This is a test for LPS-202614."
+	@priority = 3
+	test RemoveSegmentsOptionInAdministratorRole {
+		task ("When navigates to administrator role -> Assignees tab") {
+			Role.openRolesAdmin();
+
+			LexiconEntry.gotoEntryMenuItem(
+				menuItem = "Edit",
+				rowEntry = "Administrator");
+
+			Navigator.gotoNavItem(navItem = "Assignees");
+		}
+
+		task ("Then the Segments tab is removed") {
+			AssertElementNotPresent(
+				key_navItem = "Segments",
+				locator1 = "NavBar#ACTIVE_NAV_ITEM_LINK");
+		}
+	}
+
 }
