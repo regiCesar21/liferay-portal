@@ -97,8 +97,6 @@ public class CommerceChannelClayTable
 					httpServletRequest, CPPortletKeys.COMMERCE_CHANNELS,
 					PortletRequest.RENDER_PHASE);
 
-				portletURL.setParameter("backURL", portletURL.toString());
-
 				portletURL.setParameter(
 					"commerceChannelId",
 					String.valueOf(channel.getChannelId()));
