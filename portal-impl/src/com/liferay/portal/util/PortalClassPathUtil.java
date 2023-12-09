@@ -101,6 +101,12 @@ public class PortalClassPathUtil {
 
 		StringBundler sb = new StringBundler(8);
 
+		if (servletContext != null) {
+			sb.append(servletContext.getRealPath(""));
+			sb.append("/WEB-INF/classes");
+			sb.append(File.pathSeparator);
+		}
+
 		String appServerGlobalClassPath = _buildClassPath(
 			classLoader, ServletException.class.getName());
 
@@ -121,12 +127,6 @@ public class PortalClassPathUtil {
 			_buildClassPath(
 				classLoader,
 				"com.liferay.portal.internal.servlet.MainServlet"));
-
-		if (servletContext != null) {
-			sb.append(File.pathSeparator);
-			sb.append(servletContext.getRealPath(""));
-			sb.append("/WEB-INF/classes");
-		}
 
 		String portalClassPath = sb.toString();
 
