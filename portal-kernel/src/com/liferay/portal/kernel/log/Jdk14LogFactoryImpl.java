@@ -21,9 +21,12 @@ public class Jdk14LogFactoryImpl implements LogFactory {
 			return;
 		}
 
-		try (InputStream inputStream =
-				Jdk14LogFactoryImpl.class.getResourceAsStream(
-					"/logging.properties")) {
+		Thread currentThread = Thread.currentThread();
+
+		ClassLoader contextClassLoader = currentThread.getContextClassLoader();
+
+		try (InputStream inputStream = contextClassLoader.getResourceAsStream(
+				"logging.properties")) {
 
 			if (inputStream != null) {
 				LogManager logManager = LogManager.getLogManager();
