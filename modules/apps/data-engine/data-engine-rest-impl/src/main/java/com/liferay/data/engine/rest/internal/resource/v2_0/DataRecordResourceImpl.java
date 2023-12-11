@@ -38,7 +38,6 @@ import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.language.Language;
-import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.search.BooleanClauseOccur;
 import com.liferay.portal.kernel.search.BooleanQuery;
 import com.liferay.portal.kernel.search.Field;
@@ -138,13 +137,6 @@ public class DataRecordResourceImpl
 			Long dataRecordCollectionId, Pagination pagination)
 		throws Exception {
 
-		if (pagination.getPageSize() > 250) {
-			throw new ValidationException(
-				LanguageUtil.format(
-					contextAcceptLanguage.getPreferredLocale(),
-					"page-size-is-greater-than-x", 250));
-		}
-
 		_dataRecordCollectionModelResourcePermission.check(
 			PermissionThreadLocal.getPermissionChecker(),
 			dataRecordCollectionId, DataActionKeys.EXPORT_DATA_RECORDS);
@@ -167,13 +159,6 @@ public class DataRecordResourceImpl
 			Long dataRecordCollectionId, Long dataListViewId, String keywords,
 			Pagination pagination, Sort[] sorts)
 		throws Exception {
-
-		if (pagination.getPageSize() > 250) {
-			throw new ValidationException(
-				LanguageUtil.format(
-					contextAcceptLanguage.getPreferredLocale(),
-					"page-size-is-greater-than-x", 250));
-		}
 
 		_dataRecordCollectionModelResourcePermission.check(
 			PermissionThreadLocal.getPermissionChecker(),

@@ -27,7 +27,6 @@ import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
-import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.security.auth.PrincipalThreadLocal;
@@ -56,7 +55,6 @@ import java.util.Set;
 
 import javax.validation.ValidationException;
 
-import javax.ws.rs.BadRequestException;
 import javax.ws.rs.core.MultivaluedMap;
 
 import org.osgi.service.component.annotations.Component;
@@ -101,13 +99,6 @@ public class DataListViewResourceImpl
 			Long dataDefinitionId, String keywords, Pagination pagination,
 			Sort[] sorts)
 		throws Exception {
-
-		if (pagination.getPageSize() > 250) {
-			throw new BadRequestException(
-				LanguageUtil.format(
-					contextAcceptLanguage.getPreferredLocale(),
-					"page-size-is-greater-than-x", 250));
-		}
 
 		if (ArrayUtil.isEmpty(sorts)) {
 			sorts = new Sort[] {

@@ -47,7 +47,6 @@ import com.liferay.portal.events.ThemeServicePreAction;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
-import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.security.auth.PrincipalThreadLocal;
@@ -72,12 +71,9 @@ import com.liferay.portal.vulcan.util.SearchUtil;
 import com.liferay.portal.vulcan.util.TransformUtil;
 
 import java.util.List;
-import java.util.Locale;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletResponse;
-
-import javax.validation.ValidationException;
 
 import javax.ws.rs.core.MultivaluedMap;
 import javax.ws.rs.core.Response;
@@ -139,9 +135,7 @@ public class DataLayoutResourceImpl
 			Sort[] sorts)
 		throws Exception {
 
-		return _getDataLayouts(
-			dataDefinitionId, keywords,
-			contextAcceptLanguage.getPreferredLocale(), pagination, sorts);
+		return _getDataLayouts(dataDefinitionId, keywords, pagination, sorts);
 	}
 
 	@Override
@@ -393,15 +387,9 @@ public class DataLayoutResourceImpl
 	}
 
 	private Page<DataLayout> _getDataLayouts(
-			long dataDefinitionId, String keywords, Locale locale,
-			Pagination pagination, Sort[] sorts)
+			long dataDefinitionId, String keywords, Pagination pagination,
+			Sort[] sorts)
 		throws Exception {
-
-		if (pagination.getPageSize() > 250) {
-			throw new ValidationException(
-				LanguageUtil.format(
-					locale, "page-size-is-greater-than-x", 250));
-		}
 
 		if (ArrayUtil.isEmpty(sorts)) {
 			sorts = new Sort[] {
