@@ -422,25 +422,21 @@ AUI.add(
 				_renderUploader() {
 					var instance = this;
 
-					instance._dragCounter = 0;
-
 					instance._uploader = new A.Uploader({
 						boundingBox: instance.rootNode,
 						dragAndDropArea: instance.rootNode,
 						fileFieldName: 'imageSelectorFileName',
 						on: {
-							dragenter: function () {
-								instance._dragCounter = instance._dragCounter + 1;
-
-								instance.rootNode.addClass(CSS_DROP_ACTIVE);
-							},
-							dragleave: function () {
-								instance._dragCounter = instance._dragCounter - 1;
-
-								if (instance._dragCounter === 0) {
-									instance.rootNode.removeClass(CSS_DROP_ACTIVE);
-								}
-							},
+							dragleave: A.bind(
+								'removeClass',
+								instance.rootNode,
+								CSS_DROP_ACTIVE
+							),
+							dragover: A.bind(
+								'addClass',
+								instance.rootNode,
+								CSS_DROP_ACTIVE
+							),
 							fileselect: A.bind('_onFileSelect', instance),
 							uploadcomplete: A.bind(
 								'_onUploadComplete',
