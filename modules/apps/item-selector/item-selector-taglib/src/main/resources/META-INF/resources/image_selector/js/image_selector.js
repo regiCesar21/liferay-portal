@@ -429,20 +429,16 @@ AUI.add(
 						dragAndDropArea: instance.rootNode,
 						fileFieldName: 'imageSelectorFileName',
 						on: {
-							dragenter() {
-								instance._dragCounter =
-									instance._dragCounter + 1;
+							dragenter: function () {
+								instance._dragCounter = instance._dragCounter + 1;
 
 								instance.rootNode.addClass(CSS_DROP_ACTIVE);
 							},
-							dragleave() {
-								instance._dragCounter =
-									instance._dragCounter - 1;
+							dragleave: function () {
+								instance._dragCounter = instance._dragCounter - 1;
 
 								if (instance._dragCounter === 0) {
-									instance.rootNode.removeClass(
-										CSS_DROP_ACTIVE
-									);
+									instance.rootNode.removeClass(CSS_DROP_ACTIVE);
 								}
 							},
 							fileselect: A.bind('_onFileSelect', instance),

@@ -165,11 +165,11 @@ class ItemSelectorRepositoryEntryBrowser extends PortletBase {
 				}),
 				rootNode.addEventListener(STR_DRAG_ENTER, (event) => {
 					this._dragCounter = this._dragCounter + 1;
-					this._ddEventHandler(event);
+					this._ddEventHandler(event)
 				}),
 				rootNode.addEventListener(STR_DRAG_LEAVE, (event) => {
 					this._dragCounter = this._dragCounter - 1;
-					this._ddEventHandler(event);
+					this._ddEventHandler(event)
 				}),
 				rootNode.addEventListener(STR_DROP, (event) =>
 					this._ddEventHandler(event)
