@@ -10,22 +10,7 @@ package com.liferay.osb.customer.zendesk.connector.constants;
  */
 public interface ZendeskRESTEndpoints {
 
-	public static final String GROUPS = "groups.json";
-
 	public static final String IDENTITIES = "/identities.json";
-
-	public static final String INCREMENTAL_ARTICLES =
-		"help_center/incremental/articles.json";
-
-	public static final String INCREMENTAL_ORGANIZATIONS =
-		"incremental/organizations.json";
-
-	public static final String INCREMENTAL_TICKET_EVENTS =
-		"incremental/ticket_events.json";
-
-	public static final String INCREMENTAL_TICKETS = "incremental/tickets.json";
-
-	public static final String INCREMENTAL_USERS = "incremental/users.json";
 
 	public static final String ORGANIZATION_MEMBERSHIPS_CREATE_MANY =
 		"organization_memberships/create_many.json";
@@ -42,10 +27,6 @@ public interface ZendeskRESTEndpoints {
 		"organizations/create_or_update.json";
 
 	public static final String RELATED = "/related.json";
-
-	public static final String TICKET_FIELDS = "ticket_fields.json";
-
-	public static final String TICKET_METRICS = "ticket_metrics.json";
 
 	public static final String URL_API_V2 = "/api/v2/";
 
