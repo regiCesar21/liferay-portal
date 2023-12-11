@@ -63,6 +63,7 @@ import com.liferay.portal.vulcan.internal.jaxrs.writer.interceptor.EntityExtensi
 import com.liferay.portal.vulcan.internal.jaxrs.writer.interceptor.NestedFieldsWriterInterceptor;
 import com.liferay.portal.vulcan.internal.jaxrs.writer.interceptor.PageEntityExtensionWriterInterceptor;
 import com.liferay.portal.vulcan.internal.param.converter.provider.DateParamConverterProvider;
+import com.liferay.portal.vulcan.pagination.provider.PaginationProvider;
 
 import javax.ws.rs.Priorities;
 import javax.ws.rs.core.Feature;
@@ -155,7 +156,7 @@ public class VulcanFeature implements Feature {
 			_nestedFieldsWriterInterceptor, Priorities.USER - 10);
 
 		featureContext.register(
-			new PaginationContextProvider(_configurationProvider, _portal));
+			new PaginationContextProvider(_paginationProvider, _portal));
 		featureContext.register(
 			new SiteParamConverterProvider(
 				_depotEntryLocalService, _groupLocalService));
@@ -219,6 +220,9 @@ public class VulcanFeature implements Feature {
 	private Language _language;
 
 	private NestedFieldsWriterInterceptor _nestedFieldsWriterInterceptor;
+
+	@Reference
+	private PaginationProvider _paginationProvider;
 
 	@Reference
 	private Portal _portal;
