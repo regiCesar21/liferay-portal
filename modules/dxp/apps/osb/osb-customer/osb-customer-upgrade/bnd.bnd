@@ -1,4 +1,0 @@
-Bundle-Name: Liferay OSB Customer Upgrade
-Bundle-SymbolicName: com.liferay.osb.customer.upgrade
-Bundle-Version: 1.0.0
-Export-Package: com.liferay.osb.customer.upgrade
