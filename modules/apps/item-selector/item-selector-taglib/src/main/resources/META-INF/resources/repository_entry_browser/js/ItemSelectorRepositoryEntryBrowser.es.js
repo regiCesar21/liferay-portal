@@ -14,7 +14,7 @@ import ReactDOM from 'react-dom';
 import ItemSelectorPreview from '../../item_selector_preview/js/ItemSelectorPreview.es';
 
 const STR_DRAG_LEAVE = 'dragleave';
-const STR_DRAG_ENTER = 'dragenter';
+const STR_DRAG_OVER = 'dragover';
 const STR_DROP = 'drop';
 const statusCode = Liferay.STATUS_CODE;
 
@@ -129,8 +129,6 @@ class ItemSelectorRepositoryEntryBrowser extends PortletBase {
 			const itemSelectorUploader = this._itemSelectorUploader;
 			const rootNode = this.rootNode;
 
-			this._dragCounter = 0;
-
 			this._eventHandler.add(
 				itemSelectorUploader.after('itemUploadCancel', () => {
 					this.closeItemSelectorPreview();
@@ -163,14 +161,12 @@ class ItemSelectorRepositoryEntryBrowser extends PortletBase {
 				itemSelectorUploader.after('itemUploadError', (event) => {
 					this._onItemUploadError(event);
 				}),
-				rootNode.addEventListener(STR_DRAG_ENTER, (event) => {
-					this._dragCounter = this._dragCounter + 1;
+				rootNode.addEventListener(STR_DRAG_OVER, (event) =>
 					this._ddEventHandler(event)
-				}),
-				rootNode.addEventListener(STR_DRAG_LEAVE, (event) => {
-					this._dragCounter = this._dragCounter - 1;
+				),
+				rootNode.addEventListener(STR_DRAG_LEAVE, (event) =>
 					this._ddEventHandler(event)
-				}),
+				),
 				rootNode.addEventListener(STR_DROP, (event) =>
 					this._ddEventHandler(event)
 				)
@@ -225,13 +221,11 @@ class ItemSelectorRepositoryEntryBrowser extends PortletBase {
 
 				const rootNode = this.rootNode;
 
-				if (type === STR_DRAG_ENTER) {
+				if (type === STR_DRAG_OVER) {
 					rootNode.classList.add('drop-active');
 				}
 				else if (type === STR_DRAG_LEAVE || eventDrop) {
-					if (this._dragCounter === 0) {
-						rootNode.classList.remove('drop-active');
-					}
+					rootNode.classList.remove('drop-active');
 
 					if (eventDrop) {
 						this._validateFile(dataTransfer.files[0]);
