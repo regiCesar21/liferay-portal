@@ -12,6 +12,7 @@ import com.liferay.mail.kernel.model.SMTPAccount;
 import com.liferay.mail.kernel.service.MailServiceUtil;
 import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringBundler;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.io.unsync.UnsyncByteArrayInputStream;
 import com.liferay.portal.kernel.log.Log;
@@ -77,12 +78,10 @@ public class MailEngine {
 	public static Session getSession(Account account) {
 		Session session = Session.getInstance(_getProperties(account));
 
+		_debug(session.getProperties());
+
 		if (_log.isDebugEnabled()) {
 			session.setDebug(true);
-
-			Properties sessionProperties = session.getProperties();
-
-			sessionProperties.list(System.out);
 		}
 
 		return session;
@@ -102,12 +101,10 @@ public class MailEngine {
 			session = InfrastructureUtil.getMailSession();
 		}
 
+		_debug(session.getProperties());
+
 		if (_log.isDebugEnabled()) {
 			session.setDebug(true);
-
-			Properties properties = session.getProperties();
-
-			properties.list(System.out);
 		}
 
 		return session;
@@ -472,6 +469,24 @@ public class MailEngine {
 		}
 		catch (AddressException addressException) {
 			throw new MailEngineException(addressException);
+		}
+	}
+
+	private static void _debug(Properties properties) {
+		if (!_log.isDebugEnabled()) {
+			return;
+		}
+
+		_log.debug("Properties:");
+
+		for (String name : properties.stringPropertyNames()) {
+			String value = properties.getProperty(name);
+
+			if (name.contains("password")) {
+				value = "***";
+			}
+
+			_log.debug(StringBundler.concat(name, StringPool.EQUAL, value));
 		}
 	}
 
