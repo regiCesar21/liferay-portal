@@ -8,6 +8,7 @@ package com.liferay.marketplace.store.web.internal.portlet;
 import com.liferay.marketplace.store.web.internal.oauth.util.OAuthManager;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.portlet.LiferayActionResponse;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.portlet.PortletResponseUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
@@ -86,6 +87,9 @@ public class RemoteMVCPortlet extends MVCPortlet {
 			redirect, OAuthConstants.CALLBACK, callbackURL);
 
 		actionResponse.sendRedirect(redirect);
+
+		actionResponse.addProperty(
+			LiferayActionResponse.SKIP_ESCAPE_REDIRECT, "true");
 	}
 
 	public void deauthorize(
