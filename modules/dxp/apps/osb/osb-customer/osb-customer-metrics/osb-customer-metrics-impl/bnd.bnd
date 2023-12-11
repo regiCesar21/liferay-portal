@@ -1,7 +1,0 @@
-Bundle-Name: Liferay OSB Customer Metrics Implementation
-Bundle-SymbolicName: com.liferay.osb.customer.metrics.impl
-Bundle-Version: 1.0.0
-Export-Package:\
-	com.liferay.osb.customer.metrics.impl.configuration,\
-	com.liferay.osb.customer.metrics.impl.model,\
-	com.liferay.osb.customer.metrics.impl.util

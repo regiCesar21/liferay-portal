@@ -1,5 +1,0 @@
-Bundle-Name: Liferay OSB Customer Metrics Sync Service
-Bundle-SymbolicName: com.liferay.osb.customer.metrics.sync.service
-Bundle-Version: 1.0.0
-Liferay-Require-SchemaVersion: 1.0.0
-Liferay-Service: true

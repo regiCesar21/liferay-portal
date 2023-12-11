@@ -1,6 +1,0 @@
-Bundle-Name: Liferay OSB Customer Metrics Web
-Bundle-SymbolicName: com.liferay.osb.customer.metrics.web
-Bundle-Version: 1.0.0
-Liferay-Releng-Module-Group-Title: OSB Customer Metrics
-Web-ContextPath: /osb-customer-metrics-web
--includeresource: content=src/main/resources/content

@@ -1,5 +1,0 @@
-Bundle-Name: Liferay OSB Customer Metrics Sync Zendesk
-Bundle-SymbolicName: com.liferay.osb.customer.metrics.sync.zendesk
-Bundle-Version: 1.0.0
-Export-Package: com.liferay.osb.customer.metrics.sync.zendesk.transformer
--dsannotations-options: inherit

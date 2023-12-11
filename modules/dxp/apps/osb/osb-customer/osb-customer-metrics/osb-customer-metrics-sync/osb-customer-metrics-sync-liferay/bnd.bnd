@@ -1,4 +1,0 @@
-Bundle-Name: Liferay OSB Customer Metrics Sync Liferay
-Bundle-SymbolicName: com.liferay.osb.customer.metrics.sync.liferay
-Bundle-Version: 1.0.0
--dsannotations-options: inherit

@@ -1,8 +1,0 @@
-dependencies {
-	compileInclude group: "org.json", name: "json", version: "20171018"
-
-	compileOnly group: "com.liferay.portal", name: "com.liferay.portal.kernel", version: "2.6.0"
-	compileOnly group: "org.osgi", name: "org.osgi.service.component.annotations", version: "1.3.0"
-	compileOnly project(":dxp:apps:osb:osb-customer:osb-customer-distributed-messaging:osb-customer-distributed-messaging-api")
-	compileOnly project(":dxp:apps:osb:osb-customer:osb-customer-metrics:osb-customer-metrics-api")
-}

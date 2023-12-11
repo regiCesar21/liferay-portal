@@ -1,7 +1,0 @@
-Bundle-Name: Liferay OSB Customer Metrics API
-Bundle-SymbolicName: com.liferay.osb.customer.metrics.api
-Bundle-Version: 1.0.0
-Export-Package:\
-	com.liferay.osb.customer.metrics.model,\
-	com.liferay.osb.customer.metrics.rabbitmq,\
-	com.liferay.osb.customer.metrics.rabbitmq.constants

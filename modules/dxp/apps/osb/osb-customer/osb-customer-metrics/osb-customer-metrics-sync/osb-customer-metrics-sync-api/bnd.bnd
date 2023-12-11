@@ -1,8 +1,0 @@
-Bundle-Name: Liferay OSB Customer Metrics Sync API
-Bundle-SymbolicName: com.liferay.osb.customer.metrics.sync.api
-Bundle-Version: 1.0.0
-Export-Package:\
-	com.liferay.osb.customer.metrics.sync.exception,\
-	com.liferay.osb.customer.metrics.sync.model,\
-	com.liferay.osb.customer.metrics.sync.service,\
-	com.liferay.osb.customer.metrics.sync.service.persistence
