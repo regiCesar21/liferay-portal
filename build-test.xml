@@ -10399,6 +10399,14 @@ ${update.properties}</echo>
 		<priority value="DEBUG" />
 	</category>
 </log4j:configuration>]]></echo>
+
+		<echo file="${liferay.home}/osgi/log4j/com.liferay.portal.cluster.multiple-log4j-ext.xml"><![CDATA[<?xml version="1.0"?>
+<Configuration strict="true">
+	<Loggers>
+		<Logger level="ERROR" name="com.liferay.portal.cluster.multiple.internal.jgroups.JGroupsClusterChannelFactory" />
+	</Loggers>
+</Configuration>]]>
+		</echo>
 	</target>
 
 	<target name="prepare-osgi-module-configurations">
