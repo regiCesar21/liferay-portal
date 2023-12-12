@@ -275,6 +275,11 @@ public class JournalServiceUpgrade implements UpgradeStepRegistrator {
 			new BasicWebContentAssetEntryClassTypeIdUpgradeProcess(
 				_companyLocalService, _ddmStructureLocalService,
 				_groupLocalService));
+
+		registry.register(
+			"3.4.2", "3.4.3",
+			new com.liferay.journal.internal.upgrade.v3_4_3.
+				UpgradeJournalArticleContent(_layoutLocalService));
 	}
 
 	protected void deleteTempImages() throws Exception {
