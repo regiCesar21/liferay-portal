@@ -40,13 +40,13 @@ export default class QuantityControls {
 
 			return remainder
 				? /**
-				 * min is *not* a multiple of this.step
-				 */
-				min + this.step - remainder
+				   * min is *not* a multiple of this.step
+				   */
+				  min + this.step - remainder
 				: /**
-				 * and min *is* a multiple of this.step
-				 */
-				min;
+				   * and min *is* a multiple of this.step
+				   */
+				  min;
 		}
 
 		return this.step;
