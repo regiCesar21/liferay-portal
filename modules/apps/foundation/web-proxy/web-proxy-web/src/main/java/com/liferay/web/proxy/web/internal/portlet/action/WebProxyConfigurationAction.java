@@ -5,15 +5,21 @@
 
 package com.liferay.web.proxy.web.internal.portlet.action;
 
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.portlet.ConfigurationAction;
 import com.liferay.portal.kernel.portlet.DefaultConfigurationAction;
+import com.liferay.portal.kernel.portlet.PortletPreferencesFactoryUtil;
 import com.liferay.portal.kernel.util.Http;
+import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.web.proxy.web.internal.constants.WebProxyPortletKeys;
+
+import java.util.Objects;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
 import javax.portlet.PortletConfig;
+import javax.portlet.PortletPreferences;
 
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
@@ -41,6 +47,25 @@ public class WebProxyConfigurationAction extends DefaultConfigurationAction {
 			PortletConfig portletConfig, ActionRequest actionRequest,
 			ActionResponse actionResponse)
 		throws Exception {
+
+		PortletPreferences portletPreferences =
+			PortletPreferencesFactoryUtil.getExistingPortletSetup(
+				actionRequest);
+
+		String proxyAuthenticationPassword = getParameter(
+			actionRequest, "proxyAuthenticationPassword");
+
+		if ((portletPreferences != null) &&
+			Objects.equals(
+				proxyAuthenticationPassword, Portal.TEMP_OBFUSCATION_VALUE)) {
+
+			proxyAuthenticationPassword = portletPreferences.getValue(
+				"proxyAuthenticationPassword", StringPool.BLANK);
+		}
+
+		setPreference(
+			actionRequest, "proxyAuthenticationPassword",
+			proxyAuthenticationPassword);
 
 		String initUrl = getParameter(actionRequest, "initUrl");
 

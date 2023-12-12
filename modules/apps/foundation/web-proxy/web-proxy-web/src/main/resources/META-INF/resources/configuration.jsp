@@ -34,7 +34,7 @@
 
 				<aui:input cssClass="lfr-input-text-container" name="preferences--proxyAuthenticationUsername--" value="<%= proxyAuthenticationUsername %>" />
 
-				<aui:input cssClass="lfr-input-text-container" name="preferences--proxyAuthenticationPassword--" value="<%= proxyAuthenticationPassword %>" />
+				<aui:input cssClass="lfr-input-text-container" name="preferences--proxyAuthenticationPassword--" type="password" value="<%= proxyAuthenticationPassword %>" />
 
 				<aui:input cssClass="lfr-input-text-container" name="preferences--proxyAuthenticationHost--" value="<%= proxyAuthenticationHost %>" />
 

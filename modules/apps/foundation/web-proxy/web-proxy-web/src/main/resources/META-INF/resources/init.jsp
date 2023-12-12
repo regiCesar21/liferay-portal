@@ -17,6 +17,8 @@ taglib uri="http://liferay.com/tld/ui" prefix="liferay-ui" %>
 page import="com.liferay.portal.kernel.language.LanguageUtil" %><%@
 page import="com.liferay.portal.kernel.portlet.LiferayWindowState" %><%@
 page import="com.liferay.portal.kernel.util.Constants" %><%@
+page import="com.liferay.portal.kernel.util.Portal" %><%@
+page import="com.liferay.portal.kernel.util.Validator" %><%@
 page import="com.liferay.portal.kernel.util.WebKeys" %>
 
 <%@ page import="javax.portlet.WindowState" %>
@@ -38,6 +40,10 @@ String proxyHost = portletPreferences.getValue("proxyHost", StringPool.BLANK);
 String proxyPort = portletPreferences.getValue("proxyPort", StringPool.BLANK);
 String scope = portletPreferences.getValue("scope", StringPool.BLANK);
 String stylesheet = portletPreferences.getValue("stylesheet", StringPool.BLANK);
+
+if (Validator.isNotNull(proxyAuthenticationPassword)) {
+	proxyAuthenticationPassword = Portal.TEMP_OBFUSCATION_VALUE;
+}
 %>
 
 <%@ include file="/init-ext.jsp" %>
