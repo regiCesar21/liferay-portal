@@ -281,57 +281,35 @@ const Select = ({
 
 	useEffect(() => {
 		if (expand) {
-			let firstElement;
+			const element =
+				menuElementRef.current.querySelector('[aria-selected=true]') ??
+				menuElementRef.current.querySelector('button');
 
-			if (menuElementRef.current.querySelector('[aria-selected=true]')) {
-				firstElement = menuElementRef.current.querySelector(
-					'[aria-selected=true] button'
-				);
-			}
-			else {
-				firstElement = menuElementRef.current.querySelector('button');
-			}
-
-			firstElement.focus();
+			element?.focus();
 		}
 
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [expand]);
 
 	useEffect(() => {
-		const getDocumentHeight = () => {
-			const heights = [
-				document.body.clientHeight,
-				document.documentElement.clientHeight,
-				window.innerHeight,
-			];
-
-			return Math.max(...heights);
-		};
-
-		const onScroll = () => {
-			const {
-				height,
-				top,
-			} = triggerElementRef.current.getBoundingClientRect();
-
-			const scrollTop =
-				window.pageYOffset || document.documentElement.scrollTop;
-
-			const menuElementTop = height + scrollTop + top;
-
-			if (menuElementTop <= getDocumentHeight()) {
-				menuElementRef.current.style.setProperty(
-					'top',
-					`${menuElementTop}px`
-				);
+		const onClose = (event) => {
+			if (
+				expand &&
+				menuElementRef.current &&
+				!menuElementRef.current.contains(event.target) &&
+				!triggerElementRef.current.contains(event.target)
+			) {
+				setExpand(false);
+				onExpand({event, expand: false});
+				triggerElementRef.current.firstChild.focus();
 			}
 		};
 
-		document.addEventListener('scroll', onScroll, true);
+		document.addEventListener('click', onClose, true);
 
-		return () => document.removeEventListener('scroll', onScroll, true);
-	}, []);
+		return () => document.removeEventListener('click', onClose, true);
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, [expand]);
 
 	const handleFocus = (event, direction) => {
 		const target = event.target;
@@ -459,7 +437,6 @@ const Select = ({
 						show: expand,
 					}
 				)}
-				onBlur={() => setExpand(false)}
 				onKeyDown={(event) => {
 					switch (event.keyCode) {
 						case KEYCODES.ARROW_DOWN:
@@ -473,7 +450,7 @@ const Select = ({
 							break;
 						case KEYCODES.ESCAPE:
 							setExpand(false);
-							triggerElementRef.current.focus();
+							triggerElementRef.current.firstChild.focus();
 							break;
 						default: {
 							const target = event.target;
