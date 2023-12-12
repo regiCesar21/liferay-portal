@@ -146,11 +146,14 @@ public class EditInstanceMVCActionCommand extends BaseMVCActionCommand {
 			Company company = _companyService.addCompany(
 				webId, virtualHostname, mx, false, maxUsers, active);
 
+			String siteInitializerKey = ParamUtil.getString(
+				actionRequest, "siteInitializerKey");
+
 			ServletContext servletContext =
 				(ServletContext)actionRequest.getAttribute(WebKeys.CTX);
 
 			_portalInstancesLocalService.initializePortalInstance(
-				servletContext, company.getWebId());
+				company.getCompanyId(), siteInitializerKey, servletContext);
 		}
 		else {
 
