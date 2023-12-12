@@ -534,41 +534,6 @@ describe('Select', () => {
 		]);
 	});
 
-	it('adjusts dropdown menu position during scroll', async () => {
-		const {container} = render(
-			<SelectWithProvider
-				dataSourceType="manual"
-				options={createOptions(12)}
-				spritemap={spritemap}
-			/>
-		);
-
-		const dropdownTrigger = container.querySelector(
-			'.form-builder-select-field.input-group-container'
-		);
-
-		jest.spyOn(dropdownTrigger, 'getBoundingClientRect').mockImplementation(
-			() => {
-				return {
-					height: 40,
-					top: 50,
-				};
-			}
-		);
-
-		window.pageYOffset = 100;
-
-		fireEvent.scroll(container);
-
-		act(() => {
-			jest.runAllTimers();
-		});
-
-		const dropdownMenu = container.querySelector('.ddm-select-dropdown');
-
-		expect(dropdownMenu.style).toHaveProperty('top', '190px');
-	});
-
 	it('shows the options value if there are values', async () => {
 		const handleFieldEdited = jest.fn();
 
