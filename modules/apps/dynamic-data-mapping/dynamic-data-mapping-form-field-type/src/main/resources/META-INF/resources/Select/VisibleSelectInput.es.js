@@ -82,8 +82,8 @@ const OptionSelected = ({isPlaceholder, label}) => (
 const VisibleSelectInput = forwardRef(
 	(
 		{
-			ariaRequired,
 			ariaControls,
+			ariaRequired,
 			className,
 			expand,
 			id,
@@ -127,11 +127,11 @@ const VisibleSelectInput = forwardRef(
 				ref={ref}
 			>
 				<div
-					aria-required={ariaRequired}
 					aria-controls={ariaControls}
 					aria-expanded={expand}
 					aria-haspopup="listbox"
 					aria-label={selectedLabel()}
+					aria-required={ariaRequired}
 					className={classNames(
 						'form-control results-chosen select-field-trigger',
 						{

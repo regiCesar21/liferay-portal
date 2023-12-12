@@ -227,8 +227,8 @@ const DropdownItem = ({
 const Trigger = forwardRef(
 	(
 		{
-			ariaRequired,
 			ariaControls,
+			ariaRequired,
 			onCloseButtonClicked,
 			onTriggerClicked,
 			onTriggerKeyDown,
@@ -244,8 +244,8 @@ const Trigger = forwardRef(
 					<HiddenSelectInput value={value} {...otherProps} />
 				)}
 				<VisibleSelectInput
-					ariaRequired={ariaRequired}
 					ariaControls={ariaControls}
+					ariaRequired={ariaRequired}
 					onClick={onTriggerClicked}
 					onCloseButtonClicked={onCloseButtonClicked}
 					onKeyDown={onTriggerKeyDown}
@@ -366,8 +366,8 @@ const Select = ({
 	return (
 		<>
 			<Trigger
-				ariaRequired={otherProps.required}
 				ariaControls={`ddm-select-dropdown${otherProps.name}`}
+				ariaRequired={otherProps.required}
 				expand={expand}
 				multiple={multiple}
 				onCloseButtonClicked={({event, value}) => {
