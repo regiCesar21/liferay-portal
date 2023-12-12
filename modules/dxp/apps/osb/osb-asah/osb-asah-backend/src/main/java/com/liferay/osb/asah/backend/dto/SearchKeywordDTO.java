@@ -35,6 +35,7 @@ public class SearchKeywordDTO {
 	public SearchKeywordDTO(SearchKeyword searchKeyword) {
 		_counts = searchKeyword.getCounts();
 		_createDate = searchKeyword.getCreateDate();
+		_dataSourceId = searchKeyword.getDataSourceId();
 		_displayLanguageId = searchKeyword.getDisplayLanguageId();
 		_groupId = searchKeyword.getGroupId();
 		_keywords = searchKeyword.getKeywords();
@@ -57,6 +58,11 @@ public class SearchKeywordDTO {
 		}
 
 		return new Date(_createDate.getTime());
+	}
+
+	@JsonProperty("dataSourceId")
+	public Long getDataSourceId() {
+		return _dataSourceId;
 	}
 
 	@JsonProperty("displayLanguageId")
@@ -94,6 +100,7 @@ public class SearchKeywordDTO {
 
 	private Long _counts;
 	private Date _createDate;
+	private Long _dataSourceId;
 	private String _displayLanguageId;
 	private String _groupId;
 	private String _keywords;
