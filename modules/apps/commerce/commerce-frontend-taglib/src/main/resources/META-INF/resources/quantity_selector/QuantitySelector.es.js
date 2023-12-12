@@ -5,9 +5,9 @@
 
 import Component from 'metal-component';
 import Soy, {Config} from 'metal-soy';
-import QuantityControls, {UPDATE_AFTER} from './util/index';
 
 import template from './QuantitySelector.soy';
+import QuantityControls, {UPDATE_AFTER} from './util/index';
 
 class QuantitySelector extends Component {
 	attached() {

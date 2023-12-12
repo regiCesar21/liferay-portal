@@ -1,4 +1,9 @@
 /**
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
+ */
+
+/**
  * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
  *
  * This library is free software; you can redistribute it and/or modify it under
@@ -40,13 +45,13 @@ export default class QuantityControls {
 
 			return remainder
 				? /**
-				 * min is *not* a multiple of this.step
-				 */
-				min + this.step - remainder
+				   * min is *not* a multiple of this.step
+				   */
+				  min + this.step - remainder
 				: /**
-				 * and min *is* a multiple of this.step
-				 */
-				min;
+				   * and min *is* a multiple of this.step
+				   */
+				  min;
 		}
 
 		return this.step;
