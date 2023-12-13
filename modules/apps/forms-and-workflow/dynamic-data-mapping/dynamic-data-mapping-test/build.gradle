@@ -1,7 +1,3 @@
-configJSModules {
-	enabled = false
-}
-
 copyLibs {
 	enabled = true
 }
