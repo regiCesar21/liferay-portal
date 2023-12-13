@@ -22,7 +22,7 @@ import com.liferay.osb.asah.common.model.ResultBag;
 import com.liferay.osb.asah.common.model.Sort;
 import com.liferay.osb.asah.common.util.ListUtil;
 
-import graphql.execution.ExecutionTypeInfo;
+import graphql.execution.ExecutionStepInfo;
 
 import graphql.schema.DataFetcher;
 import graphql.schema.DataFetchingEnvironment;
@@ -116,11 +116,11 @@ public class DXPEntityBagDataFetcher
 	private String _getGraphQLFieldDefinitionName(
 		DataFetchingEnvironment dataFetchingEnvironment) {
 
-		ExecutionTypeInfo executionTypeInfo =
-			dataFetchingEnvironment.getFieldTypeInfo();
+		ExecutionStepInfo executionStepInfo =
+			dataFetchingEnvironment.getExecutionStepInfo();
 
 		GraphQLFieldDefinition graphQLFieldDefinition =
-			executionTypeInfo.getFieldDefinition();
+			executionStepInfo.getFieldDefinition();
 
 		return graphQLFieldDefinition.getName();
 	}

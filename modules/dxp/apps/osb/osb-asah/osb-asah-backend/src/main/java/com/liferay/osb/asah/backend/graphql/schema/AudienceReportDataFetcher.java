@@ -12,7 +12,7 @@ import com.liferay.osb.asah.backend.dto.AudienceReportDTO;
 import com.liferay.osb.asah.backend.graphql.annotation.GraphQLTypeWiring;
 import com.liferay.osb.asah.backend.model.AudienceReport;
 
-import graphql.execution.ExecutionTypeInfo;
+import graphql.execution.ExecutionStepInfo;
 
 import graphql.schema.DataFetchingEnvironment;
 import graphql.schema.GraphQLFieldDefinition;
@@ -33,14 +33,14 @@ public class AudienceReportDataFetcher
 		DataFetchingEnvironment dataFetchingEnvironment,
 		SearchQueryContext searchQueryContext) {
 
-		ExecutionTypeInfo fieldExecutionTypeInfo =
-			dataFetchingEnvironment.getFieldTypeInfo();
+		ExecutionStepInfo fieldExecutionStepInfo =
+			dataFetchingEnvironment.getExecutionStepInfo();
 
-		ExecutionTypeInfo parentExecutionTypeInfo =
-			fieldExecutionTypeInfo.getParentTypeInfo();
+		ExecutionStepInfo parentExecutionStepInfo =
+			fieldExecutionStepInfo.getParent();
 
 		GraphQLFieldDefinition parentGraphQLFieldDefinition =
-			parentExecutionTypeInfo.getFieldDefinition();
+			parentExecutionStepInfo.getFieldDefinition();
 
 		AudienceReport audienceReport = _userDog.getAudienceReport(
 			_metricTypeDog.getMetricType(

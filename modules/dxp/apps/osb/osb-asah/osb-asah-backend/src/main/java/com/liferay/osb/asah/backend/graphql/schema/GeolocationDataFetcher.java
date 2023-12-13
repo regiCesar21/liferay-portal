@@ -14,7 +14,7 @@ import com.liferay.osb.asah.backend.model.AssetType;
 import com.liferay.osb.asah.backend.model.Metric;
 import com.liferay.osb.asah.common.model.MetricType;
 
-import graphql.execution.ExecutionTypeInfo;
+import graphql.execution.ExecutionStepInfo;
 
 import graphql.schema.DataFetchingEnvironment;
 import graphql.schema.GraphQLFieldDefinition;
@@ -36,14 +36,14 @@ public class GeolocationDataFetcher extends BaseDataFetcher<List<Metric>> {
 		DataFetchingEnvironment dataFetchingEnvironment,
 		SearchQueryContext searchQueryContext) {
 
-		ExecutionTypeInfo fieldExecutionTypeInfo =
-			dataFetchingEnvironment.getFieldTypeInfo();
+		ExecutionStepInfo fieldExecutionStepInfo =
+			dataFetchingEnvironment.getExecutionStepInfo();
 
-		ExecutionTypeInfo parentExecutionTypeInfo =
-			fieldExecutionTypeInfo.getParentTypeInfo();
+		ExecutionStepInfo parentExecutionStepInfo =
+			fieldExecutionStepInfo.getParent();
 
 		GraphQLFieldDefinition graphQLFieldDefinition =
-			parentExecutionTypeInfo.getFieldDefinition();
+			parentExecutionStepInfo.getFieldDefinition();
 
 		MetricType metricType = _metricTypeDog.getMetricType(
 			searchQueryContext.getAssetType(),

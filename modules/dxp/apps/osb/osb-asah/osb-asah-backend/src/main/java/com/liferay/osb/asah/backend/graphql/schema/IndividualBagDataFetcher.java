@@ -13,7 +13,7 @@ import com.liferay.osb.asah.backend.model.Individual;
 import com.liferay.osb.asah.common.model.MetricType;
 import com.liferay.osb.asah.common.model.ResultBag;
 
-import graphql.execution.ExecutionTypeInfo;
+import graphql.execution.ExecutionStepInfo;
 
 import graphql.schema.DataFetchingEnvironment;
 import graphql.schema.GraphQLFieldDefinition;
@@ -36,14 +36,14 @@ public class IndividualBagDataFetcher
 
 		String keywords = dataFetchingEnvironment.getArgument("keywords");
 
-		ExecutionTypeInfo fieldExecutionTypeInfo =
-			dataFetchingEnvironment.getFieldTypeInfo();
+		ExecutionStepInfo fieldExecutionStepInfo =
+			dataFetchingEnvironment.getExecutionStepInfo();
 
-		ExecutionTypeInfo parentExecutionTypeInfo =
-			fieldExecutionTypeInfo.getParentTypeInfo();
+		ExecutionStepInfo parentExecutionStepInfo =
+			fieldExecutionStepInfo.getParent();
 
 		GraphQLFieldDefinition graphQLFieldDefinition =
-			parentExecutionTypeInfo.getFieldDefinition();
+			parentExecutionStepInfo.getFieldDefinition();
 
 		MetricType metricType = _metricTypeDog.getMetricType(
 			searchQueryContext.getAssetType(),

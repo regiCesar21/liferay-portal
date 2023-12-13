@@ -12,7 +12,7 @@ import com.liferay.osb.asah.backend.graphql.annotation.GraphQLTypeWiring;
 import com.liferay.osb.asah.backend.model.Metric;
 import com.liferay.osb.asah.common.model.ResultBag;
 
-import graphql.execution.ExecutionTypeInfo;
+import graphql.execution.ExecutionStepInfo;
 
 import graphql.schema.DataFetchingEnvironment;
 import graphql.schema.GraphQLFieldDefinition;
@@ -32,14 +32,14 @@ public class SegmentDataFetcher extends BaseDataFetcher<ResultBag<Metric>> {
 		DataFetchingEnvironment dataFetchingEnvironment,
 		SearchQueryContext searchQueryContext) {
 
-		ExecutionTypeInfo fieldExecutionTypeInfo =
-			dataFetchingEnvironment.getFieldTypeInfo();
+		ExecutionStepInfo fieldExecutionStepInfo =
+			dataFetchingEnvironment.getExecutionStepInfo();
 
-		ExecutionTypeInfo parentExecutionTypeInfo =
-			fieldExecutionTypeInfo.getParentTypeInfo();
+		ExecutionStepInfo parentExecutionStepInfo =
+			fieldExecutionStepInfo.getParent();
 
 		GraphQLFieldDefinition graphQLFieldDefinition =
-			parentExecutionTypeInfo.getFieldDefinition();
+			parentExecutionStepInfo.getFieldDefinition();
 
 		return _segmentDog.getSegmentMetricResultBag(
 			_metricTypeDog.getMetricType(

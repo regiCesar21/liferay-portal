@@ -11,7 +11,7 @@ import com.liferay.osb.asah.backend.dog.helper.SearchQueryContext;
 import com.liferay.osb.asah.backend.graphql.annotation.GraphQLTypeWiring;
 import com.liferay.osb.asah.common.model.MetricType;
 
-import graphql.execution.ExecutionTypeInfo;
+import graphql.execution.ExecutionStepInfo;
 
 import graphql.schema.DataFetchingEnvironment;
 import graphql.schema.GraphQLFieldDefinition;
@@ -41,21 +41,21 @@ public class UsersCountDataFetcher extends BaseDataFetcher<Long> {
 		DataFetchingEnvironment dataFetchingEnvironment,
 		SearchQueryContext searchQueryContext) {
 
-		ExecutionTypeInfo fieldExecutionTypeInfo =
-			dataFetchingEnvironment.getFieldTypeInfo();
+		ExecutionStepInfo fieldExecutionStepInfo =
+			dataFetchingEnvironment.getExecutionStepInfo();
 
-		ExecutionTypeInfo parentExecutionTypeInfo =
-			fieldExecutionTypeInfo.getParentTypeInfo();
+		ExecutionStepInfo parentExecutionStepInfo =
+			fieldExecutionStepInfo.getParent();
 
 		GraphQLFieldDefinition parentGraphQLFieldDefinition =
-			parentExecutionTypeInfo.getFieldDefinition();
+			parentExecutionStepInfo.getFieldDefinition();
 
 		MetricType metricType = _metricTypeDog.getMetricType(
 			searchQueryContext.getAssetType(),
 			parentGraphQLFieldDefinition.getName());
 
 		GraphQLFieldDefinition graphQLFieldDefinition =
-			fieldExecutionTypeInfo.getFieldDefinition();
+			fieldExecutionStepInfo.getFieldDefinition();
 
 		if (Objects.equals(
 				graphQLFieldDefinition.getName(), "anonymousUsersCount")) {

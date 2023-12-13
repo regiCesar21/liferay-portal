@@ -15,7 +15,7 @@ import com.liferay.osb.asah.common.model.MetricType;
 import com.liferay.osb.asah.common.model.ResultBag;
 import com.liferay.osb.asah.common.model.Sort;
 
-import graphql.execution.ExecutionTypeInfo;
+import graphql.execution.ExecutionStepInfo;
 
 import graphql.schema.DataFetchingEnvironment;
 import graphql.schema.GraphQLFieldDefinition;
@@ -71,11 +71,11 @@ public class AssetMetricBagDataFetcher extends BaseDataFetcher<ResultBag> {
 	protected AssetType getAssetType(
 		DataFetchingEnvironment dataFetchingEnvironment) {
 
-		ExecutionTypeInfo executionTypeInfo =
-			dataFetchingEnvironment.getFieldTypeInfo();
+		ExecutionStepInfo executionStepInfo =
+			dataFetchingEnvironment.getExecutionStepInfo();
 
 		GraphQLFieldDefinition graphQLFieldDefinition =
-			executionTypeInfo.getFieldDefinition();
+			executionStepInfo.getFieldDefinition();
 
 		String name = graphQLFieldDefinition.getName();
 

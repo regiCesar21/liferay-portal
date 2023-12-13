@@ -9,7 +9,7 @@ import com.liferay.osb.asah.backend.dog.helper.SearchQueryContext;
 import com.liferay.osb.asah.backend.model.AssetType;
 import com.liferay.osb.asah.common.model.TimeRange;
 
-import graphql.execution.ExecutionTypeInfo;
+import graphql.execution.ExecutionStepInfo;
 
 import graphql.language.Field;
 import graphql.language.FragmentDefinition;
@@ -177,11 +177,11 @@ public abstract class BaseDataFetcher<T> implements DataFetcher<T> {
 			return AssetType.valueOf(assetTypeString);
 		}
 
-		ExecutionTypeInfo executionTypeInfo =
-			dataFetchingEnvironment.getFieldTypeInfo();
+		ExecutionStepInfo executionStepInfo =
+			dataFetchingEnvironment.getExecutionStepInfo();
 
 		GraphQLFieldDefinition graphQLFieldDefinition =
-			executionTypeInfo.getFieldDefinition();
+			executionStepInfo.getFieldDefinition();
 
 		String name = graphQLFieldDefinition.getName();
 

@@ -10,7 +10,7 @@ import com.liferay.osb.asah.backend.graphql.annotation.GraphQLTypeWiring;
 import com.liferay.osb.asah.common.model.CompositionResultBag;
 import com.liferay.osb.asah.common.model.Sort;
 
-import graphql.execution.ExecutionTypeInfo;
+import graphql.execution.ExecutionStepInfo;
 
 import graphql.schema.DataFetcher;
 import graphql.schema.DataFetchingEnvironment;
@@ -36,11 +36,11 @@ public class InterestCompositionBagDataFetcher
 	public CompositionResultBag get(
 		DataFetchingEnvironment dataFetchingEnvironment) {
 
-		ExecutionTypeInfo executionTypeInfo =
-			dataFetchingEnvironment.getFieldTypeInfo();
+		ExecutionStepInfo executionStepInfo =
+			dataFetchingEnvironment.getExecutionStepInfo();
 
 		GraphQLFieldDefinition graphQLFieldDefinition =
-			executionTypeInfo.getFieldDefinition();
+			executionStepInfo.getFieldDefinition();
 
 		String name = graphQLFieldDefinition.getName();
 
