@@ -54,6 +54,8 @@ import org.osgi.util.tracker.ServiceTrackerCustomizer;
 		"default.registration.property=filter.init.auth.verifier.PortalSessionAuthVerifier.urls.includes=*",
 		"default.registration.property=filter.init.guest.allowed=true",
 		"default.remote.access.filter.service.ranking:Integer=-10",
+		"default.whiteboard.property=" + HttpWhiteboardConstants.HTTP_WHITEBOARD_FILTER_DISPATCHER + "=" + HttpWhiteboardConstants.DISPATCHER_FORWARD,
+		"default.whiteboard.property=" + HttpWhiteboardConstants.HTTP_WHITEBOARD_FILTER_DISPATCHER + "=" + HttpWhiteboardConstants.DISPATCHER_REQUEST,
 		"default.whiteboard.property=" + HttpWhiteboardConstants.HTTP_WHITEBOARD_FILTER_SERVLET + "=cxf-servlet",
 		"servlet.context.helper.select.filter=(!(liferay.auth.verifier=false))"
 	},
@@ -121,7 +123,18 @@ public class AuthVerifierFilterTracker {
 				propertyValue = property.substring(index + 1);
 			}
 
-			dictionary.put(propertyKey, propertyValue);
+			Object existingPropertyValue = dictionary.get(propertyKey);
+
+			if (existingPropertyValue != null) {
+				List<String> strings = StringPlus.asList(existingPropertyValue);
+
+				strings.add(propertyValue);
+
+				dictionary.put(propertyKey, strings);
+			}
+			else {
+				dictionary.put(propertyKey, propertyValue);
+			}
 		}
 
 		return dictionary;
@@ -254,22 +267,6 @@ public class AuthVerifierFilterTracker {
 			remoteAccessFilterServiceRegistration.unregister();
 		}
 
-		private Dictionary<String, Object> _buildDefaultFilterProperties(
-			String filterName) {
-
-			HashMapDictionaryBuilder.HashMapDictionaryWrapper<String, Object>
-				properties =
-					new HashMapDictionaryBuilder.HashMapDictionaryWrapper<>();
-
-			properties.put("servlet-context-name", "");
-			properties.put("servlet-filter-name", filterName);
-			properties.put("url-pattern", "/o/headless-delivery/*");
-			properties.put(
-				"dispatcher", new String[] {"FORWARD", "INCLUDE", "REQUEST"});
-
-			return properties.build();
-		}
-
 		private Map<String, Object> _buildPropertiesForAuthVerifierFilter(
 			ServiceReference<ServletContextHelper> serviceReference) {
 
@@ -304,8 +301,6 @@ public class AuthVerifierFilterTracker {
 			Map<String, Object> properties = new HashMap<>(
 				_getWhiteboardProperties(serviceReference));
 
-			properties.putAll(_buildDefaultFilterProperties("Remote Access Filter"));
-			
 			properties.put(
 				"service.ranking",
 				MapUtil.getInteger(
