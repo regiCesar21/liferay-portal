@@ -7,8 +7,8 @@ package com.liferay.osb.asah.backend.dto;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 
+import com.liferay.osb.asah.backend.graphql.annotation.GraphQLType;
 import com.liferay.osb.asah.backend.model.Trend;
-import com.liferay.osb.asah.common.graphql.GraphQLType;
 import com.liferay.osb.asah.common.model.CurrencyValue;
 import com.liferay.osb.asah.common.model.TrendClassification;
 

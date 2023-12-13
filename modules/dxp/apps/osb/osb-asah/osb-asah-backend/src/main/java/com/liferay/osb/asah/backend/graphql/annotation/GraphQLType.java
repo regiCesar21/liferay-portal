@@ -3,24 +3,20 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-package com.liferay.osb.asah.common.graphql;
+package com.liferay.osb.asah.backend.graphql.annotation;
 
 import java.lang.annotation.ElementType;
-import java.lang.annotation.Repeatable;
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
 /**
- * @author André Miranda
+ * @author Marcellus Tavares
  */
-@Repeatable(GraphQLTypeWirings.class)
 @Retention(RetentionPolicy.RUNTIME)
 @Target(ElementType.TYPE)
-public @interface GraphQLTypeWiring {
+public @interface GraphQLType {
 
-	public String fieldName();
-
-	public String typeName();
+	public String value() default "";
 
 }

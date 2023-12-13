@@ -7,9 +7,9 @@ package com.liferay.osb.asah.backend.dto;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
+import com.liferay.osb.asah.backend.graphql.annotation.GraphQLProperty;
+import com.liferay.osb.asah.backend.graphql.annotation.GraphQLType;
 import com.liferay.osb.asah.common.entity.Asset;
-import com.liferay.osb.asah.common.graphql.GraphQLProperty;
-import com.liferay.osb.asah.common.graphql.GraphQLType;
 import com.liferay.osb.asah.common.util.ListUtil;
 import com.liferay.osb.asah.common.util.StringUtil;
 

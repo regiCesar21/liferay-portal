@@ -6,7 +6,7 @@
 package com.liferay.osb.asah.backend.graphql.schema;
 
 import com.liferay.osb.asah.backend.dto.JobRunDTO;
-import com.liferay.osb.asah.common.graphql.GraphQLTypeWiring;
+import com.liferay.osb.asah.backend.graphql.annotation.GraphQLTypeWiring;
 
 import graphql.schema.DataFetcher;
 import graphql.schema.DataFetchingEnvironment;

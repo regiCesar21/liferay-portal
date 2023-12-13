@@ -7,8 +7,8 @@ package com.liferay.osb.asah.backend.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
-import com.liferay.osb.asah.common.graphql.GraphQLProperty;
-import com.liferay.osb.asah.common.graphql.GraphQLType;
+import com.liferay.osb.asah.backend.graphql.annotation.GraphQLProperty;
+import com.liferay.osb.asah.backend.graphql.annotation.GraphQLType;
 
 import java.util.HashMap;
 import java.util.List;

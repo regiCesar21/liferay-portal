@@ -7,7 +7,7 @@ package com.liferay.osb.asah.backend.graphql.schema;
 
 import com.liferay.osb.asah.backend.dog.helper.SearchQueryContext;
 import com.liferay.osb.asah.backend.dto.DataSourceDTO;
-import com.liferay.osb.asah.common.graphql.GraphQLTypeWiring;
+import com.liferay.osb.asah.backend.graphql.annotation.GraphQLTypeWiring;
 
 import graphql.schema.DataFetchingEnvironment;
 

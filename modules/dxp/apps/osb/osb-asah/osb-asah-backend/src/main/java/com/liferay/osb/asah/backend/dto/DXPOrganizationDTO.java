@@ -5,8 +5,8 @@
 
 package com.liferay.osb.asah.backend.dto;
 
+import com.liferay.osb.asah.backend.graphql.annotation.GraphQLType;
 import com.liferay.osb.asah.common.entity.BQOrganization;
-import com.liferay.osb.asah.common.graphql.GraphQLType;
 import com.liferay.osb.asah.common.util.StringUtil;
 
 /**
