@@ -12,8 +12,6 @@ import com.liferay.osb.asah.common.dog.CommerceDashboardDog;
 import com.liferay.osb.asah.common.model.CurrencyValue;
 import com.liferay.osb.asah.common.util.ListUtil;
 
-import graphql.language.Field;
-
 import graphql.schema.DataFetchingEnvironment;
 import graphql.schema.DataFetchingFieldSelectionSet;
 
@@ -41,13 +39,10 @@ public class OrderAverageCurrencyValuesDataFetcher
 		DataFetchingFieldSelectionSet dataFetchingFieldSelectionSet =
 			dataFetchingEnvironment.getSelectionSet();
 
-		Map<String, List<Field>> dataFetchingFieldSelectionSetFields =
-			dataFetchingFieldSelectionSet.get();
-
 		Map<String, CurrencyValue> orderAverageCurrencyValues =
 			_commerceDashboardDog.getOrderAverageCurrencyValues(
 				Long.valueOf(dataFetchingEnvironment.getArgument("channelId")),
-				dataFetchingFieldSelectionSetFields.containsKey("trend"),
+				dataFetchingFieldSelectionSet.contains("trend"),
 				searchQueryContext.getTimeRange());
 
 		return ListUtil.map(
