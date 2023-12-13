@@ -43,18 +43,18 @@ function ExternalAccountKeys({details}) {
 			/>
 
 			<DetailField
-				fieldLabel={Liferay.Language.get('dossiera-account')}
+				fieldLabel={Liferay.Language.get('salesforce-account')}
 				fieldName="entityId"
-				formAction={details.updateDossieraAccountURL}
+				formAction={details.updateSalesforceAccountURL}
 				formData={{
-					domain: 'dossiera',
+					domain: 'salesforce',
 					entityId: convertDashToEmptyString(
-						details.dossieraAccountKey
+						details.salesforceAccountKey
 					),
 					entityName: 'account'
 				}}
 				type={fieldType}
-				value={details.dossieraAccountKey}
+				value={details.salesforceAccountKey}
 			/>
 
 			<DetailField
@@ -108,11 +108,11 @@ function ExternalAccountKeys({details}) {
 
 ExternalAccountKeys.propTypes = {
 	details: PropTypes.shape({
-		dossieraAccountKey: PropTypes.string,
+		salesforceAccountKey: PropTypes.string,
 		relatedSalesforceProjectKey: PropTypes.string,
 		salesforceProjectKey: PropTypes.string,
 		updateAnalyticsCloudGroupURL: PropTypes.string,
-		updateDossieraAccountURL: PropTypes.string,
+		updateSalesforceAccountURL: PropTypes.string,
 		updateDxpCloudProjectURL: PropTypes.string,
 		updateRelatedSalesforceProjectURL: PropTypes.string,
 		updateSalesforceProjectURL: PropTypes.string

@@ -120,12 +120,6 @@ public class AccountDisplay {
 		return _dateTimeFormat.format(_account.getDateModified());
 	}
 
-	public String getDossieraAccountKey() {
-		return _getExternalLinkEntityId(
-			ExternalLinkDomain.DOSSIERA,
-			ExternalLinkEntityName.DOSSIERA_ACCOUNT);
-	}
-
 	public String getDxpCloudProjectId() {
 		return _getExternalLinkEntityId(
 			ExternalLinkDomain.DXP_CLOUD,
@@ -274,6 +268,12 @@ public class AccountDisplay {
 			ExternalLinkEntityName.RELATED_SALESFORCE_PROJECT);
 	}
 
+	public String getSalesforceAccountKey() {
+		return _getExternalLinkEntityId(
+			ExternalLinkDomain.SALESFORCE,
+			ExternalLinkEntityName.SALESFORCE_ACCOUNT);
+	}
+
 	public String getSalesforceProjectKey() {
 		return _getExternalLinkEntityId(
 			ExternalLinkDomain.SALESFORCE,
@@ -407,13 +407,6 @@ public class AccountDisplay {
 				ExternalLinkEntityName.ANALYTICS_CLOUD_GROUP));
 	}
 
-	public String getUpdateDossieraAccountURL() {
-		return _getUpdateExternalLinkURL(
-			_getExternalLinkKey(
-				ExternalLinkDomain.DOSSIERA,
-				ExternalLinkEntityName.DOSSIERA_ACCOUNT));
-	}
-
 	public String getUpdateDxpCloudProjectURL() {
 		return _getUpdateExternalLinkURL(
 			_getExternalLinkKey(
@@ -426,6 +419,13 @@ public class AccountDisplay {
 			_getExternalLinkKey(
 				ExternalLinkDomain.SALESFORCE,
 				ExternalLinkEntityName.RELATED_SALESFORCE_PROJECT));
+	}
+
+	public String getUpdateSalesforceAccountURL() {
+		return _getUpdateExternalLinkURL(
+			_getExternalLinkKey(
+				ExternalLinkDomain.SALESFORCE,
+				ExternalLinkEntityName.SALESFORCE_ACCOUNT));
 	}
 
 	public String getUpdateSalesforceProjectURL() {
