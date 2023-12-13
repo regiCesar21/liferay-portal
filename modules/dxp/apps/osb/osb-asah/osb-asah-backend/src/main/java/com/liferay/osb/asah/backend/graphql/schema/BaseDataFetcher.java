@@ -22,6 +22,7 @@ import graphql.schema.DataFetcher;
 import graphql.schema.DataFetchingEnvironment;
 import graphql.schema.DataFetchingFieldSelectionSet;
 import graphql.schema.GraphQLFieldDefinition;
+import graphql.schema.SelectedField;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -31,6 +32,8 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 /**
  * @author Marcellus Tavares
@@ -200,29 +203,16 @@ public abstract class BaseDataFetcher<T> implements DataFetcher<T> {
 		DataFetchingFieldSelectionSet dataFetchingFieldSelectionSet =
 			dataFetchingEnvironment.getSelectionSet();
 
-		Map<String, List<Field>> selectionSetFields =
-			dataFetchingFieldSelectionSet.get();
+		List<SelectedField> selectionSetFields =
+			dataFetchingFieldSelectionSet.getFields();
 
-		Set<String> fieldNames = new HashSet<>();
+		Stream<SelectedField> selectedFieldStream = selectionSetFields.stream();
 
-		for (Map.Entry<String, List<Field>> entry :
-				selectionSetFields.entrySet()) {
-
-			for (Field field : entry.getValue()) {
-				SelectionSet selectionSet = field.getSelectionSet();
-
-				if (selectionSet != null) {
-					fieldNames.addAll(
-						_getSelectionSetFieldNames(
-							dataFetchingEnvironment, selectionSet));
-				}
-				else {
-					fieldNames.add(field.getName());
-				}
-			}
-		}
-
-		return fieldNames;
+		return selectedFieldStream.map(
+			SelectedField::getName
+		).collect(
+			Collectors.toSet()
+		);
 	}
 
 	private Set<String> _getFragmentFieldNames(
