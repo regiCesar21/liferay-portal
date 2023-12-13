@@ -157,11 +157,17 @@ AUI.add(
 				var xmlAction = XMLUtil.createObj(actionNodeName || 'action');
 
 				actions.name.forEach((item, index) => {
-					buffer.push(xmlAction.open, XMLUtil.create('name', item));
+					buffer.push(
+						xmlAction.open,
+						XMLUtil.create('name', A.Escape.html(item))
+					);
 
 					if (isValidValue(description, index)) {
 						buffer.push(
-							XMLUtil.create('description', description[index])
+							XMLUtil.create(
+								'description',
+								A.Escape.html(description[index])
+							)
 						);
 					}
 
@@ -173,7 +179,10 @@ AUI.add(
 
 					if (isValidValue(language, index)) {
 						buffer.push(
-							XMLUtil.create('scriptLanguage', language[index])
+							XMLUtil.create(
+								'scriptLanguage',
+								A.Escape.html(language[index])
+							)
 						);
 					}
 
@@ -181,7 +190,7 @@ AUI.add(
 						buffer.push(
 							XMLUtil.create(
 								'executionType',
-								executionType[index]
+								A.Escape.html(executionType[index])
 							)
 						);
 					}
@@ -226,7 +235,9 @@ AUI.add(
 				if (dataAssignments.address) {
 					dataAssignments.address.forEach((item) => {
 						if (isNotEmptyValue(item)) {
-							buffer.push(XMLUtil.create('address', item));
+							buffer.push(
+								XMLUtil.create('address', A.Escape.html(item))
+							);
 						}
 					});
 				}
@@ -240,7 +251,10 @@ AUI.add(
 					);
 
 					buffer.push(
-						XMLUtil.create('resourceActions', xmlResourceAction)
+						XMLUtil.create(
+							'resourceActions',
+							A.Escape.html(xmlResourceAction)
+						)
 					);
 				}
 				else if (assignmentType === 'roleId') {
@@ -251,7 +265,7 @@ AUI.add(
 
 					buffer.push(
 						xmlRoles.open,
-						XMLUtil.create('role', xmlRoleId),
+						XMLUtil.create('role', A.Escape.html(xmlRoleId)),
 						xmlRoles.close
 					);
 				}
@@ -266,15 +280,17 @@ AUI.add(
 						if (roleName) {
 							buffer.push(
 								xmlRole.open,
-								XMLUtil.create('roleType', item),
-								XMLUtil.create('name', roleName)
+								XMLUtil.create('roleType', A.Escape.html(item)),
+								XMLUtil.create('name', A.Escape.html(roleName))
 							);
 
 							if (dataAssignments.autoCreate[index] != null) {
 								buffer.push(
 									XMLUtil.create(
 										'autoCreate',
-										dataAssignments.autoCreate[index]
+										A.Escape.html(
+											dataAssignments.autoCreate[index]
+										)
 									)
 								);
 							}
@@ -296,7 +312,9 @@ AUI.add(
 							XMLUtil.create('script', cdata(item)),
 							XMLUtil.create(
 								'scriptLanguage',
-								dataAssignments.scriptLanguage[index]
+								A.Escape.html(
+									dataAssignments.scriptLanguage[index]
+								)
 							),
 							xmlScriptedAssignment.close
 						);
@@ -313,7 +331,9 @@ AUI.add(
 							XMLUtil.create('script', cdata(item)),
 							XMLUtil.create(
 								'scriptLanguage',
-								dataAssignments.scriptLanguage[index]
+								A.Escape.html(
+									dataAssignments.scriptLanguage[index]
+								)
 							),
 							xmlScriptedRecipient.close
 						);
@@ -332,7 +352,10 @@ AUI.add(
 
 							if (isNotEmptyValue(item)) {
 								buffer.push(
-									XMLUtil.create('emailAddress', item)
+									XMLUtil.create(
+										'emailAddress',
+										A.Escape.html(item)
+									)
 								);
 							}
 
@@ -350,7 +373,12 @@ AUI.add(
 							buffer.push(xmlUser.open);
 
 							if (isNotEmptyValue(item)) {
-								buffer.push(XMLUtil.create('screenName', item));
+								buffer.push(
+									XMLUtil.create(
+										'screenName',
+										A.Escape.html(item)
+									)
+								);
 							}
 
 							buffer.push(xmlUser.close);
@@ -367,7 +395,12 @@ AUI.add(
 							buffer.push(xmlUser.open);
 
 							if (isNotEmptyValue(item)) {
-								buffer.push(XMLUtil.create('userId', item));
+								buffer.push(
+									XMLUtil.create(
+										'userId',
+										A.Escape.html(item)
+									)
+								);
 							}
 
 							buffer.push(xmlUser.close);
