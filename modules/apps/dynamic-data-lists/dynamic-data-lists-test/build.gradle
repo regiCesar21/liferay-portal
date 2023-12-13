@@ -3,7 +3,7 @@ copyLibs {
 }
 
 dependencies {
-	compileOnly group: "org.apache.poi", name: "poi", version: "3.15"
+	compileOnly group: "org.apache.poi", name: "poi", version: "5.2.2"
 
 	testImplementation group: "com.liferay.portal", name: "com.liferay.portal.kernel", version: "default"
 	testImplementation project(":apps:dynamic-data-lists:dynamic-data-lists-api")
