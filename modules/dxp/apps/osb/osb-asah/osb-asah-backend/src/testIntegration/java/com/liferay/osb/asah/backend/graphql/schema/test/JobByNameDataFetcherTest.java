@@ -17,9 +17,12 @@ import com.liferay.osb.asah.common.repository.JobRepository;
 import com.liferay.osb.asah.common.util.SetUtil;
 import com.liferay.osb.asah.test.util.spring.OSBAsahTestExecutionListenersContext;
 
-import graphql.schema.DataFetchingEnvironment;
-import graphql.schema.DataFetchingEnvironmentBuilder;
+import graphql.GraphQLContext;
 
+import graphql.schema.DataFetchingEnvironment;
+import graphql.schema.DataFetchingEnvironmentImpl;
+
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -75,18 +78,18 @@ public class JobByNameDataFetcherTest
 	}
 
 	private DataFetchingEnvironment _getDataFetchingEnvironment(String value) {
-		DataFetchingEnvironmentBuilder dataFetchingEnvironmentBuilder =
-			DataFetchingEnvironmentBuilder.newDataFetchingEnvironment();
+		DataFetchingEnvironmentImpl.Builder builder =
+			DataFetchingEnvironmentImpl.newDataFetchingEnvironment();
 
 		Map<String, Object> arguments = new HashMap<>();
 
 		arguments.put("name", value);
 
-		dataFetchingEnvironmentBuilder.arguments(arguments);
+		builder.arguments(arguments);
 
-		dataFetchingEnvironmentBuilder.context(new HashMap<>());
+		builder.graphQLContext(GraphQLContext.of(Collections.emptyMap()));
 
-		return dataFetchingEnvironmentBuilder.build();
+		return builder.build();
 	}
 
 	@Autowired

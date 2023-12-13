@@ -15,12 +15,15 @@ import com.liferay.osb.asah.common.repository.DataSourceRepository;
 import com.liferay.osb.asah.test.util.configuration.JDBCTestConfiguration;
 import com.liferay.osb.asah.test.util.spring.OSBAsahTestExecutionListenersContext;
 
+import graphql.GraphQLContext;
+
 import graphql.language.Field;
 
 import graphql.schema.DataFetchingEnvironment;
-import graphql.schema.DataFetchingEnvironmentBuilder;
+import graphql.schema.DataFetchingEnvironmentImpl;
 
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -93,25 +96,25 @@ public abstract class BaseOrderDataFetcherTestCase
 	protected DataFetchingEnvironment getDataFetchingEnvironment(
 		List<Field> fields) {
 
-		DataFetchingEnvironmentBuilder dataFetchingEnvironmentBuilder =
-			DataFetchingEnvironmentBuilder.newDataFetchingEnvironment();
+		DataFetchingEnvironmentImpl.Builder builder =
+			DataFetchingEnvironmentImpl.newDataFetchingEnvironment();
 
 		Map<String, Object> arguments = new HashMap<>();
 
 		arguments.put("channelId", "11");
 		arguments.put("rangeKey", 7);
 
-		dataFetchingEnvironmentBuilder.arguments(arguments);
+		builder.arguments(arguments);
 
-		dataFetchingEnvironmentBuilder.context(new HashMap<>());
+		builder.graphQLContext(GraphQLContext.of(Collections.emptyMap()));
 
 		Stream<Field> stream = fields.stream();
 
-		dataFetchingEnvironmentBuilder.selectionSet(
+		builder.selectionSet(
 			() -> stream.collect(
 				Collectors.toMap(Field::getName, Arrays::asList)));
 
-		return dataFetchingEnvironmentBuilder.build();
+		return builder.build();
 	}
 
 	@Autowired

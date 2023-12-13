@@ -16,8 +16,10 @@ import com.liferay.osb.asah.common.repository.EventAnalysisRepository;
 import com.liferay.osb.asah.common.repository.EventDefinitionRepository;
 import com.liferay.osb.asah.test.util.spring.OSBAsahTestExecutionListenersContext;
 
+import graphql.GraphQLContext;
+
 import graphql.schema.DataFetchingEnvironment;
-import graphql.schema.DataFetchingEnvironmentBuilder;
+import graphql.schema.DataFetchingEnvironmentImpl;
 
 import java.util.Arrays;
 import java.util.Collections;
@@ -77,8 +79,8 @@ public class DeleteEventAnalysesMutationDataFetcherTest
 	}
 
 	private DataFetchingEnvironment _getDataFetchingEnvironment() {
-		DataFetchingEnvironmentBuilder dataFetchingEnvironmentBuilder =
-			DataFetchingEnvironmentBuilder.newDataFetchingEnvironment();
+		DataFetchingEnvironmentImpl.Builder builder =
+			DataFetchingEnvironmentImpl.newDataFetchingEnvironment();
 
 		Map<String, Object> arguments = new HashMap<>();
 
@@ -117,29 +119,29 @@ public class DeleteEventAnalysesMutationDataFetcherTest
 		arguments.put("userId", "20");
 		arguments.put("userName", "Test");
 
-		dataFetchingEnvironmentBuilder.arguments(arguments);
+		builder.arguments(arguments);
 
-		dataFetchingEnvironmentBuilder.context(new HashMap<>());
+		builder.graphQLContext(GraphQLContext.of(Collections.emptyMap()));
 
-		return dataFetchingEnvironmentBuilder.build();
+		return builder.build();
 	}
 
 	private DataFetchingEnvironment _getDeleteDataFetchingEnvironment(
 		String eventAnalysisId) {
 
-		DataFetchingEnvironmentBuilder dataFetchingEnvironmentBuilder =
-			DataFetchingEnvironmentBuilder.newDataFetchingEnvironment();
+		DataFetchingEnvironmentImpl.Builder builder =
+			DataFetchingEnvironmentImpl.newDataFetchingEnvironment();
 
 		Map<String, Object> arguments = new HashMap<>();
 
 		arguments.put(
 			"eventAnalysisIds", Collections.singletonList(eventAnalysisId));
 
-		dataFetchingEnvironmentBuilder.arguments(arguments);
+		builder.arguments(arguments);
 
-		dataFetchingEnvironmentBuilder.context(new HashMap<>());
+		builder.graphQLContext(GraphQLContext.of(Collections.emptyMap()));
 
-		return dataFetchingEnvironmentBuilder.build();
+		return builder.build();
 	}
 
 	@Autowired

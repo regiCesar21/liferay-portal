@@ -14,7 +14,7 @@ import com.liferay.osb.asah.common.model.ResultBag;
 import com.liferay.osb.asah.common.repository.EventDefinitionRepository;
 import com.liferay.osb.asah.test.util.spring.OSBAsahTestExecutionListenersContext;
 
-import graphql.schema.DataFetchingEnvironmentBuilder;
+import graphql.schema.DataFetchingEnvironmentImpl;
 
 import java.util.Arrays;
 import java.util.Date;
@@ -70,10 +70,10 @@ public class BlockedCustomEventDefinitionBagDataFetcherTest
 
 	@Test
 	public void testGetSortedByLastSeenDate() {
-		DataFetchingEnvironmentBuilder dataFetchingEnvironmentBuilder =
-			DataFetchingEnvironmentBuilder.newDataFetchingEnvironment();
+		DataFetchingEnvironmentImpl.Builder builder =
+			DataFetchingEnvironmentImpl.newDataFetchingEnvironment();
 
-		dataFetchingEnvironmentBuilder.context(new HashMap<>());
+		builder.context(new HashMap<>());
 
 		HashMap<String, String> sort = new HashMap<String, String>() {
 			{
@@ -90,12 +90,12 @@ public class BlockedCustomEventDefinitionBagDataFetcherTest
 			}
 		};
 
-		dataFetchingEnvironmentBuilder.arguments(arguments);
+		builder.arguments(arguments);
 
 		ResultBag<BlockedCustomEventDefinitionDTO>
 			blockedCustomEventDefinitionDTOResultBag =
 				_blockedCustomEventDefinitionBagDataFetcher.get(
-					dataFetchingEnvironmentBuilder.build());
+					builder.build());
 
 		List<BlockedCustomEventDefinitionDTO> blockedCustomEventDefinitionDTOs =
 			blockedCustomEventDefinitionDTOResultBag.getResults();
@@ -114,8 +114,7 @@ public class BlockedCustomEventDefinitionBagDataFetcherTest
 		sort.put("type", "DESC");
 
 		blockedCustomEventDefinitionDTOResultBag =
-			_blockedCustomEventDefinitionBagDataFetcher.get(
-				dataFetchingEnvironmentBuilder.build());
+			_blockedCustomEventDefinitionBagDataFetcher.get(builder.build());
 
 		blockedCustomEventDefinitionDTOs =
 			blockedCustomEventDefinitionDTOResultBag.getResults();

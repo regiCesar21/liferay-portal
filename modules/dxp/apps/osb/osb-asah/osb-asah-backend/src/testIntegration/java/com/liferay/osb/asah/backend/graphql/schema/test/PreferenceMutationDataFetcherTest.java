@@ -12,7 +12,7 @@ import com.liferay.osb.asah.common.entity.Preference;
 import com.liferay.osb.asah.test.util.spring.OSBAsahTestExecutionListenersContext;
 
 import graphql.schema.DataFetchingEnvironment;
-import graphql.schema.DataFetchingEnvironmentBuilder;
+import graphql.schema.DataFetchingEnvironmentImpl;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -69,17 +69,17 @@ public class PreferenceMutationDataFetcherTest
 	private DataFetchingEnvironment _getDataFetchingEnvironment(
 		String key, String value) {
 
-		DataFetchingEnvironmentBuilder dataFetchingEnvironmentBuilder =
-			DataFetchingEnvironmentBuilder.newDataFetchingEnvironment();
+		DataFetchingEnvironmentImpl.Builder builder =
+			DataFetchingEnvironmentImpl.newDataFetchingEnvironment();
 
 		Map<String, Object> arguments = new HashMap<>();
 
 		arguments.put("key", key);
 		arguments.put("value", value);
 
-		dataFetchingEnvironmentBuilder.arguments(arguments);
+		builder.arguments(arguments);
 
-		return dataFetchingEnvironmentBuilder.build();
+		return builder.build();
 	}
 
 	@Autowired

@@ -16,8 +16,10 @@ import com.liferay.osb.asah.common.repository.EventAnalysisRepository;
 import com.liferay.osb.asah.common.repository.EventDefinitionRepository;
 import com.liferay.osb.asah.test.util.spring.OSBAsahTestExecutionListenersContext;
 
+import graphql.GraphQLContext;
+
 import graphql.schema.DataFetchingEnvironment;
-import graphql.schema.DataFetchingEnvironmentBuilder;
+import graphql.schema.DataFetchingEnvironmentImpl;
 
 import java.util.Arrays;
 import java.util.Collections;
@@ -92,8 +94,8 @@ public class UpdateEventAnalysisMutationDataFetcherTest
 	private DataFetchingEnvironment _getDataFetchingEnvironment(
 		String eventAnalysisId, String userId, String userName) {
 
-		DataFetchingEnvironmentBuilder dataFetchingEnvironmentBuilder =
-			DataFetchingEnvironmentBuilder.newDataFetchingEnvironment();
+		DataFetchingEnvironmentImpl.Builder builder =
+			DataFetchingEnvironmentImpl.newDataFetchingEnvironment();
 
 		Map<String, Object> arguments = new HashMap<>();
 
@@ -137,11 +139,11 @@ public class UpdateEventAnalysisMutationDataFetcherTest
 		arguments.put("userId", userId);
 		arguments.put("userName", userName);
 
-		dataFetchingEnvironmentBuilder.arguments(arguments);
+		builder.arguments(arguments);
 
-		dataFetchingEnvironmentBuilder.context(new HashMap<>());
+		builder.graphQLContext(GraphQLContext.of(Collections.emptyMap()));
 
-		return dataFetchingEnvironmentBuilder.build();
+		return builder.build();
 	}
 
 	@Autowired
