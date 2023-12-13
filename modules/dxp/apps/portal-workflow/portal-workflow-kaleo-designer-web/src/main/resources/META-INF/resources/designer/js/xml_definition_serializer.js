@@ -50,11 +50,13 @@ AUI.add(
 			}
 
 			if (description) {
-				buffer.push(XMLUtil.create('description', description));
+				buffer.push(
+					XMLUtil.create('description', A.Escape.html(description))
+				);
 			}
 
 			if (version) {
-				buffer.push(XMLUtil.create('version', version));
+				buffer.push(XMLUtil.create('version', A.Escape.html(version)));
 			}
 
 			json.nodes.forEach((item) => {
@@ -67,10 +69,18 @@ AUI.add(
 
 				var xmlNode = XMLUtil.createObj(item.xmlType);
 
-				buffer.push(xmlNode.open, XMLUtil.create('name', name));
+				buffer.push(
+					xmlNode.open,
+					XMLUtil.create('name', A.Escape.html(name))
+				);
 
 				if (description) {
-					buffer.push(XMLUtil.create('description', description));
+					buffer.push(
+						XMLUtil.create(
+							'description',
+							A.Escape.html(description)
+						)
+					);
 				}
 
 				if (metadata) {
@@ -85,7 +95,9 @@ AUI.add(
 				appendXMLActions(buffer, item.actions, item.notifications);
 
 				if (initial) {
-					buffer.push(XMLUtil.create('initial', initial));
+					buffer.push(
+						XMLUtil.create('initial', A.Escape.html(initial))
+					);
 				}
 
 				if (script) {
@@ -94,7 +106,10 @@ AUI.add(
 
 				if (scriptLanguage) {
 					buffer.push(
-						XMLUtil.create('scriptLanguage', scriptLanguage)
+						XMLUtil.create(
+							'scriptLanguage',
+							A.Escape.html(scriptLanguage)
+						)
 					);
 				}
 
