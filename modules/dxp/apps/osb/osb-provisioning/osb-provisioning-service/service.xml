@@ -52,6 +52,7 @@
 		<exception>DuplicateContactRole</exception>
 		<exception>DuplicateDXPCloudProjectId</exception>
 		<exception>DuplicateRelatedSalesforceProjectKey</exception>
+		<exception>DuplicateSalesforceAccountKey</exception>
 		<exception>DuplicateSalesforceProjectKey</exception>
 		<exception>ProductBundleName</exception>
 		<exception>ProductPurchaseQuantity</exception>

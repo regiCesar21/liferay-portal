@@ -14,6 +14,7 @@ import com.liferay.osb.provisioning.constants.ProvisioningPortletKeys;
 import com.liferay.osb.provisioning.exception.DuplicateAnalyticsCloudGroupIdException;
 import com.liferay.osb.provisioning.exception.DuplicateDXPCloudProjectIdException;
 import com.liferay.osb.provisioning.exception.DuplicateRelatedSalesforceProjectKeyException;
+import com.liferay.osb.provisioning.exception.DuplicateSalesforceAccountKeyException;
 import com.liferay.osb.provisioning.exception.DuplicateSalesforceProjectKeyException;
 import com.liferay.osb.provisioning.koroneiki.web.service.AccountWebService;
 import com.liferay.osb.provisioning.koroneiki.web.service.ExternalLinkWebService;
@@ -86,6 +87,7 @@ public class EditExternalLinkMVCActionCommand extends BaseMVCActionCommand {
 				exception instanceof DuplicateDXPCloudProjectIdException ||
 				exception instanceof
 					DuplicateRelatedSalesforceProjectKeyException ||
+				exception instanceof DuplicateSalesforceAccountKeyException ||
 				exception instanceof DuplicateSalesforceProjectKeyException ||
 				exception instanceof Problem.ProblemException) {
 
@@ -175,6 +177,11 @@ public class EditExternalLinkMVCActionCommand extends BaseMVCActionCommand {
 							ExternalLinkEntityName.SALESFORCE_PROJECT)) {
 
 					throw new DuplicateSalesforceProjectKeyException();
+				}
+				else if (entityName.equals(
+							ExternalLinkEntityName.SALESFORCE_ACCOUNT)) {
+
+					throw new DuplicateSalesforceAccountKeyException();
 				}
 			}
 		}
