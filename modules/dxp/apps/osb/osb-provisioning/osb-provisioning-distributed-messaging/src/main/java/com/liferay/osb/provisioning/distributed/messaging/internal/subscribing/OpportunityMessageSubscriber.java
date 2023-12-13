@@ -1034,7 +1034,8 @@ public class OpportunityMessageSubscriber extends BaseMessageSubscriber {
 
 				if (!productPurchaseExceptions.isEmpty()) {
 					handleError(
-						"dossiera.provisioning.create", jsonObject.toString(),
+						"ebenezer-support-opportunity-entries",
+						jsonObject.toString(),
 						productPurchaseExceptions.toArray(new Exception[0]));
 				}
 			}
