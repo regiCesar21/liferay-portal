@@ -46,7 +46,6 @@ if (scopeGroupId != themeDisplay.getCompanyGroupId()) {
 
 								<%
 								for (PollsQuestion question : questions) {
-									question = question.toEscapedModel();
 								%>
 
 									<aui:option label="<%= question.getTitle(locale) %>" selected="<%= questionId == question.getQuestionId() %>" value="<%= question.getQuestionId() %>" />
