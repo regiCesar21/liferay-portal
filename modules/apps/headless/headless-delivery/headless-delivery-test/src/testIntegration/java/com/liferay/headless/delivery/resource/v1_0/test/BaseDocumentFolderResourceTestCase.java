@@ -1994,7 +1994,7 @@ public abstract class BaseDocumentFolderResourceTestCase {
 			valid = false;
 		}
 
-		Group group = testDepotEntry.getGroup();
+		com.liferay.portal.kernel.model.Group group = testDepotEntry.getGroup();
 
 		if (!Objects.equals(
 				documentFolder.getAssetLibraryKey(), group.getGroupKey()) &&
