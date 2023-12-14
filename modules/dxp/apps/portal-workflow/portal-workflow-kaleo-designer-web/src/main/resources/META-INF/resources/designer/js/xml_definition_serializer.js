@@ -661,9 +661,12 @@ AUI.add(
 
 					buffer.push(
 						xmlTransition.open,
-						XMLUtil.create('name', item.connector.name),
-						XMLUtil.create('target', item.target),
-						XMLUtil.create('default', defaultValue),
+						XMLUtil.create(
+							'name',
+							A.Escape.html(item.connector.name)
+						),
+						XMLUtil.create('target', A.Escape.html(item.target)),
+						XMLUtil.create('default', A.Escape.html(defaultValue)),
 						xmlTransition.close
 					);
 				});
