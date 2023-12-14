@@ -17,6 +17,12 @@ export default function formValidate({
 	rules,
 }) {
 	return (dispatch) => {
+		const ddmFormSubmitButton = document.getElementById('ddm-form-submit');
+
+		if (ddmFormSubmitButton) {
+			ddmFormSubmitButton.disabled = true;
+		}
+
 		return evaluate(null, {
 			defaultLanguageId,
 			editingLanguageId,
@@ -39,6 +45,10 @@ export default function formValidate({
 			);
 
 			if (!validForm) {
+				if (ddmFormSubmitButton) {
+					ddmFormSubmitButton.disabled = false;
+				}
+
 				dispatch({
 					payload: {
 						newPages: evaluatedPages,
