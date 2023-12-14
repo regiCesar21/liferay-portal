@@ -110,10 +110,13 @@ const Form = React.forwardRef(
 
 								Liferay.Util.submitForm(event.target);
 
+								const formNode = getFormNode(
+									containerRef.current
+								);
+
 								Liferay.fire('ddmFormSubmit', {
-									formId: getFormId(
-										getFormNode(containerRef.current)
-									),
+									formId: getFormId(formNode),
+									title: getFormTitle(formNode),
 								});
 							});
 						}
