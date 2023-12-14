@@ -177,9 +177,17 @@ public class FilterExpression {
 	private String _rewriteFilterExpression(
 		Long channelId, String filterExpressionString) {
 
+		int counter = 0;
 		Matcher matcher = _activityKeyPattern.matcher(filterExpressionString);
 
 		while (matcher.find()) {
+			counter++;
+
+			if (counter > 1000) {
+				throw new IllegalStateException(
+					"Max number of filter expression items reached");
+			}
+
 			if (channelId == null) {
 				throw new IllegalArgumentException(
 					"Unable to process activities filter without channel ID");
