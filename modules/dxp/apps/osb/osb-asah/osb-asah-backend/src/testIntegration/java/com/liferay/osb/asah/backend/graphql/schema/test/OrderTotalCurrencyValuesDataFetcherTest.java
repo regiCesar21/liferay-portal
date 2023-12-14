@@ -13,8 +13,6 @@ import com.liferay.osb.asah.common.repository.ChannelRepository;
 import com.liferay.osb.asah.common.repository.DataSourceRepository;
 import com.liferay.osb.asah.test.util.annotation.BQSQLResource;
 
-import graphql.language.Field;
-
 import java.util.Arrays;
 import java.util.List;
 
@@ -34,8 +32,8 @@ public class OrderTotalCurrencyValuesDataFetcherTest
 		List<CurrencyValueDTO> currencyValueDTOs =
 			_orderTotalCurrencyValuesDataFetcher.get(
 				getDataFetchingEnvironment(
-					Arrays.asList(
-						new Field("currencyCode"), new Field("value"))),
+					Arrays.asList("currencyCode", "value"),
+					"orderTotalCurrencyValues"),
 				new SearchQueryContext() {
 					{
 						setTimeRange(TimeRange.LAST_7_DAYS);
@@ -51,9 +49,8 @@ public class OrderTotalCurrencyValuesDataFetcherTest
 		List<CurrencyValueDTO> currencyValueDTOs =
 			_orderTotalCurrencyValuesDataFetcher.get(
 				getDataFetchingEnvironment(
-					Arrays.asList(
-						new Field("currencyCode"), new Field("trend"),
-						new Field("value"))),
+					Arrays.asList("currencyCode", "trend", "value"),
+					"orderTotalCurrencyValues"),
 				new SearchQueryContext() {
 					{
 						setTimeRange(TimeRange.LAST_7_DAYS);

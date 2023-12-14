@@ -11,8 +11,6 @@ import com.liferay.osb.asah.backend.graphql.schema.OrderIncompleteCurrencyValues
 import com.liferay.osb.asah.common.model.TimeRange;
 import com.liferay.osb.asah.test.util.annotation.BQSQLResource;
 
-import graphql.language.Field;
-
 import java.util.Arrays;
 import java.util.List;
 
@@ -32,8 +30,8 @@ public class OrderIncompleteCurrencyValuesDataFetcherTest
 		List<CurrencyValueDTO> currencyValueDTOs =
 			_orderIncompleteCurrencyValuesDataFetcher.get(
 				getDataFetchingEnvironment(
-					Arrays.asList(
-						new Field("currencyCode"), new Field("value"))),
+					Arrays.asList("currencyCode", "value"),
+					"orderIncompleteCurrencyValues"),
 				new SearchQueryContext() {
 					{
 						setTimeRange(TimeRange.LAST_7_DAYS);
@@ -49,9 +47,8 @@ public class OrderIncompleteCurrencyValuesDataFetcherTest
 		List<CurrencyValueDTO> currencyValueDTOs =
 			_orderIncompleteCurrencyValuesDataFetcher.get(
 				getDataFetchingEnvironment(
-					Arrays.asList(
-						new Field("currencyCode"), new Field("trend"),
-						new Field("value"))),
+					Arrays.asList("currencyCode", "trend", "value"),
+					"orderIncompleteCurrencyValues"),
 				new SearchQueryContext() {
 					{
 						setTimeRange(TimeRange.LAST_7_DAYS);

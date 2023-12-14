@@ -15,14 +15,18 @@ import com.liferay.osb.asah.common.repository.DataSourceRepository;
 import com.liferay.osb.asah.test.util.configuration.JDBCTestConfiguration;
 import com.liferay.osb.asah.test.util.spring.OSBAsahTestExecutionListenersContext;
 
+import graphql.GraphQL;
 import graphql.GraphQLContext;
 
-import graphql.language.Field;
+import graphql.normalized.ExecutableNormalizedField;
 
 import graphql.schema.DataFetchingEnvironment;
 import graphql.schema.DataFetchingEnvironmentImpl;
+import graphql.schema.DataFetchingFieldSelectionSetImpl;
+import graphql.schema.GraphQLList;
+import graphql.schema.GraphQLSchema;
+import graphql.schema.GraphQLType;
 
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
@@ -94,7 +98,7 @@ public abstract class BaseOrderDataFetcherTestCase
 	}
 
 	protected DataFetchingEnvironment getDataFetchingEnvironment(
-		List<Field> fields) {
+		List<String> childFieldNames, String fieldName) {
 
 		DataFetchingEnvironmentImpl.Builder builder =
 			DataFetchingEnvironmentImpl.newDataFetchingEnvironment();
@@ -108,11 +112,39 @@ public abstract class BaseOrderDataFetcherTestCase
 
 		builder.graphQLContext(GraphQLContext.of(Collections.emptyMap()));
 
-		Stream<Field> stream = fields.stream();
+		GraphQLSchema graphQLSchema = _graphQL.getGraphQLSchema();
+
+		GraphQLType graphQLType = graphQLSchema.getType("CurrencyValue");
+
+		Assertions.assertNotNull(graphQLType);
+
+		ExecutableNormalizedField.Builder executableNormalizedFieldBuilder =
+			ExecutableNormalizedField.newNormalizedField();
+
+		executableNormalizedFieldBuilder.fieldName(fieldName);
+
+		Stream<String> stream = childFieldNames.stream();
+
+		executableNormalizedFieldBuilder.children(
+			stream.map(
+				childFieldName -> {
+					ExecutableNormalizedField.Builder
+						childExecutableNormalizedFieldBuilder =
+							ExecutableNormalizedField.newNormalizedField();
+
+					childExecutableNormalizedFieldBuilder.fieldName(
+						childFieldName);
+
+					return childExecutableNormalizedFieldBuilder.build();
+				}
+			).collect(
+				Collectors.toList()
+			));
 
 		builder.selectionSet(
-			() -> stream.collect(
-				Collectors.toMap(Field::getName, Arrays::asList)));
+			DataFetchingFieldSelectionSetImpl.newCollector(
+				graphQLSchema, GraphQLList.list(graphQLType),
+				executableNormalizedFieldBuilder::build));
 
 		return builder.build();
 	}
@@ -122,5 +154,8 @@ public abstract class BaseOrderDataFetcherTestCase
 
 	@Autowired
 	private DataSourceRepository _dataSourceRepository;
+
+	@Autowired
+	private GraphQL _graphQL;
 
 }

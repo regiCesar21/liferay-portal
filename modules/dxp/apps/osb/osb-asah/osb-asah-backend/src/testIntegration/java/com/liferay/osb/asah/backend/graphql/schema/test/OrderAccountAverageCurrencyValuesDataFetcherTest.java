@@ -11,8 +11,6 @@ import com.liferay.osb.asah.backend.graphql.schema.OrderAccountAverageCurrencyVa
 import com.liferay.osb.asah.common.model.TimeRange;
 import com.liferay.osb.asah.test.util.annotation.BQSQLResource;
 
-import graphql.language.Field;
-
 import java.util.Arrays;
 import java.util.List;
 
@@ -32,8 +30,8 @@ public class OrderAccountAverageCurrencyValuesDataFetcherTest
 		List<CurrencyValueDTO> currencyValueDTOs =
 			_orderAccountAverageCurrencyValuesDataFetcher.get(
 				getDataFetchingEnvironment(
-					Arrays.asList(
-						new Field("currencyCode"), new Field("value"))),
+					Arrays.asList("currencyCode", "value"),
+					"orderAverageCurrencyValues"),
 				new SearchQueryContext() {
 					{
 						setTimeRange(TimeRange.LAST_7_DAYS);
@@ -49,9 +47,8 @@ public class OrderAccountAverageCurrencyValuesDataFetcherTest
 		List<CurrencyValueDTO> currencyValueDTOs =
 			_orderAccountAverageCurrencyValuesDataFetcher.get(
 				getDataFetchingEnvironment(
-					Arrays.asList(
-						new Field("currencyCode"), new Field("trend"),
-						new Field("value"))),
+					Arrays.asList("currencyCode", "trend", "value"),
+					"orderAverageCurrencyValues"),
 				new SearchQueryContext() {
 					{
 						setTimeRange(TimeRange.LAST_7_DAYS);
