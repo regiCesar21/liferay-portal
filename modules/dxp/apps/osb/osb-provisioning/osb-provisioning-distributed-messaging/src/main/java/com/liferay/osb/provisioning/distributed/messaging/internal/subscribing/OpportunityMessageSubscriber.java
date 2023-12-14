@@ -602,12 +602,12 @@ public class OpportunityMessageSubscriber extends BaseMessageSubscriber {
 
 		JSONObject accountJSONObject = jsonObject.getJSONObject("account");
 
-		String dossieraAccountKey = accountJSONObject.getString("accountKey");
+		String salesforceAccountKey = accountJSONObject.getString("accountKey");
 
 		String name = accountJSONObject.getString("name");
 
 		Account parentAccount = _dossieraSubscriberUtil.fetchAccount(
-			dossieraAccountKey);
+			salesforceAccountKey);
 
 		if (parentAccount != null) {
 			String parentAccountName = parentAccount.getName();
@@ -628,15 +628,6 @@ public class OpportunityMessageSubscriber extends BaseMessageSubscriber {
 		parentAccount.setName(name);
 		parentAccount.setCode(_getCode(name, null));
 
-		ExternalLink dossieraExternalLink = new ExternalLink();
-
-		dossieraExternalLink.setDomain(ExternalLinkDomain.DOSSIERA);
-		dossieraExternalLink.setEntityName(
-			ExternalLinkEntityName.DOSSIERA_ACCOUNT);
-		dossieraExternalLink.setEntityId(dossieraAccountKey);
-
-		String salesforceAccountKey = jsonObject.getString("accountKey");
-
 		ExternalLink salesforceExternalLink = new ExternalLink();
 
 		salesforceExternalLink.setDomain(ExternalLinkDomain.SALESFORCE);
@@ -645,7 +636,7 @@ public class OpportunityMessageSubscriber extends BaseMessageSubscriber {
 		salesforceExternalLink.setEntityId(salesforceAccountKey);
 
 		parentAccount.setExternalLinks(
-			new ExternalLink[] {dossieraExternalLink, salesforceExternalLink});
+			new ExternalLink[] {salesforceExternalLink});
 
 		FilterQuery filterQuery = new FilterQuery();
 
@@ -1015,7 +1006,7 @@ public class OpportunityMessageSubscriber extends BaseMessageSubscriber {
 
 		String opportunityKey = jsonObject.getString("opportunityKey");
 
-		if (isProvisionMessage(opportunityKey, jsonObject)) {
+		if (isProvisionMessage(opportunityKey, accountKey)) {
 			Account parentAccount = null;
 
 			JSONObject projectJSONObject = jsonObject.getJSONObject("project");
@@ -1028,6 +1019,18 @@ public class OpportunityMessageSubscriber extends BaseMessageSubscriber {
 				account = updateAccount(
 					accountKey, parentAccount, activeContacts, region,
 					postalAddress, productPurchases, jsonObject);
+
+				String projectKey = projectJSONObject.getString("projectKey");
+
+				List<Account> relatedAccounts = _accountWebService.getAccounts(
+					ExternalLinkDomain.SALESFORCE,
+					ExternalLinkEntityName.RELATED_SALESFORCE_PROJECT,
+					projectKey, 1, 1000);
+
+				for (Account relatedAccount : relatedAccounts) {
+					updateProductPurchases(
+						relatedAccount, productPurchases, jsonObject);
+				}
 
 				List<Exception> productPurchaseExceptions =
 					_productPurchaseExceptionsThreadLocal.get();
@@ -1667,41 +1670,14 @@ public class OpportunityMessageSubscriber extends BaseMessageSubscriber {
 	}
 
 	protected boolean isProvisionMessage(
-			String opportunityKey, JSONObject jsonObject)
+			String opportunityKey, String accountKey)
 		throws Exception {
 
 		if (Validator.isNull(opportunityKey)) {
 			return false;
 		}
 
-		Account account = null;
-
-		JSONObject projectJSONObject = jsonObject.getJSONObject("project");
-
-		if (projectJSONObject != null) {
-			List<Account> accounts = _accountWebService.getAccounts(
-				ExternalLinkDomain.SALESFORCE,
-				ExternalLinkEntityName.SALESFORCE_PROJECT,
-				projectJSONObject.getString("projectKey"), 1, 1);
-
-			if (!accounts.isEmpty()) {
-				account = accounts.get(0);
-			}
-		}
-		else {
-			JSONObject accountJSONObject = jsonObject.getJSONObject("account");
-
-			List<Account> accounts = _accountWebService.getAccounts(
-				ExternalLinkDomain.DOSSIERA,
-				ExternalLinkEntityName.DOSSIERA_ACCOUNT,
-				accountJSONObject.getString("accountKey"), 1, 1);
-
-			if (!accounts.isEmpty()) {
-				account = accounts.get(0);
-			}
-		}
-
-		if (account == null) {
+		if (Validator.isNull(accountKey)) {
 			return true;
 		}
 
@@ -1718,7 +1694,7 @@ public class OpportunityMessageSubscriber extends BaseMessageSubscriber {
 		filterQuery.addLambdaEquals(
 			true, "externalLinkEntityIds", sb.toString());
 
-		filterQuery.addEquals(true, "accountKey", account.getKey());
+		filterQuery.addEquals(true, "accountKey", accountKey);
 
 		long productPurchaseCount = _productPurchaseWebService.searchCount(
 			filterQuery);
@@ -1728,7 +1704,7 @@ public class OpportunityMessageSubscriber extends BaseMessageSubscriber {
 				_log.debug(
 					StringBundler.concat(
 						"Product purchase already exists with opportunity key ",
-						opportunityKey, " and account key ", account.getKey()));
+						opportunityKey, " and account key ", accountKey));
 			}
 
 			_logWarning(
@@ -1903,19 +1879,9 @@ public class OpportunityMessageSubscriber extends BaseMessageSubscriber {
 			ExternalLinkEntityName.SALESFORCE_ACCOUNT);
 		accountExternalLink.setEntityId(salesforceAccountKey);
 
-		ExternalLink dossieraExternalLink = new ExternalLink();
-
 		JSONObject projectJSONObject = jsonObject.getJSONObject("project");
 
 		if (projectJSONObject != null) {
-			String dossieraProjectKey = projectJSONObject.getString(
-				"dossieraProjectKey");
-
-			dossieraExternalLink.setDomain(ExternalLinkDomain.DOSSIERA);
-			dossieraExternalLink.setEntityName(
-				ExternalLinkEntityName.DOSSIERA_PROJECT);
-			dossieraExternalLink.setEntityId(dossieraProjectKey);
-
 			String salesforceProjectKey = projectJSONObject.getString(
 				"projectKey");
 
@@ -1927,20 +1893,11 @@ public class OpportunityMessageSubscriber extends BaseMessageSubscriber {
 			projectExternalLink.setEntityId(salesforceProjectKey);
 
 			return new ExternalLink[] {
-				accountExternalLink, dossieraExternalLink, projectExternalLink
+				accountExternalLink, projectExternalLink
 			};
 		}
 
-		JSONObject accountJSONObject = jsonObject.getJSONObject("account");
-
-		String dossieraAccountKey = accountJSONObject.getString("accountKey");
-
-		dossieraExternalLink.setDomain(ExternalLinkDomain.DOSSIERA);
-		dossieraExternalLink.setEntityName(
-			ExternalLinkEntityName.DOSSIERA_ACCOUNT);
-		dossieraExternalLink.setEntityId(dossieraAccountKey);
-
-		return new ExternalLink[] {accountExternalLink, dossieraExternalLink};
+		return new ExternalLink[] {accountExternalLink};
 	}
 
 	protected Account parsePartnerAccount(JSONObject jsonObject)
@@ -1953,14 +1910,14 @@ public class OpportunityMessageSubscriber extends BaseMessageSubscriber {
 			return null;
 		}
 
-		String dossieraAccountKey = partnerAccountJSONObject.getString(
+		String salesforceAccountKey = partnerAccountJSONObject.getString(
 			"accountKey");
 
-		if (Validator.isNull(dossieraAccountKey)) {
+		if (Validator.isNull(salesforceAccountKey)) {
 			return null;
 		}
 
-		return _dossieraSubscriberUtil.fetchAccount(dossieraAccountKey);
+		return _dossieraSubscriberUtil.fetchAccount(salesforceAccountKey);
 	}
 
 	protected Team[] parsePartnerTeams(
@@ -2308,6 +2265,18 @@ public class OpportunityMessageSubscriber extends BaseMessageSubscriber {
 				contact.getEmailAddress(), contactRoleKeys);
 		}
 
+		updateProductPurchases(account, productPurchases, jsonObject);
+
+		return _accountWebService.getAccount(accountKey);
+	}
+
+	protected void updateProductPurchases(
+			Account account, Set<ProductPurchase> productPurchases,
+			JSONObject jsonObject)
+		throws Exception {
+
+		String accountKey = account.getKey();
+
 		FilterQuery filterQuery = new FilterQuery();
 
 		filterQuery.addEquals(true, "accountKey", accountKey);
@@ -2493,8 +2462,6 @@ public class OpportunityMessageSubscriber extends BaseMessageSubscriber {
 				}
 			}
 		}
-
-		return _accountWebService.getAccount(accountKey);
 	}
 
 	private static boolean _containsProduct(

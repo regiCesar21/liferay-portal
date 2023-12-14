@@ -37,10 +37,11 @@ import org.osgi.service.component.annotations.Reference;
 @Component(immediate = true, service = DossieraSubscriberUtil.class)
 public class DossieraSubscriberUtil {
 
-	public Account fetchAccount(String dossieraAccountKey) throws Exception {
+	public Account fetchAccount(String salesforceAccountKey) throws Exception {
 		List<Account> accounts = _accountWebService.getAccounts(
-			ExternalLinkDomain.DOSSIERA,
-			ExternalLinkEntityName.DOSSIERA_ACCOUNT, dossieraAccountKey, 1, 1);
+			ExternalLinkDomain.SALESFORCE,
+			ExternalLinkEntityName.SALESFORCE_ACCOUNT, salesforceAccountKey, 1,
+			1);
 
 		if (!accounts.isEmpty()) {
 			return accounts.get(0);
@@ -53,13 +54,13 @@ public class DossieraSubscriberUtil {
 		JSONObject projectJSONObject = jsonObject.getJSONObject("project");
 
 		if (projectJSONObject != null) {
-			String dossieraProjectKey = projectJSONObject.getString(
-				"dossieraProjectKey");
+			String salesforceProjectKey = projectJSONObject.getString(
+				"projectKey");
 
 			List<Account> accounts = _accountWebService.getAccounts(
-				ExternalLinkDomain.DOSSIERA,
-				ExternalLinkEntityName.DOSSIERA_PROJECT, dossieraProjectKey, 1,
-				1);
+				ExternalLinkDomain.SALESFORCE,
+				ExternalLinkEntityName.SALESFORCE_PROJECT, salesforceProjectKey,
+				1, 1);
 
 			if (!accounts.isEmpty()) {
 				Account account = accounts.get(0);
@@ -70,10 +71,10 @@ public class DossieraSubscriberUtil {
 		else {
 			JSONObject accountJSONObject = jsonObject.getJSONObject("account");
 
-			String dossieraAccountKey = accountJSONObject.getString(
+			String salesforceAccountKey = accountJSONObject.getString(
 				"accountKey");
 
-			Account account = fetchAccount(dossieraAccountKey);
+			Account account = fetchAccount(salesforceAccountKey);
 
 			if (account != null) {
 				return account.getKey();
