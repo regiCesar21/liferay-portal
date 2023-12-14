@@ -444,7 +444,7 @@ AUI.add(
 				notifications.name.forEach((item, index) => {
 					buffer.push(
 						xmlNotification.open,
-						XMLUtil.create('name', item)
+						XMLUtil.create('name', A.Escape.html(item))
 					);
 
 					if (isValidValue(description, index)) {
@@ -466,7 +466,7 @@ AUI.add(
 						buffer.push(
 							XMLUtil.create(
 								'templateLanguage',
-								templateLanguage[index]
+								A.Escape.html(templateLanguage[index])
 							)
 						);
 					}
@@ -476,7 +476,7 @@ AUI.add(
 							buffer.push(
 								XMLUtil.create(
 									'notificationType',
-									item.notificationType
+									A.Escape.html(item.notificationType)
 								)
 							);
 						});
@@ -501,7 +501,7 @@ AUI.add(
 						buffer.push(
 							XMLUtil.create(
 								'executionType',
-								executionType[index]
+								A.Escape.html(executionType[index])
 							)
 						);
 					}
@@ -549,12 +549,15 @@ AUI.add(
 				taskTimers.name.forEach((item, index) => {
 					buffer.push(
 						xmlTaskTimer.open,
-						XMLUtil.create('name', item)
+						XMLUtil.create('name', A.Escape.html(item))
 					);
 
 					if (isValidValue(description, index)) {
 						buffer.push(
-							XMLUtil.create('description', description[index])
+							XMLUtil.create(
+								'description',
+								A.Escape.html(description[index])
+							)
 						);
 					}
 
@@ -563,9 +566,17 @@ AUI.add(
 					buffer.push(xmlDelay.open);
 
 					buffer.push(
-						XMLUtil.create('duration', delay[index].duration[0])
+						XMLUtil.create(
+							'duration',
+							A.Escape.html(delay[index].duration[0])
+						)
 					);
-					buffer.push(XMLUtil.create('scale', delay[index].scale[0]));
+					buffer.push(
+						XMLUtil.create(
+							'scale',
+							A.Escape.html(delay[index].scale[0])
+						)
+					);
 
 					buffer.push(xmlDelay.close);
 
@@ -578,10 +589,16 @@ AUI.add(
 						buffer.push(xmlRecurrence.open);
 
 						buffer.push(
-							XMLUtil.create('duration', delay[index].duration[1])
+							XMLUtil.create(
+								'duration',
+								A.Escape.html(delay[index].duration[1])
+							)
 						);
 						buffer.push(
-							XMLUtil.create('scale', delay[index].scale[1])
+							XMLUtil.create(
+								'scale',
+								A.Escape.html(delay[index].scale[1])
+							)
 						);
 
 						buffer.push(xmlRecurrence.close);
@@ -589,11 +606,19 @@ AUI.add(
 
 					if (blocking && isNotEmptyValue(blocking[index])) {
 						buffer.push(
-							XMLUtil.create('blocking', blocking[index])
+							XMLUtil.create(
+								'blocking',
+								A.Escape.html(blocking[index])
+							)
 						);
 					}
 					else {
-						buffer.push(XMLUtil.create('blocking', String(false)));
+						buffer.push(
+							XMLUtil.create(
+								'blocking',
+								A.Escape.html(String(false))
+							)
+						);
 					}
 
 					appendXMLActions(
