@@ -129,8 +129,9 @@ public class DataExportTaskDog {
 		if (deltaMilliseconds > maxDataRetentionDelta) {
 			throw new IllegalArgumentException(
 				String.format(
-					"The requested data is outside of your %s months data " +
-						"retention period",
+					"The requested data is outside of your data retention " +
+						"period - %s months. Please adjust the time range in " +
+							"your query accordingly.",
 					maxDataRetentionDelta / DateUtil.MONTH));
 		}
 	}
