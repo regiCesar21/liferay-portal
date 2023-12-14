@@ -21,6 +21,8 @@ Import-Package:\
 	\
 	!com.sun.msv.*,\
 	\
+	!javax.annotation.meta.*,\
+	\
 	!lzma.sdk.*,\
 	\
 	!net.jpountz.*,\
