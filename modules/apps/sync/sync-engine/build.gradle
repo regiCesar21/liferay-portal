@@ -24,8 +24,6 @@ dependencies {
 	compileInclude group: "org.apache.httpcomponents", name: "httpclient", version: "4.5.13"
 	compileInclude group: "org.apache.httpcomponents", name: "httpcore", version: "4.4.14"
 	compileInclude group: "org.apache.httpcomponents", name: "httpmime", version: "4.5.13"
-	compileInclude group: "org.apache.poi", name: "poi", version: "5.2.2"
-	compileInclude group: "org.apache.poi", name: "poi-ooxml", version: "5.2.2"
 	compileInclude group: "org.bouncycastle", name: "bcpkix-jdk18on", version: "1.76"
 	compileInclude group: "org.bouncycastle", name: "bcprov-jdk18on", version: "1.76"
 	compileInclude group: "org.bouncycastle", name: "bcutil-jdk18on", version: "1.76"
@@ -34,6 +32,8 @@ dependencies {
 	compileInclude project(":apps:foundation:petra:petra-io-delta")
 
 	compileOnly group: "com.google.guava", name: "guava", version: "32.0.1-jre"
+	compileOnly group: "org.apache.poi", name: "poi", version: "5.2.2"
+	compileOnly group: "org.apache.poi", name: "poi-ooxml", version: "5.2.2"
 }
 
 liferayOSGi {
