@@ -15,13 +15,14 @@ import com.liferay.osb.asah.common.model.MetricType;
 import com.liferay.osb.asah.common.model.ResultBag;
 import com.liferay.osb.asah.common.model.Sort;
 
+import graphql.GraphQLContext;
+
 import graphql.execution.ExecutionStepInfo;
 
 import graphql.schema.DataFetchingEnvironment;
 import graphql.schema.GraphQLFieldDefinition;
 
 import java.util.Map;
-import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -51,7 +52,9 @@ public class AssetMetricBagDataFetcher extends BaseDataFetcher<ResultBag> {
 			return resultBag;
 		}
 
-		Map<String, Object> context = dataFetchingEnvironment.getContext();
+		GraphQLContext graphQLContext =
+			dataFetchingEnvironment.getGraphQlContext();
+
 		Map<String, String> sort = dataFetchingEnvironment.getArgument("sort");
 		int size = dataFetchingEnvironment.getArgument("size");
 		int start = dataFetchingEnvironment.getArgument("start");
@@ -59,7 +62,7 @@ public class AssetMetricBagDataFetcher extends BaseDataFetcher<ResultBag> {
 		resultBag.setResults(
 			_metricDog.getAssetMetrics(
 				start / size, searchQueryContext,
-				(Set<String>)context.get("selectedMetrics"), size,
+				graphQLContext.get("selectedMetrics"), size,
 				_createSort(searchQueryContext.getAssetType(), sort)));
 
 		resultBag.setTotal(assetMetricsCount);

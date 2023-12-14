@@ -10,11 +10,12 @@ import com.liferay.osb.asah.backend.dto.ExperimentVariantDTO;
 import com.liferay.osb.asah.backend.graphql.annotation.GraphQLTypeWiring;
 import com.liferay.osb.asah.backend.model.HistogramMetric;
 
+import graphql.GraphQLContext;
+
 import graphql.schema.DataFetcher;
 import graphql.schema.DataFetchingEnvironment;
 
 import java.util.List;
-import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -34,9 +35,10 @@ public class ExperimentSessionsHistogramMetricsDataFetcher
 	public List<HistogramMetric> get(
 		DataFetchingEnvironment dataFetchingEnvironment) {
 
-		Map<String, Object> context = dataFetchingEnvironment.getContext();
+		GraphQLContext graphQLContext =
+			dataFetchingEnvironment.getGraphQlContext();
 
-		String experimentId = (String)context.get("experimentId");
+		String experimentId = graphQLContext.get("experimentId");
 
 		return _experimentDog.getExperimentSessionHistogramMetrics(
 			Long.valueOf(experimentId),

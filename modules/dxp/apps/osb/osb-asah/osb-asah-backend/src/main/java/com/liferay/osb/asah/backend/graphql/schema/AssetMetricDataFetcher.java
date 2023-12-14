@@ -11,9 +11,10 @@ import com.liferay.osb.asah.backend.graphql.annotation.GraphQLTypeWiring;
 import com.liferay.osb.asah.backend.model.AssetMetric;
 import com.liferay.osb.asah.backend.model.AssetType;
 
+import graphql.GraphQLContext;
+
 import graphql.schema.DataFetchingEnvironment;
 
-import java.util.Map;
 import java.util.Set;
 
 import org.apache.commons.lang3.StringUtils;
@@ -38,10 +39,10 @@ public class AssetMetricDataFetcher extends BaseDataFetcher<AssetMetric> {
 		DataFetchingEnvironment dataFetchingEnvironment,
 		SearchQueryContext searchQueryContext) {
 
-		Map<String, Object> context = dataFetchingEnvironment.getContext();
+		GraphQLContext graphQLContext =
+			dataFetchingEnvironment.getGraphQlContext();
 
-		Set<String> selectedMetrics = (Set<String>)context.get(
-			"selectedMetrics");
+		Set<String> selectedMetrics = graphQLContext.get("selectedMetrics");
 
 		selectedMetrics.remove("accessMetric");
 

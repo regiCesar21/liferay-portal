@@ -9,10 +9,10 @@ import com.liferay.osb.asah.backend.dog.ExperimentDog;
 import com.liferay.osb.asah.backend.dto.ExperimentDTO;
 import com.liferay.osb.asah.backend.graphql.annotation.GraphQLTypeWiring;
 
+import graphql.GraphQLContext;
+
 import graphql.schema.DataFetcher;
 import graphql.schema.DataFetchingEnvironment;
-
-import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -29,9 +29,10 @@ public class ExperimentDataFetcher implements DataFetcher<ExperimentDTO> {
 		String experimentId = dataFetchingEnvironment.getArgument(
 			"experimentId");
 
-		Map<String, Object> context = dataFetchingEnvironment.getContext();
+		GraphQLContext graphQLContext =
+			dataFetchingEnvironment.getGraphQlContext();
 
-		context.put("experimentId", experimentId);
+		graphQLContext.put("experimentId", experimentId);
 
 		return new ExperimentDTO(
 			_experimentDog.fetchExperiment(Long.valueOf(experimentId)));

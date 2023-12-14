@@ -10,9 +10,10 @@ import com.liferay.osb.asah.backend.dog.helper.SearchQueryContext;
 import com.liferay.osb.asah.backend.graphql.annotation.GraphQLTypeWiring;
 import com.liferay.osb.asah.backend.model.IndividualMetric;
 
+import graphql.GraphQLContext;
+
 import graphql.schema.DataFetchingEnvironment;
 
-import java.util.Map;
 import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,10 +32,12 @@ public class IndividualMetricDataFetcher
 		DataFetchingEnvironment dataFetchingEnvironment,
 		SearchQueryContext searchQueryContext) {
 
-		Map<String, Object> context = dataFetchingEnvironment.getContext();
+		GraphQLContext graphQLContext =
+			dataFetchingEnvironment.getGraphQlContext();
 
 		return _bqIndividualMetricDog.getIndividualMetric(
-			searchQueryContext, (Set<String>)context.get("selectedMetrics"));
+			searchQueryContext,
+			(Set<String>)graphQLContext.get("selectedMetrics"));
 	}
 
 	@Autowired

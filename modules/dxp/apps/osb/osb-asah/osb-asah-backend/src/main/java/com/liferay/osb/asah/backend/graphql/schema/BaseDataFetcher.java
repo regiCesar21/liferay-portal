@@ -9,6 +9,8 @@ import com.liferay.osb.asah.backend.dog.helper.SearchQueryContext;
 import com.liferay.osb.asah.backend.model.AssetType;
 import com.liferay.osb.asah.common.model.TimeRange;
 
+import graphql.GraphQLContext;
+
 import graphql.execution.ExecutionStepInfo;
 
 import graphql.language.Field;
@@ -42,26 +44,26 @@ public abstract class BaseDataFetcher<T> implements DataFetcher<T> {
 
 	@Override
 	public T get(DataFetchingEnvironment dataFetchingEnvironment) {
-		Map<String, Object> context = dataFetchingEnvironment.getContext();
+		GraphQLContext graphQLContext =
+			dataFetchingEnvironment.getGraphQlContext();
 
-		Set<String> selectedMetrics = (Set<String>)context.get(
-			"selectedMetrics");
+		Set<String> selectedMetrics = graphQLContext.get("selectedMetrics");
 
 		if ((selectedMetrics == null) || selectedMetrics.isEmpty()) {
-			context.put(
+			graphQLContext.put(
 				"selectedMetrics",
 				_getSelectedMetrics(
 					dataFetchingEnvironment.getFields(), new HashSet<>()));
 		}
 
-		SearchQueryContext searchQueryContext = (SearchQueryContext)context.get(
+		SearchQueryContext searchQueryContext = graphQLContext.get(
 			"searchQueryContext");
 
 		if (searchQueryContext == null) {
 			searchQueryContext = createSearchQueryContext(
 				dataFetchingEnvironment);
 
-			context.put("searchQueryContext", searchQueryContext);
+			graphQLContext.put("searchQueryContext", searchQueryContext);
 		}
 
 		return get(dataFetchingEnvironment, searchQueryContext);
