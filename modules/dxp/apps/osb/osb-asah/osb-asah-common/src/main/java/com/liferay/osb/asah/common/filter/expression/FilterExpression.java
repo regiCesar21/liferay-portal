@@ -178,6 +178,7 @@ public class FilterExpression {
 		Long channelId, String filterExpressionString) {
 
 		int counter = 0;
+
 		Matcher matcher = _activityKeyPattern.matcher(filterExpressionString);
 
 		while (matcher.find()) {
