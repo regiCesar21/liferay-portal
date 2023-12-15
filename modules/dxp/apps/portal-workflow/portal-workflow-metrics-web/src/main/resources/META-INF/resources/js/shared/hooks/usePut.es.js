@@ -19,7 +19,22 @@ const usePut = ({body = {}, admin = false, url}) => {
 				body: JSON.stringify(body),
 				headers: {...headers, 'Content-Type': 'application/json'},
 				method: 'PUT',
-			}),
+			})
+				.then((response) => {
+					if (!response.ok) {
+						return response.json();
+					}
+				})
+				.then((data) => {
+					if (
+						data &&
+						Array.isArray(data) &&
+						'fieldName' in data[0] &&
+						'message' in data[0]
+					) {
+						throw data;
+					}
+				}),
 
 		[body, fetchURL]
 	);

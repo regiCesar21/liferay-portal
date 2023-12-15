@@ -83,12 +83,12 @@ const SingleUpdateDueDateModal = () => {
 		setSendingPost(true);
 		setErrorToast(false);
 
-		postData().catch(({response}) => {
+		postData().catch((dataError) => {
 			const errorMessage = `${Liferay.Language.get(
 				'your-request-has-failed'
 			)} ${Liferay.Language.get('select-done-to-retry')}`;
 
-			setErrorToast(response?.data?.title ?? errorMessage);
+			setErrorToast(dataError.message ?? dataError.title ?? errorMessage);
 			setSendingPost(false);
 		});
 

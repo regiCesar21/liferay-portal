@@ -27,6 +27,16 @@ const usePost = ({
 		}
 	});
 
+	const isBadRequest = (data) => {
+		return (
+			(data &&
+				Array.isArray(data) &&
+				'fieldName' in data[0] &&
+				'message' in data[0]) ||
+			(typeof data === 'object' && data.status === 'BAD_REQUEST')
+		);
+	};
+
 	const postData = useCallback(
 		() =>
 			fetch(fetchURL, {
@@ -37,9 +47,14 @@ const usePost = ({
 			})
 				.then((response) => response.json())
 				.then((data) => {
-					setData(data);
+					if (isBadRequest(data)) {
+						throw data;
+					}
+					else {
+						setData(data);
 
-					return callback(data);
+						return callback(data);
+					}
 				}),
 		[body, callback, fetchURL, params]
 	);

@@ -97,12 +97,12 @@ const BulkUpdateDueDateModal = () => {
 	const handleDone = useCallback(() => {
 		setUpdating(true);
 
-		patchData().catch(({response}) => {
+		patchData().catch((dataError) => {
 			const errorMessage = `${Liferay.Language.get(
 				'your-request-has-failed'
 			)} ${Liferay.Language.get('select-done-to-retry')}`;
 
-			setErrorToast(response?.data?.title ?? errorMessage);
+			setErrorToast(dataError.message ?? dataError.title ?? errorMessage);
 			setUpdating(false);
 		});
 

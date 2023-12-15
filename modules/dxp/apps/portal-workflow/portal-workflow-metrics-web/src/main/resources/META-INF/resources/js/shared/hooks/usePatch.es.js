@@ -19,7 +19,17 @@ const usePatch = ({admin = false, body = {}, callback = () => {}, url}) => {
 				body: JSON.stringify(patchBody) || JSON.stringify(body),
 				headers: {...headers, 'Content-Type': 'application/json'},
 				method: 'PATCH',
-			}).then(callback),
+			}).then((response) => {
+				if (response.ok) {
+					return callback();
+				}
+
+				const requestFailedMessage = Liferay.Language.get(
+					'your-request-has-failed'
+				);
+
+				throw new Error(requestFailedMessage);
+			}),
 		[fetchURL, body, callback]
 	);
 

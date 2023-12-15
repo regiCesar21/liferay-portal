@@ -42,9 +42,19 @@ const useFetch = ({
 					}
 				})
 				.then((data) => {
-					setData(data);
+					if (
+						data &&
+						Array.isArray(data) &&
+						'fieldName' in data[0] &&
+						'message' in data[0]
+					) {
+						throw data;
+					}
+					else {
+						setData(data);
 
-					return callback(data);
+						return callback(data);
+					}
 				}),
 		[callback, fetchURL, plainText]
 	);
