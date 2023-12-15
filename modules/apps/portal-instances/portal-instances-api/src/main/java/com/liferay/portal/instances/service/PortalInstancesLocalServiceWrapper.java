@@ -68,6 +68,21 @@ public class PortalInstancesLocalServiceWrapper
 
 	@Override
 	public void initializePortalInstance(
+			long companyId, String siteInitializerKey,
+			javax.servlet.ServletContext servletContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		_portalInstancesLocalService.initializePortalInstance(
+			companyId, siteInitializerKey, servletContext);
+	}
+
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
+	 #initializePortalInstance(long, String, ServletContext)}
+	 */
+	@Deprecated
+	@Override
+	public void initializePortalInstance(
 		javax.servlet.ServletContext servletContext, String webId) {
 
 		_portalInstancesLocalService.initializePortalInstance(

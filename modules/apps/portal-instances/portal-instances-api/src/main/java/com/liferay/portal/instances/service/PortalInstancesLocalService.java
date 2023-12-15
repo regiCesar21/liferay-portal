@@ -67,6 +67,16 @@ public interface PortalInstancesLocalService extends BaseLocalService {
 	public String[] getWebIds();
 
 	public void initializePortalInstance(
+			long companyId, String siteInitializerKey,
+			ServletContext servletContext)
+		throws PortalException;
+
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
+	 #initializePortalInstance(long, String, ServletContext)}
+	 */
+	@Deprecated
+	public void initializePortalInstance(
 		ServletContext servletContext, String webId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)

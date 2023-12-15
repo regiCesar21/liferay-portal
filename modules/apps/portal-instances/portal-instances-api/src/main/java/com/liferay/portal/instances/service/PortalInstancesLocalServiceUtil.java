@@ -5,6 +5,8 @@
 
 package com.liferay.portal.instances.service;
 
+import com.liferay.portal.kernel.exception.PortalException;
+
 /**
  * Provides the local service utility for PortalInstances. This utility wraps
  * <code>com.liferay.portal.instances.service.impl.PortalInstancesLocalServiceImpl</code> and
@@ -51,25 +53,39 @@ public class PortalInstancesLocalServiceUtil {
 	 *
 	 * @return the OSGi service identifier
 	 */
-	public static java.lang.String getOSGiServiceIdentifier() {
+	public static String getOSGiServiceIdentifier() {
 		return getService().getOSGiServiceIdentifier();
 	}
 
-	public static java.lang.String[] getWebIds() {
+	public static String[] getWebIds() {
 		return getService().getWebIds();
 	}
 
 	public static void initializePortalInstance(
-		javax.servlet.ServletContext servletContext, java.lang.String webId) {
+			long companyId, String siteInitializerKey,
+			javax.servlet.ServletContext servletContext)
+		throws PortalException {
+
+		getService().initializePortalInstance(
+			companyId, siteInitializerKey, servletContext);
+	}
+
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
+	 #initializePortalInstance(long, String, ServletContext)}
+	 */
+	@Deprecated
+	public static void initializePortalInstance(
+		javax.servlet.ServletContext servletContext, String webId) {
 
 		getService().initializePortalInstance(servletContext, webId);
 	}
 
-	public static boolean isAutoLoginIgnoreHost(java.lang.String host) {
+	public static boolean isAutoLoginIgnoreHost(String host) {
 		return getService().isAutoLoginIgnoreHost(host);
 	}
 
-	public static boolean isAutoLoginIgnorePath(java.lang.String path) {
+	public static boolean isAutoLoginIgnorePath(String path) {
 		return getService().isAutoLoginIgnorePath(path);
 	}
 
@@ -77,11 +93,11 @@ public class PortalInstancesLocalServiceUtil {
 		return getService().isCompanyActive(companyId);
 	}
 
-	public static boolean isVirtualHostsIgnoreHost(java.lang.String host) {
+	public static boolean isVirtualHostsIgnoreHost(String host) {
 		return getService().isVirtualHostsIgnoreHost(host);
 	}
 
-	public static boolean isVirtualHostsIgnorePath(java.lang.String path) {
+	public static boolean isVirtualHostsIgnorePath(String path) {
 		return getService().isVirtualHostsIgnorePath(path);
 	}
 
