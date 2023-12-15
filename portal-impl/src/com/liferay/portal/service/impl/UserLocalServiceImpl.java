@@ -3624,11 +3624,67 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 
 	@Override
 	public List<User> searchSocial(
+		long companyId, long[] groupIds, long[] userGroupIds, String keywords,
+		int start, int end) {
+
+		return searchSocial(
+			companyId, groupIds, userGroupIds, keywords, start, end, null);
+	}
+
+	@Override
+	public List<User> searchSocial(
+		long companyId, long[] groupIds, long[] userGroupIds, String keywords,
+		int start, int end, OrderByComparator<User> obc) {
+
+		return userFinder.findByKeywords(
+			companyId, keywords, WorkflowConstants.STATUS_APPROVED,
+			LinkedHashMapBuilder.<String, Object>put(
+				"usersGroups",
+				() -> {
+					if (!ArrayUtil.isEmpty(groupIds)) {
+						return ArrayUtil.toLongArray(groupIds);
+					}
+
+					return null;
+				}
+			).put(
+				"usersUserGroups",
+				() -> {
+					if (!ArrayUtil.isEmpty(userGroupIds)) {
+						return ArrayUtil.toLongArray(userGroupIds);
+					}
+
+					return null;
+				}
+			).put(
+				"wildcardMode", WildcardMode.TRAILING
+			).build(),
+			start, end, obc);
+	}
+
+	/**
+	 * Search users by social groups
+	 *
+	 * @param  companyId the primary key of the user's company
+	 * @param  groupId the primary keys of the users groups
+	 * @deprecated As of Athanasius (7.3.x)
+	 */
+	@Deprecated
+	@Override
+	public List<User> searchSocial(
 		long companyId, long[] groupIds, String keywords, int start, int end) {
 
 		return searchSocial(companyId, groupIds, keywords, start, end, null);
 	}
 
+	/**
+	 * Search users by social groups
+	 *
+	 * @param  companyId the primary key of the user's company
+	 * @param  groupId the primary keys of the users groups
+	 * @deprecated As of Athanasius (7.3.x)
+	 */
+	@Deprecated
 	@Override
 	public List<User> searchSocial(
 		long companyId, long[] groupIds, String keywords, int start, int end,
