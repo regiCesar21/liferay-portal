@@ -20,7 +20,7 @@ Here are some of the types of changes documented in this file:
   replaces an old API, in spite of the old API being kept in Liferay Portal for
   backwards compatibility.
 
-*This document has been reviewed through commit `b629119d7786`.*
+*This document has been reviewed through commit `36307528ea7b4cb8ab088139760b5e15d67b25f4`.*
 
 ## Breaking Changes Contribution Guidelines
 
@@ -4589,25 +4589,24 @@ This change was made to avoid security issues.
 
 ---------------------------------------
 
-## The support of Apache SOAP 2.2 has been removed.
+### Removed Support for Apache SOAP 2.2
 - **Date:** 2023-Dec-4
 - **JIRA Ticket:** [LPS-164220](https://liferay.atlassian.net/browse/LPS-164220)
 
-### What changed?
+#### What changed?
 
-This change was made to address vulnerabilities in outdated libraries that are no longer
-maintained.
+Support was removed for Apache Soap 2.2 and its libraries. This change was made to address vulnerabilities in libraries that are no longer maintained.
 
-### Who is affected?
+#### Who is affected?
 
-This will affect you if you are using SOAP web service
+This affects anyone using SOAP web services.
 
-### How should I update my code?
+#### How should I update my code?
 
-Move soap services to JSON Web Services
+Move from SOAP services to JSON Web Services.
 
-### Why was this change made?
+#### Why was this change made?
 
-Apache SOAP is no longer maintained and will not receive any updates
+Apache SOAP is no longer maintained and will not receive further updates.
 
 ---------------------------------------
