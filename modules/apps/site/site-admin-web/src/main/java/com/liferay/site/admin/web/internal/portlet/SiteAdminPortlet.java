@@ -725,7 +725,7 @@ public class SiteAdminPortlet extends MVCPortlet {
 			friendlyURL = ParamUtil.getString(
 				actionRequest, "groupFriendlyURL");
 			manualMembership = ParamUtil.getBoolean(
-				actionRequest, "manualMembership");
+				actionRequest, "manualMembership", true);
 			inheritContent = ParamUtil.getBoolean(
 				actionRequest, "inheritContent");
 			active = ParamUtil.getBoolean(actionRequest, "active", true);
