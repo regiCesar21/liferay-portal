@@ -280,7 +280,6 @@ public class LayoutSetPrototypeHelperTest {
 	@DeleteAfterTestRun
 	private LayoutSetPrototype _layoutSetPrototype;
 
-	@DeleteAfterTestRun
 	private Group _layoutSetPrototypeGroup;
 
 	@Inject
