@@ -12,7 +12,7 @@ Here are some of the types of changes documented in this file:
 * Execution requirements: Java version, J2EE Version, browser versions, etc.
 * Deprecations or end of support: For example, warning that a certain feature or API will be dropped in an upcoming version.
 
-*This document has been reviewed through commit `2442ed1e976ae`.*
+*This document has been reviewed through commit `6f015d17003bd761f4582ae5358b9a8afb5a9595`.*
 
 ## Breaking Changes Contribution Guidelines
 
@@ -1098,7 +1098,7 @@ Apache's file install implementation allowed `.cfg` files to use the `.config` f
 
 #### What changed?
 
-The `OpenIdConnectServiceHandler` interface has been removed and replaced by the `OpenIdConnectAuthenticationHandler` interface.
+The `OpenIdConnectServiceHandler` interface was removed and replaced by the `OpenIdConnectAuthenticationHandler` interface.
 
 Old interface:
 
@@ -1114,72 +1114,70 @@ portal.security.sso.openid.connect.OpenIdConnectAuthenticationHandler
 
 #### Who is affected?
 
-This affects you if you are implementing or using the `OpenIdConnectServiceHandler` interface.
+This affects anyone implementing or using the `OpenIdConnectServiceHandler` interface.
 
 #### How should I update my code?
 
 If your code invokes the `OpenIdConnectServiceHandler` interface, change it to invoke the `OpenIdConnectAuthenticationHandler` interface. This requires providing an `UnsafeConsumer` for signing in the DXP/Portal user.
 
-If you have implemented the `OpenIdConnectServiceHandler` interface, implement the `OpenIdConnectAuthenticationHandler` interface and provide a way to refresh the user's OIDC access tokens using the provided refresh tokens. If you don't make this provision, sessions will invalidate when the initial access tokens expire.
+If you implemented the `OpenIdConnectServiceHandler` interface, instead implement the `OpenIdConnectAuthenticationHandler` interface and provide a way to refresh the user's OIDC access tokens using the provided refresh tokens. Otherwise user sessions will invalidate when the initial access tokens expire.
 
 #### Why was this change made?
 
 This change improves OIDC refresh token handling. The change was made for these reasons:
 
-- To detach the access token refresh process from HTTP request handling. Without this detachment, there can be problems maintaining OIDC sessions with providers that only allow refresh tokens to be used once. Premature portal session invalidation can occur.
+- To detach the access token refresh process from HTTP request handling. Without this detachment, there are problems maintaining OIDC sessions with providers that only allow single use refresh tokens. Premature portal session invalidation can occur.
 
-- To avoid premature portal session invalidation for OIDC providers that provide refresh tokens that expire at the same time as their corresponding access tokens.
+- To avoid premature portal session invalidation for OIDC providers that provide refresh tokens expiring at the same time as their corresponding access tokens.
 
 ---------------------------------------
 
-## Elasticsearch sortable type mappings were changed from keyword to icu_collation_keyword
-
+### Elasticsearch sortable type mappings were changed from keyword to icu_collation_keyword
 - **Date:** 2022-May-12
 - **JIRA Ticket:** [LPS-152937](https://issues.liferay.com/browse/LPS-152937)
 
-### What changed?
+#### What changed?
 
-The Elasticsearch type mapping of localized sortable `*_<languageId>_sortable` and nested `ddmFieldArray.ddmFieldValueText_<languageId>_String_sortable` fields were changed from `keyword` to `icu_collation_keyword`
+The Elasticsearch type mapping of localized sortable `*_<languageId>_sortable` and nested `ddmFieldArray.ddmFieldValueText_<languageId>_String_sortable` fields were changed from `keyword` to `icu_collation_keyword`.
 
-The indexed information of these fields is now stored in an encoded format, for example, the `entity title` text is now stored as `MkRQOlBaBFA6UEAyARABEAA=`
+The indexed field information is now stored in an encoded format. For example, the `entity title` text is now stored as `MkRQOlBaBFA6UEAyARABEAA=`.
 
-This new `icu_collation_keyword` type allows sorting using the correct collation rules of each language for more information see https://www.elastic.co/guide/en/elasticsearch/plugins/7.17/analysis-icu-collation-keyword-field.html
+This new `icu_collation_keyword` type allows sorting using the correct collation rules of each language. For more information see https://www.elastic.co/guide/en/elasticsearch/plugins/7.17/analysis-icu-collation-keyword-field.html.
 
-If you update your existing Liferay installation, this change won't be applied until a full reindex is executed and Elasticsearch mappings are recreated.
+If you update your existing Liferay installation, this change won't be applied until you execute a full reindex to recreate the Elasticsearch mappings.
 
-### Who is affected?
+#### Who is affected?
 
 If you are using the `*_<languageId>_sortable` and `ddmFieldArray.ddmFieldValueText_<languageId>_String_sortable` fields in your custom Elasticsearch queries:
    - **To sort your results:** you will find that now they are sorted using the correct collation rules of each language.
    - **To retrieve some information from the Elasticsearch index:** you will find that now the returned information is returned in an encoded format.
 
-### How should I update my code?
+#### How should I update my code?
 
-If you want to maintain the old sort behavior, you will have to customize the Elasticsearch mappings, removing the `icu_collation_keyword`. For more information about how to personalize them, see: https://learn.liferay.com/dxp/latest/en/using-search/installing-and-upgrading-a-search-engine/elasticsearch/advanced-configuration-of-the-liferay-elasticsearch-connector.html
+If you want to maintain the old sort behavior, remove the `icu_collation_keyword` field from the Elasticsearch mappings. To customize the mappings, see [Advanced Configuration of the Elasticsearch Connector](https://learn.liferay.com/dxp/latest/en/using-search/installing-and-upgrading-a-search-engine/elasticsearch/advanced-configuration-of-the-liferay-elasticsearch-connector.html).
 
-If you need to retrieve data from these fields, you can get the same information from the _source field of Elasticsearch https://www.elastic.co/guide/en/elasticsearch/reference/7.17/mapping-source-field.html or you can also remove the `icu_collation_keyword` as it is explained in the previous paragraph.
+If you must retrieve data from these fields, you can get the information from the `_source` field of [Elasticsearch](https://www.elastic.co/guide/en/elasticsearch/reference/7.17/mapping-source-field.html) or by removing the `icu_collation_keyword` as explained in the previous paragraph.
 
 ---------------------------------------
 
-## The support of Apache SOAP 2.2 has been removed.
+### Removed Support for Apache SOAP 2.2
 - **Date:** 2023-Dec-4
 - **JIRA Ticket:** [LPS-164220](https://liferay.atlassian.net/browse/LPS-164220)
 
-### What changed?
+#### What changed?
 
-This change was made to address vulnerabilities in outdated libraries that are no longer
-maintained.
+Support was removed for Apache Soap 2.2 and its libraries. This change was made to address vulnerabilities in libraries that are no longer maintained.
 
-### Who is affected?
+#### Who is affected?
 
-This will affect you if you are using SOAP web service
+This affects anyone using SOAP web services.
 
-### How should I update my code?
+#### How should I update my code?
 
-Move soap services to JSON Web Services
+Move from SOAP services to JSON Web Services.
 
-### Why was this change made?
+#### Why was this change made?
 
-Apache SOAP is no longer maintained and will not receive any updates
+Apache SOAP is no longer maintained and will not receive further updates.
 
 ---------------------------------------
