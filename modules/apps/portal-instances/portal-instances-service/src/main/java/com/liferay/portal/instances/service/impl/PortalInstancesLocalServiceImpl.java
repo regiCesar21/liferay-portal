@@ -138,6 +138,11 @@ public class PortalInstancesLocalServiceImpl
 		}
 	}
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
+	 *             #initializePortalInstance(long, String, ServletContext)}
+	 */
+	@Deprecated
 	@Override
 	public void initializePortalInstance(
 		ServletContext servletContext, String webId) {
