@@ -66,7 +66,7 @@ function ExternalAccountKeys({details}) {
 					entityId: convertDashToEmptyString(
 						details.relatedSalesforceProjectKey
 					),
-					entityName: 'related-project',
+					entityName: 'related-salesforce-project',
 					parentAccountKey: details.parentAccountKey
 				}}
 				type={fieldType}

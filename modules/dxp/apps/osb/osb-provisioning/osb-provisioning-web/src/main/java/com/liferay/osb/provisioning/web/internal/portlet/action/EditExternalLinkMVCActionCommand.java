@@ -118,8 +118,6 @@ public class EditExternalLinkMVCActionCommand extends BaseMVCActionCommand {
 			return;
 		}
 
-		String accountKey = ParamUtil.getString(actionRequest, "accountKey");
-
 		String domain = ParamUtil.getString(actionRequest, "domain");
 		String entityName = ParamUtil.getString(actionRequest, "entityName");
 		String parentAccountKey = ParamUtil.getString(
@@ -139,6 +137,9 @@ public class EditExternalLinkMVCActionCommand extends BaseMVCActionCommand {
 				externalLink);
 		}
 		else {
+			String accountKey = ParamUtil.getString(
+				actionRequest, "accountKey");
+
 			_externalLinkWebService.addAccountExternalLink(
 				user.getFullName(), user.getUuid(), accountKey, externalLink);
 		}
@@ -168,7 +169,13 @@ public class EditExternalLinkMVCActionCommand extends BaseMVCActionCommand {
 			}
 			else if (domain.equals(ExternalLinkDomain.SALESFORCE)) {
 				if (entityName.equals(
-						ExternalLinkEntityName.RELATED_SALESFORCE_PROJECT)) {
+						ExternalLinkEntityName.SALESFORCE_ACCOUNT)) {
+
+					throw new DuplicateSalesforceAccountKeyException();
+				}
+				else if (entityName.equals(
+							ExternalLinkEntityName.
+								RELATED_SALESFORCE_PROJECT)) {
 
 					_validateDuplicatedRelatedSalesforceProjectKey(
 						accounts, parentAccountKey);
@@ -177,11 +184,6 @@ public class EditExternalLinkMVCActionCommand extends BaseMVCActionCommand {
 							ExternalLinkEntityName.SALESFORCE_PROJECT)) {
 
 					throw new DuplicateSalesforceProjectKeyException();
-				}
-				else if (entityName.equals(
-							ExternalLinkEntityName.SALESFORCE_ACCOUNT)) {
-
-					throw new DuplicateSalesforceAccountKeyException();
 				}
 			}
 		}

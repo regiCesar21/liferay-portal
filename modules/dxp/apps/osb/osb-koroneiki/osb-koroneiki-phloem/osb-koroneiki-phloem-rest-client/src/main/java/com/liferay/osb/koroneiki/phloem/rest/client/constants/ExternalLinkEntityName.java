@@ -28,7 +28,8 @@ public class ExternalLinkEntityName {
 
 	public static final String OKTA_GROUP = "group";
 
-	public static final String RELATED_SALESFORCE_PROJECT = "related-project";
+	public static final String RELATED_SALESFORCE_PROJECT =
+		"related-salesforce-project";
 
 	public static final String SALESFORCE_ACCOUNT = "account";
 

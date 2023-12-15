@@ -83,7 +83,7 @@ function renderAccountDetails(props) {
 				updateDossieraAccountURL: '/update/dossiera/account',
 				updateDxpCloudProjectURL: '/update/dxp-cloud/project',
 				updateRelatedSalesforceProjectURL:
-					'/update/salesforce/related-project',
+					'/update/salesforce/related-salesforce-project',
 				updateSalesforceProjectURL: '/update/salesforce/project'
 			}}
 			liferayVersionNames={[

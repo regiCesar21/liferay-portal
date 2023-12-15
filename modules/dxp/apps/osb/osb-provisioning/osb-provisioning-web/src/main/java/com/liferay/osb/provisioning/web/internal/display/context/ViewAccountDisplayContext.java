@@ -196,7 +196,6 @@ public class ViewAccountDisplayContext {
 		data.put("liferayVersionNames", liferayVersionNames);
 
 		data.put("parentAccountKey", account.getParentAccountKey());
-
 		data.put("parentAccountName", getParentAccountName());
 
 		List<String> tierNames = new ArrayList<>();
