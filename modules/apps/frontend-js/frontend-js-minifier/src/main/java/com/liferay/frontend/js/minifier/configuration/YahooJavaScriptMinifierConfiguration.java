@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-package com.frontend.js.minifier.configuration;
+package com.liferay.frontend.js.minifier.configuration;
 
 import aQute.bnd.annotation.metatype.Meta;
 
@@ -11,7 +11,7 @@ import aQute.bnd.annotation.metatype.Meta;
  * @author Iván Zaera Avellón
  */
 @Meta.OCD(
-	id = "com.frontend.js.minifier.configuration.YahooJavaScriptMinifierConfiguration",
+	id = "com.liferay.frontend.js.minifier.configuration.YahooJavaScriptMinifierConfiguration",
 	localization = "content/Language", name = "yahoo-js-minifier-configuration"
 )
 public interface YahooJavaScriptMinifierConfiguration {
