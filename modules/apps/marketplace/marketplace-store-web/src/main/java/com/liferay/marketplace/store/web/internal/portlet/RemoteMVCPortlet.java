@@ -70,6 +70,9 @@ public class RemoteMVCPortlet extends MVCPortlet {
 			ActionRequest actionRequest, ActionResponse actionResponse)
 		throws Exception {
 
+		actionResponse.addProperty(
+			LiferayActionResponse.SKIP_ESCAPE_REDIRECT, "true");
+
 		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
@@ -87,9 +90,6 @@ public class RemoteMVCPortlet extends MVCPortlet {
 			redirect, OAuthConstants.CALLBACK, callbackURL);
 
 		actionResponse.sendRedirect(redirect);
-
-		actionResponse.addProperty(
-			LiferayActionResponse.SKIP_ESCAPE_REDIRECT, "true");
 	}
 
 	public void deauthorize(
