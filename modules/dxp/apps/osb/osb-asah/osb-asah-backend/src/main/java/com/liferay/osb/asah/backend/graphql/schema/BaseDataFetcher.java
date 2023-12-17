@@ -208,7 +208,7 @@ public abstract class BaseDataFetcher<T> implements DataFetcher<T> {
 		List<SelectedField> selectionSetFields =
 			dataFetchingFieldSelectionSet.getFields();
 
-		Stream<SelectedField> selectedFieldStream = selectionSetFields.stream();
+		Stream<SelectedField> stream = selectionSetFields.stream();
 
 		return selectedFieldStream.map(
 			SelectedField::getName
