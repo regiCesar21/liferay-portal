@@ -63,7 +63,7 @@ public class SXPElementDTOConverter
 				externalReferenceCode = sxpElement.getExternalReferenceCode();
 				id = sxpElement.getSXPElementId();
 				modifiedDate = sxpElement.getModifiedDate();
-				readOnly = sxpElement.getReadOnly();
+				readOnly = sxpElement.isReadOnly();
 				schemaVersion = sxpElement.getSchemaVersion();
 				title = sxpElement.getTitle(dtoConverterContext.getLocale());
 				title_i18n = LocalizedMapUtil.getI18nMap(
