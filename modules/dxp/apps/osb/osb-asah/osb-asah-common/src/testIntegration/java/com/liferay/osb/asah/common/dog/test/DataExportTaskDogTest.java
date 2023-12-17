@@ -69,7 +69,7 @@ public class DataExportTaskDogTest
 					fromDate, toDate, DataExportTask.Type.PAGE));
 
 		Assertions.assertEquals(
-			"The requested data is outside of your data retention period - " +
+			"The requested data is outside of your data retention period by " +
 				"13 months. Please adjust the time range in your query " +
 					"accordingly.",
 			illegalArgumentException.getMessage());
