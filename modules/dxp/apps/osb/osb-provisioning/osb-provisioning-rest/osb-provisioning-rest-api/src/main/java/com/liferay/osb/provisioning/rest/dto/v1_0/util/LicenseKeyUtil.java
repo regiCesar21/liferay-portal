@@ -22,12 +22,12 @@ public class LicenseKeyUtil {
 			{
 				accountKey = licenseKey.getAccountKey();
 				accountName = licenseKey.getAccountName();
-				active = licenseKey.getActive();
+				active = licenseKey.isActive();
 				additionalInfo = licenseKey.getAdditionalInfo();
 				assetReceiptLicenseUuid =
 					licenseKey.getAssetReceiptLicenseUuid();
 				clusterId = licenseKey.getClusterId();
-				complimentary = licenseKey.getComplimentary();
+				complimentary = licenseKey.isComplimentary();
 				createDate = licenseKey.getCreateDate();
 				description = licenseKey.getDescription();
 				expirationDate = licenseKey.getExpirationDate();

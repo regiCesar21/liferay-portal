@@ -282,7 +282,7 @@ public class ContactResourceImpl
 			contact.getLanguageId(), curContact.getLanguageId());
 		boolean emailAddressVerified = GetterUtil.getBoolean(
 			contact.getEmailAddressVerified(),
-			curContact.getEmailAddressVerified());
+			curContact.isEmailAddressVerified());
 
 		return _toContact(
 			_contactService.updateContact(
@@ -308,7 +308,7 @@ public class ContactResourceImpl
 			contact.getLanguageId(), curContact.getLanguageId());
 		boolean emailAddressVerified = GetterUtil.getBoolean(
 			contact.getEmailAddressVerified(),
-			curContact.getEmailAddressVerified());
+			curContact.isEmailAddressVerified());
 
 		return _toContact(
 			_contactService.updateContact(

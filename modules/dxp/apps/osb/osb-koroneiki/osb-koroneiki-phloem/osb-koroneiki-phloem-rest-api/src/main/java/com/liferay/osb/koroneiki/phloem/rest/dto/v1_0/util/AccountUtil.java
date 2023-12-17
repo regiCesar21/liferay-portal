@@ -35,7 +35,7 @@ public class AccountUtil {
 					account.getExternalLinks(),
 					ExternalLinkUtil::toExternalLink, ExternalLink.class);
 				faxNumber = account.getFaxNumber();
-				internal = account.getInternal();
+				internal = account.isInternal();
 				key = account.getAccountKey();
 				language = Language.create(account.getLanguage());
 				logoId = account.getLogoId();
@@ -93,7 +93,7 @@ public class AccountUtil {
 					com.liferay.osb.koroneiki.phloem.rest.client.dto.v1_0.
 						ExternalLink.class);
 				faxNumber = account.getFaxNumber();
-				internal = account.getInternal();
+				internal = account.isInternal();
 				key = account.getAccountKey();
 				language = Language.create(account.getLanguage());
 				logoId = account.getLogoId();

@@ -549,7 +549,7 @@ public class AccountResourceImpl
 		}
 
 		boolean internal = GetterUtil.getBoolean(
-			account.getInternal(), curAccount.getInternal());
+			account.getInternal(), curAccount.isInternal());
 
 		String status = curAccount.getStatus();
 

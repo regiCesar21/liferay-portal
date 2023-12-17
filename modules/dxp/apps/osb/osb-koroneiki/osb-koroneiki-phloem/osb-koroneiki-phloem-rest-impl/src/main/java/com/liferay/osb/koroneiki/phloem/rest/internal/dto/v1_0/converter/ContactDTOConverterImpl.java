@@ -55,7 +55,7 @@ public class ContactDTOConverterImpl implements ContactDTOConverter {
 				dateCreated = contact.getCreateDate();
 				dateModified = contact.getModifiedDate();
 				emailAddress = contact.getEmailAddress();
-				emailAddressVerified = contact.getEmailAddressVerified();
+				emailAddressVerified = contact.isEmailAddressVerified();
 				entitlements = TransformUtil.transformToArray(
 					contact.getEntitlements(),
 					EntitlementUtil::toClientEntitlement,
@@ -110,7 +110,7 @@ public class ContactDTOConverterImpl implements ContactDTOConverter {
 				dateCreated = contact.getCreateDate();
 				dateModified = contact.getModifiedDate();
 				emailAddress = contact.getEmailAddress();
-				emailAddressVerified = contact.getEmailAddressVerified();
+				emailAddressVerified = contact.isEmailAddressVerified();
 				entitlements = TransformUtil.transformToArray(
 					contact.getEntitlements(), EntitlementUtil::toEntitlement,
 					Entitlement.class);

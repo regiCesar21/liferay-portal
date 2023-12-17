@@ -32,7 +32,7 @@ public class TeamUtil {
 						ExternalLink.class);
 				key = team.getTeamKey();
 				name = team.getName();
-				system = team.getSystem();
+				system = team.isSystem();
 			}
 		};
 	}
@@ -50,7 +50,7 @@ public class TeamUtil {
 					ExternalLink.class);
 				key = team.getTeamKey();
 				name = team.getName();
-				system = team.getSystem();
+				system = team.isSystem();
 			}
 		};
 	}

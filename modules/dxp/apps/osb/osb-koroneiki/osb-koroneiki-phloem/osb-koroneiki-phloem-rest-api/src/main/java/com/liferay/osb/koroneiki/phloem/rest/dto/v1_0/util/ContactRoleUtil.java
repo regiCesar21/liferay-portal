@@ -35,7 +35,7 @@ public class ContactRoleUtil {
 						ExternalLink.class);
 				key = contactRole.getContactRoleKey();
 				name = contactRole.getName();
-				system = contactRole.getSystem();
+				system = contactRole.isSystem();
 				type = Type.create(contactRole.getType());
 			}
 		};
@@ -55,7 +55,7 @@ public class ContactRoleUtil {
 					ExternalLinkUtil::toExternalLink, ExternalLink.class);
 				key = contactRole.getContactRoleKey();
 				name = contactRole.getName();
-				system = contactRole.getSystem();
+				system = contactRole.isSystem();
 				type = Type.create(contactRole.getType());
 			}
 		};

@@ -461,7 +461,7 @@ public class LicenseKeyResourceImpl
 			com.liferay.osb.provisioning.license.model.LicenseKey licenseKey =
 				_licenseKeyLocalService.getLicenseKey(licenseKeyId);
 
-			if (!licenseKey.getActive()) {
+			if (!licenseKey.isActive()) {
 				continue;
 			}
 
@@ -580,7 +580,7 @@ public class LicenseKeyResourceImpl
 			com.liferay.osb.provisioning.license.model.LicenseKey licenseKey =
 				_licenseKeyLocalService.getLicenseKey(licenseKeyId);
 
-			if (!licenseKey.getActive()) {
+			if (!licenseKey.isActive()) {
 				continue;
 			}
 
@@ -843,7 +843,7 @@ public class LicenseKeyResourceImpl
 					contact.getLastName()),
 				contact.getUuid(), licenseKeyId,
 				licenseKey.getProductPurchaseKey(),
-				licenseKey.getComplimentary(), true);
+				licenseKey.isComplimentary(), true);
 		}
 	}
 
@@ -871,7 +871,7 @@ public class LicenseKeyResourceImpl
 					contact.getLastName()),
 				contact.getUuid(), licenseKeyId,
 				licenseKey.getProductPurchaseKey(),
-				licenseKey.getComplimentary(), false);
+				licenseKey.isComplimentary(), false);
 		}
 	}
 
@@ -1776,7 +1776,7 @@ public class LicenseKeyResourceImpl
 
 			String status = "Active";
 
-			if (!licenseKey.getActive()) {
+			if (!licenseKey.isActive()) {
 				status = "Inactive";
 			}
 
@@ -1797,7 +1797,7 @@ public class LicenseKeyResourceImpl
 				licenseKey.getIpAddresses(), licenseKey.getMacAddresses(),
 				licenseKey.getHostName(), licenseKey.getSizing(),
 				licenseKey.getStartDate(), licenseKey.getExpirationDate(),
-				status, maxServersOrNodes, licenseKey.getComplimentary());
+				status, maxServersOrNodes, licenseKey.isComplimentary());
 
 			sb.append(formattedCsvFields);
 		}
