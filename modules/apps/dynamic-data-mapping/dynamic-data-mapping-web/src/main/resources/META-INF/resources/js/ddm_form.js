@@ -376,7 +376,7 @@ AUI.add(
 			getFieldNodes() {
 				var instance = this;
 
-				return instance.get('container').all('> .field-wrapper');
+				return instance.get('container').all('.field-wrapper');
 			},
 
 			getForm() {
@@ -812,33 +812,26 @@ AUI.add(
 				},
 
 				getFieldByNameInFieldDefinition(name) {
-					var instance = this;
+					let field;
 
-					var definition = instance.get('definition');
-
-					var fields = [];
-
-					var pushNestedFields = (field) => {
-						field.nestedFields.forEach((nestedField) => {
-							fields.push(nestedField);
-							if (nestedField.nestedFields) {
-								pushNestedFields(nestedField);
+					const findField = (definitionFields) => {
+						definitionFields?.forEach((definitionField) => {
+							if (definitionField.name === name) {
+								field = definitionField;
+							}
+							else {
+								findField(definitionField.nestedFields);
 							}
 						});
 					};
 
-					if (definition && definition.fields) {
-						definition.fields.forEach((field) => {
-							fields.push(field);
-							if (field.nestedFields) {
-								pushNestedFields(field);
-							}
-						});
-					}
+					const instance = this;
 
-					return AArray.find(fields, (item) => {
-						return item.name === name;
-					});
+					var definition = instance.get('definition');
+
+					findField(definition?.fields);
+
+					return field;
 				},
 
 				getFieldDefinition() {
