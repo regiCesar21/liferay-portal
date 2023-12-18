@@ -12,7 +12,7 @@ Here are some of the types of changes documented in this file:
 * Execution requirements: Java version, J2EE Version, browser versions, etc.
 * Deprecations or end of support: For example, warning that a certain feature or API will be dropped in an upcoming version.
 
-*This document has been reviewed through commit `851ef01d7128`.*
+*This document has been reviewed through commit `56cbe555400e30032d848b93370d16ee0812f2b5`.*
 
 ## Breaking Changes Contribution Guidelines
 
@@ -1001,7 +1001,7 @@ There are very few cases where alternate behavior was desirable. File Install is
 
 #### What changed?
 
-The `OpenIdConnectServiceHandler` interface has been removed and replaced by the `OpenIdConnectAuthenticationHandler` interface.
+The `OpenIdConnectServiceHandler` interface was removed and replaced by the `OpenIdConnectAuthenticationHandler` interface.
 
 Old interface:
 
@@ -1017,7 +1017,7 @@ portal.security.sso.openid.connect.OpenIdConnectAuthenticationHandler
 
 #### Who is affected?
 
-This affects you if you are implementing or using the `OpenIdConnectServiceHandler` interface.
+This affects anyone implementing or using the `OpenIdConnectServiceHandler` interface.
 
 #### How should I update my code?
 
@@ -1035,76 +1035,75 @@ This change improves OIDC refresh token handling. The change was made for these 
 
 ---------------------------------------
 
-## Elasticsearch sortable type mappings were changed from keyword to icu_collation_keyword
+### Elasticsearch sortable type mappings were changed from keyword to icu_collation_keyword
 
 - **Date:** 2022-May-12
 - **JIRA Ticket:** [LPS-152937](https://issues.liferay.com/browse/LPS-152937)
 
-### What changed?
+#### What changed?
 
-The Elasticsearch type mapping of localized sortable `*_<languageId>_sortable` and nested `ddmFieldArray.ddmFieldValueText_<languageId>_String_sortable` fields were changed from `keyword` to `icu_collation_keyword`
+The Elasticsearch type mappings for localized sortable `*_<languageId>_sortable` and nested sortable `ddmFieldArray.ddmFieldValueText_<languageId>_String_sortable` fields were changed from `keyword` to `icu_collation_keyword`.
 
-The indexed information of these fields is now stored in an encoded format, for example, the `entity title` text is now stored as `MkRQOlBaBFA6UEAyARABEAA=`
+The indexed field information is now stored in an encoded format. For example, the `entity title` text is now stored as `MkRQOlBaBFA6UEAyARABEAA=`.
 
-This new `icu_collation_keyword` type allows sorting using the correct collation rules of each language for more information see https://www.elastic.co/guide/en/elasticsearch/plugins/7.17/analysis-icu-collation-keyword-field.html
+This new `icu_collation_keyword` type allows sorting using the correct collation rules of each language. For more information see https://www.elastic.co/guide/en/elasticsearch/plugins/7.17/analysis-icu-collation-keyword-field.html.
 
-If you update your existing Liferay installation, this change won't be applied until a full reindex is executed and Elasticsearch mappings are recreated.
+If updating your existing Liferay installation, this change won't be applied until you execute a full reindex to recreate the Elasticsearch mappings.
 
-### Who is affected?
+#### Who is affected?
 
 If you are using the `*_<languageId>_sortable` and `ddmFieldArray.ddmFieldValueText_<languageId>_String_sortable` fields in your custom Elasticsearch queries:
    - **To sort your results:** you will find that now they are sorted using the correct collation rules of each language.
    - **To retrieve some information from the Elasticsearch index:** you will find that now the returned information is returned in an encoded format.
 
-### How should I update my code?
+#### How should I update my code?
 
-If you want to maintain the old sort behavior, you will have to customize the Elasticsearch mappings, removing the `icu_collation_keyword`. For more information about how to personalize them, see: https://learn.liferay.com/dxp/latest/en/using-search/installing-and-upgrading-a-search-engine/elasticsearch/advanced-configuration-of-the-liferay-elasticsearch-connector.html
+If you want to maintain the old sort behavior, remove the `icu_collation_keyword` field from the Elasticsearch mappings. To customize the mappings, see [Advanced Configuration of the Elasticsearch Connector](https://learn.liferay.com/dxp/latest/en/using-search/installing-and-upgrading-a-search-engine/elasticsearch/advanced-configuration-of-the-liferay-elasticsearch-connector.html).
 
-If you need to retrieve data from these fields, you can get the same information from the _source field of Elasticsearch https://www.elastic.co/guide/en/elasticsearch/reference/7.17/mapping-source-field.html or you can also remove the `icu_collation_keyword` as it is explained in the previous paragraph.
+If you must retrieve data from these fields, you can get the information from the `_source` field of [Elasticsearch](https://www.elastic.co/guide/en/elasticsearch/reference/7.17/mapping-source-field.html) or by removing the `icu_collation_keyword` as explained in the previous paragraph.
 
 ---------------------------------------
 
-## The getSegmentsExperienceIds methods in FragmentEntryProcessorContext, DefaultFragmentEntryProcessorContext, FragmentRendererContext, DefaultFragmentRendererContext have been removed.
+### Removed the getSegmentsExperienceIds method from FragmentEntryProcessorContext, DefaultFragmentEntryProcessorContext, FragmentRendererContext, and DefaultFragmentRendererContext
 - **Date:** 2021-Dec-17
 - **JIRA Ticket:** [LPS-141471](https://issues.liferay.com/browse/LPS-141471)
 
-### What changed?
+#### What changed?
 
-The `getSegmentsExperienceIds` methods from `FragmentEntryProcessorContext`, `DefaultFragmentEntryProcessorContext`, `FragmentRendererContext` and `DefaultFragmentRendererContext` have been removed. The method with signature `getContextObjects(JSONObject, String)` from `FragmentEntryConfigurationParser` has been removed.
+The `getSegmentsExperienceIds` method was removed from `FragmentEntryProcessorContext`, `DefaultFragmentEntryProcessorContext`, `FragmentRendererContext` and `DefaultFragmentRendererContext`. Additionally, the method `getContextObjects(JSONObject, String)` was removed from `FragmentEntryConfigurationParser`.
 
-### Who is affected?
+#### Who is affected?
 
-This affects anyone using `FragmentEntryProcessorContext`, `DefaultFragmentEntryProcessorContext`, `FragmentRendererContext` or `DefaultFragmentRendererContext` to get the `long array` of `segmentsExperienceIds`, or if you use the method with signature `getContextObjects(JSONObject, String)` from `FragmentEntryConfigurationParser`.
+This affects anyone using `FragmentEntryProcessorContext`, `DefaultFragmentEntryProcessorContext`, `FragmentRendererContext` or `DefaultFragmentRendererContext` to get the long array of `segmentsExperienceIds`, or using the method with the signature `getContextObjects(JSONObject, String)` from `FragmentEntryConfigurationParser`.
 
-### How should I update my code?
+#### How should I update my code?
 
-Use `getSegmentsEntryIds` in `FragmentEntryProcessorContext`, `DefaultFragmentEntryProcessorContext`, `FragmentRendererContext` and `DefaultFragmentRendererContext`. Use the method with signature `getContextObjects(JSONObject, String, long[])` from `FragmentEntryConfigurationParser`, where the third parameter represents the `long array` of `segmentsEntryIds`.
+Use `getSegmentsEntryIds` in `FragmentEntryProcessorContext`, `DefaultFragmentEntryProcessorContext`, `FragmentRendererContext` and `DefaultFragmentRendererContext`. Use the method with the signature `getContextObjects(JSONObject, String, long[])` from `FragmentEntryConfigurationParser`, where the third parameter represents the long array of `segmentsEntryIds`.
 
-### Why was this change made?
+#### Why was this change made?
 
 This change was made so that a collection's variations can be retrieved when using collections in a fragment.
 
 ---------------------------------------
 
-## The support of Apache SOAP 2.2 has been removed.
+### Removed Support for Apache SOAP 2.2
 - **Date:** 2023-Dec-4
 - **JIRA Ticket:** [LPS-164220](https://liferay.atlassian.net/browse/LPS-164220)
 
-### What changed?
+#### What changed?
 
-This change was made to address vulnerabilities in outdated libraries that are no longer
-maintained.
+Support was removed for Apache Soap 2.2 and its libraries. This change was made to address vulnerabilities in libraries that are no longer maintained.
 
-### Who is affected?
+#### Who is affected?
 
-This will affect you if you are using SOAP web service
+This affects anyone using SOAP web services.
 
-### How should I update my code?
+#### How should I update my code?
 
-Move soap services to JSON Web Services
+Move from SOAP services to JSON Web Services.
 
-### Why was this change made?
+#### Why was this change made?
 
-Apache SOAP is no longer maintained and will not receive any updates
+Apache SOAP is no longer maintained and will not receive further updates.
 
 ---------------------------------------
