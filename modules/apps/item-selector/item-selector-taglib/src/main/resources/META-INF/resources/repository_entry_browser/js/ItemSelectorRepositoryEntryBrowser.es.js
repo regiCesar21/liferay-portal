@@ -13,6 +13,7 @@ import ReactDOM from 'react-dom';
 
 import ItemSelectorPreview from '../../item_selector_preview/js/ItemSelectorPreview.es';
 
+const STR_DRAG = 'drag';
 const STR_DRAG_LEAVE = 'dragleave';
 const STR_DRAG_OVER = 'dragover';
 const STR_DROP = 'drop';
@@ -161,15 +162,20 @@ class ItemSelectorRepositoryEntryBrowser extends PortletBase {
 				itemSelectorUploader.after('itemUploadError', (event) => {
 					this._onItemUploadError(event);
 				}),
+				rootNode.addEventListener(STR_DRAG, () => {
+					rootNode.style['pointer-events'] = 'none';
+				}),
 				rootNode.addEventListener(STR_DRAG_OVER, (event) =>
 					this._ddEventHandler(event)
 				),
 				rootNode.addEventListener(STR_DRAG_LEAVE, (event) =>
 					this._ddEventHandler(event)
 				),
-				rootNode.addEventListener(STR_DROP, (event) =>
-					this._ddEventHandler(event)
-				)
+				rootNode.addEventListener(STR_DROP, (event) => {
+					rootNode.style['pointer-events'] = 'auto';
+
+					this._ddEventHandler(event);
+				})
 			);
 		}
 	}
