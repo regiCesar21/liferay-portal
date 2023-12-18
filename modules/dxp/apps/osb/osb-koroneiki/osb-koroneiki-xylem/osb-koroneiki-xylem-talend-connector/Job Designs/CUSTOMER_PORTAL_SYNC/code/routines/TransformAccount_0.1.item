@@ -453,6 +453,8 @@ public class TransformAccount {
 			return 10 + supportSeatAddons;
 		}
 
+		maxSupportSeatCount += supportSeatAddons;
+
 		if (productionInstances <= 0) {
 			if (analyticsCloud) {
 				return -1;
@@ -521,8 +523,6 @@ public class TransformAccount {
 				maxSupportSeatCount += 18;
 			}
 		}
-
-		maxSupportSeatCount += supportSeatAddons;
 
 		return maxSupportSeatCount;
 	}

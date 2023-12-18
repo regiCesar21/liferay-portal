@@ -222,6 +222,8 @@ public class AccountReaderImpl implements AccountReader {
 			return 10 + supportSeatAddons;
 		}
 
+		maxSupportSeatCount += supportSeatAddons;
+
 		if (productionInstances <= 0) {
 			if (analyticsCloud) {
 				return -1;
@@ -290,8 +292,6 @@ public class AccountReaderImpl implements AccountReader {
 				maxSupportSeatCount += 18;
 			}
 		}
-
-		maxSupportSeatCount += supportSeatAddons;
 
 		return maxSupportSeatCount;
 	}
