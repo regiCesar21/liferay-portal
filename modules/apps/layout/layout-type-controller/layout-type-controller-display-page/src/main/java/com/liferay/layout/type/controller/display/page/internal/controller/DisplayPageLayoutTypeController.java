@@ -5,6 +5,7 @@
 
 package com.liferay.layout.type.controller.display.page.internal.controller;
 
+import com.liferay.asset.display.page.constants.AssetDisplayPageWebKeys;
 import com.liferay.asset.display.page.portlet.AssetDisplayPageFriendlyURLProvider;
 import com.liferay.asset.kernel.AssetRendererFactoryRegistryUtil;
 import com.liferay.asset.kernel.model.AssetEntry;
@@ -15,6 +16,7 @@ import com.liferay.fragment.renderer.FragmentRendererController;
 import com.liferay.fragment.renderer.FragmentRendererTracker;
 import com.liferay.info.constants.InfoDisplayWebKeys;
 import com.liferay.info.display.contributor.InfoDisplayContributorTracker;
+import com.liferay.info.display.contributor.InfoDisplayObjectProvider;
 import com.liferay.info.display.request.attributes.contributor.InfoDisplayRequestAttributesContributor;
 import com.liferay.info.item.renderer.InfoItemRendererTracker;
 import com.liferay.info.item.selector.InfoItemSelectorTracker;
@@ -23,6 +25,7 @@ import com.liferay.layout.content.page.editor.constants.ContentPageEditorWebKeys
 import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
 import com.liferay.layout.page.template.service.LayoutPageTemplateEntryLocalService;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.exception.NoSuchLayoutException;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.io.unsync.UnsyncStringWriter;
 import com.liferay.portal.kernel.log.Log;
@@ -122,6 +125,10 @@ public class DisplayPageLayoutTypeController
 				WebKeys.THEME_DISPLAY);
 
 		if (layout.getClassNameId() == _portal.getClassNameId(Layout.class)) {
+			if (!themeDisplay.isSignedIn()) {
+				throw new NoSuchLayoutException();
+			}
+
 			Layout curLayout = _layoutLocalService.fetchLayout(
 				layout.getClassPK());
 
@@ -157,6 +164,14 @@ public class DisplayPageLayoutTypeController
 		httpServletRequest.setAttribute(
 			FragmentActionKeys.FRAGMENT_RENDERER_CONTROLLER,
 			_fragmentRendererController);
+
+		InfoDisplayObjectProvider infoDisplayObjectProvider =
+			(InfoDisplayObjectProvider)httpServletRequest.getAttribute(
+				AssetDisplayPageWebKeys.INFO_DISPLAY_OBJECT_PROVIDER);
+
+		if ((infoDisplayObjectProvider == null) && !themeDisplay.isSignedIn()) {
+			throw new NoSuchLayoutException();
+		}
 
 		String page = getViewPage();
 
