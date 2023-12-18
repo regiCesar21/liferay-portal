@@ -37,6 +37,7 @@ import javax.portlet.PortletPreferences;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletConfig;
+import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletResponse;
 
@@ -367,6 +368,8 @@ public class ComboServletTest extends PowerMockito {
 	private void _testService(
 			String path, String queryString, ServletContext servletContext)
 		throws Exception {
+
+		ComboServlet.clearCache();
 
 		MockHttpServletRequest mockHttpServletRequest =
 			new MockHttpServletRequest();
