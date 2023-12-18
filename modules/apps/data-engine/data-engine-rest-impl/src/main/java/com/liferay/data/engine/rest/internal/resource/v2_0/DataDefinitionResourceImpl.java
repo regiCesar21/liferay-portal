@@ -766,7 +766,8 @@ public class DataDefinitionResourceImpl
 	}
 
 	private void _checkRemovedDataEngineNativeObjectFields(
-		DataDefinition dataDefinition) {
+			DataDefinition dataDefinition)
+		throws Exception {
 
 		DataEngineNativeObject dataEngineNativeObject =
 			_dataEngineNativeObjectTracker.getDataEngineNativeObject(
