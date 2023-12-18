@@ -210,7 +210,7 @@ public abstract class BaseDataFetcher<T> implements DataFetcher<T> {
 
 		Stream<SelectedField> stream = selectionSetFields.stream();
 
-		return selectedFieldStream.map(
+		return stream.map(
 			SelectedField::getName
 		).collect(
 			Collectors.toSet()
