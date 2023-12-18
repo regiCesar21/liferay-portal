@@ -6,7 +6,7 @@
 package com.liferay.osb.provisioning.distributed.messaging.internal.subscribing;
 
 import com.liferay.osb.koroneiki.phloem.rest.client.dto.v1_0.Account;
-import com.liferay.osb.provisioning.distributed.messaging.internal.subscribing.util.DossieraSubscriberUtil;
+import com.liferay.osb.provisioning.distributed.messaging.internal.subscribing.util.SalesSubscriberUtil;
 import com.liferay.osb.provisioning.koroneiki.web.service.AccountWebService;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.json.JSONObject;
@@ -44,7 +44,7 @@ public class ProjectMessageSubscriber extends BaseMessageSubscriber {
 			return;
 		}
 
-		String accountKey = _dossieraSubscriberUtil.getAccountKey(projectKey);
+		String accountKey = _salesSubscriberUtil.getAccountKey(projectKey);
 
 		if (accountKey != null) {
 			Account account = _accountWebService.getAccount(accountKey);
@@ -54,8 +54,7 @@ public class ProjectMessageSubscriber extends BaseMessageSubscriber {
 			MapUtil.copy(account.getProperties(), oldProperties);
 
 			Map<String, String> properties =
-				_dossieraSubscriberUtil.getAccountProperties(
-					account, jsonObject);
+				_salesSubscriberUtil.getAccountProperties(account, jsonObject);
 
 			account.setProperties(properties);
 
@@ -63,7 +62,7 @@ public class ProjectMessageSubscriber extends BaseMessageSubscriber {
 				StringPool.BLANK, StringPool.BLANK, accountKey, account);
 
 			if (!oldProperties.equals(properties)) {
-				_dossieraSubscriberUtil.updateTickets(account, properties);
+				_salesSubscriberUtil.updateTickets(account, properties);
 			}
 		}
 	}
@@ -75,6 +74,6 @@ public class ProjectMessageSubscriber extends BaseMessageSubscriber {
 	private AccountWebService _accountWebService;
 
 	@Reference
-	private DossieraSubscriberUtil _dossieraSubscriberUtil;
+	private SalesSubscriberUtil _salesSubscriberUtil;
 
 }

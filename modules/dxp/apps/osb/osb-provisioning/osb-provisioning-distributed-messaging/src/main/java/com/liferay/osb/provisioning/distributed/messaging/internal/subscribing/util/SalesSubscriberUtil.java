@@ -34,8 +34,8 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Kyle Bischof
  */
-@Component(immediate = true, service = DossieraSubscriberUtil.class)
-public class DossieraSubscriberUtil {
+@Component(immediate = true, service = SalesSubscriberUtil.class)
+public class SalesSubscriberUtil {
 
 	public Account fetchAccount(String salesforceAccountKey) throws Exception {
 		List<Account> accounts = _accountWebService.getAccounts(

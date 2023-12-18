@@ -23,7 +23,7 @@ import com.liferay.osb.provisioning.constants.ProductTypeConstants;
 import com.liferay.osb.provisioning.constants.ProvisioningPortletKeys;
 import com.liferay.osb.provisioning.distributed.messaging.internal.configuration.DistributedMessagingConfiguration;
 import com.liferay.osb.provisioning.distributed.messaging.internal.constants.SalesforceConstants;
-import com.liferay.osb.provisioning.distributed.messaging.internal.subscribing.util.DossieraSubscriberUtil;
+import com.liferay.osb.provisioning.distributed.messaging.internal.subscribing.util.SalesSubscriberUtil;
 import com.liferay.osb.provisioning.identity.management.provider.ContactIdentityProvider;
 import com.liferay.osb.provisioning.identity.management.validator.EmailAddressValidator;
 import com.liferay.osb.provisioning.koroneiki.constants.ContactRoleConstants;
@@ -561,7 +561,7 @@ public class OpportunityMessageSubscriber extends BaseMessageSubscriber {
 		}
 
 		account.setProperties(
-			_dossieraSubscriberUtil.getAccountProperties(account, jsonObject));
+			_salesSubscriberUtil.getAccountProperties(account, jsonObject));
 
 		String soldBy = jsonObject.getString("opportunitySoldBy");
 
@@ -606,7 +606,7 @@ public class OpportunityMessageSubscriber extends BaseMessageSubscriber {
 
 		String name = accountJSONObject.getString("name");
 
-		Account parentAccount = _dossieraSubscriberUtil.fetchAccount(
+		Account parentAccount = _salesSubscriberUtil.fetchAccount(
 			salesforceAccountKey);
 
 		if (parentAccount != null) {
@@ -909,7 +909,7 @@ public class OpportunityMessageSubscriber extends BaseMessageSubscriber {
 			return;
 		}
 
-		String accountKey = _dossieraSubscriberUtil.getAccountKey(jsonObject);
+		String accountKey = _salesSubscriberUtil.getAccountKey(jsonObject);
 
 		PostalAddress postalAddress = parseAddress(jsonObject);
 
@@ -1917,7 +1917,7 @@ public class OpportunityMessageSubscriber extends BaseMessageSubscriber {
 			return null;
 		}
 
-		return _dossieraSubscriberUtil.fetchAccount(salesforceAccountKey);
+		return _salesSubscriberUtil.fetchAccount(salesforceAccountKey);
 	}
 
 	protected Team[] parsePartnerTeams(
@@ -2190,7 +2190,7 @@ public class OpportunityMessageSubscriber extends BaseMessageSubscriber {
 		MapUtil.copy(account.getProperties(), oldProperties);
 
 		Map<String, String> newProperties =
-			_dossieraSubscriberUtil.getAccountProperties(account, jsonObject);
+			_salesSubscriberUtil.getAccountProperties(account, jsonObject);
 
 		JSONObject projectJSONObject = jsonObject.getJSONObject("project");
 
@@ -2222,7 +2222,7 @@ public class OpportunityMessageSubscriber extends BaseMessageSubscriber {
 				StringPool.BLANK, StringPool.BLANK, accountKey, account);
 
 			if (!oldProperties.equals(newProperties)) {
-				_dossieraSubscriberUtil.updateTickets(account, newProperties);
+				_salesSubscriberUtil.updateTickets(account, newProperties);
 			}
 		}
 
@@ -2713,9 +2713,6 @@ public class OpportunityMessageSubscriber extends BaseMessageSubscriber {
 		_distributedMessagingConfiguration;
 
 	@Reference
-	private DossieraSubscriberUtil _dossieraSubscriberUtil;
-
-	@Reference
 	private EmailAddressValidator _emailAddressValidator;
 
 	@Reference
@@ -2744,6 +2741,9 @@ public class OpportunityMessageSubscriber extends BaseMessageSubscriber {
 
 	@Reference
 	private ProductWebService _productWebService;
+
+	@Reference
+	private SalesSubscriberUtil _salesSubscriberUtil;
 
 	@Reference
 	private TeamRoleWebService _teamRoleWebService;
