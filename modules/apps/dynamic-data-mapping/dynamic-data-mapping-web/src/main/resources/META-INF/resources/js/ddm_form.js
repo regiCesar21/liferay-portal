@@ -4075,17 +4075,44 @@ AUI.add(
 					Field.prototype.setLabel.apply(instance, arguments);
 				},
 
-				setValue(value) {
-					var instance = this;
+				setValue(values) {
+					const instance = this;
+					const currentlyAvailableValues = instance
+						.getInputNode()
+						.all('option')
+						.val();
 
-					if (Lang.isString(value)) {
-						if (value !== '') {
-							value = JSON.parse(value);
+					const parseValues = (values) => {
+						if (values) {
+							return JSON.parse(values);
 						}
 						else {
-							value = [''];
+							return [''];
 						}
+					};
+
+					let resultValues = [];
+
+					if (Lang.isString(values)) {
+						values = parseValues(values);
 					}
+
+					values.forEach((value) => {
+						if (!currentlyAvailableValues.includes(value)) {
+							const predefinedValues = parseValues(
+								instance.getFieldByNameInFieldDefinition(
+									instance.get('name')
+								).predefinedValue[instance.get('displayLocale')]
+							);
+
+							resultValues.push(...predefinedValues);
+						}
+						else {
+							resultValues.push(value);
+						}
+					});
+
+					resultValues = [...new Set(resultValues)];
 
 					instance
 						.getInputNode()
