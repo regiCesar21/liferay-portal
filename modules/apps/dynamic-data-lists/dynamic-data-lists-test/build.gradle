@@ -3,8 +3,6 @@ copyLibs {
 }
 
 dependencies {
-	compileOnly group: "org.apache.poi", name: "poi", version: "5.2.2"
-
 	testImplementation group: "com.liferay.portal", name: "com.liferay.portal.kernel", version: "default"
 	testImplementation project(":apps:dynamic-data-lists:dynamic-data-lists-api")
 	testImplementation project(":apps:dynamic-data-lists:dynamic-data-lists-service")
@@ -15,6 +13,7 @@ dependencies {
 
 	testIntegrationImplementation group: "com.liferay", name: "com.liferay.arquillian.extension.junit.bridge", version: "1.0.19"
 	testIntegrationImplementation group: "com.liferay.portal", name: "com.liferay.portal.impl", version: "default"
+	testIntegrationImplementation group: "org.apache.poi", name: "poi", version: "5.2.2"
 	testIntegrationImplementation project(":apps:dynamic-data-mapping:dynamic-data-mapping-test-util")
 	testIntegrationImplementation project(":apps:export-import:export-import-test-util")
 	testIntegrationImplementation project(":apps:portal:portal-upgrade-api")
