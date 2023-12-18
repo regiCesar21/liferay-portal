@@ -108,13 +108,13 @@ function ExternalAccountKeys({details}) {
 
 ExternalAccountKeys.propTypes = {
 	details: PropTypes.shape({
-		salesforceAccountKey: PropTypes.string,
 		relatedSalesforceProjectKey: PropTypes.string,
+		salesforceAccountKey: PropTypes.string,
 		salesforceProjectKey: PropTypes.string,
 		updateAnalyticsCloudGroupURL: PropTypes.string,
-		updateSalesforceAccountURL: PropTypes.string,
 		updateDxpCloudProjectURL: PropTypes.string,
 		updateRelatedSalesforceProjectURL: PropTypes.string,
+		updateSalesforceAccountURL: PropTypes.string,
 		updateSalesforceProjectURL: PropTypes.string
 	})
 };
