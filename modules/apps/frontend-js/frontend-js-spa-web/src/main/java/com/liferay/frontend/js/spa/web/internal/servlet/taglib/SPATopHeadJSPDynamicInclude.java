@@ -69,6 +69,8 @@ public class SPATopHeadJSPDynamicInclude extends BaseJSPDynamicInclude {
 		).put(
 			"excludedPaths", _spaHelper.getExcludedPaths()
 		).put(
+			"excludedTargetPortlets", _spaHelper.getExcludedTargetPortlets()
+		).put(
 			"loginRedirect",
 			_html.escapeJS(_spaHelper.getLoginRedirect(httpServletRequest))
 		).put(

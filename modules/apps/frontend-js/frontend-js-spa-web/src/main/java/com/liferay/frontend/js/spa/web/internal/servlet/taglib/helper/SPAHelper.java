@@ -26,6 +26,7 @@ import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.PortalUtil;
+import com.liferay.portal.kernel.util.PortletKeys;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.Time;
@@ -73,6 +74,10 @@ public class SPAHelper {
 
 	public String getExcludedPaths() {
 		return _spaExcludedPathsJSONArray.toString();
+	}
+
+	public String getExcludedTargetPortlets() {
+		return _spaExcludedTargetPortletsJSONArray.toString();
 	}
 
 	public ResourceBundle getLanguageResourceBundle(
@@ -198,6 +203,9 @@ public class SPAHelper {
 		_spaExcludedPathsJSONArray = _getExcludedPathsJSONArray(
 			_spaConfiguration);
 
+		_spaExcludedTargetPortletsJSONArray =
+			_getExcludedTargetPortletsJSONArray();
+
 		Collections.addAll(
 			_navigationExceptionSelectors,
 			_spaConfiguration.navigationExceptionSelectors());
@@ -232,6 +240,9 @@ public class SPAHelper {
 		_cacheExpirationTime = _getCacheExpirationTime(_spaConfiguration);
 		_spaExcludedPathsJSONArray = _getExcludedPathsJSONArray(
 			_spaConfiguration);
+
+		_spaExcludedTargetPortletsJSONArray =
+			_getExcludedTargetPortletsJSONArray();
 
 		Collections.addAll(
 			_navigationExceptionSelectors,
@@ -280,10 +291,26 @@ public class SPAHelper {
 		return jsonArray;
 	}
 
+	private JSONArray _getExcludedTargetPortletsJSONArray() {
+		JSONArray jsonArray = JSONFactoryUtil.createJSONArray();
+
+		for (String excludedTargetsPortlet :
+				_SPA_DEFAULT_EXCLUDED_TARGET_PORTLETS) {
+
+			jsonArray.put(excludedTargetsPortlet);
+		}
+
+		return jsonArray;
+	}
+
 	private static final String _REDIRECT_PARAM_NAME;
 
 	private static final String[] _SPA_DEFAULT_EXCLUDED_PATHS = {
 		"/c/document_library", "/documents", "/image"
+	};
+
+	private static final String[] _SPA_DEFAULT_EXCLUDED_TARGET_PORTLETS = {
+		PortletKeys.USERS_ADMIN, PortletKeys.SERVER_ADMIN
 	};
 
 	private static final String _SPA_NAVIGATION_EXCEPTION_SELECTOR_KEY =
@@ -327,6 +354,7 @@ public class SPAHelper {
 	private PortletLocalService _portletLocalService;
 	private SPAConfiguration _spaConfiguration;
 	private JSONArray _spaExcludedPathsJSONArray;
+	private JSONArray _spaExcludedTargetPortletsJSONArray;
 
 	private static final class NavigationExceptionSelectorTrackerCustomizer
 		implements ServiceTrackerCustomizer<Object, Object> {
