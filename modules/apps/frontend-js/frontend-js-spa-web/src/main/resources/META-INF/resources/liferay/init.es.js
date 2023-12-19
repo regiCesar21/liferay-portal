@@ -40,11 +40,17 @@ const initSPA = function () {
 				const host = loginRedirect.host || window.location.host;
 
 				if (app.isLinkSameOrigin_(host)) {
-					match =
-						uri.searchParams.get('p_p_lifecycle') === '1' &&
-						!Liferay.SPA.excludedTargetPortlets.some((item) =>
-							uri.searchParams.get('p_p_id')?.includes(item)
-						);
+					match = uri.searchParams.get('p_p_lifecycle') === '1';
+
+					if (match) {
+						const id = uri.searchParams.get('p_p_id');
+
+						if (id && Liferay.SPA.excludedTargetPortlets) {
+							match = !Liferay.SPA.excludedTargetPortlets.includes(
+								id
+							);
+						}
+					}
 				}
 
 				return match;
