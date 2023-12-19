@@ -196,7 +196,9 @@ public class EditExternalLinkMVCActionCommand extends BaseMVCActionCommand {
 		for (Account account : accounts) {
 			String curParentAccountKey = account.getParentAccountKey();
 
-			if (curParentAccountKey.equals(parentAccountKey)) {
+			if (Validator.isNotNull(curParentAccountKey) &&
+				curParentAccountKey.equals(parentAccountKey)) {
+
 				continue;
 			}
 
