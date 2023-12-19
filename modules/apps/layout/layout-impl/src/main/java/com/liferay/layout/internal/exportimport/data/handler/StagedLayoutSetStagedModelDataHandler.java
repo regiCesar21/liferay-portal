@@ -652,7 +652,7 @@ public class StagedLayoutSetStagedModelDataHandler
 						portletDataContext, stagedLayoutSet,
 						layoutSet.getCss());
 
-			if (!css.isEmpty() ||
+			if (Validator.isNotNull(css) ||
 				!MergeLayoutPrototypesThreadLocal.isInProgress()) {
 
 				layoutSet.setCss(css);
