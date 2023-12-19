@@ -46,11 +46,11 @@ AS R"""
 		for (var i = 0; i < queryParamsStringParts.length; i++) {
 			var queryParam = queryParamsStringParts[i].split('=');
 
-			if (queryParam[0] === 'utm_medium') {
-				medium = queryParam[1];
-			}
-			else if (queryParam[0] === 'gclid') {
+			if (queryParam[0] === 'gclid') {
 				gclid = queryParam[1];
+			}
+			else if (queryParam[0] === 'utm_medium') {
+				medium = queryParam[1];
 			}
 		}
 
