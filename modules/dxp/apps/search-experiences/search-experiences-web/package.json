@@ -41,6 +41,7 @@
 		],
 		"testPathIgnorePatterns": [
 			"<rootDir>/test/js/mocks/*",
+			"<rootDir>/test/js/setup.js",
 			"<rootDir>/test/js/shared/CodeMirrorEditor.js"
 		],
 		"transformIgnorePatterns": [
