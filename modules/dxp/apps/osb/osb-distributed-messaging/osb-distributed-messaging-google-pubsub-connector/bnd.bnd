@@ -5,6 +5,8 @@ Export-Package:\
 	com.liferay.osb.distributed.messaging.google.pubsub.connector,\
 	com.liferay.osb.distributed.messaging.google.pubsub.connector.broker
 Import-Package:\
+	!com.aayushatharva.*,\
+	\
 	!com.conversantmedia.util.concurrent.*,\
 	\
 	!com.github.luben.zstd,\
