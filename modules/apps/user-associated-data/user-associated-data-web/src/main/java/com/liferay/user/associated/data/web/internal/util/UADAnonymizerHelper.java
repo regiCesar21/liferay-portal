@@ -73,10 +73,8 @@ public class UADAnonymizerHelper {
 		PasswordPolicy passwordPolicy =
 			_passwordPolicyLocalService.getDefaultPasswordPolicy(companyId);
 
-		String password = PwdToolkitUtil.generate(passwordPolicy);
+		String randomString = PwdToolkitUtil.generate(passwordPolicy);
 
-		String password1 = password;
-		String password2 = password;
 		long counter = _counterLocalService.increment(
 			UADAnonymizerHelper.class.getName());
 
