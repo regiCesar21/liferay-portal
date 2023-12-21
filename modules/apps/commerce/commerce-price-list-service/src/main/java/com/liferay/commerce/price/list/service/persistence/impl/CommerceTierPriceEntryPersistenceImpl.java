@@ -5,7 +5,6 @@
 
 package com.liferay.commerce.price.list.service.persistence.impl;
 
-import com.liferay.commerce.price.list.exception.DuplicateCommerceTierPriceEntryExternalReferenceCodeException;
 import com.liferay.commerce.price.list.exception.NoSuchTierPriceEntryException;
 import com.liferay.commerce.price.list.model.CommerceTierPriceEntry;
 import com.liferay.commerce.price.list.model.impl.CommerceTierPriceEntryImpl;
@@ -19,18 +18,12 @@ import com.liferay.portal.kernel.dao.orm.Query;
 import com.liferay.portal.kernel.dao.orm.QueryPos;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.Session;
-import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.sanitizer.Sanitizer;
-import com.liferay.portal.kernel.sanitizer.SanitizerException;
-import com.liferay.portal.kernel.sanitizer.SanitizerUtil;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
-import com.liferay.portal.kernel.security.auth.PrincipalThreadLocal;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
-import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.PropsKeys;
@@ -5454,69 +5447,6 @@ public class CommerceTierPriceEntryPersistenceImpl
 
 			commerceTierPriceEntry.setExternalReferenceCode(
 				commerceTierPriceEntry.getUuid());
-		}
-		else {
-			if (!Objects.equals(
-					commerceTierPriceEntryModelImpl.getColumnOriginalValue(
-						"externalReferenceCode"),
-					commerceTierPriceEntry.getExternalReferenceCode())) {
-
-				long userId = GetterUtil.getLong(
-					PrincipalThreadLocal.getName());
-
-				if (userId > 0) {
-					long companyId = commerceTierPriceEntry.getCompanyId();
-
-					long groupId = 0;
-
-					long classPK = 0;
-
-					if (!isNew) {
-						classPK = commerceTierPriceEntry.getPrimaryKey();
-					}
-
-					try {
-						commerceTierPriceEntry.setExternalReferenceCode(
-							SanitizerUtil.sanitize(
-								companyId, groupId, userId,
-								CommerceTierPriceEntry.class.getName(), classPK,
-								ContentTypes.TEXT_HTML, Sanitizer.MODE_ALL,
-								commerceTierPriceEntry.
-									getExternalReferenceCode(),
-								null));
-					}
-					catch (SanitizerException sanitizerException) {
-						throw new SystemException(sanitizerException);
-					}
-				}
-			}
-
-			CommerceTierPriceEntry ercCommerceTierPriceEntry = fetchByC_ERC(
-				commerceTierPriceEntry.getCompanyId(),
-				commerceTierPriceEntry.getExternalReferenceCode());
-
-			if (isNew) {
-				if (ercCommerceTierPriceEntry != null) {
-					throw new DuplicateCommerceTierPriceEntryExternalReferenceCodeException(
-						"Duplicate commerce tier price entry with external reference code " +
-							commerceTierPriceEntry.getExternalReferenceCode() +
-								" and company " +
-									commerceTierPriceEntry.getCompanyId());
-				}
-			}
-			else {
-				if ((ercCommerceTierPriceEntry != null) &&
-					(commerceTierPriceEntry.getCommerceTierPriceEntryId() !=
-						ercCommerceTierPriceEntry.
-							getCommerceTierPriceEntryId())) {
-
-					throw new DuplicateCommerceTierPriceEntryExternalReferenceCodeException(
-						"Duplicate commerce tier price entry with external reference code " +
-							commerceTierPriceEntry.getExternalReferenceCode() +
-								" and company " +
-									commerceTierPriceEntry.getCompanyId());
-				}
-			}
 		}
 
 		ServiceContext serviceContext =
