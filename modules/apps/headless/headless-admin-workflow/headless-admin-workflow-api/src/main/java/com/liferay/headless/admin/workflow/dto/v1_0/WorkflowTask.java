@@ -28,6 +28,7 @@ import java.util.Iterator;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
+import java.util.function.Supplier;
 
 import javax.annotation.Generated;
 
@@ -58,26 +59,36 @@ public class WorkflowTask implements Serializable {
 
 	@Schema(description = "A flag that indicates whether the task is complete.")
 	public Boolean getCompleted() {
+		if (_completedSupplier != null) {
+			completed = _completedSupplier.get();
+
+			_completedSupplier = null;
+		}
+
 		return completed;
 	}
 
 	public void setCompleted(Boolean completed) {
 		this.completed = completed;
+
+		_completedSupplier = null;
 	}
 
 	@JsonIgnore
 	public void setCompleted(
 		UnsafeSupplier<Boolean, Exception> completedUnsafeSupplier) {
 
-		try {
-			completed = completedUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_completedSupplier = () -> {
+			try {
+				return completedUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField(
@@ -86,208 +97,302 @@ public class WorkflowTask implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Boolean completed;
 
+	private Supplier<Boolean> _completedSupplier;
+
 	@Schema(description = "The task's completion date.")
 	public Date getDateCompleted() {
+		if (_dateCompletedSupplier != null) {
+			dateCompleted = _dateCompletedSupplier.get();
+
+			_dateCompletedSupplier = null;
+		}
+
 		return dateCompleted;
 	}
 
 	public void setDateCompleted(Date dateCompleted) {
 		this.dateCompleted = dateCompleted;
+
+		_dateCompletedSupplier = null;
 	}
 
 	@JsonIgnore
 	public void setDateCompleted(
 		UnsafeSupplier<Date, Exception> dateCompletedUnsafeSupplier) {
 
-		try {
-			dateCompleted = dateCompletedUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_dateCompletedSupplier = () -> {
+			try {
+				return dateCompletedUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField(description = "The task's completion date.")
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Date dateCompleted;
 
+	private Supplier<Date> _dateCompletedSupplier;
+
 	@Schema(description = "The task's creation date.")
 	public Date getDateCreated() {
+		if (_dateCreatedSupplier != null) {
+			dateCreated = _dateCreatedSupplier.get();
+
+			_dateCreatedSupplier = null;
+		}
+
 		return dateCreated;
 	}
 
 	public void setDateCreated(Date dateCreated) {
 		this.dateCreated = dateCreated;
+
+		_dateCreatedSupplier = null;
 	}
 
 	@JsonIgnore
 	public void setDateCreated(
 		UnsafeSupplier<Date, Exception> dateCreatedUnsafeSupplier) {
 
-		try {
-			dateCreated = dateCreatedUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_dateCreatedSupplier = () -> {
+			try {
+				return dateCreatedUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField(description = "The task's creation date.")
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Date dateCreated;
 
+	private Supplier<Date> _dateCreatedSupplier;
+
 	@Schema(description = "The name of the task's workflow definition.")
 	public String getDefinitionName() {
+		if (_definitionNameSupplier != null) {
+			definitionName = _definitionNameSupplier.get();
+
+			_definitionNameSupplier = null;
+		}
+
 		return definitionName;
 	}
 
 	public void setDefinitionName(String definitionName) {
 		this.definitionName = definitionName;
+
+		_definitionNameSupplier = null;
 	}
 
 	@JsonIgnore
 	public void setDefinitionName(
 		UnsafeSupplier<String, Exception> definitionNameUnsafeSupplier) {
 
-		try {
-			definitionName = definitionNameUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_definitionNameSupplier = () -> {
+			try {
+				return definitionNameUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField(description = "The name of the task's workflow definition.")
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected String definitionName;
 
+	private Supplier<String> _definitionNameSupplier;
+
 	@Schema(description = "The task's description.")
 	public String getDescription() {
+		if (_descriptionSupplier != null) {
+			description = _descriptionSupplier.get();
+
+			_descriptionSupplier = null;
+		}
+
 		return description;
 	}
 
 	public void setDescription(String description) {
 		this.description = description;
+
+		_descriptionSupplier = null;
 	}
 
 	@JsonIgnore
 	public void setDescription(
 		UnsafeSupplier<String, Exception> descriptionUnsafeSupplier) {
 
-		try {
-			description = descriptionUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_descriptionSupplier = () -> {
+			try {
+				return descriptionUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField(description = "The task's description.")
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected String description;
 
+	private Supplier<String> _descriptionSupplier;
+
 	@Schema(description = "The date the task should be completed by.")
 	public Date getDueDate() {
+		if (_dueDateSupplier != null) {
+			dueDate = _dueDateSupplier.get();
+
+			_dueDateSupplier = null;
+		}
+
 		return dueDate;
 	}
 
 	public void setDueDate(Date dueDate) {
 		this.dueDate = dueDate;
+
+		_dueDateSupplier = null;
 	}
 
 	@JsonIgnore
 	public void setDueDate(
 		UnsafeSupplier<Date, Exception> dueDateUnsafeSupplier) {
 
-		try {
-			dueDate = dueDateUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_dueDateSupplier = () -> {
+			try {
+				return dueDateUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField(description = "The date the task should be completed by.")
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Date dueDate;
 
+	private Supplier<Date> _dueDateSupplier;
+
 	@Schema(description = "The task's ID.")
 	public Long getId() {
+		if (_idSupplier != null) {
+			id = _idSupplier.get();
+
+			_idSupplier = null;
+		}
+
 		return id;
 	}
 
 	public void setId(Long id) {
 		this.id = id;
+
+		_idSupplier = null;
 	}
 
 	@JsonIgnore
 	public void setId(UnsafeSupplier<Long, Exception> idUnsafeSupplier) {
-		try {
-			id = idUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_idSupplier = () -> {
+			try {
+				return idUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField(description = "The task's ID.")
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Long id;
 
+	private Supplier<Long> _idSupplier;
+
 	@Schema(description = "The task's name.")
 	public String getName() {
+		if (_nameSupplier != null) {
+			name = _nameSupplier.get();
+
+			_nameSupplier = null;
+		}
+
 		return name;
 	}
 
 	public void setName(String name) {
 		this.name = name;
+
+		_nameSupplier = null;
 	}
 
 	@JsonIgnore
 	public void setName(UnsafeSupplier<String, Exception> nameUnsafeSupplier) {
-		try {
-			name = nameUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_nameSupplier = () -> {
+			try {
+				return nameUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField(description = "The task's name.")
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected String name;
 
+	private Supplier<String> _nameSupplier;
+
 	@Schema(
 		description = "The object/asset that the task's workflow is managing."
 	)
 	@Valid
 	public ObjectReviewed getObjectReviewed() {
+		if (_objectReviewedSupplier != null) {
+			objectReviewed = _objectReviewedSupplier.get();
+
+			_objectReviewedSupplier = null;
+		}
+
 		return objectReviewed;
 	}
 
 	public void setObjectReviewed(ObjectReviewed objectReviewed) {
 		this.objectReviewed = objectReviewed;
+
+		_objectReviewedSupplier = null;
 	}
 
 	@JsonIgnore
@@ -295,15 +400,17 @@ public class WorkflowTask implements Serializable {
 		UnsafeSupplier<ObjectReviewed, Exception>
 			objectReviewedUnsafeSupplier) {
 
-		try {
-			objectReviewed = objectReviewedUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_objectReviewedSupplier = () -> {
+			try {
+				return objectReviewedUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField(
@@ -312,30 +419,42 @@ public class WorkflowTask implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected ObjectReviewed objectReviewed;
 
+	private Supplier<ObjectReviewed> _objectReviewedSupplier;
+
 	@Schema(
 		description = "A list of transitions to be launched by the task's workflow."
 	)
 	public String[] getTransitions() {
+		if (_transitionsSupplier != null) {
+			transitions = _transitionsSupplier.get();
+
+			_transitionsSupplier = null;
+		}
+
 		return transitions;
 	}
 
 	public void setTransitions(String[] transitions) {
 		this.transitions = transitions;
+
+		_transitionsSupplier = null;
 	}
 
 	@JsonIgnore
 	public void setTransitions(
 		UnsafeSupplier<String[], Exception> transitionsUnsafeSupplier) {
 
-		try {
-			transitions = transitionsUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_transitionsSupplier = () -> {
+			try {
+				return transitionsUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField(
@@ -343,6 +462,8 @@ public class WorkflowTask implements Serializable {
 	)
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected String[] transitions;
+
+	private Supplier<String[]> _transitionsSupplier;
 
 	@Override
 	public boolean equals(Object object) {
@@ -374,6 +495,8 @@ public class WorkflowTask implements Serializable {
 		DateFormat liferayToJSONDateFormat = new SimpleDateFormat(
 			"yyyy-MM-dd'T'HH:mm:ss'Z'");
 
+		Boolean completed = getCompleted();
+
 		if (completed != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -383,6 +506,8 @@ public class WorkflowTask implements Serializable {
 
 			sb.append(completed);
 		}
+
+		Date dateCompleted = getDateCompleted();
 
 		if (dateCompleted != null) {
 			if (sb.length() > 1) {
@@ -398,6 +523,8 @@ public class WorkflowTask implements Serializable {
 			sb.append("\"");
 		}
 
+		Date dateCreated = getDateCreated();
+
 		if (dateCreated != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -411,6 +538,8 @@ public class WorkflowTask implements Serializable {
 
 			sb.append("\"");
 		}
+
+		String definitionName = getDefinitionName();
 
 		if (definitionName != null) {
 			if (sb.length() > 1) {
@@ -426,6 +555,8 @@ public class WorkflowTask implements Serializable {
 			sb.append("\"");
 		}
 
+		String description = getDescription();
+
 		if (description != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -439,6 +570,8 @@ public class WorkflowTask implements Serializable {
 
 			sb.append("\"");
 		}
+
+		Date dueDate = getDueDate();
 
 		if (dueDate != null) {
 			if (sb.length() > 1) {
@@ -454,6 +587,8 @@ public class WorkflowTask implements Serializable {
 			sb.append("\"");
 		}
 
+		Long id = getId();
+
 		if (id != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -463,6 +598,8 @@ public class WorkflowTask implements Serializable {
 
 			sb.append(id);
 		}
+
+		String name = getName();
 
 		if (name != null) {
 			if (sb.length() > 1) {
@@ -478,6 +615,8 @@ public class WorkflowTask implements Serializable {
 			sb.append("\"");
 		}
 
+		ObjectReviewed objectReviewed = getObjectReviewed();
+
 		if (objectReviewed != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -487,6 +626,8 @@ public class WorkflowTask implements Serializable {
 
 			sb.append(String.valueOf(objectReviewed));
 		}
+
+		String[] transitions = getTransitions();
 
 		if (transitions != null) {
 			if (sb.length() > 1) {

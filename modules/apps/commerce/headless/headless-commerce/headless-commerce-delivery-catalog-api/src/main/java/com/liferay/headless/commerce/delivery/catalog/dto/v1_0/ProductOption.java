@@ -24,6 +24,7 @@ import java.util.Iterator;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
+import java.util.function.Supplier;
 
 import javax.annotation.Generated;
 
@@ -52,227 +53,329 @@ public class ProductOption implements Serializable {
 
 	@Schema
 	public Long getCatalogId() {
+		if (_catalogIdSupplier != null) {
+			catalogId = _catalogIdSupplier.get();
+
+			_catalogIdSupplier = null;
+		}
+
 		return catalogId;
 	}
 
 	public void setCatalogId(Long catalogId) {
 		this.catalogId = catalogId;
+
+		_catalogIdSupplier = null;
 	}
 
 	@JsonIgnore
 	public void setCatalogId(
 		UnsafeSupplier<Long, Exception> catalogIdUnsafeSupplier) {
 
-		try {
-			catalogId = catalogIdUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_catalogIdSupplier = () -> {
+			try {
+				return catalogIdUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Long catalogId;
 
+	private Supplier<Long> _catalogIdSupplier;
+
 	@Schema
 	public String getDescription() {
+		if (_descriptionSupplier != null) {
+			description = _descriptionSupplier.get();
+
+			_descriptionSupplier = null;
+		}
+
 		return description;
 	}
 
 	public void setDescription(String description) {
 		this.description = description;
+
+		_descriptionSupplier = null;
 	}
 
 	@JsonIgnore
 	public void setDescription(
 		UnsafeSupplier<String, Exception> descriptionUnsafeSupplier) {
 
-		try {
-			description = descriptionUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_descriptionSupplier = () -> {
+			try {
+				return descriptionUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String description;
 
+	private Supplier<String> _descriptionSupplier;
+
 	@Schema(example = "select")
 	public String getFieldType() {
+		if (_fieldTypeSupplier != null) {
+			fieldType = _fieldTypeSupplier.get();
+
+			_fieldTypeSupplier = null;
+		}
+
 		return fieldType;
 	}
 
 	public void setFieldType(String fieldType) {
 		this.fieldType = fieldType;
+
+		_fieldTypeSupplier = null;
 	}
 
 	@JsonIgnore
 	public void setFieldType(
 		UnsafeSupplier<String, Exception> fieldTypeUnsafeSupplier) {
 
-		try {
-			fieldType = fieldTypeUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_fieldTypeSupplier = () -> {
+			try {
+				return fieldTypeUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String fieldType;
 
+	private Supplier<String> _fieldTypeSupplier;
+
 	@DecimalMin("0")
 	@Schema(example = "30130")
 	public Long getId() {
+		if (_idSupplier != null) {
+			id = _idSupplier.get();
+
+			_idSupplier = null;
+		}
+
 		return id;
 	}
 
 	public void setId(Long id) {
 		this.id = id;
+
+		_idSupplier = null;
 	}
 
 	@JsonIgnore
 	public void setId(UnsafeSupplier<Long, Exception> idUnsafeSupplier) {
-		try {
-			id = idUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_idSupplier = () -> {
+			try {
+				return idUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Long id;
 
+	private Supplier<Long> _idSupplier;
+
 	@Schema(example = "color")
 	public String getKey() {
+		if (_keySupplier != null) {
+			key = _keySupplier.get();
+
+			_keySupplier = null;
+		}
+
 		return key;
 	}
 
 	public void setKey(String key) {
 		this.key = key;
+
+		_keySupplier = null;
 	}
 
 	@JsonIgnore
 	public void setKey(UnsafeSupplier<String, Exception> keyUnsafeSupplier) {
-		try {
-			key = keyUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_keySupplier = () -> {
+			try {
+				return keyUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String key;
 
+	private Supplier<String> _keySupplier;
+
 	@Schema
 	public String getName() {
+		if (_nameSupplier != null) {
+			name = _nameSupplier.get();
+
+			_nameSupplier = null;
+		}
+
 		return name;
 	}
 
 	public void setName(String name) {
 		this.name = name;
+
+		_nameSupplier = null;
 	}
 
 	@JsonIgnore
 	public void setName(UnsafeSupplier<String, Exception> nameUnsafeSupplier) {
-		try {
-			name = nameUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_nameSupplier = () -> {
+			try {
+				return nameUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String name;
 
+	private Supplier<String> _nameSupplier;
+
 	@DecimalMin("0")
 	@Schema(example = "30080")
 	public Long getOptionId() {
+		if (_optionIdSupplier != null) {
+			optionId = _optionIdSupplier.get();
+
+			_optionIdSupplier = null;
+		}
+
 		return optionId;
 	}
 
 	public void setOptionId(Long optionId) {
 		this.optionId = optionId;
+
+		_optionIdSupplier = null;
 	}
 
 	@JsonIgnore
 	public void setOptionId(
 		UnsafeSupplier<Long, Exception> optionIdUnsafeSupplier) {
 
-		try {
-			optionId = optionIdUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_optionIdSupplier = () -> {
+			try {
+				return optionIdUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Long optionId;
 
+	private Supplier<Long> _optionIdSupplier;
+
 	@Schema(example = "1.2")
 	public Double getPriority() {
+		if (_prioritySupplier != null) {
+			priority = _prioritySupplier.get();
+
+			_prioritySupplier = null;
+		}
+
 		return priority;
 	}
 
 	public void setPriority(Double priority) {
 		this.priority = priority;
+
+		_prioritySupplier = null;
 	}
 
 	@JsonIgnore
 	public void setPriority(
 		UnsafeSupplier<Double, Exception> priorityUnsafeSupplier) {
 
-		try {
-			priority = priorityUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_prioritySupplier = () -> {
+			try {
+				return priorityUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Double priority;
 
+	private Supplier<Double> _prioritySupplier;
+
 	@Schema
 	@Valid
 	public ProductOptionValue[] getProductOptionValues() {
+		if (_productOptionValuesSupplier != null) {
+			productOptionValues = _productOptionValuesSupplier.get();
+
+			_productOptionValuesSupplier = null;
+		}
+
 		return productOptionValues;
 	}
 
@@ -280,6 +383,8 @@ public class ProductOption implements Serializable {
 		ProductOptionValue[] productOptionValues) {
 
 		this.productOptionValues = productOptionValues;
+
+		_productOptionValuesSupplier = null;
 	}
 
 	@JsonIgnore
@@ -287,20 +392,24 @@ public class ProductOption implements Serializable {
 		UnsafeSupplier<ProductOptionValue[], Exception>
 			productOptionValuesUnsafeSupplier) {
 
-		try {
-			productOptionValues = productOptionValuesUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_productOptionValuesSupplier = () -> {
+			try {
+				return productOptionValuesUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected ProductOptionValue[] productOptionValues;
+
+	private Supplier<ProductOptionValue[]> _productOptionValuesSupplier;
 
 	@Override
 	public boolean equals(Object object) {
@@ -329,6 +438,8 @@ public class ProductOption implements Serializable {
 
 		sb.append("{");
 
+		Long catalogId = getCatalogId();
+
 		if (catalogId != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -338,6 +449,8 @@ public class ProductOption implements Serializable {
 
 			sb.append(catalogId);
 		}
+
+		String description = getDescription();
 
 		if (description != null) {
 			if (sb.length() > 1) {
@@ -353,6 +466,8 @@ public class ProductOption implements Serializable {
 			sb.append("\"");
 		}
 
+		String fieldType = getFieldType();
+
 		if (fieldType != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -367,6 +482,8 @@ public class ProductOption implements Serializable {
 			sb.append("\"");
 		}
 
+		Long id = getId();
+
 		if (id != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -376,6 +493,8 @@ public class ProductOption implements Serializable {
 
 			sb.append(id);
 		}
+
+		String key = getKey();
 
 		if (key != null) {
 			if (sb.length() > 1) {
@@ -391,6 +510,8 @@ public class ProductOption implements Serializable {
 			sb.append("\"");
 		}
 
+		String name = getName();
+
 		if (name != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -405,6 +526,8 @@ public class ProductOption implements Serializable {
 			sb.append("\"");
 		}
 
+		Long optionId = getOptionId();
+
 		if (optionId != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -415,6 +538,8 @@ public class ProductOption implements Serializable {
 			sb.append(optionId);
 		}
 
+		Double priority = getPriority();
+
 		if (priority != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -424,6 +549,8 @@ public class ProductOption implements Serializable {
 
 			sb.append(priority);
 		}
+
+		ProductOptionValue[] productOptionValues = getProductOptionValues();
 
 		if (productOptionValues != null) {
 			if (sb.length() > 1) {

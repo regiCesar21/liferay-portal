@@ -24,6 +24,7 @@ import java.util.Iterator;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
+import java.util.function.Supplier;
 
 import javax.annotation.Generated;
 
@@ -54,97 +55,141 @@ public class Site implements Serializable {
 
 	@Schema
 	public String[] getAvailableLanguages() {
+		if (_availableLanguagesSupplier != null) {
+			availableLanguages = _availableLanguagesSupplier.get();
+
+			_availableLanguagesSupplier = null;
+		}
+
 		return availableLanguages;
 	}
 
 	public void setAvailableLanguages(String[] availableLanguages) {
 		this.availableLanguages = availableLanguages;
+
+		_availableLanguagesSupplier = null;
 	}
 
 	@JsonIgnore
 	public void setAvailableLanguages(
 		UnsafeSupplier<String[], Exception> availableLanguagesUnsafeSupplier) {
 
-		try {
-			availableLanguages = availableLanguagesUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_availableLanguagesSupplier = () -> {
+			try {
+				return availableLanguagesUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String[] availableLanguages;
 
+	private Supplier<String[]> _availableLanguagesSupplier;
+
 	@Schema
 	@Valid
 	public Creator getCreator() {
+		if (_creatorSupplier != null) {
+			creator = _creatorSupplier.get();
+
+			_creatorSupplier = null;
+		}
+
 		return creator;
 	}
 
 	public void setCreator(Creator creator) {
 		this.creator = creator;
+
+		_creatorSupplier = null;
 	}
 
 	@JsonIgnore
 	public void setCreator(
 		UnsafeSupplier<Creator, Exception> creatorUnsafeSupplier) {
 
-		try {
-			creator = creatorUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_creatorSupplier = () -> {
+			try {
+				return creatorUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Creator creator;
 
+	private Supplier<Creator> _creatorSupplier;
+
 	@Schema
 	public String getDescription() {
+		if (_descriptionSupplier != null) {
+			description = _descriptionSupplier.get();
+
+			_descriptionSupplier = null;
+		}
+
 		return description;
 	}
 
 	public void setDescription(String description) {
 		this.description = description;
+
+		_descriptionSupplier = null;
 	}
 
 	@JsonIgnore
 	public void setDescription(
 		UnsafeSupplier<String, Exception> descriptionUnsafeSupplier) {
 
-		try {
-			description = descriptionUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_descriptionSupplier = () -> {
+			try {
+				return descriptionUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String description;
 
+	private Supplier<String> _descriptionSupplier;
+
 	@Schema
 	@Valid
 	public Map<String, String> getDescription_i18n() {
+		if (_description_i18nSupplier != null) {
+			description_i18n = _description_i18nSupplier.get();
+
+			_description_i18nSupplier = null;
+		}
+
 		return description_i18n;
 	}
 
 	public void setDescription_i18n(Map<String, String> description_i18n) {
 		this.description_i18n = description_i18n;
+
+		_description_i18nSupplier = null;
 	}
 
 	@JsonIgnore
@@ -152,163 +197,235 @@ public class Site implements Serializable {
 		UnsafeSupplier<Map<String, String>, Exception>
 			description_i18nUnsafeSupplier) {
 
-		try {
-			description_i18n = description_i18nUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_description_i18nSupplier = () -> {
+			try {
+				return description_i18nUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Map<String, String> description_i18n;
 
+	private Supplier<Map<String, String>> _description_i18nSupplier;
+
 	@Schema
 	public String getFriendlyUrlPath() {
+		if (_friendlyUrlPathSupplier != null) {
+			friendlyUrlPath = _friendlyUrlPathSupplier.get();
+
+			_friendlyUrlPathSupplier = null;
+		}
+
 		return friendlyUrlPath;
 	}
 
 	public void setFriendlyUrlPath(String friendlyUrlPath) {
 		this.friendlyUrlPath = friendlyUrlPath;
+
+		_friendlyUrlPathSupplier = null;
 	}
 
 	@JsonIgnore
 	public void setFriendlyUrlPath(
 		UnsafeSupplier<String, Exception> friendlyUrlPathUnsafeSupplier) {
 
-		try {
-			friendlyUrlPath = friendlyUrlPathUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_friendlyUrlPathSupplier = () -> {
+			try {
+				return friendlyUrlPathUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String friendlyUrlPath;
 
+	private Supplier<String> _friendlyUrlPathSupplier;
+
 	@Schema
 	public Long getId() {
+		if (_idSupplier != null) {
+			id = _idSupplier.get();
+
+			_idSupplier = null;
+		}
+
 		return id;
 	}
 
 	public void setId(Long id) {
 		this.id = id;
+
+		_idSupplier = null;
 	}
 
 	@JsonIgnore
 	public void setId(UnsafeSupplier<Long, Exception> idUnsafeSupplier) {
-		try {
-			id = idUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_idSupplier = () -> {
+			try {
+				return idUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Long id;
 
+	private Supplier<Long> _idSupplier;
+
 	@Schema
 	public String getKey() {
+		if (_keySupplier != null) {
+			key = _keySupplier.get();
+
+			_keySupplier = null;
+		}
+
 		return key;
 	}
 
 	public void setKey(String key) {
 		this.key = key;
+
+		_keySupplier = null;
 	}
 
 	@JsonIgnore
 	public void setKey(UnsafeSupplier<String, Exception> keyUnsafeSupplier) {
-		try {
-			key = keyUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_keySupplier = () -> {
+			try {
+				return keyUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String key;
 
+	private Supplier<String> _keySupplier;
+
 	@Schema
 	public String getMembershipType() {
+		if (_membershipTypeSupplier != null) {
+			membershipType = _membershipTypeSupplier.get();
+
+			_membershipTypeSupplier = null;
+		}
+
 		return membershipType;
 	}
 
 	public void setMembershipType(String membershipType) {
 		this.membershipType = membershipType;
+
+		_membershipTypeSupplier = null;
 	}
 
 	@JsonIgnore
 	public void setMembershipType(
 		UnsafeSupplier<String, Exception> membershipTypeUnsafeSupplier) {
 
-		try {
-			membershipType = membershipTypeUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_membershipTypeSupplier = () -> {
+			try {
+				return membershipTypeUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String membershipType;
 
+	private Supplier<String> _membershipTypeSupplier;
+
 	@Schema
 	public String getName() {
+		if (_nameSupplier != null) {
+			name = _nameSupplier.get();
+
+			_nameSupplier = null;
+		}
+
 		return name;
 	}
 
 	public void setName(String name) {
 		this.name = name;
+
+		_nameSupplier = null;
 	}
 
 	@JsonIgnore
 	public void setName(UnsafeSupplier<String, Exception> nameUnsafeSupplier) {
-		try {
-			name = nameUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_nameSupplier = () -> {
+			try {
+				return nameUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String name;
 
+	private Supplier<String> _nameSupplier;
+
 	@Schema
 	@Valid
 	public Map<String, String> getName_i18n() {
+		if (_name_i18nSupplier != null) {
+			name_i18n = _name_i18nSupplier.get();
+
+			_name_i18nSupplier = null;
+		}
+
 		return name_i18n;
 	}
 
 	public void setName_i18n(Map<String, String> name_i18n) {
 		this.name_i18n = name_i18n;
+
+		_name_i18nSupplier = null;
 	}
 
 	@JsonIgnore
@@ -316,49 +433,65 @@ public class Site implements Serializable {
 		UnsafeSupplier<Map<String, String>, Exception>
 			name_i18nUnsafeSupplier) {
 
-		try {
-			name_i18n = name_i18nUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_name_i18nSupplier = () -> {
+			try {
+				return name_i18nUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Map<String, String> name_i18n;
 
+	private Supplier<Map<String, String>> _name_i18nSupplier;
+
 	@Schema
 	@Valid
 	public Site[] getSites() {
+		if (_sitesSupplier != null) {
+			sites = _sitesSupplier.get();
+
+			_sitesSupplier = null;
+		}
+
 		return sites;
 	}
 
 	public void setSites(Site[] sites) {
 		this.sites = sites;
+
+		_sitesSupplier = null;
 	}
 
 	@JsonIgnore
 	public void setSites(
 		UnsafeSupplier<Site[], Exception> sitesUnsafeSupplier) {
 
-		try {
-			sites = sitesUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_sitesSupplier = () -> {
+			try {
+				return sitesUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Site[] sites;
+
+	private Supplier<Site[]> _sitesSupplier;
 
 	@Override
 	public boolean equals(Object object) {
@@ -387,6 +520,8 @@ public class Site implements Serializable {
 
 		sb.append("{");
 
+		String[] availableLanguages = getAvailableLanguages();
+
 		if (availableLanguages != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -411,6 +546,8 @@ public class Site implements Serializable {
 			sb.append("]");
 		}
 
+		Creator creator = getCreator();
+
 		if (creator != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -420,6 +557,8 @@ public class Site implements Serializable {
 
 			sb.append(String.valueOf(creator));
 		}
+
+		String description = getDescription();
 
 		if (description != null) {
 			if (sb.length() > 1) {
@@ -435,6 +574,8 @@ public class Site implements Serializable {
 			sb.append("\"");
 		}
 
+		Map<String, String> description_i18n = getDescription_i18n();
+
 		if (description_i18n != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -444,6 +585,8 @@ public class Site implements Serializable {
 
 			sb.append(_toJSON(description_i18n));
 		}
+
+		String friendlyUrlPath = getFriendlyUrlPath();
 
 		if (friendlyUrlPath != null) {
 			if (sb.length() > 1) {
@@ -459,6 +602,8 @@ public class Site implements Serializable {
 			sb.append("\"");
 		}
 
+		Long id = getId();
+
 		if (id != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -468,6 +613,8 @@ public class Site implements Serializable {
 
 			sb.append(id);
 		}
+
+		String key = getKey();
 
 		if (key != null) {
 			if (sb.length() > 1) {
@@ -483,6 +630,8 @@ public class Site implements Serializable {
 			sb.append("\"");
 		}
 
+		String membershipType = getMembershipType();
+
 		if (membershipType != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -496,6 +645,8 @@ public class Site implements Serializable {
 
 			sb.append("\"");
 		}
+
+		String name = getName();
 
 		if (name != null) {
 			if (sb.length() > 1) {
@@ -511,6 +662,8 @@ public class Site implements Serializable {
 			sb.append("\"");
 		}
 
+		Map<String, String> name_i18n = getName_i18n();
+
 		if (name_i18n != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -520,6 +673,8 @@ public class Site implements Serializable {
 
 			sb.append(_toJSON(name_i18n));
 		}
+
+		Site[] sites = getSites();
 
 		if (sites != null) {
 			if (sb.length() > 1) {

@@ -24,6 +24,7 @@ import java.util.Iterator;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
+import java.util.function.Supplier;
 
 import javax.annotation.Generated;
 
@@ -54,60 +55,84 @@ public class Folder implements Serializable {
 	)
 	@Valid
 	public Breadcrumb[] getBreadcrumbs() {
+		if (_breadcrumbsSupplier != null) {
+			breadcrumbs = _breadcrumbsSupplier.get();
+
+			_breadcrumbsSupplier = null;
+		}
+
 		return breadcrumbs;
 	}
 
 	public void setBreadcrumbs(Breadcrumb[] breadcrumbs) {
 		this.breadcrumbs = breadcrumbs;
+
+		_breadcrumbsSupplier = null;
 	}
 
 	@JsonIgnore
 	public void setBreadcrumbs(
 		UnsafeSupplier<Breadcrumb[], Exception> breadcrumbsUnsafeSupplier) {
 
-		try {
-			breadcrumbs = breadcrumbsUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_breadcrumbsSupplier = () -> {
+			try {
+				return breadcrumbsUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Breadcrumb[] breadcrumbs;
 
+	private Supplier<Breadcrumb[]> _breadcrumbsSupplier;
+
 	@Schema
 	@Valid
 	public ItemData getData() {
+		if (_dataSupplier != null) {
+			data = _dataSupplier.get();
+
+			_dataSupplier = null;
+		}
+
 		return data;
 	}
 
 	public void setData(ItemData data) {
 		this.data = data;
+
+		_dataSupplier = null;
 	}
 
 	@JsonIgnore
 	public void setData(
 		UnsafeSupplier<ItemData, Exception> dataUnsafeSupplier) {
 
-		try {
-			data = dataUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_dataSupplier = () -> {
+			try {
+				return dataUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected ItemData data;
+
+	private Supplier<ItemData> _dataSupplier;
 
 	@Override
 	public boolean equals(Object object) {
@@ -136,6 +161,8 @@ public class Folder implements Serializable {
 
 		sb.append("{");
 
+		Breadcrumb[] breadcrumbs = getBreadcrumbs();
+
 		if (breadcrumbs != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -155,6 +182,8 @@ public class Folder implements Serializable {
 
 			sb.append("]");
 		}
+
+		ItemData data = getData();
 
 		if (data != null) {
 			if (sb.length() > 1) {

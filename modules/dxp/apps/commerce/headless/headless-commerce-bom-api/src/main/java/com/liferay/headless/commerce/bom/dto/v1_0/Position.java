@@ -24,6 +24,7 @@ import java.util.Iterator;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
+import java.util.function.Supplier;
 
 import javax.annotation.Generated;
 
@@ -49,55 +50,79 @@ public class Position implements Serializable {
 
 	@Schema(example = "33.54")
 	public Double getX() {
+		if (_xSupplier != null) {
+			x = _xSupplier.get();
+
+			_xSupplier = null;
+		}
+
 		return x;
 	}
 
 	public void setX(Double x) {
 		this.x = x;
+
+		_xSupplier = null;
 	}
 
 	@JsonIgnore
 	public void setX(UnsafeSupplier<Double, Exception> xUnsafeSupplier) {
-		try {
-			x = xUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_xSupplier = () -> {
+			try {
+				return xUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Double x;
 
+	private Supplier<Double> _xSupplier;
+
 	@Schema(example = "33.54")
 	public Double getY() {
+		if (_ySupplier != null) {
+			y = _ySupplier.get();
+
+			_ySupplier = null;
+		}
+
 		return y;
 	}
 
 	public void setY(Double y) {
 		this.y = y;
+
+		_ySupplier = null;
 	}
 
 	@JsonIgnore
 	public void setY(UnsafeSupplier<Double, Exception> yUnsafeSupplier) {
-		try {
-			y = yUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_ySupplier = () -> {
+			try {
+				return yUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Double y;
+
+	private Supplier<Double> _ySupplier;
 
 	@Override
 	public boolean equals(Object object) {
@@ -126,6 +151,8 @@ public class Position implements Serializable {
 
 		sb.append("{");
 
+		Double x = getX();
+
 		if (x != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -135,6 +162,8 @@ public class Position implements Serializable {
 
 			sb.append(x);
 		}
+
+		Double y = getY();
 
 		if (y != null) {
 			if (sb.length() > 1) {

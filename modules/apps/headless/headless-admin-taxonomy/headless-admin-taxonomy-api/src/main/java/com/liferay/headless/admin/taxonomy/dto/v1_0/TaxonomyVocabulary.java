@@ -30,6 +30,7 @@ import java.util.Iterator;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
+import java.util.function.Supplier;
 
 import javax.annotation.Generated;
 
@@ -68,26 +69,36 @@ public class TaxonomyVocabulary implements Serializable {
 	)
 	@Valid
 	public AssetType[] getAssetTypes() {
+		if (_assetTypesSupplier != null) {
+			assetTypes = _assetTypesSupplier.get();
+
+			_assetTypesSupplier = null;
+		}
+
 		return assetTypes;
 	}
 
 	public void setAssetTypes(AssetType[] assetTypes) {
 		this.assetTypes = assetTypes;
+
+		_assetTypesSupplier = null;
 	}
 
 	@JsonIgnore
 	public void setAssetTypes(
 		UnsafeSupplier<AssetType[], Exception> assetTypesUnsafeSupplier) {
 
-		try {
-			assetTypes = assetTypesUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_assetTypesSupplier = () -> {
+			try {
+				return assetTypesUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField(
@@ -96,30 +107,42 @@ public class TaxonomyVocabulary implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected AssetType[] assetTypes;
 
+	private Supplier<AssetType[]> _assetTypesSupplier;
+
 	@Schema(
 		description = "A list of languages the vocabulary has a translation for."
 	)
 	public String[] getAvailableLanguages() {
+		if (_availableLanguagesSupplier != null) {
+			availableLanguages = _availableLanguagesSupplier.get();
+
+			_availableLanguagesSupplier = null;
+		}
+
 		return availableLanguages;
 	}
 
 	public void setAvailableLanguages(String[] availableLanguages) {
 		this.availableLanguages = availableLanguages;
+
+		_availableLanguagesSupplier = null;
 	}
 
 	@JsonIgnore
 	public void setAvailableLanguages(
 		UnsafeSupplier<String[], Exception> availableLanguagesUnsafeSupplier) {
 
-		try {
-			availableLanguages = availableLanguagesUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_availableLanguagesSupplier = () -> {
+			try {
+				return availableLanguagesUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField(
@@ -128,85 +151,121 @@ public class TaxonomyVocabulary implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected String[] availableLanguages;
 
+	private Supplier<String[]> _availableLanguagesSupplier;
+
 	@Schema(description = "The vocabulary's creator.")
 	@Valid
 	public Creator getCreator() {
+		if (_creatorSupplier != null) {
+			creator = _creatorSupplier.get();
+
+			_creatorSupplier = null;
+		}
+
 		return creator;
 	}
 
 	public void setCreator(Creator creator) {
 		this.creator = creator;
+
+		_creatorSupplier = null;
 	}
 
 	@JsonIgnore
 	public void setCreator(
 		UnsafeSupplier<Creator, Exception> creatorUnsafeSupplier) {
 
-		try {
-			creator = creatorUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_creatorSupplier = () -> {
+			try {
+				return creatorUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField(description = "The vocabulary's creator.")
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Creator creator;
 
+	private Supplier<Creator> _creatorSupplier;
+
 	@Schema(description = "The vocabulary's creation date.")
 	public Date getDateCreated() {
+		if (_dateCreatedSupplier != null) {
+			dateCreated = _dateCreatedSupplier.get();
+
+			_dateCreatedSupplier = null;
+		}
+
 		return dateCreated;
 	}
 
 	public void setDateCreated(Date dateCreated) {
 		this.dateCreated = dateCreated;
+
+		_dateCreatedSupplier = null;
 	}
 
 	@JsonIgnore
 	public void setDateCreated(
 		UnsafeSupplier<Date, Exception> dateCreatedUnsafeSupplier) {
 
-		try {
-			dateCreated = dateCreatedUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_dateCreatedSupplier = () -> {
+			try {
+				return dateCreatedUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField(description = "The vocabulary's creation date.")
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Date dateCreated;
 
+	private Supplier<Date> _dateCreatedSupplier;
+
 	@Schema(description = "The vocabulary's most recent modification date.")
 	public Date getDateModified() {
+		if (_dateModifiedSupplier != null) {
+			dateModified = _dateModifiedSupplier.get();
+
+			_dateModifiedSupplier = null;
+		}
+
 		return dateModified;
 	}
 
 	public void setDateModified(Date dateModified) {
 		this.dateModified = dateModified;
+
+		_dateModifiedSupplier = null;
 	}
 
 	@JsonIgnore
 	public void setDateModified(
 		UnsafeSupplier<Date, Exception> dateModifiedUnsafeSupplier) {
 
-		try {
-			dateModified = dateModifiedUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_dateModifiedSupplier = () -> {
+			try {
+				return dateModifiedUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField(
@@ -215,42 +274,64 @@ public class TaxonomyVocabulary implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Date dateModified;
 
+	private Supplier<Date> _dateModifiedSupplier;
+
 	@Schema(description = "The vocabulary's text description.")
 	public String getDescription() {
+		if (_descriptionSupplier != null) {
+			description = _descriptionSupplier.get();
+
+			_descriptionSupplier = null;
+		}
+
 		return description;
 	}
 
 	public void setDescription(String description) {
 		this.description = description;
+
+		_descriptionSupplier = null;
 	}
 
 	@JsonIgnore
 	public void setDescription(
 		UnsafeSupplier<String, Exception> descriptionUnsafeSupplier) {
 
-		try {
-			description = descriptionUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_descriptionSupplier = () -> {
+			try {
+				return descriptionUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField(description = "The vocabulary's text description.")
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String description;
 
+	private Supplier<String> _descriptionSupplier;
+
 	@Schema
 	@Valid
 	public Map<String, String> getDescription_i18n() {
+		if (_description_i18nSupplier != null) {
+			description_i18n = _description_i18nSupplier.get();
+
+			_description_i18nSupplier = null;
+		}
+
 		return description_i18n;
 	}
 
 	public void setDescription_i18n(Map<String, String> description_i18n) {
 		this.description_i18n = description_i18n;
+
+		_description_i18nSupplier = null;
 	}
 
 	@JsonIgnore
@@ -258,67 +339,93 @@ public class TaxonomyVocabulary implements Serializable {
 		UnsafeSupplier<Map<String, String>, Exception>
 			description_i18nUnsafeSupplier) {
 
-		try {
-			description_i18n = description_i18nUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_description_i18nSupplier = () -> {
+			try {
+				return description_i18nUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Map<String, String> description_i18n;
 
+	private Supplier<Map<String, String>> _description_i18nSupplier;
+
 	@Schema(description = "The vocabulary's ID.")
 	public Long getId() {
+		if (_idSupplier != null) {
+			id = _idSupplier.get();
+
+			_idSupplier = null;
+		}
+
 		return id;
 	}
 
 	public void setId(Long id) {
 		this.id = id;
+
+		_idSupplier = null;
 	}
 
 	@JsonIgnore
 	public void setId(UnsafeSupplier<Long, Exception> idUnsafeSupplier) {
-		try {
-			id = idUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_idSupplier = () -> {
+			try {
+				return idUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField(description = "The vocabulary's ID.")
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Long id;
 
+	private Supplier<Long> _idSupplier;
+
 	@Schema(description = "The vocabulary's name.")
 	public String getName() {
+		if (_nameSupplier != null) {
+			name = _nameSupplier.get();
+
+			_nameSupplier = null;
+		}
+
 		return name;
 	}
 
 	public void setName(String name) {
 		this.name = name;
+
+		_nameSupplier = null;
 	}
 
 	@JsonIgnore
 	public void setName(UnsafeSupplier<String, Exception> nameUnsafeSupplier) {
-		try {
-			name = nameUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_nameSupplier = () -> {
+			try {
+				return nameUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField(description = "The vocabulary's name.")
@@ -326,14 +433,24 @@ public class TaxonomyVocabulary implements Serializable {
 	@NotEmpty
 	protected String name;
 
+	private Supplier<String> _nameSupplier;
+
 	@Schema
 	@Valid
 	public Map<String, String> getName_i18n() {
+		if (_name_i18nSupplier != null) {
+			name_i18n = _name_i18nSupplier.get();
+
+			_name_i18nSupplier = null;
+		}
+
 		return name_i18n;
 	}
 
 	public void setName_i18n(Map<String, String> name_i18n) {
 		this.name_i18n = name_i18n;
+
+		_name_i18nSupplier = null;
 	}
 
 	@JsonIgnore
@@ -341,25 +458,36 @@ public class TaxonomyVocabulary implements Serializable {
 		UnsafeSupplier<Map<String, String>, Exception>
 			name_i18nUnsafeSupplier) {
 
-		try {
-			name_i18n = name_i18nUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_name_i18nSupplier = () -> {
+			try {
+				return name_i18nUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Map<String, String> name_i18n;
 
+	private Supplier<Map<String, String>> _name_i18nSupplier;
+
 	@Schema(
 		description = "The number of categories that directly depend on this vocabulary."
 	)
 	public Integer getNumberOfTaxonomyCategories() {
+		if (_numberOfTaxonomyCategoriesSupplier != null) {
+			numberOfTaxonomyCategories =
+				_numberOfTaxonomyCategoriesSupplier.get();
+
+			_numberOfTaxonomyCategoriesSupplier = null;
+		}
+
 		return numberOfTaxonomyCategories;
 	}
 
@@ -367,6 +495,8 @@ public class TaxonomyVocabulary implements Serializable {
 		Integer numberOfTaxonomyCategories) {
 
 		this.numberOfTaxonomyCategories = numberOfTaxonomyCategories;
+
+		_numberOfTaxonomyCategoriesSupplier = null;
 	}
 
 	@JsonIgnore
@@ -374,16 +504,17 @@ public class TaxonomyVocabulary implements Serializable {
 		UnsafeSupplier<Integer, Exception>
 			numberOfTaxonomyCategoriesUnsafeSupplier) {
 
-		try {
-			numberOfTaxonomyCategories =
-				numberOfTaxonomyCategoriesUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_numberOfTaxonomyCategoriesSupplier = () -> {
+			try {
+				return numberOfTaxonomyCategoriesUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField(
@@ -392,30 +523,42 @@ public class TaxonomyVocabulary implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Integer numberOfTaxonomyCategories;
 
+	private Supplier<Integer> _numberOfTaxonomyCategoriesSupplier;
+
 	@Schema(
 		description = "The ID of the site to which this vocabulary is scoped."
 	)
 	public Long getSiteId() {
+		if (_siteIdSupplier != null) {
+			siteId = _siteIdSupplier.get();
+
+			_siteIdSupplier = null;
+		}
+
 		return siteId;
 	}
 
 	public void setSiteId(Long siteId) {
 		this.siteId = siteId;
+
+		_siteIdSupplier = null;
 	}
 
 	@JsonIgnore
 	public void setSiteId(
 		UnsafeSupplier<Long, Exception> siteIdUnsafeSupplier) {
 
-		try {
-			siteId = siteIdUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_siteIdSupplier = () -> {
+			try {
+				return siteIdUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField(
@@ -424,16 +567,26 @@ public class TaxonomyVocabulary implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Long siteId;
 
+	private Supplier<Long> _siteIdSupplier;
+
 	@Schema(
 		description = "A write-only property that specifies the vocabulary's default permissions."
 	)
 	@Valid
 	public ViewableBy getViewableBy() {
+		if (_viewableBySupplier != null) {
+			viewableBy = _viewableBySupplier.get();
+
+			_viewableBySupplier = null;
+		}
+
 		return viewableBy;
 	}
 
 	@JsonIgnore
 	public String getViewableByAsString() {
+		ViewableBy viewableBy = getViewableBy();
+
 		if (viewableBy == null) {
 			return null;
 		}
@@ -443,21 +596,25 @@ public class TaxonomyVocabulary implements Serializable {
 
 	public void setViewableBy(ViewableBy viewableBy) {
 		this.viewableBy = viewableBy;
+
+		_viewableBySupplier = null;
 	}
 
 	@JsonIgnore
 	public void setViewableBy(
 		UnsafeSupplier<ViewableBy, Exception> viewableByUnsafeSupplier) {
 
-		try {
-			viewableBy = viewableByUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_viewableBySupplier = () -> {
+			try {
+				return viewableByUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField(
@@ -465,6 +622,8 @@ public class TaxonomyVocabulary implements Serializable {
 	)
 	@JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
 	protected ViewableBy viewableBy;
+
+	private Supplier<ViewableBy> _viewableBySupplier;
 
 	@Override
 	public boolean equals(Object object) {
@@ -496,6 +655,8 @@ public class TaxonomyVocabulary implements Serializable {
 		DateFormat liferayToJSONDateFormat = new SimpleDateFormat(
 			"yyyy-MM-dd'T'HH:mm:ss'Z'");
 
+		AssetType[] assetTypes = getAssetTypes();
+
 		if (assetTypes != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -515,6 +676,8 @@ public class TaxonomyVocabulary implements Serializable {
 
 			sb.append("]");
 		}
+
+		String[] availableLanguages = getAvailableLanguages();
 
 		if (availableLanguages != null) {
 			if (sb.length() > 1) {
@@ -540,6 +703,8 @@ public class TaxonomyVocabulary implements Serializable {
 			sb.append("]");
 		}
 
+		Creator creator = getCreator();
+
 		if (creator != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -549,6 +714,8 @@ public class TaxonomyVocabulary implements Serializable {
 
 			sb.append(String.valueOf(creator));
 		}
+
+		Date dateCreated = getDateCreated();
 
 		if (dateCreated != null) {
 			if (sb.length() > 1) {
@@ -564,6 +731,8 @@ public class TaxonomyVocabulary implements Serializable {
 			sb.append("\"");
 		}
 
+		Date dateModified = getDateModified();
+
 		if (dateModified != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -577,6 +746,8 @@ public class TaxonomyVocabulary implements Serializable {
 
 			sb.append("\"");
 		}
+
+		String description = getDescription();
 
 		if (description != null) {
 			if (sb.length() > 1) {
@@ -592,6 +763,8 @@ public class TaxonomyVocabulary implements Serializable {
 			sb.append("\"");
 		}
 
+		Map<String, String> description_i18n = getDescription_i18n();
+
 		if (description_i18n != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -602,6 +775,8 @@ public class TaxonomyVocabulary implements Serializable {
 			sb.append(_toJSON(description_i18n));
 		}
 
+		Long id = getId();
+
 		if (id != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -611,6 +786,8 @@ public class TaxonomyVocabulary implements Serializable {
 
 			sb.append(id);
 		}
+
+		String name = getName();
 
 		if (name != null) {
 			if (sb.length() > 1) {
@@ -626,6 +803,8 @@ public class TaxonomyVocabulary implements Serializable {
 			sb.append("\"");
 		}
 
+		Map<String, String> name_i18n = getName_i18n();
+
 		if (name_i18n != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -635,6 +814,8 @@ public class TaxonomyVocabulary implements Serializable {
 
 			sb.append(_toJSON(name_i18n));
 		}
+
+		Integer numberOfTaxonomyCategories = getNumberOfTaxonomyCategories();
 
 		if (numberOfTaxonomyCategories != null) {
 			if (sb.length() > 1) {
@@ -646,6 +827,8 @@ public class TaxonomyVocabulary implements Serializable {
 			sb.append(numberOfTaxonomyCategories);
 		}
 
+		Long siteId = getSiteId();
+
 		if (siteId != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -655,6 +838,8 @@ public class TaxonomyVocabulary implements Serializable {
 
 			sb.append(siteId);
 		}
+
+		ViewableBy viewableBy = getViewableBy();
 
 		if (viewableBy != null) {
 			if (sb.length() > 1) {
