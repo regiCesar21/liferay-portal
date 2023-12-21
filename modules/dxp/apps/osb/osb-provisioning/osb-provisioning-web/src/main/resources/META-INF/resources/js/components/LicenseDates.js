@@ -9,7 +9,7 @@ import React, {useEffect, useState} from 'react';
 
 import DatePicker from '../components/DatePicker';
 import {usePermissions} from '../hooks/permissions';
-import {formatDate} from '../utilities/date';
+import {formatDate, setDisabledAttribute} from '../utilities/date';
 
 const YEAR_IN_MS = 1000 * 60 * 60 * 24 * 365;
 
@@ -46,6 +46,12 @@ export default function LicenseDates({
 		selectedStartDate,
 		updateValidation
 	]);
+
+	useEffect(() => {
+		if (id) {
+			setDisabledAttribute(id, !updateDatePermission);
+		}
+	});
 
 	function handleExpirationDateChange(val) {
 		const date = new Date(val);
