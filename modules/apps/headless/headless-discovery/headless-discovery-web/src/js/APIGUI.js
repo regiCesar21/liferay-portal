@@ -288,7 +288,7 @@ const APIGUI = () => {
 					</ClayLayout.Row>
 				) : endpoint && !endpoint.startsWith(origin) ? (
 					<ClayAlert className="mt-4" displayType="danger">
-						Forbidden access.
+						Forbiden access.
 					</ClayAlert>
 				) : (
 					!showGraphQL && (
