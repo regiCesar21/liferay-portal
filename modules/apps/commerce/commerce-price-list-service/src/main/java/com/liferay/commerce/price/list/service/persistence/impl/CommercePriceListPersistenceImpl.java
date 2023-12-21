@@ -23,21 +23,15 @@ import com.liferay.portal.kernel.dao.orm.QueryPos;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.SQLQuery;
 import com.liferay.portal.kernel.dao.orm.Session;
-import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.BaseModel;
-import com.liferay.portal.kernel.sanitizer.Sanitizer;
-import com.liferay.portal.kernel.sanitizer.SanitizerException;
-import com.liferay.portal.kernel.sanitizer.SanitizerUtil;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
-import com.liferay.portal.kernel.security.auth.PrincipalThreadLocal;
 import com.liferay.portal.kernel.security.permission.InlineSQLHelperUtil;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
 import com.liferay.portal.kernel.util.ArrayUtil;
-import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
@@ -8964,40 +8958,6 @@ public class CommercePriceListPersistenceImpl
 				commercePriceList.getUuid());
 		}
 		else {
-			if (!Objects.equals(
-					commercePriceListModelImpl.getColumnOriginalValue(
-						"externalReferenceCode"),
-					commercePriceList.getExternalReferenceCode())) {
-
-				long userId = GetterUtil.getLong(
-					PrincipalThreadLocal.getName());
-
-				if (userId > 0) {
-					long companyId = commercePriceList.getCompanyId();
-
-					long groupId = commercePriceList.getGroupId();
-
-					long classPK = 0;
-
-					if (!isNew) {
-						classPK = commercePriceList.getPrimaryKey();
-					}
-
-					try {
-						commercePriceList.setExternalReferenceCode(
-							SanitizerUtil.sanitize(
-								companyId, groupId, userId,
-								CommercePriceList.class.getName(), classPK,
-								ContentTypes.TEXT_HTML, Sanitizer.MODE_ALL,
-								commercePriceList.getExternalReferenceCode(),
-								null));
-					}
-					catch (SanitizerException sanitizerException) {
-						throw new SystemException(sanitizerException);
-					}
-				}
-			}
-
 			CommercePriceList ercCommercePriceList = fetchByC_ERC(
 				commercePriceList.getCompanyId(),
 				commercePriceList.getExternalReferenceCode());
