@@ -24,6 +24,7 @@ import java.util.Iterator;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
+import java.util.function.Supplier;
 
 import javax.annotation.Generated;
 
@@ -50,227 +51,323 @@ public class FragmentViewportStyle implements Serializable {
 
 	@Schema
 	public String getMarginBottom() {
+		if (_marginBottomSupplier != null) {
+			marginBottom = _marginBottomSupplier.get();
+
+			_marginBottomSupplier = null;
+		}
+
 		return marginBottom;
 	}
 
 	public void setMarginBottom(String marginBottom) {
 		this.marginBottom = marginBottom;
+
+		_marginBottomSupplier = null;
 	}
 
 	@JsonIgnore
 	public void setMarginBottom(
 		UnsafeSupplier<String, Exception> marginBottomUnsafeSupplier) {
 
-		try {
-			marginBottom = marginBottomUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_marginBottomSupplier = () -> {
+			try {
+				return marginBottomUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String marginBottom;
 
+	private Supplier<String> _marginBottomSupplier;
+
 	@Schema
 	public String getMarginLeft() {
+		if (_marginLeftSupplier != null) {
+			marginLeft = _marginLeftSupplier.get();
+
+			_marginLeftSupplier = null;
+		}
+
 		return marginLeft;
 	}
 
 	public void setMarginLeft(String marginLeft) {
 		this.marginLeft = marginLeft;
+
+		_marginLeftSupplier = null;
 	}
 
 	@JsonIgnore
 	public void setMarginLeft(
 		UnsafeSupplier<String, Exception> marginLeftUnsafeSupplier) {
 
-		try {
-			marginLeft = marginLeftUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_marginLeftSupplier = () -> {
+			try {
+				return marginLeftUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String marginLeft;
 
+	private Supplier<String> _marginLeftSupplier;
+
 	@Schema
 	public String getMarginRight() {
+		if (_marginRightSupplier != null) {
+			marginRight = _marginRightSupplier.get();
+
+			_marginRightSupplier = null;
+		}
+
 		return marginRight;
 	}
 
 	public void setMarginRight(String marginRight) {
 		this.marginRight = marginRight;
+
+		_marginRightSupplier = null;
 	}
 
 	@JsonIgnore
 	public void setMarginRight(
 		UnsafeSupplier<String, Exception> marginRightUnsafeSupplier) {
 
-		try {
-			marginRight = marginRightUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_marginRightSupplier = () -> {
+			try {
+				return marginRightUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String marginRight;
 
+	private Supplier<String> _marginRightSupplier;
+
 	@Schema
 	public String getMarginTop() {
+		if (_marginTopSupplier != null) {
+			marginTop = _marginTopSupplier.get();
+
+			_marginTopSupplier = null;
+		}
+
 		return marginTop;
 	}
 
 	public void setMarginTop(String marginTop) {
 		this.marginTop = marginTop;
+
+		_marginTopSupplier = null;
 	}
 
 	@JsonIgnore
 	public void setMarginTop(
 		UnsafeSupplier<String, Exception> marginTopUnsafeSupplier) {
 
-		try {
-			marginTop = marginTopUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_marginTopSupplier = () -> {
+			try {
+				return marginTopUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String marginTop;
 
+	private Supplier<String> _marginTopSupplier;
+
 	@Schema
 	public String getPaddingBottom() {
+		if (_paddingBottomSupplier != null) {
+			paddingBottom = _paddingBottomSupplier.get();
+
+			_paddingBottomSupplier = null;
+		}
+
 		return paddingBottom;
 	}
 
 	public void setPaddingBottom(String paddingBottom) {
 		this.paddingBottom = paddingBottom;
+
+		_paddingBottomSupplier = null;
 	}
 
 	@JsonIgnore
 	public void setPaddingBottom(
 		UnsafeSupplier<String, Exception> paddingBottomUnsafeSupplier) {
 
-		try {
-			paddingBottom = paddingBottomUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_paddingBottomSupplier = () -> {
+			try {
+				return paddingBottomUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String paddingBottom;
 
+	private Supplier<String> _paddingBottomSupplier;
+
 	@Schema
 	public String getPaddingLeft() {
+		if (_paddingLeftSupplier != null) {
+			paddingLeft = _paddingLeftSupplier.get();
+
+			_paddingLeftSupplier = null;
+		}
+
 		return paddingLeft;
 	}
 
 	public void setPaddingLeft(String paddingLeft) {
 		this.paddingLeft = paddingLeft;
+
+		_paddingLeftSupplier = null;
 	}
 
 	@JsonIgnore
 	public void setPaddingLeft(
 		UnsafeSupplier<String, Exception> paddingLeftUnsafeSupplier) {
 
-		try {
-			paddingLeft = paddingLeftUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_paddingLeftSupplier = () -> {
+			try {
+				return paddingLeftUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String paddingLeft;
 
+	private Supplier<String> _paddingLeftSupplier;
+
 	@Schema
 	public String getPaddingRight() {
+		if (_paddingRightSupplier != null) {
+			paddingRight = _paddingRightSupplier.get();
+
+			_paddingRightSupplier = null;
+		}
+
 		return paddingRight;
 	}
 
 	public void setPaddingRight(String paddingRight) {
 		this.paddingRight = paddingRight;
+
+		_paddingRightSupplier = null;
 	}
 
 	@JsonIgnore
 	public void setPaddingRight(
 		UnsafeSupplier<String, Exception> paddingRightUnsafeSupplier) {
 
-		try {
-			paddingRight = paddingRightUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_paddingRightSupplier = () -> {
+			try {
+				return paddingRightUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String paddingRight;
 
+	private Supplier<String> _paddingRightSupplier;
+
 	@Schema
 	public String getPaddingTop() {
+		if (_paddingTopSupplier != null) {
+			paddingTop = _paddingTopSupplier.get();
+
+			_paddingTopSupplier = null;
+		}
+
 		return paddingTop;
 	}
 
 	public void setPaddingTop(String paddingTop) {
 		this.paddingTop = paddingTop;
+
+		_paddingTopSupplier = null;
 	}
 
 	@JsonIgnore
 	public void setPaddingTop(
 		UnsafeSupplier<String, Exception> paddingTopUnsafeSupplier) {
 
-		try {
-			paddingTop = paddingTopUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_paddingTopSupplier = () -> {
+			try {
+				return paddingTopUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String paddingTop;
+
+	private Supplier<String> _paddingTopSupplier;
 
 	@Override
 	public boolean equals(Object object) {
@@ -300,6 +397,8 @@ public class FragmentViewportStyle implements Serializable {
 
 		sb.append("{");
 
+		String marginBottom = getMarginBottom();
+
 		if (marginBottom != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -313,6 +412,8 @@ public class FragmentViewportStyle implements Serializable {
 
 			sb.append("\"");
 		}
+
+		String marginLeft = getMarginLeft();
 
 		if (marginLeft != null) {
 			if (sb.length() > 1) {
@@ -328,6 +429,8 @@ public class FragmentViewportStyle implements Serializable {
 			sb.append("\"");
 		}
 
+		String marginRight = getMarginRight();
+
 		if (marginRight != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -341,6 +444,8 @@ public class FragmentViewportStyle implements Serializable {
 
 			sb.append("\"");
 		}
+
+		String marginTop = getMarginTop();
 
 		if (marginTop != null) {
 			if (sb.length() > 1) {
@@ -356,6 +461,8 @@ public class FragmentViewportStyle implements Serializable {
 			sb.append("\"");
 		}
 
+		String paddingBottom = getPaddingBottom();
+
 		if (paddingBottom != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -369,6 +476,8 @@ public class FragmentViewportStyle implements Serializable {
 
 			sb.append("\"");
 		}
+
+		String paddingLeft = getPaddingLeft();
 
 		if (paddingLeft != null) {
 			if (sb.length() > 1) {
@@ -384,6 +493,8 @@ public class FragmentViewportStyle implements Serializable {
 			sb.append("\"");
 		}
 
+		String paddingRight = getPaddingRight();
+
 		if (paddingRight != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -397,6 +508,8 @@ public class FragmentViewportStyle implements Serializable {
 
 			sb.append("\"");
 		}
+
+		String paddingTop = getPaddingTop();
 
 		if (paddingTop != null) {
 			if (sb.length() > 1) {

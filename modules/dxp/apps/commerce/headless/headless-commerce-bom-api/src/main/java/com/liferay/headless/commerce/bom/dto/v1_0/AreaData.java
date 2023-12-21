@@ -24,6 +24,7 @@ import java.util.Iterator;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
+import java.util.function.Supplier;
 
 import javax.annotation.Generated;
 
@@ -51,145 +52,205 @@ public class AreaData implements Serializable {
 
 	@Schema(example = "Name 1")
 	public String getId() {
+		if (_idSupplier != null) {
+			id = _idSupplier.get();
+
+			_idSupplier = null;
+		}
+
 		return id;
 	}
 
 	public void setId(String id) {
 		this.id = id;
+
+		_idSupplier = null;
 	}
 
 	@JsonIgnore
 	public void setId(UnsafeSupplier<String, Exception> idUnsafeSupplier) {
-		try {
-			id = idUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_idSupplier = () -> {
+			try {
+				return idUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String id;
 
+	private Supplier<String> _idSupplier;
+
 	@Schema(example = "Name 1")
 	public String getImageUrl() {
+		if (_imageUrlSupplier != null) {
+			imageUrl = _imageUrlSupplier.get();
+
+			_imageUrlSupplier = null;
+		}
+
 		return imageUrl;
 	}
 
 	public void setImageUrl(String imageUrl) {
 		this.imageUrl = imageUrl;
+
+		_imageUrlSupplier = null;
 	}
 
 	@JsonIgnore
 	public void setImageUrl(
 		UnsafeSupplier<String, Exception> imageUrlUnsafeSupplier) {
 
-		try {
-			imageUrl = imageUrlUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_imageUrlSupplier = () -> {
+			try {
+				return imageUrlUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String imageUrl;
 
+	private Supplier<String> _imageUrlSupplier;
+
 	@Schema(example = "Name 1")
 	public String getName() {
+		if (_nameSupplier != null) {
+			name = _nameSupplier.get();
+
+			_nameSupplier = null;
+		}
+
 		return name;
 	}
 
 	public void setName(String name) {
 		this.name = name;
+
+		_nameSupplier = null;
 	}
 
 	@JsonIgnore
 	public void setName(UnsafeSupplier<String, Exception> nameUnsafeSupplier) {
-		try {
-			name = nameUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_nameSupplier = () -> {
+			try {
+				return nameUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String name;
 
+	private Supplier<String> _nameSupplier;
+
 	@Schema(
 		example = "[{id=29130, name=Product 1, price=$ 12.99, sku=SKU01, thumbnailUrl=/product_thumbnail.png, url=/productUrl}]"
 	)
 	@Valid
 	public Product[] getProducts() {
+		if (_productsSupplier != null) {
+			products = _productsSupplier.get();
+
+			_productsSupplier = null;
+		}
+
 		return products;
 	}
 
 	public void setProducts(Product[] products) {
 		this.products = products;
+
+		_productsSupplier = null;
 	}
 
 	@JsonIgnore
 	public void setProducts(
 		UnsafeSupplier<Product[], Exception> productsUnsafeSupplier) {
 
-		try {
-			products = productsUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_productsSupplier = () -> {
+			try {
+				return productsUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Product[] products;
 
+	private Supplier<Product[]> _productsSupplier;
+
 	@Schema(
 		example = "[{id=34130, number=3, positionX=33.54, positionY=33.54, productId=29130}]"
 	)
 	@Valid
 	public Spot[] getSpots() {
+		if (_spotsSupplier != null) {
+			spots = _spotsSupplier.get();
+
+			_spotsSupplier = null;
+		}
+
 		return spots;
 	}
 
 	public void setSpots(Spot[] spots) {
 		this.spots = spots;
+
+		_spotsSupplier = null;
 	}
 
 	@JsonIgnore
 	public void setSpots(
 		UnsafeSupplier<Spot[], Exception> spotsUnsafeSupplier) {
 
-		try {
-			spots = spotsUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_spotsSupplier = () -> {
+			try {
+				return spotsUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Spot[] spots;
+
+	private Supplier<Spot[]> _spotsSupplier;
 
 	@Override
 	public boolean equals(Object object) {
@@ -218,6 +279,8 @@ public class AreaData implements Serializable {
 
 		sb.append("{");
 
+		String id = getId();
+
 		if (id != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -231,6 +294,8 @@ public class AreaData implements Serializable {
 
 			sb.append("\"");
 		}
+
+		String imageUrl = getImageUrl();
 
 		if (imageUrl != null) {
 			if (sb.length() > 1) {
@@ -246,6 +311,8 @@ public class AreaData implements Serializable {
 			sb.append("\"");
 		}
 
+		String name = getName();
+
 		if (name != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -259,6 +326,8 @@ public class AreaData implements Serializable {
 
 			sb.append("\"");
 		}
+
+		Product[] products = getProducts();
 
 		if (products != null) {
 			if (sb.length() > 1) {
@@ -279,6 +348,8 @@ public class AreaData implements Serializable {
 
 			sb.append("]");
 		}
+
+		Spot[] spots = getSpots();
 
 		if (spots != null) {
 			if (sb.length() > 1) {

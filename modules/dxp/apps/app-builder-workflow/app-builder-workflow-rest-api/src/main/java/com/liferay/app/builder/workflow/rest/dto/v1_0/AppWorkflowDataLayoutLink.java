@@ -24,6 +24,7 @@ import java.util.Iterator;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
+import java.util.function.Supplier;
 
 import javax.annotation.Generated;
 
@@ -51,59 +52,83 @@ public class AppWorkflowDataLayoutLink implements Serializable {
 
 	@Schema
 	public Long getDataLayoutId() {
+		if (_dataLayoutIdSupplier != null) {
+			dataLayoutId = _dataLayoutIdSupplier.get();
+
+			_dataLayoutIdSupplier = null;
+		}
+
 		return dataLayoutId;
 	}
 
 	public void setDataLayoutId(Long dataLayoutId) {
 		this.dataLayoutId = dataLayoutId;
+
+		_dataLayoutIdSupplier = null;
 	}
 
 	@JsonIgnore
 	public void setDataLayoutId(
 		UnsafeSupplier<Long, Exception> dataLayoutIdUnsafeSupplier) {
 
-		try {
-			dataLayoutId = dataLayoutIdUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_dataLayoutIdSupplier = () -> {
+			try {
+				return dataLayoutIdUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Long dataLayoutId;
 
+	private Supplier<Long> _dataLayoutIdSupplier;
+
 	@Schema
 	public Boolean getReadOnly() {
+		if (_readOnlySupplier != null) {
+			readOnly = _readOnlySupplier.get();
+
+			_readOnlySupplier = null;
+		}
+
 		return readOnly;
 	}
 
 	public void setReadOnly(Boolean readOnly) {
 		this.readOnly = readOnly;
+
+		_readOnlySupplier = null;
 	}
 
 	@JsonIgnore
 	public void setReadOnly(
 		UnsafeSupplier<Boolean, Exception> readOnlyUnsafeSupplier) {
 
-		try {
-			readOnly = readOnlyUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_readOnlySupplier = () -> {
+			try {
+				return readOnlyUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Boolean readOnly;
+
+	private Supplier<Boolean> _readOnlySupplier;
 
 	@Override
 	public boolean equals(Object object) {
@@ -133,6 +158,8 @@ public class AppWorkflowDataLayoutLink implements Serializable {
 
 		sb.append("{");
 
+		Long dataLayoutId = getDataLayoutId();
+
 		if (dataLayoutId != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -142,6 +169,8 @@ public class AppWorkflowDataLayoutLink implements Serializable {
 
 			sb.append(dataLayoutId);
 		}
+
+		Boolean readOnly = getReadOnly();
 
 		if (readOnly != null) {
 			if (sb.length() > 1) {

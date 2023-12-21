@@ -24,6 +24,7 @@ import java.util.Iterator;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
+import java.util.function.Supplier;
 
 import javax.annotation.Generated;
 
@@ -51,95 +52,138 @@ public class AppWorkflow implements Serializable {
 
 	@Schema
 	public Long getAppId() {
+		if (_appIdSupplier != null) {
+			appId = _appIdSupplier.get();
+
+			_appIdSupplier = null;
+		}
+
 		return appId;
 	}
 
 	public void setAppId(Long appId) {
 		this.appId = appId;
+
+		_appIdSupplier = null;
 	}
 
 	@JsonIgnore
 	public void setAppId(UnsafeSupplier<Long, Exception> appIdUnsafeSupplier) {
-		try {
-			appId = appIdUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_appIdSupplier = () -> {
+			try {
+				return appIdUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Long appId;
 
+	private Supplier<Long> _appIdSupplier;
+
 	@Schema
 	public String getAppVersion() {
+		if (_appVersionSupplier != null) {
+			appVersion = _appVersionSupplier.get();
+
+			_appVersionSupplier = null;
+		}
+
 		return appVersion;
 	}
 
 	public void setAppVersion(String appVersion) {
 		this.appVersion = appVersion;
+
+		_appVersionSupplier = null;
 	}
 
 	@JsonIgnore
 	public void setAppVersion(
 		UnsafeSupplier<String, Exception> appVersionUnsafeSupplier) {
 
-		try {
-			appVersion = appVersionUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_appVersionSupplier = () -> {
+			try {
+				return appVersionUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String appVersion;
 
+	private Supplier<String> _appVersionSupplier;
+
 	@Schema
 	public Long getAppWorkflowDefinitionId() {
+		if (_appWorkflowDefinitionIdSupplier != null) {
+			appWorkflowDefinitionId = _appWorkflowDefinitionIdSupplier.get();
+
+			_appWorkflowDefinitionIdSupplier = null;
+		}
+
 		return appWorkflowDefinitionId;
 	}
 
 	public void setAppWorkflowDefinitionId(Long appWorkflowDefinitionId) {
 		this.appWorkflowDefinitionId = appWorkflowDefinitionId;
+
+		_appWorkflowDefinitionIdSupplier = null;
 	}
 
 	@JsonIgnore
 	public void setAppWorkflowDefinitionId(
 		UnsafeSupplier<Long, Exception> appWorkflowDefinitionIdUnsafeSupplier) {
 
-		try {
-			appWorkflowDefinitionId =
-				appWorkflowDefinitionIdUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_appWorkflowDefinitionIdSupplier = () -> {
+			try {
+				return appWorkflowDefinitionIdUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Long appWorkflowDefinitionId;
 
+	private Supplier<Long> _appWorkflowDefinitionIdSupplier;
+
 	@Schema
 	@Valid
 	public AppWorkflowState[] getAppWorkflowStates() {
+		if (_appWorkflowStatesSupplier != null) {
+			appWorkflowStates = _appWorkflowStatesSupplier.get();
+
+			_appWorkflowStatesSupplier = null;
+		}
+
 		return appWorkflowStates;
 	}
 
 	public void setAppWorkflowStates(AppWorkflowState[] appWorkflowStates) {
 		this.appWorkflowStates = appWorkflowStates;
+
+		_appWorkflowStatesSupplier = null;
 	}
 
 	@JsonIgnore
@@ -147,29 +191,41 @@ public class AppWorkflow implements Serializable {
 		UnsafeSupplier<AppWorkflowState[], Exception>
 			appWorkflowStatesUnsafeSupplier) {
 
-		try {
-			appWorkflowStates = appWorkflowStatesUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_appWorkflowStatesSupplier = () -> {
+			try {
+				return appWorkflowStatesUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected AppWorkflowState[] appWorkflowStates;
 
+	private Supplier<AppWorkflowState[]> _appWorkflowStatesSupplier;
+
 	@Schema
 	@Valid
 	public AppWorkflowTask[] getAppWorkflowTasks() {
+		if (_appWorkflowTasksSupplier != null) {
+			appWorkflowTasks = _appWorkflowTasksSupplier.get();
+
+			_appWorkflowTasksSupplier = null;
+		}
+
 		return appWorkflowTasks;
 	}
 
 	public void setAppWorkflowTasks(AppWorkflowTask[] appWorkflowTasks) {
 		this.appWorkflowTasks = appWorkflowTasks;
+
+		_appWorkflowTasksSupplier = null;
 	}
 
 	@JsonIgnore
@@ -177,20 +233,24 @@ public class AppWorkflow implements Serializable {
 		UnsafeSupplier<AppWorkflowTask[], Exception>
 			appWorkflowTasksUnsafeSupplier) {
 
-		try {
-			appWorkflowTasks = appWorkflowTasksUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_appWorkflowTasksSupplier = () -> {
+			try {
+				return appWorkflowTasksUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected AppWorkflowTask[] appWorkflowTasks;
+
+	private Supplier<AppWorkflowTask[]> _appWorkflowTasksSupplier;
 
 	@Override
 	public boolean equals(Object object) {
@@ -219,6 +279,8 @@ public class AppWorkflow implements Serializable {
 
 		sb.append("{");
 
+		Long appId = getAppId();
+
 		if (appId != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -228,6 +290,8 @@ public class AppWorkflow implements Serializable {
 
 			sb.append(appId);
 		}
+
+		String appVersion = getAppVersion();
 
 		if (appVersion != null) {
 			if (sb.length() > 1) {
@@ -243,6 +307,8 @@ public class AppWorkflow implements Serializable {
 			sb.append("\"");
 		}
 
+		Long appWorkflowDefinitionId = getAppWorkflowDefinitionId();
+
 		if (appWorkflowDefinitionId != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -252,6 +318,8 @@ public class AppWorkflow implements Serializable {
 
 			sb.append(appWorkflowDefinitionId);
 		}
+
+		AppWorkflowState[] appWorkflowStates = getAppWorkflowStates();
 
 		if (appWorkflowStates != null) {
 			if (sb.length() > 1) {
@@ -272,6 +340,8 @@ public class AppWorkflow implements Serializable {
 
 			sb.append("]");
 		}
+
+		AppWorkflowTask[] appWorkflowTasks = getAppWorkflowTasks();
 
 		if (appWorkflowTasks != null) {
 			if (sb.length() > 1) {

@@ -24,6 +24,7 @@ import java.util.Iterator;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
+import java.util.function.Supplier;
 
 import javax.annotation.Generated;
 
@@ -52,60 +53,84 @@ public class PageDefinition implements Serializable {
 	@Schema
 	@Valid
 	public PageElement getPageElement() {
+		if (_pageElementSupplier != null) {
+			pageElement = _pageElementSupplier.get();
+
+			_pageElementSupplier = null;
+		}
+
 		return pageElement;
 	}
 
 	public void setPageElement(PageElement pageElement) {
 		this.pageElement = pageElement;
+
+		_pageElementSupplier = null;
 	}
 
 	@JsonIgnore
 	public void setPageElement(
 		UnsafeSupplier<PageElement, Exception> pageElementUnsafeSupplier) {
 
-		try {
-			pageElement = pageElementUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_pageElementSupplier = () -> {
+			try {
+				return pageElementUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected PageElement pageElement;
 
+	private Supplier<PageElement> _pageElementSupplier;
+
 	@Schema
 	@Valid
 	public Settings getSettings() {
+		if (_settingsSupplier != null) {
+			settings = _settingsSupplier.get();
+
+			_settingsSupplier = null;
+		}
+
 		return settings;
 	}
 
 	public void setSettings(Settings settings) {
 		this.settings = settings;
+
+		_settingsSupplier = null;
 	}
 
 	@JsonIgnore
 	public void setSettings(
 		UnsafeSupplier<Settings, Exception> settingsUnsafeSupplier) {
 
-		try {
-			settings = settingsUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_settingsSupplier = () -> {
+			try {
+				return settingsUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Settings settings;
+
+	private Supplier<Settings> _settingsSupplier;
 
 	@Override
 	public boolean equals(Object object) {
@@ -134,6 +159,8 @@ public class PageDefinition implements Serializable {
 
 		sb.append("{");
 
+		PageElement pageElement = getPageElement();
+
 		if (pageElement != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -143,6 +170,8 @@ public class PageDefinition implements Serializable {
 
 			sb.append(String.valueOf(pageElement));
 		}
+
+		Settings settings = getSettings();
 
 		if (settings != null) {
 			if (sb.length() > 1) {

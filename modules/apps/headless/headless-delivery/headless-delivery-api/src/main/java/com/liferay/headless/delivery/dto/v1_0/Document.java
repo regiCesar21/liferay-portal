@@ -30,6 +30,7 @@ import java.util.Iterator;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
+import java.util.function.Supplier;
 
 import javax.annotation.Generated;
 
@@ -61,11 +62,19 @@ public class Document implements Serializable {
 	@Schema
 	@Valid
 	public Map<String, Map<String, String>> getActions() {
+		if (_actionsSupplier != null) {
+			actions = _actionsSupplier.get();
+
+			_actionsSupplier = null;
+		}
+
 		return actions;
 	}
 
 	public void setActions(Map<String, Map<String, String>> actions) {
 		this.actions = actions;
+
+		_actionsSupplier = null;
 	}
 
 	@JsonIgnore
@@ -73,46 +82,60 @@ public class Document implements Serializable {
 		UnsafeSupplier<Map<String, Map<String, String>>, Exception>
 			actionsUnsafeSupplier) {
 
-		try {
-			actions = actionsUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_actionsSupplier = () -> {
+			try {
+				return actionsUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Map<String, Map<String, String>> actions;
 
+	private Supplier<Map<String, Map<String, String>>> _actionsSupplier;
+
 	@Schema(
 		description = "An array of images in several resolutions and sizes, created by the Adaptive Media framework."
 	)
 	@Valid
 	public AdaptedImage[] getAdaptedImages() {
+		if (_adaptedImagesSupplier != null) {
+			adaptedImages = _adaptedImagesSupplier.get();
+
+			_adaptedImagesSupplier = null;
+		}
+
 		return adaptedImages;
 	}
 
 	public void setAdaptedImages(AdaptedImage[] adaptedImages) {
 		this.adaptedImages = adaptedImages;
+
+		_adaptedImagesSupplier = null;
 	}
 
 	@JsonIgnore
 	public void setAdaptedImages(
 		UnsafeSupplier<AdaptedImage[], Exception> adaptedImagesUnsafeSupplier) {
 
-		try {
-			adaptedImages = adaptedImagesUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_adaptedImagesSupplier = () -> {
+			try {
+				return adaptedImagesUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField(
@@ -121,14 +144,24 @@ public class Document implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected AdaptedImage[] adaptedImages;
 
+	private Supplier<AdaptedImage[]> _adaptedImagesSupplier;
+
 	@Schema(description = "The document's average rating.")
 	@Valid
 	public AggregateRating getAggregateRating() {
+		if (_aggregateRatingSupplier != null) {
+			aggregateRating = _aggregateRatingSupplier.get();
+
+			_aggregateRatingSupplier = null;
+		}
+
 		return aggregateRating;
 	}
 
 	public void setAggregateRating(AggregateRating aggregateRating) {
 		this.aggregateRating = aggregateRating;
+
+		_aggregateRatingSupplier = null;
 	}
 
 	@JsonIgnore
@@ -136,101 +169,139 @@ public class Document implements Serializable {
 		UnsafeSupplier<AggregateRating, Exception>
 			aggregateRatingUnsafeSupplier) {
 
-		try {
-			aggregateRating = aggregateRatingUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_aggregateRatingSupplier = () -> {
+			try {
+				return aggregateRatingUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField(description = "The document's average rating.")
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected AggregateRating aggregateRating;
 
+	private Supplier<AggregateRating> _aggregateRatingSupplier;
+
 	@Schema
 	public String getAssetLibraryKey() {
+		if (_assetLibraryKeySupplier != null) {
+			assetLibraryKey = _assetLibraryKeySupplier.get();
+
+			_assetLibraryKeySupplier = null;
+		}
+
 		return assetLibraryKey;
 	}
 
 	public void setAssetLibraryKey(String assetLibraryKey) {
 		this.assetLibraryKey = assetLibraryKey;
+
+		_assetLibraryKeySupplier = null;
 	}
 
 	@JsonIgnore
 	public void setAssetLibraryKey(
 		UnsafeSupplier<String, Exception> assetLibraryKeyUnsafeSupplier) {
 
-		try {
-			assetLibraryKey = assetLibraryKeyUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_assetLibraryKeySupplier = () -> {
+			try {
+				return assetLibraryKeyUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected String assetLibraryKey;
 
+	private Supplier<String> _assetLibraryKeySupplier;
+
 	@Schema(description = "The document's relative URL.")
 	public String getContentUrl() {
+		if (_contentUrlSupplier != null) {
+			contentUrl = _contentUrlSupplier.get();
+
+			_contentUrlSupplier = null;
+		}
+
 		return contentUrl;
 	}
 
 	public void setContentUrl(String contentUrl) {
 		this.contentUrl = contentUrl;
+
+		_contentUrlSupplier = null;
 	}
 
 	@JsonIgnore
 	public void setContentUrl(
 		UnsafeSupplier<String, Exception> contentUrlUnsafeSupplier) {
 
-		try {
-			contentUrl = contentUrlUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_contentUrlSupplier = () -> {
+			try {
+				return contentUrlUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField(description = "The document's relative URL.")
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected String contentUrl;
 
+	private Supplier<String> _contentUrlSupplier;
+
 	@Schema(
 		description = "optional field with the content of the document in Base64, can be embedded with nestedFields"
 	)
 	public String getContentValue() {
+		if (_contentValueSupplier != null) {
+			contentValue = _contentValueSupplier.get();
+
+			_contentValueSupplier = null;
+		}
+
 		return contentValue;
 	}
 
 	public void setContentValue(String contentValue) {
 		this.contentValue = contentValue;
+
+		_contentValueSupplier = null;
 	}
 
 	@JsonIgnore
 	public void setContentValue(
 		UnsafeSupplier<String, Exception> contentValueUnsafeSupplier) {
 
-		try {
-			contentValue = contentValueUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_contentValueSupplier = () -> {
+			try {
+				return contentValueUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField(
@@ -239,114 +310,162 @@ public class Document implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected String contentValue;
 
+	private Supplier<String> _contentValueSupplier;
+
 	@Schema(description = "The document's creator.")
 	@Valid
 	public Creator getCreator() {
+		if (_creatorSupplier != null) {
+			creator = _creatorSupplier.get();
+
+			_creatorSupplier = null;
+		}
+
 		return creator;
 	}
 
 	public void setCreator(Creator creator) {
 		this.creator = creator;
+
+		_creatorSupplier = null;
 	}
 
 	@JsonIgnore
 	public void setCreator(
 		UnsafeSupplier<Creator, Exception> creatorUnsafeSupplier) {
 
-		try {
-			creator = creatorUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_creatorSupplier = () -> {
+			try {
+				return creatorUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField(description = "The document's creator.")
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Creator creator;
 
+	private Supplier<Creator> _creatorSupplier;
+
 	@Schema
 	@Valid
 	public CustomField[] getCustomFields() {
+		if (_customFieldsSupplier != null) {
+			customFields = _customFieldsSupplier.get();
+
+			_customFieldsSupplier = null;
+		}
+
 		return customFields;
 	}
 
 	public void setCustomFields(CustomField[] customFields) {
 		this.customFields = customFields;
+
+		_customFieldsSupplier = null;
 	}
 
 	@JsonIgnore
 	public void setCustomFields(
 		UnsafeSupplier<CustomField[], Exception> customFieldsUnsafeSupplier) {
 
-		try {
-			customFields = customFieldsUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_customFieldsSupplier = () -> {
+			try {
+				return customFieldsUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected CustomField[] customFields;
 
+	private Supplier<CustomField[]> _customFieldsSupplier;
+
 	@Schema(description = "The document's creation date.")
 	public Date getDateCreated() {
+		if (_dateCreatedSupplier != null) {
+			dateCreated = _dateCreatedSupplier.get();
+
+			_dateCreatedSupplier = null;
+		}
+
 		return dateCreated;
 	}
 
 	public void setDateCreated(Date dateCreated) {
 		this.dateCreated = dateCreated;
+
+		_dateCreatedSupplier = null;
 	}
 
 	@JsonIgnore
 	public void setDateCreated(
 		UnsafeSupplier<Date, Exception> dateCreatedUnsafeSupplier) {
 
-		try {
-			dateCreated = dateCreatedUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_dateCreatedSupplier = () -> {
+			try {
+				return dateCreatedUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField(description = "The document's creation date.")
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Date dateCreated;
 
+	private Supplier<Date> _dateCreatedSupplier;
+
 	@Schema(description = "The last time a field of the document changed.")
 	public Date getDateModified() {
+		if (_dateModifiedSupplier != null) {
+			dateModified = _dateModifiedSupplier.get();
+
+			_dateModifiedSupplier = null;
+		}
+
 		return dateModified;
 	}
 
 	public void setDateModified(Date dateModified) {
 		this.dateModified = dateModified;
+
+		_dateModifiedSupplier = null;
 	}
 
 	@JsonIgnore
 	public void setDateModified(
 		UnsafeSupplier<Date, Exception> dateModifiedUnsafeSupplier) {
 
-		try {
-			dateModified = dateModifiedUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_dateModifiedSupplier = () -> {
+			try {
+				return dateModifiedUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField(
@@ -355,58 +474,82 @@ public class Document implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Date dateModified;
 
+	private Supplier<Date> _dateModifiedSupplier;
+
 	@Schema(description = "The document's description.")
 	public String getDescription() {
+		if (_descriptionSupplier != null) {
+			description = _descriptionSupplier.get();
+
+			_descriptionSupplier = null;
+		}
+
 		return description;
 	}
 
 	public void setDescription(String description) {
 		this.description = description;
+
+		_descriptionSupplier = null;
 	}
 
 	@JsonIgnore
 	public void setDescription(
 		UnsafeSupplier<String, Exception> descriptionUnsafeSupplier) {
 
-		try {
-			description = descriptionUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_descriptionSupplier = () -> {
+			try {
+				return descriptionUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField(description = "The document's description.")
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String description;
 
+	private Supplier<String> _descriptionSupplier;
+
 	@Schema(
 		description = "The ID of the `DocumentFolder` where this document is stored."
 	)
 	public Long getDocumentFolderId() {
+		if (_documentFolderIdSupplier != null) {
+			documentFolderId = _documentFolderIdSupplier.get();
+
+			_documentFolderIdSupplier = null;
+		}
+
 		return documentFolderId;
 	}
 
 	public void setDocumentFolderId(Long documentFolderId) {
 		this.documentFolderId = documentFolderId;
+
+		_documentFolderIdSupplier = null;
 	}
 
 	@JsonIgnore
 	public void setDocumentFolderId(
 		UnsafeSupplier<Long, Exception> documentFolderIdUnsafeSupplier) {
 
-		try {
-			documentFolderId = documentFolderIdUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_documentFolderIdSupplier = () -> {
+			try {
+				return documentFolderIdUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField(
@@ -415,59 +558,83 @@ public class Document implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Long documentFolderId;
 
+	private Supplier<Long> _documentFolderIdSupplier;
+
 	@Schema
 	@Valid
 	public DocumentType getDocumentType() {
+		if (_documentTypeSupplier != null) {
+			documentType = _documentTypeSupplier.get();
+
+			_documentTypeSupplier = null;
+		}
+
 		return documentType;
 	}
 
 	public void setDocumentType(DocumentType documentType) {
 		this.documentType = documentType;
+
+		_documentTypeSupplier = null;
 	}
 
 	@JsonIgnore
 	public void setDocumentType(
 		UnsafeSupplier<DocumentType, Exception> documentTypeUnsafeSupplier) {
 
-		try {
-			documentType = documentTypeUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_documentTypeSupplier = () -> {
+			try {
+				return documentTypeUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected DocumentType documentType;
 
+	private Supplier<DocumentType> _documentTypeSupplier;
+
 	@Schema(
 		description = "The document's content type (e.g., `application/pdf`, etc.)."
 	)
 	public String getEncodingFormat() {
+		if (_encodingFormatSupplier != null) {
+			encodingFormat = _encodingFormatSupplier.get();
+
+			_encodingFormatSupplier = null;
+		}
+
 		return encodingFormat;
 	}
 
 	public void setEncodingFormat(String encodingFormat) {
 		this.encodingFormat = encodingFormat;
+
+		_encodingFormatSupplier = null;
 	}
 
 	@JsonIgnore
 	public void setEncodingFormat(
 		UnsafeSupplier<String, Exception> encodingFormatUnsafeSupplier) {
 
-		try {
-			encodingFormat = encodingFormatUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_encodingFormatSupplier = () -> {
+			try {
+				return encodingFormatUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField(
@@ -476,124 +643,182 @@ public class Document implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected String encodingFormat;
 
+	private Supplier<String> _encodingFormatSupplier;
+
 	@Schema(description = "The document's file extension.")
 	public String getFileExtension() {
+		if (_fileExtensionSupplier != null) {
+			fileExtension = _fileExtensionSupplier.get();
+
+			_fileExtensionSupplier = null;
+		}
+
 		return fileExtension;
 	}
 
 	public void setFileExtension(String fileExtension) {
 		this.fileExtension = fileExtension;
+
+		_fileExtensionSupplier = null;
 	}
 
 	@JsonIgnore
 	public void setFileExtension(
 		UnsafeSupplier<String, Exception> fileExtensionUnsafeSupplier) {
 
-		try {
-			fileExtension = fileExtensionUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_fileExtensionSupplier = () -> {
+			try {
+				return fileExtensionUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField(description = "The document's file extension.")
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected String fileExtension;
 
+	private Supplier<String> _fileExtensionSupplier;
+
 	@Schema(description = "The document's ID.")
 	public Long getId() {
+		if (_idSupplier != null) {
+			id = _idSupplier.get();
+
+			_idSupplier = null;
+		}
+
 		return id;
 	}
 
 	public void setId(Long id) {
 		this.id = id;
+
+		_idSupplier = null;
 	}
 
 	@JsonIgnore
 	public void setId(UnsafeSupplier<Long, Exception> idUnsafeSupplier) {
-		try {
-			id = idUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_idSupplier = () -> {
+			try {
+				return idUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField(description = "The document's ID.")
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Long id;
 
+	private Supplier<Long> _idSupplier;
+
 	@Schema(description = "A list of keywords describing the document.")
 	public String[] getKeywords() {
+		if (_keywordsSupplier != null) {
+			keywords = _keywordsSupplier.get();
+
+			_keywordsSupplier = null;
+		}
+
 		return keywords;
 	}
 
 	public void setKeywords(String[] keywords) {
 		this.keywords = keywords;
+
+		_keywordsSupplier = null;
 	}
 
 	@JsonIgnore
 	public void setKeywords(
 		UnsafeSupplier<String[], Exception> keywordsUnsafeSupplier) {
 
-		try {
-			keywords = keywordsUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_keywordsSupplier = () -> {
+			try {
+				return keywordsUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField(description = "A list of keywords describing the document.")
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String[] keywords;
 
+	private Supplier<String[]> _keywordsSupplier;
+
 	@Schema(description = "The number of comments on the document.")
 	public Integer getNumberOfComments() {
+		if (_numberOfCommentsSupplier != null) {
+			numberOfComments = _numberOfCommentsSupplier.get();
+
+			_numberOfCommentsSupplier = null;
+		}
+
 		return numberOfComments;
 	}
 
 	public void setNumberOfComments(Integer numberOfComments) {
 		this.numberOfComments = numberOfComments;
+
+		_numberOfCommentsSupplier = null;
 	}
 
 	@JsonIgnore
 	public void setNumberOfComments(
 		UnsafeSupplier<Integer, Exception> numberOfCommentsUnsafeSupplier) {
 
-		try {
-			numberOfComments = numberOfCommentsUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_numberOfCommentsSupplier = () -> {
+			try {
+				return numberOfCommentsUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField(description = "The number of comments on the document.")
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Integer numberOfComments;
 
+	private Supplier<Integer> _numberOfCommentsSupplier;
+
 	@Schema
 	@Valid
 	public RelatedContent[] getRelatedContents() {
+		if (_relatedContentsSupplier != null) {
+			relatedContents = _relatedContentsSupplier.get();
+
+			_relatedContentsSupplier = null;
+		}
+
 		return relatedContents;
 	}
 
 	public void setRelatedContents(RelatedContent[] relatedContents) {
 		this.relatedContents = relatedContents;
+
+		_relatedContentsSupplier = null;
 	}
 
 	@JsonIgnore
@@ -601,45 +826,59 @@ public class Document implements Serializable {
 		UnsafeSupplier<RelatedContent[], Exception>
 			relatedContentsUnsafeSupplier) {
 
-		try {
-			relatedContents = relatedContentsUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_relatedContentsSupplier = () -> {
+			try {
+				return relatedContentsUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected RelatedContent[] relatedContents;
 
+	private Supplier<RelatedContent[]> _relatedContentsSupplier;
+
 	@Schema(
 		description = "The ID of the site to which this document is scoped."
 	)
 	public Long getSiteId() {
+		if (_siteIdSupplier != null) {
+			siteId = _siteIdSupplier.get();
+
+			_siteIdSupplier = null;
+		}
+
 		return siteId;
 	}
 
 	public void setSiteId(Long siteId) {
 		this.siteId = siteId;
+
+		_siteIdSupplier = null;
 	}
 
 	@JsonIgnore
 	public void setSiteId(
 		UnsafeSupplier<Long, Exception> siteIdUnsafeSupplier) {
 
-		try {
-			siteId = siteIdUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_siteIdSupplier = () -> {
+			try {
+				return siteIdUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField(
@@ -648,37 +887,57 @@ public class Document implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Long siteId;
 
+	private Supplier<Long> _siteIdSupplier;
+
 	@Schema(description = "The document's size in bytes.")
 	public Long getSizeInBytes() {
+		if (_sizeInBytesSupplier != null) {
+			sizeInBytes = _sizeInBytesSupplier.get();
+
+			_sizeInBytesSupplier = null;
+		}
+
 		return sizeInBytes;
 	}
 
 	public void setSizeInBytes(Long sizeInBytes) {
 		this.sizeInBytes = sizeInBytes;
+
+		_sizeInBytesSupplier = null;
 	}
 
 	@JsonIgnore
 	public void setSizeInBytes(
 		UnsafeSupplier<Long, Exception> sizeInBytesUnsafeSupplier) {
 
-		try {
-			sizeInBytes = sizeInBytesUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_sizeInBytesSupplier = () -> {
+			try {
+				return sizeInBytesUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField(description = "The document's size in bytes.")
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Long sizeInBytes;
 
+	private Supplier<Long> _sizeInBytesSupplier;
+
 	@Schema(description = "The categories associated with this document.")
 	@Valid
 	public TaxonomyCategoryBrief[] getTaxonomyCategoryBriefs() {
+		if (_taxonomyCategoryBriefsSupplier != null) {
+			taxonomyCategoryBriefs = _taxonomyCategoryBriefsSupplier.get();
+
+			_taxonomyCategoryBriefsSupplier = null;
+		}
+
 		return taxonomyCategoryBriefs;
 	}
 
@@ -686,6 +945,8 @@ public class Document implements Serializable {
 		TaxonomyCategoryBrief[] taxonomyCategoryBriefs) {
 
 		this.taxonomyCategoryBriefs = taxonomyCategoryBriefs;
+
+		_taxonomyCategoryBriefsSupplier = null;
 	}
 
 	@JsonIgnore
@@ -693,45 +954,59 @@ public class Document implements Serializable {
 		UnsafeSupplier<TaxonomyCategoryBrief[], Exception>
 			taxonomyCategoryBriefsUnsafeSupplier) {
 
-		try {
-			taxonomyCategoryBriefs = taxonomyCategoryBriefsUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_taxonomyCategoryBriefsSupplier = () -> {
+			try {
+				return taxonomyCategoryBriefsUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField(description = "The categories associated with this document.")
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected TaxonomyCategoryBrief[] taxonomyCategoryBriefs;
 
+	private Supplier<TaxonomyCategoryBrief[]> _taxonomyCategoryBriefsSupplier;
+
 	@Schema(
 		description = "A write-only field that adds `TaxonomyCategory` instances to the document."
 	)
 	public Long[] getTaxonomyCategoryIds() {
+		if (_taxonomyCategoryIdsSupplier != null) {
+			taxonomyCategoryIds = _taxonomyCategoryIdsSupplier.get();
+
+			_taxonomyCategoryIdsSupplier = null;
+		}
+
 		return taxonomyCategoryIds;
 	}
 
 	public void setTaxonomyCategoryIds(Long[] taxonomyCategoryIds) {
 		this.taxonomyCategoryIds = taxonomyCategoryIds;
+
+		_taxonomyCategoryIdsSupplier = null;
 	}
 
 	@JsonIgnore
 	public void setTaxonomyCategoryIds(
 		UnsafeSupplier<Long[], Exception> taxonomyCategoryIdsUnsafeSupplier) {
 
-		try {
-			taxonomyCategoryIds = taxonomyCategoryIdsUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_taxonomyCategoryIdsSupplier = () -> {
+			try {
+				return taxonomyCategoryIdsUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField(
@@ -740,44 +1015,66 @@ public class Document implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
 	protected Long[] taxonomyCategoryIds;
 
+	private Supplier<Long[]> _taxonomyCategoryIdsSupplier;
+
 	@Schema(description = "The document's main title/name.")
 	public String getTitle() {
+		if (_titleSupplier != null) {
+			title = _titleSupplier.get();
+
+			_titleSupplier = null;
+		}
+
 		return title;
 	}
 
 	public void setTitle(String title) {
 		this.title = title;
+
+		_titleSupplier = null;
 	}
 
 	@JsonIgnore
 	public void setTitle(
 		UnsafeSupplier<String, Exception> titleUnsafeSupplier) {
 
-		try {
-			title = titleUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_titleSupplier = () -> {
+			try {
+				return titleUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField(description = "The document's main title/name.")
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String title;
 
+	private Supplier<String> _titleSupplier;
+
 	@Schema(
 		description = "A write-only property that specifies the document's default permissions."
 	)
 	@Valid
 	public ViewableBy getViewableBy() {
+		if (_viewableBySupplier != null) {
+			viewableBy = _viewableBySupplier.get();
+
+			_viewableBySupplier = null;
+		}
+
 		return viewableBy;
 	}
 
 	@JsonIgnore
 	public String getViewableByAsString() {
+		ViewableBy viewableBy = getViewableBy();
+
 		if (viewableBy == null) {
 			return null;
 		}
@@ -787,21 +1084,25 @@ public class Document implements Serializable {
 
 	public void setViewableBy(ViewableBy viewableBy) {
 		this.viewableBy = viewableBy;
+
+		_viewableBySupplier = null;
 	}
 
 	@JsonIgnore
 	public void setViewableBy(
 		UnsafeSupplier<ViewableBy, Exception> viewableByUnsafeSupplier) {
 
-		try {
-			viewableBy = viewableByUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_viewableBySupplier = () -> {
+			try {
+				return viewableByUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField(
@@ -809,6 +1110,8 @@ public class Document implements Serializable {
 	)
 	@JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
 	protected ViewableBy viewableBy;
+
+	private Supplier<ViewableBy> _viewableBySupplier;
 
 	@Override
 	public boolean equals(Object object) {
@@ -840,6 +1143,8 @@ public class Document implements Serializable {
 		DateFormat liferayToJSONDateFormat = new SimpleDateFormat(
 			"yyyy-MM-dd'T'HH:mm:ss'Z'");
 
+		Map<String, Map<String, String>> actions = getActions();
+
 		if (actions != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -849,6 +1154,8 @@ public class Document implements Serializable {
 
 			sb.append(_toJSON(actions));
 		}
+
+		AdaptedImage[] adaptedImages = getAdaptedImages();
 
 		if (adaptedImages != null) {
 			if (sb.length() > 1) {
@@ -870,6 +1177,8 @@ public class Document implements Serializable {
 			sb.append("]");
 		}
 
+		AggregateRating aggregateRating = getAggregateRating();
+
 		if (aggregateRating != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -879,6 +1188,8 @@ public class Document implements Serializable {
 
 			sb.append(String.valueOf(aggregateRating));
 		}
+
+		String assetLibraryKey = getAssetLibraryKey();
 
 		if (assetLibraryKey != null) {
 			if (sb.length() > 1) {
@@ -894,6 +1205,8 @@ public class Document implements Serializable {
 			sb.append("\"");
 		}
 
+		String contentUrl = getContentUrl();
+
 		if (contentUrl != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -907,6 +1220,8 @@ public class Document implements Serializable {
 
 			sb.append("\"");
 		}
+
+		String contentValue = getContentValue();
 
 		if (contentValue != null) {
 			if (sb.length() > 1) {
@@ -922,6 +1237,8 @@ public class Document implements Serializable {
 			sb.append("\"");
 		}
 
+		Creator creator = getCreator();
+
 		if (creator != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -931,6 +1248,8 @@ public class Document implements Serializable {
 
 			sb.append(String.valueOf(creator));
 		}
+
+		CustomField[] customFields = getCustomFields();
 
 		if (customFields != null) {
 			if (sb.length() > 1) {
@@ -952,6 +1271,8 @@ public class Document implements Serializable {
 			sb.append("]");
 		}
 
+		Date dateCreated = getDateCreated();
+
 		if (dateCreated != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -965,6 +1286,8 @@ public class Document implements Serializable {
 
 			sb.append("\"");
 		}
+
+		Date dateModified = getDateModified();
 
 		if (dateModified != null) {
 			if (sb.length() > 1) {
@@ -980,6 +1303,8 @@ public class Document implements Serializable {
 			sb.append("\"");
 		}
 
+		String description = getDescription();
+
 		if (description != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -994,6 +1319,8 @@ public class Document implements Serializable {
 			sb.append("\"");
 		}
 
+		Long documentFolderId = getDocumentFolderId();
+
 		if (documentFolderId != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -1004,6 +1331,8 @@ public class Document implements Serializable {
 			sb.append(documentFolderId);
 		}
 
+		DocumentType documentType = getDocumentType();
+
 		if (documentType != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -1013,6 +1342,8 @@ public class Document implements Serializable {
 
 			sb.append(String.valueOf(documentType));
 		}
+
+		String encodingFormat = getEncodingFormat();
 
 		if (encodingFormat != null) {
 			if (sb.length() > 1) {
@@ -1028,6 +1359,8 @@ public class Document implements Serializable {
 			sb.append("\"");
 		}
 
+		String fileExtension = getFileExtension();
+
 		if (fileExtension != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -1042,6 +1375,8 @@ public class Document implements Serializable {
 			sb.append("\"");
 		}
 
+		Long id = getId();
+
 		if (id != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -1051,6 +1386,8 @@ public class Document implements Serializable {
 
 			sb.append(id);
 		}
+
+		String[] keywords = getKeywords();
 
 		if (keywords != null) {
 			if (sb.length() > 1) {
@@ -1076,6 +1413,8 @@ public class Document implements Serializable {
 			sb.append("]");
 		}
 
+		Integer numberOfComments = getNumberOfComments();
+
 		if (numberOfComments != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -1085,6 +1424,8 @@ public class Document implements Serializable {
 
 			sb.append(numberOfComments);
 		}
+
+		RelatedContent[] relatedContents = getRelatedContents();
 
 		if (relatedContents != null) {
 			if (sb.length() > 1) {
@@ -1106,6 +1447,8 @@ public class Document implements Serializable {
 			sb.append("]");
 		}
 
+		Long siteId = getSiteId();
+
 		if (siteId != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -1116,6 +1459,8 @@ public class Document implements Serializable {
 			sb.append(siteId);
 		}
 
+		Long sizeInBytes = getSizeInBytes();
+
 		if (sizeInBytes != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -1125,6 +1470,9 @@ public class Document implements Serializable {
 
 			sb.append(sizeInBytes);
 		}
+
+		TaxonomyCategoryBrief[] taxonomyCategoryBriefs =
+			getTaxonomyCategoryBriefs();
 
 		if (taxonomyCategoryBriefs != null) {
 			if (sb.length() > 1) {
@@ -1146,6 +1494,8 @@ public class Document implements Serializable {
 			sb.append("]");
 		}
 
+		Long[] taxonomyCategoryIds = getTaxonomyCategoryIds();
+
 		if (taxonomyCategoryIds != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -1166,6 +1516,8 @@ public class Document implements Serializable {
 			sb.append("]");
 		}
 
+		String title = getTitle();
+
 		if (title != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -1179,6 +1531,8 @@ public class Document implements Serializable {
 
 			sb.append("\"");
 		}
+
+		ViewableBy viewableBy = getViewableBy();
 
 		if (viewableBy != null) {
 			if (sb.length() > 1) {

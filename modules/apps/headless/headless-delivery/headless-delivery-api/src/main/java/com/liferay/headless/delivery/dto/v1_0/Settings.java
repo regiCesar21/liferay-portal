@@ -25,6 +25,7 @@ import java.util.Iterator;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
+import java.util.function.Supplier;
 
 import javax.annotation.Generated;
 
@@ -52,171 +53,243 @@ public class Settings implements Serializable {
 
 	@Schema
 	public String getColorSchemeName() {
+		if (_colorSchemeNameSupplier != null) {
+			colorSchemeName = _colorSchemeNameSupplier.get();
+
+			_colorSchemeNameSupplier = null;
+		}
+
 		return colorSchemeName;
 	}
 
 	public void setColorSchemeName(String colorSchemeName) {
 		this.colorSchemeName = colorSchemeName;
+
+		_colorSchemeNameSupplier = null;
 	}
 
 	@JsonIgnore
 	public void setColorSchemeName(
 		UnsafeSupplier<String, Exception> colorSchemeNameUnsafeSupplier) {
 
-		try {
-			colorSchemeName = colorSchemeNameUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_colorSchemeNameSupplier = () -> {
+			try {
+				return colorSchemeNameUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String colorSchemeName;
 
+	private Supplier<String> _colorSchemeNameSupplier;
+
 	@Schema
 	public String getCss() {
+		if (_cssSupplier != null) {
+			css = _cssSupplier.get();
+
+			_cssSupplier = null;
+		}
+
 		return css;
 	}
 
 	public void setCss(String css) {
 		this.css = css;
+
+		_cssSupplier = null;
 	}
 
 	@JsonIgnore
 	public void setCss(UnsafeSupplier<String, Exception> cssUnsafeSupplier) {
-		try {
-			css = cssUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_cssSupplier = () -> {
+			try {
+				return cssUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String css;
 
+	private Supplier<String> _cssSupplier;
+
 	@Schema
 	public String getJavascript() {
+		if (_javascriptSupplier != null) {
+			javascript = _javascriptSupplier.get();
+
+			_javascriptSupplier = null;
+		}
+
 		return javascript;
 	}
 
 	public void setJavascript(String javascript) {
 		this.javascript = javascript;
+
+		_javascriptSupplier = null;
 	}
 
 	@JsonIgnore
 	public void setJavascript(
 		UnsafeSupplier<String, Exception> javascriptUnsafeSupplier) {
 
-		try {
-			javascript = javascriptUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_javascriptSupplier = () -> {
+			try {
+				return javascriptUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String javascript;
 
+	private Supplier<String> _javascriptSupplier;
+
 	@Schema
 	@Valid
 	public MasterPage getMasterPage() {
+		if (_masterPageSupplier != null) {
+			masterPage = _masterPageSupplier.get();
+
+			_masterPageSupplier = null;
+		}
+
 		return masterPage;
 	}
 
 	public void setMasterPage(MasterPage masterPage) {
 		this.masterPage = masterPage;
+
+		_masterPageSupplier = null;
 	}
 
 	@JsonIgnore
 	public void setMasterPage(
 		UnsafeSupplier<MasterPage, Exception> masterPageUnsafeSupplier) {
 
-		try {
-			masterPage = masterPageUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_masterPageSupplier = () -> {
+			try {
+				return masterPageUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected MasterPage masterPage;
 
+	private Supplier<MasterPage> _masterPageSupplier;
+
 	@Schema
 	public String getThemeName() {
+		if (_themeNameSupplier != null) {
+			themeName = _themeNameSupplier.get();
+
+			_themeNameSupplier = null;
+		}
+
 		return themeName;
 	}
 
 	public void setThemeName(String themeName) {
 		this.themeName = themeName;
+
+		_themeNameSupplier = null;
 	}
 
 	@JsonIgnore
 	public void setThemeName(
 		UnsafeSupplier<String, Exception> themeNameUnsafeSupplier) {
 
-		try {
-			themeName = themeNameUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_themeNameSupplier = () -> {
+			try {
+				return themeNameUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String themeName;
 
+	private Supplier<String> _themeNameSupplier;
+
 	@Schema
 	@Valid
 	public Object getThemeSettings() {
+		if (_themeSettingsSupplier != null) {
+			themeSettings = _themeSettingsSupplier.get();
+
+			_themeSettingsSupplier = null;
+		}
+
 		return themeSettings;
 	}
 
 	public void setThemeSettings(Object themeSettings) {
 		this.themeSettings = themeSettings;
+
+		_themeSettingsSupplier = null;
 	}
 
 	@JsonIgnore
 	public void setThemeSettings(
 		UnsafeSupplier<Object, Exception> themeSettingsUnsafeSupplier) {
 
-		try {
-			themeSettings = themeSettingsUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_themeSettingsSupplier = () -> {
+			try {
+				return themeSettingsUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Object themeSettings;
+
+	private Supplier<Object> _themeSettingsSupplier;
 
 	@Override
 	public boolean equals(Object object) {
@@ -245,6 +318,8 @@ public class Settings implements Serializable {
 
 		sb.append("{");
 
+		String colorSchemeName = getColorSchemeName();
+
 		if (colorSchemeName != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -258,6 +333,8 @@ public class Settings implements Serializable {
 
 			sb.append("\"");
 		}
+
+		String css = getCss();
 
 		if (css != null) {
 			if (sb.length() > 1) {
@@ -273,6 +350,8 @@ public class Settings implements Serializable {
 			sb.append("\"");
 		}
 
+		String javascript = getJavascript();
+
 		if (javascript != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -287,6 +366,8 @@ public class Settings implements Serializable {
 			sb.append("\"");
 		}
 
+		MasterPage masterPage = getMasterPage();
+
 		if (masterPage != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -296,6 +377,8 @@ public class Settings implements Serializable {
 
 			sb.append(String.valueOf(masterPage));
 		}
+
+		String themeName = getThemeName();
 
 		if (themeName != null) {
 			if (sb.length() > 1) {
@@ -310,6 +393,8 @@ public class Settings implements Serializable {
 
 			sb.append("\"");
 		}
+
+		Object themeSettings = getThemeSettings();
 
 		if (themeSettings != null) {
 			if (sb.length() > 1) {

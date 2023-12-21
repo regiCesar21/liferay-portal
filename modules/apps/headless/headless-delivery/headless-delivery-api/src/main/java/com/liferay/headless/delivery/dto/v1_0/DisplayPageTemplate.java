@@ -24,6 +24,7 @@ import java.util.Iterator;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
+import java.util.function.Supplier;
 
 import javax.annotation.Generated;
 
@@ -53,11 +54,19 @@ public class DisplayPageTemplate implements Serializable {
 	@Schema
 	@Valid
 	public ContentSubtype getContentSubtype() {
+		if (_contentSubtypeSupplier != null) {
+			contentSubtype = _contentSubtypeSupplier.get();
+
+			_contentSubtypeSupplier = null;
+		}
+
 		return contentSubtype;
 	}
 
 	public void setContentSubtype(ContentSubtype contentSubtype) {
 		this.contentSubtype = contentSubtype;
+
+		_contentSubtypeSupplier = null;
 	}
 
 	@JsonIgnore
@@ -65,101 +74,141 @@ public class DisplayPageTemplate implements Serializable {
 		UnsafeSupplier<ContentSubtype, Exception>
 			contentSubtypeUnsafeSupplier) {
 
-		try {
-			contentSubtype = contentSubtypeUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_contentSubtypeSupplier = () -> {
+			try {
+				return contentSubtypeUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected ContentSubtype contentSubtype;
 
+	private Supplier<ContentSubtype> _contentSubtypeSupplier;
+
 	@Schema
 	@Valid
 	public ContentType getContentType() {
+		if (_contentTypeSupplier != null) {
+			contentType = _contentTypeSupplier.get();
+
+			_contentTypeSupplier = null;
+		}
+
 		return contentType;
 	}
 
 	public void setContentType(ContentType contentType) {
 		this.contentType = contentType;
+
+		_contentTypeSupplier = null;
 	}
 
 	@JsonIgnore
 	public void setContentType(
 		UnsafeSupplier<ContentType, Exception> contentTypeUnsafeSupplier) {
 
-		try {
-			contentType = contentTypeUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_contentTypeSupplier = () -> {
+			try {
+				return contentTypeUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected ContentType contentType;
 
+	private Supplier<ContentType> _contentTypeSupplier;
+
 	@Schema
 	public String getKey() {
+		if (_keySupplier != null) {
+			key = _keySupplier.get();
+
+			_keySupplier = null;
+		}
+
 		return key;
 	}
 
 	public void setKey(String key) {
 		this.key = key;
+
+		_keySupplier = null;
 	}
 
 	@JsonIgnore
 	public void setKey(UnsafeSupplier<String, Exception> keyUnsafeSupplier) {
-		try {
-			key = keyUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_keySupplier = () -> {
+			try {
+				return keyUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String key;
 
+	private Supplier<String> _keySupplier;
+
 	@Schema
 	public String getName() {
+		if (_nameSupplier != null) {
+			name = _nameSupplier.get();
+
+			_nameSupplier = null;
+		}
+
 		return name;
 	}
 
 	public void setName(String name) {
 		this.name = name;
+
+		_nameSupplier = null;
 	}
 
 	@JsonIgnore
 	public void setName(UnsafeSupplier<String, Exception> nameUnsafeSupplier) {
-		try {
-			name = nameUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_nameSupplier = () -> {
+			try {
+				return nameUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String name;
+
+	private Supplier<String> _nameSupplier;
 
 	@Override
 	public boolean equals(Object object) {
@@ -188,6 +237,8 @@ public class DisplayPageTemplate implements Serializable {
 
 		sb.append("{");
 
+		ContentSubtype contentSubtype = getContentSubtype();
+
 		if (contentSubtype != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -198,6 +249,8 @@ public class DisplayPageTemplate implements Serializable {
 			sb.append(String.valueOf(contentSubtype));
 		}
 
+		ContentType contentType = getContentType();
+
 		if (contentType != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -207,6 +260,8 @@ public class DisplayPageTemplate implements Serializable {
 
 			sb.append(String.valueOf(contentType));
 		}
+
+		String key = getKey();
 
 		if (key != null) {
 			if (sb.length() > 1) {
@@ -221,6 +276,8 @@ public class DisplayPageTemplate implements Serializable {
 
 			sb.append("\"");
 		}
+
+		String name = getName();
 
 		if (name != null) {
 			if (sb.length() > 1) {

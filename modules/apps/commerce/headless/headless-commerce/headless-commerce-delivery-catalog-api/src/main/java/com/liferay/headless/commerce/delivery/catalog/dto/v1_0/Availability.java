@@ -24,6 +24,7 @@ import java.util.Iterator;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
+import java.util.function.Supplier;
 
 import javax.annotation.Generated;
 
@@ -49,59 +50,83 @@ public class Availability implements Serializable {
 
 	@Schema(example = "Available")
 	public String getLabel() {
+		if (_labelSupplier != null) {
+			label = _labelSupplier.get();
+
+			_labelSupplier = null;
+		}
+
 		return label;
 	}
 
 	public void setLabel(String label) {
 		this.label = label;
+
+		_labelSupplier = null;
 	}
 
 	@JsonIgnore
 	public void setLabel(
 		UnsafeSupplier<String, Exception> labelUnsafeSupplier) {
 
-		try {
-			label = labelUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_labelSupplier = () -> {
+			try {
+				return labelUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String label;
 
+	private Supplier<String> _labelSupplier;
+
 	@Schema
 	public Integer getStockQuantity() {
+		if (_stockQuantitySupplier != null) {
+			stockQuantity = _stockQuantitySupplier.get();
+
+			_stockQuantitySupplier = null;
+		}
+
 		return stockQuantity;
 	}
 
 	public void setStockQuantity(Integer stockQuantity) {
 		this.stockQuantity = stockQuantity;
+
+		_stockQuantitySupplier = null;
 	}
 
 	@JsonIgnore
 	public void setStockQuantity(
 		UnsafeSupplier<Integer, Exception> stockQuantityUnsafeSupplier) {
 
-		try {
-			stockQuantity = stockQuantityUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_stockQuantitySupplier = () -> {
+			try {
+				return stockQuantityUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Integer stockQuantity;
+
+	private Supplier<Integer> _stockQuantitySupplier;
 
 	@Override
 	public boolean equals(Object object) {
@@ -130,6 +155,8 @@ public class Availability implements Serializable {
 
 		sb.append("{");
 
+		String label = getLabel();
+
 		if (label != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -143,6 +170,8 @@ public class Availability implements Serializable {
 
 			sb.append("\"");
 		}
+
+		Integer stockQuantity = getStockQuantity();
 
 		if (stockQuantity != null) {
 			if (sb.length() > 1) {

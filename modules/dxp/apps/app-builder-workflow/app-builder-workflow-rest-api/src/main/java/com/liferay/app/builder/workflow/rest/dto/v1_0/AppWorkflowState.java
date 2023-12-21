@@ -24,6 +24,7 @@ import java.util.Iterator;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
+import java.util.function.Supplier;
 
 import javax.annotation.Generated;
 
@@ -52,6 +53,12 @@ public class AppWorkflowState implements Serializable {
 	@Schema
 	@Valid
 	public AppWorkflowTransition[] getAppWorkflowTransitions() {
+		if (_appWorkflowTransitionsSupplier != null) {
+			appWorkflowTransitions = _appWorkflowTransitionsSupplier.get();
+
+			_appWorkflowTransitionsSupplier = null;
+		}
+
 		return appWorkflowTransitions;
 	}
 
@@ -59,6 +66,8 @@ public class AppWorkflowState implements Serializable {
 		AppWorkflowTransition[] appWorkflowTransitions) {
 
 		this.appWorkflowTransitions = appWorkflowTransitions;
+
+		_appWorkflowTransitionsSupplier = null;
 	}
 
 	@JsonIgnore
@@ -66,74 +75,102 @@ public class AppWorkflowState implements Serializable {
 		UnsafeSupplier<AppWorkflowTransition[], Exception>
 			appWorkflowTransitionsUnsafeSupplier) {
 
-		try {
-			appWorkflowTransitions = appWorkflowTransitionsUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_appWorkflowTransitionsSupplier = () -> {
+			try {
+				return appWorkflowTransitionsUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected AppWorkflowTransition[] appWorkflowTransitions;
 
+	private Supplier<AppWorkflowTransition[]> _appWorkflowTransitionsSupplier;
+
 	@Schema
 	public Boolean getInitial() {
+		if (_initialSupplier != null) {
+			initial = _initialSupplier.get();
+
+			_initialSupplier = null;
+		}
+
 		return initial;
 	}
 
 	public void setInitial(Boolean initial) {
 		this.initial = initial;
+
+		_initialSupplier = null;
 	}
 
 	@JsonIgnore
 	public void setInitial(
 		UnsafeSupplier<Boolean, Exception> initialUnsafeSupplier) {
 
-		try {
-			initial = initialUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_initialSupplier = () -> {
+			try {
+				return initialUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Boolean initial;
 
+	private Supplier<Boolean> _initialSupplier;
+
 	@Schema
 	public String getName() {
+		if (_nameSupplier != null) {
+			name = _nameSupplier.get();
+
+			_nameSupplier = null;
+		}
+
 		return name;
 	}
 
 	public void setName(String name) {
 		this.name = name;
+
+		_nameSupplier = null;
 	}
 
 	@JsonIgnore
 	public void setName(UnsafeSupplier<String, Exception> nameUnsafeSupplier) {
-		try {
-			name = nameUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_nameSupplier = () -> {
+			try {
+				return nameUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String name;
+
+	private Supplier<String> _nameSupplier;
 
 	@Override
 	public boolean equals(Object object) {
@@ -162,6 +199,9 @@ public class AppWorkflowState implements Serializable {
 
 		sb.append("{");
 
+		AppWorkflowTransition[] appWorkflowTransitions =
+			getAppWorkflowTransitions();
+
 		if (appWorkflowTransitions != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -182,6 +222,8 @@ public class AppWorkflowState implements Serializable {
 			sb.append("]");
 		}
 
+		Boolean initial = getInitial();
+
 		if (initial != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -191,6 +233,8 @@ public class AppWorkflowState implements Serializable {
 
 			sb.append(initial);
 		}
+
+		String name = getName();
 
 		if (name != null) {
 			if (sb.length() > 1) {

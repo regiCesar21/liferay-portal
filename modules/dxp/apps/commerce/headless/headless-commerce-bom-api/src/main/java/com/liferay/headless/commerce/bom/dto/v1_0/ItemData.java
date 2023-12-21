@@ -24,6 +24,7 @@ import java.util.Iterator;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
+import java.util.function.Supplier;
 
 import javax.annotation.Generated;
 
@@ -54,124 +55,172 @@ public class ItemData implements Serializable {
 	)
 	@Valid
 	public Brand[] getBrands() {
+		if (_brandsSupplier != null) {
+			brands = _brandsSupplier.get();
+
+			_brandsSupplier = null;
+		}
+
 		return brands;
 	}
 
 	public void setBrands(Brand[] brands) {
 		this.brands = brands;
+
+		_brandsSupplier = null;
 	}
 
 	@JsonIgnore
 	public void setBrands(
 		UnsafeSupplier<Brand[], Exception> brandsUnsafeSupplier) {
 
-		try {
-			brands = brandsUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_brandsSupplier = () -> {
+			try {
+				return brandsUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Brand[] brands;
 
+	private Supplier<Brand[]> _brandsSupplier;
+
 	@Schema(
 		example = "[{id=31130, name=Item 1, slug=/Item-1, street2=/Item/31130, thumbnail=/schema.jpg}]"
 	)
 	@Valid
 	public Item[] getItems() {
+		if (_itemsSupplier != null) {
+			items = _itemsSupplier.get();
+
+			_itemsSupplier = null;
+		}
+
 		return items;
 	}
 
 	public void setItems(Item[] items) {
 		this.items = items;
+
+		_itemsSupplier = null;
 	}
 
 	@JsonIgnore
 	public void setItems(
 		UnsafeSupplier<Item[], Exception> itemsUnsafeSupplier) {
 
-		try {
-			items = itemsUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_itemsSupplier = () -> {
+			try {
+				return itemsUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Item[] items;
 
+	private Supplier<Item[]> _itemsSupplier;
+
 	@Schema(
 		example = "[{id=29130, name=Product 1, price=$ 12.99, sku=SKU01, thumbnailUrl=/product_thumbnail.png, url=/productUrl}]"
 	)
 	@Valid
 	public Product[] getProducts() {
+		if (_productsSupplier != null) {
+			products = _productsSupplier.get();
+
+			_productsSupplier = null;
+		}
+
 		return products;
 	}
 
 	public void setProducts(Product[] products) {
 		this.products = products;
+
+		_productsSupplier = null;
 	}
 
 	@JsonIgnore
 	public void setProducts(
 		UnsafeSupplier<Product[], Exception> productsUnsafeSupplier) {
 
-		try {
-			products = productsUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_productsSupplier = () -> {
+			try {
+				return productsUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Product[] products;
 
+	private Supplier<Product[]> _productsSupplier;
+
 	@Schema(
 		example = "[{id=34130, number=3, positionX=33.54, positionY=33.54, productId=29130}]"
 	)
 	@Valid
 	public Spot[] getSpots() {
+		if (_spotsSupplier != null) {
+			spots = _spotsSupplier.get();
+
+			_spotsSupplier = null;
+		}
+
 		return spots;
 	}
 
 	public void setSpots(Spot[] spots) {
 		this.spots = spots;
+
+		_spotsSupplier = null;
 	}
 
 	@JsonIgnore
 	public void setSpots(
 		UnsafeSupplier<Spot[], Exception> spotsUnsafeSupplier) {
 
-		try {
-			spots = spotsUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_spotsSupplier = () -> {
+			try {
+				return spotsUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Spot[] spots;
+
+	private Supplier<Spot[]> _spotsSupplier;
 
 	@Override
 	public boolean equals(Object object) {
@@ -200,6 +249,8 @@ public class ItemData implements Serializable {
 
 		sb.append("{");
 
+		Brand[] brands = getBrands();
+
 		if (brands != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -219,6 +270,8 @@ public class ItemData implements Serializable {
 
 			sb.append("]");
 		}
+
+		Item[] items = getItems();
 
 		if (items != null) {
 			if (sb.length() > 1) {
@@ -240,6 +293,8 @@ public class ItemData implements Serializable {
 			sb.append("]");
 		}
 
+		Product[] products = getProducts();
+
 		if (products != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -259,6 +314,8 @@ public class ItemData implements Serializable {
 
 			sb.append("]");
 		}
+
+		Spot[] spots = getSpots();
 
 		if (spots != null) {
 			if (sb.length() > 1) {

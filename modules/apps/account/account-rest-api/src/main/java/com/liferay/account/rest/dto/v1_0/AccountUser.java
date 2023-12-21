@@ -24,6 +24,7 @@ import java.util.Iterator;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
+import java.util.function.Supplier;
 
 import javax.annotation.Generated;
 
@@ -52,54 +53,76 @@ public class AccountUser implements Serializable {
 
 	@Schema
 	public String getEmailAddress() {
+		if (_emailAddressSupplier != null) {
+			emailAddress = _emailAddressSupplier.get();
+
+			_emailAddressSupplier = null;
+		}
+
 		return emailAddress;
 	}
 
 	public void setEmailAddress(String emailAddress) {
 		this.emailAddress = emailAddress;
+
+		_emailAddressSupplier = null;
 	}
 
 	@JsonIgnore
 	public void setEmailAddress(
 		UnsafeSupplier<String, Exception> emailAddressUnsafeSupplier) {
 
-		try {
-			emailAddress = emailAddressUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_emailAddressSupplier = () -> {
+			try {
+				return emailAddressUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String emailAddress;
 
+	private Supplier<String> _emailAddressSupplier;
+
 	@Schema(description = "The optional external key of this account user.")
 	public String getExternalReferenceCode() {
+		if (_externalReferenceCodeSupplier != null) {
+			externalReferenceCode = _externalReferenceCodeSupplier.get();
+
+			_externalReferenceCodeSupplier = null;
+		}
+
 		return externalReferenceCode;
 	}
 
 	public void setExternalReferenceCode(String externalReferenceCode) {
 		this.externalReferenceCode = externalReferenceCode;
+
+		_externalReferenceCodeSupplier = null;
 	}
 
 	@JsonIgnore
 	public void setExternalReferenceCode(
 		UnsafeSupplier<String, Exception> externalReferenceCodeUnsafeSupplier) {
 
-		try {
-			externalReferenceCode = externalReferenceCodeUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_externalReferenceCodeSupplier = () -> {
+			try {
+				return externalReferenceCodeUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField(
@@ -108,199 +131,285 @@ public class AccountUser implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String externalReferenceCode;
 
+	private Supplier<String> _externalReferenceCodeSupplier;
+
 	@Schema
 	public String getFirstName() {
+		if (_firstNameSupplier != null) {
+			firstName = _firstNameSupplier.get();
+
+			_firstNameSupplier = null;
+		}
+
 		return firstName;
 	}
 
 	public void setFirstName(String firstName) {
 		this.firstName = firstName;
+
+		_firstNameSupplier = null;
 	}
 
 	@JsonIgnore
 	public void setFirstName(
 		UnsafeSupplier<String, Exception> firstNameUnsafeSupplier) {
 
-		try {
-			firstName = firstNameUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_firstNameSupplier = () -> {
+			try {
+				return firstNameUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String firstName;
 
+	private Supplier<String> _firstNameSupplier;
+
 	@Schema
 	public Long getId() {
+		if (_idSupplier != null) {
+			id = _idSupplier.get();
+
+			_idSupplier = null;
+		}
+
 		return id;
 	}
 
 	public void setId(Long id) {
 		this.id = id;
+
+		_idSupplier = null;
 	}
 
 	@JsonIgnore
 	public void setId(UnsafeSupplier<Long, Exception> idUnsafeSupplier) {
-		try {
-			id = idUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_idSupplier = () -> {
+			try {
+				return idUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Long id;
 
+	private Supplier<Long> _idSupplier;
+
 	@Schema
 	public String getLastName() {
+		if (_lastNameSupplier != null) {
+			lastName = _lastNameSupplier.get();
+
+			_lastNameSupplier = null;
+		}
+
 		return lastName;
 	}
 
 	public void setLastName(String lastName) {
 		this.lastName = lastName;
+
+		_lastNameSupplier = null;
 	}
 
 	@JsonIgnore
 	public void setLastName(
 		UnsafeSupplier<String, Exception> lastNameUnsafeSupplier) {
 
-		try {
-			lastName = lastNameUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_lastNameSupplier = () -> {
+			try {
+				return lastNameUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String lastName;
 
+	private Supplier<String> _lastNameSupplier;
+
 	@Schema
 	public String getMiddleName() {
+		if (_middleNameSupplier != null) {
+			middleName = _middleNameSupplier.get();
+
+			_middleNameSupplier = null;
+		}
+
 		return middleName;
 	}
 
 	public void setMiddleName(String middleName) {
 		this.middleName = middleName;
+
+		_middleNameSupplier = null;
 	}
 
 	@JsonIgnore
 	public void setMiddleName(
 		UnsafeSupplier<String, Exception> middleNameUnsafeSupplier) {
 
-		try {
-			middleName = middleNameUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_middleNameSupplier = () -> {
+			try {
+				return middleNameUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String middleName;
 
+	private Supplier<String> _middleNameSupplier;
+
 	@Schema
 	public String getPrefix() {
+		if (_prefixSupplier != null) {
+			prefix = _prefixSupplier.get();
+
+			_prefixSupplier = null;
+		}
+
 		return prefix;
 	}
 
 	public void setPrefix(String prefix) {
 		this.prefix = prefix;
+
+		_prefixSupplier = null;
 	}
 
 	@JsonIgnore
 	public void setPrefix(
 		UnsafeSupplier<String, Exception> prefixUnsafeSupplier) {
 
-		try {
-			prefix = prefixUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_prefixSupplier = () -> {
+			try {
+				return prefixUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String prefix;
 
+	private Supplier<String> _prefixSupplier;
+
 	@Schema
 	public String getScreenName() {
+		if (_screenNameSupplier != null) {
+			screenName = _screenNameSupplier.get();
+
+			_screenNameSupplier = null;
+		}
+
 		return screenName;
 	}
 
 	public void setScreenName(String screenName) {
 		this.screenName = screenName;
+
+		_screenNameSupplier = null;
 	}
 
 	@JsonIgnore
 	public void setScreenName(
 		UnsafeSupplier<String, Exception> screenNameUnsafeSupplier) {
 
-		try {
-			screenName = screenNameUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_screenNameSupplier = () -> {
+			try {
+				return screenNameUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String screenName;
 
+	private Supplier<String> _screenNameSupplier;
+
 	@Schema
 	public String getSuffix() {
+		if (_suffixSupplier != null) {
+			suffix = _suffixSupplier.get();
+
+			_suffixSupplier = null;
+		}
+
 		return suffix;
 	}
 
 	public void setSuffix(String suffix) {
 		this.suffix = suffix;
+
+		_suffixSupplier = null;
 	}
 
 	@JsonIgnore
 	public void setSuffix(
 		UnsafeSupplier<String, Exception> suffixUnsafeSupplier) {
 
-		try {
-			suffix = suffixUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_suffixSupplier = () -> {
+			try {
+				return suffixUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String suffix;
+
+	private Supplier<String> _suffixSupplier;
 
 	@Override
 	public boolean equals(Object object) {
@@ -329,6 +438,8 @@ public class AccountUser implements Serializable {
 
 		sb.append("{");
 
+		String emailAddress = getEmailAddress();
+
 		if (emailAddress != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -342,6 +453,8 @@ public class AccountUser implements Serializable {
 
 			sb.append("\"");
 		}
+
+		String externalReferenceCode = getExternalReferenceCode();
 
 		if (externalReferenceCode != null) {
 			if (sb.length() > 1) {
@@ -357,6 +470,8 @@ public class AccountUser implements Serializable {
 			sb.append("\"");
 		}
 
+		String firstName = getFirstName();
+
 		if (firstName != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -371,6 +486,8 @@ public class AccountUser implements Serializable {
 			sb.append("\"");
 		}
 
+		Long id = getId();
+
 		if (id != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -380,6 +497,8 @@ public class AccountUser implements Serializable {
 
 			sb.append(id);
 		}
+
+		String lastName = getLastName();
 
 		if (lastName != null) {
 			if (sb.length() > 1) {
@@ -395,6 +514,8 @@ public class AccountUser implements Serializable {
 			sb.append("\"");
 		}
 
+		String middleName = getMiddleName();
+
 		if (middleName != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -408,6 +529,8 @@ public class AccountUser implements Serializable {
 
 			sb.append("\"");
 		}
+
+		String prefix = getPrefix();
 
 		if (prefix != null) {
 			if (sb.length() > 1) {
@@ -423,6 +546,8 @@ public class AccountUser implements Serializable {
 			sb.append("\"");
 		}
 
+		String screenName = getScreenName();
+
 		if (screenName != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -436,6 +561,8 @@ public class AccountUser implements Serializable {
 
 			sb.append("\"");
 		}
+
+		String suffix = getSuffix();
 
 		if (suffix != null) {
 			if (sb.length() > 1) {

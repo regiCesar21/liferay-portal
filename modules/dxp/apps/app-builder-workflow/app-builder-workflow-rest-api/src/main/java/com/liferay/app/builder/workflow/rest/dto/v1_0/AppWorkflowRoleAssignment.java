@@ -24,6 +24,7 @@ import java.util.Iterator;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
+import java.util.function.Supplier;
 
 import javax.annotation.Generated;
 
@@ -51,59 +52,83 @@ public class AppWorkflowRoleAssignment implements Serializable {
 
 	@Schema
 	public Long getRoleId() {
+		if (_roleIdSupplier != null) {
+			roleId = _roleIdSupplier.get();
+
+			_roleIdSupplier = null;
+		}
+
 		return roleId;
 	}
 
 	public void setRoleId(Long roleId) {
 		this.roleId = roleId;
+
+		_roleIdSupplier = null;
 	}
 
 	@JsonIgnore
 	public void setRoleId(
 		UnsafeSupplier<Long, Exception> roleIdUnsafeSupplier) {
 
-		try {
-			roleId = roleIdUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_roleIdSupplier = () -> {
+			try {
+				return roleIdUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Long roleId;
 
+	private Supplier<Long> _roleIdSupplier;
+
 	@Schema
 	public String getRoleName() {
+		if (_roleNameSupplier != null) {
+			roleName = _roleNameSupplier.get();
+
+			_roleNameSupplier = null;
+		}
+
 		return roleName;
 	}
 
 	public void setRoleName(String roleName) {
 		this.roleName = roleName;
+
+		_roleNameSupplier = null;
 	}
 
 	@JsonIgnore
 	public void setRoleName(
 		UnsafeSupplier<String, Exception> roleNameUnsafeSupplier) {
 
-		try {
-			roleName = roleNameUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_roleNameSupplier = () -> {
+			try {
+				return roleNameUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String roleName;
+
+	private Supplier<String> _roleNameSupplier;
 
 	@Override
 	public boolean equals(Object object) {
@@ -133,6 +158,8 @@ public class AppWorkflowRoleAssignment implements Serializable {
 
 		sb.append("{");
 
+		Long roleId = getRoleId();
+
 		if (roleId != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -142,6 +169,8 @@ public class AppWorkflowRoleAssignment implements Serializable {
 
 			sb.append(roleId);
 		}
+
+		String roleName = getRoleName();
 
 		if (roleName != null) {
 			if (sb.length() > 1) {

@@ -27,6 +27,7 @@ import java.util.Iterator;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
+import java.util.function.Supplier;
 
 import javax.annotation.Generated;
 
@@ -55,38 +56,58 @@ public class FragmentLink implements Serializable {
 	@Schema
 	@Valid
 	public Object getHref() {
+		if (_hrefSupplier != null) {
+			href = _hrefSupplier.get();
+
+			_hrefSupplier = null;
+		}
+
 		return href;
 	}
 
 	public void setHref(Object href) {
 		this.href = href;
+
+		_hrefSupplier = null;
 	}
 
 	@JsonIgnore
 	public void setHref(UnsafeSupplier<Object, Exception> hrefUnsafeSupplier) {
-		try {
-			href = hrefUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_hrefSupplier = () -> {
+			try {
+				return hrefUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Object href;
 
+	private Supplier<Object> _hrefSupplier;
+
 	@Schema
 	@Valid
 	public Target getTarget() {
+		if (_targetSupplier != null) {
+			target = _targetSupplier.get();
+
+			_targetSupplier = null;
+		}
+
 		return target;
 	}
 
 	@JsonIgnore
 	public String getTargetAsString() {
+		Target target = getTarget();
+
 		if (target == null) {
 			return null;
 		}
@@ -96,26 +117,32 @@ public class FragmentLink implements Serializable {
 
 	public void setTarget(Target target) {
 		this.target = target;
+
+		_targetSupplier = null;
 	}
 
 	@JsonIgnore
 	public void setTarget(
 		UnsafeSupplier<Target, Exception> targetUnsafeSupplier) {
 
-		try {
-			target = targetUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_targetSupplier = () -> {
+			try {
+				return targetUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Target target;
+
+	private Supplier<Target> _targetSupplier;
 
 	@Override
 	public boolean equals(Object object) {
@@ -144,6 +171,8 @@ public class FragmentLink implements Serializable {
 
 		sb.append("{");
 
+		Object href = getHref();
+
 		if (href != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -163,6 +192,8 @@ public class FragmentLink implements Serializable {
 				sb.append(href);
 			}
 		}
+
+		Target target = getTarget();
 
 		if (target != null) {
 			if (sb.length() > 1) {

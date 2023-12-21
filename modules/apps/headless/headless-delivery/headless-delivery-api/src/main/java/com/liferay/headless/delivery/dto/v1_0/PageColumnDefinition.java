@@ -24,6 +24,7 @@ import java.util.Iterator;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
+import java.util.function.Supplier;
 
 import javax.annotation.Generated;
 
@@ -58,6 +59,12 @@ public class PageColumnDefinition implements Serializable {
 	)
 	@Valid
 	public ColumnViewportConfig getColumnViewportConfig() {
+		if (_columnViewportConfigSupplier != null) {
+			columnViewportConfig = _columnViewportConfigSupplier.get();
+
+			_columnViewportConfigSupplier = null;
+		}
+
 		return columnViewportConfig;
 	}
 
@@ -65,6 +72,8 @@ public class PageColumnDefinition implements Serializable {
 		ColumnViewportConfig columnViewportConfig) {
 
 		this.columnViewportConfig = columnViewportConfig;
+
+		_columnViewportConfigSupplier = null;
 	}
 
 	@JsonIgnore
@@ -72,15 +81,17 @@ public class PageColumnDefinition implements Serializable {
 		UnsafeSupplier<ColumnViewportConfig, Exception>
 			columnViewportConfigUnsafeSupplier) {
 
-		try {
-			columnViewportConfig = columnViewportConfigUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_columnViewportConfigSupplier = () -> {
+			try {
+				return columnViewportConfigUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@Deprecated
@@ -90,14 +101,24 @@ public class PageColumnDefinition implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected ColumnViewportConfig columnViewportConfig;
 
+	private Supplier<ColumnViewportConfig> _columnViewportConfigSupplier;
+
 	@Schema
 	@Valid
 	public ColumnViewport[] getColumnViewports() {
+		if (_columnViewportsSupplier != null) {
+			columnViewports = _columnViewportsSupplier.get();
+
+			_columnViewportsSupplier = null;
+		}
+
 		return columnViewports;
 	}
 
 	public void setColumnViewports(ColumnViewport[] columnViewports) {
 		this.columnViewports = columnViewports;
+
+		_columnViewportsSupplier = null;
 	}
 
 	@JsonIgnore
@@ -105,48 +126,64 @@ public class PageColumnDefinition implements Serializable {
 		UnsafeSupplier<ColumnViewport[], Exception>
 			columnViewportsUnsafeSupplier) {
 
-		try {
-			columnViewports = columnViewportsUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_columnViewportsSupplier = () -> {
+			try {
+				return columnViewportsUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected ColumnViewport[] columnViewports;
 
+	private Supplier<ColumnViewport[]> _columnViewportsSupplier;
+
 	@DecimalMax("12")
 	@DecimalMin("1")
 	@Schema
 	public Integer getSize() {
+		if (_sizeSupplier != null) {
+			size = _sizeSupplier.get();
+
+			_sizeSupplier = null;
+		}
+
 		return size;
 	}
 
 	public void setSize(Integer size) {
 		this.size = size;
+
+		_sizeSupplier = null;
 	}
 
 	@JsonIgnore
 	public void setSize(UnsafeSupplier<Integer, Exception> sizeUnsafeSupplier) {
-		try {
-			size = sizeUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_sizeSupplier = () -> {
+			try {
+				return sizeUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Integer size;
+
+	private Supplier<Integer> _sizeSupplier;
 
 	@Override
 	public boolean equals(Object object) {
@@ -176,6 +213,8 @@ public class PageColumnDefinition implements Serializable {
 
 		sb.append("{");
 
+		ColumnViewportConfig columnViewportConfig = getColumnViewportConfig();
+
 		if (columnViewportConfig != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -185,6 +224,8 @@ public class PageColumnDefinition implements Serializable {
 
 			sb.append(String.valueOf(columnViewportConfig));
 		}
+
+		ColumnViewport[] columnViewports = getColumnViewports();
 
 		if (columnViewports != null) {
 			if (sb.length() > 1) {
@@ -205,6 +246,8 @@ public class PageColumnDefinition implements Serializable {
 
 			sb.append("]");
 		}
+
+		Integer size = getSize();
 
 		if (size != null) {
 			if (sb.length() > 1) {

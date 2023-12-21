@@ -24,6 +24,7 @@ import java.util.Iterator;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
+import java.util.function.Supplier;
 
 import javax.annotation.Generated;
 
@@ -49,31 +50,43 @@ public class DataRecordIds implements Serializable {
 
 	@Schema
 	public Long[] getDataRecordIds() {
+		if (_dataRecordIdsSupplier != null) {
+			dataRecordIds = _dataRecordIdsSupplier.get();
+
+			_dataRecordIdsSupplier = null;
+		}
+
 		return dataRecordIds;
 	}
 
 	public void setDataRecordIds(Long[] dataRecordIds) {
 		this.dataRecordIds = dataRecordIds;
+
+		_dataRecordIdsSupplier = null;
 	}
 
 	@JsonIgnore
 	public void setDataRecordIds(
 		UnsafeSupplier<Long[], Exception> dataRecordIdsUnsafeSupplier) {
 
-		try {
-			dataRecordIds = dataRecordIdsUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_dataRecordIdsSupplier = () -> {
+			try {
+				return dataRecordIdsUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Long[] dataRecordIds;
+
+	private Supplier<Long[]> _dataRecordIdsSupplier;
 
 	@Override
 	public boolean equals(Object object) {
@@ -101,6 +114,8 @@ public class DataRecordIds implements Serializable {
 		StringBundler sb = new StringBundler();
 
 		sb.append("{");
+
+		Long[] dataRecordIds = getDataRecordIds();
 
 		if (dataRecordIds != null) {
 			if (sb.length() > 1) {

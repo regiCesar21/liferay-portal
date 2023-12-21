@@ -24,6 +24,7 @@ import java.util.Iterator;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
+import java.util.function.Supplier;
 
 import javax.annotation.Generated;
 
@@ -54,24 +55,34 @@ public class RowViewport implements Serializable {
 
 	@Schema
 	public String getId() {
+		if (_idSupplier != null) {
+			id = _idSupplier.get();
+
+			_idSupplier = null;
+		}
+
 		return id;
 	}
 
 	public void setId(String id) {
 		this.id = id;
+
+		_idSupplier = null;
 	}
 
 	@JsonIgnore
 	public void setId(UnsafeSupplier<String, Exception> idUnsafeSupplier) {
-		try {
-			id = idUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_idSupplier = () -> {
+			try {
+				return idUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField
@@ -79,9 +90,17 @@ public class RowViewport implements Serializable {
 	@NotEmpty
 	protected String id;
 
+	private Supplier<String> _idSupplier;
+
 	@Schema
 	@Valid
 	public RowViewportDefinition getRowViewportDefinition() {
+		if (_rowViewportDefinitionSupplier != null) {
+			rowViewportDefinition = _rowViewportDefinitionSupplier.get();
+
+			_rowViewportDefinitionSupplier = null;
+		}
+
 		return rowViewportDefinition;
 	}
 
@@ -89,6 +108,8 @@ public class RowViewport implements Serializable {
 		RowViewportDefinition rowViewportDefinition) {
 
 		this.rowViewportDefinition = rowViewportDefinition;
+
+		_rowViewportDefinitionSupplier = null;
 	}
 
 	@JsonIgnore
@@ -96,21 +117,25 @@ public class RowViewport implements Serializable {
 		UnsafeSupplier<RowViewportDefinition, Exception>
 			rowViewportDefinitionUnsafeSupplier) {
 
-		try {
-			rowViewportDefinition = rowViewportDefinitionUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_rowViewportDefinitionSupplier = () -> {
+			try {
+				return rowViewportDefinitionUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	@NotNull
 	protected RowViewportDefinition rowViewportDefinition;
+
+	private Supplier<RowViewportDefinition> _rowViewportDefinitionSupplier;
 
 	@Override
 	public boolean equals(Object object) {
@@ -139,6 +164,8 @@ public class RowViewport implements Serializable {
 
 		sb.append("{");
 
+		String id = getId();
+
 		if (id != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -152,6 +179,9 @@ public class RowViewport implements Serializable {
 
 			sb.append("\"");
 		}
+
+		RowViewportDefinition rowViewportDefinition =
+			getRowViewportDefinition();
 
 		if (rowViewportDefinition != null) {
 			if (sb.length() > 1) {

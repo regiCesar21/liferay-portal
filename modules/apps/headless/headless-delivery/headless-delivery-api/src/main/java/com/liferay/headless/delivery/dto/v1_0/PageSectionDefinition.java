@@ -24,6 +24,7 @@ import java.util.Iterator;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
+import java.util.function.Supplier;
 
 import javax.annotation.Generated;
 
@@ -52,26 +53,36 @@ public class PageSectionDefinition implements Serializable {
 
 	@Schema(deprecated = true)
 	public String getBackgroundColor() {
+		if (_backgroundColorSupplier != null) {
+			backgroundColor = _backgroundColorSupplier.get();
+
+			_backgroundColorSupplier = null;
+		}
+
 		return backgroundColor;
 	}
 
 	public void setBackgroundColor(String backgroundColor) {
 		this.backgroundColor = backgroundColor;
+
+		_backgroundColorSupplier = null;
 	}
 
 	@JsonIgnore
 	public void setBackgroundColor(
 		UnsafeSupplier<String, Exception> backgroundColorUnsafeSupplier) {
 
-		try {
-			backgroundColor = backgroundColorUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_backgroundColorSupplier = () -> {
+			try {
+				return backgroundColorUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@Deprecated
@@ -79,9 +90,17 @@ public class PageSectionDefinition implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String backgroundColor;
 
+	private Supplier<String> _backgroundColorSupplier;
+
 	@Schema
 	@Valid
 	public FragmentImage getBackgroundFragmentImage() {
+		if (_backgroundFragmentImageSupplier != null) {
+			backgroundFragmentImage = _backgroundFragmentImageSupplier.get();
+
+			_backgroundFragmentImageSupplier = null;
+		}
+
 		return backgroundFragmentImage;
 	}
 
@@ -89,6 +108,8 @@ public class PageSectionDefinition implements Serializable {
 		FragmentImage backgroundFragmentImage) {
 
 		this.backgroundFragmentImage = backgroundFragmentImage;
+
+		_backgroundFragmentImageSupplier = null;
 	}
 
 	@JsonIgnore
@@ -96,21 +117,24 @@ public class PageSectionDefinition implements Serializable {
 		UnsafeSupplier<FragmentImage, Exception>
 			backgroundFragmentImageUnsafeSupplier) {
 
-		try {
-			backgroundFragmentImage =
-				backgroundFragmentImageUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_backgroundFragmentImageSupplier = () -> {
+			try {
+				return backgroundFragmentImageUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected FragmentImage backgroundFragmentImage;
+
+	private Supplier<FragmentImage> _backgroundFragmentImageSupplier;
 
 	@Schema(
 		deprecated = true,
@@ -118,11 +142,19 @@ public class PageSectionDefinition implements Serializable {
 	)
 	@Valid
 	public BackgroundImage getBackgroundImage() {
+		if (_backgroundImageSupplier != null) {
+			backgroundImage = _backgroundImageSupplier.get();
+
+			_backgroundImageSupplier = null;
+		}
+
 		return backgroundImage;
 	}
 
 	public void setBackgroundImage(BackgroundImage backgroundImage) {
 		this.backgroundImage = backgroundImage;
+
+		_backgroundImageSupplier = null;
 	}
 
 	@JsonIgnore
@@ -130,15 +162,17 @@ public class PageSectionDefinition implements Serializable {
 		UnsafeSupplier<BackgroundImage, Exception>
 			backgroundImageUnsafeSupplier) {
 
-		try {
-			backgroundImage = backgroundImageUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_backgroundImageSupplier = () -> {
+			try {
+				return backgroundImageUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@Deprecated
@@ -148,72 +182,106 @@ public class PageSectionDefinition implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected BackgroundImage backgroundImage;
 
+	private Supplier<BackgroundImage> _backgroundImageSupplier;
+
 	@Schema
 	@Valid
 	public FragmentLink getFragmentLink() {
+		if (_fragmentLinkSupplier != null) {
+			fragmentLink = _fragmentLinkSupplier.get();
+
+			_fragmentLinkSupplier = null;
+		}
+
 		return fragmentLink;
 	}
 
 	public void setFragmentLink(FragmentLink fragmentLink) {
 		this.fragmentLink = fragmentLink;
+
+		_fragmentLinkSupplier = null;
 	}
 
 	@JsonIgnore
 	public void setFragmentLink(
 		UnsafeSupplier<FragmentLink, Exception> fragmentLinkUnsafeSupplier) {
 
-		try {
-			fragmentLink = fragmentLinkUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_fragmentLinkSupplier = () -> {
+			try {
+				return fragmentLinkUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected FragmentLink fragmentLink;
 
+	private Supplier<FragmentLink> _fragmentLinkSupplier;
+
 	@Schema
 	@Valid
 	public FragmentStyle getFragmentStyle() {
+		if (_fragmentStyleSupplier != null) {
+			fragmentStyle = _fragmentStyleSupplier.get();
+
+			_fragmentStyleSupplier = null;
+		}
+
 		return fragmentStyle;
 	}
 
 	public void setFragmentStyle(FragmentStyle fragmentStyle) {
 		this.fragmentStyle = fragmentStyle;
+
+		_fragmentStyleSupplier = null;
 	}
 
 	@JsonIgnore
 	public void setFragmentStyle(
 		UnsafeSupplier<FragmentStyle, Exception> fragmentStyleUnsafeSupplier) {
 
-		try {
-			fragmentStyle = fragmentStyleUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_fragmentStyleSupplier = () -> {
+			try {
+				return fragmentStyleUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected FragmentStyle fragmentStyle;
 
+	private Supplier<FragmentStyle> _fragmentStyleSupplier;
+
 	@Schema
 	@Valid
 	public FragmentViewport[] getFragmentViewports() {
+		if (_fragmentViewportsSupplier != null) {
+			fragmentViewports = _fragmentViewportsSupplier.get();
+
+			_fragmentViewportsSupplier = null;
+		}
+
 		return fragmentViewports;
 	}
 
 	public void setFragmentViewports(FragmentViewport[] fragmentViewports) {
 		this.fragmentViewports = fragmentViewports;
+
+		_fragmentViewportsSupplier = null;
 	}
 
 	@JsonIgnore
@@ -221,45 +289,59 @@ public class PageSectionDefinition implements Serializable {
 		UnsafeSupplier<FragmentViewport[], Exception>
 			fragmentViewportsUnsafeSupplier) {
 
-		try {
-			fragmentViewports = fragmentViewportsUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_fragmentViewportsSupplier = () -> {
+			try {
+				return fragmentViewportsUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected FragmentViewport[] fragmentViewports;
 
+	private Supplier<FragmentViewport[]> _fragmentViewportsSupplier;
+
 	@Schema(
 		description = "A flag that indicates whether the page section is indexed or not."
 	)
 	public Boolean getIndexed() {
+		if (_indexedSupplier != null) {
+			indexed = _indexedSupplier.get();
+
+			_indexedSupplier = null;
+		}
+
 		return indexed;
 	}
 
 	public void setIndexed(Boolean indexed) {
 		this.indexed = indexed;
+
+		_indexedSupplier = null;
 	}
 
 	@JsonIgnore
 	public void setIndexed(
 		UnsafeSupplier<Boolean, Exception> indexedUnsafeSupplier) {
 
-		try {
-			indexed = indexedUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_indexedSupplier = () -> {
+			try {
+				return indexedUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField(
@@ -268,34 +350,48 @@ public class PageSectionDefinition implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Boolean indexed;
 
+	private Supplier<Boolean> _indexedSupplier;
+
 	@Schema
 	@Valid
 	public Layout getLayout() {
+		if (_layoutSupplier != null) {
+			layout = _layoutSupplier.get();
+
+			_layoutSupplier = null;
+		}
+
 		return layout;
 	}
 
 	public void setLayout(Layout layout) {
 		this.layout = layout;
+
+		_layoutSupplier = null;
 	}
 
 	@JsonIgnore
 	public void setLayout(
 		UnsafeSupplier<Layout, Exception> layoutUnsafeSupplier) {
 
-		try {
-			layout = layoutUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_layoutSupplier = () -> {
+			try {
+				return layoutUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Layout layout;
+
+	private Supplier<Layout> _layoutSupplier;
 
 	@Override
 	public boolean equals(Object object) {
@@ -325,6 +421,8 @@ public class PageSectionDefinition implements Serializable {
 
 		sb.append("{");
 
+		String backgroundColor = getBackgroundColor();
+
 		if (backgroundColor != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -339,6 +437,8 @@ public class PageSectionDefinition implements Serializable {
 			sb.append("\"");
 		}
 
+		FragmentImage backgroundFragmentImage = getBackgroundFragmentImage();
+
 		if (backgroundFragmentImage != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -348,6 +448,8 @@ public class PageSectionDefinition implements Serializable {
 
 			sb.append(String.valueOf(backgroundFragmentImage));
 		}
+
+		BackgroundImage backgroundImage = getBackgroundImage();
 
 		if (backgroundImage != null) {
 			if (sb.length() > 1) {
@@ -359,6 +461,8 @@ public class PageSectionDefinition implements Serializable {
 			sb.append(String.valueOf(backgroundImage));
 		}
 
+		FragmentLink fragmentLink = getFragmentLink();
+
 		if (fragmentLink != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -369,6 +473,8 @@ public class PageSectionDefinition implements Serializable {
 			sb.append(String.valueOf(fragmentLink));
 		}
 
+		FragmentStyle fragmentStyle = getFragmentStyle();
+
 		if (fragmentStyle != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -378,6 +484,8 @@ public class PageSectionDefinition implements Serializable {
 
 			sb.append(String.valueOf(fragmentStyle));
 		}
+
+		FragmentViewport[] fragmentViewports = getFragmentViewports();
 
 		if (fragmentViewports != null) {
 			if (sb.length() > 1) {
@@ -399,6 +507,8 @@ public class PageSectionDefinition implements Serializable {
 			sb.append("]");
 		}
 
+		Boolean indexed = getIndexed();
+
 		if (indexed != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -408,6 +518,8 @@ public class PageSectionDefinition implements Serializable {
 
 			sb.append(indexed);
 		}
+
+		Layout layout = getLayout();
 
 		if (layout != null) {
 			if (sb.length() > 1) {

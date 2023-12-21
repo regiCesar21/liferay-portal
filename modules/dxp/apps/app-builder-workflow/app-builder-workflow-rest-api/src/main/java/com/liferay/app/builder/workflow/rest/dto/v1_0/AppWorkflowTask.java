@@ -24,6 +24,7 @@ import java.util.Iterator;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
+import java.util.function.Supplier;
 
 import javax.annotation.Generated;
 
@@ -52,6 +53,13 @@ public class AppWorkflowTask implements Serializable {
 	@Schema
 	@Valid
 	public AppWorkflowDataLayoutLink[] getAppWorkflowDataLayoutLinks() {
+		if (_appWorkflowDataLayoutLinksSupplier != null) {
+			appWorkflowDataLayoutLinks =
+				_appWorkflowDataLayoutLinksSupplier.get();
+
+			_appWorkflowDataLayoutLinksSupplier = null;
+		}
+
 		return appWorkflowDataLayoutLinks;
 	}
 
@@ -59,6 +67,8 @@ public class AppWorkflowTask implements Serializable {
 		AppWorkflowDataLayoutLink[] appWorkflowDataLayoutLinks) {
 
 		this.appWorkflowDataLayoutLinks = appWorkflowDataLayoutLinks;
+
+		_appWorkflowDataLayoutLinksSupplier = null;
 	}
 
 	@JsonIgnore
@@ -66,25 +76,36 @@ public class AppWorkflowTask implements Serializable {
 		UnsafeSupplier<AppWorkflowDataLayoutLink[], Exception>
 			appWorkflowDataLayoutLinksUnsafeSupplier) {
 
-		try {
-			appWorkflowDataLayoutLinks =
-				appWorkflowDataLayoutLinksUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_appWorkflowDataLayoutLinksSupplier = () -> {
+			try {
+				return appWorkflowDataLayoutLinksUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected AppWorkflowDataLayoutLink[] appWorkflowDataLayoutLinks;
 
+	private Supplier<AppWorkflowDataLayoutLink[]>
+		_appWorkflowDataLayoutLinksSupplier;
+
 	@Schema
 	@Valid
 	public AppWorkflowRoleAssignment[] getAppWorkflowRoleAssignments() {
+		if (_appWorkflowRoleAssignmentsSupplier != null) {
+			appWorkflowRoleAssignments =
+				_appWorkflowRoleAssignmentsSupplier.get();
+
+			_appWorkflowRoleAssignmentsSupplier = null;
+		}
+
 		return appWorkflowRoleAssignments;
 	}
 
@@ -92,6 +113,8 @@ public class AppWorkflowTask implements Serializable {
 		AppWorkflowRoleAssignment[] appWorkflowRoleAssignments) {
 
 		this.appWorkflowRoleAssignments = appWorkflowRoleAssignments;
+
+		_appWorkflowRoleAssignmentsSupplier = null;
 	}
 
 	@JsonIgnore
@@ -99,25 +122,35 @@ public class AppWorkflowTask implements Serializable {
 		UnsafeSupplier<AppWorkflowRoleAssignment[], Exception>
 			appWorkflowRoleAssignmentsUnsafeSupplier) {
 
-		try {
-			appWorkflowRoleAssignments =
-				appWorkflowRoleAssignmentsUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_appWorkflowRoleAssignmentsSupplier = () -> {
+			try {
+				return appWorkflowRoleAssignmentsUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected AppWorkflowRoleAssignment[] appWorkflowRoleAssignments;
 
+	private Supplier<AppWorkflowRoleAssignment[]>
+		_appWorkflowRoleAssignmentsSupplier;
+
 	@Schema
 	@Valid
 	public AppWorkflowTransition[] getAppWorkflowTransitions() {
+		if (_appWorkflowTransitionsSupplier != null) {
+			appWorkflowTransitions = _appWorkflowTransitionsSupplier.get();
+
+			_appWorkflowTransitionsSupplier = null;
+		}
+
 		return appWorkflowTransitions;
 	}
 
@@ -125,6 +158,8 @@ public class AppWorkflowTask implements Serializable {
 		AppWorkflowTransition[] appWorkflowTransitions) {
 
 		this.appWorkflowTransitions = appWorkflowTransitions;
+
+		_appWorkflowTransitionsSupplier = null;
 	}
 
 	@JsonIgnore
@@ -132,46 +167,62 @@ public class AppWorkflowTask implements Serializable {
 		UnsafeSupplier<AppWorkflowTransition[], Exception>
 			appWorkflowTransitionsUnsafeSupplier) {
 
-		try {
-			appWorkflowTransitions = appWorkflowTransitionsUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_appWorkflowTransitionsSupplier = () -> {
+			try {
+				return appWorkflowTransitionsUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected AppWorkflowTransition[] appWorkflowTransitions;
 
+	private Supplier<AppWorkflowTransition[]> _appWorkflowTransitionsSupplier;
+
 	@Schema
 	public String getName() {
+		if (_nameSupplier != null) {
+			name = _nameSupplier.get();
+
+			_nameSupplier = null;
+		}
+
 		return name;
 	}
 
 	public void setName(String name) {
 		this.name = name;
+
+		_nameSupplier = null;
 	}
 
 	@JsonIgnore
 	public void setName(UnsafeSupplier<String, Exception> nameUnsafeSupplier) {
-		try {
-			name = nameUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_nameSupplier = () -> {
+			try {
+				return nameUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String name;
+
+	private Supplier<String> _nameSupplier;
 
 	@Override
 	public boolean equals(Object object) {
@@ -200,6 +251,9 @@ public class AppWorkflowTask implements Serializable {
 
 		sb.append("{");
 
+		AppWorkflowDataLayoutLink[] appWorkflowDataLayoutLinks =
+			getAppWorkflowDataLayoutLinks();
+
 		if (appWorkflowDataLayoutLinks != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -219,6 +273,9 @@ public class AppWorkflowTask implements Serializable {
 
 			sb.append("]");
 		}
+
+		AppWorkflowRoleAssignment[] appWorkflowRoleAssignments =
+			getAppWorkflowRoleAssignments();
 
 		if (appWorkflowRoleAssignments != null) {
 			if (sb.length() > 1) {
@@ -240,6 +297,9 @@ public class AppWorkflowTask implements Serializable {
 			sb.append("]");
 		}
 
+		AppWorkflowTransition[] appWorkflowTransitions =
+			getAppWorkflowTransitions();
+
 		if (appWorkflowTransitions != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -259,6 +319,8 @@ public class AppWorkflowTask implements Serializable {
 
 			sb.append("]");
 		}
+
+		String name = getName();
 
 		if (name != null) {
 			if (sb.length() > 1) {

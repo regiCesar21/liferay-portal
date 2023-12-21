@@ -25,6 +25,7 @@ import java.util.Iterator;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
+import java.util.function.Supplier;
 
 import javax.annotation.Generated;
 
@@ -54,31 +55,43 @@ public class PageDropZoneDefinition implements Serializable {
 	@Schema
 	@Valid
 	public Object getFragmentSettings() {
+		if (_fragmentSettingsSupplier != null) {
+			fragmentSettings = _fragmentSettingsSupplier.get();
+
+			_fragmentSettingsSupplier = null;
+		}
+
 		return fragmentSettings;
 	}
 
 	public void setFragmentSettings(Object fragmentSettings) {
 		this.fragmentSettings = fragmentSettings;
+
+		_fragmentSettingsSupplier = null;
 	}
 
 	@JsonIgnore
 	public void setFragmentSettings(
 		UnsafeSupplier<Object, Exception> fragmentSettingsUnsafeSupplier) {
 
-		try {
-			fragmentSettings = fragmentSettingsUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_fragmentSettingsSupplier = () -> {
+			try {
+				return fragmentSettingsUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Object fragmentSettings;
+
+	private Supplier<Object> _fragmentSettingsSupplier;
 
 	@Override
 	public boolean equals(Object object) {
@@ -107,6 +120,8 @@ public class PageDropZoneDefinition implements Serializable {
 		StringBundler sb = new StringBundler();
 
 		sb.append("{");
+
+		Object fragmentSettings = getFragmentSettings();
 
 		if (fragmentSettings != null) {
 			if (sb.length() > 1) {

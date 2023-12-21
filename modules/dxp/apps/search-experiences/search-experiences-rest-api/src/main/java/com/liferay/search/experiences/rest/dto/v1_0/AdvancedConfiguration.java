@@ -24,6 +24,7 @@ import java.util.Iterator;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
+import java.util.function.Supplier;
 
 import javax.annotation.Generated;
 
@@ -53,31 +54,43 @@ public class AdvancedConfiguration implements Serializable {
 	@Schema
 	@Valid
 	public Source getSource() {
+		if (_sourceSupplier != null) {
+			source = _sourceSupplier.get();
+
+			_sourceSupplier = null;
+		}
+
 		return source;
 	}
 
 	public void setSource(Source source) {
 		this.source = source;
+
+		_sourceSupplier = null;
 	}
 
 	@JsonIgnore
 	public void setSource(
 		UnsafeSupplier<Source, Exception> sourceUnsafeSupplier) {
 
-		try {
-			source = sourceUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_sourceSupplier = () -> {
+			try {
+				return sourceUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Source source;
+
+	private Supplier<Source> _sourceSupplier;
 
 	@Override
 	public boolean equals(Object object) {
@@ -106,6 +119,8 @@ public class AdvancedConfiguration implements Serializable {
 		StringBundler sb = new StringBundler();
 
 		sb.append("{");
+
+		Source source = getSource();
 
 		if (source != null) {
 			if (sb.length() > 1) {

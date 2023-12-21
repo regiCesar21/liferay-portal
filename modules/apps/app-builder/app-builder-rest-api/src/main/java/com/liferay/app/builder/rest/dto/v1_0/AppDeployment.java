@@ -24,6 +24,7 @@ import java.util.Iterator;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
+import java.util.function.Supplier;
 
 import javax.annotation.Generated;
 
@@ -52,57 +53,81 @@ public class AppDeployment implements Serializable {
 	@Schema
 	@Valid
 	public Map<String, Object> getSettings() {
+		if (_settingsSupplier != null) {
+			settings = _settingsSupplier.get();
+
+			_settingsSupplier = null;
+		}
+
 		return settings;
 	}
 
 	public void setSettings(Map<String, Object> settings) {
 		this.settings = settings;
+
+		_settingsSupplier = null;
 	}
 
 	@JsonIgnore
 	public void setSettings(
 		UnsafeSupplier<Map<String, Object>, Exception> settingsUnsafeSupplier) {
 
-		try {
-			settings = settingsUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_settingsSupplier = () -> {
+			try {
+				return settingsUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Map<String, Object> settings;
 
+	private Supplier<Map<String, Object>> _settingsSupplier;
+
 	@Schema
 	public String getType() {
+		if (_typeSupplier != null) {
+			type = _typeSupplier.get();
+
+			_typeSupplier = null;
+		}
+
 		return type;
 	}
 
 	public void setType(String type) {
 		this.type = type;
+
+		_typeSupplier = null;
 	}
 
 	@JsonIgnore
 	public void setType(UnsafeSupplier<String, Exception> typeUnsafeSupplier) {
-		try {
-			type = typeUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_typeSupplier = () -> {
+			try {
+				return typeUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String type;
+
+	private Supplier<String> _typeSupplier;
 
 	@Override
 	public boolean equals(Object object) {
@@ -131,6 +156,8 @@ public class AppDeployment implements Serializable {
 
 		sb.append("{");
 
+		Map<String, Object> settings = getSettings();
+
 		if (settings != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -140,6 +167,8 @@ public class AppDeployment implements Serializable {
 
 			sb.append(_toJSON(settings));
 		}
+
+		String type = getType();
 
 		if (type != null) {
 			if (sb.length() > 1) {

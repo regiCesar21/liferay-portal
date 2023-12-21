@@ -24,6 +24,7 @@ import java.util.Iterator;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
+import java.util.function.Supplier;
 
 import javax.annotation.Generated;
 
@@ -49,31 +50,43 @@ public class ContentSubtype implements Serializable {
 
 	@Schema
 	public Long getSubtypeId() {
+		if (_subtypeIdSupplier != null) {
+			subtypeId = _subtypeIdSupplier.get();
+
+			_subtypeIdSupplier = null;
+		}
+
 		return subtypeId;
 	}
 
 	public void setSubtypeId(Long subtypeId) {
 		this.subtypeId = subtypeId;
+
+		_subtypeIdSupplier = null;
 	}
 
 	@JsonIgnore
 	public void setSubtypeId(
 		UnsafeSupplier<Long, Exception> subtypeIdUnsafeSupplier) {
 
-		try {
-			subtypeId = subtypeIdUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_subtypeIdSupplier = () -> {
+			try {
+				return subtypeIdUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Long subtypeId;
+
+	private Supplier<Long> _subtypeIdSupplier;
 
 	@Override
 	public boolean equals(Object object) {
@@ -101,6 +114,8 @@ public class ContentSubtype implements Serializable {
 		StringBundler sb = new StringBundler();
 
 		sb.append("{");
+
+		Long subtypeId = getSubtypeId();
 
 		if (subtypeId != null) {
 			if (sb.length() > 1) {

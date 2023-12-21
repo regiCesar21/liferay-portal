@@ -30,6 +30,7 @@ import java.util.Iterator;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
+import java.util.function.Supplier;
 
 import javax.annotation.Generated;
 
@@ -63,11 +64,19 @@ public class WikiPage implements Serializable {
 	@Schema
 	@Valid
 	public Map<String, Map<String, String>> getActions() {
+		if (_actionsSupplier != null) {
+			actions = _actionsSupplier.get();
+
+			_actionsSupplier = null;
+		}
+
 		return actions;
 	}
 
 	public void setActions(Map<String, Map<String, String>> actions) {
 		this.actions = actions;
+
+		_actionsSupplier = null;
 	}
 
 	@JsonIgnore
@@ -75,29 +84,41 @@ public class WikiPage implements Serializable {
 		UnsafeSupplier<Map<String, Map<String, String>>, Exception>
 			actionsUnsafeSupplier) {
 
-		try {
-			actions = actionsUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_actionsSupplier = () -> {
+			try {
+				return actionsUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Map<String, Map<String, String>> actions;
 
+	private Supplier<Map<String, Map<String, String>>> _actionsSupplier;
+
 	@Schema(description = "The blog post's average rating.")
 	@Valid
 	public AggregateRating getAggregateRating() {
+		if (_aggregateRatingSupplier != null) {
+			aggregateRating = _aggregateRatingSupplier.get();
+
+			_aggregateRatingSupplier = null;
+		}
+
 		return aggregateRating;
 	}
 
 	public void setAggregateRating(AggregateRating aggregateRating) {
 		this.aggregateRating = aggregateRating;
+
+		_aggregateRatingSupplier = null;
 	}
 
 	@JsonIgnore
@@ -105,159 +126,221 @@ public class WikiPage implements Serializable {
 		UnsafeSupplier<AggregateRating, Exception>
 			aggregateRatingUnsafeSupplier) {
 
-		try {
-			aggregateRating = aggregateRatingUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_aggregateRatingSupplier = () -> {
+			try {
+				return aggregateRatingUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField(description = "The blog post's average rating.")
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected AggregateRating aggregateRating;
 
+	private Supplier<AggregateRating> _aggregateRatingSupplier;
+
 	@Schema(description = "The wiki page's content.")
 	public String getContent() {
+		if (_contentSupplier != null) {
+			content = _contentSupplier.get();
+
+			_contentSupplier = null;
+		}
+
 		return content;
 	}
 
 	public void setContent(String content) {
 		this.content = content;
+
+		_contentSupplier = null;
 	}
 
 	@JsonIgnore
 	public void setContent(
 		UnsafeSupplier<String, Exception> contentUnsafeSupplier) {
 
-		try {
-			content = contentUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_contentSupplier = () -> {
+			try {
+				return contentUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField(description = "The wiki page's content.")
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String content;
 
+	private Supplier<String> _contentSupplier;
+
 	@Schema(description = "The wiki page's creator.")
 	@Valid
 	public Creator getCreator() {
+		if (_creatorSupplier != null) {
+			creator = _creatorSupplier.get();
+
+			_creatorSupplier = null;
+		}
+
 		return creator;
 	}
 
 	public void setCreator(Creator creator) {
 		this.creator = creator;
+
+		_creatorSupplier = null;
 	}
 
 	@JsonIgnore
 	public void setCreator(
 		UnsafeSupplier<Creator, Exception> creatorUnsafeSupplier) {
 
-		try {
-			creator = creatorUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_creatorSupplier = () -> {
+			try {
+				return creatorUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField(description = "The wiki page's creator.")
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Creator creator;
 
+	private Supplier<Creator> _creatorSupplier;
+
 	@Schema
 	@Valid
 	public CustomField[] getCustomFields() {
+		if (_customFieldsSupplier != null) {
+			customFields = _customFieldsSupplier.get();
+
+			_customFieldsSupplier = null;
+		}
+
 		return customFields;
 	}
 
 	public void setCustomFields(CustomField[] customFields) {
 		this.customFields = customFields;
+
+		_customFieldsSupplier = null;
 	}
 
 	@JsonIgnore
 	public void setCustomFields(
 		UnsafeSupplier<CustomField[], Exception> customFieldsUnsafeSupplier) {
 
-		try {
-			customFields = customFieldsUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_customFieldsSupplier = () -> {
+			try {
+				return customFieldsUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected CustomField[] customFields;
 
+	private Supplier<CustomField[]> _customFieldsSupplier;
+
 	@Schema(description = "The date the wiki page was created.")
 	public Date getDateCreated() {
+		if (_dateCreatedSupplier != null) {
+			dateCreated = _dateCreatedSupplier.get();
+
+			_dateCreatedSupplier = null;
+		}
+
 		return dateCreated;
 	}
 
 	public void setDateCreated(Date dateCreated) {
 		this.dateCreated = dateCreated;
+
+		_dateCreatedSupplier = null;
 	}
 
 	@JsonIgnore
 	public void setDateCreated(
 		UnsafeSupplier<Date, Exception> dateCreatedUnsafeSupplier) {
 
-		try {
-			dateCreated = dateCreatedUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_dateCreatedSupplier = () -> {
+			try {
+				return dateCreatedUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField(description = "The date the wiki page was created.")
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Date dateCreated;
 
+	private Supplier<Date> _dateCreatedSupplier;
+
 	@Schema(
 		description = "The last time any of the wiki page's fields changed."
 	)
 	public Date getDateModified() {
+		if (_dateModifiedSupplier != null) {
+			dateModified = _dateModifiedSupplier.get();
+
+			_dateModifiedSupplier = null;
+		}
+
 		return dateModified;
 	}
 
 	public void setDateModified(Date dateModified) {
 		this.dateModified = dateModified;
+
+		_dateModifiedSupplier = null;
 	}
 
 	@JsonIgnore
 	public void setDateModified(
 		UnsafeSupplier<Date, Exception> dateModifiedUnsafeSupplier) {
 
-		try {
-			dateModified = dateModifiedUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_dateModifiedSupplier = () -> {
+			try {
+				return dateModifiedUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField(
@@ -266,58 +349,82 @@ public class WikiPage implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Date dateModified;
 
+	private Supplier<Date> _dateModifiedSupplier;
+
 	@Schema(description = "The wiki page's description.")
 	public String getDescription() {
+		if (_descriptionSupplier != null) {
+			description = _descriptionSupplier.get();
+
+			_descriptionSupplier = null;
+		}
+
 		return description;
 	}
 
 	public void setDescription(String description) {
 		this.description = description;
+
+		_descriptionSupplier = null;
 	}
 
 	@JsonIgnore
 	public void setDescription(
 		UnsafeSupplier<String, Exception> descriptionUnsafeSupplier) {
 
-		try {
-			description = descriptionUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_descriptionSupplier = () -> {
+			try {
+				return descriptionUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField(description = "The wiki page's description.")
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String description;
 
+	private Supplier<String> _descriptionSupplier;
+
 	@Schema(
 		description = "The wiki page's media format (e.g., HTML, BBCode, etc.)."
 	)
 	public String getEncodingFormat() {
+		if (_encodingFormatSupplier != null) {
+			encodingFormat = _encodingFormatSupplier.get();
+
+			_encodingFormatSupplier = null;
+		}
+
 		return encodingFormat;
 	}
 
 	public void setEncodingFormat(String encodingFormat) {
 		this.encodingFormat = encodingFormat;
+
+		_encodingFormatSupplier = null;
 	}
 
 	@JsonIgnore
 	public void setEncodingFormat(
 		UnsafeSupplier<String, Exception> encodingFormatUnsafeSupplier) {
 
-		try {
-			encodingFormat = encodingFormatUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_encodingFormatSupplier = () -> {
+			try {
+				return encodingFormatUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField(
@@ -327,28 +434,40 @@ public class WikiPage implements Serializable {
 	@NotEmpty
 	protected String encodingFormat;
 
+	private Supplier<String> _encodingFormatSupplier;
+
 	@Schema(description = "The wiki page's main title.")
 	public String getHeadline() {
+		if (_headlineSupplier != null) {
+			headline = _headlineSupplier.get();
+
+			_headlineSupplier = null;
+		}
+
 		return headline;
 	}
 
 	public void setHeadline(String headline) {
 		this.headline = headline;
+
+		_headlineSupplier = null;
 	}
 
 	@JsonIgnore
 	public void setHeadline(
 		UnsafeSupplier<String, Exception> headlineUnsafeSupplier) {
 
-		try {
-			headline = headlineUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_headlineSupplier = () -> {
+			try {
+				return headlineUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField(description = "The wiki page's main title.")
@@ -356,110 +475,158 @@ public class WikiPage implements Serializable {
 	@NotEmpty
 	protected String headline;
 
+	private Supplier<String> _headlineSupplier;
+
 	@Schema(description = "The wiki page's ID.")
 	public Long getId() {
+		if (_idSupplier != null) {
+			id = _idSupplier.get();
+
+			_idSupplier = null;
+		}
+
 		return id;
 	}
 
 	public void setId(Long id) {
 		this.id = id;
+
+		_idSupplier = null;
 	}
 
 	@JsonIgnore
 	public void setId(UnsafeSupplier<Long, Exception> idUnsafeSupplier) {
-		try {
-			id = idUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_idSupplier = () -> {
+			try {
+				return idUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField(description = "The wiki page's ID.")
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Long id;
 
+	private Supplier<Long> _idSupplier;
+
 	@Schema(description = "A list of keywords describing the blog post.")
 	public String[] getKeywords() {
+		if (_keywordsSupplier != null) {
+			keywords = _keywordsSupplier.get();
+
+			_keywordsSupplier = null;
+		}
+
 		return keywords;
 	}
 
 	public void setKeywords(String[] keywords) {
 		this.keywords = keywords;
+
+		_keywordsSupplier = null;
 	}
 
 	@JsonIgnore
 	public void setKeywords(
 		UnsafeSupplier<String[], Exception> keywordsUnsafeSupplier) {
 
-		try {
-			keywords = keywordsUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_keywordsSupplier = () -> {
+			try {
+				return keywordsUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField(description = "A list of keywords describing the blog post.")
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String[] keywords;
 
+	private Supplier<String[]> _keywordsSupplier;
+
 	@Schema(description = "The wiki page's number attachments.")
 	public Integer getNumberOfAttachments() {
+		if (_numberOfAttachmentsSupplier != null) {
+			numberOfAttachments = _numberOfAttachmentsSupplier.get();
+
+			_numberOfAttachmentsSupplier = null;
+		}
+
 		return numberOfAttachments;
 	}
 
 	public void setNumberOfAttachments(Integer numberOfAttachments) {
 		this.numberOfAttachments = numberOfAttachments;
+
+		_numberOfAttachmentsSupplier = null;
 	}
 
 	@JsonIgnore
 	public void setNumberOfAttachments(
 		UnsafeSupplier<Integer, Exception> numberOfAttachmentsUnsafeSupplier) {
 
-		try {
-			numberOfAttachments = numberOfAttachmentsUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_numberOfAttachmentsSupplier = () -> {
+			try {
+				return numberOfAttachmentsUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField(description = "The wiki page's number attachments.")
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Integer numberOfAttachments;
 
+	private Supplier<Integer> _numberOfAttachmentsSupplier;
+
 	@Schema(description = "The number of child wiki page on this wiki page.")
 	public Integer getNumberOfWikiPages() {
+		if (_numberOfWikiPagesSupplier != null) {
+			numberOfWikiPages = _numberOfWikiPagesSupplier.get();
+
+			_numberOfWikiPagesSupplier = null;
+		}
+
 		return numberOfWikiPages;
 	}
 
 	public void setNumberOfWikiPages(Integer numberOfWikiPages) {
 		this.numberOfWikiPages = numberOfWikiPages;
+
+		_numberOfWikiPagesSupplier = null;
 	}
 
 	@JsonIgnore
 	public void setNumberOfWikiPages(
 		UnsafeSupplier<Integer, Exception> numberOfWikiPagesUnsafeSupplier) {
 
-		try {
-			numberOfWikiPages = numberOfWikiPagesUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_numberOfWikiPagesSupplier = () -> {
+			try {
+				return numberOfWikiPagesUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField(
@@ -468,42 +635,64 @@ public class WikiPage implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Integer numberOfWikiPages;
 
+	private Supplier<Integer> _numberOfWikiPagesSupplier;
+
 	@Schema
 	public Long getParentWikiPageId() {
+		if (_parentWikiPageIdSupplier != null) {
+			parentWikiPageId = _parentWikiPageIdSupplier.get();
+
+			_parentWikiPageIdSupplier = null;
+		}
+
 		return parentWikiPageId;
 	}
 
 	public void setParentWikiPageId(Long parentWikiPageId) {
 		this.parentWikiPageId = parentWikiPageId;
+
+		_parentWikiPageIdSupplier = null;
 	}
 
 	@JsonIgnore
 	public void setParentWikiPageId(
 		UnsafeSupplier<Long, Exception> parentWikiPageIdUnsafeSupplier) {
 
-		try {
-			parentWikiPageId = parentWikiPageIdUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_parentWikiPageIdSupplier = () -> {
+			try {
+				return parentWikiPageIdUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Long parentWikiPageId;
 
+	private Supplier<Long> _parentWikiPageIdSupplier;
+
 	@Schema
 	@Valid
 	public RelatedContent[] getRelatedContents() {
+		if (_relatedContentsSupplier != null) {
+			relatedContents = _relatedContentsSupplier.get();
+
+			_relatedContentsSupplier = null;
+		}
+
 		return relatedContents;
 	}
 
 	public void setRelatedContents(RelatedContent[] relatedContents) {
 		this.relatedContents = relatedContents;
+
+		_relatedContentsSupplier = null;
 	}
 
 	@JsonIgnore
@@ -511,45 +700,59 @@ public class WikiPage implements Serializable {
 		UnsafeSupplier<RelatedContent[], Exception>
 			relatedContentsUnsafeSupplier) {
 
-		try {
-			relatedContents = relatedContentsUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_relatedContentsSupplier = () -> {
+			try {
+				return relatedContentsUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected RelatedContent[] relatedContents;
 
+	private Supplier<RelatedContent[]> _relatedContentsSupplier;
+
 	@Schema(
 		description = "The ID of the site to which this wiki page is scoped."
 	)
 	public Long getSiteId() {
+		if (_siteIdSupplier != null) {
+			siteId = _siteIdSupplier.get();
+
+			_siteIdSupplier = null;
+		}
+
 		return siteId;
 	}
 
 	public void setSiteId(Long siteId) {
 		this.siteId = siteId;
+
+		_siteIdSupplier = null;
 	}
 
 	@JsonIgnore
 	public void setSiteId(
 		UnsafeSupplier<Long, Exception> siteIdUnsafeSupplier) {
 
-		try {
-			siteId = siteIdUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_siteIdSupplier = () -> {
+			try {
+				return siteIdUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField(
@@ -558,37 +761,57 @@ public class WikiPage implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Long siteId;
 
+	private Supplier<Long> _siteIdSupplier;
+
 	@Schema
 	public Boolean getSubscribed() {
+		if (_subscribedSupplier != null) {
+			subscribed = _subscribedSupplier.get();
+
+			_subscribedSupplier = null;
+		}
+
 		return subscribed;
 	}
 
 	public void setSubscribed(Boolean subscribed) {
 		this.subscribed = subscribed;
+
+		_subscribedSupplier = null;
 	}
 
 	@JsonIgnore
 	public void setSubscribed(
 		UnsafeSupplier<Boolean, Exception> subscribedUnsafeSupplier) {
 
-		try {
-			subscribed = subscribedUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_subscribedSupplier = () -> {
+			try {
+				return subscribedUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Boolean subscribed;
 
+	private Supplier<Boolean> _subscribedSupplier;
+
 	@Schema(description = "The categories associated with this blog post.")
 	@Valid
 	public TaxonomyCategoryBrief[] getTaxonomyCategoryBriefs() {
+		if (_taxonomyCategoryBriefsSupplier != null) {
+			taxonomyCategoryBriefs = _taxonomyCategoryBriefsSupplier.get();
+
+			_taxonomyCategoryBriefsSupplier = null;
+		}
+
 		return taxonomyCategoryBriefs;
 	}
 
@@ -596,6 +819,8 @@ public class WikiPage implements Serializable {
 		TaxonomyCategoryBrief[] taxonomyCategoryBriefs) {
 
 		this.taxonomyCategoryBriefs = taxonomyCategoryBriefs;
+
+		_taxonomyCategoryBriefsSupplier = null;
 	}
 
 	@JsonIgnore
@@ -603,15 +828,17 @@ public class WikiPage implements Serializable {
 		UnsafeSupplier<TaxonomyCategoryBrief[], Exception>
 			taxonomyCategoryBriefsUnsafeSupplier) {
 
-		try {
-			taxonomyCategoryBriefs = taxonomyCategoryBriefsUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_taxonomyCategoryBriefsSupplier = () -> {
+			try {
+				return taxonomyCategoryBriefsUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField(
@@ -620,30 +847,42 @@ public class WikiPage implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected TaxonomyCategoryBrief[] taxonomyCategoryBriefs;
 
+	private Supplier<TaxonomyCategoryBrief[]> _taxonomyCategoryBriefsSupplier;
+
 	@Schema(
 		description = "A write-only field that adds a `TaxonomyCategory` to this resource."
 	)
 	public Long[] getTaxonomyCategoryIds() {
+		if (_taxonomyCategoryIdsSupplier != null) {
+			taxonomyCategoryIds = _taxonomyCategoryIdsSupplier.get();
+
+			_taxonomyCategoryIdsSupplier = null;
+		}
+
 		return taxonomyCategoryIds;
 	}
 
 	public void setTaxonomyCategoryIds(Long[] taxonomyCategoryIds) {
 		this.taxonomyCategoryIds = taxonomyCategoryIds;
+
+		_taxonomyCategoryIdsSupplier = null;
 	}
 
 	@JsonIgnore
 	public void setTaxonomyCategoryIds(
 		UnsafeSupplier<Long[], Exception> taxonomyCategoryIdsUnsafeSupplier) {
 
-		try {
-			taxonomyCategoryIds = taxonomyCategoryIdsUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_taxonomyCategoryIdsSupplier = () -> {
+			try {
+				return taxonomyCategoryIdsUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField(
@@ -652,16 +891,26 @@ public class WikiPage implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
 	protected Long[] taxonomyCategoryIds;
 
+	private Supplier<Long[]> _taxonomyCategoryIdsSupplier;
+
 	@Schema(
 		description = "A write-only property that specifies the default permissions."
 	)
 	@Valid
 	public ViewableBy getViewableBy() {
+		if (_viewableBySupplier != null) {
+			viewableBy = _viewableBySupplier.get();
+
+			_viewableBySupplier = null;
+		}
+
 		return viewableBy;
 	}
 
 	@JsonIgnore
 	public String getViewableByAsString() {
+		ViewableBy viewableBy = getViewableBy();
+
 		if (viewableBy == null) {
 			return null;
 		}
@@ -671,21 +920,25 @@ public class WikiPage implements Serializable {
 
 	public void setViewableBy(ViewableBy viewableBy) {
 		this.viewableBy = viewableBy;
+
+		_viewableBySupplier = null;
 	}
 
 	@JsonIgnore
 	public void setViewableBy(
 		UnsafeSupplier<ViewableBy, Exception> viewableByUnsafeSupplier) {
 
-		try {
-			viewableBy = viewableByUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_viewableBySupplier = () -> {
+			try {
+				return viewableByUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField(
@@ -693,6 +946,8 @@ public class WikiPage implements Serializable {
 	)
 	@JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
 	protected ViewableBy viewableBy;
+
+	private Supplier<ViewableBy> _viewableBySupplier;
 
 	@Override
 	public boolean equals(Object object) {
@@ -724,6 +979,8 @@ public class WikiPage implements Serializable {
 		DateFormat liferayToJSONDateFormat = new SimpleDateFormat(
 			"yyyy-MM-dd'T'HH:mm:ss'Z'");
 
+		Map<String, Map<String, String>> actions = getActions();
+
 		if (actions != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -734,6 +991,8 @@ public class WikiPage implements Serializable {
 			sb.append(_toJSON(actions));
 		}
 
+		AggregateRating aggregateRating = getAggregateRating();
+
 		if (aggregateRating != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -743,6 +1002,8 @@ public class WikiPage implements Serializable {
 
 			sb.append(String.valueOf(aggregateRating));
 		}
+
+		String content = getContent();
 
 		if (content != null) {
 			if (sb.length() > 1) {
@@ -758,6 +1019,8 @@ public class WikiPage implements Serializable {
 			sb.append("\"");
 		}
 
+		Creator creator = getCreator();
+
 		if (creator != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -767,6 +1030,8 @@ public class WikiPage implements Serializable {
 
 			sb.append(String.valueOf(creator));
 		}
+
+		CustomField[] customFields = getCustomFields();
 
 		if (customFields != null) {
 			if (sb.length() > 1) {
@@ -788,6 +1053,8 @@ public class WikiPage implements Serializable {
 			sb.append("]");
 		}
 
+		Date dateCreated = getDateCreated();
+
 		if (dateCreated != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -801,6 +1068,8 @@ public class WikiPage implements Serializable {
 
 			sb.append("\"");
 		}
+
+		Date dateModified = getDateModified();
 
 		if (dateModified != null) {
 			if (sb.length() > 1) {
@@ -816,6 +1085,8 @@ public class WikiPage implements Serializable {
 			sb.append("\"");
 		}
 
+		String description = getDescription();
+
 		if (description != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -829,6 +1100,8 @@ public class WikiPage implements Serializable {
 
 			sb.append("\"");
 		}
+
+		String encodingFormat = getEncodingFormat();
 
 		if (encodingFormat != null) {
 			if (sb.length() > 1) {
@@ -844,6 +1117,8 @@ public class WikiPage implements Serializable {
 			sb.append("\"");
 		}
 
+		String headline = getHeadline();
+
 		if (headline != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -858,6 +1133,8 @@ public class WikiPage implements Serializable {
 			sb.append("\"");
 		}
 
+		Long id = getId();
+
 		if (id != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -867,6 +1144,8 @@ public class WikiPage implements Serializable {
 
 			sb.append(id);
 		}
+
+		String[] keywords = getKeywords();
 
 		if (keywords != null) {
 			if (sb.length() > 1) {
@@ -892,6 +1171,8 @@ public class WikiPage implements Serializable {
 			sb.append("]");
 		}
 
+		Integer numberOfAttachments = getNumberOfAttachments();
+
 		if (numberOfAttachments != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -901,6 +1182,8 @@ public class WikiPage implements Serializable {
 
 			sb.append(numberOfAttachments);
 		}
+
+		Integer numberOfWikiPages = getNumberOfWikiPages();
 
 		if (numberOfWikiPages != null) {
 			if (sb.length() > 1) {
@@ -912,6 +1195,8 @@ public class WikiPage implements Serializable {
 			sb.append(numberOfWikiPages);
 		}
 
+		Long parentWikiPageId = getParentWikiPageId();
+
 		if (parentWikiPageId != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -921,6 +1206,8 @@ public class WikiPage implements Serializable {
 
 			sb.append(parentWikiPageId);
 		}
+
+		RelatedContent[] relatedContents = getRelatedContents();
 
 		if (relatedContents != null) {
 			if (sb.length() > 1) {
@@ -942,6 +1229,8 @@ public class WikiPage implements Serializable {
 			sb.append("]");
 		}
 
+		Long siteId = getSiteId();
+
 		if (siteId != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -952,6 +1241,8 @@ public class WikiPage implements Serializable {
 			sb.append(siteId);
 		}
 
+		Boolean subscribed = getSubscribed();
+
 		if (subscribed != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -961,6 +1252,9 @@ public class WikiPage implements Serializable {
 
 			sb.append(subscribed);
 		}
+
+		TaxonomyCategoryBrief[] taxonomyCategoryBriefs =
+			getTaxonomyCategoryBriefs();
 
 		if (taxonomyCategoryBriefs != null) {
 			if (sb.length() > 1) {
@@ -982,6 +1276,8 @@ public class WikiPage implements Serializable {
 			sb.append("]");
 		}
 
+		Long[] taxonomyCategoryIds = getTaxonomyCategoryIds();
+
 		if (taxonomyCategoryIds != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -1001,6 +1297,8 @@ public class WikiPage implements Serializable {
 
 			sb.append("]");
 		}
+
+		ViewableBy viewableBy = getViewableBy();
 
 		if (viewableBy != null) {
 			if (sb.length() > 1) {

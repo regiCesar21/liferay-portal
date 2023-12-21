@@ -24,6 +24,7 @@ import java.util.Iterator;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
+import java.util.function.Supplier;
 
 import javax.annotation.Generated;
 
@@ -54,59 +55,83 @@ public class AppWorkflowDataRecordLink implements Serializable {
 	@Schema
 	@Valid
 	public AppWorkflow getAppWorkflow() {
+		if (_appWorkflowSupplier != null) {
+			appWorkflow = _appWorkflowSupplier.get();
+
+			_appWorkflowSupplier = null;
+		}
+
 		return appWorkflow;
 	}
 
 	public void setAppWorkflow(AppWorkflow appWorkflow) {
 		this.appWorkflow = appWorkflow;
+
+		_appWorkflowSupplier = null;
 	}
 
 	@JsonIgnore
 	public void setAppWorkflow(
 		UnsafeSupplier<AppWorkflow, Exception> appWorkflowUnsafeSupplier) {
 
-		try {
-			appWorkflow = appWorkflowUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_appWorkflowSupplier = () -> {
+			try {
+				return appWorkflowUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected AppWorkflow appWorkflow;
 
+	private Supplier<AppWorkflow> _appWorkflowSupplier;
+
 	@Schema
 	public Long getDataRecordId() {
+		if (_dataRecordIdSupplier != null) {
+			dataRecordId = _dataRecordIdSupplier.get();
+
+			_dataRecordIdSupplier = null;
+		}
+
 		return dataRecordId;
 	}
 
 	public void setDataRecordId(Long dataRecordId) {
 		this.dataRecordId = dataRecordId;
+
+		_dataRecordIdSupplier = null;
 	}
 
 	@JsonIgnore
 	public void setDataRecordId(
 		UnsafeSupplier<Long, Exception> dataRecordIdUnsafeSupplier) {
 
-		try {
-			dataRecordId = dataRecordIdUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_dataRecordIdSupplier = () -> {
+			try {
+				return dataRecordIdUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Long dataRecordId;
+
+	private Supplier<Long> _dataRecordIdSupplier;
 
 	@Override
 	public boolean equals(Object object) {
@@ -136,6 +161,8 @@ public class AppWorkflowDataRecordLink implements Serializable {
 
 		sb.append("{");
 
+		AppWorkflow appWorkflow = getAppWorkflow();
+
 		if (appWorkflow != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -145,6 +172,8 @@ public class AppWorkflowDataRecordLink implements Serializable {
 
 			sb.append(String.valueOf(appWorkflow));
 		}
+
+		Long dataRecordId = getDataRecordId();
 
 		if (dataRecordId != null) {
 			if (sb.length() > 1) {

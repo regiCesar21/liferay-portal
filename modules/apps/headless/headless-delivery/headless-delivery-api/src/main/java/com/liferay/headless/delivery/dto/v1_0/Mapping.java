@@ -25,6 +25,7 @@ import java.util.Iterator;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
+import java.util.function.Supplier;
 
 import javax.annotation.Generated;
 
@@ -52,60 +53,84 @@ public class Mapping implements Serializable {
 
 	@Schema
 	public String getFieldKey() {
+		if (_fieldKeySupplier != null) {
+			fieldKey = _fieldKeySupplier.get();
+
+			_fieldKeySupplier = null;
+		}
+
 		return fieldKey;
 	}
 
 	public void setFieldKey(String fieldKey) {
 		this.fieldKey = fieldKey;
+
+		_fieldKeySupplier = null;
 	}
 
 	@JsonIgnore
 	public void setFieldKey(
 		UnsafeSupplier<String, Exception> fieldKeyUnsafeSupplier) {
 
-		try {
-			fieldKey = fieldKeyUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_fieldKeySupplier = () -> {
+			try {
+				return fieldKeyUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String fieldKey;
 
+	private Supplier<String> _fieldKeySupplier;
+
 	@Schema
 	@Valid
 	public Object getItemReference() {
+		if (_itemReferenceSupplier != null) {
+			itemReference = _itemReferenceSupplier.get();
+
+			_itemReferenceSupplier = null;
+		}
+
 		return itemReference;
 	}
 
 	public void setItemReference(Object itemReference) {
 		this.itemReference = itemReference;
+
+		_itemReferenceSupplier = null;
 	}
 
 	@JsonIgnore
 	public void setItemReference(
 		UnsafeSupplier<Object, Exception> itemReferenceUnsafeSupplier) {
 
-		try {
-			itemReference = itemReferenceUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_itemReferenceSupplier = () -> {
+			try {
+				return itemReferenceUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Object itemReference;
+
+	private Supplier<Object> _itemReferenceSupplier;
 
 	@Override
 	public boolean equals(Object object) {
@@ -134,6 +159,8 @@ public class Mapping implements Serializable {
 
 		sb.append("{");
 
+		String fieldKey = getFieldKey();
+
 		if (fieldKey != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -147,6 +174,8 @@ public class Mapping implements Serializable {
 
 			sb.append("\"");
 		}
+
+		Object itemReference = getItemReference();
 
 		if (itemReference != null) {
 			if (sb.length() > 1) {
