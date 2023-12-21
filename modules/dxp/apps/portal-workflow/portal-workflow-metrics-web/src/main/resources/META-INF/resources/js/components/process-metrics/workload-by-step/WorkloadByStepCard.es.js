@@ -3,6 +3,7 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
+import {fetch} from 'frontend-js-web';
 import React from 'react';
 
 import Icon from '../../../shared/components/Icon.es';
@@ -11,6 +12,7 @@ import Tooltip from '../../../shared/components/Tooltip.es';
 import ListView from '../../../shared/components/list/ListView.es';
 import ReloadButton from '../../../shared/components/list/ReloadButton.es';
 import PaginationBar from '../../../shared/components/pagination/PaginationBar.es';
+import {baseURL, headers} from '../../../shared/rest/fetch.es';
 import {AppContext} from '../../AppContext.es';
 import WorkloadByStepTable from './WorkloadByStepTable.es';
 
@@ -64,17 +66,19 @@ class WorkloadByStepCard extends React.Component {
 	}
 
 	requestData({page, pageSize, processId, sort}) {
-		const {client} = this.context;
-
 		this.setState({
 			loading: true
 		});
 
-		return client
-			.get(
-				`/processes/${processId}/tasks?page=${page}&pageSize=${pageSize}&sort=${sort}`
-			)
-			.then(({data}) => {
+		return fetch(
+			`${baseURL}/processes/${processId}/tasks?page=${page}&pageSize=${pageSize}&sort=${sort}`,
+			{
+				headers,
+				method: 'GET'
+			}
+		)
+			.then(response => response.json())
+			.then(data => {
 				this.setState({
 					loading: false
 				});

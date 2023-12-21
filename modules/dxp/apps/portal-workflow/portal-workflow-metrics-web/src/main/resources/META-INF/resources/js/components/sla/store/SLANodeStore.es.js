@@ -3,86 +3,83 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
+import {fetch} from 'frontend-js-web';
 import {createContext, useCallback, useEffect, useState} from 'react';
 
-const useSLANodes = (processId, fetchClient) => {
+import {baseURL, headers} from '../../../shared/rest/fetch.es';
+
+const useSLANodes = processId => {
 	const [nodes, setNodes] = useState([]);
 
-	const fetchNodes = useCallback(
-		processId => {
-			fetchClient
-				.get(`/processes/${processId}/nodes`)
-				.then(({data: {items}}) => {
-					const entersTaskString = Liferay.Language.get(
-						'enters-task'
-					);
-					const leavesTaskString = Liferay.Language.get(
-						'leaves-task'
-					);
-					const nodeBegins = [];
-					const nodeEnds = [];
-					const nodeEnters = [];
-					const nodeLeaves = [];
-					const processBeginsString = Liferay.Language.get(
-						'process-begins'
-					);
-					const processEndsString = Liferay.Language.get(
-						'process-ends'
-					);
+	const fetchNodes = useCallback(processId => {
+		fetch(`${baseURL}/processes/${processId}/nodes`, {
+			headers,
+			method: 'GET'
+		})
+			.then(response => response.json())
+			.then(data => {
+				const entersTaskString = Liferay.Language.get('enters-task');
+				const leavesTaskString = Liferay.Language.get('leaves-task');
+				const nodeBegins = [];
+				const nodeEnds = [];
+				const nodeEnters = [];
+				const nodeLeaves = [];
+				const processBeginsString = Liferay.Language.get(
+					'process-begins'
+				);
+				const processEndsString = Liferay.Language.get('process-ends');
 
-					items.forEach(node => {
-						if (node.type === 'STATE') {
-							const newNode = {
-								...node,
-								desc: node.initial
-									? processBeginsString
-									: `${processEndsString} ${node.name}`,
-								executionType: node.initial ? 'begin' : 'end'
-							};
+				data.items.forEach(node => {
+					if (node.type === 'STATE') {
+						const newNode = {
+							...node,
+							desc: node.initial
+								? processBeginsString
+								: `${processEndsString} ${node.name}`,
+							executionType: node.initial ? 'begin' : 'end'
+						};
 
-							if (node.initial) {
-								nodeBegins.push(newNode);
-							}
-							else {
-								nodeEnds.push(newNode);
-							}
+						if (node.initial) {
+							nodeBegins.push(newNode);
 						}
-						else if (node.type === 'TASK') {
-							nodeEnters.push({
-								...node,
-								desc: `${entersTaskString} ${node.name}`,
-								executionType: 'enter'
-							});
-
-							nodeLeaves.push({
-								...node,
-								desc: `${leavesTaskString} ${node.name}`,
-								executionType: 'leave'
-							});
+						else {
+							nodeEnds.push(newNode);
 						}
-					});
+					}
+					else if (node.type === 'TASK') {
+						nodeEnters.push({
+							...node,
+							desc: `${entersTaskString} ${node.name}`,
+							executionType: 'enter'
+						});
 
-					const compareToName = (curNode, nextNode) =>
-						curNode.name.localeCompare(nextNode.name);
-
-					nodeEnters.sort(compareToName);
-					nodeLeaves.sort(compareToName);
-
-					const nodes = [
-						...nodeBegins,
-						...nodeEnters,
-						...nodeLeaves,
-						...nodeEnds
-					].map(node => ({
-						...node,
-						compositeId: `${node.id}:${node.executionType}`
-					}));
-
-					setNodes(nodes);
+						nodeLeaves.push({
+							...node,
+							desc: `${leavesTaskString} ${node.name}`,
+							executionType: 'leave'
+						});
+					}
 				});
-		},
-		[fetchClient]
-	);
+
+				const compareToName = (curNode, nextNode) =>
+					curNode.name.localeCompare(nextNode.name);
+
+				nodeEnters.sort(compareToName);
+				nodeLeaves.sort(compareToName);
+
+				const nodes = [
+					...nodeBegins,
+					...nodeEnters,
+					...nodeLeaves,
+					...nodeEnds
+				].map(node => ({
+					...node,
+					compositeId: `${node.id}:${node.executionType}`
+				}));
+
+				setNodes(nodes);
+			});
+	}, []);
 
 	const getPauseNodes = (startNodeKeys, stopNodeKeys) => {
 		const selectedNodes = [...startNodeKeys, ...stopNodeKeys]

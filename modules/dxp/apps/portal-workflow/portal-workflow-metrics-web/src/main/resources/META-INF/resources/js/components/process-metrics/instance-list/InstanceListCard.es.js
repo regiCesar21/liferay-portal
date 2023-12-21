@@ -3,6 +3,7 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
+import {fetch} from 'frontend-js-web';
 import React, {useContext, useEffect, useMemo} from 'react';
 
 import {getFiltersParam} from '../../../shared/components/filter/util/filterUtil.es';
@@ -12,6 +13,7 @@ import LoadingState from '../../../shared/components/loading/LoadingState.es';
 import PaginationBar from '../../../shared/components/pagination/PaginationBar.es';
 import PromisesResolver from '../../../shared/components/request/PromisesResolver.es';
 import Request from '../../../shared/components/request/Request.es';
+import {baseURL} from '../../../shared/rest/fetch.es';
 import {AppContext} from '../../AppContext.es';
 import InstanceItemDetail from './InstanceItemDetail.es';
 import InstanceListFilters from './InstanceListFilters.es';
@@ -31,17 +33,21 @@ export function InstanceListCard({page, pageSize, processId, query}) {
 		timeRange = []
 	} = filters;
 
-	const {client, setTitle} = useContext(AppContext);
+	const {setTitle} = useContext(AppContext);
 
 	useEffect(() => {
-		client.get(`/processes/${processId}/title`).then(({data}) => {
-			setTitle(`${data}: ${Liferay.Language.get('all-items')}`);
-
-			return data;
-		});
-
-		// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, []);
+		fetch(`${baseURL}/processes/${processId}/title`, {
+			headers: {
+				'Accept-Language': Liferay.ThemeDisplay.getBCP47LanguageId(),
+				'Content-Type': 'text/plain'
+			},
+			method: 'GET'
+		})
+			.then(response => response.text())
+			.then(data => {
+				setTitle(`${data}: ${Liferay.Language.get('all-items')}`);
+			});
+	}, [processId, setTitle]);
 
 	return (
 		<Request>

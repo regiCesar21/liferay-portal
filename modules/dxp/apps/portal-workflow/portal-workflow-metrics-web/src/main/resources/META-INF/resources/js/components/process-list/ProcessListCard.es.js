@@ -3,11 +3,13 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
+import {fetch} from 'frontend-js-web';
 import React from 'react';
 
 import ListView from '../../shared/components/list/ListView.es';
 import PaginationBar from '../../shared/components/pagination/PaginationBar.es';
 import Search from '../../shared/components/pagination/Search.es';
+import {baseURL, headers} from '../../shared/rest/fetch.es';
 import {AppContext} from '../AppContext.es';
 import {
 	REQUEST_ORIGIN_TYPE_FETCH,
@@ -48,8 +50,6 @@ class ProcessListCard extends React.Component {
 	 * @desc request data
 	 */
 	requestData({page, pageSize, search, sort}) {
-		const {client} = this.context;
-
 		const searching = typeof search === 'string' && search ? true : false;
 
 		const params = {
@@ -62,15 +62,25 @@ class ProcessListCard extends React.Component {
 			params.title = decodeURIComponent(search);
 		}
 
-		return client.get('/processes', {params}).then(({data}) => {
-			if (data && data.totalCount === 0) {
-				this.requestOriginType = searching
-					? REQUEST_ORIGIN_TYPE_SEARCH
-					: REQUEST_ORIGIN_TYPE_FETCH;
+		return fetch(
+			`${baseURL}/processes?page=${params.page}&pageSize=${params.pageSize}&sort=${params.sort}`,
+			{
+				headers,
+				method: 'GET'
 			}
+		)
+			.then(response => {
+				return response.json();
+			})
+			.then(data => {
+				if (data && data.totalCount === 0) {
+					this.requestOriginType = searching
+						? REQUEST_ORIGIN_TYPE_SEARCH
+						: REQUEST_ORIGIN_TYPE_FETCH;
+				}
 
-			return data;
-		});
+				return data;
+			});
 	}
 
 	render() {

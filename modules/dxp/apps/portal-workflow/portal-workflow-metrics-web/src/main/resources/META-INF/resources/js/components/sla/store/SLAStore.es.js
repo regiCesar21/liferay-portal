@@ -3,8 +3,10 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
+import {fetch} from 'frontend-js-web';
 import {createContext, useCallback, useEffect, useState} from 'react';
 
+import {baseURL, headers} from '../../../shared/rest/fetch.es';
 import {
 	durationAsMilliseconds,
 	formatHours,
@@ -12,7 +14,7 @@ import {
 } from '../../../shared/util/duration.es';
 import {START_NODE_KEYS} from '../Constants.es';
 
-const useSLA = (fetchClient, slaId, processId) => {
+const useSLA = (slaId, processId) => {
 	const [sla, setSLA] = useState({
 		calendarKey: null,
 		days: null,
@@ -63,9 +65,13 @@ const useSLA = (fetchClient, slaId, processId) => {
 		setSLA(oldSla => ({...oldSla, ...{[name]: value}}));
 	};
 
-	const fetchSLA = useCallback(
-		slaId => {
-			fetchClient.get(`/slas/${slaId}`).then(({data}) => {
+	const fetchSLA = useCallback(slaId => {
+		fetch(`${baseURL}/slas/${slaId}`, {
+			headers,
+			method: 'GET'
+		})
+			.then(response => response.json())
+			.then(data => {
 				const {
 					calendarKey,
 					description = '',
@@ -102,9 +108,7 @@ const useSLA = (fetchClient, slaId, processId) => {
 					stopNodeKeys
 				});
 			});
-		},
-		[fetchClient]
-	);
+	}, []);
 
 	const filterNodeTagIds = (nodes, nodeKeys = []) => {
 		return nodes
@@ -155,11 +159,22 @@ const useSLA = (fetchClient, slaId, processId) => {
 
 		const duration = durationAsMilliseconds(days, hours);
 
-		let submit = body =>
-			fetchClient.post(`/processes/${processId}/slas`, body);
+		let submit = body => {
+			return fetch(`${baseURL}/processes/${processId}/slas`, {
+				body: JSON.stringify(body),
+				headers,
+				method: 'POST'
+			}).then(response => response.json());
+		};
 
 		if (slaId) {
-			submit = body => fetchClient.put(`/slas/${slaId}`, body);
+			submit = body => {
+				return fetch(`${baseURL}/slas/${slaId}`, {
+					body: JSON.stringify(body),
+					headers,
+					method: 'PUT'
+				}).then(response => response.json());
+			};
 		}
 
 		return submit({

@@ -8,7 +8,6 @@ import {HashRouter as Router, Redirect, Route, Switch} from 'react-router-dom';
 
 import HeaderController from '../shared/components/header-controller/HeaderController.es';
 import {withParams} from '../shared/components/router/routerUtil.es';
-import fetch from '../shared/rest/fetch.es';
 import {AppContext} from './AppContext.es';
 import ProcessListCard from './process-list/ProcessListCard.es';
 import ProcessMetrics from './process-metrics/ProcessMetrics.es';
@@ -25,7 +24,6 @@ export default class AppComponent extends React.Component {
 		super(props);
 
 		this.state = {
-			client: fetch,
 			companyId: props.companyId,
 			defaultDelta: props.defaultDelta,
 			deltas: props.deltas,

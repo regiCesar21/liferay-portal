@@ -47,13 +47,11 @@ import {
  * @extends React.Component
  */
 function SLAForm({id, processId, query}) {
-	const {client} = useContext(AppContext);
-
 	return (
 		<div className="sla-form">
 			<Errors.Provider value={useErrors()}>
-				<SLANodes.Provider value={useSLANodes(processId, client)}>
-					<SLA.Provider value={useSLA(client, id, processId)}>
+				<SLANodes.Provider value={useSLANodes(processId)}>
+					<SLA.Provider value={useSLA(id, processId)}>
 						<SLAForm.Body
 							id={id}
 							processId={processId}

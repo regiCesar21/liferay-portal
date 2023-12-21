@@ -3,6 +3,7 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
+import {fetch} from 'frontend-js-web';
 import React from 'react';
 
 import Icon from '../../shared/components/Icon.es';
@@ -10,6 +11,7 @@ import Tooltip from '../../shared/components/Tooltip.es';
 import ListView from '../../shared/components/list/ListView.es';
 import PaginationBar from '../../shared/components/pagination/PaginationBar.es';
 import {ChildLink} from '../../shared/components/router/routerWrapper.es';
+import {baseURL, headers} from '../../shared/rest/fetch.es';
 import {openErrorToast, openSuccessToast} from '../../shared/util/toast.es';
 import {AppContext, AppStatus} from '../AppContext.es';
 import {REQUEST_ORIGIN_TYPE_FETCH} from './Constants.es';
@@ -69,23 +71,28 @@ class SLAListCard extends React.Component {
 	}
 
 	loadBlockedSLA() {
-		const {client} = this.context;
 		const {processId} = this.props;
 
-		client
-			.get(`/processes/${processId}/slas?page=1&pageSize=1&status=2`)
-			.then(({data: {totalCount: blockedSLACount}}) => {
+		fetch(
+			`${baseURL}/processes/${processId}/slas?page=1&pageSize=1&status=2`,
+			{
+				headers,
+				method: 'GET'
+			}
+		)
+			.then(response => response.json())
+			.then(data => {
 				this.setState({
-					blockedSLACount
+					blockedSLACount: data.totalCount.blockedSLACount
 				});
 			});
 	}
 
 	removeItem(id) {
-		const {client} = this.context;
-
-		client
-			.delete(`/slas/${id}`)
+		fetch(`${baseURL}/slas/${id}`, {
+			headers,
+			method: 'DELETE'
+		})
 			.then(() => {
 				this.loadData();
 				openSuccessToast(Liferay.Language.get('sla-was-deleted'));
@@ -132,13 +139,15 @@ class SLAListCard extends React.Component {
 	 * @param {number} configuration.processId
 	 */
 	requestData({page, pageSize, processId}) {
-		const {client} = this.context;
-
-		return client
-			.get(
-				`/processes/${processId}/slas?page=${page}&pageSize=${pageSize}`
-			)
-			.then(({data}) => {
+		return fetch(
+			`${baseURL}/processes/${processId}/slas?page=${page}&pageSize=${pageSize}`,
+			{
+				headers,
+				method: 'GET'
+			}
+		)
+			.then(response => response.json())
+			.then(data => {
 				this.requestOriginType = REQUEST_ORIGIN_TYPE_FETCH;
 
 				return data;

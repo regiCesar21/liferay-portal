@@ -4,17 +4,17 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
+import {fetch} from 'frontend-js-web';
 import React, {createContext, useContext, useEffect, useState} from 'react';
 
 import {buildFallbackItems} from '../../../../shared/components/filter/util/filterEvents.es';
 import {ErrorContext} from '../../../../shared/components/request/Error.es';
 import {LoadingContext} from '../../../../shared/components/request/Loading.es';
+import {baseURL, headers} from '../../../../shared/rest/fetch.es';
 import {compareArrays} from '../../../../shared/util/array.es';
 import {usePrevious} from '../../../../shared/util/hooks.es';
-import {AppContext} from '../../../AppContext.es';
 
 const useProcessStep = (processId, processStepKeys) => {
-	const {client} = useContext(AppContext);
 	const [processSteps, setProcessSteps] = useState([]);
 	const {setError} = useContext(ErrorContext);
 	const {setLoading} = useContext(LoadingContext);
@@ -23,9 +23,15 @@ const useProcessStep = (processId, processStepKeys) => {
 		setError(null);
 		setLoading(true);
 
-		return client
-			.get(`/processes/${processId}/tasks?page=0&pageSize=0`)
-			.then(({data}) => {
+		return fetch(
+			`${baseURL}/processes/${processId}/tasks?page=0&pageSize=0`,
+			{
+				headers,
+				method: 'GET'
+			}
+		)
+			.then(response => response.json())
+			.then(data => {
 				const items = data.items || [];
 
 				const processSteps = items.map(processStep => ({

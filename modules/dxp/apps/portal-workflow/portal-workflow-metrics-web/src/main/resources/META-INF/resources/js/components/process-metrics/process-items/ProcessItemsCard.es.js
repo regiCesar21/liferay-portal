@@ -4,6 +4,7 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
+import {fetch} from 'frontend-js-web';
 import React, {useContext, useEffect, useState} from 'react';
 
 import Icon from '../../../shared/components/Icon.es';
@@ -12,6 +13,7 @@ import Tooltip from '../../../shared/components/Tooltip.es';
 import {ErrorContext} from '../../../shared/components/request/Error.es';
 import {LoadingContext} from '../../../shared/components/request/Loading.es';
 import Request from '../../../shared/components/request/Request.es';
+import {baseURL, headers} from '../../../shared/rest/fetch.es';
 import {AppContext} from '../../AppContext.es';
 import PANELS from './Panels.es';
 import SummaryCard from './SummaryCard.es';
@@ -45,7 +47,7 @@ function ProcessItemsCard({
 }
 
 const Body = ({completed = false, processId, timeRange}) => {
-	const {client, setTitle} = useContext(AppContext);
+	const {setTitle} = useContext(AppContext);
 	const {setError} = useContext(ErrorContext);
 	const {setLoading} = useContext(LoadingContext);
 
@@ -69,9 +71,12 @@ const Body = ({completed = false, processId, timeRange}) => {
 			urlRequest += `&dateEnd=${dateEnd.toISOString()}&dateStart=${dateStart.toISOString()}`;
 		}
 
-		return client
-			.get(urlRequest)
-			.then(({data}) => {
+		return fetch(`${baseURL}/${urlRequest}`, {
+			headers,
+			method: 'GET'
+		})
+			.then(response => response.json())
+			.then(data => {
 				setTitle(data.title);
 				setProcess(data);
 			})

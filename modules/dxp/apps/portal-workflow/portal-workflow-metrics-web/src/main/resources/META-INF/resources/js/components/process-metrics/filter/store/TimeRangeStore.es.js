@@ -4,12 +4,14 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
+import {fetch} from 'frontend-js-web';
 import React, {createContext, useContext, useEffect, useState} from 'react';
 
 import {getFiltersParam} from '../../../../shared/components/filter/util/filterUtil.es';
 import {ErrorContext} from '../../../../shared/components/request/Error.es';
 import {LoadingContext} from '../../../../shared/components/request/Loading.es';
 import {useRouter} from '../../../../shared/components/router/useRouter.es';
+import {baseURL, headers} from '../../../../shared/rest/fetch.es';
 import {compareArrays} from '../../../../shared/util/array.es';
 import {usePrevious} from '../../../../shared/util/hooks.es';
 import {AppContext} from '../../../AppContext.es';
@@ -21,7 +23,7 @@ import {
 } from '../../util/timeRangeUtil.es';
 
 const useTimeRange = timeRangeKeys => {
-	const {client, isAmPm} = useContext(AppContext);
+	const {isAmPm} = useContext(AppContext);
 	const {
 		location: {search}
 	} = useRouter();
@@ -36,9 +38,12 @@ const useTimeRange = timeRangeKeys => {
 		setError(null);
 		setLoading(true);
 
-		client
-			.get('/time-ranges')
-			.then(({data}) => {
+		fetch(`${baseURL}/time-ranges`, {
+			headers,
+			method: 'GET'
+		})
+			.then(response => response.json())
+			.then(data => {
 				const timeRanges = [
 					getCustomTimeRange(filters, timeRangeKeys),
 					...data.items.map(item => {

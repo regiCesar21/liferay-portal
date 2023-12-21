@@ -3,10 +3,11 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
+import {fetch} from 'frontend-js-web';
 import React, {createContext, useContext, useState} from 'react';
 
 import {getFiltersParam} from '../../../../shared/components/filter/util/filterUtil.es';
-import {AppContext} from '../../../AppContext.es';
+import {baseURL, headers} from '../../../../shared/rest/fetch.es';
 import {ProcessStatusContext} from '../../filter/store/ProcessStatusStore.es';
 import {ProcessStepContext} from '../../filter/store/ProcessStepStore.es';
 import {SLAStatusContext} from '../../filter/store/SLAStatusStore.es';
@@ -31,7 +32,6 @@ const useInstanceListData = (page, pageSize, processId, query) => {
 	const [searching, setSearching] = useState();
 	const [totalCount, setTotalCount] = useState();
 
-	const {client} = useContext(AppContext);
 	const {getSelectedProcessStatuses, isCompletedStatusSelected} = useContext(
 		ProcessStatusContext
 	);
@@ -106,12 +106,17 @@ const useInstanceListData = (page, pageSize, processId, query) => {
 	};
 
 	const fetchInstances = () => {
-		return client.get(getInstancesRequestURL()).then(({data}) => {
-			setItems(data.items);
-			setTotalCount(data.totalCount);
+		return fetch(`${baseURL}/${getInstancesRequestURL()}`, {
+			headers,
+			method: 'GET'
+		})
+			.then(response => response.json())
+			.then(data => {
+				setItems(data.items);
+				setTotalCount(data.totalCount);
 
-			return data;
-		});
+				return data;
+			});
 	};
 
 	return {

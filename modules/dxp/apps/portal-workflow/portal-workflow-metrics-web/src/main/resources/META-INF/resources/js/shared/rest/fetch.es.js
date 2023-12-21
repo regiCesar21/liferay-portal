@@ -24,4 +24,14 @@ const restClient = axios.create({
 	baseURL: '/o/portal-workflow-metrics/v1.0'
 });
 
+const baseURL = '/o/portal-workflow-metrics/v1.0';
+
+const headers = new Headers({
+	Accept: 'application/json',
+	'Accept-Language': Liferay.ThemeDisplay.getBCP47LanguageId(),
+	'Content-Type': 'application/json'
+});
+
+export {baseURL, headers};
+
 export default restClient;

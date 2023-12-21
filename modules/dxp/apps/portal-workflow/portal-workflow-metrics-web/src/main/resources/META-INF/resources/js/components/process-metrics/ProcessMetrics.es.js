@@ -3,6 +3,7 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
+import {fetch} from 'frontend-js-web';
 import React from 'react';
 import {HashRouter as Router, Redirect, Route, Switch} from 'react-router-dom';
 
@@ -10,6 +11,7 @@ import {withParams} from '../../shared/components/router/routerUtil.es';
 import {ChildLink} from '../../shared/components/router/routerWrapper.es';
 import {getPathname} from '../../shared/components/tabs/TabItem.es';
 import Tabs from '../../shared/components/tabs/Tabs.es';
+import {baseURL, headers} from '../../shared/rest/fetch.es';
 import {sub} from '../../shared/util/lang.es';
 import {openErrorToast} from '../../shared/util/toast.es';
 import {AppContext} from '../AppContext.es';
@@ -35,18 +37,30 @@ class ProcessMetrics extends React.Component {
 	}
 
 	loadBlockedSLACount() {
-		return this.context.client
-			.get(
-				`/processes/${this.props.processId}/slas?page=1&pageSize=1&status=2`
-			)
-			.then(({data: {totalCount}}) => totalCount)
+		return fetch(
+			`${baseURL}/processes/${this.props.processId}/slas?page=1&pageSize=1&status=2`,
+			{
+				headers,
+				method: 'GET'
+			}
+		)
+			.then(response => response.json())
+			.then(data => data.totalCount)
 			.catch(this.showLoadingError);
 	}
 
 	loadSLACount() {
-		return this.context.client
-			.get(`/processes/${this.props.processId}/slas?page=1&pageSize=1`)
-			.then(({data: {totalCount}}) => totalCount)
+		return fetch(
+			`${baseURL}/processes/${this.props.processId}/slas?page=1&pageSize=1`,
+			{
+				headers,
+				method: 'GET'
+			}
+		)
+			.then(response => response.json())
+			.then(data => {
+				return data.totalCount;
+			})
 			.catch(this.showLoadingError);
 	}
 

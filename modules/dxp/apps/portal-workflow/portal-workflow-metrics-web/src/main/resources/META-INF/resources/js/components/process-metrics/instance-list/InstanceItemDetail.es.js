@@ -4,29 +4,29 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
+import {fetch} from 'frontend-js-web';
 import React, {useContext, useEffect, useState} from 'react';
 
 import Icon from '../../../shared/components/Icon.es';
+import {baseURL, headers} from '../../../shared/rest/fetch.es';
 import moment from '../../../shared/util/moment.es';
-import {AppContext} from '../../AppContext.es';
 import {InstanceListContext} from './store/InstanceListStore.es';
 
 function InstanceItemDetail({processId}) {
-	const {client} = useContext(AppContext);
 	const [instance, setInstance] = useState({});
 	const {instanceId} = useContext(InstanceListContext);
 
 	useEffect(() => {
 		if (instanceId) {
-			fetchData(instanceId, processId).then(data => setInstance(data));
+			fetch(`${baseURL}/processes/${processId}/instances/${instanceId}`, {
+				headers,
+				method: 'GET'
+			})
+				.then(response => response.json())
+				.then(data => data)
+				.then(data => setInstance(data));
 		}
-	}, [fetchData, instanceId, processId]);
-
-	const fetchData = (instanceId, processId) => {
-		return client
-			.get(`/processes/${processId}/instances/${instanceId}`)
-			.then(({data}) => data);
-	};
+	}, [instanceId, processId]);
 
 	const {
 		assetTitle,
