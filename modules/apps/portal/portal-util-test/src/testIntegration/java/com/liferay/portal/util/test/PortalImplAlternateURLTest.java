@@ -10,10 +10,13 @@ import com.liferay.layout.test.util.LayoutTestUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.GroupConstants;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.LayoutSet;
+import com.liferay.portal.kernel.model.LayoutTypePortlet;
+import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
 import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.service.GroupLocalServiceUtil;
 import com.liferay.portal.kernel.service.VirtualHostLocalService;
@@ -27,8 +30,10 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.Http;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.Portal;
+import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.TreeMapBuilder;
+import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.util.PropsValues;
@@ -45,6 +50,8 @@ import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+
+import org.springframework.mock.web.MockHttpServletRequest;
 
 /**
  * @author Sergio González
@@ -92,6 +99,27 @@ public class PortalImplAlternateURLTest {
 			"localhost",
 			Arrays.asList(LocaleUtil.US, LocaleUtil.SPAIN, LocaleUtil.GERMANY),
 			LocaleUtil.US);
+	}
+
+	@Test
+	public void testAlternateURLWithUrlSeparator() throws Exception {
+		_group = GroupTestUtil.addGroup();
+
+		String urlSeparator = "/p/";
+
+		Locale locale = LocaleUtil.SPAIN;
+
+		Layout layout = LayoutTestUtil.addTypeContentLayout(_group);
+
+		Assert.assertEquals(
+			_generateURL(
+				"localhost", StringPool.SLASH + locale.getLanguage(),
+				_group.getFriendlyURL(), urlSeparator),
+			_portal.getAlternateURL(
+				_generateURL(
+					"localhost", StringPool.BLANK, _group.getFriendlyURL(),
+					urlSeparator),
+				_getThemeDisplay(_group, layout), locale, layout));
 	}
 
 	@Test
@@ -212,6 +240,60 @@ public class PortalImplAlternateURLTest {
 		sb.append(layoutFriendlyURL);
 
 		return sb.toString();
+	}
+
+	private ThemeDisplay _getThemeDisplay(
+			Company company, Group group, Layout layout)
+		throws Exception {
+
+		ThemeDisplay themeDisplay = new ThemeDisplay();
+
+		themeDisplay.setCompany(company);
+		themeDisplay.setLayout(layout);
+		themeDisplay.setLayoutSet(layout.getLayoutSet());
+		themeDisplay.setLayoutTypePortlet(
+			(LayoutTypePortlet)layout.getLayoutType());
+		themeDisplay.setLocale(PortalUtil.getSiteDefaultLocale(group));
+
+		LayoutSet layoutSet = group.getPublicLayoutSet();
+
+		themeDisplay.setLookAndFeel(
+			layoutSet.getTheme(), layoutSet.getColorScheme());
+
+		themeDisplay.setPermissionChecker(
+			PermissionThreadLocal.getPermissionChecker());
+		themeDisplay.setPlid(layout.getPlid());
+		themeDisplay.setRealUser(TestPropsValues.getUser());
+		themeDisplay.setScopeGroupId(group.getGroupId());
+		themeDisplay.setSiteGroupId(group.getGroupId());
+		themeDisplay.setUser(TestPropsValues.getUser());
+
+		return themeDisplay;
+	}
+
+	private ThemeDisplay _getThemeDisplay(Group group, Layout layout)
+		throws Exception {
+
+		Company company = _companyLocalService.getCompany(
+			_group.getCompanyId());
+
+		ThemeDisplay themeDisplay = _getThemeDisplay(company, _group, layout);
+
+		themeDisplay.setPortalDomain("localhost");
+		themeDisplay.setPortalURL(company.getPortalURL(group.getGroupId()));
+		themeDisplay.setServerName("localhost");
+		themeDisplay.setServerPort(8080);
+
+		MockHttpServletRequest mockHttpServletRequest =
+			new MockHttpServletRequest();
+
+		mockHttpServletRequest.setAttribute(WebKeys.LAYOUT, layout);
+		mockHttpServletRequest.setAttribute(
+			WebKeys.THEME_DISPLAY, themeDisplay);
+
+		themeDisplay.setRequest(mockHttpServletRequest);
+
+		return themeDisplay;
 	}
 
 	private ThemeDisplay _getThemeDisplay(Group group, String portalURL)
