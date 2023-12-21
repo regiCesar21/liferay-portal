@@ -30,6 +30,7 @@ import java.util.Iterator;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
+import java.util.function.Supplier;
 
 import javax.annotation.Generated;
 
@@ -59,265 +60,381 @@ public class Instance implements Serializable {
 
 	@Schema
 	public String getAssetTitle() {
+		if (_assetTitleSupplier != null) {
+			assetTitle = _assetTitleSupplier.get();
+
+			_assetTitleSupplier = null;
+		}
+
 		return assetTitle;
 	}
 
 	public void setAssetTitle(String assetTitle) {
 		this.assetTitle = assetTitle;
+
+		_assetTitleSupplier = null;
 	}
 
 	@JsonIgnore
 	public void setAssetTitle(
 		UnsafeSupplier<String, Exception> assetTitleUnsafeSupplier) {
 
-		try {
-			assetTitle = assetTitleUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_assetTitleSupplier = () -> {
+			try {
+				return assetTitleUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String assetTitle;
 
+	private Supplier<String> _assetTitleSupplier;
+
 	@Schema
 	public String getAssetType() {
+		if (_assetTypeSupplier != null) {
+			assetType = _assetTypeSupplier.get();
+
+			_assetTypeSupplier = null;
+		}
+
 		return assetType;
 	}
 
 	public void setAssetType(String assetType) {
 		this.assetType = assetType;
+
+		_assetTypeSupplier = null;
 	}
 
 	@JsonIgnore
 	public void setAssetType(
 		UnsafeSupplier<String, Exception> assetTypeUnsafeSupplier) {
 
-		try {
-			assetType = assetTypeUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_assetTypeSupplier = () -> {
+			try {
+				return assetTypeUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String assetType;
 
+	private Supplier<String> _assetTypeSupplier;
+
 	@Schema
 	@Valid
 	public AssigneeUser[] getAssigneeUsers() {
+		if (_assigneeUsersSupplier != null) {
+			assigneeUsers = _assigneeUsersSupplier.get();
+
+			_assigneeUsersSupplier = null;
+		}
+
 		return assigneeUsers;
 	}
 
 	public void setAssigneeUsers(AssigneeUser[] assigneeUsers) {
 		this.assigneeUsers = assigneeUsers;
+
+		_assigneeUsersSupplier = null;
 	}
 
 	@JsonIgnore
 	public void setAssigneeUsers(
 		UnsafeSupplier<AssigneeUser[], Exception> assigneeUsersUnsafeSupplier) {
 
-		try {
-			assigneeUsers = assigneeUsersUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_assigneeUsersSupplier = () -> {
+			try {
+				return assigneeUsersUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected AssigneeUser[] assigneeUsers;
 
+	private Supplier<AssigneeUser[]> _assigneeUsersSupplier;
+
 	@Schema
 	@Valid
 	public CreatorUser getCreatorUser() {
+		if (_creatorUserSupplier != null) {
+			creatorUser = _creatorUserSupplier.get();
+
+			_creatorUserSupplier = null;
+		}
+
 		return creatorUser;
 	}
 
 	public void setCreatorUser(CreatorUser creatorUser) {
 		this.creatorUser = creatorUser;
+
+		_creatorUserSupplier = null;
 	}
 
 	@JsonIgnore
 	public void setCreatorUser(
 		UnsafeSupplier<CreatorUser, Exception> creatorUserUnsafeSupplier) {
 
-		try {
-			creatorUser = creatorUserUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_creatorUserSupplier = () -> {
+			try {
+				return creatorUserUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected CreatorUser creatorUser;
 
+	private Supplier<CreatorUser> _creatorUserSupplier;
+
 	@Schema
 	public Date getDateCompletion() {
+		if (_dateCompletionSupplier != null) {
+			dateCompletion = _dateCompletionSupplier.get();
+
+			_dateCompletionSupplier = null;
+		}
+
 		return dateCompletion;
 	}
 
 	public void setDateCompletion(Date dateCompletion) {
 		this.dateCompletion = dateCompletion;
+
+		_dateCompletionSupplier = null;
 	}
 
 	@JsonIgnore
 	public void setDateCompletion(
 		UnsafeSupplier<Date, Exception> dateCompletionUnsafeSupplier) {
 
-		try {
-			dateCompletion = dateCompletionUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_dateCompletionSupplier = () -> {
+			try {
+				return dateCompletionUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Date dateCompletion;
 
+	private Supplier<Date> _dateCompletionSupplier;
+
 	@Schema
 	public Date getDateCreated() {
+		if (_dateCreatedSupplier != null) {
+			dateCreated = _dateCreatedSupplier.get();
+
+			_dateCreatedSupplier = null;
+		}
+
 		return dateCreated;
 	}
 
 	public void setDateCreated(Date dateCreated) {
 		this.dateCreated = dateCreated;
+
+		_dateCreatedSupplier = null;
 	}
 
 	@JsonIgnore
 	public void setDateCreated(
 		UnsafeSupplier<Date, Exception> dateCreatedUnsafeSupplier) {
 
-		try {
-			dateCreated = dateCreatedUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_dateCreatedSupplier = () -> {
+			try {
+				return dateCreatedUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Date dateCreated;
 
+	private Supplier<Date> _dateCreatedSupplier;
+
 	@Schema
 	public Long getId() {
+		if (_idSupplier != null) {
+			id = _idSupplier.get();
+
+			_idSupplier = null;
+		}
+
 		return id;
 	}
 
 	public void setId(Long id) {
 		this.id = id;
+
+		_idSupplier = null;
 	}
 
 	@JsonIgnore
 	public void setId(UnsafeSupplier<Long, Exception> idUnsafeSupplier) {
-		try {
-			id = idUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_idSupplier = () -> {
+			try {
+				return idUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Long id;
 
+	private Supplier<Long> _idSupplier;
+
 	@Schema
 	public Long getProcessId() {
+		if (_processIdSupplier != null) {
+			processId = _processIdSupplier.get();
+
+			_processIdSupplier = null;
+		}
+
 		return processId;
 	}
 
 	public void setProcessId(Long processId) {
 		this.processId = processId;
+
+		_processIdSupplier = null;
 	}
 
 	@JsonIgnore
 	public void setProcessId(
 		UnsafeSupplier<Long, Exception> processIdUnsafeSupplier) {
 
-		try {
-			processId = processIdUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_processIdSupplier = () -> {
+			try {
+				return processIdUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Long processId;
 
+	private Supplier<Long> _processIdSupplier;
+
 	@Schema
 	@Valid
 	public SLAResult[] getSlaResults() {
+		if (_slaResultsSupplier != null) {
+			slaResults = _slaResultsSupplier.get();
+
+			_slaResultsSupplier = null;
+		}
+
 		return slaResults;
 	}
 
 	public void setSlaResults(SLAResult[] slaResults) {
 		this.slaResults = slaResults;
+
+		_slaResultsSupplier = null;
 	}
 
 	@JsonIgnore
 	public void setSlaResults(
 		UnsafeSupplier<SLAResult[], Exception> slaResultsUnsafeSupplier) {
 
-		try {
-			slaResults = slaResultsUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_slaResultsSupplier = () -> {
+			try {
+				return slaResultsUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected SLAResult[] slaResults;
 
+	private Supplier<SLAResult[]> _slaResultsSupplier;
+
 	@Schema
 	@Valid
 	public SLAStatus getSLAStatus() {
+		if (_slaStatusSupplier != null) {
+			slaStatus = _slaStatusSupplier.get();
+
+			_slaStatusSupplier = null;
+		}
+
 		return slaStatus;
 	}
 
 	@JsonIgnore
 	public String getSLAStatusAsString() {
+		SLAStatus slaStatus = getSLAStatus();
+
 		if (slaStatus == null) {
 			return null;
 		}
@@ -327,35 +444,49 @@ public class Instance implements Serializable {
 
 	public void setSLAStatus(SLAStatus slaStatus) {
 		this.slaStatus = slaStatus;
+
+		_slaStatusSupplier = null;
 	}
 
 	@JsonIgnore
 	public void setSLAStatus(
 		UnsafeSupplier<SLAStatus, Exception> slaStatusUnsafeSupplier) {
 
-		try {
-			slaStatus = slaStatusUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_slaStatusSupplier = () -> {
+			try {
+				return slaStatusUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected SLAStatus slaStatus;
 
+	private Supplier<SLAStatus> _slaStatusSupplier;
+
 	@Schema
 	@Valid
 	public Status getStatus() {
+		if (_statusSupplier != null) {
+			status = _statusSupplier.get();
+
+			_statusSupplier = null;
+		}
+
 		return status;
 	}
 
 	@JsonIgnore
 	public String getStatusAsString() {
+		Status status = getStatus();
+
 		if (status == null) {
 			return null;
 		}
@@ -365,54 +496,72 @@ public class Instance implements Serializable {
 
 	public void setStatus(Status status) {
 		this.status = status;
+
+		_statusSupplier = null;
 	}
 
 	@JsonIgnore
 	public void setStatus(
 		UnsafeSupplier<Status, Exception> statusUnsafeSupplier) {
 
-		try {
-			status = statusUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_statusSupplier = () -> {
+			try {
+				return statusUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Status status;
 
+	private Supplier<Status> _statusSupplier;
+
 	@Schema
 	public String[] getTaskNames() {
+		if (_taskNamesSupplier != null) {
+			taskNames = _taskNamesSupplier.get();
+
+			_taskNamesSupplier = null;
+		}
+
 		return taskNames;
 	}
 
 	public void setTaskNames(String[] taskNames) {
 		this.taskNames = taskNames;
+
+		_taskNamesSupplier = null;
 	}
 
 	@JsonIgnore
 	public void setTaskNames(
 		UnsafeSupplier<String[], Exception> taskNamesUnsafeSupplier) {
 
-		try {
-			taskNames = taskNamesUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_taskNamesSupplier = () -> {
+			try {
+				return taskNamesUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String[] taskNames;
+
+	private Supplier<String[]> _taskNamesSupplier;
 
 	@Override
 	public boolean equals(Object object) {
@@ -444,6 +593,8 @@ public class Instance implements Serializable {
 		DateFormat liferayToJSONDateFormat = new SimpleDateFormat(
 			"yyyy-MM-dd'T'HH:mm:ss'Z'");
 
+		String assetTitle = getAssetTitle();
+
 		if (assetTitle != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -458,6 +609,8 @@ public class Instance implements Serializable {
 			sb.append("\"");
 		}
 
+		String assetType = getAssetType();
+
 		if (assetType != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -471,6 +624,8 @@ public class Instance implements Serializable {
 
 			sb.append("\"");
 		}
+
+		AssigneeUser[] assigneeUsers = getAssigneeUsers();
 
 		if (assigneeUsers != null) {
 			if (sb.length() > 1) {
@@ -492,6 +647,8 @@ public class Instance implements Serializable {
 			sb.append("]");
 		}
 
+		CreatorUser creatorUser = getCreatorUser();
+
 		if (creatorUser != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -501,6 +658,8 @@ public class Instance implements Serializable {
 
 			sb.append(String.valueOf(creatorUser));
 		}
+
+		Date dateCompletion = getDateCompletion();
 
 		if (dateCompletion != null) {
 			if (sb.length() > 1) {
@@ -516,6 +675,8 @@ public class Instance implements Serializable {
 			sb.append("\"");
 		}
 
+		Date dateCreated = getDateCreated();
+
 		if (dateCreated != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -530,6 +691,8 @@ public class Instance implements Serializable {
 			sb.append("\"");
 		}
 
+		Long id = getId();
+
 		if (id != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -540,6 +703,8 @@ public class Instance implements Serializable {
 			sb.append(id);
 		}
 
+		Long processId = getProcessId();
+
 		if (processId != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -549,6 +714,8 @@ public class Instance implements Serializable {
 
 			sb.append(processId);
 		}
+
+		SLAResult[] slaResults = getSlaResults();
 
 		if (slaResults != null) {
 			if (sb.length() > 1) {
@@ -570,6 +737,8 @@ public class Instance implements Serializable {
 			sb.append("]");
 		}
 
+		SLAStatus slaStatus = getSLAStatus();
+
 		if (slaStatus != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -584,6 +753,8 @@ public class Instance implements Serializable {
 			sb.append("\"");
 		}
 
+		Status status = getStatus();
+
 		if (status != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -597,6 +768,8 @@ public class Instance implements Serializable {
 
 			sb.append("\"");
 		}
+
+		String[] taskNames = getTaskNames();
 
 		if (taskNames != null) {
 			if (sb.length() > 1) {

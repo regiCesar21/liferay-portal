@@ -24,6 +24,7 @@ import java.util.Iterator;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
+import java.util.function.Supplier;
 
 import javax.annotation.Generated;
 
@@ -52,57 +53,81 @@ public class ObjectReviewed implements Serializable {
 
 	@Schema(description = "The resource's ID.")
 	public Long getId() {
+		if (_idSupplier != null) {
+			id = _idSupplier.get();
+
+			_idSupplier = null;
+		}
+
 		return id;
 	}
 
 	public void setId(Long id) {
 		this.id = id;
+
+		_idSupplier = null;
 	}
 
 	@JsonIgnore
 	public void setId(UnsafeSupplier<Long, Exception> idUnsafeSupplier) {
-		try {
-			id = idUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_idSupplier = () -> {
+			try {
+				return idUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField(description = "The resource's ID.")
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Long id;
 
+	private Supplier<Long> _idSupplier;
+
 	@Schema(description = "The resource's type.")
 	public String getResourceType() {
+		if (_resourceTypeSupplier != null) {
+			resourceType = _resourceTypeSupplier.get();
+
+			_resourceTypeSupplier = null;
+		}
+
 		return resourceType;
 	}
 
 	public void setResourceType(String resourceType) {
 		this.resourceType = resourceType;
+
+		_resourceTypeSupplier = null;
 	}
 
 	@JsonIgnore
 	public void setResourceType(
 		UnsafeSupplier<String, Exception> resourceTypeUnsafeSupplier) {
 
-		try {
-			resourceType = resourceTypeUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_resourceTypeSupplier = () -> {
+			try {
+				return resourceTypeUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField(description = "The resource's type.")
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected String resourceType;
+
+	private Supplier<String> _resourceTypeSupplier;
 
 	@Override
 	public boolean equals(Object object) {
@@ -131,6 +156,8 @@ public class ObjectReviewed implements Serializable {
 
 		sb.append("{");
 
+		Long id = getId();
+
 		if (id != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -140,6 +167,8 @@ public class ObjectReviewed implements Serializable {
 
 			sb.append(id);
 		}
+
+		String resourceType = getResourceType();
 
 		if (resourceType != null) {
 			if (sb.length() > 1) {

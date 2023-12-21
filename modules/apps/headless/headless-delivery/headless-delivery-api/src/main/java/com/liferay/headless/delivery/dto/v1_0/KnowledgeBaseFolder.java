@@ -30,6 +30,7 @@ import java.util.Iterator;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
+import java.util.function.Supplier;
 
 import javax.annotation.Generated;
 
@@ -67,11 +68,19 @@ public class KnowledgeBaseFolder implements Serializable {
 	@Schema
 	@Valid
 	public Map<String, Map<String, String>> getActions() {
+		if (_actionsSupplier != null) {
+			actions = _actionsSupplier.get();
+
+			_actionsSupplier = null;
+		}
+
 		return actions;
 	}
 
 	public void setActions(Map<String, Map<String, String>> actions) {
 		this.actions = actions;
+
+		_actionsSupplier = null;
 	}
 
 	@JsonIgnore
@@ -79,209 +88,295 @@ public class KnowledgeBaseFolder implements Serializable {
 		UnsafeSupplier<Map<String, Map<String, String>>, Exception>
 			actionsUnsafeSupplier) {
 
-		try {
-			actions = actionsUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_actionsSupplier = () -> {
+			try {
+				return actionsUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Map<String, Map<String, String>> actions;
 
+	private Supplier<Map<String, Map<String, String>>> _actionsSupplier;
+
 	@Schema(description = "The folder's creator.")
 	@Valid
 	public Creator getCreator() {
+		if (_creatorSupplier != null) {
+			creator = _creatorSupplier.get();
+
+			_creatorSupplier = null;
+		}
+
 		return creator;
 	}
 
 	public void setCreator(Creator creator) {
 		this.creator = creator;
+
+		_creatorSupplier = null;
 	}
 
 	@JsonIgnore
 	public void setCreator(
 		UnsafeSupplier<Creator, Exception> creatorUnsafeSupplier) {
 
-		try {
-			creator = creatorUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_creatorSupplier = () -> {
+			try {
+				return creatorUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField(description = "The folder's creator.")
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Creator creator;
 
+	private Supplier<Creator> _creatorSupplier;
+
 	@Schema
 	@Valid
 	public CustomField[] getCustomFields() {
+		if (_customFieldsSupplier != null) {
+			customFields = _customFieldsSupplier.get();
+
+			_customFieldsSupplier = null;
+		}
+
 		return customFields;
 	}
 
 	public void setCustomFields(CustomField[] customFields) {
 		this.customFields = customFields;
+
+		_customFieldsSupplier = null;
 	}
 
 	@JsonIgnore
 	public void setCustomFields(
 		UnsafeSupplier<CustomField[], Exception> customFieldsUnsafeSupplier) {
 
-		try {
-			customFields = customFieldsUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_customFieldsSupplier = () -> {
+			try {
+				return customFieldsUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected CustomField[] customFields;
 
+	private Supplier<CustomField[]> _customFieldsSupplier;
+
 	@Schema(description = "The date the folder was created.")
 	public Date getDateCreated() {
+		if (_dateCreatedSupplier != null) {
+			dateCreated = _dateCreatedSupplier.get();
+
+			_dateCreatedSupplier = null;
+		}
+
 		return dateCreated;
 	}
 
 	public void setDateCreated(Date dateCreated) {
 		this.dateCreated = dateCreated;
+
+		_dateCreatedSupplier = null;
 	}
 
 	@JsonIgnore
 	public void setDateCreated(
 		UnsafeSupplier<Date, Exception> dateCreatedUnsafeSupplier) {
 
-		try {
-			dateCreated = dateCreatedUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_dateCreatedSupplier = () -> {
+			try {
+				return dateCreatedUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField(description = "The date the folder was created.")
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Date dateCreated;
 
+	private Supplier<Date> _dateCreatedSupplier;
+
 	@Schema(description = "The last time the folder was modified.")
 	public Date getDateModified() {
+		if (_dateModifiedSupplier != null) {
+			dateModified = _dateModifiedSupplier.get();
+
+			_dateModifiedSupplier = null;
+		}
+
 		return dateModified;
 	}
 
 	public void setDateModified(Date dateModified) {
 		this.dateModified = dateModified;
+
+		_dateModifiedSupplier = null;
 	}
 
 	@JsonIgnore
 	public void setDateModified(
 		UnsafeSupplier<Date, Exception> dateModifiedUnsafeSupplier) {
 
-		try {
-			dateModified = dateModifiedUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_dateModifiedSupplier = () -> {
+			try {
+				return dateModifiedUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField(description = "The last time the folder was modified.")
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Date dateModified;
 
+	private Supplier<Date> _dateModifiedSupplier;
+
 	@Schema(description = "The folder's description.")
 	public String getDescription() {
+		if (_descriptionSupplier != null) {
+			description = _descriptionSupplier.get();
+
+			_descriptionSupplier = null;
+		}
+
 		return description;
 	}
 
 	public void setDescription(String description) {
 		this.description = description;
+
+		_descriptionSupplier = null;
 	}
 
 	@JsonIgnore
 	public void setDescription(
 		UnsafeSupplier<String, Exception> descriptionUnsafeSupplier) {
 
-		try {
-			description = descriptionUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_descriptionSupplier = () -> {
+			try {
+				return descriptionUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField(description = "The folder's description.")
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String description;
 
+	private Supplier<String> _descriptionSupplier;
+
 	@Schema(description = "The folder's ID.")
 	public Long getId() {
+		if (_idSupplier != null) {
+			id = _idSupplier.get();
+
+			_idSupplier = null;
+		}
+
 		return id;
 	}
 
 	public void setId(Long id) {
 		this.id = id;
+
+		_idSupplier = null;
 	}
 
 	@JsonIgnore
 	public void setId(UnsafeSupplier<Long, Exception> idUnsafeSupplier) {
-		try {
-			id = idUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_idSupplier = () -> {
+			try {
+				return idUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField(description = "The folder's ID.")
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Long id;
 
+	private Supplier<Long> _idSupplier;
+
 	@Schema(description = "The folder's main title/name.")
 	public String getName() {
+		if (_nameSupplier != null) {
+			name = _nameSupplier.get();
+
+			_nameSupplier = null;
+		}
+
 		return name;
 	}
 
 	public void setName(String name) {
 		this.name = name;
+
+		_nameSupplier = null;
 	}
 
 	@JsonIgnore
 	public void setName(UnsafeSupplier<String, Exception> nameUnsafeSupplier) {
-		try {
-			name = nameUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_nameSupplier = () -> {
+			try {
+				return nameUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField(description = "The folder's main title/name.")
@@ -289,10 +384,19 @@ public class KnowledgeBaseFolder implements Serializable {
 	@NotEmpty
 	protected String name;
 
+	private Supplier<String> _nameSupplier;
+
 	@Schema(
 		description = "The number of Knowledge Base articles in this folder."
 	)
 	public Integer getNumberOfKnowledgeBaseArticles() {
+		if (_numberOfKnowledgeBaseArticlesSupplier != null) {
+			numberOfKnowledgeBaseArticles =
+				_numberOfKnowledgeBaseArticlesSupplier.get();
+
+			_numberOfKnowledgeBaseArticlesSupplier = null;
+		}
+
 		return numberOfKnowledgeBaseArticles;
 	}
 
@@ -300,6 +404,8 @@ public class KnowledgeBaseFolder implements Serializable {
 		Integer numberOfKnowledgeBaseArticles) {
 
 		this.numberOfKnowledgeBaseArticles = numberOfKnowledgeBaseArticles;
+
+		_numberOfKnowledgeBaseArticlesSupplier = null;
 	}
 
 	@JsonIgnore
@@ -307,16 +413,17 @@ public class KnowledgeBaseFolder implements Serializable {
 		UnsafeSupplier<Integer, Exception>
 			numberOfKnowledgeBaseArticlesUnsafeSupplier) {
 
-		try {
-			numberOfKnowledgeBaseArticles =
-				numberOfKnowledgeBaseArticlesUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_numberOfKnowledgeBaseArticlesSupplier = () -> {
+			try {
+				return numberOfKnowledgeBaseArticlesUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField(
@@ -325,10 +432,19 @@ public class KnowledgeBaseFolder implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Integer numberOfKnowledgeBaseArticles;
 
+	private Supplier<Integer> _numberOfKnowledgeBaseArticlesSupplier;
+
 	@Schema(
 		description = "The number of Knowledge Base folders in this folder."
 	)
 	public Integer getNumberOfKnowledgeBaseFolders() {
+		if (_numberOfKnowledgeBaseFoldersSupplier != null) {
+			numberOfKnowledgeBaseFolders =
+				_numberOfKnowledgeBaseFoldersSupplier.get();
+
+			_numberOfKnowledgeBaseFoldersSupplier = null;
+		}
+
 		return numberOfKnowledgeBaseFolders;
 	}
 
@@ -336,6 +452,8 @@ public class KnowledgeBaseFolder implements Serializable {
 		Integer numberOfKnowledgeBaseFolders) {
 
 		this.numberOfKnowledgeBaseFolders = numberOfKnowledgeBaseFolders;
+
+		_numberOfKnowledgeBaseFoldersSupplier = null;
 	}
 
 	@JsonIgnore
@@ -343,16 +461,17 @@ public class KnowledgeBaseFolder implements Serializable {
 		UnsafeSupplier<Integer, Exception>
 			numberOfKnowledgeBaseFoldersUnsafeSupplier) {
 
-		try {
-			numberOfKnowledgeBaseFolders =
-				numberOfKnowledgeBaseFoldersUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_numberOfKnowledgeBaseFoldersSupplier = () -> {
+			try {
+				return numberOfKnowledgeBaseFoldersUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField(
@@ -361,11 +480,20 @@ public class KnowledgeBaseFolder implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Integer numberOfKnowledgeBaseFolders;
 
+	private Supplier<Integer> _numberOfKnowledgeBaseFoldersSupplier;
+
 	@Schema(
 		description = "The folder's parent Knowledge Base folder, if it exists."
 	)
 	@Valid
 	public ParentKnowledgeBaseFolder getParentKnowledgeBaseFolder() {
+		if (_parentKnowledgeBaseFolderSupplier != null) {
+			parentKnowledgeBaseFolder =
+				_parentKnowledgeBaseFolderSupplier.get();
+
+			_parentKnowledgeBaseFolderSupplier = null;
+		}
+
 		return parentKnowledgeBaseFolder;
 	}
 
@@ -373,6 +501,8 @@ public class KnowledgeBaseFolder implements Serializable {
 		ParentKnowledgeBaseFolder parentKnowledgeBaseFolder) {
 
 		this.parentKnowledgeBaseFolder = parentKnowledgeBaseFolder;
+
+		_parentKnowledgeBaseFolderSupplier = null;
 	}
 
 	@JsonIgnore
@@ -380,16 +510,17 @@ public class KnowledgeBaseFolder implements Serializable {
 		UnsafeSupplier<ParentKnowledgeBaseFolder, Exception>
 			parentKnowledgeBaseFolderUnsafeSupplier) {
 
-		try {
-			parentKnowledgeBaseFolder =
-				parentKnowledgeBaseFolderUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_parentKnowledgeBaseFolderSupplier = () -> {
+			try {
+				return parentKnowledgeBaseFolderUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField(
@@ -398,10 +529,20 @@ public class KnowledgeBaseFolder implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected ParentKnowledgeBaseFolder parentKnowledgeBaseFolder;
 
+	private Supplier<ParentKnowledgeBaseFolder>
+		_parentKnowledgeBaseFolderSupplier;
+
 	@Schema(
 		description = "The ID of the folder's parent Knowledge Base folder, if such a parent folder exists."
 	)
 	public Long getParentKnowledgeBaseFolderId() {
+		if (_parentKnowledgeBaseFolderIdSupplier != null) {
+			parentKnowledgeBaseFolderId =
+				_parentKnowledgeBaseFolderIdSupplier.get();
+
+			_parentKnowledgeBaseFolderIdSupplier = null;
+		}
+
 		return parentKnowledgeBaseFolderId;
 	}
 
@@ -409,6 +550,8 @@ public class KnowledgeBaseFolder implements Serializable {
 		Long parentKnowledgeBaseFolderId) {
 
 		this.parentKnowledgeBaseFolderId = parentKnowledgeBaseFolderId;
+
+		_parentKnowledgeBaseFolderIdSupplier = null;
 	}
 
 	@JsonIgnore
@@ -416,16 +559,17 @@ public class KnowledgeBaseFolder implements Serializable {
 		UnsafeSupplier<Long, Exception>
 			parentKnowledgeBaseFolderIdUnsafeSupplier) {
 
-		try {
-			parentKnowledgeBaseFolderId =
-				parentKnowledgeBaseFolderIdUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_parentKnowledgeBaseFolderIdSupplier = () -> {
+			try {
+				return parentKnowledgeBaseFolderIdUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField(
@@ -434,28 +578,40 @@ public class KnowledgeBaseFolder implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
 	protected Long parentKnowledgeBaseFolderId;
 
+	private Supplier<Long> _parentKnowledgeBaseFolderIdSupplier;
+
 	@Schema(description = "The ID of the site to which this folder is scoped.")
 	public Long getSiteId() {
+		if (_siteIdSupplier != null) {
+			siteId = _siteIdSupplier.get();
+
+			_siteIdSupplier = null;
+		}
+
 		return siteId;
 	}
 
 	public void setSiteId(Long siteId) {
 		this.siteId = siteId;
+
+		_siteIdSupplier = null;
 	}
 
 	@JsonIgnore
 	public void setSiteId(
 		UnsafeSupplier<Long, Exception> siteIdUnsafeSupplier) {
 
-		try {
-			siteId = siteIdUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_siteIdSupplier = () -> {
+			try {
+				return siteIdUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField(
@@ -464,16 +620,26 @@ public class KnowledgeBaseFolder implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Long siteId;
 
+	private Supplier<Long> _siteIdSupplier;
+
 	@Schema(
 		description = "A write-only property that specifies the folder's default permissions."
 	)
 	@Valid
 	public ViewableBy getViewableBy() {
+		if (_viewableBySupplier != null) {
+			viewableBy = _viewableBySupplier.get();
+
+			_viewableBySupplier = null;
+		}
+
 		return viewableBy;
 	}
 
 	@JsonIgnore
 	public String getViewableByAsString() {
+		ViewableBy viewableBy = getViewableBy();
+
 		if (viewableBy == null) {
 			return null;
 		}
@@ -483,21 +649,25 @@ public class KnowledgeBaseFolder implements Serializable {
 
 	public void setViewableBy(ViewableBy viewableBy) {
 		this.viewableBy = viewableBy;
+
+		_viewableBySupplier = null;
 	}
 
 	@JsonIgnore
 	public void setViewableBy(
 		UnsafeSupplier<ViewableBy, Exception> viewableByUnsafeSupplier) {
 
-		try {
-			viewableBy = viewableByUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_viewableBySupplier = () -> {
+			try {
+				return viewableByUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField(
@@ -505,6 +675,8 @@ public class KnowledgeBaseFolder implements Serializable {
 	)
 	@JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
 	protected ViewableBy viewableBy;
+
+	private Supplier<ViewableBy> _viewableBySupplier;
 
 	@Override
 	public boolean equals(Object object) {
@@ -536,6 +708,8 @@ public class KnowledgeBaseFolder implements Serializable {
 		DateFormat liferayToJSONDateFormat = new SimpleDateFormat(
 			"yyyy-MM-dd'T'HH:mm:ss'Z'");
 
+		Map<String, Map<String, String>> actions = getActions();
+
 		if (actions != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -546,6 +720,8 @@ public class KnowledgeBaseFolder implements Serializable {
 			sb.append(_toJSON(actions));
 		}
 
+		Creator creator = getCreator();
+
 		if (creator != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -555,6 +731,8 @@ public class KnowledgeBaseFolder implements Serializable {
 
 			sb.append(String.valueOf(creator));
 		}
+
+		CustomField[] customFields = getCustomFields();
 
 		if (customFields != null) {
 			if (sb.length() > 1) {
@@ -576,6 +754,8 @@ public class KnowledgeBaseFolder implements Serializable {
 			sb.append("]");
 		}
 
+		Date dateCreated = getDateCreated();
+
 		if (dateCreated != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -589,6 +769,8 @@ public class KnowledgeBaseFolder implements Serializable {
 
 			sb.append("\"");
 		}
+
+		Date dateModified = getDateModified();
 
 		if (dateModified != null) {
 			if (sb.length() > 1) {
@@ -604,6 +786,8 @@ public class KnowledgeBaseFolder implements Serializable {
 			sb.append("\"");
 		}
 
+		String description = getDescription();
+
 		if (description != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -618,6 +802,8 @@ public class KnowledgeBaseFolder implements Serializable {
 			sb.append("\"");
 		}
 
+		Long id = getId();
+
 		if (id != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -627,6 +813,8 @@ public class KnowledgeBaseFolder implements Serializable {
 
 			sb.append(id);
 		}
+
+		String name = getName();
 
 		if (name != null) {
 			if (sb.length() > 1) {
@@ -642,6 +830,9 @@ public class KnowledgeBaseFolder implements Serializable {
 			sb.append("\"");
 		}
 
+		Integer numberOfKnowledgeBaseArticles =
+			getNumberOfKnowledgeBaseArticles();
+
 		if (numberOfKnowledgeBaseArticles != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -651,6 +842,9 @@ public class KnowledgeBaseFolder implements Serializable {
 
 			sb.append(numberOfKnowledgeBaseArticles);
 		}
+
+		Integer numberOfKnowledgeBaseFolders =
+			getNumberOfKnowledgeBaseFolders();
 
 		if (numberOfKnowledgeBaseFolders != null) {
 			if (sb.length() > 1) {
@@ -662,6 +856,9 @@ public class KnowledgeBaseFolder implements Serializable {
 			sb.append(numberOfKnowledgeBaseFolders);
 		}
 
+		ParentKnowledgeBaseFolder parentKnowledgeBaseFolder =
+			getParentKnowledgeBaseFolder();
+
 		if (parentKnowledgeBaseFolder != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -671,6 +868,8 @@ public class KnowledgeBaseFolder implements Serializable {
 
 			sb.append(String.valueOf(parentKnowledgeBaseFolder));
 		}
+
+		Long parentKnowledgeBaseFolderId = getParentKnowledgeBaseFolderId();
 
 		if (parentKnowledgeBaseFolderId != null) {
 			if (sb.length() > 1) {
@@ -682,6 +881,8 @@ public class KnowledgeBaseFolder implements Serializable {
 			sb.append(parentKnowledgeBaseFolderId);
 		}
 
+		Long siteId = getSiteId();
+
 		if (siteId != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -691,6 +892,8 @@ public class KnowledgeBaseFolder implements Serializable {
 
 			sb.append(siteId);
 		}
+
+		ViewableBy viewableBy = getViewableBy();
 
 		if (viewableBy != null) {
 			if (sb.length() > 1) {

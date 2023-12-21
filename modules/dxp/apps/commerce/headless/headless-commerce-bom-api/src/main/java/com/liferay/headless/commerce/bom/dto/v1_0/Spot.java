@@ -24,6 +24,7 @@ import java.util.Iterator;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
+import java.util.function.Supplier;
 
 import javax.annotation.Generated;
 
@@ -53,141 +54,201 @@ public class Spot implements Serializable {
 	@DecimalMin("0")
 	@Schema(example = "33130")
 	public Long getId() {
+		if (_idSupplier != null) {
+			id = _idSupplier.get();
+
+			_idSupplier = null;
+		}
+
 		return id;
 	}
 
 	public void setId(Long id) {
 		this.id = id;
+
+		_idSupplier = null;
 	}
 
 	@JsonIgnore
 	public void setId(UnsafeSupplier<Long, Exception> idUnsafeSupplier) {
-		try {
-			id = idUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_idSupplier = () -> {
+			try {
+				return idUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Long id;
 
+	private Supplier<Long> _idSupplier;
+
 	@DecimalMin("0")
 	@Schema(example = "3")
 	public Integer getNumber() {
+		if (_numberSupplier != null) {
+			number = _numberSupplier.get();
+
+			_numberSupplier = null;
+		}
+
 		return number;
 	}
 
 	public void setNumber(Integer number) {
 		this.number = number;
+
+		_numberSupplier = null;
 	}
 
 	@JsonIgnore
 	public void setNumber(
 		UnsafeSupplier<Integer, Exception> numberUnsafeSupplier) {
 
-		try {
-			number = numberUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_numberSupplier = () -> {
+			try {
+				return numberUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Integer number;
 
+	private Supplier<Integer> _numberSupplier;
+
 	@Schema
 	@Valid
 	public Position getPosition() {
+		if (_positionSupplier != null) {
+			position = _positionSupplier.get();
+
+			_positionSupplier = null;
+		}
+
 		return position;
 	}
 
 	public void setPosition(Position position) {
 		this.position = position;
+
+		_positionSupplier = null;
 	}
 
 	@JsonIgnore
 	public void setPosition(
 		UnsafeSupplier<Position, Exception> positionUnsafeSupplier) {
 
-		try {
-			position = positionUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_positionSupplier = () -> {
+			try {
+				return positionUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Position position;
 
+	private Supplier<Position> _positionSupplier;
+
 	@Schema(example = "123e4567-e89b-12d3-a456-426655440000")
 	public String getProductId() {
+		if (_productIdSupplier != null) {
+			productId = _productIdSupplier.get();
+
+			_productIdSupplier = null;
+		}
+
 		return productId;
 	}
 
 	public void setProductId(String productId) {
 		this.productId = productId;
+
+		_productIdSupplier = null;
 	}
 
 	@JsonIgnore
 	public void setProductId(
 		UnsafeSupplier<String, Exception> productIdUnsafeSupplier) {
 
-		try {
-			productId = productIdUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_productIdSupplier = () -> {
+			try {
+				return productIdUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String productId;
 
+	private Supplier<String> _productIdSupplier;
+
 	@Schema(example = "SKU01")
 	public String getSku() {
+		if (_skuSupplier != null) {
+			sku = _skuSupplier.get();
+
+			_skuSupplier = null;
+		}
+
 		return sku;
 	}
 
 	public void setSku(String sku) {
 		this.sku = sku;
+
+		_skuSupplier = null;
 	}
 
 	@JsonIgnore
 	public void setSku(UnsafeSupplier<String, Exception> skuUnsafeSupplier) {
-		try {
-			sku = skuUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_skuSupplier = () -> {
+			try {
+				return skuUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String sku;
+
+	private Supplier<String> _skuSupplier;
 
 	@Override
 	public boolean equals(Object object) {
@@ -216,6 +277,8 @@ public class Spot implements Serializable {
 
 		sb.append("{");
 
+		Long id = getId();
+
 		if (id != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -225,6 +288,8 @@ public class Spot implements Serializable {
 
 			sb.append(id);
 		}
+
+		Integer number = getNumber();
 
 		if (number != null) {
 			if (sb.length() > 1) {
@@ -236,6 +301,8 @@ public class Spot implements Serializable {
 			sb.append(number);
 		}
 
+		Position position = getPosition();
+
 		if (position != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -245,6 +312,8 @@ public class Spot implements Serializable {
 
 			sb.append(String.valueOf(position));
 		}
+
+		String productId = getProductId();
 
 		if (productId != null) {
 			if (sb.length() > 1) {
@@ -259,6 +328,8 @@ public class Spot implements Serializable {
 
 			sb.append("\"");
 		}
+
+		String sku = getSku();
 
 		if (sku != null) {
 			if (sb.length() > 1) {

@@ -24,6 +24,7 @@ import java.util.Iterator;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
+import java.util.function.Supplier;
 
 import javax.annotation.Generated;
 
@@ -54,56 +55,78 @@ public class RenderedContent implements Serializable {
 
 	@Schema(description = "An absolute URL to the rendered content.")
 	public String getRenderedContentURL() {
+		if (_renderedContentURLSupplier != null) {
+			renderedContentURL = _renderedContentURLSupplier.get();
+
+			_renderedContentURLSupplier = null;
+		}
+
 		return renderedContentURL;
 	}
 
 	public void setRenderedContentURL(String renderedContentURL) {
 		this.renderedContentURL = renderedContentURL;
+
+		_renderedContentURLSupplier = null;
 	}
 
 	@JsonIgnore
 	public void setRenderedContentURL(
 		UnsafeSupplier<String, Exception> renderedContentURLUnsafeSupplier) {
 
-		try {
-			renderedContentURL = renderedContentURLUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_renderedContentURLSupplier = () -> {
+			try {
+				return renderedContentURLUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField(description = "An absolute URL to the rendered content.")
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String renderedContentURL;
 
+	private Supplier<String> _renderedContentURLSupplier;
+
 	@Schema(
 		description = "optional field with the rendered content, can be embedded with nestedFields"
 	)
 	public String getRenderedContentValue() {
+		if (_renderedContentValueSupplier != null) {
+			renderedContentValue = _renderedContentValueSupplier.get();
+
+			_renderedContentValueSupplier = null;
+		}
+
 		return renderedContentValue;
 	}
 
 	public void setRenderedContentValue(String renderedContentValue) {
 		this.renderedContentValue = renderedContentValue;
+
+		_renderedContentValueSupplier = null;
 	}
 
 	@JsonIgnore
 	public void setRenderedContentValue(
 		UnsafeSupplier<String, Exception> renderedContentValueUnsafeSupplier) {
 
-		try {
-			renderedContentValue = renderedContentValueUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_renderedContentValueSupplier = () -> {
+			try {
+				return renderedContentValueUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField(
@@ -112,30 +135,42 @@ public class RenderedContent implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String renderedContentValue;
 
+	private Supplier<String> _renderedContentValueSupplier;
+
 	@Schema(
 		description = "The name of the template used to render the content."
 	)
 	public String getTemplateName() {
+		if (_templateNameSupplier != null) {
+			templateName = _templateNameSupplier.get();
+
+			_templateNameSupplier = null;
+		}
+
 		return templateName;
 	}
 
 	public void setTemplateName(String templateName) {
 		this.templateName = templateName;
+
+		_templateNameSupplier = null;
 	}
 
 	@JsonIgnore
 	public void setTemplateName(
 		UnsafeSupplier<String, Exception> templateNameUnsafeSupplier) {
 
-		try {
-			templateName = templateNameUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_templateNameSupplier = () -> {
+			try {
+				return templateNameUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField(
@@ -144,14 +179,24 @@ public class RenderedContent implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String templateName;
 
+	private Supplier<String> _templateNameSupplier;
+
 	@Schema
 	@Valid
 	public Map<String, String> getTemplateName_i18n() {
+		if (_templateName_i18nSupplier != null) {
+			templateName_i18n = _templateName_i18nSupplier.get();
+
+			_templateName_i18nSupplier = null;
+		}
+
 		return templateName_i18n;
 	}
 
 	public void setTemplateName_i18n(Map<String, String> templateName_i18n) {
 		this.templateName_i18n = templateName_i18n;
+
+		_templateName_i18nSupplier = null;
 	}
 
 	@JsonIgnore
@@ -159,20 +204,24 @@ public class RenderedContent implements Serializable {
 		UnsafeSupplier<Map<String, String>, Exception>
 			templateName_i18nUnsafeSupplier) {
 
-		try {
-			templateName_i18n = templateName_i18nUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_templateName_i18nSupplier = () -> {
+			try {
+				return templateName_i18nUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Map<String, String> templateName_i18n;
+
+	private Supplier<Map<String, String>> _templateName_i18nSupplier;
 
 	@Override
 	public boolean equals(Object object) {
@@ -201,6 +250,8 @@ public class RenderedContent implements Serializable {
 
 		sb.append("{");
 
+		String renderedContentURL = getRenderedContentURL();
+
 		if (renderedContentURL != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -214,6 +265,8 @@ public class RenderedContent implements Serializable {
 
 			sb.append("\"");
 		}
+
+		String renderedContentValue = getRenderedContentValue();
 
 		if (renderedContentValue != null) {
 			if (sb.length() > 1) {
@@ -229,6 +282,8 @@ public class RenderedContent implements Serializable {
 			sb.append("\"");
 		}
 
+		String templateName = getTemplateName();
+
 		if (templateName != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -242,6 +297,8 @@ public class RenderedContent implements Serializable {
 
 			sb.append("\"");
 		}
+
+		Map<String, String> templateName_i18n = getTemplateName_i18n();
 
 		if (templateName_i18n != null) {
 			if (sb.length() > 1) {

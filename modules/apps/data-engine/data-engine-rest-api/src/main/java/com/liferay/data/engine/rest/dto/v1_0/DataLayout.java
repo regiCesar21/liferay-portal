@@ -28,6 +28,7 @@ import java.util.Iterator;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
+import java.util.function.Supplier;
 
 import javax.annotation.Generated;
 
@@ -55,68 +56,100 @@ public class DataLayout implements Serializable {
 
 	@Schema
 	public Long getDataDefinitionId() {
+		if (_dataDefinitionIdSupplier != null) {
+			dataDefinitionId = _dataDefinitionIdSupplier.get();
+
+			_dataDefinitionIdSupplier = null;
+		}
+
 		return dataDefinitionId;
 	}
 
 	public void setDataDefinitionId(Long dataDefinitionId) {
 		this.dataDefinitionId = dataDefinitionId;
+
+		_dataDefinitionIdSupplier = null;
 	}
 
 	@JsonIgnore
 	public void setDataDefinitionId(
 		UnsafeSupplier<Long, Exception> dataDefinitionIdUnsafeSupplier) {
 
-		try {
-			dataDefinitionId = dataDefinitionIdUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_dataDefinitionIdSupplier = () -> {
+			try {
+				return dataDefinitionIdUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Long dataDefinitionId;
 
+	private Supplier<Long> _dataDefinitionIdSupplier;
+
 	@Schema
 	public String getDataLayoutKey() {
+		if (_dataLayoutKeySupplier != null) {
+			dataLayoutKey = _dataLayoutKeySupplier.get();
+
+			_dataLayoutKeySupplier = null;
+		}
+
 		return dataLayoutKey;
 	}
 
 	public void setDataLayoutKey(String dataLayoutKey) {
 		this.dataLayoutKey = dataLayoutKey;
+
+		_dataLayoutKeySupplier = null;
 	}
 
 	@JsonIgnore
 	public void setDataLayoutKey(
 		UnsafeSupplier<String, Exception> dataLayoutKeyUnsafeSupplier) {
 
-		try {
-			dataLayoutKey = dataLayoutKeyUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_dataLayoutKeySupplier = () -> {
+			try {
+				return dataLayoutKeyUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String dataLayoutKey;
 
+	private Supplier<String> _dataLayoutKeySupplier;
+
 	@Schema
 	@Valid
 	public DataLayoutPage[] getDataLayoutPages() {
+		if (_dataLayoutPagesSupplier != null) {
+			dataLayoutPages = _dataLayoutPagesSupplier.get();
+
+			_dataLayoutPagesSupplier = null;
+		}
+
 		return dataLayoutPages;
 	}
 
 	public void setDataLayoutPages(DataLayoutPage[] dataLayoutPages) {
 		this.dataLayoutPages = dataLayoutPages;
+
+		_dataLayoutPagesSupplier = null;
 	}
 
 	@JsonIgnore
@@ -124,85 +157,121 @@ public class DataLayout implements Serializable {
 		UnsafeSupplier<DataLayoutPage[], Exception>
 			dataLayoutPagesUnsafeSupplier) {
 
-		try {
-			dataLayoutPages = dataLayoutPagesUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_dataLayoutPagesSupplier = () -> {
+			try {
+				return dataLayoutPagesUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected DataLayoutPage[] dataLayoutPages;
 
+	private Supplier<DataLayoutPage[]> _dataLayoutPagesSupplier;
+
 	@Schema
 	public Date getDateCreated() {
+		if (_dateCreatedSupplier != null) {
+			dateCreated = _dateCreatedSupplier.get();
+
+			_dateCreatedSupplier = null;
+		}
+
 		return dateCreated;
 	}
 
 	public void setDateCreated(Date dateCreated) {
 		this.dateCreated = dateCreated;
+
+		_dateCreatedSupplier = null;
 	}
 
 	@JsonIgnore
 	public void setDateCreated(
 		UnsafeSupplier<Date, Exception> dateCreatedUnsafeSupplier) {
 
-		try {
-			dateCreated = dateCreatedUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_dateCreatedSupplier = () -> {
+			try {
+				return dateCreatedUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Date dateCreated;
 
+	private Supplier<Date> _dateCreatedSupplier;
+
 	@Schema
 	public Date getDateModified() {
+		if (_dateModifiedSupplier != null) {
+			dateModified = _dateModifiedSupplier.get();
+
+			_dateModifiedSupplier = null;
+		}
+
 		return dateModified;
 	}
 
 	public void setDateModified(Date dateModified) {
 		this.dateModified = dateModified;
+
+		_dateModifiedSupplier = null;
 	}
 
 	@JsonIgnore
 	public void setDateModified(
 		UnsafeSupplier<Date, Exception> dateModifiedUnsafeSupplier) {
 
-		try {
-			dateModified = dateModifiedUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_dateModifiedSupplier = () -> {
+			try {
+				return dateModifiedUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Date dateModified;
 
+	private Supplier<Date> _dateModifiedSupplier;
+
 	@Schema
 	@Valid
 	public Map<String, Object> getDescription() {
+		if (_descriptionSupplier != null) {
+			description = _descriptionSupplier.get();
+
+			_descriptionSupplier = null;
+		}
+
 		return description;
 	}
 
 	public void setDescription(Map<String, Object> description) {
 		this.description = description;
+
+		_descriptionSupplier = null;
 	}
 
 	@JsonIgnore
@@ -210,159 +279,223 @@ public class DataLayout implements Serializable {
 		UnsafeSupplier<Map<String, Object>, Exception>
 			descriptionUnsafeSupplier) {
 
-		try {
-			description = descriptionUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_descriptionSupplier = () -> {
+			try {
+				return descriptionUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Map<String, Object> description;
 
+	private Supplier<Map<String, Object>> _descriptionSupplier;
+
 	@Schema
 	public Long getId() {
+		if (_idSupplier != null) {
+			id = _idSupplier.get();
+
+			_idSupplier = null;
+		}
+
 		return id;
 	}
 
 	public void setId(Long id) {
 		this.id = id;
+
+		_idSupplier = null;
 	}
 
 	@JsonIgnore
 	public void setId(UnsafeSupplier<Long, Exception> idUnsafeSupplier) {
-		try {
-			id = idUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_idSupplier = () -> {
+			try {
+				return idUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Long id;
 
+	private Supplier<Long> _idSupplier;
+
 	@Schema
 	@Valid
 	public Map<String, Object> getName() {
+		if (_nameSupplier != null) {
+			name = _nameSupplier.get();
+
+			_nameSupplier = null;
+		}
+
 		return name;
 	}
 
 	public void setName(Map<String, Object> name) {
 		this.name = name;
+
+		_nameSupplier = null;
 	}
 
 	@JsonIgnore
 	public void setName(
 		UnsafeSupplier<Map<String, Object>, Exception> nameUnsafeSupplier) {
 
-		try {
-			name = nameUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_nameSupplier = () -> {
+			try {
+				return nameUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Map<String, Object> name;
 
+	private Supplier<Map<String, Object>> _nameSupplier;
+
 	@Schema
 	public String getPaginationMode() {
+		if (_paginationModeSupplier != null) {
+			paginationMode = _paginationModeSupplier.get();
+
+			_paginationModeSupplier = null;
+		}
+
 		return paginationMode;
 	}
 
 	public void setPaginationMode(String paginationMode) {
 		this.paginationMode = paginationMode;
+
+		_paginationModeSupplier = null;
 	}
 
 	@JsonIgnore
 	public void setPaginationMode(
 		UnsafeSupplier<String, Exception> paginationModeUnsafeSupplier) {
 
-		try {
-			paginationMode = paginationModeUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_paginationModeSupplier = () -> {
+			try {
+				return paginationModeUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String paginationMode;
 
+	private Supplier<String> _paginationModeSupplier;
+
 	@Schema
 	public Long getSiteId() {
+		if (_siteIdSupplier != null) {
+			siteId = _siteIdSupplier.get();
+
+			_siteIdSupplier = null;
+		}
+
 		return siteId;
 	}
 
 	public void setSiteId(Long siteId) {
 		this.siteId = siteId;
+
+		_siteIdSupplier = null;
 	}
 
 	@JsonIgnore
 	public void setSiteId(
 		UnsafeSupplier<Long, Exception> siteIdUnsafeSupplier) {
 
-		try {
-			siteId = siteIdUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_siteIdSupplier = () -> {
+			try {
+				return siteIdUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Long siteId;
 
+	private Supplier<Long> _siteIdSupplier;
+
 	@Schema
 	public Long getUserId() {
+		if (_userIdSupplier != null) {
+			userId = _userIdSupplier.get();
+
+			_userIdSupplier = null;
+		}
+
 		return userId;
 	}
 
 	public void setUserId(Long userId) {
 		this.userId = userId;
+
+		_userIdSupplier = null;
 	}
 
 	@JsonIgnore
 	public void setUserId(
 		UnsafeSupplier<Long, Exception> userIdUnsafeSupplier) {
 
-		try {
-			userId = userIdUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_userIdSupplier = () -> {
+			try {
+				return userIdUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Long userId;
+
+	private Supplier<Long> _userIdSupplier;
 
 	@Override
 	public boolean equals(Object object) {
@@ -394,6 +527,8 @@ public class DataLayout implements Serializable {
 		DateFormat liferayToJSONDateFormat = new SimpleDateFormat(
 			"yyyy-MM-dd'T'HH:mm:ss'Z'");
 
+		Long dataDefinitionId = getDataDefinitionId();
+
 		if (dataDefinitionId != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -403,6 +538,8 @@ public class DataLayout implements Serializable {
 
 			sb.append(dataDefinitionId);
 		}
+
+		String dataLayoutKey = getDataLayoutKey();
 
 		if (dataLayoutKey != null) {
 			if (sb.length() > 1) {
@@ -417,6 +554,8 @@ public class DataLayout implements Serializable {
 
 			sb.append("\"");
 		}
+
+		DataLayoutPage[] dataLayoutPages = getDataLayoutPages();
 
 		if (dataLayoutPages != null) {
 			if (sb.length() > 1) {
@@ -438,6 +577,8 @@ public class DataLayout implements Serializable {
 			sb.append("]");
 		}
 
+		Date dateCreated = getDateCreated();
+
 		if (dateCreated != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -451,6 +592,8 @@ public class DataLayout implements Serializable {
 
 			sb.append("\"");
 		}
+
+		Date dateModified = getDateModified();
 
 		if (dateModified != null) {
 			if (sb.length() > 1) {
@@ -466,6 +609,8 @@ public class DataLayout implements Serializable {
 			sb.append("\"");
 		}
 
+		Map<String, Object> description = getDescription();
+
 		if (description != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -475,6 +620,8 @@ public class DataLayout implements Serializable {
 
 			sb.append(_toJSON(description));
 		}
+
+		Long id = getId();
 
 		if (id != null) {
 			if (sb.length() > 1) {
@@ -486,6 +633,8 @@ public class DataLayout implements Serializable {
 			sb.append(id);
 		}
 
+		Map<String, Object> name = getName();
+
 		if (name != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -495,6 +644,8 @@ public class DataLayout implements Serializable {
 
 			sb.append(_toJSON(name));
 		}
+
+		String paginationMode = getPaginationMode();
 
 		if (paginationMode != null) {
 			if (sb.length() > 1) {
@@ -510,6 +661,8 @@ public class DataLayout implements Serializable {
 			sb.append("\"");
 		}
 
+		Long siteId = getSiteId();
+
 		if (siteId != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -519,6 +672,8 @@ public class DataLayout implements Serializable {
 
 			sb.append(siteId);
 		}
+
+		Long userId = getUserId();
 
 		if (userId != null) {
 			if (sb.length() > 1) {

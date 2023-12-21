@@ -30,6 +30,7 @@ import java.util.Iterator;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
+import java.util.function.Supplier;
 
 import javax.annotation.Generated;
 
@@ -62,34 +63,53 @@ public class Order implements Serializable {
 	@Schema
 	@Valid
 	public Account getAccount() {
+		if (_accountSupplier != null) {
+			account = _accountSupplier.get();
+
+			_accountSupplier = null;
+		}
+
 		return account;
 	}
 
 	public void setAccount(Account account) {
 		this.account = account;
+
+		_accountSupplier = null;
 	}
 
 	@JsonIgnore
 	public void setAccount(
 		UnsafeSupplier<Account, Exception> accountUnsafeSupplier) {
 
-		try {
-			account = accountUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_accountSupplier = () -> {
+			try {
+				return accountUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Account account;
 
+	private Supplier<Account> _accountSupplier;
+
 	@Schema(example = "AAB-34098-789-N")
 	public String getAccountExternalReferenceCode() {
+		if (_accountExternalReferenceCodeSupplier != null) {
+			accountExternalReferenceCode =
+				_accountExternalReferenceCodeSupplier.get();
+
+			_accountExternalReferenceCodeSupplier = null;
+		}
+
 		return accountExternalReferenceCode;
 	}
 
@@ -97,6 +117,8 @@ public class Order implements Serializable {
 		String accountExternalReferenceCode) {
 
 		this.accountExternalReferenceCode = accountExternalReferenceCode;
+
+		_accountExternalReferenceCodeSupplier = null;
 	}
 
 	@JsonIgnore
@@ -104,59 +126,82 @@ public class Order implements Serializable {
 		UnsafeSupplier<String, Exception>
 			accountExternalReferenceCodeUnsafeSupplier) {
 
-		try {
-			accountExternalReferenceCode =
-				accountExternalReferenceCodeUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_accountExternalReferenceCodeSupplier = () -> {
+			try {
+				return accountExternalReferenceCodeUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String accountExternalReferenceCode;
 
+	private Supplier<String> _accountExternalReferenceCodeSupplier;
+
 	@DecimalMin("0")
 	@Schema(example = "30130")
 	public Long getAccountId() {
+		if (_accountIdSupplier != null) {
+			accountId = _accountIdSupplier.get();
+
+			_accountIdSupplier = null;
+		}
+
 		return accountId;
 	}
 
 	public void setAccountId(Long accountId) {
 		this.accountId = accountId;
+
+		_accountIdSupplier = null;
 	}
 
 	@JsonIgnore
 	public void setAccountId(
 		UnsafeSupplier<Long, Exception> accountIdUnsafeSupplier) {
 
-		try {
-			accountId = accountIdUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_accountIdSupplier = () -> {
+			try {
+				return accountIdUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Long accountId;
 
+	private Supplier<Long> _accountIdSupplier;
+
 	@Schema
 	@Valid
 	public Map<String, Map<String, String>> getActions() {
+		if (_actionsSupplier != null) {
+			actions = _actionsSupplier.get();
+
+			_actionsSupplier = null;
+		}
+
 		return actions;
 	}
 
 	public void setActions(Map<String, Map<String, String>> actions) {
 		this.actions = actions;
+
+		_actionsSupplier = null;
 	}
 
 	@JsonIgnore
@@ -164,57 +209,81 @@ public class Order implements Serializable {
 		UnsafeSupplier<Map<String, Map<String, String>>, Exception>
 			actionsUnsafeSupplier) {
 
-		try {
-			actions = actionsUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_actionsSupplier = () -> {
+			try {
+				return actionsUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Map<String, Map<String, String>> actions;
 
+	private Supplier<Map<String, Map<String, String>>> _actionsSupplier;
+
 	@Schema(example = "trasmitted")
 	public String getAdvanceStatus() {
+		if (_advanceStatusSupplier != null) {
+			advanceStatus = _advanceStatusSupplier.get();
+
+			_advanceStatusSupplier = null;
+		}
+
 		return advanceStatus;
 	}
 
 	public void setAdvanceStatus(String advanceStatus) {
 		this.advanceStatus = advanceStatus;
+
+		_advanceStatusSupplier = null;
 	}
 
 	@JsonIgnore
 	public void setAdvanceStatus(
 		UnsafeSupplier<String, Exception> advanceStatusUnsafeSupplier) {
 
-		try {
-			advanceStatus = advanceStatusUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_advanceStatusSupplier = () -> {
+			try {
+				return advanceStatusUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String advanceStatus;
 
+	private Supplier<String> _advanceStatusSupplier;
+
 	@Schema
 	@Valid
 	public BillingAddress getBillingAddress() {
+		if (_billingAddressSupplier != null) {
+			billingAddress = _billingAddressSupplier.get();
+
+			_billingAddressSupplier = null;
+		}
+
 		return billingAddress;
 	}
 
 	public void setBillingAddress(BillingAddress billingAddress) {
 		this.billingAddress = billingAddress;
+
+		_billingAddressSupplier = null;
 	}
 
 	@JsonIgnore
@@ -222,81 +291,116 @@ public class Order implements Serializable {
 		UnsafeSupplier<BillingAddress, Exception>
 			billingAddressUnsafeSupplier) {
 
-		try {
-			billingAddress = billingAddressUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_billingAddressSupplier = () -> {
+			try {
+				return billingAddressUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected BillingAddress billingAddress;
 
+	private Supplier<BillingAddress> _billingAddressSupplier;
+
 	@DecimalMin("0")
 	@Schema(example = "31130")
 	public Long getBillingAddressId() {
+		if (_billingAddressIdSupplier != null) {
+			billingAddressId = _billingAddressIdSupplier.get();
+
+			_billingAddressIdSupplier = null;
+		}
+
 		return billingAddressId;
 	}
 
 	public void setBillingAddressId(Long billingAddressId) {
 		this.billingAddressId = billingAddressId;
+
+		_billingAddressIdSupplier = null;
 	}
 
 	@JsonIgnore
 	public void setBillingAddressId(
 		UnsafeSupplier<Long, Exception> billingAddressIdUnsafeSupplier) {
 
-		try {
-			billingAddressId = billingAddressIdUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_billingAddressIdSupplier = () -> {
+			try {
+				return billingAddressIdUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Long billingAddressId;
 
+	private Supplier<Long> _billingAddressIdSupplier;
+
 	@Schema
 	@Valid
 	public Channel getChannel() {
+		if (_channelSupplier != null) {
+			channel = _channelSupplier.get();
+
+			_channelSupplier = null;
+		}
+
 		return channel;
 	}
 
 	public void setChannel(Channel channel) {
 		this.channel = channel;
+
+		_channelSupplier = null;
 	}
 
 	@JsonIgnore
 	public void setChannel(
 		UnsafeSupplier<Channel, Exception> channelUnsafeSupplier) {
 
-		try {
-			channel = channelUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_channelSupplier = () -> {
+			try {
+				return channelUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Channel channel;
 
+	private Supplier<Channel> _channelSupplier;
+
 	@Schema(example = "AAB-34098-789-N")
 	public String getChannelExternalReferenceCode() {
+		if (_channelExternalReferenceCodeSupplier != null) {
+			channelExternalReferenceCode =
+				_channelExternalReferenceCodeSupplier.get();
+
+			_channelExternalReferenceCodeSupplier = null;
+		}
+
 		return channelExternalReferenceCode;
 	}
 
@@ -304,6 +408,8 @@ public class Order implements Serializable {
 		String channelExternalReferenceCode) {
 
 		this.channelExternalReferenceCode = channelExternalReferenceCode;
+
+		_channelExternalReferenceCodeSupplier = null;
 	}
 
 	@JsonIgnore
@@ -311,45 +417,58 @@ public class Order implements Serializable {
 		UnsafeSupplier<String, Exception>
 			channelExternalReferenceCodeUnsafeSupplier) {
 
-		try {
-			channelExternalReferenceCode =
-				channelExternalReferenceCodeUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_channelExternalReferenceCodeSupplier = () -> {
+			try {
+				return channelExternalReferenceCodeUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String channelExternalReferenceCode;
 
+	private Supplier<String> _channelExternalReferenceCodeSupplier;
+
 	@DecimalMin("0")
 	@Schema(example = "30130")
 	public Long getChannelId() {
+		if (_channelIdSupplier != null) {
+			channelId = _channelIdSupplier.get();
+
+			_channelIdSupplier = null;
+		}
+
 		return channelId;
 	}
 
 	public void setChannelId(Long channelId) {
 		this.channelId = channelId;
+
+		_channelIdSupplier = null;
 	}
 
 	@JsonIgnore
 	public void setChannelId(
 		UnsafeSupplier<Long, Exception> channelIdUnsafeSupplier) {
 
-		try {
-			channelId = channelIdUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_channelIdSupplier = () -> {
+			try {
+				return channelIdUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField
@@ -357,84 +476,120 @@ public class Order implements Serializable {
 	@NotNull
 	protected Long channelId;
 
+	private Supplier<Long> _channelIdSupplier;
+
 	@Schema(example = "save20")
 	public String getCouponCode() {
+		if (_couponCodeSupplier != null) {
+			couponCode = _couponCodeSupplier.get();
+
+			_couponCodeSupplier = null;
+		}
+
 		return couponCode;
 	}
 
 	public void setCouponCode(String couponCode) {
 		this.couponCode = couponCode;
+
+		_couponCodeSupplier = null;
 	}
 
 	@JsonIgnore
 	public void setCouponCode(
 		UnsafeSupplier<String, Exception> couponCodeUnsafeSupplier) {
 
-		try {
-			couponCode = couponCodeUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_couponCodeSupplier = () -> {
+			try {
+				return couponCodeUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String couponCode;
 
+	private Supplier<String> _couponCodeSupplier;
+
 	@Schema(example = "2017-07-21")
 	public Date getCreateDate() {
+		if (_createDateSupplier != null) {
+			createDate = _createDateSupplier.get();
+
+			_createDateSupplier = null;
+		}
+
 		return createDate;
 	}
 
 	public void setCreateDate(Date createDate) {
 		this.createDate = createDate;
+
+		_createDateSupplier = null;
 	}
 
 	@JsonIgnore
 	public void setCreateDate(
 		UnsafeSupplier<Date, Exception> createDateUnsafeSupplier) {
 
-		try {
-			createDate = createDateUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_createDateSupplier = () -> {
+			try {
+				return createDateUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Date createDate;
 
+	private Supplier<Date> _createDateSupplier;
+
 	@Schema(example = "USD")
 	public String getCurrencyCode() {
+		if (_currencyCodeSupplier != null) {
+			currencyCode = _currencyCodeSupplier.get();
+
+			_currencyCodeSupplier = null;
+		}
+
 		return currencyCode;
 	}
 
 	public void setCurrencyCode(String currencyCode) {
 		this.currencyCode = currencyCode;
+
+		_currencyCodeSupplier = null;
 	}
 
 	@JsonIgnore
 	public void setCurrencyCode(
 		UnsafeSupplier<String, Exception> currencyCodeUnsafeSupplier) {
 
-		try {
-			currencyCode = currencyCodeUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_currencyCodeSupplier = () -> {
+			try {
+				return currencyCodeUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField
@@ -442,439 +597,629 @@ public class Order implements Serializable {
 	@NotEmpty
 	protected String currencyCode;
 
+	private Supplier<String> _currencyCodeSupplier;
+
 	@Schema
 	@Valid
 	public Map<String, ?> getCustomFields() {
+		if (_customFieldsSupplier != null) {
+			customFields = _customFieldsSupplier.get();
+
+			_customFieldsSupplier = null;
+		}
+
 		return customFields;
 	}
 
 	public void setCustomFields(Map<String, ?> customFields) {
 		this.customFields = customFields;
+
+		_customFieldsSupplier = null;
 	}
 
 	@JsonIgnore
 	public void setCustomFields(
 		UnsafeSupplier<Map<String, ?>, Exception> customFieldsUnsafeSupplier) {
 
-		try {
-			customFields = customFieldsUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_customFieldsSupplier = () -> {
+			try {
+				return customFieldsUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Map<String, ?> customFields;
 
+	private Supplier<Map<String, ?>> _customFieldsSupplier;
+
 	@Schema(example = "AB-34098-789-N")
 	public String getExternalReferenceCode() {
+		if (_externalReferenceCodeSupplier != null) {
+			externalReferenceCode = _externalReferenceCodeSupplier.get();
+
+			_externalReferenceCodeSupplier = null;
+		}
+
 		return externalReferenceCode;
 	}
 
 	public void setExternalReferenceCode(String externalReferenceCode) {
 		this.externalReferenceCode = externalReferenceCode;
+
+		_externalReferenceCodeSupplier = null;
 	}
 
 	@JsonIgnore
 	public void setExternalReferenceCode(
 		UnsafeSupplier<String, Exception> externalReferenceCodeUnsafeSupplier) {
 
-		try {
-			externalReferenceCode = externalReferenceCodeUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_externalReferenceCodeSupplier = () -> {
+			try {
+				return externalReferenceCodeUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String externalReferenceCode;
 
+	private Supplier<String> _externalReferenceCodeSupplier;
+
 	@DecimalMin("0")
 	@Schema(example = "30130")
 	public Long getId() {
+		if (_idSupplier != null) {
+			id = _idSupplier.get();
+
+			_idSupplier = null;
+		}
+
 		return id;
 	}
 
 	public void setId(Long id) {
 		this.id = id;
+
+		_idSupplier = null;
 	}
 
 	@JsonIgnore
 	public void setId(UnsafeSupplier<Long, Exception> idUnsafeSupplier) {
-		try {
-			id = idUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_idSupplier = () -> {
+			try {
+				return idUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Long id;
 
+	private Supplier<Long> _idSupplier;
+
 	@Schema(example = "2017-07-21")
 	public Date getLastPriceUpdateDate() {
+		if (_lastPriceUpdateDateSupplier != null) {
+			lastPriceUpdateDate = _lastPriceUpdateDateSupplier.get();
+
+			_lastPriceUpdateDateSupplier = null;
+		}
+
 		return lastPriceUpdateDate;
 	}
 
 	public void setLastPriceUpdateDate(Date lastPriceUpdateDate) {
 		this.lastPriceUpdateDate = lastPriceUpdateDate;
+
+		_lastPriceUpdateDateSupplier = null;
 	}
 
 	@JsonIgnore
 	public void setLastPriceUpdateDate(
 		UnsafeSupplier<Date, Exception> lastPriceUpdateDateUnsafeSupplier) {
 
-		try {
-			lastPriceUpdateDate = lastPriceUpdateDateUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_lastPriceUpdateDateSupplier = () -> {
+			try {
+				return lastPriceUpdateDateUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Date lastPriceUpdateDate;
 
+	private Supplier<Date> _lastPriceUpdateDateSupplier;
+
 	@Schema(example = "2017-08-21")
 	public Date getModifiedDate() {
+		if (_modifiedDateSupplier != null) {
+			modifiedDate = _modifiedDateSupplier.get();
+
+			_modifiedDateSupplier = null;
+		}
+
 		return modifiedDate;
 	}
 
 	public void setModifiedDate(Date modifiedDate) {
 		this.modifiedDate = modifiedDate;
+
+		_modifiedDateSupplier = null;
 	}
 
 	@JsonIgnore
 	public void setModifiedDate(
 		UnsafeSupplier<Date, Exception> modifiedDateUnsafeSupplier) {
 
-		try {
-			modifiedDate = modifiedDateUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_modifiedDateSupplier = () -> {
+			try {
+				return modifiedDateUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Date modifiedDate;
 
+	private Supplier<Date> _modifiedDateSupplier;
+
 	@Schema(example = "2017-07-21")
 	public Date getOrderDate() {
+		if (_orderDateSupplier != null) {
+			orderDate = _orderDateSupplier.get();
+
+			_orderDateSupplier = null;
+		}
+
 		return orderDate;
 	}
 
 	public void setOrderDate(Date orderDate) {
 		this.orderDate = orderDate;
+
+		_orderDateSupplier = null;
 	}
 
 	@JsonIgnore
 	public void setOrderDate(
 		UnsafeSupplier<Date, Exception> orderDateUnsafeSupplier) {
 
-		try {
-			orderDate = orderDateUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_orderDateSupplier = () -> {
+			try {
+				return orderDateUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Date orderDate;
 
+	private Supplier<Date> _orderDateSupplier;
+
 	@Schema
 	@Valid
 	public OrderItem[] getOrderItems() {
+		if (_orderItemsSupplier != null) {
+			orderItems = _orderItemsSupplier.get();
+
+			_orderItemsSupplier = null;
+		}
+
 		return orderItems;
 	}
 
 	public void setOrderItems(OrderItem[] orderItems) {
 		this.orderItems = orderItems;
+
+		_orderItemsSupplier = null;
 	}
 
 	@JsonIgnore
 	public void setOrderItems(
 		UnsafeSupplier<OrderItem[], Exception> orderItemsUnsafeSupplier) {
 
-		try {
-			orderItems = orderItemsUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_orderItemsSupplier = () -> {
+			try {
+				return orderItemsUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected OrderItem[] orderItems;
 
+	private Supplier<OrderItem[]> _orderItemsSupplier;
+
 	@DecimalMin("0")
 	@Schema(example = "0")
 	public Integer getOrderStatus() {
+		if (_orderStatusSupplier != null) {
+			orderStatus = _orderStatusSupplier.get();
+
+			_orderStatusSupplier = null;
+		}
+
 		return orderStatus;
 	}
 
 	public void setOrderStatus(Integer orderStatus) {
 		this.orderStatus = orderStatus;
+
+		_orderStatusSupplier = null;
 	}
 
 	@JsonIgnore
 	public void setOrderStatus(
 		UnsafeSupplier<Integer, Exception> orderStatusUnsafeSupplier) {
 
-		try {
-			orderStatus = orderStatusUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_orderStatusSupplier = () -> {
+			try {
+				return orderStatusUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Integer orderStatus;
 
+	private Supplier<Integer> _orderStatusSupplier;
+
 	@Schema
 	@Valid
 	public Status getOrderStatusInfo() {
+		if (_orderStatusInfoSupplier != null) {
+			orderStatusInfo = _orderStatusInfoSupplier.get();
+
+			_orderStatusInfoSupplier = null;
+		}
+
 		return orderStatusInfo;
 	}
 
 	public void setOrderStatusInfo(Status orderStatusInfo) {
 		this.orderStatusInfo = orderStatusInfo;
+
+		_orderStatusInfoSupplier = null;
 	}
 
 	@JsonIgnore
 	public void setOrderStatusInfo(
 		UnsafeSupplier<Status, Exception> orderStatusInfoUnsafeSupplier) {
 
-		try {
-			orderStatusInfo = orderStatusInfoUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_orderStatusInfoSupplier = () -> {
+			try {
+				return orderStatusInfoUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Status orderStatusInfo;
 
+	private Supplier<Status> _orderStatusInfoSupplier;
+
 	@Schema(example = "paypal")
 	public String getPaymentMethod() {
+		if (_paymentMethodSupplier != null) {
+			paymentMethod = _paymentMethodSupplier.get();
+
+			_paymentMethodSupplier = null;
+		}
+
 		return paymentMethod;
 	}
 
 	public void setPaymentMethod(String paymentMethod) {
 		this.paymentMethod = paymentMethod;
+
+		_paymentMethodSupplier = null;
 	}
 
 	@JsonIgnore
 	public void setPaymentMethod(
 		UnsafeSupplier<String, Exception> paymentMethodUnsafeSupplier) {
 
-		try {
-			paymentMethod = paymentMethodUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_paymentMethodSupplier = () -> {
+			try {
+				return paymentMethodUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String paymentMethod;
 
+	private Supplier<String> _paymentMethodSupplier;
+
 	@DecimalMin("0")
 	@Schema(example = "0")
 	public Integer getPaymentStatus() {
+		if (_paymentStatusSupplier != null) {
+			paymentStatus = _paymentStatusSupplier.get();
+
+			_paymentStatusSupplier = null;
+		}
+
 		return paymentStatus;
 	}
 
 	public void setPaymentStatus(Integer paymentStatus) {
 		this.paymentStatus = paymentStatus;
+
+		_paymentStatusSupplier = null;
 	}
 
 	@JsonIgnore
 	public void setPaymentStatus(
 		UnsafeSupplier<Integer, Exception> paymentStatusUnsafeSupplier) {
 
-		try {
-			paymentStatus = paymentStatusUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_paymentStatusSupplier = () -> {
+			try {
+				return paymentStatusUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Integer paymentStatus;
 
+	private Supplier<Integer> _paymentStatusSupplier;
+
 	@Schema
 	@Valid
 	public Status getPaymentStatusInfo() {
+		if (_paymentStatusInfoSupplier != null) {
+			paymentStatusInfo = _paymentStatusInfoSupplier.get();
+
+			_paymentStatusInfoSupplier = null;
+		}
+
 		return paymentStatusInfo;
 	}
 
 	public void setPaymentStatusInfo(Status paymentStatusInfo) {
 		this.paymentStatusInfo = paymentStatusInfo;
+
+		_paymentStatusInfoSupplier = null;
 	}
 
 	@JsonIgnore
 	public void setPaymentStatusInfo(
 		UnsafeSupplier<Status, Exception> paymentStatusInfoUnsafeSupplier) {
 
-		try {
-			paymentStatusInfo = paymentStatusInfoUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_paymentStatusInfoSupplier = () -> {
+			try {
+				return paymentStatusInfoUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Status paymentStatusInfo;
 
+	private Supplier<Status> _paymentStatusInfoSupplier;
+
 	@Schema(example = "Order printed note")
 	public String getPrintedNote() {
+		if (_printedNoteSupplier != null) {
+			printedNote = _printedNoteSupplier.get();
+
+			_printedNoteSupplier = null;
+		}
+
 		return printedNote;
 	}
 
 	public void setPrintedNote(String printedNote) {
 		this.printedNote = printedNote;
+
+		_printedNoteSupplier = null;
 	}
 
 	@JsonIgnore
 	public void setPrintedNote(
 		UnsafeSupplier<String, Exception> printedNoteUnsafeSupplier) {
 
-		try {
-			printedNote = printedNoteUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_printedNoteSupplier = () -> {
+			try {
+				return printedNoteUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String printedNote;
 
+	private Supplier<String> _printedNoteSupplier;
+
 	@Schema(example = "Abcd1234")
 	public String getPurchaseOrderNumber() {
+		if (_purchaseOrderNumberSupplier != null) {
+			purchaseOrderNumber = _purchaseOrderNumberSupplier.get();
+
+			_purchaseOrderNumberSupplier = null;
+		}
+
 		return purchaseOrderNumber;
 	}
 
 	public void setPurchaseOrderNumber(String purchaseOrderNumber) {
 		this.purchaseOrderNumber = purchaseOrderNumber;
+
+		_purchaseOrderNumberSupplier = null;
 	}
 
 	@JsonIgnore
 	public void setPurchaseOrderNumber(
 		UnsafeSupplier<String, Exception> purchaseOrderNumberUnsafeSupplier) {
 
-		try {
-			purchaseOrderNumber = purchaseOrderNumberUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_purchaseOrderNumberSupplier = () -> {
+			try {
+				return purchaseOrderNumberUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String purchaseOrderNumber;
 
+	private Supplier<String> _purchaseOrderNumberSupplier;
+
 	@Schema(example = "2017-07-21")
 	public Date getRequestedDeliveryDate() {
+		if (_requestedDeliveryDateSupplier != null) {
+			requestedDeliveryDate = _requestedDeliveryDateSupplier.get();
+
+			_requestedDeliveryDateSupplier = null;
+		}
+
 		return requestedDeliveryDate;
 	}
 
 	public void setRequestedDeliveryDate(Date requestedDeliveryDate) {
 		this.requestedDeliveryDate = requestedDeliveryDate;
+
+		_requestedDeliveryDateSupplier = null;
 	}
 
 	@JsonIgnore
 	public void setRequestedDeliveryDate(
 		UnsafeSupplier<Date, Exception> requestedDeliveryDateUnsafeSupplier) {
 
-		try {
-			requestedDeliveryDate = requestedDeliveryDateUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_requestedDeliveryDateSupplier = () -> {
+			try {
+				return requestedDeliveryDateUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Date requestedDeliveryDate;
 
+	private Supplier<Date> _requestedDeliveryDateSupplier;
+
 	@Schema
 	@Valid
 	public ShippingAddress getShippingAddress() {
+		if (_shippingAddressSupplier != null) {
+			shippingAddress = _shippingAddressSupplier.get();
+
+			_shippingAddressSupplier = null;
+		}
+
 		return shippingAddress;
 	}
 
 	public void setShippingAddress(ShippingAddress shippingAddress) {
 		this.shippingAddress = shippingAddress;
+
+		_shippingAddressSupplier = null;
 	}
 
 	@JsonIgnore
@@ -882,87 +1227,123 @@ public class Order implements Serializable {
 		UnsafeSupplier<ShippingAddress, Exception>
 			shippingAddressUnsafeSupplier) {
 
-		try {
-			shippingAddress = shippingAddressUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_shippingAddressSupplier = () -> {
+			try {
+				return shippingAddressUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected ShippingAddress shippingAddress;
 
+	private Supplier<ShippingAddress> _shippingAddressSupplier;
+
 	@DecimalMin("0")
 	@Schema(example = "31130")
 	public Long getShippingAddressId() {
+		if (_shippingAddressIdSupplier != null) {
+			shippingAddressId = _shippingAddressIdSupplier.get();
+
+			_shippingAddressIdSupplier = null;
+		}
+
 		return shippingAddressId;
 	}
 
 	public void setShippingAddressId(Long shippingAddressId) {
 		this.shippingAddressId = shippingAddressId;
+
+		_shippingAddressIdSupplier = null;
 	}
 
 	@JsonIgnore
 	public void setShippingAddressId(
 		UnsafeSupplier<Long, Exception> shippingAddressIdUnsafeSupplier) {
 
-		try {
-			shippingAddressId = shippingAddressIdUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_shippingAddressIdSupplier = () -> {
+			try {
+				return shippingAddressIdUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Long shippingAddressId;
 
+	private Supplier<Long> _shippingAddressIdSupplier;
+
 	@DecimalMin("0")
 	@Schema(example = "12")
 	@Valid
 	public BigDecimal getShippingAmount() {
+		if (_shippingAmountSupplier != null) {
+			shippingAmount = _shippingAmountSupplier.get();
+
+			_shippingAmountSupplier = null;
+		}
+
 		return shippingAmount;
 	}
 
 	public void setShippingAmount(BigDecimal shippingAmount) {
 		this.shippingAmount = shippingAmount;
+
+		_shippingAmountSupplier = null;
 	}
 
 	@JsonIgnore
 	public void setShippingAmount(
 		UnsafeSupplier<BigDecimal, Exception> shippingAmountUnsafeSupplier) {
 
-		try {
-			shippingAmount = shippingAmountUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_shippingAmountSupplier = () -> {
+			try {
+				return shippingAmountUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected BigDecimal shippingAmount;
 
+	private Supplier<BigDecimal> _shippingAmountSupplier;
+
 	@Schema
 	public String getShippingAmountFormatted() {
+		if (_shippingAmountFormattedSupplier != null) {
+			shippingAmountFormatted = _shippingAmountFormattedSupplier.get();
+
+			_shippingAmountFormattedSupplier = null;
+		}
+
 		return shippingAmountFormatted;
 	}
 
 	public void setShippingAmountFormatted(String shippingAmountFormatted) {
 		this.shippingAmountFormatted = shippingAmountFormatted;
+
+		_shippingAmountFormattedSupplier = null;
 	}
 
 	@JsonIgnore
@@ -970,58 +1351,81 @@ public class Order implements Serializable {
 		UnsafeSupplier<String, Exception>
 			shippingAmountFormattedUnsafeSupplier) {
 
-		try {
-			shippingAmountFormatted =
-				shippingAmountFormattedUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_shippingAmountFormattedSupplier = () -> {
+			try {
+				return shippingAmountFormattedUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String shippingAmountFormatted;
 
+	private Supplier<String> _shippingAmountFormattedSupplier;
+
 	@DecimalMin("0")
 	@Schema(example = "12")
 	public Double getShippingAmountValue() {
+		if (_shippingAmountValueSupplier != null) {
+			shippingAmountValue = _shippingAmountValueSupplier.get();
+
+			_shippingAmountValueSupplier = null;
+		}
+
 		return shippingAmountValue;
 	}
 
 	public void setShippingAmountValue(Double shippingAmountValue) {
 		this.shippingAmountValue = shippingAmountValue;
+
+		_shippingAmountValueSupplier = null;
 	}
 
 	@JsonIgnore
 	public void setShippingAmountValue(
 		UnsafeSupplier<Double, Exception> shippingAmountValueUnsafeSupplier) {
 
-		try {
-			shippingAmountValue = shippingAmountValueUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_shippingAmountValueSupplier = () -> {
+			try {
+				return shippingAmountValueUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Double shippingAmountValue;
 
+	private Supplier<Double> _shippingAmountValueSupplier;
+
 	@Schema
 	public Double getShippingDiscountAmount() {
+		if (_shippingDiscountAmountSupplier != null) {
+			shippingDiscountAmount = _shippingDiscountAmountSupplier.get();
+
+			_shippingDiscountAmountSupplier = null;
+		}
+
 		return shippingDiscountAmount;
 	}
 
 	public void setShippingDiscountAmount(Double shippingDiscountAmount) {
 		this.shippingDiscountAmount = shippingDiscountAmount;
+
+		_shippingDiscountAmountSupplier = null;
 	}
 
 	@JsonIgnore
@@ -1029,23 +1433,34 @@ public class Order implements Serializable {
 		UnsafeSupplier<Double, Exception>
 			shippingDiscountAmountUnsafeSupplier) {
 
-		try {
-			shippingDiscountAmount = shippingDiscountAmountUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_shippingDiscountAmountSupplier = () -> {
+			try {
+				return shippingDiscountAmountUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Double shippingDiscountAmount;
 
+	private Supplier<Double> _shippingDiscountAmountSupplier;
+
 	@Schema
 	public String getShippingDiscountAmountFormatted() {
+		if (_shippingDiscountAmountFormattedSupplier != null) {
+			shippingDiscountAmountFormatted =
+				_shippingDiscountAmountFormattedSupplier.get();
+
+			_shippingDiscountAmountFormattedSupplier = null;
+		}
+
 		return shippingDiscountAmountFormatted;
 	}
 
@@ -1053,6 +1468,8 @@ public class Order implements Serializable {
 		String shippingDiscountAmountFormatted) {
 
 		this.shippingDiscountAmountFormatted = shippingDiscountAmountFormatted;
+
+		_shippingDiscountAmountFormattedSupplier = null;
 	}
 
 	@JsonIgnore
@@ -1060,25 +1477,35 @@ public class Order implements Serializable {
 		UnsafeSupplier<String, Exception>
 			shippingDiscountAmountFormattedUnsafeSupplier) {
 
-		try {
-			shippingDiscountAmountFormatted =
-				shippingDiscountAmountFormattedUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_shippingDiscountAmountFormattedSupplier = () -> {
+			try {
+				return shippingDiscountAmountFormattedUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String shippingDiscountAmountFormatted;
 
+	private Supplier<String> _shippingDiscountAmountFormattedSupplier;
+
 	@DecimalMin("0")
 	@Schema(example = "20")
 	public Double getShippingDiscountPercentageLevel1() {
+		if (_shippingDiscountPercentageLevel1Supplier != null) {
+			shippingDiscountPercentageLevel1 =
+				_shippingDiscountPercentageLevel1Supplier.get();
+
+			_shippingDiscountPercentageLevel1Supplier = null;
+		}
+
 		return shippingDiscountPercentageLevel1;
 	}
 
@@ -1087,6 +1514,8 @@ public class Order implements Serializable {
 
 		this.shippingDiscountPercentageLevel1 =
 			shippingDiscountPercentageLevel1;
+
+		_shippingDiscountPercentageLevel1Supplier = null;
 	}
 
 	@JsonIgnore
@@ -1094,25 +1523,35 @@ public class Order implements Serializable {
 		UnsafeSupplier<Double, Exception>
 			shippingDiscountPercentageLevel1UnsafeSupplier) {
 
-		try {
-			shippingDiscountPercentageLevel1 =
-				shippingDiscountPercentageLevel1UnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_shippingDiscountPercentageLevel1Supplier = () -> {
+			try {
+				return shippingDiscountPercentageLevel1UnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Double shippingDiscountPercentageLevel1;
 
+	private Supplier<Double> _shippingDiscountPercentageLevel1Supplier;
+
 	@DecimalMin("0")
 	@Schema(example = "20")
 	public Double getShippingDiscountPercentageLevel1WithTaxAmount() {
+		if (_shippingDiscountPercentageLevel1WithTaxAmountSupplier != null) {
+			shippingDiscountPercentageLevel1WithTaxAmount =
+				_shippingDiscountPercentageLevel1WithTaxAmountSupplier.get();
+
+			_shippingDiscountPercentageLevel1WithTaxAmountSupplier = null;
+		}
+
 		return shippingDiscountPercentageLevel1WithTaxAmount;
 	}
 
@@ -1121,6 +1560,8 @@ public class Order implements Serializable {
 
 		this.shippingDiscountPercentageLevel1WithTaxAmount =
 			shippingDiscountPercentageLevel1WithTaxAmount;
+
+		_shippingDiscountPercentageLevel1WithTaxAmountSupplier = null;
 	}
 
 	@JsonIgnore
@@ -1128,26 +1569,37 @@ public class Order implements Serializable {
 		UnsafeSupplier<Double, Exception>
 			shippingDiscountPercentageLevel1WithTaxAmountUnsafeSupplier) {
 
-		try {
-			shippingDiscountPercentageLevel1WithTaxAmount =
-				shippingDiscountPercentageLevel1WithTaxAmountUnsafeSupplier.
+		_shippingDiscountPercentageLevel1WithTaxAmountSupplier = () -> {
+			try {
+				return shippingDiscountPercentageLevel1WithTaxAmountUnsafeSupplier.
 					get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Double shippingDiscountPercentageLevel1WithTaxAmount;
 
+	private Supplier<Double>
+		_shippingDiscountPercentageLevel1WithTaxAmountSupplier;
+
 	@DecimalMin("0")
 	@Schema(example = "0")
 	public Double getShippingDiscountPercentageLevel2() {
+		if (_shippingDiscountPercentageLevel2Supplier != null) {
+			shippingDiscountPercentageLevel2 =
+				_shippingDiscountPercentageLevel2Supplier.get();
+
+			_shippingDiscountPercentageLevel2Supplier = null;
+		}
+
 		return shippingDiscountPercentageLevel2;
 	}
 
@@ -1156,6 +1608,8 @@ public class Order implements Serializable {
 
 		this.shippingDiscountPercentageLevel2 =
 			shippingDiscountPercentageLevel2;
+
+		_shippingDiscountPercentageLevel2Supplier = null;
 	}
 
 	@JsonIgnore
@@ -1163,25 +1617,35 @@ public class Order implements Serializable {
 		UnsafeSupplier<Double, Exception>
 			shippingDiscountPercentageLevel2UnsafeSupplier) {
 
-		try {
-			shippingDiscountPercentageLevel2 =
-				shippingDiscountPercentageLevel2UnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_shippingDiscountPercentageLevel2Supplier = () -> {
+			try {
+				return shippingDiscountPercentageLevel2UnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Double shippingDiscountPercentageLevel2;
 
+	private Supplier<Double> _shippingDiscountPercentageLevel2Supplier;
+
 	@DecimalMin("0")
 	@Schema(example = "0")
 	public Double getShippingDiscountPercentageLevel2WithTaxAmount() {
+		if (_shippingDiscountPercentageLevel2WithTaxAmountSupplier != null) {
+			shippingDiscountPercentageLevel2WithTaxAmount =
+				_shippingDiscountPercentageLevel2WithTaxAmountSupplier.get();
+
+			_shippingDiscountPercentageLevel2WithTaxAmountSupplier = null;
+		}
+
 		return shippingDiscountPercentageLevel2WithTaxAmount;
 	}
 
@@ -1190,6 +1654,8 @@ public class Order implements Serializable {
 
 		this.shippingDiscountPercentageLevel2WithTaxAmount =
 			shippingDiscountPercentageLevel2WithTaxAmount;
+
+		_shippingDiscountPercentageLevel2WithTaxAmountSupplier = null;
 	}
 
 	@JsonIgnore
@@ -1197,26 +1663,37 @@ public class Order implements Serializable {
 		UnsafeSupplier<Double, Exception>
 			shippingDiscountPercentageLevel2WithTaxAmountUnsafeSupplier) {
 
-		try {
-			shippingDiscountPercentageLevel2WithTaxAmount =
-				shippingDiscountPercentageLevel2WithTaxAmountUnsafeSupplier.
+		_shippingDiscountPercentageLevel2WithTaxAmountSupplier = () -> {
+			try {
+				return shippingDiscountPercentageLevel2WithTaxAmountUnsafeSupplier.
 					get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Double shippingDiscountPercentageLevel2WithTaxAmount;
 
+	private Supplier<Double>
+		_shippingDiscountPercentageLevel2WithTaxAmountSupplier;
+
 	@DecimalMin("0")
 	@Schema(example = "0")
 	public Double getShippingDiscountPercentageLevel3() {
+		if (_shippingDiscountPercentageLevel3Supplier != null) {
+			shippingDiscountPercentageLevel3 =
+				_shippingDiscountPercentageLevel3Supplier.get();
+
+			_shippingDiscountPercentageLevel3Supplier = null;
+		}
+
 		return shippingDiscountPercentageLevel3;
 	}
 
@@ -1225,6 +1702,8 @@ public class Order implements Serializable {
 
 		this.shippingDiscountPercentageLevel3 =
 			shippingDiscountPercentageLevel3;
+
+		_shippingDiscountPercentageLevel3Supplier = null;
 	}
 
 	@JsonIgnore
@@ -1232,25 +1711,35 @@ public class Order implements Serializable {
 		UnsafeSupplier<Double, Exception>
 			shippingDiscountPercentageLevel3UnsafeSupplier) {
 
-		try {
-			shippingDiscountPercentageLevel3 =
-				shippingDiscountPercentageLevel3UnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_shippingDiscountPercentageLevel3Supplier = () -> {
+			try {
+				return shippingDiscountPercentageLevel3UnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Double shippingDiscountPercentageLevel3;
 
+	private Supplier<Double> _shippingDiscountPercentageLevel3Supplier;
+
 	@DecimalMin("0")
 	@Schema(example = "0")
 	public Double getShippingDiscountPercentageLevel3WithTaxAmount() {
+		if (_shippingDiscountPercentageLevel3WithTaxAmountSupplier != null) {
+			shippingDiscountPercentageLevel3WithTaxAmount =
+				_shippingDiscountPercentageLevel3WithTaxAmountSupplier.get();
+
+			_shippingDiscountPercentageLevel3WithTaxAmountSupplier = null;
+		}
+
 		return shippingDiscountPercentageLevel3WithTaxAmount;
 	}
 
@@ -1259,6 +1748,8 @@ public class Order implements Serializable {
 
 		this.shippingDiscountPercentageLevel3WithTaxAmount =
 			shippingDiscountPercentageLevel3WithTaxAmount;
+
+		_shippingDiscountPercentageLevel3WithTaxAmountSupplier = null;
 	}
 
 	@JsonIgnore
@@ -1266,26 +1757,37 @@ public class Order implements Serializable {
 		UnsafeSupplier<Double, Exception>
 			shippingDiscountPercentageLevel3WithTaxAmountUnsafeSupplier) {
 
-		try {
-			shippingDiscountPercentageLevel3WithTaxAmount =
-				shippingDiscountPercentageLevel3WithTaxAmountUnsafeSupplier.
+		_shippingDiscountPercentageLevel3WithTaxAmountSupplier = () -> {
+			try {
+				return shippingDiscountPercentageLevel3WithTaxAmountUnsafeSupplier.
 					get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Double shippingDiscountPercentageLevel3WithTaxAmount;
 
+	private Supplier<Double>
+		_shippingDiscountPercentageLevel3WithTaxAmountSupplier;
+
 	@DecimalMin("0")
 	@Schema(example = "0")
 	public Double getShippingDiscountPercentageLevel4() {
+		if (_shippingDiscountPercentageLevel4Supplier != null) {
+			shippingDiscountPercentageLevel4 =
+				_shippingDiscountPercentageLevel4Supplier.get();
+
+			_shippingDiscountPercentageLevel4Supplier = null;
+		}
+
 		return shippingDiscountPercentageLevel4;
 	}
 
@@ -1294,6 +1796,8 @@ public class Order implements Serializable {
 
 		this.shippingDiscountPercentageLevel4 =
 			shippingDiscountPercentageLevel4;
+
+		_shippingDiscountPercentageLevel4Supplier = null;
 	}
 
 	@JsonIgnore
@@ -1301,25 +1805,35 @@ public class Order implements Serializable {
 		UnsafeSupplier<Double, Exception>
 			shippingDiscountPercentageLevel4UnsafeSupplier) {
 
-		try {
-			shippingDiscountPercentageLevel4 =
-				shippingDiscountPercentageLevel4UnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_shippingDiscountPercentageLevel4Supplier = () -> {
+			try {
+				return shippingDiscountPercentageLevel4UnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Double shippingDiscountPercentageLevel4;
 
+	private Supplier<Double> _shippingDiscountPercentageLevel4Supplier;
+
 	@DecimalMin("0")
 	@Schema(example = "0")
 	public Double getShippingDiscountPercentageLevel4WithTaxAmount() {
+		if (_shippingDiscountPercentageLevel4WithTaxAmountSupplier != null) {
+			shippingDiscountPercentageLevel4WithTaxAmount =
+				_shippingDiscountPercentageLevel4WithTaxAmountSupplier.get();
+
+			_shippingDiscountPercentageLevel4WithTaxAmountSupplier = null;
+		}
+
 		return shippingDiscountPercentageLevel4WithTaxAmount;
 	}
 
@@ -1328,6 +1842,8 @@ public class Order implements Serializable {
 
 		this.shippingDiscountPercentageLevel4WithTaxAmount =
 			shippingDiscountPercentageLevel4WithTaxAmount;
+
+		_shippingDiscountPercentageLevel4WithTaxAmountSupplier = null;
 	}
 
 	@JsonIgnore
@@ -1335,25 +1851,36 @@ public class Order implements Serializable {
 		UnsafeSupplier<Double, Exception>
 			shippingDiscountPercentageLevel4WithTaxAmountUnsafeSupplier) {
 
-		try {
-			shippingDiscountPercentageLevel4WithTaxAmount =
-				shippingDiscountPercentageLevel4WithTaxAmountUnsafeSupplier.
+		_shippingDiscountPercentageLevel4WithTaxAmountSupplier = () -> {
+			try {
+				return shippingDiscountPercentageLevel4WithTaxAmountUnsafeSupplier.
 					get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Double shippingDiscountPercentageLevel4WithTaxAmount;
 
+	private Supplier<Double>
+		_shippingDiscountPercentageLevel4WithTaxAmountSupplier;
+
 	@Schema
 	public Double getShippingDiscountWithTaxAmount() {
+		if (_shippingDiscountWithTaxAmountSupplier != null) {
+			shippingDiscountWithTaxAmount =
+				_shippingDiscountWithTaxAmountSupplier.get();
+
+			_shippingDiscountWithTaxAmountSupplier = null;
+		}
+
 		return shippingDiscountWithTaxAmount;
 	}
 
@@ -1361,6 +1888,8 @@ public class Order implements Serializable {
 		Double shippingDiscountWithTaxAmount) {
 
 		this.shippingDiscountWithTaxAmount = shippingDiscountWithTaxAmount;
+
+		_shippingDiscountWithTaxAmountSupplier = null;
 	}
 
 	@JsonIgnore
@@ -1368,24 +1897,34 @@ public class Order implements Serializable {
 		UnsafeSupplier<Double, Exception>
 			shippingDiscountWithTaxAmountUnsafeSupplier) {
 
-		try {
-			shippingDiscountWithTaxAmount =
-				shippingDiscountWithTaxAmountUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_shippingDiscountWithTaxAmountSupplier = () -> {
+			try {
+				return shippingDiscountWithTaxAmountUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Double shippingDiscountWithTaxAmount;
 
+	private Supplier<Double> _shippingDiscountWithTaxAmountSupplier;
+
 	@Schema
 	public String getShippingDiscountWithTaxAmountFormatted() {
+		if (_shippingDiscountWithTaxAmountFormattedSupplier != null) {
+			shippingDiscountWithTaxAmountFormatted =
+				_shippingDiscountWithTaxAmountFormattedSupplier.get();
+
+			_shippingDiscountWithTaxAmountFormattedSupplier = null;
+		}
+
 		return shippingDiscountWithTaxAmountFormatted;
 	}
 
@@ -1394,6 +1933,8 @@ public class Order implements Serializable {
 
 		this.shippingDiscountWithTaxAmountFormatted =
 			shippingDiscountWithTaxAmountFormatted;
+
+		_shippingDiscountWithTaxAmountFormattedSupplier = null;
 	}
 
 	@JsonIgnore
@@ -1401,87 +1942,123 @@ public class Order implements Serializable {
 		UnsafeSupplier<String, Exception>
 			shippingDiscountWithTaxAmountFormattedUnsafeSupplier) {
 
-		try {
-			shippingDiscountWithTaxAmountFormatted =
-				shippingDiscountWithTaxAmountFormattedUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_shippingDiscountWithTaxAmountFormattedSupplier = () -> {
+			try {
+				return shippingDiscountWithTaxAmountFormattedUnsafeSupplier.
+					get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String shippingDiscountWithTaxAmountFormatted;
 
+	private Supplier<String> _shippingDiscountWithTaxAmountFormattedSupplier;
+
 	@Schema(example = "fixed")
 	public String getShippingMethod() {
+		if (_shippingMethodSupplier != null) {
+			shippingMethod = _shippingMethodSupplier.get();
+
+			_shippingMethodSupplier = null;
+		}
+
 		return shippingMethod;
 	}
 
 	public void setShippingMethod(String shippingMethod) {
 		this.shippingMethod = shippingMethod;
+
+		_shippingMethodSupplier = null;
 	}
 
 	@JsonIgnore
 	public void setShippingMethod(
 		UnsafeSupplier<String, Exception> shippingMethodUnsafeSupplier) {
 
-		try {
-			shippingMethod = shippingMethodUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_shippingMethodSupplier = () -> {
+			try {
+				return shippingMethodUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String shippingMethod;
 
+	private Supplier<String> _shippingMethodSupplier;
+
 	@Schema(example = "by Air")
 	public String getShippingOption() {
+		if (_shippingOptionSupplier != null) {
+			shippingOption = _shippingOptionSupplier.get();
+
+			_shippingOptionSupplier = null;
+		}
+
 		return shippingOption;
 	}
 
 	public void setShippingOption(String shippingOption) {
 		this.shippingOption = shippingOption;
+
+		_shippingOptionSupplier = null;
 	}
 
 	@JsonIgnore
 	public void setShippingOption(
 		UnsafeSupplier<String, Exception> shippingOptionUnsafeSupplier) {
 
-		try {
-			shippingOption = shippingOptionUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_shippingOptionSupplier = () -> {
+			try {
+				return shippingOptionUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String shippingOption;
 
+	private Supplier<String> _shippingOptionSupplier;
+
 	@DecimalMin("0")
 	@Schema(example = "12")
 	@Valid
 	public BigDecimal getShippingWithTaxAmount() {
+		if (_shippingWithTaxAmountSupplier != null) {
+			shippingWithTaxAmount = _shippingWithTaxAmountSupplier.get();
+
+			_shippingWithTaxAmountSupplier = null;
+		}
+
 		return shippingWithTaxAmount;
 	}
 
 	public void setShippingWithTaxAmount(BigDecimal shippingWithTaxAmount) {
 		this.shippingWithTaxAmount = shippingWithTaxAmount;
+
+		_shippingWithTaxAmountSupplier = null;
 	}
 
 	@JsonIgnore
@@ -1489,23 +2066,34 @@ public class Order implements Serializable {
 		UnsafeSupplier<BigDecimal, Exception>
 			shippingWithTaxAmountUnsafeSupplier) {
 
-		try {
-			shippingWithTaxAmount = shippingWithTaxAmountUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_shippingWithTaxAmountSupplier = () -> {
+			try {
+				return shippingWithTaxAmountUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected BigDecimal shippingWithTaxAmount;
 
+	private Supplier<BigDecimal> _shippingWithTaxAmountSupplier;
+
 	@Schema
 	public String getShippingWithTaxAmountFormatted() {
+		if (_shippingWithTaxAmountFormattedSupplier != null) {
+			shippingWithTaxAmountFormatted =
+				_shippingWithTaxAmountFormattedSupplier.get();
+
+			_shippingWithTaxAmountFormattedSupplier = null;
+		}
+
 		return shippingWithTaxAmountFormatted;
 	}
 
@@ -1513,6 +2101,8 @@ public class Order implements Serializable {
 		String shippingWithTaxAmountFormatted) {
 
 		this.shippingWithTaxAmountFormatted = shippingWithTaxAmountFormatted;
+
+		_shippingWithTaxAmountFormattedSupplier = null;
 	}
 
 	@JsonIgnore
@@ -1520,25 +2110,35 @@ public class Order implements Serializable {
 		UnsafeSupplier<String, Exception>
 			shippingWithTaxAmountFormattedUnsafeSupplier) {
 
-		try {
-			shippingWithTaxAmountFormatted =
-				shippingWithTaxAmountFormattedUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_shippingWithTaxAmountFormattedSupplier = () -> {
+			try {
+				return shippingWithTaxAmountFormattedUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String shippingWithTaxAmountFormatted;
 
+	private Supplier<String> _shippingWithTaxAmountFormattedSupplier;
+
 	@DecimalMin("0")
 	@Schema(example = "12")
 	public Double getShippingWithTaxAmountValue() {
+		if (_shippingWithTaxAmountValueSupplier != null) {
+			shippingWithTaxAmountValue =
+				_shippingWithTaxAmountValueSupplier.get();
+
+			_shippingWithTaxAmountValueSupplier = null;
+		}
+
 		return shippingWithTaxAmountValue;
 	}
 
@@ -1546,6 +2146,8 @@ public class Order implements Serializable {
 		Double shippingWithTaxAmountValue) {
 
 		this.shippingWithTaxAmountValue = shippingWithTaxAmountValue;
+
+		_shippingWithTaxAmountValueSupplier = null;
 	}
 
 	@JsonIgnore
@@ -1553,86 +2155,121 @@ public class Order implements Serializable {
 		UnsafeSupplier<Double, Exception>
 			shippingWithTaxAmountValueUnsafeSupplier) {
 
-		try {
-			shippingWithTaxAmountValue =
-				shippingWithTaxAmountValueUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_shippingWithTaxAmountValueSupplier = () -> {
+			try {
+				return shippingWithTaxAmountValueUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Double shippingWithTaxAmountValue;
 
+	private Supplier<Double> _shippingWithTaxAmountValueSupplier;
+
 	@Schema
 	@Valid
 	public BigDecimal getSubtotal() {
+		if (_subtotalSupplier != null) {
+			subtotal = _subtotalSupplier.get();
+
+			_subtotalSupplier = null;
+		}
+
 		return subtotal;
 	}
 
 	public void setSubtotal(BigDecimal subtotal) {
 		this.subtotal = subtotal;
+
+		_subtotalSupplier = null;
 	}
 
 	@JsonIgnore
 	public void setSubtotal(
 		UnsafeSupplier<BigDecimal, Exception> subtotalUnsafeSupplier) {
 
-		try {
-			subtotal = subtotalUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_subtotalSupplier = () -> {
+			try {
+				return subtotalUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected BigDecimal subtotal;
 
+	private Supplier<BigDecimal> _subtotalSupplier;
+
 	@Schema
 	public Double getSubtotalAmount() {
+		if (_subtotalAmountSupplier != null) {
+			subtotalAmount = _subtotalAmountSupplier.get();
+
+			_subtotalAmountSupplier = null;
+		}
+
 		return subtotalAmount;
 	}
 
 	public void setSubtotalAmount(Double subtotalAmount) {
 		this.subtotalAmount = subtotalAmount;
+
+		_subtotalAmountSupplier = null;
 	}
 
 	@JsonIgnore
 	public void setSubtotalAmount(
 		UnsafeSupplier<Double, Exception> subtotalAmountUnsafeSupplier) {
 
-		try {
-			subtotalAmount = subtotalAmountUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_subtotalAmountSupplier = () -> {
+			try {
+				return subtotalAmountUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Double subtotalAmount;
 
+	private Supplier<Double> _subtotalAmountSupplier;
+
 	@Schema
 	public Double getSubtotalDiscountAmount() {
+		if (_subtotalDiscountAmountSupplier != null) {
+			subtotalDiscountAmount = _subtotalDiscountAmountSupplier.get();
+
+			_subtotalDiscountAmountSupplier = null;
+		}
+
 		return subtotalDiscountAmount;
 	}
 
 	public void setSubtotalDiscountAmount(Double subtotalDiscountAmount) {
 		this.subtotalDiscountAmount = subtotalDiscountAmount;
+
+		_subtotalDiscountAmountSupplier = null;
 	}
 
 	@JsonIgnore
@@ -1640,23 +2277,34 @@ public class Order implements Serializable {
 		UnsafeSupplier<Double, Exception>
 			subtotalDiscountAmountUnsafeSupplier) {
 
-		try {
-			subtotalDiscountAmount = subtotalDiscountAmountUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_subtotalDiscountAmountSupplier = () -> {
+			try {
+				return subtotalDiscountAmountUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Double subtotalDiscountAmount;
 
+	private Supplier<Double> _subtotalDiscountAmountSupplier;
+
 	@Schema
 	public String getSubtotalDiscountAmountFormatted() {
+		if (_subtotalDiscountAmountFormattedSupplier != null) {
+			subtotalDiscountAmountFormatted =
+				_subtotalDiscountAmountFormattedSupplier.get();
+
+			_subtotalDiscountAmountFormattedSupplier = null;
+		}
+
 		return subtotalDiscountAmountFormatted;
 	}
 
@@ -1664,6 +2312,8 @@ public class Order implements Serializable {
 		String subtotalDiscountAmountFormatted) {
 
 		this.subtotalDiscountAmountFormatted = subtotalDiscountAmountFormatted;
+
+		_subtotalDiscountAmountFormattedSupplier = null;
 	}
 
 	@JsonIgnore
@@ -1671,25 +2321,35 @@ public class Order implements Serializable {
 		UnsafeSupplier<String, Exception>
 			subtotalDiscountAmountFormattedUnsafeSupplier) {
 
-		try {
-			subtotalDiscountAmountFormatted =
-				subtotalDiscountAmountFormattedUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_subtotalDiscountAmountFormattedSupplier = () -> {
+			try {
+				return subtotalDiscountAmountFormattedUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String subtotalDiscountAmountFormatted;
 
+	private Supplier<String> _subtotalDiscountAmountFormattedSupplier;
+
 	@DecimalMin("0")
 	@Schema(example = "20")
 	public Double getSubtotalDiscountPercentageLevel1() {
+		if (_subtotalDiscountPercentageLevel1Supplier != null) {
+			subtotalDiscountPercentageLevel1 =
+				_subtotalDiscountPercentageLevel1Supplier.get();
+
+			_subtotalDiscountPercentageLevel1Supplier = null;
+		}
+
 		return subtotalDiscountPercentageLevel1;
 	}
 
@@ -1698,6 +2358,8 @@ public class Order implements Serializable {
 
 		this.subtotalDiscountPercentageLevel1 =
 			subtotalDiscountPercentageLevel1;
+
+		_subtotalDiscountPercentageLevel1Supplier = null;
 	}
 
 	@JsonIgnore
@@ -1705,25 +2367,35 @@ public class Order implements Serializable {
 		UnsafeSupplier<Double, Exception>
 			subtotalDiscountPercentageLevel1UnsafeSupplier) {
 
-		try {
-			subtotalDiscountPercentageLevel1 =
-				subtotalDiscountPercentageLevel1UnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_subtotalDiscountPercentageLevel1Supplier = () -> {
+			try {
+				return subtotalDiscountPercentageLevel1UnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Double subtotalDiscountPercentageLevel1;
 
+	private Supplier<Double> _subtotalDiscountPercentageLevel1Supplier;
+
 	@DecimalMin("0")
 	@Schema(example = "20")
 	public Double getSubtotalDiscountPercentageLevel1WithTaxAmount() {
+		if (_subtotalDiscountPercentageLevel1WithTaxAmountSupplier != null) {
+			subtotalDiscountPercentageLevel1WithTaxAmount =
+				_subtotalDiscountPercentageLevel1WithTaxAmountSupplier.get();
+
+			_subtotalDiscountPercentageLevel1WithTaxAmountSupplier = null;
+		}
+
 		return subtotalDiscountPercentageLevel1WithTaxAmount;
 	}
 
@@ -1732,6 +2404,8 @@ public class Order implements Serializable {
 
 		this.subtotalDiscountPercentageLevel1WithTaxAmount =
 			subtotalDiscountPercentageLevel1WithTaxAmount;
+
+		_subtotalDiscountPercentageLevel1WithTaxAmountSupplier = null;
 	}
 
 	@JsonIgnore
@@ -1739,26 +2413,37 @@ public class Order implements Serializable {
 		UnsafeSupplier<Double, Exception>
 			subtotalDiscountPercentageLevel1WithTaxAmountUnsafeSupplier) {
 
-		try {
-			subtotalDiscountPercentageLevel1WithTaxAmount =
-				subtotalDiscountPercentageLevel1WithTaxAmountUnsafeSupplier.
+		_subtotalDiscountPercentageLevel1WithTaxAmountSupplier = () -> {
+			try {
+				return subtotalDiscountPercentageLevel1WithTaxAmountUnsafeSupplier.
 					get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Double subtotalDiscountPercentageLevel1WithTaxAmount;
 
+	private Supplier<Double>
+		_subtotalDiscountPercentageLevel1WithTaxAmountSupplier;
+
 	@DecimalMin("0")
 	@Schema(example = "0")
 	public Double getSubtotalDiscountPercentageLevel2() {
+		if (_subtotalDiscountPercentageLevel2Supplier != null) {
+			subtotalDiscountPercentageLevel2 =
+				_subtotalDiscountPercentageLevel2Supplier.get();
+
+			_subtotalDiscountPercentageLevel2Supplier = null;
+		}
+
 		return subtotalDiscountPercentageLevel2;
 	}
 
@@ -1767,6 +2452,8 @@ public class Order implements Serializable {
 
 		this.subtotalDiscountPercentageLevel2 =
 			subtotalDiscountPercentageLevel2;
+
+		_subtotalDiscountPercentageLevel2Supplier = null;
 	}
 
 	@JsonIgnore
@@ -1774,25 +2461,35 @@ public class Order implements Serializable {
 		UnsafeSupplier<Double, Exception>
 			subtotalDiscountPercentageLevel2UnsafeSupplier) {
 
-		try {
-			subtotalDiscountPercentageLevel2 =
-				subtotalDiscountPercentageLevel2UnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_subtotalDiscountPercentageLevel2Supplier = () -> {
+			try {
+				return subtotalDiscountPercentageLevel2UnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Double subtotalDiscountPercentageLevel2;
 
+	private Supplier<Double> _subtotalDiscountPercentageLevel2Supplier;
+
 	@DecimalMin("0")
 	@Schema(example = "0")
 	public Double getSubtotalDiscountPercentageLevel2WithTaxAmount() {
+		if (_subtotalDiscountPercentageLevel2WithTaxAmountSupplier != null) {
+			subtotalDiscountPercentageLevel2WithTaxAmount =
+				_subtotalDiscountPercentageLevel2WithTaxAmountSupplier.get();
+
+			_subtotalDiscountPercentageLevel2WithTaxAmountSupplier = null;
+		}
+
 		return subtotalDiscountPercentageLevel2WithTaxAmount;
 	}
 
@@ -1801,6 +2498,8 @@ public class Order implements Serializable {
 
 		this.subtotalDiscountPercentageLevel2WithTaxAmount =
 			subtotalDiscountPercentageLevel2WithTaxAmount;
+
+		_subtotalDiscountPercentageLevel2WithTaxAmountSupplier = null;
 	}
 
 	@JsonIgnore
@@ -1808,26 +2507,37 @@ public class Order implements Serializable {
 		UnsafeSupplier<Double, Exception>
 			subtotalDiscountPercentageLevel2WithTaxAmountUnsafeSupplier) {
 
-		try {
-			subtotalDiscountPercentageLevel2WithTaxAmount =
-				subtotalDiscountPercentageLevel2WithTaxAmountUnsafeSupplier.
+		_subtotalDiscountPercentageLevel2WithTaxAmountSupplier = () -> {
+			try {
+				return subtotalDiscountPercentageLevel2WithTaxAmountUnsafeSupplier.
 					get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Double subtotalDiscountPercentageLevel2WithTaxAmount;
 
+	private Supplier<Double>
+		_subtotalDiscountPercentageLevel2WithTaxAmountSupplier;
+
 	@DecimalMin("0")
 	@Schema(example = "0")
 	public Double getSubtotalDiscountPercentageLevel3() {
+		if (_subtotalDiscountPercentageLevel3Supplier != null) {
+			subtotalDiscountPercentageLevel3 =
+				_subtotalDiscountPercentageLevel3Supplier.get();
+
+			_subtotalDiscountPercentageLevel3Supplier = null;
+		}
+
 		return subtotalDiscountPercentageLevel3;
 	}
 
@@ -1836,6 +2546,8 @@ public class Order implements Serializable {
 
 		this.subtotalDiscountPercentageLevel3 =
 			subtotalDiscountPercentageLevel3;
+
+		_subtotalDiscountPercentageLevel3Supplier = null;
 	}
 
 	@JsonIgnore
@@ -1843,25 +2555,35 @@ public class Order implements Serializable {
 		UnsafeSupplier<Double, Exception>
 			subtotalDiscountPercentageLevel3UnsafeSupplier) {
 
-		try {
-			subtotalDiscountPercentageLevel3 =
-				subtotalDiscountPercentageLevel3UnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_subtotalDiscountPercentageLevel3Supplier = () -> {
+			try {
+				return subtotalDiscountPercentageLevel3UnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Double subtotalDiscountPercentageLevel3;
 
+	private Supplier<Double> _subtotalDiscountPercentageLevel3Supplier;
+
 	@DecimalMin("0")
 	@Schema(example = "0")
 	public Double getSubtotalDiscountPercentageLevel3WithTaxAmount() {
+		if (_subtotalDiscountPercentageLevel3WithTaxAmountSupplier != null) {
+			subtotalDiscountPercentageLevel3WithTaxAmount =
+				_subtotalDiscountPercentageLevel3WithTaxAmountSupplier.get();
+
+			_subtotalDiscountPercentageLevel3WithTaxAmountSupplier = null;
+		}
+
 		return subtotalDiscountPercentageLevel3WithTaxAmount;
 	}
 
@@ -1870,6 +2592,8 @@ public class Order implements Serializable {
 
 		this.subtotalDiscountPercentageLevel3WithTaxAmount =
 			subtotalDiscountPercentageLevel3WithTaxAmount;
+
+		_subtotalDiscountPercentageLevel3WithTaxAmountSupplier = null;
 	}
 
 	@JsonIgnore
@@ -1877,26 +2601,37 @@ public class Order implements Serializable {
 		UnsafeSupplier<Double, Exception>
 			subtotalDiscountPercentageLevel3WithTaxAmountUnsafeSupplier) {
 
-		try {
-			subtotalDiscountPercentageLevel3WithTaxAmount =
-				subtotalDiscountPercentageLevel3WithTaxAmountUnsafeSupplier.
+		_subtotalDiscountPercentageLevel3WithTaxAmountSupplier = () -> {
+			try {
+				return subtotalDiscountPercentageLevel3WithTaxAmountUnsafeSupplier.
 					get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Double subtotalDiscountPercentageLevel3WithTaxAmount;
 
+	private Supplier<Double>
+		_subtotalDiscountPercentageLevel3WithTaxAmountSupplier;
+
 	@DecimalMin("0")
 	@Schema(example = "0")
 	public Double getSubtotalDiscountPercentageLevel4() {
+		if (_subtotalDiscountPercentageLevel4Supplier != null) {
+			subtotalDiscountPercentageLevel4 =
+				_subtotalDiscountPercentageLevel4Supplier.get();
+
+			_subtotalDiscountPercentageLevel4Supplier = null;
+		}
+
 		return subtotalDiscountPercentageLevel4;
 	}
 
@@ -1905,6 +2640,8 @@ public class Order implements Serializable {
 
 		this.subtotalDiscountPercentageLevel4 =
 			subtotalDiscountPercentageLevel4;
+
+		_subtotalDiscountPercentageLevel4Supplier = null;
 	}
 
 	@JsonIgnore
@@ -1912,25 +2649,35 @@ public class Order implements Serializable {
 		UnsafeSupplier<Double, Exception>
 			subtotalDiscountPercentageLevel4UnsafeSupplier) {
 
-		try {
-			subtotalDiscountPercentageLevel4 =
-				subtotalDiscountPercentageLevel4UnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_subtotalDiscountPercentageLevel4Supplier = () -> {
+			try {
+				return subtotalDiscountPercentageLevel4UnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Double subtotalDiscountPercentageLevel4;
 
+	private Supplier<Double> _subtotalDiscountPercentageLevel4Supplier;
+
 	@DecimalMin("0")
 	@Schema(example = "0")
 	public Double getSubtotalDiscountPercentageLevel4WithTaxAmount() {
+		if (_subtotalDiscountPercentageLevel4WithTaxAmountSupplier != null) {
+			subtotalDiscountPercentageLevel4WithTaxAmount =
+				_subtotalDiscountPercentageLevel4WithTaxAmountSupplier.get();
+
+			_subtotalDiscountPercentageLevel4WithTaxAmountSupplier = null;
+		}
+
 		return subtotalDiscountPercentageLevel4WithTaxAmount;
 	}
 
@@ -1939,6 +2686,8 @@ public class Order implements Serializable {
 
 		this.subtotalDiscountPercentageLevel4WithTaxAmount =
 			subtotalDiscountPercentageLevel4WithTaxAmount;
+
+		_subtotalDiscountPercentageLevel4WithTaxAmountSupplier = null;
 	}
 
 	@JsonIgnore
@@ -1946,25 +2695,36 @@ public class Order implements Serializable {
 		UnsafeSupplier<Double, Exception>
 			subtotalDiscountPercentageLevel4WithTaxAmountUnsafeSupplier) {
 
-		try {
-			subtotalDiscountPercentageLevel4WithTaxAmount =
-				subtotalDiscountPercentageLevel4WithTaxAmountUnsafeSupplier.
+		_subtotalDiscountPercentageLevel4WithTaxAmountSupplier = () -> {
+			try {
+				return subtotalDiscountPercentageLevel4WithTaxAmountUnsafeSupplier.
 					get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Double subtotalDiscountPercentageLevel4WithTaxAmount;
 
+	private Supplier<Double>
+		_subtotalDiscountPercentageLevel4WithTaxAmountSupplier;
+
 	@Schema
 	public Double getSubtotalDiscountWithTaxAmount() {
+		if (_subtotalDiscountWithTaxAmountSupplier != null) {
+			subtotalDiscountWithTaxAmount =
+				_subtotalDiscountWithTaxAmountSupplier.get();
+
+			_subtotalDiscountWithTaxAmountSupplier = null;
+		}
+
 		return subtotalDiscountWithTaxAmount;
 	}
 
@@ -1972,6 +2732,8 @@ public class Order implements Serializable {
 		Double subtotalDiscountWithTaxAmount) {
 
 		this.subtotalDiscountWithTaxAmount = subtotalDiscountWithTaxAmount;
+
+		_subtotalDiscountWithTaxAmountSupplier = null;
 	}
 
 	@JsonIgnore
@@ -1979,24 +2741,34 @@ public class Order implements Serializable {
 		UnsafeSupplier<Double, Exception>
 			subtotalDiscountWithTaxAmountUnsafeSupplier) {
 
-		try {
-			subtotalDiscountWithTaxAmount =
-				subtotalDiscountWithTaxAmountUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_subtotalDiscountWithTaxAmountSupplier = () -> {
+			try {
+				return subtotalDiscountWithTaxAmountUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Double subtotalDiscountWithTaxAmount;
 
+	private Supplier<Double> _subtotalDiscountWithTaxAmountSupplier;
+
 	@Schema
 	public String getSubtotalDiscountWithTaxAmountFormatted() {
+		if (_subtotalDiscountWithTaxAmountFormattedSupplier != null) {
+			subtotalDiscountWithTaxAmountFormatted =
+				_subtotalDiscountWithTaxAmountFormattedSupplier.get();
+
+			_subtotalDiscountWithTaxAmountFormattedSupplier = null;
+		}
+
 		return subtotalDiscountWithTaxAmountFormatted;
 	}
 
@@ -2005,6 +2777,8 @@ public class Order implements Serializable {
 
 		this.subtotalDiscountWithTaxAmountFormatted =
 			subtotalDiscountWithTaxAmountFormatted;
+
+		_subtotalDiscountWithTaxAmountFormattedSupplier = null;
 	}
 
 	@JsonIgnore
@@ -2012,58 +2786,82 @@ public class Order implements Serializable {
 		UnsafeSupplier<String, Exception>
 			subtotalDiscountWithTaxAmountFormattedUnsafeSupplier) {
 
-		try {
-			subtotalDiscountWithTaxAmountFormatted =
-				subtotalDiscountWithTaxAmountFormattedUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_subtotalDiscountWithTaxAmountFormattedSupplier = () -> {
+			try {
+				return subtotalDiscountWithTaxAmountFormattedUnsafeSupplier.
+					get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String subtotalDiscountWithTaxAmountFormatted;
 
+	private Supplier<String> _subtotalDiscountWithTaxAmountFormattedSupplier;
+
 	@Schema
 	public String getSubtotalFormatted() {
+		if (_subtotalFormattedSupplier != null) {
+			subtotalFormatted = _subtotalFormattedSupplier.get();
+
+			_subtotalFormattedSupplier = null;
+		}
+
 		return subtotalFormatted;
 	}
 
 	public void setSubtotalFormatted(String subtotalFormatted) {
 		this.subtotalFormatted = subtotalFormatted;
+
+		_subtotalFormattedSupplier = null;
 	}
 
 	@JsonIgnore
 	public void setSubtotalFormatted(
 		UnsafeSupplier<String, Exception> subtotalFormattedUnsafeSupplier) {
 
-		try {
-			subtotalFormatted = subtotalFormattedUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_subtotalFormattedSupplier = () -> {
+			try {
+				return subtotalFormattedUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String subtotalFormatted;
 
+	private Supplier<String> _subtotalFormattedSupplier;
+
 	@Schema
 	@Valid
 	public BigDecimal getSubtotalWithTaxAmount() {
+		if (_subtotalWithTaxAmountSupplier != null) {
+			subtotalWithTaxAmount = _subtotalWithTaxAmountSupplier.get();
+
+			_subtotalWithTaxAmountSupplier = null;
+		}
+
 		return subtotalWithTaxAmount;
 	}
 
 	public void setSubtotalWithTaxAmount(BigDecimal subtotalWithTaxAmount) {
 		this.subtotalWithTaxAmount = subtotalWithTaxAmount;
+
+		_subtotalWithTaxAmountSupplier = null;
 	}
 
 	@JsonIgnore
@@ -2071,23 +2869,34 @@ public class Order implements Serializable {
 		UnsafeSupplier<BigDecimal, Exception>
 			subtotalWithTaxAmountUnsafeSupplier) {
 
-		try {
-			subtotalWithTaxAmount = subtotalWithTaxAmountUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_subtotalWithTaxAmountSupplier = () -> {
+			try {
+				return subtotalWithTaxAmountUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected BigDecimal subtotalWithTaxAmount;
 
+	private Supplier<BigDecimal> _subtotalWithTaxAmountSupplier;
+
 	@Schema
 	public String getSubtotalWithTaxAmountFormatted() {
+		if (_subtotalWithTaxAmountFormattedSupplier != null) {
+			subtotalWithTaxAmountFormatted =
+				_subtotalWithTaxAmountFormattedSupplier.get();
+
+			_subtotalWithTaxAmountFormattedSupplier = null;
+		}
+
 		return subtotalWithTaxAmountFormatted;
 	}
 
@@ -2095,6 +2904,8 @@ public class Order implements Serializable {
 		String subtotalWithTaxAmountFormatted) {
 
 		this.subtotalWithTaxAmountFormatted = subtotalWithTaxAmountFormatted;
+
+		_subtotalWithTaxAmountFormattedSupplier = null;
 	}
 
 	@JsonIgnore
@@ -2102,24 +2913,34 @@ public class Order implements Serializable {
 		UnsafeSupplier<String, Exception>
 			subtotalWithTaxAmountFormattedUnsafeSupplier) {
 
-		try {
-			subtotalWithTaxAmountFormatted =
-				subtotalWithTaxAmountFormattedUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_subtotalWithTaxAmountFormattedSupplier = () -> {
+			try {
+				return subtotalWithTaxAmountFormattedUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String subtotalWithTaxAmountFormatted;
 
+	private Supplier<String> _subtotalWithTaxAmountFormattedSupplier;
+
 	@Schema
 	public Double getSubtotalWithTaxAmountValue() {
+		if (_subtotalWithTaxAmountValueSupplier != null) {
+			subtotalWithTaxAmountValue =
+				_subtotalWithTaxAmountValueSupplier.get();
+
+			_subtotalWithTaxAmountValueSupplier = null;
+		}
+
 		return subtotalWithTaxAmountValue;
 	}
 
@@ -2127,6 +2948,8 @@ public class Order implements Serializable {
 		Double subtotalWithTaxAmountValue) {
 
 		this.subtotalWithTaxAmountValue = subtotalWithTaxAmountValue;
+
+		_subtotalWithTaxAmountValueSupplier = null;
 	}
 
 	@JsonIgnore
@@ -2134,169 +2957,239 @@ public class Order implements Serializable {
 		UnsafeSupplier<Double, Exception>
 			subtotalWithTaxAmountValueUnsafeSupplier) {
 
-		try {
-			subtotalWithTaxAmountValue =
-				subtotalWithTaxAmountValueUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_subtotalWithTaxAmountValueSupplier = () -> {
+			try {
+				return subtotalWithTaxAmountValueUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Double subtotalWithTaxAmountValue;
 
+	private Supplier<Double> _subtotalWithTaxAmountValueSupplier;
+
 	@DecimalMin("0")
 	@Schema(example = "11")
 	public Double getTaxAmount() {
+		if (_taxAmountSupplier != null) {
+			taxAmount = _taxAmountSupplier.get();
+
+			_taxAmountSupplier = null;
+		}
+
 		return taxAmount;
 	}
 
 	public void setTaxAmount(Double taxAmount) {
 		this.taxAmount = taxAmount;
+
+		_taxAmountSupplier = null;
 	}
 
 	@JsonIgnore
 	public void setTaxAmount(
 		UnsafeSupplier<Double, Exception> taxAmountUnsafeSupplier) {
 
-		try {
-			taxAmount = taxAmountUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_taxAmountSupplier = () -> {
+			try {
+				return taxAmountUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Double taxAmount;
 
+	private Supplier<Double> _taxAmountSupplier;
+
 	@Schema
 	public String getTaxAmountFormatted() {
+		if (_taxAmountFormattedSupplier != null) {
+			taxAmountFormatted = _taxAmountFormattedSupplier.get();
+
+			_taxAmountFormattedSupplier = null;
+		}
+
 		return taxAmountFormatted;
 	}
 
 	public void setTaxAmountFormatted(String taxAmountFormatted) {
 		this.taxAmountFormatted = taxAmountFormatted;
+
+		_taxAmountFormattedSupplier = null;
 	}
 
 	@JsonIgnore
 	public void setTaxAmountFormatted(
 		UnsafeSupplier<String, Exception> taxAmountFormattedUnsafeSupplier) {
 
-		try {
-			taxAmountFormatted = taxAmountFormattedUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_taxAmountFormattedSupplier = () -> {
+			try {
+				return taxAmountFormattedUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String taxAmountFormatted;
 
+	private Supplier<String> _taxAmountFormattedSupplier;
+
 	@DecimalMin("0")
 	@Schema(example = "113")
 	@Valid
 	public BigDecimal getTotal() {
+		if (_totalSupplier != null) {
+			total = _totalSupplier.get();
+
+			_totalSupplier = null;
+		}
+
 		return total;
 	}
 
 	public void setTotal(BigDecimal total) {
 		this.total = total;
+
+		_totalSupplier = null;
 	}
 
 	@JsonIgnore
 	public void setTotal(
 		UnsafeSupplier<BigDecimal, Exception> totalUnsafeSupplier) {
 
-		try {
-			total = totalUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_totalSupplier = () -> {
+			try {
+				return totalUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected BigDecimal total;
 
+	private Supplier<BigDecimal> _totalSupplier;
+
 	@DecimalMin("0")
 	@Schema(example = "113")
 	public Double getTotalAmount() {
+		if (_totalAmountSupplier != null) {
+			totalAmount = _totalAmountSupplier.get();
+
+			_totalAmountSupplier = null;
+		}
+
 		return totalAmount;
 	}
 
 	public void setTotalAmount(Double totalAmount) {
 		this.totalAmount = totalAmount;
+
+		_totalAmountSupplier = null;
 	}
 
 	@JsonIgnore
 	public void setTotalAmount(
 		UnsafeSupplier<Double, Exception> totalAmountUnsafeSupplier) {
 
-		try {
-			totalAmount = totalAmountUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_totalAmountSupplier = () -> {
+			try {
+				return totalAmountUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Double totalAmount;
 
+	private Supplier<Double> _totalAmountSupplier;
+
 	@DecimalMin("0")
 	@Schema(example = "11")
 	public Double getTotalDiscountAmount() {
+		if (_totalDiscountAmountSupplier != null) {
+			totalDiscountAmount = _totalDiscountAmountSupplier.get();
+
+			_totalDiscountAmountSupplier = null;
+		}
+
 		return totalDiscountAmount;
 	}
 
 	public void setTotalDiscountAmount(Double totalDiscountAmount) {
 		this.totalDiscountAmount = totalDiscountAmount;
+
+		_totalDiscountAmountSupplier = null;
 	}
 
 	@JsonIgnore
 	public void setTotalDiscountAmount(
 		UnsafeSupplier<Double, Exception> totalDiscountAmountUnsafeSupplier) {
 
-		try {
-			totalDiscountAmount = totalDiscountAmountUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_totalDiscountAmountSupplier = () -> {
+			try {
+				return totalDiscountAmountUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Double totalDiscountAmount;
 
+	private Supplier<Double> _totalDiscountAmountSupplier;
+
 	@Schema
 	public String getTotalDiscountAmountFormatted() {
+		if (_totalDiscountAmountFormattedSupplier != null) {
+			totalDiscountAmountFormatted =
+				_totalDiscountAmountFormattedSupplier.get();
+
+			_totalDiscountAmountFormattedSupplier = null;
+		}
+
 		return totalDiscountAmountFormatted;
 	}
 
@@ -2304,6 +3197,8 @@ public class Order implements Serializable {
 		String totalDiscountAmountFormatted) {
 
 		this.totalDiscountAmountFormatted = totalDiscountAmountFormatted;
+
+		_totalDiscountAmountFormattedSupplier = null;
 	}
 
 	@JsonIgnore
@@ -2311,25 +3206,35 @@ public class Order implements Serializable {
 		UnsafeSupplier<String, Exception>
 			totalDiscountAmountFormattedUnsafeSupplier) {
 
-		try {
-			totalDiscountAmountFormatted =
-				totalDiscountAmountFormattedUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_totalDiscountAmountFormattedSupplier = () -> {
+			try {
+				return totalDiscountAmountFormattedUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String totalDiscountAmountFormatted;
 
+	private Supplier<String> _totalDiscountAmountFormattedSupplier;
+
 	@DecimalMin("0")
 	@Schema(example = "20")
 	public Double getTotalDiscountPercentageLevel1() {
+		if (_totalDiscountPercentageLevel1Supplier != null) {
+			totalDiscountPercentageLevel1 =
+				_totalDiscountPercentageLevel1Supplier.get();
+
+			_totalDiscountPercentageLevel1Supplier = null;
+		}
+
 		return totalDiscountPercentageLevel1;
 	}
 
@@ -2337,6 +3242,8 @@ public class Order implements Serializable {
 		Double totalDiscountPercentageLevel1) {
 
 		this.totalDiscountPercentageLevel1 = totalDiscountPercentageLevel1;
+
+		_totalDiscountPercentageLevel1Supplier = null;
 	}
 
 	@JsonIgnore
@@ -2344,25 +3251,35 @@ public class Order implements Serializable {
 		UnsafeSupplier<Double, Exception>
 			totalDiscountPercentageLevel1UnsafeSupplier) {
 
-		try {
-			totalDiscountPercentageLevel1 =
-				totalDiscountPercentageLevel1UnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_totalDiscountPercentageLevel1Supplier = () -> {
+			try {
+				return totalDiscountPercentageLevel1UnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Double totalDiscountPercentageLevel1;
 
+	private Supplier<Double> _totalDiscountPercentageLevel1Supplier;
+
 	@DecimalMin("0")
 	@Schema(example = "20")
 	public Double getTotalDiscountPercentageLevel1WithTaxAmount() {
+		if (_totalDiscountPercentageLevel1WithTaxAmountSupplier != null) {
+			totalDiscountPercentageLevel1WithTaxAmount =
+				_totalDiscountPercentageLevel1WithTaxAmountSupplier.get();
+
+			_totalDiscountPercentageLevel1WithTaxAmountSupplier = null;
+		}
+
 		return totalDiscountPercentageLevel1WithTaxAmount;
 	}
 
@@ -2371,6 +3288,8 @@ public class Order implements Serializable {
 
 		this.totalDiscountPercentageLevel1WithTaxAmount =
 			totalDiscountPercentageLevel1WithTaxAmount;
+
+		_totalDiscountPercentageLevel1WithTaxAmountSupplier = null;
 	}
 
 	@JsonIgnore
@@ -2378,25 +3297,37 @@ public class Order implements Serializable {
 		UnsafeSupplier<Double, Exception>
 			totalDiscountPercentageLevel1WithTaxAmountUnsafeSupplier) {
 
-		try {
-			totalDiscountPercentageLevel1WithTaxAmount =
-				totalDiscountPercentageLevel1WithTaxAmountUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_totalDiscountPercentageLevel1WithTaxAmountSupplier = () -> {
+			try {
+				return totalDiscountPercentageLevel1WithTaxAmountUnsafeSupplier.
+					get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Double totalDiscountPercentageLevel1WithTaxAmount;
 
+	private Supplier<Double>
+		_totalDiscountPercentageLevel1WithTaxAmountSupplier;
+
 	@DecimalMin("0")
 	@Schema(example = "0")
 	public Double getTotalDiscountPercentageLevel2() {
+		if (_totalDiscountPercentageLevel2Supplier != null) {
+			totalDiscountPercentageLevel2 =
+				_totalDiscountPercentageLevel2Supplier.get();
+
+			_totalDiscountPercentageLevel2Supplier = null;
+		}
+
 		return totalDiscountPercentageLevel2;
 	}
 
@@ -2404,6 +3335,8 @@ public class Order implements Serializable {
 		Double totalDiscountPercentageLevel2) {
 
 		this.totalDiscountPercentageLevel2 = totalDiscountPercentageLevel2;
+
+		_totalDiscountPercentageLevel2Supplier = null;
 	}
 
 	@JsonIgnore
@@ -2411,25 +3344,35 @@ public class Order implements Serializable {
 		UnsafeSupplier<Double, Exception>
 			totalDiscountPercentageLevel2UnsafeSupplier) {
 
-		try {
-			totalDiscountPercentageLevel2 =
-				totalDiscountPercentageLevel2UnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_totalDiscountPercentageLevel2Supplier = () -> {
+			try {
+				return totalDiscountPercentageLevel2UnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Double totalDiscountPercentageLevel2;
 
+	private Supplier<Double> _totalDiscountPercentageLevel2Supplier;
+
 	@DecimalMin("0")
 	@Schema(example = "0")
 	public Double getTotalDiscountPercentageLevel2WithTaxAmount() {
+		if (_totalDiscountPercentageLevel2WithTaxAmountSupplier != null) {
+			totalDiscountPercentageLevel2WithTaxAmount =
+				_totalDiscountPercentageLevel2WithTaxAmountSupplier.get();
+
+			_totalDiscountPercentageLevel2WithTaxAmountSupplier = null;
+		}
+
 		return totalDiscountPercentageLevel2WithTaxAmount;
 	}
 
@@ -2438,6 +3381,8 @@ public class Order implements Serializable {
 
 		this.totalDiscountPercentageLevel2WithTaxAmount =
 			totalDiscountPercentageLevel2WithTaxAmount;
+
+		_totalDiscountPercentageLevel2WithTaxAmountSupplier = null;
 	}
 
 	@JsonIgnore
@@ -2445,25 +3390,37 @@ public class Order implements Serializable {
 		UnsafeSupplier<Double, Exception>
 			totalDiscountPercentageLevel2WithTaxAmountUnsafeSupplier) {
 
-		try {
-			totalDiscountPercentageLevel2WithTaxAmount =
-				totalDiscountPercentageLevel2WithTaxAmountUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_totalDiscountPercentageLevel2WithTaxAmountSupplier = () -> {
+			try {
+				return totalDiscountPercentageLevel2WithTaxAmountUnsafeSupplier.
+					get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Double totalDiscountPercentageLevel2WithTaxAmount;
 
+	private Supplier<Double>
+		_totalDiscountPercentageLevel2WithTaxAmountSupplier;
+
 	@DecimalMin("0")
 	@Schema(example = "0")
 	public Double getTotalDiscountPercentageLevel3() {
+		if (_totalDiscountPercentageLevel3Supplier != null) {
+			totalDiscountPercentageLevel3 =
+				_totalDiscountPercentageLevel3Supplier.get();
+
+			_totalDiscountPercentageLevel3Supplier = null;
+		}
+
 		return totalDiscountPercentageLevel3;
 	}
 
@@ -2471,6 +3428,8 @@ public class Order implements Serializable {
 		Double totalDiscountPercentageLevel3) {
 
 		this.totalDiscountPercentageLevel3 = totalDiscountPercentageLevel3;
+
+		_totalDiscountPercentageLevel3Supplier = null;
 	}
 
 	@JsonIgnore
@@ -2478,25 +3437,35 @@ public class Order implements Serializable {
 		UnsafeSupplier<Double, Exception>
 			totalDiscountPercentageLevel3UnsafeSupplier) {
 
-		try {
-			totalDiscountPercentageLevel3 =
-				totalDiscountPercentageLevel3UnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_totalDiscountPercentageLevel3Supplier = () -> {
+			try {
+				return totalDiscountPercentageLevel3UnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Double totalDiscountPercentageLevel3;
 
+	private Supplier<Double> _totalDiscountPercentageLevel3Supplier;
+
 	@DecimalMin("0")
 	@Schema(example = "0")
 	public Double getTotalDiscountPercentageLevel3WithTaxAmount() {
+		if (_totalDiscountPercentageLevel3WithTaxAmountSupplier != null) {
+			totalDiscountPercentageLevel3WithTaxAmount =
+				_totalDiscountPercentageLevel3WithTaxAmountSupplier.get();
+
+			_totalDiscountPercentageLevel3WithTaxAmountSupplier = null;
+		}
+
 		return totalDiscountPercentageLevel3WithTaxAmount;
 	}
 
@@ -2505,6 +3474,8 @@ public class Order implements Serializable {
 
 		this.totalDiscountPercentageLevel3WithTaxAmount =
 			totalDiscountPercentageLevel3WithTaxAmount;
+
+		_totalDiscountPercentageLevel3WithTaxAmountSupplier = null;
 	}
 
 	@JsonIgnore
@@ -2512,25 +3483,37 @@ public class Order implements Serializable {
 		UnsafeSupplier<Double, Exception>
 			totalDiscountPercentageLevel3WithTaxAmountUnsafeSupplier) {
 
-		try {
-			totalDiscountPercentageLevel3WithTaxAmount =
-				totalDiscountPercentageLevel3WithTaxAmountUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_totalDiscountPercentageLevel3WithTaxAmountSupplier = () -> {
+			try {
+				return totalDiscountPercentageLevel3WithTaxAmountUnsafeSupplier.
+					get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Double totalDiscountPercentageLevel3WithTaxAmount;
 
+	private Supplier<Double>
+		_totalDiscountPercentageLevel3WithTaxAmountSupplier;
+
 	@DecimalMin("0")
 	@Schema(example = "0")
 	public Double getTotalDiscountPercentageLevel4() {
+		if (_totalDiscountPercentageLevel4Supplier != null) {
+			totalDiscountPercentageLevel4 =
+				_totalDiscountPercentageLevel4Supplier.get();
+
+			_totalDiscountPercentageLevel4Supplier = null;
+		}
+
 		return totalDiscountPercentageLevel4;
 	}
 
@@ -2538,6 +3521,8 @@ public class Order implements Serializable {
 		Double totalDiscountPercentageLevel4) {
 
 		this.totalDiscountPercentageLevel4 = totalDiscountPercentageLevel4;
+
+		_totalDiscountPercentageLevel4Supplier = null;
 	}
 
 	@JsonIgnore
@@ -2545,25 +3530,35 @@ public class Order implements Serializable {
 		UnsafeSupplier<Double, Exception>
 			totalDiscountPercentageLevel4UnsafeSupplier) {
 
-		try {
-			totalDiscountPercentageLevel4 =
-				totalDiscountPercentageLevel4UnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_totalDiscountPercentageLevel4Supplier = () -> {
+			try {
+				return totalDiscountPercentageLevel4UnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Double totalDiscountPercentageLevel4;
 
+	private Supplier<Double> _totalDiscountPercentageLevel4Supplier;
+
 	@DecimalMin("0")
 	@Schema(example = "0")
 	public Double getTotalDiscountPercentageLevel4WithTaxAmount() {
+		if (_totalDiscountPercentageLevel4WithTaxAmountSupplier != null) {
+			totalDiscountPercentageLevel4WithTaxAmount =
+				_totalDiscountPercentageLevel4WithTaxAmountSupplier.get();
+
+			_totalDiscountPercentageLevel4WithTaxAmountSupplier = null;
+		}
+
 		return totalDiscountPercentageLevel4WithTaxAmount;
 	}
 
@@ -2572,6 +3567,8 @@ public class Order implements Serializable {
 
 		this.totalDiscountPercentageLevel4WithTaxAmount =
 			totalDiscountPercentageLevel4WithTaxAmount;
+
+		_totalDiscountPercentageLevel4WithTaxAmountSupplier = null;
 	}
 
 	@JsonIgnore
@@ -2579,25 +3576,37 @@ public class Order implements Serializable {
 		UnsafeSupplier<Double, Exception>
 			totalDiscountPercentageLevel4WithTaxAmountUnsafeSupplier) {
 
-		try {
-			totalDiscountPercentageLevel4WithTaxAmount =
-				totalDiscountPercentageLevel4WithTaxAmountUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_totalDiscountPercentageLevel4WithTaxAmountSupplier = () -> {
+			try {
+				return totalDiscountPercentageLevel4WithTaxAmountUnsafeSupplier.
+					get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Double totalDiscountPercentageLevel4WithTaxAmount;
 
+	private Supplier<Double>
+		_totalDiscountPercentageLevel4WithTaxAmountSupplier;
+
 	@DecimalMin("0")
 	@Schema(example = "11")
 	public Double getTotalDiscountWithTaxAmount() {
+		if (_totalDiscountWithTaxAmountSupplier != null) {
+			totalDiscountWithTaxAmount =
+				_totalDiscountWithTaxAmountSupplier.get();
+
+			_totalDiscountWithTaxAmountSupplier = null;
+		}
+
 		return totalDiscountWithTaxAmount;
 	}
 
@@ -2605,6 +3614,8 @@ public class Order implements Serializable {
 		Double totalDiscountWithTaxAmount) {
 
 		this.totalDiscountWithTaxAmount = totalDiscountWithTaxAmount;
+
+		_totalDiscountWithTaxAmountSupplier = null;
 	}
 
 	@JsonIgnore
@@ -2612,24 +3623,34 @@ public class Order implements Serializable {
 		UnsafeSupplier<Double, Exception>
 			totalDiscountWithTaxAmountUnsafeSupplier) {
 
-		try {
-			totalDiscountWithTaxAmount =
-				totalDiscountWithTaxAmountUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_totalDiscountWithTaxAmountSupplier = () -> {
+			try {
+				return totalDiscountWithTaxAmountUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Double totalDiscountWithTaxAmount;
 
+	private Supplier<Double> _totalDiscountWithTaxAmountSupplier;
+
 	@Schema
 	public String getTotalDiscountWithTaxAmountFormatted() {
+		if (_totalDiscountWithTaxAmountFormattedSupplier != null) {
+			totalDiscountWithTaxAmountFormatted =
+				_totalDiscountWithTaxAmountFormattedSupplier.get();
+
+			_totalDiscountWithTaxAmountFormattedSupplier = null;
+		}
+
 		return totalDiscountWithTaxAmountFormatted;
 	}
 
@@ -2638,6 +3659,8 @@ public class Order implements Serializable {
 
 		this.totalDiscountWithTaxAmountFormatted =
 			totalDiscountWithTaxAmountFormatted;
+
+		_totalDiscountWithTaxAmountFormattedSupplier = null;
 	}
 
 	@JsonIgnore
@@ -2645,59 +3668,82 @@ public class Order implements Serializable {
 		UnsafeSupplier<String, Exception>
 			totalDiscountWithTaxAmountFormattedUnsafeSupplier) {
 
-		try {
-			totalDiscountWithTaxAmountFormatted =
-				totalDiscountWithTaxAmountFormattedUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_totalDiscountWithTaxAmountFormattedSupplier = () -> {
+			try {
+				return totalDiscountWithTaxAmountFormattedUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String totalDiscountWithTaxAmountFormatted;
 
+	private Supplier<String> _totalDiscountWithTaxAmountFormattedSupplier;
+
 	@Schema
 	public String getTotalFormatted() {
+		if (_totalFormattedSupplier != null) {
+			totalFormatted = _totalFormattedSupplier.get();
+
+			_totalFormattedSupplier = null;
+		}
+
 		return totalFormatted;
 	}
 
 	public void setTotalFormatted(String totalFormatted) {
 		this.totalFormatted = totalFormatted;
+
+		_totalFormattedSupplier = null;
 	}
 
 	@JsonIgnore
 	public void setTotalFormatted(
 		UnsafeSupplier<String, Exception> totalFormattedUnsafeSupplier) {
 
-		try {
-			totalFormatted = totalFormattedUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_totalFormattedSupplier = () -> {
+			try {
+				return totalFormattedUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String totalFormatted;
 
+	private Supplier<String> _totalFormattedSupplier;
+
 	@DecimalMin("0")
 	@Schema(example = "113")
 	@Valid
 	public BigDecimal getTotalWithTaxAmount() {
+		if (_totalWithTaxAmountSupplier != null) {
+			totalWithTaxAmount = _totalWithTaxAmountSupplier.get();
+
+			_totalWithTaxAmountSupplier = null;
+		}
+
 		return totalWithTaxAmount;
 	}
 
 	public void setTotalWithTaxAmount(BigDecimal totalWithTaxAmount) {
 		this.totalWithTaxAmount = totalWithTaxAmount;
+
+		_totalWithTaxAmountSupplier = null;
 	}
 
 	@JsonIgnore
@@ -2705,23 +3751,34 @@ public class Order implements Serializable {
 		UnsafeSupplier<BigDecimal, Exception>
 			totalWithTaxAmountUnsafeSupplier) {
 
-		try {
-			totalWithTaxAmount = totalWithTaxAmountUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_totalWithTaxAmountSupplier = () -> {
+			try {
+				return totalWithTaxAmountUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected BigDecimal totalWithTaxAmount;
 
+	private Supplier<BigDecimal> _totalWithTaxAmountSupplier;
+
 	@Schema
 	public String getTotalWithTaxAmountFormatted() {
+		if (_totalWithTaxAmountFormattedSupplier != null) {
+			totalWithTaxAmountFormatted =
+				_totalWithTaxAmountFormattedSupplier.get();
+
+			_totalWithTaxAmountFormattedSupplier = null;
+		}
+
 		return totalWithTaxAmountFormatted;
 	}
 
@@ -2729,6 +3786,8 @@ public class Order implements Serializable {
 		String totalWithTaxAmountFormatted) {
 
 		this.totalWithTaxAmountFormatted = totalWithTaxAmountFormatted;
+
+		_totalWithTaxAmountFormattedSupplier = null;
 	}
 
 	@JsonIgnore
@@ -2736,30 +3795,41 @@ public class Order implements Serializable {
 		UnsafeSupplier<String, Exception>
 			totalWithTaxAmountFormattedUnsafeSupplier) {
 
-		try {
-			totalWithTaxAmountFormatted =
-				totalWithTaxAmountFormattedUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_totalWithTaxAmountFormattedSupplier = () -> {
+			try {
+				return totalWithTaxAmountFormattedUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String totalWithTaxAmountFormatted;
 
+	private Supplier<String> _totalWithTaxAmountFormattedSupplier;
+
 	@DecimalMin("0")
 	@Schema(example = "113")
 	public Double getTotalWithTaxAmountValue() {
+		if (_totalWithTaxAmountValueSupplier != null) {
+			totalWithTaxAmountValue = _totalWithTaxAmountValueSupplier.get();
+
+			_totalWithTaxAmountValueSupplier = null;
+		}
+
 		return totalWithTaxAmountValue;
 	}
 
 	public void setTotalWithTaxAmountValue(Double totalWithTaxAmountValue) {
 		this.totalWithTaxAmountValue = totalWithTaxAmountValue;
+
+		_totalWithTaxAmountValueSupplier = null;
 	}
 
 	@JsonIgnore
@@ -2767,78 +3837,105 @@ public class Order implements Serializable {
 		UnsafeSupplier<Double, Exception>
 			totalWithTaxAmountValueUnsafeSupplier) {
 
-		try {
-			totalWithTaxAmountValue =
-				totalWithTaxAmountValueUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_totalWithTaxAmountValueSupplier = () -> {
+			try {
+				return totalWithTaxAmountValueUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Double totalWithTaxAmountValue;
 
+	private Supplier<Double> _totalWithTaxAmountValueSupplier;
+
 	@Schema
 	public String getTransactionId() {
+		if (_transactionIdSupplier != null) {
+			transactionId = _transactionIdSupplier.get();
+
+			_transactionIdSupplier = null;
+		}
+
 		return transactionId;
 	}
 
 	public void setTransactionId(String transactionId) {
 		this.transactionId = transactionId;
+
+		_transactionIdSupplier = null;
 	}
 
 	@JsonIgnore
 	public void setTransactionId(
 		UnsafeSupplier<String, Exception> transactionIdUnsafeSupplier) {
 
-		try {
-			transactionId = transactionIdUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_transactionIdSupplier = () -> {
+			try {
+				return transactionIdUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String transactionId;
 
+	private Supplier<String> _transactionIdSupplier;
+
 	@Schema
 	@Valid
 	public Status getWorkflowStatusInfo() {
+		if (_workflowStatusInfoSupplier != null) {
+			workflowStatusInfo = _workflowStatusInfoSupplier.get();
+
+			_workflowStatusInfoSupplier = null;
+		}
+
 		return workflowStatusInfo;
 	}
 
 	public void setWorkflowStatusInfo(Status workflowStatusInfo) {
 		this.workflowStatusInfo = workflowStatusInfo;
+
+		_workflowStatusInfoSupplier = null;
 	}
 
 	@JsonIgnore
 	public void setWorkflowStatusInfo(
 		UnsafeSupplier<Status, Exception> workflowStatusInfoUnsafeSupplier) {
 
-		try {
-			workflowStatusInfo = workflowStatusInfoUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_workflowStatusInfoSupplier = () -> {
+			try {
+				return workflowStatusInfoUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Status workflowStatusInfo;
+
+	private Supplier<Status> _workflowStatusInfoSupplier;
 
 	@Override
 	public boolean equals(Object object) {
@@ -2870,6 +3967,8 @@ public class Order implements Serializable {
 		DateFormat liferayToJSONDateFormat = new SimpleDateFormat(
 			"yyyy-MM-dd'T'HH:mm:ss'Z'");
 
+		Account account = getAccount();
+
 		if (account != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -2879,6 +3978,8 @@ public class Order implements Serializable {
 
 			sb.append(String.valueOf(account));
 		}
+
+		String accountExternalReferenceCode = getAccountExternalReferenceCode();
 
 		if (accountExternalReferenceCode != null) {
 			if (sb.length() > 1) {
@@ -2894,6 +3995,8 @@ public class Order implements Serializable {
 			sb.append("\"");
 		}
 
+		Long accountId = getAccountId();
+
 		if (accountId != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -2904,6 +4007,8 @@ public class Order implements Serializable {
 			sb.append(accountId);
 		}
 
+		Map<String, Map<String, String>> actions = getActions();
+
 		if (actions != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -2913,6 +4018,8 @@ public class Order implements Serializable {
 
 			sb.append(_toJSON(actions));
 		}
+
+		String advanceStatus = getAdvanceStatus();
 
 		if (advanceStatus != null) {
 			if (sb.length() > 1) {
@@ -2928,6 +4035,8 @@ public class Order implements Serializable {
 			sb.append("\"");
 		}
 
+		BillingAddress billingAddress = getBillingAddress();
+
 		if (billingAddress != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -2937,6 +4046,8 @@ public class Order implements Serializable {
 
 			sb.append(String.valueOf(billingAddress));
 		}
+
+		Long billingAddressId = getBillingAddressId();
 
 		if (billingAddressId != null) {
 			if (sb.length() > 1) {
@@ -2948,6 +4059,8 @@ public class Order implements Serializable {
 			sb.append(billingAddressId);
 		}
 
+		Channel channel = getChannel();
+
 		if (channel != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -2957,6 +4070,8 @@ public class Order implements Serializable {
 
 			sb.append(String.valueOf(channel));
 		}
+
+		String channelExternalReferenceCode = getChannelExternalReferenceCode();
 
 		if (channelExternalReferenceCode != null) {
 			if (sb.length() > 1) {
@@ -2972,6 +4087,8 @@ public class Order implements Serializable {
 			sb.append("\"");
 		}
 
+		Long channelId = getChannelId();
+
 		if (channelId != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -2981,6 +4098,8 @@ public class Order implements Serializable {
 
 			sb.append(channelId);
 		}
+
+		String couponCode = getCouponCode();
 
 		if (couponCode != null) {
 			if (sb.length() > 1) {
@@ -2996,6 +4115,8 @@ public class Order implements Serializable {
 			sb.append("\"");
 		}
 
+		Date createDate = getCreateDate();
+
 		if (createDate != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -3009,6 +4130,8 @@ public class Order implements Serializable {
 
 			sb.append("\"");
 		}
+
+		String currencyCode = getCurrencyCode();
 
 		if (currencyCode != null) {
 			if (sb.length() > 1) {
@@ -3024,6 +4147,8 @@ public class Order implements Serializable {
 			sb.append("\"");
 		}
 
+		Map<String, ?> customFields = getCustomFields();
+
 		if (customFields != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -3033,6 +4158,8 @@ public class Order implements Serializable {
 
 			sb.append(_toJSON(customFields));
 		}
+
+		String externalReferenceCode = getExternalReferenceCode();
 
 		if (externalReferenceCode != null) {
 			if (sb.length() > 1) {
@@ -3048,6 +4175,8 @@ public class Order implements Serializable {
 			sb.append("\"");
 		}
 
+		Long id = getId();
+
 		if (id != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -3057,6 +4186,8 @@ public class Order implements Serializable {
 
 			sb.append(id);
 		}
+
+		Date lastPriceUpdateDate = getLastPriceUpdateDate();
 
 		if (lastPriceUpdateDate != null) {
 			if (sb.length() > 1) {
@@ -3072,6 +4203,8 @@ public class Order implements Serializable {
 			sb.append("\"");
 		}
 
+		Date modifiedDate = getModifiedDate();
+
 		if (modifiedDate != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -3086,6 +4219,8 @@ public class Order implements Serializable {
 			sb.append("\"");
 		}
 
+		Date orderDate = getOrderDate();
+
 		if (orderDate != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -3099,6 +4234,8 @@ public class Order implements Serializable {
 
 			sb.append("\"");
 		}
+
+		OrderItem[] orderItems = getOrderItems();
 
 		if (orderItems != null) {
 			if (sb.length() > 1) {
@@ -3120,6 +4257,8 @@ public class Order implements Serializable {
 			sb.append("]");
 		}
 
+		Integer orderStatus = getOrderStatus();
+
 		if (orderStatus != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -3130,6 +4269,8 @@ public class Order implements Serializable {
 			sb.append(orderStatus);
 		}
 
+		Status orderStatusInfo = getOrderStatusInfo();
+
 		if (orderStatusInfo != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -3139,6 +4280,8 @@ public class Order implements Serializable {
 
 			sb.append(String.valueOf(orderStatusInfo));
 		}
+
+		String paymentMethod = getPaymentMethod();
 
 		if (paymentMethod != null) {
 			if (sb.length() > 1) {
@@ -3154,6 +4297,8 @@ public class Order implements Serializable {
 			sb.append("\"");
 		}
 
+		Integer paymentStatus = getPaymentStatus();
+
 		if (paymentStatus != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -3164,6 +4309,8 @@ public class Order implements Serializable {
 			sb.append(paymentStatus);
 		}
 
+		Status paymentStatusInfo = getPaymentStatusInfo();
+
 		if (paymentStatusInfo != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -3173,6 +4320,8 @@ public class Order implements Serializable {
 
 			sb.append(String.valueOf(paymentStatusInfo));
 		}
+
+		String printedNote = getPrintedNote();
 
 		if (printedNote != null) {
 			if (sb.length() > 1) {
@@ -3188,6 +4337,8 @@ public class Order implements Serializable {
 			sb.append("\"");
 		}
 
+		String purchaseOrderNumber = getPurchaseOrderNumber();
+
 		if (purchaseOrderNumber != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -3201,6 +4352,8 @@ public class Order implements Serializable {
 
 			sb.append("\"");
 		}
+
+		Date requestedDeliveryDate = getRequestedDeliveryDate();
 
 		if (requestedDeliveryDate != null) {
 			if (sb.length() > 1) {
@@ -3216,6 +4369,8 @@ public class Order implements Serializable {
 			sb.append("\"");
 		}
 
+		ShippingAddress shippingAddress = getShippingAddress();
+
 		if (shippingAddress != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -3225,6 +4380,8 @@ public class Order implements Serializable {
 
 			sb.append(String.valueOf(shippingAddress));
 		}
+
+		Long shippingAddressId = getShippingAddressId();
 
 		if (shippingAddressId != null) {
 			if (sb.length() > 1) {
@@ -3236,6 +4393,8 @@ public class Order implements Serializable {
 			sb.append(shippingAddressId);
 		}
 
+		BigDecimal shippingAmount = getShippingAmount();
+
 		if (shippingAmount != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -3245,6 +4404,8 @@ public class Order implements Serializable {
 
 			sb.append(shippingAmount);
 		}
+
+		String shippingAmountFormatted = getShippingAmountFormatted();
 
 		if (shippingAmountFormatted != null) {
 			if (sb.length() > 1) {
@@ -3260,6 +4421,8 @@ public class Order implements Serializable {
 			sb.append("\"");
 		}
 
+		Double shippingAmountValue = getShippingAmountValue();
+
 		if (shippingAmountValue != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -3270,6 +4433,8 @@ public class Order implements Serializable {
 			sb.append(shippingAmountValue);
 		}
 
+		Double shippingDiscountAmount = getShippingDiscountAmount();
+
 		if (shippingDiscountAmount != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -3279,6 +4444,9 @@ public class Order implements Serializable {
 
 			sb.append(shippingDiscountAmount);
 		}
+
+		String shippingDiscountAmountFormatted =
+			getShippingDiscountAmountFormatted();
 
 		if (shippingDiscountAmountFormatted != null) {
 			if (sb.length() > 1) {
@@ -3294,6 +4462,9 @@ public class Order implements Serializable {
 			sb.append("\"");
 		}
 
+		Double shippingDiscountPercentageLevel1 =
+			getShippingDiscountPercentageLevel1();
+
 		if (shippingDiscountPercentageLevel1 != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -3303,6 +4474,9 @@ public class Order implements Serializable {
 
 			sb.append(shippingDiscountPercentageLevel1);
 		}
+
+		Double shippingDiscountPercentageLevel1WithTaxAmount =
+			getShippingDiscountPercentageLevel1WithTaxAmount();
 
 		if (shippingDiscountPercentageLevel1WithTaxAmount != null) {
 			if (sb.length() > 1) {
@@ -3314,6 +4488,9 @@ public class Order implements Serializable {
 			sb.append(shippingDiscountPercentageLevel1WithTaxAmount);
 		}
 
+		Double shippingDiscountPercentageLevel2 =
+			getShippingDiscountPercentageLevel2();
+
 		if (shippingDiscountPercentageLevel2 != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -3323,6 +4500,9 @@ public class Order implements Serializable {
 
 			sb.append(shippingDiscountPercentageLevel2);
 		}
+
+		Double shippingDiscountPercentageLevel2WithTaxAmount =
+			getShippingDiscountPercentageLevel2WithTaxAmount();
 
 		if (shippingDiscountPercentageLevel2WithTaxAmount != null) {
 			if (sb.length() > 1) {
@@ -3334,6 +4514,9 @@ public class Order implements Serializable {
 			sb.append(shippingDiscountPercentageLevel2WithTaxAmount);
 		}
 
+		Double shippingDiscountPercentageLevel3 =
+			getShippingDiscountPercentageLevel3();
+
 		if (shippingDiscountPercentageLevel3 != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -3343,6 +4526,9 @@ public class Order implements Serializable {
 
 			sb.append(shippingDiscountPercentageLevel3);
 		}
+
+		Double shippingDiscountPercentageLevel3WithTaxAmount =
+			getShippingDiscountPercentageLevel3WithTaxAmount();
 
 		if (shippingDiscountPercentageLevel3WithTaxAmount != null) {
 			if (sb.length() > 1) {
@@ -3354,6 +4540,9 @@ public class Order implements Serializable {
 			sb.append(shippingDiscountPercentageLevel3WithTaxAmount);
 		}
 
+		Double shippingDiscountPercentageLevel4 =
+			getShippingDiscountPercentageLevel4();
+
 		if (shippingDiscountPercentageLevel4 != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -3363,6 +4552,9 @@ public class Order implements Serializable {
 
 			sb.append(shippingDiscountPercentageLevel4);
 		}
+
+		Double shippingDiscountPercentageLevel4WithTaxAmount =
+			getShippingDiscountPercentageLevel4WithTaxAmount();
 
 		if (shippingDiscountPercentageLevel4WithTaxAmount != null) {
 			if (sb.length() > 1) {
@@ -3374,6 +4566,9 @@ public class Order implements Serializable {
 			sb.append(shippingDiscountPercentageLevel4WithTaxAmount);
 		}
 
+		Double shippingDiscountWithTaxAmount =
+			getShippingDiscountWithTaxAmount();
+
 		if (shippingDiscountWithTaxAmount != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -3383,6 +4578,9 @@ public class Order implements Serializable {
 
 			sb.append(shippingDiscountWithTaxAmount);
 		}
+
+		String shippingDiscountWithTaxAmountFormatted =
+			getShippingDiscountWithTaxAmountFormatted();
 
 		if (shippingDiscountWithTaxAmountFormatted != null) {
 			if (sb.length() > 1) {
@@ -3398,6 +4596,8 @@ public class Order implements Serializable {
 			sb.append("\"");
 		}
 
+		String shippingMethod = getShippingMethod();
+
 		if (shippingMethod != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -3411,6 +4611,8 @@ public class Order implements Serializable {
 
 			sb.append("\"");
 		}
+
+		String shippingOption = getShippingOption();
 
 		if (shippingOption != null) {
 			if (sb.length() > 1) {
@@ -3426,6 +4628,8 @@ public class Order implements Serializable {
 			sb.append("\"");
 		}
 
+		BigDecimal shippingWithTaxAmount = getShippingWithTaxAmount();
+
 		if (shippingWithTaxAmount != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -3435,6 +4639,9 @@ public class Order implements Serializable {
 
 			sb.append(shippingWithTaxAmount);
 		}
+
+		String shippingWithTaxAmountFormatted =
+			getShippingWithTaxAmountFormatted();
 
 		if (shippingWithTaxAmountFormatted != null) {
 			if (sb.length() > 1) {
@@ -3450,6 +4657,8 @@ public class Order implements Serializable {
 			sb.append("\"");
 		}
 
+		Double shippingWithTaxAmountValue = getShippingWithTaxAmountValue();
+
 		if (shippingWithTaxAmountValue != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -3459,6 +4668,8 @@ public class Order implements Serializable {
 
 			sb.append(shippingWithTaxAmountValue);
 		}
+
+		BigDecimal subtotal = getSubtotal();
 
 		if (subtotal != null) {
 			if (sb.length() > 1) {
@@ -3470,6 +4681,8 @@ public class Order implements Serializable {
 			sb.append(subtotal);
 		}
 
+		Double subtotalAmount = getSubtotalAmount();
+
 		if (subtotalAmount != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -3480,6 +4693,8 @@ public class Order implements Serializable {
 			sb.append(subtotalAmount);
 		}
 
+		Double subtotalDiscountAmount = getSubtotalDiscountAmount();
+
 		if (subtotalDiscountAmount != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -3489,6 +4704,9 @@ public class Order implements Serializable {
 
 			sb.append(subtotalDiscountAmount);
 		}
+
+		String subtotalDiscountAmountFormatted =
+			getSubtotalDiscountAmountFormatted();
 
 		if (subtotalDiscountAmountFormatted != null) {
 			if (sb.length() > 1) {
@@ -3504,6 +4722,9 @@ public class Order implements Serializable {
 			sb.append("\"");
 		}
 
+		Double subtotalDiscountPercentageLevel1 =
+			getSubtotalDiscountPercentageLevel1();
+
 		if (subtotalDiscountPercentageLevel1 != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -3513,6 +4734,9 @@ public class Order implements Serializable {
 
 			sb.append(subtotalDiscountPercentageLevel1);
 		}
+
+		Double subtotalDiscountPercentageLevel1WithTaxAmount =
+			getSubtotalDiscountPercentageLevel1WithTaxAmount();
 
 		if (subtotalDiscountPercentageLevel1WithTaxAmount != null) {
 			if (sb.length() > 1) {
@@ -3524,6 +4748,9 @@ public class Order implements Serializable {
 			sb.append(subtotalDiscountPercentageLevel1WithTaxAmount);
 		}
 
+		Double subtotalDiscountPercentageLevel2 =
+			getSubtotalDiscountPercentageLevel2();
+
 		if (subtotalDiscountPercentageLevel2 != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -3533,6 +4760,9 @@ public class Order implements Serializable {
 
 			sb.append(subtotalDiscountPercentageLevel2);
 		}
+
+		Double subtotalDiscountPercentageLevel2WithTaxAmount =
+			getSubtotalDiscountPercentageLevel2WithTaxAmount();
 
 		if (subtotalDiscountPercentageLevel2WithTaxAmount != null) {
 			if (sb.length() > 1) {
@@ -3544,6 +4774,9 @@ public class Order implements Serializable {
 			sb.append(subtotalDiscountPercentageLevel2WithTaxAmount);
 		}
 
+		Double subtotalDiscountPercentageLevel3 =
+			getSubtotalDiscountPercentageLevel3();
+
 		if (subtotalDiscountPercentageLevel3 != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -3553,6 +4786,9 @@ public class Order implements Serializable {
 
 			sb.append(subtotalDiscountPercentageLevel3);
 		}
+
+		Double subtotalDiscountPercentageLevel3WithTaxAmount =
+			getSubtotalDiscountPercentageLevel3WithTaxAmount();
 
 		if (subtotalDiscountPercentageLevel3WithTaxAmount != null) {
 			if (sb.length() > 1) {
@@ -3564,6 +4800,9 @@ public class Order implements Serializable {
 			sb.append(subtotalDiscountPercentageLevel3WithTaxAmount);
 		}
 
+		Double subtotalDiscountPercentageLevel4 =
+			getSubtotalDiscountPercentageLevel4();
+
 		if (subtotalDiscountPercentageLevel4 != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -3573,6 +4812,9 @@ public class Order implements Serializable {
 
 			sb.append(subtotalDiscountPercentageLevel4);
 		}
+
+		Double subtotalDiscountPercentageLevel4WithTaxAmount =
+			getSubtotalDiscountPercentageLevel4WithTaxAmount();
 
 		if (subtotalDiscountPercentageLevel4WithTaxAmount != null) {
 			if (sb.length() > 1) {
@@ -3584,6 +4826,9 @@ public class Order implements Serializable {
 			sb.append(subtotalDiscountPercentageLevel4WithTaxAmount);
 		}
 
+		Double subtotalDiscountWithTaxAmount =
+			getSubtotalDiscountWithTaxAmount();
+
 		if (subtotalDiscountWithTaxAmount != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -3593,6 +4838,9 @@ public class Order implements Serializable {
 
 			sb.append(subtotalDiscountWithTaxAmount);
 		}
+
+		String subtotalDiscountWithTaxAmountFormatted =
+			getSubtotalDiscountWithTaxAmountFormatted();
 
 		if (subtotalDiscountWithTaxAmountFormatted != null) {
 			if (sb.length() > 1) {
@@ -3608,6 +4856,8 @@ public class Order implements Serializable {
 			sb.append("\"");
 		}
 
+		String subtotalFormatted = getSubtotalFormatted();
+
 		if (subtotalFormatted != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -3622,6 +4872,8 @@ public class Order implements Serializable {
 			sb.append("\"");
 		}
 
+		BigDecimal subtotalWithTaxAmount = getSubtotalWithTaxAmount();
+
 		if (subtotalWithTaxAmount != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -3631,6 +4883,9 @@ public class Order implements Serializable {
 
 			sb.append(subtotalWithTaxAmount);
 		}
+
+		String subtotalWithTaxAmountFormatted =
+			getSubtotalWithTaxAmountFormatted();
 
 		if (subtotalWithTaxAmountFormatted != null) {
 			if (sb.length() > 1) {
@@ -3646,6 +4901,8 @@ public class Order implements Serializable {
 			sb.append("\"");
 		}
 
+		Double subtotalWithTaxAmountValue = getSubtotalWithTaxAmountValue();
+
 		if (subtotalWithTaxAmountValue != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -3656,6 +4913,8 @@ public class Order implements Serializable {
 			sb.append(subtotalWithTaxAmountValue);
 		}
 
+		Double taxAmount = getTaxAmount();
+
 		if (taxAmount != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -3665,6 +4924,8 @@ public class Order implements Serializable {
 
 			sb.append(taxAmount);
 		}
+
+		String taxAmountFormatted = getTaxAmountFormatted();
 
 		if (taxAmountFormatted != null) {
 			if (sb.length() > 1) {
@@ -3680,6 +4941,8 @@ public class Order implements Serializable {
 			sb.append("\"");
 		}
 
+		BigDecimal total = getTotal();
+
 		if (total != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -3689,6 +4952,8 @@ public class Order implements Serializable {
 
 			sb.append(total);
 		}
+
+		Double totalAmount = getTotalAmount();
 
 		if (totalAmount != null) {
 			if (sb.length() > 1) {
@@ -3700,6 +4965,8 @@ public class Order implements Serializable {
 			sb.append(totalAmount);
 		}
 
+		Double totalDiscountAmount = getTotalDiscountAmount();
+
 		if (totalDiscountAmount != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -3709,6 +4976,8 @@ public class Order implements Serializable {
 
 			sb.append(totalDiscountAmount);
 		}
+
+		String totalDiscountAmountFormatted = getTotalDiscountAmountFormatted();
 
 		if (totalDiscountAmountFormatted != null) {
 			if (sb.length() > 1) {
@@ -3724,6 +4993,9 @@ public class Order implements Serializable {
 			sb.append("\"");
 		}
 
+		Double totalDiscountPercentageLevel1 =
+			getTotalDiscountPercentageLevel1();
+
 		if (totalDiscountPercentageLevel1 != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -3733,6 +5005,9 @@ public class Order implements Serializable {
 
 			sb.append(totalDiscountPercentageLevel1);
 		}
+
+		Double totalDiscountPercentageLevel1WithTaxAmount =
+			getTotalDiscountPercentageLevel1WithTaxAmount();
 
 		if (totalDiscountPercentageLevel1WithTaxAmount != null) {
 			if (sb.length() > 1) {
@@ -3744,6 +5019,9 @@ public class Order implements Serializable {
 			sb.append(totalDiscountPercentageLevel1WithTaxAmount);
 		}
 
+		Double totalDiscountPercentageLevel2 =
+			getTotalDiscountPercentageLevel2();
+
 		if (totalDiscountPercentageLevel2 != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -3753,6 +5031,9 @@ public class Order implements Serializable {
 
 			sb.append(totalDiscountPercentageLevel2);
 		}
+
+		Double totalDiscountPercentageLevel2WithTaxAmount =
+			getTotalDiscountPercentageLevel2WithTaxAmount();
 
 		if (totalDiscountPercentageLevel2WithTaxAmount != null) {
 			if (sb.length() > 1) {
@@ -3764,6 +5045,9 @@ public class Order implements Serializable {
 			sb.append(totalDiscountPercentageLevel2WithTaxAmount);
 		}
 
+		Double totalDiscountPercentageLevel3 =
+			getTotalDiscountPercentageLevel3();
+
 		if (totalDiscountPercentageLevel3 != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -3773,6 +5057,9 @@ public class Order implements Serializable {
 
 			sb.append(totalDiscountPercentageLevel3);
 		}
+
+		Double totalDiscountPercentageLevel3WithTaxAmount =
+			getTotalDiscountPercentageLevel3WithTaxAmount();
 
 		if (totalDiscountPercentageLevel3WithTaxAmount != null) {
 			if (sb.length() > 1) {
@@ -3784,6 +5071,9 @@ public class Order implements Serializable {
 			sb.append(totalDiscountPercentageLevel3WithTaxAmount);
 		}
 
+		Double totalDiscountPercentageLevel4 =
+			getTotalDiscountPercentageLevel4();
+
 		if (totalDiscountPercentageLevel4 != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -3793,6 +5083,9 @@ public class Order implements Serializable {
 
 			sb.append(totalDiscountPercentageLevel4);
 		}
+
+		Double totalDiscountPercentageLevel4WithTaxAmount =
+			getTotalDiscountPercentageLevel4WithTaxAmount();
 
 		if (totalDiscountPercentageLevel4WithTaxAmount != null) {
 			if (sb.length() > 1) {
@@ -3804,6 +5097,8 @@ public class Order implements Serializable {
 			sb.append(totalDiscountPercentageLevel4WithTaxAmount);
 		}
 
+		Double totalDiscountWithTaxAmount = getTotalDiscountWithTaxAmount();
+
 		if (totalDiscountWithTaxAmount != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -3813,6 +5108,9 @@ public class Order implements Serializable {
 
 			sb.append(totalDiscountWithTaxAmount);
 		}
+
+		String totalDiscountWithTaxAmountFormatted =
+			getTotalDiscountWithTaxAmountFormatted();
 
 		if (totalDiscountWithTaxAmountFormatted != null) {
 			if (sb.length() > 1) {
@@ -3828,6 +5126,8 @@ public class Order implements Serializable {
 			sb.append("\"");
 		}
 
+		String totalFormatted = getTotalFormatted();
+
 		if (totalFormatted != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -3842,6 +5142,8 @@ public class Order implements Serializable {
 			sb.append("\"");
 		}
 
+		BigDecimal totalWithTaxAmount = getTotalWithTaxAmount();
+
 		if (totalWithTaxAmount != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -3851,6 +5153,8 @@ public class Order implements Serializable {
 
 			sb.append(totalWithTaxAmount);
 		}
+
+		String totalWithTaxAmountFormatted = getTotalWithTaxAmountFormatted();
 
 		if (totalWithTaxAmountFormatted != null) {
 			if (sb.length() > 1) {
@@ -3866,6 +5170,8 @@ public class Order implements Serializable {
 			sb.append("\"");
 		}
 
+		Double totalWithTaxAmountValue = getTotalWithTaxAmountValue();
+
 		if (totalWithTaxAmountValue != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -3875,6 +5181,8 @@ public class Order implements Serializable {
 
 			sb.append(totalWithTaxAmountValue);
 		}
+
+		String transactionId = getTransactionId();
 
 		if (transactionId != null) {
 			if (sb.length() > 1) {
@@ -3889,6 +5197,8 @@ public class Order implements Serializable {
 
 			sb.append("\"");
 		}
+
+		Status workflowStatusInfo = getWorkflowStatusInfo();
 
 		if (workflowStatusInfo != null) {
 			if (sb.length() > 1) {

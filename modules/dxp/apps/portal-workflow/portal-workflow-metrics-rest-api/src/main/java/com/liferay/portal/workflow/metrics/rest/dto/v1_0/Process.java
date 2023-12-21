@@ -24,6 +24,7 @@ import java.util.Iterator;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
+import java.util.function.Supplier;
 
 import javax.annotation.Generated;
 
@@ -49,169 +50,241 @@ public class Process implements Serializable {
 
 	@Schema
 	public Long getId() {
+		if (_idSupplier != null) {
+			id = _idSupplier.get();
+
+			_idSupplier = null;
+		}
+
 		return id;
 	}
 
 	public void setId(Long id) {
 		this.id = id;
+
+		_idSupplier = null;
 	}
 
 	@JsonIgnore
 	public void setId(UnsafeSupplier<Long, Exception> idUnsafeSupplier) {
-		try {
-			id = idUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_idSupplier = () -> {
+			try {
+				return idUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Long id;
 
+	private Supplier<Long> _idSupplier;
+
 	@Schema
 	public Long getInstanceCount() {
+		if (_instanceCountSupplier != null) {
+			instanceCount = _instanceCountSupplier.get();
+
+			_instanceCountSupplier = null;
+		}
+
 		return instanceCount;
 	}
 
 	public void setInstanceCount(Long instanceCount) {
 		this.instanceCount = instanceCount;
+
+		_instanceCountSupplier = null;
 	}
 
 	@JsonIgnore
 	public void setInstanceCount(
 		UnsafeSupplier<Long, Exception> instanceCountUnsafeSupplier) {
 
-		try {
-			instanceCount = instanceCountUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_instanceCountSupplier = () -> {
+			try {
+				return instanceCountUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Long instanceCount;
 
+	private Supplier<Long> _instanceCountSupplier;
+
 	@Schema
 	public Long getOnTimeInstanceCount() {
+		if (_onTimeInstanceCountSupplier != null) {
+			onTimeInstanceCount = _onTimeInstanceCountSupplier.get();
+
+			_onTimeInstanceCountSupplier = null;
+		}
+
 		return onTimeInstanceCount;
 	}
 
 	public void setOnTimeInstanceCount(Long onTimeInstanceCount) {
 		this.onTimeInstanceCount = onTimeInstanceCount;
+
+		_onTimeInstanceCountSupplier = null;
 	}
 
 	@JsonIgnore
 	public void setOnTimeInstanceCount(
 		UnsafeSupplier<Long, Exception> onTimeInstanceCountUnsafeSupplier) {
 
-		try {
-			onTimeInstanceCount = onTimeInstanceCountUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_onTimeInstanceCountSupplier = () -> {
+			try {
+				return onTimeInstanceCountUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Long onTimeInstanceCount;
 
+	private Supplier<Long> _onTimeInstanceCountSupplier;
+
 	@Schema
 	public Long getOverdueInstanceCount() {
+		if (_overdueInstanceCountSupplier != null) {
+			overdueInstanceCount = _overdueInstanceCountSupplier.get();
+
+			_overdueInstanceCountSupplier = null;
+		}
+
 		return overdueInstanceCount;
 	}
 
 	public void setOverdueInstanceCount(Long overdueInstanceCount) {
 		this.overdueInstanceCount = overdueInstanceCount;
+
+		_overdueInstanceCountSupplier = null;
 	}
 
 	@JsonIgnore
 	public void setOverdueInstanceCount(
 		UnsafeSupplier<Long, Exception> overdueInstanceCountUnsafeSupplier) {
 
-		try {
-			overdueInstanceCount = overdueInstanceCountUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_overdueInstanceCountSupplier = () -> {
+			try {
+				return overdueInstanceCountUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Long overdueInstanceCount;
 
+	private Supplier<Long> _overdueInstanceCountSupplier;
+
 	@Schema
 	public String getTitle() {
+		if (_titleSupplier != null) {
+			title = _titleSupplier.get();
+
+			_titleSupplier = null;
+		}
+
 		return title;
 	}
 
 	public void setTitle(String title) {
 		this.title = title;
+
+		_titleSupplier = null;
 	}
 
 	@JsonIgnore
 	public void setTitle(
 		UnsafeSupplier<String, Exception> titleUnsafeSupplier) {
 
-		try {
-			title = titleUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_titleSupplier = () -> {
+			try {
+				return titleUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String title;
 
+	private Supplier<String> _titleSupplier;
+
 	@Schema
 	public Long getUntrackedInstanceCount() {
+		if (_untrackedInstanceCountSupplier != null) {
+			untrackedInstanceCount = _untrackedInstanceCountSupplier.get();
+
+			_untrackedInstanceCountSupplier = null;
+		}
+
 		return untrackedInstanceCount;
 	}
 
 	public void setUntrackedInstanceCount(Long untrackedInstanceCount) {
 		this.untrackedInstanceCount = untrackedInstanceCount;
+
+		_untrackedInstanceCountSupplier = null;
 	}
 
 	@JsonIgnore
 	public void setUntrackedInstanceCount(
 		UnsafeSupplier<Long, Exception> untrackedInstanceCountUnsafeSupplier) {
 
-		try {
-			untrackedInstanceCount = untrackedInstanceCountUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_untrackedInstanceCountSupplier = () -> {
+			try {
+				return untrackedInstanceCountUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Long untrackedInstanceCount;
+
+	private Supplier<Long> _untrackedInstanceCountSupplier;
 
 	@Override
 	public boolean equals(Object object) {
@@ -240,6 +313,8 @@ public class Process implements Serializable {
 
 		sb.append("{");
 
+		Long id = getId();
+
 		if (id != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -249,6 +324,8 @@ public class Process implements Serializable {
 
 			sb.append(id);
 		}
+
+		Long instanceCount = getInstanceCount();
 
 		if (instanceCount != null) {
 			if (sb.length() > 1) {
@@ -260,6 +337,8 @@ public class Process implements Serializable {
 			sb.append(instanceCount);
 		}
 
+		Long onTimeInstanceCount = getOnTimeInstanceCount();
+
 		if (onTimeInstanceCount != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -270,6 +349,8 @@ public class Process implements Serializable {
 			sb.append(onTimeInstanceCount);
 		}
 
+		Long overdueInstanceCount = getOverdueInstanceCount();
+
 		if (overdueInstanceCount != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -279,6 +360,8 @@ public class Process implements Serializable {
 
 			sb.append(overdueInstanceCount);
 		}
+
+		String title = getTitle();
 
 		if (title != null) {
 			if (sb.length() > 1) {
@@ -293,6 +376,8 @@ public class Process implements Serializable {
 
 			sb.append("\"");
 		}
+
+		Long untrackedInstanceCount = getUntrackedInstanceCount();
 
 		if (untrackedInstanceCount != null) {
 			if (sb.length() > 1) {

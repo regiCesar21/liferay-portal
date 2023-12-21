@@ -24,6 +24,7 @@ import java.util.Iterator;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
+import java.util.function.Supplier;
 
 import javax.annotation.Generated;
 
@@ -52,31 +53,43 @@ public class ChangeTransition implements Serializable {
 
 	@Schema
 	public String getTransition() {
+		if (_transitionSupplier != null) {
+			transition = _transitionSupplier.get();
+
+			_transitionSupplier = null;
+		}
+
 		return transition;
 	}
 
 	public void setTransition(String transition) {
 		this.transition = transition;
+
+		_transitionSupplier = null;
 	}
 
 	@JsonIgnore
 	public void setTransition(
 		UnsafeSupplier<String, Exception> transitionUnsafeSupplier) {
 
-		try {
-			transition = transitionUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_transitionSupplier = () -> {
+			try {
+				return transitionUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
 	protected String transition;
+
+	private Supplier<String> _transitionSupplier;
 
 	@Override
 	public boolean equals(Object object) {
@@ -104,6 +117,8 @@ public class ChangeTransition implements Serializable {
 		StringBundler sb = new StringBundler();
 
 		sb.append("{");
+
+		String transition = getTransition();
 
 		if (transition != null) {
 			if (sb.length() > 1) {

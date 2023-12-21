@@ -24,6 +24,7 @@ import java.util.Iterator;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
+import java.util.function.Supplier;
 
 import javax.annotation.Generated;
 
@@ -54,40 +55,60 @@ public class Language implements Serializable {
 
 	@Schema
 	public String getCountryName() {
+		if (_countryNameSupplier != null) {
+			countryName = _countryNameSupplier.get();
+
+			_countryNameSupplier = null;
+		}
+
 		return countryName;
 	}
 
 	public void setCountryName(String countryName) {
 		this.countryName = countryName;
+
+		_countryNameSupplier = null;
 	}
 
 	@JsonIgnore
 	public void setCountryName(
 		UnsafeSupplier<String, Exception> countryNameUnsafeSupplier) {
 
-		try {
-			countryName = countryNameUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_countryNameSupplier = () -> {
+			try {
+				return countryNameUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String countryName;
 
+	private Supplier<String> _countryNameSupplier;
+
 	@Schema
 	@Valid
 	public Map<String, String> getCountryName_i18n() {
+		if (_countryName_i18nSupplier != null) {
+			countryName_i18n = _countryName_i18nSupplier.get();
+
+			_countryName_i18nSupplier = null;
+		}
+
 		return countryName_i18n;
 	}
 
 	public void setCountryName_i18n(Map<String, String> countryName_i18n) {
 		this.countryName_i18n = countryName_i18n;
+
+		_countryName_i18nSupplier = null;
 	}
 
 	@JsonIgnore
@@ -95,109 +116,157 @@ public class Language implements Serializable {
 		UnsafeSupplier<Map<String, String>, Exception>
 			countryName_i18nUnsafeSupplier) {
 
-		try {
-			countryName_i18n = countryName_i18nUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_countryName_i18nSupplier = () -> {
+			try {
+				return countryName_i18nUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Map<String, String> countryName_i18n;
 
+	private Supplier<Map<String, String>> _countryName_i18nSupplier;
+
 	@Schema
 	public String getId() {
+		if (_idSupplier != null) {
+			id = _idSupplier.get();
+
+			_idSupplier = null;
+		}
+
 		return id;
 	}
 
 	public void setId(String id) {
 		this.id = id;
+
+		_idSupplier = null;
 	}
 
 	@JsonIgnore
 	public void setId(UnsafeSupplier<String, Exception> idUnsafeSupplier) {
-		try {
-			id = idUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_idSupplier = () -> {
+			try {
+				return idUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String id;
 
+	private Supplier<String> _idSupplier;
+
 	@Schema
 	public Boolean getMarkedAsDefault() {
+		if (_markedAsDefaultSupplier != null) {
+			markedAsDefault = _markedAsDefaultSupplier.get();
+
+			_markedAsDefaultSupplier = null;
+		}
+
 		return markedAsDefault;
 	}
 
 	public void setMarkedAsDefault(Boolean markedAsDefault) {
 		this.markedAsDefault = markedAsDefault;
+
+		_markedAsDefaultSupplier = null;
 	}
 
 	@JsonIgnore
 	public void setMarkedAsDefault(
 		UnsafeSupplier<Boolean, Exception> markedAsDefaultUnsafeSupplier) {
 
-		try {
-			markedAsDefault = markedAsDefaultUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_markedAsDefaultSupplier = () -> {
+			try {
+				return markedAsDefaultUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Boolean markedAsDefault;
 
+	private Supplier<Boolean> _markedAsDefaultSupplier;
+
 	@Schema
 	public String getName() {
+		if (_nameSupplier != null) {
+			name = _nameSupplier.get();
+
+			_nameSupplier = null;
+		}
+
 		return name;
 	}
 
 	public void setName(String name) {
 		this.name = name;
+
+		_nameSupplier = null;
 	}
 
 	@JsonIgnore
 	public void setName(UnsafeSupplier<String, Exception> nameUnsafeSupplier) {
-		try {
-			name = nameUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_nameSupplier = () -> {
+			try {
+				return nameUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String name;
 
+	private Supplier<String> _nameSupplier;
+
 	@Schema
 	@Valid
 	public Map<String, String> getName_i18n() {
+		if (_name_i18nSupplier != null) {
+			name_i18n = _name_i18nSupplier.get();
+
+			_name_i18nSupplier = null;
+		}
+
 		return name_i18n;
 	}
 
 	public void setName_i18n(Map<String, String> name_i18n) {
 		this.name_i18n = name_i18n;
+
+		_name_i18nSupplier = null;
 	}
 
 	@JsonIgnore
@@ -205,20 +274,24 @@ public class Language implements Serializable {
 		UnsafeSupplier<Map<String, String>, Exception>
 			name_i18nUnsafeSupplier) {
 
-		try {
-			name_i18n = name_i18nUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_name_i18nSupplier = () -> {
+			try {
+				return name_i18nUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Map<String, String> name_i18n;
+
+	private Supplier<Map<String, String>> _name_i18nSupplier;
 
 	@Override
 	public boolean equals(Object object) {
@@ -247,6 +320,8 @@ public class Language implements Serializable {
 
 		sb.append("{");
 
+		String countryName = getCountryName();
+
 		if (countryName != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -261,6 +336,8 @@ public class Language implements Serializable {
 			sb.append("\"");
 		}
 
+		Map<String, String> countryName_i18n = getCountryName_i18n();
+
 		if (countryName_i18n != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -270,6 +347,8 @@ public class Language implements Serializable {
 
 			sb.append(_toJSON(countryName_i18n));
 		}
+
+		String id = getId();
 
 		if (id != null) {
 			if (sb.length() > 1) {
@@ -285,6 +364,8 @@ public class Language implements Serializable {
 			sb.append("\"");
 		}
 
+		Boolean markedAsDefault = getMarkedAsDefault();
+
 		if (markedAsDefault != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -294,6 +375,8 @@ public class Language implements Serializable {
 
 			sb.append(markedAsDefault);
 		}
+
+		String name = getName();
 
 		if (name != null) {
 			if (sb.length() > 1) {
@@ -308,6 +391,8 @@ public class Language implements Serializable {
 
 			sb.append("\"");
 		}
+
+		Map<String, String> name_i18n = getName_i18n();
 
 		if (name_i18n != null) {
 			if (sb.length() > 1) {

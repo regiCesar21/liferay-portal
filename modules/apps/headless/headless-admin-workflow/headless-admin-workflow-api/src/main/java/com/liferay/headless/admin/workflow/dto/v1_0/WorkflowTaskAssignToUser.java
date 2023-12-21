@@ -28,6 +28,7 @@ import java.util.Iterator;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
+import java.util.function.Supplier;
 
 import javax.annotation.Generated;
 
@@ -57,26 +58,36 @@ public class WorkflowTaskAssignToUser implements Serializable {
 
 	@Schema(description = "The ID of the user to assign the workflow task.")
 	public Long getAssigneeId() {
+		if (_assigneeIdSupplier != null) {
+			assigneeId = _assigneeIdSupplier.get();
+
+			_assigneeIdSupplier = null;
+		}
+
 		return assigneeId;
 	}
 
 	public void setAssigneeId(Long assigneeId) {
 		this.assigneeId = assigneeId;
+
+		_assigneeIdSupplier = null;
 	}
 
 	@JsonIgnore
 	public void setAssigneeId(
 		UnsafeSupplier<Long, Exception> assigneeIdUnsafeSupplier) {
 
-		try {
-			assigneeId = assigneeIdUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_assigneeIdSupplier = () -> {
+			try {
+				return assigneeIdUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField(
@@ -85,30 +96,42 @@ public class WorkflowTaskAssignToUser implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
 	protected Long assigneeId;
 
+	private Supplier<Long> _assigneeIdSupplier;
+
 	@Schema(
 		description = "An optional comment to add when assigning the workflow task."
 	)
 	public String getComment() {
+		if (_commentSupplier != null) {
+			comment = _commentSupplier.get();
+
+			_commentSupplier = null;
+		}
+
 		return comment;
 	}
 
 	public void setComment(String comment) {
 		this.comment = comment;
+
+		_commentSupplier = null;
 	}
 
 	@JsonIgnore
 	public void setComment(
 		UnsafeSupplier<String, Exception> commentUnsafeSupplier) {
 
-		try {
-			comment = commentUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_commentSupplier = () -> {
+			try {
+				return commentUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField(
@@ -117,30 +140,42 @@ public class WorkflowTaskAssignToUser implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
 	protected String comment;
 
+	private Supplier<String> _commentSupplier;
+
 	@Schema(
 		description = "The date on which the workflow task should be executed."
 	)
 	public Date getDueDate() {
+		if (_dueDateSupplier != null) {
+			dueDate = _dueDateSupplier.get();
+
+			_dueDateSupplier = null;
+		}
+
 		return dueDate;
 	}
 
 	public void setDueDate(Date dueDate) {
 		this.dueDate = dueDate;
+
+		_dueDateSupplier = null;
 	}
 
 	@JsonIgnore
 	public void setDueDate(
 		UnsafeSupplier<Date, Exception> dueDateUnsafeSupplier) {
 
-		try {
-			dueDate = dueDateUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_dueDateSupplier = () -> {
+			try {
+				return dueDateUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField(
@@ -148,6 +183,8 @@ public class WorkflowTaskAssignToUser implements Serializable {
 	)
 	@JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
 	protected Date dueDate;
+
+	private Supplier<Date> _dueDateSupplier;
 
 	@Override
 	public boolean equals(Object object) {
@@ -180,6 +217,8 @@ public class WorkflowTaskAssignToUser implements Serializable {
 		DateFormat liferayToJSONDateFormat = new SimpleDateFormat(
 			"yyyy-MM-dd'T'HH:mm:ss'Z'");
 
+		Long assigneeId = getAssigneeId();
+
 		if (assigneeId != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -189,6 +228,8 @@ public class WorkflowTaskAssignToUser implements Serializable {
 
 			sb.append(assigneeId);
 		}
+
+		String comment = getComment();
 
 		if (comment != null) {
 			if (sb.length() > 1) {
@@ -203,6 +244,8 @@ public class WorkflowTaskAssignToUser implements Serializable {
 
 			sb.append("\"");
 		}
+
+		Date dueDate = getDueDate();
 
 		if (dueDate != null) {
 			if (sb.length() > 1) {
