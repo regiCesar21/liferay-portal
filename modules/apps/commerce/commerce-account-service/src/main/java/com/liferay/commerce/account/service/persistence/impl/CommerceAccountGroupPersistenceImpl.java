@@ -5,7 +5,6 @@
 
 package com.liferay.commerce.account.service.persistence.impl;
 
-import com.liferay.commerce.account.exception.DuplicateCommerceAccountGroupExternalReferenceCodeException;
 import com.liferay.commerce.account.exception.NoSuchAccountGroupException;
 import com.liferay.commerce.account.model.CommerceAccountGroup;
 import com.liferay.commerce.account.model.impl.CommerceAccountGroupImpl;
@@ -20,20 +19,14 @@ import com.liferay.portal.kernel.dao.orm.QueryPos;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.SQLQuery;
 import com.liferay.portal.kernel.dao.orm.Session;
-import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.sanitizer.Sanitizer;
-import com.liferay.portal.kernel.sanitizer.SanitizerException;
-import com.liferay.portal.kernel.sanitizer.SanitizerUtil;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
-import com.liferay.portal.kernel.security.auth.PrincipalThreadLocal;
 import com.liferay.portal.kernel.security.permission.InlineSQLHelperUtil;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
 import com.liferay.portal.kernel.util.ArrayUtil;
-import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.PropsKeys;
@@ -3607,67 +3600,6 @@ public class CommerceAccountGroupPersistenceImpl
 		if (Validator.isNull(commerceAccountGroup.getExternalReferenceCode())) {
 			commerceAccountGroup.setExternalReferenceCode(
 				String.valueOf(commerceAccountGroup.getPrimaryKey()));
-		}
-		else {
-			if (!Objects.equals(
-					commerceAccountGroupModelImpl.getColumnOriginalValue(
-						"externalReferenceCode"),
-					commerceAccountGroup.getExternalReferenceCode())) {
-
-				long userId = GetterUtil.getLong(
-					PrincipalThreadLocal.getName());
-
-				if (userId > 0) {
-					long companyId = commerceAccountGroup.getCompanyId();
-
-					long groupId = 0;
-
-					long classPK = 0;
-
-					if (!isNew) {
-						classPK = commerceAccountGroup.getPrimaryKey();
-					}
-
-					try {
-						commerceAccountGroup.setExternalReferenceCode(
-							SanitizerUtil.sanitize(
-								companyId, groupId, userId,
-								CommerceAccountGroup.class.getName(), classPK,
-								ContentTypes.TEXT_HTML, Sanitizer.MODE_ALL,
-								commerceAccountGroup.getExternalReferenceCode(),
-								null));
-					}
-					catch (SanitizerException sanitizerException) {
-						throw new SystemException(sanitizerException);
-					}
-				}
-			}
-
-			CommerceAccountGroup ercCommerceAccountGroup = fetchByC_ERC(
-				commerceAccountGroup.getCompanyId(),
-				commerceAccountGroup.getExternalReferenceCode());
-
-			if (isNew) {
-				if (ercCommerceAccountGroup != null) {
-					throw new DuplicateCommerceAccountGroupExternalReferenceCodeException(
-						"Duplicate commerce account group with external reference code " +
-							commerceAccountGroup.getExternalReferenceCode() +
-								" and company " +
-									commerceAccountGroup.getCompanyId());
-				}
-			}
-			else {
-				if ((ercCommerceAccountGroup != null) &&
-					(commerceAccountGroup.getCommerceAccountGroupId() !=
-						ercCommerceAccountGroup.getCommerceAccountGroupId())) {
-
-					throw new DuplicateCommerceAccountGroupExternalReferenceCodeException(
-						"Duplicate commerce account group with external reference code " +
-							commerceAccountGroup.getExternalReferenceCode() +
-								" and company " +
-									commerceAccountGroup.getCompanyId());
-				}
-			}
 		}
 
 		ServiceContext serviceContext =

@@ -14,17 +14,11 @@ import com.liferay.portal.kernel.dao.orm.QueryPos;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.SQLQuery;
 import com.liferay.portal.kernel.dao.orm.Session;
-import com.liferay.portal.kernel.exception.DuplicateUserGroupExternalReferenceCodeException;
 import com.liferay.portal.kernel.exception.NoSuchUserGroupException;
-import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.UserGroup;
-import com.liferay.portal.kernel.sanitizer.Sanitizer;
-import com.liferay.portal.kernel.sanitizer.SanitizerException;
-import com.liferay.portal.kernel.sanitizer.SanitizerUtil;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
-import com.liferay.portal.kernel.security.auth.PrincipalThreadLocal;
 import com.liferay.portal.kernel.security.permission.InlineSQLHelperUtil;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
@@ -37,7 +31,6 @@ import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
 import com.liferay.portal.kernel.service.persistence.impl.TableMapper;
 import com.liferay.portal.kernel.service.persistence.impl.TableMapperFactory;
 import com.liferay.portal.kernel.util.ArrayUtil;
-import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
@@ -6401,63 +6394,6 @@ public class UserGroupPersistenceImpl
 
 		if (Validator.isNull(userGroup.getExternalReferenceCode())) {
 			userGroup.setExternalReferenceCode(userGroup.getUuid());
-		}
-		else {
-			if (!Objects.equals(
-					userGroupModelImpl.getColumnOriginalValue(
-						"externalReferenceCode"),
-					userGroup.getExternalReferenceCode())) {
-
-				long userId = GetterUtil.getLong(
-					PrincipalThreadLocal.getName());
-
-				if (userId > 0) {
-					long companyId = userGroup.getCompanyId();
-
-					long groupId = 0;
-
-					long classPK = 0;
-
-					if (!isNew) {
-						classPK = userGroup.getPrimaryKey();
-					}
-
-					try {
-						userGroup.setExternalReferenceCode(
-							SanitizerUtil.sanitize(
-								companyId, groupId, userId,
-								UserGroup.class.getName(), classPK,
-								ContentTypes.TEXT_HTML, Sanitizer.MODE_ALL,
-								userGroup.getExternalReferenceCode(), null));
-					}
-					catch (SanitizerException sanitizerException) {
-						throw new SystemException(sanitizerException);
-					}
-				}
-			}
-
-			UserGroup ercUserGroup = fetchByC_ERC(
-				userGroup.getCompanyId(), userGroup.getExternalReferenceCode());
-
-			if (isNew) {
-				if (ercUserGroup != null) {
-					throw new DuplicateUserGroupExternalReferenceCodeException(
-						"Duplicate user group with external reference code " +
-							userGroup.getExternalReferenceCode() +
-								" and company " + userGroup.getCompanyId());
-				}
-			}
-			else {
-				if ((ercUserGroup != null) &&
-					(userGroup.getUserGroupId() !=
-						ercUserGroup.getUserGroupId())) {
-
-					throw new DuplicateUserGroupExternalReferenceCodeException(
-						"Duplicate user group with external reference code " +
-							userGroup.getExternalReferenceCode() +
-								" and company " + userGroup.getCompanyId());
-				}
-			}
 		}
 
 		ServiceContext serviceContext =

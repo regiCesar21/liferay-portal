@@ -5,7 +5,6 @@
 
 package com.liferay.commerce.service.persistence.impl;
 
-import com.liferay.commerce.exception.DuplicateCommerceOrderExternalReferenceCodeException;
 import com.liferay.commerce.exception.NoSuchOrderException;
 import com.liferay.commerce.model.CommerceOrder;
 import com.liferay.commerce.model.impl.CommerceOrderImpl;
@@ -19,18 +18,12 @@ import com.liferay.portal.kernel.dao.orm.Query;
 import com.liferay.portal.kernel.dao.orm.QueryPos;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.Session;
-import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.sanitizer.Sanitizer;
-import com.liferay.portal.kernel.sanitizer.SanitizerException;
-import com.liferay.portal.kernel.sanitizer.SanitizerUtil;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
-import com.liferay.portal.kernel.security.auth.PrincipalThreadLocal;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
-import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.PropsKeys;
@@ -8262,65 +8255,6 @@ public class CommerceOrderPersistenceImpl
 
 		if (Validator.isNull(commerceOrder.getExternalReferenceCode())) {
 			commerceOrder.setExternalReferenceCode(commerceOrder.getUuid());
-		}
-		else {
-			if (!Objects.equals(
-					commerceOrderModelImpl.getColumnOriginalValue(
-						"externalReferenceCode"),
-					commerceOrder.getExternalReferenceCode())) {
-
-				long userId = GetterUtil.getLong(
-					PrincipalThreadLocal.getName());
-
-				if (userId > 0) {
-					long companyId = commerceOrder.getCompanyId();
-
-					long groupId = commerceOrder.getGroupId();
-
-					long classPK = 0;
-
-					if (!isNew) {
-						classPK = commerceOrder.getPrimaryKey();
-					}
-
-					try {
-						commerceOrder.setExternalReferenceCode(
-							SanitizerUtil.sanitize(
-								companyId, groupId, userId,
-								CommerceOrder.class.getName(), classPK,
-								ContentTypes.TEXT_HTML, Sanitizer.MODE_ALL,
-								commerceOrder.getExternalReferenceCode(),
-								null));
-					}
-					catch (SanitizerException sanitizerException) {
-						throw new SystemException(sanitizerException);
-					}
-				}
-			}
-
-			CommerceOrder ercCommerceOrder = fetchByC_ERC(
-				commerceOrder.getCompanyId(),
-				commerceOrder.getExternalReferenceCode());
-
-			if (isNew) {
-				if (ercCommerceOrder != null) {
-					throw new DuplicateCommerceOrderExternalReferenceCodeException(
-						"Duplicate commerce order with external reference code " +
-							commerceOrder.getExternalReferenceCode() +
-								" and company " + commerceOrder.getCompanyId());
-				}
-			}
-			else {
-				if ((ercCommerceOrder != null) &&
-					(commerceOrder.getCommerceOrderId() !=
-						ercCommerceOrder.getCommerceOrderId())) {
-
-					throw new DuplicateCommerceOrderExternalReferenceCodeException(
-						"Duplicate commerce order with external reference code " +
-							commerceOrder.getExternalReferenceCode() +
-								" and company " + commerceOrder.getCompanyId());
-				}
-			}
 		}
 
 		ServiceContext serviceContext =

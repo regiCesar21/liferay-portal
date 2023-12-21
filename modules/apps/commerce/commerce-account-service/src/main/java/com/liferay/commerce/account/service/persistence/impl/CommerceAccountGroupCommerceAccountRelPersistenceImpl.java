@@ -5,7 +5,6 @@
 
 package com.liferay.commerce.account.service.persistence.impl;
 
-import com.liferay.commerce.account.exception.DuplicateCommerceAccountGroupCommerceAccountRelExternalReferenceCodeException;
 import com.liferay.commerce.account.exception.NoSuchAccountGroupCommerceAccountRelException;
 import com.liferay.commerce.account.model.CommerceAccountGroupCommerceAccountRel;
 import com.liferay.commerce.account.model.impl.CommerceAccountGroupCommerceAccountRelImpl;
@@ -19,18 +18,12 @@ import com.liferay.portal.kernel.dao.orm.Query;
 import com.liferay.portal.kernel.dao.orm.QueryPos;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.Session;
-import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.sanitizer.Sanitizer;
-import com.liferay.portal.kernel.sanitizer.SanitizerException;
-import com.liferay.portal.kernel.sanitizer.SanitizerUtil;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
-import com.liferay.portal.kernel.security.auth.PrincipalThreadLocal;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
-import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.PropsKeys;
@@ -2169,81 +2162,6 @@ public class CommerceAccountGroupCommerceAccountRelPersistenceImpl
 			commerceAccountGroupCommerceAccountRel.setExternalReferenceCode(
 				String.valueOf(
 					commerceAccountGroupCommerceAccountRel.getPrimaryKey()));
-		}
-		else {
-			if (!Objects.equals(
-					commerceAccountGroupCommerceAccountRelModelImpl.
-						getColumnOriginalValue("externalReferenceCode"),
-					commerceAccountGroupCommerceAccountRel.
-						getExternalReferenceCode())) {
-
-				long userId = GetterUtil.getLong(
-					PrincipalThreadLocal.getName());
-
-				if (userId > 0) {
-					long companyId =
-						commerceAccountGroupCommerceAccountRel.getCompanyId();
-
-					long groupId = 0;
-
-					long classPK = 0;
-
-					if (!isNew) {
-						classPK =
-							commerceAccountGroupCommerceAccountRel.
-								getPrimaryKey();
-					}
-
-					try {
-						commerceAccountGroupCommerceAccountRel.
-							setExternalReferenceCode(
-								SanitizerUtil.sanitize(
-									companyId, groupId, userId,
-									CommerceAccountGroupCommerceAccountRel.
-										class.getName(),
-									classPK, ContentTypes.TEXT_HTML,
-									Sanitizer.MODE_ALL,
-									commerceAccountGroupCommerceAccountRel.
-										getExternalReferenceCode(),
-									null));
-					}
-					catch (SanitizerException sanitizerException) {
-						throw new SystemException(sanitizerException);
-					}
-				}
-			}
-
-			CommerceAccountGroupCommerceAccountRel
-				ercCommerceAccountGroupCommerceAccountRel = fetchByC_ERC(
-					commerceAccountGroupCommerceAccountRel.getCompanyId(),
-					commerceAccountGroupCommerceAccountRel.
-						getExternalReferenceCode());
-
-			if (isNew) {
-				if (ercCommerceAccountGroupCommerceAccountRel != null) {
-					throw new DuplicateCommerceAccountGroupCommerceAccountRelExternalReferenceCodeException(
-						"Duplicate commerce account group commerce account rel with external reference code " +
-							commerceAccountGroupCommerceAccountRel.
-								getExternalReferenceCode() + " and company " +
-									commerceAccountGroupCommerceAccountRel.
-										getCompanyId());
-				}
-			}
-			else {
-				if ((ercCommerceAccountGroupCommerceAccountRel != null) &&
-					(commerceAccountGroupCommerceAccountRel.
-						getCommerceAccountGroupCommerceAccountRelId() !=
-							ercCommerceAccountGroupCommerceAccountRel.
-								getCommerceAccountGroupCommerceAccountRelId())) {
-
-					throw new DuplicateCommerceAccountGroupCommerceAccountRelExternalReferenceCodeException(
-						"Duplicate commerce account group commerce account rel with external reference code " +
-							commerceAccountGroupCommerceAccountRel.
-								getExternalReferenceCode() + " and company " +
-									commerceAccountGroupCommerceAccountRel.
-										getCompanyId());
-				}
-			}
 		}
 
 		ServiceContext serviceContext =
