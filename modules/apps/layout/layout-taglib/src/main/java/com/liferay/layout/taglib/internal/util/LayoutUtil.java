@@ -10,6 +10,7 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.LayoutConstants;
@@ -96,18 +97,8 @@ public class LayoutUtil {
 				continue;
 			}
 
-			JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
-
-			JSONArray childrenJSONArray = getLayoutsJSONArray(
-				checkDisplayPage, enableCurrentPage, groupId,
-				httpServletRequest, privateLayout,
-				layout.getLayoutId(), selectedLayoutUuid, showHiddenLayouts, 0,
-				GetterUtil.getInteger(
-					PropsValues.LAYOUT_MANAGE_PAGES_INITIAL_CHILDREN));
-
-			if (childrenJSONArray.length() > 0) {
-				jsonObject.put("children", childrenJSONArray);
-			}
+			JSONObject jsonObject = JSONUtil.put(
+				"children", JSONFactoryUtil.createJSONArray());
 
 			if ((checkDisplayPage && !layout.isContentDisplayPage()) ||
 				(!enableCurrentPage &&
@@ -117,6 +108,8 @@ public class LayoutUtil {
 			}
 
 			jsonObject.put(
+				"expanded", false
+			).put(
 				"groupId", layout.getGroupId()
 			).put(
 				"hasChildren", layout.hasChildren()

@@ -33,17 +33,19 @@ export default function NodeListItem({NodeComponent, node}) {
 	const symbol = node.expanded ? 'hr' : 'plus';
 
 	const toggleExpanded = (event) => {
-		if (node.children.length) {
+		if (node.children.length || node.hasChildren) {
 			event.stopPropagation();
 
 			if (!node.expanded && onLoadMore) {
 				onLoadMore(node)
-					.then((items) => {
-						if (items) {
+					.then((response) => {
+						if (response.items) {
+							const items = response.items;
+
 							const alreadyExistingIds = node.children.map(
 								(item) => item.id
 							);
-							const nodesToInsert = items.filter(
+							const nodesToInsert = Object.values(items).filter(
 								(item) => !alreadyExistingIds.includes(item.id)
 							);
 
@@ -83,7 +85,7 @@ export default function NodeListItem({NodeComponent, node}) {
 				role="treeitem"
 				tabIndex="-1"
 			>
-				{children.length ? (
+				{children.length || node.hasChildren ? (
 					<button
 						aria-controls={childrenId}
 						aria-expanded={node.expanded}
