@@ -264,31 +264,18 @@ public class PortalRequestProcessor {
 	}
 
 	private String _getLastPath(HttpServletRequest httpServletRequest) {
-		HttpSession session = httpServletRequest.getSession();
+		StringBundler sb = new StringBundler(7);
+
+		String portalURL = PortalUtil.getPortalURL(httpServletRequest);
+
+		sb.append(portalURL);
 
 		ThemeDisplay themeDisplay =
 			(ThemeDisplay)httpServletRequest.getAttribute(
 				WebKeys.THEME_DISPLAY);
 
-		Boolean httpsInitial = (Boolean)session.getAttribute(
-			WebKeys.HTTPS_INITIAL);
-
-		String portalURL = null;
-
-		if (PropsValues.COMPANY_SECURITY_AUTH_REQUIRES_HTTPS &&
-			!PropsValues.SESSION_ENABLE_PHISHING_PROTECTION &&
-			(httpsInitial != null) && !httpsInitial.booleanValue()) {
-
-			portalURL = PortalUtil.getPortalURL(httpServletRequest, false);
-		}
-		else {
-			portalURL = PortalUtil.getPortalURL(httpServletRequest);
-		}
-
-		StringBundler sb = new StringBundler(7);
-
-		sb.append(portalURL);
 		sb.append(themeDisplay.getPathMain());
+
 		sb.append(_PATH_PORTAL_LAYOUT);
 
 		if (!PropsValues.AUTH_FORWARD_BY_LAST_PATH) {
@@ -307,7 +294,10 @@ public class PortalRequestProcessor {
 			return sb.toString();
 		}
 
-		LastPath lastPath = (LastPath)session.getAttribute(WebKeys.LAST_PATH);
+		HttpSession httpSession = httpServletRequest.getSession();
+
+		LastPath lastPath = (LastPath)httpSession.getAttribute(
+			WebKeys.LAST_PATH);
 
 		if (lastPath == null) {
 			return sb.toString();

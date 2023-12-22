@@ -205,7 +205,7 @@ public class AuthenticatedSessionManagerImpl
 
 		boolean secure = httpServletRequest.isSecure();
 
-		if (secure && !PropsValues.COMPANY_SECURITY_AUTH_REQUIRES_HTTPS &&
+		if (secure &&
 			!StringUtil.equalsIgnoreCase(
 				Http.HTTPS, PropsValues.WEB_SERVER_PROTOCOL)) {
 

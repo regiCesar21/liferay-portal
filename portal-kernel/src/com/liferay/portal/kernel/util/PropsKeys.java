@@ -676,6 +676,10 @@ public interface PropsKeys {
 	public static final String COMPANY_LOGIN_PREPOPULATE_DOMAIN =
 		"company.login.prepopulate.domain";
 
+	/**
+	 * @deprecated As of Mueller (7.2.x), with no direct replacement
+	 */
+	@Deprecated
 	public static final String COMPANY_SECURITY_AUTH_REQUIRES_HTTPS =
 		"company.security.auth.requires.https";
 
