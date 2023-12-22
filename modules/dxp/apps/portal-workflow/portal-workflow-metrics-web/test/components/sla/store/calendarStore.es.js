@@ -7,20 +7,24 @@ import {CalendarStore} from '../../../../src/main/resources/META-INF/resources/j
 import client from '../../../mock/fetch.es';
 
 test('Should fetch calendars', () => {
-	const data = {
-		items: [
-			{
-				defaultCalendar: true,
-				key: 'working-hours',
-				title: 'Working Hours'
-			}
-		]
-	};
+	const items = [
+		{
+			defaultCalendar: true,
+			key: 'working-hours',
+			title: 'Working Hours'
+		}
+	];
 
-	const calendarStore = new CalendarStore(client(data));
+	global.fetch.mockResolvedValueOnce({
+		json: async () => ({
+			items
+		})
+	});
+
+	const calendarStore = new CalendarStore();
 
 	return calendarStore.fetchCalendars().then(() => {
-		expect(calendarStore.getState().calendars).toMatchObject(data.items);
+		expect(calendarStore.getState().calendars).toMatchObject(items);
 	});
 });
 

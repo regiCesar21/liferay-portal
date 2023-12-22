@@ -361,9 +361,21 @@ test('Should redirect to SLA list with blocked nodes', () => {
 });
 
 test('Should render component', () => {
+	global.fetch.mockResolvedValueOnce({
+		json: async () => ({
+			items: []
+		})
+	});
+
+	global.fetch.mockResolvedValueOnce({
+		json: async () => ({
+			items: []
+		})
+	});
+
 	const component = mount(
-		<AppContext.Provider value={{client: fetch({})}}>
-			<Router client={fetch({})}>
+		<AppContext.Provider>
+			<Router>
 				<SLAForm id={1234} />
 			</Router>
 		</AppContext.Provider>
@@ -373,19 +385,28 @@ test('Should render component', () => {
 });
 
 test('Should render component in edit mode', () => {
-	const data = {
-		description: 'Total time to complete the request.',
-		duration: 1553879089,
-		name: 'Total resolution time',
-		pauseNodeKeys: {nodeKeys: []},
-		processId: '',
-		startNodeKeys: {nodeKeys: []},
-		stopNodeKeys: {nodeKeys: []}
-	};
+	global.fetch.mockResolvedValueOnce({
+		json: async () => ({
+			description: 'Total time to complete the request.',
+			duration: 1553879089,
+			items: [],
+			name: 'Total resolution time',
+			pauseNodeKeys: {nodeKeys: []},
+			processId: '',
+			startNodeKeys: {nodeKeys: []},
+			stopNodeKeys: {nodeKeys: []}
+		})
+	});
+
+	global.fetch.mockResolvedValueOnce({
+		json: async () => ({
+			items: []
+		})
+	});
 
 	const component = mount(
-		<AppContext.Provider value={{client: fetch(data)}}>
-			<Router client={fetch(data)}>
+		<AppContext.Provider value={{}}>
+			<Router>
 				<SLAForm id={1234} />
 			</Router>
 		</AppContext.Provider>

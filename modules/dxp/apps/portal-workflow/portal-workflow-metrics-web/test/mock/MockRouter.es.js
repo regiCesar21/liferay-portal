@@ -12,10 +12,9 @@ export class MockRouter extends React.Component {
 	constructor(props) {
 		super(props);
 
-		const {client, page = 1, query, search, sort} = this.props;
+		const {page = 1, query, search, sort} = this.props;
 
 		this.contextState = {
-			client,
 			companyId: 1,
 			defaultDelta: 20,
 			deltas: [5, 10, 20, 30, 50, 75],

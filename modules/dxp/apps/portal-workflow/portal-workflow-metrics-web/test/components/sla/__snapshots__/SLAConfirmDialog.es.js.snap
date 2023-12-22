@@ -130,16 +130,7 @@ exports[`Should cancel dialog 1`] = `
 `;
 
 exports[`Should cancel dialog through SLA List 1`] = `
-<MockRouter
-  client={
-    Object {
-      "delete": [Function],
-      "get": [Function],
-      "post": [Function],
-      "put": [Function],
-    }
-  }
->
+<MockRouter>
   <MemoryRouter
     initialEntries={
       Array [
@@ -419,16 +410,7 @@ exports[`Should cancel dialog through SLA List 1`] = `
 `;
 
 exports[`Should cancel dialog through SLA List 2`] = `
-<MockRouter
-  client={
-    Object {
-      "delete": [Function],
-      "get": [Function],
-      "post": [Function],
-      "put": [Function],
-    }
-  }
->
+<MockRouter>
   <MemoryRouter
     initialEntries={
       Array [

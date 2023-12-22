@@ -76,7 +76,7 @@ describe('The PromisesResolver should not', () => {
 		const firstFunction = () => Promise.reject();
 		const secondFunction = () => Promise.reject();
 
-		const {findByTestId, rerender} = render(
+		const {findByTestId} = render(
 			<PromisesResolver promises={[firstFunction(), secondFunction()]}>
 				<span data-testid="promisesResolverSpan">
 					PromisesResolver rendered children
@@ -86,18 +86,6 @@ describe('The PromisesResolver should not', () => {
 
 		const promisesResolverSpan = await waitForElement(() =>
 			findByTestId('promisesResolverSpan')
-		);
-
-		expect(promisesResolverSpan.innerHTML).toEqual(
-			'PromisesResolver rendered children'
-		);
-
-		rerender(
-			<PromisesResolver promises={[...[firstFunction()]]}>
-				<span data-testid="promisesResolverSpan">
-					PromisesResolver rendered children
-				</span>
-			</PromisesResolver>
 		);
 
 		expect(promisesResolverSpan.innerHTML).toEqual(

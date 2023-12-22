@@ -3,8 +3,8 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import {cleanup, render, waitForElement} from '@testing-library/react';
-import {renderHook} from '@testing-library/react-hooks';
+import {render, waitForElement} from '@testing-library/react';
+import {act, renderHook} from '@testing-library/react-hooks';
 import React, {useContext} from 'react';
 
 import {
@@ -33,10 +33,6 @@ const items = [
 	}
 ];
 
-const clientMock = {
-	get: jest.fn().mockResolvedValue({data: {items}})
-};
-
 const MockTimeRangeConsumer = () => {
 	const {timeRanges} = useContext(TimeRangeContext);
 
@@ -48,19 +44,25 @@ const MockTimeRangeConsumer = () => {
 };
 
 const MockAppContext = ({children}) => (
-	<MockRouter client={clientMock}>
+	<MockRouter>
 		<Request>{children}</Request>
 	</MockRouter>
 );
 
 describe('The custom time range name should', () => {
 	test('Be "invalid date" if the dates are null', async () => {
+		global.fetch.mockResolvedValue({
+			json: async () => ({items: []})
+		});
+
 		const {result, unmount, waitForNextUpdate} = renderHook(
 			() => useTimeRange([]),
 			{wrapper: MockAppContext}
 		);
 
-		await waitForNextUpdate();
+		await act(async () => {
+			await waitForNextUpdate();
+		});
 
 		const customTimeRange = result.current.timeRanges[0];
 
@@ -72,6 +74,12 @@ describe('The custom time range name should', () => {
 	});
 
 	test('Be the formatted dates if the dates are setted', async () => {
+		global.fetch.mockResolvedValue({
+			json: async () => ({
+				items
+			})
+		});
+
 		const {result, unmount, waitForNextUpdate} = renderHook(
 			() => useTimeRange([]),
 			{wrapper: MockAppContext}
@@ -100,6 +108,12 @@ describe('The custom time range name should', () => {
 
 describe('The selected time range should', () => {
 	test('Be empty when there is no initial key', async () => {
+		global.fetch.mockResolvedValue({
+			json: async () => ({
+				items
+			})
+		});
+
 		const {result, unmount, waitForNextUpdate} = renderHook(
 			() => useTimeRange([]),
 			{wrapper: MockAppContext}
@@ -115,6 +129,12 @@ describe('The selected time range should', () => {
 	});
 
 	test('Be "Custom Range" when the initial key is "custom"', async () => {
+		global.fetch.mockResolvedValue({
+			json: async () => ({
+				items
+			})
+		});
+
 		const {result, unmount, waitForNextUpdate} = renderHook(
 			() => useTimeRange(['custom']),
 			{wrapper: MockAppContext}
@@ -130,6 +150,12 @@ describe('The selected time range should', () => {
 	});
 
 	test('Be "Last Month" when the initial key is "2"', async () => {
+		global.fetch.mockResolvedValue({
+			json: async () => ({
+				items
+			})
+		});
+
 		const {result, unmount, waitForNextUpdate} = renderHook(
 			() => useTimeRange(['2']),
 			{wrapper: MockAppContext}
@@ -146,53 +172,65 @@ describe('The selected time range should', () => {
 });
 
 describe('The time range store, when receiving "Last 7 Days" and "Last Month" items, should', () => {
-	let renderer;
-
-	beforeEach(() => {
-		renderer = renderHook(
-			({timeRangeKeys}) => useTimeRange(timeRangeKeys),
-			{
-				initialProps: {
-					timeRangeKeys: ['1']
-				},
-				wrapper: MockAppContext
-			}
-		);
-	});
-
-	afterEach(() => {
-		renderer.unmount();
-		renderer = null;
-	});
-
-	test('Keep the selected time range when the keys are the same', () => {
-		const {rerender, result} = renderer;
-
-		rerender({
-			timeRangeKeys: ['1']
+	test('Keep the selected time range when the keys are the same', async () => {
+		global.fetch.mockResolvedValueOnce({
+			json: async () => ({
+				items
+			})
 		});
+
+		const {result, unmount, waitForNextUpdate} = renderHook(
+			() => useTimeRange(['1']),
+			{wrapper: MockAppContext}
+		);
+
+		await waitForNextUpdate();
 
 		const selectedTimeRange = result.current.getSelectedTimeRange();
 
 		expect(selectedTimeRange.key).toBe('1');
+
+		unmount();
 	});
 
-	test('Update the selected time range when the keys changed', () => {
-		const {rerender, result} = renderer;
-
-		rerender({
-			timeRangeKeys: ['2']
+	test('Update the selected time range when the keys changed', async () => {
+		global.fetch.mockResolvedValueOnce({
+			json: async () => ({
+				items
+			})
 		});
 
-		const selectedTimeRange = result.current.getSelectedTimeRange();
+		const {rerender, result, unmount, waitForNextUpdate} = renderHook(
+			timeRangeKeys => useTimeRange(timeRangeKeys),
+			{
+				initialProps: ['1'],
+				wrapper: MockAppContext
+			}
+		);
 
-		expect(selectedTimeRange.key).toBe('2');
+		await waitForNextUpdate();
+
+		const selectedTimeRange1 = result.current.getSelectedTimeRange();
+
+		expect(selectedTimeRange1.key).toBe('1');
+
+		rerender(['2']);
+
+		await waitForNextUpdate();
+
+		const selectedTimeRange2 = result.current.getSelectedTimeRange();
+
+		expect(selectedTimeRange2.key).toBe('2');
+
+		unmount();
 	});
 });
 
 describe('The time range store, when receiving no items, should', () => {
 	test('Have only the "Custom Range" item', async () => {
-		clientMock.get.mockResolvedValueOnce({data: {items: []}});
+		global.fetch.mockResolvedValue({
+			json: async () => ({items: []})
+		});
 
 		const {result, unmount, waitForNextUpdate} = renderHook(
 			({timeRangeKeys}) => useTimeRange(timeRangeKeys),
@@ -212,7 +250,9 @@ describe('The time range store, when receiving no items, should', () => {
 	});
 
 	test('Return a fallback object of selected item', () => {
-		clientMock.get.mockResolvedValueOnce({data: {}});
+		global.fetch.mockResolvedValue({
+			json: async () => ({items: []})
+		});
 
 		const {result, unmount} = renderHook(
 			({timeRangeKeys}) => useTimeRange(timeRangeKeys),
@@ -233,12 +273,14 @@ describe('The time range store, when receiving no items, should', () => {
 });
 
 describe('The time range provider should', () => {
-	let getAllByTestId;
+	test('Render "custom-range", "Last 7 Days", and "Last Month" items', async () => {
+		global.fetch.mockResolvedValueOnce({
+			json: async () => ({
+				items
+			})
+		});
 
-	afterEach(cleanup);
-
-	beforeEach(() => {
-		const renderResult = render(
+		const {getAllByTestId} = render(
 			<MockAppContext>
 				<TimeRangeProvider timeRangeKeys={[1, 2]}>
 					<MockTimeRangeConsumer />
@@ -246,10 +288,6 @@ describe('The time range provider should', () => {
 			</MockAppContext>
 		);
 
-		getAllByTestId = renderResult.getAllByTestId;
-	});
-
-	test('Render "custom-range", "Last 7 Days", and "Last Month" items', async () => {
 		const timeRangeKeys = await waitForElement(() =>
 			getAllByTestId('timeRangeKey')
 		);

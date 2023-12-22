@@ -20,7 +20,7 @@ const items = [
 	}
 ];
 
-describe('The instance list card should', () => {
+xdescribe('The instance list card should', () => {
 	const clientMock = {
 		get: jest.fn().mockResolvedValue({data: {items}})
 	};

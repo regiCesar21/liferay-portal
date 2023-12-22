@@ -26,10 +26,6 @@ const items = [
 	}
 ];
 
-const clientMock = {
-	get: jest.fn().mockResolvedValue({data: {items}})
-};
-
 const MockProcessStepConsumer = () => {
 	const {processSteps} = useContext(ProcessStepContext);
 
@@ -41,12 +37,20 @@ const MockProcessStepConsumer = () => {
 };
 
 const MockAppContext = ({children}) => (
-	<MockRouter client={clientMock}>
+	<MockRouter>
 		<Request>{children}</Request>
 	</MockRouter>
 );
 
 describe('The selected process steps should', () => {
+	beforeEach(() => {
+		global.fetch.mockResolvedValueOnce({
+			json: async () => ({
+				items
+			})
+		});
+	});
+
 	test('Be empty when there is no initial key', async () => {
 		const {result, unmount, waitForNextUpdate} = renderHook(
 			() => useProcessStep(12345, []),
@@ -82,6 +86,12 @@ describe('The process step store, when receiving "Review" and "Update" items, sh
 	let renderer;
 
 	beforeEach(() => {
+		global.fetch.mockResolvedValueOnce({
+			json: async () => ({
+				items
+			})
+		});
+
 		renderer = renderHook(
 			({processStepKeys}) => useProcessStep(12345, processStepKeys),
 			{
@@ -125,9 +135,15 @@ describe('The process step store, when receiving "Review" and "Update" items, sh
 });
 
 describe('The time range store, when receiving no items, should', () => {
-	test('Have no items on processSteps array', async () => {
-		clientMock.get.mockResolvedValueOnce({data: {items: []}});
+	beforeEach(() => {
+		global.fetch.mockResolvedValueOnce({
+			json: async () => ({
+				items: []
+			})
+		});
+	});
 
+	test('Have no items on processSteps array', async () => {
 		const {result, unmount, waitForNextUpdate} = renderHook(
 			({processStepKeys}) => useProcessStep(12345, processStepKeys),
 			{
@@ -146,8 +162,6 @@ describe('The time range store, when receiving no items, should', () => {
 	});
 
 	test('Return a fallback array of selected items', () => {
-		clientMock.get.mockResolvedValueOnce({data: {}});
-
 		const {result, unmount} = renderHook(
 			({processStepKeys}) => useProcessStep(12345, processStepKeys),
 			{
@@ -174,6 +188,12 @@ describe('The process step provider should', () => {
 	afterEach(cleanup);
 
 	beforeEach(() => {
+		global.fetch.mockResolvedValueOnce({
+			json: async () => ({
+				items
+			})
+		});
+
 		const renderResult = render(
 			<MockAppContext>
 				<ProcessStepProvider processId={12345} processStepKeys={[1, 2]}>

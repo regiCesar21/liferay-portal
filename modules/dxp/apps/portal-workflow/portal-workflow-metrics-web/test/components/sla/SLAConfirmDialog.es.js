@@ -9,7 +9,6 @@ import renderer from 'react-test-renderer';
 import SLAConfirmDialog from '../../../src/main/resources/META-INF/resources/js/components/sla/SLAConfirmDialog.es';
 import SLAListCard from '../../../src/main/resources/META-INF/resources/js/components/sla/SLAListCard.es';
 import {MockRouter as Router} from '../../mock/MockRouter.es';
-import fetch from '../../mock/fetch.es';
 
 jest.useFakeTimers();
 
@@ -40,20 +39,22 @@ test('Should cancel dialog', () => {
 });
 
 test('Should cancel dialog through SLA List', () => {
-	const data = {
-		items: [
-			{
-				description: 'Total time to complete the request.',
-				duration: 1553879089,
-				id: 1234,
-				name: 'Total resolution time'
-			}
-		],
-		totalCount: 0
-	};
+	global.fetch.mockResolvedValueOnce({
+		json: async () => ({
+			items: [
+				{
+					description: 'Total time to complete the request.',
+					duration: 1553879089,
+					id: 1234,
+					name: 'Total resolution time'
+				}
+			],
+			totalCount: 0
+		})
+	});
 
 	const component = mount(
-		<Router client={fetch(data)}>
+		<Router>
 			<SLAListCard />
 		</Router>
 	);

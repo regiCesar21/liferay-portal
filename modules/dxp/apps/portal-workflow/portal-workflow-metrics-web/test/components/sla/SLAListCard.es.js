@@ -8,25 +8,26 @@ import renderer from 'react-test-renderer';
 
 import SLAListCard from '../../../src/main/resources/META-INF/resources/js/components/sla/SLAListCard.es';
 import {MockRouter as Router} from '../../mock/MockRouter.es';
-import fetch from '../../mock/fetch.es';
 
 test('Should render component', () => {
-	const data = {
-		items: [
-			{
-				dateModified: new Date(
-					Date.UTC('2019', '04', '06', '20', '32', '18')
-				),
-				description: 'Total time to complete the request.',
-				duration: 1553879089,
-				name: 'Total resolution time'
-			}
-		],
-		totalCount: 0
-	};
+	global.fetch.mockResolvedValueOnce({
+		json: async () => ({
+			items: [
+				{
+					dateModified: new Date(
+						Date.UTC('2019', '04', '06', '20', '32', '18')
+					),
+					description: 'Total time to complete the request.',
+					duration: 1553879089,
+					name: 'Total resolution time'
+				}
+			],
+			totalCount: 0
+		})
+	});
 
 	const component = renderer.create(
-		<Router client={fetch(data)}>
+		<Router>
 			<SLAListCard />
 		</Router>
 	);
@@ -37,9 +38,15 @@ test('Should render component', () => {
 });
 
 test('Should render component after item was removed', () => {
-	const data = {items: [], totalCount: 0};
+	global.fetch.mockResolvedValueOnce({
+		json: async () => ({
+			items: [],
+			totalCount: 0
+		})
+	});
+
 	const component = renderer.create(
-		<Router client={fetch(data)}>
+		<Router>
 			<SLAListCard itemRemoved={'test'} />
 		</Router>
 	);
@@ -49,10 +56,15 @@ test('Should render component after item was removed', () => {
 });
 
 test('Should render toast with SLA saved message', () => {
-	const data = {items: [], totalCount: 0};
+	global.fetch.mockResolvedValueOnce({
+		json: async () => ({
+			items: [],
+			totalCount: 0
+		})
+	});
 
 	const component = mount(
-		<Router client={fetch(data)}>
+		<Router>
 			<SLAListCard />
 		</Router>
 	);
@@ -65,10 +77,15 @@ test('Should render toast with SLA saved message', () => {
 });
 
 test('Should render toast with SLA updated message', () => {
-	const data = {items: [], totalCount: 0};
+	global.fetch.mockResolvedValueOnce({
+		json: async () => ({
+			items: [],
+			totalCount: 0
+		})
+	});
 
 	const component = mount(
-		<Router client={fetch(data)}>
+		<Router>
 			<SLAListCard />
 		</Router>
 	);
@@ -81,10 +98,22 @@ test('Should render toast with SLA updated message', () => {
 });
 
 test('Should remove a item', () => {
-	const data = {items: [], totalCount: 0};
+	global.fetch.mockResolvedValueOnce({
+		json: async () => ({
+			items: [],
+			totalCount: 0
+		})
+	});
+
+	global.fetch.mockResolvedValueOnce({
+		json: async () => ({
+			items: [],
+			totalCount: 0
+		})
+	});
 
 	const component = mount(
-		<Router client={fetch(data)}>
+		<Router>
 			<SLAListCard />
 		</Router>
 	);
@@ -95,10 +124,22 @@ test('Should remove a item', () => {
 });
 
 test('Should test props change', () => {
-	const data = {items: [], totalCount: 0};
+	global.fetch.mockResolvedValueOnce({
+		json: async () => ({
+			items: [],
+			totalCount: 0
+		})
+	});
+
+	global.fetch.mockResolvedValueOnce({
+		json: async () => ({
+			items: [],
+			totalCount: 0
+		})
+	});
 
 	const component = mount(
-		<Router client={fetch(data)}>
+		<Router>
 			<SLAListCard />
 		</Router>
 	);

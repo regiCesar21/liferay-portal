@@ -1,16 +1,7 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`Should component receive props 1`] = `
-<MockRouter
-  client={
-    Object {
-      "delete": [Function],
-      "get": [Function],
-      "post": [Function],
-      "put": [Function],
-    }
-  }
->
+<MockRouter>
   <MemoryRouter
     initialEntries={
       Array [
@@ -174,16 +165,7 @@ exports[`Should component receive props 1`] = `
 `;
 
 exports[`Should component shows empty state when items is undefined 1`] = `
-<MockRouter
-  client={
-    Object {
-      "delete": [Function],
-      "get": [Function],
-      "post": [Function],
-      "put": [Function],
-    }
-  }
->
+<MockRouter>
   <MemoryRouter
     initialEntries={
       Array [
@@ -343,16 +325,7 @@ exports[`Should component shows empty state when items is undefined 1`] = `
 `;
 
 exports[`Should render component 1`] = `
-<MockRouter
-  client={
-    Object {
-      "delete": [Function],
-      "get": [Function],
-      "post": [Function],
-      "put": [Function],
-    }
-  }
->
+<MockRouter>
   <MemoryRouter
     initialEntries={
       Array [

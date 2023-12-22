@@ -22,7 +22,6 @@ exports[`Should change page 1`] = `
   <ContextProvider
     value={
       Object {
-        "client": undefined,
         "companyId": 1,
         "defaultDelta": 20,
         "deltas": Array [
@@ -109,7 +108,6 @@ exports[`Should test change page when disabled 1`] = `
   <ContextProvider
     value={
       Object {
-        "client": undefined,
         "companyId": 1,
         "defaultDelta": 20,
         "deltas": Array [

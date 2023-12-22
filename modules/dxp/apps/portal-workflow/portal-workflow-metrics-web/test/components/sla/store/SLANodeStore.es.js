@@ -6,10 +6,9 @@
 import {act, renderHook} from '@testing-library/react-hooks';
 
 import {useSLANodes} from '../../../../src/main/resources/META-INF/resources/js/components/sla/store/SLANodeStore.es';
-import client from '../../../mock/fetch.es';
 
 test('Should test fetch', () => {
-	const defaultData = {
+	const data = {
 		items: [
 			{
 				id: 26603,
@@ -45,6 +44,15 @@ test('Should test fetch', () => {
 		pageSize: 4,
 		totalCount: 4
 	};
+
+	global.fetch.mockResolvedValueOnce({
+		json: async () => data
+	});
+
+	global.fetch.mockResolvedValueOnce({
+		json: async () => data
+	});
+
 	const pauseNodeKeys = [
 		{
 			executionType: 'leave',
@@ -64,9 +72,7 @@ test('Should test fetch', () => {
 			id: 26625
 		}
 	];
-	const {result, waitForNextUpdate} = renderHook(() =>
-		useSLANodes('123', client(defaultData))
-	);
+	const {result, waitForNextUpdate} = renderHook(() => useSLANodes('123'));
 
 	act(() => result.current.fetchNodes('123'));
 
@@ -104,7 +110,7 @@ test('Should test fetch', () => {
 });
 
 test('Should test fetch data', () => {
-	const defaultData = {
+	const data = {
 		items: [
 			{
 				id: 26603,
@@ -140,6 +146,15 @@ test('Should test fetch data', () => {
 		pageSize: 4,
 		totalCount: 4
 	};
+
+	global.fetch.mockResolvedValueOnce({
+		json: async () => data
+	});
+
+	global.fetch.mockResolvedValueOnce({
+		json: async () => data
+	});
+
 	const pauseNodeKeys = [
 		{
 			executionType: 'leave',
@@ -159,9 +174,7 @@ test('Should test fetch data', () => {
 			id: 26625
 		}
 	];
-	const {result, waitForNextUpdate} = renderHook(() =>
-		useSLANodes('123', client(defaultData))
-	);
+	const {result, waitForNextUpdate} = renderHook(() => useSLANodes('123'));
 
 	act(() => result.current.fetchNodes('123'));
 
@@ -199,18 +212,23 @@ test('Should test fetch data', () => {
 });
 
 test('Should test initial state', () => {
-	const {result, waitForNextUpdate} = renderHook(() =>
-		useSLANodes(
-			'123',
-			client({
-				items: [],
-				lastPage: 1,
-				page: 1,
-				pageSize: 1,
-				totalCount: 0
-			})
-		)
-	);
+	const data = {
+		items: [],
+		lastPage: 1,
+		page: 1,
+		pageSize: 1,
+		totalCount: 0
+	};
+
+	global.fetch.mockResolvedValueOnce({
+		json: async () => data
+	});
+
+	global.fetch.mockResolvedValueOnce({
+		json: async () => data
+	});
+
+	const {result, waitForNextUpdate} = renderHook(() => useSLANodes('123'));
 
 	act(() => result.current.fetchNodes('123'));
 

@@ -2,14 +2,6 @@
 
 exports[`Should render component with completed tab activated 1`] = `
 <MockRouter
-  client={
-    Object {
-      "delete": [Function],
-      "get": [Function],
-      "post": [Function],
-      "put": [Function],
-    }
-  }
   initialPath="/metrics/35315"
 >
   <MemoryRouter
@@ -655,14 +647,6 @@ exports[`Should render component with completed tab activated 1`] = `
 
 exports[`Should render component with default tab activated 1`] = `
 <MockRouter
-  client={
-    Object {
-      "delete": [Function],
-      "get": [Function],
-      "post": [Function],
-      "put": [Function],
-    }
-  }
   initialPath="/metrics/35315"
 >
   <MemoryRouter
@@ -1308,14 +1292,6 @@ exports[`Should render component with default tab activated 1`] = `
 
 exports[`Should render component with failure state 1`] = `
 <MockRouter
-  client={
-    Object {
-      "delete": [Function],
-      "get": [Function],
-      "post": [Function],
-      "put": [Function],
-    }
-  }
   initialPath="/metrics/35315/completed"
 >
   <MemoryRouter
@@ -1960,16 +1936,7 @@ exports[`Should render component with failure state 1`] = `
 `;
 
 exports[`Should render dashboard route children 1`] = `
-<MockRouter
-  client={
-    Object {
-      "delete": [Function],
-      "get": [Function],
-      "post": [Function],
-      "put": [Function],
-    }
-  }
->
+<MockRouter>
   <MemoryRouter
     initialEntries={
       Array [
@@ -2246,14 +2213,6 @@ exports[`Should render dashboard route children 1`] = `
 
 exports[`Should render with blocked SLA 1`] = `
 <MockRouter
-  client={
-    Object {
-      "delete": [Function],
-      "get": [Function],
-      "post": [Function],
-      "put": [Function],
-    }
-  }
   initialPath="/metrics/35315/completed"
 >
   <MemoryRouter

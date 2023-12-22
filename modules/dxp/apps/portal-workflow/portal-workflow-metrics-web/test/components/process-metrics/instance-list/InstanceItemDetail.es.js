@@ -22,26 +22,20 @@ describe('The instance item detail should', () => {
 		taskNames: ['Update']
 	};
 
-	const getClientMock = (slaStatus, status, props) => ({
-		get: jest.fn().mockResolvedValue({
-			data: {
-				...baseInstance,
-				...props,
-				slaStatus,
-				status
-			}
-		})
-	});
-
 	afterEach(cleanup);
 
 	test('Be rendered with empty data when no instanceId is defined', async () => {
+		global.fetch.mockResolvedValueOnce({
+			json: async () => ({
+				...baseInstance,
+				slaStatus: 'Untracked',
+				status: 'Completed',
+				...[{status: 'Running'}]
+			})
+		});
+
 		const {getAllByTestId} = render(
-			<MockRouter
-				client={getClientMock('Untracked', 'Completed', [
-					{status: 'Running'}
-				])}
-			>
+			<MockRouter>
 				<InstanceListContext.Provider value={{instanceId: null}}>
 					<InstanceItemDetail processId="12345" />
 				</InstanceListContext.Provider>
@@ -60,12 +54,19 @@ describe('The instance item detail should', () => {
 	});
 
 	test('Be rendered with "OnTime" and "Completed" statuses', async () => {
-		const {getAllByTestId} = render(
-			<MockRouter
-				client={getClientMock('OnTime', 'Completed', {
+		global.fetch.mockResolvedValueOnce({
+			json: async () => ({
+				...baseInstance,
+				slaStatus: 'OnTime',
+				status: 'Completed',
+				...{
 					dateCompletion: new Date('2019-01-07')
-				})}
-			>
+				}
+			})
+		});
+
+		const {getAllByTestId} = render(
+			<MockRouter>
 				<InstanceListContext.Provider value={{instanceId: 12345}}>
 					<InstanceItemDetail processId="12345" />
 				</InstanceListContext.Provider>
@@ -83,8 +84,16 @@ describe('The instance item detail should', () => {
 	});
 
 	test('Be rendered with "OnTime" and "Pending" statuses', async () => {
+		global.fetch.mockResolvedValueOnce({
+			json: async () => ({
+				...baseInstance,
+				slaStatus: 'Overdue',
+				status: 'Pending'
+			})
+		});
+
 		const {getAllByTestId} = render(
-			<MockRouter client={getClientMock('Overdue', 'Pending')}>
+			<MockRouter>
 				<InstanceListContext.Provider value={{instanceId: 12345}}>
 					<InstanceItemDetail processId="12345" />
 				</InstanceListContext.Provider>
@@ -100,8 +109,16 @@ describe('The instance item detail should', () => {
 	});
 
 	test('Be rendered with "Overdue" and "Pending" statuses', async () => {
+		global.fetch.mockResolvedValueOnce({
+			json: async () => ({
+				...baseInstance,
+				slaStatus: 'Overdue',
+				status: 'Pending'
+			})
+		});
+
 		const {getAllByTestId} = render(
-			<MockRouter client={getClientMock('Overdue', 'Pending')}>
+			<MockRouter>
 				<InstanceListContext.Provider value={{instanceId: 12345}}>
 					<InstanceItemDetail processId="12345" />
 				</InstanceListContext.Provider>
@@ -116,8 +133,16 @@ describe('The instance item detail should', () => {
 	});
 
 	test('Be rendered with "Untracked" and "Paused" statuses', async () => {
+		global.fetch.mockResolvedValueOnce({
+			json: async () => ({
+				...baseInstance,
+				slaStatus: 'Untracked',
+				status: 'Paused'
+			})
+		});
+
 		const {getAllByTestId} = render(
-			<MockRouter client={getClientMock('Untracked', 'Paused')}>
+			<MockRouter>
 				<InstanceListContext.Provider value={{instanceId: 12345}}>
 					<InstanceItemDetail processId="12345" />
 				</InstanceListContext.Provider>
@@ -132,16 +157,21 @@ describe('The instance item detail should', () => {
 	});
 
 	test('Be rendered with "Untracked", "Completed", and "Running" statuses', async () => {
+		global.fetch.mockResolvedValueOnce({
+			json: async () => ({
+				...baseInstance,
+				slaResults: [
+					{
+						status: 'Running'
+					}
+				],
+				slaStatus: 'Untracked',
+				status: 'Completed'
+			})
+		});
+
 		const {getAllByTestId} = render(
-			<MockRouter
-				client={getClientMock('Untracked', 'Completed', {
-					slaResults: [
-						{
-							status: 'Running'
-						}
-					]
-				})}
-			>
+			<MockRouter>
 				<InstanceListContext.Provider value={{instanceId: 12345}}>
 					<InstanceItemDetail processId="12345" />
 				</InstanceListContext.Provider>
@@ -156,16 +186,21 @@ describe('The instance item detail should', () => {
 	});
 
 	test('Be rendered with "Untracked", "Completed", and "Stopped" statuses', async () => {
+		global.fetch.mockResolvedValueOnce({
+			json: async () => ({
+				...baseInstance,
+				slaResults: [
+					{
+						status: 'Stopped'
+					}
+				],
+				slaStatus: 'Untracked',
+				status: 'Completed'
+			})
+		});
+
 		const {getAllByTestId} = render(
-			<MockRouter
-				client={getClientMock('Untracked', 'Completed', {
-					slaResults: [
-						{
-							status: 'Stopped'
-						}
-					]
-				})}
-			>
+			<MockRouter>
 				<InstanceListContext.Provider value={{instanceId: 12345}}>
 					<InstanceItemDetail processId="12345" />
 				</InstanceListContext.Provider>

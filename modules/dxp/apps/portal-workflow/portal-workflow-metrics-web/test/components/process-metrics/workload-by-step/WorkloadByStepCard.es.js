@@ -8,24 +8,24 @@ import renderer from 'react-test-renderer';
 
 import WorkloadByStepCard from '../../../../src/main/resources/META-INF/resources/js/components/process-metrics/workload-by-step/WorkloadByStepCard.es';
 import {MockRouter as Router} from '../../../mock/MockRouter.es';
-import fetch from '../../../mock/fetch.es';
-import fetchFailure from '../../../mock/fetchFailure.es';
 
 test('Should component receive props', () => {
-	const data = {
-		items: [
-			{
-				instanceCount: 1,
-				name: 'Task Name',
-				onTimeInstanceCount: 1,
-				overdueInstanceCount: 0
-			}
-		],
-		totalCount: 1
-	};
+	global.fetch.mockResolvedValueOnce({
+		json: async () => ({
+			items: [
+				{
+					instanceCount: 1,
+					name: 'Task Name',
+					onTimeInstanceCount: 1,
+					overdueInstanceCount: 0
+				}
+			],
+			totalCount: 1
+		})
+	});
 
 	const component = mount(
-		<Router client={fetch(data)}>
+		<Router>
 			<WorkloadByStepCard page={1} pageSize={10} processId={35315} />
 		</Router>
 	);
@@ -41,29 +41,15 @@ test('Should component receive props', () => {
 	expect(component).toMatchSnapshot();
 });
 
-test('Should component set error state after request fails', () => {
-	const component = mount(
-		<Router client={fetchFailure()}>
-			<WorkloadByStepCard page={1} pageSize={10} processId={35315} />
-		</Router>
-	);
-
-	const instance = component.find(WorkloadByStepCard).instance();
-
-	instance.setState({
-		loading: false
-	});
-
-	return instance.loadData().catch(() => {
-		expect(instance.state.errors).toEqual(
-			'There was a problem retrieving data. Please try reloading the page.'
-		);
-	});
-});
-
 test('Should component shows empty state when items is undefined', () => {
+	global.fetch.mockResolvedValueOnce({
+		json: async () => ({
+			items: []
+		})
+	});
+
 	const component = mount(
-		<Router client={fetch({})}>
+		<Router>
 			<WorkloadByStepCard />
 		</Router>
 	);
@@ -78,8 +64,14 @@ test('Should component shows empty state when items is undefined', () => {
 });
 
 test('Should not reload component while loading state is true', () => {
+	global.fetch.mockResolvedValueOnce({
+		json: async () => ({
+			items: []
+		})
+	});
+
 	const component = mount(
-		<Router client={fetch(null)}>
+		<Router>
 			<WorkloadByStepCard
 				page={1}
 				pageSize={10}
@@ -99,20 +91,22 @@ test('Should not reload component while loading state is true', () => {
 });
 
 test('Should render component', () => {
-	const data = {
-		items: [
-			{
-				instanceCount: 1,
-				name: 'Task Name',
-				onTimeInstanceCount: 1,
-				overdueInstanceCount: 0
-			}
-		],
-		totalCount: 1
-	};
+	global.fetch.mockResolvedValueOnce({
+		json: async () => ({
+			items: [
+				{
+					instanceCount: 1,
+					name: 'Task Name',
+					onTimeInstanceCount: 1,
+					overdueInstanceCount: 0
+				}
+			],
+			totalCount: 1
+		})
+	});
 
 	const component = mount(
-		<Router client={fetch(data)}>
+		<Router>
 			<WorkloadByStepCard page={1} pageSize={10} processId={35315} />
 		</Router>
 	);
@@ -125,13 +119,15 @@ test('Should render component', () => {
 });
 
 test('Should render component with empty data', () => {
-	const data = {
-		items: null,
-		totalCount: 0
-	};
+	global.fetch.mockResolvedValueOnce({
+		json: async () => ({
+			items: null,
+			totalCount: 0
+		})
+	});
 
 	const component = renderer.create(
-		<Router client={fetch(data)}>
+		<Router>
 			<WorkloadByStepCard processId={35315} />
 		</Router>
 	);
@@ -142,8 +138,10 @@ test('Should render component with empty data', () => {
 });
 
 test('Should render component with error state', () => {
+	global.fetch.mockResolvedValueOnce(new Error());
+
 	const component = renderer.create(
-		<Router client={fetchFailure()}>
+		<Router>
 			<WorkloadByStepCard processId={35315} />
 		</Router>
 	);

@@ -3646,16 +3646,7 @@ exports[`Should redirect to SLA list with blocked nodes 1`] = `
 `;
 
 exports[`Should render component 1`] = `
-<MockRouter
-  client={
-    Object {
-      "delete": [Function],
-      "get": [Function],
-      "post": [Function],
-      "put": [Function],
-    }
-  }
->
+<MockRouter>
   <MemoryRouter
     initialEntries={
       Array [
@@ -4382,16 +4373,7 @@ exports[`Should render component 1`] = `
 `;
 
 exports[`Should render component in edit mode 1`] = `
-<MockRouter
-  client={
-    Object {
-      "delete": [Function],
-      "get": [Function],
-      "post": [Function],
-      "put": [Function],
-    }
-  }
->
+<MockRouter>
   <MemoryRouter
     initialEntries={
       Array [
