@@ -50,35 +50,25 @@ String editUserRoleId = "editUserRoles" + commerceAccountUser.getUserId();
 </liferay-ui:icon-menu>
 
 <aui:script use="liferay-item-selector-dialog">
-	$('#<portlet:namespace /><%= editUserRoleId %>').on(
-		'click',
-		function(event) {
+	window.document
+		.querySelector('#<portlet:namespace /><%= editUserRoleId %>')
+		.addEventListener('click', function (event) {
 			event.preventDefault();
 
-			var itemSelectorDialog = new A.LiferayItemSelectorDialog(
-				{
+			document.<portlet:namespace />fm.<portlet:namespace />originalRoleIds.value = '<%= commerceAccountUserRelAdminDisplayContext.getUserRoleIds(commerceAccountUserRel) %>';
+
+			var itemSelectorDialog = new A.LiferayItemSelectorDialog({
 					eventName: 'userRoleItemSelector',
 					on: {
 						selectedItemChange: function(event) {
-							var <portlet:namespace />addUserRolesIds = [];
-
 							var selectedItems = event.newVal;
 
 							if (selectedItems) {
-								A.Array.each(
-									selectedItems,
-									function(item, index, selectedItems) {
-										<portlet:namespace />addUserRolesIds.push(item.id);
-									}
-								);
+								document.<portlet:namespace />fm.<portlet:namespace /><%= Constants.CMD %>.value = '<%= Constants.UPDATE %>';
+								document.<portlet:namespace />fm.<portlet:namespace />commerceAccountUserId.value = <%= String.valueOf(commerceAccountUser.getUserId()) %>;
+								document.<portlet:namespace />fm.<portlet:namespace />roleIds.value = selectedItems.value;
 
-								var form = AUI.$(document.<portlet:namespace />fm);
-
-								form.fm('<%= Constants.CMD %>').val('<%= Constants.UPDATE %>');
-								form.fm('commerceAccountUserId').val(<%= String.valueOf(commerceAccountUser.getUserId()) %>);
-								form.fm('roleIds').val(<portlet:namespace />addUserRolesIds.join(','));
-
-								submitForm(form, '<portlet:actionURL name="editCommerceAccountUserRel" />');
+								submitForm(document.<portlet:namespace />fm, '<portlet:actionURL name="/commerce_account_admin/edit_commerce_account_user_rel" />');
 							}
 						}
 					},

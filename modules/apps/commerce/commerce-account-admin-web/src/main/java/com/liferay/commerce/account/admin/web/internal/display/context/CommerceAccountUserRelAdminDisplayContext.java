@@ -142,7 +142,7 @@ public class CommerceAccountUserRelAdminDisplayContext
 
 		return ListUtil.toString(
 			commerceAccountUserRel.getUserGroupRoles(), "roleId",
-			StringPool.COMMA_AND_SPACE);
+			StringPool.COMMA);
 	}
 
 	public String getUserRoleItemSelectorUrl(
@@ -160,6 +160,9 @@ public class CommerceAccountUserRelAdminDisplayContext
 			Collections.<ItemSelectorReturnType>singletonList(
 				new UUIDItemSelectorReturnType()));
 
+		roleItemSelectorCriterion.setCheckedRoleIds(
+			StringUtil.split(getUserRoleIds(commerceAccountUserRel), 0L));
+
 		PortletURL itemSelectorURL = _itemSelector.getItemSelectorURL(
 			requestBackedPortletURLFactory, "userRoleItemSelector",
 			roleItemSelectorCriterion);
@@ -168,8 +171,6 @@ public class CommerceAccountUserRelAdminDisplayContext
 			"groupId",
 			String.valueOf(commerceAccount.getCommerceAccountGroupId()));
 
-		itemSelectorURL.setParameter(
-			"checkedRoleIds", getUserRoleIds(commerceAccountUserRel));
 		itemSelectorURL.setParameter("rowChecker", StringPool.BLANK);
 
 		itemSelectorURL.setWindowState(LiferayWindowState.POP_UP);
