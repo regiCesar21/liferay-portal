@@ -184,6 +184,10 @@ public abstract class BaseAssetMetricRepository<T extends AssetMetric>
 		SelectJoinStep<Record> selectJoinStep = getAssetMetricSelectJoinStep(
 			dslContext.select(fields), timeRange);
 
+		Sort sort = pageable.getSort();
+
+		sort = sort.and(Sort.by(getAssetTitleFieldName()));
+
 		return queryExecutor.queryForList(
 			rowMap -> _toMetric(rowMap, selectedMetrics),
 			selectJoinStep.where(
@@ -192,7 +196,7 @@ public abstract class BaseAssetMetricRepository<T extends AssetMetric>
 			).groupBy(
 				assetIdField, assetTitleField
 			).orderBy(
-				_getSortFields(pageable.getSort())
+				_getSortFields(sort)
 			).limit(
 				pageable.getPageSize()
 			).offset(
