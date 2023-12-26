@@ -46,6 +46,7 @@ export default function getAlloyEditorProcessor(
 ) {
 	let _editor;
 	let _eventHandlers;
+	let _edited = false;
 	let _element;
 	let _callbacks = {};
 
@@ -115,7 +116,7 @@ export default function getAlloyEditorProcessor(
 			const nativeEditor = _editor.get('nativeEditor');
 
 			const onBlurEditor = () => {
-				if (_callbacks.changeCallback) {
+				if (_callbacks.changeCallback && _edited) {
 					_callbacks
 						.changeCallback(nativeEditor.getData())
 						.then(() => {
@@ -163,6 +164,9 @@ export default function getAlloyEditorProcessor(
 					) {
 						event.cancel();
 					}
+					else {
+						_edited = true;
+					}
 				}),
 				nativeEditor.on('blur', () => {
 					if (_editor._mainUI.state.hidden) {
@@ -191,7 +195,7 @@ export default function getAlloyEditorProcessor(
 				nativeEditor.on(
 					'saveSnapshot',
 					debounce(() => {
-						if (_callbacks.changeCallback) {
+						if (_callbacks.changeCallback && _edited) {
 							_callbacks.changeCallback(nativeEditor.getData());
 						}
 					}, 100)
