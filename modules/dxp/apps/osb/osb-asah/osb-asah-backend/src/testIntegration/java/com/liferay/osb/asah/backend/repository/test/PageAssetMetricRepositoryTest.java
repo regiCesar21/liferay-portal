@@ -16,9 +16,14 @@ import com.liferay.osb.asah.common.model.Tuple2;
 import com.liferay.osb.asah.common.util.SetUtil;
 import com.liferay.osb.asah.test.util.annotation.BQSQLResource;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
+
+import org.apache.commons.lang3.tuple.Pair;
 
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
@@ -26,6 +31,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 
 /**
  * @author Leslie Wong
@@ -224,6 +230,40 @@ public class PageAssetMetricRepositoryTest
 				SetUtil.of(PageMetricType.VIEWS.getName()),
 				TimeRange.LAST_24_HOURS),
 			PageMetric::getViewsMetric);
+	}
+
+	@BQSQLResource(resourcePath = "page_asset_metric_views_with_ordering.sql")
+	@Test
+	public void testGetViewsAssetMetricsWithOrdering() {
+		List<PageMetric> pageMetrics = _assetMetricRepository.getAssetMetrics(
+			1L, null, null,
+			PageRequest.of(
+				0, 10,
+				Sort.by(Sort.Direction.DESC, PageMetricType.VIEWS.getName())),
+			SetUtil.of(PageMetricType.VIEWS.getName()),
+			TimeRange.LAST_24_HOURS);
+
+		Stream<PageMetric> stream = pageMetrics.stream();
+
+		Assertions.assertEquals(
+			new ArrayList<Pair<String, Double>>() {
+				{
+					add(Pair.of("Title B", 6D));
+					add(Pair.of("Title K", 6D));
+					add(Pair.of("Title C", 3D));
+					add(Pair.of("Title A", 1D));
+				}
+			},
+			stream.map(
+				pageMetric -> {
+					Metric metric = pageMetric.getViewsMetric();
+
+					return Pair.of(
+						pageMetric.getAssetTitle(), metric.getValue());
+				}
+			).collect(
+				Collectors.toList()
+			));
 	}
 
 	@BQSQLResource(
