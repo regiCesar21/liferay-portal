@@ -36,6 +36,7 @@ const RichText = ({
 			visible={visible}
 		>
 			<ClassicEditor
+				ariaRequired={otherProps.required}
 				contents={currentValue}
 				data={currentValue}
 				editorConfig={editorConfig}

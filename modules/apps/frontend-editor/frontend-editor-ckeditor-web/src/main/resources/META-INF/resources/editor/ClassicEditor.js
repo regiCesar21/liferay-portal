@@ -11,6 +11,7 @@ import React, {useCallback, useEffect, useRef, useState} from 'react';
 import {Editor} from './Editor';
 
 const ClassicEditor = ({
+	ariaRequired,
 	contents = '',
 	editorConfig,
 	initialToolbarSet = 'simple',
@@ -88,7 +89,7 @@ const ClassicEditor = ({
 	useEventListener('resize', onResize, true, window);
 
 	return (
-		<div id={`${name}Container`}>
+		<div id={`${name}Container`} role="textbox">
 			{title && (
 				<label className="control-label" htmlFor={name}>
 					{title}
@@ -129,6 +130,24 @@ const ClassicEditor = ({
 				}}
 				onInstanceReady={({editor}) => {
 					editor.setData(contents);
+
+					const iframe = document.querySelector(
+						'iframe.cke_wysiwyg_frame'
+					);
+
+					iframe.onload = function () {
+						const iframeDocument = iframe.contentDocument;
+						const iframeBody = iframeDocument.querySelector(
+							'body.html-editor'
+						);
+
+						if (iframeBody) {
+							iframeBody.setAttribute(
+								'aria-required',
+								ariaRequired
+							);
+						}
+					};
 				}}
 				ref={editorRef}
 				{...otherProps}
