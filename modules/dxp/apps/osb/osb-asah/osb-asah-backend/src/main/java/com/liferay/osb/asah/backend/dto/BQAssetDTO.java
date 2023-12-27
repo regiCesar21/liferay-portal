@@ -19,6 +19,8 @@ import java.util.LinkedHashSet;
 import java.util.Objects;
 import java.util.Set;
 
+import org.apache.commons.codec.digest.DigestUtils;
+
 /**
  * @author Thiago Buarque
  */
@@ -36,7 +38,9 @@ public class BQAssetDTO {
 		_channelId = bqAsset.getChannelId();
 		_count = bqAsset.getCount();
 		_dataSourceId = bqAsset.getDataSourceId();
-		_id = bqAsset.getId();
+		_id =
+			bqAsset.getId() + "_" +
+				DigestUtils.sha256Hex(bqAsset.getAssetTitle());
 		_modifiedDate = bqAsset.getModifiedDate();
 	}
 
