@@ -187,6 +187,31 @@ public class FilterExpressionConditionVisitor
 			rightField = DSL.val(Long.parseLong(param.getValue()));
 		}
 
+		if (Objects.equals(
+				leftField.getName(), "TO_HEX(SHA256(Event.assetId))") &&
+			(rightField instanceof Param)) {
+
+			Param<String> param = (Param<String>)rightField;
+
+			String valueString = param.getValue();
+
+			if (valueString != null) {
+				String[] valueStringParts = valueString.split("_");
+
+				if (valueStringParts.length > 1) {
+					return DSL.and(
+						leftField.eq(DSL.value(valueStringParts[0])),
+						DSL.field(
+							"TO_HEX(SHA256(Event.assetTitle))"
+						).eq(
+							DSL.value(valueStringParts[1])
+						));
+				}
+
+				rightField = DSL.value(valueStringParts[0]);
+			}
+		}
+
 		if (Objects.equals(fieldName, "interestName")) {
 			Param<String> param = (Param<String>)rightField;
 
