@@ -1,12 +1,12 @@
-WITH AssetEvent AS (
+WITH NotPageEvent AS (
 	SELECT
 		CASE
-		    WHEN
+			WHEN
 				Event.applicationId = 'Comment'
 			THEN
 				'Blog'
 			ELSE
-			    Event.applicationId
+				Event.applicationId
 		END AS applicationId,
 		Event.assetId,
 		FIRST_VALUE(Event.assetTitle IGNORE NULLS) OVER (
@@ -31,8 +31,8 @@ WITH AssetEvent AS (
 			WHEN
 				Event.eventId = 'posted'
 			THEN
-			    'commentPosted'
-		    ELSE
+				'commentPosted'
+			ELSE
 				Event.eventId
 		END AS eventId,
 		Event.title
@@ -41,12 +41,12 @@ WITH AssetEvent AS (
 	WHERE
 		(
 			Event.applicationId IN (
-				'Blog', 'Document', 'Form', 'WebContent', 'Page'
+				'Blog', 'Document', 'Form', 'WebContent'
 			) AND
 			Event.assetId IS NOT NULL AND
 			Event.eventId IN (
 				'blogViewed', 'formViewed', 'formSubmitted', 'documentDownloaded',
-				'documentPreviewed', 'webContentViewed', 'pageViewed'
+				'documentPreviewed', 'webContentViewed'
 			)
 		) OR
 		(
@@ -55,15 +55,61 @@ WITH AssetEvent AS (
 			Event.eventId = 'posted' AND
 			JSON_VALUE(Event.eventProperties, '$.className') = 'com.liferay.blogs.model.BlogsEntry'
 		)
+),
+PageEvent AS (
+	SELECT
+		Event.applicationId,
+		Event.assetId,
+		Event.assetTitle,
+		Event.canonicalUrl,
+		Event.channelId,
+		Event.dataSourceId,
+		Event.eventDate,
+		Event.eventId,
+		Event.title
+	FROM
+		`$[AC_PROJECT_ID].event` Event
+	WHERE
+		Event.applicationId = 'Page' AND
+		Event.assetId IS NOT NULL AND
+		Event.assetTitle IS NOT NULL AND
+		Event.eventId = 'pageViewed'
+),
+AssetEvent AS (
+	SELECT
+		applicationId,
+		assetId,
+		assetTitle,
+		canonicalUrl,
+		channelId,
+		dataSourceId,
+		eventDate,
+		eventId,
+		title
+	FROM
+		NotPageEvent
+	UNION ALL
+	SELECT
+		applicationId,
+		assetId,
+		assetTitle,
+		canonicalUrl,
+		channelId,
+		dataSourceId,
+		eventDate,
+		eventId,
+		title
+	FROM
+		PageEvent
 )
 SELECT
-    applicationId,
+	applicationId,
 	TO_HEX(SHA256(assetId)) AS id,
 	assetId,
 	assetTitle,
 	channelId,
 	dataSourceId,
-    eventId,
+	eventId,
 	MAX(eventDate) as modifiedDate,
 	COUNT(*) as count
 FROM
