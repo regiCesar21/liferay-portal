@@ -27,7 +27,7 @@ public class ActivitiesRestControllerTest
 	implements OSBAsahBackendSpringTestContext,
 			   OSBAsahTestExecutionListenersContext {
 
-	@BQSQLResource(resourcePath = "bq_page_events.sql")
+	@BQSQLResource(resourcePath = "bq_page_events1.sql")
 	@Test
 	public void testGetBQAssetDTOPageDTO1() {
 		JSONObject jsonObject = _objectMapper.convertValue(
@@ -55,7 +55,7 @@ public class ActivitiesRestControllerTest
 				"Object/0", "Object/count"));
 	}
 
-	@BQSQLResource(resourcePath = "bq_page_events.sql")
+	@BQSQLResource(resourcePath = "bq_page_events1.sql")
 	@Test
 	public void testGetBQAssetDTOPageDTO2() {
 		JSONObject jsonObject = _objectMapper.convertValue(
@@ -66,6 +66,21 @@ public class ActivitiesRestControllerTest
 
 		Assertions.assertEquals(
 			0L,
+			JSONUtil.getValue(
+				jsonObject, "JSONObject/page", "Object/totalElements"));
+	}
+
+	@BQSQLResource(resourcePath = "bq_page_events2.sql")
+	@Test
+	public void testGetBQAssetDTOPageDTO3() {
+		JSONObject jsonObject = _objectMapper.convertValue(
+			_activitiesRestController.getBQAssetDTOPageDTO(
+				"contains(assetTitle, 'clicks')", 0, 10,
+				new String[] {"count", "desc"}),
+			JSONObject.class);
+
+		Assertions.assertEquals(
+			2L,
 			JSONUtil.getValue(
 				jsonObject, "JSONObject/page", "Object/totalElements"));
 	}

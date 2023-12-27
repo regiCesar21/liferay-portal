@@ -186,6 +186,109 @@ public class FilterExpressionTest {
 	}
 
 	@Test
+	public void testActivityKeyFilter3() {
+		Field userIdField = DSL.field("Event.userId");
+
+		Condition condition = DSL.and(
+			DSL.field(
+				"Event.applicationId"
+			).eq(
+				"Page"
+			),
+			DSL.field(
+				"Event.channelId"
+			).eq(
+				123456789L
+			),
+			DSL.field(
+				"Event.eventId"
+			).eq(
+				"pageViewed"
+			),
+			DSL.field(
+				"TO_HEX(SHA256(Event.assetId))"
+			).eq(
+				"5ffef165b9aa10b11bc186bc8782f792b0ca33c07d156672270bbf4cc0a5"
+			),
+			DSL.field(
+				"TO_HEX(SHA256(Event.assetTitle))"
+			).eq(
+				"5ffef165b9aa10b11bc186bc8782f792b0ca33c07d156672270bbf4cc0a5"
+			));
+
+		_assertEquals(
+			DSL.or(
+				DSL.field(
+					"Identity.id"
+				).in(
+					DSL.select(
+						userIdField
+					).from(
+						DSL.table(
+							"BQEvent"
+						).as(
+							"Event"
+						)
+					).where(
+						condition
+					).groupBy(
+						userIdField
+					).having(
+						DSL.count(
+							userIdField
+						).ge(
+							1
+						)
+					)
+				),
+				DSL.field(
+					"Individual.id"
+				).in(
+					DSL.selectDistinct(
+						DSL.field("Identity.individualId")
+					).from(
+						DSL.table(
+							"BQEvent"
+						).as(
+							"Event"
+						).join(
+							DSL.table(
+								"BQIdentity"
+							).as(
+								"Identity"
+							)
+						).on(
+							DSL.field(
+								"Event.userId"
+							).eq(
+								DSL.field("Identity.id")
+							)
+						)
+					).where(
+						DSL.and(
+							condition,
+							DSL.field(
+								"Identity.individualId"
+							).isNotNull())
+					).groupBy(
+						userIdField, DSL.field("Identity.individualId")
+					).having(
+						DSL.count(
+							userIdField
+						).ge(
+							1
+						)
+					)
+				)),
+			"(activities.filterByCount(filter='(activityKey eq ''Page#" +
+				"pageViewed#5ffef165b9aa10b11bc186bc8782f792b0ca33c07d1566722" +
+					"70bbf4cc0a5_5ffef165b9aa10b11bc186bc8782f792b0ca33c0" +
+						"7d156672270bbf4cc0a5'')',operator='ge',value=1))",
+			123456789L, new HashSet<>(Arrays.asList("Event", "Individual")),
+			true);
+	}
+
+	@Test
 	public void testAndOperator() {
 		_assertEquals(
 			DSL.and(
