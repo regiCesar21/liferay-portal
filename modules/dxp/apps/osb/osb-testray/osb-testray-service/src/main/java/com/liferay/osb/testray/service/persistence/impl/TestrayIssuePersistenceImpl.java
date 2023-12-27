@@ -14,6 +14,9 @@ import com.liferay.osb.testray.service.persistence.TestrayIssuePersistence;
 import com.liferay.osb.testray.service.persistence.TestrayIssueUtil;
 import com.liferay.osb.testray.service.persistence.TestraySubtaskPersistence;
 import com.liferay.portal.kernel.bean.BeanReference;
+import com.liferay.portal.kernel.configuration.Filter;
+import com.liferay.portal.kernel.dao.db.DBManagerUtil;
+import com.liferay.portal.kernel.dao.db.DBType;
 import com.liferay.portal.kernel.dao.orm.EntityCache;
 import com.liferay.portal.kernel.dao.orm.FinderCache;
 import com.liferay.portal.kernel.dao.orm.FinderPath;
@@ -21,6 +24,7 @@ import com.liferay.portal.kernel.dao.orm.Query;
 import com.liferay.portal.kernel.dao.orm.QueryPos;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.Session;
+import com.liferay.portal.kernel.dao.orm.SessionFactory;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
@@ -81,6 +85,7 @@ public class TestrayIssuePersistenceImpl
 	public static final String FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION =
 		FINDER_CLASS_NAME_ENTITY + ".List2";
 
+	private int _databaseInMaxParameters;
 	private FinderPath _finderPathWithPaginationFindAll;
 	private FinderPath _finderPathWithoutPaginationFindAll;
 	private FinderPath _finderPathCountAll;
@@ -784,6 +789,27 @@ public class TestrayIssuePersistenceImpl
 
 			if (testrayIssue != null) {
 				map.put(primaryKey, testrayIssue);
+			}
+
+			return map;
+		}
+
+		if ((_databaseInMaxParameters > 0) &&
+			(primaryKeys.size() > _databaseInMaxParameters)) {
+
+			Iterator<Serializable> iterator = primaryKeys.iterator();
+
+			while (iterator.hasNext()) {
+				Set<Serializable> page = new HashSet<>();
+
+				for (int i = 0;
+					 (i < _databaseInMaxParameters) && iterator.hasNext();
+					 i++) {
+
+					page.add(iterator.next());
+				}
+
+				map.putAll(fetchByPrimaryKeys(page));
 			}
 
 			return map;
@@ -1791,6 +1817,17 @@ public class TestrayIssuePersistenceImpl
 			"OSB_TestrayCaseResults_TestrayIssues");
 		TableMapperFactory.removeTableMapper(
 			"OSB_TestraySubtasks_TestrayIssues");
+	}
+
+	@Override
+	public void setSessionFactory(SessionFactory sessionFactory) {
+		super.setSessionFactory(sessionFactory);
+
+		DBType dbType = DBManagerUtil.getDBType(sessionFactory.getDialect());
+
+		_databaseInMaxParameters = GetterUtil.getInteger(
+			PropsUtil.get(
+				"database.in.max.parameters", new Filter(dbType.getName())));
 	}
 
 	@ServiceReference(type = EntityCache.class)

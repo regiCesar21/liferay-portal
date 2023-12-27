@@ -12,6 +12,9 @@ import com.liferay.osb.loop.asset.entry.set.model.impl.AssetEntrySetLikeModelImp
 import com.liferay.osb.loop.asset.entry.set.service.persistence.AssetEntrySetLikePK;
 import com.liferay.osb.loop.asset.entry.set.service.persistence.AssetEntrySetLikePersistence;
 import com.liferay.osb.loop.asset.entry.set.service.persistence.AssetEntrySetLikeUtil;
+import com.liferay.portal.kernel.configuration.Filter;
+import com.liferay.portal.kernel.dao.db.DBManagerUtil;
+import com.liferay.portal.kernel.dao.db.DBType;
 import com.liferay.portal.kernel.dao.orm.EntityCache;
 import com.liferay.portal.kernel.dao.orm.FinderCache;
 import com.liferay.portal.kernel.dao.orm.FinderPath;
@@ -19,6 +22,7 @@ import com.liferay.portal.kernel.dao.orm.Query;
 import com.liferay.portal.kernel.dao.orm.QueryPos;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.Session;
+import com.liferay.portal.kernel.dao.orm.SessionFactory;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
@@ -68,6 +72,7 @@ public class AssetEntrySetLikePersistenceImpl
 	public static final String FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION =
 		FINDER_CLASS_NAME_ENTITY + ".List2";
 
+	private int _databaseInMaxParameters;
 	private FinderPath _finderPathWithPaginationFindAll;
 	private FinderPath _finderPathWithoutPaginationFindAll;
 	private FinderPath _finderPathCountAll;
@@ -1284,6 +1289,17 @@ public class AssetEntrySetLikePersistenceImpl
 		finderCache.removeCache(FINDER_CLASS_NAME_ENTITY);
 		finderCache.removeCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
 		finderCache.removeCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
+	}
+
+	@Override
+	public void setSessionFactory(SessionFactory sessionFactory) {
+		super.setSessionFactory(sessionFactory);
+
+		DBType dbType = DBManagerUtil.getDBType(sessionFactory.getDialect());
+
+		_databaseInMaxParameters = GetterUtil.getInteger(
+			PropsUtil.get(
+				"database.in.max.parameters", new Filter(dbType.getName())));
 	}
 
 	@ServiceReference(type = EntityCache.class)
