@@ -29,6 +29,7 @@ import com.liferay.portal.util.HttpImpl;
 import com.liferay.portal.util.PortalImpl;
 import com.liferay.portal.util.PrefsPropsUtil;
 import com.liferay.portal.util.PropsImpl;
+import com.liferay.portal.util.PropsValues;
 import com.liferay.portlet.PortalPreferencesWrapper;
 
 import java.util.Objects;
@@ -221,6 +222,54 @@ public class ComboServletTest extends PowerMockito {
 			_comboServlet.getResourceRequestDispatcher(
 				_mockHttpServletRequest, _mockHttpServletResponse,
 				_TEST_PORTLET_ID + ":js/javascript.js"));
+	}
+
+	@Test
+	public void testMaxFiles() throws Exception {
+		MockHttpServletRequest mockHttpServletRequest =
+			new MockHttpServletRequest();
+
+		int comboMaxFiles = 10;
+
+		ReflectionTestUtil.setFieldValue(
+			PropsValues.class, "COMBO_MAX_FILES", comboMaxFiles);
+
+		StringBuilder sb = new StringBuilder();
+
+		for (int i = 0; i < comboMaxFiles; i++) {
+			if (i > 0) {
+				sb.append(StringPool.AMPERSAND);
+			}
+
+			sb.append("/js/javascript");
+			sb.append(i);
+			sb.append(".js");
+		}
+
+		mockHttpServletRequest.setQueryString(sb.toString());
+
+		MockHttpServletResponse mockHttpServletResponse =
+			new MockHttpServletResponse();
+
+		_comboServlet.service(mockHttpServletRequest, mockHttpServletResponse);
+
+		Assert.assertEquals(
+			HttpServletResponse.SC_OK, mockHttpServletResponse.getStatus());
+
+		sb.append(StringPool.AMPERSAND);
+		sb.append("/js/another_one.js");
+
+		mockHttpServletRequest = new MockHttpServletRequest();
+
+		mockHttpServletRequest.setQueryString(sb.toString());
+
+		mockHttpServletResponse = new MockHttpServletResponse();
+
+		_comboServlet.service(mockHttpServletRequest, mockHttpServletResponse);
+
+		Assert.assertEquals(
+			HttpServletResponse.SC_BAD_REQUEST,
+			mockHttpServletResponse.getStatus());
 	}
 
 	@Test
