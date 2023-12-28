@@ -104,6 +104,7 @@ public class BlogPosting implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Map<String, Map<String, String>> actions;
 
+	@JsonIgnore
 	private Supplier<Map<String, Map<String, String>>> _actionsSupplier;
 
 	@Schema(description = "The blog post's average rating.")
@@ -146,6 +147,7 @@ public class BlogPosting implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected AggregateRating aggregateRating;
 
+	@JsonIgnore
 	private Supplier<AggregateRating> _aggregateRatingSupplier;
 
 	@Schema(description = "The blog post's subtitle.")
@@ -186,6 +188,7 @@ public class BlogPosting implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String alternativeHeadline;
 
+	@JsonIgnore
 	private Supplier<String> _alternativeHeadlineSupplier;
 
 	@Schema(description = "The blog post's body (content).")
@@ -227,6 +230,7 @@ public class BlogPosting implements Serializable {
 	@NotEmpty
 	protected String articleBody;
 
+	@JsonIgnore
 	private Supplier<String> _articleBodySupplier;
 
 	@Schema(description = "The blog post's author.")
@@ -268,6 +272,7 @@ public class BlogPosting implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Creator creator;
 
+	@JsonIgnore
 	private Supplier<Creator> _creatorSupplier;
 
 	@Schema
@@ -309,6 +314,7 @@ public class BlogPosting implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected CustomField[] customFields;
 
+	@JsonIgnore
 	private Supplier<CustomField[]> _customFieldsSupplier;
 
 	@Schema(description = "The blog post's creation date.")
@@ -349,6 +355,7 @@ public class BlogPosting implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Date dateCreated;
 
+	@JsonIgnore
 	private Supplier<Date> _dateCreatedSupplier;
 
 	@Schema(description = "The blog post's most recent modification date.")
@@ -391,6 +398,7 @@ public class BlogPosting implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Date dateModified;
 
+	@JsonIgnore
 	private Supplier<Date> _dateModifiedSupplier;
 
 	@Schema(description = "The blog post's publication date.")
@@ -431,6 +439,7 @@ public class BlogPosting implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Date datePublished;
 
+	@JsonIgnore
 	private Supplier<Date> _datePublishedSupplier;
 
 	@Schema(description = "The blog post's description.")
@@ -471,6 +480,7 @@ public class BlogPosting implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String description;
 
+	@JsonIgnore
 	private Supplier<String> _descriptionSupplier;
 
 	@Schema(
@@ -515,6 +525,7 @@ public class BlogPosting implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected String encodingFormat;
 
+	@JsonIgnore
 	private Supplier<String> _encodingFormatSupplier;
 
 	@Schema(description = "The blog post's relative URL.")
@@ -555,6 +566,7 @@ public class BlogPosting implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String friendlyUrlPath;
 
+	@JsonIgnore
 	private Supplier<String> _friendlyUrlPathSupplier;
 
 	@Schema(description = "The blog post's main title.")
@@ -596,6 +608,7 @@ public class BlogPosting implements Serializable {
 	@NotEmpty
 	protected String headline;
 
+	@JsonIgnore
 	private Supplier<String> _headlineSupplier;
 
 	@Schema(description = "The blog post's identifier.")
@@ -634,6 +647,7 @@ public class BlogPosting implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Long id;
 
+	@JsonIgnore
 	private Supplier<Long> _idSupplier;
 
 	@Schema(description = "The blog post's cover image.")
@@ -673,6 +687,7 @@ public class BlogPosting implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Image image;
 
+	@JsonIgnore
 	private Supplier<Image> _imageSupplier;
 
 	@Schema(description = "A list of keywords describing the blog post.")
@@ -713,6 +728,7 @@ public class BlogPosting implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String[] keywords;
 
+	@JsonIgnore
 	private Supplier<String[]> _keywordsSupplier;
 
 	@Schema(description = "The number of comments this blog post has received.")
@@ -755,6 +771,7 @@ public class BlogPosting implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Integer numberOfComments;
 
+	@JsonIgnore
 	private Supplier<Integer> _numberOfCommentsSupplier;
 
 	@Schema
@@ -797,6 +814,7 @@ public class BlogPosting implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected RelatedContent[] relatedContents;
 
+	@JsonIgnore
 	private Supplier<RelatedContent[]> _relatedContentsSupplier;
 
 	@Schema(
@@ -841,6 +859,7 @@ public class BlogPosting implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Long siteId;
 
+	@JsonIgnore
 	private Supplier<Long> _siteIdSupplier;
 
 	@Schema(description = "The categories associated with this blog post.")
@@ -887,6 +906,7 @@ public class BlogPosting implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected TaxonomyCategoryBrief[] taxonomyCategoryBriefs;
 
+	@JsonIgnore
 	private Supplier<TaxonomyCategoryBrief[]> _taxonomyCategoryBriefsSupplier;
 
 	@Schema(
@@ -931,6 +951,7 @@ public class BlogPosting implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
 	protected Long[] taxonomyCategoryIds;
 
+	@JsonIgnore
 	private Supplier<Long[]> _taxonomyCategoryIdsSupplier;
 
 	@Schema(
@@ -987,6 +1008,7 @@ public class BlogPosting implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
 	protected ViewableBy viewableBy;
 
+	@JsonIgnore
 	private Supplier<ViewableBy> _viewableBySupplier;
 
 	@Override

@@ -97,6 +97,7 @@ public class ContactInformation implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected EmailAddress[] emailAddresses;
 
+	@JsonIgnore
 	private Supplier<EmailAddress[]> _emailAddressesSupplier;
 
 	@Schema(description = "The user's Facebook account.")
@@ -137,6 +138,7 @@ public class ContactInformation implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected String facebook;
 
+	@JsonIgnore
 	private Supplier<String> _facebookSupplier;
 
 	@Schema(description = "The ID of the `contactInformation`.")
@@ -175,6 +177,7 @@ public class ContactInformation implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Long id;
 
+	@JsonIgnore
 	private Supplier<Long> _idSupplier;
 
 	@Schema(description = "The user's Jabber handle.")
@@ -215,6 +218,7 @@ public class ContactInformation implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected String jabber;
 
+	@JsonIgnore
 	private Supplier<String> _jabberSupplier;
 
 	@Schema(
@@ -261,6 +265,7 @@ public class ContactInformation implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected PostalAddress[] postalAddresses;
 
+	@JsonIgnore
 	private Supplier<PostalAddress[]> _postalAddressesSupplier;
 
 	@Schema(description = "The user's Skype handle.")
@@ -301,6 +306,7 @@ public class ContactInformation implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected String skype;
 
+	@JsonIgnore
 	private Supplier<String> _skypeSupplier;
 
 	@Schema(description = "The user's SMS number.")
@@ -339,6 +345,7 @@ public class ContactInformation implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected String sms;
 
+	@JsonIgnore
 	private Supplier<String> _smsSupplier;
 
 	@Schema(
@@ -384,6 +391,7 @@ public class ContactInformation implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Phone[] telephones;
 
+	@JsonIgnore
 	private Supplier<Phone[]> _telephonesSupplier;
 
 	@Schema(description = "The user's Twitter handle.")
@@ -424,6 +432,7 @@ public class ContactInformation implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected String twitter;
 
+	@JsonIgnore
 	private Supplier<String> _twitterSupplier;
 
 	@Schema(
@@ -469,6 +478,7 @@ public class ContactInformation implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected WebUrl[] webUrls;
 
+	@JsonIgnore
 	private Supplier<WebUrl[]> _webUrlsSupplier;
 
 	@Override

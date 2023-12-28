@@ -91,6 +91,7 @@ public class RenderedContent implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String renderedContentURL;
 
+	@JsonIgnore
 	private Supplier<String> _renderedContentURLSupplier;
 
 	@Schema(
@@ -135,6 +136,7 @@ public class RenderedContent implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String renderedContentValue;
 
+	@JsonIgnore
 	private Supplier<String> _renderedContentValueSupplier;
 
 	@Schema(
@@ -179,6 +181,7 @@ public class RenderedContent implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String templateName;
 
+	@JsonIgnore
 	private Supplier<String> _templateNameSupplier;
 
 	@Schema
@@ -221,6 +224,7 @@ public class RenderedContent implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Map<String, String> templateName_i18n;
 
+	@JsonIgnore
 	private Supplier<Map<String, String>> _templateName_i18nSupplier;
 
 	@Override

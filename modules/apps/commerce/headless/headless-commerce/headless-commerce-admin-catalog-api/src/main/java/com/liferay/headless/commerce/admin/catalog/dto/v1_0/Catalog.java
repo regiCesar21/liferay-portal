@@ -93,6 +93,7 @@ public class Catalog implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Map<String, Map<String, String>> actions;
 
+	@JsonIgnore
 	private Supplier<Map<String, Map<String, String>>> _actionsSupplier;
 
 	@Schema(example = "USD")
@@ -133,6 +134,7 @@ public class Catalog implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String currencyCode;
 
+	@JsonIgnore
 	private Supplier<String> _currencyCodeSupplier;
 
 	@Schema(example = "en_US")
@@ -173,6 +175,7 @@ public class Catalog implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String defaultLanguageId;
 
+	@JsonIgnore
 	private Supplier<String> _defaultLanguageIdSupplier;
 
 	@Schema(example = "AB-34098-789-N")
@@ -213,6 +216,7 @@ public class Catalog implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String externalReferenceCode;
 
+	@JsonIgnore
 	private Supplier<String> _externalReferenceCodeSupplier;
 
 	@DecimalMin("0")
@@ -252,6 +256,7 @@ public class Catalog implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Long id;
 
+	@JsonIgnore
 	private Supplier<Long> _idSupplier;
 
 	@Schema(description = "Category Name")
@@ -291,6 +296,7 @@ public class Catalog implements Serializable {
 	@NotEmpty
 	protected String name;
 
+	@JsonIgnore
 	private Supplier<String> _nameSupplier;
 
 	@Schema(example = "false")
@@ -331,6 +337,7 @@ public class Catalog implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Boolean system;
 
+	@JsonIgnore
 	private Supplier<Boolean> _systemSupplier;
 
 	@Override

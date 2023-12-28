@@ -106,6 +106,7 @@ public class TaxonomyCategory implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected String[] availableLanguages;
 
+	@JsonIgnore
 	private Supplier<String[]> _availableLanguagesSupplier;
 
 	@Schema(description = "The category's creator.")
@@ -147,6 +148,7 @@ public class TaxonomyCategory implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Creator creator;
 
+	@JsonIgnore
 	private Supplier<Creator> _creatorSupplier;
 
 	@Schema(description = "The category's creation date.")
@@ -187,6 +189,7 @@ public class TaxonomyCategory implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Date dateCreated;
 
+	@JsonIgnore
 	private Supplier<Date> _dateCreatedSupplier;
 
 	@Schema(description = "The category's most recent modification date.")
@@ -227,6 +230,7 @@ public class TaxonomyCategory implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Date dateModified;
 
+	@JsonIgnore
 	private Supplier<Date> _dateModifiedSupplier;
 
 	@Schema(description = "The category's text description.")
@@ -267,6 +271,7 @@ public class TaxonomyCategory implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String description;
 
+	@JsonIgnore
 	private Supplier<String> _descriptionSupplier;
 
 	@Schema
@@ -309,6 +314,7 @@ public class TaxonomyCategory implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Map<String, String> description_i18n;
 
+	@JsonIgnore
 	private Supplier<Map<String, String>> _description_i18nSupplier;
 
 	@Schema(description = "The category's ID.")
@@ -347,6 +353,7 @@ public class TaxonomyCategory implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Long id;
 
+	@JsonIgnore
 	private Supplier<Long> _idSupplier;
 
 	@Schema(description = "The category's name.")
@@ -386,6 +393,7 @@ public class TaxonomyCategory implements Serializable {
 	@NotEmpty
 	protected String name;
 
+	@JsonIgnore
 	private Supplier<String> _nameSupplier;
 
 	@Schema
@@ -428,6 +436,7 @@ public class TaxonomyCategory implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Map<String, String> name_i18n;
 
+	@JsonIgnore
 	private Supplier<Map<String, String>> _name_i18nSupplier;
 
 	@Schema(
@@ -476,6 +485,7 @@ public class TaxonomyCategory implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Integer numberOfTaxonomyCategories;
 
+	@JsonIgnore
 	private Supplier<Integer> _numberOfTaxonomyCategoriesSupplier;
 
 	@Schema(description = "The category's parent category, if it exists.")
@@ -520,6 +530,7 @@ public class TaxonomyCategory implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected ParentTaxonomyCategory parentTaxonomyCategory;
 
+	@JsonIgnore
 	private Supplier<ParentTaxonomyCategory> _parentTaxonomyCategorySupplier;
 
 	@Schema(
@@ -568,6 +579,7 @@ public class TaxonomyCategory implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected ParentTaxonomyVocabulary parentTaxonomyVocabulary;
 
+	@JsonIgnore
 	private Supplier<ParentTaxonomyVocabulary>
 		_parentTaxonomyVocabularySupplier;
 
@@ -625,6 +637,7 @@ public class TaxonomyCategory implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
 	protected ViewableBy viewableBy;
 
+	@JsonIgnore
 	private Supplier<ViewableBy> _viewableBySupplier;
 
 	@Override

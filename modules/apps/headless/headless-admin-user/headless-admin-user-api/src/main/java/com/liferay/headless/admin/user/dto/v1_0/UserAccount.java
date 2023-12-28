@@ -94,6 +94,7 @@ public class UserAccount implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected String additionalName;
 
+	@JsonIgnore
 	private Supplier<String> _additionalNameSupplier;
 
 	@Schema(description = "The user's alias or screen name.")
@@ -134,6 +135,7 @@ public class UserAccount implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected String alternateName;
 
+	@JsonIgnore
 	private Supplier<String> _alternateNameSupplier;
 
 	@Schema(description = "The user's date of birth, in ISO 8601 format.")
@@ -174,6 +176,7 @@ public class UserAccount implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Date birthDate;
 
+	@JsonIgnore
 	private Supplier<Date> _birthDateSupplier;
 
 	@Schema(description = "The user's contact information.")
@@ -216,6 +219,7 @@ public class UserAccount implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected ContactInformation contactInformation;
 
+	@JsonIgnore
 	private Supplier<ContactInformation> _contactInformationSupplier;
 
 	@Schema
@@ -257,6 +261,7 @@ public class UserAccount implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected CustomField[] customFields;
 
+	@JsonIgnore
 	private Supplier<CustomField[]> _customFieldsSupplier;
 
 	@Schema(description = "A relative URL to the user's dashboard.")
@@ -297,6 +302,7 @@ public class UserAccount implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected String dashboardURL;
 
+	@JsonIgnore
 	private Supplier<String> _dashboardURLSupplier;
 
 	@Schema(description = "The creation date of the user's account.")
@@ -337,6 +343,7 @@ public class UserAccount implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Date dateCreated;
 
+	@JsonIgnore
 	private Supplier<Date> _dateCreatedSupplier;
 
 	@Schema(
@@ -381,6 +388,7 @@ public class UserAccount implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Date dateModified;
 
+	@JsonIgnore
 	private Supplier<Date> _dateModifiedSupplier;
 
 	@Schema(description = "The user's main email address.")
@@ -421,6 +429,7 @@ public class UserAccount implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected String emailAddress;
 
+	@JsonIgnore
 	private Supplier<String> _emailAddressSupplier;
 
 	@Schema(description = "The user's surname (last name).")
@@ -461,6 +470,7 @@ public class UserAccount implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected String familyName;
 
+	@JsonIgnore
 	private Supplier<String> _familyNameSupplier;
 
 	@Schema(description = "The user's first name.")
@@ -501,6 +511,7 @@ public class UserAccount implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected String givenName;
 
+	@JsonIgnore
 	private Supplier<String> _givenNameSupplier;
 
 	@Schema(description = "The user's title (e.g., Dr., Mr., Mrs, Ms., etc.).")
@@ -543,6 +554,7 @@ public class UserAccount implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected String honorificPrefix;
 
+	@JsonIgnore
 	private Supplier<String> _honorificPrefixSupplier;
 
 	@Schema(description = "The user's suffix (e.g., II, Jr., PhD, etc.).")
@@ -583,6 +595,7 @@ public class UserAccount implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected String honorificSuffix;
 
+	@JsonIgnore
 	private Supplier<String> _honorificSuffixSupplier;
 
 	@Schema(description = "The user's ID.")
@@ -621,6 +634,7 @@ public class UserAccount implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Long id;
 
+	@JsonIgnore
 	private Supplier<Long> _idSupplier;
 
 	@Schema(description = "A relative URL to the user's profile image.")
@@ -661,6 +675,7 @@ public class UserAccount implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected String image;
 
+	@JsonIgnore
 	private Supplier<String> _imageSupplier;
 
 	@Schema(description = "The user's job title.")
@@ -701,6 +716,7 @@ public class UserAccount implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected String jobTitle;
 
+	@JsonIgnore
 	private Supplier<String> _jobTitleSupplier;
 
 	@Schema(description = "A list of keywords describing the user.")
@@ -741,6 +757,7 @@ public class UserAccount implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected String[] keywords;
 
+	@JsonIgnore
 	private Supplier<String[]> _keywordsSupplier;
 
 	@Schema(description = "The user's full name.")
@@ -779,6 +796,7 @@ public class UserAccount implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected String name;
 
+	@JsonIgnore
 	private Supplier<String> _nameSupplier;
 
 	@Schema(description = "A list of the user's organizations.")
@@ -821,6 +839,7 @@ public class UserAccount implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected OrganizationBrief[] organizationBriefs;
 
+	@JsonIgnore
 	private Supplier<OrganizationBrief[]> _organizationBriefsSupplier;
 
 	@Schema(description = "A relative URL to the user's profile.")
@@ -861,6 +880,7 @@ public class UserAccount implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected String profileURL;
 
+	@JsonIgnore
 	private Supplier<String> _profileURLSupplier;
 
 	@Schema(description = "A list of the user's roles.")
@@ -902,6 +922,7 @@ public class UserAccount implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected RoleBrief[] roleBriefs;
 
+	@JsonIgnore
 	private Supplier<RoleBrief[]> _roleBriefsSupplier;
 
 	@Schema(description = "A list of the user's sites.")
@@ -943,6 +964,7 @@ public class UserAccount implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected SiteBrief[] siteBriefs;
 
+	@JsonIgnore
 	private Supplier<SiteBrief[]> _siteBriefsSupplier;
 
 	@Override

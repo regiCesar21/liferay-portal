@@ -91,6 +91,7 @@ public class Folder implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Breadcrumb[] breadcrumbs;
 
+	@JsonIgnore
 	private Supplier<Breadcrumb[]> _breadcrumbsSupplier;
 
 	@Schema
@@ -132,6 +133,7 @@ public class Folder implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected ItemData data;
 
+	@JsonIgnore
 	private Supplier<ItemData> _dataSupplier;
 
 	@Override

@@ -92,6 +92,7 @@ public class WarehouseItem implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String externalReferenceCode;
 
+	@JsonIgnore
 	private Supplier<String> _externalReferenceCodeSupplier;
 
 	@DecimalMin("0")
@@ -131,6 +132,7 @@ public class WarehouseItem implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Long id;
 
+	@JsonIgnore
 	private Supplier<Long> _idSupplier;
 
 	@Schema
@@ -171,6 +173,7 @@ public class WarehouseItem implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Date modifiedDate;
 
+	@JsonIgnore
 	private Supplier<Date> _modifiedDateSupplier;
 
 	@DecimalMin("0")
@@ -212,6 +215,7 @@ public class WarehouseItem implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Integer quantity;
 
+	@JsonIgnore
 	private Supplier<Integer> _quantitySupplier;
 
 	@DecimalMin("0")
@@ -253,6 +257,7 @@ public class WarehouseItem implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Integer reservedQuantity;
 
+	@JsonIgnore
 	private Supplier<Integer> _reservedQuantitySupplier;
 
 	@Schema(example = "SKU")
@@ -291,6 +296,7 @@ public class WarehouseItem implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String sku;
 
+	@JsonIgnore
 	private Supplier<String> _skuSupplier;
 
 	@Schema(example = "AB-34098-789-N")
@@ -335,6 +341,7 @@ public class WarehouseItem implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String warehouseExternalReferenceCode;
 
+	@JsonIgnore
 	private Supplier<String> _warehouseExternalReferenceCodeSupplier;
 
 	@DecimalMin("0")
@@ -376,6 +383,7 @@ public class WarehouseItem implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Long warehouseId;
 
+	@JsonIgnore
 	private Supplier<Long> _warehouseIdSupplier;
 
 	@Override

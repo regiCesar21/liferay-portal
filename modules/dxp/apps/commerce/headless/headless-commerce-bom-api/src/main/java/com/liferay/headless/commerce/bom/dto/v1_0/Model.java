@@ -87,6 +87,7 @@ public class Model implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Long id;
 
+	@JsonIgnore
 	private Supplier<Long> _idSupplier;
 
 	@Schema(example = "Brand 1")
@@ -125,6 +126,7 @@ public class Model implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String name;
 
+	@JsonIgnore
 	private Supplier<String> _nameSupplier;
 
 	@Schema(example = "2019")
@@ -163,6 +165,7 @@ public class Model implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String year;
 
+	@JsonIgnore
 	private Supplier<String> _yearSupplier;
 
 	@Override

@@ -99,6 +99,7 @@ public class Order implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Account account;
 
+	@JsonIgnore
 	private Supplier<Account> _accountSupplier;
 
 	@Schema(example = "AAB-34098-789-N")
@@ -143,6 +144,7 @@ public class Order implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String accountExternalReferenceCode;
 
+	@JsonIgnore
 	private Supplier<String> _accountExternalReferenceCodeSupplier;
 
 	@DecimalMin("0")
@@ -184,6 +186,7 @@ public class Order implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Long accountId;
 
+	@JsonIgnore
 	private Supplier<Long> _accountIdSupplier;
 
 	@Schema
@@ -226,6 +229,7 @@ public class Order implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Map<String, Map<String, String>> actions;
 
+	@JsonIgnore
 	private Supplier<Map<String, Map<String, String>>> _actionsSupplier;
 
 	@Schema(example = "trasmitted")
@@ -266,6 +270,7 @@ public class Order implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String advanceStatus;
 
+	@JsonIgnore
 	private Supplier<String> _advanceStatusSupplier;
 
 	@Schema
@@ -308,6 +313,7 @@ public class Order implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected BillingAddress billingAddress;
 
+	@JsonIgnore
 	private Supplier<BillingAddress> _billingAddressSupplier;
 
 	@DecimalMin("0")
@@ -349,6 +355,7 @@ public class Order implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Long billingAddressId;
 
+	@JsonIgnore
 	private Supplier<Long> _billingAddressIdSupplier;
 
 	@Schema
@@ -390,6 +397,7 @@ public class Order implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Channel channel;
 
+	@JsonIgnore
 	private Supplier<Channel> _channelSupplier;
 
 	@Schema(example = "AAB-34098-789-N")
@@ -434,6 +442,7 @@ public class Order implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String channelExternalReferenceCode;
 
+	@JsonIgnore
 	private Supplier<String> _channelExternalReferenceCodeSupplier;
 
 	@DecimalMin("0")
@@ -476,6 +485,7 @@ public class Order implements Serializable {
 	@NotNull
 	protected Long channelId;
 
+	@JsonIgnore
 	private Supplier<Long> _channelIdSupplier;
 
 	@Schema(example = "save20")
@@ -516,6 +526,7 @@ public class Order implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String couponCode;
 
+	@JsonIgnore
 	private Supplier<String> _couponCodeSupplier;
 
 	@Schema(example = "2017-07-21")
@@ -556,6 +567,7 @@ public class Order implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Date createDate;
 
+	@JsonIgnore
 	private Supplier<Date> _createDateSupplier;
 
 	@Schema(example = "USD")
@@ -597,6 +609,7 @@ public class Order implements Serializable {
 	@NotEmpty
 	protected String currencyCode;
 
+	@JsonIgnore
 	private Supplier<String> _currencyCodeSupplier;
 
 	@Schema
@@ -638,6 +651,7 @@ public class Order implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Map<String, ?> customFields;
 
+	@JsonIgnore
 	private Supplier<Map<String, ?>> _customFieldsSupplier;
 
 	@Schema(example = "AB-34098-789-N")
@@ -678,6 +692,7 @@ public class Order implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String externalReferenceCode;
 
+	@JsonIgnore
 	private Supplier<String> _externalReferenceCodeSupplier;
 
 	@DecimalMin("0")
@@ -717,6 +732,7 @@ public class Order implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Long id;
 
+	@JsonIgnore
 	private Supplier<Long> _idSupplier;
 
 	@Schema(example = "2017-07-21")
@@ -757,6 +773,7 @@ public class Order implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Date lastPriceUpdateDate;
 
+	@JsonIgnore
 	private Supplier<Date> _lastPriceUpdateDateSupplier;
 
 	@Schema(example = "2017-08-21")
@@ -797,6 +814,7 @@ public class Order implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Date modifiedDate;
 
+	@JsonIgnore
 	private Supplier<Date> _modifiedDateSupplier;
 
 	@Schema(example = "2017-07-21")
@@ -837,6 +855,7 @@ public class Order implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Date orderDate;
 
+	@JsonIgnore
 	private Supplier<Date> _orderDateSupplier;
 
 	@Schema
@@ -878,6 +897,7 @@ public class Order implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected OrderItem[] orderItems;
 
+	@JsonIgnore
 	private Supplier<OrderItem[]> _orderItemsSupplier;
 
 	@DecimalMin("0")
@@ -919,6 +939,7 @@ public class Order implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Integer orderStatus;
 
+	@JsonIgnore
 	private Supplier<Integer> _orderStatusSupplier;
 
 	@Schema
@@ -960,6 +981,7 @@ public class Order implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Status orderStatusInfo;
 
+	@JsonIgnore
 	private Supplier<Status> _orderStatusInfoSupplier;
 
 	@Schema(example = "paypal")
@@ -1000,6 +1022,7 @@ public class Order implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String paymentMethod;
 
+	@JsonIgnore
 	private Supplier<String> _paymentMethodSupplier;
 
 	@DecimalMin("0")
@@ -1041,6 +1064,7 @@ public class Order implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Integer paymentStatus;
 
+	@JsonIgnore
 	private Supplier<Integer> _paymentStatusSupplier;
 
 	@Schema
@@ -1082,6 +1106,7 @@ public class Order implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Status paymentStatusInfo;
 
+	@JsonIgnore
 	private Supplier<Status> _paymentStatusInfoSupplier;
 
 	@Schema(example = "Order printed note")
@@ -1122,6 +1147,7 @@ public class Order implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String printedNote;
 
+	@JsonIgnore
 	private Supplier<String> _printedNoteSupplier;
 
 	@Schema(example = "Abcd1234")
@@ -1162,6 +1188,7 @@ public class Order implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String purchaseOrderNumber;
 
+	@JsonIgnore
 	private Supplier<String> _purchaseOrderNumberSupplier;
 
 	@Schema(example = "2017-07-21")
@@ -1202,6 +1229,7 @@ public class Order implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Date requestedDeliveryDate;
 
+	@JsonIgnore
 	private Supplier<Date> _requestedDeliveryDateSupplier;
 
 	@Schema
@@ -1244,6 +1272,7 @@ public class Order implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected ShippingAddress shippingAddress;
 
+	@JsonIgnore
 	private Supplier<ShippingAddress> _shippingAddressSupplier;
 
 	@DecimalMin("0")
@@ -1285,6 +1314,7 @@ public class Order implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Long shippingAddressId;
 
+	@JsonIgnore
 	private Supplier<Long> _shippingAddressIdSupplier;
 
 	@DecimalMin("0")
@@ -1327,6 +1357,7 @@ public class Order implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected BigDecimal shippingAmount;
 
+	@JsonIgnore
 	private Supplier<BigDecimal> _shippingAmountSupplier;
 
 	@Schema
@@ -1368,6 +1399,7 @@ public class Order implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String shippingAmountFormatted;
 
+	@JsonIgnore
 	private Supplier<String> _shippingAmountFormattedSupplier;
 
 	@DecimalMin("0")
@@ -1409,6 +1441,7 @@ public class Order implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Double shippingAmountValue;
 
+	@JsonIgnore
 	private Supplier<Double> _shippingAmountValueSupplier;
 
 	@Schema
@@ -1450,6 +1483,7 @@ public class Order implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Double shippingDiscountAmount;
 
+	@JsonIgnore
 	private Supplier<Double> _shippingDiscountAmountSupplier;
 
 	@Schema
@@ -1494,6 +1528,7 @@ public class Order implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String shippingDiscountAmountFormatted;
 
+	@JsonIgnore
 	private Supplier<String> _shippingDiscountAmountFormattedSupplier;
 
 	@DecimalMin("0")
@@ -1540,6 +1575,7 @@ public class Order implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Double shippingDiscountPercentageLevel1;
 
+	@JsonIgnore
 	private Supplier<Double> _shippingDiscountPercentageLevel1Supplier;
 
 	@DecimalMin("0")
@@ -1587,6 +1623,7 @@ public class Order implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Double shippingDiscountPercentageLevel1WithTaxAmount;
 
+	@JsonIgnore
 	private Supplier<Double>
 		_shippingDiscountPercentageLevel1WithTaxAmountSupplier;
 
@@ -1634,6 +1671,7 @@ public class Order implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Double shippingDiscountPercentageLevel2;
 
+	@JsonIgnore
 	private Supplier<Double> _shippingDiscountPercentageLevel2Supplier;
 
 	@DecimalMin("0")
@@ -1681,6 +1719,7 @@ public class Order implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Double shippingDiscountPercentageLevel2WithTaxAmount;
 
+	@JsonIgnore
 	private Supplier<Double>
 		_shippingDiscountPercentageLevel2WithTaxAmountSupplier;
 
@@ -1728,6 +1767,7 @@ public class Order implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Double shippingDiscountPercentageLevel3;
 
+	@JsonIgnore
 	private Supplier<Double> _shippingDiscountPercentageLevel3Supplier;
 
 	@DecimalMin("0")
@@ -1775,6 +1815,7 @@ public class Order implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Double shippingDiscountPercentageLevel3WithTaxAmount;
 
+	@JsonIgnore
 	private Supplier<Double>
 		_shippingDiscountPercentageLevel3WithTaxAmountSupplier;
 
@@ -1822,6 +1863,7 @@ public class Order implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Double shippingDiscountPercentageLevel4;
 
+	@JsonIgnore
 	private Supplier<Double> _shippingDiscountPercentageLevel4Supplier;
 
 	@DecimalMin("0")
@@ -1869,6 +1911,7 @@ public class Order implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Double shippingDiscountPercentageLevel4WithTaxAmount;
 
+	@JsonIgnore
 	private Supplier<Double>
 		_shippingDiscountPercentageLevel4WithTaxAmountSupplier;
 
@@ -1914,6 +1957,7 @@ public class Order implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Double shippingDiscountWithTaxAmount;
 
+	@JsonIgnore
 	private Supplier<Double> _shippingDiscountWithTaxAmountSupplier;
 
 	@Schema
@@ -1960,6 +2004,7 @@ public class Order implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String shippingDiscountWithTaxAmountFormatted;
 
+	@JsonIgnore
 	private Supplier<String> _shippingDiscountWithTaxAmountFormattedSupplier;
 
 	@Schema(example = "fixed")
@@ -2000,6 +2045,7 @@ public class Order implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String shippingMethod;
 
+	@JsonIgnore
 	private Supplier<String> _shippingMethodSupplier;
 
 	@Schema(example = "by Air")
@@ -2040,6 +2086,7 @@ public class Order implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String shippingOption;
 
+	@JsonIgnore
 	private Supplier<String> _shippingOptionSupplier;
 
 	@DecimalMin("0")
@@ -2083,6 +2130,7 @@ public class Order implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected BigDecimal shippingWithTaxAmount;
 
+	@JsonIgnore
 	private Supplier<BigDecimal> _shippingWithTaxAmountSupplier;
 
 	@Schema
@@ -2127,6 +2175,7 @@ public class Order implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String shippingWithTaxAmountFormatted;
 
+	@JsonIgnore
 	private Supplier<String> _shippingWithTaxAmountFormattedSupplier;
 
 	@DecimalMin("0")
@@ -2172,6 +2221,7 @@ public class Order implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Double shippingWithTaxAmountValue;
 
+	@JsonIgnore
 	private Supplier<Double> _shippingWithTaxAmountValueSupplier;
 
 	@Schema
@@ -2213,6 +2263,7 @@ public class Order implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected BigDecimal subtotal;
 
+	@JsonIgnore
 	private Supplier<BigDecimal> _subtotalSupplier;
 
 	@Schema
@@ -2253,6 +2304,7 @@ public class Order implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Double subtotalAmount;
 
+	@JsonIgnore
 	private Supplier<Double> _subtotalAmountSupplier;
 
 	@Schema
@@ -2294,6 +2346,7 @@ public class Order implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Double subtotalDiscountAmount;
 
+	@JsonIgnore
 	private Supplier<Double> _subtotalDiscountAmountSupplier;
 
 	@Schema
@@ -2338,6 +2391,7 @@ public class Order implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String subtotalDiscountAmountFormatted;
 
+	@JsonIgnore
 	private Supplier<String> _subtotalDiscountAmountFormattedSupplier;
 
 	@DecimalMin("0")
@@ -2384,6 +2438,7 @@ public class Order implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Double subtotalDiscountPercentageLevel1;
 
+	@JsonIgnore
 	private Supplier<Double> _subtotalDiscountPercentageLevel1Supplier;
 
 	@DecimalMin("0")
@@ -2431,6 +2486,7 @@ public class Order implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Double subtotalDiscountPercentageLevel1WithTaxAmount;
 
+	@JsonIgnore
 	private Supplier<Double>
 		_subtotalDiscountPercentageLevel1WithTaxAmountSupplier;
 
@@ -2478,6 +2534,7 @@ public class Order implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Double subtotalDiscountPercentageLevel2;
 
+	@JsonIgnore
 	private Supplier<Double> _subtotalDiscountPercentageLevel2Supplier;
 
 	@DecimalMin("0")
@@ -2525,6 +2582,7 @@ public class Order implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Double subtotalDiscountPercentageLevel2WithTaxAmount;
 
+	@JsonIgnore
 	private Supplier<Double>
 		_subtotalDiscountPercentageLevel2WithTaxAmountSupplier;
 
@@ -2572,6 +2630,7 @@ public class Order implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Double subtotalDiscountPercentageLevel3;
 
+	@JsonIgnore
 	private Supplier<Double> _subtotalDiscountPercentageLevel3Supplier;
 
 	@DecimalMin("0")
@@ -2619,6 +2678,7 @@ public class Order implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Double subtotalDiscountPercentageLevel3WithTaxAmount;
 
+	@JsonIgnore
 	private Supplier<Double>
 		_subtotalDiscountPercentageLevel3WithTaxAmountSupplier;
 
@@ -2666,6 +2726,7 @@ public class Order implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Double subtotalDiscountPercentageLevel4;
 
+	@JsonIgnore
 	private Supplier<Double> _subtotalDiscountPercentageLevel4Supplier;
 
 	@DecimalMin("0")
@@ -2713,6 +2774,7 @@ public class Order implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Double subtotalDiscountPercentageLevel4WithTaxAmount;
 
+	@JsonIgnore
 	private Supplier<Double>
 		_subtotalDiscountPercentageLevel4WithTaxAmountSupplier;
 
@@ -2758,6 +2820,7 @@ public class Order implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Double subtotalDiscountWithTaxAmount;
 
+	@JsonIgnore
 	private Supplier<Double> _subtotalDiscountWithTaxAmountSupplier;
 
 	@Schema
@@ -2804,6 +2867,7 @@ public class Order implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String subtotalDiscountWithTaxAmountFormatted;
 
+	@JsonIgnore
 	private Supplier<String> _subtotalDiscountWithTaxAmountFormattedSupplier;
 
 	@Schema
@@ -2844,6 +2908,7 @@ public class Order implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String subtotalFormatted;
 
+	@JsonIgnore
 	private Supplier<String> _subtotalFormattedSupplier;
 
 	@Schema
@@ -2886,6 +2951,7 @@ public class Order implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected BigDecimal subtotalWithTaxAmount;
 
+	@JsonIgnore
 	private Supplier<BigDecimal> _subtotalWithTaxAmountSupplier;
 
 	@Schema
@@ -2930,6 +2996,7 @@ public class Order implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String subtotalWithTaxAmountFormatted;
 
+	@JsonIgnore
 	private Supplier<String> _subtotalWithTaxAmountFormattedSupplier;
 
 	@Schema
@@ -2974,6 +3041,7 @@ public class Order implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Double subtotalWithTaxAmountValue;
 
+	@JsonIgnore
 	private Supplier<Double> _subtotalWithTaxAmountValueSupplier;
 
 	@DecimalMin("0")
@@ -3015,6 +3083,7 @@ public class Order implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Double taxAmount;
 
+	@JsonIgnore
 	private Supplier<Double> _taxAmountSupplier;
 
 	@Schema
@@ -3055,6 +3124,7 @@ public class Order implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String taxAmountFormatted;
 
+	@JsonIgnore
 	private Supplier<String> _taxAmountFormattedSupplier;
 
 	@DecimalMin("0")
@@ -3097,6 +3167,7 @@ public class Order implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected BigDecimal total;
 
+	@JsonIgnore
 	private Supplier<BigDecimal> _totalSupplier;
 
 	@DecimalMin("0")
@@ -3138,6 +3209,7 @@ public class Order implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Double totalAmount;
 
+	@JsonIgnore
 	private Supplier<Double> _totalAmountSupplier;
 
 	@DecimalMin("0")
@@ -3179,6 +3251,7 @@ public class Order implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Double totalDiscountAmount;
 
+	@JsonIgnore
 	private Supplier<Double> _totalDiscountAmountSupplier;
 
 	@Schema
@@ -3223,6 +3296,7 @@ public class Order implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String totalDiscountAmountFormatted;
 
+	@JsonIgnore
 	private Supplier<String> _totalDiscountAmountFormattedSupplier;
 
 	@DecimalMin("0")
@@ -3268,6 +3342,7 @@ public class Order implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Double totalDiscountPercentageLevel1;
 
+	@JsonIgnore
 	private Supplier<Double> _totalDiscountPercentageLevel1Supplier;
 
 	@DecimalMin("0")
@@ -3315,6 +3390,7 @@ public class Order implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Double totalDiscountPercentageLevel1WithTaxAmount;
 
+	@JsonIgnore
 	private Supplier<Double>
 		_totalDiscountPercentageLevel1WithTaxAmountSupplier;
 
@@ -3361,6 +3437,7 @@ public class Order implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Double totalDiscountPercentageLevel2;
 
+	@JsonIgnore
 	private Supplier<Double> _totalDiscountPercentageLevel2Supplier;
 
 	@DecimalMin("0")
@@ -3408,6 +3485,7 @@ public class Order implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Double totalDiscountPercentageLevel2WithTaxAmount;
 
+	@JsonIgnore
 	private Supplier<Double>
 		_totalDiscountPercentageLevel2WithTaxAmountSupplier;
 
@@ -3454,6 +3532,7 @@ public class Order implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Double totalDiscountPercentageLevel3;
 
+	@JsonIgnore
 	private Supplier<Double> _totalDiscountPercentageLevel3Supplier;
 
 	@DecimalMin("0")
@@ -3501,6 +3580,7 @@ public class Order implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Double totalDiscountPercentageLevel3WithTaxAmount;
 
+	@JsonIgnore
 	private Supplier<Double>
 		_totalDiscountPercentageLevel3WithTaxAmountSupplier;
 
@@ -3547,6 +3627,7 @@ public class Order implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Double totalDiscountPercentageLevel4;
 
+	@JsonIgnore
 	private Supplier<Double> _totalDiscountPercentageLevel4Supplier;
 
 	@DecimalMin("0")
@@ -3594,6 +3675,7 @@ public class Order implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Double totalDiscountPercentageLevel4WithTaxAmount;
 
+	@JsonIgnore
 	private Supplier<Double>
 		_totalDiscountPercentageLevel4WithTaxAmountSupplier;
 
@@ -3640,6 +3722,7 @@ public class Order implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Double totalDiscountWithTaxAmount;
 
+	@JsonIgnore
 	private Supplier<Double> _totalDiscountWithTaxAmountSupplier;
 
 	@Schema
@@ -3685,6 +3768,7 @@ public class Order implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String totalDiscountWithTaxAmountFormatted;
 
+	@JsonIgnore
 	private Supplier<String> _totalDiscountWithTaxAmountFormattedSupplier;
 
 	@Schema
@@ -3725,6 +3809,7 @@ public class Order implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String totalFormatted;
 
+	@JsonIgnore
 	private Supplier<String> _totalFormattedSupplier;
 
 	@DecimalMin("0")
@@ -3768,6 +3853,7 @@ public class Order implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected BigDecimal totalWithTaxAmount;
 
+	@JsonIgnore
 	private Supplier<BigDecimal> _totalWithTaxAmountSupplier;
 
 	@Schema
@@ -3812,6 +3898,7 @@ public class Order implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String totalWithTaxAmountFormatted;
 
+	@JsonIgnore
 	private Supplier<String> _totalWithTaxAmountFormattedSupplier;
 
 	@DecimalMin("0")
@@ -3854,6 +3941,7 @@ public class Order implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Double totalWithTaxAmountValue;
 
+	@JsonIgnore
 	private Supplier<Double> _totalWithTaxAmountValueSupplier;
 
 	@Schema
@@ -3894,6 +3982,7 @@ public class Order implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String transactionId;
 
+	@JsonIgnore
 	private Supplier<String> _transactionIdSupplier;
 
 	@Schema
@@ -3935,6 +4024,7 @@ public class Order implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Status workflowStatusInfo;
 
+	@JsonIgnore
 	private Supplier<Status> _workflowStatusInfoSupplier;
 
 	@Override

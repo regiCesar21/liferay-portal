@@ -86,6 +86,7 @@ public class AreaData implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String id;
 
+	@JsonIgnore
 	private Supplier<String> _idSupplier;
 
 	@Schema(example = "Name 1")
@@ -126,6 +127,7 @@ public class AreaData implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String imageUrl;
 
+	@JsonIgnore
 	private Supplier<String> _imageUrlSupplier;
 
 	@Schema(example = "Name 1")
@@ -164,6 +166,7 @@ public class AreaData implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String name;
 
+	@JsonIgnore
 	private Supplier<String> _nameSupplier;
 
 	@Schema(
@@ -207,6 +210,7 @@ public class AreaData implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Product[] products;
 
+	@JsonIgnore
 	private Supplier<Product[]> _productsSupplier;
 
 	@Schema(
@@ -250,6 +254,7 @@ public class AreaData implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Spot[] spots;
 
+	@JsonIgnore
 	private Supplier<Spot[]> _spotsSupplier;
 
 	@Override

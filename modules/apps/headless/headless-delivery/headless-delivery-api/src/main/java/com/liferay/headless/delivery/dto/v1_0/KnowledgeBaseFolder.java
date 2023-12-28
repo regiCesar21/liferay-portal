@@ -105,6 +105,7 @@ public class KnowledgeBaseFolder implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Map<String, Map<String, String>> actions;
 
+	@JsonIgnore
 	private Supplier<Map<String, Map<String, String>>> _actionsSupplier;
 
 	@Schema(description = "The folder's creator.")
@@ -146,6 +147,7 @@ public class KnowledgeBaseFolder implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Creator creator;
 
+	@JsonIgnore
 	private Supplier<Creator> _creatorSupplier;
 
 	@Schema
@@ -187,6 +189,7 @@ public class KnowledgeBaseFolder implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected CustomField[] customFields;
 
+	@JsonIgnore
 	private Supplier<CustomField[]> _customFieldsSupplier;
 
 	@Schema(description = "The date the folder was created.")
@@ -227,6 +230,7 @@ public class KnowledgeBaseFolder implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Date dateCreated;
 
+	@JsonIgnore
 	private Supplier<Date> _dateCreatedSupplier;
 
 	@Schema(description = "The last time the folder was modified.")
@@ -267,6 +271,7 @@ public class KnowledgeBaseFolder implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Date dateModified;
 
+	@JsonIgnore
 	private Supplier<Date> _dateModifiedSupplier;
 
 	@Schema(description = "The folder's description.")
@@ -307,6 +312,7 @@ public class KnowledgeBaseFolder implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String description;
 
+	@JsonIgnore
 	private Supplier<String> _descriptionSupplier;
 
 	@Schema(description = "The folder's ID.")
@@ -345,6 +351,7 @@ public class KnowledgeBaseFolder implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Long id;
 
+	@JsonIgnore
 	private Supplier<Long> _idSupplier;
 
 	@Schema(description = "The folder's main title/name.")
@@ -384,6 +391,7 @@ public class KnowledgeBaseFolder implements Serializable {
 	@NotEmpty
 	protected String name;
 
+	@JsonIgnore
 	private Supplier<String> _nameSupplier;
 
 	@Schema(
@@ -432,6 +440,7 @@ public class KnowledgeBaseFolder implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Integer numberOfKnowledgeBaseArticles;
 
+	@JsonIgnore
 	private Supplier<Integer> _numberOfKnowledgeBaseArticlesSupplier;
 
 	@Schema(
@@ -480,6 +489,7 @@ public class KnowledgeBaseFolder implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Integer numberOfKnowledgeBaseFolders;
 
+	@JsonIgnore
 	private Supplier<Integer> _numberOfKnowledgeBaseFoldersSupplier;
 
 	@Schema(
@@ -529,6 +539,7 @@ public class KnowledgeBaseFolder implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected ParentKnowledgeBaseFolder parentKnowledgeBaseFolder;
 
+	@JsonIgnore
 	private Supplier<ParentKnowledgeBaseFolder>
 		_parentKnowledgeBaseFolderSupplier;
 
@@ -578,6 +589,7 @@ public class KnowledgeBaseFolder implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
 	protected Long parentKnowledgeBaseFolderId;
 
+	@JsonIgnore
 	private Supplier<Long> _parentKnowledgeBaseFolderIdSupplier;
 
 	@Schema(description = "The ID of the site to which this folder is scoped.")
@@ -620,6 +632,7 @@ public class KnowledgeBaseFolder implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Long siteId;
 
+	@JsonIgnore
 	private Supplier<Long> _siteIdSupplier;
 
 	@Schema(
@@ -676,6 +689,7 @@ public class KnowledgeBaseFolder implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
 	protected ViewableBy viewableBy;
 
+	@JsonIgnore
 	private Supplier<ViewableBy> _viewableBySupplier;
 
 	@Override

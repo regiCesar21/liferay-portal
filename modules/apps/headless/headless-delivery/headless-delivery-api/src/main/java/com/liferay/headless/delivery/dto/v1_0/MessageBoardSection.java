@@ -105,6 +105,7 @@ public class MessageBoardSection implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Map<String, Map<String, String>> actions;
 
+	@JsonIgnore
 	private Supplier<Map<String, Map<String, String>>> _actionsSupplier;
 
 	@Schema(description = "The section's creator.")
@@ -146,6 +147,7 @@ public class MessageBoardSection implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Creator creator;
 
+	@JsonIgnore
 	private Supplier<Creator> _creatorSupplier;
 
 	@Schema
@@ -187,6 +189,7 @@ public class MessageBoardSection implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected CustomField[] customFields;
 
+	@JsonIgnore
 	private Supplier<CustomField[]> _customFieldsSupplier;
 
 	@Schema(description = "The date the section was created.")
@@ -227,6 +230,7 @@ public class MessageBoardSection implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Date dateCreated;
 
+	@JsonIgnore
 	private Supplier<Date> _dateCreatedSupplier;
 
 	@Schema(description = "The last time the section was changed.")
@@ -267,6 +271,7 @@ public class MessageBoardSection implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Date dateModified;
 
+	@JsonIgnore
 	private Supplier<Date> _dateModifiedSupplier;
 
 	@Schema(description = "The section's description.")
@@ -307,6 +312,7 @@ public class MessageBoardSection implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String description;
 
+	@JsonIgnore
 	private Supplier<String> _descriptionSupplier;
 
 	@Schema(description = "The section's ID.")
@@ -345,6 +351,7 @@ public class MessageBoardSection implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Long id;
 
+	@JsonIgnore
 	private Supplier<Long> _idSupplier;
 
 	@Schema(description = "The number of this section's child sections.")
@@ -389,6 +396,7 @@ public class MessageBoardSection implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Integer numberOfMessageBoardSections;
 
+	@JsonIgnore
 	private Supplier<Integer> _numberOfMessageBoardSectionsSupplier;
 
 	@Schema(
@@ -437,6 +445,7 @@ public class MessageBoardSection implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Integer numberOfMessageBoardThreads;
 
+	@JsonIgnore
 	private Supplier<Integer> _numberOfMessageBoardThreadsSupplier;
 
 	@Schema(description = "The ID of the site to which this section is scoped.")
@@ -479,6 +488,7 @@ public class MessageBoardSection implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Long siteId;
 
+	@JsonIgnore
 	private Supplier<Long> _siteIdSupplier;
 
 	@Schema
@@ -519,6 +529,7 @@ public class MessageBoardSection implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Boolean subscribed;
 
+	@JsonIgnore
 	private Supplier<Boolean> _subscribedSupplier;
 
 	@Schema(description = "The section's main title.")
@@ -560,6 +571,7 @@ public class MessageBoardSection implements Serializable {
 	@NotEmpty
 	protected String title;
 
+	@JsonIgnore
 	private Supplier<String> _titleSupplier;
 
 	@Schema(
@@ -616,6 +628,7 @@ public class MessageBoardSection implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
 	protected ViewableBy viewableBy;
 
+	@JsonIgnore
 	private Supplier<ViewableBy> _viewableBySupplier;
 
 	@Override

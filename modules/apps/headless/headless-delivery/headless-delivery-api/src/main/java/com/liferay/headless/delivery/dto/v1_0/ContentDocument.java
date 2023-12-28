@@ -93,6 +93,7 @@ public class ContentDocument implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Map<String, Map<String, String>> actions;
 
+	@JsonIgnore
 	private Supplier<Map<String, Map<String, String>>> _actionsSupplier;
 
 	@Schema
@@ -133,6 +134,7 @@ public class ContentDocument implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected String contentType;
 
+	@JsonIgnore
 	private Supplier<String> _contentTypeSupplier;
 
 	@Schema(description = "The document's relative URL.")
@@ -173,6 +175,7 @@ public class ContentDocument implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected String contentUrl;
 
+	@JsonIgnore
 	private Supplier<String> _contentUrlSupplier;
 
 	@Schema(
@@ -217,6 +220,7 @@ public class ContentDocument implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected String contentValue;
 
+	@JsonIgnore
 	private Supplier<String> _contentValueSupplier;
 
 	@Schema(description = "The document's description.")
@@ -257,6 +261,7 @@ public class ContentDocument implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String description;
 
+	@JsonIgnore
 	private Supplier<String> _descriptionSupplier;
 
 	@Schema(
@@ -301,6 +306,7 @@ public class ContentDocument implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected String encodingFormat;
 
+	@JsonIgnore
 	private Supplier<String> _encodingFormatSupplier;
 
 	@Schema(description = "The document's file extension.")
@@ -341,6 +347,7 @@ public class ContentDocument implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected String fileExtension;
 
+	@JsonIgnore
 	private Supplier<String> _fileExtensionSupplier;
 
 	@Schema(description = "The document's ID.")
@@ -379,6 +386,7 @@ public class ContentDocument implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Long id;
 
+	@JsonIgnore
 	private Supplier<Long> _idSupplier;
 
 	@Schema(description = "The document's file size in bytes.")
@@ -419,6 +427,7 @@ public class ContentDocument implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Long sizeInBytes;
 
+	@JsonIgnore
 	private Supplier<Long> _sizeInBytesSupplier;
 
 	@Schema(description = "The document's title.")
@@ -459,6 +468,7 @@ public class ContentDocument implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String title;
 
+	@JsonIgnore
 	private Supplier<String> _titleSupplier;
 
 	@Override

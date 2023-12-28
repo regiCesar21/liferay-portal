@@ -86,6 +86,7 @@ public class Breadcrumb implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String label;
 
+	@JsonIgnore
 	private Supplier<String> _labelSupplier;
 
 	@Schema(example = "/folder/32344")
@@ -124,6 +125,7 @@ public class Breadcrumb implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String url;
 
+	@JsonIgnore
 	private Supplier<String> _urlSupplier;
 
 	@Override

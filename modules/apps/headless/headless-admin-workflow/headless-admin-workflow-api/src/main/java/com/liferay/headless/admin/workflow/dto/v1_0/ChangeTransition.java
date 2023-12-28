@@ -89,6 +89,7 @@ public class ChangeTransition implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
 	protected String transition;
 
+	@JsonIgnore
 	private Supplier<String> _transitionSupplier;
 
 	@Override

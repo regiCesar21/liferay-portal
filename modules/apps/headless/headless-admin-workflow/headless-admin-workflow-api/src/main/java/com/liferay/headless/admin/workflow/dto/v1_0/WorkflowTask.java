@@ -97,6 +97,7 @@ public class WorkflowTask implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Boolean completed;
 
+	@JsonIgnore
 	private Supplier<Boolean> _completedSupplier;
 
 	@Schema(description = "The task's completion date.")
@@ -137,6 +138,7 @@ public class WorkflowTask implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Date dateCompleted;
 
+	@JsonIgnore
 	private Supplier<Date> _dateCompletedSupplier;
 
 	@Schema(description = "The task's creation date.")
@@ -177,6 +179,7 @@ public class WorkflowTask implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Date dateCreated;
 
+	@JsonIgnore
 	private Supplier<Date> _dateCreatedSupplier;
 
 	@Schema(description = "The name of the task's workflow definition.")
@@ -217,6 +220,7 @@ public class WorkflowTask implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected String definitionName;
 
+	@JsonIgnore
 	private Supplier<String> _definitionNameSupplier;
 
 	@Schema(description = "The task's description.")
@@ -257,6 +261,7 @@ public class WorkflowTask implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected String description;
 
+	@JsonIgnore
 	private Supplier<String> _descriptionSupplier;
 
 	@Schema(description = "The date the task should be completed by.")
@@ -297,6 +302,7 @@ public class WorkflowTask implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Date dueDate;
 
+	@JsonIgnore
 	private Supplier<Date> _dueDateSupplier;
 
 	@Schema(description = "The task's ID.")
@@ -335,6 +341,7 @@ public class WorkflowTask implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Long id;
 
+	@JsonIgnore
 	private Supplier<Long> _idSupplier;
 
 	@Schema(description = "The task's name.")
@@ -373,6 +380,7 @@ public class WorkflowTask implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected String name;
 
+	@JsonIgnore
 	private Supplier<String> _nameSupplier;
 
 	@Schema(
@@ -419,6 +427,7 @@ public class WorkflowTask implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected ObjectReviewed objectReviewed;
 
+	@JsonIgnore
 	private Supplier<ObjectReviewed> _objectReviewedSupplier;
 
 	@Schema(
@@ -463,6 +472,7 @@ public class WorkflowTask implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected String[] transitions;
 
+	@JsonIgnore
 	private Supplier<String[]> _transitionsSupplier;
 
 	@Override
