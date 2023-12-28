@@ -13,11 +13,15 @@ import com.liferay.osb.asah.backend.model.Metric;
 import com.liferay.osb.asah.backend.model.SiteMetricType;
 import com.liferay.osb.asah.common.date.DateUtil;
 import com.liferay.osb.asah.common.date.dog.TimeZoneDog;
+import com.liferay.osb.asah.common.model.Interval;
 import com.liferay.osb.asah.common.model.SiteVisitorBehaviorMetric;
 import com.liferay.osb.asah.common.model.TimeRange;
 import com.liferay.osb.asah.common.repository.BQSessionRepository;
 
 import java.time.Clock;
+import java.time.DayOfWeek;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.time.ZoneOffset;
 
@@ -87,7 +91,9 @@ public class SiteHistogramDog {
 					_getMetricValue(
 						siteMetricType,
 						siteVisitorBehaviorMetricsMap.get(
-							_getPreviousDateString(dateString, timeRange))));
+							_getPreviousDateString(
+								dateString, searchQueryContext.getInterval(),
+								timeRange))));
 			}
 		}
 
@@ -151,7 +157,43 @@ public class SiteHistogramDog {
 	}
 
 	private String _getPreviousDateString(
-		String dateString, TimeRange timeRange) {
+		String dateString, Interval interval, TimeRange timeRange) {
+
+		LocalDateTime localDateTime = LocalDateTime.parse(dateString);
+
+		if (Interval.WEEK.equals(interval)) {
+			LocalDateTime firstWeekdayLocalDateTime = localDateTime.minusDays(
+				8);
+
+			if (firstWeekdayLocalDateTime.getDayOfWeek() != DayOfWeek.SUNDAY) {
+				firstWeekdayLocalDateTime =
+					firstWeekdayLocalDateTime.minusWeeks(1);
+
+				firstWeekdayLocalDateTime = firstWeekdayLocalDateTime.with(
+					DayOfWeek.SUNDAY);
+			}
+
+			LocalDate firstWeekdayLocalDate =
+				firstWeekdayLocalDateTime.toLocalDate();
+
+			return String.valueOf(firstWeekdayLocalDate.atStartOfDay());
+		}
+
+		if (Interval.MONTH.equals(interval)) {
+			LocalDateTime firstMonthDayLocalDateTime = localDateTime.minusDays(
+				1);
+
+			firstMonthDayLocalDateTime = firstMonthDayLocalDateTime.minusMonths(
+				1);
+
+			firstMonthDayLocalDateTime =
+				firstMonthDayLocalDateTime.withDayOfMonth(1);
+
+			LocalDate firstMonthDayLocalDate =
+				firstMonthDayLocalDateTime.toLocalDate();
+
+			return String.valueOf(firstMonthDayLocalDate.atStartOfDay());
+		}
 
 		return String.valueOf(
 			DateUtil.toLocalDateTime(
