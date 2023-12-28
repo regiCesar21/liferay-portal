@@ -86,6 +86,7 @@ public class AssigneeUser implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Long id;
 
+	@JsonIgnore
 	private Supplier<Long> _idSupplier;
 
 	@Schema(description = "A relative URL to the user's profile image.")
@@ -126,6 +127,7 @@ public class AssigneeUser implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected String image;
 
+	@JsonIgnore
 	private Supplier<String> _imageSupplier;
 
 	@Schema(description = "The user's full name.")
@@ -164,6 +166,7 @@ public class AssigneeUser implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected String name;
 
+	@JsonIgnore
 	private Supplier<String> _nameSupplier;
 
 	@Override

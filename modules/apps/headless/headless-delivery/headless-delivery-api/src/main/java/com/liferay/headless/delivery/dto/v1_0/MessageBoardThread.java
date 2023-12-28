@@ -104,6 +104,7 @@ public class MessageBoardThread implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Map<String, Map<String, String>> actions;
 
+	@JsonIgnore
 	private Supplier<Map<String, Map<String, String>>> _actionsSupplier;
 
 	@Schema(description = "The thread's average rating.")
@@ -146,6 +147,7 @@ public class MessageBoardThread implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected AggregateRating aggregateRating;
 
+	@JsonIgnore
 	private Supplier<AggregateRating> _aggregateRatingSupplier;
 
 	@Schema(
@@ -190,6 +192,7 @@ public class MessageBoardThread implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String articleBody;
 
+	@JsonIgnore
 	private Supplier<String> _articleBodySupplier;
 
 	@Schema(description = "The thread's creator.")
@@ -231,6 +234,7 @@ public class MessageBoardThread implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Creator creator;
 
+	@JsonIgnore
 	private Supplier<Creator> _creatorSupplier;
 
 	@Schema
@@ -272,6 +276,7 @@ public class MessageBoardThread implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected CustomField[] customFields;
 
+	@JsonIgnore
 	private Supplier<CustomField[]> _customFieldsSupplier;
 
 	@Schema(description = "The date the thread was created.")
@@ -312,6 +317,7 @@ public class MessageBoardThread implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Date dateCreated;
 
+	@JsonIgnore
 	private Supplier<Date> _dateCreatedSupplier;
 
 	@Schema(description = "The last time any field of the thread changed.")
@@ -354,6 +360,7 @@ public class MessageBoardThread implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Date dateModified;
 
+	@JsonIgnore
 	private Supplier<Date> _dateModifiedSupplier;
 
 	@Schema(
@@ -398,6 +405,7 @@ public class MessageBoardThread implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected String encodingFormat;
 
+	@JsonIgnore
 	private Supplier<String> _encodingFormatSupplier;
 
 	@Schema(description = "The thread's main title.")
@@ -439,6 +447,7 @@ public class MessageBoardThread implements Serializable {
 	@NotEmpty
 	protected String headline;
 
+	@JsonIgnore
 	private Supplier<String> _headlineSupplier;
 
 	@Schema(description = "The thread's ID.")
@@ -477,6 +486,7 @@ public class MessageBoardThread implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Long id;
 
+	@JsonIgnore
 	private Supplier<Long> _idSupplier;
 
 	@Schema(description = "A list of keywords describing the thread.")
@@ -517,6 +527,7 @@ public class MessageBoardThread implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String[] keywords;
 
+	@JsonIgnore
 	private Supplier<String[]> _keywordsSupplier;
 
 	@Schema(description = "The number of the thread's attachments.")
@@ -561,6 +572,7 @@ public class MessageBoardThread implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Integer numberOfMessageBoardAttachments;
 
+	@JsonIgnore
 	private Supplier<Integer> _numberOfMessageBoardAttachmentsSupplier;
 
 	@Schema(description = "The number of the thread's messages.")
@@ -605,6 +617,7 @@ public class MessageBoardThread implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Integer numberOfMessageBoardMessages;
 
+	@JsonIgnore
 	private Supplier<Integer> _numberOfMessageBoardMessagesSupplier;
 
 	@Schema
@@ -647,6 +660,7 @@ public class MessageBoardThread implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected RelatedContent[] relatedContents;
 
+	@JsonIgnore
 	private Supplier<RelatedContent[]> _relatedContentsSupplier;
 
 	@Schema(
@@ -691,6 +705,7 @@ public class MessageBoardThread implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Boolean showAsQuestion;
 
+	@JsonIgnore
 	private Supplier<Boolean> _showAsQuestionSupplier;
 
 	@Schema(description = "The ID of the site to which this thread is scoped.")
@@ -733,6 +748,7 @@ public class MessageBoardThread implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Long siteId;
 
+	@JsonIgnore
 	private Supplier<Long> _siteIdSupplier;
 
 	@Schema
@@ -773,6 +789,7 @@ public class MessageBoardThread implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Boolean subscribed;
 
+	@JsonIgnore
 	private Supplier<Boolean> _subscribedSupplier;
 
 	@Schema
@@ -817,6 +834,7 @@ public class MessageBoardThread implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected TaxonomyCategoryBrief[] taxonomyCategoryBriefs;
 
+	@JsonIgnore
 	private Supplier<TaxonomyCategoryBrief[]> _taxonomyCategoryBriefsSupplier;
 
 	@Schema
@@ -857,6 +875,7 @@ public class MessageBoardThread implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
 	protected Long[] taxonomyCategoryIds;
 
+	@JsonIgnore
 	private Supplier<Long[]> _taxonomyCategoryIdsSupplier;
 
 	@Schema(description = "The thread's type.")
@@ -897,6 +916,7 @@ public class MessageBoardThread implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String threadType;
 
+	@JsonIgnore
 	private Supplier<String> _threadTypeSupplier;
 
 	@Schema(description = "The number of views of this thread.")
@@ -937,6 +957,7 @@ public class MessageBoardThread implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Integer viewCount;
 
+	@JsonIgnore
 	private Supplier<Integer> _viewCountSupplier;
 
 	@Schema(
@@ -993,6 +1014,7 @@ public class MessageBoardThread implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
 	protected ViewableBy viewableBy;
 
+	@JsonIgnore
 	private Supplier<ViewableBy> _viewableBySupplier;
 
 	@Override

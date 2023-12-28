@@ -86,6 +86,7 @@ public class Task implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Long breachedInstanceCount;
 
+	@JsonIgnore
 	private Supplier<Long> _breachedInstanceCountSupplier;
 
 	@Schema
@@ -126,6 +127,7 @@ public class Task implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Long durationAvg;
 
+	@JsonIgnore
 	private Supplier<Long> _durationAvgSupplier;
 
 	@Schema
@@ -166,6 +168,7 @@ public class Task implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Long instanceCount;
 
+	@JsonIgnore
 	private Supplier<Long> _instanceCountSupplier;
 
 	@Schema
@@ -204,6 +207,7 @@ public class Task implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String key;
 
+	@JsonIgnore
 	private Supplier<String> _keySupplier;
 
 	@Schema
@@ -242,6 +246,7 @@ public class Task implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String name;
 
+	@JsonIgnore
 	private Supplier<String> _nameSupplier;
 
 	@Schema
@@ -282,6 +287,7 @@ public class Task implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Long onTimeInstanceCount;
 
+	@JsonIgnore
 	private Supplier<Long> _onTimeInstanceCountSupplier;
 
 	@Schema
@@ -322,6 +328,7 @@ public class Task implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Long overdueInstanceCount;
 
+	@JsonIgnore
 	private Supplier<Long> _overdueInstanceCountSupplier;
 
 	@Override

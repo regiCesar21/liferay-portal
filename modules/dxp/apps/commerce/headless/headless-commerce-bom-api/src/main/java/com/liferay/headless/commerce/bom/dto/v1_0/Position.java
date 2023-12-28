@@ -84,6 +84,7 @@ public class Position implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Double x;
 
+	@JsonIgnore
 	private Supplier<Double> _xSupplier;
 
 	@Schema(example = "33.54")
@@ -122,6 +123,7 @@ public class Position implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Double y;
 
+	@JsonIgnore
 	private Supplier<Double> _ySupplier;
 
 	@Override

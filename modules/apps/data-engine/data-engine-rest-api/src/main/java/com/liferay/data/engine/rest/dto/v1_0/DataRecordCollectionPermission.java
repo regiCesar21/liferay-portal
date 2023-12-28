@@ -88,6 +88,7 @@ public class DataRecordCollectionPermission implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Boolean addDataRecord;
 
+	@JsonIgnore
 	private Supplier<Boolean> _addDataRecordSupplier;
 
 	@Schema
@@ -129,6 +130,7 @@ public class DataRecordCollectionPermission implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Boolean addDataRecordCollection;
 
+	@JsonIgnore
 	private Supplier<Boolean> _addDataRecordCollectionSupplier;
 
 	@Schema
@@ -169,6 +171,7 @@ public class DataRecordCollectionPermission implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Boolean definePermissions;
 
+	@JsonIgnore
 	private Supplier<Boolean> _definePermissionsSupplier;
 
 	@Schema
@@ -209,6 +212,7 @@ public class DataRecordCollectionPermission implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Boolean delete;
 
+	@JsonIgnore
 	private Supplier<Boolean> _deleteSupplier;
 
 	@Schema
@@ -249,6 +253,7 @@ public class DataRecordCollectionPermission implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Boolean deleteDataRecord;
 
+	@JsonIgnore
 	private Supplier<Boolean> _deleteDataRecordSupplier;
 
 	@Schema
@@ -289,6 +294,7 @@ public class DataRecordCollectionPermission implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Boolean exportDataRecord;
 
+	@JsonIgnore
 	private Supplier<Boolean> _exportDataRecordSupplier;
 
 	@Schema
@@ -329,6 +335,7 @@ public class DataRecordCollectionPermission implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String[] roleNames;
 
+	@JsonIgnore
 	private Supplier<String[]> _roleNamesSupplier;
 
 	@Schema
@@ -369,6 +376,7 @@ public class DataRecordCollectionPermission implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Boolean update;
 
+	@JsonIgnore
 	private Supplier<Boolean> _updateSupplier;
 
 	@Schema
@@ -409,6 +417,7 @@ public class DataRecordCollectionPermission implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Boolean updateDataRecord;
 
+	@JsonIgnore
 	private Supplier<Boolean> _updateDataRecordSupplier;
 
 	@Schema
@@ -447,6 +456,7 @@ public class DataRecordCollectionPermission implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Boolean view;
 
+	@JsonIgnore
 	private Supplier<Boolean> _viewSupplier;
 
 	@Schema
@@ -487,6 +497,7 @@ public class DataRecordCollectionPermission implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Boolean viewDataRecord;
 
+	@JsonIgnore
 	private Supplier<Boolean> _viewDataRecordSupplier;
 
 	@Override

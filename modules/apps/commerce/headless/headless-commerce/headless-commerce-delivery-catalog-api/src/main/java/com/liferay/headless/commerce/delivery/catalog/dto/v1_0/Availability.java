@@ -86,6 +86,7 @@ public class Availability implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String label;
 
+	@JsonIgnore
 	private Supplier<String> _labelSupplier;
 
 	@Schema
@@ -126,6 +127,7 @@ public class Availability implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Integer stockQuantity;
 
+	@JsonIgnore
 	private Supplier<Integer> _stockQuantitySupplier;
 
 	@Override

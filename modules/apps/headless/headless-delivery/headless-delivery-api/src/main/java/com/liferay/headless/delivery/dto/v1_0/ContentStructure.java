@@ -99,6 +99,7 @@ public class ContentStructure implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected String[] availableLanguages;
 
+	@JsonIgnore
 	private Supplier<String[]> _availableLanguagesSupplier;
 
 	@Schema(description = "The list of the content structure's fields.")
@@ -143,6 +144,7 @@ public class ContentStructure implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected ContentStructureField[] contentStructureFields;
 
+	@JsonIgnore
 	private Supplier<ContentStructureField[]> _contentStructureFieldsSupplier;
 
 	@Schema(description = "The content structure's creator.")
@@ -184,6 +186,7 @@ public class ContentStructure implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Creator creator;
 
+	@JsonIgnore
 	private Supplier<Creator> _creatorSupplier;
 
 	@Schema(description = "The content structure's creation date.")
@@ -224,6 +227,7 @@ public class ContentStructure implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Date dateCreated;
 
+	@JsonIgnore
 	private Supplier<Date> _dateCreatedSupplier;
 
 	@Schema(
@@ -268,6 +272,7 @@ public class ContentStructure implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Date dateModified;
 
+	@JsonIgnore
 	private Supplier<Date> _dateModifiedSupplier;
 
 	@Schema(description = "The content structure's description.")
@@ -308,6 +313,7 @@ public class ContentStructure implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected String description;
 
+	@JsonIgnore
 	private Supplier<String> _descriptionSupplier;
 
 	@Schema
@@ -350,6 +356,7 @@ public class ContentStructure implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Map<String, String> description_i18n;
 
+	@JsonIgnore
 	private Supplier<Map<String, String>> _description_i18nSupplier;
 
 	@Schema(description = "The content structure's ID.")
@@ -388,6 +395,7 @@ public class ContentStructure implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Long id;
 
+	@JsonIgnore
 	private Supplier<Long> _idSupplier;
 
 	@Schema(description = "The content structure's name.")
@@ -426,6 +434,7 @@ public class ContentStructure implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected String name;
 
+	@JsonIgnore
 	private Supplier<String> _nameSupplier;
 
 	@Schema
@@ -468,6 +477,7 @@ public class ContentStructure implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Map<String, String> name_i18n;
 
+	@JsonIgnore
 	private Supplier<Map<String, String>> _name_i18nSupplier;
 
 	@Schema(
@@ -512,6 +522,7 @@ public class ContentStructure implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Long siteId;
 
+	@JsonIgnore
 	private Supplier<Long> _siteIdSupplier;
 
 	@Override

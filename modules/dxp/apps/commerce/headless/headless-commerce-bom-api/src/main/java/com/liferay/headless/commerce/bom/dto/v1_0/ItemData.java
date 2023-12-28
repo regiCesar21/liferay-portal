@@ -91,6 +91,7 @@ public class ItemData implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Brand[] brands;
 
+	@JsonIgnore
 	private Supplier<Brand[]> _brandsSupplier;
 
 	@Schema(
@@ -134,6 +135,7 @@ public class ItemData implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Item[] items;
 
+	@JsonIgnore
 	private Supplier<Item[]> _itemsSupplier;
 
 	@Schema(
@@ -177,6 +179,7 @@ public class ItemData implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Product[] products;
 
+	@JsonIgnore
 	private Supplier<Product[]> _productsSupplier;
 
 	@Schema(
@@ -220,6 +223,7 @@ public class ItemData implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Spot[] spots;
 
+	@JsonIgnore
 	private Supplier<Spot[]> _spotsSupplier;
 
 	@Override

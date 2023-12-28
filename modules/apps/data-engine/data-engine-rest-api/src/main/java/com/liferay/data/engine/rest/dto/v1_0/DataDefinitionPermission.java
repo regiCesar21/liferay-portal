@@ -87,6 +87,7 @@ public class DataDefinitionPermission implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Boolean addDataDefinition;
 
+	@JsonIgnore
 	private Supplier<Boolean> _addDataDefinitionSupplier;
 
 	@Schema
@@ -127,6 +128,7 @@ public class DataDefinitionPermission implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Boolean definePermissions;
 
+	@JsonIgnore
 	private Supplier<Boolean> _definePermissionsSupplier;
 
 	@Schema
@@ -167,6 +169,7 @@ public class DataDefinitionPermission implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Boolean delete;
 
+	@JsonIgnore
 	private Supplier<Boolean> _deleteSupplier;
 
 	@Schema
@@ -207,6 +210,7 @@ public class DataDefinitionPermission implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String[] roleNames;
 
+	@JsonIgnore
 	private Supplier<String[]> _roleNamesSupplier;
 
 	@Schema
@@ -247,6 +251,7 @@ public class DataDefinitionPermission implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Boolean update;
 
+	@JsonIgnore
 	private Supplier<Boolean> _updateSupplier;
 
 	@Schema
@@ -285,6 +290,7 @@ public class DataDefinitionPermission implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Boolean view;
 
+	@JsonIgnore
 	private Supplier<Boolean> _viewSupplier;
 
 	@Override

@@ -89,6 +89,7 @@ public class DataDefinitionRule implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String[] dataDefinitionFieldNames;
 
+	@JsonIgnore
 	private Supplier<String[]> _dataDefinitionFieldNamesSupplier;
 
 	@Schema
@@ -134,6 +135,7 @@ public class DataDefinitionRule implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Map<String, Object> dataDefinitionRuleParameters;
 
+	@JsonIgnore
 	private Supplier<Map<String, Object>> _dataDefinitionRuleParametersSupplier;
 
 	@Schema
@@ -172,6 +174,7 @@ public class DataDefinitionRule implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String name;
 
+	@JsonIgnore
 	private Supplier<String> _nameSupplier;
 
 	@Schema
@@ -212,6 +215,7 @@ public class DataDefinitionRule implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String ruleType;
 
+	@JsonIgnore
 	private Supplier<String> _ruleTypeSupplier;
 
 	@Override

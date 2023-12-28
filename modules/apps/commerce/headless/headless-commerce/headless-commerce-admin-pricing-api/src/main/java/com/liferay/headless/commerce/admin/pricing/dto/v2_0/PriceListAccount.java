@@ -92,6 +92,7 @@ public class PriceListAccount implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Account account;
 
+	@JsonIgnore
 	private Supplier<Account> _accountSupplier;
 
 	@Schema(example = "DAB-34098-789-N")
@@ -136,6 +137,7 @@ public class PriceListAccount implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String accountExternalReferenceCode;
 
+	@JsonIgnore
 	private Supplier<String> _accountExternalReferenceCodeSupplier;
 
 	@DecimalMin("0")
@@ -178,6 +180,7 @@ public class PriceListAccount implements Serializable {
 	@NotNull
 	protected Long accountId;
 
+	@JsonIgnore
 	private Supplier<Long> _accountIdSupplier;
 
 	@Schema
@@ -220,6 +223,7 @@ public class PriceListAccount implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Map<String, Map<String, String>> actions;
 
+	@JsonIgnore
 	private Supplier<Map<String, Map<String, String>>> _actionsSupplier;
 
 	@DecimalMin("0")
@@ -259,6 +263,7 @@ public class PriceListAccount implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Long id;
 
+	@JsonIgnore
 	private Supplier<Long> _idSupplier;
 
 	@DecimalMin("0")
@@ -300,6 +305,7 @@ public class PriceListAccount implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Integer order;
 
+	@JsonIgnore
 	private Supplier<Integer> _orderSupplier;
 
 	@Schema(example = "PAB-34098-789-N")
@@ -344,6 +350,7 @@ public class PriceListAccount implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String priceListExternalReferenceCode;
 
+	@JsonIgnore
 	private Supplier<String> _priceListExternalReferenceCodeSupplier;
 
 	@DecimalMin("0")
@@ -386,6 +393,7 @@ public class PriceListAccount implements Serializable {
 	@NotNull
 	protected Long priceListId;
 
+	@JsonIgnore
 	private Supplier<Long> _priceListIdSupplier;
 
 	@Override

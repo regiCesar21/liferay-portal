@@ -102,6 +102,7 @@ public class PriceModifier implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Map<String, Map<String, String>> actions;
 
+	@JsonIgnore
 	private Supplier<Map<String, Map<String, String>>> _actionsSupplier;
 
 	@Schema(example = "true")
@@ -142,6 +143,7 @@ public class PriceModifier implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Boolean active;
 
+	@JsonIgnore
 	private Supplier<Boolean> _activeSupplier;
 
 	@Schema(example = "2017-07-21")
@@ -182,6 +184,7 @@ public class PriceModifier implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Date displayDate;
 
+	@JsonIgnore
 	private Supplier<Date> _displayDateSupplier;
 
 	@Schema(example = "2017-08-21")
@@ -222,6 +225,7 @@ public class PriceModifier implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Date expirationDate;
 
+	@JsonIgnore
 	private Supplier<Date> _expirationDateSupplier;
 
 	@Schema(example = "AB-34098-789-N")
@@ -262,6 +266,7 @@ public class PriceModifier implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String externalReferenceCode;
 
+	@JsonIgnore
 	private Supplier<String> _externalReferenceCodeSupplier;
 
 	@DecimalMin("0")
@@ -301,6 +306,7 @@ public class PriceModifier implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Long id;
 
+	@JsonIgnore
 	private Supplier<Long> _idSupplier;
 
 	@DecimalMin("0")
@@ -344,6 +350,7 @@ public class PriceModifier implements Serializable {
 	@NotNull
 	protected BigDecimal modifierAmount;
 
+	@JsonIgnore
 	private Supplier<BigDecimal> _modifierAmountSupplier;
 
 	@Schema(example = "percentage")
@@ -385,6 +392,7 @@ public class PriceModifier implements Serializable {
 	@NotEmpty
 	protected String modifierType;
 
+	@JsonIgnore
 	private Supplier<String> _modifierTypeSupplier;
 
 	@Schema(example = "true")
@@ -425,6 +433,7 @@ public class PriceModifier implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Boolean neverExpire;
 
+	@JsonIgnore
 	private Supplier<Boolean> _neverExpireSupplier;
 
 	@Schema(example = "PLAB-34098-789-N")
@@ -469,6 +478,7 @@ public class PriceModifier implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String priceListExternalReferenceCode;
 
+	@JsonIgnore
 	private Supplier<String> _priceListExternalReferenceCodeSupplier;
 
 	@DecimalMin("0")
@@ -510,6 +520,7 @@ public class PriceModifier implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Long priceListId;
 
+	@JsonIgnore
 	private Supplier<Long> _priceListIdSupplier;
 
 	@Schema
@@ -554,6 +565,7 @@ public class PriceModifier implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected PriceModifierCategory[] priceModifierCategory;
 
+	@JsonIgnore
 	private Supplier<PriceModifierCategory[]> _priceModifierCategorySupplier;
 
 	@Schema
@@ -598,6 +610,7 @@ public class PriceModifier implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected PriceModifierProduct[] priceModifierProduct;
 
+	@JsonIgnore
 	private Supplier<PriceModifierProduct[]> _priceModifierProductSupplier;
 
 	@Schema
@@ -643,6 +656,7 @@ public class PriceModifier implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected PriceModifierProductGroup[] priceModifierProductGroup;
 
+	@JsonIgnore
 	private Supplier<PriceModifierProductGroup[]>
 		_priceModifierProductGroupSupplier;
 
@@ -684,6 +698,7 @@ public class PriceModifier implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Double priority;
 
+	@JsonIgnore
 	private Supplier<Double> _prioritySupplier;
 
 	@Schema(example = "product")
@@ -725,6 +740,7 @@ public class PriceModifier implements Serializable {
 	@NotEmpty
 	protected String target;
 
+	@JsonIgnore
 	private Supplier<String> _targetSupplier;
 
 	@Schema(example = "20% Off")
@@ -766,6 +782,7 @@ public class PriceModifier implements Serializable {
 	@NotEmpty
 	protected String title;
 
+	@JsonIgnore
 	private Supplier<String> _titleSupplier;
 
 	@Override

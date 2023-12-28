@@ -105,6 +105,7 @@ public class StructuredContentFolder implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Map<String, Map<String, String>> actions;
 
+	@JsonIgnore
 	private Supplier<Map<String, Map<String, String>>> _actionsSupplier;
 
 	@Schema(description = "The folder's creator.")
@@ -146,6 +147,7 @@ public class StructuredContentFolder implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Creator creator;
 
+	@JsonIgnore
 	private Supplier<Creator> _creatorSupplier;
 
 	@Schema
@@ -187,6 +189,7 @@ public class StructuredContentFolder implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected CustomField[] customFields;
 
+	@JsonIgnore
 	private Supplier<CustomField[]> _customFieldsSupplier;
 
 	@Schema(description = "The date the folder was created.")
@@ -227,6 +230,7 @@ public class StructuredContentFolder implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Date dateCreated;
 
+	@JsonIgnore
 	private Supplier<Date> _dateCreatedSupplier;
 
 	@Schema(description = "The last time any of the folder's fields changed.")
@@ -269,6 +273,7 @@ public class StructuredContentFolder implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Date dateModified;
 
+	@JsonIgnore
 	private Supplier<Date> _dateModifiedSupplier;
 
 	@Schema(description = "The folder's description.")
@@ -309,6 +314,7 @@ public class StructuredContentFolder implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String description;
 
+	@JsonIgnore
 	private Supplier<String> _descriptionSupplier;
 
 	@Schema(description = "The folder's ID.")
@@ -347,6 +353,7 @@ public class StructuredContentFolder implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Long id;
 
+	@JsonIgnore
 	private Supplier<Long> _idSupplier;
 
 	@Schema(description = "The folder's name.")
@@ -386,6 +393,7 @@ public class StructuredContentFolder implements Serializable {
 	@NotEmpty
 	protected String name;
 
+	@JsonIgnore
 	private Supplier<String> _nameSupplier;
 
 	@Schema(
@@ -435,6 +443,7 @@ public class StructuredContentFolder implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Integer numberOfStructuredContentFolders;
 
+	@JsonIgnore
 	private Supplier<Integer> _numberOfStructuredContentFoldersSupplier;
 
 	@Schema(
@@ -483,6 +492,7 @@ public class StructuredContentFolder implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Integer numberOfStructuredContents;
 
+	@JsonIgnore
 	private Supplier<Integer> _numberOfStructuredContentsSupplier;
 
 	@Schema
@@ -527,6 +537,7 @@ public class StructuredContentFolder implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Long parentStructuredContentFolderId;
 
+	@JsonIgnore
 	private Supplier<Long> _parentStructuredContentFolderIdSupplier;
 
 	@Schema(description = "The ID of the site to which this folder is scoped.")
@@ -569,6 +580,7 @@ public class StructuredContentFolder implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Long siteId;
 
+	@JsonIgnore
 	private Supplier<Long> _siteIdSupplier;
 
 	@Schema
@@ -609,6 +621,7 @@ public class StructuredContentFolder implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Boolean subscribed;
 
+	@JsonIgnore
 	private Supplier<Boolean> _subscribedSupplier;
 
 	@Schema(
@@ -665,6 +678,7 @@ public class StructuredContentFolder implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
 	protected ViewableBy viewableBy;
 
+	@JsonIgnore
 	private Supplier<ViewableBy> _viewableBySupplier;
 
 	@Override

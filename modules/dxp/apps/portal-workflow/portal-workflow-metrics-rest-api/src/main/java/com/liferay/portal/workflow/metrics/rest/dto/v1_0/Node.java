@@ -84,6 +84,7 @@ public class Node implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Long id;
 
+	@JsonIgnore
 	private Supplier<Long> _idSupplier;
 
 	@Schema
@@ -124,6 +125,7 @@ public class Node implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Boolean initial;
 
+	@JsonIgnore
 	private Supplier<Boolean> _initialSupplier;
 
 	@Schema
@@ -162,6 +164,7 @@ public class Node implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String name;
 
+	@JsonIgnore
 	private Supplier<String> _nameSupplier;
 
 	@Schema
@@ -202,6 +205,7 @@ public class Node implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Boolean terminal;
 
+	@JsonIgnore
 	private Supplier<Boolean> _terminalSupplier;
 
 	@Schema
@@ -240,6 +244,7 @@ public class Node implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String type;
 
+	@JsonIgnore
 	private Supplier<String> _typeSupplier;
 
 	@Override

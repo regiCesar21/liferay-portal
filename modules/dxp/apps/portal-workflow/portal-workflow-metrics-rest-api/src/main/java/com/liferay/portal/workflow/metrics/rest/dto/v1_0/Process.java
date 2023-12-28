@@ -84,6 +84,7 @@ public class Process implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Long id;
 
+	@JsonIgnore
 	private Supplier<Long> _idSupplier;
 
 	@Schema
@@ -124,6 +125,7 @@ public class Process implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Long instanceCount;
 
+	@JsonIgnore
 	private Supplier<Long> _instanceCountSupplier;
 
 	@Schema
@@ -164,6 +166,7 @@ public class Process implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Long onTimeInstanceCount;
 
+	@JsonIgnore
 	private Supplier<Long> _onTimeInstanceCountSupplier;
 
 	@Schema
@@ -204,6 +207,7 @@ public class Process implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Long overdueInstanceCount;
 
+	@JsonIgnore
 	private Supplier<Long> _overdueInstanceCountSupplier;
 
 	@Schema
@@ -244,6 +248,7 @@ public class Process implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String title;
 
+	@JsonIgnore
 	private Supplier<String> _titleSupplier;
 
 	@Schema
@@ -284,6 +289,7 @@ public class Process implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Long untrackedInstanceCount;
 
+	@JsonIgnore
 	private Supplier<Long> _untrackedInstanceCountSupplier;
 
 	@Override

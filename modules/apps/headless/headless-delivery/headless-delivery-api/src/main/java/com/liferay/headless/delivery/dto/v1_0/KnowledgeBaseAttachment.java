@@ -90,6 +90,7 @@ public class KnowledgeBaseAttachment implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected String contentUrl;
 
+	@JsonIgnore
 	private Supplier<String> _contentUrlSupplier;
 
 	@Schema(
@@ -134,6 +135,7 @@ public class KnowledgeBaseAttachment implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected String contentValue;
 
+	@JsonIgnore
 	private Supplier<String> _contentValueSupplier;
 
 	@Schema(
@@ -178,6 +180,7 @@ public class KnowledgeBaseAttachment implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected String encodingFormat;
 
+	@JsonIgnore
 	private Supplier<String> _encodingFormatSupplier;
 
 	@Schema(description = "The file's extension.")
@@ -218,6 +221,7 @@ public class KnowledgeBaseAttachment implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected String fileExtension;
 
+	@JsonIgnore
 	private Supplier<String> _fileExtensionSupplier;
 
 	@Schema(description = "The file's ID.")
@@ -256,6 +260,7 @@ public class KnowledgeBaseAttachment implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Long id;
 
+	@JsonIgnore
 	private Supplier<Long> _idSupplier;
 
 	@Schema(description = "The file's size in bytes.")
@@ -296,6 +301,7 @@ public class KnowledgeBaseAttachment implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Long sizeInBytes;
 
+	@JsonIgnore
 	private Supplier<Long> _sizeInBytesSupplier;
 
 	@Schema(description = "The file's main title.")
@@ -336,6 +342,7 @@ public class KnowledgeBaseAttachment implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String title;
 
+	@JsonIgnore
 	private Supplier<String> _titleSupplier;
 
 	@Override

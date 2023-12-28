@@ -96,6 +96,7 @@ public class DataDefinition implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String[] availableLanguageIds;
 
+	@JsonIgnore
 	private Supplier<String[]> _availableLanguageIdsSupplier;
 
 	@Schema
@@ -140,6 +141,7 @@ public class DataDefinition implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected DataDefinitionField[] dataDefinitionFields;
 
+	@JsonIgnore
 	private Supplier<DataDefinitionField[]> _dataDefinitionFieldsSupplier;
 
 	@Schema
@@ -180,6 +182,7 @@ public class DataDefinition implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String dataDefinitionKey;
 
+	@JsonIgnore
 	private Supplier<String> _dataDefinitionKeySupplier;
 
 	@Schema
@@ -224,6 +227,7 @@ public class DataDefinition implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected DataDefinitionRule[] dataDefinitionRules;
 
+	@JsonIgnore
 	private Supplier<DataDefinitionRule[]> _dataDefinitionRulesSupplier;
 
 	@Schema
@@ -264,6 +268,7 @@ public class DataDefinition implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Date dateCreated;
 
+	@JsonIgnore
 	private Supplier<Date> _dateCreatedSupplier;
 
 	@Schema
@@ -304,6 +309,7 @@ public class DataDefinition implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Date dateModified;
 
+	@JsonIgnore
 	private Supplier<Date> _dateModifiedSupplier;
 
 	@Schema
@@ -344,6 +350,7 @@ public class DataDefinition implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String defaultLanguageId;
 
+	@JsonIgnore
 	private Supplier<String> _defaultLanguageIdSupplier;
 
 	@Schema
@@ -386,6 +393,7 @@ public class DataDefinition implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Map<String, Object> description;
 
+	@JsonIgnore
 	private Supplier<Map<String, Object>> _descriptionSupplier;
 
 	@Schema
@@ -424,6 +432,7 @@ public class DataDefinition implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Long id;
 
+	@JsonIgnore
 	private Supplier<Long> _idSupplier;
 
 	@Schema
@@ -465,6 +474,7 @@ public class DataDefinition implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Map<String, Object> name;
 
+	@JsonIgnore
 	private Supplier<Map<String, Object>> _nameSupplier;
 
 	@Schema
@@ -505,6 +515,7 @@ public class DataDefinition implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Long siteId;
 
+	@JsonIgnore
 	private Supplier<Long> _siteIdSupplier;
 
 	@Schema
@@ -545,6 +556,7 @@ public class DataDefinition implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String storageType;
 
+	@JsonIgnore
 	private Supplier<String> _storageTypeSupplier;
 
 	@Schema
@@ -585,6 +597,7 @@ public class DataDefinition implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Long userId;
 
+	@JsonIgnore
 	private Supplier<Long> _userIdSupplier;
 
 	@Override
