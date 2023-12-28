@@ -86,6 +86,7 @@ public class Fragment implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String collectionName;
 
+	@JsonIgnore
 	private Supplier<String> _collectionNameSupplier;
 
 	@Schema
@@ -124,6 +125,7 @@ public class Fragment implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String key;
 
+	@JsonIgnore
 	private Supplier<String> _keySupplier;
 
 	@Schema
@@ -162,6 +164,7 @@ public class Fragment implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String name;
 
+	@JsonIgnore
 	private Supplier<String> _nameSupplier;
 
 	@Override

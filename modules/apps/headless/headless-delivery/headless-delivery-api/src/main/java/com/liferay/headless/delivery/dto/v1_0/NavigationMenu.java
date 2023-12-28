@@ -96,6 +96,7 @@ public class NavigationMenu implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Map<String, Map<String, String>> actions;
 
+	@JsonIgnore
 	private Supplier<Map<String, Map<String, String>>> _actionsSupplier;
 
 	@Schema
@@ -137,6 +138,7 @@ public class NavigationMenu implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Creator creator;
 
+	@JsonIgnore
 	private Supplier<Creator> _creatorSupplier;
 
 	@Schema
@@ -177,6 +179,7 @@ public class NavigationMenu implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Date dateCreated;
 
+	@JsonIgnore
 	private Supplier<Date> _dateCreatedSupplier;
 
 	@Schema
@@ -217,6 +220,7 @@ public class NavigationMenu implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Date dateModified;
 
+	@JsonIgnore
 	private Supplier<Date> _dateModifiedSupplier;
 
 	@Schema
@@ -255,6 +259,7 @@ public class NavigationMenu implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Long id;
 
+	@JsonIgnore
 	private Supplier<Long> _idSupplier;
 
 	@Schema
@@ -293,6 +298,7 @@ public class NavigationMenu implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String name;
 
+	@JsonIgnore
 	private Supplier<String> _nameSupplier;
 
 	@Schema
@@ -337,6 +343,7 @@ public class NavigationMenu implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected NavigationMenuItem[] navigationMenuItems;
 
+	@JsonIgnore
 	private Supplier<NavigationMenuItem[]> _navigationMenuItemsSupplier;
 
 	@Schema
@@ -390,6 +397,7 @@ public class NavigationMenu implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected NavigationType navigationType;
 
+	@JsonIgnore
 	private Supplier<NavigationType> _navigationTypeSupplier;
 
 	@Schema
@@ -430,6 +438,7 @@ public class NavigationMenu implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Long siteId;
 
+	@JsonIgnore
 	private Supplier<Long> _siteIdSupplier;
 
 	@Override

@@ -90,6 +90,7 @@ public class PageSectionDefinition implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String backgroundColor;
 
+	@JsonIgnore
 	private Supplier<String> _backgroundColorSupplier;
 
 	@Schema
@@ -134,6 +135,7 @@ public class PageSectionDefinition implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected FragmentImage backgroundFragmentImage;
 
+	@JsonIgnore
 	private Supplier<FragmentImage> _backgroundFragmentImageSupplier;
 
 	@Schema(
@@ -182,6 +184,7 @@ public class PageSectionDefinition implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected BackgroundImage backgroundImage;
 
+	@JsonIgnore
 	private Supplier<BackgroundImage> _backgroundImageSupplier;
 
 	@Schema
@@ -223,6 +226,7 @@ public class PageSectionDefinition implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected FragmentLink fragmentLink;
 
+	@JsonIgnore
 	private Supplier<FragmentLink> _fragmentLinkSupplier;
 
 	@Schema
@@ -264,6 +268,7 @@ public class PageSectionDefinition implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected FragmentStyle fragmentStyle;
 
+	@JsonIgnore
 	private Supplier<FragmentStyle> _fragmentStyleSupplier;
 
 	@Schema
@@ -306,6 +311,7 @@ public class PageSectionDefinition implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected FragmentViewport[] fragmentViewports;
 
+	@JsonIgnore
 	private Supplier<FragmentViewport[]> _fragmentViewportsSupplier;
 
 	@Schema(
@@ -350,6 +356,7 @@ public class PageSectionDefinition implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Boolean indexed;
 
+	@JsonIgnore
 	private Supplier<Boolean> _indexedSupplier;
 
 	@Schema
@@ -391,6 +398,7 @@ public class PageSectionDefinition implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Layout layout;
 
+	@JsonIgnore
 	private Supplier<Layout> _layoutSupplier;
 
 	@Override

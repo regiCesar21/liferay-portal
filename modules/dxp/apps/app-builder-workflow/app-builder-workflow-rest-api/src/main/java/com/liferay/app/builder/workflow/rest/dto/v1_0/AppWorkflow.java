@@ -86,6 +86,7 @@ public class AppWorkflow implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Long appId;
 
+	@JsonIgnore
 	private Supplier<Long> _appIdSupplier;
 
 	@Schema
@@ -126,6 +127,7 @@ public class AppWorkflow implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String appVersion;
 
+	@JsonIgnore
 	private Supplier<String> _appVersionSupplier;
 
 	@Schema
@@ -166,6 +168,7 @@ public class AppWorkflow implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Long appWorkflowDefinitionId;
 
+	@JsonIgnore
 	private Supplier<Long> _appWorkflowDefinitionIdSupplier;
 
 	@Schema
@@ -208,6 +211,7 @@ public class AppWorkflow implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected AppWorkflowState[] appWorkflowStates;
 
+	@JsonIgnore
 	private Supplier<AppWorkflowState[]> _appWorkflowStatesSupplier;
 
 	@Schema
@@ -250,6 +254,7 @@ public class AppWorkflow implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected AppWorkflowTask[] appWorkflowTasks;
 
+	@JsonIgnore
 	private Supplier<AppWorkflowTask[]> _appWorkflowTasksSupplier;
 
 	@Override

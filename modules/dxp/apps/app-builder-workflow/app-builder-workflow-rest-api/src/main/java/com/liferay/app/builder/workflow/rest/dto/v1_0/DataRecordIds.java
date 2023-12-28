@@ -86,6 +86,7 @@ public class DataRecordIds implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Long[] dataRecordIds;
 
+	@JsonIgnore
 	private Supplier<Long[]> _dataRecordIdsSupplier;
 
 	@Override

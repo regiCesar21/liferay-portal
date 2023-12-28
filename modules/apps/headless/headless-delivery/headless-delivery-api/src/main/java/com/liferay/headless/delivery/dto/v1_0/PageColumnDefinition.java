@@ -101,6 +101,7 @@ public class PageColumnDefinition implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected ColumnViewportConfig columnViewportConfig;
 
+	@JsonIgnore
 	private Supplier<ColumnViewportConfig> _columnViewportConfigSupplier;
 
 	@Schema
@@ -143,6 +144,7 @@ public class PageColumnDefinition implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected ColumnViewport[] columnViewports;
 
+	@JsonIgnore
 	private Supplier<ColumnViewport[]> _columnViewportsSupplier;
 
 	@DecimalMax("12")
@@ -183,6 +185,7 @@ public class PageColumnDefinition implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Integer size;
 
+	@JsonIgnore
 	private Supplier<Integer> _sizeSupplier;
 
 	@Override

@@ -90,6 +90,7 @@ public class Item implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Long id;
 
+	@JsonIgnore
 	private Supplier<Long> _idSupplier;
 
 	@Schema(example = "Item 1")
@@ -128,6 +129,7 @@ public class Item implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String name;
 
+	@JsonIgnore
 	private Supplier<String> _nameSupplier;
 
 	@Schema(example = "Item-1")
@@ -166,6 +168,7 @@ public class Item implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String slug;
 
+	@JsonIgnore
 	private Supplier<String> _slugSupplier;
 
 	@Schema(example = "/schema.jpg")
@@ -206,6 +209,7 @@ public class Item implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String thumbnail;
 
+	@JsonIgnore
 	private Supplier<String> _thumbnailSupplier;
 
 	@Schema(example = "folder")
@@ -256,6 +260,7 @@ public class Item implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Type type;
 
+	@JsonIgnore
 	private Supplier<Type> _typeSupplier;
 
 	@Schema(example = "/folder/31130")
@@ -294,6 +299,7 @@ public class Item implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String url;
 
+	@JsonIgnore
 	private Supplier<String> _urlSupplier;
 
 	@Override

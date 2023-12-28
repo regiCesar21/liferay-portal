@@ -88,6 +88,7 @@ public class Spot implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Long id;
 
+	@JsonIgnore
 	private Supplier<Long> _idSupplier;
 
 	@DecimalMin("0")
@@ -129,6 +130,7 @@ public class Spot implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Integer number;
 
+	@JsonIgnore
 	private Supplier<Integer> _numberSupplier;
 
 	@Schema
@@ -170,6 +172,7 @@ public class Spot implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Position position;
 
+	@JsonIgnore
 	private Supplier<Position> _positionSupplier;
 
 	@Schema(example = "123e4567-e89b-12d3-a456-426655440000")
@@ -210,6 +213,7 @@ public class Spot implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String productId;
 
+	@JsonIgnore
 	private Supplier<String> _productIdSupplier;
 
 	@Schema(example = "SKU01")
@@ -248,6 +252,7 @@ public class Spot implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String sku;
 
+	@JsonIgnore
 	private Supplier<String> _skuSupplier;
 
 	@Override

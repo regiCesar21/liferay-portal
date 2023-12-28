@@ -85,6 +85,7 @@ public class AppWorkflowTransition implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String name;
 
+	@JsonIgnore
 	private Supplier<String> _nameSupplier;
 
 	@Schema
@@ -125,6 +126,7 @@ public class AppWorkflowTransition implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Boolean primary;
 
+	@JsonIgnore
 	private Supplier<Boolean> _primarySupplier;
 
 	@Schema
@@ -165,6 +167,7 @@ public class AppWorkflowTransition implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String transitionTo;
 
+	@JsonIgnore
 	private Supplier<String> _transitionToSupplier;
 
 	@Override

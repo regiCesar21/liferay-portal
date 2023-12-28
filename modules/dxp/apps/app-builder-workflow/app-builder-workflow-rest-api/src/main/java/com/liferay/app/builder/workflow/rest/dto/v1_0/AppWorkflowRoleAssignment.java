@@ -88,6 +88,7 @@ public class AppWorkflowRoleAssignment implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Long roleId;
 
+	@JsonIgnore
 	private Supplier<Long> _roleIdSupplier;
 
 	@Schema
@@ -128,6 +129,7 @@ public class AppWorkflowRoleAssignment implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String roleName;
 
+	@JsonIgnore
 	private Supplier<String> _roleNameSupplier;
 
 	@Override

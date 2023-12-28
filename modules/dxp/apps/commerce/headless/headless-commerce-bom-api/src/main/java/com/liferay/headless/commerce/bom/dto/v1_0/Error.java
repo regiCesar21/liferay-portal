@@ -93,6 +93,7 @@ public class Error implements Serializable {
 	@NotNull
 	protected Integer errorCode;
 
+	@JsonIgnore
 	private Supplier<Integer> _errorCodeSupplier;
 
 	@Schema(example = "Unable to find Item.")
@@ -134,6 +135,7 @@ public class Error implements Serializable {
 	@NotEmpty
 	protected String errorDescription;
 
+	@JsonIgnore
 	private Supplier<String> _errorDescriptionSupplier;
 
 	@Schema(example = "No CommerceBOMItem exists with commerceBOMItemId 31300")
@@ -175,6 +177,7 @@ public class Error implements Serializable {
 	@NotEmpty
 	protected String message;
 
+	@JsonIgnore
 	private Supplier<String> _messageSupplier;
 
 	@Schema(description = "HTTP Status code", example = "404")
@@ -216,6 +219,7 @@ public class Error implements Serializable {
 	@NotNull
 	protected Integer status;
 
+	@JsonIgnore
 	private Supplier<Integer> _statusSupplier;
 
 	@Override

@@ -102,6 +102,7 @@ public class WorkflowLog implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Creator auditPerson;
 
+	@JsonIgnore
 	private Supplier<Creator> _auditPersonSupplier;
 
 	@Schema(description = "The log's comments.")
@@ -142,6 +143,7 @@ public class WorkflowLog implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected String commentLog;
 
+	@JsonIgnore
 	private Supplier<String> _commentLogSupplier;
 
 	@Schema(description = "The log's creation date.")
@@ -182,6 +184,7 @@ public class WorkflowLog implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Date dateCreated;
 
+	@JsonIgnore
 	private Supplier<Date> _dateCreatedSupplier;
 
 	@Schema(description = "The log's ID.")
@@ -220,6 +223,7 @@ public class WorkflowLog implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Long id;
 
+	@JsonIgnore
 	private Supplier<Long> _idSupplier;
 
 	@Schema(description = "The person assigned to the workflow.")
@@ -261,6 +265,7 @@ public class WorkflowLog implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Creator person;
 
+	@JsonIgnore
 	private Supplier<Creator> _personSupplier;
 
 	@Schema(description = "The previous person assigned to the workflow.")
@@ -302,6 +307,7 @@ public class WorkflowLog implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Creator previousPerson;
 
+	@JsonIgnore
 	private Supplier<Creator> _previousPersonSupplier;
 
 	@Schema
@@ -343,6 +349,7 @@ public class WorkflowLog implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Role previousRole;
 
+	@JsonIgnore
 	private Supplier<Role> _previousRoleSupplier;
 
 	@Schema(description = "The workflow's previous state.")
@@ -383,6 +390,7 @@ public class WorkflowLog implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected String previousState;
 
+	@JsonIgnore
 	private Supplier<String> _previousStateSupplier;
 
 	@Schema
@@ -422,6 +430,7 @@ public class WorkflowLog implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Role role;
 
+	@JsonIgnore
 	private Supplier<Role> _roleSupplier;
 
 	@Schema(description = "The workflow's current state.")
@@ -462,6 +471,7 @@ public class WorkflowLog implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected String state;
 
+	@JsonIgnore
 	private Supplier<String> _stateSupplier;
 
 	@Schema(description = "The workflow log's type.")
@@ -512,6 +522,7 @@ public class WorkflowLog implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Type type;
 
+	@JsonIgnore
 	private Supplier<Type> _typeSupplier;
 
 	@Schema(description = "The task associated with this workflow log.")
@@ -552,6 +563,7 @@ public class WorkflowLog implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Long workflowTaskId;
 
+	@JsonIgnore
 	private Supplier<Long> _workflowTaskIdSupplier;
 
 	@Override

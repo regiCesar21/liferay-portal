@@ -84,6 +84,7 @@ public class Product implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String id;
 
+	@JsonIgnore
 	private Supplier<String> _idSupplier;
 
 	@Schema(example = "Product 1")
@@ -122,6 +123,7 @@ public class Product implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String name;
 
+	@JsonIgnore
 	private Supplier<String> _nameSupplier;
 
 	@Schema(example = "$ 12.99")
@@ -162,6 +164,7 @@ public class Product implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String price;
 
+	@JsonIgnore
 	private Supplier<String> _priceSupplier;
 
 	@Schema(example = "SKU01")
@@ -200,6 +203,7 @@ public class Product implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String sku;
 
+	@JsonIgnore
 	private Supplier<String> _skuSupplier;
 
 	@Schema(example = "/product_thumbnail.jpg")
@@ -240,6 +244,7 @@ public class Product implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String thumbnailUrl;
 
+	@JsonIgnore
 	private Supplier<String> _thumbnailUrlSupplier;
 
 	@Schema(example = "/productUrl")
@@ -278,6 +283,7 @@ public class Product implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String url;
 
+	@JsonIgnore
 	private Supplier<String> _urlSupplier;
 
 	@Override

@@ -96,6 +96,7 @@ public class FragmentViewport implements Serializable {
 	@NotNull
 	protected FragmentViewportStyle fragmentViewportStyle;
 
+	@JsonIgnore
 	private Supplier<FragmentViewportStyle> _fragmentViewportStyleSupplier;
 
 	@Schema
@@ -135,6 +136,7 @@ public class FragmentViewport implements Serializable {
 	@NotEmpty
 	protected String id;
 
+	@JsonIgnore
 	private Supplier<String> _idSupplier;
 
 	@Override

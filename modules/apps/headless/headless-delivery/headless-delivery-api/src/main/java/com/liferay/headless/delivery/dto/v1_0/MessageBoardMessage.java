@@ -100,6 +100,7 @@ public class MessageBoardMessage implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Map<String, Map<String, String>> actions;
 
+	@JsonIgnore
 	private Supplier<Map<String, Map<String, String>>> _actionsSupplier;
 
 	@Schema(description = "The message's average rating.")
@@ -142,6 +143,7 @@ public class MessageBoardMessage implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected AggregateRating aggregateRating;
 
+	@JsonIgnore
 	private Supplier<AggregateRating> _aggregateRatingSupplier;
 
 	@Schema(
@@ -186,6 +188,7 @@ public class MessageBoardMessage implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Boolean anonymous;
 
+	@JsonIgnore
 	private Supplier<Boolean> _anonymousSupplier;
 
 	@Schema(description = "The message's main content.")
@@ -226,6 +229,7 @@ public class MessageBoardMessage implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String articleBody;
 
+	@JsonIgnore
 	private Supplier<String> _articleBodySupplier;
 
 	@Schema(description = "The message's author.")
@@ -267,6 +271,7 @@ public class MessageBoardMessage implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Creator creator;
 
+	@JsonIgnore
 	private Supplier<Creator> _creatorSupplier;
 
 	@Schema
@@ -309,6 +314,7 @@ public class MessageBoardMessage implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected CreatorStatistics creatorStatistics;
 
+	@JsonIgnore
 	private Supplier<CreatorStatistics> _creatorStatisticsSupplier;
 
 	@Schema
@@ -350,6 +356,7 @@ public class MessageBoardMessage implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected CustomField[] customFields;
 
+	@JsonIgnore
 	private Supplier<CustomField[]> _customFieldsSupplier;
 
 	@Schema(description = "The date the message was created.")
@@ -390,6 +397,7 @@ public class MessageBoardMessage implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Date dateCreated;
 
+	@JsonIgnore
 	private Supplier<Date> _dateCreatedSupplier;
 
 	@Schema(
@@ -434,6 +442,7 @@ public class MessageBoardMessage implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Date dateModified;
 
+	@JsonIgnore
 	private Supplier<Date> _dateModifiedSupplier;
 
 	@Schema(
@@ -478,6 +487,7 @@ public class MessageBoardMessage implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String encodingFormat;
 
+	@JsonIgnore
 	private Supplier<String> _encodingFormatSupplier;
 
 	@Schema
@@ -518,6 +528,7 @@ public class MessageBoardMessage implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String friendlyUrlPath;
 
+	@JsonIgnore
 	private Supplier<String> _friendlyUrlPathSupplier;
 
 	@Schema(description = "The message's main title.")
@@ -558,6 +569,7 @@ public class MessageBoardMessage implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String headline;
 
+	@JsonIgnore
 	private Supplier<String> _headlineSupplier;
 
 	@Schema(description = "The message's ID.")
@@ -596,6 +608,7 @@ public class MessageBoardMessage implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Long id;
 
+	@JsonIgnore
 	private Supplier<Long> _idSupplier;
 
 	@Schema(description = "A list of keywords describing the message.")
@@ -636,6 +649,7 @@ public class MessageBoardMessage implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String[] keywords;
 
+	@JsonIgnore
 	private Supplier<String[]> _keywordsSupplier;
 
 	@Schema
@@ -676,6 +690,7 @@ public class MessageBoardMessage implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Long messageBoardSectionId;
 
+	@JsonIgnore
 	private Supplier<Long> _messageBoardSectionIdSupplier;
 
 	@Schema(
@@ -720,6 +735,7 @@ public class MessageBoardMessage implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Long messageBoardThreadId;
 
+	@JsonIgnore
 	private Supplier<Long> _messageBoardThreadIdSupplier;
 
 	@Schema(description = "The number of the message's attachments.")
@@ -764,6 +780,7 @@ public class MessageBoardMessage implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Integer numberOfMessageBoardAttachments;
 
+	@JsonIgnore
 	private Supplier<Integer> _numberOfMessageBoardAttachmentsSupplier;
 
 	@Schema(description = "The number of the message's child messages.")
@@ -808,6 +825,7 @@ public class MessageBoardMessage implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Integer numberOfMessageBoardMessages;
 
+	@JsonIgnore
 	private Supplier<Integer> _numberOfMessageBoardMessagesSupplier;
 
 	@Schema
@@ -852,6 +870,7 @@ public class MessageBoardMessage implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Long parentMessageBoardMessageId;
 
+	@JsonIgnore
 	private Supplier<Long> _parentMessageBoardMessageIdSupplier;
 
 	@Schema
@@ -894,6 +913,7 @@ public class MessageBoardMessage implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected RelatedContent[] relatedContents;
 
+	@JsonIgnore
 	private Supplier<RelatedContent[]> _relatedContentsSupplier;
 
 	@Schema(
@@ -938,6 +958,7 @@ public class MessageBoardMessage implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Boolean showAsAnswer;
 
+	@JsonIgnore
 	private Supplier<Boolean> _showAsAnswerSupplier;
 
 	@Schema(description = "The ID of the site to which this message is scoped.")
@@ -980,6 +1001,7 @@ public class MessageBoardMessage implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Long siteId;
 
+	@JsonIgnore
 	private Supplier<Long> _siteIdSupplier;
 
 	@Schema
@@ -1020,6 +1042,7 @@ public class MessageBoardMessage implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Boolean subscribed;
 
+	@JsonIgnore
 	private Supplier<Boolean> _subscribedSupplier;
 
 	@Schema(
@@ -1076,6 +1099,7 @@ public class MessageBoardMessage implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
 	protected ViewableBy viewableBy;
 
+	@JsonIgnore
 	private Supplier<ViewableBy> _viewableBySupplier;
 
 	@Override

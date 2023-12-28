@@ -89,6 +89,7 @@ public class AccountUser implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String emailAddress;
 
+	@JsonIgnore
 	private Supplier<String> _emailAddressSupplier;
 
 	@Schema(description = "The optional external key of this account user.")
@@ -131,6 +132,7 @@ public class AccountUser implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String externalReferenceCode;
 
+	@JsonIgnore
 	private Supplier<String> _externalReferenceCodeSupplier;
 
 	@Schema
@@ -171,6 +173,7 @@ public class AccountUser implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String firstName;
 
+	@JsonIgnore
 	private Supplier<String> _firstNameSupplier;
 
 	@Schema
@@ -209,6 +212,7 @@ public class AccountUser implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Long id;
 
+	@JsonIgnore
 	private Supplier<Long> _idSupplier;
 
 	@Schema
@@ -249,6 +253,7 @@ public class AccountUser implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String lastName;
 
+	@JsonIgnore
 	private Supplier<String> _lastNameSupplier;
 
 	@Schema
@@ -289,6 +294,7 @@ public class AccountUser implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String middleName;
 
+	@JsonIgnore
 	private Supplier<String> _middleNameSupplier;
 
 	@Schema
@@ -329,6 +335,7 @@ public class AccountUser implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String prefix;
 
+	@JsonIgnore
 	private Supplier<String> _prefixSupplier;
 
 	@Schema
@@ -369,6 +376,7 @@ public class AccountUser implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String screenName;
 
+	@JsonIgnore
 	private Supplier<String> _screenNameSupplier;
 
 	@Schema
@@ -409,6 +417,7 @@ public class AccountUser implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String suffix;
 
+	@JsonIgnore
 	private Supplier<String> _suffixSupplier;
 
 	@Override

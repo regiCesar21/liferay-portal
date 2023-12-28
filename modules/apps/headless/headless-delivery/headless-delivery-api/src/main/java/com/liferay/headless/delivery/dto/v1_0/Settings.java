@@ -89,6 +89,7 @@ public class Settings implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String colorSchemeName;
 
+	@JsonIgnore
 	private Supplier<String> _colorSchemeNameSupplier;
 
 	@Schema
@@ -127,6 +128,7 @@ public class Settings implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String css;
 
+	@JsonIgnore
 	private Supplier<String> _cssSupplier;
 
 	@Schema
@@ -167,6 +169,7 @@ public class Settings implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String javascript;
 
+	@JsonIgnore
 	private Supplier<String> _javascriptSupplier;
 
 	@Schema
@@ -208,6 +211,7 @@ public class Settings implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected MasterPage masterPage;
 
+	@JsonIgnore
 	private Supplier<MasterPage> _masterPageSupplier;
 
 	@Schema
@@ -248,6 +252,7 @@ public class Settings implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String themeName;
 
+	@JsonIgnore
 	private Supplier<String> _themeNameSupplier;
 
 	@Schema
@@ -289,6 +294,7 @@ public class Settings implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Object themeSettings;
 
+	@JsonIgnore
 	private Supplier<Object> _themeSettingsSupplier;
 
 	@Override

@@ -104,6 +104,7 @@ public class TaxonomyVocabulary implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Map<String, Map<String, String>> actions;
 
+	@JsonIgnore
 	private Supplier<Map<String, Map<String, String>>> _actionsSupplier;
 
 	@Schema
@@ -144,6 +145,7 @@ public class TaxonomyVocabulary implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected String assetLibraryKey;
 
+	@JsonIgnore
 	private Supplier<String> _assetLibraryKeySupplier;
 
 	@Schema(
@@ -189,6 +191,7 @@ public class TaxonomyVocabulary implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected AssetType[] assetTypes;
 
+	@JsonIgnore
 	private Supplier<AssetType[]> _assetTypesSupplier;
 
 	@Schema(
@@ -233,6 +236,7 @@ public class TaxonomyVocabulary implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected String[] availableLanguages;
 
+	@JsonIgnore
 	private Supplier<String[]> _availableLanguagesSupplier;
 
 	@Schema(description = "The vocabulary's creator.")
@@ -274,6 +278,7 @@ public class TaxonomyVocabulary implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Creator creator;
 
+	@JsonIgnore
 	private Supplier<Creator> _creatorSupplier;
 
 	@Schema(description = "The vocabulary's creation date.")
@@ -314,6 +319,7 @@ public class TaxonomyVocabulary implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Date dateCreated;
 
+	@JsonIgnore
 	private Supplier<Date> _dateCreatedSupplier;
 
 	@Schema(description = "The vocabulary's most recent modification date.")
@@ -356,6 +362,7 @@ public class TaxonomyVocabulary implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Date dateModified;
 
+	@JsonIgnore
 	private Supplier<Date> _dateModifiedSupplier;
 
 	@Schema(description = "The vocabulary's text description.")
@@ -396,6 +403,7 @@ public class TaxonomyVocabulary implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String description;
 
+	@JsonIgnore
 	private Supplier<String> _descriptionSupplier;
 
 	@Schema
@@ -438,6 +446,7 @@ public class TaxonomyVocabulary implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Map<String, String> description_i18n;
 
+	@JsonIgnore
 	private Supplier<Map<String, String>> _description_i18nSupplier;
 
 	@Schema(description = "The vocabulary's ID.")
@@ -476,6 +485,7 @@ public class TaxonomyVocabulary implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Long id;
 
+	@JsonIgnore
 	private Supplier<Long> _idSupplier;
 
 	@Schema(description = "The vocabulary's name.")
@@ -515,6 +525,7 @@ public class TaxonomyVocabulary implements Serializable {
 	@NotEmpty
 	protected String name;
 
+	@JsonIgnore
 	private Supplier<String> _nameSupplier;
 
 	@Schema
@@ -557,6 +568,7 @@ public class TaxonomyVocabulary implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Map<String, String> name_i18n;
 
+	@JsonIgnore
 	private Supplier<Map<String, String>> _name_i18nSupplier;
 
 	@Schema(
@@ -605,6 +617,7 @@ public class TaxonomyVocabulary implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Integer numberOfTaxonomyCategories;
 
+	@JsonIgnore
 	private Supplier<Integer> _numberOfTaxonomyCategoriesSupplier;
 
 	@Schema(
@@ -649,6 +662,7 @@ public class TaxonomyVocabulary implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Long siteId;
 
+	@JsonIgnore
 	private Supplier<Long> _siteIdSupplier;
 
 	@Schema(
@@ -705,6 +719,7 @@ public class TaxonomyVocabulary implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
 	protected ViewableBy viewableBy;
 
+	@JsonIgnore
 	private Supplier<ViewableBy> _viewableBySupplier;
 
 	@Override

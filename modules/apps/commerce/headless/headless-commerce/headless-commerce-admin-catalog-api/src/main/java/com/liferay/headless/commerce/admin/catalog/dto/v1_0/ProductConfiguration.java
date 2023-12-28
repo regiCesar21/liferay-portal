@@ -87,6 +87,7 @@ public class ProductConfiguration implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Boolean allowBackOrder;
 
+	@JsonIgnore
 	private Supplier<Boolean> _allowBackOrderSupplier;
 
 	@Schema(example = "[10, 20, 30, 40]")
@@ -128,6 +129,7 @@ public class ProductConfiguration implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Integer[] allowedOrderQuantities;
 
+	@JsonIgnore
 	private Supplier<Integer[]> _allowedOrderQuantitiesSupplier;
 
 	@Schema(example = "true")
@@ -168,6 +170,7 @@ public class ProductConfiguration implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Boolean displayAvailability;
 
+	@JsonIgnore
 	private Supplier<Boolean> _displayAvailabilitySupplier;
 
 	@Schema(example = "true")
@@ -208,6 +211,7 @@ public class ProductConfiguration implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Boolean displayStockQuantity;
 
+	@JsonIgnore
 	private Supplier<Boolean> _displayStockQuantitySupplier;
 
 	@Schema(
@@ -252,6 +256,7 @@ public class ProductConfiguration implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String inventoryEngine;
 
+	@JsonIgnore
 	private Supplier<String> _inventoryEngineSupplier;
 
 	@Schema(
@@ -296,6 +301,7 @@ public class ProductConfiguration implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String lowStockAction;
 
+	@JsonIgnore
 	private Supplier<String> _lowStockActionSupplier;
 
 	@Schema
@@ -336,6 +342,7 @@ public class ProductConfiguration implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Integer maxOrderQuantity;
 
+	@JsonIgnore
 	private Supplier<Integer> _maxOrderQuantitySupplier;
 
 	@Schema
@@ -376,6 +383,7 @@ public class ProductConfiguration implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Integer minOrderQuantity;
 
+	@JsonIgnore
 	private Supplier<Integer> _minOrderQuantitySupplier;
 
 	@Schema
@@ -416,6 +424,7 @@ public class ProductConfiguration implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Integer minStockQuantity;
 
+	@JsonIgnore
 	private Supplier<Integer> _minStockQuantitySupplier;
 
 	@Schema
@@ -457,6 +466,7 @@ public class ProductConfiguration implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Integer multipleOrderQuantity;
 
+	@JsonIgnore
 	private Supplier<Integer> _multipleOrderQuantitySupplier;
 
 	@Override

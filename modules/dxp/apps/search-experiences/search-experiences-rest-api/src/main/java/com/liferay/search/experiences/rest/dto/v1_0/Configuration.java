@@ -92,6 +92,7 @@ public class Configuration implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected AdvancedConfiguration advancedConfiguration;
 
+	@JsonIgnore
 	private Supplier<AdvancedConfiguration> _advancedConfigurationSupplier;
 
 	@Schema
@@ -136,6 +137,7 @@ public class Configuration implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected AggregationConfiguration aggregationConfiguration;
 
+	@JsonIgnore
 	private Supplier<AggregationConfiguration>
 		_aggregationConfigurationSupplier;
 
@@ -181,6 +183,7 @@ public class Configuration implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected GeneralConfiguration generalConfiguration;
 
+	@JsonIgnore
 	private Supplier<GeneralConfiguration> _generalConfigurationSupplier;
 
 	@Schema
@@ -225,6 +228,7 @@ public class Configuration implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected HighlightConfiguration highlightConfiguration;
 
+	@JsonIgnore
 	private Supplier<HighlightConfiguration> _highlightConfigurationSupplier;
 
 	@Schema
@@ -269,6 +273,7 @@ public class Configuration implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected ParameterConfiguration parameterConfiguration;
 
+	@JsonIgnore
 	private Supplier<ParameterConfiguration> _parameterConfigurationSupplier;
 
 	@Schema
@@ -311,6 +316,7 @@ public class Configuration implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected QueryConfiguration queryConfiguration;
 
+	@JsonIgnore
 	private Supplier<QueryConfiguration> _queryConfigurationSupplier;
 
 	@Schema
@@ -355,6 +361,7 @@ public class Configuration implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Map<String, Object> searchContextAttributes;
 
+	@JsonIgnore
 	private Supplier<Map<String, Object>> _searchContextAttributesSupplier;
 
 	@Schema
@@ -397,6 +404,7 @@ public class Configuration implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected SortConfiguration sortConfiguration;
 
+	@JsonIgnore
 	private Supplier<SortConfiguration> _sortConfigurationSupplier;
 
 	@Override

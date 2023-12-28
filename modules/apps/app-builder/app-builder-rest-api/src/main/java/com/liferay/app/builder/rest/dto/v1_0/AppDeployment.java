@@ -89,6 +89,7 @@ public class AppDeployment implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Map<String, Object> settings;
 
+	@JsonIgnore
 	private Supplier<Map<String, Object>> _settingsSupplier;
 
 	@Schema
@@ -127,6 +128,7 @@ public class AppDeployment implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String type;
 
+	@JsonIgnore
 	private Supplier<String> _typeSupplier;
 
 	@Override

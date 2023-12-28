@@ -94,6 +94,7 @@ public class PageTemplateCollection implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Creator creator;
 
+	@JsonIgnore
 	private Supplier<Creator> _creatorSupplier;
 
 	@Schema
@@ -134,6 +135,7 @@ public class PageTemplateCollection implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Date dateCreated;
 
+	@JsonIgnore
 	private Supplier<Date> _dateCreatedSupplier;
 
 	@Schema
@@ -174,6 +176,7 @@ public class PageTemplateCollection implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Date dateModified;
 
+	@JsonIgnore
 	private Supplier<Date> _dateModifiedSupplier;
 
 	@Schema
@@ -214,6 +217,7 @@ public class PageTemplateCollection implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String description;
 
+	@JsonIgnore
 	private Supplier<String> _descriptionSupplier;
 
 	@Schema
@@ -252,6 +256,7 @@ public class PageTemplateCollection implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Long id;
 
+	@JsonIgnore
 	private Supplier<Long> _idSupplier;
 
 	@Schema
@@ -290,6 +295,7 @@ public class PageTemplateCollection implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String name;
 
+	@JsonIgnore
 	private Supplier<String> _nameSupplier;
 
 	@Schema(
@@ -332,6 +338,7 @@ public class PageTemplateCollection implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected String uuid;
 
+	@JsonIgnore
 	private Supplier<String> _uuidSupplier;
 
 	@Override

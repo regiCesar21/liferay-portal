@@ -97,6 +97,7 @@ public class Organization implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Map<String, Map<String, String>> actions;
 
+	@JsonIgnore
 	private Supplier<Map<String, Map<String, String>>> _actionsSupplier;
 
 	@Schema(
@@ -141,6 +142,7 @@ public class Organization implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String comment;
 
+	@JsonIgnore
 	private Supplier<String> _commentSupplier;
 
 	@Schema
@@ -182,6 +184,7 @@ public class Organization implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected CustomField[] customFields;
 
+	@JsonIgnore
 	private Supplier<CustomField[]> _customFieldsSupplier;
 
 	@Schema(description = "The organization's creation date.")
@@ -222,6 +225,7 @@ public class Organization implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Date dateCreated;
 
+	@JsonIgnore
 	private Supplier<Date> _dateCreatedSupplier;
 
 	@Schema(
@@ -266,6 +270,7 @@ public class Organization implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Date dateModified;
 
+	@JsonIgnore
 	private Supplier<Date> _dateModifiedSupplier;
 
 	@Schema(description = "The organization's ID.")
@@ -304,6 +309,7 @@ public class Organization implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String id;
 
+	@JsonIgnore
 	private Supplier<String> _idSupplier;
 
 	@Schema(description = "A relative URL to the organization's image.")
@@ -344,6 +350,7 @@ public class Organization implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected String image;
 
+	@JsonIgnore
 	private Supplier<String> _imageSupplier;
 
 	@Schema(description = "A list of keywords describing the organization.")
@@ -386,6 +393,7 @@ public class Organization implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected String[] keywords;
 
+	@JsonIgnore
 	private Supplier<String[]> _keywordsSupplier;
 
 	@Schema(
@@ -431,6 +439,7 @@ public class Organization implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Location location;
 
+	@JsonIgnore
 	private Supplier<Location> _locationSupplier;
 
 	@Schema(description = "The organization's name.")
@@ -469,6 +478,7 @@ public class Organization implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String name;
 
+	@JsonIgnore
 	private Supplier<String> _nameSupplier;
 
 	@Schema(
@@ -514,6 +524,7 @@ public class Organization implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Integer numberOfOrganizations;
 
+	@JsonIgnore
 	private Supplier<Integer> _numberOfOrganizationsSupplier;
 
 	@Schema(
@@ -563,6 +574,7 @@ public class Organization implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected OrganizationContactInformation organizationContactInformation;
 
+	@JsonIgnore
 	private Supplier<OrganizationContactInformation>
 		_organizationContactInformationSupplier;
 
@@ -606,6 +618,7 @@ public class Organization implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Organization parentOrganization;
 
+	@JsonIgnore
 	private Supplier<Organization> _parentOrganizationSupplier;
 
 	@Schema(
@@ -651,6 +664,7 @@ public class Organization implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Service[] services;
 
+	@JsonIgnore
 	private Supplier<Service[]> _servicesSupplier;
 
 	@Override

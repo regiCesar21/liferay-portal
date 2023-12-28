@@ -97,6 +97,7 @@ public class Rating implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Map<String, Map<String, String>> actions;
 
+	@JsonIgnore
 	private Supplier<Map<String, Map<String, String>>> _actionsSupplier;
 
 	@Schema(
@@ -141,6 +142,7 @@ public class Rating implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Double bestRating;
 
+	@JsonIgnore
 	private Supplier<Double> _bestRatingSupplier;
 
 	@Schema(description = "The rating's creator.")
@@ -182,6 +184,7 @@ public class Rating implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Creator creator;
 
+	@JsonIgnore
 	private Supplier<Creator> _creatorSupplier;
 
 	@Schema(description = "The rating's creation date.")
@@ -222,6 +225,7 @@ public class Rating implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Date dateCreated;
 
+	@JsonIgnore
 	private Supplier<Date> _dateCreatedSupplier;
 
 	@Schema(description = "The last time a field of the rating changed.")
@@ -262,6 +266,7 @@ public class Rating implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Date dateModified;
 
+	@JsonIgnore
 	private Supplier<Date> _dateModifiedSupplier;
 
 	@Schema(description = "The rating's ID.")
@@ -300,6 +305,7 @@ public class Rating implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Long id;
 
+	@JsonIgnore
 	private Supplier<Long> _idSupplier;
 
 	@Schema(description = "The rating's value.")
@@ -340,6 +346,7 @@ public class Rating implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Double ratingValue;
 
+	@JsonIgnore
 	private Supplier<Double> _ratingValueSupplier;
 
 	@Schema(
@@ -384,6 +391,7 @@ public class Rating implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Double worstRating;
 
+	@JsonIgnore
 	private Supplier<Double> _worstRatingSupplier;
 
 	@Override

@@ -94,6 +94,7 @@ public class SXPElement implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Map<String, Map<String, String>> actions;
 
+	@JsonIgnore
 	private Supplier<Map<String, Map<String, String>>> _actionsSupplier;
 
 	@Schema
@@ -134,6 +135,7 @@ public class SXPElement implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Date createDate;
 
+	@JsonIgnore
 	private Supplier<Date> _createDateSupplier;
 
 	@Schema
@@ -174,6 +176,7 @@ public class SXPElement implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String description;
 
+	@JsonIgnore
 	private Supplier<String> _descriptionSupplier;
 
 	@Schema
@@ -216,6 +219,7 @@ public class SXPElement implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Map<String, String> description_i18n;
 
+	@JsonIgnore
 	private Supplier<Map<String, String>> _description_i18nSupplier;
 
 	@Schema
@@ -258,6 +262,7 @@ public class SXPElement implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected ElementDefinition elementDefinition;
 
+	@JsonIgnore
 	private Supplier<ElementDefinition> _elementDefinitionSupplier;
 
 	@Schema(example = "AB-34098-789-N")
@@ -298,6 +303,7 @@ public class SXPElement implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String externalReferenceCode;
 
+	@JsonIgnore
 	private Supplier<String> _externalReferenceCodeSupplier;
 
 	@Schema
@@ -338,6 +344,7 @@ public class SXPElement implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Boolean hidden;
 
+	@JsonIgnore
 	private Supplier<Boolean> _hiddenSupplier;
 
 	@Schema
@@ -376,6 +383,7 @@ public class SXPElement implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Long id;
 
+	@JsonIgnore
 	private Supplier<Long> _idSupplier;
 
 	@Schema
@@ -416,6 +424,7 @@ public class SXPElement implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Date modifiedDate;
 
+	@JsonIgnore
 	private Supplier<Date> _modifiedDateSupplier;
 
 	@Schema
@@ -456,6 +465,7 @@ public class SXPElement implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Boolean readOnly;
 
+	@JsonIgnore
 	private Supplier<Boolean> _readOnlySupplier;
 
 	@Schema
@@ -496,6 +506,7 @@ public class SXPElement implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String schemaVersion;
 
+	@JsonIgnore
 	private Supplier<String> _schemaVersionSupplier;
 
 	@Schema
@@ -536,6 +547,7 @@ public class SXPElement implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String title;
 
+	@JsonIgnore
 	private Supplier<String> _titleSupplier;
 
 	@Schema
@@ -578,6 +590,7 @@ public class SXPElement implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Map<String, String> title_i18n;
 
+	@JsonIgnore
 	private Supplier<Map<String, String>> _title_i18nSupplier;
 
 	@Schema
@@ -616,6 +629,7 @@ public class SXPElement implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Integer type;
 
+	@JsonIgnore
 	private Supplier<Integer> _typeSupplier;
 
 	@Schema
@@ -656,6 +670,7 @@ public class SXPElement implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String userName;
 
+	@JsonIgnore
 	private Supplier<String> _userNameSupplier;
 
 	@Schema
@@ -696,6 +711,7 @@ public class SXPElement implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String version;
 
+	@JsonIgnore
 	private Supplier<String> _versionSupplier;
 
 	@Override

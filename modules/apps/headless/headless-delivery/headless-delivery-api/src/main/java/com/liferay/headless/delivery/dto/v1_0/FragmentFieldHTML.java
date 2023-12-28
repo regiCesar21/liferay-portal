@@ -88,6 +88,7 @@ public class FragmentFieldHTML implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Object html;
 
+	@JsonIgnore
 	private Supplier<Object> _htmlSupplier;
 
 	@Override

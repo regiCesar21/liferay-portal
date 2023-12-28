@@ -87,6 +87,7 @@ public class FragmentViewportStyle implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String marginBottom;
 
+	@JsonIgnore
 	private Supplier<String> _marginBottomSupplier;
 
 	@Schema
@@ -127,6 +128,7 @@ public class FragmentViewportStyle implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String marginLeft;
 
+	@JsonIgnore
 	private Supplier<String> _marginLeftSupplier;
 
 	@Schema
@@ -167,6 +169,7 @@ public class FragmentViewportStyle implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String marginRight;
 
+	@JsonIgnore
 	private Supplier<String> _marginRightSupplier;
 
 	@Schema
@@ -207,6 +210,7 @@ public class FragmentViewportStyle implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String marginTop;
 
+	@JsonIgnore
 	private Supplier<String> _marginTopSupplier;
 
 	@Schema
@@ -247,6 +251,7 @@ public class FragmentViewportStyle implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String paddingBottom;
 
+	@JsonIgnore
 	private Supplier<String> _paddingBottomSupplier;
 
 	@Schema
@@ -287,6 +292,7 @@ public class FragmentViewportStyle implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String paddingLeft;
 
+	@JsonIgnore
 	private Supplier<String> _paddingLeftSupplier;
 
 	@Schema
@@ -327,6 +333,7 @@ public class FragmentViewportStyle implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String paddingRight;
 
+	@JsonIgnore
 	private Supplier<String> _paddingRightSupplier;
 
 	@Schema
@@ -367,6 +374,7 @@ public class FragmentViewportStyle implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String paddingTop;
 
+	@JsonIgnore
 	private Supplier<String> _paddingTopSupplier;
 
 	@Override

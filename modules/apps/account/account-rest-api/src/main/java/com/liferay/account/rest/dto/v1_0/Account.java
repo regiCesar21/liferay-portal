@@ -89,6 +89,7 @@ public class Account implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String description;
 
+	@JsonIgnore
 	private Supplier<String> _descriptionSupplier;
 
 	@Schema(
@@ -133,6 +134,7 @@ public class Account implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String[] domains;
 
+	@JsonIgnore
 	private Supplier<String[]> _domainsSupplier;
 
 	@Schema(description = "The optional external key of this account.")
@@ -173,6 +175,7 @@ public class Account implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String externalReferenceCode;
 
+	@JsonIgnore
 	private Supplier<String> _externalReferenceCodeSupplier;
 
 	@Schema
@@ -211,6 +214,7 @@ public class Account implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Long id;
 
+	@JsonIgnore
 	private Supplier<Long> _idSupplier;
 
 	@Schema
@@ -249,6 +253,7 @@ public class Account implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String name;
 
+	@JsonIgnore
 	private Supplier<String> _nameSupplier;
 
 	@Schema
@@ -289,6 +294,7 @@ public class Account implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Long[] organizationIds;
 
+	@JsonIgnore
 	private Supplier<Long[]> _organizationIdsSupplier;
 
 	@Schema
@@ -329,6 +335,7 @@ public class Account implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Long parentAccountId;
 
+	@JsonIgnore
 	private Supplier<Long> _parentAccountIdSupplier;
 
 	@Schema
@@ -369,6 +376,7 @@ public class Account implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Integer status;
 
+	@JsonIgnore
 	private Supplier<Integer> _statusSupplier;
 
 	@Override

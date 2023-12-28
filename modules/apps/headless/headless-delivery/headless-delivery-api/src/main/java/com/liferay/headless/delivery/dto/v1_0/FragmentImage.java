@@ -90,6 +90,7 @@ public class FragmentImage implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Object description;
 
+	@JsonIgnore
 	private Supplier<Object> _descriptionSupplier;
 
 	@Schema
@@ -131,6 +132,7 @@ public class FragmentImage implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Object title;
 
+	@JsonIgnore
 	private Supplier<Object> _titleSupplier;
 
 	@Schema
@@ -170,6 +172,7 @@ public class FragmentImage implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Object url;
 
+	@JsonIgnore
 	private Supplier<Object> _urlSupplier;
 
 	@Override

@@ -92,6 +92,7 @@ public class App implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Boolean active;
 
+	@JsonIgnore
 	private Supplier<Boolean> _activeSupplier;
 
 	@Schema
@@ -134,6 +135,7 @@ public class App implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected AppDeployment[] appDeployments;
 
+	@JsonIgnore
 	private Supplier<AppDeployment[]> _appDeploymentsSupplier;
 
 	@Schema
@@ -174,6 +176,7 @@ public class App implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Long dataDefinitionId;
 
+	@JsonIgnore
 	private Supplier<Long> _dataDefinitionIdSupplier;
 
 	@Schema
@@ -214,6 +217,7 @@ public class App implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected String dataDefinitionName;
 
+	@JsonIgnore
 	private Supplier<String> _dataDefinitionNameSupplier;
 
 	@Schema
@@ -254,6 +258,7 @@ public class App implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Long dataLayoutId;
 
+	@JsonIgnore
 	private Supplier<Long> _dataLayoutIdSupplier;
 
 	@Schema
@@ -294,6 +299,7 @@ public class App implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Long dataListViewId;
 
+	@JsonIgnore
 	private Supplier<Long> _dataListViewIdSupplier;
 
 	@Schema
@@ -334,6 +340,7 @@ public class App implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Long dataRecordCollectionId;
 
+	@JsonIgnore
 	private Supplier<Long> _dataRecordCollectionIdSupplier;
 
 	@Schema
@@ -374,6 +381,7 @@ public class App implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Date dateCreated;
 
+	@JsonIgnore
 	private Supplier<Date> _dateCreatedSupplier;
 
 	@Schema
@@ -414,6 +422,7 @@ public class App implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Date dateModified;
 
+	@JsonIgnore
 	private Supplier<Date> _dateModifiedSupplier;
 
 	@Schema
@@ -452,6 +461,7 @@ public class App implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Long id;
 
+	@JsonIgnore
 	private Supplier<Long> _idSupplier;
 
 	@Schema
@@ -493,6 +503,7 @@ public class App implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Map<String, Object> name;
 
+	@JsonIgnore
 	private Supplier<Map<String, Object>> _nameSupplier;
 
 	@Schema
@@ -533,6 +544,7 @@ public class App implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String scope;
 
+	@JsonIgnore
 	private Supplier<String> _scopeSupplier;
 
 	@Schema
@@ -573,6 +585,7 @@ public class App implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Long siteId;
 
+	@JsonIgnore
 	private Supplier<Long> _siteIdSupplier;
 
 	@Schema
@@ -613,6 +626,7 @@ public class App implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Long userId;
 
+	@JsonIgnore
 	private Supplier<Long> _userIdSupplier;
 
 	@Schema
@@ -653,6 +667,7 @@ public class App implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String version;
 
+	@JsonIgnore
 	private Supplier<String> _versionSupplier;
 
 	@Override

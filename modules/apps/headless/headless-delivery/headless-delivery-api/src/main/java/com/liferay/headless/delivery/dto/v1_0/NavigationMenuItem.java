@@ -96,6 +96,7 @@ public class NavigationMenuItem implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected String[] availableLanguages;
 
+	@JsonIgnore
 	private Supplier<String[]> _availableLanguagesSupplier;
 
 	@Schema
@@ -137,6 +138,7 @@ public class NavigationMenuItem implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Creator creator;
 
+	@JsonIgnore
 	private Supplier<Creator> _creatorSupplier;
 
 	@Schema
@@ -177,6 +179,7 @@ public class NavigationMenuItem implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Date dateCreated;
 
+	@JsonIgnore
 	private Supplier<Date> _dateCreatedSupplier;
 
 	@Schema
@@ -217,6 +220,7 @@ public class NavigationMenuItem implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Date dateModified;
 
+	@JsonIgnore
 	private Supplier<Date> _dateModifiedSupplier;
 
 	@Schema
@@ -255,6 +259,7 @@ public class NavigationMenuItem implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Long id;
 
+	@JsonIgnore
 	private Supplier<Long> _idSupplier;
 
 	@Schema(description = "A link to a page on the server.")
@@ -293,6 +298,7 @@ public class NavigationMenuItem implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String link;
 
+	@JsonIgnore
 	private Supplier<String> _linkSupplier;
 
 	@Schema
@@ -331,6 +337,7 @@ public class NavigationMenuItem implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String name;
 
+	@JsonIgnore
 	private Supplier<String> _nameSupplier;
 
 	@Schema
@@ -373,6 +380,7 @@ public class NavigationMenuItem implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Map<String, String> name_i18n;
 
+	@JsonIgnore
 	private Supplier<Map<String, String>> _name_i18nSupplier;
 
 	@Schema
@@ -417,6 +425,7 @@ public class NavigationMenuItem implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected NavigationMenuItem[] navigationMenuItems;
 
+	@JsonIgnore
 	private Supplier<NavigationMenuItem[]> _navigationMenuItemsSupplier;
 
 	@Schema
@@ -457,6 +466,7 @@ public class NavigationMenuItem implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Long parentNavigationMenuId;
 
+	@JsonIgnore
 	private Supplier<Long> _parentNavigationMenuIdSupplier;
 
 	@Schema
@@ -495,6 +505,7 @@ public class NavigationMenuItem implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected String type;
 
+	@JsonIgnore
 	private Supplier<String> _typeSupplier;
 
 	@Schema
@@ -533,6 +544,7 @@ public class NavigationMenuItem implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String url;
 
+	@JsonIgnore
 	private Supplier<String> _urlSupplier;
 
 	@Schema
@@ -573,6 +585,7 @@ public class NavigationMenuItem implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Boolean useCustomName;
 
+	@JsonIgnore
 	private Supplier<Boolean> _useCustomNameSupplier;
 
 	@Override

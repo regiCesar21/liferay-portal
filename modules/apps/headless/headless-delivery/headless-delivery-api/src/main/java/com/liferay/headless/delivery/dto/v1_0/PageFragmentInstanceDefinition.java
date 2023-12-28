@@ -91,6 +91,7 @@ public class PageFragmentInstanceDefinition implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Fragment fragment;
 
+	@JsonIgnore
 	private Supplier<Fragment> _fragmentSupplier;
 
 	@Schema
@@ -133,6 +134,7 @@ public class PageFragmentInstanceDefinition implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Map<String, Object> fragmentConfig;
 
+	@JsonIgnore
 	private Supplier<Map<String, Object>> _fragmentConfigSupplier;
 
 	@Schema
@@ -175,6 +177,7 @@ public class PageFragmentInstanceDefinition implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected FragmentField[] fragmentFields;
 
+	@JsonIgnore
 	private Supplier<FragmentField[]> _fragmentFieldsSupplier;
 
 	@Schema
@@ -216,6 +219,7 @@ public class PageFragmentInstanceDefinition implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected FragmentStyle fragmentStyle;
 
+	@JsonIgnore
 	private Supplier<FragmentStyle> _fragmentStyleSupplier;
 
 	@Schema
@@ -258,6 +262,7 @@ public class PageFragmentInstanceDefinition implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected FragmentViewport[] fragmentViewports;
 
+	@JsonIgnore
 	private Supplier<FragmentViewport[]> _fragmentViewportsSupplier;
 
 	@Schema(
@@ -302,6 +307,7 @@ public class PageFragmentInstanceDefinition implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Boolean indexed;
 
+	@JsonIgnore
 	private Supplier<Boolean> _indexedSupplier;
 
 	@Schema
@@ -344,6 +350,7 @@ public class PageFragmentInstanceDefinition implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected WidgetInstance[] widgetInstances;
 
+	@JsonIgnore
 	private Supplier<WidgetInstance[]> _widgetInstancesSupplier;
 
 	@Override

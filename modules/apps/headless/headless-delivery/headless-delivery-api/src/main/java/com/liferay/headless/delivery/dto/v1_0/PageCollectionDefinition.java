@@ -91,6 +91,7 @@ public class PageCollectionDefinition implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected CollectionConfig collectionConfig;
 
+	@JsonIgnore
 	private Supplier<CollectionConfig> _collectionConfigSupplier;
 
 	@Schema
@@ -132,6 +133,7 @@ public class PageCollectionDefinition implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected FragmentStyle fragmentStyle;
 
+	@JsonIgnore
 	private Supplier<FragmentStyle> _fragmentStyleSupplier;
 
 	@Schema
@@ -174,6 +176,7 @@ public class PageCollectionDefinition implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected FragmentViewport[] fragmentViewports;
 
+	@JsonIgnore
 	private Supplier<FragmentViewport[]> _fragmentViewportsSupplier;
 
 	@Schema
@@ -214,6 +217,7 @@ public class PageCollectionDefinition implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String listItemStyle;
 
+	@JsonIgnore
 	private Supplier<String> _listItemStyleSupplier;
 
 	@Schema
@@ -254,6 +258,7 @@ public class PageCollectionDefinition implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String listStyle;
 
+	@JsonIgnore
 	private Supplier<String> _listStyleSupplier;
 
 	@Schema
@@ -294,6 +299,7 @@ public class PageCollectionDefinition implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Integer numberOfColumns;
 
+	@JsonIgnore
 	private Supplier<Integer> _numberOfColumnsSupplier;
 
 	@Schema
@@ -334,6 +340,7 @@ public class PageCollectionDefinition implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Integer numberOfItems;
 
+	@JsonIgnore
 	private Supplier<Integer> _numberOfItemsSupplier;
 
 	@Schema
@@ -374,6 +381,7 @@ public class PageCollectionDefinition implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String templateKey;
 
+	@JsonIgnore
 	private Supplier<String> _templateKeySupplier;
 
 	@Override

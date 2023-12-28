@@ -89,6 +89,7 @@ public class FragmentFieldImage implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected FragmentImage fragmentImage;
 
+	@JsonIgnore
 	private Supplier<FragmentImage> _fragmentImageSupplier;
 
 	@Schema
@@ -130,6 +131,7 @@ public class FragmentFieldImage implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected FragmentLink fragmentLink;
 
+	@JsonIgnore
 	private Supplier<FragmentLink> _fragmentLinkSupplier;
 
 	@Override

@@ -95,6 +95,7 @@ public class CollectionConfig implements Serializable {
 	@NotNull
 	protected Object collectionReference;
 
+	@JsonIgnore
 	private Supplier<Object> _collectionReferenceSupplier;
 
 	@Schema
@@ -149,6 +150,7 @@ public class CollectionConfig implements Serializable {
 	@NotNull
 	protected CollectionType collectionType;
 
+	@JsonIgnore
 	private Supplier<CollectionType> _collectionTypeSupplier;
 
 	@Override

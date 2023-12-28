@@ -88,6 +88,7 @@ public class PortalInstance implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Boolean active;
 
+	@JsonIgnore
 	private Supplier<Boolean> _activeSupplier;
 
 	@Schema(description = "internal unique key.")
@@ -128,6 +129,7 @@ public class PortalInstance implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Long companyId;
 
+	@JsonIgnore
 	private Supplier<Long> _companyIdSupplier;
 
 	@Schema(description = "domain used for email authentication.")
@@ -168,6 +170,7 @@ public class PortalInstance implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String domain;
 
+	@JsonIgnore
 	private Supplier<String> _domainSupplier;
 
 	@Schema(
@@ -212,6 +215,7 @@ public class PortalInstance implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String portalInstanceId;
 
+	@JsonIgnore
 	private Supplier<String> _portalInstanceIdSupplier;
 
 	@Schema(
@@ -260,6 +264,7 @@ public class PortalInstance implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
 	protected String portalInstanceInitializerKey;
 
+	@JsonIgnore
 	private Supplier<String> _portalInstanceInitializerKeySupplier;
 
 	@Schema(
@@ -310,6 +315,7 @@ public class PortalInstance implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
 	protected Map<String, String> portalInstanceInitializerPayload;
 
+	@JsonIgnore
 	private Supplier<Map<String, String>>
 		_portalInstanceInitializerPayloadSupplier;
 
@@ -351,6 +357,7 @@ public class PortalInstance implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String virtualHost;
 
+	@JsonIgnore
 	private Supplier<String> _virtualHostSupplier;
 
 	@Override

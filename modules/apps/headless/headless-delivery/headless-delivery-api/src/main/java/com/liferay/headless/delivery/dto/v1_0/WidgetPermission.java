@@ -86,6 +86,7 @@ public class WidgetPermission implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String[] actionKeys;
 
+	@JsonIgnore
 	private Supplier<String[]> _actionKeysSupplier;
 
 	@Schema
@@ -126,6 +127,7 @@ public class WidgetPermission implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String roleKey;
 
+	@JsonIgnore
 	private Supplier<String> _roleKeySupplier;
 
 	@Override

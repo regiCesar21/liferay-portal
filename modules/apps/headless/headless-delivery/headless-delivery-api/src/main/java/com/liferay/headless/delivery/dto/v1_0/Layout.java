@@ -101,6 +101,7 @@ public class Layout implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Align align;
 
+	@JsonIgnore
 	private Supplier<Align> _alignSupplier;
 
 	@Schema(deprecated = true)
@@ -142,6 +143,7 @@ public class Layout implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String borderColor;
 
+	@JsonIgnore
 	private Supplier<String> _borderColorSupplier;
 
 	@Schema(deprecated = true)
@@ -195,6 +197,7 @@ public class Layout implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected BorderRadius borderRadius;
 
+	@JsonIgnore
 	private Supplier<BorderRadius> _borderRadiusSupplier;
 
 	@Schema(deprecated = true)
@@ -236,6 +239,7 @@ public class Layout implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Integer borderWidth;
 
+	@JsonIgnore
 	private Supplier<Integer> _borderWidthSupplier;
 
 	@Schema
@@ -288,6 +292,7 @@ public class Layout implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected ContainerType containerType;
 
+	@JsonIgnore
 	private Supplier<ContainerType> _containerTypeSupplier;
 
 	@Schema(deprecated = true)
@@ -342,6 +347,7 @@ public class Layout implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected ContentDisplay contentDisplay;
 
+	@JsonIgnore
 	private Supplier<ContentDisplay> _contentDisplaySupplier;
 
 	@Schema(deprecated = true)
@@ -395,6 +401,7 @@ public class Layout implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Justify justify;
 
+	@JsonIgnore
 	private Supplier<Justify> _justifySupplier;
 
 	@Schema(deprecated = true)
@@ -436,6 +443,7 @@ public class Layout implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Integer marginBottom;
 
+	@JsonIgnore
 	private Supplier<Integer> _marginBottomSupplier;
 
 	@Schema(deprecated = true)
@@ -477,6 +485,7 @@ public class Layout implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Integer marginLeft;
 
+	@JsonIgnore
 	private Supplier<Integer> _marginLeftSupplier;
 
 	@Schema(deprecated = true)
@@ -518,6 +527,7 @@ public class Layout implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Integer marginRight;
 
+	@JsonIgnore
 	private Supplier<Integer> _marginRightSupplier;
 
 	@Schema(deprecated = true)
@@ -559,6 +569,7 @@ public class Layout implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Integer marginTop;
 
+	@JsonIgnore
 	private Supplier<Integer> _marginTopSupplier;
 
 	@Schema(deprecated = true)
@@ -600,6 +611,7 @@ public class Layout implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Integer opacity;
 
+	@JsonIgnore
 	private Supplier<Integer> _opacitySupplier;
 
 	@Schema(deprecated = true)
@@ -641,6 +653,7 @@ public class Layout implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Integer paddingBottom;
 
+	@JsonIgnore
 	private Supplier<Integer> _paddingBottomSupplier;
 
 	@Schema(deprecated = true)
@@ -682,6 +695,7 @@ public class Layout implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Integer paddingHorizontal;
 
+	@JsonIgnore
 	private Supplier<Integer> _paddingHorizontalSupplier;
 
 	@Schema(deprecated = true)
@@ -723,6 +737,7 @@ public class Layout implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Integer paddingLeft;
 
+	@JsonIgnore
 	private Supplier<Integer> _paddingLeftSupplier;
 
 	@Schema(deprecated = true)
@@ -764,6 +779,7 @@ public class Layout implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Integer paddingRight;
 
+	@JsonIgnore
 	private Supplier<Integer> _paddingRightSupplier;
 
 	@Schema(deprecated = true)
@@ -805,6 +821,7 @@ public class Layout implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Integer paddingTop;
 
+	@JsonIgnore
 	private Supplier<Integer> _paddingTopSupplier;
 
 	@Schema(deprecated = true)
@@ -858,6 +875,7 @@ public class Layout implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Shadow shadow;
 
+	@JsonIgnore
 	private Supplier<Shadow> _shadowSupplier;
 
 	@Schema
@@ -910,6 +928,7 @@ public class Layout implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected WidthType widthType;
 
+	@JsonIgnore
 	private Supplier<WidthType> _widthTypeSupplier;
 
 	@Override

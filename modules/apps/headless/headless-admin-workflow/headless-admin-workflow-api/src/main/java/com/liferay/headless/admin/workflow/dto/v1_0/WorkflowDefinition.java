@@ -90,6 +90,7 @@ public class WorkflowDefinition implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Boolean active;
 
+	@JsonIgnore
 	private Supplier<Boolean> _activeSupplier;
 
 	@Schema
@@ -130,6 +131,7 @@ public class WorkflowDefinition implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String content;
 
+	@JsonIgnore
 	private Supplier<String> _contentSupplier;
 
 	@Schema
@@ -170,6 +172,7 @@ public class WorkflowDefinition implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Date dateModified;
 
+	@JsonIgnore
 	private Supplier<Date> _dateModifiedSupplier;
 
 	@Schema
@@ -210,6 +213,7 @@ public class WorkflowDefinition implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected String description;
 
+	@JsonIgnore
 	private Supplier<String> _descriptionSupplier;
 
 	@Schema
@@ -248,6 +252,7 @@ public class WorkflowDefinition implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String name;
 
+	@JsonIgnore
 	private Supplier<String> _nameSupplier;
 
 	@Schema
@@ -288,6 +293,7 @@ public class WorkflowDefinition implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String title;
 
+	@JsonIgnore
 	private Supplier<String> _titleSupplier;
 
 	@Schema
@@ -328,6 +334,7 @@ public class WorkflowDefinition implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String version;
 
+	@JsonIgnore
 	private Supplier<String> _versionSupplier;
 
 	@Override

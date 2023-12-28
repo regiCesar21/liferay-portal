@@ -93,6 +93,7 @@ public class AppWorkflowTask implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected AppWorkflowDataLayoutLink[] appWorkflowDataLayoutLinks;
 
+	@JsonIgnore
 	private Supplier<AppWorkflowDataLayoutLink[]>
 		_appWorkflowDataLayoutLinksSupplier;
 
@@ -139,6 +140,7 @@ public class AppWorkflowTask implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected AppWorkflowRoleAssignment[] appWorkflowRoleAssignments;
 
+	@JsonIgnore
 	private Supplier<AppWorkflowRoleAssignment[]>
 		_appWorkflowRoleAssignmentsSupplier;
 
@@ -184,6 +186,7 @@ public class AppWorkflowTask implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected AppWorkflowTransition[] appWorkflowTransitions;
 
+	@JsonIgnore
 	private Supplier<AppWorkflowTransition[]> _appWorkflowTransitionsSupplier;
 
 	@Schema
@@ -222,6 +225,7 @@ public class AppWorkflowTask implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String name;
 
+	@JsonIgnore
 	private Supplier<String> _nameSupplier;
 
 	@Override

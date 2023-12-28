@@ -96,6 +96,7 @@ public class Instance implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected String assetTitle;
 
+	@JsonIgnore
 	private Supplier<String> _assetTitleSupplier;
 
 	@Schema
@@ -138,6 +139,7 @@ public class Instance implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Map<String, String> assetTitle_i18n;
 
+	@JsonIgnore
 	private Supplier<Map<String, String>> _assetTitle_i18nSupplier;
 
 	@Schema
@@ -178,6 +180,7 @@ public class Instance implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected String assetType;
 
+	@JsonIgnore
 	private Supplier<String> _assetTypeSupplier;
 
 	@Schema
@@ -220,6 +223,7 @@ public class Instance implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Map<String, String> assetType_i18n;
 
+	@JsonIgnore
 	private Supplier<Map<String, String>> _assetType_i18nSupplier;
 
 	@Schema
@@ -261,6 +265,7 @@ public class Instance implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Assignee[] assignees;
 
+	@JsonIgnore
 	private Supplier<Assignee[]> _assigneesSupplier;
 
 	@Schema
@@ -301,6 +306,7 @@ public class Instance implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String className;
 
+	@JsonIgnore
 	private Supplier<String> _classNameSupplier;
 
 	@Schema
@@ -341,6 +347,7 @@ public class Instance implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Long classPK;
 
+	@JsonIgnore
 	private Supplier<Long> _classPKSupplier;
 
 	@Schema
@@ -381,6 +388,7 @@ public class Instance implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Boolean completed;
 
+	@JsonIgnore
 	private Supplier<Boolean> _completedSupplier;
 
 	@Schema
@@ -422,6 +430,7 @@ public class Instance implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Creator creator;
 
+	@JsonIgnore
 	private Supplier<Creator> _creatorSupplier;
 
 	@Schema
@@ -462,6 +471,7 @@ public class Instance implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Date dateCompletion;
 
+	@JsonIgnore
 	private Supplier<Date> _dateCompletionSupplier;
 
 	@Schema
@@ -502,6 +512,7 @@ public class Instance implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Date dateCreated;
 
+	@JsonIgnore
 	private Supplier<Date> _dateCreatedSupplier;
 
 	@Schema
@@ -542,6 +553,7 @@ public class Instance implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Date dateModified;
 
+	@JsonIgnore
 	private Supplier<Date> _dateModifiedSupplier;
 
 	@Schema
@@ -582,6 +594,7 @@ public class Instance implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Long duration;
 
+	@JsonIgnore
 	private Supplier<Long> _durationSupplier;
 
 	@Schema
@@ -620,6 +633,7 @@ public class Instance implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Long id;
 
+	@JsonIgnore
 	private Supplier<Long> _idSupplier;
 
 	@Schema
@@ -660,6 +674,7 @@ public class Instance implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Long processId;
 
+	@JsonIgnore
 	private Supplier<Long> _processIdSupplier;
 
 	@Schema
@@ -700,6 +715,7 @@ public class Instance implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String processVersion;
 
+	@JsonIgnore
 	private Supplier<String> _processVersionSupplier;
 
 	@Schema
@@ -741,6 +757,7 @@ public class Instance implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected SLAResult[] slaResults;
 
+	@JsonIgnore
 	private Supplier<SLAResult[]> _slaResultsSupplier;
 
 	@Schema
@@ -793,6 +810,7 @@ public class Instance implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected SLAStatus slaStatus;
 
+	@JsonIgnore
 	private Supplier<SLAStatus> _slaStatusSupplier;
 
 	@Schema
@@ -833,6 +851,7 @@ public class Instance implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected String[] taskNames;
 
+	@JsonIgnore
 	private Supplier<String[]> _taskNamesSupplier;
 
 	@Schema
@@ -874,6 +893,7 @@ public class Instance implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Transition[] transitions;
 
+	@JsonIgnore
 	private Supplier<Transition[]> _transitionsSupplier;
 
 	@Override

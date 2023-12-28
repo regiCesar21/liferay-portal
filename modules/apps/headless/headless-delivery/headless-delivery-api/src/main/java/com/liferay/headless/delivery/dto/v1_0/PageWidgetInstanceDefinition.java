@@ -91,6 +91,7 @@ public class PageWidgetInstanceDefinition implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected FragmentStyle fragmentStyle;
 
+	@JsonIgnore
 	private Supplier<FragmentStyle> _fragmentStyleSupplier;
 
 	@Schema
@@ -133,6 +134,7 @@ public class PageWidgetInstanceDefinition implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected FragmentViewport[] fragmentViewports;
 
+	@JsonIgnore
 	private Supplier<FragmentViewport[]> _fragmentViewportsSupplier;
 
 	@Schema
@@ -175,6 +177,7 @@ public class PageWidgetInstanceDefinition implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected WidgetInstance widgetInstance;
 
+	@JsonIgnore
 	private Supplier<WidgetInstance> _widgetInstanceSupplier;
 
 	@Override

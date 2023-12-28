@@ -91,6 +91,7 @@ public class AppWorkflowDataRecordLink implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected AppWorkflow appWorkflow;
 
+	@JsonIgnore
 	private Supplier<AppWorkflow> _appWorkflowSupplier;
 
 	@Schema
@@ -131,6 +132,7 @@ public class AppWorkflowDataRecordLink implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Long dataRecordId;
 
+	@JsonIgnore
 	private Supplier<Long> _dataRecordIdSupplier;
 
 	@Override

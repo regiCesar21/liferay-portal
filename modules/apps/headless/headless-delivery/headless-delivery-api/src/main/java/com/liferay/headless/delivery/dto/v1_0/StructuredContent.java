@@ -105,6 +105,7 @@ public class StructuredContent implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Map<String, Map<String, String>> actions;
 
+	@JsonIgnore
 	private Supplier<Map<String, Map<String, String>>> _actionsSupplier;
 
 	@Schema(description = "The structured content's average rating.")
@@ -147,6 +148,7 @@ public class StructuredContent implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected AggregateRating aggregateRating;
 
+	@JsonIgnore
 	private Supplier<AggregateRating> _aggregateRatingSupplier;
 
 	@Schema
@@ -187,6 +189,7 @@ public class StructuredContent implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected String assetLibraryKey;
 
+	@JsonIgnore
 	private Supplier<String> _assetLibraryKeySupplier;
 
 	@Schema(
@@ -231,6 +234,7 @@ public class StructuredContent implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected String[] availableLanguages;
 
+	@JsonIgnore
 	private Supplier<String[]> _availableLanguagesSupplier;
 
 	@Schema(
@@ -276,6 +280,7 @@ public class StructuredContent implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected ContentField[] contentFields;
 
+	@JsonIgnore
 	private Supplier<ContentField[]> _contentFieldsSupplier;
 
 	@Schema(description = "The ID of the `ContentStructure`.")
@@ -317,6 +322,7 @@ public class StructuredContent implements Serializable {
 	@NotNull
 	protected Long contentStructureId;
 
+	@JsonIgnore
 	private Supplier<Long> _contentStructureIdSupplier;
 
 	@Schema(description = "The structured content's creator.")
@@ -358,6 +364,7 @@ public class StructuredContent implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Creator creator;
 
+	@JsonIgnore
 	private Supplier<Creator> _creatorSupplier;
 
 	@Schema
@@ -399,6 +406,7 @@ public class StructuredContent implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected CustomField[] customFields;
 
+	@JsonIgnore
 	private Supplier<CustomField[]> _customFieldsSupplier;
 
 	@Schema(description = "The structured content's creation date.")
@@ -439,6 +447,7 @@ public class StructuredContent implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Date dateCreated;
 
+	@JsonIgnore
 	private Supplier<Date> _dateCreatedSupplier;
 
 	@Schema(
@@ -483,6 +492,7 @@ public class StructuredContent implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Date dateModified;
 
+	@JsonIgnore
 	private Supplier<Date> _dateModifiedSupplier;
 
 	@Schema(
@@ -527,6 +537,7 @@ public class StructuredContent implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Date datePublished;
 
+	@JsonIgnore
 	private Supplier<Date> _datePublishedSupplier;
 
 	@Schema(description = "The structured content's description.")
@@ -567,6 +578,7 @@ public class StructuredContent implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String description;
 
+	@JsonIgnore
 	private Supplier<String> _descriptionSupplier;
 
 	@Schema
@@ -609,6 +621,7 @@ public class StructuredContent implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Map<String, String> description_i18n;
 
+	@JsonIgnore
 	private Supplier<Map<String, String>> _description_i18nSupplier;
 
 	@Schema(
@@ -653,6 +666,7 @@ public class StructuredContent implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String friendlyUrlPath;
 
+	@JsonIgnore
 	private Supplier<String> _friendlyUrlPathSupplier;
 
 	@Schema
@@ -697,6 +711,7 @@ public class StructuredContent implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Map<String, String> friendlyUrlPath_i18n;
 
+	@JsonIgnore
 	private Supplier<Map<String, String>> _friendlyUrlPath_i18nSupplier;
 
 	@Schema(description = "The structured content's ID.")
@@ -735,6 +750,7 @@ public class StructuredContent implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Long id;
 
+	@JsonIgnore
 	private Supplier<Long> _idSupplier;
 
 	@Schema(
@@ -777,6 +793,7 @@ public class StructuredContent implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected String key;
 
+	@JsonIgnore
 	private Supplier<String> _keySupplier;
 
 	@Schema(
@@ -821,6 +838,7 @@ public class StructuredContent implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String[] keywords;
 
+	@JsonIgnore
 	private Supplier<String[]> _keywordsSupplier;
 
 	@Schema(
@@ -865,6 +883,7 @@ public class StructuredContent implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Integer numberOfComments;
 
+	@JsonIgnore
 	private Supplier<Integer> _numberOfCommentsSupplier;
 
 	@Schema
@@ -907,6 +926,7 @@ public class StructuredContent implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected RelatedContent[] relatedContents;
 
+	@JsonIgnore
 	private Supplier<RelatedContent[]> _relatedContentsSupplier;
 
 	@Schema(
@@ -953,6 +973,7 @@ public class StructuredContent implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected RenderedContent[] renderedContents;
 
+	@JsonIgnore
 	private Supplier<RenderedContent[]> _renderedContentsSupplier;
 
 	@Schema(
@@ -997,6 +1018,7 @@ public class StructuredContent implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Long siteId;
 
+	@JsonIgnore
 	private Supplier<Long> _siteIdSupplier;
 
 	@Schema
@@ -1037,6 +1059,7 @@ public class StructuredContent implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Boolean subscribed;
 
+	@JsonIgnore
 	private Supplier<Boolean> _subscribedSupplier;
 
 	@Schema(
@@ -1085,6 +1108,7 @@ public class StructuredContent implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected TaxonomyCategoryBrief[] taxonomyCategoryBriefs;
 
+	@JsonIgnore
 	private Supplier<TaxonomyCategoryBrief[]> _taxonomyCategoryBriefsSupplier;
 
 	@Schema(
@@ -1129,6 +1153,7 @@ public class StructuredContent implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
 	protected Long[] taxonomyCategoryIds;
 
+	@JsonIgnore
 	private Supplier<Long[]> _taxonomyCategoryIdsSupplier;
 
 	@Schema(description = "The structured content's main title.")
@@ -1170,6 +1195,7 @@ public class StructuredContent implements Serializable {
 	@NotEmpty
 	protected String title;
 
+	@JsonIgnore
 	private Supplier<String> _titleSupplier;
 
 	@Schema
@@ -1212,6 +1238,7 @@ public class StructuredContent implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Map<String, String> title_i18n;
 
+	@JsonIgnore
 	private Supplier<Map<String, String>> _title_i18nSupplier;
 
 	@Schema(
@@ -1254,6 +1281,7 @@ public class StructuredContent implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected String uuid;
 
+	@JsonIgnore
 	private Supplier<String> _uuidSupplier;
 
 	@Schema(
@@ -1310,6 +1338,7 @@ public class StructuredContent implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
 	protected ViewableBy viewableBy;
 
+	@JsonIgnore
 	private Supplier<ViewableBy> _viewableBySupplier;
 
 	@Override

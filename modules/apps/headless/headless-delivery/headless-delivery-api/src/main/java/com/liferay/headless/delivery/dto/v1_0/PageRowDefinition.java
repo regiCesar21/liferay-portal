@@ -89,6 +89,7 @@ public class PageRowDefinition implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected FragmentStyle fragmentStyle;
 
+	@JsonIgnore
 	private Supplier<FragmentStyle> _fragmentStyleSupplier;
 
 	@Schema
@@ -131,6 +132,7 @@ public class PageRowDefinition implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected FragmentViewport[] fragmentViewports;
 
+	@JsonIgnore
 	private Supplier<FragmentViewport[]> _fragmentViewportsSupplier;
 
 	@Schema
@@ -171,6 +173,7 @@ public class PageRowDefinition implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Boolean gutters;
 
+	@JsonIgnore
 	private Supplier<Boolean> _guttersSupplier;
 
 	@Schema(
@@ -215,6 +218,7 @@ public class PageRowDefinition implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Boolean indexed;
 
+	@JsonIgnore
 	private Supplier<Boolean> _indexedSupplier;
 
 	@Schema
@@ -255,6 +259,7 @@ public class PageRowDefinition implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Integer modulesPerRow;
 
+	@JsonIgnore
 	private Supplier<Integer> _modulesPerRowSupplier;
 
 	@Schema
@@ -295,6 +300,7 @@ public class PageRowDefinition implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Integer numberOfColumns;
 
+	@JsonIgnore
 	private Supplier<Integer> _numberOfColumnsSupplier;
 
 	@Schema
@@ -335,6 +341,7 @@ public class PageRowDefinition implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Boolean reverseOrder;
 
+	@JsonIgnore
 	private Supplier<Boolean> _reverseOrderSupplier;
 
 	@Schema(
@@ -383,6 +390,7 @@ public class PageRowDefinition implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected RowViewportConfig rowViewportConfig;
 
+	@JsonIgnore
 	private Supplier<RowViewportConfig> _rowViewportConfigSupplier;
 
 	@Schema
@@ -424,6 +432,7 @@ public class PageRowDefinition implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected RowViewport[] rowViewports;
 
+	@JsonIgnore
 	private Supplier<RowViewport[]> _rowViewportsSupplier;
 
 	@Schema
@@ -464,6 +473,7 @@ public class PageRowDefinition implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String verticalAlignment;
 
+	@JsonIgnore
 	private Supplier<String> _verticalAlignmentSupplier;
 
 	@Override

@@ -88,6 +88,7 @@ public class AppWorkflowDataLayoutLink implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Long dataLayoutId;
 
+	@JsonIgnore
 	private Supplier<Long> _dataLayoutIdSupplier;
 
 	@Schema
@@ -128,6 +129,7 @@ public class AppWorkflowDataLayoutLink implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Boolean readOnly;
 
+	@JsonIgnore
 	private Supplier<Boolean> _readOnlySupplier;
 
 	@Override
