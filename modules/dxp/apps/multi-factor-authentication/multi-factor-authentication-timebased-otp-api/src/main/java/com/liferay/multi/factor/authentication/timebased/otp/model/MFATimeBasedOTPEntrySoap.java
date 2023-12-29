@@ -38,6 +38,7 @@ public class MFATimeBasedOTPEntrySoap implements Serializable {
 		soapModel.setLastFailIP(model.getLastFailIP());
 		soapModel.setLastSuccessDate(model.getLastSuccessDate());
 		soapModel.setLastSuccessIP(model.getLastSuccessIP());
+		soapModel.setLastValidTOTP(model.getLastValidTOTP());
 		soapModel.setSharedSecret(model.getSharedSecret());
 
 		return soapModel;
@@ -197,6 +198,14 @@ public class MFATimeBasedOTPEntrySoap implements Serializable {
 		_lastSuccessIP = lastSuccessIP;
 	}
 
+	public String getLastValidTOTP() {
+		return _lastValidTOTP;
+	}
+
+	public void setLastValidTOTP(String lastValidTOTP) {
+		_lastValidTOTP = lastValidTOTP;
+	}
+
 	public String getSharedSecret() {
 		return _sharedSecret;
 	}
@@ -217,6 +226,7 @@ public class MFATimeBasedOTPEntrySoap implements Serializable {
 	private String _lastFailIP;
 	private Date _lastSuccessDate;
 	private String _lastSuccessIP;
+	private String _lastValidTOTP;
 	private String _sharedSecret;
 
 }
