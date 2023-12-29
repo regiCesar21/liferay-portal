@@ -19,6 +19,8 @@ import com.liferay.osb.asah.test.util.annotation.BQSQLResource;
 import com.liferay.osb.asah.test.util.spring.OSBAsahSpringExtension;
 import com.liferay.osb.asah.test.util.spring.OSBAsahTestExecutionListenersContext;
 
+import java.time.LocalDate;
+
 import java.util.Arrays;
 import java.util.List;
 import java.util.function.Function;
@@ -172,6 +174,55 @@ public class SiteHistogramDogTest
 				_siteHistogramDog.getHistogramMetricBag(
 					_getSearchQueryContext(), SiteMetricType.VISITORS)),
 			0);
+	}
+
+	@BQSQLResource(
+		resourcePath = "test_bq_events_site_histogram_monthly_interval.sql"
+	)
+	@Test
+	public void testGetHistogramMetricMonthlyIntervalCustomRange() {
+		SearchQueryContext searchQueryContext = new SearchQueryContext();
+
+		searchQueryContext.setChannelId("661075223757747223");
+		searchQueryContext.setIncludePrevious(Boolean.TRUE);
+		searchQueryContext.setInterval(Interval.MONTH.getKey());
+		searchQueryContext.setTimeRange(
+			TimeRange.of(
+				LocalDate.parse("2023-12-22"), LocalDate.parse("2023-10-23")));
+
+		HistogramMetricBag histogramMetricBag =
+			_siteHistogramDog.getHistogramMetricBag(
+				searchQueryContext, SiteMetricType.SESSIONS_PER_VISITOR);
+
+		Assertions.assertArrayEquals(
+			new double[] {16, 15, 11}, _getActualValues(histogramMetricBag), 0);
+		Assertions.assertArrayEquals(
+			new double[] {4, 15, 16}, _getPreviousValues(histogramMetricBag),
+			0);
+	}
+
+	@BQSQLResource(
+		resourcePath = "test_bq_events_site_histogram_weekly_interval.sql"
+	)
+	@Test
+	public void testGetHistogramMetricWeeklyIntervalCustomRange() {
+		SearchQueryContext searchQueryContext = new SearchQueryContext();
+
+		searchQueryContext.setChannelId("661075223757747223");
+		searchQueryContext.setIncludePrevious(Boolean.TRUE);
+		searchQueryContext.setInterval(Interval.WEEK.getKey());
+		searchQueryContext.setTimeRange(
+			TimeRange.of(
+				LocalDate.parse("2023-12-22"), LocalDate.parse("2023-12-11")));
+
+		HistogramMetricBag histogramMetricBag =
+			_siteHistogramDog.getHistogramMetricBag(
+				searchQueryContext, SiteMetricType.SESSIONS_PER_VISITOR);
+
+		Assertions.assertArrayEquals(
+			new double[] {7, 7, 6}, _getActualValues(histogramMetricBag), 0);
+		Assertions.assertArrayEquals(
+			new double[] {0, 3, 7}, _getPreviousValues(histogramMetricBag), 0);
 	}
 
 	private double[] _getActualValues(HistogramMetricBag histogramMetricBag) {
