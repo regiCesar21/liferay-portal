@@ -9,7 +9,7 @@ import React, {useEffect, useState} from 'react';
 
 import DatePicker from '../components/DatePicker';
 import {usePermissions} from '../hooks/permissions';
-import {formatDate, setDisabledAttribute} from '../utilities/date';
+import {formatDate} from '../utilities/date';
 
 const YEAR_IN_MS = 1000 * 60 * 60 * 24 * 365;
 
@@ -47,12 +47,6 @@ export default function LicenseDates({
 		updateValidation
 	]);
 
-	useEffect(() => {
-		if (id) {
-			setDisabledAttribute(id, !updateDatePermission);
-		}
-	});
-
 	function handleExpirationDateChange(val) {
 		const date = new Date(val);
 
@@ -89,8 +83,7 @@ export default function LicenseDates({
 				</label>
 			</ClayTableCell>
 
-			{(updateDatePermission ||
-				(!updateDatePermission && !restricted)) && (
+			{updateDatePermission && (
 				<ClayTableCell
 					className={`input-group-sm ${
 						!validDates ? 'has-error' : ''
@@ -107,7 +100,7 @@ export default function LicenseDates({
 				</ClayTableCell>
 			)}
 
-			{!updateDatePermission && restricted && (
+			{!updateDatePermission && (
 				<>
 					{!detached && (
 						<ClayTableCell>
