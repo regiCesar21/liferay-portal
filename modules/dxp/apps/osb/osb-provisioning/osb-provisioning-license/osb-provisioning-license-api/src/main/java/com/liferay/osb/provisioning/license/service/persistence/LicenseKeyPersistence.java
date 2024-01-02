@@ -968,6 +968,178 @@ public interface LicenseKeyPersistence extends BasePersistence<LicenseKey> {
 		String assetReceiptLicenseUuid, boolean complimentary, boolean active);
 
 	/**
+	 * Returns all the license keies where productPurchaseKey = &#63; and complimentary = &#63; and active = &#63;.
+	 *
+	 * @param productPurchaseKey the product purchase key
+	 * @param complimentary the complimentary
+	 * @param active the active
+	 * @return the matching license keies
+	 */
+	public java.util.List<LicenseKey> findByPPK_C_A(
+		String productPurchaseKey, boolean complimentary, boolean active);
+
+	/**
+	 * Returns a range of all the license keies where productPurchaseKey = &#63; and complimentary = &#63; and active = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>LicenseKeyModelImpl</code>.
+	 * </p>
+	 *
+	 * @param productPurchaseKey the product purchase key
+	 * @param complimentary the complimentary
+	 * @param active the active
+	 * @param start the lower bound of the range of license keies
+	 * @param end the upper bound of the range of license keies (not inclusive)
+	 * @return the range of matching license keies
+	 */
+	public java.util.List<LicenseKey> findByPPK_C_A(
+		String productPurchaseKey, boolean complimentary, boolean active,
+		int start, int end);
+
+	/**
+	 * Returns an ordered range of all the license keies where productPurchaseKey = &#63; and complimentary = &#63; and active = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>LicenseKeyModelImpl</code>.
+	 * </p>
+	 *
+	 * @param productPurchaseKey the product purchase key
+	 * @param complimentary the complimentary
+	 * @param active the active
+	 * @param start the lower bound of the range of license keies
+	 * @param end the upper bound of the range of license keies (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching license keies
+	 */
+	public java.util.List<LicenseKey> findByPPK_C_A(
+		String productPurchaseKey, boolean complimentary, boolean active,
+		int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<LicenseKey>
+			orderByComparator);
+
+	/**
+	 * Returns an ordered range of all the license keies where productPurchaseKey = &#63; and complimentary = &#63; and active = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>LicenseKeyModelImpl</code>.
+	 * </p>
+	 *
+	 * @param productPurchaseKey the product purchase key
+	 * @param complimentary the complimentary
+	 * @param active the active
+	 * @param start the lower bound of the range of license keies
+	 * @param end the upper bound of the range of license keies (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
+	 * @return the ordered range of matching license keies
+	 */
+	public java.util.List<LicenseKey> findByPPK_C_A(
+		String productPurchaseKey, boolean complimentary, boolean active,
+		int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<LicenseKey>
+			orderByComparator,
+		boolean useFinderCache);
+
+	/**
+	 * Returns the first license key in the ordered set where productPurchaseKey = &#63; and complimentary = &#63; and active = &#63;.
+	 *
+	 * @param productPurchaseKey the product purchase key
+	 * @param complimentary the complimentary
+	 * @param active the active
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching license key
+	 * @throws NoSuchLicenseKeyException if a matching license key could not be found
+	 */
+	public LicenseKey findByPPK_C_A_First(
+			String productPurchaseKey, boolean complimentary, boolean active,
+			com.liferay.portal.kernel.util.OrderByComparator<LicenseKey>
+				orderByComparator)
+		throws NoSuchLicenseKeyException;
+
+	/**
+	 * Returns the first license key in the ordered set where productPurchaseKey = &#63; and complimentary = &#63; and active = &#63;.
+	 *
+	 * @param productPurchaseKey the product purchase key
+	 * @param complimentary the complimentary
+	 * @param active the active
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching license key, or <code>null</code> if a matching license key could not be found
+	 */
+	public LicenseKey fetchByPPK_C_A_First(
+		String productPurchaseKey, boolean complimentary, boolean active,
+		com.liferay.portal.kernel.util.OrderByComparator<LicenseKey>
+			orderByComparator);
+
+	/**
+	 * Returns the last license key in the ordered set where productPurchaseKey = &#63; and complimentary = &#63; and active = &#63;.
+	 *
+	 * @param productPurchaseKey the product purchase key
+	 * @param complimentary the complimentary
+	 * @param active the active
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching license key
+	 * @throws NoSuchLicenseKeyException if a matching license key could not be found
+	 */
+	public LicenseKey findByPPK_C_A_Last(
+			String productPurchaseKey, boolean complimentary, boolean active,
+			com.liferay.portal.kernel.util.OrderByComparator<LicenseKey>
+				orderByComparator)
+		throws NoSuchLicenseKeyException;
+
+	/**
+	 * Returns the last license key in the ordered set where productPurchaseKey = &#63; and complimentary = &#63; and active = &#63;.
+	 *
+	 * @param productPurchaseKey the product purchase key
+	 * @param complimentary the complimentary
+	 * @param active the active
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching license key, or <code>null</code> if a matching license key could not be found
+	 */
+	public LicenseKey fetchByPPK_C_A_Last(
+		String productPurchaseKey, boolean complimentary, boolean active,
+		com.liferay.portal.kernel.util.OrderByComparator<LicenseKey>
+			orderByComparator);
+
+	/**
+	 * Returns the license keies before and after the current license key in the ordered set where productPurchaseKey = &#63; and complimentary = &#63; and active = &#63;.
+	 *
+	 * @param licenseKeyId the primary key of the current license key
+	 * @param productPurchaseKey the product purchase key
+	 * @param complimentary the complimentary
+	 * @param active the active
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the previous, current, and next license key
+	 * @throws NoSuchLicenseKeyException if a license key with the primary key could not be found
+	 */
+	public LicenseKey[] findByPPK_C_A_PrevAndNext(
+			long licenseKeyId, String productPurchaseKey, boolean complimentary,
+			boolean active,
+			com.liferay.portal.kernel.util.OrderByComparator<LicenseKey>
+				orderByComparator)
+		throws NoSuchLicenseKeyException;
+
+	/**
+	 * Removes all the license keies where productPurchaseKey = &#63; and complimentary = &#63; and active = &#63; from the database.
+	 *
+	 * @param productPurchaseKey the product purchase key
+	 * @param complimentary the complimentary
+	 * @param active the active
+	 */
+	public void removeByPPK_C_A(
+		String productPurchaseKey, boolean complimentary, boolean active);
+
+	/**
+	 * Returns the number of license keies where productPurchaseKey = &#63; and complimentary = &#63; and active = &#63;.
+	 *
+	 * @param productPurchaseKey the product purchase key
+	 * @param complimentary the complimentary
+	 * @param active the active
+	 * @return the number of matching license keies
+	 */
+	public int countByPPK_C_A(
+		String productPurchaseKey, boolean complimentary, boolean active);
+
+	/**
 	 * Returns all the license keies where productName = &#63; and serverId = &#63; and active = &#63;.
 	 *
 	 * @param productName the product name

@@ -126,4 +126,9 @@ public interface ProductConsumptionService extends BaseService {
 			String domain, String entityName, String entityId)
 		throws PortalException;
 
+	public ProductConsumption updateProductConsumption(
+			long productConsumptionId, Date startDate, Date endDate,
+			List<ProductField> productFields)
+		throws PortalException;
+
 }

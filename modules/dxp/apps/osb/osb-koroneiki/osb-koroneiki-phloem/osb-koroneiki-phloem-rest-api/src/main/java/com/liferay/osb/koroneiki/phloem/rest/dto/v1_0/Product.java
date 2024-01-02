@@ -28,6 +28,7 @@ import java.util.Iterator;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
+import java.util.function.Supplier;
 
 import javax.annotation.Generated;
 
@@ -57,56 +58,78 @@ public class Product implements Serializable {
 
 	@Schema(description = "The product's creation date.")
 	public Date getDateCreated() {
+		if (_dateCreatedSupplier != null) {
+			dateCreated = _dateCreatedSupplier.get();
+
+			_dateCreatedSupplier = null;
+		}
+
 		return dateCreated;
 	}
 
 	public void setDateCreated(Date dateCreated) {
 		this.dateCreated = dateCreated;
+
+		_dateCreatedSupplier = null;
 	}
 
 	@JsonIgnore
 	public void setDateCreated(
 		UnsafeSupplier<Date, Exception> dateCreatedUnsafeSupplier) {
 
-		try {
-			dateCreated = dateCreatedUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_dateCreatedSupplier = () -> {
+			try {
+				return dateCreatedUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField(description = "The product's creation date.")
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Date dateCreated;
 
+	private Supplier<Date> _dateCreatedSupplier;
+
 	@Schema(
 		description = "The most recent time that any of the product's fields changed."
 	)
 	public Date getDateModified() {
+		if (_dateModifiedSupplier != null) {
+			dateModified = _dateModifiedSupplier.get();
+
+			_dateModifiedSupplier = null;
+		}
+
 		return dateModified;
 	}
 
 	public void setDateModified(Date dateModified) {
 		this.dateModified = dateModified;
+
+		_dateModifiedSupplier = null;
 	}
 
 	@JsonIgnore
 	public void setDateModified(
 		UnsafeSupplier<Date, Exception> dateModifiedUnsafeSupplier) {
 
-		try {
-			dateModified = dateModifiedUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_dateModifiedSupplier = () -> {
+			try {
+				return dateModifiedUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField(
@@ -115,31 +138,43 @@ public class Product implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Date dateModified;
 
+	private Supplier<Date> _dateModifiedSupplier;
+
 	@Schema(
 		description = "The product's links to entities in external domains."
 	)
 	@Valid
 	public ExternalLink[] getExternalLinks() {
+		if (_externalLinksSupplier != null) {
+			externalLinks = _externalLinksSupplier.get();
+
+			_externalLinksSupplier = null;
+		}
+
 		return externalLinks;
 	}
 
 	public void setExternalLinks(ExternalLink[] externalLinks) {
 		this.externalLinks = externalLinks;
+
+		_externalLinksSupplier = null;
 	}
 
 	@JsonIgnore
 	public void setExternalLinks(
 		UnsafeSupplier<ExternalLink[], Exception> externalLinksUnsafeSupplier) {
 
-		try {
-			externalLinks = externalLinksUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_externalLinksSupplier = () -> {
+			try {
+				return externalLinksUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField(
@@ -148,52 +183,76 @@ public class Product implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected ExternalLink[] externalLinks;
 
+	private Supplier<ExternalLink[]> _externalLinksSupplier;
+
 	@Schema(description = "The product's key.")
 	public String getKey() {
+		if (_keySupplier != null) {
+			key = _keySupplier.get();
+
+			_keySupplier = null;
+		}
+
 		return key;
 	}
 
 	public void setKey(String key) {
 		this.key = key;
+
+		_keySupplier = null;
 	}
 
 	@JsonIgnore
 	public void setKey(UnsafeSupplier<String, Exception> keyUnsafeSupplier) {
-		try {
-			key = keyUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_keySupplier = () -> {
+			try {
+				return keyUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField(description = "The product's key.")
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected String key;
 
+	private Supplier<String> _keySupplier;
+
 	@Schema(description = "The name of the product.")
 	public String getName() {
+		if (_nameSupplier != null) {
+			name = _nameSupplier.get();
+
+			_nameSupplier = null;
+		}
+
 		return name;
 	}
 
 	public void setName(String name) {
 		this.name = name;
+
+		_nameSupplier = null;
 	}
 
 	@JsonIgnore
 	public void setName(UnsafeSupplier<String, Exception> nameUnsafeSupplier) {
-		try {
-			name = nameUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_nameSupplier = () -> {
+			try {
+				return nameUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField(description = "The name of the product.")
@@ -201,14 +260,24 @@ public class Product implements Serializable {
 	@NotEmpty
 	protected String name;
 
+	private Supplier<String> _nameSupplier;
+
 	@Schema
 	@Valid
 	public Map<String, String> getProperties() {
+		if (_propertiesSupplier != null) {
+			properties = _propertiesSupplier.get();
+
+			_propertiesSupplier = null;
+		}
+
 		return properties;
 	}
 
 	public void setProperties(Map<String, String> properties) {
 		this.properties = properties;
+
+		_propertiesSupplier = null;
 	}
 
 	@JsonIgnore
@@ -216,20 +285,24 @@ public class Product implements Serializable {
 		UnsafeSupplier<Map<String, String>, Exception>
 			propertiesUnsafeSupplier) {
 
-		try {
-			properties = propertiesUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_propertiesSupplier = () -> {
+			try {
+				return propertiesUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Map<String, String> properties;
+
+	private Supplier<Map<String, String>> _propertiesSupplier;
 
 	@Override
 	public boolean equals(Object object) {
@@ -261,6 +334,8 @@ public class Product implements Serializable {
 		DateFormat liferayToJSONDateFormat = new SimpleDateFormat(
 			"yyyy-MM-dd'T'HH:mm:ss'Z'");
 
+		Date dateCreated = getDateCreated();
+
 		if (dateCreated != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -275,6 +350,8 @@ public class Product implements Serializable {
 			sb.append("\"");
 		}
 
+		Date dateModified = getDateModified();
+
 		if (dateModified != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -288,6 +365,8 @@ public class Product implements Serializable {
 
 			sb.append("\"");
 		}
+
+		ExternalLink[] externalLinks = getExternalLinks();
 
 		if (externalLinks != null) {
 			if (sb.length() > 1) {
@@ -309,6 +388,8 @@ public class Product implements Serializable {
 			sb.append("]");
 		}
 
+		String key = getKey();
+
 		if (key != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -323,6 +404,8 @@ public class Product implements Serializable {
 			sb.append("\"");
 		}
 
+		String name = getName();
+
 		if (name != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -336,6 +419,8 @@ public class Product implements Serializable {
 
 			sb.append("\"");
 		}
+
+		Map<String, String> properties = getProperties();
 
 		if (properties != null) {
 			if (sb.length() > 1) {

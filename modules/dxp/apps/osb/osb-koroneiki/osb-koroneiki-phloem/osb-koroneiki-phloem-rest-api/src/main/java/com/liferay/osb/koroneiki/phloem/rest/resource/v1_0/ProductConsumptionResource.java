@@ -78,6 +78,11 @@ public interface ProductConsumptionResource {
 			String productConsumptionKey)
 		throws Exception;
 
+	public ProductConsumption putProductConsumption(
+			String agentName, String agentUID, String productConsumptionKey,
+			ProductConsumption productConsumption)
+		throws Exception;
+
 	public void deleteProductConsumptionProductConsumptionPermission(
 			String agentName, String agentUID, String productConsumptionKey,
 			ProductConsumptionPermission productConsumptionPermission)

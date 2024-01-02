@@ -388,6 +388,32 @@ public class ProductConsumptionServiceSoap {
 		}
 	}
 
+	public static com.liferay.osb.koroneiki.trunk.model.ProductConsumptionSoap
+			updateProductConsumption(
+				long productConsumptionId, java.util.Date startDate,
+				java.util.Date endDate,
+				com.liferay.osb.koroneiki.trunk.model.ProductFieldSoap[]
+					productFields)
+		throws RemoteException {
+
+		try {
+			com.liferay.osb.koroneiki.trunk.model.ProductConsumption
+				returnValue =
+					ProductConsumptionServiceUtil.updateProductConsumption(
+						productConsumptionId, startDate, endDate,
+						com.liferay.osb.koroneiki.trunk.model.impl.
+							ProductFieldModelImpl.toModels(productFields));
+
+			return com.liferay.osb.koroneiki.trunk.model.ProductConsumptionSoap.
+				toSoapModel(returnValue);
+		}
+		catch (Exception exception) {
+			_log.error(exception, exception);
+
+			throw new RemoteException(exception.getMessage());
+		}
+	}
+
 	private static Log _log = LogFactoryUtil.getLog(
 		ProductConsumptionServiceSoap.class);
 

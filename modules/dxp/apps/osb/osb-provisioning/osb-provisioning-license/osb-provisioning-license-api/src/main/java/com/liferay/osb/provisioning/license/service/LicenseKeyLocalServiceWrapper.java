@@ -442,6 +442,15 @@ public class LicenseKeyLocalServiceWrapper
 
 	@Override
 	public java.util.List<com.liferay.osb.provisioning.license.model.LicenseKey>
+		getLicenseKeys(
+			String productPurchaseKey, boolean complimentary, boolean active) {
+
+		return _licenseKeyLocalService.getLicenseKeys(
+			productPurchaseKey, complimentary, active);
+	}
+
+	@Override
+	public java.util.List<com.liferay.osb.provisioning.license.model.LicenseKey>
 		getLicenseKeys(String productId, String serverId) {
 
 		return _licenseKeyLocalService.getLicenseKeys(productId, serverId);

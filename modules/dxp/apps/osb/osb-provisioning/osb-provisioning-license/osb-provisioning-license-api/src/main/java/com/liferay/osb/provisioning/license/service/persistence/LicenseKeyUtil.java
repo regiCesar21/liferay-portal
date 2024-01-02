@@ -1253,6 +1253,218 @@ public class LicenseKeyUtil {
 	}
 
 	/**
+	 * Returns all the license keies where productPurchaseKey = &#63; and complimentary = &#63; and active = &#63;.
+	 *
+	 * @param productPurchaseKey the product purchase key
+	 * @param complimentary the complimentary
+	 * @param active the active
+	 * @return the matching license keies
+	 */
+	public static List<LicenseKey> findByPPK_C_A(
+		String productPurchaseKey, boolean complimentary, boolean active) {
+
+		return getPersistence().findByPPK_C_A(
+			productPurchaseKey, complimentary, active);
+	}
+
+	/**
+	 * Returns a range of all the license keies where productPurchaseKey = &#63; and complimentary = &#63; and active = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>LicenseKeyModelImpl</code>.
+	 * </p>
+	 *
+	 * @param productPurchaseKey the product purchase key
+	 * @param complimentary the complimentary
+	 * @param active the active
+	 * @param start the lower bound of the range of license keies
+	 * @param end the upper bound of the range of license keies (not inclusive)
+	 * @return the range of matching license keies
+	 */
+	public static List<LicenseKey> findByPPK_C_A(
+		String productPurchaseKey, boolean complimentary, boolean active,
+		int start, int end) {
+
+		return getPersistence().findByPPK_C_A(
+			productPurchaseKey, complimentary, active, start, end);
+	}
+
+	/**
+	 * Returns an ordered range of all the license keies where productPurchaseKey = &#63; and complimentary = &#63; and active = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>LicenseKeyModelImpl</code>.
+	 * </p>
+	 *
+	 * @param productPurchaseKey the product purchase key
+	 * @param complimentary the complimentary
+	 * @param active the active
+	 * @param start the lower bound of the range of license keies
+	 * @param end the upper bound of the range of license keies (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching license keies
+	 */
+	public static List<LicenseKey> findByPPK_C_A(
+		String productPurchaseKey, boolean complimentary, boolean active,
+		int start, int end, OrderByComparator<LicenseKey> orderByComparator) {
+
+		return getPersistence().findByPPK_C_A(
+			productPurchaseKey, complimentary, active, start, end,
+			orderByComparator);
+	}
+
+	/**
+	 * Returns an ordered range of all the license keies where productPurchaseKey = &#63; and complimentary = &#63; and active = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>LicenseKeyModelImpl</code>.
+	 * </p>
+	 *
+	 * @param productPurchaseKey the product purchase key
+	 * @param complimentary the complimentary
+	 * @param active the active
+	 * @param start the lower bound of the range of license keies
+	 * @param end the upper bound of the range of license keies (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
+	 * @return the ordered range of matching license keies
+	 */
+	public static List<LicenseKey> findByPPK_C_A(
+		String productPurchaseKey, boolean complimentary, boolean active,
+		int start, int end, OrderByComparator<LicenseKey> orderByComparator,
+		boolean useFinderCache) {
+
+		return getPersistence().findByPPK_C_A(
+			productPurchaseKey, complimentary, active, start, end,
+			orderByComparator, useFinderCache);
+	}
+
+	/**
+	 * Returns the first license key in the ordered set where productPurchaseKey = &#63; and complimentary = &#63; and active = &#63;.
+	 *
+	 * @param productPurchaseKey the product purchase key
+	 * @param complimentary the complimentary
+	 * @param active the active
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching license key
+	 * @throws NoSuchLicenseKeyException if a matching license key could not be found
+	 */
+	public static LicenseKey findByPPK_C_A_First(
+			String productPurchaseKey, boolean complimentary, boolean active,
+			OrderByComparator<LicenseKey> orderByComparator)
+		throws com.liferay.osb.provisioning.license.exception.
+			NoSuchLicenseKeyException {
+
+		return getPersistence().findByPPK_C_A_First(
+			productPurchaseKey, complimentary, active, orderByComparator);
+	}
+
+	/**
+	 * Returns the first license key in the ordered set where productPurchaseKey = &#63; and complimentary = &#63; and active = &#63;.
+	 *
+	 * @param productPurchaseKey the product purchase key
+	 * @param complimentary the complimentary
+	 * @param active the active
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching license key, or <code>null</code> if a matching license key could not be found
+	 */
+	public static LicenseKey fetchByPPK_C_A_First(
+		String productPurchaseKey, boolean complimentary, boolean active,
+		OrderByComparator<LicenseKey> orderByComparator) {
+
+		return getPersistence().fetchByPPK_C_A_First(
+			productPurchaseKey, complimentary, active, orderByComparator);
+	}
+
+	/**
+	 * Returns the last license key in the ordered set where productPurchaseKey = &#63; and complimentary = &#63; and active = &#63;.
+	 *
+	 * @param productPurchaseKey the product purchase key
+	 * @param complimentary the complimentary
+	 * @param active the active
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching license key
+	 * @throws NoSuchLicenseKeyException if a matching license key could not be found
+	 */
+	public static LicenseKey findByPPK_C_A_Last(
+			String productPurchaseKey, boolean complimentary, boolean active,
+			OrderByComparator<LicenseKey> orderByComparator)
+		throws com.liferay.osb.provisioning.license.exception.
+			NoSuchLicenseKeyException {
+
+		return getPersistence().findByPPK_C_A_Last(
+			productPurchaseKey, complimentary, active, orderByComparator);
+	}
+
+	/**
+	 * Returns the last license key in the ordered set where productPurchaseKey = &#63; and complimentary = &#63; and active = &#63;.
+	 *
+	 * @param productPurchaseKey the product purchase key
+	 * @param complimentary the complimentary
+	 * @param active the active
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching license key, or <code>null</code> if a matching license key could not be found
+	 */
+	public static LicenseKey fetchByPPK_C_A_Last(
+		String productPurchaseKey, boolean complimentary, boolean active,
+		OrderByComparator<LicenseKey> orderByComparator) {
+
+		return getPersistence().fetchByPPK_C_A_Last(
+			productPurchaseKey, complimentary, active, orderByComparator);
+	}
+
+	/**
+	 * Returns the license keies before and after the current license key in the ordered set where productPurchaseKey = &#63; and complimentary = &#63; and active = &#63;.
+	 *
+	 * @param licenseKeyId the primary key of the current license key
+	 * @param productPurchaseKey the product purchase key
+	 * @param complimentary the complimentary
+	 * @param active the active
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the previous, current, and next license key
+	 * @throws NoSuchLicenseKeyException if a license key with the primary key could not be found
+	 */
+	public static LicenseKey[] findByPPK_C_A_PrevAndNext(
+			long licenseKeyId, String productPurchaseKey, boolean complimentary,
+			boolean active, OrderByComparator<LicenseKey> orderByComparator)
+		throws com.liferay.osb.provisioning.license.exception.
+			NoSuchLicenseKeyException {
+
+		return getPersistence().findByPPK_C_A_PrevAndNext(
+			licenseKeyId, productPurchaseKey, complimentary, active,
+			orderByComparator);
+	}
+
+	/**
+	 * Removes all the license keies where productPurchaseKey = &#63; and complimentary = &#63; and active = &#63; from the database.
+	 *
+	 * @param productPurchaseKey the product purchase key
+	 * @param complimentary the complimentary
+	 * @param active the active
+	 */
+	public static void removeByPPK_C_A(
+		String productPurchaseKey, boolean complimentary, boolean active) {
+
+		getPersistence().removeByPPK_C_A(
+			productPurchaseKey, complimentary, active);
+	}
+
+	/**
+	 * Returns the number of license keies where productPurchaseKey = &#63; and complimentary = &#63; and active = &#63;.
+	 *
+	 * @param productPurchaseKey the product purchase key
+	 * @param complimentary the complimentary
+	 * @param active the active
+	 * @return the number of matching license keies
+	 */
+	public static int countByPPK_C_A(
+		String productPurchaseKey, boolean complimentary, boolean active) {
+
+		return getPersistence().countByPPK_C_A(
+			productPurchaseKey, complimentary, active);
+	}
+
+	/**
 	 * Returns all the license keies where productName = &#63; and serverId = &#63; and active = &#63;.
 	 *
 	 * @param productName the product name

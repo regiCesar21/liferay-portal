@@ -26,6 +26,7 @@ import java.util.Iterator;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
+import java.util.function.Supplier;
 
 import javax.annotation.Generated;
 
@@ -53,56 +54,78 @@ public class Phone implements Serializable {
 
 	@Schema(description = "The phone number.")
 	public String getNumber() {
+		if (_numberSupplier != null) {
+			number = _numberSupplier.get();
+
+			_numberSupplier = null;
+		}
+
 		return number;
 	}
 
 	public void setNumber(String number) {
 		this.number = number;
+
+		_numberSupplier = null;
 	}
 
 	@JsonIgnore
 	public void setNumber(
 		UnsafeSupplier<String, Exception> numberUnsafeSupplier) {
 
-		try {
-			number = numberUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_numberSupplier = () -> {
+			try {
+				return numberUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField(description = "The phone number.")
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String number;
 
+	private Supplier<String> _numberSupplier;
+
 	@Schema(
 		description = "A flag that identifies whether this is the main phone number of the contact."
 	)
 	public Boolean getPrimary() {
+		if (_primarySupplier != null) {
+			primary = _primarySupplier.get();
+
+			_primarySupplier = null;
+		}
+
 		return primary;
 	}
 
 	public void setPrimary(Boolean primary) {
 		this.primary = primary;
+
+		_primarySupplier = null;
 	}
 
 	@JsonIgnore
 	public void setPrimary(
 		UnsafeSupplier<Boolean, Exception> primaryUnsafeSupplier) {
 
-		try {
-			primary = primaryUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_primarySupplier = () -> {
+			try {
+				return primaryUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField(
@@ -111,14 +134,24 @@ public class Phone implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Boolean primary;
 
+	private Supplier<Boolean> _primarySupplier;
+
 	@Schema(description = "The phone number's type.")
 	@Valid
 	public Type getType() {
+		if (_typeSupplier != null) {
+			type = _typeSupplier.get();
+
+			_typeSupplier = null;
+		}
+
 		return type;
 	}
 
 	@JsonIgnore
 	public String getTypeAsString() {
+		Type type = getType();
+
 		if (type == null) {
 			return null;
 		}
@@ -128,24 +161,30 @@ public class Phone implements Serializable {
 
 	public void setType(Type type) {
 		this.type = type;
+
+		_typeSupplier = null;
 	}
 
 	@JsonIgnore
 	public void setType(UnsafeSupplier<Type, Exception> typeUnsafeSupplier) {
-		try {
-			type = typeUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_typeSupplier = () -> {
+			try {
+				return typeUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField(description = "The phone number's type.")
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Type type;
+
+	private Supplier<Type> _typeSupplier;
 
 	@Override
 	public boolean equals(Object object) {
@@ -174,6 +213,8 @@ public class Phone implements Serializable {
 
 		sb.append("{");
 
+		String number = getNumber();
+
 		if (number != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -188,6 +229,8 @@ public class Phone implements Serializable {
 			sb.append("\"");
 		}
 
+		Boolean primary = getPrimary();
+
 		if (primary != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -197,6 +240,8 @@ public class Phone implements Serializable {
 
 			sb.append(primary);
 		}
+
+		Type type = getType();
 
 		if (type != null) {
 			if (sb.length() > 1) {

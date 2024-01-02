@@ -30,6 +30,7 @@ import java.util.Iterator;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
+import java.util.function.Supplier;
 
 import javax.annotation.Generated;
 
@@ -66,56 +67,78 @@ public class EntitlementDefinition implements Serializable {
 
 	@Schema(description = "The entitlement definition's creation date.")
 	public Date getDateCreated() {
+		if (_dateCreatedSupplier != null) {
+			dateCreated = _dateCreatedSupplier.get();
+
+			_dateCreatedSupplier = null;
+		}
+
 		return dateCreated;
 	}
 
 	public void setDateCreated(Date dateCreated) {
 		this.dateCreated = dateCreated;
+
+		_dateCreatedSupplier = null;
 	}
 
 	@JsonIgnore
 	public void setDateCreated(
 		UnsafeSupplier<Date, Exception> dateCreatedUnsafeSupplier) {
 
-		try {
-			dateCreated = dateCreatedUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_dateCreatedSupplier = () -> {
+			try {
+				return dateCreatedUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField(description = "The entitlement definition's creation date.")
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Date dateCreated;
 
+	private Supplier<Date> _dateCreatedSupplier;
+
 	@Schema(
 		description = "The most recent time that any of the entitlement definition's fields changed."
 	)
 	public Date getDateModified() {
+		if (_dateModifiedSupplier != null) {
+			dateModified = _dateModifiedSupplier.get();
+
+			_dateModifiedSupplier = null;
+		}
+
 		return dateModified;
 	}
 
 	public void setDateModified(Date dateModified) {
 		this.dateModified = dateModified;
+
+		_dateModifiedSupplier = null;
 	}
 
 	@JsonIgnore
 	public void setDateModified(
 		UnsafeSupplier<Date, Exception> dateModifiedUnsafeSupplier) {
 
-		try {
-			dateModified = dateModifiedUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_dateModifiedSupplier = () -> {
+			try {
+				return dateModifiedUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField(
@@ -124,30 +147,42 @@ public class EntitlementDefinition implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Date dateModified;
 
+	private Supplier<Date> _dateModifiedSupplier;
+
 	@Schema(
 		description = "Defines who has access to the entitlement using SQL."
 	)
 	public String getDefinition() {
+		if (_definitionSupplier != null) {
+			definition = _definitionSupplier.get();
+
+			_definitionSupplier = null;
+		}
+
 		return definition;
 	}
 
 	public void setDefinition(String definition) {
 		this.definition = definition;
+
+		_definitionSupplier = null;
 	}
 
 	@JsonIgnore
 	public void setDefinition(
 		UnsafeSupplier<String, Exception> definitionUnsafeSupplier) {
 
-		try {
-			definition = definitionUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_definitionSupplier = () -> {
+			try {
+				return definitionUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField(
@@ -156,59 +191,83 @@ public class EntitlementDefinition implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String definition;
 
+	private Supplier<String> _definitionSupplier;
+
 	@Schema(description = "The description of the entitlement.")
 	public String getDescription() {
+		if (_descriptionSupplier != null) {
+			description = _descriptionSupplier.get();
+
+			_descriptionSupplier = null;
+		}
+
 		return description;
 	}
 
 	public void setDescription(String description) {
 		this.description = description;
+
+		_descriptionSupplier = null;
 	}
 
 	@JsonIgnore
 	public void setDescription(
 		UnsafeSupplier<String, Exception> descriptionUnsafeSupplier) {
 
-		try {
-			description = descriptionUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_descriptionSupplier = () -> {
+			try {
+				return descriptionUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField(description = "The description of the entitlement.")
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String description;
 
+	private Supplier<String> _descriptionSupplier;
+
 	@Schema(
 		description = "The entitlement definition's links to entities in external domains."
 	)
 	@Valid
 	public ExternalLink[] getExternalLinks() {
+		if (_externalLinksSupplier != null) {
+			externalLinks = _externalLinksSupplier.get();
+
+			_externalLinksSupplier = null;
+		}
+
 		return externalLinks;
 	}
 
 	public void setExternalLinks(ExternalLink[] externalLinks) {
 		this.externalLinks = externalLinks;
+
+		_externalLinksSupplier = null;
 	}
 
 	@JsonIgnore
 	public void setExternalLinks(
 		UnsafeSupplier<ExternalLink[], Exception> externalLinksUnsafeSupplier) {
 
-		try {
-			externalLinks = externalLinksUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_externalLinksSupplier = () -> {
+			try {
+				return externalLinksUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField(
@@ -217,52 +276,76 @@ public class EntitlementDefinition implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected ExternalLink[] externalLinks;
 
+	private Supplier<ExternalLink[]> _externalLinksSupplier;
+
 	@Schema(description = "The entitlement definition's key.")
 	public String getKey() {
+		if (_keySupplier != null) {
+			key = _keySupplier.get();
+
+			_keySupplier = null;
+		}
+
 		return key;
 	}
 
 	public void setKey(String key) {
 		this.key = key;
+
+		_keySupplier = null;
 	}
 
 	@JsonIgnore
 	public void setKey(UnsafeSupplier<String, Exception> keyUnsafeSupplier) {
-		try {
-			key = keyUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_keySupplier = () -> {
+			try {
+				return keyUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField(description = "The entitlement definition's key.")
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected String key;
 
+	private Supplier<String> _keySupplier;
+
 	@Schema(description = "The name of the entitlement.")
 	public String getName() {
+		if (_nameSupplier != null) {
+			name = _nameSupplier.get();
+
+			_nameSupplier = null;
+		}
+
 		return name;
 	}
 
 	public void setName(String name) {
 		this.name = name;
+
+		_nameSupplier = null;
 	}
 
 	@JsonIgnore
 	public void setName(UnsafeSupplier<String, Exception> nameUnsafeSupplier) {
-		try {
-			name = nameUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_nameSupplier = () -> {
+			try {
+				return nameUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField(description = "The name of the entitlement.")
@@ -270,14 +353,24 @@ public class EntitlementDefinition implements Serializable {
 	@NotEmpty
 	protected String name;
 
+	private Supplier<String> _nameSupplier;
+
 	@Schema(description = "The status of the entitlement definition.")
 	@Valid
 	public Status getStatus() {
+		if (_statusSupplier != null) {
+			status = _statusSupplier.get();
+
+			_statusSupplier = null;
+		}
+
 		return status;
 	}
 
 	@JsonIgnore
 	public String getStatusAsString() {
+		Status status = getStatus();
+
 		if (status == null) {
 			return null;
 		}
@@ -287,26 +380,32 @@ public class EntitlementDefinition implements Serializable {
 
 	public void setStatus(Status status) {
 		this.status = status;
+
+		_statusSupplier = null;
 	}
 
 	@JsonIgnore
 	public void setStatus(
 		UnsafeSupplier<Status, Exception> statusUnsafeSupplier) {
 
-		try {
-			status = statusUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_statusSupplier = () -> {
+			try {
+				return statusUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField(description = "The status of the entitlement definition.")
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Status status;
+
+	private Supplier<Status> _statusSupplier;
 
 	@Override
 	public boolean equals(Object object) {
@@ -339,6 +438,8 @@ public class EntitlementDefinition implements Serializable {
 		DateFormat liferayToJSONDateFormat = new SimpleDateFormat(
 			"yyyy-MM-dd'T'HH:mm:ss'Z'");
 
+		Date dateCreated = getDateCreated();
+
 		if (dateCreated != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -352,6 +453,8 @@ public class EntitlementDefinition implements Serializable {
 
 			sb.append("\"");
 		}
+
+		Date dateModified = getDateModified();
 
 		if (dateModified != null) {
 			if (sb.length() > 1) {
@@ -367,6 +470,8 @@ public class EntitlementDefinition implements Serializable {
 			sb.append("\"");
 		}
 
+		String definition = getDefinition();
+
 		if (definition != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -381,6 +486,8 @@ public class EntitlementDefinition implements Serializable {
 			sb.append("\"");
 		}
 
+		String description = getDescription();
+
 		if (description != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -394,6 +501,8 @@ public class EntitlementDefinition implements Serializable {
 
 			sb.append("\"");
 		}
+
+		ExternalLink[] externalLinks = getExternalLinks();
 
 		if (externalLinks != null) {
 			if (sb.length() > 1) {
@@ -415,6 +524,8 @@ public class EntitlementDefinition implements Serializable {
 			sb.append("]");
 		}
 
+		String key = getKey();
+
 		if (key != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -429,6 +540,8 @@ public class EntitlementDefinition implements Serializable {
 			sb.append("\"");
 		}
 
+		String name = getName();
+
 		if (name != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -442,6 +555,8 @@ public class EntitlementDefinition implements Serializable {
 
 			sb.append("\"");
 		}
+
+		Status status = getStatus();
 
 		if (status != null) {
 			if (sb.length() > 1) {

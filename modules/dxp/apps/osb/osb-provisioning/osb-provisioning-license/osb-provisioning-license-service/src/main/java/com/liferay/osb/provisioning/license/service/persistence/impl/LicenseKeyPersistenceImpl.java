@@ -3659,6 +3659,643 @@ public class LicenseKeyPersistenceImpl
 	private static final String _FINDER_COLUMN_ARLU_C_A_ACTIVE_2 =
 		"licenseKey.active = ?";
 
+	private FinderPath _finderPathWithPaginationFindByPPK_C_A;
+	private FinderPath _finderPathWithoutPaginationFindByPPK_C_A;
+	private FinderPath _finderPathCountByPPK_C_A;
+
+	/**
+	 * Returns all the license keies where productPurchaseKey = &#63; and complimentary = &#63; and active = &#63;.
+	 *
+	 * @param productPurchaseKey the product purchase key
+	 * @param complimentary the complimentary
+	 * @param active the active
+	 * @return the matching license keies
+	 */
+	@Override
+	public List<LicenseKey> findByPPK_C_A(
+		String productPurchaseKey, boolean complimentary, boolean active) {
+
+		return findByPPK_C_A(
+			productPurchaseKey, complimentary, active, QueryUtil.ALL_POS,
+			QueryUtil.ALL_POS, null);
+	}
+
+	/**
+	 * Returns a range of all the license keies where productPurchaseKey = &#63; and complimentary = &#63; and active = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>LicenseKeyModelImpl</code>.
+	 * </p>
+	 *
+	 * @param productPurchaseKey the product purchase key
+	 * @param complimentary the complimentary
+	 * @param active the active
+	 * @param start the lower bound of the range of license keies
+	 * @param end the upper bound of the range of license keies (not inclusive)
+	 * @return the range of matching license keies
+	 */
+	@Override
+	public List<LicenseKey> findByPPK_C_A(
+		String productPurchaseKey, boolean complimentary, boolean active,
+		int start, int end) {
+
+		return findByPPK_C_A(
+			productPurchaseKey, complimentary, active, start, end, null);
+	}
+
+	/**
+	 * Returns an ordered range of all the license keies where productPurchaseKey = &#63; and complimentary = &#63; and active = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>LicenseKeyModelImpl</code>.
+	 * </p>
+	 *
+	 * @param productPurchaseKey the product purchase key
+	 * @param complimentary the complimentary
+	 * @param active the active
+	 * @param start the lower bound of the range of license keies
+	 * @param end the upper bound of the range of license keies (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching license keies
+	 */
+	@Override
+	public List<LicenseKey> findByPPK_C_A(
+		String productPurchaseKey, boolean complimentary, boolean active,
+		int start, int end, OrderByComparator<LicenseKey> orderByComparator) {
+
+		return findByPPK_C_A(
+			productPurchaseKey, complimentary, active, start, end,
+			orderByComparator, true);
+	}
+
+	/**
+	 * Returns an ordered range of all the license keies where productPurchaseKey = &#63; and complimentary = &#63; and active = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>LicenseKeyModelImpl</code>.
+	 * </p>
+	 *
+	 * @param productPurchaseKey the product purchase key
+	 * @param complimentary the complimentary
+	 * @param active the active
+	 * @param start the lower bound of the range of license keies
+	 * @param end the upper bound of the range of license keies (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
+	 * @return the ordered range of matching license keies
+	 */
+	@Override
+	public List<LicenseKey> findByPPK_C_A(
+		String productPurchaseKey, boolean complimentary, boolean active,
+		int start, int end, OrderByComparator<LicenseKey> orderByComparator,
+		boolean useFinderCache) {
+
+		productPurchaseKey = Objects.toString(productPurchaseKey, "");
+
+		FinderPath finderPath = null;
+		Object[] finderArgs = null;
+
+		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
+			(orderByComparator == null)) {
+
+			if (useFinderCache) {
+				finderPath = _finderPathWithoutPaginationFindByPPK_C_A;
+				finderArgs = new Object[] {
+					productPurchaseKey, complimentary, active
+				};
+			}
+		}
+		else if (useFinderCache) {
+			finderPath = _finderPathWithPaginationFindByPPK_C_A;
+			finderArgs = new Object[] {
+				productPurchaseKey, complimentary, active, start, end,
+				orderByComparator
+			};
+		}
+
+		List<LicenseKey> list = null;
+
+		if (useFinderCache) {
+			list = (List<LicenseKey>)finderCache.getResult(
+				finderPath, finderArgs, this);
+
+			if ((list != null) && !list.isEmpty()) {
+				for (LicenseKey licenseKey : list) {
+					if (!productPurchaseKey.equals(
+							licenseKey.getProductPurchaseKey()) ||
+						(complimentary != licenseKey.isComplimentary()) ||
+						(active != licenseKey.isActive())) {
+
+						list = null;
+
+						break;
+					}
+				}
+			}
+		}
+
+		if (list == null) {
+			StringBundler sb = null;
+
+			if (orderByComparator != null) {
+				sb = new StringBundler(
+					5 + (orderByComparator.getOrderByFields().length * 2));
+			}
+			else {
+				sb = new StringBundler(5);
+			}
+
+			sb.append(_SQL_SELECT_LICENSEKEY_WHERE);
+
+			boolean bindProductPurchaseKey = false;
+
+			if (productPurchaseKey.isEmpty()) {
+				sb.append(_FINDER_COLUMN_PPK_C_A_PRODUCTPURCHASEKEY_3);
+			}
+			else {
+				bindProductPurchaseKey = true;
+
+				sb.append(_FINDER_COLUMN_PPK_C_A_PRODUCTPURCHASEKEY_2);
+			}
+
+			sb.append(_FINDER_COLUMN_PPK_C_A_COMPLIMENTARY_2);
+
+			sb.append(_FINDER_COLUMN_PPK_C_A_ACTIVE_2);
+
+			if (orderByComparator != null) {
+				appendOrderByComparator(
+					sb, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
+			}
+			else {
+				sb.append(LicenseKeyModelImpl.ORDER_BY_JPQL);
+			}
+
+			String sql = sb.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query query = session.createQuery(sql);
+
+				QueryPos queryPos = QueryPos.getInstance(query);
+
+				if (bindProductPurchaseKey) {
+					queryPos.add(productPurchaseKey);
+				}
+
+				queryPos.add(complimentary);
+
+				queryPos.add(active);
+
+				list = (List<LicenseKey>)QueryUtil.list(
+					query, getDialect(), start, end);
+
+				cacheResult(list);
+
+				if (useFinderCache) {
+					finderCache.putResult(finderPath, finderArgs, list);
+				}
+			}
+			catch (Exception exception) {
+				if (useFinderCache) {
+					finderCache.removeResult(finderPath, finderArgs);
+				}
+
+				throw processException(exception);
+			}
+			finally {
+				closeSession(session);
+			}
+		}
+
+		return list;
+	}
+
+	/**
+	 * Returns the first license key in the ordered set where productPurchaseKey = &#63; and complimentary = &#63; and active = &#63;.
+	 *
+	 * @param productPurchaseKey the product purchase key
+	 * @param complimentary the complimentary
+	 * @param active the active
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching license key
+	 * @throws NoSuchLicenseKeyException if a matching license key could not be found
+	 */
+	@Override
+	public LicenseKey findByPPK_C_A_First(
+			String productPurchaseKey, boolean complimentary, boolean active,
+			OrderByComparator<LicenseKey> orderByComparator)
+		throws NoSuchLicenseKeyException {
+
+		LicenseKey licenseKey = fetchByPPK_C_A_First(
+			productPurchaseKey, complimentary, active, orderByComparator);
+
+		if (licenseKey != null) {
+			return licenseKey;
+		}
+
+		StringBundler sb = new StringBundler(8);
+
+		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+		sb.append("productPurchaseKey=");
+		sb.append(productPurchaseKey);
+
+		sb.append(", complimentary=");
+		sb.append(complimentary);
+
+		sb.append(", active=");
+		sb.append(active);
+
+		sb.append("}");
+
+		throw new NoSuchLicenseKeyException(sb.toString());
+	}
+
+	/**
+	 * Returns the first license key in the ordered set where productPurchaseKey = &#63; and complimentary = &#63; and active = &#63;.
+	 *
+	 * @param productPurchaseKey the product purchase key
+	 * @param complimentary the complimentary
+	 * @param active the active
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching license key, or <code>null</code> if a matching license key could not be found
+	 */
+	@Override
+	public LicenseKey fetchByPPK_C_A_First(
+		String productPurchaseKey, boolean complimentary, boolean active,
+		OrderByComparator<LicenseKey> orderByComparator) {
+
+		List<LicenseKey> list = findByPPK_C_A(
+			productPurchaseKey, complimentary, active, 0, 1, orderByComparator);
+
+		if (!list.isEmpty()) {
+			return list.get(0);
+		}
+
+		return null;
+	}
+
+	/**
+	 * Returns the last license key in the ordered set where productPurchaseKey = &#63; and complimentary = &#63; and active = &#63;.
+	 *
+	 * @param productPurchaseKey the product purchase key
+	 * @param complimentary the complimentary
+	 * @param active the active
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching license key
+	 * @throws NoSuchLicenseKeyException if a matching license key could not be found
+	 */
+	@Override
+	public LicenseKey findByPPK_C_A_Last(
+			String productPurchaseKey, boolean complimentary, boolean active,
+			OrderByComparator<LicenseKey> orderByComparator)
+		throws NoSuchLicenseKeyException {
+
+		LicenseKey licenseKey = fetchByPPK_C_A_Last(
+			productPurchaseKey, complimentary, active, orderByComparator);
+
+		if (licenseKey != null) {
+			return licenseKey;
+		}
+
+		StringBundler sb = new StringBundler(8);
+
+		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+		sb.append("productPurchaseKey=");
+		sb.append(productPurchaseKey);
+
+		sb.append(", complimentary=");
+		sb.append(complimentary);
+
+		sb.append(", active=");
+		sb.append(active);
+
+		sb.append("}");
+
+		throw new NoSuchLicenseKeyException(sb.toString());
+	}
+
+	/**
+	 * Returns the last license key in the ordered set where productPurchaseKey = &#63; and complimentary = &#63; and active = &#63;.
+	 *
+	 * @param productPurchaseKey the product purchase key
+	 * @param complimentary the complimentary
+	 * @param active the active
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching license key, or <code>null</code> if a matching license key could not be found
+	 */
+	@Override
+	public LicenseKey fetchByPPK_C_A_Last(
+		String productPurchaseKey, boolean complimentary, boolean active,
+		OrderByComparator<LicenseKey> orderByComparator) {
+
+		int count = countByPPK_C_A(productPurchaseKey, complimentary, active);
+
+		if (count == 0) {
+			return null;
+		}
+
+		List<LicenseKey> list = findByPPK_C_A(
+			productPurchaseKey, complimentary, active, count - 1, count,
+			orderByComparator);
+
+		if (!list.isEmpty()) {
+			return list.get(0);
+		}
+
+		return null;
+	}
+
+	/**
+	 * Returns the license keies before and after the current license key in the ordered set where productPurchaseKey = &#63; and complimentary = &#63; and active = &#63;.
+	 *
+	 * @param licenseKeyId the primary key of the current license key
+	 * @param productPurchaseKey the product purchase key
+	 * @param complimentary the complimentary
+	 * @param active the active
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the previous, current, and next license key
+	 * @throws NoSuchLicenseKeyException if a license key with the primary key could not be found
+	 */
+	@Override
+	public LicenseKey[] findByPPK_C_A_PrevAndNext(
+			long licenseKeyId, String productPurchaseKey, boolean complimentary,
+			boolean active, OrderByComparator<LicenseKey> orderByComparator)
+		throws NoSuchLicenseKeyException {
+
+		productPurchaseKey = Objects.toString(productPurchaseKey, "");
+
+		LicenseKey licenseKey = findByPrimaryKey(licenseKeyId);
+
+		Session session = null;
+
+		try {
+			session = openSession();
+
+			LicenseKey[] array = new LicenseKeyImpl[3];
+
+			array[0] = getByPPK_C_A_PrevAndNext(
+				session, licenseKey, productPurchaseKey, complimentary, active,
+				orderByComparator, true);
+
+			array[1] = licenseKey;
+
+			array[2] = getByPPK_C_A_PrevAndNext(
+				session, licenseKey, productPurchaseKey, complimentary, active,
+				orderByComparator, false);
+
+			return array;
+		}
+		catch (Exception exception) {
+			throw processException(exception);
+		}
+		finally {
+			closeSession(session);
+		}
+	}
+
+	protected LicenseKey getByPPK_C_A_PrevAndNext(
+		Session session, LicenseKey licenseKey, String productPurchaseKey,
+		boolean complimentary, boolean active,
+		OrderByComparator<LicenseKey> orderByComparator, boolean previous) {
+
+		StringBundler sb = null;
+
+		if (orderByComparator != null) {
+			sb = new StringBundler(
+				6 + (orderByComparator.getOrderByConditionFields().length * 3) +
+					(orderByComparator.getOrderByFields().length * 3));
+		}
+		else {
+			sb = new StringBundler(5);
+		}
+
+		sb.append(_SQL_SELECT_LICENSEKEY_WHERE);
+
+		boolean bindProductPurchaseKey = false;
+
+		if (productPurchaseKey.isEmpty()) {
+			sb.append(_FINDER_COLUMN_PPK_C_A_PRODUCTPURCHASEKEY_3);
+		}
+		else {
+			bindProductPurchaseKey = true;
+
+			sb.append(_FINDER_COLUMN_PPK_C_A_PRODUCTPURCHASEKEY_2);
+		}
+
+		sb.append(_FINDER_COLUMN_PPK_C_A_COMPLIMENTARY_2);
+
+		sb.append(_FINDER_COLUMN_PPK_C_A_ACTIVE_2);
+
+		if (orderByComparator != null) {
+			String[] orderByConditionFields =
+				orderByComparator.getOrderByConditionFields();
+
+			if (orderByConditionFields.length > 0) {
+				sb.append(WHERE_AND);
+			}
+
+			for (int i = 0; i < orderByConditionFields.length; i++) {
+				sb.append(_ORDER_BY_ENTITY_ALIAS);
+				sb.append(orderByConditionFields[i]);
+
+				if ((i + 1) < orderByConditionFields.length) {
+					if (orderByComparator.isAscending() ^ previous) {
+						sb.append(WHERE_GREATER_THAN_HAS_NEXT);
+					}
+					else {
+						sb.append(WHERE_LESSER_THAN_HAS_NEXT);
+					}
+				}
+				else {
+					if (orderByComparator.isAscending() ^ previous) {
+						sb.append(WHERE_GREATER_THAN);
+					}
+					else {
+						sb.append(WHERE_LESSER_THAN);
+					}
+				}
+			}
+
+			sb.append(ORDER_BY_CLAUSE);
+
+			String[] orderByFields = orderByComparator.getOrderByFields();
+
+			for (int i = 0; i < orderByFields.length; i++) {
+				sb.append(_ORDER_BY_ENTITY_ALIAS);
+				sb.append(orderByFields[i]);
+
+				if ((i + 1) < orderByFields.length) {
+					if (orderByComparator.isAscending() ^ previous) {
+						sb.append(ORDER_BY_ASC_HAS_NEXT);
+					}
+					else {
+						sb.append(ORDER_BY_DESC_HAS_NEXT);
+					}
+				}
+				else {
+					if (orderByComparator.isAscending() ^ previous) {
+						sb.append(ORDER_BY_ASC);
+					}
+					else {
+						sb.append(ORDER_BY_DESC);
+					}
+				}
+			}
+		}
+		else {
+			sb.append(LicenseKeyModelImpl.ORDER_BY_JPQL);
+		}
+
+		String sql = sb.toString();
+
+		Query query = session.createQuery(sql);
+
+		query.setFirstResult(0);
+		query.setMaxResults(2);
+
+		QueryPos queryPos = QueryPos.getInstance(query);
+
+		if (bindProductPurchaseKey) {
+			queryPos.add(productPurchaseKey);
+		}
+
+		queryPos.add(complimentary);
+
+		queryPos.add(active);
+
+		if (orderByComparator != null) {
+			for (Object orderByConditionValue :
+					orderByComparator.getOrderByConditionValues(licenseKey)) {
+
+				queryPos.add(orderByConditionValue);
+			}
+		}
+
+		List<LicenseKey> list = query.list();
+
+		if (list.size() == 2) {
+			return list.get(1);
+		}
+		else {
+			return null;
+		}
+	}
+
+	/**
+	 * Removes all the license keies where productPurchaseKey = &#63; and complimentary = &#63; and active = &#63; from the database.
+	 *
+	 * @param productPurchaseKey the product purchase key
+	 * @param complimentary the complimentary
+	 * @param active the active
+	 */
+	@Override
+	public void removeByPPK_C_A(
+		String productPurchaseKey, boolean complimentary, boolean active) {
+
+		for (LicenseKey licenseKey :
+				findByPPK_C_A(
+					productPurchaseKey, complimentary, active,
+					QueryUtil.ALL_POS, QueryUtil.ALL_POS, null)) {
+
+			remove(licenseKey);
+		}
+	}
+
+	/**
+	 * Returns the number of license keies where productPurchaseKey = &#63; and complimentary = &#63; and active = &#63;.
+	 *
+	 * @param productPurchaseKey the product purchase key
+	 * @param complimentary the complimentary
+	 * @param active the active
+	 * @return the number of matching license keies
+	 */
+	@Override
+	public int countByPPK_C_A(
+		String productPurchaseKey, boolean complimentary, boolean active) {
+
+		productPurchaseKey = Objects.toString(productPurchaseKey, "");
+
+		FinderPath finderPath = _finderPathCountByPPK_C_A;
+
+		Object[] finderArgs = new Object[] {
+			productPurchaseKey, complimentary, active
+		};
+
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
+
+		if (count == null) {
+			StringBundler sb = new StringBundler(4);
+
+			sb.append(_SQL_COUNT_LICENSEKEY_WHERE);
+
+			boolean bindProductPurchaseKey = false;
+
+			if (productPurchaseKey.isEmpty()) {
+				sb.append(_FINDER_COLUMN_PPK_C_A_PRODUCTPURCHASEKEY_3);
+			}
+			else {
+				bindProductPurchaseKey = true;
+
+				sb.append(_FINDER_COLUMN_PPK_C_A_PRODUCTPURCHASEKEY_2);
+			}
+
+			sb.append(_FINDER_COLUMN_PPK_C_A_COMPLIMENTARY_2);
+
+			sb.append(_FINDER_COLUMN_PPK_C_A_ACTIVE_2);
+
+			String sql = sb.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query query = session.createQuery(sql);
+
+				QueryPos queryPos = QueryPos.getInstance(query);
+
+				if (bindProductPurchaseKey) {
+					queryPos.add(productPurchaseKey);
+				}
+
+				queryPos.add(complimentary);
+
+				queryPos.add(active);
+
+				count = (Long)query.uniqueResult();
+
+				finderCache.putResult(finderPath, finderArgs, count);
+			}
+			catch (Exception exception) {
+				finderCache.removeResult(finderPath, finderArgs);
+
+				throw processException(exception);
+			}
+			finally {
+				closeSession(session);
+			}
+		}
+
+		return count.intValue();
+	}
+
+	private static final String _FINDER_COLUMN_PPK_C_A_PRODUCTPURCHASEKEY_2 =
+		"licenseKey.productPurchaseKey = ? AND ";
+
+	private static final String _FINDER_COLUMN_PPK_C_A_PRODUCTPURCHASEKEY_3 =
+		"(licenseKey.productPurchaseKey IS NULL OR licenseKey.productPurchaseKey = '') AND ";
+
+	private static final String _FINDER_COLUMN_PPK_C_A_COMPLIMENTARY_2 =
+		"licenseKey.complimentary = ? AND ";
+
+	private static final String _FINDER_COLUMN_PPK_C_A_ACTIVE_2 =
+		"licenseKey.active = ?";
+
 	private FinderPath _finderPathWithPaginationFindByPN_SI_A;
 	private FinderPath _finderPathWithoutPaginationFindByPN_SI_A;
 	private FinderPath _finderPathCountByPN_SI_A;
@@ -5445,6 +6082,16 @@ public class LicenseKeyPersistenceImpl
 				_finderPathWithoutPaginationFindByARLU_C_A, args);
 
 			args = new Object[] {
+				licenseKeyModelImpl.getProductPurchaseKey(),
+				licenseKeyModelImpl.isComplimentary(),
+				licenseKeyModelImpl.isActive()
+			};
+
+			finderCache.removeResult(_finderPathCountByPPK_C_A, args);
+			finderCache.removeResult(
+				_finderPathWithoutPaginationFindByPPK_C_A, args);
+
+			args = new Object[] {
 				licenseKeyModelImpl.getProductName(),
 				licenseKeyModelImpl.getServerId(),
 				licenseKeyModelImpl.isActive()
@@ -5604,6 +6251,31 @@ public class LicenseKeyPersistenceImpl
 				finderCache.removeResult(_finderPathCountByARLU_C_A, args);
 				finderCache.removeResult(
 					_finderPathWithoutPaginationFindByARLU_C_A, args);
+			}
+
+			if ((licenseKeyModelImpl.getColumnBitmask() &
+				 _finderPathWithoutPaginationFindByPPK_C_A.
+					 getColumnBitmask()) != 0) {
+
+				Object[] args = new Object[] {
+					licenseKeyModelImpl.getOriginalProductPurchaseKey(),
+					licenseKeyModelImpl.getOriginalComplimentary(),
+					licenseKeyModelImpl.getOriginalActive()
+				};
+
+				finderCache.removeResult(_finderPathCountByPPK_C_A, args);
+				finderCache.removeResult(
+					_finderPathWithoutPaginationFindByPPK_C_A, args);
+
+				args = new Object[] {
+					licenseKeyModelImpl.getProductPurchaseKey(),
+					licenseKeyModelImpl.isComplimentary(),
+					licenseKeyModelImpl.isActive()
+				};
+
+				finderCache.removeResult(_finderPathCountByPPK_C_A, args);
+				finderCache.removeResult(
+					_finderPathWithoutPaginationFindByPPK_C_A, args);
 			}
 
 			if ((licenseKeyModelImpl.getColumnBitmask() &
@@ -6084,6 +6756,34 @@ public class LicenseKeyPersistenceImpl
 		_finderPathCountByARLU_C_A = new FinderPath(
 			entityCacheEnabled, finderCacheEnabled, Long.class,
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByARLU_C_A",
+			new String[] {
+				String.class.getName(), Boolean.class.getName(),
+				Boolean.class.getName()
+			});
+
+		_finderPathWithPaginationFindByPPK_C_A = new FinderPath(
+			entityCacheEnabled, finderCacheEnabled, LicenseKeyImpl.class,
+			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByPPK_C_A",
+			new String[] {
+				String.class.getName(), Boolean.class.getName(),
+				Boolean.class.getName(), Integer.class.getName(),
+				Integer.class.getName(), OrderByComparator.class.getName()
+			});
+
+		_finderPathWithoutPaginationFindByPPK_C_A = new FinderPath(
+			entityCacheEnabled, finderCacheEnabled, LicenseKeyImpl.class,
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByPPK_C_A",
+			new String[] {
+				String.class.getName(), Boolean.class.getName(),
+				Boolean.class.getName()
+			},
+			LicenseKeyModelImpl.PRODUCTPURCHASEKEY_COLUMN_BITMASK |
+			LicenseKeyModelImpl.COMPLIMENTARY_COLUMN_BITMASK |
+			LicenseKeyModelImpl.ACTIVE_COLUMN_BITMASK);
+
+		_finderPathCountByPPK_C_A = new FinderPath(
+			entityCacheEnabled, finderCacheEnabled, Long.class,
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByPPK_C_A",
 			new String[] {
 				String.class.getName(), Boolean.class.getName(),
 				Boolean.class.getName()

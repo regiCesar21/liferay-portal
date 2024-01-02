@@ -435,6 +435,11 @@ public class ServletDataImpl implements ServletData {
 							ProductConsumptionResourceImpl.class,
 							"deleteProductConsumption"));
 					put(
+						"mutation#updateProductConsumption",
+						new ObjectValuePair<>(
+							ProductConsumptionResourceImpl.class,
+							"putProductConsumption"));
+					put(
 						"mutation#deleteProductConsumptionProductConsumptionPermission",
 						new ObjectValuePair<>(
 							ProductConsumptionResourceImpl.class,

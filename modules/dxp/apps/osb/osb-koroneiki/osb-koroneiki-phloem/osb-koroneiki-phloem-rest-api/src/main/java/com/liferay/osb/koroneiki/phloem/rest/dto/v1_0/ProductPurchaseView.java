@@ -24,6 +24,7 @@ import java.util.Iterator;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
+import java.util.function.Supplier;
 
 import javax.annotation.Generated;
 
@@ -56,35 +57,53 @@ public class ProductPurchaseView implements Serializable {
 	@Schema
 	@Valid
 	public Product getProduct() {
+		if (_productSupplier != null) {
+			product = _productSupplier.get();
+
+			_productSupplier = null;
+		}
+
 		return product;
 	}
 
 	public void setProduct(Product product) {
 		this.product = product;
+
+		_productSupplier = null;
 	}
 
 	@JsonIgnore
 	public void setProduct(
 		UnsafeSupplier<Product, Exception> productUnsafeSupplier) {
 
-		try {
-			product = productUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_productSupplier = () -> {
+			try {
+				return productUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Product product;
 
+	private Supplier<Product> _productSupplier;
+
 	@Schema
 	@Valid
 	public ProductConsumption[] getProductConsumptions() {
+		if (_productConsumptionsSupplier != null) {
+			productConsumptions = _productConsumptionsSupplier.get();
+
+			_productConsumptionsSupplier = null;
+		}
+
 		return productConsumptions;
 	}
 
@@ -92,6 +111,8 @@ public class ProductPurchaseView implements Serializable {
 		ProductConsumption[] productConsumptions) {
 
 		this.productConsumptions = productConsumptions;
+
+		_productConsumptionsSupplier = null;
 	}
 
 	@JsonIgnore
@@ -99,29 +120,41 @@ public class ProductPurchaseView implements Serializable {
 		UnsafeSupplier<ProductConsumption[], Exception>
 			productConsumptionsUnsafeSupplier) {
 
-		try {
-			productConsumptions = productConsumptionsUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_productConsumptionsSupplier = () -> {
+			try {
+				return productConsumptionsUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected ProductConsumption[] productConsumptions;
 
+	private Supplier<ProductConsumption[]> _productConsumptionsSupplier;
+
 	@Schema
 	@Valid
 	public ProductPurchase[] getProductPurchases() {
+		if (_productPurchasesSupplier != null) {
+			productPurchases = _productPurchasesSupplier.get();
+
+			_productPurchasesSupplier = null;
+		}
+
 		return productPurchases;
 	}
 
 	public void setProductPurchases(ProductPurchase[] productPurchases) {
 		this.productPurchases = productPurchases;
+
+		_productPurchasesSupplier = null;
 	}
 
 	@JsonIgnore
@@ -129,20 +162,24 @@ public class ProductPurchaseView implements Serializable {
 		UnsafeSupplier<ProductPurchase[], Exception>
 			productPurchasesUnsafeSupplier) {
 
-		try {
-			productPurchases = productPurchasesUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_productPurchasesSupplier = () -> {
+			try {
+				return productPurchasesUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected ProductPurchase[] productPurchases;
+
+	private Supplier<ProductPurchase[]> _productPurchasesSupplier;
 
 	@Override
 	public boolean equals(Object object) {
@@ -171,6 +208,8 @@ public class ProductPurchaseView implements Serializable {
 
 		sb.append("{");
 
+		Product product = getProduct();
+
 		if (product != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -180,6 +219,8 @@ public class ProductPurchaseView implements Serializable {
 
 			sb.append(String.valueOf(product));
 		}
+
+		ProductConsumption[] productConsumptions = getProductConsumptions();
 
 		if (productConsumptions != null) {
 			if (sb.length() > 1) {
@@ -200,6 +241,8 @@ public class ProductPurchaseView implements Serializable {
 
 			sb.append("]");
 		}
+
+		ProductPurchase[] productPurchases = getProductPurchases();
 
 		if (productPurchases != null) {
 			if (sb.length() > 1) {

@@ -166,6 +166,17 @@ public class ProductConsumptionServiceUtil {
 			domain, entityName, entityId);
 	}
 
+	public static ProductConsumption updateProductConsumption(
+			long productConsumptionId, java.util.Date startDate,
+			java.util.Date endDate,
+			List<com.liferay.osb.koroneiki.trunk.model.ProductField>
+				productFields)
+		throws PortalException {
+
+		return getService().updateProductConsumption(
+			productConsumptionId, startDate, endDate, productFields);
+	}
+
 	public static ProductConsumptionService getService() {
 		return _service;
 	}

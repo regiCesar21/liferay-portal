@@ -11,7 +11,6 @@ import com.liferay.osb.koroneiki.phloem.rest.resource.v1_0.ProductConsumptionRes
 import com.liferay.petra.function.UnsafeFunction;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.model.GroupedModel;
 import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.search.filter.Filter;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
@@ -388,6 +387,54 @@ public abstract class BaseProductConsumptionResourceImpl
 	/**
 	 * Invoke this method with the command line:
 	 *
+	 * curl -X 'PUT' 'http://localhost:8080/o/koroneiki-rest/v1.0/product-consumptions/{productConsumptionKey}' -d $'{"endDate": ___, "externalLinks": ___, "productKey": ___, "productPurchaseKey": ___, "properties": ___, "startDate": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
+	 */
+	@io.swagger.v3.oas.annotations.Parameters(
+		value = {
+			@io.swagger.v3.oas.annotations.Parameter(
+				in = io.swagger.v3.oas.annotations.enums.ParameterIn.QUERY,
+				name = "agentName"
+			),
+			@io.swagger.v3.oas.annotations.Parameter(
+				in = io.swagger.v3.oas.annotations.enums.ParameterIn.QUERY,
+				name = "agentUID"
+			),
+			@io.swagger.v3.oas.annotations.Parameter(
+				in = io.swagger.v3.oas.annotations.enums.ParameterIn.PATH,
+				name = "productConsumptionKey"
+			)
+		}
+	)
+	@io.swagger.v3.oas.annotations.tags.Tags(
+		value = {
+			@io.swagger.v3.oas.annotations.tags.Tag(name = "ProductConsumption")
+		}
+	)
+	@javax.ws.rs.Consumes({"application/json", "application/xml"})
+	@javax.ws.rs.Path("/product-consumptions/{productConsumptionKey}")
+	@javax.ws.rs.Produces({"application/json", "application/xml"})
+	@javax.ws.rs.PUT
+	@Override
+	public ProductConsumption putProductConsumption(
+			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
+			@javax.ws.rs.QueryParam("agentName")
+			String agentName,
+			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
+			@javax.ws.rs.QueryParam("agentUID")
+			String agentUID,
+			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
+			@javax.validation.constraints.NotNull
+			@javax.ws.rs.PathParam("productConsumptionKey")
+			String productConsumptionKey,
+			ProductConsumption productConsumption)
+		throws Exception {
+
+		return new ProductConsumption();
+	}
+
+	/**
+	 * Invoke this method with the command line:
+	 *
 	 * curl -X 'DELETE' 'http://localhost:8080/o/koroneiki-rest/v1.0/product-consumptions/{productConsumptionKey}/product-consumption-permissions' -d $'{"delete": ___, "permissions": ___, "roleNames": ___, "update": ___, "view": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
 	 */
 	@io.swagger.v3.oas.annotations.Parameters(
@@ -557,7 +604,9 @@ public abstract class BaseProductConsumptionResourceImpl
 	}
 
 	protected Map<String, String> addAction(
-		String actionName, GroupedModel groupedModel, String methodName) {
+		String actionName,
+		com.liferay.portal.kernel.model.GroupedModel groupedModel,
+		String methodName) {
 
 		return ActionUtil.addAction(
 			actionName, getClass(), groupedModel, methodName,

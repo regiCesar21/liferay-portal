@@ -393,6 +393,13 @@ public class LicenseKeyLocalServiceUtil {
 	}
 
 	public static List<LicenseKey> getLicenseKeys(
+		String productPurchaseKey, boolean complimentary, boolean active) {
+
+		return getService().getLicenseKeys(
+			productPurchaseKey, complimentary, active);
+	}
+
+	public static List<LicenseKey> getLicenseKeys(
 		String productId, String serverId) {
 
 		return getService().getLicenseKeys(productId, serverId);

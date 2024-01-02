@@ -1156,6 +1156,24 @@ public class Mutation {
 	}
 
 	@GraphQLField
+	public ProductConsumption updateProductConsumption(
+			@GraphQLName("agentName") String agentName,
+			@GraphQLName("agentUID") String agentUID,
+			@GraphQLName("productConsumptionKey") String productConsumptionKey,
+			@GraphQLName("productConsumption") ProductConsumption
+				productConsumption)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_productConsumptionResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			productConsumptionResource ->
+				productConsumptionResource.putProductConsumption(
+					agentName, agentUID, productConsumptionKey,
+					productConsumption));
+	}
+
+	@GraphQLField
 	public boolean deleteProductConsumptionProductConsumptionPermission(
 			@GraphQLName("agentName") String agentName,
 			@GraphQLName("agentUID") String agentUID,

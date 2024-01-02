@@ -24,6 +24,7 @@ import java.util.Iterator;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
+import java.util.function.Supplier;
 
 import javax.annotation.Generated;
 
@@ -55,26 +56,36 @@ public class OktaUser implements Serializable {
 
 	@Schema(description = "The email address of the user.")
 	public String getEmailAddress() {
+		if (_emailAddressSupplier != null) {
+			emailAddress = _emailAddressSupplier.get();
+
+			_emailAddressSupplier = null;
+		}
+
 		return emailAddress;
 	}
 
 	public void setEmailAddress(String emailAddress) {
 		this.emailAddress = emailAddress;
+
+		_emailAddressSupplier = null;
 	}
 
 	@JsonIgnore
 	public void setEmailAddress(
 		UnsafeSupplier<String, Exception> emailAddressUnsafeSupplier) {
 
-		try {
-			emailAddress = emailAddressUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_emailAddressSupplier = () -> {
+			try {
+				return emailAddressUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField(description = "The email address of the user.")
@@ -82,28 +93,40 @@ public class OktaUser implements Serializable {
 	@NotEmpty
 	protected String emailAddress;
 
+	private Supplier<String> _emailAddressSupplier;
+
 	@Schema(description = "The first name of the user.")
 	public String getFirstName() {
+		if (_firstNameSupplier != null) {
+			firstName = _firstNameSupplier.get();
+
+			_firstNameSupplier = null;
+		}
+
 		return firstName;
 	}
 
 	public void setFirstName(String firstName) {
 		this.firstName = firstName;
+
+		_firstNameSupplier = null;
 	}
 
 	@JsonIgnore
 	public void setFirstName(
 		UnsafeSupplier<String, Exception> firstNameUnsafeSupplier) {
 
-		try {
-			firstName = firstNameUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_firstNameSupplier = () -> {
+			try {
+				return firstNameUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField(description = "The first name of the user.")
@@ -111,28 +134,40 @@ public class OktaUser implements Serializable {
 	@NotEmpty
 	protected String firstName;
 
+	private Supplier<String> _firstNameSupplier;
+
 	@Schema(description = "The last name of the user.")
 	public String getLastName() {
+		if (_lastNameSupplier != null) {
+			lastName = _lastNameSupplier.get();
+
+			_lastNameSupplier = null;
+		}
+
 		return lastName;
 	}
 
 	public void setLastName(String lastName) {
 		this.lastName = lastName;
+
+		_lastNameSupplier = null;
 	}
 
 	@JsonIgnore
 	public void setLastName(
 		UnsafeSupplier<String, Exception> lastNameUnsafeSupplier) {
 
-		try {
-			lastName = lastNameUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_lastNameSupplier = () -> {
+			try {
+				return lastNameUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField(description = "The last name of the user.")
@@ -140,26 +175,38 @@ public class OktaUser implements Serializable {
 	@NotEmpty
 	protected String lastName;
 
+	private Supplier<String> _lastNameSupplier;
+
 	@Schema(description = "A universal identifier to reference this user.")
 	public String getUuid() {
+		if (_uuidSupplier != null) {
+			uuid = _uuidSupplier.get();
+
+			_uuidSupplier = null;
+		}
+
 		return uuid;
 	}
 
 	public void setUuid(String uuid) {
 		this.uuid = uuid;
+
+		_uuidSupplier = null;
 	}
 
 	@JsonIgnore
 	public void setUuid(UnsafeSupplier<String, Exception> uuidUnsafeSupplier) {
-		try {
-			uuid = uuidUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_uuidSupplier = () -> {
+			try {
+				return uuidUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField(
@@ -167,6 +214,8 @@ public class OktaUser implements Serializable {
 	)
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String uuid;
+
+	private Supplier<String> _uuidSupplier;
 
 	@Override
 	public boolean equals(Object object) {
@@ -195,6 +244,8 @@ public class OktaUser implements Serializable {
 
 		sb.append("{");
 
+		String emailAddress = getEmailAddress();
+
 		if (emailAddress != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -208,6 +259,8 @@ public class OktaUser implements Serializable {
 
 			sb.append("\"");
 		}
+
+		String firstName = getFirstName();
 
 		if (firstName != null) {
 			if (sb.length() > 1) {
@@ -223,6 +276,8 @@ public class OktaUser implements Serializable {
 			sb.append("\"");
 		}
 
+		String lastName = getLastName();
+
 		if (lastName != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -236,6 +291,8 @@ public class OktaUser implements Serializable {
 
 			sb.append("\"");
 		}
+
+		String uuid = getUuid();
 
 		if (uuid != null) {
 			if (sb.length() > 1) {

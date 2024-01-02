@@ -320,6 +320,10 @@ public interface LicenseKeyLocalService
 		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<LicenseKey> getLicenseKeys(
+		String productPurchaseKey, boolean complimentary, boolean active);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<LicenseKey> getLicenseKeys(String productId, String serverId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)

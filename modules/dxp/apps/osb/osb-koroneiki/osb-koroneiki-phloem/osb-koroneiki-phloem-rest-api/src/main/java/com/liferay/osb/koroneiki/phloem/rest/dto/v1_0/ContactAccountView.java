@@ -24,6 +24,7 @@ import java.util.Iterator;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
+import java.util.function.Supplier;
 
 import javax.annotation.Generated;
 
@@ -55,40 +56,60 @@ public class ContactAccountView implements Serializable {
 	@Schema
 	@Valid
 	public Account getAccount() {
+		if (_accountSupplier != null) {
+			account = _accountSupplier.get();
+
+			_accountSupplier = null;
+		}
+
 		return account;
 	}
 
 	public void setAccount(Account account) {
 		this.account = account;
+
+		_accountSupplier = null;
 	}
 
 	@JsonIgnore
 	public void setAccount(
 		UnsafeSupplier<Account, Exception> accountUnsafeSupplier) {
 
-		try {
-			account = accountUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_accountSupplier = () -> {
+			try {
+				return accountUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Account account;
 
+	private Supplier<Account> _accountSupplier;
+
 	@Schema
 	@Valid
 	public ContactRole[] getCustomerContactRoles() {
+		if (_customerContactRolesSupplier != null) {
+			customerContactRoles = _customerContactRolesSupplier.get();
+
+			_customerContactRolesSupplier = null;
+		}
+
 		return customerContactRoles;
 	}
 
 	public void setCustomerContactRoles(ContactRole[] customerContactRoles) {
 		this.customerContactRoles = customerContactRoles;
+
+		_customerContactRolesSupplier = null;
 	}
 
 	@JsonIgnore
@@ -96,29 +117,41 @@ public class ContactAccountView implements Serializable {
 		UnsafeSupplier<ContactRole[], Exception>
 			customerContactRolesUnsafeSupplier) {
 
-		try {
-			customerContactRoles = customerContactRolesUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_customerContactRolesSupplier = () -> {
+			try {
+				return customerContactRolesUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected ContactRole[] customerContactRoles;
 
+	private Supplier<ContactRole[]> _customerContactRolesSupplier;
+
 	@Schema
 	@Valid
 	public ContactRole[] getWorkerContactRoles() {
+		if (_workerContactRolesSupplier != null) {
+			workerContactRoles = _workerContactRolesSupplier.get();
+
+			_workerContactRolesSupplier = null;
+		}
+
 		return workerContactRoles;
 	}
 
 	public void setWorkerContactRoles(ContactRole[] workerContactRoles) {
 		this.workerContactRoles = workerContactRoles;
+
+		_workerContactRolesSupplier = null;
 	}
 
 	@JsonIgnore
@@ -126,20 +159,24 @@ public class ContactAccountView implements Serializable {
 		UnsafeSupplier<ContactRole[], Exception>
 			workerContactRolesUnsafeSupplier) {
 
-		try {
-			workerContactRoles = workerContactRolesUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_workerContactRolesSupplier = () -> {
+			try {
+				return workerContactRolesUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected ContactRole[] workerContactRoles;
+
+	private Supplier<ContactRole[]> _workerContactRolesSupplier;
 
 	@Override
 	public boolean equals(Object object) {
@@ -168,6 +205,8 @@ public class ContactAccountView implements Serializable {
 
 		sb.append("{");
 
+		Account account = getAccount();
+
 		if (account != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -177,6 +216,8 @@ public class ContactAccountView implements Serializable {
 
 			sb.append(String.valueOf(account));
 		}
+
+		ContactRole[] customerContactRoles = getCustomerContactRoles();
 
 		if (customerContactRoles != null) {
 			if (sb.length() > 1) {
@@ -197,6 +238,8 @@ public class ContactAccountView implements Serializable {
 
 			sb.append("]");
 		}
+
+		ContactRole[] workerContactRoles = getWorkerContactRoles();
 
 		if (workerContactRoles != null) {
 			if (sb.length() > 1) {

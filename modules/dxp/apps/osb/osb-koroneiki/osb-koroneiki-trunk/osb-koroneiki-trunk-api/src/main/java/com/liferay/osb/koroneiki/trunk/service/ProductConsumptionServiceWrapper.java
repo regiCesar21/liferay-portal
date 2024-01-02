@@ -201,6 +201,20 @@ public class ProductConsumptionServiceWrapper
 	}
 
 	@Override
+	public com.liferay.osb.koroneiki.trunk.model.ProductConsumption
+			updateProductConsumption(
+				long productConsumptionId, java.util.Date startDate,
+				java.util.Date endDate,
+				java.util.List
+					<com.liferay.osb.koroneiki.trunk.model.ProductField>
+						productFields)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _productConsumptionService.updateProductConsumption(
+			productConsumptionId, startDate, endDate, productFields);
+	}
+
+	@Override
 	public ProductConsumptionService getWrappedService() {
 		return _productConsumptionService;
 	}

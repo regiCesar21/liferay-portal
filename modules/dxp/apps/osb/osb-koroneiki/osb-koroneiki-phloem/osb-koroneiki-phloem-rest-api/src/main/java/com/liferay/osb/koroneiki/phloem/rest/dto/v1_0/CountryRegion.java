@@ -24,6 +24,7 @@ import java.util.Iterator;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
+import java.util.function.Supplier;
 
 import javax.annotation.Generated;
 
@@ -54,26 +55,36 @@ public class CountryRegion implements Serializable {
 		description = "A flag that identifies whether this country region is active."
 	)
 	public Boolean getActive() {
+		if (_activeSupplier != null) {
+			active = _activeSupplier.get();
+
+			_activeSupplier = null;
+		}
+
 		return active;
 	}
 
 	public void setActive(Boolean active) {
 		this.active = active;
+
+		_activeSupplier = null;
 	}
 
 	@JsonIgnore
 	public void setActive(
 		UnsafeSupplier<Boolean, Exception> activeUnsafeSupplier) {
 
-		try {
-			active = activeUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_activeSupplier = () -> {
+			try {
+				return activeUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField(
@@ -82,85 +93,123 @@ public class CountryRegion implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Boolean active;
 
+	private Supplier<Boolean> _activeSupplier;
+
 	@Schema(description = "The region's code.")
 	public String getCode() {
+		if (_codeSupplier != null) {
+			code = _codeSupplier.get();
+
+			_codeSupplier = null;
+		}
+
 		return code;
 	}
 
 	public void setCode(String code) {
 		this.code = code;
+
+		_codeSupplier = null;
 	}
 
 	@JsonIgnore
 	public void setCode(UnsafeSupplier<String, Exception> codeUnsafeSupplier) {
-		try {
-			code = codeUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_codeSupplier = () -> {
+			try {
+				return codeUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField(description = "The region's code.")
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected String code;
 
+	private Supplier<String> _codeSupplier;
+
 	@Schema(description = "The region's country name.")
 	public String getCountryName() {
+		if (_countryNameSupplier != null) {
+			countryName = _countryNameSupplier.get();
+
+			_countryNameSupplier = null;
+		}
+
 		return countryName;
 	}
 
 	public void setCountryName(String countryName) {
 		this.countryName = countryName;
+
+		_countryNameSupplier = null;
 	}
 
 	@JsonIgnore
 	public void setCountryName(
 		UnsafeSupplier<String, Exception> countryNameUnsafeSupplier) {
 
-		try {
-			countryName = countryNameUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_countryNameSupplier = () -> {
+			try {
+				return countryNameUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField(description = "The region's country name.")
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected String countryName;
 
+	private Supplier<String> _countryNameSupplier;
+
 	@Schema(description = "The name of the region.")
 	public String getName() {
+		if (_nameSupplier != null) {
+			name = _nameSupplier.get();
+
+			_nameSupplier = null;
+		}
+
 		return name;
 	}
 
 	public void setName(String name) {
 		this.name = name;
+
+		_nameSupplier = null;
 	}
 
 	@JsonIgnore
 	public void setName(UnsafeSupplier<String, Exception> nameUnsafeSupplier) {
-		try {
-			name = nameUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_nameSupplier = () -> {
+			try {
+				return nameUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField(description = "The name of the region.")
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected String name;
+
+	private Supplier<String> _nameSupplier;
 
 	@Override
 	public boolean equals(Object object) {
@@ -189,6 +238,8 @@ public class CountryRegion implements Serializable {
 
 		sb.append("{");
 
+		Boolean active = getActive();
+
 		if (active != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -198,6 +249,8 @@ public class CountryRegion implements Serializable {
 
 			sb.append(active);
 		}
+
+		String code = getCode();
 
 		if (code != null) {
 			if (sb.length() > 1) {
@@ -213,6 +266,8 @@ public class CountryRegion implements Serializable {
 			sb.append("\"");
 		}
 
+		String countryName = getCountryName();
+
 		if (countryName != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -226,6 +281,8 @@ public class CountryRegion implements Serializable {
 
 			sb.append("\"");
 		}
+
+		String name = getName();
 
 		if (name != null) {
 			if (sb.length() > 1) {

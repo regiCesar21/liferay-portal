@@ -336,6 +336,11 @@ public interface ProductConsumptionLocalService
 			long companyId, String keywords, int start, int end, Sort sort)
 		throws PortalException;
 
+	public ProductConsumption updateProductConsumption(
+			long userId, long productConsumptionId, Date startDate,
+			Date endDate, List<ProductField> productFields)
+		throws PortalException;
+
 	/**
 	 * Updates the product consumption in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
 	 *

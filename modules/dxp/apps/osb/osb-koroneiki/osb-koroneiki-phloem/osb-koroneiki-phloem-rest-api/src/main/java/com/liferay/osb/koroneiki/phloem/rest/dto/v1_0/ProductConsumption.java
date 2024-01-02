@@ -28,6 +28,7 @@ import java.util.Iterator;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
+import java.util.function.Supplier;
 
 import javax.annotation.Generated;
 
@@ -63,82 +64,116 @@ public class ProductConsumption implements Serializable {
 
 	@Schema(description = "The key of the account consuming the product.")
 	public String getAccountKey() {
+		if (_accountKeySupplier != null) {
+			accountKey = _accountKeySupplier.get();
+
+			_accountKeySupplier = null;
+		}
+
 		return accountKey;
 	}
 
 	public void setAccountKey(String accountKey) {
 		this.accountKey = accountKey;
+
+		_accountKeySupplier = null;
 	}
 
 	@JsonIgnore
 	public void setAccountKey(
 		UnsafeSupplier<String, Exception> accountKeyUnsafeSupplier) {
 
-		try {
-			accountKey = accountKeyUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_accountKeySupplier = () -> {
+			try {
+				return accountKeyUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField(description = "The key of the account consuming the product.")
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected String accountKey;
 
+	private Supplier<String> _accountKeySupplier;
+
 	@Schema(description = "The product consumption's creation date.")
 	public Date getDateCreated() {
+		if (_dateCreatedSupplier != null) {
+			dateCreated = _dateCreatedSupplier.get();
+
+			_dateCreatedSupplier = null;
+		}
+
 		return dateCreated;
 	}
 
 	public void setDateCreated(Date dateCreated) {
 		this.dateCreated = dateCreated;
+
+		_dateCreatedSupplier = null;
 	}
 
 	@JsonIgnore
 	public void setDateCreated(
 		UnsafeSupplier<Date, Exception> dateCreatedUnsafeSupplier) {
 
-		try {
-			dateCreated = dateCreatedUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_dateCreatedSupplier = () -> {
+			try {
+				return dateCreatedUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField(description = "The product consumption's creation date.")
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Date dateCreated;
 
+	private Supplier<Date> _dateCreatedSupplier;
+
 	@Schema(description = "The product consumption's end date if applicable.")
 	public Date getEndDate() {
+		if (_endDateSupplier != null) {
+			endDate = _endDateSupplier.get();
+
+			_endDateSupplier = null;
+		}
+
 		return endDate;
 	}
 
 	public void setEndDate(Date endDate) {
 		this.endDate = endDate;
+
+		_endDateSupplier = null;
 	}
 
 	@JsonIgnore
 	public void setEndDate(
 		UnsafeSupplier<Date, Exception> endDateUnsafeSupplier) {
 
-		try {
-			endDate = endDateUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_endDateSupplier = () -> {
+			try {
+				return endDateUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField(
@@ -147,31 +182,43 @@ public class ProductConsumption implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Date endDate;
 
+	private Supplier<Date> _endDateSupplier;
+
 	@Schema(
 		description = "The product consumption's links to entities in external domains."
 	)
 	@Valid
 	public ExternalLink[] getExternalLinks() {
+		if (_externalLinksSupplier != null) {
+			externalLinks = _externalLinksSupplier.get();
+
+			_externalLinksSupplier = null;
+		}
+
 		return externalLinks;
 	}
 
 	public void setExternalLinks(ExternalLink[] externalLinks) {
 		this.externalLinks = externalLinks;
+
+		_externalLinksSupplier = null;
 	}
 
 	@JsonIgnore
 	public void setExternalLinks(
 		UnsafeSupplier<ExternalLink[], Exception> externalLinksUnsafeSupplier) {
 
-		try {
-			externalLinks = externalLinksUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_externalLinksSupplier = () -> {
+			try {
+				return externalLinksUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField(
@@ -180,54 +227,78 @@ public class ProductConsumption implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected ExternalLink[] externalLinks;
 
+	private Supplier<ExternalLink[]> _externalLinksSupplier;
+
 	@Schema(description = "The product consumption's key.")
 	public String getKey() {
+		if (_keySupplier != null) {
+			key = _keySupplier.get();
+
+			_keySupplier = null;
+		}
+
 		return key;
 	}
 
 	public void setKey(String key) {
 		this.key = key;
+
+		_keySupplier = null;
 	}
 
 	@JsonIgnore
 	public void setKey(UnsafeSupplier<String, Exception> keyUnsafeSupplier) {
-		try {
-			key = keyUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_keySupplier = () -> {
+			try {
+				return keyUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField(description = "The product consumption's key.")
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected String key;
 
+	private Supplier<String> _keySupplier;
+
 	@Schema(description = "The key of the product being consumed.")
 	public String getProductKey() {
+		if (_productKeySupplier != null) {
+			productKey = _productKeySupplier.get();
+
+			_productKeySupplier = null;
+		}
+
 		return productKey;
 	}
 
 	public void setProductKey(String productKey) {
 		this.productKey = productKey;
+
+		_productKeySupplier = null;
 	}
 
 	@JsonIgnore
 	public void setProductKey(
 		UnsafeSupplier<String, Exception> productKeyUnsafeSupplier) {
 
-		try {
-			productKey = productKeyUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_productKeySupplier = () -> {
+			try {
+				return productKeyUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField(description = "The key of the product being consumed.")
@@ -235,30 +306,42 @@ public class ProductConsumption implements Serializable {
 	@NotEmpty
 	protected String productKey;
 
+	private Supplier<String> _productKeySupplier;
+
 	@Schema(
 		description = "The key of the product consumption's product purchase if applicable."
 	)
 	public String getProductPurchaseKey() {
+		if (_productPurchaseKeySupplier != null) {
+			productPurchaseKey = _productPurchaseKeySupplier.get();
+
+			_productPurchaseKeySupplier = null;
+		}
+
 		return productPurchaseKey;
 	}
 
 	public void setProductPurchaseKey(String productPurchaseKey) {
 		this.productPurchaseKey = productPurchaseKey;
+
+		_productPurchaseKeySupplier = null;
 	}
 
 	@JsonIgnore
 	public void setProductPurchaseKey(
 		UnsafeSupplier<String, Exception> productPurchaseKeyUnsafeSupplier) {
 
-		try {
-			productPurchaseKey = productPurchaseKeyUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_productPurchaseKeySupplier = () -> {
+			try {
+				return productPurchaseKeyUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField(
@@ -267,14 +350,24 @@ public class ProductConsumption implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String productPurchaseKey;
 
+	private Supplier<String> _productPurchaseKeySupplier;
+
 	@Schema
 	@Valid
 	public Map<String, String> getProperties() {
+		if (_propertiesSupplier != null) {
+			properties = _propertiesSupplier.get();
+
+			_propertiesSupplier = null;
+		}
+
 		return properties;
 	}
 
 	public void setProperties(Map<String, String> properties) {
 		this.properties = properties;
+
+		_propertiesSupplier = null;
 	}
 
 	@JsonIgnore
@@ -282,43 +375,57 @@ public class ProductConsumption implements Serializable {
 		UnsafeSupplier<Map<String, String>, Exception>
 			propertiesUnsafeSupplier) {
 
-		try {
-			properties = propertiesUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_propertiesSupplier = () -> {
+			try {
+				return propertiesUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Map<String, String> properties;
 
+	private Supplier<Map<String, String>> _propertiesSupplier;
+
 	@Schema(description = "The product consumption's start date if applicable.")
 	public Date getStartDate() {
+		if (_startDateSupplier != null) {
+			startDate = _startDateSupplier.get();
+
+			_startDateSupplier = null;
+		}
+
 		return startDate;
 	}
 
 	public void setStartDate(Date startDate) {
 		this.startDate = startDate;
+
+		_startDateSupplier = null;
 	}
 
 	@JsonIgnore
 	public void setStartDate(
 		UnsafeSupplier<Date, Exception> startDateUnsafeSupplier) {
 
-		try {
-			startDate = startDateUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_startDateSupplier = () -> {
+			try {
+				return startDateUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField(
@@ -326,6 +433,8 @@ public class ProductConsumption implements Serializable {
 	)
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Date startDate;
+
+	private Supplier<Date> _startDateSupplier;
 
 	@Override
 	public boolean equals(Object object) {
@@ -357,6 +466,8 @@ public class ProductConsumption implements Serializable {
 		DateFormat liferayToJSONDateFormat = new SimpleDateFormat(
 			"yyyy-MM-dd'T'HH:mm:ss'Z'");
 
+		String accountKey = getAccountKey();
+
 		if (accountKey != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -370,6 +481,8 @@ public class ProductConsumption implements Serializable {
 
 			sb.append("\"");
 		}
+
+		Date dateCreated = getDateCreated();
 
 		if (dateCreated != null) {
 			if (sb.length() > 1) {
@@ -385,6 +498,8 @@ public class ProductConsumption implements Serializable {
 			sb.append("\"");
 		}
 
+		Date endDate = getEndDate();
+
 		if (endDate != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -398,6 +513,8 @@ public class ProductConsumption implements Serializable {
 
 			sb.append("\"");
 		}
+
+		ExternalLink[] externalLinks = getExternalLinks();
 
 		if (externalLinks != null) {
 			if (sb.length() > 1) {
@@ -419,6 +536,8 @@ public class ProductConsumption implements Serializable {
 			sb.append("]");
 		}
 
+		String key = getKey();
+
 		if (key != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -432,6 +551,8 @@ public class ProductConsumption implements Serializable {
 
 			sb.append("\"");
 		}
+
+		String productKey = getProductKey();
 
 		if (productKey != null) {
 			if (sb.length() > 1) {
@@ -447,6 +568,8 @@ public class ProductConsumption implements Serializable {
 			sb.append("\"");
 		}
 
+		String productPurchaseKey = getProductPurchaseKey();
+
 		if (productPurchaseKey != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -461,6 +584,8 @@ public class ProductConsumption implements Serializable {
 			sb.append("\"");
 		}
 
+		Map<String, String> properties = getProperties();
+
 		if (properties != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -470,6 +595,8 @@ public class ProductConsumption implements Serializable {
 
 			sb.append(_toJSON(properties));
 		}
+
+		Date startDate = getStartDate();
 
 		if (startDate != null) {
 			if (sb.length() > 1) {

@@ -28,6 +28,7 @@ import java.util.Iterator;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
+import java.util.function.Supplier;
 
 import javax.annotation.Generated;
 
@@ -62,54 +63,76 @@ public class ExternalLink implements Serializable {
 
 	@Schema(description = "The external link's creation date.")
 	public Date getDateCreated() {
+		if (_dateCreatedSupplier != null) {
+			dateCreated = _dateCreatedSupplier.get();
+
+			_dateCreatedSupplier = null;
+		}
+
 		return dateCreated;
 	}
 
 	public void setDateCreated(Date dateCreated) {
 		this.dateCreated = dateCreated;
+
+		_dateCreatedSupplier = null;
 	}
 
 	@JsonIgnore
 	public void setDateCreated(
 		UnsafeSupplier<Date, Exception> dateCreatedUnsafeSupplier) {
 
-		try {
-			dateCreated = dateCreatedUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_dateCreatedSupplier = () -> {
+			try {
+				return dateCreatedUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField(description = "The external link's creation date.")
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Date dateCreated;
 
+	private Supplier<Date> _dateCreatedSupplier;
+
 	@Schema(description = "The external domain.")
 	public String getDomain() {
+		if (_domainSupplier != null) {
+			domain = _domainSupplier.get();
+
+			_domainSupplier = null;
+		}
+
 		return domain;
 	}
 
 	public void setDomain(String domain) {
 		this.domain = domain;
+
+		_domainSupplier = null;
 	}
 
 	@JsonIgnore
 	public void setDomain(
 		UnsafeSupplier<String, Exception> domainUnsafeSupplier) {
 
-		try {
-			domain = domainUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_domainSupplier = () -> {
+			try {
+				return domainUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField(description = "The external domain.")
@@ -117,28 +140,40 @@ public class ExternalLink implements Serializable {
 	@NotEmpty
 	protected String domain;
 
+	private Supplier<String> _domainSupplier;
+
 	@Schema(description = "The unique ID for the entity.")
 	public String getEntityId() {
+		if (_entityIdSupplier != null) {
+			entityId = _entityIdSupplier.get();
+
+			_entityIdSupplier = null;
+		}
+
 		return entityId;
 	}
 
 	public void setEntityId(String entityId) {
 		this.entityId = entityId;
+
+		_entityIdSupplier = null;
 	}
 
 	@JsonIgnore
 	public void setEntityId(
 		UnsafeSupplier<String, Exception> entityIdUnsafeSupplier) {
 
-		try {
-			entityId = entityIdUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_entityIdSupplier = () -> {
+			try {
+				return entityIdUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField(description = "The unique ID for the entity.")
@@ -146,28 +181,40 @@ public class ExternalLink implements Serializable {
 	@NotEmpty
 	protected String entityId;
 
+	private Supplier<String> _entityIdSupplier;
+
 	@Schema(description = "The unique classification for the entity.")
 	public String getEntityName() {
+		if (_entityNameSupplier != null) {
+			entityName = _entityNameSupplier.get();
+
+			_entityNameSupplier = null;
+		}
+
 		return entityName;
 	}
 
 	public void setEntityName(String entityName) {
 		this.entityName = entityName;
+
+		_entityNameSupplier = null;
 	}
 
 	@JsonIgnore
 	public void setEntityName(
 		UnsafeSupplier<String, Exception> entityNameUnsafeSupplier) {
 
-		try {
-			entityName = entityNameUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_entityNameSupplier = () -> {
+			try {
+				return entityNameUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField(description = "The unique classification for the entity.")
@@ -175,57 +222,83 @@ public class ExternalLink implements Serializable {
 	@NotEmpty
 	protected String entityName;
 
+	private Supplier<String> _entityNameSupplier;
+
 	@Schema(description = "The external link's key.")
 	public String getKey() {
+		if (_keySupplier != null) {
+			key = _keySupplier.get();
+
+			_keySupplier = null;
+		}
+
 		return key;
 	}
 
 	public void setKey(String key) {
 		this.key = key;
+
+		_keySupplier = null;
 	}
 
 	@JsonIgnore
 	public void setKey(UnsafeSupplier<String, Exception> keyUnsafeSupplier) {
-		try {
-			key = keyUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_keySupplier = () -> {
+			try {
+				return keyUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField(description = "The external link's key.")
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String key;
 
+	private Supplier<String> _keySupplier;
+
 	@Schema(description = "The url of the external entity.")
 	public String getUrl() {
+		if (_urlSupplier != null) {
+			url = _urlSupplier.get();
+
+			_urlSupplier = null;
+		}
+
 		return url;
 	}
 
 	public void setUrl(String url) {
 		this.url = url;
+
+		_urlSupplier = null;
 	}
 
 	@JsonIgnore
 	public void setUrl(UnsafeSupplier<String, Exception> urlUnsafeSupplier) {
-		try {
-			url = urlUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_urlSupplier = () -> {
+			try {
+				return urlUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField(description = "The url of the external entity.")
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected String url;
+
+	private Supplier<String> _urlSupplier;
 
 	@Override
 	public boolean equals(Object object) {
@@ -257,6 +330,8 @@ public class ExternalLink implements Serializable {
 		DateFormat liferayToJSONDateFormat = new SimpleDateFormat(
 			"yyyy-MM-dd'T'HH:mm:ss'Z'");
 
+		Date dateCreated = getDateCreated();
+
 		if (dateCreated != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -270,6 +345,8 @@ public class ExternalLink implements Serializable {
 
 			sb.append("\"");
 		}
+
+		String domain = getDomain();
 
 		if (domain != null) {
 			if (sb.length() > 1) {
@@ -285,6 +362,8 @@ public class ExternalLink implements Serializable {
 			sb.append("\"");
 		}
 
+		String entityId = getEntityId();
+
 		if (entityId != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -298,6 +377,8 @@ public class ExternalLink implements Serializable {
 
 			sb.append("\"");
 		}
+
+		String entityName = getEntityName();
 
 		if (entityName != null) {
 			if (sb.length() > 1) {
@@ -313,6 +394,8 @@ public class ExternalLink implements Serializable {
 			sb.append("\"");
 		}
 
+		String key = getKey();
+
 		if (key != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -326,6 +409,8 @@ public class ExternalLink implements Serializable {
 
 			sb.append("\"");
 		}
+
+		String url = getUrl();
 
 		if (url != null) {
 			if (sb.length() > 1) {

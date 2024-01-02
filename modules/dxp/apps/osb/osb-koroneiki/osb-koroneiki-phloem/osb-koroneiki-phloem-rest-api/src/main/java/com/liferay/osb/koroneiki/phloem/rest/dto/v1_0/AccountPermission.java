@@ -24,6 +24,7 @@ import java.util.Iterator;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
+import java.util.function.Supplier;
 
 import javax.annotation.Generated;
 
@@ -49,197 +50,281 @@ public class AccountPermission implements Serializable {
 
 	@Schema
 	public Boolean getAssignContact() {
+		if (_assignContactSupplier != null) {
+			assignContact = _assignContactSupplier.get();
+
+			_assignContactSupplier = null;
+		}
+
 		return assignContact;
 	}
 
 	public void setAssignContact(Boolean assignContact) {
 		this.assignContact = assignContact;
+
+		_assignContactSupplier = null;
 	}
 
 	@JsonIgnore
 	public void setAssignContact(
 		UnsafeSupplier<Boolean, Exception> assignContactUnsafeSupplier) {
 
-		try {
-			assignContact = assignContactUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_assignContactSupplier = () -> {
+			try {
+				return assignContactUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Boolean assignContact;
 
+	private Supplier<Boolean> _assignContactSupplier;
+
 	@Schema
 	public Boolean getAssignTeam() {
+		if (_assignTeamSupplier != null) {
+			assignTeam = _assignTeamSupplier.get();
+
+			_assignTeamSupplier = null;
+		}
+
 		return assignTeam;
 	}
 
 	public void setAssignTeam(Boolean assignTeam) {
 		this.assignTeam = assignTeam;
+
+		_assignTeamSupplier = null;
 	}
 
 	@JsonIgnore
 	public void setAssignTeam(
 		UnsafeSupplier<Boolean, Exception> assignTeamUnsafeSupplier) {
 
-		try {
-			assignTeam = assignTeamUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_assignTeamSupplier = () -> {
+			try {
+				return assignTeamUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Boolean assignTeam;
 
+	private Supplier<Boolean> _assignTeamSupplier;
+
 	@Schema
 	public Boolean getDelete() {
+		if (_deleteSupplier != null) {
+			delete = _deleteSupplier.get();
+
+			_deleteSupplier = null;
+		}
+
 		return delete;
 	}
 
 	public void setDelete(Boolean delete) {
 		this.delete = delete;
+
+		_deleteSupplier = null;
 	}
 
 	@JsonIgnore
 	public void setDelete(
 		UnsafeSupplier<Boolean, Exception> deleteUnsafeSupplier) {
 
-		try {
-			delete = deleteUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_deleteSupplier = () -> {
+			try {
+				return deleteUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Boolean delete;
 
+	private Supplier<Boolean> _deleteSupplier;
+
 	@Schema
 	public Boolean getPermissions() {
+		if (_permissionsSupplier != null) {
+			permissions = _permissionsSupplier.get();
+
+			_permissionsSupplier = null;
+		}
+
 		return permissions;
 	}
 
 	public void setPermissions(Boolean permissions) {
 		this.permissions = permissions;
+
+		_permissionsSupplier = null;
 	}
 
 	@JsonIgnore
 	public void setPermissions(
 		UnsafeSupplier<Boolean, Exception> permissionsUnsafeSupplier) {
 
-		try {
-			permissions = permissionsUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_permissionsSupplier = () -> {
+			try {
+				return permissionsUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Boolean permissions;
 
+	private Supplier<Boolean> _permissionsSupplier;
+
 	@Schema
 	public String[] getRoleNames() {
+		if (_roleNamesSupplier != null) {
+			roleNames = _roleNamesSupplier.get();
+
+			_roleNamesSupplier = null;
+		}
+
 		return roleNames;
 	}
 
 	public void setRoleNames(String[] roleNames) {
 		this.roleNames = roleNames;
+
+		_roleNamesSupplier = null;
 	}
 
 	@JsonIgnore
 	public void setRoleNames(
 		UnsafeSupplier<String[], Exception> roleNamesUnsafeSupplier) {
 
-		try {
-			roleNames = roleNamesUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_roleNamesSupplier = () -> {
+			try {
+				return roleNamesUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String[] roleNames;
 
+	private Supplier<String[]> _roleNamesSupplier;
+
 	@Schema
 	public Boolean getUpdate() {
+		if (_updateSupplier != null) {
+			update = _updateSupplier.get();
+
+			_updateSupplier = null;
+		}
+
 		return update;
 	}
 
 	public void setUpdate(Boolean update) {
 		this.update = update;
+
+		_updateSupplier = null;
 	}
 
 	@JsonIgnore
 	public void setUpdate(
 		UnsafeSupplier<Boolean, Exception> updateUnsafeSupplier) {
 
-		try {
-			update = updateUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_updateSupplier = () -> {
+			try {
+				return updateUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Boolean update;
 
+	private Supplier<Boolean> _updateSupplier;
+
 	@Schema
 	public Boolean getView() {
+		if (_viewSupplier != null) {
+			view = _viewSupplier.get();
+
+			_viewSupplier = null;
+		}
+
 		return view;
 	}
 
 	public void setView(Boolean view) {
 		this.view = view;
+
+		_viewSupplier = null;
 	}
 
 	@JsonIgnore
 	public void setView(UnsafeSupplier<Boolean, Exception> viewUnsafeSupplier) {
-		try {
-			view = viewUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_viewSupplier = () -> {
+			try {
+				return viewUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Boolean view;
+
+	private Supplier<Boolean> _viewSupplier;
 
 	@Override
 	public boolean equals(Object object) {
@@ -268,6 +353,8 @@ public class AccountPermission implements Serializable {
 
 		sb.append("{");
 
+		Boolean assignContact = getAssignContact();
+
 		if (assignContact != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -277,6 +364,8 @@ public class AccountPermission implements Serializable {
 
 			sb.append(assignContact);
 		}
+
+		Boolean assignTeam = getAssignTeam();
 
 		if (assignTeam != null) {
 			if (sb.length() > 1) {
@@ -288,6 +377,8 @@ public class AccountPermission implements Serializable {
 			sb.append(assignTeam);
 		}
 
+		Boolean delete = getDelete();
+
 		if (delete != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -298,6 +389,8 @@ public class AccountPermission implements Serializable {
 			sb.append(delete);
 		}
 
+		Boolean permissions = getPermissions();
+
 		if (permissions != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -307,6 +400,8 @@ public class AccountPermission implements Serializable {
 
 			sb.append(permissions);
 		}
+
+		String[] roleNames = getRoleNames();
 
 		if (roleNames != null) {
 			if (sb.length() > 1) {
@@ -332,6 +427,8 @@ public class AccountPermission implements Serializable {
 			sb.append("]");
 		}
 
+		Boolean update = getUpdate();
+
 		if (update != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -341,6 +438,8 @@ public class AccountPermission implements Serializable {
 
 			sb.append(update);
 		}
+
+		Boolean view = getView();
 
 		if (view != null) {
 			if (sb.length() > 1) {

@@ -28,6 +28,7 @@ import java.util.Iterator;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
+import java.util.function.Supplier;
 
 import javax.annotation.Generated;
 
@@ -60,26 +61,36 @@ public class Team implements Serializable {
 	)
 	@Valid
 	public Account getAccount() {
+		if (_accountSupplier != null) {
+			account = _accountSupplier.get();
+
+			_accountSupplier = null;
+		}
+
 		return account;
 	}
 
 	public void setAccount(Account account) {
 		this.account = account;
+
+		_accountSupplier = null;
 	}
 
 	@JsonIgnore
 	public void setAccount(
 		UnsafeSupplier<Account, Exception> accountUnsafeSupplier) {
 
-		try {
-			account = accountUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_accountSupplier = () -> {
+			try {
+				return accountUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField(
@@ -88,59 +99,83 @@ public class Team implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Account account;
 
+	private Supplier<Account> _accountSupplier;
+
 	@Schema(description = "The team's account's key.")
 	public String getAccountKey() {
+		if (_accountKeySupplier != null) {
+			accountKey = _accountKeySupplier.get();
+
+			_accountKeySupplier = null;
+		}
+
 		return accountKey;
 	}
 
 	public void setAccountKey(String accountKey) {
 		this.accountKey = accountKey;
+
+		_accountKeySupplier = null;
 	}
 
 	@JsonIgnore
 	public void setAccountKey(
 		UnsafeSupplier<String, Exception> accountKeyUnsafeSupplier) {
 
-		try {
-			accountKey = accountKeyUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_accountKeySupplier = () -> {
+			try {
+				return accountKeyUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField(description = "The team's account's key.")
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected String accountKey;
 
+	private Supplier<String> _accountKeySupplier;
+
 	@Schema(
 		description = "The team's contacts. Optional field that can retrieved with nestedFields."
 	)
 	@Valid
 	public Contact[] getContacts() {
+		if (_contactsSupplier != null) {
+			contacts = _contactsSupplier.get();
+
+			_contactsSupplier = null;
+		}
+
 		return contacts;
 	}
 
 	public void setContacts(Contact[] contacts) {
 		this.contacts = contacts;
+
+		_contactsSupplier = null;
 	}
 
 	@JsonIgnore
 	public void setContacts(
 		UnsafeSupplier<Contact[], Exception> contactsUnsafeSupplier) {
 
-		try {
-			contacts = contactsUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_contactsSupplier = () -> {
+			try {
+				return contactsUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField(
@@ -149,58 +184,82 @@ public class Team implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Contact[] contacts;
 
+	private Supplier<Contact[]> _contactsSupplier;
+
 	@Schema(description = "The team's creation date.")
 	public Date getDateCreated() {
+		if (_dateCreatedSupplier != null) {
+			dateCreated = _dateCreatedSupplier.get();
+
+			_dateCreatedSupplier = null;
+		}
+
 		return dateCreated;
 	}
 
 	public void setDateCreated(Date dateCreated) {
 		this.dateCreated = dateCreated;
+
+		_dateCreatedSupplier = null;
 	}
 
 	@JsonIgnore
 	public void setDateCreated(
 		UnsafeSupplier<Date, Exception> dateCreatedUnsafeSupplier) {
 
-		try {
-			dateCreated = dateCreatedUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_dateCreatedSupplier = () -> {
+			try {
+				return dateCreatedUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField(description = "The team's creation date.")
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Date dateCreated;
 
+	private Supplier<Date> _dateCreatedSupplier;
+
 	@Schema(
 		description = "The most recent time that any of the team's fields changed."
 	)
 	public Date getDateModified() {
+		if (_dateModifiedSupplier != null) {
+			dateModified = _dateModifiedSupplier.get();
+
+			_dateModifiedSupplier = null;
+		}
+
 		return dateModified;
 	}
 
 	public void setDateModified(Date dateModified) {
 		this.dateModified = dateModified;
+
+		_dateModifiedSupplier = null;
 	}
 
 	@JsonIgnore
 	public void setDateModified(
 		UnsafeSupplier<Date, Exception> dateModifiedUnsafeSupplier) {
 
-		try {
-			dateModified = dateModifiedUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_dateModifiedSupplier = () -> {
+			try {
+				return dateModifiedUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField(
@@ -209,29 +268,41 @@ public class Team implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Date dateModified;
 
+	private Supplier<Date> _dateModifiedSupplier;
+
 	@Schema(description = "The team's links to entities in external domains.")
 	@Valid
 	public ExternalLink[] getExternalLinks() {
+		if (_externalLinksSupplier != null) {
+			externalLinks = _externalLinksSupplier.get();
+
+			_externalLinksSupplier = null;
+		}
+
 		return externalLinks;
 	}
 
 	public void setExternalLinks(ExternalLink[] externalLinks) {
 		this.externalLinks = externalLinks;
+
+		_externalLinksSupplier = null;
 	}
 
 	@JsonIgnore
 	public void setExternalLinks(
 		UnsafeSupplier<ExternalLink[], Exception> externalLinksUnsafeSupplier) {
 
-		try {
-			externalLinks = externalLinksUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_externalLinksSupplier = () -> {
+			try {
+				return externalLinksUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField(
@@ -240,52 +311,76 @@ public class Team implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected ExternalLink[] externalLinks;
 
+	private Supplier<ExternalLink[]> _externalLinksSupplier;
+
 	@Schema(description = "The team's key.")
 	public String getKey() {
+		if (_keySupplier != null) {
+			key = _keySupplier.get();
+
+			_keySupplier = null;
+		}
+
 		return key;
 	}
 
 	public void setKey(String key) {
 		this.key = key;
+
+		_keySupplier = null;
 	}
 
 	@JsonIgnore
 	public void setKey(UnsafeSupplier<String, Exception> keyUnsafeSupplier) {
-		try {
-			key = keyUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_keySupplier = () -> {
+			try {
+				return keyUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField(description = "The team's key.")
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String key;
 
+	private Supplier<String> _keySupplier;
+
 	@Schema(description = "The name of the team.")
 	public String getName() {
+		if (_nameSupplier != null) {
+			name = _nameSupplier.get();
+
+			_nameSupplier = null;
+		}
+
 		return name;
 	}
 
 	public void setName(String name) {
 		this.name = name;
+
+		_nameSupplier = null;
 	}
 
 	@JsonIgnore
 	public void setName(UnsafeSupplier<String, Exception> nameUnsafeSupplier) {
-		try {
-			name = nameUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_nameSupplier = () -> {
+			try {
+				return nameUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField(description = "The name of the team.")
@@ -293,30 +388,42 @@ public class Team implements Serializable {
 	@NotEmpty
 	protected String name;
 
+	private Supplier<String> _nameSupplier;
+
 	@Schema(
 		description = "A flag that identifies whether this is a system team."
 	)
 	public Boolean getSystem() {
+		if (_systemSupplier != null) {
+			system = _systemSupplier.get();
+
+			_systemSupplier = null;
+		}
+
 		return system;
 	}
 
 	public void setSystem(Boolean system) {
 		this.system = system;
+
+		_systemSupplier = null;
 	}
 
 	@JsonIgnore
 	public void setSystem(
 		UnsafeSupplier<Boolean, Exception> systemUnsafeSupplier) {
 
-		try {
-			system = systemUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_systemSupplier = () -> {
+			try {
+				return systemUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField(
@@ -325,31 +432,43 @@ public class Team implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Boolean system;
 
+	private Supplier<Boolean> _systemSupplier;
+
 	@Schema(
 		description = "The team's account team roles. Optional field that can retrieved with nestedFields."
 	)
 	@Valid
 	public TeamRole[] getTeamRoles() {
+		if (_teamRolesSupplier != null) {
+			teamRoles = _teamRolesSupplier.get();
+
+			_teamRolesSupplier = null;
+		}
+
 		return teamRoles;
 	}
 
 	public void setTeamRoles(TeamRole[] teamRoles) {
 		this.teamRoles = teamRoles;
+
+		_teamRolesSupplier = null;
 	}
 
 	@JsonIgnore
 	public void setTeamRoles(
 		UnsafeSupplier<TeamRole[], Exception> teamRolesUnsafeSupplier) {
 
-		try {
-			teamRoles = teamRolesUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_teamRolesSupplier = () -> {
+			try {
+				return teamRolesUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField(
@@ -357,6 +476,8 @@ public class Team implements Serializable {
 	)
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected TeamRole[] teamRoles;
+
+	private Supplier<TeamRole[]> _teamRolesSupplier;
 
 	@Override
 	public boolean equals(Object object) {
@@ -388,6 +509,8 @@ public class Team implements Serializable {
 		DateFormat liferayToJSONDateFormat = new SimpleDateFormat(
 			"yyyy-MM-dd'T'HH:mm:ss'Z'");
 
+		Account account = getAccount();
+
 		if (account != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -397,6 +520,8 @@ public class Team implements Serializable {
 
 			sb.append(String.valueOf(account));
 		}
+
+		String accountKey = getAccountKey();
 
 		if (accountKey != null) {
 			if (sb.length() > 1) {
@@ -411,6 +536,8 @@ public class Team implements Serializable {
 
 			sb.append("\"");
 		}
+
+		Contact[] contacts = getContacts();
 
 		if (contacts != null) {
 			if (sb.length() > 1) {
@@ -432,6 +559,8 @@ public class Team implements Serializable {
 			sb.append("]");
 		}
 
+		Date dateCreated = getDateCreated();
+
 		if (dateCreated != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -446,6 +575,8 @@ public class Team implements Serializable {
 			sb.append("\"");
 		}
 
+		Date dateModified = getDateModified();
+
 		if (dateModified != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -459,6 +590,8 @@ public class Team implements Serializable {
 
 			sb.append("\"");
 		}
+
+		ExternalLink[] externalLinks = getExternalLinks();
 
 		if (externalLinks != null) {
 			if (sb.length() > 1) {
@@ -480,6 +613,8 @@ public class Team implements Serializable {
 			sb.append("]");
 		}
 
+		String key = getKey();
+
 		if (key != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -493,6 +628,8 @@ public class Team implements Serializable {
 
 			sb.append("\"");
 		}
+
+		String name = getName();
 
 		if (name != null) {
 			if (sb.length() > 1) {
@@ -508,6 +645,8 @@ public class Team implements Serializable {
 			sb.append("\"");
 		}
 
+		Boolean system = getSystem();
+
 		if (system != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -517,6 +656,8 @@ public class Team implements Serializable {
 
 			sb.append(system);
 		}
+
+		TeamRole[] teamRoles = getTeamRoles();
 
 		if (teamRoles != null) {
 			if (sb.length() > 1) {

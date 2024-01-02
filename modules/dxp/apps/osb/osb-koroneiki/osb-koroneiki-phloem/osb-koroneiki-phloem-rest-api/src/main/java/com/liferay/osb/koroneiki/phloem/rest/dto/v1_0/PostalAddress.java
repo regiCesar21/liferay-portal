@@ -24,6 +24,7 @@ import java.util.Iterator;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
+import java.util.function.Supplier;
 
 import javax.annotation.Generated;
 
@@ -52,166 +53,236 @@ public class PostalAddress implements Serializable {
 
 	@Schema(description = "The address's country (e.g., United States).")
 	public String getAddressCountry() {
+		if (_addressCountrySupplier != null) {
+			addressCountry = _addressCountrySupplier.get();
+
+			_addressCountrySupplier = null;
+		}
+
 		return addressCountry;
 	}
 
 	public void setAddressCountry(String addressCountry) {
 		this.addressCountry = addressCountry;
+
+		_addressCountrySupplier = null;
 	}
 
 	@JsonIgnore
 	public void setAddressCountry(
 		UnsafeSupplier<String, Exception> addressCountryUnsafeSupplier) {
 
-		try {
-			addressCountry = addressCountryUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_addressCountrySupplier = () -> {
+			try {
+				return addressCountryUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField(description = "The address's country (e.g., United States).")
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String addressCountry;
 
+	private Supplier<String> _addressCountrySupplier;
+
 	@Schema(description = "The address's locality (e.g., city).")
 	public String getAddressLocality() {
+		if (_addressLocalitySupplier != null) {
+			addressLocality = _addressLocalitySupplier.get();
+
+			_addressLocalitySupplier = null;
+		}
+
 		return addressLocality;
 	}
 
 	public void setAddressLocality(String addressLocality) {
 		this.addressLocality = addressLocality;
+
+		_addressLocalitySupplier = null;
 	}
 
 	@JsonIgnore
 	public void setAddressLocality(
 		UnsafeSupplier<String, Exception> addressLocalityUnsafeSupplier) {
 
-		try {
-			addressLocality = addressLocalityUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_addressLocalitySupplier = () -> {
+			try {
+				return addressLocalityUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField(description = "The address's locality (e.g., city).")
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String addressLocality;
 
+	private Supplier<String> _addressLocalitySupplier;
+
 	@Schema(description = "The address's region (e.g., California).")
 	public String getAddressRegion() {
+		if (_addressRegionSupplier != null) {
+			addressRegion = _addressRegionSupplier.get();
+
+			_addressRegionSupplier = null;
+		}
+
 		return addressRegion;
 	}
 
 	public void setAddressRegion(String addressRegion) {
 		this.addressRegion = addressRegion;
+
+		_addressRegionSupplier = null;
 	}
 
 	@JsonIgnore
 	public void setAddressRegion(
 		UnsafeSupplier<String, Exception> addressRegionUnsafeSupplier) {
 
-		try {
-			addressRegion = addressRegionUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_addressRegionSupplier = () -> {
+			try {
+				return addressRegionUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField(description = "The address's region (e.g., California).")
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String addressRegion;
 
+	private Supplier<String> _addressRegionSupplier;
+
 	@Schema(description = "The address's type.")
 	public String getAddressType() {
+		if (_addressTypeSupplier != null) {
+			addressType = _addressTypeSupplier.get();
+
+			_addressTypeSupplier = null;
+		}
+
 		return addressType;
 	}
 
 	public void setAddressType(String addressType) {
 		this.addressType = addressType;
+
+		_addressTypeSupplier = null;
 	}
 
 	@JsonIgnore
 	public void setAddressType(
 		UnsafeSupplier<String, Exception> addressTypeUnsafeSupplier) {
 
-		try {
-			addressType = addressTypeUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_addressTypeSupplier = () -> {
+			try {
+				return addressTypeUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField(description = "The address's type.")
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String addressType;
 
+	private Supplier<String> _addressTypeSupplier;
+
 	@Schema(description = "The address's ID.")
 	public Long getId() {
+		if (_idSupplier != null) {
+			id = _idSupplier.get();
+
+			_idSupplier = null;
+		}
+
 		return id;
 	}
 
 	public void setId(Long id) {
 		this.id = id;
+
+		_idSupplier = null;
 	}
 
 	@JsonIgnore
 	public void setId(UnsafeSupplier<Long, Exception> idUnsafeSupplier) {
-		try {
-			id = idUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_idSupplier = () -> {
+			try {
+				return idUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField(description = "The address's ID.")
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Long id;
 
+	private Supplier<Long> _idSupplier;
+
 	@Schema(
 		description = "A flag that identifies whether this is a mailing addrress."
 	)
 	public Boolean getMailing() {
+		if (_mailingSupplier != null) {
+			mailing = _mailingSupplier.get();
+
+			_mailingSupplier = null;
+		}
+
 		return mailing;
 	}
 
 	public void setMailing(Boolean mailing) {
 		this.mailing = mailing;
+
+		_mailingSupplier = null;
 	}
 
 	@JsonIgnore
 	public void setMailing(
 		UnsafeSupplier<Boolean, Exception> mailingUnsafeSupplier) {
 
-		try {
-			mailing = mailingUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_mailingSupplier = () -> {
+			try {
+				return mailingUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField(
@@ -220,58 +291,82 @@ public class PostalAddress implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Boolean mailing;
 
+	private Supplier<Boolean> _mailingSupplier;
+
 	@Schema(description = "The address's postal code (e.g., zip code).")
 	public String getPostalCode() {
+		if (_postalCodeSupplier != null) {
+			postalCode = _postalCodeSupplier.get();
+
+			_postalCodeSupplier = null;
+		}
+
 		return postalCode;
 	}
 
 	public void setPostalCode(String postalCode) {
 		this.postalCode = postalCode;
+
+		_postalCodeSupplier = null;
 	}
 
 	@JsonIgnore
 	public void setPostalCode(
 		UnsafeSupplier<String, Exception> postalCodeUnsafeSupplier) {
 
-		try {
-			postalCode = postalCodeUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_postalCodeSupplier = () -> {
+			try {
+				return postalCodeUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField(description = "The address's postal code (e.g., zip code).")
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String postalCode;
 
+	private Supplier<String> _postalCodeSupplier;
+
 	@Schema(
 		description = "A flag that identifies whether this is the main address of the user/organization."
 	)
 	public Boolean getPrimary() {
+		if (_primarySupplier != null) {
+			primary = _primarySupplier.get();
+
+			_primarySupplier = null;
+		}
+
 		return primary;
 	}
 
 	public void setPrimary(Boolean primary) {
 		this.primary = primary;
+
+		_primarySupplier = null;
 	}
 
 	@JsonIgnore
 	public void setPrimary(
 		UnsafeSupplier<Boolean, Exception> primaryUnsafeSupplier) {
 
-		try {
-			primary = primaryUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_primarySupplier = () -> {
+			try {
+				return primaryUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField(
@@ -280,30 +375,42 @@ public class PostalAddress implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Boolean primary;
 
+	private Supplier<Boolean> _primarySupplier;
+
 	@Schema(
 		description = "The street address's first line (e.g., 1600 Amphitheatre Pkwy.)."
 	)
 	public String getStreetAddressLine1() {
+		if (_streetAddressLine1Supplier != null) {
+			streetAddressLine1 = _streetAddressLine1Supplier.get();
+
+			_streetAddressLine1Supplier = null;
+		}
+
 		return streetAddressLine1;
 	}
 
 	public void setStreetAddressLine1(String streetAddressLine1) {
 		this.streetAddressLine1 = streetAddressLine1;
+
+		_streetAddressLine1Supplier = null;
 	}
 
 	@JsonIgnore
 	public void setStreetAddressLine1(
 		UnsafeSupplier<String, Exception> streetAddressLine1UnsafeSupplier) {
 
-		try {
-			streetAddressLine1 = streetAddressLine1UnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_streetAddressLine1Supplier = () -> {
+			try {
+				return streetAddressLine1UnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField(
@@ -312,61 +419,87 @@ public class PostalAddress implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String streetAddressLine1;
 
+	private Supplier<String> _streetAddressLine1Supplier;
+
 	@Schema(description = "The street address's second line.")
 	public String getStreetAddressLine2() {
+		if (_streetAddressLine2Supplier != null) {
+			streetAddressLine2 = _streetAddressLine2Supplier.get();
+
+			_streetAddressLine2Supplier = null;
+		}
+
 		return streetAddressLine2;
 	}
 
 	public void setStreetAddressLine2(String streetAddressLine2) {
 		this.streetAddressLine2 = streetAddressLine2;
+
+		_streetAddressLine2Supplier = null;
 	}
 
 	@JsonIgnore
 	public void setStreetAddressLine2(
 		UnsafeSupplier<String, Exception> streetAddressLine2UnsafeSupplier) {
 
-		try {
-			streetAddressLine2 = streetAddressLine2UnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_streetAddressLine2Supplier = () -> {
+			try {
+				return streetAddressLine2UnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField(description = "The street address's second line.")
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String streetAddressLine2;
 
+	private Supplier<String> _streetAddressLine2Supplier;
+
 	@Schema(description = "The street address's third line.")
 	public String getStreetAddressLine3() {
+		if (_streetAddressLine3Supplier != null) {
+			streetAddressLine3 = _streetAddressLine3Supplier.get();
+
+			_streetAddressLine3Supplier = null;
+		}
+
 		return streetAddressLine3;
 	}
 
 	public void setStreetAddressLine3(String streetAddressLine3) {
 		this.streetAddressLine3 = streetAddressLine3;
+
+		_streetAddressLine3Supplier = null;
 	}
 
 	@JsonIgnore
 	public void setStreetAddressLine3(
 		UnsafeSupplier<String, Exception> streetAddressLine3UnsafeSupplier) {
 
-		try {
-			streetAddressLine3 = streetAddressLine3UnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_streetAddressLine3Supplier = () -> {
+			try {
+				return streetAddressLine3UnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField(description = "The street address's third line.")
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String streetAddressLine3;
+
+	private Supplier<String> _streetAddressLine3Supplier;
 
 	@Override
 	public boolean equals(Object object) {
@@ -395,6 +528,8 @@ public class PostalAddress implements Serializable {
 
 		sb.append("{");
 
+		String addressCountry = getAddressCountry();
+
 		if (addressCountry != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -408,6 +543,8 @@ public class PostalAddress implements Serializable {
 
 			sb.append("\"");
 		}
+
+		String addressLocality = getAddressLocality();
 
 		if (addressLocality != null) {
 			if (sb.length() > 1) {
@@ -423,6 +560,8 @@ public class PostalAddress implements Serializable {
 			sb.append("\"");
 		}
 
+		String addressRegion = getAddressRegion();
+
 		if (addressRegion != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -436,6 +575,8 @@ public class PostalAddress implements Serializable {
 
 			sb.append("\"");
 		}
+
+		String addressType = getAddressType();
 
 		if (addressType != null) {
 			if (sb.length() > 1) {
@@ -451,6 +592,8 @@ public class PostalAddress implements Serializable {
 			sb.append("\"");
 		}
 
+		Long id = getId();
+
 		if (id != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -461,6 +604,8 @@ public class PostalAddress implements Serializable {
 			sb.append(id);
 		}
 
+		Boolean mailing = getMailing();
+
 		if (mailing != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -470,6 +615,8 @@ public class PostalAddress implements Serializable {
 
 			sb.append(mailing);
 		}
+
+		String postalCode = getPostalCode();
 
 		if (postalCode != null) {
 			if (sb.length() > 1) {
@@ -485,6 +632,8 @@ public class PostalAddress implements Serializable {
 			sb.append("\"");
 		}
 
+		Boolean primary = getPrimary();
+
 		if (primary != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -494,6 +643,8 @@ public class PostalAddress implements Serializable {
 
 			sb.append(primary);
 		}
+
+		String streetAddressLine1 = getStreetAddressLine1();
 
 		if (streetAddressLine1 != null) {
 			if (sb.length() > 1) {
@@ -509,6 +660,8 @@ public class PostalAddress implements Serializable {
 			sb.append("\"");
 		}
 
+		String streetAddressLine2 = getStreetAddressLine2();
+
 		if (streetAddressLine2 != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -522,6 +675,8 @@ public class PostalAddress implements Serializable {
 
 			sb.append("\"");
 		}
+
+		String streetAddressLine3 = getStreetAddressLine3();
 
 		if (streetAddressLine3 != null) {
 			if (sb.length() > 1) {

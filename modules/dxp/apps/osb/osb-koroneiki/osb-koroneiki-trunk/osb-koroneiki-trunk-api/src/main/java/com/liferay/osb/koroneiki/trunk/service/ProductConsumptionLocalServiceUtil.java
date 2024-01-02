@@ -406,6 +406,17 @@ public class ProductConsumptionLocalServiceUtil {
 		return getService().search(companyId, keywords, start, end, sort);
 	}
 
+	public static ProductConsumption updateProductConsumption(
+			long userId, long productConsumptionId, java.util.Date startDate,
+			java.util.Date endDate,
+			List<com.liferay.osb.koroneiki.trunk.model.ProductField>
+				productFields)
+		throws PortalException {
+
+		return getService().updateProductConsumption(
+			userId, productConsumptionId, startDate, endDate, productFields);
+	}
+
 	/**
 	 * Updates the product consumption in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
 	 *

@@ -30,6 +30,7 @@ import java.util.Iterator;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
+import java.util.function.Supplier;
 
 import javax.annotation.Generated;
 
@@ -60,54 +61,76 @@ public class Note implements Serializable {
 
 	@Schema(description = "The content of the note.")
 	public String getContent() {
+		if (_contentSupplier != null) {
+			content = _contentSupplier.get();
+
+			_contentSupplier = null;
+		}
+
 		return content;
 	}
 
 	public void setContent(String content) {
 		this.content = content;
+
+		_contentSupplier = null;
 	}
 
 	@JsonIgnore
 	public void setContent(
 		UnsafeSupplier<String, Exception> contentUnsafeSupplier) {
 
-		try {
-			content = contentUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_contentSupplier = () -> {
+			try {
+				return contentUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField(description = "The content of the note.")
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String content;
 
+	private Supplier<String> _contentSupplier;
+
 	@Schema(description = "The full name of the user who created the note.")
 	public String getCreatorName() {
+		if (_creatorNameSupplier != null) {
+			creatorName = _creatorNameSupplier.get();
+
+			_creatorNameSupplier = null;
+		}
+
 		return creatorName;
 	}
 
 	public void setCreatorName(String creatorName) {
 		this.creatorName = creatorName;
+
+		_creatorNameSupplier = null;
 	}
 
 	@JsonIgnore
 	public void setCreatorName(
 		UnsafeSupplier<String, Exception> creatorNameUnsafeSupplier) {
 
-		try {
-			creatorName = creatorNameUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_creatorNameSupplier = () -> {
+			try {
+				return creatorNameUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField(
@@ -116,86 +139,122 @@ public class Note implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected String creatorName;
 
+	private Supplier<String> _creatorNameSupplier;
+
 	@Schema(description = "The UUID of the user who created the note.")
 	public String getCreatorUID() {
+		if (_creatorUIDSupplier != null) {
+			creatorUID = _creatorUIDSupplier.get();
+
+			_creatorUIDSupplier = null;
+		}
+
 		return creatorUID;
 	}
 
 	public void setCreatorUID(String creatorUID) {
 		this.creatorUID = creatorUID;
+
+		_creatorUIDSupplier = null;
 	}
 
 	@JsonIgnore
 	public void setCreatorUID(
 		UnsafeSupplier<String, Exception> creatorUIDUnsafeSupplier) {
 
-		try {
-			creatorUID = creatorUIDUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_creatorUIDSupplier = () -> {
+			try {
+				return creatorUIDUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField(description = "The UUID of the user who created the note.")
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected String creatorUID;
 
+	private Supplier<String> _creatorUIDSupplier;
+
 	@Schema(description = "The note's creation date.")
 	public Date getDateCreated() {
+		if (_dateCreatedSupplier != null) {
+			dateCreated = _dateCreatedSupplier.get();
+
+			_dateCreatedSupplier = null;
+		}
+
 		return dateCreated;
 	}
 
 	public void setDateCreated(Date dateCreated) {
 		this.dateCreated = dateCreated;
+
+		_dateCreatedSupplier = null;
 	}
 
 	@JsonIgnore
 	public void setDateCreated(
 		UnsafeSupplier<Date, Exception> dateCreatedUnsafeSupplier) {
 
-		try {
-			dateCreated = dateCreatedUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_dateCreatedSupplier = () -> {
+			try {
+				return dateCreatedUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField(description = "The note's creation date.")
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Date dateCreated;
 
+	private Supplier<Date> _dateCreatedSupplier;
+
 	@Schema(
 		description = "The most recent time that any of the note's fields changed."
 	)
 	public Date getDateModified() {
+		if (_dateModifiedSupplier != null) {
+			dateModified = _dateModifiedSupplier.get();
+
+			_dateModifiedSupplier = null;
+		}
+
 		return dateModified;
 	}
 
 	public void setDateModified(Date dateModified) {
 		this.dateModified = dateModified;
+
+		_dateModifiedSupplier = null;
 	}
 
 	@JsonIgnore
 	public void setDateModified(
 		UnsafeSupplier<Date, Exception> dateModifiedUnsafeSupplier) {
 
-		try {
-			dateModified = dateModifiedUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_dateModifiedSupplier = () -> {
+			try {
+				return dateModifiedUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField(
@@ -204,14 +263,24 @@ public class Note implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Date dateModified;
 
+	private Supplier<Date> _dateModifiedSupplier;
+
 	@Schema(description = "The style structure of the content.")
 	@Valid
 	public Format getFormat() {
+		if (_formatSupplier != null) {
+			format = _formatSupplier.get();
+
+			_formatSupplier = null;
+		}
+
 		return format;
 	}
 
 	@JsonIgnore
 	public String getFormatAsString() {
+		Format format = getFormat();
+
 		if (format == null) {
 			return null;
 		}
@@ -221,77 +290,105 @@ public class Note implements Serializable {
 
 	public void setFormat(Format format) {
 		this.format = format;
+
+		_formatSupplier = null;
 	}
 
 	@JsonIgnore
 	public void setFormat(
 		UnsafeSupplier<Format, Exception> formatUnsafeSupplier) {
 
-		try {
-			format = formatUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_formatSupplier = () -> {
+			try {
+				return formatUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField(description = "The style structure of the content.")
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Format format;
 
+	private Supplier<Format> _formatSupplier;
+
 	@Schema(description = "The note's key.")
 	public String getKey() {
+		if (_keySupplier != null) {
+			key = _keySupplier.get();
+
+			_keySupplier = null;
+		}
+
 		return key;
 	}
 
 	public void setKey(String key) {
 		this.key = key;
+
+		_keySupplier = null;
 	}
 
 	@JsonIgnore
 	public void setKey(UnsafeSupplier<String, Exception> keyUnsafeSupplier) {
-		try {
-			key = keyUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_keySupplier = () -> {
+			try {
+				return keyUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField(description = "The note's key.")
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected String key;
 
+	private Supplier<String> _keySupplier;
+
 	@Schema(
 		description = "The full name of the user who last modified the note."
 	)
 	public String getModifierName() {
+		if (_modifierNameSupplier != null) {
+			modifierName = _modifierNameSupplier.get();
+
+			_modifierNameSupplier = null;
+		}
+
 		return modifierName;
 	}
 
 	public void setModifierName(String modifierName) {
 		this.modifierName = modifierName;
+
+		_modifierNameSupplier = null;
 	}
 
 	@JsonIgnore
 	public void setModifierName(
 		UnsafeSupplier<String, Exception> modifierNameUnsafeSupplier) {
 
-		try {
-			modifierName = modifierNameUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_modifierNameSupplier = () -> {
+			try {
+				return modifierNameUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField(
@@ -300,28 +397,40 @@ public class Note implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected String modifierName;
 
+	private Supplier<String> _modifierNameSupplier;
+
 	@Schema(description = "The UUID of the user who last modified the note.")
 	public String getModifierUID() {
+		if (_modifierUIDSupplier != null) {
+			modifierUID = _modifierUIDSupplier.get();
+
+			_modifierUIDSupplier = null;
+		}
+
 		return modifierUID;
 	}
 
 	public void setModifierUID(String modifierUID) {
 		this.modifierUID = modifierUID;
+
+		_modifierUIDSupplier = null;
 	}
 
 	@JsonIgnore
 	public void setModifierUID(
 		UnsafeSupplier<String, Exception> modifierUIDUnsafeSupplier) {
 
-		try {
-			modifierUID = modifierUIDUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_modifierUIDSupplier = () -> {
+			try {
+				return modifierUIDUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField(
@@ -330,30 +439,42 @@ public class Note implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected String modifierUID;
 
+	private Supplier<String> _modifierUIDSupplier;
+
 	@Schema(
 		description = "The importance of this note. A lower number indicates a higher importance."
 	)
 	public Integer getPriority() {
+		if (_prioritySupplier != null) {
+			priority = _prioritySupplier.get();
+
+			_prioritySupplier = null;
+		}
+
 		return priority;
 	}
 
 	public void setPriority(Integer priority) {
 		this.priority = priority;
+
+		_prioritySupplier = null;
 	}
 
 	@JsonIgnore
 	public void setPriority(
 		UnsafeSupplier<Integer, Exception> priorityUnsafeSupplier) {
 
-		try {
-			priority = priorityUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_prioritySupplier = () -> {
+			try {
+				return priorityUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField(
@@ -362,14 +483,24 @@ public class Note implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Integer priority;
 
+	private Supplier<Integer> _prioritySupplier;
+
 	@Schema(description = "The workflow status of the note.")
 	@Valid
 	public Status getStatus() {
+		if (_statusSupplier != null) {
+			status = _statusSupplier.get();
+
+			_statusSupplier = null;
+		}
+
 		return status;
 	}
 
 	@JsonIgnore
 	public String getStatusAsString() {
+		Status status = getStatus();
+
 		if (status == null) {
 			return null;
 		}
@@ -379,35 +510,49 @@ public class Note implements Serializable {
 
 	public void setStatus(Status status) {
 		this.status = status;
+
+		_statusSupplier = null;
 	}
 
 	@JsonIgnore
 	public void setStatus(
 		UnsafeSupplier<Status, Exception> statusUnsafeSupplier) {
 
-		try {
-			status = statusUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_statusSupplier = () -> {
+			try {
+				return statusUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField(description = "The workflow status of the note.")
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Status status;
 
+	private Supplier<Status> _statusSupplier;
+
 	@Schema(description = "The type of information the note contains.")
 	@Valid
 	public Type getType() {
+		if (_typeSupplier != null) {
+			type = _typeSupplier.get();
+
+			_typeSupplier = null;
+		}
+
 		return type;
 	}
 
 	@JsonIgnore
 	public String getTypeAsString() {
+		Type type = getType();
+
 		if (type == null) {
 			return null;
 		}
@@ -417,24 +562,30 @@ public class Note implements Serializable {
 
 	public void setType(Type type) {
 		this.type = type;
+
+		_typeSupplier = null;
 	}
 
 	@JsonIgnore
 	public void setType(UnsafeSupplier<Type, Exception> typeUnsafeSupplier) {
-		try {
-			type = typeUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		_typeSupplier = () -> {
+			try {
+				return typeUnsafeSupplier.get();
+			}
+			catch (RuntimeException re) {
+				throw re;
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		};
 	}
 
 	@GraphQLField(description = "The type of information the note contains.")
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Type type;
+
+	private Supplier<Type> _typeSupplier;
 
 	@Override
 	public boolean equals(Object object) {
@@ -466,6 +617,8 @@ public class Note implements Serializable {
 		DateFormat liferayToJSONDateFormat = new SimpleDateFormat(
 			"yyyy-MM-dd'T'HH:mm:ss'Z'");
 
+		String content = getContent();
+
 		if (content != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -479,6 +632,8 @@ public class Note implements Serializable {
 
 			sb.append("\"");
 		}
+
+		String creatorName = getCreatorName();
 
 		if (creatorName != null) {
 			if (sb.length() > 1) {
@@ -494,6 +649,8 @@ public class Note implements Serializable {
 			sb.append("\"");
 		}
 
+		String creatorUID = getCreatorUID();
+
 		if (creatorUID != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -507,6 +664,8 @@ public class Note implements Serializable {
 
 			sb.append("\"");
 		}
+
+		Date dateCreated = getDateCreated();
 
 		if (dateCreated != null) {
 			if (sb.length() > 1) {
@@ -522,6 +681,8 @@ public class Note implements Serializable {
 			sb.append("\"");
 		}
 
+		Date dateModified = getDateModified();
+
 		if (dateModified != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -535,6 +696,8 @@ public class Note implements Serializable {
 
 			sb.append("\"");
 		}
+
+		Format format = getFormat();
 
 		if (format != null) {
 			if (sb.length() > 1) {
@@ -550,6 +713,8 @@ public class Note implements Serializable {
 			sb.append("\"");
 		}
 
+		String key = getKey();
+
 		if (key != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -563,6 +728,8 @@ public class Note implements Serializable {
 
 			sb.append("\"");
 		}
+
+		String modifierName = getModifierName();
 
 		if (modifierName != null) {
 			if (sb.length() > 1) {
@@ -578,6 +745,8 @@ public class Note implements Serializable {
 			sb.append("\"");
 		}
 
+		String modifierUID = getModifierUID();
+
 		if (modifierUID != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -592,6 +761,8 @@ public class Note implements Serializable {
 			sb.append("\"");
 		}
 
+		Integer priority = getPriority();
+
 		if (priority != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -601,6 +772,8 @@ public class Note implements Serializable {
 
 			sb.append(priority);
 		}
+
+		Status status = getStatus();
 
 		if (status != null) {
 			if (sb.length() > 1) {
@@ -615,6 +788,8 @@ public class Note implements Serializable {
 
 			sb.append("\"");
 		}
+
+		Type type = getType();
 
 		if (type != null) {
 			if (sb.length() > 1) {

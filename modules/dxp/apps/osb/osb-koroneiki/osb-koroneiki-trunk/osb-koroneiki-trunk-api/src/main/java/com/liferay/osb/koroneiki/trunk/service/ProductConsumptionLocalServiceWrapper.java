@@ -470,6 +470,20 @@ public class ProductConsumptionLocalServiceWrapper
 			companyId, keywords, start, end, sort);
 	}
 
+	@Override
+	public com.liferay.osb.koroneiki.trunk.model.ProductConsumption
+			updateProductConsumption(
+				long userId, long productConsumptionId,
+				java.util.Date startDate, java.util.Date endDate,
+				java.util.List
+					<com.liferay.osb.koroneiki.trunk.model.ProductField>
+						productFields)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _productConsumptionLocalService.updateProductConsumption(
+			userId, productConsumptionId, startDate, endDate, productFields);
+	}
+
 	/**
 	 * Updates the product consumption in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
 	 *

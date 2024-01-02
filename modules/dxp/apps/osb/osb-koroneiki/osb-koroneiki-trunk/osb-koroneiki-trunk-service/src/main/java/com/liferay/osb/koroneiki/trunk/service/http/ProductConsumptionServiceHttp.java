@@ -743,6 +743,53 @@ public class ProductConsumptionServiceHttp {
 		}
 	}
 
+	public static com.liferay.osb.koroneiki.trunk.model.ProductConsumption
+			updateProductConsumption(
+				HttpPrincipal httpPrincipal, long productConsumptionId,
+				java.util.Date startDate, java.util.Date endDate,
+				java.util.List
+					<com.liferay.osb.koroneiki.trunk.model.ProductField>
+						productFields)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		try {
+			MethodKey methodKey = new MethodKey(
+				ProductConsumptionServiceUtil.class, "updateProductConsumption",
+				_updateProductConsumptionParameterTypes16);
+
+			MethodHandler methodHandler = new MethodHandler(
+				methodKey, productConsumptionId, startDate, endDate,
+				productFields);
+
+			Object returnObj = null;
+
+			try {
+				returnObj = TunnelUtil.invoke(httpPrincipal, methodHandler);
+			}
+			catch (Exception exception) {
+				if (exception instanceof
+						com.liferay.portal.kernel.exception.PortalException) {
+
+					throw (com.liferay.portal.kernel.exception.PortalException)
+						exception;
+				}
+
+				throw new com.liferay.portal.kernel.exception.SystemException(
+					exception);
+			}
+
+			return (com.liferay.osb.koroneiki.trunk.model.ProductConsumption)
+				returnObj;
+		}
+		catch (com.liferay.portal.kernel.exception.SystemException
+					systemException) {
+
+			_log.error(systemException, systemException);
+
+			throw systemException;
+		}
+	}
+
 	private static Log _log = LogFactoryUtil.getLog(
 		ProductConsumptionServiceHttp.class);
 
@@ -800,6 +847,11 @@ public class ProductConsumptionServiceHttp {
 	private static final Class<?>[]
 		_getProductConsumptionsCountParameterTypes15 = new Class[] {
 			String.class, String.class, String.class
+		};
+	private static final Class<?>[] _updateProductConsumptionParameterTypes16 =
+		new Class[] {
+			long.class, java.util.Date.class, java.util.Date.class,
+			java.util.List.class
 		};
 
 }
