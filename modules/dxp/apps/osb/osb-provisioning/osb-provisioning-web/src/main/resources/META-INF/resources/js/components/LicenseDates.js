@@ -70,59 +70,86 @@ export default function LicenseDates({
 
 	return (
 		<>
-			<ClayTableCell
-				className={`input-group-sm ${!validDates ? 'has-error' : ''}`}
-			>
-				<label htmlFor={`startDate-${id}`}>
-					<DatePicker
-						defaultValue={startDate}
-						id={`startDate-${id}`}
-						inputName="startDate"
-						updateFn={handleStartDateChange}
-					/>
-				</label>
-			</ClayTableCell>
-
 			{updateDatePermission && (
-				<ClayTableCell
-					className={`input-group-sm ${
-						!validDates ? 'has-error' : ''
-					}`}
-				>
-					<label htmlFor={`expirationDate-${id}`}>
-						<DatePicker
-							defaultValue={expirationDate}
-							id={`expirationDate-${id}`}
-							inputName="expirationDate"
-							updateFn={handleExpirationDateChange}
-						/>
-					</label>
-				</ClayTableCell>
+				<>
+					<ClayTableCell
+						className={`input-group-sm ${
+							!validDates ? 'has-error' : ''
+						}`}
+					>
+						<label htmlFor={`startDate-${id}`}>
+							<DatePicker
+								defaultValue={startDate}
+								id={`startDate-${id}`}
+								inputName="startDate"
+								updateFn={handleStartDateChange}
+							/>
+						</label>
+					</ClayTableCell>
+
+					<ClayTableCell
+						className={`input-group-sm ${
+							!validDates ? 'has-error' : ''
+						}`}
+					>
+						<label htmlFor={`expirationDate-${id}`}>
+							<DatePicker
+								defaultValue={expirationDate}
+								id={`expirationDate-${id}`}
+								inputName="expirationDate"
+								updateFn={handleExpirationDateChange}
+							/>
+						</label>
+					</ClayTableCell>
+				</>
 			)}
 
 			{!updateDatePermission && (
 				<>
 					{!detached && (
-						<ClayTableCell>
-							{formatDate(expirationDate)}
-						</ClayTableCell>
+						<>
+							<ClayTableCell>
+								{formatDate(startDate)}
+							</ClayTableCell>
+
+							<ClayTableCell>
+								{formatDate(expirationDate)}
+							</ClayTableCell>
+						</>
 					)}
 
 					{detached && (
-						<ClayTableCell
-							className={`input-group-sm ${
-								!validDates ? 'has-error' : ''
-							}`}
-						>
-							<label htmlFor={`expirationDate-${id}`}>
-								<DatePicker
-									defaultValue={expirationDate}
-									id={`expirationDate-${id}`}
-									inputName="expirationDate"
-									updateFn={validateExpirationDateChange}
-								/>
-							</label>
-						</ClayTableCell>
+						<>
+							<ClayTableCell
+								className={`input-group-sm ${
+									!validDates ? 'has-error' : ''
+								}`}
+							>
+								<label htmlFor={`startDate-${id}`}>
+									<DatePicker
+										defaultValue={startDate}
+										id={`startDate-${id}`}
+										inputName="startDate"
+										updateFn={handleStartDateChange}
+									/>
+								</label>
+							</ClayTableCell>
+
+							<ClayTableCell
+								className={`input-group-sm ${
+									!validDates ? 'has-error' : ''
+								}`}
+							>
+								<label htmlFor={`expirationDate-${id}`}>
+									<DatePicker
+										defaultValue={expirationDate}
+										id={`expirationDate-${id}`}
+										inputName="expirationDate"
+										updateFn={validateExpirationDateChange}
+									/>
+								</label>
+							</ClayTableCell>
+						</>
 					)}
 				</>
 			)}
