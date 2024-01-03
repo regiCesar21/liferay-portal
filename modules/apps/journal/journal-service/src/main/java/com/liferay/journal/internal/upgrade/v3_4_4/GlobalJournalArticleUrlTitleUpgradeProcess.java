@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.journal.internal.upgrade.v4_4_0;
+package com.liferay.journal.internal.upgrade.v3_4_4;
 
 import com.liferay.journal.model.JournalArticle;
 import com.liferay.petra.string.StringPool;
