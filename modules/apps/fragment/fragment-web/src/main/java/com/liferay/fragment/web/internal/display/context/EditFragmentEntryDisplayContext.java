@@ -29,6 +29,7 @@ import com.liferay.portal.kernel.template.TemplateManager;
 import com.liferay.portal.kernel.template.TemplateManagerUtil;
 import com.liferay.portal.kernel.theme.PortletDisplay;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
@@ -459,6 +460,9 @@ public class EditFragmentEntryDisplayContext {
 
 					renderFragmentEntryURL.setResourceID(
 						"/fragment/render_fragment_entry");
+
+					renderFragmentEntryURL.setParameter(
+						"p_l_mode", Constants.PREVIEW);
 
 					renderFragmentEntryURL.setWindowState(
 						LiferayWindowState.POP_UP);
