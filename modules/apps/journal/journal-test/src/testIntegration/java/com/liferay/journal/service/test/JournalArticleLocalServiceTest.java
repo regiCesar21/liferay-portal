@@ -41,6 +41,7 @@ import com.liferay.portal.kernel.model.ResourcePermission;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.ClassNameLocalService;
 import com.liferay.portal.kernel.service.CompanyLocalService;
+import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.ResourcePermissionLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
@@ -51,7 +52,9 @@ import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
+import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.CalendarFactoryUtil;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.LocaleUtil;
@@ -62,6 +65,8 @@ import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 
+import java.util.Calendar;
+import java.util.Collections;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
@@ -118,6 +123,29 @@ public class JournalArticleLocalServiceTest {
 		_themeDisplay.setScopeGroupId(_group.getGroupId());
 		_themeDisplay.setSiteGroupId(_group.getGroupId());
 		_themeDisplay.setUser(user);
+	}
+
+	@Test
+	public void testArticleFriendlyURLValidationCompanyGroup()
+		throws Exception {
+
+		Group companyGroup = _groupLocalService.getCompanyGroup(
+			_group.getCompanyId());
+
+		JournalArticle journalArticle = JournalTestUtil.addArticle(
+			companyGroup.getGroupId(),
+			JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID);
+
+		Assert.assertNotNull(journalArticle.getUrlTitle());
+
+		Map<Locale, String> friendlyURLMap = journalArticle.getFriendlyURLMap();
+
+		journalArticle = _updateJournalArticle(
+			Collections.emptyMap(), journalArticle);
+
+		Assert.assertEquals(friendlyURLMap, journalArticle.getFriendlyURLMap());
+
+		Assert.assertNotNull(journalArticle.getUrlTitle());
 	}
 
 	@Test
@@ -612,6 +640,38 @@ public class JournalArticleLocalServiceTest {
 		return new Tuple(article, ddmStructure);
 	}
 
+	private JournalArticle _updateJournalArticle(
+			Map<Locale, String> friendlyURLMap, JournalArticle journalArticle)
+		throws Exception {
+
+		Calendar calendar = CalendarFactoryUtil.getCalendar();
+
+		calendar.setTime(journalArticle.getDisplayDate());
+
+		int displayDateMonth = calendar.get(Calendar.MONTH);
+		int displayDateDay = calendar.get(Calendar.DATE);
+		int displayDateYear = calendar.get(Calendar.YEAR);
+		int displayDateHour = calendar.get(Calendar.HOUR);
+		int displayDateMinute = calendar.get(Calendar.MINUTE);
+
+		if (calendar.get(Calendar.AM_PM) == Calendar.PM) {
+			displayDateHour += 12;
+		}
+
+		return _journalArticleLocalService.updateArticle(
+			TestPropsValues.getUserId(), journalArticle.getGroupId(),
+			journalArticle.getFolderId(), journalArticle.getArticleId(),
+			journalArticle.getVersion(), journalArticle.getTitleMap(),
+			journalArticle.getDescriptionMap(), friendlyURLMap,
+			journalArticle.getContent(), journalArticle.getDDMStructureKey(),
+			journalArticle.getDDMTemplateKey(), journalArticle.getLayoutUuid(),
+			displayDateMonth, displayDateDay, displayDateYear, displayDateHour,
+			displayDateMinute, 0, 0, 0, 0, 0, true, 0, 0, 0, 0, 0, true,
+			journalArticle.isIndexable(), false, null, null, null, null,
+			ServiceContextTestUtil.getServiceContext(
+				journalArticle.getGroupId(), TestPropsValues.getUserId()));
+	}
+
 	@Inject
 	private AssetDisplayPageEntryLocalService
 		_assetDisplayPageEntryLocalService;
@@ -633,6 +693,9 @@ public class JournalArticleLocalServiceTest {
 
 	@DeleteAfterTestRun
 	private Group _group;
+
+	@Inject
+	private GroupLocalService _groupLocalService;
 
 	@Inject
 	private JournalArticleLocalService _journalArticleLocalService;
