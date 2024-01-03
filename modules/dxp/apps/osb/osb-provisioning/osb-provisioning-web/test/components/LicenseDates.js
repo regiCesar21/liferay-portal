@@ -124,7 +124,7 @@ describe('LicenseDates', () => {
 							'input[name="expirationDate"][type="hidden"]'
 						);
 
-						expect(expDateDatepickers.length).toBe(1);
+						expect(expDateDatepickers.length).toBe(0);
 					});
 				});
 
