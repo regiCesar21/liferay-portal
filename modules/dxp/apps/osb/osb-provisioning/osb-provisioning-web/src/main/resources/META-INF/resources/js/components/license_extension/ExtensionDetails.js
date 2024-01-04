@@ -14,6 +14,7 @@ import {
 	formatDate,
 	validateDateFieldFormat
 } from '../../utilities/date';
+import {deriveLicenseDates} from '../../utilities/license';
 import IconButton from '../IconButton';
 import LicenseDates from '../LicenseDates';
 import ExtendButton from './ExtendButton';
@@ -147,12 +148,27 @@ function Detail({
 	}
 
 	function handleTermsChange(val) {
+		const currentTerm = terms.find(
+			({productPurchaseKey}) => productPurchaseKey === val
+		);
+
+		const dates = deriveLicenseDates(
+			currentTerm,
+			licenseType,
+			license.allowPermanentLicenses
+		);
+
 		updateLicense(licenseKeyId, license =>
 			license
+				.set('expirationDate', dates.licenseExpirationDate)
 				.set('licenseKeysAllowed', getLicenseKeysAllowed(val))
 				.set('licenseKeysGenerated', getLicenseKeysGenerated(val))
 				.set('productPurchaseKey', val)
+				.set('startDate', dates.licenseStartDate)
 		);
+
+		setSelectedExpirationDate(dates.licenseExpirationDate);
+		setSelectedStartDate(dates.licenseStartDate);
 
 		if (updater) {
 			updater([licenseKeyId, 'productPurchaseKey'], val);

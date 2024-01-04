@@ -18,6 +18,7 @@ import DatePicker from '../DatePicker';
 
 function ReplacementModal({
 	closeFn,
+	detached = false,
 	expirationDate = '',
 	replaceFn,
 	startDate = ''
@@ -46,7 +47,8 @@ function ReplacementModal({
 			validateDateFieldFormat(currentExpirationDate) &&
 			validateDateFieldFormat(currentStartDate) &&
 			(expirationDate !== currentExpirationDate ||
-				startDate !== currentStartDate) &&
+				startDate !== currentStartDate ||
+				!detached) &&
 			new Date(currentExpirationDate) > new Date(currentStartDate)
 		) {
 			setDisableReplace(false);
@@ -54,7 +56,13 @@ function ReplacementModal({
 		else {
 			setDisableReplace(true);
 		}
-	}, [currentExpirationDate, currentStartDate, expirationDate, startDate]);
+	}, [
+		currentExpirationDate,
+		currentStartDate,
+		detached,
+		expirationDate,
+		startDate
+	]);
 
 	function handleExpirationDateChange(val) {
 		setCurrentExpirationDate(val);
@@ -136,6 +144,7 @@ function ReplacementModal({
 
 ReplacementModal.propTypes = {
 	closeFn: PropTypes.func.isRequired,
+	detached: PropTypes.bool,
 	expirationDate: PropTypes.string,
 	replaceFn: PropTypes.func.isRequired,
 	startDate: PropTypes.string

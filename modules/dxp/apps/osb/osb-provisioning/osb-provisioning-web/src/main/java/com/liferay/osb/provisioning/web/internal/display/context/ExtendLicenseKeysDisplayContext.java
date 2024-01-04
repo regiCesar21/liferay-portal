@@ -226,6 +226,9 @@ public class ExtendLicenseKeysDisplayContext {
 						"licenseKeysGenerated",
 						_getLicenseKeysGenerated(productPurchaseView)
 					).put(
+						"originalEndDate",
+						_formatDate(productPurchase.getOriginalEndDate())
+					).put(
 						"perpetual", productPurchase.getPerpetual()
 					).put(
 						"productPurchaseKey", productPurchase.getKey()

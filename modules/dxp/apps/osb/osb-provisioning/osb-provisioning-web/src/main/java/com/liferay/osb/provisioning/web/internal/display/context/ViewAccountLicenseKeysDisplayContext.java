@@ -223,6 +223,7 @@ public class ViewAccountLicenseKeysDisplayContext
 		Map<String, Object> data = new HashMap<>();
 
 		data.put("accountKey", account.getKey());
+		data.put("allowPermanentLicenses", _isAllowPermanentLicenses());
 		data.put("productKey", _productKey);
 
 		PortletURL portletURL = renderResponse.createActionURL();
@@ -386,6 +387,17 @@ public class ViewAccountLicenseKeysDisplayContext
 		}
 
 		return StringPool.BLANK;
+	}
+
+	private boolean _isAllowPermanentLicenses() throws Exception {
+		Map<String, String> properties = account.getProperties();
+
+		if (properties != null) {
+			return GetterUtil.getBoolean(
+				properties.get("allowPermanentLicenses"), true);
+		}
+
+		return true;
 	}
 
 	private String _productKey;

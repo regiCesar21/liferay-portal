@@ -404,7 +404,7 @@ public class ProvisioningWebComponentProvider {
 
 		return new EditLicenseKeyDisplayContext(
 			renderRequest, renderResponse, httpServletRequest,
-			_licenseKeyLocalService, _licenseKeyPermission,
+			_accountWebService, _licenseKeyLocalService, _licenseKeyPermission,
 			_productPurchaseViewWebService);
 	}
 

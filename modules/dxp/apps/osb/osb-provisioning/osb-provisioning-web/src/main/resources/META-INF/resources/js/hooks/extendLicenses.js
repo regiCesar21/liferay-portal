@@ -7,7 +7,10 @@ import {Map, Record} from 'immutable';
 import React, {createContext, useContext, useState} from 'react';
 
 import {PRODUCT_PURCHASE_STATUS_CANCELLED} from '../utilities/constants';
-import {getDetachedLicenseDates} from '../utilities/license';
+import {
+	deriveLicenseDates,
+	getDetachedLicenseDates
+} from '../utilities/license';
 
 export const LicenseRecord = Record({
 	accountName: '',
@@ -49,23 +52,30 @@ function createLicenseRecord(license) {
 		term => term.status !== PRODUCT_PURCHASE_STATUS_CANCELLED
 	);
 
-	const newRecord = {
+	if (approvedTerms.length === 1) {
+		const term = approvedTerms[0];
+
+		const dates = deriveLicenseDates(
+			term,
+			license.licenseType,
+			license.allowPermanentLicenses
+		);
+
+		return new LicenseRecord({
+			...license,
+			expirationDate: dates.licenseExpirationDate,
+			productPurchaseKey: term.productPurchaseKey,
+			startDate: dates.licenseStartDate,
+			terms: approvedTerms
+		});
+	}
+
+	return new LicenseRecord({
 		...license,
 		expirationDate: new Date(license.expirationDate),
 		startDate: new Date(license.startDate),
 		terms: approvedTerms
-	};
-
-	if (approvedTerms.length === 1) {
-		const term = approvedTerms[0];
-
-		return new LicenseRecord({
-			...newRecord,
-			productPurchaseKey: term.productPurchaseKey
-		});
-	}
-
-	return new LicenseRecord(newRecord);
+	});
 }
 
 export function ExtendLicensesProvider({initialLicenses = [], children}) {

@@ -8,13 +8,28 @@ import React, {useState} from 'react';
 
 import {NAMESPACE} from '../../utilities/constants';
 import {formatDate} from '../../utilities/date';
+import {deriveLicenseDates} from '../../utilities/license';
 import ReplacementModal from './ReplacementModal';
 
 export default function ReplaceLicense({
+	allowPermanentLicenses = true,
 	expirationDate = '',
+	licenseType = '',
 	replacementURL = '',
-	startDate = ''
+	startDate = '',
+	term
 }) {
+	if (term) {
+		const dates = deriveLicenseDates(
+			term,
+			licenseType,
+			allowPermanentLicenses
+		);
+
+		expirationDate = dates.licenseExpirationDate;
+		startDate = dates.licenseStartDate;
+	}
+
 	const [modalVisible, setModalVisible] = useState(false);
 
 	function handleClose() {
@@ -57,6 +72,7 @@ export default function ReplaceLicense({
 			{modalVisible && (
 				<ReplacementModal
 					closeFn={handleClose}
+					detached={!term}
 					expirationDate={expirationDate}
 					replaceFn={handleReplace}
 					startDate={startDate}
@@ -67,7 +83,15 @@ export default function ReplaceLicense({
 }
 
 ReplaceLicense.propTypes = {
+	allowPermanentLicenses: PropTypes.bool,
 	expirationDate: PropTypes.string,
+	licenseType: PropTypes.string,
 	replacementURL: PropTypes.string,
-	startDate: PropTypes.string
+	startDate: PropTypes.string,
+	term: PropTypes.shape({
+		endDate: PropTypes.string,
+		originalEndDate: PropTypes.string,
+		productPurchaseKey: PropTypes.string,
+		startDate: PropTypes.string
+	})
 };

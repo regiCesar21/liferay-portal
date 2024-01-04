@@ -5,9 +5,13 @@
 
 package com.liferay.osb.provisioning.web.internal.display.context;
 
+import com.liferay.osb.koroneiki.phloem.rest.client.dto.v1_0.Account;
+import com.liferay.osb.koroneiki.phloem.rest.client.dto.v1_0.ProductPurchase;
+import com.liferay.osb.koroneiki.phloem.rest.client.dto.v1_0.ProductPurchaseView;
 import com.liferay.osb.provisioning.constants.ProvisioningActionKeys;
 import com.liferay.osb.provisioning.constants.ProvisioningPortletKeys;
 import com.liferay.osb.provisioning.constants.ProvisioningWebKeys;
+import com.liferay.osb.provisioning.koroneiki.web.service.AccountWebService;
 import com.liferay.osb.provisioning.koroneiki.web.service.ProductPurchaseViewWebService;
 import com.liferay.osb.provisioning.license.helper.constants.LicenseLifetime;
 import com.liferay.osb.provisioning.license.helper.constants.LicenseType;
@@ -16,14 +20,21 @@ import com.liferay.osb.provisioning.license.permission.LicenseKeyPermission;
 import com.liferay.osb.provisioning.license.service.LicenseKeyLocalService;
 import com.liferay.osb.provisioning.license.util.LicenseUtil;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.portlet.LiferayWindowState;
 import com.liferay.portal.kernel.portlet.PortletURLFactoryUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.ArrayUtil;
+import com.liferay.portal.kernel.util.FastDateFormatFactoryUtil;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
+
+import java.text.Format;
 
 import java.util.Date;
 import java.util.HashMap;
@@ -48,6 +59,7 @@ public class EditLicenseKeyDisplayContext {
 	public EditLicenseKeyDisplayContext(
 			RenderRequest renderRequest, RenderResponse renderResponse,
 			HttpServletRequest httpServletRequest,
+			AccountWebService accountWebService,
 			LicenseKeyLocalService licenseKeyLocalService,
 			LicenseKeyPermission licenseKeyPermission,
 			ProductPurchaseViewWebService productPurchaseViewWebService)
@@ -56,14 +68,19 @@ public class EditLicenseKeyDisplayContext {
 		_renderRequest = renderRequest;
 		_renderResponse = renderResponse;
 		_httpServletRequest = httpServletRequest;
+		_accountWebService = accountWebService;
 		_licenseKeyLocalService = licenseKeyLocalService;
 		_licenseKeyPermission = licenseKeyPermission;
 		_productPurchaseViewWebService = productPurchaseViewWebService;
 
-		_licenseKey = (LicenseKey)renderRequest.getAttribute(
-			ProvisioningWebKeys.LICENSE_KEY);
 		_themeDisplay = (ThemeDisplay)_httpServletRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
+
+		_account = (Account)renderRequest.getAttribute(
+			ProvisioningWebKeys.ACCOUNT);
+
+		_licenseKey = (LicenseKey)renderRequest.getAttribute(
+			ProvisioningWebKeys.LICENSE_KEY);
 
 		_licenseKeyDisplay = new LicenseKeyDisplay(
 			renderRequest, renderResponse, _licenseKey);
@@ -215,6 +232,10 @@ public class EditLicenseKeyDisplayContext {
 
 		data.put("replacementURL", portletURL.toString());
 
+		data.put("allowPermanentLicenses", _isAllowPermanentLicenses());
+		data.put("licenseType", _licenseKey.getLicenseEntryType());
+		data.put("term", _getTerm(_licenseKey));
+
 		return data;
 	}
 
@@ -343,6 +364,77 @@ public class EditLicenseKeyDisplayContext {
 		return false;
 	}
 
+	private String _formatDate(Date date) {
+		if (date != null) {
+			Format dateFormat = FastDateFormatFactoryUtil.getSimpleDateFormat(
+				"yyyy-MM-dd");
+
+			return dateFormat.format(date);
+		}
+
+		return StringPool.BLANK;
+	}
+
+	private JSONObject _getTerm(LicenseKey licenseKey) throws Exception {
+		if (Validator.isNull(licenseKey.getProductPurchaseKey())) {
+			return null;
+		}
+
+		ProductPurchaseView productPurchaseView =
+			_productPurchaseViewWebService.getProductPurchaseView(
+				licenseKey.getAccountKey(), licenseKey.getProductKey());
+
+		if (ArrayUtil.isNotEmpty(productPurchaseView.getProductPurchases())) {
+			for (ProductPurchase productPurchase :
+					productPurchaseView.getProductPurchases()) {
+
+				String productPurchaseKey = productPurchase.getKey();
+
+				if (productPurchaseKey.equals(
+						licenseKey.getProductPurchaseKey())) {
+
+					return JSONUtil.put(
+						"endDate", _formatDate(productPurchase.getEndDate())
+					).put(
+						"originalEndDate",
+						_formatDate(productPurchase.getOriginalEndDate())
+					).put(
+						"perpetual", productPurchase.getPerpetual()
+					).put(
+						"productPurchaseKey", productPurchaseKey
+					).put(
+						"startDate", _formatDate(productPurchase.getStartDate())
+					);
+				}
+			}
+		}
+
+		return null;
+	}
+
+	private boolean _isAllowPermanentLicenses() throws Exception {
+		Map<String, String> properties = null;
+
+		if (_account == null) {
+			Account account = _accountWebService.getAccount(
+				_licenseKey.getAccountKey());
+
+			properties = account.getProperties();
+		}
+		else {
+			properties = _account.getProperties();
+		}
+
+		if (properties != null) {
+			return GetterUtil.getBoolean(
+				properties.get("allowPermanentLicenses"), true);
+		}
+
+		return true;
+	}
+
+	private final Account _account;
+	private final AccountWebService _accountWebService;
 	private final HttpServletRequest _httpServletRequest;
 	private final LicenseKey _licenseKey;
 	private final LicenseKeyDisplay _licenseKeyDisplay;
