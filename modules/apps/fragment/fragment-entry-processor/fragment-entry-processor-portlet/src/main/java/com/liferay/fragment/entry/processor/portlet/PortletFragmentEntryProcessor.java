@@ -5,6 +5,7 @@
 
 package com.liferay.fragment.entry.processor.portlet;
 
+import com.liferay.fragment.constants.FragmentEntryLinkConstants;
 import com.liferay.fragment.constants.FragmentWebKeys;
 import com.liferay.fragment.exception.FragmentEntryContentException;
 import com.liferay.fragment.model.FragmentEntryLink;
@@ -197,41 +198,54 @@ public class PortletFragmentEntryProcessor implements FragmentEntryProcessor {
 							"on-the-same-page"));
 			}
 
-			long plid = ParamUtil.getLong(
-				fragmentEntryProcessorContext.getHttpServletRequest(),
-				"p_l_id");
+			String portletHTML = StringPool.BLANK;
 
-			String defaultPreferences = StringPool.BLANK;
+			String defaultPreferences = portlet.getDefaultPreferences();
 
-			boolean stagingAdvicesThreadLocalEnabled =
-				StagingAdvicesThreadLocal.isEnabled();
+			if (Objects.equals(
+					fragmentEntryProcessorContext.getMode(),
+					FragmentEntryLinkConstants.PREVIEW)) {
 
-			try {
-				StagingAdvicesThreadLocal.setEnabled(false);
+				portletHTML = _fragmentPortletRenderer.renderPortlet(
+					fragmentEntryProcessorContext.getHttpServletRequest(),
+					fragmentEntryProcessorContext.getHttpServletResponse(),
+					portletName, instanceId, defaultPreferences);
+			}
+			else {
+				long plid = ParamUtil.getLong(
+					fragmentEntryProcessorContext.getHttpServletRequest(),
+					"p_l_id");
 
-				if (originalFragmentEntryLink != null) {
-					defaultPreferences = _getPreferences(
-						plid, portletName, originalFragmentEntryLink, id,
-						StringPool.BLANK);
+				boolean stagingAdvicesThreadLocalEnabled =
+					StagingAdvicesThreadLocal.isEnabled();
+
+				try {
+					StagingAdvicesThreadLocal.setEnabled(false);
+
+					if (originalFragmentEntryLink != null) {
+						defaultPreferences = _getPreferences(
+							plid, portletName, originalFragmentEntryLink, id,
+							StringPool.BLANK);
+					}
+					else {
+						defaultPreferences = _getPreferences(
+							plid, portletName, fragmentEntryLink, id,
+							portlet.getDefaultPreferences());
+					}
 				}
-				else {
-					defaultPreferences = _getPreferences(
+				finally {
+					StagingAdvicesThreadLocal.setEnabled(
+						stagingAdvicesThreadLocalEnabled);
+				}
+
+				portletHTML = _fragmentPortletRenderer.renderPortlet(
+					fragmentEntryProcessorContext.getHttpServletRequest(),
+					fragmentEntryProcessorContext.getHttpServletResponse(),
+					portletName, instanceId,
+					_getPreferences(
 						plid, portletName, fragmentEntryLink, id,
-						portlet.getDefaultPreferences());
-				}
+						defaultPreferences));
 			}
-			finally {
-				StagingAdvicesThreadLocal.setEnabled(
-					stagingAdvicesThreadLocalEnabled);
-			}
-
-			String portletHTML = _fragmentPortletRenderer.renderPortlet(
-				fragmentEntryProcessorContext.getHttpServletRequest(),
-				fragmentEntryProcessorContext.getHttpServletResponse(),
-				portletName, instanceId,
-				_getPreferences(
-					plid, portletName, fragmentEntryLink, id,
-					defaultPreferences));
 
 			Element portletElement = new Element("div");
 
