@@ -291,10 +291,11 @@ public class RuntimeTag extends TagSupport implements DirectTag {
 			JSONObject jsonObject = null;
 
 			boolean writeObject = false;
+
 			String layoutMode = ParamUtil.getString(
 				httpServletRequest, "p_l_mode", Constants.VIEW);
 
-			if (layoutMode.equals(Constants.VIEW)) {
+			if (!layoutMode.equals(Constants.PREVIEW)) {
 				if (persistSettings &&
 					!layout.isPortletEmbedded(
 						portlet.getPortletId(), layout.getGroupId())) {
