@@ -58,8 +58,8 @@ public class NotificationTemplateContextFactory {
 	public static NotificationTemplateContext getInstance(
 			NotificationType notificationType,
 			NotificationTemplateType notificationTemplateType,
-			CalendarBooking calendarBooking,
-			String layoutURL, String portalURL, User user)
+			CalendarBooking calendarBooking, String layoutURL, String portalURL,
+			User user)
 		throws Exception {
 
 		CalendarBooking parentCalendarBooking =
@@ -241,18 +241,20 @@ public class NotificationTemplateContextFactory {
 			User user)
 		throws Exception {
 
+		String url = layoutURL;
+
 		if (layoutURL == null) {
 			Group group = _groupLocalService.getGroup(
 				user.getCompanyId(), GroupConstants.GUEST);
 
 			layoutURL = PortalUtil.getLayoutActualURL(
 				_layoutLocalService.fetchLayout(group.getDefaultPublicPlid()));
+
+			portalURL = _getPortalURLOrCompanyPortalURL(
+				portalURL, user.getCompanyId());
+
+			url = portalURL + layoutURL;
 		}
-
-		portalURL = _getPortalURLOrCompanyPortalURL(
-			portalURL, user.getCompanyId());
-
-		String url = portalURL + layoutURL;
 
 		String namespace = PortalUtil.getPortletNamespace(
 			CalendarPortletKeys.CALENDAR);
@@ -311,4 +313,5 @@ public class NotificationTemplateContextFactory {
 	private static CompanyLocalService _companyLocalService;
 	private static GroupLocalService _groupLocalService;
 	private static LayoutLocalService _layoutLocalService;
+
 }
