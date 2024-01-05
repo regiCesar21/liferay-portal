@@ -68,7 +68,8 @@ public class RenderFragmentEntryDisplayContext {
 		DefaultFragmentRendererContext defaultFragmentRendererContext =
 			new DefaultFragmentRendererContext(fragmentEntryLink);
 
-		defaultFragmentRendererContext.setMode(FragmentEntryLinkConstants.VIEW);
+		defaultFragmentRendererContext.setMode(
+			FragmentEntryLinkConstants.PREVIEW);
 
 		return defaultFragmentRendererContext;
 	}
