@@ -129,7 +129,7 @@ public class NotificationTemplateContextFactory {
 				"location", calendarBooking.getLocation()
 			).put(
 				"portalURL",
-				() -> _getPortalURLOrCompanyDefault(
+				() -> _getPortalURLOrCompanyPortalURL(
 					portalURL, user.getCompanyId())
 			).put(
 				"portletName",
@@ -249,7 +249,7 @@ public class NotificationTemplateContextFactory {
 				_layoutLocalService.fetchLayout(group.getDefaultPublicPlid()));
 		}
 
-		portalURL = _getPortalURLOrCompanyDefault(
+		portalURL = _getPortalURLOrCompanyPortalURL(
 			portalURL, user.getCompanyId());
 
 		String url = portalURL + layoutURL;
@@ -271,7 +271,7 @@ public class NotificationTemplateContextFactory {
 		return url;
 	}
 
-	private static String _getPortalURLOrCompanyDefault(
+	private static String _getPortalURLOrCompanyPortalURL(
 			String portalURL, long companyId)
 		throws PortalException {
 
