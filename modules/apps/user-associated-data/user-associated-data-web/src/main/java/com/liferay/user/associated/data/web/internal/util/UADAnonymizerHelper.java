@@ -108,6 +108,8 @@ public class UADAnonymizerHelper {
 		user.setPassword(randomString);
 		user.setScreenName(screenName);
 		user.setEmailAddress(emailAddress);
+		user.setFacebookId(facebookId);
+		user.setOpenId(openId);
 		user.setLanguageId(LocaleUtil.toLanguageId(locale));
 		user.setComments(
 			StringBundler.concat(
@@ -119,8 +121,6 @@ public class UADAnonymizerHelper {
 		user.setLastName(lastName);
 		user.setJobTitle(jobTitle);
 		user.setStatus(WorkflowConstants.STATUS_INCOMPLETE);
-		user.setFacebookId(facebookId);
-		user.setOpenId(openId);
 
 		_userLocalService.addUser(user);
 
