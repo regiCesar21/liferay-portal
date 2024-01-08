@@ -24,6 +24,22 @@ const props = {
 		'_com_liferay_dynamic_data_mapping_form_report_web_portlet_DDMFormReportPortlet_',
 };
 
+// Mock needed due to a bug in ResponsiveContainer Recharts component
+// See https://github.com/recharts/recharts/issues/2268
+
+jest.mock('recharts', () => {
+	const OriginalModule = jest.requireActual('recharts');
+
+	return {
+		...OriginalModule,
+		ResponsiveContainer: ({children, height}) => (
+			<OriginalModule.ResponsiveContainer height={height} width={800}>
+				{children}
+			</OriginalModule.ResponsiveContainer>
+		),
+	};
+});
+
 describe('index', () => {
 	afterEach(cleanup);
 
