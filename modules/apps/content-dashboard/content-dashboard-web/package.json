@@ -15,7 +15,15 @@
 		"frontend-js-web": "*",
 		"prop-types": "15.7.2",
 		"react": "16.12.0",
-		"recharts": "1.8.5"
+		"recharts": "2.8.0"
+	},
+	"jest": {
+		"setupFilesAfterEnv": [
+			"<rootDir>/test/js/components/setup.js"
+		],
+		"testPathIgnorePatterns": [
+			"<rootDir>/test/js/components/setup.js"
+		]
 	},
 	"name": "content-dashboard-web",
 	"private": true,

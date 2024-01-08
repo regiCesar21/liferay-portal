@@ -3,6 +3,7 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
+import {waitForDomChange} from '@testing-library/dom';
 import {cleanup, render} from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import React from 'react';
@@ -141,6 +142,22 @@ const mockVocabulariesTwoCategories = [
 	},
 ];
 
+// Mock needed due to a bug in ResponsiveContainer Recharts component
+// See https://github.com/recharts/recharts/issues/2268
+
+jest.mock('recharts', () => {
+	const OriginalModule = jest.requireActual('recharts');
+
+	return {
+		...OriginalModule,
+		ResponsiveContainer: ({children, height}) => (
+			<OriginalModule.ResponsiveContainer height={height} width={800}>
+				{children}
+			</OriginalModule.ResponsiveContainer>
+		),
+	};
+});
+
 describe('AuditBarChart', () => {
 	afterEach(() => {
 		jest.clearAllMocks();
@@ -193,7 +210,7 @@ describe('AuditBarChart', () => {
 		expect(bars.length).toBe(12);
 	});
 
-	it('renders audit bar chart only from checked categories from legend', () => {
+	it('renders audit bar chart only from checked categories from legend', async () => {
 		const {container, getByLabelText} = render(
 			<AuditBarChart
 				rtl={false}
@@ -210,19 +227,25 @@ describe('AuditBarChart', () => {
 		const solutionCheckbox = getByLabelText('Solution');
 
 		userEvent.click(educationCheckbox);
-		expect(educationCheckbox.checked).toEqual(false);
-		expect(bars.length).toBe(8);
+		await waitForDomChange(() => {
+			expect(educationCheckbox.checked).toEqual(false);
+			expect(bars.length).toBe(8);
+		});
 
 		userEvent.click(selectionCheckbox);
-		expect(selectionCheckbox.checked).toEqual(false);
-		expect(bars.length).toBe(4);
+		await waitForDomChange(() => {
+			expect(selectionCheckbox.checked).toEqual(false);
+			expect(bars.length).toBe(4);
+		});
 
 		userEvent.click(solutionCheckbox);
-		expect(solutionCheckbox.checked).toEqual(false);
-		expect(bars.length).toBe(0);
+		await waitForDomChange(() => {
+			expect(solutionCheckbox.checked).toEqual(false);
+			expect(bars.length).toBe(0);
+		});
 	});
 
-	it('renders audit bar chart message when there are no categories selected', () => {
+	it('renders audit bar chart message when there are no categories selected', async () => {
 		const {getByLabelText, getByText} = render(
 			<AuditBarChart
 				rtl={false}
@@ -238,13 +261,15 @@ describe('AuditBarChart', () => {
 		userEvent.click(selectionCheckbox);
 		userEvent.click(solutionCheckbox);
 
-		expect(
-			getByText('there-are-no-categories-selected')
-		).toBeInTheDocument();
-		expect(
-			getByText(
-				'select-categories-from-the-checkboxes-in-the-legend-above'
-			)
-		).toBeInTheDocument();
+		await waitForDomChange(() => {
+			expect(
+				getByText('there-are-no-categories-selected')
+			).toBeInTheDocument();
+			expect(
+				getByText(
+					'select-categories-from-the-checkboxes-in-the-legend-above'
+				)
+			).toBeInTheDocument();
+		});
 	});
 });
