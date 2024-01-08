@@ -13,6 +13,7 @@ import com.liferay.osb.provisioning.distributed.messaging.internal.subscribing.E
 import com.liferay.osb.provisioning.distributed.messaging.internal.subscribing.OktaUsersMessageSubscriber;
 import com.liferay.osb.provisioning.distributed.messaging.internal.subscribing.OpportunityMessageSubscriber;
 import com.liferay.osb.provisioning.distributed.messaging.internal.subscribing.ProductMessageSubscriber;
+import com.liferay.osb.provisioning.distributed.messaging.internal.subscribing.ProductPurchaseMessageSubscriber;
 import com.liferay.osb.provisioning.distributed.messaging.internal.subscribing.ProjectMessageSubscriber;
 import com.liferay.osb.provisioning.distributed.messaging.internal.subscribing.SalesforceCasesMessageSubscriber;
 
@@ -73,6 +74,14 @@ public class ProvisioningMessageRouter extends BaseMessageRouter {
 		Map<String, Object> properties) {
 
 		addRoute(productMessageSubscriber, properties);
+	}
+
+	@Reference(unbind = "-")
+	protected void setProductPurchaseMessageSubscriber(
+		ProductPurchaseMessageSubscriber productPurchaseMessageSubscriber,
+		Map<String, Object> properties) {
+
+		addRoute(productPurchaseMessageSubscriber, properties);
 	}
 
 	@Reference(unbind = "-")

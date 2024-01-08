@@ -35,4 +35,9 @@ public interface ProductConsumptionWebService {
 
 	public long searchCount(FilterQuery filterQuery) throws Exception;
 
+	public ProductConsumption updateProductConsumption(
+			String agentName, String agentUID, String productConsumptionKey,
+			ProductConsumption productConsumption)
+		throws Exception;
+
 }

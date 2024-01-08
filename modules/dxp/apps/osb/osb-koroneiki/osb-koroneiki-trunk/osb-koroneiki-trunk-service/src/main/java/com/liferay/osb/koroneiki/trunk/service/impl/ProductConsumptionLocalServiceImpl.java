@@ -289,6 +289,74 @@ public class ProductConsumptionLocalServiceImpl
 		}
 	}
 
+	public ProductConsumption updateProductConsumption(
+			long userId, long productConsumptionId, Date startDate,
+			Date endDate, List<ProductField> productFields)
+		throws PortalException {
+
+		ProductConsumption productConsumption =
+			productConsumptionPersistence.findByPrimaryKey(
+				productConsumptionId);
+
+		productConsumption.setStartDate(startDate);
+		productConsumption.setEndDate(endDate);
+
+		productConsumption = productConsumptionPersistence.update(
+			productConsumption);
+
+		// Product fields
+
+		long classNameId = classNameLocalService.getClassNameId(
+			ProductConsumption.class);
+
+		Map<String, ProductField> productFieldsMap = getProductFieldsMap(
+			productConsumptionId);
+
+		for (ProductField productField : productFields) {
+			ProductField curProductField = productFieldsMap.remove(
+				productField.getName());
+
+			if (curProductField == null) {
+				_productFieldLocalService.addProductField(
+					userId, classNameId, productConsumptionId,
+					productField.getName(), productField.getValue());
+			}
+			else {
+				_productFieldLocalService.updateProductField(
+					curProductField.getProductFieldId(),
+					productField.getValue());
+			}
+		}
+
+		for (ProductField productField : productFieldsMap.values()) {
+			_productFieldLocalService.deleteProductField(
+				productField.getProductFieldId());
+		}
+
+		reindexProductPurchaseView(productConsumption);
+
+		return productConsumption;
+	}
+
+	protected Map<String, ProductField> getProductFieldsMap(
+		long productConsumptionId) {
+
+		Map<String, ProductField> productFieldsMap = new HashMap<>();
+
+		long classNameId = classNameLocalService.getClassNameId(
+			ProductConsumption.class);
+
+		List<ProductField> productFields =
+			_productFieldLocalService.getProductFields(
+				classNameId, productConsumptionId);
+
+		for (ProductField productField : productFields) {
+			productFieldsMap.put(productField.getName(), productField);
+		}
+
+		return productFieldsMap;
+	}
+
 	protected void reindexProductPurchaseView(
 			ProductConsumption productConsumption)
 		throws PortalException {

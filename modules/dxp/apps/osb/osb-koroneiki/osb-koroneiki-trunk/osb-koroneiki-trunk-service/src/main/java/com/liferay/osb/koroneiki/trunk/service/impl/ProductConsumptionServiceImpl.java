@@ -270,6 +270,19 @@ public class ProductConsumptionServiceImpl
 			domain, entityName, entityId);
 	}
 
+	public ProductConsumption updateProductConsumption(
+			long productConsumptionId, Date startDate, Date endDate,
+			List<ProductField> productFields)
+		throws PortalException {
+
+		_productConsumptionPermission.check(
+			getPermissionChecker(), productConsumptionId, ActionKeys.UPDATE);
+
+		return productConsumptionLocalService.updateProductConsumption(
+			getUserId(), productConsumptionId, startDate, endDate,
+			productFields);
+	}
+
 	@Reference
 	private AccountLocalService _accountLocalService;
 

@@ -1151,7 +1151,7 @@ components:
 info:
     description:
         "A Java client JAR is available for use with the group ID 'com.liferay', artifact ID
-        'com.liferay.osb.koroneiki.phloem.rest.client', and version '1.1.0'."
+        'com.liferay.osb.koroneiki.phloem.rest.client', and version '1.2.0'."
     license:
         name: "Apache 2.0"
         url: "http://www.apache.org/licenses/LICENSE-2.0.html"
@@ -3969,6 +3969,35 @@ paths:
                   required: true
                   schema:
                       type: string
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/ProductConsumption"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/ProductConsumption"
+            tags: ["ProductConsumption"]
+        put:
+            operationId: putProductConsumption
+            parameters:
+                - $ref: "#/components/parameters/AgentName"
+                - $ref: "#/components/parameters/AgentUID"
+                - in: path
+                  name: productConsumptionKey
+                  required: true
+                  schema:
+                      type: string
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: "#/components/schemas/ProductConsumption"
+                    application/xml:
+                        schema:
+                            $ref: "#/components/schemas/ProductConsumption"
+                required: true
             responses:
                 200:
                     content:

@@ -114,6 +114,15 @@ public class ProductConsumptionWebServiceImpl
 		return 0;
 	}
 
+	public ProductConsumption updateProductConsumption(
+			String agentName, String agentUID, String productConsumptionKey,
+			ProductConsumption productConsumption)
+		throws Exception {
+
+		return _productConsumptionResource.putProductConsumption(
+			agentName, agentUID, productConsumptionKey, productConsumption);
+	}
+
 	@Activate
 	protected void activate(Map<String, Object> properties) throws Exception {
 		KoroneikiConfiguration koroneikiConfiguration =

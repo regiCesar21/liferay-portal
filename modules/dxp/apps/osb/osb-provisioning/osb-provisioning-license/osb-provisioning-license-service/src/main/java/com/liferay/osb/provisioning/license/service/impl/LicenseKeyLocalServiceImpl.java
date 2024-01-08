@@ -12,10 +12,12 @@ import com.liferay.osb.koroneiki.phloem.rest.client.dto.v1_0.Contact;
 import com.liferay.osb.koroneiki.phloem.rest.client.dto.v1_0.ExternalLink;
 import com.liferay.osb.koroneiki.phloem.rest.client.dto.v1_0.Product;
 import com.liferay.osb.koroneiki.phloem.rest.client.dto.v1_0.ProductConsumption;
+import com.liferay.osb.koroneiki.phloem.rest.client.dto.v1_0.ProductPurchase;
 import com.liferay.osb.provisioning.identity.management.provider.ContactIdentityProvider;
 import com.liferay.osb.provisioning.koroneiki.constants.ProductConstants;
 import com.liferay.osb.provisioning.koroneiki.web.service.AccountWebService;
 import com.liferay.osb.provisioning.koroneiki.web.service.ProductConsumptionWebService;
+import com.liferay.osb.provisioning.koroneiki.web.service.ProductPurchaseWebService;
 import com.liferay.osb.provisioning.koroneiki.web.service.ProductWebService;
 import com.liferay.osb.provisioning.license.exception.DuplicateIPAddressException;
 import com.liferay.osb.provisioning.license.exception.DuplicateMACAddressException;
@@ -294,6 +296,13 @@ public class LicenseKeyLocalServiceImpl extends LicenseKeyLocalServiceBaseImpl {
 			return;
 		}
 
+		ProductPurchase productPurchase = null;
+
+		if (Validator.isNotNull(licenseKey.getProductPurchaseKey())) {
+			productPurchase = _productPurchaseWebService.getProductPurchase(
+				licenseKey.getProductPurchaseKey());
+		}
+
 		int count = 1;
 
 		String licenseEntryType = licenseKey.getLicenseEntryType();
@@ -305,7 +314,12 @@ public class LicenseKeyLocalServiceImpl extends LicenseKeyLocalServiceBaseImpl {
 		for (int i = 0; i < count; i++) {
 			ProductConsumption productConsumption = new ProductConsumption();
 
-			productConsumption.setEndDate(licenseKey.getExpirationDate());
+			if (productPurchase != null) {
+				productConsumption.setEndDate(productPurchase.getEndDate());
+			}
+			else {
+				productConsumption.setEndDate(licenseKey.getExpirationDate());
+			}
 
 			Product product = _productWebService.getProduct(
 				licenseKey.getProductKey());
@@ -411,6 +425,13 @@ public class LicenseKeyLocalServiceImpl extends LicenseKeyLocalServiceBaseImpl {
 		}
 
 		return licenseKeys.get(0);
+	}
+
+	public List<LicenseKey> getLicenseKeys(
+		String productPurchaseKey, boolean complimentary, boolean active) {
+
+		return licenseKeyPersistence.findByPPK_C_A(
+			productPurchaseKey, complimentary, active);
 	}
 
 	public List<LicenseKey> getLicenseKeys(String productId, String serverId) {
@@ -1318,6 +1339,9 @@ public class LicenseKeyLocalServiceImpl extends LicenseKeyLocalServiceBaseImpl {
 
 	@Reference
 	private ProductConsumptionWebService _productConsumptionWebService;
+
+	@Reference
+	private ProductPurchaseWebService _productPurchaseWebService;
 
 	@Reference
 	private ProductWebService _productWebService;

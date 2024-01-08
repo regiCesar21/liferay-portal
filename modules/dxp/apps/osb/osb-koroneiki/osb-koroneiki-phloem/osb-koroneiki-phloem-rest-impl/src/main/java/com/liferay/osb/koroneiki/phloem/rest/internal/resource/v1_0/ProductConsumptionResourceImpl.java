@@ -34,6 +34,7 @@ import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.odata.entity.EntityModel;
 import com.liferay.portal.vulcan.fields.NestedField;
 import com.liferay.portal.vulcan.fields.NestedFieldId;
@@ -237,6 +238,48 @@ public class ProductConsumptionResourceImpl
 	}
 
 	@Override
+	public ProductConsumption putProductConsumption(
+			String agentName, String agentUID, String productConsumptionKey,
+			ProductConsumption productConsumption)
+		throws Exception {
+
+		ServiceContextUtil.setAgentFields(agentName, agentUID);
+
+		com.liferay.osb.koroneiki.trunk.model.ProductConsumption
+			curProductConsumption =
+				_productConsumptionLocalService.getProductConsumption(
+					productConsumptionKey);
+
+		List<ProductField> productFields = getProductFields(
+			productConsumption.getProperties(),
+			curProductConsumption.getProductFields());
+
+		if (!ArrayUtil.isEmpty(productConsumption.getExternalLinks())) {
+			for (ExternalLink externalLink :
+					productConsumption.getExternalLinks()) {
+
+				if (Validator.isNull(externalLink.getKey())) {
+					_externalLinkResource.
+						postProductConsumptionProductConsumptionKeyExternalLink(
+							agentName, agentUID, productConsumptionKey,
+							externalLink);
+				}
+				else {
+					_externalLinkResource.putExternalLink(
+						agentName, agentUID, externalLink.getKey(),
+						externalLink);
+				}
+			}
+		}
+
+		return ProductConsumptionUtil.toProductConsumption(
+			_productConsumptionService.updateProductConsumption(
+				curProductConsumption.getProductConsumptionId(),
+				productConsumption.getStartDate(),
+				productConsumption.getEndDate(), productFields));
+	}
+
+	@Override
 	public void putProductConsumptionProductConsumptionPermission(
 			String agentName, String agentUID, String productConsumptionKey,
 			ProductConsumptionPermission productConsumptionPermission)
@@ -246,6 +289,29 @@ public class ProductConsumptionResourceImpl
 
 		_updateProductConsumptionPermission(
 			productConsumptionKey, "add", productConsumptionPermission);
+	}
+
+	protected List<ProductField> getProductFields(
+		Map<String, String> properties,
+		List<ProductField> defaultProductFields) {
+
+		if (properties == null) {
+			return defaultProductFields;
+		}
+
+		List<ProductField> productFields = new ArrayList<>();
+
+		for (Map.Entry<String, String> entry : properties.entrySet()) {
+			ProductField productField =
+				_productFieldLocalService.createProductField(0);
+
+			productField.setName(entry.getKey());
+			productField.setValue(entry.getValue());
+
+			productFields.add(productField);
+		}
+
+		return productFields;
 	}
 
 	private Page<ProductConsumption> _getContactProductConsumptionsPage(

@@ -168,6 +168,11 @@
 			<finder-column name="complimentary" />
 			<finder-column name="active" />
 		</finder>
+		<finder name="PPK_C_A" return-type="Collection">
+			<finder-column name="productPurchaseKey" />
+			<finder-column name="complimentary" />
+			<finder-column name="active" />
+		</finder>
 		<finder name="PN_SI_A" return-type="Collection">
 			<finder-column name="productName" />
 			<finder-column name="serverId" />
