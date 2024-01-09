@@ -1522,32 +1522,9 @@ public class LicenseKeyResourceImpl
 	}
 
 	private SubscriptionTerm[] _getSubscriptionTerms(
-			String accountKey, String productGroupName,
+			List<ProductPurchaseView> productPurchaseViews,
 			boolean allowPermanentLicenses)
 		throws Exception {
-
-		FilterQuery filterQuery = new FilterQuery();
-
-		filterQuery.addEquals(true, "accountKey", accountKey);
-		filterQuery.addEquals(true, "property_licenses", "true");
-
-		if (productGroupName.equals(ProductGroup.Name.COMMERCE.toString())) {
-			filterQuery.addContains(true, "name", "Commerce Subscription");
-		}
-		else if (productGroupName.equals(ProductGroup.Name.DXP.toString())) {
-			filterQuery.addStartsWith(true, "name", "DXP");
-			filterQuery.addContains(true, "name", "DXP Cloud", true);
-			filterQuery.addContains(true, "name", "LXC SM", true);
-		}
-		else if (productGroupName.equals(ProductGroup.Name.PORTAL.toString())) {
-			filterQuery.addContains(
-				true, "name", "Early  Access Program", true);
-			filterQuery.addContains(true, "name", "Portal");
-		}
-
-		List<ProductPurchaseView> productPurchaseViews =
-			_productPurchaseViewWebService.search(
-				StringPool.BLANK, filterQuery, 1, 1000, StringPool.BLANK);
 
 		if (productPurchaseViews.isEmpty()) {
 			return new SubscriptionTerm[0];
@@ -1705,6 +1682,38 @@ public class LicenseKeyResourceImpl
 		}
 
 		return subscriptionTerms.toArray(new SubscriptionTerm[0]);
+	}
+
+	private SubscriptionTerm[] _getSubscriptionTerms(
+			String accountKey, String productGroupName,
+			boolean allowPermanentLicenses)
+		throws Exception {
+
+		FilterQuery filterQuery = new FilterQuery();
+
+		filterQuery.addEquals(true, "accountKey", accountKey);
+		filterQuery.addEquals(true, "property_licenses", "true");
+
+		if (productGroupName.equals(ProductGroup.Name.COMMERCE.toString())) {
+			filterQuery.addContains(true, "name", "Commerce Subscription");
+		}
+		else if (productGroupName.equals(ProductGroup.Name.DXP.toString())) {
+			filterQuery.addStartsWith(true, "name", "DXP");
+			filterQuery.addContains(true, "name", "DXP Cloud", true);
+			filterQuery.addContains(true, "name", "LXC SM", true);
+		}
+		else if (productGroupName.equals(ProductGroup.Name.PORTAL.toString())) {
+			filterQuery.addContains(
+				true, "name", "Early  Access Program", true);
+			filterQuery.addContains(true, "name", "Portal");
+		}
+
+		List<ProductPurchaseView> productPurchaseViews =
+			_productPurchaseViewWebService.search(
+				StringPool.BLANK, filterQuery, 1, 1000, StringPool.BLANK);
+
+		return _getSubscriptionTerms(
+			productPurchaseViews, allowPermanentLicenses);
 	}
 
 	private int _getTotalProductQuantity(
@@ -2168,42 +2177,40 @@ public class LicenseKeyResourceImpl
 				}
 			}
 
-			List<ProductPurchase> groupedProductPurchases =
-				_getGroupedProductPurchases(accountKey, licenseKey);
-
-			Date productPurchaseStartDate = productPurchase.getStartDate();
-
-			for (ProductPurchase curProductPurchase : groupedProductPurchases) {
-				Date curStartDate = curProductPurchase.getStartDate();
-
-				if ((curStartDate != null) &&
-					curStartDate.before(productPurchaseStartDate)) {
-
-					productPurchaseStartDate = curStartDate;
-				}
-			}
-
-			if (!productPurchaseStartDate.equals(licenseKey.getStartDate())) {
-				throw new PrincipalException("Invalid start date");
-			}
-
-			LicenseKeyEndDate[] licenseKeyEndDates = _getLicenseKeyEndDates(
-				productPurchaseStartDate, productPurchase.getEndDate(),
-				productPurchase.getOriginalEndDate(), allowPermanentLicenses);
-
 			boolean validEndDate = false;
 
-			for (LicenseKeyEndDate licenseKeyEndDate : licenseKeyEndDates) {
-				String curLicenseEntryType =
-					licenseKeyEndDate.getLicenseEntryType();
+			FilterQuery filterQuery = new FilterQuery();
 
-				if (curLicenseEntryType.equals(licenseEntryType.toString())) {
-					Date endDate = licenseKeyEndDate.getEndDate();
+			filterQuery.addEquals(true, "accountKey", accountKey);
+			filterQuery.addEquals(
+				true, "productKey", licenseKey.getProductKey());
 
-					if (endDate.equals(licenseKey.getExpirationDate())) {
-						validEndDate = true;
+			List<ProductPurchaseView> productPurchaseViews =
+				_productPurchaseViewWebService.search(
+					StringPool.BLANK, filterQuery, 1, 1, StringPool.BLANK);
 
-						break;
+			SubscriptionTerm[] subscriptionTerms = _getSubscriptionTerms(
+				productPurchaseViews, allowPermanentLicenses);
+
+			for (SubscriptionTerm subscriptionTerm : subscriptionTerms) {
+				for (LicenseKeyEndDate licenseKeyEndDate :
+						subscriptionTerm.getLicenseKeyEndDates()) {
+
+					String curLicenseEntryType =
+						licenseKeyEndDate.getLicenseEntryType();
+
+					if (curLicenseEntryType.equals(
+							licenseEntryType.toString())) {
+
+						int daysBetween = DateUtil.getDaysBetween(
+							licenseKeyEndDate.getEndDate(),
+							licenseKey.getExpirationDate());
+
+						if (daysBetween <= 1) {
+							validEndDate = true;
+
+							break;
+						}
 					}
 				}
 			}
@@ -2214,6 +2221,9 @@ public class LicenseKeyResourceImpl
 
 			int productionConsumptionsCount = _getProductConsumptionsCount(
 				productPurchase, true);
+
+			List<ProductPurchase> groupedProductPurchases =
+				_getGroupedProductPurchases(accountKey, licenseKey);
 
 			for (ProductPurchase curProductPurchase : groupedProductPurchases) {
 				String curProductPurchaseKey = curProductPurchase.getKey();
