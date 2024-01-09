@@ -239,9 +239,76 @@ describe('ExtendLicense', () => {
 			expect(queryByText('bulk-input')).toBeFalsy();
 		});
 
-		it('populates the start/expiration bulk date input when all licenses in the group have the same start/expiration dates', () => {
+		it('populates the start/expiration bulk date input when all licenses in the group have the same purchase start/expiration dates', () => {
 			const {container} = renderExtendLicense({
-				details: multipleAttachedLicenses
+				details: [
+					{
+						accountName: 'Account 1',
+						allowPermanentLicenses: false,
+						expirationDate: '2022-06-08',
+						indefinite: false,
+						licenseKeyId: 'licenseKeyID1',
+						licenseKeysGenerated: 0,
+						licenseType: 'development',
+						productName: 'DXP 7.0',
+						startDate: '2021-06-03',
+						terms: [
+							{
+								endDate: '2022-07-02',
+								licenseKeysAllowed: 1,
+								licenseKeysGenerated: 1,
+								perpetual: false,
+								productPurchaseKey: 'productPurchaseKey1',
+								startDate: '2021-06-02',
+								status: 'Approved'
+							}
+						]
+					},
+					{
+						accountName: 'Account 1',
+						allowPermanentLicenses: false,
+						expirationDate: '2022-06-08',
+						indefinite: false,
+						licenseKeyId: 'licenseKeyID2',
+						licenseKeysGenerated: 0,
+						licenseType: 'development',
+						productName: 'DXP 7.0',
+						startDate: '2021-06-03',
+						terms: [
+							{
+								endDate: '2022-07-02',
+								licenseKeysAllowed: 1,
+								licenseKeysGenerated: 1,
+								perpetual: false,
+								productPurchaseKey: 'productPurchaseKey2',
+								startDate: '2021-06-02',
+								status: 'Approved'
+							}
+						]
+					},
+					{
+						accountName: 'Account 1',
+						allowPermanentLicenses: false,
+						expirationDate: '2022-06-08',
+						indefinite: false,
+						licenseKeyId: 'licenseKeyID3',
+						licenseKeysGenerated: 0,
+						licenseType: 'development',
+						productName: 'DXP 7.0',
+						startDate: '2021-06-03',
+						terms: [
+							{
+								endDate: '2022-07-02',
+								licenseKeysAllowed: 1,
+								licenseKeysGenerated: 1,
+								perpetual: false,
+								productPurchaseKey: 'productPurchaseKey3',
+								startDate: '2021-06-02',
+								status: 'Approved'
+							}
+						]
+					}
+				]
 			});
 
 			const bulkStartDate = container.querySelector(
@@ -252,11 +319,11 @@ describe('ExtendLicense', () => {
 				'input[name="expirationDateBulkInput-DXP 7.0"]'
 			);
 
-			expect(bulkStartDate.value).toBe('2021-06-03');
-			expect(bulkExpirationDate.value).toBe('2022-06-08');
+			expect(bulkStartDate.value).toBe('2021-06-02');
+			expect(bulkExpirationDate.value).toBe('2022-07-02');
 		});
 
-		it('displays the start/expiration bulk date input as Varied Data when dates vary for the licenses in the group', () => {
+		it('displays the start/expiration bulk date input as Varied Data when purchase dates vary for the licenses in the group', () => {
 			const {container} = renderExtendLicense({
 				details: [
 					{
@@ -291,12 +358,12 @@ describe('ExtendLicense', () => {
 						startDate: '2021-06-03',
 						terms: [
 							{
-								endDate: '2022-07-02',
+								endDate: '2022-07-01',
 								licenseKeysAllowed: 1,
 								licenseKeysGenerated: 1,
 								perpetual: false,
 								productPurchaseKey: 'productPurchaseKey4',
-								startDate: '2021-06-02',
+								startDate: '2021-06-01',
 								status: 'Approved'
 							}
 						]
@@ -318,18 +385,82 @@ describe('ExtendLicense', () => {
 
 		it("display Varied Data when one of the licenses' date changes", () => {
 			const {container, getAllByDisplayValue} = renderExtendLicense({
-				details: multipleAttachedLicenses
+				details: [
+					{
+						accountName: 'Account 1',
+						expirationDate: '2022-06-08',
+						indefinite: false,
+						licenseKeyId: 'licenseKeyID1',
+						licenseKeysGenerated: 0,
+						licenseType: 'development',
+						productName: 'DXP 7.0',
+						startDate: '2021-06-03',
+						terms: [
+							{
+								endDate: '2022-07-02',
+								licenseKeysAllowed: 1,
+								licenseKeysGenerated: 1,
+								perpetual: false,
+								productPurchaseKey: 'productPurchaseKey1',
+								startDate: '2021-06-02',
+								status: 'Approved'
+							}
+						]
+					},
+					{
+						accountName: 'Account 1',
+						expirationDate: '2022-06-08',
+						indefinite: false,
+						licenseKeyId: 'licenseKeyID2',
+						licenseKeysGenerated: 0,
+						licenseType: 'development',
+						productName: 'DXP 7.0',
+						startDate: '2021-06-03',
+						terms: [
+							{
+								endDate: '2022-07-02',
+								licenseKeysAllowed: 1,
+								licenseKeysGenerated: 1,
+								perpetual: false,
+								productPurchaseKey: 'productPurchaseKey2',
+								startDate: '2021-06-02',
+								status: 'Approved'
+							}
+						]
+					},
+					{
+						accountName: 'Account 1',
+						expirationDate: '2022-06-08',
+						indefinite: false,
+						licenseKeyId: 'licenseKeyID3',
+						licenseKeysGenerated: 0,
+						licenseType: 'development',
+						productName: 'DXP 7.0',
+						startDate: '2021-06-03',
+						terms: [
+							{
+								endDate: '2022-07-02',
+								licenseKeysAllowed: 1,
+								licenseKeysGenerated: 1,
+								perpetual: false,
+								productPurchaseKey: 'productPurchaseKey3',
+								startDate: '2021-06-02',
+								status: 'Approved'
+							}
+						]
+					}
+				]
 			});
 
 			const bulkStartDate = container.querySelector(
 				'input[name="startDateBulkInput-DXP 7.0"]'
 			);
 
-			expect(bulkStartDate.value).toBe('2021-06-03');
+			expect(bulkStartDate.value).toBe('2021-06-02');
 
 			// Clay Date Picker always displays two inputs for the same date
 
-			fireEvent.change(getAllByDisplayValue('2021-06-03')[3], {
+			fireEvent.change(getAllByDisplayValue('2021-06-02')[3], {
 				target: {value: '2021-03-06'}
 			});
 
@@ -338,18 +469,63 @@ describe('ExtendLicense', () => {
 
 		it('updates all licenses dates in the group when the Bulk Input is updated', () => {
 			const {container, getAllByDisplayValue} = renderExtendLicense({
-				details: multipleAttachedLicenses
+				details: [
+					{
+						accountName: 'Account 1',
+						allowPermanentLicenses: false,
+						expirationDate: '2022-01-08',
+						indefinite: false,
+						licenseKeyId: 'licenseKeyID1',
+						licenseKeysGenerated: 0,
+						licenseType: 'development',
+						productName: 'DXP 7.0',
+						startDate: '2021-01-03',
+						terms: [
+							{
+								endDate: '2022-07-02',
+								licenseKeysAllowed: 1,
+								licenseKeysGenerated: 1,
+								perpetual: false,
+								productPurchaseKey: 'productPurchaseKey1',
+								startDate: '2021-06-02',
+								status: 'Approved'
+							}
+						]
+					},
+					{
+						accountName: 'Account 1',
+						allowPermanentLicenses: false,
+						expirationDate: '2022-06-08',
+						indefinite: false,
+						licenseKeyId: 'licenseKeyID2',
+						licenseKeysGenerated: 0,
+						licenseType: 'development',
+						productName: 'DXP 7.0',
+						startDate: '2021-06-03',
+						terms: [
+							{
+								endDate: '2022-07-02',
+								licenseKeysAllowed: 1,
+								licenseKeysGenerated: 1,
+								perpetual: false,
+								productPurchaseKey: 'productPurchaseKey2',
+								startDate: '2021-06-02',
+								status: 'Approved'
+							}
+						]
+					}
+				]
 			});
 
 			const bulkStartDate = container.querySelector(
 				'input[name="startDateBulkInput-DXP 7.0"]'
 			);
 
-			expect(bulkStartDate.value).toBe('2021-06-03');
+			expect(bulkStartDate.value).toBe('2021-06-02');
 
 			// Clay Date Picker always displays two inputs for the same date
 
-			fireEvent.change(getAllByDisplayValue('2021-06-03')[1], {
+			fireEvent.change(getAllByDisplayValue('2021-06-02')[1], {
 				target: {value: '2021-03-06'}
 			});
 
@@ -422,18 +598,41 @@ describe('ExtendLicense', () => {
 					getByLabelText,
 					getByText
 				} = renderExtendLicense({
-					details: singleAttachedLicense
+					details: [
+						{
+							accountName: 'Account 1',
+							allowPermanentLicenses: false,
+							expirationDate: '2022-06-08',
+							indefinite: false,
+							licenseKeyId: 'licenseKeyID1',
+							licenseKeysGenerated: 0,
+							licenseType: 'development',
+							productName: 'DXP 7.0',
+							startDate: '2021-06-03',
+							terms: [
+								{
+									endDate: '2022-07-02',
+									licenseKeysAllowed: 1,
+									licenseKeysGenerated: 1,
+									perpetual: false,
+									productPurchaseKey: 'productPurchaseKey1',
+									startDate: '2021-06-02',
+									status: 'Approved'
+								}
+							]
+						}
+					]
 				});
 
 				fireEvent.change(getByLabelText('subscription-term'), {
-					target: {value: 'productPurchaseKey2'}
+					target: {value: 'productPurchaseKey1'}
 				});
 
 				expect(getByText('extend').disabled).toBeFalsy();
 
 				// Clay Date Picker always displays two inputs for the same date
 
-				fireEvent.change(getAllByDisplayValue('2021-06-03')[1], {
+				fireEvent.change(getAllByDisplayValue('2021-06-02')[1], {
 					target: {value: ''}
 				});
 
