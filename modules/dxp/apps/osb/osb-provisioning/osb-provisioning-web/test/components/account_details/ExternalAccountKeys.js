@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import {cleanup, fireEvent, render} from '@testing-library/react';
+import {cleanup, render} from '@testing-library/react';
 import React from 'react';
 
 import ExternalAccountKeys from '../../../src/main/resources/META-INF/resources/js/components/account_details/ExternalAccountKeys';
@@ -15,7 +15,6 @@ function renderExternalAccountKeys(permission = true) {
 			<ExternalAccountKeys
 				details={{
 					analyticsCloudGroupId: 'testAnalyticsCloudGroupId',
-					dossieraAccountKey: 'testDossieraAccountKey',
 					dxpCloudProjectId: 'testDxpCloudProjectId',
 					key: '123',
 					relatedSalesforceProjectKey:
@@ -23,7 +22,6 @@ function renderExternalAccountKeys(permission = true) {
 					salesforceProjectKey: 'testSalesForceProjectKey',
 					updateAnalyticsCloudGroupURL:
 						'/update/analytics-cloud/group',
-					updateDossieraAccountURL: '/update/dossiera/account',
 					updateDxpCloudProjectURL: '/update/dxp-cloud/project',
 					updateRelatedSalesforceProjectURL:
 						'/update/salesforce/related-salesforce-project',
@@ -50,13 +48,6 @@ describe('ExternalAccountKeys', () => {
 		getByText('testAnalyticsCloudGroupId');
 	});
 
-	it('displays Dossiera Account field with the correct value', () => {
-		const {getByText} = renderExternalAccountKeys();
-
-		getByText('dossiera-account');
-		getByText('testDossieraAccountKey');
-	});
-
 	it('displays DXP Cloud Project field with the correct value', () => {
 		const {getByText} = renderExternalAccountKeys();
 
@@ -76,27 +67,5 @@ describe('ExternalAccountKeys', () => {
 
 		getByText('salesforce-project');
 		getByText('testSalesForceProjectKey');
-	});
-
-	describe('ExternalAccountKeys with full editing privilege', () => {
-		it('allows the Dossiera Account field to be editable', () => {
-			const {getByText} = renderExternalAccountKeys();
-
-			fireEvent.click(getByText('testDossieraAccountKey'));
-
-			getByText('save');
-			getByText('cancel');
-		});
-	});
-
-	describe('ExternalAccountKeys with limited editing privilege', () => {
-		it('does not allow the Dossiera Account field to be editable', () => {
-			const {getByText, queryByText} = renderExternalAccountKeys(false);
-
-			fireEvent.click(getByText('testDossieraAccountKey'));
-
-			expect(queryByText('save')).toBeFalsy();
-			expect(queryByText('cancel')).toBeFalsy();
-		});
 	});
 });

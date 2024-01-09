@@ -62,7 +62,6 @@ function renderAccountDetails(props) {
 				dataRegion: 'Brazil',
 				dateCreated: CURRENT_TIME.toLocaleString('en-US'),
 				dateModified: CURRENT_TIME.toLocaleString('en-US'),
-				dossieraAccountKey: 'testDossieraAccountKey',
 				dxpCloudProjectId: 'testDxpCloudProjectId',
 				editAccountURL: 'edit/account/url',
 				firstLineSupportTeamKey: 'first-line-123',
@@ -80,7 +79,6 @@ function renderAccountDetails(props) {
 				subscriptionStateStyle: 'label-success',
 				tier: 'Regular',
 				updateAnalyticsCloudGroupURL: '/update/analytics-cloud/group',
-				updateDossieraAccountURL: '/update/dossiera/account',
 				updateDxpCloudProjectURL: '/update/dxp-cloud/project',
 				updateRelatedSalesforceProjectURL:
 					'/update/salesforce/related-salesforce-project',
