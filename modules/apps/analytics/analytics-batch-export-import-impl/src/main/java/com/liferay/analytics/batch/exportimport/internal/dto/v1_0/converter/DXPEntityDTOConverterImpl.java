@@ -99,10 +99,17 @@ public class DXPEntityDTOConverterImpl implements DXPEntityDTOConverter {
 			(Map<String, Function<?, Object>>)
 				baseModel.getAttributeGetterFunctions();
 
-		for (String includeAttributeName : includeAttributeNames) {
+		for (Map.Entry<String, Function<?, Object>> entry :
+				attributeGetterFunctions.entrySet()) {
+
+			if (ListUtil.isNotEmpty(includeAttributeNames) &&
+				!includeAttributeNames.contains(entry.getKey())) {
+
+				continue;
+			}
+
 			Function<Object, Object> function =
-				(Function<Object, Object>)attributeGetterFunctions.get(
-					includeAttributeName);
+				(Function<Object, Object>)entry.getValue();
 
 			if (function == null) {
 				continue;
@@ -110,7 +117,7 @@ public class DXPEntityDTOConverterImpl implements DXPEntityDTOConverter {
 
 			Field field = new Field() {
 				{
-					name = includeAttributeName;
+					name = entry.getKey();
 
 					setValue(
 						() -> {
