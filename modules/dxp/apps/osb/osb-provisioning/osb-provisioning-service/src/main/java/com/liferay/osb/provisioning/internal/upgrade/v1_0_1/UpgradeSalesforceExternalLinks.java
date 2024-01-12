@@ -12,6 +12,7 @@ import com.liferay.osb.koroneiki.phloem.rest.client.dto.v1_0.ExternalLink;
 import com.liferay.osb.provisioning.koroneiki.web.service.AccountWebService;
 import com.liferay.osb.provisioning.koroneiki.web.service.ExternalLinkWebService;
 import com.liferay.osb.provisioning.search.FilterQuery;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -102,6 +103,42 @@ public class UpgradeSalesforceExternalLinks extends UpgradeProcess {
 							externalLink);
 					}
 				}
+			}
+		}
+		catch (Exception exception) {
+			_log.error(exception);
+		}
+	}
+
+	public void upgradeSalesforceExternalLinks(
+			Map<String, String> accountKeySalesforceKey, String entityName)
+		throws Exception {
+
+		try {
+			for (Map.Entry<String, String> entry :
+					accountKeySalesforceKey.entrySet()) {
+
+				String salesforceKey = entry.getValue();
+
+				if (salesforceKey.length() != 18) {
+					_log.error(
+						StringBundler.concat(
+							"Skipping Salesforce ", entityName, " key ",
+							entry.getKey(), " due an invalid value: ",
+							salesforceKey));
+
+					continue;
+				}
+
+				ExternalLink externalLink = new ExternalLink();
+
+				externalLink.setDomain(ExternalLinkDomain.SALESFORCE);
+				externalLink.setEntityName(entityName);
+				externalLink.setEntityId(salesforceKey);
+
+				_externalLinkWebService.addAccountExternalLink(
+					StringPool.BLANK, StringPool.BLANK, entry.getKey(),
+					externalLink);
 			}
 		}
 		catch (Exception exception) {
