@@ -46,31 +46,40 @@ public class PagePathDataFetcherTest
 
 		adjacentPageViewsMetrics.add(
 			new AdjacentPageViewsMetric(
-				"direct", Boolean.TRUE, "direct", BigDecimal.valueOf(5)));
+				"direct", Boolean.TRUE, Boolean.TRUE, "direct",
+				BigDecimal.valueOf(5)));
 		adjacentPageViewsMetrics.add(
 			new AdjacentPageViewsMetric(
-				"others", Boolean.TRUE, "others", BigDecimal.valueOf(7)));
+				"others", Boolean.TRUE, Boolean.TRUE, "others",
+				BigDecimal.valueOf(7)));
 		adjacentPageViewsMetrics.add(
 			new AdjacentPageViewsMetric(
-				"others", Boolean.FALSE, "others", BigDecimal.valueOf(90)));
+				"others", Boolean.TRUE, Boolean.FALSE, "others",
+				BigDecimal.valueOf(90)));
 		adjacentPageViewsMetrics.add(
 			new AdjacentPageViewsMetric(
-				"url-1", Boolean.TRUE, "url 1", BigDecimal.valueOf(10)));
+				"url-1", Boolean.FALSE, Boolean.TRUE, "url 1",
+				BigDecimal.valueOf(10)));
 		adjacentPageViewsMetrics.add(
 			new AdjacentPageViewsMetric(
-				"url-2", Boolean.TRUE, "url 2", BigDecimal.valueOf(100)));
+				"url-2", Boolean.FALSE, Boolean.TRUE, "url 2",
+				BigDecimal.valueOf(100)));
 		adjacentPageViewsMetrics.add(
 			new AdjacentPageViewsMetric(
-				"url-3", Boolean.TRUE, "url 3", BigDecimal.valueOf(1000)));
+				"url-3", Boolean.FALSE, Boolean.TRUE, "url 3",
+				BigDecimal.valueOf(1000)));
 		adjacentPageViewsMetrics.add(
 			new AdjacentPageViewsMetric(
-				"url-4", Boolean.FALSE, "url 4", BigDecimal.valueOf(100)));
+				"url-4", Boolean.FALSE, Boolean.FALSE, "url 4",
+				BigDecimal.valueOf(100)));
 		adjacentPageViewsMetrics.add(
 			new AdjacentPageViewsMetric(
-				"url-5", Boolean.FALSE, "url 5", BigDecimal.valueOf(300)));
+				"url-5", Boolean.FALSE, Boolean.FALSE, "url 5",
+				BigDecimal.valueOf(300)));
 		adjacentPageViewsMetrics.add(
 			new AdjacentPageViewsMetric(
-				"url-6", Boolean.FALSE, "url 6", BigDecimal.valueOf(200)));
+				"url-6", Boolean.FALSE, Boolean.FALSE, "url 6",
+				BigDecimal.valueOf(200)));
 
 		Mockito.when(
 			_pagePathDog.getAdjacentPagesViewsMetric(
@@ -100,21 +109,21 @@ public class PagePathDataFetcherTest
 		_assertPagePathNodeDTOs(
 			pagePathNodeDTO.getPreviousPagePathNodeDTOs(),
 			Arrays.asList(
-				new PagePathNodeDTO("url-3", null, null, "url 3", 1000L),
-				new PagePathNodeDTO("url-2", null, null, "url 2", 100L),
-				new PagePathNodeDTO("url-1", null, null, "url 1", 10L),
-				new PagePathNodeDTO("direct", null, null, "direct", 5L),
-				new PagePathNodeDTO("others", null, null, "others", 7L)));
+				new PagePathNodeDTO("url-3", false, null, null, "url 3", 1000L),
+				new PagePathNodeDTO("url-2", false, null, null, "url 2", 100L),
+				new PagePathNodeDTO("url-1", false, null, null, "url 1", 10L),
+				new PagePathNodeDTO("direct", true, null, null, "direct", 5L),
+				new PagePathNodeDTO("others", true, null, null, "others", 7L)));
 
 		_assertPagePathNodeDTOs(
 			pagePathNodeDTO.getFollowingPagePathNodeDTOs(),
 			Arrays.asList(
-				new PagePathNodeDTO("url-5", null, null, "url 5", 300L),
-				new PagePathNodeDTO("url-6", null, null, "url 6", 200L),
-				new PagePathNodeDTO("url-4", null, null, "url 4", 100L),
-				new PagePathNodeDTO("others", null, null, "others", 90L),
+				new PagePathNodeDTO("url-5", false, null, null, "url 5", 300L),
+				new PagePathNodeDTO("url-6", false, null, null, "url 6", 200L),
+				new PagePathNodeDTO("url-4", false, null, null, "url 4", 100L),
+				new PagePathNodeDTO("others", true, null, null, "others", 90L),
 				new PagePathNodeDTO(
-					"drop-offs", null, null, "drop-offs", 432L)));
+					"drop-offs", true, null, null, "drop-offs", 432L)));
 	}
 
 	private void _assertPagePathNodeDTOs(
