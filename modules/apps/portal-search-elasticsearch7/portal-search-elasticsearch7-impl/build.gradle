@@ -13,7 +13,6 @@ dependencies {
 	compileInclude group: "com.fasterxml.jackson.dataformat", name: "jackson-dataformat-smile", version: "2.13.2"
 	compileInclude group: "com.fasterxml.jackson.dataformat", name: "jackson-dataformat-yaml", version: "2.14.2"
 	compileInclude group: "com.liferay", name: "org.elasticsearch.analysis.common", version: elasticsearchVersion
-	compileInclude group: "com.liferay", name: "org.elasticsearch.client.xpack.transport", version: elasticsearchVersion
 	compileInclude group: "com.liferay", name: "org.elasticsearch.lz4", version: elasticsearchVersion
 	compileInclude group: "com.liferay", name: "org.elasticsearch.painless", version: elasticsearchVersion
 	compileInclude group: "com.liferay", name: "org.elasticsearch.plugin.classloader", version: elasticsearchVersion
@@ -67,6 +66,7 @@ dependencies {
 	compileInclude group: "org.elasticsearch.client", name: "elasticsearch-rest-high-level-client", version: elasticsearchVersion
 	compileInclude group: "org.elasticsearch.client", name: "sniffer", version: "5.5.3"
 	compileInclude group: "org.elasticsearch.client", name: "transport", version: elasticsearchVersion
+	compileInclude group: "org.elasticsearch.client", name: "x-pack-transport", version: elasticsearchVersion
 	compileInclude group: "org.elasticsearch.plugin", name: "elasticsearch-scripting-painless-spi", version: elasticsearchVersion
 	compileInclude group: "org.elasticsearch.plugin", name: "lang-mustache-client", version: elasticsearchVersion
 	compileInclude group: "org.elasticsearch.plugin", name: "mapper-extras-client", version: elasticsearchVersion
