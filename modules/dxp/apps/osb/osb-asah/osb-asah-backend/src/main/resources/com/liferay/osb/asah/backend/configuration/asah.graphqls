@@ -899,6 +899,7 @@ type PageMetric implements AssetMetric {
 
 type PagePathNode {
 	canonicalUrl: String
+	external: Boolean
 	followingPagePathNodes: [PagePathNode]
 	previousPagePathNodes: [PagePathNode]
 	title: String

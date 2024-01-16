@@ -55,18 +55,25 @@ public class PagePathRepositoryImpl implements PagePathRepository {
 			).with(
 				_getTopPreviousPagesCTE()
 			).select(
-				_canonicalUrlField, _previousField, _titleField, _viewsField
+				_canonicalUrlField, _externalField, _previousField, _titleField,
+				_viewsField
 			).from(
 				"TopFollowingPages"
 			).unionAll(
 				_dslContext.select(
-					_canonicalUrlField, _previousField, _titleField, _viewsField
+					_canonicalUrlField, _externalField, _previousField,
+					_titleField, _viewsField
 				).from(
 					"TopPreviousPages"
 				)
 			).unionAll(
 				_dslContext.select(
 					_canonicalUrlField,
+					DSL.val(
+						Boolean.TRUE
+					).as(
+						"external"
+					),
 					DSL.val(
 						Boolean.TRUE
 					).as(
@@ -284,6 +291,20 @@ public class PagePathRepositoryImpl implements PagePathRepository {
 				).as(
 					"canonicalUrl"
 				),
+				DSL.max(
+					DSL.when(
+						DSL.field(
+							"rowNumber", Long.class
+						).greaterThan(
+							3L
+						),
+						Boolean.TRUE
+					).otherwise(
+						Boolean.FALSE
+					)
+				).as(
+					"external"
+				),
 				DSL.when(
 					DSL.field(
 						"rowNumber", Long.class
@@ -351,6 +372,24 @@ public class PagePathRepositoryImpl implements PagePathRepository {
 				).as(
 					"canonicalUrl"
 				),
+				DSL.max(
+					DSL.when(
+						DSL.or(
+							DSL.field(
+								"trackedCanonicalUrl"
+							).isNull(),
+							DSL.field(
+								"rowNumber", Long.class
+							).greaterThan(
+								3L
+							)),
+						DSL.value(true)
+					).otherwise(
+						DSL.value(false)
+					)
+				).as(
+					"external"
+				),
 				DSL.when(
 					DSL.field(
 						"rowNumber", Long.class
@@ -397,6 +436,22 @@ public class PagePathRepositoryImpl implements PagePathRepository {
 				).groupBy(
 					_canonicalUrlField, _titleField
 				)
+			).leftJoin(
+				DSL.selectDistinct(
+					DSL.field(
+						"canonicalUrl"
+					).as(
+						"trackedCanonicalUrl"
+					)
+				).from(
+					"PagePath"
+				)
+			).on(
+				DSL.field(
+					"trackedCanonicalUrl"
+				).eq(
+					DSL.field("canonicalUrl")
+				)
 			).groupBy(
 				_canonicalUrlField, _titleField
 			)
@@ -412,6 +467,8 @@ public class PagePathRepositoryImpl implements PagePathRepository {
 	@Autowired
 	private DSLHelper _dslHelper;
 
+	private final Field<Boolean> _externalField = DSL.field(
+		"external", Boolean.class);
 	private final Field<Boolean> _previousField = DSL.field(
 		"previous", Boolean.class);
 

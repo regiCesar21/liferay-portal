@@ -24,11 +24,13 @@ public class PagePathNodeDTO {
 	}
 
 	public PagePathNodeDTO(
-		String canonicalUrl, List<PagePathNodeDTO> followingPagePathNodeDTOs,
+		String canonicalUrl, Boolean external,
+		List<PagePathNodeDTO> followingPagePathNodeDTOs,
 		List<PagePathNodeDTO> previousPagePathNodeDTOs, String title,
 		Long views) {
 
 		_canonicalUrl = canonicalUrl;
+		_external = external;
 		_followingPagePathNodeDTOs = followingPagePathNodeDTOs;
 		_previousPagePathNodeDTOs = previousPagePathNodeDTOs;
 		_title = title;
@@ -59,8 +61,17 @@ public class PagePathNodeDTO {
 		return _views;
 	}
 
+	@GraphQLProperty("external")
+	public Boolean isExternal() {
+		return _external;
+	}
+
 	public void setCanonicalUrl(String canonicalUrl) {
 		_canonicalUrl = canonicalUrl;
+	}
+
+	public void setExternal(Boolean external) {
+		_external = external;
 	}
 
 	public void setFollowingPagePathNodeDTOS(
@@ -84,6 +95,7 @@ public class PagePathNodeDTO {
 	}
 
 	private String _canonicalUrl;
+	private Boolean _external;
 	private List<PagePathNodeDTO> _followingPagePathNodeDTOs;
 	private List<PagePathNodeDTO> _previousPagePathNodeDTOs;
 	private String _title;

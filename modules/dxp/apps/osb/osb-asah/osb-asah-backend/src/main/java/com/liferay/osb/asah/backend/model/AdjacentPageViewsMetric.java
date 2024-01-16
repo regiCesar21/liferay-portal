@@ -25,9 +25,11 @@ public class AdjacentPageViewsMetric {
 	}
 
 	public AdjacentPageViewsMetric(
-		String canonicalUrl, Boolean previous, String title, BigDecimal views) {
+		String canonicalUrl, Boolean external, Boolean previous, String title,
+		BigDecimal views) {
 
 		_canonicalUrl = canonicalUrl;
+		_external = external;
 		_previous = previous;
 		_title = title;
 		_views = views;
@@ -48,6 +50,7 @@ public class AdjacentPageViewsMetric {
 
 		if (Objects.equals(
 				_canonicalUrl, adjacentPageViewsMetric._canonicalUrl) &&
+			Objects.equals(_external, adjacentPageViewsMetric._external) &&
 			Objects.equals(_previous, adjacentPageViewsMetric._previous) &&
 			Objects.equals(_title, adjacentPageViewsMetric._title) &&
 			Objects.equals(_views, adjacentPageViewsMetric._views)) {
@@ -80,7 +83,12 @@ public class AdjacentPageViewsMetric {
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(_canonicalUrl, _previous, _title, _views);
+		return Objects.hash(
+			_canonicalUrl, _external, _previous, _title, _views);
+	}
+
+	public Boolean isExternal() {
+		return _external;
 	}
 
 	public Boolean isPrevious() {
@@ -89,6 +97,10 @@ public class AdjacentPageViewsMetric {
 
 	public void setCanonicalUrl(String canonicalUrl) {
 		_canonicalUrl = canonicalUrl;
+	}
+
+	public void setExternal(Boolean external) {
+		_external = external;
 	}
 
 	public void setPrevious(Boolean previous) {
@@ -104,6 +116,7 @@ public class AdjacentPageViewsMetric {
 	}
 
 	private String _canonicalUrl;
+	private Boolean _external;
 	private Boolean _previous;
 	private String _title;
 	private BigDecimal _views;

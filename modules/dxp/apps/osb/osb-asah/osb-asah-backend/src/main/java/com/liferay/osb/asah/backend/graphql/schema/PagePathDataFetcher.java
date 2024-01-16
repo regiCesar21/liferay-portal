@@ -80,6 +80,8 @@ public class PagePathDataFetcher extends BaseDataFetcher<PagePathNodeDTO> {
 
 				pagePathNodeDTO.setCanonicalUrl(
 					adjacentPageViewsMetric.getCanonicalUrl());
+				pagePathNodeDTO.setExternal(
+					adjacentPageViewsMetric.isExternal());
 				pagePathNodeDTO.setTitle(adjacentPageViewsMetric.getTitle());
 				pagePathNodeDTO.setViews(
 					adjacentPageViewsMetric.getViewsAsLong());
@@ -133,8 +135,9 @@ public class PagePathDataFetcher extends BaseDataFetcher<PagePathNodeDTO> {
 		if (dropOffs > 0) {
 			PagePathNodeDTO dropOffPagePathNodeDTO = new PagePathNodeDTO();
 
-			dropOffPagePathNodeDTO.setTitle("drop-offs");
 			dropOffPagePathNodeDTO.setCanonicalUrl("drop-offs");
+			dropOffPagePathNodeDTO.setExternal(true);
+			dropOffPagePathNodeDTO.setTitle("drop-offs");
 			dropOffPagePathNodeDTO.setViews(dropOffs);
 
 			followingPagePathNodeDTOs.add(dropOffPagePathNodeDTO);
