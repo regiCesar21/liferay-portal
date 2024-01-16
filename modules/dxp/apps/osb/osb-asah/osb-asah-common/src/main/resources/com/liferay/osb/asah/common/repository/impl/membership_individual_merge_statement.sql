@@ -8,6 +8,10 @@ ON (
 	source.individualId = target.individualId AND
 	source.segmentId = target.segmentId
 )
+WHEN MATCHED THEN
+	UPDATE SET
+		target.dataSourceUUIDs = source.dataSourceUUIDs,
+		target.modifiedDate = source.modifiedDate
 WHEN NOT MATCHED BY TARGET THEN
 	INSERT (
 		`channelId`,
