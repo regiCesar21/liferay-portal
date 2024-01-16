@@ -17,6 +17,7 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
+import com.liferay.portal.kernel.util.ListUtil;
 
 import java.util.Arrays;
 import java.util.HashMap;
@@ -68,11 +69,14 @@ public class UpgradeSalesforceExternalLinks extends UpgradeProcess {
 						if (salesforceProjectKeyAccountKeys.containsKey(
 								salesforceProjectKey)) {
 
-							List<String> accountKeys =
+							List<String> accountKeys = ListUtil.copy(
 								salesforceProjectKeyAccountKeys.get(
-									salesforceProjectKey);
+									salesforceProjectKey));
 
 							accountKeys.add(account.getKey());
+
+							salesforceProjectKeyAccountKeys.put(
+								salesforceProjectKey, accountKeys);
 						}
 						else {
 							salesforceProjectKeyAccountKeys.put(
