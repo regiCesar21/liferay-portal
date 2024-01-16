@@ -94,7 +94,7 @@ definition {
 			panel = "Control Panel",
 			portlet = "Sites");
 
-		Site.addCustomCP(
+		Site.addCP(
 			siteName = "Site3 Name",
 			siteTemplateName = "Minium");
 
