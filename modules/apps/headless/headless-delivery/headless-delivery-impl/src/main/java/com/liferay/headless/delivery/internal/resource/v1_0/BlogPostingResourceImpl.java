@@ -247,8 +247,7 @@ public class BlogPostingResourceImpl
 			blogPosting.setTaxonomyCategoryIds(
 				transform(
 					taxonomyCategoryBriefs,
-					TaxonomyCategoryBrief::getTaxonomyCategoryId,
-					Long[].class));
+					TaxonomyCategoryBrief::getTaxonomyCategoryId, Long.class));
 		}
 	}
 
