@@ -1,4 +1,4 @@
-String elasticsearchVersion = "7.17.13"
+String elasticsearchVersion = "7.17.14"
 String luceneVersion = "8.11.1"
 
 configurations {
