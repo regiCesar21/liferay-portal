@@ -122,14 +122,34 @@ public class UpgradeSalesforceExternalLinks extends UpgradeProcess {
 			for (Map.Entry<String, String> entry :
 					accountKeySalesforceKey.entrySet()) {
 
+				String accountKey = entry.getKey();
 				String salesforceKey = entry.getValue();
 
 				if (salesforceKey.length() != 18) {
 					_log.error(
 						StringBundler.concat(
 							"Skipping Salesforce ", entityName, " key ",
-							entry.getKey(), " due an invalid value: ",
-							salesforceKey));
+							salesforceKey, " on account ", accountKey,
+							" due to an invalid value"));
+
+					continue;
+				}
+
+				List<Account> accounts = _accountWebService.getAccounts(
+					ExternalLinkDomain.SALESFORCE, entityName, salesforceKey, 1,
+					1);
+
+				if (!accounts.isEmpty()) {
+					Account account = accounts.get(0);
+
+					if (!accountKey.equals(account.getKey())) {
+						_log.error(
+							StringBundler.concat(
+								"Skipping Salesforce ", entityName, " key ",
+								salesforceKey,
+								" due to already existing on account ",
+								account.getKey()));
+					}
 
 					continue;
 				}
@@ -141,7 +161,7 @@ public class UpgradeSalesforceExternalLinks extends UpgradeProcess {
 				externalLink.setEntityId(salesforceKey);
 
 				_externalLinkWebService.addAccountExternalLink(
-					StringPool.BLANK, StringPool.BLANK, entry.getKey(),
+					StringPool.BLANK, StringPool.BLANK, accountKey,
 					externalLink);
 			}
 		}
