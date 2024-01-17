@@ -8,9 +8,9 @@ package com.liferay.portal.store.gcs;
 import com.google.auth.oauth2.GoogleCredentials;
 import com.google.auth.oauth2.ServiceAccountCredentials;
 
+import com.liferay.petra.io.StreamUtil;
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
-import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.store.gcs.configuration.GCSStoreConfiguration;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
 
@@ -19,21 +19,24 @@ import java.io.ByteArrayInputStream;
 import java.util.Collections;
 import java.util.Map;
 
-import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
+import org.junit.runner.RunWith;
 
-import org.mockito.Mock;
-import org.mockito.MockedStatic;
 import org.mockito.Mockito;
-import org.mockito.MockitoAnnotations;
+
+import org.powermock.api.mockito.PowerMockito;
+import org.powermock.core.classloader.annotations.PrepareForTest;
+import org.powermock.modules.junit4.PowerMockRunner;
 
 /**
  * @author Adam Brandizzi
  */
+@PrepareForTest(ConfigurableUtil.class)
+@RunWith(PowerMockRunner.class)
 public class GCSStoreTest {
 
 	@ClassRule
@@ -43,39 +46,36 @@ public class GCSStoreTest {
 
 	@Before
 	public void setUp() {
-		MockitoAnnotations.openMocks(this);
+		_gcsStoreConfiguration = PowerMockito.mock(GCSStoreConfiguration.class);
+
+		PowerMockito.mockStatic(ConfigurableUtil.class);
 
 		_gcsStore = new GCSStore();
 
-		Mockito.when(
+		PowerMockito.when(
 			ConfigurableUtil.createConfigurable(
 				Mockito.eq(GCSStoreConfiguration.class), Mockito.any(Map.class))
 		).thenReturn(
 			_gcsStoreConfiguration
 		);
 
-		Mockito.when(
+		PowerMockito.when(
 			_gcsStoreConfiguration.retryDelayMultiplier()
 		).thenReturn(
 			1.5
 		);
 
-		Mockito.when(
+		PowerMockito.when(
 			_gcsStoreConfiguration.rpcTimeoutMultiplier()
 		).thenReturn(
 			1.0
 		);
 	}
 
-	@After
-	public void tearDown() {
-		_configurableUtilMockedStatic.close();
-	}
-
 	@Test
 	public void testActivate1() throws Exception {
-		byte[] serviceAccountKeyBytes = FileUtil.getBytes(
-			getClass(), "dependencies/service-account-key.json");
+		byte[] serviceAccountKeyBytes = _getBytes(
+			"dependencies/service-account-key.json");
 
 		_mockServiceAccountKey(new String(serviceAccountKeyBytes));
 
@@ -102,19 +102,21 @@ public class GCSStoreTest {
 			googleCredentials);
 	}
 
+	private byte[] _getBytes(String path) throws Exception {
+		Class<? extends GCSStoreTest> clazz = getClass();
+
+		return StreamUtil.toByteArray(clazz.getResourceAsStream(path));
+	}
+
 	private void _mockServiceAccountKey(String serviceAccountKey) {
-		Mockito.when(
+		PowerMockito.when(
 			_gcsStoreConfiguration.serviceAccountKey()
 		).thenReturn(
 			serviceAccountKey
 		);
 	}
 
-	private final MockedStatic<ConfigurableUtil> _configurableUtilMockedStatic =
-		Mockito.mockStatic(ConfigurableUtil.class);
 	private GCSStore _gcsStore;
-
-	@Mock
 	private GCSStoreConfiguration _gcsStoreConfiguration;
 
 }
