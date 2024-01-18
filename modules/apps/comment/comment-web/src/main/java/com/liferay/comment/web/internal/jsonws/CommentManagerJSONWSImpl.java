@@ -44,8 +44,10 @@ import org.osgi.service.component.annotations.Reference;
 	service = CommentManagerJSONWS.class
 )
 @JSONWebService
-public class CommentManagerJSONWSImpl extends BaseServiceImpl {
+public class CommentManagerJSONWSImpl extends BaseServiceImpl
+	implements CommentManagerJSONWS{
 
+	@Override
 	public long addComment(
 			long groupId, String className, long classPK, String body)
 		throws PortalException {
@@ -63,6 +65,7 @@ public class CommentManagerJSONWSImpl extends BaseServiceImpl {
 			createServiceContextFunction(companyId));
 	}
 
+	@Override
 	public void deleteComment(long commentId) throws PortalException {
 		DiscussionPermission discussionPermission =
 			_commentManager.getDiscussionPermission(getPermissionChecker());
@@ -72,6 +75,7 @@ public class CommentManagerJSONWSImpl extends BaseServiceImpl {
 		_commentManager.deleteComment(commentId);
 	}
 
+	@Override
 	public List<CommentJSONWS> getComments(long commentId, int start, int end)
 		throws PortalException {
 
@@ -89,6 +93,7 @@ public class CommentManagerJSONWSImpl extends BaseServiceImpl {
 		return getComments(discussionComment, start, end);
 	}
 
+	@Override
 	public List<CommentJSONWS> getComments(
 			long groupId, String className, long classPK, int start, int end)
 		throws PortalException {
@@ -106,6 +111,7 @@ public class CommentManagerJSONWSImpl extends BaseServiceImpl {
 		return getComments(discussion.getRootDiscussionComment(), start, end);
 	}
 
+	@Override
 	public int getCommentsCount(long groupId, String className, long classPK)
 		throws PortalException {
 
@@ -118,6 +124,7 @@ public class CommentManagerJSONWSImpl extends BaseServiceImpl {
 		return _commentManager.getCommentsCount(className, classPK);
 	}
 
+	@Override
 	public boolean hasDiscussion(long groupId, String className, long classPK)
 		throws PortalException {
 
@@ -128,6 +135,7 @@ public class CommentManagerJSONWSImpl extends BaseServiceImpl {
 		return _commentManager.hasDiscussion(className, classPK);
 	}
 
+	@Override
 	public void subscribeDiscussion(
 			long groupId, String className, long classPK)
 		throws PortalException {
@@ -142,6 +150,7 @@ public class CommentManagerJSONWSImpl extends BaseServiceImpl {
 			getUserId(), groupId, className, classPK);
 	}
 
+	@Override
 	public void unsubscribeDiscussion(
 			long groupId, String className, long classPK)
 		throws PortalException {
@@ -155,6 +164,7 @@ public class CommentManagerJSONWSImpl extends BaseServiceImpl {
 		_commentManager.unsubscribeDiscussion(getUserId(), className, classPK);
 	}
 
+	@Override
 	public long updateComment(
 			String className, long classPK, long commentId, String subject,
 			String body)
