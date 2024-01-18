@@ -5,6 +5,7 @@
 
 package com.liferay.comment.web.internal.jsonws;
 
+import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.comment.CommentManager;
 import com.liferay.portal.kernel.comment.Discussion;
 import com.liferay.portal.kernel.comment.DiscussionComment;
@@ -13,6 +14,7 @@ import com.liferay.portal.kernel.comment.DiscussionPermission;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.jsonwebservice.JSONWebService;
+import com.liferay.portal.kernel.jsonwebservice.JSONWebServiceMode;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.security.access.control.AccessControlled;
@@ -41,11 +43,11 @@ import org.osgi.service.component.annotations.Reference;
 		"json.web.service.context.name=comment",
 		"json.web.service.context.path=Comment"
 	},
-	service = CommentManagerJSONWS.class
+	service = AopService.class
 )
 @JSONWebService
-public class CommentManagerJSONWSImpl extends BaseServiceImpl
-	implements CommentManagerJSONWS{
+public class CommentManagerJSONWSImpl
+	extends BaseServiceImpl implements AopService, CommentManagerJSONWS {
 
 	@Override
 	public long addComment(
@@ -73,6 +75,12 @@ public class CommentManagerJSONWSImpl extends BaseServiceImpl
 		discussionPermission.checkDeletePermission(commentId);
 
 		_commentManager.deleteComment(commentId);
+	}
+
+	@JSONWebService(mode = JSONWebServiceMode.IGNORE)
+	@Override
+	public Class<?>[] getAopInterfaces() {
+		return new Class<?>[] {CommentManagerJSONWS.class};
 	}
 
 	@Override
