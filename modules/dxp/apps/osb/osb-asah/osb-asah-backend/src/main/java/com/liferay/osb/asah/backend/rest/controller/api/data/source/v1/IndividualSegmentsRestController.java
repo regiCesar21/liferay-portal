@@ -45,8 +45,11 @@ import com.liferay.osb.asah.common.util.SetUtil;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.HashSet;
 import java.util.LinkedHashSet;
 import java.util.List;
+import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
 import java.util.stream.Stream;
@@ -534,13 +537,26 @@ public class IndividualSegmentsRestController extends BaseRestController {
 
 			individual.setId(bqMembershipIndividual.getIndividualId());
 
+			Map<Long, Set<String>> dataSourceUUIDs = new HashMap<>();
+
+			for (BQMembershipIndividual.DataSourceUUID dataSourceUUID :
+					bqMembershipIndividual.getDataSourceUUIDs()) {
+
+				dataSourceUUIDs.putIfAbsent(
+					dataSourceUUID.getDataSourceId(), new HashSet<>());
+
+				Set<String> uuids = dataSourceUUIDs.get(
+					dataSourceUUID.getDataSourceId());
+
+				uuids.add(dataSourceUUID.getUuid());
+			}
+
 			individual.setBQDataSourceUsers(
 				SetUtil.map(
-					bqMembershipIndividual.getDataSourceUUIDs(),
-					dataSourceUUID -> new BQDataSourceUser(
-						Collections.emptySet(),
-						dataSourceUUID.getDataSourceId(), null,
-						SetUtil.of(dataSourceUUID.getUuid()))));
+					dataSourceUUIDs.entrySet(),
+					entry -> new BQDataSourceUser(
+						Collections.emptySet(), entry.getKey(), null,
+						entry.getValue())));
 
 			individuals.add(individual);
 		}
