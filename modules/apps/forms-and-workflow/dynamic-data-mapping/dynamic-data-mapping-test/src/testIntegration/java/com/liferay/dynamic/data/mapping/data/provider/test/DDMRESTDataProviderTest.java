@@ -8,10 +8,12 @@ package com.liferay.dynamic.data.mapping.data.provider.test;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.dynamic.data.mapping.data.provider.DDMDataProvider;
 import com.liferay.dynamic.data.mapping.data.provider.DDMDataProviderContext;
-import com.liferay.dynamic.data.mapping.model.DDMForm;
 import com.liferay.dynamic.data.mapping.storage.DDMFormValues;
 import com.liferay.dynamic.data.mapping.test.util.DDMFormValuesTestUtil;
 import com.liferay.dynamic.data.mapping.util.DDMFormFactory;
+import com.liferay.portal.kernel.cache.PortalCache;
+import com.liferay.portal.kernel.cache.PortalCacheHelperUtil;
+import com.liferay.portal.kernel.cache.PortalCacheManagerNames;
 import com.liferay.portal.kernel.util.KeyValuePair;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
@@ -50,58 +52,79 @@ public class DDMRESTDataProviderTest {
 	}
 
 	@Test
-	public void testGetCountries() throws Exception {
-		Class<?> ddmDataProviderSettings = _ddmDataProvider.getSettings();
+	public void testGetData() throws Exception {
+		List<KeyValuePair> keyValuePairs = _ddmDataProvider.getData(
+			new DDMDataProviderContext(
+				_createDDMDataProviderDDMFormValues(
+					false, "name", _GET_COUNTRIES_URL, "nameCurrentValue")));
 
-		DDMForm ddmForm = DDMFormFactory.create(ddmDataProviderSettings);
+		Assert.assertTrue(
+			keyValuePairs.containsAll(
+				ListUtil.fromArray(
+					new KeyValuePair("france", "France"),
+					new KeyValuePair("spain", "Spain"),
+					new KeyValuePair("united-states", "United States"),
+					new KeyValuePair("brazil", "Brazil"))));
+	}
+
+	@Test
+	public void testGetDataWithCache() throws Exception {
+		_ddmDataProvider.getData(
+			new DDMDataProviderContext(
+				_createDDMDataProviderDDMFormValues(
+					true, "name", _GET_COUNTRIES_URL, "nameCurrentValue")));
+
+		Class<?> clazz = _ddmDataProvider.getClass();
+
+		PortalCache<String, List<KeyValuePair>> portalCache =
+			PortalCacheHelperUtil.getPortalCache(
+				PortalCacheManagerNames.MULTI_VM, clazz.getName());
+
+		Assert.assertNotNull(portalCache.get(_GET_COUNTRIES_URL));
+
+		portalCache.remove(_GET_COUNTRIES_URL);
+	}
+
+	@Test
+	public void testGetDataWithWebServiceError() throws Exception {
+		List<KeyValuePair> keyValuePairs = _ddmDataProvider.getData(
+			new DDMDataProviderContext(
+				_createDDMDataProviderDDMFormValues(
+					false, "", "http://localhost", "nameCurrentValue;name")));
+
+		Assert.assertEquals(keyValuePairs.toString(), 0, keyValuePairs.size());
+	}
+
+	private DDMFormValues _createDDMDataProviderDDMFormValues(
+		boolean cacheable, String key, String url, String value) {
 
 		DDMFormValues ddmFormValues = DDMFormValuesTestUtil.createDDMFormValues(
-			ddmForm);
+			DDMFormFactory.create(_ddmDataProvider.getSettings()));
 
 		ddmFormValues.addDDMFormFieldValue(
 			DDMFormValuesTestUtil.createUnlocalizedDDMFormFieldValue(
-				"cacheable", Boolean.FALSE.toString()));
+				"cacheable", String.valueOf(cacheable)));
 		ddmFormValues.addDDMFormFieldValue(
 			DDMFormValuesTestUtil.createUnlocalizedDDMFormFieldValue(
-				"key", "countryId"));
+				"key", key));
 		ddmFormValues.addDDMFormFieldValue(
 			DDMFormValuesTestUtil.createUnlocalizedDDMFormFieldValue(
 				"password", "test"));
 		ddmFormValues.addDDMFormFieldValue(
 			DDMFormValuesTestUtil.createUnlocalizedDDMFormFieldValue(
-				"url",
-				"http://localhost:8080/api/jsonws/country/get-countries"));
+				"url", url));
 		ddmFormValues.addDDMFormFieldValue(
 			DDMFormValuesTestUtil.createUnlocalizedDDMFormFieldValue(
 				"username", "test@liferay.com"));
 		ddmFormValues.addDDMFormFieldValue(
 			DDMFormValuesTestUtil.createUnlocalizedDDMFormFieldValue(
-				"value", "nameCurrentValue"));
+				"value", value));
 
-		DDMDataProviderContext ddmDataProviderContext =
-			new DDMDataProviderContext(ddmFormValues);
-
-		List<KeyValuePair> actualKeyValuePairs = _ddmDataProvider.getData(
-			ddmDataProviderContext);
-
-		Assert.assertNotNull(actualKeyValuePairs);
-
-		List<KeyValuePair> expectedKeyValuePairs =
-			createExpectedKeyValuePairs();
-
-		for (KeyValuePair expectedKeyValuePair : expectedKeyValuePairs) {
-			Assert.assertTrue(
-				actualKeyValuePairs.toString(),
-				actualKeyValuePairs.contains(expectedKeyValuePair));
-		}
+		return ddmFormValues;
 	}
 
-	protected List<KeyValuePair> createExpectedKeyValuePairs() {
-		return ListUtil.fromArray(
-			new KeyValuePair("3", "France"), new KeyValuePair("15", "Spain"),
-			new KeyValuePair("19", "United States"),
-			new KeyValuePair("48", "Brazil"));
-	}
+	private static final String _GET_COUNTRIES_URL =
+		"http://localhost:8080/api/jsonws/country/get-countries";
 
 	private DDMDataProvider _ddmDataProvider;
 
