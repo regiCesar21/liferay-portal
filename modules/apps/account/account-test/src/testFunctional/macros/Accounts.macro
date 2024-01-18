@@ -122,6 +122,8 @@ definition {
 
 		Button.clickSave();
 
+		SelectFrameTop();
+
 		for (var domainName : list ${domainNames}) {
 			AssertElementPresent(
 				key_domainName = ${domainName},
