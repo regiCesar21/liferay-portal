@@ -23,8 +23,8 @@ INSERT INTO Membership (identityId, individualId, segmentId) VALUES ('5aab8eb3-7
 
 INSERT INTO MembershipIndividual(dataSourceUUIDs, individualId, segmentId) VALUES ([(337984445922213329, 'uuid-1')], '337984659206412898', 327968823603500655);
 INSERT INTO MembershipIndividual(dataSourceUUIDs, individualId, segmentId) VALUES ([(337984445922213329, 'uuid-2')], '337984612356412845', 366637689379787789);
-INSERT INTO MembershipIndividual(dataSourceUUIDs, individualId, segmentId) VALUES ([(351238757269547424, 'uuid-3')], '337984659206412899', 327968823603500666);
-INSERT INTO MembershipIndividual(dataSourceUUIDs, individualId, segmentId) VALUES ([(351238757269547424, 'uuid-4')], '337984659206412343', 327968823603500677);
+INSERT INTO MembershipIndividual(dataSourceUUIDs, individualId, segmentId) VALUES ([(351238757269547424, 'uuid-3'), (351238757269547424, 'uuid-4')], '337984659206412899', 327968823603500666);
+INSERT INTO MembershipIndividual(dataSourceUUIDs, individualId, segmentId) VALUES ([(351238757269547424, 'uuid-5')], '337984659206412343', 327968823603500677);
 
 INSERT INTO User (dataSourceId, individualId, uuid) VALUES (337984445922213329, '337984659206412898', 'uuid-1');
 INSERT INTO User (dataSourceId, individualId, uuid) VALUES (337984445922213329, '337984612356412845', 'uuid-2');

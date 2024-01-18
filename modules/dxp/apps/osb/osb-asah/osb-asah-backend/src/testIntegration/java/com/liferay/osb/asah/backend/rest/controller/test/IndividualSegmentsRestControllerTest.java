@@ -164,6 +164,21 @@ public class IndividualSegmentsRestControllerTest
 			"individuals");
 
 		Assertions.assertEquals(1, individualsJSONArray.length());
+
+		JSONObject individualJSONObject = individualsJSONArray.getJSONObject(0);
+
+		JSONArray dataSourceIndividualPKsJSONArray =
+			individualJSONObject.getJSONArray("dataSourceIndividualPKs");
+
+		Assertions.assertEquals(1, dataSourceIndividualPKsJSONArray.length());
+
+		JSONObject dataSourceIndividualPKJSONObject =
+			dataSourceIndividualPKsJSONArray.getJSONObject(0);
+
+		JSONArray individualPKsJSONArray =
+			dataSourceIndividualPKJSONObject.getJSONArray("individualPKs");
+
+		Assertions.assertEquals(2, individualPKsJSONArray.length());
 	}
 
 	@BQSQLResource(resourcePath = "test_get_individuals_bq.sql")
