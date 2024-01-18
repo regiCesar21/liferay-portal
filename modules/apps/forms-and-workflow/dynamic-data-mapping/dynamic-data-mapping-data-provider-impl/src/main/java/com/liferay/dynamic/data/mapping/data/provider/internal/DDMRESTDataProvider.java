@@ -8,30 +8,56 @@ package com.liferay.dynamic.data.mapping.data.provider.internal;
 import com.liferay.dynamic.data.mapping.data.provider.DDMDataProvider;
 import com.liferay.dynamic.data.mapping.data.provider.DDMDataProviderContext;
 import com.liferay.dynamic.data.mapping.data.provider.DDMDataProviderException;
+import com.liferay.dynamic.data.mapping.data.provider.configuration.DDMDataProviderConfiguration;
+import com.liferay.petra.json.web.service.client.JSONWebServiceClient;
+import com.liferay.petra.json.web.service.client.JSONWebServiceClientFactory;
+import com.liferay.petra.json.web.service.client.JSONWebServiceException;
+import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.cache.MultiVMPool;
 import com.liferay.portal.kernel.cache.PortalCache;
-import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.HashMapBuilder;
+import com.liferay.portal.kernel.util.Http;
 import com.liferay.portal.kernel.util.KeyValuePair;
+import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.SystemProperties;
 import com.liferay.portal.kernel.util.Validator;
 
+import java.io.ByteArrayInputStream;
 import java.io.Serializable;
 
+import java.net.URI;
+
+import java.nio.charset.StandardCharsets;
+
+import java.security.KeyStore;
+
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
-import jodd.http.HttpRequest;
-import jodd.http.HttpResponse;
+import org.apache.commons.io.IOUtils;
+import org.apache.commons.io.input.BOMInputStream;
 
+import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Modified;
 import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Marcellus Tavares
  */
-@Component(immediate = true, property = "ddm.data.provider.type=rest")
+@Component(
+	configurationPid = "com.liferay.dynamic.data.mapping.data.provider.configuration.DDMDataProviderConfiguration",
+	immediate = true, property = "ddm.data.provider.type=rest"
+)
 public class DDMRESTDataProvider implements DDMDataProvider {
 
 	@Override
@@ -40,10 +66,29 @@ public class DDMRESTDataProvider implements DDMDataProvider {
 		throws DDMDataProviderException {
 
 		try {
-			return doGetData(ddmDataProviderContext);
+			try {
+				return _getData(ddmDataProviderContext);
+			}
+			catch (JSONWebServiceException jsonWebServiceException) {
+				if (_log.isDebugEnabled()) {
+					_log.debug(
+						jsonWebServiceException, jsonWebServiceException);
+				}
+				else if (_log.isWarnEnabled()) {
+					_log.warn(
+						"The data provider was not able to connect to the " +
+							"web service. " + jsonWebServiceException);
+				}
+			}
+
+			return Collections.emptyList();
 		}
-		catch (PortalException pe) {
-			throw new DDMDataProviderException(pe);
+		catch (Exception exception) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(exception, exception);
+			}
+
+			throw new DDMDataProviderException(exception);
 		}
 	}
 
@@ -52,29 +97,25 @@ public class DDMRESTDataProvider implements DDMDataProvider {
 		return DDMRESTDataProviderSettings.class;
 	}
 
-	protected List<KeyValuePair> doGetData(
+	@Activate
+	@Modified
+	protected void activate(Map<String, Object> properties) {
+		_ddmDataProviderConfiguration = ConfigurableUtil.createConfigurable(
+			DDMDataProviderConfiguration.class, properties);
+	}
+
+	private List<KeyValuePair> _getData(
 			DDMDataProviderContext ddmDataProviderContext)
-		throws PortalException {
+		throws Exception {
 
 		DDMRESTDataProviderSettings ddmRESTDataProviderSettings =
 			ddmDataProviderContext.getSettingsInstance(
 				DDMRESTDataProviderSettings.class);
 
-		HttpRequest httpRequest = HttpRequest.get(
-			ddmRESTDataProviderSettings.url());
-
-		if (Validator.isNotNull(ddmRESTDataProviderSettings.username())) {
-			httpRequest.basicAuthentication(
-				ddmRESTDataProviderSettings.username(),
-				ddmRESTDataProviderSettings.password());
-		}
-
-		httpRequest.query(ddmDataProviderContext.getParameters());
-
-		String cacheKey = getCacheKey(httpRequest);
+		String url = ddmRESTDataProviderSettings.url();
 
 		DDMRESTDataProviderResult ddmRESTDataProviderResult = _portalCache.get(
-			cacheKey);
+			url);
 
 		if ((ddmRESTDataProviderResult != null) &&
 			ddmRESTDataProviderSettings.cacheable()) {
@@ -82,61 +123,135 @@ public class DDMRESTDataProvider implements DDMDataProvider {
 			return ddmRESTDataProviderResult.getKeyValuePairs();
 		}
 
-		HttpResponse httpResponse = httpRequest.send();
+		URI uri = new URI(url);
 
-		httpResponse.charset("UTF-8");
+		JSONWebServiceClient jsonWebServiceClient =
+			_jsonWebServiceClientFactory.getInstance(
+				HashMapBuilder.<String, Object>put(
+					"hostName",
+					() -> {
+						String host = uri.getHost();
 
-		String responseBodyText = _removeUTFBOM(httpResponse.bodyText());
+						if (StringUtil.startsWith(host, "www.")) {
+							return host.substring(4);
+						}
 
-		JSONArray jsonArray = _jsonFactory.createJSONArray(responseBodyText);
+						return host;
+					}
+				).put(
+					"hostPort",
+					() -> {
+						int port = uri.getPort();
+
+						if (port != -1) {
+							return port;
+						}
+
+						if (StringUtil.equals(uri.getScheme(), Http.HTTPS)) {
+							return Http.HTTPS_PORT;
+						}
+
+						return Http.HTTP_PORT;
+					}
+				).put(
+					"keyStore",
+					() -> {
+						KeyStore keyStore = KeyStore.getInstance(
+							KeyStore.getDefaultType());
+
+						keyStore.load(null);
+
+						return keyStore;
+					}
+				).put(
+					"login", ddmRESTDataProviderSettings.username()
+				).put(
+					"password", ddmRESTDataProviderSettings.password()
+				).put(
+					"protocol", uri.getScheme()
+				).put(
+					"trustSelfSignedCertificates",
+					_ddmDataProviderConfiguration.trustSelfSignedCertificates()
+				).putAll(
+					_getProxySettingsMap()
+				).build(),
+				false);
+
+		String response = jsonWebServiceClient.doGet(url);
+
+		JSONArray jsonArray = _jsonFactory.createJSONArray(
+			IOUtils.toString(
+				new BOMInputStream(
+					new ByteArrayInputStream(response.getBytes())),
+				StandardCharsets.UTF_8));
 
 		List<KeyValuePair> results = new ArrayList<>();
 
 		for (int i = 0; i < jsonArray.length(); i++) {
 			JSONObject jsonObject = jsonArray.getJSONObject(i);
 
-			String key = jsonObject.getString(
-				ddmRESTDataProviderSettings.key());
-			String value = jsonObject.getString(
-				ddmRESTDataProviderSettings.value());
-
-			results.add(new KeyValuePair(key, value));
+			results.add(
+				new KeyValuePair(
+					jsonObject.getString(ddmRESTDataProviderSettings.key()),
+					jsonObject.getString(ddmRESTDataProviderSettings.value())));
 		}
 
 		if (ddmRESTDataProviderSettings.cacheable()) {
-			_portalCache.put(cacheKey, new DDMRESTDataProviderResult(results));
+			_portalCache.put(url, new DDMRESTDataProviderResult(results));
 		}
 
 		return results;
 	}
 
-	protected String getCacheKey(HttpRequest httpRequest) {
-		return httpRequest.url();
+	private Map<String, Object> _getProxySettingsMap() {
+		Map<String, Object> proxySettingsMap = new HashMap<>();
+
+		try {
+			String proxyHost = SystemProperties.get("http.proxyHost");
+			String proxyPort = SystemProperties.get("http.proxyPort");
+
+			if (Validator.isNotNull(proxyHost) &&
+				Validator.isNotNull(proxyPort)) {
+
+				proxySettingsMap.put("proxyHostName", proxyHost);
+				proxySettingsMap.put(
+					"proxyHostPort", GetterUtil.getInteger(proxyPort));
+			}
+		}
+		catch (Exception exception) {
+			proxySettingsMap.clear();
+
+			if (_log.isWarnEnabled()) {
+				_log.warn(
+					"Unable to get proxy settings from system properties",
+					exception);
+			}
+		}
+
+		return proxySettingsMap;
 	}
 
 	@Reference(unbind = "-")
-	protected void setJSONFactory(JSONFactory jsonFactory) {
+	private void _setJSONFactory(JSONFactory jsonFactory) {
 		_jsonFactory = jsonFactory;
 	}
 
 	@Reference(unbind = "-")
-	protected void setMultiVMPool(MultiVMPool multiVMPool) {
+	private void _setMultiVMPool(MultiVMPool multiVMPool) {
 		_portalCache =
 			(PortalCache<String, DDMRESTDataProviderResult>)
 				multiVMPool.getPortalCache(DDMRESTDataProvider.class.getName());
 	}
 
-	private String _removeUTFBOM(String bodyText) {
-		for (int i = 0; i < bodyText.length(); i++) {
-			if ((bodyText.charAt(i) == '[') || (bodyText.charAt(i) == '{')) {
-				return bodyText.substring(i);
-			}
-		}
+	private static final Log _log = LogFactoryUtil.getLog(
+		DDMRESTDataProvider.class);
 
-		return "";
-	}
-
+	private volatile DDMDataProviderConfiguration _ddmDataProviderConfiguration;
 	private JSONFactory _jsonFactory;
+
+	@Reference
+	private JSONWebServiceClientFactory _jsonWebServiceClientFactory;
+
 	private PortalCache<String, DDMRESTDataProviderResult> _portalCache;
 
 	private static class DDMRESTDataProviderResult implements Serializable {
