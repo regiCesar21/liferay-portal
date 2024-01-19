@@ -5,6 +5,7 @@
 
 package com.liferay.shopping.web.internal.portlet.action;
 
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
@@ -160,6 +161,13 @@ public class EditItemMVCActionCommand extends BaseMVCActionCommand {
 				uploadPortletRequest, "fieldValues" + i);
 			String fieldDescription = ParamUtil.getString(
 				uploadPortletRequest, "fieldDescription" + i);
+
+			if (fieldName.equals(StringPool.BLANK) &&
+				fieldValues.equals(StringPool.BLANK) &&
+				fieldDescription.equals(StringPool.BLANK)) {
+
+				continue;
+			}
 
 			ShoppingItemField itemField = ShoppingItemFieldUtil.create(0);
 
