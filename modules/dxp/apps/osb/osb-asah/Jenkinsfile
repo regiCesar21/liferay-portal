@@ -42,6 +42,20 @@ pipeline {
 						}
 					}
 				}
+
+				stage('osb-asah-publisher') {
+					steps {
+						dir('osb-asah-publisher') {
+							script {
+								withDockerRegistry([credentialsId: "dockerhub", url: ""]) {
+									osbAsahPublisherImage = docker.build("${IMAGE_NAME}:osb-asah-publisher-${IMAGE_TAG_SUFFIX}", '--no-cache -f ./Dockerfile ./')
+
+									osbAsahPublisherImage.push()
+								}
+							}
+						}
+					}
+				}
 			}
 		}
 	}
