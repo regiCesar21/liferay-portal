@@ -56,6 +56,20 @@ pipeline {
 						}
 					}
 				}
+
+				stage('osb-asah-stream-curator') {
+					steps {
+						dir('osb-asah-stream-curator') {
+							script {
+								withDockerRegistry([credentialsId: "dockerhub", url: ""]) {
+									osbAsahStreamCuratorImage = docker.build("${IMAGE_NAME}:osb-asah-stream-curator-${IMAGE_TAG_SUFFIX}", '--no-cache -f ./Dockerfile ./')
+
+									osbAsahStreamCuratorImage.push()
+								}
+							}
+						}
+					}
+				}
 			}
 		}
 	}
