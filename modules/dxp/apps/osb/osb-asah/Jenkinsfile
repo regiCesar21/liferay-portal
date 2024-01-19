@@ -1,0 +1,34 @@
+pipeline {
+	agent any
+
+	environment {
+		IMAGE_NAME = "liferaycloud/com-liferay-osb-asah-private"
+		IMAGE_TAG_SUFFIX = "${sh(script: 'date +%Y%m%d', returnStdout: true).trim()}-${sh(script: 'git rev-parse --short ${GIT_COMMIT}', returnStdout: true).trim()}"
+	}
+
+	stages {
+		stage('Build') {
+			steps {
+				sh './gradlew clean assemble'
+			}
+		}
+
+		stage('Build Docker Images') {
+			parallel {
+				stage('osb-asah-backend') {
+					steps {
+						dir('osb-asah-backend') {
+							script {
+								withDockerRegistry([credentialsId: "dockerhub", url: ""]) {
+									osbAsahBackendImage = docker.build("${IMAGE_NAME}:osb-asah-backend-${IMAGE_TAG_SUFFIX}", '--no-cache -f ./Dockerfile ./')
+
+	                                osbAsahBackendImage.push()
+	                            }
+							}
+						}
+					}
+				}
+			}
+		}
+	}
+}
