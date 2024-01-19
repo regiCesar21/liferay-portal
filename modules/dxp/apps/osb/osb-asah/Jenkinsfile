@@ -28,6 +28,20 @@ pipeline {
 						}
 					}
 				}
+
+				stage('osb-asah-batch-curator') {
+					steps {
+						dir('osb-asah-batch-curator') {
+							script {
+								withDockerRegistry([credentialsId: "dockerhub", url: ""]) {
+									osbAsahBatchCuratorImage = docker.build("${IMAGE_NAME}:osb-asah-batch-curator-${IMAGE_TAG_SUFFIX}", '--no-cache -f ./Dockerfile ./')
+
+									osbAsahBatchCuratorImage.push()
+								}
+							}
+						}
+					}
+				}
 			}
 		}
 	}
