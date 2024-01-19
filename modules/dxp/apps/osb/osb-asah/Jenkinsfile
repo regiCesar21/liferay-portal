@@ -3,7 +3,7 @@ pipeline {
 
 	environment {
 		IMAGE_NAME = "liferaycloud/com-liferay-osb-asah-private"
-		IMAGE_TAG_SUFFIX = "${sh(script: 'date +%Y%m%d', returnStdout: true).trim()}-${sh(script: 'git rev-parse --short ${GIT_COMMIT}', returnStdout: true).trim()}"
+		IMAGE_TAG_SUFFIX = "${sh(script: 'date +%Y%m%d', returnStdout: true).trim()}-${sh(script: 'git rev-parse --short=7 ${GIT_COMMIT}', returnStdout: true).trim()}"
 	}
 
 	stages {
