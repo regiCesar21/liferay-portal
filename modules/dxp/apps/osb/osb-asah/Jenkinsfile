@@ -70,6 +70,20 @@ pipeline {
 						}
 					}
 				}
+
+				stage('osb-asah-upgrade') {
+					steps {
+						dir('osb-asah-upgrade') {
+							script {
+								withDockerRegistry([credentialsId: "dockerhub", url: ""]) {
+									osbAsahUpgradeImage = docker.build("${IMAGE_NAME}:osb-asah-upgrade-${IMAGE_TAG_SUFFIX}", '--no-cache -f ./Dockerfile ./')
+
+									osbAsahUpgradeImage.push()
+								}
+							}
+						}
+					}
+				}
 			}
 		}
 	}
