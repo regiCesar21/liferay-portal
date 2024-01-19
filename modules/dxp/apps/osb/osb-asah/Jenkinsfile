@@ -14,73 +14,53 @@ pipeline {
 		}
 
 		stage('Build Docker Images') {
-			parallel {
-				stage('osb-asah-backend') {
-					steps {
-						dir('osb-asah-backend') {
-							script {
-								withDockerRegistry([credentialsId: "dockerhub", url: ""]) {
-									osbAsahBackendImage = docker.build("${IMAGE_NAME}:osb-asah-backend-${IMAGE_TAG_SUFFIX}", '--no-cache -f ./Dockerfile ./')
+			steps {
+				dir('osb-asah-backend') {
+					script {
+						withDockerRegistry([credentialsId: "dockerhub", url: ""]) {
+							osbAsahBackendImage = docker.build("${IMAGE_NAME}:osb-asah-backend-${IMAGE_TAG_SUFFIX}", '--no-cache -f ./Dockerfile ./')
 
-	                                osbAsahBackendImage.push()
-	                            }
-							}
+                            osbAsahBackendImage.push()
+                        }
+					}
+				}
+
+				dir('osb-asah-batch-curator') {
+					script {
+						withDockerRegistry([credentialsId: "dockerhub", url: ""]) {
+							osbAsahBatchCuratorImage = docker.build("${IMAGE_NAME}:osb-asah-batch-curator-${IMAGE_TAG_SUFFIX}", '--no-cache -f ./Dockerfile ./')
+
+							osbAsahBatchCuratorImage.push()
 						}
 					}
 				}
 
-				stage('osb-asah-batch-curator') {
-					steps {
-						dir('osb-asah-batch-curator') {
-							script {
-								withDockerRegistry([credentialsId: "dockerhub", url: ""]) {
-									osbAsahBatchCuratorImage = docker.build("${IMAGE_NAME}:osb-asah-batch-curator-${IMAGE_TAG_SUFFIX}", '--no-cache -f ./Dockerfile ./')
+				dir('osb-asah-publisher') {
+					script {
+						withDockerRegistry([credentialsId: "dockerhub", url: ""]) {
+							osbAsahPublisherImage = docker.build("${IMAGE_NAME}:osb-asah-publisher-${IMAGE_TAG_SUFFIX}", '--no-cache -f ./Dockerfile ./')
 
-									osbAsahBatchCuratorImage.push()
-								}
-							}
+							osbAsahPublisherImage.push()
 						}
 					}
 				}
 
-				stage('osb-asah-publisher') {
-					steps {
-						dir('osb-asah-publisher') {
-							script {
-								withDockerRegistry([credentialsId: "dockerhub", url: ""]) {
-									osbAsahPublisherImage = docker.build("${IMAGE_NAME}:osb-asah-publisher-${IMAGE_TAG_SUFFIX}", '--no-cache -f ./Dockerfile ./')
+				dir('osb-asah-stream-curator') {
+					script {
+						withDockerRegistry([credentialsId: "dockerhub", url: ""]) {
+							osbAsahStreamCuratorImage = docker.build("${IMAGE_NAME}:osb-asah-stream-curator-${IMAGE_TAG_SUFFIX}", '--no-cache -f ./Dockerfile ./')
 
-									osbAsahPublisherImage.push()
-								}
-							}
+							osbAsahStreamCuratorImage.push()
 						}
 					}
 				}
 
-				stage('osb-asah-stream-curator') {
-					steps {
-						dir('osb-asah-stream-curator') {
-							script {
-								withDockerRegistry([credentialsId: "dockerhub", url: ""]) {
-									osbAsahStreamCuratorImage = docker.build("${IMAGE_NAME}:osb-asah-stream-curator-${IMAGE_TAG_SUFFIX}", '--no-cache -f ./Dockerfile ./')
+				dir('osb-asah-upgrade') {
+					script {
+						withDockerRegistry([credentialsId: "dockerhub", url: ""]) {
+							osbAsahUpgradeImage = docker.build("${IMAGE_NAME}:osb-asah-upgrade-${IMAGE_TAG_SUFFIX}", '--no-cache -f ./Dockerfile ./')
 
-									osbAsahStreamCuratorImage.push()
-								}
-							}
-						}
-					}
-				}
-
-				stage('osb-asah-upgrade') {
-					steps {
-						dir('osb-asah-upgrade') {
-							script {
-								withDockerRegistry([credentialsId: "dockerhub", url: ""]) {
-									osbAsahUpgradeImage = docker.build("${IMAGE_NAME}:osb-asah-upgrade-${IMAGE_TAG_SUFFIX}", '--no-cache -f ./Dockerfile ./')
-
-									osbAsahUpgradeImage.push()
-								}
-							}
+							osbAsahUpgradeImage.push()
 						}
 					}
 				}
