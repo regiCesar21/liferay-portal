@@ -2,6 +2,7 @@ pipeline {
 	agent any
 
 	environment {
+		LABEL_BUILD_DATE = "${sh(script: 'date -u +%Y-%m-%dT%H:%M:%SZ', returnStdout: true).trim()}"
 		IMAGE_NAME = "liferaycloud/com-liferay-osb-asah-private"
 		IMAGE_TAG_SUFFIX = "${sh(script: 'date +%Y%m%d', returnStdout: true).trim()}-${sh(script: 'git rev-parse --short=7 ${GIT_COMMIT}', returnStdout: true).trim()}"
 	}
@@ -18,7 +19,9 @@ pipeline {
 				dir('osb-asah-backend') {
 					script {
 						withDockerRegistry([credentialsId: "dockerhub", url: ""]) {
-							osbAsahBackendImage = docker.build("${IMAGE_NAME}:osb-asah-backend-${IMAGE_TAG_SUFFIX}", '--no-cache -f ./Dockerfile ./')
+							osbAsahBackendImage = docker.build(
+								"${IMAGE_NAME}:osb-asah-backend-${IMAGE_TAG_SUFFIX}",
+								"--build-arg LABEL_BUILD_DATE=${LABEL_BUILD_DATE} --build-arg LABEL_VCS_REF=${GIT_COMMIT} --no-cache -f ./Dockerfile ./")
 
                             osbAsahBackendImage.push()
                         }
@@ -28,7 +31,9 @@ pipeline {
 				dir('osb-asah-batch-curator') {
 					script {
 						withDockerRegistry([credentialsId: "dockerhub", url: ""]) {
-							osbAsahBatchCuratorImage = docker.build("${IMAGE_NAME}:osb-asah-batch-curator-${IMAGE_TAG_SUFFIX}", '--no-cache -f ./Dockerfile ./')
+							osbAsahBatchCuratorImage = docker.build(
+								"${IMAGE_NAME}:osb-asah-batch-curator-${IMAGE_TAG_SUFFIX}",
+								 "--build-arg LABEL_BUILD_DATE=${LABEL_BUILD_DATE} --build-arg LABEL_VCS_REF=${GIT_COMMIT} --no-cache -f ./Dockerfile ./")
 
 							osbAsahBatchCuratorImage.push()
 						}
@@ -38,7 +43,9 @@ pipeline {
 				dir('osb-asah-publisher') {
 					script {
 						withDockerRegistry([credentialsId: "dockerhub", url: ""]) {
-							osbAsahPublisherImage = docker.build("${IMAGE_NAME}:osb-asah-publisher-${IMAGE_TAG_SUFFIX}", '--no-cache -f ./Dockerfile ./')
+							osbAsahPublisherImage = docker.build(
+								"${IMAGE_NAME}:osb-asah-publisher-${IMAGE_TAG_SUFFIX}",
+								"--build-arg LABEL_BUILD_DATE=${LABEL_BUILD_DATE} --build-arg LABEL_VCS_REF=${GIT_COMMIT} --no-cache -f ./Dockerfile ./")
 
 							osbAsahPublisherImage.push()
 						}
@@ -48,7 +55,9 @@ pipeline {
 				dir('osb-asah-stream-curator') {
 					script {
 						withDockerRegistry([credentialsId: "dockerhub", url: ""]) {
-							osbAsahStreamCuratorImage = docker.build("${IMAGE_NAME}:osb-asah-stream-curator-${IMAGE_TAG_SUFFIX}", '--no-cache -f ./Dockerfile ./')
+							osbAsahStreamCuratorImage = docker.build(
+								"${IMAGE_NAME}:osb-asah-stream-curator-${IMAGE_TAG_SUFFIX}", 
+								"--build-arg LABEL_BUILD_DATE=${LABEL_BUILD_DATE} --build-arg LABEL_VCS_REF=${GIT_COMMIT} --no-cache -f ./Dockerfile ./")
 
 							osbAsahStreamCuratorImage.push()
 						}
@@ -58,7 +67,9 @@ pipeline {
 				dir('osb-asah-upgrade') {
 					script {
 						withDockerRegistry([credentialsId: "dockerhub", url: ""]) {
-							osbAsahUpgradeImage = docker.build("${IMAGE_NAME}:osb-asah-upgrade-${IMAGE_TAG_SUFFIX}", '--no-cache -f ./Dockerfile ./')
+							osbAsahUpgradeImage = docker.build(
+								"${IMAGE_NAME}:osb-asah-upgrade-${IMAGE_TAG_SUFFIX}",
+								"--build-arg LABEL_BUILD_DATE=${LABEL_BUILD_DATE} --build-arg LABEL_VCS_REF=${GIT_COMMIT} --no-cache -f ./Dockerfile ./")
 
 							osbAsahUpgradeImage.push()
 						}
