@@ -72,7 +72,7 @@ if (product != null) {
 			</aui:select>
 
 			<%
-			String dossieraIdMapping = StringPool.BLANK;
+			String salesforceIdMapping = StringPool.BLANK;
 
 			if (product != null) {
 				ExternalLink[] externalLinks = product.getExternalLinks();
@@ -82,15 +82,15 @@ if (product != null) {
 						String domain = externalLink.getDomain();
 						String entityName = externalLink.getEntityName();
 
-						if (domain.equals(ExternalLinkDomain.DOSSIERA) && entityName.equals(ExternalLinkEntityName.DOSSIERA_PRODUCT)) {
-							dossieraIdMapping = externalLink.getEntityId();
+						if (domain.equals(ExternalLinkDomain.SALESFORCE) && entityName.equals(ExternalLinkEntityName.SALESFORCE_PRODUCT)) {
+							salesforceIdMapping = externalLink.getEntityId();
 						}
 					}
 				}
 			}
 			%>
 
-			<aui:input inlineLabel="left" name="dossieraIdMapping" value="<%= dossieraIdMapping %>" />
+			<aui:input inlineLabel="left" name="salesforceIdMapping" value="<%= salesforceIdMapping %>" />
 
 			<aui:button-row>
 				<aui:button type="submit" />

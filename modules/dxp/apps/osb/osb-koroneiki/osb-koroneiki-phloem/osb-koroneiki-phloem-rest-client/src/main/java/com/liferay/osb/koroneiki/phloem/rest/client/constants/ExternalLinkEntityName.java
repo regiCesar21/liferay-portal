@@ -12,12 +12,6 @@ public class ExternalLinkEntityName {
 
 	public static final String ANALYTICS_CLOUD_GROUP = "group";
 
-	public static final String DOSSIERA_ACCOUNT = "account";
-
-	public static final String DOSSIERA_PRODUCT = "product";
-
-	public static final String DOSSIERA_PROJECT = "project";
-
 	public static final String DXP_CLOUD_PROJECT = "project";
 
 	public static final String JIRA_PROJECT = "project";
@@ -34,6 +28,8 @@ public class ExternalLinkEntityName {
 	public static final String SALESFORCE_ACCOUNT = "account";
 
 	public static final String SALESFORCE_OPPORTUNITY = "opportunity";
+
+	public static final String SALESFORCE_PRODUCT = "salesforce-product";
 
 	public static final String SALESFORCE_PROJECT = "project";
 

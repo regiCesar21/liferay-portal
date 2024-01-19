@@ -111,7 +111,7 @@ public class EditProductMVCActionCommand extends BaseMVCActionCommand {
 		}
 	}
 
-	protected void updateDossieraMapping(
+	protected void updateSalesforceMapping(
 			User user, String productKey, ExternalLink externalLink)
 		throws Exception {
 
@@ -124,9 +124,9 @@ public class EditProductMVCActionCommand extends BaseMVCActionCommand {
 				String domain = curExternalLink.getDomain();
 				String entityName = curExternalLink.getEntityName();
 
-				if (domain.equals(ExternalLinkDomain.DOSSIERA) &&
+				if (domain.equals(ExternalLinkDomain.SALESFORCE) &&
 					entityName.equals(
-						ExternalLinkEntityName.DOSSIERA_PRODUCT)) {
+						ExternalLinkEntityName.SALESFORCE_PRODUCT)) {
 
 					if (externalLink == null) {
 						_externalLinkWebService.deleteExternalLink(
@@ -157,8 +157,8 @@ public class EditProductMVCActionCommand extends BaseMVCActionCommand {
 
 		String name = ParamUtil.getString(actionRequest, "name");
 		String type = ParamUtil.getString(actionRequest, "type");
-		String dossieraIdMapping = ParamUtil.getString(
-			actionRequest, "dossieraIdMapping");
+		String salesforceIdMapping = ParamUtil.getString(
+			actionRequest, "salesforceIdMapping");
 
 		Product product = new Product();
 
@@ -172,12 +172,13 @@ public class EditProductMVCActionCommand extends BaseMVCActionCommand {
 
 		ExternalLink externalLink = null;
 
-		if (Validator.isNotNull(dossieraIdMapping)) {
+		if (Validator.isNotNull(salesforceIdMapping)) {
 			externalLink = new ExternalLink();
 
-			externalLink.setDomain(ExternalLinkDomain.DOSSIERA);
-			externalLink.setEntityId(dossieraIdMapping);
-			externalLink.setEntityName(ExternalLinkEntityName.DOSSIERA_PRODUCT);
+			externalLink.setDomain(ExternalLinkDomain.SALESFORCE);
+			externalLink.setEntityId(salesforceIdMapping);
+			externalLink.setEntityName(
+				ExternalLinkEntityName.SALESFORCE_PRODUCT);
 
 			product.setExternalLinks(new ExternalLink[] {externalLink});
 		}
@@ -185,13 +186,11 @@ public class EditProductMVCActionCommand extends BaseMVCActionCommand {
 		product.setProperties(properties);
 
 		if (Validator.isNull(productKey)) {
-			product = _productWebService.addProduct(
+			_productWebService.addProduct(
 				user.getFullName(), user.getUuid(), product);
-
-			productKey = product.getKey();
 		}
 		else {
-			updateDossieraMapping(user, productKey, externalLink);
+			updateSalesforceMapping(user, productKey, externalLink);
 
 			_productWebService.updateProduct(
 				user.getFullName(), user.getUuid(), productKey, product);

@@ -2602,8 +2602,8 @@ public class OpportunityMessageSubscriber extends BaseMessageSubscriber {
 
 	private Product _getProduct(String productName) throws Exception {
 		List<Product> products = _productWebService.getProducts(
-			ExternalLinkDomain.DOSSIERA,
-			ExternalLinkEntityName.DOSSIERA_PRODUCT, productName, 1, 1);
+			ExternalLinkDomain.SALESFORCE,
+			ExternalLinkEntityName.SALESFORCE_PRODUCT, productName, 1, 1);
 
 		if (!products.isEmpty()) {
 			return products.get(0);

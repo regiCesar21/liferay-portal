@@ -33,9 +33,7 @@ import org.osgi.service.component.annotations.Reference;
 @Component(service = UpgradeSalesforceExternalLinks.class)
 public class UpgradeSalesforceExternalLinks extends UpgradeProcess {
 
-	public void upgradeRelatedSalesforceProjectExternalLinks()
-		throws Exception {
-
+	public void upgradeRelatedSalesforceProjectExternalLinks() {
 		try {
 			FilterQuery filterQuery = new FilterQuery();
 
@@ -115,8 +113,7 @@ public class UpgradeSalesforceExternalLinks extends UpgradeProcess {
 	}
 
 	public void upgradeSalesforceExternalLinks(
-			Map<String, String> accountKeySalesforceKey, String entityName)
-		throws Exception {
+		Map<String, String> accountKeySalesforceKey, String entityName) {
 
 		try {
 			for (Map.Entry<String, String> entry :
