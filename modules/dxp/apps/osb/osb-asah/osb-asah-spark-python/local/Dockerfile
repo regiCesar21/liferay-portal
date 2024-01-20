@@ -1,8 +1,8 @@
 FROM java:openjdk-8-jdk
 
-COPY ./build/libs/*.py /opt
-COPY ./docker-resources/ /opt
-COPY ./src/main/resources/*.yaml /opt
+COPY ../build/libs/*.py /opt
+COPY ../docker-resources/ /opt
+COPY ../src/main/resources/*.yaml /opt
 
 ENTRYPOINT ["/bin/bash", "entrypoint.sh"]
 
