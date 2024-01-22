@@ -1,26 +1,11 @@
 #!/bin/bash
 
-export PROJECT_ID=$(gcloud config get-value project)
-export REGION=$(gcloud config get-value compute/region)
+if [ -z "$GIT_HASH" ] || [ -z "$PROJECT_ID" ] || [ -z "$REGION" ]
+then
+		echo "Set the environment set variables \"GIT_HASH\", \"PROJECT_ID\", and \"REGION.\"";
 
-CURRENT_DATE=$(date)
-GCP_BUCKET=gs://${PROJECT_ID}-dataproc-${REGION}
-GIT_HASH=$(git rev-parse --short=7 HEAD)
-
-function check_osb_asah_spark {
-	gradlew formatSource
-
-	if [ -n "$(git status . --porcelain -uno)" ]
-	then
-		echo "There are source formatter changes. Please fix them and try again.";
-
-		exit
-	fi
-}
-
-function compile_osb_asah_spark {
-	gradlew clean assemble
-}
+		exit 1
+fi
 
 function date {
 	export LC_ALL=en_US.UTF-8
@@ -58,36 +43,6 @@ function gradlew {
 	fi
 }
 
-function main {
-	check_osb_asah_spark
-
-	compile_osb_asah_spark
-
-	push_to_gcp
-}
-
-function push_to_gcp {
-	echo ""
-	echo "Pushing osb-asah-spark-python-driver.py to ${GCP_BUCKET}."
-	echo ""
-
-	gsutil -h x-goog-meta-git-hash:${GIT_HASH} cp build/libs/osb-asah-spark-python-driver.py ${GCP_BUCKET}
-
-	echo ""
-	echo "Pushing osb-asah-spark-python.zip to ${GCP_BUCKET}."
-	echo ""
-
-	gsutil -h x-goog-meta-git-hash:${GIT_HASH} cp build/libs/osb-asah-spark-python.zip ${GCP_BUCKET}
-
-	replace_yaml_files_env_variables
-
-	echo ""
-	echo "Pushing resources to ${GCP_BUCKET}/resources."
-	echo ""
-
-	gsutil -h x-goog-meta-git-hash:${GIT_HASH} cp build/resources/main/*.* ${GCP_BUCKET}/resources/
-}
-
 function replace_yaml_files_env_variables {
 	local resources_build="build/resources/main"
 	local resources_src="src/main/resources"
@@ -100,4 +55,22 @@ function replace_yaml_files_env_variables {
 	done
 }
 
-main
+echo ""
+echo "Pushing osb-asah-spark-python-driver.py to ${GCP_BUCKET}."
+echo ""
+
+gsutil -h x-goog-meta-git-hash:${GIT_HASH} cp build/libs/osb-asah-spark-python-driver.py ${GCP_BUCKET}
+
+echo ""
+echo "Pushing osb-asah-spark-python.zip to ${GCP_BUCKET}."
+echo ""
+
+gsutil -h x-goog-meta-git-hash:${GIT_HASH} cp build/libs/osb-asah-spark-python.zip ${GCP_BUCKET}
+
+replace_yaml_files_env_variables
+
+echo ""
+echo "Pushing resources to ${GCP_BUCKET}/resources."
+echo ""
+
+gsutil -h x-goog-meta-git-hash:${GIT_HASH} cp build/resources/main/*.* ${GCP_BUCKET}/resources/
