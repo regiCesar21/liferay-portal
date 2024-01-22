@@ -71,13 +71,13 @@ public class CommerceUpgradeStepRegistrator implements UpgradeStepRegistrator {
 
 		registry.register(
 			_SCHEMA_VERSION_2_0_0, _SCHEMA_VERSION_2_1_0,
+			new CPDAvailabilityEstimateUpgradeProcess(
+				_cpDefinitionLocalService),
 			new com.liferay.commerce.internal.upgrade.v2_1_0.
 				CommerceOrderItemUpgradeProcess(
 					_cpDefinitionLocalService, _cpInstanceLocalService),
 			new CommerceSubscriptionEntryUpgradeProcess(
-				_cpDefinitionLocalService, _cpInstanceLocalService),
-			new CPDAvailabilityEstimateUpgradeProcess(
-				_cpDefinitionLocalService));
+				_cpDefinitionLocalService, _cpInstanceLocalService));
 
 		registry.register(
 			_SCHEMA_VERSION_2_1_0, _SCHEMA_VERSION_2_2_0,
@@ -103,14 +103,14 @@ public class CommerceUpgradeStepRegistrator implements UpgradeStepRegistrator {
 		registry.register(
 			_SCHEMA_VERSION_3_1_0, _SCHEMA_VERSION_3_2_0,
 			new com.liferay.commerce.internal.upgrade.v3_2_0.
-				CommerceOrderUpgradeProcess(),
-			new com.liferay.commerce.internal.upgrade.v3_2_0.
-				CommerceOrderItemUpgradeProcess(),
+				CPDAvailabilityEstimateUpgradeProcess(),
 			new CommerceAvailabilityEstimateUpgradeProcess(),
 			new CommerceCountryUpgradeProcess(),
-			new CommerceRegionUpgradeProcess(),
 			new com.liferay.commerce.internal.upgrade.v3_2_0.
-				CPDAvailabilityEstimateUpgradeProcess());
+				CommerceOrderItemUpgradeProcess(),
+			new com.liferay.commerce.internal.upgrade.v3_2_0.
+				CommerceOrderUpgradeProcess(),
+			new CommerceRegionUpgradeProcess());
 
 		registry.register(
 			_SCHEMA_VERSION_3_2_0, _SCHEMA_VERSION_4_0_0,
@@ -122,9 +122,9 @@ public class CommerceUpgradeStepRegistrator implements UpgradeStepRegistrator {
 			_SCHEMA_VERSION_4_0_0, _SCHEMA_VERSION_4_1_0,
 			new CommerceAddressUpgradeProcess(_classNameLocalService),
 			new com.liferay.commerce.internal.upgrade.v4_1_0.
-				CommerceOrderItemUpgradeProcess(),
+				CommerceCountryUpgradeProcess(),
 			new com.liferay.commerce.internal.upgrade.v4_1_0.
-				CommerceCountryUpgradeProcess());
+				CommerceOrderItemUpgradeProcess());
 
 		registry.register(
 			_SCHEMA_VERSION_4_1_0, _SCHEMA_VERSION_4_1_1,
