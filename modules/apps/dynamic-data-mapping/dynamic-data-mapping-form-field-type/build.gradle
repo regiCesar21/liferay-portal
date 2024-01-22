@@ -35,6 +35,7 @@ dependencies {
 	testImplementation project(":apps:journal:journal-api")
 	testImplementation project(":apps:portal-search:portal-search-test-util")
 	testImplementation project(":apps:portal-template:portal-template-soy-impl")
+	testImplementation project(":core:registry-api")
 }
 
 processResources {
