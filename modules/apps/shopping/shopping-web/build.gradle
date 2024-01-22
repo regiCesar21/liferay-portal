@@ -15,4 +15,5 @@ dependencies {
 	compileOnly project(":apps:shopping:shopping-service")
 	compileOnly project(":apps:web-experience:application-list:application-list-api")
 	compileOnly project(":core:petra:petra-lang")
+	compileOnly project(":core:petra:petra-string")
 }
