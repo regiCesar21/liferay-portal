@@ -309,8 +309,8 @@ public class AccountEntryServiceImpl extends AccountEntryServiceBaseImpl {
 
 			accountEntry.setDossieraAccountKey(
 				getExternalLinkEntityId(
-					parentAccount, ExternalLinkDomain.DOSSIERA,
-					ExternalLinkEntityName.DOSSIERA_ACCOUNT));
+					parentAccount, ExternalLinkDomain.SALESFORCE,
+					ExternalLinkEntityName.SALESFORCE_ACCOUNT));
 			accountEntry.setCorpEntryName(parentAccount.getName());
 		}
 

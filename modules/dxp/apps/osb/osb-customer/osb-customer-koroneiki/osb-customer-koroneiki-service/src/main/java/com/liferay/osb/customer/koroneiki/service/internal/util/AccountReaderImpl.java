@@ -83,11 +83,11 @@ public class AccountReaderImpl implements AccountReader {
 			for (ExternalLink externalLink : externalLinks) {
 				String domain = externalLink.getDomain();
 
-				if (domain.equals(ExternalLinkDomain.DOSSIERA)) {
+				if (domain.equals(ExternalLinkDomain.SALESFORCE)) {
 					String entityName = externalLink.getEntityName();
 
 					if (entityName.equals(
-							ExternalLinkEntityName.DOSSIERA_ACCOUNT)) {
+							ExternalLinkEntityName.SALESFORCE_ACCOUNT)) {
 
 						return externalLink.getEntityId();
 					}
