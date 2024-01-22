@@ -70,9 +70,9 @@ public class CommerceProductUpgradeStepRegistrator
 			"1.2.0", "1.3.0", new CPAttachmentFileEntryUpgradeProcess(),
 			new CPDefinitionLinkUpgradeProcess(),
 			new CPDefinitionOptionRelUpgradeProcess(),
-			new CPDefinitionUpgradeProcess(), new CProductUpgradeProcess(),
+			new CPDefinitionUpgradeProcess(),
 			new CPFriendlyURLEntryUpgradeProcess(_classNameLocalService),
-			new CPInstanceUpgradeProcess());
+			new CPInstanceUpgradeProcess(), new CProductUpgradeProcess());
 
 		registry.register(
 			"1.3.0", "1.4.0",
