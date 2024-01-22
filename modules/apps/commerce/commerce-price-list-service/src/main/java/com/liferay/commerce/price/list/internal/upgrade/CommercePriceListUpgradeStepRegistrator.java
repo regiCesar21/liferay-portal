@@ -59,12 +59,12 @@ public class CommercePriceListUpgradeStepRegistrator
 			_SCHEMA_VERSION_2_0_0, _SCHEMA_VERSION_2_1_0,
 			new com.liferay.commerce.price.list.internal.upgrade.v2_1_0.
 				CommercePriceEntryUpgradeProcess(),
+			new CommercePriceListChannelRelUpgradeProcess(),
+			new CommercePriceListDiscountRelUpgradeProcess(),
 			new com.liferay.commerce.price.list.internal.upgrade.v2_1_0.
 				CommercePriceListUpgradeProcess(),
 			new com.liferay.commerce.price.list.internal.upgrade.v2_1_0.
-				CommerceTierPriceEntryUpgradeProcess(),
-			new CommercePriceListChannelRelUpgradeProcess(),
-			new CommercePriceListDiscountRelUpgradeProcess());
+				CommerceTierPriceEntryUpgradeProcess());
 
 		registry.register(
 			_SCHEMA_VERSION_2_1_0, _SCHEMA_VERSION_2_1_1,

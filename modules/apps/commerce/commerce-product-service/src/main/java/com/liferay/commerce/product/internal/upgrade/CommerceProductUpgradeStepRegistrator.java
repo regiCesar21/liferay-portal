@@ -71,9 +71,9 @@ public class CommerceProductUpgradeStepRegistrator
 			new CPAttachmentFileEntryUpgradeProcess(),
 			new CPDefinitionLinkUpgradeProcess(),
 			new CPDefinitionOptionRelUpgradeProcess(),
-			new CPDefinitionUpgradeProcess(), new CProductUpgradeProcess(),
+			new CPDefinitionUpgradeProcess(),
 			new CPFriendlyURLEntryUpgradeProcess(_classNameLocalService),
-			new CPInstanceUpgradeProcess());
+			new CPInstanceUpgradeProcess(), new CProductUpgradeProcess());
 
 		registry.register(
 			_SCHEMA_VERSION_1_3_0, _SCHEMA_VERSION_1_4_0,
