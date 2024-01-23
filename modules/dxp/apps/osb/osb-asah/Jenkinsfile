@@ -2,17 +2,19 @@ pipeline {
 	agent any
 
 	environment {
+		GIT_HASH = "${sh(script: 'git rev-parse --short=7 ${GIT_COMMIT}', returnStdout: true).trim()}"
+
 		LABEL_BUILD_DATE = "${sh(script: 'date -u +%Y-%m-%dT%H:%M:%SZ', returnStdout: true).trim()}"
 		IMAGE_NAME = "liferaycloud/com-liferay-osb-asah-private"
-		IMAGE_TAG_SUFFIX = "${sh(script: 'date +%Y%m%d', returnStdout: true).trim()}-${sh(script: 'git rev-parse --short=7 ${GIT_COMMIT}', returnStdout: true).trim()}"
+		IMAGE_TAG_SUFFIX = "${sh(script: 'date +%Y%m%d', returnStdout: true).trim()}-${GIT_HASH}"
 
-		DOCKER_BUILD_ARGS = "--build-arg LABEL_BUILD_DATE=${LABEL_BUILD_DATE} --build-arg LABEL_VCS_REF=${GIT_COMMIT} --no-cache -f ./Dockerfile ./"
+		DOCKER_BUILD_ARGS = "--build-arg GIT_HASH=${GIT_HASH} --build-arg LABEL_BUILD_DATE=${LABEL_BUILD_DATE} --build-arg LABEL_VCS_REF=${GIT_COMMIT} --no-cache -f ./Dockerfile ./"
 	}
 
 	stages {
 		stage('Build') {
 			steps {
-				sh './gradlew clean assemble'
+				sh './gradlew clean assemble -Dinclude.spark.python=true'
 			}
 		}
 
@@ -50,6 +52,18 @@ pipeline {
 								"${DOCKER_BUILD_ARGS}")
 
 							osbAsahPublisherImage.push()
+						}
+					}
+				}
+
+				dir('osb-asah-spark-python') {
+					script {
+						withDockerRegistry([credentialsId: "dockerhub", url: ""]) {
+							osbAsahSparkPythonImage = docker.build(
+								"${IMAGE_NAME}:osb-asah-spark-python-${IMAGE_TAG_SUFFIX}",
+								"${DOCKER_BUILD_ARGS}")
+
+							osbAsahSparkPythonImage.push()
 						}
 					}
 				}
