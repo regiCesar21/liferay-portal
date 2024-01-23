@@ -44,6 +44,18 @@ pipeline {
 					}
 				}
 
+				dir('osb-asah-composer') {
+					script {
+						withDockerRegistry([credentialsId: "dockerhub", url: ""]) {
+							osbAsahComposerImage = docker.build(
+								"${IMAGE_NAME}:osb-asah-composer-${IMAGE_TAG_SUFFIX}",
+								 "${DOCKER_BUILD_ARGS}")
+
+							osbAsahComposerImage.push()
+						}
+					}
+				}
+
 				dir('osb-asah-publisher') {
 					script {
 						withDockerRegistry([credentialsId: "dockerhub", url: ""]) {
