@@ -789,7 +789,7 @@ function Treeview({
 		init
 	);
 
-	const {filteredNodes, nodes, selectedNodeIds} = state;
+	const {filteredNodes, nodeMap, nodes, selectedNodeIds} = state;
 
 	useEffect(() => {
 		dispatch({filterQuery, type: 'FILTER'});
@@ -801,9 +801,9 @@ function Treeview({
 
 	useEffect(() => {
 		if (onSelectedNodesChange) {
-			onSelectedNodesChange(selectedNodeIds);
+			onSelectedNodesChange(selectedNodeIds, nodeMap);
 		}
-	}, [onSelectedNodesChange, selectedNodeIds]);
+	}, [nodeMap, onSelectedNodesChange, selectedNodeIds]);
 
 	const cancelTimer = () => {
 		if (focusTimer.current) {

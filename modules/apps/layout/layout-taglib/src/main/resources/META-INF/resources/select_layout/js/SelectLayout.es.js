@@ -44,25 +44,43 @@ const SelectLayout = ({
 
 	const [filterQuery, setFilterQuery] = useState();
 
-	const handleSelectionChange = (selectedNodeIds) => {
+	const handleSelectionChange = (selectedNodeIds, nodeMap) => {
 		if (!selectedNodeIds.size) {
 			return;
 		}
 
 		let data = [];
 
-		visit(nodes, (node) => {
-			if (selectedNodeIds.has(node.id)) {
-				data.push({
-					groupId: node.groupId,
-					id: node.id,
-					layoutId: node.layoutId,
-					name: node.value,
-					privateLayout: node.privateLayout,
-					value: node.url,
-				});
-			}
-		});
+		if (nodeMap) {
+			selectedNodeIds.forEach((selectedNodeId) => {
+				const node = nodeMap[selectedNodeId];
+
+				if (node) {
+					data.push({
+						groupId: node.groupId,
+						id: node.id,
+						layoutId: node.layoutId,
+						name: node.value,
+						privateLayout: node.privateLayout,
+						value: node.url,
+					});
+				}
+			});
+		}
+		else {
+			visit(nodes, (node) => {
+				if (selectedNodeIds.has(node.id)) {
+					data.push({
+						groupId: node.groupId,
+						id: node.id,
+						layoutId: node.layoutId,
+						name: node.value,
+						privateLayout: node.privateLayout,
+						value: node.url,
+					});
+				}
+			});
+		}
 
 		if (!multiSelection) {
 			data = data[0];
