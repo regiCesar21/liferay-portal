@@ -652,7 +652,47 @@ function reducer(state, action) {
 					return node.children
 						? {
 								...node,
-								children: [...node.children, ...action.nodes],
+								children: [
+									...node.children,
+									...addLinks(
+										action.nodes,
+										action.nodeId
+									).map((node) => {
+										return visit(
+											node,
+											(node) => {
+												const {selectedNodeIds} = state;
+												const oldNode =
+													nodeMap[node.id] || {};
+
+												const expanded =
+													oldNode.expanded ||
+													node.expanded ||
+													node.children.some(
+														(child) => {
+															return (
+																child.expanded ||
+																child.selected
+															);
+														}
+													);
+
+												const selected =
+													oldNode.selected ||
+													selectedNodeIds.has(
+														node.id
+													);
+
+												return {
+													...node,
+													expanded,
+													selected,
+												};
+											},
+											nodeMap
+										);
+									}),
+								],
 						  }
 						: node;
 				}),
