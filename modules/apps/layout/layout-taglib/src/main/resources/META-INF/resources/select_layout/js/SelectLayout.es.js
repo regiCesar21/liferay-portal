@@ -117,13 +117,13 @@ const SelectLayout = ({
 
 			return fetch(loadMoreItemsURL, {
 				body: Liferay.Util.objectToURLSearchParams({
-					[`${namespace}groupId`]: groupId,
-					[`${namespace}layoutUuid`]: item.id,
-					[`${namespace}parentLayoutId`]: item.layoutId,
-					[`${namespace}privateLayout`]: privateLayout,
-					[`${namespace}redirect`]:
+					[`groupId`]: groupId,
+					[`layoutUuid`]: item.id,
+					[`parentLayoutId`]: item.layoutId,
+					[`privateLayout`]: privateLayout,
+					[`redirect`]:
 						window.location.pathname + window.location.search,
-					[`${namespace}start`]: cursor * maxPageSize,
+					[`start`]: cursor * maxPageSize,
 				}),
 				method: 'post',
 			})
@@ -142,15 +142,8 @@ const SelectLayout = ({
 					})
 				);
 		},
-		[
-			groupId,
-			loadMoreItemsURL,
-			privateLayout,
-			maxPageSize,
-			namespace,
-		]
+		[groupId, loadMoreItemsURL, maxPageSize, privateLayout]
 	);
-
 
 	return (
 		<div className="select-layout">
@@ -165,7 +158,7 @@ const SelectLayout = ({
 							<ClayInput
 								className="form-control input-group-inset input-group-inset-after"
 								disabled={empty}
-								name={`${namespace}filterKeywords`}
+								name={`filterKeywords`}
 								onInput={(event) => {
 									setFilterQuery(
 										event.target.value.toLowerCase()
