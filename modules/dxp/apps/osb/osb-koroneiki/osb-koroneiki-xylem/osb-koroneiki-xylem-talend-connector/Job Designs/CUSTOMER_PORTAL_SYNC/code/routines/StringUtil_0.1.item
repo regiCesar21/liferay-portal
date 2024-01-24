@@ -7,10 +7,26 @@ import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.List;
 
+import routines.system.JSONArray;
+
 /**
  * @author Amos Fong
  */
 public class StringUtil {
+
+	public static boolean contains(String stringArray, String value) {
+		JSONArray jsonArray = new JSONArray(stringArray);
+
+		for (int i = 0; i < jsonArray.length(); i++) {
+			String stringValue = jsonArray.getString(i);
+
+			if (value.equals(stringValue)) {
+				return true;
+			}
+		}
+
+		return false;
+	}
 
 	public static String encodeURL(String rawURLString) throws Exception {
 		if (rawURLString == null) {
