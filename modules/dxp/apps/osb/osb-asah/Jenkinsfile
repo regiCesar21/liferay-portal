@@ -15,6 +15,14 @@ pipeline {
 		stage('Build') {
 			steps {
 				sh './gradlew clean assemble -Dinclude.spark.python=true'
+
+				dir('osb-asah-spark-python') {
+					sh 'cp -R build docker-resources/build'
+
+					sh 'mkdir -p docker-resources/src/main'
+
+					sh 'cp -R src/main/resources docker-resources/src/main'
+				}
 			}
 		}
 

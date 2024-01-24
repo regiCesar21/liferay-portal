@@ -13,4 +13,4 @@ export GIT_HASH=$(git rev-parse --short=7 HEAD)
 export PROJECT_ID=$(gcloud config get-value project)
 export REGION=$(gcloud config get-value compute/region)
 
-./push_to_gcp.sh
+./docker-resources/push_to_gcp.sh

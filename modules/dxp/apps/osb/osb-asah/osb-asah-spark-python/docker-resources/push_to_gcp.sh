@@ -7,6 +7,9 @@ then
 		exit 1
 fi
 
+CURRENT_DATE=$(date)
+GCP_BUCKET=gs://${PROJECT_ID}-dataproc-${REGION}
+
 function date {
 	export LC_ALL=en_US.UTF-8
 
