@@ -19,9 +19,19 @@ boolean hasUpdateLayoutPermission = GetterUtil.getBoolean(request.getAttribute(C
 			<div class="control-menu-level-2-heading d-flex d-md-none py-2">
 				<liferay-ui:message key="customization-options" />
 
-				<button aria-label="<%= LanguageUtil.get(request, "close") %>" class="close" id="<%= portletNamespace %>closeCustomizationOptions" type="button">
-					<aui:icon image="times" markupView="lexicon" />
-				</button>
+				<clay:button
+					additionalProps='<%=
+						HashMapBuilder.<String, Object>put(
+							"portletNamespace", portletNamespace
+						).build()
+					%>'
+					cssClass="close"
+					displayType="unstyled"
+					aria-label='<%= LanguageUtil.get(request, "close") %>'
+					icon="times"
+					propsTransformer="js/CustomizationButtonPropsTransformer"
+					small="<%= true %>"
+				/>
 			</div>
 
 			<ul class="control-menu-level-2-nav control-menu-nav flex-column flex-md-row">
