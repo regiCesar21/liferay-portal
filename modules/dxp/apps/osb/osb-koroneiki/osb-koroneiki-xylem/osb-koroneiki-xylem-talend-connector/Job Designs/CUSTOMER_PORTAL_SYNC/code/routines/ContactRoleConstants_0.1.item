@@ -24,6 +24,17 @@ public class ContactRoleConstants {
 	public static String NAME_ADMINISTRATOR_PROVISIONING =
 		"Support Administrator";
 
+	public static String NAME_CRITICAL_INCIDENT_CONTACT_CP =
+		"Critical Incident Contact";
+
+	public static String NAME_CRITICAL_INCIDENT_CONTACT_PROVISIONING =
+		"Critical Incident Contact";
+
+	public static String NAME_DATA_BREACH_CONTACT_CP = "Data Breach Contact";
+
+	public static String NAME_DATA_BREACH_CONTACT_PROVISIONING =
+		"Data Breach Contact";
+
 	public static String NAME_LIFERAY_CUSTOMER_SUCCESS_PROVISIONING =
 		"Liferay Customer Success";
 
@@ -46,16 +57,11 @@ public class ContactRoleConstants {
 	public static String NAME_REQUESTER_CP = "Requester";
 
 	public static String NAME_REQUESTER_PROVISIONING = "Support Requester";
-	
-	public static String NAME_CRITICAL_INCIDENT_CONTACT_CP = "Critical Incident Contact";
-	
-	public static String NAME_CRITICAL_INCIDENT_CONTACT_PROVISIONING = "Critical Incident Contact";
 
-	public static String NAME_DATA_BREACH_CONTACT_CP = "Data Breach Contact";
-	
-	public static String NAME_DATA_BREACH_CONTACT_PROVISIONING = "Data Breach Contact";
+	public static String NAME_SECURITY_INCIDENT_CONTACT_CP =
+		"Security Incident Contact";
 
-	public static String NAME_SECURITY_INCIDENT_CONTACT_CP = "Security Incident Contact";
-	
-	public static String NAME_SECURITY_INCIDENT_CONTACT_PROVISIONING = "Security Incident Contact";
+	public static String NAME_SECURITY_INCIDENT_CONTACT_PROVISIONING =
+		"Security Incident Contact";
+
 }
