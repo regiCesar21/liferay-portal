@@ -16,7 +16,7 @@ boolean hasUpdateLayoutPermission = GetterUtil.getBoolean(request.getAttribute(C
 <div id="<%= portletNamespace %>customizationBar">
 	<div class="control-menu-level-2">
 		<clay:container-fluid>
-			<div class="control-menu-level-2-heading d-block d-md-none">
+			<div class="control-menu-level-2-heading d-flex d-md-none py-2">
 				<liferay-ui:message key="customization-options" />
 
 				<button aria-label="<%= LanguageUtil.get(request, "close") %>" class="close" id="<%= portletNamespace %>closeCustomizationOptions" type="button">
@@ -58,7 +58,7 @@ boolean hasUpdateLayoutPermission = GetterUtil.getBoolean(request.getAttribute(C
 				</li>
 
 				<c:if test="<%= hasUpdateLayoutPermission %>">
-					<li class="control-menu-nav-item mb-0">
+					<li class="control-menu-nav-item my-3">
 						<aui:input id='<%= portletNamespace + "manageCustomization" %>' inlineField="<%= true %>" label="<%= StringPool.BLANK %>" labelOff='<%= LanguageUtil.get(resourceBundle, "hide-customizable-zones") %>' labelOn='<%= LanguageUtil.get(resourceBundle, "view-customizable-zones") %>' name="manageCustomization" type="toggle-switch" useNamespace="<%= false %>" wrappedField="<%= true %>" />
 
 						<div class="hide layout-customizable-controls-container" id="<%= portletNamespace %>layoutCustomizableControls">
@@ -82,95 +82,24 @@ boolean hasUpdateLayoutPermission = GetterUtil.getBoolean(request.getAttribute(C
 				</c:if>
 
 				<%
-				String toggleCustomizedViewMessage = "view-page-without-my-customizations";
-
-				if (!layoutTypePortlet.isCustomizedView()) {
-					toggleCustomizedViewMessage = "view-my-customized-page";
-				}
-				else if (layoutTypePortlet.isDefaultUpdated()) {
-					toggleCustomizedViewMessage = "the-defaults-for-the-current-page-have-been-updated-click-here-to-see-them";
-				}
-
-				toggleCustomizedViewMessage = LanguageUtil.get(resourceBundle, toggleCustomizedViewMessage);
-
-				PortletURL resetCustomizationViewURL = PortletURLFactoryUtil.create(request, LayoutAdminPortletKeys.GROUP_PAGES, PortletRequest.ACTION_PHASE);
-
-				resetCustomizationViewURL.setParameter(ActionRequest.ACTION_NAME, "/layout_admin/reset_customization_view");
-
-				String resetCustomizationsViewURLString = "javascript:if (confirm('" + UnicodeLanguageUtil.get(resourceBundle, "are-you-sure-you-want-to-reset-your-customizations-to-default") + "')){submitForm(document.hrefFm, '" + HtmlUtil.escapeJS(resetCustomizationViewURL.toString()) + "');}";
-
-				PortletURL toggleCustomizationViewPortletURL = PortletURLFactoryUtil.create(request, LayoutAdminPortletKeys.GROUP_PAGES, PortletRequest.ACTION_PHASE);
-
-				toggleCustomizationViewPortletURL.setParameter(ActionRequest.ACTION_NAME, "/layout_admin/toggle_customized_view");
-
-				String toggleCustomizationViewURL = HttpUtil.addParameter(toggleCustomizationViewPortletURL.toString(), "customized_view", !layoutTypePortlet.isCustomizedView());
+				CustomizationSettingsActionDropdownItemsProvider customizationSettingsActionDropdownItemsProvider = new CustomizationSettingsActionDropdownItemsProvider(request);
 				%>
 
 				<li class="control-menu-nav-item d-md-block d-none">
-					<liferay-ui:icon-menu
-						direction="left-side"
-						icon="<%= StringPool.BLANK %>"
-						markupView="lexicon"
-						message="<%= StringPool.BLANK %>"
-						showWhenSingleIcon="<%= true %>"
-					>
-						<liferay-ui:icon
-							message="<%= toggleCustomizedViewMessage %>"
-							url="<%= toggleCustomizationViewURL %>"
-						/>
-
-						<c:if test="<%= layoutTypePortlet.isCustomizedView() %>">
-							<liferay-ui:icon
-								message="reset-my-customizations"
-								url="<%= resetCustomizationsViewURLString %>"
-							/>
-						</c:if>
-					</liferay-ui:icon-menu>
+					<clay:dropdown-actions
+						aria-label='<%= LanguageUtil.get(request, "show-actions") %>'
+						dropdownItems="<%= customizationSettingsActionDropdownItemsProvider.getActionDropdownItems() %>"
+						propsTransformer="js/CustomizationSettingsActionDropdownPropsTransformer"
+					/>
 				</li>
-				<li class="control-menu-nav-item d-block d-md-none mb-0 mt-3">
-					<div class="btn-group dropdown flex-nowrap">
-						<aui:a cssClass="btn btn-primary text-white" href="<%= toggleCustomizationViewURL %>" label="<%= toggleCustomizedViewMessage %>" />
-
-						<c:if test="<%= layoutTypePortlet.isCustomizedView() %>">
-							<button aria-expanded="false" class="btn btn-primary dropdown-toggle flex-grow-0 h-auto" data-toggle="dropdown" type="button">
-								<span class="caret"></span>
-
-								<span class="sr-only"><liferay-ui:message key="toggle-dropdown" /></span>
-							</button>
-
-							<ul class="dropdown-menu" role="menu">
-								<li>
-									<aui:a cssClass="dropdown-item" href="<%= resetCustomizationsViewURLString %>" label="reset-my-customizations" />
-								</li>
-							</ul>
-						</c:if>
-					</div>
+				<li class="control-menu-nav-item d-block d-md-none">
+					<clay:dropdown-menu
+						dropdownItems="<%= customizationSettingsActionDropdownItemsProvider.getActionDropdownItems() %>"
+						icon="caret-bottom"
+						label="show-actions"
+						propsTransformer="js/CustomizationSettingsActionDropdownPropsTransformer"
+					/>
 				</li>
-
-				<aui:script require="metal-dom/src/dom as dom">
-					var closeCustomizationOptions = document.getElementById(
-						'<%= portletNamespace %>closeCustomizationOptions'
-					);
-					var controlMenu = document.querySelector(
-						'#<%= portletNamespace %>customizationBar .control-menu-level-2'
-					);
-
-					if (closeCustomizationOptions && controlMenu) {
-						closeCustomizationOptions.addEventListener('click', function (event) {
-							dom.toggleClasses(controlMenu, 'open');
-						});
-					}
-
-					var customizationButton = document.getElementById(
-						'<%= portletNamespace %>customizationButton'
-					);
-
-					if (customizationButton && controlMenu) {
-						customizationButton.addEventListener('click', function (event) {
-							dom.toggleClasses(controlMenu, 'open');
-						});
-					}
-				</aui:script>
 			</ul>
 		</clay:container-fluid>
 	</div>
