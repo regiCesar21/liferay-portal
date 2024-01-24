@@ -29,7 +29,7 @@ public class ExternalLinkEntityName {
 
 	public static final String SALESFORCE_OPPORTUNITY = "opportunity";
 
-	public static final String SALESFORCE_PRODUCT = "salesforce-product";
+	public static final String SALESFORCE_PRODUCT = "product";
 
 	public static final String SALESFORCE_PROJECT = "project";
 
