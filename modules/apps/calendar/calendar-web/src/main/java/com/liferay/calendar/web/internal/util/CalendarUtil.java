@@ -174,7 +174,7 @@ public class CalendarUtil {
 			"calendarId", calendarBooking.getCalendarId()
 		).put(
 			"calendarResourceName",
-			calendarResource.getName(themeDisplay.getLocale())
+			HtmlUtil.escape(calendarResource.getName(themeDisplay.getLocale()))
 		).put(
 			"description",
 			calendarBooking.getDescription(themeDisplay.getLocale())
