@@ -26,6 +26,14 @@ pipeline {
 					sh 'cp -R src/main/python docker-resources/src/main'
 				}
 
+				dir('osb-asah-dataflow-java') {
+					sh '../gradlew clean shadowJar'
+
+					sh 'mkdir -p docker-resources/build/libs'
+
+					sh 'cp build/libs/osb-asah-dataflow-java-all.jar docker-resources/build/libs/osb-asah-dataflow-java.jar'
+				}
+
 				dir('osb-asah-spark-python') {
 					sh 'cp -R build docker-resources/build'
 
@@ -70,6 +78,18 @@ pipeline {
 								 "${DOCKER_BUILD_ARGS}")
 
 							osbAsahComposerImage.push()
+						}
+					}
+				}
+
+				dir('osb-asah-dataflow-java') {
+					script {
+						withDockerRegistry([credentialsId: "dockerhub", url: ""]) {
+							osbAsahDataflowJavaImage = docker.build(
+								"${IMAGE_NAME}:osb-asah-dataflow-java-${IMAGE_TAG_SUFFIX}",
+								 "${DOCKER_BUILD_ARGS}")
+
+							osbAsahDataflowJavaImage.push()
 						}
 					}
 				}
