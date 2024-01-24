@@ -409,14 +409,14 @@ public class ChannelDog {
 		Optional<DataSource> dataSourceOptional =
 			_dataSourceRepository.findById(dataSourceId);
 
+		String dataSourceName = dataSourceOptional.map(
+			DataSource::getName
+		).get();
+
 		return Collections.singletonList(
 			addChannel(
 				Collections.singletonMap(dataSourceId, groupIds), false,
-				_getChannelName(
-					dataSourceOptional.map(
-						DataSource::getName
-					).get() + " Combined Property"),
-				true));
+				_getChannelName(dataSourceName + " Combined Property"), true));
 	}
 
 	private List<Channel> _saveMultipleChannel(
