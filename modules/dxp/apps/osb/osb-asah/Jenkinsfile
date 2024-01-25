@@ -16,6 +16,12 @@ pipeline {
 			steps {
 				sh './gradlew clean assemble -Dinclude.spark.python=true'
 
+				dir('osb-asah-composer') {
+					sh 'mkdir -p docker-resources/src/main'
+
+					sh 'cp -R src/main/python docker-resources/src/main'
+				}
+
 				dir('osb-asah-spark-python') {
 					sh 'cp -R build docker-resources/build'
 
@@ -35,8 +41,8 @@ pipeline {
 								"${IMAGE_NAME}:osb-asah-backend-${IMAGE_TAG_SUFFIX}",
 								"${DOCKER_BUILD_ARGS}")
 
-                            osbAsahBackendImage.push()
-                        }
+							osbAsahBackendImage.push()
+						}
 					}
 				}
 
