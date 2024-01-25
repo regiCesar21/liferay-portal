@@ -1,5 +1,9 @@
 pipeline {
-	agent any
+	agent {
+		kubernetes {
+			label 'java'
+		}
+	}
 
 	environment {
 		GIT_HASH = "${sh(script: 'git rev-parse --short=7 ${GIT_COMMIT}', returnStdout: true).trim()}"
