@@ -18,6 +18,8 @@ import com.liferay.osb.provisioning.exception.DuplicateSalesforceAccountKeyExcep
 import com.liferay.osb.provisioning.exception.DuplicateSalesforceProjectKeyException;
 import com.liferay.osb.provisioning.koroneiki.web.service.AccountWebService;
 import com.liferay.osb.provisioning.koroneiki.web.service.ExternalLinkWebService;
+import com.liferay.osb.provisioning.search.FilterQuery;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.User;
@@ -118,6 +120,8 @@ public class EditExternalLinkMVCActionCommand extends BaseMVCActionCommand {
 			return;
 		}
 
+		String accountKey = ParamUtil.getString(actionRequest, "accountKey");
+
 		String domain = ParamUtil.getString(actionRequest, "domain");
 		String entityName = ParamUtil.getString(actionRequest, "entityName");
 		String parentAccountKey = ParamUtil.getString(
@@ -131,15 +135,15 @@ public class EditExternalLinkMVCActionCommand extends BaseMVCActionCommand {
 		externalLink.setEntityName(entityName);
 		externalLink.setEntityId(entityId);
 
+		_validateDuplicateSalesforceAccountKey(
+			parentAccountKey, entityId, accountKey);
+
 		if (Validator.isNotNull(externalLinkKey)) {
 			_externalLinkWebService.updateExternalLink(
 				user.getFullName(), user.getUuid(), externalLinkKey,
 				externalLink);
 		}
 		else {
-			String accountKey = ParamUtil.getString(
-				actionRequest, "accountKey");
-
 			_externalLinkWebService.addAccountExternalLink(
 				user.getFullName(), user.getUuid(), accountKey, externalLink);
 		}
@@ -167,24 +171,16 @@ public class EditExternalLinkMVCActionCommand extends BaseMVCActionCommand {
 			else if (domain.equals(ExternalLinkDomain.DXP_CLOUD)) {
 				throw new DuplicateDXPCloudProjectIdException();
 			}
-			else if (domain.equals(ExternalLinkDomain.SALESFORCE)) {
-				if (entityName.equals(
-						ExternalLinkEntityName.SALESFORCE_ACCOUNT)) {
+			else if (entityName.equals(
+						ExternalLinkEntityName.RELATED_SALESFORCE_PROJECT)) {
 
-					throw new DuplicateSalesforceAccountKeyException();
-				}
-				else if (entityName.equals(
-							ExternalLinkEntityName.
-								RELATED_SALESFORCE_PROJECT)) {
+				_validateDuplicatedRelatedSalesforceProjectKey(
+					accounts, parentAccountKey);
+			}
+			else if (entityName.equals(
+						ExternalLinkEntityName.SALESFORCE_PROJECT)) {
 
-					_validateDuplicatedRelatedSalesforceProjectKey(
-						accounts, parentAccountKey);
-				}
-				else if (entityName.equals(
-							ExternalLinkEntityName.SALESFORCE_PROJECT)) {
-
-					throw new DuplicateSalesforceProjectKeyException();
-				}
+				throw new DuplicateSalesforceProjectKeyException();
 			}
 		}
 	}
@@ -204,6 +200,38 @@ public class EditExternalLinkMVCActionCommand extends BaseMVCActionCommand {
 
 			throw new DuplicateRelatedSalesforceProjectKeyException();
 		}
+	}
+
+	private void _validateDuplicateSalesforceAccountKey(
+			String parentAccountKey, String entityId, String accountKey)
+		throws Exception {
+
+		FilterQuery filterQuery = new FilterQuery();
+
+		filterQuery.addLambdaEquals(
+			true, "externalLinkDomains", ExternalLinkDomain.SALESFORCE);
+		filterQuery.addLambdaContains(
+			true, "externalLinkEntityNames",
+			ExternalLinkEntityName.SALESFORCE_ACCOUNT);
+
+		if (Validator.isNotNull(parentAccountKey)) {
+			filterQuery.addEquals(false, "parentAccountKey", parentAccountKey);
+			filterQuery.addLambdaEquals(
+				false, "externalLinkEntityIds", entityId);
+		}
+		else {
+			filterQuery.addEquals(false, "parentAccountKey", accountKey);
+			filterQuery.addLambdaEquals(false, "externalLinkEntityIds", entityId);
+		}
+
+		List<Account> relatedAccounts = _accountWebService.search(
+			StringPool.BLANK, filterQuery, 1, 1000, StringPool.BLANK);
+
+		if (!relatedAccounts.isEmpty()) {
+			return;
+		}
+
+		throw new DuplicateSalesforceAccountKeyException();
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

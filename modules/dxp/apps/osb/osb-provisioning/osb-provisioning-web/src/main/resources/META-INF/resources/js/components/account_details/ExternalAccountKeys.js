@@ -36,7 +36,8 @@ function ExternalAccountKeys({details}) {
 					entityId: convertDashToEmptyString(
 						details.analyticsCloudGroupId
 					),
-					entityName: 'group'
+					entityName: 'group',
+					parentAccountKey: details.parentAccountKey
 				}}
 				type={fieldType}
 				value={details.analyticsCloudGroupId}
@@ -51,7 +52,8 @@ function ExternalAccountKeys({details}) {
 					entityId: convertDashToEmptyString(
 						details.salesforceAccountKey
 					),
-					entityName: 'account'
+					entityName: 'account',
+					parentAccountKey: details.parentAccountKey
 				}}
 				type={fieldType}
 				value={details.salesforceAccountKey}
@@ -82,7 +84,8 @@ function ExternalAccountKeys({details}) {
 					entityId: convertDashToEmptyString(
 						details.dxpCloudProjectId
 					),
-					entityName: 'project'
+					entityName: 'project',
+					parentAccountKey: details.parentAccountKey
 				}}
 				type={fieldType}
 				value={details.dxpCloudProjectId}
@@ -97,7 +100,8 @@ function ExternalAccountKeys({details}) {
 					entityId: convertDashToEmptyString(
 						details.salesforceProjectKey
 					),
-					entityName: 'project'
+					entityName: 'project',
+					parentAccountKey: details.parentAccountKey
 				}}
 				type={fieldType}
 				value={details.salesforceProjectKey}
