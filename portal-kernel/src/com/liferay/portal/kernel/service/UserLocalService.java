@@ -1876,8 +1876,34 @@ public interface UserLocalService
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<User> searchSocial(
+		long companyId, long[] groupIds, long[] userGroupIds, String keywords,
+		int start, int end);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<User> searchSocial(
+		long companyId, long[] groupIds, long[] userGroupIds, String keywords,
+		int start, int end, OrderByComparator<User> obc);
+
+	/**
+	 * Search users by social groups
+	 *
+	 * @param companyId the primary key of the user's company
+	 * @param groupId the primary keys of the users groups
+	 * @deprecated As of Athanasius (7.3.x)
+	 */
+	@Deprecated
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<User> searchSocial(
 		long companyId, long[] groupIds, String keywords, int start, int end);
 
+	/**
+	 * Search users by social groups
+	 *
+	 * @param companyId the primary key of the user's company
+	 * @param groupId the primary keys of the users groups
+	 * @deprecated As of Athanasius (7.3.x)
+	 */
+	@Deprecated
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<User> searchSocial(
 		long companyId, long[] groupIds, String keywords, int start, int end,

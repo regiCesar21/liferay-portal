@@ -2294,12 +2294,44 @@ public class UserLocalServiceUtil {
 	}
 
 	public static List<User> searchSocial(
+		long companyId, long[] groupIds, long[] userGroupIds, String keywords,
+		int start, int end) {
+
+		return getService().searchSocial(
+			companyId, groupIds, userGroupIds, keywords, start, end);
+	}
+
+	public static List<User> searchSocial(
+		long companyId, long[] groupIds, long[] userGroupIds, String keywords,
+		int start, int end, OrderByComparator<User> obc) {
+
+		return getService().searchSocial(
+			companyId, groupIds, userGroupIds, keywords, start, end, obc);
+	}
+
+	/**
+	 * Search users by social groups
+	 *
+	 * @param companyId the primary key of the user's company
+	 * @param groupId the primary keys of the users groups
+	 * @deprecated As of Athanasius (7.3.x)
+	 */
+	@Deprecated
+	public static List<User> searchSocial(
 		long companyId, long[] groupIds, String keywords, int start, int end) {
 
 		return getService().searchSocial(
 			companyId, groupIds, keywords, start, end);
 	}
 
+	/**
+	 * Search users by social groups
+	 *
+	 * @param companyId the primary key of the user's company
+	 * @param groupId the primary keys of the users groups
+	 * @deprecated As of Athanasius (7.3.x)
+	 */
+	@Deprecated
 	public static List<User> searchSocial(
 		long companyId, long[] groupIds, String keywords, int start, int end,
 		OrderByComparator<User> obc) {

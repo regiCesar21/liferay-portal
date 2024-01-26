@@ -2642,6 +2642,34 @@ public class UserLocalServiceWrapper
 
 	@Override
 	public java.util.List<com.liferay.portal.kernel.model.User> searchSocial(
+		long companyId, long[] groupIds, long[] userGroupIds,
+		java.lang.String keywords, int start, int end) {
+
+		return _userLocalService.searchSocial(
+			companyId, groupIds, userGroupIds, keywords, start, end);
+	}
+
+	@Override
+	public java.util.List<com.liferay.portal.kernel.model.User> searchSocial(
+		long companyId, long[] groupIds, long[] userGroupIds,
+		java.lang.String keywords, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator
+			<com.liferay.portal.kernel.model.User> obc) {
+
+		return _userLocalService.searchSocial(
+			companyId, groupIds, userGroupIds, keywords, start, end, obc);
+	}
+
+	/**
+	 * Search users by social groups
+	 *
+	 * @param companyId the primary key of the user's company
+	 * @param groupId the primary keys of the users groups
+	 * @deprecated As of Athanasius (7.3.x)
+	 */
+	@Deprecated
+	@Override
+	public java.util.List<com.liferay.portal.kernel.model.User> searchSocial(
 		long companyId, long[] groupIds, java.lang.String keywords, int start,
 		int end) {
 
@@ -2649,6 +2677,14 @@ public class UserLocalServiceWrapper
 			companyId, groupIds, keywords, start, end);
 	}
 
+	/**
+	 * Search users by social groups
+	 *
+	 * @param companyId the primary key of the user's company
+	 * @param groupId the primary keys of the users groups
+	 * @deprecated As of Athanasius (7.3.x)
+	 */
+	@Deprecated
 	@Override
 	public java.util.List<com.liferay.portal.kernel.model.User> searchSocial(
 		long companyId, long[] groupIds, java.lang.String keywords, int start,
