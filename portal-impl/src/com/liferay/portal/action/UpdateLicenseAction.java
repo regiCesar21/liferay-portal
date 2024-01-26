@@ -61,7 +61,9 @@ public class UpdateLicenseAction implements Action {
 			return null;
 		}
 
-		if (StringUtil.equalsIgnoreCase(httpServletRequest.getMethod(), HttpMethods.GET)) {
+		if (StringUtil.equalsIgnoreCase(
+				httpServletRequest.getMethod(), HttpMethods.GET)) {
+
 			return actionMapping.getActionForward("portal.license");
 		}
 
@@ -161,6 +163,7 @@ public class UpdateLicenseAction implements Action {
 	}
 
 	private boolean _isOmniAdmin(HttpServletRequest httpServletRequest) {
+
 		// PLACEHOLDER 09
 		// PLACEHOLDER 10
 		// PLACEHOLDER 11
