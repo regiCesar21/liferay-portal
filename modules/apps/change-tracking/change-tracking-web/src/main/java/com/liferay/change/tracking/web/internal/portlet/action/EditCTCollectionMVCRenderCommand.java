@@ -5,9 +5,14 @@
 
 package com.liferay.change.tracking.web.internal.portlet.action;
 
+import com.liferay.change.tracking.model.CTCollection;
 import com.liferay.change.tracking.service.CTCollectionLocalService;
 import com.liferay.change.tracking.web.internal.constants.CTPortletKeys;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;
+import com.liferay.portal.kernel.security.permission.ActionKeys;
+import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
+import com.liferay.portal.kernel.servlet.SessionErrors;
+import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ParamUtil;
 
 import javax.portlet.RenderRequest;
@@ -38,6 +43,22 @@ public class EditCTCollectionMVCRenderCommand implements MVCRenderCommand {
 		long ctCollectionId = ParamUtil.getLong(
 			renderRequest, "ctCollectionId");
 
+		ThemeDisplay themeDisplay = (ThemeDisplay)renderRequest.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
+		try {
+			if (ctCollectionId != 0) {
+				_ctCollectionModelResourcePermission.check(
+					themeDisplay.getPermissionChecker(), ctCollectionId,
+					ActionKeys.UPDATE);
+			}
+		}
+		catch (Exception exception) {
+			SessionErrors.add(renderRequest, exception.getClass());
+
+			return "/publications/error.jsp";
+		}
+
 		renderRequest.setAttribute(
 			"ctCollection",
 			_ctCollectionLocalService.fetchCTCollection(ctCollectionId));
@@ -47,5 +68,11 @@ public class EditCTCollectionMVCRenderCommand implements MVCRenderCommand {
 
 	@Reference
 	private CTCollectionLocalService _ctCollectionLocalService;
+
+	@Reference(
+		target = "(model.class.name=com.liferay.change.tracking.model.CTCollection)"
+	)
+	private ModelResourcePermission<CTCollection>
+		_ctCollectionModelResourcePermission;
 
 }
