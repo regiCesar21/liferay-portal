@@ -14,12 +14,12 @@ ENV SPARK_HOME /opt/spark-${APACHE_SPARK_VERSION}-bin-hadoop${APACHE_HADOOP_VERS
 
 EXPOSE 8998
 
-RUN cd /tmp
-RUN wget -q http://mirror.cc.columbia.edu/pub/software/apache/incubator/livy/${APACHE_LIVY_VERSION}-incubating/apache-livy-${APACHE_LIVY_VERSION}-incubating-bin.zip
-RUN wget -q https://archive.apache.org/dist/spark/spark-${APACHE_SPARK_VERSION}/spark-${APACHE_SPARK_VERSION}-bin-hadoop${APACHE_HADOOP_VERSION}.tgz
-RUN unzip -q apache-livy-${APACHE_LIVY_VERSION}-incubating-bin.zip -d /opt/
-RUN tar fxz spark-${APACHE_SPARK_VERSION}-bin-hadoop${APACHE_HADOOP_VERSION}.tgz -C /opt --group root --no-same-owner --owner root
-RUN rm apache-livy-${APACHE_LIVY_VERSION}-incubating-bin.zip
-RUN rm spark-${APACHE_SPARK_VERSION}-bin-hadoop${APACHE_HADOOP_VERSION}.tgz
+RUN cd /tmp && \
+	wget -q http://mirror.cc.columbia.edu/pub/software/apache/incubator/livy/${APACHE_LIVY_VERSION}-incubating/apache-livy-${APACHE_LIVY_VERSION}-incubating-bin.zip && \
+	wget -q https://archive.apache.org/dist/spark/spark-${APACHE_SPARK_VERSION}/spark-${APACHE_SPARK_VERSION}-bin-hadoop${APACHE_HADOOP_VERSION}.tgz && \
+	unzip -q apache-livy-${APACHE_LIVY_VERSION}-incubating-bin.zip -d /opt/ && \
+	tar fxz spark-${APACHE_SPARK_VERSION}-bin-hadoop${APACHE_HADOOP_VERSION}.tgz -C /opt --group root --no-same-owner --owner root && \
+	rm apache-livy-${APACHE_LIVY_VERSION}-incubating-bin.zip && \
+	rm spark-${APACHE_SPARK_VERSION}-bin-hadoop${APACHE_HADOOP_VERSION}.tgz
 
 WORKDIR /opt

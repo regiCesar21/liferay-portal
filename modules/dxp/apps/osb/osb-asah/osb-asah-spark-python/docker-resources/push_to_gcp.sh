@@ -2,9 +2,9 @@
 
 if [ -z "$GIT_HASH" ] || [ -z "$PROJECT_ID" ] || [ -z "$REGION" ]
 then
-		echo "Set the environment set variables \"GIT_HASH\", \"PROJECT_ID\", and \"REGION.\"";
+	echo "Set the environment set variables \"GIT_HASH\", \"PROJECT_ID\", and \"REGION.\"";
 
-		exit 1
+	exit 1
 fi
 
 CURRENT_DATE=$(date)
