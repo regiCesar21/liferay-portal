@@ -88,13 +88,13 @@ public class FormRecordUtil {
 		List<DDMFormFieldValue> allDDMFormFieldValues = new ArrayList<>(
 			ddmFormValues);
 
-		for (DDMFormFieldValue field : ddmFormValues) {
-			if (field.getNestedDDMFormFieldValues(
-				).size() > 0) {
+		for (DDMFormFieldValue ddmFormValue : ddmFormValues) {
+			List<DDMFormFieldValue> nestedDDMFormFieldValues =
+				ddmFormValue.getNestedDDMFormFieldValues();
 
+			if (!nestedDDMFormFieldValues.isEmpty()) {
 				allDDMFormFieldValues.addAll(
-					_getAllDDMFormFieldValues(
-						field.getNestedDDMFormFieldValues()));
+					_getAllDDMFormFieldValues(nestedDDMFormFieldValues));
 			}
 		}
 
