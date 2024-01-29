@@ -41,7 +41,7 @@ public class LDAPConfigurationListener implements ConfigurationListener {
 		String factoryPid = configurationEvent.getFactoryPid();
 
 		if (Validator.isNull(factoryPid)) {
-			return;
+			factoryPid = configurationEvent.getPid();
 		}
 
 		if (factoryPid.endsWith(".scoped")) {
