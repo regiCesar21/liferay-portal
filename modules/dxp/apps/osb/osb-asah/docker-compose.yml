@@ -56,6 +56,15 @@ services:
             - "9081:9081"
         volumes:
             - ./devtools/kong-gateway/declarative:/usr/local/kong/declarative
+    mariadb:
+        container_name: mariadb
+        env_file:
+            - mariadb.env
+        image: mariadb
+        ports:
+            - "3306:3306"
+        volumes:
+            - mariadbdata:/var/lib/mysql
     osbapiemulator:
         build: ./devtools/osb-api-emulator
         container_name: osbapiemulator
@@ -223,6 +232,8 @@ volumes:
     export:
         driver: local
     faro:
+        driver: local
+    mariadbdata:
         driver: local
     psqldata:
         driver: local
