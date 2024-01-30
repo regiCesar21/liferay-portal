@@ -46,6 +46,9 @@ public class MailTemplatesHelper {
 			LanguageUtil.get(
 				resourceBundle, "the-company-name-associated-with-the-wiki")
 		).put(
+			"[$PAGE_STATUS_BY_USER_NAME$]",
+			LanguageUtil.get(resourceBundle, "the-user-who-updated-the-page")
+		).put(
 			"[$PAGE_USER_ADDRESS$]",
 			LanguageUtil.get(
 				resourceBundle,
@@ -110,6 +113,9 @@ public class MailTemplatesHelper {
 					"content")
 		).put(
 			"[$PAGE_ID$]", LanguageUtil.get(resourceBundle, "the-page-id")
+		).put(
+			"[$PAGE_STATUS_BY_USER_NAME$]",
+			LanguageUtil.get(resourceBundle, "the-user-who-updated-the-page")
 		).put(
 			"[$PAGE_SUMMARY$]",
 			LanguageUtil.get(

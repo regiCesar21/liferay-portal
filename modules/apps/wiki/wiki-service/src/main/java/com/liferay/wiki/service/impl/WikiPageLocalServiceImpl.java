@@ -3010,6 +3010,7 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 			_getDiffsURL(page, previousVersionPage, serviceContext),
 			"[$NODE_NAME$]", node.getName(), "[$PAGE_DATE_UPDATE$]",
 			page.getModifiedDate(), "[$PAGE_ID$]", page.getPageId(),
+			"[$PAGE_STATUS_BY_USER_NAME$]", page.getStatusByUserName(),
 			"[$PAGE_SUMMARY$]", page.getSummary(), "[$PAGE_TITLE$]", pageTitle,
 			"[$PAGE_URL$]", pageURL);
 
