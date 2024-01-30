@@ -563,70 +563,24 @@ public class DataControlTaskDog {
 					"unsuppression");
 		}
 
-		String individualId = DigestUtils.sha256Hex(
-			dataControlTask.getEmailAddress());
-
 		if (_environment.acceptsProfiles(Profiles.of("prod"))) {
 			_bigQueryQueryExecutor.queryExecute(
 				StringUtils.replaceEach(
 					ResourceUtil.readResourceToString(
 						"dependencies/unsuppress_individual_statement.sql",
 						getClass()),
-					new String[] {
-						"${email_address}", "${individual_id}",
-						"${range_end_date}", "${range_start_date}"
-					},
-					new String[] {
-						emailAddress, individualId,
-						DateUtil.toUTCString(dataControlTask.getStartDate()),
-						DateUtil.toUTCString(
-							suppressionDataControlTask.getStartDate())
-					}));
+					new String[] {"${email_address}"},
+					new String[] {emailAddress}));
 		}
 		else {
-			StringBuilder sb = new StringBuilder();
-
-			List<String> identityIds =
-				_bqIdentityDog.getBQIdentityIdsIgnoreSuppresion(individualId);
-
-			for (String identityId : identityIds) {
-				sb.append(
-					StringUtils.replaceEach(
-						ResourceUtil.readResourceToString(
-							"dependencies" +
-								"/anonymize_activities_statement_emulator.sql",
-							getClass()),
-						new String[] {
-							"${new_identity_id}", "${old_identity_id}",
-							"${range_end_date}", "${range_start_date}"
-						},
-						new String[] {
-							String.valueOf(UUID.randomUUID()), identityId,
-							DateUtil.toUTCString(
-								dataControlTask.getStartDate()),
-							DateUtil.toUTCString(
-								suppressionDataControlTask.getStartDate())
-						}));
-				sb.append("\n");
-			}
-
 			_bigQueryQueryExecutor.queryExecute(
 				StringUtils.replaceEach(
 					ResourceUtil.readResourceToString(
 						"dependencies" +
 							"/unsuppress_individual_statement_emulator.sql",
 						getClass()),
-					new String[] {
-						"${anonymize_activities_statement}", "${email_address}",
-						"${individual_id}", "${range_end_date}",
-						"${range_start_date}"
-					},
-					new String[] {
-						sb.toString(), emailAddress, individualId,
-						DateUtil.toUTCString(dataControlTask.getStartDate()),
-						DateUtil.toUTCString(
-							suppressionDataControlTask.getStartDate())
-					}));
+					new String[] {"${email_address}"},
+					new String[] {emailAddress}));
 		}
 
 		return true;
