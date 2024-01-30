@@ -70,7 +70,6 @@ import org.jooq.DSLContext;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -703,7 +702,7 @@ public class DataControlTaskDogTest
 
 		Set<String> bqEventUserIds = SetUtil.map(bqEvents, BQEvent::getUserId);
 
-		Assertions.assertEquals(2, bqEventUserIds.size());
+		Assertions.assertEquals(1, bqEventUserIds.size());
 		Assertions.assertTrue(
 			bqEventUserIds.contains("f25a78e4-1443-4457-91f1-e0af18bf832a"));
 	}
@@ -791,12 +790,11 @@ public class DataControlTaskDogTest
 	}
 
 	@BQSQLResource(resourcePath = "test_data_control_task_unsuppress_bq.sql")
-	@Disabled
 	@SQLResource(resourcePath = "test_data_control_task_unsuppress.sql")
 	@Test
 	public void testUnsuppress() {
 		Optional<DataControlTask> dataControlTaskOptional =
-			_dataControlTaskRepository.findById(12345L);
+			_dataControlTaskRepository.findById(54321L);
 
 		Assertions.assertTrue(dataControlTaskOptional.isPresent());
 
@@ -809,17 +807,30 @@ public class DataControlTaskDogTest
 
 		BQIndividual bqIndividual = bqIndividualOptional.get();
 
+		Assertions.assertTrue(bqIndividual.getSuppressed());
+
+		dataControlTaskOptional = _dataControlTaskRepository.findById(12345L);
+
+		Assertions.assertTrue(dataControlTaskOptional.isPresent());
+
+		_dataControlTaskDog.run(dataControlTaskOptional.get());
+
+		bqIndividualOptional = _bqIndividualRepository.findByEmailAddress(
+			"test1@liferay.com");
+
+		bqIndividual = bqIndividualOptional.get();
+
 		Assertions.assertFalse(bqIndividual.getSuppressed());
 
 		Assertions.assertEquals(
 			Arrays.asList(
-				"55f4730b-e774-487f-b186-e52fa81990d3",
-				"72a22dce-b12b-4a82-9b3c-1bedb90baebf"),
+				"d0c7cf82-fece-4b80-a561-1179abfa8154",
+				"f25a78e4-1443-4457-91f1-e0af18bf832a"),
 			_bqIdentityRepository.getBQIdentityIds(
 				bqIndividual.getId(), false));
 
 		Assertions.assertEquals(
-			10,
+			8,
 			_bqEventRepository.countBQEvents(
 				1L, bqIndividual.getId(), null,
 				LocalDateTime.parse("2023-08-10T00:00:00"),
