@@ -13,7 +13,7 @@ BEGIN
 	UPDATE JournalDaily SET userId = '${new_identity_id}' WHERE userId IN (SELECT id FROM BQIdentity WHERE individualId = '${individual_id}') AND eventDate <= timestamp '${range_end_date}';
 	UPDATE PageDaily SET userId = '${new_identity_id}' WHERE userId IN (SELECT id FROM BQIdentity WHERE individualId = '${individual_id}') AND eventDate <= timestamp '${range_end_date}';
 
-	UPDATE BQIdentity_Raw SET id = '${new_identity_id}' WHERE individualId = '${individual_id}' AND createDate <= timestamp '${range_end_date}';
+	UPDATE BQIdentity_Raw SET id = '${new_identity_id}', individualId = NULL WHERE individualId = '${individual_id}' AND createDate <= timestamp '${range_end_date}';
 
 	UPDATE BQIndividual SET suppressed = TRUE WHERE id = '${individual_id}';
 
