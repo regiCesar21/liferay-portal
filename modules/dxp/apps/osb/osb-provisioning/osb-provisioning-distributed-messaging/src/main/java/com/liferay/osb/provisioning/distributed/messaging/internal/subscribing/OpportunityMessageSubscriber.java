@@ -728,7 +728,7 @@ public class OpportunityMessageSubscriber extends BaseMessageSubscriber {
 				group.getGroupId(), ProvisioningPortletKeys.ACCOUNTS, params));
 
 		sb.append("'>Provisioning Account</a><br />Salesforce Opportunity ");
-		sb.append("Link: <a href='https://login.salesforce.com/");
+		sb.append("Link: <a href='https://liferay.my.salesforce.com/");
 		sb.append(opportunityKey);
 		sb.append("'>Salesforce Opportunity</a>");
 
@@ -1298,7 +1298,7 @@ public class OpportunityMessageSubscriber extends BaseMessageSubscriber {
 		sb.append(ownerJSONObject.getString("lastName"));
 		sb.append(StringPool.NEW_LINE);
 
-		sb.append("SFDC: https://login.salesforce.com/");
+		sb.append("SFDC: https://liferay.my.salesforce.com/");
 		sb.append(jsonObject.getString("opportunityKey"));
 
 		return sb.toString();
