@@ -111,45 +111,6 @@ public class EditProductMVCActionCommand extends BaseMVCActionCommand {
 		}
 	}
 
-	protected void updateSalesforceMapping(
-			User user, String productKey, ExternalLink externalLink)
-		throws Exception {
-
-		Product oldProduct = _productWebService.getProduct(productKey);
-
-		ExternalLink[] externalLinks = oldProduct.getExternalLinks();
-
-		if (externalLinks != null) {
-			for (ExternalLink curExternalLink : externalLinks) {
-				String domain = curExternalLink.getDomain();
-				String entityName = curExternalLink.getEntityName();
-
-				if (domain.equals(ExternalLinkDomain.SALESFORCE) &&
-					entityName.equals(
-						ExternalLinkEntityName.SALESFORCE_PRODUCT)) {
-
-					if (externalLink == null) {
-						_externalLinkWebService.deleteExternalLink(
-							user.getFullName(), user.getUuid(),
-							curExternalLink.getKey());
-					}
-					else {
-						_externalLinkWebService.updateExternalLink(
-							user.getFullName(), user.getUuid(),
-							curExternalLink.getKey(), externalLink);
-					}
-
-					return;
-				}
-			}
-		}
-
-		if (externalLink != null) {
-			_externalLinkWebService.addProductExternalLink(
-				user.getFullName(), user.getUuid(), productKey, externalLink);
-		}
-	}
-
 	protected void updateProduct(ActionRequest actionRequest, User user)
 		throws Exception {
 
@@ -194,6 +155,45 @@ public class EditProductMVCActionCommand extends BaseMVCActionCommand {
 
 			_productWebService.updateProduct(
 				user.getFullName(), user.getUuid(), productKey, product);
+		}
+	}
+
+	protected void updateSalesforceMapping(
+			User user, String productKey, ExternalLink externalLink)
+		throws Exception {
+
+		Product oldProduct = _productWebService.getProduct(productKey);
+
+		ExternalLink[] externalLinks = oldProduct.getExternalLinks();
+
+		if (externalLinks != null) {
+			for (ExternalLink curExternalLink : externalLinks) {
+				String domain = curExternalLink.getDomain();
+				String entityName = curExternalLink.getEntityName();
+
+				if (domain.equals(ExternalLinkDomain.SALESFORCE) &&
+					entityName.equals(
+						ExternalLinkEntityName.SALESFORCE_PRODUCT)) {
+
+					if (externalLink == null) {
+						_externalLinkWebService.deleteExternalLink(
+							user.getFullName(), user.getUuid(),
+							curExternalLink.getKey());
+					}
+					else {
+						_externalLinkWebService.updateExternalLink(
+							user.getFullName(), user.getUuid(),
+							curExternalLink.getKey(), externalLink);
+					}
+
+					return;
+				}
+			}
+		}
+
+		if (externalLink != null) {
+			_externalLinkWebService.addProductExternalLink(
+				user.getFullName(), user.getUuid(), productKey, externalLink);
 		}
 	}
 
