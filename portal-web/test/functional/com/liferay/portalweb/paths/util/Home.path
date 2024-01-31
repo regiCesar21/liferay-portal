@@ -474,17 +474,17 @@
 </tr>
 <tr>
 	<td>PAGE_CUSTOMIZATION_VIEW_DEFAULT_PAGE</td>
-	<td>//li/a[contains(.,'View Page without my customizations')]</td>
+	<td>//li/button[contains(.,'View Page without my customizations')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>PAGE_CUSTOMIZATION_RESET_MY_CUSTOMIZATIONS</td>
-	<td>//li/a[contains(.,'Reset My Customizations')]</td>
+	<td>//li/button[contains(.,'Reset My Customizations')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>PAGE_CUSTOMIZATION_VIEW_MY_CUSTOMIZED_PAGE</td>
-	<td>//li/a[contains(.,'View My Customized')]</td>
+	<td>//li/button[contains(.,'View My Customized')]</td>
 	<td></td>
 </tr>
 <tr>

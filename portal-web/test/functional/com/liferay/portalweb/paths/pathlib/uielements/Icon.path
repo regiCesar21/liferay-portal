@@ -355,7 +355,7 @@
 </tr>
 <tr>
 	<td>PAGE_CUSTOMIZATION_ELLIPSIS</td>
-	<td>//div[@class='control-menu-level-2']//div[contains(@class,'icon-menu')]</td>
+	<td>//div[@class='control-menu-level-2']//div[contains(@class,'dropdown')]//button[contains(@class,'dropdown-toggle')]</td>
 	<td></td>
 </tr>
 <tr>
