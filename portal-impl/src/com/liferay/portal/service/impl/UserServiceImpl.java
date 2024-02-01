@@ -156,6 +156,8 @@ public class UserServiceImpl extends UserServiceBaseImpl {
 			return;
 		}
 
+		validateUserIds(userIds);
+
 		OrganizationPermissionUtil.check(
 			getPermissionChecker(), organizationId, ActionKeys.ASSIGN_MEMBERS);
 
@@ -2814,6 +2816,12 @@ public class UserServiceImpl extends UserServiceBaseImpl {
 
 		if (userFieldException.hasFields()) {
 			throw userFieldException;
+		}
+	}
+
+	protected void validateUserIds(long[] userIds) throws PortalException {
+		for (long userId : userIds) {
+			getUserById(userId);
 		}
 	}
 
