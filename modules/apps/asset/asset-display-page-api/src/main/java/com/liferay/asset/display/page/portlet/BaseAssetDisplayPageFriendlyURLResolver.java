@@ -116,7 +116,7 @@ public abstract class BaseAssetDisplayPageFriendlyURLResolver
 
 		Locale locale = portal.getLocale(httpServletRequest);
 		Layout layout = _getLayoutDisplayPageObjectProviderLayout(
-			layoutDisplayPageObjectProvider);
+			groupId, layoutDisplayPageObjectProvider);
 
 		portal.setPageDescription(
 			HtmlUtil.unescape(
@@ -157,7 +157,7 @@ public abstract class BaseAssetDisplayPageFriendlyURLResolver
 		}
 
 		Layout layout = _getLayoutDisplayPageObjectProviderLayout(
-			layoutDisplayPageObjectProvider);
+			groupId, layoutDisplayPageObjectProvider);
 
 		Locale locale = getLocale(requestContext);
 
@@ -303,12 +303,12 @@ public abstract class BaseAssetDisplayPageFriendlyURLResolver
 	}
 
 	private Layout _getLayoutDisplayPageObjectProviderLayout(
+		long groupId,
 		LayoutDisplayPageObjectProvider<?> layoutDisplayPageObjectProvider) {
 
 		AssetDisplayPageEntry assetDisplayPageEntry =
 			assetDisplayPageEntryLocalService.fetchAssetDisplayPageEntry(
-				layoutDisplayPageObjectProvider.getGroupId(),
-				layoutDisplayPageObjectProvider.getClassNameId(),
+				groupId, layoutDisplayPageObjectProvider.getClassNameId(),
 				layoutDisplayPageObjectProvider.getClassPK());
 
 		if (assetDisplayPageEntry == null) {
@@ -324,8 +324,7 @@ public abstract class BaseAssetDisplayPageFriendlyURLResolver
 
 		LayoutPageTemplateEntry layoutPageTemplateEntry =
 			layoutPageTemplateEntryService.fetchDefaultLayoutPageTemplateEntry(
-				layoutDisplayPageObjectProvider.getGroupId(),
-				layoutDisplayPageObjectProvider.getClassNameId(),
+				groupId, layoutDisplayPageObjectProvider.getClassNameId(),
 				layoutDisplayPageObjectProvider.getClassTypeId());
 
 		if (layoutPageTemplateEntry != null) {

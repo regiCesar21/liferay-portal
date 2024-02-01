@@ -392,7 +392,7 @@ public class JournalArticleAssetRenderer
 			ThemeDisplay themeDisplay, String noSuchEntryRedirect)
 		throws PortalException {
 
-		if (!_isShowDisplayPage(_article.getGroupId(), _article)) {
+		if (!_isShowDisplayPage(themeDisplay.getScopeGroupId(), _article)) {
 			return getHitLayoutURL(noSuchEntryRedirect, themeDisplay);
 		}
 
