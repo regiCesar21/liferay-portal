@@ -92,8 +92,8 @@ public class SiteHistogramDog {
 						siteMetricType,
 						siteVisitorBehaviorMetricsMap.get(
 							_getPreviousDateString(
-								dateString, searchQueryContext.getInterval(),
-								timeRange))));
+								searchQueryContext.getInterval(),
+								metric.getPreviousValueKey()))));
 			}
 		}
 
@@ -157,49 +157,17 @@ public class SiteHistogramDog {
 	}
 
 	private String _getPreviousDateString(
-		String dateString, Interval interval, TimeRange timeRange) {
+		Interval interval, String previousValueKey) {
 
-		LocalDateTime localDateTime = LocalDateTime.parse(dateString);
+		if (Interval.WEEK.equals(interval) || Interval.MONTH.equals(interval)) {
+			String[] str = previousValueKey.split("/");
 
-		if (Interval.WEEK.equals(interval)) {
-			LocalDateTime firstWeekdayLocalDateTime = localDateTime.minusDays(
-				8);
+			LocalDate localDate = LocalDate.parse(str[0]);
 
-			if (firstWeekdayLocalDateTime.getDayOfWeek() != DayOfWeek.SUNDAY) {
-				firstWeekdayLocalDateTime =
-					firstWeekdayLocalDateTime.minusWeeks(1);
-
-				firstWeekdayLocalDateTime = firstWeekdayLocalDateTime.with(
-					DayOfWeek.SUNDAY);
-			}
-
-			LocalDate firstWeekdayLocalDate =
-				firstWeekdayLocalDateTime.toLocalDate();
-
-			return String.valueOf(firstWeekdayLocalDate.atStartOfDay());
+			return String.valueOf(localDate.atStartOfDay());
 		}
 
-		if (Interval.MONTH.equals(interval)) {
-			LocalDateTime firstMonthDayLocalDateTime = localDateTime.minusDays(
-				1);
-
-			firstMonthDayLocalDateTime = firstMonthDayLocalDateTime.minusMonths(
-				1);
-
-			firstMonthDayLocalDateTime =
-				firstMonthDayLocalDateTime.withDayOfMonth(1);
-
-			LocalDate firstMonthDayLocalDate =
-				firstMonthDayLocalDateTime.toLocalDate();
-
-			return String.valueOf(firstMonthDayLocalDate.atStartOfDay());
-		}
-
-		return String.valueOf(
-			DateUtil.toLocalDateTime(
-				DateUtil.toUTCDate(
-					DateUtil.addDays(dateString, -timeRange.getDeltaDays())),
-				ZoneId.of("UTC")));
+		return previousValueKey;
 	}
 
 	@Autowired
