@@ -8,9 +8,12 @@ package com.liferay.osb.asah.common.dog;
 import com.liferay.osb.asah.common.entity.BQAsset;
 import com.liferay.osb.asah.common.repository.BQAssetRepository;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
+
+import org.apache.commons.lang3.StringUtils;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -32,7 +35,15 @@ public class BQAssetDog {
 			return Collections.emptyList();
 		}
 
-		return _bqAssetEventRepository.findByIdIn(ids);
+		List<String> parsedIds = new ArrayList<>();
+
+		for (String id : ids) {
+			String[] idParts = StringUtils.split(id, "_");
+
+			parsedIds.add(idParts[0]);
+		}
+
+		return _bqAssetEventRepository.findByIdIn(parsedIds);
 	}
 
 	public Page<BQAsset> searchBQAssets(
