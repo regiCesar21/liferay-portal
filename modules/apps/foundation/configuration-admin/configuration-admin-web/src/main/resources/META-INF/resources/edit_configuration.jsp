@@ -55,6 +55,8 @@ renderResponse.setTitle(configurationModelName);
 					</aui:alert>
 				</c:if>
 
+				<liferay-util:dynamic-include key='<%= "com.liferay.configuration.admin.web#/edit_configuration.jsp#" + configurationModel.getFactoryPid() + "#pre" %>' />
+
 				<%
 				String configurationModelDescription = (componentResourceBundle != null) ? LanguageUtil.get(componentResourceBundle, configurationModel.getDescription()) : configurationModel.getDescription();
 				%>
@@ -66,6 +68,8 @@ renderResponse.setTitle(configurationModelName);
 				</c:if>
 
 				<%= ddmFormHTML %>
+
+				<liferay-util:dynamic-include key='<%= "com.liferay.configuration.admin.web#/edit_configuration.jsp#" + configurationModel.getFactoryPid() + "#post" %>' />
 			</aui:fieldset-group>
 		</div>
 
