@@ -1,0 +1,6 @@
+INSERT INTO Identity_Raw (createDate, id, individualId, projectId) VALUES (timestamp '2023-08-07T00:00:00.000Z', '1', 'a97e7fbc5bc8d1923d98f7e045278a78d37576e407537f8491ba0ac61c0be840', 'test');
+INSERT INTO Identity_Raw (createDate, id, individualId, projectId) VALUES (timestamp '2023-08-07T00:00:00.000Z', '2', 'f071800ff496a9ec76bb39a1a9dedd2c63a84a059c51877184882d7193b6ad4e', 'test');
+INSERT INTO Identity_Raw (createDate, id, individualId, projectId) VALUES (timestamp '2023-08-07T00:00:00.000Z', '3', '21e73fd05d8cd2a42980d10ae3c517103661ce0dba2d4286c5e3b83728732d18', 'test');
+
+INSERT INTO Suppression (createDate, dataControlTaskBatchId, dataControlTaskCreateDate, emailAddress) VALUES (timestamp '2023-08-07T00:00:00.000Z', 91011, timestamp '2023-08-06T23:55:00.000Z', 'james.doe@liferay.com');
+INSERT INTO Suppression (createDate, dataControlTaskBatchId, dataControlTaskCreateDate, emailAddress) VALUES (timestamp '2023-08-08T00:00:00.000Z', 10111, timestamp '2023-08-07T23:55:00.000Z', 'joy.doe@liferay.com');
