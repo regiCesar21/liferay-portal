@@ -6,6 +6,7 @@
 package com.liferay.osb.asah.upgrade;
 
 import com.liferay.osb.asah.upgrade.v4_5_0.PostgreSQLUpgradeStep;
+import com.liferay.osb.asah.upgrade.v4_6_0.BQIdentityRawUpgradeStep;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -24,8 +25,14 @@ public class UpgradeProcessConfiguration {
 		upgradeProcess.addUpgradeSteps(
 			"4.0.25", "4.0.26", _postgreSQLUpgradeStep);
 
+		upgradeProcess.addUpgradeSteps(
+			"4.0.26", "4.0.27", _bqIdentityRawUpgradeStep);
+
 		return upgradeProcess;
 	}
+
+	@Autowired
+	private BQIdentityRawUpgradeStep _bqIdentityRawUpgradeStep;
 
 	@Autowired
 	private PostgreSQLUpgradeStep _postgreSQLUpgradeStep;
