@@ -6,13 +6,19 @@
 package com.liferay.journal.web.internal.layout.display.page;
 
 import com.liferay.asset.util.AssetHelper;
+import com.liferay.depot.model.DepotEntry;
+import com.liferay.depot.service.DepotEntryLocalService;
 import com.liferay.info.item.InfoItemReference;
 import com.liferay.journal.model.JournalArticle;
 import com.liferay.journal.service.JournalArticleLocalService;
 import com.liferay.journal.web.internal.asset.model.JournalArticleAssetRendererFactory;
 import com.liferay.layout.display.page.LayoutDisplayPageObjectProvider;
 import com.liferay.layout.display.page.LayoutDisplayPageProvider;
+import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.util.ArrayUtil;
+import com.liferay.portal.kernel.util.ListUtil;
+import com.liferay.portal.kernel.util.Portal;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -57,15 +63,15 @@ public class JournalArticleLayoutDisplayPageProvider
 	public LayoutDisplayPageObjectProvider<JournalArticle>
 		getLayoutDisplayPageObjectProvider(long groupId, String urlTitle) {
 
-		JournalArticle article =
-			journalArticleLocalService.fetchArticleByUrlTitle(
-				groupId, urlTitle);
-
-		if ((article == null) || article.isExpired() || article.isInTrash()) {
-			return null;
-		}
-
 		try {
+			JournalArticle article = _getArticle(groupId, urlTitle);
+
+			if ((article == null) || article.isExpired() ||
+				article.isInTrash()) {
+
+				return null;
+			}
+
 			return new JournalArticleLayoutDisplayPageObjectProvider(
 				article, assetHelper, journalArticleAssetRendererFactory);
 		}
@@ -83,10 +89,39 @@ public class JournalArticleLayoutDisplayPageProvider
 	protected AssetHelper assetHelper;
 
 	@Reference
+	protected DepotEntryLocalService depotEntryLocalService;
+
+	@Reference
 	protected JournalArticleAssetRendererFactory
 		journalArticleAssetRendererFactory;
 
 	@Reference
 	protected JournalArticleLocalService journalArticleLocalService;
+
+	@Reference
+	protected Portal portal;
+
+	private JournalArticle _getArticle(long groupId, String urlTitle)
+		throws PortalException {
+
+		for (long connectedGroupId :
+				ArrayUtil.append(
+					portal.getCurrentAndAncestorSiteGroupIds(groupId),
+					ListUtil.toLongArray(
+						depotEntryLocalService.getGroupConnectedDepotEntries(
+							groupId, QueryUtil.ALL_POS, QueryUtil.ALL_POS),
+						DepotEntry::getGroupId))) {
+
+			JournalArticle article =
+				journalArticleLocalService.fetchArticleByUrlTitle(
+					connectedGroupId, urlTitle);
+
+			if (article != null) {
+				return article;
+			}
+		}
+
+		return null;
+	}
 
 }
