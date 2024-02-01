@@ -19,9 +19,7 @@ import com.liferay.osb.asah.common.model.TimeRange;
 import com.liferay.osb.asah.common.repository.BQSessionRepository;
 
 import java.time.Clock;
-import java.time.DayOfWeek;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.time.ZoneOffset;
 
@@ -30,6 +28,8 @@ import java.util.Map;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
+
+import org.apache.commons.lang3.tuple.Pair;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -60,13 +60,15 @@ public class SiteHistogramDog {
 		Stream<SiteVisitorBehaviorMetric> stream =
 			siteVisitorBehaviorMetrics.stream();
 
-		Map<String, SiteVisitorBehaviorMetric> siteVisitorBehaviorMetricsMap =
-			stream.collect(
+		Map<Pair<String, Boolean>, SiteVisitorBehaviorMetric>
+			siteVisitorBehaviorMetricsMap = stream.collect(
 				Collectors.toMap(
-					siteVisitorBehaviorMetric -> String.valueOf(
-						DateUtil.toLocalDateTime(
-							siteVisitorBehaviorMetric.getEventDate(),
-							ZoneOffset.UTC)),
+					siteVisitorBehaviorMetric -> Pair.of(
+						String.valueOf(
+							DateUtil.toLocalDateTime(
+								siteVisitorBehaviorMetric.getEventDate(),
+								ZoneOffset.UTC)),
+						siteVisitorBehaviorMetric.isPrevious()),
 					Function.identity()));
 
 		HistogramMetricBag histogramMetricBag =
@@ -84,16 +86,19 @@ public class SiteHistogramDog {
 			metric.setValue(
 				_getMetricValue(
 					siteMetricType,
-					siteVisitorBehaviorMetricsMap.get(dateString)));
+					siteVisitorBehaviorMetricsMap.get(
+						Pair.of(dateString, Boolean.FALSE))));
 
 			if (searchQueryContext.isIncludePrevious()) {
 				metric.setPreviousValue(
 					_getMetricValue(
 						siteMetricType,
 						siteVisitorBehaviorMetricsMap.get(
-							_getPreviousDateString(
-								searchQueryContext.getInterval(),
-								metric.getPreviousValueKey()))));
+							Pair.of(
+								_getPreviousDateString(
+									searchQueryContext.getInterval(),
+									metric.getPreviousValueKey()),
+								Boolean.TRUE))));
 			}
 		}
 
