@@ -41,6 +41,7 @@ import org.jooq.Record;
 import org.jooq.Record1;
 import org.jooq.Record3;
 import org.jooq.SelectFinalStep;
+import org.jooq.SelectHavingStep;
 import org.jooq.SelectJoinStep;
 import org.jooq.SelectOnConditionStep;
 import org.jooq.SelectSelectStep;
@@ -532,47 +533,24 @@ public class BQSessionRepositoryImpl
 			Long channelId, boolean includePrevious, Interval interval,
 			TimeRange timeRange, ZoneId zoneId) {
 
-		Field sessionStartField = DSL.timestamp(
-			_dslHelper.dateTrunc(
-				DatePart.valueOf(interval.name()),
-				_dslHelper.getDateAtTimeZoneField(
-					"Session.sessionStart", zoneId.toString())));
+		SelectFinalStep selectFinalStep;
 
-		sessionStartField = sessionStartField.as("eventdate");
+		SelectHavingStep selectHavingStep =
+			_getSiteVisitorBehaviorMetricsGroupedBySessionStartSelectHavingStep(
+				channelId, interval, false, timeRange, zoneId);
+
+		if (includePrevious) {
+			selectFinalStep = selectHavingStep.unionAll(
+				_getSiteVisitorBehaviorMetricsGroupedBySessionStartSelectHavingStep(
+					channelId, interval, true, timeRange.getPreviousTimeRange(),
+					zoneId));
+		}
+		else {
+			selectFinalStep = selectHavingStep;
+		}
 
 		return _queryExecutor.queryForList(
-			SiteVisitorBehaviorMetric::new,
-			_joinWithIdentityTable(
-				_dslContext.select(
-					sessionStartField, _getKnownVisitorsField(true),
-					_getUniqueVisitorsField(),
-					DSL.avg(
-						DSL.field("duration", Long.class)
-					).as(
-						"averagesessionduration"
-					),
-					DSL.sum(
-						DSL.field("bounce", Long.class)
-					).as(
-						"bounces"
-					),
-					DSL.count(
-					).as(
-						"sessions"
-					)
-				).from(
-					DSL.table(
-						"BQSession"
-					).as(
-						"Session"
-					)
-				)
-			).where(
-				_createWhereClauseCondition(
-					channelId, includePrevious, timeRange, zoneId)
-			).groupBy(
-				sessionStartField
-			));
+			SiteVisitorBehaviorMetric::new, selectFinalStep);
 	}
 
 	@Override
@@ -984,6 +962,56 @@ public class BQSessionRepositoryImpl
 		);
 
 		return selectOnConditionStep;
+	}
+
+	private SelectHavingStep
+		_getSiteVisitorBehaviorMetricsGroupedBySessionStartSelectHavingStep(
+			Long channelId, Interval interval, boolean previous,
+			TimeRange timeRange, ZoneId zoneId) {
+
+		Field sessionStartField = DSL.timestamp(
+			_dslHelper.dateTrunc(
+				DatePart.valueOf(interval.name()),
+				_dslHelper.getDateAtTimeZoneField(
+					"Session.sessionStart", zoneId.toString())));
+
+		sessionStartField = sessionStartField.as("eventdate");
+
+		return _joinWithIdentityTable(
+			_dslContext.select(
+				sessionStartField, _getKnownVisitorsField(true),
+				_getUniqueVisitorsField(),
+				DSL.avg(
+					DSL.field("duration", Long.class)
+				).as(
+					"averagesessionduration"
+				),
+				DSL.sum(
+					DSL.field("bounce", Long.class)
+				).as(
+					"bounces"
+				),
+				DSL.val(
+					previous
+				).as(
+					"previous"
+				),
+				DSL.count(
+				).as(
+					"sessions"
+				)
+			).from(
+				DSL.table(
+					"BQSession"
+				).as(
+					"Session"
+				)
+			)
+		).where(
+			_createWhereClauseCondition(channelId, false, timeRange, zoneId)
+		).groupBy(
+			sessionStartField
+		);
 	}
 
 	private Field<Integer> _getUniqueVisitorsField() {
