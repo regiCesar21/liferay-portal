@@ -269,7 +269,7 @@ public class TimeRange {
 
 		LocalDate startLocalDate = getStartLocalDate();
 
-		startLocalDate = startLocalDate.minusDays(getDeltaDays() - 1);
+		startLocalDate = startLocalDate.minusDays(getDeltaDays());
 
 		return of(getEndLocalDate(), startLocalDate);
 	}
