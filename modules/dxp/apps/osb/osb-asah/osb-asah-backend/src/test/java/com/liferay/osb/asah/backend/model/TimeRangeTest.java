@@ -338,7 +338,7 @@ public class TimeRangeTest {
 		Duration duration = Duration.between(
 			timeRange.getStartLocalDateTime(), timeRange.getEndLocalDateTime());
 
-		Assertions.assertEquals(1, Math.abs(duration.toDays()));
+		Assertions.assertEquals(2879, Math.abs(duration.toMinutes()));
 
 		TimeRange includePreviousTimeRange =
 			timeRange.getIncludePreviousTimeRange();
@@ -347,7 +347,7 @@ public class TimeRangeTest {
 			includePreviousTimeRange.getStartLocalDateTime(),
 			includePreviousTimeRange.getEndLocalDateTime());
 
-		Assertions.assertEquals(2, Math.abs(duration.toDays()));
+		Assertions.assertEquals(5759, Math.abs(duration.toMinutes()));
 
 		timeRange = TimeRange.of(
 			LocalDateTime.of(2022, 9, 21, 23, 59),
@@ -356,7 +356,7 @@ public class TimeRangeTest {
 		duration = Duration.between(
 			timeRange.getStartLocalDateTime(), timeRange.getEndLocalDateTime());
 
-		Assertions.assertEquals(32, Math.abs(duration.toDays()));
+		Assertions.assertEquals(47519, Math.abs(duration.toMinutes()));
 
 		includePreviousTimeRange = timeRange.getIncludePreviousTimeRange();
 
@@ -364,7 +364,7 @@ public class TimeRangeTest {
 			includePreviousTimeRange.getStartLocalDateTime(),
 			includePreviousTimeRange.getEndLocalDateTime());
 
-		Assertions.assertEquals(64, Math.abs(duration.toDays()));
+		Assertions.assertEquals(95039, Math.abs(duration.toMinutes()));
 	}
 
 	@Test

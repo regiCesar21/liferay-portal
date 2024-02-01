@@ -195,9 +195,9 @@ public class SiteHistogramDogTest
 				searchQueryContext, SiteMetricType.SESSIONS_PER_VISITOR);
 
 		Assertions.assertArrayEquals(
-			new double[] {16, 15, 11}, _getActualValues(histogramMetricBag), 0);
+			new double[] {5, 15, 11}, _getActualValues(histogramMetricBag), 0);
 		Assertions.assertArrayEquals(
-			new double[] {4, 15, 16}, _getPreviousValues(histogramMetricBag),
+			new double[] {4, 15, 11}, _getPreviousValues(histogramMetricBag),
 			0);
 	}
 
@@ -220,9 +220,9 @@ public class SiteHistogramDogTest
 				searchQueryContext, SiteMetricType.SESSIONS_PER_VISITOR);
 
 		Assertions.assertArrayEquals(
-			new double[] {7, 7, 6}, _getActualValues(histogramMetricBag), 0);
+			new double[] {0, 6, 6}, _getActualValues(histogramMetricBag), 0);
 		Assertions.assertArrayEquals(
-			new double[] {0, 3, 7}, _getPreviousValues(histogramMetricBag), 0);
+			new double[] {4, 7, 1}, _getPreviousValues(histogramMetricBag), 0);
 	}
 
 	private double[] _getActualValues(HistogramMetricBag histogramMetricBag) {
