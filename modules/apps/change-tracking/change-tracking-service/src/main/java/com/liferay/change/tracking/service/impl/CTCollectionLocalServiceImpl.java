@@ -1015,6 +1015,15 @@ public class CTCollectionLocalServiceImpl
 			ctEntryPersistence.remove(ctEntry);
 		}
 
+		try (SafeCloseable safeCloseable =
+				CTCollectionThreadLocal.setCTCollectionIdWithSafeCloseable(
+					ctCollection.getCtCollectionId())) {
+
+			CTPersistence<?> ctPersistence = ctService.getCTPersistence();
+
+			ctPersistence.clearCache(new HashSet<>(modelClassPKs));
+		}
+
 		for (CTAutoResolutionInfo ctAutoResolutionInfo :
 				_ctAutoResolutionInfoPersistence.findByC_MCNI_SMCPK(
 					ctCollection.getCtCollectionId(), classNameId,

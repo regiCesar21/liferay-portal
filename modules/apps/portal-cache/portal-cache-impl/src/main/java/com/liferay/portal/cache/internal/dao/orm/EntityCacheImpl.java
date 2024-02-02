@@ -15,6 +15,7 @@ import com.liferay.portal.kernel.cache.PortalCache;
 import com.liferay.portal.kernel.cache.PortalCacheHelperUtil;
 import com.liferay.portal.kernel.cache.PortalCacheManager;
 import com.liferay.portal.kernel.cache.PortalCacheManagerListener;
+import com.liferay.portal.kernel.change.tracking.CTCollectionThreadLocal;
 import com.liferay.portal.kernel.dao.orm.EntityCache;
 import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.dao.orm.SessionFactory;
@@ -23,6 +24,7 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.BaseModel;
 import com.liferay.portal.kernel.model.CacheModel;
 import com.liferay.portal.kernel.model.MVCCModel;
+import com.liferay.portal.kernel.model.change.tracking.CTModel;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.Props;
 import com.liferay.portal.kernel.util.PropsKeys;
@@ -74,7 +76,7 @@ public class EntityCacheImpl
 
 	@Override
 	public void clearLocalCache() {
-		if (_isLocalCacheEnabled()) {
+		if (_localCache != null) {
 			_localCache.remove();
 		}
 	}
@@ -125,9 +127,14 @@ public class EntityCacheImpl
 			mvcc = true;
 		}
 
-		portalCache =
-			(PortalCache<Serializable, Serializable>)
-				_multiVMPool.getPortalCache(groupKey, false, mvcc);
+		if (CTModel.class.isAssignableFrom(clazz)) {
+			portalCache = new CTAwarePortalCache(_multiVMPool, groupKey, mvcc);
+		}
+		else {
+			portalCache =
+				(PortalCache<Serializable, Serializable>)
+					_multiVMPool.getPortalCache(groupKey, false, mvcc);
+		}
 
 		PortalCache<Serializable, Serializable> previousPortalCache =
 			_portalCaches.putIfAbsent(className, portalCache);
@@ -369,11 +376,20 @@ public class EntityCacheImpl
 	public void removeCache(String className) {
 		_finderCacheImpl.removeCacheByEntityCache(className);
 
-		_portalCaches.remove(className);
+		PortalCache<Serializable, Serializable> portalCache =
+			_portalCaches.remove(className);
 
-		String groupKey = _GROUP_KEY_PREFIX.concat(className);
+		if (portalCache instanceof CTAwarePortalCache) {
+			CTAwarePortalCache ctAwarePortalCache =
+				(CTAwarePortalCache)portalCache;
 
-		_multiVMPool.removePortalCache(groupKey);
+			ctAwarePortalCache.destroy();
+		}
+		else {
+			String groupKey = _GROUP_KEY_PREFIX.concat(className);
+
+			_multiVMPool.removePortalCache(groupKey);
+		}
 	}
 
 	/**
@@ -425,7 +441,9 @@ public class EntityCacheImpl
 	}
 
 	private boolean _isLocalCacheEnabled() {
-		if (_localCache == null) {
+		if ((_localCache == null) ||
+			!CTCollectionThreadLocal.isProductionMode()) {
+
 			return false;
 		}
 

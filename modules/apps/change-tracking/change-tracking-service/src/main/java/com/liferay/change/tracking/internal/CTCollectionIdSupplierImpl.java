@@ -8,7 +8,9 @@ package com.liferay.change.tracking.internal;
 import com.liferay.change.tracking.constants.CTConstants;
 import com.liferay.change.tracking.model.CTPreferences;
 import com.liferay.change.tracking.service.CTPreferencesLocalService;
+import com.liferay.petra.lang.SafeCloseable;
 import com.liferay.portal.kernel.change.tracking.CTCollectionIdSupplier;
+import com.liferay.portal.kernel.change.tracking.CTCollectionThreadLocal;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.security.auth.PrincipalThreadLocal;
 
@@ -23,10 +25,15 @@ public class CTCollectionIdSupplierImpl implements CTCollectionIdSupplier {
 
 	@Override
 	public long getCTCollectionId() {
-		CTPreferences ctPreferences =
-			_ctPreferencesLocalService.fetchCTPreferences(
+		CTPreferences ctPreferences = null;
+
+		try (SafeCloseable safeCloseable =
+				CTCollectionThreadLocal.setProductionModeWithSafeCloseable()) {
+
+			ctPreferences = _ctPreferencesLocalService.fetchCTPreferences(
 				CompanyThreadLocal.getCompanyId(),
 				PrincipalThreadLocal.getUserId());
+		}
 
 		if (ctPreferences == null) {
 			return CTConstants.CT_COLLECTION_ID_PRODUCTION;

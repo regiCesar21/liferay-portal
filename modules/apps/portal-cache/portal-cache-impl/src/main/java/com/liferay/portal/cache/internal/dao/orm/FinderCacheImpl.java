@@ -19,6 +19,7 @@ import com.liferay.portal.kernel.cache.PortalCacheManager;
 import com.liferay.portal.kernel.cache.PortalCacheManagerListener;
 import com.liferay.portal.kernel.cache.key.CacheKeyGenerator;
 import com.liferay.portal.kernel.cache.key.CacheKeyGeneratorUtil;
+import com.liferay.portal.kernel.change.tracking.CTCollectionThreadLocal;
 import com.liferay.portal.kernel.dao.orm.ArgumentsResolver;
 import com.liferay.portal.kernel.dao.orm.FinderCache;
 import com.liferay.portal.kernel.dao.orm.FinderPath;
@@ -99,7 +100,7 @@ public class FinderCacheImpl
 
 	@Override
 	public void clearLocalCache() {
-		if (_isLocalCacheEnabled()) {
+		if (_localCache != null) {
 			_localCache.remove();
 		}
 	}
@@ -320,11 +321,15 @@ public class FinderCacheImpl
 
 	@Override
 	public void removeCache(String className) {
-		_portalCaches.remove(className);
+		PortalCache<Serializable, Serializable> portalCache =
+			_portalCaches.remove(className);
 
-		String groupKey = _GROUP_KEY_PREFIX.concat(className);
+		if (portalCache instanceof CTAwarePortalCache) {
+			CTAwarePortalCache ctAwarePortalCache =
+				(CTAwarePortalCache)portalCache;
 
-		_multiVMPool.removePortalCache(groupKey);
+			ctAwarePortalCache.destroy();
+		}
 
 		_finderPathsMap.remove(className);
 	}
@@ -514,9 +519,7 @@ public class FinderCacheImpl
 
 		String groupKey = _GROUP_KEY_PREFIX.concat(className);
 
-		portalCache =
-			(PortalCache<Serializable, Serializable>)
-				_multiVMPool.getPortalCache(groupKey);
+		portalCache = new CTAwarePortalCache(_multiVMPool, groupKey, false);
 
 		PortalCache<Serializable, Serializable> previousPortalCache =
 			_portalCaches.putIfAbsent(className, portalCache);
@@ -529,7 +532,9 @@ public class FinderCacheImpl
 	}
 
 	private boolean _isLocalCacheEnabled() {
-		if (_localCache == null) {
+		if ((_localCache == null) ||
+			!CTCollectionThreadLocal.isProductionMode()) {
+
 			return false;
 		}
 
