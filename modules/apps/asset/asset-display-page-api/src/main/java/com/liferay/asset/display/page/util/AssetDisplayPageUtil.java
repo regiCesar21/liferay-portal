@@ -40,6 +40,19 @@ public class AssetDisplayPageUtil {
 				groupId, assetEntry.getClassNameId(), assetEntry.getClassPK(),
 				assetEntry.getClassTypeId());
 
+		if ((layoutPageTemplateEntry == null) &&
+			(groupId != assetEntry.getGroupId())) {
+
+			layoutPageTemplateEntry =
+				_getAssetDisplayPageLayoutPageTemplateEntry(
+					AssetDisplayPageEntryLocalServiceUtil.
+						fetchAssetDisplayPageEntry(
+							assetEntry.getGroupId(),
+							assetEntry.getClassNameId(),
+							assetEntry.getClassPK()),
+					assetEntry.getClassTypeId(), groupId);
+		}
+
 		if (layoutPageTemplateEntry != null) {
 			return true;
 		}
