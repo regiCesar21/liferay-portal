@@ -14,7 +14,10 @@ import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.exception.ContactNameException;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.BaseModel;
+import com.liferay.portal.kernel.model.ResourceConstants;
+import com.liferay.portal.kernel.model.SystemEventConstants;
 import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.systemevent.SystemEvent;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.security.auth.FullNameValidatorFactory;
@@ -56,7 +59,23 @@ public class EntryLocalServiceImpl extends EntryLocalServiceBaseImpl {
 		entry.setEmailAddress(emailAddress);
 		entry.setComments(comments);
 
+		resourceLocalService.addResources(
+			user.getCompanyId(), 0, user.getUserId(), Entry.class.getName(),
+			contactId, false, false, false);
+
 		return entryPersistence.update(entry);
+	}
+
+	@Override
+	@SystemEvent(type = SystemEventConstants.TYPE_DELETE)
+	public Entry deleteEntry(Entry entry) throws PortalException {
+		entry = super.deleteEntry(entry);
+
+		resourceLocalService.deleteResource(
+			entry.getCompanyId(), Entry.class.getName(),
+			ResourceConstants.SCOPE_INDIVIDUAL, entry.getEntryId());
+
+		return entry;
 	}
 
 	@Override
