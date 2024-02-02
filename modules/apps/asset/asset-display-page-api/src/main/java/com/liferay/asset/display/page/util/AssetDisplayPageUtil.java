@@ -27,24 +27,8 @@ public class AssetDisplayPageUtil {
 			AssetDisplayPageEntryLocalServiceUtil.fetchAssetDisplayPageEntry(
 				groupId, classNameId, classPK);
 
-		if ((assetDisplayPageEntry == null) ||
-			(assetDisplayPageEntry.getType() ==
-				AssetDisplayPageConstants.TYPE_NONE)) {
-
-			return null;
-		}
-
-		if (assetDisplayPageEntry.getType() ==
-				AssetDisplayPageConstants.TYPE_SPECIFIC) {
-
-			return LayoutPageTemplateEntryServiceUtil.
-				fetchLayoutPageTemplateEntry(
-					assetDisplayPageEntry.getLayoutPageTemplateEntryId());
-		}
-
-		return LayoutPageTemplateEntryServiceUtil.
-			fetchDefaultLayoutPageTemplateEntry(
-				groupId, classNameId, classTypeId);
+		return _getAssetDisplayPageLayoutPageTemplateEntry(
+			assetDisplayPageEntry, classTypeId, groupId);
 	}
 
 	public static boolean hasAssetDisplayPage(
@@ -76,6 +60,32 @@ public class AssetDisplayPageUtil {
 		}
 
 		return false;
+	}
+
+	private static LayoutPageTemplateEntry
+			_getAssetDisplayPageLayoutPageTemplateEntry(
+				AssetDisplayPageEntry assetDisplayPageEntry, long classTypeId,
+				long groupId)
+		throws PortalException {
+
+		if ((assetDisplayPageEntry == null) ||
+			(assetDisplayPageEntry.getType() ==
+				AssetDisplayPageConstants.TYPE_NONE)) {
+
+			return null;
+		}
+
+		if (assetDisplayPageEntry.getType() ==
+				AssetDisplayPageConstants.TYPE_SPECIFIC) {
+
+			return LayoutPageTemplateEntryServiceUtil.
+				fetchLayoutPageTemplateEntry(
+					assetDisplayPageEntry.getLayoutPageTemplateEntryId());
+		}
+
+		return LayoutPageTemplateEntryServiceUtil.
+			fetchDefaultLayoutPageTemplateEntry(
+				groupId, assetDisplayPageEntry.getClassNameId(), classTypeId);
 	}
 
 }
