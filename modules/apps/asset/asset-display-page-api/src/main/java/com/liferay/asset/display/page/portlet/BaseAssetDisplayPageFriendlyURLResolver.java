@@ -311,6 +311,16 @@ public abstract class BaseAssetDisplayPageFriendlyURLResolver
 				groupId, layoutDisplayPageObjectProvider.getClassNameId(),
 				layoutDisplayPageObjectProvider.getClassPK());
 
+		if ((assetDisplayPageEntry == null) &&
+			(groupId != layoutDisplayPageObjectProvider.getGroupId())) {
+
+			assetDisplayPageEntry =
+				assetDisplayPageEntryLocalService.fetchAssetDisplayPageEntry(
+					layoutDisplayPageObjectProvider.getGroupId(),
+					layoutDisplayPageObjectProvider.getClassNameId(),
+					layoutDisplayPageObjectProvider.getClassPK());
+		}
+
 		if (assetDisplayPageEntry == null) {
 			return null;
 		}
