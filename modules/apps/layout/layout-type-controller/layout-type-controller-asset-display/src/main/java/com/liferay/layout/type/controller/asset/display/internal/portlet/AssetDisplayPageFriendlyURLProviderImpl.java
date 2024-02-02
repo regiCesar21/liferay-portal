@@ -7,6 +7,7 @@ package com.liferay.layout.type.controller.asset.display.internal.portlet;
 
 import com.liferay.asset.display.page.portlet.AssetDisplayPageFriendlyURLProvider;
 import com.liferay.asset.display.page.util.AssetDisplayPageUtil;
+import com.liferay.asset.kernel.model.AssetEntry;
 import com.liferay.asset.kernel.service.AssetEntryLocalService;
 import com.liferay.info.item.InfoItemReference;
 import com.liferay.layout.display.page.LayoutDisplayPageObjectProvider;
@@ -95,7 +96,13 @@ public class AssetDisplayPageFriendlyURLProviderImpl
 			Locale locale, ThemeDisplay themeDisplay)
 		throws PortalException {
 
-		if (!AssetDisplayPageUtil.hasAssetDisplayPage(
+		AssetEntry assetEntry = _assetEntryLocalService.fetchEntry(
+			layoutDisplayPageObjectProvider.getClassNameId(),
+			layoutDisplayPageObjectProvider.getClassPK());
+
+		if (((assetEntry == null) ||
+			 !AssetDisplayPageUtil.hasAssetDisplayPage(groupId, assetEntry)) &&
+			!AssetDisplayPageUtil.hasAssetDisplayPage(
 				groupId, layoutDisplayPageObjectProvider.getClassNameId(),
 				layoutDisplayPageObjectProvider.getClassPK(),
 				layoutDisplayPageObjectProvider.getClassTypeId())) {
