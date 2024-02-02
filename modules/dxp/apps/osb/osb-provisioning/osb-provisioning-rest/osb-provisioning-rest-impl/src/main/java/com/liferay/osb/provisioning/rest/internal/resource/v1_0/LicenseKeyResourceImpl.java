@@ -725,6 +725,8 @@ public class LicenseKeyResourceImpl
 
 		List<LicenseKey> curLicenseKeys = new ArrayList<>();
 
+		boolean allowComplimentary = false;
+
 		for (LicenseKey licenseKey : consolidatedLicenseKeys) {
 			String productPurchaseKey = StringPool.BLANK;
 
@@ -754,8 +756,11 @@ public class LicenseKeyResourceImpl
 
 			boolean complimentary = false;
 
-			if (licenseKey.getComplimentary() != null) {
-				complimentary = licenseKey.getComplimentary();
+			if ((licenseKey.getComplimentary() != null) &&
+				licenseKey.getComplimentary()) {
+
+				complimentary = true;
+				allowComplimentary = true;
 			}
 
 			com.liferay.osb.provisioning.license.model.LicenseKey
@@ -773,10 +778,10 @@ public class LicenseKeyResourceImpl
 					complimentary, true);
 
 			curLicenseKeys.add(LicenseKeyUtil.toLicenseKey(curLicenseKey));
+		}
 
-			if (complimentary) {
-				_resetComplimentaryProperty(accountKey);
-			}
+		if (allowComplimentary) {
+			_resetComplimentaryProperty(accountKey);
 		}
 
 		return Page.of(curLicenseKeys);
@@ -2097,22 +2102,12 @@ public class LicenseKeyResourceImpl
 				properties.get("allowPermanentLicenses"), true);
 		}
 
-		boolean multipleComplimentary = false;
-
 		for (LicenseKey licenseKey : licenseKeys) {
 			if ((licenseKey.getComplimentary() != null) &&
 				licenseKey.getComplimentary()) {
 
-				if (multipleComplimentary) {
-					throw new PrincipalException(
-						"Only one complimentary license key can be " +
-							"provisioned at a time");
-				}
-
 				_validateComplimentary(
 					accountKey, account.getProperties(), licenseKey);
-
-				multipleComplimentary = true;
 
 				continue;
 			}
