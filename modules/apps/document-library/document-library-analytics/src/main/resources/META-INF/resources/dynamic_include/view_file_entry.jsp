@@ -18,21 +18,21 @@ FileEntry fileEntry = (FileEntry)request.getAttribute(WebKeys.DOCUMENT_LIBRARY_F
 </script>
 
 <script>
-function sendAnalyticsEvent() {
-	if (window.Analytics) {
-		Analytics.send('documentPreviewed', 'Document', {
-			fileEntryId: '<%= fileEntry.getFileEntryId() %>',
-			groupId: '<%= fileEntry.getGroupId() %>',
-			fileEntryUUID: '<%= fileEntry.getUuid() %>',
-			title: '<%= HtmlUtil.escapeJS(fileEntry.getTitle()) %>',
-			version: '<%= fileEntry.getVersion() %>'
-		});
+	function sendAnalyticsEvent() {
+		if (window.Analytics) {
+			Analytics.send('documentPreviewed', 'Document', {
+				fileEntryId: '<%= fileEntry.getFileEntryId() %>',
+				groupId: '<%= fileEntry.getGroupId() %>',
+				fileEntryUUID: '<%= fileEntry.getUuid() %>',
+				title: '<%= HtmlUtil.escapeJS(fileEntry.getTitle()) %>',
+				version: '<%= fileEntry.getVersion() %>'
+			});
+		}
 	}
-}
 
-if (Liferay.SPA && document.readyState === 'complete') {
-	sendAnalyticsEvent();
-}
+	if (Liferay.SPA && document.readyState === 'complete') {
+		sendAnalyticsEvent();
+	}
 
-window.addEventListener('load', sendAnalyticsEvent);
+	window.addEventListener('load', sendAnalyticsEvent);
 </script>
