@@ -64,7 +64,7 @@ public class SynchronizeJIRAComponentMessageListener
 	@Override
 	protected void doReceive(Message message) throws Exception {
 		synchronizeJIRAComponents("COMMERCE");
-		synchronizeJIRAComponents("LPS");
+		synchronizeJIRAComponents("LPD");
 	}
 
 	protected void synchronizeJIRAComponents(String jiraProject)

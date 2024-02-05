@@ -210,7 +210,7 @@ public class ReleaseToolDisplayContext {
 			jiraProject = "COMMERCE";
 		}
 		else {
-			jiraProject = "LPS";
+			jiraProject = "LPD";
 		}
 
 		List<JIRAComponent> jiraComponents =
