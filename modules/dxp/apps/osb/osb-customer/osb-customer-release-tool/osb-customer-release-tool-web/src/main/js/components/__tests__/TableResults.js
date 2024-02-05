@@ -18,7 +18,7 @@ describe('TableResults', () => {
 			{
 				components: ['Frontend Infrastructure > WYSIWYG'],
 				description: 'description',
-				key: 'LPS-90100',
+				key: 'LPD-90100',
 				release: 'GA',
 				summary: 'IE11 Web Image Resizing',
 				url: '/'
@@ -26,7 +26,7 @@ describe('TableResults', () => {
 			{
 				components: ['Accessibility'],
 				description: 'description 2',
-				key: 'LPS-85155',
+				key: 'LPD-85155',
 				release: 'GA',
 				summary: 'Add menu - Heading order invalid',
 				url: '/'

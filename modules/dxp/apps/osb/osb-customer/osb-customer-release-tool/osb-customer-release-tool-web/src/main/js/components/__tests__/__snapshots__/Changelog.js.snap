@@ -147,7 +147,7 @@ exports[`Changelog does not show a See More option below the filters if seven or
       <tbody>
         <tr
           class="journal-article-row"
-          id="LPS-90100GA"
+          id="LPD-90100GA"
         >
           <td
             class="lfr-summary-column table-cell-content"
@@ -175,13 +175,13 @@ exports[`Changelog does not show a See More option below the filters if seven or
             <a
               href="/"
             >
-              LPS-90100
+              LPD-90100
             </a>
           </td>
         </tr>
         <tr
           class="journal-article-row"
-          id="LPS-85155GA"
+          id="LPD-85155GA"
         >
           <td
             class="lfr-summary-column table-cell-content"
@@ -209,7 +209,7 @@ exports[`Changelog does not show a See More option below the filters if seven or
             <a
               href="/"
             >
-              LPS-85155
+              LPD-85155
             </a>
           </td>
         </tr>
@@ -479,7 +479,7 @@ exports[`Changelog renders changelog results correctly 1`] = `
       <tbody>
         <tr
           class="journal-article-row"
-          id="LPS-90100GA"
+          id="LPD-90100GA"
         >
           <td
             class="lfr-summary-column table-cell-content"
@@ -507,13 +507,13 @@ exports[`Changelog renders changelog results correctly 1`] = `
             <a
               href="/"
             >
-              LPS-90100
+              LPD-90100
             </a>
           </td>
         </tr>
         <tr
           class="journal-article-row"
-          id="LPS-85155GA"
+          id="LPD-85155GA"
         >
           <td
             class="lfr-summary-column table-cell-content"
@@ -541,7 +541,7 @@ exports[`Changelog renders changelog results correctly 1`] = `
             <a
               href="/"
             >
-              LPS-85155
+              LPD-85155
             </a>
           </td>
         </tr>
@@ -2845,7 +2845,7 @@ exports[`Changelog renders details modal when a ticket summary is clicked 1`] = 
       <tbody>
         <tr
           class="journal-article-row"
-          id="LPS-90100GA"
+          id="LPD-90100GA"
         >
           <td
             class="lfr-summary-column table-cell-content"
@@ -2920,7 +2920,7 @@ exports[`Changelog renders details modal when a ticket summary is clicked 1`] = 
                       <a
                         href="/"
                       >
-                        LPS-90100
+                        LPD-90100
                       </a>
                     </div>
                   </div>
@@ -2944,13 +2944,13 @@ exports[`Changelog renders details modal when a ticket summary is clicked 1`] = 
             <a
               href="/"
             >
-              LPS-90100
+              LPD-90100
             </a>
           </td>
         </tr>
         <tr
           class="journal-article-row"
-          id="LPS-85155GA"
+          id="LPD-85155GA"
         >
           <td
             class="lfr-summary-column table-cell-content"
@@ -2978,7 +2978,7 @@ exports[`Changelog renders details modal when a ticket summary is clicked 1`] = 
             <a
               href="/"
             >
-              LPS-85155
+              LPD-85155
             </a>
           </td>
         </tr>
@@ -3521,7 +3521,7 @@ exports[`Changelog updates details modal when a different ticket summary is clic
       <tbody>
         <tr
           class="journal-article-row"
-          id="LPS-90100GA"
+          id="LPD-90100GA"
         >
           <td
             class="lfr-summary-column table-cell-content"
@@ -3549,13 +3549,13 @@ exports[`Changelog updates details modal when a different ticket summary is clic
             <a
               href="/"
             >
-              LPS-90100
+              LPD-90100
             </a>
           </td>
         </tr>
         <tr
           class="journal-article-row"
-          id="LPS-85155GA"
+          id="LPD-85155GA"
         >
           <td
             class="lfr-summary-column table-cell-content"
@@ -3630,7 +3630,7 @@ exports[`Changelog updates details modal when a different ticket summary is clic
                       <a
                         href="/"
                       >
-                        LPS-85155
+                        LPD-85155
                       </a>
                     </div>
                   </div>
@@ -3654,7 +3654,7 @@ exports[`Changelog updates details modal when a different ticket summary is clic
             <a
               href="/"
             >
-              LPS-85155
+              LPD-85155
             </a>
           </td>
         </tr>

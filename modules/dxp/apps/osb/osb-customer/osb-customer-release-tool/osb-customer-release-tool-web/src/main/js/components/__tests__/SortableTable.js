@@ -11,7 +11,7 @@ const setup = () => {
 			{
 				components: ['Frontend Infrastructure > WYSIWYG'],
 				description: 'description',
-				key: 'LPS-90100',
+				key: 'LPD-90100',
 				release: 'GA',
 				summary:
 					'IE11 Web Image Resizing Does not Maintain Initial Aspect Ratio',
@@ -20,7 +20,7 @@ const setup = () => {
 			{
 				components: ['Accessibility'],
 				description: 'description 2',
-				key: 'LPS-85155',
+				key: 'LPD-85155',
 				release: 'GA',
 				summary: 'Add menu - Heading order invalid',
 				url: '/'
@@ -133,7 +133,7 @@ describe('SortableTable', () => {
 				{
 					components: ['Accessibility'],
 					description: 'description 2',
-					key: 'LPS-85155',
+					key: 'LPD-85155',
 					release: 'GA',
 					summary: 'Add menu - Heading order invalid',
 					url: '/'

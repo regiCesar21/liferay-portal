@@ -48,7 +48,7 @@ exports[`SortableTable renders changelog table correctly 1`] = `
     <tbody>
       <tr
         class="journal-article-row"
-        id="LPS-90100GA"
+        id="LPD-90100GA"
       >
         <td
           class="lfr-summary-column table-cell-content"
@@ -76,13 +76,13 @@ exports[`SortableTable renders changelog table correctly 1`] = `
           <a
             href="/"
           >
-            LPS-90100
+            LPD-90100
           </a>
         </td>
       </tr>
       <tr
         class="journal-article-row"
-        id="LPS-85155GA"
+        id="LPD-85155GA"
       >
         <td
           class="lfr-summary-column table-cell-content"
@@ -110,7 +110,7 @@ exports[`SortableTable renders changelog table correctly 1`] = `
           <a
             href="/"
           >
-            LPS-85155
+            LPD-85155
           </a>
         </td>
       </tr>
@@ -375,7 +375,7 @@ exports[`SortableTable renders the singular x-result language key when there is 
     <tbody>
       <tr
         class="journal-article-row"
-        id="LPS-85155GA"
+        id="LPD-85155GA"
       >
         <td
           class="lfr-summary-column table-cell-content"
@@ -403,7 +403,7 @@ exports[`SortableTable renders the singular x-result language key when there is 
           <a
             href="/"
           >
-            LPS-85155
+            LPD-85155
           </a>
         </td>
       </tr>

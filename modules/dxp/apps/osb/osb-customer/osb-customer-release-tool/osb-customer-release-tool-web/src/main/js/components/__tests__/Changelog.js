@@ -11,7 +11,7 @@ const setup = () => {
 			{
 				components: ['Frontend Infrastructure > WYSIWYG'],
 				description: 'description',
-				key: 'LPS-90100',
+				key: 'LPD-90100',
 				release: 'GA',
 				summary: 'summary 1',
 				url: '/'
@@ -19,7 +19,7 @@ const setup = () => {
 			{
 				components: ['Accessibility'],
 				description: 'description 2',
-				key: 'LPS-85155',
+				key: 'LPD-85155',
 				release: 'GA',
 				summary: 'summary 2',
 				url: '/'
