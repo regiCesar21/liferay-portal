@@ -30,6 +30,7 @@ import com.liferay.portal.kernel.service.permission.PortletPermission;
 import com.liferay.portal.kernel.servlet.ServletResponseUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ContentTypes;
+import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.Validator;
@@ -134,30 +135,28 @@ public class MentionsPortlet extends MVCPortlet {
 				continue;
 			}
 
-			JSONObject jsonObject = JSONUtil.put(
-				"fullName", user.getFullName());
-
-			String mention = "@" + user.getScreenName();
+			String mention = "@" + HtmlUtil.escape(user.getScreenName());
 
 			String profileURL = user.getDisplayURL(themeDisplay);
 
 			if (Validator.isNotNull(profileURL)) {
 				mention = StringBundler.concat(
-					"<a href=\"", profileURL, "\">@", user.getScreenName(),
-					"</a>");
+					"<a href=\"", profileURL, "\">@",
+					HtmlUtil.escape(user.getScreenName()), "</a>");
 			}
 
-			jsonObject.put(
-				"mention", mention
-			).put(
-				"portraitHTML",
-				UserPortraitTag.getUserPortraitHTML(
-					StringPool.BLANK, user, themeDisplay)
-			).put(
-				"screenName", user.getScreenName()
-			);
-
-			jsonArray.put(jsonObject);
+			jsonArray.put(
+				JSONUtil.put(
+					"fullName", HtmlUtil.escape(user.getFullName())
+				).put(
+					"mention", mention
+				).put(
+					"portraitHTML",
+					UserPortraitTag.getUserPortraitHTML(
+						StringPool.BLANK, user, themeDisplay)
+				).put(
+					"screenName", HtmlUtil.escape(user.getScreenName())
+				));
 		}
 
 		return jsonArray;
