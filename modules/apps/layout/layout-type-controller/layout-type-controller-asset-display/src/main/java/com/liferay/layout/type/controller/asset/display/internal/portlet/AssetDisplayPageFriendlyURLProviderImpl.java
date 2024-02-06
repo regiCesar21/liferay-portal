@@ -9,6 +9,7 @@ import com.liferay.asset.display.page.portlet.AssetDisplayPageFriendlyURLProvide
 import com.liferay.asset.display.page.util.AssetDisplayPageUtil;
 import com.liferay.asset.kernel.model.AssetEntry;
 import com.liferay.asset.kernel.service.AssetEntryLocalService;
+import com.liferay.document.library.kernel.model.DLFileEntry;
 import com.liferay.info.item.InfoItemReference;
 import com.liferay.layout.display.page.LayoutDisplayPageObjectProvider;
 import com.liferay.layout.display.page.LayoutDisplayPageProvider;
@@ -18,6 +19,7 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.model.Group;
+import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.LocaleUtil;
@@ -96,9 +98,14 @@ public class AssetDisplayPageFriendlyURLProviderImpl
 			Locale locale, ThemeDisplay themeDisplay)
 		throws PortalException {
 
+		long classNameId = layoutDisplayPageObjectProvider.getClassNameId();
+
+		if (classNameId == _portal.getClassNameId(FileEntry.class)) {
+			classNameId = _portal.getClassNameId(DLFileEntry.class);
+		}
+
 		AssetEntry assetEntry = _assetEntryLocalService.fetchEntry(
-			layoutDisplayPageObjectProvider.getClassNameId(),
-			layoutDisplayPageObjectProvider.getClassPK());
+			classNameId, layoutDisplayPageObjectProvider.getClassPK());
 
 		if (((assetEntry == null) ||
 			 !AssetDisplayPageUtil.hasAssetDisplayPage(groupId, assetEntry)) &&

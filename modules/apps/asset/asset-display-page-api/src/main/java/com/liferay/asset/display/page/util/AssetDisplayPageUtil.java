@@ -9,9 +9,12 @@ import com.liferay.asset.display.page.constants.AssetDisplayPageConstants;
 import com.liferay.asset.display.page.model.AssetDisplayPageEntry;
 import com.liferay.asset.display.page.service.AssetDisplayPageEntryLocalServiceUtil;
 import com.liferay.asset.kernel.model.AssetEntry;
+import com.liferay.document.library.kernel.model.DLFileEntry;
 import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
 import com.liferay.layout.page.template.service.LayoutPageTemplateEntryServiceUtil;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.repository.model.FileEntry;
+import com.liferay.portal.kernel.util.PortalUtil;
 
 /**
  * @author Jürgen Kappler
@@ -35,9 +38,15 @@ public class AssetDisplayPageUtil {
 			long groupId, AssetEntry assetEntry)
 		throws PortalException {
 
+		long classNameId = assetEntry.getClassNameId();
+
+		if (classNameId == PortalUtil.getClassNameId(DLFileEntry.class)) {
+			classNameId = PortalUtil.getClassNameId(FileEntry.class);
+		}
+
 		LayoutPageTemplateEntry layoutPageTemplateEntry =
 			getAssetDisplayPageLayoutPageTemplateEntry(
-				groupId, assetEntry.getClassNameId(), assetEntry.getClassPK(),
+				groupId, classNameId, assetEntry.getClassPK(),
 				assetEntry.getClassTypeId());
 
 		if ((layoutPageTemplateEntry == null) &&
@@ -47,8 +56,7 @@ public class AssetDisplayPageUtil {
 				_getAssetDisplayPageLayoutPageTemplateEntry(
 					AssetDisplayPageEntryLocalServiceUtil.
 						fetchAssetDisplayPageEntry(
-							assetEntry.getGroupId(),
-							assetEntry.getClassNameId(),
+							assetEntry.getGroupId(), classNameId,
 							assetEntry.getClassPK()),
 					assetEntry.getClassTypeId(), groupId);
 		}
