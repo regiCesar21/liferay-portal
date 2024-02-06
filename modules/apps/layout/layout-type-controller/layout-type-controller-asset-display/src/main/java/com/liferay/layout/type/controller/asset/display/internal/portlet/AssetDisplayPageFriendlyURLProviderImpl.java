@@ -7,8 +7,9 @@ package com.liferay.layout.type.controller.asset.display.internal.portlet;
 
 import com.liferay.asset.display.page.portlet.AssetDisplayPageFriendlyURLProvider;
 import com.liferay.asset.display.page.util.AssetDisplayPageUtil;
+import com.liferay.asset.kernel.AssetRendererFactoryRegistryUtil;
 import com.liferay.asset.kernel.model.AssetEntry;
-import com.liferay.asset.kernel.service.AssetEntryLocalService;
+import com.liferay.asset.kernel.model.AssetRendererFactory;
 import com.liferay.document.library.kernel.model.DLFileEntry;
 import com.liferay.info.item.InfoItemReference;
 import com.liferay.layout.display.page.LayoutDisplayPageObjectProvider;
@@ -18,6 +19,8 @@ import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.Language;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.service.GroupLocalService;
@@ -91,12 +94,8 @@ public class AssetDisplayPageFriendlyURLProviderImpl
 			className, classPK, themeDisplay.getLocale(), themeDisplay);
 	}
 
-	private String _getFriendlyURL(
-			long groupId,
-			LayoutDisplayPageProvider<?> layoutDisplayPageProvider,
-			LayoutDisplayPageObjectProvider<?> layoutDisplayPageObjectProvider,
-			Locale locale, ThemeDisplay themeDisplay)
-		throws PortalException {
+	private AssetEntry _getAssetEntry(
+		LayoutDisplayPageObjectProvider<?> layoutDisplayPageObjectProvider) {
 
 		long classNameId = layoutDisplayPageObjectProvider.getClassNameId();
 
@@ -104,8 +103,36 @@ public class AssetDisplayPageFriendlyURLProviderImpl
 			classNameId = _portal.getClassNameId(DLFileEntry.class);
 		}
 
-		AssetEntry assetEntry = _assetEntryLocalService.fetchEntry(
-			classNameId, layoutDisplayPageObjectProvider.getClassPK());
+		AssetRendererFactory<?> assetRendererFactory =
+			AssetRendererFactoryRegistryUtil.getAssetRendererFactoryByClassName(
+				_portal.getClassName(classNameId));
+
+		if (assetRendererFactory == null) {
+			return null;
+		}
+
+		try {
+			return assetRendererFactory.getAssetEntry(
+				_portal.getClassName(classNameId),
+				layoutDisplayPageObjectProvider.getClassPK());
+		}
+		catch (PortalException portalException) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(portalException, portalException);
+			}
+		}
+
+		return null;
+	}
+
+	private String _getFriendlyURL(
+			long groupId,
+			LayoutDisplayPageProvider<?> layoutDisplayPageProvider,
+			LayoutDisplayPageObjectProvider<?> layoutDisplayPageObjectProvider,
+			Locale locale, ThemeDisplay themeDisplay)
+		throws PortalException {
+
+		AssetEntry assetEntry = _getAssetEntry(layoutDisplayPageObjectProvider);
 
 		if (((assetEntry == null) ||
 			 !AssetDisplayPageUtil.hasAssetDisplayPage(groupId, assetEntry)) &&
@@ -182,8 +209,8 @@ public class AssetDisplayPageFriendlyURLProviderImpl
 		themeDisplay.setLocale(locale);
 	}
 
-	@Reference
-	private AssetEntryLocalService _assetEntryLocalService;
+	private static final Log _log = LogFactoryUtil.getLog(
+		AssetDisplayPageFriendlyURLProviderImpl.class);
 
 	@Reference
 	private GroupLocalService _groupLocalService;
