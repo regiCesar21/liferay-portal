@@ -533,7 +533,7 @@ public class BQSessionRepositoryImpl
 			Long channelId, boolean includePrevious, Interval interval,
 			TimeRange timeRange, ZoneId zoneId) {
 
-		SelectFinalStep selectFinalStep;
+		SelectFinalStep selectFinalStep = null;
 
 		SelectHavingStep selectHavingStep =
 			_getSiteVisitorBehaviorMetricsGroupedBySessionStartSelectHavingStep(
