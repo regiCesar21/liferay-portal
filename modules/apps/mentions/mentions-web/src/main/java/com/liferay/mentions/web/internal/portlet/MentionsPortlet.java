@@ -13,7 +13,6 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
-import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -29,6 +28,7 @@ import com.liferay.portal.kernel.servlet.ServletResponseUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.GroupThreadLocal;
+import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.Validator;
@@ -140,30 +140,28 @@ public class MentionsPortlet extends MVCPortlet {
 				}
 			}
 
-			JSONObject jsonObject = JSONUtil.put(
-				"fullName", user.getFullName());
-
-			String mention = "@" + user.getScreenName();
+			String mention = "@" + HtmlUtil.escape(user.getScreenName());
 
 			String profileURL = user.getDisplayURL(themeDisplay);
 
 			if (Validator.isNotNull(profileURL)) {
 				mention = StringBundler.concat(
-					"<a href=\"", profileURL, "\">@", user.getScreenName(),
-					"</a>");
+					"<a href=\"", profileURL, "\">@",
+					HtmlUtil.escape(user.getScreenName()), "</a>");
 			}
 
-			jsonObject.put(
-				"mention", mention
-			).put(
-				"portraitHTML",
-				UserPortraitTag.getUserPortraitHTML(
-					StringPool.BLANK, user, themeDisplay)
-			).put(
-				"screenName", user.getScreenName()
-			);
-
-			jsonArray.put(jsonObject);
+			jsonArray.put(
+				JSONUtil.put(
+					"fullName", HtmlUtil.escape(user.getFullName())
+				).put(
+					"mention", mention
+				).put(
+					"portraitHTML",
+					UserPortraitTag.getUserPortraitHTML(
+						StringPool.BLANK, user, themeDisplay)
+				).put(
+					"screenName", HtmlUtil.escape(user.getScreenName())
+				));
 		}
 
 		return jsonArray;
