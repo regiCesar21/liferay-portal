@@ -11,6 +11,7 @@ import com.liferay.dynamic.data.mapping.storage.DDMFormFieldValue;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.Html;
+import com.liferay.portal.kernel.util.HtmlUtil;
 
 import java.util.Locale;
 
@@ -37,7 +38,8 @@ public class RichTextDDMFormFieldValueRenderer
 			return StringPool.BLANK;
 		}
 
-		return GetterUtil.getString(_html.extractText(value.getString(locale)));
+		return GetterUtil.getString(
+			HtmlUtil.escape(_html.extractText(value.getString(locale))));
 	}
 
 	@Reference
