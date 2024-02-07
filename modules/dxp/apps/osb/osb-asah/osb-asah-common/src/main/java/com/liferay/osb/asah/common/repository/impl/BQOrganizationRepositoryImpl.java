@@ -13,6 +13,7 @@ import com.liferay.osb.asah.common.repository.CustomBQOrganizationRepository;
 import com.liferay.osb.asah.common.repository.executor.QueryExecutor;
 import com.liferay.osb.asah.common.repository.helper.FilterHelper;
 import com.liferay.osb.asah.common.repository.util.ConditionUtil;
+import com.liferay.osb.asah.common.util.BQSQLUtil;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -337,11 +338,13 @@ public class BQOrganizationRepositoryImpl
 			Long channelId, String fieldName, String filterString,
 			SelectSelectStep<T> selectSelectStep) {
 
+		String parsedFieldName = BQSQLUtil.createFieldNameAlias(fieldName);
+
 		SelectJoinStep<T> selectJoinStep = selectSelectStep.from(
 			DSL.table(
 				"BQExpandoValue"
 			).as(
-				"ExpandoValue_" + fieldName
+				"ExpandoValue_" + parsedFieldName
 			)
 		).join(
 			DSL.table(
@@ -353,7 +356,7 @@ public class BQOrganizationRepositoryImpl
 			DSL.field(
 				"FieldMapping.fieldName"
 			).eq(
-				DSL.field("ExpandoValue_" + fieldName + ".fieldName")
+				DSL.field("ExpandoValue_" + parsedFieldName + ".fieldName")
 			)
 		);
 
@@ -361,13 +364,13 @@ public class BQOrganizationRepositoryImpl
 
 		conditions.add(
 			DSL.field(
-				"ExpandoValue_" + fieldName + ".classType"
+				"ExpandoValue_" + parsedFieldName + ".classType"
 			).eq(
 				DSL.val("com.liferay.portal.kernel.model.Organization")
 			));
 		conditions.add(
 			DSL.field(
-				"ExpandoValue_" + fieldName + ".fieldName"
+				"ExpandoValue_" + parsedFieldName + ".fieldName"
 			).eq(
 				fieldName
 			));
@@ -387,7 +390,7 @@ public class BQOrganizationRepositoryImpl
 				)
 			).on(
 				DSL.field(
-					"ExpandoValue_" + fieldName + ".dataSourceId"
+					"ExpandoValue_" + parsedFieldName + ".dataSourceId"
 				).eq(
 					DSL.field("IdentityActivity.dataSourceId")
 				)
@@ -418,7 +421,9 @@ public class BQOrganizationRepositoryImpl
 		SelectSelectStep<Record1<String>> selectSelectStep =
 			_dslContext.selectDistinct(
 				DSL.field(
-					"ExpandoValue_" + fieldName + ".value", String.class
+					"ExpandoValue_" +
+						BQSQLUtil.createFieldNameAlias(fieldName) + ".value",
+					String.class
 				).as(
 					"organizationFieldValue"
 				));

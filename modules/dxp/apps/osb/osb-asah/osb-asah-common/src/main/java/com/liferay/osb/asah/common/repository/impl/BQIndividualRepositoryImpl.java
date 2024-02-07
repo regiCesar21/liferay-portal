@@ -1002,7 +1002,8 @@ public class BQIndividualRepositoryImpl
 				)));
 		conditions.add(
 			DSL.field(
-				"IndividualFields_" + fieldName + ".name"
+				"IndividualFields_" +
+					BQSQLUtil.createFieldNameAlias(fieldName) + ".name"
 			).eq(
 				fieldName
 			));
@@ -1028,7 +1029,7 @@ public class BQIndividualRepositoryImpl
 			DSL.table(
 				"UNNEST(Individual.fields)"
 			).as(
-				"IndividualFields_" + fieldName
+				"IndividualFields_" + BQSQLUtil.createFieldNameAlias(fieldName)
 			)
 		).join(
 			DSL.table(
@@ -1040,7 +1041,9 @@ public class BQIndividualRepositoryImpl
 			DSL.field(
 				"FieldMapping.fieldName"
 			).eq(
-				DSL.field("IndividualFields_" + fieldName + ".name")
+				DSL.field(
+					"IndividualFields_" +
+						BQSQLUtil.createFieldNameAlias(fieldName) + ".name")
 			)
 		).where(
 			conditions
@@ -1054,7 +1057,9 @@ public class BQIndividualRepositoryImpl
 		SelectSelectStep<Record1<String>> selectSelectStep =
 			_dslContext.selectDistinct(
 				DSL.field(
-					"IndividualFields_" + fieldName + ".value", String.class
+					"IndividualFields_" +
+						BQSQLUtil.createFieldNameAlias(fieldName) + ".value",
+					String.class
 				).as(
 					"individualFieldValue"
 				));

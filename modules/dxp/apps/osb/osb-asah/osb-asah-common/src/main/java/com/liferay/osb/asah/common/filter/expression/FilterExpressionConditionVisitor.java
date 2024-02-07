@@ -9,6 +9,7 @@ import com.liferay.osb.asah.common.date.DateUtil;
 import com.liferay.osb.asah.common.date.dog.util.TimeZoneDogUtil;
 import com.liferay.osb.asah.common.filter.expression.parser.FilterExpressionBaseVisitor;
 import com.liferay.osb.asah.common.filter.expression.parser.FilterExpressionParser;
+import com.liferay.osb.asah.common.util.BQSQLUtil;
 import com.liferay.osb.asah.common.util.SetUtil;
 import com.liferay.osb.asah.common.util.StringUtil;
 
@@ -394,15 +395,20 @@ public class FilterExpressionConditionVisitor
 
 		String qualifiedFieldName = fieldName;
 
+		String parsedQualifiedFieldName = qualifiedFieldName;
+
 		if (StringUtils.startsWith(fieldName, "ExpandoValue.")) {
 			String[] parts = fieldName.split("\\.", 2);
 
 			qualifiedFieldName = parts[1];
 
+			parsedQualifiedFieldName = BQSQLUtil.createFieldNameAlias(
+				qualifiedFieldName);
+
 			if (Objects.equals(
 					_filterType, FilterExpression.FilterType.INDIVIDUALS)) {
 
-				String alias = "IndividualFields_" + qualifiedFieldName;
+				String alias = "IndividualFields_" + parsedQualifiedFieldName;
 
 				_referencedTableNames.add(alias);
 
@@ -410,7 +416,7 @@ public class FilterExpressionConditionVisitor
 			}
 			else {
 				field = DSL.field(
-					"ExpandoValue_" + qualifiedFieldName + ".value");
+					"ExpandoValue_" + parsedQualifiedFieldName + ".value");
 			}
 		}
 
@@ -529,7 +535,8 @@ public class FilterExpressionConditionVisitor
 			if (StringUtils.startsWith(field.getName(), "ExpandoValue_")) {
 				condition = condition.and(
 					DSL.field(
-						"ExpandoValue_" + qualifiedFieldName + ".fieldName"
+						"ExpandoValue_" + parsedQualifiedFieldName +
+							".fieldName"
 					).eq(
 						qualifiedFieldName
 					));
@@ -557,7 +564,7 @@ public class FilterExpressionConditionVisitor
 
 			if (StringUtils.startsWith(fieldName, "ExpandoValue.")) {
 				return _getIndividualIdsInOrganizationCondition(
-					condition, "ExpandoValue_" + qualifiedFieldName);
+					condition, "ExpandoValue_" + parsedQualifiedFieldName);
 			}
 
 			return _getIndividualIdsInOrganizationCondition(condition, null);
@@ -951,8 +958,10 @@ public class FilterExpressionConditionVisitor
 			fieldName = parts[1];
 		}
 
+		String parsedFieldName = BQSQLUtil.createFieldNameAlias(fieldName);
+
 		if (_filterType == FilterExpression.FilterType.INDIVIDUALS) {
-			alias = "IndividualFields_" + fieldName;
+			alias = "IndividualFields_" + parsedFieldName;
 
 			_referencedTableNames.add(alias);
 
@@ -965,7 +974,7 @@ public class FilterExpressionConditionVisitor
 			);
 		}
 		else {
-			alias = "ExpandoValue_" + fieldName;
+			alias = "ExpandoValue_" + parsedFieldName;
 
 			condition = DSL.field(
 				alias + ".fieldName"
@@ -1453,7 +1462,8 @@ public class FilterExpressionConditionVisitor
 
 			return _getIndividualIdsInOrganizationCondition(
 				_getCustomFieldCondition(identifierParts[1], operator, value),
-				"ExpandoValue_" + identifierParts[1]);
+				"ExpandoValue_" +
+					BQSQLUtil.createFieldNameAlias(identifierParts[1]));
 		}
 
 		if (fieldName.equalsIgnoreCase("id")) {

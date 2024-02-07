@@ -22,6 +22,7 @@ import java.util.Objects;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
+import org.apache.commons.codec.digest.DigestUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
@@ -31,6 +32,12 @@ import org.springframework.beans.BeanUtils;
  * @author Marcellus Tavares
  */
 public class BQSQLUtil {
+
+	public static String createFieldNameAlias(String fieldName) {
+		String string = DigestUtils.sha256Hex(fieldName);
+
+		return string.substring(0, 6);
+	}
 
 	public static String createInsertStatement(Object entity) {
 		StringBuilder sb = new StringBuilder();
