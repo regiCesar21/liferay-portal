@@ -563,14 +563,25 @@ public class DataControlTaskDog {
 					"unsuppression");
 		}
 
+		String individualId = DigestUtils.sha256Hex(
+			dataControlTask.getEmailAddress());
+
 		if (_environment.acceptsProfiles(Profiles.of("prod"))) {
 			_bigQueryQueryExecutor.queryExecute(
 				StringUtils.replaceEach(
 					ResourceUtil.readResourceToString(
 						"dependencies/unsuppress_individual_statement.sql",
 						getClass()),
-					new String[] {"${email_address}"},
-					new String[] {emailAddress}));
+					new String[] {
+						"${email_address}", "${individual_id}",
+						"${range_end_date}", "${range_start_date}"
+					},
+					new String[] {
+						emailAddress, individualId,
+						DateUtil.toUTCString(dataControlTask.getStartDate()),
+						DateUtil.toUTCString(
+							suppressionDataControlTask.getStartDate())
+					}));
 		}
 		else {
 			_bigQueryQueryExecutor.queryExecute(
@@ -579,8 +590,16 @@ public class DataControlTaskDog {
 						"dependencies" +
 							"/unsuppress_individual_statement_emulator.sql",
 						getClass()),
-					new String[] {"${email_address}"},
-					new String[] {emailAddress}));
+					new String[] {
+						"${email_address}", "${individual_id}",
+						"${range_end_date}", "${range_start_date}"
+					},
+					new String[] {
+						emailAddress, individualId,
+						DateUtil.toUTCString(dataControlTask.getStartDate()),
+						DateUtil.toUTCString(
+							suppressionDataControlTask.getStartDate())
+					}));
 		}
 
 		return true;
