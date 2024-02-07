@@ -28,7 +28,9 @@ public class CTModelPreDeleteEventListener implements PreDeleteEventListener {
 
 			long ctCollectionId = CTCollectionThreadLocal.getCTCollectionId();
 
-			if (ctModel.getCtCollectionId() != ctCollectionId) {
+			if ((ctCollectionId == 0) &&
+				(ctCollectionId != ctModel.getCtCollectionId())) {
+
 				return true;
 			}
 		}

@@ -26,9 +26,9 @@ public class CTModelPreUpdateEventListener implements PreUpdateEventListener {
 		if (entity instanceof CTModel) {
 			CTModel<?> ctModel = (CTModel<?>)entity;
 
-			long ctCollectionId = CTCollectionThreadLocal.getCTCollectionId();
+			if (ctModel.getCtCollectionId() !=
+					CTCollectionThreadLocal.getCTCollectionId()) {
 
-			if (ctModel.getCtCollectionId() != ctCollectionId) {
 				return true;
 			}
 		}
