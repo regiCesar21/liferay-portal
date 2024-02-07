@@ -889,7 +889,10 @@ public class BQIndividualRepositoryImpl
 				channelId, fieldName, filterString,
 				_dslContext.select(
 					DSL.countDistinct(
-						DSL.field("IndividualFields_" + fieldName + ".value")
+						DSL.field(
+							"IndividualFields_" +
+								BQSQLUtil.createFieldNameAlias(fieldName) +
+									".value")
 					).as(
 						"totalElements"
 					))));
@@ -1109,7 +1112,8 @@ public class BQIndividualRepositoryImpl
 
 		SelectSelectStep jsonExtractSelectSelectStep = _dslContext.select(
 			DSL.field(
-				"JSON_EXTRACT_ARRAY(IndividualFields_" + fieldName + ".value)"
+				"JSON_EXTRACT_ARRAY(IndividualFields_" +
+					BQSQLUtil.createFieldNameAlias(fieldName) + ".value)"
 			).as(
 				"fieldValueArray"
 			));

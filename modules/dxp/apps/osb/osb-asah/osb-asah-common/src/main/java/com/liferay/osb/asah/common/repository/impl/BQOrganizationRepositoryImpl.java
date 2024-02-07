@@ -104,7 +104,10 @@ public class BQOrganizationRepositoryImpl
 				channelId, fieldName, filterString,
 				_dslContext.select(
 					DSL.countDistinct(
-						DSL.field("ExpandoValue_" + fieldName + ".value")
+						DSL.field(
+							"ExpandoValue_" +
+								BQSQLUtil.createFieldNameAlias(fieldName) +
+									".value")
 					).as(
 						"totalElements"
 					))));
@@ -473,7 +476,8 @@ public class BQOrganizationRepositoryImpl
 
 		SelectSelectStep jsonExtractSelectSelectStep = _dslContext.select(
 			DSL.field(
-				"JSON_EXTRACT_ARRAY(ExpandoValue_" + fieldName + ".value)"
+				"JSON_EXTRACT_ARRAY(ExpandoValue_" +
+					BQSQLUtil.createFieldNameAlias(fieldName) + ".value)"
 			).as(
 				"fieldValueArray"
 			));
