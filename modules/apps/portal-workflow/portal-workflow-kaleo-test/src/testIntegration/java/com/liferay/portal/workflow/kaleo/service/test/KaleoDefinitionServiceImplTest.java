@@ -6,6 +6,7 @@
 package com.liferay.portal.workflow.kaleo.service.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.configuration.test.util.ConfigurationTestUtil;
 import com.liferay.portal.kernel.model.Company;
@@ -24,6 +25,7 @@ import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
 import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
@@ -91,20 +93,32 @@ public class KaleoDefinitionServiceImplTest {
 			).build());
 	}
 
-	@Test(expected = PrincipalException.MustHavePermission.class)
+	@Test
 	public void testAddKaleoDefinition() throws Exception {
 
-		// Admin user, company.administrator.can.publish disabled
+		// Administrator with "company.administrator.can.publish" disabled
 
 		_setUpPermissionThreadLocal(_companyAdminUser);
 
-		_kaleoDefinitionService.addKaleoDefinition(
-			RandomTestUtil.randomString(), RandomTestUtil.randomString(),
-			RandomTestUtil.randomString(),
-			_read("legal-marketing-definition.xml"), "company", 1,
-			_serviceContext);
+		try {
+			_kaleoDefinitionService.addKaleoDefinition(
+				RandomTestUtil.randomString(), RandomTestUtil.randomString(),
+				RandomTestUtil.randomString(),
+				_read("legal-marketing-definition.xml"), "company", 1,
+				_serviceContext);
 
-		// Admin user, company.administrator.can.publish enabled
+			Assert.fail();
+		}
+		catch (PrincipalException principalException) {
+			Assert.assertEquals(
+				StringBundler.concat(
+					"User ", _companyAdminUser.getUserId(), " must have ",
+					WorkflowConstants.RESOURCE_NAME,
+					",ADD_DEFINITION permission for null "),
+				principalException.getMessage());
+		}
+
+		// Administrator with "company.administrator.can.publish" enabled
 
 		ConfigurationTestUtil.saveConfiguration(
 			_configuration,
@@ -120,10 +134,10 @@ public class KaleoDefinitionServiceImplTest {
 				_serviceContext));
 	}
 
-	@Test(expected = PrincipalException.MustHavePermission.class)
+	@Test
 	public void testUpdateKaleoDefinition() throws Exception {
 
-		// Admin user, company.administrator.can.publish disabled
+		// Administrator with "company.administrator.can.publish" disabled
 
 		KaleoDefinition kaleoDefinition =
 			_kaleoDefinitionService.addKaleoDefinition(
@@ -134,12 +148,24 @@ public class KaleoDefinitionServiceImplTest {
 
 		_setUpPermissionThreadLocal(_companyAdminUser);
 
-		_kaleoDefinitionService.updateKaleoDefinition(
-			kaleoDefinition.getKaleoDefinitionId(),
-			RandomTestUtil.randomString(), RandomTestUtil.randomString(),
-			kaleoDefinition.getContent(), _serviceContext);
+		try {
+			_kaleoDefinitionService.updateKaleoDefinition(
+				kaleoDefinition.getKaleoDefinitionId(),
+				RandomTestUtil.randomString(), RandomTestUtil.randomString(),
+				kaleoDefinition.getContent(), _serviceContext);
 
-		// Admin user, company.administrator.can.publish enabled
+			Assert.fail();
+		}
+		catch (PrincipalException principalException) {
+			Assert.assertEquals(
+				StringBundler.concat(
+					"User ", _companyAdminUser.getUserId(), " must have ",
+					WorkflowConstants.RESOURCE_NAME,
+					",ADD_DEFINITION permission for null "),
+				principalException.getMessage());
+		}
+
+		// Administrator with "company.administrator.can.publish" enabled
 
 		ConfigurationTestUtil.saveConfiguration(
 			_configuration,
@@ -166,10 +192,10 @@ public class KaleoDefinitionServiceImplTest {
 	}
 
 	private void _setUpPermissionThreadLocal(User user) {
+		PrincipalThreadLocal.setName(user.getUserId());
+
 		PermissionThreadLocal.setPermissionChecker(
 			PermissionCheckerFactoryUtil.create(user));
-
-		PrincipalThreadLocal.setName(user.getUserId());
 	}
 
 	private static Company _company;
