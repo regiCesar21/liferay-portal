@@ -267,6 +267,10 @@ public class BQIndividualRepositoryTest
 			1,
 			_bqIndividualRepository.countBQIndividuals(
 				11L, "custom/Salary/value lt 100001", false, null, null));
+		Assertions.assertEquals(
+			1,
+			_bqIndividualRepository.countBQIndividuals(
+				11L, "custom/Zip-Code/value eq 91765", false, null, null));
 	}
 
 	@BQSQLResource(resourcePath = "test_bq_individual_repository_1.sql")

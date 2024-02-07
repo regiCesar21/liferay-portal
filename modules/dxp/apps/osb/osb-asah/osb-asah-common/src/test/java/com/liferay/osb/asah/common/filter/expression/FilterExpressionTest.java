@@ -508,20 +508,20 @@ public class FilterExpressionTest {
 		_assertEquals(
 			DSL.and(
 				DSL.field(
-					"IndividualFields_custom_field.name"
+					"IndividualFields_dfe480.name"
 				).eq(
 					"custom_field"
 				),
 				DSL.condition(
 					String.join(
 						"", "CASE WHEN STARTS_WITH(",
-						"IndividualFields_custom_field.value, '[') AND ",
-						"ENDS_WITH(IndividualFields_custom_field.value, ']') ",
+						"IndividualFields_dfe480.value, '[') AND ",
+						"ENDS_WITH(IndividualFields_dfe480.value, ']') ",
 						"THEN (EXISTS (SELECT value FROM UNNEST(",
 						"JSON_EXTRACT_STRING_ARRAY(",
-						"IndividualFields_custom_field.value,'$')) AS value ",
+						"IndividualFields_dfe480.value,'$')) AS value ",
 						"WHERE LOWER(value) LIKE '%value1%')) ELSE ",
-						"LOWER(IndividualFields_custom_field.value) ",
+						"LOWER(IndividualFields_dfe480.value) ",
 						"LIKE '%value1%' END"))),
 			"contains(custom/custom_field/value, 'value1')", true);
 	}
@@ -635,38 +635,38 @@ public class FilterExpressionTest {
 		_assertEquals(
 			DSL.and(
 				DSL.field(
-					"ExpandoValue_Boolean_Field.fieldName"
+					"ExpandoValue_6ffae0.fieldName"
 				).eq(
 					"Boolean_Field"
 				),
 				DSL.condition(
 					String.join(
 						"", "CASE WHEN STARTS_WITH(",
-						"ExpandoValue_Boolean_Field.value, '[') AND ENDS_WITH(",
-						"ExpandoValue_Boolean_Field.value, ']') THEN ( EXISTS ",
+						"ExpandoValue_6ffae0.value, '[') AND ENDS_WITH(",
+						"ExpandoValue_6ffae0.value, ']') THEN ( EXISTS ",
 						"(SELECT value FROM UNNEST(JSON_EXTRACT_STRING_ARRAY(",
-						"ExpandoValue_Boolean_Field.value,'$')) AS value ",
+						"ExpandoValue_6ffae0.value,'$')) AS value ",
 						"WHERE LOWER(value) = 'false')) ELSE LOWER(",
-						"ExpandoValue_Boolean_Field.value) = 'false' END"))),
+						"ExpandoValue_6ffae0.value) = 'false' END"))),
 			"(custom/Boolean_Field/value eq 'false')");
 
 		_assertEquals(
 			DSL.and(
 				DSL.field(
-					"ExpandoValue_05_IsHeadQuater.fieldName"
+					"ExpandoValue_dab3c6.fieldName"
 				).eq(
 					"05_IsHeadQuater"
 				),
 				DSL.condition(
 					String.join(
 						"", "CASE WHEN STARTS_WITH(",
-						"ExpandoValue_05_IsHeadQuater.value, '[') AND ",
-						"ENDS_WITH(ExpandoValue_05_IsHeadQuater.value, ']') ",
+						"ExpandoValue_dab3c6.value, '[') AND ",
+						"ENDS_WITH(ExpandoValue_dab3c6.value, ']') ",
 						"THEN ( EXISTS (SELECT value FROM UNNEST(",
 						"JSON_EXTRACT_STRING_ARRAY(",
-						"ExpandoValue_05_IsHeadQuater.value,'$')) AS value",
+						"ExpandoValue_dab3c6.value,'$')) AS value",
 						" WHERE LOWER(value) = 'false')) ELSE LOWER(",
-						"ExpandoValue_05_IsHeadQuater.value) = 'false' END"))),
+						"ExpandoValue_dab3c6.value) = 'false' END"))),
 			"(custom/05_IsHeadQuater/value eq 'false')");
 	}
 
@@ -1912,104 +1912,96 @@ public class FilterExpressionTest {
 		_assertEquals(
 			DSL.and(
 				DSL.field(
-					"IndividualFields_custom_field.name"
+					"IndividualFields_dfe480.name"
 				).eq(
 					"custom_field"
 				),
 				DSL.condition(
 					String.join(
 						"", "CASE WHEN STARTS_WITH(",
-						"IndividualFields_custom_field.value, '[') AND ",
-						"ENDS_WITH(IndividualFields_custom_field.value, ']') ",
+						"IndividualFields_dfe480.value, '[') AND ",
+						"ENDS_WITH(IndividualFields_dfe480.value, ']') ",
 						"THEN ( EXISTS (SELECT value FROM UNNEST(",
 						"JSON_EXTRACT_STRING_ARRAY(",
-						"IndividualFields_custom_field.value,'$')) AS value ",
+						"IndividualFields_dfe480.value,'$')) AS value ",
 						"WHERE LOWER(value) = 'test')) ELSE LOWER(",
-						"IndividualFields_custom_field.value) = 'test' END"))),
+						"IndividualFields_dfe480.value) = 'test' END"))),
 			"(custom/custom_field/value eq 'test')",
 			new HashSet<>(
 				Arrays.asList(
-					"ExpandoValue", "Individual",
-					"IndividualFields_custom_field")),
+					"ExpandoValue", "Individual", "IndividualFields_dfe480")),
 			true);
 
 		_assertEquals(
 			DSL.and(
 				DSL.field(
-					"IndividualFields_custom_field.name"
+					"IndividualFields_dfe480.name"
 				).eq(
 					"custom_field"
 				),
 				DSL.or(
 					DSL.field(
-						"IndividualFields_custom_field.value"
+						"IndividualFields_dfe480.value"
 					).isNull(),
 					DSL.field(
-						"IndividualFields_custom_field.value"
+						"IndividualFields_dfe480.value"
 					).eq(
 						""
 					),
 					DSL.field(
-						"IndividualFields_custom_field.value"
+						"IndividualFields_dfe480.value"
 					).eq(
 						"[]"
 					),
 					DSL.field(
-						"IndividualFields_custom_field.value"
+						"IndividualFields_dfe480.value"
 					).eq(
 						"[\"\"]"
 					))),
 			"(custom/custom_field/value eq null)",
 			new HashSet<>(
 				Arrays.asList(
-					"ExpandoValue", "Individual",
-					"IndividualFields_custom_field")),
+					"ExpandoValue", "Individual", "IndividualFields_dfe480")),
 			true);
 
 		_assertEquals(
 			DSL.and(
 				DSL.field(
-					"IndividualFields_custom_field.name"
+					"IndividualFields_dfe480.name"
 				).eq(
 					"custom_field"
 				),
 				DSL.condition(
 					StringUtil.replace(
 						_QUERY, new String[] {"{0}", "{1}", "{2}"},
-						new String[] {
-							"IndividualFields_custom_field", ">=", "50"
-						}))),
+						new String[] {"IndividualFields_dfe480", ">=", "50"}))),
 			"(custom/custom_field/value ge 50)",
 			new HashSet<>(
 				Arrays.asList(
-					"ExpandoValue", "Individual",
-					"IndividualFields_custom_field")),
+					"ExpandoValue", "Individual", "IndividualFields_dfe480")),
 			true);
 
 		_assertEquals(
 			DSL.and(
 				DSL.field(
-					"IndividualFields_custom_field.name"
+					"IndividualFields_dfe480.name"
 				).eq(
 					"custom_field"
 				),
 				DSL.condition(
 					StringUtil.replace(
 						_QUERY, new String[] {"{0}", "{1}", "{2}"},
-						new String[] {
-							"IndividualFields_custom_field", ">", "50"
-						}))),
+						new String[] {"IndividualFields_dfe480", ">", "50"}))),
 			"(custom/custom_field/value gt 50)",
 			new HashSet<>(
 				Arrays.asList(
-					"ExpandoValue", "Individual",
-					"IndividualFields_custom_field")),
+					"ExpandoValue", "Individual", "IndividualFields_dfe480")),
 			true);
 
 		_assertEquals(
 			DSL.and(
 				DSL.field(
-					"IndividualFields_custom_field.name"
+					"IndividualFields_dfe480.name"
 				).eq(
 					"custom_field"
 				),
@@ -2017,19 +2009,18 @@ public class FilterExpressionTest {
 					StringUtil.replace(
 						_QUERY, new String[] {"{0}", "{1}", "{2}"},
 						new String[] {
-							"IndividualFields_custom_field", "<=", "50.03"
+							"IndividualFields_dfe480", "<=", "50.03"
 						}))),
 			"(custom/custom_field/value le 50.03)",
 			new HashSet<>(
 				Arrays.asList(
-					"ExpandoValue", "Individual",
-					"IndividualFields_custom_field")),
+					"ExpandoValue", "Individual", "IndividualFields_dfe480")),
 			true);
 
 		_assertEquals(
 			DSL.and(
 				DSL.field(
-					"IndividualFields_custom_field.name"
+					"IndividualFields_dfe480.name"
 				).eq(
 					"custom_field"
 				),
@@ -2037,71 +2028,68 @@ public class FilterExpressionTest {
 					StringUtil.replace(
 						_QUERY, new String[] {"{0}", "{1}", "{2}"},
 						new String[] {
-							"IndividualFields_custom_field", "<", "500.2344"
+							"IndividualFields_dfe480", "<", "500.2344"
 						}))),
 			"(custom/custom_field/value lt '500.2344')",
 			new HashSet<>(
 				Arrays.asList(
-					"ExpandoValue", "Individual",
-					"IndividualFields_custom_field")),
+					"ExpandoValue", "Individual", "IndividualFields_dfe480")),
 			true);
 
 		_assertEquals(
 			DSL.and(
 				DSL.field(
-					"IndividualFields_custom_field.name"
+					"IndividualFields_dfe480.name"
 				).eq(
 					"custom_field"
 				),
 				DSL.and(
 					DSL.field(
-						"IndividualFields_custom_field.value"
+						"IndividualFields_dfe480.value"
 					).isNotNull()),
 				DSL.field(
-					"IndividualFields_custom_field.value"
+					"IndividualFields_dfe480.value"
 				).ne(
 					""
 				),
 				DSL.field(
-					"IndividualFields_custom_field.value"
+					"IndividualFields_dfe480.value"
 				).ne(
 					"[]"
 				),
 				DSL.field(
-					"IndividualFields_custom_field.value"
+					"IndividualFields_dfe480.value"
 				).ne(
 					"[\"\"]"
 				)),
 			"(custom/custom_field/value ne null)",
 			new HashSet<>(
 				Arrays.asList(
-					"ExpandoValue", "Individual",
-					"IndividualFields_custom_field")),
+					"ExpandoValue", "Individual", "IndividualFields_dfe480")),
 			true);
 
 		_assertEquals(
 			DSL.and(
 				DSL.field(
-					"IndividualFields_custom_field.name"
+					"IndividualFields_dfe480.name"
 				).eq(
 					"custom_field"
 				),
 				DSL.condition(
 					String.join(
 						"", "CASE WHEN STARTS_WITH(",
-						"IndividualFields_custom_field.value, '[') ",
-						"AND ENDS_WITH(IndividualFields_custom_field.value, ",
+						"IndividualFields_dfe480.value, '[') ",
+						"AND ENDS_WITH(IndividualFields_dfe480.value, ",
 						"']') THEN (EXISTS (SELECT value FROM UNNEST(",
 						"JSON_EXTRACT_STRING_ARRAY(",
-						"IndividualFields_custom_field.value,'$')) AS value ",
+						"IndividualFields_dfe480.value,'$')) AS value ",
 						"WHERE LOWER(value) LIKE '%test%')) ELSE LOWER(",
-						"IndividualFields_custom_field.value) LIKE '%test%' ",
+						"IndividualFields_dfe480.value) LIKE '%test%' ",
 						"END"))),
 			"contains(custom/custom_field/value, 'test')",
 			new HashSet<>(
 				Arrays.asList(
-					"ExpandoValue", "Individual",
-					"IndividualFields_custom_field")),
+					"ExpandoValue", "Individual", "IndividualFields_dfe480")),
 			true);
 	}
 
@@ -2942,24 +2930,24 @@ public class FilterExpressionTest {
 					DSL.table(
 						"BQExpandoValue"
 					).as(
-						"ExpandoValue_custom_field"
+						"ExpandoValue_dfe480"
 					)
 				).on(
 					DSL.and(
 						DSL.field(
-							"ExpandoValue_custom_field.classPK"
+							"ExpandoValue_dfe480.classPK"
 						).eq(
 							DSL.field(
 								"SAFE_CAST(Organization.organizationId AS " +
 									"STRING)")
 						),
 						DSL.field(
-							"ExpandoValue_custom_field.classType"
+							"ExpandoValue_dfe480.classType"
 						).eq(
 							"com.liferay.portal.kernel.model.Organization"
 						),
 						DSL.field(
-							"ExpandoValue_custom_field.dataSourceId"
+							"ExpandoValue_dfe480.dataSourceId"
 						).eq(
 							DSL.field("Organization.dataSourceId")
 						))
@@ -2970,20 +2958,20 @@ public class FilterExpressionTest {
 						"organizationIds"
 					),
 					DSL.field(
-						"ExpandoValue_custom_field.fieldName"
+						"ExpandoValue_dfe480.fieldName"
 					).eq(
 						"custom_field"
 					),
 					DSL.condition(
 						String.join(
 							"", "CASE WHEN STARTS_WITH(",
-							"ExpandoValue_custom_field.value, '[') AND ",
-							"ENDS_WITH(ExpandoValue_custom_field.value, ",
+							"ExpandoValue_dfe480.value, '[') AND ",
+							"ENDS_WITH(ExpandoValue_dfe480.value, ",
 							"']') THEN ( EXISTS (SELECT value FROM UNNEST(",
 							"JSON_EXTRACT_STRING_ARRAY(",
-							"ExpandoValue_custom_field.value,'$')) AS ",
+							"ExpandoValue_dfe480.value,'$')) AS ",
 							"value WHERE LOWER(value) = 'test')) ELSE ",
-							"LOWER(ExpandoValue_custom_field.value) = ",
+							"LOWER(ExpandoValue_dfe480.value) = ",
 							"'test' END"))
 				)
 			),
@@ -3020,24 +3008,24 @@ public class FilterExpressionTest {
 					DSL.table(
 						"BQExpandoValue"
 					).as(
-						"ExpandoValue_custom_field"
+						"ExpandoValue_dfe480"
 					)
 				).on(
 					DSL.and(
 						DSL.field(
-							"ExpandoValue_custom_field.classPK"
+							"ExpandoValue_dfe480.classPK"
 						).eq(
 							DSL.field(
 								"SAFE_CAST(Organization.organizationId AS " +
 									"STRING)")
 						),
 						DSL.field(
-							"ExpandoValue_custom_field.classType"
+							"ExpandoValue_dfe480.classType"
 						).eq(
 							"com.liferay.portal.kernel.model.Organization"
 						),
 						DSL.field(
-							"ExpandoValue_custom_field.dataSourceId"
+							"ExpandoValue_dfe480.dataSourceId"
 						).eq(
 							DSL.field("Organization.dataSourceId")
 						))
@@ -3048,16 +3036,14 @@ public class FilterExpressionTest {
 						"organizationIds"
 					),
 					DSL.field(
-						"ExpandoValue_custom_field.fieldName"
+						"ExpandoValue_dfe480.fieldName"
 					).eq(
 						"custom_field"
 					),
 					DSL.condition(
 						StringUtil.replace(
 							_QUERY, new String[] {"{0}", "{1}", "{2}"},
-							new String[] {
-								"ExpandoValue_custom_field", ">=", "123"
-							}))
+							new String[] {"ExpandoValue_dfe480", ">=", "123"}))
 				)
 			),
 			"organizations.filter(filter='(custom/custom_field/value ge 123)')",
@@ -3092,24 +3078,24 @@ public class FilterExpressionTest {
 					DSL.table(
 						"BQExpandoValue"
 					).as(
-						"ExpandoValue_custom_field"
+						"ExpandoValue_dfe480"
 					)
 				).on(
 					DSL.and(
 						DSL.field(
-							"ExpandoValue_custom_field.classPK"
+							"ExpandoValue_dfe480.classPK"
 						).eq(
 							DSL.field(
 								"SAFE_CAST(Organization.organizationId AS " +
 									"STRING)")
 						),
 						DSL.field(
-							"ExpandoValue_custom_field.classType"
+							"ExpandoValue_dfe480.classType"
 						).eq(
 							"com.liferay.portal.kernel.model.Organization"
 						),
 						DSL.field(
-							"ExpandoValue_custom_field.dataSourceId"
+							"ExpandoValue_dfe480.dataSourceId"
 						).eq(
 							DSL.field("Organization.dataSourceId")
 						))
@@ -3120,20 +3106,20 @@ public class FilterExpressionTest {
 						"organizationIds"
 					),
 					DSL.field(
-						"ExpandoValue_custom_field.fieldName"
+						"ExpandoValue_dfe480.fieldName"
 					).eq(
 						"custom_field"
 					),
 					DSL.condition(
 						String.join(
 							"", "CASE WHEN STARTS_WITH(",
-							"ExpandoValue_custom_field.value, '[') AND ",
-							"ENDS_WITH(ExpandoValue_custom_field.value, ",
+							"ExpandoValue_dfe480.value, '[') AND ",
+							"ENDS_WITH(ExpandoValue_dfe480.value, ",
 							"']') THEN (EXISTS (SELECT value FROM UNNEST(",
 							"JSON_EXTRACT_STRING_ARRAY(",
-							"ExpandoValue_custom_field.value,'$')) AS ",
+							"ExpandoValue_dfe480.value,'$')) AS ",
 							"value WHERE LOWER(value) LIKE '%test%')) ",
-							"ELSE LOWER(ExpandoValue_custom_field.value) ",
+							"ELSE LOWER(ExpandoValue_dfe480.value) ",
 							"LIKE '%test%' END"))
 				)
 			),
