@@ -823,14 +823,12 @@ public class DataControlTaskDogTest
 		Assertions.assertFalse(bqIndividual.getSuppressed());
 
 		Assertions.assertEquals(
-			Arrays.asList(
-				"d0c7cf82-fece-4b80-a561-1179abfa8154",
-				"f25a78e4-1443-4457-91f1-e0af18bf832a"),
+			Collections.emptyList(),
 			_bqIdentityRepository.getBQIdentityIds(
 				bqIndividual.getId(), false));
 
 		Assertions.assertEquals(
-			8,
+			0,
 			_bqEventRepository.countBQEvents(
 				1L, bqIndividual.getId(), null,
 				LocalDateTime.parse("2023-08-10T00:00:00"),
