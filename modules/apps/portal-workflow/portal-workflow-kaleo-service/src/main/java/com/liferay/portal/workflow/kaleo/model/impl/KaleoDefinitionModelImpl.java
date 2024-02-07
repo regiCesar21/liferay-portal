@@ -26,6 +26,7 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.workflow.kaleo.model.KaleoDefinition;
 import com.liferay.portal.workflow.kaleo.model.KaleoDefinitionModel;
+import com.liferay.portal.workflow.kaleo.model.KaleoDefinitionSoap;
 
 import java.io.Serializable;
 
@@ -34,10 +35,12 @@ import java.lang.reflect.InvocationHandler;
 import java.sql.Blob;
 import java.sql.Types;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
+import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Objects;
@@ -57,6 +60,7 @@ import java.util.function.Function;
  * @see KaleoDefinitionImpl
  * @generated
  */
+@JSON(strict = true)
 public class KaleoDefinitionModelImpl
 	extends BaseModelImpl<KaleoDefinition> implements KaleoDefinitionModel {
 
@@ -158,6 +162,65 @@ public class KaleoDefinitionModelImpl
 	 */
 	@Deprecated
 	public static void setFinderCacheEnabled(boolean finderCacheEnabled) {
+	}
+
+	/**
+	 * Converts the soap model instance into a normal model instance.
+	 *
+	 * @param soapModel the soap model instance to convert
+	 * @return the normal model instance
+	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
+	 */
+	@Deprecated
+	public static KaleoDefinition toModel(KaleoDefinitionSoap soapModel) {
+		if (soapModel == null) {
+			return null;
+		}
+
+		KaleoDefinition model = new KaleoDefinitionImpl();
+
+		model.setMvccVersion(soapModel.getMvccVersion());
+		model.setKaleoDefinitionId(soapModel.getKaleoDefinitionId());
+		model.setGroupId(soapModel.getGroupId());
+		model.setCompanyId(soapModel.getCompanyId());
+		model.setUserId(soapModel.getUserId());
+		model.setUserName(soapModel.getUserName());
+		model.setCreateDate(soapModel.getCreateDate());
+		model.setModifiedDate(soapModel.getModifiedDate());
+		model.setName(soapModel.getName());
+		model.setTitle(soapModel.getTitle());
+		model.setDescription(soapModel.getDescription());
+		model.setContent(soapModel.getContent());
+		model.setScope(soapModel.getScope());
+		model.setVersion(soapModel.getVersion());
+		model.setActive(soapModel.isActive());
+
+		return model;
+	}
+
+	/**
+	 * Converts the soap model instances into normal model instances.
+	 *
+	 * @param soapModels the soap model instances to convert
+	 * @return the normal model instances
+	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
+	 */
+	@Deprecated
+	public static List<KaleoDefinition> toModels(
+		KaleoDefinitionSoap[] soapModels) {
+
+		if (soapModels == null) {
+			return null;
+		}
+
+		List<KaleoDefinition> models = new ArrayList<KaleoDefinition>(
+			soapModels.length);
+
+		for (KaleoDefinitionSoap soapModel : soapModels) {
+			models.add(toModel(soapModel));
+		}
+
+		return models;
 	}
 
 	public KaleoDefinitionModelImpl() {
@@ -339,6 +402,7 @@ public class KaleoDefinitionModelImpl
 			(Map)attributeSetterBiConsumers);
 	}
 
+	@JSON
 	@Override
 	public long getMvccVersion() {
 		return _mvccVersion;
@@ -353,6 +417,7 @@ public class KaleoDefinitionModelImpl
 		_mvccVersion = mvccVersion;
 	}
 
+	@JSON
 	@Override
 	public long getKaleoDefinitionId() {
 		return _kaleoDefinitionId;
@@ -367,6 +432,7 @@ public class KaleoDefinitionModelImpl
 		_kaleoDefinitionId = kaleoDefinitionId;
 	}
 
+	@JSON
 	@Override
 	public long getGroupId() {
 		return _groupId;
@@ -381,6 +447,7 @@ public class KaleoDefinitionModelImpl
 		_groupId = groupId;
 	}
 
+	@JSON
 	@Override
 	public long getCompanyId() {
 		return _companyId;
@@ -405,6 +472,7 @@ public class KaleoDefinitionModelImpl
 			this.<Long>getColumnOriginalValue("companyId"));
 	}
 
+	@JSON
 	@Override
 	public long getUserId() {
 		return _userId;
@@ -435,6 +503,7 @@ public class KaleoDefinitionModelImpl
 	public void setUserUuid(String userUuid) {
 	}
 
+	@JSON
 	@Override
 	public String getUserName() {
 		if (_userName == null) {
@@ -454,6 +523,7 @@ public class KaleoDefinitionModelImpl
 		_userName = userName;
 	}
 
+	@JSON
 	@Override
 	public Date getCreateDate() {
 		return _createDate;
@@ -468,6 +538,7 @@ public class KaleoDefinitionModelImpl
 		_createDate = createDate;
 	}
 
+	@JSON
 	@Override
 	public Date getModifiedDate() {
 		return _modifiedDate;
@@ -488,6 +559,7 @@ public class KaleoDefinitionModelImpl
 		_modifiedDate = modifiedDate;
 	}
 
+	@JSON
 	@Override
 	public String getName() {
 		if (_name == null) {
@@ -516,6 +588,7 @@ public class KaleoDefinitionModelImpl
 		return getColumnOriginalValue("name");
 	}
 
+	@JSON
 	@Override
 	public String getTitle() {
 		if (_title == null) {
@@ -624,6 +697,7 @@ public class KaleoDefinitionModelImpl
 				LocaleUtil.toLanguageId(defaultLocale)));
 	}
 
+	@JSON
 	@Override
 	public String getDescription() {
 		if (_description == null) {
@@ -643,6 +717,7 @@ public class KaleoDefinitionModelImpl
 		_description = description;
 	}
 
+	@JSON
 	@Override
 	public String getContent() {
 		if (_content == null) {
@@ -662,6 +737,7 @@ public class KaleoDefinitionModelImpl
 		_content = content;
 	}
 
+	@JSON
 	@Override
 	public String getScope() {
 		if (_scope == null) {
@@ -690,6 +766,7 @@ public class KaleoDefinitionModelImpl
 		return getColumnOriginalValue("scope");
 	}
 
+	@JSON
 	@Override
 	public int getVersion() {
 		return _version;
@@ -714,11 +791,13 @@ public class KaleoDefinitionModelImpl
 			this.<Integer>getColumnOriginalValue("version"));
 	}
 
+	@JSON
 	@Override
 	public boolean getActive() {
 		return _active;
 	}
 
+	@JSON
 	@Override
 	public boolean isActive() {
 		return _active;
