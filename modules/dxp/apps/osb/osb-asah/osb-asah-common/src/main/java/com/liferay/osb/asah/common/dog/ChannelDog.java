@@ -110,18 +110,11 @@ public class ChannelDog {
 		_experimentRepository.deleteByChannelIdIn(channelIds);
 		_segmentRepository.deleteByChannelIdIn(channelIds);
 
-		_bigQueryQueryExecutor.queryExecute(
-			StringUtils.replace(
-				ResourceUtil.readResourceToString(
-					"dependencies/clear_channel_statement.sql", getClass()),
-				"${channel_ids}", StringUtils.join(channelIds, ",")));
-
 		try {
 			_bigQueryQueryExecutor.queryExecute(
 				StringUtils.replace(
 					ResourceUtil.readResourceToString(
-						"dependencies/clear_daily_tables_statement.sql",
-						getClass()),
+						"dependencies/clear_channel_statement.sql", getClass()),
 					"${channel_ids}", StringUtils.join(channelIds, ",")));
 		}
 		catch (Exception exception) {
