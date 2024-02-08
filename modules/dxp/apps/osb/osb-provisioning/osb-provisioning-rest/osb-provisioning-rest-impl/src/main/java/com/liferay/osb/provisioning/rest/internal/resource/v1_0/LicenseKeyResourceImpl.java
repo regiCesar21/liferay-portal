@@ -759,8 +759,8 @@ public class LicenseKeyResourceImpl
 			if ((licenseKey.getComplimentary() != null) &&
 				licenseKey.getComplimentary()) {
 
-				complimentary = true;
 				allowComplimentary = true;
+				complimentary = true;
 			}
 
 			com.liferay.osb.provisioning.license.model.LicenseKey
