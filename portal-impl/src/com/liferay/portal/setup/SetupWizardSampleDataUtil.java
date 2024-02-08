@@ -189,7 +189,7 @@ public class SetupWizardSampleDataUtil {
 		}
 		else {
 			UserLocalServiceUtil.addDefaultAdminUser(
-				company.getCompanyId(), screenName, emailAddress, locale,
+				company.getCompanyId(), PropsValues.DEFAULT_ADMIN_PASSWORD, screenName, emailAddress, locale,
 				firstName, StringPool.BLANK, lastName);
 
 			adminUser = UserLocalServiceUtil.getUserByEmailAddress(
