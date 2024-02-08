@@ -31,6 +31,7 @@ public class DeleteChannelsNanite extends BaseNanite {
 	public void run(JSONObject contextJSONObject) throws Exception {
 		_channelDog.deleteChannels(
 			JSONUtil.toLongSet(contextJSONObject.getJSONArray("channelIds")),
+			String.valueOf(contextJSONObject.get("createDate")),
 			String.valueOf(contextJSONObject.get("userId")),
 			String.valueOf(contextJSONObject.get("userName")));
 	}

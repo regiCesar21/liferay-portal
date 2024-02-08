@@ -65,6 +65,8 @@ public class ChannelsRestController extends BaseRestController {
 			JSONUtil.put(
 				"channelIds", jsonObject.getJSONArray("channelIds")
 			).put(
+				"createDate", DateUtil.newDateString()
+			).put(
 				"userId", jsonObject.get("userId")
 			).put(
 				"userName", jsonObject.get("userName")

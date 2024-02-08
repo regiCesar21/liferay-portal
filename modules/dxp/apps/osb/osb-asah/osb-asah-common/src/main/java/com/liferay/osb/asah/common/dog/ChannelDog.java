@@ -100,7 +100,8 @@ public class ChannelDog {
 
 	@Transactional
 	public void clearChannels(
-			Set<Long> channelIds, boolean clear, String userId, String userName)
+			Set<Long> channelIds, boolean clear, String createDateString,
+			String userId, String userName)
 		throws Exception {
 
 		_customAssetDashboardRepository.deleteByChannelIdIn(channelIds);
@@ -122,10 +123,11 @@ public class ChannelDog {
 	}
 
 	public void deleteChannels(
-			Set<Long> channelIds, String userId, String userName)
+			Set<Long> channelIds, String createDateString, String userId,
+			String userName)
 		throws Exception {
 
-		clearChannels(channelIds, false, userId, userName);
+		clearChannels(channelIds, false, createDateString, userId, userName);
 
 		_channelRepository.deleteByIdIn(new HashSet<>(channelIds));
 
@@ -440,6 +442,9 @@ public class ChannelDog {
 	private static final String _CHANNEL_TYPE_MULTIPLE = "multiple";
 
 	private static final Log _log = LogFactory.getLog(ChannelDog.class);
+
+	@Autowired
+	private AsahTaskDog _asahTaskDog;
 
 	@Autowired
 	private AuditEventDog _auditEventDog;
