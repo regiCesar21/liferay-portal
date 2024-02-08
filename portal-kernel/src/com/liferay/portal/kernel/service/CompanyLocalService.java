@@ -83,7 +83,10 @@ public interface CompanyLocalService
 	 */
 	public Company addCompany(
 			String webId, String virtualHostname, String mx, boolean system,
-			int maxUsers, boolean active)
+			int maxUsers, boolean active, String defaultAdminPassword,
+			String defaultAdminScreenName, String defaultAdminEmailAddress,
+			String defaultAdminFirstName, String defaultAdminMiddleName,
+			String defaultAdminLastName)
 		throws PortalException;
 
 	/**
@@ -112,7 +115,12 @@ public interface CompanyLocalService
 		isolation = Isolation.PORTAL,
 		rollbackFor = {PortalException.class, SystemException.class}
 	)
-	public Company checkCompany(String webId, String mx) throws PortalException;
+	public Company checkCompany(
+			String webId, String mx, String defaultAdminPassword,
+			String defaultAdminScreenName, String defaultAdminEmailAddress,
+			String defaultAdminFirstName, String defaultAdminMiddleName,
+			String defaultAdminLastName)
+		throws PortalException;
 
 	/**
 	 * Checks if the company has an encryption key. It will create a key if one

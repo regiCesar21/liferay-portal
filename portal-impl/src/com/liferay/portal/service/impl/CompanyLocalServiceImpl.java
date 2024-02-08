@@ -149,7 +149,10 @@ public class CompanyLocalServiceImpl extends CompanyLocalServiceBaseImpl {
 	@Override
 	public Company addCompany(
 			String webId, String virtualHostname, String mx, boolean system,
-			int maxUsers, boolean active)
+			int maxUsers, boolean active,
+			String defaultAdminPassword, String defaultAdminScreenName,
+			String defaultAdminEmailAddress, String defaultAdminFirstName,
+			String defaultAdminMiddleName, String defaultAdminLastName)
 		throws PortalException {
 
 		// Company
@@ -167,7 +170,7 @@ public class CompanyLocalServiceImpl extends CompanyLocalServiceBaseImpl {
 		validateVirtualHost(webId, virtualHostname);
 		validateMx(-1, mx);
 
-		Company company = checkCompany(webId, mx);
+		Company company = checkCompany(webId, mx, defaultAdminPassword, defaultAdminScreenName, defaultAdminEmailAddress, defaultAdminFirstName, defaultAdminMiddleName, defaultAdminLastName);
 
 		company = companyPersistence.fetchByPrimaryKey(company.getCompanyId());
 
@@ -199,7 +202,7 @@ public class CompanyLocalServiceImpl extends CompanyLocalServiceBaseImpl {
 	public Company checkCompany(String webId) throws PortalException {
 		String mx = webId;
 
-		return companyLocalService.checkCompany(webId, mx);
+		return companyLocalService.checkCompany(webId, mx, null, null, null, null, null,null);
 	}
 
 	/**
@@ -218,7 +221,10 @@ public class CompanyLocalServiceImpl extends CompanyLocalServiceBaseImpl {
 		isolation = Isolation.PORTAL,
 		rollbackFor = {PortalException.class, SystemException.class}
 	)
-	public Company checkCompany(String webId, String mx)
+	public Company checkCompany(String webId, String mx, String defaultAdminPassword,
+								String defaultAdminScreenName, String defaultAdminEmailAddress,
+								String defaultAdminFirstName, String defaultAdminMiddleName,
+								String defaultAdminLastName)
 		throws PortalException {
 
 		// Company
@@ -429,11 +435,27 @@ public class CompanyLocalServiceImpl extends CompanyLocalServiceBaseImpl {
 					PropsValues.DEFAULT_ADMIN_EMAIL_ADDRESS_PREFIX + "@" + mx;
 
 				userLocalService.addDefaultAdminUser(
-					companyId, PropsValues.DEFAULT_ADMIN_SCREEN_NAME,
-					emailAddress, defaultUser.getLocale(),
-					PropsValues.DEFAULT_ADMIN_FIRST_NAME,
-					PropsValues.DEFAULT_ADMIN_MIDDLE_NAME,
-					PropsValues.DEFAULT_ADMIN_LAST_NAME);
+					companyId,
+					GetterUtil.getString(
+						defaultAdminPassword,
+						PropsValues.DEFAULT_ADMIN_PASSWORD),
+					GetterUtil.getString(
+						defaultAdminScreenName,
+						PropsValues.DEFAULT_ADMIN_SCREEN_NAME),
+					GetterUtil.getString(
+						defaultAdminEmailAddress,
+						PropsValues.DEFAULT_ADMIN_EMAIL_ADDRESS_PREFIX + "@" +
+						mx),
+					defaultUser.getLocale(),
+					GetterUtil.getString(
+						defaultAdminFirstName,
+						PropsValues.DEFAULT_ADMIN_FIRST_NAME),
+					GetterUtil.getString(
+						defaultAdminMiddleName,
+						PropsValues.DEFAULT_ADMIN_MIDDLE_NAME),
+					GetterUtil.getString(
+						defaultAdminLastName,
+						PropsValues.DEFAULT_ADMIN_LAST_NAME));
 			}
 
 			// Portlets

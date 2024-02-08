@@ -46,11 +46,17 @@ public class CompanyServiceUtil {
 	 */
 	public static Company addCompany(
 			String webId, String virtualHost, String mx, boolean system,
-			int maxUsers, boolean active)
+			int maxUsers, boolean active, String defaultAdminPassword,
+			String defaultAdminScreenName, String defaultAdminEmailAddress,
+			String defaultAdminFirstName, String defaultAdminMiddleName,
+			String defaultAdminLastName)
 		throws PortalException {
 
 		return getService().addCompany(
-			webId, virtualHost, mx, system, maxUsers, active);
+			webId, virtualHost, mx, system, maxUsers, active,
+			defaultAdminPassword, defaultAdminScreenName,
+			defaultAdminEmailAddress, defaultAdminFirstName,
+			defaultAdminMiddleName, defaultAdminLastName);
 	}
 
 	public static Company deleteCompany(long companyId) throws PortalException {

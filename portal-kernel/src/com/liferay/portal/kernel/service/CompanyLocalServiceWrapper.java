@@ -52,11 +52,20 @@ public class CompanyLocalServiceWrapper
 	@Override
 	public com.liferay.portal.kernel.model.Company addCompany(
 			java.lang.String webId, java.lang.String virtualHostname,
-			java.lang.String mx, boolean system, int maxUsers, boolean active)
+			java.lang.String mx, boolean system, int maxUsers, boolean active,
+			java.lang.String defaultAdminPassword,
+			java.lang.String defaultAdminScreenName,
+			java.lang.String defaultAdminEmailAddress,
+			java.lang.String defaultAdminFirstName,
+			java.lang.String defaultAdminMiddleName,
+			java.lang.String defaultAdminLastName)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _companyLocalService.addCompany(
-			webId, virtualHostname, mx, system, maxUsers, active);
+			webId, virtualHostname, mx, system, maxUsers, active,
+			defaultAdminPassword, defaultAdminScreenName,
+			defaultAdminEmailAddress, defaultAdminFirstName,
+			defaultAdminMiddleName, defaultAdminLastName);
 	}
 
 	/**
@@ -89,10 +98,19 @@ public class CompanyLocalServiceWrapper
 	 */
 	@Override
 	public com.liferay.portal.kernel.model.Company checkCompany(
-			java.lang.String webId, java.lang.String mx)
+			java.lang.String webId, java.lang.String mx,
+			java.lang.String defaultAdminPassword,
+			java.lang.String defaultAdminScreenName,
+			java.lang.String defaultAdminEmailAddress,
+			java.lang.String defaultAdminFirstName,
+			java.lang.String defaultAdminMiddleName,
+			java.lang.String defaultAdminLastName)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
-		return _companyLocalService.checkCompany(webId, mx);
+		return _companyLocalService.checkCompany(
+			webId, mx, defaultAdminPassword, defaultAdminScreenName,
+			defaultAdminEmailAddress, defaultAdminFirstName,
+			defaultAdminMiddleName, defaultAdminLastName);
 	}
 
 	/**

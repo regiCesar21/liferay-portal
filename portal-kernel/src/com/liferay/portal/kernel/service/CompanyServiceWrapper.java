@@ -34,11 +34,20 @@ public class CompanyServiceWrapper
 	@Override
 	public com.liferay.portal.kernel.model.Company addCompany(
 			java.lang.String webId, java.lang.String virtualHost,
-			java.lang.String mx, boolean system, int maxUsers, boolean active)
+			java.lang.String mx, boolean system, int maxUsers, boolean active,
+			java.lang.String defaultAdminPassword,
+			java.lang.String defaultAdminScreenName,
+			java.lang.String defaultAdminEmailAddress,
+			java.lang.String defaultAdminFirstName,
+			java.lang.String defaultAdminMiddleName,
+			java.lang.String defaultAdminLastName)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _companyService.addCompany(
-			webId, virtualHost, mx, system, maxUsers, active);
+			webId, virtualHost, mx, system, maxUsers, active,
+			defaultAdminPassword, defaultAdminScreenName,
+			defaultAdminEmailAddress, defaultAdminFirstName,
+			defaultAdminMiddleName, defaultAdminLastName);
 	}
 
 	@Override

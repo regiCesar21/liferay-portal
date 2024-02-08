@@ -65,11 +65,17 @@ public class CompanyLocalServiceUtil {
 	 */
 	public static Company addCompany(
 			String webId, String virtualHostname, String mx, boolean system,
-			int maxUsers, boolean active)
+			int maxUsers, boolean active, String defaultAdminPassword,
+			String defaultAdminScreenName, String defaultAdminEmailAddress,
+			String defaultAdminFirstName, String defaultAdminMiddleName,
+			String defaultAdminLastName)
 		throws PortalException {
 
 		return getService().addCompany(
-			webId, virtualHostname, mx, system, maxUsers, active);
+			webId, virtualHostname, mx, system, maxUsers, active,
+			defaultAdminPassword, defaultAdminScreenName,
+			defaultAdminEmailAddress, defaultAdminFirstName,
+			defaultAdminMiddleName, defaultAdminLastName);
 	}
 
 	/**
@@ -96,10 +102,17 @@ public class CompanyLocalServiceUtil {
 	 * @param mx the company's mail domain
 	 * @return the company with the web domain and mail domain
 	 */
-	public static Company checkCompany(String webId, String mx)
+	public static Company checkCompany(
+			String webId, String mx, String defaultAdminPassword,
+			String defaultAdminScreenName, String defaultAdminEmailAddress,
+			String defaultAdminFirstName, String defaultAdminMiddleName,
+			String defaultAdminLastName)
 		throws PortalException {
 
-		return getService().checkCompany(webId, mx);
+		return getService().checkCompany(
+			webId, mx, defaultAdminPassword, defaultAdminScreenName,
+			defaultAdminEmailAddress, defaultAdminFirstName,
+			defaultAdminMiddleName, defaultAdminLastName);
 	}
 
 	/**

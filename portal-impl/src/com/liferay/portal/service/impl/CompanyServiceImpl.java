@@ -56,7 +56,10 @@ public class CompanyServiceImpl extends CompanyServiceBaseImpl {
 	@Override
 	public Company addCompany(
 			String webId, String virtualHost, String mx, boolean system,
-			int maxUsers, boolean active)
+			int maxUsers, boolean active, String defaultAdminPassword,
+			String defaultAdminScreenName, String defaultAdminEmailAddress,
+			String defaultAdminFirstName, String defaultAdminMiddleName,
+			String defaultAdminLastName)
 		throws PortalException {
 
 		PermissionChecker permissionChecker = getPermissionChecker();
@@ -66,7 +69,9 @@ public class CompanyServiceImpl extends CompanyServiceBaseImpl {
 		}
 
 		return companyLocalService.addCompany(
-			webId, virtualHost, mx, system, maxUsers, active);
+			webId, virtualHost, mx, system, maxUsers, active, defaultAdminPassword, defaultAdminScreenName,
+			defaultAdminEmailAddress, defaultAdminFirstName,
+			defaultAdminMiddleName, defaultAdminLastName);
 	}
 
 	@JSONWebService(mode = JSONWebServiceMode.IGNORE)
