@@ -203,16 +203,19 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 	 */
 	@Override
 	public User addDefaultAdminUser(
-			long companyId, String screenName, String emailAddress,
+			long companyId, String password,String screenName, String emailAddress,
 			Locale locale, String firstName, String middleName, String lastName)
 		throws PortalException {
 
 		long creatorUserId = 0;
 		boolean autoPassword = false;
 
-		String password1 = PropsValues.DEFAULT_ADMIN_PASSWORD;
+		boolean passwordReset = _isPasswordReset(companyId);
 
-		String password2 = password1;
+		if (Validator.isNull(password)) {
+			autoPassword = true;
+			passwordReset = true;
+		}
 
 		boolean autoScreenName = false;
 
@@ -259,18 +262,25 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 		ServiceContext serviceContext = new ServiceContext();
 
 		User defaultAdminUser = addUser(
-			creatorUserId, companyId, autoPassword, password1, password2,
+			creatorUserId, companyId, autoPassword, password, password,
 			autoScreenName, screenName, emailAddress, facebookId, openId,
 			locale, firstName, middleName, lastName, prefixId, suffixId, male,
 			birthdayMonth, birthdayDay, birthdayYear, jobTitle, groupIds,
 			organizationIds, roleIds, userGroupIds, sendEmail, serviceContext);
+
+		if (autoPassword) {
+			defaultAdminUser.setReminderQueryAnswer(
+				WorkflowConstants.LABEL_PENDING);
+
+			defaultAdminUser = userPersistence.update(defaultAdminUser);
+		}
 
 		updateEmailAddressVerified(defaultAdminUser.getUserId(), true);
 
 		updateLastLogin(
 			defaultAdminUser.getUserId(), defaultAdminUser.getLoginIP());
 
-		updatePasswordReset(defaultAdminUser.getUserId(), false);
+		updatePasswordReset(defaultAdminUser.getUserId(), passwordReset);
 
 		return defaultAdminUser;
 	}
@@ -7308,6 +7318,28 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 			}
 
 		};
+
+
+	private boolean _isPasswordReset(long companyId) {
+		try {
+			PasswordPolicy passwordPolicy =
+				passwordPolicyLocalService.getDefaultPasswordPolicy(companyId);
+
+			if ((passwordPolicy != null) && passwordPolicy.isChangeable() &&
+				passwordPolicy.isChangeRequired()) {
+
+				return true;
+			}
+		}
+		catch (PortalException portalException) {
+			if (_log.isWarnEnabled()) {
+				_log.warn(portalException);
+			}
+		}
+
+		return false;
+	}
+
 
 	private final PortalCacheMapSynchronizeUtil.Synchronizer
 		<Serializable, Serializable> _synchronizer =

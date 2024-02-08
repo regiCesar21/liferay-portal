@@ -49,14 +49,14 @@ public class UserLocalServiceUtil {
 	 * @return the new default admin user
 	 */
 	public static User addDefaultAdminUser(
-			long companyId, String screenName, String emailAddress,
-			java.util.Locale locale, String firstName, String middleName,
-			String lastName)
+			long companyId, String password, String screenName,
+			String emailAddress, java.util.Locale locale, String firstName,
+			String middleName, String lastName)
 		throws PortalException {
 
 		return getService().addDefaultAdminUser(
-			companyId, screenName, emailAddress, locale, firstName, middleName,
-			lastName);
+			companyId, password, screenName, emailAddress, locale, firstName,
+			middleName, lastName);
 	}
 
 	/**

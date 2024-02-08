@@ -33,15 +33,15 @@ public class UserLocalServiceWrapper
 	 */
 	@Override
 	public com.liferay.portal.kernel.model.User addDefaultAdminUser(
-			long companyId, java.lang.String screenName,
-			java.lang.String emailAddress, java.util.Locale locale,
-			java.lang.String firstName, java.lang.String middleName,
-			java.lang.String lastName)
+			long companyId, java.lang.String password,
+			java.lang.String screenName, java.lang.String emailAddress,
+			java.util.Locale locale, java.lang.String firstName,
+			java.lang.String middleName, java.lang.String lastName)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _userLocalService.addDefaultAdminUser(
-			companyId, screenName, emailAddress, locale, firstName, middleName,
-			lastName);
+			companyId, password, screenName, emailAddress, locale, firstName,
+			middleName, lastName);
 	}
 
 	/**

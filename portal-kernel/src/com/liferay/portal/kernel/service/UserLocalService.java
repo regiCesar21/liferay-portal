@@ -74,8 +74,9 @@ public interface UserLocalService
 	 * @return the new default admin user
 	 */
 	public User addDefaultAdminUser(
-			long companyId, String screenName, String emailAddress,
-			Locale locale, String firstName, String middleName, String lastName)
+			long companyId, String password, String screenName,
+			String emailAddress, Locale locale, String firstName,
+			String middleName, String lastName)
 		throws PortalException;
 
 	/**
