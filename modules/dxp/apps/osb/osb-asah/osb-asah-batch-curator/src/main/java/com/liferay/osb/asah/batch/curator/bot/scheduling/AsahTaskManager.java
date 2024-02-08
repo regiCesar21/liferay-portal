@@ -68,7 +68,9 @@ public class AsahTaskManager {
 		if (Objects.equals(asahTask.getClassName(), "ClearChannelsNanite") ||
 			Objects.equals(asahTask.getClassName(), "DeleteChannelsNanite")) {
 
-			if (checkNanite("DataControlNanite")) {
+			if (checkNanite("DataControlNanite") ||
+				checkNanite("UpdateMembershipsNanite")) {
+
 				if (_log.isDebugEnabled()) {
 					_log.debug("Pending running " + asahTask.getClassName());
 				}
@@ -132,6 +134,16 @@ public class AsahTaskManager {
 		}
 		else if (Objects.equals(
 					asahTask.getClassName(), "UpdateMembershipsNanite")) {
+
+			if (checkNanite("ClearChannelsNanite") ||
+				checkNanite("DeleteChannelsNanite")) {
+
+				if (_log.isDebugEnabled()) {
+					_log.debug("Pending running UpdateMembershipsNanite");
+				}
+
+				return;
+			}
 
 			JSONObject contextJSONObject = asahTask.getContextJSONObject();
 
