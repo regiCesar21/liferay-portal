@@ -5,6 +5,7 @@
 
 package com.liferay.osb.asah.common.dog.test;
 
+import com.liferay.osb.asah.common.date.DateUtil;
 import com.liferay.osb.asah.common.dog.ChannelDog;
 import com.liferay.osb.asah.common.entity.BQSession;
 import com.liferay.osb.asah.common.entity.Channel;
@@ -63,7 +64,8 @@ public class ChannelDogTest
 	@SQLResource(resourcePath = "test_clear_channels.sql")
 	@Test
 	public void testClearChannels() throws Exception {
-		_channelDog.clearChannels(SetUtil.of(1L, 2L), true, "0", "test");
+		_channelDog.clearChannels(
+			SetUtil.of(1L, 2L), true, DateUtil.newDateString(), "0", "test");
 
 		_assertClearChannels(1L);
 
@@ -88,7 +90,8 @@ public class ChannelDogTest
 	@SQLResource(resourcePath = "test_delete_channels.sql")
 	@Test
 	public void testDeleteChannels() throws Exception {
-		_channelDog.deleteChannels(SetUtil.of(1L), "0", "test");
+		_channelDog.deleteChannels(
+			SetUtil.of(1L), DateUtil.newDateString(), "0", "test");
 
 		_assertClearChannels(1L);
 
