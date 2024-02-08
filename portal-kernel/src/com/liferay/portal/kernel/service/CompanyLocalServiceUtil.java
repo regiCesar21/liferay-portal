@@ -53,26 +53,46 @@ public class CompanyLocalServiceUtil {
 
 	/**
 	 * Adds a company with the primary key.
+	 * Adds a company with the primary key.
 	 *
 	 * @param companyId the primary key of the company (optionally <code>null</code> or
+	 * @param companyId the primary key of the company (optionally <code>null</code> or
+	 <code>0</code> to generate a key automatically)
 	 <code>0</code> to generate a key automatically)
 	 * @param webId the the company's web domain
+	 * @param webId the the company's web domain
+	 * @param virtualHostname the company's virtual host name
 	 * @param virtualHostname the company's virtual host name
 	 * @param mx the company's mail domain
-	 * @param system whether the company is the very first company (i.e., the
-	 super company)
+	 * @param mx the company's mail domain
+	 * @param maxUsers the max number of company users (optionally
 	 * @param maxUsers the max number of company users (optionally
 	 <code>0</code>)
+	 <code>0</code>)
 	 * @param active whether the company is active
+	 * @param active whether the company is active
+	 * @param defaultAdminPassword Password set to the admin user of the company
+	 * @param defaultAdminScreenName Screen name set to the admin user of the company
+	 * @param defaultAdminEmailAddress Email address set to the admin user of the company
+	 * @param defaultAdminFirstName First name set to the admin user of the company
+	 * @param defaultAdminMiddleName Middle name set to the admin user of the company
+	 * @param defaultAdminLastName Last name set to the admin user of the company
+	 * @return the company
 	 * @return the company
 	 */
 	public static Company addCompany(
 			Long companyId, String webId, String virtualHostname, String mx,
-			boolean system, int maxUsers, boolean active)
+			boolean system, int maxUsers, boolean active,
+			String defaultAdminPassword, String defaultAdminScreenName,
+			String defaultAdminEmailAddress, String defaultAdminFirstName,
+			String defaultAdminMiddleName, String defaultAdminLastName)
 		throws PortalException {
 
 		return getService().addCompany(
-			companyId, webId, virtualHostname, mx, system, maxUsers, active);
+			companyId, webId, virtualHostname, mx, system, maxUsers, active,
+			defaultAdminPassword, defaultAdminScreenName,
+			defaultAdminEmailAddress, defaultAdminFirstName,
+			defaultAdminMiddleName, defaultAdminLastName);
 	}
 
 	/**
