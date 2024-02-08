@@ -10,6 +10,7 @@ import com.liferay.osb.asah.common.entity.Channel;
 import com.liferay.osb.asah.common.entity.ChannelDataSource;
 import com.liferay.osb.asah.common.entity.DataSource;
 import com.liferay.osb.asah.common.http.ChannelHttp;
+import com.liferay.osb.asah.common.json.JSONUtil;
 import com.liferay.osb.asah.common.repository.ChannelRepository;
 import com.liferay.osb.asah.common.repository.CustomAssetDashboardRepository;
 import com.liferay.osb.asah.common.repository.DataSourceRepository;
@@ -114,6 +115,34 @@ public class ChannelDog {
 				ResourceUtil.readResourceToString(
 					"dependencies/clear_channel_statement.sql", getClass()),
 				"${channel_ids}", StringUtils.join(channelIds, ",")));
+
+		try {
+			_bigQueryQueryExecutor.queryExecute(
+				StringUtils.replace(
+					ResourceUtil.readResourceToString(
+						"dependencies/clear_daily_tables_statement.sql",
+						getClass()),
+					"${channel_ids}", StringUtils.join(channelIds, ",")));
+		}
+		catch (Exception exception) {
+			String className = "DeleteChannelsNanite";
+
+			if (clear) {
+				className = "ClearChannelsNanite";
+			}
+
+			_asahTaskDog.scheduleAsahTask(
+				className,
+				JSONUtil.put(
+					"channelIds", JSONUtil.putAll(channelIds)
+				).put(
+					"createDate", createDateString
+				).put(
+					"userId", userId
+				).put(
+					"userName", userName
+				));
+		}
 
 		if (clear) {
 			_auditEventDog.addAuditEvent(
