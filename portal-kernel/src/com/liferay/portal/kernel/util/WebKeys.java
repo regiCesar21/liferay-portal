@@ -83,6 +83,7 @@ public interface WebKeys {
 
 	public static final String CAS_LOGIN = "CAS_LOGIN";
 
+	public static final String TITLE_SET_PASSWORD = "TITLE_SET_PASSWORD";
 	public static final String CAS_NO_SUCH_USER_EXCEPTION =
 		"CAS_NO_SUCH_USER_EXCEPTION";
 
