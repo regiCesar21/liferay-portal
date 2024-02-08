@@ -48,7 +48,7 @@ public interface WebKeys {
 
 	public static final String AUTHENTICATION_TOKEN =
 		"LIFERAY_SHARED_AUTHENTICATION_TOKEN";
-
+	public static final String TITLE_SET_PASSWORD = "TITLE_SET_PASSWORD";
 	public static final String AVAILABLE_LOCALES = "AVAILABLE_LOCALES";
 
 	public static final String BEAN_FILTER_NAMES = "BEAN_FILTER_NAMES";
