@@ -5,7 +5,6 @@
 
 package com.liferay.portal.instances.web.internal.portlet.action;
 
-import com.liferay.petra.string.StringPool;
 import com.liferay.portal.instances.service.PortalInstancesLocalService;
 import com.liferay.portal.instances.web.internal.constants.PortalInstancesPortletKeys;
 import com.liferay.portal.kernel.exception.CompanyMxException;
@@ -30,17 +29,15 @@ import com.liferay.portal.kernel.servlet.SessionMessages;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
-import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
-import com.liferay.portal.util.PropsValues;
+
 import javax.servlet.ServletContext;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
-
 
 /**
  * @author Brian Wing Shun Chan
@@ -96,7 +93,18 @@ public class EditInstanceMVCActionCommand extends BaseMVCActionCommand {
 			}
 			else if (exception instanceof CompanyMxException ||
 					 exception instanceof CompanyVirtualHostException ||
-					 exception instanceof CompanyWebIdException || exception instanceof UserScreenNameException || exception instanceof UserEmailAddressException || exception instanceof UserPasswordException || exception instanceof ContactNameException.MustHaveFirstName || exception instanceof ContactNameException.MustHaveLastName || exception instanceof ContactNameException.MustHaveMiddleName || exception instanceof ContactNameException.MustHaveValidFullName ) {
+					 exception instanceof CompanyWebIdException ||
+					 exception instanceof
+						 ContactNameException.MustHaveFirstName ||
+					 exception instanceof
+						 ContactNameException.MustHaveLastName ||
+					 exception instanceof
+						 ContactNameException.MustHaveMiddleName ||
+					 exception instanceof
+						 ContactNameException.MustHaveValidFullName ||
+					 exception instanceof UserEmailAddressException ||
+					 exception instanceof UserPasswordException ||
+					 exception instanceof UserScreenNameException) {
 
 				long companyId = ParamUtil.getLong(actionRequest, "companyId");
 
@@ -163,9 +171,10 @@ public class EditInstanceMVCActionCommand extends BaseMVCActionCommand {
 				actionRequest, "defaultAdminLastName", null);
 
 			Company company = _companyService.addCompany(
-				webId, virtualHostname, mx, false, maxUsers, active, defaultAdminPassword,
-				defaultAdminScreenName, defaultAdminEmailAddress,
-				defaultAdminFirstName, StringPool.BLANK, defaultAdminLastName);
+				webId, virtualHostname, mx, false, maxUsers, active,
+				defaultAdminPassword, defaultAdminScreenName,
+				defaultAdminEmailAddress, defaultAdminFirstName,
+				defaultAdminMiddleName, defaultAdminLastName);
 
 			String siteInitializerKey = ParamUtil.getString(
 				actionRequest, "siteInitializerKey");

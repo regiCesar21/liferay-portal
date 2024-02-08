@@ -998,7 +998,8 @@ public class CompanyLocalServiceTest {
 
 	protected Company addCompany(String webId) throws Exception {
 		Company company = CompanyLocalServiceUtil.addCompany(
-			null, webId, webId, "test.com", false, 0, true, null, null,null, null,null,null);
+			null, webId, webId, "test.com", false, 0, true, null, null, null,
+			null, null, null);
 
 		PortalInstances.initCompany(_mockServletContext, webId);
 

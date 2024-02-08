@@ -38,13 +38,13 @@ renderResponse.setTitle((selCompany == null) ? LanguageUtil.get(request, "new-in
 	<liferay-ui:error exception="<%= CompanyMxException.class %>" message="please-enter-a-valid-mail-domain" />
 	<liferay-ui:error exception="<%= CompanyVirtualHostException.class %>" message="please-enter-a-valid-virtual-host" />
 	<liferay-ui:error exception="<%= CompanyWebIdException.class %>" message="please-enter-a-valid-web-id" />
-	<liferay-ui:error exception="<%= UserScreenNameException.class %>" message="please-enter-a-valid-screen-name" />
-	<liferay-ui:error exception="<%= UserEmailAddressException.class %>" message="please-enter-a-valid-email-address" />
-	<liferay-ui:error exception="<%= UserPasswordException.class %>" message="please-enter-a-valid-password" />
 	<liferay-ui:error exception="<%= ContactNameException.MustHaveFirstName.class %>" message="please-enter-a-valid-first-name" />
 	<liferay-ui:error exception="<%= ContactNameException.MustHaveLastName.class %>" message="please-enter-a-valid-last-name" />
 	<liferay-ui:error exception="<%= ContactNameException.MustHaveMiddleName.class %>" message="please-enter-a-valid-middle-name" />
 	<liferay-ui:error exception="<%= ContactNameException.MustHaveValidFullName.class %>" message="please-enter-a-valid-first-middle-and-last-name" />
+	<liferay-ui:error exception="<%= UserEmailAddressException.class %>" message="please-enter-a-valid-email-address" />
+	<liferay-ui:error exception="<%= UserPasswordException.class %>" message="please-enter-a-valid-password" />
+	<liferay-ui:error exception="<%= UserScreenNameException.class %>" message="please-enter-a-valid-screen-name" />
 
 	<aui:model-context bean="<%= selCompany %>" model="<%= Company.class %>" />
 
@@ -81,7 +81,7 @@ renderResponse.setTitle((selCompany == null) ? LanguageUtil.get(request, "new-in
 				<aui:input label="password" name="defaultAdminPassword" required="<%= true %>" type="password" />
 
 				<%
-					FullNameDefinition fullNameDefinition = FullNameDefinitionFactory.getInstance(locale);
+				FullNameDefinition fullNameDefinition = FullNameDefinitionFactory.getInstance(locale);
 				%>
 
 				<c:if test='<%= fullNameDefinition.isFieldRequired("first-name") %>'>
@@ -96,8 +96,6 @@ renderResponse.setTitle((selCompany == null) ? LanguageUtil.get(request, "new-in
 					<aui:input label="last-name" name="defaultAdminLastName" required="<%= true %>" type="text" value="<%= PropsUtil.get(PropsKeys.DEFAULT_ADMIN_LAST_NAME) %>" />
 				</c:if>
 			</c:if>
-
-
 		</aui:fieldset>
 	</aui:fieldset-group>
 

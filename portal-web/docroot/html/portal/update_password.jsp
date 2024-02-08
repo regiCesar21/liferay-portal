@@ -24,6 +24,7 @@ if (referer.startsWith(themeDisplay.getPathMain() + "/portal/update_password") &
 
 String titlePage = (String)request.getAttribute(WebKeys.TITLE_SET_PASSWORD);
 boolean showCancelButton = false;
+
 if (Validator.isNull(titlePage)) {
 	titlePage = "change-password";
 	showCancelButton = true;
