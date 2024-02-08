@@ -777,7 +777,7 @@ public class MainServlet extends HttpServlet {
 		if (StartupHelperUtil.isDBNew()) {
 			CompanyLocalServiceUtil.addCompany(
 				null, PropsValues.COMPANY_DEFAULT_WEB_ID, "localhost",
-				PropsValues.COMPANY_DEFAULT_WEB_ID, false, 0, true);
+				PropsValues.COMPANY_DEFAULT_WEB_ID, false, 0, true, null, null, null, null, null, null);
 		}
 
 		ServletContext servletContext = getServletContext();

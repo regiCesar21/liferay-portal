@@ -98,7 +98,7 @@ public class PortalInstanceResourceImpl extends BasePortalInstanceResourceImpl {
 		Company company = _companyLocalService.addCompany(
 			portalInstance.getCompanyId(), portalInstance.getPortalInstanceId(),
 			portalInstance.getVirtualHost(), portalInstance.getDomain(), false,
-			0, true);
+			0, true, null, null, null, null, null, null);
 
 		_portalInstancesLocalService.initializePortalInstance(
 			company.getCompanyId(),
