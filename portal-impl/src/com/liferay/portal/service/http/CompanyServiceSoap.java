@@ -66,13 +66,19 @@ public class CompanyServiceSoap {
 	 */
 	public static com.liferay.portal.kernel.model.CompanySoap addCompany(
 			String webId, String virtualHost, String mx, boolean system,
-			int maxUsers, boolean active)
+			int maxUsers, boolean active, String defaultAdminPassword,
+			String defaultAdminScreenName, String defaultAdminEmailAddress,
+			String defaultAdminFirstName, String defaultAdminMiddleName,
+			String defaultAdminLastName)
 		throws RemoteException {
 
 		try {
 			com.liferay.portal.kernel.model.Company returnValue =
 				CompanyServiceUtil.addCompany(
-					webId, virtualHost, mx, system, maxUsers, active);
+					webId, virtualHost, mx, system, maxUsers, active,
+					defaultAdminPassword, defaultAdminScreenName,
+					defaultAdminEmailAddress, defaultAdminFirstName,
+					defaultAdminMiddleName, defaultAdminLastName);
 
 			return com.liferay.portal.kernel.model.CompanySoap.toSoapModel(
 				returnValue);
