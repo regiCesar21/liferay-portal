@@ -14,6 +14,7 @@ import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
 import com.liferay.portal.kernel.security.permission.resource.PortletResourcePermission;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.workflow.kaleo.model.KaleoDefinition;
 import com.liferay.portal.workflow.kaleo.service.KaleoDefinitionLocalService;
 import com.liferay.portal.workflow.kaleo.service.base.KaleoDefinitionServiceBaseImpl;
@@ -78,7 +79,9 @@ public class KaleoDefinitionServiceImpl extends KaleoDefinitionServiceBaseImpl {
 	@Reference
 	private KaleoDefinitionLocalService _kaleoDefinitionLocalService;
 
-	@Reference
+	@Reference(
+		target = "(resource.name=" + WorkflowConstants.RESOURCE_NAME + ")"
+	)
 	private PortletResourcePermission _portletResourcePermission;
 
 }
