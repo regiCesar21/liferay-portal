@@ -7,11 +7,7 @@ package com.liferay.portal.workflow.kaleo.definition.internal.deployment;
 
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.security.auth.PrincipalException;
-import com.liferay.portal.kernel.security.permission.PermissionChecker;
-import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
 import com.liferay.portal.kernel.service.ServiceContext;
-import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.workflow.WorkflowDefinition;
 import com.liferay.portal.workflow.configuration.WorkflowDefinitionConfiguration;
 import com.liferay.portal.workflow.kaleo.KaleoWorkflowModelConverter;
@@ -58,8 +54,6 @@ public class DefaultWorkflowDeployer implements WorkflowDeployer {
 			String title, String name, String scope, Definition definition,
 			ServiceContext serviceContext)
 		throws PortalException {
-
-		checkPermissions(serviceContext);
 
 		KaleoDefinition kaleoDefinition = _addOrUpdateKaleoDefinition(
 			title, name, scope, definition, serviceContext);
@@ -176,34 +170,6 @@ public class DefaultWorkflowDeployer implements WorkflowDeployer {
 
 		_companyAdministratorCanPublish =
 			workflowDefinitionConfiguration.companyAdministratorCanPublish();
-	}
-
-	protected void checkPermissions(ServiceContext serviceContext)
-		throws PrincipalException {
-
-		PermissionChecker permissionChecker =
-			PermissionThreadLocal.getPermissionChecker();
-
-		if ((permissionChecker == null) ||
-			!GetterUtil.getBoolean(
-				serviceContext.getAttribute("checkPermission"), true)) {
-
-			return;
-		}
-
-		if (!permissionChecker.isCompanyAdmin()) {
-			throw new PrincipalException.MustBeCompanyAdmin(
-				permissionChecker.getUserId());
-		}
-
-		if (_companyAdministratorCanPublish) {
-			return;
-		}
-
-		if (!permissionChecker.isOmniadmin()) {
-			throw new PrincipalException.MustBeOmniadmin(
-				permissionChecker.getUserId());
-		}
 	}
 
 	private KaleoDefinition _addOrUpdateKaleoDefinition(
