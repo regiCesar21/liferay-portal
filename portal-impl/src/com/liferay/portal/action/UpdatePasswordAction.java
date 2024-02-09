@@ -145,18 +145,6 @@ public class UpdatePasswordAction implements Action {
 		}
 	}
 
-	private boolean _isUserDefaultAdmin(User user) {
-		User defaultAdminUser = DefaultAdminUtil.fetchDefaultAdmin(
-			user.getCompanyId());
-
-		if ((defaultAdminUser != null) &&
-			(defaultAdminUser.getUserId() == user.getUserId())) {
-
-			return true;
-		}
-
-		return false;
-	}
 	protected Ticket getTicket(HttpServletRequest httpServletRequest)
 		throws PortalException {
 
@@ -331,6 +319,19 @@ public class UpdatePasswordAction implements Action {
 		AuthenticatedSessionManagerUtil.login(
 			httpServletRequest, httpServletResponse, login, password1, false,
 			null);
+	}
+
+	private boolean _isUserDefaultAdmin(User user) {
+		User defaultAdminUser = DefaultAdminUtil.fetchDefaultAdmin(
+			user.getCompanyId());
+
+		if ((defaultAdminUser != null) &&
+			(defaultAdminUser.getUserId() == user.getUserId())) {
+
+			return true;
+		}
+
+		return false;
 	}
 
 }

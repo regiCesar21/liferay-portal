@@ -69,7 +69,8 @@ public class CompanyServiceImpl extends CompanyServiceBaseImpl {
 		}
 
 		return companyLocalService.addCompany(
-			webId, virtualHost, mx, system, maxUsers, active, defaultAdminPassword, defaultAdminScreenName,
+			webId, virtualHost, mx, system, maxUsers, active,
+			defaultAdminPassword, defaultAdminScreenName,
 			defaultAdminEmailAddress, defaultAdminFirstName,
 			defaultAdminMiddleName, defaultAdminLastName);
 	}

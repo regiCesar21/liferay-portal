@@ -149,10 +149,10 @@ public class CompanyLocalServiceImpl extends CompanyLocalServiceBaseImpl {
 	@Override
 	public Company addCompany(
 			String webId, String virtualHostname, String mx, boolean system,
-			int maxUsers, boolean active,
-			String defaultAdminPassword, String defaultAdminScreenName,
-			String defaultAdminEmailAddress, String defaultAdminFirstName,
-			String defaultAdminMiddleName, String defaultAdminLastName)
+			int maxUsers, boolean active, String defaultAdminPassword,
+			String defaultAdminScreenName, String defaultAdminEmailAddress,
+			String defaultAdminFirstName, String defaultAdminMiddleName,
+			String defaultAdminLastName)
 		throws PortalException {
 
 		// Company
@@ -170,7 +170,10 @@ public class CompanyLocalServiceImpl extends CompanyLocalServiceBaseImpl {
 		validateVirtualHost(webId, virtualHostname);
 		validateMx(-1, mx);
 
-		Company company = checkCompany(webId, mx, defaultAdminPassword, defaultAdminScreenName, defaultAdminEmailAddress, defaultAdminFirstName, defaultAdminMiddleName, defaultAdminLastName);
+		Company company = checkCompany(
+			webId, mx, defaultAdminPassword, defaultAdminScreenName,
+			defaultAdminEmailAddress, defaultAdminFirstName,
+			defaultAdminMiddleName, defaultAdminLastName);
 
 		company = companyPersistence.fetchByPrimaryKey(company.getCompanyId());
 
@@ -202,7 +205,8 @@ public class CompanyLocalServiceImpl extends CompanyLocalServiceBaseImpl {
 	public Company checkCompany(String webId) throws PortalException {
 		String mx = webId;
 
-		return companyLocalService.checkCompany(webId, mx, null, null, null, null, null,null);
+		return companyLocalService.checkCompany(
+			webId, mx, null, null, null, null, null, null);
 	}
 
 	/**
@@ -221,10 +225,11 @@ public class CompanyLocalServiceImpl extends CompanyLocalServiceBaseImpl {
 		isolation = Isolation.PORTAL,
 		rollbackFor = {PortalException.class, SystemException.class}
 	)
-	public Company checkCompany(String webId, String mx, String defaultAdminPassword,
-								String defaultAdminScreenName, String defaultAdminEmailAddress,
-								String defaultAdminFirstName, String defaultAdminMiddleName,
-								String defaultAdminLastName)
+	public Company checkCompany(
+			String webId, String mx, String defaultAdminPassword,
+			String defaultAdminScreenName, String defaultAdminEmailAddress,
+			String defaultAdminFirstName, String defaultAdminMiddleName,
+			String defaultAdminLastName)
 		throws PortalException {
 
 		// Company
@@ -431,9 +436,6 @@ public class CompanyLocalServiceImpl extends CompanyLocalServiceBaseImpl {
 			// Default admin
 
 			if (userPersistence.countByCompanyId(companyId) == 0) {
-				String emailAddress =
-					PropsValues.DEFAULT_ADMIN_EMAIL_ADDRESS_PREFIX + "@" + mx;
-
 				userLocalService.addDefaultAdminUser(
 					companyId,
 					GetterUtil.getString(
@@ -445,7 +447,7 @@ public class CompanyLocalServiceImpl extends CompanyLocalServiceBaseImpl {
 					GetterUtil.getString(
 						defaultAdminEmailAddress,
 						PropsValues.DEFAULT_ADMIN_EMAIL_ADDRESS_PREFIX + "@" +
-						mx),
+							mx),
 					defaultUser.getLocale(),
 					GetterUtil.getString(
 						defaultAdminFirstName,

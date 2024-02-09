@@ -5,7 +5,6 @@
 
 package com.liferay.portal.instances.web.internal.portlet.action;
 
-import com.liferay.petra.string.StringPool;
 import com.liferay.portal.instances.service.PortalInstancesLocalService;
 import com.liferay.portal.instances.web.internal.constants.PortalInstancesPortletKeys;
 import com.liferay.portal.kernel.exception.CompanyMxException;
@@ -90,7 +89,18 @@ public class EditInstanceMVCActionCommand extends BaseMVCActionCommand {
 			}
 			else if (exception instanceof CompanyMxException ||
 					 exception instanceof CompanyVirtualHostException ||
-					 exception instanceof CompanyWebIdException || exception instanceof UserScreenNameException || exception instanceof UserEmailAddressException || exception instanceof UserPasswordException || exception instanceof ContactNameException.MustHaveFirstName || exception instanceof ContactNameException.MustHaveLastName || exception instanceof ContactNameException.MustHaveMiddleName || exception instanceof ContactNameException.MustHaveValidFullName ) {
+					 exception instanceof CompanyWebIdException ||
+					 exception instanceof
+						 ContactNameException.MustHaveFirstName ||
+					 exception instanceof
+						 ContactNameException.MustHaveLastName ||
+					 exception instanceof
+						 ContactNameException.MustHaveMiddleName ||
+					 exception instanceof
+						 ContactNameException.MustHaveValidFullName ||
+					 exception instanceof UserEmailAddressException ||
+					 exception instanceof UserPasswordException ||
+					 exception instanceof UserScreenNameException) {
 
 				long companyId = ParamUtil.getLong(actionRequest, "companyId");
 
@@ -157,9 +167,10 @@ public class EditInstanceMVCActionCommand extends BaseMVCActionCommand {
 				actionRequest, "defaultAdminLastName", null);
 
 			Company company = _companyService.addCompany(
-				webId, virtualHostname, mx, false, maxUsers, active, defaultAdminPassword,
-				defaultAdminScreenName, defaultAdminEmailAddress,
-				defaultAdminFirstName, StringPool.BLANK, defaultAdminLastName);
+				webId, virtualHostname, mx, false, maxUsers, active,
+				defaultAdminPassword, defaultAdminScreenName,
+				defaultAdminEmailAddress, defaultAdminFirstName,
+				defaultAdminMiddleName, defaultAdminLastName);
 
 			ServletContext servletContext =
 				(ServletContext)actionRequest.getAttribute(WebKeys.CTX);
