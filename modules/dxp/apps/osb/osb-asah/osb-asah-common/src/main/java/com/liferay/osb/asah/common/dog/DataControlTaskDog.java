@@ -584,6 +584,32 @@ public class DataControlTaskDog {
 					}));
 		}
 		else {
+			StringBuilder sb = new StringBuilder();
+
+			List<String> identityIds =
+				_bqIdentityDog.getBQIdentityIdsIgnoreSuppresion(individualId);
+
+			for (String identityId : identityIds) {
+				sb.append(
+					StringUtils.replaceEach(
+						ResourceUtil.readResourceToString(
+							"dependencies" +
+								"/anonymize_activities_statement_emulator.sql",
+							getClass()),
+						new String[] {
+							"${new_identity_id}", "${old_identity_id}",
+							"${range_end_date}", "${range_start_date}"
+						},
+						new String[] {
+							String.valueOf(UUID.randomUUID()), identityId,
+							DateUtil.toUTCString(
+								dataControlTask.getStartDate()),
+							DateUtil.toUTCString(
+								suppressionDataControlTask.getStartDate())
+						}));
+				sb.append("\n");
+			}
+
 			_bigQueryQueryExecutor.queryExecute(
 				StringUtils.replaceEach(
 					ResourceUtil.readResourceToString(
@@ -591,11 +617,12 @@ public class DataControlTaskDog {
 							"/unsuppress_individual_statement_emulator.sql",
 						getClass()),
 					new String[] {
-						"${email_address}", "${individual_id}",
-						"${range_end_date}", "${range_start_date}"
+						"${anonymize_activities_statement}", "${email_address}",
+						"${individual_id}", "${range_end_date}",
+						"${range_start_date}"
 					},
 					new String[] {
-						emailAddress, individualId,
+						sb.toString(), emailAddress, individualId,
 						DateUtil.toUTCString(dataControlTask.getStartDate()),
 						DateUtil.toUTCString(
 							suppressionDataControlTask.getStartDate())

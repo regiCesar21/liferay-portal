@@ -1,6 +1,8 @@
 BEGIN
 	BEGIN TRANSACTION;
 
+	${anonymize_activities_statement}
+
 	DELETE FROM Suppression WHERE emailAddress = '${email_address}';
 
 	UPDATE BQIndividual SET suppressed = false WHERE emailAddress = '${email_address}';
