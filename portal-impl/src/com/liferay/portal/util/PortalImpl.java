@@ -3580,12 +3580,8 @@ public class PortalImpl implements Portal {
 		HttpServletRequest httpServletRequest, Layout layout, Locale locale,
 		Locale originalLocale) {
 
-		HttpServletRequest originalHttpServletRequest =
-			getOriginalServletRequest(httpServletRequest);
-
-		String requestURI = originalHttpServletRequest.getRequestURI();
-
 		String contextPath = getPathContext();
+		String requestURI = httpServletRequest.getRequestURI();
 
 		if (Validator.isNotNull(contextPath) &&
 			requestURI.startsWith(contextPath)) {
