@@ -109,9 +109,6 @@ public class LayoutPrototypeDisplayContext {
 
 		if (isShowAddButton()) {
 			searchContainer.setEmptyResultsMessageCssClass(
-				"there-are-no-page-templates.-you-can-add-a-page-template-by-" +
-					"clicking-the-plus-button-on-the-bottom-right-corner");
-			searchContainer.setEmptyResultsMessageCssClass(
 				"taglib-empty-result-message-header-has-plus-btn");
 		}
 
