@@ -84,11 +84,11 @@ public class SearchBarPortletSharedSearchContributor
 		SearchScope searchScope = getSearchScope(
 			searchBarPortletPreferences, portletSharedSearchSettings);
 
-		searchRequestBuilder.withSearchContext(
-			searchContext -> searchContext.setGroupIds(
-				getGroupIds(portletSharedSearchSettings, searchScope)));
-
 		if (searchScope == SearchScope.THIS_SITE) {
+			searchRequestBuilder.withSearchContext(
+				searchContext -> searchContext.setGroupIds(
+					getGroupIds(portletSharedSearchSettings)));
+
 			return;
 		}
 
@@ -117,8 +117,7 @@ public class SearchBarPortletSharedSearchContributor
 	}
 
 	protected long[] getGroupIds(
-		PortletSharedSearchSettings portletSharedSearchSettings,
-		SearchScope searchScope) {
+		PortletSharedSearchSettings portletSharedSearchSettings) {
 
 		ThemeDisplay themeDisplay =
 			portletSharedSearchSettings.getThemeDisplay();
@@ -126,20 +125,14 @@ public class SearchBarPortletSharedSearchContributor
 		try {
 			List<Long> groupIds = new ArrayList<>();
 
-			if (searchScope == SearchScope.THIS_SITE) {
-				groupIds.add(themeDisplay.getScopeGroupId());
+			groupIds.add(themeDisplay.getScopeGroupId());
 
-				List<Group> groups = groupLocalService.getGroups(
-					themeDisplay.getCompanyId(), Layout.class.getName(),
-					themeDisplay.getScopeGroupId());
+			List<Group> groups = groupLocalService.getGroups(
+				themeDisplay.getCompanyId(), Layout.class.getName(),
+				themeDisplay.getScopeGroupId());
 
-				for (Group group : groups) {
-					groupIds.add(group.getGroupId());
-				}
-			}
-			else {
-				groupIds = groupLocalService.getGroupIds(
-					themeDisplay.getCompanyId(), true);
+			for (Group group : groups) {
+				groupIds.add(group.getGroupId());
 			}
 
 			return ArrayUtil.toLongArray(groupIds);
