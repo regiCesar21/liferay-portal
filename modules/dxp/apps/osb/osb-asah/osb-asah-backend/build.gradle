@@ -20,8 +20,8 @@ configurations.all {
 }
 
 dependencies {
-	api group: "com.fasterxml.jackson.datatype", name: "jackson-datatype-jdk8", version: "2.9.8"
-	api group: "com.fasterxml.jackson.datatype", name: "jackson-datatype-json-org", version: "2.9.8"
+	api group: "com.fasterxml.jackson.datatype", name: "jackson-datatype-jdk8", version: "2.13.5"
+	api group: "com.fasterxml.jackson.datatype", name: "jackson-datatype-json-org", version: "2.13.5"
 	api group: "com.graphql-java", name: "graphql-java", version: "20.7"
 	api group: "com.liferay", name: "com.liferay.petra.lang", version: "1.0.0"
 	api group: "com.liferay", name: "com.liferay.petra.string", version: "1.0.0"

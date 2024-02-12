@@ -18,9 +18,9 @@ configurations.all {
 }
 
 dependencies {
-	api group: "com.fasterxml.jackson.datatype", name: "jackson-datatype-jdk8", version: "2.9.8"
-	api group: "com.fasterxml.jackson.datatype", name: "jackson-datatype-json-org", version: "2.9.8"
-	api group: "com.fasterxml.jackson.datatype", name: "jackson-datatype-jsr310", version: "2.9.8"
+	api group: "com.fasterxml.jackson.datatype", name: "jackson-datatype-jdk8", version: "2.13.5"
+	api group: "com.fasterxml.jackson.datatype", name: "jackson-datatype-json-org", version: "2.13.5"
+	api group: "com.fasterxml.jackson.datatype", name: "jackson-datatype-jsr310", version: "2.13.5"
 	api project(configuration: "default", path: ":dxp:apps:osb:osb-asah:osb-asah-common")
 
 	testImplementation project(configuration: "default", path: ":dxp:apps:osb:osb-asah:osb-asah-test-util")
