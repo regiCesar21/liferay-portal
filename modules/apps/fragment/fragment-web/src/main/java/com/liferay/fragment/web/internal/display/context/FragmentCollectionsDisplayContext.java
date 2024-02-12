@@ -118,8 +118,8 @@ public class FragmentCollectionsDisplayContext {
 					groupIds);
 		}
 
-		searchContainer.setTotal(fragmentCollectionsCount);
 		searchContainer.setResults(fragmentCollections);
+		searchContainer.setTotal(fragmentCollectionsCount);
 
 		_searchContainer = searchContainer;
 

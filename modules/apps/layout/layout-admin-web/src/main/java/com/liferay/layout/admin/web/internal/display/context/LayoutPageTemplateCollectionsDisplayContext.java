@@ -117,8 +117,8 @@ public class LayoutPageTemplateCollectionsDisplayContext {
 						themeDisplay.getScopeGroupId());
 		}
 
-		searchContainer.setTotal(layoutPageTemplateCollectionsCount);
 		searchContainer.setResults(layoutPageTemplateCollections);
+		searchContainer.setTotal(layoutPageTemplateCollectionsCount);
 
 		_searchContainer = searchContainer;
 
