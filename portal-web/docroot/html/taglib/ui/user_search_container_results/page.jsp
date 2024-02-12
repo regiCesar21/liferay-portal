@@ -33,8 +33,8 @@ SearchContainer userSearchContainer = (SearchContainer)request.getAttribute("lif
 			results = UserLocalServiceUtil.search(company.getCompanyId(), searchTerms.getKeywords(), searchTerms.getStatus(), userParams, searchContainer.getStart(), searchContainer.getEnd(), searchContainer.getOrderByComparator());
 		}
 
-		searchContainer.setTotal(total);
 		searchContainer.setResults(results);
+		searchContainer.setTotal(total);
 		%>
 
 	</liferay-ui:search-container-results>

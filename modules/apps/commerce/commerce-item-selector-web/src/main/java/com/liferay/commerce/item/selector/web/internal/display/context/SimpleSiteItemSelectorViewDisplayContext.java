@@ -134,8 +134,8 @@ public class SimpleSiteItemSelectorViewDisplayContext
 			null, params, searchContainer.getStart(), searchContainer.getEnd(),
 			null);
 
-		searchContainer.setTotal(total);
 		searchContainer.setResults(groups);
+		searchContainer.setTotal(total);
 
 		return searchContainer;
 	}

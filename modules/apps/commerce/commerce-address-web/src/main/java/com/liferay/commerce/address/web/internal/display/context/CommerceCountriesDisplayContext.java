@@ -165,8 +165,8 @@ public class CommerceCountriesDisplayContext
 			}
 		}
 
-		searchContainer.setTotal(total);
 		searchContainer.setResults(results);
+		searchContainer.setTotal(total);
 
 		return searchContainer;
 	}

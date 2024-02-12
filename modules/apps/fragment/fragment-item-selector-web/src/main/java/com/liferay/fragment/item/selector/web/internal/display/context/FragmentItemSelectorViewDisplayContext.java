@@ -148,8 +148,8 @@ public class FragmentItemSelectorViewDisplayContext {
 					themeDisplay.getScopeGroupId());
 		}
 
-		fragmentCollectionsSearchContainer.setTotal(fragmentCollectionsCount);
 		fragmentCollectionsSearchContainer.setResults(fragmentCollections);
+		fragmentCollectionsSearchContainer.setTotal(fragmentCollectionsCount);
 
 		_fragmentCollectionsSearchContainer =
 			fragmentCollectionsSearchContainer;

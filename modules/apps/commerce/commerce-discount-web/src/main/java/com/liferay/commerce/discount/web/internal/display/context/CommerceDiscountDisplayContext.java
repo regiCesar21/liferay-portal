@@ -344,8 +344,8 @@ public class CommerceDiscountDisplayContext {
 				WorkflowConstants.STATUS_ANY, _searchContainer.getStart(),
 				_searchContainer.getEnd(), sort);
 
-		_searchContainer.setTotal(baseModelSearchResult.getLength());
 		_searchContainer.setResults(baseModelSearchResult.getBaseModels());
+		_searchContainer.setTotal(baseModelSearchResult.getLength());
 
 		return _searchContainer;
 	}

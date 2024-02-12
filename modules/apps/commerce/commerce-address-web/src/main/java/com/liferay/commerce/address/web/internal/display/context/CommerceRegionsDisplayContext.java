@@ -138,8 +138,8 @@ public class CommerceRegionsDisplayContext
 				searchContainer.getEnd(), orderByComparator);
 		}
 
-		searchContainer.setTotal(total);
 		searchContainer.setResults(results);
+		searchContainer.setTotal(total);
 
 		return searchContainer;
 	}

@@ -44,8 +44,8 @@ if (wikiPageItemSelectorViewDisplayContext.isSearch()) {
 	wikiPagesSearchContainer.setResults(results);
 }
 else {
-	wikiPagesSearchContainer.setTotal(WikiPageLocalServiceUtil.getPagesCount(node.getNodeId(), true, wikiPageItemSelectorViewDisplayContext.getStatus()));
 	wikiPagesSearchContainer.setResults(WikiPageLocalServiceUtil.getPages(node.getNodeId(), true, wikiPageItemSelectorViewDisplayContext.getStatus(), wikiPagesSearchContainer.getStart(), wikiPagesSearchContainer.getEnd()));
+	wikiPagesSearchContainer.setTotal(WikiPageLocalServiceUtil.getPagesCount(node.getNodeId(), true, wikiPageItemSelectorViewDisplayContext.getStatus()));
 }
 %>
 

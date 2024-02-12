@@ -127,8 +127,8 @@ public class CommerceAccountUserRelAdminDisplayContext
 		List<CommerceAccountUserRel> results = _getCommerceAccountUserRels(
 			_searchContainer.getStart(), _searchContainer.getEnd());
 
-		_searchContainer.setTotal(total);
 		_searchContainer.setResults(results);
+		_searchContainer.setTotal(total);
 
 		return _searchContainer;
 	}

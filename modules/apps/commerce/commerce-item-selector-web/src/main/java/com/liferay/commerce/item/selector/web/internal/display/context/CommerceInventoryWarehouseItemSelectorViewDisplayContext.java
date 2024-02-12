@@ -178,8 +178,8 @@ public class CommerceInventoryWarehouseItemSelectorViewDisplayContext
 						orderByComparator);
 		}
 
-		searchContainer.setTotal(total);
 		searchContainer.setResults(results);
+		searchContainer.setTotal(total);
 
 		return searchContainer;
 	}

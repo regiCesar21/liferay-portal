@@ -311,8 +311,8 @@ public class CommerceVirtualOrderItemContentDisplayContext {
 				_searchContainer.getStart(), _searchContainer.getEnd(),
 				new CommerceVirtualOrderItemCreateDateComparator());
 
-		_searchContainer.setTotal(total);
 		_searchContainer.setResults(results);
+		_searchContainer.setTotal(total);
 
 		return _searchContainer;
 	}

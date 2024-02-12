@@ -185,8 +185,8 @@ public class CommerceTaxMethodsDisplayContext {
 		results.sort(
 			new CommerceTaxMethodNameComparator(themeDisplay.getLocale()));
 
-		_searchContainer.setTotal(results.size());
 		_searchContainer.setResults(results);
+		_searchContainer.setTotal(results.size());
 
 		return _searchContainer;
 	}

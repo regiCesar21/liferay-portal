@@ -118,9 +118,9 @@ public class CommerceAccountGroupAdminDisplayContext {
 					_commerceAccountGroupCommerceAccountRelSearchContainer.
 						getEnd());
 
-		_commerceAccountGroupCommerceAccountRelSearchContainer.setTotal(total);
 		_commerceAccountGroupCommerceAccountRelSearchContainer.setResults(
 			results);
+		_commerceAccountGroupCommerceAccountRelSearchContainer.setTotal(total);
 
 		return _commerceAccountGroupCommerceAccountRelSearchContainer;
 	}
@@ -246,8 +246,8 @@ public class CommerceAccountGroupAdminDisplayContext {
 				_getKeywords(), _searchContainer.getStart(),
 				_searchContainer.getEnd(), null);
 
-		_searchContainer.setTotal(total);
 		_searchContainer.setResults(results);
+		_searchContainer.setTotal(total);
 
 		return _searchContainer;
 	}

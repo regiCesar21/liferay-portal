@@ -366,8 +366,8 @@ public class ViewTreeManagementToolbarDisplayContext {
 				searchContainer.getOrderByComparator());
 		}
 
-		searchContainer.setTotal(total);
 		searchContainer.setResults(results);
+		searchContainer.setTotal(total);
 
 		_searchContainer = searchContainer;
 

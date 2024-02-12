@@ -123,8 +123,8 @@ public class CPDefinitionItemSelectorViewDisplayContext
 		List<CPDefinition> results =
 			cpDefinitionBaseModelSearchResult.getBaseModels();
 
-		searchContainer.setTotal(total);
 		searchContainer.setResults(results);
+		searchContainer.setTotal(total);
 
 		return searchContainer;
 	}

@@ -180,12 +180,12 @@ public class DefaultMBAdminListDisplayContext
 					searchContainer.getStart(), searchContainer.getEnd(),
 					searchContainer.getOrderByComparator());
 
-				searchContainer.setTotal(
-					MBCategoryServiceUtil.getCategoriesAndThreadsCount(
-						themeDisplay.getScopeGroupId(), _categoryId,
-						queryDefinition));
 				searchContainer.setResults(
 					MBCategoryServiceUtil.getCategoriesAndThreads(
+						themeDisplay.getScopeGroupId(), _categoryId,
+						queryDefinition));
+				searchContainer.setTotal(
+					MBCategoryServiceUtil.getCategoriesAndThreadsCount(
 						themeDisplay.getScopeGroupId(), _categoryId,
 						queryDefinition));
 			}
@@ -208,12 +208,12 @@ public class DefaultMBAdminListDisplayContext
 						searchContainer.getStart(), searchContainer.getEnd(),
 						searchContainer.getOrderByComparator());
 
-				searchContainer.setTotal(
-					MBThreadServiceUtil.getThreadsCount(
-						themeDisplay.getScopeGroupId(), _categoryId,
-						queryDefinition));
 				searchContainer.setResults(
 					MBThreadServiceUtil.getThreads(
+						themeDisplay.getScopeGroupId(), _categoryId,
+						queryDefinition));
+				searchContainer.setTotal(
+					MBThreadServiceUtil.getThreadsCount(
 						themeDisplay.getScopeGroupId(), _categoryId,
 						queryDefinition));
 			}
@@ -236,12 +236,12 @@ public class DefaultMBAdminListDisplayContext
 						searchContainer.getStart(), searchContainer.getEnd(),
 						searchContainer.getOrderByComparator());
 
-				searchContainer.setTotal(
-					MBCategoryServiceUtil.getCategoriesCount(
-						themeDisplay.getScopeGroupId(), _categoryId,
-						queryDefinition));
 				searchContainer.setResults(
 					MBCategoryServiceUtil.getCategories(
+						themeDisplay.getScopeGroupId(), _categoryId,
+						queryDefinition));
+				searchContainer.setTotal(
+					MBCategoryServiceUtil.getCategoriesCount(
 						themeDisplay.getScopeGroupId(), _categoryId,
 						queryDefinition));
 			}
