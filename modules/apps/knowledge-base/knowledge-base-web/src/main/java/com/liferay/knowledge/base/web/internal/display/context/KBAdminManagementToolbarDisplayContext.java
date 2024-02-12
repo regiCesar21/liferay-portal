@@ -424,6 +424,7 @@ public class KBAdminManagementToolbarDisplayContext {
 						WorkflowConstants.STATUS_ANY,
 						_searchContainer.getStart(), _searchContainer.getEnd(),
 						kbArticleOrderByComparator)));
+
 			_searchContainer.setTotal(
 				KBArticleServiceUtil.getKBArticlesCount(
 					_themeDisplay.getScopeGroupId(), parentResourcePrimKey,

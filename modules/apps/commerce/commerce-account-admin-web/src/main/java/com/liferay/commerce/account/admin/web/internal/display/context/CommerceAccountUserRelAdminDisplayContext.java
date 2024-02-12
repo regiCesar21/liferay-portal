@@ -132,6 +132,7 @@ public class CommerceAccountUserRelAdminDisplayContext
 			_searchContainer.getStart(), _searchContainer.getEnd());
 
 		_searchContainer.setResults(results);
+
 		_searchContainer.setTotal(total);
 
 		return _searchContainer;

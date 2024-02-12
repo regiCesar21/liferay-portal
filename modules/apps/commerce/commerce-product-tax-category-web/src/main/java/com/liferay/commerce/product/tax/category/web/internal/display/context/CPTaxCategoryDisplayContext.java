@@ -140,6 +140,7 @@ public class CPTaxCategoryDisplayContext {
 			_searchContainer.getEnd(), orderByComparator);
 
 		_searchContainer.setResults(results);
+
 		_searchContainer.setTotal(total);
 
 		return _searchContainer;

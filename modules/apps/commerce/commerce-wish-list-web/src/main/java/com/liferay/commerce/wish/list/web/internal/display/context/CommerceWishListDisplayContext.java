@@ -284,6 +284,7 @@ public class CommerceWishListDisplayContext {
 				orderByComparator);
 
 		_searchContainer.setResults(results);
+
 		_searchContainer.setTotal(total);
 
 		return _searchContainer;

@@ -165,6 +165,7 @@ public class CommerceShipmentContentDisplayContext {
 				new CommerceShipmentItemCreateDateComparator());
 
 		_commerceShipmentItemSearchContainer.setResults(results);
+
 		_commerceShipmentItemSearchContainer.setTotal(total);
 
 		return _commerceShipmentItemSearchContainer;

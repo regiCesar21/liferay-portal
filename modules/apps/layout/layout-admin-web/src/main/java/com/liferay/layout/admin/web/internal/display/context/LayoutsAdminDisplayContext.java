@@ -717,6 +717,7 @@ public class LayoutsAdminDisplayContext {
 			layoutsSearchContainer.getOrderByComparator());
 
 		layoutsSearchContainer.setResults(layouts);
+
 		layoutsSearchContainer.setTotal(layoutsCount);
 
 		_layoutsSearchContainer = layoutsSearchContainer;
