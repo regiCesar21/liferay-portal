@@ -306,42 +306,85 @@ public abstract class BaseContentSetElementResourceTestCase {
 			testGetAssetLibraryContentSetByKeyContentSetElementsPage_addContentSetElement(
 				assetLibraryId, key, randomContentSetElement());
 
-		Page<ContentSetElement> page1 =
-			contentSetElementResource.
-				getAssetLibraryContentSetByKeyContentSetElementsPage(
-					assetLibraryId, key, Pagination.of(1, totalCount + 2));
+		// See com.liferay.portal.vulcan.internal.configuration.HeadlessAPICompanyConfiguration#pageSizeLimit
 
-		List<ContentSetElement> contentSetElements1 =
-			(List<ContentSetElement>)page1.getItems();
+		int pageSizeLimit = 500;
 
-		Assert.assertEquals(
-			contentSetElements1.toString(), totalCount + 2,
-			contentSetElements1.size());
+		if (totalCount >= (pageSizeLimit - 2)) {
+			Page<ContentSetElement> page1 =
+				contentSetElementResource.
+					getAssetLibraryContentSetByKeyContentSetElementsPage(
+						assetLibraryId, key,
+						Pagination.of(
+							(int)Math.ceil((totalCount + 1.0) / pageSizeLimit),
+							pageSizeLimit));
 
-		Page<ContentSetElement> page2 =
-			contentSetElementResource.
-				getAssetLibraryContentSetByKeyContentSetElementsPage(
-					assetLibraryId, key, Pagination.of(2, totalCount + 2));
+			Assert.assertEquals(totalCount + 3, page1.getTotalCount());
 
-		Assert.assertEquals(totalCount + 3, page2.getTotalCount());
+			assertContains(
+				contentSetElement1, (List<ContentSetElement>)page1.getItems());
 
-		List<ContentSetElement> contentSetElements2 =
-			(List<ContentSetElement>)page2.getItems();
+			Page<ContentSetElement> page2 =
+				contentSetElementResource.
+					getAssetLibraryContentSetByKeyContentSetElementsPage(
+						assetLibraryId, key,
+						Pagination.of(
+							(int)Math.ceil((totalCount + 2.0) / pageSizeLimit),
+							pageSizeLimit));
 
-		Assert.assertEquals(
-			contentSetElements2.toString(), 1, contentSetElements2.size());
+			assertContains(
+				contentSetElement2, (List<ContentSetElement>)page2.getItems());
 
-		Page<ContentSetElement> page3 =
-			contentSetElementResource.
-				getAssetLibraryContentSetByKeyContentSetElementsPage(
-					assetLibraryId, key, Pagination.of(1, (int)totalCount + 3));
+			Page<ContentSetElement> page3 =
+				contentSetElementResource.
+					getAssetLibraryContentSetByKeyContentSetElementsPage(
+						assetLibraryId, key,
+						Pagination.of(
+							(int)Math.ceil((totalCount + 3.0) / pageSizeLimit),
+							pageSizeLimit));
 
-		assertContains(
-			contentSetElement1, (List<ContentSetElement>)page3.getItems());
-		assertContains(
-			contentSetElement2, (List<ContentSetElement>)page3.getItems());
-		assertContains(
-			contentSetElement3, (List<ContentSetElement>)page3.getItems());
+			assertContains(
+				contentSetElement3, (List<ContentSetElement>)page3.getItems());
+		}
+		else {
+			Page<ContentSetElement> page1 =
+				contentSetElementResource.
+					getAssetLibraryContentSetByKeyContentSetElementsPage(
+						assetLibraryId, key, Pagination.of(1, totalCount + 2));
+
+			List<ContentSetElement> contentSetElements1 =
+				(List<ContentSetElement>)page1.getItems();
+
+			Assert.assertEquals(
+				contentSetElements1.toString(), totalCount + 2,
+				contentSetElements1.size());
+
+			Page<ContentSetElement> page2 =
+				contentSetElementResource.
+					getAssetLibraryContentSetByKeyContentSetElementsPage(
+						assetLibraryId, key, Pagination.of(2, totalCount + 2));
+
+			Assert.assertEquals(totalCount + 3, page2.getTotalCount());
+
+			List<ContentSetElement> contentSetElements2 =
+				(List<ContentSetElement>)page2.getItems();
+
+			Assert.assertEquals(
+				contentSetElements2.toString(), 1, contentSetElements2.size());
+
+			Page<ContentSetElement> page3 =
+				contentSetElementResource.
+					getAssetLibraryContentSetByKeyContentSetElementsPage(
+						assetLibraryId, key,
+						Pagination.of(1, (int)totalCount + 3));
+
+			assertContains(
+				contentSetElement1, (List<ContentSetElement>)page3.getItems());
+			assertContains(
+				contentSetElement2, (List<ContentSetElement>)page3.getItems());
+			assertContains(
+				contentSetElement3, (List<ContentSetElement>)page3.getItems());
+		}
 	}
 
 	protected ContentSetElement
@@ -490,43 +533,85 @@ public abstract class BaseContentSetElementResourceTestCase {
 			testGetAssetLibraryContentSetByUuidContentSetElementsPage_addContentSetElement(
 				assetLibraryId, uuid, randomContentSetElement());
 
-		Page<ContentSetElement> page1 =
-			contentSetElementResource.
-				getAssetLibraryContentSetByUuidContentSetElementsPage(
-					assetLibraryId, uuid, Pagination.of(1, totalCount + 2));
+		// See com.liferay.portal.vulcan.internal.configuration.HeadlessAPICompanyConfiguration#pageSizeLimit
 
-		List<ContentSetElement> contentSetElements1 =
-			(List<ContentSetElement>)page1.getItems();
+		int pageSizeLimit = 500;
 
-		Assert.assertEquals(
-			contentSetElements1.toString(), totalCount + 2,
-			contentSetElements1.size());
+		if (totalCount >= (pageSizeLimit - 2)) {
+			Page<ContentSetElement> page1 =
+				contentSetElementResource.
+					getAssetLibraryContentSetByUuidContentSetElementsPage(
+						assetLibraryId, uuid,
+						Pagination.of(
+							(int)Math.ceil((totalCount + 1.0) / pageSizeLimit),
+							pageSizeLimit));
 
-		Page<ContentSetElement> page2 =
-			contentSetElementResource.
-				getAssetLibraryContentSetByUuidContentSetElementsPage(
-					assetLibraryId, uuid, Pagination.of(2, totalCount + 2));
+			Assert.assertEquals(totalCount + 3, page1.getTotalCount());
 
-		Assert.assertEquals(totalCount + 3, page2.getTotalCount());
+			assertContains(
+				contentSetElement1, (List<ContentSetElement>)page1.getItems());
 
-		List<ContentSetElement> contentSetElements2 =
-			(List<ContentSetElement>)page2.getItems();
+			Page<ContentSetElement> page2 =
+				contentSetElementResource.
+					getAssetLibraryContentSetByUuidContentSetElementsPage(
+						assetLibraryId, uuid,
+						Pagination.of(
+							(int)Math.ceil((totalCount + 2.0) / pageSizeLimit),
+							pageSizeLimit));
 
-		Assert.assertEquals(
-			contentSetElements2.toString(), 1, contentSetElements2.size());
+			assertContains(
+				contentSetElement2, (List<ContentSetElement>)page2.getItems());
 
-		Page<ContentSetElement> page3 =
-			contentSetElementResource.
-				getAssetLibraryContentSetByUuidContentSetElementsPage(
-					assetLibraryId, uuid,
-					Pagination.of(1, (int)totalCount + 3));
+			Page<ContentSetElement> page3 =
+				contentSetElementResource.
+					getAssetLibraryContentSetByUuidContentSetElementsPage(
+						assetLibraryId, uuid,
+						Pagination.of(
+							(int)Math.ceil((totalCount + 3.0) / pageSizeLimit),
+							pageSizeLimit));
 
-		assertContains(
-			contentSetElement1, (List<ContentSetElement>)page3.getItems());
-		assertContains(
-			contentSetElement2, (List<ContentSetElement>)page3.getItems());
-		assertContains(
-			contentSetElement3, (List<ContentSetElement>)page3.getItems());
+			assertContains(
+				contentSetElement3, (List<ContentSetElement>)page3.getItems());
+		}
+		else {
+			Page<ContentSetElement> page1 =
+				contentSetElementResource.
+					getAssetLibraryContentSetByUuidContentSetElementsPage(
+						assetLibraryId, uuid, Pagination.of(1, totalCount + 2));
+
+			List<ContentSetElement> contentSetElements1 =
+				(List<ContentSetElement>)page1.getItems();
+
+			Assert.assertEquals(
+				contentSetElements1.toString(), totalCount + 2,
+				contentSetElements1.size());
+
+			Page<ContentSetElement> page2 =
+				contentSetElementResource.
+					getAssetLibraryContentSetByUuidContentSetElementsPage(
+						assetLibraryId, uuid, Pagination.of(2, totalCount + 2));
+
+			Assert.assertEquals(totalCount + 3, page2.getTotalCount());
+
+			List<ContentSetElement> contentSetElements2 =
+				(List<ContentSetElement>)page2.getItems();
+
+			Assert.assertEquals(
+				contentSetElements2.toString(), 1, contentSetElements2.size());
+
+			Page<ContentSetElement> page3 =
+				contentSetElementResource.
+					getAssetLibraryContentSetByUuidContentSetElementsPage(
+						assetLibraryId, uuid,
+						Pagination.of(1, (int)totalCount + 3));
+
+			assertContains(
+				contentSetElement1, (List<ContentSetElement>)page3.getItems());
+			assertContains(
+				contentSetElement2, (List<ContentSetElement>)page3.getItems());
+			assertContains(
+				contentSetElement3, (List<ContentSetElement>)page3.getItems());
+		}
 	}
 
 	protected ContentSetElement
@@ -662,39 +747,78 @@ public abstract class BaseContentSetElementResourceTestCase {
 			testGetContentSetContentSetElementsPage_addContentSetElement(
 				contentSetId, randomContentSetElement());
 
-		Page<ContentSetElement> page1 =
-			contentSetElementResource.getContentSetContentSetElementsPage(
-				contentSetId, Pagination.of(1, totalCount + 2));
+		// See com.liferay.portal.vulcan.internal.configuration.HeadlessAPICompanyConfiguration#pageSizeLimit
 
-		List<ContentSetElement> contentSetElements1 =
-			(List<ContentSetElement>)page1.getItems();
+		int pageSizeLimit = 500;
 
-		Assert.assertEquals(
-			contentSetElements1.toString(), totalCount + 2,
-			contentSetElements1.size());
+		if (totalCount >= (pageSizeLimit - 2)) {
+			Page<ContentSetElement> page1 =
+				contentSetElementResource.getContentSetContentSetElementsPage(
+					contentSetId,
+					Pagination.of(
+						(int)Math.ceil((totalCount + 1.0) / pageSizeLimit),
+						pageSizeLimit));
 
-		Page<ContentSetElement> page2 =
-			contentSetElementResource.getContentSetContentSetElementsPage(
-				contentSetId, Pagination.of(2, totalCount + 2));
+			Assert.assertEquals(totalCount + 3, page1.getTotalCount());
 
-		Assert.assertEquals(totalCount + 3, page2.getTotalCount());
+			assertContains(
+				contentSetElement1, (List<ContentSetElement>)page1.getItems());
 
-		List<ContentSetElement> contentSetElements2 =
-			(List<ContentSetElement>)page2.getItems();
+			Page<ContentSetElement> page2 =
+				contentSetElementResource.getContentSetContentSetElementsPage(
+					contentSetId,
+					Pagination.of(
+						(int)Math.ceil((totalCount + 2.0) / pageSizeLimit),
+						pageSizeLimit));
 
-		Assert.assertEquals(
-			contentSetElements2.toString(), 1, contentSetElements2.size());
+			assertContains(
+				contentSetElement2, (List<ContentSetElement>)page2.getItems());
 
-		Page<ContentSetElement> page3 =
-			contentSetElementResource.getContentSetContentSetElementsPage(
-				contentSetId, Pagination.of(1, (int)totalCount + 3));
+			Page<ContentSetElement> page3 =
+				contentSetElementResource.getContentSetContentSetElementsPage(
+					contentSetId,
+					Pagination.of(
+						(int)Math.ceil((totalCount + 3.0) / pageSizeLimit),
+						pageSizeLimit));
 
-		assertContains(
-			contentSetElement1, (List<ContentSetElement>)page3.getItems());
-		assertContains(
-			contentSetElement2, (List<ContentSetElement>)page3.getItems());
-		assertContains(
-			contentSetElement3, (List<ContentSetElement>)page3.getItems());
+			assertContains(
+				contentSetElement3, (List<ContentSetElement>)page3.getItems());
+		}
+		else {
+			Page<ContentSetElement> page1 =
+				contentSetElementResource.getContentSetContentSetElementsPage(
+					contentSetId, Pagination.of(1, totalCount + 2));
+
+			List<ContentSetElement> contentSetElements1 =
+				(List<ContentSetElement>)page1.getItems();
+
+			Assert.assertEquals(
+				contentSetElements1.toString(), totalCount + 2,
+				contentSetElements1.size());
+
+			Page<ContentSetElement> page2 =
+				contentSetElementResource.getContentSetContentSetElementsPage(
+					contentSetId, Pagination.of(2, totalCount + 2));
+
+			Assert.assertEquals(totalCount + 3, page2.getTotalCount());
+
+			List<ContentSetElement> contentSetElements2 =
+				(List<ContentSetElement>)page2.getItems();
+
+			Assert.assertEquals(
+				contentSetElements2.toString(), 1, contentSetElements2.size());
+
+			Page<ContentSetElement> page3 =
+				contentSetElementResource.getContentSetContentSetElementsPage(
+					contentSetId, Pagination.of(1, (int)totalCount + 3));
+
+			assertContains(
+				contentSetElement1, (List<ContentSetElement>)page3.getItems());
+			assertContains(
+				contentSetElement2, (List<ContentSetElement>)page3.getItems());
+			assertContains(
+				contentSetElement3, (List<ContentSetElement>)page3.getItems());
+		}
 	}
 
 	protected ContentSetElement
@@ -824,42 +948,84 @@ public abstract class BaseContentSetElementResourceTestCase {
 			testGetSiteContentSetByKeyContentSetElementsPage_addContentSetElement(
 				siteId, key, randomContentSetElement());
 
-		Page<ContentSetElement> page1 =
-			contentSetElementResource.
-				getSiteContentSetByKeyContentSetElementsPage(
-					siteId, key, Pagination.of(1, totalCount + 2));
+		// See com.liferay.portal.vulcan.internal.configuration.HeadlessAPICompanyConfiguration#pageSizeLimit
 
-		List<ContentSetElement> contentSetElements1 =
-			(List<ContentSetElement>)page1.getItems();
+		int pageSizeLimit = 500;
 
-		Assert.assertEquals(
-			contentSetElements1.toString(), totalCount + 2,
-			contentSetElements1.size());
+		if (totalCount >= (pageSizeLimit - 2)) {
+			Page<ContentSetElement> page1 =
+				contentSetElementResource.
+					getSiteContentSetByKeyContentSetElementsPage(
+						siteId, key,
+						Pagination.of(
+							(int)Math.ceil((totalCount + 1.0) / pageSizeLimit),
+							pageSizeLimit));
 
-		Page<ContentSetElement> page2 =
-			contentSetElementResource.
-				getSiteContentSetByKeyContentSetElementsPage(
-					siteId, key, Pagination.of(2, totalCount + 2));
+			Assert.assertEquals(totalCount + 3, page1.getTotalCount());
 
-		Assert.assertEquals(totalCount + 3, page2.getTotalCount());
+			assertContains(
+				contentSetElement1, (List<ContentSetElement>)page1.getItems());
 
-		List<ContentSetElement> contentSetElements2 =
-			(List<ContentSetElement>)page2.getItems();
+			Page<ContentSetElement> page2 =
+				contentSetElementResource.
+					getSiteContentSetByKeyContentSetElementsPage(
+						siteId, key,
+						Pagination.of(
+							(int)Math.ceil((totalCount + 2.0) / pageSizeLimit),
+							pageSizeLimit));
 
-		Assert.assertEquals(
-			contentSetElements2.toString(), 1, contentSetElements2.size());
+			assertContains(
+				contentSetElement2, (List<ContentSetElement>)page2.getItems());
 
-		Page<ContentSetElement> page3 =
-			contentSetElementResource.
-				getSiteContentSetByKeyContentSetElementsPage(
-					siteId, key, Pagination.of(1, (int)totalCount + 3));
+			Page<ContentSetElement> page3 =
+				contentSetElementResource.
+					getSiteContentSetByKeyContentSetElementsPage(
+						siteId, key,
+						Pagination.of(
+							(int)Math.ceil((totalCount + 3.0) / pageSizeLimit),
+							pageSizeLimit));
 
-		assertContains(
-			contentSetElement1, (List<ContentSetElement>)page3.getItems());
-		assertContains(
-			contentSetElement2, (List<ContentSetElement>)page3.getItems());
-		assertContains(
-			contentSetElement3, (List<ContentSetElement>)page3.getItems());
+			assertContains(
+				contentSetElement3, (List<ContentSetElement>)page3.getItems());
+		}
+		else {
+			Page<ContentSetElement> page1 =
+				contentSetElementResource.
+					getSiteContentSetByKeyContentSetElementsPage(
+						siteId, key, Pagination.of(1, totalCount + 2));
+
+			List<ContentSetElement> contentSetElements1 =
+				(List<ContentSetElement>)page1.getItems();
+
+			Assert.assertEquals(
+				contentSetElements1.toString(), totalCount + 2,
+				contentSetElements1.size());
+
+			Page<ContentSetElement> page2 =
+				contentSetElementResource.
+					getSiteContentSetByKeyContentSetElementsPage(
+						siteId, key, Pagination.of(2, totalCount + 2));
+
+			Assert.assertEquals(totalCount + 3, page2.getTotalCount());
+
+			List<ContentSetElement> contentSetElements2 =
+				(List<ContentSetElement>)page2.getItems();
+
+			Assert.assertEquals(
+				contentSetElements2.toString(), 1, contentSetElements2.size());
+
+			Page<ContentSetElement> page3 =
+				contentSetElementResource.
+					getSiteContentSetByKeyContentSetElementsPage(
+						siteId, key, Pagination.of(1, (int)totalCount + 3));
+
+			assertContains(
+				contentSetElement1, (List<ContentSetElement>)page3.getItems());
+			assertContains(
+				contentSetElement2, (List<ContentSetElement>)page3.getItems());
+			assertContains(
+				contentSetElement3, (List<ContentSetElement>)page3.getItems());
+		}
 	}
 
 	protected ContentSetElement
@@ -1005,42 +1171,84 @@ public abstract class BaseContentSetElementResourceTestCase {
 			testGetSiteContentSetByUuidContentSetElementsPage_addContentSetElement(
 				siteId, uuid, randomContentSetElement());
 
-		Page<ContentSetElement> page1 =
-			contentSetElementResource.
-				getSiteContentSetByUuidContentSetElementsPage(
-					siteId, uuid, Pagination.of(1, totalCount + 2));
+		// See com.liferay.portal.vulcan.internal.configuration.HeadlessAPICompanyConfiguration#pageSizeLimit
 
-		List<ContentSetElement> contentSetElements1 =
-			(List<ContentSetElement>)page1.getItems();
+		int pageSizeLimit = 500;
 
-		Assert.assertEquals(
-			contentSetElements1.toString(), totalCount + 2,
-			contentSetElements1.size());
+		if (totalCount >= (pageSizeLimit - 2)) {
+			Page<ContentSetElement> page1 =
+				contentSetElementResource.
+					getSiteContentSetByUuidContentSetElementsPage(
+						siteId, uuid,
+						Pagination.of(
+							(int)Math.ceil((totalCount + 1.0) / pageSizeLimit),
+							pageSizeLimit));
 
-		Page<ContentSetElement> page2 =
-			contentSetElementResource.
-				getSiteContentSetByUuidContentSetElementsPage(
-					siteId, uuid, Pagination.of(2, totalCount + 2));
+			Assert.assertEquals(totalCount + 3, page1.getTotalCount());
 
-		Assert.assertEquals(totalCount + 3, page2.getTotalCount());
+			assertContains(
+				contentSetElement1, (List<ContentSetElement>)page1.getItems());
 
-		List<ContentSetElement> contentSetElements2 =
-			(List<ContentSetElement>)page2.getItems();
+			Page<ContentSetElement> page2 =
+				contentSetElementResource.
+					getSiteContentSetByUuidContentSetElementsPage(
+						siteId, uuid,
+						Pagination.of(
+							(int)Math.ceil((totalCount + 2.0) / pageSizeLimit),
+							pageSizeLimit));
 
-		Assert.assertEquals(
-			contentSetElements2.toString(), 1, contentSetElements2.size());
+			assertContains(
+				contentSetElement2, (List<ContentSetElement>)page2.getItems());
 
-		Page<ContentSetElement> page3 =
-			contentSetElementResource.
-				getSiteContentSetByUuidContentSetElementsPage(
-					siteId, uuid, Pagination.of(1, (int)totalCount + 3));
+			Page<ContentSetElement> page3 =
+				contentSetElementResource.
+					getSiteContentSetByUuidContentSetElementsPage(
+						siteId, uuid,
+						Pagination.of(
+							(int)Math.ceil((totalCount + 3.0) / pageSizeLimit),
+							pageSizeLimit));
 
-		assertContains(
-			contentSetElement1, (List<ContentSetElement>)page3.getItems());
-		assertContains(
-			contentSetElement2, (List<ContentSetElement>)page3.getItems());
-		assertContains(
-			contentSetElement3, (List<ContentSetElement>)page3.getItems());
+			assertContains(
+				contentSetElement3, (List<ContentSetElement>)page3.getItems());
+		}
+		else {
+			Page<ContentSetElement> page1 =
+				contentSetElementResource.
+					getSiteContentSetByUuidContentSetElementsPage(
+						siteId, uuid, Pagination.of(1, totalCount + 2));
+
+			List<ContentSetElement> contentSetElements1 =
+				(List<ContentSetElement>)page1.getItems();
+
+			Assert.assertEquals(
+				contentSetElements1.toString(), totalCount + 2,
+				contentSetElements1.size());
+
+			Page<ContentSetElement> page2 =
+				contentSetElementResource.
+					getSiteContentSetByUuidContentSetElementsPage(
+						siteId, uuid, Pagination.of(2, totalCount + 2));
+
+			Assert.assertEquals(totalCount + 3, page2.getTotalCount());
+
+			List<ContentSetElement> contentSetElements2 =
+				(List<ContentSetElement>)page2.getItems();
+
+			Assert.assertEquals(
+				contentSetElements2.toString(), 1, contentSetElements2.size());
+
+			Page<ContentSetElement> page3 =
+				contentSetElementResource.
+					getSiteContentSetByUuidContentSetElementsPage(
+						siteId, uuid, Pagination.of(1, (int)totalCount + 3));
+
+			assertContains(
+				contentSetElement1, (List<ContentSetElement>)page3.getItems());
+			assertContains(
+				contentSetElement2, (List<ContentSetElement>)page3.getItems());
+			assertContains(
+				contentSetElement3, (List<ContentSetElement>)page3.getItems());
+		}
 	}
 
 	protected ContentSetElement

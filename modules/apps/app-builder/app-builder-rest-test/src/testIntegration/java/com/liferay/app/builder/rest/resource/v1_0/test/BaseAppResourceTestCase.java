@@ -236,31 +236,67 @@ public abstract class BaseAppResourceTestCase {
 
 		App app3 = testGetAppsPage_addApp(randomApp());
 
-		Page<App> page1 = appResource.getAppsPage(
-			null, null, null, null, null, Pagination.of(1, totalCount + 2),
-			null);
+		// See com.liferay.portal.vulcan.internal.configuration.HeadlessAPICompanyConfiguration#pageSizeLimit
 
-		List<App> apps1 = (List<App>)page1.getItems();
+		int pageSizeLimit = 500;
 
-		Assert.assertEquals(apps1.toString(), totalCount + 2, apps1.size());
+		if (totalCount >= (pageSizeLimit - 2)) {
+			Page<App> page1 = appResource.getAppsPage(
+				null, null, null, null, null,
+				Pagination.of(
+					(int)Math.ceil((totalCount + 1.0) / pageSizeLimit),
+					pageSizeLimit),
+				null);
 
-		Page<App> page2 = appResource.getAppsPage(
-			null, null, null, null, null, Pagination.of(2, totalCount + 2),
-			null);
+			Assert.assertEquals(totalCount + 3, page1.getTotalCount());
 
-		Assert.assertEquals(totalCount + 3, page2.getTotalCount());
+			assertContains(app1, (List<App>)page1.getItems());
 
-		List<App> apps2 = (List<App>)page2.getItems();
+			Page<App> page2 = appResource.getAppsPage(
+				null, null, null, null, null,
+				Pagination.of(
+					(int)Math.ceil((totalCount + 2.0) / pageSizeLimit),
+					pageSizeLimit),
+				null);
 
-		Assert.assertEquals(apps2.toString(), 1, apps2.size());
+			assertContains(app2, (List<App>)page2.getItems());
 
-		Page<App> page3 = appResource.getAppsPage(
-			null, null, null, null, null, Pagination.of(1, (int)totalCount + 3),
-			null);
+			Page<App> page3 = appResource.getAppsPage(
+				null, null, null, null, null,
+				Pagination.of(
+					(int)Math.ceil((totalCount + 3.0) / pageSizeLimit),
+					pageSizeLimit),
+				null);
 
-		assertContains(app1, (List<App>)page3.getItems());
-		assertContains(app2, (List<App>)page3.getItems());
-		assertContains(app3, (List<App>)page3.getItems());
+			assertContains(app3, (List<App>)page3.getItems());
+		}
+		else {
+			Page<App> page1 = appResource.getAppsPage(
+				null, null, null, null, null, Pagination.of(1, totalCount + 2),
+				null);
+
+			List<App> apps1 = (List<App>)page1.getItems();
+
+			Assert.assertEquals(apps1.toString(), totalCount + 2, apps1.size());
+
+			Page<App> page2 = appResource.getAppsPage(
+				null, null, null, null, null, Pagination.of(2, totalCount + 2),
+				null);
+
+			Assert.assertEquals(totalCount + 3, page2.getTotalCount());
+
+			List<App> apps2 = (List<App>)page2.getItems();
+
+			Assert.assertEquals(apps2.toString(), 1, apps2.size());
+
+			Page<App> page3 = appResource.getAppsPage(
+				null, null, null, null, null,
+				Pagination.of(1, (int)totalCount + 3), null);
+
+			assertContains(app1, (List<App>)page3.getItems());
+			assertContains(app2, (List<App>)page3.getItems());
+			assertContains(app3, (List<App>)page3.getItems());
+		}
 	}
 
 	@Test
@@ -662,31 +698,67 @@ public abstract class BaseAppResourceTestCase {
 		App app3 = testGetDataDefinitionAppsPage_addApp(
 			dataDefinitionId, randomApp());
 
-		Page<App> page1 = appResource.getDataDefinitionAppsPage(
-			dataDefinitionId, null, null, Pagination.of(1, totalCount + 2),
-			null);
+		// See com.liferay.portal.vulcan.internal.configuration.HeadlessAPICompanyConfiguration#pageSizeLimit
 
-		List<App> apps1 = (List<App>)page1.getItems();
+		int pageSizeLimit = 500;
 
-		Assert.assertEquals(apps1.toString(), totalCount + 2, apps1.size());
+		if (totalCount >= (pageSizeLimit - 2)) {
+			Page<App> page1 = appResource.getDataDefinitionAppsPage(
+				dataDefinitionId, null, null,
+				Pagination.of(
+					(int)Math.ceil((totalCount + 1.0) / pageSizeLimit),
+					pageSizeLimit),
+				null);
 
-		Page<App> page2 = appResource.getDataDefinitionAppsPage(
-			dataDefinitionId, null, null, Pagination.of(2, totalCount + 2),
-			null);
+			Assert.assertEquals(totalCount + 3, page1.getTotalCount());
 
-		Assert.assertEquals(totalCount + 3, page2.getTotalCount());
+			assertContains(app1, (List<App>)page1.getItems());
 
-		List<App> apps2 = (List<App>)page2.getItems();
+			Page<App> page2 = appResource.getDataDefinitionAppsPage(
+				dataDefinitionId, null, null,
+				Pagination.of(
+					(int)Math.ceil((totalCount + 2.0) / pageSizeLimit),
+					pageSizeLimit),
+				null);
 
-		Assert.assertEquals(apps2.toString(), 1, apps2.size());
+			assertContains(app2, (List<App>)page2.getItems());
 
-		Page<App> page3 = appResource.getDataDefinitionAppsPage(
-			dataDefinitionId, null, null, Pagination.of(1, (int)totalCount + 3),
-			null);
+			Page<App> page3 = appResource.getDataDefinitionAppsPage(
+				dataDefinitionId, null, null,
+				Pagination.of(
+					(int)Math.ceil((totalCount + 3.0) / pageSizeLimit),
+					pageSizeLimit),
+				null);
 
-		assertContains(app1, (List<App>)page3.getItems());
-		assertContains(app2, (List<App>)page3.getItems());
-		assertContains(app3, (List<App>)page3.getItems());
+			assertContains(app3, (List<App>)page3.getItems());
+		}
+		else {
+			Page<App> page1 = appResource.getDataDefinitionAppsPage(
+				dataDefinitionId, null, null, Pagination.of(1, totalCount + 2),
+				null);
+
+			List<App> apps1 = (List<App>)page1.getItems();
+
+			Assert.assertEquals(apps1.toString(), totalCount + 2, apps1.size());
+
+			Page<App> page2 = appResource.getDataDefinitionAppsPage(
+				dataDefinitionId, null, null, Pagination.of(2, totalCount + 2),
+				null);
+
+			Assert.assertEquals(totalCount + 3, page2.getTotalCount());
+
+			List<App> apps2 = (List<App>)page2.getItems();
+
+			Assert.assertEquals(apps2.toString(), 1, apps2.size());
+
+			Page<App> page3 = appResource.getDataDefinitionAppsPage(
+				dataDefinitionId, null, null,
+				Pagination.of(1, (int)totalCount + 3), null);
+
+			assertContains(app1, (List<App>)page3.getItems());
+			assertContains(app2, (List<App>)page3.getItems());
+			assertContains(app3, (List<App>)page3.getItems());
+		}
 	}
 
 	@Test
@@ -926,28 +998,65 @@ public abstract class BaseAppResourceTestCase {
 
 		App app3 = testGetSiteAppsPage_addApp(siteId, randomApp());
 
-		Page<App> page1 = appResource.getSiteAppsPage(
-			siteId, null, null, Pagination.of(1, totalCount + 2), null);
+		// See com.liferay.portal.vulcan.internal.configuration.HeadlessAPICompanyConfiguration#pageSizeLimit
 
-		List<App> apps1 = (List<App>)page1.getItems();
+		int pageSizeLimit = 500;
 
-		Assert.assertEquals(apps1.toString(), totalCount + 2, apps1.size());
+		if (totalCount >= (pageSizeLimit - 2)) {
+			Page<App> page1 = appResource.getSiteAppsPage(
+				siteId, null, null,
+				Pagination.of(
+					(int)Math.ceil((totalCount + 1.0) / pageSizeLimit),
+					pageSizeLimit),
+				null);
 
-		Page<App> page2 = appResource.getSiteAppsPage(
-			siteId, null, null, Pagination.of(2, totalCount + 2), null);
+			Assert.assertEquals(totalCount + 3, page1.getTotalCount());
 
-		Assert.assertEquals(totalCount + 3, page2.getTotalCount());
+			assertContains(app1, (List<App>)page1.getItems());
 
-		List<App> apps2 = (List<App>)page2.getItems();
+			Page<App> page2 = appResource.getSiteAppsPage(
+				siteId, null, null,
+				Pagination.of(
+					(int)Math.ceil((totalCount + 2.0) / pageSizeLimit),
+					pageSizeLimit),
+				null);
 
-		Assert.assertEquals(apps2.toString(), 1, apps2.size());
+			assertContains(app2, (List<App>)page2.getItems());
 
-		Page<App> page3 = appResource.getSiteAppsPage(
-			siteId, null, null, Pagination.of(1, (int)totalCount + 3), null);
+			Page<App> page3 = appResource.getSiteAppsPage(
+				siteId, null, null,
+				Pagination.of(
+					(int)Math.ceil((totalCount + 3.0) / pageSizeLimit),
+					pageSizeLimit),
+				null);
 
-		assertContains(app1, (List<App>)page3.getItems());
-		assertContains(app2, (List<App>)page3.getItems());
-		assertContains(app3, (List<App>)page3.getItems());
+			assertContains(app3, (List<App>)page3.getItems());
+		}
+		else {
+			Page<App> page1 = appResource.getSiteAppsPage(
+				siteId, null, null, Pagination.of(1, totalCount + 2), null);
+
+			List<App> apps1 = (List<App>)page1.getItems();
+
+			Assert.assertEquals(apps1.toString(), totalCount + 2, apps1.size());
+
+			Page<App> page2 = appResource.getSiteAppsPage(
+				siteId, null, null, Pagination.of(2, totalCount + 2), null);
+
+			Assert.assertEquals(totalCount + 3, page2.getTotalCount());
+
+			List<App> apps2 = (List<App>)page2.getItems();
+
+			Assert.assertEquals(apps2.toString(), 1, apps2.size());
+
+			Page<App> page3 = appResource.getSiteAppsPage(
+				siteId, null, null, Pagination.of(1, (int)totalCount + 3),
+				null);
+
+			assertContains(app1, (List<App>)page3.getItems());
+			assertContains(app2, (List<App>)page3.getItems());
+			assertContains(app3, (List<App>)page3.getItems());
+		}
 	}
 
 	@Test
