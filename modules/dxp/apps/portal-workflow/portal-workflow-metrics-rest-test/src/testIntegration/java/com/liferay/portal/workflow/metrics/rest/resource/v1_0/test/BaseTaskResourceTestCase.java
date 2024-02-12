@@ -254,31 +254,68 @@ public abstract class BaseTaskResourceTestCase {
 
 		Task task3 = testGetProcessTasksPage_addTask(processId, randomTask());
 
-		Page<Task> page1 = taskResource.getProcessTasksPage(
-			processId, null, null, null, null, Pagination.of(1, totalCount + 2),
-			null);
+		// See com.liferay.portal.vulcan.internal.configuration.HeadlessAPICompanyConfiguration#pageSizeLimit
 
-		List<Task> tasks1 = (List<Task>)page1.getItems();
+		int pageSizeLimit = 500;
 
-		Assert.assertEquals(tasks1.toString(), totalCount + 2, tasks1.size());
+		if (totalCount >= (pageSizeLimit - 2)) {
+			Page<Task> page1 = taskResource.getProcessTasksPage(
+				processId, null, null, null, null,
+				Pagination.of(
+					(int)Math.ceil((totalCount + 1.0) / pageSizeLimit),
+					pageSizeLimit),
+				null);
 
-		Page<Task> page2 = taskResource.getProcessTasksPage(
-			processId, null, null, null, null, Pagination.of(2, totalCount + 2),
-			null);
+			Assert.assertEquals(totalCount + 3, page1.getTotalCount());
 
-		Assert.assertEquals(totalCount + 3, page2.getTotalCount());
+			assertContains(task1, (List<Task>)page1.getItems());
 
-		List<Task> tasks2 = (List<Task>)page2.getItems();
+			Page<Task> page2 = taskResource.getProcessTasksPage(
+				processId, null, null, null, null,
+				Pagination.of(
+					(int)Math.ceil((totalCount + 2.0) / pageSizeLimit),
+					pageSizeLimit),
+				null);
 
-		Assert.assertEquals(tasks2.toString(), 1, tasks2.size());
+			assertContains(task2, (List<Task>)page2.getItems());
 
-		Page<Task> page3 = taskResource.getProcessTasksPage(
-			processId, null, null, null, null,
-			Pagination.of(1, (int)totalCount + 3), null);
+			Page<Task> page3 = taskResource.getProcessTasksPage(
+				processId, null, null, null, null,
+				Pagination.of(
+					(int)Math.ceil((totalCount + 3.0) / pageSizeLimit),
+					pageSizeLimit),
+				null);
 
-		assertContains(task1, (List<Task>)page3.getItems());
-		assertContains(task2, (List<Task>)page3.getItems());
-		assertContains(task3, (List<Task>)page3.getItems());
+			assertContains(task3, (List<Task>)page3.getItems());
+		}
+		else {
+			Page<Task> page1 = taskResource.getProcessTasksPage(
+				processId, null, null, null, null,
+				Pagination.of(1, totalCount + 2), null);
+
+			List<Task> tasks1 = (List<Task>)page1.getItems();
+
+			Assert.assertEquals(
+				tasks1.toString(), totalCount + 2, tasks1.size());
+
+			Page<Task> page2 = taskResource.getProcessTasksPage(
+				processId, null, null, null, null,
+				Pagination.of(2, totalCount + 2), null);
+
+			Assert.assertEquals(totalCount + 3, page2.getTotalCount());
+
+			List<Task> tasks2 = (List<Task>)page2.getItems();
+
+			Assert.assertEquals(tasks2.toString(), 1, tasks2.size());
+
+			Page<Task> page3 = taskResource.getProcessTasksPage(
+				processId, null, null, null, null,
+				Pagination.of(1, (int)totalCount + 3), null);
+
+			assertContains(task1, (List<Task>)page3.getItems());
+			assertContains(task2, (List<Task>)page3.getItems());
+			assertContains(task3, (List<Task>)page3.getItems());
+		}
 	}
 
 	@Test

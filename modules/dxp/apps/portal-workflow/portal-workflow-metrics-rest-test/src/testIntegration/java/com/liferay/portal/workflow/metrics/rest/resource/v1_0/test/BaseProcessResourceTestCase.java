@@ -226,29 +226,65 @@ public abstract class BaseProcessResourceTestCase {
 
 		Process process3 = testGetProcessesPage_addProcess(randomProcess());
 
-		Page<Process> page1 = processResource.getProcessesPage(
-			null, Pagination.of(1, totalCount + 2), null);
+		// See com.liferay.portal.vulcan.internal.configuration.HeadlessAPICompanyConfiguration#pageSizeLimit
 
-		List<Process> processes1 = (List<Process>)page1.getItems();
+		int pageSizeLimit = 500;
 
-		Assert.assertEquals(
-			processes1.toString(), totalCount + 2, processes1.size());
+		if (totalCount >= (pageSizeLimit - 2)) {
+			Page<Process> page1 = processResource.getProcessesPage(
+				null,
+				Pagination.of(
+					(int)Math.ceil((totalCount + 1.0) / pageSizeLimit),
+					pageSizeLimit),
+				null);
 
-		Page<Process> page2 = processResource.getProcessesPage(
-			null, Pagination.of(2, totalCount + 2), null);
+			Assert.assertEquals(totalCount + 3, page1.getTotalCount());
 
-		Assert.assertEquals(totalCount + 3, page2.getTotalCount());
+			assertContains(process1, (List<Process>)page1.getItems());
 
-		List<Process> processes2 = (List<Process>)page2.getItems();
+			Page<Process> page2 = processResource.getProcessesPage(
+				null,
+				Pagination.of(
+					(int)Math.ceil((totalCount + 2.0) / pageSizeLimit),
+					pageSizeLimit),
+				null);
 
-		Assert.assertEquals(processes2.toString(), 1, processes2.size());
+			assertContains(process2, (List<Process>)page2.getItems());
 
-		Page<Process> page3 = processResource.getProcessesPage(
-			null, Pagination.of(1, (int)totalCount + 3), null);
+			Page<Process> page3 = processResource.getProcessesPage(
+				null,
+				Pagination.of(
+					(int)Math.ceil((totalCount + 3.0) / pageSizeLimit),
+					pageSizeLimit),
+				null);
 
-		assertContains(process1, (List<Process>)page3.getItems());
-		assertContains(process2, (List<Process>)page3.getItems());
-		assertContains(process3, (List<Process>)page3.getItems());
+			assertContains(process3, (List<Process>)page3.getItems());
+		}
+		else {
+			Page<Process> page1 = processResource.getProcessesPage(
+				null, Pagination.of(1, totalCount + 2), null);
+
+			List<Process> processes1 = (List<Process>)page1.getItems();
+
+			Assert.assertEquals(
+				processes1.toString(), totalCount + 2, processes1.size());
+
+			Page<Process> page2 = processResource.getProcessesPage(
+				null, Pagination.of(2, totalCount + 2), null);
+
+			Assert.assertEquals(totalCount + 3, page2.getTotalCount());
+
+			List<Process> processes2 = (List<Process>)page2.getItems();
+
+			Assert.assertEquals(processes2.toString(), 1, processes2.size());
+
+			Page<Process> page3 = processResource.getProcessesPage(
+				null, Pagination.of(1, (int)totalCount + 3), null);
+
+			assertContains(process1, (List<Process>)page3.getItems());
+			assertContains(process2, (List<Process>)page3.getItems());
+			assertContains(process3, (List<Process>)page3.getItems());
+		}
 	}
 
 	@Test
