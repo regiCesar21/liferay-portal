@@ -186,6 +186,7 @@ public class CPMeasurementUnitsDisplayContext {
 				orderByComparator);
 
 		_searchContainer.setResults(results);
+
 		_searchContainer.setTotal(total);
 
 		return _searchContainer;

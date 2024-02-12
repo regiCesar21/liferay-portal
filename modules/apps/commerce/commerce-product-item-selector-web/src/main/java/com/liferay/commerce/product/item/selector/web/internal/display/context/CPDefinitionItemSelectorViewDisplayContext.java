@@ -120,10 +120,12 @@ public class CPDefinitionItemSelectorViewDisplayContext
 				searchContainer.getEnd(), sort);
 
 		int total = cpDefinitionBaseModelSearchResult.getLength();
+
 		List<CPDefinition> results =
 			cpDefinitionBaseModelSearchResult.getBaseModels();
 
 		searchContainer.setResults(results);
+
 		searchContainer.setTotal(total);
 
 		return searchContainer;

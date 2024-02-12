@@ -120,6 +120,7 @@ public class CommerceAccountGroupAdminDisplayContext {
 
 		_commerceAccountGroupCommerceAccountRelSearchContainer.setResults(
 			results);
+
 		_commerceAccountGroupCommerceAccountRelSearchContainer.setTotal(total);
 
 		return _commerceAccountGroupCommerceAccountRelSearchContainer;
@@ -247,6 +248,7 @@ public class CommerceAccountGroupAdminDisplayContext {
 				_searchContainer.getEnd(), null);
 
 		_searchContainer.setResults(results);
+
 		_searchContainer.setTotal(total);
 
 		return _searchContainer;

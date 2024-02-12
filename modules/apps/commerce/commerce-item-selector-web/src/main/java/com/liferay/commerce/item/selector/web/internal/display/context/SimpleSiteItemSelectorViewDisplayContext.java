@@ -125,6 +125,7 @@ public class SimpleSiteItemSelectorViewDisplayContext
 
 		int total = _groupService.searchCount(
 			cpRequestHelper.getCompanyId(), null, null, null);
+
 		List<Group> groups = _groupService.search(
 			cpRequestHelper.getCompanyId(),
 			new long[] {
@@ -135,6 +136,7 @@ public class SimpleSiteItemSelectorViewDisplayContext
 			null);
 
 		searchContainer.setResults(groups);
+
 		searchContainer.setTotal(total);
 
 		return searchContainer;

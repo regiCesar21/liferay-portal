@@ -305,6 +305,7 @@ public class CommerceVirtualOrderItemContentDisplayContext {
 				getCommerceVirtualOrderItemsCount(
 					commerceChannelGroupId,
 					commerceAccount.getCommerceAccountId());
+
 		List<CommerceVirtualOrderItem> results =
 			_commerceVirtualOrderItemLocalService.getCommerceVirtualOrderItems(
 				commerceChannelGroupId, commerceAccount.getCommerceAccountId(),
@@ -312,6 +313,7 @@ public class CommerceVirtualOrderItemContentDisplayContext {
 				new CommerceVirtualOrderItemCreateDateComparator());
 
 		_searchContainer.setResults(results);
+
 		_searchContainer.setTotal(total);
 
 		return _searchContainer;

@@ -97,6 +97,7 @@ public class CommerceChannelItemSelectorViewDisplayContext
 				_searchContainer.getStart(), _searchContainer.getEnd(), null);
 
 		_searchContainer.setResults(results);
+
 		_searchContainer.setTotal(total);
 
 		return _searchContainer;
