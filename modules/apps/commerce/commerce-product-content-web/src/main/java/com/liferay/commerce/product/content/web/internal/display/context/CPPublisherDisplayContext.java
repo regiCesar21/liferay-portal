@@ -153,9 +153,9 @@ public class CPPublisherDisplayContext extends BaseCPPublisherDisplayContext {
 		CPDataSourceResult cpDataSourceResult = getCPDataSourceResult();
 
 		if (cpDataSourceResult != null) {
-			_searchContainer.setTotal(cpDataSourceResult.getLength());
 			_searchContainer.setResults(
 				cpDataSourceResult.getCPCatalogEntries());
+			_searchContainer.setTotal(cpDataSourceResult.getLength());
 		}
 
 		return _searchContainer;

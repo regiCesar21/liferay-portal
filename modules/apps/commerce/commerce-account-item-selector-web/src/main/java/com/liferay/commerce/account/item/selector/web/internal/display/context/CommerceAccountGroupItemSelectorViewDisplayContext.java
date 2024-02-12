@@ -98,8 +98,8 @@ public class CommerceAccountGroupItemSelectorViewDisplayContext {
 				getKeywords(), _searchContainer.getStart(),
 				_searchContainer.getEnd(), null);
 
-		_searchContainer.setTotal(total);
 		_searchContainer.setResults(results);
+		_searchContainer.setTotal(total);
 
 		return _searchContainer;
 	}

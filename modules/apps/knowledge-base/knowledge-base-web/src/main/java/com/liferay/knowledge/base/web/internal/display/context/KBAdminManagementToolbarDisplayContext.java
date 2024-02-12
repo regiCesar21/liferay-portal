@@ -395,10 +395,6 @@ public class KBAdminManagementToolbarDisplayContext {
 			_searchContainer.setTotal(kbArticleSearchDisplay.getTotal());
 		}
 		else if (kbFolderView) {
-			_searchContainer.setTotal(
-				KBFolderServiceUtil.getKBFoldersAndKBArticlesCount(
-					_themeDisplay.getScopeGroupId(), parentResourcePrimKey,
-					WorkflowConstants.STATUS_ANY));
 			_searchContainer.setResults(
 				KBFolderServiceUtil.getKBFoldersAndKBArticles(
 					_themeDisplay.getScopeGroupId(), parentResourcePrimKey,
@@ -407,6 +403,10 @@ public class KBAdminManagementToolbarDisplayContext {
 					KBUtil.getKBObjectsOrderByComparator(
 						_searchContainer.getOrderByCol(),
 						_searchContainer.getOrderByType())));
+			_searchContainer.setTotal(
+				KBFolderServiceUtil.getKBFoldersAndKBArticlesCount(
+					_themeDisplay.getScopeGroupId(), parentResourcePrimKey,
+					WorkflowConstants.STATUS_ANY));
 		}
 		else {
 			OrderByComparator<KBArticle> kbArticleOrderByComparator =
@@ -417,10 +417,6 @@ public class KBAdminManagementToolbarDisplayContext {
 			_searchContainer.setOrderByComparator(
 				new KBOrderByComparatorAdapter<>(kbArticleOrderByComparator));
 
-			_searchContainer.setTotal(
-				KBArticleServiceUtil.getKBArticlesCount(
-					_themeDisplay.getScopeGroupId(), parentResourcePrimKey,
-					WorkflowConstants.STATUS_ANY));
 			_searchContainer.setResults(
 				new ArrayList<>(
 					KBArticleServiceUtil.getKBArticles(
@@ -428,6 +424,10 @@ public class KBAdminManagementToolbarDisplayContext {
 						WorkflowConstants.STATUS_ANY,
 						_searchContainer.getStart(), _searchContainer.getEnd(),
 						kbArticleOrderByComparator)));
+			_searchContainer.setTotal(
+				KBArticleServiceUtil.getKBArticlesCount(
+					_themeDisplay.getScopeGroupId(), parentResourcePrimKey,
+					WorkflowConstants.STATUS_ANY));
 		}
 
 		_searchContainer.setRowChecker(

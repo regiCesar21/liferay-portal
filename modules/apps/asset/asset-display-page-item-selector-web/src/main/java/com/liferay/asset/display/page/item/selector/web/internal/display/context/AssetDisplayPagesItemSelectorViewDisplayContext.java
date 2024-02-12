@@ -125,9 +125,9 @@ public class AssetDisplayPagesItemSelectorViewDisplayContext {
 					assetDisplayPageSearchContainer.getOrderByComparator());
 		}
 
+		assetDisplayPageSearchContainer.setResults(layoutPageTemplateEntries);
 		assetDisplayPageSearchContainer.setTotal(
 			layoutPageTemplateEntriesCount);
-		assetDisplayPageSearchContainer.setResults(layoutPageTemplateEntries);
 
 		_assetDisplayPageSearchContainer = assetDisplayPageSearchContainer;
 

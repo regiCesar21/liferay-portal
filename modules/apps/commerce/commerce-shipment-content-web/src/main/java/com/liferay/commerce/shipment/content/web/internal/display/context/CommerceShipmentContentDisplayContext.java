@@ -164,8 +164,8 @@ public class CommerceShipmentContentDisplayContext {
 				_commerceShipmentItemSearchContainer.getEnd(),
 				new CommerceShipmentItemCreateDateComparator());
 
-		_commerceShipmentItemSearchContainer.setTotal(total);
 		_commerceShipmentItemSearchContainer.setResults(results);
+		_commerceShipmentItemSearchContainer.setTotal(total);
 
 		return _commerceShipmentItemSearchContainer;
 	}
@@ -257,8 +257,8 @@ public class CommerceShipmentContentDisplayContext {
 				new CommerceShipmentCreateDateComparator());
 		}
 
-		_searchContainer.setTotal(total);
 		_searchContainer.setResults(results);
+		_searchContainer.setTotal(total);
 
 		return _searchContainer;
 	}

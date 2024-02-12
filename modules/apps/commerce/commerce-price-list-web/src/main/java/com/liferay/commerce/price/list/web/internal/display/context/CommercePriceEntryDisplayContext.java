@@ -180,10 +180,10 @@ public class CommercePriceEntryDisplayContext
 						getKeywords(), searchContainer.getStart(),
 						searchContainer.getEnd(), sort);
 
-			searchContainer.setTotal(
-				commercePriceListBaseModelSearchResult.getLength());
 			searchContainer.setResults(
 				commercePriceListBaseModelSearchResult.getBaseModels());
+			searchContainer.setTotal(
+				commercePriceListBaseModelSearchResult.getLength());
 		}
 		else {
 			int total = _commercePriceEntryService.getCommercePriceEntriesCount(

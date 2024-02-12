@@ -65,9 +65,9 @@ public class CPOptionItemSelectorViewDisplayContext
 				cpRequestHelper.getCompanyId(), getKeywords(),
 				searchContainer.getStart(), searchContainer.getEnd(), sort);
 
-		searchContainer.setTotal(cpOptionBaseModelSearchResult.getLength());
 		searchContainer.setResults(
 			cpOptionBaseModelSearchResult.getBaseModels());
+		searchContainer.setTotal(cpOptionBaseModelSearchResult.getLength());
 
 		return searchContainer;
 	}

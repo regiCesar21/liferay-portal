@@ -222,8 +222,8 @@ public class CommerceAccountAddressAdminDisplayContext
 				commerceAccount.getCommerceAccountId(), null,
 				_searchContainer.getStart(), _searchContainer.getEnd(), null);
 
-		_searchContainer.setTotal(baseModelSearchResult.getLength());
 		_searchContainer.setResults(baseModelSearchResult.getBaseModels());
+		_searchContainer.setTotal(baseModelSearchResult.getLength());
 
 		return _searchContainer;
 	}

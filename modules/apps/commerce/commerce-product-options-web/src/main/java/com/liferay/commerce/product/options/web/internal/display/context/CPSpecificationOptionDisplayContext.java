@@ -133,10 +133,10 @@ public class CPSpecificationOptionDisplayContext
 					cpRequestHelper.getCompanyId(), facetable, getKeywords(),
 					searchContainer.getStart(), searchContainer.getEnd(), sort);
 
-		searchContainer.setTotal(
-			cpSpecificationOptionBaseModelSearchResult.getLength());
 		searchContainer.setResults(
 			cpSpecificationOptionBaseModelSearchResult.getBaseModels());
+		searchContainer.setTotal(
+			cpSpecificationOptionBaseModelSearchResult.getLength());
 
 		return searchContainer;
 	}

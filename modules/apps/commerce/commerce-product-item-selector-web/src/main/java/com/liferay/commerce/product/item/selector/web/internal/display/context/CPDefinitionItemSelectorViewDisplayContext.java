@@ -118,9 +118,9 @@ public class CPDefinitionItemSelectorViewDisplayContext
 				WorkflowConstants.STATUS_APPROVED, searchContainer.getStart(),
 				searchContainer.getEnd(), sort);
 
-		searchContainer.setTotal(cpDefinitionBaseModelSearchResult.getLength());
 		searchContainer.setResults(
 			cpDefinitionBaseModelSearchResult.getBaseModels());
+		searchContainer.setTotal(cpDefinitionBaseModelSearchResult.getLength());
 
 		return searchContainer;
 	}

@@ -230,8 +230,8 @@ public class CommerceCurrenciesDisplayContext {
 				_searchContainer.getEnd(), orderByComparator);
 		}
 
-		_searchContainer.setTotal(total);
 		_searchContainer.setResults(results);
+		_searchContainer.setTotal(total);
 
 		return _searchContainer;
 	}

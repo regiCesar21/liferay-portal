@@ -58,8 +58,8 @@ Indexer<?> indexer = IndexerRegistryUtil.nullSafeGetIndexer(Organization.class);
 					results = OrganizationLocalServiceUtil.search(company.getCompanyId(), parentOrganizationId, searchTerms.getKeywords(), searchTerms.getType(), searchTerms.getRegionIdObj(), searchTerms.getCountryIdObj(), organizationParams, searchContainer.getStart(), searchContainer.getEnd(), searchContainer.getOrderByComparator());
 				}
 
-				searchContainer.setTotal(total);
 				searchContainer.setResults(results);
+				searchContainer.setTotal(total);
 				%>
 
 			</c:otherwise>
