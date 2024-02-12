@@ -40,10 +40,8 @@ public class InfoPanelMVCResourceCommand extends BaseMVCResourceCommand {
 		resourceRequest.setAttribute(
 			SiteAdminWebKeys.GROUP_ENTRIES,
 			ActionUtil.getGroups(resourceRequest));
-
 		resourceRequest.setAttribute(
 			SiteWebKeys.GROUP_SEARCH_PROVIDER, _groupSearchProvider);
-
 		resourceRequest.setAttribute(
 			SiteWebKeys.GROUP_URL_PROVIDER, _groupURLProvider);
 
