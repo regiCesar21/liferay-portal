@@ -27,12 +27,12 @@ if (Validator.isNotNull(keywords)) {
 	kbObjectsSearchContainer.setTotal(kbArticleSearchDisplay.getTotal());
 }
 else if (kbFolderView) {
-	kbObjectsSearchContainer.setTotal(KBFolderServiceUtil.getKBFoldersAndKBArticlesCount(scopeGroupId, parentResourcePrimKey, WorkflowConstants.STATUS_ANY));
 	kbObjectsSearchContainer.setResults(KBFolderServiceUtil.getKBFoldersAndKBArticles(scopeGroupId, parentResourcePrimKey, WorkflowConstants.STATUS_ANY, kbObjectsSearchContainer.getStart(), kbObjectsSearchContainer.getEnd(), kbObjectsSearchContainer.getOrderByComparator()));
+	kbObjectsSearchContainer.setTotal(KBFolderServiceUtil.getKBFoldersAndKBArticlesCount(scopeGroupId, parentResourcePrimKey, WorkflowConstants.STATUS_ANY));
 }
 else {
-	kbObjectsSearchContainer.setTotal(KBArticleServiceUtil.getKBArticlesCount(scopeGroupId, parentResourcePrimKey, WorkflowConstants.STATUS_ANY));
 	kbObjectsSearchContainer.setResults(KBArticleServiceUtil.getKBArticles(scopeGroupId, parentResourcePrimKey, WorkflowConstants.STATUS_ANY, kbObjectsSearchContainer.getStart(), kbObjectsSearchContainer.getEnd(), kbObjectsSearchContainer.getOrderByComparator()));
+	kbObjectsSearchContainer.setTotal(KBArticleServiceUtil.getKBArticlesCount(scopeGroupId, parentResourcePrimKey, WorkflowConstants.STATUS_ANY));
 }
 
 kbObjectsSearchContainer.setRowChecker(new EntriesChecker(liferayPortletRequest, liferayPortletResponse));

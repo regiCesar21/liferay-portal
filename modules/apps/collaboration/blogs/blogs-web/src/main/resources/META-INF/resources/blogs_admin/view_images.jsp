@@ -144,8 +144,8 @@ String keywords = ParamUtil.getString(request, "keywords");
 				}
 			}
 
-			searchContainer.setTotal(total);
 			searchContainer.setResults(results);
+			searchContainer.setTotal(total);
 			%>
 
 			<liferay-ui:search-container-row
