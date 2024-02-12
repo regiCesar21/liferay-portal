@@ -286,42 +286,84 @@ public abstract class BaseMeasurementUnitResourceTestCase {
 			testGetCommerceAdminSiteSettingGroupMeasurementUnitPage_addMeasurementUnit(
 				groupId, randomMeasurementUnit());
 
-		Page<MeasurementUnit> page1 =
-			measurementUnitResource.
-				getCommerceAdminSiteSettingGroupMeasurementUnitPage(
-					groupId, null, Pagination.of(1, totalCount + 2));
+		// See com.liferay.portal.vulcan.internal.configuration.HeadlessAPICompanyConfiguration#pageSizeLimit
 
-		List<MeasurementUnit> measurementUnits1 =
-			(List<MeasurementUnit>)page1.getItems();
+		int pageSizeLimit = 500;
 
-		Assert.assertEquals(
-			measurementUnits1.toString(), totalCount + 2,
-			measurementUnits1.size());
+		if (totalCount >= (pageSizeLimit - 2)) {
+			Page<MeasurementUnit> page1 =
+				measurementUnitResource.
+					getCommerceAdminSiteSettingGroupMeasurementUnitPage(
+						groupId, null,
+						Pagination.of(
+							(int)Math.ceil((totalCount + 1.0) / pageSizeLimit),
+							pageSizeLimit));
 
-		Page<MeasurementUnit> page2 =
-			measurementUnitResource.
-				getCommerceAdminSiteSettingGroupMeasurementUnitPage(
-					groupId, null, Pagination.of(2, totalCount + 2));
+			Assert.assertEquals(totalCount + 3, page1.getTotalCount());
 
-		Assert.assertEquals(totalCount + 3, page2.getTotalCount());
+			assertContains(
+				measurementUnit1, (List<MeasurementUnit>)page1.getItems());
 
-		List<MeasurementUnit> measurementUnits2 =
-			(List<MeasurementUnit>)page2.getItems();
+			Page<MeasurementUnit> page2 =
+				measurementUnitResource.
+					getCommerceAdminSiteSettingGroupMeasurementUnitPage(
+						groupId, null,
+						Pagination.of(
+							(int)Math.ceil((totalCount + 2.0) / pageSizeLimit),
+							pageSizeLimit));
 
-		Assert.assertEquals(
-			measurementUnits2.toString(), 1, measurementUnits2.size());
+			assertContains(
+				measurementUnit2, (List<MeasurementUnit>)page2.getItems());
 
-		Page<MeasurementUnit> page3 =
-			measurementUnitResource.
-				getCommerceAdminSiteSettingGroupMeasurementUnitPage(
-					groupId, null, Pagination.of(1, (int)totalCount + 3));
+			Page<MeasurementUnit> page3 =
+				measurementUnitResource.
+					getCommerceAdminSiteSettingGroupMeasurementUnitPage(
+						groupId, null,
+						Pagination.of(
+							(int)Math.ceil((totalCount + 3.0) / pageSizeLimit),
+							pageSizeLimit));
 
-		assertContains(
-			measurementUnit1, (List<MeasurementUnit>)page3.getItems());
-		assertContains(
-			measurementUnit2, (List<MeasurementUnit>)page3.getItems());
-		assertContains(
-			measurementUnit3, (List<MeasurementUnit>)page3.getItems());
+			assertContains(
+				measurementUnit3, (List<MeasurementUnit>)page3.getItems());
+		}
+		else {
+			Page<MeasurementUnit> page1 =
+				measurementUnitResource.
+					getCommerceAdminSiteSettingGroupMeasurementUnitPage(
+						groupId, null, Pagination.of(1, totalCount + 2));
+
+			List<MeasurementUnit> measurementUnits1 =
+				(List<MeasurementUnit>)page1.getItems();
+
+			Assert.assertEquals(
+				measurementUnits1.toString(), totalCount + 2,
+				measurementUnits1.size());
+
+			Page<MeasurementUnit> page2 =
+				measurementUnitResource.
+					getCommerceAdminSiteSettingGroupMeasurementUnitPage(
+						groupId, null, Pagination.of(2, totalCount + 2));
+
+			Assert.assertEquals(totalCount + 3, page2.getTotalCount());
+
+			List<MeasurementUnit> measurementUnits2 =
+				(List<MeasurementUnit>)page2.getItems();
+
+			Assert.assertEquals(
+				measurementUnits2.toString(), 1, measurementUnits2.size());
+
+			Page<MeasurementUnit> page3 =
+				measurementUnitResource.
+					getCommerceAdminSiteSettingGroupMeasurementUnitPage(
+						groupId, null, Pagination.of(1, (int)totalCount + 3));
+
+			assertContains(
+				measurementUnit1, (List<MeasurementUnit>)page3.getItems());
+			assertContains(
+				measurementUnit2, (List<MeasurementUnit>)page3.getItems());
+			assertContains(
+				measurementUnit3, (List<MeasurementUnit>)page3.getItems());
+		}
 	}
 
 	protected MeasurementUnit

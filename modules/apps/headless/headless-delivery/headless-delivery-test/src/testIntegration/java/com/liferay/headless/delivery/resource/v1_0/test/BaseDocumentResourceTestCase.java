@@ -393,32 +393,74 @@ public abstract class BaseDocumentResourceTestCase {
 		Document document3 = testGetDocumentFolderDocumentsPage_addDocument(
 			documentFolderId, randomDocument());
 
-		Page<Document> page1 = documentResource.getDocumentFolderDocumentsPage(
-			documentFolderId, null, null, null, null,
-			Pagination.of(1, totalCount + 2), null);
+		// See com.liferay.portal.vulcan.internal.configuration.HeadlessAPICompanyConfiguration#pageSizeLimit
 
-		List<Document> documents1 = (List<Document>)page1.getItems();
+		int pageSizeLimit = 500;
 
-		Assert.assertEquals(
-			documents1.toString(), totalCount + 2, documents1.size());
+		if (totalCount >= (pageSizeLimit - 2)) {
+			Page<Document> page1 =
+				documentResource.getDocumentFolderDocumentsPage(
+					documentFolderId, null, null, null, null,
+					Pagination.of(
+						(int)Math.ceil((totalCount + 1.0) / pageSizeLimit),
+						pageSizeLimit),
+					null);
 
-		Page<Document> page2 = documentResource.getDocumentFolderDocumentsPage(
-			documentFolderId, null, null, null, null,
-			Pagination.of(2, totalCount + 2), null);
+			Assert.assertEquals(totalCount + 3, page1.getTotalCount());
 
-		Assert.assertEquals(totalCount + 3, page2.getTotalCount());
+			assertContains(document1, (List<Document>)page1.getItems());
 
-		List<Document> documents2 = (List<Document>)page2.getItems();
+			Page<Document> page2 =
+				documentResource.getDocumentFolderDocumentsPage(
+					documentFolderId, null, null, null, null,
+					Pagination.of(
+						(int)Math.ceil((totalCount + 2.0) / pageSizeLimit),
+						pageSizeLimit),
+					null);
 
-		Assert.assertEquals(documents2.toString(), 1, documents2.size());
+			assertContains(document2, (List<Document>)page2.getItems());
 
-		Page<Document> page3 = documentResource.getDocumentFolderDocumentsPage(
-			documentFolderId, null, null, null, null,
-			Pagination.of(1, (int)totalCount + 3), null);
+			Page<Document> page3 =
+				documentResource.getDocumentFolderDocumentsPage(
+					documentFolderId, null, null, null, null,
+					Pagination.of(
+						(int)Math.ceil((totalCount + 3.0) / pageSizeLimit),
+						pageSizeLimit),
+					null);
 
-		assertContains(document1, (List<Document>)page3.getItems());
-		assertContains(document2, (List<Document>)page3.getItems());
-		assertContains(document3, (List<Document>)page3.getItems());
+			assertContains(document3, (List<Document>)page3.getItems());
+		}
+		else {
+			Page<Document> page1 =
+				documentResource.getDocumentFolderDocumentsPage(
+					documentFolderId, null, null, null, null,
+					Pagination.of(1, totalCount + 2), null);
+
+			List<Document> documents1 = (List<Document>)page1.getItems();
+
+			Assert.assertEquals(
+				documents1.toString(), totalCount + 2, documents1.size());
+
+			Page<Document> page2 =
+				documentResource.getDocumentFolderDocumentsPage(
+					documentFolderId, null, null, null, null,
+					Pagination.of(2, totalCount + 2), null);
+
+			Assert.assertEquals(totalCount + 3, page2.getTotalCount());
+
+			List<Document> documents2 = (List<Document>)page2.getItems();
+
+			Assert.assertEquals(documents2.toString(), 1, documents2.size());
+
+			Page<Document> page3 =
+				documentResource.getDocumentFolderDocumentsPage(
+					documentFolderId, null, null, null, null,
+					Pagination.of(1, (int)totalCount + 3), null);
+
+			assertContains(document1, (List<Document>)page3.getItems());
+			assertContains(document2, (List<Document>)page3.getItems());
+			assertContains(document3, (List<Document>)page3.getItems());
+		}
 	}
 
 	@Test
@@ -980,32 +1022,68 @@ public abstract class BaseDocumentResourceTestCase {
 		Document document3 = testGetSiteDocumentsPage_addDocument(
 			siteId, randomDocument());
 
-		Page<Document> page1 = documentResource.getSiteDocumentsPage(
-			siteId, null, null, null, null, Pagination.of(1, totalCount + 2),
-			null);
+		// See com.liferay.portal.vulcan.internal.configuration.HeadlessAPICompanyConfiguration#pageSizeLimit
 
-		List<Document> documents1 = (List<Document>)page1.getItems();
+		int pageSizeLimit = 500;
 
-		Assert.assertEquals(
-			documents1.toString(), totalCount + 2, documents1.size());
+		if (totalCount >= (pageSizeLimit - 2)) {
+			Page<Document> page1 = documentResource.getSiteDocumentsPage(
+				siteId, null, null, null, null,
+				Pagination.of(
+					(int)Math.ceil((totalCount + 1.0) / pageSizeLimit),
+					pageSizeLimit),
+				null);
 
-		Page<Document> page2 = documentResource.getSiteDocumentsPage(
-			siteId, null, null, null, null, Pagination.of(2, totalCount + 2),
-			null);
+			Assert.assertEquals(totalCount + 3, page1.getTotalCount());
 
-		Assert.assertEquals(totalCount + 3, page2.getTotalCount());
+			assertContains(document1, (List<Document>)page1.getItems());
 
-		List<Document> documents2 = (List<Document>)page2.getItems();
+			Page<Document> page2 = documentResource.getSiteDocumentsPage(
+				siteId, null, null, null, null,
+				Pagination.of(
+					(int)Math.ceil((totalCount + 2.0) / pageSizeLimit),
+					pageSizeLimit),
+				null);
 
-		Assert.assertEquals(documents2.toString(), 1, documents2.size());
+			assertContains(document2, (List<Document>)page2.getItems());
 
-		Page<Document> page3 = documentResource.getSiteDocumentsPage(
-			siteId, null, null, null, null,
-			Pagination.of(1, (int)totalCount + 3), null);
+			Page<Document> page3 = documentResource.getSiteDocumentsPage(
+				siteId, null, null, null, null,
+				Pagination.of(
+					(int)Math.ceil((totalCount + 3.0) / pageSizeLimit),
+					pageSizeLimit),
+				null);
 
-		assertContains(document1, (List<Document>)page3.getItems());
-		assertContains(document2, (List<Document>)page3.getItems());
-		assertContains(document3, (List<Document>)page3.getItems());
+			assertContains(document3, (List<Document>)page3.getItems());
+		}
+		else {
+			Page<Document> page1 = documentResource.getSiteDocumentsPage(
+				siteId, null, null, null, null,
+				Pagination.of(1, totalCount + 2), null);
+
+			List<Document> documents1 = (List<Document>)page1.getItems();
+
+			Assert.assertEquals(
+				documents1.toString(), totalCount + 2, documents1.size());
+
+			Page<Document> page2 = documentResource.getSiteDocumentsPage(
+				siteId, null, null, null, null,
+				Pagination.of(2, totalCount + 2), null);
+
+			Assert.assertEquals(totalCount + 3, page2.getTotalCount());
+
+			List<Document> documents2 = (List<Document>)page2.getItems();
+
+			Assert.assertEquals(documents2.toString(), 1, documents2.size());
+
+			Page<Document> page3 = documentResource.getSiteDocumentsPage(
+				siteId, null, null, null, null,
+				Pagination.of(1, (int)totalCount + 3), null);
+
+			assertContains(document1, (List<Document>)page3.getItems());
+			assertContains(document2, (List<Document>)page3.getItems());
+			assertContains(document3, (List<Document>)page3.getItems());
+		}
 	}
 
 	@Test

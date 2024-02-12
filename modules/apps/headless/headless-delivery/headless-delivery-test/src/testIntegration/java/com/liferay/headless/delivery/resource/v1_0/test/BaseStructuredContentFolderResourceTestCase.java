@@ -409,46 +409,97 @@ public abstract class BaseStructuredContentFolderResourceTestCase {
 			testGetSiteStructuredContentFoldersPage_addStructuredContentFolder(
 				siteId, randomStructuredContentFolder());
 
-		Page<StructuredContentFolder> page1 =
-			structuredContentFolderResource.getSiteStructuredContentFoldersPage(
-				siteId, null, null, null, null,
-				Pagination.of(1, totalCount + 2), null);
+		// See com.liferay.portal.vulcan.internal.configuration.HeadlessAPICompanyConfiguration#pageSizeLimit
 
-		List<StructuredContentFolder> structuredContentFolders1 =
-			(List<StructuredContentFolder>)page1.getItems();
+		int pageSizeLimit = 500;
 
-		Assert.assertEquals(
-			structuredContentFolders1.toString(), totalCount + 2,
-			structuredContentFolders1.size());
+		if (totalCount >= (pageSizeLimit - 2)) {
+			Page<StructuredContentFolder> page1 =
+				structuredContentFolderResource.
+					getSiteStructuredContentFoldersPage(
+						siteId, null, null, null, null,
+						Pagination.of(
+							(int)Math.ceil((totalCount + 1.0) / pageSizeLimit),
+							pageSizeLimit),
+						null);
 
-		Page<StructuredContentFolder> page2 =
-			structuredContentFolderResource.getSiteStructuredContentFoldersPage(
-				siteId, null, null, null, null,
-				Pagination.of(2, totalCount + 2), null);
+			Assert.assertEquals(totalCount + 3, page1.getTotalCount());
 
-		Assert.assertEquals(totalCount + 3, page2.getTotalCount());
+			assertContains(
+				structuredContentFolder1,
+				(List<StructuredContentFolder>)page1.getItems());
 
-		List<StructuredContentFolder> structuredContentFolders2 =
-			(List<StructuredContentFolder>)page2.getItems();
+			Page<StructuredContentFolder> page2 =
+				structuredContentFolderResource.
+					getSiteStructuredContentFoldersPage(
+						siteId, null, null, null, null,
+						Pagination.of(
+							(int)Math.ceil((totalCount + 2.0) / pageSizeLimit),
+							pageSizeLimit),
+						null);
 
-		Assert.assertEquals(
-			structuredContentFolders2.toString(), 1,
-			structuredContentFolders2.size());
+			assertContains(
+				structuredContentFolder2,
+				(List<StructuredContentFolder>)page2.getItems());
 
-		Page<StructuredContentFolder> page3 =
-			structuredContentFolderResource.getSiteStructuredContentFoldersPage(
-				siteId, null, null, null, null,
-				Pagination.of(1, (int)totalCount + 3), null);
+			Page<StructuredContentFolder> page3 =
+				structuredContentFolderResource.
+					getSiteStructuredContentFoldersPage(
+						siteId, null, null, null, null,
+						Pagination.of(
+							(int)Math.ceil((totalCount + 3.0) / pageSizeLimit),
+							pageSizeLimit),
+						null);
 
-		assertContains(
-			structuredContentFolder1,
-			(List<StructuredContentFolder>)page3.getItems());
-		assertContains(
-			structuredContentFolder2,
-			(List<StructuredContentFolder>)page3.getItems());
-		assertContains(
-			structuredContentFolder3,
-			(List<StructuredContentFolder>)page3.getItems());
+			assertContains(
+				structuredContentFolder3,
+				(List<StructuredContentFolder>)page3.getItems());
+		}
+		else {
+			Page<StructuredContentFolder> page1 =
+				structuredContentFolderResource.
+					getSiteStructuredContentFoldersPage(
+						siteId, null, null, null, null,
+						Pagination.of(1, totalCount + 2), null);
+
+			List<StructuredContentFolder> structuredContentFolders1 =
+				(List<StructuredContentFolder>)page1.getItems();
+
+			Assert.assertEquals(
+				structuredContentFolders1.toString(), totalCount + 2,
+				structuredContentFolders1.size());
+
+			Page<StructuredContentFolder> page2 =
+				structuredContentFolderResource.
+					getSiteStructuredContentFoldersPage(
+						siteId, null, null, null, null,
+						Pagination.of(2, totalCount + 2), null);
+
+			Assert.assertEquals(totalCount + 3, page2.getTotalCount());
+
+			List<StructuredContentFolder> structuredContentFolders2 =
+				(List<StructuredContentFolder>)page2.getItems();
+
+			Assert.assertEquals(
+				structuredContentFolders2.toString(), 1,
+				structuredContentFolders2.size());
+
+			Page<StructuredContentFolder> page3 =
+				structuredContentFolderResource.
+					getSiteStructuredContentFoldersPage(
+						siteId, null, null, null, null,
+						Pagination.of(1, (int)totalCount + 3), null);
+
+			assertContains(
+				structuredContentFolder1,
+				(List<StructuredContentFolder>)page3.getItems());
+			assertContains(
+				structuredContentFolder2,
+				(List<StructuredContentFolder>)page3.getItems());
+			assertContains(
+				structuredContentFolder3,
+				(List<StructuredContentFolder>)page3.getItems());
+		}
 	}
 
 	@Test
@@ -956,49 +1007,97 @@ public abstract class BaseStructuredContentFolderResourceTestCase {
 				parentStructuredContentFolderId,
 				randomStructuredContentFolder());
 
-		Page<StructuredContentFolder> page1 =
-			structuredContentFolderResource.
-				getStructuredContentFolderStructuredContentFoldersPage(
-					parentStructuredContentFolderId, null, null, null,
-					Pagination.of(1, totalCount + 2), null);
+		// See com.liferay.portal.vulcan.internal.configuration.HeadlessAPICompanyConfiguration#pageSizeLimit
 
-		List<StructuredContentFolder> structuredContentFolders1 =
-			(List<StructuredContentFolder>)page1.getItems();
+		int pageSizeLimit = 500;
 
-		Assert.assertEquals(
-			structuredContentFolders1.toString(), totalCount + 2,
-			structuredContentFolders1.size());
+		if (totalCount >= (pageSizeLimit - 2)) {
+			Page<StructuredContentFolder> page1 =
+				structuredContentFolderResource.
+					getStructuredContentFolderStructuredContentFoldersPage(
+						parentStructuredContentFolderId, null, null, null,
+						Pagination.of(
+							(int)Math.ceil((totalCount + 1.0) / pageSizeLimit),
+							pageSizeLimit),
+						null);
 
-		Page<StructuredContentFolder> page2 =
-			structuredContentFolderResource.
-				getStructuredContentFolderStructuredContentFoldersPage(
-					parentStructuredContentFolderId, null, null, null,
-					Pagination.of(2, totalCount + 2), null);
+			Assert.assertEquals(totalCount + 3, page1.getTotalCount());
 
-		Assert.assertEquals(totalCount + 3, page2.getTotalCount());
+			assertContains(
+				structuredContentFolder1,
+				(List<StructuredContentFolder>)page1.getItems());
 
-		List<StructuredContentFolder> structuredContentFolders2 =
-			(List<StructuredContentFolder>)page2.getItems();
+			Page<StructuredContentFolder> page2 =
+				structuredContentFolderResource.
+					getStructuredContentFolderStructuredContentFoldersPage(
+						parentStructuredContentFolderId, null, null, null,
+						Pagination.of(
+							(int)Math.ceil((totalCount + 2.0) / pageSizeLimit),
+							pageSizeLimit),
+						null);
 
-		Assert.assertEquals(
-			structuredContentFolders2.toString(), 1,
-			structuredContentFolders2.size());
+			assertContains(
+				structuredContentFolder2,
+				(List<StructuredContentFolder>)page2.getItems());
 
-		Page<StructuredContentFolder> page3 =
-			structuredContentFolderResource.
-				getStructuredContentFolderStructuredContentFoldersPage(
-					parentStructuredContentFolderId, null, null, null,
-					Pagination.of(1, (int)totalCount + 3), null);
+			Page<StructuredContentFolder> page3 =
+				structuredContentFolderResource.
+					getStructuredContentFolderStructuredContentFoldersPage(
+						parentStructuredContentFolderId, null, null, null,
+						Pagination.of(
+							(int)Math.ceil((totalCount + 3.0) / pageSizeLimit),
+							pageSizeLimit),
+						null);
 
-		assertContains(
-			structuredContentFolder1,
-			(List<StructuredContentFolder>)page3.getItems());
-		assertContains(
-			structuredContentFolder2,
-			(List<StructuredContentFolder>)page3.getItems());
-		assertContains(
-			structuredContentFolder3,
-			(List<StructuredContentFolder>)page3.getItems());
+			assertContains(
+				structuredContentFolder3,
+				(List<StructuredContentFolder>)page3.getItems());
+		}
+		else {
+			Page<StructuredContentFolder> page1 =
+				structuredContentFolderResource.
+					getStructuredContentFolderStructuredContentFoldersPage(
+						parentStructuredContentFolderId, null, null, null,
+						Pagination.of(1, totalCount + 2), null);
+
+			List<StructuredContentFolder> structuredContentFolders1 =
+				(List<StructuredContentFolder>)page1.getItems();
+
+			Assert.assertEquals(
+				structuredContentFolders1.toString(), totalCount + 2,
+				structuredContentFolders1.size());
+
+			Page<StructuredContentFolder> page2 =
+				structuredContentFolderResource.
+					getStructuredContentFolderStructuredContentFoldersPage(
+						parentStructuredContentFolderId, null, null, null,
+						Pagination.of(2, totalCount + 2), null);
+
+			Assert.assertEquals(totalCount + 3, page2.getTotalCount());
+
+			List<StructuredContentFolder> structuredContentFolders2 =
+				(List<StructuredContentFolder>)page2.getItems();
+
+			Assert.assertEquals(
+				structuredContentFolders2.toString(), 1,
+				structuredContentFolders2.size());
+
+			Page<StructuredContentFolder> page3 =
+				structuredContentFolderResource.
+					getStructuredContentFolderStructuredContentFoldersPage(
+						parentStructuredContentFolderId, null, null, null,
+						Pagination.of(1, (int)totalCount + 3), null);
+
+			assertContains(
+				structuredContentFolder1,
+				(List<StructuredContentFolder>)page3.getItems());
+			assertContains(
+				structuredContentFolder2,
+				(List<StructuredContentFolder>)page3.getItems());
+			assertContains(
+				structuredContentFolder3,
+				(List<StructuredContentFolder>)page3.getItems());
+		}
 	}
 
 	@Test
