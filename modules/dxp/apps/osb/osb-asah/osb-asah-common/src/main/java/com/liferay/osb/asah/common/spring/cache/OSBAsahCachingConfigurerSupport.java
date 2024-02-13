@@ -16,8 +16,8 @@ import java.time.Duration;
 
 import java.util.Arrays;
 
+import org.apache.commons.lang.StringUtils;
 import org.apache.commons.pool2.impl.GenericObjectPoolConfig;
-import org.apache.hadoop.util.StringUtils;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.cache.annotation.CachingConfigurerSupport;

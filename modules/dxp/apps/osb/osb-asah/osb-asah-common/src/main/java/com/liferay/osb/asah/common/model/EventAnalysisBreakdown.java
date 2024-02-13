@@ -11,7 +11,7 @@ import com.liferay.osb.asah.common.util.BeanUtils;
 import java.util.Map;
 import java.util.Objects;
 
-import org.apache.commons.collections.map.CaseInsensitiveMap;
+import org.apache.commons.collections4.map.CaseInsensitiveMap;
 
 /**
  * @author Matthew Kong

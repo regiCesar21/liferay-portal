@@ -15,7 +15,7 @@ import java.util.Objects;
 import java.util.Set;
 import java.util.stream.Stream;
 
-import org.apache.commons.collections.CollectionUtils;
+import org.apache.commons.collections4.CollectionUtils;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
