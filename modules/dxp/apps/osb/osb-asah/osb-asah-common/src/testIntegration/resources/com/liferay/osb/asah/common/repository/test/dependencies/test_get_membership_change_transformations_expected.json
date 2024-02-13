@@ -1,0 +1,44 @@
+[
+	{
+		"addedIndividualsCount": 7,
+		"anonymousIndividualsCount": 2,
+		"individualsCount": 7,
+		"knownIndividualsCount": 5,
+		"removedIndividualsCount": 0
+	},
+	{
+		"addedIndividualsCount": 0,
+		"anonymousIndividualsCount": 0,
+		"individualsCount": 7,
+		"knownIndividualsCount": 7,
+		"removedIndividualsCount": 0
+	},
+	{
+		"addedIndividualsCount": 1,
+		"anonymousIndividualsCount": 0,
+		"individualsCount": 8,
+		"knownIndividualsCount": 8,
+		"removedIndividualsCount": 0
+	},
+	{
+		"addedIndividualsCount": 3,
+		"anonymousIndividualsCount": 3,
+		"individualsCount": 11,
+		"knownIndividualsCount": 8,
+		"removedIndividualsCount": 0
+	},
+	{
+		"addedIndividualsCount": 1,
+		"anonymousIndividualsCount": 4,
+		"individualsCount": 12,
+		"knownIndividualsCount": 8,
+		"removedIndividualsCount": 0
+	},
+	{
+		"addedIndividualsCount": 1,
+		"anonymousIndividualsCount": 4,
+		"individualsCount": 13,
+		"knownIndividualsCount": 9,
+		"removedIndividualsCount": 0
+	}
+]

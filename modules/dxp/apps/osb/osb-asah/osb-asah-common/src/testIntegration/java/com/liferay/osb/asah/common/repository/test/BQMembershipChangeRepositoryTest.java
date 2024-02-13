@@ -7,14 +7,18 @@ package com.liferay.osb.asah.common.repository.test;
 
 import com.liferay.osb.asah.common.OSBAsahCommonSpringTestContext;
 import com.liferay.osb.asah.common.date.DateUtil;
+import com.liferay.osb.asah.common.date.dog.TimeZoneDog;
+import com.liferay.osb.asah.common.date.dog.util.TimeZoneDogUtil;
 import com.liferay.osb.asah.common.entity.BQMembershipChange;
 import com.liferay.osb.asah.common.entity.Channel;
 import com.liferay.osb.asah.common.entity.Segment;
+import com.liferay.osb.asah.common.model.Transformation;
 import com.liferay.osb.asah.common.repository.BQMembershipChangeRepository;
 import com.liferay.osb.asah.common.repository.BQMembershipRepository;
 import com.liferay.osb.asah.common.repository.ChannelRepository;
 import com.liferay.osb.asah.common.repository.SegmentRepository;
 import com.liferay.osb.asah.common.repository.helper.FilterHelper;
+import com.liferay.osb.asah.common.spring.resource.ResourceUtil;
 import com.liferay.osb.asah.common.util.SetUtil;
 import com.liferay.osb.asah.test.util.annotation.BQSQLResource;
 import com.liferay.osb.asah.test.util.annotation.SQLResource;
@@ -38,10 +42,16 @@ import java.util.stream.Stream;
 import org.apache.commons.collections4.IterableUtils;
 import org.apache.commons.lang.time.DateUtils;
 
+import org.json.JSONArray;
+
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+
+import org.mockito.Mockito;
+
+import org.skyscreamer.jsonassert.JSONAssert;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Import;
@@ -202,6 +212,50 @@ public class BQMembershipChangeRepositoryTest
 			"individualsCount ge 3");
 
 		Assertions.assertEquals(3, segmentIds.size());
+	}
+
+	@BQSQLResource(
+		resourcePath = "test_get_membership_change_transformations_bq.sql"
+	)
+	@SQLResource(
+		resourcePath = "test_get_membership_change_transformations.sql"
+	)
+	@Test
+	public void testGetMembershipChangeTransformations() throws Exception {
+		TimeZoneDog timeZoneDog = Mockito.mock(TimeZoneDog.class);
+
+		Mockito.when(
+			timeZoneDog.getTimeZoneId()
+		).thenReturn(
+			"UTC"
+		);
+
+		Mockito.when(
+			timeZoneDog.getZoneId()
+		).thenReturn(
+			ZoneOffset.UTC
+		);
+
+		TimeZoneDogUtil.setTimeZoneDog(timeZoneDog);
+
+		List<Transformation> membershipChangeTransformations =
+			_bqMembershipChangeRepository.getMembershipChangeTransformations(
+				true, 1029384756L, PageRequest.of(0, 20));
+
+		JSONArray actualJSONArray = new JSONArray();
+
+		for (Transformation transformation : membershipChangeTransformations) {
+			Transformation.Term term = transformation.getTerm();
+
+			actualJSONArray.put(term.getTermsMap());
+		}
+
+		JSONAssert.assertEquals(
+			ResourceUtil.readResourceToJSONArray(
+				"dependencies" +
+					"/test_get_membership_change_transformations_expected.json",
+				this),
+			actualJSONArray, false);
 	}
 
 	@Test
