@@ -1,6 +1,12 @@
 import org.apache.tools.ant.taskdefs.condition.Os
 
 subprojects {
+	configurations {
+		all {
+			exclude group: 'org.slf4j', module: 'slf4j-reload4j'
+		}
+	}
+
 	tasks.withType(Test) {
 		doFirst {
 			environment "LCP_ENGINE_ELASTICSEARCH_SERVER_IP", "127.0.0.1"
