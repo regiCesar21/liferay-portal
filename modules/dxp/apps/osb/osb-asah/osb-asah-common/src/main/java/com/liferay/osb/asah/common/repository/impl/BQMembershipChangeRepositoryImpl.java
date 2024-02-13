@@ -18,8 +18,6 @@ import com.liferay.osb.asah.common.repository.util.ConditionUtil;
 
 import java.math.BigDecimal;
 
-import java.sql.Timestamp;
-
 import java.time.LocalDateTime;
 import java.time.ZoneOffset;
 
@@ -301,8 +299,7 @@ public class BQMembershipChangeRepositoryImpl
 			selectConditionStep = _dslContext.select(
 				DSL.field("identitiesCount", Long.class),
 				DSL.function(
-					"UNIX_MILLIS", Long.class,
-					DSL.function("TIMESTAMP", Timestamp.class, dateField)
+					"UNIX_MILLIS", Long.class, dateField
 				).as(
 					"intervalInitDate"
 				),
