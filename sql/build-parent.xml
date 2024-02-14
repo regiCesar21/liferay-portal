@@ -35,21 +35,45 @@
 			</then>
 		</if>
 
-		<java
-			classname="com.liferay.portal.tools.DBBuilder"
-			classpathref="db.builder.classpath"
-			failonerror="true"
-			fork="${fork.mode}"
-			outputproperty="db.builder.output"
-		>
-			<jvmarg if:true="${jvm.debug}" line="${jpda.settings}" />
-			<jvmarg value="-Xmx${db.build.java.mx}" />
-			<jvmarg value="-XX:MaxPermSize=${db.build.java.maxpermsize}" />
-			<arg value="-Dexternal-properties=com/liferay/portal/tools/dependencies/portal-tools.properties" />
-			<arg value="db.database.name=${database.name}" />
-			<arg value="db.database.types=${database.types}" />
-			<arg value="db.sql.dir=${db.sql.dir}" />
-		</java>
+		<if>
+			<equals arg1="${java.specification.version}" arg2="1.8" />
+			<then>
+				<java
+					classname="com.liferay.portal.tools.DBBuilder"
+					classpathref="db.builder.classpath"
+					failonerror="true"
+					fork="true"
+					logError="true"
+					outputproperty="db.builder.output"
+				>
+					<jvmarg if:true="${jvm.debug}" line="${jpda.settings}" />
+					<jvmarg value="-Xmx${db.build.java.mx}" />
+					<jvmarg value="-XX:MaxPermSize=${db.build.java.maxpermsize}" />
+					<arg value="-Dexternal-properties=com/liferay/portal/tools/dependencies/portal-tools.properties" />
+					<arg value="db.database.name=${database.name}" />
+					<arg value="db.database.types=${database.types}" />
+					<arg value="db.sql.dir=${db.sql.dir}" />
+				</java>
+			</then>
+			<else>
+				<java
+					classname="com.liferay.portal.tools.DBBuilder"
+					classpathref="db.builder.classpath"
+					failonerror="true"
+					fork="true"
+					logError="true"
+					outputproperty="db.builder.output"
+				>
+					<jvmarg if:true="${jvm.debug}" line="${jpda.settings}" />
+					<jvmarg value="-Xmx${db.build.java.mx}" />
+					<jvmarg line="${junit.java.add.opens[21]}" />
+					<arg value="-Dexternal-properties=com/liferay/portal/tools/dependencies/portal-tools.properties" />
+					<arg value="db.database.name=${database.name}" />
+					<arg value="db.database.types=${database.types}" />
+					<arg value="db.sql.dir=${db.sql.dir}" />
+				</java>
+			</else>
+		</if>
 
 		<move
 			todir="${db.sql.dir}"
