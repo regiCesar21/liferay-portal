@@ -1020,16 +1020,20 @@ public class OpportunityMessageSubscriber extends BaseMessageSubscriber {
 					accountKey, parentAccount, activeContacts, region,
 					postalAddress, productPurchases, jsonObject);
 
-				String projectKey = projectJSONObject.getString("projectKey");
+				if (projectJSONObject != null) {
+					String projectKey = projectJSONObject.getString(
+						"projectKey");
 
-				List<Account> relatedAccounts = _accountWebService.getAccounts(
-					ExternalLinkDomain.SALESFORCE,
-					ExternalLinkEntityName.RELATED_SALESFORCE_PROJECT,
-					projectKey, 1, 1000);
+					List<Account> relatedAccounts =
+						_accountWebService.getAccounts(
+							ExternalLinkDomain.SALESFORCE,
+							ExternalLinkEntityName.RELATED_SALESFORCE_PROJECT,
+							projectKey, 1, 1000);
 
-				for (Account relatedAccount : relatedAccounts) {
-					updateProductPurchases(
-						relatedAccount, productPurchases, jsonObject);
+					for (Account relatedAccount : relatedAccounts) {
+						updateProductPurchases(
+							relatedAccount, productPurchases, jsonObject);
+					}
 				}
 
 				List<Exception> productPurchaseExceptions =
