@@ -6371,7 +6371,8 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 	}
 
 	protected void notifyUser(
-		User user, String password, ServiceContext serviceContext) {
+			User user, String password, ServiceContext serviceContext)
+		throws PortalException {
 
 		if (!PrefsPropsUtil.getBoolean(
 				user.getCompanyId(),
@@ -6421,10 +6422,6 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 					PropsKeys.ADMIN_EMAIL_USER_ADDED_BODY);
 			}
 			else {
-				Ticket ticket = ticketLocalService.addDistinctTicket(
-					user.getCompanyId(), User.class.getName(), user.getUserId(),
-					TicketConstants.TYPE_PASSWORD, null, null, serviceContext);
-
 				String updatePasswordURL = "/portal/update_password?";
 
 				long plid = serviceContext.getPlid();
@@ -6447,9 +6444,18 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 					}
 				}
 
+				Ticket ticket = ticketLocalService.addDistinctTicket(
+					user.getCompanyId(), User.class.getName(), user.getUserId(),
+					TicketConstants.TYPE_PASSWORD, null, null, serviceContext);
+
 				passwordResetURL = StringBundler.concat(
 					serviceContext.getPortalURL(), serviceContext.getPathMain(),
-					updatePasswordURL, "ticketKey=", ticket.getKey());
+					updatePasswordURL, "ticketId=", ticket.getTicketId(),
+					"&ticketKey=", ticket.getKey());
+
+				ticket.setKey(PasswordEncryptorUtil.encrypt(ticket.getKey()));
+
+				ticketLocalService.updateTicket(ticket);
 
 				localizedBodyMap = LocalizationUtil.getLocalizationMap(
 					companyPortletPreferences,
