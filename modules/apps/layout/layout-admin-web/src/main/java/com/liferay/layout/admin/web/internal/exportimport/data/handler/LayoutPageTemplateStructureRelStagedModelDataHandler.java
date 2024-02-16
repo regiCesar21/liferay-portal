@@ -85,8 +85,8 @@ public class LayoutPageTemplateStructureRelStagedModelDataHandler
 			if (assetListEntry != null) {
 				try {
 					StagedModelDataHandlerUtil.exportReferenceStagedModel(
-						portletDataContext, assetListEntry,
-						layoutPageTemplateStructureRel,
+						portletDataContext, layoutPageTemplateStructureRel,
+						assetListEntry,
 						PortletDataContext.REFERENCE_TYPE_DEPENDENCY);
 				}
 				catch (PortletDataException portletDataException) {
