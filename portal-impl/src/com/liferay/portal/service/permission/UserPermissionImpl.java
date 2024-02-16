@@ -181,7 +181,9 @@ public class UserPermissionImpl
 			}
 		}
 		catch (Exception exception) {
-			_log.error(exception, exception);
+			if (_log.isDebugEnabled()) {
+				_log.debug(exception, exception);
+			}
 		}
 
 		return false;
