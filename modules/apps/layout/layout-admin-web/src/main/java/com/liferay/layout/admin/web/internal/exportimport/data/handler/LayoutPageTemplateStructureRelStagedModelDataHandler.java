@@ -9,6 +9,7 @@ import com.liferay.asset.list.model.AssetListEntry;
 import com.liferay.asset.list.service.AssetListEntryLocalService;
 import com.liferay.exportimport.content.processor.ExportImportContentProcessor;
 import com.liferay.exportimport.data.handler.base.BaseStagedModelDataHandler;
+import com.liferay.exportimport.kernel.exception.ExportImportContentProcessorException;
 import com.liferay.exportimport.kernel.lar.ExportImportPathUtil;
 import com.liferay.exportimport.kernel.lar.PortletDataContext;
 import com.liferay.exportimport.kernel.lar.PortletDataException;
@@ -19,6 +20,7 @@ import com.liferay.item.selector.criteria.InfoListItemSelectorReturnType;
 import com.liferay.layout.page.template.model.LayoutPageTemplateStructure;
 import com.liferay.layout.page.template.model.LayoutPageTemplateStructureRel;
 import com.liferay.layout.util.constants.LayoutDataItemTypeConstants;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
@@ -157,6 +159,43 @@ public class LayoutPageTemplateStructureRelStagedModelDataHandler
 					AssetListEntry.class.getName());
 
 			long newClassPK = MapUtil.getLong(
+				assetListEntryNewPrimaryKeys, classPK, -1);
+
+			if (newClassPK == -1) {
+				try {
+					StagedModelDataHandlerUtil.importReferenceStagedModel(
+						portletDataContext, layoutPageTemplateStructureRel,
+						AssetListEntry.class, classPK);
+				}
+				catch (Exception exception) {
+					StringBundler exceptionSB = new StringBundler(6);
+
+					exceptionSB.append("Unable to process asset list entry ");
+					exceptionSB.append(classPK);
+					exceptionSB.append(" for ");
+					exceptionSB.append(
+						layoutPageTemplateStructureRel.getModelClassName());
+					exceptionSB.append(" with primary key ");
+					exceptionSB.append(
+						layoutPageTemplateStructureRel.getPrimaryKeyObj());
+
+					ExportImportContentProcessorException
+						exportImportContentProcessorException =
+							new ExportImportContentProcessorException(
+								exceptionSB.toString(), exception);
+
+					if (_log.isDebugEnabled()) {
+						_log.debug(
+							exceptionSB.toString(),
+							exportImportContentProcessorException);
+					}
+					else if (_log.isWarnEnabled()) {
+						_log.warn(exceptionSB.toString());
+					}
+				}
+			}
+
+			newClassPK = MapUtil.getLong(
 				assetListEntryNewPrimaryKeys, classPK, classPK);
 
 			AssetListEntry assetListEntry =
