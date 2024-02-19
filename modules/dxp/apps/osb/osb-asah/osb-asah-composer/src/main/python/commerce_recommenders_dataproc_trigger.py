@@ -30,10 +30,12 @@ def create_dag(ac_project_id, ac_project_time_zone_id, dag_id, dag_description, 
 			'ac_project_time_zone_id': ac_project_time_zone_id,
 			'dag_configuration_key': 'commerce_recommenders_dag_trigger',
 			'data_source_ids': data_source_ids,
+			'network': os.environ['NETWORK'],
 			'owner': 'Liferay',
 			'project_id': os.environ['GOOGLE_PROJECT_ID'],
 			'region': os.environ['GOOGLE_REGION'],
-			'resource_name': resource_name
+			'resource_name': resource_name,
+			'subnetwork': os.environ['SUBNETWORK']
 		},
 		description=dag_description,
 		max_active_runs=1,

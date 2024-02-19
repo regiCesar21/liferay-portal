@@ -57,6 +57,7 @@ class DataprocClusterGetOrCreateOperator(BaseOperator):
 			metadata=json.loads(
 				dag_configuration['dataproc.cluster.metadata']
 			),
+			network_uri=dag.default_args['network'],
 			num_masters=dag_configuration['dataproc.cluster.master.count'],
 			num_workers=dag_configuration['dataproc.cluster.worker.count'],
 			project_id=dag.default_args['project_id'],
@@ -64,6 +65,7 @@ class DataprocClusterGetOrCreateOperator(BaseOperator):
 				dag_configuration['dataproc.cluster.properties']
 			),
 			region=dag.default_args['region'],
+			subnetwork_uri=dag.default_args['subnetwork'],
 			use_if_exists=True,
 			worker_disk_size=dag_configuration[
 				'dataproc.cluster.worker.disk_size'

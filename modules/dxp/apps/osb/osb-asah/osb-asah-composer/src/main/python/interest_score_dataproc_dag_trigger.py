@@ -26,9 +26,11 @@ def create_dag(ac_project_id, ac_project_time_zone_id, dag_id, dag_description, 
 			'ac_project_id': ac_project_id,
 			'ac_project_time_zone_id': ac_project_time_zone_id,
 			'dag_configuration_key': 'interest_score_dag_trigger',
+			'network': os.environ['NETWORK'],
 			'owner': 'Liferay',
 			'project_id': os.environ['GOOGLE_PROJECT_ID'],
-			'region': os.environ['GOOGLE_REGION']
+			'region': os.environ['GOOGLE_REGION'],
+			'subnetwork': os.environ['SUBNETWORK']
 		},
 		description=dag_description,
 		max_active_runs=1,
