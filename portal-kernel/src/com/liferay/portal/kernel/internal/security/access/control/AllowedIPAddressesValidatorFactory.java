@@ -116,7 +116,7 @@ public final class AllowedIPAddressesValidatorFactory {
 			throws UnknownHostException {
 
 			if (allowedIpAddress == null) {
-				throw new UnknownHostException("allowedIpAddress si null");
+				throw new UnknownHostException("Allowed IP address is null");
 			}
 
 			_allowedIpAddress = allowedIpAddress;
