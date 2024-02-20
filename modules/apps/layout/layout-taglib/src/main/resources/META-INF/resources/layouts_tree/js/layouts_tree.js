@@ -176,30 +176,31 @@ AUI.add(
 			_formatJSONResults(json) {
 				var instance = this;
 
-				var output = json.layouts.map((node) => {
-					return instance._formatNode(node);
-				});
+				var layouts = json.layouts || json.items;
+				var output = [];
+
+				if (layouts) {
+					output = layouts.map((node) => {
+						return instance._formatNode(node, json.total);
+					});
+				}
 
 				return output;
 			},
 
-			_formatNode(node) {
+			_formatNode(node, totalLayouts) {
 				var instance = this;
 
 				var childLayouts = [];
 				var cssIcons = {};
-				var total = 0;
-
+				var total = totalLayouts;
+				var childLayoutsLength = 0;
 				var iconCssClassName = 'icon-link';
 
-				var hasChildren = node.hasChildren;
-				var nodeChildren = node.children;
-				var nodeType = node.type;
-
 				if (
-					nodeType === 'embedded' ||
-					nodeType === 'link_to_layout' ||
-					nodeType === 'url'
+					node.type === 'embedded' ||
+					node.type === 'link_to_layout' ||
+					node.type === 'url'
 				) {
 					cssIcons = {
 						iconCollapsed: iconCssClassName,
@@ -207,12 +208,15 @@ AUI.add(
 					};
 				}
 
-				if (nodeChildren) {
-					childLayouts = nodeChildren.layouts;
-					total = nodeChildren.total;
+				if (node.children) {
+					childLayouts = node.children.layouts || 0;
+					total = node.children.total || total;
+					childLayoutsLength = childLayouts
+						? childLayouts.length
+						: childLayoutsLength;
 				}
 
-				var expanded = childLayouts.length > 0;
+				var expanded = childLayoutsLength > 0;
 
 				var maxChildren = instance.get('maxChildren');
 
@@ -223,7 +227,7 @@ AUI.add(
 				);
 
 				var newNode = {
-					alwaysShowHitArea: hasChildren,
+					alwaysShowHitArea: node.hasChildren,
 					cssClasses: {
 						pages: A.merge(TREE_CSS_CLASSES, cssIcons),
 					},
@@ -235,15 +239,15 @@ AUI.add(
 					paginator: {
 						limit: maxChildren,
 						offsetParam: 'start',
-						start: Math.max(childLayouts.length - maxChildren, 0),
+						start: Math.max(childLayoutsLength - maxChildren, 0),
 						total,
 					},
 					type: total > 0 ? 'io' : 'node',
 				};
 
-				if (nodeChildren && expanded) {
+				if (node.children && expanded) {
 					newNode.children = instance._formatJSONResults(
-						nodeChildren
+						node.children
 					);
 				}
 

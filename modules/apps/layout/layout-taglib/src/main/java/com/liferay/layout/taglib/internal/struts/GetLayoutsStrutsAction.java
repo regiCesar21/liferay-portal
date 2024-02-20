@@ -76,6 +76,8 @@ public class GetLayoutsStrutsAction implements StrutsAction {
 					checkDisplayPage, enableCurrentPage, groupId,
 					httpServletRequest, privateLayout, parentLayoutId,
 					selectedLayoutUuid, showHiddenLayouts, start, end)
+			).put(
+				"total", childLayoutsCount
 			).toString());
 
 		return null;

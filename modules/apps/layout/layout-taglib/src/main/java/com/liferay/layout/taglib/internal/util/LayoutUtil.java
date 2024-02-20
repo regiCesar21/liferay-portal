@@ -14,7 +14,10 @@ import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.LayoutConstants;
+import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.service.LayoutServiceUtil;
+import com.liferay.portal.kernel.service.permission.GroupPermissionUtil;
+import com.liferay.portal.kernel.servlet.BrowserSnifferUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HtmlUtil;
@@ -22,6 +25,7 @@ import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.util.PropsValues;
+import com.liferay.sites.kernel.util.SitesUtil;
 
 import java.util.Collections;
 import java.util.List;
@@ -90,6 +94,11 @@ public class LayoutUtil {
 		List<Layout> layouts = LayoutServiceUtil.getLayouts(
 			groupId, privateLayout, parentLayoutId, false, start, end);
 
+		boolean hasManageLayoutsPermission = GroupPermissionUtil.contains(
+			themeDisplay.getPermissionChecker(), groupId,
+			ActionKeys.MANAGE_LAYOUTS);
+		boolean mobile = BrowserSnifferUtil.isMobile(httpServletRequest);
+
 		for (Layout layout : layouts) {
 			if ((layout.isHidden() && !showHiddenLayouts) ||
 				_isContentLayoutDraft(layout)) {
@@ -122,7 +131,15 @@ public class LayoutUtil {
 			).put(
 				"name", layout.getName(themeDisplay.getLocale())
 			).put(
+				"plid", layout.getPlid()
+			).put(
 				"privateLayout", layout.isPrivateLayout()
+			).put(
+				"sortable",
+				hasManageLayoutsPermission && !mobile &&
+				SitesUtil.isLayoutSortable(layout)
+			).put(
+				"type", layout.getType()
 			).put(
 				"url",
 				PortalUtil.getLayoutRelativeURL(layout, themeDisplay, false)
