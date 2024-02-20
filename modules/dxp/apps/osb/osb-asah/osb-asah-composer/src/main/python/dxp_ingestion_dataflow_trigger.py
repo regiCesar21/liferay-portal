@@ -69,7 +69,12 @@ def create_dag(
 			options={
 				"zipFilePath": "{{ params['zipFilePath'] }}",
 				"projectId": ac_project_id,
-				"bigQueryWriterTempLocation": DATAFLOW_BUCKET + '/bigquery/temp'
+				"bigQueryWriterTempLocation": DATAFLOW_BUCKET + '/bigquery/temp',
+				"network": os.environ['NETWORK'],
+				"subnetwork": "regions/{}}/subnetworks/{}}".format(
+					os.environ['NETWORK'],
+					os.environ['SUBNETWORK']
+				)
 			},
 			task_id=task_id
 		)
