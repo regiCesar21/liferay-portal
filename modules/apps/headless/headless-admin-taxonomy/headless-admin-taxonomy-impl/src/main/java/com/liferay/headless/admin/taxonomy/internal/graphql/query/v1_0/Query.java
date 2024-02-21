@@ -102,8 +102,8 @@ public class Query {
 	 */
 	@GraphQLField
 	public KeywordPage keywordsRanked(
-			@GraphQLName("siteKey") @NotEmpty String siteKey,
 			@GraphQLName("search") String search,
+			@GraphQLName("siteKey") @NotEmpty String siteKey,
 			@GraphQLName("pageSize") int pageSize,
 			@GraphQLName("page") int page)
 		throws Exception {
@@ -113,7 +113,7 @@ public class Query {
 			this::_populateResourceContext,
 			keywordResource -> new KeywordPage(
 				keywordResource.getKeywordsRankedPage(
-					Long.valueOf(siteKey), search,
+					search, Long.valueOf(siteKey),
 					Pagination.of(page, pageSize))));
 	}
 
