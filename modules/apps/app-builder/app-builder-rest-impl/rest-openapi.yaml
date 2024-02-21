@@ -87,7 +87,20 @@ paths:
                   schema:
                       type: string
                 - in: query
+                  name: page
+                  schema:
+                      type: integer
+                - in: query
+                  name: pageSize
+                  schema:
+                      type: integer
+                - in: query
                   name: scope
+                  schema:
+                      type: string
+                - in: query
+                  name: sort
+                  required: false
                   schema:
                       type: string
                 - in: query
@@ -97,19 +110,6 @@ paths:
                           format: int64
                           type: integer
                       type: array
-                - in: query
-                  name: page
-                  schema:
-                      type: integer
-                - in: query
-                  name: pageSize
-                  schema:
-                      type: integer
-                - in: query
-                  name: sort
-                  required: false
-                  schema:
-                      type: string
             responses:
                 200:
                     content:
@@ -231,10 +231,6 @@ paths:
                   schema:
                       type: string
                 - in: query
-                  name: scope
-                  schema:
-                      type: string
-                - in: query
                   name: page
                   schema:
                       type: integer
@@ -242,6 +238,10 @@ paths:
                   name: pageSize
                   schema:
                       type: integer
+                - in: query
+                  name: scope
+                  schema:
+                      type: string
                 - in: query
                   name: sort
                   required: false
@@ -303,10 +303,6 @@ paths:
                   schema:
                       type: string
                 - in: query
-                  name: scope
-                  schema:
-                      type: string
-                - in: query
                   name: page
                   schema:
                       type: integer
@@ -314,6 +310,10 @@ paths:
                   name: pageSize
                   schema:
                       type: integer
+                - in: query
+                  name: scope
+                  schema:
+                      type: string
                 - in: query
                   name: sort
                   required: false

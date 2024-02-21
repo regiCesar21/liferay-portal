@@ -683,19 +683,6 @@ paths:
                   style: simple
                 - in: query
                   explode: true
-                  name: type
-                  required: false
-                  schema:
-                      description:
-                          Type to filter
-                      example: 0
-                      format: int32
-                      maximum: 1
-                      minimum: 0
-                      type: integer
-                  style: form
-                - in: query
-                  explode: true
                   name: page
                   required: false
                   schema:
@@ -706,6 +693,19 @@ paths:
                   name: pageSize
                   required: false
                   schema:
+                      type: integer
+                  style: form
+                - in: query
+                  explode: true
+                  name: type
+                  required: false
+                  schema:
+                      description:
+                          Type to filter
+                      example: 0
+                      format: int32
+                      maximum: 1
+                      minimum: 0
                       type: integer
                   style: form
             responses:

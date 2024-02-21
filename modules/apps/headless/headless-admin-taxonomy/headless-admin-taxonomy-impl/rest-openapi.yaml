@@ -469,11 +469,6 @@ paths:
             operationId: getKeywordsRankedPage
             parameters:
                 - in: query
-                  name: siteId
-                  schema:
-                      format: int64
-                      type: integer
-                - in: query
                   name: page
                   schema:
                       type: integer
@@ -485,6 +480,11 @@ paths:
                   name: search
                   schema:
                       type: string
+                - in: query
+                  name: siteId
+                  schema:
+                      format: int64
+                      type: integer
             responses:
                 200:
                     content:
@@ -723,17 +723,17 @@ paths:
             operationId: getTaxonomyCategoryRankedPage
             parameters:
                 - in: query
-                  name: siteId
-                  schema:
-                      format: int64
-                      type: integer
-                - in: query
                   name: page
                   schema:
                       type: integer
                 - in: query
                   name: pageSize
                   schema:
+                      type: integer
+                - in: query
+                  name: siteId
+                  schema:
+                      format: int64
                       type: integer
             responses:
                 200:

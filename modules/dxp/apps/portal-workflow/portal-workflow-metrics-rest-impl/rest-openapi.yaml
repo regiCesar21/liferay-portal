@@ -660,10 +660,6 @@ paths:
             operationId: getProcessMetricsPage
             parameters:
                 - in: query
-                  name: title
-                  schema:
-                      type: string
-                - in: query
                   name: page
                   schema:
                       type: integer
@@ -673,6 +669,10 @@ paths:
                       type: integer
                 - in: query
                   name: sort
+                  schema:
+                      type: string
+                - in: query
+                  name: title
                   schema:
                       type: string
             responses:
@@ -898,6 +898,14 @@ paths:
                       format: date-time
                       type: string
                 - in: query
+                  name: page
+                  schema:
+                      type: integer
+                - in: query
+                  name: pageSize
+                  schema:
+                      type: integer
+                - in: query
                   name: slaStatuses
                   schema:
                       items:
@@ -910,14 +918,6 @@ paths:
                       items:
                           type: string
                       type: array
-                - in: query
-                  name: page
-                  schema:
-                      type: integer
-                - in: query
-                  name: pageSize
-                  schema:
-                      type: integer
             responses:
                 200:
                     content:
@@ -1265,16 +1265,16 @@ paths:
                       format: int64
                       type: integer
                 - in: query
-                  name: status
-                  required: false
-                  schema:
-                      type: integer
-                - in: query
                   name: page
                   schema:
                       type: integer
                 - in: query
                   name: pageSize
+                  schema:
+                      type: integer
+                - in: query
+                  name: status
+                  required: false
                   schema:
                       type: integer
             responses:

@@ -946,13 +946,13 @@ paths:
             operationId: getOrganizationsPage
             parameters:
                 - in: query
-                  name: flatten
-                  schema:
-                      type: boolean
-                - in: query
                   name: filter
                   schema:
                       type: string
+                - in: query
+                  name: flatten
+                  schema:
+                      type: boolean
                 - in: query
                   name: page
                   schema:
@@ -1268,13 +1268,13 @@ paths:
                   schema:
                       type: string
                 - in: query
-                  name: flatten
-                  schema:
-                      type: boolean
-                - in: query
                   name: filter
                   schema:
                       type: string
+                - in: query
+                  name: flatten
+                  schema:
+                      type: boolean
                 - in: query
                   name: page
                   schema:

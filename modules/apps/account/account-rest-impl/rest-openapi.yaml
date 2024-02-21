@@ -117,11 +117,11 @@ paths:
             operationId: getAccountsPage
             parameters:
                 - in: query
-                  name: keywords
+                  name: filter
                   schema:
                       type: string
                 - in: query
-                  name: filter
+                  name: keywords
                   schema:
                       type: string
                 - in: query
