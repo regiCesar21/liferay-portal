@@ -70,7 +70,7 @@ public class MBUserRankUtil {
 					if (_isEntityRank(
 							companyId, statsUser, entityType, entityValue)) {
 
-						rank[1] = curRank;
+						rank[1] = entityValue;
 
 						break;
 					}
