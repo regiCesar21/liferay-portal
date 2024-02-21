@@ -126,21 +126,19 @@ function AssetVocabulariesCategoriesSelector({
 		const sub = (str, obj) => str.replace(/\{([^}]+)\}/g, (_, m) => obj[m]);
 
 		const randomIntValue = Math.ceil(Math.random() * new Date().getTime());
+		const selectedCategoriesCookieName =
+			'SELECTED_CATEGORIES_COOKIE_' + randomIntValue;
 
 		const url = sub(decodeURIComponent(portletURL), {
-			randomInt: randomIntValue,
-			selectedCategories: 'selectedCategoriesCookie',
+			selectedCategories: selectedCategoriesCookieName,
 			singleSelect,
 			vocabularyIds: sourceItemsVocabularyIds.concat(),
 		});
 
 		const expires = new Date(Date.now() + 30000).toUTCString();
 
-		const selectedCategoriesCookie =
-			'selectedCategoriesCookie' + randomIntValue;
-
 		document.cookie =
-			selectedCategoriesCookie +
+			selectedCategoriesCookieName +
 			'=' +
 			selectedItems.map((item) => item.value).join() +
 			'; expires=' +

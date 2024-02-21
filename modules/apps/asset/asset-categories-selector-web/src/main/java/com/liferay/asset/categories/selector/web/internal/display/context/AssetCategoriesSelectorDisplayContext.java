@@ -176,19 +176,16 @@ public class AssetCategoriesSelectorDisplayContext {
 				StringPool.SEMICOLON + StringPool.SPACE));
 
 		if (cookies != null) {
-			String randomInt = ParamUtil.getString(
-				_httpServletRequest, "randomInt");
-			String selectedCategories = ParamUtil.getString(
+			String cookieName = ParamUtil.getString(
 				_httpServletRequest, "selectedCategories");
 
 			for (String cookie : cookies) {
-				if (cookie.startsWith(selectedCategories + randomInt)) {
-					cookie = StringUtil.removeSubstring(
-						cookie,
-						selectedCategories + randomInt + StringPool.EQUAL);
+				if (cookie.startsWith(cookieName)) {
+					String cookieValue = StringUtil.removeSubstring(
+						cookie, cookieName + StringPool.EQUAL);
 
 					_selectedCategoryIds = Arrays.asList(
-						StringUtil.split(cookie, StringPool.COMMA));
+						StringUtil.split(cookieValue, StringPool.COMMA));
 
 					break;
 				}

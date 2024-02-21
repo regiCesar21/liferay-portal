@@ -448,7 +448,6 @@ public class EditAssetListDisplayContext {
 			portletURL.setParameter(
 				"eventName",
 				_portletResponse.getNamespace() + "selectCategory");
-			portletURL.setParameter("randomInt", "{randomInt}");
 			portletURL.setParameter(
 				"selectedCategories", "{selectedCategories}");
 			portletURL.setParameter("singleSelect", "{singleSelect}");
