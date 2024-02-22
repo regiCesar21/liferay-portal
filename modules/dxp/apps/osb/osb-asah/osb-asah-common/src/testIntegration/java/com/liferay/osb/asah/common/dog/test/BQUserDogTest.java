@@ -35,6 +35,12 @@ public class BQUserDogTest extends BaseBQDXPEntityDogTestCase {
 
 	@BQSQLResource(resourcePath = "test_bq_user_dog.sql")
 	@Test
+	public void testGetBQUserCount() {
+		Assertions.assertEquals(2, _bqUserDog.getBQUsersCount());
+	}
+
+	@BQSQLResource(resourcePath = "test_bq_user_dog.sql")
+	@Test
 	public void testGetBQUserPage() {
 		Page<BQUser> bqUserPage = _bqUserDog.getBQUserPage(
 			11L, null, 10, Sort.asc("firstName"), 0);
