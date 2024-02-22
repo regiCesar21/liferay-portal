@@ -74,6 +74,10 @@ public class BQUserDog extends BaseBQDXPEntityDog {
 		return bqUsers;
 	}
 
+	public long getBQUsersCount() {
+		return _bqUserRepository.count();
+	}
+
 	private BQUser _populateExpandoFields(BQUser bqUser) {
 		bqUser.setExpandoFields(
 			getExpandoFields(
