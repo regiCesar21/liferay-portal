@@ -135,7 +135,7 @@ function AssetVocabulariesCategoriesSelector({
 			vocabularyIds: sourceItemsVocabularyIds.concat(),
 		});
 
-		const expires = new Date(Date.now() + 30000).toUTCString();
+		const expires = new Date(Date.now() + 20000).toUTCString();
 
 		document.cookie =
 			selectedCategoriesCookieName +
