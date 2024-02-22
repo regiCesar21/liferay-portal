@@ -6,7 +6,7 @@
 import ClayIcon from '@clayui/icon';
 import classNames from 'classnames';
 import PropTypes from 'prop-types';
-import React, {useContext} from 'react';
+import React, {useCallback, useContext} from 'react';
 
 import NodeList from './NodeList';
 import TreeviewContext from './TreeviewContext';
@@ -32,35 +32,39 @@ export default function NodeListItem({NodeComponent, node}) {
 
 	const symbol = node.expanded ? 'hr' : 'plus';
 
+	const loadMoreItems = useCallback(() => {
+		onLoadMore(node)
+			.then((response) => {
+				if (response.items) {
+					const items = response.items;
+
+					const alreadyExistingIds = node.children.map(
+						(item) => item.id
+					);
+					const nodesToInsert = Object.values(items).filter(
+						(item) => !alreadyExistingIds.includes(item.id)
+					);
+
+					if (nodesToInsert) {
+						dispatch({
+							nodeId: node.id,
+							nodes: nodesToInsert,
+							type: 'INSERT_NODES',
+						});
+					}
+				}
+			})
+			.catch((error) => {
+				console.error(error);
+			});
+	}, [dispatch, node, onLoadMore]);
+
 	const toggleExpanded = (event) => {
 		if (node.children.length || node.hasChildren) {
 			event.stopPropagation();
 
 			if (!node.expanded && onLoadMore) {
-				onLoadMore(node)
-					.then((response) => {
-						if (response.items) {
-							const items = response.items;
-
-							const alreadyExistingIds = node.children.map(
-								(item) => item.id
-							);
-							const nodesToInsert = Object.values(items).filter(
-								(item) => !alreadyExistingIds.includes(item.id)
-							);
-
-							if (nodesToInsert) {
-								dispatch({
-									nodeId: node.id,
-									nodes: nodesToInsert,
-									type: 'INSERT_NODES',
-								});
-							}
-						}
-					})
-					.catch((error) => {
-						console.error(error);
-					});
+				loadMoreItems(node, onLoadMore, dispatch);
 			}
 
 			dispatch({nodeId: node.id, type: 'TOGGLE_EXPANDED'});
