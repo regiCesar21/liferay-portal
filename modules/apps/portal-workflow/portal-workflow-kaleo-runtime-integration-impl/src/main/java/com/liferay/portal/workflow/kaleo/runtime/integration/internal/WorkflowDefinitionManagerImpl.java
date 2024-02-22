@@ -31,6 +31,7 @@ import com.liferay.portal.workflow.kaleo.runtime.WorkflowEngine;
 import com.liferay.portal.workflow.kaleo.runtime.integration.internal.util.WorkflowLockUtil;
 import com.liferay.portal.workflow.kaleo.runtime.util.comparator.KaleoDefinitionOrderByComparator;
 import com.liferay.portal.workflow.kaleo.service.KaleoDefinitionLocalService;
+import com.liferay.portal.workflow.kaleo.service.KaleoDefinitionService;
 import com.liferay.portal.workflow.kaleo.service.KaleoDefinitionVersionLocalService;
 
 import java.util.ArrayList;
@@ -96,7 +97,7 @@ public class WorkflowDefinitionManagerImpl
 			serviceContext.setCompanyId(companyId);
 
 			List<KaleoDefinition> kaleoDefinitions =
-				_kaleoDefinitionLocalService.getScopeKaleoDefinitions(
+				_kaleoDefinitionService.getScopeKaleoDefinitions(
 					WorkflowDefinitionConstants.SCOPE_ALL, true, start, end,
 					KaleoDefinitionOrderByComparator.getOrderByComparator(
 						orderByComparator, _kaleoWorkflowModelConverter),
@@ -127,7 +128,7 @@ public class WorkflowDefinitionManagerImpl
 			List<KaleoDefinition> kaleoDefinitions = new ArrayList<>();
 
 			KaleoDefinition kaleoDefinition =
-				_kaleoDefinitionLocalService.getKaleoDefinition(
+				_kaleoDefinitionService.getKaleoDefinition(
 					name, serviceContext);
 
 			if (kaleoDefinition.isActive()) {
@@ -175,12 +176,9 @@ public class WorkflowDefinitionManagerImpl
 
 			serviceContext.setCompanyId(companyId);
 
-			KaleoDefinition kaleoDefinition =
-				_kaleoDefinitionLocalService.getKaleoDefinition(
-					name, serviceContext);
-
 			return _kaleoWorkflowModelConverter.toWorkflowDefinition(
-				kaleoDefinition);
+				_kaleoDefinitionService.getKaleoDefinition(
+					name, serviceContext));
 		}
 		catch (WorkflowException workflowException) {
 			throw workflowException;
@@ -202,7 +200,7 @@ public class WorkflowDefinitionManagerImpl
 			serviceContext.setCompanyId(companyId);
 
 			List<KaleoDefinition> kaleoDefinitions =
-				_kaleoDefinitionLocalService.getKaleoDefinitions(
+				_kaleoDefinitionService.getKaleoDefinitions(
 					start, end,
 					KaleoDefinitionOrderByComparator.getOrderByComparator(
 						orderByComparator, _kaleoWorkflowModelConverter),
@@ -471,6 +469,9 @@ public class WorkflowDefinitionManagerImpl
 
 	@Reference
 	private KaleoDefinitionLocalService _kaleoDefinitionLocalService;
+
+	@Reference
+	private KaleoDefinitionService _kaleoDefinitionService;
 
 	@Reference
 	private KaleoDefinitionVersionLocalService
