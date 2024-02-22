@@ -5649,13 +5649,6 @@ paths:
                   style: simple
                 - in: query
                   explode: true
-                  name: type
-                  required: false
-                  schema:
-                      type: string
-                  style: form
-                - in: query
-                  explode: true
                   name: page
                   required: false
                   schema:
@@ -5667,6 +5660,13 @@ paths:
                   required: false
                   schema:
                       type: integer
+                  style: form
+                - in: query
+                  explode: true
+                  name: type
+                  required: false
+                  schema:
+                      type: string
                   style: form
             responses:
                 200:
@@ -7997,13 +7997,6 @@ paths:
                   style: simple
                 - in: query
                   explode: true
-                  name: type
-                  required: false
-                  schema:
-                      type: string
-                  style: form
-                - in: query
-                  explode: true
                   name: page
                   required: false
                   schema:
@@ -8015,6 +8008,13 @@ paths:
                   required: false
                   schema:
                       type: integer
+                  style: form
+                - in: query
+                  explode: true
+                  name: type
+                  required: false
+                  schema:
+                      type: string
                   style: form
             responses:
                 200:

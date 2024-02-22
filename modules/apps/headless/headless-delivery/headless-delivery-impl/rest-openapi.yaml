@@ -2955,13 +2955,13 @@ paths:
                           type: string
                       type: array
                 - in: query
-                  name: flatten
-                  schema:
-                      type: boolean
-                - in: query
                   name: filter
                   schema:
                       type: string
+                - in: query
+                  name: flatten
+                  schema:
+                      type: boolean
                 - in: query
                   name: page
                   schema:
@@ -3077,13 +3077,13 @@ paths:
                           type: string
                       type: array
                 - in: query
-                  name: flatten
-                  schema:
-                      type: boolean
-                - in: query
                   name: filter
                   schema:
                       type: string
+                - in: query
+                  name: flatten
+                  schema:
+                      type: boolean
                 - in: query
                   name: page
                   schema:
@@ -3957,13 +3957,13 @@ paths:
                           type: string
                       type: array
                 - in: query
-                  name: flatten
-                  schema:
-                      type: boolean
-                - in: query
                   name: filter
                   schema:
                       type: string
+                - in: query
+                  name: flatten
+                  schema:
+                      type: boolean
                 - in: query
                   name: page
                   schema:
@@ -5555,13 +5555,13 @@ paths:
                           type: string
                       type: array
                 - in: query
-                  name: flatten
-                  schema:
-                      type: boolean
-                - in: query
                   name: filter
                   schema:
                       type: string
+                - in: query
+                  name: flatten
+                  schema:
+                      type: boolean
                 - in: query
                   name: page
                   schema:
@@ -5641,13 +5641,13 @@ paths:
                           type: string
                       type: array
                 - in: query
-                  name: flatten
-                  schema:
-                      type: boolean
-                - in: query
                   name: filter
                   schema:
                       type: string
+                - in: query
+                  name: flatten
+                  schema:
+                      type: boolean
                 - in: query
                   name: page
                   schema:
@@ -5731,13 +5731,13 @@ paths:
                           type: string
                       type: array
                 - in: query
-                  name: flatten
-                  schema:
-                      type: boolean
-                - in: query
                   name: filter
                   schema:
                       type: string
+                - in: query
+                  name: flatten
+                  schema:
+                      type: boolean
                 - in: query
                   name: page
                   schema:
@@ -5939,13 +5939,13 @@ paths:
                           type: string
                       type: array
                 - in: query
-                  name: flatten
-                  schema:
-                      type: boolean
-                - in: query
                   name: filter
                   schema:
                       type: string
+                - in: query
+                  name: flatten
+                  schema:
+                      type: boolean
                 - in: query
                   name: page
                   schema:
@@ -5996,13 +5996,13 @@ paths:
                           type: string
                       type: array
                 - in: query
-                  name: flatten
-                  schema:
-                      type: boolean
-                - in: query
                   name: filter
                   schema:
                       type: string
+                - in: query
+                  name: flatten
+                  schema:
+                      type: boolean
                 - in: query
                   name: page
                   schema:
@@ -6082,13 +6082,13 @@ paths:
                           type: string
                       type: array
                 - in: query
-                  name: flatten
-                  schema:
-                      type: boolean
-                - in: query
                   name: filter
                   schema:
                       type: string
+                - in: query
+                  name: flatten
+                  schema:
+                      type: boolean
                 - in: query
                   name: page
                   schema:
@@ -6168,13 +6168,13 @@ paths:
                           type: string
                       type: array
                 - in: query
-                  name: flatten
-                  schema:
-                      type: boolean
-                - in: query
                   name: filter
                   schema:
                       type: string
+                - in: query
+                  name: flatten
+                  schema:
+                      type: boolean
                 - in: query
                   name: page
                   schema:
@@ -6254,13 +6254,13 @@ paths:
                           type: string
                       type: array
                 - in: query
-                  name: flatten
-                  schema:
-                      type: boolean
-                - in: query
                   name: filter
                   schema:
                       type: string
+                - in: query
+                  name: flatten
+                  schema:
+                      type: boolean
                 - in: query
                   name: page
                   schema:
@@ -6669,13 +6669,13 @@ paths:
                           type: string
                       type: array
                 - in: query
-                  name: flatten
-                  schema:
-                      type: boolean
-                - in: query
                   name: filter
                   schema:
                       type: string
+                - in: query
+                  name: flatten
+                  schema:
+                      type: boolean
                 - in: query
                   name: page
                   schema:
