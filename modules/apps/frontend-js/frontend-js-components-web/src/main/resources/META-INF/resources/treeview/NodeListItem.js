@@ -6,7 +6,7 @@
 import ClayIcon from '@clayui/icon';
 import classNames from 'classnames';
 import PropTypes from 'prop-types';
-import React, {useCallback, useContext} from 'react';
+import React, {useCallback, useContext, useState} from 'react';
 
 import NodeList from './NodeList';
 import TreeviewContext from './TreeviewContext';
@@ -32,6 +32,8 @@ export default function NodeListItem({NodeComponent, node}) {
 
 	const symbol = node.expanded ? 'hr' : 'plus';
 
+	const [hasMoreChildren, setHasMoreChildren] = useState(node.paginated);
+
 	const loadMoreItems = useCallback(() => {
 		onLoadMore(node)
 			.then((response) => {
@@ -51,6 +53,10 @@ export default function NodeListItem({NodeComponent, node}) {
 							nodes: nodesToInsert,
 							type: 'INSERT_NODES',
 						});
+					}
+
+					if (!response.cursor) {
+						setHasMoreChildren(false);
 					}
 				}
 			})
@@ -120,6 +126,18 @@ export default function NodeListItem({NodeComponent, node}) {
 					id={childrenId}
 				>
 					<NodeList NodeComponent={NodeComponent} nodes={children} />
+
+					{onLoadMore && hasMoreChildren ? (
+						<ClayButton
+							className="mb-5"
+							displayType="secondary"
+							onClick={() =>
+								loadMoreItems(node, onLoadMore, dispatch)
+							}
+						>
+							{Liferay.Language.get('load-more-results')}
+						</ClayButton>
+					) : null}
 				</div>
 			)}
 		</>
