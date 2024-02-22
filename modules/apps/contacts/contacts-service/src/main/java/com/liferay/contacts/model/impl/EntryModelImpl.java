@@ -7,11 +7,13 @@ package com.liferay.contacts.model.impl;
 
 import com.liferay.contacts.model.Entry;
 import com.liferay.contacts.model.EntryModel;
+import com.liferay.contacts.model.EntrySoap;
 import com.liferay.expando.kernel.model.ExpandoBridge;
 import com.liferay.expando.kernel.util.ExpandoBridgeFactoryUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.bean.AutoEscapeBeanHandler;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.json.JSON;
 import com.liferay.portal.kernel.model.CacheModel;
 import com.liferay.portal.kernel.model.ModelWrapper;
 import com.liferay.portal.kernel.model.User;
@@ -29,10 +31,12 @@ import java.lang.reflect.InvocationHandler;
 import java.sql.Blob;
 import java.sql.Types;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.function.BiConsumer;
@@ -49,6 +53,7 @@ import java.util.function.Function;
  * @see EntryImpl
  * @generated
  */
+@JSON(strict = true)
 public class EntryModelImpl extends BaseModelImpl<Entry> implements EntryModel {
 
 	/*
@@ -129,6 +134,57 @@ public class EntryModelImpl extends BaseModelImpl<Entry> implements EntryModel {
 	 */
 	@Deprecated
 	public static void setFinderCacheEnabled(boolean finderCacheEnabled) {
+	}
+
+	/**
+	 * Converts the soap model instance into a normal model instance.
+	 *
+	 * @param soapModel the soap model instance to convert
+	 * @return the normal model instance
+	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
+	 */
+	@Deprecated
+	public static Entry toModel(EntrySoap soapModel) {
+		if (soapModel == null) {
+			return null;
+		}
+
+		Entry model = new EntryImpl();
+
+		model.setEntryId(soapModel.getEntryId());
+		model.setGroupId(soapModel.getGroupId());
+		model.setCompanyId(soapModel.getCompanyId());
+		model.setUserId(soapModel.getUserId());
+		model.setUserName(soapModel.getUserName());
+		model.setCreateDate(soapModel.getCreateDate());
+		model.setModifiedDate(soapModel.getModifiedDate());
+		model.setFullName(soapModel.getFullName());
+		model.setEmailAddress(soapModel.getEmailAddress());
+		model.setComments(soapModel.getComments());
+
+		return model;
+	}
+
+	/**
+	 * Converts the soap model instances into normal model instances.
+	 *
+	 * @param soapModels the soap model instances to convert
+	 * @return the normal model instances
+	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
+	 */
+	@Deprecated
+	public static List<Entry> toModels(EntrySoap[] soapModels) {
+		if (soapModels == null) {
+			return null;
+		}
+
+		List<Entry> models = new ArrayList<Entry>(soapModels.length);
+
+		for (EntrySoap soapModel : soapModels) {
+			models.add(toModel(soapModel));
+		}
+
+		return models;
 	}
 
 	public EntryModelImpl() {
@@ -265,6 +321,7 @@ public class EntryModelImpl extends BaseModelImpl<Entry> implements EntryModel {
 			(Map)attributeSetterBiConsumers);
 	}
 
+	@JSON
 	@Override
 	public long getEntryId() {
 		return _entryId;
@@ -279,6 +336,7 @@ public class EntryModelImpl extends BaseModelImpl<Entry> implements EntryModel {
 		_entryId = entryId;
 	}
 
+	@JSON
 	@Override
 	public long getGroupId() {
 		return _groupId;
@@ -293,6 +351,7 @@ public class EntryModelImpl extends BaseModelImpl<Entry> implements EntryModel {
 		_groupId = groupId;
 	}
 
+	@JSON
 	@Override
 	public long getCompanyId() {
 		return _companyId;
@@ -307,6 +366,7 @@ public class EntryModelImpl extends BaseModelImpl<Entry> implements EntryModel {
 		_companyId = companyId;
 	}
 
+	@JSON
 	@Override
 	public long getUserId() {
 		return _userId;
@@ -346,6 +406,7 @@ public class EntryModelImpl extends BaseModelImpl<Entry> implements EntryModel {
 		return GetterUtil.getLong(this.<Long>getColumnOriginalValue("userId"));
 	}
 
+	@JSON
 	@Override
 	public String getUserName() {
 		if (_userName == null) {
@@ -365,6 +426,7 @@ public class EntryModelImpl extends BaseModelImpl<Entry> implements EntryModel {
 		_userName = userName;
 	}
 
+	@JSON
 	@Override
 	public Date getCreateDate() {
 		return _createDate;
@@ -379,6 +441,7 @@ public class EntryModelImpl extends BaseModelImpl<Entry> implements EntryModel {
 		_createDate = createDate;
 	}
 
+	@JSON
 	@Override
 	public Date getModifiedDate() {
 		return _modifiedDate;
@@ -399,6 +462,7 @@ public class EntryModelImpl extends BaseModelImpl<Entry> implements EntryModel {
 		_modifiedDate = modifiedDate;
 	}
 
+	@JSON
 	@Override
 	public String getFullName() {
 		if (_fullName == null) {
@@ -418,6 +482,7 @@ public class EntryModelImpl extends BaseModelImpl<Entry> implements EntryModel {
 		_fullName = fullName;
 	}
 
+	@JSON
 	@Override
 	public String getEmailAddress() {
 		if (_emailAddress == null) {
@@ -446,6 +511,7 @@ public class EntryModelImpl extends BaseModelImpl<Entry> implements EntryModel {
 		return getColumnOriginalValue("emailAddress");
 	}
 
+	@JSON
 	@Override
 	public String getComments() {
 		if (_comments == null) {
