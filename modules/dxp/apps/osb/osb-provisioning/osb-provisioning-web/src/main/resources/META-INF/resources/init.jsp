@@ -32,7 +32,6 @@ page import="com.liferay.osb.koroneiki.phloem.rest.client.dto.v1_0.ProductPurcha
 page import="com.liferay.osb.koroneiki.phloem.rest.client.dto.v1_0.ProductPurchaseView" %><%@
 page import="com.liferay.osb.koroneiki.phloem.rest.client.dto.v1_0.Team" %><%@
 page import="com.liferay.osb.koroneiki.phloem.rest.client.problem.Problem" %><%@
-page import="com.liferay.osb.provisioning.constants.ProductTypeConstants" %><%@
 page import="com.liferay.osb.provisioning.constants.ProvisioningActionKeys" %><%@
 page import="com.liferay.osb.provisioning.constants.ProvisioningPortletKeys" %><%@
 page import="com.liferay.osb.provisioning.constants.ProvisioningWebKeys" %><%@

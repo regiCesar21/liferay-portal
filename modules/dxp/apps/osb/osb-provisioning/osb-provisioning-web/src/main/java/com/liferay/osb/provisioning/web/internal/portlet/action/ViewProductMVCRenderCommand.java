@@ -26,11 +26,11 @@ import org.osgi.service.component.annotations.Reference;
 @Component(
 	property = {
 		"javax.portlet.name=" + ProvisioningPortletKeys.PRODUCTS,
-		"mvc.command.name=/products/edit_product"
+		"mvc.command.name=/products/view_product"
 	},
 	service = MVCRenderCommand.class
 )
-public class EditProductMVCRenderCommand implements MVCRenderCommand {
+public class ViewProductMVCRenderCommand implements MVCRenderCommand {
 
 	@Override
 	public String render(
@@ -47,7 +47,7 @@ public class EditProductMVCRenderCommand implements MVCRenderCommand {
 					_productWebService.getProduct(productKey));
 			}
 
-			return "/products/edit_product.jsp";
+			return "/products/view_product.jsp";
 		}
 		catch (Exception exception) {
 			SessionErrors.add(renderRequest, exception.getClass(), exception);
