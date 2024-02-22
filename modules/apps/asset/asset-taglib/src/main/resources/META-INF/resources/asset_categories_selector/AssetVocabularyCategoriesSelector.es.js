@@ -149,6 +149,11 @@ function AssetVocabulariesCategoriesSelector({
 			buttonAddLabel: Liferay.Language.get('done'),
 			dialogClasses: 'modal-lg',
 			eventName,
+			onClose: () => {
+				document.cookie =
+					selectedCategoriesCookieName +
+					'=; Path=/; Expires=Thu, 01 Jan 1970 00:00:01 GMT;';
+			},
 			title: label
 				? Liferay.Util.sub(Liferay.Language.get('select-x'), label)
 				: Liferay.Language.get('select-categories'),

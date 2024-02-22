@@ -26,6 +26,7 @@ class ItemSelectorDialog extends Component {
 	open() {
 		this._currentItem = null;
 		this._selectedItem = null;
+		const executeOnClose = this.onClose;
 
 		const eventName = this.eventName;
 
@@ -46,6 +47,10 @@ class ItemSelectorDialog extends Component {
 					}
 
 					this.emit('visibleChange', {visible: event.newVal});
+
+					if (executeOnClose) {
+						executeOnClose();
+					}
 				},
 			},
 		};
@@ -176,6 +181,16 @@ ItemSelectorDialog.STATE = {
 	 * @type {String}
 	 */
 	eventName: Config.string().required(),
+
+	/**
+	 *
+	 * Method that runs when dialog closes
+	 *
+	 * @instance
+	 * @memberof LayoutProvider
+	 * @type {?function}
+	 */
+	onClose: Config.func(),
 
 	/**
 	 * The selected item(s) in the dialog.
