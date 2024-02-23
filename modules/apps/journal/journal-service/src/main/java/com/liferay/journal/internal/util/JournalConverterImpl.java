@@ -1194,7 +1194,7 @@ public class JournalConverterImpl implements JournalConverter {
 		String[] values = StringUtil.split(
 			dynamicContentElement.getText(), CharPool.AT);
 
-		if (ArrayUtil.isEmpty(values)) {
+		if (ArrayUtil.isEmpty(values) || (values.length < 2)) {
 			return StringPool.BLANK;
 		}
 
