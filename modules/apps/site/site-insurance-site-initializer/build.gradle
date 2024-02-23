@@ -19,3 +19,9 @@ dependencies {
 	compileOnly project(":apps:style-book:style-book-api")
 	compileOnly project(":core:petra:petra-string")
 }
+
+generateJSPJava {
+	mustRunAfter zipZippableResourcesFragments
+	mustRunAfter zipZippableResourcesImages
+	mustRunAfter zipZippableResourcesStylebooks
+}
