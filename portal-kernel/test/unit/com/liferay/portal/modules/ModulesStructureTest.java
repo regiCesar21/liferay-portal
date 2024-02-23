@@ -982,6 +982,7 @@ public class ModulesStructureTest {
 
 		if (name.equals("com.liferay.ant.bnd") ||
 			name.equals("com.liferay.arquillian.extension.junit.bridge") ||
+			name.equals("com.liferay.gradle.plugins.app.docker") ||
 			name.equals("com.liferay.gradle.plugins.defaults") ||
 			name.equals("com.liferay.portal.cache.test.util") ||
 			name.equals("com.liferay.poshi.core") ||
