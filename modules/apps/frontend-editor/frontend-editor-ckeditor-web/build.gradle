@@ -91,6 +91,10 @@ clean {
 	delete "tmp"
 }
 
+configJSModules {
+	mustRunAfter compileJava
+}
+
 dependencies {
 	compileOnly group: "com.liferay.portal", name: "com.liferay.portal.kernel", version: "default"
 	compileOnly group: "com.liferay.portal", name: "com.liferay.util.taglib", version: "default"
@@ -105,4 +109,8 @@ dependencies {
 	compileOnly project(":apps:message-boards:message-boards-api")
 	compileOnly project(":core:petra:petra-lang")
 	compileOnly project(":core:petra:petra-string")
+}
+
+generateJSPJava {
+	mustRunAfter configJSModules
 }

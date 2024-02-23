@@ -47,6 +47,11 @@ clean {
 	delete "tmp"
 }
 
+configJSModules {
+	mustRunAfter buildCreateReactClass
+	mustRunAfter compileJava
+}
+
 dependencies {
 	compileOnly group: "com.liferay.portal", name: "com.liferay.portal.kernel", version: "default"
 	compileOnly group: "com.liferay.portal", name: "com.liferay.util.java", version: "default"
@@ -67,4 +72,9 @@ dependencies {
 	compileOnly project(":core:osgi-service-tracker-collections")
 	compileOnly project(":core:petra:petra-lang")
 	compileOnly project(":core:petra:petra-string")
+}
+
+generateJSPJava {
+	mustRunAfter buildCreateReactClass
+	mustRunAfter configJSModules
 }

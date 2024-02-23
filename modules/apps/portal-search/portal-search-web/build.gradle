@@ -1,3 +1,7 @@
+configJSModules {
+	mustRunAfter compileJava
+}
+
 dependencies {
 	compileOnly group: "biz.aQute.bnd", name: "biz.aQute.bndlib", version: "3.1.0"
 	compileOnly group: "com.liferay.portal", name: "com.liferay.portal.impl", version: "default"
@@ -41,4 +45,8 @@ dependencies {
 	testImplementation project(":core:petra:petra-concurrent")
 	testImplementation project(":core:petra:petra-memory")
 	testImplementation project(":core:petra:petra-reflect")
+}
+
+generateJSPJava {
+	mustRunAfter configJSModules
 }

@@ -191,10 +191,34 @@ classes {
 	dependsOn buildTheme
 }
 
+configJSModules {
+	mustRunAfter compileJava
+}
+
+copyCSS {
+	mustRunAfter buildAlloyUITheme
+	mustRunAfter buildClay
+	mustRunAfter buildClayIcons
+	mustRunAfter buildFontAwesome
+	mustRunAfter buildLexiconIcons
+}
+
 dependencies {
 	alloyUI group: "com.liferay.webjars", name: "com.liferay.webjars.alloy-ui", transitive: false, version: alloyUIVersion
 
 	fontAwesome group: "org.webjars", name: "font-awesome", transitive: false, version: fontAwesomeVersion
+}
+
+generateJSPJava {
+	mustRunAfter configJSModules
+}
+
+jarSources {
+	mustRunAfter buildAlloyUITheme
+	mustRunAfter buildClay
+	mustRunAfter buildClayFonts
+	mustRunAfter buildClayIcons
+	mustRunAfter buildLexiconIcons
 }
 
 publishNodeModule {

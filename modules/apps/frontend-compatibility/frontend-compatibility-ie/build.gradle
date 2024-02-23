@@ -60,3 +60,8 @@ dependencies {
 
 	fetch group: "org.webjars.npm", name: "whatwg-fetch", transitive: false, version: "2.0.4"
 }
+
+generateJSPJava {
+	mustRunAfter buildCoreJSBundle
+	mustRunAfter buildFetch
+}
