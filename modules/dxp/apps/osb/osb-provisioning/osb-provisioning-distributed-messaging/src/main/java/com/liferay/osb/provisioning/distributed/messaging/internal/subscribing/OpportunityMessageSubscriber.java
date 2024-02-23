@@ -606,7 +606,7 @@ public class OpportunityMessageSubscriber extends BaseMessageSubscriber {
 
 		String name = accountJSONObject.getString("name");
 
-		Account parentAccount = _salesSubscriberUtil.fetchAccount(
+		Account parentAccount = _salesSubscriberUtil.fetchParentAccount(
 			salesforceAccountKey);
 
 		if (parentAccount != null) {
@@ -1921,7 +1921,7 @@ public class OpportunityMessageSubscriber extends BaseMessageSubscriber {
 			return null;
 		}
 
-		return _salesSubscriberUtil.fetchAccount(salesforceAccountKey);
+		return _salesSubscriberUtil.fetchParentAccount(salesforceAccountKey);
 	}
 
 	protected Team[] parsePartnerTeams(

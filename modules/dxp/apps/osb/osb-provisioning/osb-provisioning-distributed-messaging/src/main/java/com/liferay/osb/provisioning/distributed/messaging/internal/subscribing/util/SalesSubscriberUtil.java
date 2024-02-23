@@ -37,14 +37,18 @@ import org.osgi.service.component.annotations.Reference;
 @Component(immediate = true, service = SalesSubscriberUtil.class)
 public class SalesSubscriberUtil {
 
-	public Account fetchAccount(String salesforceAccountKey) throws Exception {
+	public Account fetchParentAccount(String salesforceAccountKey)
+		throws Exception {
+
 		List<Account> accounts = _accountWebService.getAccounts(
 			ExternalLinkDomain.SALESFORCE,
 			ExternalLinkEntityName.SALESFORCE_ACCOUNT, salesforceAccountKey, 1,
-			1);
+			1000);
 
-		if (!accounts.isEmpty()) {
-			return accounts.get(0);
+		for (Account account : accounts) {
+			if (Validator.isNull(account.getParentAccountKey())) {
+				return account;
+			}
 		}
 
 		return null;
@@ -74,7 +78,7 @@ public class SalesSubscriberUtil {
 			String salesforceAccountKey = accountJSONObject.getString(
 				"accountKey");
 
-			Account account = fetchAccount(salesforceAccountKey);
+			Account account = fetchParentAccount(salesforceAccountKey);
 
 			if (account != null) {
 				return account.getKey();
