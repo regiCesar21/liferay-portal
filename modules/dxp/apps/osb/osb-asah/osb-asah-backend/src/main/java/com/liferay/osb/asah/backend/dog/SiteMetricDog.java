@@ -516,6 +516,8 @@ public class SiteMetricDog {
 				new JSONArray(preferenceValue));
 		}
 
+		searchQueryParams.add(
+			"_com_liferay_portal_search_web_portlet_SearchPortlet_keywords");
 		searchQueryParams.add("q");
 
 		return searchQueryParams.toArray(new String[0]);
