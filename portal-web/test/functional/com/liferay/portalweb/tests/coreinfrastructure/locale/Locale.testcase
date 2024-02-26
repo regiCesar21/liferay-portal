@@ -891,7 +891,9 @@ definition {
 				configurationName = "Time Zone",
 				configurationScope = "Virtual Instance Scope");
 
-			PortalSettings.configureTimeZone(timeZone = "(UTC +05:00) Pakistan Time");
+			Click.clickNoMouseOverNoWaitForVisible(locator1 = "//option[@value='Asia/Karachi']");
+
+			PortalSettings._saveDisplaySettings();
 
 			JSONUser.addUser(
 				userEmailAddress = "userea@liferay.com",
