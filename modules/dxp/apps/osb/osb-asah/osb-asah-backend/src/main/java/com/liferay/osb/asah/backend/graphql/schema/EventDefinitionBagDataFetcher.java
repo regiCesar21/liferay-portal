@@ -41,7 +41,8 @@ public class EventDefinitionBagDataFetcher
 
 		Page<EventDefinition> eventDefinitionPage =
 			_eventDefinitionDog.getEventDefinitionPage(
-				false, dataFetchingEnvironment.getArgument("hidden"), keyword,
+				dataFetchingEnvironment.getArgument("blocked"),
+				dataFetchingEnvironment.getArgument("hidden"), keyword,
 				dataFetchingEnvironment.getArgument("page"),
 				dataFetchingEnvironment.getArgument("size"),
 				Sort.of(dataFetchingEnvironment.getArgument("sort")), type);

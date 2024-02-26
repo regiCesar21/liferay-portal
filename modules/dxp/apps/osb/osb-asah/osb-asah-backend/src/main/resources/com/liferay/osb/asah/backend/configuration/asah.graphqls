@@ -1124,6 +1124,7 @@ type QueryType {
 	): EventDefinition
 
 	eventDefinitions(
+		blocked: Boolean,
 		eventType: EventDefinitionType!,
 		hidden: Boolean,
 		keyword: String,
