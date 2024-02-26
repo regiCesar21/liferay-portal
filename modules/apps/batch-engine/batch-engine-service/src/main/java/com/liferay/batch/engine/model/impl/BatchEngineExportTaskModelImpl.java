@@ -8,6 +8,7 @@ package com.liferay.batch.engine.model.impl;
 import com.liferay.batch.engine.model.BatchEngineExportTask;
 import com.liferay.batch.engine.model.BatchEngineExportTaskContentBlobModel;
 import com.liferay.batch.engine.model.BatchEngineExportTaskModel;
+import com.liferay.batch.engine.model.BatchEngineExportTaskSoap;
 import com.liferay.batch.engine.service.BatchEngineExportTaskLocalServiceUtil;
 import com.liferay.expando.kernel.model.ExpandoBridge;
 import com.liferay.expando.kernel.util.ExpandoBridgeFactoryUtil;
@@ -15,6 +16,7 @@ import com.liferay.exportimport.kernel.lar.StagedModelType;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.bean.AutoEscapeBeanHandler;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.json.JSON;
 import com.liferay.portal.kernel.model.CacheModel;
 import com.liferay.portal.kernel.model.ModelWrapper;
 import com.liferay.portal.kernel.model.User;
@@ -32,10 +34,12 @@ import java.lang.reflect.InvocationHandler;
 import java.sql.Blob;
 import java.sql.Types;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.function.BiConsumer;
@@ -52,6 +56,7 @@ import java.util.function.Function;
  * @see BatchEngineExportTaskImpl
  * @generated
  */
+@JSON(strict = true)
 public class BatchEngineExportTaskModelImpl
 	extends BaseModelImpl<BatchEngineExportTask>
 	implements BatchEngineExportTaskModel {
@@ -154,6 +159,71 @@ public class BatchEngineExportTaskModelImpl
 	 */
 	@Deprecated
 	public static void setFinderCacheEnabled(boolean finderCacheEnabled) {
+	}
+
+	/**
+	 * Converts the soap model instance into a normal model instance.
+	 *
+	 * @param soapModel the soap model instance to convert
+	 * @return the normal model instance
+	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
+	 */
+	@Deprecated
+	public static BatchEngineExportTask toModel(
+		BatchEngineExportTaskSoap soapModel) {
+
+		if (soapModel == null) {
+			return null;
+		}
+
+		BatchEngineExportTask model = new BatchEngineExportTaskImpl();
+
+		model.setMvccVersion(soapModel.getMvccVersion());
+		model.setUuid(soapModel.getUuid());
+		model.setBatchEngineExportTaskId(
+			soapModel.getBatchEngineExportTaskId());
+		model.setCompanyId(soapModel.getCompanyId());
+		model.setUserId(soapModel.getUserId());
+		model.setCreateDate(soapModel.getCreateDate());
+		model.setModifiedDate(soapModel.getModifiedDate());
+		model.setCallbackURL(soapModel.getCallbackURL());
+		model.setClassName(soapModel.getClassName());
+		model.setContent(soapModel.getContent());
+		model.setContentType(soapModel.getContentType());
+		model.setEndTime(soapModel.getEndTime());
+		model.setErrorMessage(soapModel.getErrorMessage());
+		model.setFieldNames(soapModel.getFieldNames());
+		model.setExecuteStatus(soapModel.getExecuteStatus());
+		model.setParameters(soapModel.getParameters());
+		model.setStartTime(soapModel.getStartTime());
+		model.setTaskItemDelegateName(soapModel.getTaskItemDelegateName());
+
+		return model;
+	}
+
+	/**
+	 * Converts the soap model instances into normal model instances.
+	 *
+	 * @param soapModels the soap model instances to convert
+	 * @return the normal model instances
+	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
+	 */
+	@Deprecated
+	public static List<BatchEngineExportTask> toModels(
+		BatchEngineExportTaskSoap[] soapModels) {
+
+		if (soapModels == null) {
+			return null;
+		}
+
+		List<BatchEngineExportTask> models =
+			new ArrayList<BatchEngineExportTask>(soapModels.length);
+
+		for (BatchEngineExportTaskSoap soapModel : soapModels) {
+			models.add(toModel(soapModel));
+		}
+
+		return models;
 	}
 
 	public BatchEngineExportTaskModelImpl() {
@@ -379,6 +449,7 @@ public class BatchEngineExportTaskModelImpl
 			(Map)attributeSetterBiConsumers);
 	}
 
+	@JSON
 	@Override
 	public long getMvccVersion() {
 		return _mvccVersion;
@@ -393,6 +464,7 @@ public class BatchEngineExportTaskModelImpl
 		_mvccVersion = mvccVersion;
 	}
 
+	@JSON
 	@Override
 	public String getUuid() {
 		if (_uuid == null) {
@@ -421,6 +493,7 @@ public class BatchEngineExportTaskModelImpl
 		return getColumnOriginalValue("uuid_");
 	}
 
+	@JSON
 	@Override
 	public long getBatchEngineExportTaskId() {
 		return _batchEngineExportTaskId;
@@ -435,6 +508,7 @@ public class BatchEngineExportTaskModelImpl
 		_batchEngineExportTaskId = batchEngineExportTaskId;
 	}
 
+	@JSON
 	@Override
 	public long getCompanyId() {
 		return _companyId;
@@ -459,6 +533,7 @@ public class BatchEngineExportTaskModelImpl
 			this.<Long>getColumnOriginalValue("companyId"));
 	}
 
+	@JSON
 	@Override
 	public long getUserId() {
 		return _userId;
@@ -489,6 +564,7 @@ public class BatchEngineExportTaskModelImpl
 	public void setUserUuid(String userUuid) {
 	}
 
+	@JSON
 	@Override
 	public Date getCreateDate() {
 		return _createDate;
@@ -503,6 +579,7 @@ public class BatchEngineExportTaskModelImpl
 		_createDate = createDate;
 	}
 
+	@JSON
 	@Override
 	public Date getModifiedDate() {
 		return _modifiedDate;
@@ -523,6 +600,7 @@ public class BatchEngineExportTaskModelImpl
 		_modifiedDate = modifiedDate;
 	}
 
+	@JSON
 	@Override
 	public String getCallbackURL() {
 		if (_callbackURL == null) {
@@ -542,6 +620,7 @@ public class BatchEngineExportTaskModelImpl
 		_callbackURL = callbackURL;
 	}
 
+	@JSON
 	@Override
 	public String getClassName() {
 		if (_className == null) {
@@ -561,6 +640,7 @@ public class BatchEngineExportTaskModelImpl
 		_className = className;
 	}
 
+	@JSON
 	@Override
 	public Blob getContent() {
 		if (_contentBlobModel == null) {
@@ -597,6 +677,7 @@ public class BatchEngineExportTaskModelImpl
 		}
 	}
 
+	@JSON
 	@Override
 	public String getContentType() {
 		if (_contentType == null) {
@@ -616,6 +697,7 @@ public class BatchEngineExportTaskModelImpl
 		_contentType = contentType;
 	}
 
+	@JSON
 	@Override
 	public Date getEndTime() {
 		return _endTime;
@@ -630,6 +712,7 @@ public class BatchEngineExportTaskModelImpl
 		_endTime = endTime;
 	}
 
+	@JSON
 	@Override
 	public String getErrorMessage() {
 		if (_errorMessage == null) {
@@ -649,6 +732,7 @@ public class BatchEngineExportTaskModelImpl
 		_errorMessage = errorMessage;
 	}
 
+	@JSON
 	@Override
 	public String getFieldNames() {
 		if (_fieldNames == null) {
@@ -668,6 +752,7 @@ public class BatchEngineExportTaskModelImpl
 		_fieldNames = fieldNames;
 	}
 
+	@JSON
 	@Override
 	public String getExecuteStatus() {
 		if (_executeStatus == null) {
@@ -696,6 +781,7 @@ public class BatchEngineExportTaskModelImpl
 		return getColumnOriginalValue("executeStatus");
 	}
 
+	@JSON
 	@Override
 	public Map<String, Serializable> getParameters() {
 		return _parameters;
@@ -710,6 +796,7 @@ public class BatchEngineExportTaskModelImpl
 		_parameters = parameters;
 	}
 
+	@JSON
 	@Override
 	public Date getStartTime() {
 		return _startTime;
@@ -724,6 +811,7 @@ public class BatchEngineExportTaskModelImpl
 		_startTime = startTime;
 	}
 
+	@JSON
 	@Override
 	public String getTaskItemDelegateName() {
 		if (_taskItemDelegateName == null) {
