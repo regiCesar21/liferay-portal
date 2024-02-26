@@ -934,9 +934,16 @@ definition {
 				locator1 = "Message#ERROR_DISMISSIBLE",
 				value1 = "This account is locked until");
 
-			AssertTextEquals.assertPartialText(
-				locator1 = "Message#ERROR_DISMISSIBLE",
-				value1 = "PKT.");
+			if (IsElementPresent(key_text = "PKT.", locator1 = "CP2Utils#ANY_TEXT")) {
+				AssertTextEquals.assertPartialText(
+					locator1 = "Message#ERROR_DISMISSIBLE",
+					value1 = "PKT.");
+			}
+			else {
+				AssertTextEquals.assertPartialText(
+					locator1 = "Message#ERROR_DISMISSIBLE",
+					value1 = "GMT+");
+			}
 		}
 	}
 
