@@ -3575,6 +3575,11 @@ public class PortalImpl implements Portal {
 		return getLocale(getHttpServletRequest(portletRequest));
 	}
 
+	/**
+	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link
+	 * com.liferay.friendly.url.internal.servlet.FriendlyURLServlet#_getLocalizedFriendlyURL(HttpServletRequest, Layout, Locale, Locale)}
+	 */
+	@Deprecated
 	@Override
 	public String getLocalizedFriendlyURL(
 		HttpServletRequest httpServletRequest, Layout layout, Locale locale,
