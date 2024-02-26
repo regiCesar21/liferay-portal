@@ -37,7 +37,6 @@ import com.liferay.portal.kernel.test.util.UserTestUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.LocaleUtil;
-import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.UnicodeProperties;
@@ -165,7 +164,7 @@ public class FriendlyURLServletTest {
 		mockHttpServletRequest.setPathInfo(StringPool.SLASH);
 
 		testGetRedirect(
-			mockHttpServletRequest, getPath(_group, _layout), Portal.PATH_MAIN,
+			mockHttpServletRequest, getPath(_group, _layout),
 			_redirectConstructor1.newInstance(getURL(_layout)));
 	}
 
@@ -179,7 +178,7 @@ public class FriendlyURLServletTest {
 		String path = "/" + _group.getGroupId() + _layout.getFriendlyURL();
 
 		testGetRedirect(
-			mockHttpServletRequest, path, Portal.PATH_MAIN,
+			mockHttpServletRequest, path,
 			_redirectConstructor1.newInstance(getURL(_layout)));
 	}
 
@@ -199,9 +198,7 @@ public class FriendlyURLServletTest {
 
 		mockHttpServletRequest.setPathInfo(StringPool.SLASH);
 
-		testGetRedirect(
-			mockHttpServletRequest, "/nonexistent-site/home", Portal.PATH_MAIN,
-			null);
+		testGetRedirect(mockHttpServletRequest, "/nonexistent-site/home", null);
 	}
 
 	@Test
@@ -221,7 +218,6 @@ public class FriendlyURLServletTest {
 
 		testGetRedirect(
 			mockHttpServletRequest, getPath(userGroup, _layout),
-			Portal.PATH_MAIN,
 			_redirectConstructor1.newInstance(getURL(_layout)));
 	}
 
@@ -262,7 +258,7 @@ public class FriendlyURLServletTest {
 		mockHttpServletRequest.setPathInfo(_layout.getFriendlyURL());
 
 		testGetRedirect(
-			mockHttpServletRequest, getPath(_group, _layout), Portal.PATH_MAIN,
+			mockHttpServletRequest, getPath(_group, _layout),
 			_redirectConstructor1.newInstance(getURL(_layout)));
 	}
 
@@ -283,7 +279,6 @@ public class FriendlyURLServletTest {
 
 		testGetRedirect(
 			mockHttpServletRequest, _group.getFriendlyURL() + "/TÉSTREDIRECT",
-			Portal.PATH_MAIN,
 			_redirectConstructor2.newInstance(
 				layout.getName(LocaleUtil.US), true, false));
 	}
@@ -305,7 +300,6 @@ public class FriendlyURLServletTest {
 
 		testGetRedirect(
 			mockHttpServletRequest, _group.getFriendlyURL() + "/TESTREDIRECT",
-			Portal.PATH_MAIN,
 			_redirectConstructor2.newInstance(
 				layout.getName(LocaleUtil.US), true, false));
 	}
@@ -404,7 +398,6 @@ public class FriendlyURLServletTest {
 					PropsValues.LAYOUT_FRIENDLY_URL_PUBLIC_SERVLET_MAPPING,
 					group.getFriendlyURL(), "/home")),
 			mockHttpServletResponse, getPath(group, homeLayout) + "/home",
-			Portal.PATH_MAIN,
 			_redirectConstructor1.newInstance(getURL(homeLayout)));
 
 		Assert.assertEquals(404, mockHttpServletResponse.getStatus());
@@ -424,7 +417,6 @@ public class FriendlyURLServletTest {
 					PropsValues.LAYOUT_FRIENDLY_URL_PUBLIC_SERVLET_MAPPING,
 					_group.getFriendlyURL(), "/path")),
 			mockHttpServletResponse, getPath(_group, _layout) + "/path",
-			Portal.PATH_MAIN,
 			_redirectConstructor1.newInstance(getURL(_layout)));
 
 		Assert.assertEquals(404, mockHttpServletResponse.getStatus());
@@ -589,18 +581,16 @@ public class FriendlyURLServletTest {
 		}
 
 		testGetRedirect(
-			mockHttpServletRequest, _group.getFriendlyURL(), Portal.PATH_MAIN,
-			expectedRedirect);
+			mockHttpServletRequest, _group.getFriendlyURL(), expectedRedirect);
 
 		testGetRedirect(
-			mockHttpServletRequest, getPath(_group, _layout), Portal.PATH_MAIN,
-			expectedRedirect);
+			mockHttpServletRequest, getPath(_group, _layout), expectedRedirect);
 	}
 
 	protected void testGetRedirect(
 			HttpServletRequest httpServletRequest,
 			HttpServletResponse httpServletResponse, String path,
-			String mainPath, Object expectedRedirect)
+			Object expectedRedirect)
 		throws Throwable {
 
 		try {
@@ -615,12 +605,12 @@ public class FriendlyURLServletTest {
 	}
 
 	protected void testGetRedirect(
-			HttpServletRequest httpServletRequest, String path, String mainPath,
+			HttpServletRequest httpServletRequest, String path,
 			Object expectedRedirect)
 		throws Throwable {
 
 		testGetRedirect(
-			httpServletRequest, new MockHttpServletResponse(), path, mainPath,
+			httpServletRequest, new MockHttpServletResponse(), path,
 			expectedRedirect);
 	}
 
