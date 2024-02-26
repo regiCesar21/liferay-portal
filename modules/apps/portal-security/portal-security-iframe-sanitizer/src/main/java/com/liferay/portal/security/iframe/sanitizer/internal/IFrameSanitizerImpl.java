@@ -49,12 +49,12 @@ public class IFrameSanitizerImpl implements Sanitizer {
 
 		Document document = _getDocument(content);
 
-		for (Element iframe : document.getElementsByTag("iframe")) {
+		for (Element iFrameElement : document.getElementsByTag("iframe")) {
 			if (_iFrameConfiguration.removeIFrameTags()) {
-				iframe.remove();
+				iFrameElement.remove();
 			}
 			else {
-				iframe.attr(
+				iFrameElement.attr(
 					"sandbox",
 					StringUtil.merge(
 						_iFrameConfiguration.sandboxAttributeValues(),
@@ -62,11 +62,11 @@ public class IFrameSanitizerImpl implements Sanitizer {
 			}
 		}
 
-		Element body = document.body();
+		Element bodyElement = document.body();
 
-		StringBundler sb = new StringBundler(body.childNodeSize());
+		StringBundler sb = new StringBundler(bodyElement.childNodeSize());
 
-		for (Node childNode : body.childNodes()) {
+		for (Node childNode : bodyElement.childNodes()) {
 			sb.append(childNode.toString());
 		}
 
