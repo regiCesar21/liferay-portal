@@ -11,7 +11,6 @@ import com.liferay.osb.provisioning.koroneiki.web.service.ProductWebService;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.util.ParamUtil;
-import com.liferay.portal.kernel.util.Validator;
 
 import javax.portlet.PortletException;
 import javax.portlet.RenderRequest;
@@ -41,11 +40,9 @@ public class ViewProductMVCRenderCommand implements MVCRenderCommand {
 			String productKey = ParamUtil.getString(
 				renderRequest, "productKey");
 
-			if (Validator.isNotNull(productKey)) {
-				renderRequest.setAttribute(
-					ProvisioningWebKeys.PRODUCT,
-					_productWebService.getProduct(productKey));
-			}
+			renderRequest.setAttribute(
+				ProvisioningWebKeys.PRODUCT,
+				_productWebService.getProduct(productKey));
 
 			return "/products/view_product.jsp";
 		}

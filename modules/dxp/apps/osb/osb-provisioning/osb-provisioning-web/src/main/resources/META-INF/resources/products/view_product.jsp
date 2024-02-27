@@ -14,47 +14,32 @@ String redirect = ParamUtil.getString(request, "redirect");
 
 Product product = (Product)renderRequest.getAttribute(ProvisioningWebKeys.PRODUCT);
 
-Map<String, String> properties = null;
-
-if (product != null) {
-	properties = product.getProperties();
-}
+Map<String, String> properties = product.getProperties();
 %>
 
 <div class="add-items provisioning-products">
 	<liferay-ui:header
 		backURL="<%= redirect %>"
 		cssClass="add-items-header"
-		title='<%= (product != null) ? product.getName() : "" %>'
+		title="<%= product.getName() %>"
 	/>
 
 	<div cssClass="container-fluid container-fluid-max-xl">
 		<div class="add-items-sheet sheet sheet-lg">
-
-			<%
-			String type = StringPool.BLANK;
-
-			if (properties != null) {
-				type = properties.get("type");
-			}
-			%>
-
-			<aui:input disabled="<%= true %>" inlineLabel="left" name="type" value="<%= type %>" />
+			<aui:input disabled="<%= true %>" inlineLabel="left" name="type" value='<%= properties.get("type") %>' />
 
 			<%
 			List<String> salesforceIdMappings = new ArrayList<>();
 
-			if (product != null) {
-				ExternalLink[] externalLinks = product.getExternalLinks();
+			ExternalLink[] externalLinks = product.getExternalLinks();
 
-				if (externalLinks != null) {
-					for (ExternalLink externalLink : externalLinks) {
-						String domain = externalLink.getDomain();
-						String entityName = externalLink.getEntityName();
+			if (externalLinks != null) {
+				for (ExternalLink externalLink : externalLinks) {
+					String domain = externalLink.getDomain();
+					String entityName = externalLink.getEntityName();
 
-						if (domain.equals(ExternalLinkDomain.SALESFORCE) && entityName.equals(ExternalLinkEntityName.SALESFORCE_PRODUCT)) {
-							salesforceIdMappings.add(externalLink.getEntityId());
-						}
+					if (domain.equals(ExternalLinkDomain.SALESFORCE) && entityName.equals(ExternalLinkEntityName.SALESFORCE_PRODUCT)) {
+						salesforceIdMappings.add(externalLink.getEntityId());
 					}
 				}
 			}
