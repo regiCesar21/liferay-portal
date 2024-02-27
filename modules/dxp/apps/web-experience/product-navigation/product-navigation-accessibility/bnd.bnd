@@ -1,5 +1,5 @@
 Bundle-Name: Liferay Product Navigation Accessibility
 Bundle-SymbolicName: com.liferay.product.navigation.accessibility
-Bundle-Version: 1.0.18
+Bundle-Version: 1.0.19
 Liferay-Releng-Module-Group-Title: Product Navigation
 Web-ContextPath: /product-navigation-accessibility
