@@ -1,6 +1,6 @@
 Bundle-Name: Liferay LCS Client API
 Bundle-SymbolicName: com.liferay.lcs.client.api
-Bundle-Version: 10.1.15
+Bundle-Version: 10.1.16
 Export-Package:\
 	com.liferay.lcs.client.advisor,\
 	com.liferay.lcs.client.alert,\
