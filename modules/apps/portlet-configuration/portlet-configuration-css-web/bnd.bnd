@@ -1,6 +1,6 @@
 Bundle-Name: Liferay Portlet Configuration CSS Web
 Bundle-SymbolicName: com.liferay.portlet.configuration.css.web
-Bundle-Version: 3.0.59
+Bundle-Version: 3.0.60
 Provide-Capability:\
 	soy;\
 		type="portlet-configuration-css";\
