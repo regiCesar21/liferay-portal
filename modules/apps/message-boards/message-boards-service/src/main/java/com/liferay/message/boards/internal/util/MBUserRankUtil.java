@@ -71,7 +71,7 @@ public class MBUserRankUtil {
 					if (_isEntityRank(
 							companyId, statsUser, entityType, entityValue)) {
 
-						rank[1] = entityValue;
+						rank[1] = kvp[0];
 
 						break;
 					}
