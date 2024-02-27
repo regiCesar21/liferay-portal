@@ -4120,7 +4120,7 @@ AUI.add(
 						.each((item) => {
 							item.set(
 								'selected',
-								value.indexOf(item.val()) > -1
+								resultValues.indexOf(item.val()) > -1
 							);
 						});
 				},
