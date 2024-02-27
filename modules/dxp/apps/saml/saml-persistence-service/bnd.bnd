@@ -1,7 +1,7 @@
 Bundle-Activator: com.liferay.saml.persistence.activator.SamlServicePersistenceBundleActivator
 Bundle-Name: Liferay SAML Persistence Service
 Bundle-SymbolicName: com.liferay.saml.persistence.service
-Bundle-Version: 1.0.52
+Bundle-Version: 1.0.53
 Import-Package:\
 	!com.sun.*,\
 	\
