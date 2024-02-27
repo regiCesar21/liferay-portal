@@ -24,6 +24,33 @@ public class BatchEngineImportTaskServiceWrapper
 		_batchEngineImportTaskService = batchEngineImportTaskService;
 	}
 
+	@Override
+	public com.liferay.batch.engine.model.BatchEngineImportTask
+			addBatchEngineImportTask(
+				long companyId, long userId, long batchSize, String callbackURL,
+				String className, byte[] content, String contentType,
+				String executeStatus,
+				java.util.Map<String, String> fieldNameMappingMap,
+				String operation,
+				java.util.Map<String, java.io.Serializable> parameters,
+				String taskItemDelegateName)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _batchEngineImportTaskService.addBatchEngineImportTask(
+			companyId, userId, batchSize, callbackURL, className, content,
+			contentType, executeStatus, fieldNameMappingMap, operation,
+			parameters, taskItemDelegateName);
+	}
+
+	@Override
+	public com.liferay.batch.engine.model.BatchEngineImportTask
+			getBatchEngineImportTask(long batchEngineImportTaskId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _batchEngineImportTaskService.getBatchEngineImportTask(
+			batchEngineImportTaskId);
+	}
+
 	/**
 	 * Returns the OSGi service identifier.
 	 *

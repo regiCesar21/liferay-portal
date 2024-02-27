@@ -5,9 +5,15 @@
 
 package com.liferay.batch.engine.service.http;
 
+import com.liferay.batch.engine.service.BatchEngineExportTaskServiceUtil;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
+
+import java.rmi.RemoteException;
+
 /**
  * Provides the SOAP utility for the
- * <code>com.liferay.batch.engine.service.BatchEngineExportTaskServiceUtil</code> service
+ * <code>BatchEngineExportTaskServiceUtil</code> service
  * utility. The static methods of this class call the same methods of the
  * service utility. However, the signatures are different because it is
  * difficult for SOAP to support certain types.
@@ -47,4 +53,27 @@ package com.liferay.batch.engine.service.http;
  */
 @Deprecated
 public class BatchEngineExportTaskServiceSoap {
+
+	public static com.liferay.batch.engine.model.BatchEngineExportTaskSoap
+			getBatchEngineExportTask(long batchEngineExportTaskId)
+		throws RemoteException {
+
+		try {
+			com.liferay.batch.engine.model.BatchEngineExportTask returnValue =
+				BatchEngineExportTaskServiceUtil.getBatchEngineExportTask(
+					batchEngineExportTaskId);
+
+			return com.liferay.batch.engine.model.BatchEngineExportTaskSoap.
+				toSoapModel(returnValue);
+		}
+		catch (Exception exception) {
+			_log.error(exception, exception);
+
+			throw new RemoteException(exception.getMessage());
+		}
+	}
+
+	private static Log _log = LogFactoryUtil.getLog(
+		BatchEngineExportTaskServiceSoap.class);
+
 }
