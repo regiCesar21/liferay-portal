@@ -1,6 +1,6 @@
 Bundle-Name: Liferay LCS Client Implementation
 Bundle-SymbolicName: com.liferay.lcs.client.impl
-Bundle-Version: 1.0.59
+Bundle-Version: 1.0.60
 Import-Package:\
 	com.liferay.petra.encryptor;version="[1.0.0,9999.0.0)",\
 	com.liferay.portal.kernel.bean;version="[7.1.0,9999.0.0)",\
