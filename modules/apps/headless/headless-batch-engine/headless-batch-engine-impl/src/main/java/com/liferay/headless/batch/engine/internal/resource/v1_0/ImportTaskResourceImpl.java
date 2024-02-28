@@ -14,7 +14,7 @@ import com.liferay.batch.engine.BatchEngineTaskOperation;
 import com.liferay.batch.engine.ItemClassRegistry;
 import com.liferay.batch.engine.configuration.BatchEngineTaskConfiguration;
 import com.liferay.batch.engine.model.BatchEngineImportTask;
-import com.liferay.batch.engine.service.BatchEngineImportTaskLocalService;
+import com.liferay.batch.engine.service.BatchEngineImportTaskService;
 import com.liferay.headless.batch.engine.dto.v1_0.ImportTask;
 import com.liferay.headless.batch.engine.internal.resource.v1_0.util.ParametersUtil;
 import com.liferay.headless.batch.engine.resource.v1_0.ImportTaskResource;
@@ -23,6 +23,7 @@ import com.liferay.petra.io.StreamUtil;
 import com.liferay.petra.io.unsync.UnsyncByteArrayInputStream;
 import com.liferay.petra.io.unsync.UnsyncByteArrayOutputStream;
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.util.File;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.PropsUtil;
@@ -83,7 +84,7 @@ public class ImportTaskResourceImpl extends BaseImportTaskResourceImpl {
 	public ImportTask deleteImportTask(
 			String className, String callbackURL, String taskItemDelegateName,
 			Object object)
-		throws IOException {
+		throws Exception {
 
 		String contentType = contextHttpServletRequest.getHeader(
 			HttpHeaders.CONTENT_TYPE);
@@ -97,7 +98,7 @@ public class ImportTaskResourceImpl extends BaseImportTaskResourceImpl {
 	@Override
 	public ImportTask getImportTask(Long importTaskId) throws Exception {
 		return _toImportTask(
-			_batchEngineImportTaskLocalService.getBatchEngineImportTask(
+			_batchEngineImportTaskService.getBatchEngineImportTask(
 				importTaskId));
 	}
 
@@ -290,9 +291,11 @@ public class ImportTaskResourceImpl extends BaseImportTaskResourceImpl {
 	}
 
 	private ImportTask _importFile(
-		BatchEngineTaskOperation batchEngineTaskOperation, byte[] bytes,
-		String callbackURL, String className, String batchEngineTaskContentType,
-		String fieldNameMappingString, String taskItemDelegateName) {
+			BatchEngineTaskOperation batchEngineTaskOperation, byte[] bytes,
+			String callbackURL, String className,
+			String batchEngineTaskContentType, String fieldNameMappingString,
+			String taskItemDelegateName)
+		throws PortalException {
 
 		Class<?> clazz = _itemClassRegistry.getItemClass(className);
 
@@ -306,7 +309,7 @@ public class ImportTaskResourceImpl extends BaseImportTaskResourceImpl {
 				ImportTaskResourceImpl.class.getName());
 
 		BatchEngineImportTask batchEngineImportTask =
-			_batchEngineImportTaskLocalService.addBatchEngineImportTask(
+			_batchEngineImportTaskService.addBatchEngineImportTask(
 				contextCompany.getCompanyId(), contextUser.getUserId(),
 				_itemClassBatchSizeMap.getOrDefault(className, _batchSize),
 				callbackURL, className, bytes,
@@ -368,8 +371,7 @@ public class ImportTaskResourceImpl extends BaseImportTaskResourceImpl {
 	private BatchEngineImportTaskExecutor _batchEngineImportTaskExecutor;
 
 	@Reference
-	private BatchEngineImportTaskLocalService
-		_batchEngineImportTaskLocalService;
+	private BatchEngineImportTaskService _batchEngineImportTaskService;
 
 	private int _batchSize;
 
