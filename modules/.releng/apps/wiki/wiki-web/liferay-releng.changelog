@@ -502,3 +502,8 @@ def323b5c6bbed1e66b47a2c6d13d44bf40afb75^..6bf025cf2cc84ce361991d4d49bcf8ca4e9f4
 # Bundle Version 5.0.107
 #
 24b0e3bea853ddc0544eceacafbeade149df7dd5^..aa07bf3b364d38330200beb0268abe20ca71abbe=LPS-77699 LPS-190823 LRQA-84172
+
+#
+# Bundle Version 5.0.108
+#
+aa07bf3b364d38330200beb0268abe20ca71abbe^..6b0469b00d876b300bc53c75d4654b8dd06f6516=LPD-17543 LPS-77699
