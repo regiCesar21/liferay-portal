@@ -8,6 +8,7 @@ package com.liferay.batch.engine.model.impl;
 import com.liferay.batch.engine.model.BatchEngineImportTask;
 import com.liferay.batch.engine.model.BatchEngineImportTaskContentBlobModel;
 import com.liferay.batch.engine.model.BatchEngineImportTaskModel;
+import com.liferay.batch.engine.model.BatchEngineImportTaskSoap;
 import com.liferay.batch.engine.service.BatchEngineImportTaskLocalServiceUtil;
 import com.liferay.expando.kernel.model.ExpandoBridge;
 import com.liferay.expando.kernel.util.ExpandoBridgeFactoryUtil;
@@ -15,6 +16,7 @@ import com.liferay.exportimport.kernel.lar.StagedModelType;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.bean.AutoEscapeBeanHandler;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.json.JSON;
 import com.liferay.portal.kernel.model.CacheModel;
 import com.liferay.portal.kernel.model.ModelWrapper;
 import com.liferay.portal.kernel.model.User;
@@ -32,10 +34,12 @@ import java.lang.reflect.InvocationHandler;
 import java.sql.Blob;
 import java.sql.Types;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.function.BiConsumer;
 import java.util.function.Function;
@@ -51,6 +55,7 @@ import java.util.function.Function;
  * @see BatchEngineImportTaskImpl
  * @generated
  */
+@JSON(strict = true)
 public class BatchEngineImportTaskModelImpl
 	extends BaseModelImpl<BatchEngineImportTask>
 	implements BatchEngineImportTaskModel {
@@ -133,6 +138,69 @@ public class BatchEngineImportTaskModelImpl
 
 	public static void setFinderCacheEnabled(boolean finderCacheEnabled) {
 		_finderCacheEnabled = finderCacheEnabled;
+	}
+
+	/**
+	 * Converts the soap model instance into a normal model instance.
+	 *
+	 * @param soapModel the soap model instance to convert
+	 * @return the normal model instance
+	 */
+	public static BatchEngineImportTask toModel(
+		BatchEngineImportTaskSoap soapModel) {
+
+		if (soapModel == null) {
+			return null;
+		}
+
+		BatchEngineImportTask model = new BatchEngineImportTaskImpl();
+
+		model.setMvccVersion(soapModel.getMvccVersion());
+		model.setUuid(soapModel.getUuid());
+		model.setBatchEngineImportTaskId(
+			soapModel.getBatchEngineImportTaskId());
+		model.setCompanyId(soapModel.getCompanyId());
+		model.setUserId(soapModel.getUserId());
+		model.setCreateDate(soapModel.getCreateDate());
+		model.setModifiedDate(soapModel.getModifiedDate());
+		model.setBatchSize(soapModel.getBatchSize());
+		model.setCallbackURL(soapModel.getCallbackURL());
+		model.setClassName(soapModel.getClassName());
+		model.setContent(soapModel.getContent());
+		model.setContentType(soapModel.getContentType());
+		model.setEndTime(soapModel.getEndTime());
+		model.setErrorMessage(soapModel.getErrorMessage());
+		model.setExecuteStatus(soapModel.getExecuteStatus());
+		model.setFieldNameMapping(soapModel.getFieldNameMapping());
+		model.setOperation(soapModel.getOperation());
+		model.setParameters(soapModel.getParameters());
+		model.setStartTime(soapModel.getStartTime());
+		model.setTaskItemDelegateName(soapModel.getTaskItemDelegateName());
+
+		return model;
+	}
+
+	/**
+	 * Converts the soap model instances into normal model instances.
+	 *
+	 * @param soapModels the soap model instances to convert
+	 * @return the normal model instances
+	 */
+	public static List<BatchEngineImportTask> toModels(
+		BatchEngineImportTaskSoap[] soapModels) {
+
+		if (soapModels == null) {
+			return null;
+		}
+
+		List<BatchEngineImportTask> models =
+			new ArrayList<BatchEngineImportTask>(soapModels.length);
+
+		for (BatchEngineImportTaskSoap soapModel : soapModels) {
+			models.add(toModel(soapModel));
+		}
+
+		return models;
 	}
 
 	public BatchEngineImportTaskModelImpl() {
@@ -373,6 +441,7 @@ public class BatchEngineImportTaskModelImpl
 			(Map)attributeSetterBiConsumers);
 	}
 
+	@JSON
 	@Override
 	public long getMvccVersion() {
 		return _mvccVersion;
@@ -383,6 +452,7 @@ public class BatchEngineImportTaskModelImpl
 		_mvccVersion = mvccVersion;
 	}
 
+	@JSON
 	@Override
 	public String getUuid() {
 		if (_uuid == null) {
@@ -408,6 +478,7 @@ public class BatchEngineImportTaskModelImpl
 		return GetterUtil.getString(_originalUuid);
 	}
 
+	@JSON
 	@Override
 	public long getBatchEngineImportTaskId() {
 		return _batchEngineImportTaskId;
@@ -418,6 +489,7 @@ public class BatchEngineImportTaskModelImpl
 		_batchEngineImportTaskId = batchEngineImportTaskId;
 	}
 
+	@JSON
 	@Override
 	public long getCompanyId() {
 		return _companyId;
@@ -440,6 +512,7 @@ public class BatchEngineImportTaskModelImpl
 		return _originalCompanyId;
 	}
 
+	@JSON
 	@Override
 	public long getUserId() {
 		return _userId;
@@ -466,6 +539,7 @@ public class BatchEngineImportTaskModelImpl
 	public void setUserUuid(String userUuid) {
 	}
 
+	@JSON
 	@Override
 	public Date getCreateDate() {
 		return _createDate;
@@ -476,6 +550,7 @@ public class BatchEngineImportTaskModelImpl
 		_createDate = createDate;
 	}
 
+	@JSON
 	@Override
 	public Date getModifiedDate() {
 		return _modifiedDate;
@@ -492,6 +567,7 @@ public class BatchEngineImportTaskModelImpl
 		_modifiedDate = modifiedDate;
 	}
 
+	@JSON
 	@Override
 	public long getBatchSize() {
 		return _batchSize;
@@ -502,6 +578,7 @@ public class BatchEngineImportTaskModelImpl
 		_batchSize = batchSize;
 	}
 
+	@JSON
 	@Override
 	public String getCallbackURL() {
 		if (_callbackURL == null) {
@@ -517,6 +594,7 @@ public class BatchEngineImportTaskModelImpl
 		_callbackURL = callbackURL;
 	}
 
+	@JSON
 	@Override
 	public String getClassName() {
 		if (_className == null) {
@@ -532,6 +610,7 @@ public class BatchEngineImportTaskModelImpl
 		_className = className;
 	}
 
+	@JSON
 	@Override
 	public Blob getContent() {
 		if (_contentBlobModel == null) {
@@ -564,6 +643,7 @@ public class BatchEngineImportTaskModelImpl
 		}
 	}
 
+	@JSON
 	@Override
 	public String getContentType() {
 		if (_contentType == null) {
@@ -579,6 +659,7 @@ public class BatchEngineImportTaskModelImpl
 		_contentType = contentType;
 	}
 
+	@JSON
 	@Override
 	public Date getEndTime() {
 		return _endTime;
@@ -589,6 +670,7 @@ public class BatchEngineImportTaskModelImpl
 		_endTime = endTime;
 	}
 
+	@JSON
 	@Override
 	public String getErrorMessage() {
 		if (_errorMessage == null) {
@@ -604,6 +686,7 @@ public class BatchEngineImportTaskModelImpl
 		_errorMessage = errorMessage;
 	}
 
+	@JSON
 	@Override
 	public String getExecuteStatus() {
 		if (_executeStatus == null) {
@@ -629,6 +712,7 @@ public class BatchEngineImportTaskModelImpl
 		return GetterUtil.getString(_originalExecuteStatus);
 	}
 
+	@JSON
 	@Override
 	public Map<String, Serializable> getFieldNameMapping() {
 		return _fieldNameMapping;
@@ -641,6 +725,7 @@ public class BatchEngineImportTaskModelImpl
 		_fieldNameMapping = fieldNameMapping;
 	}
 
+	@JSON
 	@Override
 	public String getOperation() {
 		if (_operation == null) {
@@ -656,6 +741,7 @@ public class BatchEngineImportTaskModelImpl
 		_operation = operation;
 	}
 
+	@JSON
 	@Override
 	public Map<String, Serializable> getParameters() {
 		return _parameters;
@@ -666,6 +752,7 @@ public class BatchEngineImportTaskModelImpl
 		_parameters = parameters;
 	}
 
+	@JSON
 	@Override
 	public Date getStartTime() {
 		return _startTime;
@@ -676,6 +763,7 @@ public class BatchEngineImportTaskModelImpl
 		_startTime = startTime;
 	}
 
+	@JSON
 	@Override
 	public String getTaskItemDelegateName() {
 		if (_taskItemDelegateName == null) {
