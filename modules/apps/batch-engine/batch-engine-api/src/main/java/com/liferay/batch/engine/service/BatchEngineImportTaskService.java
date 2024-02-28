@@ -5,13 +5,19 @@
 
 package com.liferay.batch.engine.service;
 
+import com.liferay.batch.engine.model.BatchEngineImportTask;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.jsonwebservice.JSONWebService;
 import com.liferay.portal.kernel.security.access.control.AccessControlled;
 import com.liferay.portal.kernel.service.BaseService;
 import com.liferay.portal.kernel.transaction.Isolation;
+import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.transaction.Transactional;
+
+import java.io.Serializable;
+
+import java.util.Map;
 
 import org.osgi.annotation.versioning.ProviderType;
 
@@ -38,6 +44,18 @@ public interface BatchEngineImportTaskService extends BaseService {
 	 *
 	 * Never modify this interface directly. Add custom service methods to <code>com.liferay.batch.engine.service.impl.BatchEngineImportTaskServiceImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface. Consume the batch engine import task remote service via injection or a <code>org.osgi.util.tracker.ServiceTracker</code>. Use {@link BatchEngineImportTaskServiceUtil} if injection and service tracking are not available.
 	 */
+	public BatchEngineImportTask addBatchEngineImportTask(
+			long companyId, long userId, long batchSize, String callbackURL,
+			String className, byte[] content, String contentType,
+			String executeStatus, Map<String, String> fieldNameMappingMap,
+			String operation, Map<String, Serializable> parameters,
+			String taskItemDelegateName)
+		throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public BatchEngineImportTask getBatchEngineImportTask(
+			long batchEngineImportTaskId)
+		throws PortalException;
 
 	/**
 	 * Returns the OSGi service identifier.

@@ -5,6 +5,13 @@
 
 package com.liferay.batch.engine.service;
 
+import com.liferay.batch.engine.model.BatchEngineImportTask;
+import com.liferay.portal.kernel.exception.PortalException;
+
+import java.io.Serializable;
+
+import java.util.Map;
+
 /**
  * Provides the remote service utility for BatchEngineImportTask. This utility wraps
  * <code>com.liferay.batch.engine.service.impl.BatchEngineImportTaskServiceImpl</code> and is an
@@ -24,13 +31,33 @@ public class BatchEngineImportTaskServiceUtil {
 	 *
 	 * Never modify this class directly. Add custom service methods to <code>com.liferay.batch.engine.service.impl.BatchEngineImportTaskServiceImpl</code> and rerun ServiceBuilder to regenerate this class.
 	 */
+	public static BatchEngineImportTask addBatchEngineImportTask(
+			long companyId, long userId, long batchSize, String callbackURL,
+			String className, byte[] content, String contentType,
+			String executeStatus, Map<String, String> fieldNameMappingMap,
+			String operation, Map<String, Serializable> parameters,
+			String taskItemDelegateName)
+		throws PortalException {
+
+		return getService().addBatchEngineImportTask(
+			companyId, userId, batchSize, callbackURL, className, content,
+			contentType, executeStatus, fieldNameMappingMap, operation,
+			parameters, taskItemDelegateName);
+	}
+
+	public static BatchEngineImportTask getBatchEngineImportTask(
+			long batchEngineImportTaskId)
+		throws PortalException {
+
+		return getService().getBatchEngineImportTask(batchEngineImportTaskId);
+	}
 
 	/**
 	 * Returns the OSGi service identifier.
 	 *
 	 * @return the OSGi service identifier
 	 */
-	public static java.lang.String getOSGiServiceIdentifier() {
+	public static String getOSGiServiceIdentifier() {
 		return getService().getOSGiServiceIdentifier();
 	}
 
