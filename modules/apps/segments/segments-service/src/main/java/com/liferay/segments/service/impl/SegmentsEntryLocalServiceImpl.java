@@ -101,7 +101,8 @@ public class SegmentsEntryLocalServiceImpl
 		segmentsEntry.setModifiedDate(
 			serviceContext.getModifiedDate(new Date()));
 		segmentsEntry.setSegmentsEntryKey(segmentsEntryKey);
-		segmentsEntry.setNameMap(nameMap);
+		segmentsEntry.setNameMap(
+			nameMap, _portal.getSiteDefaultLocale(groupId));
 		segmentsEntry.setDescriptionMap(descriptionMap);
 		segmentsEntry.setActive(active);
 		segmentsEntry.setCriteria(criteria);
@@ -356,7 +357,8 @@ public class SegmentsEntryLocalServiceImpl
 
 		segmentsEntry.setSegmentsEntryKey(segmentsEntryKey);
 
-		segmentsEntry.setNameMap(nameMap);
+		segmentsEntry.setNameMap(
+			nameMap, _portal.getSiteDefaultLocale(segmentsEntry.getGroupId()));
 		segmentsEntry.setDescriptionMap(descriptionMap);
 		segmentsEntry.setActive(active);
 		segmentsEntry.setCriteria(criteria);
