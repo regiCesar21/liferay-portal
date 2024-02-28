@@ -5,8 +5,18 @@
 
 package com.liferay.batch.engine.service.impl;
 
+import com.liferay.batch.engine.model.BatchEngineExportTask;
 import com.liferay.batch.engine.service.base.BatchEngineExportTaskServiceBaseImpl;
 import com.liferay.portal.aop.AopService;
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.security.auth.PrincipalException;
+import com.liferay.portal.kernel.security.permission.PermissionChecker;
+
+import java.io.InputStream;
+import java.io.Serializable;
+
+import java.util.List;
+import java.util.Map;
 
 import org.osgi.service.component.annotations.Component;
 
@@ -22,4 +32,79 @@ import org.osgi.service.component.annotations.Component;
 )
 public class BatchEngineExportTaskServiceImpl
 	extends BatchEngineExportTaskServiceBaseImpl {
+
+	@Override
+	public BatchEngineExportTask addBatchEngineExportTask(
+			long companyId, long userId, String callbackURL, String className,
+			String contentType, String executeStatus,
+			List<String> fieldNamesList, Map<String, Serializable> parameters,
+			String taskItemDelegateName)
+		throws PortalException {
+
+		_checkPermission(companyId);
+
+		return batchEngineExportTaskLocalService.addBatchEngineExportTask(
+			companyId, userId, callbackURL, className, contentType,
+			executeStatus, fieldNamesList, parameters, taskItemDelegateName);
+	}
+
+	@Override
+	public BatchEngineExportTask getBatchEngineExportTask(
+			long batchEngineExportTaskId)
+		throws PortalException {
+
+		BatchEngineExportTask batchEngineExportTask =
+			batchEngineExportTaskLocalService.getBatchEngineExportTask(
+				batchEngineExportTaskId);
+
+		_checkPermission(batchEngineExportTask);
+
+		return batchEngineExportTask;
+	}
+
+	@Override
+	public InputStream openContentInputStream(long batchEngineExportTaskId)
+		throws PortalException {
+
+		_checkPermission(
+			batchEngineExportTaskLocalService.getBatchEngineExportTask(
+				batchEngineExportTaskId));
+
+		return batchEngineExportTaskLocalService.openContentInputStream(
+			batchEngineExportTaskId);
+	}
+
+	private void _checkPermission(BatchEngineExportTask batchEngineExportTask)
+		throws PrincipalException {
+
+		if (!_hasPermission(batchEngineExportTask, getPermissionChecker())) {
+			throw new PrincipalException();
+		}
+	}
+
+	private void _checkPermission(long companyId) throws PrincipalException {
+		PermissionChecker permissionChecker = getPermissionChecker();
+
+		if ((companyId != permissionChecker.getCompanyId()) &&
+			!permissionChecker.isOmniadmin()) {
+
+			throw new PrincipalException();
+		}
+	}
+
+	private boolean _hasPermission(
+		BatchEngineExportTask batchEngineExportTask,
+		PermissionChecker permissionChecker) {
+
+		if (permissionChecker.isCompanyAdmin(
+				batchEngineExportTask.getCompanyId()) ||
+			(batchEngineExportTask.getUserId() ==
+				permissionChecker.getUserId())) {
+
+			return true;
+		}
+
+		return false;
+	}
+
 }
