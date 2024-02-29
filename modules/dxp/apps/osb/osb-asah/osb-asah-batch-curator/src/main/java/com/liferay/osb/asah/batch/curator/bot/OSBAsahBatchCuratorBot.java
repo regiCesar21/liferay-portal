@@ -132,8 +132,8 @@ public class OSBAsahBatchCuratorBot {
 		_asahTaskManager.runNanitesForAllProjects("UpdateMembershipsNanite");
 	}
 
-	private String _buildCronExpression(int second, int minute) {
-		return String.format("%d %d 0 * * ?", second, minute);
+	private String _buildCronExpression(int second, int minute, int hour) {
+		return String.format("%d %d %d * * ?", second, minute, hour);
 	}
 
 	@PreDestroy
@@ -199,10 +199,10 @@ public class OSBAsahBatchCuratorBot {
 	private void _scheduleNanites() {
 		_scheduleNanite(
 			_buildCronExpression(
-				RandomUtils.nextInt(0, 60), RandomUtils.nextInt(0, 16)),
+				RandomUtils.nextInt(0, 60), RandomUtils.nextInt(0, 16), 0),
 			_getDeleteTempFilesRunnable(), "DeleteTempFilesNanite");
 		_scheduleNanite(
-			_buildCronExpression(0, 0), _getExperimentRunnable(),
+			_buildCronExpression(0, 0, 2), _getExperimentRunnable(),
 			"ExperimentNanite");
 	}
 
