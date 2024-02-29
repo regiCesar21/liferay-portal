@@ -2059,7 +2059,7 @@ public interface UserLocalService
 			int end, Sort[] sorts)
 		throws PortalException;
 
-	public boolean sendEmailAccountCreationAttempt(
+	public boolean sendEmailUserCreationAttempt(
 			long companyId, String emailAddress, String fromName,
 			String fromAddress, String subject, String body,
 			ServiceContext serviceContext)
