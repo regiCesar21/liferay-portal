@@ -27,6 +27,9 @@ AUI.add(
 		var SELECTOR_REPEAT_BUTTONS =
 			'.lfr-ddm-repeatable-add-button, .lfr-ddm-repeatable-delete-button';
 
+		var TPL_FLAG_LANGUAGE_ID_BTN =
+			'<span class="inline-item">{flag}</span><span class="btn-section">{languageId}</span>';
+
 		var TPL_ICON_CARET =
 			'<span class="collapse-icon-closed"><span class="icon-caret-right"></span></span>';
 
@@ -4303,21 +4306,51 @@ AUI.add(
 					}
 				},
 
+				_moveDefaultLanguageFlagToFirstPosition(defaultLanguageId) {
+					var instance = this;
+
+					var portletNamespace = instance.get('portletNamespace');
+
+					var paletteContentBox = A.one(
+						'#' + portletNamespace + 'PaletteContentBox'
+					).getDOMNode();
+
+					var languageNode = paletteContentBox.querySelector(
+						'[data-languageid="' + defaultLanguageId + '"]'
+					)?.parentElement;
+
+					if (languageNode) {
+						paletteContentBox.removeChild(languageNode);
+
+						paletteContentBox.insertBefore(
+							languageNode,
+							paletteContentBox.firstElementChild
+						);
+					}
+				},
+
 				_onDefaultLocaleChanged(event) {
 					var instance = this;
 
-					var definition = instance.get('definition');
-
-					definition.defaultLanguageId = event.item.getAttribute(
+					var newDefaultLanguageId = event.item.getAttribute(
 						'data-value'
 					);
+					var oldDefaultLanguageId = instance.get('definition')
+						.defaultLanguageId;
 
-					instance.set('definition', definition);
+					instance._setDefaultLanguageId(newDefaultLanguageId);
 
-					Liferay.fire('inputLocalized:localeChanged', {
-						item: event.item,
-						source: instance,
-					});
+					instance._moveDefaultLanguageFlagToFirstPosition(
+						newDefaultLanguageId
+					);
+					instance._syncTranslatedLabelsUI(
+						newDefaultLanguageId,
+						oldDefaultLanguageId
+					);
+					instance._updateFields(
+						newDefaultLanguageId,
+						instance.get('fields')
+					);
 				},
 
 				_onLiferaySubmitForm(event) {
@@ -4334,6 +4367,127 @@ AUI.add(
 					var instance = this;
 
 					instance.updateDDMFormInputValue();
+				},
+
+				_setDefaultLanguageId(defaultLanguageId) {
+					var instance = this;
+
+					var definition = instance.get('definition');
+
+					definition.defaultLanguageId = defaultLanguageId;
+
+					instance.set('definition', definition);
+				},
+
+				_syncTranslatedLabelsUI(
+					newDefaultLanguageId,
+					oldDefaultLanguageId
+				) {
+					var instance = this;
+
+					var portletNamespace = instance.get('portletNamespace');
+
+					var items = A.all(
+						'#' + portletNamespace + 'PaletteContentBox a'
+					);
+
+					var menu = A.one('#' + portletNamespace + 'Menu');
+
+					var menuListContainer = menu.getData('menuListContainer');
+
+					if (
+						items._nodes &&
+						!items._nodes.length &&
+						menuListContainer
+					) {
+						items = menuListContainer.all(items._query);
+					}
+
+					items.each((item) => {
+						if (item.hasClass('active')) {
+							item.removeClass('active');
+						}
+
+						var languageId = item.getAttribute('data-value');
+
+						var labelItem = item.one('.label');
+
+						if (languageId === newDefaultLanguageId) {
+							item.addClass('active');
+
+							if (!labelItem.hasClass('label-info')) {
+								labelItem.addClass('label-info');
+							}
+
+							if (labelItem.hasClass('label-success')) {
+								labelItem.removeClass('label-success');
+							}
+
+							if (labelItem.hasClass('label-warning')) {
+								labelItem.removeClass('label-warning');
+							}
+
+							labelItem.setContent(
+								Liferay.Language.get('default')
+							);
+						}
+						else if (languageId === oldDefaultLanguageId) {
+							labelItem.addClass('label-warning');
+							labelItem.removeClass('label-info');
+							labelItem.setContent(
+								Liferay.Language.get('untranslated')
+							);
+						}
+					});
+
+					menu.setData('menuListContainer', menuListContainer);
+
+					newDefaultLanguageId = newDefaultLanguageId.replace(
+						'_',
+						'-'
+					);
+
+					menu.setHTML(
+						Lang.sub(TPL_FLAG_LANGUAGE_ID_BTN, {
+							flag: Liferay.Util.getLexiconIconTpl(
+								newDefaultLanguageId.toLowerCase()
+							),
+							languageId: newDefaultLanguageId,
+						})
+					);
+				},
+
+				_updateFields(defaultLocale, fields) {
+					var instance = this;
+
+					fields.forEach((field) => {
+						var displayLocale = field.get('displayLocale');
+						var localizationMap = field.get('localizationMap');
+						var value = field.getValue();
+
+						if (value) {
+							if (field.get('localizable')) {
+								localizationMap[displayLocale] = value;
+							}
+							else {
+								localizationMap = value;
+							}
+						}
+
+						field.set('displayLocale', defaultLocale);
+						field.set('localizationMap', localizationMap);
+
+						field.syncLabel(defaultLocale);
+						field.syncReadOnlyUI();
+						field.syncTranslatedLabelsUI(displayLocale);
+						field.syncValueUI();
+
+						var nestedFields = field.get('fields');
+
+						if (nestedFields.length) {
+							instance._updateFields(defaultLocale, nestedFields);
+						}
+					});
 				},
 
 				_updateNestedLocalizationMaps(fields) {

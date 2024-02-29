@@ -140,6 +140,10 @@ class JournalPortlet extends PortletBase {
 		if (event.item) {
 			this.defaultLanguageId = event.item.getAttribute('data-value');
 		}
+
+		this._selectedLanguageId = this.defaultLanguageId;
+
+		this._updateLanguageIdInput(this.defaultLanguageId);
 	}
 
 	/**
