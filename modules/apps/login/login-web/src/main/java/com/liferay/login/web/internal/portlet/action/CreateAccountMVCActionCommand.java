@@ -295,6 +295,7 @@ public class CreateAccountMVCActionCommand extends BaseMVCActionCommand {
 					"emailFromName", null);
 				String emailFromAddress = portletPreferences.getValue(
 					"emailFromAddress", null);
+
 				String emailToAddress = user.getEmailAddress();
 
 				String emailParam = "emailPasswordSent";
