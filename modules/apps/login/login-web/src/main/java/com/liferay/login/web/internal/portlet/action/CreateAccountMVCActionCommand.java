@@ -291,8 +291,6 @@ public class CreateAccountMVCActionCommand extends BaseMVCActionCommand {
 				PortletPreferences portletPreferences =
 					actionRequest.getPreferences();
 
-				String languageId = _language.getLanguageId(actionRequest);
-
 				String emailFromName = portletPreferences.getValue(
 					"emailFromName", null);
 				String emailFromAddress = portletPreferences.getValue(
@@ -300,6 +298,8 @@ public class CreateAccountMVCActionCommand extends BaseMVCActionCommand {
 				String emailToAddress = user.getEmailAddress();
 
 				String emailParam = "emailPasswordSent";
+
+				String languageId = _language.getLanguageId(actionRequest);
 
 				String subject = portletPreferences.getValue(
 					emailParam + "Subject_" + languageId, null);
