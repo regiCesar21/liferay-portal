@@ -196,15 +196,18 @@ public class LayoutModelDocumentContributor
 		ServiceContext serviceContext =
 			ServiceContextThreadLocal.getServiceContext();
 
-		if ((serviceContext != null) && (serviceContext.getRequest() != null)) {
-			httpServletRequest = DynamicServletRequest.addQueryString(
-				serviceContext.getRequest(),
-				StringBundler.concat(
-					"p_l_id=", layout.getPlid(), "&p_l_mode=",
-					Constants.SEARCH),
-				false);
-
+		if (serviceContext != null) {
+			httpServletRequest = serviceContext.getRequest();
 			httpServletResponse = serviceContext.getResponse();
+
+			if ((httpServletRequest == null) || (httpServletResponse == null)) {
+				ThemeDisplay themeDisplay = serviceContext.getThemeDisplay();
+
+				if (themeDisplay != null) {
+					httpServletRequest = themeDisplay.getRequest();
+					httpServletResponse = themeDisplay.getResponse();
+				}
+			}
 		}
 
 		if ((httpServletRequest == null) || (httpServletResponse == null)) {
@@ -231,6 +234,12 @@ public class LayoutModelDocumentContributor
 
 			return;
 		}
+
+		httpServletRequest = DynamicServletRequest.addQueryString(
+			httpServletRequest,
+			StringBundler.concat(
+				"p_l_id=", layout.getPlid(), "&p_l_mode=", Constants.SEARCH),
+			false);
 
 		Layout originalRequestLayout = (Layout)httpServletRequest.getAttribute(
 			WebKeys.LAYOUT);
