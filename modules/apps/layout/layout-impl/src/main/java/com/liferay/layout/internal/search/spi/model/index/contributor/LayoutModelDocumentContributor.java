@@ -192,6 +192,7 @@ public class LayoutModelDocumentContributor
 
 		HttpServletRequest httpServletRequest = null;
 		HttpServletResponse httpServletResponse = null;
+		ThemeDisplay themeDisplay = null;
 
 		ServiceContext serviceContext =
 			ServiceContextThreadLocal.getServiceContext();
@@ -199,15 +200,19 @@ public class LayoutModelDocumentContributor
 		if (serviceContext != null) {
 			httpServletRequest = serviceContext.getRequest();
 			httpServletResponse = serviceContext.getResponse();
+			themeDisplay = serviceContext.getThemeDisplay();
+		}
 
-			if ((httpServletRequest == null) || (httpServletResponse == null)) {
-				ThemeDisplay themeDisplay = serviceContext.getThemeDisplay();
+		if ((httpServletRequest == null) && (themeDisplay != null) &&
+			(themeDisplay.getRequest() != null)) {
 
-				if (themeDisplay != null) {
-					httpServletRequest = themeDisplay.getRequest();
-					httpServletResponse = themeDisplay.getResponse();
-				}
-			}
+			httpServletRequest = themeDisplay.getRequest();
+		}
+
+		if ((httpServletResponse == null) && (themeDisplay != null) &&
+			(themeDisplay.getResponse() != null)) {
+
+			httpServletResponse = themeDisplay.getResponse();
 		}
 
 		if ((httpServletRequest == null) || (httpServletResponse == null)) {
@@ -244,9 +249,8 @@ public class LayoutModelDocumentContributor
 		Layout originalRequestLayout = (Layout)httpServletRequest.getAttribute(
 			WebKeys.LAYOUT);
 
-		ThemeDisplay themeDisplay =
-			(ThemeDisplay)httpServletRequest.getAttribute(
-				WebKeys.THEME_DISPLAY);
+		themeDisplay = (ThemeDisplay)httpServletRequest.getAttribute(
+			WebKeys.THEME_DISPLAY);
 
 		Layout originalThemeDisplayLayout = themeDisplay.getLayout();
 		long originalThemeDisplayPlid = themeDisplay.getPlid();
