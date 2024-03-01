@@ -70,6 +70,7 @@
 /development/servlet-api.jar
 /development/slf4j-simple.jar
 /development/smtp.jar
+/development/snakeyaml.jar
 /development/spring-instrument.jar
 /development/spring-instrument-tomcat.jar
 /development/spring-test.jar
