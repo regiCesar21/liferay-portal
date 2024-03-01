@@ -6,6 +6,7 @@
 package com.liferay.osb.asah.upgrade.v4_5_0;
 
 import com.liferay.osb.asah.common.bigquery.BigQuerySchemaManager;
+import com.liferay.osb.asah.common.date.dog.TimeZoneDog;
 import com.liferay.osb.asah.common.util.ProjectIdThreadLocal;
 import com.liferay.osb.asah.upgrade.UpgradeStep;
 
@@ -24,7 +25,8 @@ public class BigQuerySchemaUpgrade implements UpgradeStep {
 	@Override
 	public void upgrade(String version) throws Exception {
 		_bigQuerySchemaManager.createOrReplaceView(
-			ProjectIdThreadLocal.getProjectId(), "asset");
+			ProjectIdThreadLocal.getProjectId(), "asset",
+			_timeZoneDog.getTimeZoneId());
 
 		if (_log.isInfoEnabled()) {
 			_log.info("BigQuery has successfully upgraded to schema 4.5.0");
@@ -36,5 +38,8 @@ public class BigQuerySchemaUpgrade implements UpgradeStep {
 
 	@Autowired
 	private BigQuerySchemaManager _bigQuerySchemaManager;
+
+	@Autowired
+	private TimeZoneDog _timeZoneDog;
 
 }
