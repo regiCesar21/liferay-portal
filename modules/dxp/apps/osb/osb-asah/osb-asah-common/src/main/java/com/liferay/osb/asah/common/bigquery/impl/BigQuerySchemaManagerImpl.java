@@ -94,7 +94,9 @@ public class BigQuerySchemaManagerImpl implements BigQuerySchemaManager {
 	}
 
 	@Override
-	public void createOrReplaceView(String projectId, String viewName) {
+	public void createOrReplaceView(
+		String projectId, String timeZoneId, String viewName) {
+
 		JSONObject jsonObject = _viewsJSONObject.getJSONObject(viewName);
 		Dataset dataset = _bigQuery.getDataset(projectId);
 		boolean materialized = false;
@@ -119,7 +121,7 @@ public class BigQuerySchemaManagerImpl implements BigQuerySchemaManager {
 		_createView(
 			dataset.getDatasetId(),
 			_readFile("/bigquery/" + jsonObject.getString("path")),
-			materialized, projectId, viewName);
+			materialized, projectId, timeZoneId, viewName);
 	}
 
 	@Override
@@ -173,7 +175,7 @@ public class BigQuerySchemaManagerImpl implements BigQuerySchemaManager {
 					_createView(
 						dataset.getDatasetId(),
 						_readFile("/bigquery/" + jsonObject.getString("path")),
-						materialized, projectId, entry.getKey());
+						materialized, projectId, "UTC", entry.getKey());
 				}
 			);
 		}
@@ -406,18 +408,29 @@ public class BigQuerySchemaManagerImpl implements BigQuerySchemaManager {
 
 	private Table _createView(
 		DatasetId datasetId, String query, boolean materialized,
-		String projectId, String viewName) {
+		String projectId, String timeZoneId, String viewName) {
 
 		TableId tableId = TableId.of(datasetId.getDataset(), viewName);
 
 		TableDefinition tableDefinition = null;
 
+		String timeZone = timeZoneId;
+		String timeZoneIdDeclaration = "";
+
+		if (_environment.acceptsProfiles(Profiles.of("prod"))) {
+			timeZone = "timeZone";
+
+			timeZoneIdDeclaration = _getTimeZoneIdDeclaration(
+				projectId, timeZone);
+		}
+
 		String translatedQuery = StringUtils.replaceEach(
 			query,
 			new String[] {
-				"$[AC_PROJECT_ID]", "$[AC_PROJECT_TIME_ZONE_ID_QUERY]"
+				"$[AC_PROJECT_ID]", "$[AC_PROJECT_TIME_ZONE_ID_DECLARATION]",
+				"$[TIME_ZONE_ID]"
 			},
-			new String[] {projectId, _getTimeZoneIdQuery(projectId)});
+			new String[] {projectId, timeZoneIdDeclaration, timeZone});
 
 		if (materialized && _environment.acceptsProfiles(Profiles.of("prod"))) {
 			tableDefinition = MaterializedViewDefinition.newBuilder(
@@ -479,19 +492,18 @@ public class BigQuerySchemaManagerImpl implements BigQuerySchemaManager {
 		return tableNames;
 	}
 
-	private String _getTimeZoneIdQuery(String projectId) {
-		if (!_environment.acceptsProfiles(Profiles.of("prod"))) {
-			return "SELECT 'UTC' AS value";
-		}
+	private String _getTimeZoneIdDeclaration(
+		String projectId, String variableName) {
 
 		return StringUtils.replaceEach(
 			_TIME_ZONE_ID_QUERY_TEMPLATE,
 			new String[] {
-				"$[AC_PROJECT_ID]", "${googleProjectId}", "${region}"
+				"$[AC_PROJECT_ID]", "${googleProjectId}", "${region}",
+				"${variableName}"
 			},
 			new String[] {
 				projectId, _bigQueryOptions.getProjectId(),
-				_bigQueryOptions.getLocation()
+				_bigQueryOptions.getLocation(), variableName
 			});
 	}
 
@@ -554,15 +566,16 @@ public class BigQuerySchemaManagerImpl implements BigQuerySchemaManager {
 	}
 
 	private static final String _TIME_ZONE_ID_QUERY_TEMPLATE =
-		"SELECT (CASE WHEN EXISTS (SELECT * FROM EXTERNAL_QUERY(" +
-			"\"${googleProjectId}.${region}.postgresql\", \"SELECT value " +
-				"FROM $[AC_PROJECT_ID].preference WHERE id = " +
-					"'time-zone-id';\")) THEN (SELECT * FROM " +
-						"EXTERNAL_QUERY(\"${googleProjectId}.${region}." +
-							"postgresql\", \"SELECT value FROM " +
-								"$[AC_PROJECT_ID].preference WHERE id = " +
-									"'time-zone-id';\")) ELSE 'UTC' END) AS " +
-										"value";
+		"DECLARE ${variableName} STRING;\n SET ${variableName} = (SELECT " +
+			"(CASE WHEN EXISTS (SELECT * FROM EXTERNAL_QUERY(\"" +
+				"${googleProjectId}.${region}.postgresql\", \"SELECT value " +
+					"FROM $[AC_PROJECT_ID].preference WHERE id = " +
+						"'time-zone-id';\")) THEN (SELECT * FROM " +
+							"EXTERNAL_QUERY(\"${googleProjectId}.${region}." +
+								"postgresql\", \"SELECT value FROM " +
+									"$[AC_PROJECT_ID].preference WHERE id = " +
+										"'time-zone-id';\")) ELSE 'UTC' END) " +
+											"AS value);";
 
 	private static final Log _log = LogFactory.getLog(
 		BigQuerySchemaManagerImpl.class);

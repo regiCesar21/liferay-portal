@@ -1,6 +1,4 @@
-DECLARE timeZone STRING;
-
-SET timeZone = ($[AC_PROJECT_TIME_ZONE_ID_QUERY]);
+$[AC_PROJECT_TIME_ZONE_ID_DECLARATION]
 
 WITH IdentityActivity AS (
 	SELECT
@@ -23,7 +21,7 @@ WITH IdentityActivity AS (
 		Event.userId = Identity.id
 	)
 	WHERE
-		DATE(Event.eventDate, timeZone) >= CURRENT_DATE(timeZone)
+		DATE(Event.eventDate, '$[TIME_ZONE_ID]') >= CURRENT_DATE('$[TIME_ZONE_ID]')
 	GROUP BY
 		Event.channelId,
 		Event.dataSourceId,
