@@ -69,13 +69,6 @@ public class PreferenceDog {
 				Long.valueOf(preference.getValue()),
 				ProjectIdThreadLocal.getProjectId());
 		}
-		else if (!_environment.acceptsProfiles(Profiles.of("prod")) &&
-				 StringUtils.equals(id, "time-zone-id")) {
-
-			_bigQuerySchemaManager.createOrReplaceView(
-				ProjectIdThreadLocal.getProjectId(), preference.getValue(),
-				"identityactivity");
-		}
 
 		return preference;
 	}
