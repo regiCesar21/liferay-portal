@@ -1,4 +1,4 @@
-FROM adoptopenjdk/openjdk8-openj9:jdk8u292-b10_openj9-0.26.0-alpine-slim AS builder
+FROM azul/zulu-openjdk-alpine:8u392-8.74.0.17-jre AS builder
 
 WORKDIR /builder
 
@@ -6,7 +6,7 @@ COPY ./build/libs/*application.jar app.jar
 
 RUN java -Djarmode=layertools -jar app.jar extract
 
-FROM adoptopenjdk/openjdk8-openj9:jdk8u292-b10_openj9-0.26.0-alpine-slim
+FROM azul/zulu-openjdk-alpine:8u392-8.74.0.17-jre
 
 ARG LABEL_BUILD_DATE
 ARG LABEL_VCS_REF
