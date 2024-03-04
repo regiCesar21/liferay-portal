@@ -172,7 +172,7 @@ services:
             - common.env
             - local.env
         environment:
-            - JAVA_OPTS=-Xms96m -Xmx1g -XX:MaxMetaspaceSize=96m
+            - JAVA_OPTS=-Xms96m -Xmx1g
         healthcheck:
             interval: 10s
             retries: 30
