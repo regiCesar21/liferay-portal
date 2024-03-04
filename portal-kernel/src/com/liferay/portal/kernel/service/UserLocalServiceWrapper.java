@@ -2789,18 +2789,6 @@ public class UserLocalServiceWrapper
 			emailAddress, status, params, andSearch, start, end, sorts);
 	}
 
-	@Override
-	public boolean sendEmailUserCreationAttempt(
-			long companyId, String emailAddress, String fromName,
-			String fromAddress, String subject, String body,
-			ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException {
-
-		return _userLocalService.sendEmailUserCreationAttempt(
-			companyId, emailAddress, fromName, fromAddress, subject, body,
-			serviceContext);
-	}
-
 	/**
 	 * Sends an email address verification to the user.
 	 *
@@ -2818,6 +2806,18 @@ public class UserLocalServiceWrapper
 
 		_userLocalService.sendEmailAddressVerification(
 			user, emailAddress, serviceContext);
+	}
+
+	@Override
+	public boolean sendEmailUserCreationAttempt(
+			long companyId, String emailAddress, String fromName,
+			String fromAddress, String subject, String body,
+			ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _userLocalService.sendEmailUserCreationAttempt(
+			companyId, emailAddress, fromName, fromAddress, subject, body,
+			serviceContext);
 	}
 
 	/**
