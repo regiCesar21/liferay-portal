@@ -41,17 +41,12 @@ import javax.portlet.PortletPreferences;
 public class CompanyServiceImpl extends CompanyServiceBaseImpl {
 
 	/**
-	 * Adds a company.
-	 *
-	 * @param  webId the company's web domain
-	 * @param  virtualHost the company's virtual host name
-	 * @param  mx the company's mail domain
-	 * @param  system whether the company is the very first company (i.e., the
-	 * @param  maxUsers the max number of company users (optionally
-	 *         <code>0</code>)
-	 * @param  active whether the company is active
-	 * @return the company
+	 * @deprecated As of Mueller (7.2.x), replaced by {@link
+	 *             #addCompany(String, String, String, boolean,
+	 * 			int , boolean, String, String, String, String, String,
+	 * 			String)}
 	 */
+	@Deprecated
 	@JSONWebService(mode = JSONWebServiceMode.IGNORE)
 	@Override
 	public Company addCompany(
