@@ -51,6 +51,22 @@ public class CompanyLocalServiceUtil {
 	}
 
 	/**
+	 * @deprecated As of Mueller (7.2.x), replaced by {@link
+	 #addCompany(String, String, String, boolean,
+	 int , boolean, String, String, String, String, String,
+	 String)}
+	 */
+	@Deprecated
+	public static Company addCompany(
+			String webId, String virtualHostname, String mx, boolean system,
+			int maxUsers, boolean active)
+		throws PortalException {
+
+		return getService().addCompany(
+			webId, virtualHostname, mx, system, maxUsers, active);
+	}
+
+	/**
 	 * Adds a company.
 	 *
 	 * @param webId the the company's web domain
@@ -61,6 +77,12 @@ public class CompanyLocalServiceUtil {
 	 * @param maxUsers the max number of company users (optionally
 	 <code>0</code>)
 	 * @param active whether the company is active
+	 * @param defaultAdminPassword default admin user password
+	 * @param defaultAdminScreenName default admin user  screen name
+	 * @param defaultAdminEmailAddress default admin user   email address
+	 * @param defaultAdminFirstName default admin user  first name
+	 * @param defaultAdminMiddleName default admin user   middle name
+	 * @param defaultAdminLastName default admin user  last name
 	 * @return the company
 	 */
 	public static Company addCompany(
@@ -89,6 +111,19 @@ public class CompanyLocalServiceUtil {
 	 */
 	public static Company checkCompany(String webId) throws PortalException {
 		return getService().checkCompany(webId);
+	}
+
+	/**
+	 * @deprecated As of Mueller (7.2.x), replaced by {@link
+	 #addCompany(String, String, String, boolean,
+	 int , boolean, String, String, String, String, String,
+	 String)}
+	 */
+	@Deprecated
+	public static Company checkCompany(String webId, String mx)
+		throws PortalException {
+
+		return getService().checkCompany(webId, mx);
 	}
 
 	/**

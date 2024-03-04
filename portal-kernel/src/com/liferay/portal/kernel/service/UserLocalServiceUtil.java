@@ -37,9 +37,27 @@ public class UserLocalServiceUtil {
 	 */
 
 	/**
+	 * @deprecated As of Mueller (7.2.x), replaced by {@link
+	 #addDefaultAdminUser(long, String, String, String, Locale,
+	 String, String, String)}
+	 */
+	@Deprecated
+	public static User addDefaultAdminUser(
+			long companyId, String screenName, String emailAddress,
+			java.util.Locale locale, String firstName, String middleName,
+			String lastName)
+		throws PortalException {
+
+		return getService().addDefaultAdminUser(
+			companyId, screenName, emailAddress, locale, firstName, middleName,
+			lastName);
+	}
+
+	/**
 	 * Adds a default admin user for the company.
 	 *
 	 * @param companyId the primary key of the user's company
+	 * @param password the user's password
 	 * @param screenName the user's screen name
 	 * @param emailAddress the user's email address
 	 * @param locale the user's locale

@@ -65,6 +65,44 @@ public class CompanyServiceSoap {
 	 * @return the company
 	 */
 	public static com.liferay.portal.kernel.model.CompanySoap addCompany(
+			String webId, String virtualHostname, String mx, boolean system,
+			int maxUsers, boolean active)
+		throws RemoteException {
+
+		try {
+			com.liferay.portal.kernel.model.Company returnValue =
+				CompanyServiceUtil.addCompany(
+					webId, virtualHostname, mx, system, maxUsers, active);
+
+			return com.liferay.portal.kernel.model.CompanySoap.toSoapModel(
+				returnValue);
+		}
+		catch (Exception exception) {
+			_log.error(exception, exception);
+
+			throw new RemoteException(exception.getMessage());
+		}
+	}
+
+	/**
+	 * Adds a company.
+	 *
+	 * @param webId the company's web domain
+	 * @param virtualHost the company's virtual host name
+	 * @param mx the company's mail domain
+	 * @param system whether the company is the very first company (i.e., the
+	 * @param maxUsers the max number of company users (optionally
+	 <code>0</code>)
+	 * @param active whether the company is active
+	 * @param defaultAdminPassword default admin user password
+	 * @param defaultAdminScreenName default admin user  screen name
+	 * @param defaultAdminEmailAddress default admin user   email address
+	 * @param defaultAdminFirstName default admin user  first name
+	 * @param defaultAdminMiddleName default admin user   middle name
+	 * @param defaultAdminLastName default admin user  last name
+	 * @return the company
+	 */
+	public static com.liferay.portal.kernel.model.CompanySoap addCompany(
 			String webId, String virtualHost, String mx, boolean system,
 			int maxUsers, boolean active, String defaultAdminPassword,
 			String defaultAdminScreenName, String defaultAdminEmailAddress,

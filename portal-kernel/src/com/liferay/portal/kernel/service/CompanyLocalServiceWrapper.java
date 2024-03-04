@@ -37,6 +37,23 @@ public class CompanyLocalServiceWrapper
 	}
 
 	/**
+	 * @deprecated As of Mueller (7.2.x), replaced by {@link
+	 #addCompany(String, String, String, boolean,
+	 int , boolean, String, String, String, String, String,
+	 String)}
+	 */
+	@Deprecated
+	@Override
+	public com.liferay.portal.kernel.model.Company addCompany(
+			java.lang.String webId, java.lang.String virtualHostname,
+			java.lang.String mx, boolean system, int maxUsers, boolean active)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _companyLocalService.addCompany(
+			webId, virtualHostname, mx, system, maxUsers, active);
+	}
+
+	/**
 	 * Adds a company.
 	 *
 	 * @param webId the the company's web domain
@@ -47,6 +64,12 @@ public class CompanyLocalServiceWrapper
 	 * @param maxUsers the max number of company users (optionally
 	 <code>0</code>)
 	 * @param active whether the company is active
+	 * @param defaultAdminPassword default admin user password
+	 * @param defaultAdminScreenName default admin user  screen name
+	 * @param defaultAdminEmailAddress default admin user   email address
+	 * @param defaultAdminFirstName default admin user  first name
+	 * @param defaultAdminMiddleName default admin user   middle name
+	 * @param defaultAdminLastName default admin user  last name
 	 * @return the company
 	 */
 	@Override
@@ -83,6 +106,21 @@ public class CompanyLocalServiceWrapper
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _companyLocalService.checkCompany(webId);
+	}
+
+	/**
+	 * @deprecated As of Mueller (7.2.x), replaced by {@link
+	 #addCompany(String, String, String, boolean,
+	 int , boolean, String, String, String, String, String,
+	 String)}
+	 */
+	@Deprecated
+	@Override
+	public com.liferay.portal.kernel.model.Company checkCompany(
+			java.lang.String webId, java.lang.String mx)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _companyLocalService.checkCompany(webId, mx);
 	}
 
 	/**

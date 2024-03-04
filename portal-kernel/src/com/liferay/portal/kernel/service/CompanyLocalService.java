@@ -69,6 +69,18 @@ public interface CompanyLocalService
 	public Company addCompany(Company company);
 
 	/**
+	 * @deprecated As of Mueller (7.2.x), replaced by {@link
+	 #addCompany(String, String, String, boolean,
+	 int , boolean, String, String, String, String, String,
+	 String)}
+	 */
+	@Deprecated
+	public Company addCompany(
+			String webId, String virtualHostname, String mx, boolean system,
+			int maxUsers, boolean active)
+		throws PortalException;
+
+	/**
 	 * Adds a company.
 	 *
 	 * @param webId the the company's web domain
@@ -79,6 +91,12 @@ public interface CompanyLocalService
 	 * @param maxUsers the max number of company users (optionally
 	 <code>0</code>)
 	 * @param active whether the company is active
+	 * @param defaultAdminPassword default admin user password
+	 * @param defaultAdminScreenName default admin user  screen name
+	 * @param defaultAdminEmailAddress default admin user   email address
+	 * @param defaultAdminFirstName default admin user  first name
+	 * @param defaultAdminMiddleName default admin user   middle name
+	 * @param defaultAdminLastName default admin user  last name
 	 * @return the company
 	 */
 	public Company addCompany(
@@ -99,6 +117,15 @@ public interface CompanyLocalService
 	 * @return the company with the web domain
 	 */
 	public Company checkCompany(String webId) throws PortalException;
+
+	/**
+	 * @deprecated As of Mueller (7.2.x), replaced by {@link
+	 #addCompany(String, String, String, boolean,
+	 int , boolean, String, String, String, String, String,
+	 String)}
+	 */
+	@Deprecated
+	public Company checkCompany(String webId, String mx) throws PortalException;
 
 	/**
 	 * Returns the company with the web domain and mail domain. If no such
