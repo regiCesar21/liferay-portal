@@ -520,17 +520,6 @@
 				</licenses>
 			</library>
 			<library>
-				<file-name>com.liferay.commerce.shipping.engine.fedex.jar!com.fedex.ws.jar</file-name>
-				<version>1.0.0</version>
-				<project-name>com.fedex.ws</project-name>
-				<licenses>
-					<license>
-						<license-name>LGPL 2.1</license-name>
-						<license-url>http://www.gnu.org/licenses/old-licenses/lgpl-2.1.txt</license-url>
-					</license>
-				</licenses>
-			</library>
-			<library>
 				<file-name>com.liferay.data.engine.rest.impl.jar!accessors-smart.jar</file-name>
 				<version>2.4.9</version>
 				<project-name>ASM based accessors helper used by json-smart</project-name>
@@ -544,13 +533,13 @@
 			</library>
 			<library>
 				<file-name>com.liferay.data.engine.rest.impl.jar!json-path.jar</file-name>
-				<version>2.2.0</version>
-				<project-name>Json Path</project-name>
+				<version>2.9.0</version>
+				<project-name>json-path</project-name>
 				<project-url>https://github.com/jayway/JsonPath</project-url>
 				<licenses>
 					<license>
 						<license-name>The Apache Software License, Version 2.0</license-name>
-						<license-url>http://www.apache.org/licenses/LICENSE-2.0.txt</license-url>
+						<license-url>https://www.apache.org/licenses/LICENSE-2.0.txt</license-url>
 					</license>
 				</licenses>
 			</library>
@@ -638,7 +627,7 @@
 			</library>
 			<library>
 				<file-name>com.liferay.document.library.google.docs.jar!org.freemarker.jar</file-name>
-				<version>2.3.29.LIFERAY-PATCHED-2</version>
+				<version>2.3.30.LIFERAY-PATCHED-2</version>
 				<project-name>org.freemarker.freemarker</project-name>
 				<licenses>
 					<license>
@@ -1139,7 +1128,7 @@
 			</library>
 			<library>
 				<file-name>com.liferay.dynamic.data.mapping.data.provider.impl.jar!hystrix-core.jar</file-name>
-				<version>1.5.11</version>
+				<version>1.5.18</version>
 				<project-name>hystrix-core</project-name>
 				<project-url>https://github.com/Netflix/Hystrix</project-url>
 				<licenses>
@@ -1151,13 +1140,13 @@
 			</library>
 			<library>
 				<file-name>com.liferay.dynamic.data.mapping.data.provider.impl.jar!json-path.jar</file-name>
-				<version>2.2.0</version>
-				<project-name>Json Path</project-name>
+				<version>2.9.0</version>
+				<project-name>json-path</project-name>
 				<project-url>https://github.com/jayway/JsonPath</project-url>
 				<licenses>
 					<license>
 						<license-name>The Apache Software License, Version 2.0</license-name>
-						<license-url>http://www.apache.org/licenses/LICENSE-2.0.txt</license-url>
+						<license-url>https://www.apache.org/licenses/LICENSE-2.0.txt</license-url>
 					</license>
 				</licenses>
 			</library>
@@ -3605,7 +3594,7 @@
 			</library>
 			<library>
 				<file-name>com.liferay.portal.template.freemarker.jar!org.freemarker.jar</file-name>
-				<version>2.3.29.LIFERAY-PATCHED-2</version>
+				<version>2.3.30.LIFERAY-PATCHED-2</version>
 				<project-name>org.freemarker.freemarker</project-name>
 				<licenses>
 					<license>
@@ -5152,7 +5141,7 @@
 			</library>
 			<library>
 				<file-name>lib/development/freemarker.jar</file-name>
-				<version>2.3.29.LIFERAY-PATCHED-2</version>
+				<version>2.3.30.LIFERAY-PATCHED-2</version>
 				<project-name>FreeMarker</project-name>
 				<project-url>http://www.freemarker.org</project-url>
 				<licenses>
