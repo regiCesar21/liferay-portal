@@ -14,6 +14,7 @@ import com.liferay.change.tracking.service.CTEntryLocalService;
 import com.liferay.change.tracking.service.CTPreferencesLocalService;
 import com.liferay.change.tracking.web.internal.configuration.helper.CTSettingsConfigurationHelper;
 import com.liferay.change.tracking.web.internal.constants.CTPortletKeys;
+import com.liferay.change.tracking.web.internal.security.permission.resource.CTPermission;
 import com.liferay.change.tracking.web.internal.util.PublicationsPortletURLUtil;
 import com.liferay.frontend.js.loader.modules.extender.npm.NPMResolver;
 import com.liferay.petra.reflect.ReflectionUtil;
@@ -312,27 +313,33 @@ public class ChangeTrackingIndicatorDynamicInclude extends BaseDynamicInclude {
 				"symbolLeft", "cards2"
 			));
 
-		PortletURL addURL = _portal.getControlPanelPortletURL(
-			httpServletRequest, themeDisplay.getScopeGroup(),
-			CTPortletKeys.PUBLICATIONS, 0, 0, PortletRequest.RENDER_PHASE);
+		if (CTPermission.contains(
+				themeDisplay.getPermissionChecker(),
+				CTActionKeys.ADD_PUBLICATION)) {
 
-		addURL.setParameter(
-			"mvcRenderCommandName", "/change_tracking/add_ct_collection");
+			PortletURL addURL = _portal.getControlPanelPortletURL(
+				httpServletRequest, themeDisplay.getScopeGroup(),
+				CTPortletKeys.PUBLICATIONS, 0, 0, PortletRequest.RENDER_PHASE);
 
-		PortletURL redirectURL = _portal.getControlPanelPortletURL(
-			httpServletRequest, themeDisplay.getScopeGroup(),
-			CTPortletKeys.PUBLICATIONS, 0, 0, PortletRequest.RENDER_PHASE);
+			addURL.setParameter(
+				"mvcRenderCommandName", "/change_tracking/add_ct_collection");
 
-		addURL.setParameter("redirect", redirectURL.toString());
+			PortletURL redirectURL = _portal.getControlPanelPortletURL(
+				httpServletRequest, themeDisplay.getScopeGroup(),
+				CTPortletKeys.PUBLICATIONS, 0, 0, PortletRequest.RENDER_PHASE);
 
-		jsonArray.put(
-			JSONUtil.put(
-				"href", addURL.toString()
-			).put(
-				"label", _language.get(resourceBundle, "create-new-publication")
-			).put(
-				"symbolLeft", "plus"
-			));
+			addURL.setParameter("redirect", redirectURL.toString());
+
+			jsonArray.put(
+				JSONUtil.put(
+					"href", addURL.toString()
+				).put(
+					"label",
+					_language.get(resourceBundle, "create-new-publication")
+				).put(
+					"symbolLeft", "plus"
+				));
+		}
 
 		if (ctCollection != null) {
 			PortletURL reviewURL = _portal.getControlPanelPortletURL(
