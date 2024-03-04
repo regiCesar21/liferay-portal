@@ -94,6 +94,16 @@ public class BQSQLUtil {
 		return sb.toString();
 	}
 
+	private static String _escape(String value) {
+		String escapedValue = value.replace("'", "\\'");
+
+		escapedValue = escapedValue.replace("\n", "\\n");
+		escapedValue = escapedValue.replace("\r", "\\r");
+		escapedValue = escapedValue.replace("\t", "\\t");
+
+		return escapedValue;
+	}
+
 	private static List<String> _getColumnNames(List<Column> columnValues) {
 		Stream<Column> stream = columnValues.stream();
 
@@ -195,7 +205,7 @@ public class BQSQLUtil {
 			return null;
 		}
 
-		return "'" + value + "'";
+		return "'" + _escape(value) + "'";
 	}
 
 	private static final Log _log = LogFactory.getLog(BQSQLUtil.class);
