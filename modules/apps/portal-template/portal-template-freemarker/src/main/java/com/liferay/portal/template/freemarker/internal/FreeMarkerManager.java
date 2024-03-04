@@ -113,7 +113,7 @@ public class FreeMarkerManager extends BaseTemplateManager {
 
 		if (beansWrapper == null) {
 			BeansWrapperBuilder beansWrapperBuilder = new BeansWrapperBuilder(
-				Configuration.getVersion());
+				Configuration.VERSION_2_3_30);
 
 			beansWrapper = beansWrapperBuilder.build();
 
@@ -255,7 +255,7 @@ public class FreeMarkerManager extends BaseTemplateManager {
 			return;
 		}
 
-		_configuration = new Configuration(Configuration.getVersion());
+		_configuration = new Configuration(Configuration.VERSION_2_3_30);
 
 		try {
 			Field field = ReflectionUtil.getDeclaredField(
