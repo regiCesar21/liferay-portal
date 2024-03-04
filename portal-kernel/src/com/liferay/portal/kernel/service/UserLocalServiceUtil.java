@@ -2533,17 +2533,6 @@ public class UserLocalServiceUtil {
 			emailAddress, status, params, andSearch, start, end, sorts);
 	}
 
-	public static boolean sendEmailAccountCreationAttempt(
-			long companyId, String emailAddress, String fromName,
-			String fromAddress, String subject, String body,
-			ServiceContext serviceContext)
-		throws PortalException {
-
-		return getService().sendEmailUserCreationAttempt(
-			companyId, emailAddress, fromName, fromAddress, subject, body,
-			serviceContext);
-	}
-
 	/**
 	 * Sends an email address verification to the user.
 	 *
@@ -2559,6 +2548,17 @@ public class UserLocalServiceUtil {
 
 		getService().sendEmailAddressVerification(
 			user, emailAddress, serviceContext);
+	}
+
+	public static boolean sendEmailUserCreationAttempt(
+			long companyId, String emailAddress, String fromName,
+			String fromAddress, String subject, String body,
+			ServiceContext serviceContext)
+		throws PortalException {
+
+		return getService().sendEmailUserCreationAttempt(
+			companyId, emailAddress, fromName, fromAddress, subject, body,
+			serviceContext);
 	}
 
 	/**
