@@ -17,7 +17,9 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
+import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.ListUtil;
+import com.liferay.portal.kernel.util.StringUtil;
 
 import java.util.Arrays;
 import java.util.HashMap;
@@ -32,6 +34,40 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(service = UpgradeSalesforceExternalLinks.class)
 public class UpgradeSalesforceExternalLinks extends UpgradeProcess {
+
+	public void upgradeDossieraSalesforceExternalLinks() {
+		try {
+			FilterQuery filterQuery = new FilterQuery();
+
+			String[] externalLinkEntityIds = {
+				"partner", "trial", "oem", "internal"
+			};
+
+			for (String externalLinkEntityId : externalLinkEntityIds) {
+				filterQuery.addLambdaContains(
+					false, "externalLinkEntityIds", externalLinkEntityId);
+			}
+
+			List<Account> accounts = _accountWebService.search(
+				StringPool.BLANK, filterQuery, 1, 10000, StringPool.BLANK);
+
+			for (Account account : accounts) {
+				for (ExternalLink externalLink : account.getExternalLinks()) {
+					String entityId = StringUtil.toLowerCase(
+						externalLink.getEntityId());
+
+					if (ArrayUtil.contains(externalLinkEntityIds, entityId)) {
+						_externalLinkWebService.deleteExternalLink(
+							StringPool.BLANK, StringPool.BLANK,
+							externalLink.getKey());
+					}
+				}
+			}
+		}
+		catch (Exception exception) {
+			_log.error(exception);
+		}
+	}
 
 	public void upgradeRelatedSalesforceProjectExternalLinks() {
 		try {
