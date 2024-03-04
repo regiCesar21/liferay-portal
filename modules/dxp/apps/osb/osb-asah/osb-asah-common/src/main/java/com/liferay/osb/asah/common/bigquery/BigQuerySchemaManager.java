@@ -12,8 +12,7 @@ public interface BigQuerySchemaManager {
 
 	public void createFunction(String projectId, String functionsName);
 
-	public void createOrReplaceView(
-		String projectId, String timeZoneId, String viewName);
+	public void createOrReplaceView(String projectId, String viewName);
 
 	public void createSchema(String projectId);
 

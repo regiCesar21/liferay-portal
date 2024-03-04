@@ -30,7 +30,9 @@ import com.google.cloud.bigquery.ViewDefinition;
 
 import com.liferay.osb.asah.common.bigquery.BigQuerySchemaManager;
 import com.liferay.osb.asah.common.constants.PreferenceConstants;
+import com.liferay.osb.asah.common.date.dog.util.TimeZoneDogUtil;
 import com.liferay.osb.asah.common.json.JSONUtil;
+import com.liferay.osb.asah.common.util.ProjectIdThreadLocal;
 
 import java.io.InputStream;
 import java.io.Serializable;
@@ -94,9 +96,7 @@ public class BigQuerySchemaManagerImpl implements BigQuerySchemaManager {
 	}
 
 	@Override
-	public void createOrReplaceView(
-		String projectId, String timeZoneId, String viewName) {
-
+	public void createOrReplaceView(String projectId, String viewName) {
 		JSONObject jsonObject = _viewsJSONObject.getJSONObject(viewName);
 		Dataset dataset = _bigQuery.getDataset(projectId);
 		boolean materialized = false;
@@ -121,7 +121,7 @@ public class BigQuerySchemaManagerImpl implements BigQuerySchemaManager {
 		_createView(
 			dataset.getDatasetId(),
 			_readFile("/bigquery/" + jsonObject.getString("path")),
-			materialized, projectId, timeZoneId, viewName);
+			materialized, projectId, viewName);
 	}
 
 	@Override
@@ -175,7 +175,7 @@ public class BigQuerySchemaManagerImpl implements BigQuerySchemaManager {
 					_createView(
 						dataset.getDatasetId(),
 						_readFile("/bigquery/" + jsonObject.getString("path")),
-						materialized, projectId, "UTC", entry.getKey());
+						materialized, projectId, entry.getKey());
 				}
 			);
 		}
@@ -408,41 +408,50 @@ public class BigQuerySchemaManagerImpl implements BigQuerySchemaManager {
 
 	private Table _createView(
 		DatasetId datasetId, String query, boolean materialized,
-		String projectId, String timeZoneId, String viewName) {
+		String projectId, String viewName) {
 
 		TableId tableId = TableId.of(datasetId.getDataset(), viewName);
 
 		TableDefinition tableDefinition = null;
 
-		String timeZone = timeZoneId;
-		String timeZoneIdDeclaration = "";
+		try {
+			ProjectIdThreadLocal.setProjectId(projectId);
 
-		if (_environment.acceptsProfiles(Profiles.of("prod"))) {
-			timeZone = "timeZone";
+			String timeZoneId = TimeZoneDogUtil.getTimeZoneId();
+			String timeZoneIdDeclaration = "";
 
-			timeZoneIdDeclaration = _getTimeZoneIdDeclaration(
-				projectId, timeZone);
+			if (_environment.acceptsProfiles(Profiles.of("prod"))) {
+				timeZoneId = "timeZone";
+
+				timeZoneIdDeclaration = _getTimeZoneIdDeclaration(
+					projectId, timeZoneId);
+			}
+
+			String translatedQuery = StringUtils.replaceEach(
+				query,
+				new String[] {
+					"$[AC_PROJECT_ID]",
+					"$[AC_PROJECT_TIME_ZONE_ID_DECLARATION]", "$[TIME_ZONE_ID]"
+				},
+				new String[] {projectId, timeZoneIdDeclaration, timeZoneId});
+
+			if (materialized &&
+				_environment.acceptsProfiles(Profiles.of("prod"))) {
+
+				tableDefinition = MaterializedViewDefinition.newBuilder(
+					translatedQuery
+				).build();
+			}
+			else {
+				tableDefinition = ViewDefinition.newBuilder(
+					translatedQuery
+				).setUseLegacySql(
+					false
+				).build();
+			}
 		}
-
-		String translatedQuery = StringUtils.replaceEach(
-			query,
-			new String[] {
-				"$[AC_PROJECT_ID]", "$[AC_PROJECT_TIME_ZONE_ID_DECLARATION]",
-				"$[TIME_ZONE_ID]"
-			},
-			new String[] {projectId, timeZoneIdDeclaration, timeZone});
-
-		if (materialized && _environment.acceptsProfiles(Profiles.of("prod"))) {
-			tableDefinition = MaterializedViewDefinition.newBuilder(
-				translatedQuery
-			).build();
-		}
-		else {
-			tableDefinition = ViewDefinition.newBuilder(
-				translatedQuery
-			).setUseLegacySql(
-				false
-			).build();
+		finally {
+			ProjectIdThreadLocal.remove();
 		}
 
 		Table table = _bigQuery.create(TableInfo.of(tableId, tableDefinition));
