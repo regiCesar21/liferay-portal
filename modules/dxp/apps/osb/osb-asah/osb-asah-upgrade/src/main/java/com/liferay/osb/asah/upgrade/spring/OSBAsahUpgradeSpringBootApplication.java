@@ -14,6 +14,7 @@ import org.springframework.boot.autoconfigure.data.redis.RedisRepositoriesAutoCo
 import org.springframework.boot.autoconfigure.jooq.JooqAutoConfiguration;
 import org.springframework.boot.autoconfigure.security.servlet.SecurityAutoConfiguration;
 import org.springframework.boot.autoconfigure.security.servlet.UserDetailsServiceAutoConfiguration;
+import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.context.annotation.ComponentScan;
 
 /**
@@ -51,7 +52,11 @@ import org.springframework.context.annotation.ComponentScan;
 public class OSBAsahUpgradeSpringBootApplication {
 
 	public static void main(String[] args) {
-		SpringApplication.run(OSBAsahUpgradeSpringBootApplication.class, args);
+		ConfigurableApplicationContext configurableApplicationContext =
+			SpringApplication.run(
+				OSBAsahUpgradeSpringBootApplication.class, args);
+
+		SpringApplication.exit(configurableApplicationContext);
 	}
 
 }
