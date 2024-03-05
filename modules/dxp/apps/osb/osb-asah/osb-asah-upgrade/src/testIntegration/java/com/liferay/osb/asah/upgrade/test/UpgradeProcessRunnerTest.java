@@ -13,6 +13,7 @@ import com.liferay.osb.asah.test.util.spring.OSBAsahSQLTestExecutionListener;
 import com.liferay.osb.asah.test.util.spring.OSBAsahSpringExtension;
 import com.liferay.osb.asah.upgrade.UpgradeProcess;
 import com.liferay.osb.asah.upgrade.UpgradeProcessRunner;
+import com.liferay.osb.asah.upgrade.UpgradeStep;
 import com.liferay.osb.asah.upgrade.spring.OSBAsahUpgradeSpringBootApplication;
 
 import java.util.Collections;
@@ -77,6 +78,32 @@ public class UpgradeProcessRunnerTest {
 
 		Assertions.assertEquals(1, projectIds.size(), projectIds.toString());
 		Assertions.assertTrue(projectIds.contains("test1"));
+	}
+
+	@Test
+	public void testRunProjectUpgradesThrowsException() throws Exception {
+		_projectDog.addProject("test1");
+
+		_projectDog.updateVersion("test1", "2.11.0");
+
+		UpgradeStep upgradeStep = Mockito.mock(UpgradeStep.class);
+
+		Mockito.doThrow(
+			new Exception()
+		).when(
+			upgradeStep
+		).upgrade(
+			ArgumentMatchers.anyString()
+		);
+
+		Mockito.when(
+			_upgradeProcess.getUpgradeSteps(ArgumentMatchers.eq("2.11.0"))
+		).thenReturn(
+			Collections.singletonList(upgradeStep)
+		);
+
+		Assertions.assertThrows(
+			RuntimeException.class, _upgradeProcessRunner::runProjectUpgrades);
 	}
 
 	@Test
