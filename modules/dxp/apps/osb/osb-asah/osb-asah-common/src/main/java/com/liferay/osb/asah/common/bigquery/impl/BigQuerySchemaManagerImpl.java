@@ -131,20 +131,7 @@ public class BigQuerySchemaManagerImpl implements BigQuerySchemaManager {
 			Dataset dataset = _createDataset(projectId);
 
 			for (String functionName : _functionsJSONObject.keySet()) {
-				JSONObject jsonObject = _functionsJSONObject.getJSONObject(
-					functionName);
-
-				_executeQuery(
-					StringUtils.replace(
-						_readFile("/bigquery/" + jsonObject.getString("path")),
-						"$[AC_PROJECT_ID]", projectId));
-
-				if (_log.isInfoEnabled()) {
-					_log.info(
-						String.format(
-							"Function %s.%s created successfully", projectId,
-							functionName));
-				}
+				createFunction(projectId, functionName);
 			}
 
 			createTables(projectId);
