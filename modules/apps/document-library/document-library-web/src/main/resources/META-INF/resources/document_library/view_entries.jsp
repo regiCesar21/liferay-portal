@@ -164,6 +164,10 @@ if (portletTitleBasedNavigation && (folderId != DLFolderConstants.DEFAULT_PARENT
 								rowURL.setParameter("mvcRenderCommandName", "/document_library/view_file_entry");
 								rowURL.setParameter("redirect", HttpUtil.removeParameter(currentURL, liferayPortletResponse.getNamespace() + "ajax"));
 								rowURL.setParameter("fileEntryId", String.valueOf(fileEntry.getFileEntryId()));
+
+								Map<String, Object> data = new HashMap<String, Object>();
+
+								data.put("analytics-file-entry-id", fileEntry.getFileEntryId());
 								%>
 
 								<c:choose>
@@ -182,6 +186,7 @@ if (portletTitleBasedNavigation && (folderId != DLFolderConstants.DEFAULT_PARENT
 											actionJsp="/document_library/file_entry_action.jsp"
 											actionJspServletContext="<%= application %>"
 											cssClass="entry-display-style file-card"
+											data="<%= data %>"
 											html="<%= customThumbnailHTML %>"
 											resultRow="<%= row %>"
 											rowChecker="<%= entriesChecker %>"
@@ -196,6 +201,7 @@ if (portletTitleBasedNavigation && (folderId != DLFolderConstants.DEFAULT_PARENT
 											actionJsp="/document_library/file_entry_action.jsp"
 											actionJspServletContext="<%= application %>"
 											cssClass="entry-display-style file-card"
+											data="<%= data %>"
 											icon="documents-and-media"
 											resultRow="<%= row %>"
 											rowChecker="<%= entriesChecker %>"
@@ -210,6 +216,7 @@ if (portletTitleBasedNavigation && (folderId != DLFolderConstants.DEFAULT_PARENT
 											actionJsp="/document_library/file_entry_action.jsp"
 											actionJspServletContext="<%= application %>"
 											cssClass="entry-display-style file-card"
+											data="<%= data %>"
 											imageUrl="<%= thumbnailSrc %>"
 											resultRow="<%= row %>"
 											rowChecker="<%= entriesChecker %>"
