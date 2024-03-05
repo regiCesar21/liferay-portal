@@ -60,6 +60,8 @@ public class UpgradeProcessRunner {
 				_log.error(
 					"Failed upgrades for project: " + project.getId(),
 					exception);
+
+				throw new RuntimeException(exception);
 			}
 		}
 	}
