@@ -40,6 +40,7 @@ import java.io.Serializable;
 import java.nio.charset.Charset;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Comparator;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -82,6 +83,15 @@ public class BigQuerySchemaManagerImpl implements BigQuerySchemaManager {
 		JSONObject jsonObject = _functionsJSONObject.getJSONObject(
 			functionName);
 
+		List<String> profiles = Arrays.asList(
+			StringUtils.split(jsonObject.optString("profile"), ","));
+
+		if (!_environment.acceptsProfiles("prod") && !profiles.isEmpty() &&
+			profiles.contains("prod")) {
+
+			return;
+		}
+
 		_executeQuery(
 			StringUtils.replace(
 				_readFile("/bigquery/" + jsonObject.getString("path")),
@@ -97,13 +107,7 @@ public class BigQuerySchemaManagerImpl implements BigQuerySchemaManager {
 
 	@Override
 	public void createOrReplaceView(String projectId, String viewName) {
-		JSONObject jsonObject = _viewsJSONObject.getJSONObject(viewName);
 		Dataset dataset = _bigQuery.getDataset(projectId);
-		boolean materialized = false;
-
-		if (Objects.equals(jsonObject.optString("type"), "materialized")) {
-			materialized = true;
-		}
 
 		Table table = _bigQuery.getTable(TableId.of(projectId, viewName));
 
@@ -118,10 +122,7 @@ public class BigQuerySchemaManagerImpl implements BigQuerySchemaManager {
 			}
 		}
 
-		_createView(
-			dataset.getDatasetId(),
-			_readFile("/bigquery/" + jsonObject.getString("path")),
-			materialized, projectId, viewName);
+		_createView(dataset.getDatasetId(), projectId, viewName);
 	}
 
 	@Override
@@ -161,22 +162,8 @@ public class BigQuerySchemaManagerImpl implements BigQuerySchemaManager {
 			stream.sorted(
 				Map.Entry.comparingByValue(new JSONObjectPriorityComparator())
 			).forEach(
-				entry -> {
-					JSONObject jsonObject = entry.getValue();
-
-					boolean materialized = false;
-
-					if (Objects.equals(
-							jsonObject.optString("type"), "materialized")) {
-
-						materialized = true;
-					}
-
-					_createView(
-						dataset.getDatasetId(),
-						_readFile("/bigquery/" + jsonObject.getString("path")),
-						materialized, projectId, entry.getKey());
-				}
+				entry -> _createView(
+					dataset.getDatasetId(), projectId, entry.getKey())
 			);
 		}
 		catch (Exception exception) {
@@ -407,8 +394,24 @@ public class BigQuerySchemaManagerImpl implements BigQuerySchemaManager {
 	}
 
 	private Table _createView(
-		DatasetId datasetId, String query, boolean materialized,
-		String projectId, String viewName) {
+		DatasetId datasetId, String projectId, String viewName) {
+
+		JSONObject jsonObject = _viewsJSONObject.getJSONObject(viewName);
+
+		List<String> profiles = Arrays.asList(
+			StringUtils.split(jsonObject.optString("profile")));
+
+		if (!_environment.acceptsProfiles("prod") && !profiles.isEmpty() &&
+			profiles.contains("prod")) {
+
+			return null;
+		}
+
+		boolean materialized = false;
+
+		if (Objects.equals(jsonObject.optString("type"), "materialized")) {
+			materialized = true;
+		}
 
 		TableId tableId = TableId.of(datasetId.getDataset(), viewName);
 
@@ -428,7 +431,7 @@ public class BigQuerySchemaManagerImpl implements BigQuerySchemaManager {
 			}
 
 			String translatedQuery = StringUtils.replaceEach(
-				query,
+				_readFile("/bigquery/" + jsonObject.getString("path")),
 				new String[] {
 					"$[AC_PROJECT_ID]",
 					"$[AC_PROJECT_TIME_ZONE_ID_DECLARATION]", "$[TIME_ZONE_ID]"

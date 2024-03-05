@@ -23,7 +23,8 @@
 	},
 	"identityactivity": {
 		"path": "identity_activity.sql",
-		"priority": 1
+		"priority": 1,
+		"profile": "dev,test"
 	},
 	"journalhourly": {
 		"path": "journal_hourly.sql"

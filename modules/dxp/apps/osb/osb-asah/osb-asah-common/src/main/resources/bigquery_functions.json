@@ -3,7 +3,8 @@
 		"path": "function_acquisition_channel.sql"
 	},
 	"identityActivity": {
-		"path": "function_identity_activity.sql"
+		"path": "function_identity_activity.sql",
+		"profile": "prod"
 	},
 	"searchTerm": {
 		"path": "function_search_term.sql"
