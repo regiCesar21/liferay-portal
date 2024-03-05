@@ -240,8 +240,7 @@ public class PageAssetMetricRepositoryTest
 			PageRequest.of(
 				0, 10,
 				Sort.by(Sort.Direction.DESC, PageMetricType.VIEWS.getName())),
-			SetUtil.of(PageMetricType.VIEWS.getName()),
-			TimeRange.LAST_24_HOURS);
+			SetUtil.of(PageMetricType.VIEWS.getName()), TimeRange.LAST_7_DAYS);
 
 		Stream<PageMetric> stream = pageMetrics.stream();
 
