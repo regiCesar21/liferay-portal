@@ -18,6 +18,7 @@ import com.google.cloud.bigquery.QueryJobConfiguration;
 import com.google.cloud.bigquery.Schema;
 import com.google.cloud.bigquery.TableResult;
 
+import com.liferay.osb.asah.common.date.dog.util.TimeZoneDogUtil;
 import com.liferay.osb.asah.common.util.ProjectIdThreadLocal;
 
 import java.math.BigDecimal;
@@ -50,6 +51,7 @@ import org.jooq.Record1;
 import org.jooq.SelectFinalStep;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Component;
 
 /**
@@ -234,6 +236,14 @@ public class BigQueryQueryExecutor implements QueryExecutor {
 
 	private String _getBigQueryTableName(String tableName) {
 		BigQueryOptions bigQueryOptions = _bigQuery.getOptions();
+
+		if (_environment.acceptsProfiles("prod") &&
+			tableName.equals("BQIdentityActivity")) {
+
+			return "`" + bigQueryOptions.getProjectId() + "." +
+				ProjectIdThreadLocal.getProjectId() + ".identity_activity`('" +
+					TimeZoneDogUtil.getTimeZoneId() + "')";
+		}
 
 		return "`" + bigQueryOptions.getProjectId() + "." +
 			ProjectIdThreadLocal.getProjectId() + "." +
@@ -471,5 +481,8 @@ public class BigQueryQueryExecutor implements QueryExecutor {
 
 	private final BigQuery _bigQuery;
 	private final BigQueryOptions _bigQueryOptions;
+
+	@Autowired
+	private Environment _environment;
 
 }
