@@ -164,4 +164,5 @@ definition {
 			fail("Expected MYSQL entries=${originalCount}, after restarting portal MYSQL entries=${actualCount}");
 		}
 	}
+
 }
