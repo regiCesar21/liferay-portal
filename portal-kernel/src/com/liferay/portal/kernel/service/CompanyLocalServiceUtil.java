@@ -52,6 +52,22 @@ public class CompanyLocalServiceUtil {
 	}
 
 	/**
+	 * @deprecated As of Mueller (7.2.x), replaced by {@link
+	 #addCompany(Long, String, String, String, boolean,
+	 int , boolean, String, String, String, String, String,
+	 String)}
+	 */
+	@Deprecated
+	public static Company addCompany(
+			Long companyId, String webId, String virtualHostname, String mx,
+			boolean system, int maxUsers, boolean active)
+		throws PortalException {
+
+		return getService().addCompany(
+			companyId, webId, virtualHostname, mx, system, maxUsers, active);
+	}
+
+	/**
 	 * Adds a company with the primary key.
 	 * Adds a company with the primary key.
 	 *

@@ -55,6 +55,33 @@ import java.rmi.RemoteException;
 public class CompanyServiceSoap {
 
 	/**
+	 * @deprecated As of Mueller (7.2.x), replaced by {@link
+	 #addCompany(String, String, String, boolean,
+	 int , boolean, String, String, String, String, String,
+	 String)}
+	 */
+	@Deprecated
+	public static com.liferay.portal.kernel.model.CompanySoap addCompany(
+			String webId, String virtualHostname, String mx, boolean system,
+			int maxUsers, boolean active)
+		throws RemoteException {
+
+		try {
+			com.liferay.portal.kernel.model.Company returnValue =
+				CompanyServiceUtil.addCompany(
+					webId, virtualHostname, mx, system, maxUsers, active);
+
+			return com.liferay.portal.kernel.model.CompanySoap.toSoapModel(
+				returnValue);
+		}
+		catch (Exception exception) {
+			_log.error(exception, exception);
+
+			throw new RemoteException(exception.getMessage());
+		}
+	}
+
+	/**
 	 * Adds a company.
 	 *
 	 * @param webId the company's web domain

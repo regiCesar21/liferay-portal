@@ -20,6 +20,23 @@ public class CompanyServiceWrapper
 	}
 
 	/**
+	 * @deprecated As of Mueller (7.2.x), replaced by {@link
+	 #addCompany(String, String, String, boolean,
+	 int , boolean, String, String, String, String, String,
+	 String)}
+	 */
+	@Deprecated
+	@Override
+	public com.liferay.portal.kernel.model.Company addCompany(
+			java.lang.String webId, java.lang.String virtualHostname,
+			java.lang.String mx, boolean system, int maxUsers, boolean active)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _companyService.addCompany(
+			webId, virtualHostname, mx, system, maxUsers, active);
+	}
+
+	/**
 	 * Adds a company.
 	 *
 	 * @param webId the company's web domain

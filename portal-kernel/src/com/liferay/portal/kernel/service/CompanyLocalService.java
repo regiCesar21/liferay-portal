@@ -71,6 +71,18 @@ public interface CompanyLocalService
 	public Company addCompany(Company company);
 
 	/**
+	 * @deprecated As of Mueller (7.2.x), replaced by {@link
+	 #addCompany(Long, String, String, String, boolean,
+	 int , boolean, String, String, String, String, String,
+	 String)}
+	 */
+	@Deprecated
+	public Company addCompany(
+			Long companyId, String webId, String virtualHostname, String mx,
+			boolean system, int maxUsers, boolean active)
+		throws PortalException;
+
+	/**
 	 * Adds a company with the primary key.
 	 * Adds a company with the primary key.
 	 *

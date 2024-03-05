@@ -41,6 +41,25 @@ import javax.portlet.PortletPreferences;
 public class CompanyServiceImpl extends CompanyServiceBaseImpl {
 
 	/**
+	 * @deprecated As of Mueller (7.2.x), replaced by {@link
+	 *             #addCompany(String, String, String, boolean,
+	 * 			int , boolean, String, String, String, String, String,
+	 * 			String)}
+	 */
+	@Deprecated
+	@JSONWebService(mode = JSONWebServiceMode.IGNORE)
+	@Override
+	public Company addCompany(
+			String webId, String virtualHostname, String mx, boolean system,
+			int maxUsers, boolean active)
+		throws PortalException {
+
+		return addCompany(
+			webId, virtualHostname, mx, system, maxUsers, active, null, null,
+			null, null, null, null);
+	}
+
+	/**
 	 * Adds a company.
 	 *
 	 * @param  webId the company's web domain
