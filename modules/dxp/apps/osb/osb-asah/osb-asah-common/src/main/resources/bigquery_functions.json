@@ -2,6 +2,9 @@
 	"acquisitionChannel": {
 		"path": "function_acquisition_channel.sql"
 	},
+	"identityActivity": {
+		"path": "function_identity_activity.sql"
+	},
 	"searchTerm": {
 		"path": "function_search_term.sql"
 	}
