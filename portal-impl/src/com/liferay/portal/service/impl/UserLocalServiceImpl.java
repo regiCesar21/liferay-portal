@@ -229,7 +229,7 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 		long creatorUserId = 0;
 		boolean autoPassword = false;
 
-		boolean passwordReset = _isPasswordReset(companyId);
+		boolean passwordReset = false;
 
 		if (Validator.isNull(password)) {
 			autoPassword = true;
@@ -7266,26 +7266,6 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 					ticket.getExtraInfo(), new Date());
 			}
 		}
-	}
-
-	private boolean _isPasswordReset(long companyId) {
-		try {
-			PasswordPolicy passwordPolicy =
-				passwordPolicyLocalService.getDefaultPasswordPolicy(companyId);
-
-			if ((passwordPolicy != null) && passwordPolicy.isChangeable() &&
-				passwordPolicy.isChangeRequired()) {
-
-				return true;
-			}
-		}
-		catch (PortalException portalException) {
-			if (_log.isWarnEnabled()) {
-				_log.warn(portalException);
-			}
-		}
-
-		return false;
 	}
 
 	private void _sendNotificationEmail(
