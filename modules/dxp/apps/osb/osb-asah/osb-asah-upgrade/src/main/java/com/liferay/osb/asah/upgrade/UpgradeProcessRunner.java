@@ -15,6 +15,7 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.stereotype.Component;
 
@@ -61,7 +62,9 @@ public class UpgradeProcessRunner {
 					"Failed upgrades for project: " + project.getId(),
 					exception);
 
-				throw new RuntimeException(exception);
+				if (!_legacyMode) {
+					throw new RuntimeException(exception);
+				}
 			}
 		}
 	}
@@ -112,6 +115,9 @@ public class UpgradeProcessRunner {
 
 	private static final Log _log = LogFactory.getLog(
 		UpgradeProcessRunner.class);
+
+	@Value("${osb.asah.upgrade.legacy.mode:true}")
+	private boolean _legacyMode;
 
 	@Autowired
 	private ProjectDog _projectDog;

@@ -16,6 +16,7 @@ import org.springframework.boot.autoconfigure.security.servlet.SecurityAutoConfi
 import org.springframework.boot.autoconfigure.security.servlet.UserDetailsServiceAutoConfiguration;
 import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.context.annotation.ComponentScan;
+import org.springframework.core.env.ConfigurableEnvironment;
 
 /**
  * @author Shinn Lok
@@ -56,7 +57,15 @@ public class OSBAsahUpgradeSpringBootApplication {
 			SpringApplication.run(
 				OSBAsahUpgradeSpringBootApplication.class, args);
 
-		SpringApplication.exit(configurableApplicationContext);
+		ConfigurableEnvironment environment =
+			configurableApplicationContext.getEnvironment();
+
+		Boolean legacyMode = environment.getProperty(
+			"osb.asah.upgrade.legacy.mode", Boolean.class, true);
+
+		if (!legacyMode) {
+			SpringApplication.exit(configurableApplicationContext);
+		}
 	}
 
 }
