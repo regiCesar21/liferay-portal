@@ -40,7 +40,10 @@ import org.springframework.test.context.support.DependencyInjectionTestExecution
  * @author André Miranda
  */
 @ExtendWith(OSBAsahSpringExtension.class)
-@SpringBootTest(classes = OSBAsahUpgradeSpringBootApplication.class)
+@SpringBootTest(
+	classes = OSBAsahUpgradeSpringBootApplication.class,
+	properties = "osb.asah.upgrade.legacy.mode=false"
+)
 @TestExecutionListeners(
 	mergeMode = TestExecutionListeners.MergeMode.REPLACE_DEFAULTS,
 	value = {
