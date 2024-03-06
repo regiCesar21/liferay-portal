@@ -18,7 +18,6 @@ import com.liferay.osb.asah.common.util.ProjectIdThreadLocal;
 
 import java.io.File;
 import java.io.FileOutputStream;
-import java.io.IOException;
 
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -115,27 +114,31 @@ public class BigQueryDataExporter implements DataExporter {
 			new FileOutputStream(dataExportZipFile));
 
 		for (Blob blob : blobs.iterateAll()) {
-			String blobName = blob.getName();
-
-			if (!blobName.endsWith(".csv")) {
-				continue;
-			}
-
-			byte[] bytes = blob.getContent();
-
-			if (IOUtil.countLines(bytes) <= 1) {
-				continue;
-			}
-
-			File file = new File(blobName);
-
-			zipOutputStream.putNextEntry(new ZipEntry(file.getName()));
-
 			try {
+				String blobName = blob.getName();
+
+				if (!blobName.endsWith(".csv")) {
+					continue;
+				}
+
+				byte[] bytes = blob.getContent();
+
+				if (IOUtil.countLines(bytes) <= 1) {
+					continue;
+				}
+
+				File file = new File(blobName);
+
+				zipOutputStream.putNextEntry(new ZipEntry(file.getName()));
+
 				zipOutputStream.write(bytes, 0, bytes.length);
 			}
-			catch (IOException ioException) {
-				_log.error(ioException.getMessage(), ioException);
+			catch (Exception exception) {
+				_log.error(
+					String.format(
+						"Unable to write blob %s to data control file %s",
+						blob.getName(), path),
+					exception);
 			}
 		}
 
@@ -165,19 +168,23 @@ public class BigQueryDataExporter implements DataExporter {
 		zipOutputStream.putNextEntry(new ZipEntry(file.getName()));
 
 		for (Blob blob : blobs.iterateAll()) {
-			String blobName = blob.getName();
-
-			if (!blobName.endsWith(".json")) {
-				continue;
-			}
-
 			try {
+				String blobName = blob.getName();
+
+				if (!blobName.endsWith(".json")) {
+					continue;
+				}
+
 				byte[] bytes = blob.getContent();
 
 				zipOutputStream.write(bytes, 0, bytes.length);
 			}
-			catch (IOException ioException) {
-				_log.error(ioException.getMessage(), ioException);
+			catch (Exception exception) {
+				_log.error(
+					String.format(
+						"Unable to write blob %s to data export file %s",
+						blob.getName(), path),
+					exception);
 			}
 		}
 
