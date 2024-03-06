@@ -4,7 +4,7 @@
 	},
 	"identityActivity": {
 		"path": "function_identity_activity.sql",
-		"profile": "prod"
+		"production": true
 	},
 	"searchTerm": {
 		"path": "function_search_term.sql"

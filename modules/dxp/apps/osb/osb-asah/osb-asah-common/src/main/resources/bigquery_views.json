@@ -24,7 +24,7 @@
 	"identityactivity": {
 		"path": "identity_activity.sql",
 		"priority": 1,
-		"profile": "dev,test"
+		"production": false
 	},
 	"journalhourly": {
 		"path": "journal_hourly.sql"

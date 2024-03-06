@@ -40,7 +40,6 @@ import java.io.Serializable;
 import java.nio.charset.Charset;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Comparator;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -83,12 +82,7 @@ public class BigQuerySchemaManagerImpl implements BigQuerySchemaManager {
 		JSONObject jsonObject = _functionsJSONObject.getJSONObject(
 			functionName);
 
-		List<String> profiles = Arrays.asList(
-			StringUtils.split(jsonObject.optString("profile"), ","));
-
-		if (!_environment.acceptsProfiles("prod") && !profiles.isEmpty() &&
-			profiles.contains("prod")) {
-
+		if (!_validateEnvironment(jsonObject)) {
 			return;
 		}
 
@@ -385,12 +379,7 @@ public class BigQuerySchemaManagerImpl implements BigQuerySchemaManager {
 
 		JSONObject jsonObject = _viewsJSONObject.getJSONObject(viewName);
 
-		List<String> profiles = Arrays.asList(
-			StringUtils.split(jsonObject.optString("profile")));
-
-		if (!_environment.acceptsProfiles("prod") && !profiles.isEmpty() &&
-			profiles.contains("prod")) {
-
+		if (!_validateEnvironment(jsonObject)) {
 			return null;
 		}
 
@@ -534,6 +523,17 @@ public class BigQuerySchemaManagerImpl implements BigQuerySchemaManager {
 					tableName),
 				bigQueryException);
 		}
+	}
+
+	private boolean _validateEnvironment(JSONObject jsonObject) {
+		if (jsonObject.has("production") &&
+			(_environment.acceptsProfiles("prod") != jsonObject.getBoolean(
+				"production"))) {
+
+			return false;
+		}
+
+		return true;
 	}
 
 	private static final Log _log = LogFactory.getLog(
