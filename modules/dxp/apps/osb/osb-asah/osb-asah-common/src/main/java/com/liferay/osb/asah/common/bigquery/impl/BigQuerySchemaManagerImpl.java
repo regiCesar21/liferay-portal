@@ -87,9 +87,14 @@ public class BigQuerySchemaManagerImpl implements BigQuerySchemaManager {
 		}
 
 		_executeQuery(
-			StringUtils.replace(
+			StringUtils.replaceEach(
 				_readFile("/bigquery/" + jsonObject.getString("path")),
-				"$[AC_PROJECT_ID]", projectId));
+				new String[] {
+					"$[AC_PROJECT_ID]", "$[IDENTITY_ACTIVITY_STATEMENT]"
+				},
+				new String[] {
+					projectId, _getIdentityActivityStatement(projectId)
+				}));
 
 		if (_log.isInfoEnabled()) {
 			_log.info(
@@ -465,6 +470,26 @@ public class BigQuerySchemaManagerImpl implements BigQuerySchemaManager {
 		}
 
 		return tableNames;
+	}
+
+	private String _getIdentityActivityStatement(String projectId) {
+		try {
+			ProjectIdThreadLocal.setProjectId(projectId);
+
+			String timeZoneId = "timeZoneId";
+
+			if (!_environment.acceptsProfiles("prod")) {
+				timeZoneId = TimeZoneDogUtil.getTimeZoneId();
+			}
+
+			return StringUtils.replaceEach(
+				_readFile("/bigquery/identity_activity.sql"),
+				new String[] {"$[AC_PROJECT_ID]", "$[TIME_ZONE_ID]"},
+				new String[] {projectId, timeZoneId});
+		}
+		finally {
+			ProjectIdThreadLocal.remove();
+		}
 	}
 
 	@PostConstruct
