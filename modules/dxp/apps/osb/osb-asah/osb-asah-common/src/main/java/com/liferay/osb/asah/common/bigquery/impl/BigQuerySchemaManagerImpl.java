@@ -407,23 +407,10 @@ public class BigQuerySchemaManagerImpl implements BigQuerySchemaManager {
 		try {
 			ProjectIdThreadLocal.setProjectId(projectId);
 
-			String timeZoneId = TimeZoneDogUtil.getTimeZoneId();
-			String timeZoneIdDeclaration = "";
-
-			if (_environment.acceptsProfiles(Profiles.of("prod"))) {
-				timeZoneId = "timeZone";
-
-				timeZoneIdDeclaration = _getTimeZoneIdDeclaration(
-					projectId, timeZoneId);
-			}
-
 			String translatedQuery = StringUtils.replaceEach(
 				_readFile("/bigquery/" + jsonObject.getString("path")),
-				new String[] {
-					"$[AC_PROJECT_ID]",
-					"$[AC_PROJECT_TIME_ZONE_ID_DECLARATION]", "$[TIME_ZONE_ID]"
-				},
-				new String[] {projectId, timeZoneIdDeclaration, timeZoneId});
+				new String[] {"$[AC_PROJECT_ID]", "$[TIME_ZONE_ID]"},
+				new String[] {projectId, TimeZoneDogUtil.getTimeZoneId()});
 
 			if (materialized &&
 				_environment.acceptsProfiles(Profiles.of("prod"))) {
@@ -491,21 +478,6 @@ public class BigQuerySchemaManagerImpl implements BigQuerySchemaManager {
 		return tableNames;
 	}
 
-	private String _getTimeZoneIdDeclaration(
-		String projectId, String variableName) {
-
-		return StringUtils.replaceEach(
-			_TIME_ZONE_ID_QUERY_TEMPLATE,
-			new String[] {
-				"$[AC_PROJECT_ID]", "${googleProjectId}", "${region}",
-				"${variableName}"
-			},
-			new String[] {
-				projectId, _bigQueryOptions.getProjectId(),
-				_bigQueryOptions.getLocation(), variableName
-			});
-	}
-
 	@PostConstruct
 	private void _init() {
 		_functionsJSONObject = new JSONObject(
@@ -563,18 +535,6 @@ public class BigQuerySchemaManagerImpl implements BigQuerySchemaManager {
 				bigQueryException);
 		}
 	}
-
-	private static final String _TIME_ZONE_ID_QUERY_TEMPLATE =
-		"DECLARE ${variableName} STRING;\n SET ${variableName} = (SELECT " +
-			"(CASE WHEN EXISTS (SELECT * FROM EXTERNAL_QUERY(\"" +
-				"${googleProjectId}.${region}.postgresql\", \"SELECT value " +
-					"FROM $[AC_PROJECT_ID].preference WHERE id = " +
-						"'time-zone-id';\")) THEN (SELECT * FROM " +
-							"EXTERNAL_QUERY(\"${googleProjectId}.${region}." +
-								"postgresql\", \"SELECT value FROM " +
-									"$[AC_PROJECT_ID].preference WHERE id = " +
-										"'time-zone-id';\")) ELSE 'UTC' END) " +
-											"AS value);";
 
 	private static final Log _log = LogFactory.getLog(
 		BigQuerySchemaManagerImpl.class);

@@ -1,5 +1,3 @@
-$[AC_PROJECT_TIME_ZONE_ID_DECLARATION]
-
 WITH IdentityActivity AS (
 	SELECT
 		*
