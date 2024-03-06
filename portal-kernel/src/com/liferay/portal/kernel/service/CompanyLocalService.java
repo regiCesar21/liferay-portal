@@ -69,10 +69,9 @@ public interface CompanyLocalService
 	public Company addCompany(Company company);
 
 	/**
-	 * @deprecated As of Mueller (7.2.x), replaced by {@link
-	 #addCompany(String, String, String, boolean,
-	 int , boolean, String, String, String, String, String,
-	 String)}
+	 * @deprecated As of Mueller (7.2.x), replaced by {@link #addCompany(String,
+	 String, String, boolean, int , boolean, String, String,
+	 String, String, String, String)}
 	 */
 	@Deprecated
 	public Company addCompany(
@@ -119,10 +118,9 @@ public interface CompanyLocalService
 	public Company checkCompany(String webId) throws PortalException;
 
 	/**
-	 * @deprecated As of Mueller (7.2.x), replaced by {@link
-	 #addCompany(String, String, String, boolean,
-	 int , boolean, String, String, String, String, String,
-	 String)}
+	 * @deprecated As of Mueller (7.2.x), replaced by {@link #addCompany(String,
+	 String, String, boolean, int , boolean, String, String,
+	 String, String, String, String)}
 	 */
 	@Deprecated
 	public Company checkCompany(String webId, String mx) throws PortalException;

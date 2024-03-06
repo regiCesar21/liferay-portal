@@ -51,10 +51,9 @@ public interface CompanyService extends BaseService {
 	 */
 
 	/**
-	 * @deprecated As of Mueller (7.2.x), replaced by {@link
-	 #addCompany(String, String, String, boolean,
-	 int , boolean, String, String, String, String, String,
-	 String)}
+	 * @deprecated As of Mueller (7.2.x), replaced by {@link #addCompany(String,
+	 String, String, boolean, int , boolean, String, String,
+	 String, String, String, String)}
 	 */
 	@Deprecated
 	@JSONWebService(mode = JSONWebServiceMode.IGNORE)

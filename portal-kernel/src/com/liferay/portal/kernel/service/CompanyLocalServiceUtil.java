@@ -51,10 +51,9 @@ public class CompanyLocalServiceUtil {
 	}
 
 	/**
-	 * @deprecated As of Mueller (7.2.x), replaced by {@link
-	 #addCompany(String, String, String, boolean,
-	 int , boolean, String, String, String, String, String,
-	 String)}
+	 * @deprecated As of Mueller (7.2.x), replaced by {@link #addCompany(String,
+	 String, String, boolean, int , boolean, String, String,
+	 String, String, String, String)}
 	 */
 	@Deprecated
 	public static Company addCompany(
@@ -114,10 +113,9 @@ public class CompanyLocalServiceUtil {
 	}
 
 	/**
-	 * @deprecated As of Mueller (7.2.x), replaced by {@link
-	 #addCompany(String, String, String, boolean,
-	 int , boolean, String, String, String, String, String,
-	 String)}
+	 * @deprecated As of Mueller (7.2.x), replaced by {@link #addCompany(String,
+	 String, String, boolean, int , boolean, String, String,
+	 String, String, String, String)}
 	 */
 	@Deprecated
 	public static Company checkCompany(String webId, String mx)
