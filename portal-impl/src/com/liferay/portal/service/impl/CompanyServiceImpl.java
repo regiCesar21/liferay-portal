@@ -41,10 +41,9 @@ import javax.portlet.PortletPreferences;
 public class CompanyServiceImpl extends CompanyServiceBaseImpl {
 
 	/**
-	 * @deprecated As of Mueller (7.2.x), replaced by {@link
-	 *             #addCompany(String, String, String, boolean,
-	 * 			int , boolean, String, String, String, String, String,
-	 * 			String)}
+	 * @deprecated As of Mueller (7.2.x), replaced by {@link #addCompany(String,
+	 *             String, String, boolean, int , boolean, String, String,
+	 *             String, String, String, String)}
 	 */
 	@Deprecated
 	@JSONWebService(mode = JSONWebServiceMode.IGNORE)
@@ -69,12 +68,18 @@ public class CompanyServiceImpl extends CompanyServiceBaseImpl {
 	 * @param  maxUsers the max number of company users (optionally
 	 *         <code>0</code>)
 	 * @param  active whether the company is active
-	 * @param  defaultAdminPassword Password set to the admin user of the company
-	 * @param  defaultAdminScreenName Screen name set to the admin user of the company
-	 * @param  defaultAdminEmailAddress Email address set to the admin user of the company
-	 * @param  defaultAdminFirstName First name set to the admin user of the company
-	 * @param  defaultAdminMiddleName Middle name set to the admin user of the company
-	 * @param  defaultAdminLastName Last name set to the admin user of the company
+	 * @param  defaultAdminPassword Password set to the admin user of the
+	 *         company
+	 * @param  defaultAdminScreenName Screen name set to the admin user of the
+	 *         company
+	 * @param  defaultAdminEmailAddress Email address set to the admin user of
+	 *         the company
+	 * @param  defaultAdminFirstName First name set to the admin user of the
+	 *         company
+	 * @param  defaultAdminMiddleName Middle name set to the admin user of the
+	 *         company
+	 * @param  defaultAdminLastName Last name set to the admin user of the
+	 *         company
 	 * @return the company
 	 */
 	@JSONWebService(mode = JSONWebServiceMode.IGNORE)
