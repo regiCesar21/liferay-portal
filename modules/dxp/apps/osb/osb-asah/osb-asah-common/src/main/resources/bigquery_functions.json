@@ -4,7 +4,8 @@
 	},
 	"identityActivity": {
 		"path": "function_identity_activity.sql",
-		"production": true
+		"production": true,
+		"type": "table"
 	},
 	"searchTerm": {
 		"path": "function_search_term.sql"

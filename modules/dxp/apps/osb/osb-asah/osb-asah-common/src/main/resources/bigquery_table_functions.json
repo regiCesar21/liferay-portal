@@ -1,0 +1,6 @@
+{
+	"identityActivity": {
+		"path": "function_identity_activity.sql",
+		"production": true
+	}
+}
