@@ -140,7 +140,6 @@ page import="com.liferay.portal.kernel.upload.UploadRequestSizeException" %><%@
 page import="com.liferay.portal.kernel.upload.configuration.UploadServletRequestConfigurationProviderUtil" %><%@
 page import="com.liferay.portal.kernel.util.ArrayUtil" %><%@
 page import="com.liferay.portal.kernel.util.Constants" %><%@
-page import="com.liferay.portal.kernel.util.FastDateFormatConstants" %><%@
 page import="com.liferay.portal.kernel.util.FastDateFormatFactoryUtil" %><%@
 page import="com.liferay.portal.kernel.util.GetterUtil" %><%@
 page import="com.liferay.portal.kernel.util.HashMapBuilder" %><%@
@@ -193,6 +192,6 @@ KBGroupServiceConfiguration kbGroupServiceConfiguration = ConfigurationProviderU
 
 KBSectionPortletInstanceConfiguration kbSectionPortletInstanceConfiguration = ConfigurationProviderUtil.getPortletInstanceConfiguration(KBSectionPortletInstanceConfiguration.class, themeDisplay);
 
-Format dateFormat = FastDateFormatFactoryUtil.getDate(FastDateFormatConstants.LONG, locale, timeZone);
-Format dateTimeFormat = FastDateFormatFactoryUtil.getDateTime(FastDateFormatConstants.LONG, FastDateFormatConstants.SHORT, locale, timeZone);
+Format dateFormat = FastDateFormatFactoryUtil.getSimpleDateFormat("MMMM d, yyyy h:mm a", locale, timeZone);
+Format dateTimeFormat = FastDateFormatFactoryUtil.getSimpleDateFormat("MMMM d, yyyy h:mm a", locale, timeZone);
 %>

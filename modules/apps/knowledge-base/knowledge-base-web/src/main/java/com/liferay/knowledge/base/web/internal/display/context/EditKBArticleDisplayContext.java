@@ -38,7 +38,6 @@ import com.liferay.portal.kernel.service.WorkflowDefinitionLinkLocalServiceUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.Constants;
-import com.liferay.portal.kernel.util.FastDateFormatConstants;
 import com.liferay.portal.kernel.util.FastDateFormatFactoryUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
@@ -381,9 +380,9 @@ public class EditKBArticleDisplayContext {
 			return StringPool.BLANK;
 		}
 
-		Format format = FastDateFormatFactoryUtil.getDateTime(
-			FastDateFormatConstants.LONG, FastDateFormatConstants.SHORT,
-			_themeDisplay.getLocale(), _themeDisplay.getTimeZone());
+		Format format = FastDateFormatFactoryUtil.getSimpleDateFormat(
+			"MMMM d, yyyy h:mm a", _themeDisplay.getLocale(),
+			_themeDisplay.getTimeZone());
 
 		return format.format(kbArticle.getDisplayDate());
 	}
