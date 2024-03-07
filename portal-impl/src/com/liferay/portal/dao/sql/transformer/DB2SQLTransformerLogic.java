@@ -48,7 +48,7 @@ public class DB2SQLTransformerLogic extends BaseSQLTransformerLogic {
 
 	@Override
 	protected String replaceCastText(Matcher matcher) {
-		return matcher.replaceAll("CAST($1 AS VARCHAR(32672))");
+		return matcher.replaceAll("CAST($1 AS VARCHAR(2000))");
 	}
 
 	@Override
@@ -71,7 +71,7 @@ public class DB2SQLTransformerLogic extends BaseSQLTransformerLogic {
 			Matcher matcher = _likePattern.matcher(sql);
 
 			return matcher.replaceAll(
-				"LIKE COALESCE(CAST(? AS VARCHAR(32672)),'')");
+				"LIKE COALESCE(CAST(? AS VARCHAR(2000)),'')");
 		};
 	}
 
