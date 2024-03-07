@@ -40,7 +40,7 @@ public class UpgradeSalesforceExternalLinks extends UpgradeProcess {
 			FilterQuery filterQuery = new FilterQuery();
 
 			String[] externalLinkEntityIds = {
-				"partner", "trial", "oem", "internal"
+				"internal", "oem", "partner", "trial"
 			};
 
 			for (String externalLinkEntityId : externalLinkEntityIds) {
