@@ -10,7 +10,7 @@ package com.liferay.osb.asah.common.bigquery;
  */
 public interface BigQuerySchemaManager {
 
-	public void createFunction(String projectId, String functionsName);
+	public void createFunction(String functionName, String projectId);
 
 	public void createOrReplaceView(String projectId, String viewName);
 

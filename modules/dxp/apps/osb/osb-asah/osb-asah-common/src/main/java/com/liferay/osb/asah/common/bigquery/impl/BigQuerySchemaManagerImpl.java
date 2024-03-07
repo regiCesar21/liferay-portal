@@ -78,7 +78,7 @@ public class BigQuerySchemaManagerImpl implements BigQuerySchemaManager {
 		_bigQueryOptions = bigQuery.getOptions();
 	}
 
-	public void createFunction(String projectId, String functionName) {
+	public void createFunction(String functionName, String projectId) {
 		JSONObject jsonObject = _functionsJSONObject.getJSONObject(
 			functionName);
 
@@ -130,7 +130,14 @@ public class BigQuerySchemaManagerImpl implements BigQuerySchemaManager {
 			Dataset dataset = _createDataset(projectId);
 
 			for (String functionName : _functionsJSONObject.keySet()) {
-				createFunction(projectId, functionName);
+				JSONObject jsonObject = _functionsJSONObject.getJSONObject(
+					functionName);
+
+				if (Objects.equals(jsonObject.optString("type"), "table")) {
+					continue;
+				}
+
+				createFunction(functionName, projectId);
 			}
 
 			createTables(projectId);
@@ -151,6 +158,21 @@ public class BigQuerySchemaManagerImpl implements BigQuerySchemaManager {
 				entry -> _createView(
 					dataset.getDatasetId(), projectId, entry.getKey())
 			);
+
+			if (_environment.acceptsProfiles("prod")) {
+				for (String functionName : _functionsJSONObject.keySet()) {
+					JSONObject jsonObject = _functionsJSONObject.getJSONObject(
+						functionName);
+
+					if (!Objects.equals(
+							jsonObject.optString("type"), "table")) {
+
+						continue;
+					}
+
+					createFunction(functionName, projectId);
+				}
+			}
 		}
 		catch (Exception exception) {
 			_log.error(
