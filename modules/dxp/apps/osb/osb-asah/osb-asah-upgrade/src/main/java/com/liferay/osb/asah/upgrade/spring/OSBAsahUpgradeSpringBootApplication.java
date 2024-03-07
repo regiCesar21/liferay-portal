@@ -57,10 +57,10 @@ public class OSBAsahUpgradeSpringBootApplication {
 			SpringApplication.run(
 				OSBAsahUpgradeSpringBootApplication.class, args);
 
-		ConfigurableEnvironment environment =
+		ConfigurableEnvironment configurableEnvironment =
 			configurableApplicationContext.getEnvironment();
 
-		Boolean legacyMode = environment.getProperty(
+		Boolean legacyMode = configurableEnvironment.getProperty(
 			"osb.asah.upgrade.legacy.mode", Boolean.class, true);
 
 		if (!legacyMode) {
