@@ -301,9 +301,7 @@ public class GCSStore implements Store {
 		long companyId, long repositoryId, String fileName,
 		String versionLabel) {
 
-		return StringBundler.concat(
-			companyId, StringPool.SLASH, repositoryId, StringPool.SLASH,
-			fileName, StringPool.SLASH, versionLabel);
+		return _join(companyId, repositoryId, fileName, versionLabel);
 	}
 
 	private String _getHeadVersionLabel(
@@ -427,6 +425,44 @@ public class GCSStore implements Store {
 		).build();
 
 		_gcsStore = storageOptions.getService();
+	}
+
+	private <T> String _join(T... values) {
+		if (values == null) {
+			return null;
+		}
+
+		if (values.length == 0) {
+			return StringPool.BLANK;
+		}
+
+		if (values.length == 1) {
+			return String.valueOf(values[0]);
+		}
+
+		StringBundler sb = new StringBundler((2 * values.length) - 1);
+
+		for (int i = 0; i < values.length; i++) {
+			String value = StringUtil.trim(String.valueOf(values[i]));
+
+			if ((i != 0) && StringUtil.startsWith(value, StringPool.SLASH)) {
+				value = value.substring(1);
+			}
+
+			if ((i != (values.length - 1)) &&
+				StringUtil.endsWith(value, StringPool.SLASH)) {
+
+				value = value.substring(0, value.length() - 1);
+			}
+
+			if (i != 0) {
+				sb.append(StringPool.SLASH);
+			}
+
+			sb.append(value);
+		}
+
+		return sb.toString();
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(GCSStore.class);
