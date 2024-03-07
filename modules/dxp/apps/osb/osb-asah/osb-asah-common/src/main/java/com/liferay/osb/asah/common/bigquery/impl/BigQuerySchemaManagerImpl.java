@@ -404,7 +404,9 @@ public class BigQuerySchemaManagerImpl implements BigQuerySchemaManager {
 			String translatedQuery = StringUtils.replaceEach(
 				_readFile("/bigquery/" + jsonObject.getString("path")),
 				new String[] {"$[AC_PROJECT_ID]", "$[TIME_ZONE_ID]"},
-				new String[] {projectId, TimeZoneDogUtil.getTimeZoneId()});
+				new String[] {
+					projectId, "'" + TimeZoneDogUtil.getTimeZoneId() + "'"
+				});
 
 			if (materialized &&
 				_environment.acceptsProfiles(Profiles.of("prod"))) {
@@ -473,23 +475,10 @@ public class BigQuerySchemaManagerImpl implements BigQuerySchemaManager {
 	}
 
 	private String _getIdentityActivityStatement(String projectId) {
-		try {
-			ProjectIdThreadLocal.setProjectId(projectId);
-
-			String timeZoneId = "timeZoneId";
-
-			if (!_environment.acceptsProfiles("prod")) {
-				timeZoneId = TimeZoneDogUtil.getTimeZoneId();
-			}
-
-			return StringUtils.replaceEach(
-				_readFile("/bigquery/identity_activity.sql"),
-				new String[] {"$[AC_PROJECT_ID]", "$[TIME_ZONE_ID]"},
-				new String[] {projectId, timeZoneId});
-		}
-		finally {
-			ProjectIdThreadLocal.remove();
-		}
+		return StringUtils.replaceEach(
+			_readFile("/bigquery/identity_activity.sql"),
+			new String[] {"$[AC_PROJECT_ID]", "$[TIME_ZONE_ID]"},
+			new String[] {projectId, "timeZoneId"});
 	}
 
 	@PostConstruct

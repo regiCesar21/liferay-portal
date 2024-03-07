@@ -19,7 +19,7 @@ WITH IdentityActivity AS (
 		Event.userId = Identity.id
 	)
 	WHERE
-		DATE(Event.eventDate, '$[TIME_ZONE_ID]') >= CURRENT_DATE('$[TIME_ZONE_ID]')
+		DATE(Event.eventDate, $[TIME_ZONE_ID]) >= CURRENT_DATE($[TIME_ZONE_ID])
 	GROUP BY
 		Event.channelId,
 		Event.dataSourceId,
