@@ -13,6 +13,7 @@ import com.google.cloud.storage.StorageOptions;
 import com.liferay.osb.asah.common.entity.DataControlTask;
 import com.liferay.osb.asah.common.entity.DataExportTask;
 import com.liferay.osb.asah.common.repository.executor.BigQueryQueryExecutor;
+import com.liferay.osb.asah.common.util.GetterUtil;
 import com.liferay.osb.asah.common.util.IOUtil;
 import com.liferay.osb.asah.common.util.ProjectIdThreadLocal;
 
@@ -121,7 +122,7 @@ public class BigQueryDataExporter implements DataExporter {
 					continue;
 				}
 
-				byte[] bytes = blob.getContent();
+				byte[] bytes = _getBlobContent(blob);
 
 				if (IOUtil.countLines(bytes) <= 1) {
 					continue;
@@ -175,7 +176,7 @@ public class BigQueryDataExporter implements DataExporter {
 					continue;
 				}
 
-				byte[] bytes = blob.getContent();
+				byte[] bytes = _getBlobContent(blob);
 
 				zipOutputStream.write(bytes, 0, bytes.length);
 			}
@@ -221,6 +222,36 @@ public class BigQueryDataExporter implements DataExporter {
 		_runBigQueryExportJob(exportBucket, exportBucketFolder);
 
 		_createDataExportZipFile(exportBucket, exportBucketFolder);
+	}
+
+	private byte[] _getBlobContent(Blob blob) throws Exception {
+		int retries = 0;
+
+		while (true) {
+			try {
+				return blob.getContent();
+			}
+			catch (Exception exception) {
+				if (retries++ < _DATA_EXPORTER_MAX_RETRY) {
+					if (_log.isWarnEnabled()) {
+						_log.warn(
+							"Unable to read blob " + blob.getName() +
+								". Retrying in " +
+									_DATA_EXPORTER_RETRY_INTERVAL_MILLIS +
+										"ms.");
+					}
+
+					Thread.sleep(_DATA_EXPORTER_RETRY_INTERVAL_MILLIS);
+				}
+				else {
+					_log.error(
+						"Unable to read blob " + blob.getName() + " after " +
+							_DATA_EXPORTER_MAX_RETRY + " attempts");
+
+					throw exception;
+				}
+			}
+		}
 	}
 
 	private List<Condition> _getConditions() {
@@ -349,6 +380,13 @@ public class BigQueryDataExporter implements DataExporter {
 
 	private static final String _DATA_EXPORTER_BUCKET_TEMPLATE =
 		"{googleProjectId}-data-exporter";
+
+	private static final int _DATA_EXPORTER_MAX_RETRY = GetterUtil.getInteger(
+		System.getenv("DATA_EXPORTER_MAX_RETRY"), 3);
+
+	private static final int _DATA_EXPORTER_RETRY_INTERVAL_MILLIS =
+		GetterUtil.getInteger(
+			System.getenv("DATA_EXPORTER_RETRY_INTERVAL_MILLIS"), 1000);
 
 	private static final String _EXPORT_DATA_CSV_QUERY_TEMPLATE =
 		"EXPORT DATA OPTIONS(field_delimiter=',', format='CSV', header=true, " +
