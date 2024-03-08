@@ -12,6 +12,8 @@ import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.time.OffsetDateTime;
 
+import java.util.Objects;
+
 import org.apache.commons.lang3.math.NumberUtils;
 
 /**
@@ -82,6 +84,14 @@ public class GetterUtil {
 		}
 
 		return (int)object;
+	}
+
+	public static int getInteger(Object object, int defaultValue) {
+		if (Objects.isNull(object)) {
+			return defaultValue;
+		}
+
+		return getInteger(object);
 	}
 
 	public static Number getNumber(Object object) {
