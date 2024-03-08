@@ -3705,6 +3705,22 @@ AUI.add(
 					instance.editorContainer.placeAfter(instance.readOnlyText);
 				},
 
+				_onSetData(event) {
+					var instance = this;
+
+					const editorInfo = event.editor;
+
+					if (editorInfo.mode === 'source') {
+						const value = event.data.dataValue;
+
+						const sanitizedValue = instance.sanitizeHTML(value);
+
+						event.data.dataValue = sanitizedValue;
+
+						return event.data.dataValue;
+					}
+				},
+
 				getEditor() {
 					var instance = this;
 
@@ -3734,6 +3750,10 @@ AUI.add(
 				initializer() {
 					var instance = this;
 
+					var editor = instance.getEditor();
+
+					var nativeEditor = editor.getNativeEditor();
+
 					var editorComponentName =
 						instance.getInputName() + 'Editor';
 
@@ -3749,6 +3769,30 @@ AUI.add(
 						'liferay-ddm-field:render':
 							instance._afterRenderTextHTMLField
 					});
+
+					nativeEditor.on('setData', instance._onSetData, instance);
+				},
+
+				sanitizeHTML(html) {
+					const ALERT_REGEX = /alert\((.*?)\)/;
+					const ASP_CODE_REGEX = /<%[\s\S]*?%>/g;
+					const ASP_NET_CODE_REGEX = /(<asp:[^]+>[\s|\S]*?<\/asp:[^]+>)|(<asp:[^]+\/>)/gi;
+					const HTML_TAG_WITH_ON_ATTRIBUTE_REGEX = /<[^>]+?(\s+\bon\w+=(?:'[^']*'|"[^"]*"|[^'"\s>]+))*\s*\/?>/gi;
+					const INNER_HTML_REGEX = /innerHTML\s*=\s*.*?/;
+					const ON_ATTRIBUTE_REGEX = /(\s+\bon\w+=(?:'[^']*'|"[^"]*"|[^'"\s>]+))/gi;
+					const PHP_CODE_REGEX = /<\?[\s\S]*?\?>/g;
+
+					const sanitizedHtml = html
+						.replace(HTML_TAG_WITH_ON_ATTRIBUTE_REGEX, match => {
+							return match.replace(ON_ATTRIBUTE_REGEX, '');
+						})
+						.replace(ALERT_REGEX, '')
+						.replace(INNER_HTML_REGEX, '')
+						.replace(PHP_CODE_REGEX, '')
+						.replace(ASP_CODE_REGEX, '')
+						.replace(ASP_NET_CODE_REGEX, '');
+
+					return sanitizedHtml;
 				},
 
 				setValue(value) {
