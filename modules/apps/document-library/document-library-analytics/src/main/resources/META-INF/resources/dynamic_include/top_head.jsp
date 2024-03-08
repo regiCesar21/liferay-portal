@@ -13,59 +13,105 @@
 	}
 </script>
 
-<aui:script sandbox="<%= true %>">
-	var pathnameRegexp = /\/documents\/(\d+)\/(\d+)\/(.+?)\/([^&]+)/;
+<aui:script>
+	function getValueByAttribute(node, attr) {
+		return (
+			node.dataset[attr] ||
+			(node.parentElement && node.parentElement.dataset[attr])
+		);
+	}
 
-	function handleDownloadClick(event) {
-		if (event.target.nodeName.toLowerCase() === 'a' && window.Analytics) {
-			var anchor = event.target;
-			var match = pathnameRegexp.exec(anchor.pathname);
+	function sendDocumentDownloadedAnalyticsEvent(anchor) {
+		var fileEntryId = getValueByAttribute(anchor, 'analyticsFileEntryId');
+		var title = getValueByAttribute(anchor, 'analyticsFileEntryTitle');
+		var version = getValueByAttribute(anchor, 'analyticsFileEntryVersion');
 
-			var fileEntryId =
-				anchor.dataset.analyticsFileEntryId ||
-				(anchor.parentElement &&
-					anchor.parentElement.dataset.analyticsFileEntryId);
+		if (fileEntryId) {
+			Analytics.send('documentDownloaded', 'Document', {
+				groupId: themeDisplay.getScopeGroupId(),
+				fileEntryId: fileEntryId,
+				preview: !!window.<%= DocumentLibraryAnalyticsConstants.JS_PREFIX %>isViewFileEntry,
+				title: title,
+				version: version
+			});
+		}
+		else {
+			var nodes = document.querySelectorAll('[data-analytics-file-entry-id]');
 
-			if (fileEntryId && match) {
-				var getParameterValue = function(parameterName) {
-					var result = null;
-
-					anchor.search
-						.substr(1)
-						.split('&')
-						.forEach(function(item) {
-							var tmp = item.split('=');
-
-							if (tmp[0] === parameterName) {
-								result = decodeURIComponent(tmp[1]);
-							}
-						});
-
-					return result;
-				};
-
-				Analytics.send('documentDownloaded', 'Document', {
-					groupId: match[1],
-					fileEntryId: fileEntryId,
-					preview: !!window.<%= DocumentLibraryAnalyticsConstants.JS_PREFIX %>isViewFileEntry,
-					title: decodeURIComponent(
-						match[3].replace(/\.[^.\\:*?"<>|\r\n]+$/, '')
-					),
-					version: getParameterValue('version')
+			if (nodes.length) {
+				var matchedNode = Object.values(nodes).find(function(node) {
+					return !!node.dataset.analyticsFileEntryId;
 				});
+
+				sendDocumentDownloadedAnalyticsEvent(matchedNode);
 			}
 		}
 	}
 
-	var onDestroyPortlet = function() {
+	function handleDownloadClick(event) {
+		if (window.Analytics) {
+			if (event.target.nodeName.toLowerCase() === 'a') {
+				sendDocumentDownloadedAnalyticsEvent(event.target);
+			}
+			else if (
+				event.target.parentNode &&
+				event.target.parentNode.nodeName.toLowerCase() === 'a'
+			) {
+				sendDocumentDownloadedAnalyticsEvent(event.target.parentNode);
+			}
+			else {
+				var target = event.target;
+				var matchTextContent =
+					target.textContent &&
+					target.textContent.toLowerCase() ===
+						'<%= StringUtil.toLowerCase(LanguageUtil.get(request, "download")) %>';
+				var matchTitle =
+					target.title && target.title.toLowerCase() === 'download';
+				var matchAction = target.action === 'download';
+				var matchLexiconIcon = !!target.querySelector(
+					'.lexicon-icon-download'
+				);
+				var matchLexiconClassName = target.classList.contains(
+					'lexicon-icon-download'
+				);
+				var matchParentTitle =
+					target.parentNode &&
+					target.parentNode.title &&
+					target.parentNode.title.toLowerCase() === 'download';
+				var matchParentLexiconClassName =
+					target.parentNode &&
+					target.parentNode.classList.contains('lexicon-icon-download');
+
+				if (
+					matchTextContent ||
+					matchTitle ||
+					matchParentTitle ||
+					matchAction ||
+					matchLexiconIcon ||
+					matchLexiconClassName ||
+					matchParentLexiconClassName
+				) {
+					var selectedFiles = document.querySelectorAll(
+						'.form .custom-control-input:checked'
+					);
+
+					selectedFiles.forEach(function(element) {
+						var selectedFile = document.querySelector(
+							'[data-analytics-file-entry-id="' + element.value + '"]'
+						);
+
+						sendDocumentDownloadedAnalyticsEvent(selectedFile);
+					});
+				}
+			}
+		}
+	}
+
+	Liferay.once('destroyPortlet', function() {
 		document.body.removeEventListener('click', handleDownloadClick);
-	};
+	});
 
-	Liferay.once('destroyPortlet', onDestroyPortlet);
-
-	var onPortletReady = function() {
+	Liferay.once('portletReady', function() {
 		document.body.addEventListener('click', handleDownloadClick);
-	};
-
-	Liferay.once('portletReady', onPortletReady);
+	});
 </aui:script>
