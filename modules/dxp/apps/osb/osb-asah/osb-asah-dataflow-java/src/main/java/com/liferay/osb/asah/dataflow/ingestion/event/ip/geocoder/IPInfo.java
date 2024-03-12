@@ -5,8 +5,10 @@
 
 package com.liferay.osb.asah.dataflow.ingestion.event.ip.geocoder;
 
-import com.maxmind.geoip.Location;
-import com.maxmind.geoip.regionName;
+import com.maxmind.geoip2.model.CityResponse;
+import com.maxmind.geoip2.record.City;
+import com.maxmind.geoip2.record.Country;
+import com.maxmind.geoip2.record.Subdivision;
 
 /**
  * @author Inácio Nery
@@ -15,11 +17,18 @@ public class IPInfo {
 
 	public static final IPInfo LOCAL_NETWORK = new IPInfo("Local Network");
 
-	public IPInfo(Location location) {
-		_city = location.city;
-		_country = location.countryName;
-		_region = regionName.regionNameByCode(
-			location.countryCode, location.region);
+	public IPInfo(CityResponse cityResponse) {
+		City city = cityResponse.getCity();
+
+		_city = city.getName();
+
+		Country country = cityResponse.getCountry();
+
+		_country = country.getName();
+
+		Subdivision subdivision = cityResponse.getMostSpecificSubdivision();
+
+		_region = subdivision.getName();
 	}
 
 	public String getCity() {

@@ -5,8 +5,9 @@
 
 package com.liferay.osb.asah.dataflow.ingestion.event.ip.geocoder;
 
-import com.maxmind.geoip.Location;
-import com.maxmind.geoip.LookupService;
+import com.maxmind.geoip2.DatabaseReader;
+import com.maxmind.geoip2.exception.GeoIp2Exception;
+import com.maxmind.geoip2.model.CityResponse;
 
 import java.io.BufferedInputStream;
 import java.io.BufferedOutputStream;
@@ -16,7 +17,6 @@ import java.io.IOException;
 import java.io.InputStream;
 
 import java.net.InetAddress;
-import java.net.UnknownHostException;
 
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -37,18 +37,19 @@ public class IPGeocoder {
 			return null;
 		}
 
-		Location location = _ipGeocoder._lookupService.getLocation(ipAddress);
-
-		if (location != null) {
-			return new IPInfo(location);
-		}
-
-		if (_log.isDebugEnabled()) {
-			_log.debug("Unable to get IP info for " + ipAddress);
-		}
-
 		try {
 			InetAddress inetAddress = InetAddress.getByName(ipAddress);
+
+			CityResponse cityResponse = _ipGeocoder._databaseReader.city(
+				inetAddress);
+
+			if (cityResponse != null) {
+				return new IPInfo(cityResponse);
+			}
+
+			if (_log.isDebugEnabled()) {
+				_log.debug("Unable to get IP info for " + ipAddress);
+			}
 
 			if (inetAddress.isLoopbackAddress() ||
 				inetAddress.isSiteLocalAddress()) {
@@ -56,10 +57,9 @@ public class IPGeocoder {
 				return IPInfo.LOCAL_NETWORK;
 			}
 		}
-		catch (UnknownHostException unknownHostException) {
+		catch (GeoIp2Exception | IOException exception) {
 			if (_log.isDebugEnabled()) {
-				_log.debug(
-					unknownHostException.getMessage(), unknownHostException);
+				_log.debug(exception.getMessage(), exception);
 			}
 		}
 
@@ -68,8 +68,10 @@ public class IPGeocoder {
 
 	private IPGeocoder() {
 		try {
-			_lookupService = new LookupService(
-				_getIPGeocoderFile(), LookupService.GEOIP_MEMORY_CACHE);
+			DatabaseReader.Builder builder = new DatabaseReader.Builder(
+				_getIPGeocoderFile());
+
+			_databaseReader = builder.build();
 		}
 		catch (IOException ioException) {
 			_log.error("Unable to load MaxMind Geo IP data", ioException);
@@ -87,12 +89,11 @@ public class IPGeocoder {
 
 		ClassLoader classLoader = clazz.getClassLoader();
 
-		return classLoader.getResourceAsStream(
-			"META-INF/com.maxmind.geoip.dat.gz");
+		return classLoader.getResourceAsStream("META-INF/GeoIP2-City.mmdb.gz");
 	}
 
 	private File _getIPGeocoderFile() throws IOException {
-		Path geoip = Files.createTempFile("IPGeocoder", ".dat");
+		Path geoip = Files.createTempFile("IPGeocoder", ".mmdb");
 
 		File file = geoip.toFile();
 
@@ -140,6 +141,6 @@ public class IPGeocoder {
 
 	private static final IPGeocoder _ipGeocoder = new IPGeocoder();
 
-	private volatile LookupService _lookupService;
+	private volatile DatabaseReader _databaseReader;
 
 }
