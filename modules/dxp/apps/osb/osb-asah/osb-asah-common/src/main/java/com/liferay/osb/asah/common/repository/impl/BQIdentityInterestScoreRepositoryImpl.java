@@ -1283,15 +1283,18 @@ public class BQIdentityInterestScoreRepositoryImpl
 	private Select<?> _getIdentityActivityOverview(
 		boolean active, @Nullable Long segmentId) {
 
-		Field<Object> channelIdField = DSL.field(
-			"BQIdentityActivity.channelId");
+		Field<Object> channelIdField = DSL.field("IdentityActivity.channelId");
 		Field<Object> identityIdField = DSL.field(
-			"BQIdentityActivity.identityId");
+			"IdentityActivity.identityId");
 
 		SelectJoinStep<Record2<Object, Object>> selectJoinStep = DSL.select(
 			channelIdField, identityIdField
 		).from(
-			"BQIdentityActivity"
+			DSL.table(
+				"BQIdentityActivity"
+			).as(
+				"IdentityActivity"
+			)
 		);
 
 		if (segmentId != null) {
@@ -1300,7 +1303,7 @@ public class BQIdentityInterestScoreRepositoryImpl
 			).on(
 				DSL.and(
 					DSL.field(
-						"BQIdentityActivity.identityId"
+						"IdentityActivity.identityId"
 					).eq(
 						DSL.field("BQMembership.identityId")
 					),
@@ -1318,7 +1321,7 @@ public class BQIdentityInterestScoreRepositoryImpl
 
 			return selectJoinStep.where(
 				DSL.field(
-					"BQIdentityActivity.lastActivityDate"
+					"IdentityActivity.lastActivityDate"
 				).ge(
 					DateUtil.toUTCString(
 						DateUtil.toUTCDate(newDayLocalDateTime.minusDays(30)),
