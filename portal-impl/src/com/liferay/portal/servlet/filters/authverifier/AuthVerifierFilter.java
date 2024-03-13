@@ -12,7 +12,6 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.security.access.control.AccessControlUtil;
 import com.liferay.portal.kernel.security.auth.AccessControlContext;
 import com.liferay.portal.kernel.security.auth.verifier.AuthVerifierResult;
-import com.liferay.portal.kernel.servlet.ProtectedServletRequest;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HttpUtil;
 import com.liferay.portal.kernel.util.MapUtil;
@@ -20,6 +19,7 @@ import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.security.auth.AuthVerifierPipeline;
+import com.liferay.portal.servlet.AuthVerifierServletRequest;
 import com.liferay.portal.servlet.filters.BasePortalFilter;
 import com.liferay.portal.util.PropsUtil;
 
@@ -178,17 +178,17 @@ public class AuthVerifierFilter extends BasePortalFilter {
 				accessControlContext.getSettings(),
 				AuthVerifierPipeline.AUTH_TYPE);
 
-			ProtectedServletRequest protectedServletRequest =
-				new ProtectedServletRequest(
-					httpServletRequest, String.valueOf(userId), authType);
+			AuthVerifierServletRequest authVerifierServletRequest =
+				new AuthVerifierServletRequest(
+					httpServletRequest, userId, authType);
 
-			accessControlContext.setRequest(protectedServletRequest);
+			accessControlContext.setRequest(authVerifierServletRequest);
 
 			Class<?> clazz = getClass();
 
 			processFilter(
-				clazz.getName(), protectedServletRequest, httpServletResponse,
-				filterChain);
+				clazz.getName(), authVerifierServletRequest,
+				httpServletResponse, filterChain);
 		}
 		else {
 			_log.error("Unimplemented state " + state);
