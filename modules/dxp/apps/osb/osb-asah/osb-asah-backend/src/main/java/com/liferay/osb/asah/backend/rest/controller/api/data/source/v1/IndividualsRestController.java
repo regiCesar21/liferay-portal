@@ -214,9 +214,12 @@ public class IndividualsRestController extends BaseRestController {
 	@GetMapping("/count")
 	public long getIndividualsCount(
 		@RequestParam(defaultValue = "false", required = false) boolean
-			includeAnonymousUsers) {
+			includeAnonymousUsers,
+		@RequestParam(defaultValue = "false", required = false) boolean
+			includeSuppressed) {
 
-		return _bqIndividualDog.countIndividuals(includeAnonymousUsers);
+		return _bqIndividualDog.countBQIndividuals(
+			includeAnonymousUsers, includeSuppressed);
 	}
 
 	@GetMapping("/{id}/recent-assets")

@@ -141,7 +141,7 @@
 			"templated": true
 		},
 		"individuals-count": {
-			"href": "{url}/individuals/count{?includeAnonymousUsers}",
+			"href": "{url}/individuals/count{?includeAnonymousUsers,includeSuppressed}",
 			"templated": true
 		},
 		"individuals-created-since-count": {
@@ -201,10 +201,6 @@
 		},
 		"suppression-logs": {
 			"href": "{url}/suppressions/logs{?filter}",
-			"templated": true
-		},
-		"users-count": {
-			"href": "{url}/users/count",
 			"templated": true
 		}
 	},
