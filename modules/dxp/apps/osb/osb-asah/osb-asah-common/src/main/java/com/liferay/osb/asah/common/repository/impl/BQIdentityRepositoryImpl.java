@@ -65,37 +65,39 @@ public class BQIdentityRepositoryImpl
 				"Identity"
 			));
 
-		if (!includeAnonymousUsers) {
-			Condition condition = DSL.and(
-				DSL.field(
-					"Identity.individualId"
-				).eq(
-					DSL.field("Individual.id")
-				));
-
-			if (!includeSuppressed) {
-				condition = condition.and(
-					DSL.or(
-						DSL.field(
-							"Individual.suppressed"
-						).isNull(),
-						DSL.field(
-							"Individual.suppressed"
-						).notEqual(
-							DSL.val(Boolean.TRUE)
-						)));
-			}
-
-			selectJoinStep = selectJoinStep.join(
-				DSL.table(
-					"BQIndividual"
-				).as(
-					"Individual"
-				)
-			).on(
-				condition
-			);
+		if (includeAnonymousUsers) {
+			return _queryExecutor.queryForLong(selectJoinStep);
 		}
+
+		Condition condition = DSL.and(
+			DSL.field(
+				"Identity.individualId"
+			).eq(
+				DSL.field("Individual.id")
+			));
+
+		if (!includeSuppressed) {
+			condition = condition.and(
+				DSL.or(
+					DSL.field(
+						"Individual.suppressed"
+					).isNull(),
+					DSL.field(
+						"Individual.suppressed"
+					).notEqual(
+						DSL.val(Boolean.TRUE)
+					)));
+		}
+
+		selectJoinStep = selectJoinStep.join(
+			DSL.table(
+				"BQIndividual"
+			).as(
+				"Individual"
+			)
+		).on(
+			condition
+		);
 
 		return _queryExecutor.queryForLong(selectJoinStep);
 	}
