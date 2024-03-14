@@ -156,39 +156,6 @@ public class BQIndividualRepositoryTest
 				false, null, null));
 	}
 
-	@BQSQLResource(resourcePath = "test_bq_individual_repository_3.sql")
-	@Test
-	public void testCountBQIndividualsAfterNewStartDate() {
-		Assertions.assertEquals(
-			8,
-			_bqIndividualRepository.countBQIndividualsCreatedSince(
-				DateUtils.addDays(new Date(), -30)));
-		Assertions.assertEquals(
-			0,
-			_bqIndividualRepository.countBQIndividualsCreatedSince(
-				DateUtils.addYears(new Date(), 1)));
-	}
-
-	@BQSQLResource(resourcePath = "test_bq_individual_repository_3.sql")
-	@Test
-	public void testCountBQIndividualsCreateSince() {
-		Assertions.assertEquals(
-			0,
-			_bqIndividualRepository.countBQIndividualsCreatedSince(new Date()));
-		Assertions.assertEquals(
-			2,
-			_bqIndividualRepository.countBQIndividualsCreatedSince(
-				DateUtils.addDays(new Date(), -10)));
-		Assertions.assertEquals(
-			5,
-			_bqIndividualRepository.countBQIndividualsCreatedSince(
-				DateUtils.addDays(new Date(), -20)));
-		Assertions.assertEquals(
-			8,
-			_bqIndividualRepository.countBQIndividualsCreatedSince(
-				DateUtils.addDays(new Date(), -30)));
-	}
-
 	@BQSQLResource(resourcePath = "test_bq_individual_repository_1.sql")
 	@Test
 	public void testCountBQIndividualsCustomFieldFilter() {
@@ -361,6 +328,31 @@ public class BQIndividualRepositoryTest
 				"(interests.filter(filter='(name eq ''analytics'' and score " +
 					"eq ''false'')'))",
 				false, null, null));
+	}
+
+	@BQSQLResource(resourcePath = "test_bq_individual_repository_3.sql")
+	@Test
+	public void testCountBQIndividualsLastActivityDateSince() {
+		Assertions.assertEquals(
+			0,
+			_bqIndividualRepository.countBQIndividualsLastActivityDateSince(
+				DateUtils.addYears(new Date(), 1)));
+		Assertions.assertEquals(
+			0,
+			_bqIndividualRepository.countBQIndividualsLastActivityDateSince(
+				new Date()));
+		Assertions.assertEquals(
+			2,
+			_bqIndividualRepository.countBQIndividualsLastActivityDateSince(
+				DateUtils.addDays(new Date(), -10)));
+		Assertions.assertEquals(
+			5,
+			_bqIndividualRepository.countBQIndividualsLastActivityDateSince(
+				DateUtils.addDays(new Date(), -20)));
+		Assertions.assertEquals(
+			8,
+			_bqIndividualRepository.countBQIndividualsLastActivityDateSince(
+				DateUtils.addDays(new Date(), -30)));
 	}
 
 	@BQSQLResource(resourcePath = "test_bq_individual_repository_1.sql")

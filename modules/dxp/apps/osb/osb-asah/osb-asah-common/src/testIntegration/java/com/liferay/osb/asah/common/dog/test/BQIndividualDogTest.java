@@ -49,7 +49,7 @@ public class BQIndividualDogTest
 				"(sessions.filter(filter='(completeDate gt ''last90Days'')'))",
 				true, null, null, null, null));
 		Assertions.assertEquals(
-			3L,
+			2L,
 			_bqIndividualDog.countBQIndividuals(
 				null, 1L, null,
 				"(sessions.filter(filter='(completeDate gt ''last90Days'')'))",
