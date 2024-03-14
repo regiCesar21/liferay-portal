@@ -19,7 +19,7 @@ INSERT INTO Identity_Raw (id, individualId) VALUES ('7', null);
 
 INSERT INTO Individual (id, lastName) VALUES ('A', 'Test');
 INSERT INTO Individual (id) VALUES ('B');
-INSERT INTO Individual (id) VALUES ('C');
+INSERT INTO Individual (id, suppressed) VALUES ('C', true);
 
 INSERT INTO Session (bounce, channelId, duration, id, referrers, sessionEnd, sessionStart, urls, userId) VALUES (0, 1, 150000, '1', ['https://google.com'], timestamp '${today-1d}', timestamp '${today-1d}', ['https://liferay.com'], '1');
 INSERT INTO Session (bounce, channelId, duration, id, referrers, sessionEnd, sessionStart, urls, userId) VALUES (1, 1, 300000, '2', ['https://google.com'], timestamp '${today-5d}', timestamp '${today-5d}', ['https://liferay.com'], '1');

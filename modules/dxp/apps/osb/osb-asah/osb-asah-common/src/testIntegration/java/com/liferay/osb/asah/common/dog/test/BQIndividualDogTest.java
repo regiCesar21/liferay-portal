@@ -41,7 +41,7 @@ public class BQIndividualDogTest
 
 	@BQSQLResource(resourcePath = "test_count_bq_individuals.sql")
 	@Test
-	public void testCountBQIndividuals() {
+	public void testCountBQIndividuals1() {
 		Assertions.assertEquals(
 			7L,
 			_bqIndividualDog.countBQIndividuals(
@@ -68,6 +68,22 @@ public class BQIndividualDogTest
 				"(sessions.filter(filter='(completeDate gt ''last90Days'')') " +
 					"and demographics/familyName/value eq 'Test')",
 				false, null, null, null, null));
+	}
+
+	@BQSQLResource(resourcePath = "test_count_bq_individuals.sql")
+	@Test
+	public void testCountBQIndividuals2() {
+		Assertions.assertEquals(
+			2L, _bqIndividualDog.countBQIndividuals(false, false));
+
+		Assertions.assertEquals(
+			7L, _bqIndividualDog.countBQIndividuals(true, false));
+
+		Assertions.assertEquals(
+			3L, _bqIndividualDog.countBQIndividuals(false, true));
+
+		Assertions.assertEquals(
+			7L, _bqIndividualDog.countBQIndividuals(true, true));
 	}
 
 	@BQSQLResource(resourcePath = "test_bq_identity_activities_1.sql")
