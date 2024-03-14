@@ -6,7 +6,6 @@
 package com.liferay.portal.util.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
-import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.cache.MultiVMPool;
 import com.liferay.portal.kernel.model.Layout;
@@ -16,7 +15,8 @@ import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
-import com.liferay.portal.kernel.util.HttpComponentsUtil;
+import com.liferay.portal.kernel.util.Http;
+import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LoggingTimer;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.test.rule.Inject;
@@ -63,8 +63,7 @@ public class PortalImplGetLayouActualURLTest extends BasePortalImplURLTestCase {
 	@Test
 	public void testGetLayoutActualURLNoBrowsableLayout() throws Exception {
 		_assertGetLayoutActualURL(
-			publicLayout,
-			_addLayout(publicLayout.getLayoutId(), LayoutConstants.TYPE_NODE));
+			publicLayout, _addLayout(publicLayout.getLayoutId(), _TYPE_NODE));
 	}
 
 	@Test
@@ -73,7 +72,7 @@ public class PortalImplGetLayouActualURLTest extends BasePortalImplURLTestCase {
 
 		_assertGetLayoutActualURLWithNodeLayoutHierarchy(
 			_NODE_LAYOUT_HIERARCHY_LEVEL_LENGTH - 1,
-			_addLayout(publicLayout.getLayoutId(), LayoutConstants.TYPE_NODE),
+			_addLayout(publicLayout.getLayoutId(), _TYPE_NODE),
 			_NODE_LAYOUT_HIERARCHY_LEVEL_LENGTH - 1);
 	}
 
@@ -82,8 +81,7 @@ public class PortalImplGetLayouActualURLTest extends BasePortalImplURLTestCase {
 		throws Exception {
 
 		_assertGetLayoutActualURLWithNodeLayoutHierarchy(
-			0,
-			_addLayout(publicLayout.getLayoutId(), LayoutConstants.TYPE_NODE),
+			0, _addLayout(publicLayout.getLayoutId(), _TYPE_NODE),
 			_NODE_LAYOUT_HIERARCHY_LEVEL_LENGTH - 1);
 	}
 
@@ -93,8 +91,7 @@ public class PortalImplGetLayouActualURLTest extends BasePortalImplURLTestCase {
 
 		_assertGetLayoutActualURLWithNodeLayoutHierarchy(
 			_NODE_LAYOUT_HIERARCHY_LEVEL_LENGTH - 1,
-			_addLayout(publicLayout.getLayoutId(), LayoutConstants.TYPE_NODE),
-			0);
+			_addLayout(publicLayout.getLayoutId(), _TYPE_NODE), 0);
 	}
 
 	@Test
@@ -104,7 +101,7 @@ public class PortalImplGetLayouActualURLTest extends BasePortalImplURLTestCase {
 		_assertGetLayoutActualURLWithNodeLayoutHierarchy(
 			GetterUtil.getInteger(
 				Math.floor((_NODE_LAYOUT_HIERARCHY_LEVEL_LENGTH - 1) / 2)),
-			_addLayout(publicLayout.getLayoutId(), LayoutConstants.TYPE_NODE),
+			_addLayout(publicLayout.getLayoutId(), _TYPE_NODE),
 			_NODE_LAYOUT_HIERARCHY_LEVEL_LENGTH - 1);
 	}
 
@@ -114,7 +111,7 @@ public class PortalImplGetLayouActualURLTest extends BasePortalImplURLTestCase {
 
 		_assertGetLayoutActualURLWithNodeLayoutHierarchy(
 			_NODE_LAYOUT_HIERARCHY_LEVEL_LENGTH - 1,
-			_addLayout(publicLayout.getLayoutId(), LayoutConstants.TYPE_NODE),
+			_addLayout(publicLayout.getLayoutId(), _TYPE_NODE),
 			GetterUtil.getInteger(
 				Math.floor((_NODE_LAYOUT_HIERARCHY_LEVEL_LENGTH - 1) / 2)));
 	}
@@ -122,8 +119,16 @@ public class PortalImplGetLayouActualURLTest extends BasePortalImplURLTestCase {
 	private List<Layout> _addChildLayouts(long parentLayoutId, String... types)
 		throws Exception {
 
-		return TransformUtil.transformToList(
-			types, type -> _addLayout(parentLayoutId, type));
+		return ListUtil.toList(
+			ListUtil.fromArray(types),
+			type -> {
+				try {
+					return _addLayout(parentLayoutId, type);
+				}
+				catch (Exception exception) {
+					throw new RuntimeException(exception);
+				}
+			});
 	}
 
 	private Layout _addLayout(long parentLayoutId, String type)
@@ -197,8 +202,8 @@ public class PortalImplGetLayouActualURLTest extends BasePortalImplURLTestCase {
 			actualURL = portal.getLayoutActualURL(layout);
 		}
 
-		Map<String, String[]> parameterMap = HttpComponentsUtil.getParameterMap(
-			HttpComponentsUtil.getQueryString(actualURL));
+		Map<String, String[]> parameterMap = _http.getParameterMap(
+			_http.getQueryString(actualURL));
 
 		if (expectedLayout.getPlid() == layout.getPlid()) {
 			Assert.assertEquals(
@@ -233,7 +238,7 @@ public class PortalImplGetLayouActualURLTest extends BasePortalImplURLTestCase {
 		Layout childLayout = _assertAllChildrenAndGetDepperChildLayout(
 			expectedNumChildren, layout, parentIndex);
 
-		Assert.assertEquals(LayoutConstants.TYPE_NODE, childLayout.getType());
+		Assert.assertEquals(_TYPE_NODE, childLayout.getType());
 
 		_addChildLayouts(
 			childLayout.getLayoutId(),
@@ -272,7 +277,7 @@ public class PortalImplGetLayouActualURLTest extends BasePortalImplURLTestCase {
 		String[] types = new String[lenght];
 
 		for (int i = 0; i < lenght; i++) {
-			String type = LayoutConstants.TYPE_NODE;
+			String type = _TYPE_NODE;
 
 			if ((browsableTypePos >= 0) && (i >= browsableTypePos)) {
 				type = LayoutConstants.TYPE_PORTLET;
@@ -287,6 +292,11 @@ public class PortalImplGetLayouActualURLTest extends BasePortalImplURLTestCase {
 	private static final int _NODE_LAYOUT_HIERARCHY_DEPTH = 5;
 
 	private static final int _NODE_LAYOUT_HIERARCHY_LEVEL_LENGTH = 5;
+
+	private static final String _TYPE_NODE = "node";
+
+	@Inject
+	private Http _http;
 
 	@Inject
 	private MultiVMPool _multiVMPool;
