@@ -52,7 +52,9 @@ public class BQIdentityRepositoryImpl
 	}
 
 	@Override
-	public long countBQIndividuals(boolean includeAnonymousUsers) {
+	public long countBQIndividuals(
+		boolean includeAnonymousUsers, boolean includeSuppressed) {
+
 		SelectSelectStep<Record1<Integer>> selectSelectStep =
 			_dslContext.selectCount();
 
@@ -64,19 +66,15 @@ public class BQIdentityRepositoryImpl
 			));
 
 		if (!includeAnonymousUsers) {
-			selectJoinStep = selectJoinStep.join(
-				DSL.table(
-					"BQIndividual"
-				).as(
-					"Individual"
-				)
-			).on(
-				DSL.and(
-					DSL.field(
-						"Identity.individualId"
-					).eq(
-						DSL.field("Individual.id")
-					),
+			Condition condition = DSL.and(
+				DSL.field(
+					"Identity.individualId"
+				).eq(
+					DSL.field("Individual.id")
+				));
+
+			if (!includeSuppressed) {
+				condition = condition.and(
 					DSL.or(
 						DSL.field(
 							"Individual.suppressed"
@@ -85,7 +83,17 @@ public class BQIdentityRepositoryImpl
 							"Individual.suppressed"
 						).notEqual(
 							DSL.val(Boolean.TRUE)
-						)))
+						)));
+			}
+
+			selectJoinStep = selectJoinStep.join(
+				DSL.table(
+					"BQIndividual"
+				).as(
+					"Individual"
+				)
+			).on(
+				condition
 			);
 		}
 

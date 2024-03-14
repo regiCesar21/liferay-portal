@@ -21,7 +21,8 @@ import org.springframework.lang.Nullable;
  */
 public interface CustomBQIdentityRepository {
 
-	public long countBQIndividuals(boolean includeAnonymousUsers);
+	public long countBQIndividuals(
+		boolean includeAnonymousUsers, boolean includeSuppressed);
 
 	public List<BQIdentity> findAll();
 
