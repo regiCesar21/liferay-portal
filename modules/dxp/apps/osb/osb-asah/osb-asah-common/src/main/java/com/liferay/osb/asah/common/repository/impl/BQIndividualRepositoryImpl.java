@@ -166,9 +166,9 @@ public class BQIndividualRepositoryImpl
 	}
 
 	@Override
-	public long countBQIndividualsCreatedSince(Date startDate) {
+	public long countBQIndividualsLastActivityDateSince(Date lastActivityDate) {
 		SelectSelectStep<Record1<Integer>> selectSelectStep =
-			_dslContext.selectCount();
+			_dslContext.select(DSL.countDistinct(DSL.field("Individual.id")));
 
 		return _queryExecutor.queryForLong(
 			selectSelectStep.from(
@@ -177,11 +177,23 @@ public class BQIndividualRepositoryImpl
 				).as(
 					"Individual"
 				)
+			).join(
+				DSL.table(
+					"BQIdentityActivity"
+				).as(
+					"IdentityActivity"
+				)
+			).on(
+				DSL.field(
+					"IdentityActivity.individualId"
+				).eq(
+					DSL.field("Individual.id")
+				)
 			).where(
 				DSL.field(
-					"Individual.createDate"
+					"IdentityActivity.lastActivityDate"
 				).ge(
-					_dslHelper.getDateParam(startDate)
+					_dslHelper.getDateParam(lastActivityDate)
 				)
 			));
 	}

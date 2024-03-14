@@ -85,9 +85,9 @@ public class BQIndividualDog {
 			channelId);
 	}
 
-	public long countIndividualCreatedSince(Date startDate) {
-		return _bqIndividualRepository.countBQIndividualsCreatedSince(
-			startDate);
+	public long countIndividualLastActivityDateSince(Date lastActivityDate) {
+		return _bqIndividualRepository.countBQIndividualsLastActivityDateSince(
+			lastActivityDate);
 	}
 
 	public Individual fetchBQIndividual(@Nullable Long channelId, String id) {

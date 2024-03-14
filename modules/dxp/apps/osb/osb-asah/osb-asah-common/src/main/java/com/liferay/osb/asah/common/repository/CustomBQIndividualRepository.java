@@ -33,7 +33,7 @@ public interface CustomBQIndividualRepository {
 		@Nullable Boolean includeAnonymousUsers, @Nullable String query,
 		@Nullable Long segmentId);
 
-	public long countBQIndividualsCreatedSince(Date startDate);
+	public long countBQIndividualsLastActivityDateSince(Date startDate);
 
 	public long countBQIndividualsModifiedLast30Days(Long channelId);
 

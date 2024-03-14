@@ -61,7 +61,7 @@ public class IndividualsRestController
 		@RequestParam(name = "startDate", required = false)
 		Date startDate) {
 
-		return _bqIndividualDog.countIndividualCreatedSince(startDate);
+		return _bqIndividualDog.countIndividualLastActivityDateSince(startDate);
 	}
 
 	private PageDTO<DistributionDTO> _toDistributionDTOPageDTO(
