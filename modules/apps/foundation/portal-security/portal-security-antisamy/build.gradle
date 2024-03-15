@@ -4,6 +4,10 @@ task processSanitizerConfiguration(type: Copy)
 
 String sanitizerConfigurationUrl = "https://storage.googleapis.com/google-code-archive-downloads/v2/code.google.com/owaspantisamy/antisamy-ebay-1.4.4.xml"
 
+copyCSS {
+	mustRunAfter processSanitizerConfiguration
+}
+
 dependencies {
 	compileInclude group: "commons-codec", name: "commons-codec", version: "1.15"
 	compileInclude group: "org.apache.httpcomponents.client5", name: "httpclient5", version: "5.1.3"

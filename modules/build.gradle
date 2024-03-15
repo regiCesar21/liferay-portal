@@ -408,6 +408,12 @@ gradle.beforeProject {
 				}
 
 				generateJSPJava {
+					configurations.compileOnly.allDependencies.withType(ExternalModuleDependency) {
+						if (it.name.equals("com.liferay.util.taglib")) {
+							mustRunAfter ":core:portal-web-compat:importFiles"
+						}
+					}
+
 					configurations.compileOnly.allDependencies.withType(ProjectDependency) {
 						mustRunAfter "${it.dependencyProject.path}:deploy"
 						mustRunAfter "${it.dependencyProject.path}:deployDependencies"
@@ -436,8 +442,22 @@ gradle.beforeProject {
 				mustRunAfter "formatSource"
 			}
 
-			jarSources {
-				mustRunAfter buildPluginDescriptor
+			if (tasks.findByName("generateJSPJava")) {
+				generateJSPJava {
+					mustRunAfter "generatePomFileForMavenPublication"
+				}
+			}
+
+			if (tasks.findByName("jarSources")) {
+				jarSources {
+					mustRunAfter "buildPluginDescriptor"
+				}
+			}
+
+			if (tasks.findByName("javadoc")) {
+				javadoc {
+					mustRunAfter "generatePomFileForMavenPublication"
+				}
 			}
 		}
 
@@ -457,6 +477,7 @@ gradle.beforeProject {
 			compileTestIntegrationJava {
 				configurations.testIntegrationImplementation.allDependencies.withType(ProjectDependency) {
 					if (!it.dependencyProject.name.endsWith("-theme")) {
+						mustRunAfter "${it.dependencyProject.path}:configJSModules"
 						mustRunAfter "${it.dependencyProject.path}:processResources"
 					}
 				}
@@ -485,7 +506,7 @@ gradle.beforeProject {
 						return
 					}
 
-					FileTree fileTree = fileTree(dir: reports.junitXml.destination, exclude: "TEST-*-*.xml", include: "TEST-*.xml")
+					FileTree fileTree = fileTree(dir: reports.junitXml.outputLocation.get().getAsFile(), exclude: "TEST-*-*.xml", include: "TEST-*.xml")
 
 					ant.taskdef classname: "com.oopsconsultancy.xmltask.ant.XmlTask", classpath: configurations.xmltask.asPath, name: "xmltask"
 

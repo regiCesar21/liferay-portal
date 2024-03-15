@@ -34,3 +34,7 @@ dependencies {
 	compileOnly project(":core:petra:petra-string")
 	compileOnly project(":core:registry-api")
 }
+
+deploy {
+	mustRunAfter buildWSDDJar
+}

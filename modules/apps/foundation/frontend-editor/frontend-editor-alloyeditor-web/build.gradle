@@ -98,6 +98,11 @@ dependencies {
 	compileOnly project(":core:petra:petra-string")
 }
 
+generateJSPJava {
+	mustRunAfter buildAlloyEditor
+	mustRunAfter buildCreateReactClass
+}
+
 transpileJS {
 	enabled = false
 }
