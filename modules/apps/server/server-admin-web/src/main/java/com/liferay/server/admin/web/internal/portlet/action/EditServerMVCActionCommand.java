@@ -9,6 +9,7 @@ import com.liferay.document.library.kernel.util.DLPreviewableProcessor;
 import com.liferay.mail.kernel.model.Account;
 import com.liferay.mail.kernel.service.MailService;
 import com.liferay.petra.log4j.Log4JUtil;
+import com.liferay.petra.lang.SafeCloseable;
 import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.convert.ConvertException;
@@ -17,6 +18,11 @@ import com.liferay.portal.kernel.cache.CacheRegistryUtil;
 import com.liferay.portal.kernel.cache.MultiVMPool;
 import com.liferay.portal.kernel.cache.SingleVMPool;
 import com.liferay.portal.kernel.configuration.Filter;
+import com.liferay.portal.kernel.change.tracking.CTCollectionThreadLocal;
+import com.liferay.portal.change.tracking.sql.CTSQLModeThreadLocal;
+import com.liferay.portal.kernel.cluster.ClusterExecutorUtil;
+import com.liferay.portal.kernel.cluster.ClusterMasterExecutorUtil;
+import com.liferay.portal.kernel.cluster.ClusterRequest;
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
 import com.liferay.portal.kernel.dao.orm.ProjectionFactoryUtil;
@@ -356,7 +362,11 @@ public class EditServerMVCActionCommand extends BaseMVCActionCommand {
 
 		CacheRegistryUtil.setActive(true);
 
-		try (LoggingTimer loggingTimer = new LoggingTimer()) {
+		try (LoggingTimer loggingTimer = new LoggingTimer();
+			SafeCloseable safeCloseable1 =
+				CTSQLModeThreadLocal.setCTSQLModeWithSafeCloseable(
+					CTSQLModeThreadLocal.CTSQLMode.CT_ALL)) {
+
 			ActionableDynamicQuery actionableDynamicQuery =
 				_portletPreferencesLocalService.getActionableDynamicQuery();
 
@@ -376,43 +386,52 @@ public class EditServerMVCActionCommand extends BaseMVCActionCommand {
 			actionableDynamicQuery.setParallel(true);
 			actionableDynamicQuery.setPerformActionMethod(
 				(com.liferay.portal.kernel.model.PortletPreferences pref) -> {
-					if ((pref.getOwnerId() !=
-							PortletKeys.PREFS_OWNER_ID_DEFAULT) ||
-						(pref.getOwnerType() !=
-							PortletKeys.PREFS_OWNER_TYPE_LAYOUT)) {
+					try (SafeCloseable safeCloseable2 =
+							CTCollectionThreadLocal.
+								setCTCollectionIdWithSafeCloseable(
+									pref.getCtCollectionId())) {
 
-						return;
-					}
+						if ((pref.getOwnerId() !=
+								PortletKeys.PREFS_OWNER_ID_DEFAULT) ||
+							(pref.getOwnerType() !=
+								PortletKeys.PREFS_OWNER_TYPE_LAYOUT)) {
 
-					Layout layout = _layoutLocalService.getLayout(
-						pref.getPlid());
-
-					if (layout.isTypeContent() || layout.isTypeControlPanel()) {
-						return;
-					}
-
-					UnicodeProperties typeSettingsUnicodeProperties =
-						layout.getTypeSettingsProperties();
-
-					Set<String> keys = typeSettingsUnicodeProperties.keySet();
-
-					boolean orphan = true;
-
-					for (String key : keys) {
-						String value =
-							typeSettingsUnicodeProperties.getProperty(key);
-
-						if (value.contains(pref.getPortletId())) {
-							orphan = false;
-
-							break;
+							return;
 						}
-					}
 
-					if (orphan) {
-						_portletPreferencesLocalService.
-							deletePortletPreferences(
-								pref.getPortletPreferencesId());
+						Layout layout = _layoutLocalService.getLayout(
+							pref.getPlid());
+
+						if (layout.isTypeContent() ||
+							layout.isTypeControlPanel()) {
+
+							return;
+						}
+
+						UnicodeProperties typeSettingsUnicodeProperties =
+							layout.getTypeSettingsProperties();
+
+						Set<String> keys =
+							typeSettingsUnicodeProperties.keySet();
+
+						boolean orphan = true;
+
+						for (String key : keys) {
+							String value =
+								typeSettingsUnicodeProperties.getProperty(key);
+
+							if (value.contains(pref.getPortletId())) {
+								orphan = false;
+
+								break;
+							}
+						}
+
+						if (orphan) {
+							_portletPreferencesLocalService.
+								deletePortletPreferences(
+									pref.getPortletPreferencesId());
+						}
 					}
 				});
 
