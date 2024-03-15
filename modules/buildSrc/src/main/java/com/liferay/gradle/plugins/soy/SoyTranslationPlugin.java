@@ -25,6 +25,7 @@ import org.gradle.api.plugins.PluginContainer;
 import org.gradle.api.tasks.SourceSet;
 import org.gradle.api.tasks.SourceSetOutput;
 import org.gradle.api.tasks.TaskContainer;
+import org.gradle.api.tasks.compile.JavaCompile;
 
 /**
  * @author     Andrea Di Giorgi
@@ -127,6 +128,12 @@ public class SoyTranslationPlugin implements Plugin<Project> {
 			JavaPlugin.CLASSES_TASK_NAME);
 
 		classesTask.dependsOn(replaceSoyTranslationTask);
+
+		JavaCompile javaCompile = (JavaCompile)GradleUtil.getTask(
+			replaceSoyTranslationTask.getProject(),
+			JavaPlugin.COMPILE_JAVA_TASK_NAME);
+
+		replaceSoyTranslationTask.mustRunAfter(javaCompile);
 	}
 
 	private static final String _CONFIG_JS_MODULES_TASK_NAME =

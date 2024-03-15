@@ -25,6 +25,8 @@ import org.gradle.api.Plugin;
 import org.gradle.api.Project;
 import org.gradle.api.Task;
 import org.gradle.api.artifacts.Configuration;
+import org.gradle.api.artifacts.DependencySet;
+import org.gradle.api.artifacts.ProjectDependency;
 import org.gradle.api.file.FileCollection;
 import org.gradle.api.file.SourceDirectorySet;
 import org.gradle.api.plugins.BasePlugin;
@@ -118,15 +120,20 @@ public class JSTranspilerPlugin implements Plugin<Project> {
 		RenameDependencyClosure renameDependencyClosure =
 			new RenameDependencyClosure(project, configuration.getName());
 
-		Iterable<TaskDependency> taskDependencies =
-			JSTranspilerPluginUtil.getTaskDependencies(configuration);
-
 		for (File file : configuration) {
 			Copy copy = JSTranspilerPluginUtil.addTaskExpandCompileDependency(
 				project, file, project.getBuildDir(),
 				"expandSoyCompileDependency", renameDependencyClosure);
 
-			copy.dependsOn(taskDependencies);
+			DependencySet dependencySet = configuration.getAllDependencies();
+
+			for (ProjectDependency projectDependency :
+					dependencySet.withType(ProjectDependency.class)) {
+
+				Project curProject = projectDependency.getDependencyProject();
+
+				copy.dependsOn(curProject.getPath() + ":jar");
+			}
 
 			transpileJSTask.dependsOn(copy);
 

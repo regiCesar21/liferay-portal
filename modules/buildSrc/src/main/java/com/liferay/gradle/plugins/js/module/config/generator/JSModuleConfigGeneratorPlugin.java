@@ -25,6 +25,7 @@ import org.gradle.api.plugins.PluginContainer;
 import org.gradle.api.tasks.SourceSet;
 import org.gradle.api.tasks.SourceSetOutput;
 import org.gradle.api.tasks.TaskContainer;
+import org.gradle.api.tasks.compile.JavaCompile;
 
 /**
  * @author     Andrea Di Giorgi
@@ -210,6 +211,20 @@ public class JSModuleConfigGeneratorPlugin implements Plugin<Project> {
 			project, JavaPlugin.CLASSES_TASK_NAME);
 
 		classesTask.dependsOn(configJSModulesTask);
+
+		JavaCompile javaCompile = (JavaCompile)GradleUtil.getTask(
+			project, JavaPlugin.COMPILE_JAVA_TASK_NAME);
+
+		configJSModulesTask.mustRunAfter(javaCompile);
+
+		TaskContainer taskContainer = project.getTasks();
+
+		Task generateJSPJavaTask = taskContainer.findByName(
+			"generateJSPJava");
+
+		if (generateJSPJavaTask != null) {
+			generateJSPJavaTask.mustRunAfter(configJSModulesTask);
+		}
 	}
 
 	private void _configureTasksConfigJSModules(
