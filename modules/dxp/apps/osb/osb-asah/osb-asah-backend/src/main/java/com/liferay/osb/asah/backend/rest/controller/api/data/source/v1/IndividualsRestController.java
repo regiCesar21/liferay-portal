@@ -68,11 +68,6 @@ import org.springframework.web.bind.annotation.RestController;
 )
 public class IndividualsRestController extends BaseRestController {
 
-	@GetMapping("/identities-count")
-	public long getIdentitiesCount() {
-		return _bqIndividualDog.countBQIdentities();
-	}
-
 	@GetMapping("/{id}")
 	public IndividualDTO getIndividualDTO(
 			@PathVariable String id,
@@ -214,14 +209,6 @@ public class IndividualsRestController extends BaseRestController {
 		}
 
 		return _toPageDTO(new IndividualDTO(individualDTOs), individualPage);
-	}
-
-	@GetMapping("/count")
-	public long getIndividualsCount(
-		@RequestParam(defaultValue = "false", required = false) boolean
-			includeSuppressed) {
-
-		return _bqIndividualDog.countBQIndividuals(includeSuppressed);
 	}
 
 	@GetMapping("/{id}/recent-assets")

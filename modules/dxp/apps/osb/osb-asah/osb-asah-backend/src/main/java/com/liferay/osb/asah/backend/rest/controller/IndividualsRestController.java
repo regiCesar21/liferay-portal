@@ -55,6 +55,19 @@ public class IndividualsRestController
 		return _bqIndividualDog.countBQIndividualsModifiedLast30Days(channelId);
 	}
 
+	@GetMapping("/identities-count")
+	public long getIdentitiesCount() {
+		return _bqIndividualDog.countBQIdentities();
+	}
+
+	@GetMapping("/count")
+	public long getIndividualsCount(
+		@RequestParam(defaultValue = "false", required = false) boolean
+			includeSuppressed) {
+
+		return _bqIndividualDog.countBQIndividuals(includeSuppressed);
+	}
+
 	@GetMapping("/created-since-count")
 	public long getIndividualsCount(
 		@DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
