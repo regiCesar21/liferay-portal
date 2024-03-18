@@ -20,6 +20,8 @@ public class ExternalLinkEntityName {
 
 	public static final String LICENSE_KEY = "license-key";
 
+	public static final String LXC_PROJECT = "project";
+
 	public static final String OKTA_GROUP = "group";
 
 	public static final String RELATED_SALESFORCE_PROJECT =

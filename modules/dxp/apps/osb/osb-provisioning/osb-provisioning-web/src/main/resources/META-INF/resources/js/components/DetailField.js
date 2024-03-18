@@ -144,13 +144,13 @@ DetailField.propTypes = {
 	displayAs: PropTypes.oneOf(['label', 'text', 'toggle']),
 	displayValue: PropTypes.string,
 	externalData: PropTypes.shape({
-		formField: PropTypes.string,
+		formField: PropTypes.arrayOf(PropTypes.string),
 		formName: PropTypes.string,
 		title: PropTypes.string,
 		url: PropTypes.string
 	}),
 	fieldLabel: PropTypes.string,
-	fieldName: PropTypes.string,
+	fieldName: PropTypes.arrayOf(PropTypes.string),
 	formAction: PropTypes.string,
 	formData: PropTypes.object,
 	inputStyle: PropTypes.string,

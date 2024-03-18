@@ -16,6 +16,8 @@ public class EntitlementConstants {
 
 	public static final String LIMITED_SUBSCRIPTION = "Limited Subscription";
 
+	public static final String LXC = "LXC";
+
 	public static final String PARTNER = "Partner";
 
 	public static final String PLATINUM_SUBSCRIPTION = "Platinum Subscription";

@@ -29,7 +29,7 @@ function ExternalAccountKeys({details}) {
 
 			<DetailField
 				fieldLabel={Liferay.Language.get('analytics-cloud-group')}
-				fieldName="entityId"
+				fieldName="entityIds"
 				formAction={details.updateAnalyticsCloudGroupURL}
 				formData={{
 					domain: 'analytics-cloud',
@@ -45,7 +45,7 @@ function ExternalAccountKeys({details}) {
 
 			<DetailField
 				fieldLabel={Liferay.Language.get('salesforce-account')}
-				fieldName="entityId"
+				fieldName="entityIds"
 				formAction={details.updateSalesforceAccountURL}
 				formData={{
 					domain: 'salesforce',
@@ -61,7 +61,7 @@ function ExternalAccountKeys({details}) {
 
 			<DetailField
 				fieldLabel={Liferay.Language.get('related-salesforce-project')}
-				fieldName="entityId"
+				fieldName="entityIds"
 				formAction={details.updateRelatedSalesforceProjectURL}
 				formData={{
 					domain: 'salesforce',
@@ -77,7 +77,7 @@ function ExternalAccountKeys({details}) {
 
 			<DetailField
 				fieldLabel={Liferay.Language.get('dxp-cloud-project')}
-				fieldName="entityId"
+				fieldName="entityIds"
 				formAction={details.updateDxpCloudProjectURL}
 				formData={{
 					domain: 'dxp-cloud',
@@ -93,7 +93,7 @@ function ExternalAccountKeys({details}) {
 
 			<DetailField
 				fieldLabel={Liferay.Language.get('salesforce-project')}
-				fieldName="entityId"
+				fieldName="entityIds"
 				formAction={details.updateSalesforceProjectURL}
 				formData={{
 					domain: 'salesforce',
@@ -106,17 +106,33 @@ function ExternalAccountKeys({details}) {
 				type={fieldType}
 				value={details.salesforceProjectKey}
 			/>
+
+			<DetailField
+				fieldLabel={Liferay.Language.get('lxc-project')}
+				fieldName="entityIds"
+				formAction={details.updateLxcProjectURL}
+				formData={{
+					domain: 'lxc',
+					entityId: convertDashToEmptyString(details.lxcProjectIds),
+					entityName: 'project',
+					parentAccountKey: details.parentAccountKey
+				}}
+				type={fieldType}
+				value={details.lxcProjectIds}
+			/>
 		</ClayList>
 	);
 }
 
 ExternalAccountKeys.propTypes = {
 	details: PropTypes.shape({
+		lxcProjectIds: PropTypes.string,
 		relatedSalesforceProjectKey: PropTypes.string,
 		salesforceAccountKey: PropTypes.string,
 		salesforceProjectKey: PropTypes.string,
 		updateAnalyticsCloudGroupURL: PropTypes.string,
 		updateDxpCloudProjectURL: PropTypes.string,
+		updateLxcProjectURL: PropTypes.string,
 		updateRelatedSalesforceProjectURL: PropTypes.string,
 		updateSalesforceAccountURL: PropTypes.string,
 		updateSalesforceProjectURL: PropTypes.string

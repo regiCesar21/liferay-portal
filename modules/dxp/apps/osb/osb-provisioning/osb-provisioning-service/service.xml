@@ -51,6 +51,7 @@
 		<exception>DuplicateAnalyticsCloudGroupId</exception>
 		<exception>DuplicateContactRole</exception>
 		<exception>DuplicateDXPCloudProjectId</exception>
+		<exception>DuplicateLXCProjectId</exception>
 		<exception>DuplicateRelatedSalesforceProjectKey</exception>
 		<exception>DuplicateSalesforceAccountKey</exception>
 		<exception>DuplicateSalesforceProjectKey</exception>

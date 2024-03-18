@@ -43,6 +43,7 @@ page import="com.liferay.osb.provisioning.exception.ContactRequiredException" %>
 page import="com.liferay.osb.provisioning.exception.DuplicateAnalyticsCloudGroupIdException" %><%@
 page import="com.liferay.osb.provisioning.exception.DuplicateContactRoleException" %><%@
 page import="com.liferay.osb.provisioning.exception.DuplicateDXPCloudProjectIdException" %><%@
+page import="com.liferay.osb.provisioning.exception.DuplicateLXCProjectIdException" %><%@
 page import="com.liferay.osb.provisioning.exception.DuplicateRelatedSalesforceProjectKeyException" %><%@
 page import="com.liferay.osb.provisioning.exception.DuplicateSalesforceAccountKeyException" %><%@
 page import="com.liferay.osb.provisioning.exception.DuplicateSalesforceProjectKeyException" %><%@

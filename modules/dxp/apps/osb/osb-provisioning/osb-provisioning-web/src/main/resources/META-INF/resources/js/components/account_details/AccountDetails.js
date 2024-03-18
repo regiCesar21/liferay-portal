@@ -102,6 +102,7 @@ AccountDetails.propTypes = {
 		internal: PropTypes.bool,
 		key: PropTypes.string,
 		liferayVersion: PropTypes.string,
+		lxcProjectIds: PropTypes.string,
 		name: PropTypes.string,
 		parentAccountKey: PropTypes.string,
 		parterTeamName: PropTypes.string,
@@ -129,6 +130,7 @@ AccountDetails.propTypes = {
 		tier: PropTypes.string,
 		updateAnalyticsCloudGroupURL: PropTypes.string,
 		updateDxpCloudProjectURL: PropTypes.string,
+		updateLxcProjectURL: PropTypes.string,
 		updateRelatedSalesforceProjectURL: PropTypes.string,
 		updateSalesforceAccountURL: PropTypes.string,
 		updateSalesforceProjectURL: PropTypes.string

@@ -89,7 +89,7 @@ public class AccountDisplay {
 	}
 
 	public String getAnalyticsCloudGroupId() {
-		return _getExternalLinkEntityId(
+		return _getExternalLinkEntityIds(
 			ExternalLinkDomain.ANALYTICS_CLOUD,
 			ExternalLinkEntityName.ANALYTICS_CLOUD_GROUP);
 	}
@@ -121,7 +121,7 @@ public class AccountDisplay {
 	}
 
 	public String getDxpCloudProjectId() {
-		return _getExternalLinkEntityId(
+		return _getExternalLinkEntityIds(
 			ExternalLinkDomain.DXP_CLOUD,
 			ExternalLinkEntityName.DXP_CLOUD_PROJECT);
 	}
@@ -201,6 +201,11 @@ public class AccountDisplay {
 		return StringPool.DASH;
 	}
 
+	public String getLxcProjectIds() {
+		return _getExternalLinkEntityIds(
+			ExternalLinkDomain.LXC, ExternalLinkEntityName.LXC_PROJECT);
+	}
+
 	public String getName() {
 		return _account.getName();
 	}
@@ -263,19 +268,19 @@ public class AccountDisplay {
 	}
 
 	public String getRelatedSalesforceProjectKey() {
-		return _getExternalLinkEntityId(
+		return _getExternalLinkEntityIds(
 			ExternalLinkDomain.SALESFORCE,
 			ExternalLinkEntityName.RELATED_SALESFORCE_PROJECT);
 	}
 
 	public String getSalesforceAccountKey() {
-		return _getExternalLinkEntityId(
+		return _getExternalLinkEntityIds(
 			ExternalLinkDomain.SALESFORCE,
 			ExternalLinkEntityName.SALESFORCE_ACCOUNT);
 	}
 
 	public String getSalesforceProjectKey() {
-		return _getExternalLinkEntityId(
+		return _getExternalLinkEntityIds(
 			ExternalLinkDomain.SALESFORCE,
 			ExternalLinkEntityName.SALESFORCE_PROJECT);
 	}
@@ -414,6 +419,12 @@ public class AccountDisplay {
 				ExternalLinkEntityName.DXP_CLOUD_PROJECT));
 	}
 
+	public String getUpdateLxcProjectURL() {
+		return _getUpdateExternalLinkURL(
+			_getExternalLinkKey(
+				ExternalLinkDomain.LXC, ExternalLinkEntityName.LXC_PROJECT));
+	}
+
 	public String getUpdateRelatedSalesforceProjectURL() {
 		return _getUpdateExternalLinkURL(
 			_getExternalLinkKey(
@@ -538,20 +549,26 @@ public class AccountDisplay {
 		return editExternalLinkURL.toString();
 	}
 
-	private String _getExternalLinkEntityId(String domain, String entityName) {
+	private String _getExternalLinkEntityIds(String domain, String entityName) {
 		ExternalLink[] externalLinks = _account.getExternalLinks();
+
+		StringBundler sb = new StringBundler();
 
 		if (externalLinks != null) {
 			for (ExternalLink externalLink : externalLinks) {
 				if (domain.equals(externalLink.getDomain()) &&
 					entityName.equals(externalLink.getEntityName())) {
 
-					return externalLink.getEntityId();
+					if (sb.length() > 0) {
+						sb.append(StringPool.COMMA_AND_SPACE);
+					}
+
+					sb.append(externalLink.getEntityId());
 				}
 			}
 		}
 
-		return StringPool.DASH;
+		return sb.toString();
 	}
 
 	private String _getExternalLinkKey(String domain, String entityName) {
