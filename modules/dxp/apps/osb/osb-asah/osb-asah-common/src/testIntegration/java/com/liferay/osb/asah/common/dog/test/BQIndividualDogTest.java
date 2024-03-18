@@ -41,6 +41,12 @@ public class BQIndividualDogTest
 
 	@BQSQLResource(resourcePath = "test_count_bq_individuals.sql")
 	@Test
+	public void testCountBQIdentities() {
+		Assertions.assertEquals(7L, _bqIndividualDog.countBQIdentities());
+	}
+
+	@BQSQLResource(resourcePath = "test_count_bq_individuals.sql")
+	@Test
 	public void testCountBQIndividuals1() {
 		Assertions.assertEquals(
 			7L,
@@ -73,17 +79,9 @@ public class BQIndividualDogTest
 	@BQSQLResource(resourcePath = "test_count_bq_individuals.sql")
 	@Test
 	public void testCountBQIndividuals2() {
-		Assertions.assertEquals(
-			2L, _bqIndividualDog.countBQIndividuals(false, false));
+		Assertions.assertEquals(2L, _bqIndividualDog.countBQIndividuals(false));
 
-		Assertions.assertEquals(
-			7L, _bqIndividualDog.countBQIndividuals(true, false));
-
-		Assertions.assertEquals(
-			3L, _bqIndividualDog.countBQIndividuals(false, true));
-
-		Assertions.assertEquals(
-			7L, _bqIndividualDog.countBQIndividuals(true, true));
+		Assertions.assertEquals(3L, _bqIndividualDog.countBQIndividuals(true));
 	}
 
 	@BQSQLResource(resourcePath = "test_bq_identity_activities_1.sql")
