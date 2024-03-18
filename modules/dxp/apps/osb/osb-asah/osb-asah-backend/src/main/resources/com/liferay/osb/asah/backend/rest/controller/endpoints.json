@@ -100,6 +100,10 @@
 			"href": "{url}/fields{?apply,filter,page,size,sort*}",
 			"templated": true
 		},
+		"identities-count": {
+			"href": "{url}/individuals/identities-count",
+			"templated": true
+		},
 		"individual": {
 			"href": "{url}/individuals/{id}{?channelId,expand}",
 			"templated": true
@@ -141,7 +145,7 @@
 			"templated": true
 		},
 		"individuals-count": {
-			"href": "{url}/individuals/count{?includeAnonymousUsers,includeSuppressed}",
+			"href": "{url}/individuals/count{?includeSuppressed}",
 			"templated": true
 		},
 		"individuals-created-since-count": {

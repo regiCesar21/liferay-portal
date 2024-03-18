@@ -55,11 +55,12 @@ public class BQIndividualDog {
 		_dataSourceRepository = dataSourceRepository;
 	}
 
-	public long countBQIndividuals(
-		boolean includeAnonymousUsers, boolean includeSuppressed) {
+	public long countBQIdentities() {
+		return _bqIdentityRepository.countBQIdentities();
+	}
 
-		return _bqIdentityRepository.countBQIndividuals(
-			includeAnonymousUsers, includeSuppressed);
+	public long countBQIndividuals(boolean includeSuppressed) {
+		return _bqIdentityRepository.countBQIndividuals(includeSuppressed);
 	}
 
 	public long countBQIndividuals(
