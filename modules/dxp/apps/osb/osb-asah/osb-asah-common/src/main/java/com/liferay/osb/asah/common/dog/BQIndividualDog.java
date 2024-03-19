@@ -60,7 +60,7 @@ public class BQIndividualDog {
 	}
 
 	public long countBQIndividuals(boolean includeSuppressed) {
-		return _bqIdentityRepository.countBQIndividuals(includeSuppressed);
+		return _bqIndividualRepository.countBQIndividuals(includeSuppressed);
 	}
 
 	public long countBQIndividuals(

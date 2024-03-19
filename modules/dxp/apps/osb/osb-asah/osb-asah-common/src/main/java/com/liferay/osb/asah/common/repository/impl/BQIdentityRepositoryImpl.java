@@ -66,51 +66,6 @@ public class BQIdentityRepositoryImpl
 	}
 
 	@Override
-	public long countBQIndividuals(boolean includeSuppressed) {
-		SelectSelectStep<Record1<Integer>> selectSelectStep =
-			_dslContext.selectCount();
-
-		SelectJoinStep<Record1<Integer>> selectJoinStep = selectSelectStep.from(
-			DSL.table(
-				"BQIdentity"
-			).as(
-				"Identity"
-			));
-
-		Condition condition = DSL.and(
-			DSL.field(
-				"Identity.individualId"
-			).eq(
-				DSL.field("Individual.id")
-			));
-
-		if (!includeSuppressed) {
-			condition = condition.and(
-				DSL.or(
-					DSL.field(
-						"Individual.suppressed"
-					).isNull(),
-					DSL.field(
-						"Individual.suppressed"
-					).notEqual(
-						DSL.val(Boolean.TRUE)
-					)));
-		}
-
-		selectJoinStep = selectJoinStep.join(
-			DSL.table(
-				"BQIndividual"
-			).as(
-				"Individual"
-			)
-		).on(
-			condition
-		);
-
-		return _queryExecutor.queryForLong(selectJoinStep);
-	}
-
-	@Override
 	public List<BQIdentity> findAll() {
 		return _queryExecutor.queryForList(
 			BQIdentity::new,

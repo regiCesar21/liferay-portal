@@ -75,6 +75,35 @@ public class BQIndividualRepositoryImpl
 	}
 
 	@Override
+	public long countBQIndividuals(boolean includeSuppressed) {
+		SelectSelectStep<Record1<Integer>> selectSelectStep =
+			_dslContext.selectCount();
+
+		SelectJoinStep<Record1<Integer>> selectJoinStep = selectSelectStep.from(
+			DSL.table(
+				"BQIndividual"
+			).as(
+				"Individual"
+			));
+
+		if (!includeSuppressed) {
+			_queryExecutor.queryForLong(
+				selectJoinStep.where(
+					DSL.or(
+						DSL.field(
+							"Individual.suppressed"
+						).isNull(),
+						DSL.field(
+							"Individual.suppressed"
+						).notEqual(
+							DSL.val(Boolean.TRUE)
+						))));
+		}
+
+		return _queryExecutor.queryForLong(selectJoinStep);
+	}
+
+	@Override
 	public long countBQIndividuals(
 		@Nullable Long accountId, @Nullable Long channelId,
 		@Nullable Long datasourceId, @Nullable String interestName,

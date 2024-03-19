@@ -23,8 +23,6 @@ public interface CustomBQIdentityRepository {
 
 	public long countBQIdentities();
 
-	public long countBQIndividuals(boolean includeSuppressed);
-
 	public List<BQIdentity> findAll();
 
 	public List<BQIdentity> findByIdIn(Collection<String> ids);

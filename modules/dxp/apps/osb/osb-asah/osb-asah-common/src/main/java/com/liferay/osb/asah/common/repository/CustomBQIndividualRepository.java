@@ -22,6 +22,8 @@ import org.springframework.lang.Nullable;
  */
 public interface CustomBQIndividualRepository {
 
+	public long countBQIndividuals(boolean includeSuppressed);
+
 	public long countBQIndividuals(
 		@Nullable Long accountId, @Nullable Long channelId,
 		@Nullable Long dataSourceId, @Nullable String interestName,
