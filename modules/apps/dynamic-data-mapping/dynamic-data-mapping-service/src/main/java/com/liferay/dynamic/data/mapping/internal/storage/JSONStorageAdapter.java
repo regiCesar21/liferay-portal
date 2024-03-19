@@ -13,6 +13,7 @@ import com.liferay.dynamic.data.mapping.io.DDMFormValuesSerializerSerializeReque
 import com.liferay.dynamic.data.mapping.io.DDMFormValuesSerializerSerializeResponse;
 import com.liferay.dynamic.data.mapping.model.DDMContent;
 import com.liferay.dynamic.data.mapping.model.DDMForm;
+import com.liferay.dynamic.data.mapping.model.DDMFormField;
 import com.liferay.dynamic.data.mapping.model.DDMStorageLink;
 import com.liferay.dynamic.data.mapping.model.DDMStructure;
 import com.liferay.dynamic.data.mapping.model.DDMStructureVersion;
@@ -30,6 +31,7 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.Portal;
 
 import java.util.List;
+import java.util.Map;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -96,14 +98,22 @@ public class JSONStorageAdapter extends BaseStorageAdapter {
 		return StorageType.JSON.toString();
 	}
 
-	protected DDMFormValues deserialize(String content, DDMForm ddmForm) {
-		DDMFormValuesDeserializerDeserializeRequest.Builder builder =
-			DDMFormValuesDeserializerDeserializeRequest.Builder.newBuilder(
-				content, ddmForm);
+	protected DDMFormValues deserialize(
+		String content, DDMForm ddmForm,
+		Map<String, DDMFormField> newDDMFormFieldsReferencesMap,
+		Map<String, DDMFormField> oldDDMFormFieldsReferencesMap) {
 
 		DDMFormValuesDeserializerDeserializeResponse
 			ddmFormValuesDeserializerDeserializeResponse =
-				_jsonDDMFormValuesDeserializer.deserialize(builder.build());
+				_jsonDDMFormValuesDeserializer.deserialize(
+					DDMFormValuesDeserializerDeserializeRequest.Builder.
+						newBuilder(
+							content, ddmForm
+						).withNewDDMFormFieldsReferencesMap(
+							newDDMFormFieldsReferencesMap
+						).withOldDDMFormFieldsReferencesMap(
+							oldDDMFormFieldsReferencesMap
+						).build());
 
 		return ddmFormValuesDeserializerDeserializeResponse.getDDMFormValues();
 	}
@@ -144,8 +154,14 @@ public class JSONStorageAdapter extends BaseStorageAdapter {
 
 		DDMStructure ddmStructure = ddmStructureVersion.getStructure();
 
+		DDMForm newDDMForm = ddmStructureVersion.getDDMForm();
+
+		DDMForm oldDDMForm = ddmStructure.getDDMForm();
+
 		return deserialize(
-			ddmContent.getData(), ddmStructure.createFullHierarchyDDMForm());
+			ddmContent.getData(), ddmStructure.createFullHierarchyDDMForm(),
+			newDDMForm.getDDMFormFieldsReferencesMap(true),
+			oldDDMForm.getDDMFormFieldsReferencesMap(true));
 	}
 
 	protected String serialize(DDMFormValues ddmFormValues) {
