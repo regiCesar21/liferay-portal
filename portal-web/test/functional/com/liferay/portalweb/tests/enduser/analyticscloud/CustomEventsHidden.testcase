@@ -119,6 +119,8 @@ definition {
 	@description = "Feature ID: LRAC-7865 | Automation ID: LRAC-10232 | Test Summary: Hide a default event and hide a custom event"
 	@priority = 5
 	test CanHideDefaultAndCustomEvent {
+	property portal.upstream = "regisson";
+
 		property test.run.type = "single";
 
 		var defaultEventName = "assetDownloaded";
@@ -231,6 +233,7 @@ definition {
 	@description = "Feature ID: LRAC-7865 | Automation ID: LRAC-10233 | Test Summary: Unhide a default event and unhide a custom event"
 	@priority = 5
 	test CanUnhideDefaultAndCustomEvent {
+	    property portal.upstream = "regisson";
 		property test.run.type = "single";
 
 		var defaultEventName = "assetDepthReached";
@@ -449,6 +452,8 @@ definition {
 	@description = "Feature ID: LRAC-7865 | Automation ID: LRAC-10227 | Test Summary: Hidden custom event should not be visible on the Segment > Event criteria list"
 	@priority = 5
 	test ViewIfCustomEventIsNotVisibleOnSegmentEventCriteriaList {
+	property portal.upstream = "regisson";
+
 		task ("Fill fields and create custom event") {
 			var customEventName = ACCustomEvents.generateCustomEventName();
 
