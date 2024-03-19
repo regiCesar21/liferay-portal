@@ -219,8 +219,7 @@ public class JSModuleConfigGeneratorPlugin implements Plugin<Project> {
 
 		TaskContainer taskContainer = project.getTasks();
 
-		Task generateJSPJavaTask = taskContainer.findByName(
-			"generateJSPJava");
+		Task generateJSPJavaTask = taskContainer.findByName("generateJSPJava");
 
 		if (generateJSPJavaTask != null) {
 			generateJSPJavaTask.mustRunAfter(configJSModulesTask);

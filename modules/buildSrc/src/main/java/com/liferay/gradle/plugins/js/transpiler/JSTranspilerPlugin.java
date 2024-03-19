@@ -37,7 +37,6 @@ import org.gradle.api.tasks.Copy;
 import org.gradle.api.tasks.SourceSet;
 import org.gradle.api.tasks.SourceSetOutput;
 import org.gradle.api.tasks.TaskContainer;
-import org.gradle.api.tasks.TaskDependency;
 
 /**
  * @author     Andrea Di Giorgi
