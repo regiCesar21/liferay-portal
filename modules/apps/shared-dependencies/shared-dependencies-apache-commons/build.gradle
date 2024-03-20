@@ -1,3 +1,5 @@
 dependencies {
 	compileInclude group: "org.apache.commons", name: "commons-compress", version: "1.26.1"
+
+	compileOnly group: "commons-io", name: "commons-io", version: "2.11.0"
 }
