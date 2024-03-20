@@ -3,3 +3,4 @@ Bundle-SymbolicName: com.liferay.shared.dependencies.apache.commons
 Bundle-Version: 1.0.0
 Import-Package: !com.github.luben.zstd
 -exportcontents: org.apache.commons.compress.*
+-fixupmessages: Classes found in the wrong directory: ...;is:=ignore
