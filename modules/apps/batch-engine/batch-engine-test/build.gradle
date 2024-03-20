@@ -5,7 +5,7 @@ dependencies {
 	testIntegrationImplementation group: "com.liferay", name: "com.liferay.arquillian.extension.junit.bridge", version: "1.0.19"
 	testIntegrationImplementation group: "log4j", name: "log4j", version: "1.2.17"
 	testIntegrationImplementation group: "org.apache.commons", name: "commons-collections4", version: "4.4"
-	testIntegrationImplementation group: "org.apache.commons", name: "commons-compress", version: "1.21"
+	testIntegrationImplementation group: "org.apache.commons", name: "commons-compress", version: "1.26.1"
 	testIntegrationImplementation group: "org.apache.poi", name: "poi", version: "5.2.2"
 	testIntegrationImplementation group: "org.apache.poi", name: "poi-ooxml", version: "5.2.2"
 	testIntegrationImplementation group: "org.apache.poi", name: "poi-ooxml-schemas", version: "4.1.2"
