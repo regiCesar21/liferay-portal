@@ -10,13 +10,16 @@ sourceCompatibility = "1.8"
 targetCompatibility = "1.8"
 
 bootJar {
-	classifier = "application"
+	archiveClassifier = "application"
+}
+
+configurations.all {
+	resolutionStrategy {
+		force group: "org.apache.httpcomponents", name: "httpcore", version: "4.4.10"
+	}
 }
 
 dependencies {
-	api (group: "org.apache.httpcomponents", name: "httpcore", version: "4.4.10") {
-		force = true
-	}
 	api project(configuration: "default", path: ":dxp:apps:osb:osb-asah:osb-asah-common")
 
 	testImplementation project(configuration: "default", path: ":dxp:apps:osb:osb-asah:osb-asah-test-util")
