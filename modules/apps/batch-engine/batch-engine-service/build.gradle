@@ -13,7 +13,7 @@ dependencies {
 	compileOnly group: "com.fasterxml.jackson.core", name: "jackson-core", version: "2.13.4"
 	compileOnly group: "com.fasterxml.jackson.core", name: "jackson-databind", version: "2.13.4.2"
 	compileOnly group: "com.liferay.portal", name: "com.liferay.portal.kernel", version: "default"
-	compileOnly group: "org.apache.commons", name: "commons-compress", version: "1.21"
+	compileOnly group: "org.apache.commons", name: "commons-compress", version: "1.26.1"
 	compileOnly group: "org.apache.poi", name: "poi", version: "5.2.2"
 	compileOnly group: "org.apache.poi", name: "poi-ooxml", version: "5.2.2"
 	compileOnly group: "org.apache.poi", name: "poi-ooxml-lite", version: "5.2.2"
