@@ -80,7 +80,6 @@ public class BQIndividualDogTest
 	@Test
 	public void testCountBQIndividuals2() {
 		Assertions.assertEquals(2L, _bqIndividualDog.countBQIndividuals(false));
-
 		Assertions.assertEquals(3L, _bqIndividualDog.countBQIndividuals(true));
 	}
 
