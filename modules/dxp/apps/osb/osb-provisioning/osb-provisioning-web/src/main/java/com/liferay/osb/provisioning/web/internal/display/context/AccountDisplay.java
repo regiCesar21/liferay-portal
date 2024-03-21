@@ -550,9 +550,9 @@ public class AccountDisplay {
 	private String _getExternalLinkEntityIds(String domain, String entityName) {
 		ExternalLink[] externalLinks = _account.getExternalLinks();
 
-		StringBundler sb = new StringBundler();
-
 		if (externalLinks != null) {
+			StringBundler sb = new StringBundler();
+
 			for (ExternalLink externalLink : externalLinks) {
 				if (domain.equals(externalLink.getDomain()) &&
 					entityName.equals(externalLink.getEntityName())) {
@@ -564,10 +564,10 @@ public class AccountDisplay {
 					sb.append(externalLink.getEntityId());
 				}
 			}
-		}
 
-		if (Validator.isNotNull(sb.toString())) {
-			return sb.toString();
+			if (Validator.isNotNull(sb.toString())) {
+				return sb.toString();
+			}
 		}
 
 		return StringPool.DASH;

@@ -132,11 +132,13 @@ public class EditExternalLinkMVCActionCommand extends BaseMVCActionCommand {
 		String parentAccountKey = ParamUtil.getString(
 			actionRequest, "parentAccountKey");
 
+		_validate(accountKey, parentAccountKey, domain, entityName, entityIds);
+
 		if (Validator.isNull(externalLinkKey)) {
-			List<ExternalLink> accountExternalLinks =
+			List<ExternalLink> externalLinks =
 				_externalLinkWebService.getExternalLinks(accountKey, 1, 1000);
 
-			for (ExternalLink externalLink : accountExternalLinks) {
+			for (ExternalLink externalLink : externalLinks) {
 				if (domain.equals(externalLink.getDomain()) &&
 					entityName.equals(externalLink.getEntityName())) {
 
@@ -148,9 +150,6 @@ public class EditExternalLinkMVCActionCommand extends BaseMVCActionCommand {
 		}
 
 		for (String entityId : entityIds) {
-			_validate(
-				accountKey, parentAccountKey, domain, entityName, entityIds);
-
 			ExternalLink externalLink = new ExternalLink();
 
 			externalLink.setDomain(domain);
