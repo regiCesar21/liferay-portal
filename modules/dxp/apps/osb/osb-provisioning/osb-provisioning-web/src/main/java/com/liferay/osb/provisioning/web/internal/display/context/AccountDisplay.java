@@ -420,9 +420,7 @@ public class AccountDisplay {
 	}
 
 	public String getUpdateLxcProjectURL() {
-		return _getUpdateExternalLinkURL(
-			_getExternalLinkKey(
-				ExternalLinkDomain.LXC, ExternalLinkEntityName.LXC_PROJECT));
+		return _getUpdateExternalLinkURL(null);
 	}
 
 	public String getUpdateRelatedSalesforceProjectURL() {
@@ -568,7 +566,11 @@ public class AccountDisplay {
 			}
 		}
 
-		return sb.toString();
+		if (Validator.isNotNull(sb.toString())) {
+			return sb.toString();
+		}
+
+		return StringPool.DASH;
 	}
 
 	private String _getExternalLinkKey(String domain, String entityName) {

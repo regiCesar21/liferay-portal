@@ -18,6 +18,7 @@ ViewAccountDisplayContext viewAccountDisplayContext = ProvisioningWebComponentPr
 <liferay-ui:error exception="<%= DuplicateRelatedSalesforceProjectKeyException.class %>" message="related-salesforce-project-key-must-be-unique-if-it-does-not-share-the-same-parent" />
 <liferay-ui:error exception="<%= DuplicateSalesforceAccountKeyException.class %>" message="salesforce-account-key-must-be-unique" />
 <liferay-ui:error exception="<%= DuplicateSalesforceProjectKeyException.class %>" message="salesforce-project-key-must-be-unique" />
+<liferay-ui:error exception="<%= RequiredEntitlementException.class %>" message="account-must-have-the-required-entitlement" />
 
 <liferay-ui:error exception="<%= Problem.ProblemException.class %>">
 

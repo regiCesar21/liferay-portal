@@ -50,6 +50,7 @@ page import="com.liferay.osb.provisioning.exception.DuplicateSalesforceProjectKe
 page import="com.liferay.osb.provisioning.exception.ProductBundleNameException" %><%@
 page import="com.liferay.osb.provisioning.exception.ProductPurchaseQuantityException" %><%@
 page import="com.liferay.osb.provisioning.exception.RequiredContactRoleException" %><%@
+page import="com.liferay.osb.provisioning.exception.RequiredEntitlementException" %><%@
 page import="com.liferay.osb.provisioning.exception.RequiredProductException" %><%@
 page import="com.liferay.osb.provisioning.koroneiki.constants.ContactRoleConstants" %><%@
 page import="com.liferay.osb.provisioning.license.exception.DuplicateCommonLicenseKeyException" %><%@

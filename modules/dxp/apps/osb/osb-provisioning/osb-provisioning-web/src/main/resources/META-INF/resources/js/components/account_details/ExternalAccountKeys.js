@@ -33,7 +33,7 @@ function ExternalAccountKeys({details}) {
 				formAction={details.updateAnalyticsCloudGroupURL}
 				formData={{
 					domain: 'analytics-cloud',
-					entityId: convertDashToEmptyString(
+					entityIds: convertDashToEmptyString(
 						details.analyticsCloudGroupId
 					),
 					entityName: 'group',
@@ -49,7 +49,7 @@ function ExternalAccountKeys({details}) {
 				formAction={details.updateSalesforceAccountURL}
 				formData={{
 					domain: 'salesforce',
-					entityId: convertDashToEmptyString(
+					entityIds: convertDashToEmptyString(
 						details.salesforceAccountKey
 					),
 					entityName: 'account',
@@ -65,7 +65,7 @@ function ExternalAccountKeys({details}) {
 				formAction={details.updateRelatedSalesforceProjectURL}
 				formData={{
 					domain: 'salesforce',
-					entityId: convertDashToEmptyString(
+					entityIds: convertDashToEmptyString(
 						details.relatedSalesforceProjectKey
 					),
 					entityName: 'related-salesforce-project',
@@ -81,7 +81,7 @@ function ExternalAccountKeys({details}) {
 				formAction={details.updateDxpCloudProjectURL}
 				formData={{
 					domain: 'dxp-cloud',
-					entityId: convertDashToEmptyString(
+					entityIds: convertDashToEmptyString(
 						details.dxpCloudProjectId
 					),
 					entityName: 'project',
@@ -97,7 +97,7 @@ function ExternalAccountKeys({details}) {
 				formAction={details.updateSalesforceProjectURL}
 				formData={{
 					domain: 'salesforce',
-					entityId: convertDashToEmptyString(
+					entityIds: convertDashToEmptyString(
 						details.salesforceProjectKey
 					),
 					entityName: 'project',
@@ -113,7 +113,7 @@ function ExternalAccountKeys({details}) {
 				formAction={details.updateLxcProjectURL}
 				formData={{
 					domain: 'lxc',
-					entityId: convertDashToEmptyString(details.lxcProjectIds),
+					entityIds: convertDashToEmptyString(details.lxcProjectIds),
 					entityName: 'project',
 					parentAccountKey: details.parentAccountKey
 				}}

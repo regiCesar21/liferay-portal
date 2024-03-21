@@ -18,6 +18,7 @@ import com.liferay.osb.provisioning.exception.DuplicateLXCProjectIdException;
 import com.liferay.osb.provisioning.exception.DuplicateRelatedSalesforceProjectKeyException;
 import com.liferay.osb.provisioning.exception.DuplicateSalesforceAccountKeyException;
 import com.liferay.osb.provisioning.exception.DuplicateSalesforceProjectKeyException;
+import com.liferay.osb.provisioning.exception.RequiredEntitlementException;
 import com.liferay.osb.provisioning.koroneiki.constants.EntitlementConstants;
 import com.liferay.osb.provisioning.koroneiki.web.service.AccountWebService;
 import com.liferay.osb.provisioning.koroneiki.web.service.ExternalLinkWebService;
@@ -34,7 +35,6 @@ import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 
-import java.util.Arrays;
 import java.util.List;
 
 import javax.portlet.ActionRequest;
@@ -82,7 +82,7 @@ public class EditExternalLinkMVCActionCommand extends BaseMVCActionCommand {
 				deleteExternalLink(actionRequest, user);
 			}
 			else {
-				updateExternalLink(actionRequest, user);
+				updateExternalLinks(actionRequest, user);
 			}
 		}
 		catch (Exception exception) {
@@ -95,7 +95,8 @@ public class EditExternalLinkMVCActionCommand extends BaseMVCActionCommand {
 					DuplicateRelatedSalesforceProjectKeyException ||
 				exception instanceof DuplicateSalesforceAccountKeyException ||
 				exception instanceof DuplicateSalesforceProjectKeyException ||
-				exception instanceof Problem.ProblemException) {
+				exception instanceof Problem.ProblemException ||
+				exception instanceof RequiredEntitlementException) {
 
 				SessionErrors.add(
 					actionRequest, exception.getClass(), exception);
@@ -108,7 +109,7 @@ public class EditExternalLinkMVCActionCommand extends BaseMVCActionCommand {
 		sendRedirect(actionRequest, actionResponse);
 	}
 
-	protected void updateExternalLink(ActionRequest actionRequest, User user)
+	protected void updateExternalLinks(ActionRequest actionRequest, User user)
 		throws Exception {
 
 		String externalLinkKey = ParamUtil.getString(
@@ -116,7 +117,9 @@ public class EditExternalLinkMVCActionCommand extends BaseMVCActionCommand {
 		String[] entityIds = ParamUtil.getStringValues(
 			actionRequest, "entityIds");
 
-		if (Validator.isNotNull(externalLinkKey) && (entityIds != null)) {
+		if (Validator.isNotNull(externalLinkKey) &&
+			ArrayUtil.isEmpty(entityIds)) {
+
 			deleteExternalLink(actionRequest, user);
 
 			return;
@@ -129,10 +132,22 @@ public class EditExternalLinkMVCActionCommand extends BaseMVCActionCommand {
 		String parentAccountKey = ParamUtil.getString(
 			actionRequest, "parentAccountKey");
 
-		if (entityIds.length > 1) {
-			updateMultipleExternalLinks(actionRequest, user, entityIds);
+		if (Validator.isNull(externalLinkKey)) {
+			List<ExternalLink> accountExternalLinks =
+				_externalLinkWebService.getExternalLinks(accountKey, 1, 1000);
+
+			for (ExternalLink externalLink : accountExternalLinks) {
+				if (domain.equals(externalLink.getDomain()) &&
+					entityName.equals(externalLink.getEntityName())) {
+
+					_externalLinkWebService.deleteExternalLink(
+						user.getFullName(), user.getUuid(),
+						externalLink.getKey());
+				}
+			}
 		}
-		else {
+
+		for (String entityId : entityIds) {
 			_validate(
 				accountKey, parentAccountKey, domain, entityName, entityIds);
 
@@ -140,7 +155,7 @@ public class EditExternalLinkMVCActionCommand extends BaseMVCActionCommand {
 
 			externalLink.setDomain(domain);
 			externalLink.setEntityName(entityName);
-			externalLink.setEntityId(Arrays.toString(entityIds));
+			externalLink.setEntityId(entityId.trim());
 
 			if (Validator.isNotNull(externalLinkKey)) {
 				_externalLinkWebService.updateExternalLink(
@@ -153,56 +168,6 @@ public class EditExternalLinkMVCActionCommand extends BaseMVCActionCommand {
 					externalLink);
 			}
 		}
-	}
-
-	protected void updateMultipleExternalLinks(
-			ActionRequest actionRequest, User user, String[] entityIds)
-		throws Exception {
-
-		String accountKey = ParamUtil.getString(actionRequest, "accountKey");
-		String domain = ParamUtil.getString(actionRequest, "domain");
-		String entityName = ParamUtil.getString(actionRequest, "entityName");
-
-		List<ExternalLink> accountExternalLinks =
-			_externalLinkWebService.getExternalLinks(accountKey, 1, 1000);
-
-		for (ExternalLink externalLink : accountExternalLinks) {
-			_externalLinkWebService.deleteExternalLink(
-				user.getFullName(), user.getUuid(), externalLink.getKey());
-		}
-
-		for (String entityId : entityIds) {
-			_validate(accountKey, null, domain, entityName, entityIds);
-
-			ExternalLink externalLink = new ExternalLink();
-
-			externalLink.setDomain(domain);
-			externalLink.setEntityId(entityId);
-			externalLink.setEntityName(entityName);
-
-			_externalLinkWebService.addAccountExternalLink(
-				user.getFullName(), user.getUuid(), accountKey, externalLink);
-		}
-	}
-
-	private boolean _hasLxcEntitlement(String accountKey) throws Exception {
-		Account account = _accountWebService.getAccount(accountKey);
-
-		if (accountKey.equals(account.getKey())) {
-			Entitlement[] entitlements = account.getEntitlements();
-
-			if (ArrayUtil.isNotEmpty(entitlements)) {
-				for (Entitlement entitlement : entitlements) {
-					String name = entitlement.getName();
-
-					if (name.equals(EntitlementConstants.LXC)) {
-						return true;
-					}
-				}
-			}
-		}
-
-		return false;
 	}
 
 	private void _validate(
@@ -218,6 +183,10 @@ public class EditExternalLinkMVCActionCommand extends BaseMVCActionCommand {
 			return;
 		}
 
+		if (domain.equals(ExternalLinkDomain.LXC)) {
+			_validateLxcEntitlement(accountKey);
+		}
+
 		for (String entityId : entityIds) {
 			List<Account> accounts = _accountWebService.getAccounts(
 				domain, entityName, entityId.trim(), 1, 1000);
@@ -231,7 +200,6 @@ public class EditExternalLinkMVCActionCommand extends BaseMVCActionCommand {
 				}
 				else if (domain.equals(ExternalLinkDomain.LXC)) {
 					if (entityName.equals(ExternalLinkEntityName.LXC_PROJECT)) {
-						_hasLxcEntitlement(accountKey);
 						_validateDuplicateLXCProjectIds(accounts, accountKey);
 					}
 				}
@@ -302,6 +270,24 @@ public class EditExternalLinkMVCActionCommand extends BaseMVCActionCommand {
 
 			throw new DuplicateSalesforceAccountKeyException();
 		}
+	}
+
+	private void _validateLxcEntitlement(String accountKey) throws Exception {
+		Account account = _accountWebService.getAccount(accountKey);
+
+		Entitlement[] entitlements = account.getEntitlements();
+
+		if (ArrayUtil.isNotEmpty(entitlements)) {
+			for (Entitlement entitlement : entitlements) {
+				String name = entitlement.getName();
+
+				if (name.equals(EntitlementConstants.LXC)) {
+					return;
+				}
+			}
+		}
+
+		throw new RequiredEntitlementException();
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

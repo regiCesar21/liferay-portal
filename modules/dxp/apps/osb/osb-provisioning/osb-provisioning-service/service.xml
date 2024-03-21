@@ -58,6 +58,7 @@
 		<exception>ProductBundleName</exception>
 		<exception>ProductPurchaseQuantity</exception>
 		<exception>RequiredContactRole</exception>
+		<exception>RequiredEntitlement</exception>
 		<exception>RequiredProduct</exception>
 	</exceptions>
 </service-builder>
