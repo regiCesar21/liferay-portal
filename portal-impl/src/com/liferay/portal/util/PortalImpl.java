@@ -2699,8 +2699,30 @@ public class PortalImpl implements Portal {
 
 	@Override
 	public String getLayoutActualURL(Layout layout, String mainPath) {
-		Map<String, String> variables = _getVariables(
-			LayoutLocalServiceUtil.getBrowsableLayout(layout), mainPath);
+		Layout browsableLayout = getBrowsableLayout(layout);
+
+		String groupIdString = String.valueOf(browsableLayout.getGroupId());
+
+		Map<String, String> variables = HashMapBuilder.put(
+			"liferay:groupId", groupIdString
+		).put(
+			"liferay:layoutId", String.valueOf(browsableLayout.getLayoutId())
+		).put(
+			"liferay:mainPath", mainPath
+		).put(
+			"liferay:plid", String.valueOf(browsableLayout.getPlid())
+		).put(
+			"liferay:privateLayout",
+			String.valueOf(browsableLayout.isPrivateLayout())
+		).build();
+
+		String pvlsgid = "0";
+
+		if (browsableLayout instanceof VirtualLayout) {
+			pvlsgid = groupIdString;
+		}
+
+		variables.put("liferay:pvlsgid", pvlsgid);
 
 		variables.putAll(layout.getTypeSettingsProperties());
 
@@ -7293,6 +7315,41 @@ public class PortalImpl implements Portal {
 		return locale;
 	}
 
+	protected Layout getBrowsableLayout(Layout layout) {
+		LayoutTypeController layoutTypeController =
+			LayoutTypeControllerTracker.getLayoutTypeController(
+				layout.getType());
+
+		if (layoutTypeController.isBrowsable()) {
+			return layout;
+		}
+
+		Layout browsableChildLayout = null;
+
+		List<Layout> childLayouts = layout.getAllChildren();
+
+		for (Layout childLayout : childLayouts) {
+			LayoutTypeController childLayoutTypeController =
+				LayoutTypeControllerTracker.getLayoutTypeController(
+					childLayout.getType());
+
+			if (childLayoutTypeController.isBrowsable()) {
+				browsableChildLayout = childLayout;
+
+				break;
+			}
+		}
+
+		if (browsableChildLayout != null) {
+			return browsableChildLayout;
+		}
+
+		long defaultPlid = LayoutLocalServiceUtil.getDefaultPlid(
+			layout.getGroupId(), layout.isPrivateLayout());
+
+		return LayoutLocalServiceUtil.fetchLayout(defaultPlid);
+	}
+
 	/**
 	 * @deprecated As of Mueller (7.2.x), replaced by {@link
 	 *             #getCanonicalDomain(TreeMap, String)}
@@ -8772,37 +8829,6 @@ public class PortalImpl implements Portal {
 		}
 
 		return group;
-	}
-
-	private Map<String, String> _getVariables(Layout layout, String mainPath) {
-		if (layout == null) {
-			return HashMapBuilder.put(
-				"liferay:pvlsgid", "0"
-			).build();
-		}
-
-		String groupIdString = String.valueOf(layout.getGroupId());
-
-		return HashMapBuilder.put(
-			"liferay:groupId", groupIdString
-		).put(
-			"liferay:layoutId", String.valueOf(layout.getLayoutId())
-		).put(
-			"liferay:mainPath", mainPath
-		).put(
-			"liferay:plid", String.valueOf(layout.getPlid())
-		).put(
-			"liferay:privateLayout", String.valueOf(layout.isPrivateLayout())
-		).put(
-			"liferay:pvlsgid",
-			() -> {
-				if (layout instanceof VirtualLayout) {
-					return groupIdString;
-				}
-
-				return "0";
-			}
-		).build();
 	}
 
 	private String _getVirtualHostname(
