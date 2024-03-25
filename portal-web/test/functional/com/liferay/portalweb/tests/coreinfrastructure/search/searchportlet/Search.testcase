@@ -40,6 +40,8 @@ definition {
 	}
 
 	test AddSearchWidgetsOnContentPageViaUI {
+		property osgi.app.includes = "portal-search-elasticsearch-monitoring,search-experiences";
+
 		task ("Add a content page and navigate to the edit screen of said page") {
 			JSONLayout.addPublicLayout(
 				groupName = "Guest",
