@@ -12,6 +12,9 @@ import com.liferay.dispatch.executor.DispatchTaskStatus;
 import com.liferay.dispatch.model.DispatchTrigger;
 import com.liferay.dispatch.service.DispatchLogLocalService;
 import com.liferay.dispatch.service.DispatchTriggerLocalService;
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
@@ -63,6 +66,8 @@ public class AnalyticsDispatchTriggersUpgradeProcess extends UpgradeProcess {
 
 			long companyId = GetterUtil.getLong(properties.get("companyId"));
 
+			_deleteDispatchTriggers(companyId);
+
 			DispatchTrigger dispatchTrigger =
 				_dispatchTriggerLocalService.fetchDispatchTrigger(
 					companyId, "export-analytics-dxp-entities");
@@ -108,6 +113,44 @@ public class AnalyticsDispatchTriggersUpgradeProcess extends UpgradeProcess {
 				endDate, null, null, startDate, DispatchTaskStatus.SUCCESSFUL);
 		}
 	}
+
+	private void _deleteDispatchTriggers(long companyId) {
+		String[] dispatchTriggerNames = {
+			"export-analytics-association-analytics-dxp-entities",
+			"export-analytics-delete-message-analytics-dxp-entities",
+			"export-expando-column-analytics-dxp-entities",
+			"export-group-analytics-dxp-entities",
+			"export-organization-analytics-dxp-entities",
+			"export-role-analytics-dxp-entities",
+			"export-team-analytics-dxp-entities",
+			"export-user-analytics-dxp-entities",
+			"export-user-group-analytics-dxp-entities"
+		};
+
+		for (String dispatchTriggerName : dispatchTriggerNames) {
+			try {
+				DispatchTrigger dispatchTrigger =
+					_dispatchTriggerLocalService.fetchDispatchTrigger(
+						companyId, dispatchTriggerName);
+
+				if (dispatchTrigger != null) {
+					_dispatchLogLocalService.deleteDispatchLogs(
+						dispatchTrigger.getDispatchTriggerId());
+
+					_dispatchTriggerLocalService.deleteDispatchTrigger(
+						dispatchTrigger);
+				}
+			}
+			catch (PortalException portalException) {
+				_log.error(
+					"Failed to delete dispatch trigger " + dispatchTriggerName,
+					portalException);
+			}
+		}
+	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		AnalyticsDispatchTriggersUpgradeProcess.class);
 
 	private final ConfigurationAdmin _configurationAdmin;
 	private final DispatchLogLocalService _dispatchLogLocalService;
