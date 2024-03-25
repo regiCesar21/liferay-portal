@@ -381,8 +381,8 @@ public class AnalyticsConfigurationRegistryImpl
 				Set<String> refreshDispatchTriggerNames = new HashSet<>();
 				Set<String> unscheduleDispatchTriggerNames = new HashSet<>();
 
-				if (_syncedContactSettingsChanged(companyId)) {
-					if (_syncedContactSettingsEnabled(companyId)) {
+				if (_syncedContactSettingsChanged(dictionary)) {
+					if (_syncedContactSettingsEnabled(dictionary)) {
 						refreshDispatchTriggerNames.add(
 							AnalyticsDXPEntityBatchExporterConstants.
 								DISPATCH_TRIGGER_NAME_DXP_ENTITIES);
@@ -394,8 +394,8 @@ public class AnalyticsConfigurationRegistryImpl
 					}
 				}
 
-				if (_syncedContactSettingsEnabled(companyId) &&
-					_syncedUserFieldsChanged(companyId)) {
+				if (_syncedContactSettingsEnabled(dictionary) &&
+					_syncedUserFieldsChanged(dictionary)) {
 
 					refreshDispatchTriggerNames.add(
 						AnalyticsDXPEntityBatchExporterConstants.
@@ -415,9 +415,7 @@ public class AnalyticsConfigurationRegistryImpl
 						});
 				}
 
-				if (!_analyticsSettingsManager.syncedContactSettingsEnabled(
-						companyId)) {
-
+				if (!_syncedContactSettingsEnabled(dictionary)) {
 					unscheduleDispatchTriggerNames.add(
 						AnalyticsDXPEntityBatchExporterConstants.
 							DISPATCH_TRIGGER_NAME_DXP_ENTITIES);
@@ -454,39 +452,37 @@ public class AnalyticsConfigurationRegistryImpl
 		}
 	}
 
-	private boolean _syncedContactSettingsChanged(long companyId)
+	private boolean _syncedContactSettingsChanged(
+			Dictionary<String, ?> dictionary)
 		throws Exception {
 
-		AnalyticsConfiguration analyticsConfiguration =
-			getAnalyticsConfiguration(companyId);
-
-		if (analyticsConfiguration.previousSyncAllContacts() !=
-				analyticsConfiguration.syncAllContacts()) {
+		if (GetterUtil.getBoolean(dictionary.get("previousSyncAllContacts")) !=
+				GetterUtil.getBoolean(dictionary.get("syncAllContacts"))) {
 
 			return true;
 		}
 
-		String[] previousSyncedOrganizationIds =
-			analyticsConfiguration.previousSyncedOrganizationIds();
+		String[] previousSyncedOrganizationIds = GetterUtil.getStringValues(
+			dictionary.get("previousSyncedOrganizationIds"));
 
 		Arrays.sort(previousSyncedOrganizationIds);
 
-		String[] previousSyncedUserGroupIds =
-			analyticsConfiguration.previousSyncedUserGroupIds();
+		String[] previousSyncedUserGroupIds = GetterUtil.getStringValues(
+			dictionary.get("previousSyncedUserGroupIds"));
 
 		Arrays.sort(previousSyncedUserGroupIds);
 
-		String[] syncedOrganizationIds =
-			analyticsConfiguration.syncedOrganizationIds();
+		String[] syncedOrganizationIds = GetterUtil.getStringValues(
+			dictionary.get("syncedOrganizationIds"));
 
 		Arrays.sort(syncedOrganizationIds);
 
-		String[] syncedUserGroupIds =
-			analyticsConfiguration.syncedUserGroupIds();
+		String[] syncedUserGroupIds = GetterUtil.getStringValues(
+			dictionary.get("syncedUserGroupIds"));
 
 		Arrays.sort(syncedUserGroupIds);
 
-		if (!analyticsConfiguration.syncAllContacts() &&
+		if (!GetterUtil.getBoolean(dictionary.get("syncAllContacts")) &&
 			(!Arrays.equals(
 				previousSyncedOrganizationIds, syncedOrganizationIds) ||
 			 !Arrays.equals(previousSyncedUserGroupIds, syncedUserGroupIds))) {
@@ -497,18 +493,16 @@ public class AnalyticsConfigurationRegistryImpl
 		return false;
 	}
 
-	private boolean _syncedContactSettingsEnabled(long companyId)
+	private boolean _syncedContactSettingsEnabled(
+			Dictionary<String, ?> dictionary)
 		throws Exception {
 
-		AnalyticsConfiguration analyticsConfiguration =
-			getAnalyticsConfiguration(companyId);
+		String[] syncedOrganizationIds = GetterUtil.getStringValues(
+			dictionary.get("syncedOrganizationIds"));
+		String[] syncedUserGroupIds = GetterUtil.getStringValues(
+			dictionary.get("syncedUserGroupIds"));
 
-		String[] syncedOrganizationIds =
-			analyticsConfiguration.syncedOrganizationIds();
-		String[] syncedUserGroupIds =
-			analyticsConfiguration.syncedUserGroupIds();
-
-		if (analyticsConfiguration.syncAllContacts() ||
+		if (GetterUtil.getBoolean(dictionary.get("syncAllContacts")) ||
 			(syncedOrganizationIds.length != 0) ||
 			(syncedUserGroupIds.length != 0)) {
 
@@ -518,27 +512,24 @@ public class AnalyticsConfigurationRegistryImpl
 		return false;
 	}
 
-	private boolean _syncedUserFieldsChanged(long companyId) throws Exception {
-		AnalyticsConfiguration analyticsConfiguration =
-			getAnalyticsConfiguration(companyId);
-
-		String[] previousSyncedContactFieldNames =
-			analyticsConfiguration.previousSyncedContactFieldNames();
+	private boolean _syncedUserFieldsChanged(Dictionary<String, ?> dictionary) {
+		String[] previousSyncedContactFieldNames = GetterUtil.getStringValues(
+			dictionary.get("previousSyncedContactFieldNames"));
 
 		Arrays.sort(previousSyncedContactFieldNames);
 
-		String[] previousSyncedUserFieldNames =
-			analyticsConfiguration.previousSyncedUserFieldNames();
+		String[] previousSyncedUserFieldNames = GetterUtil.getStringValues(
+			dictionary.get("previousSyncedUserFieldNames"));
 
 		Arrays.sort(previousSyncedUserFieldNames);
 
-		String[] syncedContactFieldNames =
-			analyticsConfiguration.syncedContactFieldNames();
+		String[] syncedContactFieldNames = GetterUtil.getStringValues(
+			dictionary.get("syncedContactFieldNames"));
 
 		Arrays.sort(syncedContactFieldNames);
 
-		String[] syncedUserFieldNames =
-			analyticsConfiguration.syncedUserFieldNames();
+		String[] syncedUserFieldNames = GetterUtil.getStringValues(
+			dictionary.get("syncedUserFieldNames"));
 
 		Arrays.sort(syncedUserFieldNames);
 
