@@ -27,7 +27,15 @@ public class ContactRoleConstants {
 
 	public static final String NAME_PARTNER_MANAGER = "Partner Manager";
 
+	public static final String NAME_PARTNER_MARKETING_USER =
+		"Partner Marketing User";
+
 	public static final String NAME_PARTNER_MEMBER = "Partner Member";
+
+	public static final String NAME_PARTNER_SALES_USER = "Partner Sales User";
+
+	public static final String NAME_PARTNER_TECHNICAL_USER =
+		"Partner Technical User";
 
 	public static final String NAME_PRIMARY_CONTACT = "Primary Contact";
 
@@ -47,7 +55,8 @@ public class ContactRoleConstants {
 	public static final String NAME_SUPPORT_USER = "Support User";
 
 	public static final String[] PARTNER_CONTACT_ROLES = {
-		NAME_PARTNER_MANAGER, NAME_PARTNER_MEMBER
+		NAME_PARTNER_MANAGER, NAME_PARTNER_MARKETING_USER, NAME_PARTNER_MEMBER,
+		NAME_PARTNER_SALES_USER, NAME_PARTNER_TECHNICAL_USER
 	};
 
 	public static final String[] SUPPORT_CONTACT_ROLES = {

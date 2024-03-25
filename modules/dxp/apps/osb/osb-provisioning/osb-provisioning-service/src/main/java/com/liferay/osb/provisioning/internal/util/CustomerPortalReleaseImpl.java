@@ -653,7 +653,13 @@ public class CustomerPortalReleaseImpl implements CustomerPortalRelease {
 		}
 
 		if (contactRoleNames.contains(
+				ContactRoleConstants.NAME_PARTNER_MARKETING_USER) ||
+			contactRoleNames.contains(
 				ContactRoleConstants.NAME_PARTNER_MEMBER) ||
+			contactRoleNames.contains(
+				ContactRoleConstants.NAME_PARTNER_SALES_USER) ||
+			contactRoleNames.contains(
+				ContactRoleConstants.NAME_PARTNER_TECHNICAL_USER) ||
 			contactRoleNames.contains(
 				ContactRoleConstants.NAME_SUPPORT_REQUESTER) ||
 			contactRoleNames.contains(ContactRoleConstants.NAME_SUPPORT_USER)) {
@@ -897,7 +903,10 @@ public class CustomerPortalReleaseImpl implements CustomerPortalRelease {
 
 	private static final String[] _PARTNER_CONTACT_ROLE_NAMES = {
 		ContactRoleConstants.NAME_PARTNER_MANAGER,
-		ContactRoleConstants.NAME_PARTNER_MEMBER
+		ContactRoleConstants.NAME_PARTNER_MARKETING_USER,
+		ContactRoleConstants.NAME_PARTNER_MEMBER,
+		ContactRoleConstants.NAME_PARTNER_SALES_USER,
+		ContactRoleConstants.NAME_PARTNER_TECHNICAL_USER
 	};
 
 	private String _accountAccessEUOktaId;
