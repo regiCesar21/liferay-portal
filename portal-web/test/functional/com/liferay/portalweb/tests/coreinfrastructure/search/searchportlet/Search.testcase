@@ -57,6 +57,8 @@ definition {
 	}
 
 	test AddSearchWidgetsOnWidgetPageViaUI {
+		property osgi.app.includes = "portal-search-elasticsearch-monitoring,search-experiences";
+
 		task ("Add a widget page and navigate to said page") {
 			JSONLayout.addPublicLayout(
 				groupName = "Guest",
