@@ -8,21 +8,18 @@ package com.liferay.server.admin.web.internal.portlet.action;
 import com.liferay.document.library.kernel.util.DLPreviewableProcessor;
 import com.liferay.mail.kernel.model.Account;
 import com.liferay.mail.kernel.service.MailService;
-import com.liferay.petra.log4j.Log4JUtil;
 import com.liferay.petra.lang.SafeCloseable;
+import com.liferay.petra.log4j.Log4JUtil;
 import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.change.tracking.sql.CTSQLModeThreadLocal;
 import com.liferay.portal.convert.ConvertException;
 import com.liferay.portal.convert.ConvertProcess;
 import com.liferay.portal.kernel.cache.CacheRegistryUtil;
 import com.liferay.portal.kernel.cache.MultiVMPool;
 import com.liferay.portal.kernel.cache.SingleVMPool;
-import com.liferay.portal.kernel.configuration.Filter;
 import com.liferay.portal.kernel.change.tracking.CTCollectionThreadLocal;
-import com.liferay.portal.change.tracking.sql.CTSQLModeThreadLocal;
-import com.liferay.portal.kernel.cluster.ClusterExecutorUtil;
-import com.liferay.portal.kernel.cluster.ClusterMasterExecutorUtil;
-import com.liferay.portal.kernel.cluster.ClusterRequest;
+import com.liferay.portal.kernel.configuration.Filter;
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
 import com.liferay.portal.kernel.dao.orm.ProjectionFactoryUtil;
@@ -211,7 +208,7 @@ public class EditServerMVCActionCommand extends BaseMVCActionCommand {
 			}
 		}
 		else if (cmd.equals("runScript")) {
-			runScript(actionRequest, actionResponse);
+			_runScript(actionRequest, actionResponse);
 		}
 		else if (cmd.equals("shutdown")) {
 			shutdown(actionRequest);
@@ -363,7 +360,7 @@ public class EditServerMVCActionCommand extends BaseMVCActionCommand {
 		CacheRegistryUtil.setActive(true);
 
 		try (LoggingTimer loggingTimer = new LoggingTimer();
-			SafeCloseable safeCloseable1 =
+			SafeCloseable safeCloseable =
 				CTSQLModeThreadLocal.setCTSQLModeWithSafeCloseable(
 					CTSQLModeThreadLocal.CTSQLMode.CT_ALL)) {
 
@@ -386,59 +383,7 @@ public class EditServerMVCActionCommand extends BaseMVCActionCommand {
 			actionableDynamicQuery.setParallel(true);
 			actionableDynamicQuery.setPerformActionMethod(
 				(com.liferay.portal.kernel.model.PortletPreferences
-					portletPreferences) -> {
-
-					try (SafeCloseable safeCloseable2 =
-							CTCollectionThreadLocal.
-								setCTCollectionIdWithSafeCloseable(
-									portletPreferences.getCtCollectionId())) {
-
-						if ((portletPreferences.getOwnerId() !=
-								PortletKeys.PREFS_OWNER_ID_DEFAULT) ||
-							(portletPreferences.getOwnerType() !=
-								PortletKeys.PREFS_OWNER_TYPE_LAYOUT)) {
-
-							return;
-						}
-
-						Layout layout = _layoutLocalService.getLayout(
-							portletPreferences.getPlid());
-
-						if (layout.isTypeContent() ||
-							layout.isTypeControlPanel()) {
-
-							return;
-						}
-
-						UnicodeProperties typeSettingsUnicodeProperties =
-							layout.getTypeSettingsProperties();
-
-						Set<String> keys =
-							typeSettingsUnicodeProperties.keySet();
-
-						boolean orphan = true;
-
-						for (String key : keys) {
-							String value =
-								typeSettingsUnicodeProperties.getProperty(key);
-
-							if (value.contains(
-									portletPreferences.getPortletId())) {
-
-								orphan = false;
-
-								break;
-							}
-						}
-
-						if (orphan) {
-							_portletPreferencesLocalService.
-								deletePortletPreferences(
-									portletPreferences.
-										getPortletPreferencesId());
-						}
-					}
-				});
+					portletPreferences) -> _performAction(portletPreferences));
 
 			actionableDynamicQuery.performActions();
 		}
@@ -537,53 +482,6 @@ public class EditServerMVCActionCommand extends BaseMVCActionCommand {
 			PropsKeys.XUGGLER_JAR_SHA1, new Filter(xugglerOption));
 
 		XugglerUtil.installNativeLibraries(jarFile, sha1);
-	}
-
-	protected void runScript(
-			ActionRequest actionRequest, ActionResponse actionResponse)
-		throws Exception {
-
-		String language = ParamUtil.getString(actionRequest, "language");
-		String output = ParamUtil.getString(actionRequest, "output");
-		String script = ParamUtil.getString(actionRequest, "script");
-
-		PortletConfig portletConfig = getPortletConfig(actionRequest);
-
-		Map<String, Object> portletObjects =
-			ScriptingHelperUtil.getPortletObjects(
-				portletConfig, portletConfig.getPortletContext(), actionRequest,
-				actionResponse);
-
-		UnsyncByteArrayOutputStream unsyncByteArrayOutputStream =
-			new UnsyncByteArrayOutputStream();
-
-		UnsyncPrintWriter unsyncPrintWriter = UnsyncPrintWriterPool.borrow(
-			unsyncByteArrayOutputStream);
-
-		portletObjects.put("out", unsyncPrintWriter);
-
-		try {
-			SessionMessages.add(actionRequest, "language", language);
-			SessionMessages.add(actionRequest, "script", script);
-			SessionMessages.add(actionRequest, "output", output);
-
-			_scripting.exec(null, portletObjects, language, script);
-
-			unsyncPrintWriter.flush();
-
-			SessionMessages.add(
-				actionRequest, "scriptOutput",
-				unsyncByteArrayOutputStream.toString());
-		}
-		catch (ScriptingException scriptingException) {
-			SessionErrors.add(
-				actionRequest, ScriptingException.class.getName(),
-				scriptingException);
-
-			Log log = SanitizerLogWrapper.allowCRLF(_log);
-
-			log.error(scriptingException.getMessage());
-		}
 	}
 
 	protected void shutdown(ActionRequest actionRequest) throws Exception {
@@ -812,6 +710,101 @@ public class EditServerMVCActionCommand extends BaseMVCActionCommand {
 			layoutTypePortlet.getAllPortlets(), Portlet.PORTLET_ID_ACCESSOR);
 
 		return portletIds.contains(portletId);
+	}
+
+	private void _performAction(
+			com.liferay.portal.kernel.model.PortletPreferences
+				portletPreferences)
+		throws PortalException {
+
+		try (SafeCloseable safeCloseable =
+				CTCollectionThreadLocal.setCTCollectionIdWithSafeCloseable(
+					portletPreferences.getCtCollectionId())) {
+
+			if ((portletPreferences.getOwnerId() !=
+					PortletKeys.PREFS_OWNER_ID_DEFAULT) ||
+				(portletPreferences.getOwnerType() !=
+					PortletKeys.PREFS_OWNER_TYPE_LAYOUT)) {
+
+				return;
+			}
+
+			Layout layout = _layoutLocalService.getLayout(
+				portletPreferences.getPlid());
+
+			if (layout.isTypeContent() || layout.isTypeControlPanel()) {
+				return;
+			}
+
+			UnicodeProperties typeSettingsUnicodeProperties =
+				layout.getTypeSettingsProperties();
+
+			Set<String> keys = typeSettingsUnicodeProperties.keySet();
+
+			boolean orphan = true;
+
+			for (String key : keys) {
+				String value = typeSettingsUnicodeProperties.getProperty(key);
+
+				if (value.contains(portletPreferences.getPortletId())) {
+					orphan = false;
+
+					break;
+				}
+			}
+
+			if (orphan) {
+				_portletPreferencesLocalService.deletePortletPreferences(
+					portletPreferences.getPortletPreferencesId());
+			}
+		}
+	}
+
+	private void _runScript(
+			ActionRequest actionRequest, ActionResponse actionResponse)
+		throws Exception {
+
+		String language = ParamUtil.getString(actionRequest, "language");
+		String output = ParamUtil.getString(actionRequest, "output");
+		String script = ParamUtil.getString(actionRequest, "script");
+
+		PortletConfig portletConfig = getPortletConfig(actionRequest);
+
+		Map<String, Object> portletObjects =
+			ScriptingHelperUtil.getPortletObjects(
+				portletConfig, portletConfig.getPortletContext(), actionRequest,
+				actionResponse);
+
+		UnsyncByteArrayOutputStream unsyncByteArrayOutputStream =
+			new UnsyncByteArrayOutputStream();
+
+		UnsyncPrintWriter unsyncPrintWriter = UnsyncPrintWriterPool.borrow(
+			unsyncByteArrayOutputStream);
+
+		portletObjects.put("out", unsyncPrintWriter);
+
+		try {
+			SessionMessages.add(actionRequest, "language", language);
+			SessionMessages.add(actionRequest, "script", script);
+			SessionMessages.add(actionRequest, "output", output);
+
+			_scripting.exec(null, portletObjects, language, script);
+
+			unsyncPrintWriter.flush();
+
+			SessionMessages.add(
+				actionRequest, "scriptOutput",
+				unsyncByteArrayOutputStream.toString());
+		}
+		catch (ScriptingException scriptingException) {
+			SessionErrors.add(
+				actionRequest, ScriptingException.class.getName(),
+				scriptingException);
+
+			Log log = SanitizerLogWrapper.allowCRLF(_log);
+
+			log.error(scriptingException.getMessage());
+		}
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
