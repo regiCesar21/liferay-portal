@@ -1020,22 +1020,6 @@ public class OpportunityMessageSubscriber extends BaseMessageSubscriber {
 					accountKey, parentAccount, activeContacts, region,
 					postalAddress, productPurchases, jsonObject);
 
-				if (projectJSONObject != null) {
-					String projectKey = projectJSONObject.getString(
-						"projectKey");
-
-					List<Account> relatedAccounts =
-						_accountWebService.getAccounts(
-							ExternalLinkDomain.SALESFORCE,
-							ExternalLinkEntityName.RELATED_SALESFORCE_PROJECT,
-							projectKey, 1, 1000);
-
-					for (Account relatedAccount : relatedAccounts) {
-						updateProductPurchases(
-							relatedAccount, productPurchases, jsonObject);
-					}
-				}
-
 				List<Exception> productPurchaseExceptions =
 					_productPurchaseExceptionsThreadLocal.get();
 
@@ -2294,19 +2278,9 @@ public class OpportunityMessageSubscriber extends BaseMessageSubscriber {
 
 		ProductPurchase ewsaProductPurchase = null;
 
-		boolean renewal = false;
+		boolean renewal = jsonObject.getBoolean("renewal");
 
 		for (ProductPurchase productPurchase : productPurchases) {
-			Map<String, String> properties = productPurchase.getProperties();
-
-			if (!renewal &&
-				ArrayUtil.contains(
-					SalesforceConstants.PRODUCT_TYPES_RENEWAL,
-					properties.get("productType"))) {
-
-				renewal = true;
-			}
-
 			if (renewal) {
 				Product product = productPurchase.getProduct();
 
@@ -2341,7 +2315,10 @@ public class OpportunityMessageSubscriber extends BaseMessageSubscriber {
 			}
 		}
 
-		if (renewal) {
+		Map<String, Set<ProductPurchase>> siblingAccountProductPurchases =
+			new HashMap<>();
+
+		if (renewal && Validator.isNotNull(account.getParentAccountKey())) {
 			FilterQuery filterQuery2 = new FilterQuery();
 
 			filterQuery2.addEquals(
@@ -2361,22 +2338,30 @@ public class OpportunityMessageSubscriber extends BaseMessageSubscriber {
 					_productPurchaseWebService.search(
 						filterQuery3, 1, 1000, StringPool.BLANK);
 
+				Set<ProductPurchase> ewsaProductPurchases = new HashSet<>();
+
 				for (ProductPurchase productPurchase : activeProductPurchases) {
 					boolean isEligibleEWSARenewal = _isEligibleEWSARenewal(
 						productPurchase.getProduct());
 
 					if ((ewsaProductPurchase != null) &&
 						isEligibleEWSARenewal &&
-						(!accountKey.equals(siblingAccount.getKey()) ||
+						((!accountKey.equals(siblingAccount.getKey()) &&
+						  !_containsProduct(
+							  ewsaProductPurchases,
+							  productPurchase.getProductKey())) ||
 						 !_containsProduct(
 							 productPurchases,
 							 productPurchase.getProductKey()))) {
 
-						addEWSAProductPurchase(
-							ewsaProductPurchase, productPurchase, jsonObject,
-							siblingAccount.getName());
+						ProductPurchase curEWSAProductPurchase =
+							addEWSAProductPurchase(
+								ewsaProductPurchase, productPurchase,
+								jsonObject, siblingAccount.getName());
 
 						newStartDate = ewsaProductPurchase.getStartDate();
+
+						ewsaProductPurchases.add(curEWSAProductPurchase);
 					}
 
 					if ((((ewsaProductPurchase != null) &&
@@ -2459,9 +2444,51 @@ public class OpportunityMessageSubscriber extends BaseMessageSubscriber {
 							}
 						}
 
-						addEWSAProductPurchase(
-							ewsaProductPurchase, latestProductPurchase,
-							jsonObject, siblingAccount.getName());
+						ProductPurchase curEWSAProductPurchase =
+							addEWSAProductPurchase(
+								ewsaProductPurchase, latestProductPurchase,
+								jsonObject, siblingAccount.getName());
+
+						ewsaProductPurchases.add(curEWSAProductPurchase);
+					}
+				}
+
+				siblingAccountProductPurchases.put(
+					siblingAccount.getKey(), ewsaProductPurchases);
+			}
+		}
+
+		JSONObject projectJSONObject = jsonObject.getJSONObject("project");
+
+		if (projectJSONObject != null) {
+			String projectKey = projectJSONObject.getString("projectKey");
+
+			List<Account> relatedAccounts = _accountWebService.getAccounts(
+				ExternalLinkDomain.SALESFORCE,
+				ExternalLinkEntityName.RELATED_SALESFORCE_PROJECT, projectKey,
+				1, 1000);
+
+			for (Account relatedAccount : relatedAccounts) {
+				String relatedAccountKey = relatedAccount.getKey();
+
+				Set<ProductPurchase> siblingProductPurchases =
+					siblingAccountProductPurchases.get(relatedAccountKey);
+
+				for (ProductPurchase productPurchase : productPurchases) {
+					Product product = productPurchase.getProduct();
+
+					if (!_containsProduct(
+							siblingProductPurchases, product.getKey())) {
+
+						try {
+							_productPurchaseWebService.addProductPurchase(
+								StringPool.BLANK, StringPool.BLANK,
+								relatedAccountKey, productPurchase);
+						}
+						catch (Exception exception) {
+							_handleProductPurchaseError(
+								productPurchase, exception);
+						}
 					}
 				}
 			}
@@ -2470,6 +2497,10 @@ public class OpportunityMessageSubscriber extends BaseMessageSubscriber {
 
 	private static boolean _containsProduct(
 		Set<ProductPurchase> productPurchases, String productKey) {
+
+		if ((productPurchases == null) || productPurchases.isEmpty()) {
+			return false;
+		}
 
 		for (ProductPurchase productPurchase : productPurchases) {
 			Product product = productPurchase.getProduct();
