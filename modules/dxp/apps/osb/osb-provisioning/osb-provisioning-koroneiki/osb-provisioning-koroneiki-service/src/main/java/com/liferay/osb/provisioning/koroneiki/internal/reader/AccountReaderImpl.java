@@ -162,7 +162,7 @@ public class AccountReaderImpl implements AccountReader {
 							NAME_DXP_CLOUD_SUBSCRIPTION_HA_PRODUCTION) ||
 					 curName.equals(
 						 ProductConstants.
-							 NAME_LXC_SM_SUBSCRIPTION_HA_PRODUCTION)) {
+							 NAME_LIFERAY_PAAS_SUBSCRIPTION_HA_PRODUCTION)) {
 
 				productionInstances += 2 * productPurchase.getQuantity();
 			}
@@ -175,44 +175,58 @@ public class AccountReaderImpl implements AccountReader {
 					 curName.equals(ProductConstants.NAME_DXP_FLEX) ||
 					 curName.equals(ProductConstants.NAME_DXP_OEM) ||
 					 curName.equals(
-						 ProductConstants.NAME_LXC_CSP_CUSTOM_USER_TIER) ||
-					 curName.equals(
-						 ProductConstants.NAME_LXC_CSP_UP_TO_1K_USERS) ||
-					 curName.equals(
-						 ProductConstants.NAME_LXC_CSP_UP_TO_5K_USERS) ||
-					 curName.equals(
-						 ProductConstants.NAME_LXC_CSP_UP_TO_10K_USERS) ||
-					 curName.equals(
-						 ProductConstants.NAME_LXC_CSP_UP_TO_20K_USERS) ||
-					 curName.equals(
-						 ProductConstants.NAME_LXC_CSP_UP_TO_100_USERS) ||
-					 curName.equals(
-						 ProductConstants.NAME_LXC_CSP_UP_TO_500_USERS) ||
-					 curName.equals(
-						 ProductConstants.NAME_LXC_SM_INSTANCE_PRODUCTION) ||
+						 ProductConstants.
+							 NAME_LIFERAY_SAAS_CSP_CUSTOM_USER_TIER) ||
 					 curName.equals(
 						 ProductConstants.
-							 NAME_LXC_SM_SUBSCRIPTION_STD_PRODUCTION) ||
-					 curName.equals(
-						 ProductConstants.NAME_LXC_SUBSCRIPTION_ENGAGE_SITE) ||
-					 curName.equals(
-						 ProductConstants.NAME_LXC_SUBSCRIPTION_SUPPORT_SITE) ||
+							 NAME_LIFERAY_SAAS_CSP_UP_TO_1K_USERS) ||
 					 curName.equals(
 						 ProductConstants.
-							 NAME_LXC_SUBSCRIPTION_TRANSACT_SITE) ||
+							 NAME_LIFERAY_SAAS_CSP_UP_TO_5K_USERS) ||
+					 curName.equals(
+						 ProductConstants.
+							 NAME_LIFERAY_SAAS_CSP_UP_TO_10K_USERS) ||
+					 curName.equals(
+						 ProductConstants.
+							 NAME_LIFERAY_SAAS_CSP_UP_TO_20K_USERS) ||
+					 curName.equals(
+						 ProductConstants.
+							 NAME_LIFERAY_SAAS_CSP_UP_TO_100_USERS) ||
+					 curName.equals(
+						 ProductConstants.
+							 NAME_LIFERAY_SAAS_CSP_UP_TO_500_USERS) ||
+					 curName.equals(
+						 ProductConstants.
+							 NAME_LIFERAY_PAAS_INSTANCE_PRODUCTION) ||
+					 curName.equals(
+						 ProductConstants.
+							 NAME_LIFERAY_PAAS_SUBSCRIPTION_STD_PRODUCTION) ||
+					 curName.equals(
+						 ProductConstants.
+							 NAME_LIFERAY_SAAS_SUBSCRIPTION_ENGAGE_SITE) ||
+					 curName.equals(
+						 ProductConstants.
+							 NAME_LIFERAY_SAAS_SUBSCRIPTION_SUPPORT_SITE) ||
+					 curName.equals(
+						 ProductConstants.
+							 NAME_LIFERAY_SAAS_SUBSCRIPTION_TRANSACT_SITE) ||
 					 curName.equals(ProductConstants.NAME_PORTAL_OEM) ||
 					 curName.equals(ProductConstants.NAME_PORTAL_PRODUCTION)) {
 
 				productionInstances += productPurchase.getQuantity();
 			}
-			else if (curName.equals(ProductConstants.NAME_LXC_PRO_PLAN)) {
+			else if (curName.equals(
+						ProductConstants.NAME_LIFERAY_SAAS_PRO_PLAN)) {
+
 				maxSupportSeatCount = 2;
 			}
-			else if (curName.equals(ProductConstants.NAME_LXC_BUSINESS_PLAN)) {
+			else if (curName.equals(
+						ProductConstants.NAME_LIFERAY_SAAS_BUSINESS_PLAN)) {
+
 				maxSupportSeatCount = 15;
 			}
 			else if (curName.equals(
-						ProductConstants.NAME_LXC_ENTERPRISE_PLAN)) {
+						ProductConstants.NAME_LIFERAY_SAAS_ENTERPRISE_PLAN)) {
 
 				maxSupportSeatCount = 18;
 			}
@@ -582,8 +596,8 @@ public class AccountReaderImpl implements AccountReader {
 					ContactRoleConstants.NAME_DATA_BREACH_CONTACT) ||
 				 roleName.equals(
 					 ContactRoleConstants.NAME_SECURITY_INCIDENT_CONTACT)) &&
-				name.startsWith(ProductConstants.NAME_LXC) &&
-				!name.startsWith(ProductConstants.NAME_LXC_SM)) {
+				name.startsWith(ProductConstants.NAME_LIFERAY_SAAS) &&
+				!name.startsWith(ProductConstants.NAME_LIFERAY_PAAS)) {
 
 				return true;
 			}
@@ -591,7 +605,7 @@ public class AccountReaderImpl implements AccountReader {
 			if (roleName.equals(
 					ContactRoleConstants.NAME_CRITICAL_INCIDENT_CONTACT) &&
 				(name.startsWith(ProductConstants.NAME_ANALYTICS) ||
-				 name.startsWith(ProductConstants.NAME_LXC))) {
+				 name.startsWith(ProductConstants.NAME_LIFERAY_SAAS))) {
 
 				return true;
 			}

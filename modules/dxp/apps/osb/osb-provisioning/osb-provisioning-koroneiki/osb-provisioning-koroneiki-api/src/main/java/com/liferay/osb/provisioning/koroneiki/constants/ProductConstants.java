@@ -35,7 +35,8 @@ public class ProductConstants {
 	public static final String NAME_COMMERCE_FOR_DXP_CLOUD =
 		"Commerce for DXP Cloud";
 
-	public static final String NAME_COMMERCE_FOR_LXC_SM = "Commerce for LXC SM";
+	public static final String NAME_COMMERCE_FOR_LIFERAY_PAAS =
+		"Commerce for Liferay PaaS";
 
 	public static final String NAME_COMMERCE_SUBSCRIPTION =
 		"Commerce Subscription";
@@ -93,57 +94,59 @@ public class ProductConstants {
 
 	public static final String NAME_GOLD = "Gold Subscription";
 
+	public static final String NAME_LIFERAY_PAAS = "Liferay PaaS";
+
+	public static final String NAME_LIFERAY_PAAS_INSTANCE_PRODUCTION =
+		"Liferay PaaS Instance - Production";
+
+	public static final String NAME_LIFERAY_PAAS_SUBSCRIPTION_HA_PRODUCTION =
+		"Liferay PaaS Subscription HA Production";
+
+	public static final String NAME_LIFERAY_PAAS_SUBSCRIPTION_STD_PRODUCTION =
+		"Liferay PaaS Subscription Std Production";
+
+	public static final String NAME_LIFERAY_SAAS = "Liferay SaaS";
+
+	public static final String NAME_LIFERAY_SAAS_BUSINESS_PLAN =
+		"Liferay SaaS - Business Plan";
+
+	public static final String NAME_LIFERAY_SAAS_CSP_CUSTOM_USER_TIER =
+		"Liferay SaaS - CSP - Custom User Tier";
+
+	public static final String NAME_LIFERAY_SAAS_CSP_UP_TO_1K_USERS =
+		"Liferay SaaS - CSP - Up to 1K Users";
+
+	public static final String NAME_LIFERAY_SAAS_CSP_UP_TO_5K_USERS =
+		"Liferay SaaS - CSP - Up to 5K Users";
+
+	public static final String NAME_LIFERAY_SAAS_CSP_UP_TO_10K_USERS =
+		"Liferay SaaS - CSP - Up to 10K Users";
+
+	public static final String NAME_LIFERAY_SAAS_CSP_UP_TO_20K_USERS =
+		"Liferay SaaS - CSP - Up to 20K Users";
+
+	public static final String NAME_LIFERAY_SAAS_CSP_UP_TO_100_USERS =
+		"Liferay SaaS - CSP - Up to 100 Users";
+
+	public static final String NAME_LIFERAY_SAAS_CSP_UP_TO_500_USERS =
+		"Liferay SaaS - CSP - Up to 500 Users";
+
+	public static final String NAME_LIFERAY_SAAS_ENTERPRISE_PLAN =
+		"Liferay SaaS - Enterprise Plan";
+
+	public static final String NAME_LIFERAY_SAAS_PRO_PLAN =
+		"Liferay SaaS - Pro Plan";
+
+	public static final String NAME_LIFERAY_SAAS_SUBSCRIPTION_ENGAGE_SITE =
+		"Liferay SaaS Subscription - Engage Site";
+
+	public static final String NAME_LIFERAY_SAAS_SUBSCRIPTION_SUPPORT_SITE =
+		"Liferay SaaS Subscription - Support Site";
+
+	public static final String NAME_LIFERAY_SAAS_SUBSCRIPTION_TRANSACT_SITE =
+		"Liferay SaaS Subscription - Transact Site";
+
 	public static final String NAME_LIMITED = "Limited Subscription";
-
-	public static final String NAME_LXC = "LXC";
-
-	public static final String NAME_LXC_BUSINESS_PLAN = "LXC - Business Plan";
-
-	public static final String NAME_LXC_CSP_CUSTOM_USER_TIER =
-		"LXC - CSP - Custom User Tier";
-
-	public static final String NAME_LXC_CSP_UP_TO_1K_USERS =
-		"LXC - CSP - Up to 1K Users";
-
-	public static final String NAME_LXC_CSP_UP_TO_5K_USERS =
-		"LXC - CSP - Up to 5K Users";
-
-	public static final String NAME_LXC_CSP_UP_TO_10K_USERS =
-		"LXC - CSP - Up to 10K Users";
-
-	public static final String NAME_LXC_CSP_UP_TO_20K_USERS =
-		"LXC - CSP - Up to 20K Users";
-
-	public static final String NAME_LXC_CSP_UP_TO_100_USERS =
-		"LXC - CSP - Up to 100 Users";
-
-	public static final String NAME_LXC_CSP_UP_TO_500_USERS =
-		"LXC - CSP - Up to 500 Users";
-
-	public static final String NAME_LXC_ENTERPRISE_PLAN =
-		"LXC - Enterprise Plan";
-
-	public static final String NAME_LXC_PRO_PLAN = "LXC - Pro Plan";
-
-	public static final String NAME_LXC_SM = "LXC SM";
-
-	public static final String NAME_LXC_SM_INSTANCE_PRODUCTION =
-		"LXC SM Instance - Production";
-
-	public static final String NAME_LXC_SM_SUBSCRIPTION_HA_PRODUCTION =
-		"LXC SM Subscription HA Production";
-
-	public static final String NAME_LXC_SM_SUBSCRIPTION_STD_PRODUCTION =
-		"LXC SM Subscription Std Production";
-
-	public static final String NAME_LXC_SUBSCRIPTION_ENGAGE_SITE =
-		"LXC Subscription - Engage Site";
-
-	public static final String NAME_LXC_SUBSCRIPTION_SUPPORT_SITE =
-		"LXC Subscription - Support Site";
-
-	public static final String NAME_LXC_SUBSCRIPTION_TRANSACT_SITE =
-		"LXC Subscription - Transact Site";
 
 	public static final String NAME_MANAGED_SERVICES =
 		"Professional Services - Managed Services";
