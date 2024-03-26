@@ -10,8 +10,7 @@ import com.liferay.fragment.model.FragmentEntryLink;
 import com.liferay.fragment.service.FragmentEntryLinkLocalService;
 import com.liferay.fragment.service.FragmentEntryLocalService;
 import com.liferay.layout.type.controller.content.internal.constants.ContentLayoutPortletKeys;
-import com.liferay.portal.kernel.json.JSONFactoryUtil;
-import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.portlet.JSONPortletResponseUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
@@ -55,8 +54,6 @@ public class AddFragmentEntryLinkMVCActionCommand extends BaseMVCActionCommand {
 		FragmentEntry fragmentEntry =
 			_fragmentEntryLocalService.fetchFragmentEntry(fragmentEntryId);
 
-		JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
-
 		if (fragmentEntry != null) {
 			FragmentEntryLink fragmentEntryLink =
 				_fragmentEntryLinkLocalService.addFragmentEntryLink(
@@ -66,17 +63,17 @@ public class AddFragmentEntryLinkMVCActionCommand extends BaseMVCActionCommand {
 					fragmentEntry.getHtml(), fragmentEntry.getJs(), null,
 					position, serviceContext);
 
-			jsonObject.put(
-				"editableValues", fragmentEntryLink.getEditableValues());
-			jsonObject.put(
-				"fragmentEntryLinkId",
-				fragmentEntryLink.getFragmentEntryLinkId());
+			JSONPortletResponseUtil.writeJSON(
+				actionRequest, actionResponse,
+				JSONUtil.put(
+					"editableValues", fragmentEntryLink.getEditableValues()
+				).put(
+					"fragmentEntryLinkId",
+					fragmentEntryLink.getFragmentEntryLinkId()
+				));
 		}
 
 		hideDefaultSuccessMessage(actionRequest);
-
-		JSONPortletResponseUtil.writeJSON(
-			actionRequest, actionResponse, jsonObject);
 	}
 
 	@Reference
