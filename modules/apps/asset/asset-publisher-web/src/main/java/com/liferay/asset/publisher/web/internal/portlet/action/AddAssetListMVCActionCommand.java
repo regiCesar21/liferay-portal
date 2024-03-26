@@ -11,7 +11,6 @@ import com.liferay.asset.publisher.constants.AssetPublisherPortletKeys;
 import com.liferay.asset.publisher.util.AssetPublisherHelper;
 import com.liferay.asset.publisher.web.internal.handler.AssetListExceptionRequestHandler;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.portlet.JSONPortletResponseUtil;
 import com.liferay.portal.kernel.portlet.PortletPreferencesFactoryUtil;
@@ -82,15 +81,14 @@ public class AddAssetListMVCActionCommand extends BaseMVCActionCommand {
 				_saveManualAssetList(actionRequest, title, portletPreferences);
 			}
 
-			JSONObject jsonObject = JSONUtil.put("redirectURL", redirect);
+			JSONPortletResponseUtil.writeJSON(
+				actionRequest, actionResponse,
+				JSONUtil.put("redirectURL", redirect));
 
 			hideDefaultSuccessMessage(actionRequest);
 
 			MultiSessionMessages.add(
 				actionRequest, portletResource + "requestProcessed");
-
-			JSONPortletResponseUtil.writeJSON(
-				actionRequest, actionResponse, jsonObject);
 		}
 		catch (PortalException portalException) {
 			hideDefaultErrorMessage(actionRequest);

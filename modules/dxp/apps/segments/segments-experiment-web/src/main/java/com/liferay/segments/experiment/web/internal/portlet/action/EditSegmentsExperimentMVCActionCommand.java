@@ -80,10 +80,10 @@ public class EditSegmentsExperimentMVCActionCommand
 					themeDisplay.getRequest(), "an-unexpected-error-occurred"));
 		}
 
-		hideDefaultSuccessMessage(actionRequest);
-
 		JSONPortletResponseUtil.writeJSON(
 			actionRequest, actionResponse, jsonObject);
+
+		hideDefaultSuccessMessage(actionRequest);
 	}
 
 	private JSONObject _editSegmentsExperiment(ActionRequest actionRequest)

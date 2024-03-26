@@ -169,10 +169,10 @@ public class AddItemMVCActionCommand extends BaseMVCActionCommand {
 					errorMessage));
 		}
 
-		hideDefaultSuccessMessage(actionRequest);
-
 		JSONPortletResponseUtil.writeJSON(
 			actionRequest, actionResponse, jsonObject);
+
+		hideDefaultSuccessMessage(actionRequest);
 	}
 
 	private static final int _DEFAULT_ROW_COLUMNS = 3;
