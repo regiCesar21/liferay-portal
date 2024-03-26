@@ -91,10 +91,10 @@ public class CalculateSegmentsExperimentEstimatedDurationMVCActionCommand
 					themeDisplay.getRequest(), "an-unexpected-error-occurred"));
 		}
 
-		hideDefaultSuccessMessage(actionRequest);
-
 		JSONPortletResponseUtil.writeJSON(
 			actionRequest, actionResponse, jsonObject);
+
+		hideDefaultSuccessMessage(actionRequest);
 	}
 
 	private Long _calculateSegmentsExperimentEstimatedDaysDuration(
