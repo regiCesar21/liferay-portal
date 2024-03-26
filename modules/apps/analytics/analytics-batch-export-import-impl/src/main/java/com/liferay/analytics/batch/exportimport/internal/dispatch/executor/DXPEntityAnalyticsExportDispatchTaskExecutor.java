@@ -11,13 +11,18 @@ import com.liferay.analytics.settings.configuration.AnalyticsConfigurationRegist
 import com.liferay.dispatch.executor.DispatchTaskExecutor;
 import com.liferay.dispatch.executor.DispatchTaskExecutorOutput;
 import com.liferay.dispatch.model.DispatchTrigger;
+import com.liferay.dispatch.service.DispatchTriggerLocalService;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.UnicodeProperties;
 
 import java.io.IOException;
 
 import java.util.Arrays;
+import java.util.Date;
 import java.util.List;
 
 import org.osgi.service.component.annotations.Component;
@@ -48,6 +53,20 @@ public class DXPEntityAnalyticsExportDispatchTaskExecutor
 			return;
 		}
 
+		UnicodeProperties dispatchTaskSettingsUnicodeProperties =
+			dispatchTrigger.getDispatchTaskSettingsUnicodeProperties();
+
+		boolean forceFullExport = GetterUtil.getBoolean(
+			dispatchTaskSettingsUnicodeProperties.getProperty(
+				"forceFullExport", StringPool.FALSE));
+
+		Date resourceLastModifiedDate = null;
+
+		if (!forceFullExport) {
+			resourceLastModifiedDate = getResourceLastModifiedDate(
+				dispatchTrigger.getDispatchTriggerId());
+		}
+
 		try {
 			_analyticsBatchExportImportManager.exportToAnalyticsCloud(
 				_batchEngineExportTaskItemDelegateNames,
@@ -55,12 +74,17 @@ public class DXPEntityAnalyticsExportDispatchTaskExecutor
 				getNotificationUnsafeConsumer(
 					dispatchTrigger.getDispatchTriggerId(),
 					dispatchTaskExecutorOutput),
-				getResourceLastModifiedDate(
-					dispatchTrigger.getDispatchTriggerId()),
-				DXPEntity.class.getName(), dispatchTrigger.getUserId());
+				resourceLastModifiedDate, DXPEntity.class.getName(),
+				dispatchTrigger.getUserId());
 		}
 		catch (Exception exception) {
 			_log.error(exception, exception);
+		}
+
+		if (forceFullExport) {
+			dispatchTaskSettingsUnicodeProperties.remove("forceFullExport");
+
+			_dispatchTriggerLocalService.updateDispatchTrigger(dispatchTrigger);
 		}
 	}
 
@@ -88,5 +112,8 @@ public class DXPEntityAnalyticsExportDispatchTaskExecutor
 
 	@Reference
 	private AnalyticsConfigurationRegistry _analyticsConfigurationRegistry;
+
+	@Reference
+	private DispatchTriggerLocalService _dispatchTriggerLocalService;
 
 }
