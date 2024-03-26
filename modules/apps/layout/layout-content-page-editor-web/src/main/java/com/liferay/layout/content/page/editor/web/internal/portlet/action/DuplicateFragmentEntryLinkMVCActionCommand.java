@@ -76,12 +76,11 @@ public class DuplicateFragmentEntryLinkMVCActionCommand
 			ActionRequest actionRequest, ActionResponse actionResponse)
 		throws Exception {
 
-		JSONObject jsonObject = _duplicateFragmentEntryLink(actionRequest);
+		JSONPortletResponseUtil.writeJSON(
+			actionRequest, actionResponse,
+			_duplicateFragmentEntryLink(actionRequest));
 
 		hideDefaultSuccessMessage(actionRequest);
-
-		JSONPortletResponseUtil.writeJSON(
-			actionRequest, actionResponse, jsonObject);
 	}
 
 	private void _copyPortletPreferences(

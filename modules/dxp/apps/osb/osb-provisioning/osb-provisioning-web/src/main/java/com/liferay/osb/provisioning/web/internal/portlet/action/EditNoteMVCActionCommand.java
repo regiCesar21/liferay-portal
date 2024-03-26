@@ -106,10 +106,10 @@ public class EditNoteMVCActionCommand extends BaseMVCActionCommand {
 			}
 		}
 
-		hideDefaultSuccessMessage(actionRequest);
-
 		JSONPortletResponseUtil.writeJSON(
 			actionRequest, actionResponse, jsonObject);
+
+		hideDefaultSuccessMessage(actionRequest);
 	}
 
 	protected JSONObject updateNote(

@@ -67,13 +67,11 @@ public class AddPortletMVCActionCommand extends BaseMVCActionCommand {
 			ActionRequest actionRequest, ActionResponse actionResponse)
 		throws Exception {
 
-		JSONObject jsonObject = _processAddPortlet(
-			actionRequest, actionResponse);
+		JSONPortletResponseUtil.writeJSON(
+			actionRequest, actionResponse,
+			_processAddPortlet(actionRequest, actionResponse));
 
 		hideDefaultSuccessMessage(actionRequest);
-
-		JSONPortletResponseUtil.writeJSON(
-			actionRequest, actionResponse, jsonObject);
 	}
 
 	private String _getPortletInstanceId(

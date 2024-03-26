@@ -101,10 +101,10 @@ public class AddSegmentsExperienceMVCActionCommand
 					themeDisplay.getRequest(), "an-unexpected-error-occurred"));
 		}
 
-		hideDefaultSuccessMessage(actionRequest);
-
 		JSONPortletResponseUtil.writeJSON(
 			actionRequest, actionResponse, jsonObject);
+
+		hideDefaultSuccessMessage(actionRequest);
 	}
 
 	private JSONObject _addSegmentsExperience(ActionRequest actionRequest)

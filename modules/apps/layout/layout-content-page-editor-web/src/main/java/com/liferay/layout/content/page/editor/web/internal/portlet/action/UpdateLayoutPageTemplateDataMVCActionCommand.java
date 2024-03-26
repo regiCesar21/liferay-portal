@@ -76,10 +76,10 @@ public class UpdateLayoutPageTemplateDataMVCActionCommand
 					themeDisplay.getRequest(), "an-unexpected-error-occurred"));
 		}
 
-		hideDefaultSuccessMessage(actionRequest);
-
 		JSONPortletResponseUtil.writeJSON(
 			actionRequest, actionResponse, jsonObject);
+
+		hideDefaultSuccessMessage(actionRequest);
 	}
 
 	protected void updateLayoutPageTemplateData(ActionRequest actionRequest)

@@ -119,13 +119,11 @@ public class AddFragmentEntryLinkMVCActionCommand extends BaseMVCActionCommand {
 			ActionRequest actionRequest, ActionResponse actionResponse)
 		throws Exception {
 
-		JSONObject jsonObject = _processAddFragmentEntryLink(
-			actionRequest, actionResponse);
+		JSONPortletResponseUtil.writeJSON(
+			actionRequest, actionResponse,
+			_processAddFragmentEntryLink(actionRequest, actionResponse));
 
 		hideDefaultSuccessMessage(actionRequest);
-
-		JSONPortletResponseUtil.writeJSON(
-			actionRequest, actionResponse, jsonObject);
 	}
 
 	private FragmentEntry _getContributedFragmentEntry(
