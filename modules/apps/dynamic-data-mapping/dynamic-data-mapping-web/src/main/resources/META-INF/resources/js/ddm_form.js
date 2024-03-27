@@ -375,7 +375,7 @@ AUI.add(
 			getFieldNodes() {
 				var instance = this;
 
-				return instance.get('container').all('.field-wrapper');
+				return instance.get('container').all('> .field-wrapper');
 			},
 
 			getForm() {
@@ -3354,6 +3354,10 @@ AUI.add(
 					return instance
 						.get('container')
 						.all('> fieldset > div > .field-wrapper');
+				},
+
+				getLabelNode() {
+					return null;
 				}
 			}
 		});
