@@ -143,7 +143,7 @@ public class AnalyticsDispatchTriggersUpgradeProcess extends UpgradeProcess {
 			}
 			catch (PortalException portalException) {
 				_log.error(
-					"Failed to delete dispatch trigger " + dispatchTriggerName,
+					"Unable to delete dispatch trigger " + dispatchTriggerName,
 					portalException);
 			}
 		}
