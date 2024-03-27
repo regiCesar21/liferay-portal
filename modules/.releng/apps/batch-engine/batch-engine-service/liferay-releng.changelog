@@ -192,3 +192,8 @@ dbfedcf48ba06295f6bf3a2c745a373c86737d24^..4a0eaab2beb518c5fc1a62e1b4c1ba22dcf5c
 # Bundle Version 2.0.40
 #
 4a0eaab2beb518c5fc1a62e1b4c1ba22dcf5c41e^..a66a56e4de6984cd8057d81265ffc939daf77d28=LPS-149258
+
+#
+# Bundle Version 2.0.41
+#
+a66a56e4de6984cd8057d81265ffc939daf77d28^..e89f5f3003531af64daa12c812b38463c127fd0c=COMMERCE-6529 LPD-15576
