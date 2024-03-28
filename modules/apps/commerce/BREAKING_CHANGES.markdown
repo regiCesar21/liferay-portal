@@ -115,6 +115,7 @@ CommercePricingClassScreenNavigationConstants;`
 Anyone who references or uses these files.
 
 #### How should I update my code?
+
 Replace old references with the new package path.
 
 New package paths:
