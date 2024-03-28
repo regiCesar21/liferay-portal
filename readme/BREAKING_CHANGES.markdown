@@ -793,6 +793,7 @@ This affects anyone who used the replaced method.
 Use `getOutputOptional` instead of `get`.
 
 #### Why was this change made?
+
 This change is part of the Data Provider API Refactoring on [LPS-81563](https://issues.liferay.com/browse/LPS-81563).
 
 ---------------------------------------
