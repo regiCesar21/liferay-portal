@@ -28,6 +28,7 @@
 1. If you are using a MySQL database, download [mysql.jar](https://dev.mysql.com/downloads/connector/j/) and place it in `lib/ext` in your tomcat directory.
 
 1. Add a file called `portal-ext.properties` to your bundle with the following minimum properties. The example below uses a MySQL database.
+
     ```java
     jdbc.default.driverClassName=com.mysql.cj.jdbc.Driver
     jdbc.default.url=jdbc:mysql://localhost/lportal?useUnicode=true&characterEncoding=UTF-8&useFastDateParsing=false
@@ -43,6 +44,7 @@
     ```
 
     If you are using mariadb, you will need to use a different jdbc driver:
+
     ```
     jdbc.default.driverClassName=org.mariadb.jdbc.Driver
 
@@ -53,6 +55,7 @@
 1. Deploy all Elasticsearch 6 modules to your bundle. They are located inside `modules/apps/portal-search-elasticsearch6` in your portal repository.
 
 1. Create a `com.liferay.portal.bundle.blacklist.internal.BundleBlacklistConfiguration.config` file with these contents:
+
 	```
 	blacklistBundleSymbolicNames=["com.liferay.portal.search.elasticsearch", "com.liferay.portal.search.elasticsearch.shield", "com.liferay.portal.search.elasticsearch.marvel.web"]
 	```

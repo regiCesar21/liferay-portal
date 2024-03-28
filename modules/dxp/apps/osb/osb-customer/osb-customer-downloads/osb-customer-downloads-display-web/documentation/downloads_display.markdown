@@ -1,6 +1,7 @@
 # OSB Downloads Display
 
 ### Set up
+
 #### OSB Downloads Display Portlet
 
 Place the _OSB Downloads Display_ portlet on a page (not to be confused with _OSB Downloads_ portet). Go to the product menu and click on the ellipsis next to the current page. Choose _Configure Page_ and select _OSB Downloads Display Layout_ as the page's layout.
@@ -43,6 +44,7 @@ Any _Journal Article_ created with the specified structure will appear in the _O
 ---
 
 ### Viewing Journal Article Downloads
+
 #### Multiple Downloads View
 
 By default the _OSB Downloads Display_ portlet will show two filters, _Product_ and _File Type_ which a user can use to filter through the entire list of _Journal Articles_. If there are no existing _Journal Articles_, the results area will show an empty message.
@@ -69,6 +71,7 @@ where __[primkey]__ is the _Journal Article's_ `primarykey`. To obtain the prima
 ---
 
 #### <a name="newArticles">Add New Journal Article Downloads</a>
+
 Go to _Control Panel_ > _Content_ > _Web Content_, select either _OSB Customer Theme - Download_ structure or _OSB Customer Theme - Trial Download_ structure. For both these structures, the available fields are:
 
 * Title
@@ -107,6 +110,7 @@ If any option other than _None_ is chosen, a modal will be triggered when the bl
 After accepting the terms and conditions, the _Download_ button inside the modal will change from disabled to enabled to download to start. The user will only need to accept the specified terms and conditions once.
 
 #### Testing EULA
+
 Accepting EULA once will prevent the modal from showing up again. If more testing is needed, go to:
 
 _Control Panel_ > _Users_ > _Users and Organizations_ > find current user > _Miscellaneous_ tab and make sure the following boxes are empty:

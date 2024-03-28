@@ -182,6 +182,7 @@
 1. Import test results
 
 	1. Import the test file located in this directory via curl command:
+
 		```
 		curl -sS -X POST \
 			 --data-urlencode "results@TESTS-test-1-1_test-portal-hotfix-release_13003_functional-bundle-tomcat-mysql57-jdk8_3_9.xml" \

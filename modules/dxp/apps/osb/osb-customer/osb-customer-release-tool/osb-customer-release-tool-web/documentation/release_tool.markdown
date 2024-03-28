@@ -1,6 +1,7 @@
 # OSB Release Tool
 
 ### Set up
+
 #### OSB Release Tool Portlet
 
 Place the _OSB Release Tool_ portlet on a page (not to be confused with _Release Notes_ portet).
@@ -8,6 +9,7 @@ Place the _OSB Release Tool_ portlet on a page (not to be confused with _Release
 ---
 
 #### Creating Release Vocabulary
+
 When logged in as an administrator, go to _Control Panel_ and click _Go to Other Site_. Navigate to the _Global_ site. Navigate to _Content_ > _Categories_ > _Releases_.
 
 Click on the dotted menu to _Edit_. Under _Associated Asset Types_, add a _Web Content Article_ asset type and select _OSB Customer Theme - Fix Pack_. Make sure to toggle the _Required_ button and hit _Save_.
@@ -21,6 +23,7 @@ Each category and subcategories can be edited by clicking on the dotted menu and
 ---
 
 #### Creating Release Web Content
+
 Go to _Control Panel_ > _Content_ > _Web Content_ on the site where the _OSB Release Tool Portlet_ is located. Create a web content using the _OSB Customer Theme - Fix Pack_ structure. The available fields are:
 
 * Title (should be the name of the release/fix pack)
@@ -38,6 +41,7 @@ After creating a _Fix Pack_, it should show up in _OSB Release Tool_.
 ---
 
 #### Create Tab Description
+
 Release Tools has three tabs:
 * Highlights
 * Changelog
@@ -50,6 +54,7 @@ To configure, create a web content article and place the desired copy there. Go 
 ---
 
 #### Link Fix Pack Downloads
+
 At the top of _Release Tool_ portlet, there is a filter that allows the user to select a range of products and its associated releases. When a valid range is selected, a download button will appear to allow the user to go to _Downloads Display_ portlet and download the fix pack indicated in the upper range.
 
 In order to display the download link, the fix pack needs to be linked with download web content.

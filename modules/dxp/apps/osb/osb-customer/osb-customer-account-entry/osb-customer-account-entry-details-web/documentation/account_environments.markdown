@@ -3,6 +3,7 @@
 ### Viewing Environment Configurations
 
 #### Basic Case
+
 By default all of the following fields show up when a user is looking at a particular environment configuration, even if no value is present for that field:
 * Environment name
 * Product
@@ -27,9 +28,11 @@ _Special fields are only displayed when there is value in it's associated field.
 ---
 
 ### Add New Environment Configurations
+
 By default the user will be able to fill in the environment _Name_ and choose a _Product_ that they have purchased. Once a _Product_ is selected, they can choose the corresponding _Liferay Version_ for that product. The options for the rest of the fields will populate according to the _Product_ and _Liferay Version_ selected.
 
 #### Basic Case
+
 The available fields for adding a new environment configuration are:
 * Environment name
 * Product
@@ -44,7 +47,9 @@ The available fields for adding a new environment configuration are:
 * Patch info file
 
 #### Special Cases
+
 ##### Commerce Products
+
 When selecting any _Commerce_ product, the user will see an additional select field called _Commerce Version_. The field will only appear after a commerce product is selected, and it will show up in between the _Product_ and _Liferay Version_ fields. The _Commerce Version_ field refers to which version of the commerce product the user wants to select. Unlike the normal use case, _Liferay Version_ will be disabled until a _Commerce Version_ is selected. Once the user selects a _Commerce Version_, the _Liferay Version_ field will be enabled and the rest of the form fields should look the same. The user will still be required to fill out fields such as _Operating System_, _Java Version_, _Application Server_, etc.
 
 ##### Search Option
@@ -68,6 +73,7 @@ This field is a not required.
 This field is not required.
 
 #### Form Validation
+
 The required fields for adding a new environment configuration are:
 * Environment name
 * Product
