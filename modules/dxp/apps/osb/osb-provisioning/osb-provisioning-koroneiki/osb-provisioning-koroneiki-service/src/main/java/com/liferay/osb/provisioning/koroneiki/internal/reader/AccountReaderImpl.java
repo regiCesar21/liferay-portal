@@ -176,6 +176,12 @@ public class AccountReaderImpl implements AccountReader {
 					 curName.equals(ProductConstants.NAME_DXP_OEM) ||
 					 curName.equals(
 						 ProductConstants.
+							 NAME_LIFERAY_PAAS_INSTANCE_PRODUCTION) ||
+					 curName.equals(
+						 ProductConstants.
+							 NAME_LIFERAY_PAAS_SUBSCRIPTION_STD_PRODUCTION) ||
+					 curName.equals(
+						 ProductConstants.
 							 NAME_LIFERAY_SAAS_CSP_CUSTOM_USER_TIER) ||
 					 curName.equals(
 						 ProductConstants.
@@ -197,12 +203,6 @@ public class AccountReaderImpl implements AccountReader {
 							 NAME_LIFERAY_SAAS_CSP_UP_TO_500_USERS) ||
 					 curName.equals(
 						 ProductConstants.
-							 NAME_LIFERAY_PAAS_INSTANCE_PRODUCTION) ||
-					 curName.equals(
-						 ProductConstants.
-							 NAME_LIFERAY_PAAS_SUBSCRIPTION_STD_PRODUCTION) ||
-					 curName.equals(
-						 ProductConstants.
 							 NAME_LIFERAY_SAAS_SUBSCRIPTION_ENGAGE_SITE) ||
 					 curName.equals(
 						 ProductConstants.
@@ -216,11 +216,6 @@ public class AccountReaderImpl implements AccountReader {
 				productionInstances += productPurchase.getQuantity();
 			}
 			else if (curName.equals(
-						ProductConstants.NAME_LIFERAY_SAAS_PRO_PLAN)) {
-
-				maxSupportSeatCount = 2;
-			}
-			else if (curName.equals(
 						ProductConstants.NAME_LIFERAY_SAAS_BUSINESS_PLAN)) {
 
 				maxSupportSeatCount = 15;
@@ -229,6 +224,11 @@ public class AccountReaderImpl implements AccountReader {
 						ProductConstants.NAME_LIFERAY_SAAS_ENTERPRISE_PLAN)) {
 
 				maxSupportSeatCount = 18;
+			}
+			else if (curName.equals(
+				ProductConstants.NAME_LIFERAY_SAAS_PRO_PLAN)) {
+
+				maxSupportSeatCount = 2;
 			}
 		}
 
