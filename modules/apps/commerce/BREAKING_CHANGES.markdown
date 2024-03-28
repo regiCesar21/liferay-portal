@@ -195,6 +195,7 @@ CPDefintionOptionValue Map, representing option configuration for a given
 CPInstance.
 
 #### Changes in Data Structure
+
 **Before:**
 
 ```
