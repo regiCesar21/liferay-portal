@@ -62,6 +62,24 @@ def create_dag(
 		schedule_interval=None,
 		start_date=pendulum.now() - pendulum.duration(days=2)
 	) as dag:
+		pipeline_options = {
+			"zipFilePath": "{{ params['zipFilePath'] }}",
+			"projectId": ac_project_id,
+			"bigQueryWriterTempLocation": DATAFLOW_BUCKET + '/bigquery/temp',
+		},
+
+		network = os.environ['NETWORK']
+
+		if network != 'default':
+			pipeline_options = {
+				**pipeline_options,
+				"network": os.environ['NETWORK'],
+				"subnetwork": "regions/{}/subnetworks/{}".format(
+					os.environ['NETWORK'],
+					os.environ['SUBNETWORK']
+				)
+			}
+
 		dataflow_create_java_job_operator = BeamRunJavaPipelineOperator(
 			dag=dag,
 			dataflow_config=DataflowConfiguration(
@@ -71,17 +89,7 @@ def create_dag(
 			),
 			jar=DATAFLOW_BUCKET + '/pipeline/osb-asah-dataflow-java.jar',
 			job_class=dataflow_job_class,
-			location=os.environ['GOOGLE_REGION'],
-			options={
-				"zipFilePath": "{{ params['zipFilePath'] }}",
-				"projectId": ac_project_id,
-				"bigQueryWriterTempLocation": DATAFLOW_BUCKET + '/bigquery/temp',
-				"network": os.environ['NETWORK'],
-				"subnetwork": "regions/{}}/subnetworks/{}}".format(
-					os.environ['NETWORK'],
-					os.environ['SUBNETWORK']
-				)
-			},
+			pipeline_options=pipeline_options,
 			runner='DataflowRunner',
 			task_id=task_id
 		)
