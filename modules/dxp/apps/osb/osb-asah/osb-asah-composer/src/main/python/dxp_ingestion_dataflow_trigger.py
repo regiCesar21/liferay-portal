@@ -11,12 +11,14 @@
 
 from airflow.models import Variable
 from airflow.models.baseoperator import chain
-from airflow.providers.google.cloud.operators.dataflow import DataflowCreateJavaJobOperator
+from airflow.providers.apache.beam.operators.beam import \
+	BeamRunJavaPipelineOperator
+from airflow.providers.google.cloud.operators.dataflow import \
+	DataflowConfiguration
 
 from liferay.bigquery import BigQueryInsertJobFromTemplateOperator
 
 import airflow
-import datetime
 import os
 import pendulum
 import requests
@@ -60,11 +62,15 @@ def create_dag(
 		schedule_interval=None,
 		start_date=pendulum.now() - pendulum.duration(days=2)
 	) as dag:
-		dataflow_create_java_job_operator = DataflowCreateJavaJobOperator(
+		dataflow_create_java_job_operator = BeamRunJavaPipelineOperator(
 			dag=dag,
+			dataflow_config=DataflowConfiguration(
+				job_name=dataflow_job_name,
+				location=os.environ['GOOGLE_REGION'],
+				project_id=os.environ['GOOGLE_PROJECT_ID']
+			),
 			jar=DATAFLOW_BUCKET + '/pipeline/osb-asah-dataflow-java.jar',
 			job_class=dataflow_job_class,
-			job_name=dataflow_job_name,
 			location=os.environ['GOOGLE_REGION'],
 			options={
 				"zipFilePath": "{{ params['zipFilePath'] }}",
@@ -76,6 +82,7 @@ def create_dag(
 					os.environ['SUBNETWORK']
 				)
 			},
+			runner='DataflowRunner',
 			task_id=task_id
 		)
 
