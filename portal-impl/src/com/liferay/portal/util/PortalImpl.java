@@ -7293,6 +7293,11 @@ public class PortalImpl implements Portal {
 		return locale;
 	}
 
+	/**
+	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link
+	 *             LayoutLocalServiceUtil#getBrowsableLayout(Layout)}
+	 */
+	@Deprecated
 	protected Layout getBrowsableLayout(Layout layout) {
 		return LayoutLocalServiceUtil.getBrowsableLayout(layout);
 	}
