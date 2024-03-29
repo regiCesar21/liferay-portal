@@ -2700,7 +2700,7 @@ public class PortalImpl implements Portal {
 	@Override
 	public String getLayoutActualURL(Layout layout, String mainPath) {
 		Map<String, String> variables = _getVariables(
-			LayoutLocalServiceUtil.getBrowsableLayout(layout), mainPath);
+			getBrowsableLayout(layout), mainPath);
 
 		variables.putAll(layout.getTypeSettingsProperties());
 
@@ -7293,11 +7293,40 @@ public class PortalImpl implements Portal {
 		return locale;
 	}
 
-	/**
-	 * @deprecated As of Mueller (7.2.x), replaced by {@link
-	 *             #getCanonicalDomain(TreeMap, String)}
-	 */
-	@Deprecated
+	protected Layout getBrowsableLayout(Layout layout) {
+		LayoutTypeController layoutTypeController =
+			LayoutTypeControllerTracker.getLayoutTypeController(
+				layout.getType());
+
+		if (layoutTypeController.isBrowsable()) {
+			return layout;
+		}
+
+		Layout browsableChildLayout = null;
+
+		List<Layout> childLayouts = layout.getAllChildren();
+
+		for (Layout childLayout : childLayouts) {
+			LayoutTypeController childLayoutTypeController =
+				LayoutTypeControllerTracker.getLayoutTypeController(
+					childLayout.getType());
+
+			if (childLayoutTypeController.isBrowsable()) {
+				browsableChildLayout = childLayout;
+
+				break;
+			}
+		}
+
+		if (browsableChildLayout != null) {
+			return browsableChildLayout;
+		}
+
+		return LayoutLocalServiceUtil.fetchLayout(
+			LayoutLocalServiceUtil.getDefaultPlid(
+				layout.getGroupId(), layout.isPrivateLayout()));
+	}
+
 	protected String getCanonicalDomain(
 		String virtualHostname, String portalDomain) {
 
