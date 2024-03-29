@@ -29,8 +29,8 @@ import org.osgi.service.component.annotations.Reference;
 public class UpgradeProducts extends UpgradeProcess {
 
 	public void upgradeProductName(
-		String oldProductName, String newProductName,
-		String newDisplayName, String newDisplayGroupName) {
+		String oldProductName, String newProductName, String newDisplayName,
+		String newDisplayGroupName) {
 
 		try {
 			Product product = _productWebService.fetchProductByName(
