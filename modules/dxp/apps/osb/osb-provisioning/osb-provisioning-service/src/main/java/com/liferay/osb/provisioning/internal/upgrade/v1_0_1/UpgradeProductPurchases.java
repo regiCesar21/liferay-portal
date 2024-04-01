@@ -1,5 +1,5 @@
 /**
- * SPDX-FileCopyrightText: (c) 2024 Liferay, Inc. https://liferay.com
+ * SPDX-FileCopyrightText: (c) 2023 Liferay, Inc. https://liferay.com
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
@@ -38,7 +38,7 @@ import org.osgi.service.component.annotations.Reference;
 public class UpgradeProductPurchases extends UpgradeProcess {
 
 	public void upgradeOpportunityProductPurchases(
-			String salesforceProjectKey, String opportunityEntityId)
+			String salesforceProjectKey, String salesforceOpportunityKey)
 		throws Exception {
 
 		Account account = _getAccount(salesforceProjectKey);
@@ -58,7 +58,7 @@ public class UpgradeProductPurchases extends UpgradeProcess {
 		sb.append(StringPool.UNDERLINE);
 		sb.append(ExternalLinkEntityName.SALESFORCE_OPPORTUNITY);
 		sb.append(StringPool.UNDERLINE);
-		sb.append(opportunityEntityId);
+		sb.append(salesforceOpportunityKey);
 
 		filterQuery.addLambdaEquals(
 			true, "externalLinkEntityIds", sb.toString());
