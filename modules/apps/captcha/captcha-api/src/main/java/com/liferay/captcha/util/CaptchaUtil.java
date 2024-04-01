@@ -57,6 +57,14 @@ public class CaptchaUtil {
 		getCaptcha().check(portletRequest);
 	}
 
+	public static void enforceCaptcha(HttpServletRequest httpServletRequest) {
+		getCaptcha().enforceCaptcha(httpServletRequest);
+	}
+
+	public static void enforceCaptcha(PortletRequest portletRequest) {
+		getCaptcha().enforceCaptcha(portletRequest);
+	}
+
 	public static Captcha getCaptcha() {
 		String captchaClassName = _captchaConfiguration.captchaEngine();
 
