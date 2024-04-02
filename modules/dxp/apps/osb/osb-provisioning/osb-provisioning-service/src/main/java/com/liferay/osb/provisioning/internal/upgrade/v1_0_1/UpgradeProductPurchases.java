@@ -61,10 +61,11 @@ public class UpgradeProductPurchases extends UpgradeProcess {
 		sb.append(StringPool.UNDERLINE);
 		sb.append(salesforceOpportunityKey);
 
-		filterQuery.addEquals(
-			true, "state", ProductPurchaseConstants.STATE_ACTIVE);
 		filterQuery.addLambdaEquals(
 			true, "externalLinkEntityIds", sb.toString());
+
+		filterQuery.addEquals(
+			true, "state", ProductPurchaseConstants.STATE_ACTIVE);
 
 		int totalCount = (int)_productPurchaseWebService.searchCount(
 			filterQuery);
