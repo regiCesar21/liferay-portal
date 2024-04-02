@@ -31,6 +31,7 @@ export default function AddContact({
 	const [contactLastName, setContactLastName] = useState(lastName);
 	const [newRoles, setNewRoles] = useState(currentRoles);
 	const [valid, setValid] = useState(true);
+	const [validPartner, setValidPartner] = useState(true);
 
 	const knownContact = !!uuid;
 
@@ -38,6 +39,9 @@ export default function AddContact({
 		partner: allRoles
 			.filter(role => role.name.startsWith('Partner'))
 			.map(partner => partner.key),
+		partnerManager: allRoles
+			.filter(role => role.name === 'Partner Manager')
+			.map(partnerManager => partnerManager.key),
 		support: allRoles
 			.filter(
 				role =>
@@ -53,24 +57,31 @@ export default function AddContact({
 		const partnerIntersection = currentSelection.intersect(
 			validationRoleIds.partner
 		);
+		const partnerManagerIntersection = currentSelection.intersect(
+			validationRoleIds.partnerManager
+		);
 		const supportIntersection = currentSelection.intersect(
 			validationRoleIds.support
 		);
+		
+		if (partnerManagerIntersection.size === 1 && partnerIntersection.size > 1) {
+			setValidPartner(false);
+		}
 
-		if (partnerIntersection.size > 1 || supportIntersection.size > 1) {
+		if (supportIntersection.size > 1) {
 			setValid(false);
 		}
 		else {
 			setValid(true);
 		}
-	}, [newRoles, validationRoleIds.partner, validationRoleIds.support]);
+	}, [newRoles, validationRoleIds.partner, validationRoleIds.support, validationRoleIds.partnerManager]);
 
 	function disableSave() {
 		if (
 			newRoles.length > 0 &&
 			contactEmailAddress &&
 			(!newContact || (contactFirstName && contactLastName)) &&
-			valid
+			valid && validPartner
 		) {
 			return false;
 		}
