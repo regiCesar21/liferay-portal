@@ -476,8 +476,12 @@ public class TransformProductPurchases {
 				}
 			}
 			else if (name.equals(
-						SubscriptionConstants.
-							GROUP_NAME_LIFERAY_EXPERIENCE_CLOUD)) {
+						SubscriptionConstants.GROUP_NAME_LIFERAY_PAAS)) {
+
+				this.manageContactsURL = "https://console.liferay.cloud";
+			}
+			else if (name.equals(
+						SubscriptionConstants.GROUP_NAME_LIFERAY_SAAS)) {
 
 				String lxcProjectId = TransformAccount.getLXCProjectId(
 					externalLinks);
@@ -486,9 +490,6 @@ public class TransformProductPurchases {
 					this.manageContactsURL =
 						"https://" + lxcProjectId + ".lxc.liferay.com";
 				}
-			}
-			else if (name.equals(SubscriptionConstants.GROUP_NAME_LXC_SM)) {
-				this.manageContactsURL = "https://console.liferay.cloud";
 			}
 
 			for (JSONObject jsonObject : productPurchaseJSONObjects) {
@@ -548,7 +549,7 @@ public class TransformProductPurchases {
 				name.equals(SubscriptionConstants.GROUP_NAME_DXP) ||
 				name.equals(
 					SubscriptionConstants.GROUP_NAME_ENTERPRISE_SEARCH) ||
-				name.equals(SubscriptionConstants.GROUP_NAME_LXC_SM) ||
+				name.equals(SubscriptionConstants.GROUP_NAME_LIFERAY_PAAS) ||
 				name.equals(SubscriptionConstants.GROUP_NAME_PORTAL)) {
 
 				jsonObject.put("hasActivation", true);
@@ -587,13 +588,15 @@ public class TransformProductPurchases {
 			else if (name.equals(SubscriptionConstants.GROUP_NAME_DXP)) {
 				return 300;
 			}
-			else if (name.equals(SubscriptionConstants.GROUP_NAME_LXC_SM)) {
-				return 100;
-			}
 			else if (name.equals(
 						SubscriptionConstants.GROUP_NAME_ENTERPRISE_SEARCH)) {
 
 				return 600;
+			}
+			else if (name.equals(
+						SubscriptionConstants.GROUP_NAME_LIFERAY_PAAS)) {
+
+				return 100;
 			}
 			else if (name.equals(SubscriptionConstants.GROUP_NAME_PORTAL)) {
 				return 700;
@@ -617,27 +620,28 @@ public class TransformProductPurchases {
 			else if (name.equals(SubscriptionConstants.GROUP_NAME_DXP)) {
 				return 500;
 			}
-			else if (name.equals(SubscriptionConstants.GROUP_NAME_LXC_SM)) {
-				return 300;
-			}
 			else if (name.equals(
 						SubscriptionConstants.GROUP_NAME_ENTERPRISE_SEARCH)) {
 
 				return 800;
 			}
 			else if (name.equals(
-						SubscriptionConstants.
-							GROUP_NAME_LIFERAY_EXPERIENCE_CLOUD)) {
+						SubscriptionConstants.GROUP_NAME_LIFERAY_PAAS)) {
+
+				return 300;
+			}
+			else if (name.equals(
+						SubscriptionConstants.GROUP_NAME_LIFERAY_SAAS)) {
 
 				return 200;
-			}
-			else if (name.equals(SubscriptionConstants.GROUP_NAME_PORTAL)) {
-				return 900;
 			}
 			else if (name.equals(
 						SubscriptionConstants.GROUP_NAME_PARTNERSHIP)) {
 
 				return 100;
+			}
+			else if (name.equals(SubscriptionConstants.GROUP_NAME_PORTAL)) {
+				return 900;
 			}
 
 			return 100000;
