@@ -6,6 +6,7 @@
 package com.liferay.portal.vulcan.internal.jaxrs.context.provider;
 
 import com.liferay.portal.odata.entity.EntityModel;
+import com.liferay.portal.vulcan.internal.jaxrs.lifecycle.MultipleReleaseInstanceResourceProvider;
 import com.liferay.portal.vulcan.resource.EntityModelResource;
 
 import java.util.Arrays;
@@ -66,6 +67,10 @@ public class ContextProviderUtil {
 		OperationResourceInfo operationResourceInfo = exchange.get(
 			OperationResourceInfo.class);
 
+		if (operationResourceInfo == null) {
+			return null;
+		}
+
 		ResourceContext resourceContext = new ResourceContextImpl(
 			message, operationResourceInfo);
 
@@ -74,6 +79,13 @@ public class ContextProviderUtil {
 
 		ResourceProvider resourceProvider =
 			classResourceInfo.getResourceProvider();
+
+		if (!(resourceProvider instanceof
+				MultipleReleaseInstanceResourceProvider)) {
+
+			classResourceInfo.setResourceProvider(
+				new MultipleReleaseInstanceResourceProvider(resourceProvider));
+		}
 
 		if (resourceProvider != null) {
 			Object instance = resourceProvider.getInstance(message);
@@ -102,6 +114,30 @@ public class ContextProviderUtil {
 				}
 			}
 		};
+	}
+
+	public static void releaseResourceInstance() {
+		Message message = JAXRSUtils.getContextMessage(
+			JAXRSUtils.getCurrentMessage());
+
+		Exchange exchange = message.getExchange();
+
+		Object resource = getMatchedResource(message);
+
+		if (resource != null) {
+			OperationResourceInfo operationResourceInfo = exchange.get(
+				OperationResourceInfo.class);
+
+			ClassResourceInfo classResourceInfo =
+				operationResourceInfo.getClassResourceInfo();
+
+			ResourceProvider resourceProvider =
+				classResourceInfo.getResourceProvider();
+
+			if (resourceProvider != null) {
+				resourceProvider.releaseInstance(message, resource);
+			}
+		}
 	}
 
 	private static MultivaluedMap<String, String> _getPathParameters(

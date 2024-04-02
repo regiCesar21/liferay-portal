@@ -24,6 +24,8 @@ import com.liferay.portal.vulcan.batch.engine.resource.VulcanBatchEngineImportTa
 import com.liferay.portal.vulcan.internal.accept.language.AcceptLanguageImpl;
 import com.liferay.portal.vulcan.internal.jaxrs.context.provider.ContextProviderUtil;
 
+import java.io.IOException;
+
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 import java.lang.reflect.Modifier;
@@ -38,6 +40,8 @@ import javax.servlet.http.HttpServletResponse;
 
 import javax.ws.rs.container.ContainerRequestContext;
 import javax.ws.rs.container.ContainerRequestFilter;
+import javax.ws.rs.container.ContainerResponseContext;
+import javax.ws.rs.container.ContainerResponseFilter;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.UriInfo;
 import javax.ws.rs.ext.Provider;
@@ -53,7 +57,8 @@ import org.osgi.service.cm.Configuration;
  * @author Javier Gamarra
  */
 @Provider
-public class ContextContainerRequestFilter implements ContainerRequestFilter {
+public class ContextContainerRequestFilter
+	implements ContainerRequestFilter, ContainerResponseFilter {
 
 	public ContextContainerRequestFilter(
 		Map<String, Configuration> configurations,
@@ -84,6 +89,15 @@ public class ContextContainerRequestFilter implements ContainerRequestFilter {
 	public void filter(ContainerRequestContext containerRequestContext) {
 		handleMessage(
 			containerRequestContext, PhaseInterceptorChain.getCurrentMessage());
+	}
+
+	@Override
+	public void filter(
+			ContainerRequestContext containerRequestContext,
+			ContainerResponseContext containerResponseContext)
+		throws IOException {
+
+		ContextProviderUtil.releaseResourceInstance();
 	}
 
 	public void handleMessage(
