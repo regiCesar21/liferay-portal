@@ -226,7 +226,7 @@ public class AccountReaderImpl implements AccountReader {
 				maxSupportSeatCount = 18;
 			}
 			else if (curName.equals(
-				ProductConstants.NAME_LIFERAY_SAAS_PRO_PLAN)) {
+						ProductConstants.NAME_LIFERAY_SAAS_PRO_PLAN)) {
 
 				maxSupportSeatCount = 2;
 			}
