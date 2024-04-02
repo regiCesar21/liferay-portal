@@ -11,6 +11,7 @@ import com.liferay.osb.koroneiki.phloem.rest.client.dto.v1_0.Account;
 import com.liferay.osb.koroneiki.phloem.rest.client.dto.v1_0.Product;
 import com.liferay.osb.koroneiki.phloem.rest.client.dto.v1_0.ProductPurchase;
 import com.liferay.osb.provisioning.koroneiki.constants.ProductConstants;
+import com.liferay.osb.provisioning.koroneiki.constants.ProductPurchaseConstants;
 import com.liferay.osb.provisioning.koroneiki.web.service.AccountWebService;
 import com.liferay.osb.provisioning.koroneiki.web.service.ProductPurchaseWebService;
 import com.liferay.osb.provisioning.search.FilterQuery;
@@ -60,6 +61,8 @@ public class UpgradeProductPurchases extends UpgradeProcess {
 		sb.append(StringPool.UNDERLINE);
 		sb.append(salesforceOpportunityKey);
 
+		filterQuery.addEquals(
+			true, "state", ProductPurchaseConstants.STATE_ACTIVE);
 		filterQuery.addLambdaEquals(
 			true, "externalLinkEntityIds", sb.toString());
 
