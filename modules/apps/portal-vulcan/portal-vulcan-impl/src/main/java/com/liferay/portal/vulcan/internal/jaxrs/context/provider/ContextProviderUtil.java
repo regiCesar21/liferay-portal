@@ -6,7 +6,7 @@
 package com.liferay.portal.vulcan.internal.jaxrs.context.provider;
 
 import com.liferay.portal.odata.entity.EntityModel;
-import com.liferay.portal.vulcan.internal.jaxrs.lifecycle.MultipleReleaseInstanceResourceProvider;
+import com.liferay.portal.vulcan.internal.jaxrs.lifecycle.SafeReleaseInstanceResourceProvider;
 import com.liferay.portal.vulcan.resource.EntityModelResource;
 
 import java.util.Arrays;
@@ -81,10 +81,10 @@ public class ContextProviderUtil {
 			classResourceInfo.getResourceProvider();
 
 		if (!(resourceProvider instanceof
-				MultipleReleaseInstanceResourceProvider)) {
+				SafeReleaseInstanceResourceProvider)) {
 
 			classResourceInfo.setResourceProvider(
-				new MultipleReleaseInstanceResourceProvider(resourceProvider));
+				new SafeReleaseInstanceResourceProvider(resourceProvider));
 		}
 
 		if (resourceProvider != null) {
