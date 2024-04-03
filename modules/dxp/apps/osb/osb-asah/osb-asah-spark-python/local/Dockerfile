@@ -1,4 +1,4 @@
-FROM java:openjdk-8-jdk
+FROM java:openjdk-8u111-jdk
 
 COPY ../build/libs/*.py /opt
 COPY ../docker-resources/ /opt
