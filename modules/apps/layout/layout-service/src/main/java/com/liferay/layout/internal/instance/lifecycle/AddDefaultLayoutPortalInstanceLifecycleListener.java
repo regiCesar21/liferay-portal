@@ -68,7 +68,7 @@ public class AddDefaultLayoutPortalInstanceLifecycleListener
 		if (defaultLayout == null) {
 			defaultLayout = _layoutLocalService.fetchFirstLayout(
 				group.getGroupId(), false,
-				LayoutConstants.DEFAULT_PARENT_LAYOUT_ID, false);
+				LayoutConstants.DEFAULT_PARENT_LAYOUT_ID);
 
 			if (defaultLayout == null) {
 				addDefaultGuestPublicLayoutByProperties(group);
