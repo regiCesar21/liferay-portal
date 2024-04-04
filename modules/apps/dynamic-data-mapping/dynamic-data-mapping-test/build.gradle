@@ -25,8 +25,8 @@ dependencies {
 	testImplementation project(":core:petra:petra-string")
 
 	testIntegrationImplementation group: "com.liferay", name: "com.liferay.arquillian.extension.junit.bridge", version: "1.0.19"
+	testIntegrationImplementation group: "com.liferay", name: "org.springframework.web", version: "4.3.30.LIFERAY-PATCHED-1"
 	testIntegrationImplementation group: "org.osgi", name: "org.osgi.service.cm", version: "1.5.0"
-	testIntegrationImplementation group: "org.springframework", name: "spring-web", version: "4.1.9.RELEASE"
 	testIntegrationImplementation project(":apps:dynamic-data-mapping:dynamic-data-mapping-form-builder")
 	testIntegrationImplementation project(":apps:export-import:export-import-test-util")
 	testIntegrationImplementation project(":apps:journal:journal-test-util")
