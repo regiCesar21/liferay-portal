@@ -250,6 +250,8 @@ public abstract class BaseOrderItemResourceTestCase {
 		OrderItem orderItem =
 			testGraphQLGetOrderItemByExternalReferenceCode_addOrderItem();
 
+		// No namespace
+
 		Assert.assertTrue(
 			equals(
 				orderItem,
@@ -279,6 +281,8 @@ public abstract class BaseOrderItemResourceTestCase {
 
 		String irrelevantExternalReferenceCode =
 			"\"" + RandomTestUtil.randomString() + "\"";
+
+		// No namespace
 
 		Assert.assertEquals(
 			"Not Found",
@@ -333,7 +337,10 @@ public abstract class BaseOrderItemResourceTestCase {
 
 	@Test
 	public void testGraphQLDeleteOrderItem() throws Exception {
-		OrderItem orderItem = testGraphQLDeleteOrderItem_addOrderItem();
+
+		// No namespace
+
+		OrderItem orderItem1 = testGraphQLDeleteOrderItem_addOrderItem();
 
 		Assert.assertTrue(
 			JSONUtil.getValueAsBoolean(
@@ -342,23 +349,24 @@ public abstract class BaseOrderItemResourceTestCase {
 						"deleteOrderItem",
 						new HashMap<String, Object>() {
 							{
-								put("id", orderItem.getId());
+								put("id", orderItem1.getId());
 							}
 						})),
 				"JSONObject/data", "Object/deleteOrderItem"));
-		JSONArray errorsJSONArray = JSONUtil.getValueAsJSONArray(
+
+		JSONArray errorsJSONArray1 = JSONUtil.getValueAsJSONArray(
 			invokeGraphQLQuery(
 				new GraphQLField(
 					"orderItem",
 					new HashMap<String, Object>() {
 						{
-							put("id", orderItem.getId());
+							put("id", orderItem1.getId());
 						}
 					},
 					new GraphQLField("id"))),
 			"JSONArray/errors");
 
-		Assert.assertTrue(errorsJSONArray.length() > 0);
+		Assert.assertTrue(errorsJSONArray1.length() > 0);
 	}
 
 	protected OrderItem testGraphQLDeleteOrderItem_addOrderItem()
@@ -387,6 +395,8 @@ public abstract class BaseOrderItemResourceTestCase {
 	public void testGraphQLGetOrderItem() throws Exception {
 		OrderItem orderItem = testGraphQLGetOrderItem_addOrderItem();
 
+		// No namespace
+
 		Assert.assertTrue(
 			equals(
 				orderItem,
@@ -407,6 +417,8 @@ public abstract class BaseOrderItemResourceTestCase {
 	@Test
 	public void testGraphQLGetOrderItemNotFound() throws Exception {
 		Long irrelevantId = RandomTestUtil.randomLong();
+
+		// No namespace
 
 		Assert.assertEquals(
 			"Not Found",

@@ -252,6 +252,8 @@ public abstract class BasePriceEntryResourceTestCase {
 		PriceEntry priceEntry =
 			testGraphQLGetPriceEntryByExternalReferenceCode_addPriceEntry();
 
+		// No namespace
+
 		Assert.assertTrue(
 			equals(
 				priceEntry,
@@ -281,6 +283,8 @@ public abstract class BasePriceEntryResourceTestCase {
 
 		String irrelevantExternalReferenceCode =
 			"\"" + RandomTestUtil.randomString() + "\"";
+
+		// No namespace
 
 		Assert.assertEquals(
 			"Not Found",
@@ -367,7 +371,10 @@ public abstract class BasePriceEntryResourceTestCase {
 
 	@Test
 	public void testGraphQLDeletePriceEntry() throws Exception {
-		PriceEntry priceEntry = testGraphQLDeletePriceEntry_addPriceEntry();
+
+		// No namespace
+
+		PriceEntry priceEntry1 = testGraphQLDeletePriceEntry_addPriceEntry();
 
 		Assert.assertTrue(
 			JSONUtil.getValueAsBoolean(
@@ -376,23 +383,24 @@ public abstract class BasePriceEntryResourceTestCase {
 						"deletePriceEntry",
 						new HashMap<String, Object>() {
 							{
-								put("id", priceEntry.getId());
+								put("id", priceEntry1.getId());
 							}
 						})),
 				"JSONObject/data", "Object/deletePriceEntry"));
-		JSONArray errorsJSONArray = JSONUtil.getValueAsJSONArray(
+
+		JSONArray errorsJSONArray1 = JSONUtil.getValueAsJSONArray(
 			invokeGraphQLQuery(
 				new GraphQLField(
 					"priceEntry",
 					new HashMap<String, Object>() {
 						{
-							put("id", priceEntry.getId());
+							put("id", priceEntry1.getId());
 						}
 					},
 					new GraphQLField("id"))),
 			"JSONArray/errors");
 
-		Assert.assertTrue(errorsJSONArray.length() > 0);
+		Assert.assertTrue(errorsJSONArray1.length() > 0);
 	}
 
 	protected PriceEntry testGraphQLDeletePriceEntry_addPriceEntry()
@@ -421,6 +429,8 @@ public abstract class BasePriceEntryResourceTestCase {
 	public void testGraphQLGetPriceEntry() throws Exception {
 		PriceEntry priceEntry = testGraphQLGetPriceEntry_addPriceEntry();
 
+		// No namespace
+
 		Assert.assertTrue(
 			equals(
 				priceEntry,
@@ -441,6 +451,8 @@ public abstract class BasePriceEntryResourceTestCase {
 	@Test
 	public void testGraphQLGetPriceEntryNotFound() throws Exception {
 		Long irrelevantId = RandomTestUtil.randomLong();
+
+		// No namespace
 
 		Assert.assertEquals(
 			"Not Found",

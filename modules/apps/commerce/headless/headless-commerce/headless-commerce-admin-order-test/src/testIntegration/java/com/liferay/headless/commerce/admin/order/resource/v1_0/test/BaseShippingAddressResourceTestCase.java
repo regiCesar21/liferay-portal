@@ -239,6 +239,8 @@ public abstract class BaseShippingAddressResourceTestCase {
 		ShippingAddress shippingAddress =
 			testGraphQLGetOrderByExternalReferenceCodeShippingAddress_addShippingAddress();
 
+		// No namespace
+
 		Assert.assertTrue(
 			equals(
 				shippingAddress,
@@ -275,6 +277,8 @@ public abstract class BaseShippingAddressResourceTestCase {
 
 		String irrelevantExternalReferenceCode =
 			"\"" + RandomTestUtil.randomString() + "\"";
+
+		// No namespace
 
 		Assert.assertEquals(
 			"Not Found",
@@ -340,6 +344,8 @@ public abstract class BaseShippingAddressResourceTestCase {
 		ShippingAddress shippingAddress =
 			testGraphQLGetOrderIdShippingAddress_addShippingAddress();
 
+		// No namespace
+
 		Assert.assertTrue(
 			equals(
 				shippingAddress,
@@ -372,6 +378,8 @@ public abstract class BaseShippingAddressResourceTestCase {
 		throws Exception {
 
 		Long irrelevantId = RandomTestUtil.randomLong();
+
+		// No namespace
 
 		Assert.assertEquals(
 			"Not Found",

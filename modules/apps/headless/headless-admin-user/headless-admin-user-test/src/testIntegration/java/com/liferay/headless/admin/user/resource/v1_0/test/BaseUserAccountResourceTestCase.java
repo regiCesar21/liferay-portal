@@ -226,6 +226,8 @@ public abstract class BaseUserAccountResourceTestCase {
 	public void testGraphQLGetMyUserAccount() throws Exception {
 		UserAccount userAccount = testGraphQLGetMyUserAccount_addUserAccount();
 
+		// No namespace
+
 		Assert.assertTrue(
 			equals(
 				userAccount,
@@ -1428,6 +1430,8 @@ public abstract class BaseUserAccountResourceTestCase {
 			new GraphQLField("items", getGraphQLFields()),
 			new GraphQLField("page"), new GraphQLField("totalCount"));
 
+		// No namespace
+
 		JSONObject userAccountsJSONObject = JSONUtil.getValueAsJSONObject(
 			invokeGraphQLQuery(graphQLField), "JSONObject/data",
 			"JSONObject/userAccounts");
@@ -1484,6 +1488,8 @@ public abstract class BaseUserAccountResourceTestCase {
 	public void testGraphQLGetUserAccount() throws Exception {
 		UserAccount userAccount = testGraphQLGetUserAccount_addUserAccount();
 
+		// No namespace
+
 		Assert.assertTrue(
 			equals(
 				userAccount,
@@ -1506,6 +1512,8 @@ public abstract class BaseUserAccountResourceTestCase {
 	@Test
 	public void testGraphQLGetUserAccountNotFound() throws Exception {
 		Long irrelevantUserAccountId = RandomTestUtil.randomLong();
+
+		// No namespace
 
 		Assert.assertEquals(
 			"Not Found",

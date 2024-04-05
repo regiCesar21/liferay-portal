@@ -225,6 +225,8 @@ public abstract class BaseProductTaxConfigurationResourceTestCase {
 		ProductTaxConfiguration productTaxConfiguration =
 			testGraphQLGetProductByExternalReferenceCodeTaxConfiguration_addProductTaxConfiguration();
 
+		// No namespace
+
 		Assert.assertTrue(
 			equals(
 				productTaxConfiguration,
@@ -261,6 +263,8 @@ public abstract class BaseProductTaxConfigurationResourceTestCase {
 
 		String irrelevantExternalReferenceCode =
 			"\"" + RandomTestUtil.randomString() + "\"";
+
+		// No namespace
 
 		Assert.assertEquals(
 			"Not Found",
@@ -328,6 +332,8 @@ public abstract class BaseProductTaxConfigurationResourceTestCase {
 		ProductTaxConfiguration productTaxConfiguration =
 			testGraphQLGetProductIdTaxConfiguration_addProductTaxConfiguration();
 
+		// No namespace
+
 		Assert.assertTrue(
 			equals(
 				productTaxConfiguration,
@@ -361,6 +367,8 @@ public abstract class BaseProductTaxConfigurationResourceTestCase {
 		throws Exception {
 
 		Long irrelevantId = RandomTestUtil.randomLong();
+
+		// No namespace
 
 		Assert.assertEquals(
 			"Not Found",

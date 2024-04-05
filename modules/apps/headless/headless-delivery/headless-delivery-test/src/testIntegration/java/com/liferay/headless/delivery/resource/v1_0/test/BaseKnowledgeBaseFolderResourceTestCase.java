@@ -218,7 +218,10 @@ public abstract class BaseKnowledgeBaseFolderResourceTestCase {
 
 	@Test
 	public void testGraphQLDeleteKnowledgeBaseFolder() throws Exception {
-		KnowledgeBaseFolder knowledgeBaseFolder =
+
+		// No namespace
+
+		KnowledgeBaseFolder knowledgeBaseFolder1 =
 			testGraphQLDeleteKnowledgeBaseFolder_addKnowledgeBaseFolder();
 
 		Assert.assertTrue(
@@ -230,11 +233,12 @@ public abstract class BaseKnowledgeBaseFolderResourceTestCase {
 							{
 								put(
 									"knowledgeBaseFolderId",
-									knowledgeBaseFolder.getId());
+									knowledgeBaseFolder1.getId());
 							}
 						})),
 				"JSONObject/data", "Object/deleteKnowledgeBaseFolder"));
-		JSONArray errorsJSONArray = JSONUtil.getValueAsJSONArray(
+
+		JSONArray errorsJSONArray1 = JSONUtil.getValueAsJSONArray(
 			invokeGraphQLQuery(
 				new GraphQLField(
 					"knowledgeBaseFolder",
@@ -242,13 +246,13 @@ public abstract class BaseKnowledgeBaseFolderResourceTestCase {
 						{
 							put(
 								"knowledgeBaseFolderId",
-								knowledgeBaseFolder.getId());
+								knowledgeBaseFolder1.getId());
 						}
 					},
 					new GraphQLField("id"))),
 			"JSONArray/errors");
 
-		Assert.assertTrue(errorsJSONArray.length() > 0);
+		Assert.assertTrue(errorsJSONArray1.length() > 0);
 	}
 
 	protected KnowledgeBaseFolder
@@ -284,6 +288,8 @@ public abstract class BaseKnowledgeBaseFolderResourceTestCase {
 		KnowledgeBaseFolder knowledgeBaseFolder =
 			testGraphQLGetKnowledgeBaseFolder_addKnowledgeBaseFolder();
 
+		// No namespace
+
 		Assert.assertTrue(
 			equals(
 				knowledgeBaseFolder,
@@ -306,6 +312,8 @@ public abstract class BaseKnowledgeBaseFolderResourceTestCase {
 	@Test
 	public void testGraphQLGetKnowledgeBaseFolderNotFound() throws Exception {
 		Long irrelevantKnowledgeBaseFolderId = RandomTestUtil.randomLong();
+
+		// No namespace
 
 		Assert.assertEquals(
 			"Not Found",
@@ -868,6 +876,8 @@ public abstract class BaseKnowledgeBaseFolderResourceTestCase {
 			},
 			new GraphQLField("items", getGraphQLFields()),
 			new GraphQLField("page"), new GraphQLField("totalCount"));
+
+		// No namespace
 
 		JSONObject knowledgeBaseFoldersJSONObject =
 			JSONUtil.getValueAsJSONObject(

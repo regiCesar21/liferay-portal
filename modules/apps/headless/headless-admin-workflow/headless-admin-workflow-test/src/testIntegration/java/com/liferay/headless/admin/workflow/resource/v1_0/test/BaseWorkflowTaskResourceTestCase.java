@@ -638,6 +638,8 @@ public abstract class BaseWorkflowTaskResourceTestCase {
 		WorkflowTask workflowTask =
 			testGraphQLGetWorkflowTask_addWorkflowTask();
 
+		// No namespace
+
 		Assert.assertTrue(
 			equals(
 				workflowTask,
@@ -660,6 +662,8 @@ public abstract class BaseWorkflowTaskResourceTestCase {
 	@Test
 	public void testGraphQLGetWorkflowTaskNotFound() throws Exception {
 		Long irrelevantWorkflowTaskId = RandomTestUtil.randomLong();
+
+		// No namespace
 
 		Assert.assertEquals(
 			"Not Found",

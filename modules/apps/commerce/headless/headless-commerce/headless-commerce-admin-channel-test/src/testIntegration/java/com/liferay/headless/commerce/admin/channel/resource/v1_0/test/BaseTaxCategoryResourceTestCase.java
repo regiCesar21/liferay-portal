@@ -307,6 +307,8 @@ public abstract class BaseTaxCategoryResourceTestCase {
 			new GraphQLField("items", getGraphQLFields()),
 			new GraphQLField("page"), new GraphQLField("totalCount"));
 
+		// No namespace
+
 		JSONObject taxCategoriesJSONObject = JSONUtil.getValueAsJSONObject(
 			invokeGraphQLQuery(graphQLField), "JSONObject/data",
 			"JSONObject/taxCategories");
@@ -363,6 +365,8 @@ public abstract class BaseTaxCategoryResourceTestCase {
 	public void testGraphQLGetTaxCategory() throws Exception {
 		TaxCategory taxCategory = testGraphQLGetTaxCategory_addTaxCategory();
 
+		// No namespace
+
 		Assert.assertTrue(
 			equals(
 				taxCategory,
@@ -383,6 +387,8 @@ public abstract class BaseTaxCategoryResourceTestCase {
 	@Test
 	public void testGraphQLGetTaxCategoryNotFound() throws Exception {
 		Long irrelevantId = RandomTestUtil.randomLong();
+
+		// No namespace
 
 		Assert.assertEquals(
 			"Not Found",

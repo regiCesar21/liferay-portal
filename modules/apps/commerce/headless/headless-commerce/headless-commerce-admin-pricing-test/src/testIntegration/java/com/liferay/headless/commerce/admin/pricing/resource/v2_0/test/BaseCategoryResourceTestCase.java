@@ -210,6 +210,8 @@ public abstract class BaseCategoryResourceTestCase {
 	public void testGraphQLGetDiscountIdCategoryPage() throws Exception {
 		Category category = testGraphQLGetDiscountIdCategoryPage_addCategory();
 
+		// No namespace
+
 		Assert.assertTrue(
 			equals(
 				category,
@@ -241,6 +243,8 @@ public abstract class BaseCategoryResourceTestCase {
 		throws Exception {
 
 		Long irrelevantId = RandomTestUtil.randomLong();
+
+		// No namespace
 
 		Assert.assertEquals(
 			"Not Found",
@@ -292,6 +296,8 @@ public abstract class BaseCategoryResourceTestCase {
 	public void testGraphQLGetPriceModifierIdCategory() throws Exception {
 		Category category = testGraphQLGetPriceModifierIdCategory_addCategory();
 
+		// No namespace
+
 		Assert.assertTrue(
 			equals(
 				category,
@@ -324,6 +330,8 @@ public abstract class BaseCategoryResourceTestCase {
 		throws Exception {
 
 		Long irrelevantId = RandomTestUtil.randomLong();
+
+		// No namespace
 
 		Assert.assertEquals(
 			"Not Found",

@@ -515,6 +515,8 @@ public abstract class BaseChannelResourceTestCase {
 			new GraphQLField("items", getGraphQLFields()),
 			new GraphQLField("page"), new GraphQLField("totalCount"));
 
+		// No namespace
+
 		JSONObject channelsJSONObject = JSONUtil.getValueAsJSONObject(
 			invokeGraphQLQuery(graphQLField), "JSONObject/data",
 			"JSONObject/channels");
@@ -584,7 +586,10 @@ public abstract class BaseChannelResourceTestCase {
 
 	@Test
 	public void testGraphQLDeleteChannel() throws Exception {
-		Channel channel = testGraphQLDeleteChannel_addChannel();
+
+		// No namespace
+
+		Channel channel1 = testGraphQLDeleteChannel_addChannel();
 
 		Assert.assertTrue(
 			JSONUtil.getValueAsBoolean(
@@ -593,23 +598,24 @@ public abstract class BaseChannelResourceTestCase {
 						"deleteChannel",
 						new HashMap<String, Object>() {
 							{
-								put("channelId", channel.getId());
+								put("channelId", channel1.getId());
 							}
 						})),
 				"JSONObject/data", "Object/deleteChannel"));
-		JSONArray errorsJSONArray = JSONUtil.getValueAsJSONArray(
+
+		JSONArray errorsJSONArray1 = JSONUtil.getValueAsJSONArray(
 			invokeGraphQLQuery(
 				new GraphQLField(
 					"channel",
 					new HashMap<String, Object>() {
 						{
-							put("channelId", channel.getId());
+							put("channelId", channel1.getId());
 						}
 					},
 					new GraphQLField("id"))),
 			"JSONArray/errors");
 
-		Assert.assertTrue(errorsJSONArray.length() > 0);
+		Assert.assertTrue(errorsJSONArray1.length() > 0);
 	}
 
 	protected Channel testGraphQLDeleteChannel_addChannel() throws Exception {
@@ -635,6 +641,8 @@ public abstract class BaseChannelResourceTestCase {
 	public void testGraphQLGetChannel() throws Exception {
 		Channel channel = testGraphQLGetChannel_addChannel();
 
+		// No namespace
+
 		Assert.assertTrue(
 			equals(
 				channel,
@@ -655,6 +663,8 @@ public abstract class BaseChannelResourceTestCase {
 	@Test
 	public void testGraphQLGetChannelNotFound() throws Exception {
 		Long irrelevantChannelId = RandomTestUtil.randomLong();
+
+		// No namespace
 
 		Assert.assertEquals(
 			"Not Found",

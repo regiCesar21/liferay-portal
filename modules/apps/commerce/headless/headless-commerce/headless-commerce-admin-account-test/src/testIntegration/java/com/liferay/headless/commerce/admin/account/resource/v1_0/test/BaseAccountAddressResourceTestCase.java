@@ -267,6 +267,8 @@ public abstract class BaseAccountAddressResourceTestCase {
 		AccountAddress accountAddress =
 			testGraphQLGetAccountAddressByExternalReferenceCode_addAccountAddress();
 
+		// No namespace
+
 		Assert.assertTrue(
 			equals(
 				accountAddress,
@@ -296,6 +298,8 @@ public abstract class BaseAccountAddressResourceTestCase {
 
 		String irrelevantExternalReferenceCode =
 			"\"" + RandomTestUtil.randomString() + "\"";
+
+		// No namespace
 
 		Assert.assertEquals(
 			"Not Found",
@@ -360,7 +364,10 @@ public abstract class BaseAccountAddressResourceTestCase {
 
 	@Test
 	public void testGraphQLDeleteAccountAddress() throws Exception {
-		AccountAddress accountAddress =
+
+		// No namespace
+
+		AccountAddress accountAddress1 =
 			testGraphQLDeleteAccountAddress_addAccountAddress();
 
 		Assert.assertTrue(
@@ -370,23 +377,24 @@ public abstract class BaseAccountAddressResourceTestCase {
 						"deleteAccountAddress",
 						new HashMap<String, Object>() {
 							{
-								put("id", accountAddress.getId());
+								put("id", accountAddress1.getId());
 							}
 						})),
 				"JSONObject/data", "Object/deleteAccountAddress"));
-		JSONArray errorsJSONArray = JSONUtil.getValueAsJSONArray(
+
+		JSONArray errorsJSONArray1 = JSONUtil.getValueAsJSONArray(
 			invokeGraphQLQuery(
 				new GraphQLField(
 					"accountAddress",
 					new HashMap<String, Object>() {
 						{
-							put("id", accountAddress.getId());
+							put("id", accountAddress1.getId());
 						}
 					},
 					new GraphQLField("id"))),
 			"JSONArray/errors");
 
-		Assert.assertTrue(errorsJSONArray.length() > 0);
+		Assert.assertTrue(errorsJSONArray1.length() > 0);
 	}
 
 	protected AccountAddress testGraphQLDeleteAccountAddress_addAccountAddress()
@@ -420,6 +428,8 @@ public abstract class BaseAccountAddressResourceTestCase {
 		AccountAddress accountAddress =
 			testGraphQLGetAccountAddress_addAccountAddress();
 
+		// No namespace
+
 		Assert.assertTrue(
 			equals(
 				accountAddress,
@@ -440,6 +450,8 @@ public abstract class BaseAccountAddressResourceTestCase {
 	@Test
 	public void testGraphQLGetAccountAddressNotFound() throws Exception {
 		Long irrelevantId = RandomTestUtil.randomLong();
+
+		// No namespace
 
 		Assert.assertEquals(
 			"Not Found",

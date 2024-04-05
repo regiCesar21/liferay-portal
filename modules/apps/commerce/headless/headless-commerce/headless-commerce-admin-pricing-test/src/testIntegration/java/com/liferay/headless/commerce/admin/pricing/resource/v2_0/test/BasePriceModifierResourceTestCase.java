@@ -945,6 +945,8 @@ public abstract class BasePriceModifierResourceTestCase {
 		PriceModifier priceModifier =
 			testGraphQLGetPriceModifierByExternalReferenceCode_addPriceModifier();
 
+		// No namespace
+
 		Assert.assertTrue(
 			equals(
 				priceModifier,
@@ -974,6 +976,8 @@ public abstract class BasePriceModifierResourceTestCase {
 
 		String irrelevantExternalReferenceCode =
 			"\"" + RandomTestUtil.randomString() + "\"";
+
+		// No namespace
 
 		Assert.assertEquals(
 			"Not Found",
@@ -1038,7 +1042,10 @@ public abstract class BasePriceModifierResourceTestCase {
 
 	@Test
 	public void testGraphQLDeletePriceModifier() throws Exception {
-		PriceModifier priceModifier =
+
+		// No namespace
+
+		PriceModifier priceModifier1 =
 			testGraphQLDeletePriceModifier_addPriceModifier();
 
 		Assert.assertTrue(
@@ -1048,23 +1055,24 @@ public abstract class BasePriceModifierResourceTestCase {
 						"deletePriceModifier",
 						new HashMap<String, Object>() {
 							{
-								put("id", priceModifier.getId());
+								put("id", priceModifier1.getId());
 							}
 						})),
 				"JSONObject/data", "Object/deletePriceModifier"));
-		JSONArray errorsJSONArray = JSONUtil.getValueAsJSONArray(
+
+		JSONArray errorsJSONArray1 = JSONUtil.getValueAsJSONArray(
 			invokeGraphQLQuery(
 				new GraphQLField(
 					"priceModifier",
 					new HashMap<String, Object>() {
 						{
-							put("id", priceModifier.getId());
+							put("id", priceModifier1.getId());
 						}
 					},
 					new GraphQLField("id"))),
 			"JSONArray/errors");
 
-		Assert.assertTrue(errorsJSONArray.length() > 0);
+		Assert.assertTrue(errorsJSONArray1.length() > 0);
 	}
 
 	protected PriceModifier testGraphQLDeletePriceModifier_addPriceModifier()
@@ -1097,6 +1105,8 @@ public abstract class BasePriceModifierResourceTestCase {
 		PriceModifier priceModifier =
 			testGraphQLGetPriceModifier_addPriceModifier();
 
+		// No namespace
+
 		Assert.assertTrue(
 			equals(
 				priceModifier,
@@ -1117,6 +1127,8 @@ public abstract class BasePriceModifierResourceTestCase {
 	@Test
 	public void testGraphQLGetPriceModifierNotFound() throws Exception {
 		Long irrelevantId = RandomTestUtil.randomLong();
+
+		// No namespace
 
 		Assert.assertEquals(
 			"Not Found",

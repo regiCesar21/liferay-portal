@@ -672,7 +672,10 @@ public abstract class BaseDocumentResourceTestCase {
 
 	@Test
 	public void testGraphQLDeleteDocument() throws Exception {
-		Document document = testGraphQLDeleteDocument_addDocument();
+
+		// No namespace
+
+		Document document1 = testGraphQLDeleteDocument_addDocument();
 
 		Assert.assertTrue(
 			JSONUtil.getValueAsBoolean(
@@ -681,23 +684,24 @@ public abstract class BaseDocumentResourceTestCase {
 						"deleteDocument",
 						new HashMap<String, Object>() {
 							{
-								put("documentId", document.getId());
+								put("documentId", document1.getId());
 							}
 						})),
 				"JSONObject/data", "Object/deleteDocument"));
-		JSONArray errorsJSONArray = JSONUtil.getValueAsJSONArray(
+
+		JSONArray errorsJSONArray1 = JSONUtil.getValueAsJSONArray(
 			invokeGraphQLQuery(
 				new GraphQLField(
 					"document",
 					new HashMap<String, Object>() {
 						{
-							put("documentId", document.getId());
+							put("documentId", document1.getId());
 						}
 					},
 					new GraphQLField("id"))),
 			"JSONArray/errors");
 
-		Assert.assertTrue(errorsJSONArray.length() > 0);
+		Assert.assertTrue(errorsJSONArray1.length() > 0);
 	}
 
 	protected Document testGraphQLDeleteDocument_addDocument()
@@ -726,6 +730,8 @@ public abstract class BaseDocumentResourceTestCase {
 	public void testGraphQLGetDocument() throws Exception {
 		Document document = testGraphQLGetDocument_addDocument();
 
+		// No namespace
+
 		Assert.assertTrue(
 			equals(
 				document,
@@ -746,6 +752,8 @@ public abstract class BaseDocumentResourceTestCase {
 	@Test
 	public void testGraphQLGetDocumentNotFound() throws Exception {
 		Long irrelevantDocumentId = RandomTestUtil.randomLong();
+
+		// No namespace
 
 		Assert.assertEquals(
 			"Not Found",
@@ -1248,6 +1256,8 @@ public abstract class BaseDocumentResourceTestCase {
 			},
 			new GraphQLField("items", getGraphQLFields()),
 			new GraphQLField("page"), new GraphQLField("totalCount"));
+
+		// No namespace
 
 		JSONObject documentsJSONObject = JSONUtil.getValueAsJSONObject(
 			invokeGraphQLQuery(graphQLField), "JSONObject/data",

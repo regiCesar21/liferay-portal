@@ -220,6 +220,8 @@ public abstract class BaseAccountResourceTestCase {
 		Account account =
 			testGraphQLGetOrderByExternalReferenceCodeAccount_addAccount();
 
+		// No namespace
+
 		Assert.assertTrue(
 			equals(
 				account,
@@ -256,6 +258,8 @@ public abstract class BaseAccountResourceTestCase {
 
 		String irrelevantExternalReferenceCode =
 			"\"" + RandomTestUtil.randomString() + "\"";
+
+		// No namespace
 
 		Assert.assertEquals(
 			"Not Found",
@@ -308,6 +312,8 @@ public abstract class BaseAccountResourceTestCase {
 	public void testGraphQLGetOrderIdAccount() throws Exception {
 		Account account = testGraphQLGetOrderIdAccount_addAccount();
 
+		// No namespace
+
 		Assert.assertTrue(
 			equals(
 				account,
@@ -337,6 +343,8 @@ public abstract class BaseAccountResourceTestCase {
 	@Test
 	public void testGraphQLGetOrderIdAccountNotFound() throws Exception {
 		Long irrelevantId = RandomTestUtil.randomLong();
+
+		// No namespace
 
 		Assert.assertEquals(
 			"Not Found",

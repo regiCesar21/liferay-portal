@@ -218,7 +218,10 @@ public abstract class BaseDiscountRuleResourceTestCase {
 
 	@Test
 	public void testGraphQLDeleteDiscountRule() throws Exception {
-		DiscountRule discountRule =
+
+		// No namespace
+
+		DiscountRule discountRule1 =
 			testGraphQLDeleteDiscountRule_addDiscountRule();
 
 		Assert.assertTrue(
@@ -228,23 +231,24 @@ public abstract class BaseDiscountRuleResourceTestCase {
 						"deleteDiscountRule",
 						new HashMap<String, Object>() {
 							{
-								put("id", discountRule.getId());
+								put("id", discountRule1.getId());
 							}
 						})),
 				"JSONObject/data", "Object/deleteDiscountRule"));
-		JSONArray errorsJSONArray = JSONUtil.getValueAsJSONArray(
+
+		JSONArray errorsJSONArray1 = JSONUtil.getValueAsJSONArray(
 			invokeGraphQLQuery(
 				new GraphQLField(
 					"discountRule",
 					new HashMap<String, Object>() {
 						{
-							put("id", discountRule.getId());
+							put("id", discountRule1.getId());
 						}
 					},
 					new GraphQLField("id"))),
 			"JSONArray/errors");
 
-		Assert.assertTrue(errorsJSONArray.length() > 0);
+		Assert.assertTrue(errorsJSONArray1.length() > 0);
 	}
 
 	protected DiscountRule testGraphQLDeleteDiscountRule_addDiscountRule()
@@ -276,6 +280,8 @@ public abstract class BaseDiscountRuleResourceTestCase {
 		DiscountRule discountRule =
 			testGraphQLGetDiscountRule_addDiscountRule();
 
+		// No namespace
+
 		Assert.assertTrue(
 			equals(
 				discountRule,
@@ -296,6 +302,8 @@ public abstract class BaseDiscountRuleResourceTestCase {
 	@Test
 	public void testGraphQLGetDiscountRuleNotFound() throws Exception {
 		Long irrelevantId = RandomTestUtil.randomLong();
+
+		// No namespace
 
 		Assert.assertEquals(
 			"Not Found",

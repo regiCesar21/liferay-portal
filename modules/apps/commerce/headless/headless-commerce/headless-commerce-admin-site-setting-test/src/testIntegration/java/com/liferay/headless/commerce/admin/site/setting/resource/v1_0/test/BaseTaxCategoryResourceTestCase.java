@@ -425,7 +425,11 @@ public abstract class BaseTaxCategoryResourceTestCase {
 
 	@Test
 	public void testGraphQLDeleteTaxCategory() throws Exception {
-		TaxCategory taxCategory = testGraphQLDeleteTaxCategory_addTaxCategory();
+
+		// No namespace
+
+		TaxCategory taxCategory1 =
+			testGraphQLDeleteTaxCategory_addTaxCategory();
 
 		Assert.assertTrue(
 			JSONUtil.getValueAsBoolean(
@@ -434,23 +438,24 @@ public abstract class BaseTaxCategoryResourceTestCase {
 						"deleteTaxCategory",
 						new HashMap<String, Object>() {
 							{
-								put("id", taxCategory.getId());
+								put("id", taxCategory1.getId());
 							}
 						})),
 				"JSONObject/data", "Object/deleteTaxCategory"));
-		JSONArray errorsJSONArray = JSONUtil.getValueAsJSONArray(
+
+		JSONArray errorsJSONArray1 = JSONUtil.getValueAsJSONArray(
 			invokeGraphQLQuery(
 				new GraphQLField(
 					"taxCategory",
 					new HashMap<String, Object>() {
 						{
-							put("id", taxCategory.getId());
+							put("id", taxCategory1.getId());
 						}
 					},
 					new GraphQLField("id"))),
 			"JSONArray/errors");
 
-		Assert.assertTrue(errorsJSONArray.length() > 0);
+		Assert.assertTrue(errorsJSONArray1.length() > 0);
 	}
 
 	protected TaxCategory testGraphQLDeleteTaxCategory_addTaxCategory()
@@ -479,6 +484,8 @@ public abstract class BaseTaxCategoryResourceTestCase {
 	public void testGraphQLGetTaxCategory() throws Exception {
 		TaxCategory taxCategory = testGraphQLGetTaxCategory_addTaxCategory();
 
+		// No namespace
+
 		Assert.assertTrue(
 			equals(
 				taxCategory,
@@ -499,6 +506,8 @@ public abstract class BaseTaxCategoryResourceTestCase {
 	@Test
 	public void testGraphQLGetTaxCategoryNotFound() throws Exception {
 		Long irrelevantId = RandomTestUtil.randomLong();
+
+		// No namespace
 
 		Assert.assertEquals(
 			"Not Found",

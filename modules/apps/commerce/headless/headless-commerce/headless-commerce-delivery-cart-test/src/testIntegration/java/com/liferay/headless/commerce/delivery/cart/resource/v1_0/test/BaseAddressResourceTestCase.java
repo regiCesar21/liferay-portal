@@ -229,6 +229,8 @@ public abstract class BaseAddressResourceTestCase {
 	public void testGraphQLGetCartBillingAddres() throws Exception {
 		Address address = testGraphQLGetCartBillingAddres_addAddress();
 
+		// No namespace
+
 		Assert.assertTrue(
 			equals(
 				address,
@@ -258,6 +260,8 @@ public abstract class BaseAddressResourceTestCase {
 	@Test
 	public void testGraphQLGetCartBillingAddresNotFound() throws Exception {
 		Long irrelevantCartId = RandomTestUtil.randomLong();
+
+		// No namespace
 
 		Assert.assertEquals(
 			"Not Found",
@@ -306,6 +310,8 @@ public abstract class BaseAddressResourceTestCase {
 	public void testGraphQLGetCartShippingAddres() throws Exception {
 		Address address = testGraphQLGetCartShippingAddres_addAddress();
 
+		// No namespace
+
 		Assert.assertTrue(
 			equals(
 				address,
@@ -335,6 +341,8 @@ public abstract class BaseAddressResourceTestCase {
 	@Test
 	public void testGraphQLGetCartShippingAddresNotFound() throws Exception {
 		Long irrelevantCartId = RandomTestUtil.randomLong();
+
+		// No namespace
 
 		Assert.assertEquals(
 			"Not Found",

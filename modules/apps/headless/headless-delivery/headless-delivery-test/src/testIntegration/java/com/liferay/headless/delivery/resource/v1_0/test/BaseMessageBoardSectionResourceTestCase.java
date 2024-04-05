@@ -220,7 +220,10 @@ public abstract class BaseMessageBoardSectionResourceTestCase {
 
 	@Test
 	public void testGraphQLDeleteMessageBoardSection() throws Exception {
-		MessageBoardSection messageBoardSection =
+
+		// No namespace
+
+		MessageBoardSection messageBoardSection1 =
 			testGraphQLDeleteMessageBoardSection_addMessageBoardSection();
 
 		Assert.assertTrue(
@@ -232,11 +235,12 @@ public abstract class BaseMessageBoardSectionResourceTestCase {
 							{
 								put(
 									"messageBoardSectionId",
-									messageBoardSection.getId());
+									messageBoardSection1.getId());
 							}
 						})),
 				"JSONObject/data", "Object/deleteMessageBoardSection"));
-		JSONArray errorsJSONArray = JSONUtil.getValueAsJSONArray(
+
+		JSONArray errorsJSONArray1 = JSONUtil.getValueAsJSONArray(
 			invokeGraphQLQuery(
 				new GraphQLField(
 					"messageBoardSection",
@@ -244,13 +248,13 @@ public abstract class BaseMessageBoardSectionResourceTestCase {
 						{
 							put(
 								"messageBoardSectionId",
-								messageBoardSection.getId());
+								messageBoardSection1.getId());
 						}
 					},
 					new GraphQLField("id"))),
 			"JSONArray/errors");
 
-		Assert.assertTrue(errorsJSONArray.length() > 0);
+		Assert.assertTrue(errorsJSONArray1.length() > 0);
 	}
 
 	protected MessageBoardSection
@@ -286,6 +290,8 @@ public abstract class BaseMessageBoardSectionResourceTestCase {
 		MessageBoardSection messageBoardSection =
 			testGraphQLGetMessageBoardSection_addMessageBoardSection();
 
+		// No namespace
+
 		Assert.assertTrue(
 			equals(
 				messageBoardSection,
@@ -308,6 +314,8 @@ public abstract class BaseMessageBoardSectionResourceTestCase {
 	@Test
 	public void testGraphQLGetMessageBoardSectionNotFound() throws Exception {
 		Long irrelevantMessageBoardSectionId = RandomTestUtil.randomLong();
+
+		// No namespace
 
 		Assert.assertEquals(
 			"Not Found",
@@ -1458,6 +1466,8 @@ public abstract class BaseMessageBoardSectionResourceTestCase {
 			},
 			new GraphQLField("items", getGraphQLFields()),
 			new GraphQLField("page"), new GraphQLField("totalCount"));
+
+		// No namespace
 
 		JSONObject messageBoardSectionsJSONObject =
 			JSONUtil.getValueAsJSONObject(

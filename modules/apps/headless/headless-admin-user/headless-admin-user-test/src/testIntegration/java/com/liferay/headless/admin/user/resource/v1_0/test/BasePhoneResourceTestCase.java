@@ -276,6 +276,8 @@ public abstract class BasePhoneResourceTestCase {
 	public void testGraphQLGetPhone() throws Exception {
 		Phone phone = testGraphQLGetPhone_addPhone();
 
+		// No namespace
+
 		Assert.assertTrue(
 			equals(
 				phone,
@@ -296,6 +298,8 @@ public abstract class BasePhoneResourceTestCase {
 	@Test
 	public void testGraphQLGetPhoneNotFound() throws Exception {
 		Long irrelevantPhoneId = RandomTestUtil.randomLong();
+
+		// No namespace
 
 		Assert.assertEquals(
 			"Not Found",

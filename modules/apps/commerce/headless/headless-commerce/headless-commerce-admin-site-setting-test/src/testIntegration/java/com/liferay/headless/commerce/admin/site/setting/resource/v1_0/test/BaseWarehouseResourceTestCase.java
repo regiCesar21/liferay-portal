@@ -422,7 +422,10 @@ public abstract class BaseWarehouseResourceTestCase {
 
 	@Test
 	public void testGraphQLDeleteWarehouse() throws Exception {
-		Warehouse warehouse = testGraphQLDeleteWarehouse_addWarehouse();
+
+		// No namespace
+
+		Warehouse warehouse1 = testGraphQLDeleteWarehouse_addWarehouse();
 
 		Assert.assertTrue(
 			JSONUtil.getValueAsBoolean(
@@ -431,23 +434,24 @@ public abstract class BaseWarehouseResourceTestCase {
 						"deleteWarehouse",
 						new HashMap<String, Object>() {
 							{
-								put("id", warehouse.getId());
+								put("id", warehouse1.getId());
 							}
 						})),
 				"JSONObject/data", "Object/deleteWarehouse"));
-		JSONArray errorsJSONArray = JSONUtil.getValueAsJSONArray(
+
+		JSONArray errorsJSONArray1 = JSONUtil.getValueAsJSONArray(
 			invokeGraphQLQuery(
 				new GraphQLField(
 					"warehouse",
 					new HashMap<String, Object>() {
 						{
-							put("id", warehouse.getId());
+							put("id", warehouse1.getId());
 						}
 					},
 					new GraphQLField("id"))),
 			"JSONArray/errors");
 
-		Assert.assertTrue(errorsJSONArray.length() > 0);
+		Assert.assertTrue(errorsJSONArray1.length() > 0);
 	}
 
 	protected Warehouse testGraphQLDeleteWarehouse_addWarehouse()
@@ -476,6 +480,8 @@ public abstract class BaseWarehouseResourceTestCase {
 	public void testGraphQLGetWarehouse() throws Exception {
 		Warehouse warehouse = testGraphQLGetWarehouse_addWarehouse();
 
+		// No namespace
+
 		Assert.assertTrue(
 			equals(
 				warehouse,
@@ -496,6 +502,8 @@ public abstract class BaseWarehouseResourceTestCase {
 	@Test
 	public void testGraphQLGetWarehouseNotFound() throws Exception {
 		Long irrelevantId = RandomTestUtil.randomLong();
+
+		// No namespace
 
 		Assert.assertEquals(
 			"Not Found",

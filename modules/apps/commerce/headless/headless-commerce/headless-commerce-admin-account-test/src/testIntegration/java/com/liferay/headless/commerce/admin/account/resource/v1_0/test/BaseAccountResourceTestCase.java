@@ -552,6 +552,8 @@ public abstract class BaseAccountResourceTestCase {
 			new GraphQLField("items", getGraphQLFields()),
 			new GraphQLField("page"), new GraphQLField("totalCount"));
 
+		// No namespace
+
 		JSONObject accountsJSONObject = JSONUtil.getValueAsJSONObject(
 			invokeGraphQLQuery(graphQLField), "JSONObject/data",
 			"JSONObject/accounts");
@@ -653,6 +655,8 @@ public abstract class BaseAccountResourceTestCase {
 		Account account =
 			testGraphQLGetAccountByExternalReferenceCode_addAccount();
 
+		// No namespace
+
 		Assert.assertTrue(
 			equals(
 				account,
@@ -682,6 +686,8 @@ public abstract class BaseAccountResourceTestCase {
 
 		String irrelevantExternalReferenceCode =
 			"\"" + RandomTestUtil.randomString() + "\"";
+
+		// No namespace
 
 		Assert.assertEquals(
 			"Not Found",
@@ -739,7 +745,10 @@ public abstract class BaseAccountResourceTestCase {
 
 	@Test
 	public void testGraphQLDeleteAccount() throws Exception {
-		Account account = testGraphQLDeleteAccount_addAccount();
+
+		// No namespace
+
+		Account account1 = testGraphQLDeleteAccount_addAccount();
 
 		Assert.assertTrue(
 			JSONUtil.getValueAsBoolean(
@@ -748,23 +757,24 @@ public abstract class BaseAccountResourceTestCase {
 						"deleteAccount",
 						new HashMap<String, Object>() {
 							{
-								put("id", account.getId());
+								put("id", account1.getId());
 							}
 						})),
 				"JSONObject/data", "Object/deleteAccount"));
-		JSONArray errorsJSONArray = JSONUtil.getValueAsJSONArray(
+
+		JSONArray errorsJSONArray1 = JSONUtil.getValueAsJSONArray(
 			invokeGraphQLQuery(
 				new GraphQLField(
 					"account",
 					new HashMap<String, Object>() {
 						{
-							put("id", account.getId());
+							put("id", account1.getId());
 						}
 					},
 					new GraphQLField("id"))),
 			"JSONArray/errors");
 
-		Assert.assertTrue(errorsJSONArray.length() > 0);
+		Assert.assertTrue(errorsJSONArray1.length() > 0);
 	}
 
 	protected Account testGraphQLDeleteAccount_addAccount() throws Exception {
@@ -790,6 +800,8 @@ public abstract class BaseAccountResourceTestCase {
 	public void testGraphQLGetAccount() throws Exception {
 		Account account = testGraphQLGetAccount_addAccount();
 
+		// No namespace
+
 		Assert.assertTrue(
 			equals(
 				account,
@@ -810,6 +822,8 @@ public abstract class BaseAccountResourceTestCase {
 	@Test
 	public void testGraphQLGetAccountNotFound() throws Exception {
 		Long irrelevantId = RandomTestUtil.randomLong();
+
+		// No namespace
 
 		Assert.assertEquals(
 			"Not Found",

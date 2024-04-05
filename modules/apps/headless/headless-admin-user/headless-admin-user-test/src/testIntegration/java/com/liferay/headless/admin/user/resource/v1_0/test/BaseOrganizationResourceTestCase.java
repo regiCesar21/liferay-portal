@@ -553,6 +553,8 @@ public abstract class BaseOrganizationResourceTestCase {
 			new GraphQLField("items", getGraphQLFields()),
 			new GraphQLField("page"), new GraphQLField("totalCount"));
 
+		// No namespace
+
 		JSONObject organizationsJSONObject = JSONUtil.getValueAsJSONObject(
 			invokeGraphQLQuery(graphQLField), "JSONObject/data",
 			"JSONObject/organizations");
@@ -612,6 +614,8 @@ public abstract class BaseOrganizationResourceTestCase {
 		Organization organization =
 			testGraphQLGetOrganization_addOrganization();
 
+		// No namespace
+
 		Assert.assertTrue(
 			equals(
 				organization,
@@ -634,6 +638,8 @@ public abstract class BaseOrganizationResourceTestCase {
 	@Test
 	public void testGraphQLGetOrganizationNotFound() throws Exception {
 		Long irrelevantOrganizationId = RandomTestUtil.randomLong();
+
+		// No namespace
 
 		Assert.assertEquals(
 			"Not Found",

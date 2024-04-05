@@ -525,6 +525,8 @@ public abstract class BaseDiscountResourceTestCase {
 			new GraphQLField("items", getGraphQLFields()),
 			new GraphQLField("page"), new GraphQLField("totalCount"));
 
+		// No namespace
+
 		JSONObject discountsJSONObject = JSONUtil.getValueAsJSONObject(
 			invokeGraphQLQuery(graphQLField), "JSONObject/data",
 			"JSONObject/discounts");
@@ -630,6 +632,8 @@ public abstract class BaseDiscountResourceTestCase {
 		Discount discount =
 			testGraphQLGetDiscountByExternalReferenceCode_addDiscount();
 
+		// No namespace
+
 		Assert.assertTrue(
 			equals(
 				discount,
@@ -659,6 +663,8 @@ public abstract class BaseDiscountResourceTestCase {
 
 		String irrelevantExternalReferenceCode =
 			"\"" + RandomTestUtil.randomString() + "\"";
+
+		// No namespace
 
 		Assert.assertEquals(
 			"Not Found",
@@ -738,7 +744,10 @@ public abstract class BaseDiscountResourceTestCase {
 
 	@Test
 	public void testGraphQLDeleteDiscount() throws Exception {
-		Discount discount = testGraphQLDeleteDiscount_addDiscount();
+
+		// No namespace
+
+		Discount discount1 = testGraphQLDeleteDiscount_addDiscount();
 
 		Assert.assertTrue(
 			JSONUtil.getValueAsBoolean(
@@ -747,23 +756,24 @@ public abstract class BaseDiscountResourceTestCase {
 						"deleteDiscount",
 						new HashMap<String, Object>() {
 							{
-								put("id", discount.getId());
+								put("id", discount1.getId());
 							}
 						})),
 				"JSONObject/data", "Object/deleteDiscount"));
-		JSONArray errorsJSONArray = JSONUtil.getValueAsJSONArray(
+
+		JSONArray errorsJSONArray1 = JSONUtil.getValueAsJSONArray(
 			invokeGraphQLQuery(
 				new GraphQLField(
 					"discount",
 					new HashMap<String, Object>() {
 						{
-							put("id", discount.getId());
+							put("id", discount1.getId());
 						}
 					},
 					new GraphQLField("id"))),
 			"JSONArray/errors");
 
-		Assert.assertTrue(errorsJSONArray.length() > 0);
+		Assert.assertTrue(errorsJSONArray1.length() > 0);
 	}
 
 	protected Discount testGraphQLDeleteDiscount_addDiscount()
@@ -792,6 +802,8 @@ public abstract class BaseDiscountResourceTestCase {
 	public void testGraphQLGetDiscount() throws Exception {
 		Discount discount = testGraphQLGetDiscount_addDiscount();
 
+		// No namespace
+
 		Assert.assertTrue(
 			equals(
 				discount,
@@ -812,6 +824,8 @@ public abstract class BaseDiscountResourceTestCase {
 	@Test
 	public void testGraphQLGetDiscountNotFound() throws Exception {
 		Long irrelevantId = RandomTestUtil.randomLong();
+
+		// No namespace
 
 		Assert.assertEquals(
 			"Not Found",

@@ -672,6 +672,8 @@ public abstract class BaseTaxonomyVocabularyResourceTestCase {
 			new GraphQLField("items", getGraphQLFields()),
 			new GraphQLField("page"), new GraphQLField("totalCount"));
 
+		// No namespace
+
 		JSONObject taxonomyVocabulariesJSONObject =
 			JSONUtil.getValueAsJSONObject(
 				invokeGraphQLQuery(graphQLField), "JSONObject/data",
@@ -777,7 +779,10 @@ public abstract class BaseTaxonomyVocabularyResourceTestCase {
 
 	@Test
 	public void testGraphQLDeleteTaxonomyVocabulary() throws Exception {
-		TaxonomyVocabulary taxonomyVocabulary =
+
+		// No namespace
+
+		TaxonomyVocabulary taxonomyVocabulary1 =
 			testGraphQLDeleteTaxonomyVocabulary_addTaxonomyVocabulary();
 
 		Assert.assertTrue(
@@ -789,11 +794,12 @@ public abstract class BaseTaxonomyVocabularyResourceTestCase {
 							{
 								put(
 									"taxonomyVocabularyId",
-									taxonomyVocabulary.getId());
+									taxonomyVocabulary1.getId());
 							}
 						})),
 				"JSONObject/data", "Object/deleteTaxonomyVocabulary"));
-		JSONArray errorsJSONArray = JSONUtil.getValueAsJSONArray(
+
+		JSONArray errorsJSONArray1 = JSONUtil.getValueAsJSONArray(
 			invokeGraphQLQuery(
 				new GraphQLField(
 					"taxonomyVocabulary",
@@ -801,13 +807,13 @@ public abstract class BaseTaxonomyVocabularyResourceTestCase {
 						{
 							put(
 								"taxonomyVocabularyId",
-								taxonomyVocabulary.getId());
+								taxonomyVocabulary1.getId());
 						}
 					},
 					new GraphQLField("id"))),
 			"JSONArray/errors");
 
-		Assert.assertTrue(errorsJSONArray.length() > 0);
+		Assert.assertTrue(errorsJSONArray1.length() > 0);
 	}
 
 	protected TaxonomyVocabulary
@@ -843,6 +849,8 @@ public abstract class BaseTaxonomyVocabularyResourceTestCase {
 		TaxonomyVocabulary taxonomyVocabulary =
 			testGraphQLGetTaxonomyVocabulary_addTaxonomyVocabulary();
 
+		// No namespace
+
 		Assert.assertTrue(
 			equals(
 				taxonomyVocabulary,
@@ -865,6 +873,8 @@ public abstract class BaseTaxonomyVocabularyResourceTestCase {
 	@Test
 	public void testGraphQLGetTaxonomyVocabularyNotFound() throws Exception {
 		Long irrelevantTaxonomyVocabularyId = RandomTestUtil.randomLong();
+
+		// No namespace
 
 		Assert.assertEquals(
 			"Not Found",

@@ -349,6 +349,8 @@ public abstract class BaseWebUrlResourceTestCase {
 	public void testGraphQLGetWebUrl() throws Exception {
 		WebUrl webUrl = testGraphQLGetWebUrl_addWebUrl();
 
+		// No namespace
+
 		Assert.assertTrue(
 			equals(
 				webUrl,
@@ -369,6 +371,8 @@ public abstract class BaseWebUrlResourceTestCase {
 	@Test
 	public void testGraphQLGetWebUrlNotFound() throws Exception {
 		Long irrelevantWebUrlId = RandomTestUtil.randomLong();
+
+		// No namespace
 
 		Assert.assertEquals(
 			"Not Found",
