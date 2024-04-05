@@ -6,10 +6,26 @@
 package com.liferay.portal.security.audit.web.internal.portlet;
 
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
+import com.liferay.portal.kernel.security.auth.PrincipalException;
+import com.liferay.portal.kernel.security.permission.PermissionChecker;
+import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
+import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.security.audit.AuditEvent;
 import com.liferay.portal.security.audit.AuditEventManager;
+import com.liferay.portal.security.audit.web.internal.AuditEventManagerUtil;
 import com.liferay.portal.security.audit.web.internal.constants.AuditPortletKeys;
 
+import java.io.IOException;
+
+import javax.portlet.ActionRequest;
+import javax.portlet.ActionResponse;
 import javax.portlet.Portlet;
+import javax.portlet.PortletException;
+import javax.portlet.PortletRequest;
+import javax.portlet.RenderRequest;
+import javax.portlet.RenderResponse;
+import javax.portlet.ResourceRequest;
+import javax.portlet.ResourceResponse;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -34,6 +50,63 @@ import org.osgi.service.component.annotations.Reference;
 	service = Portlet.class
 )
 public class AuditPortlet extends MVCPortlet {
+
+	@Override
+	public void processAction(
+			ActionRequest actionRequest, ActionResponse actionResponse)
+		throws IOException, PortletException {
+
+		_checkCompanyAdmin(actionRequest);
+
+		super.processAction(actionRequest, actionResponse);
+	}
+
+	@Override
+	public void render(
+			RenderRequest renderRequest, RenderResponse renderResponse)
+		throws IOException, PortletException {
+
+		_checkCompanyAdmin(renderRequest);
+
+		super.render(renderRequest, renderResponse);
+	}
+
+	@Override
+	public void serveResource(
+			ResourceRequest resourceRequest, ResourceResponse resourceResponse)
+		throws IOException, PortletException {
+
+		_checkCompanyAdmin(resourceRequest);
+
+		super.serveResource(resourceRequest, resourceResponse);
+	}
+
+	private void _checkCompanyAdmin(PortletRequest portletRequest)
+		throws PortletException {
+
+		PermissionChecker permissionChecker =
+			PermissionThreadLocal.getPermissionChecker();
+
+		long auditEventId = ParamUtil.getLong(portletRequest, "auditEventId");
+
+		if (auditEventId > 0) {
+			AuditEvent auditEvent = AuditEventManagerUtil.fetchAuditEvent(
+				auditEventId);
+
+			if (permissionChecker.getCompanyId() != auditEvent.getCompanyId()) {
+				throw new PortletException(
+					"This event does not belong to this company");
+			}
+		}
+
+		if (!permissionChecker.isCompanyAdmin()) {
+			PrincipalException principalException =
+				new PrincipalException.MustBeCompanyAdmin(
+					permissionChecker.getUserId());
+
+			throw new PortletException(principalException);
+		}
+	}
 
 	@Reference
 	private AuditEventManager _auditEventManager;
