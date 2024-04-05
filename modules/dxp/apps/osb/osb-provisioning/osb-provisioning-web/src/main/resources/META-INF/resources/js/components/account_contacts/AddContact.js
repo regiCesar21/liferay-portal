@@ -67,6 +67,9 @@ export default function AddContact({
 		if (partnerManagerIntersection.size === 1 && partnerIntersection.size > 1) {
 			setValidPartner(false);
 		}
+		else {
+			setValidPartner(true);
+		}
 
 		if (supportIntersection.size > 1) {
 			setValid(false);
@@ -121,7 +124,18 @@ export default function AddContact({
 					title={Liferay.Language.get('overlapping-roles')}
 				>
 					{Liferay.Language.get(
-						'please-only-select-one-support-role-or-one-partner-role'
+						'please-only-select-one-support-role'
+					)}
+				</ClayAlert>
+			)}
+
+			{!validPartner && (
+				<ClayAlert
+					displayType="danger"
+					title={Liferay.Language.get('overlapping-roles')}
+				>
+					{Liferay.Language.get(
+						'the-partner-manager-role-must-be-the-only-partner-role'
 					)}
 				</ClayAlert>
 			)}
