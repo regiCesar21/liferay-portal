@@ -723,7 +723,10 @@ public abstract class BaseWikiPageResourceTestCase {
 
 	@Test
 	public void testGraphQLDeleteWikiPage() throws Exception {
-		WikiPage wikiPage = testGraphQLDeleteWikiPage_addWikiPage();
+
+		// No namespace
+
+		WikiPage wikiPage1 = testGraphQLDeleteWikiPage_addWikiPage();
 
 		Assert.assertTrue(
 			JSONUtil.getValueAsBoolean(
@@ -732,23 +735,24 @@ public abstract class BaseWikiPageResourceTestCase {
 						"deleteWikiPage",
 						new HashMap<String, Object>() {
 							{
-								put("wikiPageId", wikiPage.getId());
+								put("wikiPageId", wikiPage1.getId());
 							}
 						})),
 				"JSONObject/data", "Object/deleteWikiPage"));
-		JSONArray errorsJSONArray = JSONUtil.getValueAsJSONArray(
+
+		JSONArray errorsJSONArray1 = JSONUtil.getValueAsJSONArray(
 			invokeGraphQLQuery(
 				new GraphQLField(
 					"wikiPage",
 					new HashMap<String, Object>() {
 						{
-							put("wikiPageId", wikiPage.getId());
+							put("wikiPageId", wikiPage1.getId());
 						}
 					},
 					new GraphQLField("id"))),
 			"JSONArray/errors");
 
-		Assert.assertTrue(errorsJSONArray.length() > 0);
+		Assert.assertTrue(errorsJSONArray1.length() > 0);
 	}
 
 	protected WikiPage testGraphQLDeleteWikiPage_addWikiPage()
@@ -777,6 +781,8 @@ public abstract class BaseWikiPageResourceTestCase {
 	public void testGraphQLGetWikiPage() throws Exception {
 		WikiPage wikiPage = testGraphQLGetWikiPage_addWikiPage();
 
+		// No namespace
+
 		Assert.assertTrue(
 			equals(
 				wikiPage,
@@ -797,6 +803,8 @@ public abstract class BaseWikiPageResourceTestCase {
 	@Test
 	public void testGraphQLGetWikiPageNotFound() throws Exception {
 		Long irrelevantWikiPageId = RandomTestUtil.randomLong();
+
+		// No namespace
 
 		Assert.assertEquals(
 			"Not Found",

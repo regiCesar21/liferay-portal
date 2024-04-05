@@ -209,7 +209,10 @@ public abstract class BaseCartItemResourceTestCase {
 
 	@Test
 	public void testGraphQLDeleteCartItem() throws Exception {
-		CartItem cartItem = testGraphQLDeleteCartItem_addCartItem();
+
+		// No namespace
+
+		CartItem cartItem1 = testGraphQLDeleteCartItem_addCartItem();
 
 		Assert.assertTrue(
 			JSONUtil.getValueAsBoolean(
@@ -218,23 +221,24 @@ public abstract class BaseCartItemResourceTestCase {
 						"deleteCartItem",
 						new HashMap<String, Object>() {
 							{
-								put("cartItemId", cartItem.getId());
+								put("cartItemId", cartItem1.getId());
 							}
 						})),
 				"JSONObject/data", "Object/deleteCartItem"));
-		JSONArray errorsJSONArray = JSONUtil.getValueAsJSONArray(
+
+		JSONArray errorsJSONArray1 = JSONUtil.getValueAsJSONArray(
 			invokeGraphQLQuery(
 				new GraphQLField(
 					"cartItem",
 					new HashMap<String, Object>() {
 						{
-							put("cartItemId", cartItem.getId());
+							put("cartItemId", cartItem1.getId());
 						}
 					},
 					new GraphQLField("id"))),
 			"JSONArray/errors");
 
-		Assert.assertTrue(errorsJSONArray.length() > 0);
+		Assert.assertTrue(errorsJSONArray1.length() > 0);
 	}
 
 	protected CartItem testGraphQLDeleteCartItem_addCartItem()
@@ -263,6 +267,8 @@ public abstract class BaseCartItemResourceTestCase {
 	public void testGraphQLGetCartItem() throws Exception {
 		CartItem cartItem = testGraphQLGetCartItem_addCartItem();
 
+		// No namespace
+
 		Assert.assertTrue(
 			equals(
 				cartItem,
@@ -283,6 +289,8 @@ public abstract class BaseCartItemResourceTestCase {
 	@Test
 	public void testGraphQLGetCartItemNotFound() throws Exception {
 		Long irrelevantCartItemId = RandomTestUtil.randomLong();
+
+		// No namespace
 
 		Assert.assertEquals(
 			"Not Found",
@@ -516,6 +524,8 @@ public abstract class BaseCartItemResourceTestCase {
 			},
 			new GraphQLField("items", getGraphQLFields()),
 			new GraphQLField("page"), new GraphQLField("totalCount"));
+
+		// No namespace
 
 		JSONObject cartItemsJSONObject = JSONUtil.getValueAsJSONObject(
 			invokeGraphQLQuery(graphQLField), "JSONObject/data",

@@ -298,6 +298,8 @@ public abstract class BaseRoleResourceTestCase {
 			new GraphQLField("items", getGraphQLFields()),
 			new GraphQLField("page"), new GraphQLField("totalCount"));
 
+		// No namespace
+
 		JSONObject rolesJSONObject = JSONUtil.getValueAsJSONObject(
 			invokeGraphQLQuery(graphQLField), "JSONObject/data",
 			"JSONObject/roles");
@@ -347,6 +349,8 @@ public abstract class BaseRoleResourceTestCase {
 	public void testGraphQLGetRole() throws Exception {
 		Role role = testGraphQLGetRole_addRole();
 
+		// No namespace
+
 		Assert.assertTrue(
 			equals(
 				role,
@@ -367,6 +371,8 @@ public abstract class BaseRoleResourceTestCase {
 	@Test
 	public void testGraphQLGetRoleNotFound() throws Exception {
 		Long irrelevantRoleId = RandomTestUtil.randomLong();
+
+		// No namespace
 
 		Assert.assertEquals(
 			"Not Found",

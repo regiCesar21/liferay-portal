@@ -386,6 +386,8 @@ public abstract class BaseWorkflowLogResourceTestCase {
 	public void testGraphQLGetWorkflowLog() throws Exception {
 		WorkflowLog workflowLog = testGraphQLGetWorkflowLog_addWorkflowLog();
 
+		// No namespace
+
 		Assert.assertTrue(
 			equals(
 				workflowLog,
@@ -408,6 +410,8 @@ public abstract class BaseWorkflowLogResourceTestCase {
 	@Test
 	public void testGraphQLGetWorkflowLogNotFound() throws Exception {
 		Long irrelevantWorkflowLogId = RandomTestUtil.randomLong();
+
+		// No namespace
 
 		Assert.assertEquals(
 			"Not Found",

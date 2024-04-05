@@ -1113,6 +1113,8 @@ public abstract class BaseContentTemplateResourceTestCase {
 			new GraphQLField("items", getGraphQLFields()),
 			new GraphQLField("page"), new GraphQLField("totalCount"));
 
+		// No namespace
+
 		JSONObject contentTemplatesJSONObject = JSONUtil.getValueAsJSONObject(
 			invokeGraphQLQuery(graphQLField), "JSONObject/data",
 			"JSONObject/contentTemplates");
@@ -1183,6 +1185,8 @@ public abstract class BaseContentTemplateResourceTestCase {
 		ContentTemplate contentTemplate =
 			testGraphQLGetSiteContentTemplate_addContentTemplate();
 
+		// No namespace
+
 		Assert.assertTrue(
 			equals(
 				contentTemplate,
@@ -1220,6 +1224,8 @@ public abstract class BaseContentTemplateResourceTestCase {
 	public void testGraphQLGetSiteContentTemplateNotFound() throws Exception {
 		String irrelevantContentTemplateId =
 			"\"" + RandomTestUtil.randomString() + "\"";
+
+		// No namespace
 
 		Assert.assertEquals(
 			"Not Found",

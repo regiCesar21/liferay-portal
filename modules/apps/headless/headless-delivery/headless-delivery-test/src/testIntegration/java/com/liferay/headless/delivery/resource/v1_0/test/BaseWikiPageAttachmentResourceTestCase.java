@@ -222,7 +222,10 @@ public abstract class BaseWikiPageAttachmentResourceTestCase {
 
 	@Test
 	public void testGraphQLDeleteWikiPageAttachment() throws Exception {
-		WikiPageAttachment wikiPageAttachment =
+
+		// No namespace
+
+		WikiPageAttachment wikiPageAttachment1 =
 			testGraphQLDeleteWikiPageAttachment_addWikiPageAttachment();
 
 		Assert.assertTrue(
@@ -234,11 +237,12 @@ public abstract class BaseWikiPageAttachmentResourceTestCase {
 							{
 								put(
 									"wikiPageAttachmentId",
-									wikiPageAttachment.getId());
+									wikiPageAttachment1.getId());
 							}
 						})),
 				"JSONObject/data", "Object/deleteWikiPageAttachment"));
-		JSONArray errorsJSONArray = JSONUtil.getValueAsJSONArray(
+
+		JSONArray errorsJSONArray1 = JSONUtil.getValueAsJSONArray(
 			invokeGraphQLQuery(
 				new GraphQLField(
 					"wikiPageAttachment",
@@ -246,13 +250,13 @@ public abstract class BaseWikiPageAttachmentResourceTestCase {
 						{
 							put(
 								"wikiPageAttachmentId",
-								wikiPageAttachment.getId());
+								wikiPageAttachment1.getId());
 						}
 					},
 					new GraphQLField("id"))),
 			"JSONArray/errors");
 
-		Assert.assertTrue(errorsJSONArray.length() > 0);
+		Assert.assertTrue(errorsJSONArray1.length() > 0);
 	}
 
 	protected WikiPageAttachment
@@ -288,6 +292,8 @@ public abstract class BaseWikiPageAttachmentResourceTestCase {
 		WikiPageAttachment wikiPageAttachment =
 			testGraphQLGetWikiPageAttachment_addWikiPageAttachment();
 
+		// No namespace
+
 		Assert.assertTrue(
 			equals(
 				wikiPageAttachment,
@@ -310,6 +316,8 @@ public abstract class BaseWikiPageAttachmentResourceTestCase {
 	@Test
 	public void testGraphQLGetWikiPageAttachmentNotFound() throws Exception {
 		Long irrelevantWikiPageAttachmentId = RandomTestUtil.randomLong();
+
+		// No namespace
 
 		Assert.assertEquals(
 			"Not Found",

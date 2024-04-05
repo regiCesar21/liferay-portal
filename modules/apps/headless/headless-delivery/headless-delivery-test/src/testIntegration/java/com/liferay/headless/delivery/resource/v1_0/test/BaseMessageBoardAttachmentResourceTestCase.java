@@ -231,7 +231,10 @@ public abstract class BaseMessageBoardAttachmentResourceTestCase {
 
 	@Test
 	public void testGraphQLDeleteMessageBoardAttachment() throws Exception {
-		MessageBoardAttachment messageBoardAttachment =
+
+		// No namespace
+
+		MessageBoardAttachment messageBoardAttachment1 =
 			testGraphQLDeleteMessageBoardAttachment_addMessageBoardAttachment();
 
 		Assert.assertTrue(
@@ -243,11 +246,12 @@ public abstract class BaseMessageBoardAttachmentResourceTestCase {
 							{
 								put(
 									"messageBoardAttachmentId",
-									messageBoardAttachment.getId());
+									messageBoardAttachment1.getId());
 							}
 						})),
 				"JSONObject/data", "Object/deleteMessageBoardAttachment"));
-		JSONArray errorsJSONArray = JSONUtil.getValueAsJSONArray(
+
+		JSONArray errorsJSONArray1 = JSONUtil.getValueAsJSONArray(
 			invokeGraphQLQuery(
 				new GraphQLField(
 					"messageBoardAttachment",
@@ -255,13 +259,13 @@ public abstract class BaseMessageBoardAttachmentResourceTestCase {
 						{
 							put(
 								"messageBoardAttachmentId",
-								messageBoardAttachment.getId());
+								messageBoardAttachment1.getId());
 						}
 					},
 					new GraphQLField("id"))),
 			"JSONArray/errors");
 
-		Assert.assertTrue(errorsJSONArray.length() > 0);
+		Assert.assertTrue(errorsJSONArray1.length() > 0);
 	}
 
 	protected MessageBoardAttachment
@@ -297,6 +301,8 @@ public abstract class BaseMessageBoardAttachmentResourceTestCase {
 		MessageBoardAttachment messageBoardAttachment =
 			testGraphQLGetMessageBoardAttachment_addMessageBoardAttachment();
 
+		// No namespace
+
 		Assert.assertTrue(
 			equals(
 				messageBoardAttachment,
@@ -321,6 +327,8 @@ public abstract class BaseMessageBoardAttachmentResourceTestCase {
 		throws Exception {
 
 		Long irrelevantMessageBoardAttachmentId = RandomTestUtil.randomLong();
+
+		// No namespace
 
 		Assert.assertEquals(
 			"Not Found",

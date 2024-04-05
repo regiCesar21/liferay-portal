@@ -588,7 +588,10 @@ public abstract class BaseSXPElementResourceTestCase {
 
 	@Test
 	public void testGraphQLDeleteSXPElement() throws Exception {
-		SXPElement sxpElement = testGraphQLDeleteSXPElement_addSXPElement();
+
+		// No namespace
+
+		SXPElement sxpElement1 = testGraphQLDeleteSXPElement_addSXPElement();
 
 		Assert.assertTrue(
 			JSONUtil.getValueAsBoolean(
@@ -597,23 +600,24 @@ public abstract class BaseSXPElementResourceTestCase {
 						"deleteSXPElement",
 						new HashMap<String, Object>() {
 							{
-								put("sxpElementId", sxpElement.getId());
+								put("sxpElementId", sxpElement1.getId());
 							}
 						})),
 				"JSONObject/data", "Object/deleteSXPElement"));
-		JSONArray errorsJSONArray = JSONUtil.getValueAsJSONArray(
+
+		JSONArray errorsJSONArray1 = JSONUtil.getValueAsJSONArray(
 			invokeGraphQLQuery(
 				new GraphQLField(
 					"sXPElement",
 					new HashMap<String, Object>() {
 						{
-							put("sxpElementId", sxpElement.getId());
+							put("sxpElementId", sxpElement1.getId());
 						}
 					},
 					new GraphQLField("id"))),
 			"JSONArray/errors");
 
-		Assert.assertTrue(errorsJSONArray.length() > 0);
+		Assert.assertTrue(errorsJSONArray1.length() > 0);
 	}
 
 	protected SXPElement testGraphQLDeleteSXPElement_addSXPElement()
@@ -642,6 +646,8 @@ public abstract class BaseSXPElementResourceTestCase {
 	public void testGraphQLGetSXPElement() throws Exception {
 		SXPElement sxpElement = testGraphQLGetSXPElement_addSXPElement();
 
+		// No namespace
+
 		Assert.assertTrue(
 			equals(
 				sxpElement,
@@ -662,6 +668,8 @@ public abstract class BaseSXPElementResourceTestCase {
 	@Test
 	public void testGraphQLGetSXPElementNotFound() throws Exception {
 		Long irrelevantSxpElementId = RandomTestUtil.randomLong();
+
+		// No namespace
 
 		Assert.assertEquals(
 			"Not Found",

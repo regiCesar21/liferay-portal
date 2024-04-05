@@ -219,7 +219,10 @@ public abstract class BaseProductChannelResourceTestCase {
 
 	@Test
 	public void testGraphQLDeleteProductChannel() throws Exception {
-		ProductChannel productChannel =
+
+		// No namespace
+
+		ProductChannel productChannel1 =
 			testGraphQLDeleteProductChannel_addProductChannel();
 
 		Assert.assertTrue(
@@ -229,23 +232,24 @@ public abstract class BaseProductChannelResourceTestCase {
 						"deleteProductChannel",
 						new HashMap<String, Object>() {
 							{
-								put("id", productChannel.getId());
+								put("id", productChannel1.getId());
 							}
 						})),
 				"JSONObject/data", "Object/deleteProductChannel"));
-		JSONArray errorsJSONArray = JSONUtil.getValueAsJSONArray(
+
+		JSONArray errorsJSONArray1 = JSONUtil.getValueAsJSONArray(
 			invokeGraphQLQuery(
 				new GraphQLField(
 					"productChannel",
 					new HashMap<String, Object>() {
 						{
-							put("id", productChannel.getId());
+							put("id", productChannel1.getId());
 						}
 					},
 					new GraphQLField("id"))),
 			"JSONArray/errors");
 
-		Assert.assertTrue(errorsJSONArray.length() > 0);
+		Assert.assertTrue(errorsJSONArray1.length() > 0);
 	}
 
 	protected ProductChannel testGraphQLDeleteProductChannel_addProductChannel()
@@ -279,6 +283,8 @@ public abstract class BaseProductChannelResourceTestCase {
 		ProductChannel productChannel =
 			testGraphQLGetProductChannel_addProductChannel();
 
+		// No namespace
+
 		Assert.assertTrue(
 			equals(
 				productChannel,
@@ -299,6 +305,8 @@ public abstract class BaseProductChannelResourceTestCase {
 	@Test
 	public void testGraphQLGetProductChannelNotFound() throws Exception {
 		Long irrelevantId = RandomTestUtil.randomLong();
+
+		// No namespace
 
 		Assert.assertEquals(
 			"Not Found",

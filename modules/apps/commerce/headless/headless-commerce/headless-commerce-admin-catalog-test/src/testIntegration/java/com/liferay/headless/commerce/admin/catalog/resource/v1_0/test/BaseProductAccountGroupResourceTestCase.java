@@ -218,7 +218,10 @@ public abstract class BaseProductAccountGroupResourceTestCase {
 
 	@Test
 	public void testGraphQLDeleteProductAccountGroup() throws Exception {
-		ProductAccountGroup productAccountGroup =
+
+		// No namespace
+
+		ProductAccountGroup productAccountGroup1 =
 			testGraphQLDeleteProductAccountGroup_addProductAccountGroup();
 
 		Assert.assertTrue(
@@ -228,23 +231,24 @@ public abstract class BaseProductAccountGroupResourceTestCase {
 						"deleteProductAccountGroup",
 						new HashMap<String, Object>() {
 							{
-								put("id", productAccountGroup.getId());
+								put("id", productAccountGroup1.getId());
 							}
 						})),
 				"JSONObject/data", "Object/deleteProductAccountGroup"));
-		JSONArray errorsJSONArray = JSONUtil.getValueAsJSONArray(
+
+		JSONArray errorsJSONArray1 = JSONUtil.getValueAsJSONArray(
 			invokeGraphQLQuery(
 				new GraphQLField(
 					"productAccountGroup",
 					new HashMap<String, Object>() {
 						{
-							put("id", productAccountGroup.getId());
+							put("id", productAccountGroup1.getId());
 						}
 					},
 					new GraphQLField("id"))),
 			"JSONArray/errors");
 
-		Assert.assertTrue(errorsJSONArray.length() > 0);
+		Assert.assertTrue(errorsJSONArray1.length() > 0);
 	}
 
 	protected ProductAccountGroup
@@ -280,6 +284,8 @@ public abstract class BaseProductAccountGroupResourceTestCase {
 		ProductAccountGroup productAccountGroup =
 			testGraphQLGetProductAccountGroup_addProductAccountGroup();
 
+		// No namespace
+
 		Assert.assertTrue(
 			equals(
 				productAccountGroup,
@@ -300,6 +306,8 @@ public abstract class BaseProductAccountGroupResourceTestCase {
 	@Test
 	public void testGraphQLGetProductAccountGroupNotFound() throws Exception {
 		Long irrelevantId = RandomTestUtil.randomLong();
+
+		// No namespace
 
 		Assert.assertEquals(
 			"Not Found",

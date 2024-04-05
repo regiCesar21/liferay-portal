@@ -770,7 +770,10 @@ public abstract class BaseKeywordResourceTestCase {
 
 	@Test
 	public void testGraphQLDeleteKeyword() throws Exception {
-		Keyword keyword = testGraphQLDeleteKeyword_addKeyword();
+
+		// No namespace
+
+		Keyword keyword1 = testGraphQLDeleteKeyword_addKeyword();
 
 		Assert.assertTrue(
 			JSONUtil.getValueAsBoolean(
@@ -779,23 +782,24 @@ public abstract class BaseKeywordResourceTestCase {
 						"deleteKeyword",
 						new HashMap<String, Object>() {
 							{
-								put("keywordId", keyword.getId());
+								put("keywordId", keyword1.getId());
 							}
 						})),
 				"JSONObject/data", "Object/deleteKeyword"));
-		JSONArray errorsJSONArray = JSONUtil.getValueAsJSONArray(
+
+		JSONArray errorsJSONArray1 = JSONUtil.getValueAsJSONArray(
 			invokeGraphQLQuery(
 				new GraphQLField(
 					"keyword",
 					new HashMap<String, Object>() {
 						{
-							put("keywordId", keyword.getId());
+							put("keywordId", keyword1.getId());
 						}
 					},
 					new GraphQLField("id"))),
 			"JSONArray/errors");
 
-		Assert.assertTrue(errorsJSONArray.length() > 0);
+		Assert.assertTrue(errorsJSONArray1.length() > 0);
 	}
 
 	protected Keyword testGraphQLDeleteKeyword_addKeyword() throws Exception {
@@ -821,6 +825,8 @@ public abstract class BaseKeywordResourceTestCase {
 	public void testGraphQLGetKeyword() throws Exception {
 		Keyword keyword = testGraphQLGetKeyword_addKeyword();
 
+		// No namespace
+
 		Assert.assertTrue(
 			equals(
 				keyword,
@@ -841,6 +847,8 @@ public abstract class BaseKeywordResourceTestCase {
 	@Test
 	public void testGraphQLGetKeywordNotFound() throws Exception {
 		Long irrelevantKeywordId = RandomTestUtil.randomLong();
+
+		// No namespace
 
 		Assert.assertEquals(
 			"Not Found",
@@ -1278,6 +1286,8 @@ public abstract class BaseKeywordResourceTestCase {
 			},
 			new GraphQLField("items", getGraphQLFields()),
 			new GraphQLField("page"), new GraphQLField("totalCount"));
+
+		// No namespace
 
 		JSONObject keywordsJSONObject = JSONUtil.getValueAsJSONObject(
 			invokeGraphQLQuery(graphQLField), "JSONObject/data",

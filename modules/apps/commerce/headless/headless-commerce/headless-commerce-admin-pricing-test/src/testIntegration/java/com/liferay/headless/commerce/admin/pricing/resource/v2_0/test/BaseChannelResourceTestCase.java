@@ -213,6 +213,8 @@ public abstract class BaseChannelResourceTestCase {
 	public void testGraphQLGetDiscountChannelChannel() throws Exception {
 		Channel channel = testGraphQLGetDiscountChannelChannel_addChannel();
 
+		// No namespace
+
 		Assert.assertTrue(
 			equals(
 				channel,
@@ -244,6 +246,8 @@ public abstract class BaseChannelResourceTestCase {
 		throws Exception {
 
 		Long irrelevantDiscountChannelId = RandomTestUtil.randomLong();
+
+		// No namespace
 
 		Assert.assertEquals(
 			"Not Found",
@@ -298,6 +302,8 @@ public abstract class BaseChannelResourceTestCase {
 	public void testGraphQLGetPriceListChannelChannel() throws Exception {
 		Channel channel = testGraphQLGetPriceListChannelChannel_addChannel();
 
+		// No namespace
+
 		Assert.assertTrue(
 			equals(
 				channel,
@@ -329,6 +335,8 @@ public abstract class BaseChannelResourceTestCase {
 		throws Exception {
 
 		Long irrelevantPriceListChannelId = RandomTestUtil.randomLong();
+
+		// No namespace
 
 		Assert.assertEquals(
 			"Not Found",

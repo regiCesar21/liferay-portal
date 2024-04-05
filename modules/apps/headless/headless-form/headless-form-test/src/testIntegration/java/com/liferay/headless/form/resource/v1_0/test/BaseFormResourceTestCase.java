@@ -206,6 +206,8 @@ public abstract class BaseFormResourceTestCase {
 	public void testGraphQLGetForm() throws Exception {
 		Form form = testGraphQLGetForm_addForm();
 
+		// No namespace
+
 		Assert.assertTrue(
 			equals(
 				form,
@@ -226,6 +228,8 @@ public abstract class BaseFormResourceTestCase {
 	@Test
 	public void testGraphQLGetFormNotFound() throws Exception {
 		Long irrelevantFormId = RandomTestUtil.randomLong();
+
+		// No namespace
 
 		Assert.assertEquals(
 			"Not Found",
@@ -397,6 +401,8 @@ public abstract class BaseFormResourceTestCase {
 			},
 			new GraphQLField("items", getGraphQLFields()),
 			new GraphQLField("page"), new GraphQLField("totalCount"));
+
+		// No namespace
 
 		JSONObject formsJSONObject = JSONUtil.getValueAsJSONObject(
 			invokeGraphQLQuery(graphQLField), "JSONObject/data",

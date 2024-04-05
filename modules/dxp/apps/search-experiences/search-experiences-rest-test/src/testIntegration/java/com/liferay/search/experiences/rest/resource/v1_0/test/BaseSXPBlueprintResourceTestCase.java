@@ -612,7 +612,10 @@ public abstract class BaseSXPBlueprintResourceTestCase {
 
 	@Test
 	public void testGraphQLDeleteSXPBlueprint() throws Exception {
-		SXPBlueprint sxpBlueprint =
+
+		// No namespace
+
+		SXPBlueprint sxpBlueprint1 =
 			testGraphQLDeleteSXPBlueprint_addSXPBlueprint();
 
 		Assert.assertTrue(
@@ -622,23 +625,24 @@ public abstract class BaseSXPBlueprintResourceTestCase {
 						"deleteSXPBlueprint",
 						new HashMap<String, Object>() {
 							{
-								put("sxpBlueprintId", sxpBlueprint.getId());
+								put("sxpBlueprintId", sxpBlueprint1.getId());
 							}
 						})),
 				"JSONObject/data", "Object/deleteSXPBlueprint"));
-		JSONArray errorsJSONArray = JSONUtil.getValueAsJSONArray(
+
+		JSONArray errorsJSONArray1 = JSONUtil.getValueAsJSONArray(
 			invokeGraphQLQuery(
 				new GraphQLField(
 					"sXPBlueprint",
 					new HashMap<String, Object>() {
 						{
-							put("sxpBlueprintId", sxpBlueprint.getId());
+							put("sxpBlueprintId", sxpBlueprint1.getId());
 						}
 					},
 					new GraphQLField("id"))),
 			"JSONArray/errors");
 
-		Assert.assertTrue(errorsJSONArray.length() > 0);
+		Assert.assertTrue(errorsJSONArray1.length() > 0);
 	}
 
 	protected SXPBlueprint testGraphQLDeleteSXPBlueprint_addSXPBlueprint()
@@ -670,6 +674,8 @@ public abstract class BaseSXPBlueprintResourceTestCase {
 		SXPBlueprint sxpBlueprint =
 			testGraphQLGetSXPBlueprint_addSXPBlueprint();
 
+		// No namespace
+
 		Assert.assertTrue(
 			equals(
 				sxpBlueprint,
@@ -692,6 +698,8 @@ public abstract class BaseSXPBlueprintResourceTestCase {
 	@Test
 	public void testGraphQLGetSXPBlueprintNotFound() throws Exception {
 		Long irrelevantSxpBlueprintId = RandomTestUtil.randomLong();
+
+		// No namespace
 
 		Assert.assertEquals(
 			"Not Found",

@@ -301,6 +301,8 @@ public abstract class BasePostalAddressResourceTestCase {
 		PostalAddress postalAddress =
 			testGraphQLGetPostalAddress_addPostalAddress();
 
+		// No namespace
+
 		Assert.assertTrue(
 			equals(
 				postalAddress,
@@ -323,6 +325,8 @@ public abstract class BasePostalAddressResourceTestCase {
 	@Test
 	public void testGraphQLGetPostalAddressNotFound() throws Exception {
 		Long irrelevantPostalAddressId = RandomTestUtil.randomLong();
+
+		// No namespace
 
 		Assert.assertEquals(
 			"Not Found",

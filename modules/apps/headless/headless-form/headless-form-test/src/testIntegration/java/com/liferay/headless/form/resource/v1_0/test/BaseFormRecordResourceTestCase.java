@@ -197,6 +197,8 @@ public abstract class BaseFormRecordResourceTestCase {
 	public void testGraphQLGetFormRecord() throws Exception {
 		FormRecord formRecord = testGraphQLGetFormRecord_addFormRecord();
 
+		// No namespace
+
 		Assert.assertTrue(
 			equals(
 				formRecord,
@@ -217,6 +219,8 @@ public abstract class BaseFormRecordResourceTestCase {
 	@Test
 	public void testGraphQLGetFormRecordNotFound() throws Exception {
 		Long irrelevantFormRecordId = RandomTestUtil.randomLong();
+
+		// No namespace
 
 		Assert.assertEquals(
 			"Not Found",
@@ -474,6 +478,8 @@ public abstract class BaseFormRecordResourceTestCase {
 		FormRecord formRecord =
 			testGraphQLGetFormFormRecordByLatestDraft_addFormRecord();
 
+		// No namespace
+
 		Assert.assertTrue(
 			equals(
 				formRecord,
@@ -507,6 +513,8 @@ public abstract class BaseFormRecordResourceTestCase {
 		throws Exception {
 
 		Long irrelevantFormId = RandomTestUtil.randomLong();
+
+		// No namespace
 
 		Assert.assertEquals(
 			"Not Found",

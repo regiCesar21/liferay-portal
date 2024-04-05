@@ -225,7 +225,10 @@ public abstract class BaseProcessResourceTestCase {
 
 	@Test
 	public void testGraphQLDeleteProcess() throws Exception {
-		Process process = testGraphQLDeleteProcess_addProcess();
+
+		// No namespace
+
+		Process process1 = testGraphQLDeleteProcess_addProcess();
 
 		Assert.assertTrue(
 			JSONUtil.getValueAsBoolean(
@@ -234,23 +237,24 @@ public abstract class BaseProcessResourceTestCase {
 						"deleteProcess",
 						new HashMap<String, Object>() {
 							{
-								put("processId", process.getId());
+								put("processId", process1.getId());
 							}
 						})),
 				"JSONObject/data", "Object/deleteProcess"));
-		JSONArray errorsJSONArray = JSONUtil.getValueAsJSONArray(
+
+		JSONArray errorsJSONArray1 = JSONUtil.getValueAsJSONArray(
 			invokeGraphQLQuery(
 				new GraphQLField(
 					"process",
 					new HashMap<String, Object>() {
 						{
-							put("processId", process.getId());
+							put("processId", process1.getId());
 						}
 					},
 					new GraphQLField("id"))),
 			"JSONArray/errors");
 
-		Assert.assertTrue(errorsJSONArray.length() > 0);
+		Assert.assertTrue(errorsJSONArray1.length() > 0);
 	}
 
 	protected Process testGraphQLDeleteProcess_addProcess() throws Exception {
@@ -276,6 +280,8 @@ public abstract class BaseProcessResourceTestCase {
 	public void testGraphQLGetProcess() throws Exception {
 		Process process = testGraphQLGetProcess_addProcess();
 
+		// No namespace
+
 		Assert.assertTrue(
 			equals(
 				process,
@@ -296,6 +302,8 @@ public abstract class BaseProcessResourceTestCase {
 	@Test
 	public void testGraphQLGetProcessNotFound() throws Exception {
 		Long irrelevantProcessId = RandomTestUtil.randomLong();
+
+		// No namespace
 
 		Assert.assertEquals(
 			"Not Found",

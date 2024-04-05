@@ -334,6 +334,8 @@ public abstract class BaseTaskResourceTestCase {
 	public void testGraphQLGetProcessTask() throws Exception {
 		Task task = testGraphQLGetProcessTask_addTask();
 
+		// No namespace
+
 		Assert.assertTrue(
 			equals(
 				task,
@@ -366,6 +368,8 @@ public abstract class BaseTaskResourceTestCase {
 	public void testGraphQLGetProcessTaskNotFound() throws Exception {
 		Long irrelevantProcessId = RandomTestUtil.randomLong();
 		Long irrelevantTaskId = RandomTestUtil.randomLong();
+
+		// No namespace
 
 		Assert.assertEquals(
 			"Not Found",

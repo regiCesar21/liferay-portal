@@ -1076,7 +1076,10 @@ public abstract class BaseMessageBoardThreadResourceTestCase {
 
 	@Test
 	public void testGraphQLDeleteMessageBoardThread() throws Exception {
-		MessageBoardThread messageBoardThread =
+
+		// No namespace
+
+		MessageBoardThread messageBoardThread1 =
 			testGraphQLDeleteMessageBoardThread_addMessageBoardThread();
 
 		Assert.assertTrue(
@@ -1088,11 +1091,12 @@ public abstract class BaseMessageBoardThreadResourceTestCase {
 							{
 								put(
 									"messageBoardThreadId",
-									messageBoardThread.getId());
+									messageBoardThread1.getId());
 							}
 						})),
 				"JSONObject/data", "Object/deleteMessageBoardThread"));
-		JSONArray errorsJSONArray = JSONUtil.getValueAsJSONArray(
+
+		JSONArray errorsJSONArray1 = JSONUtil.getValueAsJSONArray(
 			invokeGraphQLQuery(
 				new GraphQLField(
 					"messageBoardThread",
@@ -1100,13 +1104,13 @@ public abstract class BaseMessageBoardThreadResourceTestCase {
 						{
 							put(
 								"messageBoardThreadId",
-								messageBoardThread.getId());
+								messageBoardThread1.getId());
 						}
 					},
 					new GraphQLField("id"))),
 			"JSONArray/errors");
 
-		Assert.assertTrue(errorsJSONArray.length() > 0);
+		Assert.assertTrue(errorsJSONArray1.length() > 0);
 	}
 
 	protected MessageBoardThread
@@ -1142,6 +1146,8 @@ public abstract class BaseMessageBoardThreadResourceTestCase {
 		MessageBoardThread messageBoardThread =
 			testGraphQLGetMessageBoardThread_addMessageBoardThread();
 
+		// No namespace
+
 		Assert.assertTrue(
 			equals(
 				messageBoardThread,
@@ -1164,6 +1170,8 @@ public abstract class BaseMessageBoardThreadResourceTestCase {
 	@Test
 	public void testGraphQLGetMessageBoardThreadNotFound() throws Exception {
 		Long irrelevantMessageBoardThreadId = RandomTestUtil.randomLong();
+
+		// No namespace
 
 		Assert.assertEquals(
 			"Not Found",
@@ -1825,6 +1833,8 @@ public abstract class BaseMessageBoardThreadResourceTestCase {
 			new GraphQLField("items", getGraphQLFields()),
 			new GraphQLField("page"), new GraphQLField("totalCount"));
 
+		// No namespace
+
 		JSONObject messageBoardThreadsJSONObject =
 			JSONUtil.getValueAsJSONObject(
 				invokeGraphQLQuery(graphQLField), "JSONObject/data",
@@ -1938,6 +1948,8 @@ public abstract class BaseMessageBoardThreadResourceTestCase {
 		MessageBoardThread messageBoardThread =
 			testGraphQLGetSiteMessageBoardThreadByFriendlyUrlPath_addMessageBoardThread();
 
+		// No namespace
+
 		Assert.assertTrue(
 			equals(
 				messageBoardThread,
@@ -1981,6 +1993,8 @@ public abstract class BaseMessageBoardThreadResourceTestCase {
 
 		String irrelevantFriendlyUrlPath =
 			"\"" + RandomTestUtil.randomString() + "\"";
+
+		// No namespace
 
 		Assert.assertEquals(
 			"Not Found",

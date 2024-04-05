@@ -211,7 +211,11 @@ public abstract class BaseCartCommentResourceTestCase {
 
 	@Test
 	public void testGraphQLDeleteCartComment() throws Exception {
-		CartComment cartComment = testGraphQLDeleteCartComment_addCartComment();
+
+		// No namespace
+
+		CartComment cartComment1 =
+			testGraphQLDeleteCartComment_addCartComment();
 
 		Assert.assertTrue(
 			JSONUtil.getValueAsBoolean(
@@ -220,23 +224,24 @@ public abstract class BaseCartCommentResourceTestCase {
 						"deleteCartComment",
 						new HashMap<String, Object>() {
 							{
-								put("cartCommentId", cartComment.getId());
+								put("cartCommentId", cartComment1.getId());
 							}
 						})),
 				"JSONObject/data", "Object/deleteCartComment"));
-		JSONArray errorsJSONArray = JSONUtil.getValueAsJSONArray(
+
+		JSONArray errorsJSONArray1 = JSONUtil.getValueAsJSONArray(
 			invokeGraphQLQuery(
 				new GraphQLField(
 					"cartComment",
 					new HashMap<String, Object>() {
 						{
-							put("cartCommentId", cartComment.getId());
+							put("cartCommentId", cartComment1.getId());
 						}
 					},
 					new GraphQLField("id"))),
 			"JSONArray/errors");
 
-		Assert.assertTrue(errorsJSONArray.length() > 0);
+		Assert.assertTrue(errorsJSONArray1.length() > 0);
 	}
 
 	protected CartComment testGraphQLDeleteCartComment_addCartComment()
@@ -265,6 +270,8 @@ public abstract class BaseCartCommentResourceTestCase {
 	public void testGraphQLGetCartComment() throws Exception {
 		CartComment cartComment = testGraphQLGetCartComment_addCartComment();
 
+		// No namespace
+
 		Assert.assertTrue(
 			equals(
 				cartComment,
@@ -287,6 +294,8 @@ public abstract class BaseCartCommentResourceTestCase {
 	@Test
 	public void testGraphQLGetCartCommentNotFound() throws Exception {
 		Long irrelevantCartCommentId = RandomTestUtil.randomLong();
+
+		// No namespace
 
 		Assert.assertEquals(
 			"Not Found",
@@ -533,6 +542,8 @@ public abstract class BaseCartCommentResourceTestCase {
 			},
 			new GraphQLField("items", getGraphQLFields()),
 			new GraphQLField("page"), new GraphQLField("totalCount"));
+
+		// No namespace
 
 		JSONObject cartCommentsJSONObject = JSONUtil.getValueAsJSONObject(
 			invokeGraphQLQuery(graphQLField), "JSONObject/data",

@@ -374,7 +374,10 @@ public abstract class BaseSLAResourceTestCase {
 
 	@Test
 	public void testGraphQLDeleteSLA() throws Exception {
-		SLA sla = testGraphQLDeleteSLA_addSLA();
+
+		// No namespace
+
+		SLA sla1 = testGraphQLDeleteSLA_addSLA();
 
 		Assert.assertTrue(
 			JSONUtil.getValueAsBoolean(
@@ -383,23 +386,24 @@ public abstract class BaseSLAResourceTestCase {
 						"deleteSLA",
 						new HashMap<String, Object>() {
 							{
-								put("slaId", sla.getId());
+								put("slaId", sla1.getId());
 							}
 						})),
 				"JSONObject/data", "Object/deleteSLA"));
-		JSONArray errorsJSONArray = JSONUtil.getValueAsJSONArray(
+
+		JSONArray errorsJSONArray1 = JSONUtil.getValueAsJSONArray(
 			invokeGraphQLQuery(
 				new GraphQLField(
 					"sLA",
 					new HashMap<String, Object>() {
 						{
-							put("slaId", sla.getId());
+							put("slaId", sla1.getId());
 						}
 					},
 					new GraphQLField("id"))),
 			"JSONArray/errors");
 
-		Assert.assertTrue(errorsJSONArray.length() > 0);
+		Assert.assertTrue(errorsJSONArray1.length() > 0);
 	}
 
 	protected SLA testGraphQLDeleteSLA_addSLA() throws Exception {
@@ -425,6 +429,8 @@ public abstract class BaseSLAResourceTestCase {
 	public void testGraphQLGetSLA() throws Exception {
 		SLA sla = testGraphQLGetSLA_addSLA();
 
+		// No namespace
+
 		Assert.assertTrue(
 			equals(
 				sla,
@@ -445,6 +451,8 @@ public abstract class BaseSLAResourceTestCase {
 	@Test
 	public void testGraphQLGetSLANotFound() throws Exception {
 		Long irrelevantSlaId = RandomTestUtil.randomLong();
+
+		// No namespace
 
 		Assert.assertEquals(
 			"Not Found",

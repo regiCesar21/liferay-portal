@@ -869,7 +869,10 @@ public abstract class BaseTaxonomyCategoryResourceTestCase {
 
 	@Test
 	public void testGraphQLDeleteTaxonomyCategory() throws Exception {
-		TaxonomyCategory taxonomyCategory =
+
+		// No namespace
+
+		TaxonomyCategory taxonomyCategory1 =
 			testGraphQLDeleteTaxonomyCategory_addTaxonomyCategory();
 
 		Assert.assertTrue(
@@ -881,11 +884,12 @@ public abstract class BaseTaxonomyCategoryResourceTestCase {
 							{
 								put(
 									"taxonomyCategoryId",
-									"\"" + taxonomyCategory.getId() + "\"");
+									"\"" + taxonomyCategory1.getId() + "\"");
 							}
 						})),
 				"JSONObject/data", "Object/deleteTaxonomyCategory"));
-		JSONArray errorsJSONArray = JSONUtil.getValueAsJSONArray(
+
+		JSONArray errorsJSONArray1 = JSONUtil.getValueAsJSONArray(
 			invokeGraphQLQuery(
 				new GraphQLField(
 					"taxonomyCategory",
@@ -893,13 +897,13 @@ public abstract class BaseTaxonomyCategoryResourceTestCase {
 						{
 							put(
 								"taxonomyCategoryId",
-								"\"" + taxonomyCategory.getId() + "\"");
+								"\"" + taxonomyCategory1.getId() + "\"");
 						}
 					},
 					new GraphQLField("id"))),
 			"JSONArray/errors");
 
-		Assert.assertTrue(errorsJSONArray.length() > 0);
+		Assert.assertTrue(errorsJSONArray1.length() > 0);
 	}
 
 	protected TaxonomyCategory
@@ -934,6 +938,8 @@ public abstract class BaseTaxonomyCategoryResourceTestCase {
 		TaxonomyCategory taxonomyCategory =
 			testGraphQLGetTaxonomyCategory_addTaxonomyCategory();
 
+		// No namespace
+
 		Assert.assertTrue(
 			equals(
 				taxonomyCategory,
@@ -958,6 +964,8 @@ public abstract class BaseTaxonomyCategoryResourceTestCase {
 	public void testGraphQLGetTaxonomyCategoryNotFound() throws Exception {
 		String irrelevantTaxonomyCategoryId =
 			"\"" + RandomTestUtil.randomString() + "\"";
+
+		// No namespace
 
 		Assert.assertEquals(
 			"Not Found",

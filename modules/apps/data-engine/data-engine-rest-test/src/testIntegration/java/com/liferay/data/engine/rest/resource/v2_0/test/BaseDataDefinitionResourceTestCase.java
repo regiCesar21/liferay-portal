@@ -621,7 +621,10 @@ public abstract class BaseDataDefinitionResourceTestCase {
 
 	@Test
 	public void testGraphQLDeleteDataDefinition() throws Exception {
-		DataDefinition dataDefinition =
+
+		// No namespace
+
+		DataDefinition dataDefinition1 =
 			testGraphQLDeleteDataDefinition_addDataDefinition();
 
 		Assert.assertTrue(
@@ -631,23 +634,26 @@ public abstract class BaseDataDefinitionResourceTestCase {
 						"deleteDataDefinition",
 						new HashMap<String, Object>() {
 							{
-								put("dataDefinitionId", dataDefinition.getId());
+								put(
+									"dataDefinitionId",
+									dataDefinition1.getId());
 							}
 						})),
 				"JSONObject/data", "Object/deleteDataDefinition"));
-		JSONArray errorsJSONArray = JSONUtil.getValueAsJSONArray(
+
+		JSONArray errorsJSONArray1 = JSONUtil.getValueAsJSONArray(
 			invokeGraphQLQuery(
 				new GraphQLField(
 					"dataDefinition",
 					new HashMap<String, Object>() {
 						{
-							put("dataDefinitionId", dataDefinition.getId());
+							put("dataDefinitionId", dataDefinition1.getId());
 						}
 					},
 					new GraphQLField("id"))),
 			"JSONArray/errors");
 
-		Assert.assertTrue(errorsJSONArray.length() > 0);
+		Assert.assertTrue(errorsJSONArray1.length() > 0);
 	}
 
 	protected DataDefinition testGraphQLDeleteDataDefinition_addDataDefinition()
@@ -681,6 +687,8 @@ public abstract class BaseDataDefinitionResourceTestCase {
 		DataDefinition dataDefinition =
 			testGraphQLGetDataDefinition_addDataDefinition();
 
+		// No namespace
+
 		Assert.assertTrue(
 			equals(
 				dataDefinition,
@@ -703,6 +711,8 @@ public abstract class BaseDataDefinitionResourceTestCase {
 	@Test
 	public void testGraphQLGetDataDefinitionNotFound() throws Exception {
 		Long irrelevantDataDefinitionId = RandomTestUtil.randomLong();
+
+		// No namespace
 
 		Assert.assertEquals(
 			"Not Found",
@@ -1279,6 +1289,8 @@ public abstract class BaseDataDefinitionResourceTestCase {
 		DataDefinition dataDefinition =
 			testGraphQLGetSiteDataDefinitionByContentTypeByDataDefinitionKey_addDataDefinition();
 
+		// No namespace
+
 		Assert.assertTrue(
 			equals(
 				dataDefinition,
@@ -1330,6 +1342,8 @@ public abstract class BaseDataDefinitionResourceTestCase {
 			"\"" + RandomTestUtil.randomString() + "\"";
 		String irrelevantDataDefinitionKey =
 			"\"" + RandomTestUtil.randomString() + "\"";
+
+		// No namespace
 
 		Assert.assertEquals(
 			"Not Found",

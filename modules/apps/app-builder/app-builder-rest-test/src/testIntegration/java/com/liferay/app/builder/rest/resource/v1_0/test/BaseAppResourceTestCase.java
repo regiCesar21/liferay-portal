@@ -443,6 +443,8 @@ public abstract class BaseAppResourceTestCase {
 			new GraphQLField("items", getGraphQLFields()),
 			new GraphQLField("page"), new GraphQLField("totalCount"));
 
+		// No namespace
+
 		JSONObject appsJSONObject = JSONUtil.getValueAsJSONObject(
 			invokeGraphQLQuery(graphQLField), "JSONObject/data",
 			"JSONObject/apps");
@@ -492,7 +494,10 @@ public abstract class BaseAppResourceTestCase {
 
 	@Test
 	public void testGraphQLDeleteApp() throws Exception {
-		App app = testGraphQLDeleteApp_addApp();
+
+		// No namespace
+
+		App app1 = testGraphQLDeleteApp_addApp();
 
 		Assert.assertTrue(
 			JSONUtil.getValueAsBoolean(
@@ -501,23 +506,24 @@ public abstract class BaseAppResourceTestCase {
 						"deleteApp",
 						new HashMap<String, Object>() {
 							{
-								put("appId", app.getId());
+								put("appId", app1.getId());
 							}
 						})),
 				"JSONObject/data", "Object/deleteApp"));
-		JSONArray errorsJSONArray = JSONUtil.getValueAsJSONArray(
+
+		JSONArray errorsJSONArray1 = JSONUtil.getValueAsJSONArray(
 			invokeGraphQLQuery(
 				new GraphQLField(
 					"app",
 					new HashMap<String, Object>() {
 						{
-							put("appId", app.getId());
+							put("appId", app1.getId());
 						}
 					},
 					new GraphQLField("id"))),
 			"JSONArray/errors");
 
-		Assert.assertTrue(errorsJSONArray.length() > 0);
+		Assert.assertTrue(errorsJSONArray1.length() > 0);
 	}
 
 	protected App testGraphQLDeleteApp_addApp() throws Exception {
@@ -543,6 +549,8 @@ public abstract class BaseAppResourceTestCase {
 	public void testGraphQLGetApp() throws Exception {
 		App app = testGraphQLGetApp_addApp();
 
+		// No namespace
+
 		Assert.assertTrue(
 			equals(
 				app,
@@ -563,6 +571,8 @@ public abstract class BaseAppResourceTestCase {
 	@Test
 	public void testGraphQLGetAppNotFound() throws Exception {
 		Long irrelevantAppId = RandomTestUtil.randomLong();
+
+		// No namespace
 
 		Assert.assertEquals(
 			"Not Found",

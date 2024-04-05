@@ -444,7 +444,10 @@ public abstract class BaseMeasurementUnitResourceTestCase {
 
 	@Test
 	public void testGraphQLDeleteMeasurementUnit() throws Exception {
-		MeasurementUnit measurementUnit =
+
+		// No namespace
+
+		MeasurementUnit measurementUnit1 =
 			testGraphQLDeleteMeasurementUnit_addMeasurementUnit();
 
 		Assert.assertTrue(
@@ -454,23 +457,24 @@ public abstract class BaseMeasurementUnitResourceTestCase {
 						"deleteMeasurementUnit",
 						new HashMap<String, Object>() {
 							{
-								put("id", measurementUnit.getId());
+								put("id", measurementUnit1.getId());
 							}
 						})),
 				"JSONObject/data", "Object/deleteMeasurementUnit"));
-		JSONArray errorsJSONArray = JSONUtil.getValueAsJSONArray(
+
+		JSONArray errorsJSONArray1 = JSONUtil.getValueAsJSONArray(
 			invokeGraphQLQuery(
 				new GraphQLField(
 					"measurementUnit",
 					new HashMap<String, Object>() {
 						{
-							put("id", measurementUnit.getId());
+							put("id", measurementUnit1.getId());
 						}
 					},
 					new GraphQLField("id"))),
 			"JSONArray/errors");
 
-		Assert.assertTrue(errorsJSONArray.length() > 0);
+		Assert.assertTrue(errorsJSONArray1.length() > 0);
 	}
 
 	protected MeasurementUnit
@@ -505,6 +509,8 @@ public abstract class BaseMeasurementUnitResourceTestCase {
 		MeasurementUnit measurementUnit =
 			testGraphQLGetMeasurementUnit_addMeasurementUnit();
 
+		// No namespace
+
 		Assert.assertTrue(
 			equals(
 				measurementUnit,
@@ -525,6 +531,8 @@ public abstract class BaseMeasurementUnitResourceTestCase {
 	@Test
 	public void testGraphQLGetMeasurementUnitNotFound() throws Exception {
 		Long irrelevantId = RandomTestUtil.randomLong();
+
+		// No namespace
 
 		Assert.assertEquals(
 			"Not Found",

@@ -211,7 +211,10 @@ public abstract class BaseExperimentResourceTestCase {
 
 	@Test
 	public void testGraphQLDeleteExperiment() throws Exception {
-		Experiment experiment = testGraphQLDeleteExperiment_addExperiment();
+
+		// No namespace
+
+		Experiment experiment1 = testGraphQLDeleteExperiment_addExperiment();
 
 		Assert.assertTrue(
 			JSONUtil.getValueAsBoolean(
@@ -222,11 +225,12 @@ public abstract class BaseExperimentResourceTestCase {
 							{
 								put(
 									"experimentId",
-									"\"" + experiment.getId() + "\"");
+									"\"" + experiment1.getId() + "\"");
 							}
 						})),
 				"JSONObject/data", "Object/deleteExperiment"));
-		JSONArray errorsJSONArray = JSONUtil.getValueAsJSONArray(
+
+		JSONArray errorsJSONArray1 = JSONUtil.getValueAsJSONArray(
 			invokeGraphQLQuery(
 				new GraphQLField(
 					"experiment",
@@ -234,13 +238,13 @@ public abstract class BaseExperimentResourceTestCase {
 						{
 							put(
 								"experimentId",
-								"\"" + experiment.getId() + "\"");
+								"\"" + experiment1.getId() + "\"");
 						}
 					},
 					new GraphQLField("id"))),
 			"JSONArray/errors");
 
-		Assert.assertTrue(errorsJSONArray.length() > 0);
+		Assert.assertTrue(errorsJSONArray1.length() > 0);
 	}
 
 	protected Experiment testGraphQLDeleteExperiment_addExperiment()
@@ -269,6 +273,8 @@ public abstract class BaseExperimentResourceTestCase {
 	public void testGraphQLGetExperiment() throws Exception {
 		Experiment experiment = testGraphQLGetExperiment_addExperiment();
 
+		// No namespace
+
 		Assert.assertTrue(
 			equals(
 				experiment,
@@ -292,6 +298,8 @@ public abstract class BaseExperimentResourceTestCase {
 	public void testGraphQLGetExperimentNotFound() throws Exception {
 		String irrelevantExperimentId =
 			"\"" + RandomTestUtil.randomString() + "\"";
+
+		// No namespace
 
 		Assert.assertEquals(
 			"Not Found",

@@ -213,7 +213,10 @@ public abstract class BaseNavigationMenuResourceTestCase {
 
 	@Test
 	public void testGraphQLDeleteNavigationMenu() throws Exception {
-		NavigationMenu navigationMenu =
+
+		// No namespace
+
+		NavigationMenu navigationMenu1 =
 			testGraphQLDeleteNavigationMenu_addNavigationMenu();
 
 		Assert.assertTrue(
@@ -223,23 +226,26 @@ public abstract class BaseNavigationMenuResourceTestCase {
 						"deleteNavigationMenu",
 						new HashMap<String, Object>() {
 							{
-								put("navigationMenuId", navigationMenu.getId());
+								put(
+									"navigationMenuId",
+									navigationMenu1.getId());
 							}
 						})),
 				"JSONObject/data", "Object/deleteNavigationMenu"));
-		JSONArray errorsJSONArray = JSONUtil.getValueAsJSONArray(
+
+		JSONArray errorsJSONArray1 = JSONUtil.getValueAsJSONArray(
 			invokeGraphQLQuery(
 				new GraphQLField(
 					"navigationMenu",
 					new HashMap<String, Object>() {
 						{
-							put("navigationMenuId", navigationMenu.getId());
+							put("navigationMenuId", navigationMenu1.getId());
 						}
 					},
 					new GraphQLField("id"))),
 			"JSONArray/errors");
 
-		Assert.assertTrue(errorsJSONArray.length() > 0);
+		Assert.assertTrue(errorsJSONArray1.length() > 0);
 	}
 
 	protected NavigationMenu testGraphQLDeleteNavigationMenu_addNavigationMenu()
@@ -273,6 +279,8 @@ public abstract class BaseNavigationMenuResourceTestCase {
 		NavigationMenu navigationMenu =
 			testGraphQLGetNavigationMenu_addNavigationMenu();
 
+		// No namespace
+
 		Assert.assertTrue(
 			equals(
 				navigationMenu,
@@ -295,6 +303,8 @@ public abstract class BaseNavigationMenuResourceTestCase {
 	@Test
 	public void testGraphQLGetNavigationMenuNotFound() throws Exception {
 		Long irrelevantNavigationMenuId = RandomTestUtil.randomLong();
+
+		// No namespace
 
 		Assert.assertEquals(
 			"Not Found",
@@ -552,6 +562,8 @@ public abstract class BaseNavigationMenuResourceTestCase {
 			},
 			new GraphQLField("items", getGraphQLFields()),
 			new GraphQLField("page"), new GraphQLField("totalCount"));
+
+		// No namespace
 
 		JSONObject navigationMenusJSONObject = JSONUtil.getValueAsJSONObject(
 			invokeGraphQLQuery(graphQLField), "JSONObject/data",

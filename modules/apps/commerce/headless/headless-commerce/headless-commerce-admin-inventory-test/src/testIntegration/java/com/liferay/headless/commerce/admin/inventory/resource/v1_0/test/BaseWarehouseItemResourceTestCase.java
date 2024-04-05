@@ -250,6 +250,8 @@ public abstract class BaseWarehouseItemResourceTestCase {
 		WarehouseItem warehouseItem =
 			testGraphQLGetWarehouseItemByExternalReferenceCode_addWarehouseItem();
 
+		// No namespace
+
 		Assert.assertTrue(
 			equals(
 				warehouseItem,
@@ -279,6 +281,8 @@ public abstract class BaseWarehouseItemResourceTestCase {
 
 		String irrelevantExternalReferenceCode =
 			"\"" + RandomTestUtil.randomString() + "\"";
+
+		// No namespace
 
 		Assert.assertEquals(
 			"Not Found",
@@ -366,7 +370,10 @@ public abstract class BaseWarehouseItemResourceTestCase {
 
 	@Test
 	public void testGraphQLDeleteWarehouseItem() throws Exception {
-		WarehouseItem warehouseItem =
+
+		// No namespace
+
+		WarehouseItem warehouseItem1 =
 			testGraphQLDeleteWarehouseItem_addWarehouseItem();
 
 		Assert.assertTrue(
@@ -376,23 +383,24 @@ public abstract class BaseWarehouseItemResourceTestCase {
 						"deleteWarehouseItem",
 						new HashMap<String, Object>() {
 							{
-								put("id", warehouseItem.getId());
+								put("id", warehouseItem1.getId());
 							}
 						})),
 				"JSONObject/data", "Object/deleteWarehouseItem"));
-		JSONArray errorsJSONArray = JSONUtil.getValueAsJSONArray(
+
+		JSONArray errorsJSONArray1 = JSONUtil.getValueAsJSONArray(
 			invokeGraphQLQuery(
 				new GraphQLField(
 					"warehouseItem",
 					new HashMap<String, Object>() {
 						{
-							put("id", warehouseItem.getId());
+							put("id", warehouseItem1.getId());
 						}
 					},
 					new GraphQLField("id"))),
 			"JSONArray/errors");
 
-		Assert.assertTrue(errorsJSONArray.length() > 0);
+		Assert.assertTrue(errorsJSONArray1.length() > 0);
 	}
 
 	protected WarehouseItem testGraphQLDeleteWarehouseItem_addWarehouseItem()
@@ -425,6 +433,8 @@ public abstract class BaseWarehouseItemResourceTestCase {
 		WarehouseItem warehouseItem =
 			testGraphQLGetWarehouseItem_addWarehouseItem();
 
+		// No namespace
+
 		Assert.assertTrue(
 			equals(
 				warehouseItem,
@@ -445,6 +455,8 @@ public abstract class BaseWarehouseItemResourceTestCase {
 	@Test
 	public void testGraphQLGetWarehouseItemNotFound() throws Exception {
 		Long irrelevantId = RandomTestUtil.randomLong();
+
+		// No namespace
 
 		Assert.assertEquals(
 			"Not Found",

@@ -346,6 +346,8 @@ public abstract class BaseWorkflowInstanceResourceTestCase {
 			new GraphQLField("items", getGraphQLFields()),
 			new GraphQLField("page"), new GraphQLField("totalCount"));
 
+		// No namespace
+
 		JSONObject workflowInstancesJSONObject = JSONUtil.getValueAsJSONObject(
 			invokeGraphQLQuery(graphQLField), "JSONObject/data",
 			"JSONObject/workflowInstances");
@@ -433,7 +435,10 @@ public abstract class BaseWorkflowInstanceResourceTestCase {
 
 	@Test
 	public void testGraphQLDeleteWorkflowInstance() throws Exception {
-		WorkflowInstance workflowInstance =
+
+		// No namespace
+
+		WorkflowInstance workflowInstance1 =
 			testGraphQLDeleteWorkflowInstance_addWorkflowInstance();
 
 		Assert.assertTrue(
@@ -445,23 +450,26 @@ public abstract class BaseWorkflowInstanceResourceTestCase {
 							{
 								put(
 									"workflowInstanceId",
-									workflowInstance.getId());
+									workflowInstance1.getId());
 							}
 						})),
 				"JSONObject/data", "Object/deleteWorkflowInstance"));
-		JSONArray errorsJSONArray = JSONUtil.getValueAsJSONArray(
+
+		JSONArray errorsJSONArray1 = JSONUtil.getValueAsJSONArray(
 			invokeGraphQLQuery(
 				new GraphQLField(
 					"workflowInstance",
 					new HashMap<String, Object>() {
 						{
-							put("workflowInstanceId", workflowInstance.getId());
+							put(
+								"workflowInstanceId",
+								workflowInstance1.getId());
 						}
 					},
 					new GraphQLField("id"))),
 			"JSONArray/errors");
 
-		Assert.assertTrue(errorsJSONArray.length() > 0);
+		Assert.assertTrue(errorsJSONArray1.length() > 0);
 	}
 
 	protected WorkflowInstance
@@ -496,6 +504,8 @@ public abstract class BaseWorkflowInstanceResourceTestCase {
 		WorkflowInstance workflowInstance =
 			testGraphQLGetWorkflowInstance_addWorkflowInstance();
 
+		// No namespace
+
 		Assert.assertTrue(
 			equals(
 				workflowInstance,
@@ -518,6 +528,8 @@ public abstract class BaseWorkflowInstanceResourceTestCase {
 	@Test
 	public void testGraphQLGetWorkflowInstanceNotFound() throws Exception {
 		Long irrelevantWorkflowInstanceId = RandomTestUtil.randomLong();
+
+		// No namespace
 
 		Assert.assertEquals(
 			"Not Found",

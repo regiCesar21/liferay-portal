@@ -613,7 +613,10 @@ public abstract class BaseDataListViewResourceTestCase {
 
 	@Test
 	public void testGraphQLDeleteDataListView() throws Exception {
-		DataListView dataListView =
+
+		// No namespace
+
+		DataListView dataListView1 =
 			testGraphQLDeleteDataListView_addDataListView();
 
 		Assert.assertTrue(
@@ -623,23 +626,24 @@ public abstract class BaseDataListViewResourceTestCase {
 						"deleteDataListView",
 						new HashMap<String, Object>() {
 							{
-								put("dataListViewId", dataListView.getId());
+								put("dataListViewId", dataListView1.getId());
 							}
 						})),
 				"JSONObject/data", "Object/deleteDataListView"));
-		JSONArray errorsJSONArray = JSONUtil.getValueAsJSONArray(
+
+		JSONArray errorsJSONArray1 = JSONUtil.getValueAsJSONArray(
 			invokeGraphQLQuery(
 				new GraphQLField(
 					"dataListView",
 					new HashMap<String, Object>() {
 						{
-							put("dataListViewId", dataListView.getId());
+							put("dataListViewId", dataListView1.getId());
 						}
 					},
 					new GraphQLField("id"))),
 			"JSONArray/errors");
 
-		Assert.assertTrue(errorsJSONArray.length() > 0);
+		Assert.assertTrue(errorsJSONArray1.length() > 0);
 	}
 
 	protected DataListView testGraphQLDeleteDataListView_addDataListView()
@@ -671,6 +675,8 @@ public abstract class BaseDataListViewResourceTestCase {
 		DataListView dataListView =
 			testGraphQLGetDataListView_addDataListView();
 
+		// No namespace
+
 		Assert.assertTrue(
 			equals(
 				dataListView,
@@ -693,6 +699,8 @@ public abstract class BaseDataListViewResourceTestCase {
 	@Test
 	public void testGraphQLGetDataListViewNotFound() throws Exception {
 		Long irrelevantDataListViewId = RandomTestUtil.randomLong();
+
+		// No namespace
 
 		Assert.assertEquals(
 			"Not Found",

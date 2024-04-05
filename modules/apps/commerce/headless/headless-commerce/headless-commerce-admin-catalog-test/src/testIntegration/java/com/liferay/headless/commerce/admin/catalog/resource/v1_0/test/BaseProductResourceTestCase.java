@@ -519,6 +519,8 @@ public abstract class BaseProductResourceTestCase {
 			new GraphQLField("items", getGraphQLFields()),
 			new GraphQLField("page"), new GraphQLField("totalCount"));
 
+		// No namespace
+
 		JSONObject productsJSONObject = JSONUtil.getValueAsJSONObject(
 			invokeGraphQLQuery(graphQLField), "JSONObject/data",
 			"JSONObject/products");
@@ -620,6 +622,8 @@ public abstract class BaseProductResourceTestCase {
 		Product product =
 			testGraphQLGetProductByExternalReferenceCode_addProduct();
 
+		// No namespace
+
 		Assert.assertTrue(
 			equals(
 				product,
@@ -649,6 +653,8 @@ public abstract class BaseProductResourceTestCase {
 
 		String irrelevantExternalReferenceCode =
 			"\"" + RandomTestUtil.randomString() + "\"";
+
+		// No namespace
 
 		Assert.assertEquals(
 			"Not Found",
@@ -721,7 +727,10 @@ public abstract class BaseProductResourceTestCase {
 
 	@Test
 	public void testGraphQLDeleteProduct() throws Exception {
-		Product product = testGraphQLDeleteProduct_addProduct();
+
+		// No namespace
+
+		Product product1 = testGraphQLDeleteProduct_addProduct();
 
 		Assert.assertTrue(
 			JSONUtil.getValueAsBoolean(
@@ -730,23 +739,24 @@ public abstract class BaseProductResourceTestCase {
 						"deleteProduct",
 						new HashMap<String, Object>() {
 							{
-								put("id", product.getId());
+								put("id", product1.getId());
 							}
 						})),
 				"JSONObject/data", "Object/deleteProduct"));
-		JSONArray errorsJSONArray = JSONUtil.getValueAsJSONArray(
+
+		JSONArray errorsJSONArray1 = JSONUtil.getValueAsJSONArray(
 			invokeGraphQLQuery(
 				new GraphQLField(
 					"product",
 					new HashMap<String, Object>() {
 						{
-							put("id", product.getId());
+							put("id", product1.getId());
 						}
 					},
 					new GraphQLField("id"))),
 			"JSONArray/errors");
 
-		Assert.assertTrue(errorsJSONArray.length() > 0);
+		Assert.assertTrue(errorsJSONArray1.length() > 0);
 	}
 
 	protected Product testGraphQLDeleteProduct_addProduct() throws Exception {
@@ -772,6 +782,8 @@ public abstract class BaseProductResourceTestCase {
 	public void testGraphQLGetProduct() throws Exception {
 		Product product = testGraphQLGetProduct_addProduct();
 
+		// No namespace
+
 		Assert.assertTrue(
 			equals(
 				product,
@@ -792,6 +804,8 @@ public abstract class BaseProductResourceTestCase {
 	@Test
 	public void testGraphQLGetProductNotFound() throws Exception {
 		Long irrelevantId = RandomTestUtil.randomLong();
+
+		// No namespace
 
 		Assert.assertEquals(
 			"Not Found",

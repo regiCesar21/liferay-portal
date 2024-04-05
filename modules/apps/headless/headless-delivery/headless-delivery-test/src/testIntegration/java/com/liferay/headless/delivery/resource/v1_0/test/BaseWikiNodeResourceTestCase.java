@@ -585,6 +585,8 @@ public abstract class BaseWikiNodeResourceTestCase {
 			new GraphQLField("items", getGraphQLFields()),
 			new GraphQLField("page"), new GraphQLField("totalCount"));
 
+		// No namespace
+
 		JSONObject wikiNodesJSONObject = JSONUtil.getValueAsJSONObject(
 			invokeGraphQLQuery(graphQLField), "JSONObject/data",
 			"JSONObject/wikiNodes");
@@ -666,7 +668,10 @@ public abstract class BaseWikiNodeResourceTestCase {
 
 	@Test
 	public void testGraphQLDeleteWikiNode() throws Exception {
-		WikiNode wikiNode = testGraphQLDeleteWikiNode_addWikiNode();
+
+		// No namespace
+
+		WikiNode wikiNode1 = testGraphQLDeleteWikiNode_addWikiNode();
 
 		Assert.assertTrue(
 			JSONUtil.getValueAsBoolean(
@@ -675,23 +680,24 @@ public abstract class BaseWikiNodeResourceTestCase {
 						"deleteWikiNode",
 						new HashMap<String, Object>() {
 							{
-								put("wikiNodeId", wikiNode.getId());
+								put("wikiNodeId", wikiNode1.getId());
 							}
 						})),
 				"JSONObject/data", "Object/deleteWikiNode"));
-		JSONArray errorsJSONArray = JSONUtil.getValueAsJSONArray(
+
+		JSONArray errorsJSONArray1 = JSONUtil.getValueAsJSONArray(
 			invokeGraphQLQuery(
 				new GraphQLField(
 					"wikiNode",
 					new HashMap<String, Object>() {
 						{
-							put("wikiNodeId", wikiNode.getId());
+							put("wikiNodeId", wikiNode1.getId());
 						}
 					},
 					new GraphQLField("id"))),
 			"JSONArray/errors");
 
-		Assert.assertTrue(errorsJSONArray.length() > 0);
+		Assert.assertTrue(errorsJSONArray1.length() > 0);
 	}
 
 	protected WikiNode testGraphQLDeleteWikiNode_addWikiNode()
@@ -720,6 +726,8 @@ public abstract class BaseWikiNodeResourceTestCase {
 	public void testGraphQLGetWikiNode() throws Exception {
 		WikiNode wikiNode = testGraphQLGetWikiNode_addWikiNode();
 
+		// No namespace
+
 		Assert.assertTrue(
 			equals(
 				wikiNode,
@@ -740,6 +748,8 @@ public abstract class BaseWikiNodeResourceTestCase {
 	@Test
 	public void testGraphQLGetWikiNodeNotFound() throws Exception {
 		Long irrelevantWikiNodeId = RandomTestUtil.randomLong();
+
+		// No namespace
 
 		Assert.assertEquals(
 			"Not Found",

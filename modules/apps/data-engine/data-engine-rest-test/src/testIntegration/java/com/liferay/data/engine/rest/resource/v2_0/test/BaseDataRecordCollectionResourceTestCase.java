@@ -227,6 +227,8 @@ public abstract class BaseDataRecordCollectionResourceTestCase {
 		DataRecordCollection dataRecordCollection =
 			testGraphQLGetDataDefinitionDataRecordCollection_addDataRecordCollection();
 
+		// No namespace
+
 		Assert.assertTrue(
 			equals(
 				dataRecordCollection,
@@ -261,6 +263,8 @@ public abstract class BaseDataRecordCollectionResourceTestCase {
 		throws Exception {
 
 		Long irrelevantDataDefinitionId = RandomTestUtil.randomLong();
+
+		// No namespace
 
 		Assert.assertEquals(
 			"Not Found",
@@ -577,7 +581,10 @@ public abstract class BaseDataRecordCollectionResourceTestCase {
 
 	@Test
 	public void testGraphQLDeleteDataRecordCollection() throws Exception {
-		DataRecordCollection dataRecordCollection =
+
+		// No namespace
+
+		DataRecordCollection dataRecordCollection1 =
 			testGraphQLDeleteDataRecordCollection_addDataRecordCollection();
 
 		Assert.assertTrue(
@@ -589,11 +596,12 @@ public abstract class BaseDataRecordCollectionResourceTestCase {
 							{
 								put(
 									"dataRecordCollectionId",
-									dataRecordCollection.getId());
+									dataRecordCollection1.getId());
 							}
 						})),
 				"JSONObject/data", "Object/deleteDataRecordCollection"));
-		JSONArray errorsJSONArray = JSONUtil.getValueAsJSONArray(
+
+		JSONArray errorsJSONArray1 = JSONUtil.getValueAsJSONArray(
 			invokeGraphQLQuery(
 				new GraphQLField(
 					"dataRecordCollection",
@@ -601,13 +609,13 @@ public abstract class BaseDataRecordCollectionResourceTestCase {
 						{
 							put(
 								"dataRecordCollectionId",
-								dataRecordCollection.getId());
+								dataRecordCollection1.getId());
 						}
 					},
 					new GraphQLField("id"))),
 			"JSONArray/errors");
 
-		Assert.assertTrue(errorsJSONArray.length() > 0);
+		Assert.assertTrue(errorsJSONArray1.length() > 0);
 	}
 
 	protected DataRecordCollection
@@ -643,6 +651,8 @@ public abstract class BaseDataRecordCollectionResourceTestCase {
 		DataRecordCollection dataRecordCollection =
 			testGraphQLGetDataRecordCollection_addDataRecordCollection();
 
+		// No namespace
+
 		Assert.assertTrue(
 			equals(
 				dataRecordCollection,
@@ -665,6 +675,8 @@ public abstract class BaseDataRecordCollectionResourceTestCase {
 	@Test
 	public void testGraphQLGetDataRecordCollectionNotFound() throws Exception {
 		Long irrelevantDataRecordCollectionId = RandomTestUtil.randomLong();
+
+		// No namespace
 
 		Assert.assertEquals(
 			"Not Found",
@@ -837,6 +849,8 @@ public abstract class BaseDataRecordCollectionResourceTestCase {
 		DataRecordCollection dataRecordCollection =
 			testGraphQLGetSiteDataRecordCollectionByDataRecordCollectionKey_addDataRecordCollection();
 
+		// No namespace
+
 		Assert.assertTrue(
 			equals(
 				dataRecordCollection,
@@ -881,6 +895,8 @@ public abstract class BaseDataRecordCollectionResourceTestCase {
 
 		String irrelevantDataRecordCollectionKey =
 			"\"" + RandomTestUtil.randomString() + "\"";
+
+		// No namespace
 
 		Assert.assertEquals(
 			"Not Found",

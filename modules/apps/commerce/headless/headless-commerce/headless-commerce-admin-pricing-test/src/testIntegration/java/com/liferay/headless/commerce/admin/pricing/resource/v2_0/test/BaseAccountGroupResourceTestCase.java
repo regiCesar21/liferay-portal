@@ -214,6 +214,8 @@ public abstract class BaseAccountGroupResourceTestCase {
 		AccountGroup accountGroup =
 			testGraphQLGetDiscountAccountGroupAccountGroup_addAccountGroup();
 
+		// No namespace
+
 		Assert.assertTrue(
 			equals(
 				accountGroup,
@@ -247,6 +249,8 @@ public abstract class BaseAccountGroupResourceTestCase {
 		throws Exception {
 
 		Long irrelevantDiscountAccountGroupId = RandomTestUtil.randomLong();
+
+		// No namespace
 
 		Assert.assertEquals(
 			"Not Found",
@@ -309,6 +313,8 @@ public abstract class BaseAccountGroupResourceTestCase {
 		AccountGroup accountGroup =
 			testGraphQLGetPriceListAccountGroupAccountGroup_addAccountGroup();
 
+		// No namespace
+
 		Assert.assertTrue(
 			equals(
 				accountGroup,
@@ -342,6 +348,8 @@ public abstract class BaseAccountGroupResourceTestCase {
 		throws Exception {
 
 		Long irrelevantPriceListAccountGroupId = RandomTestUtil.randomLong();
+
+		// No namespace
 
 		Assert.assertEquals(
 			"Not Found",
