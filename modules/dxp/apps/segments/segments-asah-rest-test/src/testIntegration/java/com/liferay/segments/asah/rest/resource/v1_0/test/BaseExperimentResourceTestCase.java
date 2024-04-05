@@ -203,7 +203,10 @@ public abstract class BaseExperimentResourceTestCase {
 
 	@Test
 	public void testGraphQLDeleteExperiment() throws Exception {
-		Experiment experiment = testGraphQLDeleteExperiment_addExperiment();
+
+		// No namespace
+
+		Experiment experiment1 = testGraphQLDeleteExperiment_addExperiment();
 
 		Assert.assertTrue(
 			JSONUtil.getValueAsBoolean(
@@ -214,7 +217,7 @@ public abstract class BaseExperimentResourceTestCase {
 							{
 								put(
 									"experimentId",
-									"\"" + experiment.getId() + "\"");
+									"\"" + experiment1.getId() + "\"");
 							}
 						})),
 				"JSONObject/data", "Object/deleteExperiment"));

@@ -217,7 +217,10 @@ public abstract class BaseDocumentFolderResourceTestCase {
 
 	@Test
 	public void testGraphQLDeleteDocumentFolder() throws Exception {
-		DocumentFolder documentFolder =
+
+		// No namespace
+
+		DocumentFolder documentFolder1 =
 			testGraphQLDeleteDocumentFolder_addDocumentFolder();
 
 		Assert.assertTrue(
@@ -227,23 +230,26 @@ public abstract class BaseDocumentFolderResourceTestCase {
 						"deleteDocumentFolder",
 						new HashMap<String, Object>() {
 							{
-								put("documentFolderId", documentFolder.getId());
+								put(
+									"documentFolderId",
+									documentFolder1.getId());
 							}
 						})),
 				"JSONObject/data", "Object/deleteDocumentFolder"));
-		JSONArray errorsJSONArray = JSONUtil.getValueAsJSONArray(
+
+		JSONArray errorsJSONArray1 = JSONUtil.getValueAsJSONArray(
 			invokeGraphQLQuery(
 				new GraphQLField(
 					"documentFolder",
 					new HashMap<String, Object>() {
 						{
-							put("documentFolderId", documentFolder.getId());
+							put("documentFolderId", documentFolder1.getId());
 						}
 					},
 					new GraphQLField("id"))),
 			"JSONArray/errors");
 
-		Assert.assertTrue(errorsJSONArray.length() > 0);
+		Assert.assertTrue(errorsJSONArray1.length() > 0);
 	}
 
 	protected DocumentFolder testGraphQLDeleteDocumentFolder_addDocumentFolder()
@@ -277,6 +283,8 @@ public abstract class BaseDocumentFolderResourceTestCase {
 		DocumentFolder documentFolder =
 			testGraphQLGetDocumentFolder_addDocumentFolder();
 
+		// No namespace
+
 		Assert.assertTrue(
 			equals(
 				documentFolder,
@@ -299,6 +307,8 @@ public abstract class BaseDocumentFolderResourceTestCase {
 	@Test
 	public void testGraphQLGetDocumentFolderNotFound() throws Exception {
 		Long irrelevantDocumentFolderId = RandomTestUtil.randomLong();
+
+		// No namespace
 
 		Assert.assertEquals(
 			"Not Found",
@@ -1369,6 +1379,8 @@ public abstract class BaseDocumentFolderResourceTestCase {
 			},
 			new GraphQLField("items", getGraphQLFields()),
 			new GraphQLField("page"), new GraphQLField("totalCount"));
+
+		// No namespace
 
 		JSONObject documentFoldersJSONObject = JSONUtil.getValueAsJSONObject(
 			invokeGraphQLQuery(graphQLField), "JSONObject/data",

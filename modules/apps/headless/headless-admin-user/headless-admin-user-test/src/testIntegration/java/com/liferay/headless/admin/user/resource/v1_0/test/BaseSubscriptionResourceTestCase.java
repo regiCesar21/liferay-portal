@@ -371,6 +371,8 @@ public abstract class BaseSubscriptionResourceTestCase {
 		Subscription subscription =
 			testGraphQLGetMyUserAccountSubscription_addSubscription();
 
+		// No namespace
+
 		Assert.assertTrue(
 			equals(
 				subscription,
@@ -396,6 +398,8 @@ public abstract class BaseSubscriptionResourceTestCase {
 		throws Exception {
 
 		Long irrelevantSubscriptionId = RandomTestUtil.randomLong();
+
+		// No namespace
 
 		Assert.assertEquals(
 			"Not Found",

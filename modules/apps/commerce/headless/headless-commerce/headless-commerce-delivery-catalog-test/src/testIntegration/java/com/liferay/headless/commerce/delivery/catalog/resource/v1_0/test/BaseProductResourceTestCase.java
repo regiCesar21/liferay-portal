@@ -596,6 +596,8 @@ public abstract class BaseProductResourceTestCase {
 	public void testGraphQLGetChannelProduct() throws Exception {
 		Product product = testGraphQLGetChannelProduct_addProduct();
 
+		// No namespace
+
 		Assert.assertTrue(
 			equals(
 				product,
@@ -628,6 +630,8 @@ public abstract class BaseProductResourceTestCase {
 	public void testGraphQLGetChannelProductNotFound() throws Exception {
 		Long irrelevantChannelId = RandomTestUtil.randomLong();
 		Long irrelevantProductId = RandomTestUtil.randomLong();
+
+		// No namespace
 
 		Assert.assertEquals(
 			"Not Found",

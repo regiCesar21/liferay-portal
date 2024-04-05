@@ -206,6 +206,8 @@ public abstract class BaseSkuResourceTestCase {
 	public void testGraphQLGetPriceEntryIdSku() throws Exception {
 		Sku sku = testGraphQLGetPriceEntryIdSku_addSku();
 
+		// No namespace
+
 		Assert.assertTrue(
 			equals(
 				sku,
@@ -235,6 +237,8 @@ public abstract class BaseSkuResourceTestCase {
 	@Test
 	public void testGraphQLGetPriceEntryIdSkuNotFound() throws Exception {
 		Long irrelevantId = RandomTestUtil.randomLong();
+
+		// No namespace
 
 		Assert.assertEquals(
 			"Not Found",

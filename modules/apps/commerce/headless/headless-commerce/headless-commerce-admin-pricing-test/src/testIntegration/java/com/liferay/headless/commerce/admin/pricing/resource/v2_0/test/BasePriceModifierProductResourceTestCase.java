@@ -215,7 +215,10 @@ public abstract class BasePriceModifierProductResourceTestCase {
 
 	@Test
 	public void testGraphQLDeletePriceModifierProduct() throws Exception {
-		PriceModifierProduct priceModifierProduct =
+
+		// No namespace
+
+		PriceModifierProduct priceModifierProduct1 =
 			testGraphQLDeletePriceModifierProduct_addPriceModifierProduct();
 
 		Assert.assertTrue(
@@ -225,7 +228,7 @@ public abstract class BasePriceModifierProductResourceTestCase {
 						"deletePriceModifierProduct",
 						new HashMap<String, Object>() {
 							{
-								put("id", priceModifierProduct.getId());
+								put("id", priceModifierProduct1.getId());
 							}
 						})),
 				"JSONObject/data", "Object/deletePriceModifierProduct"));

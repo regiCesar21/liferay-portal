@@ -643,6 +643,8 @@ public abstract class BaseTierPriceResourceTestCase {
 		TierPrice tierPrice =
 			testGraphQLGetTierPriceByExternalReferenceCode_addTierPrice();
 
+		// No namespace
+
 		Assert.assertTrue(
 			equals(
 				tierPrice,
@@ -672,6 +674,8 @@ public abstract class BaseTierPriceResourceTestCase {
 
 		String irrelevantExternalReferenceCode =
 			"\"" + RandomTestUtil.randomString() + "\"";
+
+		// No namespace
 
 		Assert.assertEquals(
 			"Not Found",
@@ -726,7 +730,10 @@ public abstract class BaseTierPriceResourceTestCase {
 
 	@Test
 	public void testGraphQLDeleteTierPrice() throws Exception {
-		TierPrice tierPrice = testGraphQLDeleteTierPrice_addTierPrice();
+
+		// No namespace
+
+		TierPrice tierPrice1 = testGraphQLDeleteTierPrice_addTierPrice();
 
 		Assert.assertTrue(
 			JSONUtil.getValueAsBoolean(
@@ -735,23 +742,24 @@ public abstract class BaseTierPriceResourceTestCase {
 						"deleteTierPrice",
 						new HashMap<String, Object>() {
 							{
-								put("id", tierPrice.getId());
+								put("id", tierPrice1.getId());
 							}
 						})),
 				"JSONObject/data", "Object/deleteTierPrice"));
-		JSONArray errorsJSONArray = JSONUtil.getValueAsJSONArray(
+
+		JSONArray errorsJSONArray1 = JSONUtil.getValueAsJSONArray(
 			invokeGraphQLQuery(
 				new GraphQLField(
 					"tierPrice",
 					new HashMap<String, Object>() {
 						{
-							put("id", tierPrice.getId());
+							put("id", tierPrice1.getId());
 						}
 					},
 					new GraphQLField("id"))),
 			"JSONArray/errors");
 
-		Assert.assertTrue(errorsJSONArray.length() > 0);
+		Assert.assertTrue(errorsJSONArray1.length() > 0);
 	}
 
 	protected TierPrice testGraphQLDeleteTierPrice_addTierPrice()
@@ -780,6 +788,8 @@ public abstract class BaseTierPriceResourceTestCase {
 	public void testGraphQLGetTierPrice() throws Exception {
 		TierPrice tierPrice = testGraphQLGetTierPrice_addTierPrice();
 
+		// No namespace
+
 		Assert.assertTrue(
 			equals(
 				tierPrice,
@@ -800,6 +810,8 @@ public abstract class BaseTierPriceResourceTestCase {
 	@Test
 	public void testGraphQLGetTierPriceNotFound() throws Exception {
 		Long irrelevantId = RandomTestUtil.randomLong();
+
+		// No namespace
 
 		Assert.assertEquals(
 			"Not Found",

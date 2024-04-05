@@ -311,6 +311,8 @@ public abstract class BaseSiteResourceTestCase {
 	public void testGraphQLGetSiteByFriendlyUrlPath() throws Exception {
 		Site site = testGraphQLGetSiteByFriendlyUrlPath_addSite();
 
+		// No namespace
+
 		Assert.assertTrue(
 			equals(
 				site,
@@ -335,6 +337,8 @@ public abstract class BaseSiteResourceTestCase {
 	public void testGraphQLGetSiteByFriendlyUrlPathNotFound() throws Exception {
 		String irrelevantFriendlyUrlPath =
 			"\"" + RandomTestUtil.randomString() + "\"";
+
+		// No namespace
 
 		Assert.assertEquals(
 			"Not Found",
@@ -379,6 +383,8 @@ public abstract class BaseSiteResourceTestCase {
 	public void testGraphQLGetSite() throws Exception {
 		Site site = testGraphQLGetSite_addSite();
 
+		// No namespace
+
 		Assert.assertTrue(
 			equals(
 				site,
@@ -398,6 +404,9 @@ public abstract class BaseSiteResourceTestCase {
 
 	@Test
 	public void testGraphQLGetSiteNotFound() throws Exception {
+
+		// No namespace
+
 		Assert.assertEquals(
 			"Not Found",
 			JSONUtil.getValueAsString(

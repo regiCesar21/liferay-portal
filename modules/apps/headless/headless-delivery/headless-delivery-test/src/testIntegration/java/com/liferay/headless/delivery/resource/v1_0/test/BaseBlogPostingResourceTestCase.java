@@ -224,7 +224,11 @@ public abstract class BaseBlogPostingResourceTestCase {
 
 	@Test
 	public void testGraphQLDeleteBlogPosting() throws Exception {
-		BlogPosting blogPosting = testGraphQLDeleteBlogPosting_addBlogPosting();
+
+		// No namespace
+
+		BlogPosting blogPosting1 =
+			testGraphQLDeleteBlogPosting_addBlogPosting();
 
 		Assert.assertTrue(
 			JSONUtil.getValueAsBoolean(
@@ -233,23 +237,24 @@ public abstract class BaseBlogPostingResourceTestCase {
 						"deleteBlogPosting",
 						new HashMap<String, Object>() {
 							{
-								put("blogPostingId", blogPosting.getId());
+								put("blogPostingId", blogPosting1.getId());
 							}
 						})),
 				"JSONObject/data", "Object/deleteBlogPosting"));
-		JSONArray errorsJSONArray = JSONUtil.getValueAsJSONArray(
+
+		JSONArray errorsJSONArray1 = JSONUtil.getValueAsJSONArray(
 			invokeGraphQLQuery(
 				new GraphQLField(
 					"blogPosting",
 					new HashMap<String, Object>() {
 						{
-							put("blogPostingId", blogPosting.getId());
+							put("blogPostingId", blogPosting1.getId());
 						}
 					},
 					new GraphQLField("id"))),
 			"JSONArray/errors");
 
-		Assert.assertTrue(errorsJSONArray.length() > 0);
+		Assert.assertTrue(errorsJSONArray1.length() > 0);
 	}
 
 	protected BlogPosting testGraphQLDeleteBlogPosting_addBlogPosting()
@@ -278,6 +283,8 @@ public abstract class BaseBlogPostingResourceTestCase {
 	public void testGraphQLGetBlogPosting() throws Exception {
 		BlogPosting blogPosting = testGraphQLGetBlogPosting_addBlogPosting();
 
+		// No namespace
+
 		Assert.assertTrue(
 			equals(
 				blogPosting,
@@ -300,6 +307,8 @@ public abstract class BaseBlogPostingResourceTestCase {
 	@Test
 	public void testGraphQLGetBlogPostingNotFound() throws Exception {
 		Long irrelevantBlogPostingId = RandomTestUtil.randomLong();
+
+		// No namespace
 
 		Assert.assertEquals(
 			"Not Found",
@@ -829,6 +838,8 @@ public abstract class BaseBlogPostingResourceTestCase {
 			},
 			new GraphQLField("items", getGraphQLFields()),
 			new GraphQLField("page"), new GraphQLField("totalCount"));
+
+		// No namespace
 
 		JSONObject blogPostingsJSONObject = JSONUtil.getValueAsJSONObject(
 			invokeGraphQLQuery(graphQLField), "JSONObject/data",

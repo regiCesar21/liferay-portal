@@ -563,6 +563,8 @@ public abstract class BaseSpecificationResourceTestCase {
 			new GraphQLField("items", getGraphQLFields()),
 			new GraphQLField("page"), new GraphQLField("totalCount"));
 
+		// No namespace
+
 		JSONObject specificationsJSONObject = JSONUtil.getValueAsJSONObject(
 			invokeGraphQLQuery(graphQLField), "JSONObject/data",
 			"JSONObject/specifications");
@@ -649,7 +651,10 @@ public abstract class BaseSpecificationResourceTestCase {
 
 	@Test
 	public void testGraphQLDeleteSpecification() throws Exception {
-		Specification specification =
+
+		// No namespace
+
+		Specification specification1 =
 			testGraphQLDeleteSpecification_addSpecification();
 
 		Assert.assertTrue(
@@ -659,23 +664,24 @@ public abstract class BaseSpecificationResourceTestCase {
 						"deleteSpecification",
 						new HashMap<String, Object>() {
 							{
-								put("id", specification.getId());
+								put("id", specification1.getId());
 							}
 						})),
 				"JSONObject/data", "Object/deleteSpecification"));
-		JSONArray errorsJSONArray = JSONUtil.getValueAsJSONArray(
+
+		JSONArray errorsJSONArray1 = JSONUtil.getValueAsJSONArray(
 			invokeGraphQLQuery(
 				new GraphQLField(
 					"specification",
 					new HashMap<String, Object>() {
 						{
-							put("id", specification.getId());
+							put("id", specification1.getId());
 						}
 					},
 					new GraphQLField("id"))),
 			"JSONArray/errors");
 
-		Assert.assertTrue(errorsJSONArray.length() > 0);
+		Assert.assertTrue(errorsJSONArray1.length() > 0);
 	}
 
 	protected Specification testGraphQLDeleteSpecification_addSpecification()
@@ -708,6 +714,8 @@ public abstract class BaseSpecificationResourceTestCase {
 		Specification specification =
 			testGraphQLGetSpecification_addSpecification();
 
+		// No namespace
+
 		Assert.assertTrue(
 			equals(
 				specification,
@@ -728,6 +736,8 @@ public abstract class BaseSpecificationResourceTestCase {
 	@Test
 	public void testGraphQLGetSpecificationNotFound() throws Exception {
 		Long irrelevantId = RandomTestUtil.randomLong();
+
+		// No namespace
 
 		Assert.assertEquals(
 			"Not Found",

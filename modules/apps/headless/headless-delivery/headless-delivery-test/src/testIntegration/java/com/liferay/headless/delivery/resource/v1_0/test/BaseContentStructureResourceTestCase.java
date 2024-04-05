@@ -211,6 +211,8 @@ public abstract class BaseContentStructureResourceTestCase {
 		ContentStructure contentStructure =
 			testGraphQLGetContentStructure_addContentStructure();
 
+		// No namespace
+
 		Assert.assertTrue(
 			equals(
 				contentStructure,
@@ -233,6 +235,8 @@ public abstract class BaseContentStructureResourceTestCase {
 	@Test
 	public void testGraphQLGetContentStructureNotFound() throws Exception {
 		Long irrelevantContentStructureId = RandomTestUtil.randomLong();
+
+		// No namespace
 
 		Assert.assertEquals(
 			"Not Found",
@@ -715,6 +719,8 @@ public abstract class BaseContentStructureResourceTestCase {
 			},
 			new GraphQLField("items", getGraphQLFields()),
 			new GraphQLField("page"), new GraphQLField("totalCount"));
+
+		// No namespace
 
 		JSONObject contentStructuresJSONObject = JSONUtil.getValueAsJSONObject(
 			invokeGraphQLQuery(graphQLField), "JSONObject/data",

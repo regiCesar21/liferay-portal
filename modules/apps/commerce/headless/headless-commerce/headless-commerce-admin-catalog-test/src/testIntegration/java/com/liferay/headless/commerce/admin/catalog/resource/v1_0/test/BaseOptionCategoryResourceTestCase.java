@@ -570,6 +570,8 @@ public abstract class BaseOptionCategoryResourceTestCase {
 			new GraphQLField("items", getGraphQLFields()),
 			new GraphQLField("page"), new GraphQLField("totalCount"));
 
+		// No namespace
+
 		JSONObject optionCategoriesJSONObject = JSONUtil.getValueAsJSONObject(
 			invokeGraphQLQuery(graphQLField), "JSONObject/data",
 			"JSONObject/optionCategories");
@@ -657,7 +659,10 @@ public abstract class BaseOptionCategoryResourceTestCase {
 
 	@Test
 	public void testGraphQLDeleteOptionCategory() throws Exception {
-		OptionCategory optionCategory =
+
+		// No namespace
+
+		OptionCategory optionCategory1 =
 			testGraphQLDeleteOptionCategory_addOptionCategory();
 
 		Assert.assertTrue(
@@ -667,23 +672,24 @@ public abstract class BaseOptionCategoryResourceTestCase {
 						"deleteOptionCategory",
 						new HashMap<String, Object>() {
 							{
-								put("id", optionCategory.getId());
+								put("id", optionCategory1.getId());
 							}
 						})),
 				"JSONObject/data", "Object/deleteOptionCategory"));
-		JSONArray errorsJSONArray = JSONUtil.getValueAsJSONArray(
+
+		JSONArray errorsJSONArray1 = JSONUtil.getValueAsJSONArray(
 			invokeGraphQLQuery(
 				new GraphQLField(
 					"optionCategory",
 					new HashMap<String, Object>() {
 						{
-							put("id", optionCategory.getId());
+							put("id", optionCategory1.getId());
 						}
 					},
 					new GraphQLField("id"))),
 			"JSONArray/errors");
 
-		Assert.assertTrue(errorsJSONArray.length() > 0);
+		Assert.assertTrue(errorsJSONArray1.length() > 0);
 	}
 
 	protected OptionCategory testGraphQLDeleteOptionCategory_addOptionCategory()
@@ -717,6 +723,8 @@ public abstract class BaseOptionCategoryResourceTestCase {
 		OptionCategory optionCategory =
 			testGraphQLGetOptionCategory_addOptionCategory();
 
+		// No namespace
+
 		Assert.assertTrue(
 			equals(
 				optionCategory,
@@ -737,6 +745,8 @@ public abstract class BaseOptionCategoryResourceTestCase {
 	@Test
 	public void testGraphQLGetOptionCategoryNotFound() throws Exception {
 		Long irrelevantId = RandomTestUtil.randomLong();
+
+		// No namespace
 
 		Assert.assertEquals(
 			"Not Found",

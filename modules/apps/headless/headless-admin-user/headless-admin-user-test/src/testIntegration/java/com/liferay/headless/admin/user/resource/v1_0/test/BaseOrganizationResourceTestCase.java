@@ -558,6 +558,8 @@ public abstract class BaseOrganizationResourceTestCase {
 			new GraphQLField("items", getGraphQLFields()),
 			new GraphQLField("page"), new GraphQLField("totalCount"));
 
+		// No namespace
+
 		JSONObject organizationsJSONObject = JSONUtil.getValueAsJSONObject(
 			invokeGraphQLQuery(graphQLField), "JSONObject/data",
 			"JSONObject/organizations");
@@ -641,7 +643,10 @@ public abstract class BaseOrganizationResourceTestCase {
 
 	@Test
 	public void testGraphQLDeleteOrganization() throws Exception {
-		Organization organization =
+
+		// No namespace
+
+		Organization organization1 =
 			testGraphQLDeleteOrganization_addOrganization();
 
 		Assert.assertTrue(
@@ -651,23 +656,24 @@ public abstract class BaseOrganizationResourceTestCase {
 						"deleteOrganization",
 						new HashMap<String, Object>() {
 							{
-								put("organizationId", organization.getId());
+								put("organizationId", organization1.getId());
 							}
 						})),
 				"JSONObject/data", "Object/deleteOrganization"));
-		JSONArray errorsJSONArray = JSONUtil.getValueAsJSONArray(
+
+		JSONArray errorsJSONArray1 = JSONUtil.getValueAsJSONArray(
 			invokeGraphQLQuery(
 				new GraphQLField(
 					"organization",
 					new HashMap<String, Object>() {
 						{
-							put("organizationId", organization.getId());
+							put("organizationId", organization1.getId());
 						}
 					},
 					new GraphQLField("id"))),
 			"JSONArray/errors");
 
-		Assert.assertTrue(errorsJSONArray.length() > 0);
+		Assert.assertTrue(errorsJSONArray1.length() > 0);
 	}
 
 	protected Organization testGraphQLDeleteOrganization_addOrganization()
@@ -699,6 +705,8 @@ public abstract class BaseOrganizationResourceTestCase {
 		Organization organization =
 			testGraphQLGetOrganization_addOrganization();
 
+		// No namespace
+
 		Assert.assertTrue(
 			equals(
 				organization,
@@ -721,6 +729,8 @@ public abstract class BaseOrganizationResourceTestCase {
 	@Test
 	public void testGraphQLGetOrganizationNotFound() throws Exception {
 		Long irrelevantOrganizationId = RandomTestUtil.randomLong();
+
+		// No namespace
 
 		Assert.assertEquals(
 			"Not Found",

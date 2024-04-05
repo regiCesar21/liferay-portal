@@ -1153,6 +1153,8 @@ public abstract class BaseStructuredContentResourceTestCase {
 			new GraphQLField("items", getGraphQLFields()),
 			new GraphQLField("page"), new GraphQLField("totalCount"));
 
+		// No namespace
+
 		JSONObject structuredContentsJSONObject = JSONUtil.getValueAsJSONObject(
 			invokeGraphQLQuery(graphQLField), "JSONObject/data",
 			"JSONObject/structuredContents");
@@ -1257,6 +1259,8 @@ public abstract class BaseStructuredContentResourceTestCase {
 		StructuredContent structuredContent =
 			testGraphQLGetSiteStructuredContentByKey_addStructuredContent();
 
+		// No namespace
+
 		Assert.assertTrue(
 			equals(
 				structuredContent,
@@ -1295,6 +1299,8 @@ public abstract class BaseStructuredContentResourceTestCase {
 		throws Exception {
 
 		String irrelevantKey = "\"" + RandomTestUtil.randomString() + "\"";
+
+		// No namespace
 
 		Assert.assertEquals(
 			"Not Found",
@@ -1357,6 +1363,8 @@ public abstract class BaseStructuredContentResourceTestCase {
 		StructuredContent structuredContent =
 			testGraphQLGetSiteStructuredContentByUuid_addStructuredContent();
 
+		// No namespace
+
 		Assert.assertTrue(
 			equals(
 				structuredContent,
@@ -1395,6 +1403,8 @@ public abstract class BaseStructuredContentResourceTestCase {
 		throws Exception {
 
 		String irrelevantUuid = "\"" + RandomTestUtil.randomString() + "\"";
+
+		// No namespace
 
 		Assert.assertEquals(
 			"Not Found",
@@ -2030,7 +2040,10 @@ public abstract class BaseStructuredContentResourceTestCase {
 
 	@Test
 	public void testGraphQLDeleteStructuredContent() throws Exception {
-		StructuredContent structuredContent =
+
+		// No namespace
+
+		StructuredContent structuredContent1 =
 			testGraphQLDeleteStructuredContent_addStructuredContent();
 
 		Assert.assertTrue(
@@ -2042,11 +2055,12 @@ public abstract class BaseStructuredContentResourceTestCase {
 							{
 								put(
 									"structuredContentId",
-									structuredContent.getId());
+									structuredContent1.getId());
 							}
 						})),
 				"JSONObject/data", "Object/deleteStructuredContent"));
-		JSONArray errorsJSONArray = JSONUtil.getValueAsJSONArray(
+
+		JSONArray errorsJSONArray1 = JSONUtil.getValueAsJSONArray(
 			invokeGraphQLQuery(
 				new GraphQLField(
 					"structuredContent",
@@ -2054,13 +2068,13 @@ public abstract class BaseStructuredContentResourceTestCase {
 						{
 							put(
 								"structuredContentId",
-								structuredContent.getId());
+								structuredContent1.getId());
 						}
 					},
 					new GraphQLField("id"))),
 			"JSONArray/errors");
 
-		Assert.assertTrue(errorsJSONArray.length() > 0);
+		Assert.assertTrue(errorsJSONArray1.length() > 0);
 	}
 
 	protected StructuredContent
@@ -2095,6 +2109,8 @@ public abstract class BaseStructuredContentResourceTestCase {
 		StructuredContent structuredContent =
 			testGraphQLGetStructuredContent_addStructuredContent();
 
+		// No namespace
+
 		Assert.assertTrue(
 			equals(
 				structuredContent,
@@ -2117,6 +2133,8 @@ public abstract class BaseStructuredContentResourceTestCase {
 	@Test
 	public void testGraphQLGetStructuredContentNotFound() throws Exception {
 		Long irrelevantStructuredContentId = RandomTestUtil.randomLong();
+
+		// No namespace
 
 		Assert.assertEquals(
 			"Not Found",

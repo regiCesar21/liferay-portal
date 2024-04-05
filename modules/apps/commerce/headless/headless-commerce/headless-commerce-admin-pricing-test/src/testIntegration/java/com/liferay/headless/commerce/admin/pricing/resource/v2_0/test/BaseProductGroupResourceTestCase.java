@@ -206,6 +206,8 @@ public abstract class BaseProductGroupResourceTestCase {
 		ProductGroup productGroup =
 			testGraphQLGetDiscountIdProductGroupPage_addProductGroup();
 
+		// No namespace
+
 		Assert.assertTrue(
 			equals(
 				productGroup,
@@ -239,6 +241,8 @@ public abstract class BaseProductGroupResourceTestCase {
 		throws Exception {
 
 		Long irrelevantId = RandomTestUtil.randomLong();
+
+		// No namespace
 
 		Assert.assertEquals(
 			"Not Found",
@@ -295,6 +299,8 @@ public abstract class BaseProductGroupResourceTestCase {
 		ProductGroup productGroup =
 			testGraphQLGetPriceModifierIdProductGroup_addProductGroup();
 
+		// No namespace
+
 		Assert.assertTrue(
 			equals(
 				productGroup,
@@ -328,6 +334,8 @@ public abstract class BaseProductGroupResourceTestCase {
 		throws Exception {
 
 		Long irrelevantId = RandomTestUtil.randomLong();
+
+		// No namespace
 
 		Assert.assertEquals(
 			"Not Found",

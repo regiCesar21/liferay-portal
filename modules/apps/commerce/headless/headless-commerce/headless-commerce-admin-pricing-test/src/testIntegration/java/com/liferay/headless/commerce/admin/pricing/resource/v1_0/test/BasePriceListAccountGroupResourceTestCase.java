@@ -215,7 +215,10 @@ public abstract class BasePriceListAccountGroupResourceTestCase {
 
 	@Test
 	public void testGraphQLDeletePriceListAccountGroup() throws Exception {
-		PriceListAccountGroup priceListAccountGroup =
+
+		// No namespace
+
+		PriceListAccountGroup priceListAccountGroup1 =
 			testGraphQLDeletePriceListAccountGroup_addPriceListAccountGroup();
 
 		Assert.assertTrue(
@@ -225,7 +228,7 @@ public abstract class BasePriceListAccountGroupResourceTestCase {
 						"deletePriceListAccountGroup",
 						new HashMap<String, Object>() {
 							{
-								put("id", priceListAccountGroup.getId());
+								put("id", priceListAccountGroup1.getId());
 							}
 						})),
 				"JSONObject/data", "Object/deletePriceListAccountGroup"));

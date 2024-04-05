@@ -704,6 +704,8 @@ public abstract class BaseStructuredContentFolderResourceTestCase {
 			new GraphQLField("items", getGraphQLFields()),
 			new GraphQLField("page"), new GraphQLField("totalCount"));
 
+		// No namespace
+
 		JSONObject structuredContentFoldersJSONObject =
 			JSONUtil.getValueAsJSONObject(
 				invokeGraphQLQuery(graphQLField), "JSONObject/data",
@@ -1353,7 +1355,10 @@ public abstract class BaseStructuredContentFolderResourceTestCase {
 
 	@Test
 	public void testGraphQLDeleteStructuredContentFolder() throws Exception {
-		StructuredContentFolder structuredContentFolder =
+
+		// No namespace
+
+		StructuredContentFolder structuredContentFolder1 =
 			testGraphQLDeleteStructuredContentFolder_addStructuredContentFolder();
 
 		Assert.assertTrue(
@@ -1365,11 +1370,12 @@ public abstract class BaseStructuredContentFolderResourceTestCase {
 							{
 								put(
 									"structuredContentFolderId",
-									structuredContentFolder.getId());
+									structuredContentFolder1.getId());
 							}
 						})),
 				"JSONObject/data", "Object/deleteStructuredContentFolder"));
-		JSONArray errorsJSONArray = JSONUtil.getValueAsJSONArray(
+
+		JSONArray errorsJSONArray1 = JSONUtil.getValueAsJSONArray(
 			invokeGraphQLQuery(
 				new GraphQLField(
 					"structuredContentFolder",
@@ -1377,13 +1383,13 @@ public abstract class BaseStructuredContentFolderResourceTestCase {
 						{
 							put(
 								"structuredContentFolderId",
-								structuredContentFolder.getId());
+								structuredContentFolder1.getId());
 						}
 					},
 					new GraphQLField("id"))),
 			"JSONArray/errors");
 
-		Assert.assertTrue(errorsJSONArray.length() > 0);
+		Assert.assertTrue(errorsJSONArray1.length() > 0);
 	}
 
 	protected StructuredContentFolder
@@ -1419,6 +1425,8 @@ public abstract class BaseStructuredContentFolderResourceTestCase {
 		StructuredContentFolder structuredContentFolder =
 			testGraphQLGetStructuredContentFolder_addStructuredContentFolder();
 
+		// No namespace
+
 		Assert.assertTrue(
 			equals(
 				structuredContentFolder,
@@ -1443,6 +1451,8 @@ public abstract class BaseStructuredContentFolderResourceTestCase {
 		throws Exception {
 
 		Long irrelevantStructuredContentFolderId = RandomTestUtil.randomLong();
+
+		// No namespace
 
 		Assert.assertEquals(
 			"Not Found",

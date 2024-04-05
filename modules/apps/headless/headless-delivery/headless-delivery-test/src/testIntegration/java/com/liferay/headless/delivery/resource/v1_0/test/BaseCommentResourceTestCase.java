@@ -628,7 +628,10 @@ public abstract class BaseCommentResourceTestCase {
 
 	@Test
 	public void testGraphQLDeleteComment() throws Exception {
-		Comment comment = testGraphQLDeleteComment_addComment();
+
+		// No namespace
+
+		Comment comment1 = testGraphQLDeleteComment_addComment();
 
 		Assert.assertTrue(
 			JSONUtil.getValueAsBoolean(
@@ -637,23 +640,24 @@ public abstract class BaseCommentResourceTestCase {
 						"deleteComment",
 						new HashMap<String, Object>() {
 							{
-								put("commentId", comment.getId());
+								put("commentId", comment1.getId());
 							}
 						})),
 				"JSONObject/data", "Object/deleteComment"));
-		JSONArray errorsJSONArray = JSONUtil.getValueAsJSONArray(
+
+		JSONArray errorsJSONArray1 = JSONUtil.getValueAsJSONArray(
 			invokeGraphQLQuery(
 				new GraphQLField(
 					"comment",
 					new HashMap<String, Object>() {
 						{
-							put("commentId", comment.getId());
+							put("commentId", comment1.getId());
 						}
 					},
 					new GraphQLField("id"))),
 			"JSONArray/errors");
 
-		Assert.assertTrue(errorsJSONArray.length() > 0);
+		Assert.assertTrue(errorsJSONArray1.length() > 0);
 	}
 
 	protected Comment testGraphQLDeleteComment_addComment() throws Exception {
@@ -679,6 +683,8 @@ public abstract class BaseCommentResourceTestCase {
 	public void testGraphQLGetComment() throws Exception {
 		Comment comment = testGraphQLGetComment_addComment();
 
+		// No namespace
+
 		Assert.assertTrue(
 			equals(
 				comment,
@@ -699,6 +705,8 @@ public abstract class BaseCommentResourceTestCase {
 	@Test
 	public void testGraphQLGetCommentNotFound() throws Exception {
 		Long irrelevantCommentId = RandomTestUtil.randomLong();
+
+		// No namespace
 
 		Assert.assertEquals(
 			"Not Found",

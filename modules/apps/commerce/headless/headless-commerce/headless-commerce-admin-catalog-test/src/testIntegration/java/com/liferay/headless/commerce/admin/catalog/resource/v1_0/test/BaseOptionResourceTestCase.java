@@ -511,6 +511,8 @@ public abstract class BaseOptionResourceTestCase {
 			new GraphQLField("items", getGraphQLFields()),
 			new GraphQLField("page"), new GraphQLField("totalCount"));
 
+		// No namespace
+
 		JSONObject optionsJSONObject = JSONUtil.getValueAsJSONObject(
 			invokeGraphQLQuery(graphQLField), "JSONObject/data",
 			"JSONObject/options");
@@ -606,6 +608,8 @@ public abstract class BaseOptionResourceTestCase {
 	public void testGraphQLGetOptionByExternalReferenceCode() throws Exception {
 		Option option = testGraphQLGetOptionByExternalReferenceCode_addOption();
 
+		// No namespace
+
 		Assert.assertTrue(
 			equals(
 				option,
@@ -635,6 +639,8 @@ public abstract class BaseOptionResourceTestCase {
 
 		String irrelevantExternalReferenceCode =
 			"\"" + RandomTestUtil.randomString() + "\"";
+
+		// No namespace
 
 		Assert.assertEquals(
 			"Not Found",
@@ -687,7 +693,10 @@ public abstract class BaseOptionResourceTestCase {
 
 	@Test
 	public void testGraphQLDeleteOption() throws Exception {
-		Option option = testGraphQLDeleteOption_addOption();
+
+		// No namespace
+
+		Option option1 = testGraphQLDeleteOption_addOption();
 
 		Assert.assertTrue(
 			JSONUtil.getValueAsBoolean(
@@ -696,23 +705,24 @@ public abstract class BaseOptionResourceTestCase {
 						"deleteOption",
 						new HashMap<String, Object>() {
 							{
-								put("id", option.getId());
+								put("id", option1.getId());
 							}
 						})),
 				"JSONObject/data", "Object/deleteOption"));
-		JSONArray errorsJSONArray = JSONUtil.getValueAsJSONArray(
+
+		JSONArray errorsJSONArray1 = JSONUtil.getValueAsJSONArray(
 			invokeGraphQLQuery(
 				new GraphQLField(
 					"option",
 					new HashMap<String, Object>() {
 						{
-							put("id", option.getId());
+							put("id", option1.getId());
 						}
 					},
 					new GraphQLField("id"))),
 			"JSONArray/errors");
 
-		Assert.assertTrue(errorsJSONArray.length() > 0);
+		Assert.assertTrue(errorsJSONArray1.length() > 0);
 	}
 
 	protected Option testGraphQLDeleteOption_addOption() throws Exception {
@@ -738,6 +748,8 @@ public abstract class BaseOptionResourceTestCase {
 	public void testGraphQLGetOption() throws Exception {
 		Option option = testGraphQLGetOption_addOption();
 
+		// No namespace
+
 		Assert.assertTrue(
 			equals(
 				option,
@@ -758,6 +770,8 @@ public abstract class BaseOptionResourceTestCase {
 	@Test
 	public void testGraphQLGetOptionNotFound() throws Exception {
 		Long irrelevantId = RandomTestUtil.randomLong();
+
+		// No namespace
 
 		Assert.assertEquals(
 			"Not Found",

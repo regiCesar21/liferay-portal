@@ -259,6 +259,8 @@ public abstract class BaseWarehouseResourceTestCase {
 		Warehouse warehouse =
 			testGraphQLGetWarehousByExternalReferenceCode_addWarehouse();
 
+		// No namespace
+
 		Assert.assertTrue(
 			equals(
 				warehouse,
@@ -288,6 +290,8 @@ public abstract class BaseWarehouseResourceTestCase {
 
 		String irrelevantExternalReferenceCode =
 			"\"" + RandomTestUtil.randomString() + "\"";
+
+		// No namespace
 
 		Assert.assertEquals(
 			"Not Found",
@@ -362,6 +366,8 @@ public abstract class BaseWarehouseResourceTestCase {
 	public void testGraphQLGetWarehousId() throws Exception {
 		Warehouse warehouse = testGraphQLGetWarehousId_addWarehouse();
 
+		// No namespace
+
 		Assert.assertTrue(
 			equals(
 				warehouse,
@@ -382,6 +388,8 @@ public abstract class BaseWarehouseResourceTestCase {
 	@Test
 	public void testGraphQLGetWarehousIdNotFound() throws Exception {
 		Long irrelevantId = RandomTestUtil.randomLong();
+
+		// No namespace
 
 		Assert.assertEquals(
 			"Not Found",
@@ -743,6 +751,8 @@ public abstract class BaseWarehouseResourceTestCase {
 			},
 			new GraphQLField("items", getGraphQLFields()),
 			new GraphQLField("page"), new GraphQLField("totalCount"));
+
+		// No namespace
 
 		JSONObject warehousesJSONObject = JSONUtil.getValueAsJSONObject(
 			invokeGraphQLQuery(graphQLField), "JSONObject/data",

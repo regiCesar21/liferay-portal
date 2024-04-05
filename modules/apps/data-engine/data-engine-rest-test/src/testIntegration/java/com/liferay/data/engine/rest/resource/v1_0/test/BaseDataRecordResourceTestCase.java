@@ -631,7 +631,10 @@ public abstract class BaseDataRecordResourceTestCase {
 
 	@Test
 	public void testGraphQLDeleteDataRecord() throws Exception {
-		DataRecord dataRecord = testGraphQLDeleteDataRecord_addDataRecord();
+
+		// No namespace
+
+		DataRecord dataRecord1 = testGraphQLDeleteDataRecord_addDataRecord();
 
 		Assert.assertTrue(
 			JSONUtil.getValueAsBoolean(
@@ -640,23 +643,24 @@ public abstract class BaseDataRecordResourceTestCase {
 						"deleteDataRecord",
 						new HashMap<String, Object>() {
 							{
-								put("dataRecordId", dataRecord.getId());
+								put("dataRecordId", dataRecord1.getId());
 							}
 						})),
 				"JSONObject/data", "Object/deleteDataRecord"));
-		JSONArray errorsJSONArray = JSONUtil.getValueAsJSONArray(
+
+		JSONArray errorsJSONArray1 = JSONUtil.getValueAsJSONArray(
 			invokeGraphQLQuery(
 				new GraphQLField(
 					"dataRecord",
 					new HashMap<String, Object>() {
 						{
-							put("dataRecordId", dataRecord.getId());
+							put("dataRecordId", dataRecord1.getId());
 						}
 					},
 					new GraphQLField("id"))),
 			"JSONArray/errors");
 
-		Assert.assertTrue(errorsJSONArray.length() > 0);
+		Assert.assertTrue(errorsJSONArray1.length() > 0);
 	}
 
 	protected DataRecord testGraphQLDeleteDataRecord_addDataRecord()
@@ -685,6 +689,8 @@ public abstract class BaseDataRecordResourceTestCase {
 	public void testGraphQLGetDataRecord() throws Exception {
 		DataRecord dataRecord = testGraphQLGetDataRecord_addDataRecord();
 
+		// No namespace
+
 		Assert.assertTrue(
 			equals(
 				dataRecord,
@@ -705,6 +711,8 @@ public abstract class BaseDataRecordResourceTestCase {
 	@Test
 	public void testGraphQLGetDataRecordNotFound() throws Exception {
 		Long irrelevantDataRecordId = RandomTestUtil.randomLong();
+
+		// No namespace
 
 		Assert.assertEquals(
 			"Not Found",

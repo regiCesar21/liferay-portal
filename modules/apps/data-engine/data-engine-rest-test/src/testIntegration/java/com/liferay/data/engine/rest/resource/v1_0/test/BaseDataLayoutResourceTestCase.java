@@ -573,7 +573,10 @@ public abstract class BaseDataLayoutResourceTestCase {
 
 	@Test
 	public void testGraphQLDeleteDataLayout() throws Exception {
-		DataLayout dataLayout = testGraphQLDeleteDataLayout_addDataLayout();
+
+		// No namespace
+
+		DataLayout dataLayout1 = testGraphQLDeleteDataLayout_addDataLayout();
 
 		Assert.assertTrue(
 			JSONUtil.getValueAsBoolean(
@@ -582,23 +585,24 @@ public abstract class BaseDataLayoutResourceTestCase {
 						"deleteDataLayout",
 						new HashMap<String, Object>() {
 							{
-								put("dataLayoutId", dataLayout.getId());
+								put("dataLayoutId", dataLayout1.getId());
 							}
 						})),
 				"JSONObject/data", "Object/deleteDataLayout"));
-		JSONArray errorsJSONArray = JSONUtil.getValueAsJSONArray(
+
+		JSONArray errorsJSONArray1 = JSONUtil.getValueAsJSONArray(
 			invokeGraphQLQuery(
 				new GraphQLField(
 					"dataLayout",
 					new HashMap<String, Object>() {
 						{
-							put("dataLayoutId", dataLayout.getId());
+							put("dataLayoutId", dataLayout1.getId());
 						}
 					},
 					new GraphQLField("id"))),
 			"JSONArray/errors");
 
-		Assert.assertTrue(errorsJSONArray.length() > 0);
+		Assert.assertTrue(errorsJSONArray1.length() > 0);
 	}
 
 	protected DataLayout testGraphQLDeleteDataLayout_addDataLayout()
@@ -627,6 +631,8 @@ public abstract class BaseDataLayoutResourceTestCase {
 	public void testGraphQLGetDataLayout() throws Exception {
 		DataLayout dataLayout = testGraphQLGetDataLayout_addDataLayout();
 
+		// No namespace
+
 		Assert.assertTrue(
 			equals(
 				dataLayout,
@@ -647,6 +653,8 @@ public abstract class BaseDataLayoutResourceTestCase {
 	@Test
 	public void testGraphQLGetDataLayoutNotFound() throws Exception {
 		Long irrelevantDataLayoutId = RandomTestUtil.randomLong();
+
+		// No namespace
 
 		Assert.assertEquals(
 			"Not Found",
@@ -1060,6 +1068,8 @@ public abstract class BaseDataLayoutResourceTestCase {
 			new GraphQLField("items", getGraphQLFields()),
 			new GraphQLField("page"), new GraphQLField("totalCount"));
 
+		// No namespace
+
 		JSONObject dataLayoutsJSONObject = JSONUtil.getValueAsJSONObject(
 			invokeGraphQLQuery(graphQLField), "JSONObject/data",
 			"JSONObject/dataLayouts");
@@ -1125,6 +1135,8 @@ public abstract class BaseDataLayoutResourceTestCase {
 	public void testGraphQLGetSiteDataLayout() throws Exception {
 		DataLayout dataLayout = testGraphQLGetSiteDataLayout_addDataLayout();
 
+		// No namespace
+
 		Assert.assertTrue(
 			equals(
 				dataLayout,
@@ -1162,6 +1174,8 @@ public abstract class BaseDataLayoutResourceTestCase {
 	public void testGraphQLGetSiteDataLayoutNotFound() throws Exception {
 		String irrelevantDataLayoutKey =
 			"\"" + RandomTestUtil.randomString() + "\"";
+
+		// No namespace
 
 		Assert.assertEquals(
 			"Not Found",

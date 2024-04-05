@@ -555,6 +555,8 @@ public abstract class BaseOrderResourceTestCase {
 			new GraphQLField("items", getGraphQLFields()),
 			new GraphQLField("page"), new GraphQLField("totalCount"));
 
+		// No namespace
+
 		JSONObject ordersJSONObject = JSONUtil.getValueAsJSONObject(
 			invokeGraphQLQuery(graphQLField), "JSONObject/data",
 			"JSONObject/orders");
@@ -650,6 +652,8 @@ public abstract class BaseOrderResourceTestCase {
 	public void testGraphQLGetOrderByExternalReferenceCode() throws Exception {
 		Order order = testGraphQLGetOrderByExternalReferenceCode_addOrder();
 
+		// No namespace
+
 		Assert.assertTrue(
 			equals(
 				order,
@@ -679,6 +683,8 @@ public abstract class BaseOrderResourceTestCase {
 
 		String irrelevantExternalReferenceCode =
 			"\"" + RandomTestUtil.randomString() + "\"";
+
+		// No namespace
 
 		Assert.assertEquals(
 			"Not Found",
@@ -731,7 +737,10 @@ public abstract class BaseOrderResourceTestCase {
 
 	@Test
 	public void testGraphQLDeleteOrder() throws Exception {
-		Order order = testGraphQLDeleteOrder_addOrder();
+
+		// No namespace
+
+		Order order1 = testGraphQLDeleteOrder_addOrder();
 
 		Assert.assertTrue(
 			JSONUtil.getValueAsBoolean(
@@ -740,23 +749,24 @@ public abstract class BaseOrderResourceTestCase {
 						"deleteOrder",
 						new HashMap<String, Object>() {
 							{
-								put("id", order.getId());
+								put("id", order1.getId());
 							}
 						})),
 				"JSONObject/data", "Object/deleteOrder"));
-		JSONArray errorsJSONArray = JSONUtil.getValueAsJSONArray(
+
+		JSONArray errorsJSONArray1 = JSONUtil.getValueAsJSONArray(
 			invokeGraphQLQuery(
 				new GraphQLField(
 					"order",
 					new HashMap<String, Object>() {
 						{
-							put("id", order.getId());
+							put("id", order1.getId());
 						}
 					},
 					new GraphQLField("id"))),
 			"JSONArray/errors");
 
-		Assert.assertTrue(errorsJSONArray.length() > 0);
+		Assert.assertTrue(errorsJSONArray1.length() > 0);
 	}
 
 	protected Order testGraphQLDeleteOrder_addOrder() throws Exception {
@@ -782,6 +792,8 @@ public abstract class BaseOrderResourceTestCase {
 	public void testGraphQLGetOrder() throws Exception {
 		Order order = testGraphQLGetOrder_addOrder();
 
+		// No namespace
+
 		Assert.assertTrue(
 			equals(
 				order,
@@ -802,6 +814,8 @@ public abstract class BaseOrderResourceTestCase {
 	@Test
 	public void testGraphQLGetOrderNotFound() throws Exception {
 		Long irrelevantId = RandomTestUtil.randomLong();
+
+		// No namespace
 
 		Assert.assertEquals(
 			"Not Found",

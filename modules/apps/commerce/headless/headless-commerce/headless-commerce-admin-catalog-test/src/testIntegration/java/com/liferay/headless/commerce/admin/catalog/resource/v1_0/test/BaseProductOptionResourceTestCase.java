@@ -214,7 +214,10 @@ public abstract class BaseProductOptionResourceTestCase {
 
 	@Test
 	public void testGraphQLDeleteProductOption() throws Exception {
-		ProductOption productOption =
+
+		// No namespace
+
+		ProductOption productOption1 =
 			testGraphQLDeleteProductOption_addProductOption();
 
 		Assert.assertTrue(
@@ -224,23 +227,24 @@ public abstract class BaseProductOptionResourceTestCase {
 						"deleteProductOption",
 						new HashMap<String, Object>() {
 							{
-								put("id", productOption.getId());
+								put("id", productOption1.getId());
 							}
 						})),
 				"JSONObject/data", "Object/deleteProductOption"));
-		JSONArray errorsJSONArray = JSONUtil.getValueAsJSONArray(
+
+		JSONArray errorsJSONArray1 = JSONUtil.getValueAsJSONArray(
 			invokeGraphQLQuery(
 				new GraphQLField(
 					"productOption",
 					new HashMap<String, Object>() {
 						{
-							put("id", productOption.getId());
+							put("id", productOption1.getId());
 						}
 					},
 					new GraphQLField("id"))),
 			"JSONArray/errors");
 
-		Assert.assertTrue(errorsJSONArray.length() > 0);
+		Assert.assertTrue(errorsJSONArray1.length() > 0);
 	}
 
 	protected ProductOption testGraphQLDeleteProductOption_addProductOption()
@@ -273,6 +277,8 @@ public abstract class BaseProductOptionResourceTestCase {
 		ProductOption productOption =
 			testGraphQLGetProductOption_addProductOption();
 
+		// No namespace
+
 		Assert.assertTrue(
 			equals(
 				productOption,
@@ -293,6 +299,8 @@ public abstract class BaseProductOptionResourceTestCase {
 	@Test
 	public void testGraphQLGetProductOptionNotFound() throws Exception {
 		Long irrelevantId = RandomTestUtil.randomLong();
+
+		// No namespace
 
 		Assert.assertEquals(
 			"Not Found",

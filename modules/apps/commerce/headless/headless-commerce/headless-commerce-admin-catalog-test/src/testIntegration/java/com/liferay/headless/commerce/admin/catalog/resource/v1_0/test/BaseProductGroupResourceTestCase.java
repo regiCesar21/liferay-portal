@@ -548,6 +548,8 @@ public abstract class BaseProductGroupResourceTestCase {
 			new GraphQLField("items", getGraphQLFields()),
 			new GraphQLField("page"), new GraphQLField("totalCount"));
 
+		// No namespace
+
 		JSONObject productGroupsJSONObject = JSONUtil.getValueAsJSONObject(
 			invokeGraphQLQuery(graphQLField), "JSONObject/data",
 			"JSONObject/productGroups");
@@ -666,6 +668,8 @@ public abstract class BaseProductGroupResourceTestCase {
 		ProductGroup productGroup =
 			testGraphQLGetProductGroupByExternalReferenceCode_addProductGroup();
 
+		// No namespace
+
 		Assert.assertTrue(
 			equals(
 				productGroup,
@@ -695,6 +699,8 @@ public abstract class BaseProductGroupResourceTestCase {
 
 		String irrelevantExternalReferenceCode =
 			"\"" + RandomTestUtil.randomString() + "\"";
+
+		// No namespace
 
 		Assert.assertEquals(
 			"Not Found",
@@ -758,7 +764,10 @@ public abstract class BaseProductGroupResourceTestCase {
 
 	@Test
 	public void testGraphQLDeleteProductGroup() throws Exception {
-		ProductGroup productGroup =
+
+		// No namespace
+
+		ProductGroup productGroup1 =
 			testGraphQLDeleteProductGroup_addProductGroup();
 
 		Assert.assertTrue(
@@ -768,23 +777,24 @@ public abstract class BaseProductGroupResourceTestCase {
 						"deleteProductGroup",
 						new HashMap<String, Object>() {
 							{
-								put("id", productGroup.getId());
+								put("id", productGroup1.getId());
 							}
 						})),
 				"JSONObject/data", "Object/deleteProductGroup"));
-		JSONArray errorsJSONArray = JSONUtil.getValueAsJSONArray(
+
+		JSONArray errorsJSONArray1 = JSONUtil.getValueAsJSONArray(
 			invokeGraphQLQuery(
 				new GraphQLField(
 					"productGroup",
 					new HashMap<String, Object>() {
 						{
-							put("id", productGroup.getId());
+							put("id", productGroup1.getId());
 						}
 					},
 					new GraphQLField("id"))),
 			"JSONArray/errors");
 
-		Assert.assertTrue(errorsJSONArray.length() > 0);
+		Assert.assertTrue(errorsJSONArray1.length() > 0);
 	}
 
 	protected ProductGroup testGraphQLDeleteProductGroup_addProductGroup()
@@ -816,6 +826,8 @@ public abstract class BaseProductGroupResourceTestCase {
 		ProductGroup productGroup =
 			testGraphQLGetProductGroup_addProductGroup();
 
+		// No namespace
+
 		Assert.assertTrue(
 			equals(
 				productGroup,
@@ -836,6 +848,8 @@ public abstract class BaseProductGroupResourceTestCase {
 	@Test
 	public void testGraphQLGetProductGroupNotFound() throws Exception {
 		Long irrelevantId = RandomTestUtil.randomLong();
+
+		// No namespace
 
 		Assert.assertEquals(
 			"Not Found",

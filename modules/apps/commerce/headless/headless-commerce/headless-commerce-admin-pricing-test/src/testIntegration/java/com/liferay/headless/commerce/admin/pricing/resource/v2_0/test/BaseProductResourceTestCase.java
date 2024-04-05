@@ -208,6 +208,8 @@ public abstract class BaseProductResourceTestCase {
 	public void testGraphQLGetDiscountIdProductPage() throws Exception {
 		Product product = testGraphQLGetDiscountIdProductPage_addProduct();
 
+		// No namespace
+
 		Assert.assertTrue(
 			equals(
 				product,
@@ -237,6 +239,8 @@ public abstract class BaseProductResourceTestCase {
 	@Test
 	public void testGraphQLGetDiscountIdProductPageNotFound() throws Exception {
 		Long irrelevantId = RandomTestUtil.randomLong();
+
+		// No namespace
 
 		Assert.assertEquals(
 			"Not Found",
@@ -286,6 +290,8 @@ public abstract class BaseProductResourceTestCase {
 	public void testGraphQLGetPriceEntryIdProduct() throws Exception {
 		Product product = testGraphQLGetPriceEntryIdProduct_addProduct();
 
+		// No namespace
+
 		Assert.assertTrue(
 			equals(
 				product,
@@ -315,6 +321,8 @@ public abstract class BaseProductResourceTestCase {
 	@Test
 	public void testGraphQLGetPriceEntryIdProductNotFound() throws Exception {
 		Long irrelevantId = RandomTestUtil.randomLong();
+
+		// No namespace
 
 		Assert.assertEquals(
 			"Not Found",
@@ -366,6 +374,8 @@ public abstract class BaseProductResourceTestCase {
 	public void testGraphQLGetPriceModifierIdProduct() throws Exception {
 		Product product = testGraphQLGetPriceModifierIdProduct_addProduct();
 
+		// No namespace
+
 		Assert.assertTrue(
 			equals(
 				product,
@@ -397,6 +407,8 @@ public abstract class BaseProductResourceTestCase {
 		throws Exception {
 
 		Long irrelevantId = RandomTestUtil.randomLong();
+
+		// No namespace
 
 		Assert.assertEquals(
 			"Not Found",

@@ -430,6 +430,8 @@ public abstract class BaseProcessResourceTestCase {
 			new GraphQLField("items", getGraphQLFields()),
 			new GraphQLField("page"), new GraphQLField("totalCount"));
 
+		// No namespace
+
 		JSONObject processesJSONObject = JSONUtil.getValueAsJSONObject(
 			invokeGraphQLQuery(graphQLField), "JSONObject/data",
 			"JSONObject/processes");
@@ -482,6 +484,8 @@ public abstract class BaseProcessResourceTestCase {
 	public void testGraphQLGetProcess() throws Exception {
 		Process process = testGraphQLGetProcess_addProcess();
 
+		// No namespace
+
 		Assert.assertTrue(
 			equals(
 				process,
@@ -502,6 +506,8 @@ public abstract class BaseProcessResourceTestCase {
 	@Test
 	public void testGraphQLGetProcessNotFound() throws Exception {
 		Long irrelevantProcessId = RandomTestUtil.randomLong();
+
+		// No namespace
 
 		Assert.assertEquals(
 			"Not Found",

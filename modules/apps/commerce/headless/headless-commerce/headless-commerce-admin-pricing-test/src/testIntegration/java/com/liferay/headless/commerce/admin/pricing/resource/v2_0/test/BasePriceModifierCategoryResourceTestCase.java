@@ -218,7 +218,10 @@ public abstract class BasePriceModifierCategoryResourceTestCase {
 
 	@Test
 	public void testGraphQLDeletePriceModifierCategory() throws Exception {
-		PriceModifierCategory priceModifierCategory =
+
+		// No namespace
+
+		PriceModifierCategory priceModifierCategory1 =
 			testGraphQLDeletePriceModifierCategory_addPriceModifierCategory();
 
 		Assert.assertTrue(
@@ -228,7 +231,7 @@ public abstract class BasePriceModifierCategoryResourceTestCase {
 						"deletePriceModifierCategory",
 						new HashMap<String, Object>() {
 							{
-								put("id", priceModifierCategory.getId());
+								put("id", priceModifierCategory1.getId());
 							}
 						})),
 				"JSONObject/data", "Object/deletePriceModifierCategory"));

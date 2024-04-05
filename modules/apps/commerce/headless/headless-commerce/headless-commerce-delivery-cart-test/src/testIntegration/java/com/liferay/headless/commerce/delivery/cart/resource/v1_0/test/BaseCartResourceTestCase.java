@@ -227,7 +227,10 @@ public abstract class BaseCartResourceTestCase {
 
 	@Test
 	public void testGraphQLDeleteCart() throws Exception {
-		Cart cart = testGraphQLDeleteCart_addCart();
+
+		// No namespace
+
+		Cart cart1 = testGraphQLDeleteCart_addCart();
 
 		Assert.assertTrue(
 			JSONUtil.getValueAsBoolean(
@@ -236,23 +239,24 @@ public abstract class BaseCartResourceTestCase {
 						"deleteCart",
 						new HashMap<String, Object>() {
 							{
-								put("cartId", cart.getId());
+								put("cartId", cart1.getId());
 							}
 						})),
 				"JSONObject/data", "Object/deleteCart"));
-		JSONArray errorsJSONArray = JSONUtil.getValueAsJSONArray(
+
+		JSONArray errorsJSONArray1 = JSONUtil.getValueAsJSONArray(
 			invokeGraphQLQuery(
 				new GraphQLField(
 					"cart",
 					new HashMap<String, Object>() {
 						{
-							put("cartId", cart.getId());
+							put("cartId", cart1.getId());
 						}
 					},
 					new GraphQLField("id"))),
 			"JSONArray/errors");
 
-		Assert.assertTrue(errorsJSONArray.length() > 0);
+		Assert.assertTrue(errorsJSONArray1.length() > 0);
 	}
 
 	protected Cart testGraphQLDeleteCart_addCart() throws Exception {
@@ -278,6 +282,8 @@ public abstract class BaseCartResourceTestCase {
 	public void testGraphQLGetCart() throws Exception {
 		Cart cart = testGraphQLGetCart_addCart();
 
+		// No namespace
+
 		Assert.assertTrue(
 			equals(
 				cart,
@@ -298,6 +304,8 @@ public abstract class BaseCartResourceTestCase {
 	@Test
 	public void testGraphQLGetCartNotFound() throws Exception {
 		Long irrelevantCartId = RandomTestUtil.randomLong();
+
+		// No namespace
 
 		Assert.assertEquals(
 			"Not Found",

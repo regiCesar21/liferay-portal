@@ -203,6 +203,8 @@ public abstract class BaseEmailAddressResourceTestCase {
 		EmailAddress emailAddress =
 			testGraphQLGetEmailAddress_addEmailAddress();
 
+		// No namespace
+
 		Assert.assertTrue(
 			equals(
 				emailAddress,
@@ -225,6 +227,8 @@ public abstract class BaseEmailAddressResourceTestCase {
 	@Test
 	public void testGraphQLGetEmailAddressNotFound() throws Exception {
 		Long irrelevantEmailAddressId = RandomTestUtil.randomLong();
+
+		// No namespace
 
 		Assert.assertEquals(
 			"Not Found",

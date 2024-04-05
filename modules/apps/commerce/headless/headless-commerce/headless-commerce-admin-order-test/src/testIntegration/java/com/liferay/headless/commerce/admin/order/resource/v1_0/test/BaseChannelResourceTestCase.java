@@ -220,6 +220,8 @@ public abstract class BaseChannelResourceTestCase {
 		Channel channel =
 			testGraphQLGetOrderByExternalReferenceCodeChannel_addChannel();
 
+		// No namespace
+
 		Assert.assertTrue(
 			equals(
 				channel,
@@ -256,6 +258,8 @@ public abstract class BaseChannelResourceTestCase {
 
 		String irrelevantExternalReferenceCode =
 			"\"" + RandomTestUtil.randomString() + "\"";
+
+		// No namespace
 
 		Assert.assertEquals(
 			"Not Found",
@@ -308,6 +312,8 @@ public abstract class BaseChannelResourceTestCase {
 	public void testGraphQLGetOrderIdChannel() throws Exception {
 		Channel channel = testGraphQLGetOrderIdChannel_addChannel();
 
+		// No namespace
+
 		Assert.assertTrue(
 			equals(
 				channel,
@@ -337,6 +343,8 @@ public abstract class BaseChannelResourceTestCase {
 	@Test
 	public void testGraphQLGetOrderIdChannelNotFound() throws Exception {
 		Long irrelevantId = RandomTestUtil.randomLong();
+
+		// No namespace
 
 		Assert.assertEquals(
 			"Not Found",

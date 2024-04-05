@@ -209,7 +209,10 @@ public abstract class BaseDiscountChannelResourceTestCase {
 
 	@Test
 	public void testGraphQLDeleteDiscountChannel() throws Exception {
-		DiscountChannel discountChannel =
+
+		// No namespace
+
+		DiscountChannel discountChannel1 =
 			testGraphQLDeleteDiscountChannel_addDiscountChannel();
 
 		Assert.assertTrue(
@@ -219,7 +222,7 @@ public abstract class BaseDiscountChannelResourceTestCase {
 						"deleteDiscountChannel",
 						new HashMap<String, Object>() {
 							{
-								put("id", discountChannel.getId());
+								put("id", discountChannel1.getId());
 							}
 						})),
 				"JSONObject/data", "Object/deleteDiscountChannel"));

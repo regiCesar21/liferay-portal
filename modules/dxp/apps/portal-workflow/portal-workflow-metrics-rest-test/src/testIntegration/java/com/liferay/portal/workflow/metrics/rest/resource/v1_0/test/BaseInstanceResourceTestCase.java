@@ -365,6 +365,8 @@ public abstract class BaseInstanceResourceTestCase {
 	public void testGraphQLGetProcessInstance() throws Exception {
 		Instance instance = testGraphQLGetProcessInstance_addInstance();
 
+		// No namespace
+
 		Assert.assertTrue(
 			equals(
 				instance,
@@ -397,6 +399,8 @@ public abstract class BaseInstanceResourceTestCase {
 	public void testGraphQLGetProcessInstanceNotFound() throws Exception {
 		Long irrelevantProcessId = RandomTestUtil.randomLong();
 		Long irrelevantInstanceId = RandomTestUtil.randomLong();
+
+		// No namespace
 
 		Assert.assertEquals(
 			"Not Found",

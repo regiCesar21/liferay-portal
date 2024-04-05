@@ -204,6 +204,8 @@ public abstract class BaseAccountResourceTestCase {
 	public void testGraphQLGetDiscountIdAccount() throws Exception {
 		Account account = testGraphQLGetDiscountIdAccount_addAccount();
 
+		// No namespace
+
 		Assert.assertTrue(
 			equals(
 				account,
@@ -233,6 +235,8 @@ public abstract class BaseAccountResourceTestCase {
 	@Test
 	public void testGraphQLGetDiscountIdAccountNotFound() throws Exception {
 		Long irrelevantId = RandomTestUtil.randomLong();
+
+		// No namespace
 
 		Assert.assertEquals(
 			"Not Found",
@@ -282,6 +286,8 @@ public abstract class BaseAccountResourceTestCase {
 	public void testGraphQLGetPriceListIdAccount() throws Exception {
 		Account account = testGraphQLGetPriceListIdAccount_addAccount();
 
+		// No namespace
+
 		Assert.assertTrue(
 			equals(
 				account,
@@ -311,6 +317,8 @@ public abstract class BaseAccountResourceTestCase {
 	@Test
 	public void testGraphQLGetPriceListIdAccountNotFound() throws Exception {
 		Long irrelevantId = RandomTestUtil.randomLong();
+
+		// No namespace
 
 		Assert.assertEquals(
 			"Not Found",

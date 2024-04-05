@@ -241,6 +241,8 @@ public abstract class BaseBillingAddressResourceTestCase {
 		BillingAddress billingAddress =
 			testGraphQLGetOrderByExternalReferenceCodeBillingAddress_addBillingAddress();
 
+		// No namespace
+
 		Assert.assertTrue(
 			equals(
 				billingAddress,
@@ -277,6 +279,8 @@ public abstract class BaseBillingAddressResourceTestCase {
 
 		String irrelevantExternalReferenceCode =
 			"\"" + RandomTestUtil.randomString() + "\"";
+
+		// No namespace
 
 		Assert.assertEquals(
 			"Not Found",
@@ -342,6 +346,8 @@ public abstract class BaseBillingAddressResourceTestCase {
 		BillingAddress billingAddress =
 			testGraphQLGetOrderIdBillingAddress_addBillingAddress();
 
+		// No namespace
+
 		Assert.assertTrue(
 			equals(
 				billingAddress,
@@ -372,6 +378,8 @@ public abstract class BaseBillingAddressResourceTestCase {
 	@Test
 	public void testGraphQLGetOrderIdBillingAddressNotFound() throws Exception {
 		Long irrelevantId = RandomTestUtil.randomLong();
+
+		// No namespace
 
 		Assert.assertEquals(
 			"Not Found",

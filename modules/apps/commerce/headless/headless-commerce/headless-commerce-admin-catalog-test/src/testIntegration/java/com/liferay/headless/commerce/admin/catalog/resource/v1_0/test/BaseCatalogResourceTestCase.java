@@ -244,6 +244,8 @@ public abstract class BaseCatalogResourceTestCase {
 		Catalog catalog =
 			testGraphQLGetCatalogByExternalReferenceCode_addCatalog();
 
+		// No namespace
+
 		Assert.assertTrue(
 			equals(
 				catalog,
@@ -273,6 +275,8 @@ public abstract class BaseCatalogResourceTestCase {
 
 		String irrelevantExternalReferenceCode =
 			"\"" + RandomTestUtil.randomString() + "\"";
+
+		// No namespace
 
 		Assert.assertEquals(
 			"Not Found",
@@ -325,7 +329,10 @@ public abstract class BaseCatalogResourceTestCase {
 
 	@Test
 	public void testGraphQLDeleteCatalog() throws Exception {
-		Catalog catalog = testGraphQLDeleteCatalog_addCatalog();
+
+		// No namespace
+
+		Catalog catalog1 = testGraphQLDeleteCatalog_addCatalog();
 
 		Assert.assertTrue(
 			JSONUtil.getValueAsBoolean(
@@ -334,23 +341,24 @@ public abstract class BaseCatalogResourceTestCase {
 						"deleteCatalog",
 						new HashMap<String, Object>() {
 							{
-								put("id", catalog.getId());
+								put("id", catalog1.getId());
 							}
 						})),
 				"JSONObject/data", "Object/deleteCatalog"));
-		JSONArray errorsJSONArray = JSONUtil.getValueAsJSONArray(
+
+		JSONArray errorsJSONArray1 = JSONUtil.getValueAsJSONArray(
 			invokeGraphQLQuery(
 				new GraphQLField(
 					"catalog",
 					new HashMap<String, Object>() {
 						{
-							put("id", catalog.getId());
+							put("id", catalog1.getId());
 						}
 					},
 					new GraphQLField("id"))),
 			"JSONArray/errors");
 
-		Assert.assertTrue(errorsJSONArray.length() > 0);
+		Assert.assertTrue(errorsJSONArray1.length() > 0);
 	}
 
 	protected Catalog testGraphQLDeleteCatalog_addCatalog() throws Exception {
@@ -376,6 +384,8 @@ public abstract class BaseCatalogResourceTestCase {
 	public void testGraphQLGetCatalog() throws Exception {
 		Catalog catalog = testGraphQLGetCatalog_addCatalog();
 
+		// No namespace
+
 		Assert.assertTrue(
 			equals(
 				catalog,
@@ -396,6 +406,8 @@ public abstract class BaseCatalogResourceTestCase {
 	@Test
 	public void testGraphQLGetCatalogNotFound() throws Exception {
 		Long irrelevantId = RandomTestUtil.randomLong();
+
+		// No namespace
 
 		Assert.assertEquals(
 			"Not Found",
@@ -747,6 +759,8 @@ public abstract class BaseCatalogResourceTestCase {
 			new GraphQLField("items", getGraphQLFields()),
 			new GraphQLField("page"), new GraphQLField("totalCount"));
 
+		// No namespace
+
 		JSONObject catalogsJSONObject = JSONUtil.getValueAsJSONObject(
 			invokeGraphQLQuery(graphQLField), "JSONObject/data",
 			"JSONObject/catalogs");
@@ -833,6 +847,8 @@ public abstract class BaseCatalogResourceTestCase {
 		Catalog catalog =
 			testGraphQLGetProductByExternalReferenceCodeCatalog_addCatalog();
 
+		// No namespace
+
 		Assert.assertTrue(
 			equals(
 				catalog,
@@ -869,6 +885,8 @@ public abstract class BaseCatalogResourceTestCase {
 
 		String irrelevantExternalReferenceCode =
 			"\"" + RandomTestUtil.randomString() + "\"";
+
+		// No namespace
 
 		Assert.assertEquals(
 			"Not Found",
@@ -921,6 +939,8 @@ public abstract class BaseCatalogResourceTestCase {
 	public void testGraphQLGetProductIdCatalog() throws Exception {
 		Catalog catalog = testGraphQLGetProductIdCatalog_addCatalog();
 
+		// No namespace
+
 		Assert.assertTrue(
 			equals(
 				catalog,
@@ -950,6 +970,8 @@ public abstract class BaseCatalogResourceTestCase {
 	@Test
 	public void testGraphQLGetProductIdCatalogNotFound() throws Exception {
 		Long irrelevantId = RandomTestUtil.randomLong();
+
+		// No namespace
 
 		Assert.assertEquals(
 			"Not Found",
