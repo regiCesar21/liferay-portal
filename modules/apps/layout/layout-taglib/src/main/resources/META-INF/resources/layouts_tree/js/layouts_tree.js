@@ -390,6 +390,7 @@ AUI.add(
 								privateLayout: instance.get('root')
 									.privateLayout,
 								selPlid: instance.get('selPlid'),
+								showHiddenLayouts: true,
 								treeId: instance._treeId,
 							};
 						},

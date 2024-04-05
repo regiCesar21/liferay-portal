@@ -123,6 +123,7 @@ const SelectLayout = ({
 					[`privateLayout`]: privateLayout,
 					[`redirect`]:
 						window.location.pathname + window.location.search,
+					[`showHiddenLayouts`]: true,
 					[`start`]: cursor * maxPageSize,
 				}),
 				method: 'post',
