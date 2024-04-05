@@ -37,7 +37,7 @@ public class AuditEventServiceImpl extends AuditEventServiceBaseImpl {
 
 		PermissionChecker permissionChecker = getPermissionChecker();
 
-		if (!(permissionChecker.isCompanyAdmin() ||
+		if (!(permissionChecker.isCompanyAdmin(companyId) ||
 			  userLocalService.hasRoleUser(
 				  companyId, RoleConstants.ANALYTICS_ADMINISTRATOR,
 				  permissionChecker.getUserId(), true))) {
@@ -56,7 +56,7 @@ public class AuditEventServiceImpl extends AuditEventServiceBaseImpl {
 
 		PermissionChecker permissionChecker = getPermissionChecker();
 
-		if (!(permissionChecker.isCompanyAdmin() ||
+		if (!(permissionChecker.isCompanyAdmin(companyId) ||
 			  userLocalService.hasRoleUser(
 				  companyId, RoleConstants.ANALYTICS_ADMINISTRATOR,
 				  permissionChecker.getUserId(), true))) {
@@ -79,7 +79,7 @@ public class AuditEventServiceImpl extends AuditEventServiceBaseImpl {
 
 		PermissionChecker permissionChecker = getPermissionChecker();
 
-		if (!(permissionChecker.isCompanyAdmin() ||
+		if (!(permissionChecker.isCompanyAdmin(companyId) ||
 			  userLocalService.hasRoleUser(
 				  companyId, RoleConstants.ANALYTICS_ADMINISTRATOR,
 				  permissionChecker.getUserId(), true))) {
@@ -105,7 +105,7 @@ public class AuditEventServiceImpl extends AuditEventServiceBaseImpl {
 
 		PermissionChecker permissionChecker = getPermissionChecker();
 
-		if (!(permissionChecker.isCompanyAdmin() ||
+		if (!(permissionChecker.isCompanyAdmin(companyId) ||
 			  userLocalService.hasRoleUser(
 				  companyId, RoleConstants.ANALYTICS_ADMINISTRATOR,
 				  permissionChecker.getUserId(), true))) {
