@@ -12,14 +12,14 @@ import {fetch, openToast} from 'frontend-js-web';
 import PropTypes from 'prop-types';
 import React, {useCallback, useState} from 'react';
 
-function visit(nodes, callback) {
-	nodes.forEach((node) => {
-		callback(node);
+import SearchResults from './SearchResults';
 
-		if (node.children) {
-			visit(node.children, callback);
-		}
-	});
+function normalizeLayout(layout) {
+	return {
+		...layout,
+		name: layout.value,
+		value: layout.url,
+	};
 }
 
 /**
@@ -32,6 +32,7 @@ function visit(nodes, callback) {
  */
 
 const SelectLayout = ({
+	checkDisplayPage,
 	config,
 	followURLOnTitleClick,
 	groupId,
@@ -44,61 +45,73 @@ const SelectLayout = ({
 
 	const [filterQuery, setFilterQuery] = useState();
 
-	const handleSelectionChange = (selectedNodeIds, nodeMap) => {
-		if (!selectedNodeIds.size) {
-			return;
-		}
+	const [selectionData, setSelectionData] = useState([]);
 
-		let data = [];
+	const handleSelectionChange = useCallback(
+		(_, selectedNodes) => {
+			if (!selectedNodes.length) {
+				return;
+			}
 
-		if (nodeMap) {
-			selectedNodeIds.forEach((selectedNodeId) => {
-				const node = nodeMap[selectedNodeId];
+			const nodes = selectedNodes.map(normalizeLayout);
 
-				if (node) {
-					data.push({
-						groupId: node.groupId,
-						id: node.id,
-						layoutId: node.layoutId,
-						name: node.value,
-						privateLayout: node.privateLayout,
-						value: node.url,
-					});
+			const nextData = multiSelection ? nodes : [nodes];
+
+			setSelectionData(nextData);
+
+			if (followURLOnTitleClick) {
+				Liferay.Util.getOpener().document.location.href = nextData.url;
+			}
+			else {
+				Liferay.fire(itemSelectorSaveEvent, {
+					data: nextData,
+				});
+
+				Liferay.Util.getOpener().Liferay.fire(itemSelectorSaveEvent, {
+					data: nextData,
+				});
+			}
+		},
+		[followURLOnTitleClick, itemSelectorSaveEvent, multiSelection]
+	);
+
+	const onSearchResultSelect = useCallback(
+		(layout) => {
+			const node = normalizeLayout(layout);
+
+			let nextData = node;
+
+			if (multiSelection) {
+				if (selectionData.some(({id}) => id === layout.id)) {
+					nextData = selectionData.filter(({id}) => id !== layout.id);
 				}
-			});
-		}
-		else {
-			visit(nodes, (node) => {
-				if (selectedNodeIds.has(node.id)) {
-					data.push({
-						groupId: node.groupId,
-						id: node.id,
-						layoutId: node.layoutId,
-						name: node.value,
-						privateLayout: node.privateLayout,
-						value: node.url,
-					});
+				else {
+					nextData = [...selectionData, node];
 				}
-			});
-		}
 
-		if (!multiSelection) {
-			data = data[0];
-		}
+				setSelectionData(nextData);
+			}
 
-		if (followURLOnTitleClick) {
-			Liferay.Util.getOpener().document.location.href = data.url;
-		}
-		else {
-			Liferay.fire(itemSelectorSaveEvent, {
-				data,
-			});
+			if (followURLOnTitleClick) {
+				Liferay.Util.getOpener().document.location.href = nextData.url;
+			}
+			else {
+				Liferay.fire(itemSelectorSaveEvent, {
+					data: nextData,
+				});
 
-			Liferay.Util.getOpener().Liferay.fire(itemSelectorSaveEvent, {
-				data,
-			});
-		}
-	};
+				Liferay.Util.getOpener().Liferay.fire(itemSelectorSaveEvent, {
+					data: nextData,
+				});
+			}
+		},
+		[
+			followURLOnTitleClick,
+			itemSelectorSaveEvent,
+			multiSelection,
+			selectionData,
+		]
+	);
 
 	const empty = nodes.length === 0;
 
@@ -193,6 +206,16 @@ const SelectLayout = ({
 				<fieldset className="panel-body">
 					{empty ? (
 						<EmptyState />
+					) : filterQuery ? (
+						<SearchResults
+							checkDisplayPage={checkDisplayPage}
+							filter={filterQuery}
+							findLayoutsURL={config.findLayoutsURL}
+							groupId={groupId}
+							multiSelection={multiSelection}
+							onSelect={onSearchResultSelect}
+							selection={selectionData.map(({id}) => id)}
+						/>
 					) : (
 						<div
 							className="layout-tree"
@@ -201,6 +224,11 @@ const SelectLayout = ({
 							<Treeview
 								NodeComponent={Treeview.Card}
 								filterQuery={filterQuery}
+								initialSelectedNodeIds={
+									new Set(
+										selectionData.map((layout) => layout.id)
+									)
+								}
 								multiSelection={multiSelection}
 								nodes={nodes}
 								onLoadMore={onLoadMore}
