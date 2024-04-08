@@ -5,6 +5,7 @@
 
 package com.liferay.portal.kernel.servlet;
 
+import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.util.PropsTestUtil;
@@ -290,7 +291,8 @@ public class ServletResponseUtilRangeTest extends PowerMockito {
 			contentType.startsWith(_CONTENT_TYPE_BOUNDARY_PREFACE));
 
 		String boundary = contentType.substring(
-			_CONTENT_TYPE_BOUNDARY_PREFACE.length());
+			_CONTENT_TYPE_BOUNDARY_PREFACE.length(),
+			contentType.lastIndexOf(CharPool.SEMICOLON));
 
 		String responseBody = mockHttpServletResponse.getContentAsString();
 
