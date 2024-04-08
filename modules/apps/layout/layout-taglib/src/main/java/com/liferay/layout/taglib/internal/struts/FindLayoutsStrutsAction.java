@@ -128,6 +128,8 @@ public class FindLayoutsStrutsAction implements StrutsAction {
 				).put(
 					"returnType", itemSelectorReturnType
 				).put(
+					"url", layout.getFriendlyURL(themeDisplay.getLocale())
+				).put(
 					"value",
 					LayoutUtil.getLayoutBreadcrumb(layout, httpServletRequest)
 				));
