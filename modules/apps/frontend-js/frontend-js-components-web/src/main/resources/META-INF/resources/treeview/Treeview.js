@@ -801,7 +801,11 @@ function Treeview({
 
 	useEffect(() => {
 		if (onSelectedNodesChange) {
-			onSelectedNodesChange(selectedNodeIds, nodeMap);
+			const selectedNodes = Object.values(nodeMap).filter(({id}) =>
+				selectedNodeIds.has(id)
+			);
+
+			onSelectedNodesChange(selectedNodeIds, selectedNodes);
 		}
 	}, [nodeMap, onSelectedNodesChange, selectedNodeIds]);
 
