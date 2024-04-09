@@ -188,7 +188,7 @@ public class LocaleUtilTest {
 		Locale catalanValenciaLocale = new Locale("ca", "ES", "VALENCIA");
 
 		Assert.assertEquals(
-			"Catalan (Spain, VALENCIA)",
+			_JDK21 ? "Catalan (Spain, Valencian)" : "Catalan (Spain, VALENCIA)",
 			LocaleUtil.getLocaleDisplayName(catalanValenciaLocale, Locale.US));
 	}
 
@@ -221,9 +221,14 @@ public class LocaleUtilTest {
 		Locale catalanValenciaLocale = new Locale("ca", "ES", "VALENCIA");
 
 		Assert.assertEquals(
-			"catal\u00e0 (Espanya, VALENCIA)",
+			_JDK21 ? "catal\u00e0 (Espanya, valenci\u00e0)" :
+				"catal\u00e0 (Espanya, VALENCIA)",
 			LocaleUtil.getLongDisplayName(
 				catalanValenciaLocale, duplicateLanguages));
 	}
+
+	// TODO Clean up after JDK21 update is finished
+
+	private static final boolean _JDK21 = JavaDetector.isJDK21();
 
 }
