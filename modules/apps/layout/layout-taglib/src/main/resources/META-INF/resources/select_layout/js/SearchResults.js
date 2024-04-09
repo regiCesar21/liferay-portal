@@ -10,10 +10,11 @@ import ClayLoadingIndicator from '@clayui/loading-indicator';
 import {debounce, fetch, openToast} from 'frontend-js-web';
 import React, {useCallback, useEffect, useState} from 'react';
 
-function findLayouts(url, checkDisplayPage, keywords, onFindLayouts) {
+function findLayouts(url, checkDisplayPage, keywords, groupId, onFindLayouts) {
 	fetch(url, {
 		body: Liferay.Util.objectToURLSearchParams({
 			[`checkDisplayPage`]: checkDisplayPage,
+			[`groupId`]: groupId,
 			[`keywords`]: keywords,
 		}),
 		method: 'post',
@@ -37,6 +38,7 @@ export default function SearchResults({
 	checkDisplayPage,
 	filter,
 	findLayoutsURL,
+	groupId,
 	multiSelection,
 	onSelect,
 	selection,
@@ -57,9 +59,10 @@ export default function SearchResults({
 			findLayoutsURL,
 			checkDisplayPage,
 			filter,
+			groupId,
 			onFindLayouts
 		);
-	}, [checkDisplayPage, filter, findLayoutsURL, onFindLayouts]);
+	}, [checkDisplayPage, filter, findLayoutsURL, groupId, onFindLayouts]);
 
 	if (loading) {
 		return <ClayLoadingIndicator displayType="secondary" />;
