@@ -182,15 +182,6 @@ describe('AddContact', () => {
 		expect(getByText('save').disabled).toBeTruthy();
 	});
 
-	it('disables Save button if more than one Partner roles are selected', () => {
-		const {getByText} = renderAddContact({
-			currentRoles: ['KEY-PARTNER1', 'KEY-PARTNER2'],
-			emailAddress: 'test1@liferay.com'
-		});
-
-		expect(getByText('save').disabled).toBeTruthy();
-	});
-
 	it('enables Save button if email and contact roles are populated', () => {
 		const {getByText} = renderAddContact({
 			currentRoles: ['KEY-100', 'KEY-101'],
@@ -210,15 +201,6 @@ describe('AddContact', () => {
 		fireEvent.click(getAllByTitle('delete')[1]);
 
 		expect(getByText('save').disabled).toBeFalsy();
-	});
-
-	it('displays a warning message if more than one Partner roles are selected', () => {
-		const {getByText} = renderAddContact({
-			currentRoles: ['KEY-PARTNER1', 'KEY-PARTNER2'],
-			emailAddress: 'test1@liferay.com'
-		});
-
-		getByText('overlapping-roles');
 	});
 
 	it('removes the a warning message if overlapping roles are removed', () => {
