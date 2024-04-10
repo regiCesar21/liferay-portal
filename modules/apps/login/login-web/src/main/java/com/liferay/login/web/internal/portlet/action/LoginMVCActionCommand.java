@@ -130,6 +130,12 @@ public class LoginMVCActionCommand extends BaseMVCActionCommand {
 
 					SessionErrors.add(actionRequest, exception.getClass());
 				}
+
+				postProcessAuthFailure(actionRequest, actionResponse);
+
+				hideDefaultErrorMessage(actionRequest);
+
+				return;
 			}
 			else if (exception instanceof
 						UserLockoutException.PasswordPolicyLockout) {
@@ -156,6 +162,12 @@ public class LoginMVCActionCommand extends BaseMVCActionCommand {
 
 				SessionErrors.add(
 					actionRequest, exception.getClass(), exception);
+
+				postProcessAuthFailure(actionRequest, actionResponse);
+
+				hideDefaultErrorMessage(actionRequest);
+
+				return;
 			}
 
 			if (exception instanceof CompanyMaxUsersException ||
