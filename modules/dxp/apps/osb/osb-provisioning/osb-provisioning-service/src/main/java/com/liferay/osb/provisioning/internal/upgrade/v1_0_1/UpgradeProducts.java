@@ -94,7 +94,6 @@ public class UpgradeProducts extends UpgradeProcess {
 	protected void doUpgrade() throws Exception {
 	}
 
-	@Reference
 	private static final Log _log = LogFactoryUtil.getLog(
 		UpgradeProducts.class);
 
