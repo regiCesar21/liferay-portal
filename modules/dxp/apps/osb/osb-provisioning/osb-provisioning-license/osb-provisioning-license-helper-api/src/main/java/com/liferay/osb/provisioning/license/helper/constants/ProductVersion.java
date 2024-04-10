@@ -160,7 +160,6 @@ public class ProductVersion {
 
 	private static boolean _isDXP(String productName) {
 		if (productName.startsWith("DXP")) {
-
 			return true;
 		}
 

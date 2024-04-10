@@ -32,9 +32,6 @@ public class ProductConstants {
 
 	public static final String NAME_COMMERCE = "Commerce";
 
-	public static final String NAME_COMMERCE_FOR_DXP_CLOUD =
-		"Commerce for DXP Cloud";
-
 	public static final String NAME_COMMERCE_FOR_LIFERAY_PAAS =
 		"Commerce for Liferay PaaS";
 
@@ -59,17 +56,6 @@ public class ProductConstants {
 	public static final String NAME_DXP = "DXP";
 
 	public static final String NAME_DXP_BACKUP = "DXP Backup";
-
-	public static final String NAME_DXP_CLOUD = "DXP Cloud";
-
-	public static final String NAME_DXP_CLOUD_INSTANCE_PRODUCTION =
-		"DXP Cloud Instance - Production";
-
-	public static final String NAME_DXP_CLOUD_SUBSCRIPTION_HA_PRODUCTION =
-		"DXP Cloud Subscription HA Production";
-
-	public static final String NAME_DXP_CLOUD_SUBSCRIPTION_STD_PRODUCTION =
-		"DXP Cloud Subscription Std Production";
 
 	public static final String NAME_DXP_DEVELOPMENT = "DXP Development";
 

@@ -1769,7 +1769,7 @@ public class LicenseKeyResourceImpl
 
 			if (productGroupName.equals(ProductConstants.GROUP_NAME_COMMERCE) &&
 				(curProductName.contains(
-					 ProductConstants.NAME_COMMERCE_FOR_LIFERAY_PAAS) ||
+					ProductConstants.NAME_COMMERCE_FOR_LIFERAY_PAAS) ||
 				 curProductName.startsWith(
 					 ProductConstants.NAME_COMMERCE_SUBSCRIPTION))) {
 

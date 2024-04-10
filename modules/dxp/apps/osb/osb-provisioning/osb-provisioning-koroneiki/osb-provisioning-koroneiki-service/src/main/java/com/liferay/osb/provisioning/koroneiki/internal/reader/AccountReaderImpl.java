@@ -158,8 +158,8 @@ public class AccountReaderImpl implements AccountReader {
 				managedServices = true;
 			}
 			else if (curName.equals(
-						 ProductConstants.
-							 NAME_LIFERAY_PAAS_SUBSCRIPTION_HA_PRODUCTION)) {
+						ProductConstants.
+							NAME_LIFERAY_PAAS_SUBSCRIPTION_HA_PRODUCTION)) {
 
 				productionInstances += 2 * productPurchase.getQuantity();
 			}
