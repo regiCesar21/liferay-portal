@@ -158,20 +158,12 @@ public class AccountReaderImpl implements AccountReader {
 				managedServices = true;
 			}
 			else if (curName.equals(
-						ProductConstants.
-							NAME_DXP_CLOUD_SUBSCRIPTION_HA_PRODUCTION) ||
-					 curName.equals(
 						 ProductConstants.
 							 NAME_LIFERAY_PAAS_SUBSCRIPTION_HA_PRODUCTION)) {
 
 				productionInstances += 2 * productPurchase.getQuantity();
 			}
 			else if (curName.equals(ProductConstants.NAME_DXP_PRODUCTION) ||
-					 curName.equals(
-						 ProductConstants.NAME_DXP_CLOUD_INSTANCE_PRODUCTION) ||
-					 curName.equals(
-						 ProductConstants.
-							 NAME_DXP_CLOUD_SUBSCRIPTION_STD_PRODUCTION) ||
 					 curName.equals(ProductConstants.NAME_DXP_FLEX) ||
 					 curName.equals(ProductConstants.NAME_DXP_OEM) ||
 					 curName.equals(

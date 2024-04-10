@@ -406,8 +406,7 @@ public class OpportunityMessageSubscriber extends BaseMessageSubscriber {
 						"of ", productConsumptionCount, "."));
 			}
 
-			if ((productName.contains(ProductConstants.NAME_DXP) &&
-				 !productName.contains(ProductConstants.NAME_DXP_CLOUD)) ||
+			if (productName.contains(ProductConstants.NAME_DXP) ||
 				productName.contains(ProductConstants.NAME_COMMERCE) ||
 				productName.contains(ProductConstants.NAME_PORTAL)) {
 
