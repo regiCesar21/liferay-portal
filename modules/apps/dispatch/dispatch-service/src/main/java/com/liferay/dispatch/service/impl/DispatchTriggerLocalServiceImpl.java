@@ -65,10 +65,10 @@ public class DispatchTriggerLocalServiceImpl
 		dispatchTrigger.setUserId(user.getUserId());
 		dispatchTrigger.setUserName(user.getFullName());
 		dispatchTrigger.setDispatchTaskExecutorType(dispatchTaskExecutorType);
-		dispatchTrigger.setName(name);
-		dispatchTrigger.setSystem(system);
 		dispatchTrigger.setDispatchTaskSettingsUnicodeProperties(
 			dispatchTaskSettingsUnicodeProperties);
+		dispatchTrigger.setName(name);
+		dispatchTrigger.setSystem(system);
 
 		dispatchTrigger = dispatchTriggerPersistence.update(dispatchTrigger);
 
@@ -300,9 +300,9 @@ public class DispatchTriggerLocalServiceImpl
 
 		validate(dispatchTriggerId, dispatchTrigger.getCompanyId(), name);
 
-		dispatchTrigger.setName(name);
 		dispatchTrigger.setDispatchTaskSettingsUnicodeProperties(
 			taskSettingsUnicodeProperties);
+		dispatchTrigger.setName(name);
 
 		return dispatchTriggerPersistence.update(dispatchTrigger);
 	}
