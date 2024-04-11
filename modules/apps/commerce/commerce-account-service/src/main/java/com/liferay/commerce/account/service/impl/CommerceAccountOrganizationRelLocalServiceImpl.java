@@ -5,11 +5,14 @@
 
 package com.liferay.commerce.account.service.impl;
 
+import com.liferay.commerce.account.model.CommerceAccount;
 import com.liferay.commerce.account.model.CommerceAccountOrganizationRel;
 import com.liferay.commerce.account.service.base.CommerceAccountOrganizationRelLocalServiceBaseImpl;
 import com.liferay.commerce.account.service.persistence.CommerceAccountOrganizationRelPK;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.search.Indexer;
+import com.liferay.portal.kernel.search.IndexerRegistryUtil;
 import com.liferay.portal.kernel.service.ServiceContext;
 
 import java.util.List;
@@ -43,8 +46,13 @@ public class CommerceAccountOrganizationRelLocalServiceImpl
 		commerceAccountOrganizationRel.setUserId(user.getUserId());
 		commerceAccountOrganizationRel.setUserName(user.getFullName());
 
-		return commerceAccountOrganizationRelPersistence.update(
-			commerceAccountOrganizationRel);
+		commerceAccountOrganizationRel =
+			commerceAccountOrganizationRelPersistence.update(
+				commerceAccountOrganizationRel);
+
+		_reindexCommerceAccount(commerceAccountId);
+
+		return commerceAccountOrganizationRel;
 	}
 
 	@Override
@@ -77,6 +85,8 @@ public class CommerceAccountOrganizationRelLocalServiceImpl
 			commerceAccountOrganizationRelPersistence.remove(
 				commerceAccountOrganizationRelPK);
 		}
+
+		_reindexCommerceAccount(commerceAccountId);
 	}
 
 	@Override
@@ -133,6 +143,15 @@ public class CommerceAccountOrganizationRelLocalServiceImpl
 	public int getCommerceAccountOrganizationRelsCount(long commerceAccountId) {
 		return commerceAccountOrganizationRelPersistence.
 			countByCommerceAccountId(commerceAccountId);
+	}
+
+	private void _reindexCommerceAccount(long commerceAccountId)
+		throws PortalException {
+
+		Indexer<CommerceAccount> indexer =
+			IndexerRegistryUtil.nullSafeGetIndexer(CommerceAccount.class);
+
+		indexer.reindex(CommerceAccount.class.getName(), commerceAccountId);
 	}
 
 }

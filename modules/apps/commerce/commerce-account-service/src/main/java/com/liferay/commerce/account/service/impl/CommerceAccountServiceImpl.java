@@ -100,7 +100,10 @@ public class CommerceAccountServiceImpl extends CommerceAccountServiceBaseImpl {
 				user.getCompanyId());
 		}
 
-		if (_isAccountCompanyAdministrator()) {
+		if (_isAccountCompanyAdministrator() ||
+			_commerceAccountModelResourcePermission.contains(
+				getPermissionChecker(), commerceAccountId, ActionKeys.VIEW)) {
+
 			return commerceAccountLocalService.fetchCommerceAccount(
 				commerceAccountId);
 		}
@@ -129,7 +132,10 @@ public class CommerceAccountServiceImpl extends CommerceAccountServiceBaseImpl {
 				user.getCompanyId());
 		}
 
-		if (_isAccountCompanyAdministrator()) {
+		if (_isAccountCompanyAdministrator() ||
+			_commerceAccountModelResourcePermission.contains(
+				getPermissionChecker(), commerceAccountId, ActionKeys.VIEW)) {
+
 			return commerceAccountLocalService.fetchCommerceAccount(
 				commerceAccountId);
 		}
@@ -143,6 +149,58 @@ public class CommerceAccountServiceImpl extends CommerceAccountServiceBaseImpl {
 		}
 
 		return commerceAccount;
+	}
+
+	@Override
+	public List<CommerceAccount> getCommerceAccounts(
+			long userId, long parentCommerceAccountId, int commerceSiteType,
+			String keywords, Boolean active, int start, int end)
+		throws PortalException {
+
+		User user = userLocalService.fetchUser(userId);
+
+		if (user == null) {
+			return Collections.emptyList();
+		}
+
+		int accountType = CommerceAccountConstants.ACCOUNT_TYPE_BUSINESS;
+
+		if (commerceSiteType == CommerceAccountConstants.SITE_TYPE_B2C) {
+			accountType = CommerceAccountConstants.ACCOUNT_TYPE_PERSONAL;
+		}
+		else if (commerceSiteType == CommerceAccountConstants.SITE_TYPE_B2X) {
+			accountType = -1;
+		}
+
+		return commerceAccountLocalService.searchUserCommerceAccounts(
+			user.getUserId(), parentCommerceAccountId, keywords, accountType,
+			active, start, end, SortFactoryUtil.create("name", false));
+	}
+
+	@Override
+	public int getCommerceAccountsCount(
+			long userId, long parentCommerceAccountId, int commerceSiteType,
+			String keywords, Boolean active)
+		throws PortalException {
+
+		User user = userLocalService.fetchUser(userId);
+
+		if (user == null) {
+			return 0;
+		}
+
+		int accountType = CommerceAccountConstants.ACCOUNT_TYPE_BUSINESS;
+
+		if (commerceSiteType == CommerceAccountConstants.SITE_TYPE_B2C) {
+			accountType = CommerceAccountConstants.ACCOUNT_TYPE_PERSONAL;
+		}
+		else if (commerceSiteType == CommerceAccountConstants.SITE_TYPE_B2X) {
+			accountType = -1;
+		}
+
+		return commerceAccountLocalService.searchCommerceAccountsCount(
+			user.getCompanyId(), parentCommerceAccountId, keywords, accountType,
+			active);
 	}
 
 	@Override

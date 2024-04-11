@@ -89,13 +89,13 @@ public class CommerceAccountAdminDisplayContext
 			new EmptyOnClickRowChecker(
 				commerceAccountAdminRequestHelper.getLiferayPortletResponse()));
 
-		int total = commerceAccountService.getUserCommerceAccountsCount(
+		int total = commerceAccountService.getCommerceAccountsCount(
 			commerceAccountAdminRequestHelper.getUserId(),
 			getParentCommerceAccountId(), getCommerceSiteType(), getKeywords(),
 			getActive());
 
 		List<CommerceAccount> results =
-			commerceAccountService.getUserCommerceAccounts(
+			commerceAccountService.getCommerceAccounts(
 				commerceAccountAdminRequestHelper.getUserId(),
 				getParentCommerceAccountId(), getCommerceSiteType(),
 				getKeywords(), getActive(), _searchContainer.getStart(),

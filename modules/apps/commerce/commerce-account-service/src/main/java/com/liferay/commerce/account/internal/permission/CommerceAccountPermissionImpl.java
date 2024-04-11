@@ -7,14 +7,24 @@ package com.liferay.commerce.account.internal.permission;
 
 import com.liferay.commerce.account.constants.CommerceAccountActionKeys;
 import com.liferay.commerce.account.model.CommerceAccount;
+import com.liferay.commerce.account.model.CommerceAccountOrganizationRel;
 import com.liferay.commerce.account.permission.CommerceAccountPermission;
 import com.liferay.commerce.account.service.CommerceAccountLocalService;
+import com.liferay.commerce.account.service.CommerceAccountOrganizationRelLocalService;
+import com.liferay.commerce.account.service.persistence.CommerceAccountOrganizationRelPK;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.model.Organization;
+import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
+import com.liferay.portal.kernel.service.OrganizationLocalService;
+import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.service.permission.PortalPermissionUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
+import com.liferay.portal.kernel.util.ListUtil;
+
+import java.util.List;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -85,8 +95,7 @@ public class CommerceAccountPermissionImpl
 		}
 
 		CommerceAccount commerceAccount =
-			_commerceAccountLocalService.getCommerceAccount(
-				permissionChecker.getUserId(), commerceAccountId);
+			_commerceAccountLocalService.getCommerceAccount(commerceAccountId);
 
 		if (commerceAccount == null) {
 			return false;
@@ -206,10 +215,48 @@ public class CommerceAccountPermissionImpl
 			return true;
 		}
 
+		for (Organization organization :
+				_getUserOrganizations(permissionChecker.getUserId())) {
+
+			CommerceAccountOrganizationRel commerceAccountOrganizationRel =
+				_commerceAccountOrganizationRelLocalService.
+					fetchCommerceAccountOrganizationRel(
+						new CommerceAccountOrganizationRelPK(
+							commerceAccount.getCommerceAccountId(),
+							organization.getOrganizationId()));
+
+			if (commerceAccountOrganizationRel != null) {
+				return true;
+			}
+		}
+
 		return permissionChecker.hasPermission(
 			commerceAccount.getCommerceAccountGroupId(),
 			CommerceAccount.class.getName(),
 			commerceAccount.getCommerceAccountId(), ActionKeys.VIEW);
+	}
+
+	private List<Organization> _getUserOrganizations(long userId)
+		throws PortalException {
+
+		List<Organization> organizations =
+			_organizationLocalService.getUserOrganizations(userId);
+
+		List<Organization> userOrganizations = ListUtil.copy(organizations);
+
+		User user = _userLocalService.getUser(userId);
+
+		for (Organization organization : organizations) {
+			for (Organization curOrganization :
+					_organizationLocalService.getOrganizations(
+						user.getCompanyId(),
+						organization.getTreePath() + "%")) {
+
+				userOrganizations.add(curOrganization);
+			}
+		}
+
+		return userOrganizations;
 	}
 
 	private boolean _hasOwnerPermission(
@@ -224,5 +271,15 @@ public class CommerceAccountPermissionImpl
 
 	@Reference
 	private CommerceAccountLocalService _commerceAccountLocalService;
+
+	@Reference
+	private CommerceAccountOrganizationRelLocalService
+		_commerceAccountOrganizationRelLocalService;
+
+	@Reference
+	private OrganizationLocalService _organizationLocalService;
+
+	@Reference
+	private UserLocalService _userLocalService;
 
 }

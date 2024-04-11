@@ -39,6 +39,7 @@ import com.liferay.portal.kernel.search.SearchException;
 import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.systemevent.SystemEvent;
+import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.Validator;
@@ -448,7 +449,8 @@ public class CommerceAccountLocalServiceImpl
 		throws PortalException {
 
 		SearchContext searchContext = buildSearchContext(
-			companyId, parentCommerceAccountId, type, active, start, end, sort);
+			companyId, null, parentCommerceAccountId, type, active, start, end,
+			null);
 
 		searchContext.setKeywords(keywords);
 
@@ -462,8 +464,48 @@ public class CommerceAccountLocalServiceImpl
 		throws PortalException {
 
 		SearchContext searchContext = buildSearchContext(
-			companyId, parentCommerceAccountId, type, active, QueryUtil.ALL_POS,
-			QueryUtil.ALL_POS, null);
+			companyId, null, parentCommerceAccountId, type, active,
+			QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
+
+		searchContext.setKeywords(keywords);
+
+		return searchCommerceAccountsCount(searchContext);
+	}
+
+	@Override
+	public List<CommerceAccount> searchUserCommerceAccounts(
+			long userId, long parentCommerceAccountId, String keywords,
+			int type, Boolean active, int start, int end, Sort sort)
+		throws PortalException {
+
+		User user = userLocalService.getUser(userId);
+
+		long[] organizationIds = ArrayUtil.toLongArray(
+			_getUserOrganizations(user.getUserId()));
+
+		SearchContext searchContext = buildSearchContext(
+			user.getCompanyId(), organizationIds, parentCommerceAccountId, type,
+			active, start, end, null);
+
+		searchContext.setKeywords(keywords);
+
+		return searchCommerceAccounts(searchContext);
+	}
+
+	@Override
+	public int searchUserCommerceAccountsCount(
+			long userId, long parentCommerceAccountId, String keywords,
+			int type, Boolean active)
+		throws PortalException {
+
+		User user = userLocalService.getUser(userId);
+
+		long[] organizationIds = ArrayUtil.toLongArray(
+			_getUserOrganizations(userId));
+
+		SearchContext searchContext = buildSearchContext(
+			user.getCompanyId(), organizationIds, parentCommerceAccountId, type,
+			active, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
 
 		searchContext.setKeywords(keywords);
 
@@ -681,10 +723,14 @@ public class CommerceAccountLocalServiceImpl
 	}
 
 	protected SearchContext buildSearchContext(
-		long companyId, long parentCommerceAccountId, int type, Boolean active,
-		int start, int end, Sort sort) {
+		long companyId, long[] organizationIds, long parentCommerceAccountId,
+		int type, Boolean active, int start, int end, Sort sort) {
 
 		SearchContext searchContext = new SearchContext();
+
+		if (ArrayUtil.isNotEmpty(organizationIds)) {
+			searchContext.setAttribute("organizationIds", organizationIds);
+		}
 
 		searchContext.setAttribute(
 			CommerceAccountIndexer.FIELD_PARENT_COMMERCE_ACCOUNT_ID,
