@@ -71,10 +71,10 @@ public class SamlSpIdpConnectionLocalServiceImpl
 			assertionSignatureRequired);
 		samlSpIdpConnection.setClockSkew(clockSkew);
 		samlSpIdpConnection.setEnabled(enabled);
-		samlSpIdpConnection.setExpandoBridgeAttributes(serviceContext);
 		samlSpIdpConnection.setForceAuthn(forceAuthn);
 		samlSpIdpConnection.setLdapImportEnabled(ldapImportEnabled);
 		samlSpIdpConnection.setMetadataUpdatedDate(now);
+		samlSpIdpConnection.setExpandoBridgeAttributes(serviceContext);
 
 		if ((metadataXmlInputStream == null) &&
 			Validator.isNotNull(metadataUrl)) {
@@ -233,10 +233,10 @@ public class SamlSpIdpConnectionLocalServiceImpl
 			assertionSignatureRequired);
 		samlSpIdpConnection.setClockSkew(clockSkew);
 		samlSpIdpConnection.setEnabled(enabled);
-		samlSpIdpConnection.setExpandoBridgeAttributes(serviceContext);
 		samlSpIdpConnection.setForceAuthn(forceAuthn);
 		samlSpIdpConnection.setLdapImportEnabled(ldapImportEnabled);
 		samlSpIdpConnection.setMetadataUpdatedDate(now);
+		samlSpIdpConnection.setExpandoBridgeAttributes(serviceContext);
 
 		if (enabled && (metadataXmlInputStream == null) &&
 			Validator.isNotNull(metadataUrl)) {
