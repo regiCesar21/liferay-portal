@@ -159,8 +159,8 @@ public class DDMStructureLocalServiceImpl
 		structure.setClassNameId(classNameId);
 		structure.setStructureKey(structureKey);
 		structure.setVersion(DDMStructureConstants.VERSION_DEFAULT);
-		structure.setDescriptionMap(descriptionMap, ddmForm.getDefaultLocale());
 		structure.setNameMap(nameMap, ddmForm.getDefaultLocale());
+		structure.setDescriptionMap(descriptionMap, ddmForm.getDefaultLocale());
 		structure.setDefinition(ddmFormJSONSerializer.serialize(ddmForm));
 		structure.setStorageType(storageType);
 		structure.setType(type);
@@ -1702,9 +1702,9 @@ public class DDMStructureLocalServiceImpl
 
 		structure.setVersion(version);
 
-		structure.setNameMap(nameMap, ddmForm.getDefaultLocale());
 		structure.setVersionUserId(user.getUserId());
 		structure.setVersionUserName(user.getFullName());
+		structure.setNameMap(nameMap, ddmForm.getDefaultLocale());
 		structure.setDescriptionMap(descriptionMap, ddmForm.getDefaultLocale());
 		structure.setDefinition(ddmFormJSONSerializer.serialize(ddmForm));
 

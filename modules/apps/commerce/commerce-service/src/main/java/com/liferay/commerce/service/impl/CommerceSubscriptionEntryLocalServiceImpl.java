@@ -120,21 +120,21 @@ public class CommerceSubscriptionEntryLocalServiceImpl
 		commerceSubscriptionEntry.setCommerceOrderItemId(commerceOrderItemId);
 		commerceSubscriptionEntry.setSubscriptionLength(subscriptionLength);
 		commerceSubscriptionEntry.setSubscriptionType(subscriptionType);
+		commerceSubscriptionEntry.setSubscriptionTypeSettingsProperties(
+			subscriptionTypeSettingsProperties);
 		commerceSubscriptionEntry.setCurrentCycle(1);
 		commerceSubscriptionEntry.setMaxSubscriptionCycles(
 			maxSubscriptionCycles);
-		commerceSubscriptionEntry.setSubscriptionTypeSettingsProperties(
-			subscriptionTypeSettingsProperties);
 		commerceSubscriptionEntry.setLastIterationDate(new Date());
 		commerceSubscriptionEntry.setDeliverySubscriptionLength(
 			deliverySubscriptionLength);
 		commerceSubscriptionEntry.setDeliverySubscriptionType(
 			deliverySubscriptionType);
+		commerceSubscriptionEntry.setDeliverySubscriptionTypeSettingsProperties(
+			deliverySubscriptionTypeSettingsProperties);
 		commerceSubscriptionEntry.setDeliveryCurrentCycle(1);
 		commerceSubscriptionEntry.setDeliveryMaxSubscriptionCycles(
 			deliveryMaxSubscriptionCycles);
-		commerceSubscriptionEntry.setDeliverySubscriptionTypeSettingsProperties(
-			deliverySubscriptionTypeSettingsProperties);
 		commerceSubscriptionEntry.setDeliveryLastIterationDate(new Date());
 
 		if (cpSubscriptionType != null) {

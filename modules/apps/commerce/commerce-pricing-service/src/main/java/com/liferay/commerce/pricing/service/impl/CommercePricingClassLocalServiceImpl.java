@@ -81,12 +81,12 @@ public class CommercePricingClassLocalServiceImpl
 		CommercePricingClass commercePricingClass =
 			commercePricingClassPersistence.create(commercePricingClassId);
 
+		commercePricingClass.setExternalReferenceCode(externalReferenceCode);
 		commercePricingClass.setCompanyId(serviceContext.getCompanyId());
 		commercePricingClass.setUserId(user.getUserId());
 		commercePricingClass.setUserName(user.getFullName());
 		commercePricingClass.setTitleMap(titleMap);
 		commercePricingClass.setDescriptionMap(descriptionMap);
-		commercePricingClass.setExternalReferenceCode(externalReferenceCode);
 		commercePricingClass.setExpandoBridgeAttributes(serviceContext);
 
 		Date now = new Date();

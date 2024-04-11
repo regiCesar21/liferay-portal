@@ -86,6 +86,7 @@ public class CPOptionValueLocalServiceImpl
 		CPOptionValue cpOptionValue = cpOptionValuePersistence.create(
 			cpOptionValueId);
 
+		cpOptionValue.setExternalReferenceCode(externalReferenceCode);
 		cpOptionValue.setCompanyId(user.getCompanyId());
 		cpOptionValue.setUserId(user.getUserId());
 		cpOptionValue.setUserName(user.getFullName());
@@ -94,7 +95,6 @@ public class CPOptionValueLocalServiceImpl
 		cpOptionValue.setPriority(priority);
 		cpOptionValue.setKey(key);
 		cpOptionValue.setExpandoBridgeAttributes(serviceContext);
-		cpOptionValue.setExternalReferenceCode(externalReferenceCode);
 
 		cpOptionValue = cpOptionValuePersistence.update(cpOptionValue);
 
