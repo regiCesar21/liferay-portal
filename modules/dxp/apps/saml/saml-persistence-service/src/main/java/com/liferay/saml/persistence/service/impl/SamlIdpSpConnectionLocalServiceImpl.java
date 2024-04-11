@@ -76,8 +76,8 @@ public class SamlIdpSpConnectionLocalServiceImpl
 		samlIdpSpConnection.setAttributesNamespaceEnabled(
 			attributesNamespaceEnabled);
 		samlIdpSpConnection.setEnabled(enabled);
-		samlIdpSpConnection.setExpandoBridgeAttributes(serviceContext);
 		samlIdpSpConnection.setMetadataUpdatedDate(now);
+		samlIdpSpConnection.setExpandoBridgeAttributes(serviceContext);
 
 		if ((metadataXmlInputStream == null) &&
 			Validator.isNotNull(metadataUrl)) {
