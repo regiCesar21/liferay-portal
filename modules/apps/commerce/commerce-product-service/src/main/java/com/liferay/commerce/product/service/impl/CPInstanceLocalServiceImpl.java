@@ -221,10 +221,10 @@ public class CPInstanceLocalServiceImpl extends CPInstanceLocalServiceBaseImpl {
 			cpInstance.setStatus(WorkflowConstants.STATUS_EXPIRED);
 		}
 
+		cpInstance.setUnspsc(unspsc);
 		cpInstance.setStatusByUserId(user.getUserId());
 		cpInstance.setStatusDate(serviceContext.getModifiedDate(now));
 		cpInstance.setExpandoBridgeAttributes(serviceContext);
-		cpInstance.setUnspsc(unspsc);
 
 		cpInstance = cpInstancePersistence.update(cpInstance);
 
@@ -1364,10 +1364,10 @@ public class CPInstanceLocalServiceImpl extends CPInstanceLocalServiceBaseImpl {
 			cpInstance.setStatus(WorkflowConstants.STATUS_EXPIRED);
 		}
 
+		cpInstance.setUnspsc(unspsc);
 		cpInstance.setStatusByUserId(user.getUserId());
 		cpInstance.setStatusDate(serviceContext.getModifiedDate(now));
 		cpInstance.setExpandoBridgeAttributes(serviceContext);
-		cpInstance.setUnspsc(unspsc);
 
 		cpInstance = cpInstancePersistence.update(cpInstance);
 

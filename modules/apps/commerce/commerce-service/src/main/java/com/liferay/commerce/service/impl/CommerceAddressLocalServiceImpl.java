@@ -120,11 +120,11 @@ public class CommerceAddressLocalServiceImpl
 		CommerceAddress commerceAddress = commerceAddressPersistence.create(
 			commerceAddressId);
 
+		commerceAddress.setExternalReferenceCode(externalReferenceCode);
 		commerceAddress.setCompanyId(companyId);
 		commerceAddress.setUserId(user.getUserId());
 		commerceAddress.setUserName(user.getFullName());
 		commerceAddress.setClassName(className);
-		commerceAddress.setExternalReferenceCode(externalReferenceCode);
 		commerceAddress.setClassPK(classPK);
 		commerceAddress.setName(name);
 		commerceAddress.setDescription(description);

@@ -158,12 +158,12 @@ public class LayoutSEOEntryLocalServiceImpl
 		}
 
 		layoutSEOEntry.setModifiedDate(DateUtil.newDate());
-		layoutSEOEntry.setCanonicalURLEnabled(canonicalURLEnabled);
 		layoutSEOEntry.setCanonicalURLMap(canonicalURLMap);
+		layoutSEOEntry.setCanonicalURLEnabled(canonicalURLEnabled);
 
+		layoutSEOEntry.setOpenGraphDescriptionMap(openGraphDescriptionMap);
 		layoutSEOEntry.setOpenGraphDescriptionEnabled(
 			openGraphDescriptionEnabled);
-		layoutSEOEntry.setOpenGraphDescriptionMap(openGraphDescriptionMap);
 
 		if (openGraphImageFileEntryId != 0) {
 			layoutSEOEntry.setOpenGraphImageAltMap(openGraphImageAltMap);
@@ -173,8 +173,8 @@ public class LayoutSEOEntryLocalServiceImpl
 		}
 
 		layoutSEOEntry.setOpenGraphImageFileEntryId(openGraphImageFileEntryId);
-		layoutSEOEntry.setOpenGraphTitleEnabled(openGraphTitleEnabled);
 		layoutSEOEntry.setOpenGraphTitleMap(openGraphTitleMap);
+		layoutSEOEntry.setOpenGraphTitleEnabled(openGraphTitleEnabled);
 
 		return layoutSEOEntryPersistence.update(layoutSEOEntry);
 	}
@@ -198,8 +198,8 @@ public class LayoutSEOEntryLocalServiceImpl
 		}
 
 		layoutSEOEntry.setModifiedDate(DateUtil.newDate());
-		layoutSEOEntry.setCanonicalURLEnabled(canonicalURLEnabled);
 		layoutSEOEntry.setCanonicalURLMap(canonicalURLMap);
+		layoutSEOEntry.setCanonicalURLEnabled(canonicalURLEnabled);
 
 		return layoutSEOEntryPersistence.update(layoutSEOEntry);
 	}
@@ -234,8 +234,8 @@ public class LayoutSEOEntryLocalServiceImpl
 
 		layoutSEOEntry.setPrivateLayout(privateLayout);
 		layoutSEOEntry.setLayoutId(layoutId);
-		layoutSEOEntry.setCanonicalURLEnabled(canonicalURLEnabled);
 		layoutSEOEntry.setCanonicalURLMap(canonicalURLMap);
+		layoutSEOEntry.setCanonicalURLEnabled(canonicalURLEnabled);
 
 		DDMStructure ddmStructure = _getDDMStructure(
 			groupLocalService.getGroup(groupId));
@@ -246,17 +246,17 @@ public class LayoutSEOEntryLocalServiceImpl
 
 		layoutSEOEntry.setDDMStorageId(ddmStorageId);
 
+		layoutSEOEntry.setOpenGraphDescriptionMap(openGraphDescriptionMap);
 		layoutSEOEntry.setOpenGraphDescriptionEnabled(
 			openGraphDescriptionEnabled);
-		layoutSEOEntry.setOpenGraphDescriptionMap(openGraphDescriptionMap);
 
 		if (openGraphImageFileEntryId != 0) {
 			layoutSEOEntry.setOpenGraphImageAltMap(openGraphImageAltMap);
 		}
 
 		layoutSEOEntry.setOpenGraphImageFileEntryId(openGraphImageFileEntryId);
-		layoutSEOEntry.setOpenGraphTitleEnabled(openGraphTitleEnabled);
 		layoutSEOEntry.setOpenGraphTitleMap(openGraphTitleMap);
+		layoutSEOEntry.setOpenGraphTitleEnabled(openGraphTitleEnabled);
 
 		return layoutSEOEntryPersistence.update(layoutSEOEntry);
 	}

@@ -74,6 +74,7 @@ public class CommerceChannelLocalServiceImpl
 		CommerceChannel commerceChannel = commerceChannelPersistence.create(
 			commerceChannelId);
 
+		commerceChannel.setExternalReferenceCode(externalReferenceCode);
 		commerceChannel.setCompanyId(user.getCompanyId());
 		commerceChannel.setUserId(user.getUserId());
 		commerceChannel.setUserName(user.getFullName());
@@ -82,7 +83,6 @@ public class CommerceChannelLocalServiceImpl
 		commerceChannel.setType(type);
 		commerceChannel.setTypeSettingsProperties(
 			typeSettingsUnicodeProperties);
-		commerceChannel.setExternalReferenceCode(externalReferenceCode);
 		commerceChannel.setCommerceCurrencyCode(commerceCurrencyCode);
 		commerceChannel.setPriceDisplayType(
 			CommercePricingConstants.TAX_EXCLUDED_FROM_PRICE);

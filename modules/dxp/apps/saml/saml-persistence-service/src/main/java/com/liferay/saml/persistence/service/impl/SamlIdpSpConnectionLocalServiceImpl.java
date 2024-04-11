@@ -85,8 +85,8 @@ public class SamlIdpSpConnectionLocalServiceImpl
 			attributesNamespaceEnabled);
 		samlIdpSpConnection.setEnabled(enabled);
 		samlIdpSpConnection.setEncryptionForced(encryptionForced);
-		samlIdpSpConnection.setExpandoBridgeAttributes(serviceContext);
 		samlIdpSpConnection.setMetadataUpdatedDate(now);
+		samlIdpSpConnection.setExpandoBridgeAttributes(serviceContext);
 
 		if ((metadataXmlInputStream == null) &&
 			Validator.isNotNull(metadataUrl)) {

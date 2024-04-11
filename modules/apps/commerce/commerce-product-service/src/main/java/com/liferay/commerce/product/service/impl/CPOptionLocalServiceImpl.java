@@ -81,6 +81,7 @@ public class CPOptionLocalServiceImpl extends CPOptionLocalServiceBaseImpl {
 
 		CPOption cpOption = cpOptionPersistence.create(cpOptionId);
 
+		cpOption.setExternalReferenceCode(externalReferenceCode);
 		cpOption.setCompanyId(user.getCompanyId());
 		cpOption.setUserId(user.getUserId());
 		cpOption.setUserName(user.getFullName());
@@ -92,7 +93,6 @@ public class CPOptionLocalServiceImpl extends CPOptionLocalServiceBaseImpl {
 		cpOption.setSkuContributor(skuContributor);
 		cpOption.setKey(key);
 		cpOption.setExpandoBridgeAttributes(serviceContext);
-		cpOption.setExternalReferenceCode(externalReferenceCode);
 
 		cpOption = cpOptionPersistence.update(cpOption);
 
