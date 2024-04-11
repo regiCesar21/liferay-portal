@@ -50,6 +50,10 @@ public class NumericDDMFormFieldTemplateContextContributor
 		return HashMapBuilder.<String, Object>put(
 			"dataType", getDataType(ddmFormField, ddmFormFieldRenderingContext)
 		).put(
+			"htmlAutocompleteAttribute",
+			GetterUtil.getString(
+				ddmFormField.getProperty("htmlAutocompleteAttribute"))
+		).put(
 			"placeholder",
 			getValueString(
 				(LocalizedValue)ddmFormField.getProperty("placeholder"), locale,

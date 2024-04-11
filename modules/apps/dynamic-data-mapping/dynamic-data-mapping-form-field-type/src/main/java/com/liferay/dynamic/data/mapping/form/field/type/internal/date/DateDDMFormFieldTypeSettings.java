@@ -43,6 +43,7 @@ import com.liferay.dynamic.data.mapping.model.LocalizedValue;
 							size = 12,
 							value = {
 								"name", "fieldReference", "predefinedValue",
+								"htmlAutocompleteAttribute",
 								"visibilityExpression", "validation",
 								"fieldNamespace", "indexType", "localizable",
 								"nativeField", "readOnly", "dataType", "type",
@@ -57,6 +58,13 @@ import com.liferay.dynamic.data.mapping.model.LocalizedValue;
 )
 public interface DateDDMFormFieldTypeSettings
 	extends DefaultDDMFormFieldTypeSettings {
+
+	@DDMFormField(
+		dataType = "string", label = "%html-autocomplete-attribute",
+		properties = {"invalidCharacters=[^a-z0-9-]|-{2,}", "maxLength=20"},
+		type = "text"
+	)
+	public String htmlAutocompleteAttribute();
 
 	@DDMFormField(
 		dataType = "string", label = "%predefined-value", type = "date"

@@ -83,6 +83,7 @@ import com.liferay.dynamic.data.mapping.model.LocalizedValue;
 							size = 12,
 							value = {
 								"name", "fieldReference", "predefinedValue",
+								"htmlAutocompleteAttribute",
 								"visibilityExpression", "fieldNamespace",
 								"indexType", "localizable", "nativeField",
 								"readOnly", "dataType", "type", "showLabel",
@@ -151,6 +152,13 @@ public interface TextDDMFormFieldTypeSettings
 		predefinedValue = "singleline", type = "radio"
 	)
 	public String displayStyle();
+
+	@DDMFormField(
+		dataType = "string", label = "%html-autocomplete-attribute",
+		properties = {"invalidCharacters=[^a-z0-9-]|-{2,}", "maxLength=20"},
+		type = "text"
+	)
+	public String htmlAutocompleteAttribute();
 
 	@DDMFormField(
 		label = "%searchable", optionLabels = {"%disable", "%keyword", "%text"},

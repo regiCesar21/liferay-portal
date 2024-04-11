@@ -52,6 +52,10 @@ public class TextDDMFormFieldTemplateContextContributor
 				"autocompleteEnabled", isAutocompleteEnabled(ddmFormField));
 			parameters.put("displayStyle", getDisplayStyle(ddmFormField));
 			parameters.put(
+				"htmlAutocompleteAttribute",
+				GetterUtil.getString(
+					ddmFormField.getProperty("htmlAutocompleteAttribute")));
+			parameters.put(
 				"placeholder",
 				getPlaceholder(ddmFormField, ddmFormFieldRenderingContext));
 			parameters.put(

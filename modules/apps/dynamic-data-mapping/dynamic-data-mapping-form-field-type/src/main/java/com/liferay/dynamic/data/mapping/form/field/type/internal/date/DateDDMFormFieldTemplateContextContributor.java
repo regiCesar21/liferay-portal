@@ -11,6 +11,7 @@ import com.liferay.dynamic.data.mapping.model.DDMFormField;
 import com.liferay.dynamic.data.mapping.render.DDMFormFieldRenderingContext;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.util.CalendarUtil;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.LocaleThreadLocal;
 
@@ -47,6 +48,10 @@ public class DateDDMFormFieldTemplateContextContributor
 
 		return HashMapBuilder.<String, Object>put(
 			"firstDayOfWeek", _getFirstDayOfWeek()
+		).put(
+			"htmlAutocompleteAttribute",
+			GetterUtil.getString(
+				ddmFormField.getProperty("htmlAutocompleteAttribute"))
 		).put(
 			"months",
 			Arrays.asList(

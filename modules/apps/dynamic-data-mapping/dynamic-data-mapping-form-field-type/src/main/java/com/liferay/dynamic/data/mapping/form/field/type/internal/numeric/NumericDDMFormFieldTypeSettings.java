@@ -61,9 +61,10 @@ import com.liferay.dynamic.data.mapping.model.LocalizedValue;
 							value = {
 								"name", "fieldReference", "predefinedValue",
 								"visibilityExpression", "fieldNamespace",
-								"indexType", "localizable", "nativeField",
-								"readOnly", "type", "showLabel", "repeatable",
-								"validation", "tooltip"
+								"htmlAutocompleteAttribute", "indexType",
+								"localizable", "nativeField", "readOnly",
+								"type", "showLabel", "repeatable", "validation",
+								"tooltip"
 							}
 						)
 					}
@@ -82,6 +83,13 @@ public interface NumericDDMFormFieldTypeSettings
 	)
 	@Override
 	public String dataType();
+
+	@DDMFormField(
+		dataType = "string", label = "%html-autocomplete-attribute",
+		properties = {"invalidCharacters=[^a-z0-9-]|-{2,}", "maxLength=20"},
+		type = "text"
+	)
+	public String htmlAutocompleteAttribute();
 
 	@DDMFormField(
 		dataType = "string", label = "%placeholder-text",
