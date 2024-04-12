@@ -372,6 +372,10 @@ public class SegmentDog {
 			SetUtil.map(
 				referencedObjectIds.get("referencedAssetIds"),
 				String::valueOf));
+		segment.setReferencedCustomEventIds(
+			SetUtil.map(
+				referencedObjectIds.get("referencedCustomEventIds"),
+				String::valueOf));
 		segment.setReferencedFieldMappingFieldNames(
 			SetUtil.map(
 				referencedObjectIds.get("referencedFieldMappingFieldNames"),

@@ -29,11 +29,13 @@ import com.liferay.osb.asah.common.dog.BQRoleDog;
 import com.liferay.osb.asah.common.dog.BQTeamDog;
 import com.liferay.osb.asah.common.dog.BQUserDog;
 import com.liferay.osb.asah.common.dog.BQUserGroupDog;
+import com.liferay.osb.asah.common.dog.EventDefinitionDog;
 import com.liferay.osb.asah.common.dog.SegmentDog;
 import com.liferay.osb.asah.common.entity.BQDataSourceUser;
 import com.liferay.osb.asah.common.entity.BQMembership;
 import com.liferay.osb.asah.common.entity.BQMembershipChange;
 import com.liferay.osb.asah.common.entity.BQMembershipIndividual;
+import com.liferay.osb.asah.common.entity.EventDefinition;
 import com.liferay.osb.asah.common.entity.Segment;
 import com.liferay.osb.asah.common.json.JSONUtil;
 import com.liferay.osb.asah.common.model.Individual;
@@ -418,6 +420,10 @@ public class IndividualSegmentsRestController extends BaseRestController {
 	private JSONObject _getReferencedObjectsJSONObject(Segment segment)
 		throws Exception {
 
+		Map<String, EventDefinition> eventDefinitions =
+			_eventDefinitionDog.getEventDefinitions(
+				segment.getReferencedCustomEventIds());
+
 		return JSONUtil.put(
 			"assets",
 			JSONUtil.toJSONArray(
@@ -425,6 +431,10 @@ public class IndividualSegmentsRestController extends BaseRestController {
 					_bqAssetDog.getBQAssets(segment.getReferencedAssetIds()),
 					BQAssetDTO::new),
 				this::_toJSONObject)
+		).put(
+			"custom-events",
+			JSONUtil.toJSONArray(
+				new ArrayList<>(eventDefinitions.values()), this::_toJSONObject)
 		).put(
 			"field-mappings",
 			JSONUtil.toJSONArray(
@@ -630,5 +640,8 @@ public class IndividualSegmentsRestController extends BaseRestController {
 
 	@Autowired
 	private BQUserGroupDog _bqUserGroupDog;
+
+	@Autowired
+	private EventDefinitionDog _eventDefinitionDog;
 
 }
