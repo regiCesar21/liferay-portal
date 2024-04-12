@@ -346,6 +346,7 @@ CREATE TABLE IF NOT EXISTS Segment (
 	modifiedDate TIMESTAMPTZ,
 	name TEXT,
 	referencedAssetIds VARCHAR[],
+	referencedCustomEventIds VARCHAR[],
 	referencedDataSourceIds BIGINT[],
 	referencedFieldMappingFieldNames VARCHAR[],
 	referencedGroupIds VARCHAR[],

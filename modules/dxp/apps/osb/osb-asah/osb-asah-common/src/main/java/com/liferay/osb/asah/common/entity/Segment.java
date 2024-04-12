@@ -67,6 +67,8 @@ public class Segment implements Persistable<Long> {
 			Objects.equals(_name, segment._name) &&
 			Objects.equals(_referencedAssetIds, segment._referencedAssetIds) &&
 			Objects.equals(
+				_referencedCustomEventIds, segment._referencedCustomEventIds) &&
+			Objects.equals(
 				_referencedDataSourceIds, segment._referencedDataSourceIds) &&
 			Objects.equals(
 				_referencedFieldMappingFieldNames,
@@ -188,6 +190,11 @@ public class Segment implements Persistable<Long> {
 	@AccessType(AccessType.Type.PROPERTY)
 	public Set<String> getReferencedAssetIds() {
 		return _referencedAssetIds;
+	}
+
+	@AccessType(AccessType.Type.PROPERTY)
+	public Set<String> getReferencedCustomEventIds() {
+		return _referencedCustomEventIds;
 	}
 
 	@AccessType(AccessType.Type.PROPERTY)
@@ -352,6 +359,12 @@ public class Segment implements Persistable<Long> {
 		_referencedAssetIds = referencedAssetIds;
 	}
 
+	public void setReferencedCustomEventIds(
+		Set<String> referencedCustomEventIds) {
+
+		_referencedCustomEventIds = referencedCustomEventIds;
+	}
+
 	public void setReferencedDataSourceIds(Set<Long> referencedDataSourceIds) {
 		_referencedDataSourceIds = referencedDataSourceIds;
 	}
@@ -457,6 +470,9 @@ public class Segment implements Persistable<Long> {
 
 	@Transient
 	private Set<String> _referencedAssetIds = new HashSet<>();
+
+	@Transient
+	private Set<String> _referencedCustomEventIds = new HashSet<>();
 
 	@Transient
 	private Set<Long> _referencedDataSourceIds = new HashSet<>();
