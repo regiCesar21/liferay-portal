@@ -44,6 +44,10 @@ public class UpgradeProducts extends UpgradeProcess {
 
 				if (!products.isEmpty()) {
 					product = products.get(0);
+
+					_updateExternalLink(
+						oldProductName, newProductName,
+						product.getExternalLinks());
 				}
 				else {
 					if (_log.isInfoEnabled()) {
@@ -53,23 +57,9 @@ public class UpgradeProducts extends UpgradeProcess {
 					}
 				}
 			}
-
-			if (product != null) {
-				ExternalLink[] externalLinks = product.getExternalLinks();
-
-				for (ExternalLink externalLink : externalLinks) {
-					String entityId = externalLink.getEntityId();
-
-					if (entityId.equals(oldProductName)) {
-						externalLink.setEntityId(newProductName);
-
-						_externalLinkWebService.updateExternalLink(
-							StringPool.BLANK, StringPool.BLANK,
-							externalLink.getKey(), externalLink);
-
-						break;
-					}
-				}
+			else {
+				_updateExternalLink(
+					oldProductName, newProductName, product.getExternalLinks());
 
 				product.setName(newProductName);
 
@@ -94,6 +84,35 @@ public class UpgradeProducts extends UpgradeProcess {
 	protected void doUpgrade() throws Exception {
 	}
 
+	private void _updateExternalLink(
+		String oldProductName, String newProductName,
+		ExternalLink[] externalLinks) {
+
+		for (ExternalLink externalLink : externalLinks) {
+			String entityId = externalLink.getEntityId();
+
+			if (entityId.equals(oldProductName)) {
+				externalLink.setEntityId(newProductName);
+
+				try {
+					_externalLinkWebService.updateExternalLink(
+						StringPool.BLANK, StringPool.BLANK,
+						externalLink.getKey(), externalLink);
+				}
+				catch (Exception exception) {
+					if (_log.isInfoEnabled()) {
+						_log.info(
+							"Product with name " + oldProductName +
+								" was not update.");
+					}
+				}
+
+				break;
+			}
+		}
+	}
+
+	@Reference
 	private static final Log _log = LogFactoryUtil.getLog(
 		UpgradeProducts.class);
 
