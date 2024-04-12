@@ -178,6 +178,13 @@ public class FilterExpressionReferencedObjectsVisitor
 
 			referencedAssetIds.add(valueParts[2]);
 		}
+
+		if (fieldName.startsWith("eventId")) {
+			Set<String> referencedCustomEventIds = _referencedObjectIds.get(
+				"referencedCustomEventIds");
+
+			referencedCustomEventIds.add(value);
+		}
 		else if (fieldName.startsWith("groupIds")) {
 			Set<String> referencedGroupIds = _referencedObjectIds.get(
 				"referencedGroupIds");
@@ -229,10 +236,10 @@ public class FilterExpressionReferencedObjectsVisitor
 	}
 
 	private static final String[] _REFERENCED_OBJECT_NAMES = {
-		"referencedAssetIds", "referencedDataSourceIds",
-		"referencedFieldMappingFieldNames", "referencedGroupIds",
-		"referencedOrganizationIds", "referencedRoleIds", "referencedTeamIds",
-		"referencedUserGroupIds", "referencedUserIds"
+		"referencedAssetIds", "referencedCustomEventIds",
+		"referencedDataSourceIds", "referencedFieldMappingFieldNames",
+		"referencedGroupIds", "referencedOrganizationIds", "referencedRoleIds",
+		"referencedTeamIds", "referencedUserGroupIds", "referencedUserIds"
 	};
 
 	private static final Map<String, String> _demographicFieldNames =
