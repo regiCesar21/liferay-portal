@@ -174,24 +174,27 @@ public class JournalViewMoreMenuItemsDisplayContext {
 		if (Validator.isNull(_orderByCol)) {
 			if (isSearch()) {
 				_orderByCol = _portalPreferences.getValue(
-					JournalPortletKeys.JOURNAL, "order-by-col", "relevance");
+					JournalPortletKeys.JOURNAL, "ddm-structure-order-by-col",
+					"relevance");
 			}
 			else {
 				_orderByCol = _portalPreferences.getValue(
-					JournalPortletKeys.JOURNAL, "order-by-col",
+					JournalPortletKeys.JOURNAL, "ddm-structure-order-by-col",
 					"modified-date");
 
 				if (_orderByCol.equals("relevance")) {
 					_orderByCol = "modified-date";
 
 					_portalPreferences.setValue(
-						JournalPortletKeys.JOURNAL, "order-by-col", null);
+						JournalPortletKeys.JOURNAL,
+						"ddm-structure-order-by-col", null);
 				}
 			}
 		}
 		else {
 			_portalPreferences.setValue(
-				JournalPortletKeys.JOURNAL, "order-by-col", _orderByCol);
+				JournalPortletKeys.JOURNAL, "ddm-structure-order-by-col",
+				_orderByCol);
 		}
 
 		return _orderByCol;
@@ -212,12 +215,13 @@ public class JournalViewMoreMenuItemsDisplayContext {
 			}
 
 			_orderByType = _portalPreferences.getValue(
-				JournalPortletKeys.JOURNAL, "order-by-type",
+				JournalPortletKeys.JOURNAL, "ddm-template-order-by-type",
 				defaultOrderByType);
 		}
 		else {
 			_portalPreferences.setValue(
-				JournalPortletKeys.JOURNAL, "order-by-type", _orderByType);
+				JournalPortletKeys.JOURNAL, "ddm-template-order-by-type",
+				_orderByType);
 		}
 
 		return _orderByType;
