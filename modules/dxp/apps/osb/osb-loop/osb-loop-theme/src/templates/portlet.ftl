@@ -1,7 +1,7 @@
 <#assign
-	portlet_display=portletDisplay
+	portlet_display = portletDisplay
 
-	portlet_id=htmlUtil.escapeAttribute(portlet_display.getId())
+	portlet_id = htmlUtil.escapeAttribute(portlet_display.getId())
 />
 
 <section class="portlet" id="portlet_${portlet_id}">
