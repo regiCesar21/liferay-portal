@@ -5,6 +5,7 @@
 
 package com.liferay.server.admin.web.internal.portlet.action;
 
+import com.liferay.captcha.util.CaptchaUtil;
 import com.liferay.document.library.kernel.util.DLPreviewableProcessor;
 import com.liferay.mail.kernel.model.Account;
 import com.liferay.mail.kernel.service.MailService;
@@ -163,6 +164,16 @@ public class EditServerMVCActionCommand extends BaseMVCActionCommand {
 		String cmd = ParamUtil.getString(actionRequest, Constants.CMD);
 
 		String redirect = ParamUtil.getString(actionRequest, "redirect");
+
+		if (!cmd.equals("addLogLevel") &&
+			!cmd.equals("dlGenerateAudioPreviews") &&
+			!cmd.equals("dlGenerateOpenOfficePreviews") &&
+			!cmd.equals("dlGenerateVideoPreviews") &&
+			!cmd.equals("updateLogLevels") &&
+			!cmd.equals("updatePortalProperties")) {
+
+			CaptchaUtil.check(actionRequest);
+		}
 
 		if (cmd.equals("addLogLevel")) {
 			addLogLevel(actionRequest);
