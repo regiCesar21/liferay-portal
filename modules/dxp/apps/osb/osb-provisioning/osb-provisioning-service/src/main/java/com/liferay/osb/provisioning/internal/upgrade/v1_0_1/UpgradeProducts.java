@@ -104,7 +104,6 @@ public class UpgradeProducts extends UpgradeProcess {
 		}
 	}
 
-	@Reference
 	private static final Log _log = LogFactoryUtil.getLog(
 		UpgradeProducts.class);
 
