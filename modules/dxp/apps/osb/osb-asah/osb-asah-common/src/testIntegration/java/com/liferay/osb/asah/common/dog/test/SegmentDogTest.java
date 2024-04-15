@@ -237,6 +237,24 @@ public class SegmentDogTest
 			referencedFieldMappingFieldNames.contains("Custom_Field"));
 		Assertions.assertTrue(
 			referencedFieldMappingFieldNames.contains("emailAddress"));
+
+		segment = new Segment();
+
+		segment.setFilter(
+			"((events.filter(filter='(eventId eq ''Custom_Event'')')))");
+		segment.setIncludeAnonymousUsers(Boolean.FALSE);
+		segment.setModifiedDate(new Date());
+		segment.setName("Segment 6");
+		segment.setType(Segment.Type.DYNAMIC);
+
+		segment = _segmentDog.addSegment(segment);
+
+		Set<String> referencedCustomEventIds =
+			segment.getReferencedCustomEventIds();
+
+		Assertions.assertEquals(1L, referencedCustomEventIds.size());
+		Assertions.assertTrue(
+			referencedCustomEventIds.contains("Custom_Event"));
 	}
 
 	@BQSQLResource(resourcePath = "test_referenced_objects_bq.sql")
