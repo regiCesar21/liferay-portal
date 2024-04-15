@@ -17,7 +17,8 @@ taglib uri="http://liferay.com/tld/theme" prefix="liferay-theme" %><%@
 taglib uri="http://liferay.com/tld/ui" prefix="liferay-ui" %><%@
 taglib uri="http://liferay.com/tld/util" prefix="liferay-util" %>
 
-<%@ page import="com.liferay.document.library.kernel.model.DLFileEntry" %><%@
+<%@ page import="com.liferay.captcha.util.CaptchaUtil" %><%@
+page import="com.liferay.document.library.kernel.model.DLFileEntry" %><%@
 page import="com.liferay.document.library.kernel.model.DLFileVersion" %><%@
 page import="com.liferay.document.library.kernel.service.DLFileEntryLocalServiceUtil" %><%@
 page import="com.liferay.expando.kernel.model.ExpandoBridge" %><%@
@@ -47,6 +48,7 @@ page import="com.liferay.portal.kernel.servlet.SessionMessages" %><%@
 page import="com.liferay.portal.kernel.util.ArrayUtil" %><%@
 page import="com.liferay.portal.kernel.util.Constants" %><%@
 page import="com.liferay.portal.kernel.util.HtmlUtil" %><%@
+page import="com.liferay.portal.kernel.util.JavaConstants" %><%@
 page import="com.liferay.portal.kernel.util.ListUtil" %><%@
 page import="com.liferay.portal.kernel.util.OSDetector" %><%@
 page import="com.liferay.portal.kernel.util.ParamUtil" %><%@
@@ -83,6 +85,7 @@ page import="java.util.Properties" %><%@
 page import="java.util.TreeMap" %>
 
 <%@ page import="javax.portlet.PortletPreferences" %><%@
+page import="javax.portlet.PortletRequest" %><%@
 page import="javax.portlet.PortletURL" %><%@
 page import="javax.portlet.WindowState" %>
 
@@ -102,3 +105,18 @@ String tabs2 = ParamUtil.getString(request, "tabs2");
 %>
 
 <%@ include file="/init-ext.jsp" %>
+
+<%
+PortletRequest portletRequest = (PortletRequest)request.getAttribute(JavaConstants.JAVAX_PORTLET_REQUEST);
+
+if (portletRequest != null) {
+	CaptchaUtil.enforceCaptcha(portletRequest);
+}
+else {
+	CaptchaUtil.enforceCaptcha(request);
+}
+%>
+
+<%!
+private static final String[] _ALL_PRIORITIES = {String.valueOf(Level.OFF), String.valueOf(Level.FATAL), String.valueOf(Level.ERROR), String.valueOf(Level.WARN), String.valueOf(Level.INFO), String.valueOf(Level.DEBUG), String.valueOf(Level.TRACE), String.valueOf(Level.ALL)};
+%>
