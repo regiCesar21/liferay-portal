@@ -1657,6 +1657,7 @@ public class FilterExpressionConditionVisitor
 		new HashMap<FilterExpression.FilterType, String>() {
 			{
 				put(FilterExpression.FilterType.ACTIVITIES, "Event");
+				put(FilterExpression.FilterType.EVENTS, "Event");
 				put(FilterExpression.FilterType.INDIVIDUALS, "Individual");
 				put(FilterExpression.FilterType.MEMBERSHIPS, "Membership");
 				put(FilterExpression.FilterType.ORGANIZATIONS, "Organization");

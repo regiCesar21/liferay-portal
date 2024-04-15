@@ -99,9 +99,9 @@ public class FilterExpression {
 
 	public enum FilterType {
 
-		ACTIVITIES("activities"), ASSETS("assets"), INDIVIDUALS("individuals"),
-		MEMBERSHIPS("memberships"), ORGANIZATIONS("organizations"),
-		SESSIONS("sessions");
+		ACTIVITIES("activities"), ASSETS("assets"), EVENTS("events"),
+		INDIVIDUALS("individuals"), MEMBERSHIPS("memberships"),
+		ORGANIZATIONS("organizations"), SESSIONS("sessions");
 
 		public static FilterType of(String name) {
 			if (name == null) {
@@ -114,6 +114,10 @@ public class FilterExpression {
 
 			if (name.equalsIgnoreCase("assets")) {
 				return ASSETS;
+			}
+
+			if (name.equalsIgnoreCase("events")) {
+				return EVENTS;
 			}
 
 			if (name.equalsIgnoreCase("individuals")) {
