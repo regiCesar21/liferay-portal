@@ -57,7 +57,6 @@ public class JournalViewMoreMenuItemsDisplayContext {
 
 		_portalPreferences = PortletPreferencesFactoryUtil.getPortalPreferences(
 			_httpServletRequest);
-
 		_themeDisplay = (ThemeDisplay)_httpServletRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 	}
