@@ -11,6 +11,10 @@
 String commandOutput = (String)SessionMessages.get(renderRequest, "commandOutput");
 %>
 
+<liferay-ui:error exception="<%= CaptchaConfigurationException.class %>" message="a-captcha-error-occurred-please-contact-an-administrator" />
+<liferay-ui:error exception="<%= CaptchaException.class %>" message="captcha-verification-failed" />
+<liferay-ui:error exception="<%= CaptchaTextException.class %>" message="text-verification-failed" />
+
 <portlet:actionURL name="executeCommand" var="executeCommandURL" />
 
 <clay:container-fluid>
@@ -34,6 +38,8 @@ String commandOutput = (String)SessionMessages.get(renderRequest, "commandOutput
 				/>
 
 				<aui:input autoFocus="<%= windowState.equals(WindowState.MAXIMIZED) || windowState.equals(LiferayWindowState.POP_UP) %>" name="command" prefix='<%= (String)SessionMessages.get(renderRequest, "prompt") %>' value='<%= (String)SessionMessages.get(renderRequest, "command") %>' />
+
+				<liferay-captcha:captcha />
 			</aui:fieldset>
 		</aui:fieldset-group>
 
