@@ -7,6 +7,10 @@
 
 <%@ include file="/init.jsp" %>
 
+<liferay-ui:error exception="<%= CaptchaConfigurationException.class %>" message="a-captcha-error-occurred-please-contact-an-administrator" />
+<liferay-ui:error exception="<%= CaptchaException.class %>" message="captcha-verification-failed" />
+<liferay-ui:error exception="<%= CaptchaTextException.class %>" message="text-verification-failed" />
+
 <aui:fieldset-group markupView="lexicon">
 	<aui:fieldset>
 		<aui:input cssClass="lfr-input-text-container" label="incoming-pop-server" name="pop3Host" type="text" value="<%= PrefsPropsUtil.getString(PropsKeys.MAIL_SESSION_MAIL_POP3_HOST) %>" />
@@ -50,6 +54,8 @@
 		<aui:input cssClass="lfr-textarea-container" label="manually-specify-additional-javamail-properties-to-override-the-above-configuration" name="advancedProperties" type="textarea" value="<%= PrefsPropsUtil.getString(PropsKeys.MAIL_SESSION_MAIL_ADVANCED_PROPERTIES, StringPool.BLANK) %>" />
 	</aui:fieldset>
 </aui:fieldset-group>
+
+<liferay-captcha:captcha />
 
 <aui:button-row>
 	<aui:button cssClass="save-server-button" data-cmd="updateMail" value="save" />
