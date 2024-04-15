@@ -36,7 +36,24 @@ public class UpgradeProducts extends UpgradeProcess {
 			Product product = _productWebService.fetchProductByName(
 				oldProductName);
 
-			if (product == null) {
+			if (product != null) {
+				_updateExternalLink(
+					oldProductName, newProductName, product.getExternalLinks());
+
+				product.setName(newProductName);
+
+				Map<String, String> properties = product.getProperties();
+
+				properties.put("display-group-name", newDisplayGroupName);
+				properties.put("display-name", newDisplayName);
+
+				product.setProperties(properties);
+
+				_productWebService.updateProduct(
+					StringPool.BLANK, StringPool.BLANK, product.getKey(),
+					product);
+			}
+			else {
 				List<Product> products = _productWebService.getProducts(
 					ExternalLinkDomain.SALESFORCE,
 					ExternalLinkEntityName.SALESFORCE_PRODUCT, oldProductName,
@@ -56,23 +73,6 @@ public class UpgradeProducts extends UpgradeProcess {
 								" was not found.");
 					}
 				}
-			}
-			else {
-				_updateExternalLink(
-					oldProductName, newProductName, product.getExternalLinks());
-
-				product.setName(newProductName);
-
-				Map<String, String> properties = product.getProperties();
-
-				properties.put("display-group-name", newDisplayGroupName);
-				properties.put("display-name", newDisplayName);
-
-				product.setProperties(properties);
-
-				_productWebService.updateProduct(
-					StringPool.BLANK, StringPool.BLANK, product.getKey(),
-					product);
 			}
 		}
 		catch (Exception exception) {
@@ -99,7 +99,7 @@ public class UpgradeProducts extends UpgradeProcess {
 					StringPool.BLANK, StringPool.BLANK, externalLink.getKey(),
 					externalLink);
 
-				break;
+				return;
 			}
 		}
 	}
