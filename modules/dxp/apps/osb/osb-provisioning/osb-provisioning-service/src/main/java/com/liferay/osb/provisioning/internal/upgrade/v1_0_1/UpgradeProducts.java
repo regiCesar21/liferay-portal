@@ -85,8 +85,9 @@ public class UpgradeProducts extends UpgradeProcess {
 	}
 
 	private void _updateExternalLink(
-		String oldProductName, String newProductName,
-		ExternalLink[] externalLinks) {
+			String oldProductName, String newProductName,
+			ExternalLink[] externalLinks)
+		throws Exception {
 
 		for (ExternalLink externalLink : externalLinks) {
 			String entityId = externalLink.getEntityId();
@@ -94,18 +95,9 @@ public class UpgradeProducts extends UpgradeProcess {
 			if (entityId.equals(oldProductName)) {
 				externalLink.setEntityId(newProductName);
 
-				try {
-					_externalLinkWebService.updateExternalLink(
-						StringPool.BLANK, StringPool.BLANK,
-						externalLink.getKey(), externalLink);
-				}
-				catch (Exception exception) {
-					if (_log.isInfoEnabled()) {
-						_log.info(
-							"Product with name " + oldProductName +
-								" was not update.");
-					}
-				}
+				_externalLinkWebService.updateExternalLink(
+					StringPool.BLANK, StringPool.BLANK, externalLink.getKey(),
+					externalLink);
 
 				break;
 			}
