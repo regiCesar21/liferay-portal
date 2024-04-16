@@ -125,6 +125,8 @@ import com.liferay.portal.kernel.service.PortletLocalServiceUtil;
 import com.liferay.portal.kernel.service.PortletPreferencesLocalServiceUtil;
 import com.liferay.portal.kernel.service.ResourceLocalServiceUtil;
 import com.liferay.portal.kernel.service.ResourcePermissionLocalServiceUtil;
+import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.service.TicketLocalServiceUtil;
 import com.liferay.portal.kernel.service.UserLocalServiceUtil;
 import com.liferay.portal.kernel.service.UserServiceUtil;
@@ -984,6 +986,14 @@ public class PortalImpl implements Portal {
 				return url;
 			}
 
+			ServiceContext serviceContext =
+				ServiceContextThreadLocal.getServiceContext();
+
+			ThemeDisplay themeDisplay = serviceContext.getThemeDisplay();
+
+			boolean currentDomainIsPortalDomain = domain.equals(
+				themeDisplay.getPortalDomain());
+
 			for (String allowedDomain : allowedDomains) {
 				if (allowedDomain.startsWith("*.") &&
 					(allowedDomain.regionMatches(
@@ -995,7 +1005,10 @@ public class PortalImpl implements Portal {
 
 					return url;
 				}
-				else if (allowedDomain.equals(domain)) {
+				else if ((currentDomainIsPortalDomain &&
+						  allowedDomain.equals("PORTAL_DOMAIN")) ||
+						 allowedDomain.equals(domain)) {
+
 					return url;
 				}
 			}
