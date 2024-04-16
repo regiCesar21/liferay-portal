@@ -79,7 +79,6 @@ public class SamlIdpSpConnectionLocalServiceImpl
 		samlIdpSpConnection.setEnabled(enabled);
 		samlIdpSpConnection.setEncryptionForced(encryptionForced);
 		samlIdpSpConnection.setMetadataUpdatedDate(now);
-		samlIdpSpConnection.setExpandoBridgeAttributes(serviceContext);
 
 		if ((metadataXmlInputStream == null) &&
 			Validator.isNotNull(metadataUrl)) {
@@ -108,6 +107,7 @@ public class SamlIdpSpConnectionLocalServiceImpl
 		samlIdpSpConnection.setName(name);
 		samlIdpSpConnection.setNameIdAttribute(nameIdAttribute);
 		samlIdpSpConnection.setNameIdFormat(nameIdFormat);
+		samlIdpSpConnection.setExpandoBridgeAttributes(serviceContext);
 
 		return samlIdpSpConnectionPersistence.update(samlIdpSpConnection);
 	}
@@ -235,7 +235,6 @@ public class SamlIdpSpConnectionLocalServiceImpl
 			attributesNamespaceEnabled);
 		samlIdpSpConnection.setEnabled(enabled);
 		samlIdpSpConnection.setEncryptionForced(encryptionForced);
-		samlIdpSpConnection.setExpandoBridgeAttributes(serviceContext);
 
 		if ((metadataXmlInputStream == null) &&
 			Validator.isNotNull(metadataUrl)) {
@@ -269,6 +268,7 @@ public class SamlIdpSpConnectionLocalServiceImpl
 		samlIdpSpConnection.setName(name);
 		samlIdpSpConnection.setNameIdAttribute(nameIdAttribute);
 		samlIdpSpConnection.setNameIdFormat(nameIdFormat);
+		samlIdpSpConnection.setExpandoBridgeAttributes(serviceContext);
 
 		return samlIdpSpConnectionPersistence.update(samlIdpSpConnection);
 	}

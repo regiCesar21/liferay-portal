@@ -87,7 +87,6 @@ public class CommercePricingClassLocalServiceImpl
 		commercePricingClass.setUserName(user.getFullName());
 		commercePricingClass.setTitleMap(titleMap);
 		commercePricingClass.setDescriptionMap(descriptionMap);
-		commercePricingClass.setExpandoBridgeAttributes(serviceContext);
 
 		Date now = new Date();
 
@@ -95,6 +94,8 @@ public class CommercePricingClassLocalServiceImpl
 			now.getTime(), user.getTimeZone());
 
 		commercePricingClass.setLastPublishDate(calendar.getTime());
+
+		commercePricingClass.setExpandoBridgeAttributes(serviceContext);
 
 		commercePricingClass = commercePricingClassPersistence.update(
 			commercePricingClass);
