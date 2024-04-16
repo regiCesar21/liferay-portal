@@ -409,8 +409,8 @@ public class ProductEntryWrapper
 	}
 
 	@Override
-	public boolean isLXCSM() {
-		return _productEntry.isLXCSM();
+	public boolean isLiferayPaas() {
+		return _productEntry.isLiferayPaas();
 	}
 
 	@Override
