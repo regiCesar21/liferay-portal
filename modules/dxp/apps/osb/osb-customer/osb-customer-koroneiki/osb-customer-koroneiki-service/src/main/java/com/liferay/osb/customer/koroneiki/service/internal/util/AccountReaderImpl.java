@@ -472,12 +472,12 @@ public class AccountReaderImpl implements AccountReader {
 		}
 
 		if (name.startsWith("Commerce") || name.startsWith("DXP") ||
-			name.startsWith("LXC") || name.startsWith("Portal")) {
+			name.startsWith("Liferay SaaS") || name.startsWith("Portal")) {
 
 			return true;
 		}
 
-		if (name.contains("DXP Cloud") || name.contains("LXC SM")) {
+		if (name.contains("DXP Cloud") || name.contains("Liferay PaaS")) {
 			return true;
 		}
 

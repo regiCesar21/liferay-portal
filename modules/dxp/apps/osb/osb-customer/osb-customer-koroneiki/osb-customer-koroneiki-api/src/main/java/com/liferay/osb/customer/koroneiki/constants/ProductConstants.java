@@ -24,7 +24,7 @@ public class ProductConstants {
 
 	public static final String NAME_PREFIX_DXP = "DXP";
 
-	public static final String NAME_PREFIX_LXC_SM = "LXC SM";
+	public static final String NAME_PREFIX_LIFERAY_PAAS = "Liferay PaaS";
 
 	public static final String NAME_PREFIX_PORTAL = "Portal";
 

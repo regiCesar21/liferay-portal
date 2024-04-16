@@ -80,10 +80,10 @@ public class LicenseKeyServiceImpl extends LicenseKeyServiceBaseImpl {
 			sb.append(user.getUuid());
 			sb.append("') and state eq 'active' and (property_type eq ");
 			sb.append("'primary' or contains(name, 'Commerce for DXP Cloud') ");
-			sb.append("or contains(name, 'Commerce for LXC SM') ");
+			sb.append("or contains(name, 'Commerce for Liferay PaaS') ");
 			sb.append("or contains(name, 'Commerce Subscription') ");
 			sb.append("or contains(name, 'DXP Cloud Subscription') ");
-			sb.append("or contains(name, 'LXC SM Subscription') ");
+			sb.append("or contains(name, 'Liferay PaaS Subscription') ");
 			sb.append("or contains(name, 'Partnership'))");
 
 			List<ProductPurchaseView> productPurchaseViews =
@@ -105,7 +105,7 @@ public class LicenseKeyServiceImpl extends LicenseKeyServiceBaseImpl {
 					  curProductEntry.isCommerceSubscription()) &&
 					 productEntry.isCommerceSubscription()) ||
 					((curProductEntry.isDXP() || curProductEntry.isDXPCloud() ||
-					  curProductEntry.isLXCSM()) &&
+					  curProductEntry.isLiferayPaas()) &&
 					 productEntry.isDXP()) ||
 					(curProductEntry.isPortal() && productEntry.isPortal()) ||
 					(ArrayUtil.contains(

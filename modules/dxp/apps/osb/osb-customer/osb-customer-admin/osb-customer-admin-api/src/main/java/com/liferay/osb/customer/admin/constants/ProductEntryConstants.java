@@ -205,7 +205,7 @@ public class ProductEntryConstants {
 
 	public static final String ROOT_DXP_CLOUD = "DXP Cloud";
 
-	public static final String ROOT_LXC_SM = "LXC SM";
+	public static final String ROOT_LIFERAY_PAAS = "Liferay PaaS";
 
 	public static final String ROOT_NAME_DXP = "DXP";
 

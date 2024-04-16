@@ -123,7 +123,7 @@ public class ProductEntryLocalServiceImpl
 				  productEntry.isCommerceSubscription())) ||
 				(curProductEntry.isDXP() && productEntry.isDXP()) ||
 				(curProductEntry.isDXP() &&
-				 (productEntry.isDXPCloud() || productEntry.isLXCSM())) ||
+				 (productEntry.isDXPCloud() || productEntry.isLiferayPaas())) ||
 				(curProductEntry.isPortal() && productEntry.isPortal())) {
 
 				return curProductEntry;

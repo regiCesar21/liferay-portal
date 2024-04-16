@@ -36,10 +36,10 @@ long[] portalProductMinorVersions = StringUtil.split(PrefsParamUtil.getString(po
 		sb.append(user.getUuid());
 		sb.append("') and state eq 'active' and (property_type eq 'primary' ");
 		sb.append("or contains(name, 'Commerce for DXP Cloud') ");
-		sb.append("or contains(name, 'Commerce for LXC SM') ");
+		sb.append("or contains(name, 'Commerce for Liferay PaaS') ");
 		sb.append("or contains(name, 'Commerce Subscription') ");
 		sb.append("or contains(name, 'DXP Cloud Subscription') ");
-		sb.append("or contains(name, 'LXC SM Subscription') ");
+		sb.append("or contains(name, 'Liferay PaaS Subscription') ");
 		sb.append("or contains(name, 'Partnership'))");
 
 		List<ProductPurchaseView> productPurchaseViews = productPurchaseViewWebService.getProductPurchaseViews(StringPool.BLANK, sb.toString(), 1, 1000, StringPool.BLANK);
@@ -212,7 +212,7 @@ long[] portalProductMinorVersions = StringUtil.split(PrefsParamUtil.getString(po
 										productEntryRootName = ProductEntryConstants.ROOT_COMMERCE_SUBSCRIPTION;
 									}
 
-									if (productEntry.isDXP() || productEntry.isDXPCloud() || productEntry.isLXCSM()) {
+									if (productEntry.isDXP() || productEntry.isDXPCloud() || productEntry.isLiferayPaas()) {
 										productEntryRootName = ProductEntryConstants.ROOT_NAME_DXP;
 									}
 

@@ -487,7 +487,7 @@ public class AccountEntryViewDisplayContext {
 		return searchContainer;
 	}
 
-	public boolean hasOnlyLXC() throws Exception {
+	public boolean hasOnlyLiferaySaas() throws Exception {
 		StringBundler sb = new StringBundler(3);
 
 		sb.append("accountKey eq '");
@@ -504,7 +504,7 @@ public class AccountEntryViewDisplayContext {
 
 			if (ArrayUtil.contains(ProductConstants.NAMES_PARTNERSHIP, name) ||
 				name.contains(ProductConstants.NAME_PREFIX_DXP) ||
-				name.contains(ProductConstants.NAME_PREFIX_LXC_SM) ||
+				name.contains(ProductConstants.NAME_PREFIX_LIFERAY_PAAS) ||
 				name.contains(ProductConstants.NAME_PREFIX_PORTAL)) {
 
 				return false;

@@ -140,7 +140,7 @@ public class ProductEntryImpl extends ProductEntryBaseImpl {
 		String name = getName();
 
 		if (name.startsWith("Commerce for DXP Cloud") ||
-			name.contains("Commerce for LXC SM")) {
+			name.contains("Commerce for Liferay PaaS")) {
 
 			return true;
 		}
@@ -220,10 +220,10 @@ public class ProductEntryImpl extends ProductEntryBaseImpl {
 		return false;
 	}
 
-	public boolean isLXCSM() {
+	public boolean isLiferayPaas() {
 		String name = getName();
 
-		if (name.contains(ProductEntryConstants.ROOT_LXC_SM)) {
+		if (name.contains(ProductEntryConstants.ROOT_LIFERAY_PAAS)) {
 			return true;
 		}
 

@@ -17,7 +17,7 @@ boolean permitAdd = false;
 boolean permitDelete = false;
 boolean permitEdit = false;
 
-if ((accountEntry != null) && (!accountEntryViewDisplayContext.hasOnlyLXC() || permissionChecker.isOmniadmin())) {
+if ((accountEntry != null) && (!accountEntryViewDisplayContext.hasOnlyLiferaySaas() || permissionChecker.isOmniadmin())) {
 	addEnvironmentURL = accountEntryViewDisplayContext.getAccountEnvironmentAddURL(accountEntry);
 	accountEnvironmentsJSONArray = accountEntryViewDisplayContext.getAccountEnvironmentsJSONArray();
 	environmentConfigurationJSONObject = accountEntryViewDisplayContext.getEnvironmentConfigurationJSONObject();
@@ -29,7 +29,7 @@ if ((accountEntry != null) && (!accountEntryViewDisplayContext.hasOnlyLXC() || p
 
 <liferay-util:include page="/account_entry_details/customer_portal_banner.jsp" servletContext="<%= application %>" />
 
-<c:if test="<%= !accountEntryViewDisplayContext.hasOnlyLXC() || permissionChecker.isOmniadmin() %>">
+<c:if test="<%= !accountEntryViewDisplayContext.hasOnlyLiferaySaas() || permissionChecker.isOmniadmin() %>">
 	<div class="account-environments card" id="<portlet:namespace />accountEnvironments"></div>
 
 	<aui:script>

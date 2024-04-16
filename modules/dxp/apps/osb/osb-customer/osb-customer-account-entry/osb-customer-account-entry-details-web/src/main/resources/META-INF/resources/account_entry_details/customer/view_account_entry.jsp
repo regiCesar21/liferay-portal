@@ -22,13 +22,13 @@ PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(request, "project
 
 String tabNames = StringPool.BLANK;
 
-if (!accountEntryViewDisplayContext.hasOnlyLXC()) {
+if (!accountEntryViewDisplayContext.hasOnlyLiferaySaas()) {
 	tabNames = "overview,";
 }
 
 tabNames += "attachments";
 
-if (GitHubConfigurationValues.GITHUB_FEATURE_ENABLED && !accountEntryViewDisplayContext.hasOnlyLXC()) {
+if (GitHubConfigurationValues.GITHUB_FEATURE_ENABLED && !accountEntryViewDisplayContext.hasOnlyLiferaySaas()) {
 	tabNames += ",source-code-access";
 }
 %>
@@ -53,10 +53,10 @@ if (GitHubConfigurationValues.GITHUB_FEATURE_ENABLED && !accountEntryViewDisplay
 <liferay-ui:error exception="<%= DuplicateAccountEnvironmentException.class %>" message="please-provide-a-unique-environment-name" />
 
 <c:choose>
-	<c:when test='<%= tabs1.equals("overview") && !accountEntryViewDisplayContext.hasOnlyLXC() %>'>
+	<c:when test='<%= tabs1.equals("overview") && !accountEntryViewDisplayContext.hasOnlyLiferaySaas() %>'>
 		<liferay-util:include page="/account_entry_details/customer/overview.jsp" servletContext="<%= application %>" />
 	</c:when>
-	<c:when test='<%= tabs1.equals("source-code-access") && GitHubConfigurationValues.GITHUB_FEATURE_ENABLED && !accountEntryViewDisplayContext.hasOnlyLXC() %>'>
+	<c:when test='<%= tabs1.equals("source-code-access") && GitHubConfigurationValues.GITHUB_FEATURE_ENABLED && !accountEntryViewDisplayContext.hasOnlyLiferaySaas() %>'>
 		<liferay-util:include page="/account_entry_details/source_code_access.jsp" servletContext="<%= application %>" />
 	</c:when>
 	<c:otherwise>

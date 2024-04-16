@@ -55,7 +55,7 @@ public class EntitlementCreateMessageSubscriber
 			return;
 		}
 
-		if (name.equals(EntitlementConstants.NAME_CUSTOMER_LXC_SM)) {
+		if (name.equals(EntitlementConstants.NAME_CUSTOMER_LIFERAY_PAAS)) {
 			_dxpCloudStatusPageSubscriptionUtil.subscribe(user);
 		}
 
