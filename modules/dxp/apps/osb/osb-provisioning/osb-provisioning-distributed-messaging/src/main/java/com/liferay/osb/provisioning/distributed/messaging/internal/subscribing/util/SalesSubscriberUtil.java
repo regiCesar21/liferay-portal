@@ -129,19 +129,14 @@ public class SalesSubscriberUtil {
 			if (Validator.isNotNull(liferayVersion)) {
 				properties.put("liferayVersion", liferayVersion);
 			}
+			else {
+				properties.remove("liferayVersion");
+			}
 
 			projectSolution = projectJSONObject.getString("projectSolution");
 		}
 		else {
-			liferayVersion = jsonObject.getString("currentLiferayVersion");
 			projectSolution = jsonObject.getString("projectSolution");
-		}
-
-		if (Validator.isNotNull(liferayVersion)) {
-			properties.put("liferayVersion", liferayVersion);
-		}
-		else {
-			properties.remove("liferayVersion");
 		}
 
 		if (Validator.isNotNull(projectSolution)) {
