@@ -55,9 +55,16 @@ const SelectLayout = ({
 
 			const nodes = selectedNodes.map(normalizeLayout);
 
-			const nextData = multiSelection ? nodes : [nodes];
+			let nextData;
 
-			setSelectionData(nextData);
+			if (multiSelection) {
+				nextData = nodes;
+
+				setSelectionData(nextData);
+			}
+			else {
+				nextData = nodes[0];
+			}
 
 			if (followURLOnTitleClick) {
 				Liferay.Util.getOpener().document.location.href = nextData.url;
