@@ -16,6 +16,7 @@ import com.liferay.osb.asah.common.util.ListUtil;
 import com.liferay.osb.asah.common.util.ProjectIdThreadLocal;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Objects;
 
@@ -48,6 +49,11 @@ public class ProjectsRestController extends BaseRestController {
 		@PathVariable String id) {
 
 		_projectDog.deleteProject(deleteData, id);
+	}
+
+	@GetMapping("/{id}/last-seen-date")
+	public Date getLastSeenDate(@PathVariable String id) {
+		return _projectDog.fetchLastSeenDate(id);
 	}
 
 	@GetMapping("/details")

@@ -9,11 +9,13 @@ import com.liferay.osb.asah.common.bigquery.BigQuerySchemaManager;
 import com.liferay.osb.asah.common.entity.Project;
 import com.liferay.osb.asah.common.http.NanitesHttp;
 import com.liferay.osb.asah.common.postgresql.PostgreSQLSchemaManager;
+import com.liferay.osb.asah.common.repository.BQEventRepository;
 import com.liferay.osb.asah.common.repository.ProjectRepository;
 import com.liferay.osb.asah.common.spring.http.exception.OSBAsahException;
 import com.liferay.osb.asah.common.util.ProjectIdThreadLocal;
 import com.liferay.osb.asah.common.util.ReleaseInfo;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -73,6 +75,19 @@ public class ProjectDog {
 		}
 	}
 
+	public Date fetchLastSeenDate(String id) {
+		try {
+			ProjectIdThreadLocal.setProjectId(id);
+
+			Optional<Date> dateOption = _bqEventRepository.getLastSeenDate();
+
+			return dateOption.orElse(null);
+		}
+		finally {
+			ProjectIdThreadLocal.remove();
+		}
+	}
+
 	public Project getProject(String projectId) {
 		try {
 			ProjectIdThreadLocal.setGlobalContext(true);
@@ -119,6 +134,9 @@ public class ProjectDog {
 
 	@Autowired
 	private BigQuerySchemaManager _bigQuerySchemaManager;
+
+	@Autowired
+	private BQEventRepository _bqEventRepository;
 
 	@Autowired
 	private NanitesHttp _nanitesHttp;
