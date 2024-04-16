@@ -119,7 +119,13 @@ public class AccountEnvironmentPermission {
 			for (ContactRole contactRole : partnerContactRoles) {
 				String name = contactRole.getName();
 
-				if (name.equals(ContactRoleConstants.NAME_PARTNER_MEMBER)) {
+				if (name.equals(
+						ContactRoleConstants.NAME_PARTNER_MARKETING_USER) ||
+					name.equals(ContactRoleConstants.NAME_PARTNER_MEMBER) ||
+					name.equals(ContactRoleConstants.NAME_PARTNER_SALES_USER) ||
+					name.equals(
+						ContactRoleConstants.NAME_PARTNER_TECHNICAL_USER)) {
+
 					return true;
 				}
 			}

@@ -131,7 +131,12 @@ public class AccountEntryPermission {
 				if (name.equals(
 						ContactRoleConstants.NAME_SUPPORT_ADMINISTRATOR) ||
 					name.equals(ContactRoleConstants.NAME_PARTNER_MANAGER) ||
+					name.equals(
+						ContactRoleConstants.NAME_PARTNER_MARKETING_USER) ||
 					name.equals(ContactRoleConstants.NAME_PARTNER_MEMBER) ||
+					name.equals(ContactRoleConstants.NAME_PARTNER_SALES_USER) ||
+					name.equals(
+						ContactRoleConstants.NAME_PARTNER_TECHNICAL_USER) ||
 					name.equals(ContactRoleConstants.NAME_SUPPORT_REQUESTER) ||
 					name.equals(ContactRoleConstants.NAME_SUPPORT_USER)) {
 
