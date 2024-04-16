@@ -103,6 +103,8 @@ public interface CustomBQEventRepository {
 	public List<Map<String, String>>
 		getKeywordsGroupedByChannelIdAndSessionIdAndUserId(Date eventDate);
 
+	public Optional<Date> getLastSeenDate();
+
 	public Map<String, Date> getLastSeenDateDateGroupedByColumnName(
 		String columnName, int size);
 

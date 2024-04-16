@@ -664,6 +664,35 @@ public class BQEventRepositoryImpl
 	}
 
 	@Override
+	public Optional<Date> getLastSeenDate() {
+		return _queryExecutor.queryForObject(
+			recordMap -> (Date)recordMap.get("lastseendate"),
+			_dslContext.select(
+				DSL.max(
+					DSL.field("lastseendate")
+				).as(
+					"lastseendate"
+				)
+			).from(
+				_dslContext.select(
+					DSL.max(
+						DSL.field("eventdate")
+					).as(
+						"lastseendate"
+					)
+				).from(
+					DSL.table("BQEvent")
+				).unionAll(
+					_dslContext.select(
+						DSL.max(DSL.field("modifieddate"))
+					).from(
+						DSL.table("DXPEntity")
+					)
+				)
+			));
+	}
+
+	@Override
 	public Map<String, Date> getLastSeenDateDateGroupedByColumnName(
 		String columnName, int size) {
 
