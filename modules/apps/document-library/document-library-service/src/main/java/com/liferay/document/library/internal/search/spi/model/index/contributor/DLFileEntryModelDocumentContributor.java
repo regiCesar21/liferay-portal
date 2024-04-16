@@ -105,6 +105,10 @@ public class DLFileEntryModelDocumentContributor
 						document.addFile(
 							localizedField, inputStream, dlFileEntry.getTitle(),
 							PropsValues.DL_FILE_INDEXING_MAX_SIZE);
+
+						document.addText(
+							Field.DEFAULT_LANGUAGE_ID,
+							LocaleUtil.toLanguageId(defaultLocale));
 					}
 					catch (IOException ioException) {
 						if (_log.isWarnEnabled()) {
@@ -121,6 +125,7 @@ public class DLFileEntryModelDocumentContributor
 
 			document.addKeyword(
 				Field.CLASS_TYPE_ID, dlFileEntry.getFileEntryTypeId());
+
 			document.addText(Field.DESCRIPTION, dlFileEntry.getDescription());
 			document.addKeyword(Field.FOLDER_ID, dlFileEntry.getFolderId());
 			document.addKeyword(Field.HIDDEN, dlFileEntry.isInHiddenFolder());
