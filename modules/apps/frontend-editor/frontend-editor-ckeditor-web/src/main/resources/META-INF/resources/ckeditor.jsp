@@ -633,6 +633,8 @@ name = HtmlUtil.escapeJS(name);
 			}
 			else {
 				instanceDataReady = true;
+
+				ckEditor.resetUndo();
 			}
 
 			window['<%= name %>']._setStyles();
