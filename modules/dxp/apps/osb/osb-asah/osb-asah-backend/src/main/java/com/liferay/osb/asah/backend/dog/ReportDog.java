@@ -161,6 +161,35 @@ public class ReportDog {
 		return file;
 	}
 
+	public Long getCSVReportCount(
+		@Nullable String assetId, @Nullable String assetType, Long channelId,
+		@Nullable String query, @Nullable TimeRange timeRange, String type) {
+
+		if (StringUtils.equals(type, "blog") ||
+			StringUtils.equals(type, "document") ||
+			StringUtils.equals(type, "form") ||
+			StringUtils.equals(type, "journal") ||
+			StringUtils.equals(type, "page")) {
+
+			return _getAssetMetricsCount(channelId, query, timeRange, type);
+		}
+		else if (StringUtils.equals(type, "individual") &&
+				 StringUtils.isEmpty(assetId) &&
+				 StringUtils.isEmpty(assetType)) {
+
+			return _bqIndividualRepository.countBQIndividuals(
+				null, channelId, null, null, null, query, null);
+		}
+		else if (StringUtils.equals(type, "individual") &&
+				 !StringUtils.isEmpty(assetType)) {
+
+			return _getAssetIndividualRowsCount(
+				assetId, assetType, channelId, query, timeRange);
+		}
+
+		return null;
+	}
+
 	private List<String[]> _getAssetBlogRows(
 		Long channelId, String keywords, Set<String> selectedMetrics,
 		String[] sorts, TimeRange timeRange, String type) {
@@ -308,6 +337,18 @@ public class ReportDog {
 		return rows;
 	}
 
+	private long _getAssetIndividualRowsCount(
+		@Nullable String assetId, String assetType, Long channelId,
+		@Nullable String query, @Nullable TimeRange timeRange) {
+
+		AssetMetricRepository<?> assetMetricRepository =
+			_assetMetricRepositoryMap.get(AssetType.of(assetType));
+
+		return assetMetricRepository.getKnownIndividualsCount(
+			assetId, null, channelId, _getMetricType(AssetType.of(assetType)),
+			query, timeRange);
+	}
+
 	private List<String[]> _getAssetJournalRows(
 		Long channelId, String keywords, Set<String> selectedMetrics,
 		String[] sorts, TimeRange timeRange, String type) {
@@ -347,6 +388,16 @@ public class ReportDog {
 		return assetMetricRepository.getAssetMetrics(
 			channelId, keywords, null, PageRequest.of(0, _MAX_SIZE, sorts),
 			selectedMetrics, timeRange);
+	}
+
+	private Long _getAssetMetricsCount(
+		Long channelId, String keywords, TimeRange timeRange, String type) {
+
+		AssetMetricRepository assetMetricRepository =
+			_assetMetricRepositoryMap.get(AssetType.of(type));
+
+		return assetMetricRepository.getAssetMetricsCount(
+			channelId, keywords, null, timeRange);
 	}
 
 	private List<String[]> _getAssetPageRows(

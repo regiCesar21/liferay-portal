@@ -196,6 +196,10 @@
 			"href": "{url}/individual-segments/preview-disabled-segments{?dataSourceId,filter,page,size,sort*}",
 			"templated": true
 		},
+		"reports-export-csv-count": {
+			"href": "{url}/reports/export/csv/{type}/count{?assetId,assetType,channelId,fromDate,query,rangeKey,toDate}",
+			"templated": true
+		},
 		"self": {
 			"href": "{url}"
 		},

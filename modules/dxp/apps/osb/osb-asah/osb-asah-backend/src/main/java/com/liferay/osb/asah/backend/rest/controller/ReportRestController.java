@@ -96,6 +96,40 @@ public class ReportRestController {
 		return bodyBuilder.body(new FileSystemResource(file.getAbsolutePath()));
 	}
 
+	@GetMapping("/export/csv/{type}/count")
+	public ResponseEntity<Long> getCSVReportCount(
+		@RequestParam(required = false) String assetId,
+		@RequestParam(required = false) String assetType,
+		@RequestParam String channelId,
+		@RequestParam(name = "fromDate", required = false) String fromDate,
+		@RequestParam(required = false) String query,
+		@RequestParam(defaultValue = "30") int rangeKey,
+		@RequestParam(name = "toDate", required = false) String toDate,
+		@PathVariable String type) {
+
+		if (!StringUtils.equals(type, "individual") ||
+			!StringUtils.isEmpty(assetType)) {
+
+			_validateDateRange(fromDate, toDate);
+		}
+
+		TimeRange timeRange = null;
+
+		if ((fromDate != null) && (toDate != null)) {
+			timeRange = TimeRange.of(
+				LocalDateTime.parse(toDate, _dateTimeFormatter),
+				LocalDateTime.parse(fromDate, _dateTimeFormatter));
+		}
+		else {
+			timeRange = TimeRange.of(rangeKey);
+		}
+
+		return ResponseEntity.ok(
+			_reportDog.getCSVReportCount(
+				assetId, assetType, Long.valueOf(channelId), query, timeRange,
+				type));
+	}
+
 	private void _validateDateRange(String fromDate, String toDate) {
 		if ((fromDate == null) && (toDate == null)) {
 			return;
