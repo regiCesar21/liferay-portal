@@ -187,7 +187,6 @@ public class CommercePriceEntryLocalServiceImpl
 		commercePriceEntry.setDiscountLevel3(discountLevel3);
 		commercePriceEntry.setDiscountLevel4(discountLevel4);
 		commercePriceEntry.setDisplayDate(displayDate);
-		commercePriceEntry.setExpandoBridgeAttributes(serviceContext);
 
 		if ((expirationDate == null) || expirationDate.after(now)) {
 			commercePriceEntry.setStatus(WorkflowConstants.STATUS_DRAFT);
@@ -199,6 +198,7 @@ public class CommercePriceEntryLocalServiceImpl
 		commercePriceEntry.setExpirationDate(expirationDate);
 		commercePriceEntry.setStatusByUserId(user.getUserId());
 		commercePriceEntry.setStatusDate(serviceContext.getModifiedDate(now));
+		commercePriceEntry.setExpandoBridgeAttributes(serviceContext);
 
 		commercePriceEntry = commercePriceEntryPersistence.update(
 			commercePriceEntry);
@@ -668,7 +668,6 @@ public class CommercePriceEntryLocalServiceImpl
 		commercePriceEntry.setDiscountLevel3(discountLevel3);
 		commercePriceEntry.setDiscountLevel4(discountLevel4);
 		commercePriceEntry.setBulkPricing(bulkPricing);
-		commercePriceEntry.setExpandoBridgeAttributes(serviceContext);
 
 		commercePriceEntry.setDisplayDate(displayDate);
 
@@ -682,6 +681,7 @@ public class CommercePriceEntryLocalServiceImpl
 		commercePriceEntry.setExpirationDate(expirationDate);
 		commercePriceEntry.setStatusByUserId(user.getUserId());
 		commercePriceEntry.setStatusDate(serviceContext.getModifiedDate(now));
+		commercePriceEntry.setExpandoBridgeAttributes(serviceContext);
 
 		commercePriceEntry = commercePriceEntryPersistence.update(
 			commercePriceEntry);
