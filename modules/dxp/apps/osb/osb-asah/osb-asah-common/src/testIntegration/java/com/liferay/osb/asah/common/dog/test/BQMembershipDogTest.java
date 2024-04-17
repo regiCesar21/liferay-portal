@@ -885,6 +885,121 @@ public class BQMembershipDogTest
 			2L, _bqMembershipDog.getBQMembershipsCount(segment.getId()));
 	}
 
+	@BQSQLResource(resourcePath = "test_bq_memberships_events.sql")
+	@Test
+	public void testUpdateBQMmbershipsWithEvents() {
+		Segment segment = new Segment();
+
+		segment.setChannelId(11L);
+		segment.setId(1L);
+
+		_bqMembershipDog.updateBQMemberships(
+			"(events.filterByCount(filter='(applicationId eq ''CustomEvent'' " +
+				"and eventId eq ''addedToWishlist'' and eventDate gt " +
+					"''2023-11-01'')', operator='ge', value=1))",
+			Boolean.TRUE, segment);
+
+		Assertions.assertEquals(
+			2L, _bqMembershipDog.getBQMembershipsCount(segment.getId()));
+
+		_bqMembershipDog.updateBQMemberships(
+			"(not(events.filterByCount(filter='(applicationId eq " +
+				"''CustomEvent'' and eventId eq ''addedToWishlist'' and " +
+					"eventDate gt ''2023-11-01'')', operator='ge', value=1)))",
+			Boolean.TRUE, segment);
+
+		Assertions.assertEquals(
+			1L, _bqMembershipDog.getBQMembershipsCount(segment.getId()));
+
+		_bqMembershipDog.updateBQMemberships(
+			"(events.filterByCount(filter='(applicationId eq ''CustomEvent'' " +
+				"and eventId eq ''addedToWishlist'' and eventDate lt " +
+					"''2023-12-17'')', operator='ge', value=1))",
+			Boolean.TRUE, segment);
+
+		Assertions.assertEquals(
+			2L, _bqMembershipDog.getBQMembershipsCount(segment.getId()));
+
+		_bqMembershipDog.updateBQMemberships(
+			"(events.filterByCount(filter='(applicationId eq ''CustomEvent'' " +
+				"and eventId eq ''addedToWishlist'' and eventDate eq " +
+					"''2023-12-17'')', operator='ge', value=1))",
+			Boolean.TRUE, segment);
+
+		Assertions.assertEquals(
+			1L, _bqMembershipDog.getBQMembershipsCount(segment.getId()));
+
+		_bqMembershipDog.updateBQMemberships(
+			"(events.filterByCount(filter='(applicationId eq ''CustomEvent'' " +
+				"and eventId eq ''addedToWishlist'')', operator='ge', " +
+					"value=1))",
+			Boolean.TRUE, segment);
+
+		Assertions.assertEquals(
+			2L, _bqMembershipDog.getBQMembershipsCount(segment.getId()));
+
+		_bqMembershipDog.updateBQMemberships(
+			"(events.filterByCount(filter='(applicationId eq ''CustomEvent'' " +
+				"and eventId eq ''addedToWishlist'' and eventDate gt " +
+					"''2023-11-01'')', operator='le', value=2))",
+			Boolean.TRUE, segment);
+
+		Assertions.assertEquals(
+			2L, _bqMembershipDog.getBQMembershipsCount(segment.getId()));
+
+		_bqMembershipDog.updateBQMemberships(
+			"(events.filterByCount(filter='(applicationId eq ''CustomEvent'' " +
+				"and eventId eq ''addedToWishlist'' and between(eventDate, " +
+					"''2023-12-16'', ''2023-12-17''))', operator='eq', " +
+						"value=2))",
+			Boolean.TRUE, segment);
+
+		Assertions.assertEquals(
+			1L, _bqMembershipDog.getBQMembershipsCount(segment.getId()));
+
+		String assetId =
+			"da70dfa4d9f95ac979f921e8e623358236313f334afcd06cddf8a5621cf6a1e9";
+
+		_bqMembershipDog.updateBQMemberships(
+			"(activities.filterByCount(filter='(activityKey eq " +
+				"''WebContent#webContentViewed#" + assetId + "'' and day eq " +
+					"''2023-12-16'')', operator='ge', value=1)) and " +
+						"(events.filterByCount(filter='(applicationId eq " +
+							"''CustomEvent'' and eventId eq " +
+								"''addedToWishlist'' and eventDate gt " +
+									"''2023-11-01'')', operator='ge', " +
+										"value=1))",
+			Boolean.TRUE, segment);
+
+		Assertions.assertEquals(
+			1L, _bqMembershipDog.getBQMembershipsCount(segment.getId()));
+
+		_bqMembershipDog.updateBQMemberships(
+			"(activities.filterByCount(filter='(activityKey eq " +
+				"''WebContent#webContentViewed#" + assetId + "'' and day eq " +
+					"''2023-12-16'')', operator='ge', value=1)) or " +
+						"(events.filterByCount(filter='(applicationId eq " +
+							"''CustomEvent'' and eventId eq " +
+								"''addedToWishlist'' and eventDate gt " +
+									"''2023-11-01'')', operator='ge', " +
+										"value=1))",
+			Boolean.TRUE, segment);
+
+		Assertions.assertEquals(
+			2L, _bqMembershipDog.getBQMembershipsCount(segment.getId()));
+
+		_bqMembershipDog.updateBQMemberships(
+			"(events.filterByCount(filter='(applicationId eq ''CustomEvent'' " +
+				"and eventId eq ''addedToWishlist'')', operator='ge', " +
+					"value=1)) and (events.filterByCount(filter='(" +
+						"applicationId eq ''CustomEvent'' and eventId eq " +
+							"''purchased'')', operator='ge', value=1))",
+			Boolean.TRUE, segment);
+
+		Assertions.assertEquals(
+			1L, _bqMembershipDog.getBQMembershipsCount(segment.getId()));
+	}
+
 	private void _assertBQMemberships(
 		List<BQMembership> bqMemberships,
 		Map<String, String> expectedIndividuals) {
