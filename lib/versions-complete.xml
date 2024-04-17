@@ -2795,7 +2795,7 @@
 			</library>
 			<library>
 				<file-name>com.liferay.portal.search.elasticsearch6.impl.jar!snakeyaml.jar</file-name>
-				<version>2.0</version>
+				<version>2.2</version>
 				<project-name>SnakeYAML</project-name>
 				<project-url>https://bitbucket.org/snakeyaml/snakeyaml</project-url>
 				<licenses>
@@ -8269,7 +8269,7 @@
 			</library>
 			<library>
 				<file-name>lib/portal/spring-web.jar</file-name>
-				<version>4.3.30</version>
+				<version>4.3.30.LIFERAY-PATCHED-1</version>
 				<project-name>Spring</project-name>
 				<project-url>http://www.springframework.org</project-url>
 				<licenses>
