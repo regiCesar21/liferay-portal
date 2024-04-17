@@ -6,12 +6,14 @@
 package com.liferay.osb.asah.common.dog.test;
 
 import com.liferay.osb.asah.common.OSBAsahCommonSpringTestContext;
+import com.liferay.osb.asah.common.date.DateUtil;
 import com.liferay.osb.asah.common.dog.ProjectDog;
 import com.liferay.osb.asah.common.entity.Project;
 import com.liferay.osb.asah.common.http.NanitesHttp;
 import com.liferay.osb.asah.common.postgresql.PostgreSQLSchemaManager;
 import com.liferay.osb.asah.common.repository.ProjectRepository;
 import com.liferay.osb.asah.common.util.ProjectIdThreadLocal;
+import com.liferay.osb.asah.test.util.annotation.BQSQLResource;
 import com.liferay.osb.asah.test.util.annotation.SQLResource;
 import com.liferay.osb.asah.test.util.spring.OSBAsahTestExecutionListenersContext;
 
@@ -77,6 +79,33 @@ public class ProjectDogTest
 		Assertions.assertTrue(_projectRepository.existsById("project1"));
 		Assertions.assertFalse(_projectRepository.existsById("project2"));
 		Assertions.assertTrue(_projectRepository.existsById("project3"));
+	}
+
+	@BQSQLResource(resourcePath = "test_fetch_last_seen_date_1.sql")
+	@Test
+	public void testFetchLastSeenDate1() {
+		Assertions.assertEquals(
+			DateUtil.toUTCDate("2024-04-19T12:35:00.000Z"),
+			_projectDog.fetchLastSeenDate("test"));
+
+		ProjectIdThreadLocal.setGlobalContext(true);
+	}
+
+	@BQSQLResource(resourcePath = "test_fetch_last_seen_date_2.sql")
+	@Test
+	public void testFetchLastSeenDate2() {
+		Assertions.assertEquals(
+			DateUtil.toUTCDate("2024-04-21T12:35:00.000Z"),
+			_projectDog.fetchLastSeenDate("test"));
+
+		ProjectIdThreadLocal.setGlobalContext(true);
+	}
+
+	@Test
+	public void testFetchLastSeenDate3() {
+		Assertions.assertNull(_projectDog.fetchLastSeenDate("test"));
+
+		ProjectIdThreadLocal.setGlobalContext(true);
 	}
 
 	@SQLResource(resourcePath = "test_projects.sql")
