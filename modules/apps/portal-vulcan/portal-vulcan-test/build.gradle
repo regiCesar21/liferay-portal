@@ -6,7 +6,7 @@ dependencies {
 	testIntegrationImplementation group: "org.apache.cxf", name: "cxf-core", version: "3.4.10"
 	testIntegrationImplementation group: "org.apache.cxf", name: "cxf-rt-frontend-jaxrs", version: "3.4.10"
 	testIntegrationImplementation group: "org.osgi", name: "org.osgi.service.cm", version: "1.5.0"
-	testIntegrationImplementation group: "org.springframework", name: "spring-test", version: "5.2.24.RELEASE"
+	testIntegrationImplementation group: "org.springframework", name: "spring-test", version: "5.3.33"
 	testIntegrationImplementation project(":apps:portal-configuration:portal-configuration-test-util")
 	testIntegrationImplementation project(":apps:portal-odata:portal-odata-api")
 	testIntegrationImplementation project(":apps:portal-vulcan:portal-vulcan-api")

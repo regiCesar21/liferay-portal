@@ -28,7 +28,7 @@ dependencies {
 
 	testIntegrationImplementation group: "com.liferay", name: "com.liferay.arquillian.extension.junit.bridge", version: "1.0.19"
 	testIntegrationImplementation group: "org.osgi", name: "org.osgi.service.cm", version: "1.5.0"
-	testIntegrationImplementation group: "org.springframework", name: "spring-web", version: "5.2.24.RELEASE"
+	testIntegrationImplementation group: "org.springframework", name: "spring-web", version: "5.3.33"
 	testIntegrationImplementation project(":apps:dynamic-data-mapping:dynamic-data-mapping-form-builder")
 	testIntegrationImplementation project(":apps:export-import:export-import-test-util")
 	testIntegrationImplementation project(":apps:journal:journal-test-util")

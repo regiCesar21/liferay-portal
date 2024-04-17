@@ -1,5 +1,5 @@
 dependencies {
 	testIntegrationImplementation group: "com.liferay", name: "com.liferay.arquillian.extension.junit.bridge", version: "1.0.19"
 	testIntegrationImplementation group: "com.liferay.portal", name: "com.liferay.portal.impl", version: "default"
-	testIntegrationImplementation group: "org.springframework", name: "spring-context", version: "5.2.24.RELEASE"
+	testIntegrationImplementation group: "org.springframework", name: "spring-context", version: "5.3.33"
 }
