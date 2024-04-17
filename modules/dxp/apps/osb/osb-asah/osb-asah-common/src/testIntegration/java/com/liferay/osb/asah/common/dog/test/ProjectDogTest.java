@@ -47,6 +47,8 @@ public class ProjectDogTest
 
 	@AfterEach
 	public void tearDown() {
+		ProjectIdThreadLocal.setGlobalContext(true);
+
 		_projectRepository.deleteAll();
 
 		ProjectIdThreadLocal.setGlobalContext(false);
@@ -87,8 +89,6 @@ public class ProjectDogTest
 		Assertions.assertEquals(
 			DateUtil.toUTCDate("2024-04-19T12:35:00.000Z"),
 			_projectDog.fetchLastSeenDate("test"));
-
-		ProjectIdThreadLocal.setGlobalContext(true);
 	}
 
 	@BQSQLResource(resourcePath = "test_fetch_last_seen_date_2.sql")
@@ -97,15 +97,11 @@ public class ProjectDogTest
 		Assertions.assertEquals(
 			DateUtil.toUTCDate("2024-04-21T12:35:00.000Z"),
 			_projectDog.fetchLastSeenDate("test"));
-
-		ProjectIdThreadLocal.setGlobalContext(true);
 	}
 
 	@Test
 	public void testFetchLastSeenDate3() {
 		Assertions.assertNull(_projectDog.fetchLastSeenDate("test"));
-
-		ProjectIdThreadLocal.setGlobalContext(true);
 	}
 
 	@SQLResource(resourcePath = "test_projects.sql")
