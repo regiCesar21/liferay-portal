@@ -178,8 +178,7 @@ public class FilterExpressionReferencedObjectsVisitor
 
 			referencedAssetIds.add(valueParts[2]);
 		}
-
-		if (fieldName.startsWith("eventId")) {
+		else if (fieldName.startsWith("eventId")) {
 			Set<String> referencedCustomEventIds = _referencedObjectIds.get(
 				"referencedCustomEventIds");
 
