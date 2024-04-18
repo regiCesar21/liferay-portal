@@ -82,7 +82,7 @@ definition {
 		task ("Add a web content article with '${webContentTitle}' as the title and '${webContentContent}' as the content") {
 			WebContentNavigator.gotoAddCP();
 
-			WebContent.addCP(
+			WebContent.addViaCKEditor(
 				webContentContent = ${webContentContent},
 				webContentTitle = ${webContentTitle});
 

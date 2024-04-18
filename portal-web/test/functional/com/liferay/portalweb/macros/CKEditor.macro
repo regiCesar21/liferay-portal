@@ -12,6 +12,25 @@ definition {
 	}
 
 	@summary = "Default summary"
+	macro addEntryExternalURL(entryExternalURL = null, displayText = null, fieldLabel = null) {
+		Click(
+			key_fieldLabel = ${fieldLabel},
+			locator1 = "CKEditor#TOOLBAR_LINK_BUTTON");
+
+		Type(
+			key_text = "Display Text",
+			locator1 = "TextInput#ANY",
+			value1 = ${displayText});
+
+		Type(
+			key_text = "URL",
+			locator1 = "TextInput#ANY",
+			value1 = ${entryExternalURL});
+
+		Click(locator1 = "CKEditor#OK_BUTTON");
+	}
+
+	@summary = "Default summary"
 	macro assertEditorPresent() {
 		AssertElementPresent(locator1 = "CKEditor#BODY_FIELD");
 	}
