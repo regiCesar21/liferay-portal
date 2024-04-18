@@ -309,6 +309,35 @@ public class BQEventRepositoryImpl
 	}
 
 	@Override
+	public Optional<Date> findLastSeenDate() {
+		return _queryExecutor.queryForObject(
+			recordMap -> (Date)recordMap.get("lastseendate"),
+			_dslContext.select(
+				DSL.max(
+					DSL.field("lastseendate")
+				).as(
+					"lastseendate"
+				)
+			).from(
+				_dslContext.select(
+					DSL.max(
+						DSL.field("eventdate")
+					).as(
+						"lastseendate"
+					)
+				).from(
+					DSL.table("BQEvent")
+				).unionAll(
+					_dslContext.select(
+						DSL.max(DSL.field("modifieddate"))
+					).from(
+						DSL.table("DXPEntity")
+					)
+				)
+			));
+	}
+
+	@Override
 	public BigDecimal getAverageBQEventCountPerIndividual(
 		@Nullable Long channelId,
 		@Nullable List<EventAnalysisFilter> eventAnalysisFilters,
@@ -660,35 +689,6 @@ public class BQEventRepositoryImpl
 				DSL.field("userId")
 			).orderBy(
 				DSL.field("userId")
-			));
-	}
-
-	@Override
-	public Optional<Date> getLastSeenDate() {
-		return _queryExecutor.queryForObject(
-			recordMap -> (Date)recordMap.get("lastseendate"),
-			_dslContext.select(
-				DSL.max(
-					DSL.field("lastseendate")
-				).as(
-					"lastseendate"
-				)
-			).from(
-				_dslContext.select(
-					DSL.max(
-						DSL.field("eventdate")
-					).as(
-						"lastseendate"
-					)
-				).from(
-					DSL.table("BQEvent")
-				).unionAll(
-					_dslContext.select(
-						DSL.max(DSL.field("modifieddate"))
-					).from(
-						DSL.table("DXPEntity")
-					)
-				)
 			));
 	}
 

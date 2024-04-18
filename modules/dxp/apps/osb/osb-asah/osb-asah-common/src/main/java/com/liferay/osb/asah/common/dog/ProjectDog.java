@@ -79,7 +79,7 @@ public class ProjectDog {
 		try {
 			ProjectIdThreadLocal.setProjectId(id);
 
-			Optional<Date> dateOption = _bqEventRepository.getLastSeenDate();
+			Optional<Date> dateOption = _bqEventRepository.findLastSeenDate();
 
 			return dateOption.orElse(null);
 		}

@@ -73,6 +73,8 @@ public interface CustomBQEventRepository {
 	public Optional<BQEvent> findLastSeenBQEvent(
 		@Nullable Long eventDefinitionId);
 
+	public Optional<Date> findLastSeenDate();
+
 	public BigDecimal getAverageBQEventCountPerIndividual(
 		@Nullable Long channelId,
 		@Nullable List<EventAnalysisFilter> eventAnalysisFilters,
@@ -102,8 +104,6 @@ public interface CustomBQEventRepository {
 
 	public List<Map<String, String>>
 		getKeywordsGroupedByChannelIdAndSessionIdAndUserId(Date eventDate);
-
-	public Optional<Date> getLastSeenDate();
 
 	public Map<String, Date> getLastSeenDateDateGroupedByColumnName(
 		String columnName, int size);
