@@ -19,7 +19,9 @@ import com.liferay.osb.asah.backend.model.Metric;
 import com.liferay.osb.asah.backend.model.PageMetric;
 import com.liferay.osb.asah.backend.repository.AssetMetricRepository;
 import com.liferay.osb.asah.common.date.DateUtil;
+import com.liferay.osb.asah.common.date.dog.TimeZoneDog;
 import com.liferay.osb.asah.common.dog.ChannelDog;
+import com.liferay.osb.asah.common.entity.BQEvent;
 import com.liferay.osb.asah.common.entity.Channel;
 import com.liferay.osb.asah.common.model.Field;
 import com.liferay.osb.asah.common.model.Individual;
@@ -27,6 +29,7 @@ import com.liferay.osb.asah.common.model.MetricType;
 import com.liferay.osb.asah.common.model.PageMetricType;
 import com.liferay.osb.asah.common.model.Sort;
 import com.liferay.osb.asah.common.model.TimeRange;
+import com.liferay.osb.asah.common.repository.BQEventRepository;
 import com.liferay.osb.asah.common.repository.BQIndividualRepository;
 import com.liferay.osb.asah.common.util.SetUtil;
 
@@ -38,6 +41,8 @@ import java.io.FileOutputStream;
 import java.io.OutputStreamWriter;
 
 import java.nio.charset.StandardCharsets;
+
+import java.time.LocalDateTime;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -64,15 +69,19 @@ public class ReportDog {
 	@Autowired
 	public ReportDog(
 		List<AssetMetricRepository> assetMetricRepositories,
-		BQIndividualRepository bqIndividualRepository, ChannelDog channelDog) {
+		BQEventRepository bqEventRepository,
+		BQIndividualRepository bqIndividualRepository, ChannelDog channelDog,
+		TimeZoneDog timeZoneDog) {
 
 		assetMetricRepositories.forEach(
 			assetMetricAssetMetricRepository -> _assetMetricRepositoryMap.put(
 				assetMetricAssetMetricRepository.getAssetType(),
 				assetMetricAssetMetricRepository));
 
+		_bqEventRepository = bqEventRepository;
 		_bqIndividualRepository = bqIndividualRepository;
 		_channelDog = channelDog;
+		_timeZoneDog = timeZoneDog;
 	}
 
 	public File getCSVReport(
@@ -102,6 +111,9 @@ public class ReportDog {
 					DocumentLibraryMetricType.COMMENTS.getName(),
 					DocumentLibraryMetricType.RATINGS.getName()),
 				sorts, timeRange, type);
+		}
+		else if (StringUtils.equals(type, "event")) {
+			rows = _getEventRows(channelId, query, sorts, timeRange);
 		}
 		else if (StringUtils.equals(type, "form")) {
 			rows = _getAssetFormRows(
@@ -172,6 +184,21 @@ public class ReportDog {
 			StringUtils.equals(type, "page")) {
 
 			return _getAssetMetricsCount(channelId, query, timeRange, type);
+		}
+		else if (StringUtils.equals(type, "event")) {
+			LocalDateTime rangeEndLocalDateTime = null;
+			LocalDateTime rangeStartLocalDateTime = null;
+
+			if (timeRange != null) {
+				rangeEndLocalDateTime = timeRange.getEndLocalDateTime();
+				rangeStartLocalDateTime = timeRange.getStartLocalDateTime();
+			}
+
+			Integer count = _bqEventRepository.countBQEvents(
+				channelId, null, query, rangeEndLocalDateTime,
+				rangeStartLocalDateTime, _timeZoneDog.getTimeZoneId());
+
+			return count.longValue();
 		}
 		else if (StringUtils.equals(type, "individual") &&
 				 StringUtils.isEmpty(assetId) &&
@@ -437,6 +464,47 @@ public class ReportDog {
 		return rows;
 	}
 
+	private List<String[]> _getEventRows(
+		Long channelId, String keywords, String[] sorts, TimeRange timeRange) {
+
+		List<String[]> rows = new ArrayList<>();
+
+		rows.add(
+			new String[] {
+				"Date", "Hour", "Name of Event", "Canonical URL", "Referrer",
+				"Title", "URL"
+			});
+
+		LocalDateTime rangeEndLocalDateTime = null;
+		LocalDateTime rangeStartLocalDateTime = null;
+
+		if (timeRange != null) {
+			rangeEndLocalDateTime = timeRange.getEndLocalDateTime();
+			rangeStartLocalDateTime = timeRange.getStartLocalDateTime();
+		}
+
+		List<BQEvent> bqEvents = _bqEventRepository.searchBQEvents(
+			channelId, null, keywords,
+			PageRequest.of(
+				0, _MAX_SIZE, _getSort(sorts, Order.desc("eventDate"))),
+			rangeEndLocalDateTime, rangeStartLocalDateTime,
+			_timeZoneDog.getTimeZoneId());
+
+		for (BQEvent bqEvent : bqEvents) {
+			rows.add(
+				new String[] {
+					DateUtil.toUTCString(
+						bqEvent.getEventDate(), DateUtil.PATTERN_SHORT),
+					DateUtil.toUTCString(
+						bqEvent.getEventDate(), "HH:mm:ss.SSS"),
+					bqEvent.getEventId(), bqEvent.getCanonicalUrl(),
+					bqEvent.getReferrer(), bqEvent.getTitle(), bqEvent.getURL()
+				});
+		}
+
+		return rows;
+	}
+
 	private List<String[]> _getIndividualRows(
 		Long channelId, @Nullable String query, @Nullable String[] sorts) {
 
@@ -568,7 +636,9 @@ public class ReportDog {
 
 	private final Map<AssetType, AssetMetricRepository>
 		_assetMetricRepositoryMap = new HashMap<>();
+	private final BQEventRepository _bqEventRepository;
 	private final BQIndividualRepository _bqIndividualRepository;
 	private final ChannelDog _channelDog;
+	private final TimeZoneDog _timeZoneDog;
 
 }
