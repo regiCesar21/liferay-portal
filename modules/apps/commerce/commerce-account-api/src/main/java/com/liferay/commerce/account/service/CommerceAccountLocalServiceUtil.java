@@ -447,6 +447,26 @@ public class CommerceAccountLocalServiceUtil {
 			companyId, parentCommerceAccountId, keywords, type, active);
 	}
 
+	public static List<CommerceAccount> searchUserCommerceAccounts(
+			long userId, long parentCommerceAccountId, String keywords,
+			int type, Boolean active, int start, int end,
+			com.liferay.portal.kernel.search.Sort sort)
+		throws PortalException {
+
+		return getService().searchUserCommerceAccounts(
+			userId, parentCommerceAccountId, keywords, type, active, start, end,
+			sort);
+	}
+
+	public static int searchUserCommerceAccountsCount(
+			long userId, long parentCommerceAccountId, String keywords,
+			int type, Boolean active)
+		throws PortalException {
+
+		return getService().searchUserCommerceAccountsCount(
+			userId, parentCommerceAccountId, keywords, type, active);
+	}
+
 	public static CommerceAccount setActive(
 			long commerceAccountId, boolean active)
 		throws PortalException {

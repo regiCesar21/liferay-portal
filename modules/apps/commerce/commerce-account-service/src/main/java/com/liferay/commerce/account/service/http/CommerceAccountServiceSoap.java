@@ -174,6 +174,48 @@ public class CommerceAccountServiceSoap {
 		}
 	}
 
+	public static com.liferay.commerce.account.model.CommerceAccountSoap[]
+			getCommerceAccounts(
+				long userId, long parentCommerceAccountId, int commerceSiteType,
+				String keywords, Boolean active, int start, int end)
+		throws RemoteException {
+
+		try {
+			java.util.List<com.liferay.commerce.account.model.CommerceAccount>
+				returnValue = CommerceAccountServiceUtil.getCommerceAccounts(
+					userId, parentCommerceAccountId, commerceSiteType, keywords,
+					active, start, end);
+
+			return com.liferay.commerce.account.model.CommerceAccountSoap.
+				toSoapModels(returnValue);
+		}
+		catch (Exception exception) {
+			_log.error(exception, exception);
+
+			throw new RemoteException(exception.getMessage());
+		}
+	}
+
+	public static int getCommerceAccountsCount(
+			long userId, long parentCommerceAccountId, int commerceSiteType,
+			String keywords, Boolean active)
+		throws RemoteException {
+
+		try {
+			int returnValue =
+				CommerceAccountServiceUtil.getCommerceAccountsCount(
+					userId, parentCommerceAccountId, commerceSiteType, keywords,
+					active);
+
+			return returnValue;
+		}
+		catch (Exception exception) {
+			_log.error(exception, exception);
+
+			throw new RemoteException(exception.getMessage());
+		}
+	}
+
 	public static com.liferay.commerce.account.model.CommerceAccountSoap
 			getPersonalCommerceAccount(long userId)
 		throws RemoteException {

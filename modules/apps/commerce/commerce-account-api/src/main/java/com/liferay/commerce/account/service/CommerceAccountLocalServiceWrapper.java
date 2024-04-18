@@ -521,6 +521,29 @@ public class CommerceAccountLocalServiceWrapper
 	}
 
 	@Override
+	public java.util.List<com.liferay.commerce.account.model.CommerceAccount>
+			searchUserCommerceAccounts(
+				long userId, long parentCommerceAccountId, String keywords,
+				int type, Boolean active, int start, int end,
+				com.liferay.portal.kernel.search.Sort sort)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _commerceAccountLocalService.searchUserCommerceAccounts(
+			userId, parentCommerceAccountId, keywords, type, active, start, end,
+			sort);
+	}
+
+	@Override
+	public int searchUserCommerceAccountsCount(
+			long userId, long parentCommerceAccountId, String keywords,
+			int type, Boolean active)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _commerceAccountLocalService.searchUserCommerceAccountsCount(
+			userId, parentCommerceAccountId, keywords, type, active);
+	}
+
+	@Override
 	public com.liferay.commerce.account.model.CommerceAccount setActive(
 			long commerceAccountId, boolean active)
 		throws com.liferay.portal.kernel.exception.PortalException {

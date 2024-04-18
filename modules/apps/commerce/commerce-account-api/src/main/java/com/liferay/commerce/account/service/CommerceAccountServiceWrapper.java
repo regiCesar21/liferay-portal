@@ -84,6 +84,29 @@ public class CommerceAccountServiceWrapper
 		return _commerceAccountService.getCommerceAccount(commerceAccountId);
 	}
 
+	@Override
+	public java.util.List<com.liferay.commerce.account.model.CommerceAccount>
+			getCommerceAccounts(
+				long userId, long parentCommerceAccountId, int commerceSiteType,
+				String keywords, Boolean active, int start, int end)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _commerceAccountService.getCommerceAccounts(
+			userId, parentCommerceAccountId, commerceSiteType, keywords, active,
+			start, end);
+	}
+
+	@Override
+	public int getCommerceAccountsCount(
+			long userId, long parentCommerceAccountId, int commerceSiteType,
+			String keywords, Boolean active)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _commerceAccountService.getCommerceAccountsCount(
+			userId, parentCommerceAccountId, commerceSiteType, keywords,
+			active);
+	}
+
 	/**
 	 * Returns the OSGi service identifier.
 	 *

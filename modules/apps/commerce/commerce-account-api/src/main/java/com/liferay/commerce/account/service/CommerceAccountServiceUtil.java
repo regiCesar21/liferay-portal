@@ -79,6 +79,26 @@ public class CommerceAccountServiceUtil {
 		return getService().getCommerceAccount(commerceAccountId);
 	}
 
+	public static List<CommerceAccount> getCommerceAccounts(
+			long userId, long parentCommerceAccountId, int commerceSiteType,
+			String keywords, Boolean active, int start, int end)
+		throws PortalException {
+
+		return getService().getCommerceAccounts(
+			userId, parentCommerceAccountId, commerceSiteType, keywords, active,
+			start, end);
+	}
+
+	public static int getCommerceAccountsCount(
+			long userId, long parentCommerceAccountId, int commerceSiteType,
+			String keywords, Boolean active)
+		throws PortalException {
+
+		return getService().getCommerceAccountsCount(
+			userId, parentCommerceAccountId, commerceSiteType, keywords,
+			active);
+	}
+
 	/**
 	 * Returns the OSGi service identifier.
 	 *

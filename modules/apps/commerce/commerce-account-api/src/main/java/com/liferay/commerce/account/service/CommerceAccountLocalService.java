@@ -354,6 +354,18 @@ public interface CommerceAccountLocalService
 			int type, Boolean active)
 		throws PortalException;
 
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<CommerceAccount> searchUserCommerceAccounts(
+			long userId, long parentCommerceAccountId, String keywords,
+			int type, Boolean active, int start, int end, Sort sort)
+		throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int searchUserCommerceAccountsCount(
+			long userId, long parentCommerceAccountId, String keywords,
+			int type, Boolean active)
+		throws PortalException;
+
 	@Indexable(type = IndexableType.REINDEX)
 	public CommerceAccount setActive(long commerceAccountId, boolean active)
 		throws PortalException;

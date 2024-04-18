@@ -80,6 +80,18 @@ public interface CommerceAccountService extends BaseService {
 	public CommerceAccount getCommerceAccount(long commerceAccountId)
 		throws PortalException;
 
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<CommerceAccount> getCommerceAccounts(
+			long userId, long parentCommerceAccountId, int commerceSiteType,
+			String keywords, Boolean active, int start, int end)
+		throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int getCommerceAccountsCount(
+			long userId, long parentCommerceAccountId, int commerceSiteType,
+			String keywords, Boolean active)
+		throws PortalException;
+
 	/**
 	 * Returns the OSGi service identifier.
 	 *
