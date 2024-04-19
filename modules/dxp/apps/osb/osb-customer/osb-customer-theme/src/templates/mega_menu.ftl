@@ -115,9 +115,9 @@
 			},
 			{
 				description: '<@liferay.language key="reference-the-latest-changes-for-liferay-dxp" />',
-				name: '<@liferay.language key="dxp-release-notes" />',
+				name: '<@liferay.language key="release-notes" />',
 				svgId: '#fixpack',
-				url: 'https://customer.liferay.com/dxp-release-notes'
+				url: 'https://support.liferay.com/release-notes'
 			},
 			{
 				description: '<@liferay.language key="learn-more-about-designated-contacts-for-your-project" />',
