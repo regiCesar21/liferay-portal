@@ -15,7 +15,7 @@ USING
 			sum(submissionsTime) as submissionsTime,
 			sum(views) as views
 		FROM
-			`{{ dag.default_args['ac_project_id'] }}.customassethourly`
+			`{{ dag.default_args['ac_project_id'] }}.customasset_hourly`(TIMESTAMP(DATE(TIMESTAMP('{{ data_interval_end.to_datetime_string() }}'), '{{ dag.default_args['ac_project_time_zone_id'] }}'), '{{ dag.default_args['ac_project_time_zone_id'] }}'), TIMESTAMP(DATE(TIMESTAMP('{{ data_interval_start.to_datetime_string() }}'), '{{ dag.default_args['ac_project_time_zone_id'] }}'), '{{ dag.default_args['ac_project_time_zone_id'] }}'))
 		WHERE
 			DATE(eventDate, '{{ dag.default_args['ac_project_time_zone_id'] }}') = DATE(TIMESTAMP('{{ data_interval_start.to_datetime_string() }}'), '{{ dag.default_args['ac_project_time_zone_id'] }}')
 		GROUP BY
