@@ -546,10 +546,11 @@ public class TransformProductPurchases {
 
 			if (name.equals(SubscriptionConstants.GROUP_NAME_ANALYTICS_CLOUD) ||
 				name.equals(SubscriptionConstants.GROUP_NAME_COMMERCE) ||
-				name.equals(SubscriptionConstants.GROUP_NAME_DXP) ||
 				name.equals(
 					SubscriptionConstants.GROUP_NAME_ENTERPRISE_SEARCH) ||
 				name.equals(SubscriptionConstants.GROUP_NAME_LIFERAY_PAAS) ||
+				name.equals(
+					SubscriptionConstants.GROUP_NAME_LIFERAY_SELF_HOSTED) ||
 				name.equals(SubscriptionConstants.GROUP_NAME_PORTAL)) {
 
 				jsonObject.put("hasActivation", true);
@@ -585,9 +586,6 @@ public class TransformProductPurchases {
 
 				return 200;
 			}
-			else if (name.equals(SubscriptionConstants.GROUP_NAME_DXP)) {
-				return 300;
-			}
 			else if (name.equals(
 						SubscriptionConstants.GROUP_NAME_ENTERPRISE_SEARCH)) {
 
@@ -597,6 +595,11 @@ public class TransformProductPurchases {
 						SubscriptionConstants.GROUP_NAME_LIFERAY_PAAS)) {
 
 				return 100;
+			}
+			else if (name.equals(
+						SubscriptionConstants.GROUP_NAME_LIFERAY_SELF_HOSTED)) {
+
+				return 300;
 			}
 			else if (name.equals(SubscriptionConstants.GROUP_NAME_PORTAL)) {
 				return 700;
@@ -617,9 +620,6 @@ public class TransformProductPurchases {
 
 				return 400;
 			}
-			else if (name.equals(SubscriptionConstants.GROUP_NAME_DXP)) {
-				return 500;
-			}
 			else if (name.equals(
 						SubscriptionConstants.GROUP_NAME_ENTERPRISE_SEARCH)) {
 
@@ -634,6 +634,11 @@ public class TransformProductPurchases {
 						SubscriptionConstants.GROUP_NAME_LIFERAY_SAAS)) {
 
 				return 200;
+			}
+			else if (name.equals(
+						SubscriptionConstants.GROUP_NAME_LIFERAY_SELF_HOSTED)) {
+
+				return 500;
 			}
 			else if (name.equals(
 						SubscriptionConstants.GROUP_NAME_PARTNERSHIP)) {

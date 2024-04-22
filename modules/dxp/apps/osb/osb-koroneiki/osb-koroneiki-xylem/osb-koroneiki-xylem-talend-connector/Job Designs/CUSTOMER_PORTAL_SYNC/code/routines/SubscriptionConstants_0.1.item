@@ -25,13 +25,13 @@ public class SubscriptionConstants {
 
 	public static String GROUP_NAME_COMMERCE_FOR_CLOUD = "Commerce for Cloud";
 
-	public static String GROUP_NAME_DXP = "DXP";
-
 	public static String GROUP_NAME_ENTERPRISE_SEARCH = "Enterprise Search";
 
 	public static String GROUP_NAME_LIFERAY_PAAS = "Liferay PaaS";
 
 	public static String GROUP_NAME_LIFERAY_SAAS = "Liferay Saas";
+
+	public static String GROUP_NAME_LIFERAY_SELF_HOSTED = "Liferay Self-Hosted";
 
 	public static String GROUP_NAME_PARTNERSHIP = "Partnership";
 
