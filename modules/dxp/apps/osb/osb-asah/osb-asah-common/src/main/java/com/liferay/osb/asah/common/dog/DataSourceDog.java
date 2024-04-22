@@ -56,6 +56,7 @@ import org.springframework.data.domain.Sort;
 import org.springframework.data.support.PageableExecutionUtils;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Transactional;
 
 /**
  * @author Rachael Koestartyo
@@ -71,27 +72,16 @@ public class DataSourceDog {
 		Date date = DateUtil.newDate();
 
 		dataSource.setCreateDate(date);
+		dataSource.setFaroBackendSecuritySignature(
+			String.valueOf(UUID.randomUUID()));
 		dataSource.setId(_timeOrderedUuidGenerator.generateIdAsLong());
 		dataSource.setIsNew(Boolean.TRUE);
 		dataSource.setModifiedDate(date);
 		dataSource.setName(_getDataSourceName(dataSource.getName()));
+		dataSource.setState("CREDENTIALS_VALID");
+		dataSource.setStatus("ACTIVE");
 
-		dataSource = _dataSourceRepository.save(dataSource);
-
-		dataSource.setIsNew(Boolean.FALSE);
-
-		String providerType = dataSource.getProviderType();
-
-		if (Objects.equals(providerType, "CSV")) {
-			dataSource.setState("READY");
-		}
-		else if (Objects.equals(providerType, "LIFERAY")) {
-			_addDefaultChannel(dataSource);
-
-			dataSource.setStatus("ACTIVE");
-
-			_updateTokenDataSourceCredentials(dataSource);
-		}
+		_addDefaultChannel(dataSource);
 
 		return _dataSourceRepository.save(dataSource);
 	}
