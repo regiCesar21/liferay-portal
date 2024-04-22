@@ -77,6 +77,8 @@
 						<div id="user-menu" role="menu">
 							<a class="my-activities" href="${zendesk_url}/hc/${zendesk_locale_util.convertToZendeskLocale(current_locale)}/requests"><@liferay.language key="my-activities" /></a>
 
+							<a href="https://liferay.okta.com/login/login.htm?fromURI=%2Fenduser%2Fsettings"><@liferay.language key="account-settings" /></a>
+
 							<#if liferay_employee>
 								<a href="/group/license"><@liferay.language key="license" /></a>
 							</#if>
