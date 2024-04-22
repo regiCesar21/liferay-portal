@@ -56,7 +56,6 @@ import org.springframework.data.domain.Sort;
 import org.springframework.data.support.PageableExecutionUtils;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Component;
-import org.springframework.transaction.annotation.Transactional;
 
 /**
  * @author Rachael Koestartyo
@@ -72,6 +71,7 @@ public class DataSourceDog {
 		Date date = DateUtil.newDate();
 
 		dataSource.setCreateDate(date);
+
 		dataSource.setFaroBackendSecuritySignature(
 			String.valueOf(UUID.randomUUID()));
 		dataSource.setId(_timeOrderedUuidGenerator.generateIdAsLong());
@@ -485,7 +485,6 @@ public class DataSourceDog {
 
 	private void _validateCredentialType(String credentialType) {
 		if (!Objects.equals(credentialType, "Token Authentication")) {
-
 			throw new OSBAsahException(
 				HttpStatus.BAD_REQUEST,
 				"Unsupported Data Source credential type " + credentialType);
@@ -494,22 +493,26 @@ public class DataSourceDog {
 
 	private void _validateDataSourceName(Long dataSourceId, String name) {
 		if ((name != null) &&
-			_dataSourceRepository.existsByIdNotAndName(
-				dataSourceId, name)) {
+			_dataSourceRepository.existsByIdNotAndName(dataSourceId, name)) {
 
 			throw new OSBAsahException(
 				HttpStatus.BAD_REQUEST, "Duplicate data source name " + name);
 		}
 	}
 
-	private void _validateFaroBackendSignatureModification(Long dataSourceId, String faroBackendSignature) {
+	private void _validateFaroBackendSignatureModification(
+		Long dataSourceId, String faroBackendSignature) {
+
 		DataSource dataSource = getDataSource(dataSourceId);
 
 		if (!Objects.equals(
-				dataSource.getFaroBackendSecuritySignature(), faroBackendSignature)) {
+				dataSource.getFaroBackendSecuritySignature(),
+				faroBackendSignature)) {
 
 			throw new OSBAsahException(
-				HttpStatus.BAD_REQUEST, "Unable to modify Faro backend signature for data source ID " + dataSourceId);
+				HttpStatus.BAD_REQUEST,
+				"Unable to modify Faro backend signature for data source ID " +
+					dataSourceId);
 		}
 	}
 
@@ -525,6 +528,9 @@ public class DataSourceDog {
 
 	@Autowired
 	private AsahMarkerDog _asahMarkerDog;
+
+	@Autowired
+	private AsahTaskDog _asahTaskDog;
 
 	private final BoundedExecutor _boundedExecutor =
 		BoundedExecutor.newBoundedExecutor(10, 1);
@@ -563,8 +569,5 @@ public class DataSourceDog {
 
 	private final TimeOrderedUuidGenerator _timeOrderedUuidGenerator =
 		new TimeOrderedUuidGenerator();
-
-	@Autowired
-	private AsahTaskDog _asahTaskDog;
 
 }
