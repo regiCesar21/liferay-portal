@@ -293,6 +293,8 @@ public class DataSourceDog {
 		_validateCredentialType(dataSource.getCredentialType());
 		_validateDataSourceName(dataSource.getId(), dataSource.getName());
 		_validateProviderType(dataSource.getProviderType());
+		_validateFaroBackendSignatureModification(
+			dataSource.getId(), dataSource.getFaroBackendSecuritySignature());
 
 		dataSource.setModifiedDate(DateUtil.newDate());
 
@@ -497,6 +499,17 @@ public class DataSourceDog {
 
 			throw new OSBAsahException(
 				HttpStatus.BAD_REQUEST, "Duplicate data source name " + name);
+		}
+	}
+
+	private void _validateFaroBackendSignatureModification(Long dataSourceId, String faroBackendSignature) {
+		DataSource dataSource = getDataSource(dataSourceId);
+
+		if (!Objects.equals(
+				dataSource.getFaroBackendSecuritySignature(), faroBackendSignature)) {
+
+			throw new OSBAsahException(
+				HttpStatus.BAD_REQUEST, "Unable to modify Faro backend signature for data source ID " + dataSourceId);
 		}
 	}
 
