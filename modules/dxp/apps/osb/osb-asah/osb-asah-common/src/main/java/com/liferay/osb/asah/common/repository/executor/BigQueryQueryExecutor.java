@@ -237,12 +237,23 @@ public class BigQueryQueryExecutor implements QueryExecutor {
 	private String _getBigQueryTableName(String tableName) {
 		BigQueryOptions bigQueryOptions = _bigQuery.getOptions();
 
-		if (_environment.acceptsProfiles("prod") &&
-			tableName.equals("BQIdentityActivity")) {
+		if (_environment.acceptsProfiles("prod")) {
+			if (tableName.equals("BQIdentityActivity")) {
+				return "`" + bigQueryOptions.getProjectId() + "." +
+					ProjectIdThreadLocal.getProjectId() +
+						".identity_activity`('" +
+							TimeZoneDogUtil.getTimeZoneId() + "')";
+			}
+			else if (tableName.endsWith("Hourly")) {
+				String assetType = tableName.substring(
+					0, tableName.indexOf("Hourly"));
 
-			return "`" + bigQueryOptions.getProjectId() + "." +
-				ProjectIdThreadLocal.getProjectId() + ".identity_activity`('" +
-					TimeZoneDogUtil.getTimeZoneId() + "')";
+				return "`" + bigQueryOptions.getProjectId() + "." +
+					ProjectIdThreadLocal.getProjectId() + "." +
+						StringUtils.lowerCase(assetType.replace("BQ", "")) +
+							"_hourly`(CURRENT_TIMESTAMP(), TIMESTAMP_SUB(" +
+								"CURRENT_TIMESTAMP(), INTERVAL 48 HOUR))";
+			}
 		}
 
 		return "`" + bigQueryOptions.getProjectId() + "." +
