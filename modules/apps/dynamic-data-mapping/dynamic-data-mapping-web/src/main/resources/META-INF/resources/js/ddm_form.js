@@ -3103,7 +3103,7 @@ AUI.add(
 								return response.json();
 							})
 							.then((response) => {
-								var layouts = response && response.layouts;
+								var layouts = response && response.items;
 
 								if (layouts) {
 									var parentLayoutId =
