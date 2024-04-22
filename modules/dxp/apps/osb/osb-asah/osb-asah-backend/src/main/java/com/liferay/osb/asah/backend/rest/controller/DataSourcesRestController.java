@@ -50,15 +50,7 @@ public class DataSourcesRestController extends BaseRestController {
 
 	@DeleteMapping("/{id}")
 	public void deleteDataSource(@PathVariable Long id) {
-		DataSource dataSource = _dataSourceDog.getDataSource(id);
-
-		dataSource.setDeletionDate(DateUtil.newDate());
-		dataSource.setState("IN_PROGRESS_DELETING");
-
-		_asahTaskDog.scheduleAsahTask(
-			"DeleteDataSourcesNanite",
-			_objectMapper.convertValue(
-				_dataSourceDog.updateDataSource(dataSource), JSONObject.class));
+		_dataSourceDog.scheduleDataSourceDeletion(id);
 	}
 
 	@PostMapping("/{id}/disconnect")
@@ -206,9 +198,6 @@ public class DataSourcesRestController extends BaseRestController {
 			dataSourcesPage.getTotalElements(),
 			dataSourcesPage.getTotalPages());
 	}
-
-	@Autowired
-	private AsahTaskDog _asahTaskDog;
 
 	@Autowired
 	private BQCSVUserDog _bqCSVUserDog;

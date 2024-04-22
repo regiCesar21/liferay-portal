@@ -276,8 +276,17 @@ public class DataSourceDog {
 		return updateDataSourceConfiguration(existingDataSource);
 	}
 
-	public DataSource updateDataSource(DataSource dataSource) {
-		return _dataSourceRepository.save(dataSource);
+	public void scheduleDataSourceDeletion(Long dataSourceId) {
+		DataSource dataSource = getDataSource(dataSourceId);
+
+		dataSource.setDeletionDate(DateUtil.newDate());
+		dataSource.setState("IN_PROGRESS_DELETING");
+
+		_dataSourceRepository.save(dataSource);
+
+		_asahTaskDog.scheduleAsahTask(
+			"DeleteDataSourcesNanite",
+			_objectMapper.convertValue(dataSource, JSONObject.class));
 	}
 
 	public DataSource updateDataSourceConfiguration(DataSource dataSource) {
@@ -538,5 +547,8 @@ public class DataSourceDog {
 
 	private final TimeOrderedUuidGenerator _timeOrderedUuidGenerator =
 		new TimeOrderedUuidGenerator();
+
+	@Autowired
+	private AsahTaskDog _asahTaskDog;
 
 }
