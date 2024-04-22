@@ -129,8 +129,6 @@ public class DataSourcesRestController extends BaseRestController {
 
 	@PostMapping
 	public String postDataSource(@RequestBody DataSourceDTO dataSourceDTO) {
-		_beforeAdd(dataSourceDTO);
-
 		DataSource dataSource = _dataSourceDog.addDataSource(
 			_objectMapper.convertValue(dataSourceDTO, DataSource.class));
 
@@ -155,16 +153,6 @@ public class DataSourcesRestController extends BaseRestController {
 			dataSource, JSONObject.class);
 
 		return dataSourceJSONObject.toString();
-	}
-
-	private void _beforeAdd(DataSourceDTO dataSourceDTO) {
-		Date date = DateUtil.newDate();
-
-		dataSourceDTO.setCreateDate(date);
-
-		dataSourceDTO.setId(null);
-
-		dataSourceDTO.setModifiedDate(date);
 	}
 
 	private void _beforeUpdate(DataSourceDTO dataSourceDTO) {

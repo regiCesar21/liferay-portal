@@ -9,6 +9,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 import com.liferay.osb.asah.common.concurrent.BoundedExecutor;
 import com.liferay.osb.asah.common.converter.helper.DefaultFilterStringConverterHelper;
+import com.liferay.osb.asah.common.date.DateUtil;
 import com.liferay.osb.asah.common.entity.Channel;
 import com.liferay.osb.asah.common.entity.ChannelDataSource;
 import com.liferay.osb.asah.common.entity.DXPEntity;
@@ -26,6 +27,7 @@ import com.liferay.osb.asah.common.wedeploy.data.WeDeployDataService;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -63,8 +65,12 @@ import org.springframework.stereotype.Component;
 public class DataSourceDog {
 
 	public DataSource addDataSource(DataSource dataSource) {
+		Date date = DateUtil.newDate();
+
+		dataSource.setCreateDate(date);
 		dataSource.setId(_timeOrderedUuidGenerator.generateIdAsLong());
 		dataSource.setIsNew(Boolean.TRUE);
+		dataSource.setModifiedDate(date);
 		dataSource.setName(_getDataSourceName(dataSource.getName()));
 
 		dataSource = _dataSourceRepository.save(dataSource);
