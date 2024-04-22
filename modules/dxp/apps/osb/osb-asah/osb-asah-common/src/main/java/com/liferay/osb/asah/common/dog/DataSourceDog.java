@@ -293,6 +293,8 @@ public class DataSourceDog {
 		_validateCredentialType(dataSource.getCredentialType());
 		_validateProviderType(dataSource.getProviderType());
 
+		dataSource.setModifiedDate(DateUtil.newDate());
+
 		String name = dataSource.getName();
 
 		if ((name != null) &&

@@ -136,8 +136,6 @@ public class DataSourcesRestController extends BaseRestController {
 
 		dataSourceDTO.setId(id);
 
-		_beforeUpdate(dataSourceDTO);
-
 		DataSource dataSource = _dataSourceDog.updateDataSourceConfiguration(
 			_objectMapper.convertValue(dataSourceDTO, DataSource.class));
 
@@ -145,10 +143,6 @@ public class DataSourcesRestController extends BaseRestController {
 			dataSource, JSONObject.class);
 
 		return dataSourceJSONObject.toString();
-	}
-
-	private void _beforeUpdate(DataSourceDTO dataSourceDTO) {
-		dataSourceDTO.setModifiedDate(DateUtil.newDate());
 	}
 
 	private JSONObject _getCSVDataSourceProgressJSONObject(Long dataSourceId) {
