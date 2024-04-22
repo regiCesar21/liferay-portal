@@ -65,6 +65,7 @@ import org.springframework.stereotype.Component;
 public class DataSourceDog {
 
 	public DataSource addDataSource(DataSource dataSource) {
+		_validateCredentialType(dataSource.getCredentialType());
 		_validateProviderType(dataSource.getProviderType());
 
 		Date date = DateUtil.newDate();
@@ -512,6 +513,15 @@ public class DataSourceDog {
 			if (_log.isDebugEnabled()) {
 				_log.debug(exception, exception);
 			}
+		}
+	}
+
+	private void _validateCredentialType(String credentialType) {
+		if (!Objects.equals(credentialType, "Token Authentication")) {
+
+			throw new OSBAsahException(
+				HttpStatus.BAD_REQUEST,
+				"Unsupported Data Source credential type " + credentialType);
 		}
 	}
 
