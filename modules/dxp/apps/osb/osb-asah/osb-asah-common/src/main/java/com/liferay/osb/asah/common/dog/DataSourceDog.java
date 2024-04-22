@@ -65,6 +65,8 @@ import org.springframework.stereotype.Component;
 public class DataSourceDog {
 
 	public DataSource addDataSource(DataSource dataSource) {
+		_validateProviderType(dataSource.getProviderType());
+
 		Date date = DateUtil.newDate();
 
 		dataSource.setCreateDate(date);
@@ -510,6 +512,14 @@ public class DataSourceDog {
 			if (_log.isDebugEnabled()) {
 				_log.debug(exception, exception);
 			}
+		}
+	}
+
+	private void _validateProviderType(String providerType) {
+		if (!Objects.equals(providerType, "LIFERAY")) {
+			throw new OSBAsahException(
+				HttpStatus.BAD_REQUEST,
+				"Unsupported Data Source provider type " + providerType);
 		}
 	}
 
