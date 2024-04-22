@@ -291,19 +291,10 @@ public class DataSourceDog {
 
 	public DataSource updateDataSourceConfiguration(DataSource dataSource) {
 		_validateCredentialType(dataSource.getCredentialType());
+		_validateDataSourceName(dataSource.getId(), dataSource.getName());
 		_validateProviderType(dataSource.getProviderType());
 
 		dataSource.setModifiedDate(DateUtil.newDate());
-
-		String name = dataSource.getName();
-
-		if ((name != null) &&
-			_dataSourceRepository.existsByIdNotAndName(
-				dataSource.getId(), name)) {
-
-			throw new OSBAsahException(
-				HttpStatus.BAD_REQUEST, "Duplicate data source name " + name);
-		}
 
 		if (Objects.equals(dataSource.getStatus(), "ACTIVE")) {
 			dataSource.setState("CREDENTIALS_VALID");
@@ -496,6 +487,16 @@ public class DataSourceDog {
 			throw new OSBAsahException(
 				HttpStatus.BAD_REQUEST,
 				"Unsupported Data Source credential type " + credentialType);
+		}
+	}
+
+	private void _validateDataSourceName(Long dataSourceId, String name) {
+		if ((name != null) &&
+			_dataSourceRepository.existsByIdNotAndName(
+				dataSourceId, name)) {
+
+			throw new OSBAsahException(
+				HttpStatus.BAD_REQUEST, "Duplicate data source name " + name);
 		}
 	}
 
