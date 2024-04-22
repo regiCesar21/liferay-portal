@@ -281,6 +281,9 @@ public class DataSourceDog {
 	}
 
 	public DataSource updateDataSourceConfiguration(DataSource dataSource) {
+		_validateCredentialType(dataSource.getCredentialType());
+		_validateProviderType(dataSource.getProviderType());
+
 		String name = dataSource.getName();
 
 		if ((name != null) &&
@@ -291,10 +294,8 @@ public class DataSourceDog {
 				HttpStatus.BAD_REQUEST, "Duplicate data source name " + name);
 		}
 
-		String providerType = dataSource.getProviderType();
-
-		if (providerType.equals("LIFERAY")) {
-			_updateTokenDataSourceCredentials(dataSource);
+		if (Objects.equals(dataSource.getStatus(), "ACTIVE")) {
+			dataSource.setState("CREDENTIALS_VALID");
 		}
 
 		return _dataSourceRepository.save(dataSource);
@@ -476,34 +477,6 @@ public class DataSourceDog {
 		}
 
 		return Sort.by(orders);
-	}
-
-	private void _updateTokenDataSourceCredentials(DataSource dataSource) {
-		if (!Objects.equals(
-				dataSource.getCredentialType(), "Token Authentication")) {
-
-			return;
-		}
-
-		String dataSourceStatus = dataSource.getStatus();
-
-		if (dataSourceStatus.equals("ACTIVE")) {
-			dataSource.setState("CREDENTIALS_VALID");
-		}
-
-		try {
-			if (StringUtils.isBlank(
-					dataSource.getFaroBackendSecuritySignature())) {
-
-				dataSource.setFaroBackendSecuritySignature(
-					String.valueOf(UUID.randomUUID()));
-			}
-		}
-		catch (Exception exception) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(exception, exception);
-			}
-		}
 	}
 
 	private void _validateCredentialType(String credentialType) {
