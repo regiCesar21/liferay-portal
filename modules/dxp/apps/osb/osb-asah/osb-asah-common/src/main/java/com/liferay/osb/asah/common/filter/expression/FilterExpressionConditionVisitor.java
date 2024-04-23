@@ -257,6 +257,28 @@ public class FilterExpressionConditionVisitor
 		_referencedTableNames.addAll(
 			filterExpression.getReferencedTableNames());
 
+		Condition condition = filterExpression.getCondition();
+
+		if (Objects.equals(
+				FilterExpression.FilterType.of(
+					filterByCountExpressionContext.filterType.getText()),
+				FilterExpression.FilterType.EVENTS)) {
+
+			condition = DSL.field(
+				"Event.applicationId"
+			).eq(
+				"CustomEvent"
+			).and(
+				DSL.field(
+					"Event.channelId"
+				).eq(
+					_channelId
+				)
+			).and(
+				condition
+			);
+		}
+
 		String operator = filterByCountExpressionContext.operator.getText();
 		Integer value = Integer.parseInt(
 			filterByCountExpressionContext.value.getText());
@@ -293,7 +315,7 @@ public class FilterExpressionConditionVisitor
 						"Event"
 					)
 				).where(
-					filterExpression.getCondition()
+					condition
 				).groupBy(
 					userIdField
 				).having(
@@ -322,7 +344,7 @@ public class FilterExpressionConditionVisitor
 					)
 				).where(
 					DSL.and(
-						filterExpression.getCondition(),
+						condition,
 						DSL.field(
 							"Identity.individualId"
 						).isNotNull())
@@ -1631,6 +1653,7 @@ public class FilterExpressionConditionVisitor
 				put("activities.day", "Event.eventDate");
 				put("channelIds", "IdentityActivity.channelId");
 				put("credentials/type", "credentialType");
+				put("events.day", "Event.eventDate");
 				put("individualCount", "identitiesCount");
 				put("individuals.additionalName", "Individual.middleName");
 				put("individuals.address", "Individual.addresses");
