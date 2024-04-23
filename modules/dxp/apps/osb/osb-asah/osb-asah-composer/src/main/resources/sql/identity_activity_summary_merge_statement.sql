@@ -34,8 +34,8 @@ ON (
 WHEN MATCHED THEN
 	UPDATE SET
 		replica.activitiesCount = replica.activitiesCount + staging.activitiesCount,
-		replica.individualId = CASE WHEN staging.individualId IS NOT NULL THEN staging.individualId END,
-		replica.lastActivityDate = staging.lastActivityDate
+		replica.individualId = CASE WHEN replica.individualId IS NOT NULL THEN replica.individualId ELSE (CASE WHEN staging.individualId IS NOT NULL THEN staging.individualId END) END,
+		replica.lastActivityDate = GREATEST(staging.lastActivityDate, replica.lastActivityDate)
 WHEN NOT MATCHED THEN
 	INSERT (
 		`activitiesCount`,
