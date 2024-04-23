@@ -17,12 +17,12 @@ import com.liferay.osb.asah.common.repository.DataSourceRepository;
 import com.liferay.osb.asah.test.util.annotation.RepositoryResource;
 import com.liferay.osb.asah.test.util.faro.FaroInfoTestUtil;
 import com.liferay.osb.asah.test.util.spring.OSBAsahTestExecutionListenersContext;
+import com.liferay.osb.asah.test.util.util.RandomTestUtil;
 
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 
-import com.liferay.osb.asah.test.util.util.RandomTestUtil;
 import org.json.JSONArray;
 import org.json.JSONObject;
 

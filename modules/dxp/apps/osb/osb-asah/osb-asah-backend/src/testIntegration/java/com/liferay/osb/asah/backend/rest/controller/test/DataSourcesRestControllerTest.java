@@ -254,6 +254,7 @@ public class DataSourcesRestControllerTest {
 			actualDataSourceDTO.getModifiedDate());
 
 		actualDataSourceDTO.setModifiedDate(null);
+
 		dataSourceDTO.setModifiedDate(null);
 
 		JSONAssert.assertEquals(

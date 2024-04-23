@@ -412,6 +412,7 @@ public class DataSourceHttpTest extends BaseFaroInfoDogTestCase {
 		String updatedURL = "https://foo.bar";
 
 		dataSource.setURL(updatedURL);
+
 		dataSource.setIsNew(Boolean.FALSE);
 
 		dataSource = _dataSourceDog.updateDataSourceConfiguration(dataSource);
