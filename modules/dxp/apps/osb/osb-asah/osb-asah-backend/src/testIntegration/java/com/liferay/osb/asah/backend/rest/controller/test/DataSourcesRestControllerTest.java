@@ -249,6 +249,13 @@ public class DataSourcesRestControllerTest {
 			_dataSourcesRestController.patchDataSource(
 				dataSourceDTO.getId(), dataSourceDTO);
 
+		Assertions.assertNotEquals(
+			dataSourceDTO.getModifiedDate(),
+			actualDataSourceDTO.getModifiedDate());
+
+		actualDataSourceDTO.setModifiedDate(null);
+		dataSourceDTO.setModifiedDate(null);
+
 		JSONAssert.assertEquals(
 			_objectMapper.convertValue(dataSourceDTO, JSONObject.class),
 			_objectMapper.convertValue(actualDataSourceDTO, JSONObject.class),
