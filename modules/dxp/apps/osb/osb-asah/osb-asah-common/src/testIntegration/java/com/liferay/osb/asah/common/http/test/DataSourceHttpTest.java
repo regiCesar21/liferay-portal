@@ -368,14 +368,10 @@ public class DataSourceHttpTest extends BaseFaroInfoDogTestCase {
 			FaroInfoTestUtil.buildLiferayDataSource(
 				"foo", RandomTestUtil.randomURL()));
 
-		DataSource liferayDataSource = FaroInfoTestUtil.buildLiferayDataSource(
-			"bar", RandomTestUtil.randomURL());
+		dataSource.setName("bar");
+		dataSource.setIsNew(Boolean.FALSE);
 
-		liferayDataSource.setId(dataSource.getId());
-		liferayDataSource.setIsNew(Boolean.FALSE);
-
-		dataSource = _dataSourceDog.updateDataSourceConfiguration(
-			liferayDataSource);
+		dataSource = _dataSourceDog.updateDataSourceConfiguration(dataSource);
 
 		Assertions.assertEquals("bar", dataSource.getName());
 	}
@@ -415,14 +411,10 @@ public class DataSourceHttpTest extends BaseFaroInfoDogTestCase {
 
 		String updatedURL = "https://foo.bar";
 
-		DataSource liferayDataSource = FaroInfoTestUtil.buildLiferayDataSource(
-			dataSourceName, updatedURL);
+		dataSource.setURL(updatedURL);
+		dataSource.setIsNew(Boolean.FALSE);
 
-		liferayDataSource.setId(dataSource.getId());
-		liferayDataSource.setIsNew(Boolean.FALSE);
-
-		dataSource = _dataSourceDog.updateDataSourceConfiguration(
-			liferayDataSource);
+		dataSource = _dataSourceDog.updateDataSourceConfiguration(dataSource);
 
 		Assertions.assertEquals(updatedURL, dataSource.getURL());
 	}
