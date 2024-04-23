@@ -682,6 +682,125 @@ public class FilterExpressionTest {
 	}
 
 	@Test
+	public void testEventFilter1() {
+		Field userIdField = DSL.field("Event.userId");
+
+		LocalDateTime localDateTime = LocalDateTime.now(ZoneOffset.UTC);
+
+		localDateTime = localDateTime.truncatedTo(ChronoUnit.HOURS);
+
+		Field identityIdField = DSL.field("Identity.id");
+		Field individualIdField = DSL.field("Individual.id");
+
+		_assertEquals(
+			DSL.or(
+				identityIdField.in(
+					DSL.select(
+						userIdField
+					).from(
+						DSL.table(
+							"BQEvent"
+						).as(
+							"Event"
+						)
+					).where(
+						DSL.field(
+							"Event.applicationId"
+						).eq(
+							"CustomEvent"
+						).and(
+							DSL.field(
+								"Event.channelId"
+							).eq(
+								123456789L
+							)
+						).and(
+							DSL.field(
+								"Event.eventId"
+							).eq(
+								"added"
+							)
+						).and(
+							DSL.field(
+								"Event.eventDate"
+							).gt(
+								localDateTime.minusHours(23)
+							)
+						)
+					).groupBy(
+						userIdField
+					).having(
+						DSL.count(
+							userIdField
+						).ge(
+							1
+						)
+					)),
+				individualIdField.in(
+					DSL.selectDistinct(
+						DSL.field("Identity.individualId")
+					).from(
+						DSL.table(
+							"BQEvent"
+						).as(
+							"Event"
+						).join(
+							DSL.table(
+								"BQIdentity"
+							).as(
+								"Identity"
+							)
+						).on(
+							DSL.field(
+								"Event.userId"
+							).eq(
+								DSL.field("Identity.id")
+							)
+						)
+					).where(
+						DSL.field(
+							"Event.applicationId"
+						).eq(
+							"CustomEvent"
+						).and(
+							DSL.field(
+								"Event.channelId"
+							).eq(
+								123456789L
+							)
+						).and(
+							DSL.field(
+								"Event.eventId"
+							).eq(
+								"added"
+							)
+						).and(
+							DSL.field(
+								"Event.eventDate"
+							).gt(
+								localDateTime.minusHours(23)
+							)
+						).and(
+							DSL.field(
+								"Identity.individualId"
+							).isNotNull()
+						)
+					).groupBy(
+						userIdField, DSL.field("Identity.individualId")
+					).having(
+						DSL.count(
+							userIdField
+						).ge(
+							1
+						)
+					))),
+			"events.filterByCount(filter='(eventId eq ''added'' and day gt " +
+				"''last24Hours'')',operator='ge',value=1)",
+			123456789L, new HashSet<>(Arrays.asList("Event", "Individual")),
+			true);
+	}
+
+	@Test
 	public void testFreestyle1() {
 		_assertEquals(
 			DSL.or(
