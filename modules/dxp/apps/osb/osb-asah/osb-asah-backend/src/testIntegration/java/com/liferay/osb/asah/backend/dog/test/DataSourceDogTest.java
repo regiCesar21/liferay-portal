@@ -15,12 +15,14 @@ import com.liferay.osb.asah.common.model.Individual;
 import com.liferay.osb.asah.common.repository.ChannelRepository;
 import com.liferay.osb.asah.common.repository.DataSourceRepository;
 import com.liferay.osb.asah.test.util.annotation.RepositoryResource;
+import com.liferay.osb.asah.test.util.faro.FaroInfoTestUtil;
 import com.liferay.osb.asah.test.util.spring.OSBAsahTestExecutionListenersContext;
 
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 
+import com.liferay.osb.asah.test.util.util.RandomTestUtil;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
@@ -135,12 +137,8 @@ public class DataSourceDogTest
 
 	@Test
 	public void testPatchDataSource() {
-		DataSource dataSource = new DataSource();
-
-		dataSource.setName("Test Data Source");
-		dataSource.setProviderType("LIFERAY");
-		dataSource.setState("CREDENTIALS_VALID");
-		dataSource.setStatus("ACTIVE");
+		DataSource dataSource = FaroInfoTestUtil.buildLiferayDataSource(
+			"Test Data Source", RandomTestUtil.randomURL());
 
 		dataSource = _dataSourceRepository.save(dataSource);
 
