@@ -14,7 +14,9 @@ import java.util.Objects;
 
 /**
  * @author Leslie Wong
+ * @deprecated
  */
+@Deprecated
 public class BQEventProperty {
 
 	public BQEventProperty() {

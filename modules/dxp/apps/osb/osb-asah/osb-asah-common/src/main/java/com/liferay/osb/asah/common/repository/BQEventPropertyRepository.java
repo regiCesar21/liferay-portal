@@ -9,7 +9,9 @@ import com.liferay.osb.asah.common.entity.BQEventProperty;
 
 /**
  * @author Marcellus Tavares
+ * @deprecated
  */
+@Deprecated
 public interface BQEventPropertyRepository
 	extends BigQueryRepository<BQEventProperty, String>,
 			CustomBQEventPropertyRepository {
