@@ -55,7 +55,46 @@ public class ContextProviderUtil {
 			"HTTP.REQUEST");
 	}
 
-	public static Object getMatchedResource(
+	public static Object getMatchedResource(Message message) {
+		return _getMatchedResource(true, message);
+	}
+
+	public static MultivaluedHashMap<String, String> getMultivaluedHashMap(
+		Map<String, String[]> parameterMap) {
+
+		return new MultivaluedHashMap<String, String>() {
+			{
+				for (Entry<String, String[]> entry : parameterMap.entrySet()) {
+					put(entry.getKey(), Arrays.asList(entry.getValue()));
+				}
+			}
+		};
+	}
+
+	public static void releaseResourceInstance(Message message) {
+		Exchange exchange = message.getExchange();
+
+		Object resource = _getMatchedResource(false, message);
+
+		if (resource == null) {
+			return;
+		}
+
+		OperationResourceInfo operationResourceInfo = exchange.get(
+			OperationResourceInfo.class);
+
+		ClassResourceInfo classResourceInfo =
+			operationResourceInfo.getClassResourceInfo();
+
+		ResourceProvider resourceProvider =
+			classResourceInfo.getResourceProvider();
+
+		if (resourceProvider != null) {
+			resourceProvider.releaseInstance(message, resource);
+		}
+	}
+
+	private static Object _getMatchedResource(
 		boolean initialize, Message message) {
 
 		Exchange exchange = message.getExchange();
@@ -106,45 +145,6 @@ public class ContextProviderUtil {
 		Class<?> matchedResourceClass = (Class<?>)matchedResources.get(0);
 
 		return resourceContext.getResource(matchedResourceClass);
-	}
-
-	public static Object getMatchedResource(Message message) {
-		return getMatchedResource(true, message);
-	}
-
-	public static MultivaluedHashMap<String, String> getMultivaluedHashMap(
-		Map<String, String[]> parameterMap) {
-
-		return new MultivaluedHashMap<String, String>() {
-			{
-				for (Entry<String, String[]> entry : parameterMap.entrySet()) {
-					put(entry.getKey(), Arrays.asList(entry.getValue()));
-				}
-			}
-		};
-	}
-
-	public static void releaseResourceInstance(Message message) {
-		Exchange exchange = message.getExchange();
-
-		Object resource = getMatchedResource(false, message);
-
-		if (resource == null) {
-			return;
-		}
-
-		OperationResourceInfo operationResourceInfo = exchange.get(
-			OperationResourceInfo.class);
-
-		ClassResourceInfo classResourceInfo =
-			operationResourceInfo.getClassResourceInfo();
-
-		ResourceProvider resourceProvider =
-			classResourceInfo.getResourceProvider();
-
-		if (resourceProvider != null) {
-			resourceProvider.releaseInstance(message, resource);
-		}
 	}
 
 	private static MultivaluedMap<String, String> _getPathParameters(
