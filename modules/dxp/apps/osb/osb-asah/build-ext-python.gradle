@@ -3,6 +3,20 @@ import com.liferay.gradle.util.FileUtil
 import com.pswidersk.gradle.python.PythonPlugin
 import com.pswidersk.gradle.python.VenvTask
 
+buildscript {
+	dependencies {
+		classpath group: "com.pswidersk", name: "python-gradle-plugin", version: "2.3.0"
+	}
+
+	repositories {
+		mavenLocal()
+
+		maven {
+			url "https://repository-cdn.liferay.com/nexus/content/groups/public"
+		}
+	}
+}
+
 configure(subprojects.findAll { FileUtil.exists(it, "src/main/python")}) {
 	repositories {
 		maven {
