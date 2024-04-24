@@ -9,6 +9,7 @@ import com.liferay.osb.asah.common.spring.annotation.BigQueryColumn;
 import com.liferay.osb.asah.common.util.BeanUtils;
 
 import java.util.Date;
+import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 
@@ -31,9 +32,9 @@ public class BQEvent {
 		String deviceType, String emailAddressHashed, Date eventDate,
 		String eventId, String eventProperties, String experienceId, String id,
 		String keywords, String languageId, String platformName,
-		String projectTimeZoneId, String referrer, String region,
-		String sessionId, String timezoneOffset, String title, String url,
-		String userId, String variantId) {
+		String projectTimeZoneId, List<Property> properties, String referrer,
+		String region, String sessionId, String timezoneOffset, String title,
+		String url, String userId, String variantId) {
 
 		_applicationId = applicationId;
 		_browserName = browserName;
@@ -61,6 +62,7 @@ public class BQEvent {
 		_languageId = languageId;
 		_platformName = platformName;
 		_projectTimeZoneId = projectTimeZoneId;
+		_properties = properties;
 		_referrer = referrer;
 		_region = region;
 		_sessionId = sessionId;
@@ -107,6 +109,7 @@ public class BQEvent {
 			Objects.equals(_languageId, bqEvent._languageId) &&
 			Objects.equals(_platformName, bqEvent._platformName) &&
 			Objects.equals(_projectTimeZoneId, bqEvent._projectTimeZoneId) &&
+			Objects.equals(_properties, bqEvent._properties) &&
 			Objects.equals(_referrer, bqEvent._referrer) &&
 			Objects.equals(_region, bqEvent._region) &&
 			Objects.equals(_sessionId, bqEvent._sessionId) &&
@@ -256,6 +259,11 @@ public class BQEvent {
 	}
 
 	@BigQueryColumn
+	public List<Property> getProperties() {
+		return _properties;
+	}
+
+	@BigQueryColumn
 	public String getReferrer() {
 		return _referrer;
 	}
@@ -303,8 +311,8 @@ public class BQEvent {
 			_createDate, _dataSourceId, _description, _deviceType,
 			_emailAddressHashed, _eventDate, _eventId, _eventProperties,
 			_experienceId, _experimentId, _id, _keywords, _languageId,
-			_platformName, _projectTimeZoneId, _referrer, _region, _sessionId,
-			_timezoneOffset, _title, _url, _userId, _variantId);
+			_platformName, _projectTimeZoneId, _properties, _referrer, _region,
+			_sessionId, _timezoneOffset, _title, _url, _userId, _variantId);
 	}
 
 	public void setApplicationId(String applicationId) {
@@ -417,6 +425,10 @@ public class BQEvent {
 		_projectTimeZoneId = projectTimeZoneId;
 	}
 
+	public void setProperties(List<Property> eventProperties) {
+		_properties = eventProperties;
+	}
+
 	public void setReferrer(String referrer) {
 		_referrer = referrer;
 	}
@@ -449,6 +461,39 @@ public class BQEvent {
 		_variantId = variantId;
 	}
 
+	public static class Property {
+
+		public Property() {
+		}
+
+		public Property(String name, String value) {
+			_name = name;
+			_value = value;
+		}
+
+		@BigQueryColumn
+		public String getName() {
+			return _name;
+		}
+
+		@BigQueryColumn
+		public String getValue() {
+			return _value;
+		}
+
+		public void setName(String name) {
+			_name = name;
+		}
+
+		public void setValue(String value) {
+			_value = value;
+		}
+
+		private String _name;
+		private String _value;
+
+	}
+
 	private String _applicationId;
 	private String _assetId;
 	private String _assetTitle;
@@ -474,6 +519,7 @@ public class BQEvent {
 	private String _languageId;
 	private String _platformName;
 	private String _projectTimeZoneId;
+	private List<Property> _properties;
 	private String _referrer;
 	private String _region;
 	private String _sessionId;

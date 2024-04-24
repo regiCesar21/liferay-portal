@@ -58,45 +58,45 @@ public class BQEventDog {
 
 	@VisibleForTestingOnly
 	public BQEvent addBQEvent(
-			String applicationId, Set<BQEventProperty> bqEventProperties,
-			Long channelId, Date createDate, Long dataSourceId, Date eventDate,
-			String eventId, String id, String sessionId, String userId)
+			String applicationId, Long channelId, Date createDate,
+			Long dataSourceId, Date eventDate, String eventId, String id,
+			List<BQEvent.Property> properties, String sessionId, String userId)
 		throws Exception {
 
 		return addBQEvent(
-			applicationId, bqEventProperties, null, null, channelId, null, null,
-			null, null, createDate, dataSourceId, null, null, null, eventDate,
-			eventId, null, id, null, null, null, null, null, null, sessionId,
+			applicationId, null, null, channelId, null, null, null, null,
+			createDate, dataSourceId, null, null, null, eventDate, eventId,
+			null, id, null, null, null, null, properties, null, null, sessionId,
 			null, null, null, userId, null);
 	}
 
 	@VisibleForTestingOnly
 	public BQEvent addBQEvent(
-			String applicationId, Set<BQEventProperty> bqEventProperties,
-			Long channelId, Date createDate, Long dataSourceId, Date eventDate,
-			String eventId, String id, String sessionId, String title,
+			String applicationId, Long channelId, Date createDate,
+			Long dataSourceId, Date eventDate, String eventId, String id,
+			List<BQEvent.Property> properties, String sessionId, String title,
 			String userId)
 		throws Exception {
 
 		return addBQEvent(
-			applicationId, bqEventProperties, null, null, channelId, null, null,
-			null, null, createDate, dataSourceId, null, null, null, eventDate,
-			eventId, null, id, null, null, null, null, null, null, sessionId,
+			applicationId, null, null, channelId, null, null, null, null,
+			createDate, dataSourceId, null, null, null, eventDate, eventId,
+			null, id, null, null, null, null, properties, null, null, sessionId,
 			null, title, null, userId, null);
 	}
 
 	@VisibleForTestingOnly
 	public BQEvent addBQEvent(
-			String applicationId, Set<BQEventProperty> bqEventProperties,
-			String browserName, String canonicalUrl, Long channelId,
-			String city, String contentLanguageId, String context,
-			String country, Date createDate, Long dataSourceId,
+			String applicationId, String browserName, String canonicalUrl,
+			Long channelId, String city, String contentLanguageId,
+			String context, String country, Date createDate, Long dataSourceId,
 			String description, String deviceType, String emailAddressHashed,
 			Date eventDate, String eventId, String experienceId, String id,
 			String keywords, String languageId, String platformName,
-			String projectTimeZoneId, String referrer, String region,
-			String sessionId, String timezoneOffset, String title, String url,
-			String userId, String variantId)
+			String projectTimeZoneId, List<BQEvent.Property> properties,
+			String referrer, String region, String sessionId,
+			String timezoneOffset, String title, String url, String userId,
+			String variantId)
 		throws Exception {
 
 		BQEvent bqEvent = _bqEventRepository.insert(
@@ -104,12 +104,15 @@ public class BQEventDog {
 				applicationId, browserName, canonicalUrl, channelId, city,
 				contentLanguageId, context, country, createDate, dataSourceId,
 				description, deviceType, emailAddressHashed, eventDate, eventId,
-				_objectMapper.writeValueAsString(bqEventProperties),
-				experienceId, id, keywords, languageId, platformName,
-				projectTimeZoneId, referrer, region, sessionId, timezoneOffset,
-				title, url, userId, variantId));
+				_objectMapper.writeValueAsString(properties), experienceId, id,
+				keywords, languageId, platformName, projectTimeZoneId,
+				properties, referrer, region, sessionId, timezoneOffset, title,
+				url, userId, variantId));
 
-		for (BQEventProperty bqEventProperty : bqEventProperties) {
+		for (BQEvent.Property property : properties) {
+			BQEventProperty bqEventProperty = new BQEventProperty(
+				null, property.getName(), property.getValue());
+
 			bqEventProperty.setId(bqEvent.getId());
 
 			_bqEventPropertyRepository.insert(bqEventProperty);

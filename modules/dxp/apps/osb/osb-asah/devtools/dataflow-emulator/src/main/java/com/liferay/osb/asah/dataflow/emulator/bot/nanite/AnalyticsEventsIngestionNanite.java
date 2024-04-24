@@ -26,6 +26,7 @@ import com.liferay.osb.asah.common.util.ProjectIdThreadLocal;
 import com.liferay.osb.asah.dataflow.emulator.browscap.BrowscapDevice;
 import com.liferay.osb.asah.dataflow.emulator.browscap.BrowscapEngine;
 
+import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.Date;
 import java.util.HashMap;
@@ -291,6 +292,19 @@ public class AnalyticsEventsIngestionNanite {
 		return true;
 	}
 
+	private List<BQEvent.Property> _parseBQEventProperties(
+		Map<String, String> eventProperties) {
+
+		List<BQEvent.Property> properties = new ArrayList<>();
+
+		for (Map.Entry<String, String> entry : eventProperties.entrySet()) {
+			properties.add(
+				new BQEvent.Property(entry.getKey(), entry.getValue()));
+		}
+
+		return properties;
+	}
+
 	private List<AnalyticsEvent> _parseMessages(
 		List<Message<String>> messages) {
 
@@ -506,6 +520,8 @@ public class AnalyticsEventsIngestionNanite {
 		bqEvent.setLanguageId(context.get("languageId"));
 		bqEvent.setPlatformName(context.get("platformName"));
 		bqEvent.setProjectTimeZoneId(analyticsEvent.getProjectTimeZoneId());
+		bqEvent.setProperties(
+			_parseBQEventProperties(analyticsEvent.getEventProperties()));
 		bqEvent.setReferrer(context.get("referrer"));
 		bqEvent.setRegion("Local Network");
 		bqEvent.setSessionId(sessionContext.id);
