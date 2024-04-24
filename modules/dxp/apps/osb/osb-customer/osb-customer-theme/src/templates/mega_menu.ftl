@@ -32,7 +32,7 @@
 					url: '/project-details'
 				},
 				{
-					name: '<@liferay.language key="escalate-a-ticket-beta" />',
+					name: '<@liferay.language key="escalate-a-ticket" />',
 					svgId: '#warning',
 					url: 'https://support.liferay.com/support-ticket-escalation'
 				}
