@@ -53,7 +53,15 @@ WITH NotPageEvent AS (
 			Event.applicationId = 'Comment' AND
 			Event.assetId IS NOT NULL AND
 			Event.eventId = 'posted' AND
-			JSON_VALUE(Event.eventProperties, '$.className') = 'com.liferay.blogs.model.BlogsEntry'
+			EXISTS (
+				SELECT
+					1
+				FROM
+					UNNEST(Event.properties)
+				WHERE
+					name = 'className' AND
+					SAFE_CAST(value AS STRING) = 'com.liferay.blogs.model.BlogsEntry'
+			)
 		)
 ),
 PageEvent AS (
