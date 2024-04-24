@@ -45,6 +45,8 @@ public class GetLayoutsStrutsAction implements StrutsAction {
 			httpServletRequest, "layoutUuid");
 		boolean showHiddenLayouts = ParamUtil.getBoolean(
 			httpServletRequest, "showHiddenLayouts");
+		boolean showDraftLayouts = ParamUtil.getBoolean(
+			httpServletRequest, "showDraftLayouts");
 
 		int start = ParamUtil.getInteger(httpServletRequest, "start");
 
@@ -75,7 +77,8 @@ public class GetLayoutsStrutsAction implements StrutsAction {
 				LayoutUtil.getLayoutsJSONArray(
 					checkDisplayPage, enableCurrentPage, groupId,
 					httpServletRequest, privateLayout, parentLayoutId,
-					selectedLayoutUuid, showHiddenLayouts, start, end)
+					selectedLayoutUuid, showHiddenLayouts, showDraftLayouts,
+					start, end)
 			).put(
 				"total", childLayoutsCount
 			).toString());

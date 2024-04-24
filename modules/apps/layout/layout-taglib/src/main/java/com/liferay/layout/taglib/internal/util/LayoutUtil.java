@@ -82,7 +82,8 @@ public class LayoutUtil {
 			boolean checkDisplayPage, boolean enableCurrentPage, long groupId,
 			HttpServletRequest httpServletRequest, boolean privateLayout,
 			long parentLayoutId, String selectedLayoutUuid,
-			boolean showHiddenLayouts, int start, int end)
+			boolean showHiddenLayouts, boolean showDraftLayouts, int start,
+			int end)
 		throws Exception {
 
 		ThemeDisplay themeDisplay =
@@ -101,7 +102,7 @@ public class LayoutUtil {
 
 		for (Layout layout : layouts) {
 			if ((layout.isHidden() && !showHiddenLayouts) ||
-				_isContentLayoutDraft(layout)) {
+				(_isContentLayoutDraft(layout) && !showDraftLayouts)) {
 
 				continue;
 			}

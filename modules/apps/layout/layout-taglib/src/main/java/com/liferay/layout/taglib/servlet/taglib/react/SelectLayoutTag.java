@@ -240,7 +240,7 @@ public class SelectLayoutTag extends IncludeTag {
 				LayoutUtil.getLayoutsJSONArray(
 					_checkDisplayPage, _enableCurrentPage,
 					themeDisplay.getScopeGroupId(), getRequest(),
-					_privateLayout, 0, layoutUuid, _showHiddenLayouts, 0,
+					_privateLayout, 0, layoutUuid, _showHiddenLayouts, false, 0,
 					GetterUtil.getInteger(
 						PropsValues.LAYOUT_MANAGE_PAGES_INITIAL_CHILDREN))
 			).put(
