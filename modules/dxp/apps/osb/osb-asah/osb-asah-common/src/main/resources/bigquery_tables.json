@@ -804,9 +804,21 @@
 				"type": "STRING"
 			},
 			{
-				"mode": "NULLABLE",
-				"name": "eventProperties",
-				"type": "STRING"
+				"fields": [
+					{
+						"mode": "REQUIRED",
+						"name": "name",
+						"type": "STRING"
+					},
+					{
+						"mode": "REQUIRED",
+						"name": "value",
+						"type": "STRING"
+					}
+				],
+				"mode": "REPEATED",
+				"name": "properties",
+				"type": "RECORD"
 			},
 			{
 				"mode": "NULLABLE",
