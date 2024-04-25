@@ -46,6 +46,18 @@ public class ReportDogTest
 
 	@BQSQLResource(resourcePath = "test_report_dog.sql")
 	@Test
+	public void testGetCSVCountReportAssetForm() throws Exception {
+		Assertions.assertEquals(
+			3,
+			_reportDog.getCSVReportCount(
+				null, null, 1L, null,
+				TimeRange.of(
+					LocalDate.of(2023, 11, 6), LocalDate.of(2023, 11, 3)),
+				"form"));
+	}
+
+	@BQSQLResource(resourcePath = "test_report_dog.sql")
+	@Test
 	public void testGetCSVReportAssetBlog() throws Exception {
 		ClassPathResource classPathResource = new ClassPathResource(
 			"dependencies/test_get_csv_report_asset_blog_expected.csv",
@@ -104,6 +116,20 @@ public class ReportDogTest
 				IOUtils.contentEquals(
 					classPathResource.getInputStream(), inputStream));
 		}
+	}
+
+	@BQSQLResource(resourcePath = "test_report_dog.sql")
+	@Test
+	public void testGetCSVReportAssetCountDocumentLibraryFilteredByQuery()
+		throws Exception {
+
+		Assertions.assertEquals(
+			1,
+			_reportDog.getCSVReportCount(
+				null, null, 1L, "Document 3",
+				TimeRange.of(
+					LocalDate.of(2023, 11, 6), LocalDate.of(2023, 11, 3)),
+				"document"));
 	}
 
 	@BQSQLResource(resourcePath = "test_report_dog.sql")
@@ -617,6 +643,373 @@ public class ReportDogTest
 				IOUtils.contentEquals(
 					classPathResource.getInputStream(), inputStream));
 		}
+	}
+
+	@BQSQLResource(resourcePath = "test_report_dog.sql")
+	@Test
+	public void testGetCSVReportCountAssetBlog() throws Exception {
+		Assertions.assertEquals(
+			3,
+			_reportDog.getCSVReportCount(
+				null, null, 1L, null,
+				TimeRange.of(
+					LocalDate.of(2023, 11, 6), LocalDate.of(2023, 11, 3)),
+				"blog"));
+	}
+
+	@BQSQLResource(resourcePath = "test_report_dog.sql")
+	@Test
+	public void testGetCSVReportCountAssetBlogFilteredByQuery()
+		throws Exception {
+
+		Assertions.assertEquals(
+			1,
+			_reportDog.getCSVReportCount(
+				null, null, 1L, "Blog 1",
+				TimeRange.of(
+					LocalDate.of(2023, 11, 6), LocalDate.of(2023, 11, 3)),
+				"blog"));
+	}
+
+	@BQSQLResource(resourcePath = "test_report_dog.sql")
+	@Test
+	public void testGetCSVReportCountAssetBlogSortedByViews() throws Exception {
+		Assertions.assertEquals(
+			3,
+			_reportDog.getCSVReportCount(
+				null, null, 1L, null,
+				TimeRange.of(
+					LocalDate.of(2023, 11, 6), LocalDate.of(2023, 11, 3)),
+				"blog"));
+	}
+
+	@BQSQLResource(resourcePath = "test_report_dog.sql")
+	@Test
+	public void testGetCSVReportCountAssetDocumentLibrary() throws Exception {
+		Assertions.assertEquals(
+			3,
+			_reportDog.getCSVReportCount(
+				null, null, 1L, null,
+				TimeRange.of(
+					LocalDate.of(2023, 11, 6), LocalDate.of(2023, 11, 3)),
+				"document"));
+	}
+
+	@BQSQLResource(resourcePath = "test_report_dog.sql")
+	@Test
+	public void testGetCSVReportCountAssetDocumentLibrarySortedByDownloads()
+		throws Exception {
+
+		Assertions.assertEquals(
+			3,
+			_reportDog.getCSVReportCount(
+				null, null, 1L, null,
+				TimeRange.of(
+					LocalDate.of(2023, 11, 6), LocalDate.of(2023, 11, 3)),
+				"document"));
+	}
+
+	@BQSQLResource(resourcePath = "test_report_dog.sql")
+	@Test
+	public void testGetCSVReportCountAssetFormFilteredByQuery()
+		throws Exception {
+
+		Assertions.assertEquals(
+			1,
+			_reportDog.getCSVReportCount(
+				null, null, 1L, "Form 1",
+				TimeRange.of(
+					LocalDate.of(2023, 11, 6), LocalDate.of(2023, 11, 3)),
+				"form"));
+	}
+
+	@BQSQLResource(resourcePath = "test_report_dog.sql")
+	@Test
+	public void testGetCSVReportCountAssetFormSortedBySubmissions()
+		throws Exception {
+
+		Assertions.assertEquals(
+			3,
+			_reportDog.getCSVReportCount(
+				null, null, 1L, null,
+				TimeRange.of(
+					LocalDate.of(2023, 11, 6), LocalDate.of(2023, 11, 3)),
+				"form"));
+	}
+
+	@BQSQLResource(resourcePath = "test_report_dog.sql")
+	@Test
+	public void testGetCSVReportCountAssetIndividual() throws Exception {
+		Assertions.assertEquals(
+			3,
+			_reportDog.getCSVReportCount(
+				"https://www.beryl.com/delivery", "page", 1L, null,
+				TimeRange.of(
+					LocalDate.of(2023, 11, 6), LocalDate.of(2023, 11, 3)),
+				"individual"));
+	}
+
+	@BQSQLResource(resourcePath = "test_report_dog.sql")
+	@Test
+	public void testGetCSVReportCountAssetIndividualForAGivenBlogFilteredByEmailAddressInQuery()
+		throws Exception {
+
+		Assertions.assertEquals(
+			1,
+			_reportDog.getCSVReportCount(
+				"3", "blog", 1L, "test3@liferay.com",
+				TimeRange.of(
+					LocalDate.of(2023, 11, 6), LocalDate.of(2023, 11, 3)),
+				"individual"));
+	}
+
+	@BQSQLResource(resourcePath = "test_report_dog.sql")
+	@Test
+	public void testGetCSVReportCountAssetIndividualForAGivenBlogFilteredByNameInQuery()
+		throws Exception {
+
+		Assertions.assertEquals(
+			1,
+			_reportDog.getCSVReportCount(
+				"1", "blog", 1L, "Test 1",
+				TimeRange.of(
+					LocalDate.of(2023, 11, 6), LocalDate.of(2023, 11, 3)),
+				"individual"));
+	}
+
+	@BQSQLResource(resourcePath = "test_report_dog.sql")
+	@Test
+	public void testGetCSVReportCountAssetIndividualForAGivenDocumentLibraryFilteredByEmailAddressInQuery()
+		throws Exception {
+
+		Assertions.assertEquals(
+			1,
+			_reportDog.getCSVReportCount(
+				"3", "document", 1L, "test3@liferay.com",
+				TimeRange.of(
+					LocalDate.of(2023, 11, 6), LocalDate.of(2023, 11, 3)),
+				"individual"));
+	}
+
+	@BQSQLResource(resourcePath = "test_report_dog.sql")
+	@Test
+	public void testGetCSVReportCountAssetIndividualForAGivenDocumentLibraryFilteredByNameInQuery()
+		throws Exception {
+
+		Assertions.assertEquals(
+			1,
+			_reportDog.getCSVReportCount(
+				"1", "document", 1L, "Test 1",
+				TimeRange.of(
+					LocalDate.of(2023, 11, 6), LocalDate.of(2023, 11, 3)),
+				"individual"));
+	}
+
+	@BQSQLResource(resourcePath = "test_report_dog.sql")
+	@Test
+	public void testGetCSVReportCountAssetIndividualForAGivenFormFilteredByEmailAddressInQuery()
+		throws Exception {
+
+		Assertions.assertEquals(
+			1,
+			_reportDog.getCSVReportCount(
+				"2", "form", 1L, "test2@liferay.com",
+				TimeRange.of(
+					LocalDate.of(2023, 11, 6), LocalDate.of(2023, 11, 3)),
+				"individual"));
+	}
+
+	@BQSQLResource(resourcePath = "test_report_dog.sql")
+	@Test
+	public void testGetCSVReportCountAssetIndividualForAGivenFormFilteredByNameInQuery()
+		throws Exception {
+
+		Assertions.assertEquals(
+			1,
+			_reportDog.getCSVReportCount(
+				"1", "form", 1L, "Test 1",
+				TimeRange.of(
+					LocalDate.of(2023, 11, 6), LocalDate.of(2023, 11, 3)),
+				"individual"));
+	}
+
+	@BQSQLResource(resourcePath = "test_report_dog.sql")
+	@Test
+	public void testGetCSVReportCountAssetIndividualForAGivenJournalFilteredByEmailAddressInQuery()
+		throws Exception {
+
+		Assertions.assertEquals(
+			1,
+			_reportDog.getCSVReportCount(
+				"3", "journal", 1L, "test3@liferay.com",
+				TimeRange.of(
+					LocalDate.of(2023, 11, 6), LocalDate.of(2023, 11, 3)),
+				"individual"));
+	}
+
+	@BQSQLResource(resourcePath = "test_report_dog.sql")
+	@Test
+	public void testGetCSVReportCountAssetIndividualForAGivenJournalFilteredByNameInQuery()
+		throws Exception {
+
+		Assertions.assertEquals(
+			1,
+			_reportDog.getCSVReportCount(
+				"2", "journal", 1L, "Test 2",
+				TimeRange.of(
+					LocalDate.of(2023, 11, 6), LocalDate.of(2023, 11, 3)),
+				"individual"));
+	}
+
+	@BQSQLResource(resourcePath = "test_report_dog.sql")
+	@Test
+	public void testGetCSVReportCountAssetIndividualForAGivenPageFilteredByEmailAddressInQuery()
+		throws Exception {
+
+		Assertions.assertEquals(
+			1,
+			_reportDog.getCSVReportCount(
+				"https://www.beryl.com/delivery", "page", 1L,
+				"test3@liferay.com",
+				TimeRange.of(
+					LocalDate.of(2023, 11, 6), LocalDate.of(2023, 11, 3)),
+				"individual"));
+	}
+
+	@BQSQLResource(resourcePath = "test_report_dog.sql")
+	@Test
+	public void testGetCSVReportCountAssetIndividualForAGivenPageFilteredByNameInQuery()
+		throws Exception {
+
+		Assertions.assertEquals(
+			1,
+			_reportDog.getCSVReportCount(
+				"https://www.beryl.com/delivery", "page", 1L, "Test 1",
+				TimeRange.of(
+					LocalDate.of(2023, 11, 6), LocalDate.of(2023, 11, 3)),
+				"individual"));
+	}
+
+	@BQSQLResource(resourcePath = "test_report_dog.sql")
+	@Test
+	public void testGetCSVReportCountAssetJournal() throws Exception {
+		Assertions.assertEquals(
+			3,
+			_reportDog.getCSVReportCount(
+				null, null, 1L, null,
+				TimeRange.of(
+					LocalDate.of(2023, 11, 6), LocalDate.of(2023, 11, 3)),
+				"journal"));
+	}
+
+	@BQSQLResource(resourcePath = "test_report_dog.sql")
+	@Test
+	public void testGetCSVReportCountAssetJournalFilteredByQuery()
+		throws Exception {
+
+		Assertions.assertEquals(
+			1,
+			_reportDog.getCSVReportCount(
+				null, null, 1L, "Journal 3",
+				TimeRange.of(
+					LocalDate.of(2023, 11, 6), LocalDate.of(2023, 11, 3)),
+				"journal"));
+	}
+
+	@BQSQLResource(resourcePath = "test_report_dog.sql")
+	@Test
+	public void testGetCSVReportCountAssetJournalSortedByViews()
+		throws Exception {
+
+		Assertions.assertEquals(
+			3,
+			_reportDog.getCSVReportCount(
+				null, null, 1L, null,
+				TimeRange.of(
+					LocalDate.of(2023, 11, 6), LocalDate.of(2023, 11, 3)),
+				"journal"));
+	}
+
+	@BQSQLResource(resourcePath = "test_report_dog.sql")
+	@Test
+	public void testGetCSVReportCountAssetPage() throws Exception {
+		Assertions.assertEquals(
+			2,
+			_reportDog.getCSVReportCount(
+				null, null, 1L, null,
+				TimeRange.of(
+					LocalDate.of(2023, 11, 6), LocalDate.of(2023, 11, 3)),
+				"page"));
+	}
+
+	@BQSQLResource(resourcePath = "test_report_dog.sql")
+	@Test
+	public void testGetCSVReportCountAssetPageFilteredByQuery()
+		throws Exception {
+
+		Assertions.assertEquals(
+			1,
+			_reportDog.getCSVReportCount(
+				null, null, 1L, "Liferay",
+				TimeRange.of(
+					LocalDate.of(2023, 11, 6), LocalDate.of(2023, 11, 3)),
+				"page"));
+	}
+
+	@BQSQLResource(resourcePath = "test_report_dog.sql")
+	@Test
+	public void testGetCSVReportCountAssetPageSortedByEntrances()
+		throws Exception {
+
+		Assertions.assertEquals(
+			2,
+			_reportDog.getCSVReportCount(
+				null, null, 1L, null,
+				TimeRange.of(
+					LocalDate.of(2023, 11, 6), LocalDate.of(2023, 11, 3)),
+				"page"));
+	}
+
+	@BQSQLResource(resourcePath = "test_report_dog.sql")
+	@Test
+	public void testGetCSVReportCountIndividual() throws Exception {
+		Assertions.assertEquals(
+			3,
+			_reportDog.getCSVReportCount(
+				null, null, 1L, null, null, "individual"));
+	}
+
+	@BQSQLResource(resourcePath = "test_report_dog.sql")
+	@Test
+	public void testGetCSVReportCountIndividualFilteredByEmailAddressInQuery()
+		throws Exception {
+
+		Assertions.assertEquals(
+			1,
+			_reportDog.getCSVReportCount(
+				null, null, 1L, "test2@liferay.com", null, "individual"));
+	}
+
+	@BQSQLResource(resourcePath = "test_report_dog.sql")
+	@Test
+	public void testGetCSVReportCountIndividualFilteredByNameInQuery()
+		throws Exception {
+
+		Assertions.assertEquals(
+			1,
+			_reportDog.getCSVReportCount(
+				null, null, 1L, "Test 3", null, "individual"));
+	}
+
+	@BQSQLResource(resourcePath = "test_report_dog.sql")
+	@Test
+	public void testGetCSVReportCountIndividualSortedByJobTitle()
+		throws Exception {
+
+		Assertions.assertEquals(
+			3,
+			_reportDog.getCSVReportCount(
+				null, null, 1L, null, null, "individual"));
 	}
 
 	@BQSQLResource(resourcePath = "test_report_dog.sql")
