@@ -37,6 +37,7 @@ public class RemoteAppBottomDynamicInclude implements DynamicInclude {
 			HttpServletRequest httpServletRequest,
 			HttpServletResponse httpServletResponse, String key)
 		throws IOException {
+
 		if (_remoteAppConfiguration.enablePostMessage()) {
 			ScriptData scriptData = new ScriptData();
 
