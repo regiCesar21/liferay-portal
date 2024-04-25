@@ -542,6 +542,14 @@ public class TransformProductPurchases {
 			JSONObject jsonObject = new JSONObject();
 
 			jsonObject.put("accountKey", accountKey);
+
+			if (name.equals(
+					SubscriptionConstants.GROUP_NAME_LIFERAY_SELF_HOSTED)) {
+
+				jsonObject.put(
+					"activationProductName", Constants.PRODUCT_GROUP_DXP_NAME);
+			}
+
 			jsonObject.put("externalReferenceCode", externalReferenceCode);
 
 			if (name.equals(SubscriptionConstants.GROUP_NAME_ANALYTICS_CLOUD) ||
