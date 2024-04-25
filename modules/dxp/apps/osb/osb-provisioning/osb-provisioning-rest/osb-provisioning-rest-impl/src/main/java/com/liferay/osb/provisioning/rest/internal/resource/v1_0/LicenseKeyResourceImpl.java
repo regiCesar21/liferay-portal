@@ -294,8 +294,10 @@ public class LicenseKeyResourceImpl
 		String displayGroupName = properties.get("display-group-name");
 
 		if (Validator.isNull(displayGroupName) ||
-			(!displayGroupName.equals(ProductConstants.GROUP_NAME_DXP) &&
-			 !displayGroupName.equals(ProductConstants.GROUP_NAME_PORTAL))) {
+			(!displayGroupName.equals(
+				ProductConstants.DISPLAY_GROUP_NAME_LIFERAY_SELF_HOSTED) &&
+			 !displayGroupName.equals(
+				 ProductConstants.DISPLAY_GROUP_NAME_PORTAL))) {
 
 			return Response.status(
 				Response.Status.NOT_FOUND
@@ -1742,17 +1744,17 @@ public class LicenseKeyResourceImpl
 		filterQuery.addEquals(true, "property_type", "primary");
 		filterQuery.addEquals(true, "state", "active");
 
-		if (productGroupName.equals(ProductConstants.GROUP_NAME_COMMERCE)) {
+		if (productGroupName.equals(ProductGroup.Name.COMMERCE.toString())) {
 			filterQuery.addContains(false, "name", "Commerce for Liferay PaaS");
 			filterQuery.addContains(false, "name", "Commerce Subscription");
 		}
 
-		if (productGroupName.equals(ProductConstants.GROUP_NAME_DXP)) {
+		if (productGroupName.equals(ProductGroup.Name.DXP.toString())) {
 			filterQuery.addContains(false, "name", "DXP");
 			filterQuery.addContains(false, "name", "Liferay PaaS");
 		}
 
-		if (productGroupName.equals(ProductConstants.GROUP_NAME_PORTAL)) {
+		if (productGroupName.equals(ProductGroup.Name.PORTAL.toString())) {
 			filterQuery.addContains(false, "name", "Portal");
 		}
 
@@ -1767,7 +1769,8 @@ public class LicenseKeyResourceImpl
 
 			String curProductName = curProduct.getName();
 
-			if (productGroupName.equals(ProductConstants.GROUP_NAME_COMMERCE) &&
+			if (productGroupName.equals(
+					ProductGroup.Name.COMMERCE.toString()) &&
 				(curProductName.contains(
 					ProductConstants.NAME_COMMERCE_FOR_LIFERAY_PAAS) ||
 				 curProductName.startsWith(
@@ -1776,14 +1779,14 @@ public class LicenseKeyResourceImpl
 				return true;
 			}
 
-			if (productGroupName.equals(ProductConstants.GROUP_NAME_DXP) &&
+			if (productGroupName.equals(ProductGroup.Name.DXP.toString()) &&
 				(curProductName.startsWith(ProductConstants.NAME_DXP) ||
 				 curProductName.contains(ProductConstants.NAME_LIFERAY_PAAS))) {
 
 				return true;
 			}
 
-			if (productGroupName.equals(ProductConstants.GROUP_NAME_PORTAL) &&
+			if (productGroupName.equals(ProductGroup.Name.PORTAL.toString()) &&
 				curProductName.contains(ProductConstants.NAME_PORTAL)) {
 
 				return true;
@@ -1792,9 +1795,10 @@ public class LicenseKeyResourceImpl
 			if (ArrayUtil.contains(
 					ProductConstants.NAMES_PARTNERSHIP, curProductName) &&
 				(productGroupName.equals(
-					ProductConstants.GROUP_NAME_COMMERCE) ||
-				 productGroupName.equals(ProductConstants.GROUP_NAME_DXP) ||
-				 productGroupName.equals(ProductConstants.GROUP_NAME_PORTAL))) {
+					ProductGroup.Name.COMMERCE.toString()) ||
+				 productGroupName.equals(ProductGroup.Name.DXP.toString()) ||
+				 productGroupName.equals(
+					 ProductGroup.Name.PORTAL.toString()))) {
 
 				return true;
 			}
