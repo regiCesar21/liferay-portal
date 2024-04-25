@@ -1709,8 +1709,7 @@ public class LicenseKeyResourceImpl
 			filterQuery.addContains(true, "name", "Liferay PaaS", true);
 		}
 		else if (productGroupName.equals(ProductGroup.Name.PORTAL.toString())) {
-			filterQuery.addContains(
-				true, "name", "Early  Access Program", true);
+			filterQuery.addContains(true, "name", "Early Access Program", true);
 			filterQuery.addContains(true, "name", "Portal");
 		}
 
