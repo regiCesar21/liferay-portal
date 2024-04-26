@@ -520,7 +520,7 @@ public class DataSourceDog {
 		if (!Objects.equals(providerType, "LIFERAY")) {
 			throw new OSBAsahException(
 				HttpStatus.BAD_REQUEST,
-				"Unsupported Data Source provider type " + providerType);
+				"Unsupported data source provider type " + providerType);
 		}
 	}
 
