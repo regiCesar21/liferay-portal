@@ -19,6 +19,7 @@ import com.liferay.osb.asah.dataflow.io.WriteToText;
 import java.time.ZoneId;
 import java.time.ZonedDateTime;
 
+import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -653,6 +654,22 @@ public class EventIngestionPipeline {
 		tableRow.set("platformName", context.get("platformName"));
 		tableRow.set("projectId", analyticsEvent.projectId);
 		tableRow.set("projectTimeZoneId", analyticsEvent.projectTimeZoneId);
+
+		List<TableRow> propertyTableRows = new ArrayList<>();
+
+		Map<String, String> eventProperties = analyticsEvent.eventProperties;
+
+		for (Map.Entry<String, String> entry : eventProperties.entrySet()) {
+			TableRow propertyTableRow = new TableRow();
+
+			propertyTableRow.set("name", entry.getKey());
+			propertyTableRow.set("value", entry.getValue());
+
+			propertyTableRows.add(propertyTableRow);
+		}
+
+		tableRow.set("properties", propertyTableRows);
+
 		tableRow.set("referrer", context.get("referrer"));
 		tableRow.set("region", context.get("region"));
 		tableRow.set("sessionId", sessionId);
