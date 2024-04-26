@@ -743,19 +743,15 @@ public class BQEventRepositoryImpl
 		String individualId, Pageable pageable, TimeRange timeRange,
 		String timeZoneId) {
 
-		Field field = DSL.field(
-			String.format(
-				"(SELECT value from UNNEST(BQEvent.properties) WHERE name = " +
-					"'%s' LIMIT 1)",
-				RecentVisitAsset.ContentType.WEBCONTENT.getAssetIdFieldName()));
-
 		Field assetIdField = DSL.when(
 			DSL.field(
 				"applicationId"
 			).eq(
 				RecentVisitAsset.ContentType.WEBCONTENT.getApplicationId()
 			),
-			field
+			_dslHelper.jsonExtractScalar(
+				"BQEvent.eventProperties",
+				RecentVisitAsset.ContentType.WEBCONTENT.getAssetIdFieldName())
 		).otherwise(
 			DSL.field("assetId")
 		).as(
