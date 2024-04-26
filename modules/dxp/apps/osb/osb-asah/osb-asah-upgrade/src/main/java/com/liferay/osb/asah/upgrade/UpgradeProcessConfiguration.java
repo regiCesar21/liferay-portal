@@ -6,7 +6,7 @@
 package com.liferay.osb.asah.upgrade;
 
 import com.liferay.osb.asah.upgrade.v4_6_0.BQIdentityRawUpgradeStep;
-import com.liferay.osb.asah.upgrade.v4_8_0.HourlyAssetMetricUpgradeStep;
+import com.liferay.osb.asah.upgrade.v4_9_0.HourlyAssetMetricUpgradeStep;
 import com.liferay.osb.asah.upgrade.v4_9_0.PostgreSQLUpgradeStep;
 
 import org.springframework.beans.factory.annotation.Autowired;
