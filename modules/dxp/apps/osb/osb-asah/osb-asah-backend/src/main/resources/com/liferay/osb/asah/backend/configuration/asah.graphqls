@@ -447,6 +447,7 @@ type EventAttributeDefinition {
 	dataType: EventAttributeDefinitionDataType
 	description: String
 	displayName: String
+	encodedName: String
 	id: String
 	name: String
 	recentValues: [EventAttributeValue]

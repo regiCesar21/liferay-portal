@@ -19,6 +19,8 @@ import java.util.Objects;
 import java.util.Set;
 import java.util.stream.Stream;
 
+import org.apache.commons.codec.digest.DigestUtils;
+
 /**
  * @author Leslie Wong
  */
@@ -35,6 +37,8 @@ public class EventAttributeDefinitionDTO {
 		_dataType = eventAttributeDefinition.getDataType();
 		_description = eventAttributeDefinition.getDescription();
 		_displayName = eventAttributeDefinition.getDisplayName();
+		_encodedName = DigestUtils.sha256Hex(
+			eventAttributeDefinition.getName());
 		_id = String.valueOf(eventAttributeDefinition.getId());
 		_name = eventAttributeDefinition.getName();
 
@@ -105,6 +109,11 @@ public class EventAttributeDefinitionDTO {
 		return _displayName;
 	}
 
+	@JsonProperty("encodedName")
+	public String getEncodedName() {
+		return _encodedName;
+	}
+
 	@JsonProperty("id")
 	public String getId() {
 		return _id;
@@ -128,6 +137,7 @@ public class EventAttributeDefinitionDTO {
 	private EventAttributeDefinition.DataType _dataType;
 	private String _description;
 	private String _displayName;
+	private String _encodedName;
 	private String _id;
 	private String _name;
 	private String _sampleValue;
