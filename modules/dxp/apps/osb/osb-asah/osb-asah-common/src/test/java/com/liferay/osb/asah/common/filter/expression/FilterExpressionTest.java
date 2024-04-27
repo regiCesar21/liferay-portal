@@ -32,6 +32,8 @@ import java.util.stream.Stream;
 
 import org.jooq.Condition;
 import org.jooq.Field;
+import org.jooq.Record;
+import org.jooq.Table;
 import org.jooq.impl.DSL;
 
 import org.junit.jupiter.api.AfterEach;
@@ -679,6 +681,293 @@ public class FilterExpressionTest {
 				"value'1"
 			),
 			"column1 eq 'value''1'");
+	}
+
+	@Test
+	public void testEventAttributes() {
+		String encodedName =
+			"ee2b6153396fd9c4c7fb104ce710be18962b63eac91db80c96305347a0a9514b";
+
+		_assertEquals(
+			_buildEventAttributesCondition(
+				123456789L, "added",
+				DSL.table(
+					"BQEvent"
+				).as(
+					"Event"
+				).crossJoin(
+					DSL.table("UNNEST(Event.fields) AS EventAttributes_b3b9a1")
+				),
+				DSL.field(
+					"TO_HEX(SHA256(EventAttributes_b3b9a1.name))"
+				).eq(
+					encodedName
+				).and(
+					DSL.condition(
+						"LOWER(EventAttributes_b3b9a1.value) = 'shoes'")
+				)),
+			"events.filterByCount(filter='(eventId eq ''added'' and day gt " +
+				"''last24Hours'' and attribute/" + encodedName +
+					" eq ''shoes'')',operator='ge',value=1)",
+			123456789L,
+			new HashSet<>(
+				Arrays.asList(
+					"Event", "EventAttributes", "EventAttributes_b3b9a1",
+					"Individual")),
+			true);
+
+		_assertEquals(
+			_buildEventAttributesCondition(
+				123456789L, "added",
+				DSL.table(
+					"BQEvent"
+				).as(
+					"Event"
+				).crossJoin(
+					DSL.table("UNNEST(Event.fields) AS EventAttributes_b3b9a1")
+				),
+				DSL.field(
+					"TO_HEX(SHA256(EventAttributes_b3b9a1.name))"
+				).eq(
+					encodedName
+				).and(
+					DSL.condition(
+						"SAFE_CAST(EventAttributes_b3b9a1.value AS NUMERIC) " +
+							"> SAFE_CAST('1' AS NUMERIC)")
+				)),
+			"events.filterByCount(filter='(eventId eq ''added'' and day gt " +
+				"''last24Hours'' and attribute/" + encodedName +
+					" gt 1)',operator='ge',value=1)",
+			123456789L,
+			new HashSet<>(
+				Arrays.asList(
+					"Event", "EventAttributes", "EventAttributes_b3b9a1",
+					"Individual")),
+			true);
+
+		_assertEquals(
+			_buildEventAttributesCondition(
+				123456789L, "added",
+				DSL.table(
+					"BQEvent"
+				).as(
+					"Event"
+				).crossJoin(
+					DSL.table("UNNEST(Event.fields) AS EventAttributes_b3b9a1")
+				),
+				DSL.field(
+					"TO_HEX(SHA256(EventAttributes_b3b9a1.name))"
+				).eq(
+					encodedName
+				).and(
+					DSL.condition(
+						String.join(
+							"", "CASE WHEN TO_HEX(SHA256(",
+							"EventAttributes_b3b9a1.name)) = '", encodedName,
+							"' THEN DATE(PARSE_TIMESTAMP('%a %b %d %H:%M:%S ",
+							"%Z %Y', EventAttributes_b3b9a1.value)) < ",
+							"SAFE_CAST('2024-03-04' AS DATE) ELSE false END"))
+				)),
+			"events.filterByCount(filter='(eventId eq ''added'' and day gt " +
+				"''last24Hours'' and attribute/" + encodedName +
+					" lt ''2024-03-04'')',operator='ge',value=1)",
+			123456789L,
+			new HashSet<>(
+				Arrays.asList(
+					"Event", "EventAttributes", "EventAttributes_b3b9a1",
+					"Individual")),
+			true);
+
+		_assertEquals(
+			_buildEventAttributesCondition(
+				123456789L, "added",
+				DSL.table(
+					"BQEvent"
+				).as(
+					"Event"
+				).crossJoin(
+					DSL.table("UNNEST(Event.fields) AS EventAttributes_b3b9a1")
+				),
+				DSL.and(
+					DSL.function(
+						"DATE", Date.class,
+						DSL.field("EventAttributes_b3b9a1.value"),
+						DSL.val(TimeZoneDogUtil.getZoneId())
+					).between(
+						DSL.function("DATE", Date.class, DSL.val("2024-03-04")),
+						DSL.function("DATE", Date.class, DSL.val("2024-04-04"))
+					),
+					DSL.field(
+						"TO_HEX(SHA256(EventAttributes_b3b9a1.name))"
+					).eq(
+						encodedName
+					))),
+			"events.filterByCount(filter='(eventId eq ''added'' and day gt " +
+				"''last24Hours'' and between(attribute/" + encodedName +
+					", ''2024-03-04'', ''2024-04-04''))',operator='ge'," +
+						"value=1)",
+			123456789L,
+			new HashSet<>(
+				Arrays.asList(
+					"Event", "EventAttributes", "EventAttributes_b3b9a1",
+					"Individual")),
+			true);
+
+		_assertEquals(
+			_buildEventAttributesCondition(
+				123456789L, "added",
+				DSL.table(
+					"BQEvent"
+				).as(
+					"Event"
+				).crossJoin(
+					DSL.table("UNNEST(Event.fields) AS EventAttributes_b3b9a1")
+				),
+				DSL.field(
+					"TO_HEX(SHA256(EventAttributes_b3b9a1.name))"
+				).eq(
+					encodedName
+				).and(
+					DSL.condition(
+						"LOWER(EventAttributes_b3b9a1.value) LIKE '%shoe%'")
+				)),
+			"events.filterByCount(filter='(eventId eq ''added'' and day gt " +
+				"''last24Hours'' and contains(attribute/" + encodedName +
+					", ''shoe''))',operator='ge',value=1)",
+			123456789L,
+			new HashSet<>(
+				Arrays.asList(
+					"Event", "EventAttributes", "EventAttributes_b3b9a1",
+					"Individual")),
+			true);
+
+		_assertEquals(
+			_buildEventAttributesCondition(
+				123456789L, "added",
+				DSL.table(
+					"BQEvent"
+				).as(
+					"Event"
+				).crossJoin(
+					DSL.table("UNNEST(Event.fields) AS EventAttributes_b3b9a1")
+				),
+				DSL.field(
+					"TO_HEX(SHA256(EventAttributes_b3b9a1.name))"
+				).eq(
+					encodedName
+				).and(
+					DSL.and(
+						DSL.field(
+							"EventAttributes_b3b9a1.value"
+						).isNotNull(),
+						DSL.field(
+							"EventAttributes_b3b9a1.value"
+						).ne(
+							""
+						))
+				)),
+			"events.filterByCount(filter='(eventId eq ''added'' and day gt " +
+				"''last24Hours'' and attribute/" + encodedName + " ne null)'," +
+					"operator='ge',value=1)",
+			123456789L,
+			new HashSet<>(
+				Arrays.asList(
+					"Event", "EventAttributes", "EventAttributes_b3b9a1",
+					"Individual")),
+			true);
+
+		_assertEquals(
+			_buildEventAttributesCondition(
+				123456789L, "added",
+				DSL.table(
+					"BQEvent"
+				).as(
+					"Event"
+				).crossJoin(
+					DSL.table("UNNEST(Event.fields) AS EventAttributes_b3b9a1")
+				),
+				DSL.field(
+					"TO_HEX(SHA256(EventAttributes_b3b9a1.name))"
+				).eq(
+					encodedName
+				).and(
+					DSL.or(
+						DSL.field(
+							"EventAttributes_b3b9a1.value"
+						).isNull(),
+						DSL.field(
+							"EventAttributes_b3b9a1.value"
+						).eq(
+							""
+						))
+				)),
+			"events.filterByCount(filter='(eventId eq ''added'' and day gt " +
+				"''last24Hours'' and attribute/" + encodedName + " eq null)'," +
+					"operator='ge',value=1)",
+			123456789L,
+			new HashSet<>(
+				Arrays.asList(
+					"Event", "EventAttributes", "EventAttributes_b3b9a1",
+					"Individual")),
+			true);
+
+		_assertEquals(
+			_buildEventAttributesCondition(
+				123456789L, "added",
+				DSL.table(
+					"BQEvent"
+				).as(
+					"Event"
+				).crossJoin(
+					DSL.table("UNNEST(Event.fields) AS EventAttributes_b3b9a1")
+				),
+				DSL.field(
+					"TO_HEX(SHA256(EventAttributes_b3b9a1.name))"
+				).eq(
+					encodedName
+				).and(
+					DSL.condition(
+						"SAFE_CAST(EventAttributes_b3b9a1.value AS BOOL) = " +
+							"SAFE_CAST('false' AS BOOL)")
+				)),
+			"events.filterByCount(filter='(eventId eq ''added'' and day gt " +
+				"''last24Hours'' and attribute/" + encodedName +
+					" eq false)',operator='ge',value=1)",
+			123456789L,
+			new HashSet<>(
+				Arrays.asList(
+					"Event", "EventAttributes", "EventAttributes_b3b9a1",
+					"Individual")),
+			true);
+
+		_assertEquals(
+			_buildEventAttributesCondition(
+				123456789L, "added",
+				DSL.table(
+					"BQEvent"
+				).as(
+					"Event"
+				).crossJoin(
+					DSL.table("UNNEST(Event.fields) AS EventAttributes_b3b9a1")
+				),
+				DSL.field(
+					"TO_HEX(SHA256(EventAttributes_b3b9a1.name))"
+				).eq(
+					encodedName
+				).and(
+					DSL.condition(
+						"SAFE_CAST(EventAttributes_b3b9a1.value AS BOOL) = " +
+							"SAFE_CAST('true' AS BOOL)")
+				)),
+			"events.filterByCount(filter='(eventId eq ''added'' and day gt " +
+				"''last24Hours'' and attribute/" + encodedName + " eq true)'," +
+					"operator='ge',value=1)",
+			123456789L,
+			new HashSet<>(
+				Arrays.asList(
+					"Event", "EventAttributes", "EventAttributes_b3b9a1",
+					"Individual")),
+			true);
 	}
 
 	@Test
@@ -3364,6 +3653,118 @@ public class FilterExpressionTest {
 		Assertions.assertThrows(
 			FilterExpressionParserException.class,
 			() -> new FilterExpression(null, filterExpressionString), message);
+	}
+
+	private Condition _buildEventAttributesCondition(
+		Long channelId, String eventId, Table<Record> fromTable,
+		Condition propertyCondition) {
+
+		Field userIdField = DSL.field("Event.userId");
+
+		LocalDateTime localDateTime = LocalDateTime.now(ZoneOffset.UTC);
+
+		localDateTime = localDateTime.truncatedTo(ChronoUnit.HOURS);
+
+		Field identityIdField = DSL.field("Identity.id");
+		Field individualIdField = DSL.field("Individual.id");
+
+		return DSL.or(
+			identityIdField.in(
+				DSL.select(
+					userIdField
+				).from(
+					fromTable
+				).where(
+					DSL.field(
+						"Event.applicationId"
+					).eq(
+						"CustomEvent"
+					).and(
+						DSL.field(
+							"Event.channelId"
+						).eq(
+							channelId
+						)
+					).and(
+						DSL.field(
+							"Event.eventId"
+						).eq(
+							eventId
+						)
+					).and(
+						DSL.field(
+							"Event.eventDate"
+						).gt(
+							localDateTime.minusHours(23)
+						)
+					).and(
+						propertyCondition
+					)
+				).groupBy(
+					userIdField
+				).having(
+					DSL.count(
+						userIdField
+					).ge(
+						1
+					)
+				)),
+			individualIdField.in(
+				DSL.selectDistinct(
+					DSL.field("Identity.individualId")
+				).from(
+					fromTable.join(
+						DSL.table(
+							"BQIdentity"
+						).as(
+							"Identity"
+						)
+					).on(
+						DSL.field(
+							"Event.userId"
+						).eq(
+							DSL.field("Identity.id")
+						)
+					)
+				).where(
+					DSL.field(
+						"Event.applicationId"
+					).eq(
+						"CustomEvent"
+					).and(
+						DSL.field(
+							"Event.channelId"
+						).eq(
+							channelId
+						)
+					).and(
+						DSL.field(
+							"Event.eventId"
+						).eq(
+							eventId
+						)
+					).and(
+						DSL.field(
+							"Event.eventDate"
+						).gt(
+							localDateTime.minusHours(23)
+						)
+					).and(
+						propertyCondition
+					).and(
+						DSL.field(
+							"Identity.individualId"
+						).isNotNull()
+					)
+				).groupBy(
+					userIdField, DSL.field("Identity.individualId")
+				).having(
+					DSL.count(
+						userIdField
+					).ge(
+						1
+					)
+				)));
 	}
 
 	@SuppressFBWarnings
