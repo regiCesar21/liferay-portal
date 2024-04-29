@@ -234,6 +234,7 @@ public class EventIngestionPipelineTest {
 		tableRow.set("platformName", null);
 		tableRow.set("projectId", "test");
 		tableRow.set("projectTimeZoneId", "UTC");
+		tableRow.set("properties", _convertEventProperties(properties));
 		tableRow.set("referrer", null);
 		tableRow.set("region", null);
 		tableRow.set(
@@ -329,6 +330,7 @@ public class EventIngestionPipelineTest {
 		tableRow.set("platformName", null);
 		tableRow.set("projectId", "test");
 		tableRow.set("projectTimeZoneId", "UTC");
+		tableRow.set("properties", _convertEventProperties(properties));
 		tableRow.set("referrer", null);
 		tableRow.set("region", null);
 		tableRow.set(
@@ -357,6 +359,24 @@ public class EventIngestionPipelineTest {
 
 	@Rule
 	public final transient TestPipeline testPipeline = TestPipeline.create();
+
+	private List<Map<String, String>> _convertEventProperties(
+		Map<String, String> eventProperties) {
+
+		List<Map<String, String>> properties = new ArrayList<>();
+
+		for (Map.Entry<String, String> entry : eventProperties.entrySet()) {
+			properties.add(
+				new HashMap<String, String>() {
+					{
+						put("name", entry.getKey());
+						put("value", entry.getValue());
+					}
+				});
+		}
+
+		return properties;
+	}
 
 	private AnalyticsEvent _createAnalyticsEvent(
 		String applicationId, String channelId, String clientIP,

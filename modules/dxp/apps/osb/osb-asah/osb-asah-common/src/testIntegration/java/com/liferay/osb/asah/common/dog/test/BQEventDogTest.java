@@ -5,8 +5,6 @@
 
 package com.liferay.osb.asah.common.dog.test;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import com.liferay.osb.asah.common.OSBAsahCommonSpringTestContext;
@@ -14,7 +12,6 @@ import com.liferay.osb.asah.common.date.DateUtil;
 import com.liferay.osb.asah.common.dog.BQEventDog;
 import com.liferay.osb.asah.common.dog.ChannelDog;
 import com.liferay.osb.asah.common.entity.BQEvent;
-import com.liferay.osb.asah.common.entity.BQEventProperty;
 import com.liferay.osb.asah.common.entity.Channel;
 import com.liferay.osb.asah.common.model.BQEventPropertyValue;
 import com.liferay.osb.asah.common.model.RecentVisitAsset;
@@ -33,7 +30,6 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -3124,63 +3120,35 @@ public class BQEventDogTest
 		Channel channel = _channelDog.addChannel("Test Channel");
 
 		_bqEventDog.addBQEvent(
-			"Page",
-			new HashSet<BQEventProperty>() {
-				{
-					add(
-						new BQEventProperty(
-							null, "viewDuration", "testValue1"));
-					add(
-						new BQEventProperty(
-							null, "viewDuration", "testValue2"));
-				}
-			},
-			channel.getId(), date, 1L, DateUtil.addDays(date, -3), "pageViewed",
-			"analyticsEventId1", "sessionId", "Home", "userId");
+			"Page", channel.getId(), date, 1L, DateUtil.addDays(date, -3),
+			"pageViewed", "analyticsEventId1",
+			Arrays.asList(
+				new BQEvent.Property("viewDuration", "testValue1"),
+				new BQEvent.Property("viewDuration", "testValue2")),
+			"sessionId", "Home", "userId");
 
 		_bqEventDog.addBQEvent(
-			"Page",
-			new HashSet<BQEventProperty>() {
-				{
-					add(
-						new BQEventProperty(
-							null, "viewDuration", "testValue1"));
-					add(
-						new BQEventProperty(
-							null, "viewDuration", "testValue2"));
-				}
-			},
-			channel.getId(), date, 1L, DateUtil.addDays(date, -1), "pageViewed",
-			"analyticsEventId2", "sessionId", "Home", "userId");
+			"Page", channel.getId(), date, 1L, DateUtil.addDays(date, -1),
+			"pageViewed", "analyticsEventId2",
+			Arrays.asList(
+				new BQEvent.Property("viewDuration", "testValue1"),
+				new BQEvent.Property("viewDuration", "testValue2")),
+			"sessionId", "Home", "userId");
 
 		_bqEventDog.addBQEvent(
-			"Page",
-			new HashSet<BQEventProperty>() {
-				{
-					add(
-						new BQEventProperty(
-							null, "viewDuration", "testValue1"));
-					add(
-						new BQEventProperty(
-							null, "viewDuration", "testValue2"));
-				}
-			},
-			channel.getId(), date, 1L, DateUtil.addDays(date, -8), "pageViewed",
-			"analyticsEventId3", "sessionId", "Test", "userId");
+			"Page", channel.getId(), date, 1L, DateUtil.addDays(date, -8),
+			"pageViewed", "analyticsEventId3",
+			Arrays.asList(
+				new BQEvent.Property("viewDuration", "testValue1"),
+				new BQEvent.Property("viewDuration", "testValue2")),
+			"sessionId", "Test", "userId");
 
 		_bqEventDog.addBQEvent(
-			"Page",
-			new HashSet<BQEventProperty>() {
-				{
-					add(
-						new BQEventProperty(
-							null, "viewDuration", "testValue1"));
-					add(
-						new BQEventProperty(
-							null, "viewDuration", "testValue2"));
-				}
-			},
-			channel.getId(), date, 1L, date, "pageViewed", "analyticsEventId4",
+			"Page", channel.getId(), date, 1L, date, "pageViewed",
+			"analyticsEventId4",
+			Arrays.asList(
+				new BQEvent.Property("viewDuration", "testValue1"),
+				new BQEvent.Property("viewDuration", "testValue2")),
 			"sessionId", "Test", "userId");
 
 		Map<String, Date> recentGlobalBQEventProperyValues =
@@ -4224,71 +4192,47 @@ public class BQEventDogTest
 		Channel channel = _channelDog.addChannel("Test Channel");
 
 		_bqEventDog.addBQEvent(
-			"Page",
-			new HashSet<BQEventProperty>() {
-				{
-					add(
-						new BQEventProperty(
-							null, "viewDuration", "testValue1"));
-				}
-			},
-			"Firefox", "http://localhost:8080/search?q=Liferay+DXP",
+			"Page", "Firefox", "http://localhost:8080/search?q=Liferay+DXP",
 			channel.getId(), "Diamond Bar", "en_US", "{\"groupId\": \"3213\"}",
 			"United States", DateUtil.newDate(), 10293L, "", "",
 			DigestUtils.sha256Hex("test@liferay.com"), DateUtil.newDate(),
-			"pageViewed", "", "analyticsEventId1", "", "en_US", "", "", "", "",
-			"", "", "", "http://localhost:8080/search?q=Liferay%20DXP",
+			"pageViewed", "", "analyticsEventId1", "", "en_US", "", "",
+			Collections.singletonList(
+				new BQEvent.Property("viewDuration", "testValue1")),
+			"", "", "", "", "", "http://localhost:8080/search?q=Liferay%20DXP",
 			"123123-sadf-32423-4245", "");
 
 		_bqEventDog.addBQEvent(
-			"Page",
-			new HashSet<BQEventProperty>() {
-				{
-					add(
-						new BQEventProperty(
-							null, "viewDuration", "testValue1"));
-				}
-			},
-			"Firefox", "http://localhost:8080/search?q=Liferay",
+			"Page", "Firefox", "http://localhost:8080/search?q=Liferay",
 			channel.getId(), "Diamond Bar", "en_US", "{\"groupId\": \"3212\"}",
 			"United States", DateUtil.newDate(), 84756L, "", "",
 			DigestUtils.sha256Hex("test@liferay.com"), DateUtil.newDate(),
-			"pageViewed", "", "analyticsEventId2", "", "en_US", "", "", "", "",
-			"", "", "", "http://localhost:8080/search?q=Liferay",
+			"pageViewed", "", "analyticsEventId2", "", "en_US", "", "",
+			Collections.singletonList(
+				new BQEvent.Property("viewDuration", "testValue1")),
+			"", "", "", "", "", "http://localhost:8080/search?q=Liferay",
 			"123123-sadf-32423-4245", "");
 
 		_bqEventDog.addBQEvent(
-			"Page",
-			new HashSet<BQEventProperty>() {
-				{
-					add(
-						new BQEventProperty(
-							null, "viewDuration", "testValue1"));
-				}
-			},
-			"Firefox", "http://localhost:8080/search?q=Liferay+DXP",
+			"Page", "Firefox", "http://localhost:8080/search?q=Liferay+DXP",
 			channel.getId(), "Diamond Bar", "en_US", "{\"groupId\": \"3212\"}",
 			"United States", DateUtil.newDate(), 84756L, "", "",
 			DigestUtils.sha256Hex("test@liferay.com"), DateUtil.newDate(),
-			"pageViewed", "", "analyticsEventId3", "", "en_US", "", "", "", "",
-			"", "", "", "http://localhost:8080/search?q=Liferay+DXP",
+			"pageViewed", "", "analyticsEventId3", "", "en_US", "", "",
+			Collections.singletonList(
+				new BQEvent.Property("viewDuration", "testValue1")),
+			"", "", "", "", "", "http://localhost:8080/search?q=Liferay+DXP",
 			"123123-sadf-32423-4245", "");
 
 		_bqEventDog.addBQEvent(
-			"Page",
-			new HashSet<BQEventProperty>() {
-				{
-					add(
-						new BQEventProperty(
-							null, "viewDuration", "testValue1"));
-				}
-			},
-			"Firefox", "http://localhost:8080/search?q=Diamond+Bar",
+			"Page", "Firefox", "http://localhost:8080/search?q=Diamond+Bar",
 			channel.getId(), "Diamond Bar", "pt_BR", "{\"groupId\": \"3212\"}",
 			"United States", DateUtil.newDate(), 84756L, "", "",
 			DigestUtils.sha256Hex("test2@liferay.com"), DateUtil.newDate(),
-			"pageViewed", "", "analyticsEventId4", "", "en_US", "", "", "", "",
-			"", "", "", "http://localhost:8080/search?q=Diamond+Bar",
+			"pageViewed", "", "analyticsEventId4", "", "en_US", "", "",
+			Collections.singletonList(
+				new BQEvent.Property("viewDuration", "testValue1")),
+			"", "", "", "", "", "http://localhost:8080/search?q=Diamond+Bar",
 			"123123-sadf-32423-234afsd", "");
 
 		Page<RecentVisitSite> recentSitePage = _bqEventDog.getRecentSitePage(
@@ -5358,68 +5302,48 @@ public class BQEventDogTest
 		Channel channel = _channelDog.addChannel("Test Channel");
 
 		_bqEventDog.addBQEvent(
-			"Page",
-			new HashSet<BQEventProperty>() {
-				{
-					add(
-						new BQEventProperty(
-							null, "viewDuration", "testValue1"));
-				}
-			},
-			"Firefox", "http://localhost:8080/search?q=Liferay+DXP",
+			"Page", "Firefox", "http://localhost:8080/search?q=Liferay+DXP",
 			channel.getId(), "Diamond Bar", "en_US", "{\"groupId\": \"3212\"}",
 			"United States", DateUtil.newDate(), 10293L, "", "", null,
 			DateUtil.newDate(), "pageViewed", "", "analyticsEventId1", "",
-			"en_US", "", "", "", "", "", "", "",
-			"http://localhost:8080/search?q=Liferay%20DXP", "userId", "");
+			"en_US", "", "",
+			Collections.singletonList(
+				new BQEvent.Property("viewDuration", "testValue1")),
+			"", "", "", "", "", "http://localhost:8080/search?q=Liferay%20DXP",
+			"userId", "");
 
 		_bqEventDog.addBQEvent(
-			"Page",
-			new HashSet<BQEventProperty>() {
-				{
-					add(
-						new BQEventProperty(
-							null, "viewDuration", "testValue1"));
-				}
-			},
-			"Firefox", "http://localhost:8080/search?q=Liferay",
+			"Page", "Firefox", "http://localhost:8080/search?q=Liferay",
 			channel.getId(), "Diamond Bar", "en_US", "{\"groupId\": \"3212\"}",
 			"United States", DateUtil.newDate(), 10293L, "", "", null,
 			DateUtil.newDate(), "pageViewed", "", "analyticsEventId2", "",
-			"en_US", "", "", "", "", "", "", "",
-			"http://localhost:8080/search?q=Liferay", "userId", "");
+			"en_US", "", "",
+			Collections.singletonList(
+				new BQEvent.Property("viewDuration", "testValue1")),
+			"", "", "", "", "", "http://localhost:8080/search?q=Liferay",
+			"userId", "");
 
 		_bqEventDog.addBQEvent(
-			"Page",
-			new HashSet<BQEventProperty>() {
-				{
-					add(
-						new BQEventProperty(
-							null, "viewDuration", "testValue1"));
-				}
-			},
-			"Firefox", "http://localhost:8080/search?q=Liferay+DXP",
+			"Page", "Firefox", "http://localhost:8080/search?q=Liferay+DXP",
 			channel.getId(), "Diamond Bar", "en_US", "{\"groupId\": \"3212\"}",
 			"United States", DateUtil.newDate(), 10293L, "", "", null,
 			DateUtil.newDate(), "pageViewed", "", "analyticsEventId3", "",
-			"en_US", "", "", "", "", "", "", "",
-			"http://localhost:8080/search?q=Liferay+DXP", "userId", "");
+			"en_US", "", "",
+			Collections.singletonList(
+				new BQEvent.Property("viewDuration", "testValue1")),
+			"", "", "", "", "", "http://localhost:8080/search?q=Liferay+DXP",
+			"userId", "");
 
 		_bqEventDog.addBQEvent(
-			"Page",
-			new HashSet<BQEventProperty>() {
-				{
-					add(
-						new BQEventProperty(
-							null, "viewDuration", "testValue1"));
-				}
-			},
-			"Firefox", "http://localhost:8080/search?q=Diamond+Bar",
+			"Page", "Firefox", "http://localhost:8080/search?q=Diamond+Bar",
 			channel.getId(), "Diamond Bar", "pt_BR", "{\"groupId\": \"3212\"}",
 			"United States", DateUtil.newDate(), 10293L, "", "", null,
 			DateUtil.newDate(), "pageViewed", "", "analyticsEventId4", "",
-			"en_US", "", "", "", "", "", "", "",
-			"http://localhost:8080/search?q=Diamond+Bar", "userId", "");
+			"en_US", "", "",
+			Collections.singletonList(
+				new BQEvent.Property("viewDuration", "testValue1")),
+			"", "", "", "", "", "http://localhost:8080/search?q=Diamond+Bar",
+			"userId", "");
 
 		Page<SearchKeyword> searchKeywordPage =
 			_bqEventDog.getSearchKeywordPage(
@@ -5476,72 +5400,48 @@ public class BQEventDogTest
 		Channel channel = _channelDog.addChannel("Test Channel");
 
 		_bqEventDog.addBQEvent(
-			"Page",
-			new HashSet<BQEventProperty>() {
-				{
-					add(
-						new BQEventProperty(
-							null, "viewDuration", "testValue1"));
-				}
-			},
-			"Firefox", "http://localhost:8080/search?q=Liferay+DXP",
+			"Page", "Firefox", "http://localhost:8080/search?q=Liferay+DXP",
 			channel.getId(), "Diamond Bar", "en_US", "{\"groupId\": \"3212\"}",
 			"United States", DateUtil.newDate(), 84756L, "", "",
 			DigestUtils.sha256Hex("test@liferay.com"), DateUtil.newDate(),
-			"pageViewed", "", "analyticsEventId1", "", "en_US", "", "", "", "",
-			"", "", "", "http://localhost:8080/search?q=Liferay%20DXP",
+			"pageViewed", "", "analyticsEventId1", "", "en_US", "", "",
+			Collections.singletonList(
+				new BQEvent.Property("viewDuration", "testValue1")),
+			"", "", "", "", "", "http://localhost:8080/search?q=Liferay%20DXP",
 			"123123-sadf-32423-4245", "");
 
 		_bqEventDog.addBQEvent(
-			"Page",
-			new HashSet<BQEventProperty>() {
-				{
-					add(
-						new BQEventProperty(
-							null, "viewDuration", "testValue1"));
-				}
-			},
-			"Firefox", "http://localhost:8080/search?q=Liferay",
+			"Page", "Firefox", "http://localhost:8080/search?q=Liferay",
 			channel.getId(), "Diamond Bar", "en_US", "{\"groupId\": \"3212\"}",
 			"United States", DateUtil.newDate(), 84756L, "", "",
 			DigestUtils.sha256Hex("test@liferay.com"), DateUtil.newDate(),
-			"pageViewed", "", "analyticsEventId2", "", "en_US", "", "", "", "",
-			"", "", "", "http://localhost:8080/search?q=Liferay",
+			"pageViewed", "", "analyticsEventId2", "", "en_US", "", "",
+			Collections.singletonList(
+				new BQEvent.Property("viewDuration", "testValue1")),
+			"", "", "", "", "", "http://localhost:8080/search?q=Liferay",
 			"123123-sadf-32423-4245", "");
 
 		_bqEventDog.addBQEvent(
-			"Page",
-			new HashSet<BQEventProperty>() {
-				{
-					add(
-						new BQEventProperty(
-							null, "viewDuration", "testValue1"));
-				}
-			},
-			"Firefox", "http://localhost:8080/search?q=Liferay+DXP",
+			"Page", "Firefox", "http://localhost:8080/search?q=Liferay+DXP",
 			channel.getId(), "Diamond Bar", "en_US", "{\"groupId\": \"3212\"}",
 			"United States", DateUtil.newDate(), 84756L, "", "",
 			DigestUtils.sha256Hex("test@liferay.com"), DateUtil.newDate(),
-			"pageViewed", "", "analyticsEventId3", "", "en_US", "", "", "", "",
-			"", "", "", "http://localhost:8080/search?q=Liferay+DXP",
+			"pageViewed", "", "analyticsEventId3", "", "en_US", "", "",
+			Collections.singletonList(
+				new BQEvent.Property("viewDuration", "testValue1")),
+			"", "", "", "", "", "http://localhost:8080/search?q=Liferay+DXP",
 			"123123-sadf-32423-4245", "");
 
 		_bqEventDog.addBQEvent(
-			"Page",
-			new HashSet<BQEventProperty>() {
-				{
-					add(
-						new BQEventProperty(
-							null, "viewDuration", "testValue1"));
-				}
-			},
-			"Firefox", "http://localhost:8080/search?q=Diamond+Bar",
+			"Page", "Firefox", "http://localhost:8080/search?q=Diamond+Bar",
 			channel.getId(), "Diamond Bar", "pt_BR", "{\"groupId\": \"3212\"}",
 			"United States", DateUtil.newDate(), 84756L, "", "",
 			DigestUtils.sha256Hex("test2@liferay.com"), DateUtil.newDate(),
-			"pageViewed", "", "analyticsEventId4", "", "en_US", "", "", "", "",
-			"", "", "", "http://localhost:8080/search?q=Diamond+Bar", "userId",
-			"");
+			"pageViewed", "", "analyticsEventId4", "", "en_US", "", "",
+			Collections.singletonList(
+				new BQEvent.Property("viewDuration", "testValue1")),
+			"", "", "", "", "", "http://localhost:8080/search?q=Diamond+Bar",
+			"userId", "");
 
 		Page<SearchKeyword> searchKeywordPage =
 			_bqEventDog.getSearchKeywordPage(
@@ -5580,71 +5480,47 @@ public class BQEventDogTest
 		Channel channel = _channelDog.addChannel("Test Channel");
 
 		_bqEventDog.addBQEvent(
-			"Page",
-			new HashSet<BQEventProperty>() {
-				{
-					add(
-						new BQEventProperty(
-							null, "viewDuration", "testValue1"));
-				}
-			},
-			"Firefox", "http://localhost:8080/search?q=Liferay+DXP",
+			"Page", "Firefox", "http://localhost:8080/search?q=Liferay+DXP",
 			channel.getId(), "Diamond Bar", "en_US", "{\"groupId\": \"3212\"}",
 			"United States", DateUtil.newDate(), 10293L, "", "",
 			DigestUtils.sha256Hex("test@liferay.com"), DateUtil.newDate(),
-			"pageViewed", "", "analyticsEventId1", "", "en_US", "", "", "", "",
-			"", "", "", "http://localhost:8080/search?q=Liferay%20DXP",
+			"pageViewed", "", "analyticsEventId1", "", "en_US", "", "",
+			Collections.singletonList(
+				new BQEvent.Property("viewDuration", "testValue1")),
+			"", "", "", "", "", "http://localhost:8080/search?q=Liferay%20DXP",
 			"123123-sadf-32423-4245", "");
 
 		_bqEventDog.addBQEvent(
-			"Page",
-			new HashSet<BQEventProperty>() {
-				{
-					add(
-						new BQEventProperty(
-							null, "viewDuration", "testValue1"));
-				}
-			},
-			"Firefox", "http://localhost:8080/search?q=Liferay",
+			"Page", "Firefox", "http://localhost:8080/search?q=Liferay",
 			channel.getId(), "Diamond Bar", "en_US", "{\"groupId\": \"3212\"}",
 			"United States", DateUtil.newDate(), 10293L, "", "",
 			DigestUtils.sha256Hex("test@liferay.com"), DateUtil.newDate(),
-			"pageViewed", "", "analyticsEventId2", "", "en_US", "", "", "", "",
-			"", "", "", "http://localhost:8080/search?q=Liferay",
+			"pageViewed", "", "analyticsEventId2", "", "en_US", "", "",
+			Collections.singletonList(
+				new BQEvent.Property("viewDuration", "testValue1")),
+			"", "", "", "", "", "http://localhost:8080/search?q=Liferay",
 			"123123-sadf-32423-4245", "");
 
 		_bqEventDog.addBQEvent(
-			"Page",
-			new HashSet<BQEventProperty>() {
-				{
-					add(
-						new BQEventProperty(
-							null, "viewDuration", "testValue1"));
-				}
-			},
-			"Firefox", "http://localhost:8080/search?q=Liferay+DXP",
+			"Page", "Firefox", "http://localhost:8080/search?q=Liferay+DXP",
 			channel.getId(), "Diamond Bar", "en_US", "{\"groupId\": \"3212\"}",
 			"United States", DateUtil.newDate(), 10293L, "", "",
 			DigestUtils.sha256Hex("test@liferay.com"), DateUtil.newDate(),
-			"pageViewed", "", "analyticsEventId3", "", "en_US", "", "", "", "",
-			"", "", "", "http://localhost:8080/search?q=Liferay+DXP",
+			"pageViewed", "", "analyticsEventId3", "", "en_US", "", "",
+			Collections.singletonList(
+				new BQEvent.Property("viewDuration", "testValue1")),
+			"", "", "", "", "", "http://localhost:8080/search?q=Liferay+DXP",
 			"123123-sadf-32423-4245", "");
 
 		_bqEventDog.addBQEvent(
-			"Page",
-			new HashSet<BQEventProperty>() {
-				{
-					add(
-						new BQEventProperty(
-							null, "viewDuration", "testValue1"));
-				}
-			},
-			"Firefox", "http://localhost:8080/search?q=Diamond+Bar",
+			"Page", "Firefox", "http://localhost:8080/search?q=Diamond+Bar",
 			channel.getId(), "Diamond Bar", "pt_BR", "{\"groupId\": \"3212\"}",
 			"United States", DateUtil.newDate(), 10293L, "", "",
 			DigestUtils.sha256Hex("test@liferay.com"), DateUtil.newDate(),
-			"pageViewed", "", "analyticsEventId4", "", "en_US", "", "", "", "",
-			"", "", "", "http://localhost:8080/search?q=Diamond+Bar",
+			"pageViewed", "", "analyticsEventId4", "", "en_US", "", "",
+			Collections.singletonList(
+				new BQEvent.Property("viewDuration", "testValue1")),
+			"", "", "", "", "", "http://localhost:8080/search?q=Diamond+Bar",
 			"123123-sadf-32423-4245", "");
 
 		Page<SearchKeyword> searchKeywordPage =
@@ -5705,71 +5581,47 @@ public class BQEventDogTest
 		Channel channel = _channelDog.addChannel("Test Channel");
 
 		_bqEventDog.addBQEvent(
-			"Page",
-			new HashSet<BQEventProperty>() {
-				{
-					add(
-						new BQEventProperty(
-							null, "viewDuration", "testValue1"));
-				}
-			},
-			"Firefox", "http://localhost:8080/search?q=Liferay+DXP",
+			"Page", "Firefox", "http://localhost:8080/search?q=Liferay+DXP",
 			channel.getId(), "Diamond Bar", "en_US", "{\"groupId\": \"3212\"}",
 			"United States", DateUtil.newDate(), 84756L, "", "",
 			DigestUtils.sha256Hex("test@liferay.com"), DateUtil.newDate(),
-			"pageViewed", "", "analyticsEventId1", "", "en_US", "", "", "", "",
-			"", "", "", "http://localhost:8080/search?q=Liferay%20DXP",
+			"pageViewed", "", "analyticsEventId1", "", "en_US", "", "",
+			Collections.singletonList(
+				new BQEvent.Property("viewDuration", "testValue1")),
+			"", "", "", "", "", "http://localhost:8080/search?q=Liferay%20DXP",
 			"123123-sadf-32423-4245", "");
 
 		_bqEventDog.addBQEvent(
-			"Page",
-			new HashSet<BQEventProperty>() {
-				{
-					add(
-						new BQEventProperty(
-							null, "viewDuration", "testValue1"));
-				}
-			},
-			"Firefox", "http://localhost:8080/search?q=Liferay",
+			"Page", "Firefox", "http://localhost:8080/search?q=Liferay",
 			channel.getId(), "Diamond Bar", "en_US", "{\"groupId\": \"3212\"}",
 			"United States", DateUtil.newDate(), 84756L, "", "",
 			DigestUtils.sha256Hex("test@liferay.com"), DateUtil.newDate(),
-			"pageViewed", "", "analyticsEventId2", "", "en_US", "", "", "", "",
-			"", "", "", "http://localhost:8080/search?q=Liferay",
+			"pageViewed", "", "analyticsEventId2", "", "en_US", "", "",
+			Collections.singletonList(
+				new BQEvent.Property("viewDuration", "testValue1")),
+			"", "", "", "", "", "http://localhost:8080/search?q=Liferay",
 			"123123-sadf-32423-4245", "");
 
 		_bqEventDog.addBQEvent(
-			"Page",
-			new HashSet<BQEventProperty>() {
-				{
-					add(
-						new BQEventProperty(
-							null, "viewDuration", "testValue1"));
-				}
-			},
-			"Firefox", "http://localhost:8080/search?q=Liferay+DXP",
+			"Page", "Firefox", "http://localhost:8080/search?q=Liferay+DXP",
 			channel.getId(), "Diamond Bar", "en_US", "{\"groupId\": \"3212\"}",
 			"United States", DateUtil.newDate(), 84756L, "", "",
 			DigestUtils.sha256Hex("test@liferay.com"), DateUtil.newDate(),
-			"pageViewed", "", "analyticsEventId3", "", "en_US", "", "", "", "",
-			"", "", "", "http://localhost:8080/search?q=Liferay+DXP",
+			"pageViewed", "", "analyticsEventId3", "", "en_US", "", "",
+			Collections.singletonList(
+				new BQEvent.Property("viewDuration", "testValue1")),
+			"", "", "", "", "", "http://localhost:8080/search?q=Liferay+DXP",
 			"123123-sadf-32423-4245", "");
 
 		_bqEventDog.addBQEvent(
-			"Page",
-			new HashSet<BQEventProperty>() {
-				{
-					add(
-						new BQEventProperty(
-							null, "viewDuration", "testValue1"));
-				}
-			},
-			"Firefox", "http://localhost:8080/search?q=Diamond+Bar",
+			"Page", "Firefox", "http://localhost:8080/search?q=Diamond+Bar",
 			channel.getId(), "Diamond Bar", "pt_BR", "{\"groupId\": \"3213\"}",
 			"United States", DateUtil.newDate(), 84756L, "", "",
 			DigestUtils.sha256Hex("test@liferay.com"), DateUtil.newDate(),
-			"pageViewed", "", "analyticsEventId4", "", "en_US", "", "", "", "",
-			"", "", "", "http://localhost:8080/search?q=Diamond+Bar",
+			"pageViewed", "", "analyticsEventId4", "", "en_US", "", "",
+			Collections.singletonList(
+				new BQEvent.Property("viewDuration", "testValue1")),
+			"", "", "", "", "", "http://localhost:8080/search?q=Diamond+Bar",
 			"123123-sadf-32423-4245", "");
 
 		Page<SearchKeyword> searchKeywordPage =
@@ -5830,54 +5682,36 @@ public class BQEventDogTest
 		Channel channel = _channelDog.addChannel("Test Channel");
 
 		_bqEventDog.addBQEvent(
-			"Page",
-			new HashSet<BQEventProperty>() {
-				{
-					add(
-						new BQEventProperty(
-							null, "viewDuration", "testValue1"));
-				}
-			},
-			"Firefox", "http://localhost:8080/search?q=Liferay+DXP",
+			"Page", "Firefox", "http://localhost:8080/search?q=Liferay+DXP",
 			channel.getId(), "Diamond Bar", "en_US", "{\"groupId\": \"3212\"}",
 			"United States", DateUtil.newDate(), 10293L, "", "",
 			DigestUtils.sha256Hex("test@liferay.com"), DateUtil.newDate(),
-			"pageViewed", "", "analyticsEventId1", "", "en_US", "", "", "", "",
-			"", "", "", "http://localhost:8080/search?q=Liferay%20DXP",
+			"pageViewed", "", "analyticsEventId1", "", "en_US", "", "",
+			Collections.singletonList(
+				new BQEvent.Property("viewDuration", "testValue1")),
+			"", "", "", "", "", "http://localhost:8080/search?q=Liferay%20DXP",
 			"123123-sadf-32423-4245", "");
 
 		_bqEventDog.addBQEvent(
-			"Page",
-			new HashSet<BQEventProperty>() {
-				{
-					add(
-						new BQEventProperty(
-							null, "viewDuration", "testValue1"));
-				}
-			},
-			"Firefox", "http://localhost:8080/search?q=Liferay",
+			"Page", "Firefox", "http://localhost:8080/search?q=Liferay",
 			channel.getId(), "Diamond Bar", "en_US", "{\"groupId\": \"3212\"}",
 			"United States", DateUtil.newDate(), 84756L, "", "",
 			DigestUtils.sha256Hex("test@liferay.com"), DateUtil.newDate(),
-			"pageViewed", "", "analyticsEventId2", "", "en_US", "", "", "", "",
-			"", "", "", "http://localhost:8080/search?q=Liferay",
+			"pageViewed", "", "analyticsEventId2", "", "en_US", "", "",
+			Collections.singletonList(
+				new BQEvent.Property("viewDuration", "testValue1")),
+			"", "", "", "", "", "http://localhost:8080/search?q=Liferay",
 			"123123-sadf-32423-4245", "");
 
 		_bqEventDog.addBQEvent(
-			"Page",
-			new HashSet<BQEventProperty>() {
-				{
-					add(
-						new BQEventProperty(
-							null, "viewDuration", "testValue1"));
-				}
-			},
-			"Firefox", "http://localhost:8080/search?q=Liferay+DXP",
+			"Page", "Firefox", "http://localhost:8080/search?q=Liferay+DXP",
 			channel.getId(), "Diamond Bar", "en_US", "{\"groupId\": \"3212\"}",
 			"United States", DateUtil.newDate(), 84756L, "", "",
 			DigestUtils.sha256Hex("test@liferay.com"), DateUtil.newDate(),
-			"pageViewed", "", "analyticsEventId3", "", "en_US", "", "", "", "",
-			"", "", "", "http://localhost:8080/search?q=Liferay+DXP",
+			"pageViewed", "", "analyticsEventId3", "", "en_US", "", "",
+			Collections.singletonList(
+				new BQEvent.Property("viewDuration", "testValue1")),
+			"", "", "", "", "", "http://localhost:8080/search?q=Liferay+DXP",
 			"123123-sadf-32423-4245", "");
 
 		Page<SearchKeyword> searchKeywordPage =
@@ -5923,54 +5757,36 @@ public class BQEventDogTest
 		Channel channel = _channelDog.addChannel("Test Channel");
 
 		_bqEventDog.addBQEvent(
-			"Page",
-			new HashSet<BQEventProperty>() {
-				{
-					add(
-						new BQEventProperty(
-							null, "viewDuration", "testValue1"));
-				}
-			},
-			"Firefox", "http://localhost:8080/search?q=Liferay+DXP",
+			"Page", "Firefox", "http://localhost:8080/search?q=Liferay+DXP",
 			channel.getId(), "Diamond Bar", "en_US", "{\"groupId\": \"3212\"}",
 			"United States", DateUtil.newDate(), 10293L, "", "",
 			DigestUtils.sha256Hex("test@liferay.com"), DateUtil.newDate(),
-			"pageViewed", "", "analyticsEventId1", "", "en_US", "", "", "", "",
-			"", "", "", "http://localhost:8080/search?q=Liferay%20DXP",
+			"pageViewed", "", "analyticsEventId1", "", "en_US", "", "",
+			Collections.singletonList(
+				new BQEvent.Property("viewDuration", "testValue1")),
+			"", "", "", "", "", "http://localhost:8080/search?q=Liferay%20DXP",
 			"123123-sadf-32423-4245", "");
 
 		_bqEventDog.addBQEvent(
-			"Page",
-			new HashSet<BQEventProperty>() {
-				{
-					add(
-						new BQEventProperty(
-							null, "viewDuration", "testValue1"));
-				}
-			},
-			"Firefox", "http://localhost:8080/search?q=Liferay",
+			"Page", "Firefox", "http://localhost:8080/search?q=Liferay",
 			channel.getId(), "Diamond Bar", "en_US", "{\"groupId\": \"3212\"}",
 			"United States", DateUtil.newDate(), 84756L, "", "",
 			DigestUtils.sha256Hex("test@liferay.com"), DateUtil.newDate(),
-			"pageViewed", "", "analyticsEventId2", "", "en_US", "", "", "", "",
-			"", "", "", "http://localhost:8080/search?q=Liferay",
+			"pageViewed", "", "analyticsEventId2", "", "en_US", "", "",
+			Collections.singletonList(
+				new BQEvent.Property("viewDuration", "testValue1")),
+			"", "", "", "", "", "http://localhost:8080/search?q=Liferay",
 			"123123-sadf-32423-4245", "");
 
 		_bqEventDog.addBQEvent(
-			"Page",
-			new HashSet<BQEventProperty>() {
-				{
-					add(
-						new BQEventProperty(
-							null, "viewDuration", "testValue1"));
-				}
-			},
-			"Firefox", "http://localhost:8080/search?q=Liferay+DXP",
+			"Page", "Firefox", "http://localhost:8080/search?q=Liferay+DXP",
 			channel.getId(), "Diamond Bar", "en_US", "{\"groupId\": \"3212\"}",
 			"United States", DateUtil.newDate(), 84756L, "", "",
 			DigestUtils.sha256Hex("test@liferay.com"), DateUtil.newDate(),
-			"pageViewed", "", "analyticsEventId3", "", "en_US", "", "", "", "",
-			"", "", "", "http://localhost:8080/search?q=Liferay+DXP",
+			"pageViewed", "", "analyticsEventId3", "", "en_US", "", "",
+			Collections.singletonList(
+				new BQEvent.Property("viewDuration", "testValue1")),
+			"", "", "", "", "", "http://localhost:8080/search?q=Liferay+DXP",
 			"123123-sadf-32423-4245", "");
 
 		Page<SearchKeyword> searchKeywordPage =
@@ -6010,20 +5826,13 @@ public class BQEventDogTest
 
 		for (int i = 2; i <= 7; i++) {
 			_bqEventDog.addBQEvent(
-				"Page",
-				new HashSet<BQEventProperty>() {
-					{
-						add(
-							new BQEventProperty(
-								null, "viewDuration", "testValue1"));
-						add(
-							new BQEventProperty(
-								null, "viewDuration", "testValue2"));
-					}
-				},
-				channel.getId(), DateUtil.addDays(date, -i), 1L,
+				"Page", channel.getId(), DateUtil.addDays(date, -i), 1L,
 				DateUtil.addDays(date, -i), "pageViewed",
-				"analyticsEventId" + i, "sessionId", "userId");
+				"analyticsEventId" + i,
+				Arrays.asList(
+					new BQEvent.Property("viewDuration", "testValue1"),
+					new BQEvent.Property("viewDuration", "testValue2")),
+				"sessionId", "userId");
 		}
 
 		List<BQEvent> bqEvents = _bqEventDog.searchBQEvents(
@@ -6045,33 +5854,19 @@ public class BQEventDogTest
 		Channel channel = _channelDog.addChannel("Test Channel");
 
 		_bqEventDog.addBQEvent(
-			"Page",
-			new HashSet<BQEventProperty>() {
-				{
-					add(
-						new BQEventProperty(
-							null, "viewDuration", "testValue1"));
-					add(
-						new BQEventProperty(
-							null, "viewDuration", "testValue2"));
-				}
-			},
-			channel.getId(), date, 1L, date, "pageViewed", "analyticsEventId1",
+			"Page", channel.getId(), date, 1L, date, "pageViewed",
+			"analyticsEventId1",
+			Arrays.asList(
+				new BQEvent.Property("viewDuration", "testValue1"),
+				new BQEvent.Property("viewDuration", "testValue2")),
 			"sessionId", "userId");
 
 		_bqEventDog.addBQEvent(
-			"Page",
-			new HashSet<BQEventProperty>() {
-				{
-					add(
-						new BQEventProperty(
-							null, "viewDuration", "testValue1"));
-					add(
-						new BQEventProperty(
-							null, "viewDuration", "testValue2"));
-				}
-			},
-			channel.getId(), date, 1L, date, "pageViewed", "analyticsEventId2",
+			"Page", channel.getId(), date, 1L, date, "pageViewed",
+			"analyticsEventId2",
+			Arrays.asList(
+				new BQEvent.Property("viewDuration", "testValue1"),
+				new BQEvent.Property("viewDuration", "testValue2")),
 			"sessionId", "userId");
 
 		List<BQEvent> bqEvents = _bqEventDog.searchBQEvents(
@@ -6081,20 +5876,10 @@ public class BQEventDogTest
 
 		bqEvents.forEach(
 			bqEvent -> {
-				try {
-					List<BQEventProperty> bqEventProperties =
-						_objectMapper.readValue(
-							bqEvent.getEventProperties(),
-							new TypeReference<List<BQEventProperty>>() {
-							});
+				List<BQEvent.Property> properties = bqEvent.getProperties();
 
-					Assertions.assertEquals(
-						2, bqEventProperties.size(),
-						bqEventProperties.toString());
-				}
-				catch (JsonProcessingException jsonProcessingException) {
-					Assertions.fail("Could not read event properties");
-				}
+				Assertions.assertEquals(
+					2, properties.size(), properties.toString());
 			});
 	}
 

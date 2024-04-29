@@ -12,7 +12,7 @@ import com.liferay.osb.asah.common.dog.ChannelDog;
 import com.liferay.osb.asah.common.dog.EventAttributeDefinitionDog;
 import com.liferay.osb.asah.common.dog.EventDefinitionDog;
 import com.liferay.osb.asah.common.dog.EventPropertyDog;
-import com.liferay.osb.asah.common.entity.BQEventProperty;
+import com.liferay.osb.asah.common.entity.BQEvent;
 import com.liferay.osb.asah.common.entity.Channel;
 import com.liferay.osb.asah.common.entity.EventAttributeDefinition;
 import com.liferay.osb.asah.common.entity.EventDefinition;
@@ -20,9 +20,7 @@ import com.liferay.osb.asah.test.util.spring.OSBAsahTestExecutionListenersContex
 
 import java.util.Arrays;
 import java.util.Date;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
@@ -45,33 +43,18 @@ public class EventPropertyDogTest
 
 		Date date = DateUtil.newDayDate();
 
-		Set<BQEventProperty> bqEventProperties =
-			new HashSet<BQEventProperty>() {
-				{
-					add(
-						new BQEventProperty(
-							null, "viewDuration", "Event Attribute Value 1"));
-					add(
-						new BQEventProperty(
-							null, "viewDuration", "event attribute value 2"));
-					add(
-						new BQEventProperty(
-							null, "viewDuration", "EVENT ATTRIBUTE VALUE 3"));
-					add(
-						new BQEventProperty(
-							null, "viewDuration", "EvEnT AtTrIbuTe VaLuE 4"));
-					add(
-						new BQEventProperty(
-							null, "viewDuration", "EvEnT AtTrIbuTe VaLuE 1"));
-					add(
-						new BQEventProperty(
-							null, "viewDuration", "A totally different value"));
-				}
-			};
-
 		_bqEventDog.addBQEvent(
-			"Page", bqEventProperties, channel.getId(), date, 1L, date,
-			"pageUnloaded", "analyticsEventId", "sessionId", "abcdef");
+			"Page", channel.getId(), date, 1L, date, "pageUnloaded",
+			"analyticsEventId",
+			Arrays.asList(
+				new BQEvent.Property("viewDuration", "Event Attribute Value 1"),
+				new BQEvent.Property("viewDuration", "event attribute value 2"),
+				new BQEvent.Property("viewDuration", "EVENT ATTRIBUTE VALUE 3"),
+				new BQEvent.Property("viewDuration", "EvEnT AtTrIbuTe VaLuE 4"),
+				new BQEvent.Property("viewDuration", "EvEnT AtTrIbuTe VaLuE 1"),
+				new BQEvent.Property(
+					"viewDuration", "A totally different value")),
+			"sessionId", "abcdef");
 
 		EventAttributeDefinition eventAttributeDefinition =
 			_eventAttributeDefinitionDog.fetchEventAttributeDefinitionByName(
