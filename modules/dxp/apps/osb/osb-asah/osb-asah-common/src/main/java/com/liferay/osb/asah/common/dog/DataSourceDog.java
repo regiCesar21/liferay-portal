@@ -503,6 +503,11 @@ public class DataSourceDog {
 	private void _validateFaroBackendSignatureModification(
 		Long dataSourceId, String faroBackendSignature) {
 
+		if (dataSourceId == null) {
+			throw new OSBAsahException(
+				HttpStatus.BAD_REQUEST, "Data source ID cannot be null");
+		}
+
 		DataSource dataSource = getDataSource(dataSourceId);
 
 		if (!Objects.equals(
