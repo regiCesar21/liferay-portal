@@ -112,6 +112,20 @@ public class LayoutUtil {
 		boolean mobile = BrowserSnifferUtil.isMobile(httpServletRequest);
 
 		for (Layout layout : ListUtil.subList(layouts, start, end)) {
+			List<Layout> childLayouts = ListUtil.filter(
+				LayoutServiceUtil.getLayouts(
+					groupId, layout.isPrivateLayout(), layout.getLayoutId()),
+				curLayout -> {
+					if ((curLayout.isHidden() && !showHiddenLayouts) ||
+						(_isContentLayoutDraft(curLayout) &&
+						 !showDraftLayouts)) {
+
+						return false;
+					}
+
+					return true;
+				});
+
 			JSONObject jsonObject = JSONUtil.put(
 				"children", JSONFactoryUtil.createJSONArray());
 
@@ -127,7 +141,7 @@ public class LayoutUtil {
 			).put(
 				"groupId", layout.getGroupId()
 			).put(
-				"hasChildren", layout.hasChildren()
+				"hasChildren", ListUtil.isNotEmpty(childLayouts)
 			).put(
 				"icon", "page"
 			).put(
@@ -152,20 +166,6 @@ public class LayoutUtil {
 			);
 
 			boolean paginated = false;
-
-			List<Layout> childLayouts = ListUtil.filter(
-				LayoutServiceUtil.getLayouts(
-					groupId, layout.isPrivateLayout(), layout.getLayoutId()),
-				curLayout -> {
-					if ((curLayout.isHidden() && !showHiddenLayouts) ||
-						(_isContentLayoutDraft(curLayout) &&
-						 !showDraftLayouts)) {
-
-						return false;
-					}
-
-					return true;
-				});
 
 			if (childLayouts.size() >
 					PropsValues.LAYOUT_MANAGE_PAGES_INITIAL_CHILDREN) {
