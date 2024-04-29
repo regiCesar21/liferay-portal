@@ -37,8 +37,7 @@ public class UpgradeProducts extends UpgradeProcess {
 				oldProductName);
 
 			if (product != null) {
-				_updateExternalLink(
-					oldProductName, newProductName, product.getExternalLinks());
+				_addExternalLink(product.getKey(), newProductName);
 
 				product.setName(newProductName);
 
@@ -62,9 +61,7 @@ public class UpgradeProducts extends UpgradeProcess {
 				if (!products.isEmpty()) {
 					product = products.get(0);
 
-					_updateExternalLink(
-						oldProductName, newProductName,
-						product.getExternalLinks());
+					_addExternalLink(product.getKey(), newProductName);
 				}
 				else {
 					if (_log.isInfoEnabled()) {
@@ -84,24 +81,17 @@ public class UpgradeProducts extends UpgradeProcess {
 	protected void doUpgrade() throws Exception {
 	}
 
-	private void _updateExternalLink(
-			String oldProductName, String newProductName,
-			ExternalLink[] externalLinks)
+	private void _addExternalLink(String productKey, String newProductName)
 		throws Exception {
 
-		for (ExternalLink externalLink : externalLinks) {
-			String entityId = externalLink.getEntityId();
+		ExternalLink externalLink = new ExternalLink();
 
-			if (entityId.equals(oldProductName)) {
-				externalLink.setEntityId(newProductName);
+		externalLink.setDomain(ExternalLinkDomain.SALESFORCE);
+		externalLink.setEntityName(ExternalLinkEntityName.SALESFORCE_PRODUCT);
+		externalLink.setEntityId(newProductName);
 
-				_externalLinkWebService.updateExternalLink(
-					StringPool.BLANK, StringPool.BLANK, externalLink.getKey(),
-					externalLink);
-
-				return;
-			}
-		}
+		_externalLinkWebService.addProductExternalLink(
+			StringPool.BLANK, StringPool.BLANK, productKey, externalLink);
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
