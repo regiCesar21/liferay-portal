@@ -7,8 +7,15 @@ package com.liferay.osb.asah.common.repository;
 
 import com.liferay.osb.asah.common.entity.AuditEvent;
 
+import java.util.List;
+
+import org.springframework.data.domain.Pageable;
+
 /**
  * @author Marcellus Tavares
  */
 public interface AuditEventRepository extends Repository<AuditEvent, Long> {
+
+	public List<AuditEvent> findByUserId(Pageable pageable, String userId);
+
 }
