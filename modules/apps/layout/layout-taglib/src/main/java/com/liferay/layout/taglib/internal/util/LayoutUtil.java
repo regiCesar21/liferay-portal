@@ -21,6 +21,7 @@ import com.liferay.portal.kernel.servlet.BrowserSnifferUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HtmlUtil;
+import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.WebKeys;
@@ -92,21 +93,25 @@ public class LayoutUtil {
 
 		JSONArray jsonArray = JSONFactoryUtil.createJSONArray();
 
-		List<Layout> layouts = LayoutServiceUtil.getLayouts(
-			groupId, privateLayout, parentLayoutId, false, start, end);
+		List<Layout> layouts = ListUtil.filter(
+			LayoutServiceUtil.getLayouts(
+				groupId, privateLayout, parentLayoutId),
+			layout -> {
+				if ((layout.isHidden() && !showHiddenLayouts) ||
+					(_isContentLayoutDraft(layout) && !showDraftLayouts)) {
+
+					return false;
+				}
+
+				return true;
+			});
 
 		boolean hasManageLayoutsPermission = GroupPermissionUtil.contains(
 			themeDisplay.getPermissionChecker(), groupId,
 			ActionKeys.MANAGE_LAYOUTS);
 		boolean mobile = BrowserSnifferUtil.isMobile(httpServletRequest);
 
-		for (Layout layout : layouts) {
-			if ((layout.isHidden() && !showHiddenLayouts) ||
-				(_isContentLayoutDraft(layout) && !showDraftLayouts)) {
-
-				continue;
-			}
-
+		for (Layout layout : ListUtil.subList(layouts, start, end)) {
 			JSONObject jsonObject = JSONUtil.put(
 				"children", JSONFactoryUtil.createJSONArray());
 
@@ -148,10 +153,21 @@ public class LayoutUtil {
 
 			boolean paginated = false;
 
-			int layoutsCount = LayoutServiceUtil.getLayoutsCount(
-				groupId, layout.isPrivateLayout(), layout.getLayoutId());
+			List<Layout> childLayouts = ListUtil.filter(
+				LayoutServiceUtil.getLayouts(
+					groupId, layout.isPrivateLayout(), layout.getLayoutId()),
+				curLayout -> {
+					if ((curLayout.isHidden() && !showHiddenLayouts) ||
+						(_isContentLayoutDraft(curLayout) &&
+						 !showDraftLayouts)) {
 
-			if (layoutsCount >
+						return false;
+					}
+
+					return true;
+				});
+
+			if (childLayouts.size() >
 					PropsValues.LAYOUT_MANAGE_PAGES_INITIAL_CHILDREN) {
 
 				paginated = true;
@@ -172,9 +188,7 @@ public class LayoutUtil {
 		return JSONUtil.put(
 			"items", jsonArray
 		).put(
-			"total",
-			LayoutServiceUtil.getLayoutsCount(
-				groupId, privateLayout, parentLayoutId)
+			"total", layouts.size()
 		);
 	}
 
