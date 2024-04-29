@@ -3,13 +3,13 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-package com.liferay.osb.asah.upgrade.v4_9_0.test;
+package com.liferay.osb.asah.upgrade.v4_9_1.test;
 
 import com.liferay.osb.asah.common.repository.executor.BigQueryQueryExecutor;
 import com.liferay.osb.asah.test.util.annotation.BQSQLResource;
 import com.liferay.osb.asah.test.util.spring.OSBAsahTestExecutionListenersContext;
 import com.liferay.osb.asah.upgrade.OSBAsahUpgradeSpringTestContext;
-import com.liferay.osb.asah.upgrade.v4_9_0.EventPropertiesColumnUpgradeStep;
+import com.liferay.osb.asah.upgrade.v4_9_1.EventPropertiesColumnUpgradeStep;
 
 import java.util.List;
 import java.util.Map;
