@@ -7,6 +7,8 @@ package com.liferay.osb.asah.batch.curator.bot.nanite;
 
 import com.liferay.osb.asah.common.dog.ChannelDog;
 import com.liferay.osb.asah.common.json.JSONUtil;
+import com.liferay.osb.asah.common.model.Author;
+import com.liferay.osb.asah.common.util.AuthorThreadLocal;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -29,11 +31,14 @@ public class DeleteChannelsNanite extends BaseNanite {
 
 	@Override
 	public void run(JSONObject contextJSONObject) throws Exception {
-		_channelDog.deleteChannels(
-			JSONUtil.toLongSet(contextJSONObject.getJSONArray("channelIds")),
-			String.valueOf(contextJSONObject.get("createDate")),
-			String.valueOf(contextJSONObject.get("userId")),
-			String.valueOf(contextJSONObject.get("userName")));
+		AuthorThreadLocal.forAuthor(
+			new Author(
+				contextJSONObject.getString("userId"),
+				contextJSONObject.getString("userName")),
+			() -> _channelDog.deleteChannels(
+				JSONUtil.toLongSet(
+					contextJSONObject.getJSONArray("channelIds")),
+				String.valueOf(contextJSONObject.get("createDate"))));
 	}
 
 	@Override

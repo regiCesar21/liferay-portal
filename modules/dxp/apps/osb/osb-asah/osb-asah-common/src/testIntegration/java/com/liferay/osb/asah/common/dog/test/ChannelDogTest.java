@@ -63,9 +63,9 @@ public class ChannelDogTest
 	@BQSQLResource(resourcePath = "test_bq_clear_channels.sql")
 	@SQLResource(resourcePath = "test_clear_channels.sql")
 	@Test
-	public void testClearChannels() throws Exception {
+	public void testClearChannels() {
 		_channelDog.clearChannels(
-			SetUtil.of(1L, 2L), true, DateUtil.newDateString(), "0", "test");
+			SetUtil.of(1L, 2L), true, DateUtil.newDateString());
 
 		_assertClearChannels(1L);
 
@@ -89,9 +89,8 @@ public class ChannelDogTest
 	@BQSQLResource(resourcePath = "test_bq_delete_channels.sql")
 	@SQLResource(resourcePath = "test_delete_channels.sql")
 	@Test
-	public void testDeleteChannels() throws Exception {
-		_channelDog.deleteChannels(
-			SetUtil.of(1L), DateUtil.newDateString(), "0", "test");
+	public void testDeleteChannels() {
+		_channelDog.deleteChannels(SetUtil.of(1L), DateUtil.newDateString());
 
 		_assertClearChannels(1L);
 

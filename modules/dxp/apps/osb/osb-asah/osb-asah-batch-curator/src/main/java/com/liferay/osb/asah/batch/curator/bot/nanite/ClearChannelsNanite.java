@@ -7,7 +7,9 @@ package com.liferay.osb.asah.batch.curator.bot.nanite;
 
 import com.liferay.osb.asah.common.dog.ChannelDog;
 import com.liferay.osb.asah.common.json.JSONUtil;
+import com.liferay.osb.asah.common.model.Author;
 import com.liferay.osb.asah.common.spring.annotation.CacheEvict;
+import com.liferay.osb.asah.common.util.AuthorThreadLocal;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -31,11 +33,14 @@ public class ClearChannelsNanite extends BaseNanite {
 	@CacheEvict(evictAll = true)
 	@Override
 	public void run(JSONObject contextJSONObject) throws Exception {
-		_channelDog.clearChannels(
-			JSONUtil.toLongSet(contextJSONObject.getJSONArray("channelIds")),
-			true, String.valueOf(contextJSONObject.get("createDate")),
-			String.valueOf(contextJSONObject.get("userId")),
-			String.valueOf(contextJSONObject.get("userName")));
+		AuthorThreadLocal.forAuthor(
+			new Author(
+				contextJSONObject.getString("userId"),
+				contextJSONObject.getString("userName")),
+			() -> _channelDog.clearChannels(
+				JSONUtil.toLongSet(
+					contextJSONObject.getJSONArray("channelIds")),
+				true, String.valueOf(contextJSONObject.get("createDate"))));
 	}
 
 	@Override

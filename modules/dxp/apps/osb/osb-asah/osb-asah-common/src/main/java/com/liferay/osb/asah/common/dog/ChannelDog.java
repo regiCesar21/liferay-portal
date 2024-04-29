@@ -20,6 +20,7 @@ import com.liferay.osb.asah.common.repository.SegmentRepository;
 import com.liferay.osb.asah.common.repository.executor.BigQueryQueryExecutor;
 import com.liferay.osb.asah.common.spring.http.exception.OSBAsahException;
 import com.liferay.osb.asah.common.spring.resource.ResourceUtil;
+import com.liferay.osb.asah.common.util.AuthorThreadLocal;
 import com.liferay.osb.asah.common.util.StringUtil;
 import com.liferay.osb.asah.common.util.TimeOrderedUuidGenerator;
 
@@ -101,9 +102,7 @@ public class ChannelDog {
 
 	@Transactional
 	public void clearChannels(
-			Set<Long> channelIds, boolean clear, String createDateString,
-			String userId, String userName)
-		throws Exception {
+		Set<Long> channelIds, boolean clear, String createDateString) {
 
 		_customAssetDashboardRepository.deleteByChannelIdIn(channelIds);
 		_eventAnalysisRepository.deleteByChannelIdIn(channelIds);
@@ -131,31 +130,29 @@ public class ChannelDog {
 				).put(
 					"createDate", createDateString
 				).put(
-					"userId", userId
+					"userId", AuthorThreadLocal.getUserId()
 				).put(
-					"userName", userName
+					"userName", AuthorThreadLocal.getUserName()
 				));
 		}
 
 		if (clear) {
 			_auditEventDog.addAuditEvent(
 				String.format("Cleared channels %s", channelIds),
-				AuditEvent.Type.CHANNEL_CLEAR, userId, userName);
+				AuditEvent.Type.CHANNEL_CLEAR, AuthorThreadLocal.getUserId(),
+				AuthorThreadLocal.getUserName());
 		}
 	}
 
-	public void deleteChannels(
-			Set<Long> channelIds, String createDateString, String userId,
-			String userName)
-		throws Exception {
-
-		clearChannels(channelIds, false, createDateString, userId, userName);
+	public void deleteChannels(Set<Long> channelIds, String createDateString) {
+		clearChannels(channelIds, false, createDateString);
 
 		_channelRepository.deleteByIdIn(new HashSet<>(channelIds));
 
 		_auditEventDog.addAuditEvent(
 			String.format("Deleted channels %s", channelIds),
-			AuditEvent.Type.CHANNEL_DELETE, userId, userName);
+			AuditEvent.Type.CHANNEL_DELETE, AuthorThreadLocal.getUserId(),
+			AuthorThreadLocal.getUserName());
 	}
 
 	public Channel fetchChannel(Long channelId) {

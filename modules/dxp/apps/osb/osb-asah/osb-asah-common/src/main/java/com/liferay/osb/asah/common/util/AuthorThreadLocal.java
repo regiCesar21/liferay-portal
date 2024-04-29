@@ -12,6 +12,17 @@ import com.liferay.osb.asah.common.model.Author;
  */
 public class AuthorThreadLocal {
 
+	public static void forAuthor(Author author, Runnable runnable) {
+		try {
+			setAuthor(author);
+
+			runnable.run();
+		}
+		finally {
+			remove();
+		}
+	}
+
 	public static Author getAuthor() {
 		Author author = _author.get();
 
