@@ -78,7 +78,7 @@ public class LayoutUtil {
 		return sb.toString();
 	}
 
-	public static JSONArray getLayoutsJSONArray(
+	public static JSONObject getLayoutsJSONObject(
 			boolean checkDisplayPage, boolean enableCurrentPage, long groupId,
 			HttpServletRequest httpServletRequest, boolean privateLayout,
 			long parentLayoutId, String selectedLayoutUuid,
@@ -169,7 +169,13 @@ public class LayoutUtil {
 			jsonArray.put(jsonObject);
 		}
 
-		return jsonArray;
+		return JSONUtil.put(
+			"items", jsonArray
+		).put(
+			"total",
+			LayoutServiceUtil.getLayoutsCount(
+				groupId, privateLayout, parentLayoutId)
+		);
 	}
 
 	private static long _getSelPlid(HttpServletRequest httpServletRequest) {

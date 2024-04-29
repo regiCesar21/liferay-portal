@@ -9,12 +9,12 @@ import com.liferay.layout.taglib.internal.servlet.ServletContextUtil;
 import com.liferay.layout.taglib.internal.util.LayoutUtil;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
+import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.LayoutConstants;
-import com.liferay.portal.kernel.service.LayoutServiceUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
@@ -224,25 +224,24 @@ public class SelectLayoutTag extends IncludeTag {
 
 		String layoutUuid = ParamUtil.getString(request, "layoutUuid");
 
+		JSONObject layoutsJSONObject = LayoutUtil.getLayoutsJSONObject(
+			_checkDisplayPage, _enableCurrentPage,
+			themeDisplay.getScopeGroupId(), getRequest(), _privateLayout, 0,
+			layoutUuid, _showHiddenLayouts, false, 0,
+			GetterUtil.getInteger(
+				PropsValues.LAYOUT_MANAGE_PAGES_INITIAL_CHILDREN));
+
 		boolean paginated = false;
 
-		int layoutsCount = LayoutServiceUtil.getLayoutsCount(
-			themeDisplay.getScopeGroupId(), _privateLayout,
-			LayoutConstants.DEFAULT_PARENT_LAYOUT_ID);
+		if (layoutsJSONObject.getInt("total") >
+				PropsValues.LAYOUT_MANAGE_PAGES_INITIAL_CHILDREN) {
 
-		if (layoutsCount > PropsValues.LAYOUT_MANAGE_PAGES_INITIAL_CHILDREN) {
 			paginated = true;
 		}
 
 		return JSONUtil.put(
 			JSONUtil.put(
-				"children",
-				LayoutUtil.getLayoutsJSONArray(
-					_checkDisplayPage, _enableCurrentPage,
-					themeDisplay.getScopeGroupId(), getRequest(),
-					_privateLayout, 0, layoutUuid, _showHiddenLayouts, false, 0,
-					GetterUtil.getInteger(
-						PropsValues.LAYOUT_MANAGE_PAGES_INITIAL_CHILDREN))
+				"children", layoutsJSONObject.get("items")
 			).put(
 				"disabled", true
 			).put(
