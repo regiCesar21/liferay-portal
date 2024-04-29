@@ -158,8 +158,8 @@ else {
 			</liferay-frontend:fieldset>
 
 			<liferay-frontend:fieldset
-				collapsed="<%= true %>"
-				collapsible="<%= true %>"
+				collapsed="<%= !readOnly %>"
+				collapsible="<%= !readOnly %>"
 				disabled="<%= readOnly %>"
 				label="advanced-properties"
 			>
