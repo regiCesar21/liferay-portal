@@ -10,14 +10,18 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.liferay.osb.asah.backend.dto.DataSourceDTO;
 import com.liferay.osb.asah.backend.rest.controller.DataSourcesRestController;
 import com.liferay.osb.asah.backend.spring.OSBAsahBackendSpringBootApplication;
+import com.liferay.osb.asah.common.constants.HeaderConstants;
 import com.liferay.osb.asah.common.date.DateUtil;
 import com.liferay.osb.asah.common.entity.Asset;
+import com.liferay.osb.asah.common.entity.AuditEvent;
 import com.liferay.osb.asah.common.entity.DataSource;
 import com.liferay.osb.asah.common.entity.RunLog;
 import com.liferay.osb.asah.common.json.JSONUtil;
 import com.liferay.osb.asah.common.repository.AssetRepository;
+import com.liferay.osb.asah.common.repository.AuditEventRepository;
 import com.liferay.osb.asah.common.repository.DataSourceRepository;
 import com.liferay.osb.asah.common.repository.RunLogRepository;
+import com.liferay.osb.asah.common.util.ProjectIdThreadLocal;
 import com.liferay.osb.asah.test.util.faro.FaroInfoTestUtil;
 import com.liferay.osb.asah.test.util.spring.OSBAsahRepositoryTestExecutionListener;
 import com.liferay.osb.asah.test.util.spring.OSBAsahSQLTestExecutionListener;
@@ -26,6 +30,8 @@ import com.liferay.osb.asah.test.util.util.RandomTestUtil;
 
 import java.util.Date;
 import java.util.HashSet;
+import java.util.List;
+import java.util.Optional;
 import java.util.Set;
 
 import org.json.JSONArray;
@@ -39,17 +45,22 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.skyscreamer.jsonassert.JSONAssert;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockitoTestExecutionListener;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.TestExecutionListeners;
 import org.springframework.test.context.support.DependencyInjectionTestExecutionListener;
+import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.web.servlet.request.MockHttpServletRequestBuilder;
+import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
 /**
  * @author Rachael Koestartyo
  * @author Vishal Reddy
  */
+@ContextConfiguration(classes = OSBAsahBackendSpringBootApplication.class)
 @ExtendWith(OSBAsahSpringExtension.class)
-@SpringBootTest(classes = OSBAsahBackendSpringBootApplication.class)
 @TestExecutionListeners(
 	mergeMode = TestExecutionListeners.MergeMode.REPLACE_DEFAULTS,
 	value = {
@@ -59,6 +70,7 @@ import org.springframework.test.context.support.DependencyInjectionTestExecution
 		OSBAsahSQLTestExecutionListener.class
 	}
 )
+@WebMvcTest
 public class DataSourcesRestControllerTest {
 
 	@Disabled
@@ -263,14 +275,70 @@ public class DataSourcesRestControllerTest {
 			false);
 	}
 
+	@Test
+	public void testScheduleDataSourceDeletion() throws Exception {
+		JSONObject dataSourceJSONObject = new JSONObject(
+			_dataSourcesRestController.postDataSource(
+				_objectMapper.convertValue(
+					FaroInfoTestUtil.buildLiferayDataSource(),
+					DataSourceDTO.class)));
+
+		// Schedule Deletion
+
+		MockHttpServletRequestBuilder mockHttpServletRequestBuilder =
+			MockMvcRequestBuilders.delete(
+				"/data-sources/" + dataSourceJSONObject.getString("id"));
+
+		mockHttpServletRequestBuilder.header(
+			HeaderConstants.AUTHOR_USER_ID, "1001");
+		mockHttpServletRequestBuilder.header(
+			HeaderConstants.AUTHOR_USER_NAME, "Caetano Veloso");
+		mockHttpServletRequestBuilder.header(
+			HeaderConstants.PROJECT_ID, "test");
+
+		_mockMvc.perform(mockHttpServletRequestBuilder);
+
+		// Assert data source state
+
+		ProjectIdThreadLocal.setProjectId("test");
+
+		Optional<DataSource> dataSourceOptional =
+			_dataSourceRepository.findById(
+				Long.valueOf(dataSourceJSONObject.getString("id")));
+
+		Assertions.assertTrue(dataSourceOptional.isPresent());
+
+		DataSource dataSource = dataSourceOptional.get();
+
+		Assertions.assertEquals("IN_PROGRESS_DELETING", dataSource.getState());
+
+		// Assert audit events
+
+		List<AuditEvent> auditEvents = _auditEventRepository.findByUserId(
+			PageRequest.ofSize(20), "1001");
+
+		Assertions.assertEquals(1, auditEvents.size());
+
+		AuditEvent auditEvent = auditEvents.get(0);
+
+		Assertions.assertEquals(
+			AuditEvent.Type.DATA_SOURCE_DELETE_REQUEST, auditEvent.getType());
+	}
+
 	@Autowired
 	private AssetRepository _assetRepository;
+
+	@Autowired
+	private AuditEventRepository _auditEventRepository;
 
 	@Autowired
 	private DataSourceRepository _dataSourceRepository;
 
 	@Autowired
 	private DataSourcesRestController _dataSourcesRestController;
+
+	@Autowired
+	private MockMvc _mockMvc;
 
 	@Autowired
 	private ObjectMapper _objectMapper;
