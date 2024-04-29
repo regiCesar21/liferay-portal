@@ -16,4 +16,9 @@ UPDATE BQEvent SET properties = ARRAY(
 		)
 		FROM UNNEST(JSON_EXTRACT_ARRAY(mapEventProperties(eventProperties))) AS property
 	)
-WHERE 1=1
+WHERE
+	(
+		eventProperties IS NOT NULL AND
+		eventProperties NOT IN ('{}', '')
+	) AND
+	ARRAY_LENGTH(properties) = 0
