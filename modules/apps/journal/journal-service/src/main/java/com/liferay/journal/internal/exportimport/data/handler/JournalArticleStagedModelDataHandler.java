@@ -511,6 +511,12 @@ public class JournalArticleStagedModelDataHandler
 
 		_exportAssetDisplayPage(portletDataContext, article);
 
+		if (!GetterUtil.getBoolean(
+				articleElement.attributeValue("articleAdded"))) {
+
+			_exportAssetDisplayPage(portletDataContext, article);
+		}
+
 		_exportFriendlyURLEntries(portletDataContext, article);
 
 		portletDataContext.addClassedModel(
