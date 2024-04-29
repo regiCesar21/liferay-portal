@@ -58,12 +58,12 @@
 
 		var productConfigs = [
 			{
-				name: '<@liferay.language key="dxp-quarterly-releases" /> (DXP 7.4)',
+				name: '<@liferay.language key="dxp" />',
 				svgId: '#dxp-logo',
-				url: addLocaleParamToURI('${current_locale}', 'categories/4410212015373')
+				url: addLocaleParamToURI('${current_locale}', 'categories/26332233260813')
 			},
 			{
-				name: '<@liferay.language key="liferay-cloud" />',
+				name: '<@liferay.language key="liferay-cloud-paas-and-saas" />',
 				svgId: '#liferay-cloud-logo',
 				url: addLocaleParamToURI('${current_locale}', 'categories/360000868032')
 			},
@@ -76,26 +76,6 @@
 				name: '<@liferay.language key="analytics-cloud" />',
 				svgId: '#analytics-cloud-logo',
 				url: addLocaleParamToURI('${current_locale}', 'categories/360000872551')
-			},
-			{
-				name: '<@liferay.language key="dxp" /> 7.3',
-				svgId: '#7-3-logo',
-				url: addLocaleParamToURI('${current_locale}', 'categories/360004183251')
-			},
-			{
-				name: '<@liferay.language key="dxp" /> 7.2',
-				svgId: '#7-2-logo',
-				url: addLocaleParamToURI('${current_locale}', 'categories/360001749912')
-			},
-			{
-				name: '<@liferay.language key="dxp" /> 7.1',
-				svgId: '#7-1-logo',
-				url: addLocaleParamToURI('${current_locale}', 'categories/360000872531')
-			},
-			{
-				name: '<@liferay.language key="dxp" /> 7.0',
-				svgId: '#7-0-logo',
-				url: addLocaleParamToURI('${current_locale}', 'categories/360000867932')
 			}
 		];
 
