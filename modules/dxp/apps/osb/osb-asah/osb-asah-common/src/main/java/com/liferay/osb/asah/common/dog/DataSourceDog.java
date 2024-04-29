@@ -10,6 +10,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.liferay.osb.asah.common.concurrent.BoundedExecutor;
 import com.liferay.osb.asah.common.converter.helper.DefaultFilterStringConverterHelper;
 import com.liferay.osb.asah.common.date.DateUtil;
+import com.liferay.osb.asah.common.entity.AuditEvent;
 import com.liferay.osb.asah.common.entity.Channel;
 import com.liferay.osb.asah.common.entity.ChannelDataSource;
 import com.liferay.osb.asah.common.entity.DXPEntity;
@@ -21,6 +22,7 @@ import com.liferay.osb.asah.common.repository.BQIndividualRepository;
 import com.liferay.osb.asah.common.repository.DataSourceRepository;
 import com.liferay.osb.asah.common.repository.helper.FilterHelper;
 import com.liferay.osb.asah.common.spring.http.exception.OSBAsahException;
+import com.liferay.osb.asah.common.util.AuthorThreadLocal;
 import com.liferay.osb.asah.common.util.BeanUtils;
 import com.liferay.osb.asah.common.util.TimeOrderedUuidGenerator;
 import com.liferay.osb.asah.common.wedeploy.data.WeDeployDataService;
@@ -97,6 +99,7 @@ public class DataSourceDog {
 				"Unable to delete a data source without ID");
 		}
 
+		_addAuditEvent(AuditEvent.Type.DATA_SOURCE_DELETE, dataSourceId);
 		_deleteFieldMappings(dataSourceId);
 
 		_dataSourceRepository.deleteById(dataSourceId);
@@ -118,6 +121,7 @@ public class DataSourceDog {
 				HttpStatus.BAD_REQUEST, "Data source already disconnected");
 		}
 
+		_addAuditEvent(AuditEvent.Type.DATA_SOURCE_DISCONNECT, dataSourceId);
 		_clearChannels(dataSourceId);
 
 		dataSource.setContactsSelected(false);
@@ -279,6 +283,9 @@ public class DataSourceDog {
 	public void scheduleDataSourceDeletion(Long dataSourceId) {
 		DataSource dataSource = getDataSource(dataSourceId);
 
+		_addAuditEvent(
+			AuditEvent.Type.DATA_SOURCE_DELETE_REQUEST, dataSourceId);
+
 		dataSource.setDeletionDate(DateUtil.newDate());
 		dataSource.setState("IN_PROGRESS_DELETING");
 
@@ -296,6 +303,8 @@ public class DataSourceDog {
 		_validateFaroBackendSignatureModification(
 			dataSource.getId(), dataSource.getFaroBackendSecuritySignature());
 
+		_addAuditEvent(AuditEvent.Type.DATA_SOURCE_UPDATE, dataSource.getId());
+
 		dataSource.setModifiedDate(DateUtil.newDate());
 
 		if (Objects.equals(dataSource.getStatus(), "ACTIVE")) {
@@ -311,6 +320,8 @@ public class DataSourceDog {
 		Boolean sitesSelected) {
 
 		DataSource dataSource = getDataSource(dataSourceId);
+
+		_addAuditEvent(AuditEvent.Type.DATA_SOURCE_UPDATE, dataSource.getId());
 
 		if (accountsSelected != null) {
 			dataSource.setAccountsSelected(accountsSelected);
@@ -329,6 +340,14 @@ public class DataSourceDog {
 		}
 
 		return _dataSourceRepository.save(dataSource);
+	}
+
+	private void _addAuditEvent(
+		AuditEvent.Type auditEventType, Long dataSourceId) {
+
+		_auditEventDog.addAuditEvent(
+			"Data source ID " + dataSourceId, auditEventType,
+			AuthorThreadLocal.getUserId(), AuthorThreadLocal.getUserName());
 	}
 
 	private void _addDefaultChannel(DataSource dataSource) {
@@ -536,6 +555,9 @@ public class DataSourceDog {
 
 	@Autowired
 	private AsahTaskDog _asahTaskDog;
+
+	@Autowired
+	private AuditEventDog _auditEventDog;
 
 	private final BoundedExecutor _boundedExecutor =
 		BoundedExecutor.newBoundedExecutor(10, 1);
