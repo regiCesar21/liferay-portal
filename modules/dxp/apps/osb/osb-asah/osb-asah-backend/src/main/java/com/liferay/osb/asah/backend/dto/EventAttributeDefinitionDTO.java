@@ -11,6 +11,7 @@ import com.fasterxml.jackson.annotation.JsonRootName;
 
 import com.liferay.osb.asah.common.entity.EventAttributeDefinition;
 import com.liferay.osb.asah.common.entity.EventDefinitionEventAttributeDefinition;
+import com.liferay.osb.asah.common.util.Base64;
 
 import java.util.ArrayList;
 import java.util.Comparator;
@@ -18,8 +19,6 @@ import java.util.List;
 import java.util.Objects;
 import java.util.Set;
 import java.util.stream.Stream;
-
-import org.apache.commons.codec.digest.DigestUtils;
 
 /**
  * @author Leslie Wong
@@ -37,10 +36,11 @@ public class EventAttributeDefinitionDTO {
 		_dataType = eventAttributeDefinition.getDataType();
 		_description = eventAttributeDefinition.getDescription();
 		_displayName = eventAttributeDefinition.getDisplayName();
-		_encodedName = DigestUtils.sha256Hex(
-			eventAttributeDefinition.getName());
 		_id = String.valueOf(eventAttributeDefinition.getId());
+
 		_name = eventAttributeDefinition.getName();
+
+		_encodedName = Base64.encode(_name.getBytes());
 
 		List<EventDefinitionEventAttributeDefinition>
 			eventDefinitionEventAttributeDefinitions = new ArrayList<>(

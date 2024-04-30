@@ -10,6 +10,7 @@ import com.liferay.osb.asah.common.date.dog.util.TimeZoneDogUtil;
 import com.liferay.osb.asah.common.filter.expression.parser.FilterExpressionBaseVisitor;
 import com.liferay.osb.asah.common.filter.expression.parser.FilterExpressionParser;
 import com.liferay.osb.asah.common.util.BQSQLUtil;
+import com.liferay.osb.asah.common.util.Base64;
 import com.liferay.osb.asah.common.util.SetUtil;
 import com.liferay.osb.asah.common.util.StringUtil;
 
@@ -612,9 +613,9 @@ public class FilterExpressionConditionVisitor
 
 				condition = condition.and(
 					DSL.field(
-						"TO_HEX(SHA256(" + alias + ".name))"
+						alias + ".name"
 					).eq(
-						fieldName
+						new String(Base64.decode(fieldName))
 					));
 			}
 			else if (StringUtils.startsWith(field.getName(), "ExpandoValue_")) {
@@ -1296,9 +1297,9 @@ public class FilterExpressionConditionVisitor
 		_referencedTableNames.add("EventAttributes");
 
 		Condition condition = DSL.field(
-			"TO_HEX(SHA256(" + alias + ".name))"
+			alias + ".name"
 		).eq(
-			fieldName
+			new String(Base64.decode(fieldName))
 		);
 
 		String query =
@@ -1306,7 +1307,8 @@ public class FilterExpressionConditionVisitor
 
 		if (DateUtil.isValidPatternShort(value)) {
 			query = String.join(
-				"", "CASE WHEN TO_HEX(SHA256({0}.name)) = '", fieldName,
+				"", "CASE WHEN {0}.name = '",
+				new String(Base64.decode(fieldName)),
 				"' THEN DATE(PARSE_TIMESTAMP('%a %b %d %H:%M:%S %Z %Y', ",
 				"{0}.value)) {1} SAFE_CAST('", value, "' AS DATE) ELSE false ",
 				"END");
