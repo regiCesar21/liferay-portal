@@ -8,6 +8,7 @@ package com.liferay.osb.asah.common.filter.expression;
 import com.liferay.osb.asah.common.date.dog.TimeZoneDog;
 import com.liferay.osb.asah.common.date.dog.util.TimeZoneDogUtil;
 import com.liferay.osb.asah.common.findbugs.SuppressFBWarnings;
+import com.liferay.osb.asah.common.util.Base64;
 import com.liferay.osb.asah.common.util.StringUtil;
 
 import java.io.File;
@@ -41,14 +42,20 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 
 import org.mockito.Mockito;
 
 import org.springframework.core.io.ClassPathResource;
 
+import uk.org.webcompere.systemstubs.environment.EnvironmentVariables;
+import uk.org.webcompere.systemstubs.jupiter.SystemStub;
+import uk.org.webcompere.systemstubs.jupiter.SystemStubsExtension;
+
 /**
  * @author Marcellus Tavares
  */
+@ExtendWith(SystemStubsExtension.class)
 public class FilterExpressionTest {
 
 	@BeforeEach
@@ -685,8 +692,14 @@ public class FilterExpressionTest {
 
 	@Test
 	public void testEventAttributes() {
-		String encodedName =
-			"ee2b6153396fd9c4c7fb104ce710be18962b63eac91db80c96305347a0a9514b";
+		_environmentVariables.set(
+			"feature.flag.LPD-24648", String.valueOf(Boolean.TRUE));
+
+		Assertions.assertEquals(
+			String.valueOf(Boolean.TRUE),
+			System.getenv("feature.flag.LPD-24648"));
+
+		String encodedName = Base64.encode("item name".getBytes());
 
 		_assertEquals(
 			_buildEventAttributesCondition(
@@ -696,15 +709,15 @@ public class FilterExpressionTest {
 				).as(
 					"Event"
 				).crossJoin(
-					DSL.table("UNNEST(Event.fields) AS EventAttributes_b3b9a1")
+					DSL.table("UNNEST(Event.fields) AS EventAttributes_d054dc")
 				),
 				DSL.field(
-					"TO_HEX(SHA256(EventAttributes_b3b9a1.name))"
+					"EventAttributes_d054dc.name"
 				).eq(
-					encodedName
+					new String(Base64.decode(encodedName))
 				).and(
 					DSL.condition(
-						"LOWER(EventAttributes_b3b9a1.value) = 'shoes'")
+						"LOWER(EventAttributes_d054dc.value) = 'shoes'")
 				)),
 			"events.filterByCount(filter='(eventId eq ''added'' and day gt " +
 				"''last24Hours'' and attribute/" + encodedName +
@@ -712,7 +725,7 @@ public class FilterExpressionTest {
 			123456789L,
 			new HashSet<>(
 				Arrays.asList(
-					"Event", "EventAttributes", "EventAttributes_b3b9a1",
+					"Event", "EventAttributes", "EventAttributes_d054dc",
 					"Individual")),
 			true);
 
@@ -724,15 +737,15 @@ public class FilterExpressionTest {
 				).as(
 					"Event"
 				).crossJoin(
-					DSL.table("UNNEST(Event.fields) AS EventAttributes_b3b9a1")
+					DSL.table("UNNEST(Event.fields) AS EventAttributes_d054dc")
 				),
 				DSL.field(
-					"TO_HEX(SHA256(EventAttributes_b3b9a1.name))"
+					"EventAttributes_d054dc.name"
 				).eq(
-					encodedName
+					new String(Base64.decode(encodedName))
 				).and(
 					DSL.condition(
-						"SAFE_CAST(EventAttributes_b3b9a1.value AS NUMERIC) " +
+						"SAFE_CAST(EventAttributes_d054dc.value AS NUMERIC) " +
 							"> SAFE_CAST('1' AS NUMERIC)")
 				)),
 			"events.filterByCount(filter='(eventId eq ''added'' and day gt " +
@@ -741,7 +754,7 @@ public class FilterExpressionTest {
 			123456789L,
 			new HashSet<>(
 				Arrays.asList(
-					"Event", "EventAttributes", "EventAttributes_b3b9a1",
+					"Event", "EventAttributes", "EventAttributes_d054dc",
 					"Individual")),
 			true);
 
@@ -753,19 +766,19 @@ public class FilterExpressionTest {
 				).as(
 					"Event"
 				).crossJoin(
-					DSL.table("UNNEST(Event.fields) AS EventAttributes_b3b9a1")
+					DSL.table("UNNEST(Event.fields) AS EventAttributes_d054dc")
 				),
 				DSL.field(
-					"TO_HEX(SHA256(EventAttributes_b3b9a1.name))"
+					"EventAttributes_d054dc.name"
 				).eq(
-					encodedName
+					new String(Base64.decode(encodedName))
 				).and(
 					DSL.condition(
 						String.join(
-							"", "CASE WHEN TO_HEX(SHA256(",
-							"EventAttributes_b3b9a1.name)) = '", encodedName,
+							"", "CASE WHEN EventAttributes_d054dc.name = '",
+							new String(Base64.decode(encodedName)),
 							"' THEN DATE(PARSE_TIMESTAMP('%a %b %d %H:%M:%S ",
-							"%Z %Y', EventAttributes_b3b9a1.value)) < ",
+							"%Z %Y', EventAttributes_d054dc.value)) < ",
 							"SAFE_CAST('2024-03-04' AS DATE) ELSE false END"))
 				)),
 			"events.filterByCount(filter='(eventId eq ''added'' and day gt " +
@@ -774,7 +787,7 @@ public class FilterExpressionTest {
 			123456789L,
 			new HashSet<>(
 				Arrays.asList(
-					"Event", "EventAttributes", "EventAttributes_b3b9a1",
+					"Event", "EventAttributes", "EventAttributes_d054dc",
 					"Individual")),
 			true);
 
@@ -786,21 +799,21 @@ public class FilterExpressionTest {
 				).as(
 					"Event"
 				).crossJoin(
-					DSL.table("UNNEST(Event.fields) AS EventAttributes_b3b9a1")
+					DSL.table("UNNEST(Event.fields) AS EventAttributes_d054dc")
 				),
 				DSL.and(
 					DSL.function(
 						"DATE", Date.class,
-						DSL.field("EventAttributes_b3b9a1.value"),
+						DSL.field("EventAttributes_d054dc.value"),
 						DSL.val(TimeZoneDogUtil.getZoneId())
 					).between(
 						DSL.function("DATE", Date.class, DSL.val("2024-03-04")),
 						DSL.function("DATE", Date.class, DSL.val("2024-04-04"))
 					),
 					DSL.field(
-						"TO_HEX(SHA256(EventAttributes_b3b9a1.name))"
+						"EventAttributes_d054dc.name"
 					).eq(
-						encodedName
+						new String(Base64.decode(encodedName))
 					))),
 			"events.filterByCount(filter='(eventId eq ''added'' and day gt " +
 				"''last24Hours'' and between(attribute/" + encodedName +
@@ -809,7 +822,7 @@ public class FilterExpressionTest {
 			123456789L,
 			new HashSet<>(
 				Arrays.asList(
-					"Event", "EventAttributes", "EventAttributes_b3b9a1",
+					"Event", "EventAttributes", "EventAttributes_d054dc",
 					"Individual")),
 			true);
 
@@ -821,15 +834,15 @@ public class FilterExpressionTest {
 				).as(
 					"Event"
 				).crossJoin(
-					DSL.table("UNNEST(Event.fields) AS EventAttributes_b3b9a1")
+					DSL.table("UNNEST(Event.fields) AS EventAttributes_d054dc")
 				),
 				DSL.field(
-					"TO_HEX(SHA256(EventAttributes_b3b9a1.name))"
+					"EventAttributes_d054dc.name"
 				).eq(
-					encodedName
+					new String(Base64.decode(encodedName))
 				).and(
 					DSL.condition(
-						"LOWER(EventAttributes_b3b9a1.value) LIKE '%shoe%'")
+						"LOWER(EventAttributes_d054dc.value) LIKE '%shoe%'")
 				)),
 			"events.filterByCount(filter='(eventId eq ''added'' and day gt " +
 				"''last24Hours'' and contains(attribute/" + encodedName +
@@ -837,7 +850,7 @@ public class FilterExpressionTest {
 			123456789L,
 			new HashSet<>(
 				Arrays.asList(
-					"Event", "EventAttributes", "EventAttributes_b3b9a1",
+					"Event", "EventAttributes", "EventAttributes_d054dc",
 					"Individual")),
 			true);
 
@@ -849,19 +862,19 @@ public class FilterExpressionTest {
 				).as(
 					"Event"
 				).crossJoin(
-					DSL.table("UNNEST(Event.fields) AS EventAttributes_b3b9a1")
+					DSL.table("UNNEST(Event.fields) AS EventAttributes_d054dc")
 				),
 				DSL.field(
-					"TO_HEX(SHA256(EventAttributes_b3b9a1.name))"
+					"EventAttributes_d054dc.name"
 				).eq(
-					encodedName
+					new String(Base64.decode(encodedName))
 				).and(
 					DSL.and(
 						DSL.field(
-							"EventAttributes_b3b9a1.value"
+							"EventAttributes_d054dc.value"
 						).isNotNull(),
 						DSL.field(
-							"EventAttributes_b3b9a1.value"
+							"EventAttributes_d054dc.value"
 						).ne(
 							""
 						))
@@ -872,7 +885,7 @@ public class FilterExpressionTest {
 			123456789L,
 			new HashSet<>(
 				Arrays.asList(
-					"Event", "EventAttributes", "EventAttributes_b3b9a1",
+					"Event", "EventAttributes", "EventAttributes_d054dc",
 					"Individual")),
 			true);
 
@@ -884,19 +897,19 @@ public class FilterExpressionTest {
 				).as(
 					"Event"
 				).crossJoin(
-					DSL.table("UNNEST(Event.fields) AS EventAttributes_b3b9a1")
+					DSL.table("UNNEST(Event.fields) AS EventAttributes_d054dc")
 				),
 				DSL.field(
-					"TO_HEX(SHA256(EventAttributes_b3b9a1.name))"
+					"EventAttributes_d054dc.name"
 				).eq(
-					encodedName
+					new String(Base64.decode(encodedName))
 				).and(
 					DSL.or(
 						DSL.field(
-							"EventAttributes_b3b9a1.value"
+							"EventAttributes_d054dc.value"
 						).isNull(),
 						DSL.field(
-							"EventAttributes_b3b9a1.value"
+							"EventAttributes_d054dc.value"
 						).eq(
 							""
 						))
@@ -907,7 +920,7 @@ public class FilterExpressionTest {
 			123456789L,
 			new HashSet<>(
 				Arrays.asList(
-					"Event", "EventAttributes", "EventAttributes_b3b9a1",
+					"Event", "EventAttributes", "EventAttributes_d054dc",
 					"Individual")),
 			true);
 
@@ -919,15 +932,15 @@ public class FilterExpressionTest {
 				).as(
 					"Event"
 				).crossJoin(
-					DSL.table("UNNEST(Event.fields) AS EventAttributes_b3b9a1")
+					DSL.table("UNNEST(Event.fields) AS EventAttributes_d054dc")
 				),
 				DSL.field(
-					"TO_HEX(SHA256(EventAttributes_b3b9a1.name))"
+					"EventAttributes_d054dc.name"
 				).eq(
-					encodedName
+					new String(Base64.decode(encodedName))
 				).and(
 					DSL.condition(
-						"SAFE_CAST(EventAttributes_b3b9a1.value AS BOOL) = " +
+						"SAFE_CAST(EventAttributes_d054dc.value AS BOOL) = " +
 							"SAFE_CAST('false' AS BOOL)")
 				)),
 			"events.filterByCount(filter='(eventId eq ''added'' and day gt " +
@@ -936,7 +949,7 @@ public class FilterExpressionTest {
 			123456789L,
 			new HashSet<>(
 				Arrays.asList(
-					"Event", "EventAttributes", "EventAttributes_b3b9a1",
+					"Event", "EventAttributes", "EventAttributes_d054dc",
 					"Individual")),
 			true);
 
@@ -948,15 +961,15 @@ public class FilterExpressionTest {
 				).as(
 					"Event"
 				).crossJoin(
-					DSL.table("UNNEST(Event.fields) AS EventAttributes_b3b9a1")
+					DSL.table("UNNEST(Event.fields) AS EventAttributes_d054dc")
 				),
 				DSL.field(
-					"TO_HEX(SHA256(EventAttributes_b3b9a1.name))"
+					"EventAttributes_d054dc.name"
 				).eq(
-					encodedName
+					new String(Base64.decode(encodedName))
 				).and(
 					DSL.condition(
-						"SAFE_CAST(EventAttributes_b3b9a1.value AS BOOL) = " +
+						"SAFE_CAST(EventAttributes_d054dc.value AS BOOL) = " +
 							"SAFE_CAST('true' AS BOOL)")
 				)),
 			"events.filterByCount(filter='(eventId eq ''added'' and day gt " +
@@ -965,7 +978,7 @@ public class FilterExpressionTest {
 			123456789L,
 			new HashSet<>(
 				Arrays.asList(
-					"Event", "EventAttributes", "EventAttributes_b3b9a1",
+					"Event", "EventAttributes", "EventAttributes_d054dc",
 					"Individual")),
 			true);
 	}
@@ -1085,6 +1098,196 @@ public class FilterExpressionTest {
 					))),
 			"events.filterByCount(filter='(eventId eq ''added'' and day gt " +
 				"''last24Hours'')',operator='ge',value=1)",
+			123456789L, new HashSet<>(Arrays.asList("Event", "Individual")),
+			true);
+	}
+
+	@Test
+	public void testEventProperties() {
+		String encodedName = Base64.encode("item name".getBytes());
+
+		_assertEquals(
+			_buildEventAttributesCondition(
+				123456789L, "added",
+				DSL.table(
+					"BQEvent"
+				).as(
+					"Event"
+				),
+				DSL.condition(
+					"JSON_EXTRACT_SCALAR(Event.eventProperties, '$.item " +
+						"name') = 'shoes'")),
+			"events.filterByCount(filter='(eventId eq ''added'' and day gt " +
+				"''last24Hours'' and attribute/" + encodedName +
+					" eq ''shoes'')',operator='ge',value=1)",
+			123456789L, new HashSet<>(Arrays.asList("Event", "Individual")),
+			true);
+
+		_assertEquals(
+			_buildEventAttributesCondition(
+				123456789L, "added",
+				DSL.table(
+					"BQEvent"
+				).as(
+					"Event"
+				),
+				DSL.condition(
+					String.join(
+						"", "CASE WHEN SAFE_CAST(JSON_EXTRACT_SCALAR(",
+						"Event.eventProperties, '$.item name') AS NUMERIC) IS ",
+						"NULL THEN false ELSE SAFE_CAST(JSON_EXTRACT_SCALAR(",
+						"Event.eventProperties, '$.item name') AS NUMERIC) > ",
+						"SAFE_CAST('1' AS NUMERIC) END"))),
+			"events.filterByCount(filter='(eventId eq ''added'' and day gt " +
+				"''last24Hours'' and attribute/" + encodedName +
+					" gt 1)',operator='ge',value=1)",
+			123456789L, new HashSet<>(Arrays.asList("Event", "Individual")),
+			true);
+
+		_assertEquals(
+			_buildEventAttributesCondition(
+				123456789L, "added",
+				DSL.table(
+					"BQEvent"
+				).as(
+					"Event"
+				),
+				DSL.condition(
+					String.join(
+						"", "DATE(PARSE_TIMESTAMP('%a %b %d %H:%M:%S %Z %Y', ",
+						"JSON_EXTRACT_SCALAR(Event.eventProperties, ",
+						"'$.item name'))) < SAFE_CAST('2024-03-04' AS DATE)"))),
+			"events.filterByCount(filter='(eventId eq ''added'' and day gt " +
+				"''last24Hours'' and attribute/" + encodedName +
+					" lt ''2024-03-04'')',operator='ge',value=1)",
+			123456789L, new HashSet<>(Arrays.asList("Event", "Individual")),
+			true);
+
+		_assertEquals(
+			_buildEventAttributesCondition(
+				123456789L, "added",
+				DSL.table(
+					"BQEvent"
+				).as(
+					"Event"
+				),
+				DSL.and(
+					DSL.function(
+						"DATE", Date.class,
+						DSL.field(
+							"JSON_EXTRACT_SCALAR(Event.eventProperties, " +
+								"'$.item name')"),
+						DSL.val(TimeZoneDogUtil.getZoneId())
+					).between(
+						DSL.function("DATE", Date.class, DSL.val("2024-03-04")),
+						DSL.function("DATE", Date.class, DSL.val("2024-04-04"))
+					))),
+			"events.filterByCount(filter='(eventId eq ''added'' and day gt " +
+				"''last24Hours'' and between(attribute/" + encodedName +
+					", ''2024-03-04'', ''2024-04-04''))',operator='ge'," +
+						"value=1)",
+			123456789L, new HashSet<>(Arrays.asList("Event", "Individual")),
+			true);
+
+		_assertEquals(
+			_buildEventAttributesCondition(
+				123456789L, "added",
+				DSL.table(
+					"BQEvent"
+				).as(
+					"Event"
+				),
+				DSL.condition(
+					"LOWER(JSON_EXTRACT_SCALAR(Event.eventProperties, " +
+						"'$.item name')) LIKE '%shoe%'")),
+			"events.filterByCount(filter='(eventId eq ''added'' and day gt " +
+				"''last24Hours'' and contains(attribute/" + encodedName +
+					", ''shoe''))',operator='ge',value=1)",
+			123456789L, new HashSet<>(Arrays.asList("Event", "Individual")),
+			true);
+
+		_assertEquals(
+			_buildEventAttributesCondition(
+				123456789L, "added",
+				DSL.table(
+					"BQEvent"
+				).as(
+					"Event"
+				),
+				DSL.and(
+					DSL.field(
+						"JSON_EXTRACT_SCALAR(Event.eventProperties, '$.item " +
+							"name')"
+					).isNotNull(),
+					DSL.field(
+						"JSON_EXTRACT_SCALAR(Event.eventProperties, '$.item " +
+							"name')"
+					).ne(
+						""
+					))),
+			"events.filterByCount(filter='(eventId eq ''added'' and day gt " +
+				"''last24Hours'' and attribute/" + encodedName + " ne null)'," +
+					"operator='ge',value=1)",
+			123456789L, new HashSet<>(Arrays.asList("Event", "Individual")),
+			true);
+
+		_assertEquals(
+			_buildEventAttributesCondition(
+				123456789L, "added",
+				DSL.table(
+					"BQEvent"
+				).as(
+					"Event"
+				),
+				DSL.or(
+					DSL.field(
+						"JSON_EXTRACT_SCALAR(Event.eventProperties, '$.item " +
+							"name')"
+					).isNull(),
+					DSL.field(
+						"JSON_EXTRACT_SCALAR(Event.eventProperties, '$.item " +
+							"name')"
+					).eq(
+						""
+					))),
+			"events.filterByCount(filter='(eventId eq ''added'' and day gt " +
+				"''last24Hours'' and attribute/" + encodedName + " eq null)'," +
+					"operator='ge',value=1)",
+			123456789L, new HashSet<>(Arrays.asList("Event", "Individual")),
+			true);
+
+		_assertEquals(
+			_buildEventAttributesCondition(
+				123456789L, "added",
+				DSL.table(
+					"BQEvent"
+				).as(
+					"Event"
+				),
+				DSL.condition(
+					"SAFE_CAST(JSON_EXTRACT_SCALAR(Event.eventProperties, " +
+						"'$.item name') AS BOOL) = SAFE_CAST('false' AS " +
+							"BOOL)")),
+			"events.filterByCount(filter='(eventId eq ''added'' and day gt " +
+				"''last24Hours'' and attribute/" + encodedName +
+					" eq false)',operator='ge',value=1)",
+			123456789L, new HashSet<>(Arrays.asList("Event", "Individual")),
+			true);
+
+		_assertEquals(
+			_buildEventAttributesCondition(
+				123456789L, "added",
+				DSL.table(
+					"BQEvent"
+				).as(
+					"Event"
+				),
+				DSL.condition(
+					"SAFE_CAST(JSON_EXTRACT_SCALAR(Event.eventProperties, " +
+						"'$.item name') AS BOOL) = SAFE_CAST('true' AS BOOL)")),
+			"events.filterByCount(filter='(eventId eq ''added'' and day gt " +
+				"''last24Hours'' and attribute/" + encodedName + " eq true)'," +
+					"operator='ge',value=1)",
 			123456789L, new HashSet<>(Arrays.asList("Event", "Individual")),
 			true);
 	}
@@ -3799,6 +4002,9 @@ public class FilterExpressionTest {
 		"NUMERIC))) WHEN SAFE_CAST({0}.value AS NUMERIC) IS NULL THEN ",
 		"false ELSE SAFE_CAST({0}.value AS NUMERIC) {1} SAFE_CAST('{2}' ",
 		"AS NUMERIC) END");
+
+	@SystemStub
+	private EnvironmentVariables _environmentVariables;
 
 	private final Map<String, String> _testFilters = _getTestFilters();
 

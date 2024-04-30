@@ -65,6 +65,7 @@ dependencies {
 	testImplementation group: "io.rest-assured", name: "rest-assured", version: "3.2.0"
 	testImplementation group: "org.skyscreamer", name: "jsonassert", transitive: false
 	testImplementation group: "org.springframework.boot", name: "spring-boot-starter-test"
+	testImplementation group: "uk.org.webcompere", name: "system-stubs-jupiter", version: "2.0.1"
 	testImplementation project(configuration: "default", path: ":dxp:apps:osb:osb-asah:osb-asah-test-util")
 }
 
