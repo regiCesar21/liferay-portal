@@ -1,2 +1,0 @@
-INSERT INTO AsahMarker (id, context) VALUES ('DXPEntitiesNanite', '{"lastSuccessfulDate":"2023-10-13T23:12:11.026Z","type":"nanite"}');
-INSERT INTO AsahMarker (id, context) VALUES ('DXPEntityNanite', '{"lastSuccessfulDate":"2023-10-12T23:12:11.026Z","type":"nanite"}');
