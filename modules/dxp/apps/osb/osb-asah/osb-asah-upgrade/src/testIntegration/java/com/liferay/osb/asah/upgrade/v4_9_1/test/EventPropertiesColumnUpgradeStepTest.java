@@ -20,6 +20,7 @@ import org.jooq.impl.DSL;
 
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.condition.EnabledIfEnvironmentVariable;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -31,6 +32,9 @@ public class EventPropertiesColumnUpgradeStepTest
 			   OSBAsahUpgradeSpringTestContext {
 
 	@BQSQLResource(resourcePath = "bq_event_upgrade_step_test.sql")
+	@EnabledIfEnvironmentVariable(
+		matches = ".*", named = "GOOGLE_APPLICATION_CREDENTIALS"
+	)
 	@Test
 	public void testUpgrade() throws Exception {
 		_eventPropertiesColumnUpgradeStep.upgrade("");
