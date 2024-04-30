@@ -115,12 +115,7 @@ public class OpenIdConnectLoginRequestMVCActionCommand
 				(ThemeDisplay)actionRequest.getAttribute(WebKeys.THEME_DISPLAY);
 
 			if (themeDisplay.isSignedIn()) {
-				String redirect = ParamUtil.getString(
-					actionRequest, "redirect");
-
-				if (Validator.isNotNull(redirect)) {
-					actionResponse.sendRedirect(redirect);
-				}
+				sendRedirect(actionRequest, actionResponse);
 
 				return;
 			}
