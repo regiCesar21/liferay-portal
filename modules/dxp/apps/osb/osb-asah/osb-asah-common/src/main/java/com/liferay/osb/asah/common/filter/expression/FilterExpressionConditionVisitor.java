@@ -156,7 +156,12 @@ public class FilterExpressionConditionVisitor
 		if (fieldName.startsWith("attribute/")) {
 			String[] identifierParts = StringUtils.split(fieldName, "/");
 
-			return _getEventAttributeCondition(identifierParts[1], "eq", value);
+			if (_isFeatureFlagEnabled()) {
+				return _getEventAttributeCondition(
+					identifierParts[1], "eq", value);
+			}
+
+			return _getEventPropertyCondition(identifierParts[1], "eq", value);
 		}
 
 		if (fieldName.startsWith("custom/")) {
@@ -458,6 +463,15 @@ public class FilterExpressionConditionVisitor
 
 			field = DSL.field(alias + ".value");
 		}
+		else if (StringUtils.startsWith(fieldName, "EventProperty.")) {
+			String[] parts = fieldName.split("\\.", 2);
+
+			qualifiedFieldName = new String(Base64.decode(parts[1]));
+
+			field = DSL.field(
+				"JSON_EXTRACT_SCALAR(Event.eventProperties, '$." +
+					qualifiedFieldName + "')");
+		}
 		else if (StringUtils.startsWith(fieldName, "ExpandoValue.")) {
 			String[] parts = fieldName.split("\\.", 2);
 
@@ -512,6 +526,10 @@ public class FilterExpressionConditionVisitor
 
 			if (StringUtils.startsWith(fieldName, "EventAttribute.")) {
 				condition = _getEventAttributeCondition(
+					fieldName, "contains", value);
+			}
+			else if (StringUtils.startsWith(fieldName, "EventProperty.")) {
+				condition = _getEventPropertyCondition(
 					fieldName, "contains", value);
 			}
 			else if (StringUtils.startsWith(fieldName, "ExpandoValue.")) {
@@ -700,7 +718,12 @@ public class FilterExpressionConditionVisitor
 		if (fieldName.startsWith("attribute/")) {
 			String[] identifierParts = StringUtils.split(fieldName, "/");
 
-			return _getEventAttributeCondition(identifierParts[1], "gt", value);
+			if (_isFeatureFlagEnabled()) {
+				return _getEventAttributeCondition(
+					identifierParts[1], "gt", value);
+			}
+
+			return _getEventPropertyCondition(identifierParts[1], "gt", value);
 		}
 
 		if (fieldName.startsWith("custom/")) {
@@ -754,7 +777,12 @@ public class FilterExpressionConditionVisitor
 		if (fieldName.startsWith("attribute/")) {
 			String[] identifierParts = StringUtils.split(fieldName, "/");
 
-			return _getEventAttributeCondition(identifierParts[1], "ge", value);
+			if (_isFeatureFlagEnabled()) {
+				return _getEventAttributeCondition(
+					identifierParts[1], "ge", value);
+			}
+
+			return _getEventPropertyCondition(identifierParts[1], "ge", value);
 		}
 
 		if (fieldName.startsWith("custom/")) {
@@ -808,7 +836,11 @@ public class FilterExpressionConditionVisitor
 			String[] identifierParts = StringUtils.split(fieldName, "/");
 
 			if (Objects.equals(identifierParts[0], "attribute")) {
-				return DSL.field("EventAttribute." + identifierParts[1]);
+				if (_isFeatureFlagEnabled()) {
+					return DSL.field("EventAttribute." + identifierParts[1]);
+				}
+
+				return DSL.field("EventProperty." + identifierParts[1]);
 			}
 			else if (Objects.equals(identifierParts[0], "custom")) {
 				return DSL.field("ExpandoValue." + identifierParts[1]);
@@ -860,7 +892,12 @@ public class FilterExpressionConditionVisitor
 		if (fieldName.startsWith("attribute/")) {
 			String[] identifierParts = StringUtils.split(fieldName, "/");
 
-			return _getEventAttributeCondition(identifierParts[1], "lt", value);
+			if (_isFeatureFlagEnabled()) {
+				return _getEventAttributeCondition(
+					identifierParts[1], "lt", value);
+			}
+
+			return _getEventPropertyCondition(identifierParts[1], "lt", value);
 		}
 
 		if (fieldName.startsWith("custom/")) {
@@ -914,7 +951,12 @@ public class FilterExpressionConditionVisitor
 		if (fieldName.startsWith("attribute/")) {
 			String[] identifierParts = StringUtils.split(fieldName, "/");
 
-			return _getEventAttributeCondition(identifierParts[1], "le", value);
+			if (_isFeatureFlagEnabled()) {
+				return _getEventAttributeCondition(
+					identifierParts[1], "le", value);
+			}
+
+			return _getEventPropertyCondition(identifierParts[1], "le", value);
 		}
 
 		if (fieldName.startsWith("custom/")) {
@@ -976,7 +1018,12 @@ public class FilterExpressionConditionVisitor
 		if (fieldName.startsWith("attribute/")) {
 			String[] identifierParts = StringUtils.split(fieldName, "/");
 
-			return _getEventAttributeCondition(identifierParts[1], "ne", value);
+			if (_isFeatureFlagEnabled()) {
+				return _getEventAttributeCondition(
+					identifierParts[1], "ne", value);
+			}
+
+			return _getEventPropertyCondition(identifierParts[1], "ne", value);
 		}
 
 		if (fieldName.startsWith("custom/")) {
@@ -1395,6 +1442,100 @@ public class FilterExpressionConditionVisitor
 		return condition;
 	}
 
+	private Condition _getEventPropertyCondition(
+		String fieldName, String operator, String value) {
+
+		if (fieldName.startsWith("EventProperty.")) {
+			String[] parts = fieldName.split("\\.", 2);
+
+			fieldName = parts[1];
+		}
+
+		fieldName = new String(Base64.decode(fieldName));
+
+		String query =
+			"JSON_EXTRACT_SCALAR(Event.eventProperties, '$." + fieldName +
+				"') {0} '" + value + "'";
+
+		if (DateUtil.isValidPatternShort(value)) {
+			query = String.join(
+				"", "DATE(PARSE_TIMESTAMP('%a %b %d %H:%M:%S %Z %Y', ",
+				"JSON_EXTRACT_SCALAR(Event.eventProperties, '$.", fieldName,
+				"'))) {0} SAFE_CAST('", value, "' AS DATE)");
+		}
+		else if (NumberUtils.isCreatable(value)) {
+			query = String.join(
+				"", "CASE WHEN SAFE_CAST(JSON_EXTRACT_SCALAR(",
+				"Event.eventProperties, '$." + fieldName + "') AS NUMERIC) IS ",
+				"NULL THEN false ELSE SAFE_CAST(JSON_EXTRACT_SCALAR(",
+				"Event.eventProperties, '$." + fieldName + "') AS NUMERIC) {0}",
+				" SAFE_CAST('", value, "' AS NUMERIC) END");
+		}
+		else if (StringUtils.equalsIgnoreCase(value, "false") ||
+				 StringUtils.equalsIgnoreCase(value, "true")) {
+
+			query =
+				"SAFE_CAST(JSON_EXTRACT_SCALAR(Event.eventProperties, '$." +
+					fieldName + "') AS BOOL) {0} SAFE_CAST('" + value +
+						"' AS BOOL)";
+		}
+
+		if (operator.equalsIgnoreCase("contains")) {
+			return DSL.condition(
+				"LOWER(JSON_EXTRACT_SCALAR(Event.eventProperties, '$." +
+					fieldName + "')) LIKE '%" + StringUtils.lowerCase(value) +
+						"%'");
+		}
+		else if (operator.equalsIgnoreCase("eq")) {
+			if (StringUtil.isNull(value)) {
+				Field field = DSL.field(
+					"JSON_EXTRACT_SCALAR(Event.eventProperties, '$." +
+						fieldName + "')");
+
+				return DSL.or(field.isNull(), field.eq(""));
+			}
+
+			return DSL.condition(
+				StringUtil.replace(
+					query, new String[] {"{0}"}, new String[] {"="}));
+		}
+		else if (operator.equalsIgnoreCase("ge")) {
+			return DSL.condition(
+				StringUtil.replace(
+					query, new String[] {"{0}"}, new String[] {">="}));
+		}
+		else if (operator.equalsIgnoreCase("gt")) {
+			return DSL.condition(
+				StringUtil.replace(
+					query, new String[] {"{0}"}, new String[] {">"}));
+		}
+		else if (operator.equalsIgnoreCase("le")) {
+			return DSL.condition(
+				StringUtil.replace(
+					query, new String[] {"{0}"}, new String[] {"<="}));
+		}
+		else if (operator.equalsIgnoreCase("lt")) {
+			return DSL.condition(
+				StringUtil.replace(
+					query, new String[] {"{0}"}, new String[] {"<"}));
+		}
+		else if (operator.equalsIgnoreCase("ne")) {
+			if (StringUtil.isNull(value)) {
+				Field field = DSL.field(
+					"JSON_EXTRACT_SCALAR(Event.eventProperties, '$." +
+						fieldName + "')");
+
+				return DSL.and(field.isNotNull(), field.ne(""));
+			}
+
+			return DSL.condition(
+				StringUtil.replace(
+					query, new String[] {"{0}"}, new String[] {"!="}));
+		}
+
+		return null;
+	}
+
 	private Object _getIndividualIdsInOrganizationCondition(
 		Condition condition, String expandoValueFieldName) {
 
@@ -1668,6 +1809,10 @@ public class FilterExpressionConditionVisitor
 		}
 
 		return DSL.val(localDateTime);
+	}
+
+	private boolean _isFeatureFlagEnabled() {
+		return Boolean.parseBoolean(System.getenv("feature.flag.LPD-24648"));
 	}
 
 	private String _parseFilterStringExpression(Token filterToken) {
