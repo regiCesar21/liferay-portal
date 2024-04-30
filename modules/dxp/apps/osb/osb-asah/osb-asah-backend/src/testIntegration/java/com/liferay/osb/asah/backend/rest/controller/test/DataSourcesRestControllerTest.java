@@ -277,13 +277,14 @@ public class DataSourcesRestControllerTest {
 
 	@Test
 	public void testScheduleDataSourceDeletion() throws Exception {
+
+		// Schedule deletion
+
 		JSONObject dataSourceJSONObject = new JSONObject(
 			_dataSourcesRestController.postDataSource(
 				_objectMapper.convertValue(
 					FaroInfoTestUtil.buildLiferayDataSource(),
 					DataSourceDTO.class)));
-
-		// Schedule deletion
 
 		MockHttpServletRequestBuilder mockHttpServletRequestBuilder =
 			MockMvcRequestBuilders.delete(
