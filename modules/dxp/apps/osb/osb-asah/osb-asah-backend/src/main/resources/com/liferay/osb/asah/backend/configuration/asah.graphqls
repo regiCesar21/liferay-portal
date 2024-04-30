@@ -912,6 +912,11 @@ type Preference {
 	value: String
 }
 
+type SegmentPageViews {
+    segmentId: String,
+    views: Int
+}
+
 type QueryType {
 	acquisitions(
 		acquisitionType: AcquisitionType!,
@@ -1381,6 +1386,16 @@ type QueryType {
 		size: Int!,
 		start: Int!
 	): CompositionBag
+
+    segmentPageViews(
+        canonicalUrl: String,
+        channelId: String,
+        rangeEnd: String,
+        rangeKey: Int,
+        rangeStart: String,
+        segmentIds: [String],
+        title: String!
+    ): [SegmentPageViews]
 
 	site(
 		assetId: String,
