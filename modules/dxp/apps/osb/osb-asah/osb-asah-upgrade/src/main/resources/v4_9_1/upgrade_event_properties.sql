@@ -9,7 +9,10 @@ LANGUAGE js AS """
 	arrayString = arrayString.substr(0, arrayString.length-1) + ']'
 	return arrayString;
 """;
-UPDATE BQEvent SET properties = ARRAY(
+UPDATE
+    BQEvent
+SET
+    properties = ARRAY(
 		SELECT STRUCT(
 			JSON_VALUE(property, "$.name") AS name,
 			JSON_VALUE(property, "$.value") AS  value

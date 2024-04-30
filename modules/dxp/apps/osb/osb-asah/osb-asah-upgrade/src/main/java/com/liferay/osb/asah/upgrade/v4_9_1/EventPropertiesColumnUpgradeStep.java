@@ -6,13 +6,9 @@
 package com.liferay.osb.asah.upgrade.v4_9_1;
 
 import com.liferay.osb.asah.common.repository.executor.QueryExecutor;
+import com.liferay.osb.asah.common.spring.resource.ResourceUtil;
 import com.liferay.osb.asah.upgrade.UpgradeStep;
 
-import java.io.InputStream;
-
-import java.nio.charset.Charset;
-
-import org.apache.commons.io.IOUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
@@ -28,23 +24,11 @@ public class EventPropertiesColumnUpgradeStep implements UpgradeStep {
 	@Override
 	public void upgrade(String version) throws Exception {
 		_queryExecutor.queryExecute(
-			_readFile("/v4_9_1/upgrade_event_properties.sql"));
+			ResourceUtil.readResourceToString(
+				"v4_9_1/upgrade_event_properties.sql"));
 
 		if (_log.isInfoEnabled()) {
 			_log.info("Event properties were updated successfully");
-		}
-	}
-
-	private String _readFile(String filePath) {
-		try {
-			Class<?> clazz = getClass();
-
-			InputStream inputStream = clazz.getResourceAsStream(filePath);
-
-			return IOUtils.toString(inputStream, Charset.defaultCharset());
-		}
-		catch (Exception exception) {
-			throw new IllegalStateException(exception);
 		}
 	}
 
