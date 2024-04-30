@@ -52,6 +52,7 @@ public class NumericDDMFormFieldUtilTest {
 		Assert.assertEquals("1,2345678", decimalFormat.format(1.2345678));
 		Assert.assertEquals(
 			BigDecimal.valueOf(1.2345678), decimalFormat.parse("1,2345678"));
+
 	}
 
 	@Test
