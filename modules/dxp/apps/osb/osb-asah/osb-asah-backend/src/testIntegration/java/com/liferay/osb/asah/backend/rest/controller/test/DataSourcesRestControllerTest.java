@@ -283,7 +283,7 @@ public class DataSourcesRestControllerTest {
 					FaroInfoTestUtil.buildLiferayDataSource(),
 					DataSourceDTO.class)));
 
-		// Schedule Deletion
+		// Schedule deletion
 
 		MockHttpServletRequestBuilder mockHttpServletRequestBuilder =
 			MockMvcRequestBuilders.delete(
