@@ -13,6 +13,8 @@ import com.liferay.osb.asah.common.entity.EventAttributeDefinition;
 import com.liferay.osb.asah.common.entity.EventDefinitionEventAttributeDefinition;
 import com.liferay.osb.asah.common.util.Base64;
 
+import java.nio.charset.StandardCharsets;
+
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
@@ -40,7 +42,7 @@ public class EventAttributeDefinitionDTO {
 
 		_name = eventAttributeDefinition.getName();
 
-		_encodedName = Base64.encode(_name.getBytes());
+		_encodedName = Base64.encode(_name.getBytes(StandardCharsets.UTF_8));
 
 		List<EventDefinitionEventAttributeDefinition>
 			eventDefinitionEventAttributeDefinitions = new ArrayList<>(

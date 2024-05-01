@@ -14,6 +14,8 @@ import com.liferay.osb.asah.common.util.Base64;
 import com.liferay.osb.asah.common.util.SetUtil;
 import com.liferay.osb.asah.common.util.StringUtil;
 
+import java.nio.charset.StandardCharsets;
+
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
@@ -466,7 +468,8 @@ public class FilterExpressionConditionVisitor
 		else if (StringUtils.startsWith(fieldName, "EventProperty.")) {
 			String[] parts = fieldName.split("\\.", 2);
 
-			qualifiedFieldName = new String(Base64.decode(parts[1]));
+			qualifiedFieldName = new String(
+				Base64.decode(parts[1]), StandardCharsets.UTF_8);
 
 			field = DSL.field(
 				"JSON_EXTRACT_SCALAR(Event.eventProperties, '$." +
@@ -633,7 +636,8 @@ public class FilterExpressionConditionVisitor
 					DSL.field(
 						alias + ".name"
 					).eq(
-						new String(Base64.decode(fieldName))
+						new String(
+							Base64.decode(fieldName), StandardCharsets.UTF_8)
 					));
 			}
 			else if (StringUtils.startsWith(field.getName(), "ExpandoValue_")) {
@@ -1346,7 +1350,7 @@ public class FilterExpressionConditionVisitor
 		Condition condition = DSL.field(
 			alias + ".name"
 		).eq(
-			new String(Base64.decode(fieldName))
+			new String(Base64.decode(fieldName), StandardCharsets.UTF_8)
 		);
 
 		String query =
@@ -1355,7 +1359,7 @@ public class FilterExpressionConditionVisitor
 		if (DateUtil.isValidPatternShort(value)) {
 			query = String.join(
 				"", "CASE WHEN {0}.name = '",
-				new String(Base64.decode(fieldName)),
+				new String(Base64.decode(fieldName), StandardCharsets.UTF_8),
 				"' THEN DATE(PARSE_TIMESTAMP('%a %b %d %H:%M:%S %Z %Y', ",
 				"{0}.value)) {1} SAFE_CAST('", value, "' AS DATE) ELSE false ",
 				"END");
@@ -1451,7 +1455,8 @@ public class FilterExpressionConditionVisitor
 			fieldName = parts[1];
 		}
 
-		fieldName = new String(Base64.decode(fieldName));
+		fieldName = new String(
+			Base64.decode(fieldName), StandardCharsets.UTF_8);
 
 		String query =
 			"JSON_EXTRACT_SCALAR(Event.eventProperties, '$." + fieldName +
