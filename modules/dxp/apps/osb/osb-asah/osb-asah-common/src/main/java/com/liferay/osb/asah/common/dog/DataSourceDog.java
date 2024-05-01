@@ -125,7 +125,6 @@ public class DataSourceDog {
 		_clearChannels(dataSourceId);
 
 		dataSource.setContactsSelected(false);
-		dataSource.setFaroBackendSecuritySignature(null);
 		dataSource.setSitesSelected(false);
 		dataSource.setState("DISCONNECTED");
 		dataSource.setStatus("INACTIVE");
