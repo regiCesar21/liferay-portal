@@ -14,6 +14,7 @@ import com.liferay.osb.asah.common.util.StringUtil;
 import java.io.File;
 import java.io.IOException;
 
+import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 
@@ -699,7 +700,8 @@ public class FilterExpressionTest {
 			String.valueOf(Boolean.TRUE),
 			System.getenv("feature.flag.LPD-24648"));
 
-		String encodedName = Base64.encode("item name".getBytes());
+		String encodedName = Base64.encode(
+			"item name".getBytes(StandardCharsets.UTF_8));
 
 		_assertEquals(
 			_buildEventAttributesCondition(
@@ -714,7 +716,8 @@ public class FilterExpressionTest {
 				DSL.field(
 					"EventAttributes_d054dc.name"
 				).eq(
-					new String(Base64.decode(encodedName))
+					new String(
+						Base64.decode(encodedName), StandardCharsets.UTF_8)
 				).and(
 					DSL.condition(
 						"LOWER(EventAttributes_d054dc.value) = 'shoes'")
@@ -742,7 +745,8 @@ public class FilterExpressionTest {
 				DSL.field(
 					"EventAttributes_d054dc.name"
 				).eq(
-					new String(Base64.decode(encodedName))
+					new String(
+						Base64.decode(encodedName), StandardCharsets.UTF_8)
 				).and(
 					DSL.condition(
 						"SAFE_CAST(EventAttributes_d054dc.value AS NUMERIC) " +
@@ -771,12 +775,15 @@ public class FilterExpressionTest {
 				DSL.field(
 					"EventAttributes_d054dc.name"
 				).eq(
-					new String(Base64.decode(encodedName))
+					new String(
+						Base64.decode(encodedName), StandardCharsets.UTF_8)
 				).and(
 					DSL.condition(
 						String.join(
 							"", "CASE WHEN EventAttributes_d054dc.name = '",
-							new String(Base64.decode(encodedName)),
+							new String(
+								Base64.decode(encodedName),
+								StandardCharsets.UTF_8),
 							"' THEN DATE(PARSE_TIMESTAMP('%a %b %d %H:%M:%S ",
 							"%Z %Y', EventAttributes_d054dc.value)) < ",
 							"SAFE_CAST('2024-03-04' AS DATE) ELSE false END"))
@@ -813,7 +820,8 @@ public class FilterExpressionTest {
 					DSL.field(
 						"EventAttributes_d054dc.name"
 					).eq(
-						new String(Base64.decode(encodedName))
+						new String(
+							Base64.decode(encodedName), StandardCharsets.UTF_8)
 					))),
 			"events.filterByCount(filter='(eventId eq ''added'' and day gt " +
 				"''last24Hours'' and between(attribute/" + encodedName +
@@ -839,7 +847,8 @@ public class FilterExpressionTest {
 				DSL.field(
 					"EventAttributes_d054dc.name"
 				).eq(
-					new String(Base64.decode(encodedName))
+					new String(
+						Base64.decode(encodedName), StandardCharsets.UTF_8)
 				).and(
 					DSL.condition(
 						"LOWER(EventAttributes_d054dc.value) LIKE '%shoe%'")
@@ -867,7 +876,8 @@ public class FilterExpressionTest {
 				DSL.field(
 					"EventAttributes_d054dc.name"
 				).eq(
-					new String(Base64.decode(encodedName))
+					new String(
+						Base64.decode(encodedName), StandardCharsets.UTF_8)
 				).and(
 					DSL.and(
 						DSL.field(
@@ -902,7 +912,8 @@ public class FilterExpressionTest {
 				DSL.field(
 					"EventAttributes_d054dc.name"
 				).eq(
-					new String(Base64.decode(encodedName))
+					new String(
+						Base64.decode(encodedName), StandardCharsets.UTF_8)
 				).and(
 					DSL.or(
 						DSL.field(
@@ -937,7 +948,8 @@ public class FilterExpressionTest {
 				DSL.field(
 					"EventAttributes_d054dc.name"
 				).eq(
-					new String(Base64.decode(encodedName))
+					new String(
+						Base64.decode(encodedName), StandardCharsets.UTF_8)
 				).and(
 					DSL.condition(
 						"SAFE_CAST(EventAttributes_d054dc.value AS BOOL) = " +
@@ -966,7 +978,8 @@ public class FilterExpressionTest {
 				DSL.field(
 					"EventAttributes_d054dc.name"
 				).eq(
-					new String(Base64.decode(encodedName))
+					new String(
+						Base64.decode(encodedName), StandardCharsets.UTF_8)
 				).and(
 					DSL.condition(
 						"SAFE_CAST(EventAttributes_d054dc.value AS BOOL) = " +
@@ -1104,7 +1117,8 @@ public class FilterExpressionTest {
 
 	@Test
 	public void testEventProperties() {
-		String encodedName = Base64.encode("item name".getBytes());
+		String encodedName = Base64.encode(
+			"item name".getBytes(StandardCharsets.UTF_8));
 
 		_assertEquals(
 			_buildEventAttributesCondition(
