@@ -1226,7 +1226,11 @@ public class BQEventRepositoryImpl
 
 	@Override
 	public BQEvent insert(BQEvent bqEvent) {
-		_queryExecutor.queryExecute(BQSQLUtil.createInsertStatement(bqEvent));
+		_queryExecutor.queryExecute(
+			BQSQLUtil.createInsertStatement(
+				Collections.singletonMap(
+					"properties", "ARRAY<STRUCT<name STRING, value STRING>>[]"),
+				bqEvent));
 
 		return bqEvent;
 	}
