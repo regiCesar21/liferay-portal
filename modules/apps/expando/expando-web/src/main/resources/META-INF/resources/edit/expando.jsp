@@ -151,7 +151,13 @@ else {
 
 			<%@ include file="/edit/default_value_input.jspf" %>
 
-			<%@ include file="/edit/advanced_properties.jspf" %>
+			<liferay-frontend:fieldset
+				collapsed="<%= true %>"
+				collapsible="<%= true %>"
+				label="advanced-properties"
+			>
+				<%@ include file="/edit/advanced_properties.jspf" %>
+			</liferay-frontend:fieldset>
 		</liferay-frontend:fieldset-group>
 	</liferay-frontend:edit-form-body>
 
