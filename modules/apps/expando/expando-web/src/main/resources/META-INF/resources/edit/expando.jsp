@@ -132,24 +132,26 @@ else {
 		</h2>
 
 		<liferay-frontend:fieldset-group>
-			<aui:field-wrapper cssClass="form-group lfr-input-text-container">
-				<c:choose>
-					<c:when test="<%= expandoColumn != null %>">
-						<aui:input name="name" type="hidden" value="<%= expandoColumn.getName() %>" />
+			<liferay-frontend:fieldset>
+				<aui:field-wrapper cssClass="form-group lfr-input-text-container">
+					<c:choose>
+						<c:when test="<%= expandoColumn != null %>">
+							<aui:input name="name" type="hidden" value="<%= expandoColumn.getName() %>" />
 
-						<aui:input label="field-name" name="key" type="resource" value="<%= expandoColumn.getName() %>" />
-					</c:when>
-					<c:otherwise>
-						<aui:input autoFocus="<%= windowState.equals(WindowState.MAXIMIZED) %>" label="field-name" maxlength='<%= ModelHintsUtil.getMaxLength(ExpandoColumn.class.getName(), "name") %>' name="name" required="<%= true %>" />
-					</c:otherwise>
-				</c:choose>
+							<aui:input label="field-name" name="key" type="resource" value="<%= expandoColumn.getName() %>" />
+						</c:when>
+						<c:otherwise>
+							<aui:input autoFocus="<%= windowState.equals(WindowState.MAXIMIZED) %>" label="field-name" maxlength='<%= ModelHintsUtil.getMaxLength(ExpandoColumn.class.getName(), "name") %>' name="name" required="<%= true %>" />
+						</c:otherwise>
+					</c:choose>
 
-				<div class="form-text">
-					<liferay-ui:message arguments="&lt;liferay-expando:custom-attribute /&gt;" key="custom-field-key-help" translateArguments="<%= false %>" />
-				</div>
-			</aui:field-wrapper>
+					<div class="form-text">
+						<liferay-ui:message arguments="&lt;liferay-expando:custom-attribute /&gt;" key="custom-field-key-help" translateArguments="<%= false %>" />
+					</div>
+				</aui:field-wrapper>
 
-			<%@ include file="/edit/default_value_input.jspf" %>
+				<%@ include file="/edit/default_value_input.jspf" %>
+			</liferay-frontend:fieldset>
 
 			<liferay-frontend:fieldset
 				collapsed="<%= true %>"
