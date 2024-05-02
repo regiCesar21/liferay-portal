@@ -18,6 +18,7 @@ import java.util.Collections;
 import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 import java.util.Objects;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
@@ -39,7 +40,9 @@ public class BQSQLUtil {
 		return string.substring(0, 6);
 	}
 
-	public static String createInsertStatement(Object entity) {
+	public static String createInsertStatement(
+		Map<String, String> defaulValues, Object entity) {
+
 		StringBuilder sb = new StringBuilder();
 
 		sb.append("INSERT INTO ");
@@ -56,12 +59,18 @@ public class BQSQLUtil {
 
 		sb.append(") VALUES ");
 
-		sb.append(_createInsertValues(columns));
+		sb.append(_createInsertValues(columns, defaulValues));
 
 		return sb.toString();
 	}
 
-	private static String _createInsertValues(List<Column> columns) {
+	public static String createInsertStatement(Object entity) {
+		return createInsertStatement(Collections.emptyMap(), entity);
+	}
+
+	private static String _createInsertValues(
+		List<Column> columns, Map<String, String> defaulValues) {
+
 		StringBuilder sb = new StringBuilder();
 
 		sb.append("(");
@@ -71,14 +80,16 @@ public class BQSQLUtil {
 
 			Object value = column.getValue();
 
+			String defaultValue = defaulValues.get(column.getName());
+
 			if (value instanceof Date) {
-				sb.append(_getValueString((Date)value));
+				sb.append(_getValueString(defaultValue, (Date)value));
 			}
 			else if (value instanceof Collection) {
-				sb.append(_getValueString((Collection)value));
+				sb.append(_getValueString(defaultValue, (Collection)value));
 			}
 			else if (value instanceof String) {
-				sb.append(_getValueString((String)value));
+				sb.append(_getValueString(defaultValue, (String)value));
 			}
 			else {
 				sb.append(value);
@@ -155,9 +166,15 @@ public class BQSQLUtil {
 		return columns;
 	}
 
-	private static String _getValueString(Collection<?> values) {
+	private static String _getValueString(
+		String defaultValue, Collection<?> values) {
+
 		if (values.isEmpty()) {
-			return "ARRAY<STRING>[]";
+			if (defaultValue == null) {
+				return "ARRAY<STRING>[]";
+			}
+
+			return defaultValue;
 		}
 
 		StringBuilder sb = new StringBuilder();
@@ -173,13 +190,15 @@ public class BQSQLUtil {
 				sb.append(value);
 			}
 			else if (value instanceof Date) {
-				sb.append(_getValueString((Date)value));
+				sb.append(_getValueString(null, (Date)value));
 			}
 			else if (value instanceof String) {
-				sb.append(_getValueString((String)value));
+				sb.append(_getValueString(null, (String)value));
 			}
 			else {
-				sb.append(_createInsertValues(_getColumns(value)));
+				sb.append(
+					_createInsertValues(
+						_getColumns(value), Collections.emptyMap()));
 			}
 
 			if (iterator.hasNext()) {
@@ -192,17 +211,25 @@ public class BQSQLUtil {
 		return sb.toString();
 	}
 
-	private static String _getValueString(Date value) {
+	private static String _getValueString(String defaultValue, Date value) {
 		if (value == null) {
-			return null;
+			if (defaultValue == null) {
+				return null;
+			}
+
+			return defaultValue;
 		}
 
 		return "TIMESTAMP '" + DateUtil.toUTCString(value) + "'";
 	}
 
-	private static String _getValueString(String value) {
+	private static String _getValueString(String defaultValue, String value) {
 		if (value == null) {
-			return null;
+			if (defaultValue == null) {
+				return null;
+			}
+
+			return defaultValue;
 		}
 
 		return "'" + _escape(value) + "'";
