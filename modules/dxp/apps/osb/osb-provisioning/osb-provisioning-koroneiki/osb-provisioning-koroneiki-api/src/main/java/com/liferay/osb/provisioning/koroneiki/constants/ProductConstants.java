@@ -51,6 +51,8 @@ public class ProductConstants {
 	public static final String NAME_DESIGNATED_CONTACT_ADD_ON =
 		"Designated Contact Add-on";
 
+	public static final String NAME_DEVELOPER_TOOLS = "Developer Tools";
+
 	public static final String NAME_DISTRIBUTION_PARTNERSHIP =
 		"Distribution Partnership";
 
@@ -144,6 +146,11 @@ public class ProductConstants {
 	public static final String NAME_MANAGED_SERVICES_LXC_SM =
 		"Managed Services for Liferay Experience Cloud - Self Managed";
 
+	public static final String NAME_MANAGEMENT_TOOLS_LCS =
+		"Management Tools (LCS)";
+
+	public static final String NAME_MOBILE_EXPERIENCE = "Mobile Experience";
+
 	public static final String NAME_PLATINUM = "Platinum Subscription";
 
 	public static final String NAME_PORTAL = "Portal";
@@ -155,6 +162,9 @@ public class ProductConstants {
 	public static final String NAME_PORTAL_PRODUCTION = "Portal Production";
 
 	public static final String NAME_PREMIUM = "Premium Subscription";
+
+	public static final String NAME_PRODUCTIVITY_TOOLS_SYNC =
+		"Productivity Tools (Sync)";
 
 	public static final String NAME_RESELLER_PARTNERSHIP =
 		"Reseller Partnership";
@@ -174,6 +184,11 @@ public class ProductConstants {
 
 	public static final String NAME_VALUE_ADDED_RESELLER_PARTNERSHIP =
 		"Value-Added Reseller Partnership";
+
+	public static final String[] NAMES_DXP_ADD_ON = {
+		NAME_DEVELOPER_TOOLS, NAME_MANAGEMENT_TOOLS_LCS, NAME_MOBILE_EXPERIENCE,
+		NAME_PRODUCTIVITY_TOOLS_SYNC
+	};
 
 	public static final String[] NAMES_EWSA_AUTO_RENEW = {
 		NAME_ANALYTICS_CLOUD_BASIC, NAME_COMMERCE_SUBSCRIPTION,
