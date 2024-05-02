@@ -11,6 +11,10 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.kernel.util.StringUtil;
+
+import java.math.BigDecimal;
 
 import java.text.SimpleDateFormat;
 
@@ -49,51 +53,65 @@ public class ZendeskHeatScoreServlet extends ZendeskBaseServlet {
 
 		JSONObject fieldsJSONObject = jsonObject.getJSONObject("fields");
 
-		String createdAt = fieldsJSONObject.getString("createdAt");
+		BigDecimal accountRiskScore =
+			ZendeskHeatScoreConstants.getAccountRiskScore(
+				fieldsJSONObject.getString("accountRisk"));
 
-		OffsetDateTime offsetDateTime = OffsetDateTime.parse(createdAt);
+		BigDecimal ageScore = ZendeskHeatScoreConstants.getAgeScore(
+			ChronoUnit.DAYS.between(
+				OffsetDateTime.parse(
+					fieldsJSONObject.getString("createdAt")
+				).toInstant(),
+				Instant.now()));
 
-		Instant created = offsetDateTime.toInstant();
+		BigDecimal causedByRegressionScore =
+			ZendeskHeatScoreConstants.getCausedByRegressionScore(
+				fieldsJSONObject.getString("causedByRegression"));
 
-		long days = ChronoUnit.DAYS.between(created, Instant.now());
+		BigDecimal environmentScore =
+			ZendeskHeatScoreConstants.getEnvironmentScore(
+				fieldsJSONObject.getString("environment"));
 
-		double ageScore = ZendeskHeatScoreConstants.getAgeScore(days);
+		BigDecimal heatTagScore = ZendeskHeatScoreConstants.getHeatTagScore(
+			fieldsJSONObject.getString("heatTag"));
 
-		String environment = fieldsJSONObject.getString("environment");
+		BigDecimal priorityScore = ZendeskHeatScoreConstants.getPriorityScore(
+			fieldsJSONObject.getString("priority"));
 
-		int environmentScore = ZendeskHeatScoreConstants.getEnvironmentScore(
-			environment);
+		BigDecimal productScore = ZendeskHeatScoreConstants.getProductScore(
+			fieldsJSONObject.getString("product"));
 
-		String heatTag = fieldsJSONObject.getString("heatTag");
+		BigDecimal ticketTagScore = ZendeskHeatScoreConstants.getTicketTagScore(
+			StringUtil.split(
+				fieldsJSONObject.getString("ticketTags"), StringPool.SPACE));
 
-		int heatTagScore = ZendeskHeatScoreConstants.getHeatTagScore(heatTag);
+		BigDecimal totalHeatScore = BigDecimal.ZERO;
 
-		String priority = fieldsJSONObject.getString("priority");
+		totalHeatScore = totalHeatScore.add(accountRiskScore);
+		totalHeatScore = totalHeatScore.add(causedByRegressionScore);
+		totalHeatScore = totalHeatScore.add(environmentScore);
+		totalHeatScore = totalHeatScore.add(heatTagScore);
+		totalHeatScore = totalHeatScore.add(productScore);
+		totalHeatScore = totalHeatScore.add(ticketTagScore);
+		totalHeatScore = totalHeatScore.multiply(priorityScore);
+		totalHeatScore = totalHeatScore.multiply(ageScore);
 
-		int priorityScore = ZendeskHeatScoreConstants.getPriorityScore(
-			priority);
+		int roundedTotalHeatScore = (int)Math.ceil(
+			totalHeatScore.doubleValue());
 
-		String product = fieldsJSONObject.getString("product");
-
-		int productScore = ZendeskHeatScoreConstants.getProductScore(product);
-
-		long zendeskTicketId = fieldsJSONObject.getLong("ticketId");
-		long heatScoreFieldId = fieldsJSONObject.getLong("heatScoreFieldId");
 		int heatScore = fieldsJSONObject.getInt("heatScore", 0);
 
-		int totalHeatScore = (int)Math.ceil(
-			(ageScore + environmentScore + heatTagScore + productScore) *
-				priorityScore);
-
-		if (totalHeatScore != heatScore) {
+		if (roundedTotalHeatScore != heatScore) {
 			updateZendeskTicketHeatScore(
-				zendeskTicketId, heatScoreFieldId, totalHeatScore);
+				fieldsJSONObject.getLong("ticketId"),
+				fieldsJSONObject.getLong("heatScoreFieldId"),
+				roundedTotalHeatScore);
 		}
 
 		boolean automation = fieldsJSONObject.getBoolean("automation");
 
 		if (automation) {
-			removeZendeskAutoHeatScoreTag(zendeskTicketId);
+			removeZendeskAutoHeatScoreTag(fieldsJSONObject.getLong("ticketId"));
 		}
 	}
 

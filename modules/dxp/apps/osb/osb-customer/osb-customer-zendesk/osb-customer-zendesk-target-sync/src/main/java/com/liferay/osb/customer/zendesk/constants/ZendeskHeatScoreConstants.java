@@ -7,24 +7,34 @@ package com.liferay.osb.customer.zendesk.constants;
 
 import com.liferay.portal.kernel.util.ArrayUtil;
 
+import java.math.BigDecimal;
+
 /**
  * @author Jenny Chen
  */
 public interface ZendeskHeatScoreConstants {
 
-	public static final String ENVIRONMENT_PRODUCTION = "production";
-
-	public static final String HEAT_TAG_ACCOUNT_RISK_BUSINESS_CRITICAL =
+	public static final String ACCOUNT_RISK_BUSINESS_CRITICAL =
 		"account_risk_business_critical";
 
-	public static final String
-		HEAT_TAG_ACCOUNT_RISK_CUSTOMER_EXEC_TEAM_INVOLVEMENT =
-			"account_risk_customer_exec_team_involvement";
+	public static final String ACCOUNT_RISK_CUSTOMER_EXEC_TEAM_INVOLVEMENT =
+		"account_risk_customer_exec_team_involvement";
 
-	public static final String HEAT_TAG_ACCOUNT_RISK_RENEWAL_RISK =
+	public static final String ACCOUNT_RISK_RENEWAL_RISK =
 		"account_risk_renewal_risk";
 
+	public static final String CAUSED_BY_REGRESSION_DEPLOYMENT =
+		"caused_by_regression_deployment";
+
+	public static final String CAUSED_BY_REGRESSION_PRODUCT =
+		"caused_by_regression_product";
+
+	public static final String ENVIRONMENT_PRODUCTION = "production";
+
 	public static final String HEAT_TAG_CUSTOMER_UPGRADE = "customer_upgrade";
+
+	public static final String HEAT_TAG_ESCALATION_OVERRIDE =
+		"escalation_override";
 
 	public static final String HEAT_TAG_EVENT_7_DAYS = "event_7_days";
 
@@ -73,81 +83,117 @@ public interface ZendeskHeatScoreConstants {
 		PRODUCT_LXC_SUPPORT, PRODUCT_LXC_TRANSACT
 	};
 
-	public static double getAgeScore(long days) {
-		return days * 0.25;
+	public static final String TICKET_TAG_ESCALATION_FORM = "escalation_form";
+
+	public static BigDecimal getAccountRiskScore(String accountRisk) {
+		if (accountRisk.equals(ACCOUNT_RISK_BUSINESS_CRITICAL) ||
+			accountRisk.equals(ACCOUNT_RISK_CUSTOMER_EXEC_TEAM_INVOLVEMENT) ||
+			accountRisk.equals(ACCOUNT_RISK_RENEWAL_RISK)) {
+
+			return BigDecimal.valueOf(21);
+		}
+
+		return BigDecimal.ZERO;
 	}
 
-	public static int getEnvironmentScore(String environment) {
+	public static BigDecimal getAgeScore(long days) {
+		if (days == 0) {
+			return BigDecimal.ONE;
+		}
+
+		BigDecimal ageScore = BigDecimal.valueOf(0.9);
+		BigDecimal increment = BigDecimal.valueOf(0.1);
+
+		for (int i = 1; i <= days; i++) {
+			ageScore = ageScore.add(increment);
+		}
+
+		return ageScore;
+	}
+
+	public static BigDecimal getCausedByRegressionScore(
+		String causedByRegression) {
+
+		if (causedByRegression.equals(CAUSED_BY_REGRESSION_DEPLOYMENT) ||
+			causedByRegression.equals(CAUSED_BY_REGRESSION_PRODUCT)) {
+
+			return BigDecimal.valueOf(21);
+		}
+
+		return BigDecimal.ZERO;
+	}
+
+	public static BigDecimal getEnvironmentScore(String environment) {
 		if (environment.equals(ENVIRONMENT_PRODUCTION)) {
-			return 8;
+			return BigDecimal.valueOf(8);
 		}
 
-		return 0;
+		return BigDecimal.valueOf(1);
 	}
 
-	public static int getHeatTagScore(String heatTag) {
-		if (heatTag.equals(HEAT_TAG_ACCOUNT_RISK_BUSINESS_CRITICAL)) {
-			return 21;
+	public static BigDecimal getHeatTagScore(String heatTag) {
+		if (heatTag.equals(HEAT_TAG_CUSTOMER_UPGRADE)) {
+			return BigDecimal.valueOf(5);
 		}
-		else if (heatTag.equals(
-					HEAT_TAG_ACCOUNT_RISK_CUSTOMER_EXEC_TEAM_INVOLVEMENT)) {
-
-			return 8;
-		}
-		else if (heatTag.equals(HEAT_TAG_ACCOUNT_RISK_RENEWAL_RISK)) {
-			return 13;
-		}
-		else if (heatTag.equals(HEAT_TAG_CUSTOMER_UPGRADE)) {
-			return 5;
+		else if (heatTag.equals(HEAT_TAG_ESCALATION_OVERRIDE)) {
+			return BigDecimal.valueOf(1000);
 		}
 		else if (heatTag.equals(HEAT_TAG_EVENT_7_DAYS)) {
-			return 5;
+			return BigDecimal.valueOf(5);
 		}
 		else if (heatTag.equals(HEAT_TAG_EVENT_30_DAYS)) {
-			return 3;
+			return BigDecimal.valueOf(3);
 		}
 		else if (heatTag.equals(HEAT_TAG_EVENT_MISSED)) {
-			return 8;
+			return BigDecimal.valueOf(8);
 		}
 		else if (heatTag.equals(HEAT_TAG_GO_LIVE_7_DAYS)) {
-			return 13;
+			return BigDecimal.valueOf(13);
 		}
 		else if (heatTag.equals(HEAT_TAG_GO_LIVE_30_DAYS)) {
-			return 8;
+			return BigDecimal.valueOf(8);
 		}
 		else if (heatTag.equals(HEAT_TAG_GO_LIVE_MISSED)) {
-			return 21;
+			return BigDecimal.valueOf(21);
 		}
 		else if (heatTag.equals(HEAT_TAG_SECURITY_EXPERIENCING_ATTACK)) {
-			return 21;
+			return BigDecimal.valueOf(21);
 		}
 		else if (heatTag.equals(HEAT_TAG_SECURITY_REPORTED_VULNERABILITIES)) {
-			return 13;
+			return BigDecimal.valueOf(13);
 		}
 		else if (heatTag.equals(HEAT_TAG_SECURITY_SCAN_RESULT_CONCERNS)) {
-			return 5;
+			return BigDecimal.valueOf(5);
 		}
 
-		return 0;
+		return BigDecimal.ZERO;
 	}
 
-	public static int getPriorityScore(String priority) {
+	public static BigDecimal getPriorityScore(String priority) {
 		if (priority.equals(PRIORITY_HIGH)) {
-			return 8;
+			return BigDecimal.valueOf(8);
 		}
 		else if (priority.equals(PRIORITY_URGENT)) {
-			return 13;
+			return BigDecimal.valueOf(13);
 		}
 
-		return 1;
+		return BigDecimal.ONE;
 	}
 
-	public static int getProductScore(String product) {
+	public static BigDecimal getProductScore(String product) {
 		if (ArrayUtil.contains(PRODUCTS_LXC, product)) {
-			return 5;
+			return BigDecimal.valueOf(5);
 		}
 
-		return 0;
+		return BigDecimal.ZERO;
+	}
+
+	public static BigDecimal getTicketTagScore(String[] ticketTags) {
+		if (ArrayUtil.contains(ticketTags, TICKET_TAG_ESCALATION_FORM)) {
+			return BigDecimal.valueOf(5);
+		}
+
+		return BigDecimal.ZERO;
 	}
 
 }
