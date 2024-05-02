@@ -38,20 +38,24 @@ public class Individual {
 	}
 
 	public Individual(
-		Long activitiesCount, BQIndividual bqIndividual,
+		Long activitiesCount, BQIndividual bqIndividual, Date firstActivityDate,
 		Date lastActivityDate) {
 
 		this(
 			activitiesCount, bqIndividual, Collections.emptyList(),
-			lastActivityDate);
+			firstActivityDate, lastActivityDate);
 	}
 
 	public Individual(
 		Long activitiesCount, BQIndividual bqIndividual,
 		List<Map<String, Object>> dataSourceIndividualPKs,
-		Date lastActivityDate) {
+		Date firstActivityDate, Date lastActivityDate) {
 
 		_activitiesCount = activitiesCount;
+
+		if (firstActivityDate != null) {
+			_firstActivityDate = new Date(firstActivityDate.getTime());
+		}
 
 		if (lastActivityDate != null) {
 			_lastActivityDate = new Date(lastActivityDate.getTime());
@@ -258,6 +262,14 @@ public class Individual {
 		return _fields;
 	}
 
+	public Date getFirstActivityDate() {
+		if (_firstActivityDate == null) {
+			return null;
+		}
+
+		return new Date(_firstActivityDate.getTime());
+	}
+
 	public Date getFirstEnrichmentDate() {
 		if (_firstEnrichmentDate == null) {
 			return null;
@@ -321,9 +333,10 @@ public class Individual {
 	@Override
 	public int hashCode() {
 		return Objects.hash(
-			_channelIds, _createDate, _emailAddressHashed, _firstEnrichmentDate,
-			_groupIds, _id, _lastEnrichmentDate, _modifiedDate,
-			_organizationIds, _roleIds, _segmentIds, _teamIds, _userGroupIds);
+			_channelIds, _createDate, _emailAddressHashed, _firstActivityDate,
+			_firstEnrichmentDate, _groupIds, _id, _lastEnrichmentDate,
+			_modifiedDate, _organizationIds, _roleIds, _segmentIds, _teamIds,
+			_userGroupIds);
 	}
 
 	public void setActivitiesCount(Long activitiesCount) {
@@ -392,6 +405,12 @@ public class Individual {
 		_fields = fields;
 
 		_demographics = new Demographics(fields);
+	}
+
+	public void setFirstActivityDate(Date firstActivityDate) {
+		if (firstActivityDate != null) {
+			_firstActivityDate = new Date(firstActivityDate.getTime());
+		}
 	}
 
 	public void setFirstEnrichmentDate(Date firstEnrichmentDate) {
@@ -573,6 +592,7 @@ public class Individual {
 	private Demographics _demographics;
 	private String _emailAddressHashed;
 	private Set<Field> _fields = new HashSet<>();
+	private Date _firstActivityDate;
 	private Date _firstEnrichmentDate;
 	private Set<Long> _groupIds = new HashSet<>();
 	private String _id;

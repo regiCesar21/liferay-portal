@@ -47,7 +47,7 @@ import org.jooq.DSLContext;
 import org.jooq.Field;
 import org.jooq.Record;
 import org.jooq.Record1;
-import org.jooq.Record11;
+import org.jooq.Record12;
 import org.jooq.SelectConditionStep;
 import org.jooq.SelectFinalStep;
 import org.jooq.SelectForStep;
@@ -381,10 +381,11 @@ public class BQIndividualRepositoryImpl
 		@Nullable Long channelId, String id) {
 
 		SelectJoinStep
-			<Record11
+			<Record12
 				<Object, Object, Object, Object, Object, Object, Object, Object,
-				 Object, Object, Object>> selectJoinStep1 = _getSelectJoinStep(
-					null, null, _getIndividualSelectJoinStep());
+				 Object, Object, Object, Object>> selectJoinStep1 =
+					_getSelectJoinStep(
+						null, null, _getIndividualSelectJoinStep());
 
 		List<Condition> conditions = new ArrayList<>();
 
@@ -413,9 +414,9 @@ public class BQIndividualRepositoryImpl
 		}
 
 		SelectSeekStep1
-			<Record11
+			<Record12
 				<Object, Object, Object, Object, Object, Object, Object, Object,
-				 Object, Object, Object>,
+				 Object, Object, Object, Object>,
 			 Object> selectSeekStep1 = selectJoinStep1.where(
 				conditions
 			).groupBy(
@@ -440,6 +441,7 @@ public class BQIndividualRepositoryImpl
 
 				return new Individual(
 					activitiesCount.longValue(), new BQIndividual(map),
+					(Date)map.get("firstactivitydate"),
 					(Date)map.get("lastactivitydate"));
 			},
 			(SelectJoinStep)_getIndividualSelectOnConditionStep(
@@ -572,10 +574,12 @@ public class BQIndividualRepositoryImpl
 		@Nullable Long segmentId) {
 
 		SelectJoinStep
-			<Record11
+			<Record12
 				<Object, Object, Object, Object, Object, Object, Object, Object,
-				 Object, Object, Object>> selectJoinStep = _getSelectJoinStep(
-					interestName, segmentId, _getIndividualSelectJoinStep());
+				 Object, Object, Object, Object>> selectJoinStep =
+					_getSelectJoinStep(
+						interestName, segmentId,
+						_getIndividualSelectJoinStep());
 
 		Condition condition = _getQueryCondition(query);
 
@@ -655,9 +659,9 @@ public class BQIndividualRepositoryImpl
 			_fieldNameConversionMap, pageable.getSort(), null);
 
 		SelectForUpdateStep
-			<Record11
+			<Record12
 				<Object, Object, Object, Object, Object, Object, Object, Object,
-				 Object, Object, Object>> selectFinalStep =
+				 Object, Object, Object, Object>> selectFinalStep =
 					selectJoinStep.where(
 						condition
 					).groupBy(
@@ -686,6 +690,7 @@ public class BQIndividualRepositoryImpl
 
 				return new Individual(
 					activitiesCount.longValue(), new BQIndividual(record), null,
+					(Date)record.get("firstactivitydate"),
 					(Date)record.get("lastactivitydate"));
 			},
 			_getIndividualSelectOnConditionStep(selectFinalStep, sortFields));
@@ -773,7 +778,7 @@ public class BQIndividualRepositoryImpl
 
 				bqIndividual.setFields(bqIndividualFields);
 
-				return new Individual(0L, bqIndividual, null, null);
+				return new Individual(0L, bqIndividual, null, null, null);
 			},
 			selectJoinStep.where(
 				_getConditions(channelId, filterExpression, query)
@@ -1210,9 +1215,9 @@ public class BQIndividualRepositoryImpl
 	}
 
 	private SelectSelectStep
-		<Record11
+		<Record12
 			<Object, Object, Object, Object, Object, Object, Object, Object,
-			 Object, Object, Object>> _getIndividualSelectJoinStep() {
+			 Object, Object, Object, Object>> _getIndividualSelectJoinStep() {
 
 		return _dslContext.select(
 			DSL.coalesce(
@@ -1234,6 +1239,11 @@ public class BQIndividualRepositoryImpl
 				"Individual.emailaddress"
 			).as(
 				"emailaddress"
+			),
+			DSL.min(
+				DSL.field("IdentityActivity.firstactivitydate")
+			).as(
+				"firstactivitydate"
 			),
 			DSL.field(
 				"Individual.id"
@@ -1275,6 +1285,11 @@ public class BQIndividualRepositoryImpl
 				"individuals.id"
 			).as(
 				"id"
+			),
+			DSL.field(
+				"individuals.firstactivitydate"
+			).as(
+				"firstactivitydate"
 			),
 			DSL.field(
 				"individuals.firstname"

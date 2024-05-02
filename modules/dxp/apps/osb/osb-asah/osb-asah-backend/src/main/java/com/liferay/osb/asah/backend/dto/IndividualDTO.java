@@ -54,6 +54,7 @@ public class IndividualDTO {
 				new DataSourceIndividualPKDTO(bqDataSourceUser));
 		}
 
+		_firstActivityDate = individual.getFirstActivityDate();
 		_firstEnrichmentDate = individual.getFirstEnrichmentDate();
 		_id = StringUtil.get(individual.getId(), null);
 		_individualCustomFieldDTO = new IndividualFieldDTO(
@@ -114,6 +115,19 @@ public class IndividualDTO {
 	@JsonProperty("_embedded")
 	public Map<String, Object> getEmbedded() {
 		return _embedded;
+	}
+
+	@JsonFormat(
+		pattern = DateUtil.PATTERN_ISO_8601, shape = JsonFormat.Shape.STRING,
+		timezone = "UTC"
+	)
+	@JsonProperty("firstActivityDate")
+	public Date getFirstActivityDate() {
+		if (_firstActivityDate == null) {
+			return null;
+		}
+
+		return new Date(_firstActivityDate.getTime());
 	}
 
 	@JsonFormat(
@@ -522,6 +536,7 @@ public class IndividualDTO {
 	private Date _createDate;
 	private Set<DataSourceIndividualPKDTO> _dataSourceIndividualPKDTOs;
 	private Map<String, Object> _embedded;
+	private Date _firstActivityDate;
 	private Date _firstEnrichmentDate;
 	private Set<String> _groupIds;
 	private String _id;
