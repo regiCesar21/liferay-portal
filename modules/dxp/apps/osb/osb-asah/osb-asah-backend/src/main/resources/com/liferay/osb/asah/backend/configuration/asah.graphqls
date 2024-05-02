@@ -912,11 +912,6 @@ type Preference {
 	value: String
 }
 
-type SegmentPageViews {
-    segmentId: String,
-    views: Int
-}
-
 type QueryType {
 	acquisitions(
 		acquisitionType: AcquisitionType!,
@@ -1149,6 +1144,18 @@ type QueryType {
 		rangeKey: Int,
 		rangeStart: String
 	): EventMetric
+
+	eventsByUserSessions(
+		channelId: String!
+		entityId: String!
+		entityType: EntityType!
+		keywords: String
+		page: Int!
+		rangeEnd: String
+		rangeKey: Int
+		rangeStart: String
+		size: Int!
+	): EventsByUserSession
 
 	experiment(
 		experimentId: String!
@@ -1453,18 +1460,6 @@ type QueryType {
 		sort: Sort!,
 		start: Int!
 	): DXPEntityBag
-	
-	eventsByUserSessions(
-		channelId: String!
-		entityId: String!
-		entityType: EntityType!
-		keywords: String
-		page: Int!
-		rangeEnd: String
-		rangeKey: Int
-		rangeStart: String
-		size: Int!
-	): EventsByUserSession
 
 	users(
 		channelId: String,
@@ -1473,6 +1468,11 @@ type QueryType {
 		sort: Sort!,
 		start: Int!
 	): DXPEntityBag
+}
+
+type SegmentPageViews {
+    segmentId: String,
+    views: Int
 }
 
 type SiteMetric {
