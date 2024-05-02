@@ -582,6 +582,9 @@ public class BQIndividualRepositoryTest
 
 		Assertions.assertEquals(4L, individual.getActivitiesCount());
 		Assertions.assertEquals(
+			DateUtil.toUTCDate("2022-12-13T23:59:59.999Z"),
+			individual.getFirstActivityDate());
+		Assertions.assertEquals(
 			DateUtil.toUTCDate("2022-12-17T23:59:59.999Z"),
 			individual.getLastActivityDate());
 	}
@@ -602,6 +605,9 @@ public class BQIndividualRepositoryTest
 		Individual individual = individuals.get(0);
 
 		Assertions.assertEquals(4L, individual.getActivitiesCount());
+		Assertions.assertEquals(
+			DateUtil.toUTCDate("2022-12-13T23:59:59.999Z"),
+			individual.getFirstActivityDate());
 		Assertions.assertEquals(
 			DateUtil.toUTCDate("2022-12-17T23:59:59.999Z"),
 			individual.getLastActivityDate());
