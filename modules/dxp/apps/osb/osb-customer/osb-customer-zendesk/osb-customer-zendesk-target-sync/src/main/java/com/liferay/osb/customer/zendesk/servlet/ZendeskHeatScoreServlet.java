@@ -93,8 +93,8 @@ public class ZendeskHeatScoreServlet extends ZendeskBaseServlet {
 		totalHeatScore = totalHeatScore.add(heatTagScore);
 		totalHeatScore = totalHeatScore.add(productScore);
 		totalHeatScore = totalHeatScore.add(ticketTagScore);
-		totalHeatScore = totalHeatScore.multiply(priorityScore);
 		totalHeatScore = totalHeatScore.multiply(ageScore);
+		totalHeatScore = totalHeatScore.multiply(priorityScore);
 
 		int roundedTotalHeatScore = (int)Math.ceil(
 			totalHeatScore.doubleValue());

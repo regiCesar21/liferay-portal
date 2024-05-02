@@ -102,10 +102,9 @@ public interface ZendeskHeatScoreConstants {
 		}
 
 		BigDecimal ageScore = BigDecimal.valueOf(0.9);
-		BigDecimal increment = BigDecimal.valueOf(0.1);
 
 		for (int i = 1; i <= days; i++) {
-			ageScore = ageScore.add(increment);
+			ageScore = ageScore.add(BigDecimal.valueOf(0.1));
 		}
 
 		return ageScore;
