@@ -238,12 +238,6 @@ public class TaxonomyCategoryResourceImpl
 						assetCategory.getAvailableLanguageIds())));
 		}
 
-		assetCategory.setDescriptionMap(
-			LocalizedMapUtil.patch(
-				assetCategory.getDescriptionMap(),
-				contextAcceptLanguage.getPreferredLocale(),
-				taxonomyCategory.getDescription(),
-				taxonomyCategory.getDescription_i18n()));
 		assetCategory.setExternalReferenceCode(
 			taxonomyCategory.getExternalReferenceCode());
 		assetCategory.setTitleMap(
@@ -251,6 +245,12 @@ public class TaxonomyCategoryResourceImpl
 				assetCategory.getTitleMap(),
 				contextAcceptLanguage.getPreferredLocale(),
 				taxonomyCategory.getName(), taxonomyCategory.getName_i18n()));
+		assetCategory.setDescriptionMap(
+			LocalizedMapUtil.patch(
+				assetCategory.getDescriptionMap(),
+				contextAcceptLanguage.getPreferredLocale(),
+				taxonomyCategory.getDescription(),
+				taxonomyCategory.getDescription_i18n()));
 
 		AssetCategoryPermission.check(
 			PermissionThreadLocal.getPermissionChecker(),
