@@ -975,11 +975,11 @@ public class PortletLocalServiceImpl extends PortletLocalServiceBaseImpl {
 			// WAR is not yet loaded
 
 			if (portletModel != null) {
+				portletModel.setRoles(portlet.getRoles());
+				portletModel.setActive(portlet.isActive());
 				portletModel.setPluginPackage(portlet.getPluginPackage());
 				portletModel.setDefaultPluginSetting(
 					portlet.getDefaultPluginSetting());
-				portletModel.setRoles(portlet.getRoles());
-				portletModel.setActive(portlet.isActive());
 			}
 		}
 
@@ -1906,6 +1906,9 @@ public class PortletLocalServiceImpl extends PortletLocalServiceBaseImpl {
 
 		portletModel.setFooterPortletJavaScript(footerPortletJavaScriptList);
 
+		portletModel.setActive(
+			GetterUtil.getBoolean(
+				portletElement.elementText("active"), portletModel.isActive()));
 		portletModel.setPartialActionServeResource(
 			GetterUtil.getBoolean(
 				portletElement.elementText("partial-action-serve-resource"),
@@ -1930,9 +1933,6 @@ public class PortletLocalServiceImpl extends PortletLocalServiceBaseImpl {
 		portletModel.setSystem(
 			GetterUtil.getBoolean(
 				portletElement.elementText("system"), portletModel.isSystem()));
-		portletModel.setActive(
-			GetterUtil.getBoolean(
-				portletElement.elementText("active"), portletModel.isActive()));
 		portletModel.setInclude(
 			GetterUtil.getBoolean(
 				portletElement.elementText("include"),

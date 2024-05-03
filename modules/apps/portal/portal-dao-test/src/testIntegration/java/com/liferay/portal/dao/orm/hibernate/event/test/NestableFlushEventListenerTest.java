@@ -233,15 +233,15 @@ public class NestableFlushEventListenerTest {
 		try {
 			_className1 = new TestClassNameImpl(session);
 
-			_className1.setPrimaryKey(_keys[0]);
 			_className1.setValue(_values[0]);
+			_className1.setPrimaryKey(_keys[0]);
 
 			session.save(_className1);
 
 			_className2 = new ClassNameImpl();
 
-			_className2.setPrimaryKey(_keys[1]);
 			_className2.setValue(_values[1]);
+			_className2.setPrimaryKey(_keys[1]);
 
 			session.save(_className2);
 		}

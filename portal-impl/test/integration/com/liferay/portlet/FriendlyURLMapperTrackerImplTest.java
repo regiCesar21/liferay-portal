@@ -37,8 +37,8 @@ public class FriendlyURLMapperTrackerImplTest {
 	public void testGetFriendlyURLMapper() throws Exception {
 		Portlet portlet = new PortletImpl();
 
-		portlet.setPortletClass(MVCPortlet.class.getName());
 		portlet.setPortletId("FriendlyURLMapperTrackerImplTest");
+		portlet.setPortletClass(MVCPortlet.class.getName());
 
 		FriendlyURLMapperTracker friendlyURLMapperTracker =
 			new FriendlyURLMapperTrackerImpl(portlet);

@@ -1741,10 +1741,10 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 			PasswordModificationThreadLocal.setPasswordUnencrypted(password);
 
 			user.setPassword(PasswordEncryptorUtil.encrypt(password));
-			user.setPasswordUnencrypted(password);
 			user.setPasswordEncrypted(true);
-			user.setPasswordModified(true);
 			user.setPasswordModifiedDate(new Date());
+			user.setPasswordUnencrypted(password);
+			user.setPasswordModified(true);
 
 			user = userPersistence.update(user);
 
@@ -3976,11 +3976,11 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 				trackPassword(user);
 
 				user.setPassword(PasswordEncryptorUtil.encrypt(newPassword));
-				user.setPasswordUnencrypted(newPassword);
 				user.setPasswordEncrypted(true);
 				user.setPasswordReset(passwordReset);
-				user.setPasswordModified(true);
 				user.setPasswordModifiedDate(new Date());
+				user.setPasswordUnencrypted(newPassword);
+				user.setPasswordModified(true);
 
 				user = userPersistence.update(user);
 
@@ -5047,9 +5047,9 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 		}
 
 		user.setPassword(newEncPwd);
-		user.setPasswordUnencrypted(password1);
 		user.setPasswordEncrypted(true);
 		user.setPasswordReset(passwordReset);
+		user.setPasswordUnencrypted(password1);
 
 		ServiceContext serviceContext =
 			ServiceContextThreadLocal.getServiceContext();

@@ -287,11 +287,11 @@ public class DefaultLDAPToPortalConverter implements LDAPToPortalConverter {
 
 		user.setLanguageId(locale.toString());
 
+		user.setScreenName(screenName);
 		user.setOpenId(StringPool.BLANK);
 		user.setMiddleName(middleName);
 		user.setLastName(lastName);
 		user.setPasswordUnencrypted(password);
-		user.setScreenName(screenName);
 
 		String status = LDAPUtil.getAttributeString(
 			attributes, userMappings, UserConverterKeys.STATUS);

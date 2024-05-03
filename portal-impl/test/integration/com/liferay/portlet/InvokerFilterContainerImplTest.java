@@ -80,9 +80,9 @@ public class InvokerFilterContainerImplTest {
 
 		Portlet portlet = new PortletImpl();
 
+		portlet.setPortletId("InvokerFilterContainerImplTest");
 		portlet.setPortletApp(portletAppImpl);
 		portlet.setPortletClass(MVCPortlet.class.getName());
-		portlet.setPortletId("InvokerFilterContainerImplTest");
 
 		PortletContext portletContext = PortletContextFactoryUtil.create(
 			portlet, servletContext);
