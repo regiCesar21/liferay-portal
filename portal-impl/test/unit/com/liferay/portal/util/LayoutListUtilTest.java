@@ -180,9 +180,9 @@ public class LayoutListUtilTest extends PowerMockito {
 	protected Layout createLayout(long plid, long parentLayoutId) {
 		Layout layout = new MockLayoutImpl();
 
-		layout.setPrimaryKey(plid);
 		layout.setLayoutId(plid);
 		layout.setParentLayoutId(parentLayoutId);
+		layout.setPrimaryKey(plid);
 
 		return layout;
 	}

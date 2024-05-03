@@ -543,8 +543,8 @@ public class WSRPConsumerPortletLocalServiceImpl
 		portlet = portletLocalService.clonePortlet(_CONSUMER_PORTLET_ID);
 
 		portlet.setCompanyId(companyId);
-		portlet.setDisplayName(portletId);
 		portlet.setPortletId(portletId);
+		portlet.setDisplayName(portletId);
 		portlet.setPortletName(portletId);
 
 		Map<String, String> initParams = portlet.getInitParams();
