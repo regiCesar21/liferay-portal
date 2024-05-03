@@ -288,6 +288,45 @@ public class LoginMVCActionCommand extends BaseMVCActionCommand {
 		}
 	}
 
+	protected void postProcessAuthFailure(
+			ActionRequest actionRequest, ActionResponse actionResponse)
+		throws Exception {
+
+		LiferayPortletRequest liferayPortletRequest =
+			_portal.getLiferayPortletRequest(actionRequest);
+
+		String portletName = liferayPortletRequest.getPortletName();
+
+		Layout layout = (Layout)actionRequest.getAttribute(WebKeys.LAYOUT);
+
+		PortletURL portletURL = PortletURLFactoryUtil.create(
+			actionRequest, liferayPortletRequest.getPortlet(), layout,
+			PortletRequest.RENDER_PHASE);
+
+		portletURL.setParameter("saveLastPath", Boolean.FALSE.toString());
+
+		String redirect = ParamUtil.getString(actionRequest, "redirect");
+
+		if (Validator.isNotNull(redirect)) {
+			portletURL.setParameter("redirect", redirect);
+		}
+
+		String login = ParamUtil.getString(actionRequest, "login");
+
+		if (Validator.isNotNull(login)) {
+			SessionErrors.add(actionRequest, "login", login);
+		}
+
+		if (portletName.equals(LoginPortletKeys.LOGIN)) {
+			portletURL.setWindowState(WindowState.MAXIMIZED);
+		}
+		else {
+			portletURL.setWindowState(actionRequest.getWindowState());
+		}
+
+		actionResponse.sendRedirect(portletURL.toString());
+	}
+
 	private User _getUser(ActionRequest actionRequest) throws Exception {
 		User user = null;
 
@@ -333,45 +372,6 @@ public class LoginMVCActionCommand extends BaseMVCActionCommand {
 		}
 
 		return user;
-	}
-
-	protected void postProcessAuthFailure(
-			ActionRequest actionRequest, ActionResponse actionResponse)
-		throws Exception {
-
-		LiferayPortletRequest liferayPortletRequest =
-			_portal.getLiferayPortletRequest(actionRequest);
-
-		String portletName = liferayPortletRequest.getPortletName();
-
-		Layout layout = (Layout)actionRequest.getAttribute(WebKeys.LAYOUT);
-
-		PortletURL portletURL = PortletURLFactoryUtil.create(
-			actionRequest, liferayPortletRequest.getPortlet(), layout,
-			PortletRequest.RENDER_PHASE);
-
-		portletURL.setParameter("saveLastPath", Boolean.FALSE.toString());
-
-		String redirect = ParamUtil.getString(actionRequest, "redirect");
-
-		if (Validator.isNotNull(redirect)) {
-			portletURL.setParameter("redirect", redirect);
-		}
-
-		String login = ParamUtil.getString(actionRequest, "login");
-
-		if (Validator.isNotNull(login)) {
-			SessionErrors.add(actionRequest, "login", login);
-		}
-
-		if (portletName.equals(LoginPortletKeys.LOGIN)) {
-			portletURL.setWindowState(WindowState.MAXIMIZED);
-		}
-		else {
-			portletURL.setWindowState(actionRequest.getWindowState());
-		}
-
-		actionResponse.sendRedirect(portletURL.toString());
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
