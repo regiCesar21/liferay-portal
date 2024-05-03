@@ -32,10 +32,12 @@ ExpandoBridge expandoBridge = ExpandoBridgeFactoryUtil.getExpandoBridge(company.
 
 UnicodeProperties properties = new UnicodeProperties(true);
 Serializable defaultValue = null;
+boolean readOnly = false;
 
 if (expandoColumn != null) {
 	properties = expandoBridge.getAttributeProperties(expandoColumn.getName());
 	defaultValue = expandoBridge.getAttributeDefault(expandoColumn.getName());
+	readOnly = !ExpandoColumnPermissionUtil.contains(permissionChecker, expandoColumn, ActionKeys.UPDATE);
 }
 
 boolean propertyHidden = GetterUtil.getBoolean(properties.get(ExpandoColumnConstants.PROPERTY_HIDDEN));
@@ -132,7 +134,9 @@ else {
 		</h2>
 
 		<liferay-frontend:fieldset-group>
-			<liferay-frontend:fieldset>
+			<liferay-frontend:fieldset
+				disabled="<%= readOnly %>"
+			>
 				<aui:field-wrapper cssClass="form-group lfr-input-text-container">
 					<c:choose>
 						<c:when test="<%= expandoColumn != null %>">
@@ -156,6 +160,7 @@ else {
 			<liferay-frontend:fieldset
 				collapsed="<%= true %>"
 				collapsible="<%= true %>"
+				disabled="<%= readOnly %>"
 				label="advanced-properties"
 			>
 				<%@ include file="/edit/advanced_properties.jspf" %>
@@ -164,7 +169,7 @@ else {
 	</liferay-frontend:edit-form-body>
 
 	<liferay-frontend:edit-form-footer>
-		<aui:button type="submit" />
+		<aui:button disabled="<%= readOnly %>" type="submit" />
 
 		<aui:button href="<%= redirect %>" type="cancel" />
 	</liferay-frontend:edit-form-footer>
