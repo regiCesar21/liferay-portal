@@ -185,7 +185,8 @@ public class UpdateMembershipsNanite extends BaseNanite {
 			_log.error(
 				String.format(
 					"Unable to update membership changes for segment ID %s",
-					segmentId));
+					segmentId),
+				exception);
 		}
 	}
 
