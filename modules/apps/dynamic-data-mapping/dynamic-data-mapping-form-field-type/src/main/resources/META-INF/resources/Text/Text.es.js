@@ -12,6 +12,7 @@ import React, {useEffect, useMemo, useRef, useState} from 'react';
 
 import {FieldBase} from '../FieldBase/ReactFieldBase.es';
 import {useSyncValue} from '../hooks/useSyncValue.es';
+import fieldPopoverSettings from '../util/fieldPopoverSettings';
 
 const Text = ({
 	accessibleProps,
@@ -340,6 +341,7 @@ const Main = ({
 			id={id}
 			localizedValue={localizedValue}
 			name={name}
+			popover={fieldPopoverSettings[fieldName]}
 			readOnly={readOnly}
 			style={null}
 		>
