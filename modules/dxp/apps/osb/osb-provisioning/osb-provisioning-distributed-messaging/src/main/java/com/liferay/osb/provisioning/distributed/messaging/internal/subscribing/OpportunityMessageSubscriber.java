@@ -837,10 +837,15 @@ public class OpportunityMessageSubscriber extends BaseMessageSubscriber {
 		if (account.getRegion() == Account.Region.UNITED_STATES) {
 			sb.append(
 				StringBundler.concat(
-					"<br /><br />US Provisioning - Working with 2019 H2 ",
-					"Pricing Promotions: <a href='https://grow.liferay.com",
-					"/people/US+Provisioning+-+Working+with+2019+H2+Pricing",
-					"+Promotions'>Grow Link</a>"));
+					"<br /><br /><a href='https://liferay.atlassian.net/wiki",
+					"/spaces/SUPPORT/pages/1806699210/Provisioning+Promotional",
+					"+Bundles+-+DXP+Solutions+LXC+SM+and+Commerce+Cloud",
+					"+Bundles#Liferay-DXP-Enterprise-Solution,-Liferay-DXP-",
+					"SMB-Solution,-Liferay-DXP-Business-Solution'>",
+					"Provisioning Promotional Bundles</a>,",
+					"<a href='https://liferay.atlassian.net/wiki/spaces",
+					"/SUPPORT/pages/1835237619/Subscriptions+and",
+					"+Products'>Subscriptions and Products</a>"));
 		}
 
 		zendeskTicket.setDescription(sb.toString());
