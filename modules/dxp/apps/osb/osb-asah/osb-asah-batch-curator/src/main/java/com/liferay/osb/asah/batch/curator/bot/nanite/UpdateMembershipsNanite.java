@@ -175,17 +175,14 @@ public class UpdateMembershipsNanite extends BaseNanite {
 
 			if (_log.isInfoEnabled()) {
 				_log.info(
-					String.format(
-						"Updated membership changes successfully for segment " +
-							"ID %s",
-						segmentId));
+					"Updated membership changes successfully for segment ID " +
+						segmentId);
 			}
 		}
 		catch (Exception exception) {
 			_log.error(
-				String.format(
-					"Unable to update membership changes for segment ID %s",
-					segmentId),
+				"Unable to update membership changes for segment ID " +
+					segmentId,
 				exception);
 		}
 	}
