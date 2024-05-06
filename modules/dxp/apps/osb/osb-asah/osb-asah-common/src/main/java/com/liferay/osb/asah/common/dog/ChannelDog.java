@@ -5,6 +5,7 @@
 
 package com.liferay.osb.asah.common.dog;
 
+import com.liferay.osb.asah.common.date.DateUtil;
 import com.liferay.osb.asah.common.entity.AuditEvent;
 import com.liferay.osb.asah.common.entity.Channel;
 import com.liferay.osb.asah.common.entity.ChannelDataSource;
@@ -26,6 +27,7 @@ import com.liferay.osb.asah.common.util.TimeOrderedUuidGenerator;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
@@ -104,17 +106,30 @@ public class ChannelDog {
 	public void clearChannels(
 		Set<Long> channelIds, boolean clear, String createDateString) {
 
-		_customAssetDashboardRepository.deleteByChannelIdIn(channelIds);
-		_eventAnalysisRepository.deleteByChannelIdIn(channelIds);
-		_experimentRepository.deleteByChannelIdIn(channelIds);
-		_segmentRepository.deleteByChannelIdIn(channelIds);
+		Date createDate = DateUtil.toUTCDate(createDateString);
+
+		_customAssetDashboardRepository.deleteByChannelIdInAndCreateDateBefore(
+			channelIds, createDate);
+		_eventAnalysisRepository.deleteByChannelIdInAndCreateDateBefore(
+			channelIds, createDate);
+		_experimentRepository.deleteByChannelIdInAndCreateDateBefore(
+			channelIds, createDate);
+		_segmentRepository.deleteByChannelIdInAndCreateDateBefore(
+			channelIds, createDate);
 
 		try {
+			String endDate = "CURRENT_TIMESTAMP()";
+
+			if (clear) {
+				endDate = "timestamp '" + createDateString + "'";
+			}
+
 			_bigQueryQueryExecutor.queryExecute(
-				StringUtils.replace(
+				StringUtils.replaceEach(
 					ResourceUtil.readResourceToString(
 						"dependencies/clear_channel_statement.sql", getClass()),
-					"${channel_ids}", StringUtils.join(channelIds, ",")));
+					new String[] {"${end_date}", "${channel_ids}"},
+					new String[] {endDate, StringUtils.join(channelIds, ",")}));
 		}
 		catch (Exception exception) {
 			String className = "DeleteChannelsNanite";

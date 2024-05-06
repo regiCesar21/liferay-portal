@@ -37,6 +37,15 @@ public interface SegmentRepository
 	@Query("DELETE FROM Segment WHERE channelId IN (:channelIds)")
 	public void deleteByChannelIdIn(@Param("channelIds") Set<Long> channelIds);
 
+	@CacheEvict(allEntries = true)
+	@Modifying
+	@Query(
+		"DELETE FROM Segment WHERE channelId IN (:channelIds) AND createDate < :createDate"
+	)
+	public void deleteByChannelIdInAndCreateDateBefore(
+		@Param("channelIds") Set<Long> channelIds,
+		@Param("createDate") Date createDate);
+
 	@Cacheable
 	public boolean existsByName(String name);
 

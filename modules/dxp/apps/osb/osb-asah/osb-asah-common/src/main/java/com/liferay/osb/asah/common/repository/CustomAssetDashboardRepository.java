@@ -7,6 +7,7 @@ package com.liferay.osb.asah.common.repository;
 
 import com.liferay.osb.asah.common.entity.CustomAssetDashboard;
 
+import java.util.Date;
 import java.util.Set;
 
 import org.springframework.cache.annotation.CacheEvict;
@@ -25,5 +26,14 @@ public interface CustomAssetDashboardRepository
 	@Modifying
 	@Query("DELETE FROM CustomAssetDashboard WHERE channelId IN (:channelIds)")
 	public void deleteByChannelIdIn(@Param("channelIds") Set<Long> channelIds);
+
+	@CacheEvict(allEntries = true)
+	@Modifying
+	@Query(
+		"DELETE FROM CustomAssetDashboard WHERE channelId IN (:channelIds) AND createDate < :createDate"
+	)
+	public void deleteByChannelIdInAndCreateDateBefore(
+		@Param("channelIds") Set<Long> channelIds,
+		@Param("createDate") Date createDate);
 
 }

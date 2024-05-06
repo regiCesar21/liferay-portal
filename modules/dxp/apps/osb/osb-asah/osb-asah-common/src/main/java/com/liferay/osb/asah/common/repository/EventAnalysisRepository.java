@@ -7,6 +7,7 @@ package com.liferay.osb.asah.common.repository;
 
 import com.liferay.osb.asah.common.entity.EventAnalysis;
 
+import java.util.Date;
 import java.util.Optional;
 import java.util.Set;
 
@@ -26,6 +27,15 @@ public interface EventAnalysisRepository
 	@Modifying
 	@Query("DELETE FROM EventAnalysis WHERE channelId IN (:channelIds)")
 	public void deleteByChannelIdIn(@Param("channelIds") Set<Long> channelIds);
+
+	@CacheEvict(allEntries = true)
+	@Modifying
+	@Query(
+		"DELETE FROM EventAnalysis WHERE channelId IN (:channelIds) AND createDate < :createDate"
+	)
+	public void deleteByChannelIdInAndCreateDateBefore(
+		@Param("channelIds") Set<Long> channelIds,
+		@Param("createDate") Date createDate);
 
 	@CacheEvict(allEntries = true)
 	@Modifying

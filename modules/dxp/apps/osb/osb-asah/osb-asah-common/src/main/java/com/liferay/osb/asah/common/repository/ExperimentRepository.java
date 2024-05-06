@@ -8,6 +8,7 @@ package com.liferay.osb.asah.common.repository;
 import com.liferay.osb.asah.common.entity.Experiment;
 import com.liferay.osb.asah.common.model.ExperimentStatus;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Set;
 
@@ -27,6 +28,15 @@ public interface ExperimentRepository
 	@Modifying
 	@Query("DELETE FROM Experiment WHERE channelId IN (:channelIds)")
 	public void deleteByChannelIdIn(@Param("channelIds") Set<Long> channelIds);
+
+	@CacheEvict(allEntries = true)
+	@Modifying
+	@Query(
+		"DELETE FROM Experiment WHERE channelId IN (:channelIds) AND createDate < :createDate"
+	)
+	public void deleteByChannelIdInAndCreateDateBefore(
+		@Param("channelIds") Set<Long> channelIds,
+		@Param("createDate") Date createDate);
 
 	@Cacheable
 	public List<Experiment> findByExperimentStatus(
