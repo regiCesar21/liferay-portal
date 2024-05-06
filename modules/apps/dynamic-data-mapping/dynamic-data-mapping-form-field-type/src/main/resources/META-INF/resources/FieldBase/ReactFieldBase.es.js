@@ -7,6 +7,7 @@ import './FieldBase.scss';
 
 import ClayButton from '@clayui/button';
 import ClayIcon from '@clayui/icon';
+import ClayPopover from '@clayui/popover';
 import {ClayTooltipProvider} from '@clayui/tooltip';
 import classNames from 'classnames';
 import {
@@ -17,7 +18,7 @@ import {
 	usePage,
 } from 'dynamic-data-mapping-form-renderer';
 import moment from 'moment';
-import React, {useMemo} from 'react';
+import React, {useEffect, useMemo, useRef, useState} from 'react';
 
 const convertInputValue = (fieldType, value) => {
 	if (fieldType === 'date') {
@@ -55,7 +56,7 @@ const getDefaultRows = (nestedFields) => {
 	});
 };
 
-const FieldProperties = ({required, tooltip}) => {
+const FieldProperties = ({popover, required, tooltip}) => {
 	return (
 		<>
 			{required && (
@@ -64,7 +65,9 @@ const FieldProperties = ({required, tooltip}) => {
 				</span>
 			)}
 
-			{tooltip && (
+			{popover && <Popover {...popover} />}
+
+			{!popover && tooltip && (
 				<span className="ddm-tooltip">
 					<ClayIcon
 						data-tooltip-align="right"
@@ -74,6 +77,84 @@ const FieldProperties = ({required, tooltip}) => {
 				</span>
 			)}
 		</>
+	);
+};
+
+const Popover = ({
+	alignPosition,
+	closeOnClickOutside,
+	content,
+	header,
+	image,
+}) => {
+	const [isPopoverVisible, setIsPopoverVisible] = useState(false);
+
+	const popoverElement = useRef();
+
+	const triggerElement = useRef();
+
+	const POPOVER_MAX_WIDTH = 256;
+
+	useEffect(() => {
+		if (closeOnClickOutside) {
+			const handleClickOutside = (event) => {
+				const pathElement = triggerElement.current.querySelector(
+					'g > path'
+				);
+
+				if (
+					popoverElement.current &&
+					pathElement !== event.target &&
+					!popoverElement.current.contains(event.target)
+				) {
+					setIsPopoverVisible(false);
+				}
+			};
+
+			document.addEventListener('mousedown', handleClickOutside);
+
+			return () => {
+				document.removeEventListener('mousedown', handleClickOutside);
+			};
+		}
+	}, [closeOnClickOutside]);
+
+	return (
+		<ClayPopover
+			alignPosition={alignPosition}
+			data-testid="clayPopover"
+			disableScroll
+			header={header}
+			onShowChange={setIsPopoverVisible}
+			ref={popoverElement}
+			show={isPopoverVisible}
+			style={{maxWidth: POPOVER_MAX_WIDTH}}
+			trigger={
+				<span className="ddm-tooltip">
+					<ClayIcon
+						onClick={() => setIsPopoverVisible(!isPopoverVisible)}
+						ref={triggerElement}
+						symbol="question-circle-full"
+					/>
+				</span>
+			}
+		>
+			<p
+				className="mb-4"
+				dangerouslySetInnerHTML={{
+					__html: content,
+				}}
+			/>
+
+			{image && (
+				<img
+					alt={image.alt}
+					height={image.height}
+					src={image.src}
+					width={image.width}
+				/>
+			)}
+		</ClayPopover>
 	);
 };
 
@@ -88,6 +169,7 @@ function FieldBase({
 	nestedFields,
 	onClick,
 	overMaximumRepetitionsLimit = false,
+	popover,
 	readOnly,
 	repeatable,
 	required,
@@ -251,6 +333,7 @@ function FieldBase({
 									{label && showLabel && label}
 
 									<FieldProperties
+										popover={popover}
 										required={required}
 										tooltip={tooltip}
 									/>
@@ -269,6 +352,7 @@ function FieldBase({
 									{label && showLabel && label}
 
 									<FieldProperties
+										popover={popover}
 										required={required}
 										tooltip={tooltip}
 									/>
