@@ -55,6 +55,7 @@ const Numeric = ({
 	defaultLanguageId,
 	disabled,
 	editingLanguageId,
+	htmlAutocompleteAttribute,
 	localizable,
 	localizedValue,
 	onChange,
@@ -120,6 +121,9 @@ const Numeric = ({
 	return (
 		<ClayInput
 			{...otherProps}
+			{...(htmlAutocompleteAttribute && {
+				autoComplete: htmlAutocompleteAttribute,
+			})}
 			disabled={disabled}
 			onChange={(event) => {
 				const {value: newValue} = event.target;
@@ -145,6 +149,7 @@ const Main = ({
 	dataType,
 	defaultLanguageId,
 	editingLanguageId,
+	htmlAutocompleteAttribute,
 	id,
 	localizable,
 	localizedValue = {},
@@ -182,6 +187,7 @@ const Main = ({
 			defaultLanguageId={defaultLanguageId}
 			disabled={readOnly}
 			editingLanguageId={editingLanguageId}
+			htmlAutocompleteAttribute={htmlAutocompleteAttribute}
 			id={id ?? name}
 			localizable={localizable}
 			localizedValue={localizedValue}

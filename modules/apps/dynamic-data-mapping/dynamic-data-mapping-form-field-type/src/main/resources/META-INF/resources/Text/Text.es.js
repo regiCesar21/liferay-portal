@@ -20,6 +20,7 @@ const Text = ({
 	disabled,
 	editingLanguageId,
 	fieldName,
+	htmlAutocompleteAttribute,
 	id,
 	localizable,
 	localizedValue,
@@ -77,6 +78,9 @@ const Text = ({
 	return (
 		<ClayInput
 			{...accessibleProps}
+			{...(htmlAutocompleteAttribute && {
+				autoComplete: htmlAutocompleteAttribute,
+			})}
 			className="ddm-field-text"
 			disabled={disabled}
 			id={id}
@@ -109,6 +113,7 @@ const Text = ({
 const Textarea = ({
 	accessibleProps,
 	disabled,
+	htmlAutocompleteAttribute,
 	id,
 	name,
 	onBlur,
@@ -123,6 +128,9 @@ const Textarea = ({
 	return (
 		<textarea
 			{...accessibleProps}
+			{...(htmlAutocompleteAttribute && {
+				autoComplete: htmlAutocompleteAttribute,
+			})}
 			className="ddm-field-text form-control"
 			disabled={disabled}
 			id={id}
@@ -142,6 +150,7 @@ const Textarea = ({
 const Autocomplete = ({
 	accessibleProps,
 	disabled,
+	htmlAutocompleteAttribute,
 	id,
 	name,
 	onBlur,
@@ -219,6 +228,9 @@ const Autocomplete = ({
 		<ClayAutocomplete>
 			<ClayAutocomplete.Input
 				{...accessibleProps}
+				{...(htmlAutocompleteAttribute && {
+					autoComplete: htmlAutocompleteAttribute,
+				})}
 				disabled={disabled}
 				id={id}
 				name={name}
@@ -307,6 +319,7 @@ const Main = ({
 	displayStyle = 'singleline',
 	editingLanguageId,
 	fieldName,
+	htmlAutocompleteAttribute,
 	id,
 	localizable,
 	localizedValue = {},
@@ -360,6 +373,7 @@ const Main = ({
 				disabled={readOnly}
 				editingLanguageId={editingLanguageId}
 				fieldName={fieldName}
+				htmlAutocompleteAttribute={htmlAutocompleteAttribute}
 				id={id ?? name}
 				localizable={localizable}
 				localizedValue={localizedValue}

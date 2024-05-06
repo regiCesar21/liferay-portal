@@ -168,6 +168,7 @@ const DatePicker = ({
 	defaultLanguageId,
 	disabled,
 	formatInEditingLocale,
+	htmlAutocompleteAttribute,
 	locale,
 	localizedValue: localizedValueInitial = {},
 	name,
@@ -269,6 +270,9 @@ const DatePicker = ({
 			/>
 			<ClayDatePicker
 				{...accessibleProps}
+				{...(htmlAutocompleteAttribute && {
+					autoComplete: htmlAutocompleteAttribute,
+				})}
 				dateFormat={dateMask}
 				disabled={disabled}
 				expanded={expanded}
@@ -330,6 +334,7 @@ const DatePicker = ({
 
 const Main = ({
 	defaultLanguageId,
+	htmlAutocompleteAttribute,
 	locale = themeDisplay.getDefaultLanguageId(),
 	localizedValue,
 	name,
@@ -360,6 +365,7 @@ const Main = ({
 			formatInEditingLocale={
 				localizedValue && localizedValue[locale] != undefined
 			}
+			htmlAutocompleteAttribute={htmlAutocompleteAttribute}
 			locale={locale}
 			localizedValue={localizedValue}
 			name={name}
