@@ -99,8 +99,8 @@ public class SegmentDogTest
 
 		segment.setFilter(
 			"(activities.filterByCount(filter='(activityKey eq " +
-				"''Form#formViewed#" + id + "'' and day gt ''last24Hours'')'," +
-					"operator='ge',value=1))");
+				"''Form#formViewed#" + id + "'' and day gt ''last24Hours'')'" +
+					", operator='ge', value=1))");
 
 		segment.setIncludeAnonymousUsers(Boolean.FALSE);
 		segment.setModifiedDate(new Date());

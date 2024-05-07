@@ -382,7 +382,7 @@ public class BQMembershipRepositoryTest
 			"(activities.filterByCount(filter='(activityKey eq " +
 				"''Page#pageViewed#a57a8091bb47fec9165d5059ac0d020baee46475ef" +
 					"05f632ff6b90ff8f720745'' and day gt ''last24Hours'')" +
-						"',operator='ge',value=1))",
+						"', operator='ge', value=1))",
 			true, 111L);
 
 		Assertions.assertEquals(

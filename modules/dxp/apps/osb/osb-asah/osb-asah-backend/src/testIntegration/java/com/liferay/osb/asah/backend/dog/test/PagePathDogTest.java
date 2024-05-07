@@ -702,7 +702,7 @@ public class PagePathDogTest
 		_bqMembershipDog.updateBQMemberships(
 			"(activities.filterByCount(filter='(activityKey eq " +
 				"''Page#pageViewed#10981d0044ea936f74b42f2a68c41fe7f11c15b0bd" +
-					"8858f85dbf940d79704ca6'')',operator='ge',value=1))",
+					"8858f85dbf940d79704ca6'')', operator='ge', value=1))",
 			true, _segmentDog.fetchSegment(24680L));
 
 		Assertions.assertEquals(

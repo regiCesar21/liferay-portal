@@ -179,7 +179,7 @@ public class FilterExpressionTest {
 				)),
 			"(activities.filterByCount(filter='(activityKey eq ''Page#" +
 				"pageViewed#5ffef165b9aa10b11bc186bc8782f792b0ca33c07d1566722" +
-					"70bbf4cc0a586fa'')',operator='ge',value=1))",
+					"70bbf4cc0a586fa'')', operator='ge', value=1))",
 			123456789L, new HashSet<>(Arrays.asList("Event", "Individual")),
 			true);
 	}
@@ -192,7 +192,7 @@ public class FilterExpressionTest {
 				null,
 				"(activities.filterByCount(filter='(activityKey eq ''Page#" +
 					"pageViewed#5ffef165b9aa10b11bc186bc8782f792b0ca33c07d156" +
-						"672270bbf4cc0a586fa'')',operator='ge',value=1))",
+						"672270bbf4cc0a586fa'')', operator='ge', value=1))",
 				true));
 	}
 
@@ -294,7 +294,7 @@ public class FilterExpressionTest {
 			"(activities.filterByCount(filter='(activityKey eq ''Page#" +
 				"pageViewed#5ffef165b9aa10b11bc186bc8782f792b0ca33c07d1566722" +
 					"70bbf4cc0a5_5ffef165b9aa10b11bc186bc8782f792b0ca33c0" +
-						"7d156672270bbf4cc0a5'')',operator='ge',value=1))",
+						"7d156672270bbf4cc0a5'')', operator='ge', value=1))",
 			123456789L, new HashSet<>(Arrays.asList("Event", "Individual")),
 			true);
 	}
@@ -725,7 +725,7 @@ public class FilterExpressionTest {
 				)),
 			"events.filterByCount(filter='(eventId eq ''added'' and day gt " +
 				"''last24Hours'' and attribute/" + encodedName +
-					" eq ''shoes'')',operator='ge',value=1)",
+					" eq ''shoes'')', operator='ge', value=1)",
 			123456789L,
 			new HashSet<>(
 				Arrays.asList(
@@ -755,7 +755,7 @@ public class FilterExpressionTest {
 				)),
 			"events.filterByCount(filter='(eventId eq ''added'' and day gt " +
 				"''last24Hours'' and attribute/" + encodedName +
-					" gt 1)',operator='ge',value=1)",
+					" gt 1)', operator='ge', value=1)",
 			123456789L,
 			new HashSet<>(
 				Arrays.asList(
@@ -788,7 +788,7 @@ public class FilterExpressionTest {
 				)),
 			"events.filterByCount(filter='(eventId eq ''added'' and day gt " +
 				"''last24Hours'' and attribute/" + encodedName +
-					" lt ''2024-03-04'')',operator='ge',value=1)",
+					" lt ''2024-03-04'')', operator='ge', value=1)",
 			123456789L,
 			new HashSet<>(
 				Arrays.asList(
@@ -823,7 +823,7 @@ public class FilterExpressionTest {
 					))),
 			"events.filterByCount(filter='(eventId eq ''added'' and day gt " +
 				"''last24Hours'' and between(attribute/" + encodedName +
-					", ''2024-03-04'', ''2024-04-04''))',operator='ge'," +
+					", ''2024-03-04'', ''2024-04-04''))', operator='ge', " +
 						"value=1)",
 			123456789L,
 			new HashSet<>(
@@ -853,7 +853,7 @@ public class FilterExpressionTest {
 				)),
 			"events.filterByCount(filter='(eventId eq ''added'' and day gt " +
 				"''last24Hours'' and contains(attribute/" + encodedName +
-					", ''shoe''))',operator='ge',value=1)",
+					", ''shoe''))', operator='ge', value=1)",
 			123456789L,
 			new HashSet<>(
 				Arrays.asList(
@@ -888,8 +888,8 @@ public class FilterExpressionTest {
 						))
 				)),
 			"events.filterByCount(filter='(eventId eq ''added'' and day gt " +
-				"''last24Hours'' and attribute/" + encodedName + " ne null)'," +
-					"operator='ge',value=1)",
+				"''last24Hours'' and attribute/" + encodedName + " ne null)'" +
+					", operator='ge', value=1)",
 			123456789L,
 			new HashSet<>(
 				Arrays.asList(
@@ -924,8 +924,8 @@ public class FilterExpressionTest {
 						))
 				)),
 			"events.filterByCount(filter='(eventId eq ''added'' and day gt " +
-				"''last24Hours'' and attribute/" + encodedName + " eq null)'," +
-					"operator='ge',value=1)",
+				"''last24Hours'' and attribute/" + encodedName + " eq null)'" +
+					", operator='ge', value=1)",
 			123456789L,
 			new HashSet<>(
 				Arrays.asList(
@@ -955,7 +955,7 @@ public class FilterExpressionTest {
 				)),
 			"events.filterByCount(filter='(eventId eq ''added'' and day gt " +
 				"''last24Hours'' and attribute/" + encodedName +
-					" eq false)',operator='ge',value=1)",
+					" eq false)', operator='ge', value=1)",
 			123456789L,
 			new HashSet<>(
 				Arrays.asList(
@@ -984,8 +984,8 @@ public class FilterExpressionTest {
 							"SAFE_CAST('true' AS BOOL)")
 				)),
 			"events.filterByCount(filter='(eventId eq ''added'' and day gt " +
-				"''last24Hours'' and attribute/" + encodedName + " eq true)'," +
-					"operator='ge',value=1)",
+				"''last24Hours'' and attribute/" + encodedName + " eq true)'" +
+					", operator='ge', value=1)",
 			123456789L,
 			new HashSet<>(
 				Arrays.asList(
@@ -1108,7 +1108,7 @@ public class FilterExpressionTest {
 						)
 					))),
 			"events.filterByCount(filter='(eventId eq ''added'' and day gt " +
-				"''last24Hours'')',operator='ge',value=1)",
+				"''last24Hours'')', operator='ge', value=1)",
 			123456789L, new HashSet<>(Arrays.asList("Event", "Individual")),
 			true);
 	}
@@ -1131,7 +1131,7 @@ public class FilterExpressionTest {
 						"name') = 'shoes'")),
 			"events.filterByCount(filter='(eventId eq ''added'' and day gt " +
 				"''last24Hours'' and attribute/" + encodedName +
-					" eq ''shoes'')',operator='ge',value=1)",
+					" eq ''shoes'')', operator='ge', value=1)",
 			123456789L, new HashSet<>(Arrays.asList("Event", "Individual")),
 			true);
 
@@ -1152,7 +1152,7 @@ public class FilterExpressionTest {
 						"SAFE_CAST('1' AS NUMERIC) END"))),
 			"events.filterByCount(filter='(eventId eq ''added'' and day gt " +
 				"''last24Hours'' and attribute/" + encodedName +
-					" gt 1)',operator='ge',value=1)",
+					" gt 1)', operator='ge', value=1)",
 			123456789L, new HashSet<>(Arrays.asList("Event", "Individual")),
 			true);
 
@@ -1171,7 +1171,7 @@ public class FilterExpressionTest {
 						"'$.item name'))) < SAFE_CAST('2024-03-04' AS DATE)"))),
 			"events.filterByCount(filter='(eventId eq ''added'' and day gt " +
 				"''last24Hours'' and attribute/" + encodedName +
-					" lt ''2024-03-04'')',operator='ge',value=1)",
+					" lt ''2024-03-04'')', operator='ge', value=1)",
 			123456789L, new HashSet<>(Arrays.asList("Event", "Individual")),
 			true);
 
@@ -1196,7 +1196,7 @@ public class FilterExpressionTest {
 					))),
 			"events.filterByCount(filter='(eventId eq ''added'' and day gt " +
 				"''last24Hours'' and between(attribute/" + encodedName +
-					", ''2024-03-04'', ''2024-04-04''))',operator='ge'," +
+					", ''2024-03-04'', ''2024-04-04''))', operator='ge', " +
 						"value=1)",
 			123456789L, new HashSet<>(Arrays.asList("Event", "Individual")),
 			true);
@@ -1214,7 +1214,7 @@ public class FilterExpressionTest {
 						"'$.item name')) LIKE '%shoe%'")),
 			"events.filterByCount(filter='(eventId eq ''added'' and day gt " +
 				"''last24Hours'' and contains(attribute/" + encodedName +
-					", ''shoe''))',operator='ge',value=1)",
+					", ''shoe''))', operator='ge', value=1)",
 			123456789L, new HashSet<>(Arrays.asList("Event", "Individual")),
 			true);
 
@@ -1238,8 +1238,8 @@ public class FilterExpressionTest {
 						""
 					))),
 			"events.filterByCount(filter='(eventId eq ''added'' and day gt " +
-				"''last24Hours'' and attribute/" + encodedName + " ne null)'," +
-					"operator='ge',value=1)",
+				"''last24Hours'' and attribute/" + encodedName + " ne null)'" +
+					", operator='ge', value=1)",
 			123456789L, new HashSet<>(Arrays.asList("Event", "Individual")),
 			true);
 
@@ -1263,8 +1263,8 @@ public class FilterExpressionTest {
 						""
 					))),
 			"events.filterByCount(filter='(eventId eq ''added'' and day gt " +
-				"''last24Hours'' and attribute/" + encodedName + " eq null)'," +
-					"operator='ge',value=1)",
+				"''last24Hours'' and attribute/" + encodedName + " eq null)'" +
+					", operator='ge', value=1)",
 			123456789L, new HashSet<>(Arrays.asList("Event", "Individual")),
 			true);
 
@@ -1282,7 +1282,7 @@ public class FilterExpressionTest {
 							"BOOL)")),
 			"events.filterByCount(filter='(eventId eq ''added'' and day gt " +
 				"''last24Hours'' and attribute/" + encodedName +
-					" eq false)',operator='ge',value=1)",
+					" eq false)', operator='ge', value=1)",
 			123456789L, new HashSet<>(Arrays.asList("Event", "Individual")),
 			true);
 
@@ -1298,8 +1298,8 @@ public class FilterExpressionTest {
 					"SAFE_CAST(JSON_EXTRACT_SCALAR(Event.eventProperties, " +
 						"'$.item name') AS BOOL) = SAFE_CAST('true' AS BOOL)")),
 			"events.filterByCount(filter='(eventId eq ''added'' and day gt " +
-				"''last24Hours'' and attribute/" + encodedName + " eq true)'," +
-					"operator='ge',value=1)",
+				"''last24Hours'' and attribute/" + encodedName + " eq true)'" +
+					", operator='ge', value=1)",
 			123456789L, new HashSet<>(Arrays.asList("Event", "Individual")),
 			true);
 	}

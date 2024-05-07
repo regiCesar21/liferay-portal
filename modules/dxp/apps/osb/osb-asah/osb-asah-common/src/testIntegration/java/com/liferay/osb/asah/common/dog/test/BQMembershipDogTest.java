@@ -437,7 +437,7 @@ public class BQMembershipDogTest
 
 		_bqMembershipDog.updateBQMemberships(
 			"(events.filterByCount(filter='(eventId eq ''addedToWishlist'' " +
-				"and eventDate gt ''2023-11-01'')',operator='ge',value=1))",
+				"and eventDate gt ''2023-11-01'')', operator='ge', value=1))",
 			Boolean.TRUE, segment);
 
 		Assertions.assertEquals(
@@ -445,8 +445,8 @@ public class BQMembershipDogTest
 
 		_bqMembershipDog.updateBQMemberships(
 			"(not(events.filterByCount(filter='(eventId eq " +
-				"''addedToWishlist'' and eventDate gt ''2023-11-01'')'," +
-					"operator='ge',value=1)))",
+				"''addedToWishlist'' and eventDate gt ''2023-11-01'')'" +
+					", operator='ge', value=1)))",
 			Boolean.TRUE, segment);
 
 		Assertions.assertEquals(
@@ -454,7 +454,7 @@ public class BQMembershipDogTest
 
 		_bqMembershipDog.updateBQMemberships(
 			"(events.filterByCount(filter='(eventId eq ''addedToWishlist'' " +
-				"and eventDate lt ''2023-12-17'')',operator='ge',value=1))",
+				"and eventDate lt ''2023-12-17'')', operator='ge', value=1))",
 			Boolean.TRUE, segment);
 
 		Assertions.assertEquals(
@@ -462,15 +462,15 @@ public class BQMembershipDogTest
 
 		_bqMembershipDog.updateBQMemberships(
 			"(events.filterByCount(filter='(eventId eq ''addedToWishlist'' " +
-				"and eventDate eq ''2023-12-17'')',operator='ge',value=1))",
+				"and eventDate eq ''2023-12-17'')', operator='ge', value=1))",
 			Boolean.TRUE, segment);
 
 		Assertions.assertEquals(
 			1L, _bqMembershipDog.getBQMembershipsCount(segment.getId()));
 
 		_bqMembershipDog.updateBQMemberships(
-			"(events.filterByCount(filter='(eventId eq ''addedToWishlist'')'," +
-				"operator='ge',value=1))",
+			"(events.filterByCount(filter='(eventId eq ''addedToWishlist'')'" +
+				", operator='ge', value=1))",
 			Boolean.TRUE, segment);
 
 		Assertions.assertEquals(
@@ -478,7 +478,7 @@ public class BQMembershipDogTest
 
 		_bqMembershipDog.updateBQMemberships(
 			"(events.filterByCount(filter='(eventId eq ''addedToWishlist'' " +
-				"and eventDate gt ''2023-11-01'')',operator='le',value=2))",
+				"and eventDate gt ''2023-11-01'')', operator='le', value=2))",
 			Boolean.TRUE, segment);
 
 		Assertions.assertEquals(
@@ -486,8 +486,8 @@ public class BQMembershipDogTest
 
 		_bqMembershipDog.updateBQMemberships(
 			"(events.filterByCount(filter='(eventId eq ''addedToWishlist'' " +
-				"and between(eventDate, ''2023-12-16'', ''2023-12-17''))'," +
-					"operator='eq',value=2))",
+				"and between(eventDate, ''2023-12-16'', ''2023-12-17''))'" +
+					", operator='eq', value=2))",
 			Boolean.TRUE, segment);
 
 		Assertions.assertEquals(
@@ -502,7 +502,7 @@ public class BQMembershipDogTest
 					"''2023-12-16'')', operator='ge', value=1)) and " +
 						"(events.filterByCount(filter='(eventId eq " +
 							"''addedToWishlist'' and eventDate gt " +
-								"''2023-11-01'')',operator='ge',value=1))",
+								"''2023-11-01'')', operator='ge', value=1))",
 			Boolean.TRUE, segment);
 
 		Assertions.assertEquals(
@@ -514,16 +514,16 @@ public class BQMembershipDogTest
 					"''2023-12-16'')', operator='ge', value=1)) or " +
 						"(events.filterByCount(filter='(eventId eq " +
 							"''addedToWishlist'' and eventDate gt " +
-								"''2023-11-01'')',operator='ge',value=1))",
+								"''2023-11-01'')', operator='ge', value=1))",
 			Boolean.TRUE, segment);
 
 		Assertions.assertEquals(
 			2L, _bqMembershipDog.getBQMembershipsCount(segment.getId()));
 
 		_bqMembershipDog.updateBQMemberships(
-			"(events.filterByCount(filter='(eventId eq ''addedToWishlist'')'," +
-				"operator='ge',value=1)) and (events.filterByCount(filter='(" +
-					"eventId eq ''purchased'')',operator='ge',value=1))",
+			"(events.filterByCount(filter='(eventId eq ''addedToWishlist'')'" +
+				", operator='ge', value=1)) and (events.filterByCount(filter=" +
+					"'(eventId eq ''purchased'')', operator='ge', value=1))",
 			Boolean.TRUE, segment);
 
 		Assertions.assertEquals(
@@ -534,8 +534,8 @@ public class BQMembershipDogTest
 
 		_bqMembershipDog.updateBQMemberships(
 			"(events.filterByCount(filter='(eventId eq ''addedToWishlist'' " +
-				"and attribute/" + encodedName + " eq ''apple'')',operator='" +
-					"ge',value=1))",
+				"and attribute/" + encodedName + " eq ''apple'')', operator='" +
+					"ge', value=1))",
 			Boolean.TRUE, segment);
 
 		Assertions.assertEquals(
@@ -543,8 +543,8 @@ public class BQMembershipDogTest
 
 		_bqMembershipDog.updateBQMemberships(
 			"(events.filterByCount(filter='(eventId eq ''addedToWishlist'' " +
-				"and contains(attribute/" + encodedName + ", ''apple''))'," +
-					"operator='ge',value=1))",
+				"and contains(attribute/" + encodedName + ", ''apple''))', " +
+					"operator='ge', value=1))",
 			Boolean.TRUE, segment);
 
 		Assertions.assertEquals(
@@ -555,8 +555,8 @@ public class BQMembershipDogTest
 
 		_bqMembershipDog.updateBQMemberships(
 			"(events.filterByCount(filter='(eventId eq ''addedToWishlist'' " +
-				"and attribute/" + encodedName + " gt 1)'," +
-					"operator='ge',value=1))",
+				"and attribute/" + encodedName + " gt 1)', operator='ge', " +
+					"value=1))",
 			Boolean.TRUE, segment);
 
 		Assertions.assertEquals(
@@ -564,8 +564,8 @@ public class BQMembershipDogTest
 
 		_bqMembershipDog.updateBQMemberships(
 			"(events.filterByCount(filter='(eventId eq ''addedToWishlist'' " +
-				"and attribute/" + encodedName + " lt 5)'," +
-					"operator='ge',value=1))",
+				"and attribute/" + encodedName + " lt 5)', operator='ge', " +
+					"value=1))",
 			Boolean.TRUE, segment);
 
 		Assertions.assertEquals(
@@ -573,8 +573,8 @@ public class BQMembershipDogTest
 
 		_bqMembershipDog.updateBQMemberships(
 			"(events.filterByCount(filter='(eventId eq ''addedToWishlist'' " +
-				"and attribute/" + encodedName + " eq 5)'," +
-					"operator='ge',value=1))",
+				"and attribute/" + encodedName + " eq 5)', operator='ge', " +
+					"value=1))",
 			Boolean.TRUE, segment);
 
 		Assertions.assertEquals(
@@ -585,8 +585,8 @@ public class BQMembershipDogTest
 
 		_bqMembershipDog.updateBQMemberships(
 			"(events.filterByCount(filter='(eventId eq ''addedToWishlist'' " +
-				"and attribute/" + encodedName + " gt ''2023-12-11'')'," +
-					"operator='ge',value=1))",
+				"and attribute/" + encodedName + " gt ''2023-12-11'')', " +
+					"operator='ge', value=1))",
 			Boolean.TRUE, segment);
 
 		Assertions.assertEquals(
@@ -594,8 +594,8 @@ public class BQMembershipDogTest
 
 		_bqMembershipDog.updateBQMemberships(
 			"(events.filterByCount(filter='(eventId eq ''addedToWishlist'' " +
-				"and attribute/" + encodedName + " lt ''2024-02-01'')'," +
-					"operator='ge',value=1))",
+				"and attribute/" + encodedName + " lt ''2024-02-01'')', " +
+					"operator='ge', value=1))",
 			Boolean.TRUE, segment);
 
 		Assertions.assertEquals(
@@ -613,8 +613,8 @@ public class BQMembershipDogTest
 
 		_bqMembershipDog.updateBQMemberships(
 			"(events.filterByCount(filter='(eventId eq ''addedToWishlist'' " +
-				"and attribute/" + encodedName + " eq ''apple'')',operator='" +
-					"ge',value=1))",
+				"and attribute/" + encodedName + " eq ''apple'')', operator='" +
+					"ge', value=1))",
 			Boolean.TRUE, segment);
 
 		Assertions.assertEquals(
@@ -622,8 +622,8 @@ public class BQMembershipDogTest
 
 		_bqMembershipDog.updateBQMemberships(
 			"(events.filterByCount(filter='(eventId eq ''addedToWishlist'' " +
-				"and contains(attribute/" + encodedName + ", ''apple''))'," +
-					"operator='ge',value=1))",
+				"and contains(attribute/" + encodedName + ", ''apple''))', " +
+					"operator='ge', value=1))",
 			Boolean.TRUE, segment);
 
 		Assertions.assertEquals(
@@ -634,8 +634,8 @@ public class BQMembershipDogTest
 
 		_bqMembershipDog.updateBQMemberships(
 			"(events.filterByCount(filter='(eventId eq ''addedToWishlist'' " +
-				"and attribute/" + encodedName + " gt 1)'," +
-					"operator='ge',value=1))",
+				"and attribute/" + encodedName + " gt 1)', operator='ge', " +
+					"value=1))",
 			Boolean.TRUE, segment);
 
 		Assertions.assertEquals(
@@ -643,8 +643,8 @@ public class BQMembershipDogTest
 
 		_bqMembershipDog.updateBQMemberships(
 			"(events.filterByCount(filter='(eventId eq ''addedToWishlist'' " +
-				"and attribute/" + encodedName + " lt 5)'," +
-					"operator='ge',value=1))",
+				"and attribute/" + encodedName + " lt 5)', operator='ge', " +
+					"value=1))",
 			Boolean.TRUE, segment);
 
 		Assertions.assertEquals(
@@ -652,8 +652,8 @@ public class BQMembershipDogTest
 
 		_bqMembershipDog.updateBQMemberships(
 			"(events.filterByCount(filter='(eventId eq ''addedToWishlist'' " +
-				"and attribute/" + encodedName + " eq 5)'," +
-					"operator='ge',value=1))",
+				"and attribute/" + encodedName + " eq 5)', operator='ge', " +
+					"value=1))",
 			Boolean.TRUE, segment);
 
 		Assertions.assertEquals(
@@ -664,8 +664,8 @@ public class BQMembershipDogTest
 
 		_bqMembershipDog.updateBQMemberships(
 			"(events.filterByCount(filter='(eventId eq ''addedToWishlist'' " +
-				"and attribute/" + encodedName + " gt ''2023-12-11'')'," +
-					"operator='ge',value=1))",
+				"and attribute/" + encodedName + " gt ''2023-12-11'')', " +
+					"operator='ge', value=1))",
 			Boolean.TRUE, segment);
 
 		Assertions.assertEquals(
@@ -673,8 +673,8 @@ public class BQMembershipDogTest
 
 		_bqMembershipDog.updateBQMemberships(
 			"(events.filterByCount(filter='(eventId eq ''addedToWishlist'' " +
-				"and attribute/" + encodedName + " lt ''2024-02-01'')'," +
-					"operator='ge',value=1))",
+				"and attribute/" + encodedName + " lt ''2024-02-01'')', " +
+					"operator='ge', value=1))",
 			Boolean.TRUE, segment);
 
 		Assertions.assertEquals(
