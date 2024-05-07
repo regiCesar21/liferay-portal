@@ -10,7 +10,6 @@ import com.liferay.osb.asah.common.date.dog.util.TimeZoneDogUtil;
 import com.liferay.osb.asah.common.filter.expression.parser.FilterExpressionBaseVisitor;
 import com.liferay.osb.asah.common.filter.expression.parser.FilterExpressionParser;
 import com.liferay.osb.asah.common.util.BQSQLUtil;
-import com.liferay.osb.asah.common.util.Base64;
 import com.liferay.osb.asah.common.util.SetUtil;
 import com.liferay.osb.asah.common.util.StringUtil;
 
@@ -38,6 +37,8 @@ import org.antlr.v4.runtime.Token;
 import org.antlr.v4.runtime.tree.ParseTree;
 import org.antlr.v4.runtime.tree.TerminalNode;
 
+import org.apache.commons.codec.DecoderException;
+import org.apache.commons.codec.binary.Hex;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.math.NumberUtils;
 
@@ -468,8 +469,14 @@ public class FilterExpressionConditionVisitor
 		else if (StringUtils.startsWith(fieldName, "EventProperty.")) {
 			String[] parts = fieldName.split("\\.", 2);
 
-			qualifiedFieldName = new String(
-				Base64.decode(parts[1]), StandardCharsets.UTF_8);
+			try {
+				qualifiedFieldName = new String(
+					Hex.decodeHex(parts[1]), StandardCharsets.UTF_8);
+			}
+			catch (DecoderException decoderException) {
+				throw new FilterExpressionParserException(
+					"Invalid event attribute name: " + parts[1]);
+			}
 
 			field = DSL.field(
 				"JSON_EXTRACT_SCALAR(Event.eventProperties, '$." +
@@ -632,12 +639,20 @@ public class FilterExpressionConditionVisitor
 
 				_referencedTableNames.add("EventAttributes");
 
+				try {
+					fieldName = new String(
+						Hex.decodeHex(fieldName), StandardCharsets.UTF_8);
+				}
+				catch (DecoderException decoderException) {
+					throw new FilterExpressionParserException(
+						"Invalid event attribute name: " + fieldName);
+				}
+
 				condition = condition.and(
 					DSL.field(
 						alias + ".name"
 					).eq(
-						new String(
-							Base64.decode(fieldName), StandardCharsets.UTF_8)
+						fieldName
 					));
 			}
 			else if (StringUtils.startsWith(field.getName(), "ExpandoValue_")) {
@@ -1347,10 +1362,19 @@ public class FilterExpressionConditionVisitor
 
 		_referencedTableNames.add("EventAttributes");
 
+		try {
+			fieldName = new String(
+				Hex.decodeHex(fieldName), StandardCharsets.UTF_8);
+		}
+		catch (DecoderException decoderException) {
+			throw new FilterExpressionParserException(
+				"Invalid event attribute name: " + fieldName);
+		}
+
 		Condition condition = DSL.field(
 			alias + ".name"
 		).eq(
-			new String(Base64.decode(fieldName), StandardCharsets.UTF_8)
+			fieldName
 		);
 
 		String query =
@@ -1358,8 +1382,7 @@ public class FilterExpressionConditionVisitor
 
 		if (DateUtil.isValidPatternShort(value)) {
 			query = String.join(
-				"", "CASE WHEN {0}.name = '",
-				new String(Base64.decode(fieldName), StandardCharsets.UTF_8),
+				"", "CASE WHEN {0}.name = '", fieldName,
 				"' THEN DATE(PARSE_TIMESTAMP('%a %b %d %H:%M:%S %Z %Y', ",
 				"{0}.value)) {1} SAFE_CAST('", value, "' AS DATE) ELSE false ",
 				"END");
@@ -1455,8 +1478,14 @@ public class FilterExpressionConditionVisitor
 			fieldName = parts[1];
 		}
 
-		fieldName = new String(
-			Base64.decode(fieldName), StandardCharsets.UTF_8);
+		try {
+			fieldName = new String(
+				Hex.decodeHex(fieldName), StandardCharsets.UTF_8);
+		}
+		catch (DecoderException decoderException) {
+			throw new FilterExpressionParserException(
+				"Invalid event attribute name: " + fieldName);
+		}
 
 		String query =
 			"JSON_EXTRACT_SCALAR(Event.eventProperties, '$." + fieldName +

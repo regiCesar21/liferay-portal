@@ -11,7 +11,6 @@ import com.fasterxml.jackson.annotation.JsonRootName;
 
 import com.liferay.osb.asah.common.entity.EventAttributeDefinition;
 import com.liferay.osb.asah.common.entity.EventDefinitionEventAttributeDefinition;
-import com.liferay.osb.asah.common.util.Base64;
 
 import java.nio.charset.StandardCharsets;
 
@@ -21,6 +20,8 @@ import java.util.List;
 import java.util.Objects;
 import java.util.Set;
 import java.util.stream.Stream;
+
+import org.apache.commons.codec.binary.Hex;
 
 /**
  * @author Leslie Wong
@@ -42,7 +43,8 @@ public class EventAttributeDefinitionDTO {
 
 		_name = eventAttributeDefinition.getName();
 
-		_encodedName = Base64.encode(_name.getBytes(StandardCharsets.UTF_8));
+		_encodedName = Hex.encodeHexString(
+			_name.getBytes(StandardCharsets.UTF_8));
 
 		List<EventDefinitionEventAttributeDefinition>
 			eventDefinitionEventAttributeDefinitions = new ArrayList<>(
