@@ -6,6 +6,7 @@
 package com.liferay.osb.asah.common.storage.impl;
 
 import com.google.api.gax.paging.Page;
+import com.google.cloud.WriteChannel;
 import com.google.cloud.storage.Blob;
 import com.google.cloud.storage.BlobId;
 import com.google.cloud.storage.BlobInfo;
@@ -18,7 +19,9 @@ import com.liferay.osb.asah.common.spring.annotation.ConditionalOnGoogleApplicat
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
 
+import java.nio.channels.Channels;
 import java.nio.file.Files;
 
 import java.util.Date;
@@ -31,6 +34,7 @@ import java.util.zip.ZipOutputStream;
 import javax.annotation.PostConstruct;
 import javax.annotation.PreDestroy;
 
+import org.apache.commons.io.IOUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
@@ -56,6 +60,25 @@ public class GoogleStorageArchiver {
 		String projectId) {
 
 		_archive(bucket, bucketFolder, file, fileName, projectId);
+	}
+
+	public void archiveSync(
+		String bucket, String bucketFolder, InputStream inputStream,
+		String fileName, String projectId) {
+
+		BlobInfo blobInfo = _buildBlobInfo(
+			bucket, _getBlobName(bucketFolder, fileName, projectId));
+
+		try (WriteChannel writeChannel = _storage.writer(blobInfo)) {
+			IOUtils.copy(inputStream, Channels.newOutputStream(writeChannel));
+		}
+		catch (IOException ioException) {
+			_log.error(
+				String.format(
+					"Unable to upload blob %s to the bucket %s",
+					blobInfo.getName(), blobInfo.getBucket()),
+				ioException);
+		}
 	}
 
 	public File readSparkJobResult(
