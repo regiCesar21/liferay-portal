@@ -17,6 +17,7 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
+import com.liferay.portal.kernel.util.Validator;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -55,6 +56,13 @@ public class TextDDMFormFieldTemplateContextContributor
 				"htmlAutocompleteAttribute",
 				GetterUtil.getString(
 					ddmFormField.getProperty("htmlAutocompleteAttribute")));
+
+			Object maxLength = ddmFormField.getProperty("maxLength");
+
+			if (Validator.isNotNull(maxLength)) {
+				parameters.put("maxLength", GetterUtil.getInteger(maxLength));
+			}
+
 			parameters.put(
 				"placeholder",
 				getPlaceholder(ddmFormField, ddmFormFieldRenderingContext));
@@ -63,6 +71,10 @@ public class TextDDMFormFieldTemplateContextContributor
 				getTooltip(ddmFormField, ddmFormFieldRenderingContext));
 		}
 
+		parameters.put(
+			"invalidCharacters",
+			GetterUtil.getString(
+				ddmFormField.getProperty("invalidCharacters")));
 		parameters.put(
 			"options", getOptions(ddmFormField, ddmFormFieldRenderingContext));
 

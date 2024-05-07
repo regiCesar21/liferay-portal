@@ -22,8 +22,10 @@ const Text = ({
 	fieldName,
 	htmlAutocompleteAttribute,
 	id,
+	invalidCharacters,
 	localizable,
 	localizedValue,
+	maxLength,
 	name,
 	onBlur,
 	onChange,
@@ -81,6 +83,9 @@ const Text = ({
 			{...(htmlAutocompleteAttribute && {
 				autoComplete: htmlAutocompleteAttribute,
 			})}
+			{...(maxLength && {
+				maxLength,
+			})}
 			className="ddm-field-text"
 			disabled={disabled}
 			id={id}
@@ -94,8 +99,16 @@ const Text = ({
 				}
 			}}
 			onChange={(event) => {
+				const originalValue = event.target.value;
+
 				if (fieldName === 'fieldReference' || fieldName === 'name') {
-					event.target.value = normalizeFieldName(event.target.value);
+					event.target.value = normalizeFieldName(originalValue);
+				}
+
+				if (invalidCharacters) {
+					const regex = new RegExp(invalidCharacters, 'g');
+
+					event.target.value = originalValue.replace(regex, '');
 				}
 
 				setValue(event.target.value);
@@ -320,9 +333,11 @@ const Main = ({
 	editingLanguageId,
 	fieldName,
 	htmlAutocompleteAttribute,
+	invalidCharacters,
 	id,
 	localizable,
 	localizedValue = {},
+	maxLength,
 	name,
 	onBlur,
 	onChange,
@@ -375,8 +390,10 @@ const Main = ({
 				fieldName={fieldName}
 				htmlAutocompleteAttribute={htmlAutocompleteAttribute}
 				id={id ?? name}
+				invalidCharacters={invalidCharacters}
 				localizable={localizable}
 				localizedValue={localizedValue}
+				maxLength={maxLength}
 				name={name}
 				onBlur={onBlur}
 				onChange={onChange}
