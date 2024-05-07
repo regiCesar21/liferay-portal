@@ -1,1 +1,1 @@
-com/liferay/osb/asah/publisher/rest/controller/DXPBatchEntitiesRestController._dxpBatchEntitiesStoragePath:SAFE
+com/liferay/osb/asah/publisher/util/DXPBatchEntitiesFileUploadEventHandler._dxpBatchEntitiesStoragePath:SAFE
