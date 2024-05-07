@@ -7,6 +7,9 @@ package com.liferay.osb.asah.publisher.rest.controller;
 
 import com.liferay.osb.asah.common.antivirus.ClamAVScanner;
 import com.liferay.osb.asah.common.constants.HeaderConstants;
+import com.liferay.osb.asah.common.dog.DataSourceDog;
+import com.liferay.osb.asah.common.entity.DataSource;
+import com.liferay.osb.asah.common.spring.http.exception.OSBAsahException;
 import com.liferay.osb.asah.common.storage.Storage;
 import com.liferay.osb.asah.common.storage.StorageConfiguration;
 import com.liferay.osb.asah.common.storage.StorageFactory;
@@ -27,6 +30,7 @@ import java.util.List;
 import java.util.Objects;
 
 import org.apache.commons.io.FilenameUtils;
+import org.apache.commons.lang3.BooleanUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -106,8 +110,13 @@ public class DXPBatchEntitiesRestController {
 				uploadType)
 		throws Exception {
 
+		DataSource dataSource = _dataSourceDog.getDataSource(
+			Long.parseLong(dataSourceId));
+
 		for (MultipartFile multipartFile : multipartFiles) {
 			String name = multipartFile.getOriginalFilename();
+
+			_validateDatasourceConfiguration(dataSource, name);
 
 			if (_log.isDebugEnabled()) {
 				_log.debug("Received upload request " + name);
@@ -196,6 +205,20 @@ public class DXPBatchEntitiesRestController {
 
 	private static final long _EMPTY_ZIP_FILE_LENGTH = 140;
 
+	private void _validateDatasourceConfiguration(
+		DataSource dataSource, String name) {
+
+		if (Objects.equals(
+				name,
+				"com.liferay.analytics.dxp.entity.rest.dto.v1_0.DXPEntity") &&
+			!(BooleanUtils.toBoolean(dataSource.getAccountsSelected()) ||
+			  BooleanUtils.toBoolean(dataSource.getContactsSelected()))) {
+
+			throw new OSBAsahException(
+				HttpStatus.BAD_REQUEST, "Contact sync not enabled");
+		}
+	}
+
 	private static final Log _log = LogFactory.getLog(
 		DXPBatchEntitiesRestController.class);
 
@@ -204,6 +227,9 @@ public class DXPBatchEntitiesRestController {
 
 	@Autowired(required = false)
 	private ClamAVScanner _clamAVScanner;
+
+	@Autowired
+	private DataSourceDog _dataSourceDog;
 
 	@Value(
 		"${osb.asah.dxp.batch.entities.google.bucket:{googleProjectId}-dxp-entities}"
