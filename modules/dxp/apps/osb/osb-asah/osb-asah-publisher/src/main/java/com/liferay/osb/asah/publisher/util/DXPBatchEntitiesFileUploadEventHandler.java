@@ -69,6 +69,7 @@ public class DXPBatchEntitiesFileUploadEventHandler {
 		_environment = environment;
 
 		if (environment.acceptsProfiles(Profiles.of("prod"))) {
+			Assert.hasText(_composerEndpoint, "Composer endpoint is null");
 			Assert.notNull(
 				googleStorageArchiver, "Google storage archiver is null");
 		}
@@ -213,7 +214,7 @@ public class DXPBatchEntitiesFileUploadEventHandler {
 	private static final Log _log = LogFactory.getLog(
 		DXPBatchEntitiesFileUploadEventHandler.class);
 
-	@Value("${osb.asah.composer.endpoint}")
+	@Value("${osb.asah.composer.endpoint:}")
 	private String _composerEndpoint;
 
 	@Value(
