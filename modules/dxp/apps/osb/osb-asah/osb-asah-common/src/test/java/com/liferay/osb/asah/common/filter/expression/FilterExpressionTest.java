@@ -711,7 +711,8 @@ public class FilterExpressionTest {
 				).as(
 					"Event"
 				).crossJoin(
-					DSL.table("UNNEST(Event.fields) AS EventAttributes_d054dc")
+					DSL.table(
+						"UNNEST(Event.properties) AS EventAttributes_d054dc")
 				),
 				DSL.field(
 					"EventAttributes_d054dc.name"
@@ -740,7 +741,8 @@ public class FilterExpressionTest {
 				).as(
 					"Event"
 				).crossJoin(
-					DSL.table("UNNEST(Event.fields) AS EventAttributes_d054dc")
+					DSL.table(
+						"UNNEST(Event.properties) AS EventAttributes_d054dc")
 				),
 				DSL.field(
 					"EventAttributes_d054dc.name"
@@ -770,7 +772,8 @@ public class FilterExpressionTest {
 				).as(
 					"Event"
 				).crossJoin(
-					DSL.table("UNNEST(Event.fields) AS EventAttributes_d054dc")
+					DSL.table(
+						"UNNEST(Event.properties) AS EventAttributes_d054dc")
 				),
 				DSL.field(
 					"EventAttributes_d054dc.name"
@@ -806,7 +809,8 @@ public class FilterExpressionTest {
 				).as(
 					"Event"
 				).crossJoin(
-					DSL.table("UNNEST(Event.fields) AS EventAttributes_d054dc")
+					DSL.table(
+						"UNNEST(Event.properties) AS EventAttributes_d054dc")
 				),
 				DSL.and(
 					DSL.function(
@@ -842,7 +846,8 @@ public class FilterExpressionTest {
 				).as(
 					"Event"
 				).crossJoin(
-					DSL.table("UNNEST(Event.fields) AS EventAttributes_d054dc")
+					DSL.table(
+						"UNNEST(Event.properties) AS EventAttributes_d054dc")
 				),
 				DSL.field(
 					"EventAttributes_d054dc.name"
@@ -871,7 +876,8 @@ public class FilterExpressionTest {
 				).as(
 					"Event"
 				).crossJoin(
-					DSL.table("UNNEST(Event.fields) AS EventAttributes_d054dc")
+					DSL.table(
+						"UNNEST(Event.properties) AS EventAttributes_d054dc")
 				),
 				DSL.field(
 					"EventAttributes_d054dc.name"
@@ -907,7 +913,8 @@ public class FilterExpressionTest {
 				).as(
 					"Event"
 				).crossJoin(
-					DSL.table("UNNEST(Event.fields) AS EventAttributes_d054dc")
+					DSL.table(
+						"UNNEST(Event.properties) AS EventAttributes_d054dc")
 				),
 				DSL.field(
 					"EventAttributes_d054dc.name"
@@ -943,7 +950,8 @@ public class FilterExpressionTest {
 				).as(
 					"Event"
 				).crossJoin(
-					DSL.table("UNNEST(Event.fields) AS EventAttributes_d054dc")
+					DSL.table(
+						"UNNEST(Event.properties) AS EventAttributes_d054dc")
 				),
 				DSL.field(
 					"EventAttributes_d054dc.name"
@@ -973,7 +981,8 @@ public class FilterExpressionTest {
 				).as(
 					"Event"
 				).crossJoin(
-					DSL.table("UNNEST(Event.fields) AS EventAttributes_d054dc")
+					DSL.table(
+						"UNNEST(Event.properties) AS EventAttributes_d054dc")
 				),
 				DSL.field(
 					"EventAttributes_d054dc.name"

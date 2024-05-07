@@ -341,7 +341,7 @@ public class FilterExpressionConditionVisitor
 
 			for (String field : fields) {
 				eventTable = eventTable.crossJoin(
-					"UNNEST(Event.fields) AS " + field);
+					"UNNEST(Event.properties) AS " + field);
 			}
 		}
 
