@@ -138,6 +138,11 @@ public class ChannelDog {
 				className = "ClearChannelsNanite";
 			}
 
+			if (_log.isWarnEnabled()) {
+				_log.warn(
+					className + " failed. Submitting a new task.", exception);
+			}
+
 			_asahTaskDog.scheduleAsahTask(
 				className,
 				JSONUtil.put(
