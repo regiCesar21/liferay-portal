@@ -7,15 +7,13 @@ package com.liferay.osb.asah.publisher.rest.controller;
 
 import com.liferay.osb.asah.common.antivirus.ClamAVScanner;
 import com.liferay.osb.asah.common.constants.HeaderConstants;
-import com.liferay.osb.asah.common.date.DateUtil;
 import com.liferay.osb.asah.common.storage.Storage;
 import com.liferay.osb.asah.common.storage.StorageConfiguration;
 import com.liferay.osb.asah.common.storage.StorageFactory;
-import com.liferay.osb.asah.common.util.ProjectIdThreadLocal;
+import com.liferay.osb.asah.publisher.util.DXPBatchEntitiesFileUploadEvent;
+import com.liferay.osb.asah.publisher.util.DXPBatchEntitiesFileUploadEventHandler;
 
 import java.io.File;
-import java.io.FileOutputStream;
-import java.io.InputStream;
 
 import java.time.Instant;
 import java.time.ZoneOffset;
@@ -28,9 +26,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.Objects;
 
-import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.FilenameUtils;
-import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -117,12 +113,22 @@ public class DXPBatchEntitiesRestController {
 				_log.debug("Received upload request " + name);
 			}
 
+			if (multipartFile.getSize() <= _EMPTY_ZIP_FILE_LENGTH) {
+				if (_log.isDebugEnabled()) {
+					_log.debug("Skipping empty uploaded file  " + name);
+				}
+
+				continue;
+			}
+
 			if (_clamAVScanner != null) {
 				_clamAVScanner.scan(multipartFile.getInputStream());
 			}
 
-			_storeMessages(
-				dataSourceId, name, multipartFile.getInputStream(), uploadType);
+			_dxpBatchEntitiesFileUploadHandler.receive(
+				new DXPBatchEntitiesFileUploadEvent(
+					dataSourceId, multipartFile.getInputStream(), name,
+					uploadType));
 
 			if (_log.isInfoEnabled()) {
 				_log.info(
@@ -158,14 +164,6 @@ public class DXPBatchEntitiesRestController {
 		return fileName;
 	}
 
-	private String _getValidatedUploadPath(String path) {
-		if (!Objects.equals(path, FilenameUtils.normalize(path))) {
-			throw new IllegalArgumentException("Invalid storage path");
-		}
-
-		return path;
-	}
-
 	private Date _parseDate(String dateString) {
 		try {
 			if (dateString == null) {
@@ -196,31 +194,7 @@ public class DXPBatchEntitiesRestController {
 		}
 	}
 
-	private void _storeMessages(
-			String dataSourceId, String resourceName, InputStream inputStream,
-			String uploadType)
-		throws Exception {
-
-		if (StringUtils.isBlank(uploadType)) {
-			uploadType = "FULL";
-		}
-
-		String path = _getValidatedUploadPath(
-			String.format(
-				"%s/%s/%s/%s/%s/%s.zip", _dxpBatchEntitiesStoragePath,
-				ProjectIdThreadLocal.getProjectId(), dataSourceId, resourceName,
-				uploadType, DateUtil.newDateString()));
-
-		File targetFile = new File(path);
-
-		FileUtils.createParentDirectories(targetFile);
-
-		try (FileOutputStream fileOutputStream = new FileOutputStream(
-				targetFile, true)) {
-
-			IOUtils.copy(inputStream, fileOutputStream);
-		}
-	}
+	private static final long _EMPTY_ZIP_FILE_LENGTH = 140;
 
 	private static final Log _log = LogFactory.getLog(
 		DXPBatchEntitiesRestController.class);
@@ -236,8 +210,9 @@ public class DXPBatchEntitiesRestController {
 	)
 	private String _dxpBatchEntitiesBucketTemplate;
 
-	@Value("${osb.asah.dxp.batch.entities.storage.path:/storage}")
-	private String _dxpBatchEntitiesStoragePath;
+	@Autowired
+	private DXPBatchEntitiesFileUploadEventHandler
+		_dxpBatchEntitiesFileUploadHandler;
 
 	@Value("${osb.asah.gcloud.project.id:liferaycloud-customer-ac}")
 	private String _gcloudProjectId;
