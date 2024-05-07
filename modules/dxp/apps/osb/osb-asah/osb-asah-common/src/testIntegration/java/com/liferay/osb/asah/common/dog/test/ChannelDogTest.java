@@ -60,14 +60,14 @@ public class ChannelDogTest
 		Assertions.assertEquals("channel1 (1)", channel.getName());
 	}
 
-	@BQSQLResource(resourcePath = "test_bq_clear_channels.sql")
-	@SQLResource(resourcePath = "test_clear_channels.sql")
+	@BQSQLResource(resourcePath = "test_bq_clear_channels_1.sql")
+	@SQLResource(resourcePath = "test_clear_channels_1.sql")
 	@Test
-	public void testClearChannels() {
+	public void testClearChannels1() {
 		_channelDog.clearChannels(
 			SetUtil.of(1L, 2L), true, DateUtil.newDateString());
 
-		_assertClearChannels(1L);
+		_assertClearChannels(1L, 0L);
 
 		Assertions.assertEquals(
 			0,
@@ -86,13 +86,45 @@ public class ChannelDogTest
 		Assertions.assertNotNull(_channelDog.fetchChannel(1L));
 	}
 
+	@BQSQLResource(resourcePath = "test_bq_clear_channels_2.sql")
+	@SQLResource(resourcePath = "test_clear_channels_2.sql")
+	@Test
+	public void testClearChannels2() {
+		_channelDog.clearChannels(
+			Collections.singleton(1L), true,
+			DateUtil.addDays(DateUtil.newDateString(), -3));
+
+		_assertClearChannels(
+			1L, 1L, "BlogDaily", "DocumentLibraryDaily", "FormDaily",
+			"BQIdentityInterestScore", "JournalDaily", "PageDaily",
+			"BQSessionInterestScore");
+
+		_assertClearChannels(1L, 0L, "BQIdentityInterestPage");
+
+		Assertions.assertEquals(
+			4,
+			_bqEventRepository.countTotalBQEvents(
+				1L, null, null, null, null, "UTC"));
+
+		List<BQSession> bqSessions = _bqSessionRepository.findAllById(
+			Collections.singleton("366909399944213421"));
+
+		Assertions.assertEquals(1, bqSessions.size());
+
+		Assertions.assertEquals(1, _customAssetDashboardRepository.count());
+		Assertions.assertEquals(1, _experimentRepository.count());
+		Assertions.assertEquals(1, _segmentRepository.count());
+
+		Assertions.assertNotNull(_channelDog.fetchChannel(1L));
+	}
+
 	@BQSQLResource(resourcePath = "test_bq_delete_channels.sql")
 	@SQLResource(resourcePath = "test_delete_channels.sql")
 	@Test
 	public void testDeleteChannels() {
 		_channelDog.deleteChannels(SetUtil.of(1L), DateUtil.newDateString());
 
-		_assertClearChannels(1L);
+		_assertClearChannels(1L, 0L);
 
 		Assertions.assertEquals(
 			0,
@@ -264,16 +296,19 @@ public class ChannelDogTest
 		Assertions.assertEquals("channel1 (1)", channel.getName());
 	}
 
-	private void _assertClearChannels(long channelId) {
-		String[] tableNames = {
-			"BlogDaily", "DocumentLibraryDaily", "FormDaily",
-			"BQIdentityInterestPage", "BQIdentityInterestScore", "JournalDaily",
-			"PageDaily", "BQSessionInterestScore"
-		};
+	private void _assertClearChannels(long channelId, long expectedCount) {
+		_assertClearChannels(
+			channelId, expectedCount, "BlogDaily", "DocumentLibraryDaily",
+			"FormDaily", "BQIdentityInterestPage", "BQIdentityInterestScore",
+			"JournalDaily", "PageDaily", "BQSessionInterestScore");
+	}
+
+	private void _assertClearChannels(
+		long channelId, long expectedCount, String... tableNames) {
 
 		for (String tableName : tableNames) {
 			Assertions.assertEquals(
-				0,
+				expectedCount,
 				_queryExecutor.queryForLong(
 					DSL.selectCount(
 					).from(
