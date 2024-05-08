@@ -478,9 +478,14 @@ public class FilterExpressionConditionVisitor
 					"Invalid event attribute name: " + parts[1]);
 			}
 
-			field = DSL.field(
-				"JSON_EXTRACT_SCALAR(Event.eventProperties, '$." +
-					qualifiedFieldName + "')");
+			if (_defaultEventPropertyNames.containsKey(fieldName)) {
+				field = DSL.field("Event." + qualifiedFieldName);
+			}
+			else {
+				field = DSL.field(
+					"JSON_EXTRACT_SCALAR(Event.eventProperties, '$." +
+						qualifiedFieldName + "')");
+			}
 		}
 		else if (StringUtils.startsWith(fieldName, "ExpandoValue.")) {
 			String[] parts = fieldName.split("\\.", 2);
@@ -1487,44 +1492,45 @@ public class FilterExpressionConditionVisitor
 				"Invalid event attribute name: " + fieldName);
 		}
 
-		String query =
-			"JSON_EXTRACT_SCALAR(Event.eventProperties, '$." + fieldName +
-				"') {0} '" + value + "'";
+		if (_defaultEventPropertyNames.containsKey(fieldName)) {
+			fieldName = "Event." + _defaultEventPropertyNames.get(fieldName);
+		}
+		else {
+			fieldName =
+				"JSON_EXTRACT_SCALAR(Event.eventProperties, '$." + fieldName +
+					"')";
+		}
+
+		String query = fieldName + " {0} '" + value + "'";
 
 		if (DateUtil.isValidPatternShort(value)) {
 			query = String.join(
 				"", "DATE(PARSE_TIMESTAMP('%a %b %d %H:%M:%S %Z %Y', ",
-				"JSON_EXTRACT_SCALAR(Event.eventProperties, '$.", fieldName,
-				"'))) {0} SAFE_CAST('", value, "' AS DATE)");
+				fieldName, ")) {0} SAFE_CAST('", value, "' AS DATE)");
 		}
 		else if (NumberUtils.isCreatable(value)) {
 			query = String.join(
-				"", "CASE WHEN SAFE_CAST(JSON_EXTRACT_SCALAR(",
-				"Event.eventProperties, '$." + fieldName + "') AS NUMERIC) IS ",
-				"NULL THEN false ELSE SAFE_CAST(JSON_EXTRACT_SCALAR(",
-				"Event.eventProperties, '$." + fieldName + "') AS NUMERIC) {0}",
-				" SAFE_CAST('", value, "' AS NUMERIC) END");
+				"", "CASE WHEN SAFE_CAST(", fieldName + " AS NUMERIC) IS ",
+				"NULL THEN false ELSE SAFE_CAST(",
+				fieldName + " AS NUMERIC) {0}", " SAFE_CAST('", value,
+				"' AS NUMERIC) END");
 		}
 		else if (StringUtils.equalsIgnoreCase(value, "false") ||
 				 StringUtils.equalsIgnoreCase(value, "true")) {
 
 			query =
-				"SAFE_CAST(JSON_EXTRACT_SCALAR(Event.eventProperties, '$." +
-					fieldName + "') AS BOOL) {0} SAFE_CAST('" + value +
-						"' AS BOOL)";
+				"SAFE_CAST(" + fieldName + " AS BOOL) {0} SAFE_CAST('" + value +
+					"' AS BOOL)";
 		}
 
 		if (operator.equalsIgnoreCase("contains")) {
 			return DSL.condition(
-				"LOWER(JSON_EXTRACT_SCALAR(Event.eventProperties, '$." +
-					fieldName + "')) LIKE '%" + StringUtils.lowerCase(value) +
-						"%'");
+				"LOWER(" + fieldName + ") LIKE '%" +
+					StringUtils.lowerCase(value) + "%'");
 		}
 		else if (operator.equalsIgnoreCase("eq")) {
 			if (StringUtil.isNull(value)) {
-				Field field = DSL.field(
-					"JSON_EXTRACT_SCALAR(Event.eventProperties, '$." +
-						fieldName + "')");
+				Field field = DSL.field(fieldName);
 
 				return DSL.or(field.isNull(), field.eq(""));
 			}
@@ -1555,9 +1561,7 @@ public class FilterExpressionConditionVisitor
 		}
 		else if (operator.equalsIgnoreCase("ne")) {
 			if (StringUtil.isNull(value)) {
-				Field field = DSL.field(
-					"JSON_EXTRACT_SCALAR(Event.eventProperties, '$." +
-						fieldName + "')");
+				Field field = DSL.field(fieldName);
 
 				return DSL.and(field.isNotNull(), field.ne(""));
 			}
@@ -2040,6 +2044,17 @@ public class FilterExpressionConditionVisitor
 		"yesterday");
 
 	private final Long _channelId;
+	private final Map<String, String> _defaultEventPropertyNames =
+		new HashMap<String, String>() {
+			{
+				put("canonicalUrl", "canonicalUrl");
+				put("pageDescription", "description");
+				put("pageKeywords", "keywords");
+				put("pageTitle", "title");
+				put("referrer", "referrer");
+				put("url", "url");
+			}
+		};
 	private final Map<String, String> _fieldMappers =
 		new HashMap<String, String>() {
 			{
