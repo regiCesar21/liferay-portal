@@ -15,7 +15,7 @@ USING
 				user.uploadDate,
 				(
 					SELECT
-						SAFE_CAST(value AS STRING)
+						SAFE_CAST(MAX(value) AS STRING)
 					FROM
 						UNNEST(user.fields)
 					WHERE
@@ -24,7 +24,7 @@ USING
 				user.fields AS fields,
 				(
 					SELECT
-						SAFE_CAST(value AS STRING)
+						SAFE_CAST(MAX(value) AS STRING)
 					FROM
 						UNNEST(user.fields)
 					WHERE
@@ -32,7 +32,7 @@ USING
 				) AS firstName,
 				(
 					SELECT
-						SAFE_CAST(value AS STRING)
+						SAFE_CAST(MAX(value) AS STRING)
 					FROM
 						UNNEST(user.fields)
 					WHERE
@@ -40,7 +40,7 @@ USING
 				) AS lastName,
 				(
 					SELECT
-						SAFE_CAST(value AS STRING)
+						SAFE_CAST(MAX(value) AS STRING)
 					FROM
 						UNNEST(user.fields)
 					WHERE
@@ -54,7 +54,7 @@ USING
 				) AS rowNumber,
 				(
 					SELECT
-						SAFE_CAST(value AS STRING)
+						SAFE_CAST(MAX(value) AS STRING)
 					FROM
 						UNNEST(user.fields)
 					WHERE
@@ -68,7 +68,7 @@ USING
 				SAFE_CAST(user.classPK AS INT64) AS dxpUserId,
 				(
 					SELECT
-						SAFE_CAST(value AS STRING)
+						SAFE_CAST(MAX(value) AS STRING)
 					FROM
 						UNNEST(user.fields)
 					WHERE
@@ -76,7 +76,7 @@ USING
 				) AS userName,
 				(
 					SELECT
-						SAFE_CAST(value AS STRING)
+						SAFE_CAST(MAX(value) AS STRING)
 					FROM
 						UNNEST(user.fields)
 					WHERE
