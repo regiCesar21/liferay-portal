@@ -15,36 +15,46 @@ USING
 				user.uploadDate,
 				(
 					SELECT
-						SAFE_CAST(MAX(value) AS STRING)
-					FROM
-						UNNEST(user.fields)
-					WHERE
-						name = 'emailAddress'
+						SAFE_CAST((
+							SELECT
+								DISTINCT(value)
+							FROM
+								UNNEST(user.fields)
+							WHERE name = 'emailAddress'
+						) AS STRING)
 				) AS emailAddress,
 				user.fields AS fields,
 				(
 					SELECT
-						SAFE_CAST(MAX(value) AS STRING)
-					FROM
-						UNNEST(user.fields)
-					WHERE
-						name = 'firstName'
+						SAFE_CAST((
+							SELECT
+								DISTINCT(value)
+							FROM
+								UNNEST(user.fields)
+							WHERE name = 'firstName'
+						) AS STRING)
 				) AS firstName,
 				(
 					SELECT
-						SAFE_CAST(MAX(value) AS STRING)
-					FROM
-						UNNEST(user.fields)
-					WHERE
-						name = 'lastName'
+						SAFE_CAST((
+							SELECT
+								DISTINCT(value)
+							FROM
+								UNNEST(user.fields)
+							WHERE
+								name = 'lastName'
+						) AS STRING)
 				) AS lastName,
 				(
 					SELECT
-						SAFE_CAST(MAX(value) AS STRING)
-					FROM
-						UNNEST(user.fields)
-					WHERE
-						name = 'middleName'
+						SAFE_CAST((
+							SELECT
+								DISTINCT(value)
+							FROM
+								UNNEST(user.fields)
+							WHERE
+								name = 'middleName'
+						) AS STRING)
 				) AS middleName,
 				ROW_NUMBER() OVER (
 					PARTITION BY
@@ -54,11 +64,13 @@ USING
 				) AS rowNumber,
 				(
 					SELECT
-						SAFE_CAST(MAX(value) AS STRING)
-					FROM
-						UNNEST(user.fields)
-					WHERE
-						name = 'screenName'
+						SAFE_CAST((
+							SELECT
+								DISTINCT(value)
+							FROM
+								UNNEST(user.fields)
+							WHERE name = 'screenName'
+						) AS STRING)
 				) AS screenName,
 				TO_HEX(
 					SHA256(
@@ -68,19 +80,23 @@ USING
 				SAFE_CAST(user.classPK AS INT64) AS dxpUserId,
 				(
 					SELECT
-						SAFE_CAST(MAX(value) AS STRING)
-					FROM
-						UNNEST(user.fields)
-					WHERE
-						name = 'userName'
+						SAFE_CAST((
+							SELECT
+								DISTINCT(value)
+							FROM
+								UNNEST(user.fields)
+							WHERE name = 'userName'
+						) AS STRING)
 				) AS userName,
 				(
 					SELECT
-						SAFE_CAST(MAX(value) AS STRING)
-					FROM
-						UNNEST(user.fields)
-					WHERE
-						name = 'uuid'
+						SAFE_CAST((
+							SELECT
+								DISTINCT(value)
+							FROM
+								UNNEST(user.fields)
+							WHERE name = 'uuid'
+						) AS STRING)
 				) AS uuid
 			FROM
 				`{{ dag.default_args['ac_project_id'] }}.dxpentity` AS user
