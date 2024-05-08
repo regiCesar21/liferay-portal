@@ -106,7 +106,7 @@ public class BQIndividualRepositoryImpl
 	@Override
 	public long countBQIndividuals(
 		@Nullable Long accountId, @Nullable Long channelId,
-		@Nullable Long datasourceId, @Nullable String interestName,
+		@Nullable Long dataSourceId, @Nullable String interestName,
 		@Nullable Long notSegmentId, String query, @Nullable Long segmentId) {
 
 		SelectJoinStep<Record1<Integer>> selectJoinStep = _getSelectJoinStep(
@@ -134,6 +134,22 @@ public class BQIndividualRepositoryImpl
 				));
 		}
 
+		if (dataSourceId != null) {
+			condition = condition.and(
+				DSL.field(
+					"IdentityActivity.dataSourceId", Long.class
+				).eq(
+					dataSourceId
+				));
+		}
+
+		condition = condition.and(
+			DSL.field(
+				"IdentityActivity.eventId"
+			).in(
+				_eventDefinitionRepository.getEventDefinitionNames(false)
+			));
+
 		if (!StringUtils.isEmpty(interestName)) {
 			condition = condition.and(
 				DSL.field(
@@ -143,6 +159,29 @@ public class BQIndividualRepositoryImpl
 						DSL.max(DSL.field("recordedDate"))
 					).from(
 						DSL.table("BQIdentityInterestScore")
+					)
+				));
+		}
+
+		if (notSegmentId != null) {
+			condition = condition.and(
+				DSL.field(
+					"Individual.id"
+				).notIn(
+					DSL.select(
+						DSL.field("notMembership.individualId")
+					).from(
+						DSL.table(
+							"BQMembership"
+						).as(
+							"notMembership"
+						)
+					).where(
+						DSL.field(
+							"notMembership.segmentId"
+						).eq(
+							notSegmentId
+						)
 					)
 				));
 		}
