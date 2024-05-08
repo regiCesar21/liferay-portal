@@ -3018,6 +3018,7 @@ AUI.add(
 								paginate: true,
 								parentLayoutId,
 								privateLayout,
+								showHiddenLayouts: true,
 								start,
 							});
 
@@ -3090,6 +3091,7 @@ AUI.add(
 							p_auth: Liferay.authToken,
 							paginate: true,
 							privateLayout,
+							showHiddenLayouts: true,
 						});
 
 						Liferay.Util.fetch(
