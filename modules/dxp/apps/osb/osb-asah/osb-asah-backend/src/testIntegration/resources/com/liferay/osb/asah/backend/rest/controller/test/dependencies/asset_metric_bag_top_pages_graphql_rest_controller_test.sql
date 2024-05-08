@@ -1,0 +1,22 @@
+INSERT INTO PageDaily (canonicalUrl, channelId, entrances, eventDate, exits, sessionId, views) VALUES ('https://www.cedric-rodriguez.net', 1, 4, TIMESTAMP '${today-2dT11:00:00.000Z}', 1, '1', 8);
+INSERT INTO PageDaily (canonicalUrl, channelId, entrances, eventDate, exits, sessionId, views) VALUES ('https://www.cedric-rodriguez.net', 1, 1, TIMESTAMP '${today-2dT11:00:00.000Z}', 0, '2', 2);
+INSERT INTO PageDaily (canonicalUrl, channelId, entrances, eventDate, exits, sessionId, views) VALUES ('https://www.cedric-rodriguez.net', 1, 1, TIMESTAMP '${today-2dT11:00:00.000Z}', 0, '3', 2);
+INSERT INTO PageDaily (canonicalUrl, channelId, entrances, eventDate, exits, sessionId, views) VALUES ('https://www.cedric-rodriguez.net', 1, 2, TIMESTAMP '${today-2dT11:00:00.000Z}', 1, '4', 3);
+INSERT INTO PageDaily (canonicalUrl, channelId, entrances, eventDate, exits, sessionId, views) VALUES ('https://www.cherelle-ullrich.org', 1, 2, TIMESTAMP '${today-2dT10:00:00.000Z}', 0, '1', 5);
+INSERT INTO PageDaily (canonicalUrl, channelId, entrances, eventDate, exits, sessionId, views) VALUES ('https://www.cherelle-ullrich.org', 1, 2, TIMESTAMP '${today-2dT10:00:00.000Z}', 1, '2', 3);
+INSERT INTO PageDaily (canonicalUrl, channelId, entrances, eventDate, exits, sessionId, views) VALUES ('https://www.cherelle-ullrich.org', 1, 2, TIMESTAMP '${today-2dT10:00:00.000Z}', 0, '3', 2);
+INSERT INTO PageDaily (canonicalUrl, channelId, entrances, eventDate, exits, sessionId, views) VALUES ('https://www.dino-boyer.com', 1, 1, TIMESTAMP '${today-2dT11:50:00.000Z}', 1, '1', 3);
+INSERT INTO PageDaily (canonicalUrl, channelId, entrances, eventDate, exits, sessionId, views) VALUES ('https://www.dino-boyer.com', 1, 1, TIMESTAMP '${today-2dT11:50:00.000Z}', 1, '2', 2);
+INSERT INTO PageDaily (canonicalUrl, channelId, entrances, eventDate, exits, sessionId, views) VALUES ('https://www.dino-boyer.com', 1, 1, TIMESTAMP '${today-2dT11:50:00.000Z}', 1, '3', 2);
+INSERT INTO PageDaily (canonicalUrl, channelId, entrances, eventDate, exits, sessionId, views) VALUES ('https://www.dino-boyer.com', 1, 0, TIMESTAMP '${today-2dT11:50:00.000Z}', 0, '4', 2);
+INSERT INTO PageDaily (canonicalUrl, channelId, entrances, eventDate, exits, sessionId, views) VALUES ('https://www.debra-huel.name', 1, 1, TIMESTAMP '${today-2dT12:15:00.000Z}', 0, '1', 1);
+INSERT INTO PageDaily (canonicalUrl, channelId, entrances, eventDate, exits, sessionId, views) VALUES ('https://www.liferay.com', 1, 7, TIMESTAMP '${today-2dT10:40:00.000Z}', 0, '1', 13);
+INSERT INTO PageDaily (canonicalUrl, channelId, entrances, eventDate, exits, sessionId, views) VALUES ('https://www.liferay.com', 1, 2, TIMESTAMP '${today-2dT10:40:00.000Z}', 1, '2', 13);
+INSERT INTO PageDaily (canonicalUrl, channelId, entrances, eventDate, exits, sessionId, views) VALUES ('https://www.liferay.com', 1, 1, TIMESTAMP '${today-2dT10:40:00.000Z}', 1, '3', 13);
+INSERT INTO PageDaily (canonicalUrl, channelId, entrances, eventDate, exits, sessionId, views) VALUES ('https://www.ray-life.com', 1, 0, TIMESTAMP '${today-2dT10:40:00.000Z}', 1, '1', 13);
+
+INSERT INTO Session(channelId, id) VALUES(1, '1');
+INSERT INTO Session(channelId, id) VALUES(2, '2');
+INSERT INTO Session(channelId, id) VALUES(3, '3');
+INSERT INTO Session(channelId, id) VALUES(4, '4');
+INSERT INTO Session(channelId, id) VALUES(5, '5');

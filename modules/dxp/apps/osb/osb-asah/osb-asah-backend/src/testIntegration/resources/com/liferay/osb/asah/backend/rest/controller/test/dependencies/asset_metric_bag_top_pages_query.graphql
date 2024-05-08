@@ -1,0 +1,20 @@
+query Touchpoint($channelId: String, $rangeEnd: String, $rangeKey: Int, $rangeStart: String, $size: Int!, $sort: Sort!, $start: Int!) {
+	pages( channelId: $channelId, rangeEnd: $rangeEnd, rangeKey: $rangeKey, rangeStart: $rangeStart, size: $size, sort: $sort, start: $start) {
+		assetMetrics {
+			... on PageMetric {
+				assetId
+				assetTitle
+				entrancesMetric {
+					value
+				}
+				exitRateMetric {
+					value
+				}
+				visitorsMetric {
+					value
+				}
+			}
+		}
+		total
+	}
+}
