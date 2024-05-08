@@ -12,16 +12,12 @@ import com.fasterxml.jackson.annotation.JsonRootName;
 import com.liferay.osb.asah.common.entity.EventAttributeDefinition;
 import com.liferay.osb.asah.common.entity.EventDefinitionEventAttributeDefinition;
 
-import java.nio.charset.StandardCharsets;
-
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Objects;
 import java.util.Set;
 import java.util.stream.Stream;
-
-import org.apache.commons.codec.binary.Hex;
 
 /**
  * @author Leslie Wong
@@ -42,9 +38,6 @@ public class EventAttributeDefinitionDTO {
 		_id = String.valueOf(eventAttributeDefinition.getId());
 
 		_name = eventAttributeDefinition.getName();
-
-		_encodedName = Hex.encodeHexString(
-			_name.getBytes(StandardCharsets.UTF_8));
 
 		List<EventDefinitionEventAttributeDefinition>
 			eventDefinitionEventAttributeDefinitions = new ArrayList<>(
@@ -113,11 +106,6 @@ public class EventAttributeDefinitionDTO {
 		return _displayName;
 	}
 
-	@JsonProperty("encodedName")
-	public String getEncodedName() {
-		return _encodedName;
-	}
-
 	@JsonProperty("id")
 	public String getId() {
 		return _id;
@@ -141,7 +129,6 @@ public class EventAttributeDefinitionDTO {
 	private EventAttributeDefinition.DataType _dataType;
 	private String _description;
 	private String _displayName;
-	private String _encodedName;
 	private String _id;
 	private String _name;
 	private String _sampleValue;
