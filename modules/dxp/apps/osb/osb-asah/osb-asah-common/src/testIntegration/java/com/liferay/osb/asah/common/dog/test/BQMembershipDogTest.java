@@ -551,6 +551,18 @@ public class BQMembershipDogTest
 			2L, _bqMembershipDog.getBQMembershipsCount(segment.getId()));
 
 		encodedName = Hex.encodeHexString(
+			"canonicalUrl".getBytes(StandardCharsets.UTF_8));
+
+		_bqMembershipDog.updateBQMemberships(
+			"(events.filterByCount(filter='(eventId eq ''addedToWishlist'' " +
+				"and contains(attribute/" + encodedName + ", ''liferay''))', " +
+					"operator='ge', value=1))",
+			Boolean.TRUE, segment);
+
+		Assertions.assertEquals(
+			2L, _bqMembershipDog.getBQMembershipsCount(segment.getId()));
+
+		encodedName = Hex.encodeHexString(
 			"quantity".getBytes(StandardCharsets.UTF_8));
 
 		_bqMembershipDog.updateBQMemberships(
