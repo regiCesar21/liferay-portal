@@ -177,6 +177,8 @@ public class GraphQLConfiguration {
 		_wireGraphQLTypeProperty(
 			builder, "eventDefinitions", "results", "EventDefinitionBag");
 		_wireGraphQLTypeProperty(
+			builder, "eventProperties", "results", "EventPropertyBag");
+		_wireGraphQLTypeProperty(
 			builder, "experiments", "results", "ExperimentBag");
 		_wireGraphQLTypeProperty(
 			builder, "individuals", "results", "IndividualBag");

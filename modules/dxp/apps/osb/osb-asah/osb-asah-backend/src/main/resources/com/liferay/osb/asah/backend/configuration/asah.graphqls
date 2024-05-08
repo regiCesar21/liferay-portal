@@ -490,6 +490,18 @@ type EventMetric {
 	totalSessionsMetric: Metric
 }
 
+type EventProperty {
+	dataType: EventAttributeDefinitionDataType
+	displayName: String
+	id: String
+	name: String
+}
+
+type EventPropertyBag {
+	eventProperties: [EventProperty]
+	total: Int
+}
+
 type EventsByUserSession {
 	userSessions: [UserSession],
 	totalEvents: Int
@@ -1156,6 +1168,14 @@ type QueryType {
 		rangeStart: String
 		size: Int!
 	): EventsByUserSession
+	
+	eventProperties(
+		eventId: String,
+		keyword: String,
+		page: Int!,
+		size: Int!,
+		sort: Sort!
+	): EventPropertyBag
 
 	experiment(
 		experimentId: String!
