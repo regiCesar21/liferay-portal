@@ -116,7 +116,7 @@ public class DXPBatchEntitiesRestController {
 		for (MultipartFile multipartFile : multipartFiles) {
 			String name = multipartFile.getOriginalFilename();
 
-			_validateDatasourceConfiguration(dataSource, name);
+			_validateDataSourceConfiguration(dataSource, name);
 
 			if (_log.isDebugEnabled()) {
 				_log.debug("Received upload request " + name);
@@ -203,7 +203,7 @@ public class DXPBatchEntitiesRestController {
 		}
 	}
 
-	private void _validateDatasourceConfiguration(
+	private void _validateDataSourceConfiguration(
 		DataSource dataSource, String name) {
 
 		if (Objects.equals(
@@ -213,7 +213,8 @@ public class DXPBatchEntitiesRestController {
 			  BooleanUtils.toBoolean(dataSource.getContactsSelected()))) {
 
 			throw new OSBAsahException(
-				HttpStatus.BAD_REQUEST, "Contact sync not enabled");
+				HttpStatus.BAD_REQUEST,
+				"Contacts synchronization is not enabled");
 		}
 	}
 
