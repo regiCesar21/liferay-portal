@@ -1,0 +1,18 @@
+fragment geolocationFragment on Metric {
+	geolocation {
+		metrics {
+			value
+			valueKey
+		}
+		value
+		valueKey
+	}
+}
+
+query SiteMetrics($channelId: String, $rangeEnd: String, $rangeKey: Int, $rangeStart: String) {
+	site(channelId: $channelId, includePrevious: false, rangeEnd: $rangeEnd, rangeKey: $rangeKey, rangeStart: $rangeStart) {
+		sessionsMetric {
+			...geolocationFragment
+		}
+	}
+}

@@ -1,0 +1,25 @@
+{
+	"data": {
+		"site": {
+			"sessionsMetric": {
+				"geolocation": [
+					{
+						"metrics": null,
+						"value": 9,
+						"valueKey": "Brazil"
+					},
+					{
+						"metrics": null,
+						"value": 6,
+						"valueKey": "Italy"
+					},
+					{
+						"metrics": null,
+						"value": 5,
+						"valueKey": "United States"
+					}
+				]
+			}
+		}
+	}
+}
