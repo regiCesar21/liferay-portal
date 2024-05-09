@@ -85,14 +85,20 @@ public abstract class BaseGraphQLRestControllerTestCase {
 
 			String expectedResultPath = getExpectedResultPath();
 
-			JSONAssert.assertEquals(
+			assertJSONObject(
 				ResourceUtil.readResourceToJSONObject(
 					"dependencies/" + expectedResultPath, this),
-				responseJSONObject, false);
+				responseJSONObject);
 		}
 		finally {
 			ProjectIdThreadLocal.setProjectId("test");
 		}
+	}
+
+	protected void assertJSONObject(
+		JSONObject expectedJSONObject, JSONObject jsonObject) {
+
+		JSONAssert.assertEquals(expectedJSONObject, jsonObject, false);
 	}
 
 	private void _expectContentTypeJSON(ResultActions resultActions)

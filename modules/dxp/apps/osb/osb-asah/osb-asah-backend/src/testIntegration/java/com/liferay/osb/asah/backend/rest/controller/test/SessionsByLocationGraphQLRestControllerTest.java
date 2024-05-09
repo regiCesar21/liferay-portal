@@ -7,6 +7,10 @@ package com.liferay.osb.asah.backend.rest.controller.test;
 
 import com.liferay.osb.asah.test.util.annotation.BQSQLResource;
 
+import org.json.JSONObject;
+
+import org.skyscreamer.jsonassert.JSONAssert;
+
 /**
  * @author Marcos Martins
  */
@@ -29,6 +33,13 @@ public class SessionsByLocationGraphQLRestControllerTest
 	@Override
 	public String getQueryPath() {
 		return "sessions_by_location_query.graphql";
+	}
+
+	@Override
+	protected void assertJSONObject(
+		JSONObject expectedJSONObject, JSONObject jsonObject) {
+
+		JSONAssert.assertEquals(expectedJSONObject, jsonObject, true);
 	}
 
 }
