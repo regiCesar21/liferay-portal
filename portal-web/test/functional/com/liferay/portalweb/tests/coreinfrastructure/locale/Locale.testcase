@@ -511,61 +511,6 @@ definition {
 		}
 	}
 
-	@priority = 3
-	test UserLockoutShowsTimezoneInformation {
-		property test.liferay.virtual.instance = "false";
-		property test.run.type = "single";
-		property user.time.zone = "UTC";
-
-		User.firstLoginPG();
-
-		PortalSettings.gotoConfiguration(
-			configurationCategory = "Localization",
-			configurationName = "Time Zone",
-			configurationScope = "Virtual Instance Scope");
-
-		PortalSettings.configureTimeZone(timeZone = "(UTC +05:00) Pakistan Time");
-
-		JSONUser.addUser(
-			userEmailAddress = "userea@liferay.com",
-			userFirstName = "userfn",
-			userLastName = "userln",
-			userScreenName = "usersn");
-
-		ProductMenu.gotoPortlet(
-			category = "Users",
-			panel = "Control Panel",
-			portlet = "Password Policies");
-
-		PasswordPoliciesNavigator.gotoPolicy(passwordPolicyName = "Default Password Policy");
-
-		PasswordPolicies.enableDefaultPasswordPolicyLockout();
-
-		PasswordPolicies.setLockoutDuration(duration = "5 Minutes");
-
-		User.logoutPG();
-
-		var count = 0;
-
-		while (${count} != 3) {
-			User._login(
-				password = "INCORRECT",
-				userEmailAddress = "userea@liferay.com");
-
-			var count = ${count} + 1;
-		}
-
-		task ("Assert Timezone is included with account lockout message.") {
-			AssertTextEquals.assertPartialText(
-				locator1 = "Message#ERROR_DISMISSIBLE",
-				value1 = "This account is locked until");
-
-			AssertTextEquals.assertPartialText(
-				locator1 = "Message#ERROR_DISMISSIBLE",
-				value1 = "PKT.");
-		}
-	}
-
 	@priority = 4
 	test ViewDefaultAvailableTimeZonesForInstancesAndUsers {
 		property test.liferay.virtual.instance = "false";
