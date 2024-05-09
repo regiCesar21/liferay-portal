@@ -118,10 +118,10 @@ public class ChannelDog {
 			channelIds, createDate);
 
 		try {
-			String endDate = "CURRENT_TIMESTAMP()";
+			String endDateString = "CURRENT_TIMESTAMP()";
 
 			if (clear) {
-				endDate = "timestamp '" + createDateString + "'";
+				endDateString = "timestamp '" + createDateString + "'";
 			}
 
 			_bigQueryQueryExecutor.queryExecute(
@@ -129,7 +129,9 @@ public class ChannelDog {
 					ResourceUtil.readResourceToString(
 						"dependencies/clear_channel_statement.sql", getClass()),
 					new String[] {"${end_date}", "${channel_ids}"},
-					new String[] {endDate, StringUtils.join(channelIds, ",")}));
+					new String[] {
+						endDateString, StringUtils.join(channelIds, ",")
+					}));
 		}
 		catch (Exception exception) {
 			String className = "DeleteChannelsNanite";
