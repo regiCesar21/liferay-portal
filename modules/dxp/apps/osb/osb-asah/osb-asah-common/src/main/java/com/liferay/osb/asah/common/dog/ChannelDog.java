@@ -141,8 +141,7 @@ public class ChannelDog {
 			}
 
 			if (_log.isWarnEnabled()) {
-				_log.warn(
-					className + " failed. Submitting a new task.", exception);
+				_log.warn("Submitting a new task for " + className, exception);
 			}
 
 			_asahTaskDog.scheduleAsahTask(
