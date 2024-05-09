@@ -203,8 +203,6 @@ public class DXPBatchEntitiesRestController {
 		}
 	}
 
-	private static final long _EMPTY_ZIP_FILE_LENGTH = 140;
-
 	private void _validateDatasourceConfiguration(
 		DataSource dataSource, String name) {
 
@@ -218,6 +216,8 @@ public class DXPBatchEntitiesRestController {
 				HttpStatus.BAD_REQUEST, "Contact sync not enabled");
 		}
 	}
+
+	private static final long _EMPTY_ZIP_FILE_LENGTH = 140;
 
 	private static final Log _log = LogFactory.getLog(
 		DXPBatchEntitiesRestController.class);
