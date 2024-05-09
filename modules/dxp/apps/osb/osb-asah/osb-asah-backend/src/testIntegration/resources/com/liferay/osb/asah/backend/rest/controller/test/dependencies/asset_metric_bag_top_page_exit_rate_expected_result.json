@@ -1,0 +1,74 @@
+{
+	"data": {
+		"pages": {
+			"assetMetrics": [
+				{
+					"assetId": "https://www.ray-life.com",
+					"assetTitle": null,
+					"entrancesMetric": {
+						"value": 0
+					},
+					"exitRateMetric": {
+						"value": 1
+					},
+					"visitorsMetric": {
+						"value": 0
+					}
+				},
+				{
+					"assetId": "https://www.dino-boyer.com",
+					"assetTitle": null,
+					"entrancesMetric": {
+						"value": 3
+					},
+					"exitRateMetric": {
+						"value": 0.75
+					},
+					"visitorsMetric": {
+						"value": 0
+					}
+				},
+				{
+					"assetId": "https://www.liferay.com",
+					"assetTitle": null,
+					"entrancesMetric": {
+						"value": 10
+					},
+					"exitRateMetric": {
+						"value": 0.6666666666666666
+					},
+					"visitorsMetric": {
+						"value": 0
+					}
+				},
+				{
+					"assetId": "https://www.cedric-rodriguez.net",
+					"assetTitle": null,
+					"entrancesMetric": {
+						"value": 8
+					},
+					"exitRateMetric": {
+						"value": 0.5
+					},
+					"visitorsMetric": {
+						"value": 0
+					}
+				},
+				{
+					"assetId": "https://www.cherelle-ullrich.org",
+					"assetTitle": null,
+					"entrancesMetric": {
+						"value": 6
+					},
+					"exitRateMetric": {
+						"value": 0.3333333333333333
+					},
+					"visitorsMetric": {
+						"value": 0
+					}
+				}
+			],
+			"total": 6
+		}
+	}
+}
