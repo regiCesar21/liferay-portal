@@ -40,6 +40,7 @@ Format format = FastDateFormatFactoryUtil.getDateTime(locale, timeZone);
 
 			<%
 			CTCollection ctCollection = viewHistoryDisplayContext.getCtCollection(ctProcess);
+			User ctProcessUser = UserLocalServiceUtil.fetchUserById(ctProcess.getUserId());
 			int status = viewHistoryDisplayContext.getStatus(ctProcess);
 			%>
 
@@ -51,7 +52,7 @@ Format format = FastDateFormatFactoryUtil.getDateTime(locale, timeZone);
 			<c:choose>
 				<c:when test='<%= Objects.equals(viewHistoryDisplayContext.getDisplayStyle(), "descriptive") %>'>
 					<liferay-ui:search-container-column-text>
-						<span class="lfr-portal-tooltip" title="<%= ctCollection.getUserName() %>">
+						<span class="lfr-portal-tooltip" title="<%= ctProcessUser.getFullName() %>">
 							<liferay-ui:user-portrait
 								userId="<%= ctProcess.getUserId() %>"
 							/>
@@ -107,7 +108,7 @@ Format format = FastDateFormatFactoryUtil.getDateTime(locale, timeZone);
 						cssClass="table-cell-expand-smallest text-center"
 						name="published-by"
 					>
-						<span class="lfr-portal-tooltip" title="<%= ctCollection.getUserName() %>">
+						<span class="lfr-portal-tooltip" title="<%= ctProcessUser.getFullName() %>">
 							<liferay-ui:user-portrait
 								userId="<%= ctProcess.getUserId() %>"
 							/>

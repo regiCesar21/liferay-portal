@@ -161,9 +161,15 @@ portletDisplay.setShowBackIcon(true);
 						if (Validator.isNotNull(description)) {
 							description = description.concat(" | ");
 						}
+
+						List<CTProcess> ctProcesses = CTProcessLocalServiceUtil.getCTProcesses(ctCollection.getCtCollectionId());
+
+						CTProcess ctProcess = ctProcesses.get(0);
+
+						User ctProcessUser = UserLocalServiceUtil.fetchUserById(ctProcess.getUserId());
 						%>
 
-						<div class="publication-description"><%= HtmlUtil.escape(description.concat(LanguageUtil.format(resourceBundle, "published-by-x-on-x", new Object[] {ctCollection.getUserName(), format.format(ctCollection.getStatusDate())}, false))) %></div>
+						<div class="publication-description"><%= HtmlUtil.escape(description.concat(LanguageUtil.format(resourceBundle, "published-by-x-on-x", new Object[] {ctProcessUser.getFullName(), format.format(ctCollection.getStatusDate())}, false))) %></div>
 					</li>
 					<li class="tbar-item">
 						<liferay-portlet:renderURL var="revertURL">
