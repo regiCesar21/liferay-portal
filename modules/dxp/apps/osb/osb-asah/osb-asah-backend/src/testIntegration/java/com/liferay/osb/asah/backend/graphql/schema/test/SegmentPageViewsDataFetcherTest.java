@@ -47,39 +47,39 @@ public class SegmentPageViewsDataFetcherTest
 
 		adjacentPageViewsMetrics.add(
 			new AdjacentPageViewsMetric(
-				"direct", Boolean.TRUE, Boolean.TRUE, "direct",
+				"direct", Boolean.TRUE, Boolean.TRUE, 1L, "direct",
 				BigDecimal.valueOf(5)));
 		adjacentPageViewsMetrics.add(
 			new AdjacentPageViewsMetric(
-				"others", Boolean.TRUE, Boolean.TRUE, "others",
+				"others", Boolean.TRUE, Boolean.TRUE, 1L, "others",
 				BigDecimal.valueOf(7)));
 		adjacentPageViewsMetrics.add(
 			new AdjacentPageViewsMetric(
-				"others", Boolean.TRUE, Boolean.FALSE, "others",
+				"others", Boolean.TRUE, Boolean.FALSE, 1L, "others",
 				BigDecimal.valueOf(90)));
 		adjacentPageViewsMetrics.add(
 			new AdjacentPageViewsMetric(
-				"url-1", Boolean.FALSE, Boolean.TRUE, "url 1",
+				"url-1", Boolean.FALSE, Boolean.TRUE, 1L, "url 1",
 				BigDecimal.valueOf(10)));
 		adjacentPageViewsMetrics.add(
 			new AdjacentPageViewsMetric(
-				"url-2", Boolean.FALSE, Boolean.TRUE, "url 2",
+				"url-2", Boolean.FALSE, Boolean.TRUE, 1L, "url 2",
 				BigDecimal.valueOf(100)));
 		adjacentPageViewsMetrics.add(
 			new AdjacentPageViewsMetric(
-				"url-3", Boolean.FALSE, Boolean.TRUE, "url 3",
+				"url-3", Boolean.FALSE, Boolean.TRUE, 1L, "url 3",
 				BigDecimal.valueOf(1000)));
 		adjacentPageViewsMetrics.add(
 			new AdjacentPageViewsMetric(
-				"url-4", Boolean.FALSE, Boolean.FALSE, "url 4",
+				"url-4", Boolean.FALSE, Boolean.FALSE, 1L, "url 4",
 				BigDecimal.valueOf(100)));
 		adjacentPageViewsMetrics.add(
 			new AdjacentPageViewsMetric(
-				"url-5", Boolean.FALSE, Boolean.FALSE, "url 5",
+				"url-5", Boolean.FALSE, Boolean.FALSE, 1L, "url 5",
 				BigDecimal.valueOf(300)));
 		adjacentPageViewsMetrics.add(
 			new AdjacentPageViewsMetric(
-				"url-6", Boolean.FALSE, Boolean.FALSE, "url 6",
+				"url-6", Boolean.FALSE, Boolean.FALSE, 1L, "url 6",
 				BigDecimal.valueOf(200)));
 
 		Mockito.when(
@@ -89,10 +89,10 @@ public class SegmentPageViewsDataFetcherTest
 		);
 
 		Mockito.when(
-			_pagePathDog.getAdjacentPagesViewsMetric(
+			_pagePathDog.getPreviousAdjacentPagesViewsMetric(
 				ArgumentMatchers.any(), ArgumentMatchers.any(),
-				ArgumentMatchers.eq(1L), ArgumentMatchers.any(),
-				ArgumentMatchers.any())
+				ArgumentMatchers.eq(Arrays.asList(1L, 2L)),
+				ArgumentMatchers.any(), ArgumentMatchers.any())
 		).thenReturn(
 			adjacentPageViewsMetrics
 		);

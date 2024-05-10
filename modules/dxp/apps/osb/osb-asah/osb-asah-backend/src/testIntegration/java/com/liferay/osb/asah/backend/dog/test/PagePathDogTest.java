@@ -22,6 +22,7 @@ import java.math.BigDecimal;
 
 import java.time.LocalDate;
 
+import java.util.Arrays;
 import java.util.Collections;
 
 import org.apache.commons.lang3.StringUtils;
@@ -767,6 +768,50 @@ public class PagePathDogTest
 					new BigDecimal(2))),
 			_pagePathDog.getAdjacentPagesViewsMetric(
 				"https://www.computer.com/abacus", 12345L, null,
+				TimeRange.of(
+					LocalDate.parse("2023-11-05"),
+					LocalDate.parse("2023-10-25")),
+				"From Abacus to Modern Day Computers"));
+	}
+
+	@BQSQLResource(
+		resourcePath = "test_get_adjacent_pages_views_metric_with_segment_id_bq.sql"
+	)
+	@Test
+	public void testGetPreviousAdjacentPagesViewsMetric() {
+		Assertions.assertEquals(
+			SetUtil.of(
+				new AdjacentPageViewsMetric(
+					"https://www.computer.com/files", Boolean.FALSE,
+					Boolean.TRUE, "Computer File Systems", BigDecimal.ONE),
+				new AdjacentPageViewsMetric(
+					"https://www.computer.com/decimal", Boolean.FALSE,
+					Boolean.TRUE, "Encoding Decimal to Binary", BigDecimal.ONE),
+				new AdjacentPageViewsMetric(
+					"https://www.computer.com/gui", Boolean.FALSE, Boolean.TRUE,
+					"Graphical User Interface", BigDecimal.ONE),
+				new AdjacentPageViewsMetric(
+					"direct", Boolean.TRUE, Boolean.TRUE, "direct",
+					BigDecimal.ONE)),
+			_pagePathDog.getPreviousAdjacentPagesViewsMetric(
+				"https://www.computer.com/abacus", 12345L,
+				Arrays.asList(14579L, 24680L),
+				TimeRange.of(
+					LocalDate.parse("2023-11-05"),
+					LocalDate.parse("2023-10-25")),
+				"From Abacus to Modern Day Computers"));
+	}
+
+	@BQSQLResource(
+		resourcePath = "test_get_adjacent_pages_views_metric_with_segment_id_bq.sql"
+	)
+	@Test
+	public void testGetPreviousAdjacentPagesViewsMetricWithNoSegmentIds() {
+		Assertions.assertEquals(
+			Collections.emptySet(),
+			_pagePathDog.getPreviousAdjacentPagesViewsMetric(
+				"https://www.computer.com/abacus", 12345L,
+				Collections.emptyList(),
 				TimeRange.of(
 					LocalDate.parse("2023-11-05"),
 					LocalDate.parse("2023-10-25")),

@@ -56,5 +56,5 @@ INSERT INTO Membership (identityId, segmentId) VALUES ('identity2', 13579);
 INSERT INTO Membership (identityId, segmentId) VALUES ('identity3', 24680);
 INSERT INTO Membership (identityId, segmentId) VALUES ('identity4', 13579);
 INSERT INTO Membership (identityId, segmentId) VALUES ('identity5', 24680);
-INSERT INTO Membership (identityId, segmentId) VALUES ('identity6', 13579);
+INSERT INTO Membership (identityId, segmentId) VALUES ('identity6', 14579);
 INSERT INTO Membership (identityId, segmentId) VALUES ('identity7', 24680);
