@@ -3,11 +3,18 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import {act, cleanup, render} from '@testing-library/react';
+import {
+	act,
+	cleanup,
+	fireEvent,
+	render,
+	waitForElement,
+} from '@testing-library/react';
 import {PageProvider} from 'dynamic-data-mapping-form-renderer';
 import React from 'react';
 
 import {FieldBase} from '../../../src/main/resources/META-INF/resources/FieldBase/ReactFieldBase.es';
+import fieldPopoverSettings from '../../../src/main/resources/META-INF/resources/util/fieldPopoverSettings';
 
 const spritemap = 'icons.svg';
 
@@ -106,6 +113,18 @@ describe('ReactFieldBase', () => {
 		expect(container).toMatchSnapshot();
 	});
 
+	it('renders the FieldBase with tooltip', () => {
+		const {container} = render(
+			<FieldBaseWithProvider spritemap={spritemap} tooltip="Tooltip" />
+		);
+
+		act(() => {
+			jest.runAllTimers();
+		});
+
+		expect(container.querySelector('.ddm-tooltip')).not.toBeNull();
+	});
+
 	it('does not render the label if showLabel is false', () => {
 		const {container} = render(
 			<FieldBaseWithProvider
@@ -147,6 +166,7 @@ describe('ReactFieldBase', () => {
 				spritemap={spritemap}
 			/>
 		);
+
 		act(() => {
 			jest.runAllTimers();
 		});
@@ -164,10 +184,40 @@ describe('ReactFieldBase', () => {
 				spritemap={spritemap}
 			/>
 		);
+
 		act(() => {
 			jest.runAllTimers();
 		});
 
 		expect(container).toMatchSnapshot();
+	});
+
+	it('shows the popover for HTML Autocomplete Attribute field when clicking the tooltip icon', async () => {
+		const {container, getByTestId, getByText} = render(
+			<FieldBaseWithProvider
+				fieldName="htmlAutocompleteAttribute"
+				popover={fieldPopoverSettings['htmlAutocompleteAttribute']}
+				spritemap={spritemap}
+				tooltip="Tooltip Description"
+			/>
+		);
+
+		act(() => {
+			jest.runAllTimers();
+		});
+
+		const tooltipIcon = container.querySelector(
+			'.lexicon-icon.lexicon-icon-question-circle-full'
+		);
+
+		fireEvent.click(tooltipIcon);
+
+		const clayPopover = await waitForElement(() =>
+			getByTestId('clayPopover')
+		);
+
+		expect(clayPopover.style).toHaveProperty('maxWidth', '256px');
+
+		expect(getByText('html-autocomplete-attribute'));
 	});
 });
