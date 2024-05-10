@@ -134,20 +134,9 @@ public class DXPEntitiesNanite extends BaseNanite {
 		// Move files
 
 		for (Map.Entry<Long, File> entry : files.entrySet()) {
-			File file = entry.getValue();
-
-			String targetPath = _getValidatedPath(
-				String.format(
-					"%s/%s/%s/%s/%s/%s.zip", _dxpBatchEntitiesStoragePath,
-					ProjectIdThreadLocal.getProjectId(), entry.getKey(),
-					"com.liferay.analytics.dxp.entity.rest.dto.v1_0.DXPEntity",
-					uploadType, DateUtil.toUTCString(currentDate)));
-
-			Path path = Paths.get(targetPath);
-
-			FileUtils.createParentDirectories(path.toFile());
-
-			Files.move(file.toPath(), path);
+			_moveFileSystem(
+				DateUtil.toUTCString(currentDate), entry.getKey(),
+				entry.getValue(), uploadType);
 		}
 
 		asahMarkerContextJSONObject.put(
@@ -302,6 +291,25 @@ public class DXPEntitiesNanite extends BaseNanite {
 		zipOutputStream.putNextEntry(zipEntry);
 
 		return zipOutputStream;
+	}
+
+	private void _moveFileSystem(
+			String currentDateString, Long dataSourceId, File file,
+			String uploadType)
+		throws Exception {
+
+		String targetPath = _getValidatedPath(
+			String.format(
+				"%s/%s/%s/%s/%s/%s.zip", _dxpBatchEntitiesStoragePath,
+				ProjectIdThreadLocal.getProjectId(), dataSourceId,
+				"com.liferay.analytics.dxp.entity.rest.dto.v1_0.DXPEntity",
+				uploadType, currentDateString));
+
+		Path path = Paths.get(targetPath);
+
+		FileUtils.createParentDirectories(path.toFile());
+
+		Files.move(file.toPath(), path);
 	}
 
 	private void _run(
