@@ -41,6 +41,8 @@ import org.json.JSONObject;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.core.env.Environment;
+import org.springframework.core.env.Profiles;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
@@ -134,7 +136,7 @@ public class DXPEntitiesNanite extends BaseNanite {
 		// Move files
 
 		for (Map.Entry<Long, File> entry : files.entrySet()) {
-			_moveFileSystem(
+			_move(
 				DateUtil.toUTCString(currentDate), entry.getKey(),
 				entry.getValue(), uploadType);
 		}
@@ -293,6 +295,18 @@ public class DXPEntitiesNanite extends BaseNanite {
 		return zipOutputStream;
 	}
 
+	private void _move(
+			String currentDateString, Long dataSourceId, File file,
+			String uploadType)
+		throws Exception {
+
+		if (_environment.acceptsProfiles(Profiles.of("prod"))) {
+		}
+		else {
+			_moveFileSystem(currentDateString, dataSourceId, file, uploadType);
+		}
+	}
+
 	private void _moveFileSystem(
 			String currentDateString, Long dataSourceId, File file,
 			String uploadType)
@@ -375,5 +389,8 @@ public class DXPEntitiesNanite extends BaseNanite {
 
 	@Autowired
 	private DXPEntityDog _dxpEntityDog;
+
+	@Autowired
+	private Environment _environment;
 
 }
