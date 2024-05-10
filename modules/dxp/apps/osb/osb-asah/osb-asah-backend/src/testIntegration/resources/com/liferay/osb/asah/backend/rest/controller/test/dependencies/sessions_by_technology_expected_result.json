@@ -1,0 +1,53 @@
+{
+	"data": {
+		"site": {
+			"sessionsMetric": {
+				"device": [
+					{
+						"metrics": [
+							{
+								"value": 4,
+								"valueKey": "Win10"
+							},
+							{
+								"value": 3,
+								"valueKey": "Ubuntu"
+							},
+							{
+								"value": 1,
+								"valueKey": "Linux"
+							},
+							{
+								"value": 1,
+								"valueKey": "MacOS"
+							}
+						],
+						"value": 9,
+						"valueKey": "Desktop"
+					},
+					{
+						"metrics": [
+							{
+								"value": 8,
+								"valueKey": "Android"
+							}
+						],
+						"value": 8,
+						"valueKey": "SmartPhone"
+					},
+					{
+						"metrics": [
+							{
+								"value": 3,
+								"valueKey": "Android"
+							}
+						],
+						"value": 3,
+						"valueKey": "Tablet"
+					}
+				],
+				"value": 20
+			}
+		}
+	}
+}

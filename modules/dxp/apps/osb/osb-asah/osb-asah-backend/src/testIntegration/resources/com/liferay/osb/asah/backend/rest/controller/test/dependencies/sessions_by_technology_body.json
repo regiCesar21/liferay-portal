@@ -1,0 +1,9 @@
+{
+	"operationName": "SiteMetrics",
+	"variables": {
+		"channelId": "1",
+		"rangeEnd": null,
+		"rangeKey": 30,
+		"rangeStart": null
+	}
+}
