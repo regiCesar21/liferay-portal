@@ -307,9 +307,7 @@ public class DXPEntitiesNanite extends BaseNanite {
 				_gcloudProjectId);
 
 			String folderName = String.format(
-				"%s/%s/%s", dataSourceId,
-				"com.liferay.analytics.dxp.entity.rest.dto.v1_0.DXPEntity",
-				uploadType);
+				"%s/%s/%s", dataSourceId, _CLASS_NAME_DXP_ENTITY, uploadType);
 
 			String fileName = currentDateString + ".zip";
 
@@ -331,8 +329,7 @@ public class DXPEntitiesNanite extends BaseNanite {
 			String.format(
 				"%s/%s/%s/%s/%s/%s.zip", _dxpBatchEntitiesStoragePath,
 				ProjectIdThreadLocal.getProjectId(), dataSourceId,
-				"com.liferay.analytics.dxp.entity.rest.dto.v1_0.DXPEntity",
-				uploadType, currentDateString));
+				_CLASS_NAME_DXP_ENTITY, uploadType, currentDateString));
 
 		Path path = Paths.get(targetPath);
 
@@ -391,6 +388,9 @@ public class DXPEntitiesNanite extends BaseNanite {
 		zipOutputStream.write(
 			newLineAppendedData.getBytes(StandardCharsets.UTF_8));
 	}
+
+	private static final String _CLASS_NAME_DXP_ENTITY =
+		"com.liferay.analytics.dxp.entity.rest.dto.v1_0.DXPEntity";
 
 	private static final long _EMPTY_ZIP_FILE_LENGTH = 140;
 
