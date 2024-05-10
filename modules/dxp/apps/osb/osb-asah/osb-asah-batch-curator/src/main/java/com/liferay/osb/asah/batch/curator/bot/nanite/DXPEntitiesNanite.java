@@ -12,6 +12,7 @@ import com.liferay.osb.asah.common.entity.AsahMarker;
 import com.liferay.osb.asah.common.entity.DXPEntity;
 import com.liferay.osb.asah.common.entity.DataSource;
 import com.liferay.osb.asah.common.json.JSONUtil;
+import com.liferay.osb.asah.common.storage.impl.GoogleStorageArchiver;
 import com.liferay.osb.asah.common.util.GetterUtil;
 import com.liferay.osb.asah.common.util.ProjectIdThreadLocal;
 
@@ -301,6 +302,20 @@ public class DXPEntitiesNanite extends BaseNanite {
 		throws Exception {
 
 		if (_environment.acceptsProfiles(Profiles.of("prod"))) {
+			String bucketName = StringUtils.replace(
+				_dxpBatchEntitiesBucketTemplate, "{googleProjectId}",
+				_gcloudProjectId);
+
+			String folderName = String.format(
+				"%s/%s/%s", dataSourceId,
+				"com.liferay.analytics.dxp.entity.rest.dto.v1_0.DXPEntity",
+				uploadType);
+
+			String fileName = currentDateString + ".zip";
+
+			_googleStorageArchiver.archiveSync(
+				bucketName, folderName, file, fileName,
+				ProjectIdThreadLocal.getProjectId());
 		}
 		else {
 			_moveFileSystem(currentDateString, dataSourceId, file, uploadType);
@@ -384,6 +399,11 @@ public class DXPEntitiesNanite extends BaseNanite {
 	@Autowired
 	private DataSourceDog _dataSourceDog;
 
+	@Value(
+		"${osb.asah.dxp.batch.entities.google.bucket:{googleProjectId}-dxp-entities}"
+	)
+	private String _dxpBatchEntitiesBucketTemplate;
+
 	@Value("${osb.asah.dxp.batch.entities.storage.path:/storage}")
 	private String _dxpBatchEntitiesStoragePath;
 
@@ -392,5 +412,11 @@ public class DXPEntitiesNanite extends BaseNanite {
 
 	@Autowired
 	private Environment _environment;
+
+	@Value("${osb.asah.gcloud.project.id:liferaycloud-customer-ac}")
+	private String _gcloudProjectId;
+
+	@Autowired(required = false)
+	private GoogleStorageArchiver _googleStorageArchiver;
 
 }
