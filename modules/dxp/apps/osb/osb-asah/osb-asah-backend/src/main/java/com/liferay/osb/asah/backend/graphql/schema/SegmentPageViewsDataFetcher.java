@@ -16,6 +16,7 @@ import graphql.schema.DataFetchingEnvironment;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Objects;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -41,18 +42,27 @@ public class SegmentPageViewsDataFetcher
 
 		List<Long> segmentIds = _getSegmentIds(dataFetchingEnvironment);
 
+		Set<AdjacentPageViewsMetric> adjacentPagesViewsMetrics =
+			_pagePathDog.getPreviousAdjacentPagesViewsMetric(
+				searchQueryContext.getCanonicalUrl(),
+				searchQueryContext.getChannelIdAsLong(), segmentIds,
+				searchQueryContext.getTimeRange(),
+				searchQueryContext.getTitle());
+
 		for (Long segmentId : segmentIds) {
-			Set<AdjacentPageViewsMetric> adjacentPagesViewsMetrics =
-				_pagePathDog.getAdjacentPagesViewsMetric(
-					searchQueryContext.getCanonicalUrl(),
-					searchQueryContext.getChannelIdAsLong(), segmentId,
-					searchQueryContext.getTimeRange(),
-					searchQueryContext.getTitle());
+			Set<AdjacentPageViewsMetric> segmentAdjacentPagesViewsMetrics =
+				adjacentPagesViewsMetrics.stream(
+				).filter(
+					adjacentPageViewsMetric -> Objects.equals(
+						adjacentPageViewsMetric.getSegmentId(), segmentId)
+				).collect(
+					Collectors.toSet()
+				);
 
 			segmentPageViewsDTOs.add(
 				new SegmentPageViewsDTO(
 					String.valueOf(segmentId),
-					_getViews(adjacentPagesViewsMetrics)));
+					_getViews(segmentAdjacentPagesViewsMetrics)));
 		}
 
 		return segmentPageViewsDTOs;

@@ -25,6 +25,18 @@ public class AdjacentPageViewsMetric {
 	}
 
 	public AdjacentPageViewsMetric(
+		String canonicalUrl, Boolean external, Boolean previous, long segmentId,
+		String title, BigDecimal views) {
+
+		_canonicalUrl = canonicalUrl;
+		_external = external;
+		_previous = previous;
+		_segmentId = segmentId;
+		_title = title;
+		_views = views;
+	}
+
+	public AdjacentPageViewsMetric(
 		String canonicalUrl, Boolean external, Boolean previous, String title,
 		BigDecimal views) {
 
@@ -63,6 +75,10 @@ public class AdjacentPageViewsMetric {
 
 	public String getCanonicalUrl() {
 		return _canonicalUrl;
+	}
+
+	public Long getSegmentId() {
+		return _segmentId;
 	}
 
 	public String getTitle() {
@@ -107,6 +123,10 @@ public class AdjacentPageViewsMetric {
 		_previous = previous;
 	}
 
+	public void setSegmentId(Long segmentId) {
+		_segmentId = segmentId;
+	}
+
 	public void setTitle(String title) {
 		_title = title;
 	}
@@ -118,6 +138,7 @@ public class AdjacentPageViewsMetric {
 	private String _canonicalUrl;
 	private Boolean _external;
 	private Boolean _previous;
+	private Long _segmentId;
 	private String _title;
 	private BigDecimal _views;
 

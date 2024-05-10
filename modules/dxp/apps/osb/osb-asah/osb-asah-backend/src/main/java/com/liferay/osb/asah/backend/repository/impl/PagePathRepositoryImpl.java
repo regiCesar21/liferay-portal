@@ -16,6 +16,7 @@ import java.math.BigDecimal;
 import java.time.ZoneId;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Set;
 
@@ -25,6 +26,10 @@ import org.jooq.CommonTableExpression;
 import org.jooq.Condition;
 import org.jooq.DSLContext;
 import org.jooq.Field;
+import org.jooq.Record6;
+import org.jooq.SelectHavingStep;
+import org.jooq.SelectOrderByStep;
+import org.jooq.WithStep;
 import org.jooq.impl.DSL;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -45,15 +50,15 @@ public class PagePathRepositoryImpl implements PagePathRepository {
 		return _queryExecutor.queryForSet(
 			AdjacentPageViewsMetric::new,
 			_dslContext.with(
-				_getPagePathCTE(channelId, segmentId, timeRange, zoneId)
+				_getPagePathCTE(channelId, segmentId, timeRange, zoneId, "")
 			).with(
 				_getFollowingPagesCTE(canonicalUrl, title)
 			).with(
 				_getTopFollowingPagesCTE()
 			).with(
-				_getPreviousPagesCTE(canonicalUrl, title)
+				_getPreviousPagesCTE(canonicalUrl, title, "")
 			).with(
-				_getTopPreviousPagesCTE()
+				_getTopPreviousPagesCTE("")
 			).select(
 				_canonicalUrlField, _externalField, _previousField, _titleField,
 				_viewsField
@@ -95,6 +100,75 @@ public class PagePathRepositoryImpl implements PagePathRepository {
 			));
 	}
 
+	@Override
+	public Set<AdjacentPageViewsMetric> getPreviousAdjacentPagesViewsMetric(
+		String canonicalUrl, @Nullable Long channelId, List<Long> segmentIds,
+		TimeRange timeRange, @Nullable String title, ZoneId zoneId) {
+
+		if (segmentIds.isEmpty()) {
+			return Collections.emptySet();
+		}
+
+		WithStep withStep = _dslContext.with();
+
+		for (Long segmentId : segmentIds) {
+			withStep = withStep.with(
+				_getPagePathCTE(
+					channelId, segmentId, timeRange, zoneId,
+					String.valueOf(segmentId))
+			).with(
+				_getPreviousPagesCTE(
+					canonicalUrl, title, String.valueOf(segmentId))
+			).with(
+				_getTopPreviousPagesCTE(String.valueOf(segmentId))
+			);
+		}
+
+		SelectOrderByStep
+			<Record6<String, Boolean, Boolean, String, BigDecimal, Long>>
+				selectOrderByStep = null;
+
+		for (int i = 0; i < segmentIds.size(); i++) {
+			Long segmentId = segmentIds.get(i);
+
+			if (i == 0) {
+				selectOrderByStep = withStep.select(
+					_canonicalUrlField, _externalField, _previousField,
+					_titleField, _viewsField,
+					DSL.val(
+						segmentId
+					).as(
+						"segmentId"
+					)
+				).from(
+					"TopPreviousPages" + segmentId
+				).unionAll(
+					_getPreviousPagesSelect(segmentId)
+				);
+			}
+			else {
+				selectOrderByStep = selectOrderByStep.unionAll(
+					_dslContext.select(
+						_canonicalUrlField, _externalField, _previousField,
+						_titleField, _viewsField,
+						DSL.val(
+							segmentId
+						).as(
+							"segmentId"
+						)
+					).from(
+						"TopPreviousPages" + segmentId
+					)
+				).unionAll(
+					_getPreviousPagesSelect(segmentId)
+				);
+			}
+		}
+
+		return _queryExecutor.queryForSet(
+			AdjacentPageViewsMetric::new, selectOrderByStep);
+	}
+
 	private CommonTableExpression<?> _getFollowingPagesCTE(
 		String canonicalUrl, @Nullable String title) {
 
@@ -133,7 +207,7 @@ public class PagePathRepositoryImpl implements PagePathRepository {
 
 	private CommonTableExpression<?> _getPagePathCTE(
 		Long channelId, @Nullable Long segmentId, TimeRange timeRange,
-		ZoneId zoneId) {
+		ZoneId zoneId, String nameSuffix) {
 
 		List<Condition> conditions = new ArrayList<>();
 
@@ -185,7 +259,7 @@ public class PagePathRepositoryImpl implements PagePathRepository {
 		}
 
 		return DSL.name(
-			"PagePath"
+			"PagePath" + nameSuffix
 		).as(
 			_dslContext.select(
 				DSL.field("canonicalUrl"), DSL.field("channelId"),
@@ -230,7 +304,7 @@ public class PagePathRepositoryImpl implements PagePathRepository {
 	}
 
 	private CommonTableExpression<?> _getPreviousPagesCTE(
-		String canonicalUrl, @Nullable String title) {
+		String canonicalUrl, @Nullable String title, String nameSuffix) {
 
 		Condition condition = DSL.field(
 			"canonicalUrl"
@@ -248,7 +322,7 @@ public class PagePathRepositoryImpl implements PagePathRepository {
 		}
 
 		return DSL.name(
-			"PreviousPages"
+			"PreviousPages" + nameSuffix
 		).as(
 			_dslContext.select(
 				DSL.coalesce(
@@ -267,10 +341,46 @@ public class PagePathRepositoryImpl implements PagePathRepository {
 					"views"
 				)
 			).from(
-				"PagePath"
+				"PagePath" + nameSuffix
 			).where(
 				condition
 			)
+		);
+	}
+
+	private SelectHavingStep
+		<Record6<String, Boolean, Boolean, String, BigDecimal, Long>>
+			_getPreviousPagesSelect(Long segmentId) {
+
+		return _dslContext.select(
+			_canonicalUrlField,
+			DSL.val(
+				Boolean.TRUE
+			).as(
+				"external"
+			),
+			DSL.val(
+				Boolean.TRUE
+			).as(
+				"previous"
+			),
+			_titleField,
+			DSL.sum(
+				_viewsField
+			).as(
+				"views"
+			),
+			DSL.val(
+				segmentId
+			).as(
+				"segmentId"
+			)
+		).from(
+			"PreviousPages" + segmentId
+		).where(
+			_canonicalUrlField.eq("direct")
+		).groupBy(
+			_canonicalUrlField, _previousField, _titleField
 		);
 	}
 
@@ -355,9 +465,11 @@ public class PagePathRepositoryImpl implements PagePathRepository {
 		);
 	}
 
-	private CommonTableExpression<?> _getTopPreviousPagesCTE() {
+	private CommonTableExpression<?> _getTopPreviousPagesCTE(
+		String nameSuffix) {
+
 		return DSL.name(
-			"TopPreviousPages"
+			"TopPreviousPages" + nameSuffix
 		).as(
 			_dslContext.select(
 				DSL.when(
@@ -430,7 +542,7 @@ public class PagePathRepositoryImpl implements PagePathRepository {
 						"rowNumber"
 					)
 				).from(
-					"PreviousPages"
+					"PreviousPages" + nameSuffix
 				).where(
 					_canonicalUrlField.notEqual("direct")
 				).groupBy(
@@ -444,7 +556,7 @@ public class PagePathRepositoryImpl implements PagePathRepository {
 						"trackedCanonicalUrl"
 					)
 				).from(
-					"PagePath"
+					"PagePath" + nameSuffix
 				)
 			).on(
 				DSL.field(
