@@ -2,4 +2,5 @@
 
 <configuration>
 	<include resource="logback-common.xml" />
+	<logger level="error" name="com.google.cloud.bigquery.storage.v1.StreamWriter" />
 </configuration>
