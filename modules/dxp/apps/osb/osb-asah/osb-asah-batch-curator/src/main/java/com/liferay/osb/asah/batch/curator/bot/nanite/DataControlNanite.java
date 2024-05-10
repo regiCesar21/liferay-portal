@@ -16,6 +16,7 @@ import com.liferay.osb.asah.common.dog.RunLogDog;
 import com.liferay.osb.asah.common.entity.DataControlTask;
 import com.liferay.osb.asah.common.http.EmailHttp;
 import com.liferay.osb.asah.common.model.DataControlTaskStatus;
+import com.liferay.osb.asah.common.storage.impl.GoogleStorageArchiver;
 import com.liferay.osb.asah.common.util.ProjectIdThreadLocal;
 import com.liferay.osb.asah.common.util.SetUtil;
 import com.liferay.osb.asah.common.zip.ZipFileBuilder;
@@ -23,13 +24,12 @@ import com.liferay.osb.asah.common.zip.ZipFileBuilder;
 import java.io.File;
 
 import java.nio.charset.StandardCharsets;
-import java.nio.file.Path;
-import java.nio.file.Paths;
 
 import java.util.Arrays;
 import java.util.List;
 import java.util.Set;
 
+import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
@@ -96,15 +96,6 @@ public class DataControlNanite extends BaseNanite {
 
 	private void _expireDataControlTask(DataControlTask dataControlTask) {
 		try {
-			Path zipFilePath = Paths.get(
-				_exportPathName, dataControlTask.getId() + ".zip");
-
-			File file = zipFilePath.toFile();
-
-			if (file.exists() && !file.delete()) {
-				_log.error("Unable to delete file " + file.getAbsolutePath());
-			}
-
 			dataControlTask.setStatus(DataControlTaskStatus.EXPIRED.toString());
 
 			_dataControlTaskDog.updateDataControlTask(dataControlTask);
@@ -114,9 +105,13 @@ public class DataControlNanite extends BaseNanite {
 		}
 	}
 
-	private void _exportDataControlTask(
-			DataControlTask dataControlTask, ZipFileBuilder zipFileBuilder)
+	private void _exportDataControlTask(DataControlTask dataControlTask)
 		throws Exception {
+
+		File tempFile = File.createTempFile(
+			String.valueOf(dataControlTask.getId()), ".zip");
+
+		ZipFileBuilder zipFileBuilder = new ZipFileBuilder(tempFile);
 
 		zipFileBuilder.addToZip(
 			"data-control-tasks.json",
@@ -133,6 +128,17 @@ public class DataControlNanite extends BaseNanite {
 			});
 
 		zipFileBuilder.build();
+
+		// Archive
+
+		String bucketName = StringUtils.replace(
+			_exportBucketTemplate, "{googleProjectId}", _gcloudProjectId);
+
+		String fileName = dataControlTask.getId() + ".zip";
+
+		_googleStorageArchiver.archiveSync(
+			bucketName, null, tempFile, fileName,
+			ProjectIdThreadLocal.getProjectId());
 	}
 
 	private void _runDataControlTask(DataControlTask dataControlTask) {
@@ -142,11 +148,7 @@ public class DataControlNanite extends BaseNanite {
 			DataControlTask.Type type = dataControlTask.getType();
 
 			if (type != DataControlTask.Type.ACCESS) {
-				_exportDataControlTask(
-					dataControlTask,
-					new ZipFileBuilder(
-						_exportPathName + "/" + dataControlTask.getId() +
-							".zip"));
+				_exportDataControlTask(dataControlTask);
 			}
 
 			_auditEventDog.addAuditEvent(
@@ -189,8 +191,14 @@ public class DataControlNanite extends BaseNanite {
 	@Autowired
 	private EmailHttp _emailHttp;
 
-	@Value("${osb.asah.batch.curator.data.export.path:/export}")
-	private String _exportPathName;
+	@Value("${osb.asah.export.google.bucket:{googleProjectId}-export}")
+	private String _exportBucketTemplate;
+
+	@Value("${osb.asah.gcloud.project.id:liferaycloud-customer-ac}")
+	private String _gcloudProjectId;
+
+	@Autowired(required = false)
+	private GoogleStorageArchiver _googleStorageArchiver;
 
 	@Autowired
 	private ObjectMapper _objectMapper;

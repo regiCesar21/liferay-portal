@@ -17,7 +17,6 @@
 		}
 	],
 	"volumes": {
-		"export": "/export",
 		"temp": "/temp"
 	}
 }

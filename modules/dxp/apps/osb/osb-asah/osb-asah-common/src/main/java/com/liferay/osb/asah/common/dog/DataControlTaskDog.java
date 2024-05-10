@@ -20,13 +20,16 @@ import com.liferay.osb.asah.common.model.Sort;
 import com.liferay.osb.asah.common.repository.DataControlTaskRepository;
 import com.liferay.osb.asah.common.repository.executor.BigQueryQueryExecutor;
 import com.liferay.osb.asah.common.spring.resource.ResourceUtil;
+import com.liferay.osb.asah.common.storage.impl.GoogleStorageArchiver;
 import com.liferay.osb.asah.common.util.ListUtil;
+import com.liferay.osb.asah.common.util.ProjectIdThreadLocal;
 import com.liferay.osb.asah.common.util.TimeOrderedUuidGenerator;
 
 import com.univocity.parsers.csv.CsvParser;
 import com.univocity.parsers.csv.CsvParserSettings;
 
 import java.io.File;
+import java.io.FileOutputStream;
 import java.io.Serializable;
 
 import java.nio.file.Path;
@@ -48,6 +51,7 @@ import java.util.Set;
 import java.util.UUID;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
+import java.util.zip.ZipOutputStream;
 
 import org.apache.commons.codec.digest.DigestUtils;
 import org.apache.commons.lang3.StringUtils;
@@ -318,11 +322,31 @@ public class DataControlTaskDog {
 	}
 
 	private boolean _access(DataControlTask dataControlTask) throws Exception {
+		File tempFile = File.createTempFile(
+			String.valueOf(dataControlTask.getId()), ".zip");
+
+		ZipOutputStream zipOutputStream = new ZipOutputStream(
+			new FileOutputStream(tempFile));
+
 		DataExporter dataExporter = new BigQueryDataExporter(
-			_bigQueryQueryExecutor, dataControlTask, _dslContext, _exportPath,
-			Arrays.asList("BQEvent", "BQExpandoValue", "BQUser"));
+			_bigQueryQueryExecutor, dataControlTask, _dslContext,
+			Arrays.asList("BQEvent", "BQExpandoValue", "BQUser"),
+			zipOutputStream);
 
 		dataExporter.export();
+
+		zipOutputStream.close();
+
+		// Archive
+
+		String bucketName = StringUtils.replace(
+			_exportBucketTemplate, "{googleProjectId}", _gcloudProjectId);
+
+		String fileName = dataControlTask.getId() + ".zip";
+
+		_googleStorageArchiver.archiveSync(
+			bucketName, null, tempFile, fileName,
+			ProjectIdThreadLocal.getProjectId());
 
 		return true;
 	}
@@ -696,8 +720,17 @@ public class DataControlTaskDog {
 	@Autowired
 	private Environment _environment;
 
+	@Value("${osb.asah.export.google.bucket:{googleProjectId}-export}")
+	private String _exportBucketTemplate;
+
 	@Value("${osb.asah.batch.curator.data.export.path:/export}")
 	private String _exportPath;
+
+	@Value("${osb.asah.gcloud.project.id:liferaycloud-customer-ac}")
+	private String _gcloudProjectId;
+
+	@Autowired(required = false)
+	private GoogleStorageArchiver _googleStorageArchiver;
 
 	@Autowired
 	private SegmentDog _segmentDog;

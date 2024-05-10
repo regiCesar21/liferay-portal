@@ -18,10 +18,6 @@ import com.liferay.osb.asah.common.util.IOUtil;
 import com.liferay.osb.asah.common.util.ProjectIdThreadLocal;
 
 import java.io.File;
-import java.io.FileOutputStream;
-
-import java.nio.file.Path;
-import java.nio.file.Paths;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -31,7 +27,6 @@ import java.util.zip.ZipEntry;
 import java.util.zip.ZipOutputStream;
 
 import org.apache.commons.codec.digest.DigestUtils;
-import org.apache.commons.io.FilenameUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -51,9 +46,9 @@ public class BigQueryDataExporter implements DataExporter {
 	public BigQueryDataExporter(
 		BigQueryQueryExecutor bigQueryQueryExecutor,
 		DataControlTask dataControlTask, DSLContext dslContext,
-		String exportPath, List<String> tableNames) {
+		List<String> tableNames, ZipOutputStream zipOutputStream) {
 
-		this(bigQueryQueryExecutor, dslContext, exportPath, tableNames);
+		this(bigQueryQueryExecutor, dslContext, tableNames, zipOutputStream);
 
 		_dataControlTask = dataControlTask;
 	}
@@ -61,12 +56,12 @@ public class BigQueryDataExporter implements DataExporter {
 	public BigQueryDataExporter(
 		BigQueryQueryExecutor bigQueryQueryExecutor, List<Condition> conditions,
 		DataExportTask dataExportTask, String dateFieldName,
-		DSLContext dslContext, String exportPath,
-		List<String> selectedFieldNames, String tableName) {
+		DSLContext dslContext, List<String> selectedFieldNames,
+		String tableName, ZipOutputStream zipOutputStream) {
 
 		this(
-			bigQueryQueryExecutor, dslContext, exportPath,
-			Collections.singletonList(tableName));
+			bigQueryQueryExecutor, dslContext,
+			Collections.singletonList(tableName), zipOutputStream);
 
 		_conditions = conditions;
 		_dataExportTask = dataExportTask;
@@ -86,12 +81,12 @@ public class BigQueryDataExporter implements DataExporter {
 
 	private BigQueryDataExporter(
 		BigQueryQueryExecutor bigQueryQueryExecutor, DSLContext dslContext,
-		String exportPath, List<String> tableNames) {
+		List<String> tableNames, ZipOutputStream zipOutputStream) {
 
 		_bigQueryQueryExecutor = bigQueryQueryExecutor;
 		_dslContext = dslContext;
-		_exportPath = exportPath;
 		_tableNames = tableNames;
+		_zipOutputStream = zipOutputStream;
 
 		StorageOptions storageOptions = StorageOptions.getDefaultInstance();
 
@@ -104,15 +99,6 @@ public class BigQueryDataExporter implements DataExporter {
 
 		Page<Blob> blobs = _storage.list(
 			exportBucket, Storage.BlobListOption.prefix(exportBucketFolder));
-
-		Path path = Paths.get(
-			_exportPath,
-			FilenameUtils.getName(_dataControlTask.getId() + ".zip"));
-
-		File dataExportZipFile = path.toFile();
-
-		ZipOutputStream zipOutputStream = new ZipOutputStream(
-			new FileOutputStream(dataExportZipFile));
 
 		for (Blob blob : blobs.iterateAll()) {
 			try {
@@ -130,22 +116,20 @@ public class BigQueryDataExporter implements DataExporter {
 
 				File file = new File(blobName);
 
-				zipOutputStream.putNextEntry(new ZipEntry(file.getName()));
+				_zipOutputStream.putNextEntry(new ZipEntry(file.getName()));
 
-				zipOutputStream.write(bytes, 0, bytes.length);
+				_zipOutputStream.write(bytes, 0, bytes.length);
 			}
 			catch (Exception exception) {
 				_log.error(
 					String.format(
-						"Unable to write blob %s to data control file %s",
-						blob.getName(), path),
+						"Unable to write blob %s to data control temp file",
+						blob.getName()),
 					exception);
 			}
 		}
 
-		zipOutputStream.closeEntry();
-
-		zipOutputStream.close();
+		_zipOutputStream.closeEntry();
 	}
 
 	private void _createDataExportZipFile(
@@ -155,18 +139,9 @@ public class BigQueryDataExporter implements DataExporter {
 		Page<Blob> blobs = _storage.list(
 			exportBucket, Storage.BlobListOption.prefix(exportBucketFolder));
 
-		Path path = Paths.get(
-			_exportPath,
-			FilenameUtils.getName(_dataExportTask.getId() + ".zip"));
-
-		File dataExportZipFile = path.toFile();
-
-		ZipOutputStream zipOutputStream = new ZipOutputStream(
-			new FileOutputStream(dataExportZipFile));
-
 		File file = new File("data.json");
 
-		zipOutputStream.putNextEntry(new ZipEntry(file.getName()));
+		_zipOutputStream.putNextEntry(new ZipEntry(file.getName()));
 
 		for (Blob blob : blobs.iterateAll()) {
 			try {
@@ -178,20 +153,18 @@ public class BigQueryDataExporter implements DataExporter {
 
 				byte[] bytes = _getBlobContent(blob);
 
-				zipOutputStream.write(bytes, 0, bytes.length);
+				_zipOutputStream.write(bytes, 0, bytes.length);
 			}
 			catch (Exception exception) {
 				_log.error(
 					String.format(
-						"Unable to write blob %s to data export file %s",
-						blob.getName(), path),
+						"Unable to write blob %s to data export temporary file",
+						blob.getName()),
 					exception);
 			}
 		}
 
-		zipOutputStream.closeEntry();
-
-		zipOutputStream.close();
+		_zipOutputStream.closeEntry();
 	}
 
 	private void _exportDataControlTask() throws Exception {
@@ -405,9 +378,9 @@ public class BigQueryDataExporter implements DataExporter {
 	private DataExportTask _dataExportTask;
 	private String _dateFieldName;
 	private final DSLContext _dslContext;
-	private final String _exportPath;
 	private List<String> _selectedFieldNames;
 	private final Storage _storage;
 	private List<String> _tableNames;
+	private ZipOutputStream _zipOutputStream;
 
 }
