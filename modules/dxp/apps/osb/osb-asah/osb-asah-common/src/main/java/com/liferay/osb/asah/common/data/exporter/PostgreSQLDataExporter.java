@@ -176,8 +176,8 @@ public class PostgreSQLDataExporter implements DataExporter {
 	private final DataExportTask _dataExportTask;
 	private final String _dateFieldName;
 	private final DSLContext _dslContext;
-	private final File _tmpFile;
 	private final JsonGenerator _jsonGenerator;
 	private final String _tableName;
+	private final File _tmpFile;
 
 }

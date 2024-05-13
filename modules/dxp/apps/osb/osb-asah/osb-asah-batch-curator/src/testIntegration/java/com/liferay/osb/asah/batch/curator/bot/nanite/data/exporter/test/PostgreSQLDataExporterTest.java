@@ -89,14 +89,14 @@ public class PostgreSQLDataExporterTest
 				dataExportTask, "createDate", _dslContext, _jsonFactory,
 				"segment");
 
-		File file = postgreSQLDataExporter.export();
+		File tmpFile = postgreSQLDataExporter.export();
 
 		tmpFile.deleteOnExit();
 
 		JSONAssert.assertEquals(
 			ResourceUtil.readResourceToString(
 				"dependencies/expected_segments_export.jsonl", this),
-			_extractJSONFileFromZip(file), true);
+			_extractJSONFileFromZip(tmpFile), true);
 	}
 
 	private DataExportTask _createDataExportTask(
