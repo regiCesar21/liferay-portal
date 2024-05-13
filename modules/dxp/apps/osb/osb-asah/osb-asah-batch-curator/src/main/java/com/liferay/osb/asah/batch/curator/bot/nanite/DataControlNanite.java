@@ -108,10 +108,8 @@ public class DataControlNanite extends BaseNanite {
 	private void _exportDataControlTask(DataControlTask dataControlTask)
 		throws Exception {
 
-		File tempFile = File.createTempFile(
+		ZipFileBuilder zipFileBuilder = new ZipFileBuilder(
 			String.valueOf(dataControlTask.getId()), ".zip");
-
-		ZipFileBuilder zipFileBuilder = new ZipFileBuilder(tempFile);
 
 		zipFileBuilder.addToZip(
 			"data-control-tasks.json",
@@ -127,17 +125,15 @@ public class DataControlNanite extends BaseNanite {
 					dataControlTaskJSON.getBytes(StandardCharsets.UTF_8));
 			});
 
-		zipFileBuilder.build();
+		File file = zipFileBuilder.build();
 
 		// Archive
 
 		String bucketName = StringUtils.replace(
 			_exportBucketTemplate, "{googleProjectId}", _gcloudProjectId);
 
-		String fileName = dataControlTask.getId() + ".zip";
-
 		_googleStorageArchiver.archiveSync(
-			bucketName, null, tempFile, fileName,
+			bucketName, null, file, file.getName(),
 			ProjectIdThreadLocal.getProjectId());
 	}
 

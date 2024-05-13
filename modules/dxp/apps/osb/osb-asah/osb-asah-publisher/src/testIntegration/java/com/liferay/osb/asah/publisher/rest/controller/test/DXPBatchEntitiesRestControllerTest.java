@@ -310,9 +310,7 @@ public class DXPBatchEntitiesRestControllerTest
 	}
 
 	private FileSystemResource _getFileSystemResource() throws Exception {
-		File tempFile = File.createTempFile("export", ".zip");
-
-		ZipFileBuilder zipFileBuilder = new ZipFileBuilder(tempFile);
+		ZipFileBuilder zipFileBuilder = new ZipFileBuilder("export", ".zip");
 
 		zipFileBuilder.addToZip(
 			"export.json",
@@ -333,9 +331,7 @@ public class DXPBatchEntitiesRestControllerTest
 				}
 			});
 
-		zipFileBuilder.build();
-
-		return new FileSystemResource(tempFile);
+		return new FileSystemResource(zipFileBuilder.build());
 	}
 
 	private HttpHeaders _getHttpHeaders() {

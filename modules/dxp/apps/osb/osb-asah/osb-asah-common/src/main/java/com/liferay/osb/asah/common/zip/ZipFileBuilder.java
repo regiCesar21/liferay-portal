@@ -27,8 +27,10 @@ public class ZipFileBuilder {
 		_file = file;
 	}
 
-	public ZipFileBuilder(String fileName) {
-		_file = new File(fileName);
+	public ZipFileBuilder(String prefix, String suffix) throws Exception {
+		_file = File.createTempFile(prefix, suffix);
+
+		_file.deleteOnExit();
 	}
 
 	public void addToZip(
@@ -38,7 +40,7 @@ public class ZipFileBuilder {
 		_unsafeConsumers.put(fileName, unsafeConsumer);
 	}
 
-	public void build() throws Exception {
+	public File build() throws Exception {
 		try (FileOutputStream fileOutputStream = new FileOutputStream(
 				_file.getAbsolutePath());
 			ZipOutputStream zipOutputStream = new ZipOutputStream(
@@ -62,6 +64,8 @@ public class ZipFileBuilder {
 				zipOutputStream.closeEntry();
 			}
 		}
+
+		return _file;
 	}
 
 	private static final Log _log = LogFactory.getLog(ZipFileBuilder.class);

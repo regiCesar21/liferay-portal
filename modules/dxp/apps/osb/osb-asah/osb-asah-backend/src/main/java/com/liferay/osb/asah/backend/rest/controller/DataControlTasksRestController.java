@@ -72,17 +72,13 @@ public class DataControlTasksRestController extends BaseRestController {
 			@RequestParam(required = false) Long[] ids)
 		throws Exception {
 
-		File file = File.createTempFile(
-			"data-control-export-", ".zip", new File(_tempPath));
-
-		file.deleteOnExit();
+		ZipFileBuilder zipFileBuilder = new ZipFileBuilder(
+			"data-control-export-", ".zip");
 
 		List<DataControlTask> dataControlTasks =
 			_dataControlTaskDog.getPrioritizedDataControlTasks(
 				batchId, null, ids, DataControlTaskStatus.COMPLETED.toString(),
 				null);
-
-		ZipFileBuilder zipFileBuilder = new ZipFileBuilder(file);
 
 		for (DataControlTask dataControlTask : dataControlTasks) {
 			File dataControlTaskFile = new File(
@@ -111,7 +107,7 @@ public class DataControlTasksRestController extends BaseRestController {
 				});
 		}
 
-		zipFileBuilder.build();
+		File file = zipFileBuilder.build();
 
 		return toDownloadResponse(file, file.getName());
 	}
