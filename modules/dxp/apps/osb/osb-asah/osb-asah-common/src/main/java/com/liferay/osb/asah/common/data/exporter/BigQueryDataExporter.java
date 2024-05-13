@@ -18,6 +18,7 @@ import com.liferay.osb.asah.common.util.IOUtil;
 import com.liferay.osb.asah.common.util.ProjectIdThreadLocal;
 
 import java.io.File;
+import java.io.FileOutputStream;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -46,47 +47,58 @@ public class BigQueryDataExporter implements DataExporter {
 	public BigQueryDataExporter(
 		BigQueryQueryExecutor bigQueryQueryExecutor,
 		DataControlTask dataControlTask, DSLContext dslContext,
-		List<String> tableNames, ZipOutputStream zipOutputStream) {
+		List<String> tableNames) {
 
-		this(bigQueryQueryExecutor, dslContext, tableNames, zipOutputStream);
+		this(bigQueryQueryExecutor, dslContext, tableNames);
 
 		_dataControlTask = dataControlTask;
+
+		_tmpFilePrefix = String.valueOf(dataControlTask.getId());
 	}
 
 	public BigQueryDataExporter(
 		BigQueryQueryExecutor bigQueryQueryExecutor, List<Condition> conditions,
 		DataExportTask dataExportTask, String dateFieldName,
 		DSLContext dslContext, List<String> selectedFieldNames,
-		String tableName, ZipOutputStream zipOutputStream) {
+		String tableName) {
 
 		this(
 			bigQueryQueryExecutor, dslContext,
-			Collections.singletonList(tableName), zipOutputStream);
+			Collections.singletonList(tableName));
 
 		_conditions = conditions;
 		_dataExportTask = dataExportTask;
 		_dateFieldName = dateFieldName;
 		_selectedFieldNames = selectedFieldNames;
+
+		_tmpFilePrefix = String.valueOf(dataExportTask.getId());
 	}
 
 	@Override
-	public void export() throws Exception {
+	public File export() throws Exception {
+		File tmpFile = File.createTempFile(_tmpFilePrefix, ".zip");
+
+		_zipOutputStream = new ZipOutputStream(new FileOutputStream(tmpFile));
+
 		if (_dataControlTask != null) {
 			_exportDataControlTask();
 		}
 		else if (_dataExportTask != null) {
 			_exportDataExportTask();
 		}
+
+		_zipOutputStream.close();
+
+		return tmpFile;
 	}
 
 	private BigQueryDataExporter(
 		BigQueryQueryExecutor bigQueryQueryExecutor, DSLContext dslContext,
-		List<String> tableNames, ZipOutputStream zipOutputStream) {
+		List<String> tableNames) {
 
 		_bigQueryQueryExecutor = bigQueryQueryExecutor;
 		_dslContext = dslContext;
 		_tableNames = tableNames;
-		_zipOutputStream = zipOutputStream;
 
 		StorageOptions storageOptions = StorageOptions.getDefaultInstance();
 
@@ -272,8 +284,7 @@ public class BigQueryDataExporter implements DataExporter {
 	}
 
 	private void _runBigQueryDataControlExportJob(
-			String exportBucket, String exportBucketFolder, String tableName)
-		throws Exception {
+		String exportBucket, String exportBucketFolder, String tableName) {
 
 		String emailAddress = StringUtils.lowerCase(
 			_dataControlTask.getEmailAddress());
@@ -335,8 +346,7 @@ public class BigQueryDataExporter implements DataExporter {
 	}
 
 	private void _runBigQueryExportJob(
-			String exportBucket, String exportBucketFolder)
-		throws Exception {
+		String exportBucket, String exportBucketFolder) {
 
 		SelectSelectStep<Record> selectSelectStep = _getSelectSelectStep();
 
@@ -381,6 +391,7 @@ public class BigQueryDataExporter implements DataExporter {
 	private List<String> _selectedFieldNames;
 	private final Storage _storage;
 	private List<String> _tableNames;
+	private String _tmpFilePrefix;
 	private ZipOutputStream _zipOutputStream;
 
 }

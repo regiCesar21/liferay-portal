@@ -5,11 +5,13 @@
 
 package com.liferay.osb.asah.common.data.exporter;
 
+import java.io.File;
+
 /**
  * @author Marcellus Tavares
  */
 public interface DataExporter {
 
-	public void export() throws Exception;
+	public File export() throws Exception;
 
 }

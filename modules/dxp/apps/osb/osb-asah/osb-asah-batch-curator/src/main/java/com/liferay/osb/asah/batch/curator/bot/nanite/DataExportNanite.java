@@ -17,11 +17,9 @@ import com.liferay.osb.asah.common.storage.impl.GoogleStorageArchiver;
 import com.liferay.osb.asah.common.util.ProjectIdThreadLocal;
 
 import java.io.File;
-import java.io.FileOutputStream;
 
 import java.util.Collections;
 import java.util.List;
-import java.util.zip.ZipOutputStream;
 
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.logging.Log;
@@ -90,17 +88,10 @@ public class DataExportNanite extends BaseNanite {
 
 		DataExporter dataExporter = null;
 
-		File tempFile = File.createTempFile(
-			String.valueOf(dataExportTask.getId()), ".zip");
-
-		ZipOutputStream zipOutputStream = new ZipOutputStream(
-			new FileOutputStream(tempFile));
-
 		if (dataExportTask.getType() == DataExportTask.Type.EVENT) {
 			dataExporter = new BigQueryDataExporter(
 				_bigQueryQueryExecutor, Collections.emptyList(), dataExportTask,
-				"eventDate", _dslContext, Collections.emptyList(), "BQEvent",
-				zipOutputStream);
+				"eventDate", _dslContext, Collections.emptyList(), "BQEvent");
 		}
 		else if (dataExportTask.getType() == DataExportTask.Type.IDENTITY) {
 			Condition condition = DSL.field(
@@ -116,7 +107,7 @@ public class DataExportNanite extends BaseNanite {
 			dataExporter = new BigQueryDataExporter(
 				_bigQueryQueryExecutor, Collections.singletonList(condition),
 				dataExportTask, "createDate", _dslContext,
-				Collections.emptyList(), "BQIdentity", zipOutputStream);
+				Collections.emptyList(), "BQIdentity");
 		}
 		else if (dataExportTask.getType() == DataExportTask.Type.INDIVIDUAL) {
 			Condition condition = DSL.or(
@@ -132,38 +123,33 @@ public class DataExportNanite extends BaseNanite {
 			dataExporter = new BigQueryDataExporter(
 				_bigQueryQueryExecutor, Collections.singletonList(condition),
 				dataExportTask, "createDate", _dslContext,
-				Collections.emptyList(), "BQIndividual", zipOutputStream);
+				Collections.emptyList(), "BQIndividual");
 		}
 		else if (dataExportTask.getType() == DataExportTask.Type.MEMBERSHIP) {
 			dataExporter = new BigQueryDataExporter(
 				_bigQueryQueryExecutor, Collections.emptyList(), dataExportTask,
 				"createDate", _dslContext, Collections.emptyList(),
-				"BQMembership", zipOutputStream);
+				"BQMembership");
 		}
 		else if (dataExportTask.getType() == DataExportTask.Type.PAGE) {
 			dataExporter = new BigQueryDataExporter(
 				_bigQueryQueryExecutor, Collections.emptyList(), dataExportTask,
-				"eventDate", _dslContext, Collections.emptyList(), "PageDaily",
-				zipOutputStream);
+				"eventDate", _dslContext, Collections.emptyList(), "PageDaily");
 		}
 		else {
 			throw new IllegalArgumentException(
 				"Invalid data export task type: " + dataExportTask.getType());
 		}
 
-		dataExporter.export();
-
-		zipOutputStream.close();
+		File tmpFile = dataExporter.export();
 
 		// Archive
 
 		String bucketName = StringUtils.replace(
 			_exportBucketTemplate, "{googleProjectId}", _gcloudProjectId);
 
-		String fileName = dataExportTask.getId() + ".zip";
-
 		_googleStorageArchiver.archiveSync(
-			bucketName, null, tempFile, fileName,
+			bucketName, null, tmpFile, tmpFile.getName(),
 			ProjectIdThreadLocal.getProjectId());
 	}
 
@@ -198,7 +184,7 @@ public class DataExportNanite extends BaseNanite {
 		DataExporter dataExporter = new PostgreSQLDataExporter(
 			dataExportTask, "createDate", _dslContext, _jsonFactory, "segment");
 
-		File file = dataExporter.export();
+		File tmpFile = dataExporter.export();
 
 		// Archive
 
@@ -206,7 +192,7 @@ public class DataExportNanite extends BaseNanite {
 			_exportBucketTemplate, "{googleProjectId}", _gcloudProjectId);
 
 		_googleStorageArchiver.archiveSync(
-			bucketName, null, file, file.getName(),
+			bucketName, null, tmpFile, tmpFile.getName(),
 			ProjectIdThreadLocal.getProjectId());
 	}
 
