@@ -56,11 +56,11 @@ public class PostgreSQLDataExporter implements DataExporter {
 		_dateFieldName = dateFieldName;
 		_dslContext = dslContext;
 
-		_file = File.createTempFile(
+		_tmpFile = File.createTempFile(
 			String.valueOf(dataExportTask.getId()), ".zip");
 
 		ZipOutputStream zipOutputStream = new ZipOutputStream(
-			new FileOutputStream(_file));
+			new FileOutputStream(_tmpFile));
 
 		File file = new File("data.json");
 
@@ -109,7 +109,7 @@ public class PostgreSQLDataExporter implements DataExporter {
 
 		_jsonGenerator.close();
 
-		return _file;
+		return _tmpFile;
 	}
 
 	private void _exportResult(JSONObject resultJSONObject) {
@@ -176,7 +176,7 @@ public class PostgreSQLDataExporter implements DataExporter {
 	private final DataExportTask _dataExportTask;
 	private final String _dateFieldName;
 	private final DSLContext _dslContext;
-	private final File _file;
+	private final File _tmpFile;
 	private final JsonGenerator _jsonGenerator;
 	private final String _tableName;
 
