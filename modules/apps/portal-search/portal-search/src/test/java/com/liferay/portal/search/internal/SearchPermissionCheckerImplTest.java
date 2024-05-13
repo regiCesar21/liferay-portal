@@ -13,10 +13,12 @@ import com.liferay.portal.kernel.search.SearchPermissionChecker;
 import com.liferay.portal.kernel.search.filter.BooleanFilter;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.UserBag;
+import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.ResourcePermissionLocalService;
 import com.liferay.portal.kernel.service.RoleLocalService;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
+import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.search.configuration.SearchPermissionCheckerConfiguration;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
 
@@ -68,6 +70,7 @@ public class SearchPermissionCheckerImplTest {
 
 		long userId = RandomTestUtil.randomLong();
 
+		whenGroupLocalServiceGetGroupIds(RandomTestUtil.randomLong());
 		whenIndexerIsPermissionAware(true);
 		whenPermissionCheckerGetUser(_user);
 		whenPermissionCheckerGetUserBag(_userBag);
@@ -85,6 +88,7 @@ public class SearchPermissionCheckerImplTest {
 	protected SearchPermissionCheckerImpl createSearchPermissionChecker() {
 		return new SearchPermissionCheckerImpl() {
 			{
+				groupLocalService = _groupLocalService;
 				indexerRegistry = _indexerRegistry;
 				permissionChecker = _permissionChecker;
 				resourcePermissionLocalService =
@@ -95,6 +99,16 @@ public class SearchPermissionCheckerImplTest {
 				userLocalService = _userLocalService;
 			}
 		};
+	}
+
+	protected void whenGroupLocalServiceGetGroupIds(long... groupIds) {
+		Mockito.doReturn(
+			ListUtil.fromArray(groupIds)
+		).when(
+			_groupLocalService
+		).getGroupIds(
+			Mockito.anyLong(), Mockito.eq(true)
+		);
 	}
 
 	protected boolean whenIndexerIsPermissionAware(boolean permissionAware) {
@@ -130,6 +144,9 @@ public class SearchPermissionCheckerImplTest {
 			_user
 		).getUserId();
 	}
+
+	@Mock
+	private GroupLocalService _groupLocalService;
 
 	@Mock
 	private Indexer<?> _indexer;
