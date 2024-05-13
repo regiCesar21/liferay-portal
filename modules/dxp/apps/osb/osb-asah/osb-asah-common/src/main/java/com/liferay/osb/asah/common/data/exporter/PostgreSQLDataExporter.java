@@ -18,10 +18,13 @@ import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import com.liferay.osb.asah.common.entity.DataExportTask;
 import com.liferay.osb.asah.common.json.JSONUtil;
 
-import java.io.OutputStream;
+import java.io.File;
+import java.io.FileOutputStream;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.zip.ZipEntry;
+import java.util.zip.ZipOutputStream;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -46,17 +49,27 @@ public class PostgreSQLDataExporter implements DataExporter {
 
 	public PostgreSQLDataExporter(
 			DataExportTask dataExportTask, String dateFieldName,
-			DSLContext dslContext, JsonFactory jsonFactory,
-			OutputStream outputStream, String tableName)
+			DSLContext dslContext, JsonFactory jsonFactory, String tableName)
 		throws Exception {
 
 		_dataExportTask = dataExportTask;
 		_dateFieldName = dateFieldName;
 		_dslContext = dslContext;
 
-		_jsonGenerator = jsonFactory.createGenerator(
-			outputStream, JsonEncoding.UTF8);
+		_file = File.createTempFile(
+			String.valueOf(dataExportTask.getId()), ".zip");
 
+		ZipOutputStream zipOutputStream = new ZipOutputStream(
+			new FileOutputStream(_file));
+
+		File file = new File("data.json");
+
+		zipOutputStream.putNextEntry(new ZipEntry(file.getName()));
+
+		_jsonGenerator = jsonFactory.createGenerator(
+			zipOutputStream, JsonEncoding.UTF8);
+
+		_jsonGenerator.enable(JsonGenerator.Feature.AUTO_CLOSE_TARGET);
 		_jsonGenerator.setCodec(
 			new ObjectMapper() {
 				{
@@ -73,7 +86,7 @@ public class PostgreSQLDataExporter implements DataExporter {
 	}
 
 	@Override
-	public void export() throws Exception {
+	public File export() throws Exception {
 		int page = 0;
 
 		while (true) {
@@ -95,6 +108,8 @@ public class PostgreSQLDataExporter implements DataExporter {
 		}
 
 		_jsonGenerator.close();
+
+		return _file;
 	}
 
 	private void _exportResult(JSONObject resultJSONObject) {
@@ -161,6 +176,7 @@ public class PostgreSQLDataExporter implements DataExporter {
 	private final DataExportTask _dataExportTask;
 	private final String _dateFieldName;
 	private final DSLContext _dslContext;
+	private final File _file;
 	private final JsonGenerator _jsonGenerator;
 	private final String _tableName;
 

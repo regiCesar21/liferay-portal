@@ -185,33 +185,18 @@ public class DataExportNanite extends BaseNanite {
 	private void _runSegmentDataExportTask(DataExportTask dataExportTask)
 		throws Exception {
 
-		File tempFile = File.createTempFile(
-			String.valueOf(dataExportTask.getId()), ".zip");
-
-		ZipOutputStream zipOutputStream = new ZipOutputStream(
-			new FileOutputStream(tempFile));
-
-		File file = new File("data.json");
-
-		zipOutputStream.putNextEntry(new ZipEntry(file.getName()));
-
 		DataExporter dataExporter = new PostgreSQLDataExporter(
-			dataExportTask, "createDate", _dslContext, _jsonFactory,
-			zipOutputStream, "segment");
+			dataExportTask, "createDate", _dslContext, _jsonFactory, "segment");
 
-		dataExporter.export();
-
-		zipOutputStream.close();
+		File file = dataExporter.export();
 
 		// Archive
 
 		String bucketName = StringUtils.replace(
 			_exportBucketTemplate, "{googleProjectId}", _gcloudProjectId);
 
-		String fileName = dataExportTask.getId() + ".zip";
-
 		_googleStorageArchiver.archiveSync(
-			bucketName, null, tempFile, fileName,
+			bucketName, null, file, file.getName(),
 			ProjectIdThreadLocal.getProjectId());
 	}
 

@@ -8,7 +8,6 @@ package com.liferay.osb.asah.batch.curator.bot.nanite.data.exporter.test;
 import com.fasterxml.jackson.core.JsonFactory;
 
 import com.liferay.osb.asah.batch.curator.OSBAsahBatchCuratorSpringTestContext;
-import com.liferay.osb.asah.common.data.exporter.DataExporter;
 import com.liferay.osb.asah.common.data.exporter.PostgreSQLDataExporter;
 import com.liferay.osb.asah.common.date.DateUtil;
 import com.liferay.osb.asah.common.entity.DataExportTask;
@@ -17,23 +16,15 @@ import com.liferay.osb.asah.common.repository.SegmentRepository;
 import com.liferay.osb.asah.common.spring.resource.ResourceUtil;
 import com.liferay.osb.asah.common.util.ProjectIdThreadLocal;
 
+import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.OutputStream;
 
 import java.nio.charset.StandardCharsets;
-import java.nio.file.Files;
-import java.nio.file.Paths;
 
 import java.util.Arrays;
 import java.util.Date;
-import java.util.zip.ZipEntry;
 import java.util.zip.ZipInputStream;
-import java.util.zip.ZipOutputStream;
-
-import org.apache.commons.io.IOUtils;
 
 import org.jooq.DSLContext;
 
@@ -90,25 +81,22 @@ public class PostgreSQLDataExporterTest
 		_segmentRepository.saveAll(Arrays.asList(segment1, segment2));
 
 		DataExportTask dataExportTask = _createDataExportTask(
-			DateUtil.toUTCDate("2023-04-01T00:00:00.000Z"), 1L,
+			DateUtil.toUTCDate("2023-04-01T00:00:00.000Z"), 100L,
 			DateUtil.toUTCDate("2023-04-28T23:23:59.000Z"));
 
-		_exportSegmentData(dataExportTask);
+		PostgreSQLDataExporter postgreSQLDataExporter =
+			new PostgreSQLDataExporter(
+				dataExportTask, "createDate", _dslContext, _jsonFactory,
+				"segment");
 
-		_extractJSONFileFromZip();
+		File file = postgreSQLDataExporter.export();
 
-		try (FileInputStream fileInputStream = new FileInputStream(
-				"data.json")) {
+		tmpFile.deleteOnExit();
 
-			JSONAssert.assertEquals(
-				ResourceUtil.readResourceToString(
-					"dependencies/expected_segments_export.jsonl", this),
-				IOUtils.toString(fileInputStream, StandardCharsets.UTF_8),
-				true);
-		}
-		finally {
-			Files.deleteIfExists(Paths.get("data.json"));
-		}
+		JSONAssert.assertEquals(
+			ResourceUtil.readResourceToString(
+				"dependencies/expected_segments_export.jsonl", this),
+			_extractJSONFileFromZip(file), true);
 	}
 
 	private DataExportTask _createDataExportTask(
@@ -123,46 +111,24 @@ public class PostgreSQLDataExporterTest
 		return dataExportTask;
 	}
 
-	private void _exportSegmentData(DataExportTask dataExportTask)
-		throws Exception {
-
-		try (OutputStream zipOutputStream = _getZipOutputStream()) {
-			DataExporter dataExporter = new PostgreSQLDataExporter(
-				dataExportTask, "createDate", _dslContext, _jsonFactory,
-				zipOutputStream, "segment");
-
-			dataExporter.export();
-		}
-	}
-
-	private void _extractJSONFileFromZip() throws Exception {
+	private String _extractJSONFileFromZip(File file) throws Exception {
 		try (ZipInputStream zipInputStream = new ZipInputStream(
-				new FileInputStream("1.zip"), StandardCharsets.UTF_8)) {
+				new FileInputStream(file), StandardCharsets.UTF_8)) {
 
 			zipInputStream.getNextEntry();
 
-			try (FileOutputStream fileOutputStream = new FileOutputStream(
-					"data.json")) {
+			try (ByteArrayOutputStream byteArrayOutputStream =
+					new ByteArrayOutputStream()) {
 
 				while (zipInputStream.available() != 0) {
-					fileOutputStream.write(zipInputStream.read());
+					byteArrayOutputStream.write(zipInputStream.read());
 				}
+
+				return new String(
+					byteArrayOutputStream.toByteArray(),
+					StandardCharsets.UTF_8);
 			}
 		}
-		finally {
-			Files.deleteIfExists(Paths.get("1.zip"));
-		}
-	}
-
-	private OutputStream _getZipOutputStream() throws IOException {
-		ZipOutputStream zipOutputStream = new ZipOutputStream(
-			new FileOutputStream("1.zip"));
-
-		File file = new File("data.json");
-
-		zipOutputStream.putNextEntry(new ZipEntry(file.getName()));
-
-		return zipOutputStream;
 	}
 
 	@Autowired
