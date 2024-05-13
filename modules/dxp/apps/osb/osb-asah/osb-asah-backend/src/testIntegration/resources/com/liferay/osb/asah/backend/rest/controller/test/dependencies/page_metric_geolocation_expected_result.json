@@ -1,0 +1,34 @@
+{
+	"data": {
+		"page": {
+			"viewsMetric": {
+				"geolocation": [
+					{
+						"value": 9,
+						"valueKey": "Brazil"
+					},
+					{
+						"value": 6,
+						"valueKey": "Italy"
+					},
+					{
+						"value": 5,
+						"valueKey": "United States"
+					},
+					{
+						"value": 3,
+						"valueKey": "Croatia"
+					},
+					{
+						"value": 1,
+						"valueKey": "France"
+					},
+					{
+						"value": 1,
+						"valueKey": "Indonesia"
+					}
+				]
+			}
+		}
+	}
+}

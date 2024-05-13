@@ -1,0 +1,9 @@
+{
+	"operationName": "PageMetric",
+	"variables": {
+		"canonicalUrl": "https://www.liferay.com",
+		"channelId": "1",
+		"rangeKey": 90,
+		"title": "Digital Experience Software Tailored to Your Needs - Liferay"
+	}
+}

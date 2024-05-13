@@ -1,0 +1,19 @@
+fragment geolocationFragment on Metric {
+	geolocation {
+		value
+		valueKey
+	}
+}
+
+query PageMetric($canonicalUrl: String, $channelId: String, $rangeKey: Int!, $title: String) {
+	page(
+		canonicalUrl: $canonicalUrl,
+		channelId: $channelId,
+		rangeKey: $rangeKey,
+		title: $title
+	) {
+		viewsMetric {
+			...geolocationFragment
+		}
+	}
+}
