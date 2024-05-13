@@ -21,7 +21,6 @@ import java.io.FileOutputStream;
 
 import java.util.Collections;
 import java.util.List;
-import java.util.zip.ZipEntry;
 import java.util.zip.ZipOutputStream;
 
 import org.apache.commons.lang3.StringUtils;
@@ -36,7 +35,10 @@ import org.json.JSONObject;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.core.env.Environment;
+import org.springframework.core.env.Profiles;
 import org.springframework.stereotype.Component;
+import org.springframework.util.Assert;
 
 /**
  * @author Marcellus Tavares
@@ -48,11 +50,19 @@ public class DataExportNanite extends BaseNanite {
 	public DataExportNanite(
 		BigQueryQueryExecutor bigQueryQueryExecutor,
 		DataExportTaskDog dataExportTaskDog, DSLContext dslContext,
-		GoogleStorageArchiver googleStorageArchiver) {
+		Environment environment,
+		@Autowired(required = false) GoogleStorageArchiver
+			googleStorageArchiver) {
 
 		_bigQueryQueryExecutor = bigQueryQueryExecutor;
 		_dataExportTaskDog = dataExportTaskDog;
 		_dslContext = dslContext;
+
+		if (environment.acceptsProfiles(Profiles.of("prod"))) {
+			Assert.notNull(
+				googleStorageArchiver, "Google storage archiver is null");
+		}
+
 		_googleStorageArchiver = googleStorageArchiver;
 	}
 
