@@ -22,7 +22,6 @@ import org.apache.commons.logging.LogFactory;
 
 import org.json.JSONObject;
 
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
 /**
@@ -38,7 +37,7 @@ public class DeleteTempFilesNanite extends BaseNanite {
 
 	@Override
 	public void run(JSONObject contextJSONObject) throws Exception {
-		Path contextPath = Paths.get(_tempPathName);
+		Path contextPath = Paths.get(_TMP_PATH_NAME);
 
 		if (!Files.exists(contextPath)) {
 			if (_log.isWarnEnabled()) {
@@ -89,10 +88,10 @@ public class DeleteTempFilesNanite extends BaseNanite {
 		return _log;
 	}
 
+	private static final String _TMP_PATH_NAME = System.getProperty(
+		"java.io.tmpdir");
+
 	private static final Log _log = LogFactory.getLog(
 		DeleteTempFilesNanite.class);
-
-	@Value("${osb.asah.backend.temp.path:/temp}")
-	private String _tempPathName;
 
 }
