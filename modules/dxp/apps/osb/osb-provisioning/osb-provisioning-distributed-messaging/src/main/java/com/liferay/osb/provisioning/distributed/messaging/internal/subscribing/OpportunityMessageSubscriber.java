@@ -2078,8 +2078,7 @@ public class OpportunityMessageSubscriber extends BaseMessageSubscriber {
 					productPurchasesMap.get(productPurchase));
 
 				if (ArrayUtil.contains(
-						ProductConstants.NAMES_DXP_ADD_ON,
-						product.getName()) ||
+						ProductConstants.NAMES_DXP_ADD_ON, product.getName()) ||
 					ArrayUtil.contains(
 						ProductConstants.NAMES_SUBSCRIPTION,
 						product.getName())) {
