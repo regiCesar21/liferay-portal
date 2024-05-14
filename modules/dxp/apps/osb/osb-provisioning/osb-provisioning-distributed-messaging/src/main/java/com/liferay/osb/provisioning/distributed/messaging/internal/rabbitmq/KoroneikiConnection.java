@@ -15,7 +15,7 @@ import org.osgi.service.component.annotations.Component;
 @Component(
 	immediate = true,
 	property = {"host=", "password=", "port=", "username=", "useSSL="},
-	service = LegacyConnection.class
+	service = KoroneikiConnection.class
 )
-public class LegacyConnection extends BaseConnection {
+public class KoroneikiConnection extends BaseConnection {
 }

@@ -7,7 +7,7 @@ package com.liferay.osb.provisioning.distributed.messaging.internal.rabbitmq.con
 
 import com.liferay.osb.distributed.messaging.rabbitmq.connector.Connection;
 import com.liferay.osb.distributed.messaging.rabbitmq.connector.consumer.BaseConsumer;
-import com.liferay.osb.provisioning.distributed.messaging.internal.rabbitmq.LegacyConnection;
+import com.liferay.osb.provisioning.distributed.messaging.internal.rabbitmq.KoroneikiConnection;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -18,23 +18,24 @@ import org.osgi.service.component.annotations.Reference;
 @Component(
 	immediate = true,
 	property = {
-		"exchange=is_entity_exchange", "exclusive=true",
-		"queue=is_osb_provisioning_entity_queue",
+		"exchange=koroneiki_exchange", "exclusive=true",
+		"queue=is_provisioning_queue",
 		"routing.key=koroneiki.account.contactrole.unassigned",
 		"routing.key=koroneiki.entitlement.create",
 		"routing.key=koroneiki.entitlement.delete",
-		"routing.key=koroneiki.product.delete"
+		"routing.key=koroneiki.product.delete",
+		"routing.key=koroneiki.productpurchase.update"
 	},
-	service = EntityLegacyConsumer.class
+	service = KoroneikiConsumer.class
 )
-public class EntityLegacyConsumer extends BaseConsumer {
+public class KoroneikiConsumer extends BaseConsumer {
 
 	@Override
 	protected Connection getConnection() {
-		return _legacyConnection;
+		return _koroneikiConnection;
 	}
 
 	@Reference
-	private LegacyConnection _legacyConnection;
+	private KoroneikiConnection _koroneikiConnection;
 
 }
