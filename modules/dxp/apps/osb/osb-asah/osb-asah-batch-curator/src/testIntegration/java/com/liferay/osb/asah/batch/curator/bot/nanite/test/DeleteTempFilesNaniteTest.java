@@ -29,7 +29,6 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.test.util.ReflectionTestUtils;
 
 /**
  * @author Matthew Kong
@@ -40,10 +39,7 @@ public class DeleteTempFilesNaniteTest
 
 	@BeforeEach
 	public void setUp() throws Exception {
-		_tempPath = Files.createTempDirectory("temp");
-
-		ReflectionTestUtils.setField(
-			_deleteTempFilesNanite, "_tempPathName", _tempPath.toString());
+		_tempPath = Paths.get(System.getProperty("java.io.tmpdir"));
 	}
 
 	@AfterEach
