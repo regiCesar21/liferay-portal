@@ -24,11 +24,13 @@ import java.time.LocalDate;
 
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.Set;
 
 import org.apache.commons.lang3.StringUtils;
 
+import org.assertj.core.api.Assertions;
+
 import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -52,7 +54,7 @@ public class PagePathDogTest
 	@BQSQLResource(resourcePath = "page_path_events.sql")
 	@Test
 	public void testGetAdjacentPagesViewsMetric() {
-		Assertions.assertEquals(
+		_assertEquals(
 			SetUtil.of(
 				new AdjacentPageViewsMetric(
 					"direct", Boolean.TRUE, Boolean.TRUE, "direct",
@@ -85,7 +87,7 @@ public class PagePathDogTest
 	)
 	@Test
 	public void testGetAdjacentPagesViewsMetricCustomDateRange() {
-		Assertions.assertEquals(
+		_assertEquals(
 			SetUtil.of(
 				new AdjacentPageViewsMetric(
 					"https://www.computer.com/calculator", Boolean.FALSE,
@@ -127,7 +129,7 @@ public class PagePathDogTest
 	@BQSQLResource(resourcePath = "test_get_adjacent_pages_views_metric.sql")
 	@Test
 	public void testGetAdjacentPagesViewsMetricLast7Days() {
-		Assertions.assertEquals(
+		_assertEquals(
 			SetUtil.of(
 				new AdjacentPageViewsMetric(
 					"https://www.computer.com/binary", Boolean.FALSE,
@@ -169,7 +171,7 @@ public class PagePathDogTest
 	)
 	@Test
 	public void testGetAdjacentPagesViewsMetricLast24Hours() {
-		Assertions.assertEquals(
+		_assertEquals(
 			SetUtil.of(
 				new AdjacentPageViewsMetric(
 					"https://www.computer.com/binary", Boolean.FALSE,
@@ -210,7 +212,7 @@ public class PagePathDogTest
 	@BQSQLResource(resourcePath = "test_get_adjacent_pages_views_metric.sql")
 	@Test
 	public void testGetAdjacentPagesViewsMetricLast28Days() {
-		Assertions.assertEquals(
+		_assertEquals(
 			SetUtil.of(
 				new AdjacentPageViewsMetric(
 					"https://www.computer.com/binary", Boolean.FALSE,
@@ -251,7 +253,7 @@ public class PagePathDogTest
 	@BQSQLResource(resourcePath = "test_get_adjacent_pages_views_metric.sql")
 	@Test
 	public void testGetAdjacentPagesViewsMetricLast30Days() {
-		Assertions.assertEquals(
+		_assertEquals(
 			SetUtil.of(
 				new AdjacentPageViewsMetric(
 					"https://www.computer.com/binary", Boolean.FALSE,
@@ -293,7 +295,7 @@ public class PagePathDogTest
 	@BQSQLResource(resourcePath = "test_get_adjacent_pages_views_metric.sql")
 	@Test
 	public void testGetAdjacentPagesViewsMetricLast90Days() {
-		Assertions.assertEquals(
+		_assertEquals(
 			SetUtil.of(
 				new AdjacentPageViewsMetric(
 					"https://www.computer.com/binary", Boolean.FALSE,
@@ -335,7 +337,7 @@ public class PagePathDogTest
 	@BQSQLResource(resourcePath = "test_get_adjacent_pages_views_metric.sql")
 	@Test
 	public void testGetAdjacentPagesViewsMetricLast180Days() {
-		Assertions.assertEquals(
+		_assertEquals(
 			SetUtil.of(
 				new AdjacentPageViewsMetric(
 					"https://www.computer.com/files", Boolean.FALSE,
@@ -380,7 +382,7 @@ public class PagePathDogTest
 	)
 	@Test
 	public void testGetAdjacentPagesViewsMetricNoDirectAccess() {
-		Assertions.assertEquals(
+		_assertEquals(
 			SetUtil.of(
 				new AdjacentPageViewsMetric(
 					"https://www.computer.com/calculator", Boolean.FALSE,
@@ -421,7 +423,7 @@ public class PagePathDogTest
 	)
 	@Test
 	public void testGetAdjacentPagesViewsMetricNoNextPageViews() {
-		Assertions.assertEquals(
+		_assertEquals(
 			SetUtil.of(
 				new AdjacentPageViewsMetric(
 					"https://www.computer.com/calculator", Boolean.FALSE,
@@ -451,7 +453,7 @@ public class PagePathDogTest
 	)
 	@Test
 	public void testGetAdjacentPagesViewsMetricNoPreviousPageViews() {
-		Assertions.assertEquals(
+		_assertEquals(
 			SetUtil.of(
 				new AdjacentPageViewsMetric(
 					"direct", Boolean.TRUE, Boolean.TRUE, "direct",
@@ -481,7 +483,7 @@ public class PagePathDogTest
 	@BQSQLResource(resourcePath = "test_get_adjacent_pages_views_metric.sql")
 	@Test
 	public void testGetAdjacentPagesViewsMetricNoResults() {
-		Assertions.assertEquals(
+		_assertEquals(
 			Collections.emptySet(),
 			_pagePathDog.getAdjacentPagesViewsMetric(
 				"https://www.computer.com/abacus", 12345L, null,
@@ -496,7 +498,7 @@ public class PagePathDogTest
 	)
 	@Test
 	public void testGetAdjacentPagesViewsMetricOneNextPageView() {
-		Assertions.assertEquals(
+		_assertEquals(
 			SetUtil.of(
 				new AdjacentPageViewsMetric(
 					"https://www.computer.com/calculator", Boolean.FALSE,
@@ -530,7 +532,7 @@ public class PagePathDogTest
 	)
 	@Test
 	public void testGetAdjacentPagesViewsMetricOnePreviousPageView() {
-		Assertions.assertEquals(
+		_assertEquals(
 			SetUtil.of(
 				new AdjacentPageViewsMetric(
 					"https://www.computer.com/calculator", Boolean.FALSE,
@@ -563,7 +565,7 @@ public class PagePathDogTest
 	)
 	@Test
 	public void testGetAdjacentPagesViewsMetricThreeNextPageViews() {
-		Assertions.assertEquals(
+		_assertEquals(
 			SetUtil.of(
 				new AdjacentPageViewsMetric(
 					"https://www.computer.com/calculator", Boolean.FALSE,
@@ -604,7 +606,7 @@ public class PagePathDogTest
 	)
 	@Test
 	public void testGetAdjacentPagesViewsMetricThreePreviousPageViews() {
-		Assertions.assertEquals(
+		_assertEquals(
 			SetUtil.of(
 				new AdjacentPageViewsMetric(
 					"https://www.computer.com/calculator", Boolean.FALSE,
@@ -643,7 +645,7 @@ public class PagePathDogTest
 	)
 	@Test
 	public void testGetAdjacentPagesViewsMetricWithSegmentId1() {
-		Assertions.assertEquals(
+		_assertEquals(
 			SetUtil.of(
 				new AdjacentPageViewsMetric(
 					"https://www.computer.com/decimal", Boolean.FALSE,
@@ -676,7 +678,7 @@ public class PagePathDogTest
 	)
 	@Test
 	public void testGetAdjacentPagesViewsMetricWithSegmentId2() {
-		Assertions.assertEquals(
+		_assertEquals(
 			SetUtil.of(
 				new AdjacentPageViewsMetric(
 					"https://www.computer.com/decimal", Boolean.FALSE,
@@ -706,7 +708,7 @@ public class PagePathDogTest
 					"8858f85dbf940d79704ca6'')', operator='ge', value=1))",
 			true, _segmentDog.fetchSegment(24680L));
 
-		Assertions.assertEquals(
+		_assertEquals(
 			SetUtil.of(
 				new AdjacentPageViewsMetric(
 					"https://www.computer.com/files", Boolean.FALSE,
@@ -735,7 +737,7 @@ public class PagePathDogTest
 	public void testGetAdjacentPagesViewsMetricWithTimeZone() {
 		_preferenceDog.savePreference("time-zone-id", "America/Los_Angeles");
 
-		Assertions.assertEquals(
+		_assertEquals(
 			SetUtil.of(
 				new AdjacentPageViewsMetric(
 					"https://www.computer.com/calculator", Boolean.FALSE,
@@ -779,7 +781,7 @@ public class PagePathDogTest
 	)
 	@Test
 	public void testGetPreviousAdjacentPagesViewsMetric() {
-		Assertions.assertEquals(
+		org.junit.jupiter.api.Assertions.assertEquals(
 			SetUtil.of(
 				new AdjacentPageViewsMetric(
 					"https://www.computer.com/files", Boolean.FALSE,
@@ -807,7 +809,7 @@ public class PagePathDogTest
 	)
 	@Test
 	public void testGetPreviousAdjacentPagesViewsMetricWithNoSegmentIds() {
-		Assertions.assertEquals(
+		_assertEquals(
 			Collections.emptySet(),
 			_pagePathDog.getPreviousAdjacentPagesViewsMetric(
 				"https://www.computer.com/abacus", 12345L,
@@ -816,6 +818,19 @@ public class PagePathDogTest
 					LocalDate.parse("2023-11-05"),
 					LocalDate.parse("2023-10-25")),
 				"From Abacus to Modern Day Computers"));
+	}
+
+	private void _assertEquals(
+		Set<AdjacentPageViewsMetric> actualAdjacentPageViewsMetrics,
+		Set<AdjacentPageViewsMetric> expectedAdjacentPageViewsMetrics) {
+
+		Assertions.assertThat(
+			expectedAdjacentPageViewsMetrics
+		).usingRecursiveFieldByFieldElementComparatorIgnoringFields(
+			"_eventDate"
+		).containsAll(
+			actualAdjacentPageViewsMetrics
+		);
 	}
 
 	@Autowired

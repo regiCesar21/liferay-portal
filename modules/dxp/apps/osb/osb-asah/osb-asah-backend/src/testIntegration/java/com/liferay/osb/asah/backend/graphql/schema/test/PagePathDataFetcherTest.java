@@ -11,6 +11,7 @@ import com.liferay.osb.asah.backend.dog.helper.SearchQueryContext;
 import com.liferay.osb.asah.backend.dto.PagePathNodeDTO;
 import com.liferay.osb.asah.backend.graphql.schema.PagePathDataFetcher;
 import com.liferay.osb.asah.backend.model.AdjacentPageViewsMetric;
+import com.liferay.osb.asah.common.date.DateUtil;
 import com.liferay.osb.asah.common.model.TimeRange;
 import com.liferay.osb.asah.test.util.spring.OSBAsahTestExecutionListenersContext;
 
@@ -19,6 +20,7 @@ import graphql.schema.DataFetchingEnvironment;
 import java.math.BigDecimal;
 
 import java.util.Arrays;
+import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -44,42 +46,52 @@ public class PagePathDataFetcherTest
 	public void testGet() {
 		Set<AdjacentPageViewsMetric> adjacentPageViewsMetrics = new HashSet<>();
 
+		Date date = new Date();
+
 		adjacentPageViewsMetrics.add(
 			new AdjacentPageViewsMetric(
-				"direct", Boolean.TRUE, Boolean.TRUE, "direct",
+				"direct", date, Boolean.TRUE, Boolean.TRUE, "direct",
 				BigDecimal.valueOf(5)));
 		adjacentPageViewsMetrics.add(
 			new AdjacentPageViewsMetric(
-				"others", Boolean.TRUE, Boolean.TRUE, "others",
+				"others", date, Boolean.TRUE, Boolean.TRUE, "others",
 				BigDecimal.valueOf(7)));
 		adjacentPageViewsMetrics.add(
 			new AdjacentPageViewsMetric(
-				"others", Boolean.TRUE, Boolean.FALSE, "others",
+				"others", date, Boolean.TRUE, Boolean.FALSE, "others",
 				BigDecimal.valueOf(90)));
 		adjacentPageViewsMetrics.add(
 			new AdjacentPageViewsMetric(
-				"url-1", Boolean.FALSE, Boolean.TRUE, "url 1",
+				"url-1", date, Boolean.FALSE, Boolean.TRUE, "url 1",
 				BigDecimal.valueOf(10)));
 		adjacentPageViewsMetrics.add(
 			new AdjacentPageViewsMetric(
-				"url-2", Boolean.FALSE, Boolean.TRUE, "url 2",
+				"url-2", date, Boolean.FALSE, Boolean.TRUE, "url 2",
 				BigDecimal.valueOf(100)));
 		adjacentPageViewsMetrics.add(
 			new AdjacentPageViewsMetric(
-				"url-3", Boolean.FALSE, Boolean.TRUE, "url 3",
+				"url-3", date, Boolean.FALSE, Boolean.TRUE, "url 3",
 				BigDecimal.valueOf(1000)));
 		adjacentPageViewsMetrics.add(
 			new AdjacentPageViewsMetric(
-				"url-4", Boolean.FALSE, Boolean.FALSE, "url 4",
+				"url-4", DateUtil.addDays(date, -1), Boolean.FALSE,
+				Boolean.TRUE, "url 4", BigDecimal.valueOf(100)));
+		adjacentPageViewsMetrics.add(
+			new AdjacentPageViewsMetric(
+				"url-5", date, Boolean.FALSE, Boolean.FALSE, "url 5",
 				BigDecimal.valueOf(100)));
 		adjacentPageViewsMetrics.add(
 			new AdjacentPageViewsMetric(
-				"url-5", Boolean.FALSE, Boolean.FALSE, "url 5",
+				"url-6", date, Boolean.FALSE, Boolean.FALSE, "url 6",
 				BigDecimal.valueOf(300)));
 		adjacentPageViewsMetrics.add(
 			new AdjacentPageViewsMetric(
-				"url-6", Boolean.FALSE, Boolean.FALSE, "url 6",
+				"url-7", date, Boolean.FALSE, Boolean.FALSE, "url 7",
 				BigDecimal.valueOf(200)));
+		adjacentPageViewsMetrics.add(
+			new AdjacentPageViewsMetric(
+				"url-8", DateUtil.addDays(date, -1), Boolean.FALSE,
+				Boolean.FALSE, "url 8", BigDecimal.valueOf(100)));
 
 		Mockito.when(
 			_pagePathDog.getAdjacentPagesViewsMetric(
@@ -104,26 +116,41 @@ public class PagePathDataFetcherTest
 		Assertions.assertEquals(
 			"http://www.liferay.com", pagePathNodeDTO.getCanonicalUrl());
 		Assertions.assertEquals("Liferay", pagePathNodeDTO.getTitle());
-		Assertions.assertEquals(1122, pagePathNodeDTO.getViews());
+		Assertions.assertEquals(1222, pagePathNodeDTO.getViews());
 
 		_assertPagePathNodeDTOs(
 			pagePathNodeDTO.getPreviousPagePathNodeDTOs(),
 			Arrays.asList(
-				new PagePathNodeDTO("url-3", false, null, null, "url 3", 1000L),
-				new PagePathNodeDTO("url-2", false, null, null, "url 2", 100L),
-				new PagePathNodeDTO("url-1", false, null, null, "url 1", 10L),
-				new PagePathNodeDTO("direct", true, null, null, "direct", 5L),
-				new PagePathNodeDTO("others", true, null, null, "others", 7L)));
+				new PagePathNodeDTO(
+					"url-3", date, false, null, null, "url 3", 1000L),
+				new PagePathNodeDTO(
+					"url-4", DateUtil.addDays(date, -1), false, null, null,
+					"url 4", 100L),
+				new PagePathNodeDTO(
+					"url-2", date, false, null, null, "url 2", 100L),
+				new PagePathNodeDTO(
+					"url-1", date, false, null, null, "url 1", 10L),
+				new PagePathNodeDTO(
+					"direct", date, true, null, null, "direct", 5L),
+				new PagePathNodeDTO(
+					"others", date, true, null, null, "others", 7L)));
 
 		_assertPagePathNodeDTOs(
 			pagePathNodeDTO.getFollowingPagePathNodeDTOs(),
 			Arrays.asList(
-				new PagePathNodeDTO("url-5", false, null, null, "url 5", 300L),
-				new PagePathNodeDTO("url-6", false, null, null, "url 6", 200L),
-				new PagePathNodeDTO("url-4", false, null, null, "url 4", 100L),
-				new PagePathNodeDTO("others", true, null, null, "others", 90L),
 				new PagePathNodeDTO(
-					"drop-offs", true, null, null, "drop-offs", 432L)));
+					"url-6", date, false, null, null, "url 6", 300L),
+				new PagePathNodeDTO(
+					"url-7", date, false, null, null, "url 7", 200L),
+				new PagePathNodeDTO(
+					"url-8", DateUtil.addDays(date, -1), false, null, null,
+					"url 8", 100L),
+				new PagePathNodeDTO(
+					"url-5", date, false, null, null, "url 5", 100L),
+				new PagePathNodeDTO(
+					"others", date, true, null, null, "others", 90L),
+				new PagePathNodeDTO(
+					"drop-offs", null, true, null, null, "drop-offs", 432L)));
 	}
 
 	private void _assertPagePathNodeDTOs(
