@@ -1,0 +1,79 @@
+{
+	"data": {
+		"assetPages": {
+			"assetMetrics": [
+				{
+					"assetId": "http://www.liferay.com/page-7",
+					"assetTitle": "Liferay Page 7",
+					"selectedMetrics": [
+						{
+							"name": "viewsMetric",
+							"value": 30
+						},
+						{
+							"name": "commentsMetric",
+							"value": 3
+						}
+					]
+				},
+				{
+					"assetId": "http://www.liferay.com/page-3",
+					"assetTitle": "Liferay Page 3",
+					"selectedMetrics": [
+						{
+							"name": "viewsMetric",
+							"value": 23
+						},
+						{
+							"name": "commentsMetric",
+							"value": 3
+						}
+					]
+				},
+				{
+					"assetId": "http://www.liferay.com/page-5",
+					"assetTitle": "Liferay Page 5",
+					"selectedMetrics": [
+						{
+							"name": "viewsMetric",
+							"value": 15
+						},
+						{
+							"name": "commentsMetric",
+							"value": 1
+						}
+					]
+				},
+				{
+					"assetId": "http://www.liferay.com/page-1",
+					"assetTitle": "Liferay Page 1",
+					"selectedMetrics": [
+						{
+							"name": "viewsMetric",
+							"value": 14
+						},
+						{
+							"name": "commentsMetric",
+							"value": 3
+						}
+					]
+				},
+				{
+					"assetId": "http://www.liferay.com/page-2",
+					"assetTitle": "Liferay Page 2",
+					"selectedMetrics": [
+						{
+							"name": "viewsMetric",
+							"value": 11
+						},
+						{
+							"name": "commentsMetric",
+							"value": 2
+						}
+					]
+				}
+			],
+			"total": 7
+		}
+	}
+}

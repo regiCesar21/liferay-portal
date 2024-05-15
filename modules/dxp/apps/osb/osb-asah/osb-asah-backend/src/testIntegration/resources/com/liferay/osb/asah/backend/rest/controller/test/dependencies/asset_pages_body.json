@@ -1,0 +1,19 @@
+{
+	"variables": {
+		"assetId": "1",
+		"assetType": "BLOG",
+		"channelId": "1",
+		"devices": "Any",
+		"location": "Any",
+		"rangeEnd": null,
+		"rangeKey": 30,
+		"rangeStart": null,
+		"selectedMetrics": [
+			"viewsMetric",
+			"commentsMetric"
+		],
+		"size": 5,
+		"start": 0,
+		"title": "Blog Test"
+	}
+}
