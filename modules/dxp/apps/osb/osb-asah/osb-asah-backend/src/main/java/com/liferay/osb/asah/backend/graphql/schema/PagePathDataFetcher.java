@@ -18,6 +18,7 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.Date;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
@@ -80,6 +81,8 @@ public class PagePathDataFetcher extends BaseDataFetcher<PagePathNodeDTO> {
 
 				pagePathNodeDTO.setCanonicalUrl(
 					adjacentPageViewsMetric.getCanonicalUrl());
+				pagePathNodeDTO.setEventDate(
+					adjacentPageViewsMetric.getEventDate());
 				pagePathNodeDTO.setExternal(
 					adjacentPageViewsMetric.isExternal());
 				pagePathNodeDTO.setTitle(adjacentPageViewsMetric.getTitle());
@@ -180,8 +183,16 @@ public class PagePathDataFetcher extends BaseDataFetcher<PagePathNodeDTO> {
 				return -1;
 			}
 
-			return Long.compare(
+			int compare = Long.compare(
 				pagePathNodeDTO2.getViews(), pagePathNodeDTO1.getViews());
+
+			if (compare == 0) {
+				Date eventDate1 = pagePathNodeDTO1.getEventDate();
+
+				compare = eventDate1.compareTo(pagePathNodeDTO2.getEventDate());
+			}
+
+			return compare;
 		}
 
 	}
@@ -225,8 +236,16 @@ public class PagePathDataFetcher extends BaseDataFetcher<PagePathNodeDTO> {
 				return -1;
 			}
 
-			return Long.compare(
+			int compare = Long.compare(
 				pagePathNodeDTO2.getViews(), pagePathNodeDTO1.getViews());
+
+			if (compare == 0) {
+				Date eventDate1 = pagePathNodeDTO1.getEventDate();
+
+				compare = eventDate1.compareTo(pagePathNodeDTO2.getEventDate());
+			}
+
+			return compare;
 		}
 
 	}

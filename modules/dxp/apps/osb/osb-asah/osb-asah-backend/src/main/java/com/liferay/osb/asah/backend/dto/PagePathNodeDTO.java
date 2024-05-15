@@ -11,6 +11,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.liferay.osb.asah.backend.graphql.annotation.GraphQLProperty;
 import com.liferay.osb.asah.backend.graphql.annotation.GraphQLType;
 
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -24,7 +25,7 @@ public class PagePathNodeDTO {
 	}
 
 	public PagePathNodeDTO(
-		String canonicalUrl, Boolean external,
+		String canonicalUrl, Date eventDate, Boolean external,
 		List<PagePathNodeDTO> followingPagePathNodeDTOs,
 		List<PagePathNodeDTO> previousPagePathNodeDTOs, String title,
 		Long views) {
@@ -39,6 +40,10 @@ public class PagePathNodeDTO {
 
 	public String getCanonicalUrl() {
 		return _canonicalUrl;
+	}
+
+	public Date getEventDate() {
+		return new Date(_eventDate.getTime());
 	}
 
 	@GraphQLProperty("followingPagePathNodes")
@@ -70,6 +75,10 @@ public class PagePathNodeDTO {
 		_canonicalUrl = canonicalUrl;
 	}
 
+	public void setEventDate(Date eventDate) {
+		_eventDate = new Date(eventDate.getTime());
+	}
+
 	public void setExternal(Boolean external) {
 		_external = external;
 	}
@@ -95,6 +104,7 @@ public class PagePathNodeDTO {
 	}
 
 	private String _canonicalUrl;
+	private Date _eventDate;
 	private Boolean _external;
 	private List<PagePathNodeDTO> _followingPagePathNodeDTOs;
 	private List<PagePathNodeDTO> _previousPagePathNodeDTOs;

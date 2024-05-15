@@ -17,6 +17,7 @@ import java.time.ZoneId;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Date;
 import java.util.List;
 import java.util.Set;
 
@@ -60,20 +61,25 @@ public class PagePathRepositoryImpl implements PagePathRepository {
 			).with(
 				_getTopPreviousPagesCTE("")
 			).select(
-				_canonicalUrlField, _externalField, _previousField, _titleField,
-				_viewsField
+				_canonicalUrlField, _eventDateField, _externalField,
+				_previousField, _titleField, _viewsField
 			).from(
 				"TopFollowingPages"
 			).unionAll(
 				_dslContext.select(
-					_canonicalUrlField, _externalField, _previousField,
-					_titleField, _viewsField
+					_canonicalUrlField, _eventDateField, _externalField,
+					_previousField, _titleField, _viewsField
 				).from(
 					"TopPreviousPages"
 				)
 			).unionAll(
 				_dslContext.select(
 					_canonicalUrlField,
+					DSL.min(
+						_eventDateField
+					).as(
+						_eventDateField
+					),
 					DSL.val(
 						Boolean.TRUE
 					).as(
@@ -191,7 +197,7 @@ public class PagePathRepositoryImpl implements PagePathRepository {
 			"FollowingPages"
 		).as(
 			_dslContext.select(
-				_canonicalUrlField, _titleField,
+				_canonicalUrlField, _eventDateField, _titleField,
 				DSL.val(
 					1
 				).as(
@@ -263,7 +269,7 @@ public class PagePathRepositoryImpl implements PagePathRepository {
 		).as(
 			_dslContext.select(
 				DSL.field("canonicalUrl"), DSL.field("channelId"),
-				DSL.field("eventDate"),
+				_eventDateField,
 				DSL.coalesce(
 					DSL.lag(
 						DSL.field("canonicalUrl")
@@ -330,6 +336,7 @@ public class PagePathRepositoryImpl implements PagePathRepository {
 				).as(
 					"canonicalUrl"
 				),
+				_eventDateField,
 				DSL.coalesce(
 					DSL.field("previousTitle"), "direct"
 				).as(
@@ -401,6 +408,11 @@ public class PagePathRepositoryImpl implements PagePathRepository {
 				).as(
 					"canonicalUrl"
 				),
+				DSL.min(
+					_eventDateField
+				).as(
+					_eventDateField
+				),
 				DSL.max(
 					DSL.when(
 						DSL.field(
@@ -439,7 +451,13 @@ public class PagePathRepositoryImpl implements PagePathRepository {
 				)
 			).from(
 				_dslContext.select(
-					_canonicalUrlField, _titleField,
+					_canonicalUrlField,
+					DSL.min(
+						_eventDateField
+					).as(
+						_eventDateField
+					),
+					_titleField,
 					DSL.sum(
 						_viewsField
 					).as(
@@ -484,6 +502,11 @@ public class PagePathRepositoryImpl implements PagePathRepository {
 				).as(
 					"canonicalUrl"
 				),
+				DSL.min(
+					_eventDateField
+				).as(
+					_eventDateField
+				),
 				DSL.max(
 					DSL.when(
 						DSL.or(
@@ -526,7 +549,13 @@ public class PagePathRepositoryImpl implements PagePathRepository {
 				)
 			).from(
 				_dslContext.select(
-					_canonicalUrlField, _titleField,
+					_canonicalUrlField,
+					DSL.min(
+						_eventDateField
+					).as(
+						_eventDateField
+					),
+					_titleField,
 					DSL.sum(
 						_viewsField
 					).as(
@@ -579,6 +608,8 @@ public class PagePathRepositoryImpl implements PagePathRepository {
 	@Autowired
 	private DSLHelper _dslHelper;
 
+	private final Field<Date> _eventDateField = DSL.field(
+		"eventDate", Date.class);
 	private final Field<Boolean> _externalField = DSL.field(
 		"external", Boolean.class);
 	private final Field<Boolean> _previousField = DSL.field(

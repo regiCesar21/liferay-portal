@@ -9,6 +9,7 @@ import com.liferay.osb.asah.common.util.BeanUtils;
 
 import java.math.BigDecimal;
 
+import java.util.Date;
 import java.util.Map;
 import java.util.Objects;
 
@@ -47,6 +48,18 @@ public class AdjacentPageViewsMetric {
 		_views = views;
 	}
 
+	public AdjacentPageViewsMetric(
+		String canonicalUrl, Date eventDate, Boolean external, Boolean previous,
+		String title, BigDecimal views) {
+
+		_canonicalUrl = canonicalUrl;
+		_eventDate = new Date(eventDate.getTime());
+		_external = external;
+		_previous = previous;
+		_title = title;
+		_views = views;
+	}
+
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj) {
@@ -62,6 +75,7 @@ public class AdjacentPageViewsMetric {
 
 		if (Objects.equals(
 				_canonicalUrl, adjacentPageViewsMetric._canonicalUrl) &&
+			Objects.equals(_eventDate, adjacentPageViewsMetric._eventDate) &&
 			Objects.equals(_external, adjacentPageViewsMetric._external) &&
 			Objects.equals(_previous, adjacentPageViewsMetric._previous) &&
 			Objects.equals(_title, adjacentPageViewsMetric._title) &&
@@ -75,6 +89,10 @@ public class AdjacentPageViewsMetric {
 
 	public String getCanonicalUrl() {
 		return _canonicalUrl;
+	}
+
+	public Date getEventDate() {
+		return new Date(_eventDate.getTime());
 	}
 
 	public Long getSegmentId() {
@@ -100,7 +118,7 @@ public class AdjacentPageViewsMetric {
 	@Override
 	public int hashCode() {
 		return Objects.hash(
-			_canonicalUrl, _external, _previous, _title, _views);
+			_canonicalUrl, _eventDate, _external, _previous, _title, _views);
 	}
 
 	public Boolean isExternal() {
@@ -113,6 +131,10 @@ public class AdjacentPageViewsMetric {
 
 	public void setCanonicalUrl(String canonicalUrl) {
 		_canonicalUrl = canonicalUrl;
+	}
+
+	public void setEventDate(Date eventDate) {
+		_eventDate = new Date(eventDate.getTime());
 	}
 
 	public void setExternal(Boolean external) {
@@ -136,6 +158,7 @@ public class AdjacentPageViewsMetric {
 	}
 
 	private String _canonicalUrl;
+	private Date _eventDate;
 	private Boolean _external;
 	private Boolean _previous;
 	private Long _segmentId;
