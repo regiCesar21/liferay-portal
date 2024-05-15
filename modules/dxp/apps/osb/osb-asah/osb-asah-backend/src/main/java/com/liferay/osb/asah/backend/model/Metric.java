@@ -89,6 +89,10 @@ public class Metric {
 		return _metricType;
 	}
 
+	public String getName() {
+		return _metricType.getName();
+	}
+
 	public Double getPreviousValue() {
 		return _previousValue;
 	}
