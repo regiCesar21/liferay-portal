@@ -142,6 +142,35 @@ public abstract class BaseAssetMetricRepository<T extends AssetMetric>
 	}
 
 	@Override
+	public long getAppearsOnMetricsCount(
+		String assetId, @Nullable String assetTitle, @Nullable Long channelId,
+		TimeRange timeRange) {
+
+		Field<String> canonicalUrlField = DSL.field(
+			"canonicalUrl", String.class);
+		Field<String> pageTitleField = DSL.field("pageTitle", String.class);
+
+		return queryExecutor.queryForLong(
+			dslContext.selectCount(
+			).from(
+				DSL.select(
+					canonicalUrlField, pageTitleField
+				).from(
+					DSL.table(
+						getTableName(timeRange)
+					).as(
+						"metric"
+					)
+				).where(
+					_createWhereClauseCondition(
+						assetId, assetTitle, channelId, timeRange)
+				).groupBy(
+					canonicalUrlField, pageTitleField
+				)
+			));
+	}
+
+	@Override
 	public T getAssetMetric(
 		@Nullable String assetId, @Nullable String assetTitle,
 		@Nullable Long channelId, Set<String> selectedMetrics,

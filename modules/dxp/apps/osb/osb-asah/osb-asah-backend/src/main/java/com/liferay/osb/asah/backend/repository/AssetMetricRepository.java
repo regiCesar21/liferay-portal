@@ -31,6 +31,9 @@ public interface AssetMetricRepository<T extends AssetMetric> {
 		String assetId, @Nullable String assetTitle, @Nullable Long channelId,
 		Set<MetricType> metricTypes, Pageable pageable, TimeRange timeRange);
 
+	public long getAppearsOnMetricsCount(
+		String assetId, String assetTitle, Long channelId, TimeRange timeRange);
+
 	public T getAssetMetric(
 		@Nullable String assetId, @Nullable String assetTitle,
 		@Nullable Long channelId, Set<String> selectedMetrics,
