@@ -26,8 +26,10 @@ import java.time.ZoneOffset;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -68,13 +70,24 @@ public abstract class BaseAssetMetricRepository<T extends AssetMetric>
 	@Override
 	public List<T> getAppearsOnMetrics(
 		String assetId, @Nullable String assetTitle, @Nullable Long channelId,
-		MetricType metricType, TimeRange timeRange) {
+		Set<MetricType> metricTypes, Pageable pageable, TimeRange timeRange) {
+
+		Set<Field> fields = new HashSet<>();
 
 		Field<String> canonicalUrlField = DSL.field(
 			"canonicalUrl", String.class);
-		Field<BigDecimal> metricField = getMetricFieldAliased(
-			metricType, timeRange);
+
 		Field<String> pageTitleField = DSL.field("pageTitle", String.class);
+
+		Collections.addAll(fields, canonicalUrlField, pageTitleField);
+
+		List<Field> metricFields = new ArrayList<>();
+
+		for (MetricType metricType : metricTypes) {
+			metricFields.add(getMetricFieldAliased(metricType, timeRange));
+		}
+
+		fields.addAll(metricFields);
 
 		Map<String, BiConsumer<T, Metric>> assetMetricSetters =
 			getAssetMetricSetters();
@@ -86,24 +99,26 @@ public abstract class BaseAssetMetricRepository<T extends AssetMetric>
 				assetMetric.setAssetId((String)recordMap.get("canonicalUrl"));
 				assetMetric.setAssetTitle((String)recordMap.get("pageTitle"));
 
-				Metric metric = new Metric(metricType);
+				for (MetricType metricType : metricTypes) {
+					Metric metric = new Metric(metricType);
 
-				BigDecimal metricValueBigDecimal = (BigDecimal)recordMap.get(
-					metricType.getName());
+					BigDecimal metricValueBigDecimal =
+						(BigDecimal)recordMap.get(metricType.getName());
 
-				if (metricValueBigDecimal != null) {
-					metric.setValue(metricValueBigDecimal.doubleValue());
+					if (metricValueBigDecimal != null) {
+						metric.setValue(metricValueBigDecimal.doubleValue());
+					}
+
+					BiConsumer<T, Metric> metricSetterBiConsumer =
+						assetMetricSetters.get(metricType.getName());
+
+					metricSetterBiConsumer.accept(assetMetric, metric);
 				}
-
-				BiConsumer<T, Metric> metricSetterBiConsumer =
-					assetMetricSetters.get(metricType.getName());
-
-				metricSetterBiConsumer.accept(assetMetric, metric);
 
 				return assetMetric;
 			},
 			dslContext.select(
-				canonicalUrlField, metricField, pageTitleField
+				fields
 			).from(
 				DSL.table(
 					getTableName(timeRange)
@@ -116,7 +131,13 @@ public abstract class BaseAssetMetricRepository<T extends AssetMetric>
 			).groupBy(
 				canonicalUrlField, pageTitleField
 			).orderBy(
-				metricField.desc()
+				metricFields.get(
+					0
+				).desc()
+			).limit(
+				pageable.getPageSize()
+			).offset(
+				pageable.getOffset()
 			));
 	}
 

@@ -29,7 +29,7 @@ public interface AssetMetricRepository<T extends AssetMetric> {
 
 	public List<T> getAppearsOnMetrics(
 		String assetId, @Nullable String assetTitle, @Nullable Long channelId,
-		MetricType metricType, TimeRange timeRange);
+		Set<MetricType> metricTypes, Pageable pageable, TimeRange timeRange);
 
 	public T getAssetMetric(
 		@Nullable String assetId, @Nullable String assetTitle,
