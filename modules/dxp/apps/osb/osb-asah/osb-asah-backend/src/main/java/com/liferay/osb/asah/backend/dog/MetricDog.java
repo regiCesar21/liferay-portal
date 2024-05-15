@@ -20,7 +20,10 @@ import java.util.Map;
 import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.support.PageableExecutionUtils;
 import org.springframework.stereotype.Component;
 
 /**
@@ -38,17 +41,24 @@ public class MetricDog {
 				assetMetricAssetMetricRepository));
 	}
 
-	public <T extends AssetMetric> List<T> getAppearsOnMetrics(
-		MetricType metricType, SearchQueryContext searchQueryContext) {
+	public <T extends AssetMetric> Page<T> getAppearsOnMetrics(
+		Set<MetricType> metricTypes, Pageable pageable,
+		SearchQueryContext searchQueryContext) {
 
 		AssetMetricRepository assetMetricRepository =
 			(AssetMetricRepository<T>)_assetMetricRepositoryMap.get(
 				searchQueryContext.getAssetType());
 
-		return assetMetricRepository.getAppearsOnMetrics(
-			searchQueryContext.getAssetId(), searchQueryContext.getTitle(),
-			searchQueryContext.getChannelIdAsLong(), metricType,
-			searchQueryContext.getTimeRange());
+		return PageableExecutionUtils.getPage(
+			assetMetricRepository.getAppearsOnMetrics(
+				searchQueryContext.getAssetId(), searchQueryContext.getTitle(),
+				searchQueryContext.getChannelIdAsLong(), metricTypes, pageable,
+				searchQueryContext.getTimeRange()),
+			pageable,
+			() -> assetMetricRepository.getAppearsOnMetricsCount(
+				searchQueryContext.getAssetId(), searchQueryContext.getTitle(),
+				searchQueryContext.getChannelIdAsLong(),
+				searchQueryContext.getTimeRange()));
 	}
 
 	public <T extends AssetMetric> T getAssetMetric(
