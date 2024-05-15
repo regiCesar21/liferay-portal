@@ -25,6 +25,7 @@ import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.time.ZoneOffset;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.Set;
 import java.util.function.Function;
@@ -41,6 +42,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.mockito.Mockito;
 
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.test.context.TestExecutionListeners;
 
 /**
@@ -85,7 +87,8 @@ public abstract class BaseAssetMetricRepositoryTestCase<T extends AssetMetric>
 			getAssetMetricRepository();
 
 		List<T> appearsOnMetrics = assetMetricRepository.getAppearsOnMetrics(
-			"e131fabc", null, 1L, metricType, timeRange);
+			"e131fabc", null, 1L, Collections.singleton(metricType),
+			PageRequest.of(0, 10), timeRange);
 
 		Stream<T> stream = appearsOnMetrics.stream();
 
