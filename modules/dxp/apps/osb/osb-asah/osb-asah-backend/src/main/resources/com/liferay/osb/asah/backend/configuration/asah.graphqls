@@ -172,6 +172,7 @@ interface AssetMetric {
 	assetType: String
 	dataSourceId: String
 	defaultMetric: Metric
+	selectedMetrics: [Metric]
 	urls: [String]
 }
 
@@ -235,6 +236,7 @@ type BlogMetric implements AssetMetric {
 	commentsMetric: Metric
 	dataSourceId: String
 	defaultMetric: Metric
+	selectedMetrics: [Metric]
 	ratingsMetric: Metric
 	readingTimeMetric: Metric
 	urls: [String]
@@ -293,6 +295,7 @@ type CustomAssetMetric implements AssetMetric {
 	dataSourceId: String
 	defaultMetric: Metric
 	downloadsMetric: Metric
+	selectedMetrics: [Metric]
 	readingTimeMetric: Metric
 	submissionsMetric: Metric
 	urls: [String]
@@ -356,6 +359,7 @@ type DocumentMetric implements AssetMetric {
 	dataSourceId: String
 	defaultMetric: Metric
 	downloadsMetric: Metric
+	selectedMetrics: [Metric]
 	previewsMetric: Metric
 	ratingsMetric: Metric
 	urls: [String]
@@ -585,6 +589,7 @@ type FormMetric implements AssetMetric {
 	dataSourceId: String
 	defaultMetric: Metric
 	formPageMetrics: [FormPageMetric]
+	selectedMetrics: [Metric]
 	submissionsMetric: Metric
 	urls: [String]
 	viewsMetric: Metric
@@ -702,6 +707,7 @@ type JournalMetric implements AssetMetric {
 	canonicalUrls: [String]
 	dataSourceId: String
 	defaultMetric: Metric
+	selectedMetrics: [Metric]
 	urls: [String]
 	viewsMetric: Metric
 }
@@ -717,6 +723,7 @@ type Metric {
 	individuals(keywords: String, size: Int!, start: Int!): IndividualBag
 	knownUsersCount: Int
 	metrics: [Metric]
+	name: String
 	nonsegmentedKnownUsersCount: Int
 	previousValue: Float
 	previousValueKey: String
@@ -905,6 +912,7 @@ type PageMetric implements AssetMetric {
 	entrancesMetric: Metric
 	exitRateMetric: Metric
 	indirectAccessMetric: Metric
+	selectedMetrics: [Metric]
 	urls: [String]
 	visitorsMetric: Metric
 	viewsMetric: Metric
@@ -956,8 +964,11 @@ type QueryType {
 		rangeEnd: String,
 		rangeKey: Int,
 		rangeStart: String,
+		selectedMetrics: [String],
+		size: Int!,
+		start: Int!,
 		title: String
-	): [AssetMetric]
+	): AssetMetricBag
 
 	assets(
 		canonicalUrl: String,
