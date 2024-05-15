@@ -85,12 +85,12 @@ public class DataControlTaskDogTest
 
 	@BeforeEach
 	public void setUp() throws Exception {
-		_tempPath = Files.createTempDirectory("temp");
+		_tmpPath = Paths.get(System.getProperty("java.io.tmpdir"));
 	}
 
 	@AfterEach
 	public void tearDown() {
-		File folder = _tempPath.toFile();
+		File folder = _tmpPath.toFile();
 
 		File[] files = folder.listFiles();
 
@@ -120,11 +120,11 @@ public class DataControlTaskDogTest
 		String content = "test1@liferay.com\ntest2@liferay.com";
 
 		Path path = Files.write(
-			Paths.get(_tempPath + "/test.csv"),
+			Paths.get(_tmpPath + "/test.csv"),
 			content.getBytes(StandardCharsets.UTF_8));
 
 		_dataControlTaskDog.addDataControlTasks(
-			null, Paths.get(_tempPath.toString(), "test.csv"), "1000",
+			null, Paths.get(_tmpPath.toString(), "test.csv"), "1000",
 			Collections.singletonList(DataControlTask.Type.SUPPRESS.toString()),
 			"12345", "test@liferay.com");
 
@@ -899,6 +899,6 @@ public class DataControlTaskDogTest
 	@Autowired
 	private SuppressionRepository _suppressionRepository;
 
-	private Path _tempPath;
+	private Path _tmpPath;
 
 }

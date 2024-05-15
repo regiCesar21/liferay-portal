@@ -1,4 +1,4 @@
 com/liferay/osb/asah/common/constants/ServiceConstants.LCP_PROJECT_ID:SAFE
 com/liferay/osb/asah/common/data/exporter/BigQueryDataExporter._tmpFilePrefix:SAFE
 com/liferay/osb/asah/common/dog/DataExportTaskDog._exportPath:SAFE
-com/liferay/osb/asah/common/dog/test/DataControlTaskDogTest._tempPath:SAFE
+com/liferay/osb/asah/common/dog/test/DataControlTaskDogTest._tmpPath:SAFE

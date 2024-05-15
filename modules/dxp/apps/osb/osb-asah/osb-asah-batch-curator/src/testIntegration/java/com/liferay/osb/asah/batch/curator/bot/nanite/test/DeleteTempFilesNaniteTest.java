@@ -38,13 +38,13 @@ public class DeleteTempFilesNaniteTest
 			   OSBAsahTestExecutionListenersContext {
 
 	@BeforeEach
-	public void setUp() throws Exception {
-		_tempPath = Paths.get(System.getProperty("java.io.tmpdir"));
+	public void setUp() {
+		_tmpPath = Paths.get(System.getProperty("java.io.tmpdir"));
 	}
 
 	@AfterEach
 	public void tearDown() {
-		File folder = _tempPath.toFile();
+		File folder = _tmpPath.toFile();
 
 		File[] files = folder.listFiles();
 
@@ -65,9 +65,9 @@ public class DeleteTempFilesNaniteTest
 	@Test
 	public void testDelete() throws Exception {
 		Path newCSVPath = Files.write(
-			Paths.get(_tempPath.toString(), "new.csv"), new byte[0]);
+			Paths.get(_tmpPath.toString(), "new.csv"), new byte[0]);
 		Path oldCSVPath = Files.write(
-			Paths.get(_tempPath.toString(), "old.csv"), new byte[0]);
+			Paths.get(_tmpPath.toString(), "old.csv"), new byte[0]);
 
 		LocalDateTime localDateTime = LocalDateTime.now();
 
@@ -95,6 +95,6 @@ public class DeleteTempFilesNaniteTest
 	@Autowired
 	private DeleteTempFilesNanite _deleteTempFilesNanite;
 
-	private Path _tempPath;
+	private Path _tmpPath;
 
 }
