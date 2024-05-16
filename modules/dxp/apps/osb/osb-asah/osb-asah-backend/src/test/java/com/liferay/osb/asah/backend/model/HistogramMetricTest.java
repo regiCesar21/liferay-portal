@@ -21,7 +21,7 @@ import org.junit.jupiter.api.Test;
 public class HistogramMetricTest extends BaseBeanTestCase<HistogramMetric> {
 
 	public HistogramMetricTest() {
-		super(null, Arrays.asList("getMetricType", "getTrend"));
+		super(null, Arrays.asList("getMetricType", "getName", "getTrend"));
 	}
 
 	@Override

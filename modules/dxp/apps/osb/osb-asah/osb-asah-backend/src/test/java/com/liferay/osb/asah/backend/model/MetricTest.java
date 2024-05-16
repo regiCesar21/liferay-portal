@@ -35,7 +35,7 @@ public class MetricTest extends BaseBeanTestCase<Metric> {
 					put(MetricType.class, MockMetricType::new);
 				}
 			},
-			Arrays.asList("getTrend"));
+			Arrays.asList("getName", "getTrend"));
 	}
 
 	@Test
