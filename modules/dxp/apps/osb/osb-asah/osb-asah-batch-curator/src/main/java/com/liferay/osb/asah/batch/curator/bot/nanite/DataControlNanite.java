@@ -127,8 +127,6 @@ public class DataControlNanite extends BaseNanite {
 
 		File file = zipFileBuilder.build();
 
-		// Archive
-
 		String bucketName = StringUtils.replace(
 			_exportBucketTemplate, "{googleProjectId}", _gcloudProjectId);
 

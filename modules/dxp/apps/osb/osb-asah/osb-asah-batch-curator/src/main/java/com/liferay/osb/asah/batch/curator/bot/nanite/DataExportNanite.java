@@ -143,8 +143,6 @@ public class DataExportNanite extends BaseNanite {
 
 		File tmpFile = dataExporter.export();
 
-		// Archive
-
 		String bucketName = StringUtils.replace(
 			_exportBucketTemplate, "{googleProjectId}", _gcloudProjectId);
 
@@ -185,8 +183,6 @@ public class DataExportNanite extends BaseNanite {
 			dataExportTask, "createDate", _dslContext, _jsonFactory, "segment");
 
 		File tmpFile = dataExporter.export();
-
-		// Archive
 
 		String bucketName = StringUtils.replace(
 			_exportBucketTemplate, "{googleProjectId}", _gcloudProjectId);

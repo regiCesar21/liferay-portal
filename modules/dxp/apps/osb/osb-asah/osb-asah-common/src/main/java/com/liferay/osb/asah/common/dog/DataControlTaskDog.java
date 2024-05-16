@@ -326,8 +326,6 @@ public class DataControlTaskDog {
 
 		File tmpFile = dataExporter.export();
 
-		// Archive
-
 		String bucketName = StringUtils.replace(
 			_exportBucketTemplate, "{googleProjectId}", _gcloudProjectId);
 
