@@ -46,11 +46,11 @@ public class DataControlTasksMutationDataFetcher
 			return null;
 		}
 
-		Path path = Paths.get(_tmpPathName, FilenameUtils.getName(fileName));
+		Path path = Paths.get(_TMP_PATH_NAME, FilenameUtils.getName(fileName));
 
 		path = path.normalize();
 
-		if (!path.startsWith(_tmpPathName)) {
+		if (!path.startsWith(_TMP_PATH_NAME)) {
 			throw new OSBAsahException(
 				HttpStatus.BAD_REQUEST, "Invalid file name: " + fileName);
 		}
@@ -58,7 +58,7 @@ public class DataControlTasksMutationDataFetcher
 		return path;
 	}
 
-	private static final String _tmpPathName = System.getProperty(
+	private static final String _TMP_PATH_NAME = System.getProperty(
 		"java.io.tmpdir");
 
 	@Autowired
