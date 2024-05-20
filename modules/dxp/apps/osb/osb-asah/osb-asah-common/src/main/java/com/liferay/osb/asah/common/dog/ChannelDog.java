@@ -108,6 +108,15 @@ public class ChannelDog {
 	public void clearChannels(
 		Set<Long> channelIds, boolean clear, String createDateString) {
 
+		if (channelIds.isEmpty()) {
+			if (_log.isWarnEnabled()) {
+				_log.warn(
+					"Skipping clear channels with empty channel IDs list");
+			}
+
+			return;
+		}
+
 		Date createDate = DateUtil.toUTCDate(createDateString);
 
 		_customAssetDashboardRepository.deleteByChannelIdInAndCreateDateBefore(
