@@ -42,6 +42,8 @@ import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
+import org.json.JSONArray;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
@@ -147,7 +149,7 @@ public class ChannelDog {
 			_asahTaskDog.scheduleAsahTask(
 				className,
 				JSONUtil.put(
-					"channelIds", JSONUtil.putAll(channelIds)
+					"channelIds", new JSONArray(channelIds)
 				).put(
 					"createDate", createDateString
 				).put(
