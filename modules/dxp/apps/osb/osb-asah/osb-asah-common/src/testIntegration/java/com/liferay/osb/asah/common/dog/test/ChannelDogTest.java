@@ -7,10 +7,13 @@ package com.liferay.osb.asah.common.dog.test;
 
 import com.liferay.osb.asah.common.date.DateUtil;
 import com.liferay.osb.asah.common.dog.ChannelDog;
+import com.liferay.osb.asah.common.entity.AsahTask;
 import com.liferay.osb.asah.common.entity.BQSession;
 import com.liferay.osb.asah.common.entity.Channel;
 import com.liferay.osb.asah.common.entity.ChannelDataSource;
 import com.liferay.osb.asah.common.faro.info.dog.test.BaseFaroInfoDogTestCase;
+import com.liferay.osb.asah.common.json.JSONUtil;
+import com.liferay.osb.asah.common.repository.AsahTaskRepository;
 import com.liferay.osb.asah.common.repository.AssetRepository;
 import com.liferay.osb.asah.common.repository.BQEventRepository;
 import com.liferay.osb.asah.common.repository.BQSessionRepository;
@@ -18,6 +21,7 @@ import com.liferay.osb.asah.common.repository.ChannelRepository;
 import com.liferay.osb.asah.common.repository.CustomAssetDashboardRepository;
 import com.liferay.osb.asah.common.repository.ExperimentRepository;
 import com.liferay.osb.asah.common.repository.SegmentRepository;
+import com.liferay.osb.asah.common.repository.executor.BigQueryQueryExecutor;
 import com.liferay.osb.asah.common.repository.executor.QueryExecutor;
 import com.liferay.osb.asah.common.util.SetUtil;
 import com.liferay.osb.asah.test.util.annotation.BQSQLResource;
@@ -39,7 +43,13 @@ import org.jooq.impl.DSL;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
+import org.mockito.ArgumentMatchers;
+import org.mockito.Mockito;
+
+import org.skyscreamer.jsonassert.JSONAssert;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.mock.mockito.SpyBean;
 import org.springframework.data.domain.Page;
 
 /**
@@ -116,6 +126,57 @@ public class ChannelDogTest
 		Assertions.assertEquals(1, _segmentRepository.count());
 
 		Assertions.assertNotNull(_channelDog.fetchChannel(1L));
+	}
+
+	@BQSQLResource(
+		resourcePath = "test_bq_clear_channels_empty_channel_ids.sql"
+	)
+	@SQLResource(resourcePath = "test_clear_channels_empty_channel_ids.sql")
+	@Test
+	public void testClearChannelsEmptyChannelIds() {
+		_channelDog.clearChannels(
+			Collections.emptySet(), true,
+			DateUtil.addDays(DateUtil.newDateString(), -3));
+
+		_assertClearChannels(
+			1L, 2L, "BQIdentityInterestPage", "BQIdentityInterestScore",
+			"BQSessionInterestScore", "BlogDaily", "DocumentLibraryDaily",
+			"FormDaily", "JournalDaily", "PageDaily");
+	}
+
+	@Test
+	public void testClearChannelsRescheduleAsahTaskOnError() {
+		Mockito.doThrow(
+			new RuntimeException()
+		).when(
+			_bigQueryQueryExecutor
+		).queryExecute(
+			ArgumentMatchers.anyString()
+		);
+
+		String dayDateString = DateUtil.newDayDateString();
+
+		_channelDog.clearChannels(
+			Collections.singleton(9876543210L), true, dayDateString);
+
+		List<AsahTask> asahTasks = _asahTaskRepository.findByClassName(
+			"ClearChannelsNanite");
+
+		Assertions.assertEquals(1, asahTasks.size());
+
+		AsahTask asahTask = asahTasks.get(0);
+
+		JSONAssert.assertEquals(
+			JSONUtil.put(
+				"channelIds", JSONUtil.putAll(9876543210L)
+			).put(
+				"createDate", dayDateString
+			).put(
+				"userId", "1"
+			).put(
+				"userName", "Test Test"
+			),
+			asahTask.getContextJSONObject(), true);
 	}
 
 	@BQSQLResource(resourcePath = "test_bq_delete_channels.sql")
@@ -338,7 +399,13 @@ public class ChannelDogTest
 	}
 
 	@Autowired
+	private AsahTaskRepository _asahTaskRepository;
+
+	@Autowired
 	private AssetRepository _assetRepository;
+
+	@SpyBean
+	private BigQueryQueryExecutor _bigQueryQueryExecutor;
 
 	@Autowired
 	private BQEventRepository _bqEventRepository;
