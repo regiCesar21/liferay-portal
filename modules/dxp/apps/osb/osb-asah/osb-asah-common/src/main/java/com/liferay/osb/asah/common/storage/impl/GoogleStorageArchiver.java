@@ -38,6 +38,7 @@ import org.apache.commons.io.IOUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
+import org.springframework.lang.Nullable;
 import org.springframework.stereotype.Component;
 
 /**
@@ -78,6 +79,43 @@ public class GoogleStorageArchiver {
 					"Unable to upload blob %s to the bucket %s",
 					blobInfo.getName(), blobInfo.getBucket()),
 				ioException);
+		}
+	}
+
+	public File readFile(
+		String bucket, @Nullable String bucketFolder, String filePrefix,
+		String fileSuffix, String projectId) {
+
+		BlobId blobId = BlobId.of(
+			bucket,
+			_getBlobName(bucketFolder, filePrefix + fileSuffix, projectId));
+
+		Blob blob = _storage.get(blobId);
+
+		if ((blob == null) || !blob.exists()) {
+			_log.error(
+				String.format(
+					"The blob %s does not exist in the bucket %s",
+					blobId.getName(), blobId.getBucket()));
+
+			return null;
+		}
+
+		try {
+			File tmpFile = File.createTempFile(filePrefix, fileSuffix);
+
+			blob.downloadTo(tmpFile.toPath());
+
+			return tmpFile;
+		}
+		catch (Exception exception) {
+			_log.error(
+				String.format(
+					"Unable to read blob %s from bucket %s", blobId.getName(),
+					blobId.getBucket()),
+				exception);
+
+			return null;
 		}
 	}
 

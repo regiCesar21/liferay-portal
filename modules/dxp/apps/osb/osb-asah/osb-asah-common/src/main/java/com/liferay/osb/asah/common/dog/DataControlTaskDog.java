@@ -708,9 +708,6 @@ public class DataControlTaskDog {
 	@Value("${osb.asah.export.google.bucket:{googleProjectId}-export}")
 	private String _exportBucketTemplate;
 
-	@Value("${osb.asah.batch.curator.data.export.path:/export}")
-	private String _exportPath;
-
 	@Value("${osb.asah.gcloud.project.id:liferaycloud-customer-ac}")
 	private String _gcloudProjectId;
 

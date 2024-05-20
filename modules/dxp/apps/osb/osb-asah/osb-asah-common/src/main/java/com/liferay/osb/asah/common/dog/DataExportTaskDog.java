@@ -10,18 +10,17 @@ import com.liferay.osb.asah.common.entity.DataExportTask;
 import com.liferay.osb.asah.common.entity.Preference;
 import com.liferay.osb.asah.common.repository.DataExportTaskRepository;
 import com.liferay.osb.asah.common.spring.http.exception.OSBAsahException;
+import com.liferay.osb.asah.common.storage.impl.GoogleStorageArchiver;
+import com.liferay.osb.asah.common.util.ProjectIdThreadLocal;
 import com.liferay.osb.asah.common.util.TimeOrderedUuidGenerator;
 
 import java.io.File;
-
-import java.nio.file.Path;
-import java.nio.file.Paths;
 
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
-import org.apache.commons.io.FilenameUtils;
+import org.apache.commons.lang3.StringUtils;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -76,18 +75,20 @@ public class DataExportTaskDog {
 	}
 
 	public File getDataExportTaskFile(Long dataExportTaskId) {
-		Path path = Paths.get(
-			_exportPath, FilenameUtils.getName(dataExportTaskId + ".zip"));
+		String bucketName = StringUtils.replace(
+			_exportBucketTemplate, "{googleProjectId}", _gcloudProjectId);
 
-		path = path.normalize();
+		File tmpFile = _googleStorageArchiver.readFile(
+			bucketName, null, String.valueOf(dataExportTaskId), ".zip",
+			ProjectIdThreadLocal.getProjectId());
 
-		if (!path.startsWith(_exportPath)) {
+		if (tmpFile == null) {
 			throw new OSBAsahException(
 				HttpStatus.BAD_REQUEST,
 				"Invalid file name: " + dataExportTaskId);
 		}
 
-		return path.toFile();
+		return tmpFile;
 	}
 
 	public List<DataExportTask> getDataExportTasks(
@@ -139,8 +140,14 @@ public class DataExportTaskDog {
 	@Autowired
 	private DataExportTaskRepository _dataExportTaskRepository;
 
-	@Value("${osb.asah.batch.curator.data.export.path:/export}")
-	private String _exportPath;
+	@Value("${osb.asah.export.google.bucket:{googleProjectId}-export}")
+	private String _exportBucketTemplate;
+
+	@Value("${osb.asah.gcloud.project.id:liferaycloud-customer-ac}")
+	private String _gcloudProjectId;
+
+	@Autowired(required = false)
+	private GoogleStorageArchiver _googleStorageArchiver;
 
 	@Autowired
 	private PreferenceDog _preferenceDog;
