@@ -6,7 +6,6 @@
 package com.liferay.osb.asah.backend.graphql.schema;
 
 import com.liferay.osb.asah.backend.graphql.annotation.GraphQLTypeWiring;
-import com.liferay.osb.asah.common.dog.AuditEventDog;
 import com.liferay.osb.asah.common.dog.DataControlTaskDog;
 import com.liferay.osb.asah.common.spring.http.exception.OSBAsahException;
 
@@ -20,7 +19,6 @@ import org.apache.commons.io.FilenameUtils;
 import org.apache.commons.lang3.StringUtils;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Component;
 
@@ -48,11 +46,11 @@ public class DataControlTasksMutationDataFetcher
 			return null;
 		}
 
-		Path path = Paths.get(_tempPathName, FilenameUtils.getName(fileName));
+		Path path = Paths.get(_tmpPathName, FilenameUtils.getName(fileName));
 
 		path = path.normalize();
 
-		if (!path.startsWith(_tempPathName)) {
+		if (!path.startsWith(_tmpPathName)) {
 			throw new OSBAsahException(
 				HttpStatus.BAD_REQUEST, "Invalid file name: " + fileName);
 		}
@@ -60,13 +58,10 @@ public class DataControlTasksMutationDataFetcher
 		return path;
 	}
 
-	@Autowired
-	private AuditEventDog _auditEventDog;
+	private static final String _tmpPathName = System.getProperty(
+		"java.io.tmpdir");
 
 	@Autowired
 	private DataControlTaskDog _dataControlTaskDog;
-
-	@Value("${osb.asah.backend.temp.path:/temp}")
-	private String _tempPathName;
 
 }

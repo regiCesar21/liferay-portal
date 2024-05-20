@@ -1,5 +1,2 @@
-com/liferay/osb/asah/backend/graphql/schema/DataControlTaskMutationDataFetcher._tempPathName:SAFE
-com/liferay/osb/asah/backend/rest/controller/DataControlTasksRestController._tempPath:SAFE
-com/liferay/osb/asah/backend/rest/controller/SuppressionsRestController._tempPath:SAFE
 com/liferay/osb/asah/common/model/DataExportTask.getId()Ljava/lang/String;:SAFE
 org/json/JSONObject.getString("id"):SAFE@com/liferay/osb/asah/backend/rest/controller/DataControlTasksRestController

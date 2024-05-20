@@ -11,7 +11,9 @@ import com.liferay.osb.asah.common.antivirus.ClamAVScanner;
 import com.liferay.osb.asah.common.dog.DataControlTaskDog;
 import com.liferay.osb.asah.common.entity.DataControlTask;
 import com.liferay.osb.asah.common.model.DataControlTaskStatus;
+import com.liferay.osb.asah.common.storage.impl.GoogleStorageArchiver;
 import com.liferay.osb.asah.common.util.CSVUtil;
+import com.liferay.osb.asah.common.util.ProjectIdThreadLocal;
 import com.liferay.osb.asah.common.zip.ZipFileBuilder;
 
 import java.io.File;
@@ -23,6 +25,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
+
+import org.apache.commons.lang3.StringUtils;
 
 import org.json.JSONObject;
 
@@ -55,8 +59,7 @@ public class DataControlTasksRestController extends BaseRestController {
 			return toNotFoundResponse();
 		}
 
-		File file = new File(
-			_exportPath + "/" + dataControlTask.getId() + ".zip");
+		File file = _getDataControlTaskFile(dataControlTask);
 
 		if (!file.exists()) {
 			return toNotFoundResponse();
@@ -81,8 +84,7 @@ public class DataControlTasksRestController extends BaseRestController {
 				null);
 
 		for (DataControlTask dataControlTask : dataControlTasks) {
-			File dataControlTaskFile = new File(
-				_exportPath + "/" + dataControlTask.getId() + ".zip");
+			File dataControlTaskFile = _getDataControlTaskFile(dataControlTask);
 
 			if (!dataControlTaskFile.exists()) {
 				continue;
@@ -127,7 +129,7 @@ public class DataControlTasksRestController extends BaseRestController {
 		Stream<DataControlTask> stream = dataControlTasks.stream();
 
 		File file = CSVUtil.createCSVFile(
-			_fieldNames, "data-control-task-logs-", new File(_tempPath),
+			_fieldNames, "data-control-task-logs-",
 			stream.map(
 				dataControlTask -> _objectMapper.convertValue(
 					dataControlTask, JSONObject.class)
@@ -146,15 +148,23 @@ public class DataControlTasksRestController extends BaseRestController {
 			_clamAVScanner.scan(multipartFile.getInputStream());
 		}
 
-		File file = new File(
-			_tempPath + "/data-control-task-" + System.currentTimeMillis() +
-				".csv");
+		File file = File.createTempFile(
+			"data-control-task-" + System.currentTimeMillis(), ".csv");
 
 		file.deleteOnExit();
 
 		multipartFile.transferTo(file);
 
 		return file.getName();
+	}
+
+	private File _getDataControlTaskFile(DataControlTask dataControlTask) {
+		String bucketName = StringUtils.replace(
+			_exportBucketTemplate, "{googleProjectId}", _gcloudProjectId);
+
+		return _googleStorageArchiver.readFile(
+			bucketName, null, String.valueOf(dataControlTask.getId()), ".zip",
+			ProjectIdThreadLocal.getProjectId());
 	}
 
 	private String _getExportFileName(
@@ -182,13 +192,16 @@ public class DataControlTasksRestController extends BaseRestController {
 	@Autowired
 	private DataControlTaskDog _dataControlTaskDog;
 
-	@Value("${osb.asah.batch.curator.data.export.path:/export}")
-	private String _exportPath;
+	@Value("${osb.asah.export.google.bucket:{googleProjectId}-export}")
+	private String _exportBucketTemplate;
+
+	@Value("${osb.asah.gcloud.project.id:liferaycloud-customer-ac}")
+	private String _gcloudProjectId;
+
+	@Autowired(required = false)
+	private GoogleStorageArchiver _googleStorageArchiver;
 
 	@Autowired
 	private ObjectMapper _objectMapper;
-
-	@Value("${osb.asah.backend.temp.path:/temp}")
-	private String _tempPath;
 
 }

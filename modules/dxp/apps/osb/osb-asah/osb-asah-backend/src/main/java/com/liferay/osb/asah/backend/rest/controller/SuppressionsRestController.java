@@ -22,7 +22,6 @@ import java.util.stream.Stream;
 import org.json.JSONObject;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -48,7 +47,7 @@ public class SuppressionsRestController extends BaseRestController {
 		Stream<Suppression> suppressionsStream = suppressions.stream();
 
 		File file = CSVUtil.createCSVFile(
-			_fieldNames, "suppression-logs-", new File(_tempPath),
+			_fieldNames, "suppression-logs-",
 			suppressionsStream.map(
 				dataControlTask -> _objectMapper.convertValue(
 					dataControlTask, JSONObject.class)
@@ -74,8 +73,5 @@ public class SuppressionsRestController extends BaseRestController {
 
 	@Autowired
 	private SuppressionDog _suppressionDog;
-
-	@Value("${osb.asah.backend.temp.path:/temp}")
-	private String _tempPath;
 
 }

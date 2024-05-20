@@ -24,11 +24,11 @@ import org.json.JSONObject;
 public class CSVUtil {
 
 	public static File createCSVFile(
-			Map<String, String> fieldNames, String fileNamePrefix, File folder,
+			Map<String, String> fieldNames, String fileNamePrefix,
 			List<JSONObject> jsonObjects)
 		throws Exception {
 
-		File file = File.createTempFile(fileNamePrefix, ".csv", folder);
+		File file = File.createTempFile(fileNamePrefix, ".csv");
 
 		file.deleteOnExit();
 
