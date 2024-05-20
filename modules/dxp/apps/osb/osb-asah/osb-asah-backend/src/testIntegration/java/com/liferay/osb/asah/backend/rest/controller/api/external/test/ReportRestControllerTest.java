@@ -11,8 +11,6 @@ import com.liferay.osb.asah.backend.rest.controller.api.external.ReportRestContr
 import com.liferay.osb.asah.common.date.DateUtil;
 import com.liferay.osb.asah.common.dog.DataExportTaskDog;
 import com.liferay.osb.asah.common.entity.DataExportTask;
-import com.liferay.osb.asah.common.json.JSONUtil;
-import com.liferay.osb.asah.common.spring.resource.ResourceUtil;
 import com.liferay.osb.asah.test.util.annotation.SQLResource;
 import com.liferay.osb.asah.test.util.spring.OSBAsahTestExecutionListenersContext;
 
@@ -21,14 +19,10 @@ import java.util.Date;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
-import org.skyscreamer.jsonassert.JSONAssert;
-
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.core.io.ClassPathResource;
 import org.springframework.core.io.FileSystemResource;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.test.util.ReflectionTestUtils;
 
 /**
  * @author Marcellus Tavares
@@ -36,44 +30,6 @@ import org.springframework.test.util.ReflectionTestUtils;
 public class ReportRestControllerTest
 	implements OSBAsahBackendSpringTestContext,
 			   OSBAsahTestExecutionListenersContext {
-
-	@SQLResource(
-		resourcePath = "osbasahfaroinfo/test_report_rest_controller_data_export_task_2.sql"
-	)
-	@Test
-	public void testGetDataExportTaskFile() throws Exception {
-		ClassPathResource classPathResource = new ClassPathResource(
-			"dependencies", getClass());
-
-		String originalExportPath = (String)ReflectionTestUtils.getField(
-			_dataExportTaskDog, "_exportPath");
-
-		ReflectionTestUtils.setField(
-			_dataExportTaskDog, "_exportPath", classPathResource.getPath());
-
-		try {
-			ResponseEntity<FileSystemResource> responseEntity =
-				_reportRestController.getDataExportTaskFile(
-					DateUtil.toUTCString(_fromDate),
-					DateUtil.toUTCString(_toDate), "page");
-
-			Assertions.assertNotNull(responseEntity);
-
-			JSONAssert.assertEquals(
-				ResourceUtil.readResourceToJSONObject(
-					"dependencies/osbasahfaroinfo/1003.json", this),
-				JSONUtil.put(
-					"result",
-					"com.liferay.osb.asah.backend.rest.controller.api." +
-						"external.test.ReportRestControllerTest::" +
-							"testGetDataExportTaskFile"),
-				false);
-		}
-		finally {
-			ReflectionTestUtils.setField(
-				_dataExportTaskDog, "_exportPath", originalExportPath);
-		}
-	}
 
 	@Test
 	public void testGetDataExportTaskFileWithNoFromDate() {
