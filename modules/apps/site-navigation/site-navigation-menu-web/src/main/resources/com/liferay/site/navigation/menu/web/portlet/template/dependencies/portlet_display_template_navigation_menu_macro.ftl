@@ -32,12 +32,12 @@
 
 					<#if includeAllChildNavItems || navItem.isInNavigation(branchNavItems)>
 						<@buildNavigation
-							branchNavItems=branchNavItems
-							cssClass=cssClass
-							displayDepth=displayDepth
-							includeAllChildNavItems=includeAllChildNavItems
-							navItemLevel=(navItemLevel + 1)
-							navItems=navItem.getChildren()
+							branchNavItems = branchNavItems
+							cssClass = cssClass
+							displayDepth = displayDepth
+							includeAllChildNavItems = includeAllChildNavItems
+							navItemLevel = (navItemLevel + 1)
+							navItems = navItem.getChildren()
 						/>
 					</#if>
 				</li>
