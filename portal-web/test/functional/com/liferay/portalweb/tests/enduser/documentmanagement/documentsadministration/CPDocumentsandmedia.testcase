@@ -804,15 +804,14 @@ definition {
 
 		DMNavigator.gotoDocumentCP(dmDocumentTitle = "large_file.pdf");
 
-		AssertTextEquals.assertPartialText(
-			locator1 = "Message#INFO",
-			value1 = "Generating preview will take a few minutes.");
+		while (IsElementPresent(key_infoMessage = "Generating preview will take a few minutes.", locator1 = "Message#INFO")) {
 
-		// Pausing 60 seconds due to reasons here. See LPS-88785
+			// Pausing, as the preview may take some time to be generated. See LPD-26420.
 
-		Pause(locator1 = 60000);
+			Pause(locator1 = 2000);
 
-		Refresh();
+			Refresh();
+		}
 
 		AssertVisible(locator1 = "DocumentsAndMediaDocument#DOCUMENT_DETAILS_IMAGE_PREVIEW");
 	}
