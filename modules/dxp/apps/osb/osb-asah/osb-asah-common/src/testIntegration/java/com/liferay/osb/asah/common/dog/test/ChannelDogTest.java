@@ -13,6 +13,7 @@ import com.liferay.osb.asah.common.entity.Channel;
 import com.liferay.osb.asah.common.entity.ChannelDataSource;
 import com.liferay.osb.asah.common.faro.info.dog.test.BaseFaroInfoDogTestCase;
 import com.liferay.osb.asah.common.json.JSONUtil;
+import com.liferay.osb.asah.common.model.Author;
 import com.liferay.osb.asah.common.repository.AsahTaskRepository;
 import com.liferay.osb.asah.common.repository.AssetRepository;
 import com.liferay.osb.asah.common.repository.BQEventRepository;
@@ -23,6 +24,7 @@ import com.liferay.osb.asah.common.repository.ExperimentRepository;
 import com.liferay.osb.asah.common.repository.SegmentRepository;
 import com.liferay.osb.asah.common.repository.executor.BigQueryQueryExecutor;
 import com.liferay.osb.asah.common.repository.executor.QueryExecutor;
+import com.liferay.osb.asah.common.util.AuthorThreadLocal;
 import com.liferay.osb.asah.common.util.SetUtil;
 import com.liferay.osb.asah.test.util.annotation.BQSQLResource;
 import com.liferay.osb.asah.test.util.annotation.RepositoryResource;
@@ -154,29 +156,36 @@ public class ChannelDogTest
 			ArgumentMatchers.anyString()
 		);
 
-		String dayDateString = DateUtil.newDayDateString();
+		try {
+			AuthorThreadLocal.setAuthor(new Author("1", "Test Test"));
 
-		_channelDog.clearChannels(
-			Collections.singleton(9876543210L), true, dayDateString);
+			String dayDateString = DateUtil.newDayDateString();
 
-		List<AsahTask> asahTasks = _asahTaskRepository.findByClassName(
-			"ClearChannelsNanite");
+			_channelDog.clearChannels(
+				Collections.singleton(9876543210L), true, dayDateString);
 
-		Assertions.assertEquals(1, asahTasks.size());
+			List<AsahTask> asahTasks = _asahTaskRepository.findByClassName(
+				"ClearChannelsNanite");
 
-		AsahTask asahTask = asahTasks.get(0);
+			Assertions.assertEquals(1, asahTasks.size());
 
-		JSONAssert.assertEquals(
-			JSONUtil.put(
-				"channelIds", JSONUtil.putAll(9876543210L)
-			).put(
-				"createDate", dayDateString
-			).put(
-				"userId", "1"
-			).put(
-				"userName", "Test Test"
-			),
-			asahTask.getContextJSONObject(), true);
+			AsahTask asahTask = asahTasks.get(0);
+
+			JSONAssert.assertEquals(
+				JSONUtil.put(
+					"channelIds", JSONUtil.putAll(9876543210L)
+				).put(
+					"createDate", dayDateString
+				).put(
+					"userId", "1"
+				).put(
+					"userName", "Test Test"
+				),
+				asahTask.getContextJSONObject(), true);
+		}
+		finally {
+			AuthorThreadLocal.remove();
+		}
 	}
 
 	@BQSQLResource(resourcePath = "test_bq_delete_channels.sql")
