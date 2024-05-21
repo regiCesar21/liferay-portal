@@ -4,7 +4,7 @@
 	<div class="nav">
 		<#if stringUtil.equals(nav_options, "static")>
 			<nav class="${nav_css_class}">
-				<@print_navigation layout_friendly_url=main_nav_friendly_url />
+				<@print_navigation layout_friendly_url = main_nav_friendly_url />
 			</nav>
 		<#else>
 			<nav class="${nav_css_class}">
