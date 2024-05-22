@@ -1388,9 +1388,9 @@ public class FilterExpressionConditionVisitor
 		if (DateUtil.isValidPatternShort(value)) {
 			query = String.join(
 				"", "CASE WHEN {0}.name = '", fieldName,
-				"' THEN DATE(PARSE_TIMESTAMP('%a %b %d %H:%M:%S %Z %Y', ",
-				"{0}.value)) {1} SAFE_CAST('", value, "' AS DATE) ELSE false ",
-				"END");
+				"' THEN DATE(PARSE_TIMESTAMP('%Y-%m-%dT%H:%M:%S', ",
+				"REGEXP_EXTRACT({0}.value, r'[^.]*'))) {1} SAFE_CAST('", value,
+				"' AS DATE) ELSE false END");
 		}
 		else if (NumberUtils.isCreatable(value)) {
 			query =
@@ -1505,8 +1505,9 @@ public class FilterExpressionConditionVisitor
 
 		if (DateUtil.isValidPatternShort(value)) {
 			query = String.join(
-				"", "DATE(PARSE_TIMESTAMP('%a %b %d %H:%M:%S %Z %Y', ",
-				fieldName, ")) {0} SAFE_CAST('", value, "' AS DATE)");
+				"", "DATE(PARSE_TIMESTAMP('%Y-%m-%dT%H:%M:%S', ",
+				"REGEXP_EXTRACT(", fieldName, ", r'[^.]*'))) {0} SAFE_CAST('",
+				value, "' AS DATE)");
 		}
 		else if (NumberUtils.isCreatable(value)) {
 			query = String.join(
