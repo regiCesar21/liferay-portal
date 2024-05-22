@@ -43,6 +43,7 @@ dependencies {
 	api group: "org.apache.beam", name: "beam-runners-google-cloud-dataflow-java", version: "2.46.0"
 	api group: "org.apache.beam", name: "beam-sdks-java-core", version: "2.46.0"
 	api group: "org.apache.beam", name: "beam-sdks-java-extensions-google-cloud-platform-core", version: "2.46.0"
+	api group: "org.apache.beam", name: "beam-sdks-java-extensions-json-jackson", version: "2.46.0"
 	api group: "org.apache.beam", name: "beam-sdks-java-io-google-cloud-platform", version: "2.46.0"
 	api group: "org.apache.commons", name: "commons-lang3", version: "3.7"
 	api group: "org.slf4j", name: "slf4j-api", version: "1.7.32"

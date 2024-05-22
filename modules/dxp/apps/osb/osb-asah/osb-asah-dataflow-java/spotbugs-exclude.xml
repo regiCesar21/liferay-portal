@@ -1,5 +1,14 @@
 <FindBugsFilter>
 	<Match>
+		<Class name="com.liferay.osb.asah.dataflow.ingestion.event.BatchEventIngestionPipeline$1" />
+	</Match>
+	<Match>
+		<Class name="com.liferay.osb.asah.dataflow.ingestion.event.BatchEventIngestionPipeline$2" />
+	</Match>
+	<Match>
+		<Class name="com.liferay.osb.asah.dataflow.ingestion.event.BatchEventIngestionPipeline$3" />
+	</Match>
+	<Match>
 		<Class name="com.liferay.osb.asah.dataflow.ingestion.dxp.DXPEntityIngestionPipeline" />
 	</Match>
 	<Match>
