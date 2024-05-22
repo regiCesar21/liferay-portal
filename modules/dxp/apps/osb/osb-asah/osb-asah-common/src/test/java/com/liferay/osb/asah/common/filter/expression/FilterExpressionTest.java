@@ -782,8 +782,9 @@ public class FilterExpressionTest {
 					DSL.condition(
 						String.join(
 							"", "CASE WHEN EventAttributes_6feec3.name = '",
-							"item name' THEN DATE(PARSE_TIMESTAMP('%a %b %d ",
-							"%H:%M:%S %Z %Y', EventAttributes_6feec3.value)) ",
+							"item name' THEN DATE(PARSE_TIMESTAMP('",
+							"%Y-%m-%dT%H:%M:%S', REGEXP_EXTRACT(",
+							"EventAttributes_6feec3.value, r'[^.]*'))) ",
 							"< SAFE_CAST('2024-03-04' AS DATE) ELSE false END"))
 				)),
 			"events.filterByCount(filter='(eventId eq ''added'' and day gt " +
@@ -1166,9 +1167,10 @@ public class FilterExpressionTest {
 				),
 				DSL.condition(
 					String.join(
-						"", "DATE(PARSE_TIMESTAMP('%a %b %d %H:%M:%S %Z %Y', ",
-						"JSON_EXTRACT_SCALAR(Event.eventProperties, ",
-						"'$.item name'))) < SAFE_CAST('2024-03-04' AS DATE)"))),
+						"", "DATE(PARSE_TIMESTAMP('%Y-%m-%dT%H:%M:%S', ",
+						"REGEXP_EXTRACT(JSON_EXTRACT_SCALAR(",
+						"Event.eventProperties, '$.item name'), r'[^.]*'))) < ",
+						"SAFE_CAST('2024-03-04' AS DATE)"))),
 			"events.filterByCount(filter='(eventId eq ''added'' and day gt " +
 				"''last24Hours'' and attribute/" + encodedName +
 					" lt ''2024-03-04'')', operator='ge', value=1)",
