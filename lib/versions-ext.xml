@@ -2421,7 +2421,7 @@
 			</library>
 			<library>
 				<file-name>lib/portal/mime4j-core.jar</file-name>
-				<version>0.8.3</version>
+				<version>0.8.11</version>
 				<project-name>Mime4j</project-name>
 				<project-url>http://james.apache.org/mime4j</project-url>
 				<licenses>
@@ -2433,7 +2433,7 @@
 			</library>
 			<library>
 				<file-name>lib/portal/mime4j-dom.jar</file-name>
-				<version>0.8.3</version>
+				<version>0.8.11</version>
 				<project-name>Mime4j</project-name>
 				<project-url>http://james.apache.org/mime4j</project-url>
 				<licenses>
