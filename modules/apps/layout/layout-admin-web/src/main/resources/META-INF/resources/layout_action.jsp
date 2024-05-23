@@ -54,7 +54,7 @@ Layout curLayout = (Layout)row.getObject();
 
 	<c:if test="<%= layoutsAdminDisplayContext.isShowCopyLayoutAction(curLayout) %>">
 		<liferay-ui:icon
-			cssClass='<%= liferayPortletResponse.getNamespace() + "copy-layout-action-option" %>'
+			cssClass='<%= liferayPortletResponse.getNamespace() + "copy-layout-action-option_" + curLayout.getPlid() %>'
 			message="copy-page"
 			url="javascript:;"
 		/>
@@ -119,7 +119,7 @@ Layout curLayout = (Layout)row.getObject();
 
 	<c:if test="<%= layoutsAdminDisplayContext.isShowViewCollectionItemsAction(curLayout) %>">
 		<liferay-ui:icon
-			cssClass='<%= liferayPortletResponse.getNamespace() + "view-collection-items-action-option" %>'
+			cssClass='<%= liferayPortletResponse.getNamespace() + "view-collection-items-action-option_" + curLayout.getPlid() %>'
 			message="view-collection-items"
 			url="javascript:;"
 		/>
@@ -130,7 +130,7 @@ Layout curLayout = (Layout)row.getObject();
 	var copyLayoutActionOptionQueryClickHandler = dom.delegate(
 		document.body,
 		'click',
-		'.<portlet:namespace />copy-layout-action-option',
+		'.<portlet:namespace />copy-layout-action-option_<%= curLayout.getPlid() %>',
 		function (event) {
 			Liferay.Util.openModal({
 				id: '<portlet:namespace />addLayoutDialog',
@@ -144,7 +144,7 @@ Layout curLayout = (Layout)row.getObject();
 	var viewCollectionItemsActionOptionQueryClickHandler = dom.delegate(
 		document.body,
 		'click',
-		'.<portlet:namespace />view-collection-items-action-option',
+		'.<portlet:namespace />view-collection-items-action-option_<%= curLayout.getPlid() %>',
 		function (event) {
 			Liferay.Util.openModal({
 				id: '<portlet:namespace />viewCollectionItemsDialog',
