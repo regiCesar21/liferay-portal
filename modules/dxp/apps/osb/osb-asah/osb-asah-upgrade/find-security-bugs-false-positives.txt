@@ -1,3 +1,3 @@
 com/liferay/osb/asah/test/util/util/RandomTestUtil.randomString()Ljava/lang/String;:SAFE
-com/liferay/osb/asah/upgrade/v4_9_0/StorageFilesUpgradeStep._dxpBatchEntitiesStoragePath:SAFE
+com/liferay/osb/asah/upgrade/v4_9_1/StorageFilesUpgradeStep._dxpBatchEntitiesStoragePath:SAFE
 com/liferay/osb/asah/upgrade/v4_9_0/test/ExportFilesUpgradeStepTest._tmpPath:SAFE
