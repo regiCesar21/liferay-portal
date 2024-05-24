@@ -18,7 +18,6 @@ import com.google.auth.oauth2.GoogleCredentials;
 import com.liferay.osb.asah.common.date.DateUtil;
 import com.liferay.osb.asah.common.json.JSONUtil;
 import com.liferay.osb.asah.common.storage.GoogleStorage;
-import com.liferay.osb.asah.common.storage.impl.GoogleStorageArchiver;
 import com.liferay.osb.asah.common.util.ProjectIdThreadLocal;
 
 import java.io.File;
@@ -41,7 +40,6 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.env.Environment;
 import org.springframework.core.env.Profiles;
 import org.springframework.stereotype.Component;
-import org.springframework.util.Assert;
 
 /**
  * @author Marcellus Tavares
@@ -49,11 +47,7 @@ import org.springframework.util.Assert;
 @Component
 public class DXPBatchEntitiesFileUploadEventHandler {
 
-	public DXPBatchEntitiesFileUploadEventHandler(
-		@Autowired Environment environment,
-		@Autowired(required = false) GoogleStorageArchiver
-			googleStorageArchiver) {
-
+	public DXPBatchEntitiesFileUploadEventHandler() {
 		_entities.put(
 			"com.liferay.analytics.dxp.entity.rest.dto.v1_0.AssetEntity",
 			"asset_entity");
@@ -66,16 +60,6 @@ public class DXPBatchEntitiesFileUploadEventHandler {
 		_entities.put(
 			"com.liferay.headless.commerce.machine.learning.dto.v1_0.Product",
 			"product");
-
-		_environment = environment;
-
-		if (environment.acceptsProfiles(Profiles.of("prod"))) {
-			Assert.hasText(_composerEndpoint, "Composer endpoint is null");
-			Assert.notNull(
-				googleStorageArchiver, "Google storage archiver is null");
-		}
-
-		_googleStorage = googleStorageArchiver;
 	}
 
 	public void receive(
@@ -227,11 +211,14 @@ public class DXPBatchEntitiesFileUploadEventHandler {
 	private String _dxpBatchEntitiesStoragePath;
 
 	private final Map<String, String> _entities = new HashMap<>();
-	private final Environment _environment;
+
+	@Autowired
+	private Environment _environment;
 
 	@Value("${osb.asah.gcloud.project.id:liferaycloud-customer-ac}")
 	private String _gcloudProjectId;
 
-	private final GoogleStorage _googleStorage;
+	@Autowired
+	private GoogleStorage _googleStorage;
 
 }

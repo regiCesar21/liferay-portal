@@ -14,7 +14,6 @@ import com.liferay.osb.asah.common.dog.DataExportTaskDog;
 import com.liferay.osb.asah.common.entity.DataExportTask;
 import com.liferay.osb.asah.common.repository.executor.BigQueryQueryExecutor;
 import com.liferay.osb.asah.common.storage.GoogleStorage;
-import com.liferay.osb.asah.common.storage.impl.GoogleStorageArchiver;
 import com.liferay.osb.asah.common.util.ProjectIdThreadLocal;
 
 import java.io.File;
@@ -34,10 +33,7 @@ import org.json.JSONObject;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.core.env.Environment;
-import org.springframework.core.env.Profiles;
 import org.springframework.stereotype.Component;
-import org.springframework.util.Assert;
 
 /**
  * @author Marcellus Tavares
@@ -49,20 +45,12 @@ public class DataExportNanite extends BaseNanite {
 	public DataExportNanite(
 		BigQueryQueryExecutor bigQueryQueryExecutor,
 		DataExportTaskDog dataExportTaskDog, DSLContext dslContext,
-		Environment environment,
-		@Autowired(required = false) GoogleStorageArchiver
-			googleStorageArchiver) {
+		GoogleStorage googleStorage) {
 
 		_bigQueryQueryExecutor = bigQueryQueryExecutor;
 		_dataExportTaskDog = dataExportTaskDog;
 		_dslContext = dslContext;
-
-		if (environment.acceptsProfiles(Profiles.of("prod"))) {
-			Assert.notNull(
-				googleStorageArchiver, "Google storage archiver is null");
-		}
-
-		_googleStorage = googleStorageArchiver;
+		_googleStorage = googleStorage;
 	}
 
 	@Override
