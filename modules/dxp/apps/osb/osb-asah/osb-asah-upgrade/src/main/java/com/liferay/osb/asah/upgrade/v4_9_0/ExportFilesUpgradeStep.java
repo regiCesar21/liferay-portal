@@ -107,6 +107,10 @@ public class ExportFilesUpgradeStep implements UpgradeStep {
 
 	@Override
 	public void upgrade(String version) throws Exception {
+		String bucketName = _gcloudProjectId + "-export";
+
+		_createBucketIfMissing(bucketName);
+
 		Set<Long> taskIds = new HashSet<>();
 
 		taskIds.addAll(_getCompletedDataControlTasksIds());
@@ -133,8 +137,6 @@ public class ExportFilesUpgradeStep implements UpgradeStep {
 			return;
 		}
 
-		String bucketName = _gcloudProjectId + "-export";
-
 		_backup(bucketName, filePaths);
 
 		if (_log.isInfoEnabled()) {
@@ -147,8 +149,6 @@ public class ExportFilesUpgradeStep implements UpgradeStep {
 
 	private void _backup(String bucketName, List<Path> filePaths)
 		throws Exception {
-
-		_createBucketIfMissing(bucketName);
 
 		TransferManagerConfig transferManagerConfig =
 			TransferManagerConfig.newBuilder(
