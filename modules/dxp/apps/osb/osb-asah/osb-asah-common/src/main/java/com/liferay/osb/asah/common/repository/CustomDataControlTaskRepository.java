@@ -41,6 +41,9 @@ public interface CustomDataControlTaskRepository {
 	@Cacheable
 	public Set<String> findSuppressedEmailAddresses();
 
+	public List<DataControlTask> getDataControlTasks(
+		@Nullable List<String> statuses);
+
 	@Cacheable
 	public List<DataControlTask> searchDataControlTasks(
 		@Nullable Long batchId, @Nullable Date fromDate, @Nullable Long[] ids,

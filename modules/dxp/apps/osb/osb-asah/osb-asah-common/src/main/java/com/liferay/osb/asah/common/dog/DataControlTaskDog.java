@@ -194,6 +194,13 @@ public class DataControlTaskDog {
 				dataControlTaskTypes));
 	}
 
+	public List<DataControlTask> getDataControlTasks(
+		DataControlTaskStatus dataControlTaskStatus) {
+
+		return _dataControlTaskRepository.getDataControlTasks(
+			Collections.singletonList(dataControlTaskStatus.toString()));
+	}
+
 	public List<DataControlTask> getPrioritizedDataControlTasks(
 		@Nullable Date endCompleteDate, List<String> statuses,
 		List<DataControlTask.Type> types) {

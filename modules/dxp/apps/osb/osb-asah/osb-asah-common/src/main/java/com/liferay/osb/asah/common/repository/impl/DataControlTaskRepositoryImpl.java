@@ -287,6 +287,21 @@ public class DataControlTaskRepositoryImpl
 	}
 
 	@Override
+	public List<DataControlTask> getDataControlTasks(
+		@Nullable List<String> statuses) {
+
+		SelectSelectStep<Record> selectSelectStep = _dslContext.select();
+
+		return selectSelectStep.from(
+			"DataControlTask"
+		).where(
+			_getConditions(null, null, null, null, statuses, null)
+		).fetch(
+			record -> new DataControlTask(record.intoMap())
+		);
+	}
+
+	@Override
 	public List<DataControlTask> searchDataControlTasks(
 		@Nullable Long batchId, @Nullable Date fromDate, @Nullable Long[] ids,
 		@Nullable String status, @Nullable Date toDate) {

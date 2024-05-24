@@ -284,6 +284,30 @@ public class DataControlTaskDogTest
 		resourcePath = "osbasahfaroinfo/data_control_tasks.json"
 	)
 	@Test
+	public void testGetCompletedDataControlTasks() throws Exception {
+		List<DataControlTask> dataControlTasks =
+			_dataControlTaskDog.getDataControlTasks(
+				DataControlTaskStatus.COMPLETED);
+
+		Assertions.assertEquals(3, dataControlTasks.size());
+
+		Stream<DataControlTask> stream = dataControlTasks.stream();
+
+		Set<String> dataControlTaskStatuses = stream.map(
+			DataControlTask::getStatus
+		).collect(
+			Collectors.toSet()
+		);
+
+		Assertions.assertEquals(1, dataControlTaskStatuses.size());
+		Assertions.assertTrue(dataControlTaskStatuses.contains("COMPLETED"));
+	}
+
+	@RepositoryResource(
+		repositoryClass = DataControlTaskRepository.class,
+		resourcePath = "osbasahfaroinfo/data_control_tasks.json"
+	)
+	@Test
 	public void testGetDataControlTaskResultBagBatch() {
 		_checkResults(
 			2, Arrays.asList("jane.doe@liferay.com", "test@liferay.com"),
