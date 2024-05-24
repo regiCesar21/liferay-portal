@@ -10,9 +10,8 @@ import com.liferay.osb.asah.common.constants.HeaderConstants;
 import com.liferay.osb.asah.common.dog.DataSourceDog;
 import com.liferay.osb.asah.common.entity.DataSource;
 import com.liferay.osb.asah.common.spring.http.exception.OSBAsahException;
-import com.liferay.osb.asah.common.storage.Storage;
-import com.liferay.osb.asah.common.storage.StorageConfiguration;
-import com.liferay.osb.asah.common.storage.StorageFactory;
+import com.liferay.osb.asah.common.storage.impl.GoogleStorageArchiver;
+import com.liferay.osb.asah.common.util.ProjectIdThreadLocal;
 import com.liferay.osb.asah.publisher.util.DXPBatchEntitiesFileUploadEvent;
 import com.liferay.osb.asah.publisher.util.DXPBatchEntitiesFileUploadEventHandler;
 
@@ -74,11 +73,8 @@ public class DXPBatchEntitiesRestController {
 				"Received download request for resource: " + resourceName);
 		}
 
-		Storage downloadStorage = _storageFactory.getStorage(
-			_getDownloadStorageConfiguration(dataSourceId));
-
-		File file = downloadStorage.readSparkJobResult(
-			_parseDate(ifModifiedSince), resourceName);
+		File file = _readSparkJobResult(
+			dataSourceId, _parseDate(ifModifiedSince), resourceName);
 
 		if (file == null) {
 			return new ResponseEntity(HttpStatus.NO_CONTENT);
@@ -151,20 +147,6 @@ public class DXPBatchEntitiesRestController {
 		return ResponseEntity.ok(Collections.emptyList());
 	}
 
-	private StorageConfiguration _getDownloadStorageConfiguration(
-		String googleBucketFolder) {
-
-		StorageConfiguration.Builder builder = StorageConfiguration.builder();
-
-		builder.googleBucket(
-			StringUtils.replace(
-				_dxpBatchEntitiesBucketTemplate, "{googleProjectId}",
-				_gcloudProjectId));
-		builder.googleBucketFolder(_getValidatedFileName(googleBucketFolder));
-
-		return builder.build();
-	}
-
 	private String _getValidatedFileName(String fileName) {
 		if (!Objects.equals(fileName, FilenameUtils.getName(fileName))) {
 			throw new IllegalArgumentException("Invalid file name");
@@ -201,6 +183,28 @@ public class DXPBatchEntitiesRestController {
 
 			return null;
 		}
+	}
+
+	private File _readSparkJobResult(
+		String dataSourceId, Date sparkJobResultDateAfter,
+		String sparkJobResultPathPrefix) {
+
+		try {
+			String bucketName = StringUtils.replace(
+				_dxpBatchEntitiesBucketTemplate, "{googleProjectId}",
+				_gcloudProjectId);
+
+			String bucketFolder = _getValidatedFileName(dataSourceId);
+
+			return _googleStorageArchiver.readSparkJobResult(
+				bucketName, bucketFolder, ProjectIdThreadLocal.getProjectId(),
+				sparkJobResultDateAfter, sparkJobResultPathPrefix);
+		}
+		catch (Exception exception) {
+			_log.error(exception, exception);
+		}
+
+		return null;
 	}
 
 	private void _validateDataSourceConfiguration(
@@ -244,7 +248,7 @@ public class DXPBatchEntitiesRestController {
 	@Value("${osb.asah.gcloud.project.id:liferaycloud-customer-ac}")
 	private String _gcloudProjectId;
 
-	@Autowired
-	private StorageFactory _storageFactory;
+	@Autowired(required = false)
+	private GoogleStorageArchiver _googleStorageArchiver;
 
 }

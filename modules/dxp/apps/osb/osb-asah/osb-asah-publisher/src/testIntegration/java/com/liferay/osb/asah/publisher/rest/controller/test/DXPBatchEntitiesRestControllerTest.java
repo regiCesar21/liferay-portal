@@ -10,9 +10,7 @@ import com.liferay.osb.asah.common.date.DateUtil;
 import com.liferay.osb.asah.common.entity.DataSource;
 import com.liferay.osb.asah.common.json.JSONUtil;
 import com.liferay.osb.asah.common.repository.DataSourceRepository;
-import com.liferay.osb.asah.common.storage.Storage;
-import com.liferay.osb.asah.common.storage.StorageConfiguration;
-import com.liferay.osb.asah.common.storage.StorageFactory;
+import com.liferay.osb.asah.common.storage.impl.GoogleStorageArchiver;
 import com.liferay.osb.asah.common.zip.ZipFileBuilder;
 import com.liferay.osb.asah.publisher.OSBAsahPublisherSpringTestContext;
 import com.liferay.osb.asah.test.util.util.RandomTestUtil;
@@ -95,20 +93,6 @@ public class DXPBatchEntitiesRestControllerTest
 
 	@Test
 	public void testGetNoContent() {
-		Mockito.when(
-			_storage.readSparkJobResult(
-				ArgumentMatchers.any(Date.class), ArgumentMatchers.anyString())
-		).thenReturn(
-			null
-		);
-
-		Mockito.when(
-			_storageFactory.getStorage(
-				ArgumentMatchers.any(StorageConfiguration.class))
-		).thenReturn(
-			_storage
-		);
-
 		ResponseEntity<Resource> responseEntity = _exchange(_getHttpHeaders());
 
 		Assertions.assertThat(
@@ -125,17 +109,12 @@ public class DXPBatchEntitiesRestControllerTest
 	@Test
 	public void testGetStatusCode200() throws Exception {
 		Mockito.when(
-			_storage.readSparkJobResult(
-				ArgumentMatchers.any(Date.class), ArgumentMatchers.anyString())
+			_googleStorageArchiver.readSparkJobResult(
+				ArgumentMatchers.anyString(), ArgumentMatchers.anyString(),
+				ArgumentMatchers.anyString(), ArgumentMatchers.any(Date.class),
+				ArgumentMatchers.anyString())
 		).thenReturn(
 			File.createTempFile(RandomTestUtil.randomString(), null)
-		);
-
-		Mockito.when(
-			_storageFactory.getStorage(
-				ArgumentMatchers.any(StorageConfiguration.class))
-		).thenReturn(
-			_storage
 		);
 
 		ResponseEntity<Resource> responseEntity = _exchange(_getHttpHeaders());
@@ -149,20 +128,6 @@ public class DXPBatchEntitiesRestControllerTest
 
 	@Test
 	public void testGetStatusCode400() throws Exception {
-		Mockito.when(
-			_storage.readSparkJobResult(
-				ArgumentMatchers.any(Date.class), ArgumentMatchers.anyString())
-		).thenReturn(
-			File.createTempFile(RandomTestUtil.randomString(), null)
-		);
-
-		Mockito.when(
-			_storageFactory.getStorage(
-				ArgumentMatchers.any(StorageConfiguration.class))
-		).thenReturn(
-			_storage
-		);
-
 		HttpHeaders httpHeaders = new HttpHeaders();
 
 		httpHeaders.add("If-Modified-Since", _getModifiedSince());
@@ -179,17 +144,12 @@ public class DXPBatchEntitiesRestControllerTest
 	@Test
 	public void testGetWithInvalidIfModifiedSince() throws Exception {
 		Mockito.when(
-			_storage.readSparkJobResult(
-				ArgumentMatchers.isNull(), ArgumentMatchers.anyString())
+			_googleStorageArchiver.readSparkJobResult(
+				ArgumentMatchers.anyString(), ArgumentMatchers.anyString(),
+				ArgumentMatchers.anyString(), ArgumentMatchers.isNull(),
+				ArgumentMatchers.anyString())
 		).thenReturn(
 			File.createTempFile(RandomTestUtil.randomString(), null)
-		);
-
-		Mockito.when(
-			_storageFactory.getStorage(
-				ArgumentMatchers.any(StorageConfiguration.class))
-		).thenReturn(
-			_storage
 		);
 
 		HttpHeaders httpHeaders = new HttpHeaders();
@@ -210,17 +170,12 @@ public class DXPBatchEntitiesRestControllerTest
 	@Test
 	public void testGetWithNullIfModifiedSince() throws Exception {
 		Mockito.when(
-			_storage.readSparkJobResult(
-				ArgumentMatchers.isNull(), ArgumentMatchers.anyString())
+			_googleStorageArchiver.readSparkJobResult(
+				ArgumentMatchers.anyString(), ArgumentMatchers.anyString(),
+				ArgumentMatchers.anyString(), ArgumentMatchers.isNull(),
+				ArgumentMatchers.anyString())
 		).thenReturn(
 			File.createTempFile(RandomTestUtil.randomString(), null)
-		);
-
-		Mockito.when(
-			_storageFactory.getStorage(
-				ArgumentMatchers.any(StorageConfiguration.class))
-		).thenReturn(
-			_storage
 		);
 
 		HttpHeaders httpHeaders = new HttpHeaders();
@@ -362,14 +317,11 @@ public class DXPBatchEntitiesRestControllerTest
 	@Autowired
 	private DataSourceRepository _dataSourceRepository;
 
+	@MockBean
+	private GoogleStorageArchiver _googleStorageArchiver;
+
 	@LocalServerPort
 	private int _serverPort;
-
-	@MockBean
-	private Storage _storage;
-
-	@MockBean
-	private StorageFactory _storageFactory;
 
 	@Autowired
 	private TestRestTemplate _testRestTemplate;
