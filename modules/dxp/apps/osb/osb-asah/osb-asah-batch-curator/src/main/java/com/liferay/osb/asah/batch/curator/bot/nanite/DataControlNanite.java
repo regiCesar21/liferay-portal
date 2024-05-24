@@ -16,7 +16,7 @@ import com.liferay.osb.asah.common.dog.RunLogDog;
 import com.liferay.osb.asah.common.entity.DataControlTask;
 import com.liferay.osb.asah.common.http.EmailHttp;
 import com.liferay.osb.asah.common.model.DataControlTaskStatus;
-import com.liferay.osb.asah.common.storage.impl.GoogleStorageArchiver;
+import com.liferay.osb.asah.common.storage.GoogleStorage;
 import com.liferay.osb.asah.common.util.ProjectIdThreadLocal;
 import com.liferay.osb.asah.common.util.SetUtil;
 import com.liferay.osb.asah.common.zip.ZipFileBuilder;
@@ -130,7 +130,7 @@ public class DataControlNanite extends BaseNanite {
 		String bucketName = StringUtils.replace(
 			_exportBucketTemplate, "{googleProjectId}", _gcloudProjectId);
 
-		_googleStorageArchiver.archiveSync(
+		_googleStorage.archiveSync(
 			bucketName, null, file, file.getName(),
 			ProjectIdThreadLocal.getProjectId());
 	}
@@ -191,8 +191,8 @@ public class DataControlNanite extends BaseNanite {
 	@Value("${osb.asah.gcloud.project.id:liferaycloud-customer-ac}")
 	private String _gcloudProjectId;
 
-	@Autowired(required = false)
-	private GoogleStorageArchiver _googleStorageArchiver;
+	@Autowired
+	private GoogleStorage _googleStorage;
 
 	@Autowired
 	private ObjectMapper _objectMapper;

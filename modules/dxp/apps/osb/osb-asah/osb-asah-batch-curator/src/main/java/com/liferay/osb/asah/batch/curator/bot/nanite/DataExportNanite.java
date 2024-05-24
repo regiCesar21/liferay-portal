@@ -13,6 +13,7 @@ import com.liferay.osb.asah.common.data.exporter.PostgreSQLDataExporter;
 import com.liferay.osb.asah.common.dog.DataExportTaskDog;
 import com.liferay.osb.asah.common.entity.DataExportTask;
 import com.liferay.osb.asah.common.repository.executor.BigQueryQueryExecutor;
+import com.liferay.osb.asah.common.storage.GoogleStorage;
 import com.liferay.osb.asah.common.storage.impl.GoogleStorageArchiver;
 import com.liferay.osb.asah.common.util.ProjectIdThreadLocal;
 
@@ -61,7 +62,7 @@ public class DataExportNanite extends BaseNanite {
 				googleStorageArchiver, "Google storage archiver is null");
 		}
 
-		_googleStorageArchiver = googleStorageArchiver;
+		_googleStorage = googleStorageArchiver;
 	}
 
 	@Override
@@ -146,7 +147,7 @@ public class DataExportNanite extends BaseNanite {
 		String bucketName = StringUtils.replace(
 			_exportBucketTemplate, "{googleProjectId}", _gcloudProjectId);
 
-		_googleStorageArchiver.archiveSync(
+		_googleStorage.archiveSync(
 			bucketName, null, tmpFile, tmpFile.getName(),
 			ProjectIdThreadLocal.getProjectId());
 	}
@@ -187,7 +188,7 @@ public class DataExportNanite extends BaseNanite {
 		String bucketName = StringUtils.replace(
 			_exportBucketTemplate, "{googleProjectId}", _gcloudProjectId);
 
-		_googleStorageArchiver.archiveSync(
+		_googleStorage.archiveSync(
 			bucketName, null, tmpFile, tmpFile.getName(),
 			ProjectIdThreadLocal.getProjectId());
 	}
@@ -204,7 +205,7 @@ public class DataExportNanite extends BaseNanite {
 	@Value("${osb.asah.gcloud.project.id:liferaycloud-customer-ac}")
 	private String _gcloudProjectId;
 
-	private final GoogleStorageArchiver _googleStorageArchiver;
+	private final GoogleStorage _googleStorage;
 	private final JsonFactory _jsonFactory = new JsonFactory();
 
 }

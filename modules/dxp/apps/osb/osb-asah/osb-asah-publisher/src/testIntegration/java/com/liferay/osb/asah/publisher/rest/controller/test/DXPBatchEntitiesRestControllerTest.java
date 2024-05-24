@@ -10,7 +10,7 @@ import com.liferay.osb.asah.common.date.DateUtil;
 import com.liferay.osb.asah.common.entity.DataSource;
 import com.liferay.osb.asah.common.json.JSONUtil;
 import com.liferay.osb.asah.common.repository.DataSourceRepository;
-import com.liferay.osb.asah.common.storage.impl.GoogleStorageArchiver;
+import com.liferay.osb.asah.common.storage.GoogleStorage;
 import com.liferay.osb.asah.common.zip.ZipFileBuilder;
 import com.liferay.osb.asah.publisher.OSBAsahPublisherSpringTestContext;
 import com.liferay.osb.asah.test.util.util.RandomTestUtil;
@@ -109,7 +109,7 @@ public class DXPBatchEntitiesRestControllerTest
 	@Test
 	public void testGetStatusCode200() throws Exception {
 		Mockito.when(
-			_googleStorageArchiver.readSparkJobResult(
+			_googleStorage.readSparkJobResult(
 				ArgumentMatchers.anyString(), ArgumentMatchers.anyString(),
 				ArgumentMatchers.anyString(), ArgumentMatchers.any(Date.class),
 				ArgumentMatchers.anyString())
@@ -144,7 +144,7 @@ public class DXPBatchEntitiesRestControllerTest
 	@Test
 	public void testGetWithInvalidIfModifiedSince() throws Exception {
 		Mockito.when(
-			_googleStorageArchiver.readSparkJobResult(
+			_googleStorage.readSparkJobResult(
 				ArgumentMatchers.anyString(), ArgumentMatchers.anyString(),
 				ArgumentMatchers.anyString(), ArgumentMatchers.isNull(),
 				ArgumentMatchers.anyString())
@@ -170,7 +170,7 @@ public class DXPBatchEntitiesRestControllerTest
 	@Test
 	public void testGetWithNullIfModifiedSince() throws Exception {
 		Mockito.when(
-			_googleStorageArchiver.readSparkJobResult(
+			_googleStorage.readSparkJobResult(
 				ArgumentMatchers.anyString(), ArgumentMatchers.anyString(),
 				ArgumentMatchers.anyString(), ArgumentMatchers.isNull(),
 				ArgumentMatchers.anyString())
@@ -318,7 +318,7 @@ public class DXPBatchEntitiesRestControllerTest
 	private DataSourceRepository _dataSourceRepository;
 
 	@MockBean
-	private GoogleStorageArchiver _googleStorageArchiver;
+	private GoogleStorage _googleStorage;
 
 	@LocalServerPort
 	private int _serverPort;

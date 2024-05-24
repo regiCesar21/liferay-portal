@@ -17,7 +17,7 @@ import com.google.auth.oauth2.GoogleCredentials;
 
 import com.liferay.osb.asah.common.date.DateUtil;
 import com.liferay.osb.asah.common.json.JSONUtil;
-import com.liferay.osb.asah.common.storage.impl.GoogleStorageArchiver;
+import com.liferay.osb.asah.common.storage.GoogleStorage;
 import com.liferay.osb.asah.common.util.ProjectIdThreadLocal;
 import com.liferay.osb.asah.upgrade.UpgradeStep;
 
@@ -136,7 +136,7 @@ public class StorageFilesUpgradeStep implements UpgradeStep {
 			_log.info("Archiving file " + file.getAbsolutePath());
 		}
 
-		_googleStorageArchiver.archiveSync(
+		_googleStorage.archiveSync(
 			bucketName, folderName, file, file.getName(),
 			ProjectIdThreadLocal.getProjectId());
 	}
@@ -230,7 +230,7 @@ public class StorageFilesUpgradeStep implements UpgradeStep {
 	@Value("${osb.asah.gcloud.project.id:liferaycloud-customer-ac}")
 	private String _gcloudProjectId;
 
-	@Autowired(required = false)
-	private GoogleStorageArchiver _googleStorageArchiver;
+	@Autowired
+	private GoogleStorage _googleStorage;
 
 }

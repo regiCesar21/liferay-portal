@@ -20,7 +20,7 @@ import com.liferay.osb.asah.common.model.Sort;
 import com.liferay.osb.asah.common.repository.DataControlTaskRepository;
 import com.liferay.osb.asah.common.repository.executor.BigQueryQueryExecutor;
 import com.liferay.osb.asah.common.spring.resource.ResourceUtil;
-import com.liferay.osb.asah.common.storage.impl.GoogleStorageArchiver;
+import com.liferay.osb.asah.common.storage.GoogleStorage;
 import com.liferay.osb.asah.common.util.ListUtil;
 import com.liferay.osb.asah.common.util.ProjectIdThreadLocal;
 import com.liferay.osb.asah.common.util.TimeOrderedUuidGenerator;
@@ -336,7 +336,7 @@ public class DataControlTaskDog {
 		String bucketName = StringUtils.replace(
 			_exportBucketTemplate, "{googleProjectId}", _gcloudProjectId);
 
-		_googleStorageArchiver.archiveSync(
+		_googleStorage.archiveSync(
 			bucketName, null, tmpFile, tmpFile.getName(),
 			ProjectIdThreadLocal.getProjectId());
 
@@ -718,8 +718,8 @@ public class DataControlTaskDog {
 	@Value("${osb.asah.gcloud.project.id:liferaycloud-customer-ac}")
 	private String _gcloudProjectId;
 
-	@Autowired(required = false)
-	private GoogleStorageArchiver _googleStorageArchiver;
+	@Autowired
+	private GoogleStorage _googleStorage;
 
 	@Autowired
 	private SegmentDog _segmentDog;

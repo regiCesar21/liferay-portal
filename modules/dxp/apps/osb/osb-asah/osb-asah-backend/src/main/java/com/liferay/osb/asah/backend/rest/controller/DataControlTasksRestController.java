@@ -11,7 +11,7 @@ import com.liferay.osb.asah.common.antivirus.ClamAVScanner;
 import com.liferay.osb.asah.common.dog.DataControlTaskDog;
 import com.liferay.osb.asah.common.entity.DataControlTask;
 import com.liferay.osb.asah.common.model.DataControlTaskStatus;
-import com.liferay.osb.asah.common.storage.impl.GoogleStorageArchiver;
+import com.liferay.osb.asah.common.storage.GoogleStorage;
 import com.liferay.osb.asah.common.util.CSVUtil;
 import com.liferay.osb.asah.common.util.ProjectIdThreadLocal;
 import com.liferay.osb.asah.common.zip.ZipFileBuilder;
@@ -162,7 +162,7 @@ public class DataControlTasksRestController extends BaseRestController {
 		String bucketName = StringUtils.replace(
 			_exportBucketTemplate, "{googleProjectId}", _gcloudProjectId);
 
-		return _googleStorageArchiver.readFile(
+		return _googleStorage.readFile(
 			bucketName, null, String.valueOf(dataControlTask.getId()), ".zip",
 			ProjectIdThreadLocal.getProjectId());
 	}
@@ -198,8 +198,8 @@ public class DataControlTasksRestController extends BaseRestController {
 	@Value("${osb.asah.gcloud.project.id:liferaycloud-customer-ac}")
 	private String _gcloudProjectId;
 
-	@Autowired(required = false)
-	private GoogleStorageArchiver _googleStorageArchiver;
+	@Autowired
+	private GoogleStorage _googleStorage;
 
 	@Autowired
 	private ObjectMapper _objectMapper;

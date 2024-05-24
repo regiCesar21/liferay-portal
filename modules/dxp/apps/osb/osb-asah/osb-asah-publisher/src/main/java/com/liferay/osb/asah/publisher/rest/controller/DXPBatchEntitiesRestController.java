@@ -10,7 +10,7 @@ import com.liferay.osb.asah.common.constants.HeaderConstants;
 import com.liferay.osb.asah.common.dog.DataSourceDog;
 import com.liferay.osb.asah.common.entity.DataSource;
 import com.liferay.osb.asah.common.spring.http.exception.OSBAsahException;
-import com.liferay.osb.asah.common.storage.impl.GoogleStorageArchiver;
+import com.liferay.osb.asah.common.storage.GoogleStorage;
 import com.liferay.osb.asah.common.util.ProjectIdThreadLocal;
 import com.liferay.osb.asah.publisher.util.DXPBatchEntitiesFileUploadEvent;
 import com.liferay.osb.asah.publisher.util.DXPBatchEntitiesFileUploadEventHandler;
@@ -196,7 +196,7 @@ public class DXPBatchEntitiesRestController {
 
 			String bucketFolder = _getValidatedFileName(dataSourceId);
 
-			return _googleStorageArchiver.readSparkJobResult(
+			return _googleStorage.readSparkJobResult(
 				bucketName, bucketFolder, ProjectIdThreadLocal.getProjectId(),
 				sparkJobResultDateAfter, sparkJobResultPathPrefix);
 		}
@@ -248,7 +248,7 @@ public class DXPBatchEntitiesRestController {
 	@Value("${osb.asah.gcloud.project.id:liferaycloud-customer-ac}")
 	private String _gcloudProjectId;
 
-	@Autowired(required = false)
-	private GoogleStorageArchiver _googleStorageArchiver;
+	@Autowired
+	private GoogleStorage _googleStorage;
 
 }

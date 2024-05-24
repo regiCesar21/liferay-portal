@@ -17,6 +17,7 @@ import com.google.auth.oauth2.GoogleCredentials;
 
 import com.liferay.osb.asah.common.date.DateUtil;
 import com.liferay.osb.asah.common.json.JSONUtil;
+import com.liferay.osb.asah.common.storage.GoogleStorage;
 import com.liferay.osb.asah.common.storage.impl.GoogleStorageArchiver;
 import com.liferay.osb.asah.common.util.ProjectIdThreadLocal;
 
@@ -74,7 +75,7 @@ public class DXPBatchEntitiesFileUploadEventHandler {
 				googleStorageArchiver, "Google storage archiver is null");
 		}
 
-		_googleStorageArchiver = googleStorageArchiver;
+		_googleStorage = googleStorageArchiver;
 	}
 
 	public void receive(
@@ -93,7 +94,7 @@ public class DXPBatchEntitiesFileUploadEventHandler {
 
 			String fileName = DateUtil.newDateString() + ".zip";
 
-			_googleStorageArchiver.archiveSync(
+			_googleStorage.archiveSync(
 				bucketName, folderName,
 				dxpBatchEntitiesFileUploadEvent.getInputStream(), fileName,
 				ProjectIdThreadLocal.getProjectId());
@@ -231,6 +232,6 @@ public class DXPBatchEntitiesFileUploadEventHandler {
 	@Value("${osb.asah.gcloud.project.id:liferaycloud-customer-ac}")
 	private String _gcloudProjectId;
 
-	private final GoogleStorageArchiver _googleStorageArchiver;
+	private final GoogleStorage _googleStorage;
 
 }

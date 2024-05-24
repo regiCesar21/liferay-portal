@@ -10,7 +10,7 @@ import com.liferay.osb.asah.common.entity.DataExportTask;
 import com.liferay.osb.asah.common.entity.Preference;
 import com.liferay.osb.asah.common.repository.DataExportTaskRepository;
 import com.liferay.osb.asah.common.spring.http.exception.OSBAsahException;
-import com.liferay.osb.asah.common.storage.impl.GoogleStorageArchiver;
+import com.liferay.osb.asah.common.storage.GoogleStorage;
 import com.liferay.osb.asah.common.util.ProjectIdThreadLocal;
 import com.liferay.osb.asah.common.util.TimeOrderedUuidGenerator;
 
@@ -78,7 +78,7 @@ public class DataExportTaskDog {
 		String bucketName = StringUtils.replace(
 			_exportBucketTemplate, "{googleProjectId}", _gcloudProjectId);
 
-		File tmpFile = _googleStorageArchiver.readFile(
+		File tmpFile = _googleStorage.readFile(
 			bucketName, null, String.valueOf(dataExportTaskId), ".zip",
 			ProjectIdThreadLocal.getProjectId());
 
@@ -146,8 +146,8 @@ public class DataExportTaskDog {
 	@Value("${osb.asah.gcloud.project.id:liferaycloud-customer-ac}")
 	private String _gcloudProjectId;
 
-	@Autowired(required = false)
-	private GoogleStorageArchiver _googleStorageArchiver;
+	@Autowired
+	private GoogleStorage _googleStorage;
 
 	@Autowired
 	private PreferenceDog _preferenceDog;

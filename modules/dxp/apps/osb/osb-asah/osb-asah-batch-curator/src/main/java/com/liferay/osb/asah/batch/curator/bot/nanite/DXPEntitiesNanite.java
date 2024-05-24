@@ -12,7 +12,7 @@ import com.liferay.osb.asah.common.entity.AsahMarker;
 import com.liferay.osb.asah.common.entity.DXPEntity;
 import com.liferay.osb.asah.common.entity.DataSource;
 import com.liferay.osb.asah.common.json.JSONUtil;
-import com.liferay.osb.asah.common.storage.impl.GoogleStorageArchiver;
+import com.liferay.osb.asah.common.storage.GoogleStorage;
 import com.liferay.osb.asah.common.util.GetterUtil;
 import com.liferay.osb.asah.common.util.ProjectIdThreadLocal;
 
@@ -311,7 +311,7 @@ public class DXPEntitiesNanite extends BaseNanite {
 
 			String fileName = currentDateString + ".zip";
 
-			_googleStorageArchiver.archiveSync(
+			_googleStorage.archiveSync(
 				bucketName, folderName, file, fileName,
 				ProjectIdThreadLocal.getProjectId());
 		}
@@ -416,7 +416,7 @@ public class DXPEntitiesNanite extends BaseNanite {
 	@Value("${osb.asah.gcloud.project.id:liferaycloud-customer-ac}")
 	private String _gcloudProjectId;
 
-	@Autowired(required = false)
-	private GoogleStorageArchiver _googleStorageArchiver;
+	@Autowired
+	private GoogleStorage _googleStorage;
 
 }
