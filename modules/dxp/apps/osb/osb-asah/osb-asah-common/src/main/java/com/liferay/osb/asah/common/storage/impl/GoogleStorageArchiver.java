@@ -15,6 +15,7 @@ import com.google.cloud.storage.StorageException;
 import com.google.cloud.storage.StorageOptions;
 
 import com.liferay.osb.asah.common.spring.annotation.ConditionalOnGoogleApplicationCredentials;
+import com.liferay.osb.asah.common.storage.GoogleStorage;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -46,8 +47,9 @@ import org.springframework.stereotype.Component;
  */
 @Component
 @ConditionalOnGoogleApplicationCredentials
-public class GoogleStorageArchiver {
+public class GoogleStorageArchiver implements GoogleStorage {
 
+	@Override
 	public void archiveAsync(
 		String bucket, String bucketFolder, File file, String fileName,
 		String projectId) {
@@ -56,6 +58,7 @@ public class GoogleStorageArchiver {
 			() -> _archive(bucket, bucketFolder, file, fileName, projectId));
 	}
 
+	@Override
 	public void archiveSync(
 		String bucket, String bucketFolder, File file, String fileName,
 		String projectId) {
@@ -63,6 +66,7 @@ public class GoogleStorageArchiver {
 		_archive(bucket, bucketFolder, file, fileName, projectId);
 	}
 
+	@Override
 	public void archiveSync(
 		String bucket, String bucketFolder, InputStream inputStream,
 		String fileName, String projectId) {
@@ -82,6 +86,7 @@ public class GoogleStorageArchiver {
 		}
 	}
 
+	@Override
 	public File readFile(
 		String bucket, @Nullable String bucketFolder, String filePrefix,
 		String fileSuffix, String projectId) {
@@ -119,6 +124,7 @@ public class GoogleStorageArchiver {
 		}
 	}
 
+	@Override
 	public File readSparkJobResult(
 			String bucket, String bucketFolder, String projectId,
 			Date sparkJobResultDateAfter, String sparkJobResultPathPrefix)
