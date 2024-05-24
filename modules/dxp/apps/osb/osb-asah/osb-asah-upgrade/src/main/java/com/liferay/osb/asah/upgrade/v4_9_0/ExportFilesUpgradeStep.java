@@ -160,10 +160,10 @@ public class ExportFilesUpgradeStep implements UpgradeStep {
 			ParallelUploadConfig.newBuilder(
 			).setBucketName(
 				bucketName
-			).setSkipIfExists(
-				true
 			).setPrefix(
 				ProjectIdThreadLocal.getProjectId() + "/"
+			).setSkipIfExists(
+				true
 			).build();
 
 		UploadJob uploadJob = transferManager.uploadFiles(
