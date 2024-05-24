@@ -103,7 +103,10 @@ public class FragmentRendererControllerImpl
 				_log.debug(
 					StringBundler.concat(
 						"Unable to render content of fragment entry ",
-						fragmentEntryLink.getFragmentEntryId(), ":",
+						fragmentEntryLink.getFragmentEntryId(), " on plid ",
+						fragmentEntryLink.getPlid(),
+						" with fragment entry link id ",
+						fragmentEntryLink.getFragmentEntryLinkId(), ":",
 						exception.getMessage()),
 					exception);
 			}
@@ -111,7 +114,10 @@ public class FragmentRendererControllerImpl
 				_log.error(
 					StringBundler.concat(
 						"Unable to render content of fragment entry ",
-						fragmentEntryLink.getFragmentEntryId(), ":",
+						fragmentEntryLink.getFragmentEntryId(), " on plid ",
+						fragmentEntryLink.getPlid(),
+						" with fragment entry link id ",
+						fragmentEntryLink.getFragmentEntryLinkId(), ":",
 						exception.getMessage()));
 			}
 
