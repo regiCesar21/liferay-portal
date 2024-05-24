@@ -214,7 +214,7 @@ public class StorageFilesUpgradeStep implements UpgradeStep {
 	private static final Log _log = LogFactory.getLog(
 		StorageFilesUpgradeStep.class);
 
-	@Value("${osb.asah.composer.endpoint}")
+	@Value("${osb.asah.composer.endpoint:}")
 	private String _composerEndpoint;
 
 	@Value(
