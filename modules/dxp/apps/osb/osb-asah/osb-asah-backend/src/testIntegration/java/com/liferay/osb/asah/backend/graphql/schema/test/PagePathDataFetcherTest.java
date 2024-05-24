@@ -124,10 +124,10 @@ public class PagePathDataFetcherTest
 				new PagePathNodeDTO(
 					"url-3", date, false, null, null, "url 3", 1000L),
 				new PagePathNodeDTO(
+					"url-2", date, false, null, null, "url 2", 100L),
+				new PagePathNodeDTO(
 					"url-4", DateUtil.addDays(date, -1), false, null, null,
 					"url 4", 100L),
-				new PagePathNodeDTO(
-					"url-2", date, false, null, null, "url 2", 100L),
 				new PagePathNodeDTO(
 					"url-1", date, false, null, null, "url 1", 10L),
 				new PagePathNodeDTO(
