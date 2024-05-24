@@ -47,7 +47,7 @@ import org.springframework.stereotype.Component;
  */
 @Component
 @ConditionalOnGoogleApplicationCredentials
-public class GoogleStorageArchiver implements GoogleStorage {
+public class GoogleStorageImpl implements GoogleStorage {
 
 	@Override
 	public void archiveAsync(
@@ -323,8 +323,7 @@ public class GoogleStorageArchiver implements GoogleStorage {
 
 	private static final String _TMP_DIR = "java.io.tmpdir";
 
-	private static final Log _log = LogFactory.getLog(
-		GoogleStorageArchiver.class);
+	private static final Log _log = LogFactory.getLog(GoogleStorageImpl.class);
 
 	private final ExecutorService _executorService =
 		Executors.newSingleThreadExecutor();
