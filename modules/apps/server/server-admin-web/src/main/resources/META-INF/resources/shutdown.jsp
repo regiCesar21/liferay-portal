@@ -16,6 +16,8 @@
 <aui:button-row>
 	<c:choose>
 		<c:when test="<%= ShutdownUtil.isInProcess() %>">
+			<liferay-captcha:captcha />
+	
 			<aui:button cssClass="save-server-button" data-cmd="shutdown" value="cancel-shutdown" />
 		</c:when>
 		<c:otherwise>
