@@ -61,7 +61,7 @@ import org.springframework.stereotype.Component;
 @Component
 public class ExportFilesUpgradeStep implements UpgradeStep {
 
-	public List<Path> listZipFilePathsModifiedLast7Days(
+	public List<Path> listZipFilePathsModifiedLast30Days(
 			Set<String> matchingZipFileNames, Path folderPath)
 		throws Exception {
 
@@ -73,7 +73,7 @@ public class ExportFilesUpgradeStep implements UpgradeStep {
 
 		LocalDateTime localDateTime = LocalDateTime.now();
 
-		localDateTime = localDateTime.minusDays(7);
+		localDateTime = localDateTime.minusDays(30);
 
 		Instant instant = localDateTime.toInstant(ZoneOffset.UTC);
 
@@ -120,7 +120,7 @@ public class ExportFilesUpgradeStep implements UpgradeStep {
 			return;
 		}
 
-		List<Path> filePaths = listZipFilePathsModifiedLast7Days(
+		List<Path> filePaths = listZipFilePathsModifiedLast30Days(
 			_toZipFileNames(taskIds), _exportPath);
 
 		if (filePaths.isEmpty()) {

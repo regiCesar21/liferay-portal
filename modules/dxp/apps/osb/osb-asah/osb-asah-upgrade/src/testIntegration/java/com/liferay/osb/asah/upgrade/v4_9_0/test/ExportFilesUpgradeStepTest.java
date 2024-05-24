@@ -89,7 +89,7 @@ public class ExportFilesUpgradeStepTest
 			FileTime.from(localDateTime.toInstant(ZoneOffset.UTC)));
 
 		List<Path> paths =
-			_exportFilesUpgradeStep.listZipFilePathsModifiedLast7Days(
+			_exportFilesUpgradeStep.listZipFilePathsModifiedLast30Days(
 				SetUtil.of("new_1.zip", "new_2.zip", "old.zip"), _tmpPath);
 
 		Assertions.assertEquals(2, paths.size());
