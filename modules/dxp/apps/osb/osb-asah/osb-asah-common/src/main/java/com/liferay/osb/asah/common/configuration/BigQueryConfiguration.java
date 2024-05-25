@@ -45,19 +45,13 @@ public class BigQueryConfiguration {
 	@Bean
 	@ConditionalOnGoogleApplicationCredentials
 	@Primary
-	public BigQuery prodBigQuery() {
-		String region = _environment.getProperty("gcloud.compute.region");
-
-		if (region == null) {
-			throw new IllegalStateException(
-				"Please set the environment variable " +
-					"\"gcloud.compute.region\"");
-		}
+	public BigQuery prodBigQuery(
+		GoogleCloudConfiguration googleCloudConfiguration) {
 
 		BigQueryOptions.Builder builder = BigQueryOptions.newBuilder();
 
 		BigQueryOptions bigQueryOptions = builder.setLocation(
-			region
+			googleCloudConfiguration.getLocation()
 		).build();
 
 		return bigQueryOptions.getService();

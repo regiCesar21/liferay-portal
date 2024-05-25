@@ -6,6 +6,7 @@
 package com.liferay.osb.asah.publisher.rest.controller;
 
 import com.liferay.osb.asah.common.antivirus.ClamAVScanner;
+import com.liferay.osb.asah.common.configuration.GoogleCloudConfiguration;
 import com.liferay.osb.asah.common.constants.HeaderConstants;
 import com.liferay.osb.asah.common.dog.DataSourceDog;
 import com.liferay.osb.asah.common.entity.DataSource;
@@ -30,12 +31,10 @@ import java.util.Objects;
 
 import org.apache.commons.io.FilenameUtils;
 import org.apache.commons.lang3.BooleanUtils;
-import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.io.FileSystemResource;
 import org.springframework.core.io.Resource;
 import org.springframework.http.HttpHeaders;
@@ -190,14 +189,11 @@ public class DXPBatchEntitiesRestController {
 		String sparkJobResultPathPrefix) {
 
 		try {
-			String bucketName = StringUtils.replace(
-				_dxpBatchEntitiesBucketTemplate, "{googleProjectId}",
-				_gcloudProjectId);
-
 			String bucketFolder = _getValidatedFileName(dataSourceId);
 
 			return _googleStorage.readSparkJobResult(
-				bucketName, bucketFolder, ProjectIdThreadLocal.getProjectId(),
+				_googleCloudConfiguration.getDXPEntitiesBucketName(),
+				bucketFolder, ProjectIdThreadLocal.getProjectId(),
 				sparkJobResultDateAfter, sparkJobResultPathPrefix);
 		}
 		catch (Exception exception) {
@@ -236,17 +232,12 @@ public class DXPBatchEntitiesRestController {
 	@Autowired
 	private DataSourceDog _dataSourceDog;
 
-	@Value(
-		"${osb.asah.dxp.batch.entities.google.bucket:{googleProjectId}-dxp-entities}"
-	)
-	private String _dxpBatchEntitiesBucketTemplate;
-
 	@Autowired
 	private DXPBatchEntitiesFileUploadEventHandler
 		_dxpBatchEntitiesFileUploadHandler;
 
-	@Value("${osb.asah.gcloud.project.id:liferaycloud-customer-ac}")
-	private String _gcloudProjectId;
+	@Autowired
+	private GoogleCloudConfiguration _googleCloudConfiguration;
 
 	@Autowired
 	private GoogleStorage _googleStorage;

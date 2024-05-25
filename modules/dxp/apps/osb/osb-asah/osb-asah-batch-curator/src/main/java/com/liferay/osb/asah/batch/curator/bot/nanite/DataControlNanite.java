@@ -8,6 +8,7 @@ package com.liferay.osb.asah.batch.curator.bot.nanite;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import com.liferay.osb.asah.batch.curator.bot.scheduling.AsahTaskRunnable;
+import com.liferay.osb.asah.common.configuration.GoogleCloudConfiguration;
 import com.liferay.osb.asah.common.date.DateUtil;
 import com.liferay.osb.asah.common.dog.AsahTaskDog;
 import com.liferay.osb.asah.common.dog.AuditEventDog;
@@ -29,14 +30,12 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Set;
 
-import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
 import org.json.JSONObject;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
 /**
@@ -127,12 +126,9 @@ public class DataControlNanite extends BaseNanite {
 
 		File file = zipFileBuilder.build();
 
-		String bucketName = StringUtils.replace(
-			_exportBucketTemplate, "{googleProjectId}", _gcloudProjectId);
-
 		_googleStorage.archiveSync(
-			bucketName, null, file, file.getName(),
-			ProjectIdThreadLocal.getProjectId());
+			_googleCloudConfiguration.getExportBucketName(), null, file,
+			file.getName(), ProjectIdThreadLocal.getProjectId());
 	}
 
 	private void _runDataControlTask(DataControlTask dataControlTask) {
@@ -185,11 +181,8 @@ public class DataControlNanite extends BaseNanite {
 	@Autowired
 	private EmailHttp _emailHttp;
 
-	@Value("${osb.asah.export.google.bucket:{googleProjectId}-export}")
-	private String _exportBucketTemplate;
-
-	@Value("${osb.asah.gcloud.project.id:liferaycloud-customer-ac}")
-	private String _gcloudProjectId;
+	@Autowired
+	private GoogleCloudConfiguration _googleCloudConfiguration;
 
 	@Autowired
 	private GoogleStorage _googleStorage;

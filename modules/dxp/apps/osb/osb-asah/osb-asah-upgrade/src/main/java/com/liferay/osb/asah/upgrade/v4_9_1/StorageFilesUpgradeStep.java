@@ -15,6 +15,7 @@ import com.google.api.client.http.javanet.NetHttpTransport;
 import com.google.auth.http.HttpCredentialsAdapter;
 import com.google.auth.oauth2.GoogleCredentials;
 
+import com.liferay.osb.asah.common.configuration.GoogleCloudConfiguration;
 import com.liferay.osb.asah.common.date.DateUtil;
 import com.liferay.osb.asah.common.json.JSONUtil;
 import com.liferay.osb.asah.common.storage.GoogleStorage;
@@ -94,9 +95,9 @@ public class StorageFilesUpgradeStep implements UpgradeStep {
 						basicFileAttributes.isRegularFile() &&
 						(basicFileAttributes.size() > _EMPTY_ZIP_FILE_LENGTH)) {
 
-						String bucketName = StringUtils.replace(
-							_dxpBatchEntitiesBucketTemplate,
-							"{googleProjectId}", _gcloudProjectId);
+						String bucketName =
+							_googleCloudConfiguration.
+								getDXPEntitiesBucketName();
 
 						String absolutePath = file.getAbsolutePath();
 
@@ -177,7 +178,8 @@ public class StorageFilesUpgradeStep implements UpgradeStep {
 
 			HttpRequest httpRequest = requestFactory.buildPostRequest(
 				new GenericUrl(
-					_composerEndpoint + "/api/v1/dags/" + dagId + "/dagRuns"),
+					_googleCloudConfiguration.getComposerEndpoint() +
+						"/api/v1/dags/" + dagId + "/dagRuns"),
 				ByteArrayContent.fromString(
 					"application/json",
 					JSONUtil.put(
@@ -214,21 +216,13 @@ public class StorageFilesUpgradeStep implements UpgradeStep {
 	private static final Log _log = LogFactory.getLog(
 		StorageFilesUpgradeStep.class);
 
-	@Value("${osb.asah.composer.endpoint:}")
-	private String _composerEndpoint;
-
-	@Value(
-		"${osb.asah.dxp.batch.entities.google.bucket:{googleProjectId}-dxp-entities}"
-	)
-	private String _dxpBatchEntitiesBucketTemplate;
-
 	@Value("${osb.asah.dxp.batch.entities.storage.path:/storage}")
 	private String _dxpBatchEntitiesStoragePath;
 
 	private final Map<String, String> _entities = new HashMap<>();
 
-	@Value("${osb.asah.gcloud.project.id:liferaycloud-customer-ac}")
-	private String _gcloudProjectId;
+	@Autowired
+	private GoogleCloudConfiguration _googleCloudConfiguration;
 
 	@Autowired
 	private GoogleStorage _googleStorage;

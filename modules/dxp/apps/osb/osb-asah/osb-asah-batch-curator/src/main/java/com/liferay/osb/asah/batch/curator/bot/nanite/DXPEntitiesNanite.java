@@ -5,6 +5,7 @@
 
 package com.liferay.osb.asah.batch.curator.bot.nanite;
 
+import com.liferay.osb.asah.common.configuration.GoogleCloudConfiguration;
 import com.liferay.osb.asah.common.date.DateUtil;
 import com.liferay.osb.asah.common.dog.DXPEntityDog;
 import com.liferay.osb.asah.common.dog.DataSourceDog;
@@ -302,17 +303,14 @@ public class DXPEntitiesNanite extends BaseNanite {
 		throws Exception {
 
 		if (_environment.acceptsProfiles(Profiles.of("prod"))) {
-			String bucketName = StringUtils.replace(
-				_dxpBatchEntitiesBucketTemplate, "{googleProjectId}",
-				_gcloudProjectId);
-
 			String folderName = String.format(
 				"%s/%s/%s", dataSourceId, _CLASS_NAME_DXP_ENTITY, uploadType);
 
 			String fileName = currentDateString + ".zip";
 
 			_googleStorage.archiveSync(
-				bucketName, folderName, file, fileName,
+				_googleCloudConfiguration.getDXPEntitiesBucketName(),
+				folderName, file, fileName,
 				ProjectIdThreadLocal.getProjectId());
 		}
 		else {
@@ -399,11 +397,6 @@ public class DXPEntitiesNanite extends BaseNanite {
 	@Autowired
 	private DataSourceDog _dataSourceDog;
 
-	@Value(
-		"${osb.asah.dxp.batch.entities.google.bucket:{googleProjectId}-dxp-entities}"
-	)
-	private String _dxpBatchEntitiesBucketTemplate;
-
 	@Value("${osb.asah.dxp.batch.entities.storage.path:/storage}")
 	private String _dxpBatchEntitiesStoragePath;
 
@@ -413,8 +406,8 @@ public class DXPEntitiesNanite extends BaseNanite {
 	@Autowired
 	private Environment _environment;
 
-	@Value("${osb.asah.gcloud.project.id:liferaycloud-customer-ac}")
-	private String _gcloudProjectId;
+	@Autowired
+	private GoogleCloudConfiguration _googleCloudConfiguration;
 
 	@Autowired
 	private GoogleStorage _googleStorage;

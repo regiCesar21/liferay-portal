@@ -7,6 +7,7 @@ package com.liferay.osb.asah.common.dog;
 
 import com.google.cloud.bigquery.BigQuery;
 
+import com.liferay.osb.asah.common.configuration.GoogleCloudConfiguration;
 import com.liferay.osb.asah.common.data.exporter.BigQueryDataExporter;
 import com.liferay.osb.asah.common.data.exporter.DataExporter;
 import com.liferay.osb.asah.common.date.DateUtil;
@@ -333,12 +334,9 @@ public class DataControlTaskDog {
 
 		File tmpFile = dataExporter.export();
 
-		String bucketName = StringUtils.replace(
-			_exportBucketTemplate, "{googleProjectId}", _gcloudProjectId);
-
 		_googleStorage.archiveSync(
-			bucketName, null, tmpFile, tmpFile.getName(),
-			ProjectIdThreadLocal.getProjectId());
+			_googleCloudConfiguration.getExportBucketName(), null, tmpFile,
+			tmpFile.getName(), ProjectIdThreadLocal.getProjectId());
 
 		return true;
 	}
@@ -712,11 +710,8 @@ public class DataControlTaskDog {
 	@Autowired
 	private Environment _environment;
 
-	@Value("${osb.asah.export.google.bucket:{googleProjectId}-export}")
-	private String _exportBucketTemplate;
-
-	@Value("${osb.asah.gcloud.project.id:liferaycloud-customer-ac}")
-	private String _gcloudProjectId;
+	@Autowired
+	private GoogleCloudConfiguration _googleCloudConfiguration;
 
 	@Autowired
 	private GoogleStorage _googleStorage;

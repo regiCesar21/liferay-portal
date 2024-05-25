@@ -15,6 +15,7 @@ import com.google.api.client.http.javanet.NetHttpTransport;
 import com.google.auth.http.HttpCredentialsAdapter;
 import com.google.auth.oauth2.GoogleCredentials;
 
+import com.liferay.osb.asah.common.configuration.GoogleCloudConfiguration;
 import com.liferay.osb.asah.common.date.DateUtil;
 import com.liferay.osb.asah.common.json.JSONUtil;
 import com.liferay.osb.asah.common.storage.GoogleStorage;
@@ -31,7 +32,6 @@ import java.util.Objects;
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.FilenameUtils;
 import org.apache.commons.io.IOUtils;
-import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
@@ -67,9 +67,8 @@ public class DXPBatchEntitiesFileUploadEventHandler {
 		throws Exception {
 
 		if (_environment.acceptsProfiles(Profiles.of("prod"))) {
-			String bucketName = StringUtils.replace(
-				_dxpBatchEntitiesBucketTemplate, "{googleProjectId}",
-				_gcloudProjectId);
+			String bucketName =
+				_googleCloudConfiguration.getDXPEntitiesBucketName();
 
 			String folderName = String.format(
 				"%s/%s/%s", dxpBatchEntitiesFileUploadEvent.getDataSourceId(),
@@ -164,7 +163,8 @@ public class DXPBatchEntitiesFileUploadEventHandler {
 
 			HttpRequest httpRequest = requestFactory.buildPostRequest(
 				new GenericUrl(
-					_composerEndpoint + "/api/v1/dags/" + dagId + "/dagRuns"),
+					_googleCloudConfiguration.getComposerEndpoint() +
+						"/api/v1/dags/" + dagId + "/dagRuns"),
 				ByteArrayContent.fromString(
 					"application/json",
 					JSONUtil.put(
@@ -199,14 +199,6 @@ public class DXPBatchEntitiesFileUploadEventHandler {
 	private static final Log _log = LogFactory.getLog(
 		DXPBatchEntitiesFileUploadEventHandler.class);
 
-	@Value("${osb.asah.composer.endpoint:}")
-	private String _composerEndpoint;
-
-	@Value(
-		"${osb.asah.dxp.batch.entities.google.bucket:{googleProjectId}-dxp-entities}"
-	)
-	private String _dxpBatchEntitiesBucketTemplate;
-
 	@Value("${osb.asah.dxp.batch.entities.storage.path:/storage}")
 	private String _dxpBatchEntitiesStoragePath;
 
@@ -215,8 +207,8 @@ public class DXPBatchEntitiesFileUploadEventHandler {
 	@Autowired
 	private Environment _environment;
 
-	@Value("${osb.asah.gcloud.project.id:liferaycloud-customer-ac}")
-	private String _gcloudProjectId;
+	@Autowired
+	private GoogleCloudConfiguration _googleCloudConfiguration;
 
 	@Autowired
 	private GoogleStorage _googleStorage;

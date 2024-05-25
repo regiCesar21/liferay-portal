@@ -7,6 +7,7 @@ package com.liferay.osb.asah.batch.curator.bot.nanite;
 
 import com.fasterxml.jackson.core.JsonFactory;
 
+import com.liferay.osb.asah.common.configuration.GoogleCloudConfiguration;
 import com.liferay.osb.asah.common.data.exporter.BigQueryDataExporter;
 import com.liferay.osb.asah.common.data.exporter.DataExporter;
 import com.liferay.osb.asah.common.data.exporter.PostgreSQLDataExporter;
@@ -21,7 +22,6 @@ import java.io.File;
 import java.util.Collections;
 import java.util.List;
 
-import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
@@ -32,7 +32,6 @@ import org.jooq.impl.DSL;
 import org.json.JSONObject;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
 /**
@@ -132,12 +131,9 @@ public class DataExportNanite extends BaseNanite {
 
 		File tmpFile = dataExporter.export();
 
-		String bucketName = StringUtils.replace(
-			_exportBucketTemplate, "{googleProjectId}", _gcloudProjectId);
-
 		_googleStorage.archiveSync(
-			bucketName, null, tmpFile, tmpFile.getName(),
-			ProjectIdThreadLocal.getProjectId());
+			_googleCloudConfiguration.getExportBucketName(), null, tmpFile,
+			tmpFile.getName(), ProjectIdThreadLocal.getProjectId());
 	}
 
 	private void _runDataExportTask(DataExportTask dataExportTask) {
@@ -173,12 +169,9 @@ public class DataExportNanite extends BaseNanite {
 
 		File tmpFile = dataExporter.export();
 
-		String bucketName = StringUtils.replace(
-			_exportBucketTemplate, "{googleProjectId}", _gcloudProjectId);
-
 		_googleStorage.archiveSync(
-			bucketName, null, tmpFile, tmpFile.getName(),
-			ProjectIdThreadLocal.getProjectId());
+			_googleCloudConfiguration.getExportBucketName(), null, tmpFile,
+			tmpFile.getName(), ProjectIdThreadLocal.getProjectId());
 	}
 
 	private static final Log _log = LogFactory.getLog(DataExportNanite.class);
@@ -187,11 +180,8 @@ public class DataExportNanite extends BaseNanite {
 	private final DataExportTaskDog _dataExportTaskDog;
 	private final DSLContext _dslContext;
 
-	@Value("${osb.asah.export.google.bucket:{googleProjectId}-export}")
-	private String _exportBucketTemplate;
-
-	@Value("${osb.asah.gcloud.project.id:liferaycloud-customer-ac}")
-	private String _gcloudProjectId;
+	@Autowired
+	private GoogleCloudConfiguration _googleCloudConfiguration;
 
 	private final GoogleStorage _googleStorage;
 	private final JsonFactory _jsonFactory = new JsonFactory();

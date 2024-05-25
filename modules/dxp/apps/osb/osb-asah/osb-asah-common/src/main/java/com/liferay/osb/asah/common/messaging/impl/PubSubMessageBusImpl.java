@@ -22,6 +22,7 @@ import com.google.pubsub.v1.Subscription;
 import com.google.pubsub.v1.Topic;
 
 import com.liferay.osb.asah.common.concurrent.BoundedExecutor;
+import com.liferay.osb.asah.common.configuration.GoogleCloudConfiguration;
 import com.liferay.osb.asah.common.constants.ServiceConstants;
 import com.liferay.osb.asah.common.messaging.Channel;
 import com.liferay.osb.asah.common.messaging.MessageBus;
@@ -46,7 +47,6 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
 /**
@@ -79,11 +79,12 @@ public class PubSubMessageBusImpl implements MessageBus {
 	}
 
 	public ProjectName getProjectName() {
-		return ProjectName.of(_gcloudProjectId);
+		return ProjectName.of(_googleCloudConfiguration.getProjectId());
 	}
 
 	public ProjectTopicName getProjectTopicName(Channel channel) {
-		return ProjectTopicName.of(_gcloudProjectId, _getTopicId(channel));
+		return ProjectTopicName.of(
+			_googleCloudConfiguration.getProjectId(), _getTopicId(channel));
 	}
 
 	public PubSubClientFactory getPubSubClientFactory() {
@@ -376,7 +377,7 @@ public class PubSubMessageBusImpl implements MessageBus {
 		Channel channel, String name) {
 
 		return ProjectSubscriptionName.of(
-			_gcloudProjectId,
+			_googleCloudConfiguration.getProjectId(),
 			_getTopicId(channel) + "_" + StringUtils.replace(name, "$", "_"));
 	}
 
@@ -396,8 +397,8 @@ public class PubSubMessageBusImpl implements MessageBus {
 
 	private final Map<Channel, Publisher> _channels = new ConcurrentHashMap<>();
 
-	@Value("${osb.asah.gcloud.project.id:liferaycloud-customer-ac}")
-	private String _gcloudProjectId;
+	@Autowired
+	private GoogleCloudConfiguration _googleCloudConfiguration;
 
 	private final Map<MessageListener, Subscriber> _messageListeners =
 		new ConcurrentHashMap<>();

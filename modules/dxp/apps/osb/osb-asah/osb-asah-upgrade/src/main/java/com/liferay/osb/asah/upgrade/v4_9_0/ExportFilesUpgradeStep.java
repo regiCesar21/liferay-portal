@@ -16,6 +16,7 @@ import com.google.cloud.storage.transfermanager.TransferManagerConfig;
 import com.google.cloud.storage.transfermanager.UploadJob;
 import com.google.cloud.storage.transfermanager.UploadResult;
 
+import com.liferay.osb.asah.common.configuration.GoogleCloudConfiguration;
 import com.liferay.osb.asah.common.dog.DataControlTaskDog;
 import com.liferay.osb.asah.common.dog.DataExportTaskDog;
 import com.liferay.osb.asah.common.entity.DataControlTask;
@@ -52,7 +53,6 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
 /**
@@ -107,7 +107,7 @@ public class ExportFilesUpgradeStep implements UpgradeStep {
 
 	@Override
 	public void upgrade(String version) throws Exception {
-		String bucketName = _gcloudProjectId + "-export";
+		String bucketName = _googleCloudConfiguration.getExportBucketName();
 
 		_createBucketIfMissing(bucketName);
 
@@ -194,7 +194,7 @@ public class ExportFilesUpgradeStep implements UpgradeStep {
 
 		_storage.create(
 			builder.setLocation(
-				_gcloudRegion
+				_googleCloudConfiguration.getLocation()
 			).setRetentionPeriodDuration(
 				Duration.of(30, ChronoUnit.DAYS)
 			).build());
@@ -260,11 +260,8 @@ public class ExportFilesUpgradeStep implements UpgradeStep {
 
 	private final Path _exportPath = Paths.get("/export");
 
-	@Value("${osb.asah.gcloud.project.id:liferaycloud-customer-ac}")
-	private String _gcloudProjectId;
-
-	@Value("${gcloud.compute.region:us-west1}")
-	private String _gcloudRegion;
+	@Autowired
+	private GoogleCloudConfiguration _googleCloudConfiguration;
 
 	private Storage _storage;
 

@@ -8,6 +8,7 @@ package com.liferay.osb.asah.backend.rest.controller;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import com.liferay.osb.asah.common.antivirus.ClamAVScanner;
+import com.liferay.osb.asah.common.configuration.GoogleCloudConfiguration;
 import com.liferay.osb.asah.common.dog.DataControlTaskDog;
 import com.liferay.osb.asah.common.entity.DataControlTask;
 import com.liferay.osb.asah.common.model.DataControlTaskStatus;
@@ -26,12 +27,9 @@ import java.util.Map;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-import org.apache.commons.lang3.StringUtils;
-
 import org.json.JSONObject;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -159,11 +157,9 @@ public class DataControlTasksRestController extends BaseRestController {
 	}
 
 	private File _getDataControlTaskFile(DataControlTask dataControlTask) {
-		String bucketName = StringUtils.replace(
-			_exportBucketTemplate, "{googleProjectId}", _gcloudProjectId);
-
 		return _googleStorage.readFile(
-			bucketName, null, String.valueOf(dataControlTask.getId()), ".zip",
+			_googleCloudConfiguration.getExportBucketName(), null,
+			String.valueOf(dataControlTask.getId()), ".zip",
 			ProjectIdThreadLocal.getProjectId());
 	}
 
@@ -192,11 +188,8 @@ public class DataControlTasksRestController extends BaseRestController {
 	@Autowired
 	private DataControlTaskDog _dataControlTaskDog;
 
-	@Value("${osb.asah.export.google.bucket:{googleProjectId}-export}")
-	private String _exportBucketTemplate;
-
-	@Value("${osb.asah.gcloud.project.id:liferaycloud-customer-ac}")
-	private String _gcloudProjectId;
+	@Autowired
+	private GoogleCloudConfiguration _googleCloudConfiguration;
 
 	@Autowired
 	private GoogleStorage _googleStorage;

@@ -5,6 +5,7 @@
 
 package com.liferay.osb.asah.common.dog;
 
+import com.liferay.osb.asah.common.configuration.GoogleCloudConfiguration;
 import com.liferay.osb.asah.common.date.DateUtil;
 import com.liferay.osb.asah.common.entity.DataExportTask;
 import com.liferay.osb.asah.common.entity.Preference;
@@ -20,10 +21,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
-import org.apache.commons.lang3.StringUtils;
-
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Component;
 
@@ -75,11 +73,9 @@ public class DataExportTaskDog {
 	}
 
 	public File getDataExportTaskFile(Long dataExportTaskId) {
-		String bucketName = StringUtils.replace(
-			_exportBucketTemplate, "{googleProjectId}", _gcloudProjectId);
-
 		File tmpFile = _googleStorage.readFile(
-			bucketName, null, String.valueOf(dataExportTaskId), ".zip",
+			_googleCloudConfiguration.getExportBucketName(), null,
+			String.valueOf(dataExportTaskId), ".zip",
 			ProjectIdThreadLocal.getProjectId());
 
 		if (tmpFile == null) {
@@ -140,11 +136,8 @@ public class DataExportTaskDog {
 	@Autowired
 	private DataExportTaskRepository _dataExportTaskRepository;
 
-	@Value("${osb.asah.export.google.bucket:{googleProjectId}-export}")
-	private String _exportBucketTemplate;
-
-	@Value("${osb.asah.gcloud.project.id:liferaycloud-customer-ac}")
-	private String _gcloudProjectId;
+	@Autowired
+	private GoogleCloudConfiguration _googleCloudConfiguration;
 
 	@Autowired
 	private GoogleStorage _googleStorage;
