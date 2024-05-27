@@ -177,7 +177,7 @@ public abstract class BasePriceListAccountResourceImpl
 	)
 	@javax.ws.rs.GET
 	@javax.ws.rs.Path(
-		"/price-lists/by-externalReferenceCode/{externalReferenceCode}/price-list-accounts"
+		"/price-lists/by-externalReferenceCode/{externalReferenceCode: .+}/price-list-accounts"
 	)
 	@javax.ws.rs.Produces({"application/json", "application/xml"})
 	@Override
@@ -213,7 +213,7 @@ public abstract class BasePriceListAccountResourceImpl
 	)
 	@javax.ws.rs.Consumes({"application/json", "application/xml"})
 	@javax.ws.rs.Path(
-		"/price-lists/by-externalReferenceCode/{externalReferenceCode}/price-list-accounts"
+		"/price-lists/by-externalReferenceCode/{externalReferenceCode: .+}/price-list-accounts"
 	)
 	@javax.ws.rs.POST
 	@javax.ws.rs.Produces({"application/json", "application/xml"})

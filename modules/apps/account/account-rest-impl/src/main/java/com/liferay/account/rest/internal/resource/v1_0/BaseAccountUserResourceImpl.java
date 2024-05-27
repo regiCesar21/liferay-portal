@@ -111,7 +111,7 @@ public abstract class BaseAccountUserResourceImpl
 	)
 	@javax.ws.rs.GET
 	@javax.ws.rs.Path(
-		"/accounts/by-external-reference-code/{externalReferenceCode}/account-users"
+		"/accounts/by-external-reference-code/{externalReferenceCode: .+}/account-users"
 	)
 	@javax.ws.rs.Produces({"application/json", "application/xml"})
 	@Override
@@ -152,7 +152,7 @@ public abstract class BaseAccountUserResourceImpl
 	)
 	@javax.ws.rs.Consumes({"application/json", "application/xml"})
 	@javax.ws.rs.Path(
-		"/accounts/by-external-reference-code/{externalReferenceCode}/account-users"
+		"/accounts/by-external-reference-code/{externalReferenceCode: .+}/account-users"
 	)
 	@javax.ws.rs.POST
 	@javax.ws.rs.Produces({"application/json", "application/xml"})
