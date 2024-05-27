@@ -1,0 +1,18 @@
+fragment individualsFragment on Metric {
+	individuals(keywords: $keywords, size: $size, start: $start) {
+		individuals {
+			email
+			id
+			name
+		}
+		total
+	}
+}
+
+query KnownIndividualsListTouchpointQuery($channelId: String, $devices: String, $keywords: String, $location: String, $rangeEnd: String, $rangeKey: Int, $rangeStart: String, $size: Int!, $start: Int!, $title: String, $touchpoint: String) {
+	page(canonicalUrl: $touchpoint, channelId: $channelId, country: $location, deviceType: $devices, rangeEnd: $rangeEnd, rangeKey: $rangeKey, rangeStart: $rangeStart, title: $title) {
+		viewsMetric {
+			...individualsFragment
+		}
+	}
+}

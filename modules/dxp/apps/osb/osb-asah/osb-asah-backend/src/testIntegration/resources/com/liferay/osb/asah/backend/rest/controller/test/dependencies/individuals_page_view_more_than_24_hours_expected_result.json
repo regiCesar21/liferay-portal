@@ -1,0 +1,23 @@
+{
+	"data": {
+		"page": {
+			"viewsMetric": {
+				"individuals": {
+					"individuals": [
+						{
+							"email": "test2@liferay.com",
+							"id": "5970d88ec4ed505177361de1b17a3f2debf7c4f630c14f075a823ec97942692a",
+							"name": "Test2 Test"
+						},
+						{
+							"email": "test3@liferay.com",
+							"id": "261319ac0d9f6e0f3467ad26bc8c63989d06c5f491849d6aa12fabdbd6c6b7bb",
+							"name": "Test3 Test"
+						}
+					],
+					"total": 2
+				}
+			}
+		}
+	}
+}

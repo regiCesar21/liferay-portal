@@ -1,0 +1,20 @@
+{
+	"operationName": "KnownIndividualsListTouchpointQuery",
+	"variables": {
+		"channelId": "1",
+		"devices": "Any",
+		"keywords": "",
+		"location": "Any",
+		"rangeEnd": null,
+		"rangeKey": 7,
+		"rangeStart": null,
+		"size": 20,
+		"sort": {
+			"column": "name",
+			"type": "ASC"
+		},
+		"start": 0,
+		"title": "Page 1",
+		"touchpoint": "https://www.liferay.com"
+	}
+}
