@@ -126,12 +126,8 @@ public class DataRecordCollectionPermissionSerDes {
 				 i < dataRecordCollectionPermission.getRoleNames().length;
 				 i++) {
 
-				sb.append("\"");
-
 				sb.append(
-					_escape(dataRecordCollectionPermission.getRoleNames()[i]));
-
-				sb.append("\"");
+					_toJSON(dataRecordCollectionPermission.getRoleNames()[i]));
 
 				if ((i + 1) <
 						dataRecordCollectionPermission.getRoleNames().length) {
@@ -331,6 +327,47 @@ public class DataRecordCollectionPermissionSerDes {
 		}
 
 		@Override
+		protected boolean parseMaps(String jsonParserFieldName) {
+			if (Objects.equals(jsonParserFieldName, "addDataRecord")) {
+				return false;
+			}
+			else if (Objects.equals(
+						jsonParserFieldName, "addDataRecordCollection")) {
+
+				return false;
+			}
+			else if (Objects.equals(jsonParserFieldName, "definePermissions")) {
+				return false;
+			}
+			else if (Objects.equals(jsonParserFieldName, "delete")) {
+				return false;
+			}
+			else if (Objects.equals(jsonParserFieldName, "deleteDataRecord")) {
+				return false;
+			}
+			else if (Objects.equals(jsonParserFieldName, "exportDataRecord")) {
+				return false;
+			}
+			else if (Objects.equals(jsonParserFieldName, "roleNames")) {
+				return false;
+			}
+			else if (Objects.equals(jsonParserFieldName, "update")) {
+				return false;
+			}
+			else if (Objects.equals(jsonParserFieldName, "updateDataRecord")) {
+				return false;
+			}
+			else if (Objects.equals(jsonParserFieldName, "view")) {
+				return false;
+			}
+			else if (Objects.equals(jsonParserFieldName, "viewDataRecord")) {
+				return false;
+			}
+
+			return false;
+		}
+
+		@Override
 		protected void setField(
 			DataRecordCollectionPermission dataRecordCollectionPermission,
 			String jsonParserFieldName, Object jsonParserFieldValue) {
@@ -435,36 +472,7 @@ public class DataRecordCollectionPermissionSerDes {
 
 			Object value = entry.getValue();
 
-			Class<?> valueClass = value.getClass();
-
-			if (value instanceof Map) {
-				sb.append(_toJSON((Map)value));
-			}
-			else if (valueClass.isArray()) {
-				Object[] values = (Object[])value;
-
-				sb.append("[");
-
-				for (int i = 0; i < values.length; i++) {
-					sb.append("\"");
-					sb.append(_escape(values[i]));
-					sb.append("\"");
-
-					if ((i + 1) < values.length) {
-						sb.append(", ");
-					}
-				}
-
-				sb.append("]");
-			}
-			else if (value instanceof String) {
-				sb.append("\"");
-				sb.append(_escape(entry.getValue()));
-				sb.append("\"");
-			}
-			else {
-				sb.append(String.valueOf(entry.getValue()));
-			}
+			sb.append(_toJSON(value));
 
 			if (iterator.hasNext()) {
 				sb.append(", ");
@@ -474,6 +482,38 @@ public class DataRecordCollectionPermissionSerDes {
 		sb.append("}");
 
 		return sb.toString();
+	}
+
+	private static String _toJSON(Object value) {
+		if (value instanceof Map) {
+			return _toJSON((Map)value);
+		}
+
+		Class<?> clazz = value.getClass();
+
+		if (clazz.isArray()) {
+			StringBuilder sb = new StringBuilder("[");
+
+			Object[] values = (Object[])value;
+
+			for (int i = 0; i < values.length; i++) {
+				sb.append(_toJSON(values[i]));
+
+				if ((i + 1) < values.length) {
+					sb.append(", ");
+				}
+			}
+
+			sb.append("]");
+
+			return sb.toString();
+		}
+
+		if (value instanceof String) {
+			return "\"" + _escape(value) + "\"";
+		}
+
+		return String.valueOf(value);
 	}
 
 }

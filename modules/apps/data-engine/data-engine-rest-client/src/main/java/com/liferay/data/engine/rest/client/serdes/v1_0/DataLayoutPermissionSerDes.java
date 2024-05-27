@@ -88,11 +88,7 @@ public class DataLayoutPermissionSerDes {
 			for (int i = 0; i < dataLayoutPermission.getRoleNames().length;
 				 i++) {
 
-				sb.append("\"");
-
-				sb.append(_escape(dataLayoutPermission.getRoleNames()[i]));
-
-				sb.append("\"");
+				sb.append(_toJSON(dataLayoutPermission.getRoleNames()[i]));
 
 				if ((i + 1) < dataLayoutPermission.getRoleNames().length) {
 					sb.append(", ");
@@ -208,6 +204,30 @@ public class DataLayoutPermissionSerDes {
 		}
 
 		@Override
+		protected boolean parseMaps(String jsonParserFieldName) {
+			if (Objects.equals(jsonParserFieldName, "addDataLayout")) {
+				return false;
+			}
+			else if (Objects.equals(jsonParserFieldName, "definePermissions")) {
+				return false;
+			}
+			else if (Objects.equals(jsonParserFieldName, "delete")) {
+				return false;
+			}
+			else if (Objects.equals(jsonParserFieldName, "roleNames")) {
+				return false;
+			}
+			else if (Objects.equals(jsonParserFieldName, "update")) {
+				return false;
+			}
+			else if (Objects.equals(jsonParserFieldName, "view")) {
+				return false;
+			}
+
+			return false;
+		}
+
+		@Override
 		protected void setField(
 			DataLayoutPermission dataLayoutPermission,
 			String jsonParserFieldName, Object jsonParserFieldValue) {
@@ -279,36 +299,7 @@ public class DataLayoutPermissionSerDes {
 
 			Object value = entry.getValue();
 
-			Class<?> valueClass = value.getClass();
-
-			if (value instanceof Map) {
-				sb.append(_toJSON((Map)value));
-			}
-			else if (valueClass.isArray()) {
-				Object[] values = (Object[])value;
-
-				sb.append("[");
-
-				for (int i = 0; i < values.length; i++) {
-					sb.append("\"");
-					sb.append(_escape(values[i]));
-					sb.append("\"");
-
-					if ((i + 1) < values.length) {
-						sb.append(", ");
-					}
-				}
-
-				sb.append("]");
-			}
-			else if (value instanceof String) {
-				sb.append("\"");
-				sb.append(_escape(entry.getValue()));
-				sb.append("\"");
-			}
-			else {
-				sb.append(String.valueOf(entry.getValue()));
-			}
+			sb.append(_toJSON(value));
 
 			if (iterator.hasNext()) {
 				sb.append(", ");
@@ -318,6 +309,38 @@ public class DataLayoutPermissionSerDes {
 		sb.append("}");
 
 		return sb.toString();
+	}
+
+	private static String _toJSON(Object value) {
+		if (value instanceof Map) {
+			return _toJSON((Map)value);
+		}
+
+		Class<?> clazz = value.getClass();
+
+		if (clazz.isArray()) {
+			StringBuilder sb = new StringBuilder("[");
+
+			Object[] values = (Object[])value;
+
+			for (int i = 0; i < values.length; i++) {
+				sb.append(_toJSON(values[i]));
+
+				if ((i + 1) < values.length) {
+					sb.append(", ");
+				}
+			}
+
+			sb.append("]");
+
+			return sb.toString();
+		}
+
+		if (value instanceof String) {
+			return "\"" + _escape(value) + "\"";
+		}
+
+		return String.valueOf(value);
 	}
 
 }
