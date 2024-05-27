@@ -92,6 +92,10 @@ public class PagePathDataFetcherTest
 			new AdjacentPageViewsMetric(
 				"url-8", DateUtil.addDays(date, -1), Boolean.FALSE,
 				Boolean.FALSE, "url 8", BigDecimal.valueOf(100)));
+		adjacentPageViewsMetrics.add(
+			new AdjacentPageViewsMetric(
+				"url-9", DateUtil.addDays(date, 1), Boolean.FALSE, Boolean.TRUE,
+				"url 9", BigDecimal.valueOf(10)));
 
 		Mockito.when(
 			_pagePathDog.getAdjacentPagesViewsMetric(
@@ -116,7 +120,7 @@ public class PagePathDataFetcherTest
 		Assertions.assertEquals(
 			"http://www.liferay.com", pagePathNodeDTO.getCanonicalUrl());
 		Assertions.assertEquals("Liferay", pagePathNodeDTO.getTitle());
-		Assertions.assertEquals(1222, pagePathNodeDTO.getViews());
+		Assertions.assertEquals(1232, pagePathNodeDTO.getViews());
 
 		_assertPagePathNodeDTOs(
 			pagePathNodeDTO.getPreviousPagePathNodeDTOs(),
@@ -128,6 +132,9 @@ public class PagePathDataFetcherTest
 				new PagePathNodeDTO(
 					"url-4", DateUtil.addDays(date, -1), false, null, null,
 					"url 4", 100L),
+				new PagePathNodeDTO(
+					"url-9", DateUtil.addDays(date, 1), false, null, null,
+					"url 9", 10L),
 				new PagePathNodeDTO(
 					"url-1", date, false, null, null, "url 1", 10L),
 				new PagePathNodeDTO(
@@ -143,14 +150,14 @@ public class PagePathDataFetcherTest
 				new PagePathNodeDTO(
 					"url-7", date, false, null, null, "url 7", 200L),
 				new PagePathNodeDTO(
+					"url-5", date, false, null, null, "url 5", 100L),
+				new PagePathNodeDTO(
 					"url-8", DateUtil.addDays(date, -1), false, null, null,
 					"url 8", 100L),
 				new PagePathNodeDTO(
-					"url-5", date, false, null, null, "url 5", 100L),
-				new PagePathNodeDTO(
 					"others", date, true, null, null, "others", 90L),
 				new PagePathNodeDTO(
-					"drop-offs", null, true, null, null, "drop-offs", 432L)));
+					"drop-offs", null, true, null, null, "drop-offs", 442L)));
 	}
 
 	private void _assertPagePathNodeDTOs(
