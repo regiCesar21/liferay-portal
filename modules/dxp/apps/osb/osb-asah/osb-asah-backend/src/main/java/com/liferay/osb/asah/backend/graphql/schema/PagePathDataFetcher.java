@@ -187,9 +187,9 @@ public class PagePathDataFetcher extends BaseDataFetcher<PagePathNodeDTO> {
 				pagePathNodeDTO2.getViews(), pagePathNodeDTO1.getViews());
 
 			if (compare == 0) {
-				Date eventDate1 = pagePathNodeDTO1.getEventDate();
+				Date eventDate2 = pagePathNodeDTO2.getEventDate();
 
-				compare = eventDate1.compareTo(pagePathNodeDTO2.getEventDate());
+				compare = eventDate2.compareTo(pagePathNodeDTO1.getEventDate());
 			}
 
 			return compare;
