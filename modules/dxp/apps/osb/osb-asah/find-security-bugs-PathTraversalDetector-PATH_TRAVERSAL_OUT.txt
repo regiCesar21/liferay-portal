@@ -4,10 +4,6 @@
 -- com/liferay/osb/asah/common/storage/StorageConfiguration$Builder.googleBucketFolder(Ljava/lang/String;)Lcom/liferay/osb/asah/common/storage/StorageConfiguration$Builder;:0
 -- com/liferay/osb/asah/common/storage/impl/GoogleStorageArchiver.archiveAsync
 -- com/liferay/osb/asah/common/storage/impl/GoogleStorageArchiver.readSparkJobResult(Ljava/lang/String;Ljava/lang/String;Ljava/util/Date;Ljava/lang/String;)Ljava/io/File;:0,2
-com/liferay/osb/asah/common/storage/StorageFactory.getStorage(Lcom/liferay/osb/asah/common/storage/StorageConfiguration;)Lcom/liferay/osb/asah/common/storage/Storage;:0
-com/liferay/osb/asah/common/storage/impl/JSONFileEncoder.<init>(Ljava/lang/String;)V:0
-com/liferay/osb/asah/common/storage/impl/LocalStorage.<init>(Lcom/liferay/osb/asah/common/storage/impl/JSONAvroTransformer;Lcom/liferay/osb/asah/common/storage/StorageConfiguration;)V:0
-com/liferay/osb/asah/common/storage/impl/ParquetFileEncoder.<init>(Lcom/liferay/osb/asah/common/storage/impl/JSONAvroTransformer;Ljava/lang/String;Lorg/apache/avro/Schema;)V:1
 com/liferay/osb/asah/common/util/CSVUtil.createCSVFile(Ljava/lang/String;Lcom/liferay/osb/asah/common/elasticsearch/ElasticsearchInvoker;Ljava/util/Map;Ljava/lang/String;Ljava/io/File;Lorg/elasticsearch/index/query/QueryBuilder;)Ljava/io/File;:1,2
 com/liferay/osb/asah/common/zip/ZipFileBuilder.<init>(Ljava/io/File;)V:0
 com/liferay/osb/asah/common/zip/ZipFileBuilder.<init>(Ljava/lang/String;)V:0

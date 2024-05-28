@@ -22,16 +22,8 @@
 	</Match>
 	<Match>
 		<Bug pattern="PATH_TRAVERSAL_IN" />
-		<Class name="com.liferay.osb.asah.common.storage.impl.JSONFileEncoder" />
-		<Method name="open" />
-	</Match>
-	<Match>
-		<Bug pattern="PATH_TRAVERSAL_IN" />
-		<Class name="com.liferay.osb.asah.common.storage.impl.LocalStorage" />
-		<Or>
-			<Method name="_archiveSuccessFile" />
-			<Method name="_rollover" />
-		</Or>
+		<Class name="com.liferay.osb.asah.common.storage.impl.GoogleStorageImpl" />
+		<Method name="readFile" />
 	</Match>
 	<Match>
 		<Bug pattern="PATH_TRAVERSAL_IN" />
@@ -42,20 +34,6 @@
 		<Bug pattern="PATH_TRAVERSAL_IN" />
 		<Class name="com.liferay.osb.asah.common.zip.ZipFileBuilder" />
 		<Method name="&lt;init&gt;" />
-	</Match>
-	<Match>
-		<Bug pattern="PATH_TRAVERSAL_OUT" />
-		<Class name="com.liferay.osb.asah.common.storage.impl.LocalStorage" />
-		<Method name="_open" />
-	</Match>
-	<Match>
-		<Bug pattern="PATH_TRAVERSAL_OUT" />
-		<Class name="com.liferay.osb.asah.common.storage.impl.LocalStorageTest" />
-	</Match>
-	<Match>
-		<Bug pattern="PATH_TRAVERSAL_OUT" />
-		<Class name="com.liferay.osb.asah.common.storage.impl.StorageFactoryImpl" />
-		<Method name="getStorage" />
 	</Match>
 	<Match>
 		<Bug pattern="PATH_TRAVERSAL_OUT" />
