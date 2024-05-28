@@ -509,8 +509,6 @@ public class JournalArticleStagedModelDataHandler
 			articleElement.addAttribute("preloaded", "true");
 		}
 
-		_exportAssetDisplayPage(portletDataContext, article);
-
 		if (!GetterUtil.getBoolean(
 				articleElement.attributeValue("articleAdded"))) {
 
