@@ -33,9 +33,9 @@ import org.springframework.core.env.ConfigurableEnvironment;
 		"com.liferay.osb.asah.common.messaging",
 		"com.liferay.osb.asah.common.postgresql",
 		"com.liferay.osb.asah.common.repository",
-		"com.liferay.osb.asah.common.storage",
 		"com.liferay.osb.asah.common.spring.cache",
 		"com.liferay.osb.asah.common.spring.http",
+		"com.liferay.osb.asah.common.storage",
 		"com.liferay.osb.asah.common.wedeploy", "com.liferay.osb.asah.upgrade"
 	}
 )
