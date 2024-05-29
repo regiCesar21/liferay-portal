@@ -1,0 +1,32 @@
+{
+	"data": {
+		"document": {
+			"assetId": "1",
+			"assetTitle": "Deploying Liferay DXP in Azure",
+			"downloadsMetric": {
+				"geolocation": [
+					{
+						"value": 3.0,
+						"valueKey": "United States"
+					},
+					{
+						"value": 2.0,
+						"valueKey": "Colombia"
+					},
+					{
+						"value": 1.0,
+						"valueKey": "India"
+					},
+					{
+						"value": 1.0,
+						"valueKey": "Italy"
+					},
+					{
+						"value": 1.0,
+						"valueKey": "Romania"
+					}
+				]
+			}
+		}
+	}
+}

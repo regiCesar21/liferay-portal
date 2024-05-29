@@ -1,0 +1,10 @@
+{
+	"operationName": "DocumentsAndMediaMetrics",
+	"variables": {
+		"assetId": "1",
+		"channelId": "1",
+		"country": "Any",
+		"rangeKey": 30,
+		"title": "Deploying Liferay DXP in Azure"
+	}
+}

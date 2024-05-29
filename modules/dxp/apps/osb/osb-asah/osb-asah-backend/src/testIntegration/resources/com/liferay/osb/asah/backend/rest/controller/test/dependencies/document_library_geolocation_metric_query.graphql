@@ -1,0 +1,16 @@
+fragment geolocationFragment on Metric {
+	geolocation {
+		value
+		valueKey
+	}
+}
+
+query DocumentsAndMediaMetrics($assetId: String!, $canonicalUrl: String, $channelId: String, $country: String, $deviceType: String, $rangeKey: Int, $title: String, $url: String) {
+	document(assetId: $assetId, canonicalUrl: $canonicalUrl, channelId: $channelId, country: $country, deviceType: $deviceType, rangeKey: $rangeKey, title: $title, url: $url) {
+		assetId
+		assetTitle
+		downloadsMetric {
+			...geolocationFragment
+		}
+	}
+}
