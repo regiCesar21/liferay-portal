@@ -306,6 +306,10 @@ public abstract class BaseAccountUserResourceImpl
 		return null;
 	}
 
+	public String getResourceName() {
+		return "AccountUser";
+	}
+
 	public String getVersion() {
 		return "v1.0";
 	}

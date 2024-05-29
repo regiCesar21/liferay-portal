@@ -1222,6 +1222,10 @@ public abstract class BaseKnowledgeBaseArticleResourceImpl
 		return null;
 	}
 
+	public String getResourceName() {
+		return "KnowledgeBaseArticle";
+	}
+
 	public String getVersion() {
 		return "v1.0";
 	}

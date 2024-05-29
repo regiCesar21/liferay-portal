@@ -478,6 +478,10 @@ public abstract class BasePriceModifierProductGroupResourceImpl
 		return null;
 	}
 
+	public String getResourceName() {
+		return "PriceModifierProductGroup";
+	}
+
 	public String getVersion() {
 		return "v2.0";
 	}

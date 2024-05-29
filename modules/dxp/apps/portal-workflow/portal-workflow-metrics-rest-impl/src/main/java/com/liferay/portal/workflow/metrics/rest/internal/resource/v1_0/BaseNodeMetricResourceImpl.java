@@ -187,6 +187,10 @@ public abstract class BaseNodeMetricResourceImpl
 		return null;
 	}
 
+	public String getResourceName() {
+		return "NodeMetric";
+	}
+
 	public String getVersion() {
 		return "v1.0";
 	}

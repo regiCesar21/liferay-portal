@@ -570,6 +570,10 @@ public abstract class BaseCatalogResourceImpl
 		return null;
 	}
 
+	public String getResourceName() {
+		return "Catalog";
+	}
+
 	public String getVersion() {
 		return "v1.0";
 	}

@@ -474,6 +474,10 @@ public abstract class BaseInstanceResourceImpl
 		return null;
 	}
 
+	public String getResourceName() {
+		return "Instance";
+	}
+
 	public String getVersion() {
 		return "v1.0";
 	}

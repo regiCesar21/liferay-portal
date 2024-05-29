@@ -575,6 +575,10 @@ public abstract class BaseAppResourceImpl
 		return null;
 	}
 
+	public String getResourceName() {
+		return "App";
+	}
+
 	public String getVersion() {
 		return "v1.0";
 	}

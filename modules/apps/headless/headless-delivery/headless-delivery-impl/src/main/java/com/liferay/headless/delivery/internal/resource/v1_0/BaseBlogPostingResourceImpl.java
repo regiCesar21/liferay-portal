@@ -763,6 +763,10 @@ public abstract class BaseBlogPostingResourceImpl
 		return null;
 	}
 
+	public String getResourceName() {
+		return "BlogPosting";
+	}
+
 	public String getVersion() {
 		return "v1.0";
 	}

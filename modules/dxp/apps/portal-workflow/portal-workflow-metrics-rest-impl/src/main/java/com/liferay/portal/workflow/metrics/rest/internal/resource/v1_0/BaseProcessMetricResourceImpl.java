@@ -213,6 +213,10 @@ public abstract class BaseProcessMetricResourceImpl
 		return null;
 	}
 
+	public String getResourceName() {
+		return "ProcessMetric";
+	}
+
 	public String getVersion() {
 		return "v1.0";
 	}

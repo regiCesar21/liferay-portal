@@ -1003,6 +1003,10 @@ public abstract class BaseDocumentResourceImpl
 		return null;
 	}
 
+	public String getResourceName() {
+		return "Document";
+	}
+
 	public String getVersion() {
 		return "v1.0";
 	}

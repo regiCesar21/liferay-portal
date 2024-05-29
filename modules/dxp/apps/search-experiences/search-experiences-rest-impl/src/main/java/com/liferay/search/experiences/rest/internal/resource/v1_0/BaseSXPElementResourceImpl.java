@@ -477,6 +477,10 @@ public abstract class BaseSXPElementResourceImpl
 		return null;
 	}
 
+	public String getResourceName() {
+		return "SXPElement";
+	}
+
 	public String getVersion() {
 		return "v1.0";
 	}

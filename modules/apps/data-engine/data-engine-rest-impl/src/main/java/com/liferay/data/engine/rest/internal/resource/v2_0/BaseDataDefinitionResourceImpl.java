@@ -706,6 +706,10 @@ public abstract class BaseDataDefinitionResourceImpl
 		return null;
 	}
 
+	public String getResourceName() {
+		return "DataDefinition";
+	}
+
 	public String getVersion() {
 		return "v2.0";
 	}

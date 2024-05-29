@@ -189,6 +189,10 @@ public abstract class BaseAccountCategoryForecastResourceImpl
 		return null;
 	}
 
+	public String getResourceName() {
+		return "AccountCategoryForecast";
+	}
+
 	public String getVersion() {
 		return "v1.0";
 	}

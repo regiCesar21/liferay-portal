@@ -237,6 +237,10 @@ public abstract class BaseStatusResourceImpl
 		return null;
 	}
 
+	public String getResourceName() {
+		return "Status";
+	}
+
 	public String getVersion() {
 		return "v1.0";
 	}

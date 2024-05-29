@@ -159,6 +159,10 @@ public abstract class BaseDataDefinitionFieldLinkResourceImpl
 		return null;
 	}
 
+	public String getResourceName() {
+		return "DataDefinitionFieldLink";
+	}
+
 	public String getVersion() {
 		return "v2.0";
 	}

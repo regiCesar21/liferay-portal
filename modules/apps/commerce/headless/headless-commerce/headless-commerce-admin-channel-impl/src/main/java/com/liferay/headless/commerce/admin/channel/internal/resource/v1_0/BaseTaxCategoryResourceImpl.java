@@ -181,6 +181,10 @@ public abstract class BaseTaxCategoryResourceImpl
 		return null;
 	}
 
+	public String getResourceName() {
+		return "TaxCategory";
+	}
+
 	public String getVersion() {
 		return "v1.0";
 	}

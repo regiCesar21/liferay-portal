@@ -163,6 +163,10 @@ public abstract class BaseAssigneeMetricResourceImpl
 		return null;
 	}
 
+	public String getResourceName() {
+		return "AssigneeMetric";
+	}
+
 	public String getVersion() {
 		return "v1.0";
 	}

@@ -774,6 +774,10 @@ public abstract class BaseDataRecordCollectionResourceImpl
 		return null;
 	}
 
+	public String getResourceName() {
+		return "DataRecordCollection";
+	}
+
 	public String getVersion() {
 		return "v2.0";
 	}

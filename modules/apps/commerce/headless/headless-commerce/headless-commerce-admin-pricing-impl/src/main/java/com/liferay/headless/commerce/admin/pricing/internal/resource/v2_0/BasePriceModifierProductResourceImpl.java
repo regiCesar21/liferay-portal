@@ -469,6 +469,10 @@ public abstract class BasePriceModifierProductResourceImpl
 		return null;
 	}
 
+	public String getResourceName() {
+		return "PriceModifierProduct";
+	}
+
 	public String getVersion() {
 		return "v2.0";
 	}

@@ -268,6 +268,10 @@ public abstract class BaseSpotResourceImpl
 		return null;
 	}
 
+	public String getResourceName() {
+		return "Spot";
+	}
+
 	public String getVersion() {
 		return "1.0";
 	}

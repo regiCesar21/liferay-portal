@@ -408,6 +408,10 @@ public abstract class BaseSpecificationResourceImpl
 		return null;
 	}
 
+	public String getResourceName() {
+		return "Specification";
+	}
+
 	public String getVersion() {
 		return "v1.0";
 	}

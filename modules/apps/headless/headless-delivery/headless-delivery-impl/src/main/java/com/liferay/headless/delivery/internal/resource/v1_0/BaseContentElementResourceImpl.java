@@ -243,6 +243,10 @@ public abstract class BaseContentElementResourceImpl
 		return null;
 	}
 
+	public String getResourceName() {
+		return "ContentElement";
+	}
+
 	public String getVersion() {
 		return "v1.0";
 	}

@@ -144,6 +144,10 @@ public abstract class BaseIndexResourceImpl
 		return null;
 	}
 
+	public String getResourceName() {
+		return "Index";
+	}
+
 	public String getVersion() {
 		return "v1.0";
 	}

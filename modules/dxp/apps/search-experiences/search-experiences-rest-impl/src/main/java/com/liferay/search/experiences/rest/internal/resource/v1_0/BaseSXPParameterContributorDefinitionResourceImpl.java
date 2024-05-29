@@ -140,6 +140,10 @@ public abstract class BaseSXPParameterContributorDefinitionResourceImpl
 		return null;
 	}
 
+	public String getResourceName() {
+		return "SXPParameterContributorDefinition";
+	}
+
 	public String getVersion() {
 		return "v1.0";
 	}

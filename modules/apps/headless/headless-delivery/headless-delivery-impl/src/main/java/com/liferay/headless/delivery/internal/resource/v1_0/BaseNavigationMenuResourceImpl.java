@@ -479,6 +479,10 @@ public abstract class BaseNavigationMenuResourceImpl
 		return null;
 	}
 
+	public String getResourceName() {
+		return "NavigationMenu";
+	}
+
 	public String getVersion() {
 		return "v1.0";
 	}

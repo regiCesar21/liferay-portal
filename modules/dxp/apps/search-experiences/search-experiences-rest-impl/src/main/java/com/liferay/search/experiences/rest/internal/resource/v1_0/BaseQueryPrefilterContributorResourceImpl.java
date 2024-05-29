@@ -136,6 +136,10 @@ public abstract class BaseQueryPrefilterContributorResourceImpl
 		return null;
 	}
 
+	public String getResourceName() {
+		return "QueryPrefilterContributor";
+	}
+
 	public String getVersion() {
 		return "v1.0";
 	}

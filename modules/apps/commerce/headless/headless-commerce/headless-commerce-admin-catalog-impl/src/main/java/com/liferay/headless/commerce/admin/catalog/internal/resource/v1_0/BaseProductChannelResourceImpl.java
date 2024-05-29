@@ -306,6 +306,10 @@ public abstract class BaseProductChannelResourceImpl
 		return null;
 	}
 
+	public String getResourceName() {
+		return "ProductChannel";
+	}
+
 	public String getVersion() {
 		return "v1.0";
 	}

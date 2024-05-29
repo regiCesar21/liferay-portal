@@ -220,6 +220,10 @@ public abstract class BasePostalAddressResourceImpl
 		return null;
 	}
 
+	public String getResourceName() {
+		return "PostalAddress";
+	}
+
 	public String getVersion() {
 		return "v1.0";
 	}

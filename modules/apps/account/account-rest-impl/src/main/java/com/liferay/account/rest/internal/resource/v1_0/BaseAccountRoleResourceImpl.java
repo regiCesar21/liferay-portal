@@ -492,6 +492,10 @@ public abstract class BaseAccountRoleResourceImpl
 		return null;
 	}
 
+	public String getResourceName() {
+		return "AccountRole";
+	}
+
 	public String getVersion() {
 		return "v1.0";
 	}

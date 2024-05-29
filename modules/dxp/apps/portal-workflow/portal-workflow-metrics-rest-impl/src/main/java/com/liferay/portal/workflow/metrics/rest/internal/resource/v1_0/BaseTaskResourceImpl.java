@@ -444,6 +444,10 @@ public abstract class BaseTaskResourceImpl
 		return null;
 	}
 
+	public String getResourceName() {
+		return "Task";
+	}
+
 	public String getVersion() {
 		return "v1.0";
 	}

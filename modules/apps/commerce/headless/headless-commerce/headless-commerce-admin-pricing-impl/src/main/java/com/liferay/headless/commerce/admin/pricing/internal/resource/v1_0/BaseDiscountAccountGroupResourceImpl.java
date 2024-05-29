@@ -452,6 +452,10 @@ public abstract class BaseDiscountAccountGroupResourceImpl
 		return null;
 	}
 
+	public String getResourceName() {
+		return "DiscountAccountGroup";
+	}
+
 	public String getVersion() {
 		return "v1.0";
 	}

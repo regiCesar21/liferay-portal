@@ -471,6 +471,10 @@ public abstract class BasePriceModifierCategoryResourceImpl
 		return null;
 	}
 
+	public String getResourceName() {
+		return "PriceModifierCategory";
+	}
+
 	public String getVersion() {
 		return "v2.0";
 	}
