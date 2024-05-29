@@ -594,7 +594,7 @@ public class LayoutSetPrototypePropagationTest
 		LayoutSet prototypePrivateLayoutSet =
 			_layoutSetPrototypeGroup.getPrivateLayoutSet();
 
-		prototypePrivateLayoutSet.setThemeId(_MINIUM_THEME_ID);
+		prototypePrivateLayoutSet.setThemeId(_THEME_ID);
 
 		prototypePrivateLayoutSet = LayoutSetLocalServiceUtil.updateLayoutSet(
 			prototypePrivateLayoutSet);
@@ -602,7 +602,7 @@ public class LayoutSetPrototypePropagationTest
 		LayoutSet prototypePublicLayoutSet =
 			_layoutSetPrototypeGroup.getPublicLayoutSet();
 
-		prototypePublicLayoutSet.setThemeId(_MINIUM_THEME_ID);
+		prototypePublicLayoutSet.setThemeId(_THEME_ID);
 
 		LayoutSetLocalServiceUtil.updateLayoutSet(prototypePublicLayoutSet);
 
@@ -991,7 +991,7 @@ public class LayoutSetPrototypePropagationTest
 		}
 	}
 
-	private static final String _MINIUM_THEME_ID = "minium_WAR_miniumtheme";
+	private static final String _THEME_ID = "minium_WAR_miniumtheme";
 
 	private int _initialLayoutCount;
 	private int _initialPrototypeLayoutsCount;
