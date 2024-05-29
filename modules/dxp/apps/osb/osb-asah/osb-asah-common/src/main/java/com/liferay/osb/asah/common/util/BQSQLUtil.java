@@ -41,7 +41,7 @@ public class BQSQLUtil {
 	}
 
 	public static String createInsertStatement(
-		Map<String, String> defaulValues, Object entity) {
+		Map<String, String> defaultValues, Object entity) {
 
 		StringBuilder sb = new StringBuilder();
 
@@ -59,7 +59,7 @@ public class BQSQLUtil {
 
 		sb.append(") VALUES ");
 
-		sb.append(_createInsertValues(columns, defaulValues));
+		sb.append(_createInsertValues(columns, defaultValues));
 
 		return sb.toString();
 	}
@@ -69,7 +69,7 @@ public class BQSQLUtil {
 	}
 
 	private static String _createInsertValues(
-		List<Column> columns, Map<String, String> defaulValues) {
+		List<Column> columns, Map<String, String> defaultValues) {
 
 		StringBuilder sb = new StringBuilder();
 
@@ -80,7 +80,7 @@ public class BQSQLUtil {
 
 			Object value = column.getValue();
 
-			String defaultValue = defaulValues.get(column.getName());
+			String defaultValue = defaultValues.get(column.getName());
 
 			if (value instanceof Date) {
 				sb.append(_getValueString(defaultValue, (Date)value));
