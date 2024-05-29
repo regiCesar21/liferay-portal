@@ -794,6 +794,10 @@ public abstract class BaseStructuredContentFolderResourceImpl
 		return null;
 	}
 
+	public String getResourceName() {
+		return "StructuredContentFolder";
+	}
+
 	public String getVersion() {
 		return "v1.0";
 	}

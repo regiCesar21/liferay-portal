@@ -197,6 +197,10 @@ public abstract class BaseSiteResourceImpl
 		return null;
 	}
 
+	public String getResourceName() {
+		return "Site";
+	}
+
 	public String getVersion() {
 		return "v1.0";
 	}

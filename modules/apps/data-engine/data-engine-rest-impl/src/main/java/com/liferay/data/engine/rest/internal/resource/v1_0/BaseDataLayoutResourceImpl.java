@@ -633,6 +633,10 @@ public abstract class BaseDataLayoutResourceImpl
 		return null;
 	}
 
+	public String getResourceName() {
+		return "DataLayout";
+	}
+
 	public String getVersion() {
 		return "v1.0";
 	}

@@ -130,6 +130,10 @@ public abstract class BaseCalendarResourceImpl
 		return null;
 	}
 
+	public String getResourceName() {
+		return "Calendar";
+	}
+
 	public String getVersion() {
 		return "v1.0";
 	}

@@ -263,6 +263,10 @@ public abstract class BaseCategoryResourceImpl
 		return null;
 	}
 
+	public String getResourceName() {
+		return "Category";
+	}
+
 	public String getVersion() {
 		return "v1.0";
 	}

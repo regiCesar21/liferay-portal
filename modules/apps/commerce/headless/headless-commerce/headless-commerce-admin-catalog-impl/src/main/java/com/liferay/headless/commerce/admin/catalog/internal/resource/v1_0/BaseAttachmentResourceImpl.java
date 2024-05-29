@@ -747,6 +747,10 @@ public abstract class BaseAttachmentResourceImpl
 		return null;
 	}
 
+	public String getResourceName() {
+		return "Attachment";
+	}
+
 	public String getVersion() {
 		return "v1.0";
 	}

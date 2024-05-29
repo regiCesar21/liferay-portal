@@ -148,6 +148,10 @@ public abstract class BaseLanguageResourceImpl
 		return null;
 	}
 
+	public String getResourceName() {
+		return "Language";
+	}
+
 	public String getVersion() {
 		return "v1.0";
 	}

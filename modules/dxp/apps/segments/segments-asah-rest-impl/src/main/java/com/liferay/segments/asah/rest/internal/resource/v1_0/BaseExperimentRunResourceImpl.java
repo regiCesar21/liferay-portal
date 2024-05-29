@@ -234,6 +234,10 @@ public abstract class BaseExperimentRunResourceImpl
 		return null;
 	}
 
+	public String getResourceName() {
+		return "ExperimentRun";
+	}
+
 	public String getVersion() {
 		return "v1.0";
 	}

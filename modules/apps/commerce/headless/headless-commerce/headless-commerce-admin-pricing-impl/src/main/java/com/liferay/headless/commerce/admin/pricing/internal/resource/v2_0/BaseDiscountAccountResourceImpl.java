@@ -445,6 +445,10 @@ public abstract class BaseDiscountAccountResourceImpl
 		return null;
 	}
 
+	public String getResourceName() {
+		return "DiscountAccount";
+	}
+
 	public String getVersion() {
 		return "v2.0";
 	}

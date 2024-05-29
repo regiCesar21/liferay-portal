@@ -487,6 +487,10 @@ public abstract class BaseCartResourceImpl
 		return null;
 	}
 
+	public String getResourceName() {
+		return "Cart";
+	}
+
 	public String getVersion() {
 		return "v1.0";
 	}

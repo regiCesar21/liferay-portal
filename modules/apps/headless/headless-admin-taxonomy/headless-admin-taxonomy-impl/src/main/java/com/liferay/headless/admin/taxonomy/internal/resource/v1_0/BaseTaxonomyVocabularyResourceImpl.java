@@ -569,6 +569,10 @@ public abstract class BaseTaxonomyVocabularyResourceImpl
 		return null;
 	}
 
+	public String getResourceName() {
+		return "TaxonomyVocabulary";
+	}
+
 	public String getVersion() {
 		return "v1.0";
 	}

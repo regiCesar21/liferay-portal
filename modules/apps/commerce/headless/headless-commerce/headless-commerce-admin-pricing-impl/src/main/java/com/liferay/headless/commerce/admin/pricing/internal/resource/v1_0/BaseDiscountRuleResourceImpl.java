@@ -444,6 +444,10 @@ public abstract class BaseDiscountRuleResourceImpl
 		return null;
 	}
 
+	public String getResourceName() {
+		return "DiscountRule";
+	}
+
 	public String getVersion() {
 		return "v1.0";
 	}

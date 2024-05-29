@@ -415,6 +415,10 @@ public abstract class BaseCartCommentResourceImpl
 		return null;
 	}
 
+	public String getResourceName() {
+		return "CartComment";
+	}
+
 	public String getVersion() {
 		return "v1.0";
 	}

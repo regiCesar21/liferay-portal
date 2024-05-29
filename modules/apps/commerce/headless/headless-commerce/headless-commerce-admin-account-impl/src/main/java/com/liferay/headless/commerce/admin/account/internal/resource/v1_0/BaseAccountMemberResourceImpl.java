@@ -608,6 +608,10 @@ public abstract class BaseAccountMemberResourceImpl
 		return null;
 	}
 
+	public String getResourceName() {
+		return "AccountMember";
+	}
+
 	public String getVersion() {
 		return "v1.0";
 	}
