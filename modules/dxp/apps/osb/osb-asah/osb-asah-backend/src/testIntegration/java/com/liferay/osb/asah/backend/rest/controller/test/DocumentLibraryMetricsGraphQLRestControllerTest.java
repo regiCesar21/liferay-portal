@@ -5,20 +5,19 @@
 
 package com.liferay.osb.asah.backend.rest.controller.test;
 
-import com.liferay.osb.asah.test.util.annotation.RepositoryResource;
-import com.liferay.osb.asah.test.util.repository.CrudBQDocumentLibraryRepository;
+import com.liferay.osb.asah.test.util.annotation.BQSQLResource;
 
-import org.junit.jupiter.api.Disabled;
+import org.json.JSONObject;
+
+import org.skyscreamer.jsonassert.JSONAssert;
 
 /**
- * @author André Miranda
+ * @author Rachael Koestartyo
  */
-@Disabled
-@RepositoryResource(
-	repositoryClass = CrudBQDocumentLibraryRepository.class,
-	resourcePath = "osbasahcerebroinfo/document_library_info.json"
+@BQSQLResource(
+	resourcePath = "document_library_metrics_graphql_rest_controller_test.sql"
 )
-public class DocumentLibrariesMetricsGraphQLRestControllerTest
+public class DocumentLibraryMetricsGraphQLRestControllerTest
 	extends BaseGraphQLRestControllerTestCase {
 
 	@Override
@@ -34,6 +33,13 @@ public class DocumentLibrariesMetricsGraphQLRestControllerTest
 	@Override
 	public String getQueryPath() {
 		return "document_library_metrics_query.graphql";
+	}
+
+	@Override
+	protected void assertJSONObject(
+		JSONObject expectedJSONObject, JSONObject jsonObject) {
+
+		JSONAssert.assertEquals(expectedJSONObject, jsonObject, true);
 	}
 
 }

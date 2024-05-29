@@ -3,41 +3,103 @@
 		"documents": {
 			"assetMetrics": [
 				{
-					"assetId": "1",
-					"assetTitle": "null",
+					"assetId": "3",
+					"assetTitle": "Liferay DXP 7.4 Deployment Checklist",
 					"commentsMetric": {
-						"value": 3.0
+						"value": 4
 					},
 					"downloadsMetric": {
-						"value": 2.0
+						"value": 3
 					},
 					"previewsMetric": {
-						"value": 0.0
+						"value": 2
 					},
 					"ratingsMetric": {
-						"value": 1.0
-					},
-					"urls": null
+						"value": 0.33333333333333331
+					}
 				},
 				{
-					"assetId": "3",
-					"assetTitle": "Liferay",
+					"assetId": "2",
+					"assetTitle": "Deploying Liferay DXP in Amazon Web Services",
 					"commentsMetric": {
-						"value": 0.0
+						"value": 2
 					},
 					"downloadsMetric": {
-						"value": 3.0
+						"value": 2
 					},
 					"previewsMetric": {
-						"value": 0.0
+						"value": 1
 					},
 					"ratingsMetric": {
-						"value": 0.0
+						"value": 0
+					}
+				},
+				{
+					"assetId": "1",
+					"assetTitle": "Deploying Liferay DXP in Azure",
+					"commentsMetric": {
+						"value": 1
 					},
-					"urls": null
+					"downloadsMetric": {
+						"value": 2
+					},
+					"previewsMetric": {
+						"value": 2
+					},
+					"ratingsMetric": {
+						"value": 0.5
+					}
+				},
+				{
+					"assetId": "5",
+					"assetTitle": "Digitize, Automate, and Deploy Smarter Business Processes with a Customer Portal",
+					"commentsMetric": {
+						"value": 0
+					},
+					"downloadsMetric": {
+						"value": 2
+					},
+					"previewsMetric": {
+						"value": 1
+					},
+					"ratingsMetric": {
+						"value": 0.5
+					}
+				},
+				{
+					"assetId": "4",
+					"assetTitle": "Benchmark Study of Liferay DXP 7.4 on Liferay PaaS",
+					"commentsMetric": {
+						"value": 0
+					},
+					"downloadsMetric": {
+						"value": 1
+					},
+					"previewsMetric": {
+						"value": 1
+					},
+					"ratingsMetric": {
+						"value": 1
+					}
+				},
+				{
+					"assetId": "6",
+					"assetTitle": "Liferay DXP Performance Benchmark Study of Liferay DXP 7.4",
+					"commentsMetric": {
+						"value": 1
+					},
+					"downloadsMetric": {
+						"value": 1
+					},
+					"previewsMetric": {
+						"value": 0
+					},
+					"ratingsMetric": {
+						"value": 1
+					}
 				}
 			],
-			"total": 2
+			"total": 6
 		}
 	}
 }

@@ -16,7 +16,6 @@ query DocumentLibraryMetrics($channelId: String, $keywords: String, $rangeKey: I
 				ratingsMetric {
 					value
 				}
-				urls
 			}
 		}
 		total
