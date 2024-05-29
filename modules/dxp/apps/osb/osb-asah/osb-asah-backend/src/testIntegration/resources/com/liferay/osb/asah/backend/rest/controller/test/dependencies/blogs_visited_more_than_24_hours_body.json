@@ -1,0 +1,16 @@
+{
+	"operationName": "BlogsList",
+	"variables": {
+		"channelId": "1",
+		"keywords": "",
+		"rangeEnd": null,
+		"rangeKey": 7,
+		"rangeStart": null,
+		"size": 20,
+		"sort": {
+			"column": "viewsMetric",
+			"type": "DESC"
+		},
+		"start": 0
+	}
+}

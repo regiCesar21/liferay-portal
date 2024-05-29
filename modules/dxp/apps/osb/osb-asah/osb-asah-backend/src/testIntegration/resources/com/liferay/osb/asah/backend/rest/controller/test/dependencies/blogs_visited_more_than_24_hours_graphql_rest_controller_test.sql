@@ -1,0 +1,7 @@
+INSERT INTO BlogDaily (assetId, assetTitle, canonicalUrl, channelId, comments, eventDate, ratings, ratingsScore, readTime, sessions, userId, views) VALUES ('1', 'Blog 1', 'https://www.liferay.com', 1, 1, TIMESTAMP '${today-2d}', 1, 1, 1, 1, '1', 1);
+INSERT INTO BlogDaily (assetId, assetTitle, canonicalUrl, channelId, comments, eventDate, ratings, ratingsScore, readTime, sessions, userId, views) VALUES ('2', 'Blog 2', 'https://www.liferay.com', 1, 2, TIMESTAMP '${today-1d}', 2, 4, 10, 2, '2', 2);
+INSERT INTO BlogDaily (assetId, assetTitle, canonicalUrl, channelId, comments, eventDate, ratings, ratingsScore, readTime, sessions, userId, views) VALUES ('3', 'Blog 3', 'https://www.liferay.com', 1, 3, TIMESTAMP '${today-4d}', 3, 9, 18, 3, '3', 3);
+
+INSERT INTO Event (applicationId, assetId, assetTitle, canonicalUrl, channelId, eventDate, eventId, userId) VALUES ('Blog', '4', 'Blog 4', 'https://www.liferay.com', 1, TIMESTAMP '${now-4h}', 'blogViewed', '4');
+INSERT INTO Event (applicationId, assetId, assetTitle, canonicalUrl, channelId, eventDate, eventId, userId) VALUES ('Blog', '5', 'Blog 5', 'https://www.liferay.com', 1, TIMESTAMP '${now-5h}', 'blogViewed', '5');
+INSERT INTO Event (applicationId, assetId, assetTitle, canonicalUrl, channelId, eventDate, eventId, userId) VALUES ('Blog', '6', 'Blog 6', 'https://www.liferay.com', 1, TIMESTAMP '${now-6h}', 'blogViewed', '6');

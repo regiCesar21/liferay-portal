@@ -1,0 +1,57 @@
+{
+	"data": {
+		"blogs": {
+			"assetMetrics": [
+				{
+					"assetId": "1",
+					"assetTitle": "Blog 1",
+					"commentsMetric": {
+						"value": 1
+					},
+					"ratingsMetric": {
+						"value": 1
+					},
+					"readingTimeMetric": {
+						"value": 1
+					},
+					"viewsMetric": {
+						"value": 1
+					}
+				},
+				{
+					"assetId": "2",
+					"assetTitle": "Blog 2",
+					"commentsMetric": {
+						"value": 2
+					},
+					"ratingsMetric": {
+						"value": 2
+					},
+					"readingTimeMetric": {
+						"value": 5
+					},
+					"viewsMetric": {
+						"value": 2
+					}
+				},
+				{
+					"assetId": "3",
+					"assetTitle": "Blog 3",
+					"commentsMetric": {
+						"value": 3
+					},
+					"ratingsMetric": {
+						"value": 3
+					},
+					"readingTimeMetric": {
+						"value": 6
+					},
+					"viewsMetric": {
+						"value": 3
+					}
+				}
+			],
+			"total": 3
+		}
+	}
+}
