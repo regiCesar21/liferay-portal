@@ -75,7 +75,7 @@ public class PagePathRepositoryImpl implements PagePathRepository {
 			).unionAll(
 				_dslContext.select(
 					_canonicalUrlField,
-					DSL.min(
+					DSL.max(
 						_eventDateField
 					).as(
 						_eventDateField
@@ -408,7 +408,7 @@ public class PagePathRepositoryImpl implements PagePathRepository {
 				).as(
 					"canonicalUrl"
 				),
-				DSL.min(
+				DSL.max(
 					_eventDateField
 				).as(
 					_eventDateField
@@ -452,7 +452,7 @@ public class PagePathRepositoryImpl implements PagePathRepository {
 			).from(
 				_dslContext.select(
 					_canonicalUrlField,
-					DSL.min(
+					DSL.max(
 						_eventDateField
 					).as(
 						_eventDateField
@@ -468,6 +468,9 @@ public class PagePathRepositoryImpl implements PagePathRepository {
 						DSL.orderBy(
 							DSL.sum(
 								_viewsField
+							).desc(),
+							DSL.max(
+								_eventDateField
 							).desc())
 					).as(
 						"rowNumber"
@@ -502,7 +505,7 @@ public class PagePathRepositoryImpl implements PagePathRepository {
 				).as(
 					"canonicalUrl"
 				),
-				DSL.min(
+				DSL.max(
 					_eventDateField
 				).as(
 					_eventDateField
@@ -550,7 +553,7 @@ public class PagePathRepositoryImpl implements PagePathRepository {
 			).from(
 				_dslContext.select(
 					_canonicalUrlField,
-					DSL.min(
+					DSL.max(
 						_eventDateField
 					).as(
 						_eventDateField
@@ -566,6 +569,9 @@ public class PagePathRepositoryImpl implements PagePathRepository {
 						DSL.orderBy(
 							DSL.sum(
 								_viewsField
+							).desc(),
+							DSL.max(
+								_eventDateField
 							).desc())
 					).as(
 						"rowNumber"
