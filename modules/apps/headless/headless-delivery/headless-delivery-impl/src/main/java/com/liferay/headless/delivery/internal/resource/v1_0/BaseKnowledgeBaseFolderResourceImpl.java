@@ -660,6 +660,10 @@ public abstract class BaseKnowledgeBaseFolderResourceImpl
 		return null;
 	}
 
+	public String getResourceName() {
+		return "KnowledgeBaseFolder";
+	}
+
 	public String getVersion() {
 		return "v1.0";
 	}

@@ -165,6 +165,10 @@ public abstract class BaseProductOptionResourceImpl
 		return null;
 	}
 
+	public String getResourceName() {
+		return "ProductOption";
+	}
+
 	public String getVersion() {
 		return "v1.0";
 	}

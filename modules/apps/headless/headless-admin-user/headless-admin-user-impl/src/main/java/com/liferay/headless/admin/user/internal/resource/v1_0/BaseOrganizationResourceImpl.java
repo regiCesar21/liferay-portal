@@ -271,6 +271,10 @@ public abstract class BaseOrganizationResourceImpl
 		return null;
 	}
 
+	public String getResourceName() {
+		return "Organization";
+	}
+
 	public String getVersion() {
 		return "v1.0";
 	}

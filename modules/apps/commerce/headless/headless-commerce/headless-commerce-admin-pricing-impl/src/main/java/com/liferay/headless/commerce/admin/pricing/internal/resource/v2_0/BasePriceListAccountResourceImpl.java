@@ -438,6 +438,10 @@ public abstract class BasePriceListAccountResourceImpl
 		return null;
 	}
 
+	public String getResourceName() {
+		return "PriceListAccount";
+	}
+
 	public String getVersion() {
 		return "v2.0";
 	}

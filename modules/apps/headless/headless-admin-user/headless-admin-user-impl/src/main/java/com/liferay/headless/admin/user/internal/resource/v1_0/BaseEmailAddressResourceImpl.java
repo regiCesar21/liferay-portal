@@ -214,6 +214,10 @@ public abstract class BaseEmailAddressResourceImpl
 		return null;
 	}
 
+	public String getResourceName() {
+		return "EmailAddress";
+	}
+
 	public String getVersion() {
 		return "v1.0";
 	}

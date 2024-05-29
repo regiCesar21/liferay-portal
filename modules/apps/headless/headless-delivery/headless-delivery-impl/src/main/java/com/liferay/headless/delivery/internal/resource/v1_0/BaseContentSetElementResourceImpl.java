@@ -266,6 +266,10 @@ public abstract class BaseContentSetElementResourceImpl
 		return null;
 	}
 
+	public String getResourceName() {
+		return "ContentSetElement";
+	}
+
 	public String getVersion() {
 		return "v1.0";
 	}

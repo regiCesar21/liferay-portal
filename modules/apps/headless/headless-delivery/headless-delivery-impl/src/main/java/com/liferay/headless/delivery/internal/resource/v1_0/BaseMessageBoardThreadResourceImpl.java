@@ -976,6 +976,10 @@ public abstract class BaseMessageBoardThreadResourceImpl
 		return null;
 	}
 
+	public String getResourceName() {
+		return "MessageBoardThread";
+	}
+
 	public String getVersion() {
 		return "v1.0";
 	}

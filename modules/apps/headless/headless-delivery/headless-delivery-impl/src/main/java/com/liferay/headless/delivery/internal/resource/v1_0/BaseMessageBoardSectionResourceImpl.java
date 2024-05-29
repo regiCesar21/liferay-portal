@@ -778,6 +778,10 @@ public abstract class BaseMessageBoardSectionResourceImpl
 		return null;
 	}
 
+	public String getResourceName() {
+		return "MessageBoardSection";
+	}
+
 	public String getVersion() {
 		return "v1.0";
 	}

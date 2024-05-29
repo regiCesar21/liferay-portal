@@ -445,6 +445,10 @@ public abstract class BaseProductGroupProductResourceImpl
 		return null;
 	}
 
+	public String getResourceName() {
+		return "ProductGroupProduct";
+	}
+
 	public String getVersion() {
 		return "v1.0";
 	}

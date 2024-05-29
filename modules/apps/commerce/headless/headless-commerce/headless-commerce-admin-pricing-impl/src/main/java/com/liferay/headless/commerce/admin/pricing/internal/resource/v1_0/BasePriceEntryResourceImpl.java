@@ -582,6 +582,10 @@ public abstract class BasePriceEntryResourceImpl
 		return null;
 	}
 
+	public String getResourceName() {
+		return "PriceEntry";
+	}
+
 	public String getVersion() {
 		return "v1.0";
 	}

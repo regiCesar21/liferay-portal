@@ -1031,6 +1031,10 @@ public abstract class BaseMessageBoardMessageResourceImpl
 		return null;
 	}
 
+	public String getResourceName() {
+		return "MessageBoardMessage";
+	}
+
 	public String getVersion() {
 		return "v1.0";
 	}
