@@ -8,20 +8,32 @@ package com.liferay.osb.provisioning.internal.upgrade.v1_0_1;
 import com.liferay.osb.koroneiki.phloem.rest.client.constants.ExternalLinkDomain;
 import com.liferay.osb.koroneiki.phloem.rest.client.constants.ExternalLinkEntityName;
 import com.liferay.osb.koroneiki.phloem.rest.client.dto.v1_0.Account;
+import com.liferay.osb.koroneiki.phloem.rest.client.dto.v1_0.ExternalLink;
 import com.liferay.osb.koroneiki.phloem.rest.client.dto.v1_0.Product;
+import com.liferay.osb.koroneiki.phloem.rest.client.dto.v1_0.ProductConsumption;
 import com.liferay.osb.koroneiki.phloem.rest.client.dto.v1_0.ProductPurchase;
+import com.liferay.osb.koroneiki.phloem.rest.client.dto.v1_0.ProductPurchaseView;
+import com.liferay.osb.provisioning.constants.ProductTypeConstants;
 import com.liferay.osb.provisioning.koroneiki.constants.ProductConstants;
 import com.liferay.osb.provisioning.koroneiki.constants.ProductPurchaseConstants;
 import com.liferay.osb.provisioning.koroneiki.web.service.AccountWebService;
+import com.liferay.osb.provisioning.koroneiki.web.service.AuditEntryWebService;
+import com.liferay.osb.provisioning.koroneiki.web.service.ProductConsumptionWebService;
+import com.liferay.osb.provisioning.koroneiki.web.service.ProductPurchaseViewWebService;
 import com.liferay.osb.provisioning.koroneiki.web.service.ProductPurchaseWebService;
+import com.liferay.osb.provisioning.koroneiki.web.service.ProductWebService;
 import com.liferay.osb.provisioning.search.FilterQuery;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
+import com.liferay.portal.kernel.util.ArrayUtil;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -125,6 +137,48 @@ public class UpgradeProductPurchases extends UpgradeProcess {
 		}
 	}
 
+	public void upgradeProductPurchases(
+			String salesforceProjectKey, String salesforceOpportunityKey,
+			List<String> productNames)
+		throws Exception {
+
+		Account account = _getAccount(salesforceProjectKey);
+
+		if (account == null) {
+			return;
+		}
+
+		List<Product> ewsaProducts = _getEWSAProducts();
+		List<Product> opportunityProducts = _getProducts(productNames);
+
+		List<Product> combinedProducts = new ArrayList<>(ewsaProducts);
+
+		for (Product product : opportunityProducts) {
+			combinedProducts.add(product);
+
+			Map<String, String> properties = product.getProperties();
+
+			String productType = properties.get("type");
+
+			if (StringUtil.equals(productType, ProductTypeConstants.ADD_ON)) {
+				ewsaProducts.add(product);
+			}
+		}
+
+		List<Account> relatedAccounts = _getRelatedAccounts(
+			salesforceProjectKey);
+
+		List<String> updatedAccountKeys = _updateProductPurchases(
+			relatedAccounts, combinedProducts, salesforceOpportunityKey,
+			new ArrayList<>());
+
+		List<Account> siblingAccounts = _getSiblingAccounts(account);
+
+		_updateProductPurchases(
+			siblingAccounts, ewsaProducts, salesforceOpportunityKey,
+			updatedAccountKeys);
+	}
+
 	protected void addProductPurchase(Account account, String productKey)
 		throws Exception {
 
@@ -194,11 +248,122 @@ public class UpgradeProductPurchases extends UpgradeProcess {
 		return null;
 	}
 
+	private List<Product> _getEWSAProducts() throws Exception {
+		String[] productNames = ArrayUtil.append(
+			ProductConstants.NAMES_EWSA_AUTO_RENEW,
+			ProductConstants.NAMES_DXP_ADD_ON);
+
+		productNames = ArrayUtil.append(
+			productNames, ProductConstants.NAME_PORTAL_EWSA);
+
+		productNames = ArrayUtil.append(
+			productNames, ProductConstants.NAME_DESIGNATED_CONTACT_ADD_ON);
+
+		FilterQuery filterQuery = new FilterQuery();
+
+		for (String productName : productNames) {
+			filterQuery.addEquals(false, "name", productName);
+		}
+
+		return _productWebService.search(
+			StringPool.BLANK, filterQuery, 1, 100, StringPool.BLANK);
+	}
+
 	private Set<String> _getFamilyAccountKeys(
 			Account account, String salesforceProjectKey)
 		throws Exception {
 
 		Set<String> familyAccountKeys = new HashSet<>();
+
+		List<Account> siblingAccounts = _getSiblingAccounts(account);
+
+		for (Account siblingAccount : siblingAccounts) {
+			familyAccountKeys.add(siblingAccount.getKey());
+		}
+
+		List<Account> relatedAccounts = _getRelatedAccounts(
+			salesforceProjectKey);
+
+		for (Account relatedAccount : relatedAccounts) {
+			familyAccountKeys.add(relatedAccount.getKey());
+		}
+
+		return familyAccountKeys;
+	}
+
+	private List<ProductPurchase> _getOpportunityProductPurchases(
+		ProductPurchase[] productPurchases, String salesforceOpportunityKey) {
+
+		List<ProductPurchase> validProductPurchases = new ArrayList<>();
+
+		for (ProductPurchase productPurchase : productPurchases) {
+			if (productPurchase.getStatus() ==
+					ProductPurchase.Status.APPROVED) {
+
+				for (ExternalLink externalLink :
+						productPurchase.getExternalLinks()) {
+
+					String domain = externalLink.getDomain();
+					String entityId = externalLink.getEntityId();
+					String entityName = externalLink.getEntityName();
+
+					if (domain.equals(ExternalLinkDomain.SALESFORCE) &&
+						entityId.equals(salesforceOpportunityKey) &&
+						entityName.equals(
+							ExternalLinkEntityName.SALESFORCE_OPPORTUNITY)) {
+
+						validProductPurchases.add(productPurchase);
+					}
+				}
+			}
+		}
+
+		return validProductPurchases;
+	}
+
+	private List<ProductPurchaseView> _getProductPurchaseViews(
+			Account account, List<Product> products)
+		throws Exception {
+
+		FilterQuery filterQuery = new FilterQuery();
+
+		filterQuery.addEquals(true, "accountKey", account.getKey());
+
+		for (Product product : products) {
+			filterQuery.addEquals(false, "productKey", product.getKey());
+		}
+
+		filterQuery.addEquals(
+			true, "state", ProductPurchaseConstants.STATE_ACTIVE);
+
+		return _productPurchaseViewWebService.search(
+			StringPool.BLANK, filterQuery, 1, 100, StringPool.BLANK);
+	}
+
+	private List<Product> _getProducts(List<String> productNames)
+		throws Exception {
+
+		FilterQuery filterQuery = new FilterQuery();
+
+		for (String productName : productNames) {
+			filterQuery.addEquals(false, "name", productName);
+		}
+
+		return _productWebService.search(
+			StringPool.BLANK, filterQuery, 1, 100, StringPool.BLANK);
+	}
+
+	private List<Account> _getRelatedAccounts(String salesforceProjectKey)
+		throws Exception {
+
+		return _accountWebService.getAccounts(
+			ExternalLinkDomain.SALESFORCE,
+			ExternalLinkEntityName.RELATED_SALESFORCE_PROJECT,
+			salesforceProjectKey, 1, 1000);
+	}
+
+	private List<Account> _getSiblingAccounts(Account account)
+		throws Exception {
 
 		if (Validator.isNotNull(account.getParentAccountKey())) {
 			FilterQuery filterQuery = new FilterQuery();
@@ -206,24 +371,86 @@ public class UpgradeProductPurchases extends UpgradeProcess {
 			filterQuery.addEquals(
 				true, "parentAccountKey", account.getParentAccountKey());
 
-			List<Account> siblingAccounts = _accountWebService.search(
+			return _accountWebService.search(
 				StringPool.BLANK, filterQuery, 1, 1000, null);
+		}
 
-			for (Account siblingAccount : siblingAccounts) {
-				familyAccountKeys.add(siblingAccount.getKey());
+		return Collections.emptyList();
+	}
+
+	private void _updateProductConsumptions(
+			ProductConsumption[] productConsumptions, String productPurchaseKey)
+		throws Exception {
+
+		for (ProductConsumption productConsumption : productConsumptions) {
+			productConsumption.setProductPurchaseKey(productPurchaseKey);
+
+			_productConsumptionWebService.updateProductConsumption(
+				StringPool.BLANK, StringPool.BLANK, productConsumption.getKey(),
+				productConsumption);
+		}
+	}
+
+	private List<String> _updateProductPurchases(
+			List<Account> accounts, List<Product> products,
+			String salesforceOpportunityKey, List<String> updatedAccountKeys)
+		throws Exception {
+
+		for (Account account : accounts) {
+			if (updatedAccountKeys.contains(account.getKey())) {
+				continue;
+			}
+
+			List<ProductPurchaseView> productPurchaseViews =
+				_getProductPurchaseViews(account, products);
+
+			for (ProductPurchaseView productPurchaseView :
+					productPurchaseViews) {
+
+				List<ProductPurchase> productPurchases =
+					_getOpportunityProductPurchases(
+						productPurchaseView.getProductPurchases(),
+						salesforceOpportunityKey);
+
+				ProductConsumption[] productConsumptions =
+					productPurchaseView.getProductConsumptions();
+
+				if (!productPurchases.isEmpty()) {
+					ProductPurchase validProductPurchase =
+						productPurchases.remove(0);
+
+					_updateProductPurchases(productPurchases);
+
+					_updateProductConsumptions(
+						productConsumptions, validProductPurchase.getKey());
+				}
+			}
+
+			updatedAccountKeys.add(account.getKey());
+		}
+
+		return updatedAccountKeys;
+	}
+
+	private void _updateProductPurchases(
+		List<ProductPurchase> productPurchases) {
+
+		for (ProductPurchase productPurchase : productPurchases) {
+			productPurchase.setStatus(ProductPurchase.Status.CANCELLED);
+
+			try {
+				_productPurchaseWebService.updateProductPurchase(
+					StringPool.BLANK, StringPool.BLANK,
+					productPurchase.getKey(), productPurchase);
+			}
+			catch (Exception exception) {
+				if (_log.isInfoEnabled()) {
+					_log.info(
+						"Product Purchase with key " +
+							productPurchase.getKey() + " was not updated.");
+				}
 			}
 		}
-
-		List<Account> relatedAccounts = _accountWebService.getAccounts(
-			ExternalLinkDomain.SALESFORCE,
-			ExternalLinkEntityName.RELATED_SALESFORCE_PROJECT,
-			salesforceProjectKey, 1, 1000);
-
-		for (Account relatedAccount : relatedAccounts) {
-			familyAccountKeys.add(relatedAccount.getKey());
-		}
-
-		return familyAccountKeys;
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
@@ -233,6 +460,18 @@ public class UpgradeProductPurchases extends UpgradeProcess {
 	private AccountWebService _accountWebService;
 
 	@Reference
+	private AuditEntryWebService _auditEntryWebService;
+
+	@Reference
+	private ProductConsumptionWebService _productConsumptionWebService;
+
+	@Reference
+	private ProductPurchaseViewWebService _productPurchaseViewWebService;
+
+	@Reference
 	private ProductPurchaseWebService _productPurchaseWebService;
+
+	@Reference
+	private ProductWebService _productWebService;
 
 }
