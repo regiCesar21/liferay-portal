@@ -1,0 +1,73 @@
+{
+	"data": {
+		"forms": {
+			"assetMetrics": [
+				{
+					"abandonmentsMetric": {
+						"value": 5
+					},
+					"assetId": "5",
+					"assetTitle": "Form 5",
+					"completionTimeMetric": {
+						"value": 5
+					},
+					"submissionsMetric": {
+						"value": 5
+					},
+					"viewsMetric": {
+						"value": 10
+					}
+				},
+				{
+					"abandonmentsMetric": {
+						"value": 6
+					},
+					"assetId": "6",
+					"assetTitle": "Form 6",
+					"completionTimeMetric": {
+						"value": 6
+					},
+					"submissionsMetric": {
+						"value": 6
+					},
+					"viewsMetric": {
+						"value": 7
+					}
+				},
+				{
+					"abandonmentsMetric": {
+						"value": 7
+					},
+					"assetId": "7",
+					"assetTitle": "Form 7",
+					"completionTimeMetric": {
+						"value": 7
+					},
+					"submissionsMetric": {
+						"value": 7
+					},
+					"viewsMetric": {
+						"value": 4
+					}
+				},
+				{
+					"abandonmentsMetric": {
+						"value": 8
+					},
+					"assetId": "8",
+					"assetTitle": "Form 8",
+					"completionTimeMetric": {
+						"value": 8
+					},
+					"submissionsMetric": {
+						"value": 8
+					},
+					"viewsMetric": {
+						"value": 6
+					}
+				}
+			],
+			"total": 4
+		}
+	}
+}

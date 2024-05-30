@@ -1,0 +1,9 @@
+INSERT INTO Event (applicationId, assetId, assetTitle, canonicalUrl, channelId, eventDate, eventId, title, userId) VALUES ('Form', '1', 'Form Title 1', 'https://www.beryl.com/forms/form-1', 1, TIMESTAMP '${now-1h}', 'formViewed', 'Title 1', '1');
+INSERT INTO Event (applicationId, assetId, assetTitle, canonicalUrl, channelId, eventDate, eventId, title, userId) VALUES ('Form', '2', 'Form Title 2', 'https://www.beryl.com/forms/form-2', 1, TIMESTAMP '${now-2h}', 'formViewed', 'Title 2', '2');
+INSERT INTO Event (applicationId, assetId, assetTitle, canonicalUrl, channelId, eventDate, eventId, title, userId) VALUES ('Form', '3', 'Form Title 3', 'https://www.beryl.com/forms/form-3', 1, TIMESTAMP '${now-4h}', 'formViewed', 'Title 3', '3');
+INSERT INTO Event (applicationId, assetId, assetTitle, canonicalUrl, channelId, eventDate, eventId, title, userId) VALUES ('Form', '4', 'Form Title 4', 'https://www.beryl.com/forms/form-4', 1, TIMESTAMP '${now-6h}', 'formViewed', 'Title 4', '4');
+
+INSERT INTO FormDaily (abandonments, assetId, assetTitle, channelId, eventDate, finalizedFormViews, submissions, submissionsTime, userId, views) VALUES (15, '5', 'Form 5', 1, TIMESTAMP '${today-1d}', 3, 5, 5, '5', 10);
+INSERT INTO FormDaily (abandonments, assetId, assetTitle, channelId, eventDate, finalizedFormViews, submissions, submissionsTime, userId, views) VALUES (12, '6', 'Form 6', 1, TIMESTAMP '${today-3d}', 2, 6, 6, '6', 7);
+INSERT INTO FormDaily (abandonments, assetId, assetTitle, channelId, eventDate, finalizedFormViews, submissions, submissionsTime, userId, views) VALUES (21, '7', 'Form 7', 1, TIMESTAMP '${today-1d}', 3, 7, 7, '7', 4);
+INSERT INTO FormDaily (abandonments, assetId, assetTitle, channelId, eventDate, finalizedFormViews, submissions, submissionsTime, userId, views) VALUES (64, '8', 'Form 8', 1, TIMESTAMP '${today-4d}', 8, 8, 8, '8', 6);

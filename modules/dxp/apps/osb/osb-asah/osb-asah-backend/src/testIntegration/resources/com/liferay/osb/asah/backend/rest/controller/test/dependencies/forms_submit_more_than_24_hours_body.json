@@ -1,0 +1,16 @@
+{
+	"operationName": "FormsList",
+	"variables": {
+		"channelId": "1",
+		"keywords": "",
+		"rangeEnd": null,
+		"rangeKey": 30,
+		"rangeStart": null,
+		"size": 20,
+		"sort": {
+			"column": "submissionsMetric",
+			"type": "DESC"
+		},
+		"start": 0
+	}
+}
