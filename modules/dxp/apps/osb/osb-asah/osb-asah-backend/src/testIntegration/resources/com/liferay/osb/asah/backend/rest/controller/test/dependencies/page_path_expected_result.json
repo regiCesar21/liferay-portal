@@ -6,20 +6,20 @@
 			"followingPagePathNodes": [
 				{
 					"__typename": "PagePathNode",
+					"canonicalUrl": "https://www.computer.com/gui",
+					"title": "Graphical User Interface",
+					"views": 1
+				},
+				{
+					"__typename": "PagePathNode",
+					"canonicalUrl": "https://www.computer.com/files",
+					"title": "Computer File Systems",
+					"views": 1
+				},
+				{
+					"__typename": "PagePathNode",
 					"canonicalUrl": "https://www.computer.com/binary",
 					"title": "How Binary Encoding is Used in a Computer",
-					"views": 1
-				},
-				{
-					"__typename": "PagePathNode",
-					"canonicalUrl": "https://www.computer.com/decimal",
-					"title": "Encoding Decimal to Binary",
-					"views": 1
-				},
-				{
-					"__typename": "PagePathNode",
-					"canonicalUrl": "https://www.computer.com/encoding",
-					"title": "How Do Computers Talk?",
 					"views": 1
 				},
 				{
@@ -38,14 +38,14 @@
 			"previousPagePathNodes": [
 				{
 					"__typename": "PagePathNode",
-					"canonicalUrl": "https://www.computer.com/calculator",
-					"title": "Are Calculators Computers?",
+					"canonicalUrl": "https://www.computer.com/files",
+					"title": "Computer File Systems",
 					"views": 1
 				},
 				{
 					"__typename": "PagePathNode",
-					"canonicalUrl": "https://www.computer.com/decimal",
-					"title": "Encoding Decimal to Binary",
+					"canonicalUrl": "https://www.computer.com/gui",
+					"title": "Graphical User Interface",
 					"views": 1
 				},
 				{

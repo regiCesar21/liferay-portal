@@ -66,10 +66,10 @@ public class PagePathDogTest
 					"http://liferay.com/b", Boolean.FALSE, Boolean.FALSE,
 					"B - Liferay DXP", new BigDecimal(2)),
 				new AdjacentPageViewsMetric(
-					"http://liferay.com/c", Boolean.FALSE, Boolean.TRUE,
-					"C - Liferay DXP", BigDecimal.ONE),
-				new AdjacentPageViewsMetric(
 					"http://liferay.com/d", Boolean.FALSE, Boolean.FALSE,
+					"D - Liferay DXP", BigDecimal.ONE),
+				new AdjacentPageViewsMetric(
+					"http://liferay.com/d", Boolean.FALSE, Boolean.TRUE,
 					"D - Liferay DXP", BigDecimal.ONE),
 				new AdjacentPageViewsMetric(
 					"http://liferay.com/e", Boolean.FALSE, Boolean.TRUE,
@@ -89,32 +89,41 @@ public class PagePathDogTest
 	public void testGetAdjacentPagesViewsMetricCustomDateRange() {
 		_assertEquals(
 			SetUtil.of(
+				//
 				new AdjacentPageViewsMetric(
-					"https://www.computer.com/calculator", Boolean.FALSE,
-					Boolean.TRUE, "Are Calculators Computers?", BigDecimal.ONE),
+					"https://www.computer.com/files", Boolean.FALSE,
+					Boolean.TRUE, "Computer File Systems", BigDecimal.ONE),
+				//
 				new AdjacentPageViewsMetric(
-					"https://www.computer.com/decimal", Boolean.FALSE,
-					Boolean.TRUE, "Encoding Decimal to Binary", BigDecimal.ONE),
+					"https://www.computer.com/gui", Boolean.FALSE,
+					Boolean.TRUE, "Graphical User Interface", BigDecimal.ONE),
+				//
 				new AdjacentPageViewsMetric(
 					"https://www.computer.com/encoding", Boolean.FALSE,
 					Boolean.TRUE, "How Do Computers Talk?", BigDecimal.ONE),
+				//
 				new AdjacentPageViewsMetric(
 					"others", Boolean.TRUE, Boolean.TRUE, "others",
 					new BigDecimal(2)),
+				//
 				new AdjacentPageViewsMetric(
 					"direct", Boolean.TRUE, Boolean.TRUE, "direct",
 					BigDecimal.ONE),
+				//
 				new AdjacentPageViewsMetric(
 					"https://www.computer.com/binary", Boolean.FALSE,
 					Boolean.FALSE, "How Binary Encoding is Used in a Computer",
 					BigDecimal.ONE),
+				//
 				new AdjacentPageViewsMetric(
-					"https://www.computer.com/decimal", Boolean.FALSE,
-					Boolean.FALSE, "Encoding Decimal to Binary",
+					"https://www.computer.com/gui", Boolean.FALSE,
+					Boolean.FALSE, "Graphical User Interface",
 					BigDecimal.ONE),
+				//
 				new AdjacentPageViewsMetric(
-					"https://www.computer.com/encoding", Boolean.FALSE,
-					Boolean.FALSE, "How Do Computers Talk?", BigDecimal.ONE),
+					"https://www.computer.com/files", Boolean.FALSE,
+					Boolean.FALSE, "Computer File Systems", BigDecimal.ONE),
+				//
 				new AdjacentPageViewsMetric(
 					"others", Boolean.TRUE, Boolean.FALSE, "others",
 					new BigDecimal(2))),
@@ -137,7 +146,7 @@ public class PagePathDogTest
 					new BigDecimal(2)),
 				new AdjacentPageViewsMetric(
 					"https://www.computer.com/calculator", Boolean.FALSE,
-					Boolean.TRUE, "Are Calculators Computers?", BigDecimal.ONE),
+					Boolean.FALSE, "Try Our Online Calculator", BigDecimal.ONE),
 				new AdjacentPageViewsMetric(
 					"https://www.computer.com/decimal", Boolean.FALSE,
 					Boolean.TRUE, "Encoding Decimal to Binary", BigDecimal.ONE),
@@ -156,8 +165,8 @@ public class PagePathDogTest
 					Boolean.FALSE, "How Binary Encoding is Used in a Computer",
 					BigDecimal.ONE),
 				new AdjacentPageViewsMetric(
-					"https://www.computer.com/calculator", Boolean.FALSE,
-					Boolean.FALSE, "Try Our Online Calculator", BigDecimal.ONE),
+					"https://www.computer.com/encoding", Boolean.FALSE,
+					Boolean.TRUE, "How Do Computers Talk?", BigDecimal.ONE),
 				new AdjacentPageViewsMetric(
 					"others", Boolean.TRUE, Boolean.FALSE, "others",
 					new BigDecimal(3))),
@@ -194,9 +203,8 @@ public class PagePathDogTest
 					Boolean.FALSE, "Encoding Decimal to Binary",
 					new BigDecimal(2)),
 				new AdjacentPageViewsMetric(
-					"https://www.computer.com/binary", Boolean.FALSE,
-					Boolean.FALSE, "How Binary Encoding is Used in a Computer",
-					BigDecimal.ONE),
+					"https://www.computer.com/encoding", Boolean.FALSE,
+					Boolean.FALSE, "How Do Computers Talk?", BigDecimal.ONE),
 				new AdjacentPageViewsMetric(
 					"https://www.computer.com/calculator", Boolean.FALSE,
 					Boolean.FALSE, "Try Our Online Calculator", BigDecimal.ONE),
@@ -223,10 +231,10 @@ public class PagePathDogTest
 					Boolean.TRUE, "Are Calculators Computers?",
 					new BigDecimal(2)),
 				new AdjacentPageViewsMetric(
-					"https://www.computer.com/decimal", Boolean.FALSE,
-					Boolean.TRUE, "Encoding Decimal to Binary", BigDecimal.ONE),
+					"https://www.computer.com/encoding", Boolean.FALSE,
+					Boolean.TRUE, "How Do Computers Talk?", BigDecimal.ONE),
 				new AdjacentPageViewsMetric(
-					"others", Boolean.TRUE, Boolean.TRUE, "others",
+					"others", Boolean.TRUE, Boolean.FALSE, "others",
 					new BigDecimal(3)),
 				new AdjacentPageViewsMetric(
 					"direct", Boolean.TRUE, Boolean.TRUE, "direct",
@@ -278,12 +286,11 @@ public class PagePathDogTest
 					Boolean.FALSE, "Encoding Decimal to Binary",
 					new BigDecimal(3)),
 				new AdjacentPageViewsMetric(
+					"https://www.computer.com/calculator", Boolean.FALSE,
+					Boolean.FALSE, "Try Our Online Calculator", BigDecimal.ONE),
+				new AdjacentPageViewsMetric(
 					"https://www.computer.com/encoding", Boolean.FALSE,
 					Boolean.FALSE, "How Do Computers Talk?", new BigDecimal(2)),
-				new AdjacentPageViewsMetric(
-					"https://www.computer.com/binary", Boolean.FALSE,
-					Boolean.FALSE, "How Binary Encoding is Used in a Computer",
-					BigDecimal.ONE),
 				new AdjacentPageViewsMetric(
 					"others", Boolean.TRUE, Boolean.FALSE, "others",
 					new BigDecimal(3))),
@@ -302,9 +309,8 @@ public class PagePathDogTest
 					Boolean.TRUE, "How Binary Encoding is Used in a Computer",
 					new BigDecimal(2)),
 				new AdjacentPageViewsMetric(
-					"https://www.computer.com/calculator", Boolean.FALSE,
-					Boolean.TRUE, "Are Calculators Computers?",
-					new BigDecimal(2)),
+					"https://www.computer.com/encoding", Boolean.FALSE,
+					Boolean.TRUE, "How Do Computers Talk?", new BigDecimal(2)),
 				new AdjacentPageViewsMetric(
 					"https://www.computer.com/decimal", Boolean.FALSE,
 					Boolean.TRUE, "Encoding Decimal to Binary",
@@ -347,9 +353,8 @@ public class PagePathDogTest
 					Boolean.TRUE, "How Binary Encoding is Used in a Computer",
 					new BigDecimal(2)),
 				new AdjacentPageViewsMetric(
-					"https://www.computer.com/calculator", Boolean.FALSE,
-					Boolean.TRUE, "Are Calculators Computers?",
-					new BigDecimal(2)),
+					"https://www.computer.com/encoding", Boolean.FALSE,
+					Boolean.TRUE, "How Do Computers Talk?", new BigDecimal(2)),
 				new AdjacentPageViewsMetric(
 					"others", Boolean.TRUE, Boolean.TRUE, "others",
 					new BigDecimal(6)),
@@ -385,28 +390,34 @@ public class PagePathDogTest
 		_assertEquals(
 			SetUtil.of(
 				new AdjacentPageViewsMetric(
-					"https://www.computer.com/calculator", Boolean.FALSE,
-					Boolean.TRUE, "Are Calculators Computers?", BigDecimal.ONE),
+					"https://www.computer.com/files", Boolean.FALSE,
+					Boolean.TRUE, "Computer File Systems", BigDecimal.ONE),
 				new AdjacentPageViewsMetric(
-					"https://www.computer.com/decimal", Boolean.FALSE,
-					Boolean.TRUE, "Encoding Decimal to Binary", BigDecimal.ONE),
+					"https://www.computer.com/gui", Boolean.FALSE,
+					Boolean.TRUE, "Graphical User Interface", BigDecimal.ONE),
+				//
 				new AdjacentPageViewsMetric(
 					"https://www.computer.com/encoding", Boolean.FALSE,
 					Boolean.TRUE, "How Do Computers Talk?", BigDecimal.ONE),
+				//
 				new AdjacentPageViewsMetric(
 					"others", Boolean.TRUE, Boolean.TRUE, "others",
 					new BigDecimal(2)),
+				//
 				new AdjacentPageViewsMetric(
 					"https://www.computer.com/binary", Boolean.FALSE,
 					Boolean.FALSE, "How Binary Encoding is Used in a Computer",
 					BigDecimal.ONE),
+				//
 				new AdjacentPageViewsMetric(
-					"https://www.computer.com/decimal", Boolean.FALSE,
-					Boolean.FALSE, "Encoding Decimal to Binary",
+					"https://www.computer.com/files", Boolean.FALSE,
+					Boolean.FALSE, "Computer File Systems",
 					BigDecimal.ONE),
+				//
 				new AdjacentPageViewsMetric(
-					"https://www.computer.com/encoding", Boolean.FALSE,
-					Boolean.FALSE, "How Do Computers Talk?", BigDecimal.ONE),
+					"https://www.computer.com/gui", Boolean.FALSE,
+					Boolean.FALSE, "Graphical User Interface", BigDecimal.ONE),
+				//
 				new AdjacentPageViewsMetric(
 					"others", Boolean.TRUE, Boolean.FALSE, "others",
 					new BigDecimal(2))),
@@ -426,11 +437,11 @@ public class PagePathDogTest
 		_assertEquals(
 			SetUtil.of(
 				new AdjacentPageViewsMetric(
-					"https://www.computer.com/calculator", Boolean.FALSE,
-					Boolean.TRUE, "Are Calculators Computers?", BigDecimal.ONE),
+					"https://www.computer.com/files", Boolean.FALSE,
+					Boolean.TRUE, "Computer File Systems", BigDecimal.ONE),
 				new AdjacentPageViewsMetric(
-					"https://www.computer.com/decimal", Boolean.FALSE,
-					Boolean.TRUE, "Encoding Decimal to Binary", BigDecimal.ONE),
+					"https://www.computer.com/gui", Boolean.FALSE, Boolean.TRUE,
+					"Graphical User Interface", BigDecimal.ONE),
 				new AdjacentPageViewsMetric(
 					"https://www.computer.com/encoding", Boolean.FALSE,
 					Boolean.TRUE, "How Do Computers Talk?", BigDecimal.ONE),
@@ -463,12 +474,11 @@ public class PagePathDogTest
 					Boolean.FALSE, "How Binary Encoding is Used in a Computer",
 					BigDecimal.ONE),
 				new AdjacentPageViewsMetric(
-					"https://www.computer.com/decimal", Boolean.FALSE,
-					Boolean.FALSE, "Encoding Decimal to Binary",
-					BigDecimal.ONE),
+					"https://www.computer.com/files", Boolean.FALSE,
+					Boolean.FALSE, "Computer File Systems", BigDecimal.ONE),
 				new AdjacentPageViewsMetric(
-					"https://www.computer.com/encoding", Boolean.FALSE,
-					Boolean.FALSE, "How Do Computers Talk?", BigDecimal.ONE),
+					"https://www.computer.com/gui", Boolean.FALSE,
+					Boolean.FALSE, "Graphical User Interface", BigDecimal.ONE),
 				new AdjacentPageViewsMetric(
 					"others", Boolean.TRUE, Boolean.FALSE, "others",
 					new BigDecimal(2))),
@@ -501,20 +511,24 @@ public class PagePathDogTest
 		_assertEquals(
 			SetUtil.of(
 				new AdjacentPageViewsMetric(
-					"https://www.computer.com/calculator", Boolean.FALSE,
-					Boolean.TRUE, "Are Calculators Computers?", BigDecimal.ONE),
+					"https://www.computer.com/files", Boolean.FALSE,
+					Boolean.TRUE, "Computer File Systems", BigDecimal.ONE),
 				new AdjacentPageViewsMetric(
-					"https://www.computer.com/decimal", Boolean.FALSE,
-					Boolean.TRUE, "Encoding Decimal to Binary", BigDecimal.ONE),
+					"https://www.computer.com/gui", Boolean.FALSE,
+					Boolean.TRUE, "Graphical User Interface", BigDecimal.ONE),
+				//
 				new AdjacentPageViewsMetric(
 					"https://www.computer.com/encoding", Boolean.FALSE,
 					Boolean.TRUE, "How Do Computers Talk?", BigDecimal.ONE),
+				//
 				new AdjacentPageViewsMetric(
 					"others", Boolean.TRUE, Boolean.TRUE, "others",
 					new BigDecimal(2)),
+				//
 				new AdjacentPageViewsMetric(
 					"direct", Boolean.TRUE, Boolean.TRUE, "direct",
 					BigDecimal.ONE),
+				//
 				new AdjacentPageViewsMetric(
 					"https://www.computer.com/decimal", Boolean.FALSE,
 					Boolean.FALSE, "Encoding Decimal to Binary",
@@ -535,20 +549,19 @@ public class PagePathDogTest
 		_assertEquals(
 			SetUtil.of(
 				new AdjacentPageViewsMetric(
-					"https://www.computer.com/calculator", Boolean.FALSE,
-					Boolean.TRUE, "Are Calculators Computers?",
-					new BigDecimal(6)),
-				new AdjacentPageViewsMetric(
 					"https://www.computer.com/binary", Boolean.FALSE,
 					Boolean.FALSE, "How Binary Encoding is Used in a Computer",
 					BigDecimal.ONE),
 				new AdjacentPageViewsMetric(
-					"https://www.computer.com/decimal", Boolean.FALSE,
-					Boolean.FALSE, "Encoding Decimal to Binary",
-					BigDecimal.ONE),
+					"https://www.computer.com/files", Boolean.FALSE,
+					Boolean.FALSE, "Computer File Systems", BigDecimal.ONE),
 				new AdjacentPageViewsMetric(
-					"https://www.computer.com/encoding", Boolean.FALSE,
-					Boolean.FALSE, "How Do Computers Talk?", BigDecimal.ONE),
+					"https://www.computer.com/gui", Boolean.FALSE,
+					Boolean.FALSE, "Graphical User Interface", BigDecimal.ONE),
+				new AdjacentPageViewsMetric(
+					"https://www.computer.com/calculator", Boolean.FALSE,
+					Boolean.TRUE, "Are Calculators Computers?",
+					new BigDecimal(6)),
 				new AdjacentPageViewsMetric(
 					"others", Boolean.TRUE, Boolean.FALSE, "others",
 					new BigDecimal(2))),
@@ -568,19 +581,8 @@ public class PagePathDogTest
 		_assertEquals(
 			SetUtil.of(
 				new AdjacentPageViewsMetric(
-					"https://www.computer.com/calculator", Boolean.FALSE,
-					Boolean.TRUE, "Are Calculators Computers?", BigDecimal.ONE),
-				new AdjacentPageViewsMetric(
-					"https://www.computer.com/decimal", Boolean.FALSE,
-					Boolean.TRUE, "Encoding Decimal to Binary", BigDecimal.ONE),
-				new AdjacentPageViewsMetric(
-					"https://www.computer.com/encoding", Boolean.FALSE,
-					Boolean.TRUE, "How Do Computers Talk?", BigDecimal.ONE),
-				new AdjacentPageViewsMetric(
-					"others", Boolean.TRUE, Boolean.TRUE, "others",
-					new BigDecimal(2)),
-				new AdjacentPageViewsMetric(
-					"direct", Boolean.TRUE, Boolean.TRUE, "direct",
+					"https://www.computer.com/binary", Boolean.FALSE,
+					Boolean.FALSE, "How Binary Encoding is Used in a Computer",
 					BigDecimal.ONE),
 				new AdjacentPageViewsMetric(
 					"https://www.computer.com/files", Boolean.FALSE,
@@ -590,9 +592,20 @@ public class PagePathDogTest
 					Boolean.FALSE, "Graphical User Interface",
 					new BigDecimal(2)),
 				new AdjacentPageViewsMetric(
-					"https://www.computer.com/binary", Boolean.FALSE,
-					Boolean.FALSE, "How Binary Encoding is Used in a Computer",
-					BigDecimal.ONE)),
+					"https://www.computer.com/encoding", Boolean.FALSE,
+					Boolean.TRUE, "How Do Computers Talk?", BigDecimal.ONE),
+				new AdjacentPageViewsMetric(
+					"https://www.computer.com/files", Boolean.FALSE,
+					Boolean.TRUE, "Computer File Systems", BigDecimal.ONE),
+				new AdjacentPageViewsMetric(
+					"https://www.computer.com/gui", Boolean.FALSE, Boolean.TRUE,
+					"Graphical User Interface", BigDecimal.ONE),
+				new AdjacentPageViewsMetric(
+					"direct", Boolean.TRUE, Boolean.TRUE, "direct",
+					BigDecimal.ONE),
+				new AdjacentPageViewsMetric(
+					"others", Boolean.TRUE, Boolean.TRUE, "others",
+					new BigDecimal(2))),
 			_pagePathDog.getAdjacentPagesViewsMetric(
 				"https://www.computer.com/abacus", 12345L, null,
 				TimeRange.of(
@@ -619,16 +632,15 @@ public class PagePathDogTest
 					"https://www.computer.com/encoding", Boolean.FALSE,
 					Boolean.TRUE, "How Do Computers Talk?", BigDecimal.ONE),
 				new AdjacentPageViewsMetric(
+					"https://www.computer.com/files", Boolean.FALSE,
+					Boolean.FALSE, "Computer File Systems", BigDecimal.ONE),
+				new AdjacentPageViewsMetric(
+					"https://www.computer.com/gui", Boolean.FALSE,
+					Boolean.FALSE, "Graphical User Interface", BigDecimal.ONE),
+				new AdjacentPageViewsMetric(
 					"https://www.computer.com/binary", Boolean.FALSE,
 					Boolean.FALSE, "How Binary Encoding is Used in a Computer",
 					BigDecimal.ONE),
-				new AdjacentPageViewsMetric(
-					"https://www.computer.com/decimal", Boolean.FALSE,
-					Boolean.FALSE, "Encoding Decimal to Binary",
-					BigDecimal.ONE),
-				new AdjacentPageViewsMetric(
-					"https://www.computer.com/encoding", Boolean.FALSE,
-					Boolean.FALSE, "How Do Computers Talk?", BigDecimal.ONE),
 				new AdjacentPageViewsMetric(
 					"others", Boolean.TRUE, Boolean.FALSE, "others",
 					new BigDecimal(2))),
@@ -740,33 +752,32 @@ public class PagePathDogTest
 		_assertEquals(
 			SetUtil.of(
 				new AdjacentPageViewsMetric(
-					"https://www.computer.com/calculator", Boolean.FALSE,
-					Boolean.TRUE, "Are Calculators Computers?", BigDecimal.ONE),
+					"https://www.computer.com/binary", Boolean.FALSE,
+					Boolean.FALSE, "How Binary Encoding is Used in a Computer",
+					BigDecimal.ONE),
 				new AdjacentPageViewsMetric(
-					"https://www.computer.com/decimal", Boolean.FALSE,
-					Boolean.TRUE, "Encoding Decimal to Binary", BigDecimal.ONE),
+					"https://www.computer.com/files", Boolean.FALSE,
+					Boolean.FALSE, "Computer File Systems", BigDecimal.ONE),
+				new AdjacentPageViewsMetric(
+					"https://www.computer.com/gui", Boolean.FALSE,
+					Boolean.FALSE, "Graphical User Interface", BigDecimal.ONE),
 				new AdjacentPageViewsMetric(
 					"https://www.computer.com/encoding", Boolean.FALSE,
 					Boolean.TRUE, "How Do Computers Talk?", BigDecimal.ONE),
 				new AdjacentPageViewsMetric(
-					"others", Boolean.TRUE, Boolean.TRUE, "others",
+					"https://www.computer.com/files", Boolean.FALSE,
+					Boolean.TRUE, "Computer File Systems", BigDecimal.ONE),
+				new AdjacentPageViewsMetric(
+					"https://www.computer.com/gui", Boolean.FALSE, Boolean.TRUE,
+					"Graphical User Interface", BigDecimal.ONE),
+				new AdjacentPageViewsMetric(
+					"others", Boolean.TRUE, Boolean.FALSE, "others",
 					new BigDecimal(2)),
 				new AdjacentPageViewsMetric(
 					"direct", Boolean.TRUE, Boolean.TRUE, "direct",
 					BigDecimal.ONE),
 				new AdjacentPageViewsMetric(
-					"https://www.computer.com/binary", Boolean.FALSE,
-					Boolean.FALSE, "How Binary Encoding is Used in a Computer",
-					BigDecimal.ONE),
-				new AdjacentPageViewsMetric(
-					"https://www.computer.com/decimal", Boolean.FALSE,
-					Boolean.FALSE, "Encoding Decimal to Binary",
-					BigDecimal.ONE),
-				new AdjacentPageViewsMetric(
-					"https://www.computer.com/encoding", Boolean.FALSE,
-					Boolean.FALSE, "How Do Computers Talk?", BigDecimal.ONE),
-				new AdjacentPageViewsMetric(
-					"others", Boolean.TRUE, Boolean.FALSE, "others",
+					"others", Boolean.TRUE, Boolean.TRUE, "others",
 					new BigDecimal(2))),
 			_pagePathDog.getAdjacentPagesViewsMetric(
 				"https://www.computer.com/abacus", 12345L, null,
