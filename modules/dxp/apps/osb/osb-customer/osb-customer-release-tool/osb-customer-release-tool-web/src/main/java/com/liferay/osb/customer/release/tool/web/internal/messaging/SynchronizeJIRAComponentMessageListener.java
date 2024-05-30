@@ -20,6 +20,7 @@ import com.liferay.portal.kernel.scheduler.TimeUnit;
 import com.liferay.portal.kernel.scheduler.Trigger;
 import com.liferay.portal.kernel.scheduler.TriggerFactory;
 import com.liferay.portal.kernel.util.ListUtil;
+import com.liferay.portal.kernel.util.StringUtil;
 
 import java.util.List;
 import java.util.Map;
@@ -80,7 +81,10 @@ public class SynchronizeJIRAComponentMessageListener
 			JSONObject jsonObject = jsonArray.getJSONObject(i);
 
 			long jiraComponentRemoteId = jsonObject.getLong("id");
+
 			String name = jsonObject.getString("name");
+
+			name = StringUtil.shorten(name, 75);
 
 			JIRAComponent jiraComponent =
 				_jiraComponentLocalService.updateJIRAComponent(
