@@ -27,22 +27,32 @@ AUI.add(
 
 						var container = instance.fetchContainer();
 
-						if (!instance._formGroupNode) {
-							instance._formGroupNode = container.one('.form-group');
-						}
+						let formGroupNode;
 
-						var formGroupNode = instance._formGroupNode;
+						if (instance._isEdgeBrowser()) {
+							if (!instance._formGroupNode) {
+								instance._formGroupNode = container.one('.form-group');
+							}
 
-						if (formGroupNode.hasChildNodes()) {
-							instance._formGroupNodeChildren = A.NodeList.create();
+							formGroupNode = instance._formGroupNode;
 
-							var formGroupNodeChildren = formGroupNode.get('children');
+							if (formGroupNode.hasChildNodes()) {
+								instance._formGroupNodeChildren = A.NodeList.create();
 
-							formGroupNodeChildren.each(
-								function(item, index) {
-									instance._formGroupNodeChildren.push(item.cloneNode(true));
-								}
-							);
+								var formGroupNodeChildren = formGroupNode.get('children');
+
+								formGroupNodeChildren.each(
+									function(item, index) {
+										instance._formGroupNodeChildren.push(item.cloneNode(true));
+									}
+								);
+							}
+						} else {
+							if (!instance._formGroupNode) {
+								instance._formGroupNode = container.one('.form-group').clone();
+							}
+
+							formGroupNode = instance._formGroupNode;
 						}
 
 						var fieldName = formGroupNode.attr('data-fieldname');
@@ -69,8 +79,10 @@ AUI.add(
 
 						var formGroupNode = instance._formGroupNode;
 
-						if (!formGroupNode.hasChildNodes()) {
-							formGroupNode.setHTML(instance._formGroupNodeChildren);
+						if (instance._isEdgeBrowser()) {
+							if (!formGroupNode.hasChildNodes()) {
+								formGroupNode.setHTML(instance._formGroupNodeChildren);
+							}
 						}
 
 						formGroupNode.appendTo(container);
@@ -82,6 +94,12 @@ AUI.add(
 						var instance = this;
 
 						return instance._valueContainer().html();
+					},
+
+					_isEdgeBrowser: function() {
+						const userAgent = navigator.userAgent;
+
+						return userAgent.includes('Edg');
 					},
 
 					_onClickRefresh: function() {
