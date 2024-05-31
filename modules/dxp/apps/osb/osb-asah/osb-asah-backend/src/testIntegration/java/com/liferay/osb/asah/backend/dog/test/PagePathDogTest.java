@@ -89,41 +89,31 @@ public class PagePathDogTest
 	public void testGetAdjacentPagesViewsMetricCustomDateRange() {
 		_assertEquals(
 			SetUtil.of(
-				//
 				new AdjacentPageViewsMetric(
 					"https://www.computer.com/files", Boolean.FALSE,
 					Boolean.TRUE, "Computer File Systems", BigDecimal.ONE),
-				//
 				new AdjacentPageViewsMetric(
-					"https://www.computer.com/gui", Boolean.FALSE,
-					Boolean.TRUE, "Graphical User Interface", BigDecimal.ONE),
-				//
+					"https://www.computer.com/gui", Boolean.FALSE, Boolean.TRUE,
+					"Graphical User Interface", BigDecimal.ONE),
 				new AdjacentPageViewsMetric(
 					"https://www.computer.com/encoding", Boolean.FALSE,
 					Boolean.TRUE, "How Do Computers Talk?", BigDecimal.ONE),
-				//
 				new AdjacentPageViewsMetric(
 					"others", Boolean.TRUE, Boolean.TRUE, "others",
 					new BigDecimal(2)),
-				//
 				new AdjacentPageViewsMetric(
 					"direct", Boolean.TRUE, Boolean.TRUE, "direct",
 					BigDecimal.ONE),
-				//
 				new AdjacentPageViewsMetric(
 					"https://www.computer.com/binary", Boolean.FALSE,
 					Boolean.FALSE, "How Binary Encoding is Used in a Computer",
 					BigDecimal.ONE),
-				//
 				new AdjacentPageViewsMetric(
 					"https://www.computer.com/gui", Boolean.FALSE,
-					Boolean.FALSE, "Graphical User Interface",
-					BigDecimal.ONE),
-				//
+					Boolean.FALSE, "Graphical User Interface", BigDecimal.ONE),
 				new AdjacentPageViewsMetric(
 					"https://www.computer.com/files", Boolean.FALSE,
 					Boolean.FALSE, "Computer File Systems", BigDecimal.ONE),
-				//
 				new AdjacentPageViewsMetric(
 					"others", Boolean.TRUE, Boolean.FALSE, "others",
 					new BigDecimal(2))),
@@ -393,31 +383,24 @@ public class PagePathDogTest
 					"https://www.computer.com/files", Boolean.FALSE,
 					Boolean.TRUE, "Computer File Systems", BigDecimal.ONE),
 				new AdjacentPageViewsMetric(
-					"https://www.computer.com/gui", Boolean.FALSE,
-					Boolean.TRUE, "Graphical User Interface", BigDecimal.ONE),
-				//
+					"https://www.computer.com/gui", Boolean.FALSE, Boolean.TRUE,
+					"Graphical User Interface", BigDecimal.ONE),
 				new AdjacentPageViewsMetric(
 					"https://www.computer.com/encoding", Boolean.FALSE,
 					Boolean.TRUE, "How Do Computers Talk?", BigDecimal.ONE),
-				//
 				new AdjacentPageViewsMetric(
 					"others", Boolean.TRUE, Boolean.TRUE, "others",
 					new BigDecimal(2)),
-				//
 				new AdjacentPageViewsMetric(
 					"https://www.computer.com/binary", Boolean.FALSE,
 					Boolean.FALSE, "How Binary Encoding is Used in a Computer",
 					BigDecimal.ONE),
-				//
 				new AdjacentPageViewsMetric(
 					"https://www.computer.com/files", Boolean.FALSE,
-					Boolean.FALSE, "Computer File Systems",
-					BigDecimal.ONE),
-				//
+					Boolean.FALSE, "Computer File Systems", BigDecimal.ONE),
 				new AdjacentPageViewsMetric(
 					"https://www.computer.com/gui", Boolean.FALSE,
 					Boolean.FALSE, "Graphical User Interface", BigDecimal.ONE),
-				//
 				new AdjacentPageViewsMetric(
 					"others", Boolean.TRUE, Boolean.FALSE, "others",
 					new BigDecimal(2))),
@@ -514,21 +497,17 @@ public class PagePathDogTest
 					"https://www.computer.com/files", Boolean.FALSE,
 					Boolean.TRUE, "Computer File Systems", BigDecimal.ONE),
 				new AdjacentPageViewsMetric(
-					"https://www.computer.com/gui", Boolean.FALSE,
-					Boolean.TRUE, "Graphical User Interface", BigDecimal.ONE),
-				//
+					"https://www.computer.com/gui", Boolean.FALSE, Boolean.TRUE,
+					"Graphical User Interface", BigDecimal.ONE),
 				new AdjacentPageViewsMetric(
 					"https://www.computer.com/encoding", Boolean.FALSE,
 					Boolean.TRUE, "How Do Computers Talk?", BigDecimal.ONE),
-				//
 				new AdjacentPageViewsMetric(
 					"others", Boolean.TRUE, Boolean.TRUE, "others",
 					new BigDecimal(2)),
-				//
 				new AdjacentPageViewsMetric(
 					"direct", Boolean.TRUE, Boolean.TRUE, "direct",
 					BigDecimal.ONE),
-				//
 				new AdjacentPageViewsMetric(
 					"https://www.computer.com/decimal", Boolean.FALSE,
 					Boolean.FALSE, "Encoding Decimal to Binary",
