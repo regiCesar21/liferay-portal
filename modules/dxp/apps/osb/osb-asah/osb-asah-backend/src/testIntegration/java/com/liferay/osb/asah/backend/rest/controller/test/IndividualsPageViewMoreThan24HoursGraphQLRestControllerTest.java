@@ -23,7 +23,7 @@ public class IndividualsPageViewMoreThan24HoursGraphQLRestControllerTest
 
 	@Override
 	public String getExpectedResultPath() {
-		return "individuals_page_view_more_than_24_hoursexpected_result.json";
+		return "individuals_page_view_more_than_24_hours_expected_result.json";
 	}
 
 	@Override
