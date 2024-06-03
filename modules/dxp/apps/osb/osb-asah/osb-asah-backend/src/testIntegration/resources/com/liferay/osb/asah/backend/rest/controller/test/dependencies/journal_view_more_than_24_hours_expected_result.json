@@ -1,0 +1,37 @@
+{
+	"data": {
+		"journals": {
+			"assetMetrics": [
+				{
+					"assetId": "5",
+					"assetTitle": "Journal 5",
+					"viewsMetric": {
+						"value": 5
+					}
+				},
+				{
+					"assetId": "6",
+					"assetTitle": "Journal 6",
+					"viewsMetric": {
+						"value": 6
+					}
+				},
+				{
+					"assetId": "7",
+					"assetTitle": "Journal 7",
+					"viewsMetric": {
+						"value": 7
+					}
+				},
+				{
+					"assetId": "8",
+					"assetTitle": "Journal 8",
+					"viewsMetric": {
+						"value": 8
+					}
+				}
+			],
+			"total": 4
+		}
+	}
+}
