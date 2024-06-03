@@ -92,6 +92,12 @@ public abstract class BaseAssetMetricRepository<T extends AssetMetric>
 		Map<String, BiConsumer<T, Metric>> assetMetricSetters =
 			getAssetMetricSetters();
 
+		Condition condition = DSL.noCondition();
+
+		for (Field field : metricFields) {
+			condition = condition.or(field.gt(DSL.value(0)));
+		}
+
 		return queryExecutor.queryForList(
 			recordMap -> {
 				T assetMetric = createAssetMetric();
@@ -130,6 +136,8 @@ public abstract class BaseAssetMetricRepository<T extends AssetMetric>
 					assetId, assetTitle, channelId, timeRange)
 			).groupBy(
 				canonicalUrlField, pageTitleField
+			).having(
+				condition
 			).orderBy(
 				metricFields.get(
 					0
