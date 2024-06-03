@@ -25,9 +25,9 @@ boolean hasUpdateLayoutPermission = GetterUtil.getBoolean(request.getAttribute(C
 							"portletNamespace", portletNamespace
 						).build()
 					%>'
+					aria-label='<%= LanguageUtil.get(request, "close") %>'
 					cssClass="close"
 					displayType="unstyled"
-					aria-label='<%= LanguageUtil.get(request, "close") %>'
 					icon="times"
 					propsTransformer="js/CustomizationButtonPropsTransformer"
 					small="<%= true %>"

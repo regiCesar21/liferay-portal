@@ -22,9 +22,9 @@ String portletNamespace = PortalUtil.getPortletNamespace(LayoutAdminPortletKeys.
 			aria-label='<%= LanguageUtil.get(request, "this-page-can-be-customized") %>'
 			data-qa-id="customizations"
 			displayType="unstyled"
-			monospaced="<%= true %>"
 			icon="pencil"
 			id='<%= portletNamespace + "customizationButton" %>'
+			monospaced="<%= true %>"
 			propsTransformer="js/CustomizationButtonPropsTransformer"
 			small="<%= true %>"
 			title='<%= LanguageUtil.get(request, "this-page-can-be-customized") %>'
