@@ -1,4 +1,5 @@
-INSERT INTO DocumentLibraryDaily (assetId, canonicalUrl, channelId, eventDate, previews) VALUES ('e131fabc', 'https://www.beryl.com/products/commercial/irrigation/FF-2100', 1, DATETIME_TRUNC(timestamp '${now-5d}', HOUR), 1);
-INSERT INTO DocumentLibraryDaily (assetId, canonicalUrl, channelId, eventDate, previews) VALUES ('e131fabc', 'https://should.not.return.com', 1, DATETIME_TRUNC(timestamp '${now-8d}', HOUR), 1);
-INSERT INTO DocumentLibraryDaily (assetId, canonicalUrl, channelId, eventDate, previews) VALUES ('e131fabc', 'https://www.beryl.com/products/commercial/irrigation', 1, DATETIME_TRUNC(timestamp '${today-4d}', HOUR), 1);
-INSERT INTO DocumentLibraryDaily (assetId, canonicalUrl, channelId, eventDate, previews) VALUES ('e131fabc', 'https://www.beryl.com/delivery', 1, DATETIME_TRUNC(timestamp '${today-6d}', HOUR), 1);
+INSERT INTO DocumentLibraryDaily (assetId, canonicalUrl, channelId, downloads, eventDate, previews) VALUES ('e131fabc', 'https://www.beryl.com/products/commercial/irrigation/FF-2100', 1, 1, DATETIME_TRUNC(timestamp '${now-5d}', HOUR), 1);
+INSERT INTO DocumentLibraryDaily (assetId, canonicalUrl, channelId, downloads, eventDate, previews) VALUES ('e131fabc', 'https://should.not.return.com', 1, 0, DATETIME_TRUNC(timestamp '${now-8d}', HOUR), 1);
+INSERT INTO DocumentLibraryDaily (assetId, canonicalUrl, channelId, downloads, eventDate, previews) VALUES ('e131fabc', 'https://www.beryl.com/products/commercial/irrigation', 1, 0, DATETIME_TRUNC(timestamp '${today-4d}', HOUR), 1);
+INSERT INTO DocumentLibraryDaily (assetId, canonicalUrl, channelId, downloads, eventDate, previews) VALUES ('e131fabc', 'https://www.beryl.com/delivery', 1, 0, DATETIME_TRUNC(timestamp '${today-6d}', HOUR), 1);
+INSERT INTO DocumentLibraryDaily (assetId, canonicalUrl, channelId, downloads, eventDate, previews) VALUES ('e131fabc', 'https://should.not.return2.com', 1, 0, DATETIME_TRUNC(timestamp '${now-8d}', HOUR), 0);

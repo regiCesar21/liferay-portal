@@ -39,7 +39,7 @@ public class BlogAssetMetricRepositoryTest
 	@Test
 	public void testGetAppearsOnMetricLast7Days() {
 		super.assertAppearsOnMetric(
-			BlogMetricType.VIEWS, TimeRange.LAST_7_DAYS);
+			Collections.singleton(BlogMetricType.VIEWS), TimeRange.LAST_7_DAYS);
 	}
 
 	@BQSQLResource(resourcePath = "blog_asset_metric_audience_report.sql")

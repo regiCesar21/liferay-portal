@@ -39,7 +39,10 @@ public class DocumentLibraryAssetMetricRepositoryTest
 	@Test
 	public void testGetAppearsOnMetricLast7Days() {
 		super.assertAppearsOnMetric(
-			DocumentLibraryMetricType.DOWNLOADS, TimeRange.LAST_7_DAYS);
+			SetUtil.of(
+				DocumentLibraryMetricType.DOWNLOADS,
+				DocumentLibraryMetricType.PREVIEWS),
+			TimeRange.LAST_7_DAYS);
 	}
 
 	@BQSQLResource(

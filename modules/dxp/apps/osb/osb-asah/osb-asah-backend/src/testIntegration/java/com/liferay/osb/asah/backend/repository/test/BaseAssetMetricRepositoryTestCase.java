@@ -25,7 +25,6 @@ import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.time.ZoneOffset;
 
-import java.util.Collections;
 import java.util.List;
 import java.util.Set;
 import java.util.function.Function;
@@ -81,14 +80,14 @@ public abstract class BaseAssetMetricRepositoryTestCase<T extends AssetMetric>
 	}
 
 	protected void assertAppearsOnMetric(
-		MetricType metricType, TimeRange timeRange) {
+		Set<MetricType> metricTypes, TimeRange timeRange) {
 
 		AssetMetricRepository<T> assetMetricRepository =
 			getAssetMetricRepository();
 
 		List<T> appearsOnMetrics = assetMetricRepository.getAppearsOnMetrics(
-			"e131fabc", null, 1L, Collections.singleton(metricType),
-			PageRequest.of(0, 10), timeRange);
+			"e131fabc", null, 1L, metricTypes, PageRequest.of(0, 10),
+			timeRange);
 
 		Stream<T> stream = appearsOnMetrics.stream();
 

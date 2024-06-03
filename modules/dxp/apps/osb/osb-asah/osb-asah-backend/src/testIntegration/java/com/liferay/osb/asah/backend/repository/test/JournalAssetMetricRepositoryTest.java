@@ -39,7 +39,8 @@ public class JournalAssetMetricRepositoryTest
 	@Test
 	public void testGetAppearsOnMetricLast7Days() {
 		super.assertAppearsOnMetric(
-			JournalMetricType.VIEWS, TimeRange.LAST_7_DAYS);
+			Collections.singleton(JournalMetricType.VIEWS),
+			TimeRange.LAST_7_DAYS);
 	}
 
 	@BQSQLResource(resourcePath = "journal_asset_metric_audience_report.sql")

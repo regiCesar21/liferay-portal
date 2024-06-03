@@ -39,7 +39,8 @@ public class FormAssetMetricRepositoryTest
 	@Test
 	public void testGetAppearsOnMetricLast7Days() {
 		super.assertAppearsOnMetric(
-			FormMetricType.SUBMISSIONS, TimeRange.LAST_7_DAYS);
+			Collections.singleton(FormMetricType.SUBMISSIONS),
+			TimeRange.LAST_7_DAYS);
 	}
 
 	@BQSQLResource(resourcePath = "form_asset_metric_audience_report.sql")
