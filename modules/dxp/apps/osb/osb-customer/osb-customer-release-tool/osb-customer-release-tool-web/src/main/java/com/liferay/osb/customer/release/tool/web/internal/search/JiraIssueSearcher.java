@@ -11,7 +11,6 @@ import com.liferay.asset.kernel.service.AssetCategoryPropertyLocalService;
 import com.liferay.osb.customer.jira.rest.connector.configuration.JIRARESTConnectorConfigurationValues;
 import com.liferay.osb.customer.jira.rest.connector.service.JIRAIssueRESTService;
 import com.liferay.osb.customer.release.tool.configuration.ReleaseToolConfigurationValues;
-import com.liferay.osb.customer.release.tool.util.comparator.AssetCategoryPropertyComparator;
 import com.liferay.osb.customer.release.tool.web.internal.constants.ProductConstants;
 import com.liferay.osb.customer.release.tool.web.internal.constants.ReleaseAssetCategoryProperty;
 import com.liferay.osb.customer.release.tool.web.internal.util.ReleasesAssetCategoryUtil;
@@ -21,7 +20,6 @@ import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.Http;
-import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
@@ -72,14 +70,11 @@ public class JiraIssueSearcher extends BaseSearcher {
 
 		StringBundler sb = new StringBundler(26);
 
+		sb.append("project in (\"");
+		sb.append(StringUtil.merge(jiraProjects, "\",\""));
+		sb.append("\") AND ");
+
 		if (productVersion == 7.4) {
-			List<String> jiraIssueVersionTags = _getJIRAIssueVersionTags(
-				assetCategoryId, fromFixPackVersion, toFixPackVersion);
-
-			List<String> jiraIssueVersionExcludeTags =
-				_getJIRAIssueVersionExcludeTags(
-					assetCategoryId, fromFixPackVersion);
-
 			String jiraFixPacksCustomField =
 				_releasesAssetCategoryUtil.getPropertyValue(
 					assetCategoryId,
@@ -88,13 +83,17 @@ public class JiraIssueSearcher extends BaseSearcher {
 			String jiraFixPacksJQLField =
 				"cf[" + jiraFixPacksCustomField.substring(pos + 1) + "]";
 
-			sb.append("project in (\"");
-			sb.append(StringUtil.merge(jiraProjects, "\",\""));
-			sb.append("\") AND ");
+			List<String> jiraIssueVersionTags = _getJIRAIssueVersionTags(
+				assetCategoryId, fromFixPackVersion, toFixPackVersion);
+
 			sb.append(jiraFixPacksJQLField);
 			sb.append(" in (\"");
 			sb.append(StringUtil.merge(jiraIssueVersionTags, "\",\""));
 			sb.append("\")");
+
+			List<String> jiraIssueVersionExcludeTags =
+				_getJIRAIssueVersionExcludeTags(
+					assetCategoryId, fromFixPackVersion);
 
 			if (!jiraIssueVersionExcludeTags.isEmpty()) {
 				sb.append(" AND ");
@@ -106,9 +105,6 @@ public class JiraIssueSearcher extends BaseSearcher {
 			}
 		}
 		else {
-			sb.append("project in (\"");
-			sb.append(StringUtil.merge(jiraProjects, "\",\""));
-			sb.append("\") AND ");
 			sb.append(jiraFixPackJQLField);
 			sb.append(">=");
 			sb.append(fromFixPackVersion);
@@ -297,28 +293,31 @@ public class JiraIssueSearcher extends BaseSearcher {
 			return jiraIssueVersionTags;
 		}
 
+		Map<String, String> fromVersionMap = _getVersionMap(
+			String.valueOf(fromFixPackVersion));
+
 		List<AssetCategory> childAssetCategories =
 			_assetCategoryLocalService.getChildCategories(assetCategoryId);
-
-		childAssetCategories = ListUtil.sort(
-			childAssetCategories,
-			new AssetCategoryPropertyComparator(
-				ReleaseAssetCategoryProperty.VERSION));
 
 		for (AssetCategory childAssetCategory : childAssetCategories) {
 			String version = _releasesAssetCategoryUtil.getPropertyValue(
 				childAssetCategory.getCategoryId(),
 				ReleaseAssetCategoryProperty.VERSION);
 
-			if (_isQuarterlyRelease(Double.valueOf(version)) &&
-				(Double.valueOf(version) < fromFixPackVersion)) {
+			if (!_isQuarterlyRelease(Double.valueOf(version))) {
+				continue;
+			}
 
-				version = _parseExcludeVersionValueTag(
-					fromFixPackVersion, version);
+			Map<String, String> versionMap = _getVersionMap(version);
 
-				if (Validator.isNotNull(version)) {
-					jiraIssueVersionTags.add(version);
-				}
+			if (StringUtil.equals(
+					fromVersionMap.get("year"), versionMap.get("year")) &&
+				StringUtil.equals(
+					fromVersionMap.get("quarter"), versionMap.get("quarter")) &&
+				(GetterUtil.getInteger(versionMap.get("version")) <
+					GetterUtil.getInteger(fromVersionMap.get("version")))) {
+
+				jiraIssueVersionTags.add(_getVersionTag(versionMap));
 			}
 		}
 
@@ -330,15 +329,10 @@ public class JiraIssueSearcher extends BaseSearcher {
 			double toFixPackVersion)
 		throws PortalException {
 
+		List<String> jiraIssueVersionTags = new ArrayList<>();
+
 		List<AssetCategory> childAssetCategories =
 			_assetCategoryLocalService.getChildCategories(assetCategoryId);
-
-		childAssetCategories = ListUtil.sort(
-			childAssetCategories,
-			new AssetCategoryPropertyComparator(
-				ReleaseAssetCategoryProperty.VERSION));
-
-		List<String> jiraIssueVersionTags = new ArrayList<>();
 
 		for (AssetCategory childAssetCategory : childAssetCategories) {
 			String version = _releasesAssetCategoryUtil.getPropertyValue(
@@ -348,11 +342,7 @@ public class JiraIssueSearcher extends BaseSearcher {
 			if ((Double.valueOf(version) >= fromFixPackVersion) &&
 				(Double.valueOf(version) <= toFixPackVersion)) {
 
-				version = _parseVersionValueTag(version);
-
-				if (Validator.isNotNull(version)) {
-					jiraIssueVersionTags.add(version);
-				}
+				jiraIssueVersionTags.add(_getVersionTag(version));
 			}
 		}
 
@@ -379,37 +369,13 @@ public class JiraIssueSearcher extends BaseSearcher {
 		return versionMap;
 	}
 
-	private boolean _isQuarterlyRelease(double version) {
-		if (version > 2023.0) {
-			return true;
-		}
-
-		return false;
+	private String _getVersionTag(Map<String, String> versionMap) {
+		return StringBundler.concat(
+			versionMap.get("year"), ".Q", versionMap.get("quarter"),
+			StringPool.PERIOD, versionMap.get("version"));
 	}
 
-	private String _parseExcludeVersionValueTag(
-		double fromFixPackVersion, String version) {
-
-		Map<String, String> fromVersionMap = _getVersionMap(
-			String.valueOf(fromFixPackVersion));
-		Map<String, String> versionMap = _getVersionMap(version);
-
-		if (StringUtil.equals(
-				fromVersionMap.get("year"), versionMap.get("year")) &&
-			StringUtil.equals(
-				fromVersionMap.get("quarter"), versionMap.get("quarter")) &&
-			(GetterUtil.getInteger(versionMap.get("version")) <
-				GetterUtil.getInteger(fromVersionMap.get("version")))) {
-
-			return StringBundler.concat(
-				versionMap.get("year"), ".Q", versionMap.get("quarter"),
-				StringPool.PERIOD, versionMap.get("version"));
-		}
-
-		return StringPool.BLANK;
-	}
-
-	private String _parseVersionValueTag(String version) {
+	private String _getVersionTag(String version) {
 		if (!_isQuarterlyRelease(Double.valueOf(version))) {
 			return "7.4.13 DXP U" +
 				version.substring(0, version.indexOf(StringPool.PERIOD));
@@ -417,9 +383,15 @@ public class JiraIssueSearcher extends BaseSearcher {
 
 		Map<String, String> versionMap = _getVersionMap(version);
 
-		return StringBundler.concat(
-			versionMap.get("year"), ".Q", versionMap.get("quarter"),
-			StringPool.PERIOD, versionMap.get("version"));
+		return _getVersionTag(versionMap);
+	}
+
+	private boolean _isQuarterlyRelease(double version) {
+		if (version > 2023.0) {
+			return true;
+		}
+
+		return false;
 	}
 
 	private static final String _ISSUE_FIELDS =
