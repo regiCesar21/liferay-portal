@@ -1,0 +1,32 @@
+{
+	"data": {
+		"journal": {
+			"assetId": "1",
+			"assetTitle": "Journal 1",
+			"viewsMetric": {
+				"geolocation": [
+					{
+						"value": 300,
+						"valueKey": "Italy"
+					},
+					{
+						"value": 52,
+						"valueKey": "Croatia"
+					},
+					{
+						"value": 45,
+						"valueKey": "Indonesia"
+					},
+					{
+						"value": 30,
+						"valueKey": "United States"
+					},
+					{
+						"value": 21,
+						"valueKey": "Brazil"
+					}
+				]
+			}
+		}
+	}
+}

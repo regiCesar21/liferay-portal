@@ -1,0 +1,15 @@
+{
+	"operationName": "WebContentMetrics",
+	"variables": {
+		"assetId": "1",
+		"channelId": "1",
+		"devices": "Any",
+		"interval": "D",
+		"location": "Any",
+		"rangeEnd": null,
+		"rangeKey": 30,
+		"rangeStart": null,
+		"title": "Journal 1",
+		"touchpoint": null
+	}
+}

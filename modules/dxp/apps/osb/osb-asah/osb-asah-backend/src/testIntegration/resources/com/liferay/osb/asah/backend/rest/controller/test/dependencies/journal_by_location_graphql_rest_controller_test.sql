@@ -1,0 +1,16 @@
+INSERT INTO JournalDaily (assetId, assetTitle, channelId, country, eventDate, views) VALUES ('1', 'Journal 1', 1, 'Brazil', TIMESTAMP '${today-1d}', 11);
+INSERT INTO JournalDaily (assetId, assetTitle, channelId, country, eventDate, views) VALUES ('1', 'Journal 1', 1, 'Brazil', TIMESTAMP '${today-4d}', 6);
+INSERT INTO JournalDaily (assetId, assetTitle, channelId, country, eventDate, views) VALUES ('1', 'Journal 1', 1, 'Brazil', TIMESTAMP '${today-5d}', 1);
+INSERT INTO JournalDaily (assetId, assetTitle, channelId, country, eventDate, views) VALUES ('1', 'Journal 1', 1, 'Brazil', TIMESTAMP '${today-6d}', 3);
+INSERT INTO JournalDaily (assetId, assetTitle, channelId, country, eventDate, views) VALUES ('1', 'Journal 1', 1, 'Croatia', TIMESTAMP '${today-3d}', 25);
+INSERT INTO JournalDaily (assetId, assetTitle, channelId, country, eventDate, views) VALUES ('1', 'Journal 1', 1, 'Croatia', TIMESTAMP '${today-3d}', 22);
+INSERT INTO JournalDaily (assetId, assetTitle, channelId, country, eventDate, views) VALUES ('1', 'Journal 1', 1, 'Croatia', TIMESTAMP '${today-3d}', 5);
+INSERT INTO JournalDaily (assetId, assetTitle, channelId, country, eventDate, views) VALUES ('1', 'Journal 1', 1, 'Indonesia', TIMESTAMP '${today-6d}', 15);
+INSERT INTO JournalDaily (assetId, assetTitle, channelId, country, eventDate, views) VALUES ('1', 'Journal 1', 1, 'Indonesia', TIMESTAMP '${today-7d}', 15);
+INSERT INTO JournalDaily (assetId, assetTitle, channelId, country, eventDate, views) VALUES ('1', 'Journal 1', 1, 'Indonesia', TIMESTAMP '${today-8d}', 15);
+INSERT INTO JournalDaily (assetId, assetTitle, channelId, country, eventDate, views) VALUES ('1', 'Journal 1', 1, 'Italy', TIMESTAMP '${today-2d}', 100);
+INSERT INTO JournalDaily (assetId, assetTitle, channelId, country, eventDate, views) VALUES ('1', 'Journal 1', 1, 'Italy', TIMESTAMP '${today-3d}', 100);
+INSERT INTO JournalDaily (assetId, assetTitle, channelId, country, eventDate, views) VALUES ('1', 'Journal 1', 1, 'Italy', TIMESTAMP '${today-4d}', 100);
+INSERT INTO JournalDaily (assetId, assetTitle, channelId, country, eventDate, views) VALUES ('1', 'Journal 1', 1, 'United States', TIMESTAMP '${today-5d}', 10);
+INSERT INTO JournalDaily (assetId, assetTitle, channelId, country, eventDate, views) VALUES ('1', 'Journal 1', 1, 'United States', TIMESTAMP '${today-6d}', 10);
+INSERT INTO JournalDaily (assetId, assetTitle, channelId, country, eventDate, views) VALUES ('1', 'Journal 1', 1, 'United States', TIMESTAMP '${today-7d}', 10);
