@@ -216,9 +216,11 @@ const TooltipProvider = () => {
 			<div
 				dangerouslySetInnerHTML={{
 					__html:
-						state.target.title ||
-						state.target.dataset.restoreTitle ||
-						state.target.dataset.title,
+						Liferay.Util.escapeHTML(state.target.title) ||
+						Liferay.Util.escapeHTML(
+							state.target.dataset.restoreTitle
+						) ||
+						Liferay.Util.escapeHTML(state.target.dataset.title),
 				}}
 			/>
 		</ClayTooltip>
