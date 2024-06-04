@@ -63,7 +63,7 @@ def create_dag(ac_project_id, ac_project_time_zone_id, dag_id, dag_description, 
 				task_id='bigquery_short_circuit_operator_{}'.format(data_source_id),
 				sql=f"""
 					SELECT
-						COUNT(*)
+						DISTINCT COUNT(accountId) > 5
 					FROM
 						{ dag.default_args['ac_project_id'] }.{table_name}
 					WHERE
