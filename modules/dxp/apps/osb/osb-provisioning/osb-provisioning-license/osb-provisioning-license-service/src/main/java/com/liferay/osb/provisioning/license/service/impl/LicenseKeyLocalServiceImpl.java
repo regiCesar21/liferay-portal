@@ -89,7 +89,6 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
-import java.util.StringTokenizer;
 
 import org.apache.commons.lang.time.DateUtils;
 
@@ -128,6 +127,10 @@ public class LicenseKeyLocalServiceImpl extends LicenseKeyLocalServiceBaseImpl {
 		int licenseVersion = LicenseVersion.getLicenseVersion(
 			product.getName(), productVersion);
 
+		name = condenseText(name, accountName, 75);
+		owner = condenseText(owner, accountName, 75);
+		description = condenseText(description, accountName, 255);
+
 		validate(
 			productVersion, name, owner, description, licenseEntryType,
 			maxClusterNodes);
@@ -163,10 +166,6 @@ public class LicenseKeyLocalServiceImpl extends LicenseKeyLocalServiceBaseImpl {
 
 		LicenseEntry licenseEntry = _licenseEntryLocalService.getLicenseEntry(
 			licenseEntryId);
-
-		name = truncateText(name, accountName, 75);
-		owner = truncateText(owner, accountName, 75);
-		description = truncateText(description, accountName, 255);
 
 		String licenseEntryType = licenseEntry.getType();
 
@@ -234,9 +233,16 @@ public class LicenseKeyLocalServiceImpl extends LicenseKeyLocalServiceBaseImpl {
 		Date now = new Date();
 		int licenseVersion = 3;
 
-		productName = trimText(productName);
-		owner = trimText(owner);
-		description = trimText(description);
+		userName = condenseText(userName, StringPool.BLANK, 75);
+
+		owner = condenseText(owner, StringPool.BLANK, 75);
+
+		description = condenseText(description, owner, 255);
+
+		productName = condenseText(productName, StringPool.BLANK, 75);
+		licenseEntryType = condenseText(licenseEntryType, StringPool.BLANK, 75);
+		productVersion = condenseText(productVersion, StringPool.BLANK, 75);
+
 		startDate = DateUtils.round(startDate, Calendar.SECOND);
 		expirationDate = DateUtils.round(expirationDate, Calendar.SECOND);
 
@@ -682,6 +688,8 @@ public class LicenseKeyLocalServiceImpl extends LicenseKeyLocalServiceBaseImpl {
 			deleteProductConsumption(userName, userUuid, licenseKey);
 		}
 
+		userName = condenseText(userName, StringPool.BLANK, 75);
+
 		licenseKey.setModifiedUserUuid(userUuid);
 		licenseKey.setModifiedUserName(userName);
 		licenseKey.setModifiedDate(new Date());
@@ -714,6 +722,8 @@ public class LicenseKeyLocalServiceImpl extends LicenseKeyLocalServiceBaseImpl {
 			updateActive = true;
 		}
 
+		userName = condenseText(userName, StringPool.BLANK, 75);
+
 		licenseKey.setModifiedUserUuid(userUuid);
 		licenseKey.setModifiedUserName(userName);
 		licenseKey.setModifiedDate(new Date());
@@ -745,25 +755,32 @@ public class LicenseKeyLocalServiceImpl extends LicenseKeyLocalServiceBaseImpl {
 		return licenseKey;
 	}
 
-	protected static String trimText(String text) {
+	protected static String condenseText(
+		String text, String defaultText, int maxLength) {
 
-		// Copied from org.dom4j.tree.AbstractBranch.getTextTrim()
+		if (Validator.isNull(text)) {
+			text = defaultText;
+		}
 
-		StringBuffer textContent = new StringBuffer();
+		StringBundler sb = new StringBundler();
 
-		StringTokenizer tokenizer = new StringTokenizer(text);
+		String[] strings = text.split("\\s+");
 
-		while (tokenizer.hasMoreTokens()) {
-			String str = tokenizer.nextToken();
+		for (int i = 0; i < strings.length; i++) {
+			sb.append(strings[i]);
 
-			textContent.append(str);
-
-			if (tokenizer.hasMoreTokens()) {
-				textContent.append(" ");
+			if (i < (strings.length - 1)) {
+				sb.append(" ");
 			}
 		}
 
-		return textContent.toString();
+		text = sb.toString();
+
+		if (maxLength != 0) {
+			text = text.substring(0, Math.min(maxLength, text.length()));
+		}
+
+		return StringUtil.trim(text);
 	}
 
 	protected SearchContext buildSearchContext(
@@ -1020,10 +1037,17 @@ public class LicenseKeyLocalServiceImpl extends LicenseKeyLocalServiceBaseImpl {
 			String additionalInfo, boolean complimentary, boolean active)
 		throws Exception {
 
-		accountName = trimText(accountName);
+		accountName = condenseText(accountName, StringPool.BLANK, 500);
+		userName = condenseText(userName, StringPool.BLANK, 75);
 
-		String licenseEntryName = trimText(licenseEntry.getName());
-		String productName = trimText(product.getName());
+		String licenseEntryName = condenseText(
+			licenseEntry.getName(), StringPool.BLANK, 75);
+
+		String productName = condenseText(
+			product.getName(), StringPool.BLANK, 75);
+
+		productVersion = condenseText(productVersion, StringPool.BLANK, 75);
+		sizing = condenseText(sizing, StringPool.BLANK, 75);
 
 		String productId = ProductId.PORTAL;
 
@@ -1031,7 +1055,9 @@ public class LicenseKeyLocalServiceImpl extends LicenseKeyLocalServiceBaseImpl {
 			productId = ProductId.COMMERCE;
 		}
 
-		owner = trimText(owner);
+		name = condenseText(name, accountName, 75);
+		owner = condenseText(owner, accountName, 75);
+		description = condenseText(description, accountName, 255);
 
 		if (!licenseEntryType.equals(LicenseType.VIRTUAL_CLUSTER)) {
 			maxClusterNodes = 0;
@@ -1040,8 +1066,6 @@ public class LicenseKeyLocalServiceImpl extends LicenseKeyLocalServiceBaseImpl {
 		if (!licenseEntryType.equals(LicenseType.CLUSTER)) {
 			maxServers = 1;
 		}
-
-		description = trimText(description);
 
 		if (licenseEntryType.equals(LicenseType.DEVELOPER) ||
 			licenseEntryType.equals(LicenseType.DEVELOPER_CLUSTER)) {
@@ -1150,21 +1174,6 @@ public class LicenseKeyLocalServiceImpl extends LicenseKeyLocalServiceBaseImpl {
 		}
 
 		return sb.toString();
-	}
-
-	protected String truncateText(
-		String text, String defaultText, int maxLength) {
-
-		if (Validator.isNull(text)) {
-			if (Validator.isNull(defaultText)) {
-				return null;
-			}
-
-			return defaultText.substring(
-				0, Math.min(maxLength, defaultText.length()));
-		}
-
-		return text.substring(0, Math.min(maxLength, text.length()));
 	}
 
 	protected void validate(
