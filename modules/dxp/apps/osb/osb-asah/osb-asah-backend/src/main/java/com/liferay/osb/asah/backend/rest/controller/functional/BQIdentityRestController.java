@@ -14,6 +14,8 @@ import org.json.JSONArray;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Profile;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -30,12 +32,14 @@ import org.springframework.web.bind.annotation.RestController;
 public class BQIdentityRestController {
 
 	@PostMapping
-	public void postBQIdentities(@RequestBody String json) {
+	public ResponseEntity postBQIdentities(@RequestBody String json) {
 		JSONArray jsonArray = new JSONArray(json);
 
 		jsonArray.forEach(
 			jsonObject -> _bqIdentityRepository.insert(
 				_objectMapper.convertValue(jsonObject, BQIdentity.class)));
+
+		return new ResponseEntity(HttpStatus.NO_CONTENT);
 	}
 
 	@Autowired

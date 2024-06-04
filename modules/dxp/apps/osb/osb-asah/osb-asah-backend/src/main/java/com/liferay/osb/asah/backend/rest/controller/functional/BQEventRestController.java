@@ -14,6 +14,8 @@ import org.json.JSONArray;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Profile;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -30,12 +32,14 @@ import org.springframework.web.bind.annotation.RestController;
 public class BQEventRestController {
 
 	@PostMapping
-	public void postBQEvents(@RequestBody String json) {
+	public ResponseEntity postBQEvents(@RequestBody String json) {
 		JSONArray jsonArray = new JSONArray(json);
 
 		jsonArray.forEach(
 			jsonObject -> _bqEventRepository.insert(
 				_objectMapper.convertValue(jsonObject, BQEvent.class)));
+
+		return new ResponseEntity(HttpStatus.NO_CONTENT);
 	}
 
 	@Autowired
