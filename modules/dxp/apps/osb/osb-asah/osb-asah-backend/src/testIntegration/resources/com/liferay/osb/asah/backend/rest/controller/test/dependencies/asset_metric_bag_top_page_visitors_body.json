@@ -1,0 +1,15 @@
+{
+	"operationName": "Touchpoint",
+	"variables": {
+		"channelId": "1",
+		"rangeEnd": null,
+		"rangeKey": 7,
+		"rangeStart": null,
+		"size": 5,
+		"sort": {
+			"column": "visitorsMetric",
+			"type": "DESC"
+		},
+		"start": 0
+	}
+}

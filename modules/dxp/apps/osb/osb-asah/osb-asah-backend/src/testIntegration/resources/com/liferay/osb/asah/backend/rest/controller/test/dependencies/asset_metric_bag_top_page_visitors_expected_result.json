@@ -1,0 +1,74 @@
+{
+	"data": {
+		"pages": {
+			"assetMetrics": [
+				{
+					"assetId": "https://www.cedric-rodriguez.net",
+					"assetTitle": "Cedric Rodriguez",
+					"entrancesMetric": {
+						"value": 8
+					},
+					"exitRateMetric": {
+						"value": 0.5
+					},
+					"visitorsMetric": {
+						"value": 4
+					}
+				},
+				{
+					"assetId": "https://www.dino-boyer.com",
+					"assetTitle": "Dino Boyer",
+					"entrancesMetric": {
+						"value": 3
+					},
+					"exitRateMetric": {
+						"value": 0.75
+					},
+					"visitorsMetric": {
+						"value": 4
+					}
+				},
+				{
+					"assetId": "https://www.cherelle-ullrich.org",
+					"assetTitle": "Cherelle Ullrich",
+					"entrancesMetric": {
+						"value": 6
+					},
+					"exitRateMetric": {
+						"value": 0.3333333333333333
+					},
+					"visitorsMetric": {
+						"value": 3
+					}
+				},
+				{
+					"assetId": "https://www.liferay.com",
+					"assetTitle": "Liferay | Home",
+					"entrancesMetric": {
+						"value": 10
+					},
+					"exitRateMetric": {
+						"value": 0.6666666666666666
+					},
+					"visitorsMetric": {
+						"value": 3
+					}
+				},
+				{
+					"assetId": "https://www.debra-huel.name",
+					"assetTitle": "Debra Huel",
+					"entrancesMetric": {
+						"value": 1
+					},
+					"exitRateMetric": {
+						"value": 0
+					},
+					"visitorsMetric": {
+						"value": 1
+					}
+				}
+			],
+			"total": 6
+		}
+	}
+}
