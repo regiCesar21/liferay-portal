@@ -382,8 +382,34 @@ public class TransformProductPurchases {
 					originalEndDate = subscriptionTerm.originalEndDate;
 				}
 
-				if (instanceSize == null) {
-					instanceSize = subscriptionTerm.instanceSize;
+				int subscriptionTermInstanceSize = 0;
+
+				if (subscriptionTerm.instanceSize != null) {
+					subscriptionTermInstanceSize = Integer.valueOf(
+						subscriptionTerm.instanceSize);
+				}
+
+				if (now.after(subscriptionTerm.startDate) &&
+					now.before(subscriptionTerm.endDate)) {
+
+					if (activeInstanceSize == null) {
+						activeInstanceSize = subscriptionTerm.instanceSize;
+					}
+					else if (subscriptionTermInstanceSize > Integer.valueOf(
+								activeInstanceSize)) {
+
+						activeInstanceSize = subscriptionTerm.instanceSize;
+					}
+				}
+				else {
+					if (inActiveInstanceSize == null) {
+						inActiveInstanceSize = subscriptionTerm.instanceSize;
+					}
+					else if (subscriptionTermInstanceSize > Integer.valueOf(
+								inActiveInstanceSize)) {
+
+						inActiveInstanceSize = subscriptionTerm.instanceSize;
+					}
 				}
 
 				if (now.after(subscriptionTerm.startDate) &&
@@ -415,7 +441,14 @@ public class TransformProductPurchases {
 				accountSubscriptionGroupExternalReferenceCode);
 			jsonObject.put("endDate", DateUtil.format(originalEndDate));
 			jsonObject.put("externalReferenceCode", externalReferenceCode);
-			jsonObject.put("instanceSize", instanceSize);
+
+			if (activeInstanceSize != null) {
+				jsonObject.put("instanceSize", activeInstanceSize);
+			}
+			else {
+				jsonObject.put("instanceSize", inActiveInstanceSize);
+			}
+
 			jsonObject.put("name", name);
 			jsonObject.put("productKey", productKey);
 			jsonObject.put("quantity", quantity);
@@ -444,9 +477,10 @@ public class TransformProductPurchases {
 
 		public String accountKey;
 		public String accountSubscriptionGroupExternalReferenceCode;
+		public String activeInstanceSize;
 		public Date endDate;
 		public String externalReferenceCode;
-		public String instanceSize;
+		public String inActiveInstanceSize;
 		public String name;
 		public Date originalEndDate;
 		public String productKey;
