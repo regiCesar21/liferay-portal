@@ -11,24 +11,24 @@ import com.liferay.osb.asah.test.util.annotation.BQSQLResource;
  * @author Sillas Cavalcanti
  */
 @BQSQLResource(
-	resourcePath = "forms_submit_more_than_24_hours_graphql_rest_controller_test.sql"
+	resourcePath = "forms_submission_more_than_24_hours_graphql_rest_controller_test.sql"
 )
-public class FormsSubmitMoreThan24HoursGraphQLRestControllerTest
+public class FormsSubmissionMoreThan24HoursGraphQLRestControllerTest
 	extends BaseGraphQLRestControllerTestCase {
 
 	@Override
 	public String getBodyPath() {
-		return "forms_submit_more_than_24_hours_body.json";
+		return "forms_submission_more_than_24_hours_body.json";
 	}
 
 	@Override
 	public String getExpectedResultPath() {
-		return "forms_submit_more_than_24_hours_expected_result.json";
+		return "forms_submission_more_than_24_hours_expected_result.json";
 	}
 
 	@Override
 	public String getQueryPath() {
-		return "forms_submit_more_than_24_hours_query.graphql";
+		return "forms_submission_more_than_24_hours_query.graphql";
 	}
 
 }
