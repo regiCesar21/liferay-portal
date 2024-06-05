@@ -382,35 +382,8 @@ public class TransformProductPurchases {
 					originalEndDate = subscriptionTerm.originalEndDate;
 				}
 
-				int subscriptionTermInstanceSize = 0;
-
-				if (subscriptionTerm.instanceSize != null) {
-					subscriptionTermInstanceSize = Integer.valueOf(
-						subscriptionTerm.instanceSize);
-				}
-
-				if (now.after(subscriptionTerm.startDate) &&
-					now.before(subscriptionTerm.endDate)) {
-
-					if (activeInstanceSize == null) {
-						activeInstanceSize = subscriptionTerm.instanceSize;
-					}
-					else if (subscriptionTermInstanceSize > Integer.valueOf(
-								activeInstanceSize)) {
-
-						activeInstanceSize = subscriptionTerm.instanceSize;
-					}
-				}
-				else {
-					if (inActiveInstanceSize == null) {
-						inActiveInstanceSize = subscriptionTerm.instanceSize;
-					}
-					else if (subscriptionTermInstanceSize > Integer.valueOf(
-								inActiveInstanceSize)) {
-
-						inActiveInstanceSize = subscriptionTerm.instanceSize;
-					}
-				}
+				instanceSizeSubscriptionTerm =
+					_getRelevantInstanceSizeSubscriptionTerm(subscriptionTerm);
 
 				if (now.after(subscriptionTerm.startDate) &&
 					now.before(subscriptionTerm.endDate)) {
@@ -442,11 +415,9 @@ public class TransformProductPurchases {
 			jsonObject.put("endDate", DateUtil.format(originalEndDate));
 			jsonObject.put("externalReferenceCode", externalReferenceCode);
 
-			if (activeInstanceSize != null) {
-				jsonObject.put("instanceSize", activeInstanceSize);
-			}
-			else {
-				jsonObject.put("instanceSize", inActiveInstanceSize);
+			if (instanceSizeSubscriptionTerm != null) {
+				jsonObject.put(
+					"instanceSize", instanceSizeSubscriptionTerm.instanceSize);
 			}
 
 			jsonObject.put("name", name);
@@ -477,16 +448,64 @@ public class TransformProductPurchases {
 
 		public String accountKey;
 		public String accountSubscriptionGroupExternalReferenceCode;
-		public String activeInstanceSize;
 		public Date endDate;
 		public String externalReferenceCode;
-		public String inActiveInstanceSize;
+		public SubscriptionTerm instanceSizeSubscriptionTerm;
 		public String name;
 		public Date originalEndDate;
 		public String productKey;
 		public int quantity;
 		public Date startDate;
 		public List<SubscriptionTerm> subscriptionTerms = new ArrayList<>();
+
+		private SubscriptionTerm _getRelevantInstanceSizeSubscriptionTerm(
+			SubscriptionTerm subscriptionTerm) {
+
+			if (instanceSizeSubscriptionTerm == null) {
+				return subscriptionTerm;
+			}
+
+			String currentSubscriptionStatus =
+				instanceSizeSubscriptionTerm.getSubscriptionStatus();
+			String newSubscriptionTermStatus =
+				subscriptionTerm.getSubscriptionStatus();
+
+			if (currentSubscriptionStatus.equals(newSubscriptionTermStatus)) {
+				int currentInstanceSize = 0;
+
+				if (instanceSizeSubscriptionTerm.instanceSize != null) {
+					currentInstanceSize = Integer.valueOf(
+						instanceSizeSubscriptionTerm.instanceSize);
+				}
+
+				int newInstanceSize = 0;
+
+				if (subscriptionTerm.instanceSize != null) {
+					newInstanceSize = Integer.valueOf(
+						subscriptionTerm.instanceSize);
+				}
+
+				if (newInstanceSize > currentInstanceSize) {
+					return subscriptionTerm;
+				}
+
+				return instanceSizeSubscriptionTerm;
+			}
+
+			if (newSubscriptionTermStatus.equals("Active") &&
+				!currentSubscriptionStatus.equals("Active")) {
+
+				return subscriptionTerm;
+			}
+
+			if (newSubscriptionTermStatus.equals("Future") &&
+				currentSubscriptionStatus.equals("Expired")) {
+
+				return subscriptionTerm;
+			}
+
+			return instanceSizeSubscriptionTerm;
+		}
 
 	}
 
@@ -730,6 +749,19 @@ public class TransformProductPurchases {
 			status = jsonObject.getString("status");
 		}
 
+		public String getSubscriptionStatus() {
+			Date now = new Date();
+
+			if ((endDate != null) && endDate.before(now)) {
+				return "Expired";
+			}
+			else if ((startDate != null) && startDate.after(now)) {
+				return "Future";
+			}
+
+			return "Active";
+		}
+
 		public JSONObject toJSONObject() {
 			JSONObject jsonObject = new JSONObject();
 
@@ -746,22 +778,7 @@ public class TransformProductPurchases {
 			jsonObject.put("provisioned", provisioned);
 			jsonObject.put("quantity", quantity);
 			jsonObject.put("startDate", DateUtil.format(startDate));
-
-			Date now = new Date();
-
-			String subscriptionTermStatus = null;
-
-			if ((endDate != null) && endDate.before(now)) {
-				subscriptionTermStatus = "Expired";
-			}
-			else if ((startDate != null) && startDate.after(now)) {
-				subscriptionTermStatus = "Future";
-			}
-			else {
-				subscriptionTermStatus = "Active";
-			}
-
-			jsonObject.put("subscriptionTermStatus", subscriptionTermStatus);
+			jsonObject.put("subscriptionTermStatus", getSubscriptionStatus());
 
 			return jsonObject;
 		}
