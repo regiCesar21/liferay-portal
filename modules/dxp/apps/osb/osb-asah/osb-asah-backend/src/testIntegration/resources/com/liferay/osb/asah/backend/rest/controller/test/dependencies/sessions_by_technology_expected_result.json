@@ -2,6 +2,40 @@
 	"data": {
 		"site": {
 			"sessionsMetric": {
+				"browser": [
+					{
+						"value": 7,
+						"valueKey": "Chrome"
+					},
+					{
+						"value": 3,
+						"valueKey": "Firefox"
+					},
+					{
+						"value": 3,
+						"valueKey": "Safari"
+					},
+					{
+						"value": 2,
+						"valueKey": "Default Browser"
+					},
+					{
+						"value": 2,
+						"valueKey": "Edge"
+					},
+					{
+						"value": 1,
+						"valueKey": "Android WebView"
+					},
+					{
+						"value": 1,
+						"valueKey": "Headless Chrome"
+					},
+					{
+						"value": 1,
+						"valueKey": "Samsung Browser"
+					}
+				],
 				"device": [
 					{
 						"metrics": [

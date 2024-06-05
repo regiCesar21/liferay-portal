@@ -1,3 +1,10 @@
+fragment browserFragment on Metric {
+	browser {
+		value
+		valueKey
+	}
+}
+
 fragment deviceFragment on Metric {
 	device {
 		metrics {
@@ -12,6 +19,7 @@ fragment deviceFragment on Metric {
 query SiteMetrics($channelId: String, $rangeEnd: String, $rangeKey: Int, $rangeStart: String) {
 	site(channelId: $channelId, includePrevious: false, rangeEnd: $rangeEnd, rangeKey: $rangeKey, rangeStart: $rangeStart) {
 		sessionsMetric {
+			...browserFragment
 			...deviceFragment
 			value
 		}
