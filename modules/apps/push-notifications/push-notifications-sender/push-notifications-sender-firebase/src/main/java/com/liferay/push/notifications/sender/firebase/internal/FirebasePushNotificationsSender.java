@@ -5,22 +5,32 @@
 
 package com.liferay.push.notifications.sender.firebase.internal;
 
-import com.liferay.mobile.fcm.Message;
-import com.liferay.mobile.fcm.Notification;
-import com.liferay.mobile.fcm.Sender;
+import com.google.auth.oauth2.GoogleCredentials;
+import com.google.auth.oauth2.ServiceAccountCredentials;
+
+import com.liferay.petra.string.StringBundler;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
-import com.liferay.portal.kernel.json.JSONArray;
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.json.JSONException;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
-import com.liferay.portal.kernel.util.HashMapBuilder;
+import com.liferay.portal.kernel.json.JSONUtil;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.util.ContentTypes;
+import com.liferay.portal.kernel.util.Http;
+import com.liferay.portal.kernel.util.HttpUtil;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.push.notifications.constants.PushNotificationsConstants;
 import com.liferay.push.notifications.exception.PushNotificationsException;
 import com.liferay.push.notifications.sender.PushNotificationsSender;
 import com.liferay.push.notifications.sender.firebase.internal.configuration.FirebasePushNotificationsSenderConfiguration;
 
-import java.util.ArrayList;
-import java.util.Iterator;
+import java.io.ByteArrayInputStream;
+import java.io.IOException;
+
+import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 
@@ -28,6 +38,7 @@ import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Deactivate;
 import org.osgi.service.component.annotations.Modified;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Bruno Farache
@@ -40,6 +51,15 @@ import org.osgi.service.component.annotations.Modified;
 )
 public class FirebasePushNotificationsSender
 	implements PushNotificationsSender {
+
+	public static final String AUTHORIZATION = "Authorization";
+
+	public static final String BASE_GOOGLE_NOTIFICATIONS_API =
+		"https://fcm.googleapis.com/fcm/notification";
+
+	public static final String GOOGLE_GROUP_ID = StringUtil.randomString();
+
+	public static final int OK_CODE = 200;
 
 	public static final String PLATFORM = "firebase";
 
@@ -58,20 +78,25 @@ public class FirebasePushNotificationsSender
 
 	@Activate
 	@Modified
-	protected void activate(Map<String, Object> properties) {
+	protected void activate(Map<String, Object> properties)
+		throws PortalException {
+
 		_firebasePushNotificationsSenderConfiguration =
 			ConfigurableUtil.createConfigurable(
 				FirebasePushNotificationsSenderConfiguration.class, properties);
 
-		String apiKey = _firebasePushNotificationsSenderConfiguration.apiKey();
+		_projectNumber =
+			_firebasePushNotificationsSenderConfiguration.projectNumber();
 
-		if (Validator.isNull(apiKey)) {
-			_sender = null;
+		_initGoogleCloudServices();
+	}
 
 			return;
 		}
 
-		_sender = new Sender(apiKey);
+	@Deactivate
+	protected void deactivate() {
+		_googleCredentials = null;
 	}
 
 	protected Message buildMessage(
@@ -127,19 +152,35 @@ public class FirebasePushNotificationsSender
 				payloadJSONObject.getInt(PushNotificationsConstants.KEY_BADGE));
 		}
 
-		String body = payloadJSONObject.getString(
-			PushNotificationsConstants.KEY_BODY);
+	private void _initGoogleCloudServices() throws PortalException {
+		String serviceAccountKey =
+			_firebasePushNotificationsSenderConfiguration.serviceAccountKey();
 
-		if (Validator.isNotNull(body)) {
-			builder.body(body);
+		try {
+			if (Validator.isBlank(serviceAccountKey)) {
+				if (_log.isInfoEnabled()) {
+					_log.info(
+						"Using application default credentials because " +
+							"service account key was not set");
+				}
+
+				_googleCredentials =
+					ServiceAccountCredentials.getApplicationDefault();
+			}
+			else {
+				_googleCredentials = ServiceAccountCredentials.fromStream(
+					new ByteArrayInputStream(serviceAccountKey.getBytes())
+				).createScoped(
+					Arrays.asList(
+						"https://www.googleapis.com/auth/firebase.messaging")
+				);
+			}
 		}
-
-		String bodyLocalizedKey = payloadJSONObject.getString(
-			PushNotificationsConstants.KEY_BODY_LOCALIZED);
-
-		if (Validator.isNotNull(bodyLocalizedKey)) {
-			builder.bodyLocalizationKey(bodyLocalizedKey);
+		catch (IOException ioException) {
+			throw new PortalException(
+				"Unable to authenticate with GCS", ioException);
 		}
+	}
 
 		JSONArray bodyLocalizedArgumentsJSONArray =
 			payloadJSONObject.getJSONArray(
@@ -197,13 +238,16 @@ public class FirebasePushNotificationsSender
 		return builder.build();
 	}
 
-	@Deactivate
-	protected void deactivate() {
-		_sender = null;
-	}
+	private static final Log _log = LogFactoryUtil.getLog(
+		FirebasePushNotificationsSender.class);
 
 	private volatile FirebasePushNotificationsSenderConfiguration
 		_firebasePushNotificationsSenderConfiguration;
-	private volatile Sender _sender;
+	private GoogleCredentials _googleCredentials;
+
+	@Reference
+	private HttpUtil _httpUtil;
+
+	private String _projectNumber;
 
 }
