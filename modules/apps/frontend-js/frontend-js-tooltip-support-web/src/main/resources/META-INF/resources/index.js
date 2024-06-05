@@ -207,6 +207,15 @@ const TooltipProvider = () => {
 		}
 	}, [state.target]);
 
+	const getEscapedTooltipHtml = () => {
+		var tooltipHtml =
+			state.target.title ||
+			state.target.dataset.restoreTitle ||
+			state.target.dataset.title;
+
+		return Liferay.Util.escapeHTML(tooltipHtml);
+	};
+
 	return state.target ? (
 		<ClayTooltip
 			alignPosition={ALIGN_POSITIONS[alignment]}
@@ -215,12 +224,7 @@ const TooltipProvider = () => {
 		>
 			<div
 				dangerouslySetInnerHTML={{
-					__html:
-						Liferay.Util.escapeHTML(state.target.title) ||
-						Liferay.Util.escapeHTML(
-							state.target.dataset.restoreTitle
-						) ||
-						Liferay.Util.escapeHTML(state.target.dataset.title),
+					__html: getEscapedTooltipHtml(),
 				}}
 			/>
 		</ClayTooltip>
