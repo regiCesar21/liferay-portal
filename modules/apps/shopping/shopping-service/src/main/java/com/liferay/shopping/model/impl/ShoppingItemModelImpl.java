@@ -136,9 +136,6 @@ public class ShoppingItemModelImpl
 	public static final String ORDER_BY_SQL =
 		" ORDER BY ShoppingItem.itemId ASC";
 
-	public static final String ORDER_BY_SQL_INLINE_DISTINCT =
-		" ORDER BY shoppingItem.itemId ASC";
-
 	public static final String DATA_SOURCE = "liferayDataSource";
 
 	public static final String SESSION_FACTORY = "liferaySessionFactory";

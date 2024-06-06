@@ -1980,7 +1980,7 @@ public class MBCategoryPersistenceImpl
 		}
 		else {
 			if (getDB().isSupportsInlineDistinct()) {
-				sb.append(MBCategoryModelImpl.ORDER_BY_SQL_INLINE_DISTINCT);
+				sb.append(MBCategoryModelImpl.ORDER_BY_JPQL);
 			}
 			else {
 				sb.append(MBCategoryModelImpl.ORDER_BY_SQL);
@@ -2171,7 +2171,7 @@ public class MBCategoryPersistenceImpl
 		}
 		else {
 			if (getDB().isSupportsInlineDistinct()) {
-				sb.append(MBCategoryModelImpl.ORDER_BY_SQL_INLINE_DISTINCT);
+				sb.append(MBCategoryModelImpl.ORDER_BY_JPQL);
 			}
 			else {
 				sb.append(MBCategoryModelImpl.ORDER_BY_SQL);
@@ -3403,7 +3403,7 @@ public class MBCategoryPersistenceImpl
 		}
 		else {
 			if (getDB().isSupportsInlineDistinct()) {
-				sb.append(MBCategoryModelImpl.ORDER_BY_SQL_INLINE_DISTINCT);
+				sb.append(MBCategoryModelImpl.ORDER_BY_JPQL);
 			}
 			else {
 				sb.append(MBCategoryModelImpl.ORDER_BY_SQL);
@@ -3602,7 +3602,7 @@ public class MBCategoryPersistenceImpl
 		}
 		else {
 			if (getDB().isSupportsInlineDistinct()) {
-				sb.append(MBCategoryModelImpl.ORDER_BY_SQL_INLINE_DISTINCT);
+				sb.append(MBCategoryModelImpl.ORDER_BY_JPQL);
 			}
 			else {
 				sb.append(MBCategoryModelImpl.ORDER_BY_SQL);
@@ -3760,7 +3760,7 @@ public class MBCategoryPersistenceImpl
 		}
 		else {
 			if (getDB().isSupportsInlineDistinct()) {
-				sb.append(MBCategoryModelImpl.ORDER_BY_SQL_INLINE_DISTINCT);
+				sb.append(MBCategoryModelImpl.ORDER_BY_JPQL);
 			}
 			else {
 				sb.append(MBCategoryModelImpl.ORDER_BY_SQL);
@@ -4847,7 +4847,7 @@ public class MBCategoryPersistenceImpl
 		}
 		else {
 			if (getDB().isSupportsInlineDistinct()) {
-				sb.append(MBCategoryModelImpl.ORDER_BY_SQL_INLINE_DISTINCT);
+				sb.append(MBCategoryModelImpl.ORDER_BY_JPQL);
 			}
 			else {
 				sb.append(MBCategoryModelImpl.ORDER_BY_SQL);
@@ -5043,7 +5043,7 @@ public class MBCategoryPersistenceImpl
 		}
 		else {
 			if (getDB().isSupportsInlineDistinct()) {
-				sb.append(MBCategoryModelImpl.ORDER_BY_SQL_INLINE_DISTINCT);
+				sb.append(MBCategoryModelImpl.ORDER_BY_JPQL);
 			}
 			else {
 				sb.append(MBCategoryModelImpl.ORDER_BY_SQL);
@@ -6197,7 +6197,7 @@ public class MBCategoryPersistenceImpl
 		}
 		else {
 			if (getDB().isSupportsInlineDistinct()) {
-				sb.append(MBCategoryModelImpl.ORDER_BY_SQL_INLINE_DISTINCT);
+				sb.append(MBCategoryModelImpl.ORDER_BY_JPQL);
 			}
 			else {
 				sb.append(MBCategoryModelImpl.ORDER_BY_SQL);
@@ -6381,7 +6381,7 @@ public class MBCategoryPersistenceImpl
 		}
 		else {
 			if (getDB().isSupportsInlineDistinct()) {
-				sb.append(MBCategoryModelImpl.ORDER_BY_SQL_INLINE_DISTINCT);
+				sb.append(MBCategoryModelImpl.ORDER_BY_JPQL);
 			}
 			else {
 				sb.append(MBCategoryModelImpl.ORDER_BY_SQL);
@@ -7631,7 +7631,7 @@ public class MBCategoryPersistenceImpl
 		}
 		else {
 			if (getDB().isSupportsInlineDistinct()) {
-				sb.append(MBCategoryModelImpl.ORDER_BY_SQL_INLINE_DISTINCT);
+				sb.append(MBCategoryModelImpl.ORDER_BY_JPQL);
 			}
 			else {
 				sb.append(MBCategoryModelImpl.ORDER_BY_SQL);
@@ -7836,7 +7836,7 @@ public class MBCategoryPersistenceImpl
 		}
 		else {
 			if (getDB().isSupportsInlineDistinct()) {
-				sb.append(MBCategoryModelImpl.ORDER_BY_SQL_INLINE_DISTINCT);
+				sb.append(MBCategoryModelImpl.ORDER_BY_JPQL);
 			}
 			else {
 				sb.append(MBCategoryModelImpl.ORDER_BY_SQL);
@@ -8006,7 +8006,7 @@ public class MBCategoryPersistenceImpl
 		}
 		else {
 			if (getDB().isSupportsInlineDistinct()) {
-				sb.append(MBCategoryModelImpl.ORDER_BY_SQL_INLINE_DISTINCT);
+				sb.append(MBCategoryModelImpl.ORDER_BY_JPQL);
 			}
 			else {
 				sb.append(MBCategoryModelImpl.ORDER_BY_SQL);
@@ -9047,7 +9047,7 @@ public class MBCategoryPersistenceImpl
 		}
 		else {
 			if (getDB().isSupportsInlineDistinct()) {
-				sb.append(MBCategoryModelImpl.ORDER_BY_SQL_INLINE_DISTINCT);
+				sb.append(MBCategoryModelImpl.ORDER_BY_JPQL);
 			}
 			else {
 				sb.append(MBCategoryModelImpl.ORDER_BY_SQL);
@@ -9241,7 +9241,7 @@ public class MBCategoryPersistenceImpl
 		}
 		else {
 			if (getDB().isSupportsInlineDistinct()) {
-				sb.append(MBCategoryModelImpl.ORDER_BY_SQL_INLINE_DISTINCT);
+				sb.append(MBCategoryModelImpl.ORDER_BY_JPQL);
 			}
 			else {
 				sb.append(MBCategoryModelImpl.ORDER_BY_SQL);

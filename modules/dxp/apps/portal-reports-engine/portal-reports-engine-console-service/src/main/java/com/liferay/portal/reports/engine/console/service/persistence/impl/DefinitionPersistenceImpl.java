@@ -1975,7 +1975,7 @@ public class DefinitionPersistenceImpl
 		}
 		else {
 			if (getDB().isSupportsInlineDistinct()) {
-				sb.append(DefinitionModelImpl.ORDER_BY_SQL_INLINE_DISTINCT);
+				sb.append(DefinitionModelImpl.ORDER_BY_JPQL);
 			}
 			else {
 				sb.append(DefinitionModelImpl.ORDER_BY_SQL);
@@ -2166,7 +2166,7 @@ public class DefinitionPersistenceImpl
 		}
 		else {
 			if (getDB().isSupportsInlineDistinct()) {
-				sb.append(DefinitionModelImpl.ORDER_BY_SQL_INLINE_DISTINCT);
+				sb.append(DefinitionModelImpl.ORDER_BY_JPQL);
 			}
 			else {
 				sb.append(DefinitionModelImpl.ORDER_BY_SQL);

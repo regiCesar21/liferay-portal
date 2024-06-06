@@ -607,8 +607,7 @@ public class LayoutSetBranchPersistenceImpl
 		}
 		else {
 			if (getDB().isSupportsInlineDistinct()) {
-				sb.append(
-					LayoutSetBranchModelImpl.ORDER_BY_SQL_INLINE_DISTINCT);
+				sb.append(LayoutSetBranchModelImpl.ORDER_BY_JPQL);
 			}
 			else {
 				sb.append(LayoutSetBranchModelImpl.ORDER_BY_SQL);
@@ -804,8 +803,7 @@ public class LayoutSetBranchPersistenceImpl
 		}
 		else {
 			if (getDB().isSupportsInlineDistinct()) {
-				sb.append(
-					LayoutSetBranchModelImpl.ORDER_BY_SQL_INLINE_DISTINCT);
+				sb.append(LayoutSetBranchModelImpl.ORDER_BY_JPQL);
 			}
 			else {
 				sb.append(LayoutSetBranchModelImpl.ORDER_BY_SQL);
@@ -1537,8 +1535,7 @@ public class LayoutSetBranchPersistenceImpl
 		}
 		else {
 			if (getDB().isSupportsInlineDistinct()) {
-				sb.append(
-					LayoutSetBranchModelImpl.ORDER_BY_SQL_INLINE_DISTINCT);
+				sb.append(LayoutSetBranchModelImpl.ORDER_BY_JPQL);
 			}
 			else {
 				sb.append(LayoutSetBranchModelImpl.ORDER_BY_SQL);
@@ -1742,8 +1739,7 @@ public class LayoutSetBranchPersistenceImpl
 		}
 		else {
 			if (getDB().isSupportsInlineDistinct()) {
-				sb.append(
-					LayoutSetBranchModelImpl.ORDER_BY_SQL_INLINE_DISTINCT);
+				sb.append(LayoutSetBranchModelImpl.ORDER_BY_JPQL);
 			}
 			else {
 				sb.append(LayoutSetBranchModelImpl.ORDER_BY_SQL);
@@ -2812,8 +2808,7 @@ public class LayoutSetBranchPersistenceImpl
 		}
 		else {
 			if (getDB().isSupportsInlineDistinct()) {
-				sb.append(
-					LayoutSetBranchModelImpl.ORDER_BY_SQL_INLINE_DISTINCT);
+				sb.append(LayoutSetBranchModelImpl.ORDER_BY_JPQL);
 			}
 			else {
 				sb.append(LayoutSetBranchModelImpl.ORDER_BY_SQL);
@@ -3024,8 +3019,7 @@ public class LayoutSetBranchPersistenceImpl
 		}
 		else {
 			if (getDB().isSupportsInlineDistinct()) {
-				sb.append(
-					LayoutSetBranchModelImpl.ORDER_BY_SQL_INLINE_DISTINCT);
+				sb.append(LayoutSetBranchModelImpl.ORDER_BY_JPQL);
 			}
 			else {
 				sb.append(LayoutSetBranchModelImpl.ORDER_BY_SQL);

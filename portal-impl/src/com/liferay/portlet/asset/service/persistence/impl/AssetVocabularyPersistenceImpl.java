@@ -1998,8 +1998,7 @@ public class AssetVocabularyPersistenceImpl
 		}
 		else {
 			if (getDB().isSupportsInlineDistinct()) {
-				sb.append(
-					AssetVocabularyModelImpl.ORDER_BY_SQL_INLINE_DISTINCT);
+				sb.append(AssetVocabularyModelImpl.ORDER_BY_JPQL);
 			}
 			else {
 				sb.append(AssetVocabularyModelImpl.ORDER_BY_SQL);
@@ -2195,8 +2194,7 @@ public class AssetVocabularyPersistenceImpl
 		}
 		else {
 			if (getDB().isSupportsInlineDistinct()) {
-				sb.append(
-					AssetVocabularyModelImpl.ORDER_BY_SQL_INLINE_DISTINCT);
+				sb.append(AssetVocabularyModelImpl.ORDER_BY_JPQL);
 			}
 			else {
 				sb.append(AssetVocabularyModelImpl.ORDER_BY_SQL);
@@ -2346,8 +2344,7 @@ public class AssetVocabularyPersistenceImpl
 		}
 		else {
 			if (getDB().isSupportsInlineDistinct()) {
-				sb.append(
-					AssetVocabularyModelImpl.ORDER_BY_SQL_INLINE_DISTINCT);
+				sb.append(AssetVocabularyModelImpl.ORDER_BY_JPQL);
 			}
 			else {
 				sb.append(AssetVocabularyModelImpl.ORDER_BY_SQL);
@@ -4184,8 +4181,7 @@ public class AssetVocabularyPersistenceImpl
 		}
 		else {
 			if (getDB().isSupportsInlineDistinct()) {
-				sb.append(
-					AssetVocabularyModelImpl.ORDER_BY_SQL_INLINE_DISTINCT);
+				sb.append(AssetVocabularyModelImpl.ORDER_BY_JPQL);
 			}
 			else {
 				sb.append(AssetVocabularyModelImpl.ORDER_BY_SQL);
@@ -4401,8 +4397,7 @@ public class AssetVocabularyPersistenceImpl
 		}
 		else {
 			if (getDB().isSupportsInlineDistinct()) {
-				sb.append(
-					AssetVocabularyModelImpl.ORDER_BY_SQL_INLINE_DISTINCT);
+				sb.append(AssetVocabularyModelImpl.ORDER_BY_JPQL);
 			}
 			else {
 				sb.append(AssetVocabularyModelImpl.ORDER_BY_SQL);

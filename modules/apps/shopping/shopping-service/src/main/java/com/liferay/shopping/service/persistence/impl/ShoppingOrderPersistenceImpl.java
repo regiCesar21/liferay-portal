@@ -606,7 +606,7 @@ public class ShoppingOrderPersistenceImpl
 		}
 		else {
 			if (getDB().isSupportsInlineDistinct()) {
-				sb.append(ShoppingOrderModelImpl.ORDER_BY_SQL_INLINE_DISTINCT);
+				sb.append(ShoppingOrderModelImpl.ORDER_BY_JPQL);
 			}
 			else {
 				sb.append(ShoppingOrderModelImpl.ORDER_BY_SQL);
@@ -801,7 +801,7 @@ public class ShoppingOrderPersistenceImpl
 		}
 		else {
 			if (getDB().isSupportsInlineDistinct()) {
-				sb.append(ShoppingOrderModelImpl.ORDER_BY_SQL_INLINE_DISTINCT);
+				sb.append(ShoppingOrderModelImpl.ORDER_BY_JPQL);
 			}
 			else {
 				sb.append(ShoppingOrderModelImpl.ORDER_BY_SQL);
@@ -2086,7 +2086,7 @@ public class ShoppingOrderPersistenceImpl
 		}
 		else {
 			if (getDB().isSupportsInlineDistinct()) {
-				sb.append(ShoppingOrderModelImpl.ORDER_BY_SQL_INLINE_DISTINCT);
+				sb.append(ShoppingOrderModelImpl.ORDER_BY_JPQL);
 			}
 			else {
 				sb.append(ShoppingOrderModelImpl.ORDER_BY_SQL);
@@ -2307,7 +2307,7 @@ public class ShoppingOrderPersistenceImpl
 		}
 		else {
 			if (getDB().isSupportsInlineDistinct()) {
-				sb.append(ShoppingOrderModelImpl.ORDER_BY_SQL_INLINE_DISTINCT);
+				sb.append(ShoppingOrderModelImpl.ORDER_BY_JPQL);
 			}
 			else {
 				sb.append(ShoppingOrderModelImpl.ORDER_BY_SQL);

@@ -1308,7 +1308,7 @@ public class ShoppingItemPersistenceImpl
 		}
 		else {
 			if (getDB().isSupportsInlineDistinct()) {
-				sb.append(ShoppingItemModelImpl.ORDER_BY_SQL_INLINE_DISTINCT);
+				sb.append(ShoppingItemModelImpl.ORDER_BY_JPQL);
 			}
 			else {
 				sb.append(ShoppingItemModelImpl.ORDER_BY_SQL);
@@ -1511,7 +1511,7 @@ public class ShoppingItemPersistenceImpl
 		}
 		else {
 			if (getDB().isSupportsInlineDistinct()) {
-				sb.append(ShoppingItemModelImpl.ORDER_BY_SQL_INLINE_DISTINCT);
+				sb.append(ShoppingItemModelImpl.ORDER_BY_JPQL);
 			}
 			else {
 				sb.append(ShoppingItemModelImpl.ORDER_BY_SQL);
