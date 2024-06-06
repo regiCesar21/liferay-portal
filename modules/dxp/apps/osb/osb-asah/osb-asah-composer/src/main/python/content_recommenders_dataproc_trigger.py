@@ -20,7 +20,7 @@ import os
 import pendulum
 import requests
 
-def create_dag(ac_project_id, ac_project_time_zone_id, dag_id, dag_description, data_source_ids, application_name, schedule_interval, table_name: str):
+def create_dag(ac_project_id, ac_project_time_zone_id, dag_id, dag_description, data_source_ids, is_paused_upon_creation, application_name, schedule_interval, table_name: str):
 	with airflow.DAG(
 		dag_id=dag_id,
 		default_args={
@@ -36,6 +36,7 @@ def create_dag(ac_project_id, ac_project_time_zone_id, dag_id, dag_description, 
 			'subnetwork': os.environ['SUBNETWORK']
 		},
 		description=dag_description,
+		is_paused_upon_creation=is_paused_upon_creation,
 		max_active_runs=1,
 		schedule_interval=schedule_interval,
 		start_date=pendulum.now(ac_project_time_zone_id) - pendulum.duration(days=2)
@@ -102,6 +103,7 @@ for project in response.json():
 		project.get('id'), project.get('timeZoneId'), dag_id,
 		'Most Viewed Content Recommender DAG For {}'.format(project.get('id')),
 		data_source_ids,
+		True,
 		'MostViewedContentRecommendation',
 		None,
 		'assetentity'
@@ -113,6 +115,7 @@ for project in response.json():
 		project.get('id'), project.get('timeZoneId'), dag_id,
 		'User Content Recommender DAG For {}'.format(project.get('id')),
 		data_source_ids,
+		True,
 		'UserContentRecommendation',
 		None,
 		'assetentity'
