@@ -75,7 +75,7 @@ def create_dag(
 				**pipeline_options,
 				"network": os.environ['NETWORK'],
 				"subnetwork": "regions/{}/subnetworks/{}".format(
-					os.environ['NETWORK'],
+					os.environ['GOOGLE_REGION'],
 					os.environ['SUBNETWORK']
 				)
 			}
