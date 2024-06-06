@@ -2019,7 +2019,7 @@ public class KBFolderPersistenceImpl
 		}
 		else {
 			if (getDB().isSupportsInlineDistinct()) {
-				sb.append(KBFolderModelImpl.ORDER_BY_JPQL);
+				sb.append(KBFolderModelImpl.ORDER_BY_SQL_INLINE_DISTINCT);
 			}
 			else {
 				sb.append(KBFolderModelImpl.ORDER_BY_SQL);
@@ -2217,7 +2217,7 @@ public class KBFolderPersistenceImpl
 		}
 		else {
 			if (getDB().isSupportsInlineDistinct()) {
-				sb.append(KBFolderModelImpl.ORDER_BY_JPQL);
+				sb.append(KBFolderModelImpl.ORDER_BY_SQL_INLINE_DISTINCT);
 			}
 			else {
 				sb.append(KBFolderModelImpl.ORDER_BY_SQL);

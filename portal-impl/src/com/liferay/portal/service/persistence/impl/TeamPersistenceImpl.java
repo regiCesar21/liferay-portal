@@ -1973,7 +1973,7 @@ public class TeamPersistenceImpl
 		}
 		else {
 			if (getDB().isSupportsInlineDistinct()) {
-				sb.append(TeamModelImpl.ORDER_BY_JPQL);
+				sb.append(TeamModelImpl.ORDER_BY_SQL_INLINE_DISTINCT);
 			}
 			else {
 				sb.append(TeamModelImpl.ORDER_BY_SQL);
@@ -2164,7 +2164,7 @@ public class TeamPersistenceImpl
 		}
 		else {
 			if (getDB().isSupportsInlineDistinct()) {
-				sb.append(TeamModelImpl.ORDER_BY_JPQL);
+				sb.append(TeamModelImpl.ORDER_BY_SQL_INLINE_DISTINCT);
 			}
 			else {
 				sb.append(TeamModelImpl.ORDER_BY_SQL);

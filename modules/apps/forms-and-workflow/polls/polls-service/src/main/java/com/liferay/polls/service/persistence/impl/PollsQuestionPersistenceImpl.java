@@ -1987,7 +1987,7 @@ public class PollsQuestionPersistenceImpl
 		}
 		else {
 			if (getDB().isSupportsInlineDistinct()) {
-				sb.append(PollsQuestionModelImpl.ORDER_BY_JPQL);
+				sb.append(PollsQuestionModelImpl.ORDER_BY_SQL_INLINE_DISTINCT);
 			}
 			else {
 				sb.append(PollsQuestionModelImpl.ORDER_BY_SQL);
@@ -2182,7 +2182,7 @@ public class PollsQuestionPersistenceImpl
 		}
 		else {
 			if (getDB().isSupportsInlineDistinct()) {
-				sb.append(PollsQuestionModelImpl.ORDER_BY_JPQL);
+				sb.append(PollsQuestionModelImpl.ORDER_BY_SQL_INLINE_DISTINCT);
 			}
 			else {
 				sb.append(PollsQuestionModelImpl.ORDER_BY_SQL);
