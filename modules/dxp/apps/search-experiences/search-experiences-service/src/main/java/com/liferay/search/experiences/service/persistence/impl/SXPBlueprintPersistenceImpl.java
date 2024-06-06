@@ -654,7 +654,7 @@ public class SXPBlueprintPersistenceImpl
 		}
 		else {
 			if (getDB().isSupportsInlineDistinct()) {
-				sb.append(SXPBlueprintModelImpl.ORDER_BY_JPQL);
+				sb.append(SXPBlueprintModelImpl.ORDER_BY_SQL_INLINE_DISTINCT);
 			}
 			else {
 				sb.append(SXPBlueprintModelImpl.ORDER_BY_SQL);
@@ -862,7 +862,7 @@ public class SXPBlueprintPersistenceImpl
 		}
 		else {
 			if (getDB().isSupportsInlineDistinct()) {
-				sb.append(SXPBlueprintModelImpl.ORDER_BY_JPQL);
+				sb.append(SXPBlueprintModelImpl.ORDER_BY_SQL_INLINE_DISTINCT);
 			}
 			else {
 				sb.append(SXPBlueprintModelImpl.ORDER_BY_SQL);
@@ -1651,7 +1651,7 @@ public class SXPBlueprintPersistenceImpl
 		}
 		else {
 			if (getDB().isSupportsInlineDistinct()) {
-				sb.append(SXPBlueprintModelImpl.ORDER_BY_JPQL);
+				sb.append(SXPBlueprintModelImpl.ORDER_BY_SQL_INLINE_DISTINCT);
 			}
 			else {
 				sb.append(SXPBlueprintModelImpl.ORDER_BY_SQL);
@@ -1866,7 +1866,7 @@ public class SXPBlueprintPersistenceImpl
 		}
 		else {
 			if (getDB().isSupportsInlineDistinct()) {
-				sb.append(SXPBlueprintModelImpl.ORDER_BY_JPQL);
+				sb.append(SXPBlueprintModelImpl.ORDER_BY_SQL_INLINE_DISTINCT);
 			}
 			else {
 				sb.append(SXPBlueprintModelImpl.ORDER_BY_SQL);
@@ -2599,7 +2599,7 @@ public class SXPBlueprintPersistenceImpl
 		}
 		else {
 			if (getDB().isSupportsInlineDistinct()) {
-				sb.append(SXPBlueprintModelImpl.ORDER_BY_JPQL);
+				sb.append(SXPBlueprintModelImpl.ORDER_BY_SQL_INLINE_DISTINCT);
 			}
 			else {
 				sb.append(SXPBlueprintModelImpl.ORDER_BY_SQL);
@@ -2794,7 +2794,7 @@ public class SXPBlueprintPersistenceImpl
 		}
 		else {
 			if (getDB().isSupportsInlineDistinct()) {
-				sb.append(SXPBlueprintModelImpl.ORDER_BY_JPQL);
+				sb.append(SXPBlueprintModelImpl.ORDER_BY_SQL_INLINE_DISTINCT);
 			}
 			else {
 				sb.append(SXPBlueprintModelImpl.ORDER_BY_SQL);

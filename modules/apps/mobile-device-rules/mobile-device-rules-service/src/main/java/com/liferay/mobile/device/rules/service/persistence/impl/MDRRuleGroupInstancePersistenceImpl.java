@@ -2000,7 +2000,8 @@ public class MDRRuleGroupInstancePersistenceImpl
 		}
 		else {
 			if (getDB().isSupportsInlineDistinct()) {
-				sb.append(MDRRuleGroupInstanceModelImpl.ORDER_BY_JPQL);
+				sb.append(
+					MDRRuleGroupInstanceModelImpl.ORDER_BY_SQL_INLINE_DISTINCT);
 			}
 			else {
 				sb.append(MDRRuleGroupInstanceModelImpl.ORDER_BY_SQL);
@@ -2199,7 +2200,8 @@ public class MDRRuleGroupInstancePersistenceImpl
 		}
 		else {
 			if (getDB().isSupportsInlineDistinct()) {
-				sb.append(MDRRuleGroupInstanceModelImpl.ORDER_BY_JPQL);
+				sb.append(
+					MDRRuleGroupInstanceModelImpl.ORDER_BY_SQL_INLINE_DISTINCT);
 			}
 			else {
 				sb.append(MDRRuleGroupInstanceModelImpl.ORDER_BY_SQL);
@@ -4013,7 +4015,8 @@ public class MDRRuleGroupInstancePersistenceImpl
 		}
 		else {
 			if (getDB().isSupportsInlineDistinct()) {
-				sb.append(MDRRuleGroupInstanceModelImpl.ORDER_BY_JPQL);
+				sb.append(
+					MDRRuleGroupInstanceModelImpl.ORDER_BY_SQL_INLINE_DISTINCT);
 			}
 			else {
 				sb.append(MDRRuleGroupInstanceModelImpl.ORDER_BY_SQL);
@@ -4225,7 +4228,8 @@ public class MDRRuleGroupInstancePersistenceImpl
 		}
 		else {
 			if (getDB().isSupportsInlineDistinct()) {
-				sb.append(MDRRuleGroupInstanceModelImpl.ORDER_BY_JPQL);
+				sb.append(
+					MDRRuleGroupInstanceModelImpl.ORDER_BY_SQL_INLINE_DISTINCT);
 			}
 			else {
 				sb.append(MDRRuleGroupInstanceModelImpl.ORDER_BY_SQL);

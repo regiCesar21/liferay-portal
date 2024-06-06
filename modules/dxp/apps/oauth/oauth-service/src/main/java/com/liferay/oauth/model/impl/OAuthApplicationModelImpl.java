@@ -108,6 +108,9 @@ public class OAuthApplicationModelImpl
 	public static final String ORDER_BY_SQL =
 		" ORDER BY OAuth_OAuthApplication.oAuthApplicationId ASC";
 
+	public static final String ORDER_BY_SQL_INLINE_DISTINCT =
+		" ORDER BY oAuthApplication.oAuthApplicationId ASC";
+
 	public static final String DATA_SOURCE = "liferayDataSource";
 
 	public static final String SESSION_FACTORY = "liferaySessionFactory";

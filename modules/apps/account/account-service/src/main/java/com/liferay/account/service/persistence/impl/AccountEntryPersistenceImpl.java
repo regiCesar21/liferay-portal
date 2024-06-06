@@ -624,7 +624,7 @@ public class AccountEntryPersistenceImpl
 		}
 		else {
 			if (getDB().isSupportsInlineDistinct()) {
-				sb.append(AccountEntryModelImpl.ORDER_BY_JPQL);
+				sb.append(AccountEntryModelImpl.ORDER_BY_SQL_INLINE_DISTINCT);
 			}
 			else {
 				sb.append(AccountEntryModelImpl.ORDER_BY_SQL);
@@ -819,7 +819,7 @@ public class AccountEntryPersistenceImpl
 		}
 		else {
 			if (getDB().isSupportsInlineDistinct()) {
-				sb.append(AccountEntryModelImpl.ORDER_BY_JPQL);
+				sb.append(AccountEntryModelImpl.ORDER_BY_SQL_INLINE_DISTINCT);
 			}
 			else {
 				sb.append(AccountEntryModelImpl.ORDER_BY_SQL);
@@ -1535,7 +1535,7 @@ public class AccountEntryPersistenceImpl
 		}
 		else {
 			if (getDB().isSupportsInlineDistinct()) {
-				sb.append(AccountEntryModelImpl.ORDER_BY_JPQL);
+				sb.append(AccountEntryModelImpl.ORDER_BY_SQL_INLINE_DISTINCT);
 			}
 			else {
 				sb.append(AccountEntryModelImpl.ORDER_BY_SQL);
@@ -1737,7 +1737,7 @@ public class AccountEntryPersistenceImpl
 		}
 		else {
 			if (getDB().isSupportsInlineDistinct()) {
-				sb.append(AccountEntryModelImpl.ORDER_BY_JPQL);
+				sb.append(AccountEntryModelImpl.ORDER_BY_SQL_INLINE_DISTINCT);
 			}
 			else {
 				sb.append(AccountEntryModelImpl.ORDER_BY_SQL);
