@@ -617,9 +617,7 @@ public class CommerceApplicationModelPersistenceImpl
 		}
 		else {
 			if (getDB().isSupportsInlineDistinct()) {
-				sb.append(
-					CommerceApplicationModelModelImpl.
-						ORDER_BY_SQL_INLINE_DISTINCT);
+				sb.append(CommerceApplicationModelModelImpl.ORDER_BY_JPQL);
 			}
 			else {
 				sb.append(CommerceApplicationModelModelImpl.ORDER_BY_SQL);
@@ -820,9 +818,7 @@ public class CommerceApplicationModelPersistenceImpl
 		}
 		else {
 			if (getDB().isSupportsInlineDistinct()) {
-				sb.append(
-					CommerceApplicationModelModelImpl.
-						ORDER_BY_SQL_INLINE_DISTINCT);
+				sb.append(CommerceApplicationModelModelImpl.ORDER_BY_JPQL);
 			}
 			else {
 				sb.append(CommerceApplicationModelModelImpl.ORDER_BY_SQL);
@@ -1544,9 +1540,7 @@ public class CommerceApplicationModelPersistenceImpl
 		}
 		else {
 			if (getDB().isSupportsInlineDistinct()) {
-				sb.append(
-					CommerceApplicationModelModelImpl.
-						ORDER_BY_SQL_INLINE_DISTINCT);
+				sb.append(CommerceApplicationModelModelImpl.ORDER_BY_JPQL);
 			}
 			else {
 				sb.append(CommerceApplicationModelModelImpl.ORDER_BY_SQL);
@@ -1752,9 +1746,7 @@ public class CommerceApplicationModelPersistenceImpl
 		}
 		else {
 			if (getDB().isSupportsInlineDistinct()) {
-				sb.append(
-					CommerceApplicationModelModelImpl.
-						ORDER_BY_SQL_INLINE_DISTINCT);
+				sb.append(CommerceApplicationModelModelImpl.ORDER_BY_JPQL);
 			}
 			else {
 				sb.append(CommerceApplicationModelModelImpl.ORDER_BY_SQL);

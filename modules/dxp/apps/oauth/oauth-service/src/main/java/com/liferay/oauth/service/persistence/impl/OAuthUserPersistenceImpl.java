@@ -599,7 +599,7 @@ public class OAuthUserPersistenceImpl
 		}
 		else {
 			if (getDB().isSupportsInlineDistinct()) {
-				sb.append(OAuthUserModelImpl.ORDER_BY_SQL_INLINE_DISTINCT);
+				sb.append(OAuthUserModelImpl.ORDER_BY_JPQL);
 			}
 			else {
 				sb.append(OAuthUserModelImpl.ORDER_BY_SQL);
@@ -790,7 +790,7 @@ public class OAuthUserPersistenceImpl
 		}
 		else {
 			if (getDB().isSupportsInlineDistinct()) {
-				sb.append(OAuthUserModelImpl.ORDER_BY_SQL_INLINE_DISTINCT);
+				sb.append(OAuthUserModelImpl.ORDER_BY_JPQL);
 			}
 			else {
 				sb.append(OAuthUserModelImpl.ORDER_BY_SQL);
@@ -1481,7 +1481,7 @@ public class OAuthUserPersistenceImpl
 		}
 		else {
 			if (getDB().isSupportsInlineDistinct()) {
-				sb.append(OAuthUserModelImpl.ORDER_BY_SQL_INLINE_DISTINCT);
+				sb.append(OAuthUserModelImpl.ORDER_BY_JPQL);
 			}
 			else {
 				sb.append(OAuthUserModelImpl.ORDER_BY_SQL);
@@ -1674,7 +1674,7 @@ public class OAuthUserPersistenceImpl
 		}
 		else {
 			if (getDB().isSupportsInlineDistinct()) {
-				sb.append(OAuthUserModelImpl.ORDER_BY_SQL_INLINE_DISTINCT);
+				sb.append(OAuthUserModelImpl.ORDER_BY_JPQL);
 			}
 			else {
 				sb.append(OAuthUserModelImpl.ORDER_BY_SQL);

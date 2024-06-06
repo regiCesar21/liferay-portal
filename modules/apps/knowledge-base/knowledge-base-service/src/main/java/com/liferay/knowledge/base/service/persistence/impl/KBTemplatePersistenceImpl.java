@@ -1968,7 +1968,7 @@ public class KBTemplatePersistenceImpl
 		}
 		else {
 			if (getDB().isSupportsInlineDistinct()) {
-				sb.append(KBTemplateModelImpl.ORDER_BY_SQL_INLINE_DISTINCT);
+				sb.append(KBTemplateModelImpl.ORDER_BY_JPQL);
 			}
 			else {
 				sb.append(KBTemplateModelImpl.ORDER_BY_SQL);
@@ -2159,7 +2159,7 @@ public class KBTemplatePersistenceImpl
 		}
 		else {
 			if (getDB().isSupportsInlineDistinct()) {
-				sb.append(KBTemplateModelImpl.ORDER_BY_SQL_INLINE_DISTINCT);
+				sb.append(KBTemplateModelImpl.ORDER_BY_JPQL);
 			}
 			else {
 				sb.append(KBTemplateModelImpl.ORDER_BY_SQL);

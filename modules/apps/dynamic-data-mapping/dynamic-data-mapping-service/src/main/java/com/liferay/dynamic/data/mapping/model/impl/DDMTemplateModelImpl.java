@@ -135,9 +135,6 @@ public class DDMTemplateModelImpl
 	public static final String ORDER_BY_SQL =
 		" ORDER BY DDMTemplate.templateId ASC";
 
-	public static final String ORDER_BY_SQL_INLINE_DISTINCT =
-		" ORDER BY ddmTemplate.templateId ASC";
-
 	public static final String DATA_SOURCE = "liferayDataSource";
 
 	public static final String SESSION_FACTORY = "liferaySessionFactory";

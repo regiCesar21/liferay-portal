@@ -618,8 +618,7 @@ public class OAuthApplicationPersistenceImpl
 		}
 		else {
 			if (getDB().isSupportsInlineDistinct()) {
-				sb.append(
-					OAuthApplicationModelImpl.ORDER_BY_SQL_INLINE_DISTINCT);
+				sb.append(OAuthApplicationModelImpl.ORDER_BY_JPQL);
 			}
 			else {
 				sb.append(OAuthApplicationModelImpl.ORDER_BY_SQL);
@@ -816,8 +815,7 @@ public class OAuthApplicationPersistenceImpl
 		}
 		else {
 			if (getDB().isSupportsInlineDistinct()) {
-				sb.append(
-					OAuthApplicationModelImpl.ORDER_BY_SQL_INLINE_DISTINCT);
+				sb.append(OAuthApplicationModelImpl.ORDER_BY_JPQL);
 			}
 			else {
 				sb.append(OAuthApplicationModelImpl.ORDER_BY_SQL);
@@ -1499,8 +1497,7 @@ public class OAuthApplicationPersistenceImpl
 		}
 		else {
 			if (getDB().isSupportsInlineDistinct()) {
-				sb.append(
-					OAuthApplicationModelImpl.ORDER_BY_SQL_INLINE_DISTINCT);
+				sb.append(OAuthApplicationModelImpl.ORDER_BY_JPQL);
 			}
 			else {
 				sb.append(OAuthApplicationModelImpl.ORDER_BY_SQL);
@@ -1697,8 +1694,7 @@ public class OAuthApplicationPersistenceImpl
 		}
 		else {
 			if (getDB().isSupportsInlineDistinct()) {
-				sb.append(
-					OAuthApplicationModelImpl.ORDER_BY_SQL_INLINE_DISTINCT);
+				sb.append(OAuthApplicationModelImpl.ORDER_BY_JPQL);
 			}
 			else {
 				sb.append(OAuthApplicationModelImpl.ORDER_BY_SQL);
@@ -2676,8 +2672,7 @@ public class OAuthApplicationPersistenceImpl
 		}
 		else {
 			if (getDB().isSupportsInlineDistinct()) {
-				sb.append(
-					OAuthApplicationModelImpl.ORDER_BY_SQL_INLINE_DISTINCT);
+				sb.append(OAuthApplicationModelImpl.ORDER_BY_JPQL);
 			}
 			else {
 				sb.append(OAuthApplicationModelImpl.ORDER_BY_SQL);
@@ -2894,8 +2889,7 @@ public class OAuthApplicationPersistenceImpl
 		}
 		else {
 			if (getDB().isSupportsInlineDistinct()) {
-				sb.append(
-					OAuthApplicationModelImpl.ORDER_BY_SQL_INLINE_DISTINCT);
+				sb.append(OAuthApplicationModelImpl.ORDER_BY_JPQL);
 			}
 			else {
 				sb.append(OAuthApplicationModelImpl.ORDER_BY_SQL);
@@ -3690,8 +3684,7 @@ public class OAuthApplicationPersistenceImpl
 		}
 		else {
 			if (getDB().isSupportsInlineDistinct()) {
-				sb.append(
-					OAuthApplicationModelImpl.ORDER_BY_SQL_INLINE_DISTINCT);
+				sb.append(OAuthApplicationModelImpl.ORDER_BY_JPQL);
 			}
 			else {
 				sb.append(OAuthApplicationModelImpl.ORDER_BY_SQL);
@@ -3908,8 +3901,7 @@ public class OAuthApplicationPersistenceImpl
 		}
 		else {
 			if (getDB().isSupportsInlineDistinct()) {
-				sb.append(
-					OAuthApplicationModelImpl.ORDER_BY_SQL_INLINE_DISTINCT);
+				sb.append(OAuthApplicationModelImpl.ORDER_BY_JPQL);
 			}
 			else {
 				sb.append(OAuthApplicationModelImpl.ORDER_BY_SQL);

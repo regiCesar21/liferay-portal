@@ -622,8 +622,7 @@ public class MicroblogsEntryPersistenceImpl
 		}
 		else {
 			if (getDB().isSupportsInlineDistinct()) {
-				sb.append(
-					MicroblogsEntryModelImpl.ORDER_BY_SQL_INLINE_DISTINCT);
+				sb.append(MicroblogsEntryModelImpl.ORDER_BY_JPQL);
 			}
 			else {
 				sb.append(MicroblogsEntryModelImpl.ORDER_BY_SQL);
@@ -819,8 +818,7 @@ public class MicroblogsEntryPersistenceImpl
 		}
 		else {
 			if (getDB().isSupportsInlineDistinct()) {
-				sb.append(
-					MicroblogsEntryModelImpl.ORDER_BY_SQL_INLINE_DISTINCT);
+				sb.append(MicroblogsEntryModelImpl.ORDER_BY_JPQL);
 			}
 			else {
 				sb.append(MicroblogsEntryModelImpl.ORDER_BY_SQL);
@@ -1497,8 +1495,7 @@ public class MicroblogsEntryPersistenceImpl
 		}
 		else {
 			if (getDB().isSupportsInlineDistinct()) {
-				sb.append(
-					MicroblogsEntryModelImpl.ORDER_BY_SQL_INLINE_DISTINCT);
+				sb.append(MicroblogsEntryModelImpl.ORDER_BY_JPQL);
 			}
 			else {
 				sb.append(MicroblogsEntryModelImpl.ORDER_BY_SQL);
@@ -1694,8 +1691,7 @@ public class MicroblogsEntryPersistenceImpl
 		}
 		else {
 			if (getDB().isSupportsInlineDistinct()) {
-				sb.append(
-					MicroblogsEntryModelImpl.ORDER_BY_SQL_INLINE_DISTINCT);
+				sb.append(MicroblogsEntryModelImpl.ORDER_BY_JPQL);
 			}
 			else {
 				sb.append(MicroblogsEntryModelImpl.ORDER_BY_SQL);
@@ -2413,8 +2409,7 @@ public class MicroblogsEntryPersistenceImpl
 		}
 		else {
 			if (getDB().isSupportsInlineDistinct()) {
-				sb.append(
-					MicroblogsEntryModelImpl.ORDER_BY_SQL_INLINE_DISTINCT);
+				sb.append(MicroblogsEntryModelImpl.ORDER_BY_JPQL);
 			}
 			else {
 				sb.append(MicroblogsEntryModelImpl.ORDER_BY_SQL);
@@ -2617,8 +2612,7 @@ public class MicroblogsEntryPersistenceImpl
 		}
 		else {
 			if (getDB().isSupportsInlineDistinct()) {
-				sb.append(
-					MicroblogsEntryModelImpl.ORDER_BY_SQL_INLINE_DISTINCT);
+				sb.append(MicroblogsEntryModelImpl.ORDER_BY_JPQL);
 			}
 			else {
 				sb.append(MicroblogsEntryModelImpl.ORDER_BY_SQL);
@@ -3374,8 +3368,7 @@ public class MicroblogsEntryPersistenceImpl
 		}
 		else {
 			if (getDB().isSupportsInlineDistinct()) {
-				sb.append(
-					MicroblogsEntryModelImpl.ORDER_BY_SQL_INLINE_DISTINCT);
+				sb.append(MicroblogsEntryModelImpl.ORDER_BY_JPQL);
 			}
 			else {
 				sb.append(MicroblogsEntryModelImpl.ORDER_BY_SQL);
@@ -3581,8 +3574,7 @@ public class MicroblogsEntryPersistenceImpl
 		}
 		else {
 			if (getDB().isSupportsInlineDistinct()) {
-				sb.append(
-					MicroblogsEntryModelImpl.ORDER_BY_SQL_INLINE_DISTINCT);
+				sb.append(MicroblogsEntryModelImpl.ORDER_BY_JPQL);
 			}
 			else {
 				sb.append(MicroblogsEntryModelImpl.ORDER_BY_SQL);
@@ -3743,8 +3735,7 @@ public class MicroblogsEntryPersistenceImpl
 		}
 		else {
 			if (getDB().isSupportsInlineDistinct()) {
-				sb.append(
-					MicroblogsEntryModelImpl.ORDER_BY_SQL_INLINE_DISTINCT);
+				sb.append(MicroblogsEntryModelImpl.ORDER_BY_JPQL);
 			}
 			else {
 				sb.append(MicroblogsEntryModelImpl.ORDER_BY_SQL);
@@ -4844,8 +4835,7 @@ public class MicroblogsEntryPersistenceImpl
 		}
 		else {
 			if (getDB().isSupportsInlineDistinct()) {
-				sb.append(
-					MicroblogsEntryModelImpl.ORDER_BY_SQL_INLINE_DISTINCT);
+				sb.append(MicroblogsEntryModelImpl.ORDER_BY_JPQL);
 			}
 			else {
 				sb.append(MicroblogsEntryModelImpl.ORDER_BY_SQL);
@@ -5049,8 +5039,7 @@ public class MicroblogsEntryPersistenceImpl
 		}
 		else {
 			if (getDB().isSupportsInlineDistinct()) {
-				sb.append(
-					MicroblogsEntryModelImpl.ORDER_BY_SQL_INLINE_DISTINCT);
+				sb.append(MicroblogsEntryModelImpl.ORDER_BY_JPQL);
 			}
 			else {
 				sb.append(MicroblogsEntryModelImpl.ORDER_BY_SQL);
@@ -5798,8 +5787,7 @@ public class MicroblogsEntryPersistenceImpl
 		}
 		else {
 			if (getDB().isSupportsInlineDistinct()) {
-				sb.append(
-					MicroblogsEntryModelImpl.ORDER_BY_SQL_INLINE_DISTINCT);
+				sb.append(MicroblogsEntryModelImpl.ORDER_BY_JPQL);
 			}
 			else {
 				sb.append(MicroblogsEntryModelImpl.ORDER_BY_SQL);
@@ -6004,8 +5992,7 @@ public class MicroblogsEntryPersistenceImpl
 		}
 		else {
 			if (getDB().isSupportsInlineDistinct()) {
-				sb.append(
-					MicroblogsEntryModelImpl.ORDER_BY_SQL_INLINE_DISTINCT);
+				sb.append(MicroblogsEntryModelImpl.ORDER_BY_JPQL);
 			}
 			else {
 				sb.append(MicroblogsEntryModelImpl.ORDER_BY_SQL);
@@ -6797,8 +6784,7 @@ public class MicroblogsEntryPersistenceImpl
 		}
 		else {
 			if (getDB().isSupportsInlineDistinct()) {
-				sb.append(
-					MicroblogsEntryModelImpl.ORDER_BY_SQL_INLINE_DISTINCT);
+				sb.append(MicroblogsEntryModelImpl.ORDER_BY_JPQL);
 			}
 			else {
 				sb.append(MicroblogsEntryModelImpl.ORDER_BY_SQL);
@@ -7009,8 +6995,7 @@ public class MicroblogsEntryPersistenceImpl
 		}
 		else {
 			if (getDB().isSupportsInlineDistinct()) {
-				sb.append(
-					MicroblogsEntryModelImpl.ORDER_BY_SQL_INLINE_DISTINCT);
+				sb.append(MicroblogsEntryModelImpl.ORDER_BY_JPQL);
 			}
 			else {
 				sb.append(MicroblogsEntryModelImpl.ORDER_BY_SQL);
@@ -7180,8 +7165,7 @@ public class MicroblogsEntryPersistenceImpl
 		}
 		else {
 			if (getDB().isSupportsInlineDistinct()) {
-				sb.append(
-					MicroblogsEntryModelImpl.ORDER_BY_SQL_INLINE_DISTINCT);
+				sb.append(MicroblogsEntryModelImpl.ORDER_BY_JPQL);
 			}
 			else {
 				sb.append(MicroblogsEntryModelImpl.ORDER_BY_SQL);
@@ -8362,8 +8346,7 @@ public class MicroblogsEntryPersistenceImpl
 		}
 		else {
 			if (getDB().isSupportsInlineDistinct()) {
-				sb.append(
-					MicroblogsEntryModelImpl.ORDER_BY_SQL_INLINE_DISTINCT);
+				sb.append(MicroblogsEntryModelImpl.ORDER_BY_JPQL);
 			}
 			else {
 				sb.append(MicroblogsEntryModelImpl.ORDER_BY_SQL);
@@ -8573,8 +8556,7 @@ public class MicroblogsEntryPersistenceImpl
 		}
 		else {
 			if (getDB().isSupportsInlineDistinct()) {
-				sb.append(
-					MicroblogsEntryModelImpl.ORDER_BY_SQL_INLINE_DISTINCT);
+				sb.append(MicroblogsEntryModelImpl.ORDER_BY_JPQL);
 			}
 			else {
 				sb.append(MicroblogsEntryModelImpl.ORDER_BY_SQL);
@@ -9389,8 +9371,7 @@ public class MicroblogsEntryPersistenceImpl
 		}
 		else {
 			if (getDB().isSupportsInlineDistinct()) {
-				sb.append(
-					MicroblogsEntryModelImpl.ORDER_BY_SQL_INLINE_DISTINCT);
+				sb.append(MicroblogsEntryModelImpl.ORDER_BY_JPQL);
 			}
 			else {
 				sb.append(MicroblogsEntryModelImpl.ORDER_BY_SQL);
@@ -9601,8 +9582,7 @@ public class MicroblogsEntryPersistenceImpl
 		}
 		else {
 			if (getDB().isSupportsInlineDistinct()) {
-				sb.append(
-					MicroblogsEntryModelImpl.ORDER_BY_SQL_INLINE_DISTINCT);
+				sb.append(MicroblogsEntryModelImpl.ORDER_BY_JPQL);
 			}
 			else {
 				sb.append(MicroblogsEntryModelImpl.ORDER_BY_SQL);
@@ -9773,8 +9753,7 @@ public class MicroblogsEntryPersistenceImpl
 		}
 		else {
 			if (getDB().isSupportsInlineDistinct()) {
-				sb.append(
-					MicroblogsEntryModelImpl.ORDER_BY_SQL_INLINE_DISTINCT);
+				sb.append(MicroblogsEntryModelImpl.ORDER_BY_JPQL);
 			}
 			else {
 				sb.append(MicroblogsEntryModelImpl.ORDER_BY_SQL);
@@ -11007,8 +10986,7 @@ public class MicroblogsEntryPersistenceImpl
 		}
 		else {
 			if (getDB().isSupportsInlineDistinct()) {
-				sb.append(
-					MicroblogsEntryModelImpl.ORDER_BY_SQL_INLINE_DISTINCT);
+				sb.append(MicroblogsEntryModelImpl.ORDER_BY_JPQL);
 			}
 			else {
 				sb.append(MicroblogsEntryModelImpl.ORDER_BY_SQL);
@@ -11224,8 +11202,7 @@ public class MicroblogsEntryPersistenceImpl
 		}
 		else {
 			if (getDB().isSupportsInlineDistinct()) {
-				sb.append(
-					MicroblogsEntryModelImpl.ORDER_BY_SQL_INLINE_DISTINCT);
+				sb.append(MicroblogsEntryModelImpl.ORDER_BY_JPQL);
 			}
 			else {
 				sb.append(MicroblogsEntryModelImpl.ORDER_BY_SQL);
@@ -11406,8 +11383,7 @@ public class MicroblogsEntryPersistenceImpl
 		}
 		else {
 			if (getDB().isSupportsInlineDistinct()) {
-				sb.append(
-					MicroblogsEntryModelImpl.ORDER_BY_SQL_INLINE_DISTINCT);
+				sb.append(MicroblogsEntryModelImpl.ORDER_BY_JPQL);
 			}
 			else {
 				sb.append(MicroblogsEntryModelImpl.ORDER_BY_SQL);
@@ -12712,8 +12688,7 @@ public class MicroblogsEntryPersistenceImpl
 		}
 		else {
 			if (getDB().isSupportsInlineDistinct()) {
-				sb.append(
-					MicroblogsEntryModelImpl.ORDER_BY_SQL_INLINE_DISTINCT);
+				sb.append(MicroblogsEntryModelImpl.ORDER_BY_JPQL);
 			}
 			else {
 				sb.append(MicroblogsEntryModelImpl.ORDER_BY_SQL);
@@ -12940,8 +12915,7 @@ public class MicroblogsEntryPersistenceImpl
 		}
 		else {
 			if (getDB().isSupportsInlineDistinct()) {
-				sb.append(
-					MicroblogsEntryModelImpl.ORDER_BY_SQL_INLINE_DISTINCT);
+				sb.append(MicroblogsEntryModelImpl.ORDER_BY_JPQL);
 			}
 			else {
 				sb.append(MicroblogsEntryModelImpl.ORDER_BY_SQL);

@@ -99,9 +99,6 @@ public class CommerceApplicationBrandModelImpl
 	public static final String ORDER_BY_SQL =
 		" ORDER BY CommerceApplicationBrand.name ASC";
 
-	public static final String ORDER_BY_SQL_INLINE_DISTINCT =
-		" ORDER BY commerceApplicationBrand.name ASC";
-
 	public static final String DATA_SOURCE = "liferayDataSource";
 
 	public static final String SESSION_FACTORY = "liferaySessionFactory";

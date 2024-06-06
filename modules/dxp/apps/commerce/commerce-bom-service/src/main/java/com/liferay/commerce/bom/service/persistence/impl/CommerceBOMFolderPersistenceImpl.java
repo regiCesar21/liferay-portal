@@ -612,8 +612,7 @@ public class CommerceBOMFolderPersistenceImpl
 		}
 		else {
 			if (getDB().isSupportsInlineDistinct()) {
-				sb.append(
-					CommerceBOMFolderModelImpl.ORDER_BY_SQL_INLINE_DISTINCT);
+				sb.append(CommerceBOMFolderModelImpl.ORDER_BY_JPQL);
 			}
 			else {
 				sb.append(CommerceBOMFolderModelImpl.ORDER_BY_SQL);
@@ -811,8 +810,7 @@ public class CommerceBOMFolderPersistenceImpl
 		}
 		else {
 			if (getDB().isSupportsInlineDistinct()) {
-				sb.append(
-					CommerceBOMFolderModelImpl.ORDER_BY_SQL_INLINE_DISTINCT);
+				sb.append(CommerceBOMFolderModelImpl.ORDER_BY_JPQL);
 			}
 			else {
 				sb.append(CommerceBOMFolderModelImpl.ORDER_BY_SQL);
@@ -1552,8 +1550,7 @@ public class CommerceBOMFolderPersistenceImpl
 		}
 		else {
 			if (getDB().isSupportsInlineDistinct()) {
-				sb.append(
-					CommerceBOMFolderModelImpl.ORDER_BY_SQL_INLINE_DISTINCT);
+				sb.append(CommerceBOMFolderModelImpl.ORDER_BY_JPQL);
 			}
 			else {
 				sb.append(CommerceBOMFolderModelImpl.ORDER_BY_SQL);
@@ -1760,8 +1757,7 @@ public class CommerceBOMFolderPersistenceImpl
 		}
 		else {
 			if (getDB().isSupportsInlineDistinct()) {
-				sb.append(
-					CommerceBOMFolderModelImpl.ORDER_BY_SQL_INLINE_DISTINCT);
+				sb.append(CommerceBOMFolderModelImpl.ORDER_BY_JPQL);
 			}
 			else {
 				sb.append(CommerceBOMFolderModelImpl.ORDER_BY_SQL);

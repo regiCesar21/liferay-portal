@@ -643,8 +643,7 @@ public class CPOptionCategoryPersistenceImpl
 		}
 		else {
 			if (getDB().isSupportsInlineDistinct()) {
-				sb.append(
-					CPOptionCategoryModelImpl.ORDER_BY_SQL_INLINE_DISTINCT);
+				sb.append(CPOptionCategoryModelImpl.ORDER_BY_JPQL);
 			}
 			else {
 				sb.append(CPOptionCategoryModelImpl.ORDER_BY_SQL);
@@ -854,8 +853,7 @@ public class CPOptionCategoryPersistenceImpl
 		}
 		else {
 			if (getDB().isSupportsInlineDistinct()) {
-				sb.append(
-					CPOptionCategoryModelImpl.ORDER_BY_SQL_INLINE_DISTINCT);
+				sb.append(CPOptionCategoryModelImpl.ORDER_BY_JPQL);
 			}
 			else {
 				sb.append(CPOptionCategoryModelImpl.ORDER_BY_SQL);
@@ -1652,8 +1650,7 @@ public class CPOptionCategoryPersistenceImpl
 		}
 		else {
 			if (getDB().isSupportsInlineDistinct()) {
-				sb.append(
-					CPOptionCategoryModelImpl.ORDER_BY_SQL_INLINE_DISTINCT);
+				sb.append(CPOptionCategoryModelImpl.ORDER_BY_JPQL);
 			}
 			else {
 				sb.append(CPOptionCategoryModelImpl.ORDER_BY_SQL);
@@ -1870,8 +1867,7 @@ public class CPOptionCategoryPersistenceImpl
 		}
 		else {
 			if (getDB().isSupportsInlineDistinct()) {
-				sb.append(
-					CPOptionCategoryModelImpl.ORDER_BY_SQL_INLINE_DISTINCT);
+				sb.append(CPOptionCategoryModelImpl.ORDER_BY_JPQL);
 			}
 			else {
 				sb.append(CPOptionCategoryModelImpl.ORDER_BY_SQL);
@@ -2612,8 +2608,7 @@ public class CPOptionCategoryPersistenceImpl
 		}
 		else {
 			if (getDB().isSupportsInlineDistinct()) {
-				sb.append(
-					CPOptionCategoryModelImpl.ORDER_BY_SQL_INLINE_DISTINCT);
+				sb.append(CPOptionCategoryModelImpl.ORDER_BY_JPQL);
 			}
 			else {
 				sb.append(CPOptionCategoryModelImpl.ORDER_BY_SQL);
@@ -2810,8 +2805,7 @@ public class CPOptionCategoryPersistenceImpl
 		}
 		else {
 			if (getDB().isSupportsInlineDistinct()) {
-				sb.append(
-					CPOptionCategoryModelImpl.ORDER_BY_SQL_INLINE_DISTINCT);
+				sb.append(CPOptionCategoryModelImpl.ORDER_BY_JPQL);
 			}
 			else {
 				sb.append(CPOptionCategoryModelImpl.ORDER_BY_SQL);

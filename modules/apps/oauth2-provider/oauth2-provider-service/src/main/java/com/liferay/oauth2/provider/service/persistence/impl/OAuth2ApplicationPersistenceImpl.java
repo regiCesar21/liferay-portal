@@ -621,8 +621,7 @@ public class OAuth2ApplicationPersistenceImpl
 		}
 		else {
 			if (getDB().isSupportsInlineDistinct()) {
-				sb.append(
-					OAuth2ApplicationModelImpl.ORDER_BY_SQL_INLINE_DISTINCT);
+				sb.append(OAuth2ApplicationModelImpl.ORDER_BY_JPQL);
 			}
 			else {
 				sb.append(OAuth2ApplicationModelImpl.ORDER_BY_SQL);
@@ -820,8 +819,7 @@ public class OAuth2ApplicationPersistenceImpl
 		}
 		else {
 			if (getDB().isSupportsInlineDistinct()) {
-				sb.append(
-					OAuth2ApplicationModelImpl.ORDER_BY_SQL_INLINE_DISTINCT);
+				sb.append(OAuth2ApplicationModelImpl.ORDER_BY_JPQL);
 			}
 			else {
 				sb.append(OAuth2ApplicationModelImpl.ORDER_BY_SQL);

@@ -1972,7 +1972,7 @@ public class MDRRuleGroupPersistenceImpl
 		}
 		else {
 			if (getDB().isSupportsInlineDistinct()) {
-				sb.append(MDRRuleGroupModelImpl.ORDER_BY_SQL_INLINE_DISTINCT);
+				sb.append(MDRRuleGroupModelImpl.ORDER_BY_JPQL);
 			}
 			else {
 				sb.append(MDRRuleGroupModelImpl.ORDER_BY_SQL);
@@ -2167,7 +2167,7 @@ public class MDRRuleGroupPersistenceImpl
 		}
 		else {
 			if (getDB().isSupportsInlineDistinct()) {
-				sb.append(MDRRuleGroupModelImpl.ORDER_BY_SQL_INLINE_DISTINCT);
+				sb.append(MDRRuleGroupModelImpl.ORDER_BY_JPQL);
 			}
 			else {
 				sb.append(MDRRuleGroupModelImpl.ORDER_BY_SQL);
@@ -2314,7 +2314,7 @@ public class MDRRuleGroupPersistenceImpl
 		}
 		else {
 			if (getDB().isSupportsInlineDistinct()) {
-				sb.append(MDRRuleGroupModelImpl.ORDER_BY_SQL_INLINE_DISTINCT);
+				sb.append(MDRRuleGroupModelImpl.ORDER_BY_JPQL);
 			}
 			else {
 				sb.append(MDRRuleGroupModelImpl.ORDER_BY_SQL);

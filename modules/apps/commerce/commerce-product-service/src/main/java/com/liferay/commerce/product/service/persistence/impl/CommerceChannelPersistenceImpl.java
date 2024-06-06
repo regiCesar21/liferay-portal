@@ -621,8 +621,7 @@ public class CommerceChannelPersistenceImpl
 		}
 		else {
 			if (getDB().isSupportsInlineDistinct()) {
-				sb.append(
-					CommerceChannelModelImpl.ORDER_BY_SQL_INLINE_DISTINCT);
+				sb.append(CommerceChannelModelImpl.ORDER_BY_JPQL);
 			}
 			else {
 				sb.append(CommerceChannelModelImpl.ORDER_BY_SQL);
@@ -818,8 +817,7 @@ public class CommerceChannelPersistenceImpl
 		}
 		else {
 			if (getDB().isSupportsInlineDistinct()) {
-				sb.append(
-					CommerceChannelModelImpl.ORDER_BY_SQL_INLINE_DISTINCT);
+				sb.append(CommerceChannelModelImpl.ORDER_BY_JPQL);
 			}
 			else {
 				sb.append(CommerceChannelModelImpl.ORDER_BY_SQL);

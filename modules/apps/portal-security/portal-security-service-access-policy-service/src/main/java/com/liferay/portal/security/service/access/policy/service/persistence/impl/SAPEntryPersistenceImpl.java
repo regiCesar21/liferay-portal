@@ -641,7 +641,7 @@ public class SAPEntryPersistenceImpl
 		}
 		else {
 			if (getDB().isSupportsInlineDistinct()) {
-				sb.append(SAPEntryModelImpl.ORDER_BY_SQL_INLINE_DISTINCT);
+				sb.append(SAPEntryModelImpl.ORDER_BY_JPQL);
 			}
 			else {
 				sb.append(SAPEntryModelImpl.ORDER_BY_SQL);
@@ -844,7 +844,7 @@ public class SAPEntryPersistenceImpl
 		}
 		else {
 			if (getDB().isSupportsInlineDistinct()) {
-				sb.append(SAPEntryModelImpl.ORDER_BY_SQL_INLINE_DISTINCT);
+				sb.append(SAPEntryModelImpl.ORDER_BY_JPQL);
 			}
 			else {
 				sb.append(SAPEntryModelImpl.ORDER_BY_SQL);
@@ -1628,7 +1628,7 @@ public class SAPEntryPersistenceImpl
 		}
 		else {
 			if (getDB().isSupportsInlineDistinct()) {
-				sb.append(SAPEntryModelImpl.ORDER_BY_SQL_INLINE_DISTINCT);
+				sb.append(SAPEntryModelImpl.ORDER_BY_JPQL);
 			}
 			else {
 				sb.append(SAPEntryModelImpl.ORDER_BY_SQL);
@@ -1837,7 +1837,7 @@ public class SAPEntryPersistenceImpl
 		}
 		else {
 			if (getDB().isSupportsInlineDistinct()) {
-				sb.append(SAPEntryModelImpl.ORDER_BY_SQL_INLINE_DISTINCT);
+				sb.append(SAPEntryModelImpl.ORDER_BY_JPQL);
 			}
 			else {
 				sb.append(SAPEntryModelImpl.ORDER_BY_SQL);
@@ -2564,7 +2564,7 @@ public class SAPEntryPersistenceImpl
 		}
 		else {
 			if (getDB().isSupportsInlineDistinct()) {
-				sb.append(SAPEntryModelImpl.ORDER_BY_SQL_INLINE_DISTINCT);
+				sb.append(SAPEntryModelImpl.ORDER_BY_JPQL);
 			}
 			else {
 				sb.append(SAPEntryModelImpl.ORDER_BY_SQL);
@@ -2755,7 +2755,7 @@ public class SAPEntryPersistenceImpl
 		}
 		else {
 			if (getDB().isSupportsInlineDistinct()) {
-				sb.append(SAPEntryModelImpl.ORDER_BY_SQL_INLINE_DISTINCT);
+				sb.append(SAPEntryModelImpl.ORDER_BY_JPQL);
 			}
 			else {
 				sb.append(SAPEntryModelImpl.ORDER_BY_SQL);
@@ -3474,7 +3474,7 @@ public class SAPEntryPersistenceImpl
 		}
 		else {
 			if (getDB().isSupportsInlineDistinct()) {
-				sb.append(SAPEntryModelImpl.ORDER_BY_SQL_INLINE_DISTINCT);
+				sb.append(SAPEntryModelImpl.ORDER_BY_JPQL);
 			}
 			else {
 				sb.append(SAPEntryModelImpl.ORDER_BY_SQL);
@@ -3673,7 +3673,7 @@ public class SAPEntryPersistenceImpl
 		}
 		else {
 			if (getDB().isSupportsInlineDistinct()) {
-				sb.append(SAPEntryModelImpl.ORDER_BY_SQL_INLINE_DISTINCT);
+				sb.append(SAPEntryModelImpl.ORDER_BY_JPQL);
 			}
 			else {
 				sb.append(SAPEntryModelImpl.ORDER_BY_SQL);

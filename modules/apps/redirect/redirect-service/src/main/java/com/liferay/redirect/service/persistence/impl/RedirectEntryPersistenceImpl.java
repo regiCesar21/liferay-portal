@@ -1980,7 +1980,7 @@ public class RedirectEntryPersistenceImpl
 		}
 		else {
 			if (getDB().isSupportsInlineDistinct()) {
-				sb.append(RedirectEntryModelImpl.ORDER_BY_SQL_INLINE_DISTINCT);
+				sb.append(RedirectEntryModelImpl.ORDER_BY_JPQL);
 			}
 			else {
 				sb.append(RedirectEntryModelImpl.ORDER_BY_SQL);
@@ -2175,7 +2175,7 @@ public class RedirectEntryPersistenceImpl
 		}
 		else {
 			if (getDB().isSupportsInlineDistinct()) {
-				sb.append(RedirectEntryModelImpl.ORDER_BY_SQL_INLINE_DISTINCT);
+				sb.append(RedirectEntryModelImpl.ORDER_BY_JPQL);
 			}
 			else {
 				sb.append(RedirectEntryModelImpl.ORDER_BY_SQL);
@@ -2937,7 +2937,7 @@ public class RedirectEntryPersistenceImpl
 		}
 		else {
 			if (getDB().isSupportsInlineDistinct()) {
-				sb.append(RedirectEntryModelImpl.ORDER_BY_SQL_INLINE_DISTINCT);
+				sb.append(RedirectEntryModelImpl.ORDER_BY_JPQL);
 			}
 			else {
 				sb.append(RedirectEntryModelImpl.ORDER_BY_SQL);
@@ -3153,7 +3153,7 @@ public class RedirectEntryPersistenceImpl
 		}
 		else {
 			if (getDB().isSupportsInlineDistinct()) {
-				sb.append(RedirectEntryModelImpl.ORDER_BY_SQL_INLINE_DISTINCT);
+				sb.append(RedirectEntryModelImpl.ORDER_BY_JPQL);
 			}
 			else {
 				sb.append(RedirectEntryModelImpl.ORDER_BY_SQL);

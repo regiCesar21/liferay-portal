@@ -2015,9 +2015,7 @@ public class CommerceNotificationTemplatePersistenceImpl
 		}
 		else {
 			if (getDB().isSupportsInlineDistinct()) {
-				sb.append(
-					CommerceNotificationTemplateModelImpl.
-						ORDER_BY_SQL_INLINE_DISTINCT);
+				sb.append(CommerceNotificationTemplateModelImpl.ORDER_BY_JPQL);
 			}
 			else {
 				sb.append(CommerceNotificationTemplateModelImpl.ORDER_BY_SQL);
@@ -2220,9 +2218,7 @@ public class CommerceNotificationTemplatePersistenceImpl
 		}
 		else {
 			if (getDB().isSupportsInlineDistinct()) {
-				sb.append(
-					CommerceNotificationTemplateModelImpl.
-						ORDER_BY_SQL_INLINE_DISTINCT);
+				sb.append(CommerceNotificationTemplateModelImpl.ORDER_BY_JPQL);
 			}
 			else {
 				sb.append(CommerceNotificationTemplateModelImpl.ORDER_BY_SQL);
@@ -2953,9 +2949,7 @@ public class CommerceNotificationTemplatePersistenceImpl
 		}
 		else {
 			if (getDB().isSupportsInlineDistinct()) {
-				sb.append(
-					CommerceNotificationTemplateModelImpl.
-						ORDER_BY_SQL_INLINE_DISTINCT);
+				sb.append(CommerceNotificationTemplateModelImpl.ORDER_BY_JPQL);
 			}
 			else {
 				sb.append(CommerceNotificationTemplateModelImpl.ORDER_BY_SQL);
@@ -3165,9 +3159,7 @@ public class CommerceNotificationTemplatePersistenceImpl
 		}
 		else {
 			if (getDB().isSupportsInlineDistinct()) {
-				sb.append(
-					CommerceNotificationTemplateModelImpl.
-						ORDER_BY_SQL_INLINE_DISTINCT);
+				sb.append(CommerceNotificationTemplateModelImpl.ORDER_BY_JPQL);
 			}
 			else {
 				sb.append(CommerceNotificationTemplateModelImpl.ORDER_BY_SQL);
@@ -3984,9 +3976,7 @@ public class CommerceNotificationTemplatePersistenceImpl
 		}
 		else {
 			if (getDB().isSupportsInlineDistinct()) {
-				sb.append(
-					CommerceNotificationTemplateModelImpl.
-						ORDER_BY_SQL_INLINE_DISTINCT);
+				sb.append(CommerceNotificationTemplateModelImpl.ORDER_BY_JPQL);
 			}
 			else {
 				sb.append(CommerceNotificationTemplateModelImpl.ORDER_BY_SQL);
@@ -4215,9 +4205,7 @@ public class CommerceNotificationTemplatePersistenceImpl
 		}
 		else {
 			if (getDB().isSupportsInlineDistinct()) {
-				sb.append(
-					CommerceNotificationTemplateModelImpl.
-						ORDER_BY_SQL_INLINE_DISTINCT);
+				sb.append(CommerceNotificationTemplateModelImpl.ORDER_BY_JPQL);
 			}
 			else {
 				sb.append(CommerceNotificationTemplateModelImpl.ORDER_BY_SQL);

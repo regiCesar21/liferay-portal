@@ -2067,9 +2067,7 @@ public class DDMDataProviderInstancePersistenceImpl
 		}
 		else {
 			if (getDB().isSupportsInlineDistinct()) {
-				sb.append(
-					DDMDataProviderInstanceModelImpl.
-						ORDER_BY_SQL_INLINE_DISTINCT);
+				sb.append(DDMDataProviderInstanceModelImpl.ORDER_BY_JPQL);
 			}
 			else {
 				sb.append(DDMDataProviderInstanceModelImpl.ORDER_BY_SQL);
@@ -2270,9 +2268,7 @@ public class DDMDataProviderInstancePersistenceImpl
 		}
 		else {
 			if (getDB().isSupportsInlineDistinct()) {
-				sb.append(
-					DDMDataProviderInstanceModelImpl.
-						ORDER_BY_SQL_INLINE_DISTINCT);
+				sb.append(DDMDataProviderInstanceModelImpl.ORDER_BY_JPQL);
 			}
 			else {
 				sb.append(DDMDataProviderInstanceModelImpl.ORDER_BY_SQL);
@@ -2422,9 +2418,7 @@ public class DDMDataProviderInstancePersistenceImpl
 		}
 		else {
 			if (getDB().isSupportsInlineDistinct()) {
-				sb.append(
-					DDMDataProviderInstanceModelImpl.
-						ORDER_BY_SQL_INLINE_DISTINCT);
+				sb.append(DDMDataProviderInstanceModelImpl.ORDER_BY_JPQL);
 			}
 			else {
 				sb.append(DDMDataProviderInstanceModelImpl.ORDER_BY_SQL);

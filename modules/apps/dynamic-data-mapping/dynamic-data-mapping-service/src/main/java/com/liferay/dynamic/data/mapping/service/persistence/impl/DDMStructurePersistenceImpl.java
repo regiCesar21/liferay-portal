@@ -2020,7 +2020,7 @@ public class DDMStructurePersistenceImpl
 		}
 		else {
 			if (getDB().isSupportsInlineDistinct()) {
-				sb.append(DDMStructureModelImpl.ORDER_BY_SQL_INLINE_DISTINCT);
+				sb.append(DDMStructureModelImpl.ORDER_BY_JPQL);
 			}
 			else {
 				sb.append(DDMStructureModelImpl.ORDER_BY_SQL);
@@ -2215,7 +2215,7 @@ public class DDMStructurePersistenceImpl
 		}
 		else {
 			if (getDB().isSupportsInlineDistinct()) {
-				sb.append(DDMStructureModelImpl.ORDER_BY_SQL_INLINE_DISTINCT);
+				sb.append(DDMStructureModelImpl.ORDER_BY_JPQL);
 			}
 			else {
 				sb.append(DDMStructureModelImpl.ORDER_BY_SQL);
@@ -2362,7 +2362,7 @@ public class DDMStructurePersistenceImpl
 		}
 		else {
 			if (getDB().isSupportsInlineDistinct()) {
-				sb.append(DDMStructureModelImpl.ORDER_BY_SQL_INLINE_DISTINCT);
+				sb.append(DDMStructureModelImpl.ORDER_BY_JPQL);
 			}
 			else {
 				sb.append(DDMStructureModelImpl.ORDER_BY_SQL);
@@ -4489,7 +4489,7 @@ public class DDMStructurePersistenceImpl
 		}
 		else {
 			if (getDB().isSupportsInlineDistinct()) {
-				sb.append(DDMStructureModelImpl.ORDER_BY_SQL_INLINE_DISTINCT);
+				sb.append(DDMStructureModelImpl.ORDER_BY_JPQL);
 			}
 			else {
 				sb.append(DDMStructureModelImpl.ORDER_BY_SQL);
@@ -4692,7 +4692,7 @@ public class DDMStructurePersistenceImpl
 		}
 		else {
 			if (getDB().isSupportsInlineDistinct()) {
-				sb.append(DDMStructureModelImpl.ORDER_BY_SQL_INLINE_DISTINCT);
+				sb.append(DDMStructureModelImpl.ORDER_BY_JPQL);
 			}
 			else {
 				sb.append(DDMStructureModelImpl.ORDER_BY_SQL);
@@ -5439,7 +5439,7 @@ public class DDMStructurePersistenceImpl
 		}
 		else {
 			if (getDB().isSupportsInlineDistinct()) {
-				sb.append(DDMStructureModelImpl.ORDER_BY_SQL_INLINE_DISTINCT);
+				sb.append(DDMStructureModelImpl.ORDER_BY_JPQL);
 			}
 			else {
 				sb.append(DDMStructureModelImpl.ORDER_BY_SQL);
@@ -5642,7 +5642,7 @@ public class DDMStructurePersistenceImpl
 		}
 		else {
 			if (getDB().isSupportsInlineDistinct()) {
-				sb.append(DDMStructureModelImpl.ORDER_BY_SQL_INLINE_DISTINCT);
+				sb.append(DDMStructureModelImpl.ORDER_BY_JPQL);
 			}
 			else {
 				sb.append(DDMStructureModelImpl.ORDER_BY_SQL);
@@ -5801,7 +5801,7 @@ public class DDMStructurePersistenceImpl
 		}
 		else {
 			if (getDB().isSupportsInlineDistinct()) {
-				sb.append(DDMStructureModelImpl.ORDER_BY_SQL_INLINE_DISTINCT);
+				sb.append(DDMStructureModelImpl.ORDER_BY_JPQL);
 			}
 			else {
 				sb.append(DDMStructureModelImpl.ORDER_BY_SQL);
@@ -7852,7 +7852,7 @@ public class DDMStructurePersistenceImpl
 		}
 		else {
 			if (getDB().isSupportsInlineDistinct()) {
-				sb.append(DDMStructureModelImpl.ORDER_BY_SQL_INLINE_DISTINCT);
+				sb.append(DDMStructureModelImpl.ORDER_BY_JPQL);
 			}
 			else {
 				sb.append(DDMStructureModelImpl.ORDER_BY_SQL);
@@ -8085,7 +8085,7 @@ public class DDMStructurePersistenceImpl
 		}
 		else {
 			if (getDB().isSupportsInlineDistinct()) {
-				sb.append(DDMStructureModelImpl.ORDER_BY_SQL_INLINE_DISTINCT);
+				sb.append(DDMStructureModelImpl.ORDER_BY_JPQL);
 			}
 			else {
 				sb.append(DDMStructureModelImpl.ORDER_BY_SQL);
@@ -9057,7 +9057,7 @@ public class DDMStructurePersistenceImpl
 		}
 		else {
 			if (getDB().isSupportsInlineDistinct()) {
-				sb.append(DDMStructureModelImpl.ORDER_BY_SQL_INLINE_DISTINCT);
+				sb.append(DDMStructureModelImpl.ORDER_BY_JPQL);
 			}
 			else {
 				sb.append(DDMStructureModelImpl.ORDER_BY_SQL);
@@ -9297,7 +9297,7 @@ public class DDMStructurePersistenceImpl
 		}
 		else {
 			if (getDB().isSupportsInlineDistinct()) {
-				sb.append(DDMStructureModelImpl.ORDER_BY_SQL_INLINE_DISTINCT);
+				sb.append(DDMStructureModelImpl.ORDER_BY_JPQL);
 			}
 			else {
 				sb.append(DDMStructureModelImpl.ORDER_BY_SQL);
@@ -9499,7 +9499,7 @@ public class DDMStructurePersistenceImpl
 		}
 		else {
 			if (getDB().isSupportsInlineDistinct()) {
-				sb.append(DDMStructureModelImpl.ORDER_BY_SQL_INLINE_DISTINCT);
+				sb.append(DDMStructureModelImpl.ORDER_BY_JPQL);
 			}
 			else {
 				sb.append(DDMStructureModelImpl.ORDER_BY_SQL);

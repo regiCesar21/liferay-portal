@@ -611,7 +611,7 @@ public class CTCollectionPersistenceImpl
 		}
 		else {
 			if (getDB().isSupportsInlineDistinct()) {
-				sb.append(CTCollectionModelImpl.ORDER_BY_SQL_INLINE_DISTINCT);
+				sb.append(CTCollectionModelImpl.ORDER_BY_JPQL);
 			}
 			else {
 				sb.append(CTCollectionModelImpl.ORDER_BY_SQL);
@@ -806,7 +806,7 @@ public class CTCollectionPersistenceImpl
 		}
 		else {
 			if (getDB().isSupportsInlineDistinct()) {
-				sb.append(CTCollectionModelImpl.ORDER_BY_SQL_INLINE_DISTINCT);
+				sb.append(CTCollectionModelImpl.ORDER_BY_JPQL);
 			}
 			else {
 				sb.append(CTCollectionModelImpl.ORDER_BY_SQL);
@@ -1522,7 +1522,7 @@ public class CTCollectionPersistenceImpl
 		}
 		else {
 			if (getDB().isSupportsInlineDistinct()) {
-				sb.append(CTCollectionModelImpl.ORDER_BY_SQL_INLINE_DISTINCT);
+				sb.append(CTCollectionModelImpl.ORDER_BY_JPQL);
 			}
 			else {
 				sb.append(CTCollectionModelImpl.ORDER_BY_SQL);
@@ -1724,7 +1724,7 @@ public class CTCollectionPersistenceImpl
 		}
 		else {
 			if (getDB().isSupportsInlineDistinct()) {
-				sb.append(CTCollectionModelImpl.ORDER_BY_SQL_INLINE_DISTINCT);
+				sb.append(CTCollectionModelImpl.ORDER_BY_JPQL);
 			}
 			else {
 				sb.append(CTCollectionModelImpl.ORDER_BY_SQL);

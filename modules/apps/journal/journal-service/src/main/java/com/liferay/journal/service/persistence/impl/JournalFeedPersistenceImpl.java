@@ -2015,7 +2015,7 @@ public class JournalFeedPersistenceImpl
 		}
 		else {
 			if (getDB().isSupportsInlineDistinct()) {
-				sb.append(JournalFeedModelImpl.ORDER_BY_SQL_INLINE_DISTINCT);
+				sb.append(JournalFeedModelImpl.ORDER_BY_JPQL);
 			}
 			else {
 				sb.append(JournalFeedModelImpl.ORDER_BY_SQL);
@@ -2207,7 +2207,7 @@ public class JournalFeedPersistenceImpl
 		}
 		else {
 			if (getDB().isSupportsInlineDistinct()) {
-				sb.append(JournalFeedModelImpl.ORDER_BY_SQL_INLINE_DISTINCT);
+				sb.append(JournalFeedModelImpl.ORDER_BY_JPQL);
 			}
 			else {
 				sb.append(JournalFeedModelImpl.ORDER_BY_SQL);

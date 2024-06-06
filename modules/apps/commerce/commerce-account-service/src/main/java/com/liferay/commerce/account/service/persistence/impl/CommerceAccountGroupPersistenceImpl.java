@@ -489,8 +489,7 @@ public class CommerceAccountGroupPersistenceImpl
 		}
 		else {
 			if (getDB().isSupportsInlineDistinct()) {
-				sb.append(
-					CommerceAccountGroupModelImpl.ORDER_BY_SQL_INLINE_DISTINCT);
+				sb.append(CommerceAccountGroupModelImpl.ORDER_BY_JPQL);
 			}
 			else {
 				sb.append(CommerceAccountGroupModelImpl.ORDER_BY_SQL);
@@ -641,8 +640,7 @@ public class CommerceAccountGroupPersistenceImpl
 		}
 		else {
 			if (getDB().isSupportsInlineDistinct()) {
-				sb.append(
-					CommerceAccountGroupModelImpl.ORDER_BY_SQL_INLINE_DISTINCT);
+				sb.append(CommerceAccountGroupModelImpl.ORDER_BY_JPQL);
 			}
 			else {
 				sb.append(CommerceAccountGroupModelImpl.ORDER_BY_SQL);
@@ -1666,8 +1664,7 @@ public class CommerceAccountGroupPersistenceImpl
 		}
 		else {
 			if (getDB().isSupportsInlineDistinct()) {
-				sb.append(
-					CommerceAccountGroupModelImpl.ORDER_BY_SQL_INLINE_DISTINCT);
+				sb.append(CommerceAccountGroupModelImpl.ORDER_BY_JPQL);
 			}
 			else {
 				sb.append(CommerceAccountGroupModelImpl.ORDER_BY_SQL);
@@ -1867,8 +1864,7 @@ public class CommerceAccountGroupPersistenceImpl
 		}
 		else {
 			if (getDB().isSupportsInlineDistinct()) {
-				sb.append(
-					CommerceAccountGroupModelImpl.ORDER_BY_SQL_INLINE_DISTINCT);
+				sb.append(CommerceAccountGroupModelImpl.ORDER_BY_JPQL);
 			}
 			else {
 				sb.append(CommerceAccountGroupModelImpl.ORDER_BY_SQL);
@@ -2592,8 +2588,7 @@ public class CommerceAccountGroupPersistenceImpl
 		}
 		else {
 			if (getDB().isSupportsInlineDistinct()) {
-				sb.append(
-					CommerceAccountGroupModelImpl.ORDER_BY_SQL_INLINE_DISTINCT);
+				sb.append(CommerceAccountGroupModelImpl.ORDER_BY_JPQL);
 			}
 			else {
 				sb.append(CommerceAccountGroupModelImpl.ORDER_BY_SQL);
@@ -2798,8 +2793,7 @@ public class CommerceAccountGroupPersistenceImpl
 		}
 		else {
 			if (getDB().isSupportsInlineDistinct()) {
-				sb.append(
-					CommerceAccountGroupModelImpl.ORDER_BY_SQL_INLINE_DISTINCT);
+				sb.append(CommerceAccountGroupModelImpl.ORDER_BY_JPQL);
 			}
 			else {
 				sb.append(CommerceAccountGroupModelImpl.ORDER_BY_SQL);

@@ -617,9 +617,7 @@ public class CommerceApplicationBrandPersistenceImpl
 		}
 		else {
 			if (getDB().isSupportsInlineDistinct()) {
-				sb.append(
-					CommerceApplicationBrandModelImpl.
-						ORDER_BY_SQL_INLINE_DISTINCT);
+				sb.append(CommerceApplicationBrandModelImpl.ORDER_BY_JPQL);
 			}
 			else {
 				sb.append(CommerceApplicationBrandModelImpl.ORDER_BY_SQL);
@@ -820,9 +818,7 @@ public class CommerceApplicationBrandPersistenceImpl
 		}
 		else {
 			if (getDB().isSupportsInlineDistinct()) {
-				sb.append(
-					CommerceApplicationBrandModelImpl.
-						ORDER_BY_SQL_INLINE_DISTINCT);
+				sb.append(CommerceApplicationBrandModelImpl.ORDER_BY_JPQL);
 			}
 			else {
 				sb.append(CommerceApplicationBrandModelImpl.ORDER_BY_SQL);
