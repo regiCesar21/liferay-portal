@@ -638,7 +638,7 @@ public class PasswordPolicyPersistenceImpl
 		}
 		else {
 			if (getDB().isSupportsInlineDistinct()) {
-				sb.append(PasswordPolicyModelImpl.ORDER_BY_JPQL);
+				sb.append(PasswordPolicyModelImpl.ORDER_BY_SQL_INLINE_DISTINCT);
 			}
 			else {
 				sb.append(PasswordPolicyModelImpl.ORDER_BY_SQL);
@@ -846,7 +846,7 @@ public class PasswordPolicyPersistenceImpl
 		}
 		else {
 			if (getDB().isSupportsInlineDistinct()) {
-				sb.append(PasswordPolicyModelImpl.ORDER_BY_JPQL);
+				sb.append(PasswordPolicyModelImpl.ORDER_BY_SQL_INLINE_DISTINCT);
 			}
 			else {
 				sb.append(PasswordPolicyModelImpl.ORDER_BY_SQL);
@@ -1647,7 +1647,7 @@ public class PasswordPolicyPersistenceImpl
 		}
 		else {
 			if (getDB().isSupportsInlineDistinct()) {
-				sb.append(PasswordPolicyModelImpl.ORDER_BY_JPQL);
+				sb.append(PasswordPolicyModelImpl.ORDER_BY_SQL_INLINE_DISTINCT);
 			}
 			else {
 				sb.append(PasswordPolicyModelImpl.ORDER_BY_SQL);
@@ -1863,7 +1863,7 @@ public class PasswordPolicyPersistenceImpl
 		}
 		else {
 			if (getDB().isSupportsInlineDistinct()) {
-				sb.append(PasswordPolicyModelImpl.ORDER_BY_JPQL);
+				sb.append(PasswordPolicyModelImpl.ORDER_BY_SQL_INLINE_DISTINCT);
 			}
 			else {
 				sb.append(PasswordPolicyModelImpl.ORDER_BY_SQL);
@@ -2605,7 +2605,7 @@ public class PasswordPolicyPersistenceImpl
 		}
 		else {
 			if (getDB().isSupportsInlineDistinct()) {
-				sb.append(PasswordPolicyModelImpl.ORDER_BY_JPQL);
+				sb.append(PasswordPolicyModelImpl.ORDER_BY_SQL_INLINE_DISTINCT);
 			}
 			else {
 				sb.append(PasswordPolicyModelImpl.ORDER_BY_SQL);
@@ -2800,7 +2800,7 @@ public class PasswordPolicyPersistenceImpl
 		}
 		else {
 			if (getDB().isSupportsInlineDistinct()) {
-				sb.append(PasswordPolicyModelImpl.ORDER_BY_JPQL);
+				sb.append(PasswordPolicyModelImpl.ORDER_BY_SQL_INLINE_DISTINCT);
 			}
 			else {
 				sb.append(PasswordPolicyModelImpl.ORDER_BY_SQL);

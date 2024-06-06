@@ -8906,7 +8906,7 @@ public class WikiPagePersistenceImpl
 		}
 		else {
 			if (getDB().isSupportsInlineDistinct()) {
-				sb.append(WikiPageModelImpl.ORDER_BY_JPQL);
+				sb.append(WikiPageModelImpl.ORDER_BY_SQL_INLINE_DISTINCT);
 			}
 			else {
 				sb.append(WikiPageModelImpl.ORDER_BY_SQL);
@@ -9110,7 +9110,7 @@ public class WikiPagePersistenceImpl
 		}
 		else {
 			if (getDB().isSupportsInlineDistinct()) {
-				sb.append(WikiPageModelImpl.ORDER_BY_JPQL);
+				sb.append(WikiPageModelImpl.ORDER_BY_SQL_INLINE_DISTINCT);
 			}
 			else {
 				sb.append(WikiPageModelImpl.ORDER_BY_SQL);
@@ -9897,7 +9897,7 @@ public class WikiPagePersistenceImpl
 		}
 		else {
 			if (getDB().isSupportsInlineDistinct()) {
-				sb.append(WikiPageModelImpl.ORDER_BY_JPQL);
+				sb.append(WikiPageModelImpl.ORDER_BY_SQL_INLINE_DISTINCT);
 			}
 			else {
 				sb.append(WikiPageModelImpl.ORDER_BY_SQL);
@@ -10101,7 +10101,7 @@ public class WikiPagePersistenceImpl
 		}
 		else {
 			if (getDB().isSupportsInlineDistinct()) {
-				sb.append(WikiPageModelImpl.ORDER_BY_JPQL);
+				sb.append(WikiPageModelImpl.ORDER_BY_SQL_INLINE_DISTINCT);
 			}
 			else {
 				sb.append(WikiPageModelImpl.ORDER_BY_SQL);
@@ -15403,7 +15403,7 @@ public class WikiPagePersistenceImpl
 		}
 		else {
 			if (getDB().isSupportsInlineDistinct()) {
-				sb.append(WikiPageModelImpl.ORDER_BY_JPQL);
+				sb.append(WikiPageModelImpl.ORDER_BY_SQL_INLINE_DISTINCT);
 			}
 			else {
 				sb.append(WikiPageModelImpl.ORDER_BY_SQL);
@@ -15612,7 +15612,7 @@ public class WikiPagePersistenceImpl
 		}
 		else {
 			if (getDB().isSupportsInlineDistinct()) {
-				sb.append(WikiPageModelImpl.ORDER_BY_JPQL);
+				sb.append(WikiPageModelImpl.ORDER_BY_SQL_INLINE_DISTINCT);
 			}
 			else {
 				sb.append(WikiPageModelImpl.ORDER_BY_SQL);
@@ -16493,7 +16493,7 @@ public class WikiPagePersistenceImpl
 		}
 		else {
 			if (getDB().isSupportsInlineDistinct()) {
-				sb.append(WikiPageModelImpl.ORDER_BY_JPQL);
+				sb.append(WikiPageModelImpl.ORDER_BY_SQL_INLINE_DISTINCT);
 			}
 			else {
 				sb.append(WikiPageModelImpl.ORDER_BY_SQL);
@@ -16715,7 +16715,7 @@ public class WikiPagePersistenceImpl
 		}
 		else {
 			if (getDB().isSupportsInlineDistinct()) {
-				sb.append(WikiPageModelImpl.ORDER_BY_JPQL);
+				sb.append(WikiPageModelImpl.ORDER_BY_SQL_INLINE_DISTINCT);
 			}
 			else {
 				sb.append(WikiPageModelImpl.ORDER_BY_SQL);
@@ -17589,7 +17589,7 @@ public class WikiPagePersistenceImpl
 		}
 		else {
 			if (getDB().isSupportsInlineDistinct()) {
-				sb.append(WikiPageModelImpl.ORDER_BY_JPQL);
+				sb.append(WikiPageModelImpl.ORDER_BY_SQL_INLINE_DISTINCT);
 			}
 			else {
 				sb.append(WikiPageModelImpl.ORDER_BY_SQL);
@@ -17798,7 +17798,7 @@ public class WikiPagePersistenceImpl
 		}
 		else {
 			if (getDB().isSupportsInlineDistinct()) {
-				sb.append(WikiPageModelImpl.ORDER_BY_JPQL);
+				sb.append(WikiPageModelImpl.ORDER_BY_SQL_INLINE_DISTINCT);
 			}
 			else {
 				sb.append(WikiPageModelImpl.ORDER_BY_SQL);
@@ -21359,7 +21359,7 @@ public class WikiPagePersistenceImpl
 		}
 		else {
 			if (getDB().isSupportsInlineDistinct()) {
-				sb.append(WikiPageModelImpl.ORDER_BY_JPQL);
+				sb.append(WikiPageModelImpl.ORDER_BY_SQL_INLINE_DISTINCT);
 			}
 			else {
 				sb.append(WikiPageModelImpl.ORDER_BY_SQL);
@@ -21588,7 +21588,7 @@ public class WikiPagePersistenceImpl
 		}
 		else {
 			if (getDB().isSupportsInlineDistinct()) {
-				sb.append(WikiPageModelImpl.ORDER_BY_JPQL);
+				sb.append(WikiPageModelImpl.ORDER_BY_SQL_INLINE_DISTINCT);
 			}
 			else {
 				sb.append(WikiPageModelImpl.ORDER_BY_SQL);

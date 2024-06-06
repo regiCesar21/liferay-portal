@@ -2533,7 +2533,7 @@ public class BookmarksEntryPersistenceImpl
 		}
 		else {
 			if (getDB().isSupportsInlineDistinct()) {
-				sb.append(BookmarksEntryModelImpl.ORDER_BY_JPQL);
+				sb.append(BookmarksEntryModelImpl.ORDER_BY_SQL_INLINE_DISTINCT);
 			}
 			else {
 				sb.append(BookmarksEntryModelImpl.ORDER_BY_SQL);
@@ -2736,7 +2736,7 @@ public class BookmarksEntryPersistenceImpl
 		}
 		else {
 			if (getDB().isSupportsInlineDistinct()) {
-				sb.append(BookmarksEntryModelImpl.ORDER_BY_JPQL);
+				sb.append(BookmarksEntryModelImpl.ORDER_BY_SQL_INLINE_DISTINCT);
 			}
 			else {
 				sb.append(BookmarksEntryModelImpl.ORDER_BY_SQL);
@@ -2895,7 +2895,7 @@ public class BookmarksEntryPersistenceImpl
 		}
 		else {
 			if (getDB().isSupportsInlineDistinct()) {
-				sb.append(BookmarksEntryModelImpl.ORDER_BY_JPQL);
+				sb.append(BookmarksEntryModelImpl.ORDER_BY_SQL_INLINE_DISTINCT);
 			}
 			else {
 				sb.append(BookmarksEntryModelImpl.ORDER_BY_SQL);
@@ -3987,7 +3987,7 @@ public class BookmarksEntryPersistenceImpl
 		}
 		else {
 			if (getDB().isSupportsInlineDistinct()) {
-				sb.append(BookmarksEntryModelImpl.ORDER_BY_JPQL);
+				sb.append(BookmarksEntryModelImpl.ORDER_BY_SQL_INLINE_DISTINCT);
 			}
 			else {
 				sb.append(BookmarksEntryModelImpl.ORDER_BY_SQL);
@@ -4190,7 +4190,7 @@ public class BookmarksEntryPersistenceImpl
 		}
 		else {
 			if (getDB().isSupportsInlineDistinct()) {
-				sb.append(BookmarksEntryModelImpl.ORDER_BY_JPQL);
+				sb.append(BookmarksEntryModelImpl.ORDER_BY_SQL_INLINE_DISTINCT);
 			}
 			else {
 				sb.append(BookmarksEntryModelImpl.ORDER_BY_SQL);
@@ -4921,7 +4921,7 @@ public class BookmarksEntryPersistenceImpl
 		}
 		else {
 			if (getDB().isSupportsInlineDistinct()) {
-				sb.append(BookmarksEntryModelImpl.ORDER_BY_JPQL);
+				sb.append(BookmarksEntryModelImpl.ORDER_BY_SQL_INLINE_DISTINCT);
 			}
 			else {
 				sb.append(BookmarksEntryModelImpl.ORDER_BY_SQL);
@@ -5124,7 +5124,7 @@ public class BookmarksEntryPersistenceImpl
 		}
 		else {
 			if (getDB().isSupportsInlineDistinct()) {
-				sb.append(BookmarksEntryModelImpl.ORDER_BY_JPQL);
+				sb.append(BookmarksEntryModelImpl.ORDER_BY_SQL_INLINE_DISTINCT);
 			}
 			else {
 				sb.append(BookmarksEntryModelImpl.ORDER_BY_SQL);
@@ -6437,7 +6437,7 @@ public class BookmarksEntryPersistenceImpl
 		}
 		else {
 			if (getDB().isSupportsInlineDistinct()) {
-				sb.append(BookmarksEntryModelImpl.ORDER_BY_JPQL);
+				sb.append(BookmarksEntryModelImpl.ORDER_BY_SQL_INLINE_DISTINCT);
 			}
 			else {
 				sb.append(BookmarksEntryModelImpl.ORDER_BY_SQL);
@@ -6645,7 +6645,7 @@ public class BookmarksEntryPersistenceImpl
 		}
 		else {
 			if (getDB().isSupportsInlineDistinct()) {
-				sb.append(BookmarksEntryModelImpl.ORDER_BY_JPQL);
+				sb.append(BookmarksEntryModelImpl.ORDER_BY_SQL_INLINE_DISTINCT);
 			}
 			else {
 				sb.append(BookmarksEntryModelImpl.ORDER_BY_SQL);
@@ -7428,7 +7428,7 @@ public class BookmarksEntryPersistenceImpl
 		}
 		else {
 			if (getDB().isSupportsInlineDistinct()) {
-				sb.append(BookmarksEntryModelImpl.ORDER_BY_JPQL);
+				sb.append(BookmarksEntryModelImpl.ORDER_BY_SQL_INLINE_DISTINCT);
 			}
 			else {
 				sb.append(BookmarksEntryModelImpl.ORDER_BY_SQL);
@@ -7636,7 +7636,7 @@ public class BookmarksEntryPersistenceImpl
 		}
 		else {
 			if (getDB().isSupportsInlineDistinct()) {
-				sb.append(BookmarksEntryModelImpl.ORDER_BY_JPQL);
+				sb.append(BookmarksEntryModelImpl.ORDER_BY_SQL_INLINE_DISTINCT);
 			}
 			else {
 				sb.append(BookmarksEntryModelImpl.ORDER_BY_SQL);
@@ -8431,7 +8431,7 @@ public class BookmarksEntryPersistenceImpl
 		}
 		else {
 			if (getDB().isSupportsInlineDistinct()) {
-				sb.append(BookmarksEntryModelImpl.ORDER_BY_JPQL);
+				sb.append(BookmarksEntryModelImpl.ORDER_BY_SQL_INLINE_DISTINCT);
 			}
 			else {
 				sb.append(BookmarksEntryModelImpl.ORDER_BY_SQL);
@@ -8639,7 +8639,7 @@ public class BookmarksEntryPersistenceImpl
 		}
 		else {
 			if (getDB().isSupportsInlineDistinct()) {
-				sb.append(BookmarksEntryModelImpl.ORDER_BY_JPQL);
+				sb.append(BookmarksEntryModelImpl.ORDER_BY_SQL_INLINE_DISTINCT);
 			}
 			else {
 				sb.append(BookmarksEntryModelImpl.ORDER_BY_SQL);
@@ -8809,7 +8809,7 @@ public class BookmarksEntryPersistenceImpl
 		}
 		else {
 			if (getDB().isSupportsInlineDistinct()) {
-				sb.append(BookmarksEntryModelImpl.ORDER_BY_JPQL);
+				sb.append(BookmarksEntryModelImpl.ORDER_BY_SQL_INLINE_DISTINCT);
 			}
 			else {
 				sb.append(BookmarksEntryModelImpl.ORDER_BY_SQL);
@@ -9972,7 +9972,7 @@ public class BookmarksEntryPersistenceImpl
 		}
 		else {
 			if (getDB().isSupportsInlineDistinct()) {
-				sb.append(BookmarksEntryModelImpl.ORDER_BY_JPQL);
+				sb.append(BookmarksEntryModelImpl.ORDER_BY_SQL_INLINE_DISTINCT);
 			}
 			else {
 				sb.append(BookmarksEntryModelImpl.ORDER_BY_SQL);
@@ -10180,7 +10180,7 @@ public class BookmarksEntryPersistenceImpl
 		}
 		else {
 			if (getDB().isSupportsInlineDistinct()) {
-				sb.append(BookmarksEntryModelImpl.ORDER_BY_JPQL);
+				sb.append(BookmarksEntryModelImpl.ORDER_BY_SQL_INLINE_DISTINCT);
 			}
 			else {
 				sb.append(BookmarksEntryModelImpl.ORDER_BY_SQL);
@@ -10351,7 +10351,7 @@ public class BookmarksEntryPersistenceImpl
 		}
 		else {
 			if (getDB().isSupportsInlineDistinct()) {
-				sb.append(BookmarksEntryModelImpl.ORDER_BY_JPQL);
+				sb.append(BookmarksEntryModelImpl.ORDER_BY_SQL_INLINE_DISTINCT);
 			}
 			else {
 				sb.append(BookmarksEntryModelImpl.ORDER_BY_SQL);
@@ -11565,7 +11565,7 @@ public class BookmarksEntryPersistenceImpl
 		}
 		else {
 			if (getDB().isSupportsInlineDistinct()) {
-				sb.append(BookmarksEntryModelImpl.ORDER_BY_JPQL);
+				sb.append(BookmarksEntryModelImpl.ORDER_BY_SQL_INLINE_DISTINCT);
 			}
 			else {
 				sb.append(BookmarksEntryModelImpl.ORDER_BY_SQL);
@@ -11778,7 +11778,7 @@ public class BookmarksEntryPersistenceImpl
 		}
 		else {
 			if (getDB().isSupportsInlineDistinct()) {
-				sb.append(BookmarksEntryModelImpl.ORDER_BY_JPQL);
+				sb.append(BookmarksEntryModelImpl.ORDER_BY_SQL_INLINE_DISTINCT);
 			}
 			else {
 				sb.append(BookmarksEntryModelImpl.ORDER_BY_SQL);
@@ -11958,7 +11958,7 @@ public class BookmarksEntryPersistenceImpl
 		}
 		else {
 			if (getDB().isSupportsInlineDistinct()) {
-				sb.append(BookmarksEntryModelImpl.ORDER_BY_JPQL);
+				sb.append(BookmarksEntryModelImpl.ORDER_BY_SQL_INLINE_DISTINCT);
 			}
 			else {
 				sb.append(BookmarksEntryModelImpl.ORDER_BY_SQL);

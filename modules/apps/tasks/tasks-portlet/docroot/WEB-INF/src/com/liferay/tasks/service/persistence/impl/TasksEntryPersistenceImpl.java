@@ -594,7 +594,7 @@ public class TasksEntryPersistenceImpl
 		}
 		else {
 			if (getDB().isSupportsInlineDistinct()) {
-				sb.append(TasksEntryModelImpl.ORDER_BY_JPQL);
+				sb.append(TasksEntryModelImpl.ORDER_BY_SQL_INLINE_DISTINCT);
 			}
 			else {
 				sb.append(TasksEntryModelImpl.ORDER_BY_SQL);
@@ -785,7 +785,7 @@ public class TasksEntryPersistenceImpl
 		}
 		else {
 			if (getDB().isSupportsInlineDistinct()) {
-				sb.append(TasksEntryModelImpl.ORDER_BY_JPQL);
+				sb.append(TasksEntryModelImpl.ORDER_BY_SQL_INLINE_DISTINCT);
 			}
 			else {
 				sb.append(TasksEntryModelImpl.ORDER_BY_SQL);
@@ -3012,7 +3012,7 @@ public class TasksEntryPersistenceImpl
 		}
 		else {
 			if (getDB().isSupportsInlineDistinct()) {
-				sb.append(TasksEntryModelImpl.ORDER_BY_JPQL);
+				sb.append(TasksEntryModelImpl.ORDER_BY_SQL_INLINE_DISTINCT);
 			}
 			else {
 				sb.append(TasksEntryModelImpl.ORDER_BY_SQL);
@@ -3208,7 +3208,7 @@ public class TasksEntryPersistenceImpl
 		}
 		else {
 			if (getDB().isSupportsInlineDistinct()) {
-				sb.append(TasksEntryModelImpl.ORDER_BY_JPQL);
+				sb.append(TasksEntryModelImpl.ORDER_BY_SQL_INLINE_DISTINCT);
 			}
 			else {
 				sb.append(TasksEntryModelImpl.ORDER_BY_SQL);
@@ -3950,7 +3950,7 @@ public class TasksEntryPersistenceImpl
 		}
 		else {
 			if (getDB().isSupportsInlineDistinct()) {
-				sb.append(TasksEntryModelImpl.ORDER_BY_JPQL);
+				sb.append(TasksEntryModelImpl.ORDER_BY_SQL_INLINE_DISTINCT);
 			}
 			else {
 				sb.append(TasksEntryModelImpl.ORDER_BY_SQL);
@@ -4149,7 +4149,7 @@ public class TasksEntryPersistenceImpl
 		}
 		else {
 			if (getDB().isSupportsInlineDistinct()) {
-				sb.append(TasksEntryModelImpl.ORDER_BY_JPQL);
+				sb.append(TasksEntryModelImpl.ORDER_BY_SQL_INLINE_DISTINCT);
 			}
 			else {
 				sb.append(TasksEntryModelImpl.ORDER_BY_SQL);
@@ -4891,7 +4891,7 @@ public class TasksEntryPersistenceImpl
 		}
 		else {
 			if (getDB().isSupportsInlineDistinct()) {
-				sb.append(TasksEntryModelImpl.ORDER_BY_JPQL);
+				sb.append(TasksEntryModelImpl.ORDER_BY_SQL_INLINE_DISTINCT);
 			}
 			else {
 				sb.append(TasksEntryModelImpl.ORDER_BY_SQL);
@@ -5090,7 +5090,7 @@ public class TasksEntryPersistenceImpl
 		}
 		else {
 			if (getDB().isSupportsInlineDistinct()) {
-				sb.append(TasksEntryModelImpl.ORDER_BY_JPQL);
+				sb.append(TasksEntryModelImpl.ORDER_BY_SQL_INLINE_DISTINCT);
 			}
 			else {
 				sb.append(TasksEntryModelImpl.ORDER_BY_SQL);
@@ -7515,7 +7515,7 @@ public class TasksEntryPersistenceImpl
 		}
 		else {
 			if (getDB().isSupportsInlineDistinct()) {
-				sb.append(TasksEntryModelImpl.ORDER_BY_JPQL);
+				sb.append(TasksEntryModelImpl.ORDER_BY_SQL_INLINE_DISTINCT);
 			}
 			else {
 				sb.append(TasksEntryModelImpl.ORDER_BY_SQL);
@@ -7719,7 +7719,7 @@ public class TasksEntryPersistenceImpl
 		}
 		else {
 			if (getDB().isSupportsInlineDistinct()) {
-				sb.append(TasksEntryModelImpl.ORDER_BY_JPQL);
+				sb.append(TasksEntryModelImpl.ORDER_BY_SQL_INLINE_DISTINCT);
 			}
 			else {
 				sb.append(TasksEntryModelImpl.ORDER_BY_SQL);
@@ -7884,7 +7884,7 @@ public class TasksEntryPersistenceImpl
 		}
 		else {
 			if (getDB().isSupportsInlineDistinct()) {
-				sb.append(TasksEntryModelImpl.ORDER_BY_JPQL);
+				sb.append(TasksEntryModelImpl.ORDER_BY_SQL_INLINE_DISTINCT);
 			}
 			else {
 				sb.append(TasksEntryModelImpl.ORDER_BY_SQL);
@@ -9050,7 +9050,7 @@ public class TasksEntryPersistenceImpl
 		}
 		else {
 			if (getDB().isSupportsInlineDistinct()) {
-				sb.append(TasksEntryModelImpl.ORDER_BY_JPQL);
+				sb.append(TasksEntryModelImpl.ORDER_BY_SQL_INLINE_DISTINCT);
 			}
 			else {
 				sb.append(TasksEntryModelImpl.ORDER_BY_SQL);
@@ -9255,7 +9255,7 @@ public class TasksEntryPersistenceImpl
 		}
 		else {
 			if (getDB().isSupportsInlineDistinct()) {
-				sb.append(TasksEntryModelImpl.ORDER_BY_JPQL);
+				sb.append(TasksEntryModelImpl.ORDER_BY_SQL_INLINE_DISTINCT);
 			}
 			else {
 				sb.append(TasksEntryModelImpl.ORDER_BY_SQL);
@@ -9422,7 +9422,7 @@ public class TasksEntryPersistenceImpl
 		}
 		else {
 			if (getDB().isSupportsInlineDistinct()) {
-				sb.append(TasksEntryModelImpl.ORDER_BY_JPQL);
+				sb.append(TasksEntryModelImpl.ORDER_BY_SQL_INLINE_DISTINCT);
 			}
 			else {
 				sb.append(TasksEntryModelImpl.ORDER_BY_SQL);

@@ -1984,7 +1984,7 @@ public class JournalFolderPersistenceImpl
 		}
 		else {
 			if (getDB().isSupportsInlineDistinct()) {
-				sb.append(JournalFolderModelImpl.ORDER_BY_JPQL);
+				sb.append(JournalFolderModelImpl.ORDER_BY_SQL_INLINE_DISTINCT);
 			}
 			else {
 				sb.append(JournalFolderModelImpl.ORDER_BY_SQL);
@@ -2179,7 +2179,7 @@ public class JournalFolderPersistenceImpl
 		}
 		else {
 			if (getDB().isSupportsInlineDistinct()) {
-				sb.append(JournalFolderModelImpl.ORDER_BY_JPQL);
+				sb.append(JournalFolderModelImpl.ORDER_BY_SQL_INLINE_DISTINCT);
 			}
 			else {
 				sb.append(JournalFolderModelImpl.ORDER_BY_SQL);
@@ -3412,7 +3412,7 @@ public class JournalFolderPersistenceImpl
 		}
 		else {
 			if (getDB().isSupportsInlineDistinct()) {
-				sb.append(JournalFolderModelImpl.ORDER_BY_JPQL);
+				sb.append(JournalFolderModelImpl.ORDER_BY_SQL_INLINE_DISTINCT);
 			}
 			else {
 				sb.append(JournalFolderModelImpl.ORDER_BY_SQL);
@@ -3615,7 +3615,7 @@ public class JournalFolderPersistenceImpl
 		}
 		else {
 			if (getDB().isSupportsInlineDistinct()) {
-				sb.append(JournalFolderModelImpl.ORDER_BY_JPQL);
+				sb.append(JournalFolderModelImpl.ORDER_BY_SQL_INLINE_DISTINCT);
 			}
 			else {
 				sb.append(JournalFolderModelImpl.ORDER_BY_SQL);
@@ -5482,7 +5482,7 @@ public class JournalFolderPersistenceImpl
 		}
 		else {
 			if (getDB().isSupportsInlineDistinct()) {
-				sb.append(JournalFolderModelImpl.ORDER_BY_JPQL);
+				sb.append(JournalFolderModelImpl.ORDER_BY_SQL_INLINE_DISTINCT);
 			}
 			else {
 				sb.append(JournalFolderModelImpl.ORDER_BY_SQL);
@@ -5690,7 +5690,7 @@ public class JournalFolderPersistenceImpl
 		}
 		else {
 			if (getDB().isSupportsInlineDistinct()) {
-				sb.append(JournalFolderModelImpl.ORDER_BY_JPQL);
+				sb.append(JournalFolderModelImpl.ORDER_BY_SQL_INLINE_DISTINCT);
 			}
 			else {
 				sb.append(JournalFolderModelImpl.ORDER_BY_SQL);
@@ -6479,7 +6479,7 @@ public class JournalFolderPersistenceImpl
 		}
 		else {
 			if (getDB().isSupportsInlineDistinct()) {
-				sb.append(JournalFolderModelImpl.ORDER_BY_JPQL);
+				sb.append(JournalFolderModelImpl.ORDER_BY_SQL_INLINE_DISTINCT);
 			}
 			else {
 				sb.append(JournalFolderModelImpl.ORDER_BY_SQL);
@@ -6687,7 +6687,7 @@ public class JournalFolderPersistenceImpl
 		}
 		else {
 			if (getDB().isSupportsInlineDistinct()) {
-				sb.append(JournalFolderModelImpl.ORDER_BY_JPQL);
+				sb.append(JournalFolderModelImpl.ORDER_BY_SQL_INLINE_DISTINCT);
 			}
 			else {
 				sb.append(JournalFolderModelImpl.ORDER_BY_SQL);

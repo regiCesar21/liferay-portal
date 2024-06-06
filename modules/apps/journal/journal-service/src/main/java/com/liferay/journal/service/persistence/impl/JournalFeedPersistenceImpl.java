@@ -1976,7 +1976,7 @@ public class JournalFeedPersistenceImpl
 		}
 		else {
 			if (getDB().isSupportsInlineDistinct()) {
-				sb.append(JournalFeedModelImpl.ORDER_BY_JPQL);
+				sb.append(JournalFeedModelImpl.ORDER_BY_SQL_INLINE_DISTINCT);
 			}
 			else {
 				sb.append(JournalFeedModelImpl.ORDER_BY_SQL);
@@ -2168,7 +2168,7 @@ public class JournalFeedPersistenceImpl
 		}
 		else {
 			if (getDB().isSupportsInlineDistinct()) {
-				sb.append(JournalFeedModelImpl.ORDER_BY_JPQL);
+				sb.append(JournalFeedModelImpl.ORDER_BY_SQL_INLINE_DISTINCT);
 			}
 			else {
 				sb.append(JournalFeedModelImpl.ORDER_BY_SQL);

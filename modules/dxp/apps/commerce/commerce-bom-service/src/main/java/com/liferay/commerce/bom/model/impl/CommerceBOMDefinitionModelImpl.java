@@ -102,6 +102,9 @@ public class CommerceBOMDefinitionModelImpl
 	public static final String ORDER_BY_SQL =
 		" ORDER BY CommerceBOMDefinition.name ASC";
 
+	public static final String ORDER_BY_SQL_INLINE_DISTINCT =
+		" ORDER BY commerceBOMDefinition.name ASC";
+
 	public static final String DATA_SOURCE = "liferayDataSource";
 
 	public static final String SESSION_FACTORY = "liferaySessionFactory";
