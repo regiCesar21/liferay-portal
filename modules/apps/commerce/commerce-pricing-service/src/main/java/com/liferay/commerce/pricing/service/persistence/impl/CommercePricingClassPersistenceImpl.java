@@ -655,8 +655,7 @@ public class CommercePricingClassPersistenceImpl
 		}
 		else {
 			if (getDB().isSupportsInlineDistinct()) {
-				sb.append(
-					CommercePricingClassModelImpl.ORDER_BY_SQL_INLINE_DISTINCT);
+				sb.append(CommercePricingClassModelImpl.ORDER_BY_JPQL);
 			}
 			else {
 				sb.append(CommercePricingClassModelImpl.ORDER_BY_SQL);
@@ -866,8 +865,7 @@ public class CommercePricingClassPersistenceImpl
 		}
 		else {
 			if (getDB().isSupportsInlineDistinct()) {
-				sb.append(
-					CommercePricingClassModelImpl.ORDER_BY_SQL_INLINE_DISTINCT);
+				sb.append(CommercePricingClassModelImpl.ORDER_BY_JPQL);
 			}
 			else {
 				sb.append(CommercePricingClassModelImpl.ORDER_BY_SQL);
@@ -1673,8 +1671,7 @@ public class CommercePricingClassPersistenceImpl
 		}
 		else {
 			if (getDB().isSupportsInlineDistinct()) {
-				sb.append(
-					CommercePricingClassModelImpl.ORDER_BY_SQL_INLINE_DISTINCT);
+				sb.append(CommercePricingClassModelImpl.ORDER_BY_JPQL);
 			}
 			else {
 				sb.append(CommercePricingClassModelImpl.ORDER_BY_SQL);
@@ -1892,8 +1889,7 @@ public class CommercePricingClassPersistenceImpl
 		}
 		else {
 			if (getDB().isSupportsInlineDistinct()) {
-				sb.append(
-					CommercePricingClassModelImpl.ORDER_BY_SQL_INLINE_DISTINCT);
+				sb.append(CommercePricingClassModelImpl.ORDER_BY_JPQL);
 			}
 			else {
 				sb.append(CommercePricingClassModelImpl.ORDER_BY_SQL);
@@ -2645,8 +2641,7 @@ public class CommercePricingClassPersistenceImpl
 		}
 		else {
 			if (getDB().isSupportsInlineDistinct()) {
-				sb.append(
-					CommercePricingClassModelImpl.ORDER_BY_SQL_INLINE_DISTINCT);
+				sb.append(CommercePricingClassModelImpl.ORDER_BY_JPQL);
 			}
 			else {
 				sb.append(CommercePricingClassModelImpl.ORDER_BY_SQL);
@@ -2846,8 +2841,7 @@ public class CommercePricingClassPersistenceImpl
 		}
 		else {
 			if (getDB().isSupportsInlineDistinct()) {
-				sb.append(
-					CommercePricingClassModelImpl.ORDER_BY_SQL_INLINE_DISTINCT);
+				sb.append(CommercePricingClassModelImpl.ORDER_BY_JPQL);
 			}
 			else {
 				sb.append(CommercePricingClassModelImpl.ORDER_BY_SQL);

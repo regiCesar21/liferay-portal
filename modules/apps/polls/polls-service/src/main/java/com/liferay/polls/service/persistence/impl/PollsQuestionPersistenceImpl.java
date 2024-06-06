@@ -1983,7 +1983,7 @@ public class PollsQuestionPersistenceImpl
 		}
 		else {
 			if (getDB().isSupportsInlineDistinct()) {
-				sb.append(PollsQuestionModelImpl.ORDER_BY_SQL_INLINE_DISTINCT);
+				sb.append(PollsQuestionModelImpl.ORDER_BY_JPQL);
 			}
 			else {
 				sb.append(PollsQuestionModelImpl.ORDER_BY_SQL);
@@ -2178,7 +2178,7 @@ public class PollsQuestionPersistenceImpl
 		}
 		else {
 			if (getDB().isSupportsInlineDistinct()) {
-				sb.append(PollsQuestionModelImpl.ORDER_BY_SQL_INLINE_DISTINCT);
+				sb.append(PollsQuestionModelImpl.ORDER_BY_JPQL);
 			}
 			else {
 				sb.append(PollsQuestionModelImpl.ORDER_BY_SQL);

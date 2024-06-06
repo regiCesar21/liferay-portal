@@ -2505,7 +2505,7 @@ public class JournalArticlePersistenceImpl
 		}
 		else {
 			if (getDB().isSupportsInlineDistinct()) {
-				sb.append(JournalArticleModelImpl.ORDER_BY_SQL_INLINE_DISTINCT);
+				sb.append(JournalArticleModelImpl.ORDER_BY_JPQL);
 			}
 			else {
 				sb.append(JournalArticleModelImpl.ORDER_BY_SQL);
@@ -2699,7 +2699,7 @@ public class JournalArticlePersistenceImpl
 		}
 		else {
 			if (getDB().isSupportsInlineDistinct()) {
-				sb.append(JournalArticleModelImpl.ORDER_BY_SQL_INLINE_DISTINCT);
+				sb.append(JournalArticleModelImpl.ORDER_BY_JPQL);
 			}
 			else {
 				sb.append(JournalArticleModelImpl.ORDER_BY_SQL);
@@ -7806,7 +7806,7 @@ public class JournalArticlePersistenceImpl
 		}
 		else {
 			if (getDB().isSupportsInlineDistinct()) {
-				sb.append(JournalArticleModelImpl.ORDER_BY_SQL_INLINE_DISTINCT);
+				sb.append(JournalArticleModelImpl.ORDER_BY_JPQL);
 			}
 			else {
 				sb.append(JournalArticleModelImpl.ORDER_BY_SQL);
@@ -8009,7 +8009,7 @@ public class JournalArticlePersistenceImpl
 		}
 		else {
 			if (getDB().isSupportsInlineDistinct()) {
-				sb.append(JournalArticleModelImpl.ORDER_BY_SQL_INLINE_DISTINCT);
+				sb.append(JournalArticleModelImpl.ORDER_BY_JPQL);
 			}
 			else {
 				sb.append(JournalArticleModelImpl.ORDER_BY_SQL);
@@ -8752,7 +8752,7 @@ public class JournalArticlePersistenceImpl
 		}
 		else {
 			if (getDB().isSupportsInlineDistinct()) {
-				sb.append(JournalArticleModelImpl.ORDER_BY_SQL_INLINE_DISTINCT);
+				sb.append(JournalArticleModelImpl.ORDER_BY_JPQL);
 			}
 			else {
 				sb.append(JournalArticleModelImpl.ORDER_BY_SQL);
@@ -8955,7 +8955,7 @@ public class JournalArticlePersistenceImpl
 		}
 		else {
 			if (getDB().isSupportsInlineDistinct()) {
-				sb.append(JournalArticleModelImpl.ORDER_BY_SQL_INLINE_DISTINCT);
+				sb.append(JournalArticleModelImpl.ORDER_BY_JPQL);
 			}
 			else {
 				sb.append(JournalArticleModelImpl.ORDER_BY_SQL);
@@ -9114,7 +9114,7 @@ public class JournalArticlePersistenceImpl
 		}
 		else {
 			if (getDB().isSupportsInlineDistinct()) {
-				sb.append(JournalArticleModelImpl.ORDER_BY_SQL_INLINE_DISTINCT);
+				sb.append(JournalArticleModelImpl.ORDER_BY_JPQL);
 			}
 			else {
 				sb.append(JournalArticleModelImpl.ORDER_BY_SQL);
@@ -10246,7 +10246,7 @@ public class JournalArticlePersistenceImpl
 		}
 		else {
 			if (getDB().isSupportsInlineDistinct()) {
-				sb.append(JournalArticleModelImpl.ORDER_BY_SQL_INLINE_DISTINCT);
+				sb.append(JournalArticleModelImpl.ORDER_BY_JPQL);
 			}
 			else {
 				sb.append(JournalArticleModelImpl.ORDER_BY_SQL);
@@ -10462,7 +10462,7 @@ public class JournalArticlePersistenceImpl
 		}
 		else {
 			if (getDB().isSupportsInlineDistinct()) {
-				sb.append(JournalArticleModelImpl.ORDER_BY_SQL_INLINE_DISTINCT);
+				sb.append(JournalArticleModelImpl.ORDER_BY_JPQL);
 			}
 			else {
 				sb.append(JournalArticleModelImpl.ORDER_BY_SQL);
@@ -11274,7 +11274,7 @@ public class JournalArticlePersistenceImpl
 		}
 		else {
 			if (getDB().isSupportsInlineDistinct()) {
-				sb.append(JournalArticleModelImpl.ORDER_BY_SQL_INLINE_DISTINCT);
+				sb.append(JournalArticleModelImpl.ORDER_BY_JPQL);
 			}
 			else {
 				sb.append(JournalArticleModelImpl.ORDER_BY_SQL);
@@ -11490,7 +11490,7 @@ public class JournalArticlePersistenceImpl
 		}
 		else {
 			if (getDB().isSupportsInlineDistinct()) {
-				sb.append(JournalArticleModelImpl.ORDER_BY_SQL_INLINE_DISTINCT);
+				sb.append(JournalArticleModelImpl.ORDER_BY_JPQL);
 			}
 			else {
 				sb.append(JournalArticleModelImpl.ORDER_BY_SQL);
@@ -12308,7 +12308,7 @@ public class JournalArticlePersistenceImpl
 		}
 		else {
 			if (getDB().isSupportsInlineDistinct()) {
-				sb.append(JournalArticleModelImpl.ORDER_BY_SQL_INLINE_DISTINCT);
+				sb.append(JournalArticleModelImpl.ORDER_BY_JPQL);
 			}
 			else {
 				sb.append(JournalArticleModelImpl.ORDER_BY_SQL);
@@ -12524,7 +12524,7 @@ public class JournalArticlePersistenceImpl
 		}
 		else {
 			if (getDB().isSupportsInlineDistinct()) {
-				sb.append(JournalArticleModelImpl.ORDER_BY_SQL_INLINE_DISTINCT);
+				sb.append(JournalArticleModelImpl.ORDER_BY_JPQL);
 			}
 			else {
 				sb.append(JournalArticleModelImpl.ORDER_BY_SQL);
@@ -13342,7 +13342,7 @@ public class JournalArticlePersistenceImpl
 		}
 		else {
 			if (getDB().isSupportsInlineDistinct()) {
-				sb.append(JournalArticleModelImpl.ORDER_BY_SQL_INLINE_DISTINCT);
+				sb.append(JournalArticleModelImpl.ORDER_BY_JPQL);
 			}
 			else {
 				sb.append(JournalArticleModelImpl.ORDER_BY_SQL);
@@ -13558,7 +13558,7 @@ public class JournalArticlePersistenceImpl
 		}
 		else {
 			if (getDB().isSupportsInlineDistinct()) {
-				sb.append(JournalArticleModelImpl.ORDER_BY_SQL_INLINE_DISTINCT);
+				sb.append(JournalArticleModelImpl.ORDER_BY_JPQL);
 			}
 			else {
 				sb.append(JournalArticleModelImpl.ORDER_BY_SQL);
@@ -14371,7 +14371,7 @@ public class JournalArticlePersistenceImpl
 		}
 		else {
 			if (getDB().isSupportsInlineDistinct()) {
-				sb.append(JournalArticleModelImpl.ORDER_BY_SQL_INLINE_DISTINCT);
+				sb.append(JournalArticleModelImpl.ORDER_BY_JPQL);
 			}
 			else {
 				sb.append(JournalArticleModelImpl.ORDER_BY_SQL);
@@ -14587,7 +14587,7 @@ public class JournalArticlePersistenceImpl
 		}
 		else {
 			if (getDB().isSupportsInlineDistinct()) {
-				sb.append(JournalArticleModelImpl.ORDER_BY_SQL_INLINE_DISTINCT);
+				sb.append(JournalArticleModelImpl.ORDER_BY_JPQL);
 			}
 			else {
 				sb.append(JournalArticleModelImpl.ORDER_BY_SQL);
@@ -15389,7 +15389,7 @@ public class JournalArticlePersistenceImpl
 		}
 		else {
 			if (getDB().isSupportsInlineDistinct()) {
-				sb.append(JournalArticleModelImpl.ORDER_BY_SQL_INLINE_DISTINCT);
+				sb.append(JournalArticleModelImpl.ORDER_BY_JPQL);
 			}
 			else {
 				sb.append(JournalArticleModelImpl.ORDER_BY_SQL);
@@ -15605,7 +15605,7 @@ public class JournalArticlePersistenceImpl
 		}
 		else {
 			if (getDB().isSupportsInlineDistinct()) {
-				sb.append(JournalArticleModelImpl.ORDER_BY_SQL_INLINE_DISTINCT);
+				sb.append(JournalArticleModelImpl.ORDER_BY_JPQL);
 			}
 			else {
 				sb.append(JournalArticleModelImpl.ORDER_BY_SQL);
@@ -15780,7 +15780,7 @@ public class JournalArticlePersistenceImpl
 		}
 		else {
 			if (getDB().isSupportsInlineDistinct()) {
-				sb.append(JournalArticleModelImpl.ORDER_BY_SQL_INLINE_DISTINCT);
+				sb.append(JournalArticleModelImpl.ORDER_BY_JPQL);
 			}
 			else {
 				sb.append(JournalArticleModelImpl.ORDER_BY_SQL);
@@ -16964,7 +16964,7 @@ public class JournalArticlePersistenceImpl
 		}
 		else {
 			if (getDB().isSupportsInlineDistinct()) {
-				sb.append(JournalArticleModelImpl.ORDER_BY_SQL_INLINE_DISTINCT);
+				sb.append(JournalArticleModelImpl.ORDER_BY_JPQL);
 			}
 			else {
 				sb.append(JournalArticleModelImpl.ORDER_BY_SQL);
@@ -17167,7 +17167,7 @@ public class JournalArticlePersistenceImpl
 		}
 		else {
 			if (getDB().isSupportsInlineDistinct()) {
-				sb.append(JournalArticleModelImpl.ORDER_BY_SQL_INLINE_DISTINCT);
+				sb.append(JournalArticleModelImpl.ORDER_BY_JPQL);
 			}
 			else {
 				sb.append(JournalArticleModelImpl.ORDER_BY_SQL);
@@ -21638,7 +21638,7 @@ public class JournalArticlePersistenceImpl
 		}
 		else {
 			if (getDB().isSupportsInlineDistinct()) {
-				sb.append(JournalArticleModelImpl.ORDER_BY_SQL_INLINE_DISTINCT);
+				sb.append(JournalArticleModelImpl.ORDER_BY_JPQL);
 			}
 			else {
 				sb.append(JournalArticleModelImpl.ORDER_BY_SQL);
@@ -21846,7 +21846,7 @@ public class JournalArticlePersistenceImpl
 		}
 		else {
 			if (getDB().isSupportsInlineDistinct()) {
-				sb.append(JournalArticleModelImpl.ORDER_BY_SQL_INLINE_DISTINCT);
+				sb.append(JournalArticleModelImpl.ORDER_BY_JPQL);
 			}
 			else {
 				sb.append(JournalArticleModelImpl.ORDER_BY_SQL);
@@ -22641,7 +22641,7 @@ public class JournalArticlePersistenceImpl
 		}
 		else {
 			if (getDB().isSupportsInlineDistinct()) {
-				sb.append(JournalArticleModelImpl.ORDER_BY_SQL_INLINE_DISTINCT);
+				sb.append(JournalArticleModelImpl.ORDER_BY_JPQL);
 			}
 			else {
 				sb.append(JournalArticleModelImpl.ORDER_BY_SQL);
@@ -22849,7 +22849,7 @@ public class JournalArticlePersistenceImpl
 		}
 		else {
 			if (getDB().isSupportsInlineDistinct()) {
-				sb.append(JournalArticleModelImpl.ORDER_BY_SQL_INLINE_DISTINCT);
+				sb.append(JournalArticleModelImpl.ORDER_BY_JPQL);
 			}
 			else {
 				sb.append(JournalArticleModelImpl.ORDER_BY_SQL);
@@ -23018,7 +23018,7 @@ public class JournalArticlePersistenceImpl
 		}
 		else {
 			if (getDB().isSupportsInlineDistinct()) {
-				sb.append(JournalArticleModelImpl.ORDER_BY_SQL_INLINE_DISTINCT);
+				sb.append(JournalArticleModelImpl.ORDER_BY_JPQL);
 			}
 			else {
 				sb.append(JournalArticleModelImpl.ORDER_BY_SQL);
@@ -24189,7 +24189,7 @@ public class JournalArticlePersistenceImpl
 		}
 		else {
 			if (getDB().isSupportsInlineDistinct()) {
-				sb.append(JournalArticleModelImpl.ORDER_BY_SQL_INLINE_DISTINCT);
+				sb.append(JournalArticleModelImpl.ORDER_BY_JPQL);
 			}
 			else {
 				sb.append(JournalArticleModelImpl.ORDER_BY_SQL);
@@ -24397,7 +24397,7 @@ public class JournalArticlePersistenceImpl
 		}
 		else {
 			if (getDB().isSupportsInlineDistinct()) {
-				sb.append(JournalArticleModelImpl.ORDER_BY_SQL_INLINE_DISTINCT);
+				sb.append(JournalArticleModelImpl.ORDER_BY_JPQL);
 			}
 			else {
 				sb.append(JournalArticleModelImpl.ORDER_BY_SQL);
@@ -25545,7 +25545,7 @@ public class JournalArticlePersistenceImpl
 		}
 		else {
 			if (getDB().isSupportsInlineDistinct()) {
-				sb.append(JournalArticleModelImpl.ORDER_BY_SQL_INLINE_DISTINCT);
+				sb.append(JournalArticleModelImpl.ORDER_BY_JPQL);
 			}
 			else {
 				sb.append(JournalArticleModelImpl.ORDER_BY_SQL);
@@ -25766,7 +25766,7 @@ public class JournalArticlePersistenceImpl
 		}
 		else {
 			if (getDB().isSupportsInlineDistinct()) {
-				sb.append(JournalArticleModelImpl.ORDER_BY_SQL_INLINE_DISTINCT);
+				sb.append(JournalArticleModelImpl.ORDER_BY_JPQL);
 			}
 			else {
 				sb.append(JournalArticleModelImpl.ORDER_BY_SQL);
@@ -26640,7 +26640,7 @@ public class JournalArticlePersistenceImpl
 		}
 		else {
 			if (getDB().isSupportsInlineDistinct()) {
-				sb.append(JournalArticleModelImpl.ORDER_BY_SQL_INLINE_DISTINCT);
+				sb.append(JournalArticleModelImpl.ORDER_BY_JPQL);
 			}
 			else {
 				sb.append(JournalArticleModelImpl.ORDER_BY_SQL);
@@ -26861,7 +26861,7 @@ public class JournalArticlePersistenceImpl
 		}
 		else {
 			if (getDB().isSupportsInlineDistinct()) {
-				sb.append(JournalArticleModelImpl.ORDER_BY_SQL_INLINE_DISTINCT);
+				sb.append(JournalArticleModelImpl.ORDER_BY_JPQL);
 			}
 			else {
 				sb.append(JournalArticleModelImpl.ORDER_BY_SQL);
@@ -28010,7 +28010,7 @@ public class JournalArticlePersistenceImpl
 		}
 		else {
 			if (getDB().isSupportsInlineDistinct()) {
-				sb.append(JournalArticleModelImpl.ORDER_BY_SQL_INLINE_DISTINCT);
+				sb.append(JournalArticleModelImpl.ORDER_BY_JPQL);
 			}
 			else {
 				sb.append(JournalArticleModelImpl.ORDER_BY_SQL);
@@ -28231,7 +28231,7 @@ public class JournalArticlePersistenceImpl
 		}
 		else {
 			if (getDB().isSupportsInlineDistinct()) {
-				sb.append(JournalArticleModelImpl.ORDER_BY_SQL_INLINE_DISTINCT);
+				sb.append(JournalArticleModelImpl.ORDER_BY_JPQL);
 			}
 			else {
 				sb.append(JournalArticleModelImpl.ORDER_BY_SQL);
@@ -28413,7 +28413,7 @@ public class JournalArticlePersistenceImpl
 		}
 		else {
 			if (getDB().isSupportsInlineDistinct()) {
-				sb.append(JournalArticleModelImpl.ORDER_BY_SQL_INLINE_DISTINCT);
+				sb.append(JournalArticleModelImpl.ORDER_BY_JPQL);
 			}
 			else {
 				sb.append(JournalArticleModelImpl.ORDER_BY_SQL);
@@ -29680,7 +29680,7 @@ public class JournalArticlePersistenceImpl
 		}
 		else {
 			if (getDB().isSupportsInlineDistinct()) {
-				sb.append(JournalArticleModelImpl.ORDER_BY_SQL_INLINE_DISTINCT);
+				sb.append(JournalArticleModelImpl.ORDER_BY_JPQL);
 			}
 			else {
 				sb.append(JournalArticleModelImpl.ORDER_BY_SQL);
@@ -29901,7 +29901,7 @@ public class JournalArticlePersistenceImpl
 		}
 		else {
 			if (getDB().isSupportsInlineDistinct()) {
-				sb.append(JournalArticleModelImpl.ORDER_BY_SQL_INLINE_DISTINCT);
+				sb.append(JournalArticleModelImpl.ORDER_BY_JPQL);
 			}
 			else {
 				sb.append(JournalArticleModelImpl.ORDER_BY_SQL);
@@ -30765,7 +30765,7 @@ public class JournalArticlePersistenceImpl
 		}
 		else {
 			if (getDB().isSupportsInlineDistinct()) {
-				sb.append(JournalArticleModelImpl.ORDER_BY_SQL_INLINE_DISTINCT);
+				sb.append(JournalArticleModelImpl.ORDER_BY_JPQL);
 			}
 			else {
 				sb.append(JournalArticleModelImpl.ORDER_BY_SQL);
@@ -30986,7 +30986,7 @@ public class JournalArticlePersistenceImpl
 		}
 		else {
 			if (getDB().isSupportsInlineDistinct()) {
-				sb.append(JournalArticleModelImpl.ORDER_BY_SQL_INLINE_DISTINCT);
+				sb.append(JournalArticleModelImpl.ORDER_BY_JPQL);
 			}
 			else {
 				sb.append(JournalArticleModelImpl.ORDER_BY_SQL);

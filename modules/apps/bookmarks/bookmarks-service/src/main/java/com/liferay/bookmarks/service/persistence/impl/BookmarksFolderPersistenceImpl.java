@@ -1988,8 +1988,7 @@ public class BookmarksFolderPersistenceImpl
 		}
 		else {
 			if (getDB().isSupportsInlineDistinct()) {
-				sb.append(
-					BookmarksFolderModelImpl.ORDER_BY_SQL_INLINE_DISTINCT);
+				sb.append(BookmarksFolderModelImpl.ORDER_BY_JPQL);
 			}
 			else {
 				sb.append(BookmarksFolderModelImpl.ORDER_BY_SQL);
@@ -2185,8 +2184,7 @@ public class BookmarksFolderPersistenceImpl
 		}
 		else {
 			if (getDB().isSupportsInlineDistinct()) {
-				sb.append(
-					BookmarksFolderModelImpl.ORDER_BY_SQL_INLINE_DISTINCT);
+				sb.append(BookmarksFolderModelImpl.ORDER_BY_JPQL);
 			}
 			else {
 				sb.append(BookmarksFolderModelImpl.ORDER_BY_SQL);
@@ -3424,8 +3422,7 @@ public class BookmarksFolderPersistenceImpl
 		}
 		else {
 			if (getDB().isSupportsInlineDistinct()) {
-				sb.append(
-					BookmarksFolderModelImpl.ORDER_BY_SQL_INLINE_DISTINCT);
+				sb.append(BookmarksFolderModelImpl.ORDER_BY_JPQL);
 			}
 			else {
 				sb.append(BookmarksFolderModelImpl.ORDER_BY_SQL);
@@ -3629,8 +3626,7 @@ public class BookmarksFolderPersistenceImpl
 		}
 		else {
 			if (getDB().isSupportsInlineDistinct()) {
-				sb.append(
-					BookmarksFolderModelImpl.ORDER_BY_SQL_INLINE_DISTINCT);
+				sb.append(BookmarksFolderModelImpl.ORDER_BY_JPQL);
 			}
 			else {
 				sb.append(BookmarksFolderModelImpl.ORDER_BY_SQL);
@@ -4948,8 +4944,7 @@ public class BookmarksFolderPersistenceImpl
 		}
 		else {
 			if (getDB().isSupportsInlineDistinct()) {
-				sb.append(
-					BookmarksFolderModelImpl.ORDER_BY_SQL_INLINE_DISTINCT);
+				sb.append(BookmarksFolderModelImpl.ORDER_BY_JPQL);
 			}
 			else {
 				sb.append(BookmarksFolderModelImpl.ORDER_BY_SQL);
@@ -5158,8 +5153,7 @@ public class BookmarksFolderPersistenceImpl
 		}
 		else {
 			if (getDB().isSupportsInlineDistinct()) {
-				sb.append(
-					BookmarksFolderModelImpl.ORDER_BY_SQL_INLINE_DISTINCT);
+				sb.append(BookmarksFolderModelImpl.ORDER_BY_JPQL);
 			}
 			else {
 				sb.append(BookmarksFolderModelImpl.ORDER_BY_SQL);
@@ -5950,8 +5944,7 @@ public class BookmarksFolderPersistenceImpl
 		}
 		else {
 			if (getDB().isSupportsInlineDistinct()) {
-				sb.append(
-					BookmarksFolderModelImpl.ORDER_BY_SQL_INLINE_DISTINCT);
+				sb.append(BookmarksFolderModelImpl.ORDER_BY_JPQL);
 			}
 			else {
 				sb.append(BookmarksFolderModelImpl.ORDER_BY_SQL);
@@ -6160,8 +6153,7 @@ public class BookmarksFolderPersistenceImpl
 		}
 		else {
 			if (getDB().isSupportsInlineDistinct()) {
-				sb.append(
-					BookmarksFolderModelImpl.ORDER_BY_SQL_INLINE_DISTINCT);
+				sb.append(BookmarksFolderModelImpl.ORDER_BY_JPQL);
 			}
 			else {
 				sb.append(BookmarksFolderModelImpl.ORDER_BY_SQL);

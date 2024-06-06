@@ -1979,7 +1979,7 @@ public class DDMTemplatePersistenceImpl
 		}
 		else {
 			if (getDB().isSupportsInlineDistinct()) {
-				sb.append(DDMTemplateModelImpl.ORDER_BY_SQL_INLINE_DISTINCT);
+				sb.append(DDMTemplateModelImpl.ORDER_BY_JPQL);
 			}
 			else {
 				sb.append(DDMTemplateModelImpl.ORDER_BY_SQL);
@@ -2172,7 +2172,7 @@ public class DDMTemplatePersistenceImpl
 		}
 		else {
 			if (getDB().isSupportsInlineDistinct()) {
-				sb.append(DDMTemplateModelImpl.ORDER_BY_SQL_INLINE_DISTINCT);
+				sb.append(DDMTemplateModelImpl.ORDER_BY_JPQL);
 			}
 			else {
 				sb.append(DDMTemplateModelImpl.ORDER_BY_SQL);
@@ -5238,7 +5238,7 @@ public class DDMTemplatePersistenceImpl
 		}
 		else {
 			if (getDB().isSupportsInlineDistinct()) {
-				sb.append(DDMTemplateModelImpl.ORDER_BY_SQL_INLINE_DISTINCT);
+				sb.append(DDMTemplateModelImpl.ORDER_BY_JPQL);
 			}
 			else {
 				sb.append(DDMTemplateModelImpl.ORDER_BY_SQL);
@@ -5439,7 +5439,7 @@ public class DDMTemplatePersistenceImpl
 		}
 		else {
 			if (getDB().isSupportsInlineDistinct()) {
-				sb.append(DDMTemplateModelImpl.ORDER_BY_SQL_INLINE_DISTINCT);
+				sb.append(DDMTemplateModelImpl.ORDER_BY_JPQL);
 			}
 			else {
 				sb.append(DDMTemplateModelImpl.ORDER_BY_SQL);
@@ -6179,7 +6179,7 @@ public class DDMTemplatePersistenceImpl
 		}
 		else {
 			if (getDB().isSupportsInlineDistinct()) {
-				sb.append(DDMTemplateModelImpl.ORDER_BY_SQL_INLINE_DISTINCT);
+				sb.append(DDMTemplateModelImpl.ORDER_BY_JPQL);
 			}
 			else {
 				sb.append(DDMTemplateModelImpl.ORDER_BY_SQL);
@@ -6379,7 +6379,7 @@ public class DDMTemplatePersistenceImpl
 		}
 		else {
 			if (getDB().isSupportsInlineDistinct()) {
-				sb.append(DDMTemplateModelImpl.ORDER_BY_SQL_INLINE_DISTINCT);
+				sb.append(DDMTemplateModelImpl.ORDER_BY_JPQL);
 			}
 			else {
 				sb.append(DDMTemplateModelImpl.ORDER_BY_SQL);
@@ -6538,7 +6538,7 @@ public class DDMTemplatePersistenceImpl
 		}
 		else {
 			if (getDB().isSupportsInlineDistinct()) {
-				sb.append(DDMTemplateModelImpl.ORDER_BY_SQL_INLINE_DISTINCT);
+				sb.append(DDMTemplateModelImpl.ORDER_BY_JPQL);
 			}
 			else {
 				sb.append(DDMTemplateModelImpl.ORDER_BY_SQL);
@@ -7670,7 +7670,7 @@ public class DDMTemplatePersistenceImpl
 		}
 		else {
 			if (getDB().isSupportsInlineDistinct()) {
-				sb.append(DDMTemplateModelImpl.ORDER_BY_SQL_INLINE_DISTINCT);
+				sb.append(DDMTemplateModelImpl.ORDER_BY_JPQL);
 			}
 			else {
 				sb.append(DDMTemplateModelImpl.ORDER_BY_SQL);
@@ -7876,7 +7876,7 @@ public class DDMTemplatePersistenceImpl
 		}
 		else {
 			if (getDB().isSupportsInlineDistinct()) {
-				sb.append(DDMTemplateModelImpl.ORDER_BY_SQL_INLINE_DISTINCT);
+				sb.append(DDMTemplateModelImpl.ORDER_BY_JPQL);
 			}
 			else {
 				sb.append(DDMTemplateModelImpl.ORDER_BY_SQL);
@@ -8046,7 +8046,7 @@ public class DDMTemplatePersistenceImpl
 		}
 		else {
 			if (getDB().isSupportsInlineDistinct()) {
-				sb.append(DDMTemplateModelImpl.ORDER_BY_SQL_INLINE_DISTINCT);
+				sb.append(DDMTemplateModelImpl.ORDER_BY_JPQL);
 			}
 			else {
 				sb.append(DDMTemplateModelImpl.ORDER_BY_SQL);
@@ -10203,7 +10203,7 @@ public class DDMTemplatePersistenceImpl
 		}
 		else {
 			if (getDB().isSupportsInlineDistinct()) {
-				sb.append(DDMTemplateModelImpl.ORDER_BY_SQL_INLINE_DISTINCT);
+				sb.append(DDMTemplateModelImpl.ORDER_BY_JPQL);
 			}
 			else {
 				sb.append(DDMTemplateModelImpl.ORDER_BY_SQL);
@@ -10428,7 +10428,7 @@ public class DDMTemplatePersistenceImpl
 		}
 		else {
 			if (getDB().isSupportsInlineDistinct()) {
-				sb.append(DDMTemplateModelImpl.ORDER_BY_SQL_INLINE_DISTINCT);
+				sb.append(DDMTemplateModelImpl.ORDER_BY_JPQL);
 			}
 			else {
 				sb.append(DDMTemplateModelImpl.ORDER_BY_SQL);
@@ -11423,7 +11423,7 @@ public class DDMTemplatePersistenceImpl
 		}
 		else {
 			if (getDB().isSupportsInlineDistinct()) {
-				sb.append(DDMTemplateModelImpl.ORDER_BY_SQL_INLINE_DISTINCT);
+				sb.append(DDMTemplateModelImpl.ORDER_BY_JPQL);
 			}
 			else {
 				sb.append(DDMTemplateModelImpl.ORDER_BY_SQL);
@@ -11666,7 +11666,7 @@ public class DDMTemplatePersistenceImpl
 		}
 		else {
 			if (getDB().isSupportsInlineDistinct()) {
-				sb.append(DDMTemplateModelImpl.ORDER_BY_SQL_INLINE_DISTINCT);
+				sb.append(DDMTemplateModelImpl.ORDER_BY_JPQL);
 			}
 			else {
 				sb.append(DDMTemplateModelImpl.ORDER_BY_SQL);

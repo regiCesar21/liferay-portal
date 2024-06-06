@@ -1979,7 +1979,7 @@ public class KaleoProcessPersistenceImpl
 		}
 		else {
 			if (getDB().isSupportsInlineDistinct()) {
-				sb.append(KaleoProcessModelImpl.ORDER_BY_SQL_INLINE_DISTINCT);
+				sb.append(KaleoProcessModelImpl.ORDER_BY_JPQL);
 			}
 			else {
 				sb.append(KaleoProcessModelImpl.ORDER_BY_SQL);
@@ -2174,7 +2174,7 @@ public class KaleoProcessPersistenceImpl
 		}
 		else {
 			if (getDB().isSupportsInlineDistinct()) {
-				sb.append(KaleoProcessModelImpl.ORDER_BY_SQL_INLINE_DISTINCT);
+				sb.append(KaleoProcessModelImpl.ORDER_BY_JPQL);
 			}
 			else {
 				sb.append(KaleoProcessModelImpl.ORDER_BY_SQL);

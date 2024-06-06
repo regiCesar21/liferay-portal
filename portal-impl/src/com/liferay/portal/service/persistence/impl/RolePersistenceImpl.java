@@ -636,7 +636,7 @@ public class RolePersistenceImpl
 		}
 		else {
 			if (getDB().isSupportsInlineDistinct()) {
-				sb.append(RoleModelImpl.ORDER_BY_SQL_INLINE_DISTINCT);
+				sb.append(RoleModelImpl.ORDER_BY_JPQL);
 			}
 			else {
 				sb.append(RoleModelImpl.ORDER_BY_SQL);
@@ -838,7 +838,7 @@ public class RolePersistenceImpl
 		}
 		else {
 			if (getDB().isSupportsInlineDistinct()) {
-				sb.append(RoleModelImpl.ORDER_BY_SQL_INLINE_DISTINCT);
+				sb.append(RoleModelImpl.ORDER_BY_JPQL);
 			}
 			else {
 				sb.append(RoleModelImpl.ORDER_BY_SQL);
@@ -1626,7 +1626,7 @@ public class RolePersistenceImpl
 		}
 		else {
 			if (getDB().isSupportsInlineDistinct()) {
-				sb.append(RoleModelImpl.ORDER_BY_SQL_INLINE_DISTINCT);
+				sb.append(RoleModelImpl.ORDER_BY_JPQL);
 			}
 			else {
 				sb.append(RoleModelImpl.ORDER_BY_SQL);
@@ -1835,7 +1835,7 @@ public class RolePersistenceImpl
 		}
 		else {
 			if (getDB().isSupportsInlineDistinct()) {
-				sb.append(RoleModelImpl.ORDER_BY_SQL_INLINE_DISTINCT);
+				sb.append(RoleModelImpl.ORDER_BY_JPQL);
 			}
 			else {
 				sb.append(RoleModelImpl.ORDER_BY_SQL);
@@ -2567,7 +2567,7 @@ public class RolePersistenceImpl
 		}
 		else {
 			if (getDB().isSupportsInlineDistinct()) {
-				sb.append(RoleModelImpl.ORDER_BY_SQL_INLINE_DISTINCT);
+				sb.append(RoleModelImpl.ORDER_BY_JPQL);
 			}
 			else {
 				sb.append(RoleModelImpl.ORDER_BY_SQL);
@@ -2758,7 +2758,7 @@ public class RolePersistenceImpl
 		}
 		else {
 			if (getDB().isSupportsInlineDistinct()) {
-				sb.append(RoleModelImpl.ORDER_BY_SQL_INLINE_DISTINCT);
+				sb.append(RoleModelImpl.ORDER_BY_JPQL);
 			}
 			else {
 				sb.append(RoleModelImpl.ORDER_BY_SQL);
@@ -3466,7 +3466,7 @@ public class RolePersistenceImpl
 		}
 		else {
 			if (getDB().isSupportsInlineDistinct()) {
-				sb.append(RoleModelImpl.ORDER_BY_SQL_INLINE_DISTINCT);
+				sb.append(RoleModelImpl.ORDER_BY_JPQL);
 			}
 			else {
 				sb.append(RoleModelImpl.ORDER_BY_SQL);
@@ -3668,7 +3668,7 @@ public class RolePersistenceImpl
 		}
 		else {
 			if (getDB().isSupportsInlineDistinct()) {
-				sb.append(RoleModelImpl.ORDER_BY_SQL_INLINE_DISTINCT);
+				sb.append(RoleModelImpl.ORDER_BY_JPQL);
 			}
 			else {
 				sb.append(RoleModelImpl.ORDER_BY_SQL);
@@ -4368,7 +4368,7 @@ public class RolePersistenceImpl
 		}
 		else {
 			if (getDB().isSupportsInlineDistinct()) {
-				sb.append(RoleModelImpl.ORDER_BY_SQL_INLINE_DISTINCT);
+				sb.append(RoleModelImpl.ORDER_BY_JPQL);
 			}
 			else {
 				sb.append(RoleModelImpl.ORDER_BY_SQL);
@@ -4557,7 +4557,7 @@ public class RolePersistenceImpl
 		}
 		else {
 			if (getDB().isSupportsInlineDistinct()) {
-				sb.append(RoleModelImpl.ORDER_BY_SQL_INLINE_DISTINCT);
+				sb.append(RoleModelImpl.ORDER_BY_JPQL);
 			}
 			else {
 				sb.append(RoleModelImpl.ORDER_BY_SQL);
@@ -5269,7 +5269,7 @@ public class RolePersistenceImpl
 		}
 		else {
 			if (getDB().isSupportsInlineDistinct()) {
-				sb.append(RoleModelImpl.ORDER_BY_SQL_INLINE_DISTINCT);
+				sb.append(RoleModelImpl.ORDER_BY_JPQL);
 			}
 			else {
 				sb.append(RoleModelImpl.ORDER_BY_SQL);
@@ -5473,7 +5473,7 @@ public class RolePersistenceImpl
 		}
 		else {
 			if (getDB().isSupportsInlineDistinct()) {
-				sb.append(RoleModelImpl.ORDER_BY_SQL_INLINE_DISTINCT);
+				sb.append(RoleModelImpl.ORDER_BY_JPQL);
 			}
 			else {
 				sb.append(RoleModelImpl.ORDER_BY_SQL);
@@ -6469,7 +6469,7 @@ public class RolePersistenceImpl
 		}
 		else {
 			if (getDB().isSupportsInlineDistinct()) {
-				sb.append(RoleModelImpl.ORDER_BY_SQL_INLINE_DISTINCT);
+				sb.append(RoleModelImpl.ORDER_BY_JPQL);
 			}
 			else {
 				sb.append(RoleModelImpl.ORDER_BY_SQL);
@@ -6665,7 +6665,7 @@ public class RolePersistenceImpl
 		}
 		else {
 			if (getDB().isSupportsInlineDistinct()) {
-				sb.append(RoleModelImpl.ORDER_BY_SQL_INLINE_DISTINCT);
+				sb.append(RoleModelImpl.ORDER_BY_JPQL);
 			}
 			else {
 				sb.append(RoleModelImpl.ORDER_BY_SQL);
@@ -6819,7 +6819,7 @@ public class RolePersistenceImpl
 		}
 		else {
 			if (getDB().isSupportsInlineDistinct()) {
-				sb.append(RoleModelImpl.ORDER_BY_SQL_INLINE_DISTINCT);
+				sb.append(RoleModelImpl.ORDER_BY_JPQL);
 			}
 			else {
 				sb.append(RoleModelImpl.ORDER_BY_SQL);
@@ -7928,7 +7928,7 @@ public class RolePersistenceImpl
 		}
 		else {
 			if (getDB().isSupportsInlineDistinct()) {
-				sb.append(RoleModelImpl.ORDER_BY_SQL_INLINE_DISTINCT);
+				sb.append(RoleModelImpl.ORDER_BY_JPQL);
 			}
 			else {
 				sb.append(RoleModelImpl.ORDER_BY_SQL);
@@ -8137,7 +8137,7 @@ public class RolePersistenceImpl
 		}
 		else {
 			if (getDB().isSupportsInlineDistinct()) {
-				sb.append(RoleModelImpl.ORDER_BY_SQL_INLINE_DISTINCT);
+				sb.append(RoleModelImpl.ORDER_BY_JPQL);
 			}
 			else {
 				sb.append(RoleModelImpl.ORDER_BY_SQL);
