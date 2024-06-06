@@ -377,6 +377,10 @@ public class JiraIssueSearcher extends BaseSearcher {
 
 	private String _getVersionTag(String version) {
 		if (!_isQuarterlyRelease(Double.valueOf(version))) {
+			if (version.equals("0.0")) {
+				return "7.4.13 DXP GA1";
+			}
+
 			return "7.4.13 DXP U" +
 				version.substring(0, version.indexOf(StringPool.PERIOD));
 		}
