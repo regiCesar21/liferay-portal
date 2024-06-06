@@ -1,0 +1,10 @@
+INSERT INTO Session (channelId, id, sessionEnd, sessionStart, userId) VALUES (1, '1', TIMESTAMP '2024-05-05T13:00:00.000Z', TIMESTAMP '2024-05-05T13:30:00.000Z', '1');
+INSERT INTO Session (channelId, id, sessionEnd, sessionStart, userId) VALUES (1, '2', TIMESTAMP '2024-05-05T14:00:00.000Z', TIMESTAMP '2024-05-05T14:40:00.000Z', '1');
+INSERT INTO Session (channelId, id, sessionEnd, sessionStart, userId) VALUES (1, '3', TIMESTAMP '2024-05-05T18:00:00.000Z', TIMESTAMP '2024-05-05T18:20:00.000Z', '1');
+INSERT INTO Session (channelId, id, sessionEnd, sessionStart, userId) VALUES (1, '4', TIMESTAMP '2024-05-06T16:00:00.000Z', TIMESTAMP '2024-05-06T16:50:00.000Z', '3');
+INSERT INTO Session (channelId, id, sessionEnd, sessionStart, userId) VALUES (1, '5', TIMESTAMP '2024-05-06T17:00:00.000Z', TIMESTAMP '2024-05-06T17:10:00.000Z', '3');
+INSERT INTO Session (channelId, id, sessionEnd, sessionStart, userId) VALUES (1, '6', TIMESTAMP '2024-05-06T20:00:00.000Z', TIMESTAMP '2024-05-06T20:30:00.000Z', '3');
+INSERT INTO Session (channelId, id, sessionEnd, sessionStart, userId) VALUES (1, '7', TIMESTAMP '2024-05-07T15:00:00.000Z', TIMESTAMP '2024-05-07T15:30:00.000Z', '2');
+INSERT INTO Session (channelId, id, sessionEnd, sessionStart, userId) VALUES (1, '8', TIMESTAMP '2024-05-07T16:00:00.000Z', TIMESTAMP '2024-05-07T16:40:00.000Z', '2');
+INSERT INTO Session (channelId, id, sessionEnd, sessionStart, userId) VALUES (1, '9', TIMESTAMP '2024-05-07T19:00:00.000Z', TIMESTAMP '2024-05-07T19:50:00.000Z', '2');
+INSERT INTO Session (channelId, id, sessionEnd, sessionStart, userId) VALUES (1, '10', TIMESTAMP '2024-05-07T21:00:00.000Z', TIMESTAMP '2024-05-07T21:40:00.000Z', '2');
