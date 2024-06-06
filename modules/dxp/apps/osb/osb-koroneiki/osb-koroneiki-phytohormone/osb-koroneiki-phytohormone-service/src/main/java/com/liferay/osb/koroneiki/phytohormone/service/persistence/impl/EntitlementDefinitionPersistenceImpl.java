@@ -655,9 +655,7 @@ public class EntitlementDefinitionPersistenceImpl
 		}
 		else {
 			if (getDB().isSupportsInlineDistinct()) {
-				sb.append(
-					EntitlementDefinitionModelImpl.
-						ORDER_BY_SQL_INLINE_DISTINCT);
+				sb.append(EntitlementDefinitionModelImpl.ORDER_BY_JPQL);
 			}
 			else {
 				sb.append(EntitlementDefinitionModelImpl.ORDER_BY_SQL);
@@ -867,9 +865,7 @@ public class EntitlementDefinitionPersistenceImpl
 		}
 		else {
 			if (getDB().isSupportsInlineDistinct()) {
-				sb.append(
-					EntitlementDefinitionModelImpl.
-						ORDER_BY_SQL_INLINE_DISTINCT);
+				sb.append(EntitlementDefinitionModelImpl.ORDER_BY_JPQL);
 			}
 			else {
 				sb.append(EntitlementDefinitionModelImpl.ORDER_BY_SQL);
@@ -1675,9 +1671,7 @@ public class EntitlementDefinitionPersistenceImpl
 		}
 		else {
 			if (getDB().isSupportsInlineDistinct()) {
-				sb.append(
-					EntitlementDefinitionModelImpl.
-						ORDER_BY_SQL_INLINE_DISTINCT);
+				sb.append(EntitlementDefinitionModelImpl.ORDER_BY_JPQL);
 			}
 			else {
 				sb.append(EntitlementDefinitionModelImpl.ORDER_BY_SQL);
@@ -1895,9 +1889,7 @@ public class EntitlementDefinitionPersistenceImpl
 		}
 		else {
 			if (getDB().isSupportsInlineDistinct()) {
-				sb.append(
-					EntitlementDefinitionModelImpl.
-						ORDER_BY_SQL_INLINE_DISTINCT);
+				sb.append(EntitlementDefinitionModelImpl.ORDER_BY_JPQL);
 			}
 			else {
 				sb.append(EntitlementDefinitionModelImpl.ORDER_BY_SQL);
@@ -3241,9 +3233,7 @@ public class EntitlementDefinitionPersistenceImpl
 		}
 		else {
 			if (getDB().isSupportsInlineDistinct()) {
-				sb.append(
-					EntitlementDefinitionModelImpl.
-						ORDER_BY_SQL_INLINE_DISTINCT);
+				sb.append(EntitlementDefinitionModelImpl.ORDER_BY_JPQL);
 			}
 			else {
 				sb.append(EntitlementDefinitionModelImpl.ORDER_BY_SQL);
@@ -3461,9 +3451,7 @@ public class EntitlementDefinitionPersistenceImpl
 		}
 		else {
 			if (getDB().isSupportsInlineDistinct()) {
-				sb.append(
-					EntitlementDefinitionModelImpl.
-						ORDER_BY_SQL_INLINE_DISTINCT);
+				sb.append(EntitlementDefinitionModelImpl.ORDER_BY_JPQL);
 			}
 			else {
 				sb.append(EntitlementDefinitionModelImpl.ORDER_BY_SQL);
@@ -4244,9 +4232,7 @@ public class EntitlementDefinitionPersistenceImpl
 		}
 		else {
 			if (getDB().isSupportsInlineDistinct()) {
-				sb.append(
-					EntitlementDefinitionModelImpl.
-						ORDER_BY_SQL_INLINE_DISTINCT);
+				sb.append(EntitlementDefinitionModelImpl.ORDER_BY_JPQL);
 			}
 			else {
 				sb.append(EntitlementDefinitionModelImpl.ORDER_BY_SQL);
@@ -4452,9 +4438,7 @@ public class EntitlementDefinitionPersistenceImpl
 		}
 		else {
 			if (getDB().isSupportsInlineDistinct()) {
-				sb.append(
-					EntitlementDefinitionModelImpl.
-						ORDER_BY_SQL_INLINE_DISTINCT);
+				sb.append(EntitlementDefinitionModelImpl.ORDER_BY_JPQL);
 			}
 			else {
 				sb.append(EntitlementDefinitionModelImpl.ORDER_BY_SQL);

@@ -645,8 +645,7 @@ public class ProductPurchasePersistenceImpl
 		}
 		else {
 			if (getDB().isSupportsInlineDistinct()) {
-				sb.append(
-					ProductPurchaseModelImpl.ORDER_BY_SQL_INLINE_DISTINCT);
+				sb.append(ProductPurchaseModelImpl.ORDER_BY_JPQL);
 			}
 			else {
 				sb.append(ProductPurchaseModelImpl.ORDER_BY_SQL);
@@ -855,8 +854,7 @@ public class ProductPurchasePersistenceImpl
 		}
 		else {
 			if (getDB().isSupportsInlineDistinct()) {
-				sb.append(
-					ProductPurchaseModelImpl.ORDER_BY_SQL_INLINE_DISTINCT);
+				sb.append(ProductPurchaseModelImpl.ORDER_BY_JPQL);
 			}
 			else {
 				sb.append(ProductPurchaseModelImpl.ORDER_BY_SQL);
@@ -1656,8 +1654,7 @@ public class ProductPurchasePersistenceImpl
 		}
 		else {
 			if (getDB().isSupportsInlineDistinct()) {
-				sb.append(
-					ProductPurchaseModelImpl.ORDER_BY_SQL_INLINE_DISTINCT);
+				sb.append(ProductPurchaseModelImpl.ORDER_BY_JPQL);
 			}
 			else {
 				sb.append(ProductPurchaseModelImpl.ORDER_BY_SQL);
@@ -1873,8 +1870,7 @@ public class ProductPurchasePersistenceImpl
 		}
 		else {
 			if (getDB().isSupportsInlineDistinct()) {
-				sb.append(
-					ProductPurchaseModelImpl.ORDER_BY_SQL_INLINE_DISTINCT);
+				sb.append(ProductPurchaseModelImpl.ORDER_BY_JPQL);
 			}
 			else {
 				sb.append(ProductPurchaseModelImpl.ORDER_BY_SQL);
@@ -2866,8 +2862,7 @@ public class ProductPurchasePersistenceImpl
 		}
 		else {
 			if (getDB().isSupportsInlineDistinct()) {
-				sb.append(
-					ProductPurchaseModelImpl.ORDER_BY_SQL_INLINE_DISTINCT);
+				sb.append(ProductPurchaseModelImpl.ORDER_BY_JPQL);
 			}
 			else {
 				sb.append(ProductPurchaseModelImpl.ORDER_BY_SQL);
@@ -3063,8 +3058,7 @@ public class ProductPurchasePersistenceImpl
 		}
 		else {
 			if (getDB().isSupportsInlineDistinct()) {
-				sb.append(
-					ProductPurchaseModelImpl.ORDER_BY_SQL_INLINE_DISTINCT);
+				sb.append(ProductPurchaseModelImpl.ORDER_BY_JPQL);
 			}
 			else {
 				sb.append(ProductPurchaseModelImpl.ORDER_BY_SQL);
@@ -3762,8 +3756,7 @@ public class ProductPurchasePersistenceImpl
 		}
 		else {
 			if (getDB().isSupportsInlineDistinct()) {
-				sb.append(
-					ProductPurchaseModelImpl.ORDER_BY_SQL_INLINE_DISTINCT);
+				sb.append(ProductPurchaseModelImpl.ORDER_BY_JPQL);
 			}
 			else {
 				sb.append(ProductPurchaseModelImpl.ORDER_BY_SQL);
@@ -3961,8 +3954,7 @@ public class ProductPurchasePersistenceImpl
 		}
 		else {
 			if (getDB().isSupportsInlineDistinct()) {
-				sb.append(
-					ProductPurchaseModelImpl.ORDER_BY_SQL_INLINE_DISTINCT);
+				sb.append(ProductPurchaseModelImpl.ORDER_BY_JPQL);
 			}
 			else {
 				sb.append(ProductPurchaseModelImpl.ORDER_BY_SQL);
@@ -4697,8 +4689,7 @@ public class ProductPurchasePersistenceImpl
 		}
 		else {
 			if (getDB().isSupportsInlineDistinct()) {
-				sb.append(
-					ProductPurchaseModelImpl.ORDER_BY_SQL_INLINE_DISTINCT);
+				sb.append(ProductPurchaseModelImpl.ORDER_BY_JPQL);
 			}
 			else {
 				sb.append(ProductPurchaseModelImpl.ORDER_BY_SQL);
@@ -4903,8 +4894,7 @@ public class ProductPurchasePersistenceImpl
 		}
 		else {
 			if (getDB().isSupportsInlineDistinct()) {
-				sb.append(
-					ProductPurchaseModelImpl.ORDER_BY_SQL_INLINE_DISTINCT);
+				sb.append(ProductPurchaseModelImpl.ORDER_BY_JPQL);
 			}
 			else {
 				sb.append(ProductPurchaseModelImpl.ORDER_BY_SQL);

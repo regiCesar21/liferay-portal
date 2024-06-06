@@ -100,9 +100,6 @@ public class TeamModelImpl extends BaseModelImpl<Team> implements TeamModel {
 	public static final String ORDER_BY_SQL =
 		" ORDER BY Koroneiki_Team.teamId ASC";
 
-	public static final String ORDER_BY_SQL_INLINE_DISTINCT =
-		" ORDER BY team.teamId ASC";
-
 	public static final String DATA_SOURCE = "liferayDataSource";
 
 	public static final String SESSION_FACTORY = "liferaySessionFactory";

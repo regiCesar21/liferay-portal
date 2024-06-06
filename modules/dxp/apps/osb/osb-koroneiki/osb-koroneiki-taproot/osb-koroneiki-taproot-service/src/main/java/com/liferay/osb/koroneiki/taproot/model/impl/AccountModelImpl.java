@@ -121,9 +121,6 @@ public class AccountModelImpl
 	public static final String ORDER_BY_SQL =
 		" ORDER BY Koroneiki_Account.accountId ASC";
 
-	public static final String ORDER_BY_SQL_INLINE_DISTINCT =
-		" ORDER BY account.accountId ASC";
-
 	public static final String DATA_SOURCE = "liferayDataSource";
 
 	public static final String SESSION_FACTORY = "liferaySessionFactory";

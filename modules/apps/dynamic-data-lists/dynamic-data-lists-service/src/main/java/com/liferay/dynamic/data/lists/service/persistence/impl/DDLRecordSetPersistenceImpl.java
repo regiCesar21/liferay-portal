@@ -1987,7 +1987,7 @@ public class DDLRecordSetPersistenceImpl
 		}
 		else {
 			if (getDB().isSupportsInlineDistinct()) {
-				sb.append(DDLRecordSetModelImpl.ORDER_BY_SQL_INLINE_DISTINCT);
+				sb.append(DDLRecordSetModelImpl.ORDER_BY_JPQL);
 			}
 			else {
 				sb.append(DDLRecordSetModelImpl.ORDER_BY_SQL);
@@ -2182,7 +2182,7 @@ public class DDLRecordSetPersistenceImpl
 		}
 		else {
 			if (getDB().isSupportsInlineDistinct()) {
-				sb.append(DDLRecordSetModelImpl.ORDER_BY_SQL_INLINE_DISTINCT);
+				sb.append(DDLRecordSetModelImpl.ORDER_BY_JPQL);
 			}
 			else {
 				sb.append(DDLRecordSetModelImpl.ORDER_BY_SQL);
@@ -2329,7 +2329,7 @@ public class DDLRecordSetPersistenceImpl
 		}
 		else {
 			if (getDB().isSupportsInlineDistinct()) {
-				sb.append(DDLRecordSetModelImpl.ORDER_BY_SQL_INLINE_DISTINCT);
+				sb.append(DDLRecordSetModelImpl.ORDER_BY_JPQL);
 			}
 			else {
 				sb.append(DDLRecordSetModelImpl.ORDER_BY_SQL);

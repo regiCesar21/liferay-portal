@@ -637,7 +637,7 @@ public class TeamRolePersistenceImpl
 		}
 		else {
 			if (getDB().isSupportsInlineDistinct()) {
-				sb.append(TeamRoleModelImpl.ORDER_BY_SQL_INLINE_DISTINCT);
+				sb.append(TeamRoleModelImpl.ORDER_BY_JPQL);
 			}
 			else {
 				sb.append(TeamRoleModelImpl.ORDER_BY_SQL);
@@ -840,7 +840,7 @@ public class TeamRolePersistenceImpl
 		}
 		else {
 			if (getDB().isSupportsInlineDistinct()) {
-				sb.append(TeamRoleModelImpl.ORDER_BY_SQL_INLINE_DISTINCT);
+				sb.append(TeamRoleModelImpl.ORDER_BY_JPQL);
 			}
 			else {
 				sb.append(TeamRoleModelImpl.ORDER_BY_SQL);
@@ -1630,7 +1630,7 @@ public class TeamRolePersistenceImpl
 		}
 		else {
 			if (getDB().isSupportsInlineDistinct()) {
-				sb.append(TeamRoleModelImpl.ORDER_BY_SQL_INLINE_DISTINCT);
+				sb.append(TeamRoleModelImpl.ORDER_BY_JPQL);
 			}
 			else {
 				sb.append(TeamRoleModelImpl.ORDER_BY_SQL);
@@ -1839,7 +1839,7 @@ public class TeamRolePersistenceImpl
 		}
 		else {
 			if (getDB().isSupportsInlineDistinct()) {
-				sb.append(TeamRoleModelImpl.ORDER_BY_SQL_INLINE_DISTINCT);
+				sb.append(TeamRoleModelImpl.ORDER_BY_JPQL);
 			}
 			else {
 				sb.append(TeamRoleModelImpl.ORDER_BY_SQL);
@@ -2836,7 +2836,7 @@ public class TeamRolePersistenceImpl
 		}
 		else {
 			if (getDB().isSupportsInlineDistinct()) {
-				sb.append(TeamRoleModelImpl.ORDER_BY_SQL_INLINE_DISTINCT);
+				sb.append(TeamRoleModelImpl.ORDER_BY_JPQL);
 			}
 			else {
 				sb.append(TeamRoleModelImpl.ORDER_BY_SQL);
@@ -3039,7 +3039,7 @@ public class TeamRolePersistenceImpl
 		}
 		else {
 			if (getDB().isSupportsInlineDistinct()) {
-				sb.append(TeamRoleModelImpl.ORDER_BY_SQL_INLINE_DISTINCT);
+				sb.append(TeamRoleModelImpl.ORDER_BY_JPQL);
 			}
 			else {
 				sb.append(TeamRoleModelImpl.ORDER_BY_SQL);

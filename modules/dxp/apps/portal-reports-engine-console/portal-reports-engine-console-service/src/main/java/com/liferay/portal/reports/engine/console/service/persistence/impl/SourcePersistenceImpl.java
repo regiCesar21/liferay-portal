@@ -1968,7 +1968,7 @@ public class SourcePersistenceImpl
 		}
 		else {
 			if (getDB().isSupportsInlineDistinct()) {
-				sb.append(SourceModelImpl.ORDER_BY_SQL_INLINE_DISTINCT);
+				sb.append(SourceModelImpl.ORDER_BY_JPQL);
 			}
 			else {
 				sb.append(SourceModelImpl.ORDER_BY_SQL);
@@ -2159,7 +2159,7 @@ public class SourcePersistenceImpl
 		}
 		else {
 			if (getDB().isSupportsInlineDistinct()) {
-				sb.append(SourceModelImpl.ORDER_BY_SQL_INLINE_DISTINCT);
+				sb.append(SourceModelImpl.ORDER_BY_JPQL);
 			}
 			else {
 				sb.append(SourceModelImpl.ORDER_BY_SQL);

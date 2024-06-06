@@ -2539,7 +2539,7 @@ public class KBArticlePersistenceImpl
 		}
 		else {
 			if (getDB().isSupportsInlineDistinct()) {
-				sb.append(KBArticleModelImpl.ORDER_BY_SQL_INLINE_DISTINCT);
+				sb.append(KBArticleModelImpl.ORDER_BY_JPQL);
 			}
 			else {
 				sb.append(KBArticleModelImpl.ORDER_BY_SQL);
@@ -2738,7 +2738,7 @@ public class KBArticlePersistenceImpl
 		}
 		else {
 			if (getDB().isSupportsInlineDistinct()) {
-				sb.append(KBArticleModelImpl.ORDER_BY_SQL_INLINE_DISTINCT);
+				sb.append(KBArticleModelImpl.ORDER_BY_JPQL);
 			}
 			else {
 				sb.append(KBArticleModelImpl.ORDER_BY_SQL);
@@ -6194,7 +6194,7 @@ public class KBArticlePersistenceImpl
 		}
 		else {
 			if (getDB().isSupportsInlineDistinct()) {
-				sb.append(KBArticleModelImpl.ORDER_BY_SQL_INLINE_DISTINCT);
+				sb.append(KBArticleModelImpl.ORDER_BY_JPQL);
 			}
 			else {
 				sb.append(KBArticleModelImpl.ORDER_BY_SQL);
@@ -6390,7 +6390,7 @@ public class KBArticlePersistenceImpl
 		}
 		else {
 			if (getDB().isSupportsInlineDistinct()) {
-				sb.append(KBArticleModelImpl.ORDER_BY_SQL_INLINE_DISTINCT);
+				sb.append(KBArticleModelImpl.ORDER_BY_JPQL);
 			}
 			else {
 				sb.append(KBArticleModelImpl.ORDER_BY_SQL);
@@ -7123,7 +7123,7 @@ public class KBArticlePersistenceImpl
 		}
 		else {
 			if (getDB().isSupportsInlineDistinct()) {
-				sb.append(KBArticleModelImpl.ORDER_BY_SQL_INLINE_DISTINCT);
+				sb.append(KBArticleModelImpl.ORDER_BY_JPQL);
 			}
 			else {
 				sb.append(KBArticleModelImpl.ORDER_BY_SQL);
@@ -7319,7 +7319,7 @@ public class KBArticlePersistenceImpl
 		}
 		else {
 			if (getDB().isSupportsInlineDistinct()) {
-				sb.append(KBArticleModelImpl.ORDER_BY_SQL_INLINE_DISTINCT);
+				sb.append(KBArticleModelImpl.ORDER_BY_JPQL);
 			}
 			else {
 				sb.append(KBArticleModelImpl.ORDER_BY_SQL);
@@ -8053,7 +8053,7 @@ public class KBArticlePersistenceImpl
 		}
 		else {
 			if (getDB().isSupportsInlineDistinct()) {
-				sb.append(KBArticleModelImpl.ORDER_BY_SQL_INLINE_DISTINCT);
+				sb.append(KBArticleModelImpl.ORDER_BY_JPQL);
 			}
 			else {
 				sb.append(KBArticleModelImpl.ORDER_BY_SQL);
@@ -8249,7 +8249,7 @@ public class KBArticlePersistenceImpl
 		}
 		else {
 			if (getDB().isSupportsInlineDistinct()) {
-				sb.append(KBArticleModelImpl.ORDER_BY_SQL_INLINE_DISTINCT);
+				sb.append(KBArticleModelImpl.ORDER_BY_JPQL);
 			}
 			else {
 				sb.append(KBArticleModelImpl.ORDER_BY_SQL);
@@ -13429,7 +13429,7 @@ public class KBArticlePersistenceImpl
 		}
 		else {
 			if (getDB().isSupportsInlineDistinct()) {
-				sb.append(KBArticleModelImpl.ORDER_BY_SQL_INLINE_DISTINCT);
+				sb.append(KBArticleModelImpl.ORDER_BY_JPQL);
 			}
 			else {
 				sb.append(KBArticleModelImpl.ORDER_BY_SQL);
@@ -13634,7 +13634,7 @@ public class KBArticlePersistenceImpl
 		}
 		else {
 			if (getDB().isSupportsInlineDistinct()) {
-				sb.append(KBArticleModelImpl.ORDER_BY_SQL_INLINE_DISTINCT);
+				sb.append(KBArticleModelImpl.ORDER_BY_JPQL);
 			}
 			else {
 				sb.append(KBArticleModelImpl.ORDER_BY_SQL);
@@ -13802,7 +13802,7 @@ public class KBArticlePersistenceImpl
 		}
 		else {
 			if (getDB().isSupportsInlineDistinct()) {
-				sb.append(KBArticleModelImpl.ORDER_BY_SQL_INLINE_DISTINCT);
+				sb.append(KBArticleModelImpl.ORDER_BY_JPQL);
 			}
 			else {
 				sb.append(KBArticleModelImpl.ORDER_BY_SQL);
@@ -14983,7 +14983,7 @@ public class KBArticlePersistenceImpl
 		}
 		else {
 			if (getDB().isSupportsInlineDistinct()) {
-				sb.append(KBArticleModelImpl.ORDER_BY_SQL_INLINE_DISTINCT);
+				sb.append(KBArticleModelImpl.ORDER_BY_JPQL);
 			}
 			else {
 				sb.append(KBArticleModelImpl.ORDER_BY_SQL);
@@ -15187,7 +15187,7 @@ public class KBArticlePersistenceImpl
 		}
 		else {
 			if (getDB().isSupportsInlineDistinct()) {
-				sb.append(KBArticleModelImpl.ORDER_BY_SQL_INLINE_DISTINCT);
+				sb.append(KBArticleModelImpl.ORDER_BY_JPQL);
 			}
 			else {
 				sb.append(KBArticleModelImpl.ORDER_BY_SQL);
@@ -15355,7 +15355,7 @@ public class KBArticlePersistenceImpl
 		}
 		else {
 			if (getDB().isSupportsInlineDistinct()) {
-				sb.append(KBArticleModelImpl.ORDER_BY_SQL_INLINE_DISTINCT);
+				sb.append(KBArticleModelImpl.ORDER_BY_JPQL);
 			}
 			else {
 				sb.append(KBArticleModelImpl.ORDER_BY_SQL);
@@ -16534,7 +16534,7 @@ public class KBArticlePersistenceImpl
 		}
 		else {
 			if (getDB().isSupportsInlineDistinct()) {
-				sb.append(KBArticleModelImpl.ORDER_BY_SQL_INLINE_DISTINCT);
+				sb.append(KBArticleModelImpl.ORDER_BY_JPQL);
 			}
 			else {
 				sb.append(KBArticleModelImpl.ORDER_BY_SQL);
@@ -16739,7 +16739,7 @@ public class KBArticlePersistenceImpl
 		}
 		else {
 			if (getDB().isSupportsInlineDistinct()) {
-				sb.append(KBArticleModelImpl.ORDER_BY_SQL_INLINE_DISTINCT);
+				sb.append(KBArticleModelImpl.ORDER_BY_JPQL);
 			}
 			else {
 				sb.append(KBArticleModelImpl.ORDER_BY_SQL);
@@ -16907,7 +16907,7 @@ public class KBArticlePersistenceImpl
 		}
 		else {
 			if (getDB().isSupportsInlineDistinct()) {
-				sb.append(KBArticleModelImpl.ORDER_BY_SQL_INLINE_DISTINCT);
+				sb.append(KBArticleModelImpl.ORDER_BY_JPQL);
 			}
 			else {
 				sb.append(KBArticleModelImpl.ORDER_BY_SQL);
@@ -18092,7 +18092,7 @@ public class KBArticlePersistenceImpl
 		}
 		else {
 			if (getDB().isSupportsInlineDistinct()) {
-				sb.append(KBArticleModelImpl.ORDER_BY_SQL_INLINE_DISTINCT);
+				sb.append(KBArticleModelImpl.ORDER_BY_JPQL);
 			}
 			else {
 				sb.append(KBArticleModelImpl.ORDER_BY_SQL);
@@ -18297,7 +18297,7 @@ public class KBArticlePersistenceImpl
 		}
 		else {
 			if (getDB().isSupportsInlineDistinct()) {
-				sb.append(KBArticleModelImpl.ORDER_BY_SQL_INLINE_DISTINCT);
+				sb.append(KBArticleModelImpl.ORDER_BY_JPQL);
 			}
 			else {
 				sb.append(KBArticleModelImpl.ORDER_BY_SQL);
@@ -18466,7 +18466,7 @@ public class KBArticlePersistenceImpl
 		}
 		else {
 			if (getDB().isSupportsInlineDistinct()) {
-				sb.append(KBArticleModelImpl.ORDER_BY_SQL_INLINE_DISTINCT);
+				sb.append(KBArticleModelImpl.ORDER_BY_JPQL);
 			}
 			else {
 				sb.append(KBArticleModelImpl.ORDER_BY_SQL);
@@ -19660,7 +19660,7 @@ public class KBArticlePersistenceImpl
 		}
 		else {
 			if (getDB().isSupportsInlineDistinct()) {
-				sb.append(KBArticleModelImpl.ORDER_BY_SQL_INLINE_DISTINCT);
+				sb.append(KBArticleModelImpl.ORDER_BY_JPQL);
 			}
 			else {
 				sb.append(KBArticleModelImpl.ORDER_BY_SQL);
@@ -19865,7 +19865,7 @@ public class KBArticlePersistenceImpl
 		}
 		else {
 			if (getDB().isSupportsInlineDistinct()) {
-				sb.append(KBArticleModelImpl.ORDER_BY_SQL_INLINE_DISTINCT);
+				sb.append(KBArticleModelImpl.ORDER_BY_JPQL);
 			}
 			else {
 				sb.append(KBArticleModelImpl.ORDER_BY_SQL);
@@ -20034,7 +20034,7 @@ public class KBArticlePersistenceImpl
 		}
 		else {
 			if (getDB().isSupportsInlineDistinct()) {
-				sb.append(KBArticleModelImpl.ORDER_BY_SQL_INLINE_DISTINCT);
+				sb.append(KBArticleModelImpl.ORDER_BY_JPQL);
 			}
 			else {
 				sb.append(KBArticleModelImpl.ORDER_BY_SQL);
@@ -21228,7 +21228,7 @@ public class KBArticlePersistenceImpl
 		}
 		else {
 			if (getDB().isSupportsInlineDistinct()) {
-				sb.append(KBArticleModelImpl.ORDER_BY_SQL_INLINE_DISTINCT);
+				sb.append(KBArticleModelImpl.ORDER_BY_JPQL);
 			}
 			else {
 				sb.append(KBArticleModelImpl.ORDER_BY_SQL);
@@ -21433,7 +21433,7 @@ public class KBArticlePersistenceImpl
 		}
 		else {
 			if (getDB().isSupportsInlineDistinct()) {
-				sb.append(KBArticleModelImpl.ORDER_BY_SQL_INLINE_DISTINCT);
+				sb.append(KBArticleModelImpl.ORDER_BY_JPQL);
 			}
 			else {
 				sb.append(KBArticleModelImpl.ORDER_BY_SQL);
@@ -21602,7 +21602,7 @@ public class KBArticlePersistenceImpl
 		}
 		else {
 			if (getDB().isSupportsInlineDistinct()) {
-				sb.append(KBArticleModelImpl.ORDER_BY_SQL_INLINE_DISTINCT);
+				sb.append(KBArticleModelImpl.ORDER_BY_JPQL);
 			}
 			else {
 				sb.append(KBArticleModelImpl.ORDER_BY_SQL);
@@ -22822,7 +22822,7 @@ public class KBArticlePersistenceImpl
 		}
 		else {
 			if (getDB().isSupportsInlineDistinct()) {
-				sb.append(KBArticleModelImpl.ORDER_BY_SQL_INLINE_DISTINCT);
+				sb.append(KBArticleModelImpl.ORDER_BY_JPQL);
 			}
 			else {
 				sb.append(KBArticleModelImpl.ORDER_BY_SQL);
@@ -23039,7 +23039,7 @@ public class KBArticlePersistenceImpl
 		}
 		else {
 			if (getDB().isSupportsInlineDistinct()) {
-				sb.append(KBArticleModelImpl.ORDER_BY_SQL_INLINE_DISTINCT);
+				sb.append(KBArticleModelImpl.ORDER_BY_JPQL);
 			}
 			else {
 				sb.append(KBArticleModelImpl.ORDER_BY_SQL);
@@ -23867,7 +23867,7 @@ public class KBArticlePersistenceImpl
 		}
 		else {
 			if (getDB().isSupportsInlineDistinct()) {
-				sb.append(KBArticleModelImpl.ORDER_BY_SQL_INLINE_DISTINCT);
+				sb.append(KBArticleModelImpl.ORDER_BY_JPQL);
 			}
 			else {
 				sb.append(KBArticleModelImpl.ORDER_BY_SQL);
@@ -24071,7 +24071,7 @@ public class KBArticlePersistenceImpl
 		}
 		else {
 			if (getDB().isSupportsInlineDistinct()) {
-				sb.append(KBArticleModelImpl.ORDER_BY_SQL_INLINE_DISTINCT);
+				sb.append(KBArticleModelImpl.ORDER_BY_JPQL);
 			}
 			else {
 				sb.append(KBArticleModelImpl.ORDER_BY_SQL);
@@ -24866,7 +24866,7 @@ public class KBArticlePersistenceImpl
 		}
 		else {
 			if (getDB().isSupportsInlineDistinct()) {
-				sb.append(KBArticleModelImpl.ORDER_BY_SQL_INLINE_DISTINCT);
+				sb.append(KBArticleModelImpl.ORDER_BY_JPQL);
 			}
 			else {
 				sb.append(KBArticleModelImpl.ORDER_BY_SQL);
@@ -25070,7 +25070,7 @@ public class KBArticlePersistenceImpl
 		}
 		else {
 			if (getDB().isSupportsInlineDistinct()) {
-				sb.append(KBArticleModelImpl.ORDER_BY_SQL_INLINE_DISTINCT);
+				sb.append(KBArticleModelImpl.ORDER_BY_JPQL);
 			}
 			else {
 				sb.append(KBArticleModelImpl.ORDER_BY_SQL);
@@ -25890,7 +25890,7 @@ public class KBArticlePersistenceImpl
 		}
 		else {
 			if (getDB().isSupportsInlineDistinct()) {
-				sb.append(KBArticleModelImpl.ORDER_BY_SQL_INLINE_DISTINCT);
+				sb.append(KBArticleModelImpl.ORDER_BY_JPQL);
 			}
 			else {
 				sb.append(KBArticleModelImpl.ORDER_BY_SQL);
@@ -26107,7 +26107,7 @@ public class KBArticlePersistenceImpl
 		}
 		else {
 			if (getDB().isSupportsInlineDistinct()) {
-				sb.append(KBArticleModelImpl.ORDER_BY_SQL_INLINE_DISTINCT);
+				sb.append(KBArticleModelImpl.ORDER_BY_JPQL);
 			}
 			else {
 				sb.append(KBArticleModelImpl.ORDER_BY_SQL);
@@ -26287,7 +26287,7 @@ public class KBArticlePersistenceImpl
 		}
 		else {
 			if (getDB().isSupportsInlineDistinct()) {
-				sb.append(KBArticleModelImpl.ORDER_BY_SQL_INLINE_DISTINCT);
+				sb.append(KBArticleModelImpl.ORDER_BY_JPQL);
 			}
 			else {
 				sb.append(KBArticleModelImpl.ORDER_BY_SQL);
@@ -27576,7 +27576,7 @@ public class KBArticlePersistenceImpl
 		}
 		else {
 			if (getDB().isSupportsInlineDistinct()) {
-				sb.append(KBArticleModelImpl.ORDER_BY_SQL_INLINE_DISTINCT);
+				sb.append(KBArticleModelImpl.ORDER_BY_JPQL);
 			}
 			else {
 				sb.append(KBArticleModelImpl.ORDER_BY_SQL);
@@ -27793,7 +27793,7 @@ public class KBArticlePersistenceImpl
 		}
 		else {
 			if (getDB().isSupportsInlineDistinct()) {
-				sb.append(KBArticleModelImpl.ORDER_BY_SQL_INLINE_DISTINCT);
+				sb.append(KBArticleModelImpl.ORDER_BY_JPQL);
 			}
 			else {
 				sb.append(KBArticleModelImpl.ORDER_BY_SQL);
@@ -27973,7 +27973,7 @@ public class KBArticlePersistenceImpl
 		}
 		else {
 			if (getDB().isSupportsInlineDistinct()) {
-				sb.append(KBArticleModelImpl.ORDER_BY_SQL_INLINE_DISTINCT);
+				sb.append(KBArticleModelImpl.ORDER_BY_JPQL);
 			}
 			else {
 				sb.append(KBArticleModelImpl.ORDER_BY_SQL);
@@ -29260,7 +29260,7 @@ public class KBArticlePersistenceImpl
 		}
 		else {
 			if (getDB().isSupportsInlineDistinct()) {
-				sb.append(KBArticleModelImpl.ORDER_BY_SQL_INLINE_DISTINCT);
+				sb.append(KBArticleModelImpl.ORDER_BY_JPQL);
 			}
 			else {
 				sb.append(KBArticleModelImpl.ORDER_BY_SQL);
@@ -29477,7 +29477,7 @@ public class KBArticlePersistenceImpl
 		}
 		else {
 			if (getDB().isSupportsInlineDistinct()) {
-				sb.append(KBArticleModelImpl.ORDER_BY_SQL_INLINE_DISTINCT);
+				sb.append(KBArticleModelImpl.ORDER_BY_JPQL);
 			}
 			else {
 				sb.append(KBArticleModelImpl.ORDER_BY_SQL);
@@ -29657,7 +29657,7 @@ public class KBArticlePersistenceImpl
 		}
 		else {
 			if (getDB().isSupportsInlineDistinct()) {
-				sb.append(KBArticleModelImpl.ORDER_BY_SQL_INLINE_DISTINCT);
+				sb.append(KBArticleModelImpl.ORDER_BY_JPQL);
 			}
 			else {
 				sb.append(KBArticleModelImpl.ORDER_BY_SQL);
@@ -30960,7 +30960,7 @@ public class KBArticlePersistenceImpl
 		}
 		else {
 			if (getDB().isSupportsInlineDistinct()) {
-				sb.append(KBArticleModelImpl.ORDER_BY_SQL_INLINE_DISTINCT);
+				sb.append(KBArticleModelImpl.ORDER_BY_JPQL);
 			}
 			else {
 				sb.append(KBArticleModelImpl.ORDER_BY_SQL);
@@ -31171,7 +31171,7 @@ public class KBArticlePersistenceImpl
 		}
 		else {
 			if (getDB().isSupportsInlineDistinct()) {
-				sb.append(KBArticleModelImpl.ORDER_BY_SQL_INLINE_DISTINCT);
+				sb.append(KBArticleModelImpl.ORDER_BY_JPQL);
 			}
 			else {
 				sb.append(KBArticleModelImpl.ORDER_BY_SQL);
@@ -31349,7 +31349,7 @@ public class KBArticlePersistenceImpl
 		}
 		else {
 			if (getDB().isSupportsInlineDistinct()) {
-				sb.append(KBArticleModelImpl.ORDER_BY_SQL_INLINE_DISTINCT);
+				sb.append(KBArticleModelImpl.ORDER_BY_JPQL);
 			}
 			else {
 				sb.append(KBArticleModelImpl.ORDER_BY_SQL);
@@ -32652,7 +32652,7 @@ public class KBArticlePersistenceImpl
 		}
 		else {
 			if (getDB().isSupportsInlineDistinct()) {
-				sb.append(KBArticleModelImpl.ORDER_BY_SQL_INLINE_DISTINCT);
+				sb.append(KBArticleModelImpl.ORDER_BY_JPQL);
 			}
 			else {
 				sb.append(KBArticleModelImpl.ORDER_BY_SQL);
@@ -32875,7 +32875,7 @@ public class KBArticlePersistenceImpl
 		}
 		else {
 			if (getDB().isSupportsInlineDistinct()) {
-				sb.append(KBArticleModelImpl.ORDER_BY_SQL_INLINE_DISTINCT);
+				sb.append(KBArticleModelImpl.ORDER_BY_JPQL);
 			}
 			else {
 				sb.append(KBArticleModelImpl.ORDER_BY_SQL);
@@ -33061,7 +33061,7 @@ public class KBArticlePersistenceImpl
 		}
 		else {
 			if (getDB().isSupportsInlineDistinct()) {
-				sb.append(KBArticleModelImpl.ORDER_BY_SQL_INLINE_DISTINCT);
+				sb.append(KBArticleModelImpl.ORDER_BY_JPQL);
 			}
 			else {
 				sb.append(KBArticleModelImpl.ORDER_BY_SQL);

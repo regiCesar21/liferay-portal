@@ -598,7 +598,7 @@ public class ExpandoColumnPersistenceImpl
 		}
 		else {
 			if (getDB().isSupportsInlineDistinct()) {
-				sb.append(ExpandoColumnModelImpl.ORDER_BY_SQL_INLINE_DISTINCT);
+				sb.append(ExpandoColumnModelImpl.ORDER_BY_JPQL);
 			}
 			else {
 				sb.append(ExpandoColumnModelImpl.ORDER_BY_SQL);
@@ -793,7 +793,7 @@ public class ExpandoColumnPersistenceImpl
 		}
 		else {
 			if (getDB().isSupportsInlineDistinct()) {
-				sb.append(ExpandoColumnModelImpl.ORDER_BY_SQL_INLINE_DISTINCT);
+				sb.append(ExpandoColumnModelImpl.ORDER_BY_JPQL);
 			}
 			else {
 				sb.append(ExpandoColumnModelImpl.ORDER_BY_SQL);

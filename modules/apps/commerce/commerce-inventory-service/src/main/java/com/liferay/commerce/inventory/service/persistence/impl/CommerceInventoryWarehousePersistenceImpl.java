@@ -630,9 +630,7 @@ public class CommerceInventoryWarehousePersistenceImpl
 		}
 		else {
 			if (getDB().isSupportsInlineDistinct()) {
-				sb.append(
-					CommerceInventoryWarehouseModelImpl.
-						ORDER_BY_SQL_INLINE_DISTINCT);
+				sb.append(CommerceInventoryWarehouseModelImpl.ORDER_BY_JPQL);
 			}
 			else {
 				sb.append(CommerceInventoryWarehouseModelImpl.ORDER_BY_SQL);
@@ -833,9 +831,7 @@ public class CommerceInventoryWarehousePersistenceImpl
 		}
 		else {
 			if (getDB().isSupportsInlineDistinct()) {
-				sb.append(
-					CommerceInventoryWarehouseModelImpl.
-						ORDER_BY_SQL_INLINE_DISTINCT);
+				sb.append(CommerceInventoryWarehouseModelImpl.ORDER_BY_JPQL);
 			}
 			else {
 				sb.append(CommerceInventoryWarehouseModelImpl.ORDER_BY_SQL);
@@ -1572,9 +1568,7 @@ public class CommerceInventoryWarehousePersistenceImpl
 		}
 		else {
 			if (getDB().isSupportsInlineDistinct()) {
-				sb.append(
-					CommerceInventoryWarehouseModelImpl.
-						ORDER_BY_SQL_INLINE_DISTINCT);
+				sb.append(CommerceInventoryWarehouseModelImpl.ORDER_BY_JPQL);
 			}
 			else {
 				sb.append(CommerceInventoryWarehouseModelImpl.ORDER_BY_SQL);
@@ -1781,9 +1775,7 @@ public class CommerceInventoryWarehousePersistenceImpl
 		}
 		else {
 			if (getDB().isSupportsInlineDistinct()) {
-				sb.append(
-					CommerceInventoryWarehouseModelImpl.
-						ORDER_BY_SQL_INLINE_DISTINCT);
+				sb.append(CommerceInventoryWarehouseModelImpl.ORDER_BY_JPQL);
 			}
 			else {
 				sb.append(CommerceInventoryWarehouseModelImpl.ORDER_BY_SQL);
@@ -2592,9 +2584,7 @@ public class CommerceInventoryWarehousePersistenceImpl
 		}
 		else {
 			if (getDB().isSupportsInlineDistinct()) {
-				sb.append(
-					CommerceInventoryWarehouseModelImpl.
-						ORDER_BY_SQL_INLINE_DISTINCT);
+				sb.append(CommerceInventoryWarehouseModelImpl.ORDER_BY_JPQL);
 			}
 			else {
 				sb.append(CommerceInventoryWarehouseModelImpl.ORDER_BY_SQL);
@@ -2816,9 +2806,7 @@ public class CommerceInventoryWarehousePersistenceImpl
 		}
 		else {
 			if (getDB().isSupportsInlineDistinct()) {
-				sb.append(
-					CommerceInventoryWarehouseModelImpl.
-						ORDER_BY_SQL_INLINE_DISTINCT);
+				sb.append(CommerceInventoryWarehouseModelImpl.ORDER_BY_JPQL);
 			}
 			else {
 				sb.append(CommerceInventoryWarehouseModelImpl.ORDER_BY_SQL);
@@ -3700,9 +3688,7 @@ public class CommerceInventoryWarehousePersistenceImpl
 		}
 		else {
 			if (getDB().isSupportsInlineDistinct()) {
-				sb.append(
-					CommerceInventoryWarehouseModelImpl.
-						ORDER_BY_SQL_INLINE_DISTINCT);
+				sb.append(CommerceInventoryWarehouseModelImpl.ORDER_BY_JPQL);
 			}
 			else {
 				sb.append(CommerceInventoryWarehouseModelImpl.ORDER_BY_SQL);
@@ -3929,9 +3915,7 @@ public class CommerceInventoryWarehousePersistenceImpl
 		}
 		else {
 			if (getDB().isSupportsInlineDistinct()) {
-				sb.append(
-					CommerceInventoryWarehouseModelImpl.
-						ORDER_BY_SQL_INLINE_DISTINCT);
+				sb.append(CommerceInventoryWarehouseModelImpl.ORDER_BY_JPQL);
 			}
 			else {
 				sb.append(CommerceInventoryWarehouseModelImpl.ORDER_BY_SQL);

@@ -109,9 +109,6 @@ public class MDRRuleGroupInstanceModelImpl
 	public static final String ORDER_BY_SQL =
 		" ORDER BY MDRRuleGroupInstance.ruleGroupInstanceId ASC";
 
-	public static final String ORDER_BY_SQL_INLINE_DISTINCT =
-		" ORDER BY mdrRuleGroupInstance.ruleGroupInstanceId ASC";
-
 	public static final String DATA_SOURCE = "liferayDataSource";
 
 	public static final String SESSION_FACTORY = "liferaySessionFactory";

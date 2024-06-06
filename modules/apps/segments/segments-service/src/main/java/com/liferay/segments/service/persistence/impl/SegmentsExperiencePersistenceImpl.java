@@ -2006,8 +2006,7 @@ public class SegmentsExperiencePersistenceImpl
 		}
 		else {
 			if (getDB().isSupportsInlineDistinct()) {
-				sb.append(
-					SegmentsExperienceModelImpl.ORDER_BY_SQL_INLINE_DISTINCT);
+				sb.append(SegmentsExperienceModelImpl.ORDER_BY_JPQL);
 			}
 			else {
 				sb.append(SegmentsExperienceModelImpl.ORDER_BY_SQL);
@@ -2204,8 +2203,7 @@ public class SegmentsExperiencePersistenceImpl
 		}
 		else {
 			if (getDB().isSupportsInlineDistinct()) {
-				sb.append(
-					SegmentsExperienceModelImpl.ORDER_BY_SQL_INLINE_DISTINCT);
+				sb.append(SegmentsExperienceModelImpl.ORDER_BY_JPQL);
 			}
 			else {
 				sb.append(SegmentsExperienceModelImpl.ORDER_BY_SQL);
@@ -3753,8 +3751,7 @@ public class SegmentsExperiencePersistenceImpl
 		}
 		else {
 			if (getDB().isSupportsInlineDistinct()) {
-				sb.append(
-					SegmentsExperienceModelImpl.ORDER_BY_SQL_INLINE_DISTINCT);
+				sb.append(SegmentsExperienceModelImpl.ORDER_BY_JPQL);
 			}
 			else {
 				sb.append(SegmentsExperienceModelImpl.ORDER_BY_SQL);
@@ -3966,8 +3963,7 @@ public class SegmentsExperiencePersistenceImpl
 		}
 		else {
 			if (getDB().isSupportsInlineDistinct()) {
-				sb.append(
-					SegmentsExperienceModelImpl.ORDER_BY_SQL_INLINE_DISTINCT);
+				sb.append(SegmentsExperienceModelImpl.ORDER_BY_JPQL);
 			}
 			else {
 				sb.append(SegmentsExperienceModelImpl.ORDER_BY_SQL);
@@ -4813,8 +4809,7 @@ public class SegmentsExperiencePersistenceImpl
 		}
 		else {
 			if (getDB().isSupportsInlineDistinct()) {
-				sb.append(
-					SegmentsExperienceModelImpl.ORDER_BY_SQL_INLINE_DISTINCT);
+				sb.append(SegmentsExperienceModelImpl.ORDER_BY_JPQL);
 			}
 			else {
 				sb.append(SegmentsExperienceModelImpl.ORDER_BY_SQL);
@@ -5031,8 +5026,7 @@ public class SegmentsExperiencePersistenceImpl
 		}
 		else {
 			if (getDB().isSupportsInlineDistinct()) {
-				sb.append(
-					SegmentsExperienceModelImpl.ORDER_BY_SQL_INLINE_DISTINCT);
+				sb.append(SegmentsExperienceModelImpl.ORDER_BY_JPQL);
 			}
 			else {
 				sb.append(SegmentsExperienceModelImpl.ORDER_BY_SQL);
@@ -6159,8 +6153,7 @@ public class SegmentsExperiencePersistenceImpl
 		}
 		else {
 			if (getDB().isSupportsInlineDistinct()) {
-				sb.append(
-					SegmentsExperienceModelImpl.ORDER_BY_SQL_INLINE_DISTINCT);
+				sb.append(SegmentsExperienceModelImpl.ORDER_BY_JPQL);
 			}
 			else {
 				sb.append(SegmentsExperienceModelImpl.ORDER_BY_SQL);
@@ -6377,8 +6370,7 @@ public class SegmentsExperiencePersistenceImpl
 		}
 		else {
 			if (getDB().isSupportsInlineDistinct()) {
-				sb.append(
-					SegmentsExperienceModelImpl.ORDER_BY_SQL_INLINE_DISTINCT);
+				sb.append(SegmentsExperienceModelImpl.ORDER_BY_JPQL);
 			}
 			else {
 				sb.append(SegmentsExperienceModelImpl.ORDER_BY_SQL);
@@ -7227,8 +7219,7 @@ public class SegmentsExperiencePersistenceImpl
 		}
 		else {
 			if (getDB().isSupportsInlineDistinct()) {
-				sb.append(
-					SegmentsExperienceModelImpl.ORDER_BY_SQL_INLINE_DISTINCT);
+				sb.append(SegmentsExperienceModelImpl.ORDER_BY_JPQL);
 			}
 			else {
 				sb.append(SegmentsExperienceModelImpl.ORDER_BY_SQL);
@@ -7445,8 +7436,7 @@ public class SegmentsExperiencePersistenceImpl
 		}
 		else {
 			if (getDB().isSupportsInlineDistinct()) {
-				sb.append(
-					SegmentsExperienceModelImpl.ORDER_BY_SQL_INLINE_DISTINCT);
+				sb.append(SegmentsExperienceModelImpl.ORDER_BY_JPQL);
 			}
 			else {
 				sb.append(SegmentsExperienceModelImpl.ORDER_BY_SQL);
@@ -8308,8 +8298,7 @@ public class SegmentsExperiencePersistenceImpl
 		}
 		else {
 			if (getDB().isSupportsInlineDistinct()) {
-				sb.append(
-					SegmentsExperienceModelImpl.ORDER_BY_SQL_INLINE_DISTINCT);
+				sb.append(SegmentsExperienceModelImpl.ORDER_BY_JPQL);
 			}
 			else {
 				sb.append(SegmentsExperienceModelImpl.ORDER_BY_SQL);
@@ -8526,8 +8515,7 @@ public class SegmentsExperiencePersistenceImpl
 		}
 		else {
 			if (getDB().isSupportsInlineDistinct()) {
-				sb.append(
-					SegmentsExperienceModelImpl.ORDER_BY_SQL_INLINE_DISTINCT);
+				sb.append(SegmentsExperienceModelImpl.ORDER_BY_JPQL);
 			}
 			else {
 				sb.append(SegmentsExperienceModelImpl.ORDER_BY_SQL);
@@ -9438,8 +9426,7 @@ public class SegmentsExperiencePersistenceImpl
 		}
 		else {
 			if (getDB().isSupportsInlineDistinct()) {
-				sb.append(
-					SegmentsExperienceModelImpl.ORDER_BY_SQL_INLINE_DISTINCT);
+				sb.append(SegmentsExperienceModelImpl.ORDER_BY_JPQL);
 			}
 			else {
 				sb.append(SegmentsExperienceModelImpl.ORDER_BY_SQL);
@@ -9661,8 +9648,7 @@ public class SegmentsExperiencePersistenceImpl
 		}
 		else {
 			if (getDB().isSupportsInlineDistinct()) {
-				sb.append(
-					SegmentsExperienceModelImpl.ORDER_BY_SQL_INLINE_DISTINCT);
+				sb.append(SegmentsExperienceModelImpl.ORDER_BY_JPQL);
 			}
 			else {
 				sb.append(SegmentsExperienceModelImpl.ORDER_BY_SQL);
@@ -9852,8 +9838,7 @@ public class SegmentsExperiencePersistenceImpl
 		}
 		else {
 			if (getDB().isSupportsInlineDistinct()) {
-				sb.append(
-					SegmentsExperienceModelImpl.ORDER_BY_SQL_INLINE_DISTINCT);
+				sb.append(SegmentsExperienceModelImpl.ORDER_BY_JPQL);
 			}
 			else {
 				sb.append(SegmentsExperienceModelImpl.ORDER_BY_SQL);

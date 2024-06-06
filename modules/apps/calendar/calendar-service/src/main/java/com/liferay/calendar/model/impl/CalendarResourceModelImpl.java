@@ -118,9 +118,6 @@ public class CalendarResourceModelImpl
 	public static final String ORDER_BY_SQL =
 		" ORDER BY CalendarResource.code_ ASC";
 
-	public static final String ORDER_BY_SQL_INLINE_DISTINCT =
-		" ORDER BY calendarResource.code_ ASC";
-
 	public static final String DATA_SOURCE = "liferayDataSource";
 
 	public static final String SESSION_FACTORY = "liferaySessionFactory";

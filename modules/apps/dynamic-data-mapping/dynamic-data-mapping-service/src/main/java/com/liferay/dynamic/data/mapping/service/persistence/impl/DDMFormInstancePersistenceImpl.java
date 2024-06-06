@@ -1997,8 +1997,7 @@ public class DDMFormInstancePersistenceImpl
 		}
 		else {
 			if (getDB().isSupportsInlineDistinct()) {
-				sb.append(
-					DDMFormInstanceModelImpl.ORDER_BY_SQL_INLINE_DISTINCT);
+				sb.append(DDMFormInstanceModelImpl.ORDER_BY_JPQL);
 			}
 			else {
 				sb.append(DDMFormInstanceModelImpl.ORDER_BY_SQL);
@@ -2194,8 +2193,7 @@ public class DDMFormInstancePersistenceImpl
 		}
 		else {
 			if (getDB().isSupportsInlineDistinct()) {
-				sb.append(
-					DDMFormInstanceModelImpl.ORDER_BY_SQL_INLINE_DISTINCT);
+				sb.append(DDMFormInstanceModelImpl.ORDER_BY_JPQL);
 			}
 			else {
 				sb.append(DDMFormInstanceModelImpl.ORDER_BY_SQL);
@@ -2343,8 +2341,7 @@ public class DDMFormInstancePersistenceImpl
 		}
 		else {
 			if (getDB().isSupportsInlineDistinct()) {
-				sb.append(
-					DDMFormInstanceModelImpl.ORDER_BY_SQL_INLINE_DISTINCT);
+				sb.append(DDMFormInstanceModelImpl.ORDER_BY_JPQL);
 			}
 			else {
 				sb.append(DDMFormInstanceModelImpl.ORDER_BY_SQL);
