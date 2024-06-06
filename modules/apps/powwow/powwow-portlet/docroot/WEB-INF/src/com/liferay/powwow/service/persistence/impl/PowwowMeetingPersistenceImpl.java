@@ -594,7 +594,7 @@ public class PowwowMeetingPersistenceImpl
 		}
 		else {
 			if (getDB().isSupportsInlineDistinct()) {
-				sb.append(PowwowMeetingModelImpl.ORDER_BY_JPQL);
+				sb.append(PowwowMeetingModelImpl.ORDER_BY_SQL_INLINE_DISTINCT);
 			}
 			else {
 				sb.append(PowwowMeetingModelImpl.ORDER_BY_SQL);
@@ -789,7 +789,7 @@ public class PowwowMeetingPersistenceImpl
 		}
 		else {
 			if (getDB().isSupportsInlineDistinct()) {
-				sb.append(PowwowMeetingModelImpl.ORDER_BY_JPQL);
+				sb.append(PowwowMeetingModelImpl.ORDER_BY_SQL_INLINE_DISTINCT);
 			}
 			else {
 				sb.append(PowwowMeetingModelImpl.ORDER_BY_SQL);

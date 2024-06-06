@@ -1996,7 +1996,8 @@ public class DLFileEntryTypePersistenceImpl
 		}
 		else {
 			if (getDB().isSupportsInlineDistinct()) {
-				sb.append(DLFileEntryTypeModelImpl.ORDER_BY_JPQL);
+				sb.append(
+					DLFileEntryTypeModelImpl.ORDER_BY_SQL_INLINE_DISTINCT);
 			}
 			else {
 				sb.append(DLFileEntryTypeModelImpl.ORDER_BY_SQL);
@@ -2192,7 +2193,8 @@ public class DLFileEntryTypePersistenceImpl
 		}
 		else {
 			if (getDB().isSupportsInlineDistinct()) {
-				sb.append(DLFileEntryTypeModelImpl.ORDER_BY_JPQL);
+				sb.append(
+					DLFileEntryTypeModelImpl.ORDER_BY_SQL_INLINE_DISTINCT);
 			}
 			else {
 				sb.append(DLFileEntryTypeModelImpl.ORDER_BY_SQL);
@@ -2340,7 +2342,8 @@ public class DLFileEntryTypePersistenceImpl
 		}
 		else {
 			if (getDB().isSupportsInlineDistinct()) {
-				sb.append(DLFileEntryTypeModelImpl.ORDER_BY_JPQL);
+				sb.append(
+					DLFileEntryTypeModelImpl.ORDER_BY_SQL_INLINE_DISTINCT);
 			}
 			else {
 				sb.append(DLFileEntryTypeModelImpl.ORDER_BY_SQL);

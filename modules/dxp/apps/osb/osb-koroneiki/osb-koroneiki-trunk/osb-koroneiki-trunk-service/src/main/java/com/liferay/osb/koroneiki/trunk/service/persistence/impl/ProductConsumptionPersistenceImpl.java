@@ -651,7 +651,8 @@ public class ProductConsumptionPersistenceImpl
 		}
 		else {
 			if (getDB().isSupportsInlineDistinct()) {
-				sb.append(ProductConsumptionModelImpl.ORDER_BY_JPQL);
+				sb.append(
+					ProductConsumptionModelImpl.ORDER_BY_SQL_INLINE_DISTINCT);
 			}
 			else {
 				sb.append(ProductConsumptionModelImpl.ORDER_BY_SQL);
@@ -861,7 +862,8 @@ public class ProductConsumptionPersistenceImpl
 		}
 		else {
 			if (getDB().isSupportsInlineDistinct()) {
-				sb.append(ProductConsumptionModelImpl.ORDER_BY_JPQL);
+				sb.append(
+					ProductConsumptionModelImpl.ORDER_BY_SQL_INLINE_DISTINCT);
 			}
 			else {
 				sb.append(ProductConsumptionModelImpl.ORDER_BY_SQL);
@@ -1664,7 +1666,8 @@ public class ProductConsumptionPersistenceImpl
 		}
 		else {
 			if (getDB().isSupportsInlineDistinct()) {
-				sb.append(ProductConsumptionModelImpl.ORDER_BY_JPQL);
+				sb.append(
+					ProductConsumptionModelImpl.ORDER_BY_SQL_INLINE_DISTINCT);
 			}
 			else {
 				sb.append(ProductConsumptionModelImpl.ORDER_BY_SQL);
@@ -1881,7 +1884,8 @@ public class ProductConsumptionPersistenceImpl
 		}
 		else {
 			if (getDB().isSupportsInlineDistinct()) {
-				sb.append(ProductConsumptionModelImpl.ORDER_BY_JPQL);
+				sb.append(
+					ProductConsumptionModelImpl.ORDER_BY_SQL_INLINE_DISTINCT);
 			}
 			else {
 				sb.append(ProductConsumptionModelImpl.ORDER_BY_SQL);
@@ -2882,7 +2886,8 @@ public class ProductConsumptionPersistenceImpl
 		}
 		else {
 			if (getDB().isSupportsInlineDistinct()) {
-				sb.append(ProductConsumptionModelImpl.ORDER_BY_JPQL);
+				sb.append(
+					ProductConsumptionModelImpl.ORDER_BY_SQL_INLINE_DISTINCT);
 			}
 			else {
 				sb.append(ProductConsumptionModelImpl.ORDER_BY_SQL);
@@ -3081,7 +3086,8 @@ public class ProductConsumptionPersistenceImpl
 		}
 		else {
 			if (getDB().isSupportsInlineDistinct()) {
-				sb.append(ProductConsumptionModelImpl.ORDER_BY_JPQL);
+				sb.append(
+					ProductConsumptionModelImpl.ORDER_BY_SQL_INLINE_DISTINCT);
 			}
 			else {
 				sb.append(ProductConsumptionModelImpl.ORDER_BY_SQL);
@@ -3785,7 +3791,8 @@ public class ProductConsumptionPersistenceImpl
 		}
 		else {
 			if (getDB().isSupportsInlineDistinct()) {
-				sb.append(ProductConsumptionModelImpl.ORDER_BY_JPQL);
+				sb.append(
+					ProductConsumptionModelImpl.ORDER_BY_SQL_INLINE_DISTINCT);
 			}
 			else {
 				sb.append(ProductConsumptionModelImpl.ORDER_BY_SQL);
@@ -3985,7 +3992,8 @@ public class ProductConsumptionPersistenceImpl
 		}
 		else {
 			if (getDB().isSupportsInlineDistinct()) {
-				sb.append(ProductConsumptionModelImpl.ORDER_BY_JPQL);
+				sb.append(
+					ProductConsumptionModelImpl.ORDER_BY_SQL_INLINE_DISTINCT);
 			}
 			else {
 				sb.append(ProductConsumptionModelImpl.ORDER_BY_SQL);
@@ -4694,7 +4702,8 @@ public class ProductConsumptionPersistenceImpl
 		}
 		else {
 			if (getDB().isSupportsInlineDistinct()) {
-				sb.append(ProductConsumptionModelImpl.ORDER_BY_JPQL);
+				sb.append(
+					ProductConsumptionModelImpl.ORDER_BY_SQL_INLINE_DISTINCT);
 			}
 			else {
 				sb.append(ProductConsumptionModelImpl.ORDER_BY_SQL);
@@ -4894,7 +4903,8 @@ public class ProductConsumptionPersistenceImpl
 		}
 		else {
 			if (getDB().isSupportsInlineDistinct()) {
-				sb.append(ProductConsumptionModelImpl.ORDER_BY_JPQL);
+				sb.append(
+					ProductConsumptionModelImpl.ORDER_BY_SQL_INLINE_DISTINCT);
 			}
 			else {
 				sb.append(ProductConsumptionModelImpl.ORDER_BY_SQL);
@@ -5633,7 +5643,8 @@ public class ProductConsumptionPersistenceImpl
 		}
 		else {
 			if (getDB().isSupportsInlineDistinct()) {
-				sb.append(ProductConsumptionModelImpl.ORDER_BY_JPQL);
+				sb.append(
+					ProductConsumptionModelImpl.ORDER_BY_SQL_INLINE_DISTINCT);
 			}
 			else {
 				sb.append(ProductConsumptionModelImpl.ORDER_BY_SQL);
@@ -5839,7 +5850,8 @@ public class ProductConsumptionPersistenceImpl
 		}
 		else {
 			if (getDB().isSupportsInlineDistinct()) {
-				sb.append(ProductConsumptionModelImpl.ORDER_BY_JPQL);
+				sb.append(
+					ProductConsumptionModelImpl.ORDER_BY_SQL_INLINE_DISTINCT);
 			}
 			else {
 				sb.append(ProductConsumptionModelImpl.ORDER_BY_SQL);
@@ -6628,7 +6640,8 @@ public class ProductConsumptionPersistenceImpl
 		}
 		else {
 			if (getDB().isSupportsInlineDistinct()) {
-				sb.append(ProductConsumptionModelImpl.ORDER_BY_JPQL);
+				sb.append(
+					ProductConsumptionModelImpl.ORDER_BY_SQL_INLINE_DISTINCT);
 			}
 			else {
 				sb.append(ProductConsumptionModelImpl.ORDER_BY_SQL);
@@ -6840,7 +6853,8 @@ public class ProductConsumptionPersistenceImpl
 		}
 		else {
 			if (getDB().isSupportsInlineDistinct()) {
-				sb.append(ProductConsumptionModelImpl.ORDER_BY_JPQL);
+				sb.append(
+					ProductConsumptionModelImpl.ORDER_BY_SQL_INLINE_DISTINCT);
 			}
 			else {
 				sb.append(ProductConsumptionModelImpl.ORDER_BY_SQL);

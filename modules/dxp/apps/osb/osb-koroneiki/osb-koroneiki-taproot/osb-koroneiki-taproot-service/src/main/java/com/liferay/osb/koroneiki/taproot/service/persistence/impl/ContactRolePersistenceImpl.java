@@ -640,7 +640,7 @@ public class ContactRolePersistenceImpl
 		}
 		else {
 			if (getDB().isSupportsInlineDistinct()) {
-				sb.append(ContactRoleModelImpl.ORDER_BY_JPQL);
+				sb.append(ContactRoleModelImpl.ORDER_BY_SQL_INLINE_DISTINCT);
 			}
 			else {
 				sb.append(ContactRoleModelImpl.ORDER_BY_SQL);
@@ -846,7 +846,7 @@ public class ContactRolePersistenceImpl
 		}
 		else {
 			if (getDB().isSupportsInlineDistinct()) {
-				sb.append(ContactRoleModelImpl.ORDER_BY_JPQL);
+				sb.append(ContactRoleModelImpl.ORDER_BY_SQL_INLINE_DISTINCT);
 			}
 			else {
 				sb.append(ContactRoleModelImpl.ORDER_BY_SQL);
@@ -1640,7 +1640,7 @@ public class ContactRolePersistenceImpl
 		}
 		else {
 			if (getDB().isSupportsInlineDistinct()) {
-				sb.append(ContactRoleModelImpl.ORDER_BY_JPQL);
+				sb.append(ContactRoleModelImpl.ORDER_BY_SQL_INLINE_DISTINCT);
 			}
 			else {
 				sb.append(ContactRoleModelImpl.ORDER_BY_SQL);
@@ -1852,7 +1852,7 @@ public class ContactRolePersistenceImpl
 		}
 		else {
 			if (getDB().isSupportsInlineDistinct()) {
-				sb.append(ContactRoleModelImpl.ORDER_BY_JPQL);
+				sb.append(ContactRoleModelImpl.ORDER_BY_SQL_INLINE_DISTINCT);
 			}
 			else {
 				sb.append(ContactRoleModelImpl.ORDER_BY_SQL);
@@ -2854,7 +2854,7 @@ public class ContactRolePersistenceImpl
 		}
 		else {
 			if (getDB().isSupportsInlineDistinct()) {
-				sb.append(ContactRoleModelImpl.ORDER_BY_JPQL);
+				sb.append(ContactRoleModelImpl.ORDER_BY_SQL_INLINE_DISTINCT);
 			}
 			else {
 				sb.append(ContactRoleModelImpl.ORDER_BY_SQL);
@@ -3060,7 +3060,7 @@ public class ContactRolePersistenceImpl
 		}
 		else {
 			if (getDB().isSupportsInlineDistinct()) {
-				sb.append(ContactRoleModelImpl.ORDER_BY_JPQL);
+				sb.append(ContactRoleModelImpl.ORDER_BY_SQL_INLINE_DISTINCT);
 			}
 			else {
 				sb.append(ContactRoleModelImpl.ORDER_BY_SQL);

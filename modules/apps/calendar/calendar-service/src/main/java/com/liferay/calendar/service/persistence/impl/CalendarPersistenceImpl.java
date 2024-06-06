@@ -2024,7 +2024,7 @@ public class CalendarPersistenceImpl
 		}
 		else {
 			if (getDB().isSupportsInlineDistinct()) {
-				sb.append(CalendarModelImpl.ORDER_BY_JPQL);
+				sb.append(CalendarModelImpl.ORDER_BY_SQL_INLINE_DISTINCT);
 			}
 			else {
 				sb.append(CalendarModelImpl.ORDER_BY_SQL);
@@ -2223,7 +2223,7 @@ public class CalendarPersistenceImpl
 		}
 		else {
 			if (getDB().isSupportsInlineDistinct()) {
-				sb.append(CalendarModelImpl.ORDER_BY_JPQL);
+				sb.append(CalendarModelImpl.ORDER_BY_SQL_INLINE_DISTINCT);
 			}
 			else {
 				sb.append(CalendarModelImpl.ORDER_BY_SQL);
@@ -3010,7 +3010,7 @@ public class CalendarPersistenceImpl
 		}
 		else {
 			if (getDB().isSupportsInlineDistinct()) {
-				sb.append(CalendarModelImpl.ORDER_BY_JPQL);
+				sb.append(CalendarModelImpl.ORDER_BY_SQL_INLINE_DISTINCT);
 			}
 			else {
 				sb.append(CalendarModelImpl.ORDER_BY_SQL);
@@ -3216,7 +3216,7 @@ public class CalendarPersistenceImpl
 		}
 		else {
 			if (getDB().isSupportsInlineDistinct()) {
-				sb.append(CalendarModelImpl.ORDER_BY_JPQL);
+				sb.append(CalendarModelImpl.ORDER_BY_SQL_INLINE_DISTINCT);
 			}
 			else {
 				sb.append(CalendarModelImpl.ORDER_BY_SQL);

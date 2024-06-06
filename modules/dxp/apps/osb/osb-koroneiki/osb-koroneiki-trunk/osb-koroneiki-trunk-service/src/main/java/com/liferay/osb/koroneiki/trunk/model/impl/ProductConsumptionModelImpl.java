@@ -107,6 +107,9 @@ public class ProductConsumptionModelImpl
 	public static final String ORDER_BY_SQL =
 		" ORDER BY Koroneiki_ProductConsumption.productConsumptionId ASC";
 
+	public static final String ORDER_BY_SQL_INLINE_DISTINCT =
+		" ORDER BY productConsumption.productConsumptionId ASC";
+
 	public static final String DATA_SOURCE = "liferayDataSource";
 
 	public static final String SESSION_FACTORY = "liferaySessionFactory";
