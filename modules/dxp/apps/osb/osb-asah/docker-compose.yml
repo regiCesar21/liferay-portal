@@ -197,6 +197,8 @@ services:
             - JAVA_OPTS=-Xmx256m
     osbfarofrontend:
         container_name: faro
+        depends_on:
+            - mariadb
         environment:
             - FARO_DXP_CLOUD_API_URL=http://dxpcloudemulator:3000/projects/
             - FARO_WEDEPLOY_EMAIL_ADDRESS=test@liferay.com
