@@ -181,19 +181,19 @@ AUI.add(
 
 				if (layouts) {
 					output = layouts.map((node) => {
-						return instance._formatNode(node, json.total);
+						return instance._formatNode(node);
 					});
 				}
 
 				return output;
 			},
 
-			_formatNode(node, totalLayouts) {
+			_formatNode(node) {
 				var instance = this;
 
 				var childLayouts = [];
 				var cssIcons = {};
-				var total = totalLayouts;
+				var total = node.totalChildren || 0;
 				var childLayoutsLength = 0;
 				var iconCssClassName = 'icon-link';
 

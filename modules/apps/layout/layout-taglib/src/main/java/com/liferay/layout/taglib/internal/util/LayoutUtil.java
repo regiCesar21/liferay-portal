@@ -159,6 +159,8 @@ public class LayoutUtil {
 				hasManageLayoutsPermission && !mobile &&
 				SitesUtil.isLayoutSortable(layout)
 			).put(
+				"totalChildren", childLayouts.size()
+			).put(
 				"type", layout.getType()
 			).put(
 				"url",
