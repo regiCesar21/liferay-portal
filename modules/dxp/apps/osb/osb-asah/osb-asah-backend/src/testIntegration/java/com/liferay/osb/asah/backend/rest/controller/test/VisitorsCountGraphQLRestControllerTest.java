@@ -10,9 +10,7 @@ import com.liferay.osb.asah.test.util.annotation.BQSQLResource;
 /**
  * @author Sillas Cavalcanti
  */
-@BQSQLResource(
-	resourcePath = "visitors_count_graphql_rest_controller_test.sql"
-)
+@BQSQLResource(resourcePath = "visitors_count_graphql_rest_controller_test.sql")
 public class VisitorsCountGraphQLRestControllerTest
 	extends BaseGraphQLRestControllerTestCase {
 
