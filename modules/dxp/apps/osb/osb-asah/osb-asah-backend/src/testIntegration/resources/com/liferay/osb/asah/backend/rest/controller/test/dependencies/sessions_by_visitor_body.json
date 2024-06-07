@@ -2,9 +2,7 @@
 	"operationName": "SitesMetricQuery",
 	"variables": {
 		"channelId": "1",
-		"devices": "Any",
 		"interval": "D",
-		"location": "Any",
 		"rangeEnd": "2024-05-11",
 		"rangeKey": null,
 		"rangeStart": "2024-05-05"
