@@ -11,11 +11,11 @@ definition {
 				-H 'Content-Type: application/json' \
 				-u 'test@liferay.com:test' \
 				-d '{
+					"articleBody": "${bodyField}",
+					"headline": "${titleField}",
 					"keywords": [
 						"${tagField}"
-					],
-					"headline": "${titleField}",
-					"articleBody": "${bodyField}"
+					]
 				}'
 		''';
 
@@ -43,8 +43,8 @@ definition {
 				-H 'Content-Type: application/json' \
 				-u 'test@liferay.com:test' \
 				-d '{
-					"headline": "${titleField}",
-					"articleBody": "${bodyField}"
+					"articleBody": "${bodyField}",
+					"headline": "${titleField}"
 				}'
 		''';
 
