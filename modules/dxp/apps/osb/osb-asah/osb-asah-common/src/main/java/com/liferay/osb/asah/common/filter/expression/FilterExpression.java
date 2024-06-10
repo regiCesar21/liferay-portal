@@ -269,7 +269,7 @@ public class FilterExpression {
 		"activityKey eq ''(?<applicationId>[\\w]+)#(?<eventId>[\\w]+)#" +
 			"(?<assetIdHashed>[\\w]+)''");
 	private static final Pattern _interestPattern = Pattern.compile(
-		"interests.filter\\(filter='\\(name eq ''(?<keyword>[^']+)'' and " +
+		"interests.filter\\(filter='\\(name eq ''(?<keyword>.+?)'' and " +
 			"score eq ''(?<interested>true|false)''\\)'\\)");
 	private static final Pattern _membershipPattern = Pattern.compile(
 		"(?<type>groupIds|roleIds|teamIds|userGroupIds) (?<operator>eq|ne) '" +
