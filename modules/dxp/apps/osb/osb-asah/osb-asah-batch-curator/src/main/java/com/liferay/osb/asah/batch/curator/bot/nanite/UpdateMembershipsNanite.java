@@ -91,8 +91,8 @@ public class UpdateMembershipsNanite extends BaseNanite {
 			_bqMembershipDog.updateBQMemberships(
 				filterString, segment.getIncludeAnonymousUsers(), segment);
 
-			if (_log.isInfoEnabled()) {
-				_log.info(
+			if (_log.isDebugEnabled()) {
+				_log.debug(
 					String.format(
 						"Updated memberships successfully for segment ID %s " +
 							"and filter %s",
@@ -130,8 +130,8 @@ public class UpdateMembershipsNanite extends BaseNanite {
 	private void _updateMembershipIndividuals() {
 		_bqMembershipIndividualDog.updateMembershipIndividuals();
 
-		if (_log.isInfoEnabled()) {
-			_log.info("Updated membership individuals successfully");
+		if (_log.isDebugEnabled()) {
+			_log.debug("Updated membership individuals successfully");
 		}
 	}
 
@@ -173,8 +173,8 @@ public class UpdateMembershipsNanite extends BaseNanite {
 			_segmentDog.updateSegmentMembershipCount(
 				membershipCountSnapshot, segment);
 
-			if (_log.isInfoEnabled()) {
-				_log.info(
+			if (_log.isDebugEnabled()) {
+				_log.debug(
 					"Updated membership changes successfully for segment ID " +
 						segmentId);
 			}
