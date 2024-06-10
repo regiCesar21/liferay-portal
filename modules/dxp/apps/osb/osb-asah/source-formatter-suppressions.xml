@@ -2,6 +2,7 @@
 
 <suppressions>
 	<checkstyle>
+		<suppress checks="ContractionsCheck" files="osb-asah-common/src/test/java/com/liferay/osb/asah/common/filter/expression/FilterExpressionTest\.java" />
 		<suppress checks="JSONUtilCheck" files="osb-asah-common/src/test/java/com/liferay/osb/asah/common/json/JSONUtilTest\.java" />
 	</checkstyle>
 	<source-check>
