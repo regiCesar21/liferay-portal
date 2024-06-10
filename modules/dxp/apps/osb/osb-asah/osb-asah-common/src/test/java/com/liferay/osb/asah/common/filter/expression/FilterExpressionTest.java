@@ -3034,6 +3034,91 @@ public class FilterExpressionTest {
 	}
 
 	@Test
+	public void testInterestFilterExpressionWithApostrophe() {
+		_assertEquals(
+			DSL.or(
+				DSL.field(
+					"Identity.id", String.class
+				).in(
+					DSL.selectDistinct(
+						DSL.field("Identity.id", String.class)
+					).from(
+						DSL.table(
+							"BQIdentity"
+						).as(
+							"Identity"
+						)
+					).join(
+						DSL.table(
+							"BQIdentityInterestScore"
+						).as(
+							"Interest"
+						)
+					).on(
+						DSL.field(
+							"Identity.id", String.class
+						).eq(
+							DSL.field("Interest.identityId", String.class)
+						)
+					).where(
+						DSL.and(
+							DSL.field(
+								"Interest.keyword", String.class
+							).eq(
+								"that's all"
+							),
+							DSL.field(
+								"Interest.interested", Boolean.class
+							).eq(
+								true
+							))
+					)
+				),
+				DSL.field(
+					"Individual.id", String.class
+				).in(
+					DSL.selectDistinct(
+						DSL.field("Identity.individualId", String.class)
+					).from(
+						DSL.table(
+							"BQIdentity"
+						).as(
+							"Identity"
+						)
+					).join(
+						DSL.table(
+							"BQIdentityInterestScore"
+						).as(
+							"Interest"
+						)
+					).on(
+						DSL.field(
+							"Identity.id", String.class
+						).eq(
+							DSL.field("Interest.identityId", String.class)
+						)
+					).where(
+						DSL.and(
+							DSL.field(
+								"Interest.keyword", String.class
+							).eq(
+								"that's all"
+							),
+							DSL.field(
+								"Interest.interested", Boolean.class
+							).eq(
+								true
+							),
+							DSL.field(
+								"Identity.individualId"
+							).isNotNull())
+					)
+				)),
+			"(interests.filter(filter='(name eq ''that''''s all'' and score " +
+				"eq ''true'')'))");
+	}
+
+	@Test
 	public void testInvalidLogicalOperatorThrowsException() {
 		_assertThrowsException(
 			"column1 eq 'value1' but column2 eq 'value2'",
