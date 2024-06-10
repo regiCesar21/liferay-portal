@@ -20,7 +20,7 @@ import os
 import pendulum
 import requests
 
-def create_dag(ac_project_id, ac_project_time_zone_id, dag_id, dag_description, data_source_ids, is_paused_upon_creation, application_name, schedule_interval, table_name: str):
+def create_dag(ac_project_id, ac_project_time_zone_id, application_name, dag_id, dag_description, data_source_ids, is_paused_upon_creation, schedule_interval, table_name):
 	with airflow.DAG(
 		dag_id=dag_id,
 		default_args={
@@ -100,11 +100,11 @@ for project in response.json():
 	dag_id = 'most_viewed_content_recommender_{}'.format(project.get('id'))
 
 	globals()[dag_id] = create_dag(
-		project.get('id'), project.get('timeZoneId'), dag_id,
+		project.get('id'), project.get('timeZoneId'),
+		'MostViewedContentRecommendation', dag_id,
 		'Most Viewed Content Recommender DAG For {}'.format(project.get('id')),
 		data_source_ids,
 		True,
-		'MostViewedContentRecommendation',
 		None,
 		'assetentity'
 	)
@@ -112,11 +112,11 @@ for project in response.json():
 	dag_id = 'user_content_recommender_{}'.format(project.get('id'))
 
 	globals()[dag_id] = create_dag(
-		project.get('id'), project.get('timeZoneId'), dag_id,
+		project.get('id'), project.get('timeZoneId'),
+		'UserContentRecommendation', dag_id,
 		'User Content Recommender DAG For {}'.format(project.get('id')),
 		data_source_ids,
 		True,
-		'UserContentRecommendation',
 		None,
 		'assetentity'
 	)

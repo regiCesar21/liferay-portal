@@ -10,8 +10,6 @@
 #
 
 from airflow.models import Variable
-from airflow.providers.google.cloud.operators.bigquery import \
-	BigQueryCheckOperator
 
 from liferay.bigquery import BigQueryShortCircuitOperator
 from liferay.dataproc import DataprocClusterGetOrCreateOperator, \
@@ -22,7 +20,7 @@ import os
 import pendulum
 import requests
 
-def create_dag(ac_project_id, ac_project_time_zone_id, dag_id, dag_description, data_source_ids, is_paused_upon_creation: bool, resource_name, schedule_interval: str, table_name: str):
+def create_dag(ac_project_id, ac_project_time_zone_id, dag_id, dag_description, data_source_ids, is_paused_upon_creation, resource_name, schedule_interval, table_name):
 	with airflow.DAG(
 		dag_id=dag_id,
 		default_args={
