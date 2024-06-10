@@ -1,0 +1,64 @@
+{
+	"data": {
+		"site": {
+			"bounceRateMetric": {
+				"histogram": {
+					"asymmetricComparison": false,
+					"metrics": [
+						{
+							"key": "2024-05-05T00:00",
+							"previousValue": 0,
+							"previousValueKey": "2024-04-28T00:00",
+							"value": 26.666666666666668,
+							"valueKey": "2024-05-05T00:00"
+						},
+						{
+							"key": "2024-05-06T00:00",
+							"previousValue": 0,
+							"previousValueKey": "2024-04-29T00:00",
+							"value": 32,
+							"valueKey": "2024-05-06T00:00"
+						},
+						{
+							"key": "2024-05-07T00:00",
+							"previousValue": 0,
+							"previousValueKey": "2024-04-30T00:00",
+							"value": 125,
+							"valueKey": "2024-05-07T00:00"
+						},
+						{
+							"key": "2024-05-08T00:00",
+							"previousValue": 0,
+							"previousValueKey": "2024-05-01T00:00",
+							"value": 140,
+							"valueKey": "2024-05-08T00:00"
+						},
+						{
+							"key": "2024-05-09T00:00",
+							"previousValue": 0,
+							"previousValueKey": "2024-05-02T00:00",
+							"value": 47.333333333333336,
+							"valueKey": "2024-05-09T00:00"
+						},
+						{
+							"key": "2024-05-10T00:00",
+							"previousValue": 0,
+							"previousValueKey": "2024-05-03T00:00",
+							"value": 550,
+							"valueKey": "2024-05-10T00:00"
+						},
+						{
+							"key": "2024-05-11T00:00",
+							"previousValue": 0,
+							"previousValueKey": "2024-05-04T00:00",
+							"value": 0,
+							"valueKey": "2024-05-11T00:00"
+						}
+					],
+					"total": 7
+				},
+				"value": 130.42105263157896
+			}
+		}
+	}
+}
