@@ -1,0 +1,10 @@
+{
+	"operationName": "SitesMetricQuery",
+	"variables": {
+		"channelId": "1",
+		"interval": "D",
+		"rangeEnd": "2024-05-11",
+		"rangeKey": null,
+		"rangeStart": "2024-05-05"
+	}
+}

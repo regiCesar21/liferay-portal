@@ -1,0 +1,26 @@
+fragment HistogramFragment on Metric {
+	...TabsFragment
+	histogram {
+		asymmetricComparison
+		metrics {
+			key
+			previousValue
+			previousValueKey
+			value
+			valueKey
+		}
+		total
+	}
+}
+
+fragment TabsFragment on Metric {
+	value
+}
+
+query SitesMetricQuery($channelId: String, $interval: String!, $rangeEnd: String, $rangeKey: Int, $rangeStart: String) {
+	site(channelId: $channelId, interval: $interval, rangeEnd: $rangeEnd, rangeKey: $rangeKey, rangeStart: $rangeStart) {
+		sessionDurationMetric {
+			...HistogramFragment
+		}
+	}
+}
