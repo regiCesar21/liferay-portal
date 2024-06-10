@@ -415,7 +415,10 @@ public class TransformProductPurchases {
 			jsonObject.put("endDate", DateUtil.format(originalEndDate));
 			jsonObject.put("externalReferenceCode", externalReferenceCode);
 
-			if (instanceSizeSubscriptionTerm != null) {
+			if ((instanceSizeSubscriptionTerm != null) &&
+				(instanceSizeSubscriptionTerm.instanceSize != null) &&
+				(instanceSizeSubscriptionTerm.instanceSize != "")) {
+
 				jsonObject.put(
 					"instanceSize", instanceSizeSubscriptionTerm.instanceSize);
 			}
@@ -473,16 +476,28 @@ public class TransformProductPurchases {
 			if (currentSubscriptionStatus.equals(newSubscriptionTermStatus)) {
 				int currentInstanceSize = 0;
 
-				if (instanceSizeSubscriptionTerm.instanceSize != null) {
-					currentInstanceSize = Integer.valueOf(
-						instanceSizeSubscriptionTerm.instanceSize);
+				if ((instanceSizeSubscriptionTerm.instanceSize != null) &&
+					(instanceSizeSubscriptionTerm.instanceSize != "")) {
+
+					try {
+						currentInstanceSize = Integer.valueOf(
+							instanceSizeSubscriptionTerm.instanceSize);
+					}
+					catch (NumberFormatException nfe) {
+					}
 				}
 
 				int newInstanceSize = 0;
 
-				if (subscriptionTerm.instanceSize != null) {
-					newInstanceSize = Integer.valueOf(
-						subscriptionTerm.instanceSize);
+				if ((subscriptionTerm.instanceSize != null) &&
+					(subscriptionTerm.instanceSize != "")) {
+
+					try {
+						newInstanceSize = Integer.valueOf(
+							subscriptionTerm.instanceSize);
+					}
+					catch (NumberFormatException nfe) {
+					}
 				}
 
 				if (newInstanceSize > currentInstanceSize) {
