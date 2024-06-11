@@ -11,24 +11,24 @@ import com.liferay.osb.asah.test.util.annotation.BQSQLResource;
  * @author Sillas Cavalcanti
  */
 @BQSQLResource(
-	resourcePath = "bounce_rate_metric_graphql_rest_controller_test.sql"
+	resourcePath = "site_activity_bounce_rate_graphql_rest_controller_test.sql"
 )
-public class BounceRateMetricGraphQLRestControllerTest
+public class SiteActivityBounceRateGraphQLRestControllerTest
 	extends BaseGraphQLRestControllerTestCase {
 
 	@Override
 	public String getBodyPath() {
-		return "bounce_rate_metric_body.json";
+		return "site_activity_bounce_rate_body.json";
 	}
 
 	@Override
 	public String getExpectedResultPath() {
-		return "bounce_rate_metric_expected_result.json";
+		return "site_activity_bounce_rate_expected_result.json";
 	}
 
 	@Override
 	public String getQueryPath() {
-		return "bounce_rate_metric_query.graphql";
+		return "site_activity_bounce_rate_query.graphql";
 	}
 
 }
