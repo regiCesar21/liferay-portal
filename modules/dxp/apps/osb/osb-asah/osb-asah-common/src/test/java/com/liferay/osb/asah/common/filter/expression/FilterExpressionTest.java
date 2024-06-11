@@ -3034,7 +3034,7 @@ public class FilterExpressionTest {
 	}
 
 	@Test
-	public void testInterestFilterExpressionWithApostrophe() {
+	public void testInterestFilterExpressionWithApostrophe1() {
 		_assertEquals(
 			DSL.or(
 				DSL.field(
@@ -3065,7 +3065,7 @@ public class FilterExpressionTest {
 							DSL.field(
 								"Interest.keyword", String.class
 							).eq(
-								"that's all"
+								"brand's intention"
 							),
 							DSL.field(
 								"Interest.interested", Boolean.class
@@ -3102,7 +3102,7 @@ public class FilterExpressionTest {
 							DSL.field(
 								"Interest.keyword", String.class
 							).eq(
-								"that's all"
+								"brand's intention"
 							),
 							DSL.field(
 								"Interest.interested", Boolean.class
@@ -3114,8 +3114,258 @@ public class FilterExpressionTest {
 							).isNotNull())
 					)
 				)),
-			"(interests.filter(filter='(name eq ''that''''s all'' and score " +
-				"eq ''true'')'))");
+			"(interests.filter(filter='(name eq ''brand''''s intention'' and " +
+				"score eq ''true'')'))");
+	}
+
+	@Test
+	public void testInterestFilterExpressionWithApostrophe2() {
+		_assertEquals(
+			DSL.or(
+				DSL.field(
+					"Identity.id", String.class
+				).in(
+					DSL.selectDistinct(
+						DSL.field("Identity.id", String.class)
+					).from(
+						DSL.table(
+							"BQIdentity"
+						).as(
+							"Identity"
+						)
+					).join(
+						DSL.table(
+							"BQIdentityInterestScore"
+						).as(
+							"Interest"
+						)
+					).on(
+						DSL.field(
+							"Identity.id", String.class
+						).eq(
+							DSL.field("Interest.identityId", String.class)
+						)
+					).where(
+						DSL.and(
+							DSL.field(
+								"Interest.keyword", String.class
+							).eq(
+								"brands' intention"
+							),
+							DSL.field(
+								"Interest.interested", Boolean.class
+							).eq(
+								true
+							))
+					)
+				),
+				DSL.field(
+					"Individual.id", String.class
+				).in(
+					DSL.selectDistinct(
+						DSL.field("Identity.individualId", String.class)
+					).from(
+						DSL.table(
+							"BQIdentity"
+						).as(
+							"Identity"
+						)
+					).join(
+						DSL.table(
+							"BQIdentityInterestScore"
+						).as(
+							"Interest"
+						)
+					).on(
+						DSL.field(
+							"Identity.id", String.class
+						).eq(
+							DSL.field("Interest.identityId", String.class)
+						)
+					).where(
+						DSL.and(
+							DSL.field(
+								"Interest.keyword", String.class
+							).eq(
+								"brands' intention"
+							),
+							DSL.field(
+								"Interest.interested", Boolean.class
+							).eq(
+								true
+							),
+							DSL.field(
+								"Identity.individualId"
+							).isNotNull())
+					)
+				)),
+			"(interests.filter(filter='(name eq ''brands'''' intention'' and " +
+				"score eq ''true'')'))");
+	}
+
+	@Test
+	public void testInterestFilterExpressionWithMultipleCriteria() {
+		_assertEquals(
+			DSL.and(
+				DSL.or(
+					DSL.field(
+						"Identity.id", String.class
+					).in(
+						DSL.selectDistinct(
+							DSL.field("Identity.id", String.class)
+						).from(
+							DSL.table(
+								"BQIdentity"
+							).as(
+								"Identity"
+							)
+						).join(
+							DSL.table(
+								"BQIdentityInterestScore"
+							).as(
+								"Interest"
+							)
+						).on(
+							DSL.field(
+								"Identity.id", String.class
+							).eq(
+								DSL.field("Interest.identityId", String.class)
+							)
+						).where(
+							DSL.and(
+								DSL.field(
+									"Interest.keyword", String.class
+								).eq(
+									"food"
+								),
+								DSL.field(
+									"Interest.interested", Boolean.class
+								).eq(
+									true
+								))
+						)
+					),
+					DSL.field(
+						"Individual.id", String.class
+					).in(
+						DSL.selectDistinct(
+							DSL.field("Identity.individualId", String.class)
+						).from(
+							DSL.table(
+								"BQIdentity"
+							).as(
+								"Identity"
+							)
+						).join(
+							DSL.table(
+								"BQIdentityInterestScore"
+							).as(
+								"Interest"
+							)
+						).on(
+							DSL.field(
+								"Identity.id", String.class
+							).eq(
+								DSL.field("Interest.identityId", String.class)
+							)
+						).where(
+							DSL.and(
+								DSL.field(
+									"Interest.keyword", String.class
+								).eq(
+									"food"
+								),
+								DSL.field(
+									"Interest.interested", Boolean.class
+								).eq(
+									true
+								),
+								DSL.field(
+									"Identity.individualId"
+								).isNotNull())
+						)
+					)),
+				DSL.or(
+					DSL.field(
+						"Identity.id", String.class
+					).in(
+						DSL.selectDistinct(
+							DSL.field("Identity.id", String.class)
+						).from(
+							DSL.table(
+								"BQIdentity"
+							).as(
+								"Identity"
+							)
+						).join(
+							DSL.table(
+								"BQIdentityInterestScore"
+							).as(
+								"Interest"
+							)
+						).on(
+							DSL.field(
+								"Identity.id", String.class
+							).eq(
+								DSL.field("Interest.identityId", String.class)
+							)
+						).where(
+							DSL.and(
+								DSL.field(
+									"Interest.keyword", String.class
+								).eq(
+									"music"
+								),
+								DSL.field(
+									"Interest.interested", Boolean.class
+								).eq(
+									true
+								))
+						)
+					),
+					DSL.field(
+						"Individual.id", String.class
+					).in(
+						DSL.selectDistinct(
+							DSL.field("Identity.individualId", String.class)
+						).from(
+							DSL.table(
+								"BQIdentity"
+							).as(
+								"Identity"
+							)
+						).join(
+							DSL.table(
+								"BQIdentityInterestScore"
+							).as(
+								"Interest"
+							)
+						).on(
+							DSL.field(
+								"Identity.id", String.class
+							).eq(
+								DSL.field("Interest.identityId", String.class)
+							)
+						).where(
+							DSL.and(
+								DSL.field(
+									"Interest.keyword", String.class
+								).eq(
+									"music"
+								),
+								DSL.field(
+									"Interest.interested", Boolean.class
+								).eq(
+									true
+								),
+								DSL.field(
+									"Identity.individualId"
+								).isNotNull())
+						)
+					))),
+			"(interests.filter(filter='(name eq ''food'' and score eq " +
+				"''true'')')) and (interests.filter(filter='(name eq " +
+					"''music'' and score eq ''true'')'))");
 	}
 
 	@Test
