@@ -2918,8 +2918,9 @@ public class UserLocalServiceWrapper
 
 	@Override
 	public boolean sendPasswordLockout(
-			long companyId, String emailAddress, String fromName,
-			String fromAddress, String subject, String body,
+			long companyId, java.lang.String emailAddress,
+			java.lang.String fromName, java.lang.String fromAddress,
+			java.lang.String subject, java.lang.String body,
 			ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 

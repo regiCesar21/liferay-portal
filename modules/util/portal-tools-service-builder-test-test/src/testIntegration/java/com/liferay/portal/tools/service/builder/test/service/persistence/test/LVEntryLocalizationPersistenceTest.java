@@ -447,7 +447,7 @@ public class LVEntryLocalizationPersistenceTest {
 
 		lvEntryLocalization.setMvccVersion(RandomTestUtil.nextLong());
 
-		lvEntryLocalization.setHeadId(RandomTestUtil.nextLong());
+		lvEntryLocalization.setHeadId(-pk);
 
 		lvEntryLocalization.setCompanyId(RandomTestUtil.nextLong());
 

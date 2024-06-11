@@ -425,7 +425,7 @@ public class VersionedEntryPersistenceTest {
 
 		versionedEntry.setMvccVersion(RandomTestUtil.nextLong());
 
-		versionedEntry.setHeadId(RandomTestUtil.nextLong());
+		versionedEntry.setHeadId(-pk);
 
 		versionedEntry.setGroupId(RandomTestUtil.nextLong());
 

@@ -1088,7 +1088,7 @@ public class LayoutPersistenceTest {
 
 		layout.setUuid(RandomTestUtil.randomString());
 
-		layout.setHeadId(RandomTestUtil.nextLong());
+		layout.setHeadId(-pk);
 
 		layout.setGroupId(RandomTestUtil.nextLong());
 

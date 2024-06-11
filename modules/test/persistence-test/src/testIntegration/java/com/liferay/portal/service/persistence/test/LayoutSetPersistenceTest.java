@@ -572,7 +572,7 @@ public class LayoutSetPersistenceTest {
 
 		layoutSet.setMvccVersion(RandomTestUtil.nextLong());
 
-		layoutSet.setHeadId(RandomTestUtil.nextLong());
+		layoutSet.setHeadId(-pk);
 
 		layoutSet.setGroupId(RandomTestUtil.nextLong());
 
