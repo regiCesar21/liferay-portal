@@ -1863,6 +1863,8 @@ public class FilterExpressionConditionVisitor
 		filterString = filterString.replaceAll("''\\s", "' ");
 		filterString = filterString.replaceAll("''\\)", "')");
 
+		filterString = filterString.replaceAll("''''", "''");
+
 		return filterString;
 	}
 
