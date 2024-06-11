@@ -11,24 +11,24 @@ import com.liferay.osb.asah.test.util.annotation.BQSQLResource;
  * @author Sillas Cavalcanti
  */
 @BQSQLResource(
-	resourcePath = "session_duration_metric_graphql_rest_controller_test.sql"
+	resourcePath = "site_activity_session_duration_graphql_rest_controller_test.sql"
 )
-public class SessionDurationMetricGraphQLRestControllerTest
+public class SiteActivitySessionDurationGraphQLRestControllerTest
 	extends BaseGraphQLRestControllerTestCase {
 
 	@Override
 	public String getBodyPath() {
-		return "session_duration_metric_body.json";
+		return "site_activity_session_duration_body.json";
 	}
 
 	@Override
 	public String getExpectedResultPath() {
-		return "session_duration_metric_expected_result.json";
+		return "site_activity_session_duration_expected_result.json";
 	}
 
 	@Override
 	public String getQueryPath() {
-		return "session_duration_metric_query.graphql";
+		return "site_activity_session_duration_query.graphql";
 	}
 
 }
