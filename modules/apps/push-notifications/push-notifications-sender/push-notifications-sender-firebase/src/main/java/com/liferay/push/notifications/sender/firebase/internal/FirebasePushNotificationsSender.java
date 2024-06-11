@@ -108,8 +108,12 @@ public class FirebasePushNotificationsSender
 			ConfigurableUtil.createConfigurable(
 				FirebasePushNotificationsSenderConfiguration.class, properties);
 
-		_projectNumber =
-			_firebasePushNotificationsSenderConfiguration.projectNumber();
+		if (Validator.isNull(
+				_firebasePushNotificationsSenderConfiguration.
+					projectNumber())) {
+
+			return;
+		}
 
 		_initGoogleCloudServices();
 	}
@@ -287,6 +291,9 @@ public class FirebasePushNotificationsSender
 	}
 
 	private void _initGoogleCloudServices() throws PortalException {
+		_projectNumber =
+			_firebasePushNotificationsSenderConfiguration.projectNumber();
+
 		String serviceAccountKey =
 			_firebasePushNotificationsSenderConfiguration.serviceAccountKey();
 
