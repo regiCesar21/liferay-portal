@@ -47,8 +47,8 @@ public interface CustomBQEventRepository {
 		LocalDateTime rangeStartLocalDateTime, String timeZoneId);
 
 	public Integer countBQEvents(
-		String applicationId, String assetId, @Nullable Long channelId,
-		@Nullable Long dataSourceId, String eventId,
+		String applicationId, @Nullable String assetId,
+		@Nullable Long channelId, @Nullable Long dataSourceId, String eventId,
 		@Nullable LocalDateTime rangeEndLocalDateTime,
 		@Nullable LocalDateTime rangeStartLocalDateTime);
 

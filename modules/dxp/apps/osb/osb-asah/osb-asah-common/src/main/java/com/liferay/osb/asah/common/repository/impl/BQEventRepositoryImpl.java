@@ -126,8 +126,8 @@ public class BQEventRepositoryImpl
 
 	@Override
 	public Integer countBQEvents(
-		String applicationId, String assetId, @Nullable Long channelId,
-		@Nullable Long dataSourceId, String eventId,
+		String applicationId, @Nullable String assetId,
+		@Nullable Long channelId, @Nullable Long dataSourceId, String eventId,
 		@Nullable LocalDateTime rangeEndLocalDateTime,
 		@Nullable LocalDateTime rangeStartLocalDateTime) {
 
@@ -141,15 +141,19 @@ public class BQEventRepositoryImpl
 				applicationId
 			),
 			DSL.field(
-				"assetId"
-			).eq(
-				assetId
-			),
-			DSL.field(
 				"eventId"
 			).eq(
 				eventId
 			));
+
+		if (assetId != null) {
+			condition = condition.and(
+				DSL.field(
+					"assetId"
+				).eq(
+					assetId
+				));
+		}
 
 		if (channelId != null) {
 			condition = condition.and(
