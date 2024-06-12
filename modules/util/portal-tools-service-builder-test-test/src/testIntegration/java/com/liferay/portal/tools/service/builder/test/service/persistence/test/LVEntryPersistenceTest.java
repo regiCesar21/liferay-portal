@@ -543,7 +543,7 @@ public class LVEntryPersistenceTest {
 
 		lvEntry.setUuid(RandomTestUtil.randomString());
 
-		lvEntry.setHeadId(RandomTestUtil.nextLong());
+		lvEntry.setHeadId(-pk);
 
 		lvEntry.setDefaultLanguageId(RandomTestUtil.randomString());
 
