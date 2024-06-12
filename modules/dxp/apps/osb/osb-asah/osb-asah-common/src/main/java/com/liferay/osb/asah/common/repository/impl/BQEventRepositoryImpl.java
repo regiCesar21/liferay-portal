@@ -134,20 +134,17 @@ public class BQEventRepositoryImpl
 		SelectSelectStep<Record1<Integer>> selectSelectStep =
 			_dslContext.selectCount();
 
-		Condition condition = DSL.and(
+		List<Condition> conditions = new ArrayList<>();
+
+		conditions.add(
 			DSL.field(
 				"applicationId"
 			).eq(
 				applicationId
-			),
-			DSL.field(
-				"eventId"
-			).eq(
-				eventId
 			));
 
 		if (assetId != null) {
-			condition = condition.and(
+			conditions.add(
 				DSL.field(
 					"assetId"
 				).eq(
@@ -156,7 +153,7 @@ public class BQEventRepositoryImpl
 		}
 
 		if (channelId != null) {
-			condition = condition.and(
+			conditions.add(
 				DSL.field(
 					"channelId"
 				).eq(
@@ -165,7 +162,7 @@ public class BQEventRepositoryImpl
 		}
 
 		if (dataSourceId != null) {
-			condition = condition.and(
+			conditions.add(
 				DSL.field(
 					"dataSourceId"
 				).eq(
@@ -173,8 +170,15 @@ public class BQEventRepositoryImpl
 				));
 		}
 
+		conditions.add(
+			DSL.field(
+				"eventId"
+			).eq(
+				eventId
+			));
+
 		if (rangeEndLocalDateTime != null) {
-			condition = condition.and(
+			conditions.add(
 				DSL.field(
 					"eventDate"
 				).lt(
@@ -183,7 +187,7 @@ public class BQEventRepositoryImpl
 		}
 
 		if (rangeStartLocalDateTime != null) {
-			condition = condition.and(
+			conditions.add(
 				DSL.field(
 					"eventDate"
 				).ge(
@@ -195,7 +199,7 @@ public class BQEventRepositoryImpl
 			selectSelectStep.from(
 				"BQEvent"
 			).where(
-				condition
+				conditions
 			));
 	}
 
