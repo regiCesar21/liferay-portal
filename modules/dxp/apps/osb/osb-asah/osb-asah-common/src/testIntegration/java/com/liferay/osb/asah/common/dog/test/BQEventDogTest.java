@@ -19,10 +19,14 @@ import com.liferay.osb.asah.common.model.RecentVisitPage;
 import com.liferay.osb.asah.common.model.RecentVisitSite;
 import com.liferay.osb.asah.common.model.SearchKeyword;
 import com.liferay.osb.asah.common.model.TimeRange;
+import com.liferay.osb.asah.common.repository.BQEventRepository;
 import com.liferay.osb.asah.test.util.annotation.BQSQLResource;
 import com.liferay.osb.asah.test.util.annotation.SQLResource;
 import com.liferay.osb.asah.test.util.configuration.JDBCTestConfiguration;
 import com.liferay.osb.asah.test.util.spring.OSBAsahTestExecutionListenersContext;
+
+import java.time.LocalDateTime;
+import java.time.ZoneOffset;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -51,6 +55,49 @@ import org.springframework.data.domain.Page;
 public class BQEventDogTest
 	implements OSBAsahCommonSpringTestContext,
 			   OSBAsahTestExecutionListenersContext {
+
+	@Test
+	public void testCountBQEvents() {
+		BQEvent bqEvent1 = new BQEvent();
+
+		Date date = DateUtil.newDate();
+
+		bqEvent1.setApplicationId("Page");
+		bqEvent1.setEventId("pageViewed");
+		bqEvent1.setEventDate(date);
+
+		_bqEventRepository.insert(bqEvent1);
+
+		BQEvent bqEvent2 = new BQEvent();
+
+		bqEvent2.setApplicationId("Page");
+		bqEvent2.setEventId("pageViewed");
+		bqEvent2.setEventDate(DateUtil.addDays(date, -7));
+
+		_bqEventRepository.insert(bqEvent2);
+
+		BQEvent bqEvent3 = new BQEvent();
+
+		bqEvent3.setApplicationId("Document");
+		bqEvent3.setEventId("documentDownloaded");
+		bqEvent3.setEventDate(date);
+
+		_bqEventRepository.insert(bqEvent3);
+
+		LocalDateTime endLocalDateTime = LocalDateTime.now(ZoneOffset.UTC);
+
+		Assertions.assertEquals(
+			2,
+			_bqEventDog.countBQEvents(
+				"Page", null, null, null, endLocalDateTime, "pageViewed",
+				endLocalDateTime.minusDays(8)));
+
+		Assertions.assertEquals(
+			1,
+			_bqEventDog.countBQEvents(
+				"Page", null, null, null, endLocalDateTime, "pageViewed",
+				endLocalDateTime.minusDays(1)));
+	}
 
 	@BQSQLResource(resourcePath = "test_get_recent_assets_bq.sql")
 	@SQLResource(resourcePath = "test_get_recent_assets.sql")
@@ -5885,6 +5932,9 @@ public class BQEventDogTest
 
 	@Autowired
 	private BQEventDog _bqEventDog;
+
+	@Autowired
+	private BQEventRepository _bqEventRepository;
 
 	@Autowired
 	private ChannelDog _channelDog;
