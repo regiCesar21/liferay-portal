@@ -137,7 +137,7 @@ public class BQEventDog {
 		LocalDate endLocalDate, String eventId, LocalDate startLocalDate) {
 
 		return _bqEventRepository.countBQEvents(
-			assetId, applicationId, channelId, dataSourceId, eventId,
+			applicationId, assetId, channelId, dataSourceId, eventId,
 			endLocalDate.atTime(LocalTime.MAX),
 			startLocalDate.atTime(LocalTime.MIN));
 	}
@@ -149,7 +149,7 @@ public class BQEventDog {
 		@Nullable LocalDateTime startLocalDateTime) {
 
 		return _bqEventRepository.countBQEvents(
-			assetId, applicationId, channelId, dataSourceId, eventId,
+			applicationId, assetId, channelId, dataSourceId, eventId,
 			endLocalDateTime, startLocalDateTime);
 	}
 
