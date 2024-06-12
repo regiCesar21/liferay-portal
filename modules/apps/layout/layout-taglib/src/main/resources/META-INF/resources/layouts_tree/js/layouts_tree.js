@@ -14,6 +14,12 @@ AUI.add(
 		var NODE_LINK_TPL =
 			'<a class="{cssClass}" data-regular-url="{regularURL}" data-url="{url}" data-uuid="{uuid}" href="{layoutURL}" id="{id}" title="{title}">{label}</a>';
 
+		var NODE_TYPE = {
+			embedded: 'embedded',
+			linkToLayout: 'link_to_layout',
+			url: 'url',
+		};
+
 		var STR_BOUNDING_BOX = 'boundingBox';
 
 		var STR_EMPTY = '';
@@ -198,9 +204,9 @@ AUI.add(
 				var iconCssClassName = 'icon-link';
 
 				if (
-					node.type === 'embedded' ||
-					node.type === 'link_to_layout' ||
-					node.type === 'url'
+					node.type === NODE_TYPE.embedded ||
+					node.type === NODE_TYPE.linkToLayout ||
+					node.type === NODE_TYPE.url
 				) {
 					cssIcons = {
 						iconCollapsed: iconCssClassName,
@@ -307,6 +313,11 @@ AUI.add(
 				var data = A.merge(
 					{
 						cssClass,
+						icon:
+							node.type === NODE_TYPE.linkToLayout ||
+							node.type === NODE_TYPE.url
+								? 'link'
+								: 'page',
 						label: name,
 						plid: node.plid,
 						title,

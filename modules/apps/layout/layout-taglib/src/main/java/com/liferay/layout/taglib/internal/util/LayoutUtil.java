@@ -143,7 +143,7 @@ public class LayoutUtil {
 			).put(
 				"hasChildren", ListUtil.isNotEmpty(childLayouts)
 			).put(
-				"icon", "page"
+				"icon", _getIcon(layout)
 			).put(
 				"id", layout.getUuid()
 			).put(
@@ -192,6 +192,17 @@ public class LayoutUtil {
 		).put(
 			"total", layouts.size()
 		);
+	}
+
+	private static String _getIcon(Layout layout) {
+		if (Objects.equals(
+				layout.getType(), LayoutConstants.TYPE_LINK_TO_LAYOUT) ||
+			Objects.equals(layout.getType(), LayoutConstants.TYPE_URL)) {
+
+			return "link";
+		}
+
+		return "page";
 	}
 
 	private static long _getSelPlid(HttpServletRequest httpServletRequest) {
