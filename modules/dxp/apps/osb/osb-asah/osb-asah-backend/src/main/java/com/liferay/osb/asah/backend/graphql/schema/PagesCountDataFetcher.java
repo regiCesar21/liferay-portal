@@ -5,8 +5,8 @@
 
 package com.liferay.osb.asah.backend.graphql.schema;
 
-import com.liferay.osb.asah.backend.dog.PageDog;
 import com.liferay.osb.asah.backend.graphql.annotation.GraphQLTypeWiring;
+import com.liferay.osb.asah.common.dog.BQEventDog;
 
 import graphql.schema.DataFetcher;
 import graphql.schema.DataFetchingEnvironment;
@@ -21,19 +21,19 @@ import org.springframework.stereotype.Component;
  */
 @Component
 @GraphQLTypeWiring(fieldName = "pagesCount", typeName = "QueryType")
-public class PagesCountDataFetcher implements DataFetcher<Long> {
+public class PagesCountDataFetcher implements DataFetcher<Integer> {
 
 	@Override
-	public Long get(DataFetchingEnvironment dataFetchingEnvironment) {
+	public Integer get(DataFetchingEnvironment dataFetchingEnvironment) {
 		String fromDateString = dataFetchingEnvironment.getArgument("fromDate");
 		String toDateString = dataFetchingEnvironment.getArgument("toDate");
 
-		return _pageDog.getViewsMetricValue(
-			null, LocalDateTime.parse(fromDateString),
-			LocalDateTime.parse(toDateString));
+		return _bqEventDog.countBQEvents(
+			"Page", null, null, null, LocalDateTime.parse(toDateString),
+			"pageViewed", LocalDateTime.parse(fromDateString));
 	}
 
 	@Autowired
-	private PageDog _pageDog;
+	private BQEventDog _bqEventDog;
 
 }
