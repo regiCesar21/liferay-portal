@@ -207,10 +207,7 @@ public class FirebasePushNotificationsSender
 		JSONObject messageContent = JSONUtil.put(
 			"android", _buildAndroidData(payloadJSONObject)
 		).put(
-			"data",
-			_buildMessagePayload(
-				payloadJSONObject
-			).toString()
+			"data", _buildMessagePayload(payloadJSONObject)
 		).put(
 			"token", notificationKey
 		);
@@ -231,7 +228,7 @@ public class FirebasePushNotificationsSender
 			}
 		}
 
-		return JSONUtil.put("payload", jsonObject);
+		return JSONUtil.put("payload", jsonObject.toString());
 	}
 
 	private DeviceGroup _createDeviceGroup(
