@@ -40,7 +40,9 @@ LayoutsTreeDisplayContext layoutsTreeDisplayContext = new LayoutsTreeDisplayCont
 						<aui:icon image="list" markupView="lexicon" />
 					</span>
 					<span class="mr-1 page-icon {type}-layout">
-						<aui:icon image="{icon}" markupView="lexicon" />
+						<clay:icon
+							symbol="{icon}"
+						/>
 					</span>
 					{label}
 				</span>
