@@ -58,9 +58,6 @@ import org.osgi.service.component.annotations.Reference;
 public class FirebasePushNotificationsSender
 	implements PushNotificationsSender {
 
-	public static final String BASE_GOOGLE_NOTIFICATIONS_API =
-		"https://fcm.googleapis.com/fcm/notification";
-
 	public static final int OK_CODE = 200;
 
 	public static final String PLATFORM = "firebase";
@@ -108,6 +105,9 @@ public class FirebasePushNotificationsSender
 				FirebasePushNotificationsSenderConfiguration.class, properties);
 
 		if (Validator.isNull(
+				_firebasePushNotificationsSenderConfiguration.
+					firebaseCloudMessagingURL()) ||
+			Validator.isNull(
 				_firebasePushNotificationsSenderConfiguration.
 					projectNumber())) {
 
@@ -255,7 +255,7 @@ public class FirebasePushNotificationsSender
 				"registration_ids", tokens
 			).toString(),
 			ContentTypes.APPLICATION_JSON, StringPool.UTF8);
-		options.setLocation(BASE_GOOGLE_NOTIFICATIONS_API);
+		options.setLocation(_firebaseCloudMessagingURL + "/fcm/notification");
 		options.setPost(true);
 
 		String responseString = _httpUtil.URLtoString(options);
@@ -287,6 +287,10 @@ public class FirebasePushNotificationsSender
 	}
 
 	private void _initGoogleCloudServices() throws PortalException {
+		_firebaseCloudMessagingURL =
+			_firebasePushNotificationsSenderConfiguration.
+				firebaseCloudMessagingURL();
+
 		_projectNumber =
 			_firebasePushNotificationsSenderConfiguration.projectNumber();
 
@@ -345,7 +349,7 @@ public class FirebasePushNotificationsSender
 			).toString(),
 			ContentTypes.APPLICATION_JSON, StringPool.UTF8);
 
-		options.setLocation(BASE_GOOGLE_NOTIFICATIONS_API);
+		options.setLocation(_firebaseCloudMessagingURL + "/fcm/notification");
 		options.setPost(true);
 
 		_httpUtil.URLtoString(options);
@@ -378,8 +382,9 @@ public class FirebasePushNotificationsSender
 		options.setBody(
 			message.toString(), ContentTypes.APPLICATION_JSON, StringPool.UTF8);
 		options.setLocation(
-			"https://fcm.googleapis.com/v1/projects/" + _getProjectId() +
-				"/messages:send");
+			StringBundler.concat(
+				_firebaseCloudMessagingURL, "/v1/projects/", _getProjectId(),
+				"/messages:send"));
 		options.setPost(true);
 
 		_httpUtil.URLtoString(options);
@@ -403,6 +408,7 @@ public class FirebasePushNotificationsSender
 		PushNotificationsConstants.KEY_SOUND,
 		PushNotificationsConstants.KEY_SILENT);
 
+	private String _firebaseCloudMessagingURL;
 	private volatile FirebasePushNotificationsSenderConfiguration
 		_firebasePushNotificationsSenderConfiguration;
 	private GoogleCredentials _googleCredentials;
