@@ -126,9 +126,10 @@ public class BQEventRepositoryImpl
 
 	@Override
 	public Integer countBQEvents(
-		String applicationId, String assetId, Long channelId, Long dataSourceId,
-		String eventId, LocalDateTime rangeEndLocalDateTime,
-		LocalDateTime rangeStartLocalDateTime) {
+		String applicationId, String assetId, @Nullable Long channelId,
+		@Nullable Long dataSourceId, String eventId,
+		@Nullable LocalDateTime rangeEndLocalDateTime,
+		@Nullable LocalDateTime rangeStartLocalDateTime) {
 
 		SelectSelectStep<Record1<Integer>> selectSelectStep =
 			_dslContext.selectCount();
