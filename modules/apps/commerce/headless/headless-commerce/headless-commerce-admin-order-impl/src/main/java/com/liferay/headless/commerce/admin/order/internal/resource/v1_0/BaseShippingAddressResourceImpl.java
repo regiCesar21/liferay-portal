@@ -68,7 +68,7 @@ public abstract class BaseShippingAddressResourceImpl
 	)
 	@javax.ws.rs.GET
 	@javax.ws.rs.Path(
-		"/orders/by-externalReferenceCode/{externalReferenceCode: .+}/shippingAddress"
+		"/orders/by-externalReferenceCode/{externalReferenceCode}/shippingAddress"
 	)
 	@javax.ws.rs.Produces({"application/json", "application/xml"})
 	@Override
@@ -103,7 +103,7 @@ public abstract class BaseShippingAddressResourceImpl
 	@javax.ws.rs.Consumes({"application/json", "application/xml"})
 	@javax.ws.rs.PATCH
 	@javax.ws.rs.Path(
-		"/orders/by-externalReferenceCode/{externalReferenceCode: .+}/shippingAddress"
+		"/orders/by-externalReferenceCode/{externalReferenceCode}/shippingAddress"
 	)
 	@javax.ws.rs.Produces({"application/json", "application/xml"})
 	@Override
