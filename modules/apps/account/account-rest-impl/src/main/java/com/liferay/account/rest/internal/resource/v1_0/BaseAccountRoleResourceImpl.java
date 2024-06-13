@@ -99,7 +99,7 @@ public abstract class BaseAccountRoleResourceImpl
 	)
 	@javax.ws.rs.DELETE
 	@javax.ws.rs.Path(
-		"/accounts/by-external-reference-code/{accountExternalReferenceCode: .+}/account-roles/{accountRoleId}/account-users/{accountUserExternalReferenceCode: .+}"
+		"/accounts/by-external-reference-code/{accountExternalReferenceCode}/account-roles/{accountRoleId}/account-users/{accountUserExternalReferenceCode}"
 	)
 	@javax.ws.rs.Produces({"application/json", "application/xml"})
 	@Override
@@ -147,7 +147,7 @@ public abstract class BaseAccountRoleResourceImpl
 		value = {@io.swagger.v3.oas.annotations.tags.Tag(name = "AccountRole")}
 	)
 	@javax.ws.rs.Path(
-		"/accounts/by-external-reference-code/{accountExternalReferenceCode: .+}/account-roles/{accountRoleId}/account-users/{accountUserExternalReferenceCode: .+}"
+		"/accounts/by-external-reference-code/{accountExternalReferenceCode}/account-roles/{accountRoleId}/account-users/{accountUserExternalReferenceCode}"
 	)
 	@javax.ws.rs.POST
 	@javax.ws.rs.Produces({"application/json", "application/xml"})
@@ -205,7 +205,7 @@ public abstract class BaseAccountRoleResourceImpl
 	)
 	@javax.ws.rs.GET
 	@javax.ws.rs.Path(
-		"/accounts/by-external-reference-code/{externalReferenceCode: .+}/account-roles"
+		"/accounts/by-external-reference-code/{externalReferenceCode}/account-roles"
 	)
 	@javax.ws.rs.Produces({"application/json", "application/xml"})
 	@Override
@@ -245,7 +245,7 @@ public abstract class BaseAccountRoleResourceImpl
 	)
 	@javax.ws.rs.Consumes({"application/json", "application/xml"})
 	@javax.ws.rs.Path(
-		"/accounts/by-external-reference-code/{externalReferenceCode: .+}/account-roles"
+		"/accounts/by-external-reference-code/{externalReferenceCode}/account-roles"
 	)
 	@javax.ws.rs.POST
 	@javax.ws.rs.Produces({"application/json", "application/xml"})
