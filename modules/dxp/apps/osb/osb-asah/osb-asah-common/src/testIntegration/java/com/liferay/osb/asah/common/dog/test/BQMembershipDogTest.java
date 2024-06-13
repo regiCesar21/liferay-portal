@@ -1159,6 +1159,14 @@ public class BQMembershipDogTest
 
 		Assertions.assertEquals(
 			2L, _bqMembershipDog.getBQMembershipsCount(segment.getId()));
+
+		_bqMembershipDog.updateBQMemberships(
+			"(sessions.filter(filter='(context/city eq ''Martha''''s " +
+				"Vineyard'')'))",
+			Boolean.FALSE, segment);
+
+		Assertions.assertEquals(
+			2L, _bqMembershipDog.getBQMembershipsCount(segment.getId()));
 	}
 
 	private void _assertBQMemberships(
