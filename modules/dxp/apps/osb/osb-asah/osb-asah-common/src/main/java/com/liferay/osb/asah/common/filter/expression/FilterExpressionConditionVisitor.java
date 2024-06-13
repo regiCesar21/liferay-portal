@@ -579,7 +579,7 @@ public class FilterExpressionConditionVisitor
 			Param param = (Param)parameters.get(1);
 
 			condition = _getIsInterestedCondition(
-				StringUtil.unquote((String)param.getValue()));
+				String.valueOf(param.getValue()));
 		}
 		else if (functionName.equalsIgnoreCase("isMember")) {
 			Param param = (Param)parameters.get(1);
