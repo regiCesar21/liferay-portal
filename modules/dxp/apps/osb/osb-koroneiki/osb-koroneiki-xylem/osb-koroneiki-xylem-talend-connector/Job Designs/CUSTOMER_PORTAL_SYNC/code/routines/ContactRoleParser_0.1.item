@@ -53,7 +53,16 @@ public class ContactRoleParser {
 				name.equals(
 					ContactRoleConstants.NAME_PARTNER_MANAGER_PROVISIONING) ||
 				name.equals(
+					ContactRoleConstants.
+						NAME_PARTNER_MARKETING_USER_PROVISIONING) ||
+				name.equals(
 					ContactRoleConstants.NAME_PARTNER_MEMBER_PROVISIONING) ||
+				name.equals(
+					ContactRoleConstants.
+						NAME_PARTNER_SALES_USER_PROVISIONING) ||
+				name.equals(
+					ContactRoleConstants.
+						NAME_PARTNER_TECHNICAL_USER_PROVISIONING) ||
 				name.equals(ContactRoleConstants.NAME_REQUESTER_PROVISIONING) ||
 				name.equals(
 					ContactRoleConstants.
@@ -114,10 +123,31 @@ public class ContactRoleParser {
 				ContactRoleConstants.NAME_PARTNER_MANAGER_CP);
 		}
 		else if (contactRoleName.equals(
+					ContactRoleConstants.
+						NAME_PARTNER_MARKETING_USER_PROVISIONING)) {
+
+			return accountRoleIdMap.get(
+				ContactRoleConstants.NAME_PARTNER_MARKETING_USER_CP);
+		}
+		else if (contactRoleName.equals(
 					ContactRoleConstants.NAME_PARTNER_MEMBER_PROVISIONING)) {
 
 			return accountRoleIdMap.get(
 				ContactRoleConstants.NAME_PARTNER_MEMBER_CP);
+		}
+		else if (contactRoleName.equals(
+					ContactRoleConstants.
+						NAME_PARTNER_SALES_USER_PROVISIONING)) {
+
+			return accountRoleIdMap.get(
+				ContactRoleConstants.NAME_PARTNER_SALES_USER_CP);
+		}
+		else if (contactRoleName.equals(
+					ContactRoleConstants.
+						NAME_PARTNER_TECHNICAL_USER_PROVISIONING)) {
+
+			return accountRoleIdMap.get(
+				ContactRoleConstants.NAME_PARTNER_TECHNICAL_USER_CP);
 		}
 		else if (contactRoleName.equals(
 					ContactRoleConstants.NAME_REQUESTER_PROVISIONING)) {
@@ -242,7 +272,13 @@ public class ContactRoleParser {
 			contactRoleName.equals(
 				ContactRoleConstants.NAME_PARTNER_MANAGER_CP) ||
 			contactRoleName.equals(
+				ContactRoleConstants.NAME_PARTNER_MARKETING_USER_CP) ||
+			contactRoleName.equals(
 				ContactRoleConstants.NAME_PARTNER_MEMBER_CP) ||
+			contactRoleName.equals(
+				ContactRoleConstants.NAME_PARTNER_SALES_USER_CP) ||
+			contactRoleName.equals(
+				ContactRoleConstants.NAME_PARTNER_TECHNICAL_USER_CP) ||
 			contactRoleName.equals(ContactRoleConstants.NAME_PROVISIONING_CP) ||
 			contactRoleName.equals(ContactRoleConstants.NAME_REQUESTER_CP) ||
 			contactRoleName.equals(

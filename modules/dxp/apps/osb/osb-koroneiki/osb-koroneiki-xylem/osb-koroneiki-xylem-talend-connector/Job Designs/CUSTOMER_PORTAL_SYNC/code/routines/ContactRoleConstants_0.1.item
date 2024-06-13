@@ -48,9 +48,26 @@ public class ContactRoleConstants {
 
 	public static String NAME_PARTNER_MANAGER_PROVISIONING = "Partner Manager";
 
+	public static String NAME_PARTNER_MARKETING_USER_CP =
+		"Partner Marketing User";
+
+	public static String NAME_PARTNER_MARKETING_USER_PROVISIONING =
+		"Partner Marketing User";
+
 	public static String NAME_PARTNER_MEMBER_CP = "Partner Member";
 
 	public static String NAME_PARTNER_MEMBER_PROVISIONING = "Partner Member";
+
+	public static String NAME_PARTNER_SALES_USER_CP = "Partner Sales User";
+
+	public static String NAME_PARTNER_SALES_USER_PROVISIONING =
+		"Partner Sales User";
+
+	public static String NAME_PARTNER_TECHNICAL_USER_CP =
+		"Partner Technical User";
+
+	public static String NAME_PARTNER_TECHNICAL_USER_PROVISIONING =
+		"Partner Technical User";
 
 	public static String NAME_PROVISIONING_CP = "Provisioning";
 

@@ -6,8 +6,8 @@
     <contextParameter comment="" name="accountSyncFilter" prompt="accountSyncFilter?" promptNeeded="false" type="id_String" value=""/>
     <contextParameter comment="" name="customerPortalHost" prompt="customerPortalHost?" promptNeeded="false" type="id_String" value="&quot;http://localhost:8080&quot;"/>
     <contextParameter comment="" name="provisioningHost" prompt="provisioningHost?" promptNeeded="false" type="id_String" value="&quot;https://webserver-lrkoroneiki-uat.lfr.cloud&quot;"/>
-    <contextParameter comment="" name="customerPortalUserName" prompt="customerPortalUserName?" promptNeeded="false" type="id_String" value="&quot;id-a545b584-c3e3-bfd5-5f9c-24eb2bf479a&quot;"/>
-    <contextParameter comment="" name="customerPortalPassword" prompt="customerPortalPassword?" promptNeeded="false" type="id_String" value="&quot;secret-431423ef-b651-d5ef-2e75-b790521c6&quot;"/>
+    <contextParameter comment="" name="customerPortalUserName" prompt="customerPortalUserName?" promptNeeded="false" type="id_String" value="&quot;id-7dd96a37-1336-51fb-267c-7da18bd4b1&quot;"/>
+    <contextParameter comment="" name="customerPortalPassword" prompt="customerPortalPassword?" promptNeeded="false" type="id_String" value="&quot;secret-f3c088dd-2e10-5b74-cd30-a2da52e4fb5&quot;"/>
     <contextParameter comment="" name="provisioningUserName" prompt="provisioningUserName?" promptNeeded="false" type="id_String" value="&quot;id-f655889a-3c3a-8888-65cd-e6712c12fb82&quot;"/>
     <contextParameter comment="" name="provisioningPassword" prompt="provisioningPassword?" promptNeeded="false" type="id_String" value="&quot;secret-8f59a264-e7e6-2cde-bb1a-e1454b10285&quot;"/>
     <contextParameter comment="" name="accountAccessUSTeamKey" prompt="accountAccessUSTeamKey?" promptNeeded="false" type="id_String" value="&quot;KOR-14041160&quot;"/>
@@ -642,7 +642,7 @@
       </column>
     </metadata>
     <nodeData xsi:type="TalendMapper:MapperData">
-      <uiProperties shellMaximized="true"/>
+      <uiProperties/>
       <varTables sizeState="INTERMEDIATE" name="Var" minimized="true"/>
       <outputTables sizeState="INTERMEDIATE" name="map10">
         <mapperTableEntries name="activationStatus" expression="row10.activationStatus " type="id_String" nullable="true"/>
