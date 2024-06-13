@@ -70,12 +70,13 @@ public class AnalyticsEventsIngestionNanite {
 		_advanceWatermark(System.currentTimeMillis());
 	}
 
-	public void closeOpenSessions() {
+	public void closeOpenSessions(boolean force) {
 		for (Map.Entry<String, SessionContext> entry : _sessions.entrySet()) {
 			SessionContext sessionContext = entry.getValue();
 
-			if ((_watermarkTimestamp - sessionContext.sessionEnd.getTime()) >=
-					0) {
+			if (force ||
+				((_watermarkTimestamp - sessionContext.sessionEnd.getTime()) >=
+					0)) {
 
 				if (_log.isInfoEnabled()) {
 					_log.info(

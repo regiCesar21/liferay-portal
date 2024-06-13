@@ -6,7 +6,9 @@
 package com.liferay.osb.asah.dataflow.emulator.bot;
 
 import com.liferay.osb.asah.common.date.DateUtil;
+import com.liferay.osb.asah.common.dog.AsahTaskDog;
 import com.liferay.osb.asah.common.dog.ProjectDog;
+import com.liferay.osb.asah.common.entity.AsahTask;
 import com.liferay.osb.asah.common.util.ProjectIdThreadLocal;
 import com.liferay.osb.asah.dataflow.emulator.bot.nanite.AnalyticsEventsIngestionNanite;
 import com.liferay.osb.asah.dataflow.emulator.bot.nanite.DXPEntitiesIngestionNanite;
@@ -40,7 +42,23 @@ public class OSBAsahDataflowEmulatorCuratorBot {
 
 	@Scheduled(fixedDelay = DateUtil.MINUTE)
 	public void closeIngestionNaniteOpenSessions() {
-		_analyticsEventsIngestionNanite.closeOpenSessions();
+		_analyticsEventsIngestionNanite.closeOpenSessions(false);
+	}
+
+	@Scheduled(fixedDelay = DateUtil.SECOND * 10)
+	public void forceCloseIngestionNaniteOpenSessions() {
+		ProjectIdThreadLocal.forProjects(
+			_projectDog.getProjects(),
+			() -> {
+				for (AsahTask asahTask :
+						_asahTaskDog.getAsahTasks(
+							"AnalyticsEventsIngestionNanite")) {
+
+					_analyticsEventsIngestionNanite.closeOpenSessions(true);
+
+					_asahTaskDog.deleteAsahTask(asahTask.getId());
+				}
+			});
 	}
 
 	@Scheduled(fixedDelay = 10 * DateUtil.SECOND)
@@ -101,6 +119,9 @@ public class OSBAsahDataflowEmulatorCuratorBot {
 
 	@Autowired
 	private AnalyticsEventsIngestionNanite _analyticsEventsIngestionNanite;
+
+	@Autowired
+	private AsahTaskDog _asahTaskDog;
 
 	@Autowired
 	private DXPEntitiesIngestionNanite _dxpEntitiesIngestionNanite;
