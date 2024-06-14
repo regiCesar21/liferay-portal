@@ -111,6 +111,8 @@ public class FirebasePushNotificationsSender
 				_firebasePushNotificationsSenderConfiguration.
 					projectNumber())) {
 
+			_googleCredentials = null;
+
 			return;
 		}
 
