@@ -37,7 +37,6 @@ import org.apache.beam.sdk.transforms.GroupByKey;
 import org.apache.beam.sdk.transforms.ParDo;
 import org.apache.beam.sdk.transforms.SerializableFunction;
 import org.apache.beam.sdk.transforms.WithKeys;
-import org.apache.beam.sdk.transforms.windowing.AfterProcessingTime;
 import org.apache.beam.sdk.transforms.windowing.AfterWatermark;
 import org.apache.beam.sdk.transforms.windowing.IntervalWindow;
 import org.apache.beam.sdk.transforms.windowing.PaneInfo;
@@ -130,16 +129,7 @@ public class BatchEventIngestionPipeline {
 			pCollection.apply(
 				"Create Events Windowing",
 				analyticsEventsWindow.triggering(
-					Repeatedly.forever(
-						AfterWatermark.pastEndOfWindow(
-						).withEarlyFirings(
-							AfterProcessingTime.pastFirstElementInPane(
-							).plusDelayOf(
-								Duration.standardMinutes(
-									batchEventIngestionPipelineOptions.
-										getSessionWindowEarlyFiringsInterval())
-							)
-						)))
+					Repeatedly.forever(AfterWatermark.pastEndOfWindow()))
 			).apply(
 				"GroupBy.Key", GroupByKey.create()
 			);
@@ -263,7 +253,9 @@ public class BatchEventIngestionPipeline {
 			}
 			catch (Exception exception) {
 				_logger.error(
-					"Event Extractor [" +analyticsEvent.id + "]: " + exception.getMessage(), exception);
+					"Event Extractor [" + analyticsEvent.id + "]: " +
+						exception.getMessage(),
+					exception);
 			}
 		}
 
