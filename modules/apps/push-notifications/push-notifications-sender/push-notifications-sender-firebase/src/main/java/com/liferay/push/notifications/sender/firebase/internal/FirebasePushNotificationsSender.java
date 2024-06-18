@@ -75,16 +75,14 @@ public class FirebasePushNotificationsSender
 			DeviceGroup deviceGroup = _createDeviceGroup(accessToken, tokens);
 
 			try {
-				_send(
-					accessToken,
-					_buildMessage(deviceGroup.getId(), payloadJSONObject));
+				_send(accessToken, deviceGroup.getId(), payloadJSONObject);
 			}
 			finally {
 				_removeDeviceGroup(accessToken, deviceGroup, tokens);
 			}
 		}
 		else {
-			_send(accessToken, _buildMessage(tokens.get(0), payloadJSONObject));
+			_send(accessToken, tokens.get(0), payloadJSONObject);
 		}
 	}
 
@@ -194,20 +192,6 @@ public class FirebasePushNotificationsSender
 		}
 
 		return JSONUtil.put("notification", jsonObject);
-	}
-
-	private JSONObject _buildMessage(
-		String notificationKey, JSONObject payloadJSONObject) {
-
-		return JSONUtil.put(
-			"message",
-			JSONUtil.put(
-				"android", _buildAndroidData(payloadJSONObject)
-			).put(
-				"data", _buildMessagePayload(payloadJSONObject)
-			).put(
-				"token", notificationKey
-			));
 	}
 
 	private JSONObject _buildMessagePayload(JSONObject payloadJSONObject) {
@@ -327,7 +311,8 @@ public class FirebasePushNotificationsSender
 	}
 
 	private void _removeDeviceGroup(
-			String authorizationToken, DeviceGroup deviceGroup, List<String> tokens)
+			String authorizationToken, DeviceGroup deviceGroup,
+			List<String> tokens)
 		throws Exception {
 
 		Http.Options options = new Http.Options();
@@ -367,7 +352,9 @@ public class FirebasePushNotificationsSender
 		}
 	}
 
-	private void _send(String accessToken, JSONObject messageJSONObject)
+	private void _send(
+			String accessToken, String notificationKey,
+			JSONObject payloadJSONObject)
 		throws Exception {
 
 		Http.Options options = new Http.Options();
@@ -377,8 +364,17 @@ public class FirebasePushNotificationsSender
 			HttpHeaders.CONTENT_TYPE, ContentTypes.APPLICATION_JSON);
 
 		options.setBody(
-			messageJSONObject.toString(), ContentTypes.APPLICATION_JSON,
-			StringPool.UTF8);
+			JSONUtil.put(
+				"message",
+				JSONUtil.put(
+					"android", _buildAndroidData(payloadJSONObject)
+				).put(
+					"data", _buildMessagePayload(payloadJSONObject)
+				).put(
+					"token", notificationKey
+				)
+			).toString(),
+			ContentTypes.APPLICATION_JSON, StringPool.UTF8);
 		options.setLocation(
 			StringBundler.concat(
 				_firebaseCloudMessagingURL, "/v1/projects/", _getProjectId(),
