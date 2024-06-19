@@ -16,7 +16,7 @@ USING
 				dxpEntity.uploadDate,
 				expandoField.columnId,
 				expandoField.value,
-				COALESCE(fieldMapping.fieldName, REGEXP_REPLACE(expandoField.name, r'\s', '_')) AS fieldName,
+				COALESCE(fieldMapping.fieldName, REGEXP_REPLACE(REPLACE(expandoField.name, SUBSTR(expandoField.name, STRPOS(expandoField.name, CONCAT('-', REGEXP_EXTRACT(expandoField.name, r'([^-]+)?$')))), ''), r'\s', '_')) AS fieldName,
 				ROW_NUMBER() OVER (
 					PARTITION BY
 						dxpEntity.projectId, dxpEntity.dataSourceId, expandoField.columnId, dxpEntity.classPK
