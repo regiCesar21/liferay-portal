@@ -203,7 +203,7 @@ public class FirebasePushNotificationsSender
 		while (keysIterator.hasNext()) {
 			String key = keysIterator.next();
 
-			if (!_notificationKeys.contains(key)) {
+			if (!_keys.contains(key)) {
 				jsonObject.put(key, payloadJSONObject.get(key));
 			}
 		}
@@ -215,8 +215,6 @@ public class FirebasePushNotificationsSender
 			String authorizationToken, List<String> tokens)
 		throws Exception {
 
-		String name = StringUtil.randomString();
-
 		Http.Options options = new Http.Options();
 
 		options.addHeader("access_token_auth", "true");
@@ -225,6 +223,8 @@ public class FirebasePushNotificationsSender
 			HttpHeaders.AUTHORIZATION, "Bearer " + authorizationToken);
 		options.addHeader(
 			HttpHeaders.CONTENT_TYPE, ContentTypes.APPLICATION_JSON);
+
+		String name = StringUtil.randomString();
 
 		options.setBody(
 			JSONUtil.put(
@@ -235,6 +235,7 @@ public class FirebasePushNotificationsSender
 				"registration_ids", tokens
 			).toString(),
 			ContentTypes.APPLICATION_JSON, StringPool.UTF8);
+
 		options.setLocation(_firebaseCloudMessagingURL + "/fcm/notification");
 		options.setPost(true);
 
@@ -244,7 +245,7 @@ public class FirebasePushNotificationsSender
 
 		if (optionsResponse.getResponseCode() != _OK_CODE) {
 			throw new PushNotificationsException(
-				"Unable to create a notification group");
+				"Unable to create notification group");
 		}
 
 		JSONObject responseJSONObject = _jsonFactoryUtil.createJSONObject(
@@ -263,7 +264,7 @@ public class FirebasePushNotificationsSender
 		}
 		catch (Exception exception) {
 			throw new PushNotificationsException(
-				"Unable to get the access token", exception);
+				"Unable to get access token", exception);
 		}
 	}
 
@@ -317,7 +318,6 @@ public class FirebasePushNotificationsSender
 			HttpHeaders.AUTHORIZATION, "Bearer " + authorizationToken);
 		options.addHeader(
 			HttpHeaders.CONTENT_TYPE, ContentTypes.APPLICATION_JSON);
-
 		options.setBody(
 			JSONUtil.put(
 				"notification_key", deviceGroup.getId()
@@ -329,7 +329,6 @@ public class FirebasePushNotificationsSender
 				"registration_ids", tokens
 			).toString(),
 			ContentTypes.APPLICATION_JSON, StringPool.UTF8);
-
 		options.setLocation(_firebaseCloudMessagingURL + "/fcm/notification");
 		options.setPost(true);
 
@@ -340,9 +339,8 @@ public class FirebasePushNotificationsSender
 		if (optionsResponse.getResponseCode() != _OK_CODE) {
 			_log.error(
 				StringBundler.concat(
-					"Unable to remove notification group with ",
-					"notification_key: ", deviceGroup.getId(),
-					" and notification_key_name: ", deviceGroup.getName()));
+					"Unable to remove notification group with ID ",
+					deviceGroup.getId(), " and name ", deviceGroup.getName()));
 		}
 	}
 
@@ -355,7 +353,6 @@ public class FirebasePushNotificationsSender
 		options.addHeader(HttpHeaders.AUTHORIZATION, "Bearer " + accessToken);
 		options.addHeader(
 			HttpHeaders.CONTENT_TYPE, ContentTypes.APPLICATION_JSON);
-
 		options.setBody(
 			JSONUtil.put(
 				"message",
@@ -381,16 +378,16 @@ public class FirebasePushNotificationsSender
 
 		String responseString = _http.URLtoString(options);
 
-		Http.Response optionsResponse = options.getResponse();
+		Http.Response response = options.getResponse();
 
-		if (optionsResponse.getResponseCode() != _OK_CODE) {
+		if (response.getResponseCode() != _OK_CODE) {
 			_log.error(
 				StringBundler.concat(
-					"Unable to send notification with token: ", token,
-					" and reason: ", responseString));
+					"Unable to send notification with token ", token,
+					" and reason ", responseString));
 
 			throw new PushNotificationsException(
-				"Unable to send the push notification");
+				"Unable to send push notification");
 		}
 	}
 
@@ -399,7 +396,7 @@ public class FirebasePushNotificationsSender
 	private static final Log _log = LogFactoryUtil.getLog(
 		FirebasePushNotificationsSender.class);
 
-	private static final Set<String> _notificationKeys = SetUtil.fromArray(
+	private static final Set<String> _keys = SetUtil.fromArray(
 		PushNotificationsConstants.KEY_BADGE,
 		PushNotificationsConstants.KEY_BODY,
 		PushNotificationsConstants.KEY_BODY_LOCALIZED,

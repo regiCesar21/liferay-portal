@@ -50,8 +50,6 @@ import org.skyscreamer.jsonassert.JSONCompareMode;
 @RunWith(Arquillian.class)
 public class FirebasePushNotificationsSenderTest {
 
-	public static final String PLATFORM = "firebase";
-
 	@ClassRule
 	@Rule
 	public static final LiferayIntegrationTestRule liferayIntegrationTestRule =
@@ -75,12 +73,12 @@ public class FirebasePushNotificationsSenderTest {
 
 		String accessToken = _mockAccessTokenRequest(true);
 
-		String destinationToken = RandomTestUtil.randomString();
-
 		_mockSendNotificationRequest(accessToken, true);
 
+		String destinationToken = RandomTestUtil.randomString();
+
 		_pushNotificationsDeviceLocalService.sendPushNotification(
-			PLATFORM, Arrays.asList(destinationToken),
+			_PLATFORM, Arrays.asList(destinationToken),
 			JSONFactoryUtil.createJSONObject());
 
 		_verifyAccessTokenRequest();
@@ -97,7 +95,6 @@ public class FirebasePushNotificationsSenderTest {
 		_saveConfiguration();
 
 		String accessToken = _mockAccessTokenRequest(true);
-
 		String groupId = RandomTestUtil.randomString();
 
 		_mockGroupRequest(accessToken, true, groupId, true);
@@ -108,7 +105,7 @@ public class FirebasePushNotificationsSenderTest {
 			RandomTestUtil.randomString(), RandomTestUtil.randomString());
 
 		_pushNotificationsDeviceLocalService.sendPushNotification(
-			PLATFORM, destinationTokens, JSONFactoryUtil.createJSONObject());
+			_PLATFORM, destinationTokens, JSONFactoryUtil.createJSONObject());
 
 		_verifyAccessTokenRequest();
 
@@ -127,9 +124,9 @@ public class FirebasePushNotificationsSenderTest {
 		_saveConfiguration();
 
 		AssertUtils.assertFailure(
-			PushNotificationsException.class, "Unable to get the access token",
+			PushNotificationsException.class, "Unable get the access token",
 			() -> _pushNotificationsDeviceLocalService.sendPushNotification(
-				PLATFORM, Arrays.asList(RandomTestUtil.randomString()),
+				_PLATFORM, Arrays.asList(RandomTestUtil.randomString()),
 				_getRandomNotificationJSONObject()));
 
 		_verifyAccessTokenRequest();
@@ -143,14 +140,14 @@ public class FirebasePushNotificationsSenderTest {
 
 		String accessToken = _mockAccessTokenRequest(true);
 
+		_mockSendNotificationRequest(accessToken, true);
+
 		String destinationToken = RandomTestUtil.randomString();
 
 		JSONObject jsonObject = _getRandomNotificationJSONObject();
 
-		_mockSendNotificationRequest(accessToken, true);
-
 		_pushNotificationsDeviceLocalService.sendPushNotification(
-			PLATFORM, Arrays.asList(destinationToken), jsonObject);
+			_PLATFORM, Arrays.asList(destinationToken), jsonObject);
 
 		_verifyAccessTokenRequest();
 		_verifyGroupRequestInteractions(accessToken, false, false);
@@ -178,9 +175,9 @@ public class FirebasePushNotificationsSenderTest {
 
 			AssertUtils.assertFailure(
 				PushNotificationsException.class,
-				"Unable to send the push notification",
+				"Unable to send push notification",
 				() -> _pushNotificationsDeviceLocalService.sendPushNotification(
-					PLATFORM, Arrays.asList(destinationToken),
+					_PLATFORM, Arrays.asList(destinationToken),
 					_getExpectedNotificationJSONObject(
 						destinationToken, _getRandomNotificationJSONObject())));
 
@@ -192,8 +189,8 @@ public class FirebasePushNotificationsSenderTest {
 
 			Assert.assertEquals(
 				StringBundler.concat(
-					"Unable to send notification with token: ",
-					destinationToken, " and reason: REASON"),
+					"Unable to send notification with token ", destinationToken,
+					" and reason REASON"),
 				logEntry.getMessage());
 		}
 
@@ -207,7 +204,7 @@ public class FirebasePushNotificationsSenderTest {
 			PushNotificationsException.class,
 			"Firebase push notifications sender is not configured properly",
 			() -> _pushNotificationsDeviceLocalService.sendPushNotification(
-				PLATFORM, Arrays.asList(RandomTestUtil.randomString()),
+				_PLATFORM, Arrays.asList(RandomTestUtil.randomString()),
 				JSONFactoryUtil.createJSONObject()));
 	}
 
@@ -229,7 +226,7 @@ public class FirebasePushNotificationsSenderTest {
 		JSONObject jsonObject = _getRandomNotificationJSONObject();
 
 		_pushNotificationsDeviceLocalService.sendPushNotification(
-			PLATFORM, destinationTokens, jsonObject);
+			_PLATFORM, destinationTokens, jsonObject);
 
 		_verifyAccessTokenRequest();
 
@@ -262,7 +259,7 @@ public class FirebasePushNotificationsSenderTest {
 			PushNotificationsException.class,
 			"Unable to create a notification group",
 			() -> _pushNotificationsDeviceLocalService.sendPushNotification(
-				PLATFORM, destinationTokens,
+				_PLATFORM, destinationTokens,
 				_getRandomNotificationJSONObject()));
 
 		_verifyAccessTokenRequest();
@@ -295,7 +292,7 @@ public class FirebasePushNotificationsSenderTest {
 				LoggerTestUtil.ERROR)) {
 
 			_pushNotificationsDeviceLocalService.sendPushNotification(
-				PLATFORM, destinationTokens, jsonObject);
+				_PLATFORM, destinationTokens, jsonObject);
 
 			_verifyAccessTokenRequest();
 
@@ -352,7 +349,7 @@ public class FirebasePushNotificationsSenderTest {
 				PushNotificationsException.class,
 				"Unable to send the push notification",
 				() -> _pushNotificationsDeviceLocalService.sendPushNotification(
-					PLATFORM, destinationTokens, jsonObject));
+					_PLATFORM, destinationTokens, jsonObject));
 			_verifyAccessTokenRequest();
 
 			String groupName = _verifyCreateGroupRequest(
@@ -373,17 +370,16 @@ public class FirebasePushNotificationsSenderTest {
 
 			Assert.assertEquals(
 				StringBundler.concat(
-					"Unable to send notification with token: ", groupId,
-					" and reason: REASON"),
+					"Unable send notification with token ", groupId,
+					" and reason REASON"),
 				logEntry.getMessage());
 
 			logEntry = logEntries.get(1);
 
 			Assert.assertEquals(
 				StringBundler.concat(
-					"Unable to remove notification group with ",
-					"notification_key: ", groupId,
-					" and notification_key_name: ", groupName),
+					"Unable to remove notification group with ID ", groupId,
+					" and name ", groupName),
 				logEntry.getMessage());
 		}
 	}
@@ -547,13 +543,13 @@ public class FirebasePushNotificationsSenderTest {
 		_clientAndServer.when(
 			HttpRequest.request(
 			).withHeader(
-				"access_token_auth", "true"
-			).withHeader(
-				"project_id", _PROJECT_NUMBER
-			).withHeader(
 				"Authorization", "Bearer " + accessToken
 			).withHeader(
 				"Content-type", "application/json"
+			).withHeader(
+				"access_token_auth", "true"
+			).withHeader(
+				"project_id", _PROJECT_NUMBER
 			).withMethod(
 				"POST"
 			).withPath(
@@ -653,17 +649,16 @@ public class FirebasePushNotificationsSenderTest {
 			String accessToken, List<String> destinationTokens)
 		throws Exception {
 
-		HttpRequest[] recordedRequests =
-			_clientAndServer.retrieveRecordedRequests(
-				HttpRequest.request(
-				).withMethod(
-					"POST"
-				).withPath(
-					"/fcm/notification"
-				));
+		HttpRequest[] httpRequests = _clientAndServer.retrieveRecordedRequests(
+			HttpRequest.request(
+			).withMethod(
+				"POST"
+			).withPath(
+				"/fcm/notification"
+			));
 
 		JSONObject jsonObject = JSONFactoryUtil.createJSONObject(
-			recordedRequests[0].getBodyAsString());
+			httpRequests[0].getBodyAsString());
 
 		JSONAssert.assertEquals(
 			JSONUtil.put(
@@ -678,13 +673,13 @@ public class FirebasePushNotificationsSenderTest {
 			).withBody(
 				jsonObject.toString()
 			).withHeader(
-				"access_token_auth", "true"
-			).withHeader(
-				"project_id", _PROJECT_NUMBER
-			).withHeader(
 				"Authorization", "Bearer " + accessToken
 			).withHeader(
 				"Content-Type", "application/json"
+			).withHeader(
+				"access_token_auth", "true"
+			).withHeader(
+				"project_id", _PROJECT_NUMBER
 			).withMethod(
 				"POST"
 			).withPath(
@@ -712,13 +707,13 @@ public class FirebasePushNotificationsSenderTest {
 		_clientAndServer.verify(
 			HttpRequest.request(
 			).withHeader(
-				"access_token_auth", "true"
-			).withHeader(
-				"project_id", _PROJECT_NUMBER
-			).withHeader(
 				"Authorization", "Bearer " + accessToken
 			).withHeader(
 				"Content-Type", "application/json"
+			).withHeader(
+				"access_token_auth", "true"
+			).withHeader(
+				"project_id", _PROJECT_NUMBER
 			).withMethod(
 				"POST"
 			).withPath(
@@ -744,13 +739,13 @@ public class FirebasePushNotificationsSenderTest {
 					"registration_ids", destinationTokens
 				).toString()
 			).withHeader(
-				"access_token_auth", "true"
-			).withHeader(
-				"project_id", _PROJECT_NUMBER
-			).withHeader(
 				"Authorization", "Bearer " + accessToken
 			).withHeader(
 				"Content-type", "application/json"
+			).withHeader(
+				"access_token_auth", "true"
+			).withHeader(
+				"project_id", _PROJECT_NUMBER
 			).withMethod(
 				"POST"
 			).withPath(
@@ -781,6 +776,8 @@ public class FirebasePushNotificationsSenderTest {
 	private static final String _PID =
 		"com.liferay.push.notifications.sender.firebase.internal." +
 			"configuration.FirebasePushNotificationsSenderConfiguration";
+
+	private static final String _PLATFORM = "firebase";
 
 	private static final String _PROJECT_ID = RandomTestUtil.randomString();
 
