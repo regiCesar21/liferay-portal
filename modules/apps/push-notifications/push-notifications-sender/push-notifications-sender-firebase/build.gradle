@@ -6,6 +6,8 @@ dependencies {
 	compileInclude group: "io.grpc", name: "grpc-context", version: "1.36.0"
 	compileInclude group: "io.opencensus", name: "opencensus-api", version: "0.28.3"
 	compileInclude group: "io.opencensus", name: "opencensus-contrib-http-util", version: "0.28.3"
+	compileInclude group: "org.apache.httpcomponents", name: "httpclient", version: "4.5.13"
+	compileInclude group: "org.apache.httpcomponents", name: "httpcore", version: "4.4.14"
 
 	compileOnly group: "biz.aQute.bnd", name: "biz.aQute.bnd.annotation", version: "4.2.0"
 	compileOnly group: "com.liferay.portal", name: "com.liferay.portal.kernel", version: "default"
