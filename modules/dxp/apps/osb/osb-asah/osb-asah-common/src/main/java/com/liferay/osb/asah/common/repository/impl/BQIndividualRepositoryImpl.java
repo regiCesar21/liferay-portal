@@ -407,6 +407,77 @@ public class BQIndividualRepositoryImpl
 	}
 
 	@Override
+	public long countReportIndividuals(
+		@Nullable Long channelId, @Nullable String query,
+		@Nullable Long segmentId) {
+
+		SelectJoinStep selectJoinStep = _dslContext.selectCount(
+		).from(
+			DSL.table(
+				"BQIndividual"
+			).as(
+				"Individual"
+			)
+		);
+
+		Condition condition = _getQueryCondition(query);
+
+		if (channelId != null) {
+			condition = condition.and(
+				DSL.field(
+					"Individual.id"
+				).in(
+					_dslContext.selectDistinct(
+						DSL.field("individualId")
+					).from(
+						DSL.table(
+							"BQIdentityActivity"
+						).as(
+							"IdentityActivity"
+						)
+					).where(
+						DSL.field(
+							"channelId"
+						).eq(
+							channelId
+						)
+					)
+				));
+		}
+
+		if (segmentId != null) {
+			condition = condition.and(
+				DSL.exists(
+					_dslContext.select(
+					).from(
+						"Membership.segmentIds"
+					).where(
+						DSL.field(
+							"segmentIds"
+						).eq(
+							segmentId
+						)
+					)));
+
+			selectJoinStep = selectJoinStep.join(
+				DSL.table(
+					"BQMembership"
+				).as(
+					"Membership"
+				)
+			).on(
+				DSL.field(
+					"Individual.id"
+				).eq(
+					DSL.field("Membership.individualId")
+				)
+			);
+		}
+
+		return _queryExecutor.queryForLong(selectJoinStep.where(condition));
+	}
+
+	@Override
 	public void deleteAll() {
 		_queryExecutor.queryExecute(
 			_dslContext.delete(

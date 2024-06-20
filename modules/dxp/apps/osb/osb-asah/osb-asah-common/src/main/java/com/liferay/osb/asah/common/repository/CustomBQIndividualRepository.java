@@ -48,6 +48,10 @@ public interface CustomBQIndividualRepository {
 		@Nullable Long channelId, String fieldName,
 		@Nullable String filterString);
 
+	public long countReportIndividuals(
+		@Nullable Long channelId, @Nullable String query,
+		@Nullable Long segmentId);
+
 	public void deleteAll();
 
 	public Optional<Individual> findByChannelIdAndId(
