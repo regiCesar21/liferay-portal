@@ -5,13 +5,10 @@
 
 package com.liferay.osb.asah.common.model;
 
-import com.liferay.osb.asah.common.constants.FieldMappingConstants;
-import com.liferay.osb.asah.common.date.DateUtil;
 import com.liferay.osb.asah.common.entity.BQDataSourceUser;
 import com.liferay.osb.asah.common.entity.BQIndividual;
 import com.liferay.osb.asah.common.util.BeanUtils;
 import com.liferay.osb.asah.common.util.SetUtil;
-import com.liferay.osb.asah.common.util.StringUtil;
 
 import java.math.BigDecimal;
 
@@ -22,17 +19,14 @@ import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
-import java.util.stream.Collectors;
 import java.util.stream.Stream;
-
-import org.apache.commons.lang.math.NumberUtils;
 
 import org.springframework.util.CollectionUtils;
 
 /**
  * @author Rachael Koestartyo
  */
-public class Individual {
+public class Individual extends ReportIndividual {
 
 	public Individual() {
 	}
@@ -51,6 +45,8 @@ public class Individual {
 		List<Map<String, Object>> dataSourceIndividualPKs,
 		Date firstActivityDate, Date lastActivityDate) {
 
+		super(bqIndividual);
+
 		_activitiesCount = activitiesCount;
 
 		if (firstActivityDate != null) {
@@ -62,72 +58,6 @@ public class Individual {
 		}
 
 		_createDate = bqIndividual.getCreateDate();
-
-		List<BQIndividual.Field> bqIndividualFields = bqIndividual.getFields();
-
-		Stream<BQIndividual.Field> stream1 = bqIndividualFields.stream();
-
-		Set<Field> fields = stream1.map(
-			bqIndividualField -> {
-				Field field = new Field();
-
-				field.setDataSourceId(bqIndividualField.getDataSourceId());
-				field.setName(bqIndividualField.getName());
-				field.setValue(bqIndividualField.getValue());
-
-				return field;
-			}
-		).collect(
-			Collectors.toSet()
-		);
-
-		if (fields != null) {
-			Set<String> demographicsFieldNames =
-				FieldMappingConstants.demographicsDisplayNames.keySet();
-
-			Stream<Field> stream2 = fields.stream();
-
-			_customFields = stream2.filter(
-				bqIndividualField -> !demographicsFieldNames.contains(
-					bqIndividualField.getName())
-			).collect(
-				Collectors.toSet()
-			);
-
-			fields.removeAll(_customFields);
-
-			_customFields.forEach(
-				customField -> {
-					customField.setModifiedDate(bqIndividual.getModifiedDate());
-					customField.setSourceName(customField.getName());
-				});
-
-			stream2 = fields.stream();
-
-			stream2.forEach(
-				field -> {
-					field.setModifiedDate(bqIndividual.getModifiedDate());
-
-					String displayName =
-						FieldMappingConstants.demographicsDisplayNames.
-							getOrDefault(field.getName(), field.getName());
-
-					field.setName(displayName);
-
-					if (displayName.endsWith("Date")) {
-						long value = NumberUtils.toLong(
-							(String)field.getValue());
-
-						field.setValue(DateUtil.toUTCString(new Date(value)));
-					}
-
-					field.setSourceName(field.getName());
-				});
-
-			_fields = fields;
-		}
-
-		_customDemographics = new Demographics(_customFields);
 
 		if (dataSourceIndividualPKs != null) {
 			for (Map<String, Object> dataSourceIndividualPK :
@@ -145,10 +75,8 @@ public class Individual {
 			}
 		}
 
-		_demographics = new Demographics(_fields);
 		_emailAddressHashed = bqIndividual.getId();
 		_firstEnrichmentDate = bqIndividual.getCreateDate();
-		_id = StringUtil.get(bqIndividual.getId(), null);
 		_lastEnrichmentDate = bqIndividual.getModifiedDate();
 		_modifiedDate = bqIndividual.getModifiedDate();
 	}
@@ -202,15 +130,15 @@ public class Individual {
 			Objects.equals(
 				_firstEnrichmentDate, individual._firstEnrichmentDate) &&
 			Objects.equals(_groupIds, individual._groupIds) &&
-			Objects.equals(_id, individual._id) &&
 			Objects.equals(
 				_lastEnrichmentDate, individual._lastEnrichmentDate) &&
 			Objects.equals(_modifiedDate, individual._modifiedDate) &&
 			Objects.equals(_organizationIds, individual._organizationIds) &&
 			Objects.equals(_roleIds, individual._roleIds) &&
-			Objects.equals(_segmentIds, individual._segmentIds) &&
 			Objects.equals(_teamIds, individual._teamIds) &&
-			Objects.equals(_userGroupIds, individual._userGroupIds)) {
+			Objects.equals(_userGroupIds, individual._userGroupIds) &&
+			Objects.equals(id, individual.id) &&
+			Objects.equals(segmentIds, individual.segmentIds)) {
 
 			return true;
 		}
@@ -238,28 +166,12 @@ public class Individual {
 		return new Date(_createDate.getTime());
 	}
 
-	public Demographics getCustomDemographics() {
-		return new Demographics(_customFields);
-	}
-
-	public Set<Field> getCustomFields() {
-		return _customFields;
-	}
-
 	public Set<DataSourceUserPK> getDataSourceUserPKs() {
 		return _dataSourceUserPKs;
 	}
 
-	public Demographics getDemographics() {
-		return new Demographics(_fields);
-	}
-
 	public String getEmailAddressHashed() {
 		return _emailAddressHashed;
-	}
-
-	public Set<Field> getFields() {
-		return _fields;
 	}
 
 	public Date getFirstActivityDate() {
@@ -280,10 +192,6 @@ public class Individual {
 
 	public Set<Long> getGroupIds() {
 		return _groupIds;
-	}
-
-	public String getId() {
-		return _id;
 	}
 
 	public Date getLastActivityDate() {
@@ -318,10 +226,6 @@ public class Individual {
 		return _roleIds;
 	}
 
-	public Set<Long> getSegmentIds() {
-		return _segmentIds;
-	}
-
 	public Set<Long> getTeamIds() {
 		return _teamIds;
 	}
@@ -334,9 +238,9 @@ public class Individual {
 	public int hashCode() {
 		return Objects.hash(
 			_channelIds, _createDate, _emailAddressHashed, _firstActivityDate,
-			_firstEnrichmentDate, _groupIds, _id, _lastEnrichmentDate,
-			_modifiedDate, _organizationIds, _roleIds, _segmentIds, _teamIds,
-			_userGroupIds);
+			_firstEnrichmentDate, _groupIds, _lastEnrichmentDate, _modifiedDate,
+			_organizationIds, _roleIds, _teamIds, _userGroupIds, id,
+			segmentIds);
 	}
 
 	public void setActivitiesCount(Long activitiesCount) {
@@ -360,20 +264,6 @@ public class Individual {
 		}
 	}
 
-	public void setCustomDemographics(Demographics demographics) {
-		_customDemographics = demographics;
-
-		if (demographics != null) {
-			_customFields = demographics._fields;
-		}
-	}
-
-	public void setCustomFields(Set<Field> fields) {
-		_customFields = fields;
-
-		_customDemographics = new Demographics(fields);
-	}
-
 	public void setDataSourceUserPKs(Set<DataSourceUserPK> dataSourceUserPKs) {
 		_dataSourceUserPKs = dataSourceUserPKs;
 
@@ -392,19 +282,8 @@ public class Individual {
 		}
 	}
 
-	public void setDemographics(Demographics demographics) {
-		_demographics = demographics;
-		_fields = demographics._fields;
-	}
-
 	public void setEmailAddressHashed(String emailAddressHashed) {
 		_emailAddressHashed = emailAddressHashed;
-	}
-
-	public void setFields(Set<Field> fields) {
-		_fields = fields;
-
-		_demographics = new Demographics(fields);
 	}
 
 	public void setFirstActivityDate(Date firstActivityDate) {
@@ -421,10 +300,6 @@ public class Individual {
 
 	public void setGroupIds(Set<Long> groupIds) {
 		_groupIds = groupIds;
-	}
-
-	public void setId(String id) {
-		_id = id;
 	}
 
 	public void setLastActivityDate(Date lastActivityDate) {
@@ -451,10 +326,6 @@ public class Individual {
 
 	public void setRoleIds(Set<Long> roleIds) {
 		_roleIds = roleIds;
-	}
-
-	public void setSegmentIds(Set<Long> segmentIds) {
-		_segmentIds = segmentIds;
 	}
 
 	public void setTeamIds(Set<Long> teamIds) {
@@ -524,84 +395,20 @@ public class Individual {
 
 	}
 
-	public static class Demographics {
-
-		public Demographics() {
-		}
-
-		public Demographics(Set<Field> fields) {
-			_fields = fields;
-		}
-
-		public void addField(String key, List<Field> fields) {
-			Field field = fields.get(0);
-
-			field.setName(key);
-
-			_fields.add(field);
-		}
-
-		@Override
-		public boolean equals(Object obj) {
-			if (this == obj) {
-				return true;
-			}
-
-			if (!(obj instanceof Demographics)) {
-				return false;
-			}
-
-			Demographics demographics = (Demographics)obj;
-
-			if (Objects.equals(_fields, demographics._fields)) {
-				return true;
-			}
-
-			return false;
-		}
-
-		public Map<String, List<Field>> getField() {
-			Stream<Field> stream = _fields.stream();
-
-			return stream.collect(
-				Collectors.toMap(
-					Field::getName, Collections::singletonList,
-					(existing, replacement) -> replacement));
-		}
-
-		public Set<Field> getFields() {
-			return _fields;
-		}
-
-		@Override
-		public int hashCode() {
-			return Objects.hash(_fields);
-		}
-
-		private Set<Field> _fields = new HashSet<>();
-
-	}
-
 	private Long _activitiesCount;
 	private Set<BQDataSourceUser> _bqDataSourceUsers = new HashSet<>();
 	private Set<Long> _channelIds = new HashSet<>();
 	private Date _createDate;
-	private Demographics _customDemographics;
-	private Set<Field> _customFields = new HashSet<>();
 	private Set<DataSourceUserPK> _dataSourceUserPKs = new HashSet<>();
-	private Demographics _demographics;
 	private String _emailAddressHashed;
-	private Set<Field> _fields = new HashSet<>();
 	private Date _firstActivityDate;
 	private Date _firstEnrichmentDate;
 	private Set<Long> _groupIds = new HashSet<>();
-	private String _id;
 	private Date _lastActivityDate;
 	private Date _lastEnrichmentDate;
 	private Date _modifiedDate;
 	private Set<Long> _organizationIds = new HashSet<>();
 	private Set<Long> _roleIds = new HashSet<>();
-	private Set<Long> _segmentIds = new HashSet<>();
 	private Set<Long> _teamIds = new HashSet<>();
 	private Set<Long> _userGroupIds = new HashSet<>();
 
