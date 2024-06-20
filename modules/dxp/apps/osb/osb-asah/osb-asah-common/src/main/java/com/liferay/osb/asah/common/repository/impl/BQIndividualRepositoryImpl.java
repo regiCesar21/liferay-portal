@@ -12,6 +12,7 @@ import com.liferay.osb.asah.common.entity.BQIndividual;
 import com.liferay.osb.asah.common.filter.expression.FilterExpression;
 import com.liferay.osb.asah.common.model.Distribution;
 import com.liferay.osb.asah.common.model.Individual;
+import com.liferay.osb.asah.common.model.ReportIndividual;
 import com.liferay.osb.asah.common.repository.BQFieldMappingRepository;
 import com.liferay.osb.asah.common.repository.CustomBQIndividualRepository;
 import com.liferay.osb.asah.common.repository.EventDefinitionRepository;
@@ -943,6 +944,106 @@ public class BQIndividualRepositoryImpl
 				conditions
 			).orderBy(
 				DSL.field("fieldValue")
+			).limit(
+				pageable.getPageSize()
+			).offset(
+				pageable.getOffset()
+			));
+	}
+
+	@Override
+	public List<ReportIndividual> searchReportIndividuals(
+		@Nullable Long channelId, Pageable pageable, @Nullable String query,
+		@Nullable Long segmentId) {
+
+		Condition condition = _getQueryCondition(query);
+
+		if (channelId != null) {
+			condition = condition.and(
+				DSL.field(
+					"Individual.id"
+				).in(
+					_dslContext.selectDistinct(
+						DSL.field("individualId")
+					).from(
+						DSL.table(
+							"BQIdentityActivity"
+						).as(
+							"IdentityActivity"
+						)
+					).where(
+						DSL.field(
+							"channelId"
+						).eq(
+							channelId
+						)
+					)
+				));
+		}
+
+		if (segmentId != null) {
+			condition = condition.and(
+				DSL.exists(
+					_dslContext.select(
+					).from(
+						"Membership.segmentIds"
+					).where(
+						DSL.field(
+							"segmentIds"
+						).eq(
+							segmentId
+						)
+					)));
+		}
+
+		return _queryExecutor.queryForList(
+			record -> new ReportIndividual(
+				new BQIndividual(record), (Set<Long>)record.get("segmentIds")),
+			_dslContext.select(
+				DSL.field(
+					"Individual.fields"
+				).as(
+					"fields"
+				),
+				DSL.field(
+					"Individual.id"
+				).as(
+					"id"
+				),
+				DSL.field(
+					"Membership.segmentIds"
+				).as(
+					"segmentIds"
+				)
+			).from(
+				DSL.table(
+					"BQIndividual"
+				).as(
+					"Individual"
+				)
+			).leftJoin(
+				_dslContext.select(
+					DSL.field("individualId"),
+					DSL.field(
+						"ARRAY_AGG(DISTINCT segmentId IGNORE NULLS)"
+					).as(
+						"segmentIds"
+					)
+				).from(
+					DSL.table("BQMembership")
+				).groupBy(
+					DSL.field("individualId")
+				).asTable(
+					"Membership"
+				)
+			).on(
+				DSL.field(
+					"Individual.id"
+				).eq(
+					DSL.field("Membership.individualId")
+				)
+			).where(
+				condition
 			).limit(
 				pageable.getPageSize()
 			).offset(
