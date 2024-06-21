@@ -222,7 +222,6 @@ public class FaroInfoTestUtil {
 		individual.setCreateDate(date);
 		individual.setId(individualId.toString());
 		individual.setModifiedDate(date);
-		individual.setSegmentIds(Collections.emptySet());
 
 		Field field = new Field();
 
