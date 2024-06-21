@@ -14,6 +14,7 @@ import com.liferay.osb.asah.test.util.spring.OSBAsahTestExecutionListenersContex
 
 import java.time.LocalDate;
 
+import org.json.JSONArray;
 import org.json.JSONObject;
 
 import org.junit.jupiter.api.Assertions;
@@ -66,11 +67,20 @@ public class PagesRestControllerTest
 
 		Assertions.assertEquals(6, responseJSONObject.get("value"));
 
-		JSONObject histogramMetricJSONObject = (JSONObject)JSONUtil.getValue(
-			responseJSONObject, "JSONArray/histogram", "Object/0");
+		JSONArray jsonArray = responseJSONObject.getJSONArray("histogram");
 
-		Assertions.assertTrue(histogramMetricJSONObject.has("key"));
-		Assertions.assertTrue(histogramMetricJSONObject.has("value"));
+		long count = 0;
+
+		for (Object object : jsonArray) {
+			JSONObject jsonObject = (JSONObject)object;
+
+			Assertions.assertTrue(jsonObject.has("key"));
+			Assertions.assertTrue(jsonObject.has("value"));
+
+			count += jsonObject.getLong("value");
+		}
+
+		Assertions.assertEquals(6, count);
 	}
 
 	@BQSQLResource(resourcePath = "test_bq_pages_rest_controller_test.sql")
