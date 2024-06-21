@@ -16,9 +16,8 @@ import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
 import com.liferay.portal.kernel.util.StringUtil;
-import com.liferay.portal.test.log.LogCapture;
-import com.liferay.portal.test.log.LogEntry;
-import com.liferay.portal.test.log.LoggerTestUtil;
+import com.liferay.portal.test.log.CaptureAppender;
+import com.liferay.portal.test.log.Log4JLoggerTestUtil;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.push.notifications.exception.PushNotificationsException;
@@ -26,6 +25,9 @@ import com.liferay.push.notifications.service.PushNotificationsDeviceLocalServic
 
 import java.util.Arrays;
 import java.util.List;
+
+import org.apache.log4j.Level;
+import org.apache.log4j.spi.LoggingEvent;
 
 import org.junit.After;
 import org.junit.Assert;
@@ -166,10 +168,11 @@ public class FirebasePushNotificationsSenderTest {
 
 		_mockSendNotificationRequest(accessToken, false);
 
-		try (LogCapture logCapture = LoggerTestUtil.configureLog4JLogger(
-				"com.liferay.push.notifications.sender.firebase.internal." +
-					"FirebasePushNotificationsSender",
-				LoggerTestUtil.ERROR)) {
+		try (CaptureAppender captureAppender =
+				Log4JLoggerTestUtil.configureLog4JLogger(
+					"com.liferay.push.notifications.sender.firebase.internal." +
+						"FirebasePushNotificationsSender",
+					Level.ERROR)) {
 
 			String destinationToken = RandomTestUtil.randomString();
 
@@ -181,17 +184,19 @@ public class FirebasePushNotificationsSenderTest {
 					_getExpectedNotificationJSONObject(
 						destinationToken, _getRandomNotificationJSONObject())));
 
-			List<LogEntry> logEntries = logCapture.getLogEntries();
+			List<LoggingEvent> loggingEvents =
+				captureAppender.getLoggingEvents();
 
-			Assert.assertEquals(logEntries.toString(), 1, logEntries.size());
+			Assert.assertEquals(
+				loggingEvents.toString(), 1, loggingEvents.size());
 
-			LogEntry logEntry = logEntries.get(0);
+			LoggingEvent loggingEvent = loggingEvents.get(0);
 
 			Assert.assertEquals(
 				StringBundler.concat(
 					"Unable to send notification with token ", destinationToken,
 					" and reason REASON"),
-				logEntry.getMessage());
+				loggingEvent.getMessage());
 		}
 
 		_verifyAccessTokenRequest();
@@ -286,10 +291,11 @@ public class FirebasePushNotificationsSenderTest {
 
 		JSONObject jsonObject = _getRandomNotificationJSONObject();
 
-		try (LogCapture logCapture = LoggerTestUtil.configureLog4JLogger(
-				"com.liferay.push.notifications.sender.firebase.internal." +
-					"FirebasePushNotificationsSender",
-				LoggerTestUtil.ERROR)) {
+		try (CaptureAppender captureAppender =
+				Log4JLoggerTestUtil.configureLog4JLogger(
+					"com.liferay.push.notifications.sender.firebase.internal." +
+						"FirebasePushNotificationsSender",
+					Level.ERROR)) {
 
 			_pushNotificationsDeviceLocalService.sendPushNotification(
 				_PLATFORM, destinationTokens, jsonObject);
@@ -306,17 +312,19 @@ public class FirebasePushNotificationsSenderTest {
 			_verifyRemoveGroupRequest(
 				accessToken, destinationTokens, groupId, groupName);
 
-			List<LogEntry> logEntries = logCapture.getLogEntries();
+			List<LoggingEvent> loggingEvents =
+				captureAppender.getLoggingEvents();
 
-			Assert.assertEquals(logEntries.toString(), 1, logEntries.size());
+			Assert.assertEquals(
+				loggingEvents.toString(), 1, loggingEvents.size());
 
-			LogEntry logEntry = logEntries.get(0);
+			LoggingEvent loggingEvent = loggingEvents.get(0);
 
 			Assert.assertEquals(
 				StringBundler.concat(
 					"Unable to remove notification group with ID ", groupId,
 					" and name ", groupName),
-				logEntry.getMessage());
+				loggingEvent.getMessage());
 		}
 	}
 
@@ -339,10 +347,11 @@ public class FirebasePushNotificationsSenderTest {
 
 		JSONObject jsonObject = _getRandomNotificationJSONObject();
 
-		try (LogCapture logCapture = LoggerTestUtil.configureLog4JLogger(
-				"com.liferay.push.notifications.sender.firebase.internal." +
-					"FirebasePushNotificationsSender",
-				LoggerTestUtil.ERROR)) {
+		try (CaptureAppender captureAppender =
+				Log4JLoggerTestUtil.configureLog4JLogger(
+					"com.liferay.push.notifications.sender.firebase.internal." +
+						"FirebasePushNotificationsSender",
+					Level.ERROR)) {
 
 			AssertUtils.assertFailure(
 				PushNotificationsException.class,
@@ -361,25 +370,27 @@ public class FirebasePushNotificationsSenderTest {
 			_verifyRemoveGroupRequest(
 				accessToken, destinationTokens, groupId, groupName);
 
-			List<LogEntry> logEntries = logCapture.getLogEntries();
+			List<LoggingEvent> loggingEvents =
+				captureAppender.getLoggingEvents();
 
-			Assert.assertEquals(logEntries.toString(), 2, logEntries.size());
+			Assert.assertEquals(
+				loggingEvents.toString(), 2, loggingEvents.size());
 
-			LogEntry logEntry = logEntries.get(0);
+			LoggingEvent loggingEvent = loggingEvents.get(0);
 
 			Assert.assertEquals(
 				StringBundler.concat(
 					"Unable to send notification with token ", groupId,
 					" and reason REASON"),
-				logEntry.getMessage());
+				loggingEvent.getMessage());
 
-			logEntry = logEntries.get(1);
+			loggingEvent = loggingEvents.get(1);
 
 			Assert.assertEquals(
 				StringBundler.concat(
 					"Unable to remove notification group with ID ", groupId,
 					" and name ", groupName),
-				logEntry.getMessage());
+				loggingEvent.getMessage());
 		}
 	}
 
