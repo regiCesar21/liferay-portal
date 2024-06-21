@@ -412,82 +412,9 @@ public class BQIndividualRepositoryImpl
 		@Nullable Long channelId, @Nullable String query,
 		@Nullable Long segmentId) {
 
-		SelectJoinStep selectJoinStep = _dslContext.selectCount(
-		).from(
-			DSL.table(
-				"BQIndividual"
-			).as(
-				"Individual"
-			)
-		);
-
-		List<Condition> conditions = new ArrayList<>();
-
-		conditions.add(_getQueryCondition(query));
-		conditions.add(
-			DSL.or(
-				DSL.field(
-					"Individual.suppressed"
-				).isNull(),
-				DSL.field(
-					"Individual.suppressed"
-				).notEqual(
-					Boolean.TRUE
-				)));
-
-		if (channelId != null) {
-			conditions.add(
-				DSL.field(
-					"Individual.id"
-				).in(
-					_dslContext.selectDistinct(
-						DSL.field("individualId")
-					).from(
-						DSL.table(
-							"BQIdentityActivity"
-						).as(
-							"IdentityActivity"
-						)
-					).where(
-						DSL.field(
-							"channelId"
-						).eq(
-							channelId
-						)
-					)
-				));
-		}
-
-		if (segmentId != null) {
-			conditions.add(
-				DSL.exists(
-					_dslContext.select(
-					).from(
-						"Membership.segmentIds"
-					).where(
-						DSL.field(
-							"segmentIds"
-						).eq(
-							segmentId
-						)
-					)));
-
-			selectJoinStep = selectJoinStep.join(
-				DSL.table(
-					"BQMembership"
-				).as(
-					"Membership"
-				)
-			).on(
-				DSL.field(
-					"Individual.id"
-				).eq(
-					DSL.field("Membership.individualId")
-				)
-			);
-		}
-
-		return _queryExecutor.queryForLong(selectJoinStep.where(conditions));
+		return _queryExecutor.queryForLong(
+			_getReportIndividualsSelectConditionStep(
+				channelId, null, query, segmentId, _dslContext.selectCount()));
 	}
 
 	@Override
@@ -594,6 +521,26 @@ public class BQIndividualRepositoryImpl
 
 	@Override
 	public Optional<ReportIndividual> findReportIndividualById(String id) {
+		SelectConditionStep selectConditionStep =
+			_getReportIndividualsSelectConditionStep(
+				null, id, null, null,
+				_dslContext.select(
+					DSL.field(
+						"Individual.fields"
+					).as(
+						"fields"
+					),
+					DSL.field(
+						"Individual.id"
+					).as(
+						"id"
+					),
+					DSL.field(
+						"Membership.segmentIds"
+					).as(
+						"segmentIds"
+					)));
+
 		return _queryExecutor.queryForObject(
 			record -> {
 				Object object = record.get("segmentIds");
@@ -608,66 +555,7 @@ public class BQIndividualRepositoryImpl
 				return new ReportIndividual(
 					new BQIndividual(record), segmentIds);
 			},
-			_dslContext.select(
-				DSL.field(
-					"Individual.fields"
-				).as(
-					"fields"
-				),
-				DSL.field(
-					"Individual.id"
-				).as(
-					"id"
-				),
-				DSL.field(
-					"Membership.segmentIds"
-				).as(
-					"segmentIds"
-				)
-			).from(
-				DSL.table(
-					"BQIndividual"
-				).as(
-					"Individual"
-				)
-			).leftJoin(
-				_dslContext.select(
-					DSL.field("individualId"),
-					DSL.field(
-						"ARRAY_AGG(DISTINCT segmentId IGNORE NULLS)"
-					).as(
-						"segmentIds"
-					)
-				).from(
-					DSL.table("BQMembership")
-				).groupBy(
-					DSL.field("individualId")
-				).asTable(
-					"Membership"
-				)
-			).on(
-				DSL.field(
-					"Individual.id"
-				).eq(
-					DSL.field("Membership.individualId")
-				)
-			).where(
-				DSL.and(
-					DSL.field(
-						"Individual.id"
-					).eq(
-						id
-					),
-					DSL.or(
-						DSL.field(
-							"Individual.suppressed"
-						).isNull(),
-						DSL.field(
-							"Individual.suppressed"
-						).notEqual(
-							Boolean.TRUE
-						)))
-			));
+			selectConditionStep);
 	}
 
 	@Override
@@ -1118,64 +1006,25 @@ public class BQIndividualRepositoryImpl
 		@Nullable Long channelId, Pageable pageable, @Nullable String query,
 		@Nullable Long segmentId) {
 
-		List<Condition> conditions = new ArrayList<>();
-		Condition membershipCondition = DSL.noCondition();
-
-		conditions.add(_getQueryCondition(query));
-		conditions.add(
-			DSL.or(
-				DSL.field(
-					"Individual.suppressed"
-				).isNull(),
-				DSL.field(
-					"Individual.suppressed"
-				).notEqual(
-					Boolean.TRUE
-				)));
-
-		if (channelId != null) {
-			conditions.add(
-				DSL.field(
-					"Individual.id"
-				).in(
-					_dslContext.selectDistinct(
-						DSL.field("individualId")
-					).from(
-						DSL.table(
-							"BQIdentityActivity"
-						).as(
-							"IdentityActivity"
-						)
-					).where(
-						DSL.field(
-							"channelId"
-						).eq(
-							channelId
-						)
-					)
-				));
-
-			membershipCondition = DSL.field(
-				"channelId"
-			).eq(
-				channelId
-			);
-		}
-
-		if (segmentId != null) {
-			conditions.add(
-				DSL.exists(
-					_dslContext.select(
-					).from(
+		SelectConditionStep selectConditionStep =
+			_getReportIndividualsSelectConditionStep(
+				channelId, null, query, segmentId,
+				_dslContext.select(
+					DSL.field(
+						"Individual.fields"
+					).as(
+						"fields"
+					),
+					DSL.field(
+						"Individual.id"
+					).as(
+						"id"
+					),
+					DSL.field(
 						"Membership.segmentIds"
-					).where(
-						DSL.field(
-							"segmentIds"
-						).eq(
-							segmentId
-						)
+					).as(
+						"segmentIds"
 					)));
-		}
 
 		return _queryExecutor.queryForList(
 			record -> {
@@ -1191,54 +1040,7 @@ public class BQIndividualRepositoryImpl
 				return new ReportIndividual(
 					new BQIndividual(record), segmentIds);
 			},
-			_dslContext.select(
-				DSL.field(
-					"Individual.fields"
-				).as(
-					"fields"
-				),
-				DSL.field(
-					"Individual.id"
-				).as(
-					"id"
-				),
-				DSL.field(
-					"Membership.segmentIds"
-				).as(
-					"segmentIds"
-				)
-			).from(
-				DSL.table(
-					"BQIndividual"
-				).as(
-					"Individual"
-				)
-			).leftJoin(
-				_dslContext.select(
-					DSL.field("individualId"),
-					DSL.field(
-						"ARRAY_AGG(DISTINCT segmentId IGNORE NULLS)"
-					).as(
-						"segmentIds"
-					)
-				).from(
-					DSL.table("BQMembership")
-				).where(
-					membershipCondition
-				).groupBy(
-					DSL.field("individualId")
-				).asTable(
-					"Membership"
-				)
-			).on(
-				DSL.field(
-					"Individual.id"
-				).eq(
-					DSL.field("Membership.individualId")
-				)
-			).where(
-				conditions
-			).limit(
+			selectConditionStep.limit(
 				pageable.getPageSize()
 			).offset(
 				pageable.getOffset()
@@ -1718,6 +1520,82 @@ public class BQIndividualRepositoryImpl
 		}
 
 		return DSL.and(conditions);
+	}
+
+	private SelectConditionStep _getReportIndividualsSelectConditionStep(
+		@Nullable Long channelId, @Nullable String id, @Nullable String query,
+		@Nullable Long segmentId, SelectSelectStep selectSelectStep) {
+
+		List<Condition> conditions = new ArrayList<>();
+		Condition membershipCondition = DSL.noCondition();
+
+		conditions.add(_getQueryCondition(query));
+		conditions.add(
+			DSL.or(
+				DSL.field(
+					"Individual.suppressed"
+				).isNull(),
+				DSL.field(
+					"Individual.suppressed"
+				).notEqual(
+					Boolean.TRUE
+				)));
+
+		if (channelId != null) {
+			conditions.add(_getChannelIdCondition(channelId));
+
+			membershipCondition = DSL.field(
+				"channelId"
+			).eq(
+				channelId
+			);
+		}
+
+		if (StringUtils.isNotBlank(id)) {
+			conditions.add(
+				DSL.field(
+					"Individual.id"
+				).eq(
+					id
+				));
+		}
+
+		if (segmentId != null) {
+			conditions.add(_getIndividualSegmentIdCondition(segmentId));
+		}
+
+		return selectSelectStep.from(
+			DSL.table(
+				"BQIndividual"
+			).as(
+				"Individual"
+			)
+		).leftJoin(
+			_dslContext.select(
+				DSL.field("individualId"),
+				DSL.field(
+					"ARRAY_AGG(DISTINCT segmentId IGNORE NULLS)"
+				).as(
+					"segmentIds"
+				)
+			).from(
+				DSL.table("BQMembership")
+			).where(
+				membershipCondition
+			).groupBy(
+				DSL.field("individualId")
+			).asTable(
+				"Membership"
+			)
+		).on(
+			DSL.field(
+				"Individual.id"
+			).eq(
+				DSL.field("Membership.individualId")
+			)
+		).where(
+			conditions
+		);
 	}
 
 	private <R extends Record> SelectJoinStep<R> _getSelectJoinStep(
