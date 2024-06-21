@@ -59,6 +59,8 @@ public interface CustomBQIndividualRepository {
 
 	public Optional<BQIndividual> findByEmailAddress(String emailAddresses);
 
+	public Optional<ReportIndividual> findReportIndividualById(String id);
+
 	public List<Distribution> getIndividualDistributions(
 		@Nullable Long channelId, String fieldName, String fieldType,
 		@Nullable Long individualSegmentId, Pageable pageable);

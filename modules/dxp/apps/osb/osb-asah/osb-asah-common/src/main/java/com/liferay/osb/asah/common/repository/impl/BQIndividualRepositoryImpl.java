@@ -580,6 +580,63 @@ public class BQIndividualRepositoryImpl
 	}
 
 	@Override
+	public Optional<ReportIndividual> findReportIndividualById(String id) {
+		return _queryExecutor.queryForObject(
+			record -> new ReportIndividual(
+				new BQIndividual(record), (Set<Long>)record.get("segmentIds")),
+			_dslContext.select(
+				DSL.field(
+					"Individual.fields"
+				).as(
+					"fields"
+				),
+				DSL.field(
+					"Individual.id"
+				).as(
+					"id"
+				),
+				DSL.field(
+					"Membership.segmentIds"
+				).as(
+					"segmentIds"
+				)
+			).from(
+				DSL.table(
+					"BQIndividual"
+				).as(
+					"Individual"
+				)
+			).leftJoin(
+				_dslContext.select(
+					DSL.field("individualId"),
+					DSL.field(
+						"ARRAY_AGG(DISTINCT segmentId IGNORE NULLS)"
+					).as(
+						"segmentIds"
+					)
+				).from(
+					DSL.table("BQMembership")
+				).groupBy(
+					DSL.field("individualId")
+				).asTable(
+					"Membership"
+				)
+			).on(
+				DSL.field(
+					"Individual.id"
+				).eq(
+					DSL.field("Membership.individualId")
+				)
+			).where(
+				DSL.field(
+					"Individual.id"
+				).eq(
+					id
+				)
+			));
+	}
+
+	@Override
 	public List<Distribution> getIndividualDistributions(
 		@Nullable Long channelId, String fieldName, String fieldType,
 		@Nullable Long individualSegmentId, Pageable pageable) {
