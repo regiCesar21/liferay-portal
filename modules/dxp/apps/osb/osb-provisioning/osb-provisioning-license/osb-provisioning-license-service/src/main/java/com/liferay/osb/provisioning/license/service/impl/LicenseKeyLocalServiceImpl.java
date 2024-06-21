@@ -764,12 +764,12 @@ public class LicenseKeyLocalServiceImpl extends LicenseKeyLocalServiceBaseImpl {
 
 		StringBundler sb = new StringBundler();
 
-		String[] strings = text.split("\\s+");
+		String[] splitText = text.split("\\s+");
 
-		for (int i = 0; i < strings.length; i++) {
-			sb.append(strings[i]);
+		for (int i = 0; i < splitText.length; i++) {
+			sb.append(splitText[i]);
 
-			if (i < (strings.length - 1)) {
+			if (i < (splitText.length - 1)) {
 				sb.append(" ");
 			}
 		}
