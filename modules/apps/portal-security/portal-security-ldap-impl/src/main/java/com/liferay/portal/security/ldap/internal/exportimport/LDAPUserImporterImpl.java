@@ -779,60 +779,75 @@ public class LDAPUserImporterImpl implements LDAPUserImporter, UserImporter {
 	protected void importFromLDAPByUser(LDAPImportContext ldapImportContext)
 		throws Exception {
 
-		byte[] cookie = new byte[0];
+		LdapContext ldapContext = _portalLDAP.getContext(
+			ldapImportContext.getLdapServerId(),
+			ldapImportContext.getCompanyId());
 
-		while (cookie != null) {
-			List<SearchResult> searchResults = new ArrayList<>();
+		try {
+			byte[] cookie = new byte[0];
 
-			Properties userMappings = ldapImportContext.getUserMappings();
+			while (cookie != null) {
+				List<SearchResult> searchResults = new ArrayList<>();
 
-			String userMappingsScreenName = GetterUtil.getString(
-				userMappings.getProperty("screenName"));
+				Properties userMappings = ldapImportContext.getUserMappings();
 
-			userMappingsScreenName = StringUtil.toLowerCase(
-				userMappingsScreenName);
+				String userMappingsScreenName = GetterUtil.getString(
+					userMappings.getProperty("screenName"));
 
-			cookie = _portalLDAP.getUsers(
-				ldapImportContext.getLdapServerId(),
-				ldapImportContext.getCompanyId(),
-				ldapImportContext.getLdapContext(), cookie, 0,
-				new String[] {userMappingsScreenName}, searchResults);
+				userMappingsScreenName = StringUtil.toLowerCase(
+					userMappingsScreenName);
 
-			for (SearchResult searchResult : searchResults) {
-				try {
-					String fullUserDN = searchResult.getNameInNamespace();
+				cookie = _portalLDAP.getUsers(
+					ldapImportContext.getLdapServerId(),
+					ldapImportContext.getCompanyId(), ldapContext, cookie, 0,
+					new String[] {userMappingsScreenName}, searchResults);
 
-					if (ldapImportContext.containsImportedUser(fullUserDN)) {
-						continue;
+				for (SearchResult searchResult : searchResults) {
+					try {
+						String fullUserDN = searchResult.getNameInNamespace();
+
+						if (ldapImportContext.containsImportedUser(
+								fullUserDN)) {
+
+							continue;
+						}
+
+						Attributes userAttributes =
+							_portalLDAP.getUserAttributes(
+								ldapImportContext.getLdapServerId(),
+								ldapImportContext.getCompanyId(),
+								ldapImportContext.getLdapContext(), fullUserDN);
+
+						User user = importUser(
+							ldapImportContext, fullUserDN, userAttributes,
+							null);
+
+						importGroups(ldapImportContext, userAttributes, user);
 					}
+					catch (GroupFriendlyURLException gfurle) {
+						int type = gfurle.getType();
 
-					Attributes userAttributes = _portalLDAP.getUserAttributes(
-						ldapImportContext.getLdapServerId(),
-						ldapImportContext.getCompanyId(),
-						ldapImportContext.getLdapContext(), fullUserDN);
-
-					User user = importUser(
-						ldapImportContext, fullUserDN, userAttributes, null);
-
-					importGroups(ldapImportContext, userAttributes, user);
-				}
-				catch (GroupFriendlyURLException gfurle) {
-					int type = gfurle.getType();
-
-					if (type == GroupFriendlyURLException.DUPLICATE) {
-						_log.error(
-							"Unable to import user " + searchResult +
-								" because of a duplicate group friendly URL",
-							gfurle);
+						if (type == GroupFriendlyURLException.DUPLICATE) {
+							_log.error(
+								"Unable to import user " + searchResult +
+									" because of a duplicate group friendly URL",
+								gfurle);
+						}
+						else {
+							_log.error(
+								"Unable to import user " + searchResult,
+								gfurle);
+						}
 					}
-					else {
-						_log.error(
-							"Unable to import user " + searchResult, gfurle);
+					catch (Exception e) {
+						_log.error("Unable to import user " + searchResult, e);
 					}
 				}
-				catch (Exception e) {
-					_log.error("Unable to import user " + searchResult, e);
-				}
+			}
+		}
+		finally {
+			if (ldapContext != null) {
+				ldapContext.close();
 			}
 		}
 	}
