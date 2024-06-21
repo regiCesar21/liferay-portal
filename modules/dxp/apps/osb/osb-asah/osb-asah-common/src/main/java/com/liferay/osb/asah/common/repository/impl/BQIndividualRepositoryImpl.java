@@ -1119,6 +1119,7 @@ public class BQIndividualRepositoryImpl
 		@Nullable Long segmentId) {
 
 		List<Condition> conditions = new ArrayList<>();
+		Condition membershipCondition = DSL.noCondition();
 
 		conditions.add(_getQueryCondition(query));
 		conditions.add(
@@ -1153,6 +1154,12 @@ public class BQIndividualRepositoryImpl
 						)
 					)
 				));
+
+			membershipCondition = DSL.field(
+				"channelId"
+			).eq(
+				channelId
+			);
 		}
 
 		if (segmentId != null) {
@@ -1216,6 +1223,8 @@ public class BQIndividualRepositoryImpl
 					)
 				).from(
 					DSL.table("BQMembership")
+				).where(
+					membershipCondition
 				).groupBy(
 					DSL.field("individualId")
 				).asTable(

@@ -61,11 +61,11 @@ INSERT INTO Individual (birthday, createDate, emailAddress, fields, firstName, i
 INSERT INTO Individual (birthday, createDate, emailAddress, fields, firstName, id, jobTitle, languageId, lastName, middleName, modifiedDate, screenName, suppressed) VALUES (timestamp '1988-01-01T00:00:00.000Z', timestamp '${today}', 'test19@liferay.com', ARRAY<STRUCT<dataSourceId INT64, name STRING, value STRING>> [(null, null, null)], 'Test19', '19', 'Test', 'en-US', 'Test', 'Test', timestamp '${today}', 'Test 19', false);
 INSERT INTO Individual (birthday, createDate, emailAddress, fields, firstName, id, jobTitle, languageId, lastName, middleName, modifiedDate, screenName, suppressed) VALUES (timestamp '1989-01-01T00:00:00.000Z', timestamp '${today}', 'test20@liferay.com', ARRAY<STRUCT<dataSourceId INT64, name STRING, value STRING>> [(null, null, null)], 'Test20', '20', 'Test', 'en-US', 'Test', 'Test', timestamp '${today}', 'Test 20', false);
 
-INSERT INTO Membership (individualId, segmentId) VALUES ('1', 11111);
-INSERT INTO Membership (individualId, segmentId) VALUES ('2', 11111);
-INSERT INTO Membership (individualId, segmentId) VALUES ('3', 11111);
-INSERT INTO Membership (individualId, segmentId) VALUES ('1', 22222);
-INSERT INTO Membership (individualId, segmentId) VALUES ('1', 33333);
+INSERT INTO Membership (channelId, individualId, segmentId) VALUES (1, '1', 11111);
+INSERT INTO Membership (channelId, individualId, segmentId) VALUES (1, '2', 11111);
+INSERT INTO Membership (channelId, individualId, segmentId) VALUES (1, '3', 11111);
+INSERT INTO Membership (channelId, individualId, segmentId) VALUES (1, '1', 22222);
+INSERT INTO Membership (channelId, individualId, segmentId) VALUES (1, '1', 33333);
 
 INSERT INTO Suppression (createDate, dataControlTaskBatchId, dataControlTaskCreateDate, emailAddress, hidden) VALUES (timestamp '${now}', 1, timestamp '${now-1h}', 'test2@liferay.com', false);
 INSERT INTO Suppression (createDate, dataControlTaskBatchId, dataControlTaskCreateDate, emailAddress, hidden) VALUES (timestamp '${now}', 1, timestamp '${now-1h}', 'test4@liferay.com', false);
