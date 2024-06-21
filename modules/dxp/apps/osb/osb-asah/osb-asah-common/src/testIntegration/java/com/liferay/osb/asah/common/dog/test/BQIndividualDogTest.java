@@ -11,12 +11,15 @@ import com.liferay.osb.asah.common.faro.info.dog.test.BaseFaroInfoDogTestCase;
 import com.liferay.osb.asah.common.faro.info.util.FaroInfoIndividualUtil;
 import com.liferay.osb.asah.common.model.Field;
 import com.liferay.osb.asah.common.model.Individual;
+import com.liferay.osb.asah.common.model.ReportIndividual;
 import com.liferay.osb.asah.common.util.ListUtil;
 import com.liferay.osb.asah.test.util.annotation.BQSQLResource;
 import com.liferay.osb.asah.test.util.spring.OSBAsahTestExecutionListenersContext;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
+import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Objects;
@@ -127,6 +130,27 @@ public class BQIndividualDogTest
 				1L,
 				"05574696b257a38dc21009122d33550c299f822dc768984c95693e6d5c4e" +
 					"d006"));
+	}
+
+	@BQSQLResource(resourcePath = "test_search_report_individual_page.sql")
+	@Test
+	public void testFetchReportIndividual() {
+		ReportIndividual expectedReportIndividual = new ReportIndividual();
+
+		expectedReportIndividual.setId("1");
+		expectedReportIndividual.setSegmentIds(
+			new HashSet<>(Arrays.asList(11111L, 22222L, 33333L)));
+
+		Assertions.assertEquals(
+			expectedReportIndividual,
+			_bqIndividualDog.fetchReportIndividual("1"));
+
+		Assertions.assertNull(_bqIndividualDog.fetchReportIndividual("2"));
+		Assertions.assertNull(_bqIndividualDog.fetchReportIndividual("4"));
+		Assertions.assertNull(_bqIndividualDog.fetchReportIndividual("6"));
+		Assertions.assertNull(_bqIndividualDog.fetchReportIndividual("8"));
+		Assertions.assertNull(_bqIndividualDog.fetchReportIndividual("10"));
+		Assertions.assertNull(_bqIndividualDog.fetchReportIndividual("abc"));
 	}
 
 	@BQSQLResource(
@@ -430,6 +454,58 @@ public class BQIndividualDogTest
 					"Bonnie", "cedric", "Daniel", "Zinchenko"
 				}),
 			_getGivenNames(individualPage.getContent()));
+	}
+
+	@BQSQLResource(resourcePath = "test_search_report_individual_page.sql")
+	@Test
+	public void testSearchReportIndividualPage() {
+		Page<ReportIndividual> reportIndividualPage =
+			_bqIndividualDog.searchReportIndividualPage(1L, 0, null, null, 2);
+
+		Assertions.assertEquals(8, reportIndividualPage.getTotalPages());
+		Assertions.assertEquals(15, reportIndividualPage.getTotalElements());
+
+		ReportIndividual reportIndividual1 = new ReportIndividual();
+
+		reportIndividual1.setId("1");
+		reportIndividual1.setSegmentIds(
+			new HashSet<>(Arrays.asList(11111L, 22222L, 33333L)));
+
+		ReportIndividual reportIndividual2 = new ReportIndividual();
+
+		reportIndividual2.setId("3");
+		reportIndividual2.setSegmentIds(Collections.singleton(11111L));
+
+		Assertions.assertEquals(
+			new ArrayList<ReportIndividual>() {
+				{
+					add(reportIndividual1);
+					add(reportIndividual2);
+				}
+			},
+			reportIndividualPage.getContent());
+
+		reportIndividualPage = _bqIndividualDog.searchReportIndividualPage(
+			1L, 1, null, null, 2);
+
+		ReportIndividual reportIndividual3 = new ReportIndividual();
+
+		reportIndividual3.setId("5");
+		reportIndividual3.setSegmentIds(Collections.emptySet());
+
+		ReportIndividual reportIndividual4 = new ReportIndividual();
+
+		reportIndividual4.setId("7");
+		reportIndividual4.setSegmentIds(Collections.emptySet());
+
+		Assertions.assertEquals(
+			new ArrayList<ReportIndividual>() {
+				{
+					add(reportIndividual3);
+					add(reportIndividual4);
+				}
+			},
+			reportIndividualPage.getContent());
 	}
 
 	private List<String> _getGivenNames(List<Individual> individuals) {
