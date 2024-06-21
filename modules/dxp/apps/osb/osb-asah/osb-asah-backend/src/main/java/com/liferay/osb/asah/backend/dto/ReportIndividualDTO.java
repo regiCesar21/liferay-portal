@@ -13,6 +13,7 @@ import com.liferay.osb.asah.backend.graphql.annotation.GraphQLProperty;
 import com.liferay.osb.asah.backend.graphql.annotation.GraphQLType;
 import com.liferay.osb.asah.common.model.Field;
 import com.liferay.osb.asah.common.model.Individual;
+import com.liferay.osb.asah.common.model.ReportIndividual;
 import com.liferay.osb.asah.common.util.ListUtil;
 import com.liferay.osb.asah.common.util.StringUtil;
 
@@ -32,12 +33,14 @@ public class ReportIndividualDTO {
 	public ReportIndividualDTO() {
 	}
 
-	public ReportIndividualDTO(Individual individual) {
-		_custom = _getIndividualProperties(individual.getCustomDemographics());
-		_demographics = _getIndividualProperties(individual.getDemographics());
-		_id = StringUtil.get(individual.getId());
+	public ReportIndividualDTO(ReportIndividual reportIndividual) {
+		_custom = _getIndividualProperties(
+			reportIndividual.getCustomDemographics());
+		_demographics = _getIndividualProperties(
+			reportIndividual.getDemographics());
+		_id = StringUtil.get(reportIndividual.getId());
 		_individualSegmentIds = ListUtil.map(
-			individual.getSegmentIds(), String::valueOf);
+			reportIndividual.getSegmentIds(), String::valueOf);
 	}
 
 	public Map<String, String> getCustom() {

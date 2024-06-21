@@ -56,6 +56,7 @@ import com.liferay.osb.asah.common.entity.Segment;
 import com.liferay.osb.asah.common.model.Individual;
 import com.liferay.osb.asah.common.model.MetricType;
 import com.liferay.osb.asah.common.model.PageMetricType;
+import com.liferay.osb.asah.common.model.ReportIndividual;
 import com.liferay.osb.asah.common.model.ResultBag;
 import com.liferay.osb.asah.common.model.Sort;
 import com.liferay.osb.asah.common.model.TimeRange;
@@ -737,15 +738,16 @@ public class ReportRestController extends BaseRestController {
 			@RequestParam(defaultValue = "0") Integer page,
 			@RequestParam(defaultValue = "") String query) {
 
-		Page<Individual> individualPage =
-			_bqIndividualDog.searchBQIndividualPage(
-				channelId, page, query, _PAGE_SIZE);
+		Page<ReportIndividual> reportIndividulaPage =
+			_bqIndividualDog.searchReportIndividualPage(
+				channelId, page, query, null, _PAGE_SIZE);
 
 		ResultBag<ReportIndividualDTO> reportIndividualDTOResultBag =
 			new ResultBag<>(
 				ListUtil.map(
-					individualPage.getContent(), ReportIndividualDTO::new),
-				individualPage.getTotalElements());
+					reportIndividulaPage.getContent(),
+					ReportIndividualDTO::new),
+				reportIndividulaPage.getTotalElements());
 
 		return _toResultBagEntityModel(
 			_getLink(
@@ -807,15 +809,16 @@ public class ReportRestController extends BaseRestController {
 			@RequestParam(defaultValue = "0") Integer page,
 			@RequestParam(defaultValue = "") String query) {
 
-		Page<Individual> individualPage =
-			_bqIndividualDog.searchBQIndividualPage(
-				channelId, segmentId, page, query, _PAGE_SIZE);
+		Page<ReportIndividual> reportIndividualPage =
+			_bqIndividualDog.searchReportIndividualPage(
+				channelId, page, query, segmentId, _PAGE_SIZE);
 
 		ResultBag<ReportIndividualDTO> reportIndividualDTOResultBag =
 			new ResultBag<>(
 				ListUtil.map(
-					individualPage.getContent(), ReportIndividualDTO::new),
-				individualPage.getTotalElements());
+					reportIndividualPage.getContent(),
+					ReportIndividualDTO::new),
+				reportIndividualPage.getTotalElements());
 
 		return _toResultBagEntityModel(
 			_getLink(
