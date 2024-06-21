@@ -19,6 +19,7 @@ import com.liferay.osb.asah.common.repository.EventDefinitionRepository;
 import com.liferay.osb.asah.common.repository.executor.QueryExecutor;
 import com.liferay.osb.asah.common.repository.helper.DSLHelper;
 import com.liferay.osb.asah.common.util.BQSQLUtil;
+import com.liferay.osb.asah.common.util.SetUtil;
 
 import java.math.BigDecimal;
 
@@ -594,8 +595,19 @@ public class BQIndividualRepositoryImpl
 	@Override
 	public Optional<ReportIndividual> findReportIndividualById(String id) {
 		return _queryExecutor.queryForObject(
-			record -> new ReportIndividual(
-				new BQIndividual(record), (Set<Long>)record.get("segmentIds")),
+			record -> {
+				Object object = record.get("segmentIds");
+
+				Set<Long> segmentIds = new HashSet<>();
+
+				if (object instanceof List) {
+					segmentIds = SetUtil.map(
+						(List<BigDecimal>)object, BigDecimal::longValue);
+				}
+
+				return new ReportIndividual(
+					new BQIndividual(record), segmentIds);
+			},
 			_dslContext.select(
 				DSL.field(
 					"Individual.fields"
@@ -1159,8 +1171,19 @@ public class BQIndividualRepositoryImpl
 		}
 
 		return _queryExecutor.queryForList(
-			record -> new ReportIndividual(
-				new BQIndividual(record), (Set<Long>)record.get("segmentIds")),
+			record -> {
+				Object object = record.get("segmentIds");
+
+				Set<Long> segmentIds = new HashSet<>();
+
+				if (object instanceof List) {
+					segmentIds = SetUtil.map(
+						(List<BigDecimal>)object, BigDecimal::longValue);
+				}
+
+				return new ReportIndividual(
+					new BQIndividual(record), segmentIds);
+			},
 			_dslContext.select(
 				DSL.field(
 					"Individual.fields"
