@@ -112,6 +112,13 @@ public class BQIndividualDog {
 		return fetchBQIndividual(null, id);
 	}
 
+	public ReportIndividual fetchReportIndividual(String id) {
+		Optional<ReportIndividual> reportIndividualOptional =
+			_bqIndividualRepository.findReportIndividualById(id);
+
+		return reportIndividualOptional.orElse(null);
+	}
+
 	public Page<String> getBQIndividualFieldValuePage(
 		Long channelId, String filterString, String groupByField, int page,
 		int size) {
