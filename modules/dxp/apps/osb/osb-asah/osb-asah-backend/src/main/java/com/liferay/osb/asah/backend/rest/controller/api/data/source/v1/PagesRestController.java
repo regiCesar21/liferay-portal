@@ -268,7 +268,7 @@ public class PagesRestController extends BaseRestController {
 				pageMetricType,
 				new SearchQueryContext() {
 					{
-						setCanonicalUrl(canonicalUrl);
+						setAssetId(canonicalUrl);
 						setIncludeActiveSessions(Boolean.TRUE);
 						setIncludePrevious(Boolean.TRUE);
 						setInterval(interval);
