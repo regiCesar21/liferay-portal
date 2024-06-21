@@ -420,10 +420,22 @@ public class BQIndividualRepositoryImpl
 			)
 		);
 
-		Condition condition = _getQueryCondition(query);
+		List<Condition> conditions = new ArrayList<>();
+
+		conditions.add(_getQueryCondition(query));
+		conditions.add(
+			DSL.or(
+				DSL.field(
+					"Individual.suppressed"
+				).isNull(),
+				DSL.field(
+					"Individual.suppressed"
+				).notEqual(
+					Boolean.TRUE
+				)));
 
 		if (channelId != null) {
-			condition = condition.and(
+			conditions.add(
 				DSL.field(
 					"Individual.id"
 				).in(
@@ -446,7 +458,7 @@ public class BQIndividualRepositoryImpl
 		}
 
 		if (segmentId != null) {
-			condition = condition.and(
+			conditions.add(
 				DSL.exists(
 					_dslContext.select(
 					).from(
@@ -474,7 +486,7 @@ public class BQIndividualRepositoryImpl
 			);
 		}
 
-		return _queryExecutor.queryForLong(selectJoinStep.where(condition));
+		return _queryExecutor.queryForLong(selectJoinStep.where(conditions));
 	}
 
 	@Override
@@ -628,11 +640,21 @@ public class BQIndividualRepositoryImpl
 					DSL.field("Membership.individualId")
 				)
 			).where(
-				DSL.field(
-					"Individual.id"
-				).eq(
-					id
-				)
+				DSL.and(
+					DSL.field(
+						"Individual.id"
+					).eq(
+						id
+					),
+					DSL.or(
+						DSL.field(
+							"Individual.suppressed"
+						).isNull(),
+						DSL.field(
+							"Individual.suppressed"
+						).notEqual(
+							Boolean.TRUE
+						)))
 			));
 	}
 
@@ -1084,10 +1106,22 @@ public class BQIndividualRepositoryImpl
 		@Nullable Long channelId, Pageable pageable, @Nullable String query,
 		@Nullable Long segmentId) {
 
-		Condition condition = _getQueryCondition(query);
+		List<Condition> conditions = new ArrayList<>();
+
+		conditions.add(_getQueryCondition(query));
+		conditions.add(
+			DSL.or(
+				DSL.field(
+					"Individual.suppressed"
+				).isNull(),
+				DSL.field(
+					"Individual.suppressed"
+				).notEqual(
+					Boolean.TRUE
+				)));
 
 		if (channelId != null) {
-			condition = condition.and(
+			conditions.add(
 				DSL.field(
 					"Individual.id"
 				).in(
@@ -1110,7 +1144,7 @@ public class BQIndividualRepositoryImpl
 		}
 
 		if (segmentId != null) {
-			condition = condition.and(
+			conditions.add(
 				DSL.exists(
 					_dslContext.select(
 					).from(
@@ -1171,7 +1205,7 @@ public class BQIndividualRepositoryImpl
 					DSL.field("Membership.individualId")
 				)
 			).where(
-				condition
+				conditions
 			).limit(
 				pageable.getPageSize()
 			).offset(
