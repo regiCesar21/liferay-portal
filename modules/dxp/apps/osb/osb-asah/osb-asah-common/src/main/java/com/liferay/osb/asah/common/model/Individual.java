@@ -26,7 +26,7 @@ import org.springframework.util.CollectionUtils;
 /**
  * @author Rachael Koestartyo
  */
-public class Individual extends ReportIndividual {
+public class Individual extends BaseIndividual {
 
 	public Individual() {
 	}
@@ -137,8 +137,7 @@ public class Individual extends ReportIndividual {
 			Objects.equals(_roleIds, individual._roleIds) &&
 			Objects.equals(_teamIds, individual._teamIds) &&
 			Objects.equals(_userGroupIds, individual._userGroupIds) &&
-			Objects.equals(id, individual.id) &&
-			Objects.equals(segmentIds, individual.segmentIds)) {
+			Objects.equals(id, individual.id)) {
 
 			return true;
 		}
@@ -239,8 +238,7 @@ public class Individual extends ReportIndividual {
 		return Objects.hash(
 			_channelIds, _createDate, _emailAddressHashed, _firstActivityDate,
 			_firstEnrichmentDate, _groupIds, _lastEnrichmentDate, _modifiedDate,
-			_organizationIds, _roleIds, _teamIds, _userGroupIds, id,
-			segmentIds);
+			_organizationIds, _roleIds, _teamIds, _userGroupIds, id);
 	}
 
 	public void setActivitiesCount(Long activitiesCount) {
