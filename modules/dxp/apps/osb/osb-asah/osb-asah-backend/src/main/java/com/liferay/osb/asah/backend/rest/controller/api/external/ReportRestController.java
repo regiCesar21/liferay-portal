@@ -53,7 +53,6 @@ import com.liferay.osb.asah.common.entity.BQIdentityInterestScore;
 import com.liferay.osb.asah.common.entity.BQMembershipChange;
 import com.liferay.osb.asah.common.entity.DataExportTask;
 import com.liferay.osb.asah.common.entity.Segment;
-import com.liferay.osb.asah.common.model.Individual;
 import com.liferay.osb.asah.common.model.MetricType;
 import com.liferay.osb.asah.common.model.PageMetricType;
 import com.liferay.osb.asah.common.model.ReportIndividual;
@@ -724,11 +723,11 @@ public class ReportRestController extends BaseRestController {
 	public EntityModel<ReportIndividualDTO> getReportIndividualDTOEntityModel(
 		@PathVariable String individualId) {
 
-		Individual individual = _bqIndividualDog.fetchBQIndividual(
-			individualId);
+		ReportIndividual reportIndividual =
+			_bqIndividualDog.fetchReportIndividual(individualId);
 
 		return _toReportIndividualDTOEntityModel(
-			new ReportIndividualDTO(individual));
+			new ReportIndividualDTO(reportIndividual));
 	}
 
 	@GetMapping("/individuals")
