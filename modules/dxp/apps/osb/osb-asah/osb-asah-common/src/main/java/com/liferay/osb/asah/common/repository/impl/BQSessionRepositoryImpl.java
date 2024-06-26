@@ -87,9 +87,9 @@ public class BQSessionRepositoryImpl
 
 		if (_nestedFieldNamesMap.containsKey(fieldName)) {
 			selectJoinStep = selectJoinStep.crossJoin(
-				DSL.unnest(
-					DSL.field(
-						_nestedFieldNamesMap.get(fieldName), String[].class)
+				DSL.table(
+					String.format(
+						"UNNEST(%s)", _nestedFieldNamesMap.get(fieldName))
 				).as(
 					"value"
 				));
