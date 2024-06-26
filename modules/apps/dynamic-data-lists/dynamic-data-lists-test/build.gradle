@@ -1,4 +1,6 @@
 dependencies {
+	compileOnly project(":core:petra:petra-function")
+
 	testImplementation group: "com.liferay.portal", name: "com.liferay.portal.kernel", version: "default"
 	testImplementation project(":apps:dynamic-data-lists:dynamic-data-lists-api")
 	testImplementation project(":apps:dynamic-data-lists:dynamic-data-lists-service")
