@@ -5,6 +5,8 @@
 
 package com.liferay.portal.kernel.json;
 
+import com.liferay.petra.function.UnsafeSupplier;
+
 import java.io.Externalizable;
 import java.io.Writer;
 
@@ -77,6 +79,9 @@ public interface JSONObject extends Externalizable, JSONSerializable {
 	public JSONObject put(String key, Object value);
 
 	public JSONObject put(String key, String value);
+
+	public JSONObject put(
+		String key, UnsafeSupplier<Object, Exception> valueUnsafeSupplier);
 
 	public JSONObject putException(Exception exception);
 
