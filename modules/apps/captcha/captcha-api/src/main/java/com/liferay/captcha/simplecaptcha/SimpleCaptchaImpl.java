@@ -381,6 +381,32 @@ public class SimpleCaptchaImpl implements Captcha {
 		}
 	}
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
+	 */
+	@Deprecated
+	protected boolean isExceededMaxChallenges(
+		HttpServletRequest httpServletRequest) {
+
+		throw new UnsupportedOperationException();
+	}
+
+	/**
+	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
+	 */
+	@Deprecated
+	protected boolean isExceededMaxChallenges(Integer count) {
+		throw new UnsupportedOperationException();
+	}
+
+	/**
+	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
+	 */
+	@Deprecated
+	protected boolean isExceededMaxChallenges(PortletRequest portletRequest) {
+		throw new UnsupportedOperationException();
+	}
+
 	protected void setCaptchaConfiguration(
 		CaptchaConfiguration captchaConfiguration) {
 
