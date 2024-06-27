@@ -505,7 +505,7 @@ AUI.add(
 					}
 				},
 
-				_normalizeFieldData(item, record, normalized, field, update) {
+				_normalizeFieldData(item, record, normalized, field) {
 					var instance = this;
 
 					var type = item.type;
@@ -540,7 +540,7 @@ AUI.add(
 						fieldValue['value'] = value;
 					}
 
-					if (field && !update) {
+					if (field) {
 						if (!field['nestedFieldValues']) {
 							field['nestedFieldValues'] = [];
 						}
@@ -557,14 +557,13 @@ AUI.add(
 								nestedItem,
 								record,
 								normalized,
-								fieldValue,
-								update
+								fieldValue
 							);
 						});
 					}
 				},
 
-				_normalizeRecordData(record, update) {
+				_normalizeRecordData(record) {
 					var instance = this;
 
 					var structure = instance.get('structure');
@@ -580,8 +579,7 @@ AUI.add(
 							item,
 							record,
 							normalized,
-							null,
-							update
+							null
 						);
 					});
 
@@ -647,6 +645,8 @@ AUI.add(
 
 						var recordId = record.get('recordId');
 
+						var fieldsMap = instance._normalizeRecordData(record);
+
 						var recordIndex = data.indexOf(record);
 
 						if (recordId > 0) {
@@ -654,7 +654,7 @@ AUI.add(
 								recordId,
 								recordIndex,
 								recordsetId,
-								instance._normalizeRecordData(record, true),
+								fieldsMap,
 								false,
 								instance.get('portletNamespace'),
 								instance.get('updateRecordURL')
@@ -670,7 +670,7 @@ AUI.add(
 										});
 									}
 								},
-								instance._normalizeRecordData(record, false),
+								fieldsMap,
 								recordIndex,
 								instance.get('portletNamespace'),
 								recordsetId
