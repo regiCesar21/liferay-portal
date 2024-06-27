@@ -181,40 +181,40 @@ jacocoRootReport {
 						"**/exception/*Exception*",
 						"**/test/util/*"
 					])
-			})
+				})
+		}
+
+		reports {
+			csv.required = false
+			html.required = true
+			xml.required = true
+		}
 	}
 
-	reports {
-		csv.required = false
-		html.required = true
-		xml.required = true
-	}
-}
+	jacocoTestCoverageVerification {
+		classDirectories.from = files(javaSubprojects.sourceSets.main.output)
 
-jacocoTestCoverageVerification {
-	classDirectories.from = files(javaSubprojects.sourceSets.main.output)
+		Set<JacocoTaskExtension> testJacocoTaskExtensions = javaSubprojects.test.jacoco.findAll {
+			it.enabled
+		}
 
-	Set<JacocoTaskExtension> testJacocoTaskExtensions = javaSubprojects.test.jacoco.findAll {
-		it.enabled
-	}
+		Set<JacocoTaskExtension> testIntegrationJacocoTaskExtensions = javaSubprojects.testIntegration.jacoco.findAll {
+			it.enabled
+		}
 
-	Set<JacocoTaskExtension> testIntegrationJacocoTaskExtensions = javaSubprojects.testIntegration.jacoco.findAll {
-		it.enabled
-	}
+		executionData.from = files(testJacocoTaskExtensions.destinationFile, testIntegrationJacocoTaskExtensions.destinationFile)
 
-	executionData.from = files(testJacocoTaskExtensions.destinationFile, testIntegrationJacocoTaskExtensions.destinationFile)
-
-	violationRules {
-		rule {
-			limit {
-				counter = 'LINE'
-				minimum = 0.4200
-				value = 'COVEREDRATIO'
+		violationRules {
+			rule {
+				limit {
+					counter = 'LINE'
+					minimum = 0.4200
+					value = 'COVEREDRATIO'
+				}
 			}
 		}
 	}
-}
 
-tasks.coveralls {
-	dependsOn jacocoRootReport
-}
+	tasks.coveralls {
+		dependsOn jacocoRootReport
+	}
