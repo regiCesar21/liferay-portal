@@ -5,7 +5,12 @@
 
 package com.liferay.osb.asah.common.spring.http.exception;
 
+import com.liferay.osb.asah.common.prometheus.PrometheusUtil;
+
+import io.prometheus.client.Counter;
+
 import java.util.Map;
+import java.util.Objects;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -46,15 +51,23 @@ public class OSBAsahErrorAttributes extends DefaultErrorAttributes {
 
 		ServletWebRequest servletWebRequest = (ServletWebRequest)webRequest;
 
-		HttpServletRequest httpServletRequest = servletWebRequest.getRequest();
+		String message = getMessage(webRequest, throwable);
 
-		_log.error(
-			String.format(
-				"Unable to process the request with origin %s to path %s " +
-					"with error %s",
-				_getOrigin(httpServletRequest), _getPath(httpServletRequest),
-				getMessage(webRequest, throwable)),
-			throwable);
+		if (Objects.equals(message, "INVALID_PROJECT_ID")) {
+			_invalidProjectIdRequestCounter.inc();
+		}
+		else {
+			HttpServletRequest httpServletRequest =
+				servletWebRequest.getRequest();
+
+			_log.error(
+				String.format(
+					"Unable to process the request with origin %s to path %s " +
+						"with error %s",
+					_getOrigin(httpServletRequest),
+					_getPath(httpServletRequest), message),
+				throwable);
+		}
 
 		OSBAsahError osbAsahError = new OSBAsahError(
 			_environment.getActiveProfiles());
@@ -105,6 +118,11 @@ public class OSBAsahErrorAttributes extends DefaultErrorAttributes {
 
 	private static final Log _log = LogFactory.getLog(
 		OSBAsahErrorAttributes.class);
+
+	private static final Counter _invalidProjectIdRequestCounter =
+		PrometheusUtil.counter(
+			"invalid_project_id_request_count",
+			"The number requests with invalid project ID header");
 
 	@Autowired
 	private Environment _environment;
