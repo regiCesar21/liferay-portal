@@ -12,6 +12,7 @@ import com.liferay.osb.asah.backend.model.AssetType;
 import com.liferay.osb.asah.backend.model.BlogMetricType;
 import com.liferay.osb.asah.backend.model.Individual;
 import com.liferay.osb.asah.common.entity.DataSource;
+import com.liferay.osb.asah.common.model.ReportIndividual;
 import com.liferay.osb.asah.common.model.ResultBag;
 import com.liferay.osb.asah.common.model.TimeRange;
 import com.liferay.osb.asah.common.repository.DataSourceRepository;
@@ -19,6 +20,10 @@ import com.liferay.osb.asah.test.util.annotation.BQSQLResource;
 import com.liferay.osb.asah.test.util.faro.FaroInfoTestUtil;
 import com.liferay.osb.asah.test.util.spring.OSBAsahTestExecutionListenersContext;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.HashSet;
 import java.util.List;
 
 import org.junit.jupiter.api.Assertions;
@@ -26,6 +31,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 
 /**
  * @author André Miranda
@@ -42,6 +48,81 @@ public class ReportIndividualDogTest
 
 		// TODO Add BQFieldMapping with _FIELD_NAMES
 
+	}
+
+	@BQSQLResource(resourcePath = "test_search_report_individual_page.sql")
+	@Test
+	public void testFetchReportIndividual() {
+		ReportIndividual expectedReportIndividual = new ReportIndividual();
+
+		expectedReportIndividual.setId("1");
+		expectedReportIndividual.setSegmentIds(
+			new HashSet<>(Arrays.asList(11111L, 22222L, 33333L)));
+
+		Assertions.assertEquals(
+			expectedReportIndividual,
+			_reportIndividualDog.fetchReportIndividual("1"));
+
+		Assertions.assertNull(_reportIndividualDog.fetchReportIndividual("2"));
+		Assertions.assertNull(_reportIndividualDog.fetchReportIndividual("4"));
+		Assertions.assertNull(_reportIndividualDog.fetchReportIndividual("6"));
+		Assertions.assertNull(_reportIndividualDog.fetchReportIndividual("8"));
+		Assertions.assertNull(_reportIndividualDog.fetchReportIndividual("10"));
+		Assertions.assertNull(
+			_reportIndividualDog.fetchReportIndividual("abc"));
+	}
+
+	@BQSQLResource(resourcePath = "test_search_report_individual_page.sql")
+	@Test
+	public void testSearchReportIndividualPage() {
+		Page<ReportIndividual> reportIndividualPage =
+			_reportIndividualDog.searchReportIndividualPage(
+				1L, 0, null, null, 2);
+
+		Assertions.assertEquals(8, reportIndividualPage.getTotalPages());
+		Assertions.assertEquals(15, reportIndividualPage.getTotalElements());
+
+		ReportIndividual reportIndividual1 = new ReportIndividual();
+
+		reportIndividual1.setId("1");
+		reportIndividual1.setSegmentIds(
+			new HashSet<>(Arrays.asList(11111L, 22222L, 33333L)));
+
+		ReportIndividual reportIndividual2 = new ReportIndividual();
+
+		reportIndividual2.setId("3");
+		reportIndividual2.setSegmentIds(Collections.singleton(11111L));
+
+		Assertions.assertEquals(
+			new ArrayList<ReportIndividual>() {
+				{
+					add(reportIndividual1);
+					add(reportIndividual2);
+				}
+			},
+			reportIndividualPage.getContent());
+
+		reportIndividualPage = _reportIndividualDog.searchReportIndividualPage(
+			1L, 1, null, null, 2);
+
+		ReportIndividual reportIndividual3 = new ReportIndividual();
+
+		reportIndividual3.setId("5");
+		reportIndividual3.setSegmentIds(Collections.emptySet());
+
+		ReportIndividual reportIndividual4 = new ReportIndividual();
+
+		reportIndividual4.setId("7");
+		reportIndividual4.setSegmentIds(Collections.emptySet());
+
+		Assertions.assertEquals(
+			new ArrayList<ReportIndividual>() {
+				{
+					add(reportIndividual3);
+					add(reportIndividual4);
+				}
+			},
+			reportIndividualPage.getContent());
 	}
 
 	@BQSQLResource(resourcePath = "test_report_individual_dog.sql")
