@@ -483,13 +483,14 @@ public class ContentPageEditorDisplayContext {
 				() -> {
 					Layout layout = themeDisplay.getLayout();
 
+					Theme theme = layout.getTheme();
+
 					LayoutSet layoutSet =
 						LayoutSetLocalServiceUtil.fetchLayoutSet(
 							themeDisplay.getSiteGroupId(), false);
 
-					if (layout.isInheritLookAndFeel() ||
-						Objects.equals(
-							layout.getThemeId(), layoutSet.getThemeId())) {
+					if (Objects.equals(
+							theme.getThemeId(), layoutSet.getThemeId())) {
 
 						return true;
 					}
