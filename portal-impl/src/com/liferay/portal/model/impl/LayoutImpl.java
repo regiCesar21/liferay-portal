@@ -760,6 +760,13 @@ public class LayoutImpl extends LayoutBaseImpl {
 	@Override
 	public Theme getTheme() throws PortalException {
 		if (!isInheritLookAndFeel()) {
+			Layout masterLayout = _getMasterLayout();
+
+			if (masterLayout != null) {
+				return ThemeLocalServiceUtil.getTheme(
+					masterLayout.getCompanyId(), masterLayout.getThemeId());
+			}
+
 			return ThemeLocalServiceUtil.getTheme(getCompanyId(), getThemeId());
 		}
 
@@ -1035,6 +1042,12 @@ public class LayoutImpl extends LayoutBaseImpl {
 	 */
 	@Override
 	public boolean isInheritLookAndFeel() {
+		Layout masterLayout = _getMasterLayout();
+
+		if (masterLayout != null) {
+			return masterLayout.isInheritLookAndFeel();
+		}
+
 		if (Validator.isNull(getThemeId()) ||
 			Validator.isNull(getColorSchemeId())) {
 
