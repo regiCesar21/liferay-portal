@@ -14,6 +14,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.liferay.osb.asah.backend.dog.HistogramDog;
 import com.liferay.osb.asah.backend.dog.MetricDog;
 import com.liferay.osb.asah.backend.dog.MetricTypeDog;
+import com.liferay.osb.asah.backend.dog.ReportIndividualDog;
 import com.liferay.osb.asah.backend.dog.SegmentMetricDog;
 import com.liferay.osb.asah.backend.dog.UserDog;
 import com.liferay.osb.asah.backend.dog.helper.SearchQueryContext;
@@ -44,7 +45,6 @@ import com.liferay.osb.asah.common.date.DateUtil;
 import com.liferay.osb.asah.common.dog.BQEventDog;
 import com.liferay.osb.asah.common.dog.BQIdentityDog;
 import com.liferay.osb.asah.common.dog.BQIdentityInterestScoreDog;
-import com.liferay.osb.asah.common.dog.BQIndividualDog;
 import com.liferay.osb.asah.common.dog.BQMembershipChangeDog;
 import com.liferay.osb.asah.common.dog.DataExportTaskDog;
 import com.liferay.osb.asah.common.dog.SegmentDog;
@@ -724,7 +724,7 @@ public class ReportRestController extends BaseRestController {
 		@PathVariable String individualId) {
 
 		ReportIndividual reportIndividual =
-			_bqIndividualDog.fetchReportIndividual(individualId);
+			_reportIndividualDog.fetchReportIndividual(individualId);
 
 		return _toReportIndividualDTOEntityModel(
 			new ReportIndividualDTO(reportIndividual));
@@ -738,7 +738,7 @@ public class ReportRestController extends BaseRestController {
 			@RequestParam(defaultValue = "") String query) {
 
 		Page<ReportIndividual> reportIndividulaPage =
-			_bqIndividualDog.searchReportIndividualPage(
+			_reportIndividualDog.searchReportIndividualPage(
 				channelId, page, query, null, _PAGE_SIZE);
 
 		ResultBag<ReportIndividualDTO> reportIndividualDTOResultBag =
@@ -809,7 +809,7 @@ public class ReportRestController extends BaseRestController {
 			@RequestParam(defaultValue = "") String query) {
 
 		Page<ReportIndividual> reportIndividualPage =
-			_bqIndividualDog.searchReportIndividualPage(
+			_reportIndividualDog.searchReportIndividualPage(
 				channelId, page, query, segmentId, _PAGE_SIZE);
 
 		ResultBag<ReportIndividualDTO> reportIndividualDTOResultBag =
@@ -1385,9 +1385,6 @@ public class ReportRestController extends BaseRestController {
 	private BQIdentityInterestScoreDog _bqIdentityInterestScoreDog;
 
 	@Autowired
-	private BQIndividualDog _bqIndividualDog;
-
-	@Autowired
 	private BQMembershipChangeDog _bqMembershipChangeDog;
 
 	@Autowired
@@ -1407,6 +1404,9 @@ public class ReportRestController extends BaseRestController {
 
 	@Autowired
 	private ObjectMapper _objectMapper;
+
+	@Autowired
+	private ReportIndividualDog _reportIndividualDog;
 
 	@Autowired
 	private SegmentDog _segmentDog;
