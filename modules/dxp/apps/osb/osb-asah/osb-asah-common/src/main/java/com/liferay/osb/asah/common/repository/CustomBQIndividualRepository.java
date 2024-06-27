@@ -8,7 +8,6 @@ package com.liferay.osb.asah.common.repository;
 import com.liferay.osb.asah.common.entity.BQIndividual;
 import com.liferay.osb.asah.common.model.Distribution;
 import com.liferay.osb.asah.common.model.Individual;
-import com.liferay.osb.asah.common.model.ReportIndividual;
 
 import java.util.Date;
 import java.util.List;
@@ -48,18 +47,12 @@ public interface CustomBQIndividualRepository {
 		@Nullable Long channelId, String fieldName,
 		@Nullable String filterString);
 
-	public long countReportIndividuals(
-		@Nullable Long channelId, @Nullable String query,
-		@Nullable Long segmentId);
-
 	public void deleteAll();
 
 	public Optional<Individual> findByChannelIdAndId(
 		@Nullable Long channelId, String id);
 
 	public Optional<BQIndividual> findByEmailAddress(String emailAddresses);
-
-	public Optional<ReportIndividual> findReportIndividualById(String id);
 
 	public List<Distribution> getIndividualDistributions(
 		@Nullable Long channelId, String fieldName, String fieldType,
@@ -86,10 +79,6 @@ public interface CustomBQIndividualRepository {
 	public List<String> searchIndividualFieldValuesDemographics(
 		@Nullable Long channelId, String fieldName,
 		@Nullable String filterString, Pageable pageable);
-
-	public List<ReportIndividual> searchReportIndividuals(
-		@Nullable Long channelId, Pageable pageable, @Nullable String query,
-		@Nullable Long segmentId);
 
 	public void updateSuppressed(String id, Boolean suppressed);
 

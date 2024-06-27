@@ -11,7 +11,6 @@ import com.liferay.osb.asah.common.entity.DataSource;
 import com.liferay.osb.asah.common.model.Distribution;
 import com.liferay.osb.asah.common.model.Field;
 import com.liferay.osb.asah.common.model.Individual;
-import com.liferay.osb.asah.common.model.ReportIndividual;
 import com.liferay.osb.asah.common.model.Sort;
 import com.liferay.osb.asah.common.repository.BQFieldMappingRepository;
 import com.liferay.osb.asah.common.repository.BQIdentityRepository;
@@ -110,13 +109,6 @@ public class BQIndividualDog {
 
 	public Individual fetchBQIndividual(String id) {
 		return fetchBQIndividual(null, id);
-	}
-
-	public ReportIndividual fetchReportIndividual(String id) {
-		Optional<ReportIndividual> reportIndividualOptional =
-			_bqIndividualRepository.findReportIndividualById(id);
-
-		return reportIndividualOptional.orElse(null);
 	}
 
 	public Page<String> getBQIndividualFieldValuePage(
@@ -227,18 +219,6 @@ public class BQIndividualDog {
 				accountId, channelId, dataSourceId, filterString,
 				includeAnonymousUsers, interestName, notSegmentId, query,
 				segmentId));
-	}
-
-	public Page<ReportIndividual> searchReportIndividualPage(
-		@Nullable Long channelId, int page, @Nullable String query,
-		@Nullable Long segmentId, int size) {
-
-		return PageableExecutionUtils.getPage(
-			_bqIndividualRepository.searchReportIndividuals(
-				channelId, PageRequest.of(page, size), query, segmentId),
-			PageRequest.of(page, size),
-			() -> _bqIndividualRepository.countReportIndividuals(
-				channelId, query, segmentId));
 	}
 
 	public void suppress(String id) {
