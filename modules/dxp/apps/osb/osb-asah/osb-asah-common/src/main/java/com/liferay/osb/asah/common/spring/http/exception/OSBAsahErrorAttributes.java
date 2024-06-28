@@ -122,7 +122,7 @@ public class OSBAsahErrorAttributes extends DefaultErrorAttributes {
 	private static final Counter _invalidProjectIdRequestCounter =
 		PrometheusUtil.counter(
 			"invalid_project_id_request_count",
-			"The number requests with invalid project ID header");
+			"The number of requests with invalid project ID header");
 
 	@Autowired
 	private Environment _environment;
