@@ -28,4 +28,12 @@ public interface MimeTypes {
 
 	public Set<String> getExtensions(String contentType);
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x)
+	 */
+	@Deprecated
+	public default boolean isWebImage(String mimeType) {
+		throw new UnsupportedOperationException();
+	}
+
 }

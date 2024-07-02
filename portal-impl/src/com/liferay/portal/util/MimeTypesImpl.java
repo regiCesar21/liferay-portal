@@ -144,6 +144,19 @@ public class MimeTypesImpl implements MimeTypes, MimeTypesReaderMetKeys {
 		return extensions;
 	}
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x)
+	 */
+	@Deprecated
+	@Override
+	public boolean isWebImage(String mimeType) {
+		throw new UnsupportedOperationException();
+	}
+
+	protected String getCustomContentType(String extension) {
+		throw new UnsupportedOperationException();
+	}
+
 	protected void read(
 			InputStream inputStream, Map<String, Set<String>> extensionsMap)
 		throws Exception {

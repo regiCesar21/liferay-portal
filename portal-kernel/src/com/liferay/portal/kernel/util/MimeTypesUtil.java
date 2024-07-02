@@ -101,6 +101,14 @@ public class MimeTypesUtil {
 		return _mimeTypes;
 	}
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x)
+	 */
+	@Deprecated
+	public static boolean isWebImage(String mimeType) {
+		throw new UnsupportedOperationException();
+	}
+
 	public void setMimeTypes(MimeTypes mimeTypes) {
 		_mimeTypes = mimeTypes;
 	}
