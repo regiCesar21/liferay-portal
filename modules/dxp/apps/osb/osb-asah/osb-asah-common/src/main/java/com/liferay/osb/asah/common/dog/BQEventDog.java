@@ -10,7 +10,6 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.liferay.osb.asah.common.date.dog.TimeZoneDog;
 import com.liferay.osb.asah.common.dog.util.SortUtil;
 import com.liferay.osb.asah.common.entity.BQEvent;
-import com.liferay.osb.asah.common.entity.BQEventProperty;
 import com.liferay.osb.asah.common.entity.BQSession;
 import com.liferay.osb.asah.common.entity.EventAttributeDefinition;
 import com.liferay.osb.asah.common.entity.Preference;
@@ -22,7 +21,6 @@ import com.liferay.osb.asah.common.model.RecentVisitSite;
 import com.liferay.osb.asah.common.model.SearchKeyword;
 import com.liferay.osb.asah.common.model.Sort;
 import com.liferay.osb.asah.common.model.TimeRange;
-import com.liferay.osb.asah.common.repository.BQEventPropertyRepository;
 import com.liferay.osb.asah.common.repository.BQEventRepository;
 import com.liferay.osb.asah.common.spring.annotation.VisibleForTestingOnly;
 import com.liferay.osb.asah.common.util.StringUtil;
@@ -100,26 +98,14 @@ public class BQEventDog {
 			String variantId)
 		throws Exception {
 
-		BQEvent bqEvent = _bqEventRepository.insert(
+		return _bqEventRepository.insert(
 			new BQEvent(
 				applicationId, browserName, canonicalUrl, channelId, city,
 				contentLanguageId, context, country, createDate, dataSourceId,
 				description, deviceType, emailAddressHashed, eventDate, eventId,
-				_objectMapper.writeValueAsString(properties), experienceId, id,
-				keywords, languageId, platformName, projectTimeZoneId,
-				properties, referrer, region, sessionId, timezoneOffset, title,
-				url, userId, variantId));
-
-		for (BQEvent.Property property : properties) {
-			BQEventProperty bqEventProperty = new BQEventProperty(
-				null, property.getName(), property.getValue());
-
-			bqEventProperty.setId(bqEvent.getId());
-
-			_bqEventPropertyRepository.insert(bqEventProperty);
-		}
-
-		return bqEvent;
+				experienceId, id, keywords, languageId, platformName,
+				projectTimeZoneId, properties, referrer, region, sessionId,
+				timezoneOffset, title, url, userId, variantId));
 	}
 
 	public Integer countBQEvents(
@@ -403,9 +389,6 @@ public class BQEventDog {
 
 		return searchQueryStrings;
 	}
-
-	@Autowired
-	private BQEventPropertyRepository _bqEventPropertyRepository;
 
 	@Autowired
 	private BQEventRepository _bqEventRepository;

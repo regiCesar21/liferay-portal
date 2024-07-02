@@ -30,11 +30,11 @@ public class BQEvent {
 		Long channelId, String city, String contentLanguageId, String context,
 		String country, Date createDate, Long dataSourceId, String description,
 		String deviceType, String emailAddressHashed, Date eventDate,
-		String eventId, String eventProperties, String experienceId, String id,
-		String keywords, String languageId, String platformName,
-		String projectTimeZoneId, List<Property> properties, String referrer,
-		String region, String sessionId, String timezoneOffset, String title,
-		String url, String userId, String variantId) {
+		String eventId, String experienceId, String id, String keywords,
+		String languageId, String platformName, String projectTimeZoneId,
+		List<Property> properties, String referrer, String region,
+		String sessionId, String timezoneOffset, String title, String url,
+		String userId, String variantId) {
 
 		_applicationId = applicationId;
 		_browserName = browserName;
@@ -55,7 +55,6 @@ public class BQEvent {
 		setEventDate(eventDate);
 
 		_eventId = eventId;
-		_eventProperties = eventProperties;
 		_experienceId = experienceId;
 		_id = id;
 		_keywords = keywords;
@@ -102,7 +101,6 @@ public class BQEvent {
 			Objects.equals(_emailAddressHashed, bqEvent._emailAddressHashed) &&
 			Objects.equals(_eventDate, bqEvent._eventDate) &&
 			Objects.equals(_eventId, bqEvent._eventId) &&
-			Objects.equals(_eventProperties, bqEvent._eventProperties) &&
 			Objects.equals(_experienceId, bqEvent._experienceId) &&
 			Objects.equals(_id, bqEvent._id) &&
 			Objects.equals(_keywords, bqEvent._keywords) &&
@@ -219,11 +217,6 @@ public class BQEvent {
 	}
 
 	@BigQueryColumn
-	public String getEventProperties() {
-		return _eventProperties;
-	}
-
-	@BigQueryColumn
 	public String getExperienceId() {
 		return _experienceId;
 	}
@@ -309,10 +302,10 @@ public class BQEvent {
 			_applicationId, _assetId, _assetTitle, _browserName, _canonicalUrl,
 			_channelId, _city, _contentLanguageId, _context, _country,
 			_createDate, _dataSourceId, _description, _deviceType,
-			_emailAddressHashed, _eventDate, _eventId, _eventProperties,
-			_experienceId, _experimentId, _id, _keywords, _languageId,
-			_platformName, _projectTimeZoneId, _properties, _referrer, _region,
-			_sessionId, _timezoneOffset, _title, _url, _userId, _variantId);
+			_emailAddressHashed, _eventDate, _eventId, _experienceId,
+			_experimentId, _id, _keywords, _languageId, _platformName,
+			_projectTimeZoneId, _properties, _referrer, _region, _sessionId,
+			_timezoneOffset, _title, _url, _userId, _variantId);
 	}
 
 	public void setApplicationId(String applicationId) {
@@ -391,10 +384,6 @@ public class BQEvent {
 
 	public void setEventId(String eventId) {
 		_eventId = eventId;
-	}
-
-	public void setEventProperties(String eventProperties) {
-		_eventProperties = eventProperties;
 	}
 
 	public void setExperienceId(String experienceId) {
@@ -511,7 +500,6 @@ public class BQEvent {
 	private String _emailAddressHashed;
 	private Date _eventDate;
 	private String _eventId;
-	private String _eventProperties;
 	private String _experienceId;
 	private Long _experimentId;
 	private String _id;

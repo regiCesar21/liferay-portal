@@ -636,10 +636,6 @@ public class EventIngestionPipeline {
 
 		tableRow.set("eventDate", analyticsEvent.eventDate);
 		tableRow.set("eventId", analyticsEvent.eventId);
-		tableRow.set(
-			"eventProperties",
-			ObjectMapperUtil.writeValueAsString(
-				analyticsEvent.eventProperties));
 		tableRow.set("experienceId", context.get("experienceId"));
 
 		String experimentId = context.get("experimentId");

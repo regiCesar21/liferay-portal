@@ -2,7 +2,6 @@ BEGIN TRANSACTION;
 
 DELETE FROM BlogDaily WHERE channelId IN ( ${channel_ids} ) AND eventDate < LEAST(${end_date}, TIMESTAMP_SUB(CURRENT_TIMESTAMP(), INTERVAL 90 MINUTE));
 DELETE FROM BQEvent WHERE channelId IN ( ${channel_ids} ) AND eventDate < LEAST(${end_date}, TIMESTAMP_SUB(CURRENT_TIMESTAMP(), INTERVAL 90 MINUTE));
-DELETE FROM BQEventProperty WHERE channelId IN ( ${channel_ids} ) AND eventDate < LEAST(${end_date}, TIMESTAMP_SUB(CURRENT_TIMESTAMP(), INTERVAL 90 MINUTE));
 DELETE FROM BQIdentityActivitySummary WHERE channelId IN ( ${channel_ids} ) AND firstActivityDate < LEAST(${end_date}, TIMESTAMP_SUB(CURRENT_TIMESTAMP(), INTERVAL 90 MINUTE));
 DELETE FROM BQIdentityInterestPage WHERE channelId IN ( ${channel_ids} );
 DELETE FROM BQIdentityInterestScore WHERE channelId IN ( ${channel_ids} ) AND recordedDate < DATE(LEAST(${end_date}, TIMESTAMP_SUB(CURRENT_TIMESTAMP(), INTERVAL 90 MINUTE)));

@@ -10,7 +10,6 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 import com.liferay.osb.asah.common.date.DateUtil;
 import com.liferay.osb.asah.common.entity.BQEvent;
-import com.liferay.osb.asah.common.entity.BQEventProperty;
 import com.liferay.osb.asah.common.entity.BQSession;
 import com.liferay.osb.asah.common.messaging.Channel;
 import com.liferay.osb.asah.common.messaging.MessageBus;
@@ -18,7 +17,6 @@ import com.liferay.osb.asah.common.messaging.MessageSubscriber;
 import com.liferay.osb.asah.common.messaging.model.Message;
 import com.liferay.osb.asah.common.model.Acquisition;
 import com.liferay.osb.asah.common.model.AnalyticsEvent;
-import com.liferay.osb.asah.common.repository.BQEventPropertyRepository;
 import com.liferay.osb.asah.common.repository.BQEventRepository;
 import com.liferay.osb.asah.common.repository.BQSessionRepository;
 import com.liferay.osb.asah.common.util.MapUtil;
@@ -392,7 +390,6 @@ public class AnalyticsEventsIngestionNanite {
 			}
 
 			_writeBQEvent(analyticsEvent, sessionContext);
-			_writeBQEventProperties(analyticsEvent);
 		}
 		catch (Exception exception) {
 			_log.error(
@@ -498,16 +495,6 @@ public class AnalyticsEventsIngestionNanite {
 
 		bqEvent.setEventDate(analyticsEvent.getEventDate());
 		bqEvent.setEventId(analyticsEvent.getEventId());
-
-		try {
-			bqEvent.setEventProperties(
-				_objectMapper.writeValueAsString(
-					analyticsEvent.getEventProperties()));
-		}
-		catch (JsonProcessingException jsonProcessingException) {
-			throw new RuntimeException(jsonProcessingException);
-		}
-
 		bqEvent.setExperienceId(context.get("experienceId"));
 
 		String experimentId = context.get("experimentId");
@@ -533,25 +520,6 @@ public class AnalyticsEventsIngestionNanite {
 		bqEvent.setVariantId(context.get("variantId"));
 
 		_bqEventRepository.insert(bqEvent);
-	}
-
-	private void _writeBQEventProperties(AnalyticsEvent analyticsEvent) {
-		Map<String, String> eventProperties =
-			analyticsEvent.getEventProperties();
-
-		for (Map.Entry<String, String> entry : eventProperties.entrySet()) {
-			BQEventProperty bqEventProperty = new BQEventProperty();
-
-			bqEventProperty.setChannelId(
-				Long.valueOf(analyticsEvent.getChannelId()));
-			bqEventProperty.setEventDate(analyticsEvent.getEventDate());
-			bqEventProperty.setId(analyticsEvent.getId());
-			bqEventProperty.setName(entry.getKey());
-			bqEventProperty.setProjectId(analyticsEvent.getProjectId());
-			bqEventProperty.setValue(entry.getValue());
-
-			_bqEventPropertyRepository.insert(bqEventProperty);
-		}
 	}
 
 	private void _writeBQSession(SessionContext sessionContext) {
@@ -669,9 +637,6 @@ public class AnalyticsEventsIngestionNanite {
 
 	@Value("${session.window.allowed.lateness:1}")
 	private long _allowedLateness;
-
-	@Autowired
-	private BQEventPropertyRepository _bqEventPropertyRepository;
 
 	@Autowired
 	private BQEventRepository _bqEventRepository;
