@@ -2,7 +2,7 @@ INSERT INTO BlogDaily (assetId, channelId, eventDate, views) VALUES ('e131fabc',
 
 INSERT INTO DocumentLibraryDaily (assetId, canonicalUrl, channelId, eventDate, previews) VALUES ('e131fabc', 'https://www.beryl.com/delivery', 1, DATETIME_TRUNC(timestamp '${today-6d}', HOUR), 1);
 
-INSERT INTO Event (applicationId, channelId, eventDate, eventId, id, sessionId, userId) VALUES ('CustomEvent', 1, '2021-05-14', 'testEvent1', '1', '366909399944213421', '1');
+INSERT INTO Event (applicationId, channelId, eventDate, eventId, id, properties, sessionId, userId) VALUES ('CustomEvent', 1, '2021-05-14', 'testEvent1', '1', ARRAY<STRUCT<name STRING, value STRING>> [], '366909399944213421', '1');
 
 INSERT INTO FormDaily (assetId, browserName, channelId, eventDate, views) VALUES ('e131fabc', 'Chrome', 1, DATETIME_TRUNC(TIMESTAMP '${now-5d}', HOUR), 2);
 

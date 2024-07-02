@@ -1,4 +1,4 @@
-INSERT INTO Event (applicationId, assetId, assetTitle, canonicalUrl, channelId, dataSourceId, eventDate, eventId, title) VALUES ('Form', '5678', 'Title', 'http://liferay.com', 1, 123456789, timestamp '${now}', 'formViewed', 'Liferay');
+INSERT INTO Event (applicationId, assetId, assetTitle, canonicalUrl, channelId, dataSourceId, eventDate, eventId, properties, title) VALUES ('Form', '5678', 'Title', 'http://liferay.com', 1, 123456789, timestamp '${now}', 'formViewed', ARRAY<STRUCT<name STRING, value STRING>> [], 'Liferay');
 
 INSERT INTO `Group` (dataSourceId, groupId, id, modifiedDate, name) VALUES (123456789, 5632478, 'c4f359787171fadfbcb37c96c324254260e0d164d03dd3384bd0d8eee6976cf5', timestamp '${now}', 'Group 1');
 

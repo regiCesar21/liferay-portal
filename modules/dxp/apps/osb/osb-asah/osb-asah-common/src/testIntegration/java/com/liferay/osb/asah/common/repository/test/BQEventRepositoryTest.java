@@ -39,14 +39,19 @@ import java.time.ZonedDateTime;
 import java.time.temporal.ChronoUnit;
 
 import java.util.Arrays;
+import java.util.Calendar;
 import java.util.Collection;
 import java.util.Collections;
+import java.util.Date;
+import java.util.GregorianCalendar;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 import java.util.Set;
+import java.util.TimeZone;
+import java.util.TreeMap;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -255,6 +260,42 @@ public class BQEventRepositoryTest
 				DateUtil.toUTCDate(LocalDateTime.of(2021, 6, 1, 23, 59)),
 				DateUtil.toUTCDate(LocalDateTime.of(2021, 5, 10, 0, 0)),
 				"America/Los_Angeles"));
+	}
+
+	@BQSQLResource(resourcePath = "test_bq_event_properties_bq.sql")
+	@SQLResource(resourcePath = "test_bq_event_properties.sql")
+	@Test
+	public void testFindBQEventPropertyValuesByEventAttributeDefinitionId() {
+		Date date = DateUtil.newDate();
+
+		Assertions.assertEquals(
+			new TreeMap<String, Date>() {
+				{
+					put("Windshield Wipers", _getExpectedDate(date, -1));
+
+					put("Wheels", _getExpectedDate(date, -2));
+
+					put("Plates", _getExpectedDate(date, -3));
+
+					put("Apples", _getExpectedDate(date, -4));
+
+					put("Books", _getExpectedDate(date, -6));
+				}
+			},
+			_bqEventRepository.
+				findBQEventPropertyValuesByEventAttributeDefinitionName(
+					"itemName", 5));
+	}
+
+	@BQSQLResource(resourcePath = "test_bq_event_properties_1_bq.sql")
+	@SQLResource(resourcePath = "test_bq_event_properties_1.sql")
+	@Test
+	public void testFindBQEventPropertyValuesByEventAttributeDefinitionIdNoMatchingValues() {
+		Assertions.assertEquals(
+			Collections.emptyMap(),
+			_bqEventRepository.
+				findBQEventPropertyValuesByEventAttributeDefinitionName(
+					"itemName", 10));
 	}
 
 	@BQSQLResource(
@@ -1230,6 +1271,44 @@ public class BQEventRepositoryTest
 		Assertions.assertEquals(1, bqEvents.size(), bqEvents.toString());
 	}
 
+	@BQSQLResource(resourcePath = "test_bq_event_properties_2_bq.sql")
+	@SQLResource(resourcePath = "test_bq_event_properties_2.sql")
+	@Test
+	public void testSearchValues() {
+		List<String> values = _bqEventRepository.searchPropertyValues(
+			1L, "test", "test", "Attribute Value", PageRequest.of(0, 100));
+
+		Assertions.assertEquals(4, values.size());
+
+		for (String value :
+				Arrays.asList(
+					"event attribute value 4", "event attribute value 3",
+					"event attribute value 2", "event attribute value 1")) {
+
+			Assertions.assertTrue(values.contains(value));
+		}
+
+		values = _bqEventRepository.searchPropertyValues(
+			1L, "pageTitle", "test", "Test", PageRequest.of(0, 100));
+
+		Assertions.assertEquals(1, values.size());
+
+		values = _bqEventRepository.searchPropertyValues(
+			1L, "test", "test", "Attribute Value", PageRequest.of(0, 3));
+
+		Assertions.assertEquals(3, values.size());
+
+		values = _bqEventRepository.searchPropertyValues(
+			1L, "test", "test", "Attribute Value", PageRequest.of(1, 3));
+
+		Assertions.assertEquals(1, values.size());
+
+		Assertions.assertEquals(
+			4,
+			_bqEventRepository.countPropertyValues(
+				1L, "test", "test", "Attribute Value"));
+	}
+
 	private void _assertBreakdowRowEquals(
 		List<BreakdownRow> breakdownRows,
 		Map<String, BigDecimal> expectedValues) {
@@ -1264,6 +1343,21 @@ public class BQEventRepositoryTest
 
 			Assertions.assertEquals(0, actualValue.compareTo(entry.getValue()));
 		}
+	}
+
+	private Date _getExpectedDate(Date date, int deltaDays) {
+		Calendar calendar = new GregorianCalendar(TimeZone.getTimeZone("UTC"));
+
+		calendar.setTime(date);
+
+		calendar.add(Calendar.DATE, deltaDays);
+
+		calendar.set(Calendar.HOUR_OF_DAY, 0);
+		calendar.set(Calendar.MILLISECOND, 0);
+		calendar.set(Calendar.MINUTE, 0);
+		calendar.set(Calendar.SECOND, 0);
+
+		return new Date(calendar.getTimeInMillis());
 	}
 
 	private String _getLocalDateString(

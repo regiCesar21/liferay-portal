@@ -6,14 +6,14 @@ INSERT INTO DocumentLibraryDaily (assetId, canonicalUrl, channelId, eventDate, p
 INSERT INTO DocumentLibraryDaily (assetId, canonicalUrl, channelId, eventDate, previews) VALUES ('e131fabc', 'https://www.beryl.com/delivery', 1, timestamp '${today-6d}', 1);
 INSERT INTO DocumentLibraryDaily (assetId, canonicalUrl, channelId, eventDate, previews) VALUES ('e131fabc', 'https://www.beryl.com/delivery', 1, timestamp '${today-8d}', 1);
 
-INSERT INTO Event (applicationId, channelId, eventDate, eventId, id, sessionId, userId) VALUES ('CustomEvent', 1, timestamp '${today-1d}', 'testEvent1', '1', '366909399944213421', '1');
-INSERT INTO Event (applicationId, channelId, eventDate, eventId, id, sessionId, userId) VALUES ('CustomEvent', 1, timestamp '${today-1d}', 'testEvent2', '2', '366909399944215919', '1');
-INSERT INTO Event (applicationId, channelId, eventDate, eventId, id, sessionId, userId) VALUES ('CustomEvent', 1, timestamp '${today-2d}', 'testEvent2', '3', '366909399944215920', '1');
-INSERT INTO Event (applicationId, channelId, eventDate, eventId, id, sessionId, userId) VALUES ('CustomEvent', 1, timestamp '${today-2d}', 'testEvent2', '4', '366909399944215922', '1');
-INSERT INTO Event (applicationId, channelId, eventDate, eventId, id, sessionId, userId) VALUES ('CustomEvent', 1, timestamp '${today-5d}', 'testEvent2', '5', '366909399944215923', '1');
-INSERT INTO Event (applicationId, channelId, eventDate, eventId, id, sessionId, userId) VALUES ('CustomEvent', 1, timestamp '${today-9d}', 'testEvent2', '6', '366909399944215924', '2');
-INSERT INTO Event (applicationId, channelId, eventDate, eventId, id, sessionId, userId) VALUES ('CustomEvent', 1, timestamp '${today-12d}', 'testEvent2', '7', '366909399944215925', '1');
-INSERT INTO Event (applicationId, channelId, eventDate, eventId, id, sessionId, userId) VALUES ('CustomEvent', 1, timestamp '${today-14d}', 'testEvent2', '8', '366909399944215926', '2');
+INSERT INTO Event (applicationId, channelId, eventDate, eventId, id, properties, sessionId, userId) VALUES ('CustomEvent', 1, timestamp '${today-1d}', 'testEvent1', '1', ARRAY<STRUCT<name STRING, value STRING>> [], '366909399944213421', '1');
+INSERT INTO Event (applicationId, channelId, eventDate, eventId, id, properties, sessionId, userId) VALUES ('CustomEvent', 1, timestamp '${today-1d}', 'testEvent2', '2', ARRAY<STRUCT<name STRING, value STRING>> [], '366909399944215919', '1');
+INSERT INTO Event (applicationId, channelId, eventDate, eventId, id, properties, sessionId, userId) VALUES ('CustomEvent', 1, timestamp '${today-2d}', 'testEvent2', '3', ARRAY<STRUCT<name STRING, value STRING>> [], '366909399944215920', '1');
+INSERT INTO Event (applicationId, channelId, eventDate, eventId, id, properties, sessionId, userId) VALUES ('CustomEvent', 1, timestamp '${today-2d}', 'testEvent2', '4', ARRAY<STRUCT<name STRING, value STRING>> [], '366909399944215922', '1');
+INSERT INTO Event (applicationId, channelId, eventDate, eventId, id, properties, sessionId, userId) VALUES ('CustomEvent', 1, timestamp '${today-5d}', 'testEvent2', '5', ARRAY<STRUCT<name STRING, value STRING>> [], '366909399944215923', '1');
+INSERT INTO Event (applicationId, channelId, eventDate, eventId, id, properties, sessionId, userId) VALUES ('CustomEvent', 1, timestamp '${today-9d}', 'testEvent2', '6', ARRAY<STRUCT<name STRING, value STRING>> [], '366909399944215924', '2');
+INSERT INTO Event (applicationId, channelId, eventDate, eventId, id, properties, sessionId, userId) VALUES ('CustomEvent', 1, timestamp '${today-12d}', 'testEvent2', '7', ARRAY<STRUCT<name STRING, value STRING>> [], '366909399944215925', '1');
+INSERT INTO Event (applicationId, channelId, eventDate, eventId, id, properties, sessionId, userId) VALUES ('CustomEvent', 1, timestamp '${today-14d}', 'testEvent2', '8', ARRAY<STRUCT<name STRING, value STRING>> [], '366909399944215926', '2');
 
 INSERT INTO FormDaily (assetId, browserName, channelId, eventDate, views) VALUES ('e131fabc', 'Chrome', 1, timestamp '${now-2d}', 2);
 INSERT INTO FormDaily (assetId, browserName, channelId, eventDate, views) VALUES ('e131fabc', 'Chrome', 1, timestamp '${now-5d}', 2);

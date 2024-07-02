@@ -225,8 +225,6 @@ public class EventIngestionPipelineTest {
 		tableRow.set("deviceType", null);
 		tableRow.set("eventDate", "2017-11-10T09:34:45.345Z");
 		tableRow.set("eventId", "pageViewed");
-		tableRow.set(
-			"eventProperties", ObjectMapperUtil.writeValueAsString(properties));
 		tableRow.set("experienceId", null);
 		tableRow.set("id", "1");
 		tableRow.set("keywords", null);
@@ -321,8 +319,6 @@ public class EventIngestionPipelineTest {
 		tableRow.set("deviceType", null);
 		tableRow.set("eventDate", "2017-11-10T09:34:45.345Z");
 		tableRow.set("eventId", "pageViewed");
-		tableRow.set(
-			"eventProperties", ObjectMapperUtil.writeValueAsString(properties));
 		tableRow.set("experienceId", null);
 		tableRow.set("id", "1");
 		tableRow.set("keywords", null);

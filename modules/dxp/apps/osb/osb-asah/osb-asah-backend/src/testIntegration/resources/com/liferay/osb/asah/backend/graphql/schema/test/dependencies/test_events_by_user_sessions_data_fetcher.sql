@@ -1,8 +1,5 @@
-INSERT INTO Event(applicationId, canonicalUrl, channelId, createDate, context, dataSourceId, eventDate, eventId, id, languageId, sessionId, userId) VALUES ('Page', 'canonicalUrlValue', 1, timestamp '${now}', '{}', 1, timestamp '${now}', 'assetClicked', 'abc-123', 'pt-BR', 'sessionId', '1');
-INSERT INTO Event(applicationId, canonicalUrl, channelId, createDate, context, dataSourceId, eventDate, eventId, id, languageId, sessionId, userId) VALUES ('Page', 'canonicalUrlValue', 1, timestamp '${now}', '{}', 1, timestamp '${now}', 'assetDownloaded', 'efg-246', 'pt-BR', 'sessionId', '1');
-
-INSERT INTO EventProperty(id, name, value) VALUES ('abc-123', 'viewDuration', 'viewDurationValue');
-INSERT INTO EventProperty(id, name, value) VALUES ('efg-246', 'viewDuration', 'viewDurationValue');
+INSERT INTO Event(applicationId, canonicalUrl, channelId, createDate, context, dataSourceId, eventDate, eventId, id, languageId, properties, sessionId, userId) VALUES ('Page', 'canonicalUrlValue', 1, timestamp '${now}', '{}', 1, timestamp '${now}', 'assetClicked', 'abc-123', 'pt-BR', ARRAY<STRUCT<name STRING, value STRING>> [('viewDuration', 'viewDurationValue')], 'sessionId', '1');
+INSERT INTO Event(applicationId, canonicalUrl, channelId, createDate, context, dataSourceId, eventDate, eventId, id, languageId, properties, sessionId, userId) VALUES ('Page', 'canonicalUrlValue', 1, timestamp '${now}', '{}', 1, timestamp '${now}', 'assetDownloaded', 'efg-246', 'pt-BR', ARRAY<STRUCT<name STRING, value STRING>> [('viewDuration', 'viewDurationValue')], 'sessionId', '1');
 
 INSERT INTO Identity_Raw (id, individualId) VALUES ('1', '1');
 
