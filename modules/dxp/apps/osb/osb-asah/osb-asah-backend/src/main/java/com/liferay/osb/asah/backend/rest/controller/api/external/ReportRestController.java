@@ -455,10 +455,7 @@ public class ReportRestController extends BaseRestController {
 							bqEvent.getContext(),
 							new TypeReference<Map<String, String>>() {
 							}),
-						_objectMapper.readValue(
-							bqEvent.getEventProperties(),
-							new TypeReference<Map<String, String>>() {
-							}));
+						_toMap(bqEvent.getProperties()));
 				}
 				catch (JsonProcessingException jsonProcessingException) {
 					throw new RuntimeException(jsonProcessingException);
@@ -1245,6 +1242,16 @@ public class ReportRestController extends BaseRestController {
 		Function<T, EntityModel<R>> resultEntityModelMapperFunction) {
 
 		return ListUtil.map(results, resultEntityModelMapperFunction);
+	}
+
+	private Map<String, String> _toMap(List<BQEvent.Property> properties) {
+		Map<String, String> propertiesMap = new HashMap<>();
+
+		for (BQEvent.Property property : properties) {
+			propertiesMap.put(property.getName(), property.getValue());
+		}
+
+		return propertiesMap;
 	}
 
 	private EntityModel<PageAssetReport> _toPageAssetReportEntityModel(

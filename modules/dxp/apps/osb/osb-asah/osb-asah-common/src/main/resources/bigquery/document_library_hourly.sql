@@ -1,4 +1,21 @@
 WITH
+	EventProperty AS (
+		SELECT
+		Event.eventDate,
+		Event.id,
+		EventProperty.name,
+		EventProperty.value
+	FROM
+		`$[AC_PROJECT_ID].event` AS Event
+	CROSS JOIN UNNEST(Event.properties) AS EventProperty
+		WHERE
+			Event.applicationId IN ('Comment', 'Document', 'Ratings') AND
+			Event.assetId IS NOT NULL AND
+			Event.canonicalUrl IS NOT NULL AND
+			Event.eventDate > TIMESTAMP_SUB(CURRENT_TIMESTAMP(), INTERVAL 48 HOUR) AND
+			Event.eventId IN ('documentDownloaded', 'documentPreviewed', 'posted', 'VOTE') AND
+			Event.title IS NOT NULL
+	),
 	CommentEvent AS (
 		SELECT
 			Event.assetId,
@@ -9,7 +26,7 @@ WITH
 			Event.userId
 		FROM
 			`$[AC_PROJECT_ID].event` AS Event
-		LEFT JOIN `$[AC_PROJECT_ID].eventproperty` AS className ON (
+		LEFT JOIN EventProperty AS className ON (
 			className.eventDate > TIMESTAMP_SUB(CURRENT_TIMESTAMP(), INTERVAL 48 HOUR) AND
 			className.id = Event.id AND
 		    className.name = 'className' AND
@@ -42,7 +59,7 @@ WITH
 			Event.userId
 		FROM
 			`$[AC_PROJECT_ID].event` AS Event
-		LEFT JOIN `$[AC_PROJECT_ID].eventproperty` AS className ON (
+		LEFT JOIN EventProperty AS className ON (
 			className.eventDate > TIMESTAMP_SUB(CURRENT_TIMESTAMP(), INTERVAL 48 HOUR) AND
 			className.id = Event.id AND
 			className.name = 'className' AND
@@ -106,19 +123,19 @@ WITH
 			Event.userId
 		FROM
 			`$[AC_PROJECT_ID].event` AS Event
-		LEFT JOIN `$[AC_PROJECT_ID].eventproperty` AS className ON (
+		LEFT JOIN EventProperty AS className ON (
 			className.eventDate > TIMESTAMP_SUB(CURRENT_TIMESTAMP(), INTERVAL 48 HOUR) AND
 			className.id = Event.id AND
 		    className.name = 'className' AND
 			className.value = 'com.liferay.document.library.kernel.model.DLFileEntry'
 		)
-		LEFT JOIN `$[AC_PROJECT_ID].eventproperty` AS ratingType ON (
+		LEFT JOIN EventProperty AS ratingType ON (
 			ratingType.eventDate > TIMESTAMP_SUB(CURRENT_TIMESTAMP(), INTERVAL 48 HOUR) AND
 		    ratingType.id = Event.id AND
 		    ratingType.name = 'ratingType' AND
 			ratingtype.value = 'stars'
 		)
-		LEFT JOIN `$[AC_PROJECT_ID].eventproperty` AS score ON (
+		LEFT JOIN EventProperty AS score ON (
 			score.eventDate > TIMESTAMP_SUB(CURRENT_TIMESTAMP(), INTERVAL 48 HOUR) AND
 		    score.id = Event.id AND
 		    score.name = 'score'

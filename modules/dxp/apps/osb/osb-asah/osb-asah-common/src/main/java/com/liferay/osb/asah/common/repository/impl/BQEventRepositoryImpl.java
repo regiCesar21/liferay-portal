@@ -77,6 +77,7 @@ import org.jooq.SelectHavingStep;
 import org.jooq.SelectJoinStep;
 import org.jooq.SelectSelectStep;
 import org.jooq.Table;
+import org.jooq.WithStep;
 import org.jooq.impl.DSL;
 import org.jooq.impl.SQLDataType;
 
@@ -240,7 +241,10 @@ public class BQEventRepositoryImpl
 		if ((eventAnalysisFilters == null) ||
 			!_hasOnlyLocalAttributes(eventAnalysisFilters)) {
 
-			selectJoinStep = _getEventSelectJoinStep(_dslContext.selectCount());
+			WithStep withStep = _buildBQEventPropertyWithStep(
+				channelId, eventDefinitionId, rangeEndDate, rangeStartDate);
+
+			selectJoinStep = _getEventSelectJoinStep(withStep.selectCount());
 		}
 		else {
 			filteredEventsTableName = "_filteredEvents";
@@ -266,7 +270,11 @@ public class BQEventRepositoryImpl
 		@Nullable Date rangeStartDate, String timeZoneId) {
 
 		SelectSelectStep<Record1<Integer>> selectSelectStep =
-			_dslContext.select(_getUniqueIndividualsField(null));
+			_buildBQEventPropertyWithStep(
+				channelId, eventDefinitionId, rangeEndDate, rangeStartDate
+			).select(
+				_getUniqueIndividualsField(null)
+			);
 
 		SelectJoinStep<Record1<Integer>> selectJoinStep =
 			_getEventSelectJoinStep(selectSelectStep);
@@ -357,9 +365,13 @@ public class BQEventRepositoryImpl
 
 		totalEventCount = totalEventCount.cast(SQLDataType.DECIMAL);
 
-		SelectSelectStep<Record1<Number>> selectSelectStep = _dslContext.select(
-			totalEventCount.div(
-				DSL.nullif(_getUniqueIndividualsField(null), 0)));
+		SelectSelectStep<Record1<Number>> selectSelectStep =
+			_buildBQEventPropertyWithStep(
+				channelId, eventDefinitionId, rangeEndDate, rangeStartDate
+			).select(
+				totalEventCount.div(
+					DSL.nullif(_getUniqueIndividualsField(null), 0))
+			);
 
 		SelectJoinStep<Record1<Number>> selectJoinStep =
 			_getEventSelectJoinStep(selectSelectStep);
@@ -487,12 +499,16 @@ public class BQEventRepositoryImpl
 			timeZoneId);
 
 		SelectSelectStep<Record1<Integer>> selectSelectStep =
-			_dslContext.select(
+			_buildBQEventPropertyWithStep(
+				channelId, eventDefinitionId, timeRange.getEndDate(),
+				timeRange.getStartDate()
+			).select(
 				DSL.countDistinct(
 					valueField
 				).plus(
 					DSL.count(DSL.when(valueField.isNull(), 1))
-				));
+				)
+			);
 
 		SelectJoinStep<Record1<Integer>> selectJoinStep = selectSelectStep.from(
 			"BQEvent");
@@ -646,7 +662,31 @@ public class BQEventRepositoryImpl
 
 				return keywordMap;
 			},
-			_dslContext.select(
+			_dslContext.with(
+				"BQEventProperty"
+			).as(
+				DSL.select(
+					DSL.field(
+						"BQEvent.id"
+					).as(
+						"id"
+					),
+					DSL.field(
+						"properties.name"
+					).as(
+						"name"
+					),
+					DSL.field(
+						"properties.value"
+					).as(
+						"value"
+					)
+				).from(
+					"BQEvent"
+				).crossJoin(
+					"BQEvent.properties AS properties"
+				)
+			).select(
 				DSL.field(
 					"event.channelId"
 				).as(
@@ -758,9 +798,10 @@ public class BQEventRepositoryImpl
 			).eq(
 				RecentVisitAsset.ContentType.WEBCONTENT.getApplicationId()
 			),
-			_dslHelper.jsonExtractScalar(
-				"BQEvent.eventProperties",
-				RecentVisitAsset.ContentType.WEBCONTENT.getAssetIdFieldName())
+			DSL.field(
+				"(SELECT value FROM UNNEST(BQEvent.properties) WHERE name = '" +
+					RecentVisitAsset.ContentType.WEBCONTENT.
+						getAssetIdFieldName() + "')")
 		).otherwise(
 			DSL.field("assetId")
 		).as(
@@ -1256,7 +1297,7 @@ public class BQEventRepositoryImpl
 		SelectJoinStep<?> selectJoinStep = _dslContext.select(
 			DSL.field("applicationId"), DSL.field("context"),
 			DSL.field("eventDate"), DSL.field("eventId"),
-			DSL.field("eventProperties"), DSL.field("id"), DSL.field("userId")
+			DSL.field("properties"), DSL.field("id"), DSL.field("userId")
 		).from(
 			eventTable
 		);
@@ -1287,7 +1328,12 @@ public class BQEventRepositoryImpl
 
 		Table<Record> eventTable = DSL.table("BQEvent");
 
-		SelectJoinStep<Record> selectJoinStep = _dslContext.select(
+		ZoneId zoneId = ZoneId.of("UTC");
+
+		SelectJoinStep<Record> selectJoinStep = _buildBQEventPropertyWithStep(
+			channelId, null, DateUtil.toDate(rangeEndLocalDateTime, zoneId),
+			DateUtil.toDate(rangeStartLocalDateTime, zoneId)
+		).select(
 			eventTable.asterisk()
 		).from(
 			"BQEvent"
@@ -1329,6 +1375,37 @@ public class BQEventRepositoryImpl
 			).offset(
 				pageable.getOffset()
 			));
+	}
+
+	private WithStep _buildBQEventPropertyWithStep(
+		@Nullable Long channelId, @Nullable Long eventDefinitionId,
+		@Nullable Date rangeEndDate, @Nullable Date rangeStartDate) {
+
+		SelectJoinStep selectJoinStep = DSL.select(
+			DSL.field("id"), DSL.field("channelId"), DSL.field("eventDate"),
+			DSL.field(
+				"properties.name"
+			).as(
+				"name"
+			),
+			DSL.field(
+				"properties.value"
+			).as(
+				"value"
+			)
+		).from(
+			"BQEvent"
+		).crossJoin(
+			"UNNEST(properties) AS properties"
+		);
+
+		return _dslContext.with(
+			"BQEventProperty"
+		).as(
+			selectJoinStep.where(
+				_getConditions(
+					channelId, eventDefinitionId, rangeEndDate, rangeStartDate))
+		);
 	}
 
 	private SelectJoinStep _buildSelectJoinStep(
@@ -1698,7 +1775,10 @@ public class BQEventRepositoryImpl
 
 		return _buildSelectJoinStep(
 			channelId, eventAnalysisBreakdowns, eventAttributeDefinitions,
-			_dslContext.with(
+			_buildBQEventPropertyWithStep(
+				channelId, eventDefinitionId, timeRange.getEndDate(),
+				timeRange.getStartDate()
+			).with(
 				"_filteredEvents"
 			).as(
 				_buildSelectJoinStep(
@@ -2045,17 +2125,92 @@ public class BQEventRepositoryImpl
 		return DSL.noCondition();
 	}
 
+	private SelectConditionStep<Record1<String>> _getEventPropertySelectStep(
+		Long channelId, String eventAttributeDefinitionName,
+		String eventDefinitionName, Field<String> selectField,
+		String keywords) {
+
+		SelectSelectStep<Record1<String>> selectSelectStep =
+			_dslContext.selectDistinct(selectField);
+
+		if (_isGlobalEventAttributeDefinition(eventAttributeDefinitionName)) {
+			return selectSelectStep.from(
+				"BQEvent"
+			).where(
+				DSL.and(
+					DSL.field(
+						"BQEvent.channelId"
+					).eq(
+						channelId
+					),
+					DSL.field(
+						"BQEvent.eventId"
+					).eq(
+						eventDefinitionName
+					),
+					DSL.lower(
+						DSL.field(
+							String.format(
+								"BQEvent.%s",
+								EventPropertyConstants.globalEventPropertyNames.
+									get(eventAttributeDefinitionName)),
+							String.class)
+					).like(
+						"%" + _getSanitizedKeywords(keywords) + "%"
+					))
+			);
+		}
+
+		return selectSelectStep.from(
+			DSL.table(
+				"BQEvent"
+			).as(
+				"BQEvent"
+			)
+		).crossJoin(
+			"UNNEST(BQEvent.properties) AS BQEventProperty"
+		).where(
+			DSL.and(
+				DSL.field(
+					"BQEvent.channelId"
+				).eq(
+					channelId
+				),
+				DSL.field(
+					"BQEvent.eventId"
+				).eq(
+					eventDefinitionName
+				),
+				DSL.field(
+					"BQEventProperty.name"
+				).eq(
+					eventAttributeDefinitionName.replace("'", "\\'")
+				),
+				DSL.lower(
+					DSL.field("BQEventProperty.value", String.class)
+				).like(
+					"%" + _getSanitizedKeywords(keywords) + "%"
+				))
+		);
+	}
+
 	private SelectFinalStep<Record1<Integer>> _getEventsCount(
 		@Nullable Long channelId,
 		AggregateFunction<Integer> countAggregateFunction, String individualId,
 		String keywords, LocalDateTime rangeEndLocalDateTime,
 		LocalDateTime rangeStartLocalDateTime, String timeZoneId) {
 
-		SelectJoinStep<Record1<Integer>> selectJoinStep = _dslContext.select(
-			countAggregateFunction
-		).from(
-			"BQEvent"
-		);
+		ZoneId zoneId = ZoneId.of("UTC");
+
+		SelectJoinStep<Record1<Integer>> selectJoinStep =
+			_buildBQEventPropertyWithStep(
+				channelId, null, DateUtil.toDate(rangeEndLocalDateTime, zoneId),
+				DateUtil.toDate(rangeStartLocalDateTime, zoneId)
+			).select(
+				countAggregateFunction
+			).from(
+				"BQEvent"
+			);
 
 		if (StringUtils.isNotBlank(individualId)) {
 			selectJoinStep = selectJoinStep.join(
@@ -2238,7 +2393,9 @@ public class BQEventRepositoryImpl
 			);
 
 		return _getEventSelectJoinStep(
-			_dslContext.with(
+			_buildBQEventPropertyWithStep(
+				channelId, eventDefinitionId, rangeEndDate, rangeStartDate
+			).with(
 				filteredEventsTableName
 			).as(
 				filtersCommonTable

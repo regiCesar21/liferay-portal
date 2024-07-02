@@ -1,4 +1,29 @@
-WITH
+WITH 
+	BlogEventProperty AS (
+		SELECT
+			Event.eventDate,
+			Event.id,
+			EventProperty.name,
+			EventProperty.value
+		FROM
+			`$[AC_PROJECT_ID].event` AS Event
+		CROSS JOIN UNNEST(Event.properties) AS EventProperty
+		WHERE
+			(
+				(
+					Event.applicationId = 'Blog' AND
+					Event.eventId IN ('blogClicked', 'blogDepthReached', 'blogViewed')
+				) OR
+				(
+					Event.applicationId = 'Ratings'
+				)
+			) AND
+			Event.assetId IS NOT NULL AND
+			Event.assetTitle IS NOT NULL AND
+			Event.canonicalUrl IS NOT NULL AND
+			Event.eventDate > TIMESTAMP_SUB(CURRENT_TIMESTAMP(), INTERVAL 48 HOUR) AND
+			Event.title IS NOT NULL
+	),
 	BlogEvent AS (
 		SELECT
 			Event.assetId,
@@ -18,7 +43,7 @@ WITH
 			Event.userId
 		FROM
 			`$[AC_PROJECT_ID].event` AS Event
-		LEFT JOIN `$[AC_PROJECT_ID].eventproperty` AS className ON (
+		LEFT JOIN BlogEventProperty AS className ON (
 			className.eventDate > TIMESTAMP_SUB(CURRENT_TIMESTAMP(), INTERVAL 48 HOUR) AND
 		    className.id = Event.id AND
 			className.name = 'className' AND
@@ -69,7 +94,7 @@ WITH
 			Event.userId
 		FROM
 			`$[AC_PROJECT_ID].event` AS Event
-		LEFT JOIN `$[AC_PROJECT_ID].eventproperty` AS className ON (
+		LEFT JOIN BlogEventProperty AS className ON (
 			className.eventDate > TIMESTAMP_SUB(CURRENT_TIMESTAMP(), INTERVAL 48 HOUR) AND
 			className.id = Event.id AND
 			className.name = 'className' AND
@@ -108,19 +133,19 @@ WITH
 			Event.userId
 		FROM
 			`$[AC_PROJECT_ID].event` AS Event
-		LEFT JOIN `$[AC_PROJECT_ID].eventproperty` AS className ON (
+		LEFT JOIN BlogEventProperty AS className ON (
 			className.eventDate > TIMESTAMP_SUB(CURRENT_TIMESTAMP(), INTERVAL 48 HOUR) AND
 			className.id = Event.id AND
 			className.value = 'com.liferay.blogs.model.BlogsEntry' AND
 		    className.name = 'className'
 		)
-		LEFT JOIN `$[AC_PROJECT_ID].eventproperty` AS ratingType ON (
+		LEFT JOIN BlogEventProperty AS ratingType ON (
 			ratingType.eventDate > TIMESTAMP_SUB(CURRENT_TIMESTAMP(), INTERVAL 48 HOUR) AND
 			ratingType.id = Event.id AND
 			ratingType.value = 'stars' AND
 		    ratingType.name = 'ratingType'
 		)
-		LEFT JOIN `$[AC_PROJECT_ID].eventproperty` AS score ON (
+		LEFT JOIN BlogEventProperty AS score ON (
 			score.eventDate > TIMESTAMP_SUB(CURRENT_TIMESTAMP(), INTERVAL 48 HOUR) AND
 			score.id = Event.id AND
 		    score.name = 'score'

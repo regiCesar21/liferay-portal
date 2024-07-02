@@ -473,18 +473,18 @@ public class BigQueryQueryExecutor implements QueryExecutor {
 
 	private static final String[] _FUNCTION_AND_TABLE_NAMES = {
 		"BlogDaily", "BlogHourly", "BQAccountEntry", "BQAccountGroup",
-		"BQAsset", "BQCSVUser", "BQEvent", "BQEventProperty", "BQExpandoColumn",
-		"BQExpandoValue", "BQFieldMapping", "BQGroup", "BQIdentity",
-		"BQIdentity_Raw", "BQIdentityActivity", "BQIdentityActivitySummary",
-		"BQIdentityChannel", "BQIdentityInterestPage",
-		"BQIdentityInterestScore", "BQIndividual", "BQMembership",
-		"BQMembershipChange", "BQMembershipIndividual", "BQOrder",
-		"BQOrder_Raw", "BQOrganization", "BQPageReferrers", "BQProduct",
-		"BQProduct_Raw", "BQRole", "BQSession", "BQSessionInterestScore",
-		"BQTeam", "BQUser", "BQUserGroup", "CustomAssetDaily",
-		"CustomAssetHourly", "DocumentLibraryDaily", "DocumentLibraryHourly",
-		"DXPEntity", "FormDaily", "FormHourly", "Identity_Raw", "JournalDaily",
-		"JournalHourly", "PageDaily", "PageHourly", "Suppression"
+		"BQAsset", "BQCSVUser", "BQEvent", "BQExpandoColumn", "BQExpandoValue",
+		"BQFieldMapping", "BQGroup", "BQIdentity", "BQIdentity_Raw",
+		"BQIdentityActivity", "BQIdentityActivitySummary", "BQIdentityChannel",
+		"BQIdentityInterestPage", "BQIdentityInterestScore", "BQIndividual",
+		"BQMembership", "BQMembershipChange", "BQMembershipIndividual",
+		"BQOrder", "BQOrder_Raw", "BQOrganization", "BQPageReferrers",
+		"BQProduct", "BQProduct_Raw", "BQRole", "BQSession",
+		"BQSessionInterestScore", "BQTeam", "BQUser", "BQUserGroup",
+		"CustomAssetDaily", "CustomAssetHourly", "DocumentLibraryDaily",
+		"DocumentLibraryHourly", "DXPEntity", "FormDaily", "FormHourly",
+		"Identity_Raw", "JournalDaily", "JournalHourly", "PageDaily",
+		"PageHourly", "Suppression"
 	};
 
 	private static final Log _log = LogFactory.getLog(

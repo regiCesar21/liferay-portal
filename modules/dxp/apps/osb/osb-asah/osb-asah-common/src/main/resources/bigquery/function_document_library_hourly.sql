@@ -1,6 +1,24 @@
 CREATE OR REPLACE TABLE FUNCTION `$[AC_PROJECT_ID].documentlibrary_hourly`(endDate TIMESTAMP, startDate TIMESTAMP)
 AS (
     WITH
+        EventProperty AS (
+            SELECT
+            Event.eventDate,
+            Event.id,
+            EventProperty.name,
+            EventProperty.value
+        FROM
+            `$[AC_PROJECT_ID].event` AS Event
+        CROSS JOIN UNNEST(Event.properties) AS EventProperty
+            WHERE
+                Event.applicationId IN ('Comment', 'Document', 'Ratings') AND
+                Event.assetId IS NOT NULL AND
+                Event.canonicalUrl IS NOT NULL AND
+                Event.eventDate >= startDate AND
+                Event.eventDate < endDate AND
+                Event.eventId IN ('documentDownloaded', 'documentPreviewed', 'posted', 'VOTE') AND
+                Event.title IS NOT NULL
+        ),
         CommentEvent AS (
             SELECT
                 Event.assetId,
