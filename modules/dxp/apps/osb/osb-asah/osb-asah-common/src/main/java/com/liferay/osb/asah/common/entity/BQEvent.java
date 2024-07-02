@@ -8,6 +8,7 @@ package com.liferay.osb.asah.common.entity;
 import com.liferay.osb.asah.common.spring.annotation.BigQueryColumn;
 import com.liferay.osb.asah.common.util.BeanUtils;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
@@ -414,8 +415,8 @@ public class BQEvent {
 		_projectTimeZoneId = projectTimeZoneId;
 	}
 
-	public void setProperties(List<Property> eventProperties) {
-		_properties = eventProperties;
+	public void setProperties(List<Property> properties) {
+		_properties = properties;
 	}
 
 	public void setReferrer(String referrer) {
@@ -507,7 +508,7 @@ public class BQEvent {
 	private String _languageId;
 	private String _platformName;
 	private String _projectTimeZoneId;
-	private List<Property> _properties;
+	private List<Property> _properties = new ArrayList<>();
 	private String _referrer;
 	private String _region;
 	private String _sessionId;
