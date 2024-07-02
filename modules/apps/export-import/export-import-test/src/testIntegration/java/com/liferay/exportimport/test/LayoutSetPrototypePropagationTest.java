@@ -45,6 +45,7 @@ import com.liferay.portal.kernel.service.ResourcePermissionServiceUtil;
 import com.liferay.portal.kernel.service.RoleLocalServiceUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
+import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.RoleTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
@@ -626,6 +627,144 @@ public class LayoutSetPrototypePropagationTest
 	}
 
 	@Test
+	public void testThemeSettingsAfterLayoutPropagationWithPrivateLinkEnabled()
+		throws Exception {
+
+		LayoutSetPrototype layoutSetPrototype =
+			LayoutTestUtil.addLayoutSetPrototype(RandomTestUtil.randomString());
+
+		Group layoutSetPrototypeGroup = layoutSetPrototype.getGroup();
+
+		LayoutSet prototypePrivateLayoutSet =
+			layoutSetPrototypeGroup.getPrivateLayoutSet();
+
+		Group testGroup = GroupTestUtil.addGroup();
+
+		try {
+			prototypePrivateLayoutSet.setThemeId(_THEME_ID);
+
+			prototypePrivateLayoutSet =
+				LayoutSetLocalServiceUtil.updateLayoutSet(
+					prototypePrivateLayoutSet);
+
+			layoutSetPrototype =
+				LayoutSetPrototypeLocalServiceUtil.fetchLayoutSetPrototype(
+					layoutSetPrototype.getLayoutSetPrototypeId());
+
+			layoutSetPrototype.setModifiedDate(new Date());
+
+			layoutSetPrototype =
+				LayoutSetPrototypeLocalServiceUtil.updateLayoutSetPrototype(
+					layoutSetPrototype);
+
+			LayoutSet privateLayoutSet =
+				LayoutSetLocalServiceUtil.fetchLayoutSet(
+					testGroup.getGroupId(), true);
+
+			privateLayoutSet.setLayoutSetPrototypeLinkEnabled(true);
+
+			LayoutSetLocalServiceUtil.updateLayoutSet(privateLayoutSet);
+
+			setLinkEnabled(
+				testGroup, 0, layoutSetPrototype.getLayoutSetPrototypeId(),
+				false, true);
+
+			MergeLayoutPrototypesThreadLocal.setSkipMerge(false);
+
+			SitesUtil.mergeLayoutSetPrototypeLayouts(
+				testGroup, testGroup.getPrivateLayoutSet());
+
+			LayoutSet publicLayoutSet = LayoutSetLocalServiceUtil.getLayoutSet(
+				testGroup.getGroupId(), false);
+
+			Assert.assertNotEquals(
+				prototypePrivateLayoutSet.getThemeId(),
+				publicLayoutSet.getThemeId());
+
+			privateLayoutSet = LayoutSetLocalServiceUtil.getLayoutSet(
+				testGroup.getGroupId(), true);
+
+			Assert.assertEquals(
+				prototypePrivateLayoutSet.getThemeId(),
+				privateLayoutSet.getThemeId());
+		}
+		finally {
+			GroupTestUtil.deleteGroup(testGroup);
+
+			GroupTestUtil.deleteGroup(layoutSetPrototypeGroup);
+		}
+	}
+
+	@Test
+	public void testThemeSettingsAfterLayoutPropagationWithPublicLinkEnabled()
+		throws Exception {
+
+		LayoutSetPrototype layoutSetPrototype =
+			LayoutTestUtil.addLayoutSetPrototype(RandomTestUtil.randomString());
+
+		Group layoutSetPrototypeGroup = layoutSetPrototype.getGroup();
+
+		LayoutSet prototypePrivateLayoutSet =
+			layoutSetPrototypeGroup.getPrivateLayoutSet();
+
+		Group testGroup = GroupTestUtil.addGroup();
+
+		try {
+			prototypePrivateLayoutSet.setThemeId(_THEME_ID);
+
+			prototypePrivateLayoutSet =
+				LayoutSetLocalServiceUtil.updateLayoutSet(
+					prototypePrivateLayoutSet);
+
+			layoutSetPrototype =
+				LayoutSetPrototypeLocalServiceUtil.fetchLayoutSetPrototype(
+					layoutSetPrototype.getLayoutSetPrototypeId());
+
+			layoutSetPrototype.setModifiedDate(new Date());
+
+			layoutSetPrototype =
+				LayoutSetPrototypeLocalServiceUtil.updateLayoutSetPrototype(
+					layoutSetPrototype);
+
+			LayoutSet publicLayoutSet =
+				LayoutSetLocalServiceUtil.fetchLayoutSet(
+					testGroup.getGroupId(), false);
+
+			publicLayoutSet.setLayoutSetPrototypeLinkEnabled(true);
+
+			LayoutSetLocalServiceUtil.updateLayoutSet(publicLayoutSet);
+
+			setLinkEnabled(
+				testGroup, layoutSetPrototype.getLayoutSetPrototypeId(), 0,
+				true, false);
+
+			MergeLayoutPrototypesThreadLocal.setSkipMerge(false);
+
+			SitesUtil.mergeLayoutSetPrototypeLayouts(
+				testGroup, testGroup.getPublicLayoutSet());
+
+			publicLayoutSet = LayoutSetLocalServiceUtil.getLayoutSet(
+				testGroup.getGroupId(), false);
+
+			Assert.assertEquals(
+				prototypePrivateLayoutSet.getThemeId(),
+				publicLayoutSet.getThemeId());
+
+			LayoutSet privateLayoutSet = LayoutSetLocalServiceUtil.getLayoutSet(
+				testGroup.getGroupId(), true);
+
+			Assert.assertNotEquals(
+				prototypePrivateLayoutSet.getThemeId(),
+				privateLayoutSet.getThemeId());
+		}
+		finally {
+			GroupTestUtil.deleteGroup(testGroup);
+
+			GroupTestUtil.deleteGroup(layoutSetPrototypeGroup);
+		}
+	}
+
+	@Test
 	public void testThemeSettingsWithLinkEnabled() throws Exception {
 		LayoutSet prototypeLayoutSet =
 			_layoutSetPrototypeGroup.getPrivateLayoutSet();
@@ -966,6 +1105,19 @@ public class LayoutSetPrototypePropagationTest
 		SitesUtil.updateLayoutSetPrototypesLinks(
 			group, _layoutSetPrototype.getLayoutSetPrototypeId(), 0,
 			linkEnabled, linkEnabled);
+
+		Thread.sleep(2000);
+	}
+
+	protected void setLinkEnabled(
+			Group group, long publicLayoutSetPrototypeId,
+			long privateLayoutSetPrototypeId, boolean publicLinkEnabled,
+			boolean privateLinkEnabled)
+		throws Exception {
+
+		SitesUtil.updateLayoutSetPrototypesLinks(
+			group, publicLayoutSetPrototypeId, privateLayoutSetPrototypeId,
+			publicLinkEnabled, privateLinkEnabled);
 
 		Thread.sleep(2000);
 	}
