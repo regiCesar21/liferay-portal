@@ -59,6 +59,10 @@ public interface CustomBQEventRepository {
 		LocalDateTime rangeEndLocalDateTime,
 		LocalDateTime rangeStartLocalDateTime, String timeZoneId);
 
+	public long countPropertyValues(
+		Long channelId, String eventAttributeDefinitionName,
+		String eventDefinitionName, String keywords);
+
 	public long countTotalBQEvents(
 		@Nullable Long channelId,
 		@Nullable List<EventAnalysisFilter> eventAnalysisFilters,
@@ -70,6 +74,10 @@ public interface CustomBQEventRepository {
 		@Nullable List<EventAnalysisFilter> eventAnalysisFilters,
 		@Nullable Long eventDefinitionId, @Nullable Date rangeEndDate,
 		@Nullable Date rangeStartDate, String timeZoneId);
+
+	public Map<String, Date>
+		findBQEventPropertyValuesByEventAttributeDefinitionName(
+			String eventAttributeDefinitionName, int size);
 
 	public Optional<BQEvent> findLastSeenBQEvent(
 		@Nullable Long eventDefinitionId);
@@ -171,5 +179,9 @@ public interface CustomBQEventRepository {
 		@Nullable String keywords, Pageable pageable,
 		LocalDateTime rangeEndLocalDateTime,
 		LocalDateTime rangeStartLocalDateTime, String timeZoneId);
+
+	public List<String> searchPropertyValues(
+		Long channelId, String eventAttributeDefinitionName,
+		String eventDefinitionName, String keywords, Pageable pageable);
 
 }

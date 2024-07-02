@@ -5,6 +5,7 @@
 
 package com.liferay.osb.asah.common.repository.impl;
 
+import com.liferay.osb.asah.common.constants.EventPropertyConstants;
 import com.liferay.osb.asah.common.date.DateUtil;
 import com.liferay.osb.asah.common.entity.BQEvent;
 import com.liferay.osb.asah.common.entity.EventAttributeDefinition;
@@ -42,6 +43,7 @@ import java.net.URLDecoder;
 
 import java.time.LocalDateTime;
 import java.time.OffsetDateTime;
+import java.time.ZoneId;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -228,6 +230,23 @@ public class BQEventRepositoryImpl
 	}
 
 	@Override
+	public long countPropertyValues(
+		Long channelId, String eventAttributeDefinitionName,
+		String eventDefinitionName, String keywords) {
+
+		SelectSelectStep<Record1<Integer>> selectCount =
+			_dslContext.selectCount();
+
+		return _queryExecutor.queryForLong(
+			selectCount.from(
+				_getEventPropertySelectStep(
+					channelId, eventAttributeDefinitionName,
+					eventDefinitionName,
+					DSL.lower(DSL.field("BQEventProperty.value", String.class)),
+					keywords)));
+	}
+
+	@Override
 	public long countTotalBQEvents(
 		@Nullable Long channelId,
 		@Nullable List<EventAnalysisFilter> eventAnalysisFilters,
@@ -284,6 +303,77 @@ public class BQEventRepositoryImpl
 				_getConditions(
 					channelId, eventAnalysisFilters, eventDefinitionId,
 					rangeEndDate, rangeStartDate, timeZoneId)));
+	}
+
+	@Override
+	public Map<String, Date>
+		findBQEventPropertyValuesByEventAttributeDefinitionName(
+			String eventAttributeDefinitionName, int size) {
+
+		return _queryExecutor.queryForMap(
+			key -> (String)key,
+			_dslContext.with(
+				DSL.name(
+					"BQEventProperty"
+				).as(
+					DSL.select(
+						DSL.field(
+							"BQEvent.eventDate"
+						).as(
+							"eventDate"
+						),
+						DSL.field(
+							"properties.name"
+						).as(
+							"name"
+						),
+						DSL.field(
+							"properties.value"
+						).as(
+							"value"
+						)
+					).from(
+						DSL.table(
+							"BQEvent"
+						).as(
+							"BQEvent"
+						)
+					).crossJoin(
+						"UNNEST(BQEvent.properties) AS properties"
+					).where(
+						DSL.and(
+							DSL.field(
+								"BQEvent.eventDate"
+							).ge(
+								_dslHelper.getDateParam(
+									DateUtil.addDays(DateUtil.newDate(), -7))
+							),
+							DSL.field(
+								"properties.name"
+							).eq(
+								eventAttributeDefinitionName.replace("'", "\\'")
+							))
+					)
+				)
+			).select(
+				DSL.field("BQEventProperty.value", String.class),
+				DSL.max(
+					DSL.field("BQEventProperty.eventDate", Date.class)
+				).as(
+					"lastSeenDate"
+				)
+			).from(
+				"BQEventProperty"
+			).groupBy(
+				DSL.field("BQEventProperty.value")
+			).orderBy(
+				DSL.field(
+					"lastSeenDate"
+				).desc()
+			).limit(
+				size
+			),
+			value -> (Date)value);
 	}
 
 	@Override
@@ -1370,6 +1460,49 @@ public class BQEventRepositoryImpl
 				conditions
 			).orderBy(
 				getSortFields(pageable.getSort(), eventTable)
+			).limit(
+				pageable.getPageSize()
+			).offset(
+				pageable.getOffset()
+			));
+	}
+
+	@Override
+	public List<String> searchPropertyValues(
+		Long channelId, String eventAttributeDefinitionName,
+		String eventDefinitionName, String keywords, Pageable pageable) {
+
+		Field<String> selectField = null;
+
+		if (_isGlobalEventAttributeDefinition(eventAttributeDefinitionName)) {
+			selectField = DSL.lower(
+				DSL.field(
+					String.format(
+						"BQEvent.%s",
+						EventPropertyConstants.globalEventPropertyNames.get(
+							eventAttributeDefinitionName)),
+					String.class)
+			).as(
+				"temp"
+			);
+		}
+		else {
+			selectField = DSL.lower(
+				DSL.field("BQEventProperty.value", String.class)
+			).as(
+				"temp"
+			);
+		}
+
+		SelectConditionStep<Record1<String>> eventPropertySelectStep =
+			_getEventPropertySelectStep(
+				channelId, eventAttributeDefinitionName, eventDefinitionName,
+				selectField, keywords);
+
+		return _queryExecutor.queryForList(
+			rowMap -> (String)rowMap.get("temp"),
+			eventPropertySelectStep.orderBy(
+				selectField.asc()
 			).limit(
 				pageable.getPageSize()
 			).offset(
@@ -2893,6 +3026,13 @@ public class BQEventRepositoryImpl
 		return Objects.equals(
 			eventAttributeDefinition.getType(),
 			EventAttributeDefinition.Type.GLOBAL);
+	}
+
+	private boolean _isGlobalEventAttributeDefinition(
+		String eventAttributeDefinitionName) {
+
+		return EventPropertyConstants.globalEventPropertyNames.containsKey(
+			eventAttributeDefinitionName);
 	}
 
 	private static final Map<String, String> _globalAttributes =

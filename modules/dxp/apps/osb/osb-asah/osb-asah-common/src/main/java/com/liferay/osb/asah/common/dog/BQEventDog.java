@@ -203,7 +203,7 @@ public class BQEventDog {
 			new ArrayList<>();
 
 		Map<String, Date> bqEventPropertyValues =
-			_bqEventPropertyRepository.
+			_bqEventRepository.
 				findBQEventPropertyValuesByEventAttributeDefinitionName(
 					_getEventAttributeDefinitionName(
 						eventAttributeDefinitionId),

@@ -7,7 +7,7 @@ package com.liferay.osb.asah.common.dog;
 
 import com.liferay.osb.asah.common.entity.EventAttributeDefinition;
 import com.liferay.osb.asah.common.entity.EventDefinition;
-import com.liferay.osb.asah.common.repository.BQEventPropertyRepository;
+import com.liferay.osb.asah.common.repository.BQEventRepository;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -33,11 +33,11 @@ public class EventPropertyDog {
 		String eventDefinitionName = _getEventDefinitionName(eventDefinitionId);
 
 		return PageableExecutionUtils.getPage(
-			_bqEventPropertyRepository.searchValues(
+			_bqEventRepository.searchPropertyValues(
 				channelId, eventAttributeDefinitionName, eventDefinitionName,
 				keywords, pageRequest),
 			pageRequest,
-			() -> _bqEventPropertyRepository.countValues(
+			() -> _bqEventRepository.countPropertyValues(
 				channelId, eventAttributeDefinitionName, eventDefinitionName,
 				keywords));
 	}
@@ -60,13 +60,10 @@ public class EventPropertyDog {
 	}
 
 	@Autowired
-	private BQEventPropertyRepository _bqEventPropertyRepository;
+	private BQEventRepository _bqEventRepository;
 
 	@Autowired
 	private EventAttributeDefinitionDog _eventAttributeDefinitionDog;
-
-	@Autowired
-	private EventAttributeDefinitionDog _eventAttributionDefinitionDog;
 
 	@Autowired
 	private EventDefinitionDog _eventDefinitionDog;
