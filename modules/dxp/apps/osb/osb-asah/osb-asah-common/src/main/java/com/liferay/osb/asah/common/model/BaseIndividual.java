@@ -76,6 +76,8 @@ public abstract class BaseIndividual {
 				field -> {
 					field.setModifiedDate(bqIndividual.getModifiedDate());
 
+					field.setSourceName(field.getName());
+
 					String displayName =
 						FieldMappingConstants.demographicsDisplayNames.
 							getOrDefault(field.getName(), field.getName());
@@ -88,8 +90,6 @@ public abstract class BaseIndividual {
 
 						field.setValue(DateUtil.toUTCString(new Date(value)));
 					}
-
-					field.setSourceName(field.getName());
 				});
 
 			this.fields = fields;
