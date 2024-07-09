@@ -5,6 +5,7 @@
 
 package com.liferay.document.library.web.internal.display.context;
 
+import com.liferay.asset.kernel.model.AssetEntry;
 import com.liferay.asset.kernel.service.AssetEntryServiceUtil;
 import com.liferay.asset.kernel.service.persistence.AssetEntryQuery;
 import com.liferay.document.library.constants.DLPortletKeys;
@@ -24,6 +25,7 @@ import com.liferay.document.library.kernel.versioning.VersioningStrategy;
 import com.liferay.document.library.web.internal.display.context.logic.DLPortletInstanceSettingsHelper;
 import com.liferay.document.library.web.internal.display.context.util.DLRequestHelper;
 import com.liferay.document.library.web.internal.settings.DLPortletInstanceSettings;
+import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
@@ -66,11 +68,14 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
+import com.liferay.portal.repository.liferayrepository.model.LiferayFileEntry;
 import com.liferay.portal.util.PropsValues;
 import com.liferay.trash.TrashHelper;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
+import java.util.Objects;
 
 import javax.portlet.PortletURL;
 
@@ -605,8 +610,28 @@ public class DLAdminDisplayContext {
 
 					dlSearchContainer.setTotal(total);
 
-					results.addAll(
-						AssetEntryServiceUtil.getEntries(assetEntryQuery));
+					for (AssetEntry assetEntry :
+							AssetEntryServiceUtil.getEntries(assetEntryQuery)) {
+
+						if (Objects.equals(
+								assetEntry.getClassName(),
+								DLFileEntryConstants.getClassName())) {
+
+							FileEntry fileEntry =
+								DLAppLocalServiceUtil.getFileEntry(
+									assetEntry.getClassPK());
+
+							if (_isAncestorFolder(folderId, fileEntry) ||
+								((folderId ==
+									DLFolderConstants.
+										DEFAULT_PARENT_FOLDER_ID) &&
+								 (fileEntry.getRepositoryId() ==
+									 getRepositoryId()))) {
+
+								results.add(fileEntry);
+							}
+						}
+					}
 				}
 				else {
 					long repositoryId = getRepositoryId();
@@ -772,6 +797,18 @@ public class DLAdminDisplayContext {
 		searchContainer.setTotal(hits.getLength());
 
 		return searchContainer;
+	}
+
+	private boolean _isAncestorFolder(long folderId, FileEntry fileEntry) {
+		LiferayFileEntry liferayFileEntry = (LiferayFileEntry)fileEntry;
+
+		DLFileEntry dlFileEntry = liferayFileEntry.getDLFileEntry();
+
+		List<String> listTreePath = Arrays.asList(
+			StringUtil.split(
+				dlFileEntry.getTreePath(), CharPool.FORWARD_SLASH));
+
+		return listTreePath.contains(String.valueOf(folderId));
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
