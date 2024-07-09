@@ -104,6 +104,10 @@ public class JournalArticleLayoutClassedModelUsageRecorder
 				contentSearch.getGroupId(), contentSearch.isPrivateLayout(),
 				contentSearch.getLayoutId());
 
+			if (layout == null) {
+				continue;
+			}
+
 			LayoutClassedModelUsage layoutClassedModelUsage =
 				_layoutClassedModelUsageLocalService.
 					fetchLayoutClassedModelUsage(

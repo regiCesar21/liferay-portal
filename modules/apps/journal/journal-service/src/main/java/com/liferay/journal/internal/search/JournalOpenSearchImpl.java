@@ -77,10 +77,16 @@ public class JournalOpenSearchImpl extends HitsOpenSearchImpl {
 				articleId);
 
 		for (JournalContentSearch contentSearch : contentSearches) {
+			Layout layout = _layoutLocalService.fetchLayout(
+				contentSearch.getGroupId(), contentSearch.isPrivateLayout(),
+				contentSearch.getLayoutId());
+
+			if (layout == null) {
+				continue;
+			}
+
 			if (LayoutPermissionUtil.contains(
-					permissionChecker, contentSearch.getGroupId(),
-					contentSearch.isPrivateLayout(),
-					contentSearch.getLayoutId(), ActionKeys.VIEW)) {
+					permissionChecker, layout, ActionKeys.VIEW)) {
 
 				if (contentSearch.isPrivateLayout() &&
 					!_groupLocalService.hasUserGroup(
@@ -89,11 +95,7 @@ public class JournalOpenSearchImpl extends HitsOpenSearchImpl {
 					continue;
 				}
 
-				Layout hitLayout = _layoutLocalService.getLayout(
-					contentSearch.getGroupId(), contentSearch.isPrivateLayout(),
-					contentSearch.getLayoutId());
-
-				return _portal.getLayoutURL(hitLayout, themeDisplay);
+				return _portal.getLayoutURL(layout, themeDisplay);
 			}
 		}
 
