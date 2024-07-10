@@ -8,7 +8,9 @@ package com.liferay.osb.asah.backend.rest.controller.functional;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import com.liferay.osb.asah.common.entity.BQIndividual;
+import com.liferay.osb.asah.common.entity.BQUser;
 import com.liferay.osb.asah.common.repository.BQIndividualRepository;
+import com.liferay.osb.asah.common.repository.BQUserRepository;
 
 import org.json.JSONArray;
 
@@ -38,14 +40,26 @@ public class BQIndividualsRestController {
 		JSONArray jsonArray = new JSONArray(json);
 
 		jsonArray.forEach(
-			jsonObject -> _bqIndividualRepository.insert(
-				_objectMapper.convertValue(jsonObject, BQIndividual.class)));
+			jsonObject -> {
+				BQIndividual bqIndividual = _bqIndividualRepository.insert(
+					_objectMapper.convertValue(jsonObject, BQIndividual.class));
+
+				BQUser bqUser = _objectMapper.convertValue(
+					jsonObject, BQUser.class);
+
+				bqUser.setIndividualId(bqIndividual.getId());
+
+				_bqUserRepository.insert(bqUser);
+			});
 
 		return new ResponseEntity(HttpStatus.NO_CONTENT);
 	}
 
 	@Autowired
 	private BQIndividualRepository _bqIndividualRepository;
+
+	@Autowired
+	private BQUserRepository _bqUserRepository;
 
 	@Autowired
 	private ObjectMapper _objectMapper;
