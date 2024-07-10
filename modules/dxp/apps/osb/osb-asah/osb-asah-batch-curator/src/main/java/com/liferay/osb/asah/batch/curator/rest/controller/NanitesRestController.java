@@ -15,6 +15,8 @@ import org.json.JSONArray;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.context.annotation.Profile;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -33,31 +35,41 @@ import org.springframework.web.bind.annotation.RestController;
 public class NanitesRestController {
 
 	@PostMapping("/remove-schedule")
-	public void removeSchedule() {
+	public ResponseEntity removeSchedule() {
 		_osbAsahBatchCuratorBot.removeNanitesSchedule(
 			ProjectIdThreadLocal.getProjectId());
+
+		return new ResponseEntity(HttpStatus.NO_CONTENT);
 	}
 
 	@PostMapping("/reschedule")
-	public void reschedule() {
+	public ResponseEntity reschedule() {
 		_osbAsahBatchCuratorBot.rescheduleNanites(
 			ProjectIdThreadLocal.getProjectId());
+
+		return new ResponseEntity(HttpStatus.NO_CONTENT);
 	}
 
 	@PostMapping("/run")
-	public void run(@RequestBody String json) {
+	public ResponseEntity run(@RequestBody String json) {
 		_asahTaskManager.runNanites(
 			JSONUtil.toStringArray(new JSONArray(json)));
+
+		return new ResponseEntity(HttpStatus.NO_CONTENT);
 	}
 
 	@PostMapping("/schedule/{asahTaskId}")
-	public void schedule(@PathVariable Long asahTaskId) {
+	public ResponseEntity schedule(@PathVariable Long asahTaskId) {
 		_asahTaskManager.scheduleAsahTask(asahTaskId);
+
+		return new ResponseEntity(HttpStatus.NO_CONTENT);
 	}
 
 	@PostMapping("/unschedule/{asahTaskId}")
-	public void unschedule(@PathVariable Long asahTaskId) {
+	public ResponseEntity unschedule(@PathVariable Long asahTaskId) {
 		_asahTaskManager.unscheduleAsahTask(asahTaskId);
+
+		return new ResponseEntity(HttpStatus.NO_CONTENT);
 	}
 
 	@Autowired
