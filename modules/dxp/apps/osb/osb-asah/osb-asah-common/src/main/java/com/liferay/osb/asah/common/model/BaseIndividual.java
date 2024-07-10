@@ -75,7 +75,6 @@ public abstract class BaseIndividual {
 			stream2.forEach(
 				field -> {
 					field.setModifiedDate(bqIndividual.getModifiedDate());
-
 					field.setSourceName(field.getName());
 
 					String displayName =
