@@ -597,6 +597,7 @@ public class AccountReaderImpl implements AccountReader {
 			if (roleName.equals(
 					ContactRoleConstants.NAME_CRITICAL_INCIDENT_CONTACT) &&
 				(name.startsWith(ProductConstants.NAME_ANALYTICS) ||
+				 name.startsWith(ProductConstants.NAME_LIFERAY_PAAS) ||
 				 name.startsWith(ProductConstants.NAME_LIFERAY_SAAS))) {
 
 				return true;
