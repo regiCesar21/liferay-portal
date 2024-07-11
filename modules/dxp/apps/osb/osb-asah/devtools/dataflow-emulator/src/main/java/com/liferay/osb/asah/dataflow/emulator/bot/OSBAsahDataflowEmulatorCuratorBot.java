@@ -87,7 +87,7 @@ public class OSBAsahDataflowEmulatorCuratorBot {
 		}
 	}
 
-	@Scheduled(fixedDelay = 1 * DateUtil.MINUTE)
+	@Scheduled(fixedDelay = 15 * DateUtil.SECOND)
 	public void runIndividualNanite() {
 		ProjectIdThreadLocal.forProjects(
 			_projectDog.getProjects(), _individualNanite::run);
