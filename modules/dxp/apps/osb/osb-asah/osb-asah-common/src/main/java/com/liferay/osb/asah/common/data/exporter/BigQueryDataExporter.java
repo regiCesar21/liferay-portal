@@ -21,6 +21,7 @@ import java.io.File;
 import java.io.FileOutputStream;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.Date;
 import java.util.List;
@@ -269,6 +270,22 @@ public class BigQueryDataExporter implements DataExporter {
 		return conditions;
 	}
 
+	private Field _getEventPropertiesField() {
+		return DSL.field(
+			String.join(
+				"", "COALESCE((SELECT CONCAT('{',",
+				"STRING_AGG(CONCAT('\"', CAST(name AS STRING), ",
+				"'\":\"', CAST(value AS STRING), '\"')),'}')",
+				"FROM UNNEST(properties) AS properties",
+				"), '{}') AS eventProperties"));
+	}
+
+	private List<Field> _getFields() {
+		return Arrays.asList(
+			DSL.field("* EXCEPT (eventProperties, properties)"),
+			_getEventPropertiesField());
+	}
+
 	private SelectSelectStep<Record> _getSelectSelectStep() {
 		if (_selectedFieldNames.isEmpty()) {
 			return _dslContext.select();
@@ -277,7 +294,14 @@ public class BigQueryDataExporter implements DataExporter {
 		List<Field> fields = new ArrayList<>();
 
 		for (String selectedFieldName : _selectedFieldNames) {
-			fields.add(DSL.field(selectedFieldName));
+			if (StringUtils.equalsIgnoreCase(
+					selectedFieldName, "eventProperties")) {
+
+				fields.add(_getEventPropertiesField());
+			}
+			else {
+				fields.add(DSL.field(selectedFieldName));
+			}
 		}
 
 		return _dslContext.select(fields);
@@ -292,6 +316,7 @@ public class BigQueryDataExporter implements DataExporter {
 
 		if (tableName.equalsIgnoreCase("BQEvent")) {
 			query = _dslContext.select(
+				_getFields()
 			).from(
 				"BQEvent"
 			).where(
