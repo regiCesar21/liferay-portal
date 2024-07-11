@@ -250,14 +250,13 @@ public class UpgradeProductPurchases extends UpgradeProcess {
 
 	private List<Product> _getEWSAProducts() throws Exception {
 		String[] productNames = ArrayUtil.append(
+			ProductConstants.NAMES_DXP_ADD_ON,
 			ProductConstants.NAMES_EWSA_AUTO_RENEW,
-			ProductConstants.NAMES_DXP_ADD_ON);
-
-		productNames = ArrayUtil.append(
-			productNames, ProductConstants.NAME_PORTAL_EWSA);
-
-		productNames = ArrayUtil.append(
-			productNames, ProductConstants.NAME_DESIGNATED_CONTACT_ADD_ON);
+			new String[] {
+				ProductConstants.NAME_ANALYTICS_CLOUD_BUSINESS,
+				ProductConstants.NAME_DESIGNATED_CONTACT_ADD_ON,
+				ProductConstants.NAME_PORTAL_EWSA
+			});
 
 		FilterQuery filterQuery = new FilterQuery();
 
