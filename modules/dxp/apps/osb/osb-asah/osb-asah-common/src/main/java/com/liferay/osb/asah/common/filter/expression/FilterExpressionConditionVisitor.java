@@ -483,8 +483,11 @@ public class FilterExpressionConditionVisitor
 			}
 			else {
 				field = DSL.field(
-					"JSON_EXTRACT_SCALAR(Event.eventProperties, '$." +
-						qualifiedFieldName + "')");
+					String.join(
+						"", "COALESCE((SELECT value FROM UNNEST(",
+						"Event.properties) AS properties WHERE ",
+						"properties.name = '", qualifiedFieldName,
+						"' LIMIT 1), NULL)"));
 			}
 		}
 		else if (StringUtils.startsWith(fieldName, "ExpandoValue.")) {
@@ -1496,9 +1499,10 @@ public class FilterExpressionConditionVisitor
 			fieldName = "Event." + _defaultEventPropertyNames.get(fieldName);
 		}
 		else {
-			fieldName =
-				"JSON_EXTRACT_SCALAR(Event.eventProperties, '$." + fieldName +
-					"')";
+			fieldName = String.join(
+				"", "COALESCE((SELECT value FROM UNNEST(",
+				"Event.properties) AS properties WHERE properties.name = '",
+				fieldName, "' LIMIT 1), NULL)");
 		}
 
 		String query = fieldName + " {0} '" + value + "'";

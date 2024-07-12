@@ -1128,8 +1128,9 @@ public class FilterExpressionTest {
 					"Event"
 				),
 				DSL.condition(
-					"JSON_EXTRACT_SCALAR(Event.eventProperties, '$.item " +
-						"name') = 'shoes'")),
+					"COALESCE((SELECT value FROM UNNEST(Event.properties) AS " +
+						"properties WHERE properties.name = 'item name' " +
+							"LIMIT 1), NULL) = 'shoes'")),
 			"events.filterByCount(filter='(eventId eq ''added'' and day gt " +
 				"''last24Hours'' and attribute/" + encodedName +
 					" eq ''shoes'')', operator='ge', value=1)",
@@ -1146,10 +1147,14 @@ public class FilterExpressionTest {
 				),
 				DSL.condition(
 					String.join(
-						"", "CASE WHEN SAFE_CAST(JSON_EXTRACT_SCALAR(",
-						"Event.eventProperties, '$.item name') AS NUMERIC) IS ",
-						"NULL THEN false ELSE SAFE_CAST(JSON_EXTRACT_SCALAR(",
-						"Event.eventProperties, '$.item name') AS NUMERIC) > ",
+						"", "CASE WHEN SAFE_CAST(",
+						"COALESCE((SELECT value FROM UNNEST(Event.properties) ",
+						"AS properties WHERE properties.name = 'item name' ",
+						"LIMIT 1), NULL) AS NUMERIC) IS ",
+						"NULL THEN false ELSE SAFE_CAST(",
+						"COALESCE((SELECT value FROM UNNEST(Event.properties) ",
+						"AS properties WHERE properties.name = 'item name' ",
+						"LIMIT 1), NULL) AS NUMERIC) > ",
 						"SAFE_CAST('1' AS NUMERIC) END"))),
 			"events.filterByCount(filter='(eventId eq ''added'' and day gt " +
 				"''last24Hours'' and attribute/" + encodedName +
@@ -1168,8 +1173,10 @@ public class FilterExpressionTest {
 				DSL.condition(
 					String.join(
 						"", "DATE(PARSE_TIMESTAMP('%Y-%m-%dT%H:%M:%S', ",
-						"REGEXP_EXTRACT(JSON_EXTRACT_SCALAR(",
-						"Event.eventProperties, '$.item name'), r'[^.]*'))) < ",
+						"REGEXP_EXTRACT(",
+						"COALESCE((SELECT value FROM UNNEST(Event.properties) ",
+						"AS properties WHERE properties.name = 'item name' ",
+						"LIMIT 1), NULL), r'[^.]*'))) < ",
 						"SAFE_CAST('2024-03-04' AS DATE)"))),
 			"events.filterByCount(filter='(eventId eq ''added'' and day gt " +
 				"''last24Hours'' and attribute/" + encodedName +
@@ -1189,8 +1196,10 @@ public class FilterExpressionTest {
 					DSL.function(
 						"DATE", Date.class,
 						DSL.field(
-							"JSON_EXTRACT_SCALAR(Event.eventProperties, " +
-								"'$.item name')"),
+							"COALESCE((SELECT value FROM UNNEST(" +
+								"Event.properties) AS properties WHERE " +
+									"properties.name = 'item name' LIMIT 1), " +
+										"NULL)"),
 						DSL.val(TimeZoneDogUtil.getZoneId())
 					).between(
 						DSL.function("DATE", Date.class, DSL.val("2024-03-04")),
@@ -1212,8 +1221,10 @@ public class FilterExpressionTest {
 					"Event"
 				),
 				DSL.condition(
-					"LOWER(JSON_EXTRACT_SCALAR(Event.eventProperties, " +
-						"'$.item name')) LIKE '%shoe%'")),
+					"LOWER(COALESCE((SELECT value FROM " +
+						"UNNEST(Event.properties) AS properties WHERE " +
+							"properties.name = 'item name' LIMIT 1), NULL)" +
+								") LIKE '%shoe%'")),
 			"events.filterByCount(filter='(eventId eq ''added'' and day gt " +
 				"''last24Hours'' and contains(attribute/" + encodedName +
 					", ''shoe''))', operator='ge', value=1)",
@@ -1230,12 +1241,14 @@ public class FilterExpressionTest {
 				),
 				DSL.and(
 					DSL.field(
-						"JSON_EXTRACT_SCALAR(Event.eventProperties, '$.item " +
-							"name')"
+						"COALESCE((SELECT value FROM " +
+							"UNNEST(Event.properties) AS properties WHERE " +
+								"properties.name = 'item name' LIMIT 1), NULL)"
 					).isNotNull(),
 					DSL.field(
-						"JSON_EXTRACT_SCALAR(Event.eventProperties, '$.item " +
-							"name')"
+						"COALESCE((SELECT value FROM " +
+							"UNNEST(Event.properties) AS properties WHERE " +
+								"properties.name = 'item name' LIMIT 1), NULL)"
 					).ne(
 						""
 					))),
@@ -1255,12 +1268,14 @@ public class FilterExpressionTest {
 				),
 				DSL.or(
 					DSL.field(
-						"JSON_EXTRACT_SCALAR(Event.eventProperties, '$.item " +
-							"name')"
+						"COALESCE((SELECT value FROM " +
+							"UNNEST(Event.properties) AS properties WHERE " +
+								"properties.name = 'item name' LIMIT 1), NULL)"
 					).isNull(),
 					DSL.field(
-						"JSON_EXTRACT_SCALAR(Event.eventProperties, '$.item " +
-							"name')"
+						"COALESCE((SELECT value FROM " +
+							"UNNEST(Event.properties) AS properties WHERE " +
+								"properties.name = 'item name' LIMIT 1), NULL)"
 					).eq(
 						""
 					))),
@@ -1279,9 +1294,11 @@ public class FilterExpressionTest {
 					"Event"
 				),
 				DSL.condition(
-					"SAFE_CAST(JSON_EXTRACT_SCALAR(Event.eventProperties, " +
-						"'$.item name') AS BOOL) = SAFE_CAST('false' AS " +
-							"BOOL)")),
+					String.join(
+						"", "SAFE_CAST(COALESCE((SELECT value FROM ",
+						"UNNEST(Event.properties) AS properties WHERE ",
+						"properties.name = 'item name' LIMIT 1), NULL) AS ",
+						"BOOL) = SAFE_CAST('false' AS BOOL)"))),
 			"events.filterByCount(filter='(eventId eq ''added'' and day gt " +
 				"''last24Hours'' and attribute/" + encodedName +
 					" eq false)', operator='ge', value=1)",
@@ -1297,8 +1314,11 @@ public class FilterExpressionTest {
 					"Event"
 				),
 				DSL.condition(
-					"SAFE_CAST(JSON_EXTRACT_SCALAR(Event.eventProperties, " +
-						"'$.item name') AS BOOL) = SAFE_CAST('true' AS BOOL)")),
+					String.join(
+						"", "SAFE_CAST(COALESCE((SELECT value FROM ",
+						"UNNEST(Event.properties) AS properties WHERE ",
+						"properties.name = 'item name' LIMIT 1), NULL) AS ",
+						"BOOL) = SAFE_CAST('true' AS BOOL)"))),
 			"events.filterByCount(filter='(eventId eq ''added'' and day gt " +
 				"''last24Hours'' and attribute/" + encodedName + " eq true)'" +
 					", operator='ge', value=1)",
