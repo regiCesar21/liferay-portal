@@ -805,11 +805,6 @@
 			},
 			{
 				"mode": "NULLABLE",
-				"name": "eventProperties",
-				"type": "STRING"
-			},
-			{
-				"mode": "NULLABLE",
 				"name": "experienceId",
 				"type": "STRING"
 			},
