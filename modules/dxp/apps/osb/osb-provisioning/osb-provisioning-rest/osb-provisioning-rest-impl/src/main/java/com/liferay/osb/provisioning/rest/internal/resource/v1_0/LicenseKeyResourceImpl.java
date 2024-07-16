@@ -2042,7 +2042,9 @@ public class LicenseKeyResourceImpl
 		long days = ChronoUnit.DAYS.between(
 			startDate.toInstant(), expirationDate.toInstant());
 
-		if (days != 60) {
+		Date now = new Date();
+
+		if ((days != 30) || expirationDate.before(now)) {
 			throw new PrincipalException("Invalid start or expiration date");
 		}
 
