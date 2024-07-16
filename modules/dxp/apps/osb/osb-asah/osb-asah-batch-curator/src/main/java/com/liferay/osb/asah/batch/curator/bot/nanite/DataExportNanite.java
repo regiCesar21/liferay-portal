@@ -79,7 +79,7 @@ public class DataExportNanite extends BaseNanite {
 		if (dataExportTask.getType() == DataExportTask.Type.EVENT) {
 			dataExporter = new BigQueryDataExporter(
 				_bigQueryQueryExecutor, Collections.emptyList(), dataExportTask,
-				"eventDate", _dslContext, Collections.emptyList(), "BQEvent");
+				"eventDate", _dslContext, "BQEvent");
 		}
 		else if (dataExportTask.getType() == DataExportTask.Type.IDENTITY) {
 			Condition condition = DSL.field(
@@ -94,8 +94,7 @@ public class DataExportNanite extends BaseNanite {
 
 			dataExporter = new BigQueryDataExporter(
 				_bigQueryQueryExecutor, Collections.singletonList(condition),
-				dataExportTask, "createDate", _dslContext,
-				Collections.emptyList(), "BQIdentity");
+				dataExportTask, "createDate", _dslContext, "BQIdentity");
 		}
 		else if (dataExportTask.getType() == DataExportTask.Type.INDIVIDUAL) {
 			Condition condition = DSL.or(
@@ -110,19 +109,17 @@ public class DataExportNanite extends BaseNanite {
 
 			dataExporter = new BigQueryDataExporter(
 				_bigQueryQueryExecutor, Collections.singletonList(condition),
-				dataExportTask, "createDate", _dslContext,
-				Collections.emptyList(), "BQIndividual");
+				dataExportTask, "createDate", _dslContext, "BQIndividual");
 		}
 		else if (dataExportTask.getType() == DataExportTask.Type.MEMBERSHIP) {
 			dataExporter = new BigQueryDataExporter(
 				_bigQueryQueryExecutor, Collections.emptyList(), dataExportTask,
-				"createDate", _dslContext, Collections.emptyList(),
-				"BQMembership");
+				"createDate", _dslContext, "BQMembership");
 		}
 		else if (dataExportTask.getType() == DataExportTask.Type.PAGE) {
 			dataExporter = new BigQueryDataExporter(
 				_bigQueryQueryExecutor, Collections.emptyList(), dataExportTask,
-				"eventDate", _dslContext, Collections.emptyList(), "PageDaily");
+				"eventDate", _dslContext, "PageDaily");
 		}
 		else {
 			throw new IllegalArgumentException(

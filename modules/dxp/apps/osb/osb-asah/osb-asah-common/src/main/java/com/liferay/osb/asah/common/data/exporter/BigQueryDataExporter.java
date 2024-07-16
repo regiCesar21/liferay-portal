@@ -60,8 +60,7 @@ public class BigQueryDataExporter implements DataExporter {
 	public BigQueryDataExporter(
 		BigQueryQueryExecutor bigQueryQueryExecutor, List<Condition> conditions,
 		DataExportTask dataExportTask, String dateFieldName,
-		DSLContext dslContext, List<String> selectedFieldNames,
-		String tableName) {
+		DSLContext dslContext, String tableName) {
 
 		this(
 			bigQueryQueryExecutor, dslContext,
@@ -70,7 +69,6 @@ public class BigQueryDataExporter implements DataExporter {
 		_conditions = conditions;
 		_dataExportTask = dataExportTask;
 		_dateFieldName = dateFieldName;
-		_selectedFieldNames = selectedFieldNames;
 
 		_tmpFilePrefix = String.valueOf(dataExportTask.getId());
 	}
@@ -205,7 +203,7 @@ public class BigQueryDataExporter implements DataExporter {
 		String exportBucketFolder =
 			ProjectIdThreadLocal.getProjectId() + "/" + _dataExportTask.getId();
 
-		_runBigQueryExportJob(exportBucket, exportBucketFolder);
+		_runDataExportBigQueryExportJob(exportBucket, exportBucketFolder);
 
 		_createDataExportZipFile(exportBucket, exportBucketFolder);
 	}
@@ -270,6 +268,16 @@ public class BigQueryDataExporter implements DataExporter {
 		return conditions;
 	}
 
+	private SelectSelectStep<Record> _getDataExportSelectSelectStep() {
+		String tableName = _tableNames.get(0);
+
+		if (tableName.equals("BQEvent")) {
+			return _dslContext.select(_getFields());
+		}
+
+		return _dslContext.select();
+	}
+
 	private Field _getEventPropertiesField() {
 		return DSL.field(
 			String.join(
@@ -282,29 +290,7 @@ public class BigQueryDataExporter implements DataExporter {
 
 	private List<Field> _getFields() {
 		return Arrays.asList(
-			DSL.field("* EXCEPT (properties)"),
-			_getEventPropertiesField());
-	}
-
-	private SelectSelectStep<Record> _getSelectSelectStep() {
-		if (_selectedFieldNames.isEmpty()) {
-			return _dslContext.select();
-		}
-
-		List<Field> fields = new ArrayList<>();
-
-		for (String selectedFieldName : _selectedFieldNames) {
-			if (StringUtils.equalsIgnoreCase(
-					selectedFieldName, "eventProperties")) {
-
-				fields.add(_getEventPropertiesField());
-			}
-			else {
-				fields.add(DSL.field(selectedFieldName));
-			}
-		}
-
-		return _dslContext.select(fields);
+			DSL.field("* EXCEPT (properties)"), _getEventPropertiesField());
 	}
 
 	private void _runBigQueryDataControlExportJob(
@@ -370,10 +356,11 @@ public class BigQueryDataExporter implements DataExporter {
 				exportBucketFolder, tableName, query));
 	}
 
-	private void _runBigQueryExportJob(
+	private void _runDataExportBigQueryExportJob(
 		String exportBucket, String exportBucketFolder) {
 
-		SelectSelectStep<Record> selectSelectStep = _getSelectSelectStep();
+		SelectSelectStep<Record> selectSelectStep =
+			_getDataExportSelectSelectStep();
 
 		_bigQueryQueryExecutor.queryExecute(
 			String.format(
@@ -413,7 +400,6 @@ public class BigQueryDataExporter implements DataExporter {
 	private DataExportTask _dataExportTask;
 	private String _dateFieldName;
 	private final DSLContext _dslContext;
-	private List<String> _selectedFieldNames;
 	private final Storage _storage;
 	private List<String> _tableNames;
 	private String _tmpFilePrefix;
