@@ -242,3 +242,8 @@ eec4a8e05d4fd514b28ea11641b3e0218cf2f7a2^..bbc040deca015aadeb065814f65bad6eee8b8
 # Bundle Version 4.0.57
 #
 bbc040deca015aadeb065814f65bad6eee8b8ae2^..68a25ffe0379f1affd79664b6d930d6dae9038b6=LPS-77699
+
+#
+# Bundle Version 4.0.58
+#
+68a25ffe0379f1affd79664b6d930d6dae9038b6^..9bb5b9e77d52bf3a625b9d273e6b8aaef7ad14b5=LPD-24354 LPS-77699
