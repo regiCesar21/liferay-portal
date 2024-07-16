@@ -137,3 +137,8 @@ ff5112c495f5ff0b848083fd1b1840c5ac86e29a^..1add34ef042964c11df2b5782e54a1e5d503b
 # Bundle Version 3.0.33
 #
 1add34ef042964c11df2b5782e54a1e5d503b38a^..fd5abd6faffecf973fff450ff50fe849cbe9b0e4=LPD-15360
+
+#
+# Bundle Version 3.0.34
+#
+fd5abd6faffecf973fff450ff50fe849cbe9b0e4^..a82ae9c01302fa1ae554027111e73ead66c79646=LPD-23771 LPD-24753
