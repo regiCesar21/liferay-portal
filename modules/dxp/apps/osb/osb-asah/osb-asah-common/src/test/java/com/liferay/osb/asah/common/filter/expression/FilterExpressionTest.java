@@ -1119,6 +1119,11 @@ public class FilterExpressionTest {
 		String encodedName = Hex.encodeHexString(
 			"item name".getBytes(StandardCharsets.UTF_8));
 
+		String eventPropertiesValueQuery =
+			"COALESCE((SELECT value FROM UNNEST(Event.properties) AS " +
+				"properties WHERE properties.name = 'item name' LIMIT 1), " +
+					"NULL)";
+
 		_assertEquals(
 			_buildEventAttributesCondition(
 				123456789L, "added",
@@ -1129,7 +1134,7 @@ public class FilterExpressionTest {
 				),
 				DSL.condition(
 					String.format(
-						"%s = 'shoes'", _EVENT_PROPERTIES_VALUE_QUERY))),
+						"%s = 'shoes'", eventPropertiesValueQuery))),
 			"events.filterByCount(filter='(eventId eq ''added'' and day gt " +
 				"''last24Hours'' and attribute/" + encodedName +
 					" eq ''shoes'')', operator='ge', value=1)",
@@ -1147,9 +1152,9 @@ public class FilterExpressionTest {
 				DSL.condition(
 					String.join(
 						"", "CASE WHEN SAFE_CAST(",
-						_EVENT_PROPERTIES_VALUE_QUERY, " AS NUMERIC) ",
+						eventPropertiesValueQuery, " AS NUMERIC) ",
 						"IS NULL THEN false ELSE SAFE_CAST(",
-						_EVENT_PROPERTIES_VALUE_QUERY, " AS NUMERIC) > ",
+						eventPropertiesValueQuery, " AS NUMERIC) > ",
 						"SAFE_CAST('1' AS NUMERIC) END"))),
 			"events.filterByCount(filter='(eventId eq ''added'' and day gt " +
 				"''last24Hours'' and attribute/" + encodedName +
@@ -1168,7 +1173,7 @@ public class FilterExpressionTest {
 				DSL.condition(
 					String.join(
 						"", "DATE(PARSE_TIMESTAMP('%Y-%m-%dT%H:%M:%S', ",
-						"REGEXP_EXTRACT(", _EVENT_PROPERTIES_VALUE_QUERY,
+						"REGEXP_EXTRACT(", eventPropertiesValueQuery,
 						", r'[^.]*'))) < SAFE_CAST('2024-03-04' AS DATE)"))),
 			"events.filterByCount(filter='(eventId eq ''added'' and day gt " +
 				"''last24Hours'' and attribute/" + encodedName +
@@ -1187,7 +1192,7 @@ public class FilterExpressionTest {
 				DSL.and(
 					DSL.function(
 						"DATE", Date.class,
-						DSL.field(_EVENT_PROPERTIES_VALUE_QUERY),
+						DSL.field(eventPropertiesValueQuery),
 						DSL.val(TimeZoneDogUtil.getZoneId())
 					).between(
 						DSL.function("DATE", Date.class, DSL.val("2024-03-04")),
@@ -1209,7 +1214,7 @@ public class FilterExpressionTest {
 					"Event"
 				),
 				DSL.condition(
-					"LOWER(" + _EVENT_PROPERTIES_VALUE_QUERY +
+					"LOWER(" + eventPropertiesValueQuery +
 						") LIKE '%shoe%'")),
 			"events.filterByCount(filter='(eventId eq ''added'' and day gt " +
 				"''last24Hours'' and contains(attribute/" + encodedName +
@@ -1227,10 +1232,10 @@ public class FilterExpressionTest {
 				),
 				DSL.and(
 					DSL.field(
-						_EVENT_PROPERTIES_VALUE_QUERY
+						eventPropertiesValueQuery
 					).isNotNull(),
 					DSL.field(
-						_EVENT_PROPERTIES_VALUE_QUERY
+						eventPropertiesValueQuery
 					).ne(
 						""
 					))),
@@ -1250,10 +1255,10 @@ public class FilterExpressionTest {
 				),
 				DSL.or(
 					DSL.field(
-						_EVENT_PROPERTIES_VALUE_QUERY
+						eventPropertiesValueQuery
 					).isNull(),
 					DSL.field(
-						_EVENT_PROPERTIES_VALUE_QUERY
+						eventPropertiesValueQuery
 					).eq(
 						""
 					))),
@@ -1273,7 +1278,7 @@ public class FilterExpressionTest {
 				),
 				DSL.condition(
 					String.join(
-						"", "SAFE_CAST(", _EVENT_PROPERTIES_VALUE_QUERY,
+						"", "SAFE_CAST(", eventPropertiesValueQuery,
 						" AS BOOL) = SAFE_CAST('false' AS BOOL)"))),
 			"events.filterByCount(filter='(eventId eq ''added'' and day gt " +
 				"''last24Hours'' and attribute/" + encodedName +
@@ -1291,7 +1296,7 @@ public class FilterExpressionTest {
 				),
 				DSL.condition(
 					String.join(
-						"", "SAFE_CAST(", _EVENT_PROPERTIES_VALUE_QUERY,
+						"", "SAFE_CAST(", eventPropertiesValueQuery,
 						" AS BOOL) = SAFE_CAST('true' AS BOOL)"))),
 			"events.filterByCount(filter='(eventId eq ''added'' and day gt " +
 				"''last24Hours'' and attribute/" + encodedName + " eq true)'" +
@@ -4410,10 +4415,6 @@ public class FilterExpressionTest {
 			throw new RuntimeException(ioException);
 		}
 	}
-
-	private static final String _EVENT_PROPERTIES_VALUE_QUERY =
-		"COALESCE((SELECT value FROM UNNEST(Event.properties) AS properties " +
-			"WHERE properties.name = 'item name' LIMIT 1), NULL)";
 
 	private static final String _QUERY = String.join(
 		"", "CASE WHEN STARTS_WITH({0}.value, '[') AND ENDS_WITH(",
