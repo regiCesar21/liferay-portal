@@ -1133,8 +1133,7 @@ public class FilterExpressionTest {
 					"Event"
 				),
 				DSL.condition(
-					String.format(
-						"%s = 'shoes'", eventPropertiesValueQuery))),
+					String.format("%s = 'shoes'", eventPropertiesValueQuery))),
 			"events.filterByCount(filter='(eventId eq ''added'' and day gt " +
 				"''last24Hours'' and attribute/" + encodedName +
 					" eq ''shoes'')', operator='ge', value=1)",
@@ -1151,9 +1150,8 @@ public class FilterExpressionTest {
 				),
 				DSL.condition(
 					String.join(
-						"", "CASE WHEN SAFE_CAST(",
-						eventPropertiesValueQuery, " AS NUMERIC) ",
-						"IS NULL THEN false ELSE SAFE_CAST(",
+						"", "CASE WHEN SAFE_CAST(", eventPropertiesValueQuery,
+						" AS NUMERIC) ", "IS NULL THEN false ELSE SAFE_CAST(",
 						eventPropertiesValueQuery, " AS NUMERIC) > ",
 						"SAFE_CAST('1' AS NUMERIC) END"))),
 			"events.filterByCount(filter='(eventId eq ''added'' and day gt " +
@@ -1214,8 +1212,7 @@ public class FilterExpressionTest {
 					"Event"
 				),
 				DSL.condition(
-					"LOWER(" + eventPropertiesValueQuery +
-						") LIKE '%shoe%'")),
+					"LOWER(" + eventPropertiesValueQuery + ") LIKE '%shoe%'")),
 			"events.filterByCount(filter='(eventId eq ''added'' and day gt " +
 				"''last24Hours'' and contains(attribute/" + encodedName +
 					", ''shoe''))', operator='ge', value=1)",
