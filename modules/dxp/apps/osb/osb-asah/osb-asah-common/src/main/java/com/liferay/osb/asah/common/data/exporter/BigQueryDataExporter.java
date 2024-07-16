@@ -282,7 +282,7 @@ public class BigQueryDataExporter implements DataExporter {
 
 	private List<Field> _getFields() {
 		return Arrays.asList(
-			DSL.field("* EXCEPT (eventProperties, properties)"),
+			DSL.field("* EXCEPT (properties)"),
 			_getEventPropertiesField());
 	}
 
