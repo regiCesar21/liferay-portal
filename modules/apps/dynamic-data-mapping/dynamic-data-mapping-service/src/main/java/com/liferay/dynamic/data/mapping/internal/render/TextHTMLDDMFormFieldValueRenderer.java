@@ -9,6 +9,7 @@ import com.liferay.dynamic.data.mapping.model.DDMFormFieldType;
 import com.liferay.dynamic.data.mapping.model.Value;
 import com.liferay.dynamic.data.mapping.render.ValueAccessor;
 import com.liferay.dynamic.data.mapping.storage.DDMFormFieldValue;
+import com.liferay.dynamic.data.mapping.util.TextHTMLDDMFormFieldUtil;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -38,7 +39,9 @@ public class TextHTMLDDMFormFieldValueRenderer
 					_HTML,
 					new String[] {"[$DDM_FORM_FIELD_VALUE$]", "[$PREVIEW$]"},
 					new String[] {
-						HtmlUtil.escapeJS(value.getString(locale)),
+						HtmlUtil.escapeJS(
+							TextHTMLDDMFormFieldUtil.getHTML(
+								value.getString(locale))),
 						LanguageUtil.get(locale, "preview")
 					});
 			}

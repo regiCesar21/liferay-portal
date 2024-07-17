@@ -11,6 +11,7 @@ import com.liferay.dynamic.data.mapping.model.DDMFormFieldOptions;
 import com.liferay.dynamic.data.mapping.model.DDMStructure;
 import com.liferay.dynamic.data.mapping.model.LocalizedValue;
 import com.liferay.dynamic.data.mapping.service.DDMStructureLocalServiceUtil;
+import com.liferay.dynamic.data.mapping.util.TextHTMLDDMFormFieldUtil;
 import com.liferay.journal.configuration.JournalServiceConfiguration;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
@@ -567,6 +568,9 @@ public class JournalTransformer {
 
 					attributes.put(key, value);
 				}
+			}
+			else if (type.equals("text_area")) {
+				data = TextHTMLDDMFormFieldUtil.getHTML(data);
 			}
 
 			if (dynamicContentElement != null) {
