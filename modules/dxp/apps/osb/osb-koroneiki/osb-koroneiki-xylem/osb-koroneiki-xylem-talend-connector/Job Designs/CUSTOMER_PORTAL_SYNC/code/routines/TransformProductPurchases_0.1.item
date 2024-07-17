@@ -124,7 +124,8 @@ public class TransformProductPurchases {
 				_getCustomFieldJSONObject(
 					"accountSubscriptionERC",
 					_getAccountSubscriptionERC(
-						accountKey, displayGroupName, displayName)));
+						accountKey, displayGroupName,
+						productJSONObject.getString("key"))));
 			customFieldsJSONArray.put(
 				_getCustomFieldJSONObject(
 					"provisionedCount", productConsumptionsJSONArray.length()));
@@ -151,7 +152,7 @@ public class TransformProductPurchases {
 			orderItemJSONObject.put(
 				"orderExternalReferenceCode", orderExternalReferenceCode);
 			orderItemJSONObject.put(
-				"skuExternalReferenceCode", productJSONObject.get("key"));
+				"skuExternalReferenceCode", productJSONObject.getString("key"));
 
 			JSONObject optionsJSONObject = new JSONObject();
 
@@ -248,14 +249,10 @@ public class TransformProductPurchases {
 	}
 
 	private static String _getAccountSubscriptionERC(
-		String accountKey, String displayGroupName, String displayName) {
+		String accountKey, String displayGroupName, String productKey) {
 
 		return _getAccountSubscriptionGroupERC(accountKey, displayGroupName) +
-			"_" +
-				displayName.toLowerCase(
-				).replace(
-					" ", "-"
-				);
+			"_" + productKey;
 	}
 
 	private static String _getAccountSubscriptionGroupERC(
@@ -351,7 +348,7 @@ public class TransformProductPurchases {
 			this.accountSubscriptionGroupExternalReferenceCode =
 				_getAccountSubscriptionGroupERC(accountKey, displayGroupName);
 			this.externalReferenceCode = _getAccountSubscriptionERC(
-				accountKey, displayGroupName, name);
+				accountKey, displayGroupName, productKey);
 		}
 
 		public void addSubscriptionTerm(JSONObject jsonObject)
