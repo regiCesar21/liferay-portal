@@ -564,10 +564,16 @@ public class OpportunityMessageSubscriber extends BaseMessageSubscriber {
 
 		String soldBy = jsonObject.getString("opportunitySoldBy");
 
+		Map<String, String> properties = account.getProperties();
+
+		if (!soldBy.equals("Liferay China") &&
+			!soldBy.equals("Liferay India")) {
+
+			properties.put("allowComplimentary", StringPool.TRUE);
+		}
+
 		if (soldBy.equals("Liferay Brazil") || soldBy.equals("Liferay China") ||
 			soldBy.equals("Liferay India")) {
-
-			Map<String, String> properties = account.getProperties();
 
 			properties.put("allowPermanentLicenses", StringPool.FALSE);
 		}
