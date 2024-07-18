@@ -29,8 +29,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 import org.antlr.v4.runtime.ParserRuleContext;
 import org.antlr.v4.runtime.Token;
@@ -158,11 +156,6 @@ public class FilterExpressionConditionVisitor
 
 		if (fieldName.startsWith("attribute/")) {
 			String[] identifierParts = StringUtils.split(fieldName, "/");
-
-			if (_isFeatureFlagEnabled()) {
-				return _getEventAttributeCondition(
-					identifierParts[1], "eq", value);
-			}
 
 			return _getEventPropertyCondition(identifierParts[1], "eq", value);
 		}
@@ -330,21 +323,6 @@ public class FilterExpressionConditionVisitor
 			"Event"
 		);
 
-		if (_referencedTableNames.contains("EventAttributes")) {
-			Stream<String> stream = _referencedTableNames.stream();
-
-			Set<String> fields = stream.filter(
-				s -> s.startsWith("EventAttributes_")
-			).collect(
-				Collectors.toSet()
-			);
-
-			for (String field : fields) {
-				eventTable = eventTable.crossJoin(
-					"UNNEST(Event.properties) AS " + field);
-			}
-		}
-
 		return DSL.or(
 			identityIdField.in(
 				DSL.select(
@@ -452,21 +430,7 @@ public class FilterExpressionConditionVisitor
 
 		String parsedQualifiedFieldName = qualifiedFieldName;
 
-		if (StringUtils.startsWith(fieldName, "EventAttribute.")) {
-			String[] parts = fieldName.split("\\.", 2);
-
-			qualifiedFieldName = parts[1];
-
-			parsedQualifiedFieldName = BQSQLUtil.createFieldNameAlias(
-				qualifiedFieldName);
-
-			String alias = "EventAttributes_" + parsedQualifiedFieldName;
-
-			_referencedTableNames.add(alias);
-
-			field = DSL.field(alias + ".value");
-		}
-		else if (StringUtils.startsWith(fieldName, "EventProperty.")) {
+		if (StringUtils.startsWith(fieldName, "EventProperty.")) {
 			String[] parts = fieldName.split("\\.", 2);
 
 			try {
@@ -542,11 +506,7 @@ public class FilterExpressionConditionVisitor
 
 			String value = String.valueOf(param.getValue());
 
-			if (StringUtils.startsWith(fieldName, "EventAttribute.")) {
-				condition = _getEventAttributeCondition(
-					fieldName, "contains", value);
-			}
-			else if (StringUtils.startsWith(fieldName, "EventProperty.")) {
+			if (StringUtils.startsWith(fieldName, "EventProperty.")) {
 				condition = _getEventPropertyCondition(
 					fieldName, "contains", value);
 			}
@@ -633,37 +593,7 @@ public class FilterExpressionConditionVisitor
 		}
 
 		if (!functionName.equalsIgnoreCase("contains")) {
-			if (StringUtils.startsWith(fieldName, "EventAttribute.")) {
-				String[] parts = fieldName.split("\\.", 2);
-
-				fieldName = parts[1];
-
-				String parsedFieldName = BQSQLUtil.createFieldNameAlias(
-					fieldName);
-
-				String alias = "EventAttributes_" + parsedFieldName;
-
-				_referencedTableNames.add(alias);
-
-				_referencedTableNames.add("EventAttributes");
-
-				try {
-					fieldName = new String(
-						Hex.decodeHex(fieldName), StandardCharsets.UTF_8);
-				}
-				catch (DecoderException decoderException) {
-					throw new FilterExpressionParserException(
-						"Invalid event attribute name: " + fieldName);
-				}
-
-				condition = condition.and(
-					DSL.field(
-						alias + ".name"
-					).eq(
-						fieldName
-					));
-			}
-			else if (StringUtils.startsWith(field.getName(), "ExpandoValue_")) {
+			if (StringUtils.startsWith(field.getName(), "ExpandoValue_")) {
 				condition = condition.and(
 					DSL.field(
 						"ExpandoValue_" + parsedQualifiedFieldName +
@@ -745,11 +675,6 @@ public class FilterExpressionConditionVisitor
 		if (fieldName.startsWith("attribute/")) {
 			String[] identifierParts = StringUtils.split(fieldName, "/");
 
-			if (_isFeatureFlagEnabled()) {
-				return _getEventAttributeCondition(
-					identifierParts[1], "gt", value);
-			}
-
 			return _getEventPropertyCondition(identifierParts[1], "gt", value);
 		}
 
@@ -803,11 +728,6 @@ public class FilterExpressionConditionVisitor
 
 		if (fieldName.startsWith("attribute/")) {
 			String[] identifierParts = StringUtils.split(fieldName, "/");
-
-			if (_isFeatureFlagEnabled()) {
-				return _getEventAttributeCondition(
-					identifierParts[1], "ge", value);
-			}
 
 			return _getEventPropertyCondition(identifierParts[1], "ge", value);
 		}
@@ -863,10 +783,6 @@ public class FilterExpressionConditionVisitor
 			String[] identifierParts = StringUtils.split(fieldName, "/");
 
 			if (Objects.equals(identifierParts[0], "attribute")) {
-				if (_isFeatureFlagEnabled()) {
-					return DSL.field("EventAttribute." + identifierParts[1]);
-				}
-
 				return DSL.field("EventProperty." + identifierParts[1]);
 			}
 			else if (Objects.equals(identifierParts[0], "custom")) {
@@ -918,11 +834,6 @@ public class FilterExpressionConditionVisitor
 
 		if (fieldName.startsWith("attribute/")) {
 			String[] identifierParts = StringUtils.split(fieldName, "/");
-
-			if (_isFeatureFlagEnabled()) {
-				return _getEventAttributeCondition(
-					identifierParts[1], "lt", value);
-			}
 
 			return _getEventPropertyCondition(identifierParts[1], "lt", value);
 		}
@@ -977,11 +888,6 @@ public class FilterExpressionConditionVisitor
 
 		if (fieldName.startsWith("attribute/")) {
 			String[] identifierParts = StringUtils.split(fieldName, "/");
-
-			if (_isFeatureFlagEnabled()) {
-				return _getEventAttributeCondition(
-					identifierParts[1], "le", value);
-			}
 
 			return _getEventPropertyCondition(identifierParts[1], "le", value);
 		}
@@ -1044,11 +950,6 @@ public class FilterExpressionConditionVisitor
 
 		if (fieldName.startsWith("attribute/")) {
 			String[] identifierParts = StringUtils.split(fieldName, "/");
-
-			if (_isFeatureFlagEnabled()) {
-				return _getEventAttributeCondition(
-					identifierParts[1], "ne", value);
-			}
 
 			return _getEventPropertyCondition(identifierParts[1], "ne", value);
 		}
@@ -1351,130 +1252,6 @@ public class FilterExpressionConditionVisitor
 		}
 
 		return leftField.ne(value);
-	}
-
-	private Condition _getEventAttributeCondition(
-		String fieldName, String operator, String value) {
-
-		if (fieldName.startsWith("EventAttribute.")) {
-			String[] parts = fieldName.split("\\.", 2);
-
-			fieldName = parts[1];
-		}
-
-		String parsedFieldName = BQSQLUtil.createFieldNameAlias(fieldName);
-
-		String alias = "EventAttributes_" + parsedFieldName;
-
-		_referencedTableNames.add(alias);
-
-		_referencedTableNames.add("EventAttributes");
-
-		try {
-			fieldName = new String(
-				Hex.decodeHex(fieldName), StandardCharsets.UTF_8);
-		}
-		catch (DecoderException decoderException) {
-			throw new FilterExpressionParserException(
-				"Invalid event attribute name: " + fieldName);
-		}
-
-		Condition condition = DSL.field(
-			alias + ".name"
-		).eq(
-			fieldName
-		);
-
-		String query =
-			"LOWER({0}.value) {1} '" + StringUtils.lowerCase(value) + "'";
-
-		if (DateUtil.isValidPatternShort(value)) {
-			query = String.join(
-				"", "CASE WHEN {0}.name = '", fieldName,
-				"' THEN DATE(PARSE_TIMESTAMP('%Y-%m-%dT%H:%M:%S', ",
-				"REGEXP_EXTRACT({0}.value, r'[^.]*'))) {1} SAFE_CAST('", value,
-				"' AS DATE) ELSE false END");
-		}
-		else if (NumberUtils.isCreatable(value)) {
-			query =
-				"SAFE_CAST({0}.value AS NUMERIC) {1} SAFE_CAST('" + value +
-					"' AS NUMERIC)";
-		}
-		else if (StringUtils.equalsIgnoreCase(value, "false") ||
-				 StringUtils.equalsIgnoreCase(value, "true")) {
-
-			query =
-				"SAFE_CAST({0}.value AS BOOL) {1} SAFE_CAST('" + value +
-					"' AS BOOL)";
-		}
-
-		if (operator.equalsIgnoreCase("contains")) {
-			condition = condition.and(
-				DSL.condition(
-					String.join(
-						"", "LOWER(", alias, ".value) LIKE '%",
-						StringUtils.lowerCase(value), "%'")));
-		}
-		else if (operator.equalsIgnoreCase("eq")) {
-			if (StringUtil.isNull(value)) {
-				Field aliasField = DSL.field(alias + ".value");
-
-				condition = condition.and(
-					DSL.or(aliasField.isNull(), aliasField.eq("")));
-			}
-			else {
-				condition = condition.and(
-					DSL.condition(
-						StringUtil.replace(
-							query, new String[] {"{0}", "{1}"},
-							new String[] {alias, "="})));
-			}
-		}
-		else if (operator.equalsIgnoreCase("ge")) {
-			condition = condition.and(
-				DSL.condition(
-					StringUtil.replace(
-						query, new String[] {"{0}", "{1}"},
-						new String[] {alias, ">="})));
-		}
-		else if (operator.equalsIgnoreCase("gt")) {
-			condition = condition.and(
-				DSL.condition(
-					StringUtil.replace(
-						query, new String[] {"{0}", "{1}"},
-						new String[] {alias, ">"})));
-		}
-		else if (operator.equalsIgnoreCase("le")) {
-			condition = condition.and(
-				DSL.condition(
-					StringUtil.replace(
-						query, new String[] {"{0}", "{1}"},
-						new String[] {alias, "<="})));
-		}
-		else if (operator.equalsIgnoreCase("lt")) {
-			condition = condition.and(
-				DSL.condition(
-					StringUtil.replace(
-						query, new String[] {"{0}", "{1}"},
-						new String[] {alias, "<"})));
-		}
-		else if (operator.equalsIgnoreCase("ne")) {
-			if (StringUtil.isNull(value)) {
-				Field aliasField = DSL.field(alias + ".value");
-
-				condition = condition.and(
-					DSL.and(aliasField.isNotNull(), aliasField.ne("")));
-			}
-			else {
-				condition = condition.and(
-					DSL.condition(
-						StringUtil.replace(
-							query, new String[] {"{0}", "{1}"},
-							new String[] {alias, "!="})));
-			}
-		}
-
-		return condition;
 	}
 
 	private Condition _getEventPropertyCondition(
@@ -1852,10 +1629,6 @@ public class FilterExpressionConditionVisitor
 		}
 
 		return DSL.val(localDateTime);
-	}
-
-	private boolean _isFeatureFlagEnabled() {
-		return Boolean.parseBoolean(System.getenv("feature.flag.LPD-24648"));
 	}
 
 	private String _parseFilterStringExpression(Token filterToken) {
