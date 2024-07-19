@@ -271,15 +271,11 @@ public class BQEventRepositoryTest
 		Assertions.assertEquals(
 			new TreeMap<String, Date>() {
 				{
-					put("Windshield Wipers", _getExpectedDate(date, -1));
-
-					put("Wheels", _getExpectedDate(date, -2));
-
-					put("Plates", _getExpectedDate(date, -3));
-
 					put("Apples", _getExpectedDate(date, -4));
-
 					put("Books", _getExpectedDate(date, -6));
+					put("Plates", _getExpectedDate(date, -3));
+					put("Wheels", _getExpectedDate(date, -2));
+					put("Windshield Wipers", _getExpectedDate(date, -1));
 				}
 			},
 			_bqEventRepository.
