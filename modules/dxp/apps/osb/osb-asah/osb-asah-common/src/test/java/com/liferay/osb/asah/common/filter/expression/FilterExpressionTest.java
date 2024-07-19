@@ -813,7 +813,6 @@ public class FilterExpressionTest {
 	public void testEventProperties() {
 		String encodedName = Hex.encodeHexString(
 			"item name".getBytes(StandardCharsets.UTF_8));
-
 		String eventPropertiesValueQuery =
 			"COALESCE((SELECT value FROM UNNEST(Event.properties) AS " +
 				"properties WHERE properties.name = 'item name' LIMIT 1), " +
