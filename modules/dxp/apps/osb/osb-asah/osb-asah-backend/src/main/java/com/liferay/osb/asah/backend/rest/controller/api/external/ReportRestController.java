@@ -1245,13 +1245,13 @@ public class ReportRestController extends BaseRestController {
 	}
 
 	private Map<String, String> _toMap(List<BQEvent.Property> properties) {
-		Map<String, String> propertiesMap = new HashMap<>();
+		Map<String, String> map = new HashMap<>();
 
 		for (BQEvent.Property property : properties) {
-			propertiesMap.put(property.getName(), property.getValue());
+			map.put(property.getName(), property.getValue());
 		}
 
-		return propertiesMap;
+		return map;
 	}
 
 	private EntityModel<PageAssetReport> _toPageAssetReportEntityModel(
