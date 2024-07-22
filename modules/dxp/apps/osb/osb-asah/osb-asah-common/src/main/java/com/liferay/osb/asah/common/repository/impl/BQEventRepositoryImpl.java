@@ -652,12 +652,24 @@ public class BQEventRepositoryImpl
 
 		eventDateField = eventDateField.as("eventDateTrunc");
 
-		SelectJoinStep<Record2<OffsetDateTime, Integer>> selectJoinStep =
-			_dslContext.select(
+		SelectSelectStep selectSelectStep = null;
+
+		if (StringUtils.isEmpty(keywords)) {
+			selectSelectStep = _dslContext.select(eventDateField, DSL.count());
+		}
+		else {
+			ZoneId zoneId = ZoneId.of("UTC");
+
+			selectSelectStep = _buildBQEventPropertyWithStep(
+				channelId, null, DateUtil.toDate(rangeEndLocalDateTime, zoneId),
+				DateUtil.toDate(rangeStartLocalDateTime, zoneId)
+			).select(
 				eventDateField, DSL.count()
-			).from(
-				"BQEvent"
 			);
+		}
+
+		SelectJoinStep<Record2<OffsetDateTime, Integer>> selectJoinStep =
+			selectSelectStep.from("BQEvent");
 
 		selectJoinStep = _getIndividualSelectJoinStep(
 			individualId, selectJoinStep);
@@ -698,11 +710,26 @@ public class BQEventRepositoryImpl
 		selectJoinStep = _getIndividualSelectJoinStep(
 			individualId, selectJoinStep);
 
+		SelectSelectStep selectSelectStep = null;
+
+		if (StringUtils.isEmpty(keywords)) {
+			selectSelectStep = _dslContext.select(
+				event1EventDateField, DSL.count());
+		}
+		else {
+			ZoneId zoneId = ZoneId.of("UTC");
+
+			selectSelectStep = _buildBQEventPropertyWithStep(
+				channelId, null, DateUtil.toDate(rangeEndLocalDateTime, zoneId),
+				DateUtil.toDate(rangeStartLocalDateTime, zoneId)
+			).select(
+				event1EventDateField, DSL.count()
+			);
+		}
+
 		return _queryExecutor.queryForMap(
 			object -> GetterUtil.getDateString(object),
-			_dslContext.select(
-				event1EventDateField, DSL.count()
-			).from(
+			selectSelectStep.from(
 				DSL.table(
 					selectJoinStep.where(
 						_createConditions(
