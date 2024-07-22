@@ -14,6 +14,8 @@ public interface ZendeskTagConstants {
 
 	public static final String GS_OPPORTUNITY = "gs_opportunity";
 
+	public static final String PREMIUM_SERVICE = "premium_service";
+
 	public static final String SERVICE_SOLUTION = "service_solution";
 
 }

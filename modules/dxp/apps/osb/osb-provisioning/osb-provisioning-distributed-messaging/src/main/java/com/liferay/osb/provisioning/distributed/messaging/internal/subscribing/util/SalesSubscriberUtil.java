@@ -133,6 +133,13 @@ public class SalesSubscriberUtil {
 				properties.remove("liferayVersion");
 			}
 
+			if (projectJSONObject.getBoolean("premiumService")) {
+				properties.put("premiumService", "true");
+			}
+			else {
+				properties.remove("premiumService");
+			}
+
 			projectSolution = projectJSONObject.getString("projectSolution");
 		}
 		else {
@@ -168,6 +175,7 @@ public class SalesSubscriberUtil {
 		}
 
 		String gsOpportunity = properties.get("gsOpportunity");
+		String premiumService = properties.get("premiumService");
 		String projectSolution = properties.get("projectSolution");
 
 		Set<String> criteria = new HashSet<>();
@@ -182,12 +190,17 @@ public class SalesSubscriberUtil {
 		for (ZendeskTicket zendeskTicket : zendeskTickets) {
 			Set<String> tags = zendeskTicket.getTags();
 
-			tags.remove(ZendeskTagConstants.GS_OPPORTUNITY);
 			tags.remove(ZendeskTagConstants.COMMERCE_SOLUTION);
+			tags.remove(ZendeskTagConstants.GS_OPPORTUNITY);
+			tags.remove(ZendeskTagConstants.PREMIUM_SERVICE);
 			tags.remove(ZendeskTagConstants.SERVICE_SOLUTION);
 
 			if (Validator.isNotNull(gsOpportunity)) {
 				tags.add(ZendeskTagConstants.GS_OPPORTUNITY);
+			}
+
+			if (Validator.isNotNull(premiumService)) {
+				tags.add(ZendeskTagConstants.PREMIUM_SERVICE);
 			}
 
 			if (Validator.isNotNull(projectSolution)) {
