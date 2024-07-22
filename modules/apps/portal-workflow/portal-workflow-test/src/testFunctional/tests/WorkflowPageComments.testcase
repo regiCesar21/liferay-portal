@@ -147,7 +147,7 @@ definition {
 
 		Navigator.gotoPage(pageName = "Page Comments Page");
 
-		PageComment.addWithWorkflowPG(
+		PageComment.addWithWorkflowPGWithoutAlert(
 			commentAuthor = "Test Test (You)",
 			commentBody = "Page Comment Comment");
 

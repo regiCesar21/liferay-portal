@@ -146,7 +146,7 @@ StagingGroupHelper stagingGroupHelper = StagingGroupHelperUtil.getStagingGroupHe
 												/>
 
 												<aui:button-row>
-													<aui:button cssClass="btn-comment btn-primary btn-sm" disabled="<%= true %>" id="postReplyButton0" onClick='<%= randomNamespace + "postReply(0);" %>' value='<%= themeDisplay.isSignedIn() ? "reply" : "reply-as" %>' />
+													<aui:button cssClass="btn-comment btn-primary btn-sm" disabled="<%= true %>" id="postReplyButton0" onClick='<%= randomNamespace + "postReply(0, true);" %>' value='<%= themeDisplay.isSignedIn() ? "reply" : "reply-as" %>' />
 												</aui:button-row>
 											</clay:content-col>
 										</clay:content-row>
@@ -295,7 +295,7 @@ StagingGroupHelper stagingGroupHelper = StagingGroupHelperUtil.getStagingGroupHe
 				<%= randomNamespace %>hideEl(formId);
 			};
 
-			window['<%= randomNamespace %>postReply'] = function (i) {
+			window['<%= randomNamespace %>postReply'] = function (i, refreshPage) {
 				var editorInstance =
 					window['<%= namespace + randomNamespace %>postReplyBody' + i];
 
@@ -327,7 +327,7 @@ StagingGroupHelper stagingGroupHelper = StagingGroupHelperUtil.getStagingGroupHe
 					});
 				}
 				else {
-					<%= namespace + randomNamespace %>sendMessage(form);
+					<%= namespace + randomNamespace %>sendMessage(form, refreshPage);
 
 					editorInstance.dispose();
 				}

@@ -25,6 +25,26 @@ definition {
 	}
 
 	@summary = "Default summary"
+	macro addWithWorkflowPGWithoutAlert(commentAuthor = null, commentBody = null) {
+		PageComment.reply(commentBody = ${commentBody});
+
+		var key_commentBody = ${commentBody};
+
+		AssertElementPresent(locator1 = "Comments#WORKFLOW_STATUS");
+
+		var key_entryComment = ${commentBody};
+		var key_userFullName = ${commentAuthor};
+
+		AssertTextEquals(
+			locator1 = "Comments#COMMENT_BODY_SPECIFIC",
+			value1 = ${commentBody});
+
+		AssertTextEquals(
+			locator1 = "Comments#USER_NAME",
+			value1 = ${commentAuthor});
+	}
+
+	@summary = "Default summary"
 	macro editCommentField(commentBody = null) {
 		Type.typeEditor(
 			locator1 = "Comments#COMMENT_FIELD",
