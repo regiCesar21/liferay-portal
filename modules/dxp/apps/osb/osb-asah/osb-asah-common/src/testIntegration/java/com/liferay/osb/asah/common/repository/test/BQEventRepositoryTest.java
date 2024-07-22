@@ -1312,6 +1312,31 @@ public class BQEventRepositoryTest
 	}
 
 	@BQSQLResource(
+		resourcePath = "test_bq_event_count_grouped_by_event_date_last_24_hours_with_keywords.sql"
+	)
+	@Test
+	public void testGetBQEventsCountGroupByEventDateLast24HoursWithKeywords() {
+		TimeRange timeRange = TimeRange.LAST_24_HOURS;
+
+		Map<String, Integer> bqEventsCountGroupByEventDate =
+			_bqEventRepository.getBQEventsCountGroupByEventDate(
+				1L, null, Interval.HOUR, "blogClicked",
+				timeRange.getEndLocalDateTime(),
+				timeRange.getStartLocalDateTime(),
+				_timeZoneDog.getTimeZoneId());
+
+		Assertions.assertEquals(
+			1, bqEventsCountGroupByEventDate.size(),
+			bqEventsCountGroupByEventDate.toString());
+
+		Collection<Integer> values = bqEventsCountGroupByEventDate.values();
+
+		Iterator<Integer> iterator = values.iterator();
+
+		Assertions.assertEquals(1, iterator.next());
+	}
+
+	@BQSQLResource(
 		resourcePath = "test_bq_event_count_grouped_by_event_date_last_24_hours.sql"
 	)
 	@Test
@@ -1485,6 +1510,32 @@ public class BQEventRepositoryTest
 		Iterator<Integer> iterator = values.iterator();
 
 		Assertions.assertEquals(2, iterator.next());
+	}
+
+	@BQSQLResource(
+		resourcePath = "test_bq_event_count_grouped_by_event_date_last_24_hours_with_keywords.sql"
+	)
+	@Test
+	public void testGetEventSessionsCountGroupByEventDateLast24HoursWithKeywords() {
+		TimeRange timeRange = TimeRange.LAST_24_HOURS;
+
+		Map<String, Integer> eventSessionsCountGroupByEventDate =
+			_bqEventRepository.getEventSessionsCountGroupByEventDate(
+				1L, null, Interval.HOUR, "blogClicked",
+				timeRange.getEndLocalDateTime(),
+				timeRange.getStartLocalDateTime(),
+				_timeZoneDog.getTimeZoneId());
+
+		Assertions.assertEquals(
+			1, eventSessionsCountGroupByEventDate.size(),
+			eventSessionsCountGroupByEventDate.toString());
+
+		Collection<Integer> values =
+			eventSessionsCountGroupByEventDate.values();
+
+		Iterator<Integer> iterator = values.iterator();
+
+		Assertions.assertEquals(1, iterator.next());
 	}
 
 	@BQSQLResource(

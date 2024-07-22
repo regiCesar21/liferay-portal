@@ -2,7 +2,6 @@ INSERT INTO Event (applicationId, channelId, eventDate, eventId, properties, ses
 INSERT INTO Event (applicationId, channelId, eventDate, eventId, properties, sessionId, userId) VALUES ('Blog', 1, timestamp '${now-1h}', 'blogClicked', ARRAY<STRUCT<name STRING, value STRING>> [], '1', '1');
 INSERT INTO Event (applicationId, channelId, eventDate, eventId, properties, sessionId, userId) VALUES ('Form', 1, timestamp '${now-1h}', 'fieldBlurred', ARRAY<STRUCT<name STRING, value STRING>> [], '1', '1');
 INSERT INTO Event (applicationId, channelId, eventDate, eventId, properties, sessionId, userId) VALUES ('Custom', 1, timestamp '${now-1h}', 'assetClicked', ARRAY<STRUCT<name STRING, value STRING>> [], '2', '1');
-INSERT INTO Event (applicationId, channelId, eventDate, eventId, properties, sessionId, userId) VALUES ('Blog', 1, timestamp '${now-1h}', 'blogClicked', ARRAY<STRUCT<name STRING, value STRING>> [], '2', '1');
 INSERT INTO Event (applicationId, channelId, eventDate, eventId, properties, sessionId, userId) VALUES ('Form', 1, timestamp '${now-1h}', 'fieldBlurred', ARRAY<STRUCT<name STRING, value STRING>> [], '3', '1');
 INSERT INTO Event (applicationId, channelId, eventDate, eventId, properties, sessionId, userId) VALUES ('Custom', 1, timestamp '${now-2d}', 'assetClicked', ARRAY<STRUCT<name STRING, value STRING>> [], '1', '1');
 INSERT INTO Event (applicationId, channelId, eventDate, eventId, properties, sessionId, userId) VALUES ('Blog', 1, timestamp '${now-2d}', 'blogClicked', ARRAY<STRUCT<name STRING, value STRING>> [], '2', '1');
