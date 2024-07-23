@@ -2078,6 +2078,10 @@ public class SitesImpl implements Sites {
 				String.valueOf(layoutSetPrototype.getLayoutSetPrototypeId())
 			});
 
+		parameterMap.put(
+			PortletDataHandlerKeys.LAYOUT_SET_PRIVATE_LAYOUT,
+			new String[] {String.valueOf(privateLayout)});
+
 		if (importData) {
 			file = exportLayoutSetPrototype(
 				user, layoutSetPrototype, parameterMap, null);

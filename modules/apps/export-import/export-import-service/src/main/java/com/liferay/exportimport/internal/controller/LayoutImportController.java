@@ -543,8 +543,12 @@ public class LayoutImportController implements ImportController {
 			layoutSetPrototypeUuid = GetterUtil.getString(
 				headerElement.attributeValue("type-uuid"));
 
+			boolean privateLayout = MapUtil.getBoolean(
+				portletDataContext.getParameterMap(),
+				PortletDataHandlerKeys.LAYOUT_SET_PRIVATE_LAYOUT);
+
 			LayoutSet layoutSet = _layoutSetLocalService.fetchLayoutSet(
-				group.getGroupId(), false);
+				group.getGroupId(), privateLayout);
 
 			if (layoutSet != null) {
 				layoutSet.setThemeId(
