@@ -2069,6 +2069,9 @@ public class SitesImpl implements Sites {
 		long lastMergeVersion = layoutSetPrototype.getMvccVersion();
 
 		parameterMap.put(
+			PortletDataHandlerKeys.LAYOUT_SET_PRIVATE_LAYOUT,
+			new String[] {String.valueOf(privateLayout)});
+		parameterMap.put(
 			"lastMergeVersion",
 			new String[] {String.valueOf(lastMergeVersion)});
 
@@ -2077,10 +2080,6 @@ public class SitesImpl implements Sites {
 			new String[] {
 				String.valueOf(layoutSetPrototype.getLayoutSetPrototypeId())
 			});
-
-		parameterMap.put(
-			PortletDataHandlerKeys.LAYOUT_SET_PRIVATE_LAYOUT,
-			new String[] {String.valueOf(privateLayout)});
 
 		if (importData) {
 			file = exportLayoutSetPrototype(
