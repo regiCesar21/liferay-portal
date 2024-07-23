@@ -11,8 +11,7 @@ package com.liferay.osb.asah.common.model;
 public enum AttributeType {
 
 	EVENT("name", "value", "id", "BQEventProperty"),
-	INDIVIDUAL(null, null, "ownerId", "Field"),
-	USER_SESSION(null, null, "individualId", "UserSession");
+	INDIVIDUAL(null, null, "id", "BQIndividual");
 
 	public String getAttributeIdFieldName() {
 		return _attributeIdFieldName;
