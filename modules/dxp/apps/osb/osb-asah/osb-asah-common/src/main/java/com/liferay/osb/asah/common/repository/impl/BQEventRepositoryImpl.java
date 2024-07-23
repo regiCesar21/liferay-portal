@@ -658,7 +658,7 @@ public class BQEventRepositoryImpl
 			selectSelectStep = _dslContext.select(eventDateField, DSL.count());
 		}
 		else {
-			ZoneId zoneId = ZoneId.of("UTC");
+			ZoneId zoneId = ZoneId.of(timeZoneId);
 
 			selectSelectStep = _buildBQEventPropertyWithStep(
 				channelId, null, DateUtil.toDate(rangeEndLocalDateTime, zoneId),
@@ -717,7 +717,7 @@ public class BQEventRepositoryImpl
 				event1EventDateField, DSL.count());
 		}
 		else {
-			ZoneId zoneId = ZoneId.of("UTC");
+			ZoneId zoneId = ZoneId.of(timeZoneId);
 
 			selectSelectStep = _buildBQEventPropertyWithStep(
 				channelId, null, DateUtil.toDate(rangeEndLocalDateTime, zoneId),
@@ -1468,7 +1468,7 @@ public class BQEventRepositoryImpl
 
 		Table<Record> eventTable = DSL.table("BQEvent");
 
-		ZoneId zoneId = ZoneId.of("UTC");
+		ZoneId zoneId = ZoneId.of(timeZoneId);
 
 		SelectJoinStep<Record> selectJoinStep = _buildBQEventPropertyWithStep(
 			channelId, null, DateUtil.toDate(rangeEndLocalDateTime, zoneId),
@@ -2410,7 +2410,7 @@ public class BQEventRepositoryImpl
 		String keywords, LocalDateTime rangeEndLocalDateTime,
 		LocalDateTime rangeStartLocalDateTime, String timeZoneId) {
 
-		ZoneId zoneId = ZoneId.of("UTC");
+		ZoneId zoneId = ZoneId.of(timeZoneId);
 
 		SelectJoinStep<Record1<Integer>> selectJoinStep =
 			_buildBQEventPropertyWithStep(
