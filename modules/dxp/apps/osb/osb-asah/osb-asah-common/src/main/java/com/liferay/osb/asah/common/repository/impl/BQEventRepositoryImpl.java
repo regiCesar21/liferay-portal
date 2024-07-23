@@ -2230,21 +2230,18 @@ public class BQEventRepositoryImpl
 		Map<String, EventAttributeDefinition> eventAttributeDefinitions,
 		SelectJoinStep selectJoinStep, TimeRange timeRange) {
 
-		EventAttributeDefinition eventAttributeDefinition = null;
-
-		AttributeType attributeType = eventAnalysisBreakdown.getAttributeType();
-
-		if (Objects.equals(attributeType, AttributeType.EVENT)) {
-			eventAttributeDefinition = eventAttributeDefinitions.get(
+		EventAttributeDefinition eventAttributeDefinition =
+			eventAttributeDefinitions.get(
 				eventAnalysisBreakdown.getAttributeId());
 
-			if (Objects.equals(
-					eventAttributeDefinition.getType(),
-					EventAttributeDefinition.Type.GLOBAL)) {
+		if (Objects.equals(
+				eventAttributeDefinition.getType(),
+				EventAttributeDefinition.Type.GLOBAL)) {
 
-				return selectJoinStep;
-			}
+			return selectJoinStep;
 		}
+
+		AttributeType attributeType = eventAnalysisBreakdown.getAttributeType();
 
 		Table<Record> table = DSL.table(
 			String.format(
@@ -2936,7 +2933,8 @@ public class BQEventRepositoryImpl
 
 		Field field = null;
 
-		if (Objects.equals(
+		if ((eventAnalysisBreakdown != null) &&
+			Objects.equals(
 				eventAnalysisBreakdown.getAttributeType(),
 				AttributeType.INDIVIDUAL)) {
 
