@@ -618,7 +618,7 @@ public class LayoutSetPrototypePropagationTest
 
 		propagateChanges(group);
 
-		LayoutSet propagatedLayoutSet = group.getPrivateLayoutSet();
+		LayoutSet propagatedLayoutSet = group.getPublicLayoutSet();
 
 		Assert.assertEquals(
 			prototypePrivateLayoutSet.getThemeId(),
