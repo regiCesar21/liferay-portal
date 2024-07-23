@@ -70,9 +70,9 @@ public class LayoutImplTest {
 
 		LayoutPageTemplateEntry masterLayoutPageTemplateEntry =
 			_layoutPageTemplateEntryLocalService.addLayoutPageTemplateEntry(
-				null, TestPropsValues.getUserId(), _group.getGroupId(), 0,
+				TestPropsValues.getUserId(), _group.getGroupId(), 0,
 				RandomTestUtil.randomString(),
-				LayoutPageTemplateEntryTypeConstants.MASTER_LAYOUT, 0,
+				LayoutPageTemplateEntryTypeConstants.TYPE_MASTER_LAYOUT, 0,
 				WorkflowConstants.STATUS_APPROVED,
 				ServiceContextTestUtil.getServiceContext(_group.getGroupId()));
 
@@ -84,7 +84,7 @@ public class LayoutImplTest {
 			masterLayout.getLayoutId(), StringPool.BLANK, StringPool.BLANK,
 			StringPool.BLANK);
 
-		Layout privateLayout = LayoutTestUtil.addTypePortletLayout(
+		Layout privateLayout = LayoutTestUtil.addLayout(
 			_group, true);
 
 		privateLayout = _layoutLocalService.updateMasterLayoutPlid(
@@ -93,7 +93,7 @@ public class LayoutImplTest {
 
 		_assertThemeId(privateLayout, "admin_WAR_admintheme");
 
-		Layout publicLayout = LayoutTestUtil.addTypePortletLayout(
+		Layout publicLayout = LayoutTestUtil.addLayout(
 			_group, false);
 
 		publicLayout = _layoutLocalService.updateMasterLayoutPlid(
