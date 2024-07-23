@@ -344,6 +344,354 @@ public class BQEventRepositoryTest
 					"America/Los_Angeles")));
 	}
 
+	@BQSQLResource(
+		resourcePath = "test_bq_event_property_individual_values_bq.sql"
+	)
+	@SQLResource(resourcePath = "test_bq_event_property_individual_values.sql")
+	@Test
+	public void testGetBQEventPropertyIndividualValuesAverage() {
+		List<BreakdownRow> breakdownRows =
+			_bqEventRepository.getBQEventPropertyValues(
+				AnalysisType.AVERAGE, 1L, false,
+				Arrays.asList(
+					new EventAnalysisBreakdown(
+						"jobTitle", AttributeType.INDIVIDUAL, 0,
+						EventAttributeDefinition.DataType.STRING, null, null,
+						"jobTitle", "DESC")),
+				null, 246810L, PageRequest.of(0, 10),
+				TimeRange.of(
+					LocalDateTime.of(2021, 6, 1, 23, 59),
+					LocalDateTime.of(2021, 5, 15, 0, 0)),
+				_timeZoneDog.getTimeZoneId());
+
+		_assertBreakdowRowEquals(
+			breakdownRows,
+			new HashMap<String, BigDecimal>() {
+				{
+					put("database administrator", BigDecimal.valueOf(1.29));
+					put("engineer", BigDecimal.valueOf(1.25));
+					put("manager", BigDecimal.valueOf(1.20));
+				}
+			});
+
+		breakdownRows = _bqEventRepository.getBQEventPropertyValues(
+			AnalysisType.AVERAGE, 1L, false,
+			Arrays.asList(
+				new EventAnalysisBreakdown(
+					"group", AttributeType.INDIVIDUAL, 0,
+					EventAttributeDefinition.DataType.STRING, null, null,
+					"group", "DESC")),
+			null, 246810L, PageRequest.of(0, 10),
+			TimeRange.of(
+				LocalDateTime.of(2021, 6, 1, 23, 59),
+				LocalDateTime.of(2021, 5, 15, 0, 0)),
+			_timeZoneDog.getTimeZoneId());
+
+		_assertBreakdowRowEquals(
+			breakdownRows,
+			new HashMap<String, BigDecimal>() {
+				{
+					put("group 1", BigDecimal.valueOf(1.25));
+					put("group 2", BigDecimal.valueOf(1.25));
+				}
+			});
+
+		breakdownRows = _bqEventRepository.getBQEventPropertyValues(
+			AnalysisType.AVERAGE, 1L, false,
+			Arrays.asList(
+				new EventAnalysisBreakdown(
+					"role", AttributeType.INDIVIDUAL, 0,
+					EventAttributeDefinition.DataType.STRING, null, null,
+					"role", "DESC")),
+			null, 246810L, PageRequest.of(0, 10),
+			TimeRange.of(
+				LocalDateTime.of(2021, 6, 1, 23, 59),
+				LocalDateTime.of(2021, 5, 15, 0, 0)),
+			_timeZoneDog.getTimeZoneId());
+
+		_assertBreakdowRowEquals(
+			breakdownRows,
+			new HashMap<String, BigDecimal>() {
+				{
+					put("role 1", BigDecimal.valueOf(1.29));
+				}
+			});
+
+		breakdownRows = _bqEventRepository.getBQEventPropertyValues(
+			AnalysisType.AVERAGE, 1L, false,
+			Arrays.asList(
+				new EventAnalysisBreakdown(
+					"team", AttributeType.INDIVIDUAL, 0,
+					EventAttributeDefinition.DataType.STRING, null, null,
+					"team", "DESC")),
+			null, 246810L, PageRequest.of(0, 10),
+			TimeRange.of(
+				LocalDateTime.of(2021, 6, 1, 23, 59),
+				LocalDateTime.of(2021, 5, 15, 0, 0)),
+			_timeZoneDog.getTimeZoneId());
+
+		_assertBreakdowRowEquals(
+			breakdownRows,
+			new HashMap<String, BigDecimal>() {
+				{
+					put("team 1", BigDecimal.valueOf(1.20));
+				}
+			});
+
+		breakdownRows = _bqEventRepository.getBQEventPropertyValues(
+			AnalysisType.AVERAGE, 1L, false,
+			Arrays.asList(
+				new EventAnalysisBreakdown(
+					"userGroup", AttributeType.INDIVIDUAL, 0,
+					EventAttributeDefinition.DataType.STRING, null, null,
+					"userGroup", "DESC")),
+			null, 246810L, PageRequest.of(0, 10),
+			TimeRange.of(
+				LocalDateTime.of(2021, 6, 1, 23, 59),
+				LocalDateTime.of(2021, 5, 15, 0, 0)),
+			_timeZoneDog.getTimeZoneId());
+
+		_assertBreakdowRowEquals(
+			breakdownRows,
+			new HashMap<String, BigDecimal>() {
+				{
+					put("user group 1", BigDecimal.valueOf(1.29));
+				}
+			});
+	}
+
+	@BQSQLResource(
+		resourcePath = "test_bq_event_property_individual_values_bq.sql"
+	)
+	@SQLResource(resourcePath = "test_bq_event_property_individual_values.sql")
+	@Test
+	public void testGetBQEventPropertyIndividualValuesTotal() {
+		List<BreakdownRow> breakdownRows =
+			_bqEventRepository.getBQEventPropertyValues(
+				AnalysisType.TOTAL, 1L, false,
+				Arrays.asList(
+					new EventAnalysisBreakdown(
+						"jobTitle", AttributeType.INDIVIDUAL, 0,
+						EventAttributeDefinition.DataType.STRING, null, null,
+						"jobTitle", "DESC")),
+				null, 246810L, PageRequest.of(0, 10),
+				TimeRange.of(
+					LocalDateTime.of(2021, 6, 1, 23, 59),
+					LocalDateTime.of(2021, 5, 15, 0, 0)),
+				_timeZoneDog.getTimeZoneId());
+
+		_assertBreakdowRowEquals(
+			breakdownRows,
+			new HashMap<String, BigDecimal>() {
+				{
+					put("database administrator", BigDecimal.valueOf(9));
+					put("engineer", BigDecimal.valueOf(5));
+					put("manager", BigDecimal.valueOf(6));
+				}
+			});
+
+		breakdownRows = _bqEventRepository.getBQEventPropertyValues(
+			AnalysisType.TOTAL, 1L, false,
+			Arrays.asList(
+				new EventAnalysisBreakdown(
+					"group", AttributeType.INDIVIDUAL, 0,
+					EventAttributeDefinition.DataType.STRING, null, null,
+					"group", "DESC")),
+			null, 246810L, PageRequest.of(0, 10),
+			TimeRange.of(
+				LocalDateTime.of(2021, 6, 1, 23, 59),
+				LocalDateTime.of(2021, 5, 15, 0, 0)),
+			_timeZoneDog.getTimeZoneId());
+
+		_assertBreakdowRowEquals(
+			breakdownRows,
+			new HashMap<String, BigDecimal>() {
+				{
+					put("group 1", BigDecimal.valueOf(5));
+					put("group 2", BigDecimal.valueOf(5));
+				}
+			});
+
+		breakdownRows = _bqEventRepository.getBQEventPropertyValues(
+			AnalysisType.TOTAL, 1L, false,
+			Arrays.asList(
+				new EventAnalysisBreakdown(
+					"role", AttributeType.INDIVIDUAL, 0,
+					EventAttributeDefinition.DataType.STRING, null, null,
+					"role", "DESC")),
+			null, 246810L, PageRequest.of(0, 10),
+			TimeRange.of(
+				LocalDateTime.of(2021, 6, 1, 23, 59),
+				LocalDateTime.of(2021, 5, 15, 0, 0)),
+			_timeZoneDog.getTimeZoneId());
+
+		_assertBreakdowRowEquals(
+			breakdownRows,
+			new HashMap<String, BigDecimal>() {
+				{
+					put("role 1", BigDecimal.valueOf(9));
+				}
+			});
+
+		breakdownRows = _bqEventRepository.getBQEventPropertyValues(
+			AnalysisType.TOTAL, 1L, false,
+			Arrays.asList(
+				new EventAnalysisBreakdown(
+					"team", AttributeType.INDIVIDUAL, 0,
+					EventAttributeDefinition.DataType.STRING, null, null,
+					"team", "DESC")),
+			null, 246810L, PageRequest.of(0, 10),
+			TimeRange.of(
+				LocalDateTime.of(2021, 6, 1, 23, 59),
+				LocalDateTime.of(2021, 5, 15, 0, 0)),
+			_timeZoneDog.getTimeZoneId());
+
+		_assertBreakdowRowEquals(
+			breakdownRows,
+			new HashMap<String, BigDecimal>() {
+				{
+					put("team 1", BigDecimal.valueOf(6));
+				}
+			});
+
+		breakdownRows = _bqEventRepository.getBQEventPropertyValues(
+			AnalysisType.TOTAL, 1L, false,
+			Arrays.asList(
+				new EventAnalysisBreakdown(
+					"userGroup", AttributeType.INDIVIDUAL, 0,
+					EventAttributeDefinition.DataType.STRING, null, null,
+					"userGroup", "DESC")),
+			null, 246810L, PageRequest.of(0, 10),
+			TimeRange.of(
+				LocalDateTime.of(2021, 6, 1, 23, 59),
+				LocalDateTime.of(2021, 5, 15, 0, 0)),
+			_timeZoneDog.getTimeZoneId());
+
+		_assertBreakdowRowEquals(
+			breakdownRows,
+			new HashMap<String, BigDecimal>() {
+				{
+					put("user group 1", BigDecimal.valueOf(9));
+				}
+			});
+	}
+
+	@BQSQLResource(
+		resourcePath = "test_bq_event_property_individual_values_bq.sql"
+	)
+	@SQLResource(resourcePath = "test_bq_event_property_individual_values.sql")
+	@Test
+	public void testGetBQEventPropertyIndividualValuesUnique() {
+		List<BreakdownRow> breakdownRows =
+			_bqEventRepository.getBQEventPropertyValues(
+				AnalysisType.UNIQUE, 1L, false,
+				Arrays.asList(
+					new EventAnalysisBreakdown(
+						"jobTitle", AttributeType.INDIVIDUAL, 0,
+						EventAttributeDefinition.DataType.STRING, null, null,
+						"jobTitle", "DESC")),
+				null, 246810L, PageRequest.of(0, 10),
+				TimeRange.of(
+					LocalDateTime.of(2021, 6, 1, 23, 59),
+					LocalDateTime.of(2021, 5, 15, 0, 0)),
+				_timeZoneDog.getTimeZoneId());
+
+		_assertBreakdowRowEquals(
+			breakdownRows,
+			new HashMap<String, BigDecimal>() {
+				{
+					put("database administrator", BigDecimal.valueOf(7));
+					put("engineer", BigDecimal.valueOf(4));
+					put("manager", BigDecimal.valueOf(5));
+				}
+			});
+
+		breakdownRows = _bqEventRepository.getBQEventPropertyValues(
+			AnalysisType.UNIQUE, 1L, false,
+			Arrays.asList(
+				new EventAnalysisBreakdown(
+					"group", AttributeType.INDIVIDUAL, 0,
+					EventAttributeDefinition.DataType.STRING, null, null,
+					"group", "DESC")),
+			null, 246810L, PageRequest.of(0, 10),
+			TimeRange.of(
+				LocalDateTime.of(2021, 6, 1, 23, 59),
+				LocalDateTime.of(2021, 5, 15, 0, 0)),
+			_timeZoneDog.getTimeZoneId());
+
+		_assertBreakdowRowEquals(
+			breakdownRows,
+			new HashMap<String, BigDecimal>() {
+				{
+					put("group 1", BigDecimal.valueOf(4));
+					put("group 2", BigDecimal.valueOf(4));
+				}
+			});
+
+		breakdownRows = _bqEventRepository.getBQEventPropertyValues(
+			AnalysisType.UNIQUE, 1L, false,
+			Arrays.asList(
+				new EventAnalysisBreakdown(
+					"role", AttributeType.INDIVIDUAL, 0,
+					EventAttributeDefinition.DataType.STRING, null, null,
+					"role", "DESC")),
+			null, 246810L, PageRequest.of(0, 10),
+			TimeRange.of(
+				LocalDateTime.of(2021, 6, 1, 23, 59),
+				LocalDateTime.of(2021, 5, 15, 0, 0)),
+			_timeZoneDog.getTimeZoneId());
+
+		_assertBreakdowRowEquals(
+			breakdownRows,
+			new HashMap<String, BigDecimal>() {
+				{
+					put("role 1", BigDecimal.valueOf(7));
+				}
+			});
+
+		breakdownRows = _bqEventRepository.getBQEventPropertyValues(
+			AnalysisType.UNIQUE, 1L, false,
+			Arrays.asList(
+				new EventAnalysisBreakdown(
+					"team", AttributeType.INDIVIDUAL, 0,
+					EventAttributeDefinition.DataType.STRING, null, null,
+					"team", "DESC")),
+			null, 246810L, PageRequest.of(0, 10),
+			TimeRange.of(
+				LocalDateTime.of(2021, 6, 1, 23, 59),
+				LocalDateTime.of(2021, 5, 15, 0, 0)),
+			_timeZoneDog.getTimeZoneId());
+
+		_assertBreakdowRowEquals(
+			breakdownRows,
+			new HashMap<String, BigDecimal>() {
+				{
+					put("team 1", BigDecimal.valueOf(5));
+				}
+			});
+
+		breakdownRows = _bqEventRepository.getBQEventPropertyValues(
+			AnalysisType.UNIQUE, 1L, false,
+			Arrays.asList(
+				new EventAnalysisBreakdown(
+					"userGroup", AttributeType.INDIVIDUAL, 0,
+					EventAttributeDefinition.DataType.STRING, null, null,
+					"userGroup", "DESC")),
+			null, 246810L, PageRequest.of(0, 10),
+			TimeRange.of(
+				LocalDateTime.of(2021, 6, 1, 23, 59),
+				LocalDateTime.of(2021, 5, 15, 0, 0)),
+			_timeZoneDog.getTimeZoneId());
+
+		_assertBreakdowRowEquals(
+			breakdownRows,
+			new HashMap<String, BigDecimal>() {
+				{
+					put("user group 1", BigDecimal.valueOf(7));
+				}
+			});
+	}
+
 	@BQSQLResource(resourcePath = "test_bq_event_property_values_bq.sql")
 	@SQLResource(resourcePath = "test_bq_event_property_values.sql")
 	@Test
