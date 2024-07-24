@@ -80,7 +80,7 @@ public class WorkflowDefinitionsDataProviderTest extends PowerMockito {
 			workflowDefinition2, "definition2", "Definition 2");
 
 		when(
-			_workflowDefinitionManager.getActiveWorkflowDefinitions(
+			_workflowDefinitionManager.liberalGetActiveWorkflowDefinitions(
 				1, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null)
 		).thenReturn(
 			Arrays.asList(workflowDefinition1, workflowDefinition2)
@@ -152,7 +152,7 @@ public class WorkflowDefinitionsDataProviderTest extends PowerMockito {
 			_workflowDefinitionManager;
 
 		when(
-			_workflowDefinitionManager.getActiveWorkflowDefinitions(
+			_workflowDefinitionManager.liberalGetActiveWorkflowDefinitions(
 				1, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null)
 		).thenThrow(
 			WorkflowException.class
