@@ -82,6 +82,13 @@ public interface WorkflowDefinitionManager {
 		throw new UnsupportedOperationException();
 	}
 
+	public default WorkflowDefinition liberalGetLatestWorkflowDefinition(
+		long companyId, String name)
+		throws WorkflowException {
+
+		throw new UnsupportedOperationException();
+	}
+
 	public default List<WorkflowDefinition> getLatestWorkflowDefinitions(
 			long companyId, int start, int end,
 			OrderByComparator<WorkflowDefinition> orderByComparator)

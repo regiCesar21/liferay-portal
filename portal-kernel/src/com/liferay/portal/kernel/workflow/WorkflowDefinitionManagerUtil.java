@@ -94,6 +94,14 @@ public class WorkflowDefinitionManagerUtil {
 			companyId, name);
 	}
 
+	public static WorkflowDefinition liberalGetLatestWorkflowDefinition(
+		long companyId, String name)
+		throws WorkflowException {
+
+		return getWorkflowDefinitionManager().liberalGetLatestWorkflowDefinition(
+			companyId, name);
+	}
+
 	public static List<WorkflowDefinition> getLatestWorkflowDefinitions(
 			long companyId, int start, int end,
 			OrderByComparator<WorkflowDefinition> orderByComparator)

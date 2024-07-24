@@ -99,7 +99,7 @@ public class DeployWorkflowDefinitionMVCActionCommand
 
 		try {
 			return unproxiedWorkflowDefinitionManager.
-				getLatestWorkflowDefinition(companyId, name);
+				liberalGetLatestWorkflowDefinition(companyId, name);
 		}
 		catch (WorkflowException workflowException) {
 			if (_log.isDebugEnabled()) {

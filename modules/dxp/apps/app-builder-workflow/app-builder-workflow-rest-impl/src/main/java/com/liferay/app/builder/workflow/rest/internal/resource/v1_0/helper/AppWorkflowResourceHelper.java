@@ -103,8 +103,9 @@ public class AppWorkflowResourceHelper {
 		throws PortalException {
 
 		try {
-			return _workflowDefinitionManager.getLatestWorkflowDefinition(
-				companyId, String.valueOf(appId));
+			return _workflowDefinitionManager.
+				liberalGetLatestWorkflowDefinition(
+					companyId, String.valueOf(appId));
 		}
 		catch (WorkflowException workflowException) {
 			Throwable throwable = workflowException.getCause();
