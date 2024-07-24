@@ -82,13 +82,6 @@ public interface WorkflowDefinitionManager {
 		throw new UnsupportedOperationException();
 	}
 
-	public default WorkflowDefinition liberalGetLatestWorkflowDefinition(
-		long companyId, String name)
-		throws WorkflowException {
-
-		throw new UnsupportedOperationException();
-	}
-
 	public default List<WorkflowDefinition> getLatestWorkflowDefinitions(
 			long companyId, int start, int end,
 			OrderByComparator<WorkflowDefinition> orderByComparator)
@@ -98,14 +91,6 @@ public interface WorkflowDefinitionManager {
 	}
 
 	public default int getLatestWorkflowDefinitionsCount(long companyId)
-		throws WorkflowException {
-
-		throw new UnsupportedOperationException();
-	}
-
-	public default List<WorkflowDefinition> liberalGetActiveWorkflowDefinitions(
-		long companyId, int start, int end,
-		OrderByComparator<WorkflowDefinition> orderByComparator)
 		throws WorkflowException {
 
 		throw new UnsupportedOperationException();
@@ -154,6 +139,21 @@ public interface WorkflowDefinitionManager {
 		throws WorkflowException;
 
 	public default int getWorkflowDefinitionsCount(long companyId, String name)
+		throws WorkflowException {
+
+		throw new UnsupportedOperationException();
+	}
+
+	public default List<WorkflowDefinition> liberalGetActiveWorkflowDefinitions(
+			long companyId, int start, int end,
+			OrderByComparator<WorkflowDefinition> orderByComparator)
+		throws WorkflowException {
+
+		throw new UnsupportedOperationException();
+	}
+
+	public default WorkflowDefinition liberalGetLatestWorkflowDefinition(
+			long companyId, String name)
 		throws WorkflowException {
 
 		throw new UnsupportedOperationException();
