@@ -35,6 +35,40 @@ public class KaleoDefinitionServiceWrapper
 			name, title, description, content, scope, version, serviceContext);
 	}
 
+	@Override
+	public com.liferay.portal.workflow.kaleo.model.KaleoDefinition
+			getKaleoDefinition(long kaleoDefinitionId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _kaleoDefinitionService.getKaleoDefinition(kaleoDefinitionId);
+	}
+
+	@Override
+	public com.liferay.portal.workflow.kaleo.model.KaleoDefinition
+			getKaleoDefinition(
+				String name,
+				com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _kaleoDefinitionService.getKaleoDefinition(name, serviceContext);
+	}
+
+	@Override
+	public java.util.List
+		<com.liferay.portal.workflow.kaleo.model.KaleoDefinition>
+				getKaleoDefinitions(
+					int start, int end,
+					com.liferay.portal.kernel.util.OrderByComparator
+						<com.liferay.portal.workflow.kaleo.model.
+							KaleoDefinition> orderByComparator,
+					com.liferay.portal.kernel.service.ServiceContext
+						serviceContext)
+			throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _kaleoDefinitionService.getKaleoDefinitions(
+			start, end, orderByComparator, serviceContext);
+	}
+
 	/**
 	 * Returns the OSGi service identifier.
 	 *
@@ -43,6 +77,22 @@ public class KaleoDefinitionServiceWrapper
 	@Override
 	public String getOSGiServiceIdentifier() {
 		return _kaleoDefinitionService.getOSGiServiceIdentifier();
+	}
+
+	@Override
+	public java.util.List
+		<com.liferay.portal.workflow.kaleo.model.KaleoDefinition>
+				getScopeKaleoDefinitions(
+					String scope, boolean active, int start, int end,
+					com.liferay.portal.kernel.util.OrderByComparator
+						<com.liferay.portal.workflow.kaleo.model.
+							KaleoDefinition> orderByComparator,
+					com.liferay.portal.kernel.service.ServiceContext
+						serviceContext)
+			throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _kaleoDefinitionService.getScopeKaleoDefinitions(
+			scope, active, start, end, orderByComparator, serviceContext);
 	}
 
 	@Override

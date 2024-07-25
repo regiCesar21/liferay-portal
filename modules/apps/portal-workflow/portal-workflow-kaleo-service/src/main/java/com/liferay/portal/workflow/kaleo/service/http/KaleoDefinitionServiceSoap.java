@@ -78,6 +78,99 @@ public class KaleoDefinitionServiceSoap {
 	}
 
 	public static com.liferay.portal.workflow.kaleo.model.KaleoDefinitionSoap
+			getKaleoDefinition(long kaleoDefinitionId)
+		throws RemoteException {
+
+		try {
+			com.liferay.portal.workflow.kaleo.model.KaleoDefinition
+				returnValue = KaleoDefinitionServiceUtil.getKaleoDefinition(
+					kaleoDefinitionId);
+
+			return com.liferay.portal.workflow.kaleo.model.KaleoDefinitionSoap.
+				toSoapModel(returnValue);
+		}
+		catch (Exception exception) {
+			_log.error(exception, exception);
+
+			throw new RemoteException(exception.getMessage());
+		}
+	}
+
+	public static com.liferay.portal.workflow.kaleo.model.KaleoDefinitionSoap
+			getKaleoDefinition(
+				String name,
+				com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws RemoteException {
+
+		try {
+			com.liferay.portal.workflow.kaleo.model.KaleoDefinition
+				returnValue = KaleoDefinitionServiceUtil.getKaleoDefinition(
+					name, serviceContext);
+
+			return com.liferay.portal.workflow.kaleo.model.KaleoDefinitionSoap.
+				toSoapModel(returnValue);
+		}
+		catch (Exception exception) {
+			_log.error(exception, exception);
+
+			throw new RemoteException(exception.getMessage());
+		}
+	}
+
+	public static com.liferay.portal.workflow.kaleo.model.KaleoDefinitionSoap[]
+			getKaleoDefinitions(
+				int start, int end,
+				com.liferay.portal.kernel.util.OrderByComparator
+					<com.liferay.portal.workflow.kaleo.model.KaleoDefinition>
+						orderByComparator,
+				com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws RemoteException {
+
+		try {
+			java.util.List
+				<com.liferay.portal.workflow.kaleo.model.KaleoDefinition>
+					returnValue =
+						KaleoDefinitionServiceUtil.getKaleoDefinitions(
+							start, end, orderByComparator, serviceContext);
+
+			return com.liferay.portal.workflow.kaleo.model.KaleoDefinitionSoap.
+				toSoapModels(returnValue);
+		}
+		catch (Exception exception) {
+			_log.error(exception, exception);
+
+			throw new RemoteException(exception.getMessage());
+		}
+	}
+
+	public static com.liferay.portal.workflow.kaleo.model.KaleoDefinitionSoap[]
+			getScopeKaleoDefinitions(
+				String scope, boolean active, int start, int end,
+				com.liferay.portal.kernel.util.OrderByComparator
+					<com.liferay.portal.workflow.kaleo.model.KaleoDefinition>
+						orderByComparator,
+				com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws RemoteException {
+
+		try {
+			java.util.List
+				<com.liferay.portal.workflow.kaleo.model.KaleoDefinition>
+					returnValue =
+						KaleoDefinitionServiceUtil.getScopeKaleoDefinitions(
+							scope, active, start, end, orderByComparator,
+							serviceContext);
+
+			return com.liferay.portal.workflow.kaleo.model.KaleoDefinitionSoap.
+				toSoapModels(returnValue);
+		}
+		catch (Exception exception) {
+			_log.error(exception, exception);
+
+			throw new RemoteException(exception.getMessage());
+		}
+	}
+
+	public static com.liferay.portal.workflow.kaleo.model.KaleoDefinitionSoap
 			updateKaleoDefinition(
 				long kaleoDefinitionId, String title, String description,
 				String content,
