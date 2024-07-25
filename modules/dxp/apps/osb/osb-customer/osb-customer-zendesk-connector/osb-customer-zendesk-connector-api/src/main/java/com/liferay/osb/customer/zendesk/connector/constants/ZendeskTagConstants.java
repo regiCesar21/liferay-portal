@@ -22,6 +22,8 @@ public class ZendeskTagConstants {
 
 	public static final String PREFIX_OSB = "osb_";
 
+	public static final String PREMIUM_SERVICE = "premium_service";
+
 	public static final String WATCHER = "_watcher";
 
 	public static String getWatcherTag(long externalId) {

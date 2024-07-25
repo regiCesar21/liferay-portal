@@ -786,6 +786,10 @@ public class AccountSynchronizer {
 			tags.add(ZendeskTagConstants.GS_OPPORTUNITY);
 		}
 
+		if (properties.containsKey("premiumService")) {
+			tags.add(ZendeskTagConstants.PREMIUM_SERVICE);
+		}
+
 		if (properties.containsKey("projectSolution")) {
 			tags.add(_toZendeskTag(properties.get("projectSolution")));
 		}
