@@ -401,7 +401,7 @@ public class WorkflowInstanceEditDisplayContext
 		WorkflowInstance workflowInstance = _getWorkflowInstance();
 
 		WorkflowDefinition workflowDefinition =
-			WorkflowDefinitionManagerUtil.getWorkflowDefinition(
+			WorkflowDefinitionManagerUtil.liberalGetWorkflowDefinition(
 				workflowInstanceRequestHelper.getCompanyId(),
 				workflowInstance.getWorkflowDefinitionName(),
 				workflowInstance.getWorkflowDefinitionVersion());

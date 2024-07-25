@@ -86,7 +86,7 @@ public class AppWorkflowDataRecordLinkResourceImpl
 		WorkflowInstance workflowInstance = workflowInstances.get(0);
 
 		WorkflowDefinition workflowDefinition =
-			_workflowDefinitionManager.getWorkflowDefinition(
+			_workflowDefinitionManager.liberalGetWorkflowDefinition(
 				contextCompany.getCompanyId(),
 				workflowInstance.getWorkflowDefinitionName(),
 				workflowInstance.getWorkflowDefinitionVersion());

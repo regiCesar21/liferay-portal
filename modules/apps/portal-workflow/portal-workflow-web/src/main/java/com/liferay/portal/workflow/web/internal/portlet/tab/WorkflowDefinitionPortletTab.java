@@ -144,7 +144,7 @@ public class WorkflowDefinitionPortletTab extends BaseWorkflowPortletTab {
 		int version = ParamUtil.getInteger(renderRequest, "version");
 
 		WorkflowDefinition workflowDefinition =
-			WorkflowDefinitionManagerUtil.getWorkflowDefinition(
+			WorkflowDefinitionManagerUtil.liberalGetWorkflowDefinition(
 				themeDisplay.getCompanyId(), name, version);
 
 		renderRequest.setAttribute(

@@ -183,17 +183,7 @@ public class WorkflowDefinitionManagerImpl
 			long companyId, String name, int version)
 		throws WorkflowException {
 
-		try {
-			return _kaleoWorkflowModelConverter.toWorkflowDefinition(
-				_kaleoDefinitionVersionService.getKaleoDefinitionVersion(
-					companyId, name, getVersion(version)));
-		}
-		catch (WorkflowException workflowException) {
-			throw workflowException;
-		}
-		catch (Exception exception) {
-			throw new WorkflowException(exception);
-		}
+		return _getWorkflowDefinition(companyId, name, version, false);
 	}
 
 	@Override
@@ -245,6 +235,14 @@ public class WorkflowDefinitionManagerImpl
 
 		return _getLatestWorkflowDefinitions(
 			companyId, start, end, orderByComparator, true);
+	}
+
+	@Override
+	public WorkflowDefinition liberalGetWorkflowDefinition(
+			long companyId, String name, int version)
+		throws WorkflowException {
+
+		return _getWorkflowDefinition(companyId, name, version, true);
 	}
 
 	@Override
@@ -352,7 +350,7 @@ public class WorkflowDefinitionManagerImpl
 					name, version, serviceContext);
 			}
 
-			return getWorkflowDefinition(companyId, name, version);
+			return liberalGetWorkflowDefinition(companyId, name, version);
 		}
 		catch (WorkflowException workflowException) {
 			throw workflowException;
@@ -541,6 +539,31 @@ public class WorkflowDefinitionManagerImpl
 			return toWorkflowDefinitions(
 				kaleoDefinitions.toArray(new KaleoDefinition[size]),
 				orderByComparator);
+		}
+		catch (Exception exception) {
+			throw new WorkflowException(exception);
+		}
+	}
+
+	private WorkflowDefinition _getWorkflowDefinition(
+			long companyId, String name, int version, boolean liberal)
+		throws WorkflowException {
+
+		try {
+			return _kaleoWorkflowModelConverter.toWorkflowDefinition(
+				_get(
+					liberal,
+					() ->
+						_kaleoDefinitionVersionLocalService.
+							getKaleoDefinitionVersion(
+								companyId, name, getVersion(version)),
+					() ->
+						_kaleoDefinitionVersionService.
+							getKaleoDefinitionVersion(
+								companyId, name, getVersion(version))));
+		}
+		catch (WorkflowException workflowException) {
+			throw workflowException;
 		}
 		catch (Exception exception) {
 			throw new WorkflowException(exception);

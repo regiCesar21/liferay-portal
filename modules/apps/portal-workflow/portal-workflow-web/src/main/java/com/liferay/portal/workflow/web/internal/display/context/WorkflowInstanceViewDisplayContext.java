@@ -112,7 +112,7 @@ public class WorkflowInstanceViewDisplayContext
 		throws PortalException {
 
 		WorkflowDefinition workflowDefinition =
-			WorkflowDefinitionManagerUtil.getWorkflowDefinition(
+			WorkflowDefinitionManagerUtil.liberalGetWorkflowDefinition(
 				workflowInstanceRequestHelper.getCompanyId(),
 				workflowInstance.getWorkflowDefinitionName(),
 				workflowInstance.getWorkflowDefinitionVersion());

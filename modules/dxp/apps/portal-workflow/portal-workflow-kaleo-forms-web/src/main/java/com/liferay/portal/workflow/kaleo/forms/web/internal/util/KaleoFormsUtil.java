@@ -363,7 +363,7 @@ public class KaleoFormsUtil {
 		long companyId, String name, int version) {
 
 		try {
-			return WorkflowDefinitionManagerUtil.getWorkflowDefinition(
+			return WorkflowDefinitionManagerUtil.liberalGetWorkflowDefinition(
 				companyId, name, version);
 		}
 		catch (Exception exception) {
