@@ -52,6 +52,10 @@ public class WorkflowDefinitionManagerUtil {
 			companyId, name);
 	}
 
+	/**
+	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link #liberalGetActiveWorkflowDefinitions(long, int, int, OrderByComparator)}
+	 */
+	@Deprecated
 	public static List<WorkflowDefinition> getActiveWorkflowDefinitions(
 			long companyId, int start, int end,
 			OrderByComparator<WorkflowDefinition> orderByComparator)
@@ -77,6 +81,10 @@ public class WorkflowDefinitionManagerUtil {
 			companyId);
 	}
 
+	/**
+	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link #liberalGetLatestWorkflowDefinition(long, String)}
+	 */
+	@Deprecated
 	public static WorkflowDefinition getLatestWorkflowDefinition(
 			long companyId, String name)
 		throws WorkflowException {
@@ -85,6 +93,10 @@ public class WorkflowDefinitionManagerUtil {
 			companyId, name);
 	}
 
+	/**
+	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link #liberalGetLatestWorkflowDefinitions(long, int, int, OrderByComparator)}
+	 */
+	@Deprecated
 	public static List<WorkflowDefinition> getLatestWorkflowDefinitions(
 			long companyId, int start, int end,
 			OrderByComparator<WorkflowDefinition> orderByComparator)
@@ -101,6 +113,10 @@ public class WorkflowDefinitionManagerUtil {
 			companyId);
 	}
 
+	/**
+	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link #liberalGetWorkflowDefinition(long, String, int)}
+	 */
+	@Deprecated
 	public static WorkflowDefinition getWorkflowDefinition(
 			long companyId, String name, int version)
 		throws WorkflowException {
@@ -149,6 +165,10 @@ public class WorkflowDefinitionManagerUtil {
 			companyId, start, end, orderByComparator);
 	}
 
+	/**
+	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link #liberalGetWorkflowDefinitions(long, String, int, int, OrderByComparator)}
+	 */
+	@Deprecated
 	public static List<WorkflowDefinition> getWorkflowDefinitions(
 			long companyId, String name, int start, int end,
 			OrderByComparator<WorkflowDefinition> orderByComparator)
