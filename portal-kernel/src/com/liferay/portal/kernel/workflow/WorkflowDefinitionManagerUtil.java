@@ -183,6 +183,16 @@ public class WorkflowDefinitionManagerUtil {
 			liberalGetLatestWorkflowDefinition(companyId, name);
 	}
 
+	public static List<WorkflowDefinition> liberalGetLatestWorkflowDefinitions(
+			long companyId, int start, int end,
+			OrderByComparator<WorkflowDefinition> orderByComparator)
+		throws WorkflowException {
+
+		return getWorkflowDefinitionManager().
+			liberalGetLatestWorkflowDefinitions(
+				companyId, start, end, orderByComparator);
+	}
+
 	/**
 	 * Saves a workflow definition without activating it or validating its data.
 	 * To save the definition, validate its data, and activate it, use {@link

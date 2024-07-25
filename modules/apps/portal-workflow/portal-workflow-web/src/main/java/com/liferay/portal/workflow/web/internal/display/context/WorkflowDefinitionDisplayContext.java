@@ -354,7 +354,7 @@ public class WorkflowDefinitionDisplayContext {
 			"no-workflow-definitions-are-defined");
 
 		List<WorkflowDefinition> workflowDefinitions =
-			WorkflowDefinitionManagerUtil.getLatestWorkflowDefinitions(
+			WorkflowDefinitionManagerUtil.liberalGetLatestWorkflowDefinitions(
 				_workflowDefinitionRequestHelper.getCompanyId(),
 				QueryUtil.ALL_POS, QueryUtil.ALL_POS,
 				getWorkflowDefinitionOrderByComparator());
