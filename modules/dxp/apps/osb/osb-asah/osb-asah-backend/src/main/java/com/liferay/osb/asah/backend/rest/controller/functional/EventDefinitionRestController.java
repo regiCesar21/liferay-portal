@@ -43,37 +43,38 @@ public class EventDefinitionRestController {
 	public ResponseEntity postEventDefinition(@RequestBody String json) {
 		JSONArray jsonArray = new JSONArray(json);
 
-		jsonArray.forEach(
-			eventDefinitionObject -> {
-				EventDefinition eventDefinition =
-					_eventDefinitionRepository.save(
-						_objectMapper.convertValue(
-							eventDefinitionObject, EventDefinition.class));
+		for (Object eventDefinitionObject : jsonArray) {
+			EventDefinition eventDefinition = _eventDefinitionRepository.save(
+				_objectMapper.convertValue(
+					eventDefinitionObject, EventDefinition.class));
 
-				JSONObject jsonObject = (JSONObject)eventDefinitionObject;
+			JSONObject jsonObject = (JSONObject)eventDefinitionObject;
 
-				JSONArray eventAttributeDefinitionJSONArray =
-					jsonObject.optJSONArray("eventAttributeDefinitions");
+			JSONArray eventAttributeDefinitionJSONArray =
+				jsonObject.optJSONArray("eventAttributeDefinitions");
 
-				if (eventAttributeDefinitionJSONArray != null) {
-					eventAttributeDefinitionJSONArray.forEach(
-						eventAttributeDefinitionObject -> {
-							EventAttributeDefinition eventAttributeDefinition =
-								_objectMapper.convertValue(
-									eventAttributeDefinitionObject,
-									EventAttributeDefinition.class);
+			if (eventAttributeDefinitionJSONArray == null) {
+				continue;
+			}
 
-							eventAttributeDefinition.
-								setEventDefinitionEventAttributeDefinitions(
-									Collections.singleton(
-										new EventDefinitionEventAttributeDefinition(
-											eventDefinition.getId(), null)));
+			for (Object eventAttributeDefinitionObject :
+					eventAttributeDefinitionJSONArray) {
 
-							_eventAttributeDefinitionRepository.save(
-								eventAttributeDefinition);
-						});
-				}
-			});
+				EventAttributeDefinition eventAttributeDefinition =
+					_objectMapper.convertValue(
+						eventAttributeDefinitionObject,
+						EventAttributeDefinition.class);
+
+				eventAttributeDefinition.
+					setEventDefinitionEventAttributeDefinitions(
+						Collections.singleton(
+							new EventDefinitionEventAttributeDefinition(
+								eventDefinition.getId(), null)));
+
+				_eventAttributeDefinitionRepository.save(
+					eventAttributeDefinition);
+			}
+		}
 
 		return new ResponseEntity(HttpStatus.NO_CONTENT);
 	}
