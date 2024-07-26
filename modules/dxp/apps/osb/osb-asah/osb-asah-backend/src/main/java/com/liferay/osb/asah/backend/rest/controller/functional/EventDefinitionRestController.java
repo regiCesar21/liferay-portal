@@ -41,9 +41,9 @@ public class EventDefinitionRestController {
 
 	@PostMapping
 	public ResponseEntity postEventDefinition(@RequestBody String json) {
-		JSONArray jsonArray = new JSONArray(json);
+		JSONArray eventDefinitionJSONArray = new JSONArray(json);
 
-		for (Object eventDefinitionObject : jsonArray) {
+		for (Object eventDefinitionObject : eventDefinitionJSONArray) {
 			EventDefinition eventDefinition = _eventDefinitionRepository.save(
 				_objectMapper.convertValue(
 					eventDefinitionObject, EventDefinition.class));
