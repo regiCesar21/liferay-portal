@@ -40,6 +40,8 @@ String previewFileURL = previewFileURLs[0];
 		module="preview/js/DocumentPreviewer.es"
 		props='<%=
 			HashMapBuilder.<String, Object>put(
+				"alt", fileVersion.getDescription()
+			).put(
 				"baseImageURL", previewFileURL
 			).put(
 				"initialPage", 1
