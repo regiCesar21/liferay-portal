@@ -1247,7 +1247,7 @@ class KeywordsExtractionSparkJob(BaseSparkJob):
 			'extracted_keywords',
 			F.array(
 				F.col('extracted_keywords'),
-				F.split(F.col('keywords'), ","))
+				F.split(F.col('keywords'), ",|\n"))
 		).withColumn(
 			'extracted_keywords', F.flatten(F.col('extracted_keywords'))
 		).withColumn(
