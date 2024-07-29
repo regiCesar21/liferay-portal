@@ -28,37 +28,18 @@ public interface BatchEventIngestionPipelineOptions
 	@Validation.Required
 	public String getOutputDirectory();
 
-	@Default.String("output")
-	@Description("Return the output file name prefix. The default is 'output'.")
-	public String getOutputFileNamePrefix();
-
 	@Default.Long(5)
 	public long getSessionWindowAllowedLateness();
 
-	@Default.Long(1)
-	public long getSessionWindowEarlyFiringsInterval();
-
 	@Default.Long(30)
 	public long getSessionWindowGapDuration();
-
-	@Default.Long(5)
-	@Description(
-		"Return the interval in minutes in which the data will be written. The default is 5 minutes."
-	)
-	public long getWriteInterval();
 
 	public void setInputDirectory(String inputDirectory);
 
 	public void setOutputDirectory(String outputDirectory);
 
-	public void setOutputFileNamePrefix(String outputFileNamePrefix);
-
 	public void setSessionWindowAllowedLateness(long value);
 
-	public void setSessionWindowEarlyFiringsInterval(long value);
-
 	public void setSessionWindowGapDuration(long value);
-
-	public void setWriteInterval(long value);
 
 }
