@@ -43,26 +43,28 @@ public class EventDefinitionRestController {
 	public ResponseEntity postEventDefinition(@RequestBody String json) {
 		JSONArray eventDefinitionJSONArray = new JSONArray(json);
 
-		for (Object eventDefinitionObject : eventDefinitionJSONArray) {
+		for (int i = 0; i < eventDefinitionJSONArray.length(); i++) {
+			JSONObject eventDefinitionJSONObject =
+				eventDefinitionJSONArray.getJSONObject(i);
+
 			EventDefinition eventDefinition = _eventDefinitionRepository.save(
 				_objectMapper.convertValue(
-					eventDefinitionObject, EventDefinition.class));
-
-			JSONObject jsonObject = (JSONObject)eventDefinitionObject;
+					eventDefinitionJSONObject, EventDefinition.class));
 
 			JSONArray eventAttributeDefinitionJSONArray =
-				jsonObject.optJSONArray("eventAttributeDefinitions");
+				eventDefinitionJSONObject.optJSONArray(
+					"eventAttributeDefinitions");
 
 			if (eventAttributeDefinitionJSONArray == null) {
 				continue;
 			}
 
-			for (Object eventAttributeDefinitionObject :
-					eventAttributeDefinitionJSONArray) {
+			for (int j = 0; j < eventAttributeDefinitionJSONArray.length();
+				 j++) {
 
 				EventAttributeDefinition eventAttributeDefinition =
 					_objectMapper.convertValue(
-						eventAttributeDefinitionObject,
+						eventAttributeDefinitionJSONArray.getJSONObject(j),
 						EventAttributeDefinition.class);
 
 				eventAttributeDefinition.
