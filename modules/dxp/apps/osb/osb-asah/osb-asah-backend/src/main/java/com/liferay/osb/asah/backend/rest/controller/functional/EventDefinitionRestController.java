@@ -51,34 +51,37 @@ public class EventDefinitionRestController {
 				_objectMapper.convertValue(
 					eventDefinitionJSONObject, EventDefinition.class));
 
-			JSONArray eventAttributeDefinitionJSONArray =
-				eventDefinitionJSONObject.optJSONArray(
-					"eventAttributeDefinitions");
-
-			if (eventAttributeDefinitionJSONArray == null) {
-				continue;
-			}
-
-			for (int j = 0; j < eventAttributeDefinitionJSONArray.length();
-				 j++) {
-
-				EventAttributeDefinition eventAttributeDefinition =
-					_objectMapper.convertValue(
-						eventAttributeDefinitionJSONArray.getJSONObject(j),
-						EventAttributeDefinition.class);
-
-				eventAttributeDefinition.
-					setEventDefinitionEventAttributeDefinitions(
-						Collections.singleton(
-							new EventDefinitionEventAttributeDefinition(
-								eventDefinition.getId(), null)));
-
-				_eventAttributeDefinitionRepository.save(
-					eventAttributeDefinition);
-			}
+			_saveEventAttributeDefinitions(
+				eventDefinition.getId(), eventDefinitionJSONObject);
 		}
 
 		return new ResponseEntity(HttpStatus.NO_CONTENT);
+	}
+
+	private void _saveEventAttributeDefinitions(
+		Long eventDefinitionId, JSONObject eventDefinitionJSONObject) {
+
+		JSONArray eventAttributeDefinitionJSONArray =
+			eventDefinitionJSONObject.optJSONArray("eventAttributeDefinitions");
+
+		if (eventAttributeDefinitionJSONArray == null) {
+			return;
+		}
+
+		for (int i = 0; i < eventAttributeDefinitionJSONArray.length(); i++) {
+			EventAttributeDefinition eventAttributeDefinition =
+				_objectMapper.convertValue(
+					eventAttributeDefinitionJSONArray.getJSONObject(i),
+					EventAttributeDefinition.class);
+
+			eventAttributeDefinition.
+				setEventDefinitionEventAttributeDefinitions(
+					Collections.singleton(
+						new EventDefinitionEventAttributeDefinition(
+							eventDefinitionId, null)));
+
+			_eventAttributeDefinitionRepository.save(eventAttributeDefinition);
+		}
 	}
 
 	@Autowired
