@@ -19,7 +19,6 @@ import com.liferay.osb.koroneiki.phloem.rest.client.dto.v1_0.ProductPurchase;
 import com.liferay.osb.koroneiki.phloem.rest.client.dto.v1_0.ProductPurchaseView;
 import com.liferay.osb.koroneiki.phloem.rest.client.dto.v1_0.Team;
 import com.liferay.osb.koroneiki.phloem.rest.client.dto.v1_0.TeamRole;
-import com.liferay.osb.provisioning.constants.ProductTypeConstants;
 import com.liferay.osb.provisioning.constants.ProvisioningPortletKeys;
 import com.liferay.osb.provisioning.distributed.messaging.internal.configuration.DistributedMessagingConfiguration;
 import com.liferay.osb.provisioning.distributed.messaging.internal.constants.SalesforceConstants;
@@ -2549,14 +2548,10 @@ public class OpportunityMessageSubscriber extends BaseMessageSubscriber {
 	}
 
 	private static boolean _isEligibleEWSARenewal(Product product) {
-		Map<String, String> properties = product.getProperties();
-
-		String productType = properties.get("type");
-
-		if ((productType != null) &&
-			(productType.equals(ProductTypeConstants.ADD_ON) ||
-			 ArrayUtil.contains(
-				 ProductConstants.NAMES_EWSA_AUTO_RENEW, product.getName()))) {
+		if (ArrayUtil.contains(
+				ProductConstants.NAMES_DXP_ADD_ON, product.getName()) ||
+			ArrayUtil.contains(
+				ProductConstants.NAMES_EWSA_AUTO_RENEW, product.getName())) {
 
 			return true;
 		}
