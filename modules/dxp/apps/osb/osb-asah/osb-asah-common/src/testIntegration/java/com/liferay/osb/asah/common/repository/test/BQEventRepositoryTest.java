@@ -128,7 +128,7 @@ public class BQEventRepositoryTest
 		Assertions.assertEquals(
 			8L,
 			_bqEventRepository.countTotalBQEvents(
-				1L,
+				1L, null,
 				Collections.singletonList(
 					new EventAnalysisFilter(
 						"56789", AttributeType.EVENT,
@@ -156,7 +156,7 @@ public class BQEventRepositoryTest
 		Assertions.assertEquals(
 			1L,
 			_bqEventRepository.countTotalBQEvents(
-				1L,
+				1L, null,
 				Arrays.asList(
 					new EventAnalysisFilter(
 						String.valueOf(eventAttributeDefinition.getId()),
@@ -189,7 +189,7 @@ public class BQEventRepositoryTest
 		Assertions.assertEquals(
 			1,
 			_bqEventRepository.countTotalBQEvents(
-				1L,
+				1L, null,
 				Collections.singletonList(
 					new EventAnalysisFilter(
 						String.valueOf(eventAttributeDefinition.getId()),
@@ -209,7 +209,7 @@ public class BQEventRepositoryTest
 		Assertions.assertEquals(
 			6L,
 			_bqEventRepository.countTotalBQEvents(
-				1L,
+				1L, null,
 				Collections.singletonList(
 					new EventAnalysisFilter(
 						"56789", AttributeType.EVENT,
@@ -229,7 +229,7 @@ public class BQEventRepositoryTest
 		Assertions.assertEquals(
 			6L,
 			_bqEventRepository.countUniqueIndividuals(
-				1L,
+				1L, null,
 				Collections.singletonList(
 					new EventAnalysisFilter(
 						"56789", AttributeType.EVENT,
@@ -249,7 +249,7 @@ public class BQEventRepositoryTest
 		Assertions.assertEquals(
 			5L,
 			_bqEventRepository.countUniqueIndividuals(
-				1L,
+				1L, null,
 				Collections.singletonList(
 					new EventAnalysisFilter(
 						"56789", AttributeType.EVENT,
@@ -306,7 +306,7 @@ public class BQEventRepositoryTest
 			BigDecimal.valueOf(2),
 			Matchers.comparesEqualTo(
 				_bqEventRepository.getAverageBQEventCountPerIndividual(
-					1L,
+					1L, null,
 					Collections.singletonList(
 						new EventAnalysisFilter(
 							"56789", AttributeType.EVENT,
@@ -331,7 +331,7 @@ public class BQEventRepositoryTest
 			BigDecimal.valueOf(1.5),
 			Matchers.comparesEqualTo(
 				_bqEventRepository.getAverageBQEventCountPerIndividual(
-					1L,
+					1L, null,
 					Collections.singletonList(
 						new EventAnalysisFilter(
 							"56789", AttributeType.EVENT,

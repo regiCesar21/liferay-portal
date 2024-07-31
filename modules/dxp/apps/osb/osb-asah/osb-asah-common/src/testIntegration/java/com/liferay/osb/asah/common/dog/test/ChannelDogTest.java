@@ -84,7 +84,7 @@ public class ChannelDogTest
 		Assertions.assertEquals(
 			0,
 			_bqEventRepository.countTotalBQEvents(
-				1L, null, null, null, null, "UTC"));
+				1L, null, null, null, null, null, "UTC"));
 
 		List<BQSession> bqSessions = _bqSessionRepository.findAllById(
 			Collections.singleton("366909399944213421"));
@@ -116,7 +116,7 @@ public class ChannelDogTest
 		Assertions.assertEquals(
 			4,
 			_bqEventRepository.countTotalBQEvents(
-				1L, null, null, null, null, "UTC"));
+				1L, null, null, null, null, null, "UTC"));
 
 		List<BQSession> bqSessions = _bqSessionRepository.findAllById(
 			Collections.singleton("366909399944213421"));
@@ -199,7 +199,7 @@ public class ChannelDogTest
 		Assertions.assertEquals(
 			0,
 			_bqEventRepository.countTotalBQEvents(
-				1L, null, null, null, null, "UTC"));
+				1L, null, null, null, null, null, "UTC"));
 
 		List<BQSession> bqSessions = _bqSessionRepository.findAllById(
 			Collections.singleton("366909399944213421"));
