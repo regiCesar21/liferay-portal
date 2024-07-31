@@ -249,6 +249,7 @@ public class BQEventRepositoryImpl
 	@Override
 	public long countTotalBQEvents(
 		@Nullable Long channelId,
+		@Nullable List<EventAnalysisBreakdown> eventAnalysisBreakdowns,
 		@Nullable List<EventAnalysisFilter> eventAnalysisFilters,
 		@Nullable Long eventDefinitionId, @Nullable Date rangeEndDate,
 		@Nullable Date rangeStartDate, String timeZoneId) {
@@ -276,14 +277,15 @@ public class BQEventRepositoryImpl
 		return _queryExecutor.queryForLong(
 			selectJoinStep.where(
 				_getConditions(
-					channelId, eventAnalysisFilters, eventDefinitionId,
-					filteredEventsTableName, rangeEndDate, rangeStartDate,
-					timeZoneId)));
+					channelId, eventAnalysisBreakdowns, eventAnalysisFilters,
+					eventDefinitionId, filteredEventsTableName, rangeEndDate,
+					rangeStartDate, timeZoneId)));
 	}
 
 	@Override
 	public long countUniqueIndividuals(
 		@Nullable Long channelId,
+		@Nullable List<EventAnalysisBreakdown> eventAnalysisBreakdowns,
 		@Nullable List<EventAnalysisFilter> eventAnalysisFilters,
 		@Nullable Long eventDefinitionId, @Nullable Date rangeEndDate,
 		@Nullable Date rangeStartDate, String timeZoneId) {
@@ -301,8 +303,9 @@ public class BQEventRepositoryImpl
 		return _queryExecutor.queryForLong(
 			selectJoinStep.where(
 				_getConditions(
-					channelId, eventAnalysisFilters, eventDefinitionId,
-					rangeEndDate, rangeStartDate, timeZoneId)));
+					channelId, eventAnalysisBreakdowns, eventAnalysisFilters,
+					eventDefinitionId, rangeEndDate, rangeStartDate,
+					timeZoneId)));
 	}
 
 	@Override
@@ -447,6 +450,7 @@ public class BQEventRepositoryImpl
 	@Override
 	public BigDecimal getAverageBQEventCountPerIndividual(
 		@Nullable Long channelId,
+		@Nullable List<EventAnalysisBreakdown> eventAnalysisBreakdowns,
 		@Nullable List<EventAnalysisFilter> eventAnalysisFilters,
 		@Nullable Long eventDefinitionId, @Nullable Date rangeEndDate,
 		@Nullable Date rangeStartDate, String timeZoneId) {
@@ -469,8 +473,9 @@ public class BQEventRepositoryImpl
 		return _queryExecutor.queryForBigDecimal(
 			selectJoinStep.where(
 				_getConditions(
-					channelId, eventAnalysisFilters, eventDefinitionId,
-					rangeEndDate, rangeStartDate, timeZoneId)));
+					channelId, eventAnalysisBreakdowns, eventAnalysisFilters,
+					eventDefinitionId, rangeEndDate, rangeStartDate,
+					timeZoneId)));
 	}
 
 	@Override
@@ -642,7 +647,8 @@ public class BQEventRepositoryImpl
 		return _queryExecutor.queryForLong(
 			selectJoinStep.where(
 				_getConditions(
-					channelId, eventAnalysisFilters, eventDefinitionId,
+					channelId, Arrays.asList(eventAnalysisBreakdown),
+					eventAnalysisFilters, eventDefinitionId,
 					timeRange.getEndDate(), timeRange.getStartDate(),
 					timeZoneId)));
 	}
@@ -1602,6 +1608,12 @@ public class BQEventRepositoryImpl
 		Map<String, EventAttributeDefinition> eventAttributeDefinitions,
 		SelectJoinStep selectJoinStep, TimeRange timeRange) {
 
+		if ((eventAnalysisBreakdowns == null) ||
+			eventAnalysisBreakdowns.isEmpty()) {
+
+			return selectJoinStep;
+		}
+
 		for (EventAnalysisBreakdown eventAnalysisBreakdown :
 				eventAnalysisBreakdowns) {
 
@@ -1933,9 +1945,10 @@ public class BQEventRepositoryImpl
 					eventAttributeDefinitions, buildSelectJoinStep, timeRange
 				).where(
 					_getConditions(
-						channelId, filteredEventAnalysisFilters,
-						eventDefinitionId, timeRange.getEndDate(),
-						timeRange.getStartDate(), timeZoneId)
+						channelId, eventAnalysisBreakdowns,
+						filteredEventAnalysisFilters, eventDefinitionId,
+						timeRange.getEndDate(), timeRange.getStartDate(),
+						timeZoneId)
 				).groupBy(
 					DSL.field("_firstValueField")
 				).orderBy(
@@ -1966,13 +1979,68 @@ public class BQEventRepositoryImpl
 
 	private List<Condition> _getConditions(
 		Long channelId, List<EventAnalysisBreakdown> eventAnalysisBreakdowns,
+		List<EventAnalysisFilter> eventAnalysisFilters, Long eventDefinitionId,
+		Date rangeEndDate, Date rangeStartDate, String timeZoneId) {
+
+		return _getConditions(
+			channelId, eventAnalysisBreakdowns, eventAnalysisFilters,
+			eventDefinitionId, null, rangeEndDate, rangeStartDate, timeZoneId);
+	}
+
+	private List<Condition> _getConditions(
+		Long channelId, List<EventAnalysisBreakdown> eventAnalysisBreakdowns,
+		List<EventAnalysisFilter> eventAnalysisFilters, Long eventDefinitionId,
+		String filteredEventsTableName, Date rangeEndDate, Date rangeStartDate,
+		String timeZoneId) {
+
+		List<Condition> conditions = new ArrayList<>();
+
+		if (filteredEventsTableName == null) {
+			conditions = _getConditions(
+				channelId, eventDefinitionId, rangeEndDate, rangeStartDate);
+		}
+
+		if (eventAnalysisFilters != null) {
+			conditions.addAll(
+				_getEventAnalysisFilterConditions(
+					eventAnalysisFilters, filteredEventsTableName, rangeEndDate,
+					rangeStartDate, timeZoneId));
+		}
+
+		if ((eventAnalysisBreakdowns == null) ||
+			eventAnalysisBreakdowns.isEmpty()) {
+
+			return conditions;
+		}
+
+		for (EventAnalysisBreakdown eventAnalysisBreakdown :
+				eventAnalysisBreakdowns) {
+
+			if (Objects.equals(
+					eventAnalysisBreakdown.getAttributeType(),
+					AttributeType.INDIVIDUAL)) {
+
+				Field<Object> field = DSL.field("BQEvent.emailAddressHashed");
+
+				conditions.add(field.isNotNull());
+
+				break;
+			}
+		}
+
+		return conditions;
+	}
+
+	private List<Condition> _getConditions(
+		Long channelId, List<EventAnalysisBreakdown> eventAnalysisBreakdowns,
 		List<EventAnalysisFilter> eventAnalysisFilters,
 		Map<String, EventAttributeDefinition> eventAttributeDefinitions,
 		Long eventDefinitionId, TimeRange timeRange, String timeZoneId) {
 
 		List<Condition> conditions = _getConditions(
-			channelId, eventAnalysisFilters, eventDefinitionId,
-			timeRange.getEndDate(), timeRange.getStartDate(), timeZoneId);
+			channelId, eventAnalysisBreakdowns, eventAnalysisFilters,
+			eventDefinitionId, timeRange.getEndDate(), timeRange.getStartDate(),
+			timeZoneId);
 
 		if (eventAnalysisBreakdowns.isEmpty()) {
 			return conditions;
@@ -1994,38 +2062,6 @@ public class BQEventRepositoryImpl
 				).from(
 					"_filteredEvents"
 				)));
-
-		return conditions;
-	}
-
-	private List<Condition> _getConditions(
-		Long channelId, List<EventAnalysisFilter> eventAnalysisFilters,
-		Long eventDefinitionId, Date rangeEndDate, Date rangeStartDate,
-		String timeZoneId) {
-
-		return _getConditions(
-			channelId, eventAnalysisFilters, eventDefinitionId, null,
-			rangeEndDate, rangeStartDate, timeZoneId);
-	}
-
-	private List<Condition> _getConditions(
-		Long channelId, List<EventAnalysisFilter> eventAnalysisFilters,
-		Long eventDefinitionId, String filteredEventsTableName,
-		Date rangeEndDate, Date rangeStartDate, String timeZoneId) {
-
-		List<Condition> conditions = new ArrayList<>();
-
-		if (filteredEventsTableName == null) {
-			conditions = _getConditions(
-				channelId, eventDefinitionId, rangeEndDate, rangeStartDate);
-		}
-
-		if (eventAnalysisFilters != null) {
-			conditions.addAll(
-				_getEventAnalysisFilterConditions(
-					eventAnalysisFilters, filteredEventsTableName, rangeEndDate,
-					rangeStartDate, timeZoneId));
-		}
 
 		return conditions;
 	}

@@ -65,12 +65,14 @@ public interface CustomBQEventRepository {
 
 	public long countTotalBQEvents(
 		@Nullable Long channelId,
+		@Nullable List<EventAnalysisBreakdown> eventAnalysisBreakdowns,
 		@Nullable List<EventAnalysisFilter> eventAnalysisFilters,
 		@Nullable Long eventDefinitionId, @Nullable Date rangeEndDate,
 		@Nullable Date rangeStartDate, String timeZoneId);
 
 	public long countUniqueIndividuals(
 		@Nullable Long channelId,
+		@Nullable List<EventAnalysisBreakdown> eventAnalysisBreakdowns,
 		@Nullable List<EventAnalysisFilter> eventAnalysisFilters,
 		@Nullable Long eventDefinitionId, @Nullable Date rangeEndDate,
 		@Nullable Date rangeStartDate, String timeZoneId);
@@ -86,6 +88,7 @@ public interface CustomBQEventRepository {
 
 	public BigDecimal getAverageBQEventCountPerIndividual(
 		@Nullable Long channelId,
+		@Nullable List<EventAnalysisBreakdown> eventAnalysisBreakdowns,
 		@Nullable List<EventAnalysisFilter> eventAnalysisFilters,
 		@Nullable Long eventDefinitionId, @Nullable Date rangeEndDate,
 		@Nullable Date rangeStartDate, String timeZoneId);

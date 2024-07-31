@@ -174,8 +174,9 @@ public class EventAnalysisDog {
 
 				eventAnalysisResult.setValue(
 					_getAnalysisCount(
-						analysisType, channelId, eventAnalysisFilters,
-						eventDefinitionId, timeRange, timeZoneId));
+						analysisType, channelId, eventAnalysisBreakdowns,
+						eventAnalysisFilters, eventDefinitionId, timeRange,
+						timeZoneId));
 			},
 			_executorService);
 
@@ -188,7 +189,8 @@ public class EventAnalysisDog {
 
 						eventAnalysisResult.setPreviousValue(
 							_getAnalysisCount(
-								analysisType, channelId, eventAnalysisFilters,
+								analysisType, channelId,
+								eventAnalysisBreakdowns, eventAnalysisFilters,
 								eventDefinitionId,
 								timeRange.getPreviousTimeRange(), timeZoneId));
 					},
@@ -459,25 +461,29 @@ public class EventAnalysisDog {
 
 	private Number _getAnalysisCount(
 		AnalysisType analysisType, Long channelId,
+		List<EventAnalysisBreakdown> eventAnalysisBreakdowns,
 		List<EventAnalysisFilter> eventAnalysisFilters, Long eventDefinitionId,
 		TimeRange timeRange, String timeZoneId) {
 
 		if (analysisType.equals(AnalysisType.AVERAGE)) {
 			return _bqEventRepository.getAverageBQEventCountPerIndividual(
-				channelId, eventAnalysisFilters, eventDefinitionId,
-				timeRange.getEndDate(), timeRange.getStartDate(), timeZoneId);
+				channelId, eventAnalysisBreakdowns, eventAnalysisFilters,
+				eventDefinitionId, timeRange.getEndDate(),
+				timeRange.getStartDate(), timeZoneId);
 		}
 
 		if (analysisType.equals(AnalysisType.TOTAL)) {
 			return _bqEventRepository.countTotalBQEvents(
-				channelId, eventAnalysisFilters, eventDefinitionId,
-				timeRange.getEndDate(), timeRange.getStartDate(), timeZoneId);
+				channelId, eventAnalysisBreakdowns, eventAnalysisFilters,
+				eventDefinitionId, timeRange.getEndDate(),
+				timeRange.getStartDate(), timeZoneId);
 		}
 
 		if (analysisType.equals(AnalysisType.UNIQUE)) {
 			return _bqEventRepository.countUniqueIndividuals(
-				channelId, eventAnalysisFilters, eventDefinitionId,
-				timeRange.getEndDate(), timeRange.getStartDate(), timeZoneId);
+				channelId, eventAnalysisBreakdowns, eventAnalysisFilters,
+				eventDefinitionId, timeRange.getEndDate(),
+				timeRange.getStartDate(), timeZoneId);
 		}
 
 		return null;
