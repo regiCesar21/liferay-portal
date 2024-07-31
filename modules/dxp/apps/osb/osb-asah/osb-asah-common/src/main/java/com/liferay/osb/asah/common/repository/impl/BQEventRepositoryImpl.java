@@ -599,12 +599,18 @@ public class BQEventRepositoryImpl
 		@Nullable Long eventDefinitionId, TimeRange timeRange,
 		String timeZoneId) {
 
-		EventAttributeDefinition eventAttributeDefinition =
-			_getEventAttributeDefinition(
+		EventAttributeDefinition eventAttributeDefinition = null;
+
+		if (Objects.equals(
+				eventAnalysisBreakdown.getAttributeType(),
+				AttributeType.EVENT)) {
+
+			eventAttributeDefinition = _getEventAttributeDefinition(
 				eventAnalysisBreakdown.getAttributeId());
 
-		if (eventAttributeDefinition == null) {
-			return 0;
+			if (eventAttributeDefinition == null) {
+				return 0;
+			}
 		}
 
 		Field valueField = _getValueField(
