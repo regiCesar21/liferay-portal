@@ -8,6 +8,7 @@ package com.liferay.osb.koroneiki.taproot.internal.model.listener;
 import com.liferay.osb.koroneiki.taproot.model.Account;
 import com.liferay.osb.koroneiki.taproot.model.Contact;
 import com.liferay.osb.koroneiki.taproot.service.AccountLocalService;
+import com.liferay.osb.koroneiki.trunk.model.view.ProductPurchaseView;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.ModelListenerException;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -15,6 +16,9 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.BaseModelListener;
 import com.liferay.portal.kernel.model.ModelListener;
+import com.liferay.portal.kernel.search.Indexer;
+import com.liferay.portal.kernel.search.IndexerRegistry;
+import com.liferay.portal.kernel.transaction.TransactionCommitCallbackUtil;
 
 import java.util.Date;
 import java.util.List;
@@ -48,6 +52,17 @@ public class ContactModelListener extends BaseModelListener<Contact> {
 			account.setModifiedDate(new Date());
 
 			_accountLocalService.updateAccount(account);
+
+			TransactionCommitCallbackUtil.registerCallback(
+				() -> {
+					Indexer<ProductPurchaseView> indexer =
+						_indexerRegistry.getIndexer(ProductPurchaseView.class);
+
+					indexer.reindex(
+						Account.class.getName(), account.getAccountId());
+
+					return null;
+				});
 		}
 	}
 
@@ -56,5 +71,8 @@ public class ContactModelListener extends BaseModelListener<Contact> {
 
 	@Reference
 	private AccountLocalService _accountLocalService;
+
+	@Reference
+	private IndexerRegistry _indexerRegistry;
 
 }
