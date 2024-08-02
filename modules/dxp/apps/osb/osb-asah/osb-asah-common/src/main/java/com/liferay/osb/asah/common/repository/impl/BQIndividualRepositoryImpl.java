@@ -234,6 +234,42 @@ public class BQIndividualRepositoryImpl
 	}
 
 	@Override
+	public long countBQIndividualsFirstActivityDateBetween(
+		Date endDate, Date startDate) {
+
+		SelectSelectStep<Record1<Integer>> selectSelectStep =
+			_dslContext.select(DSL.countDistinct(DSL.field("Individual.id")));
+
+		return _queryExecutor.queryForLong(
+			selectSelectStep.from(
+				DSL.table(
+					"BQIndividual"
+				).as(
+					"Individual"
+				)
+			).join(
+				DSL.table(
+					"BQIdentityActivity"
+				).as(
+					"IdentityActivity"
+				)
+			).on(
+				DSL.field(
+					"IdentityActivity.individualId"
+				).eq(
+					DSL.field("Individual.id")
+				)
+			).where(
+				DSL.field(
+					"IdentityActivity.firstActivityDate"
+				).between(
+					_dslHelper.getDateParam(startDate),
+					_dslHelper.getDateParam(endDate)
+				)
+			));
+	}
+
+	@Override
 	public long countBQIndividualsLastActivityDateSince(Date lastActivityDate) {
 		SelectSelectStep<Record1<Integer>> selectSelectStep =
 			_dslContext.select(DSL.countDistinct(DSL.field("Individual.id")));

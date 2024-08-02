@@ -86,6 +86,13 @@ public class BQIndividualDog {
 			channelId);
 	}
 
+	public long countIndividualFirstActivityDateBetween(
+		Date endDate, Date startDate) {
+
+		return _bqIndividualRepository.
+			countBQIndividualsFirstActivityDateBetween(endDate, startDate);
+	}
+
 	public long countIndividualLastActivityDateSince(Date lastActivityDate) {
 		return _bqIndividualRepository.countBQIndividualsLastActivityDateSince(
 			lastActivityDate);
