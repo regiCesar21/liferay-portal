@@ -20,6 +20,7 @@ import java.time.ZoneId;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Calendar;
 import java.util.Collections;
 import java.util.Date;
 import java.util.List;
@@ -277,6 +278,35 @@ public class BQIndividualRepositoryTest
 			1,
 			_bqIndividualRepository.countBQIndividuals(
 				null, 1L, null, null, null, null, null));
+	}
+
+	@BQSQLResource(resourcePath = "test_bq_individual_repository_3.sql")
+	@Test
+	public void testCountBQIndividualsFirstActivityDateBetween() {
+		Calendar calendar = Calendar.getInstance();
+
+		calendar.setTime(new Date());
+
+		calendar.set(Calendar.HOUR, 0);
+		calendar.set(Calendar.MINUTE, 0);
+		calendar.set(Calendar.SECOND, 0);
+		calendar.set(Calendar.MILLISECOND, 0);
+
+		Date date = calendar.getTime();
+
+		Assertions.assertEquals(
+			1,
+			_bqIndividualRepository.countBQIndividualsFirstActivityDateBetween(
+				DateUtils.addYears(date, 1), date));
+
+		Assertions.assertEquals(
+			2,
+			_bqIndividualRepository.countBQIndividualsFirstActivityDateBetween(
+				DateUtils.addDays(date, -5), DateUtils.addDays(date, -10)));
+		Assertions.assertEquals(
+			6,
+			_bqIndividualRepository.countBQIndividualsFirstActivityDateBetween(
+				date, DateUtils.addDays(date, -20)));
 	}
 
 	@BQSQLResource(resourcePath = "test_bq_individual_repository_2.sql")
