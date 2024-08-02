@@ -98,6 +98,10 @@ public class DXPBatchEntitiesRestController {
 
 	@PostMapping(consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
 	public ResponseEntity<?> post(
+			@RequestHeader(
+				required = false, value = HttpHeaders.CONTENT_ENCODING
+			)
+			String contentEncoding,
 			@RequestHeader(value = HeaderConstants.DATA_SOURCE_ID) String
 				dataSourceId,
 			@RequestPart(value = "file") List<MultipartFile> multipartFiles,
@@ -131,8 +135,8 @@ public class DXPBatchEntitiesRestController {
 
 			_dxpBatchEntitiesFileUploadHandler.receive(
 				new DXPBatchEntitiesFileUploadEvent(
-					dataSourceId, multipartFile.getInputStream(), name,
-					uploadType));
+					contentEncoding, dataSourceId,
+					multipartFile.getInputStream(), name, uploadType));
 
 			if (_log.isInfoEnabled()) {
 				_log.info(

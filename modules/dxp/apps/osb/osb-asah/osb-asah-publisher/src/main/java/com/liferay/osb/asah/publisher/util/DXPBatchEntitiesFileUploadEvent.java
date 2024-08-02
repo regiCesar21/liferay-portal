@@ -17,8 +17,14 @@ import org.springframework.lang.Nullable;
 public class DXPBatchEntitiesFileUploadEvent {
 
 	public DXPBatchEntitiesFileUploadEvent(
-		String dataSourceId, InputStream inputStream, String resourceName,
-		@Nullable String uploadType) {
+		String contentEncoding, String dataSourceId, InputStream inputStream,
+		String resourceName, @Nullable String uploadType) {
+
+		if (StringUtils.isBlank(contentEncoding)) {
+			contentEncoding = "zip";
+		}
+
+		_contentEncoding = contentEncoding;
 
 		_dataSourceId = dataSourceId;
 		_inputStream = inputStream;
@@ -29,6 +35,10 @@ public class DXPBatchEntitiesFileUploadEvent {
 		}
 
 		_uploadType = uploadType;
+	}
+
+	public String getContentEncoding() {
+		return _contentEncoding;
 	}
 
 	public String getDataSourceId() {
@@ -47,6 +57,7 @@ public class DXPBatchEntitiesFileUploadEvent {
 		return _uploadType;
 	}
 
+	private final String _contentEncoding;
 	private final String _dataSourceId;
 	private final InputStream _inputStream;
 	private final String _resourceName;
