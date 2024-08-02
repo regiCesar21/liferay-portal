@@ -89,7 +89,7 @@ public class DXPBatchEntitiesFileUploadEventHandler {
 
 			if (Objects.equals(
 					dxpBatchEntitiesFileUploadEvent.getResourceName(),
-					"com.liferay.analytics.dxp.entity.rest.dto.v1_0.DXPEntity") &&
+					_DXP_ENTITY_RESOURCE_CLASS_NAME) &&
 				Objects.equals(
 					dxpBatchEntitiesFileUploadEvent.getContentEncoding(),
 					"zip")) {
@@ -226,6 +226,9 @@ public class DXPBatchEntitiesFileUploadEventHandler {
 				ioException);
 		}
 	}
+
+	private static final String _DXP_ENTITY_RESOURCE_CLASS_NAME =
+		"com.liferay.analytics.dxp.entity.rest.dto.v1_0.DXPEntity";
 
 	private static final Log _log = LogFactory.getLog(
 		DXPBatchEntitiesFileUploadEventHandler.class);
