@@ -17,6 +17,7 @@ import com.google.auth.oauth2.GoogleCredentials;
 
 import com.liferay.osb.asah.common.configuration.GoogleCloudConfiguration;
 import com.liferay.osb.asah.common.date.DateUtil;
+import com.liferay.osb.asah.common.dog.AsahTaskDog;
 import com.liferay.osb.asah.common.json.JSONUtil;
 import com.liferay.osb.asah.common.storage.GoogleStorage;
 import com.liferay.osb.asah.common.util.ProjectIdThreadLocal;
@@ -75,18 +76,47 @@ public class DXPBatchEntitiesFileUploadEventHandler {
 				dxpBatchEntitiesFileUploadEvent.getResourceName(),
 				dxpBatchEntitiesFileUploadEvent.getUploadType());
 
-			String fileName = DateUtil.newDateString() + ".zip";
+			String filePrefix = DateUtil.newDateString();
+
+			String fileName =
+				filePrefix + "." +
+					dxpBatchEntitiesFileUploadEvent.getContentEncoding();
 
 			_googleStorage.archiveSync(
 				bucketName, folderName,
 				dxpBatchEntitiesFileUploadEvent.getInputStream(), fileName,
 				ProjectIdThreadLocal.getProjectId());
 
-			_triggerDAG(
-				dxpBatchEntitiesFileUploadEvent.getResourceName(),
-				String.format(
-					"gs://%s/%s/%s/%s", bucketName,
-					ProjectIdThreadLocal.getProjectId(), folderName, fileName));
+			if (Objects.equals(
+					dxpBatchEntitiesFileUploadEvent.getResourceName(),
+					"com.liferay.analytics.dxp.entity.rest.dto.v1_0.DXPEntity") &&
+				Objects.equals(
+					dxpBatchEntitiesFileUploadEvent.getContentEncoding(),
+					"zip")) {
+
+				_asahTaskDog.scheduleAsahTask(
+					"DXPBatchEntitiesZipFileHandlerNanite",
+					JSONUtil.put(
+						"bucketFolder", folderName
+					).put(
+						"bucketName", bucketName
+					).put(
+						"filePrefix", fileName
+					).put(
+						"fileSuffix", "zip"
+					).put(
+						"resourceName",
+						dxpBatchEntitiesFileUploadEvent.getResourceName()
+					));
+			}
+			else {
+				_triggerDAG(
+					dxpBatchEntitiesFileUploadEvent.getResourceName(),
+					String.format(
+						"gs://%s/%s/%s/%s", bucketName,
+						ProjectIdThreadLocal.getProjectId(), folderName,
+						fileName));
+			}
 		}
 		else {
 			_storeFileSystem(dxpBatchEntitiesFileUploadEvent);
@@ -107,12 +137,13 @@ public class DXPBatchEntitiesFileUploadEventHandler {
 
 		String path = _getValidatedUploadPath(
 			String.format(
-				"%s/%s/%s/%s/%s/%s.zip", _dxpBatchEntitiesStoragePath,
+				"%s/%s/%s/%s/%s/%s.%s", _dxpBatchEntitiesStoragePath,
 				ProjectIdThreadLocal.getProjectId(),
 				dxpBatchEntitiesFileUploadEvent.getDataSourceId(),
 				dxpBatchEntitiesFileUploadEvent.getResourceName(),
 				dxpBatchEntitiesFileUploadEvent.getUploadType(),
-				DateUtil.newDateString()));
+				DateUtil.newDateString(),
+				dxpBatchEntitiesFileUploadEvent.getContentEncoding()));
 
 		File targetFile = new File(path);
 
@@ -198,6 +229,9 @@ public class DXPBatchEntitiesFileUploadEventHandler {
 
 	private static final Log _log = LogFactory.getLog(
 		DXPBatchEntitiesFileUploadEventHandler.class);
+
+	@Autowired
+	private AsahTaskDog _asahTaskDog;
 
 	@Value("${osb.asah.dxp.batch.entities.storage.path:/storage}")
 	private String _dxpBatchEntitiesStoragePath;
