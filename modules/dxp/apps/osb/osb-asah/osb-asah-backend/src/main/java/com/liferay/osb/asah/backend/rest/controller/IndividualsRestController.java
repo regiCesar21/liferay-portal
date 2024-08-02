@@ -77,6 +77,19 @@ public class IndividualsRestController
 		return _bqIndividualDog.countIndividualLastActivityDateSince(startDate);
 	}
 
+	@GetMapping("/created-between-count")
+	public long getIndividualsCountFirstActivityDateBetween(
+		@DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
+		@RequestParam(name = "endDate")
+		Date endDate,
+		@DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
+		@RequestParam(name = "startDate")
+		Date startDate) {
+
+		return _bqIndividualDog.countIndividualFirstActivityDateBetween(
+			endDate, startDate);
+	}
+
 	private PageDTO<DistributionDTO> _toDistributionDTOPageDTO(
 		DistributionDTO distributionDTO, Page<Distribution> distributionsPage) {
 

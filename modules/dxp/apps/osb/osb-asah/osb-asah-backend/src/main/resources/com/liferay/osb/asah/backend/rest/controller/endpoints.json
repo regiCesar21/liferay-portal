@@ -148,6 +148,10 @@
 			"href": "{url}/individuals/count{?includeSuppressed}",
 			"templated": true
 		},
+		"individuals-created-between-count": {
+			"href": "{url}/individuals/created-between-count{?endDate,startDate}",
+			"templated": true
+		},
 		"individuals-created-since-count": {
 			"href": "{url}/individuals/created-since-count{?startDate}",
 			"templated": true
