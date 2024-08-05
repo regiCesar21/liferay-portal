@@ -75,6 +75,12 @@ public class DXPBatchEntitiesZipFileHandlerNanite extends BaseNanite {
 				"gs://%s/%s/%s/%s", bucketName,
 				ProjectIdThreadLocal.getProjectId(), bucketFolder,
 				gzipTmpFile.getName()));
+
+		boolean result = zipTmpFile.delete();
+
+		if (result && _log.isDebugEnabled()) {
+			_log.debug("Deleted zip temporary file " + zipTmpFile);
+		}
 	}
 
 	@Override
