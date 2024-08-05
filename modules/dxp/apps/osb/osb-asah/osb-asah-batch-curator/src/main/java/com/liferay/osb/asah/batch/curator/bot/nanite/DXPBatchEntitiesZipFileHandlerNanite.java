@@ -38,32 +38,15 @@ public class DXPBatchEntitiesZipFileHandlerNanite extends BaseNanite {
 
 	@Override
 	public void run(JSONObject contextJSONObject) throws Exception {
-		String bucketName = contextJSONObject.getString("bucketName");
 		String bucketFolder = contextJSONObject.getString("bucketFolder");
+		String bucketName = contextJSONObject.getString("bucketName");
 		String filePrefix = contextJSONObject.getString("filePrefix");
 		String fileSuffix = contextJSONObject.getString("fileSuffix");
 
-		if (_log.isDebugEnabled()) {
-			_log.debug(
-				String.format(
-					"Reading remote file gs://%s/%s/%s/%s.%s", bucketName,
-					ProjectIdThreadLocal.getProjectId(), bucketFolder,
-					filePrefix, fileSuffix));
-		}
-
-		File zipTmpFile = _googleStorage.readFile(
-			bucketName, bucketFolder, filePrefix, fileSuffix,
-			ProjectIdThreadLocal.getProjectId());
-
-		long start = System.currentTimeMillis();
+		File zipTmpFile = _readFile(
+			bucketName, bucketFolder, filePrefix, fileSuffix);
 
 		File gzipTmpFile = _convertZipToGzip(filePrefix, zipTmpFile);
-
-		if (_log.isDebugEnabled()) {
-			_log.debug(
-				"File conversion to gzip took " +
-					(System.currentTimeMillis() - start) + " ms");
-		}
 
 		_googleStorage.archiveSync(
 			bucketName, bucketFolder, gzipTmpFile, gzipTmpFile.getName(),
@@ -91,6 +74,8 @@ public class DXPBatchEntitiesZipFileHandlerNanite extends BaseNanite {
 	private File _convertZipToGzip(String gzipFilePrefix, File zipTmpFile)
 		throws Exception {
 
+		long start = System.currentTimeMillis();
+
 		File gzipTmpFile = File.createTempFile(gzipFilePrefix, "gz");
 
 		GZIPOutputStream gzipOutputStream = new GZIPOutputStream(
@@ -106,7 +91,30 @@ public class DXPBatchEntitiesZipFileHandlerNanite extends BaseNanite {
 
 		gzipOutputStream.close();
 
+		if (_log.isDebugEnabled()) {
+			_log.debug(
+				"File conversion to gzip took " +
+					(System.currentTimeMillis() - start) + " ms");
+		}
+
 		return gzipTmpFile;
+	}
+
+	private File _readFile(
+		String bucket, String bucketFolder, String filePrefix,
+		String fileSuffix) {
+
+		if (_log.isDebugEnabled()) {
+			_log.debug(
+				String.format(
+					"Reading file gs://%s/%s/%s/%s.%s", bucket,
+					ProjectIdThreadLocal.getProjectId(), bucketFolder,
+					filePrefix, fileSuffix));
+		}
+
+		return _googleStorage.readFile(
+			bucket, bucketFolder, filePrefix, fileSuffix,
+			ProjectIdThreadLocal.getProjectId());
 	}
 
 	private static final Log _log = LogFactory.getLog(
