@@ -40,6 +40,7 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.InputStreamReader;
 
 import java.nio.charset.StandardCharsets;
@@ -62,6 +63,7 @@ import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
+import java.util.zip.GZIPInputStream;
 import java.util.zip.ZipInputStream;
 
 import org.apache.commons.codec.digest.DigestUtils;
@@ -326,7 +328,8 @@ public class DXPEntitiesIngestionNanite {
 
 						File file = path.toFile();
 
-						if (StringUtils.contains(file.getName(), ".zip") &&
+						if ((StringUtils.contains(file.getName(), ".gz") ||
+							 StringUtils.contains(file.getName(), ".zip")) &&
 							basicFileAttributes.isRegularFile() &&
 							(basicFileAttributes.size() > 0)) {
 
@@ -515,14 +518,22 @@ public class DXPEntitiesIngestionNanite {
 
 		Map<String, String> attributes = _getAttributes(absolutePath);
 
-		ZipInputStream zipInputStream = new ZipInputStream(
-			new FileInputStream(file));
+		InputStream inputStream = null;
 
-		zipInputStream.getNextEntry();
+		if (StringUtils.endsWith(absolutePath, ".gz")) {
+			inputStream = new GZIPInputStream(new FileInputStream(file));
+		}
+		else {
+			ZipInputStream zipInputStream = new ZipInputStream(
+				new FileInputStream(file));
+
+			zipInputStream.getNextEntry();
+
+			inputStream = zipInputStream;
+		}
 
 		try (BufferedReader bufferedReader = new BufferedReader(
-				new InputStreamReader(
-					zipInputStream, StandardCharsets.UTF_8))) {
+				new InputStreamReader(inputStream, StandardCharsets.UTF_8))) {
 
 			String line = null;
 
