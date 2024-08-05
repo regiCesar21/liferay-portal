@@ -5,7 +5,7 @@
 
 package com.liferay.osb.asah.batch.curator.bot.nanite;
 
-import com.liferay.osb.asah.common.composer.ComposerDAGTrigger;
+import com.liferay.osb.asah.common.composer.ComposerDXPIngestionDAGTrigger;
 import com.liferay.osb.asah.common.storage.GoogleStorage;
 import com.liferay.osb.asah.common.util.ProjectIdThreadLocal;
 
@@ -52,7 +52,7 @@ public class DXPBatchEntitiesZipFileHandlerNanite extends BaseNanite {
 			bucketName, bucketFolder, gzipTmpFile, gzipTmpFile.getName(),
 			ProjectIdThreadLocal.getProjectId());
 
-		_composerDAGTrigger.trigger(
+		_composerDXPIngestionDAGTrigger.trigger(
 			contextJSONObject.getString("resourceName"),
 			String.format(
 				"gs://%s/%s/%s/%s", bucketName,
@@ -121,7 +121,7 @@ public class DXPBatchEntitiesZipFileHandlerNanite extends BaseNanite {
 		DXPBatchEntitiesZipFileHandlerNanite.class);
 
 	@Autowired
-	private ComposerDAGTrigger _composerDAGTrigger;
+	private ComposerDXPIngestionDAGTrigger _composerDXPIngestionDAGTrigger;
 
 	@Autowired
 	private GoogleStorage _googleStorage;

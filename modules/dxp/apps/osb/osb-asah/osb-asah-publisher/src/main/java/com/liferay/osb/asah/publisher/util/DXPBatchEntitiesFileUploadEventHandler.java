@@ -5,7 +5,7 @@
 
 package com.liferay.osb.asah.publisher.util;
 
-import com.liferay.osb.asah.common.composer.ComposerDAGTrigger;
+import com.liferay.osb.asah.common.composer.ComposerDXPIngestionDAGTrigger;
 import com.liferay.osb.asah.common.configuration.GoogleCloudConfiguration;
 import com.liferay.osb.asah.common.date.DateUtil;
 import com.liferay.osb.asah.common.dog.AsahTaskDog;
@@ -81,7 +81,7 @@ public class DXPBatchEntitiesFileUploadEventHandler {
 					));
 			}
 			else {
-				_composerDAGTrigger.trigger(
+				_composerDXPIngestionDAGTrigger.trigger(
 					dxpBatchEntitiesFileUploadEvent.getResourceName(),
 					String.format(
 						"gs://%s/%s/%s/%s", bucketName,
@@ -136,7 +136,7 @@ public class DXPBatchEntitiesFileUploadEventHandler {
 	private AsahTaskDog _asahTaskDog;
 
 	@Autowired
-	private ComposerDAGTrigger _composerDAGTrigger;
+	private ComposerDXPIngestionDAGTrigger _composerDXPIngestionDAGTrigger;
 
 	@Value("${osb.asah.dxp.batch.entities.storage.path:/storage}")
 	private String _dxpBatchEntitiesStoragePath;

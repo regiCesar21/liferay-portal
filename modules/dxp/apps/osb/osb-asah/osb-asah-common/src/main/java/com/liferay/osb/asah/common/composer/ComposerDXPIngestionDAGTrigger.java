@@ -35,9 +35,9 @@ import org.springframework.stereotype.Component;
  * @author Marcellus Tavares
  */
 @Component
-public class ComposerDAGTrigger {
+public class ComposerDXPIngestionDAGTrigger {
 
-	public ComposerDAGTrigger() {
+	public ComposerDXPIngestionDAGTrigger() {
 		_entities.put(
 			"com.liferay.analytics.dxp.entity.rest.dto.v1_0.AssetEntity",
 			"asset_entity");
@@ -121,7 +121,8 @@ public class ComposerDAGTrigger {
 		}
 	}
 
-	private static final Log _log = LogFactory.getLog(ComposerDAGTrigger.class);
+	private static final Log _log = LogFactory.getLog(
+		ComposerDXPIngestionDAGTrigger.class);
 
 	private final Map<String, String> _entities = new HashMap<>();
 
