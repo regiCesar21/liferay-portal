@@ -38,27 +38,42 @@ public class DXPBatchEntitiesZipFileHandlerNanite extends BaseNanite {
 
 	@Override
 	public void run(JSONObject contextJSONObject) throws Exception {
+		String bucketName = contextJSONObject.getString("bucketName");
+		String bucketFolder = contextJSONObject.getString("bucketFolder");
+		String filePrefix = contextJSONObject.getString("filePrefix");
+		String fileSuffix = contextJSONObject.getString("fileSuffix");
+
+		if (_log.isDebugEnabled()) {
+			_log.debug(
+				String.format(
+					"Reading remote file gs://%s/%s/%s/%s.%s", bucketName,
+					ProjectIdThreadLocal.getProjectId(), bucketFolder,
+					filePrefix, fileSuffix));
+		}
+
 		File zipTmpFile = _googleStorage.readFile(
-			contextJSONObject.getString("bucketName"),
-			contextJSONObject.getString("bucketFolder"),
-			contextJSONObject.getString("filePrefix"),
-			contextJSONObject.getString("fileSuffix"),
+			bucketName, bucketFolder, filePrefix, fileSuffix,
 			ProjectIdThreadLocal.getProjectId());
 
-		File gzipTmpFile = _convertZipToGzip(
-			contextJSONObject.getString("filePrefix"), zipTmpFile);
+		long start = System.currentTimeMillis();
+
+		File gzipTmpFile = _convertZipToGzip(filePrefix, zipTmpFile);
+
+		if (_log.isDebugEnabled()) {
+			_log.debug(
+				"File conversion to gzip took " +
+					(System.currentTimeMillis() - start) + " ms");
+		}
 
 		_googleStorage.archiveSync(
-			contextJSONObject.getString("bucketName"),
-			contextJSONObject.getString("bucketFolder"), gzipTmpFile,
-			gzipTmpFile.getName(), ProjectIdThreadLocal.getProjectId());
+			bucketName, bucketFolder, gzipTmpFile, gzipTmpFile.getName(),
+			ProjectIdThreadLocal.getProjectId());
 
 		_composerDAGTrigger.trigger(
 			contextJSONObject.getString("resourceName"),
 			String.format(
-				"gs://%s/%s/%s/%s", contextJSONObject.getString("bucketName"),
-				ProjectIdThreadLocal.getProjectId(),
-				contextJSONObject.getString("bucketFolder"),
+				"gs://%s/%s/%s/%s", bucketName,
+				ProjectIdThreadLocal.getProjectId(), bucketFolder,
 				gzipTmpFile.getName()));
 	}
 
