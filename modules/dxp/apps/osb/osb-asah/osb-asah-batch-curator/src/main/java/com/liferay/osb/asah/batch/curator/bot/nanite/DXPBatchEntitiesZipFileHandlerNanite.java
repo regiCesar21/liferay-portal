@@ -45,21 +45,8 @@ public class DXPBatchEntitiesZipFileHandlerNanite extends BaseNanite {
 			contextJSONObject.getString("fileSuffix"),
 			ProjectIdThreadLocal.getProjectId());
 
-		File gzipTmpFile = File.createTempFile(
-			contextJSONObject.getString("filePrefix"), "gz");
-
-		GZIPOutputStream gzipOutputStream = new GZIPOutputStream(
-			new FileOutputStream(gzipTmpFile));
-
-		try (ZipInputStream zipInputStream = new ZipInputStream(
-				new FileInputStream(zipTmpFile))) {
-
-			zipInputStream.getNextEntry();
-
-			StreamUtils.copy(zipInputStream, gzipOutputStream);
-		}
-
-		gzipOutputStream.close();
+		File gzipTmpFile = _convertZipToGzip(
+			contextJSONObject.getString("filePrefix"), zipTmpFile);
 
 		_googleStorage.archiveSync(
 			contextJSONObject.getString("bucketName"),
@@ -78,6 +65,27 @@ public class DXPBatchEntitiesZipFileHandlerNanite extends BaseNanite {
 	@Override
 	protected Log getLog() {
 		return _log;
+	}
+
+	private File _convertZipToGzip(String gzipFilePrefix, File zipTmpFile)
+		throws Exception {
+
+		File gzipTmpFile = File.createTempFile(gzipFilePrefix, "gz");
+
+		GZIPOutputStream gzipOutputStream = new GZIPOutputStream(
+			new FileOutputStream(gzipTmpFile));
+
+		try (ZipInputStream zipInputStream = new ZipInputStream(
+				new FileInputStream(zipTmpFile))) {
+
+			zipInputStream.getNextEntry();
+
+			StreamUtils.copy(zipInputStream, gzipOutputStream);
+		}
+
+		gzipOutputStream.close();
+
+		return gzipTmpFile;
 	}
 
 	private static final Log _log = LogFactory.getLog(
