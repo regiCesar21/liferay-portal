@@ -40,21 +40,21 @@ public class EventAttributeValueBagDataFetcher
 		String eventAttributeDefinitionId = dataFetchingEnvironment.getArgument(
 			"eventAttributeDefinitionId");
 
-		if (Objects.equals(eventAttributeDefinitionId, "jobTitle") ||
-			Objects.equals(eventAttributeDefinitionId, "languageId")) {
+		if (Objects.equals(eventAttributeDefinitionId, "group")) {
+			valuePage = _bqGroupDog.getBQGroupNamePage(
+				Long.valueOf(dataFetchingEnvironment.getArgument("channelId")),
+				dataFetchingEnvironment.getArgument("keywords"),
+				dataFetchingEnvironment.getArgument("size"),
+				dataFetchingEnvironment.getArgument("start"));
+		}
+		else if (Objects.equals(eventAttributeDefinitionId, "jobTitle") ||
+				 Objects.equals(eventAttributeDefinitionId, "languageId")) {
 
 			valuePage = _bqIndividualDog.getBQIndividualFieldValuePage(
 				Long.valueOf(dataFetchingEnvironment.getArgument("channelId")),
 				null, "demographics/" + eventAttributeDefinitionId + "/value",
 				dataFetchingEnvironment.getArgument("start"),
 				dataFetchingEnvironment.getArgument("size"));
-		}
-		else if (Objects.equals(eventAttributeDefinitionId, "group")) {
-			valuePage = _bqGroupDog.getBQGroupNamePage(
-				Long.valueOf(dataFetchingEnvironment.getArgument("channelId")),
-				dataFetchingEnvironment.getArgument("keywords"),
-				dataFetchingEnvironment.getArgument("size"),
-				dataFetchingEnvironment.getArgument("start"));
 		}
 		else if (Objects.equals(eventAttributeDefinitionId, "role")) {
 			valuePage = _bqRoleDog.getBQRoleNamePage(
