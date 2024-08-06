@@ -323,11 +323,14 @@ public class SiteMetricDog {
 			compositions.add(new Composition(count.longValue(), key));
 		}
 
-		return new CompositionResultBag(
-			compositions, compositions.size(),
-			_bqEventRepository.getSearchTermsCount(
+		Map<String, Integer> searchTermsCounts =
+			_bqEventRepository.getSearchTermsCounts(
 				channelId, _getSearchQueryParams(), timeRange,
-				_timeZoneDog.getTimeZoneId()));
+				_timeZoneDog.getTimeZoneId());
+
+		return new CompositionResultBag(
+			compositions, searchTermsCounts.get("totalDistinct"),
+			searchTermsCounts.get("total"));
 	}
 
 	public SiteMetric getSiteMetric(SearchQueryContext searchQueryContext) {

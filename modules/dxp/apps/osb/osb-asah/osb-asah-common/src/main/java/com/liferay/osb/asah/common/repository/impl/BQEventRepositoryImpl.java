@@ -1409,7 +1409,7 @@ public class BQEventRepositoryImpl
 	}
 
 	@Override
-	public long getSearchTermsCount(
+	public Map<String, Integer> getSearchTermsCounts(
 		Long channelId, String[] searchQueryParams, TimeRange timeRange,
 		String timeZoneId) {
 
@@ -1419,17 +1419,42 @@ public class BQEventRepositoryImpl
 
 		searchTermField = DSL.lower(searchTermField);
 
-		return _queryExecutor.queryForLong(
-			_dslContext.select(
-				DSL.count(searchTermField)
-			).from(
-				"BQEvent"
-			).where(
-				_createSearchTermsCondition(
-					channelId, timeRange.getEndLocalDateTime(),
-					timeRange.getStartLocalDateTime(), searchTermField,
-					timeZoneId)
-			));
+		Optional<Map<String, Integer>> resultOptional =
+			_queryExecutor.queryForObject(
+				recordMap -> {
+					BigDecimal total = (BigDecimal)recordMap.get("total");
+
+					BigDecimal totalDistinct = (BigDecimal)recordMap.get(
+						"totalDistinct");
+
+					return new HashMap<String, Integer>() {
+						{
+							put("total", total.intValue());
+							put("totalDistinct", totalDistinct.intValue());
+						}
+					};
+				},
+				_dslContext.select(
+					DSL.count(
+						searchTermField
+					).as(
+						"total"
+					),
+					DSL.countDistinct(
+						searchTermField
+					).as(
+						"totalDistinct"
+					)
+				).from(
+					"BQEvent"
+				).where(
+					_createSearchTermsCondition(
+						channelId, timeRange.getEndLocalDateTime(),
+						timeRange.getStartLocalDateTime(), searchTermField,
+						timeZoneId)
+				));
+
+		return resultOptional.get();
 	}
 
 	@Override

@@ -165,7 +165,7 @@ public interface CustomBQEventRepository {
 		Long channelId, String[] searchQueryParams, int size, int start,
 		TimeRange timeRange, String timeZoneId);
 
-	public long getSearchTermsCount(
+	public Map<String, Integer> getSearchTermsCounts(
 		Long channelId, String[] searchQueryParams, TimeRange timeRange,
 		String timeZoneId);
 
