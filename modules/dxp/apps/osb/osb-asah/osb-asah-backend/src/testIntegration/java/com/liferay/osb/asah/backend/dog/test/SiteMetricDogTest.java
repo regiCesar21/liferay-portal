@@ -730,6 +730,38 @@ public class SiteMetricDogTest
 		Assertions.assertEquals(5, compositionResultBag.getTotalCount());
 	}
 
+	@BQSQLResource(resourcePath = "test_bq_events_search_terms.sql")
+	@Test
+	public void testSearchTerms30DaysPaginated() {
+		CompositionResultBag compositionResultBag =
+			_siteMetricDog.getSearchTermsCompositionResultBag(
+				1L, 3, 0, TimeRange.LAST_30_DAYS);
+
+		LinkedHashMap<String, Long> expectedResults =
+			new LinkedHashMap<String, Long>() {
+				{
+					put("liferay", 2L);
+					put("documents and media", 1L);
+					put("forms", 1L);
+				}
+			};
+
+		List<Composition> results = compositionResultBag.getResults();
+
+		Stream<Composition> stream = results.stream();
+
+		Assertions.assertEquals(
+			expectedResults,
+			stream.collect(
+				Collectors.toMap(
+					Composition::getName, Composition::getCount,
+					(name, count) -> name, LinkedHashMap::new)));
+
+		Assertions.assertEquals(2, compositionResultBag.getMaxCount());
+		Assertions.assertEquals(4, compositionResultBag.getTotal());
+		Assertions.assertEquals(5, compositionResultBag.getTotalCount());
+	}
+
 	@BQSQLResource(
 		resourcePath = "test_bq_sessions_visitors_by_day_and_time.sql"
 	)
