@@ -130,43 +130,6 @@ for project in response.json():
 		'dxp_asset_entity_ingestion_dataflow_trigger'
 	)
 
-	#
-	# DXP Entity
-	#
-
-	downstream_task_ids = []
-
-	if project.get('accountsSelected'):
-		downstream_task_ids.extend(
-			['account_entry_merge', 'account_group_merge']
-		)
-
-	if project.get('contactsSelected'):
-		downstream_task_ids.extend([
-			'expando_column_merge', 'expando_value_delete',
-			'expando_value_merge', 'group_merge', 'organization_merge',
-			'role_merge', 'team_merge', 'user_group_merge', 'user_merge'
-		])
-
-		downstream_task_ids = [downstream_task_ids] + ['individual_merge']
-
-	if len(downstream_task_ids) > 0:
-		dag_id = 'dxp_entity_ingestion_dataflow_trigger_{}'.format(
-			project.get('id')
-		)
-
-		globals()[dag_id] = create_dag(
-			project.get('id'), dag_id,
-			'DXP Entity Ingestion Dataflow Trigger For {}'.format(
-				project.get('id')
-			),
-			'com.liferay.osb.asah.dataflow.ingestion.dxp.DXPEntityIngestionPipeline',
-			'dxpentityingestionpipeline-{}'.format(project.get('id')),
-			downstream_task_ids,
-			'dxp_entity_merge'
-			'dxp_entity_ingestion_dataflow_trigger'
-		)
-
 	if project.get('commerceChannelsSelected'):
 
 		#
