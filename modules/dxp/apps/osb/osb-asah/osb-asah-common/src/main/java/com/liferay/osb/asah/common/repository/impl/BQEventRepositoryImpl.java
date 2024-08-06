@@ -50,6 +50,7 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
@@ -274,6 +275,9 @@ public class BQEventRepositoryImpl
 				rangeEndDate, rangeStartDate);
 		}
 
+		selectJoinStep = _getIndividualAttributeSelectJoinStep(
+			eventAnalysisBreakdowns, eventAnalysisFilters, selectJoinStep);
+
 		return _queryExecutor.queryForLong(
 			selectJoinStep.where(
 				_getConditions(
@@ -299,6 +303,9 @@ public class BQEventRepositoryImpl
 
 		SelectJoinStep<Record1<Integer>> selectJoinStep =
 			_getEventSelectJoinStep(selectSelectStep);
+
+		selectJoinStep = _getIndividualAttributeSelectJoinStep(
+			eventAnalysisBreakdowns, eventAnalysisFilters, selectJoinStep);
 
 		return _queryExecutor.queryForLong(
 			selectJoinStep.where(
@@ -470,6 +477,9 @@ public class BQEventRepositoryImpl
 		SelectJoinStep<Record1<Number>> selectJoinStep =
 			_getEventSelectJoinStep(selectSelectStep);
 
+		selectJoinStep = _getIndividualAttributeSelectJoinStep(
+			eventAnalysisBreakdowns, eventAnalysisFilters, selectJoinStep);
+
 		return _queryExecutor.queryForBigDecimal(
 			selectJoinStep.where(
 				_getConditions(
@@ -573,7 +583,8 @@ public class BQEventRepositoryImpl
 		}
 		else {
 			selectJoinStep = _buildSelectJoinStep(
-				channelId, eventAnalysisBreakdowns, eventAttributeDefinitions,
+				channelId, eventAnalysisBreakdowns, eventAnalysisFilters,
+				eventAttributeDefinitions,
 				_dslContext.select(
 					selectFields
 				).from(
@@ -639,6 +650,7 @@ public class BQEventRepositoryImpl
 
 		selectJoinStep = _buildSelectJoinStep(
 			channelId, Arrays.asList(eventAnalysisBreakdown),
+			eventAnalysisFilters,
 			Collections.singletonMap(
 				eventAnalysisBreakdown.getAttributeId(),
 				eventAttributeDefinition),
@@ -1599,36 +1611,27 @@ public class BQEventRepositoryImpl
 
 	private SelectJoinStep _buildSelectJoinStep(
 		Long channelId, List<EventAnalysisBreakdown> eventAnalysisBreakdowns,
+		List<EventAnalysisFilter> eventAnalysisFilters,
 		Map<String, EventAttributeDefinition> eventAttributeDefinitions,
 		SelectJoinStep selectJoinStep, TimeRange timeRange) {
 
-		if ((eventAnalysisBreakdowns == null) ||
-			eventAnalysisBreakdowns.isEmpty()) {
+		if (eventAnalysisBreakdowns != null) {
+			for (EventAnalysisBreakdown eventAnalysisBreakdown :
+					eventAnalysisBreakdowns) {
 
-			return selectJoinStep;
-		}
-
-		for (EventAnalysisBreakdown eventAnalysisBreakdown :
-				eventAnalysisBreakdowns) {
-
-			if (Objects.equals(
-					eventAnalysisBreakdown.getAttributeType(),
-					AttributeType.EVENT)) {
-
-				selectJoinStep = _getEventAttributeSelectJoinStep(
-					channelId, eventAnalysisBreakdown,
-					eventAttributeDefinitions, selectJoinStep, timeRange);
-			}
-			else if (Objects.equals(
+				if (Objects.equals(
 						eventAnalysisBreakdown.getAttributeType(),
-						AttributeType.INDIVIDUAL)) {
+						AttributeType.EVENT)) {
 
-				selectJoinStep = _getIndividualSelectJoinStep(
-					eventAnalysisBreakdown, selectJoinStep);
+					selectJoinStep = _getEventAttributeSelectJoinStep(
+						channelId, eventAnalysisBreakdown,
+						eventAttributeDefinitions, selectJoinStep, timeRange);
+				}
 			}
 		}
 
-		return selectJoinStep;
+		return _getIndividualAttributeSelectJoinStep(
+			eventAnalysisBreakdowns, eventAnalysisFilters, selectJoinStep);
 	}
 
 	private List<Condition> _createConditions(
@@ -1927,7 +1930,8 @@ public class BQEventRepositoryImpl
 		);
 
 		return _buildSelectJoinStep(
-			channelId, eventAnalysisBreakdowns, eventAttributeDefinitions,
+			channelId, eventAnalysisBreakdowns, eventAnalysisFilters,
+			eventAttributeDefinitions,
 			_buildBQEventPropertyWithStep(
 				channelId, eventDefinitionId, timeRange.getEndDate(),
 				timeRange.getStartDate()
@@ -1935,7 +1939,7 @@ public class BQEventRepositoryImpl
 				"_filteredEvents"
 			).as(
 				_buildSelectJoinStep(
-					channelId, eventAnalysisBreakdowns,
+					channelId, eventAnalysisBreakdowns, eventAnalysisFilters,
 					eventAttributeDefinitions, buildSelectJoinStep, timeRange
 				).where(
 					_getConditions(
@@ -2140,50 +2144,78 @@ public class BQEventRepositoryImpl
 
 		Condition conditions = DSL.noCondition();
 
-		Optional<EventAttributeDefinition> eventAttributeDefinitionOptional =
-			_getEventAttributeDefinition(eventAnalysisFilter);
+		EventAttributeDefinition eventAttributeDefinition = null;
 
-		if (!eventAttributeDefinitionOptional.isPresent()) {
-			return conditions;
+		if (attributeType == AttributeType.EVENT) {
+			Optional<EventAttributeDefinition>
+				eventAttributeDefinitionOptional = _getEventAttributeDefinition(
+					eventAnalysisFilter);
+
+			if (!eventAttributeDefinitionOptional.isPresent()) {
+				return conditions;
+			}
+
+			eventAttributeDefinition = eventAttributeDefinitionOptional.get();
 		}
-
-		EventAttributeDefinition eventAttributeDefinition =
-			eventAttributeDefinitionOptional.get();
-
-		Condition condition = _getValueCondition(
-			attributeType, eventAttributeDefinition, filteredEventsTableName,
-			rangeEndDate, rangeStartDate);
 
 		FilterOperator filterOperator = FilterOperators.of(
 			eventAnalysisFilter.getDataType(), _dslHelper,
 			eventAnalysisFilter.getOperator(), eventAnalysisFilter.getValues());
 
-		String fieldTableName = "BQEventProperty";
+		Field field = null;
 
-		if (filteredEventsTableName != null) {
-			fieldTableName = filteredEventsTableName;
+		if (attributeType == AttributeType.EVENT) {
+			String fieldTableName = "BQEventProperty";
+
+			if (filteredEventsTableName != null) {
+				fieldTableName = filteredEventsTableName;
+			}
+
+			field = DSL.field(fieldTableName + ".value");
+
+			if (_isGlobalAttribute(eventAttributeDefinition)) {
+				if (filteredEventsTableName == null) {
+					field = _getGlobalAttributeField(
+						eventAttributeDefinition.getName());
+				}
+				else {
+					String attributeDefinitionName = _globalAttributes.get(
+						eventAttributeDefinition.getName());
+
+					field = DSL.field(
+						filteredEventsTableName + "." +
+							attributeDefinitionName);
+				}
+			}
 		}
+		else if (attributeType == AttributeType.INDIVIDUAL) {
+			String attributeId = eventAnalysisFilter.getAttributeId();
 
-		Field field = DSL.field(fieldTableName + ".value");
+			if (Objects.equals(attributeId, "group") ||
+				Objects.equals(attributeId, "role") ||
+				Objects.equals(attributeId, "team") ||
+				Objects.equals(attributeId, "userGroup")) {
 
-		if (_isGlobalAttribute(eventAttributeDefinition)) {
-			if (filteredEventsTableName == null) {
-				field = _getGlobalAttributeField(
-					eventAttributeDefinition.getName());
+				field = DSL.field(attributeId + "Ids.name");
 			}
 			else {
-				String attributeDefinitionName = _globalAttributes.get(
-					eventAttributeDefinition.getName());
-
 				field = DSL.field(
-					filteredEventsTableName + "." + attributeDefinitionName);
+					"Individual_" + attributeId + "." + attributeId);
 			}
 		}
+
+		Condition condition = _getValueCondition(
+			attributeType, eventAttributeDefinition, filteredEventsTableName,
+			rangeEndDate, rangeStartDate);
 
 		conditions = conditions.and(
 			condition.and(
 				filterOperator.getCondition(
 					_getField(eventAnalysisFilter, field, timeZoneId))));
+
+		if (attributeType == AttributeType.INDIVIDUAL) {
+			return conditions;
+		}
 
 		Field<Object> joinFieldTableField = DSL.field(
 			_getJoinFieldTableName(attributeType));
@@ -2279,7 +2311,11 @@ public class BQEventRepositoryImpl
 
 		return IterableUtils.toList(
 			_eventAttributeDefinitionRepository.findAllById(
-				eventAnalysisFiltersStream.map(
+				eventAnalysisFiltersStream.filter(
+					eventAnalysisFilter -> !Objects.equals(
+						eventAnalysisFilter.getAttributeType(),
+						AttributeType.INDIVIDUAL)
+				).map(
 					EventAnalysisFilter::getAttributeId
 				).map(
 					Long::valueOf
@@ -2663,11 +2699,51 @@ public class BQEventRepositoryImpl
 			));
 	}
 
-	private SelectJoinStep _getIndividualSelectJoinStep(
-		EventAnalysisBreakdown eventAnalysisBreakdown,
+	private SelectJoinStep _getIndividualAttributeSelectJoinStep(
+		List<EventAnalysisBreakdown> eventAnalysisBreakdowns,
+		List<EventAnalysisFilter> eventAnalysisFilters,
 		SelectJoinStep selectJoinStep) {
 
-		String attributeId = eventAnalysisBreakdown.getAttributeId();
+		Set<String> individualAttributeIds = new HashSet<>();
+
+		if (eventAnalysisBreakdowns != null) {
+			for (EventAnalysisBreakdown eventAnalysisBreakdown :
+					eventAnalysisBreakdowns) {
+
+				if (Objects.equals(
+						eventAnalysisBreakdown.getAttributeType(),
+						AttributeType.INDIVIDUAL)) {
+
+					individualAttributeIds.add(
+						eventAnalysisBreakdown.getAttributeId());
+				}
+			}
+		}
+
+		if (eventAnalysisFilters != null) {
+			for (EventAnalysisFilter eventAnalysisFilter :
+					eventAnalysisFilters) {
+
+				if (Objects.equals(
+						eventAnalysisFilter.getAttributeType(),
+						AttributeType.INDIVIDUAL)) {
+
+					individualAttributeIds.add(
+						eventAnalysisFilter.getAttributeId());
+				}
+			}
+		}
+
+		for (String attributeId : individualAttributeIds) {
+			selectJoinStep = _getIndividualAttributeSelectJoinStep(
+				attributeId, selectJoinStep);
+		}
+
+		return selectJoinStep;
+	}
+
+	private SelectJoinStep _getIndividualAttributeSelectJoinStep(
+		String attributeId, SelectJoinStep selectJoinStep) {
 
 		String alias = "Individual_" + attributeId;
 
