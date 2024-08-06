@@ -13,6 +13,8 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -26,6 +28,27 @@ import org.springframework.stereotype.Component;
  */
 @Component
 public class BQGroupDog extends BaseBQDXPEntityDog {
+
+	public Page<String> getBQGroupNamePage(
+		@Nullable Long channelId, @Nullable String keywords, int size,
+		int start) {
+
+		PageRequest pageRequest = PageRequest.of(start / size, size);
+
+		List<BQGroup> bqGroups =
+			_bqGroupRepository.searchByDataSourceIdsAndKeywords(
+				getDataSourceIds(channelId), keywords, pageRequest);
+
+		Stream<BQGroup> bqGroupsStream = bqGroups.stream();
+
+		List<String> names = bqGroupsStream.map(
+			BQGroup::getName
+		).collect(
+			Collectors.toList()
+		);
+
+		return PageableExecutionUtils.getPage(names, pageRequest, names::size);
+	}
 
 	public Page<BQGroup> getBQGroupPage(
 		@Nullable Long channelId, @Nullable String keywords, int size,
