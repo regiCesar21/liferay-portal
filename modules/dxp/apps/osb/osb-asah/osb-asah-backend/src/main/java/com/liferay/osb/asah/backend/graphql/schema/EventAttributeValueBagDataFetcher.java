@@ -6,11 +6,18 @@
 package com.liferay.osb.asah.backend.graphql.schema;
 
 import com.liferay.osb.asah.backend.graphql.annotation.GraphQLTypeWiring;
+import com.liferay.osb.asah.common.dog.BQGroupDog;
+import com.liferay.osb.asah.common.dog.BQIndividualDog;
+import com.liferay.osb.asah.common.dog.BQRoleDog;
+import com.liferay.osb.asah.common.dog.BQTeamDog;
+import com.liferay.osb.asah.common.dog.BQUserGroupDog;
 import com.liferay.osb.asah.common.dog.EventPropertyDog;
 import com.liferay.osb.asah.common.model.ResultBag;
 
 import graphql.schema.DataFetcher;
 import graphql.schema.DataFetchingEnvironment;
+
+import java.util.Objects;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -28,22 +35,77 @@ public class EventAttributeValueBagDataFetcher
 	public ResultBag<String> get(
 		DataFetchingEnvironment dataFetchingEnvironment) {
 
-		Page<String> bqEventPropertyValuePage =
-			_eventPropertyDog.getBQEventPropertyValuePage(
+		Page<String> valuePage = null;
+
+		String eventAttributeDefinitionId = dataFetchingEnvironment.getArgument(
+			"eventAttributeDefinitionId");
+
+		if (Objects.equals(eventAttributeDefinitionId, "jobTitle") ||
+			Objects.equals(eventAttributeDefinitionId, "languageId")) {
+
+			valuePage = _bqIndividualDog.getBQIndividualFieldValuePage(
 				Long.valueOf(dataFetchingEnvironment.getArgument("channelId")),
-				Long.valueOf(
-					dataFetchingEnvironment.getArgument(
-						"eventAttributeDefinitionId")),
+				null, "demographics/" + eventAttributeDefinitionId + "/value",
+				dataFetchingEnvironment.getArgument("start"),
+				dataFetchingEnvironment.getArgument("size"));
+		}
+		else if (Objects.equals(eventAttributeDefinitionId, "group")) {
+			valuePage = _bqGroupDog.getBQGroupNamePage(
+				Long.valueOf(dataFetchingEnvironment.getArgument("channelId")),
+				dataFetchingEnvironment.getArgument("keywords"),
+				dataFetchingEnvironment.getArgument("size"),
+				dataFetchingEnvironment.getArgument("start"));
+		}
+		else if (Objects.equals(eventAttributeDefinitionId, "role")) {
+			valuePage = _bqRoleDog.getBQRoleNamePage(
+				Long.valueOf(dataFetchingEnvironment.getArgument("channelId")),
+				dataFetchingEnvironment.getArgument("keywords"),
+				dataFetchingEnvironment.getArgument("size"),
+				dataFetchingEnvironment.getArgument("start"));
+		}
+		else if (Objects.equals(eventAttributeDefinitionId, "team")) {
+			valuePage = _bqTeamDog.getBQTeamNamePage(
+				Long.valueOf(dataFetchingEnvironment.getArgument("channelId")),
+				dataFetchingEnvironment.getArgument("keywords"),
+				dataFetchingEnvironment.getArgument("size"),
+				dataFetchingEnvironment.getArgument("start"));
+		}
+		else if (Objects.equals(eventAttributeDefinitionId, "userGroup")) {
+			valuePage = _bqUserGroupDog.getBQUserGroupNamePage(
+				Long.valueOf(dataFetchingEnvironment.getArgument("channelId")),
+				dataFetchingEnvironment.getArgument("keywords"),
+				dataFetchingEnvironment.getArgument("size"),
+				dataFetchingEnvironment.getArgument("start"));
+		}
+		else {
+			valuePage = _eventPropertyDog.getBQEventPropertyValuePage(
+				Long.valueOf(dataFetchingEnvironment.getArgument("channelId")),
+				Long.valueOf(eventAttributeDefinitionId),
 				Long.valueOf(
 					dataFetchingEnvironment.getArgument("eventDefinitionId")),
 				dataFetchingEnvironment.getArgument("keywords"),
 				dataFetchingEnvironment.getArgument("size"),
 				dataFetchingEnvironment.getArgument("start"));
+		}
 
 		return new ResultBag<>(
-			bqEventPropertyValuePage.getContent(),
-			bqEventPropertyValuePage.getTotalElements());
+			valuePage.getContent(), valuePage.getTotalElements());
 	}
+
+	@Autowired
+	private BQGroupDog _bqGroupDog;
+
+	@Autowired
+	private BQIndividualDog _bqIndividualDog;
+
+	@Autowired
+	private BQRoleDog _bqRoleDog;
+
+	@Autowired
+	private BQTeamDog _bqTeamDog;
+
+	@Autowired
+	private BQUserGroupDog _bqUserGroupDog;
 
 	@Autowired
 	private EventPropertyDog _eventPropertyDog;
