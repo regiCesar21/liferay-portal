@@ -792,12 +792,6 @@ public class BQEventRepositoryImpl
 			).eq(
 				"viewDuration"
 			));
-		conditions.add(
-			DSL.field(
-				"eventproperty.eventDate", Date.class
-			).gt(
-				eventDate
-			));
 
 		return _queryExecutor.queryForList(
 			recordMap -> {
