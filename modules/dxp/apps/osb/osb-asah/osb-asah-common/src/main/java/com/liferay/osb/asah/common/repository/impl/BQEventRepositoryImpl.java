@@ -2158,6 +2158,10 @@ public class BQEventRepositoryImpl
 			eventAttributeDefinition = eventAttributeDefinitionOptional.get();
 		}
 
+		Condition condition = _getValueCondition(
+			attributeType, eventAttributeDefinition, filteredEventsTableName,
+			rangeEndDate, rangeStartDate);
+
 		FilterOperator filterOperator = FilterOperators.of(
 			eventAnalysisFilter.getDataType(), _dslHelper,
 			eventAnalysisFilter.getOperator(), eventAnalysisFilter.getValues());
@@ -2203,10 +2207,6 @@ public class BQEventRepositoryImpl
 					"Individual_" + attributeId + "." + attributeId);
 			}
 		}
-
-		Condition condition = _getValueCondition(
-			attributeType, eventAttributeDefinition, filteredEventsTableName,
-			rangeEndDate, rangeStartDate);
 
 		conditions = conditions.and(
 			condition.and(
