@@ -737,7 +737,7 @@ public class SiteMetricDogTest
 			_siteMetricDog.getSearchTermsCompositionResultBag(
 				1L, 3, 0, TimeRange.LAST_30_DAYS);
 
-		LinkedHashMap<String, Long> expectedResults =
+		Map<String, Long> expectedResults =
 			new LinkedHashMap<String, Long>() {
 				{
 					put("liferay", 2L);

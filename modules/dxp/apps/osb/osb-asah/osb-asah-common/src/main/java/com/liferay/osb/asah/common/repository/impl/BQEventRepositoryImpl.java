@@ -1419,7 +1419,7 @@ public class BQEventRepositoryImpl
 
 		searchTermField = DSL.lower(searchTermField);
 
-		Optional<Map<String, Integer>> resultOptional =
+		Optional<Map<String, Integer>> optional =
 			_queryExecutor.queryForObject(
 				recordMap -> {
 					BigDecimal total = (BigDecimal)recordMap.get("total");
@@ -1454,7 +1454,7 @@ public class BQEventRepositoryImpl
 						timeZoneId)
 				));
 
-		return resultOptional.get();
+		return optional.get();
 	}
 
 	@Override
