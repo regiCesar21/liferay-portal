@@ -22,7 +22,6 @@ import org.springframework.data.domain.Page;
 /**
  * @author Marcos Martins
  */
-@BQSQLResource(resourcePath = "test_bq_user_group_dog.sql")
 public class BQUserGroupDogTest extends BaseBQDXPEntityDogTestCase {
 
 	@BeforeEach
@@ -31,6 +30,24 @@ public class BQUserGroupDogTest extends BaseBQDXPEntityDogTestCase {
 		super.setUp();
 	}
 
+	@BQSQLResource(resourcePath = "test_bq_user_group_dog.sql")
+	@Test
+	public void testGetBQUserGroupNamePage() {
+		Page<String> bqUserGroupNamePage =
+			_bqUserGroupDog.getBQUserGroupNamePage(11L, null, 10, 0);
+
+		Assertions.assertEquals(2, bqUserGroupNamePage.getTotalElements());
+
+		List<String> bqUserGroupNames = bqUserGroupNamePage.getContent();
+
+		Assertions.assertEquals(
+			2, bqUserGroupNames.size(), bqUserGroupNames.toString());
+
+		Assertions.assertTrue(bqUserGroupNames.contains("Liferay"));
+		Assertions.assertTrue(bqUserGroupNames.contains("Test"));
+	}
+
+	@BQSQLResource(resourcePath = "test_bq_user_group_dog.sql")
 	@Test
 	public void testGetBQUserGroupPage() {
 		Page<BQUserGroup> bqUserGroupPage = _bqUserGroupDog.getBQUserGroupPage(
