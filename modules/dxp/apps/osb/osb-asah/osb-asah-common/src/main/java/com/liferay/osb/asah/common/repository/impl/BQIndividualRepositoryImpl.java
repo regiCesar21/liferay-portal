@@ -143,13 +143,6 @@ public class BQIndividualRepositoryImpl
 				));
 		}
 
-		condition = condition.and(
-			DSL.field(
-				"IdentityActivity.eventId"
-			).in(
-				_eventDefinitionRepository.getEventDefinitionNames(false)
-			));
-
 		if (!StringUtils.isEmpty(interestName)) {
 			condition = condition.and(
 				DSL.field(
@@ -675,13 +668,6 @@ public class BQIndividualRepositoryImpl
 					dataSourceId
 				));
 		}
-
-		condition = condition.and(
-			DSL.field(
-				"IdentityActivity.eventId"
-			).in(
-				_eventDefinitionRepository.getEventDefinitionNames(false)
-			));
 
 		if (!StringUtils.isEmpty(interestName)) {
 			condition = condition.and(
