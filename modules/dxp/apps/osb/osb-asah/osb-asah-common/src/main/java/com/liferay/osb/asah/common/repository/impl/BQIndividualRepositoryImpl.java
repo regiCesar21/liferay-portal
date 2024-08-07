@@ -1280,14 +1280,23 @@ public class BQIndividualRepositoryImpl
 			<Object, Object, Object, Object, Object, Object, Object, Object,
 			 Object, Object, Object, Object>> _getIndividualSelectJoinStep() {
 
+		List<String> eventDefinitionNames =
+			_eventDefinitionRepository.getEventDefinitionNames(false);
+
 		return _dslContext.select(
-			DSL.coalesce(
-				DSL.field(
-					"SAFE_CAST({0} as INT64)",
-					DSL.sum(
+			DSL.field(
+				"SAFE_CAST({0} as INT64)",
+				DSL.sum(
+					DSL.when(
 						DSL.field(
-							"IdentityActivity.activitiescount", Long.class))),
-				0L
+							"IdentityActivity.eventId"
+						).in(
+							eventDefinitionNames
+						),
+						DSL.field(
+							"IdentityActivity.activitiescount", Long.class)
+					)
+				)
 			).as(
 				"activitiescount"
 			),
@@ -1302,7 +1311,14 @@ public class BQIndividualRepositoryImpl
 				"emailaddress"
 			),
 			DSL.min(
-				DSL.field("IdentityActivity.firstactivitydate")
+				DSL.when(
+					DSL.field(
+						"IdentityActivity.eventId"
+					).in(
+						eventDefinitionNames
+					),
+					DSL.field("IdentityActivity.firstactivitydate")
+				)
 			).as(
 				"firstactivitydate"
 			),
@@ -1313,7 +1329,14 @@ public class BQIndividualRepositoryImpl
 			),
 			DSL.field("firstname"),
 			DSL.max(
-				DSL.field("IdentityActivity.lastactivitydate")
+				DSL.when(
+					DSL.field(
+						"IdentityActivity.eventId"
+					).in(
+						eventDefinitionNames
+					),
+					DSL.field("IdentityActivity.lastactivitydate")
+				)
 			).as(
 				"lastactivitydate"
 			),
