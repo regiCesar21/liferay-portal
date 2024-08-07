@@ -5,19 +5,208 @@
 				{
 					"breakdownItems": [
 						{
+							"breakdownItems": [
+								{
+									"breakdownItems": [
+										{
+											"leafNode": true,
+											"name": "Test Display Name",
+											"previousValue": 0,
+											"value": 3
+										}
+									],
+									"leafNode": false,
+									"name": "administrator",
+									"previousValue": 0,
+									"value": 3
+								}
+							],
 							"leafNode": false,
-							"name": "All Individuals",
-							"value": 8
+							"name": "database administrator",
+							"previousValue": 0,
+							"value": 3
+						},
+						{
+							"breakdownItems": [
+								{
+									"breakdownItems": [
+										{
+											"leafNode": true,
+											"name": "Test Display Name",
+											"previousValue": 0,
+											"value": 2
+										}
+									],
+									"leafNode": false,
+									"name": "administrator",
+									"previousValue": 0,
+									"value": 2
+								}
+							],
+							"leafNode": false,
+							"name": "manager",
+							"previousValue": 0,
+							"value": 2
 						}
 					],
-					"leafNode": true,
-					"name": "Test Display Name",
-					"value": 8
+					"leafNode": false,
+					"name": "https://www.beryl.com/design",
+					"previousValue": 0,
+					"value": 5
+				},
+				{
+					"breakdownItems": [
+						{
+							"breakdownItems": [
+								{
+									"breakdownItems": [
+										{
+											"leafNode": true,
+											"name": "Test Display Name",
+											"previousValue": 0,
+											"value": 2
+										}
+									],
+									"leafNode": false,
+									"name": "administrator",
+									"previousValue": 0,
+									"value": 2
+								}
+							],
+							"leafNode": false,
+							"name": "database administrator",
+							"previousValue": 0,
+							"value": 2
+						},
+						{
+							"breakdownItems": [
+								{
+									"breakdownItems": [
+										{
+											"leafNode": true,
+											"name": "Test Display Name",
+											"previousValue": 0,
+											"value": 1
+										}
+									],
+									"leafNode": false,
+									"name": "administrator",
+									"previousValue": 0,
+									"value": 1
+								}
+							],
+							"leafNode": false,
+							"name": "manager",
+							"previousValue": 0,
+							"value": 1
+						},
+						{
+							"breakdownItems": [
+								{
+									"breakdownItems": [
+										{
+											"leafNode": true,
+											"name": "Test Display Name",
+											"previousValue": 0,
+											"value": 1
+										}
+									],
+									"leafNode": false,
+									"name": "administrator",
+									"previousValue": 0,
+									"value": 1
+								}
+							],
+							"leafNode": false,
+							"name": "engineer",
+							"previousValue": 0,
+							"value": 1
+						}
+					],
+					"leafNode": false,
+					"name": "https://www.beryl.com/products",
+					"previousValue": 0,
+					"value": 4
+				},
+				{
+					"breakdownItems": [
+						{
+							"breakdownItems": [
+								{
+									"breakdownItems": [
+										{
+											"leafNode": true,
+											"name": "Test Display Name",
+											"previousValue": 0,
+											"value": 1
+										}
+									],
+									"leafNode": false,
+									"name": "administrator",
+									"previousValue": 0,
+									"value": 1
+								}
+							],
+							"leafNode": false,
+							"name": "manager",
+							"previousValue": 0,
+							"value": 1
+						},
+						{
+							"breakdownItems": [
+								{
+									"breakdownItems": [
+										{
+											"leafNode": true,
+											"name": "Test Display Name",
+											"previousValue": 0,
+											"value": 1
+										}
+									],
+									"leafNode": false,
+									"name": "administrator",
+									"previousValue": 0,
+									"value": 1
+								}
+							],
+							"leafNode": false,
+							"name": "engineer",
+							"previousValue": 0,
+							"value": 1
+						},
+						{
+							"breakdownItems": [
+								{
+									"breakdownItems": [
+										{
+											"leafNode": true,
+											"name": "Test Display Name",
+											"previousValue": 0,
+											"value": 1
+										}
+									],
+									"leafNode": false,
+									"name": "administrator",
+									"previousValue": 0,
+									"value": 1
+								}
+							],
+							"leafNode": false,
+							"name": "database administrator",
+							"previousValue": 0,
+							"value": 1
+						}
+					],
+					"leafNode": false,
+					"name": "https://www.beryl.com/blogs",
+					"previousValue": 0,
+					"value": 3
 				}
 			],
-			"count": 1,
+			"count": 3,
 			"page": 0,
-			"value": 8
+			"previousValue": null,
+			"value": 12
 		}
 	}
 }

@@ -1,17 +1,44 @@
-query EventAnalysisResult($analysisType: AnalysisType!, $channelId: String!, $compareToPrevious: Boolean!, $eventDefinitionId: String!, $page: Int!, $rangeEnd: String, $rangeStart: String, $size: Int!) {
-	eventAnalysisResult(analysisType: $analysisType, channelId: $channelId, compareToPrevious: $compareToPrevious, eventDefinitionId: $eventDefinitionId, page: $page, rangeEnd: $rangeEnd, rangeStart: $rangeStart, size: $size) {
+query EventAnalysisResult($analysisType: AnalysisType!, $channelId: String!, $compareToPrevious: Boolean!, $eventAnalysisBreakdowns: [EventAnalysisBreakdownInput], $eventAnalysisFilters: [EventAnalysisFilterInput], $eventDefinitionId: String!, $page: Int!, $rangeEnd: String, $rangeKey: Int, $rangeStart: String, $size: Int!) {
+	eventAnalysisResult(
+		analysisType: $analysisType
+		channelId: $channelId
+		compareToPrevious: $compareToPrevious
+		eventAnalysisBreakdowns: $eventAnalysisBreakdowns
+		eventAnalysisFilters: $eventAnalysisFilters
+		eventDefinitionId: $eventDefinitionId
+		page: $page
+		rangeEnd: $rangeEnd
+		rangeKey: $rangeKey
+		rangeStart: $rangeStart
+		size: $size
+	) {
 		breakdownItems {
 			breakdownItems {
+				breakdownItems {
+					breakdownItems {
+						leafNode
+						name
+						previousValue
+						value
+					}
+					leafNode
+					name
+					previousValue
+					value
+				}
 				leafNode
 				name
+				previousValue
 				value
 			}
 			leafNode
 			name
+			previousValue
 			value
 		}
 		count
 		page
+		previousValue
 		value
 	}
 }

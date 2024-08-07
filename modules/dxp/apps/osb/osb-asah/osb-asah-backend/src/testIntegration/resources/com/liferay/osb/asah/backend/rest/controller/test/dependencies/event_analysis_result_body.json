@@ -4,10 +4,63 @@
 		"analysisType": "TOTAL",
 		"channelId": "2468",
 		"compareToPrevious": false,
+		"eventAnalysisBreakdowns": [
+			{
+				"attributeId": "12346",
+				"attributeType": "EVENT",
+				"binSize": null,
+				"dataType": "STRING",
+				"dateGrouping": null,
+				"description": null,
+				"displayName": "Test Attribute 1",
+				"sortType": "DESC"
+			},
+			{
+				"attributeId": "jobTitle",
+				"attributeType": "INDIVIDUAL",
+				"binSize": null,
+				"dataType": "STRING",
+				"dateGrouping": null,
+				"displayName": "jobTitle",
+				"sortType": "DESC"
+			},
+			{
+				"attributeId": "role",
+				"attributeType": "INDIVIDUAL",
+				"binSize": null,
+				"dataType": "STRING",
+				"dateGrouping": null,
+				"displayName": "Role",
+				"sortType": "DESC"
+			}
+		],
+		"eventAnalysisFilters": [
+			{
+				"attributeId": "role",
+				"attributeType": "INDIVIDUAL",
+				"dataType": "STRING",
+				"displayName": "Role",
+				"operator": "eq",
+				"values": [
+					"Administrator"
+				]
+			},
+			{
+				"attributeId": "12346",
+				"attributeType": "EVENT",
+				"dataType": "STRING",
+				"description": null,
+				"displayName": "Test Attribute 1",
+				"operator": "contains",
+				"values": [
+					"https://www.beryl.com/"
+				]
+			}
+		],
 		"eventDefinitionId": "12345",
 		"page": 0,
-		"rangeEnd": "2021-05-12",
-		"rangeStart": "2021-05-11",
-		"size": 5
+		"rangeEnd": "2021-06-14",
+		"rangeStart": "2021-05-14",
+		"size": 20
 	}
 }
