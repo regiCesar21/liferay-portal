@@ -83,12 +83,25 @@ public abstract class BaseRepository {
 
 			Field<?> field = DSL.field(fieldName);
 
+			SortField<?> sortField;
+
 			if (order.getDirection() == Sort.Direction.ASC) {
-				sortFields.add(field.asc());
+				sortField = field.asc();
 			}
 			else {
-				sortFields.add(field.desc());
+				sortField = field.desc();
 			}
+
+			Sort.NullHandling nullHandling = order.getNullHandling();
+
+			if (nullHandling.equals(Sort.NullHandling.NULLS_FIRST)) {
+				sortField = sortField.nullsFirst();
+			}
+			else if (nullHandling.equals(Sort.NullHandling.NULLS_LAST)) {
+				sortField = sortField.nullsLast();
+			}
+
+			sortFields.add(sortField);
 		}
 
 		return sortFields;
