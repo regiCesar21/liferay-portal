@@ -43,5 +43,4 @@ FROM
 			`{{ dag.default_args['ac_project_id'] }}.dxpentity_external_{{ ts_nodash }}`
 	) TMP
 WHERE
-
 	suppressed IS NULL
