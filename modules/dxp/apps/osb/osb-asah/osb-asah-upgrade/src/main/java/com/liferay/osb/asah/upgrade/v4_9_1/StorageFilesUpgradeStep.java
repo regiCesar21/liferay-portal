@@ -172,11 +172,11 @@ public class StorageFilesUpgradeStep implements UpgradeStep {
 
 			NetHttpTransport netHttpTransport = new NetHttpTransport();
 
-			HttpRequestFactory requestFactory =
+			HttpRequestFactory httpRequestFactory =
 				netHttpTransport.createRequestFactory(
 					new HttpCredentialsAdapter(credentials));
 
-			HttpRequest httpRequest = requestFactory.buildPostRequest(
+			HttpRequest httpRequest = httpRequestFactory.buildPostRequest(
 				new GenericUrl(
 					_googleCloudConfiguration.getComposerEndpoint() +
 						"/api/v1/dags/" + dagId + "/dagRuns"),
