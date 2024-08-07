@@ -1419,40 +1419,39 @@ public class BQEventRepositoryImpl
 
 		searchTermField = DSL.lower(searchTermField);
 
-		Optional<Map<String, Integer>> optional =
-			_queryExecutor.queryForObject(
-				recordMap -> {
-					BigDecimal total = (BigDecimal)recordMap.get("total");
+		Optional<Map<String, Integer>> optional = _queryExecutor.queryForObject(
+			recordMap -> {
+				BigDecimal total = (BigDecimal)recordMap.get("total");
 
-					BigDecimal totalDistinct = (BigDecimal)recordMap.get(
-						"totalDistinct");
+				BigDecimal totalDistinct = (BigDecimal)recordMap.get(
+					"totalDistinct");
 
-					return new HashMap<String, Integer>() {
-						{
-							put("total", total.intValue());
-							put("totalDistinct", totalDistinct.intValue());
-						}
-					};
-				},
-				_dslContext.select(
-					DSL.count(
-						searchTermField
-					).as(
-						"total"
-					),
-					DSL.countDistinct(
-						searchTermField
-					).as(
-						"totalDistinct"
-					)
-				).from(
-					"BQEvent"
-				).where(
-					_createSearchTermsCondition(
-						channelId, timeRange.getEndLocalDateTime(),
-						timeRange.getStartLocalDateTime(), searchTermField,
-						timeZoneId)
-				));
+				return new HashMap<String, Integer>() {
+					{
+						put("total", total.intValue());
+						put("totalDistinct", totalDistinct.intValue());
+					}
+				};
+			},
+			_dslContext.select(
+				DSL.count(
+					searchTermField
+				).as(
+					"total"
+				),
+				DSL.countDistinct(
+					searchTermField
+				).as(
+					"totalDistinct"
+				)
+			).from(
+				"BQEvent"
+			).where(
+				_createSearchTermsCondition(
+					channelId, timeRange.getEndLocalDateTime(),
+					timeRange.getStartLocalDateTime(), searchTermField,
+					timeZoneId)
+			));
 
 		return optional.get();
 	}
