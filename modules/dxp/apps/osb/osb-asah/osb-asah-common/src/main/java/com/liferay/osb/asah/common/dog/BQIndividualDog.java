@@ -189,19 +189,6 @@ public class BQIndividualDog {
 	}
 
 	public Page<Individual> searchBQIndividualPage(
-		Long channelId, Long segmentId, Integer page, String query, int size) {
-
-		return PageableExecutionUtils.getPage(
-			_searchBQIndividuals(
-				null, channelId, null, null, null, null, page, query, segmentId,
-				size, null),
-			PageRequest.of(page, size, _getSort(null)),
-			() -> countBQIndividuals(
-				null, channelId, null, null, null, null, null, query,
-				segmentId));
-	}
-
-	public Page<Individual> searchBQIndividualPage(
 		@Nullable Long accountId, @Nullable Long channelId,
 		@Nullable Long dataSourceId, @Nullable String filterString,
 		@Nullable Boolean includeAnonymousUsers, @Nullable String interestName,
