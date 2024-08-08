@@ -47,10 +47,10 @@ public class DXPBatchEntitiesFileUploadEventHandler {
 				dxpBatchEntitiesFileUploadEvent.getResourceName(),
 				dxpBatchEntitiesFileUploadEvent.getUploadType());
 
-			String filePrefix = DateUtil.newDateString();
+			String uploadDate = DateUtil.newDateString();
 
 			String fileName =
-				filePrefix + "." +
+				uploadDate + "." +
 					dxpBatchEntitiesFileUploadEvent.getContentEncoding();
 
 			_googleStorage.archiveSync(
@@ -72,7 +72,7 @@ public class DXPBatchEntitiesFileUploadEventHandler {
 					).put(
 						"bucketName", bucketName
 					).put(
-						"filePrefix", fileName
+						"filePrefix", uploadDate
 					).put(
 						"fileSuffix", "zip"
 					).put(
