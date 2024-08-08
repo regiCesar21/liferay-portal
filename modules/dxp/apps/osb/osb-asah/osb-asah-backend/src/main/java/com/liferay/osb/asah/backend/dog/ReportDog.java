@@ -45,6 +45,7 @@ import java.nio.charset.StandardCharsets;
 import java.time.LocalDateTime;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -541,6 +542,14 @@ public class ReportDog {
 				0
 			).getValue();
 
+			String lastActivityDateString = "";
+
+			Date lastActivityDate = individual.getLastActivityDate();
+
+			if (!Objects.isNull(lastActivityDate)) {
+				lastActivityDateString = DateUtil.toUTCString(lastActivityDate);
+			}
+
 			rows.add(
 				new String[] {
 					givenNameFiledValue + " " + familyNameFieldValue,
@@ -556,9 +565,8 @@ public class ReportDog {
 						).get(
 							0
 						).getValue()),
-					String.valueOf(individual.getActivitiesCount()),
-					DateUtil.toUTCString(individual.getLastActivityDate()),
-					channel.getName()
+					Objects.toString(individual.getActivitiesCount(), ""),
+					lastActivityDateString, channel.getName()
 				});
 		}
 
