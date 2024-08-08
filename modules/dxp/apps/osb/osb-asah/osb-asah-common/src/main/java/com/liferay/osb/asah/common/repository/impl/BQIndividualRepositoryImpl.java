@@ -62,6 +62,7 @@ import org.jooq.impl.DSL;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.lang.Nullable;
 
 /**
@@ -716,8 +717,29 @@ public class BQIndividualRepositoryImpl
 					DSL.val(Boolean.TRUE)
 				)));
 
+		Sort sort = pageable.getSort();
+
+		List<Sort.Order> orders = new ArrayList<>();
+
+		for (Sort.Order order : sort.toList()) {
+			String fieldName = StringUtils.lowerCase(order.getProperty());
+
+			Sort.NullHandling nullHandling = _nullHandlingFields.get(fieldName);
+
+			if (nullHandling == Sort.NullHandling.NULLS_FIRST) {
+				order = order.nullsFirst();
+			}
+			else if (nullHandling == Sort.NullHandling.NULLS_LAST) {
+				order = order.nullsLast();
+			}
+
+			orders.add(order);
+		}
+
+		sort = Sort.by(orders);
+
 		Collection<SortField<?>> sortFields = getSortFields(
-			_fieldNameConversionMap, pageable.getSort(), null);
+			_fieldNameConversionMap, sort, null);
 
 		SelectForUpdateStep
 			<Record12
@@ -1732,6 +1754,14 @@ public class BQIndividualRepositoryImpl
 				put("demographics/jobTitle/value", "jobtitle");
 				put("familyName", "lastname");
 				put("givenName", "firstname");
+			}
+		};
+	private final Map<String, Sort.NullHandling> _nullHandlingFields =
+		new HashMap<String, Sort.NullHandling>() {
+			{
+				put("activitiescount", Sort.NullHandling.NULLS_LAST);
+				put("firstactivitydate", Sort.NullHandling.NULLS_LAST);
+				put("lastactivitydate", Sort.NullHandling.NULLS_LAST);
 			}
 		};
 
