@@ -38,7 +38,7 @@ def create_dag(
 	) as dag:
 
 		create_dxpentity_external_table = BigQueryCreateExternalTableOperator(
-			bucket="{{ dag.default_args['google_project_id'] }}-dxp-entities",
+			bucket="{{ params['bucketName'] }}",
 			compression='GZIP',
 			destination_project_dataset_table="{{ dag.default_args['ac_project_id'] }}.dxpentity_external_{{ ts_nodash }}",
 			schema_fields=[
@@ -98,7 +98,7 @@ def create_dag(
 				}
 			],
 			source_format='NEWLINE_DELIMITED_JSON',
-			source_objects=["{{ params['bucketFolder'] }}/{{ params['filePrefix'] }}.gz"],
+			source_objects=["{{ params['bucketFolder'] }}/{{ params['uploadDate'] }}.gz"],
 			task_id="create_dxpentity_external_table"
 		)
 
