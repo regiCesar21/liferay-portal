@@ -43,6 +43,7 @@ import com.nimbusds.openid.connect.sdk.AuthenticationRequest;
 import com.nimbusds.openid.connect.sdk.AuthenticationResponse;
 import com.nimbusds.openid.connect.sdk.AuthenticationResponseParser;
 import com.nimbusds.openid.connect.sdk.AuthenticationSuccessResponse;
+import com.nimbusds.openid.connect.sdk.ClaimsRequest;
 import com.nimbusds.openid.connect.sdk.Nonce;
 import com.nimbusds.openid.connect.sdk.UserInfoErrorResponse;
 import com.nimbusds.openid.connect.sdk.UserInfoRequest;
@@ -240,8 +241,8 @@ public class OpenIdConnectAuthenticationHandlerImpl
 			oidcProviderMetadata.getAuthorizationEndpointURI(), responseType,
 			null, scope, new ClientID(openIdConnectProvider.getClientId()),
 			loginRedirectURI, state, nonce, null, null, -1, langTags, null,
-			null, null, null, null, null, null, null, null, null, null, null,
-			false, null);
+			null, null, null, (ClaimsRequest)null, null, null, null, null, null,
+			null, false, null);
 
 		return authenticationRequest.toURI();
 	}
