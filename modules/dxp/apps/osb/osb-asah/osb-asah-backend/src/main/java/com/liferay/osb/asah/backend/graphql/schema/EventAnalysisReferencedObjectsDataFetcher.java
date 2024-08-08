@@ -12,13 +12,15 @@ import com.liferay.osb.asah.common.dog.EventAttributeDefinitionDog;
 import com.liferay.osb.asah.common.dog.EventDefinitionDog;
 import com.liferay.osb.asah.common.entity.EventAttributeDefinition;
 import com.liferay.osb.asah.common.entity.EventDefinition;
-import com.liferay.osb.asah.common.util.ListUtil;
+import com.liferay.osb.asah.common.model.AttributeType;
 
 import graphql.schema.DataFetcher;
 import graphql.schema.DataFetchingEnvironment;
 
-import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -41,20 +43,47 @@ public class EventAnalysisReferencedObjectsDataFetcher
 			_eventDefinitionDog.getEventDefinition(
 				Long.valueOf(eventAnalysisDTO.getEventDefinitionId()));
 
+		List<EventAnalysisDTO.EventAnalysisBreakdownDTO>
+			eventAnalysisBreakdownDTOs =
+				eventAnalysisDTO.getEventAnalysisBreakdownDTOs();
+
+		Stream<EventAnalysisDTO.EventAnalysisBreakdownDTO>
+			eventAnalysisBreakdownDTOsStream =
+				eventAnalysisBreakdownDTOs.stream();
+
 		List<EventAttributeDefinition> eventAttributeDefinitions =
-			new ArrayList<>(
-				_eventAttributeDefinitionDog.getEventAttributeDefinitions(
-					ListUtil.map(
-						eventAnalysisDTO.getEventAnalysisBreakdownDTOs(),
-						eventAnalysisBreakdownDTO -> Long.valueOf(
-							eventAnalysisBreakdownDTO.getAttributeId()))));
+			_eventAttributeDefinitionDog.getEventAttributeDefinitions(
+				eventAnalysisBreakdownDTOsStream.filter(
+					eventAnalysisBreakdownDTO -> !Objects.equals(
+						eventAnalysisBreakdownDTO.getAttributeType(),
+						AttributeType.INDIVIDUAL)
+				).map(
+					EventAnalysisDTO.EventAnalysisBreakdownDTO::getAttributeId
+				).map(
+					Long::valueOf
+				).collect(
+					Collectors.toList()
+				));
+
+		List<EventAnalysisDTO.EventAnalysisFilterDTO> eventAnalysisFilterDTOs =
+			eventAnalysisDTO.getEventAnalysisFilterDTOs();
+
+		Stream<EventAnalysisDTO.EventAnalysisFilterDTO>
+			eventAnalysisFilterDTOsStream = eventAnalysisFilterDTOs.stream();
 
 		eventAttributeDefinitions.addAll(
 			_eventAttributeDefinitionDog.getEventAttributeDefinitions(
-				ListUtil.map(
-					eventAnalysisDTO.getEventAnalysisFilterDTOs(),
-					eventAnalysisFilterDTO -> Long.valueOf(
-						eventAnalysisFilterDTO.getAttributeId()))));
+				eventAnalysisFilterDTOsStream.filter(
+					eventAnalysisFilterDTO -> !Objects.equals(
+						eventAnalysisFilterDTO.getAttributeType(),
+						AttributeType.INDIVIDUAL)
+				).map(
+					EventAnalysisDTO.EventAnalysisFilterDTO::getAttributeId
+				).map(
+					Long::valueOf
+				).collect(
+					Collectors.toList()
+				)));
 
 		return new EventAnalysisReferencedObjectDTO(
 			eventDefinition, eventAttributeDefinitions);
