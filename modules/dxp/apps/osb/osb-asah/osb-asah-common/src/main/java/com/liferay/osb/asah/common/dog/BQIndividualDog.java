@@ -16,6 +16,7 @@ import com.liferay.osb.asah.common.repository.BQFieldMappingRepository;
 import com.liferay.osb.asah.common.repository.BQIdentityRepository;
 import com.liferay.osb.asah.common.repository.BQIndividualRepository;
 import com.liferay.osb.asah.common.repository.DataSourceRepository;
+import com.liferay.osb.asah.common.spring.annotation.VisibleForTestingOnly;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -176,6 +177,7 @@ public class BQIndividualDog {
 			distributions, pageRequest, distributions::size);
 	}
 
+	@VisibleForTestingOnly
 	public Page<Individual> searchBQIndividualPage(
 		@Nullable Long channelId, int page, @Nullable String query, int size) {
 
