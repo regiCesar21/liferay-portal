@@ -1316,9 +1316,7 @@ public class BQIndividualRepositoryImpl
 							eventDefinitionNames
 						),
 						DSL.field(
-							"IdentityActivity.activitiescount", Long.class)
-					)
-				)
+							"IdentityActivity.activitiescount", Long.class)))
 			).as(
 				"activitiescount"
 			),
@@ -1339,8 +1337,7 @@ public class BQIndividualRepositoryImpl
 					).in(
 						eventDefinitionNames
 					),
-					DSL.field("IdentityActivity.firstactivitydate")
-				)
+					DSL.field("IdentityActivity.firstactivitydate"))
 			).as(
 				"firstactivitydate"
 			),
@@ -1357,8 +1354,7 @@ public class BQIndividualRepositoryImpl
 					).in(
 						eventDefinitionNames
 					),
-					DSL.field("IdentityActivity.lastactivitydate")
-				)
+					DSL.field("IdentityActivity.lastactivitydate"))
 			).as(
 				"lastactivitydate"
 			),
