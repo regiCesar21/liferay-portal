@@ -105,7 +105,7 @@ for project in response.json():
 		'Most Viewed Content Recommender DAG For {}'.format(project.get('id')),
 		data_source_ids,
 		True,
-		None,
+		'0 1 * * 7',
 		'assetentity'
 	)
 
@@ -117,6 +117,6 @@ for project in response.json():
 		'User Content Recommender DAG For {}'.format(project.get('id')),
 		data_source_ids,
 		True,
-		None,
+		'0 1 * * *',
 		'assetentity'
 	)
