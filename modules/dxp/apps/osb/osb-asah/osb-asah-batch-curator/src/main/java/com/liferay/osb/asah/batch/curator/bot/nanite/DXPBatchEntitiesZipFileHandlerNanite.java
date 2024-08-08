@@ -40,24 +40,21 @@ public class DXPBatchEntitiesZipFileHandlerNanite extends BaseNanite {
 	public void run(JSONObject contextJSONObject) throws Exception {
 		String bucketFolder = contextJSONObject.getString("bucketFolder");
 		String bucketName = contextJSONObject.getString("bucketName");
-		String filePrefix = contextJSONObject.getString("filePrefix");
-		String fileSuffix = contextJSONObject.getString("fileSuffix");
+		String uploadDate = contextJSONObject.getString("uploadDate");
 
 		File zipTmpFile = _readFile(
-			bucketName, bucketFolder, filePrefix, fileSuffix);
+			bucketName, bucketFolder, uploadDate, "zip");
 
-		File gzipTmpFile = _convertZipToGzip(filePrefix, zipTmpFile);
+		File gzipTmpFile = _convertZipToGzip(uploadDate, zipTmpFile);
 
 		_googleStorage.archiveSync(
 			bucketName, bucketFolder, gzipTmpFile, gzipTmpFile.getName(),
 			ProjectIdThreadLocal.getProjectId());
 
 		_composerDXPIngestionDAGTrigger.trigger(
-			contextJSONObject.getString("resourceName"),
-			String.format(
-				"gs://%s/%s/%s/%s", bucketName,
-				ProjectIdThreadLocal.getProjectId(), bucketFolder,
-				gzipTmpFile.getName()));
+			contextJSONObject.getString("dataSourceId"), "gzip",
+			contextJSONObject.getString("resourceName"), bucketFolder,
+			bucketName, uploadDate, contextJSONObject.getString("uploadType"));
 
 		boolean result = zipTmpFile.delete();
 

@@ -25,6 +25,7 @@ import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
@@ -52,7 +53,11 @@ public class ComposerDXPIngestionDAGTrigger {
 			"product");
 	}
 
-	public void trigger(String resourceName, String zipFilePath) {
+	public void trigger(
+		String dataSourceId, String resourceName, String uploadFileBucketFolder,
+		String uploadFileBucketName, String uploadFileContentEncoding,
+		String uploadDate, String uploadType) {
+
 		String entity = _entities.get(resourceName);
 
 		if (entity == null) {
@@ -72,6 +77,12 @@ public class ComposerDXPIngestionDAGTrigger {
 		if (_log.isInfoEnabled()) {
 			_log.info("Scheduling DAG " + dagId);
 		}
+
+		String uploadFilePath = String.format(
+			"gs://%s/%s/%s/%s.%s", uploadFileBucketName,
+			ProjectIdThreadLocal.getProjectId(), uploadFileBucketFolder,
+			uploadDate,
+			StringUtils.replace(uploadFileContentEncoding, "gzip", "gz"));
 
 		try {
 			GoogleCredentials credentials =
@@ -93,7 +104,20 @@ public class ComposerDXPIngestionDAGTrigger {
 				ByteArrayContent.fromString(
 					"application/json",
 					JSONUtil.put(
-						"conf", JSONUtil.put("zipFilePath", zipFilePath)
+						"conf",
+						JSONUtil.put(
+							"bucketFolder", uploadFileBucketFolder
+						).put(
+							"bucketName", uploadFileBucketName
+						).put(
+							"dataSourceId", dataSourceId
+						).put(
+							"uploadDate", uploadDate
+						).put(
+							"uploadType", uploadType
+						).put(
+							"zipFilePath", uploadFilePath
+						)
 					).put(
 						"logical_date", DateUtil.newDateString()
 					).toString()));
@@ -107,16 +131,16 @@ public class ComposerDXPIngestionDAGTrigger {
 			if (httpResponse.getStatusCode() != 200) {
 				_log.error(
 					String.format(
-						"Unexpected error after triggering DAG %s and ZIP " +
+						"Unexpected error after triggering DAG %s and file " +
 							"path %s. Status code: %s",
-						dagId, zipFilePath, httpResponse.getStatusCode()));
+						dagId, uploadFilePath, httpResponse.getStatusCode()));
 			}
 		}
 		catch (IOException ioException) {
 			_log.error(
 				String.format(
-					"Unable to trigger DAG %s and ZIP path %s", dagId,
-					zipFilePath),
+					"Unable to trigger DAG %s and file path %s", dagId,
+					uploadFilePath),
 				ioException);
 		}
 	}

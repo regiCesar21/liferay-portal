@@ -72,21 +72,25 @@ public class DXPBatchEntitiesFileUploadEventHandler {
 					).put(
 						"bucketName", bucketName
 					).put(
-						"filePrefix", uploadDate
-					).put(
-						"fileSuffix", "zip"
+						"dataSourceId",
+						dxpBatchEntitiesFileUploadEvent.getDataSourceId()
 					).put(
 						"resourceName",
 						dxpBatchEntitiesFileUploadEvent.getResourceName()
+					).put(
+						"uploadDate", uploadDate
+					).put(
+						"uploadType",
+						dxpBatchEntitiesFileUploadEvent.getUploadType()
 					));
 			}
 			else {
 				_composerDXPIngestionDAGTrigger.trigger(
+					dxpBatchEntitiesFileUploadEvent.getDataSourceId(),
+					dxpBatchEntitiesFileUploadEvent.getContentEncoding(),
 					dxpBatchEntitiesFileUploadEvent.getResourceName(),
-					String.format(
-						"gs://%s/%s/%s/%s", bucketName,
-						ProjectIdThreadLocal.getProjectId(), folderName,
-						fileName));
+					folderName, bucketName, uploadDate,
+					dxpBatchEntitiesFileUploadEvent.getUploadType());
 			}
 		}
 		else {
