@@ -20,7 +20,7 @@ import os
 import pendulum
 import requests
 
-def create_dag(ac_project_id, ac_project_time_zone_id, dag_id, dag_description, data_source_ids, is_paused_upon_creation, resource_name, schedule_interval, table_name):
+def create_dag(ac_project_id, ac_project_time_zone_id, big_query_skip_condition, dag_id, dag_description, data_source_ids, is_paused_upon_creation, resource_name, schedule_interval, table_name):
 	with airflow.DAG(
 		dag_id=dag_id,
 		default_args={
@@ -62,7 +62,7 @@ def create_dag(ac_project_id, ac_project_time_zone_id, dag_id, dag_description, 
 				task_id='bigquery_short_circuit_operator_{}'.format(data_source_id),
 				sql=f"""
 					SELECT
-						DISTINCT COUNT(accountId) > 5
+						{ big_query_skip_condition }
 					FROM
 						{ dag.default_args['ac_project_id'] }.{table_name}
 					WHERE
@@ -101,7 +101,8 @@ for project in response.json():
 		dag_id = 'commerce_product_content_recommender_{}'.format(project.get('id'))
 
 		globals()[dag_id] = create_dag(
-			project.get('id'), project.get('timeZoneId'), dag_id,
+			project.get('id'), project.get('timeZoneId'),
+			'COUNT(*) > 10', dag_id,
 			'Commerce Content Recommender DAG For {}'.format(project.get('id')),
 			data_source_ids,
 			True,
@@ -113,7 +114,8 @@ for project in response.json():
 		dag_id = 'commerce_user_interaction_recommender_{}'.format(project.get('id'))
 
 		globals()[dag_id] = create_dag(
-			project.get('id'), project.get('timeZoneId'), dag_id,
+			project.get('id'), project.get('timeZoneId'),
+			'DISTINCT COUNT(accountId) > 5', dag_id,
 			'Commerce User Interaction Recommender DAG For {}'.format(project.get('id')),
 			data_source_ids,
 			True,
