@@ -43,7 +43,6 @@ public class BQGroupDogTest extends BaseBQDXPEntityDogTestCase {
 
 		Assertions.assertEquals(
 			2, bqGroupNames.size(), bqGroupNames.toString());
-
 		Assertions.assertTrue(bqGroupNames.contains("Liferay"));
 		Assertions.assertTrue(bqGroupNames.contains("Test"));
 	}

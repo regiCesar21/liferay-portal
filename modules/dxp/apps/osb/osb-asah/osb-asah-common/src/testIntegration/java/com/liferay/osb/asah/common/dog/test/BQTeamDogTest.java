@@ -42,7 +42,6 @@ public class BQTeamDogTest extends BaseBQDXPEntityDogTestCase {
 		List<String> bqTeamNames = bqTeamNamePage.getContent();
 
 		Assertions.assertEquals(2, bqTeamNames.size(), bqTeamNames.toString());
-
 		Assertions.assertTrue(bqTeamNames.contains("Liferay"));
 		Assertions.assertTrue(bqTeamNames.contains("Test"));
 	}

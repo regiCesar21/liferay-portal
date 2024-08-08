@@ -41,7 +41,6 @@ public class BQRoleDogTest extends BaseBQDXPEntityDogTestCase {
 		List<String> bqRoleNames = bqRoleNamePage.getContent();
 
 		Assertions.assertEquals(2, bqRoleNames.size(), bqRoleNames.toString());
-
 		Assertions.assertTrue(bqRoleNames.contains("Liferay"));
 		Assertions.assertTrue(bqRoleNames.contains("Test"));
 	}
