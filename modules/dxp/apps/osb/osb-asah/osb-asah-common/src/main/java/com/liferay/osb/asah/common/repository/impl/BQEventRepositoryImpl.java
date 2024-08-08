@@ -265,7 +265,8 @@ public class BQEventRepositoryImpl
 			WithStep withStep = _buildBQEventPropertyWithStep(
 				channelId, eventDefinitionId, rangeEndDate, rangeStartDate);
 
-			selectJoinStep = _getEventSelectJoinStep(withStep.selectCount());
+			selectJoinStep = _getEventSelectJoinStep(
+				withStep.select(DSL.countDistinct(DSL.field("BQEvent.id"))));
 		}
 		else {
 			filteredEventsTableName = "_filteredEvents";
