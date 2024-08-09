@@ -8,6 +8,6 @@ com/liferay/osb/asah/batch/curator/bot/nanite/DataExportNanite._exportPath:SAFE
 com/liferay/osb/asah/batch/curator/bot/nanite/DeleteTempFilesNanite._tempPathName:SAFE
 com/liferay/osb/asah/batch/curator/bot/nanite/test/DataControlNaniteTest._exportPath:SAFE
 com/liferay/osb/asah/batch/curator/bot/nanite/test/DeleteTempFilesNaniteTest._tmpPath:SAFE
-org/json/JSONObject.getString("filePrefix"):SAFE@com/liferay/osb/asah/batch/curator/bot/nanite/DXPBatchEntitiesZipFileHandlerNanite
+org/json/JSONObject.getString("uploadDate"):SAFE@com/liferay/osb/asah/batch/curator/bot/nanite/DXPBatchEntitiesZipFileHandlerNanite
 org/json/JSONObject.getString("id"):SAFE@com/liferay/osb/asah/batch/curator/bot/nanite/DataControlNanite
 org/json/JSONObject.getString("id"):SAFE@com/liferay/osb/asah/batch/curator/bot/nanite/DataExportNanite
