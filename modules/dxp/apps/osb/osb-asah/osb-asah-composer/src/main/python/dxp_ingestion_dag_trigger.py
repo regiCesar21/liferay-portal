@@ -175,30 +175,14 @@ for project in response.json():
 	# DXP Entity
 	#
 
-	downstream_task_ids = []
+	dag_id = 'dxp_entity_ingestion_{}'.format(
+		project.get('id')
+	)
 
-	if project.get('accountsSelected'):
-		downstream_task_ids.extend(
-			['account_entry_merge', 'account_group_merge']
-		)
-
-	if project.get('contactsSelected'):
-		downstream_task_ids.extend([
-			'expando_column_merge', 'expando_value_delete',
-			'expando_value_merge', 'group_merge', 'organization_merge',
-			'role_merge', 'team_merge', 'user_group_merge', 'user_merge'
-		])
-
-		downstream_task_ids = [downstream_task_ids] + ['individual_merge']
-
-	if len(downstream_task_ids) > 0:
-		dag_id = 'dxp_entity_ingestion_{}'.format(
+	globals()[dag_id] = create_dag(
+		project.get('id'), project.get('accountsSelected'),
+		project.get('contactsSelected'), dag_id,
+		'DXP Entity Ingestion DAG For {}'.format(
 			project.get('id')
 		)
-
-		globals()[dag_id] = create_dag(
-			project.get('id'), project.get('accountsSelected'), dag_id,
-			'DXP Entity Ingestion DAG For {}'.format(
-				project.get('id')
-			)
-		)
+	)
