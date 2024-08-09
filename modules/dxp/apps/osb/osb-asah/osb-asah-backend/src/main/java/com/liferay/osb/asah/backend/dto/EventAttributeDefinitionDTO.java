@@ -91,6 +91,19 @@ public class EventAttributeDefinitionDTO {
 		}
 	}
 
+	public EventAttributeDefinitionDTO(
+		EventAttributeDefinition.DataType dataType, String description,
+		String displayName, String id, String name,
+		EventAttributeDefinition.Type type) {
+
+		_dataType = dataType;
+		_description = description;
+		_displayName = displayName;
+		_id = id;
+		_name = name;
+		_type = type;
+	}
+
 	@JsonProperty("dataType")
 	public EventAttributeDefinition.DataType getDataType() {
 		return _dataType;

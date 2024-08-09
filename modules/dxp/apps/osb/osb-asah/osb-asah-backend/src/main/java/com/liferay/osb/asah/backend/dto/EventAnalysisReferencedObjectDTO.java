@@ -35,6 +35,12 @@ public class EventAnalysisReferencedObjectDTO {
 		_eventDefinitionDTO = new EventDefinitionDTO(eventDefinition);
 	}
 
+	public void addEventAttributeDefinitionDTO(
+		EventAttributeDefinitionDTO eventAttributeDefinitionDTO) {
+
+		_eventAttributeDefinitionDTOs.add(eventAttributeDefinitionDTO);
+	}
+
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj) {

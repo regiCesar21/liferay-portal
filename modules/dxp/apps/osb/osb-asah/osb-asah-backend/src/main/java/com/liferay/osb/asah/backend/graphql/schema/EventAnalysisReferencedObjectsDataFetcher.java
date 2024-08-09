@@ -7,6 +7,7 @@ package com.liferay.osb.asah.backend.graphql.schema;
 
 import com.liferay.osb.asah.backend.dto.EventAnalysisDTO;
 import com.liferay.osb.asah.backend.dto.EventAnalysisReferencedObjectDTO;
+import com.liferay.osb.asah.backend.dto.EventAttributeDefinitionDTO;
 import com.liferay.osb.asah.backend.graphql.annotation.GraphQLTypeWiring;
 import com.liferay.osb.asah.common.dog.EventAttributeDefinitionDog;
 import com.liferay.osb.asah.common.dog.EventDefinitionDog;
@@ -85,8 +86,63 @@ public class EventAnalysisReferencedObjectsDataFetcher
 					Collectors.toList()
 				)));
 
-		return new EventAnalysisReferencedObjectDTO(
-			eventDefinition, eventAttributeDefinitions);
+		EventAnalysisReferencedObjectDTO eventAnalysisReferencedObjectDTO =
+			new EventAnalysisReferencedObjectDTO(
+				eventDefinition, eventAttributeDefinitions);
+
+		return _addIndividualEventAnalysisReferencedObjectDTO(
+			eventAnalysisBreakdownDTOs, eventAnalysisFilterDTOs,
+			eventAnalysisReferencedObjectDTO);
+	}
+
+	private EventAnalysisReferencedObjectDTO
+		_addIndividualEventAnalysisReferencedObjectDTO(
+			List<EventAnalysisDTO.EventAnalysisBreakdownDTO>
+				eventAnalysisBreakdownDTOs,
+			List<EventAnalysisDTO.EventAnalysisFilterDTO>
+				eventAnalysisFilterDTOs,
+			EventAnalysisReferencedObjectDTO eventAnalysisReferencedObjectDTO) {
+
+		Stream<EventAnalysisDTO.EventAnalysisBreakdownDTO>
+			eventAnalysisBreakdownDTOsStream =
+				eventAnalysisBreakdownDTOs.stream();
+
+		eventAnalysisBreakdownDTOsStream.filter(
+			eventAnalysisBreakdownDTO -> Objects.equals(
+				eventAnalysisBreakdownDTO.getAttributeType(),
+				AttributeType.INDIVIDUAL)
+		).forEach(
+			eventAnalysisBreakdownDTO ->
+				eventAnalysisReferencedObjectDTO.addEventAttributeDefinitionDTO(
+					new EventAttributeDefinitionDTO(
+						eventAnalysisBreakdownDTO.getDataType(),
+						eventAnalysisBreakdownDTO.getDescription(),
+						eventAnalysisBreakdownDTO.getDisplayName(),
+						eventAnalysisBreakdownDTO.getAttributeId(),
+						eventAnalysisBreakdownDTO.getAttributeId(),
+						EventAttributeDefinition.Type.LOCAL))
+		);
+
+		Stream<EventAnalysisDTO.EventAnalysisFilterDTO>
+			eventAnalysisFilterDTOsStream = eventAnalysisFilterDTOs.stream();
+
+		eventAnalysisFilterDTOsStream.filter(
+			eventAnalysisFilterDTO -> Objects.equals(
+				eventAnalysisFilterDTO.getAttributeType(),
+				AttributeType.INDIVIDUAL)
+		).forEach(
+			eventAnalysisFilterDTO ->
+				eventAnalysisReferencedObjectDTO.addEventAttributeDefinitionDTO(
+					new EventAttributeDefinitionDTO(
+						eventAnalysisFilterDTO.getDataType(),
+						eventAnalysisFilterDTO.getDescription(),
+						eventAnalysisFilterDTO.getDisplayName(),
+						eventAnalysisFilterDTO.getAttributeId(),
+						eventAnalysisFilterDTO.getAttributeId(),
+						EventAttributeDefinition.Type.LOCAL))
+		);
+
+		return eventAnalysisReferencedObjectDTO;
 	}
 
 	@Autowired
