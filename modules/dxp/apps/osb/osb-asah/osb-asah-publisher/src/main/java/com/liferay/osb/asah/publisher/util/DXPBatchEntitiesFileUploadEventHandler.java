@@ -87,9 +87,10 @@ public class DXPBatchEntitiesFileUploadEventHandler {
 			else {
 				_composerDXPIngestionDAGTrigger.trigger(
 					dxpBatchEntitiesFileUploadEvent.getDataSourceId(),
-					dxpBatchEntitiesFileUploadEvent.getContentEncoding(),
 					dxpBatchEntitiesFileUploadEvent.getResourceName(),
-					folderName, bucketName, uploadDate,
+					folderName, bucketName,
+					dxpBatchEntitiesFileUploadEvent.getContentEncoding(),
+					uploadDate,
 					dxpBatchEntitiesFileUploadEvent.getUploadType());
 			}
 		}

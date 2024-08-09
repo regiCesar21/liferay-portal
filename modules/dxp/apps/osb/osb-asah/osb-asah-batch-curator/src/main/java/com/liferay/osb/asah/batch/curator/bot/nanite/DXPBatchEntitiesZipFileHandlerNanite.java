@@ -52,9 +52,10 @@ public class DXPBatchEntitiesZipFileHandlerNanite extends BaseNanite {
 			ProjectIdThreadLocal.getProjectId());
 
 		_composerDXPIngestionDAGTrigger.trigger(
-			contextJSONObject.getString("dataSourceId"), "gzip",
+			contextJSONObject.getString("dataSourceId"),
 			contextJSONObject.getString("resourceName"), bucketFolder,
-			bucketName, uploadDate, contextJSONObject.getString("uploadType"));
+			bucketName, "gzip", uploadDate,
+			contextJSONObject.getString("uploadType"));
 
 		boolean result = zipTmpFile.delete();
 
