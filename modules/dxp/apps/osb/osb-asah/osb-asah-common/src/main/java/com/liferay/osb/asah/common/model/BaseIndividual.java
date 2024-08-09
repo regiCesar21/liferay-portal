@@ -20,6 +20,7 @@ import java.util.Set;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
+import org.apache.commons.collections4.ListUtils;
 import org.apache.commons.lang3.math.NumberUtils;
 
 /**
@@ -31,7 +32,8 @@ public abstract class BaseIndividual {
 	}
 
 	public BaseIndividual(BQIndividual bqIndividual) {
-		List<BQIndividual.Field> bqIndividualFields = bqIndividual.getFields();
+		List<BQIndividual.Field> bqIndividualFields = ListUtils.emptyIfNull(
+			bqIndividual.getFields());
 
 		Stream<BQIndividual.Field> stream1 = bqIndividualFields.stream();
 
@@ -49,7 +51,7 @@ public abstract class BaseIndividual {
 			Collectors.toSet()
 		);
 
-		if (fields != null) {
+		if (!fields.isEmpty()) {
 			Set<String> demographicsFieldNames =
 				FieldMappingConstants.demographicsDisplayNames.keySet();
 
