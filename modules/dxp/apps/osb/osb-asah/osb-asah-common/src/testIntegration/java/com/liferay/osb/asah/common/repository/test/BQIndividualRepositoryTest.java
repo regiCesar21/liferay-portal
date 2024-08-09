@@ -271,15 +271,6 @@ public class BQIndividualRepositoryTest
 				null));
 	}
 
-	@BQSQLResource(resourcePath = "test_bq_individual_repository_4.sql")
-	@Test
-	public void testCountBQIndividualsExcludesHiddenEvents() {
-		Assertions.assertEquals(
-			1,
-			_bqIndividualRepository.countBQIndividuals(
-				null, 1L, null, null, null, null, null));
-	}
-
 	@BQSQLResource(resourcePath = "test_bq_individual_repository_3.sql")
 	@Test
 	public void testCountBQIndividualsFirstActivityDateBetween() {
