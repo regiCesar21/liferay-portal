@@ -768,11 +768,17 @@ public class BQIndividualRepositoryImpl
 
 		return _queryExecutor.queryForList(
 			record -> {
-				BigDecimal activitiesCount = new BigDecimal(
+				BigDecimal activitiesCountBigDecimal = new BigDecimal(
 					String.valueOf(record.get("activitiescount")));
 
+				Long activitesCount = activitiesCountBigDecimal.longValue();
+
+				if (activitesCount == 0) {
+					activitesCount = null;
+				}
+
 				return new Individual(
-					activitiesCount.longValue(), new BQIndividual(record), null,
+					activitesCount, new BQIndividual(record), null,
 					(Date)record.get("firstactivitydate"),
 					(Date)record.get("lastactivitydate"));
 			},
