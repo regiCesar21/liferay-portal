@@ -10,9 +10,9 @@
 <%
 String activeView = ParamUtil.getString(request, "activeView", defaultView);
 
-TimeZone calendarBookingTimeZone = userTimeZone;
-
 boolean allDay = BeanParamUtil.getBoolean(calendarBooking, request, "allDay");
+
+TimeZone calendarBookingTimeZone = allDay ? TimeZone.getTimeZone(StringPool.UTC) : userTimeZone;
 
 java.util.Calendar defaultStartTimeJCalendar = CalendarFactoryUtil.getCalendar(calendarBookingTimeZone);
 
