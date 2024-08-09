@@ -21,6 +21,7 @@ import java.util.Objects;
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.FilenameUtils;
 import org.apache.commons.io.IOUtils;
+import org.apache.commons.lang3.StringUtils;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -49,9 +50,11 @@ public class DXPBatchEntitiesFileUploadEventHandler {
 
 			String uploadDate = DateUtil.newDateString();
 
-			String fileName =
-				uploadDate + "." +
-					dxpBatchEntitiesFileUploadEvent.getContentEncoding();
+			String fileSuffix = StringUtils.replace(
+				dxpBatchEntitiesFileUploadEvent.getContentEncoding(), "gzip",
+				"gz");
+
+			String fileName = uploadDate + "." + fileSuffix;
 
 			_googleStorage.archiveSync(
 				bucketName, folderName,
