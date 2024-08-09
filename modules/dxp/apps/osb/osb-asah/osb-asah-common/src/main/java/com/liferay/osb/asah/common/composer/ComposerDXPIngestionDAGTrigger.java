@@ -70,9 +70,7 @@ public class ComposerDXPIngestionDAGTrigger {
 			return;
 		}
 
-		String dagId = String.format(
-			"dxp_%s_ingestion_dataflow_trigger_%s", entity,
-			ProjectIdThreadLocal.getProjectId());
+		String dagId = _getDAGId(entity);
 
 		if (_log.isInfoEnabled()) {
 			_log.info("Scheduling DAG " + dagId);
@@ -143,6 +141,18 @@ public class ComposerDXPIngestionDAGTrigger {
 					uploadFilePath),
 				ioException);
 		}
+	}
+
+	private String _getDAGId(String entity) {
+		if (StringUtils.equals(entity, "entity")) {
+			return String.format(
+				"dxp_%s_ingestion_%s", entity,
+				ProjectIdThreadLocal.getProjectId());
+		}
+
+		return String.format(
+			"dxp_%s_ingestion_dataflow_trigger_%s", entity,
+			ProjectIdThreadLocal.getProjectId());
 	}
 
 	private static final Log _log = LogFactory.getLog(
