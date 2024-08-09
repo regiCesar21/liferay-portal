@@ -9,6 +9,7 @@ import com.liferay.osb.asah.common.OSBAsahCommonSpringTestContext;
 import com.liferay.osb.asah.common.date.DateUtil;
 import com.liferay.osb.asah.common.date.dog.TimeZoneDog;
 import com.liferay.osb.asah.common.date.dog.util.TimeZoneDogUtil;
+import com.liferay.osb.asah.common.model.BaseIndividual;
 import com.liferay.osb.asah.common.model.Distribution;
 import com.liferay.osb.asah.common.model.Individual;
 import com.liferay.osb.asah.common.repository.BQIndividualRepository;
@@ -617,6 +618,125 @@ public class BQIndividualRepositoryTest
 		Assertions.assertEquals(
 			DateUtil.toUTCDate("2022-12-17T23:59:59.999Z"),
 			individual.getLastActivityDate());
+	}
+
+	@BQSQLResource(
+		resourcePath = "test_bq_individual_repository_with_hidden_activities_only.sql"
+	)
+	@Test
+	public void testSearchBQIndividualsWithHiddenActivitiesOnly() {
+		Individual individual1 = new Individual();
+
+		individual1.setActivitiesCount(4L);
+		individual1.setCreateDate(
+			DateUtil.toUTCDate("2022-12-14T00:00:00.000Z"));
+		individual1.setCustomDemographics(new BaseIndividual.Demographics());
+		individual1.setEmailAddressHashed(
+			"47ff64395860b1d498241d907069f649b98c198a95b3ba5303b87094058590c1");
+		individual1.setFirstActivityDate(
+			DateUtil.toUTCDate("2022-12-13T23:59:59.999Z"));
+		individual1.setFirstEnrichmentDate(
+			DateUtil.toUTCDate("2022-12-14T00:00:00.000Z"));
+		individual1.setId(
+			"47ff64395860b1d498241d907069f649b98c198a95b3ba5303b87094058590c1");
+		individual1.setLastActivityDate(
+			DateUtil.toUTCDate("2022-12-17T23:59:59.999Z"));
+		individual1.setLastEnrichmentDate(
+			DateUtil.toUTCDate("2022-12-15T00:00:00.000Z"));
+		individual1.setModifiedDate(
+			DateUtil.toUTCDate("2022-12-15T00:00:00.000Z"));
+		individual1.setDemographics(new BaseIndividual.Demographics());
+
+		Individual individual2 = new Individual();
+
+		individual2.setActivitiesCount(2L);
+		individual2.setCreateDate(
+			DateUtil.toUTCDate("2022-12-14T00:00:00.000Z"));
+		individual2.setCustomDemographics(new BaseIndividual.Demographics());
+		individual2.setEmailAddressHashed(
+			"47ff64395860b1d498241d907069f649b98c198a95b3ba5303b87094058590c2");
+		individual2.setFirstActivityDate(
+			DateUtil.toUTCDate("2022-12-14T23:59:59.999Z"));
+		individual2.setFirstEnrichmentDate(
+			DateUtil.toUTCDate("2022-12-14T00:00:00.000Z"));
+		individual2.setId(
+			"47ff64395860b1d498241d907069f649b98c198a95b3ba5303b87094058590c2");
+		individual2.setLastActivityDate(
+			DateUtil.toUTCDate("2022-12-16T23:59:59.999Z"));
+		individual2.setLastEnrichmentDate(
+			DateUtil.toUTCDate("2022-12-14T00:00:00.000Z"));
+		individual2.setModifiedDate(
+			DateUtil.toUTCDate("2022-12-14T00:00:00.000Z"));
+		individual2.setDemographics(new BaseIndividual.Demographics());
+
+		Individual individual3 = new Individual();
+
+		individual3.setActivitiesCount(null);
+		individual3.setCreateDate(
+			DateUtil.toUTCDate("2022-12-17T00:00:00.000Z"));
+		individual3.setCustomDemographics(new BaseIndividual.Demographics());
+		individual3.setEmailAddressHashed(
+			"47ff64395860b1d498241d907069f649b98c198a95b3ba5303b87094058590c3");
+		individual3.setFirstActivityDate(null);
+		individual3.setFirstEnrichmentDate(
+			DateUtil.toUTCDate("2022-12-17T00:00:00.000Z"));
+		individual3.setId(
+			"47ff64395860b1d498241d907069f649b98c198a95b3ba5303b87094058590c3");
+		individual3.setLastActivityDate(null);
+		individual3.setLastEnrichmentDate(
+			DateUtil.toUTCDate("2022-12-17T00:00:00.000Z"));
+		individual3.setModifiedDate(
+			DateUtil.toUTCDate("2022-12-17T00:00:00.000Z"));
+		individual3.setDemographics(new BaseIndividual.Demographics());
+
+		Assertions.assertEquals(
+			Arrays.asList(individual1, individual2, individual3),
+			_bqIndividualRepository.searchBQIndividuals(
+				null, 11L, null, null, null,
+				PageRequest.of(0, 10, Sort.by(Sort.Order.asc("id"))), null,
+				null));
+		Assertions.assertEquals(
+			Arrays.asList(individual2, individual1, individual3),
+			_bqIndividualRepository.searchBQIndividuals(
+				null, 11L, null, null, null,
+				PageRequest.of(
+					0, 10, Sort.by(Sort.Order.asc("activitiesCount"))),
+				null, null));
+		Assertions.assertEquals(
+			Arrays.asList(individual1, individual2, individual3),
+			_bqIndividualRepository.searchBQIndividuals(
+				null, 11L, null, null, null,
+				PageRequest.of(
+					0, 10, Sort.by(Sort.Order.desc("activitiesCount"))),
+				null, null));
+		Assertions.assertEquals(
+			Arrays.asList(individual1, individual2, individual3),
+			_bqIndividualRepository.searchBQIndividuals(
+				null, 11L, null, null, null,
+				PageRequest.of(
+					0, 10, Sort.by(Sort.Order.asc("firstActivityDate"))),
+				null, null));
+		Assertions.assertEquals(
+			Arrays.asList(individual2, individual1, individual3),
+			_bqIndividualRepository.searchBQIndividuals(
+				null, 11L, null, null, null,
+				PageRequest.of(
+					0, 10, Sort.by(Sort.Order.desc("firstActivityDate"))),
+				null, null));
+		Assertions.assertEquals(
+			Arrays.asList(individual2, individual1, individual3),
+			_bqIndividualRepository.searchBQIndividuals(
+				null, 11L, null, null, null,
+				PageRequest.of(
+					0, 10, Sort.by(Sort.Order.asc("lastActivityDate"))),
+				null, null));
+		Assertions.assertEquals(
+			Arrays.asList(individual1, individual2, individual3),
+			_bqIndividualRepository.searchBQIndividuals(
+				null, 11L, null, null, null,
+				PageRequest.of(
+					0, 10, Sort.by(Sort.Order.desc("lastActivityDate"))),
+				null, null));
 	}
 
 	@BQSQLResource(

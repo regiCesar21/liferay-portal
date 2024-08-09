@@ -974,7 +974,7 @@ public class ReportDogTest
 	@Test
 	public void testGetCSVReportCountIndividual() throws Exception {
 		Assertions.assertEquals(
-			3,
+			4,
 			_reportDog.getCSVReportCount(
 				null, null, 1L, null, null, "individual"));
 	}
@@ -1007,7 +1007,7 @@ public class ReportDogTest
 		throws Exception {
 
 		Assertions.assertEquals(
-			3,
+			4,
 			_reportDog.getCSVReportCount(
 				null, null, 1L, null, null, "individual"));
 	}
