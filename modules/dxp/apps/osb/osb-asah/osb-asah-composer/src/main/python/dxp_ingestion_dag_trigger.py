@@ -98,7 +98,7 @@ def create_dag(
 				}
 			],
 			source_format='NEWLINE_DELIMITED_JSON',
-			source_objects=["{{ params['bucketFolder'] }}/{{ params['uploadDate'] }}.gz"],
+			source_objects=["{{ dag.default_args['ac_project_id'] }}/{{ params['bucketFolder'] }}/{{ params['uploadDate'] }}.gz"],
 			task_id="create_dxpentity_external_table"
 		)
 
