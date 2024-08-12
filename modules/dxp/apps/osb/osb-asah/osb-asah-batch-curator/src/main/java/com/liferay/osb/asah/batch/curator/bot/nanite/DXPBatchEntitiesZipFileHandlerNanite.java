@@ -48,7 +48,7 @@ public class DXPBatchEntitiesZipFileHandlerNanite extends BaseNanite {
 		File gzipTmpFile = _convertZipToGzip(uploadDate, zipTmpFile);
 
 		_googleStorage.archiveSync(
-			bucketName, bucketFolder, gzipTmpFile, gzipTmpFile.getName(),
+			bucketName, bucketFolder, gzipTmpFile, uploadDate + ".gz",
 			ProjectIdThreadLocal.getProjectId());
 
 		_composerDXPIngestionDAGTrigger.trigger(
@@ -74,7 +74,7 @@ public class DXPBatchEntitiesZipFileHandlerNanite extends BaseNanite {
 
 		long start = System.currentTimeMillis();
 
-		File gzipTmpFile = File.createTempFile(gzipFilePrefix, "gz");
+		File gzipTmpFile = File.createTempFile(gzipFilePrefix, ".gz");
 
 		GZIPOutputStream gzipOutputStream = new GZIPOutputStream(
 			new FileOutputStream(gzipTmpFile));
