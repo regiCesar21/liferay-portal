@@ -87,8 +87,9 @@ public class ReportDog {
 
 	public File getCSVReport(
 			@Nullable String assetId, @Nullable String assetType,
-			Long channelId, @Nullable String query, @Nullable String[] sorts,
-			@Nullable TimeRange timeRange, String type)
+			Long channelId, @Nullable String query, String individualId,
+			@Nullable String[] sorts, @Nullable TimeRange timeRange,
+			String type)
 		throws Exception {
 
 		List<String[]> rows = null;
@@ -114,7 +115,8 @@ public class ReportDog {
 				sorts, timeRange, type);
 		}
 		else if (StringUtils.equals(type, "event")) {
-			rows = _getEventRows(channelId, query, sorts, timeRange);
+			rows = _getEventRows(
+				channelId, query, individualId, sorts, timeRange);
 		}
 		else if (StringUtils.equals(type, "form")) {
 			rows = _getAssetFormRows(
@@ -176,7 +178,8 @@ public class ReportDog {
 
 	public Long getCSVReportCount(
 		@Nullable String assetId, @Nullable String assetType, Long channelId,
-		@Nullable String query, @Nullable TimeRange timeRange, String type) {
+		@Nullable String query, String individualId,
+		@Nullable TimeRange timeRange, String type) {
 
 		if (StringUtils.equals(type, "blog") ||
 			StringUtils.equals(type, "document") ||
@@ -196,7 +199,7 @@ public class ReportDog {
 			}
 
 			Integer count = _bqEventRepository.countBQEvents(
-				channelId, null, query, rangeEndLocalDateTime,
+				channelId, individualId, query, rangeEndLocalDateTime,
 				rangeStartLocalDateTime, _timeZoneDog.getTimeZoneId());
 
 			return count.longValue();
@@ -466,7 +469,8 @@ public class ReportDog {
 	}
 
 	private List<String[]> _getEventRows(
-		Long channelId, String keywords, String[] sorts, TimeRange timeRange) {
+		Long channelId, String keywords, String individualId, String[] sorts,
+		TimeRange timeRange) {
 
 		List<String[]> rows = new ArrayList<>();
 
@@ -485,7 +489,7 @@ public class ReportDog {
 		}
 
 		List<BQEvent> bqEvents = _bqEventRepository.searchBQEvents(
-			channelId, null, keywords,
+			channelId, individualId, keywords,
 			PageRequest.of(
 				0, _MAX_SIZE, _getSort(sorts, Order.desc("eventDate"))),
 			rangeEndLocalDateTime, rangeStartLocalDateTime,

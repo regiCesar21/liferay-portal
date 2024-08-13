@@ -47,6 +47,7 @@ public class ReportRestController {
 			@RequestParam(required = false) String assetType,
 			@RequestParam String channelId,
 			@RequestParam(name = "fromDate", required = false) String fromDate,
+			@RequestParam(required = false) String individualId,
 			@RequestParam(required = false) String query,
 			@RequestParam(defaultValue = "30") int rangeKey,
 			@RequestParam(name = "sort", required = false) String[] sorts,
@@ -90,8 +91,8 @@ public class ReportRestController {
 		}
 
 		File file = _reportDog.getCSVReport(
-			assetId, assetType, Long.valueOf(channelId), query, sorts,
-			timeRange, type);
+			assetId, assetType, Long.valueOf(channelId), individualId, query,
+			sorts, timeRange, type);
 
 		return bodyBuilder.body(new FileSystemResource(file.getAbsolutePath()));
 	}
@@ -102,6 +103,7 @@ public class ReportRestController {
 		@RequestParam(required = false) String assetType,
 		@RequestParam String channelId,
 		@RequestParam(name = "fromDate", required = false) String fromDate,
+		@RequestParam(required = false) String individualId,
 		@RequestParam(required = false) String query,
 		@RequestParam(defaultValue = "30") int rangeKey,
 		@RequestParam(name = "toDate", required = false) String toDate,
@@ -126,8 +128,8 @@ public class ReportRestController {
 
 		return ResponseEntity.ok(
 			_reportDog.getCSVReportCount(
-				assetId, assetType, Long.valueOf(channelId), query, timeRange,
-				type));
+				assetId, assetType, Long.valueOf(channelId), individualId,
+				query, timeRange, type));
 	}
 
 	private void _validateDateRange(String fromDate, String toDate) {
