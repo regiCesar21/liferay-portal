@@ -50,7 +50,7 @@ public class ReportDogTest
 		Assertions.assertEquals(
 			3,
 			_reportDog.getCSVReportCount(
-				null, null, 1L, null,
+				null, null, 1L, null, null,
 				TimeRange.of(
 					LocalDate.of(2023, 11, 6), LocalDate.of(2023, 11, 3)),
 				"form"));
@@ -65,7 +65,7 @@ public class ReportDogTest
 
 		try (InputStream inputStream = new FileInputStream(
 				_reportDog.getCSVReport(
-					null, null, 1L, null, null,
+					null, null, 1L, null, null, null,
 					TimeRange.of(
 						LocalDate.of(2023, 11, 6), LocalDate.of(2023, 11, 3)),
 					"blog"))) {
@@ -86,7 +86,7 @@ public class ReportDogTest
 
 		try (InputStream inputStream = new FileInputStream(
 				_reportDog.getCSVReport(
-					null, null, 1L, "Blog 1", null,
+					null, null, 1L, "Blog 1", null, null,
 					TimeRange.of(
 						LocalDate.of(2023, 11, 6), LocalDate.of(2023, 11, 3)),
 					"blog"))) {
@@ -107,7 +107,8 @@ public class ReportDogTest
 
 		try (InputStream inputStream = new FileInputStream(
 				_reportDog.getCSVReport(
-					null, null, 1L, null, new String[] {"viewsMetric", "asc"},
+					null, null, 1L, null, null,
+					new String[] {"viewsMetric", "asc"},
 					TimeRange.of(
 						LocalDate.of(2023, 11, 6), LocalDate.of(2023, 11, 3)),
 					"blog"))) {
@@ -126,7 +127,7 @@ public class ReportDogTest
 		Assertions.assertEquals(
 			1,
 			_reportDog.getCSVReportCount(
-				null, null, 1L, "Document 3",
+				null, null, 1L, "Document 3", null,
 				TimeRange.of(
 					LocalDate.of(2023, 11, 6), LocalDate.of(2023, 11, 3)),
 				"document"));
@@ -142,7 +143,7 @@ public class ReportDogTest
 
 		try (InputStream inputStream = new FileInputStream(
 				_reportDog.getCSVReport(
-					null, null, 1L, null, null,
+					null, null, 1L, null, null, null,
 					TimeRange.of(
 						LocalDate.of(2023, 11, 6), LocalDate.of(2023, 11, 3)),
 					"document"))) {
@@ -165,7 +166,7 @@ public class ReportDogTest
 
 		try (InputStream inputStream = new FileInputStream(
 				_reportDog.getCSVReport(
-					null, null, 1L, "Document 3", null,
+					null, null, 1L, "Document 3", null, null,
 					TimeRange.of(
 						LocalDate.of(2023, 11, 6), LocalDate.of(2023, 11, 3)),
 					"document"))) {
@@ -188,11 +189,31 @@ public class ReportDogTest
 
 		try (InputStream inputStream = new FileInputStream(
 				_reportDog.getCSVReport(
-					null, null, 1L, null,
+					null, null, 1L, null, null,
 					new String[] {"downloadsMetric", "asc"},
 					TimeRange.of(
 						LocalDate.of(2023, 11, 6), LocalDate.of(2023, 11, 3)),
 					"document"))) {
+
+			Assertions.assertTrue(
+				IOUtils.contentEquals(
+					classPathResource.getInputStream(), inputStream));
+		}
+	}
+
+	@BQSQLResource(resourcePath = "test_report_dog.sql")
+	@Test
+	public void testGetCSVReportAssetEvent() throws Exception {
+		ClassPathResource classPathResource = new ClassPathResource(
+			"dependencies/test_get_csv_report_asset_event_expected.csv",
+			getClass());
+
+		try (InputStream inputStream = new FileInputStream(
+				_reportDog.getCSVReport(
+					null, null, 1L, null, null, null,
+					TimeRange.of(
+						LocalDate.of(2023, 11, 6), LocalDate.of(2023, 11, 3)),
+					"event"))) {
 
 			Assertions.assertTrue(
 				IOUtils.contentEquals(
@@ -209,7 +230,7 @@ public class ReportDogTest
 
 		try (InputStream inputStream = new FileInputStream(
 				_reportDog.getCSVReport(
-					null, null, 1L, null, null,
+					null, null, 1L, null, null, null,
 					TimeRange.of(
 						LocalDate.of(2023, 11, 6), LocalDate.of(2023, 11, 3)),
 					"form"))) {
@@ -230,7 +251,7 @@ public class ReportDogTest
 
 		try (InputStream inputStream = new FileInputStream(
 				_reportDog.getCSVReport(
-					null, null, 1L, "Form 1", null,
+					null, null, 1L, "Form 1", null, null,
 					TimeRange.of(
 						LocalDate.of(2023, 11, 6), LocalDate.of(2023, 11, 3)),
 					"form"))) {
@@ -253,7 +274,7 @@ public class ReportDogTest
 
 		try (InputStream inputStream = new FileInputStream(
 				_reportDog.getCSVReport(
-					null, null, 1L, null,
+					null, null, 1L, null, null,
 					new String[] {"submissionsMetric", "asc"},
 					TimeRange.of(
 						LocalDate.of(2023, 11, 6), LocalDate.of(2023, 11, 3)),
@@ -275,9 +296,31 @@ public class ReportDogTest
 		try (InputStream inputStream = new FileInputStream(
 				_reportDog.getCSVReport(
 					"https://www.beryl.com/delivery", "page", 1L, null, null,
+					null,
 					TimeRange.of(
 						LocalDate.of(2023, 11, 6), LocalDate.of(2023, 11, 3)),
 					"individual"))) {
+
+			Assertions.assertTrue(
+				IOUtils.contentEquals(
+					classPathResource.getInputStream(), inputStream));
+		}
+	}
+
+	@BQSQLResource(resourcePath = "test_report_dog.sql")
+	@Test
+	public void testGetCSVReportAssetIndividualEvent() throws Exception {
+		ClassPathResource classPathResource = new ClassPathResource(
+			"dependencies" +
+				"/test_get_csv_report_asset_individual_event_expected.csv",
+			getClass());
+
+		try (InputStream inputStream = new FileInputStream(
+				_reportDog.getCSVReport(
+					null, null, 1L, null, "1", null,
+					TimeRange.of(
+						LocalDate.of(2023, 11, 6), LocalDate.of(2023, 11, 3)),
+					"event"))) {
 
 			Assertions.assertTrue(
 				IOUtils.contentEquals(
@@ -297,7 +340,7 @@ public class ReportDogTest
 
 		try (InputStream inputStream = new FileInputStream(
 				_reportDog.getCSVReport(
-					"3", "blog", 1L, "test3@liferay.com", null,
+					"3", "blog", 1L, "test3@liferay.com", null, null,
 					TimeRange.of(
 						LocalDate.of(2023, 11, 6), LocalDate.of(2023, 11, 3)),
 					"individual"))) {
@@ -320,7 +363,7 @@ public class ReportDogTest
 
 		try (InputStream inputStream = new FileInputStream(
 				_reportDog.getCSVReport(
-					"1", "blog", 1L, "Test 1", null,
+					"1", "blog", 1L, "Test 1", null, null,
 					TimeRange.of(
 						LocalDate.of(2023, 11, 6), LocalDate.of(2023, 11, 3)),
 					"individual"))) {
@@ -344,7 +387,7 @@ public class ReportDogTest
 
 		try (InputStream inputStream = new FileInputStream(
 				_reportDog.getCSVReport(
-					"3", "document", 1L, "test3@liferay.com", null,
+					"3", "document", 1L, "test3@liferay.com", null, null,
 					TimeRange.of(
 						LocalDate.of(2023, 11, 6), LocalDate.of(2023, 11, 3)),
 					"individual"))) {
@@ -367,7 +410,7 @@ public class ReportDogTest
 
 		try (InputStream inputStream = new FileInputStream(
 				_reportDog.getCSVReport(
-					"1", "document", 1L, "Test 1", null,
+					"1", "document", 1L, "Test 1", null, null,
 					TimeRange.of(
 						LocalDate.of(2023, 11, 6), LocalDate.of(2023, 11, 3)),
 					"individual"))) {
@@ -390,7 +433,7 @@ public class ReportDogTest
 
 		try (InputStream inputStream = new FileInputStream(
 				_reportDog.getCSVReport(
-					"2", "form", 1L, "test2@liferay.com", null,
+					"2", "form", 1L, "test2@liferay.com", null, null,
 					TimeRange.of(
 						LocalDate.of(2023, 11, 6), LocalDate.of(2023, 11, 3)),
 					"individual"))) {
@@ -413,7 +456,7 @@ public class ReportDogTest
 
 		try (InputStream inputStream = new FileInputStream(
 				_reportDog.getCSVReport(
-					"1", "form", 1L, "Test 1", null,
+					"1", "form", 1L, "Test 1", null, null,
 					TimeRange.of(
 						LocalDate.of(2023, 11, 6), LocalDate.of(2023, 11, 3)),
 					"individual"))) {
@@ -436,7 +479,7 @@ public class ReportDogTest
 
 		try (InputStream inputStream = new FileInputStream(
 				_reportDog.getCSVReport(
-					"3", "journal", 1L, "test3@liferay.com", null,
+					"3", "journal", 1L, "test3@liferay.com", null, null,
 					TimeRange.of(
 						LocalDate.of(2023, 11, 6), LocalDate.of(2023, 11, 3)),
 					"individual"))) {
@@ -459,7 +502,7 @@ public class ReportDogTest
 
 		try (InputStream inputStream = new FileInputStream(
 				_reportDog.getCSVReport(
-					"2", "journal", 1L, "Test 2", null,
+					"2", "journal", 1L, "Test 2", null, null,
 					TimeRange.of(
 						LocalDate.of(2023, 11, 6), LocalDate.of(2023, 11, 3)),
 					"individual"))) {
@@ -484,7 +527,7 @@ public class ReportDogTest
 		try (InputStream inputStream = new FileInputStream(
 				_reportDog.getCSVReport(
 					"https://www.beryl.com/delivery", "page", 1L,
-					"test3@liferay.com", null,
+					"test3@liferay.com", null, null,
 					TimeRange.of(
 						LocalDate.of(2023, 11, 6), LocalDate.of(2023, 11, 3)),
 					"individual"))) {
@@ -509,7 +552,7 @@ public class ReportDogTest
 		try (InputStream inputStream = new FileInputStream(
 				_reportDog.getCSVReport(
 					"https://www.beryl.com/delivery", "page", 1L, "Test 1",
-					null,
+					null, null,
 					TimeRange.of(
 						LocalDate.of(2023, 11, 6), LocalDate.of(2023, 11, 3)),
 					"individual"))) {
@@ -529,7 +572,7 @@ public class ReportDogTest
 
 		try (InputStream inputStream = new FileInputStream(
 				_reportDog.getCSVReport(
-					null, null, 1L, null, null,
+					null, null, 1L, null, null, null,
 					TimeRange.of(
 						LocalDate.of(2023, 11, 6), LocalDate.of(2023, 11, 3)),
 					"journal"))) {
@@ -550,7 +593,7 @@ public class ReportDogTest
 
 		try (InputStream inputStream = new FileInputStream(
 				_reportDog.getCSVReport(
-					null, null, 1L, "Journal 3", null,
+					null, null, 1L, "Journal 3", null, null,
 					TimeRange.of(
 						LocalDate.of(2023, 11, 6), LocalDate.of(2023, 11, 3)),
 					"journal"))) {
@@ -571,7 +614,8 @@ public class ReportDogTest
 
 		try (InputStream inputStream = new FileInputStream(
 				_reportDog.getCSVReport(
-					null, null, 1L, null, new String[] {"viewsMetric", "asc"},
+					null, null, 1L, null, null,
+					new String[] {"viewsMetric", "asc"},
 					TimeRange.of(
 						LocalDate.of(2023, 11, 6), LocalDate.of(2023, 11, 3)),
 					"journal"))) {
@@ -591,7 +635,7 @@ public class ReportDogTest
 
 		try (InputStream inputStream = new FileInputStream(
 				_reportDog.getCSVReport(
-					null, null, 1L, null, null,
+					null, null, 1L, null, null, null,
 					TimeRange.of(
 						LocalDate.of(2023, 11, 6), LocalDate.of(2023, 11, 3)),
 					"page"))) {
@@ -612,7 +656,7 @@ public class ReportDogTest
 
 		try (InputStream inputStream = new FileInputStream(
 				_reportDog.getCSVReport(
-					null, null, 1L, "Liferay", null,
+					null, null, 1L, "Liferay", null, null,
 					TimeRange.of(
 						LocalDate.of(2023, 11, 6), LocalDate.of(2023, 11, 3)),
 					"page"))) {
@@ -633,7 +677,7 @@ public class ReportDogTest
 
 		try (InputStream inputStream = new FileInputStream(
 				_reportDog.getCSVReport(
-					null, null, 1L, null,
+					null, null, 1L, null, null,
 					new String[] {"entrancesMetric", "asc"},
 					TimeRange.of(
 						LocalDate.of(2023, 11, 6), LocalDate.of(2023, 11, 3)),
@@ -651,7 +695,7 @@ public class ReportDogTest
 		Assertions.assertEquals(
 			3,
 			_reportDog.getCSVReportCount(
-				null, null, 1L, null,
+				null, null, 1L, null, null,
 				TimeRange.of(
 					LocalDate.of(2023, 11, 6), LocalDate.of(2023, 11, 3)),
 				"blog"));
@@ -665,7 +709,7 @@ public class ReportDogTest
 		Assertions.assertEquals(
 			1,
 			_reportDog.getCSVReportCount(
-				null, null, 1L, "Blog 1",
+				null, null, 1L, "Blog 1", null,
 				TimeRange.of(
 					LocalDate.of(2023, 11, 6), LocalDate.of(2023, 11, 3)),
 				"blog"));
@@ -677,7 +721,7 @@ public class ReportDogTest
 		Assertions.assertEquals(
 			3,
 			_reportDog.getCSVReportCount(
-				null, null, 1L, null,
+				null, null, 1L, null, null,
 				TimeRange.of(
 					LocalDate.of(2023, 11, 6), LocalDate.of(2023, 11, 3)),
 				"blog"));
@@ -689,7 +733,7 @@ public class ReportDogTest
 		Assertions.assertEquals(
 			3,
 			_reportDog.getCSVReportCount(
-				null, null, 1L, null,
+				null, null, 1L, null, null,
 				TimeRange.of(
 					LocalDate.of(2023, 11, 6), LocalDate.of(2023, 11, 3)),
 				"document"));
@@ -703,10 +747,38 @@ public class ReportDogTest
 		Assertions.assertEquals(
 			3,
 			_reportDog.getCSVReportCount(
-				null, null, 1L, null,
+				null, null, 1L, null, null,
 				TimeRange.of(
 					LocalDate.of(2023, 11, 6), LocalDate.of(2023, 11, 3)),
 				"document"));
+	}
+
+	@BQSQLResource(resourcePath = "test_report_dog.sql")
+	@Test
+	public void testGetCSVReportCountAssetEvent() throws Exception {
+		Assertions.assertEquals(
+			3,
+			_reportDog.getCSVReportCount(
+				null, null, 1L, null, null,
+				TimeRange.of(
+					LocalDate.of(2023, 11, 6), LocalDate.of(2023, 11, 3)),
+				"event"));
+
+		Assertions.assertEquals(
+			2,
+			_reportDog.getCSVReportCount(
+				null, null, 1L, null, "1",
+				TimeRange.of(
+					LocalDate.of(2023, 11, 6), LocalDate.of(2023, 11, 3)),
+				"event"));
+
+		Assertions.assertEquals(
+			0,
+			_reportDog.getCSVReportCount(
+				null, null, 1L, null, "3",
+				TimeRange.of(
+					LocalDate.of(2023, 11, 6), LocalDate.of(2023, 11, 3)),
+				"event"));
 	}
 
 	@BQSQLResource(resourcePath = "test_report_dog.sql")
@@ -717,7 +789,7 @@ public class ReportDogTest
 		Assertions.assertEquals(
 			1,
 			_reportDog.getCSVReportCount(
-				null, null, 1L, "Form 1",
+				null, null, 1L, "Form 1", null,
 				TimeRange.of(
 					LocalDate.of(2023, 11, 6), LocalDate.of(2023, 11, 3)),
 				"form"));
@@ -731,7 +803,7 @@ public class ReportDogTest
 		Assertions.assertEquals(
 			3,
 			_reportDog.getCSVReportCount(
-				null, null, 1L, null,
+				null, null, 1L, null, null,
 				TimeRange.of(
 					LocalDate.of(2023, 11, 6), LocalDate.of(2023, 11, 3)),
 				"form"));
@@ -743,7 +815,7 @@ public class ReportDogTest
 		Assertions.assertEquals(
 			3,
 			_reportDog.getCSVReportCount(
-				"https://www.beryl.com/delivery", "page", 1L, null,
+				"https://www.beryl.com/delivery", "page", 1L, null, null,
 				TimeRange.of(
 					LocalDate.of(2023, 11, 6), LocalDate.of(2023, 11, 3)),
 				"individual"));
@@ -757,7 +829,7 @@ public class ReportDogTest
 		Assertions.assertEquals(
 			1,
 			_reportDog.getCSVReportCount(
-				"3", "blog", 1L, "test3@liferay.com",
+				"3", "blog", 1L, "test3@liferay.com", null,
 				TimeRange.of(
 					LocalDate.of(2023, 11, 6), LocalDate.of(2023, 11, 3)),
 				"individual"));
@@ -771,7 +843,7 @@ public class ReportDogTest
 		Assertions.assertEquals(
 			1,
 			_reportDog.getCSVReportCount(
-				"1", "blog", 1L, "Test 1",
+				"1", "blog", 1L, "Test 1", null,
 				TimeRange.of(
 					LocalDate.of(2023, 11, 6), LocalDate.of(2023, 11, 3)),
 				"individual"));
@@ -785,7 +857,7 @@ public class ReportDogTest
 		Assertions.assertEquals(
 			1,
 			_reportDog.getCSVReportCount(
-				"3", "document", 1L, "test3@liferay.com",
+				"3", "document", 1L, "test3@liferay.com", null,
 				TimeRange.of(
 					LocalDate.of(2023, 11, 6), LocalDate.of(2023, 11, 3)),
 				"individual"));
@@ -799,7 +871,7 @@ public class ReportDogTest
 		Assertions.assertEquals(
 			1,
 			_reportDog.getCSVReportCount(
-				"1", "document", 1L, "Test 1",
+				"1", "document", 1L, "Test 1", null,
 				TimeRange.of(
 					LocalDate.of(2023, 11, 6), LocalDate.of(2023, 11, 3)),
 				"individual"));
@@ -813,7 +885,7 @@ public class ReportDogTest
 		Assertions.assertEquals(
 			1,
 			_reportDog.getCSVReportCount(
-				"2", "form", 1L, "test2@liferay.com",
+				"2", "form", 1L, "test2@liferay.com", null,
 				TimeRange.of(
 					LocalDate.of(2023, 11, 6), LocalDate.of(2023, 11, 3)),
 				"individual"));
@@ -827,7 +899,7 @@ public class ReportDogTest
 		Assertions.assertEquals(
 			1,
 			_reportDog.getCSVReportCount(
-				"1", "form", 1L, "Test 1",
+				"1", "form", 1L, "Test 1", null,
 				TimeRange.of(
 					LocalDate.of(2023, 11, 6), LocalDate.of(2023, 11, 3)),
 				"individual"));
@@ -841,7 +913,7 @@ public class ReportDogTest
 		Assertions.assertEquals(
 			1,
 			_reportDog.getCSVReportCount(
-				"3", "journal", 1L, "test3@liferay.com",
+				"3", "journal", 1L, "test3@liferay.com", null,
 				TimeRange.of(
 					LocalDate.of(2023, 11, 6), LocalDate.of(2023, 11, 3)),
 				"individual"));
@@ -855,7 +927,7 @@ public class ReportDogTest
 		Assertions.assertEquals(
 			1,
 			_reportDog.getCSVReportCount(
-				"2", "journal", 1L, "Test 2",
+				"2", "journal", 1L, "Test 2", null,
 				TimeRange.of(
 					LocalDate.of(2023, 11, 6), LocalDate.of(2023, 11, 3)),
 				"individual"));
@@ -870,7 +942,7 @@ public class ReportDogTest
 			1,
 			_reportDog.getCSVReportCount(
 				"https://www.beryl.com/delivery", "page", 1L,
-				"test3@liferay.com",
+				"test3@liferay.com", null,
 				TimeRange.of(
 					LocalDate.of(2023, 11, 6), LocalDate.of(2023, 11, 3)),
 				"individual"));
@@ -884,7 +956,7 @@ public class ReportDogTest
 		Assertions.assertEquals(
 			1,
 			_reportDog.getCSVReportCount(
-				"https://www.beryl.com/delivery", "page", 1L, "Test 1",
+				"https://www.beryl.com/delivery", "page", 1L, "Test 1", null,
 				TimeRange.of(
 					LocalDate.of(2023, 11, 6), LocalDate.of(2023, 11, 3)),
 				"individual"));
@@ -896,7 +968,7 @@ public class ReportDogTest
 		Assertions.assertEquals(
 			3,
 			_reportDog.getCSVReportCount(
-				null, null, 1L, null,
+				null, null, 1L, null, null,
 				TimeRange.of(
 					LocalDate.of(2023, 11, 6), LocalDate.of(2023, 11, 3)),
 				"journal"));
@@ -910,7 +982,7 @@ public class ReportDogTest
 		Assertions.assertEquals(
 			1,
 			_reportDog.getCSVReportCount(
-				null, null, 1L, "Journal 3",
+				null, null, 1L, "Journal 3", null,
 				TimeRange.of(
 					LocalDate.of(2023, 11, 6), LocalDate.of(2023, 11, 3)),
 				"journal"));
@@ -924,7 +996,7 @@ public class ReportDogTest
 		Assertions.assertEquals(
 			3,
 			_reportDog.getCSVReportCount(
-				null, null, 1L, null,
+				null, null, 1L, null, null,
 				TimeRange.of(
 					LocalDate.of(2023, 11, 6), LocalDate.of(2023, 11, 3)),
 				"journal"));
@@ -936,7 +1008,7 @@ public class ReportDogTest
 		Assertions.assertEquals(
 			2,
 			_reportDog.getCSVReportCount(
-				null, null, 1L, null,
+				null, null, 1L, null, null,
 				TimeRange.of(
 					LocalDate.of(2023, 11, 6), LocalDate.of(2023, 11, 3)),
 				"page"));
@@ -950,7 +1022,7 @@ public class ReportDogTest
 		Assertions.assertEquals(
 			1,
 			_reportDog.getCSVReportCount(
-				null, null, 1L, "Liferay",
+				null, null, 1L, "Liferay", null,
 				TimeRange.of(
 					LocalDate.of(2023, 11, 6), LocalDate.of(2023, 11, 3)),
 				"page"));
@@ -964,7 +1036,7 @@ public class ReportDogTest
 		Assertions.assertEquals(
 			2,
 			_reportDog.getCSVReportCount(
-				null, null, 1L, null,
+				null, null, 1L, null, null,
 				TimeRange.of(
 					LocalDate.of(2023, 11, 6), LocalDate.of(2023, 11, 3)),
 				"page"));
@@ -976,7 +1048,7 @@ public class ReportDogTest
 		Assertions.assertEquals(
 			4,
 			_reportDog.getCSVReportCount(
-				null, null, 1L, null, null, "individual"));
+				null, null, 1L, null, null, null, "individual"));
 	}
 
 	@BQSQLResource(resourcePath = "test_report_dog.sql")
@@ -987,7 +1059,7 @@ public class ReportDogTest
 		Assertions.assertEquals(
 			1,
 			_reportDog.getCSVReportCount(
-				null, null, 1L, "test2@liferay.com", null, "individual"));
+				null, null, 1L, "test2@liferay.com", null, null, "individual"));
 	}
 
 	@BQSQLResource(resourcePath = "test_report_dog.sql")
@@ -998,7 +1070,7 @@ public class ReportDogTest
 		Assertions.assertEquals(
 			1,
 			_reportDog.getCSVReportCount(
-				null, null, 1L, "Test 3", null, "individual"));
+				null, null, 1L, "Test 3", null, null, "individual"));
 	}
 
 	@BQSQLResource(resourcePath = "test_report_dog.sql")
@@ -1009,7 +1081,7 @@ public class ReportDogTest
 		Assertions.assertEquals(
 			4,
 			_reportDog.getCSVReportCount(
-				null, null, 1L, null, null, "individual"));
+				null, null, 1L, null, null, null, "individual"));
 	}
 
 	@BQSQLResource(resourcePath = "test_report_dog.sql")
@@ -1021,7 +1093,7 @@ public class ReportDogTest
 
 		try (InputStream inputStream = new FileInputStream(
 				_reportDog.getCSVReport(
-					null, null, 1L, null, null, null, "individual"))) {
+					null, null, 1L, null, null, null, null, "individual"))) {
 
 			Assertions.assertTrue(
 				IOUtils.contentEquals(
@@ -1041,7 +1113,7 @@ public class ReportDogTest
 
 		try (InputStream inputStream = new FileInputStream(
 				_reportDog.getCSVReport(
-					null, null, 1L, "test2@liferay.com", null, null,
+					null, null, 1L, "test2@liferay.com", null, null, null,
 					"individual"))) {
 
 			Assertions.assertTrue(
@@ -1062,7 +1134,8 @@ public class ReportDogTest
 
 		try (InputStream inputStream = new FileInputStream(
 				_reportDog.getCSVReport(
-					null, null, 1L, "Test 3", null, null, "individual"))) {
+					null, null, 1L, "Test 3", null, null, null,
+					"individual"))) {
 
 			Assertions.assertTrue(
 				IOUtils.contentEquals(
@@ -1080,8 +1153,8 @@ public class ReportDogTest
 
 		try (InputStream inputStream = new FileInputStream(
 				_reportDog.getCSVReport(
-					null, null, 1L, null, new String[] {"jobTitle", "asc"},
-					null, "individual"))) {
+					null, null, 1L, null, null,
+					new String[] {"jobTitle", "asc"}, null, "individual"))) {
 
 			Assertions.assertTrue(
 				IOUtils.contentEquals(
