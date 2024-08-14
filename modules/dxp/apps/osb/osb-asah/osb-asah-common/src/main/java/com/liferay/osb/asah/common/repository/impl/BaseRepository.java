@@ -83,7 +83,7 @@ public abstract class BaseRepository {
 
 			Field<?> field = DSL.field(fieldName);
 
-			SortField<?> sortField;
+			SortField<?> sortField = null;
 
 			if (order.getDirection() == Sort.Direction.ASC) {
 				sortField = field.asc();
