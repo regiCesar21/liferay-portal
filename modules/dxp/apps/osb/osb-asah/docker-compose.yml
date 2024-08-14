@@ -1,12 +1,14 @@
 services:
     bigqueryemulator:
-        command: --project=osbasahdev
+        command: --database=bigquerydata --project=osbasahdev
         container_name: bigqueryemulator
         image: marcellustavares/bigquery-emulator:0.3.1-LIFERAY-PATCH-2
         mem_limit: 2g
         ports:
             - "9050:9050"
             - "9060:9060"
+        volumes:
+            - bigquerydata:/bigquerydata
     dataflowemulator:
         build: ./devtools/dataflow-emulator
         container_name: dataflowemulator
@@ -230,6 +232,8 @@ services:
 version: "2.4"
 volumes:
     backup:
+        driver: local
+    bigquerydata:
         driver: local
     export:
         driver: local
