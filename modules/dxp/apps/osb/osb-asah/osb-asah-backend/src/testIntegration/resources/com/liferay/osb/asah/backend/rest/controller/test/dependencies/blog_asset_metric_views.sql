@@ -1,0 +1,10 @@
+INSERT INTO BlogDaily (assetId, channelId, eventDate, views) VALUES ('e131fabc', 1, TIMESTAMP(DATETIME_TRUNC(timestamp '${now}', HOUR)), 1);
+INSERT INTO BlogDaily (assetId, channelId, eventDate, views) VALUES ('e131fabc', 1, TIMESTAMP(DATETIME_TRUNC(timestamp '${now-1d}', HOUR)), 1);
+INSERT INTO BlogDaily (assetId, channelId, eventDate, views) VALUES ('e131fabc', 1, TIMESTAMP(DATETIME_TRUNC(timestamp '${now-2d}', HOUR)), 1);
+INSERT INTO BlogDaily (assetId, channelId, eventDate, views) VALUES ('e131fabc', 1, TIMESTAMP(DATETIME_TRUNC(timestamp '${now-6d}', HOUR)), 1);
+INSERT INTO BlogDaily (assetId, channelId, eventDate, views) VALUES ('e131fabc', 1, TIMESTAMP(DATETIME_TRUNC(timestamp '${now-8d}', HOUR)), 1);
+INSERT INTO BlogDaily (assetId, channelId, eventDate, views) VALUES ('e131fabc', 1, TIMESTAMP(DATETIME_TRUNC(timestamp '${now-8d}', HOUR)), 1);
+INSERT INTO BlogDaily (assetId, channelId, eventDate, views) VALUES ('e131fabc', 1, TIMESTAMP(DATETIME_TRUNC(timestamp '${now-9d}', HOUR)), 1);
+INSERT INTO BlogDaily (assetId, channelId, eventDate, views) VALUES ('e131fabc', 1, TIMESTAMP(DATETIME_TRUNC(timestamp '${now-12d}', HOUR)), 1);
+INSERT INTO BlogDaily (assetId, channelId, eventDate, views) VALUES ('e131fabc', 1, TIMESTAMP(DATETIME_TRUNC(timestamp '${now-14d}', HOUR)), 1);
+INSERT INTO BlogDaily (assetId, channelId, eventDate, views) VALUES ('e131fabc', 1, TIMESTAMP(DATETIME_TRUNC(timestamp '${now-15d}', HOUR)), 1);
