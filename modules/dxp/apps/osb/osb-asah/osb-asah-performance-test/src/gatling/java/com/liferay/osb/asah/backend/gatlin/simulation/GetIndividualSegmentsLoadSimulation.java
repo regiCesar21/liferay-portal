@@ -1,0 +1,41 @@
+/**
+ * SPDX-FileCopyrightText: (c) 2024 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
+ */
+
+package com.liferay.osb.asah.backend.gatlin.simulation;
+
+import com.liferay.osb.asah.backend.gatlin.simulation.util.SimulationUtil;
+
+import io.gatling.javaapi.core.ChainBuilder;
+import io.gatling.javaapi.core.CoreDsl;
+import io.gatling.javaapi.core.ScenarioBuilder;
+import io.gatling.javaapi.core.Simulation;
+
+/**
+ * @author Ivica Cardic
+ */
+public class GetIndividualSegmentsLoadSimulation extends Simulation {
+
+	protected ChainBuilder getIndividuals = SimulationUtil.get(
+		"Get Individual Segments", "/individual-segments");
+	protected ScenarioBuilder getIndividualsScenario = CoreDsl.scenario(
+		"Get Individual Segments Scenario"
+	).exec(
+		getIndividuals
+	);
+
+	{
+		setUp(
+			getIndividualsScenario.injectOpen(
+				CoreDsl.rampUsers(
+					SimulationUtil.loadRampUsers()
+				).during(
+					SimulationUtil.loadDuring()
+				))
+		).protocols(
+			SimulationUtil.httpProtocol()
+		);
+	}
+
+}
