@@ -13,7 +13,6 @@ import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.impl.VirtualLayout;
 import com.liferay.portal.kernel.portlet.PortletLayoutFinder;
 import com.liferay.portal.kernel.portlet.PortletURLFactoryUtil;
-import com.liferay.portal.kernel.redirect.RedirectURLSettingsUtil;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
@@ -22,13 +21,13 @@ import com.liferay.portal.kernel.service.LayoutLocalServiceUtil;
 import com.liferay.portal.kernel.service.permission.LayoutPermissionUtil;
 import com.liferay.portal.kernel.struts.StrutsAction;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
-import com.liferay.portal.kernel.util.HttpUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
-import com.liferay.portal.kernel.util.HttpComponentsUtil;
+import com.liferay.portal.kernel.util.HttpUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
+import com.liferay.portal.util.PropsValues;
 import com.liferay.sites.kernel.util.SitesUtil;
 
 import javax.portlet.PortletMode;
@@ -117,8 +116,8 @@ public abstract class FindStrutsAction implements StrutsAction {
 			String redirect = null;
 
 			if (inheritRedirect) {
-				redirect = HttpComponentsUtil.decodeURL(
-					HttpComponentsUtil.getParameter(
+				redirect = HttpUtil.decodeURL(
+					HttpUtil.getParameter(
 						_getNoSuchEntryRedirect(httpServletRequest), "redirect",
 						false));
 			}
@@ -216,22 +215,19 @@ public abstract class FindStrutsAction implements StrutsAction {
 	private String _getNoSuchEntryRedirect(
 		HttpServletRequest httpServletRequest) {
 
-		long companyId = PortalUtil.getCompanyId(httpServletRequest);
-
-		String securityMode = RedirectURLSettingsUtil.getSecurityMode(
-			companyId);
+		String securityMode = PropsValues.REDIRECT_URL_SECURITY_MODE;
 
 		String noSuchEntryRedirect = ParamUtil.getString(
 			httpServletRequest, "noSuchEntryRedirect");
 
 		if ((securityMode.equals("domain") &&
 			 ArrayUtil.contains(
-				 RedirectURLSettingsUtil.getAllowedDomains(companyId),
-				 HttpComponentsUtil.getDomain(noSuchEntryRedirect))) ||
+				 PropsValues.REDIRECT_URL_DOMAINS_ALLOWED,
+				 HttpUtil.getDomain(noSuchEntryRedirect))) ||
 			(securityMode.equals("ip") &&
 			 ArrayUtil.contains(
-				 RedirectURLSettingsUtil.getAllowedIPs(companyId),
-				 HttpComponentsUtil.getIpAddress(noSuchEntryRedirect)))) {
+				 PropsValues.REDIRECT_URL_IPS_ALLOWED,
+				 HttpUtil.getIpAddress(noSuchEntryRedirect)))) {
 
 			return noSuchEntryRedirect;
 		}
