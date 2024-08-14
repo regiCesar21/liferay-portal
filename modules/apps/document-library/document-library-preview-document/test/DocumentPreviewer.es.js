@@ -41,7 +41,7 @@ describe('document-library-preview-document', () => {
 		const {asFragment} = render(
 			<DocumentPreviewer
 				alt="alt text"
-				baseImageURL="http://localhost/document-images/"
+				baseImageURL="/document-images/"
 				initialPage={1}
 				spritemap="icons.svg"
 				totalPages={10}

@@ -167,7 +167,7 @@ exports[`document-library-preview-document renders a document previewer with ten
 </DocumentFragment>
 `;
 
-exports[`document-library-preview-document renders a document previewer with nineteen pages and the fifth page rendered 1`] = `
+exports[`document-library-preview-document renders a document previewer with alt attribute 1`] = `
 <DocumentFragment>
   <div
     class="preview-file"
@@ -178,7 +178,7 @@ exports[`document-library-preview-document renders a document previewer with nin
       <img
         alt="alt text"
         class="preview-file-document preview-file-document-fit"
-        src="/document-images/5"
+        src="/document-images/1"
       />
     </div>
     <div
@@ -197,11 +197,12 @@ exports[`document-library-preview-document renders a document previewer with nin
             title="click-to-jump-to-a-page"
             type="button"
           >
-            page 5 / 19
+            page 1 / 10
           </button>
         </div>
         <button
           class="btn-floating-bar btn btn-monospaced btn-primary"
+          disabled=""
           title="page-above"
           type="button"
         >
