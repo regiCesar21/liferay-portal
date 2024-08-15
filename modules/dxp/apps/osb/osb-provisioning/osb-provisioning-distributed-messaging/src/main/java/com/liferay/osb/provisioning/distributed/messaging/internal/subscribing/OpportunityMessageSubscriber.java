@@ -1824,8 +1824,6 @@ public class OpportunityMessageSubscriber extends BaseMessageSubscriber {
 			return contacts;
 		}
 
-		String soldBy = jsonObject.getString("opportunitySoldBy");
-
 		for (int i = 0; i < contactsJSONArray.length(); i++) {
 			JSONObject contactJSONObject = contactsJSONArray.getJSONObject(i);
 
@@ -1843,16 +1841,11 @@ public class OpportunityMessageSubscriber extends BaseMessageSubscriber {
 			contact.setEmailAddress(contactEmailAddress);
 			contact.setLanguageId(languageId);
 
-			String contactRoleName = null;
+			String contactRoleName = ContactRoleConstants.NAME_SUPPORT_USER;
 
-			if (customerPortal2Account && !soldBy.equals("Liferay India") &&
-				!soldBy.equals("Liferay Singapore")) {
-
+			if (customerPortal2Account) {
 				contactRoleName =
 					ContactRoleConstants.NAME_SUPPORT_ADMINISTRATOR;
-			}
-			else {
-				contactRoleName = ContactRoleConstants.NAME_SUPPORT_USER;
 			}
 
 			ContactRole contactRole = _contactRoleWebService.fetchContactRole(
