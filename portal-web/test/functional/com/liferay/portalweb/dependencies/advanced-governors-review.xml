@@ -10,7 +10,16 @@
 	<version>1</version>
 	<fork>
 		<name>Governor's Review</name>
-		<metadata> <![CDATA[{"xy":[189,194]}]]> </metadata>
+		<metadata>
+			<![CDATA[
+				{
+					"xy": [
+						189,
+						194
+					]
+				}
+			]]>
+		</metadata>
 		<transitions>
 			<transition>
 				<name>Board Member Review 1</name>
@@ -36,12 +45,21 @@
 	</fork>
 	<join>
 		<name>Governor's Approval</name>
-		<metadata> <![CDATA[{"xy":[629,193]}]]> </metadata>
+		<metadata>
+			<![CDATA[
+				{
+					"xy": [
+						629,
+						193
+					]
+				}
+			]]>
+		</metadata>
 		<actions>
 			<notification>
 				<name>Report Approval</name>
 				<description></description>
-				<template> <![CDATA[The report you submitted has earned the Board of Governors Approval.]]> </template>
+				<template><![CDATA[The report you submitted has earned the Board of Governors Approval.]]></template>
 				<template-language>text</template-language>
 				<notification-type>user-notification</notification-type>
 				<recipients>
@@ -60,7 +78,16 @@
 	</join>
 	<state>
 		<name>Submitted</name>
-		<metadata> <![CDATA[{"xy":[21,205]}]]> </metadata>
+		<metadata>
+			<![CDATA[
+				{
+					"xy": [
+						21,
+						205
+					]
+				}
+			]]>
+		</metadata>
 		<initial>true</initial>
 		<transitions>
 			<transition>
@@ -72,12 +99,22 @@
 	</state>
 	<state>
 		<name>Published</name>
-		<metadata> <![CDATA[{"terminal":true,"xy":[833,202]}]]> </metadata>
+		<metadata>
+			<![CDATA[
+				{
+					"terminal": true,
+					"xy": [
+						833,
+						202
+					]
+				}
+			]]>
+		</metadata>
 		<actions>
 			<action>
 				<name>Approve</name>
 				<description>Approve</description>
-				<script> <![CDATA[Packages.com.liferay.portal.kernel.workflow.WorkflowStatusManagerUtil.updateStatus(Packages.com.liferay.portal.kernel.workflow.WorkflowConstants.getLabelStatus("approved"), workflowContext);]]> </script>
+				<script><![CDATA[Packages.com.liferay.portal.kernel.workflow.WorkflowStatusManagerUtil.updateStatus(Packages.com.liferay.portal.kernel.workflow.WorkflowConstants.getLabelStatus("approved"), workflowContext);]]></script>
 				<script-language>javascript</script-language>
 				<execution-type>onEntry</execution-type>
 			</action>
@@ -85,12 +122,21 @@
 	</state>
 	<task>
 		<name>Board Member Review 1</name>
-		<metadata> <![CDATA[{"xy":[381,13]}]]> </metadata>
+		<metadata>
+			<![CDATA[
+				{
+					"xy": [
+						381,
+						13
+					]
+				}
+			]]>
+		</metadata>
 		<actions>
 			<notification>
 				<name>Quarterly Financial Review</name>
 				<description></description>
-				<template> <![CDATA[A quarterly report needs your review.]]> </template>
+				<template><![CDATA[A quarterly report needs your review.]]></template>
 				<template-language>text</template-language>
 				<notification-type>user-notification</notification-type>
 				<recipients>
@@ -135,12 +181,21 @@
 	</task>
 	<task>
 		<name>Board Member Review 2</name>
-		<metadata> <![CDATA[{"xy":[380,143]}]]> </metadata>
+		<metadata>
+			<![CDATA[
+				{
+					"xy": [
+						380,
+						143
+					]
+				}
+			]]>
+		</metadata>
 		<actions>
 			<notification>
 				<name>Quarterly Financial Review</name>
 				<description></description>
-				<template> <![CDATA[A quarterly report needs your review.]]> </template>
+				<template><![CDATA[A quarterly report needs your review.]]></template>
 				<template-language>text</template-language>
 				<notification-type>user-notification</notification-type>
 				<recipients>
@@ -185,12 +240,21 @@
 	</task>
 	<task>
 		<name>Board Member Review 3</name>
-		<metadata> <![CDATA[{"xy":[380,282]}]]> </metadata>
+		<metadata>
+			<![CDATA[
+				{
+					"xy": [
+						380,
+						282
+					]
+				}
+			]]>
+		</metadata>
 		<actions>
 			<notification>
 				<name>Quarterly Financial Review</name>
 				<description></description>
-				<template> <![CDATA[A quarterly report needs your review.]]> </template>
+				<template><![CDATA[A quarterly report needs your review.]]></template>
 				<template-language>text</template-language>
 				<notification-type>user-notification</notification-type>
 				<recipients>
@@ -235,12 +299,21 @@
 	</task>
 	<task>
 		<name>Board Member Review 4</name>
-		<metadata> <![CDATA[{"xy":[381,420]}]]> </metadata>
+		<metadata>
+			<![CDATA[
+				{
+					"xy": [
+						381,
+						420
+					]
+				}
+			]]>
+		</metadata>
 		<actions>
 			<notification>
 				<name>Quarterly Financial Review</name>
 				<description></description>
-				<template> <![CDATA[A quarterly report needs your review.]]> </template>
+				<template><![CDATA[A quarterly report needs your review.]]></template>
 				<template-language>text</template-language>
 				<notification-type>user-notification</notification-type>
 				<recipients>
