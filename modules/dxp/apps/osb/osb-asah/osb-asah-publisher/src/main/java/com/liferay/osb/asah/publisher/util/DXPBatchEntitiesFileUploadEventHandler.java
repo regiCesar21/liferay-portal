@@ -39,6 +39,13 @@ public class DXPBatchEntitiesFileUploadEventHandler {
 			DXPBatchEntitiesFileUploadEvent dxpBatchEntitiesFileUploadEvent)
 		throws Exception {
 
+		String uploadDate = DateUtil.newDateString();
+
+		String fileSuffix = StringUtils.replace(
+			dxpBatchEntitiesFileUploadEvent.getContentEncoding(), "gzip", "gz");
+
+		String fileName = uploadDate + "." + fileSuffix;
+
 		if (_environment.acceptsProfiles(Profiles.of("prod"))) {
 			String bucketName =
 				_googleCloudConfiguration.getDXPEntitiesBucketName();
@@ -47,14 +54,6 @@ public class DXPBatchEntitiesFileUploadEventHandler {
 				"%s/%s/%s", dxpBatchEntitiesFileUploadEvent.getDataSourceId(),
 				dxpBatchEntitiesFileUploadEvent.getResourceName(),
 				dxpBatchEntitiesFileUploadEvent.getUploadType());
-
-			String uploadDate = DateUtil.newDateString();
-
-			String fileSuffix = StringUtils.replace(
-				dxpBatchEntitiesFileUploadEvent.getContentEncoding(), "gzip",
-				"gz");
-
-			String fileName = uploadDate + "." + fileSuffix;
 
 			_googleStorage.archiveSync(
 				bucketName, folderName,
@@ -98,7 +97,7 @@ public class DXPBatchEntitiesFileUploadEventHandler {
 			}
 		}
 		else {
-			_storeFileSystem(dxpBatchEntitiesFileUploadEvent);
+			_storeFileSystem(dxpBatchEntitiesFileUploadEvent, fileName);
 		}
 	}
 
@@ -111,18 +110,18 @@ public class DXPBatchEntitiesFileUploadEventHandler {
 	}
 
 	private void _storeFileSystem(
-			DXPBatchEntitiesFileUploadEvent dxpBatchEntitiesFileUploadEvent)
+			DXPBatchEntitiesFileUploadEvent dxpBatchEntitiesFileUploadEvent,
+			String uploadFileName)
 		throws Exception {
 
 		String path = _getValidatedUploadPath(
 			String.format(
-				"%s/%s/%s/%s/%s/%s.%s", _dxpBatchEntitiesStoragePath,
+				"%s/%s/%s/%s/%s/%s", _dxpBatchEntitiesStoragePath,
 				ProjectIdThreadLocal.getProjectId(),
 				dxpBatchEntitiesFileUploadEvent.getDataSourceId(),
 				dxpBatchEntitiesFileUploadEvent.getResourceName(),
 				dxpBatchEntitiesFileUploadEvent.getUploadType(),
-				DateUtil.newDateString(),
-				dxpBatchEntitiesFileUploadEvent.getContentEncoding()));
+				uploadFileName));
 
 		File targetFile = new File(path);
 
