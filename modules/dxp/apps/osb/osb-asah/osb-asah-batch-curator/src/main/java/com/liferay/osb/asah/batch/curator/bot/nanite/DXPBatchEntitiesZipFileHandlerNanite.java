@@ -43,7 +43,7 @@ public class DXPBatchEntitiesZipFileHandlerNanite extends BaseNanite {
 		String uploadDate = contextJSONObject.getString("uploadDate");
 
 		File zipTmpFile = _readFile(
-			bucketName, bucketFolder, uploadDate, "zip");
+			bucketName, bucketFolder, uploadDate, ".zip");
 
 		File gzipTmpFile = _convertZipToGzip(uploadDate, zipTmpFile);
 
@@ -105,7 +105,7 @@ public class DXPBatchEntitiesZipFileHandlerNanite extends BaseNanite {
 		if (_log.isDebugEnabled()) {
 			_log.debug(
 				String.format(
-					"Reading file gs://%s/%s/%s/%s.%s", bucket,
+					"Reading file gs://%s/%s/%s/%s%s", bucket,
 					ProjectIdThreadLocal.getProjectId(), bucketFolder,
 					filePrefix, fileSuffix));
 		}

@@ -95,8 +95,7 @@ public class GoogleStorageImpl implements GoogleStorage {
 
 		BlobId blobId = BlobId.of(
 			bucket,
-			_getBlobName(
-				bucketFolder, filePrefix + "." + fileSuffix, projectId));
+			_getBlobName(bucketFolder, filePrefix + fileSuffix, projectId));
 
 		Blob blob = _storage.get(blobId);
 
