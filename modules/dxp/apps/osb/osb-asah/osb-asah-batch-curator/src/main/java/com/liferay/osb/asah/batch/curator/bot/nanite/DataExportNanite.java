@@ -130,7 +130,8 @@ public class DataExportNanite extends BaseNanite {
 
 		_googleStorage.archiveSync(
 			_googleCloudConfiguration.getExportBucketName(), null, tmpFile,
-			tmpFile.getName(), ProjectIdThreadLocal.getProjectId());
+			dataExportTask.getId() + ".zip",
+			ProjectIdThreadLocal.getProjectId());
 	}
 
 	private void _runDataExportTask(DataExportTask dataExportTask) {
@@ -168,7 +169,8 @@ public class DataExportNanite extends BaseNanite {
 
 		_googleStorage.archiveSync(
 			_googleCloudConfiguration.getExportBucketName(), null, tmpFile,
-			tmpFile.getName(), ProjectIdThreadLocal.getProjectId());
+			dataExportTask.getId() + ".zip",
+			ProjectIdThreadLocal.getProjectId());
 	}
 
 	private static final Log _log = LogFactory.getLog(DataExportNanite.class);

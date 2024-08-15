@@ -336,7 +336,8 @@ public class DataControlTaskDog {
 
 		_googleStorage.archiveSync(
 			_googleCloudConfiguration.getExportBucketName(), null, tmpFile,
-			tmpFile.getName(), ProjectIdThreadLocal.getProjectId());
+			dataControlTask.getId() + ".zip",
+			ProjectIdThreadLocal.getProjectId());
 
 		return true;
 	}

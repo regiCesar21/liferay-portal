@@ -128,7 +128,8 @@ public class DataControlNanite extends BaseNanite {
 
 		_googleStorage.archiveSync(
 			_googleCloudConfiguration.getExportBucketName(), null, file,
-			file.getName(), ProjectIdThreadLocal.getProjectId());
+			dataControlTask.getId() + ".zip",
+			ProjectIdThreadLocal.getProjectId());
 	}
 
 	private void _runDataControlTask(DataControlTask dataControlTask) {
