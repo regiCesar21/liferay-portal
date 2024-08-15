@@ -39,10 +39,12 @@ public class DXPBatchEntitiesFileUploadEventHandler {
 			DXPBatchEntitiesFileUploadEvent dxpBatchEntitiesFileUploadEvent)
 		throws Exception {
 
+		String uploadDateString = DateUtil.newDateString();
+
 		String fileSuffix = StringUtils.replace(
 			dxpBatchEntitiesFileUploadEvent.getContentEncoding(), "gzip", "gz");
 
-		String fileName = DateUtil.newDateString() + "." + fileSuffix;
+		String fileName = uploadDateString + "." + fileSuffix;
 
 		if (_environment.acceptsProfiles(Profiles.of("prod"))) {
 			String bucketName =
@@ -78,7 +80,7 @@ public class DXPBatchEntitiesFileUploadEventHandler {
 						"resourceName",
 						dxpBatchEntitiesFileUploadEvent.getResourceName()
 					).put(
-						"uploadDate", uploadDate
+						"uploadDate", uploadDateString
 					).put(
 						"uploadType",
 						dxpBatchEntitiesFileUploadEvent.getUploadType()
@@ -90,7 +92,7 @@ public class DXPBatchEntitiesFileUploadEventHandler {
 					dxpBatchEntitiesFileUploadEvent.getResourceName(),
 					folderName, bucketName,
 					dxpBatchEntitiesFileUploadEvent.getContentEncoding(),
-					uploadDate,
+					uploadDateString,
 					dxpBatchEntitiesFileUploadEvent.getUploadType());
 			}
 		}
