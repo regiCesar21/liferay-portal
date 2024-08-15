@@ -5,6 +5,7 @@
 
 package com.liferay.osb.asah.batch.curator.bot.nanite;
 
+import com.liferay.osb.asah.common.composer.ComposerDXPIngestionDAGTrigger;
 import com.liferay.osb.asah.common.configuration.GoogleCloudConfiguration;
 import com.liferay.osb.asah.common.date.DateUtil;
 import com.liferay.osb.asah.common.dog.DXPEntityDog;
@@ -29,8 +30,7 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
-import java.util.zip.ZipEntry;
-import java.util.zip.ZipOutputStream;
+import java.util.zip.GZIPOutputStream;
 
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.FilenameUtils;
@@ -91,36 +91,37 @@ public class DXPEntitiesNanite extends BaseNanite {
 					ProjectIdThreadLocal.getProjectId(),
 					DateUtil.toUTCString(currentDate)));
 
-			File file = File.createTempFile(fileName, ".zip");
+			File file = File.createTempFile(fileName, ".gz");
 
-			ZipOutputStream zipOutputStream = _getZipOutputStream(file);
+			GZIPOutputStream gzipOutputStream = new GZIPOutputStream(
+				new FileOutputStream(file, true));
 
 			_run(
 				currentDate, dataSourceId, lastSuccessfulDate,
-				DXPEntity.Type.ANALYTICS_DELETE_MESSAGE, zipOutputStream);
+				DXPEntity.Type.ANALYTICS_DELETE_MESSAGE, gzipOutputStream);
 			_run(
 				currentDate, dataSourceId, lastSuccessfulDate,
-				DXPEntity.Type.EXPANDO_COLUMN, zipOutputStream);
+				DXPEntity.Type.EXPANDO_COLUMN, gzipOutputStream);
 			_run(
 				currentDate, dataSourceId, lastSuccessfulDate,
-				DXPEntity.Type.GROUP, zipOutputStream);
+				DXPEntity.Type.GROUP, gzipOutputStream);
 			_run(
 				currentDate, dataSourceId, lastSuccessfulDate,
-				DXPEntity.Type.ORGANIZATION, zipOutputStream);
+				DXPEntity.Type.ORGANIZATION, gzipOutputStream);
 			_run(
 				currentDate, dataSourceId, lastSuccessfulDate,
-				DXPEntity.Type.ROLE, zipOutputStream);
+				DXPEntity.Type.ROLE, gzipOutputStream);
 			_run(
 				currentDate, dataSourceId, lastSuccessfulDate,
-				DXPEntity.Type.TEAM, zipOutputStream);
+				DXPEntity.Type.TEAM, gzipOutputStream);
 			_run(
 				currentDate, dataSourceId, lastSuccessfulDate,
-				DXPEntity.Type.USER, zipOutputStream);
+				DXPEntity.Type.USER, gzipOutputStream);
 			_run(
 				currentDate, dataSourceId, lastSuccessfulDate,
-				DXPEntity.Type.USER_GROUP, zipOutputStream);
+				DXPEntity.Type.USER_GROUP, gzipOutputStream);
 
-			zipOutputStream.close();
+			gzipOutputStream.close();
 
 			if (file.length() == _EMPTY_ZIP_FILE_LENGTH) {
 				boolean deleted = file.delete();
@@ -285,18 +286,6 @@ public class DXPEntitiesNanite extends BaseNanite {
 		return path;
 	}
 
-	private ZipOutputStream _getZipOutputStream(File file) throws Exception {
-		FileOutputStream fileOutputStream = new FileOutputStream(file, true);
-
-		ZipOutputStream zipOutputStream = new ZipOutputStream(fileOutputStream);
-
-		ZipEntry zipEntry = new ZipEntry("export.jsonl");
-
-		zipOutputStream.putNextEntry(zipEntry);
-
-		return zipOutputStream;
-	}
-
 	private void _move(
 			String currentDateString, Long dataSourceId, File file,
 			String uploadType)
@@ -306,12 +295,18 @@ public class DXPEntitiesNanite extends BaseNanite {
 			String folderName = String.format(
 				"%s/%s/%s", dataSourceId, _CLASS_NAME_DXP_ENTITY, uploadType);
 
-			String fileName = currentDateString + ".zip";
+			String fileName = currentDateString + ".gz";
 
 			_googleStorage.archiveSync(
 				_googleCloudConfiguration.getDXPEntitiesBucketName(),
 				folderName, file, fileName,
 				ProjectIdThreadLocal.getProjectId());
+
+			_composerDXPIngestionDAGTrigger.trigger(
+				String.valueOf(dataSourceId), _CLASS_NAME_DXP_ENTITY,
+				folderName,
+				_googleCloudConfiguration.getDXPEntitiesBucketName(), "gzip",
+				currentDateString, uploadType);
 		}
 		else {
 			_moveFileSystem(currentDateString, dataSourceId, file, uploadType);
@@ -325,7 +320,7 @@ public class DXPEntitiesNanite extends BaseNanite {
 
 		String targetPath = _getValidatedPath(
 			String.format(
-				"%s/%s/%s/%s/%s/%s.zip", _dxpBatchEntitiesStoragePath,
+				"%s/%s/%s/%s/%s/%s.gz", _dxpBatchEntitiesStoragePath,
 				ProjectIdThreadLocal.getProjectId(), dataSourceId,
 				_CLASS_NAME_DXP_ENTITY, uploadType, currentDateString));
 
@@ -338,7 +333,7 @@ public class DXPEntitiesNanite extends BaseNanite {
 
 	private void _run(
 			Date currentDate, Long dataSourceId, Date lastSuccessfulDate,
-			DXPEntity.Type type, ZipOutputStream zipOutputStream)
+			DXPEntity.Type type, GZIPOutputStream gzipOutputStream)
 		throws Exception {
 
 		int page = 0;
@@ -357,7 +352,7 @@ public class DXPEntitiesNanite extends BaseNanite {
 					continue;
 				}
 
-				_write(_toJSON(dxpEntity), zipOutputStream);
+				_write(_toJSON(dxpEntity), gzipOutputStream);
 			}
 		}
 	}
@@ -378,12 +373,12 @@ public class DXPEntitiesNanite extends BaseNanite {
 		).toString();
 	}
 
-	private void _write(String data, ZipOutputStream zipOutputStream)
+	private void _write(String data, GZIPOutputStream gzipOutputStream)
 		throws Exception {
 
 		String newLineAppendedData = data + System.lineSeparator();
 
-		zipOutputStream.write(
+		gzipOutputStream.write(
 			newLineAppendedData.getBytes(StandardCharsets.UTF_8));
 	}
 
@@ -393,6 +388,9 @@ public class DXPEntitiesNanite extends BaseNanite {
 	private static final long _EMPTY_ZIP_FILE_LENGTH = 140;
 
 	private static final Log _log = LogFactory.getLog(DXPEntitiesNanite.class);
+
+	@Autowired
+	private ComposerDXPIngestionDAGTrigger _composerDXPIngestionDAGTrigger;
 
 	@Autowired
 	private DataSourceDog _dataSourceDog;
