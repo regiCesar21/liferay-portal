@@ -39,12 +39,10 @@ public class DXPBatchEntitiesFileUploadEventHandler {
 			DXPBatchEntitiesFileUploadEvent dxpBatchEntitiesFileUploadEvent)
 		throws Exception {
 
-		String uploadDate = DateUtil.newDateString();
-
 		String fileSuffix = StringUtils.replace(
 			dxpBatchEntitiesFileUploadEvent.getContentEncoding(), "gzip", "gz");
 
-		String fileName = uploadDate + "." + fileSuffix;
+		String fileName = DateUtil.newDateString() + "." + fileSuffix;
 
 		if (_environment.acceptsProfiles(Profiles.of("prod"))) {
 			String bucketName =
