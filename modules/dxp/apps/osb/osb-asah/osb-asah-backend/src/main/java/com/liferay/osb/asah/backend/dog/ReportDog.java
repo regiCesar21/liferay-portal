@@ -87,7 +87,7 @@ public class ReportDog {
 
 	public File getCSVReport(
 			@Nullable String assetId, @Nullable String assetType,
-			Long channelId, @Nullable String query, String individualId,
+			Long channelId, String individualId, @Nullable String query,
 			@Nullable String[] sorts, @Nullable TimeRange timeRange,
 			String type)
 		throws Exception {
@@ -116,7 +116,7 @@ public class ReportDog {
 		}
 		else if (StringUtils.equals(type, "event")) {
 			rows = _getEventRows(
-				channelId, query, individualId, sorts, timeRange);
+				channelId, individualId, query, sorts, timeRange);
 		}
 		else if (StringUtils.equals(type, "form")) {
 			rows = _getAssetFormRows(
@@ -178,7 +178,7 @@ public class ReportDog {
 
 	public Long getCSVReportCount(
 		@Nullable String assetId, @Nullable String assetType, Long channelId,
-		@Nullable String query, String individualId,
+		String individualId, @Nullable String query,
 		@Nullable TimeRange timeRange, String type) {
 
 		if (StringUtils.equals(type, "blog") ||
@@ -469,7 +469,7 @@ public class ReportDog {
 	}
 
 	private List<String[]> _getEventRows(
-		Long channelId, String keywords, String individualId, String[] sorts,
+		Long channelId, String individualId, String keywords, String[] sorts,
 		TimeRange timeRange) {
 
 		List<String[]> rows = new ArrayList<>();
