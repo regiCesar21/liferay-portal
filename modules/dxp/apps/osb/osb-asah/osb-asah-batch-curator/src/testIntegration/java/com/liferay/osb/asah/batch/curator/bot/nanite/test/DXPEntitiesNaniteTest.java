@@ -17,7 +17,6 @@ import com.liferay.osb.asah.test.util.configuration.JDBCTestConfiguration;
 
 import java.io.BufferedReader;
 import java.io.File;
-import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
 
@@ -32,7 +31,7 @@ import java.nio.file.attribute.BasicFileAttributes;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
-import java.util.zip.ZipInputStream;
+import java.util.zip.GZIPInputStream;
 
 import org.apache.commons.lang3.StringUtils;
 
@@ -136,15 +135,13 @@ public class DXPEntitiesNaniteTest
 
 					File file = path.toFile();
 
-					if (StringUtils.contains(file.getName(), ".zip")) {
-						ZipInputStream zipInputStream = new ZipInputStream(
-							new FileInputStream(file));
-
-						zipInputStream.getNextEntry();
+					if (StringUtils.contains(file.getName(), ".gz")) {
+						GZIPInputStream gzipInputStream = new GZIPInputStream(
+							Files.newInputStream(file.toPath()));
 
 						try (BufferedReader bufferedReader = new BufferedReader(
 								new InputStreamReader(
-									zipInputStream, StandardCharsets.UTF_8))) {
+									gzipInputStream, StandardCharsets.UTF_8))) {
 
 							lines.add(bufferedReader.readLine());
 						}
