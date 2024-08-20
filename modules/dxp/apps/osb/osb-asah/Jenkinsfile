@@ -94,6 +94,18 @@ pipeline {
 					}
 				}
 
+                dir('osb-asah-performance-test') {
+                    script {
+                        withDockerRegistry([credentialsId: "dockerhub", url: ""]) {
+                            osbAsahPerformanceTestImage = docker.build(
+                                "${IMAGE_NAME}:osb-asah-performance-test-${IMAGE_TAG_SUFFIX}",
+                                "${DOCKER_BUILD_ARGS}")
+
+                            osbAsahPerformanceTestImage.push()
+                        }
+                    }
+                }
+
 				dir('osb-asah-publisher') {
 					script {
 						withDockerRegistry([credentialsId: "dockerhub", url: ""]) {
