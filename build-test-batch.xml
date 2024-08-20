@@ -2552,18 +2552,14 @@ log.sanitizer.enabled=false</echo>
 
 							<lstopwatch action="start" name="test.execution.duration" />
 
-							<for list="${test.class.group}" param="test.class">
-								<sequential>
-									<run-modules-junit-test test.class="@{test.class}" test.task="testIntegration">
-										<arg value="--continue" />
-										<arg value="-Dapp.server.start.executable.arg.line=${test.batch.app.server.start.executable.arg.line}" />
-										<arg value="-Ddatabase.type=@{database.type}" />
-										<arg value="-Dbuild.exclude.ant.plugin=true" />
-										<arg value="-Dbuild.exclude.dirs=dxp/apps/osb" />
-										<arg value="-Dtest.class.group.index=${axis.variable}" />
-									</run-modules-junit-test>
-								</sequential>
-							</for>
+							<run-modules-junit-test test.class.group="${test.class.group}" test.task="testIntegration">
+								<arg value="--continue" />
+								<arg value="-Dapp.server.start.executable.arg.line=${test.batch.app.server.start.executable.arg.line}" />
+								<arg value="-Ddatabase.type=@{database.type}" />
+								<arg value="-Dbuild.exclude.ant.plugin=true" />
+								<arg value="-Dbuild.exclude.dirs=dxp/apps/osb" />
+								<arg value="-Dtest.class.group.index=${axis.variable}" />
+							</run-modules-junit-test>
 
 							<lstopwatch action="total" name="test.execution.duration" />
 
@@ -5318,18 +5314,14 @@ log.sanitizer.enabled=false</echo>
 
 				<lstopwatch action="start" name="test.execution.duration" />
 
-				<for list="${test.class.group}" param="test.class">
-					<sequential>
-						<run-modules-junit-test test.class="@{test.class}" test.task="test">
-							<arg value="--continue" />
-							<arg value="-Dbuild.exclude.ant.plugin=true" />
-							<arg value="-Dbuild.exclude.dirs=dxp/apps/osb" />
-							<arg if:set="com.liferay.portal.search.solr.test.unit.started" value="-Dcom.liferay.portal.search.solr.test.unit.started=${com.liferay.portal.search.solr.test.unit.started}" />
-							<arg value="-Djunit.code.coverage=${test.batch.code.coverage}" />
-							<arg value="-Dtest.class.group.index=${axis.variable}" />
-						</run-modules-junit-test>
-					</sequential>
-				</for>
+				<run-modules-junit-test test.class.group="${test.class.group}" test.task="test">
+					<arg value="--continue" />
+					<arg value="-Dbuild.exclude.ant.plugin=true" />
+					<arg value="-Dbuild.exclude.dirs=dxp/apps/osb" />
+					<arg if:set="com.liferay.portal.search.solr.test.unit.started" value="-Dcom.liferay.portal.search.solr.test.unit.started=${com.liferay.portal.search.solr.test.unit.started}" />
+					<arg value="-Djunit.code.coverage=${test.batch.code.coverage}" />
+					<arg value="-Dtest.class.group.index=${axis.variable}" />
+				</run-modules-junit-test>
 
 				<lstopwatch action="total" name="test.execution.duration" />
 			</test-action>
