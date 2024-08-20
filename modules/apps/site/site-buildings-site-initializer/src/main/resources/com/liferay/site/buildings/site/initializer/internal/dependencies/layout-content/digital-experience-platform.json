@@ -10,7 +10,7 @@
 					"columnId": "0",
 					"fragmentEntries": [
 						{
-							"editableValues": "{\"com.liferay.fragment.entry.processor.editable.EditableFragmentEntryProcessor\":{\"01-logo\":{\"defaultValue\":\"data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAnSURBVHgB7cwxEQAACAOxgn8fHB7wBiK6MHwEJKpnZUiZCAgIvgQHmksDKxJ1SeoAAAAASUVORK5CYII=\",\"en_US\":\"$liferay_logo.png$\",\"config\":{\"imageLink\":\"/web/guest/home\",\"imageSource\":\"$liferay_logo.png$\"},\"segments-experience-id-0\":{\"en_US\":\"$liferay_logo.png$\"}},\"03-link\":{\"defaultValue\":\"Sign In\",\"config\":{\"href\":\"#\"}}}}",
+							"editableValues": "{\"com.liferay.fragment.entry.processor.editable.EditableFragmentEntryProcessor\": {\"01-logo\": {\"config\": {\"imageLink\": \"/web/guest/home\", \"imageSource\": \"$liferay_logo.png$\"}, \"defaultValue\": \"data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAnSURBVHgB7cwxEQAACAOxgn8fHB7wBiK6MHwEJKpnZUiZCAgIvgQHmksDKxJ1SeoAAAAASUVORK5CYII=\", \"en_US\": \"$liferay_logo.png$\", \"segments-experience-id-0\": {\"en_US\": \"$liferay_logo.png$\"}}, \"03-link\": {\"config\": {\"href\": \"#\"}, \"defaultValue\": \"Sign In\"}}}",
 							"fragmentEntryKey": "BASIC_SECTION-header-light"
 						}
 					],
@@ -31,7 +31,7 @@
 					"columnId": "5",
 					"fragmentEntries": [
 						{
-							"editableValues": "{\"com.liferay.fragment.entry.processor.editable.EditableFragmentEntryProcessor\":{}}",
+							"editableValues": "{\"com.liferay.fragment.entry.processor.editable.EditableFragmentEntryProcessor\": {}}",
 							"fragmentEntryKey": "BASIC_COMPONENT-spacer-8x"
 						},
 						{
@@ -39,15 +39,15 @@
 							"fragmentEntryKey": "BASIC_COMPONENT-paragraph"
 						},
 						{
-							"editableValues": "{\"com.liferay.fragment.entry.processor.editable.EditableFragmentEntryProcessor\":{\"element-text\":{\"defaultValue\":\"\\n\\t\\t\\tHeading Example\\n\\t\\t\",\"config\":{},\"segments-experience-id-0\":{\"en_US\":\"Deliver personalized experiences for the entire customer journey.\"}}}}",
+							"editableValues": "{\"com.liferay.fragment.entry.processor.editable.EditableFragmentEntryProcessor\": {\"element-text\": {\"config\": {}, \"defaultValue\": \"\\n\\t\\t\\tHeading Example\\n\\t\\t\", \"segments-experience-id-0\": {\"en_US\": \"Deliver personalized experiences for the entire customer journey.\"}}}}",
 							"fragmentEntryKey": "BASIC_COMPONENT-heading-1"
 						},
 						{
-							"editableValues": "{\"com.liferay.fragment.entry.processor.editable.EditableFragmentEntryProcessor\":{}}",
+							"editableValues": "{\"com.liferay.fragment.entry.processor.editable.EditableFragmentEntryProcessor\": {}}",
 							"fragmentEntryKey": "BASIC_COMPONENT-spacer-2x"
 						},
 						{
-							"editableValues": "{\"com.liferay.fragment.entry.processor.editable.EditableFragmentEntryProcessor\":{\"link\":{\"segments-experience-id-0\":{\"en_US\":\"Request a Free Demo\"},\"defaultValue\":\"Go Somewhere\",\"config\":{\"href\":\"#\"}}}}",
+							"editableValues": "{\"com.liferay.fragment.entry.processor.editable.EditableFragmentEntryProcessor\": {\"link\": {\"config\": {\"href\": \"#\"}, \"defaultValue\": \"Go Somewhere\", \"segments-experience-id-0\": {\"en_US\": \"Request a Free Demo\"}}}}",
 							"fragmentEntryKey": "BASIC_COMPONENT-primary-button"
 						}
 					],
@@ -57,7 +57,7 @@
 					"columnId": "6",
 					"fragmentEntries": [
 						{
-							"editableValues": "{\"com.liferay.fragment.entry.processor.editable.EditableFragmentEntryProcessor\":{\"image-square\":{\"segments-experience-id-0\":{\"en_US\":\"$ex.png$\"},\"defaultValue\":\"data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAJCAYAAAA7KqwyAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAkSURBVHgB7cxBEQAACAIwtH8Pzw52kxD8OBZgNXsPQUOUwCIgAz0DHTyygaAAAAAASUVORK5CYII=\",\"config\":{\"imageSource\":\"$ex.png$\"}}}}",
+							"editableValues": "{\"com.liferay.fragment.entry.processor.editable.EditableFragmentEntryProcessor\": {\"image-square\": {\"config\": {\"imageSource\": \"$ex.png$\"}, \"defaultValue\": \"data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAJCAYAAAA7KqwyAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAkSURBVHgB7cxBEQAACAIwtH8Pzw52kxD8OBZgNXsPQUOUwCIgAz0DHTyygaAAAAAASUVORK5CYII=\", \"segments-experience-id-0\": {\"en_US\": \"$ex.png$\"}}}}",
 							"fragmentEntryKey": "BASIC_COMPONENT-image"
 						}
 					],
@@ -79,7 +79,7 @@
 					"columnId": "38",
 					"fragmentEntries": [
 						{
-							"editableValues": "{\"com.liferay.fragment.entry.processor.editable.EditableFragmentEntryProcessor\":{\"01-logo\":{\"defaultValue\":\"data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAnSURBVHgB7cwxEQAACAOxgn8fHB7wBiK6MHwEJKpnZUiZCAgIvgQHmksDKxJ1SeoAAAAASUVORK5CYII=\",\"config\":{\"imageSource\":\"$dxp_logo_white.png$\"},\"segments-experience-id-0\":{\"en_US\":\"$dxp_logo_white.png$\"}}}}",
+							"editableValues": "{\"com.liferay.fragment.entry.processor.editable.EditableFragmentEntryProcessor\": {\"01-logo\": {\"config\": {\"imageSource\": \"$dxp_logo_white.png$\"}, \"defaultValue\": \"data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAnSURBVHgB7cwxEQAACAOxgn8fHB7wBiK6MHwEJKpnZUiZCAgIvgQHmksDKxJ1SeoAAAAASUVORK5CYII=\", \"segments-experience-id-0\": {\"en_US\": \"$dxp_logo_white.png$\"}}}}",
 							"fragmentEntryKey": "secondary-header"
 						}
 					],
@@ -100,7 +100,7 @@
 					"columnId": "14",
 					"fragmentEntries": [
 						{
-							"editableValues": "{\"com.liferay.fragment.entry.processor.editable.EditableFragmentEntryProcessor\":{\"image-square\":{\"segments-experience-id-0\":{\"en_US\":\"$connect_experiences_illustration.png$\"},\"defaultValue\":\"data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAJCAYAAAA7KqwyAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAkSURBVHgB7cxBEQAACAIwtH8Pzw52kxD8OBZgNXsPQUOUwCIgAz0DHTyygaAAAAAASUVORK5CYII=\",\"config\":{\"imageSource\":\"$connect_experiences_illustration.png$\"}}}}",
+							"editableValues": "{\"com.liferay.fragment.entry.processor.editable.EditableFragmentEntryProcessor\": {\"image-square\": {\"config\": {\"imageSource\": \"$connect_experiences_illustration.png$\"}, \"defaultValue\": \"data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAJCAYAAAA7KqwyAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAkSURBVHgB7cxBEQAACAIwtH8Pzw52kxD8OBZgNXsPQUOUwCIgAz0DHTyygaAAAAAASUVORK5CYII=\", \"segments-experience-id-0\": {\"en_US\": \"$connect_experiences_illustration.png$\"}}}}",
 							"fragmentEntryKey": "BASIC_COMPONENT-image"
 						}
 					],
@@ -116,15 +116,15 @@
 					"columnId": "34",
 					"fragmentEntries": [
 						{
-							"editableValues": "{\"com.liferay.fragment.entry.processor.editable.EditableFragmentEntryProcessor\":{}}",
+							"editableValues": "{\"com.liferay.fragment.entry.processor.editable.EditableFragmentEntryProcessor\": {}}",
 							"fragmentEntryKey": "BASIC_COMPONENT-spacer-4x"
 						},
 						{
-							"editableValues": "{\"com.liferay.fragment.entry.processor.editable.EditableFragmentEntryProcessor\":{\"element-text\":{\"defaultValue\":\"\\n\\t\\t\\tHeading Example\\n\\t\\t\",\"config\":{},\"segments-experience-id-0\":{\"en_US\":\"<h2>Connect Your Experiences</h2>\\n\"}}}}",
+							"editableValues": "{\"com.liferay.fragment.entry.processor.editable.EditableFragmentEntryProcessor\": {\"element-text\": {\"config\": {}, \"defaultValue\": \"\\n\\t\\t\\tHeading Example\\n\\t\\t\", \"segments-experience-id-0\": {\"en_US\": \"<h2>Connect Your Experiences</h2>\\n\"}}}}",
 							"fragmentEntryKey": "BASIC_COMPONENT-heading-2"
 						},
 						{
-							"editableValues": "{\"com.liferay.fragment.entry.processor.editable.EditableFragmentEntryProcessor\":{\"element-text\":{\"defaultValue\":\"\\n\\t\\t\\tHeading Example\\n\\t\\t\",\"config\":{},\"segments-experience-id-0\":{\"en_US\":\"<h4>For a Single View</h4>\\n\"}}}}",
+							"editableValues": "{\"com.liferay.fragment.entry.processor.editable.EditableFragmentEntryProcessor\": {\"element-text\": {\"config\": {}, \"defaultValue\": \"\\n\\t\\t\\tHeading Example\\n\\t\\t\", \"segments-experience-id-0\": {\"en_US\": \"<h4>For a Single View</h4>\\n\"}}}}",
 							"fragmentEntryKey": "BASIC_COMPONENT-heading-4"
 						},
 						{
@@ -132,7 +132,7 @@
 							"fragmentEntryKey": "BASIC_COMPONENT-paragraph"
 						},
 						{
-							"editableValues": "{\"com.liferay.fragment.entry.processor.editable.EditableFragmentEntryProcessor\":{\"link\":{\"defaultValue\":\"Go Somewhere\",\"config\":{\"href\":\"#\"},\"segments-experience-id-0\":{\"en_US\":\"Learn About Experiences\"}}}}",
+							"editableValues": "{\"com.liferay.fragment.entry.processor.editable.EditableFragmentEntryProcessor\": {\"link\": {\"config\": {\"href\": \"#\"}, \"defaultValue\": \"Go Somewhere\", \"segments-experience-id-0\": {\"en_US\": \"Learn About Experiences\"}}}}",
 							"fragmentEntryKey": "BASIC_COMPONENT-link"
 						}
 					],
@@ -154,15 +154,15 @@
 					"columnId": "11",
 					"fragmentEntries": [
 						{
-							"editableValues": "{\"com.liferay.fragment.entry.processor.editable.EditableFragmentEntryProcessor\":{}}",
+							"editableValues": "{\"com.liferay.fragment.entry.processor.editable.EditableFragmentEntryProcessor\": {}}",
 							"fragmentEntryKey": "BASIC_COMPONENT-spacer-4x"
 						},
 						{
-							"editableValues": "{\"com.liferay.fragment.entry.processor.editable.EditableFragmentEntryProcessor\":{\"element-text\":{\"defaultValue\":\"\\n\\t\\t\\tHeading Example\\n\\t\\t\",\"config\":{},\"segments-experience-id-0\":{\"en_US\":\"Create Personalized Experiences\"}}}}",
+							"editableValues": "{\"com.liferay.fragment.entry.processor.editable.EditableFragmentEntryProcessor\": {\"element-text\": {\"config\": {}, \"defaultValue\": \"\\n\\t\\t\\tHeading Example\\n\\t\\t\", \"segments-experience-id-0\": {\"en_US\": \"Create Personalized Experiences\"}}}}",
 							"fragmentEntryKey": "BASIC_COMPONENT-heading-2"
 						},
 						{
-							"editableValues": "{\"com.liferay.fragment.entry.processor.editable.EditableFragmentEntryProcessor\":{\"element-text\":{\"defaultValue\":\"\\n\\t\\t\\tHeading Example\\n\\t\\t\",\"config\":{},\"segments-experience-id-0\":{\"en_US\":\"<h4>At Every Point in the Journey</h4>\\n\"}}}}",
+							"editableValues": "{\"com.liferay.fragment.entry.processor.editable.EditableFragmentEntryProcessor\": {\"element-text\": {\"config\": {}, \"defaultValue\": \"\\n\\t\\t\\tHeading Example\\n\\t\\t\", \"segments-experience-id-0\": {\"en_US\": \"<h4>At Every Point in the Journey</h4>\\n\"}}}}",
 							"fragmentEntryKey": "BASIC_COMPONENT-heading-4"
 						},
 						{
@@ -170,7 +170,7 @@
 							"fragmentEntryKey": "BASIC_COMPONENT-paragraph"
 						},
 						{
-							"editableValues": "{\"com.liferay.fragment.entry.processor.editable.EditableFragmentEntryProcessor\":{\"link\":{\"segments-experience-id-0\":{\"en_US\":\"Learn About Personalization\"},\"defaultValue\":\"Go Somewhere\",\"config\":{\"href\":\"#\"}}}}",
+							"editableValues": "{\"com.liferay.fragment.entry.processor.editable.EditableFragmentEntryProcessor\": {\"link\": {\"config\": {\"href\": \"#\"}, \"defaultValue\": \"Go Somewhere\", \"segments-experience-id-0\": {\"en_US\": \"Learn About Personalization\"}}}}",
 							"fragmentEntryKey": "BASIC_COMPONENT-link"
 						}
 					],
@@ -186,7 +186,7 @@
 					"columnId": "33",
 					"fragmentEntries": [
 						{
-							"editableValues": "{\"com.liferay.fragment.entry.processor.editable.EditableFragmentEntryProcessor\":{\"image-square\":{\"defaultValue\":\"data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAJCAYAAAA7KqwyAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAkSURBVHgB7cxBEQAACAIwtH8Pzw52kxD8OBZgNXsPQUOUwCIgAz0DHTyygaAAAAAASUVORK5CYII=\",\"config\":{\"imageSource\":\"$personalize_experiences_illustration.png$\"},\"segments-experience-id-0\":{\"en_US\":\"$personalize_experiences_illustration.png$\"}}}}",
+							"editableValues": "{\"com.liferay.fragment.entry.processor.editable.EditableFragmentEntryProcessor\": {\"image-square\": {\"config\": {\"imageSource\": \"$personalize_experiences_illustration.png$\"}, \"defaultValue\": \"data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAJCAYAAAA7KqwyAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAkSURBVHgB7cxBEQAACAIwtH8Pzw52kxD8OBZgNXsPQUOUwCIgAz0DHTyygaAAAAAASUVORK5CYII=\", \"segments-experience-id-0\": {\"en_US\": \"$personalize_experiences_illustration.png$\"}}}}",
 							"fragmentEntryKey": "BASIC_COMPONENT-image"
 						}
 					],
@@ -208,7 +208,7 @@
 					"columnId": "17",
 					"fragmentEntries": [
 						{
-							"editableValues": "{\"com.liferay.fragment.entry.processor.editable.EditableFragmentEntryProcessor\":{\"image-square\":{\"defaultValue\":\"data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAJCAYAAAA7KqwyAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAkSURBVHgB7cxBEQAACAIwtH8Pzw52kxD8OBZgNXsPQUOUwCIgAz0DHTyygaAAAAAASUVORK5CYII=\",\"config\":{\"imageSource\":\"$customize_quickly_illustration.png$\"},\"segments-experience-id-0\":{\"en_US\":\"$customize_quickly_illustration.png$\"}}}}",
+							"editableValues": "{\"com.liferay.fragment.entry.processor.editable.EditableFragmentEntryProcessor\": {\"image-square\": {\"config\": {\"imageSource\": \"$customize_quickly_illustration.png$\"}, \"defaultValue\": \"data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAJCAYAAAA7KqwyAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAkSURBVHgB7cxBEQAACAIwtH8Pzw52kxD8OBZgNXsPQUOUwCIgAz0DHTyygaAAAAAASUVORK5CYII=\", \"segments-experience-id-0\": {\"en_US\": \"$customize_quickly_illustration.png$\"}}}}",
 							"fragmentEntryKey": "BASIC_COMPONENT-image"
 						}
 					],
@@ -224,15 +224,15 @@
 					"columnId": "19",
 					"fragmentEntries": [
 						{
-							"editableValues": "{\"com.liferay.fragment.entry.processor.editable.EditableFragmentEntryProcessor\":{}}",
+							"editableValues": "{\"com.liferay.fragment.entry.processor.editable.EditableFragmentEntryProcessor\": {}}",
 							"fragmentEntryKey": "BASIC_COMPONENT-spacer-4x"
 						},
 						{
-							"editableValues": "{\"com.liferay.fragment.entry.processor.editable.EditableFragmentEntryProcessor\":{\"element-text\":{\"defaultValue\":\"\\n\\t\\t\\tHeading Example\\n\\t\\t\",\"config\":{},\"segments-experience-id-0\":{\"en_US\":\"<h2>Customize Your Solutions Quickly</h2>\\n\"}}}}",
+							"editableValues": "{\"com.liferay.fragment.entry.processor.editable.EditableFragmentEntryProcessor\": {\"element-text\": {\"config\": {}, \"defaultValue\": \"\\n\\t\\t\\tHeading Example\\n\\t\\t\", \"segments-experience-id-0\": {\"en_US\": \"<h2>Customize Your Solutions Quickly</h2>\\n\"}}}}",
 							"fragmentEntryKey": "BASIC_COMPONENT-heading-2"
 						},
 						{
-							"editableValues": "{\"com.liferay.fragment.entry.processor.editable.EditableFragmentEntryProcessor\":{\"element-text\":{\"defaultValue\":\"\\n\\t\\t\\tHeading Example\\n\\t\\t\",\"config\":{},\"segments-experience-id-0\":{\"en_US\":\"<h4>On a Flexible Platform</h4>\\n\"}}}}",
+							"editableValues": "{\"com.liferay.fragment.entry.processor.editable.EditableFragmentEntryProcessor\": {\"element-text\": {\"config\": {}, \"defaultValue\": \"\\n\\t\\t\\tHeading Example\\n\\t\\t\", \"segments-experience-id-0\": {\"en_US\": \"<h4>On a Flexible Platform</h4>\\n\"}}}}",
 							"fragmentEntryKey": "BASIC_COMPONENT-heading-4"
 						},
 						{
@@ -240,7 +240,7 @@
 							"fragmentEntryKey": "BASIC_COMPONENT-paragraph"
 						},
 						{
-							"editableValues": "{\"com.liferay.fragment.entry.processor.editable.EditableFragmentEntryProcessor\":{\"link\":{\"defaultValue\":\"Go Somewhere\",\"config\":{\"href\":\"#\"},\"segments-experience-id-0\":{\"en_US\":\"Learn About Customization\"}}}}",
+							"editableValues": "{\"com.liferay.fragment.entry.processor.editable.EditableFragmentEntryProcessor\": {\"link\": {\"config\": {\"href\": \"#\"}, \"defaultValue\": \"Go Somewhere\", \"segments-experience-id-0\": {\"en_US\": \"Learn About Customization\"}}}}",
 							"fragmentEntryKey": "BASIC_COMPONENT-link"
 						}
 					],
@@ -262,7 +262,7 @@
 					"columnId": "30",
 					"fragmentEntries": [
 						{
-							"editableValues": "{\"com.liferay.fragment.entry.processor.editable.EditableFragmentEntryProcessor\":{}}",
+							"editableValues": "{\"com.liferay.fragment.entry.processor.editable.EditableFragmentEntryProcessor\": {}}",
 							"fragmentEntryKey": "BASIC_COMPONENT-spacer-8x"
 						},
 						{
@@ -287,19 +287,19 @@
 					"columnId": "20",
 					"fragmentEntries": [
 						{
-							"editableValues": "{\"com.liferay.fragment.entry.processor.editable.EditableFragmentEntryProcessor\":{\"image-square\":{\"classPK\":\"$WEB-CONTENT-06$\",\"defaultValue\":\"data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAJCAYAAAA7KqwyAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAkSURBVHgB7cxBEQAACAIwtH8Pzw52kxD8OBZgNXsPQUOUwCIgAz0DHTyygaAAAAAASUVORK5CYII=\",\"classNameId\":\"$com.liferay.journal.model.JournalArticle$\",\"config\":{\"imageLink\":\"/web/guest/w/unisys-study\"},\"fieldId\":\"CaseImage\"}}}",
+							"editableValues": "{\"com.liferay.fragment.entry.processor.editable.EditableFragmentEntryProcessor\": {\"image-square\": {\"classNameId\": \"$com.liferay.journal.model.JournalArticle$\", \"classPK\": \"$WEB-CONTENT-06$\", \"config\": {\"imageLink\": \"/web/guest/w/unisys-study\"}, \"defaultValue\": \"data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAJCAYAAAA7KqwyAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAkSURBVHgB7cxBEQAACAIwtH8Pzw52kxD8OBZgNXsPQUOUwCIgAz0DHTyygaAAAAAASUVORK5CYII=\", \"fieldId\": \"CaseImage\"}}}",
 							"fragmentEntryKey": "BASIC_COMPONENT-image"
 						},
 						{
-							"editableValues": "{\"com.liferay.fragment.entry.processor.editable.EditableFragmentEntryProcessor\":{\"element-text\":{\"defaultValue\":\"\\n\\t\\t\\tHeading Example\\n\\t\\t\",\"config\":{},\"classNameId\":\"$com.liferay.journal.model.JournalArticle$\",\"classPK\":\"$WEB-CONTENT-06$\",\"fieldId\":\"CaseTitle\"}}}",
+							"editableValues": "{\"com.liferay.fragment.entry.processor.editable.EditableFragmentEntryProcessor\": {\"element-text\": {\"classNameId\": \"$com.liferay.journal.model.JournalArticle$\", \"classPK\": \"$WEB-CONTENT-06$\", \"config\": {}, \"defaultValue\": \"\\n\\t\\t\\tHeading Example\\n\\t\\t\", \"fieldId\": \"CaseTitle\"}}}",
 							"fragmentEntryKey": "BASIC_COMPONENT-heading-4"
 						},
 						{
-							"editableValues": "{\"com.liferay.fragment.entry.processor.editable.EditableFragmentEntryProcessor\":{\"element-text\":{\"classPK\":\"$WEB-CONTENT-06$\",\"defaultValue\":\"\\n\\t\\tA paragraph is a self-contained unit of a discourse in writing dealing with a particular point or idea. Paragraphs are usually an expected part of formal writing, used to organize longer prose.\\n\\t\",\"classNameId\":\"$com.liferay.journal.model.JournalArticle$\",\"config\":{\"textColor\":\"secondary\"},\"fieldId\":\"CaseIntro\"}}}",
+							"editableValues": "{\"com.liferay.fragment.entry.processor.editable.EditableFragmentEntryProcessor\": {\"element-text\": {\"classNameId\": \"$com.liferay.journal.model.JournalArticle$\", \"classPK\": \"$WEB-CONTENT-06$\", \"config\": {\"textColor\": \"secondary\"}, \"defaultValue\": \"\\n\\t\\tA paragraph is a self-contained unit of a discourse in writing dealing with a particular point or idea. Paragraphs are usually an expected part of formal writing, used to organize longer prose.\\n\\t\", \"fieldId\": \"CaseIntro\"}}}",
 							"fragmentEntryKey": "BASIC_COMPONENT-paragraph"
 						},
 						{
-							"editableValues": "{\"com.liferay.fragment.entry.processor.editable.EditableFragmentEntryProcessor\":{\"link\":{\"defaultValue\":\"Go Somewhere\",\"config\":{\"href\":\"/web/guest/w/unisys-study\"}}}}",
+							"editableValues": "{\"com.liferay.fragment.entry.processor.editable.EditableFragmentEntryProcessor\": {\"link\": {\"config\": {\"href\": \"/web/guest/w/unisys-study\"}, \"defaultValue\": \"Go Somewhere\"}}}",
 							"fragmentEntryKey": "BASIC_COMPONENT-link"
 						}
 					],
@@ -309,23 +309,23 @@
 					"columnId": "21",
 					"fragmentEntries": [
 						{
-							"editableValues": "{\"com.liferay.fragment.entry.processor.editable.EditableFragmentEntryProcessor\":{\"image-square\":{\"classPK\":\"$WEB-CONTENT-05$\",\"defaultValue\":\"data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAJCAYAAAA7KqwyAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAkSURBVHgB7cxBEQAACAIwtH8Pzw52kxD8OBZgNXsPQUOUwCIgAz0DHTyygaAAAAAASUVORK5CYII=\",\"classNameId\":\"$com.liferay.journal.model.JournalArticle$\",\"config\":{\"imageLink\":\"/web/guest/w/spire-study\"},\"fieldId\":\"CaseImage\"}}}",
+							"editableValues": "{\"com.liferay.fragment.entry.processor.editable.EditableFragmentEntryProcessor\": {\"image-square\": {\"classNameId\": \"$com.liferay.journal.model.JournalArticle$\", \"classPK\": \"$WEB-CONTENT-05$\", \"config\": {\"imageLink\": \"/web/guest/w/spire-study\"}, \"defaultValue\": \"data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAJCAYAAAA7KqwyAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAkSURBVHgB7cxBEQAACAIwtH8Pzw52kxD8OBZgNXsPQUOUwCIgAz0DHTyygaAAAAAASUVORK5CYII=\", \"fieldId\": \"CaseImage\"}}}",
 							"fragmentEntryKey": "BASIC_COMPONENT-image"
 						},
 						{
-							"editableValues": "{\"com.liferay.fragment.entry.processor.editable.EditableFragmentEntryProcessor\":{\"element-text\":{\"defaultValue\":\"\\n\\t\\t\\tHeading Example\\n\\t\\t\",\"config\":{},\"classNameId\":\"$com.liferay.journal.model.JournalArticle$\",\"classPK\":\"$WEB-CONTENT-05$\",\"fieldId\":\"CaseTitle\"}}}",
+							"editableValues": "{\"com.liferay.fragment.entry.processor.editable.EditableFragmentEntryProcessor\": {\"element-text\": {\"classNameId\": \"$com.liferay.journal.model.JournalArticle$\", \"classPK\": \"$WEB-CONTENT-05$\", \"config\": {}, \"defaultValue\": \"\\n\\t\\t\\tHeading Example\\n\\t\\t\", \"fieldId\": \"CaseTitle\"}}}",
 							"fragmentEntryKey": "BASIC_COMPONENT-heading-4"
 						},
 						{
-							"editableValues": "{\"com.liferay.fragment.entry.processor.editable.EditableFragmentEntryProcessor\":{\"element-text\":{\"defaultValue\":\"\\n\\t\\tA paragraph is a self-contained unit of a discourse in writing dealing with a particular point or idea. Paragraphs are usually an expected part of formal writing, used to organize longer prose.\\n\\t\",\"config\":{\"textColor\":\"secondary\"},\"classNameId\":\"$com.liferay.journal.model.JournalArticle$\",\"classPK\":\"$WEB-CONTENT-05$\",\"fieldId\":\"CaseIntro\"}}}",
+							"editableValues": "{\"com.liferay.fragment.entry.processor.editable.EditableFragmentEntryProcessor\": {\"element-text\": {\"classNameId\": \"$com.liferay.journal.model.JournalArticle$\", \"classPK\": \"$WEB-CONTENT-05$\", \"config\": {\"textColor\": \"secondary\"}, \"defaultValue\": \"\\n\\t\\tA paragraph is a self-contained unit of a discourse in writing dealing with a particular point or idea. Paragraphs are usually an expected part of formal writing, used to organize longer prose.\\n\\t\", \"fieldId\": \"CaseIntro\"}}}",
 							"fragmentEntryKey": "BASIC_COMPONENT-paragraph"
 						},
 						{
-							"editableValues": "{\"com.liferay.fragment.entry.processor.editable.EditableFragmentEntryProcessor\":{\"link\":{\"defaultValue\":\"Go Somewhere\",\"config\":{\"href\":\"/web/guest/w/spire-study\"}}}}",
+							"editableValues": "{\"com.liferay.fragment.entry.processor.editable.EditableFragmentEntryProcessor\": {\"link\": {\"config\": {\"href\": \"/web/guest/w/spire-study\"}, \"defaultValue\": \"Go Somewhere\"}}}",
 							"fragmentEntryKey": "BASIC_COMPONENT-link"
 						},
 						{
-							"editableValues": "{\"com.liferay.fragment.entry.processor.editable.EditableFragmentEntryProcessor\":{}}",
+							"editableValues": "{\"com.liferay.fragment.entry.processor.editable.EditableFragmentEntryProcessor\": {}}",
 							"fragmentEntryKey": "BASIC_COMPONENT-spacer-8x"
 						}
 					],
@@ -335,19 +335,19 @@
 					"columnId": "22",
 					"fragmentEntries": [
 						{
-							"editableValues": "{\"com.liferay.fragment.entry.processor.editable.EditableFragmentEntryProcessor\":{\"image-square\":{\"classPK\":\"$WEB-CONTENT-04$\",\"defaultValue\":\"data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAJCAYAAAA7KqwyAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAkSURBVHgB7cxBEQAACAIwtH8Pzw52kxD8OBZgNXsPQUOUwCIgAz0DHTyygaAAAAAASUVORK5CYII=\",\"classNameId\":\"$com.liferay.journal.model.JournalArticle$\",\"config\":{\"imageLink\":\"/web/guest/w/federal-study\"},\"fieldId\":\"CaseImage\"}}}",
+							"editableValues": "{\"com.liferay.fragment.entry.processor.editable.EditableFragmentEntryProcessor\": {\"image-square\": {\"classNameId\": \"$com.liferay.journal.model.JournalArticle$\", \"classPK\": \"$WEB-CONTENT-04$\", \"config\": {\"imageLink\": \"/web/guest/w/federal-study\"}, \"defaultValue\": \"data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAJCAYAAAA7KqwyAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAkSURBVHgB7cxBEQAACAIwtH8Pzw52kxD8OBZgNXsPQUOUwCIgAz0DHTyygaAAAAAASUVORK5CYII=\", \"fieldId\": \"CaseImage\"}}}",
 							"fragmentEntryKey": "BASIC_COMPONENT-image"
 						},
 						{
-							"editableValues": "{\"com.liferay.fragment.entry.processor.editable.EditableFragmentEntryProcessor\":{\"element-text\":{\"defaultValue\":\"\\n\\t\\t\\tHeading Example\\n\\t\\t\",\"config\":{},\"classNameId\":\"$com.liferay.journal.model.JournalArticle$\",\"classPK\":\"$WEB-CONTENT-04$\",\"fieldId\":\"CaseTitle\"}}}",
+							"editableValues": "{\"com.liferay.fragment.entry.processor.editable.EditableFragmentEntryProcessor\": {\"element-text\": {\"classNameId\": \"$com.liferay.journal.model.JournalArticle$\", \"classPK\": \"$WEB-CONTENT-04$\", \"config\": {}, \"defaultValue\": \"\\n\\t\\t\\tHeading Example\\n\\t\\t\", \"fieldId\": \"CaseTitle\"}}}",
 							"fragmentEntryKey": "BASIC_COMPONENT-heading-4"
 						},
 						{
-							"editableValues": "{\"com.liferay.fragment.entry.processor.editable.EditableFragmentEntryProcessor\":{\"element-text\":{\"defaultValue\":\"\\n\\t\\tA paragraph is a self-contained unit of a discourse in writing dealing with a particular point or idea. Paragraphs are usually an expected part of formal writing, used to organize longer prose.\\n\\t\",\"config\":{\"textColor\":\"secondary\"},\"classNameId\":\"$com.liferay.journal.model.JournalArticle$\",\"classPK\":\"$WEB-CONTENT-04$\",\"fieldId\":\"CaseIntro\"}}}",
+							"editableValues": "{\"com.liferay.fragment.entry.processor.editable.EditableFragmentEntryProcessor\": {\"element-text\": {\"classNameId\": \"$com.liferay.journal.model.JournalArticle$\", \"classPK\": \"$WEB-CONTENT-04$\", \"config\": {\"textColor\": \"secondary\"}, \"defaultValue\": \"\\n\\t\\tA paragraph is a self-contained unit of a discourse in writing dealing with a particular point or idea. Paragraphs are usually an expected part of formal writing, used to organize longer prose.\\n\\t\", \"fieldId\": \"CaseIntro\"}}}",
 							"fragmentEntryKey": "BASIC_COMPONENT-paragraph"
 						},
 						{
-							"editableValues": "{\"com.liferay.fragment.entry.processor.editable.EditableFragmentEntryProcessor\":{\"link\":{\"defaultValue\":\"Go Somewhere\",\"config\":{\"href\":\"/web/guest/w/federal-study\"}}}}",
+							"editableValues": "{\"com.liferay.fragment.entry.processor.editable.EditableFragmentEntryProcessor\": {\"link\": {\"config\": {\"href\": \"/web/guest/w/federal-study\"}, \"defaultValue\": \"Go Somewhere\"}}}",
 							"fragmentEntryKey": "BASIC_COMPONENT-link"
 						}
 					],
@@ -379,11 +379,11 @@
 							"fragmentEntryKey": "BASIC_COMPONENT-heading-1"
 						},
 						{
-							"editableValues": "{\"com.liferay.fragment.entry.processor.editable.EditableFragmentEntryProcessor\":{}}",
+							"editableValues": "{\"com.liferay.fragment.entry.processor.editable.EditableFragmentEntryProcessor\": {}}",
 							"fragmentEntryKey": "BASIC_COMPONENT-spacer-2x"
 						},
 						{
-							"editableValues": "{\"com.liferay.fragment.entry.processor.editable.EditableFragmentEntryProcessor\":{\"link-center\":{\"defaultValue\":\"Go Somewhere\",\"config\":{\"href\":\"#\"},\"segments-experience-id-0\":{\"en_US\":\"Request a Live Demo\"}}}}",
+							"editableValues": "{\"com.liferay.fragment.entry.processor.editable.EditableFragmentEntryProcessor\": {\"link-center\": {\"config\": {\"href\": \"#\"}, \"defaultValue\": \"Go Somewhere\", \"segments-experience-id-0\": {\"en_US\": \"Request a Live Demo\"}}}}",
 							"fragmentEntryKey": "link-green-center"
 						}
 					],
@@ -411,7 +411,7 @@
 					"columnId": "1",
 					"fragmentEntries": [
 						{
-							"editableValues": "{\"com.liferay.fragment.entry.processor.editable.EditableFragmentEntryProcessor\":{\"01-logo\":{\"defaultValue\":\"data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAnSURBVHgB7cwxEQAACAOxgn8fHB7wBiK6MHwEJKpnZUiZCAgIvgQHmksDKxJ1SeoAAAAASUVORK5CYII=\",\"en_US\":\"$liferay_logo_white_2x.png$\",\"config\":{\"imageSource\":\"$symbol_white.png$\"},\"segments-experience-id-0\":{\"en_US\":\"$symbol_white.png$\"}},\"02-copy\":{\"defaultValue\":\"\\n\\t\\t\\t\\t© 2019 Sitebrand\\n\\t\\t\\t\",\"en_US\":\"&copy; 2019\",\"config\":{},\"segments-experience-id-0\":{\"en_US\":\"Liferay &copy; 2019\"}},\"03-link\":{\"defaultValue\":\"Sign In\",\"config\":{\"href\":\"#\"}}}}",
+							"editableValues": "{\"com.liferay.fragment.entry.processor.editable.EditableFragmentEntryProcessor\": {\"01-logo\": {\"config\": {\"imageSource\": \"$symbol_white.png$\"}, \"defaultValue\": \"data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAnSURBVHgB7cwxEQAACAOxgn8fHB7wBiK6MHwEJKpnZUiZCAgIvgQHmksDKxJ1SeoAAAAASUVORK5CYII=\", \"en_US\": \"$liferay_logo_white_2x.png$\", \"segments-experience-id-0\": {\"en_US\": \"$symbol_white.png$\"}}, \"02-copy\": {\"config\": {}, \"defaultValue\": \"\\n\\t\\t\\t\\t© 2019 Sitebrand\\n\\t\\t\\t\", \"en_US\": \"&copy; 2019\", \"segments-experience-id-0\": {\"en_US\": \"Liferay &copy; 2019\"}}, \"03-link\": {\"config\": {\"href\": \"#\"}, \"defaultValue\": \"Sign In\"}}}",
 							"fragmentEntryKey": "BASIC_SECTION-footer-nav-dark"
 						}
 					],
