@@ -285,7 +285,9 @@ public class SPAHelper {
 		}
 
 		for (String customExcludedPath : customExcludedPaths) {
-			jsonArray.put(_portal.getPathContext() + customExcludedPath);
+			if (!customExcludedPath.isEmpty()) {
+				jsonArray.put(_portal.getPathContext() + customExcludedPath);
+			}
 		}
 
 		return jsonArray;
