@@ -2777,6 +2777,10 @@ log.sanitizer.enabled=false</echo>
 
 							<get-test-batch-app-server-start-executable-arg-line />
 
+							<antcall inheritAll="false" target="start-app-server-preserve-liferay-home">
+								<param name="app.server.start.executable.arg.line" value="${test.batch.app.server.start.executable.arg.line}" />
+							</antcall>
+
 							<print-test-class-group test.class.group.index="${axis.variable}" />
 
 							<echo>Executing Gradle task in directory "modules": testIntegration.</echo>
@@ -2785,8 +2789,6 @@ log.sanitizer.enabled=false</echo>
 
 							<run-modules-junit-test test.class.group="${test.class.group}" test.task="testIntegration">
 								<arg value="--continue" />
-								<arg value="-Dapp.server.start.executable.arg.line=${test.batch.app.server.start.executable.arg.line}" />
-								<arg value="-Ddatabase.type=@{database.type}" />
 								<arg value="-Dbuild.exclude.ant.plugin=true" />
 								<arg value="-Dbuild.exclude.dirs=dxp/apps/osb" />
 								<arg value="-Dtest.class.group.index=${axis.variable}" />
