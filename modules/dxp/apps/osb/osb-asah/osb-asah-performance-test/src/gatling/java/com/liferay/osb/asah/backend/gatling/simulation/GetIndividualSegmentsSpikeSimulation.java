@@ -3,9 +3,9 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-package com.liferay.osb.asah.backend.gatlin.simulation;
+package com.liferay.osb.asah.backend.gatling.simulation;
 
-import com.liferay.osb.asah.backend.gatlin.simulation.util.SimulationUtil;
+import com.liferay.osb.asah.backend.gatling.simulation.util.SimulationUtil;
 
 import io.gatling.javaapi.core.ChainBuilder;
 import io.gatling.javaapi.core.CoreDsl;
@@ -15,12 +15,17 @@ import io.gatling.javaapi.core.Simulation;
 /**
  * @author Ivica Cardic
  */
-public class GetIndividualsLoadSimulation extends Simulation {
+public class GetIndividualSegmentsSpikeSimulation extends Simulation {
 
 	protected ChainBuilder getIndividuals = SimulationUtil.get(
-		"Get Individuals", "/individuals");
+		"Get Individual Segments", "/individual-segments");
 	protected ScenarioBuilder getIndividualsScenario = CoreDsl.scenario(
-		"Get Individuals Scenario"
+		"Get Individual Segments Scenario"
+	).exec(
+		getIndividuals
+	);
+	protected ScenarioBuilder getIndividualsSpikeScenario = CoreDsl.scenario(
+		"Get Individual Segments Spike Scenario"
 	).exec(
 		getIndividuals
 	);
@@ -32,6 +37,13 @@ public class GetIndividualsLoadSimulation extends Simulation {
 					SimulationUtil.loadRampUsers()
 				).during(
 					SimulationUtil.loadDuring()
+				)),
+			getIndividualsSpikeScenario.injectOpen(
+				CoreDsl.nothingFor(SimulationUtil.spikeNothingFor()),
+				CoreDsl.rampUsers(
+					SimulationUtil.spikeRampUsers()
+				).during(
+					SimulationUtil.spikeDuring()
 				))
 		).protocols(
 			SimulationUtil.httpProtocol()

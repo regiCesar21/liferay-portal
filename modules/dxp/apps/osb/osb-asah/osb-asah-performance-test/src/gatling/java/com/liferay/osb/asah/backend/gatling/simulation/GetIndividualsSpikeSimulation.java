@@ -3,9 +3,9 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-package com.liferay.osb.asah.backend.gatlin.simulation;
+package com.liferay.osb.asah.backend.gatling.simulation;
 
-import com.liferay.osb.asah.backend.gatlin.simulation.util.SimulationUtil;
+import com.liferay.osb.asah.backend.gatling.simulation.util.SimulationUtil;
 
 import io.gatling.javaapi.core.ChainBuilder;
 import io.gatling.javaapi.core.CoreDsl;
@@ -15,32 +15,30 @@ import io.gatling.javaapi.core.Simulation;
 /**
  * @author Ivica Cardic
  */
-public class PostAnalyticsEventsSpikeSimulation extends Simulation {
+public class GetIndividualsSpikeSimulation extends Simulation {
 
-	protected ChainBuilder postAnalyticsEvents = SimulationUtil.post(
-		SimulationUtil.generateRandomAnalyticsMessageBody(),
-		"Post Analytics Events", "/");
-	protected ScenarioBuilder postAnalyticsEventsScenario = CoreDsl.scenario(
-		"Post Analytics Events Scenario"
+	protected ChainBuilder getIndividuals = SimulationUtil.get(
+		"Get Individuals", "/individuals");
+	protected ScenarioBuilder getIndividualsScenario = CoreDsl.scenario(
+		"Get Individuals Scenario"
 	).exec(
-		postAnalyticsEvents
+		getIndividuals
 	);
-	protected ScenarioBuilder postAnalyticsEventsSpikeScenario =
-		CoreDsl.scenario(
-			"Post Analytics Events Spike Scenario"
-		).exec(
-			postAnalyticsEvents
-		);
+	protected ScenarioBuilder getIndividualsSpikeScenario = CoreDsl.scenario(
+		"Get Individuals Spike Scenario"
+	).exec(
+		getIndividuals
+	);
 
 	{
 		setUp(
-			postAnalyticsEventsScenario.injectOpen(
+			getIndividualsScenario.injectOpen(
 				CoreDsl.rampUsers(
 					SimulationUtil.loadRampUsers()
 				).during(
 					SimulationUtil.loadDuring()
 				)),
-			postAnalyticsEventsSpikeScenario.injectOpen(
+			getIndividualsSpikeScenario.injectOpen(
 				CoreDsl.nothingFor(SimulationUtil.spikeNothingFor()),
 				CoreDsl.rampUsers(
 					SimulationUtil.spikeRampUsers()

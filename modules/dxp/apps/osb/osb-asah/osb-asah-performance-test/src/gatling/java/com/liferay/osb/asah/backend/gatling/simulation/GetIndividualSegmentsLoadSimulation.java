@@ -3,9 +3,9 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-package com.liferay.osb.asah.backend.gatlin.simulation;
+package com.liferay.osb.asah.backend.gatling.simulation;
 
-import com.liferay.osb.asah.backend.gatlin.simulation.util.SimulationUtil;
+import com.liferay.osb.asah.backend.gatling.simulation.util.SimulationUtil;
 
 import io.gatling.javaapi.core.ChainBuilder;
 import io.gatling.javaapi.core.CoreDsl;
@@ -15,20 +15,19 @@ import io.gatling.javaapi.core.Simulation;
 /**
  * @author Ivica Cardic
  */
-public class PostAnalyticsEventsLoadSimulation extends Simulation {
+public class GetIndividualSegmentsLoadSimulation extends Simulation {
 
-	protected ChainBuilder postAnalyticsEvents = SimulationUtil.post(
-		SimulationUtil.generateRandomAnalyticsMessageBody(),
-		"Post Analytics Events", "/");
-	protected ScenarioBuilder postAnalyticsEventsScenario = CoreDsl.scenario(
-		"Post Analytics Events Scenario"
+	protected ChainBuilder getIndividuals = SimulationUtil.get(
+		"Get Individual Segments", "/individual-segments");
+	protected ScenarioBuilder getIndividualsScenario = CoreDsl.scenario(
+		"Get Individual Segments Scenario"
 	).exec(
-		postAnalyticsEvents
+		getIndividuals
 	);
 
 	{
 		setUp(
-			postAnalyticsEventsScenario.injectOpen(
+			getIndividualsScenario.injectOpen(
 				CoreDsl.rampUsers(
 					SimulationUtil.loadRampUsers()
 				).during(
