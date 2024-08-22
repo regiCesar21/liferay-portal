@@ -9,6 +9,10 @@ ext {
 sourceCompatibility = "1.8"
 targetCompatibility = "1.8"
 
+bootJar {
+	enabled = false
+}
+
 configurations.all {
 	exclude group: "org.apache.geronimo.bundles", module: "json"
 	exclude group: "org.nd4j", module: "nd4j-native-platform"
