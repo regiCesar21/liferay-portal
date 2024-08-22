@@ -17,30 +17,31 @@ import io.gatling.javaapi.core.Simulation;
  */
 public class PostAnalyticsEventsSpikeSimulation extends Simulation {
 
-	protected ChainBuilder postAnalyticsEvents = SimulationUtil.post(
+	private final ChainBuilder _postAnalyticsEvents = SimulationUtil.post(
 		SimulationUtil.generateRandomAnalyticsMessageBody(),
 		"Post Analytics Events", "/");
-	protected ScenarioBuilder postAnalyticsEventsScenario = CoreDsl.scenario(
-		"Post Analytics Events Scenario"
-	).exec(
-		postAnalyticsEvents
-	);
-	protected ScenarioBuilder postAnalyticsEventsSpikeScenario =
+	private final ScenarioBuilder _postAnalyticsEventsScenario =
+		CoreDsl.scenario(
+			"Post Analytics Events Scenario"
+		).exec(
+			_postAnalyticsEvents
+		);
+	private final ScenarioBuilder _postAnalyticsEventsSpikeScenario =
 		CoreDsl.scenario(
 			"Post Analytics Events Spike Scenario"
 		).exec(
-			postAnalyticsEvents
+			_postAnalyticsEvents
 		);
 
 	{
 		setUp(
-			postAnalyticsEventsScenario.injectOpen(
+			_postAnalyticsEventsScenario.injectOpen(
 				CoreDsl.rampUsers(
 					SimulationUtil.loadRampUsers()
 				).during(
 					SimulationUtil.loadDuring()
 				)),
-			postAnalyticsEventsSpikeScenario.injectOpen(
+			_postAnalyticsEventsSpikeScenario.injectOpen(
 				CoreDsl.nothingFor(SimulationUtil.spikeNothingFor()),
 				CoreDsl.rampUsers(
 					SimulationUtil.spikeRampUsers()

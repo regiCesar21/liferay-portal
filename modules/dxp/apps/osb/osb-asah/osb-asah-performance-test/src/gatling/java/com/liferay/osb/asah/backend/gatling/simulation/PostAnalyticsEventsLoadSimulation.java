@@ -17,18 +17,19 @@ import io.gatling.javaapi.core.Simulation;
  */
 public class PostAnalyticsEventsLoadSimulation extends Simulation {
 
-	protected ChainBuilder postAnalyticsEvents = SimulationUtil.post(
+	private final ChainBuilder _postAnalyticsEvents = SimulationUtil.post(
 		SimulationUtil.generateRandomAnalyticsMessageBody(),
 		"Post Analytics Events", "/");
-	protected ScenarioBuilder postAnalyticsEventsScenario = CoreDsl.scenario(
-		"Post Analytics Events Scenario"
-	).exec(
-		postAnalyticsEvents
-	);
+	private final ScenarioBuilder _postAnalyticsEventsScenario =
+		CoreDsl.scenario(
+			"Post Analytics Events Scenario"
+		).exec(
+			_postAnalyticsEvents
+		);
 
 	{
 		setUp(
-			postAnalyticsEventsScenario.injectOpen(
+			_postAnalyticsEventsScenario.injectOpen(
 				CoreDsl.rampUsers(
 					SimulationUtil.loadRampUsers()
 				).during(

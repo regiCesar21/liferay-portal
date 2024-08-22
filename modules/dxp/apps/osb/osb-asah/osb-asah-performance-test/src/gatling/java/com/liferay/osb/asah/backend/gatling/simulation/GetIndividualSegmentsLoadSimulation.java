@@ -17,17 +17,17 @@ import io.gatling.javaapi.core.Simulation;
  */
 public class GetIndividualSegmentsLoadSimulation extends Simulation {
 
-	protected ChainBuilder getIndividuals = SimulationUtil.get(
+	private final ChainBuilder _getIndividuals = SimulationUtil.get(
 		"Get Individual Segments", "/individual-segments");
-	protected ScenarioBuilder getIndividualsScenario = CoreDsl.scenario(
+	private final ScenarioBuilder _getIndividualsScenario = CoreDsl.scenario(
 		"Get Individual Segments Scenario"
 	).exec(
-		getIndividuals
+		_getIndividuals
 	);
 
 	{
 		setUp(
-			getIndividualsScenario.injectOpen(
+			_getIndividualsScenario.injectOpen(
 				CoreDsl.rampUsers(
 					SimulationUtil.loadRampUsers()
 				).during(

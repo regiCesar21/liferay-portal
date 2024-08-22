@@ -17,28 +17,29 @@ import io.gatling.javaapi.core.Simulation;
  */
 public class GetIndividualSegmentsSpikeSimulation extends Simulation {
 
-	protected ChainBuilder getIndividuals = SimulationUtil.get(
+	private final ChainBuilder _getIndividuals = SimulationUtil.get(
 		"Get Individual Segments", "/individual-segments");
-	protected ScenarioBuilder getIndividualsScenario = CoreDsl.scenario(
+	private final ScenarioBuilder _getIndividualsScenario = CoreDsl.scenario(
 		"Get Individual Segments Scenario"
 	).exec(
-		getIndividuals
+		_getIndividuals
 	);
-	protected ScenarioBuilder getIndividualsSpikeScenario = CoreDsl.scenario(
-		"Get Individual Segments Spike Scenario"
-	).exec(
-		getIndividuals
-	);
+	private final ScenarioBuilder _getIndividualsSpikeScenario =
+		CoreDsl.scenario(
+			"Get Individual Segments Spike Scenario"
+		).exec(
+			_getIndividuals
+		);
 
 	{
 		setUp(
-			getIndividualsScenario.injectOpen(
+			_getIndividualsScenario.injectOpen(
 				CoreDsl.rampUsers(
 					SimulationUtil.loadRampUsers()
 				).during(
 					SimulationUtil.loadDuring()
 				)),
-			getIndividualsSpikeScenario.injectOpen(
+			_getIndividualsSpikeScenario.injectOpen(
 				CoreDsl.nothingFor(SimulationUtil.spikeNothingFor()),
 				CoreDsl.rampUsers(
 					SimulationUtil.spikeRampUsers()
