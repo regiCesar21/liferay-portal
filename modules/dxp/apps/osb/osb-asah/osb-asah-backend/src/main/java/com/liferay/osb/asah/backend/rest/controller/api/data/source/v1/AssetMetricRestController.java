@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-package com.liferay.osb.asah.backend.rest.controller;
+package com.liferay.osb.asah.backend.rest.controller.api.data.source.v1;
 
 import com.liferay.osb.asah.backend.dog.MetricDog;
 import com.liferay.osb.asah.backend.dog.MetricTypeDog;
@@ -27,9 +27,9 @@ import org.springframework.web.bind.annotation.RestController;
 /**
  * @author Marcos Martins
  */
-@RequestMapping("/asset-metric/{assetType}")
+@RequestMapping("/api/1.0/asset-metric/{assetType}")
 @RestController(
-	"com.liferay.osb.asah.backend.rest.controller.AssetMetricRestController"
+	"com.liferay.osb.asah.backend.rest.controller.api.data.source.v1.AssetMetricRestController"
 )
 public class AssetMetricRestController {
 
