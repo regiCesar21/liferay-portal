@@ -99,7 +99,7 @@ pipeline {
                         withDockerRegistry([credentialsId: "dockerhub", url: ""]) {
                             osbAsahPerformanceTestImage = docker.build(
                                 "${IMAGE_NAME}:osb-asah-performance-test-${IMAGE_TAG_SUFFIX}",
-                                "${DOCKER_BUILD_ARGS}")
+                                "--no-cache -f ./Dockerfile ../")
 
                             osbAsahPerformanceTestImage.push()
                         }
