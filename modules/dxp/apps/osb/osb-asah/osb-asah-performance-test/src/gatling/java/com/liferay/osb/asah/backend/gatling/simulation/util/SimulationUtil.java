@@ -51,26 +51,26 @@ public class SimulationUtil {
 
 	public static HttpProtocolBuilder httpProtocol() {
 		return HttpDsl.http.baseUrl(
-			_CONFIG.getString("baseUrl")
+			_CONFIG.getString("gatling.baseUrl")
 		).header(
-			"OSB-Asah-Project-ID", _CONFIG.getString("osbAsahProjectId")
+			"OSB-Asah-Project-ID", _CONFIG.getString("osb.asah.projectId")
 		).header(
 			"OSB-Asah-Faro-Backend-Security-Signature",
 			DigestUtils.sha256Hex(
 				_CONFIG.getString(
-					"osbAsahSecurityToken"
+					"osb.asah.security.token"
 				).concat(
-					_CONFIG.getString("baseUrl")
+					_CONFIG.getString("gatling.baseUrl")
 				))
 		);
 	}
 
 	public static long loadDuring() {
-		return _CONFIG.getInt("loadDuring");
+		return _CONFIG.getInt("gatling.load.during");
 	}
 
 	public static int loadRampUsers() {
-		return _CONFIG.getInt("loadRampUsers");
+		return _CONFIG.getInt("gatling.load.rampUsers");
 	}
 
 	public static ChainBuilder post(Body body, String name, String path) {
@@ -93,15 +93,15 @@ public class SimulationUtil {
 	}
 
 	public static int spikeDuring() {
-		return _CONFIG.getInt("spikeDuring");
+		return _CONFIG.getInt("gatling.spike.during");
 	}
 
 	public static int spikeNothingFor() {
-		return _CONFIG.getInt("spikeNothingFor");
+		return _CONFIG.getInt("gatling.spike.nothingFor");
 	}
 
 	public static int spikeRampUsers() {
-		return _CONFIG.getInt("spikeRampUsers");
+		return _CONFIG.getInt("gatling.spike.rampUsers");
 	}
 
 	private static final Config _CONFIG = ConfigFactory.load();
