@@ -2036,21 +2036,6 @@ public class BQEventRepositoryImpl
 			return conditions;
 		}
 
-		for (EventAnalysisBreakdown eventAnalysisBreakdown :
-				eventAnalysisBreakdowns) {
-
-			if (Objects.equals(
-					eventAnalysisBreakdown.getAttributeType(),
-					AttributeType.INDIVIDUAL)) {
-
-				Field<Object> field = DSL.field("BQEvent.emailAddressHashed");
-
-				conditions.add(field.isNotNull());
-
-				break;
-			}
-		}
-
 		return conditions;
 	}
 
@@ -2772,7 +2757,7 @@ public class BQEventRepositoryImpl
 
 		String alias = "Individual_" + attributeId;
 
-		selectJoinStep = selectJoinStep.join(
+		selectJoinStep = selectJoinStep.leftJoin(
 			DSL.table(
 				"BQIndividual"
 			).as(
@@ -3116,10 +3101,16 @@ public class BQEventRepositoryImpl
 			}
 
 			field = DSL.when(
+				DSL.field(
+					"BQEvent.emailAddressHashed"
+				).isNull(),
+				DSL.val("undefined")
+			).when(
 				_getEventDateRangeFilter(
 					"BQEvent.eventDate", timeRange.getEndDate(),
 					timeRange.getStartDate()),
-				DSL.field(attributeId));
+				(Field)DSL.field(attributeId)
+			);
 		}
 		else if (eventAttributeDefinition == null) {
 			field = DSL.when(
