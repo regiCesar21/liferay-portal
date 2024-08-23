@@ -360,7 +360,7 @@ public class BQEventRepositoryTest
 						"jobTitle", "DESC")),
 				null, 246810L, PageRequest.of(0, 10),
 				TimeRange.of(
-					LocalDateTime.of(2021, 6, 1, 23, 59),
+					LocalDateTime.of(2021, 6, 3, 23, 59),
 					LocalDateTime.of(2021, 5, 15, 0, 0)),
 				_timeZoneDog.getTimeZoneId());
 
@@ -368,9 +368,10 @@ public class BQEventRepositoryTest
 			breakdownRows,
 			new HashMap<String, BigDecimal>() {
 				{
-					put("database administrator", BigDecimal.valueOf(1.29));
+					put("database administrator", BigDecimal.valueOf(1.25));
 					put("engineer", BigDecimal.valueOf(1.25));
 					put("manager", BigDecimal.valueOf(1.20));
+					put("undefined", BigDecimal.valueOf(1));
 				}
 			});
 
@@ -388,7 +389,7 @@ public class BQEventRepositoryTest
 					"eq", Collections.singletonList("manager"))),
 			246810L, PageRequest.of(0, 10),
 			TimeRange.of(
-				LocalDateTime.of(2021, 6, 1, 23, 59),
+				LocalDateTime.of(2021, 6, 3, 23, 59),
 				LocalDateTime.of(2021, 5, 15, 0, 0)),
 			_timeZoneDog.getTimeZoneId());
 
@@ -607,7 +608,7 @@ public class BQEventRepositoryTest
 						"jobTitle", "DESC")),
 				null, 246810L, PageRequest.of(0, 10),
 				TimeRange.of(
-					LocalDateTime.of(2021, 6, 1, 23, 59),
+					LocalDateTime.of(2021, 6, 3, 23, 59),
 					LocalDateTime.of(2021, 5, 15, 0, 0)),
 				_timeZoneDog.getTimeZoneId());
 
@@ -615,9 +616,10 @@ public class BQEventRepositoryTest
 			breakdownRows,
 			new HashMap<String, BigDecimal>() {
 				{
-					put("database administrator", BigDecimal.valueOf(9));
+					put("database administrator", BigDecimal.valueOf(10));
 					put("engineer", BigDecimal.valueOf(5));
 					put("manager", BigDecimal.valueOf(6));
+					put("undefined", BigDecimal.valueOf(3));
 				}
 			});
 
@@ -635,7 +637,7 @@ public class BQEventRepositoryTest
 					"eq", Collections.singletonList("manager"))),
 			246810L, PageRequest.of(0, 10),
 			TimeRange.of(
-				LocalDateTime.of(2021, 6, 1, 23, 59),
+				LocalDateTime.of(2021, 6, 3, 23, 59),
 				LocalDateTime.of(2021, 5, 15, 0, 0)),
 			_timeZoneDog.getTimeZoneId());
 
@@ -854,7 +856,7 @@ public class BQEventRepositoryTest
 						"jobTitle", "DESC")),
 				null, 246810L, PageRequest.of(0, 10),
 				TimeRange.of(
-					LocalDateTime.of(2021, 6, 1, 23, 59),
+					LocalDateTime.of(2021, 6, 3, 23, 59),
 					LocalDateTime.of(2021, 5, 15, 0, 0)),
 				_timeZoneDog.getTimeZoneId());
 
@@ -862,9 +864,10 @@ public class BQEventRepositoryTest
 			breakdownRows,
 			new HashMap<String, BigDecimal>() {
 				{
-					put("database administrator", BigDecimal.valueOf(7));
+					put("database administrator", BigDecimal.valueOf(8));
 					put("engineer", BigDecimal.valueOf(4));
 					put("manager", BigDecimal.valueOf(5));
+					put("undefined", BigDecimal.valueOf(3));
 				}
 			});
 
@@ -882,7 +885,7 @@ public class BQEventRepositoryTest
 					"eq", Collections.singletonList("manager"))),
 			246810L, PageRequest.of(0, 10),
 			TimeRange.of(
-				LocalDateTime.of(2021, 6, 1, 23, 59),
+				LocalDateTime.of(2021, 6, 3, 23, 59),
 				LocalDateTime.of(2021, 5, 15, 0, 0)),
 			_timeZoneDog.getTimeZoneId());
 
