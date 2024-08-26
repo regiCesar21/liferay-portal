@@ -5,8 +5,6 @@
 
 package com.liferay.osb.asah.backend.rest.controller.api.data.source.v1.test;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
-
 import com.liferay.osb.asah.backend.OSBAsahBackendSpringTestContext;
 import com.liferay.osb.asah.backend.dto.AssetMetricDTO;
 import com.liferay.osb.asah.backend.model.AssetType;
@@ -77,8 +75,5 @@ public class AssetMetricRestControllerTest
 
 	@Autowired
 	private AssetMetricRestController _assetMetricRestController;
-
-	@Autowired
-	private ObjectMapper _objectMapper;
 
 }
