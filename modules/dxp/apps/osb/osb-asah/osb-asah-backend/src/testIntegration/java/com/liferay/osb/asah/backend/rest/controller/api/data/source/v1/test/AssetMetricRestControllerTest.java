@@ -36,7 +36,7 @@ public class AssetMetricRestControllerTest
 	public void testGetAssetMetricDTO() {
 		AssetMetricDTO assetMetricDTO =
 			_assetMetricRestController.getAssetMetricDTO(
-				"e131fabc", "blog", 1L, 30, SetUtil.of("viewsMetric"));
+				"e131fabc", "blog", 1L, "ALL", 30, SetUtil.of("viewsMetric"));
 
 		Assertions.assertEquals("e131fabc", assetMetricDTO.getAssetId());
 		Assertions.assertEquals(
@@ -51,6 +51,28 @@ public class AssetMetricRestControllerTest
 
 		Assertions.assertEquals("viewsMetric", metric.getName());
 		Assertions.assertEquals(9, metric.getValue());
+
+		assetMetricDTO = _assetMetricRestController.getAssetMetricDTO(
+			"e131fabc", "blog", 1L, "KNOWN", 30, SetUtil.of("viewsMetric"));
+
+		metrics = new ArrayList<>(assetMetricDTO.getSelectedMetrics());
+
+		Assertions.assertEquals(1, metrics.size(), metrics.toString());
+
+		metric = metrics.get(0);
+
+		Assertions.assertEquals(5, metric.getValue());
+
+		assetMetricDTO = _assetMetricRestController.getAssetMetricDTO(
+			"e131fabc", "blog", 1L, "UNKNOWN", 30, SetUtil.of("viewsMetric"));
+
+		metrics = new ArrayList<>(assetMetricDTO.getSelectedMetrics());
+
+		Assertions.assertEquals(1, metrics.size(), metrics.toString());
+
+		metric = metrics.get(0);
+
+		Assertions.assertEquals(4, metric.getValue());
 	}
 
 	@Autowired
