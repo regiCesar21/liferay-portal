@@ -47,10 +47,6 @@ This service runs performance tests scenarios.
 
 This service receives events from HTTP requests made by users' browsers, and publishes them to [osb-asah-queue](#osb-asah-queue).
 
-### osb-asah-queue
-
-This is a Message Queue service that contains messages published by [osb-asah-publisher](#osb-asah-publisher).
-
 ### osb-asah-redis
 
 This is a Redis instance used as cache storage and message bus.
