@@ -39,6 +39,10 @@ This service exposes endpoints to the [Faro frontend](https://github.com/liferay
 
 This service processes raw data into intelligent information using scheduled routines (e.g., once a day).
 
+### [osb-asah-performance-test](osb-asah-performance-test/README.markdown)
+
+This service runs performance tests scenarios.
+
 ### [osb-asah-publisher](osb-asah-publisher/README.markdown)
 
 This service receives events from HTTP requests made by users' browsers, and publishes them to [osb-asah-queue](#osb-asah-queue).
