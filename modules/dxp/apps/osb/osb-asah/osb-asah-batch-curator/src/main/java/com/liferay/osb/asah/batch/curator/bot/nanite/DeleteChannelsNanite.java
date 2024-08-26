@@ -33,7 +33,7 @@ public class DeleteChannelsNanite extends BaseNanite {
 	public void run(JSONObject contextJSONObject) throws Exception {
 		AuthorThreadLocal.forAuthor(
 			new Author(
-				contextJSONObject.getString("userId"),
+				String.valueOf(contextJSONObject.getLong("userId")),
 				contextJSONObject.getString("userName")),
 			() -> _channelDog.deleteChannels(
 				JSONUtil.toLongSet(
