@@ -73,12 +73,6 @@ public class Individual {
 		_individualSegmentIds = individualSegmentIds;
 	}
 
-	public static enum Type {
-
-		ALL, KNOWN, UNKNOWN
-
-	}
-
 	private Map<String, String> _custom = new HashMap<>();
 	private Map<String, String> _demographics = new HashMap<>();
 	private String _emailAddress;
