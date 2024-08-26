@@ -25,10 +25,6 @@ dependencies {
 	compileOnly project(":dxp:apps:osb:osb-customer:osb-customer-zendesk:osb-customer-zendesk-web-service-api")
 }
 
-downloadLiferayModuleConfigGenerator {
-	enabled = false
-}
-
 generateJSPJava {
 	enabled = false
 }
