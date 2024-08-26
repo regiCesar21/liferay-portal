@@ -6,6 +6,7 @@
 package com.liferay.osb.asah.backend.dog;
 
 import com.liferay.osb.asah.backend.dog.helper.SearchQueryContext;
+import com.liferay.osb.asah.backend.model.Individual;
 import com.liferay.osb.asah.backend.model.Metric;
 import com.liferay.osb.asah.backend.model.PageMetric;
 import com.liferay.osb.asah.backend.repository.PageAssetMetricRepository;
@@ -33,7 +34,7 @@ public class PageDog {
 
 		PageMetric pageMetric = _pageAssetMetricRepository.getAssetMetric(
 			searchQueryContext.getAssetId(), searchQueryContext.getTitle(),
-			searchQueryContext.getChannelIdAsLong(),
+			searchQueryContext.getChannelIdAsLong(), Individual.Type.ALL,
 			Collections.singleton(PageMetricType.INDIRECT_ACCESS.getName()),
 			searchQueryContext.getTimeRange());
 
@@ -126,7 +127,7 @@ public class PageDog {
 		TimeRange timeRange) {
 
 		return _pageAssetMetricRepository.getAssetMetric(
-			canonicalUrl, null, null,
+			canonicalUrl, null, null, Individual.Type.ALL,
 			Collections.singleton(pageMetricType.getName()), timeRange);
 	}
 

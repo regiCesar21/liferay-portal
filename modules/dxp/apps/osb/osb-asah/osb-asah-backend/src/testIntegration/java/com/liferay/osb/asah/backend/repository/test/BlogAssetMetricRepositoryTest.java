@@ -8,6 +8,7 @@ package com.liferay.osb.asah.backend.repository.test;
 import com.liferay.osb.asah.backend.model.AudienceReport;
 import com.liferay.osb.asah.backend.model.BlogMetric;
 import com.liferay.osb.asah.backend.model.BlogMetricType;
+import com.liferay.osb.asah.backend.model.Individual;
 import com.liferay.osb.asah.backend.model.Metric;
 import com.liferay.osb.asah.backend.repository.AssetMetricRepository;
 import com.liferay.osb.asah.common.model.Interval;
@@ -156,7 +157,8 @@ public class BlogAssetMetricRepositoryTest
 	@Test
 	public void testGetViewsAssetMetric() {
 		BlogMetric blogMetric = _assetMetricRepository.getAssetMetric(
-			"e131fabc", null, 1L, SetUtil.of(BlogMetricType.VIEWS.getName()),
+			"e131fabc", null, 1L, Individual.Type.ALL,
+			SetUtil.of(BlogMetricType.VIEWS.getName()),
 			TimeRange.LAST_24_HOURS);
 
 		Assertions.assertNotNull(blogMetric);
