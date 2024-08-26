@@ -8,6 +8,7 @@ package com.liferay.osb.asah.backend.dog;
 import com.liferay.osb.asah.backend.dog.helper.SearchQueryContext;
 import com.liferay.osb.asah.backend.model.AssetMetric;
 import com.liferay.osb.asah.backend.model.AssetType;
+import com.liferay.osb.asah.backend.model.Individual;
 import com.liferay.osb.asah.backend.model.Metric;
 import com.liferay.osb.asah.backend.repository.AssetMetricRepository;
 import com.liferay.osb.asah.common.model.MetricType;
@@ -62,13 +63,8 @@ public class MetricDog {
 	}
 
 	public <T extends AssetMetric> T getAssetMetric(
-		SearchQueryContext searchQueryContext) {
-
-		return getAssetMetric(searchQueryContext, Collections.emptySet());
-	}
-
-	public <T extends AssetMetric> T getAssetMetric(
-		SearchQueryContext searchQueryContext, Set<String> selectedMetrics) {
+		Individual.Type individualType, SearchQueryContext searchQueryContext,
+		Set<String> selectedMetrics) {
 
 		AssetMetricRepository<T> assetMetricRepository =
 			(AssetMetricRepository<T>)_getAssetMetricRepository(
@@ -82,8 +78,21 @@ public class MetricDog {
 
 		return assetMetricRepository.getAssetMetric(
 			searchQueryContext.getAssetId(), assetTitle,
-			searchQueryContext.getChannelIdAsLong(), selectedMetrics,
-			searchQueryContext.getTimeRange());
+			searchQueryContext.getChannelIdAsLong(), individualType,
+			selectedMetrics, searchQueryContext.getTimeRange());
+	}
+
+	public <T extends AssetMetric> T getAssetMetric(
+		SearchQueryContext searchQueryContext) {
+
+		return getAssetMetric(searchQueryContext, Collections.emptySet());
+	}
+
+	public <T extends AssetMetric> T getAssetMetric(
+		SearchQueryContext searchQueryContext, Set<String> selectedMetrics) {
+
+		return getAssetMetric(
+			Individual.Type.ALL, searchQueryContext, selectedMetrics);
 	}
 
 	public <T extends AssetMetric> List<T> getAssetMetrics(

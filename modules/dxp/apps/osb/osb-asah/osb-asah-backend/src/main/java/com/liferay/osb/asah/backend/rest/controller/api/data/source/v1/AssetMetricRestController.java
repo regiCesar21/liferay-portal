@@ -11,6 +11,7 @@ import com.liferay.osb.asah.backend.dog.helper.SearchQueryContext;
 import com.liferay.osb.asah.backend.dto.AssetMetricDTO;
 import com.liferay.osb.asah.backend.model.AssetMetric;
 import com.liferay.osb.asah.backend.model.AssetType;
+import com.liferay.osb.asah.backend.model.Individual;
 import com.liferay.osb.asah.common.model.MetricType;
 import com.liferay.osb.asah.common.model.TimeRange;
 
@@ -37,7 +38,7 @@ public class AssetMetricRestController {
 	public AssetMetricDTO getAssetMetricDTO(
 		@RequestParam String assetId,
 		@PathVariable("assetType") String assetTypeString,
-		@RequestParam Long channelId,
+		@RequestParam Long channelId, @RequestParam String individualType,
 		@RequestParam(defaultValue = "30") int rangeKey,
 		@RequestParam Set<String> selectedMetrics) {
 
@@ -52,7 +53,8 @@ public class AssetMetricRestController {
 
 		return new AssetMetricDTO(
 			(AssetMetric)_metricDog.getAssetMetric(
-				searchQueryContext, selectedMetrics),
+				Individual.Type.valueOf(individualType), searchQueryContext,
+				selectedMetrics),
 			_getMetricTypes(assetType, selectedMetrics));
 	}
 

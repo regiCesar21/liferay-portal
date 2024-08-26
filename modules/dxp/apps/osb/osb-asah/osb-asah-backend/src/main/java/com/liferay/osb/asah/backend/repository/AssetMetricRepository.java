@@ -36,8 +36,8 @@ public interface AssetMetricRepository<T extends AssetMetric> {
 
 	public T getAssetMetric(
 		@Nullable String assetId, @Nullable String assetTitle,
-		@Nullable Long channelId, Set<String> selectedMetrics,
-		TimeRange timeRange);
+		@Nullable Long channelId, Individual.Type individualType,
+		Set<String> selectedMetrics, TimeRange timeRange);
 
 	public List<T> getAssetMetrics(
 		@Nullable Long channelId, @Nullable String keywords,

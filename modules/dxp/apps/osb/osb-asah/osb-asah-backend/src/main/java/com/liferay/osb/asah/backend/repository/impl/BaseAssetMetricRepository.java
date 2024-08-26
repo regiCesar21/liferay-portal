@@ -49,6 +49,7 @@ import org.jooq.DSLContext;
 import org.jooq.DatePart;
 import org.jooq.Field;
 import org.jooq.Record;
+import org.jooq.SelectConditionStep;
 import org.jooq.SelectJoinStep;
 import org.jooq.SelectSelectStep;
 import org.jooq.SortField;
@@ -181,8 +182,8 @@ public abstract class BaseAssetMetricRepository<T extends AssetMetric>
 	@Override
 	public T getAssetMetric(
 		@Nullable String assetId, @Nullable String assetTitle,
-		@Nullable Long channelId, Set<String> selectedMetrics,
-		TimeRange timeRange) {
+		@Nullable Long channelId, Individual.Type individualType,
+		Set<String> selectedMetrics, TimeRange timeRange) {
 
 		Field<Boolean> previousField = DSL.when(
 			DSL.field(
@@ -208,15 +209,38 @@ public abstract class BaseAssetMetricRepository<T extends AssetMetric>
 		SelectJoinStep<Record> selectJoinStep = getAssetMetricSelectJoinStep(
 			selectSelectStep, timeRange);
 
+		if (individualType != Individual.Type.ALL) {
+			selectJoinStep = selectJoinStep.join(
+				"BQIdentity as identity"
+			).on(
+				DSL.field(
+					"metric.userId"
+				).eq(
+					DSL.field("identity.id")
+				)
+			);
+		}
+
+		SelectConditionStep<Record> selectConditionStep = selectJoinStep.where(
+			_createWhereClauseCondition(
+				assetId, assetTitle, channelId,
+				timeRange.getIncludePreviousTimeRange()));
+
+		if (individualType == Individual.Type.KNOWN) {
+			selectConditionStep = selectConditionStep.and(
+				DSL.field(
+					"identity.individualId"
+				).isNotNull());
+		}
+		else if (individualType == Individual.Type.UNKNOWN) {
+			selectConditionStep = selectConditionStep.and(
+				DSL.field(
+					"identity.individualId"
+				).isNull());
+		}
+
 		List<Map<String, Object>> recordMaps = queryExecutor.queryForList(
-			Function.identity(),
-			selectJoinStep.where(
-				_createWhereClauseCondition(
-					assetId, assetTitle, channelId,
-					timeRange.getIncludePreviousTimeRange())
-			).groupBy(
-				previousField
-			));
+			Function.identity(), selectConditionStep.groupBy(previousField));
 
 		return _toMetric(assetId, assetTitle, recordMaps, selectedMetrics);
 	}
