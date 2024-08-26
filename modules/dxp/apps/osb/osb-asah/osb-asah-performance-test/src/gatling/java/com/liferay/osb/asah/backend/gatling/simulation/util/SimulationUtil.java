@@ -14,9 +14,13 @@ import io.gatling.javaapi.core.CoreDsl;
 import io.gatling.javaapi.http.HttpDsl;
 import io.gatling.javaapi.http.HttpProtocolBuilder;
 
+import java.util.Collections;
 import java.util.Random;
 
 import org.apache.commons.codec.digest.DigestUtils;
+
+import org.json.JSONArray;
+import org.json.JSONObject;
 
 /**
  * @author Ivica Cardic
@@ -24,14 +28,37 @@ import org.apache.commons.codec.digest.DigestUtils;
 public class SimulationUtil {
 
 	public static Body generateRandomAnalyticsMessageBody() {
-		return CoreDsl.StringBody(
-			session -> String.format(
-				"{\"context\":{\"key\":\"value\"},\"dataSourceId\":1," +
-					"\"events\":[{\"applicationId\":\"applicationId\"," +
-						"\"eventId\":\"%s\",\"eventDate\":" +
-							"\"2024-08-19T13:52:33.123Z\"}],\"id\":%s," +
-								"\"userId\":1}",
-				_RANDOM.nextLong(), _RANDOM.nextLong()));
+		JSONObject bodyJSONObject = new JSONObject();
+
+		JSONObject contextJSONObject = new JSONObject();
+
+		contextJSONObject.put("key", "value");
+
+		bodyJSONObject.put(
+			"context", contextJSONObject
+		).put(
+			"dataSourceId", 1
+		);
+
+		JSONObject eventJSONObject = new JSONObject();
+
+		eventJSONObject.put(
+			"applicationId", "applicationId"
+		).put(
+			"eventDate", "2024-08-19T13:52:33.123Z"
+		).put(
+			"eventId", _RANDOM.nextLong()
+		);
+
+		bodyJSONObject.put(
+			"events", new JSONArray(Collections.singleton(eventJSONObject))
+		).put(
+			"id", _RANDOM.nextLong()
+		).put(
+			"userId", 1
+		);
+
+		return CoreDsl.StringBody(bodyJSONObject.toString());
 	}
 
 	public static ChainBuilder get(String name, String path) {

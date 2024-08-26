@@ -21,4 +21,5 @@ configurations.all {
 
 dependencies {
 	gatlingImplementation group: "commons-codec", name: "commons-codec", version: "1.17.1"
+	gatlingImplementation group: "org.json", name: "json", version: "20240303"
 }
