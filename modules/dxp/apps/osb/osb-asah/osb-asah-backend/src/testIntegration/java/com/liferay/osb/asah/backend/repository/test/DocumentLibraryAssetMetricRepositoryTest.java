@@ -8,7 +8,7 @@ package com.liferay.osb.asah.backend.repository.test;
 import com.liferay.osb.asah.backend.model.AudienceReport;
 import com.liferay.osb.asah.backend.model.DocumentLibraryMetric;
 import com.liferay.osb.asah.backend.model.DocumentLibraryMetricType;
-import com.liferay.osb.asah.backend.model.Individual;
+import com.liferay.osb.asah.backend.model.IdentityType;
 import com.liferay.osb.asah.backend.model.Metric;
 import com.liferay.osb.asah.backend.repository.AssetMetricRepository;
 import com.liferay.osb.asah.common.model.Interval;
@@ -144,7 +144,7 @@ public class DocumentLibraryAssetMetricRepositoryTest
 	public void testGetPreviewsAssetMetric() {
 		DocumentLibraryMetric documentLibraryMetric =
 			_assetMetricRepository.getAssetMetric(
-				"e131fabc", null, 1L, Individual.Type.ALL,
+				"e131fabc", null, 1L, IdentityType.ALL,
 				SetUtil.of(DocumentLibraryMetricType.PREVIEWS.getName()),
 				TimeRange.LAST_24_HOURS);
 
@@ -210,7 +210,7 @@ public class DocumentLibraryAssetMetricRepositoryTest
 	public void testGetRatingsAssetMetric() {
 		DocumentLibraryMetric documentLibraryMetric =
 			_assetMetricRepository.getAssetMetric(
-				"e131fabc", null, 1L, Individual.Type.ALL,
+				"e131fabc", null, 1L, IdentityType.ALL,
 				SetUtil.of(DocumentLibraryMetricType.RATINGS.getName()),
 				TimeRange.LAST_24_HOURS);
 

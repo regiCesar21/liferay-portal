@@ -9,6 +9,7 @@ import com.liferay.osb.asah.backend.model.AssetMetric;
 import com.liferay.osb.asah.backend.model.AssetType;
 import com.liferay.osb.asah.backend.model.AudienceReport;
 import com.liferay.osb.asah.backend.model.HistogramMetric;
+import com.liferay.osb.asah.backend.model.IdentityType;
 import com.liferay.osb.asah.backend.model.Individual;
 import com.liferay.osb.asah.backend.model.Metric;
 import com.liferay.osb.asah.common.model.Interval;
@@ -36,7 +37,7 @@ public interface AssetMetricRepository<T extends AssetMetric> {
 
 	public T getAssetMetric(
 		@Nullable String assetId, @Nullable String assetTitle,
-		@Nullable Long channelId, Individual.Type individualType,
+		@Nullable Long channelId, IdentityType identityType,
 		Set<String> selectedMetrics, TimeRange timeRange);
 
 	public List<T> getAssetMetrics(

@@ -9,6 +9,7 @@ import com.liferay.osb.asah.backend.constants.DataConstants;
 import com.liferay.osb.asah.backend.model.AssetMetric;
 import com.liferay.osb.asah.backend.model.AudienceReport;
 import com.liferay.osb.asah.backend.model.HistogramMetric;
+import com.liferay.osb.asah.backend.model.IdentityType;
 import com.liferay.osb.asah.backend.model.Individual;
 import com.liferay.osb.asah.backend.model.Metric;
 import com.liferay.osb.asah.backend.repository.AssetMetricRepository;
@@ -182,7 +183,7 @@ public abstract class BaseAssetMetricRepository<T extends AssetMetric>
 	@Override
 	public T getAssetMetric(
 		@Nullable String assetId, @Nullable String assetTitle,
-		@Nullable Long channelId, Individual.Type individualType,
+		@Nullable Long channelId, IdentityType identityType,
 		Set<String> selectedMetrics, TimeRange timeRange) {
 
 		Field<Boolean> previousField = DSL.when(
@@ -209,7 +210,7 @@ public abstract class BaseAssetMetricRepository<T extends AssetMetric>
 		SelectJoinStep<Record> selectJoinStep = getAssetMetricSelectJoinStep(
 			selectSelectStep, timeRange);
 
-		if (individualType != Individual.Type.ALL) {
+		if (identityType != IdentityType.ALL) {
 			selectJoinStep = selectJoinStep.join(
 				"BQIdentity as identity"
 			).on(
@@ -226,13 +227,13 @@ public abstract class BaseAssetMetricRepository<T extends AssetMetric>
 				assetId, assetTitle, channelId,
 				timeRange.getIncludePreviousTimeRange()));
 
-		if (individualType == Individual.Type.KNOWN) {
+		if (identityType == IdentityType.KNOWN) {
 			selectConditionStep = selectConditionStep.and(
 				DSL.field(
 					"identity.individualId"
 				).isNotNull());
 		}
-		else if (individualType == Individual.Type.UNKNOWN) {
+		else if (identityType == IdentityType.UNKNOWN) {
 			selectConditionStep = selectConditionStep.and(
 				DSL.field(
 					"identity.individualId"

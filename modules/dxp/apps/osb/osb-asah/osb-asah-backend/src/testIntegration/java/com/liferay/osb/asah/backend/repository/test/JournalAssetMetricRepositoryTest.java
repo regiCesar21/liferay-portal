@@ -6,7 +6,7 @@
 package com.liferay.osb.asah.backend.repository.test;
 
 import com.liferay.osb.asah.backend.model.AudienceReport;
-import com.liferay.osb.asah.backend.model.Individual;
+import com.liferay.osb.asah.backend.model.IdentityType;
 import com.liferay.osb.asah.backend.model.JournalMetric;
 import com.liferay.osb.asah.backend.model.JournalMetricType;
 import com.liferay.osb.asah.backend.model.Metric;
@@ -157,7 +157,7 @@ public class JournalAssetMetricRepositoryTest
 	@Test
 	public void testGetViewsAssetMetric() {
 		JournalMetric journalMetric = _assetMetricRepository.getAssetMetric(
-			"e131fabc", null, 1L, Individual.Type.ALL,
+			"e131fabc", null, 1L, IdentityType.ALL,
 			SetUtil.of(JournalMetricType.VIEWS.getName()),
 			TimeRange.LAST_24_HOURS);
 
