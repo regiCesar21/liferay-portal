@@ -12,7 +12,7 @@ pipeline {
 		IMAGE_NAME = "liferaycloud/com-liferay-osb-asah-private"
 		IMAGE_TAG_SUFFIX = "${sh(script: 'date +%Y%m%d', returnStdout: true).trim()}-${GIT_HASH}"
 
-		DOCKER_BUILD_ARGS = "--build-arg GIT_HASH=${GIT_HASH} --build-arg LABEL_BUILD_DATE=${LABEL_BUILD_DATE} --build-arg LABEL_VCS_REF=${GIT_COMMIT} --no-cache -f ./Dockerfile ./"
+		DOCKER_BUILD_ARGS = "--build-arg GIT_HASH=${GIT_HASH} --build-arg LABEL_BUILD_DATE=${LABEL_BUILD_DATE} --build-arg LABEL_VCS_REF=${GIT_COMMIT} --file ./Dockerfile --no-cache ./"
 	}
 
 	stages {
@@ -99,7 +99,7 @@ pipeline {
                         withDockerRegistry([credentialsId: "dockerhub", url: ""]) {
                             osbAsahPerformanceTestImage = docker.build(
                                 "${IMAGE_NAME}:osb-asah-performance-test-${IMAGE_TAG_SUFFIX}",
-                                "--no-cache -f ./Dockerfile ../")
+                                "--file ./Dockerfile --no-cache ../")
 
                             osbAsahPerformanceTestImage.push()
                         }
