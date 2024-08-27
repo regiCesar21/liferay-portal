@@ -368,10 +368,10 @@ public class BQEventRepositoryTest
 			breakdownRows,
 			new HashMap<String, BigDecimal>() {
 				{
+					put("anonymous", BigDecimal.valueOf(1));
 					put("database administrator", BigDecimal.valueOf(1.25));
 					put("engineer", BigDecimal.valueOf(1.25));
 					put("manager", BigDecimal.valueOf(1.20));
-					put("undefined", BigDecimal.valueOf(1));
 				}
 			});
 
@@ -616,10 +616,10 @@ public class BQEventRepositoryTest
 			breakdownRows,
 			new HashMap<String, BigDecimal>() {
 				{
+					put("anonymous", BigDecimal.valueOf(3));
 					put("database administrator", BigDecimal.valueOf(10));
 					put("engineer", BigDecimal.valueOf(5));
 					put("manager", BigDecimal.valueOf(6));
-					put("undefined", BigDecimal.valueOf(3));
 				}
 			});
 
@@ -864,10 +864,10 @@ public class BQEventRepositoryTest
 			breakdownRows,
 			new HashMap<String, BigDecimal>() {
 				{
+					put("anonymous", BigDecimal.valueOf(3));
 					put("database administrator", BigDecimal.valueOf(8));
 					put("engineer", BigDecimal.valueOf(4));
 					put("manager", BigDecimal.valueOf(5));
-					put("undefined", BigDecimal.valueOf(3));
 				}
 			});
 
