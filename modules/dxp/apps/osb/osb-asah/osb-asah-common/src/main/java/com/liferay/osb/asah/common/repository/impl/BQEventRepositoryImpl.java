@@ -3104,7 +3104,7 @@ public class BQEventRepositoryImpl
 				DSL.field(
 					"BQEvent.emailAddressHashed"
 				).isNull(),
-				DSL.val("undefined")
+				DSL.val("anonymous")
 			).when(
 				_getEventDateRangeFilter(
 					"BQEvent.eventDate", timeRange.getEndDate(),
@@ -3283,6 +3283,11 @@ public class BQEventRepositoryImpl
 			_dslHelper.getCastStringField(attributeField));
 
 		attributeField = DSL.when(
+			DSL.field(
+				"BQEvent.emailAddressHashed"
+			).isNull(),
+			DSL.val("anonymous")
+		).when(
 			attributeField.isNotNull(),
 			_dslHelper.getCastStringField(attributeField)
 		).else_(
