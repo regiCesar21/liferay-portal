@@ -89,16 +89,7 @@ public class LayoutImplTest {
 
 		Assert.assertEquals(value, _layout.getThemeSetting(key, "regular"));
 
-		LayoutPageTemplateEntry masterLayoutPageTemplateEntry =
-			_layoutPageTemplateEntryLocalService.addLayoutPageTemplateEntry(
-				null, TestPropsValues.getUserId(), _group.getGroupId(), 0,
-				RandomTestUtil.randomString(),
-				LayoutPageTemplateEntryTypeConstants.TYPE_MASTER_LAYOUT, 0,
-				WorkflowConstants.STATUS_APPROVED,
-				ServiceContextTestUtil.getServiceContext(_group.getGroupId()));
-
-		Layout masterLayout = _layoutLocalService.fetchLayout(
-			masterLayoutPageTemplateEntry.getPlid());
+		Layout masterLayout = _addMasterLayout();
 
 		masterLayout = _layoutLocalService.updateLookAndFeel(
 			masterLayout.getGroupId(), masterLayout.isPrivateLayout(),
@@ -129,16 +120,7 @@ public class LayoutImplTest {
 			_group.getGroupId(), false, "minium_WAR_miniumtheme", "01",
 			StringPool.BLANK);
 
-		LayoutPageTemplateEntry masterLayoutPageTemplateEntry =
-			_layoutPageTemplateEntryLocalService.addLayoutPageTemplateEntry(
-				TestPropsValues.getUserId(), _group.getGroupId(), 0,
-				RandomTestUtil.randomString(),
-				LayoutPageTemplateEntryTypeConstants.TYPE_MASTER_LAYOUT, 0,
-				WorkflowConstants.STATUS_APPROVED,
-				ServiceContextTestUtil.getServiceContext(_group.getGroupId()));
-
-		Layout masterLayout = _layoutLocalService.fetchLayout(
-			masterLayoutPageTemplateEntry.getPlid());
+		Layout masterLayout = _addMasterLayout();
 
 		masterLayout = _layoutLocalService.updateLookAndFeel(
 			masterLayout.getGroupId(), masterLayout.isPrivateLayout(),
@@ -376,6 +358,19 @@ public class LayoutImplTest {
 		_assertGetTheme(LayoutTestUtil.addLayout(_group, false));
 	}
 
+	private Layout _addMasterLayout() throws Exception {
+		LayoutPageTemplateEntry masterLayoutPageTemplateEntry =
+			_layoutPageTemplateEntryLocalService.addLayoutPageTemplateEntry(
+				TestPropsValues.getUserId(), _group.getGroupId(), 0,
+				RandomTestUtil.randomString(),
+				LayoutPageTemplateEntryTypeConstants.TYPE_MASTER_LAYOUT, 0,
+				WorkflowConstants.STATUS_APPROVED,
+				ServiceContextTestUtil.getServiceContext(_group.getGroupId()));
+
+		return _layoutLocalService.fetchLayout(
+			masterLayoutPageTemplateEntry.getPlid());
+	}
+
 	private String _addThemeSettingProperty(
 		String key, String value,
 		UnicodeProperties typeSettingsUnicodeProperties) {
@@ -401,16 +396,7 @@ public class LayoutImplTest {
 
 		_assertThemeId(layout, "classic_WAR_classictheme");
 
-		LayoutPageTemplateEntry masterLayoutPageTemplateEntry =
-			_layoutPageTemplateEntryLocalService.addLayoutPageTemplateEntry(
-				TestPropsValues.getUserId(), _group.getGroupId(), 0,
-				RandomTestUtil.randomString(),
-				LayoutPageTemplateEntryTypeConstants.TYPE_MASTER_LAYOUT, 0,
-				WorkflowConstants.STATUS_APPROVED,
-				ServiceContextTestUtil.getServiceContext(_group.getGroupId()));
-
-		Layout masterLayout = _layoutLocalService.fetchLayout(
-			masterLayoutPageTemplateEntry.getPlid());
+		Layout masterLayout = _addMasterLayout();
 
 		masterLayout = _layoutLocalService.updateLookAndFeel(
 			masterLayout.getGroupId(), masterLayout.isPrivateLayout(),
