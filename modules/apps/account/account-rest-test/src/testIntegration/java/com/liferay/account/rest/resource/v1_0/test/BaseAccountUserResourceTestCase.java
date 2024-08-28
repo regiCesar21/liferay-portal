@@ -116,7 +116,32 @@ public abstract class BaseAccountUserResourceTestCase {
 
 	@Test
 	public void testClientSerDesToDTO() throws Exception {
-		ObjectMapper objectMapper = new ObjectMapper() {
+		ObjectMapper objectMapper = getClientSerDesObjectMapper();
+
+		AccountUser accountUser1 = randomAccountUser();
+
+		String json = objectMapper.writeValueAsString(accountUser1);
+
+		AccountUser accountUser2 = AccountUserSerDes.toDTO(json);
+
+		Assert.assertTrue(equals(accountUser1, accountUser2));
+	}
+
+	@Test
+	public void testClientSerDesToJSON() throws Exception {
+		ObjectMapper objectMapper = getClientSerDesObjectMapper();
+
+		AccountUser accountUser = randomAccountUser();
+
+		String json1 = objectMapper.writeValueAsString(accountUser);
+		String json2 = AccountUserSerDes.toJSON(accountUser);
+
+		Assert.assertEquals(
+			objectMapper.readTree(json1), objectMapper.readTree(json2));
+	}
+
+	protected ObjectMapper getClientSerDesObjectMapper() {
+		return new ObjectMapper() {
 			{
 				configure(MapperFeature.SORT_PROPERTIES_ALPHABETICALLY, true);
 				configure(
@@ -131,40 +156,6 @@ public abstract class BaseAccountUserResourceTestCase {
 					PropertyAccessor.GETTER, JsonAutoDetect.Visibility.NONE);
 			}
 		};
-
-		AccountUser accountUser1 = randomAccountUser();
-
-		String json = objectMapper.writeValueAsString(accountUser1);
-
-		AccountUser accountUser2 = AccountUserSerDes.toDTO(json);
-
-		Assert.assertTrue(equals(accountUser1, accountUser2));
-	}
-
-	@Test
-	public void testClientSerDesToJSON() throws Exception {
-		ObjectMapper objectMapper = new ObjectMapper() {
-			{
-				configure(MapperFeature.SORT_PROPERTIES_ALPHABETICALLY, true);
-				configure(
-					SerializationFeature.WRITE_ENUMS_USING_TO_STRING, true);
-				setDateFormat(new ISO8601DateFormat());
-				setSerializationInclusion(JsonInclude.Include.NON_EMPTY);
-				setSerializationInclusion(JsonInclude.Include.NON_NULL);
-				setVisibility(
-					PropertyAccessor.FIELD, JsonAutoDetect.Visibility.ANY);
-				setVisibility(
-					PropertyAccessor.GETTER, JsonAutoDetect.Visibility.NONE);
-			}
-		};
-
-		AccountUser accountUser = randomAccountUser();
-
-		String json1 = objectMapper.writeValueAsString(accountUser);
-		String json2 = AccountUserSerDes.toJSON(accountUser);
-
-		Assert.assertEquals(
-			objectMapper.readTree(json1), objectMapper.readTree(json2));
 	}
 
 	@Test
