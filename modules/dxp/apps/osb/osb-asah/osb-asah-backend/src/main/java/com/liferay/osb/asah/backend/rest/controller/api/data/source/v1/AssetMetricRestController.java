@@ -38,7 +38,7 @@ public class AssetMetricRestController {
 	public AssetMetricDTO getAssetMetricDTO(
 		@RequestParam String assetId,
 		@PathVariable("assetType") String assetTypeString,
-		@RequestParam Long channelId, @RequestParam String identityType,
+		@RequestParam Set<Long> channelIds, @RequestParam String identityType,
 		@RequestParam(defaultValue = "30") int rangeKey,
 		@RequestParam Set<String> selectedMetrics) {
 
@@ -48,13 +48,12 @@ public class AssetMetricRestController {
 			assetType);
 
 		searchQueryContext.setAssetId(assetId);
-		searchQueryContext.setChannelId(channelId);
 		searchQueryContext.setTimeRange(TimeRange.of(rangeKey));
 
 		return new AssetMetricDTO(
 			(AssetMetric)_metricDog.getAssetMetric(
-				IdentityType.valueOf(identityType), searchQueryContext,
-				selectedMetrics),
+				channelIds, IdentityType.valueOf(identityType),
+				searchQueryContext, selectedMetrics),
 			_getMetricTypes(assetType, selectedMetrics));
 	}
 

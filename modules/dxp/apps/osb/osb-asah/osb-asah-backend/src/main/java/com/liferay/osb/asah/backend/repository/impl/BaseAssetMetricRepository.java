@@ -183,67 +183,23 @@ public abstract class BaseAssetMetricRepository<T extends AssetMetric>
 	@Override
 	public T getAssetMetric(
 		@Nullable String assetId, @Nullable String assetTitle,
-		@Nullable Long channelId, IdentityType identityType,
-		Set<String> selectedMetrics, TimeRange timeRange) {
+		@Nullable Long channelId, Set<String> selectedMetrics,
+		TimeRange timeRange) {
 
-		Field<Boolean> previousField = DSL.when(
-			DSL.field(
-				"eventDate"
-			).ge(
-				dslHelper.getDateParam(
-					timeRange.getStartLocalDateTime(),
-					timeZoneDog.getTimeZoneId())
-			),
-			false
-		).otherwise(
-			true
-		).as(
-			"previous"
-		);
+		return _getAssetMetric(
+			assetId, assetTitle, channelId, null, IdentityType.ALL,
+			selectedMetrics, timeRange);
+	}
 
-		SelectSelectStep<Record> selectSelectStep = dslContext.select(
-			_getMetricFields(selectedMetrics, timeRange)
-		).select(
-			previousField
-		);
+	@Override
+	public T getAssetMetric(
+		String assetId, String assetTitle, Set<Long> channelIds,
+		IdentityType identityType, Set<String> selectedMetrics,
+		TimeRange timeRange) {
 
-		SelectJoinStep<Record> selectJoinStep = getAssetMetricSelectJoinStep(
-			selectSelectStep, timeRange);
-
-		if (identityType != IdentityType.ALL) {
-			selectJoinStep = selectJoinStep.join(
-				"BQIdentity as identity"
-			).on(
-				DSL.field(
-					"metric.userId"
-				).eq(
-					DSL.field("identity.id")
-				)
-			);
-		}
-
-		SelectConditionStep<Record> selectConditionStep = selectJoinStep.where(
-			_createWhereClauseCondition(
-				assetId, assetTitle, channelId,
-				timeRange.getIncludePreviousTimeRange()));
-
-		if (identityType == IdentityType.KNOWN) {
-			selectConditionStep = selectConditionStep.and(
-				DSL.field(
-					"identity.individualId"
-				).isNotNull());
-		}
-		else if (identityType == IdentityType.UNKNOWN) {
-			selectConditionStep = selectConditionStep.and(
-				DSL.field(
-					"identity.individualId"
-				).isNull());
-		}
-
-		List<Map<String, Object>> recordMaps = queryExecutor.queryForList(
-			Function.identity(), selectConditionStep.groupBy(previousField));
-
-		return _toMetric(assetId, assetTitle, recordMaps, selectedMetrics);
+		return _getAssetMetric(
+			assetId, assetTitle, null, channelIds, identityType,
+			selectedMetrics, timeRange);
 	}
 
 	@Override
@@ -1155,6 +1111,84 @@ public abstract class BaseAssetMetricRepository<T extends AssetMetric>
 
 		return _createWhereClauseCondition(
 			assetId, assetTitle, channelId, null, null, timeRange);
+	}
+
+	private T _getAssetMetric(
+		@Nullable String assetId, @Nullable String assetTitle,
+		@Nullable Long channelId, @Nullable Set<Long> channelIds,
+		IdentityType identityType, Set<String> selectedMetrics,
+		TimeRange timeRange) {
+
+		Field<Boolean> previousField = DSL.when(
+			DSL.field(
+				"eventDate"
+			).ge(
+				dslHelper.getDateParam(
+					timeRange.getStartLocalDateTime(),
+					timeZoneDog.getTimeZoneId())
+			),
+			false
+		).otherwise(
+			true
+		).as(
+			"previous"
+		);
+
+		SelectSelectStep<Record> selectSelectStep = dslContext.select(
+			_getMetricFields(selectedMetrics, timeRange)
+		).select(
+			previousField
+		);
+
+		SelectJoinStep<Record> selectJoinStep = getAssetMetricSelectJoinStep(
+			selectSelectStep, timeRange);
+
+		if (identityType != IdentityType.ALL) {
+			selectJoinStep = selectJoinStep.join(
+				"BQIdentity as identity"
+			).on(
+				DSL.field(
+					"metric.userId"
+				).eq(
+					DSL.field("identity.id")
+				)
+			);
+		}
+
+		Condition condition = DSL.noCondition();
+
+		if ((channelIds != null) && !channelIds.isEmpty()) {
+			condition = DSL.field(
+				"metric.channelId"
+			).in(
+				channelIds
+			);
+		}
+
+		SelectConditionStep<Record> selectConditionStep = selectJoinStep.where(
+			DSL.and(
+				condition,
+				_createWhereClauseCondition(
+					assetId, assetTitle, channelId,
+					timeRange.getIncludePreviousTimeRange())));
+
+		if (identityType == IdentityType.KNOWN) {
+			selectConditionStep = selectConditionStep.and(
+				DSL.field(
+					"identity.individualId"
+				).isNotNull());
+		}
+		else if (identityType == IdentityType.UNKNOWN) {
+			selectConditionStep = selectConditionStep.and(
+				DSL.field(
+					"identity.individualId"
+				).isNull());
+		}
+
+		List<Map<String, Object>> recordMaps = queryExecutor.queryForList(
+			Function.identity(), selectConditionStep.groupBy(previousField));
+
+		return _toMetric(assetId, assetTitle, recordMaps, selectedMetrics);
 	}
 
 	private Long _getLongValue(

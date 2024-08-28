@@ -63,8 +63,13 @@ public class MetricDog {
 	}
 
 	public <T extends AssetMetric> T getAssetMetric(
-		IdentityType identityType, SearchQueryContext searchQueryContext,
-		Set<String> selectedMetrics) {
+		SearchQueryContext searchQueryContext) {
+
+		return getAssetMetric(searchQueryContext, Collections.emptySet());
+	}
+
+	public <T extends AssetMetric> T getAssetMetric(
+		SearchQueryContext searchQueryContext, Set<String> selectedMetrics) {
 
 		AssetMetricRepository<T> assetMetricRepository =
 			(AssetMetricRepository<T>)_getAssetMetricRepository(
@@ -78,21 +83,27 @@ public class MetricDog {
 
 		return assetMetricRepository.getAssetMetric(
 			searchQueryContext.getAssetId(), assetTitle,
-			searchQueryContext.getChannelIdAsLong(), identityType,
-			selectedMetrics, searchQueryContext.getTimeRange());
+			searchQueryContext.getChannelIdAsLong(), selectedMetrics,
+			searchQueryContext.getTimeRange());
 	}
 
 	public <T extends AssetMetric> T getAssetMetric(
-		SearchQueryContext searchQueryContext) {
-
-		return getAssetMetric(searchQueryContext, Collections.emptySet());
-	}
-
-	public <T extends AssetMetric> T getAssetMetric(
+		Set<Long> channelIds, IdentityType identityType,
 		SearchQueryContext searchQueryContext, Set<String> selectedMetrics) {
 
-		return getAssetMetric(
-			IdentityType.ALL, searchQueryContext, selectedMetrics);
+		AssetMetricRepository<T> assetMetricRepository =
+			(AssetMetricRepository<T>)_getAssetMetricRepository(
+				searchQueryContext.getAssetType());
+
+		String assetTitle = null;
+
+		if (searchQueryContext.getAssetType() != AssetType.CUSTOM) {
+			assetTitle = searchQueryContext.getTitle();
+		}
+
+		return assetMetricRepository.getAssetMetric(
+			searchQueryContext.getAssetId(), assetTitle, channelIds,
+			identityType, selectedMetrics, searchQueryContext.getTimeRange());
 	}
 
 	public <T extends AssetMetric> List<T> getAssetMetrics(
