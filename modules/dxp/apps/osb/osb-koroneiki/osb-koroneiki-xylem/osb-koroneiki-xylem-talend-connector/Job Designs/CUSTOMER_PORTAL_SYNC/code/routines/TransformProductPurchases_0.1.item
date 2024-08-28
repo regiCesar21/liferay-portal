@@ -622,6 +622,7 @@ public class TransformProductPurchases {
 				name.equals(
 					SubscriptionConstants.GROUP_NAME_ENTERPRISE_SEARCH) ||
 				name.equals(SubscriptionConstants.GROUP_NAME_LIFERAY_PAAS) ||
+				name.equals(SubscriptionConstants.GROUP_NAME_LIFERAY_SAAS) ||
 				name.equals(
 					SubscriptionConstants.GROUP_NAME_LIFERAY_SELF_HOSTED) ||
 				name.equals(SubscriptionConstants.GROUP_NAME_PORTAL)) {
