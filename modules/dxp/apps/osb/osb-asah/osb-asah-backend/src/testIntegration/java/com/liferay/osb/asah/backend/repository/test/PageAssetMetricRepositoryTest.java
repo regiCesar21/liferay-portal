@@ -6,7 +6,6 @@
 package com.liferay.osb.asah.backend.repository.test;
 
 import com.liferay.osb.asah.backend.model.AudienceReport;
-import com.liferay.osb.asah.backend.model.IdentityType;
 import com.liferay.osb.asah.backend.model.Metric;
 import com.liferay.osb.asah.backend.model.PageMetric;
 import com.liferay.osb.asah.backend.repository.AssetMetricRepository;
@@ -154,8 +153,7 @@ public class PageAssetMetricRepositoryTest
 	public void testGetViewsAssetMetric() {
 		PageMetric pageMetric = _assetMetricRepository.getAssetMetric(
 			"https://www.beryl.com/products/commercial/irrigation/FF-2100",
-			"Title 1", 1L, IdentityType.ALL,
-			SetUtil.of(PageMetricType.VIEWS.getName()),
+			"Title 1", 1L, SetUtil.of(PageMetricType.VIEWS.getName()),
 			TimeRange.LAST_24_HOURS);
 
 		Assertions.assertNotNull(pageMetric);
@@ -307,7 +305,7 @@ public class PageAssetMetricRepositoryTest
 	public void testGetVisitorMetricsLast7Days() {
 		PageMetric pageMetric = _assetMetricRepository.getAssetMetric(
 			"https://www.beryl.com/delivery", "Beryl Delivery", 1L,
-			IdentityType.ALL, SetUtil.of(PageMetricType.VISITORS.getName()),
+			SetUtil.of(PageMetricType.VISITORS.getName()),
 			TimeRange.LAST_7_DAYS);
 
 		Assertions.assertNotNull(pageMetric);
@@ -324,8 +322,7 @@ public class PageAssetMetricRepositoryTest
 	public void testGetVisitorMetricsLast24Hours() {
 		PageMetric pageMetric = _assetMetricRepository.getAssetMetric(
 			"https://www.beryl.com/products/commercial/irrigation/FF-2100",
-			"Title 1", 1L, IdentityType.ALL,
-			SetUtil.of(PageMetricType.VISITORS.getName()),
+			"Title 1", 1L, SetUtil.of(PageMetricType.VISITORS.getName()),
 			TimeRange.LAST_24_HOURS);
 
 		Assertions.assertNotNull(pageMetric);
