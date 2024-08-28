@@ -111,7 +111,32 @@ public abstract class BaseAppWorkflowResourceTestCase {
 
 	@Test
 	public void testClientSerDesToDTO() throws Exception {
-		ObjectMapper objectMapper = new ObjectMapper() {
+		ObjectMapper objectMapper = getClientSerDesObjectMapper();
+
+		AppWorkflow appWorkflow1 = randomAppWorkflow();
+
+		String json = objectMapper.writeValueAsString(appWorkflow1);
+
+		AppWorkflow appWorkflow2 = AppWorkflowSerDes.toDTO(json);
+
+		Assert.assertTrue(equals(appWorkflow1, appWorkflow2));
+	}
+
+	@Test
+	public void testClientSerDesToJSON() throws Exception {
+		ObjectMapper objectMapper = getClientSerDesObjectMapper();
+
+		AppWorkflow appWorkflow = randomAppWorkflow();
+
+		String json1 = objectMapper.writeValueAsString(appWorkflow);
+		String json2 = AppWorkflowSerDes.toJSON(appWorkflow);
+
+		Assert.assertEquals(
+			objectMapper.readTree(json1), objectMapper.readTree(json2));
+	}
+
+	protected ObjectMapper getClientSerDesObjectMapper() {
+		return new ObjectMapper() {
 			{
 				configure(MapperFeature.SORT_PROPERTIES_ALPHABETICALLY, true);
 				configure(
@@ -126,40 +151,6 @@ public abstract class BaseAppWorkflowResourceTestCase {
 					PropertyAccessor.GETTER, JsonAutoDetect.Visibility.NONE);
 			}
 		};
-
-		AppWorkflow appWorkflow1 = randomAppWorkflow();
-
-		String json = objectMapper.writeValueAsString(appWorkflow1);
-
-		AppWorkflow appWorkflow2 = AppWorkflowSerDes.toDTO(json);
-
-		Assert.assertTrue(equals(appWorkflow1, appWorkflow2));
-	}
-
-	@Test
-	public void testClientSerDesToJSON() throws Exception {
-		ObjectMapper objectMapper = new ObjectMapper() {
-			{
-				configure(MapperFeature.SORT_PROPERTIES_ALPHABETICALLY, true);
-				configure(
-					SerializationFeature.WRITE_ENUMS_USING_TO_STRING, true);
-				setDateFormat(new ISO8601DateFormat());
-				setSerializationInclusion(JsonInclude.Include.NON_EMPTY);
-				setSerializationInclusion(JsonInclude.Include.NON_NULL);
-				setVisibility(
-					PropertyAccessor.FIELD, JsonAutoDetect.Visibility.ANY);
-				setVisibility(
-					PropertyAccessor.GETTER, JsonAutoDetect.Visibility.NONE);
-			}
-		};
-
-		AppWorkflow appWorkflow = randomAppWorkflow();
-
-		String json1 = objectMapper.writeValueAsString(appWorkflow);
-		String json2 = AppWorkflowSerDes.toJSON(appWorkflow);
-
-		Assert.assertEquals(
-			objectMapper.readTree(json1), objectMapper.readTree(json2));
 	}
 
 	@Test
