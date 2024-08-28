@@ -111,7 +111,32 @@ public abstract class BaseAssigneeUserResourceTestCase {
 
 	@Test
 	public void testClientSerDesToDTO() throws Exception {
-		ObjectMapper objectMapper = new ObjectMapper() {
+		ObjectMapper objectMapper = getClientSerDesObjectMapper();
+
+		AssigneeUser assigneeUser1 = randomAssigneeUser();
+
+		String json = objectMapper.writeValueAsString(assigneeUser1);
+
+		AssigneeUser assigneeUser2 = AssigneeUserSerDes.toDTO(json);
+
+		Assert.assertTrue(equals(assigneeUser1, assigneeUser2));
+	}
+
+	@Test
+	public void testClientSerDesToJSON() throws Exception {
+		ObjectMapper objectMapper = getClientSerDesObjectMapper();
+
+		AssigneeUser assigneeUser = randomAssigneeUser();
+
+		String json1 = objectMapper.writeValueAsString(assigneeUser);
+		String json2 = AssigneeUserSerDes.toJSON(assigneeUser);
+
+		Assert.assertEquals(
+			objectMapper.readTree(json1), objectMapper.readTree(json2));
+	}
+
+	protected ObjectMapper getClientSerDesObjectMapper() {
+		return new ObjectMapper() {
 			{
 				configure(MapperFeature.SORT_PROPERTIES_ALPHABETICALLY, true);
 				configure(
@@ -126,40 +151,6 @@ public abstract class BaseAssigneeUserResourceTestCase {
 					PropertyAccessor.GETTER, JsonAutoDetect.Visibility.NONE);
 			}
 		};
-
-		AssigneeUser assigneeUser1 = randomAssigneeUser();
-
-		String json = objectMapper.writeValueAsString(assigneeUser1);
-
-		AssigneeUser assigneeUser2 = AssigneeUserSerDes.toDTO(json);
-
-		Assert.assertTrue(equals(assigneeUser1, assigneeUser2));
-	}
-
-	@Test
-	public void testClientSerDesToJSON() throws Exception {
-		ObjectMapper objectMapper = new ObjectMapper() {
-			{
-				configure(MapperFeature.SORT_PROPERTIES_ALPHABETICALLY, true);
-				configure(
-					SerializationFeature.WRITE_ENUMS_USING_TO_STRING, true);
-				setDateFormat(new ISO8601DateFormat());
-				setSerializationInclusion(JsonInclude.Include.NON_EMPTY);
-				setSerializationInclusion(JsonInclude.Include.NON_NULL);
-				setVisibility(
-					PropertyAccessor.FIELD, JsonAutoDetect.Visibility.ANY);
-				setVisibility(
-					PropertyAccessor.GETTER, JsonAutoDetect.Visibility.NONE);
-			}
-		};
-
-		AssigneeUser assigneeUser = randomAssigneeUser();
-
-		String json1 = objectMapper.writeValueAsString(assigneeUser);
-		String json2 = AssigneeUserSerDes.toJSON(assigneeUser);
-
-		Assert.assertEquals(
-			objectMapper.readTree(json1), objectMapper.readTree(json2));
 	}
 
 	@Test
