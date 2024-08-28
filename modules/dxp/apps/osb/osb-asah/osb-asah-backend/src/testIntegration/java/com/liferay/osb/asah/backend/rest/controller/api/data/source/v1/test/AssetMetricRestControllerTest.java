@@ -15,6 +15,7 @@ import com.liferay.osb.asah.test.util.annotation.BQSQLResource;
 import com.liferay.osb.asah.test.util.spring.OSBAsahTestExecutionListenersContext;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import org.junit.jupiter.api.Assertions;
@@ -34,7 +35,8 @@ public class AssetMetricRestControllerTest
 	public void testGetAssetMetricDTO() {
 		AssetMetricDTO assetMetricDTO =
 			_assetMetricRestController.getAssetMetricDTO(
-				"e131fabc", "blog", 1L, "ALL", 30, SetUtil.of("viewsMetric"));
+				"e131fabc", "blog", Collections.singleton(1L), "ALL", 30,
+				SetUtil.of("viewsMetric"));
 
 		Assertions.assertEquals("e131fabc", assetMetricDTO.getAssetId());
 		Assertions.assertEquals(
@@ -51,7 +53,8 @@ public class AssetMetricRestControllerTest
 		Assertions.assertEquals(9, metric.getValue());
 
 		assetMetricDTO = _assetMetricRestController.getAssetMetricDTO(
-			"e131fabc", "blog", 1L, "KNOWN", 30, SetUtil.of("viewsMetric"));
+			"e131fabc", "blog", Collections.singleton(1L), "KNOWN", 30,
+			SetUtil.of("viewsMetric"));
 
 		metrics = new ArrayList<>(assetMetricDTO.getSelectedMetrics());
 
@@ -62,7 +65,8 @@ public class AssetMetricRestControllerTest
 		Assertions.assertEquals(5, metric.getValue());
 
 		assetMetricDTO = _assetMetricRestController.getAssetMetricDTO(
-			"e131fabc", "blog", 1L, "UNKNOWN", 30, SetUtil.of("viewsMetric"));
+			"e131fabc", "blog", Collections.singleton(1L), "UNKNOWN", 30,
+			SetUtil.of("viewsMetric"));
 
 		metrics = new ArrayList<>(assetMetricDTO.getSelectedMetrics());
 
