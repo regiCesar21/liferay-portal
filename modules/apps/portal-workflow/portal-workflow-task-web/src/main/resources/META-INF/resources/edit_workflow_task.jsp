@@ -280,6 +280,7 @@ renderResponse.setTitle(workflowTaskDisplayContext.getHeaderTitle(workflowTask))
 								formName='<%= "fm" + discussionClassPK %>'
 								ratingsEnabled="<%= false %>"
 								redirect="<%= currentURL %>"
+								refreshPageOnReply="<%= true %>"
 								userId="<%= user.getUserId() %>"
 							/>
 						</liferay-ui:panel>
