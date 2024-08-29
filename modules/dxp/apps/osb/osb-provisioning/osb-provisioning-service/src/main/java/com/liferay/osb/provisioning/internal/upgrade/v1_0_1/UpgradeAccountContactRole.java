@@ -9,6 +9,7 @@ import com.liferay.osb.koroneiki.phloem.rest.client.dto.v1_0.Account;
 import com.liferay.osb.koroneiki.phloem.rest.client.dto.v1_0.Contact;
 import com.liferay.osb.koroneiki.phloem.rest.client.dto.v1_0.ContactRole;
 import com.liferay.osb.provisioning.identity.management.provider.ContactIdentityProvider;
+import com.liferay.osb.provisioning.koroneiki.constants.ContactRoleConstants;
 import com.liferay.osb.provisioning.koroneiki.web.service.AccountWebService;
 import com.liferay.osb.provisioning.koroneiki.web.service.ContactRoleWebService;
 import com.liferay.osb.provisioning.koroneiki.web.service.ContactWebService;
@@ -20,6 +21,7 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import org.osgi.service.component.annotations.Component;
@@ -30,6 +32,94 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(service = UpgradeAccountContactRole.class)
 public class UpgradeAccountContactRole extends UpgradeProcess {
+
+	public void updateContactAccountRole() throws Exception {
+		ContactRole supportAdminContactRole =
+			_contactRoleWebService.getContactRole(
+				ContactRole.Type.ACCOUNT_CUSTOMER.toString(),
+				ContactRoleConstants.NAME_SUPPORT_ADMINISTRATOR);
+
+		ContactRole supportClosedWatcherContactRole =
+			_contactRoleWebService.getContactRole(
+				ContactRole.Type.ACCOUNT_CUSTOMER.toString(),
+				ContactRoleConstants.NAME_SUPPORT_CLOSED_WATCHER);
+
+		ContactRole supportRequesterContactRole =
+			_contactRoleWebService.getContactRole(
+				ContactRole.Type.ACCOUNT_CUSTOMER.toString(),
+				ContactRoleConstants.NAME_SUPPORT_REQUESTER);
+
+		ContactRole supportUserContactRole =
+			_contactRoleWebService.getContactRole(
+				ContactRole.Type.ACCOUNT_CUSTOMER.toString(),
+				ContactRoleConstants.NAME_SUPPORT_USER);
+
+		FilterQuery filterQuery = new FilterQuery();
+
+		filterQuery.addEquals(false, "region", "China");
+		filterQuery.addEquals(false, "region", "India");
+		filterQuery.addEquals(true, "status", "Active");
+
+		List<Account> accounts = _accountWebService.search(
+			StringPool.BLANK, filterQuery, 1, 1000, StringPool.BLANK);
+
+		for (Account account : accounts) {
+			FilterQuery filterQuery1 = new FilterQuery();
+
+			StringBundler sb = new StringBundler(3);
+
+			sb.append(account.getKey());
+			sb.append(StringPool.UNDERLINE);
+			sb.append(supportAdminContactRole.getKey());
+
+			filterQuery1.addLambdaContains(
+				true, "accountKeysContactRoleKeys", sb.toString());
+
+			List<Contact> contacts = _contactWebService.search(
+				StringPool.BLANK, filterQuery1, 1, 1, StringPool.BLANK);
+
+			if (contacts.isEmpty()) {
+				FilterQuery filterQuery2 = new FilterQuery();
+
+				filterQuery2.addLambdaContains(
+					true, "accountKeys", account.getKey());
+				filterQuery2.addLambdaContains(
+					true, "customerAccountKeys", account.getKey());
+
+				contacts = _contactWebService.search(
+					StringPool.BLANK, filterQuery2, 1, 100, StringPool.BLANK);
+
+				if (contacts.isEmpty()) {
+					continue;
+				}
+
+				Contact earliestContact = new Contact();
+
+				Date earliestDate = new Date();
+
+				for (Contact contact : contacts) {
+					if (earliestDate.after(contact.getDateCreated())) {
+						earliestContact = contact;
+						earliestDate = contact.getDateCreated();
+					}
+				}
+
+				_accountWebService.unassignContactRolesByEmailAddress(
+					StringPool.BLANK, StringPool.BLANK, account.getKey(),
+					earliestContact.getEmailAddress(),
+					new String[] {
+						supportClosedWatcherContactRole.getKey(),
+						supportRequesterContactRole.getKey(),
+						supportUserContactRole.getKey()
+					});
+
+				_accountWebService.assignContactRolesByEmailAddress(
+					StringPool.BLANK, StringPool.BLANK, account.getKey(),
+					earliestContact.getEmailAddress(),
+					new String[] {supportAdminContactRole.getKey()});
+			}
+		}
+	}
 
 	public void upgrade(
 			String accountKey, String emailAddress, String firstName,
