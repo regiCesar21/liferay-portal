@@ -1,0 +1,14 @@
+{
+	"operationName": "journalAudienceReportQuery",
+	"variables": {
+		"assetId": "Journal1",
+		"channelId": "12345",
+		"devices": "Any",
+		"location": "Any",
+		"rangeEnd": null,
+		"rangeKey": 7,
+		"rangeStart": null,
+		"title": "Web Content Title 1",
+		"touchpoint": null
+	}
+}
