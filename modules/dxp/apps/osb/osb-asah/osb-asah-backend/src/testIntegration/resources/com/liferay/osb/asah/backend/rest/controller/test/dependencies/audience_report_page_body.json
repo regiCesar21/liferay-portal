@@ -1,0 +1,13 @@
+{
+	"operationName": "pageAudienceReportQuery",
+	"variables": {
+		"channelId": "12345",
+		"devices": "Any",
+		"location": "Any",
+		"rangeEnd": null,
+		"rangeKey": 7,
+		"rangeStart": null,
+		"title": "Page Title 1",
+		"touchpoint": "https://www.beryl.com/page-1"
+	}
+}
