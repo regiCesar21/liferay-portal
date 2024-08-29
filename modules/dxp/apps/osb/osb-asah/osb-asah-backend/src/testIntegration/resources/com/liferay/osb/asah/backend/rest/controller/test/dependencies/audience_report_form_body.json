@@ -1,0 +1,14 @@
+{
+	"operationName": "formAudienceReportQuery",
+	"variables": {
+		"assetId": "Form1",
+		"channelId": "12345",
+		"devices": "Any",
+		"location": "Any",
+		"rangeEnd": null,
+		"rangeKey": 7,
+		"rangeStart": null,
+		"title": "Form 1",
+		"touchpoint": null
+	}
+}
