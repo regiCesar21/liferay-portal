@@ -29,7 +29,7 @@ public class SubscriptionConstants {
 
 	public static String GROUP_NAME_LIFERAY_PAAS = "Liferay PaaS";
 
-	public static String GROUP_NAME_LIFERAY_SAAS = "Liferay Saas";
+	public static String GROUP_NAME_LIFERAY_SAAS = "Liferay SaaS";
 
 	public static String GROUP_NAME_LIFERAY_SELF_HOSTED = "Liferay Self-Hosted";
 
