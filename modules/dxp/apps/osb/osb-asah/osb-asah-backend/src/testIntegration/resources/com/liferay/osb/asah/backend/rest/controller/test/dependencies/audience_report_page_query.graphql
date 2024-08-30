@@ -1,22 +1,3 @@
-query pageAudienceReportQuery($channelId: String, $devices: String, $location: String, $rangeEnd: String, $rangeKey: Int, $rangeStart: String, $title: String, $touchpoint: String) {
-	page(
-		channelId: $channelId
-		canonicalUrl: $touchpoint
-		country: $location
-		deviceType: $devices
-		rangeEnd: $rangeEnd
-		rangeKey: $rangeKey
-		rangeStart: $rangeStart
-		title: $title
-	) {
-		viewsMetric {
-			...audienceReportFragment
-			__typename
-		}
-		__typename
-	}
-}
-
 fragment audienceReportFragment on Metric {
 	audienceReport {
 		anonymousUsersCount
@@ -36,4 +17,23 @@ fragment audienceReportFragment on Metric {
 		__typename
 	}
 	__typename
+}
+
+query pageAudienceReportQuery($channelId: String, $devices: String, $location: String, $rangeEnd: String, $rangeKey: Int, $rangeStart: String, $title: String, $touchpoint: String) {
+	page(
+		channelId: $channelId
+		canonicalUrl: $touchpoint
+		country: $location
+		deviceType: $devices
+		rangeEnd: $rangeEnd
+		rangeKey: $rangeKey
+		rangeStart: $rangeStart
+		title: $title
+	) {
+		viewsMetric {
+			...audienceReportFragment
+			__typename
+		}
+		__typename
+	}
 }

@@ -1,23 +1,3 @@
-query documentAudienceReportQuery($assetId: String!, $channelId: String, $devices: String, $location: String, $rangeEnd: String, $rangeKey: Int, $rangeStart: String, $title: String, $touchpoint: String) {
-	document(
-		assetId: $assetId
-		canonicalUrl: $touchpoint
-		channelId: $channelId
-		country: $location
-		deviceType: $devices
-		rangeEnd: $rangeEnd
-		rangeKey: $rangeKey
-		rangeStart: $rangeStart
-		title: $title
-	) {
-		downloadsMetric {
-			...audienceReportFragment
-			__typename
-		}
-		__typename
-	}
-}
-
 fragment audienceReportFragment on Metric {
 	audienceReport {
 		anonymousUsersCount
@@ -37,4 +17,24 @@ fragment audienceReportFragment on Metric {
 		__typename
 	}
 	__typename
+}
+
+query documentAudienceReportQuery($assetId: String!, $channelId: String, $devices: String, $location: String, $rangeEnd: String, $rangeKey: Int, $rangeStart: String, $title: String, $touchpoint: String) {
+	document(
+		assetId: $assetId
+		canonicalUrl: $touchpoint
+		channelId: $channelId
+		country: $location
+		deviceType: $devices
+		rangeEnd: $rangeEnd
+		rangeKey: $rangeKey
+		rangeStart: $rangeStart
+		title: $title
+	) {
+		downloadsMetric {
+			...audienceReportFragment
+			__typename
+		}
+		__typename
+	}
 }
