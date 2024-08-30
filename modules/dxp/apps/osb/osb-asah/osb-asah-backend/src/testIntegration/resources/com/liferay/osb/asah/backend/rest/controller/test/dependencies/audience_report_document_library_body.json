@@ -1,0 +1,14 @@
+{
+	"operationName": "documentAudienceReportQuery",
+	"variables": {
+		"assetId": "DocumentLibrary1",
+		"channelId": "12345",
+		"devices": "Any",
+		"location": "Any",
+		"rangeEnd": null,
+		"rangeKey": 7,
+		"rangeStart": null,
+		"title": "Document 1",
+		"touchpoint": null
+	}
+}
