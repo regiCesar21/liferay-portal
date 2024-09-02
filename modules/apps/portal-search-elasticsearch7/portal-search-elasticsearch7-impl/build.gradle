@@ -45,7 +45,7 @@ dependencies {
 	compileInclude group: "org.apache.lucene", name: "lucene-suggest", version: luceneVersion
 	compileInclude group: "org.bouncycastle", name: "bc-fips", version: "1.0.2.4"
 	compileInclude group: "org.bouncycastle", name: "bcpg-fips", version: "1.0.7.1"
-	compileInclude group: "org.bouncycastle", name: "bcutil-jdk18on", version: "1.76"
+	compileInclude group: "org.bouncycastle", name: "bcutil-jdk18on", version: "1.78"
 	compileInclude group: "org.elasticsearch", name: "elasticsearch", version: elasticsearchVersion
 	compileInclude group: "org.elasticsearch", name: "elasticsearch-cli", version: elasticsearchVersion
 	compileInclude group: "org.elasticsearch", name: "elasticsearch-core", version: elasticsearchVersion
