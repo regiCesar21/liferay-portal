@@ -5,9 +5,9 @@ buildService {
 
 dependencies {
 	compileInclude group: "ca.juliusdavies", name: "not-yet-commons-ssl", version: "0.3.17"
-	compileInclude group: "org.bouncycastle", name: "bcpkix-jdk18on", version: "1.76"
-	compileInclude group: "org.bouncycastle", name: "bcprov-jdk18on", version: "1.76"
-	compileInclude group: "org.bouncycastle", name: "bcutil-jdk18on", version: "1.76"
+	compileInclude group: "org.bouncycastle", name: "bcpkix-jdk18on", version: "1.78"
+	compileInclude group: "org.bouncycastle", name: "bcprov-jdk18on", version: "1.78"
+	compileInclude group: "org.bouncycastle", name: "bcutil-jdk18on", version: "1.78"
 	compileInclude group: "xml-resolver", name: "xml-resolver", version: "1.2"
 
 	compileOnly group: "biz.aQute.bnd", name: "biz.aQute.bndlib", version: "3.1.0"
