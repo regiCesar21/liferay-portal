@@ -20,6 +20,7 @@ import com.liferay.osb.asah.common.model.MetricType;
 import com.liferay.osb.asah.common.model.TimeRange;
 import com.liferay.osb.asah.common.repository.executor.QueryExecutor;
 import com.liferay.osb.asah.common.repository.helper.DSLHelper;
+import com.liferay.osb.asah.common.util.SetUtil;
 
 import java.math.BigDecimal;
 
@@ -187,19 +188,19 @@ public abstract class BaseAssetMetricRepository<T extends AssetMetric>
 		TimeRange timeRange) {
 
 		return _getAssetMetric(
-			assetId, assetTitle, channelId, null, IdentityType.ALL,
+			assetId, assetTitle, SetUtil.of(channelId), IdentityType.ALL,
 			selectedMetrics, timeRange);
 	}
 
 	@Override
 	public T getAssetMetric(
-		String assetId, String assetTitle, Set<Long> channelIds,
-		IdentityType identityType, Set<String> selectedMetrics,
-		TimeRange timeRange) {
+		@Nullable String assetId, @Nullable String assetTitle,
+		@Nullable Set<Long> channelIds, IdentityType identityType,
+		Set<String> selectedMetrics, TimeRange timeRange) {
 
 		return _getAssetMetric(
-			assetId, assetTitle, null, channelIds, identityType,
-			selectedMetrics, timeRange);
+			assetId, assetTitle, channelIds, identityType, selectedMetrics,
+			timeRange);
 	}
 
 	@Override
@@ -231,7 +232,8 @@ public abstract class BaseAssetMetricRepository<T extends AssetMetric>
 			rowMap -> _toMetric(rowMap, selectedMetrics),
 			selectJoinStep.where(
 				_createWhereClauseCondition(
-					null, null, channelId, keywords, terms, timeRange)
+					null, null, SetUtil.of(channelId), keywords, terms,
+					timeRange)
 			).groupBy(
 				assetIdField, assetTitleField
 			).orderBy(
@@ -266,7 +268,8 @@ public abstract class BaseAssetMetricRepository<T extends AssetMetric>
 					)
 				).where(
 					_createWhereClauseCondition(
-						null, null, channelId, keywords, terms, timeRange)
+						null, null, SetUtil.of(channelId), keywords, terms,
+						timeRange)
 				).groupBy(
 					assetIdField, assetTitleField
 				)
@@ -1030,12 +1033,20 @@ public abstract class BaseAssetMetricRepository<T extends AssetMetric>
 		}
 
 		return _createWhereClauseCondition(
-			assetId, assetTitle, channelId, null, null, timeRange);
+			assetId, assetTitle, SetUtil.of(channelId), null, null, timeRange);
 	}
 
 	private Condition _createWhereClauseCondition(
 		@Nullable String assetId, @Nullable String assetTitle,
-		@Nullable Long channelId, @Nullable String keywords,
+		@Nullable Long channelId, TimeRange timeRange) {
+
+		return _createWhereClauseCondition(
+			assetId, assetTitle, SetUtil.of(channelId), null, null, timeRange);
+	}
+
+	private Condition _createWhereClauseCondition(
+		@Nullable String assetId, @Nullable String assetTitle,
+		@Nullable Set<Long> channelIds, @Nullable String keywords,
 		@Nullable String terms, TimeRange timeRange) {
 
 		String timeZoneId = timeZoneDog.getTimeZoneId();
@@ -1060,12 +1071,12 @@ public abstract class BaseAssetMetricRepository<T extends AssetMetric>
 				));
 		}
 
-		if (channelId != null) {
+		if ((channelIds != null) && !channelIds.isEmpty()) {
 			conditions.add(
 				DSL.field(
 					"metric.channelId"
-				).eq(
-					channelId
+				).in(
+					channelIds
 				));
 		}
 
@@ -1105,19 +1116,10 @@ public abstract class BaseAssetMetricRepository<T extends AssetMetric>
 		return DSL.and(conditions);
 	}
 
-	private Condition _createWhereClauseCondition(
-		@Nullable String assetId, @Nullable String assetTitle,
-		@Nullable Long channelId, TimeRange timeRange) {
-
-		return _createWhereClauseCondition(
-			assetId, assetTitle, channelId, null, null, timeRange);
-	}
-
 	private T _getAssetMetric(
 		@Nullable String assetId, @Nullable String assetTitle,
-		@Nullable Long channelId, @Nullable Set<Long> channelIds,
-		IdentityType identityType, Set<String> selectedMetrics,
-		TimeRange timeRange) {
+		@Nullable Set<Long> channelIds, IdentityType identityType,
+		Set<String> selectedMetrics, TimeRange timeRange) {
 
 		Field<Boolean> previousField = DSL.when(
 			DSL.field(
@@ -1157,19 +1159,11 @@ public abstract class BaseAssetMetricRepository<T extends AssetMetric>
 
 		Condition condition = DSL.noCondition();
 
-		if ((channelIds != null) && !channelIds.isEmpty()) {
-			condition = DSL.field(
-				"metric.channelId"
-			).in(
-				channelIds
-			);
-		}
-
 		SelectConditionStep<Record> selectConditionStep = selectJoinStep.where(
 			DSL.and(
 				condition,
 				_createWhereClauseCondition(
-					assetId, assetTitle, channelId,
+					assetId, assetTitle, channelIds, null, null,
 					timeRange.getIncludePreviousTimeRange())));
 
 		if (identityType == IdentityType.KNOWN) {

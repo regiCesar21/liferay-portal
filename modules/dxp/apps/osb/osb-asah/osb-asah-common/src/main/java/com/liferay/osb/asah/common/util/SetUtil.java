@@ -37,6 +37,10 @@ public class SetUtil {
 	}
 
 	public static <T> Set<T> of(T... elements) {
+		if (elements == null) {
+			return null;
+		}
+
 		return new LinkedHashSet<>(Arrays.asList(elements));
 	}
 
