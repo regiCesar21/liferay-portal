@@ -565,11 +565,7 @@ public class OpportunityMessageSubscriber extends BaseMessageSubscriber {
 
 		Map<String, String> properties = account.getProperties();
 
-		if (!soldBy.equals("Liferay China") &&
-			!soldBy.equals("Liferay India")) {
-
-			properties.put("allowComplimentary", StringPool.TRUE);
-		}
+		properties.put("allowComplimentary", StringPool.TRUE);
 
 		if (soldBy.equals("Liferay Brazil") || soldBy.equals("Liferay China") ||
 			soldBy.equals("Liferay India")) {

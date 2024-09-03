@@ -30,7 +30,10 @@ import org.osgi.service.component.annotations.Reference;
 @Component(service = UpgradeAccountComplimentaryProperties.class)
 public class UpgradeAccountComplimentaryProperties extends UpgradeProcess {
 
-	public void upgradeComplimentaryProperties() throws Exception {
+	public void upgradeComplimentaryProperties(
+			List<String> accountRegions, boolean negative)
+		throws Exception {
+
 		String[] subscriptionProductKeys = _getSubscriptionProductKeys();
 
 		FilterQuery filterQuery = new FilterQuery();
@@ -39,8 +42,16 @@ public class UpgradeAccountComplimentaryProperties extends UpgradeProcess {
 			false, "activeProductKeys", subscriptionProductKeys, false);
 		filterQuery.addLambdaEquals(
 			false, "unactivatedProductKeys", subscriptionProductKeys, false);
-		filterQuery.addEquals(true, "region", "China", true);
-		filterQuery.addEquals(true, "region", "India", true);
+
+		if (negative) {
+			for (String accountRegion : accountRegions) {
+				filterQuery.addEquals(true, "region", accountRegion, true);
+			}
+		}
+		else {
+			filterQuery.addEquals(
+				true, "region", accountRegions.toArray(new String[0]));
+		}
 
 		long totalCount = _accountWebService.searchCount(
 			StringPool.BLANK, filterQuery);
