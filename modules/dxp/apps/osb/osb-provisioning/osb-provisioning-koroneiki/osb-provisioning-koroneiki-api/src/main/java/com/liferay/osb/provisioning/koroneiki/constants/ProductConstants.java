@@ -155,7 +155,14 @@ public class ProductConstants {
 
 	public static final String NAME_PORTAL = "Portal";
 
+	public static final String NAME_PORTAL_BACKUP = "Portal Backup";
+
+	public static final String NAME_PORTAL_DEVELOPMENT = "Portal Development";
+
 	public static final String NAME_PORTAL_EWSA = "Portal Enterprise";
+
+	public static final String NAME_PORTAL_NON_PRODUCTION =
+		"Portal Non-Production";
 
 	public static final String NAME_PORTAL_OEM = "Portal OEM";
 
@@ -196,7 +203,8 @@ public class ProductConstants {
 		NAME_COMMERCE_SUBSCRIPTION_NON_PRODUCTION,
 		NAME_COMMERCE_SUBSCRIPTION_PRODUCTION, NAME_DXP_BACKUP,
 		NAME_DXP_DEVELOPMENT, NAME_DXP_EWSA, NAME_DXP_NON_PRODUCTION,
-		NAME_DXP_PRODUCTION
+		NAME_DXP_PRODUCTION, NAME_PORTAL_BACKUP, NAME_PORTAL_DEVELOPMENT,
+		NAME_PORTAL_EWSA, NAME_PORTAL_NON_PRODUCTION, NAME_PORTAL_PRODUCTION
 	};
 
 	public static final String[] NAMES_PARTNERSHIP = {

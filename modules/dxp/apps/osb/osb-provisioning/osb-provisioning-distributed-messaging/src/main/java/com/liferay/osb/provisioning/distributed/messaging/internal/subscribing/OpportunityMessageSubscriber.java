@@ -2540,7 +2540,9 @@ public class OpportunityMessageSubscriber extends BaseMessageSubscriber {
 		if (ArrayUtil.contains(
 				ProductConstants.NAMES_DXP_ADD_ON, product.getName()) ||
 			ArrayUtil.contains(
-				ProductConstants.NAMES_EWSA_AUTO_RENEW, product.getName())) {
+				ProductConstants.NAMES_EWSA_AUTO_RENEW, product.getName()) ||
+			ArrayUtil.contains(
+				ProductConstants.NAMES_SUBSCRIPTION, product.getName())) {
 
 			return true;
 		}
