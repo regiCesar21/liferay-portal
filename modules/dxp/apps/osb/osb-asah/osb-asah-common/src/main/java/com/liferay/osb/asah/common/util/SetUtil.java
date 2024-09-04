@@ -37,7 +37,7 @@ public class SetUtil {
 	}
 
 	public static <T> Set<T> of(T... elements) {
-		if (elements == null) {
+		if (ArrayUtil.removeNullValues(elements) == null) {
 			return null;
 		}
 

@@ -7,6 +7,8 @@ package com.liferay.osb.asah.common.util;
 
 import java.lang.reflect.Array;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 /**
@@ -58,6 +60,29 @@ public class ArrayUtil {
 
 	public static boolean isNotEmpty(Object[] array) {
 		return !isEmpty(array);
+	}
+
+	public static <T> T[] removeNullValues(T[] array) {
+		if (array.length == 0) {
+			return array;
+		}
+
+		List<T> list = new ArrayList<>();
+
+		for (T t : array) {
+			if (t != null) {
+				list.add(t);
+			}
+		}
+
+		if (list.isEmpty()) {
+			return null;
+		}
+
+		Class<?> arrayClass = array.getClass();
+
+		return list.toArray(
+			(T[])Array.newInstance(arrayClass.getComponentType(), 0));
 	}
 
 	public static char[] subset(char[] array, int start, int end) {
