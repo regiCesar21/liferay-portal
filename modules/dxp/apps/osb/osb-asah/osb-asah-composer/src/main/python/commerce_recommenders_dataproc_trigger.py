@@ -95,7 +95,7 @@ for project in response.json():
 	if project.get('commerceChannelsSelected'):
 		data_source_ids = project.get('dataSourceIds')
 
-		if data_source_ids is None:
+		if data_source_ids is None or len(data_source_ids) == 0:
 			continue
 
 		dag_id = 'commerce_product_content_recommender_{}'.format(project.get('id'))

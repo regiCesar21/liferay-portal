@@ -94,7 +94,7 @@ response = requests.get(
 for project in response.json():
 	data_source_ids = project.get('dataSourceIds')
 
-	if data_source_ids is None:
+	if data_source_ids is None or len(data_source_ids) == 0:
 		continue
 
 	dag_id = 'most_viewed_content_recommender_{}'.format(project.get('id'))
