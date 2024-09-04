@@ -47,6 +47,26 @@ public class ArrayUtilTest {
 	}
 
 	@Test
+	public void testRemoveNullValues() {
+		String[] array = {"a", "b", "c", "d"};
+
+		Assertions.assertArrayEquals(array, ArrayUtil.removeNullValues(array));
+
+		array = new String[0];
+
+		Assertions.assertArrayEquals(array, ArrayUtil.removeNullValues(array));
+
+		array = new String[] {"a", "b", "c", null};
+
+		Assertions.assertArrayEquals(
+			new String[] {"a", "b", "c"}, ArrayUtil.removeNullValues(array));
+
+		array = new String[] {null};
+
+		Assertions.assertNull(ArrayUtil.removeNullValues(array));
+	}
+
+	@Test
 	public void testSubsetCharacterArray() {
 		char[] array = {'a', 'b', 'c', 'd'};
 
