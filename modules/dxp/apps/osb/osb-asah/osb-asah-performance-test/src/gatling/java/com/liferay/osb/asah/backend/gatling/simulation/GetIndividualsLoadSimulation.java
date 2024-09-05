@@ -20,16 +20,20 @@ public class GetIndividualsLoadSimulation extends Simulation {
 	private final ChainBuilder _getIndividuals = SimulationUtil.get(
 		"Get Individuals", "/individuals");
 	private final ScenarioBuilder _getIndividualsScenario = CoreDsl.scenario(
-		"Get Individuals Scenario"
+		"Get Individuals Load Scenario"
 	).exec(
-		_getIndividuals
+		CoreDsl.repeat(
+			SimulationUtil.loadRequestsPerSec()
+		).on(
+			_getIndividuals
+		)
 	);
 
 	{
 		setUp(
 			_getIndividualsScenario.injectOpen(
-				CoreDsl.rampUsers(
-					SimulationUtil.loadRampUsers()
+				CoreDsl.constantUsersPerSec(
+					SimulationUtil.loadConstantUsersPerSec()
 				).during(
 					SimulationUtil.loadDuring()
 				))

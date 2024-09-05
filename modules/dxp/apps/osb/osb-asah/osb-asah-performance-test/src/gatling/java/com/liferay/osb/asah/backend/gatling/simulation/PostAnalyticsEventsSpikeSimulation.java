@@ -22,29 +22,37 @@ public class PostAnalyticsEventsSpikeSimulation extends Simulation {
 		"Post Analytics Events", "/");
 	private final ScenarioBuilder _postAnalyticsEventsScenario =
 		CoreDsl.scenario(
-			"Post Analytics Events Scenario"
+			"Post Analytics Events Load Scenario"
 		).exec(
-			_postAnalyticsEvents
+			CoreDsl.repeat(
+				SimulationUtil.loadRequestsPerSec()
+			).on(
+				_postAnalyticsEvents
+			)
 		);
 	private final ScenarioBuilder _postAnalyticsEventsSpikeScenario =
 		CoreDsl.scenario(
 			"Post Analytics Events Spike Scenario"
 		).exec(
-			_postAnalyticsEvents
+			CoreDsl.repeat(
+				SimulationUtil.spikeRequestsPerSec()
+			).on(
+				_postAnalyticsEvents
+			)
 		);
 
 	{
 		setUp(
 			_postAnalyticsEventsScenario.injectOpen(
-				CoreDsl.rampUsers(
-					SimulationUtil.loadRampUsers()
+				CoreDsl.constantUsersPerSec(
+					SimulationUtil.loadConstantUsersPerSec()
 				).during(
 					SimulationUtil.loadDuring()
 				)),
 			_postAnalyticsEventsSpikeScenario.injectOpen(
 				CoreDsl.nothingFor(SimulationUtil.spikeNothingFor()),
-				CoreDsl.rampUsers(
-					SimulationUtil.spikeRampUsers()
+				CoreDsl.constantUsersPerSec(
+					SimulationUtil.spikeConstantUsersPerSec()
 				).during(
 					SimulationUtil.spikeDuring()
 				))

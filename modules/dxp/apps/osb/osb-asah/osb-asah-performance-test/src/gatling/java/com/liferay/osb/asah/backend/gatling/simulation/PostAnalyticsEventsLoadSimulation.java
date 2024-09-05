@@ -22,16 +22,20 @@ public class PostAnalyticsEventsLoadSimulation extends Simulation {
 		"Post Analytics Events", "/");
 	private final ScenarioBuilder _postAnalyticsEventsScenario =
 		CoreDsl.scenario(
-			"Post Analytics Events Scenario"
+			"Post Analytics Events Load Scenario"
 		).exec(
-			_postAnalyticsEvents
+			CoreDsl.repeat(
+				SimulationUtil.loadRequestsPerSec()
+			).on(
+				_postAnalyticsEvents
+			)
 		);
 
 	{
 		setUp(
 			_postAnalyticsEventsScenario.injectOpen(
-				CoreDsl.rampUsers(
-					SimulationUtil.loadRampUsers()
+				CoreDsl.constantUsersPerSec(
+					SimulationUtil.loadConstantUsersPerSec()
 				).during(
 					SimulationUtil.loadDuring()
 				))

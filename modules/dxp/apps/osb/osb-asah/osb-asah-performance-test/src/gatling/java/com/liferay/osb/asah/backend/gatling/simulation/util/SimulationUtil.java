@@ -92,12 +92,16 @@ public class SimulationUtil {
 		);
 	}
 
+	public static int loadConstantUsersPerSec() {
+		return _CONFIG.getInt("gatling.load.constantUsersPerSec");
+	}
+
 	public static long loadDuring() {
 		return _CONFIG.getInt("gatling.load.during");
 	}
 
-	public static int loadRampUsers() {
-		return _CONFIG.getInt("gatling.load.rampUsers");
+	public static int loadRequestsPerSec() {
+		return _CONFIG.getInt("gatling.load.requestsPerSec");
 	}
 
 	public static ChainBuilder post(Body body, String name, String path) {
@@ -119,6 +123,10 @@ public class SimulationUtil {
 				)));
 	}
 
+	public static int spikeConstantUsersPerSec() {
+		return _CONFIG.getInt("gatling.spike.constantUsersPerSec");
+	}
+
 	public static int spikeDuring() {
 		return _CONFIG.getInt("gatling.spike.during");
 	}
@@ -127,8 +135,8 @@ public class SimulationUtil {
 		return _CONFIG.getInt("gatling.spike.nothingFor");
 	}
 
-	public static int spikeRampUsers() {
-		return _CONFIG.getInt("gatling.spike.rampUsers");
+	public static int spikeRequestsPerSec() {
+		return _CONFIG.getInt("gatling.spike.requestsPerSec");
 	}
 
 	private static final Config _CONFIG = ConfigFactory.load();

@@ -20,29 +20,37 @@ public class GetIndividualSegmentsSpikeSimulation extends Simulation {
 	private final ChainBuilder _getIndividuals = SimulationUtil.get(
 		"Get Individual Segments", "/individual-segments");
 	private final ScenarioBuilder _getIndividualsScenario = CoreDsl.scenario(
-		"Get Individual Segments Scenario"
+		"Get Individual Segments Load Scenario"
 	).exec(
-		_getIndividuals
+		CoreDsl.repeat(
+			SimulationUtil.loadRequestsPerSec()
+		).on(
+			_getIndividuals
+		)
 	);
 	private final ScenarioBuilder _getIndividualsSpikeScenario =
 		CoreDsl.scenario(
 			"Get Individual Segments Spike Scenario"
 		).exec(
-			_getIndividuals
+			CoreDsl.repeat(
+				SimulationUtil.spikeRequestsPerSec()
+			).on(
+				_getIndividuals
+			)
 		);
 
 	{
 		setUp(
 			_getIndividualsScenario.injectOpen(
-				CoreDsl.rampUsers(
-					SimulationUtil.loadRampUsers()
+				CoreDsl.constantUsersPerSec(
+					SimulationUtil.loadConstantUsersPerSec()
 				).during(
 					SimulationUtil.loadDuring()
 				)),
 			_getIndividualsSpikeScenario.injectOpen(
 				CoreDsl.nothingFor(SimulationUtil.spikeNothingFor()),
-				CoreDsl.rampUsers(
-					SimulationUtil.spikeRampUsers()
+				CoreDsl.constantUsersPerSec(
+					SimulationUtil.spikeConstantUsersPerSec()
 				).during(
 					SimulationUtil.spikeDuring()
 				))
