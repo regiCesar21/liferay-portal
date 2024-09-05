@@ -13,6 +13,7 @@ import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
+import org.springframework.http.HttpMethod;
 import org.springframework.stereotype.Component;
 
 /**
@@ -25,6 +26,15 @@ public class SecurityOncePerRequestFilter
 
 	@Override
 	protected boolean isInvalidRequest(HttpServletRequest httpServletRequest) {
+		String method = httpServletRequest.getMethod();
+		String requestURI = httpServletRequest.getRequestURI();
+
+		if (method.equals(HttpMethod.GET.name()) &&
+			requestURI.startsWith("/actuator")) {
+
+			return false;
+		}
+
 		String faroBackendSecuritySignature = httpServletRequest.getHeader(
 			HeaderConstants.FARO_BACKEND_SECURITY_SIGNATURE);
 
