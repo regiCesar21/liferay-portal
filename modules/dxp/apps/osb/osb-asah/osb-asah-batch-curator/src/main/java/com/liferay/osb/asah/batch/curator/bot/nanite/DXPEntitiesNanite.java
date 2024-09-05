@@ -123,7 +123,7 @@ public class DXPEntitiesNanite extends BaseNanite {
 
 			gzipOutputStream.close();
 
-			if (file.length() == _EMPTY_ZIP_FILE_LENGTH) {
+			if (file.length() == _EMPTY_GZIP_FILE_LENGTH) {
 				boolean deleted = file.delete();
 
 				if (!deleted && _log.isWarnEnabled()) {
@@ -385,7 +385,7 @@ public class DXPEntitiesNanite extends BaseNanite {
 	private static final String _CLASS_NAME_DXP_ENTITY =
 		"com.liferay.analytics.dxp.entity.rest.dto.v1_0.DXPEntity";
 
-	private static final long _EMPTY_ZIP_FILE_LENGTH = 140;
+	private static final long _EMPTY_GZIP_FILE_LENGTH = 20;
 
 	private static final Log _log = LogFactory.getLog(DXPEntitiesNanite.class);
 

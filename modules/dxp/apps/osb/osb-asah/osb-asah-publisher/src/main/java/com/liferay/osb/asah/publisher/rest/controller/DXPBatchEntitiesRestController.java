@@ -31,6 +31,7 @@ import java.util.Objects;
 
 import org.apache.commons.io.FilenameUtils;
 import org.apache.commons.lang3.BooleanUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
@@ -121,7 +122,7 @@ public class DXPBatchEntitiesRestController {
 				_log.debug("Received upload request " + name);
 			}
 
-			if (multipartFile.getSize() <= _EMPTY_ZIP_FILE_LENGTH) {
+			if (_isFileUploadEmpty(contentEncoding, multipartFile.getSize())) {
 				if (_log.isDebugEnabled()) {
 					_log.debug("Skipping empty uploaded file  " + name);
 				}
@@ -156,6 +157,22 @@ public class DXPBatchEntitiesRestController {
 		}
 
 		return fileName;
+	}
+
+	private boolean _isFileUploadEmpty(String contentEncoding, long fileSize) {
+		if (StringUtils.equals(contentEncoding, "gzip") &&
+			(fileSize <= _EMPTY_GZIP_FILE_LENGTH)) {
+
+			return true;
+		}
+
+		if (StringUtils.equals(contentEncoding, "zip") &&
+			(fileSize <= _EMPTY_ZIP_FILE_LENGTH)) {
+
+			return true;
+		}
+
+		return false;
 	}
 
 	private Date _parseDate(String dateString) {
@@ -221,6 +238,8 @@ public class DXPBatchEntitiesRestController {
 				"Contacts synchronization is not enabled");
 		}
 	}
+
+	private static final long _EMPTY_GZIP_FILE_LENGTH = 20;
 
 	private static final long _EMPTY_ZIP_FILE_LENGTH = 140;
 
