@@ -11,6 +11,8 @@ import com.liferay.osb.asah.common.repository.executor.BigQueryQueryExecutor;
 import com.liferay.osb.asah.common.spring.annotation.BigQueryColumn;
 import com.liferay.osb.asah.common.util.BQSQLUtil;
 
+import java.util.Date;
+
 import org.json.JSONArray;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -105,8 +107,12 @@ public class BQPageDailyRestController {
 		}
 
 		@BigQueryColumn
-		public String getEventDate() {
-			return _eventDate;
+		public Date getEventDate() {
+			if (_eventDate == null) {
+				return null;
+			}
+
+			return new Date(_eventDate.getTime());
 		}
 
 		@BigQueryColumn
@@ -213,8 +219,10 @@ public class BQPageDailyRestController {
 			_entrances = entrances;
 		}
 
-		public void setEventDate(String eventDate) {
-			_eventDate = eventDate;
+		public void setEventDate(Date eventDate) {
+			if (eventDate != null) {
+				_eventDate = new Date(eventDate.getTime());
+			}
 		}
 
 		public void setExits(long exits) {
@@ -276,7 +284,7 @@ public class BQPageDailyRestController {
 		private String _deviceType;
 		private long _directAccess;
 		private long _entrances;
-		private String _eventDate;
+		private Date _eventDate;
 		private long _exits;
 		private long _experimentId;
 		private long _indirectAccess;
