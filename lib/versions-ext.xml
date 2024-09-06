@@ -2874,7 +2874,7 @@
 			</library>
 			<library>
 				<file-name>lib/portal/spring-aspects.jar</file-name>
-				<version>5.3.33</version>
+				<version>5.3.39</version>
 				<project-name>Spring</project-name>
 				<project-url>http://www.springframework.org</project-url>
 				<licenses>
@@ -2919,7 +2919,7 @@
 			</library>
 			<library>
 				<file-name>lib/portal/spring-context-support.jar</file-name>
-				<version>5.3.33</version>
+				<version>5.3.39</version>
 				<project-name>Spring</project-name>
 				<project-url>http://www.springframework.org</project-url>
 				<licenses>
@@ -2979,7 +2979,7 @@
 			</library>
 			<library>
 				<file-name>lib/portal/spring-jms.jar</file-name>
-				<version>5.3.33</version>
+				<version>5.3.39</version>
 				<project-name>Spring</project-name>
 				<project-url>http://www.springframework.org</project-url>
 				<licenses>
@@ -3054,7 +3054,7 @@
 			</library>
 			<library>
 				<file-name>lib/portal/spring-webmvc.jar</file-name>
-				<version>5.3.33</version>
+				<version>5.3.39</version>
 				<project-name>Spring</project-name>
 				<project-url>http://www.springframework.org</project-url>
 				<licenses>
