@@ -607,9 +607,10 @@ public abstract class BaseAssetMetricRepository<T extends AssetMetric>
 
 	@Override
 	public List<HistogramMetric> getHistogramMetrics(
-		String assetId, @Nullable String assetTitle, @Nullable Long channelId,
-		boolean includePrevious, IdentityType identityType, Interval interval,
-		MetricType metricType, TimeRange timeRange) {
+		String assetId, @Nullable String assetTitle,
+		@Nullable Set<Long> channelIds, boolean includePrevious,
+		IdentityType identityType, Interval interval, MetricType metricType,
+		TimeRange timeRange) {
 
 		Field field = DSL.timestamp(
 			dslHelper.dateTrunc(
@@ -638,7 +639,16 @@ public abstract class BaseAssetMetricRepository<T extends AssetMetric>
 
 		SelectConditionStep<Record> selectConditionStep = selectJoinStep.where(
 			_createWhereClauseCondition(
-				assetId, assetTitle, channelId, includePrevious, timeRange));
+				assetId, assetTitle, includePrevious, timeRange));
+
+		if ((channelIds != null) && !channelIds.isEmpty()) {
+			selectConditionStep = selectConditionStep.and(
+				DSL.field(
+					"metric.channelId"
+				).in(
+					channelIds
+				));
+		}
 
 		if (identityType == IdentityType.KNOWN) {
 			selectConditionStep = selectConditionStep.and(
@@ -1049,15 +1059,14 @@ public abstract class BaseAssetMetricRepository<T extends AssetMetric>
 
 	private Condition _createWhereClauseCondition(
 		@Nullable String assetId, @Nullable String assetTitle,
-		@Nullable Long channelId, boolean includePrevious,
-		TimeRange timeRange) {
+		boolean includePrevious, TimeRange timeRange) {
 
 		if (includePrevious) {
 			timeRange = timeRange.getIncludePreviousTimeRange();
 		}
 
 		return _createWhereClauseCondition(
-			assetId, assetTitle, SetUtil.of(channelId), null, null, timeRange);
+			assetId, assetTitle, null, null, null, timeRange);
 	}
 
 	private Condition _createWhereClauseCondition(

@@ -73,9 +73,10 @@ public interface AssetMetricRepository<T extends AssetMetric> {
 		MetricType metricType, TimeRange timeRange);
 
 	public List<HistogramMetric> getHistogramMetrics(
-		String assetId, @Nullable String assetTitle, @Nullable Long channelId,
-		boolean includePrevious, IdentityType identityType, Interval interval,
-		MetricType metricType, TimeRange timeRange);
+		String assetId, @Nullable String assetTitle,
+		@Nullable Set<Long> channelIds, boolean includePrevious,
+		IdentityType identityType, Interval interval, MetricType metricType,
+		TimeRange timeRange);
 
 	public List<Individual> getKnownIndividuals(
 		String assetId, @Nullable String assetTitle, @Nullable Long channelId,

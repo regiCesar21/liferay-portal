@@ -10,6 +10,7 @@ import com.liferay.osb.asah.backend.dog.helper.SearchQueryContext;
 import com.liferay.osb.asah.backend.model.AssetType;
 import com.liferay.osb.asah.backend.model.HistogramMetric;
 import com.liferay.osb.asah.backend.model.HistogramMetricBag;
+import com.liferay.osb.asah.backend.model.IdentityType;
 import com.liferay.osb.asah.backend.model.Metric;
 import com.liferay.osb.asah.backend.repository.AssetMetricRepository;
 import com.liferay.osb.asah.common.date.dog.TimeZoneDog;
@@ -20,9 +21,11 @@ import com.liferay.osb.asah.common.model.TimeRange;
 import java.time.Clock;
 import java.time.LocalDateTime;
 
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
@@ -96,6 +99,15 @@ public class HistogramDog {
 	public HistogramMetricBag getHistogramMetricBag(
 		MetricType metricType, SearchQueryContext searchQueryContext) {
 
+		return getHistogramMetricBag(
+			Collections.singleton(searchQueryContext.getChannelIdAsLong()),
+			IdentityType.ALL, metricType, searchQueryContext);
+	}
+
+	public HistogramMetricBag getHistogramMetricBag(
+		Set<Long> channelIds, IdentityType identityType, MetricType metricType,
+		SearchQueryContext searchQueryContext) {
+
 		AssetMetricRepository assetMetricRepository =
 			_assetMetricRepositoryMap.get(searchQueryContext.getAssetType());
 
@@ -123,9 +135,8 @@ public class HistogramDog {
 
 		return getHistogramMetricBag(
 			assetMetricRepository.getHistogramMetrics(
-				searchQueryContext.getAssetId(), assetTitle,
-				searchQueryContext.getChannelIdAsLong(), true, interval,
-				metricType, timeRange),
+				searchQueryContext.getAssetId(), assetTitle, channelIds, true,
+				identityType, interval, metricType, timeRange),
 			searchQueryContext.isIncludePrevious(), interval, metricType,
 			timeRange);
 	}
