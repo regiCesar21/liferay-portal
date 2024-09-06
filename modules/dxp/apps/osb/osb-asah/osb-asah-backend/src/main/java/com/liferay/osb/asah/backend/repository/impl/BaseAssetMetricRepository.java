@@ -608,8 +608,8 @@ public abstract class BaseAssetMetricRepository<T extends AssetMetric>
 	@Override
 	public List<HistogramMetric> getHistogramMetrics(
 		String assetId, @Nullable String assetTitle,
-		@Nullable Set<Long> channelIds, boolean includePrevious,
-		IdentityType identityType, Interval interval, MetricType metricType,
+		@Nullable Set<Long> channelIds, IdentityType identityType,
+		boolean includePrevious, Interval interval, MetricType metricType,
 		TimeRange timeRange) {
 
 		Field field = DSL.timestamp(

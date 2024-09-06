@@ -38,7 +38,7 @@ public class CustomAssetMetricRepositoryTest
 			SetUtil.of(1D, 2D, 4D, 7D),
 			_assetMetricRepository.getHistogramMetrics(
 				DigestUtils.sha256Hex("Adefault1"), null,
-				Collections.singleton(1L), false, IdentityType.ALL,
+				Collections.singleton(1L), IdentityType.ALL, false,
 				Interval.HOUR, CustomAssetMetricType.VIEWS,
 				TimeRange.LAST_24_HOURS));
 	}
