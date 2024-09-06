@@ -17,11 +17,11 @@ import com.liferay.osb.asah.common.date.dog.TimeZoneDog;
 import com.liferay.osb.asah.common.model.Interval;
 import com.liferay.osb.asah.common.model.MetricType;
 import com.liferay.osb.asah.common.model.TimeRange;
+import com.liferay.osb.asah.common.util.SetUtil;
 
 import java.time.Clock;
 import java.time.LocalDateTime;
 
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -100,7 +100,7 @@ public class HistogramDog {
 		MetricType metricType, SearchQueryContext searchQueryContext) {
 
 		return getHistogramMetricBag(
-			Collections.singleton(searchQueryContext.getChannelIdAsLong()),
+			SetUtil.of(searchQueryContext.getChannelIdAsLong()),
 			IdentityType.ALL, metricType, searchQueryContext);
 	}
 
