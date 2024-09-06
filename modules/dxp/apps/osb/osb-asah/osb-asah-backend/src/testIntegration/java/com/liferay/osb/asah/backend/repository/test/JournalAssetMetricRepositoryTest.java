@@ -189,8 +189,9 @@ public class JournalAssetMetricRepositoryTest
 		assertHistogramMetrics(
 			SetUtil.of(3.0),
 			_assetMetricRepository.getHistogramMetrics(
-				"e131fabc", null, 1L, false, IdentityType.ALL, Interval.DAY,
-				JournalMetricType.VIEWS, TimeRange.LAST_7_DAYS));
+				"e131fabc", null, Collections.singleton(1L), false,
+				IdentityType.ALL, Interval.DAY, JournalMetricType.VIEWS,
+				TimeRange.LAST_7_DAYS));
 	}
 
 	@BQSQLResource(
@@ -201,8 +202,9 @@ public class JournalAssetMetricRepositoryTest
 		assertHistogramMetrics(
 			SetUtil.of((double)1, (double)2, (double)4),
 			_assetMetricRepository.getHistogramMetrics(
-				"e131fabc", null, 1L, false, IdentityType.ALL, Interval.HOUR,
-				JournalMetricType.VIEWS, TimeRange.LAST_24_HOURS));
+				"e131fabc", null, Collections.singleton(1L), false,
+				IdentityType.ALL, Interval.HOUR, JournalMetricType.VIEWS,
+				TimeRange.LAST_24_HOURS));
 	}
 
 	@BQSQLResource(

@@ -14,6 +14,8 @@ import com.liferay.osb.asah.common.model.TimeRange;
 import com.liferay.osb.asah.common.util.SetUtil;
 import com.liferay.osb.asah.test.util.annotation.BQSQLResource;
 
+import java.util.Collections;
+
 import org.apache.commons.codec.digest.DigestUtils;
 
 import org.junit.jupiter.api.Test;
@@ -35,8 +37,9 @@ public class CustomAssetMetricRepositoryTest
 		assertHistogramMetrics(
 			SetUtil.of(1D, 2D, 4D, 7D),
 			_assetMetricRepository.getHistogramMetrics(
-				DigestUtils.sha256Hex("Adefault1"), null, 1L, false,
-				IdentityType.ALL, Interval.HOUR, CustomAssetMetricType.VIEWS,
+				DigestUtils.sha256Hex("Adefault1"), null,
+				Collections.singleton(1L), false, IdentityType.ALL,
+				Interval.HOUR, CustomAssetMetricType.VIEWS,
 				TimeRange.LAST_24_HOURS));
 	}
 

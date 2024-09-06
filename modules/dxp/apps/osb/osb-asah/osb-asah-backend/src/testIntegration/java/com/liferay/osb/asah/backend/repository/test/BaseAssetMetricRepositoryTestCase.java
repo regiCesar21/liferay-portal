@@ -26,6 +26,7 @@ import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.time.ZoneOffset;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.Set;
 import java.util.function.Function;
@@ -188,8 +189,9 @@ public abstract class BaseAssetMetricRepositoryTestCase<T extends AssetMetric>
 
 		List<LocalDateTime> localDateTimes = _getLocalDateTimes(
 			assetMetricRepository.getHistogramMetrics(
-				assetId, null, channelId, false, IdentityType.ALL,
-				Interval.HOUR, metricType, TimeRange.LAST_24_HOURS));
+				assetId, null, Collections.singleton(channelId), false,
+				IdentityType.ALL, Interval.HOUR, metricType,
+				TimeRange.LAST_24_HOURS));
 
 		Mockito.when(
 			_timeZoneDog.getTimeZoneId()
@@ -205,8 +207,9 @@ public abstract class BaseAssetMetricRepositoryTestCase<T extends AssetMetric>
 
 		List<LocalDateTime> shiftedLocalDateTimes = _getLocalDateTimes(
 			assetMetricRepository.getHistogramMetrics(
-				assetId, null, channelId, false, IdentityType.ALL,
-				Interval.HOUR, metricType, TimeRange.LAST_24_HOURS));
+				assetId, null, Collections.singleton(channelId), false,
+				IdentityType.ALL, Interval.HOUR, metricType,
+				TimeRange.LAST_24_HOURS));
 
 		Assertions.assertEquals(
 			localDateTimes.size(), shiftedLocalDateTimes.size(),
