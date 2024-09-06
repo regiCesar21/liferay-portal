@@ -6,6 +6,7 @@
 package com.liferay.osb.asah.backend.repository.test;
 
 import com.liferay.osb.asah.backend.model.CustomAssetMetric;
+import com.liferay.osb.asah.backend.model.IdentityType;
 import com.liferay.osb.asah.backend.repository.AssetMetricRepository;
 import com.liferay.osb.asah.common.model.CustomAssetMetricType;
 import com.liferay.osb.asah.common.model.Interval;
@@ -35,7 +36,7 @@ public class CustomAssetMetricRepositoryTest
 			SetUtil.of(1D, 2D, 4D, 7D),
 			_assetMetricRepository.getHistogramMetrics(
 				DigestUtils.sha256Hex("Adefault1"), null, 1L, false,
-				Interval.HOUR, CustomAssetMetricType.VIEWS,
+				IdentityType.ALL, Interval.HOUR, CustomAssetMetricType.VIEWS,
 				TimeRange.LAST_24_HOURS));
 	}
 

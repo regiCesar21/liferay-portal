@@ -8,6 +8,7 @@ package com.liferay.osb.asah.backend.repository.test;
 import com.liferay.osb.asah.backend.model.AudienceReport;
 import com.liferay.osb.asah.backend.model.FormMetric;
 import com.liferay.osb.asah.backend.model.FormMetricType;
+import com.liferay.osb.asah.backend.model.IdentityType;
 import com.liferay.osb.asah.backend.model.Metric;
 import com.liferay.osb.asah.backend.repository.AssetMetricRepository;
 import com.liferay.osb.asah.common.model.Interval;
@@ -188,8 +189,8 @@ public class FormAssetMetricRepositoryTest
 		assertHistogramMetrics(
 			SetUtil.of((double)3),
 			_assetMetricRepository.getHistogramMetrics(
-				"e131fabc", null, 1L, false, Interval.DAY, FormMetricType.VIEWS,
-				TimeRange.LAST_7_DAYS));
+				"e131fabc", null, 1L, false, IdentityType.ALL, Interval.DAY,
+				FormMetricType.VIEWS, TimeRange.LAST_7_DAYS));
 	}
 
 	@BQSQLResource(
@@ -200,7 +201,7 @@ public class FormAssetMetricRepositoryTest
 		assertHistogramMetrics(
 			SetUtil.of((double)1, (double)2, (double)4),
 			_assetMetricRepository.getHistogramMetrics(
-				"e131fabc", null, 1L, false, Interval.HOUR,
+				"e131fabc", null, 1L, false, IdentityType.ALL, Interval.HOUR,
 				FormMetricType.VIEWS, TimeRange.LAST_24_HOURS));
 	}
 

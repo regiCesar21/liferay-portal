@@ -8,6 +8,7 @@ package com.liferay.osb.asah.backend.repository.test;
 import com.liferay.osb.asah.backend.OSBAsahBackendSpringTestContext;
 import com.liferay.osb.asah.backend.model.AssetMetric;
 import com.liferay.osb.asah.backend.model.HistogramMetric;
+import com.liferay.osb.asah.backend.model.IdentityType;
 import com.liferay.osb.asah.backend.model.Metric;
 import com.liferay.osb.asah.backend.repository.AssetMetricRepository;
 import com.liferay.osb.asah.common.date.dog.TimeZoneDog;
@@ -187,8 +188,8 @@ public abstract class BaseAssetMetricRepositoryTestCase<T extends AssetMetric>
 
 		List<LocalDateTime> localDateTimes = _getLocalDateTimes(
 			assetMetricRepository.getHistogramMetrics(
-				assetId, null, channelId, false, Interval.HOUR, metricType,
-				TimeRange.LAST_24_HOURS));
+				assetId, null, channelId, false, IdentityType.ALL,
+				Interval.HOUR, metricType, TimeRange.LAST_24_HOURS));
 
 		Mockito.when(
 			_timeZoneDog.getTimeZoneId()
@@ -204,8 +205,8 @@ public abstract class BaseAssetMetricRepositoryTestCase<T extends AssetMetric>
 
 		List<LocalDateTime> shiftedLocalDateTimes = _getLocalDateTimes(
 			assetMetricRepository.getHistogramMetrics(
-				assetId, null, channelId, false, Interval.HOUR, metricType,
-				TimeRange.LAST_24_HOURS));
+				assetId, null, channelId, false, IdentityType.ALL,
+				Interval.HOUR, metricType, TimeRange.LAST_24_HOURS));
 
 		Assertions.assertEquals(
 			localDateTimes.size(), shiftedLocalDateTimes.size(),
