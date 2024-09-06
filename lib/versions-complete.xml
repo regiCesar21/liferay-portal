@@ -2777,7 +2777,7 @@
 			</library>
 			<library>
 				<file-name>com.liferay.portal.security.sso.cas.impl.jar!bcpkix-jdk18on.jar</file-name>
-				<version>1.76</version>
+				<version>1.78</version>
 				<project-name>Bouncy Castle PKIX, CMS, EAC, TSP, PKCS, OCSP, CMP, and CRMF APIs</project-name>
 				<project-url>https://www.bouncycastle.org/java.html</project-url>
 				<licenses>
@@ -2789,7 +2789,7 @@
 			</library>
 			<library>
 				<file-name>com.liferay.portal.security.sso.cas.impl.jar!bcprov-jdk18on.jar</file-name>
-				<version>1.76</version>
+				<version>1.78</version>
 				<project-name>Bouncy Castle Provider</project-name>
 				<project-url>https://www.bouncycastle.org/java.html</project-url>
 				<licenses>
@@ -2801,7 +2801,7 @@
 			</library>
 			<library>
 				<file-name>com.liferay.portal.security.sso.cas.impl.jar!bcutil-jdk18on.jar</file-name>
-				<version>1.76</version>
+				<version>1.78</version>
 				<project-name>Bouncy Castle ASN.1 Extension and Utility APIs</project-name>
 				<project-url>https://www.bouncycastle.org/java.html</project-url>
 				<licenses>
@@ -4727,7 +4727,7 @@
 			</library>
 			<library>
 				<file-name>com.liferay.sync.service.jar!bcpg-jdk18on.jar</file-name>
-				<version>1.76</version>
+				<version>1.78</version>
 				<project-name>Bouncy Castle OpenPGP API</project-name>
 				<project-url>https://www.bouncycastle.org/java.html</project-url>
 				<licenses>
@@ -4739,7 +4739,7 @@
 			</library>
 			<library>
 				<file-name>com.liferay.sync.service.jar!bcpkix-jdk18on.jar</file-name>
-				<version>1.76</version>
+				<version>1.78</version>
 				<project-name>Bouncy Castle PKIX, CMS, EAC, TSP, PKCS, OCSP, CMP, and CRMF APIs</project-name>
 				<project-url>https://www.bouncycastle.org/java.html</project-url>
 				<licenses>
@@ -4751,7 +4751,7 @@
 			</library>
 			<library>
 				<file-name>com.liferay.sync.service.jar!bcprov-jdk18on.jar</file-name>
-				<version>1.76</version>
+				<version>1.78</version>
 				<project-name>Bouncy Castle Provider</project-name>
 				<project-url>https://www.bouncycastle.org/java.html</project-url>
 				<licenses>
@@ -4763,7 +4763,7 @@
 			</library>
 			<library>
 				<file-name>com.liferay.sync.service.jar!bcutil-jdk18on.jar</file-name>
-				<version>1.76</version>
+				<version>1.78</version>
 				<project-name>Bouncy Castle ASN.1 Extension and Utility APIs</project-name>
 				<project-url>https://www.bouncycastle.org/java.html</project-url>
 				<licenses>
