@@ -1,0 +1,3 @@
+INSERT INTO Channel (id, name) VALUES (12345, 'Channel');
+
+INSERT INTO Segment (channelId, createDate, filter, id, name, referencedDataSourceIds, state, status, type) VALUES (12345, '${now}', '(activities.filterByCount(filter=''(activityKey eq ''''Page#pageViewed#10981d0044ea936f74b42f2a68c41fe7f11c15b0bd8858f85dbf940d79704ca6'''')'', operator=''ge'', value=1))', 24680, 'Segment 1', ARRAY[5, 6], 'READY', 'STARTED', 'DYNAMIC');

@@ -1,0 +1,29 @@
+{
+	"data": {
+		"blog": {
+			"__typename": "BlogMetric",
+			"viewsMetric": {
+				"__typename": "Metric",
+				"audienceReport": {
+					"__typename": "AudienceReport",
+					"anonymousUsersCount": 0,
+					"knownUsersCount": 2,
+					"nonsegmentedKnownUsersCount": 1,
+					"segmentedAnonymousUsersCount": null,
+					"segmentedKnownUsersCount": 1
+				},
+				"segment": {
+					"__typename": "MetricBag",
+					"metrics": [
+						{
+							"__typename": "Metric",
+							"value": 1,
+							"valueKey": "Segment 1"
+						}
+					],
+					"total": 1
+				}
+			}
+		}
+	}
+}

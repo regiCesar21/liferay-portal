@@ -1,0 +1,40 @@
+query blogAudienceReportQuery($assetId: String!, $channelId: String, $devices: String, $location: String, $rangeEnd: String, $rangeKey: Int, $rangeStart: String, $title: String, $touchpoint: String) {
+	blog(
+		assetId: $assetId
+		canonicalUrl: $touchpoint
+		channelId: $channelId
+		country: $location
+		deviceType: $devices
+		rangeEnd: $rangeEnd
+		rangeKey: $rangeKey
+		rangeStart: $rangeStart
+		title: $title
+	) {
+		viewsMetric {
+			...audienceReportFragment
+			__typename
+		}
+		__typename
+	}
+}
+
+fragment audienceReportFragment on Metric {
+	audienceReport {
+		anonymousUsersCount
+		knownUsersCount
+		nonsegmentedKnownUsersCount
+		segmentedAnonymousUsersCount
+		segmentedKnownUsersCount
+		__typename
+	}
+	segment {
+		metrics {
+			value
+			valueKey
+			__typename
+		}
+		total
+		__typename
+	}
+	__typename
+}
