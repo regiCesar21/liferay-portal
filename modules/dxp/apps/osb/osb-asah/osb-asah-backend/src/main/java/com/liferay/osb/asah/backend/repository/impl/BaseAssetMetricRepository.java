@@ -608,8 +608,8 @@ public abstract class BaseAssetMetricRepository<T extends AssetMetric>
 	@Override
 	public List<HistogramMetric> getHistogramMetrics(
 		String assetId, @Nullable String assetTitle, @Nullable Long channelId,
-		boolean includePrevious, Interval interval, MetricType metricType,
-		TimeRange timeRange) {
+		boolean includePrevious, IdentityType identityType, Interval interval,
+		MetricType metricType, TimeRange timeRange) {
 
 		Field field = DSL.timestamp(
 			dslHelper.dateTrunc(
@@ -623,6 +623,35 @@ public abstract class BaseAssetMetricRepository<T extends AssetMetric>
 			dslContext.select(
 				field, getMetricFieldAliased(metricType, timeRange)),
 			timeRange);
+
+		if (identityType != IdentityType.ALL) {
+			selectJoinStep = selectJoinStep.join(
+				"BQIdentity as identity"
+			).on(
+				DSL.field(
+					"metric.userId"
+				).eq(
+					DSL.field("identity.id")
+				)
+			);
+		}
+
+		SelectConditionStep<Record> selectConditionStep = selectJoinStep.where(
+			_createWhereClauseCondition(
+				assetId, assetTitle, channelId, includePrevious, timeRange));
+
+		if (identityType == IdentityType.KNOWN) {
+			selectConditionStep = selectConditionStep.and(
+				DSL.field(
+					"identity.individualId"
+				).isNotNull());
+		}
+		else if (identityType == IdentityType.UNKNOWN) {
+			selectConditionStep = selectConditionStep.and(
+				DSL.field(
+					"identity.individualId"
+				).isNull());
+		}
 
 		return queryExecutor.queryForList(
 			rowMap -> {
@@ -643,12 +672,7 @@ public abstract class BaseAssetMetricRepository<T extends AssetMetric>
 							(Date)rowMap.get("key"), ZoneOffset.UTC)),
 					metric);
 			},
-			selectJoinStep.where(
-				_createWhereClauseCondition(
-					assetId, assetTitle, channelId, includePrevious, timeRange)
-			).groupBy(
-				field
-			));
+			selectConditionStep.groupBy(field));
 	}
 
 	@Override
