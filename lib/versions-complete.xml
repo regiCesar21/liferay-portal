@@ -530,120 +530,120 @@
 			</library>
 			<library>
 				<file-name>com.liferay.document.library.repository.cmis.impl.jar!cxf-core.jar</file-name>
-				<version>3.4.10</version>
+				<version>3.5.9</version>
 				<project-name>Apache CXF Core</project-name>
 				<project-url>https://cxf.apache.org</project-url>
 				<licenses>
 					<license>
-						<license-name>Apache License, Version 2.0</license-name>
+						<license-name>Apache-2.0</license-name>
 						<license-url>https://www.apache.org/licenses/LICENSE-2.0.txt</license-url>
 					</license>
 				</licenses>
 			</library>
 			<library>
 				<file-name>com.liferay.document.library.repository.cmis.impl.jar!cxf-rt-bindings-soap.jar</file-name>
-				<version>3.4.10</version>
+				<version>3.5.9</version>
 				<project-name>Apache CXF Runtime SOAP Binding</project-name>
 				<project-url>https://cxf.apache.org</project-url>
 				<licenses>
 					<license>
-						<license-name>Apache License, Version 2.0</license-name>
+						<license-name>Apache-2.0</license-name>
 						<license-url>https://www.apache.org/licenses/LICENSE-2.0.txt</license-url>
 					</license>
 				</licenses>
 			</library>
 			<library>
 				<file-name>com.liferay.document.library.repository.cmis.impl.jar!cxf-rt-bindings-xml.jar</file-name>
-				<version>3.4.10</version>
+				<version>3.5.9</version>
 				<project-name>Apache CXF Runtime XML Binding</project-name>
 				<project-url>https://cxf.apache.org</project-url>
 				<licenses>
 					<license>
-						<license-name>Apache License, Version 2.0</license-name>
+						<license-name>Apache-2.0</license-name>
 						<license-url>https://www.apache.org/licenses/LICENSE-2.0.txt</license-url>
 					</license>
 				</licenses>
 			</library>
 			<library>
 				<file-name>com.liferay.document.library.repository.cmis.impl.jar!cxf-rt-databinding-jaxb.jar</file-name>
-				<version>3.4.10</version>
+				<version>3.5.9</version>
 				<project-name>Apache CXF Runtime JAXB DataBinding</project-name>
 				<project-url>https://cxf.apache.org</project-url>
 				<licenses>
 					<license>
-						<license-name>Apache License, Version 2.0</license-name>
+						<license-name>Apache-2.0</license-name>
 						<license-url>https://www.apache.org/licenses/LICENSE-2.0.txt</license-url>
 					</license>
 				</licenses>
 			</library>
 			<library>
 				<file-name>com.liferay.document.library.repository.cmis.impl.jar!cxf-rt-frontend-jaxws.jar</file-name>
-				<version>3.4.10</version>
+				<version>3.5.9</version>
 				<project-name>Apache CXF Runtime JAX-WS Frontend</project-name>
 				<project-url>https://cxf.apache.org</project-url>
 				<licenses>
 					<license>
-						<license-name>Apache License, Version 2.0</license-name>
+						<license-name>Apache-2.0</license-name>
 						<license-url>https://www.apache.org/licenses/LICENSE-2.0.txt</license-url>
 					</license>
 				</licenses>
 			</library>
 			<library>
 				<file-name>com.liferay.document.library.repository.cmis.impl.jar!cxf-rt-frontend-simple.jar</file-name>
-				<version>3.4.10</version>
+				<version>3.5.9</version>
 				<project-name>Apache CXF Runtime Simple Frontend</project-name>
 				<project-url>https://cxf.apache.org</project-url>
 				<licenses>
 					<license>
-						<license-name>Apache License, Version 2.0</license-name>
+						<license-name>Apache-2.0</license-name>
 						<license-url>https://www.apache.org/licenses/LICENSE-2.0.txt</license-url>
 					</license>
 				</licenses>
 			</library>
 			<library>
 				<file-name>com.liferay.document.library.repository.cmis.impl.jar!cxf-rt-transports-http.jar</file-name>
-				<version>3.4.10</version>
+				<version>3.5.9</version>
 				<project-name>Apache CXF Runtime HTTP Transport</project-name>
 				<project-url>https://cxf.apache.org</project-url>
 				<licenses>
 					<license>
-						<license-name>Apache License, Version 2.0</license-name>
+						<license-name>Apache-2.0</license-name>
 						<license-url>https://www.apache.org/licenses/LICENSE-2.0.txt</license-url>
 					</license>
 				</licenses>
 			</library>
 			<library>
 				<file-name>com.liferay.document.library.repository.cmis.impl.jar!cxf-rt-ws-addr.jar</file-name>
-				<version>3.4.10</version>
+				<version>3.5.9</version>
 				<project-name>Apache CXF Runtime WS Addressing</project-name>
 				<project-url>https://cxf.apache.org</project-url>
 				<licenses>
 					<license>
-						<license-name>Apache License, Version 2.0</license-name>
+						<license-name>Apache-2.0</license-name>
 						<license-url>https://www.apache.org/licenses/LICENSE-2.0.txt</license-url>
 					</license>
 				</licenses>
 			</library>
 			<library>
 				<file-name>com.liferay.document.library.repository.cmis.impl.jar!cxf-rt-ws-policy.jar</file-name>
-				<version>3.4.10</version>
+				<version>3.5.9</version>
 				<project-name>Apache CXF Runtime WS Policy</project-name>
 				<project-url>https://cxf.apache.org</project-url>
 				<licenses>
 					<license>
-						<license-name>Apache License, Version 2.0</license-name>
+						<license-name>Apache-2.0</license-name>
 						<license-url>https://www.apache.org/licenses/LICENSE-2.0.txt</license-url>
 					</license>
 				</licenses>
 			</library>
 			<library>
 				<file-name>com.liferay.document.library.repository.cmis.impl.jar!cxf-rt-wsdl.jar</file-name>
-				<version>3.4.10</version>
+				<version>3.5.9</version>
 				<project-name>Apache CXF Runtime Core for WSDL</project-name>
 				<project-url>https://cxf.apache.org</project-url>
 				<licenses>
 					<license>
-						<license-name>Apache License, Version 2.0</license-name>
+						<license-name>Apache-2.0</license-name>
 						<license-url>https://www.apache.org/licenses/LICENSE-2.0.txt</license-url>
 					</license>
 				</licenses>
@@ -1746,24 +1746,24 @@
 			</library>
 			<library>
 				<file-name>com.liferay.portal.remote.rest.extender.jar!cxf-rt-rs-extension-providers.jar</file-name>
-				<version>3.4.10</version>
+				<version>3.5.9</version>
 				<project-name>Apache CXF JAX-RS Extensions: Providers</project-name>
 				<project-url>https://cxf.apache.org</project-url>
 				<licenses>
 					<license>
-						<license-name>Apache License, Version 2.0</license-name>
+						<license-name>Apache-2.0</license-name>
 						<license-url>https://www.apache.org/licenses/LICENSE-2.0.txt</license-url>
 					</license>
 				</licenses>
 			</library>
 			<library>
 				<file-name>com.liferay.portal.remote.rest.extender.jar!cxf-rt-rs-json-basic.jar</file-name>
-				<version>3.4.10</version>
+				<version>3.5.9</version>
 				<project-name>Apache CXF JAX-RS Extensions: JSON Basic</project-name>
 				<project-url>https://cxf.apache.org</project-url>
 				<licenses>
 					<license>
-						<license-name>Apache License, Version 2.0</license-name>
+						<license-name>Apache-2.0</license-name>
 						<license-url>https://www.apache.org/licenses/LICENSE-2.0.txt</license-url>
 					</license>
 				</licenses>
@@ -1889,7 +1889,7 @@
 			</library>
 			<library>
 				<file-name>com.liferay.portal.search.elasticsearch6.impl.jar!bcpg-jdk18on.jar</file-name>
-				<version>1.76</version>
+				<version>1.78</version>
 				<project-name>Bouncy Castle OpenPGP API</project-name>
 				<project-url>https://www.bouncycastle.org/java.html</project-url>
 				<licenses>
@@ -1901,7 +1901,7 @@
 			</library>
 			<library>
 				<file-name>com.liferay.portal.search.elasticsearch6.impl.jar!bcpkix-jdk18on.jar</file-name>
-				<version>1.76</version>
+				<version>1.78</version>
 				<project-name>Bouncy Castle PKIX, CMS, EAC, TSP, PKCS, OCSP, CMP, and CRMF APIs</project-name>
 				<project-url>https://www.bouncycastle.org/java.html</project-url>
 				<licenses>
@@ -1913,7 +1913,7 @@
 			</library>
 			<library>
 				<file-name>com.liferay.portal.search.elasticsearch6.impl.jar!bcprov-jdk18on.jar</file-name>
-				<version>1.76</version>
+				<version>1.78</version>
 				<project-name>Bouncy Castle Provider</project-name>
 				<project-url>https://www.bouncycastle.org/java.html</project-url>
 				<licenses>
@@ -1925,7 +1925,7 @@
 			</library>
 			<library>
 				<file-name>com.liferay.portal.search.elasticsearch6.impl.jar!bcutil-jdk18on.jar</file-name>
-				<version>1.76</version>
+				<version>1.78</version>
 				<project-name>Bouncy Castle ASN.1 Extension and Utility APIs</project-name>
 				<project-url>https://www.bouncycastle.org/java.html</project-url>
 				<licenses>
@@ -2797,7 +2797,7 @@
 			</library>
 			<library>
 				<file-name>com.liferay.portal.security.sso.cas.impl.jar!bcpkix-jdk18on.jar</file-name>
-				<version>1.76</version>
+				<version>1.78</version>
 				<project-name>Bouncy Castle PKIX, CMS, EAC, TSP, PKCS, OCSP, CMP, and CRMF APIs</project-name>
 				<project-url>https://www.bouncycastle.org/java.html</project-url>
 				<licenses>
@@ -2809,7 +2809,7 @@
 			</library>
 			<library>
 				<file-name>com.liferay.portal.security.sso.cas.impl.jar!bcprov-jdk18on.jar</file-name>
-				<version>1.76</version>
+				<version>1.78</version>
 				<project-name>Bouncy Castle Provider</project-name>
 				<project-url>https://www.bouncycastle.org/java.html</project-url>
 				<licenses>
@@ -2821,7 +2821,7 @@
 			</library>
 			<library>
 				<file-name>com.liferay.portal.security.sso.cas.impl.jar!bcutil-jdk18on.jar</file-name>
-				<version>1.76</version>
+				<version>1.78</version>
 				<project-name>Bouncy Castle ASN.1 Extension and Utility APIs</project-name>
 				<project-url>https://www.bouncycastle.org/java.html</project-url>
 				<licenses>
@@ -2959,6 +2959,18 @@
 				</licenses>
 			</library>
 			<library>
+				<file-name>com.liferay.portal.security.sso.openid.connect.impl.jar!content-type.jar</file-name>
+				<version>2.3</version>
+				<project-name>Nimbus Content Type</project-name>
+				<project-url>https://connect2id.com</project-url>
+				<licenses>
+					<license>
+						<license-name>The Apache Software License, Version 2.0</license-name>
+						<license-url>https://www.apache.org/licenses/LICENSE-2.0.txt</license-url>
+					</license>
+				</licenses>
+			</library>
+			<library>
 				<file-name>com.liferay.portal.security.sso.openid.connect.impl.jar!jakarta.mail.jar</file-name>
 				<version>1.6.6</version>
 				<project-name>Jakarta Mail API</project-name>
@@ -2996,37 +3008,37 @@
 			</library>
 			<library>
 				<file-name>com.liferay.portal.security.sso.openid.connect.impl.jar!lang-tag.jar</file-name>
-				<version>1.4.4</version>
+				<version>1.7</version>
 				<project-name>Nimbus LangTag</project-name>
-				<project-url>https://bitbucket.org/connect2id/nimbus-language-tags</project-url>
+				<project-url>https://connect2id.com/</project-url>
 				<licenses>
 					<license>
 						<license-name>The Apache Software License, Version 2.0</license-name>
-						<license-url>http://www.apache.org/licenses/LICENSE-2.0.txt</license-url>
+						<license-url>https://www.apache.org/licenses/LICENSE-2.0.txt</license-url>
 					</license>
 				</licenses>
 			</library>
 			<library>
 				<file-name>com.liferay.portal.security.sso.openid.connect.impl.jar!nimbus-jose-jwt.jar</file-name>
-				<version>7.9</version>
+				<version>9.40</version>
 				<project-name>Nimbus JOSE+JWT</project-name>
-				<project-url>https://bitbucket.org/connect2id/nimbus-jose-jwt</project-url>
+				<project-url>https://connect2id.com</project-url>
 				<licenses>
 					<license>
 						<license-name>The Apache Software License, Version 2.0</license-name>
-						<license-url>http://www.apache.org/licenses/LICENSE-2.0.txt</license-url>
+						<license-url>https://www.apache.org/licenses/LICENSE-2.0.txt</license-url>
 					</license>
 				</licenses>
 			</library>
 			<library>
 				<file-name>com.liferay.portal.security.sso.openid.connect.impl.jar!oauth2-oidc-sdk.jar</file-name>
-				<version>6.16.2</version>
+				<version>11.13</version>
 				<project-name>OAuth 2.0 SDK with OpenID Connect extensions</project-name>
 				<project-url>https://bitbucket.org/connect2id/oauth-2.0-sdk-with-openid-connect-extensions</project-url>
 				<licenses>
 					<license>
 						<license-name>Apache License, version 2.0</license-name>
-						<license-url>http://www.apache.org/licenses/LICENSE-2.0.html‎</license-url>
+						<license-url>https://www.apache.org/licenses/LICENSE-2.0.html</license-url>
 					</license>
 				</licenses>
 			</library>
@@ -4537,7 +4549,7 @@
 			</library>
 			<library>
 				<file-name>com.liferay.sync.service.jar!bcpg-jdk18on.jar</file-name>
-				<version>1.76</version>
+				<version>1.78</version>
 				<project-name>Bouncy Castle OpenPGP API</project-name>
 				<project-url>https://www.bouncycastle.org/java.html</project-url>
 				<licenses>
@@ -4549,7 +4561,7 @@
 			</library>
 			<library>
 				<file-name>com.liferay.sync.service.jar!bcpkix-jdk18on.jar</file-name>
-				<version>1.76</version>
+				<version>1.78</version>
 				<project-name>Bouncy Castle PKIX, CMS, EAC, TSP, PKCS, OCSP, CMP, and CRMF APIs</project-name>
 				<project-url>https://www.bouncycastle.org/java.html</project-url>
 				<licenses>
@@ -4561,7 +4573,7 @@
 			</library>
 			<library>
 				<file-name>com.liferay.sync.service.jar!bcprov-jdk18on.jar</file-name>
-				<version>1.76</version>
+				<version>1.78</version>
 				<project-name>Bouncy Castle Provider</project-name>
 				<project-url>https://www.bouncycastle.org/java.html</project-url>
 				<licenses>
@@ -4573,7 +4585,7 @@
 			</library>
 			<library>
 				<file-name>com.liferay.sync.service.jar!bcutil-jdk18on.jar</file-name>
-				<version>1.76</version>
+				<version>1.78</version>
 				<project-name>Bouncy Castle ASN.1 Extension and Utility APIs</project-name>
 				<project-url>https://www.bouncycastle.org/java.html</project-url>
 				<licenses>
