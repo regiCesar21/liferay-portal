@@ -12,7 +12,7 @@
 from airflow.models import Variable
 from airflow.models.baseoperator import chain
 from airflow.providers.google.cloud.operators.bigquery import \
-	BigQueryCreateExternalTableOperator
+	BigQueryCreateExternalTableOperator, BigQueryDeleteTableOperator
 
 from liferay.bigquery import BigQueryInsertJobFromTemplateOperator
 
@@ -153,9 +153,14 @@ def create_dag(
 			task_id='individual_merge'
 		)
 
+		delete_dxpentity_external_table = BigQueryDeleteTableOperator(
+			deletion_dataset_table="{{ dag.default_args['ac_project_id'] }}.dxpentity_external_{{ ts_nodash }}",
+			task_id="delete_dxpentity_external_table"
+		)
+
 		chain(
 			create_dxpentity_external_table, dxpentity_insert_job, 
-			bigquery_jobs, individual_merge_job
+			bigquery_jobs, individual_merge_job, delete_dxpentity_external_table
 		)
 
 		return dag
