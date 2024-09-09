@@ -48,6 +48,7 @@ public class UpgradeLXCExternalLinks extends UpgradeProcess {
 			}
 
 			Account account = accounts.get(0);
+			boolean hasExternalLink = false;
 
 			for (ExternalLink externalLink : account.getExternalLinks()) {
 				String domain = externalLink.getDomain();
@@ -65,19 +66,23 @@ public class UpgradeLXCExternalLinks extends UpgradeProcess {
 							externalLink.getKey(), externalLink);
 					}
 
+					hasExternalLink = true;
+
 					break;
 				}
 			}
 
-			ExternalLink externalLink = new ExternalLink();
+			if (!hasExternalLink) {
+				ExternalLink externalLink = new ExternalLink();
 
-			externalLink.setDomain(ExternalLinkDomain.LXC);
-			externalLink.setEntityName(ExternalLinkEntityName.LXC_PROJECT);
-			externalLink.setEntityId(entry.getValue());
+				externalLink.setDomain(ExternalLinkDomain.LXC);
+				externalLink.setEntityName(ExternalLinkEntityName.LXC_PROJECT);
+				externalLink.setEntityId(entry.getValue());
 
-			_externalLinkWebService.addAccountExternalLink(
-				StringPool.BLANK, StringPool.BLANK, account.getKey(),
-				externalLink);
+				_externalLinkWebService.addAccountExternalLink(
+					StringPool.BLANK, StringPool.BLANK, account.getKey(),
+					externalLink);
+			}
 		}
 	}
 
