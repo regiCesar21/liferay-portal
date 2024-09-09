@@ -5,9 +5,11 @@
 
 package com.liferay.osb.asah.upgrade;
 
-import com.liferay.osb.asah.upgrade.v4_6_0.BQIdentityRawUpgradeStep;
+import com.liferay.osb.asah.upgrade.v4_9_0.EventTableUpgradeStep;
+import com.liferay.osb.asah.upgrade.v4_9_0.ExportFilesUpgradeStep;
 import com.liferay.osb.asah.upgrade.v4_9_0.HourlyAssetMetricUpgradeStep;
 import com.liferay.osb.asah.upgrade.v4_9_0.PostgreSQLUpgradeStep;
+import com.liferay.osb.asah.upgrade.v4_9_0.StorageFilesUpgradeStep;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -24,28 +26,32 @@ public class UpgradeProcessConfiguration {
 		UpgradeProcess upgradeProcess = new UpgradeProcess();
 
 		upgradeProcess.addUpgradeSteps(
-			"4.0.26", "4.0.27", _bqIdentityRawUpgradeStep);
+			"4.0.29", "4.0.30", _eventTableUpgradeStep);
 		upgradeProcess.addUpgradeSteps(
-			"4.0.27", "4.0.28",
-			version -> {
-			});
+			"4.0.30", "4.0.31", _exportFilesUpgradeStep);
 		upgradeProcess.addUpgradeSteps(
-			"4.0.28", "4.0.29",
-			version -> {
-			});
+			"4.0.31", "4.0.32", _hourlyAssetMetricUpgradeStep);
 		upgradeProcess.addUpgradeSteps(
-			"4.0.29", "4.0.30", _hourlyAssetMetricUpgradeStep);
+			"4.0.32", "4.0.33", _postgreSQLUpgradeStep);
+		upgradeProcess.addUpgradeSteps(
+			"4.0.33", "4.0.34", _storageFilesUpgradeStep);
 
 		return upgradeProcess;
 	}
 
 	@Autowired
-	private BQIdentityRawUpgradeStep _bqIdentityRawUpgradeStep;
+	private EventTableUpgradeStep _eventTableUpgradeStep;
+
+	@Autowired
+	private ExportFilesUpgradeStep _exportFilesUpgradeStep;
 
 	@Autowired
 	private HourlyAssetMetricUpgradeStep _hourlyAssetMetricUpgradeStep;
 
 	@Autowired
 	private PostgreSQLUpgradeStep _postgreSQLUpgradeStep;
+
+	@Autowired
+	private StorageFilesUpgradeStep _storageFilesUpgradeStep;
 
 }
