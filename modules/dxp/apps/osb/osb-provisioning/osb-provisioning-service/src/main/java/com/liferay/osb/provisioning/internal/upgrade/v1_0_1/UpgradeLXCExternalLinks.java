@@ -47,7 +47,8 @@ public class UpgradeLXCExternalLinks extends UpgradeProcess {
 				continue;
 			}
 
-			Account account = accounts.get(0);
+			Account account = accounts.get(0)
+
 			boolean hasExternalLink = false;
 
 			for (ExternalLink externalLink : account.getExternalLinks()) {
