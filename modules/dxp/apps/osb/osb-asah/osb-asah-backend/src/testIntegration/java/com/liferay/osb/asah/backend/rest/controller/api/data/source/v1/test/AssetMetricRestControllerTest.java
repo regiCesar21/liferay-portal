@@ -6,6 +6,8 @@
 package com.liferay.osb.asah.backend.rest.controller.api.data.source.v1.test;
 
 import com.liferay.osb.asah.backend.OSBAsahBackendSpringTestContext;
+import com.liferay.osb.asah.backend.dto.AppearsOnHistogramMetricDTO;
+import com.liferay.osb.asah.backend.dto.AssetAppearsOnHistogramMetricDTO;
 import com.liferay.osb.asah.backend.dto.AssetHistogramMetricDTO;
 import com.liferay.osb.asah.backend.dto.AssetMetricDTO;
 import com.liferay.osb.asah.backend.dto.HistogramMetricDTO;
@@ -35,6 +37,546 @@ import org.springframework.beans.factory.annotation.Autowired;
 public class AssetMetricRestControllerTest
 	implements OSBAsahBackendSpringTestContext,
 			   OSBAsahTestExecutionListenersContext {
+
+	@BQSQLResource(resourcePath = "asset_appears_on_histogram_metric.sql")
+	@Test
+	public void testGetAssetAppearsOnHistogramMetricDTO1() {
+		AssetAppearsOnHistogramMetricDTO assetAppearsOnHistogramMetricDTO =
+			_assetMetricRestController.getTopAppearsOnHistogramMetricDTO(
+				"e131fabc", "blog", Collections.singleton(1L), "ALL", 7);
+
+		List<AssetAppearsOnHistogramMetricDTO>
+			assetAppearsOnHistogramMetricDTOs = new ArrayList(
+				assetAppearsOnHistogramMetricDTO.
+					getAssetAppearsOnHistogramMetricDTOs());
+
+		Assertions.assertEquals(
+			2, assetAppearsOnHistogramMetricDTOs.size(),
+			assetAppearsOnHistogramMetricDTOs.toString());
+
+		AssetAppearsOnHistogramMetricDTO childAssetAppearsOnHistogramMetricDTO =
+			assetAppearsOnHistogramMetricDTOs.get(0);
+
+		Assertions.assertEquals(
+			"commentsMetric",
+			childAssetAppearsOnHistogramMetricDTO.getMetricName());
+
+		List<AppearsOnHistogramMetricDTO> appearsOnHistogramMetricDTOs =
+			new ArrayList(
+				childAssetAppearsOnHistogramMetricDTO.
+					getAppearsOnHistogramMetricDTOs());
+
+		Assertions.assertEquals(
+			3, appearsOnHistogramMetricDTOs.size(),
+			appearsOnHistogramMetricDTOs.toString());
+
+		_assertAppearsOnHistogramMetricDTO(
+			appearsOnHistogramMetricDTOs.get(0), 7,
+			new double[] {0, 0, 0, 0, 0, 0, 5}, "Page Title 2");
+		_assertAppearsOnHistogramMetricDTO(
+			appearsOnHistogramMetricDTOs.get(1), 7,
+			new double[] {0, 3, 0, 0, 0, 0, 0}, "Page Title 1");
+		_assertAppearsOnHistogramMetricDTO(
+			appearsOnHistogramMetricDTOs.get(2), 7,
+			new double[] {0, 2, 0, 0, 0, 0, 0}, "Page Title 4");
+
+		childAssetAppearsOnHistogramMetricDTO =
+			assetAppearsOnHistogramMetricDTOs.get(1);
+
+		Assertions.assertEquals(
+			"viewsMetric",
+			childAssetAppearsOnHistogramMetricDTO.getMetricName());
+
+		appearsOnHistogramMetricDTOs = new ArrayList(
+			childAssetAppearsOnHistogramMetricDTO.
+				getAppearsOnHistogramMetricDTOs());
+
+		Assertions.assertEquals(
+			3, appearsOnHistogramMetricDTOs.size(),
+			appearsOnHistogramMetricDTOs.toString());
+
+		_assertAppearsOnHistogramMetricDTO(
+			appearsOnHistogramMetricDTOs.get(0), 7,
+			new double[] {0, 0, 0, 0, 0, 10, 0}, "Page Title 3");
+		_assertAppearsOnHistogramMetricDTO(
+			appearsOnHistogramMetricDTOs.get(1), 7,
+			new double[] {0, 5, 0, 0, 0, 0, 0}, "Page Title 1");
+		_assertAppearsOnHistogramMetricDTO(
+			appearsOnHistogramMetricDTOs.get(2), 7,
+			new double[] {0, 4, 0, 0, 0, 0, 0}, "Page Title 4");
+
+		assetAppearsOnHistogramMetricDTO =
+			_assetMetricRestController.getTopAppearsOnHistogramMetricDTO(
+				"e131fabc", "blog", Collections.singleton(1L), "KNOWN", 7);
+
+		assetAppearsOnHistogramMetricDTOs = new ArrayList(
+			assetAppearsOnHistogramMetricDTO.
+				getAssetAppearsOnHistogramMetricDTOs());
+
+		Assertions.assertEquals(
+			2, assetAppearsOnHistogramMetricDTOs.size(),
+			assetAppearsOnHistogramMetricDTOs.toString());
+
+		childAssetAppearsOnHistogramMetricDTO =
+			assetAppearsOnHistogramMetricDTOs.get(0);
+
+		Assertions.assertEquals(
+			"commentsMetric",
+			childAssetAppearsOnHistogramMetricDTO.getMetricName());
+
+		appearsOnHistogramMetricDTOs = new ArrayList(
+			childAssetAppearsOnHistogramMetricDTO.
+				getAppearsOnHistogramMetricDTOs());
+
+		Assertions.assertEquals(
+			3, appearsOnHistogramMetricDTOs.size(),
+			appearsOnHistogramMetricDTOs.toString());
+
+		_assertAppearsOnHistogramMetricDTO(
+			appearsOnHistogramMetricDTOs.get(0), 7,
+			new double[] {0, 0, 0, 0, 0, 0, 5}, "Page Title 2");
+		_assertAppearsOnHistogramMetricDTO(
+			appearsOnHistogramMetricDTOs.get(1), 7,
+			new double[] {0, 2, 0, 0, 0, 0, 0}, "Page Title 4");
+		_assertAppearsOnHistogramMetricDTO(
+			appearsOnHistogramMetricDTOs.get(2), 7,
+			new double[] {0, 0, 0, 0, 0, 1, 0}, "Page Title 3");
+
+		childAssetAppearsOnHistogramMetricDTO =
+			assetAppearsOnHistogramMetricDTOs.get(1);
+
+		Assertions.assertEquals(
+			"viewsMetric",
+			childAssetAppearsOnHistogramMetricDTO.getMetricName());
+
+		appearsOnHistogramMetricDTOs = new ArrayList(
+			childAssetAppearsOnHistogramMetricDTO.
+				getAppearsOnHistogramMetricDTOs());
+
+		Assertions.assertEquals(
+			3, appearsOnHistogramMetricDTOs.size(),
+			appearsOnHistogramMetricDTOs.toString());
+
+		_assertAppearsOnHistogramMetricDTO(
+			appearsOnHistogramMetricDTOs.get(0), 7,
+			new double[] {0, 0, 0, 0, 0, 10, 0}, "Page Title 3");
+		_assertAppearsOnHistogramMetricDTO(
+			appearsOnHistogramMetricDTOs.get(1), 7,
+			new double[] {0, 4, 0, 0, 0, 0, 0}, "Page Title 4");
+		_assertAppearsOnHistogramMetricDTO(
+			appearsOnHistogramMetricDTOs.get(2), 7,
+			new double[] {0, 0, 0, 0, 0, 0, 1}, "Page Title 2");
+
+		assetAppearsOnHistogramMetricDTO =
+			_assetMetricRestController.getTopAppearsOnHistogramMetricDTO(
+				"e131fabc", "blog", Collections.singleton(1L), "UNKNOWN", 7);
+
+		assetAppearsOnHistogramMetricDTOs = new ArrayList(
+			assetAppearsOnHistogramMetricDTO.
+				getAssetAppearsOnHistogramMetricDTOs());
+
+		Assertions.assertEquals(
+			2, assetAppearsOnHistogramMetricDTOs.size(),
+			assetAppearsOnHistogramMetricDTOs.toString());
+
+		childAssetAppearsOnHistogramMetricDTO =
+			assetAppearsOnHistogramMetricDTOs.get(0);
+
+		Assertions.assertEquals(
+			"commentsMetric",
+			childAssetAppearsOnHistogramMetricDTO.getMetricName());
+
+		appearsOnHistogramMetricDTOs = new ArrayList(
+			childAssetAppearsOnHistogramMetricDTO.
+				getAppearsOnHistogramMetricDTOs());
+
+		Assertions.assertEquals(
+			1, appearsOnHistogramMetricDTOs.size(),
+			appearsOnHistogramMetricDTOs.toString());
+
+		_assertAppearsOnHistogramMetricDTO(
+			appearsOnHistogramMetricDTOs.get(0), 7,
+			new double[] {0, 3, 0, 0, 0, 0, 0}, "Page Title 1");
+
+		childAssetAppearsOnHistogramMetricDTO =
+			assetAppearsOnHistogramMetricDTOs.get(1);
+
+		Assertions.assertEquals(
+			"viewsMetric",
+			childAssetAppearsOnHistogramMetricDTO.getMetricName());
+
+		appearsOnHistogramMetricDTOs = new ArrayList(
+			childAssetAppearsOnHistogramMetricDTO.
+				getAppearsOnHistogramMetricDTOs());
+
+		Assertions.assertEquals(
+			1, appearsOnHistogramMetricDTOs.size(),
+			appearsOnHistogramMetricDTOs.toString());
+
+		_assertAppearsOnHistogramMetricDTO(
+			appearsOnHistogramMetricDTOs.get(0), 7,
+			new double[] {0, 5, 0, 0, 0, 0, 0}, "Page Title 1");
+	}
+
+	@BQSQLResource(resourcePath = "asset_appears_on_histogram_metric.sql")
+	@Test
+	public void testGetAssetAppearsOnHistogramMetricDTO2() {
+		AssetAppearsOnHistogramMetricDTO assetAppearsOnHistogramMetricDTO =
+			_assetMetricRestController.getTopAppearsOnHistogramMetricDTO(
+				"egdasdf", "journal", Collections.singleton(1L), "ALL", 7);
+
+		List<AssetAppearsOnHistogramMetricDTO>
+			assetAppearsOnHistogramMetricDTOs = new ArrayList(
+				assetAppearsOnHistogramMetricDTO.
+					getAssetAppearsOnHistogramMetricDTOs());
+
+		Assertions.assertEquals(
+			1, assetAppearsOnHistogramMetricDTOs.size(),
+			assetAppearsOnHistogramMetricDTOs.toString());
+
+		AssetAppearsOnHistogramMetricDTO childAssetAppearsOnHistogramMetricDTO =
+			assetAppearsOnHistogramMetricDTOs.get(0);
+
+		Assertions.assertEquals(
+			"viewsMetric",
+			childAssetAppearsOnHistogramMetricDTO.getMetricName());
+
+		List<AppearsOnHistogramMetricDTO> appearsOnHistogramMetricDTOs =
+			new ArrayList(
+				childAssetAppearsOnHistogramMetricDTO.
+					getAppearsOnHistogramMetricDTOs());
+
+		Assertions.assertEquals(
+			3, appearsOnHistogramMetricDTOs.size(),
+			appearsOnHistogramMetricDTOs.toString());
+
+		_assertAppearsOnHistogramMetricDTO(
+			appearsOnHistogramMetricDTOs.get(0), 7,
+			new double[] {0, 0, 0, 0, 0, 0, 6}, "Page Title 1");
+		_assertAppearsOnHistogramMetricDTO(
+			appearsOnHistogramMetricDTOs.get(1), 7,
+			new double[] {0, 0, 0, 0, 0, 3, 0}, "Page Title 2");
+		_assertAppearsOnHistogramMetricDTO(
+			appearsOnHistogramMetricDTOs.get(2), 7,
+			new double[] {0, 2, 0, 0, 0, 0, 0}, "Page Title 3");
+
+		assetAppearsOnHistogramMetricDTO =
+			_assetMetricRestController.getTopAppearsOnHistogramMetricDTO(
+				"egdasdf", "journal", Collections.singleton(1L), "KNOWN", 7);
+
+		assetAppearsOnHistogramMetricDTOs = new ArrayList(
+			assetAppearsOnHistogramMetricDTO.
+				getAssetAppearsOnHistogramMetricDTOs());
+
+		Assertions.assertEquals(
+			1, assetAppearsOnHistogramMetricDTOs.size(),
+			assetAppearsOnHistogramMetricDTOs.toString());
+
+		childAssetAppearsOnHistogramMetricDTO =
+			assetAppearsOnHistogramMetricDTOs.get(0);
+
+		Assertions.assertEquals(
+			"viewsMetric",
+			childAssetAppearsOnHistogramMetricDTO.getMetricName());
+
+		appearsOnHistogramMetricDTOs = new ArrayList(
+			childAssetAppearsOnHistogramMetricDTO.
+				getAppearsOnHistogramMetricDTOs());
+
+		Assertions.assertEquals(
+			2, appearsOnHistogramMetricDTOs.size(),
+			appearsOnHistogramMetricDTOs.toString());
+
+		_assertAppearsOnHistogramMetricDTO(
+			appearsOnHistogramMetricDTOs.get(0), 7,
+			new double[] {0, 0, 0, 0, 0, 3, 0}, "Page Title 2");
+		_assertAppearsOnHistogramMetricDTO(
+			appearsOnHistogramMetricDTOs.get(1), 7,
+			new double[] {0, 1, 0, 0, 0, 0, 0}, "Page Title 4");
+
+		assetAppearsOnHistogramMetricDTO =
+			_assetMetricRestController.getTopAppearsOnHistogramMetricDTO(
+				"egdasdf", "journal", Collections.singleton(1L), "UNKNOWN", 7);
+
+		assetAppearsOnHistogramMetricDTOs = new ArrayList(
+			assetAppearsOnHistogramMetricDTO.
+				getAssetAppearsOnHistogramMetricDTOs());
+
+		Assertions.assertEquals(
+			1, assetAppearsOnHistogramMetricDTOs.size(),
+			assetAppearsOnHistogramMetricDTOs.toString());
+
+		childAssetAppearsOnHistogramMetricDTO =
+			assetAppearsOnHistogramMetricDTOs.get(0);
+
+		Assertions.assertEquals(
+			"viewsMetric",
+			childAssetAppearsOnHistogramMetricDTO.getMetricName());
+
+		appearsOnHistogramMetricDTOs = new ArrayList(
+			childAssetAppearsOnHistogramMetricDTO.
+				getAppearsOnHistogramMetricDTOs());
+
+		Assertions.assertEquals(
+			2, appearsOnHistogramMetricDTOs.size(),
+			appearsOnHistogramMetricDTOs.toString());
+
+		_assertAppearsOnHistogramMetricDTO(
+			appearsOnHistogramMetricDTOs.get(0), 7,
+			new double[] {0, 0, 0, 0, 0, 0, 6}, "Page Title 1");
+		_assertAppearsOnHistogramMetricDTO(
+			appearsOnHistogramMetricDTOs.get(1), 7,
+			new double[] {0, 2, 0, 0, 0, 0, 0}, "Page Title 3");
+	}
+
+	@BQSQLResource(resourcePath = "asset_appears_on_histogram_metric.sql")
+	@Test
+	public void testGetAssetAppearsOnHistogramMetricDTO3() {
+		AssetAppearsOnHistogramMetricDTO assetAppearsOnHistogramMetricDTO =
+			_assetMetricRestController.getTopAppearsOnHistogramMetricDTO(
+				"zsrwerf", "document", Collections.singleton(1L), "ALL", 7);
+
+		List<AssetAppearsOnHistogramMetricDTO>
+			assetAppearsOnHistogramMetricDTOs = new ArrayList(
+				assetAppearsOnHistogramMetricDTO.
+					getAssetAppearsOnHistogramMetricDTOs());
+
+		Assertions.assertEquals(
+			3, assetAppearsOnHistogramMetricDTOs.size(),
+			assetAppearsOnHistogramMetricDTOs.toString());
+
+		AssetAppearsOnHistogramMetricDTO childAssetAppearsOnHistogramMetricDTO =
+			assetAppearsOnHistogramMetricDTOs.get(0);
+
+		Assertions.assertEquals(
+			"commentsMetric",
+			childAssetAppearsOnHistogramMetricDTO.getMetricName());
+
+		List<AppearsOnHistogramMetricDTO> appearsOnHistogramMetricDTOs =
+			new ArrayList(
+				childAssetAppearsOnHistogramMetricDTO.
+					getAppearsOnHistogramMetricDTOs());
+
+		Assertions.assertEquals(
+			3, appearsOnHistogramMetricDTOs.size(),
+			appearsOnHistogramMetricDTOs.toString());
+
+		_assertAppearsOnHistogramMetricDTO(
+			appearsOnHistogramMetricDTOs.get(0), 7,
+			new double[] {0, 0, 0, 0, 0, 0, 4}, "Page Title 2");
+		_assertAppearsOnHistogramMetricDTO(
+			appearsOnHistogramMetricDTOs.get(1), 7,
+			new double[] {0, 0, 0, 0, 0, 3, 0}, "Page Title 3");
+		_assertAppearsOnHistogramMetricDTO(
+			appearsOnHistogramMetricDTOs.get(2), 7,
+			new double[] {0, 2, 0, 0, 0, 0, 0}, "Page Title 1");
+
+		childAssetAppearsOnHistogramMetricDTO =
+			assetAppearsOnHistogramMetricDTOs.get(1);
+
+		Assertions.assertEquals(
+			"downloadsMetric",
+			childAssetAppearsOnHistogramMetricDTO.getMetricName());
+
+		appearsOnHistogramMetricDTOs = new ArrayList(
+			childAssetAppearsOnHistogramMetricDTO.
+				getAppearsOnHistogramMetricDTOs());
+
+		Assertions.assertEquals(
+			3, appearsOnHistogramMetricDTOs.size(),
+			appearsOnHistogramMetricDTOs.toString());
+
+		_assertAppearsOnHistogramMetricDTO(
+			appearsOnHistogramMetricDTOs.get(0), 7,
+			new double[] {0, 6, 0, 0, 0, 0, 0}, "Page Title 1");
+		_assertAppearsOnHistogramMetricDTO(
+			appearsOnHistogramMetricDTOs.get(1), 7,
+			new double[] {0, 0, 0, 0, 0, 3, 0}, "Page Title 3");
+		_assertAppearsOnHistogramMetricDTO(
+			appearsOnHistogramMetricDTOs.get(2), 7,
+			new double[] {0, 0, 0, 0, 0, 0, 2}, "Page Title 2");
+
+		childAssetAppearsOnHistogramMetricDTO =
+			assetAppearsOnHistogramMetricDTOs.get(2);
+
+		Assertions.assertEquals(
+			"previewsMetric",
+			childAssetAppearsOnHistogramMetricDTO.getMetricName());
+
+		appearsOnHistogramMetricDTOs = new ArrayList(
+			childAssetAppearsOnHistogramMetricDTO.
+				getAppearsOnHistogramMetricDTOs());
+
+		Assertions.assertEquals(
+			3, appearsOnHistogramMetricDTOs.size(),
+			appearsOnHistogramMetricDTOs.toString());
+
+		_assertAppearsOnHistogramMetricDTO(
+			appearsOnHistogramMetricDTOs.get(0), 7,
+			new double[] {0, 0, 0, 0, 0, 7, 0}, "Page Title 3");
+		_assertAppearsOnHistogramMetricDTO(
+			appearsOnHistogramMetricDTOs.get(1), 7,
+			new double[] {0, 0, 0, 0, 0, 0, 6}, "Page Title 2");
+		_assertAppearsOnHistogramMetricDTO(
+			appearsOnHistogramMetricDTOs.get(2), 7,
+			new double[] {0, 2, 0, 0, 0, 0, 0}, "Page Title 4");
+
+		assetAppearsOnHistogramMetricDTO =
+			_assetMetricRestController.getTopAppearsOnHistogramMetricDTO(
+				"zsrwerf", "document", Collections.singleton(1L), "KNOWN", 7);
+
+		assetAppearsOnHistogramMetricDTOs = new ArrayList(
+			assetAppearsOnHistogramMetricDTO.
+				getAssetAppearsOnHistogramMetricDTOs());
+
+		Assertions.assertEquals(
+			3, assetAppearsOnHistogramMetricDTOs.size(),
+			assetAppearsOnHistogramMetricDTOs.toString());
+
+		childAssetAppearsOnHistogramMetricDTO =
+			assetAppearsOnHistogramMetricDTOs.get(0);
+
+		Assertions.assertEquals(
+			"commentsMetric",
+			childAssetAppearsOnHistogramMetricDTO.getMetricName());
+
+		appearsOnHistogramMetricDTOs = new ArrayList(
+			childAssetAppearsOnHistogramMetricDTO.
+				getAppearsOnHistogramMetricDTOs());
+
+		Assertions.assertEquals(
+			2, appearsOnHistogramMetricDTOs.size(),
+			appearsOnHistogramMetricDTOs.toString());
+
+		_assertAppearsOnHistogramMetricDTO(
+			appearsOnHistogramMetricDTOs.get(0), 7,
+			new double[] {0, 2, 0, 0, 0, 0, 0}, "Page Title 1");
+		_assertAppearsOnHistogramMetricDTO(
+			appearsOnHistogramMetricDTOs.get(1), 7,
+			new double[] {0, 1, 0, 0, 0, 0, 0}, "Page Title 4");
+
+		childAssetAppearsOnHistogramMetricDTO =
+			assetAppearsOnHistogramMetricDTOs.get(1);
+
+		Assertions.assertEquals(
+			"downloadsMetric",
+			childAssetAppearsOnHistogramMetricDTO.getMetricName());
+
+		appearsOnHistogramMetricDTOs = new ArrayList(
+			childAssetAppearsOnHistogramMetricDTO.
+				getAppearsOnHistogramMetricDTOs());
+
+		Assertions.assertEquals(
+			2, appearsOnHistogramMetricDTOs.size(),
+			appearsOnHistogramMetricDTOs.toString());
+
+		_assertAppearsOnHistogramMetricDTO(
+			appearsOnHistogramMetricDTOs.get(0), 7,
+			new double[] {0, 6, 0, 0, 0, 0, 0}, "Page Title 1");
+		_assertAppearsOnHistogramMetricDTO(
+			appearsOnHistogramMetricDTOs.get(1), 7,
+			new double[] {0, 1, 0, 0, 0, 0, 0}, "Page Title 4");
+
+		childAssetAppearsOnHistogramMetricDTO =
+			assetAppearsOnHistogramMetricDTOs.get(2);
+
+		Assertions.assertEquals(
+			"previewsMetric",
+			childAssetAppearsOnHistogramMetricDTO.getMetricName());
+
+		appearsOnHistogramMetricDTOs = new ArrayList(
+			childAssetAppearsOnHistogramMetricDTO.
+				getAppearsOnHistogramMetricDTOs());
+
+		Assertions.assertEquals(
+			2, appearsOnHistogramMetricDTOs.size(),
+			appearsOnHistogramMetricDTOs.toString());
+
+		_assertAppearsOnHistogramMetricDTO(
+			appearsOnHistogramMetricDTOs.get(0), 7,
+			new double[] {0, 2, 0, 0, 0, 0, 0}, "Page Title 4");
+		_assertAppearsOnHistogramMetricDTO(
+			appearsOnHistogramMetricDTOs.get(1), 7,
+			new double[] {0, 1, 0, 0, 0, 0, 0}, "Page Title 1");
+
+		assetAppearsOnHistogramMetricDTO =
+			_assetMetricRestController.getTopAppearsOnHistogramMetricDTO(
+				"zsrwerf", "document", Collections.singleton(1L), "UNKNOWN", 7);
+
+		assetAppearsOnHistogramMetricDTOs = new ArrayList(
+			assetAppearsOnHistogramMetricDTO.
+				getAssetAppearsOnHistogramMetricDTOs());
+
+		Assertions.assertEquals(
+			3, assetAppearsOnHistogramMetricDTOs.size(),
+			assetAppearsOnHistogramMetricDTOs.toString());
+
+		childAssetAppearsOnHistogramMetricDTO =
+			assetAppearsOnHistogramMetricDTOs.get(0);
+
+		Assertions.assertEquals(
+			"commentsMetric",
+			childAssetAppearsOnHistogramMetricDTO.getMetricName());
+
+		appearsOnHistogramMetricDTOs = new ArrayList(
+			childAssetAppearsOnHistogramMetricDTO.
+				getAppearsOnHistogramMetricDTOs());
+
+		Assertions.assertEquals(
+			2, appearsOnHistogramMetricDTOs.size(),
+			appearsOnHistogramMetricDTOs.toString());
+
+		_assertAppearsOnHistogramMetricDTO(
+			appearsOnHistogramMetricDTOs.get(0), 7,
+			new double[] {0, 0, 0, 0, 0, 0, 4}, "Page Title 2");
+		_assertAppearsOnHistogramMetricDTO(
+			appearsOnHistogramMetricDTOs.get(1), 7,
+			new double[] {0, 0, 0, 0, 0, 3, 0}, "Page Title 3");
+
+		childAssetAppearsOnHistogramMetricDTO =
+			assetAppearsOnHistogramMetricDTOs.get(1);
+
+		Assertions.assertEquals(
+			"downloadsMetric",
+			childAssetAppearsOnHistogramMetricDTO.getMetricName());
+
+		appearsOnHistogramMetricDTOs = new ArrayList(
+			childAssetAppearsOnHistogramMetricDTO.
+				getAppearsOnHistogramMetricDTOs());
+
+		Assertions.assertEquals(
+			2, appearsOnHistogramMetricDTOs.size(),
+			appearsOnHistogramMetricDTOs.toString());
+
+		_assertAppearsOnHistogramMetricDTO(
+			appearsOnHistogramMetricDTOs.get(0), 7,
+			new double[] {0, 0, 0, 0, 0, 3, 0}, "Page Title 3");
+		_assertAppearsOnHistogramMetricDTO(
+			appearsOnHistogramMetricDTOs.get(1), 7,
+			new double[] {0, 0, 0, 0, 0, 0, 2}, "Page Title 2");
+
+		childAssetAppearsOnHistogramMetricDTO =
+			assetAppearsOnHistogramMetricDTOs.get(2);
+
+		Assertions.assertEquals(
+			"previewsMetric",
+			childAssetAppearsOnHistogramMetricDTO.getMetricName());
+
+		appearsOnHistogramMetricDTOs = new ArrayList(
+			childAssetAppearsOnHistogramMetricDTO.
+				getAppearsOnHistogramMetricDTOs());
+
+		Assertions.assertEquals(
+			2, appearsOnHistogramMetricDTOs.size(),
+			appearsOnHistogramMetricDTOs.toString());
+
+		_assertAppearsOnHistogramMetricDTO(
+			appearsOnHistogramMetricDTOs.get(0), 7,
+			new double[] {0, 0, 0, 0, 0, 7, 0}, "Page Title 3");
+		_assertAppearsOnHistogramMetricDTO(
+			appearsOnHistogramMetricDTOs.get(1), 7,
+			new double[] {0, 0, 0, 0, 0, 0, 6}, "Page Title 2");
+	}
 
 	@BQSQLResource(resourcePath = "asset_histogram_metric.sql")
 	@Test
@@ -415,6 +957,25 @@ public class AssetMetricRestControllerTest
 		metric = metrics.get(0);
 
 		Assertions.assertEquals(4, metric.getValue());
+	}
+
+	private void _assertAppearsOnHistogramMetricDTO(
+		AppearsOnHistogramMetricDTO appearsOnHistogramMetricDTO,
+		int expectedHistogramMetricDTOSize,
+		double[] expectedHistogramMetricValues, String expectedPageTitle) {
+
+		Assertions.assertEquals(
+			expectedPageTitle, appearsOnHistogramMetricDTO.getPageTitle());
+
+		Set<HistogramMetricDTO> histogramMetricDTOs =
+			appearsOnHistogramMetricDTO.getHistogramMetricDTOs();
+
+		Assertions.assertEquals(
+			expectedHistogramMetricDTOSize, histogramMetricDTOs.size());
+
+		Assertions.assertArrayEquals(
+			expectedHistogramMetricValues,
+			_getActualValues(histogramMetricDTOs));
 	}
 
 	private double[] _getActualValues(
