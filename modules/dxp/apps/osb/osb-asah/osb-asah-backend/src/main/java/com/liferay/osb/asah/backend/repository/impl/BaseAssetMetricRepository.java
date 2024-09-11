@@ -6,6 +6,7 @@
 package com.liferay.osb.asah.backend.repository.impl;
 
 import com.liferay.osb.asah.backend.constants.DataConstants;
+import com.liferay.osb.asah.backend.model.AppearsOnHistogramMetric;
 import com.liferay.osb.asah.backend.model.AssetMetric;
 import com.liferay.osb.asah.backend.model.AudienceReport;
 import com.liferay.osb.asah.backend.model.HistogramMetric;
@@ -56,6 +57,7 @@ import org.jooq.SelectJoinStep;
 import org.jooq.SelectSelectStep;
 import org.jooq.SortField;
 import org.jooq.Table;
+import org.jooq.WithStep;
 import org.jooq.impl.DSL;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -968,6 +970,106 @@ public abstract class BaseAssetMetricRepository<T extends AssetMetric>
 			));
 	}
 
+	@Override
+	public List<AppearsOnHistogramMetric> getTopAppearsOnHistogramMetrics(
+		String assetId, @Nullable String assetTitle,
+		@Nullable Set<Long> channelIds, IdentityType identityType,
+		Interval interval, MetricType metricType, int size,
+		TimeRange timeRange) {
+
+		Field field = DSL.timestamp(
+			dslHelper.dateTrunc(
+				DatePart.valueOf(interval.name()),
+				dslHelper.getDateAtTimeZoneField(
+					"eventdate", timeZoneDog.getTimeZoneId())));
+
+		field = field.as("key");
+
+		Field<BigDecimal> metricFieldAliased = getMetricFieldAliased(
+			metricType, timeRange);
+
+		SelectJoinStep<Record> selectJoinStep = getAssetMetricSelectJoinStep(
+			_getTopAppearsOnWithStep(
+				assetId, assetTitle, channelIds, identityType, metricType, size,
+				timeRange
+			).select(
+				DSL.field("metric.pageTitle"), field, metricFieldAliased
+			),
+			timeRange);
+
+		if (identityType != IdentityType.ALL) {
+			selectJoinStep = selectJoinStep.join(
+				"BQIdentity as identity"
+			).on(
+				DSL.field(
+					"metric.userId"
+				).eq(
+					DSL.field("identity.id")
+				)
+			);
+		}
+
+		selectJoinStep.join(
+			"TopAppearsOn"
+		).on(
+			DSL.field(
+				"metric.pageTitle"
+			).eq(
+				DSL.field("TopAppearsOn.pageTitle")
+			)
+		);
+
+		SelectConditionStep<Record> selectConditionStep = selectJoinStep.where(
+			_createWhereClauseCondition(assetId, assetTitle, false, timeRange));
+
+		if ((channelIds != null) && !channelIds.isEmpty()) {
+			selectConditionStep = selectConditionStep.and(
+				DSL.field(
+					"metric.channelId"
+				).in(
+					channelIds
+				));
+		}
+
+		if (identityType == IdentityType.KNOWN) {
+			selectConditionStep = selectConditionStep.and(
+				DSL.field(
+					"identity.individualId"
+				).isNotNull());
+		}
+		else if (identityType == IdentityType.UNKNOWN) {
+			selectConditionStep = selectConditionStep.and(
+				DSL.field(
+					"identity.individualId"
+				).isNull());
+		}
+
+		return queryExecutor.queryForList(
+			rowMap -> {
+				Metric metric = new Metric(metricType);
+
+				BigDecimal bigDecimal = (BigDecimal)rowMap.get(
+					metricType.getName());
+
+				if (bigDecimal == null) {
+					bigDecimal = BigDecimal.ZERO;
+				}
+
+				metric.setValue(bigDecimal.doubleValue());
+
+				return new AppearsOnHistogramMetric(
+					String.valueOf(
+						DateUtil.toLocalDateTime(
+							(Date)rowMap.get("key"), ZoneOffset.UTC)),
+					metric, String.valueOf(rowMap.get("pageTitle")));
+			},
+			selectConditionStep.groupBy(
+				DSL.field("metric.pageTitle"), field
+			).orderBy(
+				metricFieldAliased.desc()
+			));
+	}
+
 	protected abstract T createAssetMetric();
 
 	protected String getAssetIdFieldName() {
@@ -1261,6 +1363,91 @@ public abstract class BaseAssetMetricRepository<T extends AssetMetric>
 		}
 
 		return sortFields;
+	}
+
+	private WithStep _getTopAppearsOnWithStep(
+		String assetId, @Nullable String assetTitle,
+		@Nullable Set<Long> channelIds, IdentityType identityType,
+		MetricType metricType, int size, TimeRange timeRange) {
+
+		Set<Field> fields = new HashSet<>();
+
+		Field<String> canonicalUrlField = DSL.field(
+			"canonicalUrl", String.class);
+
+		Field<String> pageTitleField = DSL.field("pageTitle", String.class);
+
+		Collections.addAll(fields, canonicalUrlField, pageTitleField);
+
+		Field<BigDecimal> metricFieldAliased = getMetricFieldAliased(
+			metricType, timeRange);
+
+		fields.add(metricFieldAliased);
+
+		SelectJoinStep<Record> selectJoinStep = DSL.select(
+			fields
+		).from(
+			DSL.table(
+				getTableName(timeRange)
+			).as(
+				"metric"
+			)
+		);
+
+		if (identityType != IdentityType.ALL) {
+			selectJoinStep = selectJoinStep.join(
+				"BQIdentity as identity"
+			).on(
+				DSL.field(
+					"metric.userId"
+				).eq(
+					DSL.field("identity.id")
+				)
+			);
+		}
+
+		Condition condition = DSL.noCondition();
+
+		if ((channelIds != null) && !channelIds.isEmpty()) {
+			condition = condition.and(
+				DSL.field(
+					"metric.channelId"
+				).in(
+					channelIds
+				));
+		}
+
+		if (identityType == IdentityType.KNOWN) {
+			condition = condition.and(
+				DSL.field(
+					"identity.individualId"
+				).isNotNull());
+		}
+		else if (identityType == IdentityType.UNKNOWN) {
+			condition = condition.and(
+				DSL.field(
+					"identity.individualId"
+				).isNull());
+		}
+
+		return dslContext.with(
+			"TopAppearsOn"
+		).as(
+			selectJoinStep.where(
+				DSL.and(
+					condition,
+					_createWhereClauseCondition(
+						assetId, assetTitle, channelIds, null, null, timeRange))
+			).groupBy(
+				canonicalUrlField, pageTitleField
+			).having(
+				metricFieldAliased.gt(DSL.value(BigDecimal.ZERO))
+			).orderBy(
+				metricFieldAliased.desc()
+			).limit(
+				size
+			)
+		);
 	}
 
 	private T _toMetric(

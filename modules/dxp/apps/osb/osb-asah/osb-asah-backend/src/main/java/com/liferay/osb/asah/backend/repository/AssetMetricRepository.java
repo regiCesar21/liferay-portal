@@ -5,6 +5,7 @@
 
 package com.liferay.osb.asah.backend.repository;
 
+import com.liferay.osb.asah.backend.model.AppearsOnHistogramMetric;
 import com.liferay.osb.asah.backend.model.AssetMetric;
 import com.liferay.osb.asah.backend.model.AssetType;
 import com.liferay.osb.asah.backend.model.AudienceReport;
@@ -90,5 +91,11 @@ public interface AssetMetricRepository<T extends AssetMetric> {
 	public List<Metric> getSegmentMetrics(
 		String assetId, @Nullable String assetTitle, @Nullable Long channelId,
 		MetricType metricType, TimeRange timeRange);
+
+	public List<AppearsOnHistogramMetric> getTopAppearsOnHistogramMetrics(
+		String assetId, @Nullable String assetTitle,
+		@Nullable Set<Long> channelIds, IdentityType identityType,
+		Interval interval, MetricType metricType, int size,
+		TimeRange timeRange);
 
 }
