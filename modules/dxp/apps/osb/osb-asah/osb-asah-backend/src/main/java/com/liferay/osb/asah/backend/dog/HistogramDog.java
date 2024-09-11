@@ -158,12 +158,6 @@ public class HistogramDog {
 					searchQueryContext.getAssetType());
 		}
 
-		Map<String, HistogramMetricBag> histogramMetricBags =
-			new LinkedHashMap<>();
-
-		Map<String, List<HistogramMetric>> histogramMetrics =
-			new LinkedHashMap<>();
-
 		String assetTitle = null;
 
 		if (searchQueryContext.getAssetType() != AssetType.CUSTOM) {
@@ -185,6 +179,9 @@ public class HistogramDog {
 				searchQueryContext.getAssetId(), assetTitle, channelIds,
 				identityType, interval, metricType, size, timeRange);
 
+		Map<String, List<HistogramMetric>> histogramMetrics =
+			new LinkedHashMap<>();
+
 		for (AppearsOnHistogramMetric appearsOnHistogramMetric :
 				appearsOnHistogramMetrics) {
 
@@ -195,6 +192,9 @@ public class HistogramDog {
 				histogramMetrics.get(appearsOnHistogramMetric.getPageTitle()),
 				appearsOnHistogramMetric);
 		}
+
+		Map<String, HistogramMetricBag> histogramMetricBags =
+			new LinkedHashMap<>();
 
 		for (Map.Entry<String, List<HistogramMetric>> entry :
 				histogramMetrics.entrySet()) {
