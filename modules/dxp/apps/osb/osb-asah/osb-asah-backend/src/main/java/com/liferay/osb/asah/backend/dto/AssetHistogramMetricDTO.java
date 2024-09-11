@@ -5,6 +5,7 @@
 
 package com.liferay.osb.asah.backend.dto;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import com.liferay.osb.asah.backend.model.HistogramMetric;
@@ -18,6 +19,7 @@ import java.util.stream.Stream;
 /**
  * @author Rachael Koestartyo
  */
+@JsonInclude(JsonInclude.Include.NON_NULL)
 public class AssetHistogramMetricDTO {
 
 	public AssetHistogramMetricDTO(HistogramMetricBag histogramMetricBag) {
