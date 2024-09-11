@@ -9,12 +9,15 @@ import com.liferay.osb.asah.backend.dog.HistogramDog;
 import com.liferay.osb.asah.backend.dog.MetricDog;
 import com.liferay.osb.asah.backend.dog.MetricTypeDog;
 import com.liferay.osb.asah.backend.dog.helper.SearchQueryContext;
+import com.liferay.osb.asah.backend.dto.AppearsOnHistogramMetricDTO;
+import com.liferay.osb.asah.backend.dto.AssetAppearsOnHistogramMetricDTO;
 import com.liferay.osb.asah.backend.dto.AssetHistogramMetricDTO;
 import com.liferay.osb.asah.backend.dto.AssetMetricDTO;
 import com.liferay.osb.asah.backend.model.AssetMetric;
 import com.liferay.osb.asah.backend.model.AssetType;
 import com.liferay.osb.asah.backend.model.BlogMetricType;
 import com.liferay.osb.asah.backend.model.DocumentLibraryMetricType;
+import com.liferay.osb.asah.backend.model.HistogramMetricBag;
 import com.liferay.osb.asah.backend.model.IdentityType;
 import com.liferay.osb.asah.backend.model.JournalMetricType;
 import com.liferay.osb.asah.common.model.MetricType;
@@ -22,6 +25,7 @@ import com.liferay.osb.asah.common.model.TimeRange;
 import com.liferay.osb.asah.common.spring.http.exception.OSBAsahException;
 
 import java.util.LinkedHashSet;
+import java.util.Map;
 import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -135,6 +139,90 @@ public class AssetMetricRestController {
 			_getMetricTypes(assetType, selectedMetrics));
 	}
 
+	@GetMapping("/appears-on/histogram")
+	public AssetAppearsOnHistogramMetricDTO getTopAppearsOnHistogramMetricDTO(
+		@RequestParam String assetId,
+		@PathVariable("assetType") String assetTypeString,
+		@RequestParam Set<Long> channelIds, @RequestParam String identityType,
+		@RequestParam(defaultValue = "30") int rangeKey) {
+
+		AssetType assetType = AssetType.of(assetTypeString);
+
+		SearchQueryContext searchQueryContext = new SearchQueryContext(
+			assetType);
+
+		searchQueryContext.setAssetId(assetId);
+		searchQueryContext.setInterval("D");
+		searchQueryContext.setTimeRange(TimeRange.of(rangeKey));
+
+		Set<AssetAppearsOnHistogramMetricDTO>
+			assetAppearsOnHistogramMetricDTOs = new LinkedHashSet<>();
+
+		if (assetType == AssetType.BLOG) {
+			assetAppearsOnHistogramMetricDTOs.add(
+				_getAssetAppearsOnHistogramMetricDTO(
+					channelIds, identityType, BlogMetricType.COMMENTS,
+					searchQueryContext));
+			assetAppearsOnHistogramMetricDTOs.add(
+				_getAssetAppearsOnHistogramMetricDTO(
+					channelIds, identityType, BlogMetricType.VIEWS,
+					searchQueryContext));
+		}
+		else if (assetType == AssetType.DOCUMENT) {
+			assetAppearsOnHistogramMetricDTOs.add(
+				_getAssetAppearsOnHistogramMetricDTO(
+					channelIds, identityType,
+					DocumentLibraryMetricType.COMMENTS, searchQueryContext));
+			assetAppearsOnHistogramMetricDTOs.add(
+				_getAssetAppearsOnHistogramMetricDTO(
+					channelIds, identityType,
+					DocumentLibraryMetricType.DOWNLOADS, searchQueryContext));
+			assetAppearsOnHistogramMetricDTOs.add(
+				_getAssetAppearsOnHistogramMetricDTO(
+					channelIds, identityType,
+					DocumentLibraryMetricType.PREVIEWS, searchQueryContext));
+		}
+		else if (assetType == AssetType.JOURNAL) {
+			assetAppearsOnHistogramMetricDTOs.add(
+				_getAssetAppearsOnHistogramMetricDTO(
+					channelIds, identityType, JournalMetricType.VIEWS,
+					searchQueryContext));
+		}
+		else {
+			throw new OSBAsahException(
+				HttpStatus.BAD_REQUEST,
+				"Unsupported asset type: " + assetTypeString);
+		}
+
+		return new AssetAppearsOnHistogramMetricDTO(
+			assetAppearsOnHistogramMetricDTOs);
+	}
+
+	private AssetAppearsOnHistogramMetricDTO
+		_getAssetAppearsOnHistogramMetricDTO(
+			Set<Long> channelIds, String identityType, MetricType metricType,
+			SearchQueryContext searchQueryContext) {
+
+		Set<AppearsOnHistogramMetricDTO> appearsOnHistogramMetricDTOs =
+			new LinkedHashSet<>();
+
+		Map<String, HistogramMetricBag> topAppearsOnHistogramMetricBag =
+			_histogramDog.getTopAppearsOnHistogramMetricBag(
+				channelIds, IdentityType.valueOf(identityType), metricType,
+				searchQueryContext, _TOP_PAGES_ASSET_APPEARS_ON);
+
+		for (Map.Entry<String, HistogramMetricBag> entry :
+				topAppearsOnHistogramMetricBag.entrySet()) {
+
+			appearsOnHistogramMetricDTOs.add(
+				new AppearsOnHistogramMetricDTO(
+					entry.getValue(), entry.getKey()));
+		}
+
+		return new AssetAppearsOnHistogramMetricDTO(
+			appearsOnHistogramMetricDTOs, metricType.getName());
+	}
+
 	private Set<MetricType> _getMetricTypes(
 		AssetType assetType, Set<String> selectedMetrics) {
 
@@ -147,6 +235,8 @@ public class AssetMetricRestController {
 
 		return metricTypes;
 	}
+
+	private static final int _TOP_PAGES_ASSET_APPEARS_ON = 3;
 
 	@Autowired
 	private HistogramDog _histogramDog;
