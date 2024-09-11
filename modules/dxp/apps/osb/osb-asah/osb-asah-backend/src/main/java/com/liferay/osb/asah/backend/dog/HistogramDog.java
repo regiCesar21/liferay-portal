@@ -7,6 +7,7 @@ package com.liferay.osb.asah.backend.dog;
 
 import com.liferay.osb.asah.backend.dog.helper.MetricHelper;
 import com.liferay.osb.asah.backend.dog.helper.SearchQueryContext;
+import com.liferay.osb.asah.backend.model.AppearsOnHistogramMetric;
 import com.liferay.osb.asah.backend.model.AssetType;
 import com.liferay.osb.asah.backend.model.HistogramMetric;
 import com.liferay.osb.asah.backend.model.HistogramMetricBag;
@@ -22,7 +23,10 @@ import com.liferay.osb.asah.common.util.SetUtil;
 import java.time.Clock;
 import java.time.LocalDateTime;
 
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -139,6 +143,70 @@ public class HistogramDog {
 				identityType, true, interval, metricType, timeRange),
 			searchQueryContext.isIncludePrevious(), interval, metricType,
 			timeRange);
+	}
+
+	public Map<String, HistogramMetricBag> getTopAppearsOnHistogramMetricBag(
+		Set<Long> channelIds, IdentityType identityType, MetricType metricType,
+		SearchQueryContext searchQueryContext, int size) {
+
+		AssetMetricRepository assetMetricRepository =
+			_assetMetricRepositoryMap.get(searchQueryContext.getAssetType());
+
+		if (assetMetricRepository == null) {
+			throw new IllegalArgumentException(
+				"There is no asset metric repository for asset type " +
+					searchQueryContext.getAssetType());
+		}
+
+		Map<String, HistogramMetricBag> histogramMetricBags =
+			new LinkedHashMap<>();
+
+		Map<String, List<HistogramMetric>> histogramMetrics =
+			new LinkedHashMap<>();
+
+		String assetTitle = null;
+
+		if (searchQueryContext.getAssetType() != AssetType.CUSTOM) {
+			assetTitle = searchQueryContext.getTitle();
+		}
+
+		Interval interval = searchQueryContext.getInterval();
+
+		TimeRange timeRange = searchQueryContext.getTimeRange();
+
+		if ((timeRange == TimeRange.LAST_24_HOURS) ||
+			(timeRange == TimeRange.YESTERDAY)) {
+
+			interval = Interval.HOUR;
+		}
+
+		List<AppearsOnHistogramMetric> appearsOnHistogramMetrics =
+			assetMetricRepository.getTopAppearsOnHistogramMetrics(
+				searchQueryContext.getAssetId(), assetTitle, channelIds,
+				identityType, interval, metricType, size, timeRange);
+
+		for (AppearsOnHistogramMetric appearsOnHistogramMetric :
+				appearsOnHistogramMetrics) {
+
+			histogramMetrics.putIfAbsent(
+				appearsOnHistogramMetric.getPageTitle(), new ArrayList<>());
+
+			Collections.addAll(
+				histogramMetrics.get(appearsOnHistogramMetric.getPageTitle()),
+				appearsOnHistogramMetric);
+		}
+
+		for (Map.Entry<String, List<HistogramMetric>> entry :
+				histogramMetrics.entrySet()) {
+
+			histogramMetricBags.put(
+				entry.getKey(),
+				getHistogramMetricBag(
+					entry.getValue(), searchQueryContext.isIncludePrevious(),
+					interval, metricType, timeRange));
+		}
+
+		return histogramMetricBags;
 	}
 
 	private Map<String, Metric> _getMetrics(
