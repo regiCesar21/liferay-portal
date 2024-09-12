@@ -41,8 +41,8 @@ def create_dag(ac_project_id, ac_project_time_zone_id, application_name, dag_id,
 		schedule_interval=schedule_interval,
 		start_date=pendulum.now(ac_project_time_zone_id) - pendulum.duration(days=2)
 	) as dag:
+
 		bigquery_short_circuit_operator_all = BigQueryShortCircuitOperator(
-			task_id='bigquery_short_circuit_operator_all',
 			sql=f"""
 				SELECT
 					COUNT(*)
@@ -50,7 +50,8 @@ def create_dag(ac_project_id, ac_project_time_zone_id, application_name, dag_id,
 					{dag.default_args['ac_project_id']}.{table_name}
 				WHERE
 					datasourceId in ({', '.join(map(lambda d: str(d), data_source_ids))})
-			"""
+			""",
+			task_id='bigquery_short_circuit_operator_all'
 		)
 
 		cluster_get_or_create = DataprocClusterGetOrCreateOperator(
@@ -59,7 +60,6 @@ def create_dag(ac_project_id, ac_project_time_zone_id, application_name, dag_id,
 
 		for data_source_id in data_source_ids:
 			bigquery_short_circuit_operator = BigQueryShortCircuitOperator(
-				task_id='bigquery_short_circuit_operator_{}'.format(data_source_id),
 				sql=f"""
 					WITH EventCount AS (
 						SELECT
@@ -83,15 +83,16 @@ def create_dag(ac_project_id, ac_project_time_zone_id, application_name, dag_id,
 						EventCount.value > 50
 					FROM
 						EventCount, AssetCount
-				"""
+				""",
+				task_id='bigquery_short_circuit_operator_{}'.format(data_source_id)
 			)
 
 			dataproc_submit_content_recommender_pyspark_job = \
 				DataprocSubmitContentRecommenderPySparkJobOperator(
-					task_id='dataproc_submit_content_recommender_pyspark_job_{}'.format(data_source_id),
+					application_name=application_name,
 					cluster_name="{{ ti.xcom_pull(task_ids='dataproc_cluster_get_or_create')['cluster_name'] }}",
 					data_source_id=str(data_source_id),
-					application_name=application_name
+					task_id='dataproc_submit_content_recommender_pyspark_job_{}'.format(data_source_id)
 				)
 
 			bigquery_short_circuit_operator_all >> cluster_get_or_create >> bigquery_short_circuit_operator >> dataproc_submit_content_recommender_pyspark_job
