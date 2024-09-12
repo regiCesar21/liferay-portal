@@ -20,12 +20,7 @@ public class DXPBatchEntitiesFileUploadEvent {
 		String contentEncoding, String dataSourceId, InputStream inputStream,
 		String resourceName, @Nullable String uploadType) {
 
-		if (StringUtils.isBlank(contentEncoding)) {
-			contentEncoding = "zip";
-		}
-
 		_contentEncoding = contentEncoding;
-
 		_dataSourceId = dataSourceId;
 		_inputStream = inputStream;
 		_resourceName = resourceName;
