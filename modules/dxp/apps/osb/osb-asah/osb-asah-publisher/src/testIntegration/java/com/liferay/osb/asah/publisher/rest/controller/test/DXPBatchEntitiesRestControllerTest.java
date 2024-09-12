@@ -13,6 +13,8 @@ import com.liferay.osb.asah.common.repository.DataSourceRepository;
 import com.liferay.osb.asah.common.storage.GoogleStorage;
 import com.liferay.osb.asah.common.zip.ZipFileBuilder;
 import com.liferay.osb.asah.publisher.OSBAsahPublisherSpringTestContext;
+import com.liferay.osb.asah.publisher.util.DXPBatchEntitiesFileUploadEvent;
+import com.liferay.osb.asah.publisher.util.DXPBatchEntitiesFileUploadEventHandler;
 import com.liferay.osb.asah.test.util.util.RandomTestUtil;
 
 import java.io.File;
@@ -35,6 +37,7 @@ import org.mockito.Mockito;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.boot.test.mock.mockito.SpyBean;
 import org.springframework.boot.test.web.client.TestRestTemplate;
 import org.springframework.boot.web.server.LocalServerPort;
 import org.springframework.core.io.FileSystemResource;
@@ -220,6 +223,48 @@ public class DXPBatchEntitiesRestControllerTest
 		).isEqualTo(
 			HttpStatus.valueOf(200)
 		);
+
+		Mockito.verify(
+			_dxpBatchEntitiesFileUploadHandler, Mockito.times(1)
+		).receive(
+			ArgumentMatchers.any(DXPBatchEntitiesFileUploadEvent.class)
+		);
+	}
+
+	@Test
+	public void testPostEmptyMultipartFile() throws Exception {
+		MultipartBodyBuilder multipartBodyBuilder = new MultipartBodyBuilder();
+
+		multipartBodyBuilder.part(
+			"file", _getEmptyFileSystemResource()
+		).filename(
+			"com.liferay.analytics.dxp.entity.rest.dto.v1_0.DXPEntity"
+		);
+
+		HttpHeaders httpHeaders = new HttpHeaders();
+
+		httpHeaders.add(
+			HeaderConstants.DATA_SOURCE_ID,
+			String.valueOf(_dataSource1.getId()));
+		httpHeaders.add(HeaderConstants.PROJECT_ID, "test");
+		httpHeaders.setContentType(MediaType.MULTIPART_FORM_DATA);
+
+		ResponseEntity<Resource> responseEntity = _testRestTemplate.exchange(
+			"/dxp-batch-entities", HttpMethod.POST,
+			new HttpEntity<>(multipartBodyBuilder.build(), httpHeaders),
+			Resource.class);
+
+		Assertions.assertThat(
+			responseEntity.getStatusCode()
+		).isEqualTo(
+			HttpStatus.valueOf(200)
+		);
+
+		Mockito.verify(
+			_dxpBatchEntitiesFileUploadHandler, Mockito.times(0)
+		).receive(
+			ArgumentMatchers.any(DXPBatchEntitiesFileUploadEvent.class)
+		);
 	}
 
 	@Test
@@ -262,6 +307,18 @@ public class DXPBatchEntitiesRestControllerTest
 		return _testRestTemplate.exchange(
 			uriComponents.toString(), HttpMethod.GET,
 			new HttpEntity<>(null, httpHeaders), Resource.class);
+	}
+
+	private FileSystemResource _getEmptyFileSystemResource() throws Exception {
+		ZipFileBuilder zipFileBuilder = new ZipFileBuilder(
+			"empty-export", ".zip");
+
+		zipFileBuilder.addToZip(
+			"export.jsonl",
+			zipOutputStream -> {
+			});
+
+		return new FileSystemResource(zipFileBuilder.build());
 	}
 
 	private FileSystemResource _getFileSystemResource() throws Exception {
@@ -316,6 +373,10 @@ public class DXPBatchEntitiesRestControllerTest
 
 	@Autowired
 	private DataSourceRepository _dataSourceRepository;
+
+	@SpyBean
+	private DXPBatchEntitiesFileUploadEventHandler
+		_dxpBatchEntitiesFileUploadHandler;
 
 	@MockBean
 	private GoogleStorage _googleStorage;
