@@ -79,8 +79,8 @@ def create_dag(ac_project_id, ac_project_time_zone_id, application_name, dag_id,
 							datasourceId = {str(data_source_id)}
 					)
 					SELECT
-						EventCount.value > 50 AND
-						AssetCount.value > 10
+						AssetCount.value > 10 AND
+						EventCount.value > 50
 					FROM
 						EventCount, AssetCount
 				"""
