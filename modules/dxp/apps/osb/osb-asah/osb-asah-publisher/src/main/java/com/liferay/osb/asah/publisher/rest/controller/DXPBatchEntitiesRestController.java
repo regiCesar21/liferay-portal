@@ -100,7 +100,8 @@ public class DXPBatchEntitiesRestController {
 	@PostMapping(consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
 	public ResponseEntity<?> post(
 			@RequestHeader(
-				required = false, value = HttpHeaders.CONTENT_ENCODING
+				defaultValue = "zip", required = false,
+				value = HttpHeaders.CONTENT_ENCODING
 			)
 			String contentEncoding,
 			@RequestHeader(value = HeaderConstants.DATA_SOURCE_ID) String
