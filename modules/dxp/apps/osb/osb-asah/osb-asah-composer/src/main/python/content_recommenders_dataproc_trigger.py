@@ -61,12 +61,28 @@ def create_dag(ac_project_id, ac_project_time_zone_id, application_name, dag_id,
 			bigquery_short_circuit_operator = BigQueryShortCircuitOperator(
 				task_id='bigquery_short_circuit_operator_{}'.format(data_source_id),
 				sql=f"""
+					WITH EventCount AS (
+						SELECT
+							count(*) AS value
+						FROM
+							{ dag.default_args['ac_project_id'] }.event
+						WHERE
+							DATE(eventDate) > DATE_SUB(CURRENT_DATE({ ac_project_time_zone_id }), INTERVAL 30 DAY) AND
+							datasourceId = {str(data_source_id)}
+					),
+					AssetCount AS (
+						SELECT
+							COUNT(*) AS value
+						FROM
+							{ dag.default_args['ac_project_id'] }.assetentity
+						WHERE
+							datasourceId = {str(data_source_id)}
+					)
 					SELECT
-						COUNT(*)
+						EventCount.value > 50 AND
+						AssetCount.value > 10
 					FROM
-						{ dag.default_args['ac_project_id'] }.{table_name}
-					WHERE
-						datasourceId = {str(data_source_id)}
+						EventCount, AssetCount
 				"""
 			)
 
