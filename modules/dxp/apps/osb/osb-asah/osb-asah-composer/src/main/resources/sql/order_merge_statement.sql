@@ -60,11 +60,12 @@ USING
 			`order`.id = analyticsDeleteMessage.classPK AND
 			`order`.projectId = analyticsDeleteMessage.projectId
 		WHERE
+			`order`.dataSourceId = CAST('{{ params['dataSourceId'] }}' AS INTEGER) AND
 			`order`.uploadDate >=
-				{% if prev_start_date_success is not none %}
-					'{{ prev_start_date_success }}'
-				{% else %}
+				{% if '{{ params['uploadType'] }}' == 'FULL' %}
 					'1970-01-01T00:00:00'
+				{% else %}
+					CAST('{{ params['uploadDate'] }}' AS TIMESTAMP)
 				{% endif %}
 		) AS staging
 ON

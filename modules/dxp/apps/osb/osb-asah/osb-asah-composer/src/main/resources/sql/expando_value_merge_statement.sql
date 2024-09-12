@@ -72,12 +72,13 @@ USING
 				(
 					analyticsDeleteMessage.entityId IS NOT NULL OR
 					dxpEntity.uploadDate >=
-						{% if prev_start_date_success is not none %}
-							'{{ prev_start_date_success }}'
-						{% else %}
+						{% if '{{ params['uploadType'] }}' == 'FULL' %}
 							'1970-01-01T00:00:00'
+						{% else %}
+							CAST('{{ params['uploadDate'] }}' AS TIMESTAMP)
 						{% endif %}
 				) AND
+				dxpEntity.dataSourceId = CAST('{{ params['dataSourceId'] }}' AS INTEGER) AND
 				(
 					dxpEntity.type = 'com.liferay.portal.kernel.model.Organization' OR
 					dxpEntity.type = 'com.liferay.portal.kernel.model.User'

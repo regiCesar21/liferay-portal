@@ -84,12 +84,13 @@ USING
 				(
 					analyticsDeleteMessage.teamId IS NOT NULL OR
 					team.uploadDate >=
-						{% if prev_start_date_success is not none %}
-							'{{ prev_start_date_success }}'
-						{% else %}
+						{% if '{{ params['uploadType'] }}' == 'FULL' %}
 							'1970-01-01T00:00:00'
+						{% else %}
+							CAST('{{ params['uploadDate'] }}' AS TIMESTAMP)
 						{% endif %}
 				) AND
+				team.dataSourceId = CAST('{{ params['dataSourceId'] }}' AS INTEGER) AND
 				team.type = 'com.liferay.portal.kernel.model.Team'
 		)
 		WHERE
