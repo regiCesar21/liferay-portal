@@ -31,7 +31,7 @@ USING
 			dataSourceId = CAST('{{ params['dataSourceId'] }}' AS INTEGER) AND
 			type = 'com.liferay.analytics.message.storage.model.AnalyticsDeleteMessage' AND
 			uploadDate >=
-				{% if '{{ params['uploadType'] }}' == 'FULL' %}
+				{% if params.uploadType == 'FULL' %}
 					'1970-01-01T00:00:00'
 				{% else %}
 					CAST('{{ params['uploadDate'] }}' AS TIMESTAMP)
