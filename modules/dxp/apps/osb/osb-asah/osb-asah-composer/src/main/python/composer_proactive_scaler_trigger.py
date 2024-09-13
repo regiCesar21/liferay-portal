@@ -25,7 +25,6 @@ scale_up_schedule_interval = Variable.get(
 
 if scale_down_schedule_interval and scale_up_schedule_interval:
 	default_min_workers = Variable.get('osb.asah.composer.default.min.workers', 1)
-
 	scaled_min_workers = Variable.get('osb.asah.composer.scaled.min.workers', 2)
 
 	with airflow.DAG(
@@ -38,7 +37,6 @@ if scale_down_schedule_interval and scale_up_schedule_interval:
 		schedule_interval=scale_down_schedule_interval,
 		start_date=pendulum.now() - pendulum.duration(days=2)
 	) as dag_down:
-
 		bash_operator = BashOperator(
 			bash_command="gcloud composer environments update ${COMPOSER_ENVIRONMENT} --location ${COMPOSER_LOCATION} --min-workers " + str(default_min_workers),
 			task_id="scale_down_bash_operator"
@@ -54,7 +52,6 @@ if scale_down_schedule_interval and scale_up_schedule_interval:
 		schedule_interval=scale_up_schedule_interval,
 		start_date=pendulum.now() - pendulum.duration(days=2)
 	) as dag_up:
-
 		bash_operator = BashOperator(
 			bash_command="gcloud composer environments update ${COMPOSER_ENVIRONMENT} --location ${COMPOSER_LOCATION} --min-workers " + str(scaled_min_workers),
 			task_id="scale_up_bash_operator"

@@ -41,7 +41,6 @@ def create_dag(ac_project_id, ac_project_time_zone_id, application_name, dag_id,
 		schedule_interval=schedule_interval,
 		start_date=pendulum.now(ac_project_time_zone_id) - pendulum.duration(days=2)
 	) as dag:
-
 		bigquery_short_circuit_operator_all = BigQueryShortCircuitOperator(
 			sql=f"""
 				SELECT
@@ -96,7 +95,6 @@ def create_dag(ac_project_id, ac_project_time_zone_id, application_name, dag_id,
 				)
 
 			bigquery_short_circuit_operator_all >> cluster_get_or_create >> bigquery_short_circuit_operator >> dataproc_submit_content_recommender_pyspark_job
-
 		return dag
 
 response = requests.get(
