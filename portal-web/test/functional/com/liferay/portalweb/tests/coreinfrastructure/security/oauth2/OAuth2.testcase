@@ -1134,6 +1134,10 @@ definition {
 
 		FileInstall.deployFileOnServer(liferayDependencyJars = "com.liferay.oauth2.provider.sample.jar");
 
+		WaitForConsoleTextPresent(value1 = "STARTED com.liferay.oauth2.provider.sample_1.0.0");
+
+		Pause(value1 = 10000);
+
 		LexiconEntry.gotoEntryMenuItem(
 			menuItem = "Edit",
 			rowEntry = "Analytics Cloud");
