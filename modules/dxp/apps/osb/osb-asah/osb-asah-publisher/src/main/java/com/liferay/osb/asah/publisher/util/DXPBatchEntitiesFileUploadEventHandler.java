@@ -61,9 +61,6 @@ public class DXPBatchEntitiesFileUploadEventHandler {
 				ProjectIdThreadLocal.getProjectId());
 
 			if (Objects.equals(
-					dxpBatchEntitiesFileUploadEvent.getResourceName(),
-					_DXP_ENTITY_RESOURCE_CLASS_NAME) &&
-				Objects.equals(
 					dxpBatchEntitiesFileUploadEvent.getContentEncoding(),
 					"zip")) {
 
@@ -135,9 +132,6 @@ public class DXPBatchEntitiesFileUploadEventHandler {
 				fileOutputStream);
 		}
 	}
-
-	private static final String _DXP_ENTITY_RESOURCE_CLASS_NAME =
-		"com.liferay.analytics.dxp.entity.rest.dto.v1_0.DXPEntity";
 
 	@Autowired
 	private AsahTaskDog _asahTaskDog;
