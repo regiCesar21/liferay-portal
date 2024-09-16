@@ -110,26 +110,6 @@ response = requests.get(
 )
 
 for project in response.json():
-
-	#
-	# Asset Entity
-	#
-
-	dag_id = 'dxp_asset_entity_ingestion_dataflow_trigger_{}'.format(
-		project.get('id')
-	)
-
-	globals()[dag_id] = create_dag(
-		project.get('id'), dag_id,
-		'DXP Asset Entity Ingestion Dataflow Trigger For {}'.format(
-			project.get('id')
-		),
-		'com.liferay.osb.asah.dataflow.ingestion.dxp.DXPAssetEntityIngestionPipeline',
-		'dxpassetentityingestionpipeline-{}'.format(project.get('id')),
-		['asset_entity_merge'],
-		'dxp_asset_entity_ingestion_dataflow_trigger'
-	)
-
 	if project.get('commerceChannelsSelected'):
 
 		#
