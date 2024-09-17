@@ -28,11 +28,13 @@ public class LiferayOAuthModule extends AbstractModule {
 		).toProvider(
 			OAuthModule.OAuthCrypterProvider.class
 		);
+
 		bind(
 			OAuthRequest.class
 		).toProvider(
 			OAuthModule.OAuthRequestProvider.class
 		);
+
 		bind(
 			OAuthStore.class
 		).toProvider(
