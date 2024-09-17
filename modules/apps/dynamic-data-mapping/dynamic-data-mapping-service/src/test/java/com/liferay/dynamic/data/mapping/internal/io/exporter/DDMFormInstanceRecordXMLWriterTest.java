@@ -86,21 +86,25 @@ public class DDMFormInstanceRecordXMLWriterTest extends PowerMockito {
 		).addElement(
 			"field"
 		);
+
 		inOrder.verify(
 			fieldElement, Mockito.times(1)
 		).addElement(
 			"label"
 		);
+
 		inOrder.verify(
 			labelElement, Mockito.times(1)
 		).addText(
 			"Label 1"
 		);
+
 		inOrder.verify(
 			fieldElement, Mockito.times(1)
 		).addElement(
 			"value"
 		);
+
 		inOrder.verify(
 			valueElement, Mockito.times(1)
 		).addText(
@@ -256,11 +260,13 @@ public class DDMFormInstanceRecordXMLWriterTest extends PowerMockito {
 		inOrder.verify(
 			_saxReader, Mockito.times(1)
 		).createDocument();
+
 		inOrder.verify(
 			document, Mockito.times(1)
 		).addElement(
 			"root"
 		);
+
 		inOrder.verify(
 			rootElement, Mockito.times(1)
 		).addElement(
