@@ -26,7 +26,9 @@ def create_dag(ac_project_id, dag_id, dag_description, entity, schema_fields):
 		dag_id=dag_id,
 		default_args={
 			'ac_project_id': ac_project_id,
+			'entity': entity,
 			'google_project_id': os.environ['GOOGLE_PROJECT_ID'],
+			'region': os.environ['GOOGLE_REGION'],
 			'owner': 'Liferay'
 		},
 		description=dag_description,
@@ -38,7 +40,7 @@ def create_dag(ac_project_id, dag_id, dag_description, entity, schema_fields):
 		create_external_table = BigQueryCreateExternalTableOperator(
 			bucket="{{ params['bucketName'] }}",
 			compression='GZIP',
-			destination_project_dataset_table="{{ dag.default_args['ac_project_id'] }}.{{ entity }}_external_{{ ts_nodash }}",
+			destination_project_dataset_table="{{ dag.default_args['ac_project_id'] }}.{{ dag.default_args['entity'] }}_external_{{ ts_nodash }}",
 			schema_fields=schema_fields,
 			source_format='NEWLINE_DELIMITED_JSON',
 			source_objects=["{{ dag.default_args['ac_project_id'] }}/{{ params['bucketFolder'] }}/{{ params['uploadDate'] }}.gz"],
@@ -54,7 +56,7 @@ def create_dag(ac_project_id, dag_id, dag_description, entity, schema_fields):
 		)
 
 		delete_external_table = BigQueryDeleteTableOperator(
-			deletion_dataset_table="{{ dag.default_args['ac_project_id'] }}.{{ entity }}_external_{{ ts_nodash }}",
+			deletion_dataset_table="{{ dag.default_args['ac_project_id'] }}.{{ dag.default_args['entity'] }}_external_{{ ts_nodash }}",
 			task_id=f"delete_{ entity }_external_table"
 		)
 
@@ -77,6 +79,206 @@ for project in response.json():
 
 	if not project.get('commerceChannelsSelected'):
 		continue
+
+	#
+	# Commerce Order
+	#
+
+	dag_id = 'dxp_order_ingestion_{}'.format(
+		project.get('id')
+	)
+
+	globals()[dag_id] = create_dag(
+		project.get('id'), dag_id,
+		'DXP Order Ingestion DAG For {}'.format(
+			project.get('id')
+		),
+		'order',
+		[
+			{
+				"mode": "NULLABLE",
+				"name": "accountId",
+				"type": "INT64"
+			},
+			{
+				"mode": "REQUIRED",
+				"name": "channelId",
+				"type": "INT64"
+			},
+			{
+				"mode": "NULLABLE",
+				"name": "createDate",
+				"type": "TIMESTAMP"
+			},
+			{
+				"mode": "NULLABLE",
+				"name": "currencyCode",
+				"type": "STRING"
+			},
+			{
+				"mode": "NULLABLE",
+				"name": "customFields",
+				"type": "JSON"
+			},
+			{
+				"mode": "NULLABLE",
+				"name": "externalReferenceCode",
+				"type": "STRING"
+			},
+			{
+				"mode": "NULLABLE",
+				"name": "id",
+				"type": "INT64"
+			},
+			{
+				"mode": "NULLABLE",
+				"name": "modifiedDate",
+				"type": "TIMESTAMP"
+			},
+			{
+				"mode": "NULLABLE",
+				"name": "orderDate",
+				"type": "TIMESTAMP"
+			},
+			{
+				"fields": [
+					{
+						"mode": "NULLABLE",
+						"name": "cpDefinitionId",
+						"type": "INT64"
+					},
+					{
+						"mode": "NULLABLE",
+						"name": "createDate",
+						"type": "TIMESTAMP"
+					},
+					{
+						"mode": "NULLABLE",
+						"name": "customFields",
+						"type": "JSON"
+					},
+					{
+						"mode": "NULLABLE",
+						"name": "externalReferenceCode",
+						"type": "STRING"
+					},
+					{
+						"mode": "NULLABLE",
+						"name": "finalPrice",
+						"type": "STRING"
+					},
+					{
+						"mode": "NULLABLE",
+						"name": "id",
+						"type": "INT64"
+					},
+					{
+						"mode": "NULLABLE",
+						"name": "modifiedDate",
+						"type": "TIMESTAMP"
+					},
+					{
+						"mode": "NULLABLE",
+						"name": "name",
+						"type": "JSON"
+					},
+					{
+						"mode": "NULLABLE",
+						"name": "options",
+						"type": "STRING"
+					},
+					{
+						"mode": "NULLABLE",
+						"name": "parentOrderItemId",
+						"type": "INT64"
+					},
+					{
+						"mode": "NULLABLE",
+						"name": "quantity",
+						"type": "INT64"
+					},
+					{
+						"mode": "NULLABLE",
+						"name": "sku",
+						"type": "STRING"
+					},
+					{
+						"mode": "NULLABLE",
+						"name": "subscription",
+						"type": "BOOL"
+					},
+					{
+						"mode": "NULLABLE",
+						"name": "unitOfMeasure",
+						"type": "STRING"
+					},
+					{
+						"mode": "NULLABLE",
+						"name": "unitPrice",
+						"type": "STRING"
+					},
+					{
+						"mode": "NULLABLE",
+						"name": "userId",
+						"type": "INT64"
+					}
+				],
+				"mode": "REPEATED",
+				"name": "orderItems",
+				"type": "RECORD"
+			},
+			{
+				"mode": "NULLABLE",
+				"name": "orderStatus",
+				"type": "INT64"
+			},
+			{
+				"mode": "NULLABLE",
+				"name": "orderTypeExternalReferenceCode",
+				"type": "STRING"
+			},
+			{
+				"mode": "NULLABLE",
+				"name": "orderTypeId",
+				"type": "INT64"
+			},
+			{
+				"mode": "NULLABLE",
+				"name": "paymentMethod",
+				"type": "STRING"
+			},
+			{
+				"mode": "NULLABLE",
+				"name": "paymentStatus",
+				"type": "INT64"
+			},
+			{
+				"mode": "NULLABLE",
+				"name": "status",
+				"type": "INT64"
+			},
+			{
+				"mode": "NULLABLE",
+				"name": "total",
+				"type": "STRING"
+			},
+			{
+				"mode": "NULLABLE",
+				"name": "uploadDate",
+				"type": "TIMESTAMP"
+			},
+			{
+				"mode": "NULLABLE",
+				"name": "uploadType",
+				"type": "STRING"
+			},
+			{
+				"mode": "NULLABLE",
+				"name": "userId",
+				"type": "INT64"
+			}
+		]
+	)
 
 	#
 	# Commerce Product
@@ -109,9 +311,9 @@ for project in response.json():
 				"type": "TIMESTAMP"
 			},
 			{
-				"mode": "REQUIRED",
-				"name": "dataSourceId",
-				"type": "INT64"
+				"mode": "NULLABLE",
+				"name": "customFields",
+				"type": "JSON"
 			},
 			{
 				"mode": "NULLABLE",
@@ -240,11 +442,6 @@ for project in response.json():
 			{
 				"mode": "NULLABLE",
 				"name": "productType",
-				"type": "STRING"
-			},
-			{
-				"mode": "REQUIRED",
-				"name": "projectId",
 				"type": "STRING"
 			},
 			{
