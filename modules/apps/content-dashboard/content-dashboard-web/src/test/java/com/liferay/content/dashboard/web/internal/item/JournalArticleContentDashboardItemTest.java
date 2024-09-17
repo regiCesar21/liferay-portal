@@ -448,6 +448,7 @@ public class JournalArticleContentDashboardItemTest {
 		).thenReturn(
 			url
 		);
+
 		Mockito.when(
 			contentDashboardItemAction.getURL(Mockito.any(Locale.class))
 		).thenReturn(
