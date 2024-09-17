@@ -255,11 +255,13 @@ public class ElasticsearchConnectionManagerTest {
 		).thenReturn(
 			OperationMode.EMBEDDED
 		);
+
 		Mockito.when(
 			_remoteElasticsearchConnection.getConnectionId()
 		).thenReturn(
 			RemoteElasticsearchConnection.CONNECTION_ID
 		);
+
 		Mockito.when(
 			_remoteElasticsearchConnection.getOperationMode()
 		).thenReturn(
