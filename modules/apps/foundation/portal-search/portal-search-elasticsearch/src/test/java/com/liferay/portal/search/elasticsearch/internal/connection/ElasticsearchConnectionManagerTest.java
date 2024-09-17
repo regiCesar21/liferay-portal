@@ -232,6 +232,7 @@ public class ElasticsearchConnectionManagerTest {
 		).thenReturn(
 			OperationMode.EMBEDDED
 		);
+
 		Mockito.when(
 			_remoteElasticsearchConnection.getOperationMode()
 		).thenReturn(
