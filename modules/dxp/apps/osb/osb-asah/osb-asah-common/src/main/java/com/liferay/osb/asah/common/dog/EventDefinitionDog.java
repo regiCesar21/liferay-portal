@@ -14,6 +14,7 @@ import com.liferay.osb.asah.common.repository.EventDefinitionRepository;
 import com.liferay.osb.asah.common.spring.http.exception.OSBAsahException;
 import com.liferay.osb.asah.common.util.TimeOrderedUuidGenerator;
 
+import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
@@ -175,6 +176,10 @@ public class EventDefinitionDog {
 
 	public Map<String, EventDefinition> getEventDefinitions(
 		Set<String> eventDefinitionNames) {
+
+		if ((eventDefinitionNames == null) || eventDefinitionNames.isEmpty()) {
+			return Collections.emptyMap();
+		}
 
 		List<EventDefinition> eventDefinitions =
 			_eventDefinitionRepository.findByNameIn(eventDefinitionNames);
