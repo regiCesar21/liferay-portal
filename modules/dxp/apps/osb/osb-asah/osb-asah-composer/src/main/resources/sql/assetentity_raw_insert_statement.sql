@@ -39,4 +39,4 @@ SELECT
 	CAST('{{ params['uploadDate'] }}' AS TIMESTAMP) AS uploadDate,
 	'{{ params['uploadType'] }}' AS uploadType
 FROM
-	`{{ dag.default_args['ac_project_id'] }}.dxp_asset_external_{{ ts_nodash }}`
+	`{{ dag.default_args['ac_project_id'] }}.assetentity_external_{{ ts_nodash }}`

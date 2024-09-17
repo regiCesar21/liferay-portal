@@ -81,11 +81,6 @@ def create_dag(ac_project_id, dag_id, dag_description):
 					"type": "TIMESTAMP"
 				},
 				{
-					"mode": "REQUIRED",
-					"name": "dataSourceId",
-					"type": "INT64"
-				},
-				{
 					"mode": "NULLABLE",
 					"name": "expirationDate",
 					"type": "TIMESTAMP"
@@ -104,11 +99,6 @@ def create_dag(ac_project_id, dag_id, dag_description):
 					"mode": "NULLABLE",
 					"name": "modifiedDate",
 					"type": "TIMESTAMP"
-				},
-				{
-					"mode": "REQUIRED",
-					"name": "projectId",
-					"type": "STRING"
 				},
 				{
 					"mode": "NULLABLE",
