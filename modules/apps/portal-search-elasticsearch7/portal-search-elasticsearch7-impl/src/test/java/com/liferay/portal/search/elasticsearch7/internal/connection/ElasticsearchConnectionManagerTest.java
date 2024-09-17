@@ -203,6 +203,7 @@ public class ElasticsearchConnectionManagerTest {
 		).thenReturn(
 			"test"
 		);
+
 		Mockito.when(
 			elasticsearchConnection.isActive()
 		).thenReturn(
