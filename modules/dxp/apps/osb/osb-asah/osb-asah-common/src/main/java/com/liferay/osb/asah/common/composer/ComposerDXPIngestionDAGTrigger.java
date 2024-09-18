@@ -41,7 +41,7 @@ public class ComposerDXPIngestionDAGTrigger {
 	public ComposerDXPIngestionDAGTrigger() {
 		_entities.put(
 			"com.liferay.analytics.dxp.entity.rest.dto.v1_0.AssetEntity",
-			"asset_entity");
+			"asset");
 		_entities.put(
 			"com.liferay.analytics.dxp.entity.rest.dto.v1_0.DXPEntity",
 			"entity");
@@ -144,15 +144,8 @@ public class ComposerDXPIngestionDAGTrigger {
 	}
 
 	private String _getDAGId(String entity) {
-		if (StringUtils.equals(entity, "entity")) {
-			return String.format(
-				"dxp_%s_ingestion_%s", entity,
-				ProjectIdThreadLocal.getProjectId());
-		}
-
 		return String.format(
-			"dxp_%s_ingestion_dataflow_trigger_%s", entity,
-			ProjectIdThreadLocal.getProjectId());
+			"dxp_%s_ingestion_%s", entity, ProjectIdThreadLocal.getProjectId());
 	}
 
 	private static final Log _log = LogFactory.getLog(
