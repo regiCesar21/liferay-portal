@@ -5,12 +5,21 @@
 
 package com.liferay.osb.asah.backend.dto;
 
+import com.liferay.osb.asah.backend.model.Metric;
+
 /**
  * @author Rachael Koestartyo
  */
 public class MetricDTO {
 
 	public MetricDTO() {
+	}
+
+	public MetricDTO(Metric metric) {
+		_previousValue = metric.getPreviousValue();
+		_previousValueKey = metric.getPreviousValueKey();
+		_value = metric.getValue();
+		_valueKey = metric.getValueKey();
 	}
 
 	public Double getPreviousValue() {
