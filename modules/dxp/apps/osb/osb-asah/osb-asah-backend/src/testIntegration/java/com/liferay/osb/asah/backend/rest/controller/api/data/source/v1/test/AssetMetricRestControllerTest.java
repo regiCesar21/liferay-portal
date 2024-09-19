@@ -10,17 +10,21 @@ import com.liferay.osb.asah.backend.dto.AppearsOnHistogramMetricDTO;
 import com.liferay.osb.asah.backend.dto.AssetAppearsOnHistogramMetricDTO;
 import com.liferay.osb.asah.backend.dto.AssetHistogramMetricDTO;
 import com.liferay.osb.asah.backend.dto.AssetMetricDTO;
+import com.liferay.osb.asah.backend.dto.DeviceMetricDTO;
 import com.liferay.osb.asah.backend.dto.HistogramMetricDTO;
 import com.liferay.osb.asah.backend.model.AssetType;
 import com.liferay.osb.asah.backend.model.BlogMetricType;
 import com.liferay.osb.asah.backend.model.DocumentLibraryMetricType;
+import com.liferay.osb.asah.backend.model.JournalMetricType;
 import com.liferay.osb.asah.backend.model.Metric;
 import com.liferay.osb.asah.backend.rest.controller.api.data.source.v1.AssetMetricRestController;
+import com.liferay.osb.asah.common.model.MetricType;
 import com.liferay.osb.asah.common.util.SetUtil;
 import com.liferay.osb.asah.test.util.annotation.BQSQLResource;
 import com.liferay.osb.asah.test.util.spring.OSBAsahTestExecutionListenersContext;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
@@ -959,6 +963,216 @@ public class AssetMetricRestControllerTest
 		Assertions.assertEquals(4, metric.getValue());
 	}
 
+	@BQSQLResource(resourcePath = "asset_device_metric.sql")
+	@Test
+	public void testGetDeviceMetricDTO1() {
+		DeviceMetricDTO deviceMetricDTO =
+			_assetMetricRestController.getDeviceMetricDTO(
+				"e131fabc", "blog", Collections.singleton(1L), "ALL", 7);
+
+		DeviceMetricDTO commentsDeviceMetricDTO = new DeviceMetricDTO(
+			BlogMetricType.COMMENTS.getName(),
+			Arrays.asList(
+				_createMetric(
+					BlogMetricType.COMMENTS, null, null, 5D, "Tablet"),
+				_createMetric(
+					BlogMetricType.COMMENTS, null, null, 3D, "Desktop")));
+		DeviceMetricDTO viewsDeviceMetricDTO = new DeviceMetricDTO(
+			BlogMetricType.VIEWS.getName(),
+			Arrays.asList(
+				_createMetric(BlogMetricType.VIEWS, null, null, 2D, "Desktop"),
+				_createMetric(BlogMetricType.VIEWS, null, null, 1D, "Tablet")));
+
+		Assertions.assertEquals(
+			new DeviceMetricDTO(
+				SetUtil.of(commentsDeviceMetricDTO, viewsDeviceMetricDTO)),
+			deviceMetricDTO);
+
+		deviceMetricDTO = _assetMetricRestController.getDeviceMetricDTO(
+			"e131fabc", "blog", Collections.singleton(1L), "KNOWN", 7);
+
+		commentsDeviceMetricDTO = new DeviceMetricDTO(
+			BlogMetricType.COMMENTS.getName(),
+			Arrays.asList(
+				_createMetric(
+					BlogMetricType.COMMENTS, null, null, 3D, "Desktop")));
+		viewsDeviceMetricDTO = new DeviceMetricDTO(
+			BlogMetricType.VIEWS.getName(),
+			Arrays.asList(
+				_createMetric(
+					BlogMetricType.VIEWS, null, null, 2D, "Desktop")));
+
+		Assertions.assertEquals(
+			new DeviceMetricDTO(
+				SetUtil.of(commentsDeviceMetricDTO, viewsDeviceMetricDTO)),
+			deviceMetricDTO);
+
+		deviceMetricDTO = _assetMetricRestController.getDeviceMetricDTO(
+			"e131fabc", "blog", Collections.singleton(1L), "UNKNOWN", 7);
+
+		commentsDeviceMetricDTO = new DeviceMetricDTO(
+			BlogMetricType.COMMENTS.getName(),
+			Arrays.asList(
+				_createMetric(
+					BlogMetricType.COMMENTS, null, null, 5D, "Tablet")));
+		viewsDeviceMetricDTO = new DeviceMetricDTO(
+			BlogMetricType.VIEWS.getName(),
+			Arrays.asList(
+				_createMetric(BlogMetricType.VIEWS, null, null, 1D, "Tablet")));
+
+		Assertions.assertEquals(
+			new DeviceMetricDTO(
+				SetUtil.of(commentsDeviceMetricDTO, viewsDeviceMetricDTO)),
+			deviceMetricDTO);
+	}
+
+	@BQSQLResource(resourcePath = "asset_device_metric.sql")
+	@Test
+	public void testGetDeviceMetricDTO2() {
+		DeviceMetricDTO deviceMetricDTO =
+			_assetMetricRestController.getDeviceMetricDTO(
+				"zsrwerf", "document", Collections.singleton(1L), "ALL", 7);
+
+		DeviceMetricDTO commentsDeviceMetricDTO = new DeviceMetricDTO(
+			DocumentLibraryMetricType.COMMENTS.getName(),
+			Arrays.asList(
+				_createMetric(
+					DocumentLibraryMetricType.COMMENTS, null, null, 4D,
+					"Mobile"),
+				_createMetric(
+					DocumentLibraryMetricType.COMMENTS, null, null, 3D,
+					"Tablet")));
+		DeviceMetricDTO downloadsDeviceMetricDTO = new DeviceMetricDTO(
+			DocumentLibraryMetricType.DOWNLOADS.getName(),
+			Arrays.asList(
+				_createMetric(
+					DocumentLibraryMetricType.DOWNLOADS, null, null, 2D,
+					"Tablet"),
+				_createMetric(
+					DocumentLibraryMetricType.DOWNLOADS, null, null, 1D,
+					"Mobile")));
+		DeviceMetricDTO previewsDeviceMetricDTO = new DeviceMetricDTO(
+			DocumentLibraryMetricType.PREVIEWS.getName(),
+			Arrays.asList(
+				_createMetric(
+					DocumentLibraryMetricType.PREVIEWS, null, null, 7D,
+					"Tablet"),
+				_createMetric(
+					DocumentLibraryMetricType.PREVIEWS, null, null, 4D,
+					"Mobile")));
+
+		Assertions.assertEquals(
+			new DeviceMetricDTO(
+				SetUtil.of(
+					commentsDeviceMetricDTO, downloadsDeviceMetricDTO,
+					previewsDeviceMetricDTO)),
+			deviceMetricDTO);
+
+		deviceMetricDTO = _assetMetricRestController.getDeviceMetricDTO(
+			"zsrwerf", "document", Collections.singleton(1L), "KNOWN", 7);
+
+		commentsDeviceMetricDTO = new DeviceMetricDTO(
+			DocumentLibraryMetricType.COMMENTS.getName(),
+			Arrays.asList(
+				_createMetric(
+					DocumentLibraryMetricType.COMMENTS, null, null, 4D,
+					"Mobile")));
+		downloadsDeviceMetricDTO = new DeviceMetricDTO(
+			DocumentLibraryMetricType.DOWNLOADS.getName(),
+			Arrays.asList(
+				_createMetric(
+					DocumentLibraryMetricType.DOWNLOADS, null, null, 1D,
+					"Mobile")));
+		previewsDeviceMetricDTO = new DeviceMetricDTO(
+			DocumentLibraryMetricType.PREVIEWS.getName(),
+			Arrays.asList(
+				_createMetric(
+					DocumentLibraryMetricType.PREVIEWS, null, null, 4D,
+					"Mobile")));
+
+		Assertions.assertEquals(
+			new DeviceMetricDTO(
+				SetUtil.of(
+					commentsDeviceMetricDTO, downloadsDeviceMetricDTO,
+					previewsDeviceMetricDTO)),
+			deviceMetricDTO);
+
+		deviceMetricDTO = _assetMetricRestController.getDeviceMetricDTO(
+			"zsrwerf", "document", Collections.singleton(1L), "UNKNOWN", 7);
+
+		commentsDeviceMetricDTO = new DeviceMetricDTO(
+			DocumentLibraryMetricType.COMMENTS.getName(),
+			Arrays.asList(
+				_createMetric(
+					DocumentLibraryMetricType.COMMENTS, null, null, 3D,
+					"Tablet")));
+		downloadsDeviceMetricDTO = new DeviceMetricDTO(
+			DocumentLibraryMetricType.DOWNLOADS.getName(),
+			Arrays.asList(
+				_createMetric(
+					DocumentLibraryMetricType.DOWNLOADS, null, null, 2D,
+					"Tablet")));
+		previewsDeviceMetricDTO = new DeviceMetricDTO(
+			DocumentLibraryMetricType.PREVIEWS.getName(),
+			Arrays.asList(
+				_createMetric(
+					DocumentLibraryMetricType.PREVIEWS, null, null, 7D,
+					"Tablet")));
+
+		Assertions.assertEquals(
+			new DeviceMetricDTO(
+				SetUtil.of(
+					commentsDeviceMetricDTO, downloadsDeviceMetricDTO,
+					previewsDeviceMetricDTO)),
+			deviceMetricDTO);
+	}
+
+	@BQSQLResource(resourcePath = "asset_device_metric.sql")
+	@Test
+	public void testGetDeviceMetricDTO3() {
+		DeviceMetricDTO deviceMetricDTO =
+			_assetMetricRestController.getDeviceMetricDTO(
+				"egdasdf", "journal", Collections.singleton(1L), "ALL", 7);
+
+		DeviceMetricDTO viewsDeviceMetricDTO = new DeviceMetricDTO(
+			JournalMetricType.VIEWS.getName(),
+			Arrays.asList(
+				_createMetric(
+					JournalMetricType.VIEWS, null, null, 2D, "Desktop"),
+				_createMetric(
+					JournalMetricType.VIEWS, null, null, 1D, "Mobile")));
+
+		Assertions.assertEquals(
+			new DeviceMetricDTO(SetUtil.of(viewsDeviceMetricDTO)),
+			deviceMetricDTO);
+
+		deviceMetricDTO = _assetMetricRestController.getDeviceMetricDTO(
+			"egdasdf", "journal", Collections.singleton(1L), "KNOWN", 7);
+
+		viewsDeviceMetricDTO = new DeviceMetricDTO(
+			JournalMetricType.VIEWS.getName(),
+			Arrays.asList(
+				_createMetric(
+					JournalMetricType.VIEWS, null, null, 1D, "Mobile")));
+
+		Assertions.assertEquals(
+			new DeviceMetricDTO(SetUtil.of(viewsDeviceMetricDTO)),
+			deviceMetricDTO);
+
+		deviceMetricDTO = _assetMetricRestController.getDeviceMetricDTO(
+			"egdasdf", "journal", Collections.singleton(1L), "UNKNOWN", 7);
+
+		viewsDeviceMetricDTO = new DeviceMetricDTO(
+			JournalMetricType.VIEWS.getName(),
+			Arrays.asList(
+				_createMetric(
+					JournalMetricType.VIEWS, null, null, 2D, "Desktop")));
+
+		Assertions.assertEquals(
+			new DeviceMetricDTO(SetUtil.of(viewsDeviceMetricDTO)),
+			deviceMetricDTO);
+	}
+
 	private void _assertAppearsOnHistogramMetricDTO(
 		AppearsOnHistogramMetricDTO appearsOnHistogramMetricDTO,
 		int expectedHistogramMetricDTOSize,
@@ -976,6 +1190,20 @@ public class AssetMetricRestControllerTest
 		Assertions.assertArrayEquals(
 			expectedHistogramMetricValues,
 			_getActualValues(histogramMetricDTOs));
+	}
+
+	private Metric _createMetric(
+		MetricType metricType, Double previousValue, String previousValueKey,
+		Double value, String valueKey) {
+
+		Metric metric = new Metric(metricType);
+
+		metric.setPreviousValue(previousValue);
+		metric.setPreviousValueKey(previousValueKey);
+		metric.setValue(value);
+		metric.setValueKey(valueKey);
+
+		return metric;
 	}
 
 	private double[] _getActualValues(
