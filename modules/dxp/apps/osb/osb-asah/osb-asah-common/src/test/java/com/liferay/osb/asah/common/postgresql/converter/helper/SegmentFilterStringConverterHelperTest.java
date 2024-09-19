@@ -33,12 +33,14 @@ public class SegmentFilterStringConverterHelperTest {
 		).thenReturn(
 			Collections.singletonList(3L)
 		);
+
 		Mockito.when(
 			_bqMembershipChangeDog.findSegmentIdByFilterString(
 				"identitiesCount gt 3")
 		).thenReturn(
 			Collections.singletonList(5L)
 		);
+
 		Mockito.when(
 			_bqMembershipChangeDog.findSegmentIdByFilterString(
 				"identitiesCount lt 3")
