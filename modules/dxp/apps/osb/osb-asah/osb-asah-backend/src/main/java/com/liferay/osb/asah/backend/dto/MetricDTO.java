@@ -7,6 +7,8 @@ package com.liferay.osb.asah.backend.dto;
 
 import com.liferay.osb.asah.backend.model.Metric;
 
+import java.util.Objects;
+
 /**
  * @author Rachael Koestartyo
  */
@@ -20,6 +22,29 @@ public class MetricDTO {
 		_previousValueKey = metric.getPreviousValueKey();
 		_value = metric.getValue();
 		_valueKey = metric.getValueKey();
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj) {
+			return true;
+		}
+
+		if (!(obj instanceof MetricDTO)) {
+			return false;
+		}
+
+		MetricDTO metricDTO = (MetricDTO)obj;
+
+		if (Objects.equals(_previousValue, metricDTO._previousValue) &&
+			Objects.equals(_previousValueKey, metricDTO._previousValueKey) &&
+			Objects.equals(_value, metricDTO._value) &&
+			Objects.equals(_valueKey, metricDTO._valueKey)) {
+
+			return true;
+		}
+
+		return false;
 	}
 
 	public Double getPreviousValue() {
@@ -36,6 +61,12 @@ public class MetricDTO {
 
 	public String getValueKey() {
 		return _valueKey;
+	}
+
+	@Override
+	public int hashCode() {
+		return Objects.hash(
+			_previousValue, _previousValueKey, _value, _valueKey);
 	}
 
 	public void setPreviousValue(Double previousValue) {

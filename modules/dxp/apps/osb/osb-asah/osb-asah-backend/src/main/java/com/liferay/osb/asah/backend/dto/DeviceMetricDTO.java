@@ -12,6 +12,7 @@ import com.liferay.osb.asah.backend.model.Metric;
 
 import java.util.LinkedHashSet;
 import java.util.List;
+import java.util.Objects;
 import java.util.Set;
 
 /**
@@ -34,6 +35,29 @@ public class DeviceMetricDTO {
 		_metricName = metricName;
 	}
 
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj) {
+			return true;
+		}
+
+		if (!(obj instanceof DeviceMetricDTO)) {
+			return false;
+		}
+
+		DeviceMetricDTO deviceMetricDTO = (DeviceMetricDTO)obj;
+
+		if (Objects.equals(
+				_deviceMetricDTOs, deviceMetricDTO._deviceMetricDTOs) &&
+			Objects.equals(_metricDTOs, deviceMetricDTO._metricDTOs) &&
+			Objects.equals(_metricName, deviceMetricDTO._metricName)) {
+
+			return true;
+		}
+
+		return false;
+	}
+
 	@JsonProperty("deviceMetrics")
 	public Set<DeviceMetricDTO> getDeviceMetricDTOs() {
 		return _deviceMetricDTOs;
@@ -46,6 +70,11 @@ public class DeviceMetricDTO {
 
 	public String getMetricName() {
 		return _metricName;
+	}
+
+	@Override
+	public int hashCode() {
+		return Objects.hash(_deviceMetricDTOs, _metricDTOs, _metricName);
 	}
 
 	private Set<DeviceMetricDTO> _deviceMetricDTOs;
