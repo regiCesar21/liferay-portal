@@ -67,7 +67,7 @@ public interface AssetMetricRepository<T extends AssetMetric> {
 
 	public List<Metric> getDeviceMetrics(
 		String assetId, @Nullable String assetTitle, @Nullable Long channelId,
-		MetricType metricType, TimeRange timeRange);
+		IdentityType identityType, MetricType metricType, TimeRange timeRange);
 
 	public List<Metric> getGeolocationMetrics(
 		String assetId, @Nullable String assetTitle, @Nullable Long channelId,

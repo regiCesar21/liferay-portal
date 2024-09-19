@@ -137,15 +137,23 @@ public class MetricDog {
 	}
 
 	public List<Metric> getDeviceMetrics(
-		MetricType metricType, SearchQueryContext searchQueryContext) {
+		IdentityType identityType, MetricType metricType,
+		SearchQueryContext searchQueryContext) {
 
 		AssetMetricRepository assetMetricRepository = _getAssetMetricRepository(
 			searchQueryContext.getAssetType());
 
 		return assetMetricRepository.getDeviceMetrics(
 			searchQueryContext.getAssetId(), searchQueryContext.getTitle(),
-			searchQueryContext.getChannelIdAsLong(), metricType,
+			searchQueryContext.getChannelIdAsLong(), identityType, metricType,
 			searchQueryContext.getTimeRange());
+	}
+
+	public List<Metric> getDeviceMetrics(
+		MetricType metricType, SearchQueryContext searchQueryContext) {
+
+		return getDeviceMetrics(
+			IdentityType.ALL, metricType, searchQueryContext);
 	}
 
 	public List<Metric> getGeolocationMetrics(

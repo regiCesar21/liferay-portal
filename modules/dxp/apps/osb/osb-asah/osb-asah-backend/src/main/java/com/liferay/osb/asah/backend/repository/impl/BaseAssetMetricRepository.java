@@ -53,6 +53,7 @@ import org.jooq.DatePart;
 import org.jooq.Field;
 import org.jooq.Record;
 import org.jooq.SelectConditionStep;
+import org.jooq.SelectHavingConditionStep;
 import org.jooq.SelectJoinStep;
 import org.jooq.SelectSelectStep;
 import org.jooq.SortField;
@@ -459,7 +460,7 @@ public abstract class BaseAssetMetricRepository<T extends AssetMetric>
 	@Override
 	public List<Metric> getDeviceMetrics(
 		String assetId, @Null String assetTitle, @Nullable Long channelId,
-		MetricType metricType, TimeRange timeRange) {
+		IdentityType identityType, MetricType metricType, TimeRange timeRange) {
 
 		Field<String> deviceTypeField = DSL.coalesce(
 			DSL.field("deviceType", String.class), DSL.val("Unknown")
@@ -476,6 +477,55 @@ public abstract class BaseAssetMetricRepository<T extends AssetMetric>
 		);
 
 		Map<String, Metric> metrics = new LinkedHashMap<>();
+
+		SelectJoinStep selectJoinStep = dslContext.select(
+			deviceTypeField, metricField1, platformNameField
+		).from(
+			DSL.table(
+				getTableName(timeRange)
+			).as(
+				"metric"
+			)
+		);
+
+		if (identityType != IdentityType.ALL) {
+			selectJoinStep = selectJoinStep.join(
+				"BQIdentity as identity"
+			).on(
+				DSL.field(
+					"metric.userId"
+				).eq(
+					DSL.field("identity.id")
+				)
+			);
+		}
+
+		Condition condition = DSL.noCondition();
+
+		if (identityType == IdentityType.KNOWN) {
+			condition = condition.and(
+				DSL.field(
+					"identity.individualId"
+				).isNotNull());
+		}
+		else if (identityType == IdentityType.UNKNOWN) {
+			condition = condition.and(
+				DSL.field(
+					"identity.individualId"
+				).isNull());
+		}
+
+		SelectHavingConditionStep selectHavingConditionStep =
+			selectJoinStep.where(
+				DSL.and(
+					condition,
+					_createWhereClauseCondition(
+						assetId, assetTitle, channelId, timeRange))
+			).groupBy(
+				deviceTypeField, platformNameField
+			).having(
+				metricField2.greaterThan(BigDecimal.ZERO)
+			);
 
 		queryExecutor.queryForList(
 			recordMap -> {
@@ -516,22 +566,7 @@ public abstract class BaseAssetMetricRepository<T extends AssetMetric>
 			dslContext.with(
 				"MetricsByDevice"
 			).as(
-				dslContext.select(
-					deviceTypeField, metricField1, platformNameField
-				).from(
-					DSL.table(
-						getTableName(timeRange)
-					).as(
-						"metric"
-					)
-				).where(
-					_createWhereClauseCondition(
-						assetId, assetTitle, channelId, timeRange)
-				).groupBy(
-					deviceTypeField, platformNameField
-				).having(
-					metricField2.greaterThan(BigDecimal.ZERO)
-				)
+				selectHavingConditionStep
 			).select(
 				DSL.asterisk(),
 				DSL.sum(
