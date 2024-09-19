@@ -99,7 +99,8 @@ public class PageAssetMetricRepositoryTest
 				new Tuple2("Mobile", 12D), new Tuple2("Phone", 9D)),
 			_assetMetricRepository.getDeviceMetrics(
 				"https://www.beryl.com/delivery", "Beryl Delivery", 1L,
-				PageMetricType.VIEWS, TimeRange.LAST_30_DAYS));
+				IdentityType.ALL, PageMetricType.VIEWS,
+				TimeRange.LAST_30_DAYS));
 	}
 
 	@BQSQLResource(
@@ -110,7 +111,8 @@ public class PageAssetMetricRepositoryTest
 		assertDeviceMetricsOrdering(
 			_assetMetricRepository.getDeviceMetrics(
 				"https://www.beryl.com/delivery", "Beryl Delivery", 1L,
-				PageMetricType.VIEWS, TimeRange.LAST_30_DAYS));
+				IdentityType.ALL, PageMetricType.VIEWS,
+				TimeRange.LAST_30_DAYS));
 	}
 
 	@BQSQLResource(

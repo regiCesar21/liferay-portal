@@ -102,7 +102,7 @@ public class FormAssetMetricRepositoryTest
 				new Tuple2("Desktop", 22D), new Tuple2("Tablet", 18D),
 				new Tuple2("Mobile", 12D), new Tuple2("Phone", 9D)),
 			_assetMetricRepository.getDeviceMetrics(
-				"e131fabc", null, 1L, FormMetricType.VIEWS,
+				"e131fabc", null, 1L, IdentityType.ALL, FormMetricType.VIEWS,
 				TimeRange.LAST_30_DAYS));
 	}
 
@@ -113,7 +113,7 @@ public class FormAssetMetricRepositoryTest
 	public void testGetDeviceMetricsOrdering() {
 		assertDeviceMetricsOrdering(
 			_assetMetricRepository.getDeviceMetrics(
-				"e131fabc", null, 1L, FormMetricType.VIEWS,
+				"e131fabc", null, 1L, IdentityType.ALL, FormMetricType.VIEWS,
 				TimeRange.LAST_30_DAYS));
 	}
 

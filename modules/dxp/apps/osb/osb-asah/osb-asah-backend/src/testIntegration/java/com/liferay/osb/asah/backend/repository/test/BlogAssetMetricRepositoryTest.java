@@ -102,7 +102,7 @@ public class BlogAssetMetricRepositoryTest
 				new Tuple2("Mobile", 12D), new Tuple2("Phone", 9D),
 				new Tuple2("Unknown", 1D)),
 			_assetMetricRepository.getDeviceMetrics(
-				"e131fabc", null, 1L, BlogMetricType.VIEWS,
+				"e131fabc", null, 1L, IdentityType.ALL, BlogMetricType.VIEWS,
 				TimeRange.LAST_30_DAYS));
 	}
 
@@ -113,7 +113,7 @@ public class BlogAssetMetricRepositoryTest
 	public void testGetDeviceMetricsOrdering() {
 		assertDeviceMetricsOrdering(
 			_assetMetricRepository.getDeviceMetrics(
-				"e131fabc", null, 1L, BlogMetricType.VIEWS,
+				"e131fabc", null, 1L, IdentityType.ALL, BlogMetricType.VIEWS,
 				TimeRange.LAST_30_DAYS));
 	}
 
