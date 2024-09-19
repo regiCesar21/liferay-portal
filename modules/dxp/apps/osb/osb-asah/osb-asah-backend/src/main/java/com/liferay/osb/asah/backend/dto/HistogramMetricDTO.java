@@ -7,6 +7,8 @@ package com.liferay.osb.asah.backend.dto;
 
 import com.liferay.osb.asah.backend.model.HistogramMetric;
 
+import java.util.Objects;
+
 /**
  * @author Rachael Koestartyo
  */
@@ -21,8 +23,34 @@ public class HistogramMetricDTO extends MetricDTO {
 		setValueKey(histogramMetric.getValueKey());
 	}
 
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj) {
+			return true;
+		}
+
+		if (!(obj instanceof HistogramMetricDTO)) {
+			return false;
+		}
+
+		HistogramMetricDTO histogramMetricDTO = (HistogramMetricDTO)obj;
+
+		if (super.equals(histogramMetricDTO) &&
+			Objects.equals(_key, histogramMetricDTO._key)) {
+
+			return true;
+		}
+
+		return false;
+	}
+
 	public String getKey() {
 		return _key;
+	}
+
+	@Override
+	public int hashCode() {
+		return super.hashCode() + Objects.hash(_key);
 	}
 
 	public void setKey(String key) {
