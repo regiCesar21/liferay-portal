@@ -69,6 +69,7 @@ USING
 				{% endif %}
 		) AS staging
 ON
+	staging.channelId = replica.channelId
 	staging.dataSourceId = replica.dataSourceId AND
 	staging.id = replica.id AND
 	staging.projectId = replica.projectId
