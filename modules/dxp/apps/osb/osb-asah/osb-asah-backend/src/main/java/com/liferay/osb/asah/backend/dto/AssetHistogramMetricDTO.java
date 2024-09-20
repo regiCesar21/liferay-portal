@@ -23,14 +23,20 @@ import java.util.stream.Stream;
 public class AssetHistogramMetricDTO {
 
 	public AssetHistogramMetricDTO(HistogramMetricBag histogramMetricBag) {
+		_totalValue = 0D;
+
 		List<HistogramMetric> histogramMetrics =
 			histogramMetricBag.getMetrics();
 
 		Stream<HistogramMetric> stream = histogramMetrics.stream();
 
 		stream.forEach(
-			histogramMetric -> _histogramMetricDTOs.add(
-				new HistogramMetricDTO(histogramMetric)));
+			histogramMetric -> {
+				_histogramMetricDTOs.add(
+					new HistogramMetricDTO(histogramMetric));
+
+				_totalValue += histogramMetric.getValue();
+			});
 
 		_total = histogramMetricBag.getTotal();
 	}
@@ -67,6 +73,10 @@ public class AssetHistogramMetricDTO {
 		return _total;
 	}
 
+	public Double getTotalValue() {
+		return _totalValue;
+	}
+
 	public void setAssetHistogramMetricDTOs(
 		Set<AssetHistogramMetricDTO> assetHistogramMetricDTOs) {
 
@@ -87,11 +97,16 @@ public class AssetHistogramMetricDTO {
 		_total = total;
 	}
 
+	public void setTotalValue(Double totalValue) {
+		_totalValue = totalValue;
+	}
+
 	private Set<AssetHistogramMetricDTO> _assetHistogramMetricDTOs =
 		new LinkedHashSet<>();
 	private Set<HistogramMetricDTO> _histogramMetricDTOs =
 		new LinkedHashSet<>();
 	private String _metricName;
 	private Long _total;
+	private Double _totalValue;
 
 }
