@@ -108,7 +108,7 @@ boolean metadataXmlUploaded = (samlIdpSpConnection != null) && Validator.isNull(
 </aui:form>
 
 <aui:script>
-	window['<portlet:namespace />uploadMetadataXml'] = function (selected) {
+	window['<portlet:namespace />uploadMetadataXml'] = function(selected) {
 		var metadataUrlForm = document.getElementById(
 			'<portlet:namespace />metadataUrlForm'
 		);

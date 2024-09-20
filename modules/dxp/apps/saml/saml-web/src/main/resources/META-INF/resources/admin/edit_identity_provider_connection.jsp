@@ -17,7 +17,6 @@ long clockSkew = GetterUtil.getLong(request.getAttribute(SamlWebKeys.SAML_CLOCK_
 
 if (samlSpIdpConnection != null) {
 	metadataXmlUploaded = Validator.isNull(samlSpIdpConnection.getMetadataUrl()) && Validator.isNotNull(samlSpIdpConnection.getMetadataXml());
-	
 }
 %>
 
@@ -104,7 +103,7 @@ if (samlSpIdpConnection != null) {
 </aui:form>
 
 <aui:script>
-	window['<portlet:namespace />uploadMetadataXml'] = function (selected) {
+	window['<portlet:namespace />uploadMetadataXml'] = function(selected) {
 		var metadataUrlForm = document.getElementById(
 			'<portlet:namespace />metadataUrlForm'
 		);
