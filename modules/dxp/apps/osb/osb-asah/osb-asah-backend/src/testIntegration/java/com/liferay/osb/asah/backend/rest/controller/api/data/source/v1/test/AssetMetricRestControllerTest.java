@@ -605,11 +605,17 @@ public class AssetMetricRestControllerTest
 			String metricName = curAssetHistogramMetricDTO.getMetricName();
 
 			if (metricName.equals(BlogMetricType.COMMENTS.getName())) {
+				Assertions.assertEquals(
+					1D, curAssetHistogramMetricDTO.getTotalValue());
+
 				Assertions.assertArrayEquals(
 					new double[] {0, 0, 0, 0, 0, 1, 0},
 					_getActualValues(histogramMetricDTOs));
 			}
 			else if (metricName.equals(BlogMetricType.VIEWS.getName())) {
+				Assertions.assertEquals(
+					3D, curAssetHistogramMetricDTO.getTotalValue());
+
 				Assertions.assertArrayEquals(
 					new double[] {0, 1, 0, 0, 0, 1, 1},
 					_getActualValues(histogramMetricDTOs));
@@ -636,6 +642,9 @@ public class AssetMetricRestControllerTest
 			String metricName = curAssetHistogramMetricDTO.getMetricName();
 
 			if (metricName.equals(BlogMetricType.COMMENTS.getName())) {
+				Assertions.assertEquals(
+					2D, curAssetHistogramMetricDTO.getTotalValue());
+
 				Assertions.assertArrayEquals(
 					new double[] {
 						0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
@@ -644,6 +653,9 @@ public class AssetMetricRestControllerTest
 					_getActualValues(histogramMetricDTOs));
 			}
 			else if (metricName.equals(BlogMetricType.VIEWS.getName())) {
+				Assertions.assertEquals(
+					5D, curAssetHistogramMetricDTO.getTotalValue());
+
 				Assertions.assertArrayEquals(
 					new double[] {
 						0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
@@ -673,6 +685,9 @@ public class AssetMetricRestControllerTest
 			String metricName = curAssetHistogramMetricDTO.getMetricName();
 
 			if (metricName.equals(BlogMetricType.COMMENTS.getName())) {
+				Assertions.assertEquals(
+					2D, curAssetHistogramMetricDTO.getTotalValue());
+
 				Assertions.assertArrayEquals(
 					new double[] {
 						0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 1,
@@ -681,6 +696,9 @@ public class AssetMetricRestControllerTest
 					_getActualValues(histogramMetricDTOs));
 			}
 			else if (metricName.equals(BlogMetricType.VIEWS.getName())) {
+				Assertions.assertEquals(
+					4D, curAssetHistogramMetricDTO.getTotalValue());
+
 				Assertions.assertArrayEquals(
 					new double[] {
 						0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 0, 1,
@@ -716,6 +734,9 @@ public class AssetMetricRestControllerTest
 			if (metricName.equals(
 					DocumentLibraryMetricType.COMMENTS.getName())) {
 
+				Assertions.assertEquals(
+					6D, curAssetHistogramMetricDTO.getTotalValue());
+
 				Assertions.assertArrayEquals(
 					new double[] {0, 1, 0, 0, 0, 3, 2},
 					_getActualValues(histogramMetricDTOs));
@@ -723,12 +744,18 @@ public class AssetMetricRestControllerTest
 			else if (metricName.equals(
 						DocumentLibraryMetricType.DOWNLOADS.getName())) {
 
+				Assertions.assertEquals(
+					6D, curAssetHistogramMetricDTO.getTotalValue());
+
 				Assertions.assertArrayEquals(
 					new double[] {0, 1, 0, 0, 0, 3, 2},
 					_getActualValues(histogramMetricDTOs));
 			}
 			else if (metricName.equals(
 						DocumentLibraryMetricType.PREVIEWS.getName())) {
+
+				Assertions.assertEquals(
+					3D, curAssetHistogramMetricDTO.getTotalValue());
 
 				Assertions.assertArrayEquals(
 					new double[] {0, 1, 0, 0, 0, 1, 1},
@@ -758,6 +785,9 @@ public class AssetMetricRestControllerTest
 			if (metricName.equals(
 					DocumentLibraryMetricType.COMMENTS.getName())) {
 
+				Assertions.assertEquals(
+					8D, curAssetHistogramMetricDTO.getTotalValue());
+
 				Assertions.assertArrayEquals(
 					new double[] {
 						0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 3, 0, 2, 0, 0,
@@ -768,6 +798,9 @@ public class AssetMetricRestControllerTest
 			else if (metricName.equals(
 						DocumentLibraryMetricType.DOWNLOADS.getName())) {
 
+				Assertions.assertEquals(
+					8D, curAssetHistogramMetricDTO.getTotalValue());
+
 				Assertions.assertArrayEquals(
 					new double[] {
 						0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 3, 0, 2, 0, 0,
@@ -777,6 +810,9 @@ public class AssetMetricRestControllerTest
 			}
 			else if (metricName.equals(
 						DocumentLibraryMetricType.PREVIEWS.getName())) {
+
+				Assertions.assertEquals(
+					4D, curAssetHistogramMetricDTO.getTotalValue());
 
 				Assertions.assertArrayEquals(
 					new double[] {
@@ -810,6 +846,9 @@ public class AssetMetricRestControllerTest
 			if (metricName.equals(
 					DocumentLibraryMetricType.COMMENTS.getName())) {
 
+				Assertions.assertEquals(
+					9D, curAssetHistogramMetricDTO.getTotalValue());
+
 				Assertions.assertArrayEquals(
 					new double[] {
 						0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
@@ -820,6 +859,9 @@ public class AssetMetricRestControllerTest
 			else if (metricName.equals(
 						DocumentLibraryMetricType.DOWNLOADS.getName())) {
 
+				Assertions.assertEquals(
+					9D, curAssetHistogramMetricDTO.getTotalValue());
+
 				Assertions.assertArrayEquals(
 					new double[] {
 						0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
@@ -829,6 +871,9 @@ public class AssetMetricRestControllerTest
 			}
 			else if (metricName.equals(
 						DocumentLibraryMetricType.PREVIEWS.getName())) {
+
+				Assertions.assertEquals(
+					4D, curAssetHistogramMetricDTO.getTotalValue());
 
 				Assertions.assertArrayEquals(
 					new double[] {
@@ -855,6 +900,9 @@ public class AssetMetricRestControllerTest
 		for (AssetHistogramMetricDTO curAssetHistogramMetricDTO :
 				assetHistogramMetricDTOs) {
 
+			Assertions.assertEquals(
+				3D, curAssetHistogramMetricDTO.getTotalValue());
+
 			Set<HistogramMetricDTO> histogramMetricDTOs =
 				curAssetHistogramMetricDTO.getHistogramMetricDTOs();
 
@@ -876,6 +924,9 @@ public class AssetMetricRestControllerTest
 
 		for (AssetHistogramMetricDTO curAssetHistogramMetricDTO :
 				assetHistogramMetricDTOs) {
+
+			Assertions.assertEquals(
+				4D, curAssetHistogramMetricDTO.getTotalValue());
 
 			Set<HistogramMetricDTO> histogramMetricDTOs =
 				curAssetHistogramMetricDTO.getHistogramMetricDTOs();
@@ -901,6 +952,9 @@ public class AssetMetricRestControllerTest
 
 		for (AssetHistogramMetricDTO curAssetHistogramMetricDTO :
 				assetHistogramMetricDTOs) {
+
+			Assertions.assertEquals(
+				5D, curAssetHistogramMetricDTO.getTotalValue());
 
 			Set<HistogramMetricDTO> histogramMetricDTOs =
 				curAssetHistogramMetricDTO.getHistogramMetricDTOs();
