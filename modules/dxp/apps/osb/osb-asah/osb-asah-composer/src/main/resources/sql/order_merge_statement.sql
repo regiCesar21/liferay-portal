@@ -4,24 +4,22 @@ USING
 	(
 		SELECT
 			analyticsDeleteMessage.deleted,
-			`order`.*
+			`order`.* EXCEPT (rowNumber)
 		FROM (
 			SELECT
-				*
+				*,
+				ROW_NUMBER() OVER (
+					PARTITION BY
+						channelId, dataSourceId, id
+				) AS rowNumber
 			FROM (
 				SELECT
-					*,
-					ROW_NUMBER() OVER (
-						PARTITION BY
-							channelId, id
-						ORDER BY
-							uploadDate DESC
-					) AS rowNumber
+					*
 				FROM
 					`{{ dag.default_args['ac_project_id'] }}.order_raw`
-				)
-			WHERE
-				rowNumber = 1
+				WHERE
+					uploadDate = CAST('{{ params['uploadDate'] }}' AS TIMESTAMP)
+			)
 		) AS `order`
 		LEFT JOIN (
 			SELECT
@@ -61,15 +59,10 @@ USING
 			`order`.projectId = analyticsDeleteMessage.projectId
 		WHERE
 			`order`.dataSourceId = CAST('{{ params['dataSourceId'] }}' AS INTEGER) AND
-			`order`.uploadDate >=
-				{% if params.uploadType == 'FULL' %}
-					'1970-01-01T00:00:00'
-				{% else %}
-					CAST('{{ params['uploadDate'] }}' AS TIMESTAMP)
-				{% endif %}
+			rowNumber = 1
 		) AS staging
 ON
-	staging.channelId = replica.channelId
+	staging.channelId = replica.channelId AND
 	staging.dataSourceId = replica.dataSourceId AND
 	staging.id = replica.id AND
 	staging.projectId = replica.projectId
