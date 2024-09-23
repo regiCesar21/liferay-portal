@@ -16,6 +16,8 @@ import java.util.List;
 import java.util.Set;
 import java.util.stream.Stream;
 
+import org.apache.commons.lang3.StringUtils;
+
 /**
  * @author Marcos Martins
  */
@@ -38,11 +40,19 @@ public class AppearsOnHistogramMetricDTO {
 	}
 
 	public AppearsOnHistogramMetricDTO(
-		HistogramMetricBag histogramMetricBag, String pageTitle) {
+		HistogramMetricBag histogramMetricBag, String key) {
 
 		this(histogramMetricBag);
 
-		_pageTitle = pageTitle;
+		String[] keyParts = StringUtils.split(key, "#");
+
+		_canonicalUrl = keyParts[_CANONICAL_URL_KEY_PART_INDEX];
+
+		_pageTitle = keyParts[_PAGE_TITLE_KEY_PART_INDEX];
+	}
+
+	public String getCanonicalUrl() {
+		return _canonicalUrl;
 	}
 
 	@JsonProperty("metrics")
@@ -68,6 +78,11 @@ public class AppearsOnHistogramMetricDTO {
 		_total = total;
 	}
 
+	private static final int _CANONICAL_URL_KEY_PART_INDEX = 0;
+
+	private static final int _PAGE_TITLE_KEY_PART_INDEX = 1;
+
+	private String _canonicalUrl;
 	private Set<HistogramMetricDTO> _histogramMetricDTOs;
 	private String _pageTitle;
 	private Long _total;

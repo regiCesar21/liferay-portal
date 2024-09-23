@@ -186,10 +186,16 @@ public class HistogramDog {
 				appearsOnHistogramMetrics) {
 
 			histogramMetrics.putIfAbsent(
-				appearsOnHistogramMetric.getPageTitle(), new ArrayList<>());
+				String.join(
+					"#", appearsOnHistogramMetric.getCanonicalUrl(),
+					appearsOnHistogramMetric.getPageTitle()),
+				new ArrayList<>());
 
 			Collections.addAll(
-				histogramMetrics.get(appearsOnHistogramMetric.getPageTitle()),
+				histogramMetrics.get(
+					String.join(
+						"#", appearsOnHistogramMetric.getCanonicalUrl(),
+						appearsOnHistogramMetric.getPageTitle())),
 				appearsOnHistogramMetric);
 		}
 
