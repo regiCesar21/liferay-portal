@@ -476,6 +476,16 @@ public class SafePortalLDAPImpl implements SafePortalLDAP {
 		throws Exception {
 
 		return getUser(
+			ldapServerId, companyId, screenName, emailAddress, false);
+	}
+
+	@Override
+	public Binding getUser(
+			long ldapServerId, long companyId, String screenName,
+			String emailAddress, boolean checkOriginalEmailAddress)
+		throws Exception {
+
+		return getUser(
 			ldapServerId, companyId, screenName, emailAddress, false, true);
 	}
 
@@ -568,7 +578,7 @@ public class SafePortalLDAPImpl implements SafePortalLDAP {
 
 					return getUser(
 						ldapServerId, companyId, screenName,
-						originalEmailAddress, false, true);
+						originalEmailAddress, false);
 				}
 			}
 
