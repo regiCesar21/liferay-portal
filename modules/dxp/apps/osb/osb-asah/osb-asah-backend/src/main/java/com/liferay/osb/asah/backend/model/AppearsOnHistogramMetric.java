@@ -13,10 +13,11 @@ import java.util.Objects;
 public class AppearsOnHistogramMetric extends HistogramMetric {
 
 	public AppearsOnHistogramMetric(
-		String key, Metric metric, String pageTitle) {
+		String canonicalUrl, String key, Metric metric, String pageTitle) {
 
 		super(key, metric);
 
+		_canonicalUrl = canonicalUrl;
 		_pageTitle = pageTitle;
 	}
 
@@ -34,6 +35,7 @@ public class AppearsOnHistogramMetric extends HistogramMetric {
 			(AppearsOnHistogramMetric)obj;
 
 		if (super.equalsMetric(pageHistogramMetric) &&
+			Objects.equals(_canonicalUrl, pageHistogramMetric._canonicalUrl) &&
 			Objects.equals(_pageTitle, pageHistogramMetric._pageTitle)) {
 
 			return true;
@@ -42,15 +44,20 @@ public class AppearsOnHistogramMetric extends HistogramMetric {
 		return false;
 	}
 
+	public String getCanonicalUrl() {
+		return _canonicalUrl;
+	}
+
 	public String getPageTitle() {
 		return _pageTitle;
 	}
 
 	@Override
 	public int hashCode() {
-		return super.hashCode() ^ Objects.hash(_pageTitle);
+		return super.hashCode() ^ Objects.hash(_canonicalUrl, _pageTitle);
 	}
 
+	private final String _canonicalUrl;
 	private final String _pageTitle;
 
 }

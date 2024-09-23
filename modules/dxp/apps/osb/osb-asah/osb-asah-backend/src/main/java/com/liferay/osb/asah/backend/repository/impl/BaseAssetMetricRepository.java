@@ -1028,7 +1028,8 @@ public abstract class BaseAssetMetricRepository<T extends AssetMetric>
 				assetId, assetTitle, channelIds, identityType, metricType, size,
 				timeRange
 			).select(
-				DSL.field("metric.pageTitle"), field, metricFieldAliased
+				DSL.field("metric.canonicalUrl"), DSL.field("metric.pageTitle"),
+				field, metricFieldAliased
 			),
 			timeRange);
 
@@ -1047,11 +1048,17 @@ public abstract class BaseAssetMetricRepository<T extends AssetMetric>
 		selectJoinStep.join(
 			"TopAppearsOn"
 		).on(
-			DSL.field(
-				"metric.pageTitle"
-			).eq(
-				DSL.field("TopAppearsOn.pageTitle")
-			)
+			DSL.and(
+				DSL.field(
+					"metric.canonicalUrl"
+				).eq(
+					DSL.field("TopAppearsOn.canonicalUrl")
+				),
+				DSL.field(
+					"metric.pageTitle"
+				).eq(
+					DSL.field("TopAppearsOn.pageTitle")
+				))
 		);
 
 		SelectConditionStep<Record> selectConditionStep = selectJoinStep.where(
@@ -1093,13 +1100,15 @@ public abstract class BaseAssetMetricRepository<T extends AssetMetric>
 				metric.setValue(bigDecimal.doubleValue());
 
 				return new AppearsOnHistogramMetric(
+					String.valueOf(rowMap.get("canonicalUrl")),
 					String.valueOf(
 						DateUtil.toLocalDateTime(
 							(Date)rowMap.get("key"), ZoneOffset.UTC)),
 					metric, String.valueOf(rowMap.get("pageTitle")));
 			},
 			selectConditionStep.groupBy(
-				DSL.field("metric.pageTitle"), field
+				DSL.field("metric.canonicalUrl"), DSL.field("metric.pageTitle"),
+				field
 			).orderBy(
 				metricFieldAliased.desc()
 			));
