@@ -33,8 +33,12 @@ public class AppearsOnHistogramMetricDTO {
 		Stream<HistogramMetric> stream = histogramMetrics.stream();
 
 		stream.forEach(
-			histogramMetric -> _histogramMetricDTOs.add(
-				new HistogramMetricDTO(histogramMetric)));
+			histogramMetric -> {
+				_histogramMetricDTOs.add(
+					new HistogramMetricDTO(histogramMetric));
+
+				_totalValue += histogramMetric.getValue();
+			});
 
 		_total = histogramMetricBag.getTotal();
 	}
@@ -67,6 +71,10 @@ public class AppearsOnHistogramMetricDTO {
 		return _total;
 	}
 
+	public Double getTotalValue() {
+		return _totalValue;
+	}
+
 	public void setHistogramMetricDTOs(
 		Set<HistogramMetricDTO> histogramMetricDTOs) {
 
@@ -77,9 +85,14 @@ public class AppearsOnHistogramMetricDTO {
 		_total = total;
 	}
 
+	public void setTotalValue(Double totalValue) {
+		_totalValue = totalValue;
+	}
+
 	private String _canonicalUrl;
 	private Set<HistogramMetricDTO> _histogramMetricDTOs;
 	private String _pageTitle;
 	private Long _total;
+	private Double _totalValue;
 
 }
