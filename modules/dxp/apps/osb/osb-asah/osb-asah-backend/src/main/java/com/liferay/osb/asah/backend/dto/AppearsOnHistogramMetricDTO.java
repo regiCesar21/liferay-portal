@@ -46,9 +46,8 @@ public class AppearsOnHistogramMetricDTO {
 
 		String[] keyParts = StringUtils.split(key, "#");
 
-		_canonicalUrl = keyParts[_CANONICAL_URL_KEY_PART_INDEX];
-
-		_pageTitle = keyParts[_PAGE_TITLE_KEY_PART_INDEX];
+		_canonicalUrl = keyParts[0];
+		_pageTitle = keyParts[1];
 	}
 
 	public String getCanonicalUrl() {
@@ -77,10 +76,6 @@ public class AppearsOnHistogramMetricDTO {
 	public void setTotal(Long total) {
 		_total = total;
 	}
-
-	private static final int _CANONICAL_URL_KEY_PART_INDEX = 0;
-
-	private static final int _PAGE_TITLE_KEY_PART_INDEX = 1;
 
 	private String _canonicalUrl;
 	private Set<HistogramMetricDTO> _histogramMetricDTOs;
