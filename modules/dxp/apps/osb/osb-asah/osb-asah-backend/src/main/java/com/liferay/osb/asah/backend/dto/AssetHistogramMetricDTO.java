@@ -23,8 +23,6 @@ import java.util.stream.Stream;
 public class AssetHistogramMetricDTO {
 
 	public AssetHistogramMetricDTO(HistogramMetricBag histogramMetricBag) {
-		_totalValue = 0D;
-
 		List<HistogramMetric> histogramMetrics =
 			histogramMetricBag.getMetrics();
 
