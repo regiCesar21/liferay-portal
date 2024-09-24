@@ -66,7 +66,7 @@ def create_dag(ac_project_id, ac_project_time_zone_id, application_name, dag_id,
 						FROM
 							{ dag.default_args['ac_project_id'] }.event
 						WHERE
-							DATE(eventDate) > DATE_SUB(CURRENT_DATE({ ac_project_time_zone_id }), INTERVAL 30 DAY) AND
+							DATE(eventDate) > DATE_SUB(CURRENT_DATE('{ ac_project_time_zone_id }'), INTERVAL 30 DAY) AND
 							datasourceId = {str(data_source_id)}
 					),
 					AssetCount AS (
