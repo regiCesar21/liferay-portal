@@ -308,6 +308,12 @@ public class AddLicenseKeyDisplayContext {
 					for (ProductPurchase productPurchase :
 							productPurchaseView.getProductPurchases()) {
 
+						if (productPurchase.getStatus() ==
+								ProductPurchase.Status.CANCELLED) {
+
+							continue;
+						}
+
 						Map<String, String> properties =
 							productPurchase.getProperties();
 
