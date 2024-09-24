@@ -76,13 +76,13 @@ public class AssetMetricRestControllerTest
 
 		_assertAppearsOnHistogramMetricDTO(
 			appearsOnHistogramMetricDTOs.get(0), 7,
-			new double[] {0, 0, 0, 0, 0, 0, 5}, "Page Title 2");
+			new double[] {0, 0, 0, 0, 0, 0, 5}, "Page Title 2", 5);
 		_assertAppearsOnHistogramMetricDTO(
 			appearsOnHistogramMetricDTOs.get(1), 7,
-			new double[] {0, 3, 0, 0, 0, 0, 0}, "Page Title 1");
+			new double[] {0, 3, 0, 0, 0, 0, 0}, "Page Title 1", 3);
 		_assertAppearsOnHistogramMetricDTO(
 			appearsOnHistogramMetricDTOs.get(2), 7,
-			new double[] {0, 2, 0, 0, 0, 0, 0}, "Page Title 4");
+			new double[] {0, 2, 0, 0, 0, 0, 0}, "Page Title 4", 2);
 
 		childAssetAppearsOnHistogramMetricDTO =
 			assetAppearsOnHistogramMetricDTOs.get(1);
@@ -101,13 +101,13 @@ public class AssetMetricRestControllerTest
 
 		_assertAppearsOnHistogramMetricDTO(
 			appearsOnHistogramMetricDTOs.get(0), 7,
-			new double[] {0, 0, 0, 0, 0, 10, 0}, "Page Title 3");
+			new double[] {0, 0, 0, 0, 0, 10, 0}, "Page Title 3", 10);
 		_assertAppearsOnHistogramMetricDTO(
 			appearsOnHistogramMetricDTOs.get(1), 7,
-			new double[] {0, 5, 0, 0, 0, 0, 0}, "Page Title 1");
+			new double[] {0, 5, 0, 0, 0, 0, 0}, "Page Title 1", 5);
 		_assertAppearsOnHistogramMetricDTO(
 			appearsOnHistogramMetricDTOs.get(2), 7,
-			new double[] {0, 4, 0, 0, 0, 0, 0}, "Page Title 4");
+			new double[] {0, 4, 0, 0, 0, 0, 0}, "Page Title 4", 4);
 
 		assetAppearsOnHistogramMetricDTO =
 			_assetMetricRestController.getTopAppearsOnHistogramMetricDTO(
@@ -138,13 +138,13 @@ public class AssetMetricRestControllerTest
 
 		_assertAppearsOnHistogramMetricDTO(
 			appearsOnHistogramMetricDTOs.get(0), 7,
-			new double[] {0, 0, 0, 0, 0, 0, 5}, "Page Title 2");
+			new double[] {0, 0, 0, 0, 0, 0, 5}, "Page Title 2", 5);
 		_assertAppearsOnHistogramMetricDTO(
 			appearsOnHistogramMetricDTOs.get(1), 7,
-			new double[] {0, 2, 0, 0, 0, 0, 0}, "Page Title 4");
+			new double[] {0, 2, 0, 0, 0, 0, 0}, "Page Title 4", 2);
 		_assertAppearsOnHistogramMetricDTO(
 			appearsOnHistogramMetricDTOs.get(2), 7,
-			new double[] {0, 0, 0, 0, 0, 1, 0}, "Page Title 3");
+			new double[] {0, 0, 0, 0, 0, 1, 0}, "Page Title 3", 1);
 
 		childAssetAppearsOnHistogramMetricDTO =
 			assetAppearsOnHistogramMetricDTOs.get(1);
@@ -163,13 +163,13 @@ public class AssetMetricRestControllerTest
 
 		_assertAppearsOnHistogramMetricDTO(
 			appearsOnHistogramMetricDTOs.get(0), 7,
-			new double[] {0, 0, 0, 0, 0, 10, 0}, "Page Title 3");
+			new double[] {0, 0, 0, 0, 0, 10, 0}, "Page Title 3", 10);
 		_assertAppearsOnHistogramMetricDTO(
 			appearsOnHistogramMetricDTOs.get(1), 7,
-			new double[] {0, 4, 0, 0, 0, 0, 0}, "Page Title 4");
+			new double[] {0, 4, 0, 0, 0, 0, 0}, "Page Title 4", 4);
 		_assertAppearsOnHistogramMetricDTO(
 			appearsOnHistogramMetricDTOs.get(2), 7,
-			new double[] {0, 0, 0, 0, 0, 0, 1}, "Page Title 2");
+			new double[] {0, 0, 0, 0, 0, 0, 1}, "Page Title 2", 1);
 
 		assetAppearsOnHistogramMetricDTO =
 			_assetMetricRestController.getTopAppearsOnHistogramMetricDTO(
@@ -200,7 +200,7 @@ public class AssetMetricRestControllerTest
 
 		_assertAppearsOnHistogramMetricDTO(
 			appearsOnHistogramMetricDTOs.get(0), 7,
-			new double[] {0, 3, 0, 0, 0, 0, 0}, "Page Title 1");
+			new double[] {0, 3, 0, 0, 0, 0, 0}, "Page Title 1", 3);
 
 		childAssetAppearsOnHistogramMetricDTO =
 			assetAppearsOnHistogramMetricDTOs.get(1);
@@ -219,7 +219,7 @@ public class AssetMetricRestControllerTest
 
 		_assertAppearsOnHistogramMetricDTO(
 			appearsOnHistogramMetricDTOs.get(0), 7,
-			new double[] {0, 5, 0, 0, 0, 0, 0}, "Page Title 1");
+			new double[] {0, 5, 0, 0, 0, 0, 0}, "Page Title 1", 5);
 	}
 
 	@BQSQLResource(resourcePath = "asset_appears_on_histogram_metric.sql")
@@ -256,13 +256,13 @@ public class AssetMetricRestControllerTest
 
 		_assertAppearsOnHistogramMetricDTO(
 			appearsOnHistogramMetricDTOs.get(0), 7,
-			new double[] {0, 0, 0, 0, 0, 0, 6}, "Page Title 1");
+			new double[] {0, 0, 0, 0, 0, 0, 6}, "Page Title 1", 6);
 		_assertAppearsOnHistogramMetricDTO(
 			appearsOnHistogramMetricDTOs.get(1), 7,
-			new double[] {0, 0, 0, 0, 0, 3, 0}, "Page Title 2");
+			new double[] {0, 0, 0, 0, 0, 3, 0}, "Page Title 2", 3);
 		_assertAppearsOnHistogramMetricDTO(
 			appearsOnHistogramMetricDTOs.get(2), 7,
-			new double[] {0, 2, 0, 0, 0, 0, 0}, "Page Title 3");
+			new double[] {0, 2, 0, 0, 0, 0, 0}, "Page Title 3", 2);
 
 		assetAppearsOnHistogramMetricDTO =
 			_assetMetricRestController.getTopAppearsOnHistogramMetricDTO(
@@ -293,10 +293,10 @@ public class AssetMetricRestControllerTest
 
 		_assertAppearsOnHistogramMetricDTO(
 			appearsOnHistogramMetricDTOs.get(0), 7,
-			new double[] {0, 0, 0, 0, 0, 3, 0}, "Page Title 2");
+			new double[] {0, 0, 0, 0, 0, 3, 0}, "Page Title 2", 3);
 		_assertAppearsOnHistogramMetricDTO(
 			appearsOnHistogramMetricDTOs.get(1), 7,
-			new double[] {0, 1, 0, 0, 0, 0, 0}, "Page Title 4");
+			new double[] {0, 1, 0, 0, 0, 0, 0}, "Page Title 4", 1);
 
 		assetAppearsOnHistogramMetricDTO =
 			_assetMetricRestController.getTopAppearsOnHistogramMetricDTO(
@@ -327,10 +327,10 @@ public class AssetMetricRestControllerTest
 
 		_assertAppearsOnHistogramMetricDTO(
 			appearsOnHistogramMetricDTOs.get(0), 7,
-			new double[] {0, 0, 0, 0, 0, 0, 6}, "Page Title 1");
+			new double[] {0, 0, 0, 0, 0, 0, 6}, "Page Title 1", 6);
 		_assertAppearsOnHistogramMetricDTO(
 			appearsOnHistogramMetricDTOs.get(1), 7,
-			new double[] {0, 2, 0, 0, 0, 0, 0}, "Page Title 3");
+			new double[] {0, 2, 0, 0, 0, 0, 0}, "Page Title 3", 2);
 	}
 
 	@BQSQLResource(resourcePath = "asset_appears_on_histogram_metric.sql")
@@ -367,13 +367,13 @@ public class AssetMetricRestControllerTest
 
 		_assertAppearsOnHistogramMetricDTO(
 			appearsOnHistogramMetricDTOs.get(0), 7,
-			new double[] {0, 0, 0, 0, 0, 0, 4}, "Page Title 2");
+			new double[] {0, 0, 0, 0, 0, 0, 4}, "Page Title 2", 4);
 		_assertAppearsOnHistogramMetricDTO(
 			appearsOnHistogramMetricDTOs.get(1), 7,
-			new double[] {0, 0, 0, 0, 0, 3, 0}, "Page Title 3");
+			new double[] {0, 0, 0, 0, 0, 3, 0}, "Page Title 3", 3);
 		_assertAppearsOnHistogramMetricDTO(
 			appearsOnHistogramMetricDTOs.get(2), 7,
-			new double[] {0, 2, 0, 0, 0, 0, 0}, "Page Title 1");
+			new double[] {0, 2, 0, 0, 0, 0, 0}, "Page Title 1", 2);
 
 		childAssetAppearsOnHistogramMetricDTO =
 			assetAppearsOnHistogramMetricDTOs.get(1);
@@ -392,13 +392,13 @@ public class AssetMetricRestControllerTest
 
 		_assertAppearsOnHistogramMetricDTO(
 			appearsOnHistogramMetricDTOs.get(0), 7,
-			new double[] {0, 6, 0, 0, 0, 0, 0}, "Page Title 1");
+			new double[] {0, 6, 0, 0, 0, 0, 0}, "Page Title 1", 6);
 		_assertAppearsOnHistogramMetricDTO(
 			appearsOnHistogramMetricDTOs.get(1), 7,
-			new double[] {0, 0, 0, 0, 0, 3, 0}, "Page Title 3");
+			new double[] {0, 0, 0, 0, 0, 3, 0}, "Page Title 3", 3);
 		_assertAppearsOnHistogramMetricDTO(
 			appearsOnHistogramMetricDTOs.get(2), 7,
-			new double[] {0, 0, 0, 0, 0, 0, 2}, "Page Title 2");
+			new double[] {0, 0, 0, 0, 0, 0, 2}, "Page Title 2", 2);
 
 		childAssetAppearsOnHistogramMetricDTO =
 			assetAppearsOnHistogramMetricDTOs.get(2);
@@ -417,13 +417,13 @@ public class AssetMetricRestControllerTest
 
 		_assertAppearsOnHistogramMetricDTO(
 			appearsOnHistogramMetricDTOs.get(0), 7,
-			new double[] {0, 0, 0, 0, 0, 7, 0}, "Page Title 3");
+			new double[] {0, 0, 0, 0, 0, 7, 0}, "Page Title 3", 7);
 		_assertAppearsOnHistogramMetricDTO(
 			appearsOnHistogramMetricDTOs.get(1), 7,
-			new double[] {0, 0, 0, 0, 0, 0, 6}, "Page Title 2");
+			new double[] {0, 0, 0, 0, 0, 0, 6}, "Page Title 2", 6);
 		_assertAppearsOnHistogramMetricDTO(
 			appearsOnHistogramMetricDTOs.get(2), 7,
-			new double[] {0, 2, 0, 0, 0, 0, 0}, "Page Title 4");
+			new double[] {0, 2, 0, 0, 0, 0, 0}, "Page Title 4", 2);
 
 		assetAppearsOnHistogramMetricDTO =
 			_assetMetricRestController.getTopAppearsOnHistogramMetricDTO(
@@ -454,10 +454,10 @@ public class AssetMetricRestControllerTest
 
 		_assertAppearsOnHistogramMetricDTO(
 			appearsOnHistogramMetricDTOs.get(0), 7,
-			new double[] {0, 2, 0, 0, 0, 0, 0}, "Page Title 1");
+			new double[] {0, 2, 0, 0, 0, 0, 0}, "Page Title 1", 2);
 		_assertAppearsOnHistogramMetricDTO(
 			appearsOnHistogramMetricDTOs.get(1), 7,
-			new double[] {0, 1, 0, 0, 0, 0, 0}, "Page Title 4");
+			new double[] {0, 1, 0, 0, 0, 0, 0}, "Page Title 4", 1);
 
 		childAssetAppearsOnHistogramMetricDTO =
 			assetAppearsOnHistogramMetricDTOs.get(1);
@@ -476,10 +476,10 @@ public class AssetMetricRestControllerTest
 
 		_assertAppearsOnHistogramMetricDTO(
 			appearsOnHistogramMetricDTOs.get(0), 7,
-			new double[] {0, 6, 0, 0, 0, 0, 0}, "Page Title 1");
+			new double[] {0, 6, 0, 0, 0, 0, 0}, "Page Title 1", 6);
 		_assertAppearsOnHistogramMetricDTO(
 			appearsOnHistogramMetricDTOs.get(1), 7,
-			new double[] {0, 1, 0, 0, 0, 0, 0}, "Page Title 4");
+			new double[] {0, 1, 0, 0, 0, 0, 0}, "Page Title 4", 1);
 
 		childAssetAppearsOnHistogramMetricDTO =
 			assetAppearsOnHistogramMetricDTOs.get(2);
@@ -498,10 +498,10 @@ public class AssetMetricRestControllerTest
 
 		_assertAppearsOnHistogramMetricDTO(
 			appearsOnHistogramMetricDTOs.get(0), 7,
-			new double[] {0, 2, 0, 0, 0, 0, 0}, "Page Title 4");
+			new double[] {0, 2, 0, 0, 0, 0, 0}, "Page Title 4", 2);
 		_assertAppearsOnHistogramMetricDTO(
 			appearsOnHistogramMetricDTOs.get(1), 7,
-			new double[] {0, 1, 0, 0, 0, 0, 0}, "Page Title 1");
+			new double[] {0, 1, 0, 0, 0, 0, 0}, "Page Title 1", 1);
 
 		assetAppearsOnHistogramMetricDTO =
 			_assetMetricRestController.getTopAppearsOnHistogramMetricDTO(
@@ -532,10 +532,10 @@ public class AssetMetricRestControllerTest
 
 		_assertAppearsOnHistogramMetricDTO(
 			appearsOnHistogramMetricDTOs.get(0), 7,
-			new double[] {0, 0, 0, 0, 0, 0, 4}, "Page Title 2");
+			new double[] {0, 0, 0, 0, 0, 0, 4}, "Page Title 2", 4);
 		_assertAppearsOnHistogramMetricDTO(
 			appearsOnHistogramMetricDTOs.get(1), 7,
-			new double[] {0, 0, 0, 0, 0, 3, 0}, "Page Title 3");
+			new double[] {0, 0, 0, 0, 0, 3, 0}, "Page Title 3", 3);
 
 		childAssetAppearsOnHistogramMetricDTO =
 			assetAppearsOnHistogramMetricDTOs.get(1);
@@ -554,10 +554,10 @@ public class AssetMetricRestControllerTest
 
 		_assertAppearsOnHistogramMetricDTO(
 			appearsOnHistogramMetricDTOs.get(0), 7,
-			new double[] {0, 0, 0, 0, 0, 3, 0}, "Page Title 3");
+			new double[] {0, 0, 0, 0, 0, 3, 0}, "Page Title 3", 3);
 		_assertAppearsOnHistogramMetricDTO(
 			appearsOnHistogramMetricDTOs.get(1), 7,
-			new double[] {0, 0, 0, 0, 0, 0, 2}, "Page Title 2");
+			new double[] {0, 0, 0, 0, 0, 0, 2}, "Page Title 2", 2);
 
 		childAssetAppearsOnHistogramMetricDTO =
 			assetAppearsOnHistogramMetricDTOs.get(2);
@@ -576,10 +576,10 @@ public class AssetMetricRestControllerTest
 
 		_assertAppearsOnHistogramMetricDTO(
 			appearsOnHistogramMetricDTOs.get(0), 7,
-			new double[] {0, 0, 0, 0, 0, 7, 0}, "Page Title 3");
+			new double[] {0, 0, 0, 0, 0, 7, 0}, "Page Title 3", 7);
 		_assertAppearsOnHistogramMetricDTO(
 			appearsOnHistogramMetricDTOs.get(1), 7,
-			new double[] {0, 0, 0, 0, 0, 0, 6}, "Page Title 2");
+			new double[] {0, 0, 0, 0, 0, 0, 6}, "Page Title 2", 6);
 	}
 
 	@BQSQLResource(resourcePath = "asset_histogram_metric.sql")
@@ -1230,7 +1230,8 @@ public class AssetMetricRestControllerTest
 	private void _assertAppearsOnHistogramMetricDTO(
 		AppearsOnHistogramMetricDTO appearsOnHistogramMetricDTO,
 		int expectedHistogramMetricDTOSize,
-		double[] expectedHistogramMetricValues, String expectedPageTitle) {
+		double[] expectedHistogramMetricValues, String expectedPageTitle,
+		double expectedTotalValue) {
 
 		Assertions.assertEquals(
 			expectedPageTitle, appearsOnHistogramMetricDTO.getPageTitle());
@@ -1244,6 +1245,9 @@ public class AssetMetricRestControllerTest
 		Assertions.assertArrayEquals(
 			expectedHistogramMetricValues,
 			_getActualValues(histogramMetricDTOs));
+
+		Assertions.assertEquals(
+			expectedTotalValue, appearsOnHistogramMetricDTO.getTotalValue());
 	}
 
 	private Metric _createMetric(
