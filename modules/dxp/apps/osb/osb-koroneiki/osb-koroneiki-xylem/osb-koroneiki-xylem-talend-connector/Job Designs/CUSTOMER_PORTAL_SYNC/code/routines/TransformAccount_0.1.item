@@ -541,6 +541,150 @@ public class TransformAccount {
 		return maxSupportSeatCount;
 	}
 
+	public static String getPartnershipCurrent(String productPurchases)
+		throws Exception {
+
+		JSONArray jsonArray = new JSONArray(productPurchases);
+
+		for (int i = 0; i < jsonArray.length(); i++) {
+			JSONObject jsonObject = jsonArray.getJSONObject(i);
+
+			if (!_isPartnershipProduct(jsonObject)) {
+				continue;
+			}
+
+			Date startDate = DateUtil.parseStartDate(jsonObject);
+			Date endDate = DateUtil.parseEndDate(jsonObject);
+			String status = jsonObject.getString("status");
+
+			if (!_isActive(startDate, endDate, status)) {
+				continue;
+			}
+
+			JSONObject productJSONObject = jsonObject.getJSONObject("product");
+
+			return productJSONObject.getString("name");
+		}
+
+		return "";
+	}
+
+	public static String getPartnershipCurrentEndDate(String productPurchases)
+		throws Exception {
+
+		String partnershipCurrent = getPartnershipCurrent(productPurchases);
+
+		return _getLatestEndDate(productPurchases, partnershipCurrent);
+	}
+
+	public static String getPartnershipCurrentStartDate(String productPurchases)
+		throws Exception {
+
+		String partnershipCurrent = getPartnershipCurrent(productPurchases);
+
+		return _getEarliestStartDate(productPurchases, partnershipCurrent);
+	}
+
+	public static String getPartnershipExpired(String productPurchases)
+		throws Exception {
+
+		String partnershipCurrent = getPartnershipCurrent(productPurchases);
+
+		if (!partnershipCurrent.isEmpty()) {
+			return "";
+		}
+
+		JSONArray jsonArray = new JSONArray(productPurchases);
+
+		for (int i = 0; i < jsonArray.length(); i++) {
+			JSONObject jsonObject = jsonArray.getJSONObject(i);
+
+			if (!_isPartnershipProduct(jsonObject)) {
+				continue;
+			}
+
+			Date startDate = DateUtil.parseStartDate(jsonObject);
+			String status = jsonObject.getString("status");
+
+			if (!_isActive(status) || _isActiveFuture(startDate, status)) {
+				continue;
+			}
+
+			JSONObject productJSONObject = jsonObject.getJSONObject("product");
+
+			return productJSONObject.getString("name");
+		}
+
+		return "";
+	}
+
+	public static String getPartnershipExpiredEndDate(String productPurchases)
+		throws Exception {
+
+		String partnershipExpired = getPartnershipExpired(productPurchases);
+
+		return _getLatestEndDate(productPurchases, partnershipExpired);
+	}
+
+	public static String getPartnershipExpiredStartDate(String productPurchases)
+		throws Exception {
+
+		String partnershipExpired = getPartnershipExpired(productPurchases);
+
+		return _getEarliestStartDate(productPurchases, partnershipExpired);
+	}
+
+	public static String getPartnershipFuture(String productPurchases)
+		throws Exception {
+
+		String partnershipCurrent = getPartnershipCurrent(productPurchases);
+
+		JSONArray jsonArray = new JSONArray(productPurchases);
+
+		for (int i = 0; i < jsonArray.length(); i++) {
+			JSONObject jsonObject = jsonArray.getJSONObject(i);
+
+			if (!_isPartnershipProduct(jsonObject)) {
+				continue;
+			}
+
+			JSONObject productJSONObject = jsonObject.getJSONObject("product");
+
+			if (partnershipCurrent.equals(
+					productJSONObject.getString("name"))) {
+
+				continue;
+			}
+
+			Date startDate = DateUtil.parseStartDate(jsonObject);
+			String status = jsonObject.getString("status");
+
+			if (!_isActiveFuture(startDate, status)) {
+				continue;
+			}
+
+			return productJSONObject.getString("name");
+		}
+
+		return "";
+	}
+
+	public static String getPartnershipFutureEndDate(String productPurchases)
+		throws Exception {
+
+		String partnershipFuture = getPartnershipFuture(productPurchases);
+
+		return _getLatestEndDate(productPurchases, partnershipFuture);
+	}
+
+	public static String getPartnershipFutureStartDate(String productPurchases)
+		throws Exception {
+
+		String partnershipFuture = getPartnershipFuture(productPurchases);
+
+		return _getEarliestStartDate(productPurchases, partnershipFuture);
+	}
+
 	public static String getSLACurrent(String productPurchases)
 		throws Exception {
 
@@ -583,35 +727,7 @@ public class TransformAccount {
 
 		String slaCurrent = getSLACurrent(productPurchases);
 
-		Date slaCurrentEndDate = null;
-
-		JSONArray jsonArray = new JSONArray(productPurchases);
-
-		for (int i = 0; i < jsonArray.length(); i++) {
-			JSONObject jsonObject = jsonArray.getJSONObject(i);
-
-			JSONObject productJSONObject = jsonObject.getJSONObject("product");
-
-			if (!slaCurrent.equals(productJSONObject.getString("name"))) {
-				continue;
-			}
-
-			String status = jsonObject.getString("status");
-
-			if (!_isActive(status)) {
-				continue;
-			}
-
-			Date originalEndDate = DateUtil.parseOriginalEndDate(jsonObject);
-
-			if ((slaCurrentEndDate == null) ||
-				slaCurrentEndDate.before(originalEndDate)) {
-
-				slaCurrentEndDate = originalEndDate;
-			}
-		}
-
-		return DateUtil.format(slaCurrentEndDate);
+		return _getLatestEndDate(productPurchases, slaCurrent);
 	}
 
 	public static String getSLACurrentStartDate(String productPurchases)
@@ -619,35 +735,7 @@ public class TransformAccount {
 
 		String slaCurrent = getSLACurrent(productPurchases);
 
-		Date slaCurrentStartDate = null;
-
-		JSONArray jsonArray = new JSONArray(productPurchases);
-
-		for (int i = 0; i < jsonArray.length(); i++) {
-			JSONObject jsonObject = jsonArray.getJSONObject(i);
-
-			JSONObject productJSONObject = jsonObject.getJSONObject("product");
-
-			if (!slaCurrent.equals(productJSONObject.getString("name"))) {
-				continue;
-			}
-
-			String status = jsonObject.getString("status");
-
-			if (!_isActive(status)) {
-				continue;
-			}
-
-			Date startDate = DateUtil.parseStartDate(jsonObject);
-
-			if ((slaCurrentStartDate == null) ||
-				slaCurrentStartDate.after(startDate)) {
-
-				slaCurrentStartDate = startDate;
-			}
-		}
-
-		return DateUtil.format(slaCurrentStartDate);
+		return _getEarliestStartDate(productPurchases, slaCurrent);
 	}
 
 	public static String getSLAExpired(String productPurchases)
@@ -697,35 +785,7 @@ public class TransformAccount {
 
 		String slaExpired = getSLAExpired(productPurchases);
 
-		Date slaExpiredEndDate = null;
-
-		JSONArray jsonArray = new JSONArray(productPurchases);
-
-		for (int i = 0; i < jsonArray.length(); i++) {
-			JSONObject jsonObject = jsonArray.getJSONObject(i);
-
-			JSONObject productJSONObject = jsonObject.getJSONObject("product");
-
-			if (!slaExpired.equals(productJSONObject.getString("name"))) {
-				continue;
-			}
-
-			String status = jsonObject.getString("status");
-
-			if (!_isActive(status)) {
-				continue;
-			}
-
-			Date originalEndDate = DateUtil.parseOriginalEndDate(jsonObject);
-
-			if ((slaExpiredEndDate == null) ||
-				slaExpiredEndDate.before(originalEndDate)) {
-
-				slaExpiredEndDate = originalEndDate;
-			}
-		}
-
-		return DateUtil.format(slaExpiredEndDate);
+		return _getLatestEndDate(productPurchases, slaExpired);
 	}
 
 	public static String getSLAExpiredStartDate(String productPurchases)
@@ -733,35 +793,7 @@ public class TransformAccount {
 
 		String slaExpired = getSLAExpired(productPurchases);
 
-		Date slaExpiredStartDate = null;
-
-		JSONArray jsonArray = new JSONArray(productPurchases);
-
-		for (int i = 0; i < jsonArray.length(); i++) {
-			JSONObject jsonObject = jsonArray.getJSONObject(i);
-
-			JSONObject productJSONObject = jsonObject.getJSONObject("product");
-
-			if (!slaExpired.equals(productJSONObject.getString("name"))) {
-				continue;
-			}
-
-			String status = jsonObject.getString("status");
-
-			if (!_isActive(status)) {
-				continue;
-			}
-
-			Date startDate = DateUtil.parseStartDate(jsonObject);
-
-			if ((slaExpiredStartDate == null) ||
-				slaExpiredStartDate.before(startDate)) {
-
-				slaExpiredStartDate = startDate;
-			}
-		}
-
-		return DateUtil.format(slaExpiredStartDate);
+		return _getEarliestStartDate(productPurchases, slaExpired);
 	}
 
 	public static String getSLAFuture(String productPurchases)
@@ -813,35 +845,7 @@ public class TransformAccount {
 
 		String slaFuture = getSLAFuture(productPurchases);
 
-		Date slaFutureEndDate = null;
-
-		JSONArray jsonArray = new JSONArray(productPurchases);
-
-		for (int i = 0; i < jsonArray.length(); i++) {
-			JSONObject jsonObject = jsonArray.getJSONObject(i);
-
-			JSONObject productJSONObject = jsonObject.getJSONObject("product");
-
-			if (!slaFuture.equals(productJSONObject.getString("name"))) {
-				continue;
-			}
-
-			String status = jsonObject.getString("status");
-
-			if (!_isActive(status)) {
-				continue;
-			}
-
-			Date originalEndDate = DateUtil.parseOriginalEndDate(jsonObject);
-
-			if ((slaFutureEndDate == null) ||
-				slaFutureEndDate.before(originalEndDate)) {
-
-				slaFutureEndDate = originalEndDate;
-			}
-		}
-
-		return DateUtil.format(slaFutureEndDate);
+		return _getLatestEndDate(productPurchases, slaFuture);
 	}
 
 	public static String getSLAFutureStartDate(String productPurchases)
@@ -849,35 +853,7 @@ public class TransformAccount {
 
 		String slaFuture = getSLAFuture(productPurchases);
 
-		Date slaFutureStartDate = null;
-
-		JSONArray jsonArray = new JSONArray(productPurchases);
-
-		for (int i = 0; i < jsonArray.length(); i++) {
-			JSONObject jsonObject = jsonArray.getJSONObject(i);
-
-			JSONObject productJSONObject = jsonObject.getJSONObject("product");
-
-			if (!slaFuture.equals(productJSONObject.getString("name"))) {
-				continue;
-			}
-
-			String status = jsonObject.getString("status");
-
-			if (!_isActive(status)) {
-				continue;
-			}
-
-			Date startDate = DateUtil.parseStartDate(jsonObject);
-
-			if ((slaFutureStartDate == null) ||
-				slaFutureStartDate.before(startDate)) {
-
-				slaFutureStartDate = startDate;
-			}
-		}
-
-		return DateUtil.format(slaFutureStartDate);
+		return _getEarliestStartDate(productPurchases, slaFuture);
 	}
 
 	public static boolean isPartner(String entitlements) {
@@ -904,6 +880,76 @@ public class TransformAccount {
 		}
 
 		return false;
+	}
+
+	private static String _getEarliestStartDate(
+			String productPurchases, String productName)
+		throws Exception {
+
+		Date earliestStartDate = null;
+
+		JSONArray jsonArray = new JSONArray(productPurchases);
+
+		for (int i = 0; i < jsonArray.length(); i++) {
+			JSONObject jsonObject = jsonArray.getJSONObject(i);
+
+			JSONObject productJSONObject = jsonObject.getJSONObject("product");
+
+			if (!productName.equals(productJSONObject.getString("name"))) {
+				continue;
+			}
+
+			String status = jsonObject.getString("status");
+
+			if (!_isActive(status)) {
+				continue;
+			}
+
+			Date startDate = DateUtil.parseStartDate(jsonObject);
+
+			if ((earliestStartDate == null) ||
+				earliestStartDate.before(startDate)) {
+
+				earliestStartDate = startDate;
+			}
+		}
+
+		return DateUtil.format(earliestStartDate);
+	}
+
+	private static String _getLatestEndDate(
+			String productPurchases, String productName)
+		throws Exception {
+
+		Date latestEndDate = null;
+
+		JSONArray jsonArray = new JSONArray(productPurchases);
+
+		for (int i = 0; i < jsonArray.length(); i++) {
+			JSONObject jsonObject = jsonArray.getJSONObject(i);
+
+			JSONObject productJSONObject = jsonObject.getJSONObject("product");
+
+			if (!productName.equals(productJSONObject.getString("name"))) {
+				continue;
+			}
+
+			String status = jsonObject.getString("status");
+
+			if (!_isActive(status)) {
+				continue;
+			}
+
+			Date originalEndDate = DateUtil.parseOriginalEndDate(jsonObject);
+
+			if ((latestEndDate == null) ||
+				latestEndDate.before(originalEndDate)) {
+
+				latestEndDate = originalEndDate;
+			}
+		}
+
+		return DateUtil.format(latestEndDate);
 	}
 
 	private static int _getSLARank(JSONObject productJSONObject)
@@ -1010,6 +1056,18 @@ public class TransformAccount {
 		Date endDate = DateUtil.parseStartDate(curJSONObject);
 
 		if (endDate.after(curEndDate)) {
+			return true;
+		}
+
+		return false;
+	}
+
+	private static boolean _isPartnershipProduct(JSONObject jsonObject) {
+		JSONObject productJSONObject = jsonObject.getJSONObject("product");
+
+		String productName = productJSONObject.getString("name");
+
+		if (_contains(ProductConstants.NAMES_PARTNERSHIP, productName)) {
 			return true;
 		}
 
