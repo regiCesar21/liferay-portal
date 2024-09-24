@@ -72,7 +72,6 @@ public class AssetMetricRestController {
 						channelIds, IdentityType.valueOf(identityType),
 						BlogMetricType.COMMENTS, searchQueryContext),
 					BlogMetricType.COMMENTS.getName()));
-
 			assetHistogramMetricDTOs.add(
 				new AssetHistogramMetricDTO(
 					_histogramDog.getHistogramMetricBag(
@@ -87,7 +86,6 @@ public class AssetMetricRestController {
 						channelIds, IdentityType.valueOf(identityType),
 						DocumentLibraryMetricType.COMMENTS, searchQueryContext),
 					DocumentLibraryMetricType.COMMENTS.getName()));
-
 			assetHistogramMetricDTOs.add(
 				new AssetHistogramMetricDTO(
 					_histogramDog.getHistogramMetricBag(
@@ -95,7 +93,6 @@ public class AssetMetricRestController {
 						DocumentLibraryMetricType.DOWNLOADS,
 						searchQueryContext),
 					DocumentLibraryMetricType.DOWNLOADS.getName()));
-
 			assetHistogramMetricDTOs.add(
 				new AssetHistogramMetricDTO(
 					_histogramDog.getHistogramMetricBag(
