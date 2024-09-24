@@ -93,6 +93,6 @@ public class AppearsOnHistogramMetricDTO {
 	private Set<HistogramMetricDTO> _histogramMetricDTOs;
 	private String _pageTitle;
 	private Long _total;
-	private Double _totalValue;
+	private Double _totalValue = 0D;
 
 }

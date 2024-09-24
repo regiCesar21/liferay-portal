@@ -105,6 +105,6 @@ public class AssetHistogramMetricDTO {
 		new LinkedHashSet<>();
 	private String _metricName;
 	private Long _total;
-	private Double _totalValue;
+	private Double _totalValue = 0D;
 
 }
