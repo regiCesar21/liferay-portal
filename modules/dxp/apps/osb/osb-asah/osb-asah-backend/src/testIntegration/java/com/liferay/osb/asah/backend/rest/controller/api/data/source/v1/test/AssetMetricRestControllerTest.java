@@ -1241,7 +1241,6 @@ public class AssetMetricRestControllerTest
 
 		Assertions.assertEquals(
 			expectedHistogramMetricDTOSize, histogramMetricDTOs.size());
-
 		Assertions.assertArrayEquals(
 			expectedHistogramMetricValues,
 			_getActualValues(histogramMetricDTOs));
