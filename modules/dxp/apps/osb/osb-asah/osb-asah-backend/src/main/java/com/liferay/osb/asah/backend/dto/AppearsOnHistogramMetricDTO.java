@@ -71,7 +71,7 @@ public class AppearsOnHistogramMetricDTO {
 		return _total;
 	}
 
-	public Double getTotalValue() {
+	public double getTotalValue() {
 		return _totalValue;
 	}
 
@@ -85,7 +85,7 @@ public class AppearsOnHistogramMetricDTO {
 		_total = total;
 	}
 
-	public void setTotalValue(Double totalValue) {
+	public void setTotalValue(double totalValue) {
 		_totalValue = totalValue;
 	}
 
@@ -93,6 +93,6 @@ public class AppearsOnHistogramMetricDTO {
 	private Set<HistogramMetricDTO> _histogramMetricDTOs;
 	private String _pageTitle;
 	private Long _total;
-	private Double _totalValue = 0D;
+	private double _totalValue;
 
 }

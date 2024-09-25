@@ -71,7 +71,7 @@ public class AssetHistogramMetricDTO {
 		return _total;
 	}
 
-	public Double getTotalValue() {
+	public double getTotalValue() {
 		return _totalValue;
 	}
 
@@ -95,7 +95,7 @@ public class AssetHistogramMetricDTO {
 		_total = total;
 	}
 
-	public void setTotalValue(Double totalValue) {
+	public void setTotalValue(double totalValue) {
 		_totalValue = totalValue;
 	}
 
@@ -105,6 +105,6 @@ public class AssetHistogramMetricDTO {
 		new LinkedHashSet<>();
 	private String _metricName;
 	private Long _total;
-	private Double _totalValue = 0D;
+	private double _totalValue;
 
 }
