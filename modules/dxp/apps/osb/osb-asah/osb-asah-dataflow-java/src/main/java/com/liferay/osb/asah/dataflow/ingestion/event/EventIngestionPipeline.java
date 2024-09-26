@@ -540,7 +540,11 @@ public class EventIngestionPipeline {
 
 	private static String _formatFieldValue(String fieldValue) {
 		return StringUtils.replaceAll(
-			StringUtils.trim(fieldValue), "\\\\", "\\\\\\\\");
+			StringUtils.replaceAll(
+				StringUtils.replaceAll(
+					StringUtils.trim(fieldValue), "\u200B", ""),
+				"\uFEFF", ""),
+			"\\\\", "\\\\\\\\");
 	}
 
 	private static String _getAssetId(AnalyticsEvent analyticsEvent) {
