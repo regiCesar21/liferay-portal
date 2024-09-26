@@ -257,6 +257,105 @@ public class EventIngestionPipelineTest {
 	}
 
 	@Test
+	public void testEventBigQueryTableRowParserWithEscapedBOMAndZWSPCharacters()
+		throws IOException {
+
+		String analyticsEventsJSON = _readResourceAsString(
+			"dependencies" +
+				"/test_analytics_event_parser_escape_bom_and_zwsp_characters." +
+					"json");
+
+		Instant baseTime = new Instant(0);
+
+		PCollection<TableRow> pCollection = testPipeline.apply(
+			TestStream.create(
+				StringUtf8Coder.of()
+			).advanceWatermarkTo(
+				baseTime
+			).addElements(
+				TimestampedValue.of(
+					analyticsEventsJSON,
+					baseTime.plus(Duration.standardSeconds(30)))
+			).advanceWatermarkToInfinity()
+		).apply(
+			"Parse Analytics Events",
+			ParDo.of(new EventIngestionPipeline.AnalyticsEventParser())
+		).apply(
+			"Add Session Key", WithKeys.of("session-1")
+		).apply(
+			Window.into(FixedWindows.of(Duration.standardMinutes(3L)))
+		).apply(
+			GroupByKey.create()
+		).apply(
+			"Create Event Table Rows",
+			ParDo.of(new EventIngestionPipeline.AnalyticsEventsTableRowMapper())
+		);
+
+		Map<String, String> context = Collections.singletonMap(
+			"title", "﻿﻿﻿​​MyHR - MyHR");
+
+		Map<String, String> properties = Collections.singletonMap(
+			"referrer", "http://www.google.com");
+
+		AnalyticsEvent analyticsEvent = _createAnalyticsEvent(
+			"Page", "123", "", context, "2017-11-10T09:36:00.365Z",
+			"350121114030678021", "", "2017-11-10T09:34:45.345Z", "pageViewed",
+			properties, "1", "test", "UTC",
+			"aedfa915-c7a1-4309-abcf-024e247d414c");
+
+		TableRow tableRow = new TableRow();
+
+		tableRow.set("applicationId", analyticsEvent.applicationId);
+		tableRow.set("assetId", null);
+		tableRow.set("assetTitle", "MyHR - MyHR");
+		tableRow.set("browserName", null);
+		tableRow.set("canonicalUrl", null);
+		tableRow.set("channelId", 123L);
+		tableRow.set("city", null);
+		tableRow.set("contentLanguageId", null);
+		tableRow.set("context", ObjectMapperUtil.writeValueAsString(context));
+		tableRow.set("country", null);
+		tableRow.set("createDate", "2017-11-10T09:36:00.365Z");
+		tableRow.set("dataSourceId", 350121114030678021L);
+		tableRow.set("description", null);
+		tableRow.set("deviceType", null);
+		tableRow.set("eventDate", "2017-11-10T09:34:45.345Z");
+		tableRow.set("eventId", "pageViewed");
+		tableRow.set("experienceId", null);
+		tableRow.set("id", "1");
+		tableRow.set("keywords", null);
+		tableRow.set("languageId", null);
+		tableRow.set("platformName", null);
+		tableRow.set("projectId", "test");
+		tableRow.set("projectTimeZoneId", "UTC");
+		tableRow.set("properties", _convertEventProperties(properties));
+		tableRow.set("referrer", null);
+		tableRow.set("region", null);
+		tableRow.set(
+			"sessionId",
+			"b7dbcc73168d4f5ce2ce1836250a1253cda62a46619b1e7da5d763c63d2543af");
+		tableRow.set("timezoneOffset", null);
+		tableRow.set("title", "MyHR - MyHR");
+		tableRow.set("url", null);
+		tableRow.set("userId", "aedfa915-c7a1-4309-abcf-024e247d414c");
+		tableRow.set("variantId", null);
+
+		IntervalWindow intervalWindow = new IntervalWindow(
+			new Instant(0), new Instant(180000));
+
+		PAssert.that(
+			pCollection
+		).inWindow(
+			intervalWindow
+		).containsInAnyOrder(
+			Collections.singletonList(tableRow)
+		);
+
+		testPipeline.run(
+		).waitUntilFinish();
+	}
+
+	@Test
 	public void testEventBigQueryTableRowParserWithEscapedCharacters()
 		throws IOException {
 

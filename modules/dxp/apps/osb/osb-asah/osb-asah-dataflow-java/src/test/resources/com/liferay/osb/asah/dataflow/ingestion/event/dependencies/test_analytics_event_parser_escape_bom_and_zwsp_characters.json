@@ -1,0 +1,19 @@
+{
+	"applicationId": "Page",
+	"channelId": "123",
+	"context": {
+		"title": "﻿﻿﻿​​MyHR - MyHR"
+	},
+	"createDate": "2017-11-10T09:36:00.365Z",
+	"dataSourceId": "350121114030678021",
+	"eventDate": "2017-11-10T09:34:45.345Z",
+	"eventId": "pageViewed",
+	"eventProperties": {
+		"referrer": "http://www.google.com"
+	},
+	"id": "1",
+	"projectId": "test",
+	"projectTimeZoneId": "UTC",
+	"protocolVersion": "1.0",
+	"userId": "aedfa915-c7a1-4309-abcf-024e247d414c"
+}
