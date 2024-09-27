@@ -63,6 +63,11 @@ public class DataSourcesRestController extends BaseRestController {
 		return dataSourceJSONObject.toString();
 	}
 
+	@PostMapping("/disconnect-all")
+	public void disconnectDataSources() throws Exception {
+		_dataSourceDog.disconnectDataSources();
+	}
+
 	@GetMapping("/{id}")
 	public DataSourceDTO getDataSourceDTO(@PathVariable Long id) {
 		DataSource dataSource = _dataSourceDog.getDataSource(id);
