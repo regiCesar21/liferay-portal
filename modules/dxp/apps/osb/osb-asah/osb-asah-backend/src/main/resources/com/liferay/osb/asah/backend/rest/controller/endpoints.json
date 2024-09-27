@@ -68,6 +68,10 @@
 			"href": "{url}/data-sources/{id}/disconnect",
 			"templated": true
 		},
+		"data-source-disconnect-all": {
+			"href": "{url}/data-sources/disconnect-all",
+			"templated": true
+		},
 		"data-source-progress": {
 			"href": "{url}/data-sources/{id}/progress",
 			"templated": true
