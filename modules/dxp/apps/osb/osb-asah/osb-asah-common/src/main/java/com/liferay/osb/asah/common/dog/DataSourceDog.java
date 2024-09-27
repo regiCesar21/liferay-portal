@@ -58,6 +58,7 @@ import org.springframework.data.domain.Sort;
 import org.springframework.data.support.PageableExecutionUtils;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Transactional;
 
 /**
  * @author Rachael Koestartyo
@@ -109,6 +110,19 @@ public class DataSourceDog {
 		for (DataSource dataSource : getDataSources()) {
 			deleteDataSource(dataSource);
 		}
+	}
+
+	public List<DataSource> disconnectDataSources() {
+		List<DataSource> dataSources = new ArrayList<>();
+
+		for (DataSource dataSource :
+				_dataSourceRepository.findByProviderTypeAndStatus(
+					"LIFERAY", "ACTIVE")) {
+
+			dataSources.add(disconnectDataSource(dataSource.getId()));
+		}
+
+		return dataSources;
 	}
 
 	public DataSource disconnectDataSource(Long dataSourceId) {
