@@ -182,7 +182,7 @@ public class EventIngestionPipelineTest {
 			properties, "1", "test", "UTC",
 			"aedfa915-c7a1-4309-abcf-024e247d414c");
 
-		Instant baseTime = new Instant(0);
+		Instant instant = new Instant(0);
 
 		PCollection<TableRow> pCollection = testPipeline.apply(
 			TestStream.create(
@@ -190,12 +190,12 @@ public class EventIngestionPipelineTest {
 					StringUtf8Coder.of(),
 					IterableCoder.of(AvroCoder.of(AnalyticsEvent.class)))
 			).advanceWatermarkTo(
-				baseTime
+				instant
 			).addElements(
 				TimestampedValue.of(
 					KV.of(
 						"session-1", Collections.singletonList(analyticsEvent)),
-					baseTime.plus(Duration.standardSeconds(30)))
+					instant.plus(Duration.standardSeconds(30)))
 			).advanceWatermarkToInfinity()
 		).apply(
 			Window.into(FixedWindows.of(Duration.standardMinutes(3L)))
@@ -265,17 +265,17 @@ public class EventIngestionPipelineTest {
 				"/test_analytics_event_parser_escape_bom_and_zwsp_characters." +
 					"json");
 
-		Instant baseTime = new Instant(0);
+		Instant instant = new Instant(0);
 
 		PCollection<TableRow> pCollection = testPipeline.apply(
 			TestStream.create(
 				StringUtf8Coder.of()
 			).advanceWatermarkTo(
-				baseTime
+				instant
 			).addElements(
 				TimestampedValue.of(
 					analyticsEventsJSON,
-					baseTime.plus(Duration.standardSeconds(30)))
+					instant.plus(Duration.standardSeconds(30)))
 			).advanceWatermarkToInfinity()
 		).apply(
 			"Parse Analytics Events",
@@ -362,17 +362,17 @@ public class EventIngestionPipelineTest {
 		String analyticsEventsJSON = _readResourceAsString(
 			"dependencies/test_analytics_event_parser_escape_characters.json");
 
-		Instant baseTime = new Instant(0);
+		Instant instant = new Instant(0);
 
 		PCollection<TableRow> pCollection = testPipeline.apply(
 			TestStream.create(
 				StringUtf8Coder.of()
 			).advanceWatermarkTo(
-				baseTime
+				instant
 			).addElements(
 				TimestampedValue.of(
 					analyticsEventsJSON,
-					baseTime.plus(Duration.standardSeconds(30)))
+					instant.plus(Duration.standardSeconds(30)))
 			).advanceWatermarkToInfinity()
 		).apply(
 			"Parse Analytics Events",
