@@ -63,6 +63,46 @@ public class DataSourceDogTest
 			_dataSourceDog.fetchDefaultChannelId(dataSource.getId()));
 	}
 
+	@Test
+	public void testChangeFaroBackendSecuritySignature() throws Exception {
+		DataSource dataSource1 = new DataSource();
+
+		dataSource1.setCredentialType("Token Authentication");
+		dataSource1.setId(405201047787757795L);
+		dataSource1.setIsNew(Boolean.TRUE);
+		dataSource1.setName("Test Data Source");
+		dataSource1.setProviderType("LIFERAY");
+
+		dataSource1 = _dataSourceDog.addDataSource(dataSource1);
+
+		String faroBackendSecuritySignature =
+			dataSource1.getFaroBackendSecuritySignature();
+
+		dataSource1.setFaroBackendSecuritySignature(null);
+
+		DataSource dataSource2 = _dataSourceDog.patchDataSource(dataSource1);
+
+		Assertions.assertEquals(
+			faroBackendSecuritySignature,
+			dataSource2.getFaroBackendSecuritySignature());
+
+		dataSource2.setFaroBackendSecuritySignature("  ");
+
+		OSBAsahException osbAsahException = Assertions.assertThrows(
+			OSBAsahException.class,
+			() -> _dataSourceDog.patchDataSource(dataSource2));
+
+		Assertions.assertNotNull(osbAsahException);
+
+		dataSource2.setFaroBackendSecuritySignature("123456789");
+
+		osbAsahException = Assertions.assertThrows(
+			OSBAsahException.class,
+			() -> _dataSourceDog.patchDataSource(dataSource2));
+
+		Assertions.assertNotNull(osbAsahException);
+	}
+
 	@RepositoryResource(
 		repositoryClass = ChannelRepository.class,
 		resourcePath = "osbasahfaroinfo/channels.json"
