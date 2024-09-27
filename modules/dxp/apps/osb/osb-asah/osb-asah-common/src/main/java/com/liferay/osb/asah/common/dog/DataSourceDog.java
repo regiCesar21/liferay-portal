@@ -112,6 +112,7 @@ public class DataSourceDog {
 		}
 	}
 
+	@Transactional
 	public List<DataSource> disconnectDataSources() {
 		List<DataSource> dataSources = new ArrayList<>();
 
@@ -125,6 +126,7 @@ public class DataSourceDog {
 		return dataSources;
 	}
 
+	@Transactional
 	public DataSource disconnectDataSource(Long dataSourceId) {
 		DataSource dataSource = getDataSource(dataSourceId);
 
