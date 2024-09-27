@@ -113,6 +113,12 @@ public class DataSourceDog {
 	}
 
 	@Transactional
+	public DataSource disconnectDataSource(Long dataSourceId) {
+		return _dataSourceRepository.save(
+			_disconnectDataSource(getDataSource(dataSourceId)));
+	}
+
+	@Transactional
 	public List<DataSource> disconnectDataSources() {
 		List<DataSource> dataSources = new ArrayList<>();
 
@@ -120,32 +126,10 @@ public class DataSourceDog {
 				_dataSourceRepository.findByProviderTypeAndStatus(
 					"LIFERAY", "ACTIVE")) {
 
-			dataSources.add(disconnectDataSource(dataSource.getId()));
+			dataSources.add(_disconnectDataSource(dataSource));
 		}
 
 		return dataSources;
-	}
-
-	@Transactional
-	public DataSource disconnectDataSource(Long dataSourceId) {
-		DataSource dataSource = getDataSource(dataSourceId);
-
-		if (Objects.equals(dataSource.getState(), "DISCONNECTED") &&
-			Objects.equals(dataSource.getStatus(), "INACTIVE")) {
-
-			throw new OSBAsahException(
-				HttpStatus.BAD_REQUEST, "Data source already disconnected");
-		}
-
-		_addAuditEvent(AuditEvent.Type.DATA_SOURCE_DISCONNECT, dataSourceId);
-		_clearChannels(dataSourceId);
-
-		dataSource.setContactsSelected(false);
-		dataSource.setSitesSelected(false);
-		dataSource.setState("DISCONNECTED");
-		dataSource.setStatus("INACTIVE");
-
-		return _dataSourceRepository.save(dataSource);
 	}
 
 	public boolean existsDataSource(String faroBackendSecuritySignature) {
@@ -471,6 +455,26 @@ public class DataSourceDog {
 	@PreDestroy
 	private void _destroy() {
 		_boundedExecutor.shutdown();
+	}
+
+	private DataSource _disconnectDataSource(DataSource dataSource) {
+		if (Objects.equals(dataSource.getState(), "DISCONNECTED") &&
+			Objects.equals(dataSource.getStatus(), "INACTIVE")) {
+
+			throw new OSBAsahException(
+				HttpStatus.BAD_REQUEST, "Data source already disconnected");
+		}
+
+		_addAuditEvent(
+			AuditEvent.Type.DATA_SOURCE_DISCONNECT, dataSource.getId());
+		_clearChannels(dataSource.getId());
+
+		dataSource.setContactsSelected(false);
+		dataSource.setSitesSelected(false);
+		dataSource.setState("DISCONNECTED");
+		dataSource.setStatus("INACTIVE");
+
+		return _dataSourceRepository.save(dataSource);
 	}
 
 	private String _getDataSourceName(String name) {
