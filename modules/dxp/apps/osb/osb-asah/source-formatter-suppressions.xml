@@ -4,6 +4,7 @@
 	<checkstyle>
 		<suppress checks="ContractionsCheck" files="osb-asah-common/src/test/java/com/liferay/osb/asah/common/filter/expression/FilterExpressionTest\.java" />
 		<suppress checks="JSONUtilCheck" files="osb-asah-common/src/test/java/com/liferay/osb/asah/common/json/JSONUtilTest\.java" />
+		<suppress checks="LambdaCheck" files="osb-asah-common/src/testIntegration/java/com/liferay/osb/asah/common/dog/test/DataSourceDogTest\.java" />
 	</checkstyle>
 	<source-check>
 		<suppress checks="JavaLongLinesCheck" files="osb-asah-backend/src/testIntegration/java/com/liferay/osb/asah/backend/rest/controller/test/OrderAccountAverageCurrencyValueWithTrendGraphQLRestControllerTest\.java" />
