@@ -16,6 +16,7 @@ import com.liferay.osb.asah.common.entity.ChannelDataSource;
 import com.liferay.osb.asah.common.entity.DXPEntity;
 import com.liferay.osb.asah.common.entity.DataSource;
 import com.liferay.osb.asah.common.json.JSONUtil;
+import com.liferay.osb.asah.common.model.Author;
 import com.liferay.osb.asah.common.model.Individual;
 import com.liferay.osb.asah.common.postgresql.converter.helper.DataSourceFilterStringConverterHelper;
 import com.liferay.osb.asah.common.repository.BQIndividualRepository;
@@ -120,6 +121,16 @@ public class DataSourceDog {
 
 	@Transactional
 	public List<DataSource> disconnectDataSources() {
+		Author author = AuthorThreadLocal.getAuthor();
+
+		if ((author == null) || StringUtils.isBlank(author.getUserId()) ||
+			StringUtils.isBlank(author.getUserName())) {
+
+			throw new OSBAsahException(
+				HttpStatus.BAD_REQUEST,
+				"Cannot disconnect data sources without an author");
+		}
+
 		List<DataSource> dataSources = new ArrayList<>();
 
 		for (DataSource dataSource :
