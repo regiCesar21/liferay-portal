@@ -8,6 +8,7 @@ package com.liferay.osb.asah.common.dog.test;
 import com.liferay.osb.asah.common.concurrent.BoundedExecutor;
 import com.liferay.osb.asah.common.dog.DXPEntityDog;
 import com.liferay.osb.asah.common.dog.DataSourceDog;
+import com.liferay.osb.asah.common.entity.AuditEvent;
 import com.liferay.osb.asah.common.entity.BQDataSourceUser;
 import com.liferay.osb.asah.common.entity.Channel;
 import com.liferay.osb.asah.common.entity.ChannelDataSource;
@@ -15,15 +16,22 @@ import com.liferay.osb.asah.common.entity.DXPEntity;
 import com.liferay.osb.asah.common.entity.DataSource;
 import com.liferay.osb.asah.common.faro.info.dog.test.BaseFaroInfoDogTestCase;
 import com.liferay.osb.asah.common.http.ChannelHttp;
+import com.liferay.osb.asah.common.model.Author;
 import com.liferay.osb.asah.common.model.Field;
 import com.liferay.osb.asah.common.model.Individual;
+import com.liferay.osb.asah.common.repository.AuditEventRepository;
 import com.liferay.osb.asah.common.repository.ChannelRepository;
 import com.liferay.osb.asah.common.repository.DataSourceRepository;
+import com.liferay.osb.asah.common.spring.http.exception.OSBAsahException;
+import com.liferay.osb.asah.common.util.AuthorThreadLocal;
+import com.liferay.osb.asah.common.util.ListUtil;
 import com.liferay.osb.asah.test.util.annotation.RepositoryResource;
+import com.liferay.osb.asah.test.util.annotation.SQLResource;
 import com.liferay.osb.asah.test.util.faro.FaroInfoTestUtil;
 import com.liferay.osb.asah.test.util.spring.OSBAsahTestExecutionListenersContext;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 import java.util.Set;
@@ -99,6 +107,55 @@ public class DataSourceDogTest
 
 		Assertions.assertEquals("DISCONNECTED", dataSource.getState());
 		Assertions.assertEquals("INACTIVE", dataSource.getStatus());
+	}
+
+	@SQLResource(resourcePath = "test_disconnect_data_sources.sql")
+	@Test
+	public void testDisconnectDataSources() {
+		try {
+			AuthorThreadLocal.setAuthor(new Author("test-id", "Test Test"));
+
+			List<DataSource> dataSources =
+				_dataSourceDog.disconnectDataSources();
+
+			Assertions.assertEquals(2, dataSources.size());
+			Assertions.assertEquals(
+				Arrays.asList(227629412944143296L, 973998491245327488L),
+				ListUtil.map(dataSources, DataSource::getId));
+			Assertions.assertEquals(
+				Arrays.asList("DISCONNECTED", "DISCONNECTED"),
+				ListUtil.map(dataSources, DataSource::getState));
+			Assertions.assertEquals(
+				Arrays.asList("INACTIVE", "INACTIVE"),
+				ListUtil.map(dataSources, DataSource::getStatus));
+
+			List<AuditEvent> auditEvents = IterableUtils.toList(
+				_auditEventRepository.findAll());
+
+			Assertions.assertEquals(
+				Arrays.asList(
+					"Data source ID 227629412944143296",
+					"Data source ID 973998491245327488"),
+				ListUtil.map(auditEvents, AuditEvent::getContext));
+
+			Assertions.assertEquals(
+				Arrays.asList(
+					AuditEvent.Type.DATA_SOURCE_DISCONNECT,
+					AuditEvent.Type.DATA_SOURCE_DISCONNECT),
+				ListUtil.map(auditEvents, AuditEvent::getType));
+		}
+		finally {
+			AuthorThreadLocal.remove();
+		}
+	}
+
+	@SQLResource(resourcePath = "test_disconnect_data_sources.sql")
+	@Test
+	public void testDisconnectDataSourcesWithoutAuthor() {
+		Assertions.assertThrows(
+			OSBAsahException.class,
+			() -> _dataSourceDog.disconnectDataSources(),
+			"Cannot disconnect data sources without an author");
 	}
 
 	@Disabled
@@ -235,6 +292,9 @@ public class DataSourceDogTest
 		Assertions.assertEquals(
 			"Token Authentication", dataSource.getCredentialType());
 	}
+
+	@Autowired
+	private AuditEventRepository _auditEventRepository;
 
 	@MockBean
 	private ChannelHttp _channelHttp;
