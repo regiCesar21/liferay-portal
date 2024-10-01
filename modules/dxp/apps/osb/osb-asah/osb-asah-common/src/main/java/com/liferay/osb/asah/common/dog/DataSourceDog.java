@@ -25,6 +25,7 @@ import com.liferay.osb.asah.common.repository.helper.FilterHelper;
 import com.liferay.osb.asah.common.spring.http.exception.OSBAsahException;
 import com.liferay.osb.asah.common.util.AuthorThreadLocal;
 import com.liferay.osb.asah.common.util.BeanUtils;
+import com.liferay.osb.asah.common.util.ProjectIdThreadLocal;
 import com.liferay.osb.asah.common.util.TimeOrderedUuidGenerator;
 import com.liferay.osb.asah.common.wedeploy.data.WeDeployDataService;
 
@@ -170,9 +171,14 @@ public class DataSourceDog {
 			_dataSourceRepository.findById(dataSourceId);
 
 		return dataSourceOptional.orElseThrow(
-			() -> new OSBAsahException(
-				HttpStatus.BAD_REQUEST,
-				"There is no data source with ID " + dataSourceId));
+			() -> {
+				String message =
+					"There is no data source with ID " + dataSourceId +
+						" for project with ID " +
+							ProjectIdThreadLocal.getProjectId();
+
+				return new OSBAsahException(HttpStatus.BAD_REQUEST, message);
+			});
 	}
 
 	public String getDataSourceName(Long dataSourceId) {
