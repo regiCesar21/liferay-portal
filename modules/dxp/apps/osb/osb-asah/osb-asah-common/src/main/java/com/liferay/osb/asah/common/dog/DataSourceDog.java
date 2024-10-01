@@ -128,7 +128,7 @@ public class DataSourceDog {
 
 			throw new OSBAsahException(
 				HttpStatus.BAD_REQUEST,
-				"Cannot disconnect data sources without an author");
+				"Unable to disconnect data sources without an author");
 		}
 
 		List<DataSource> dataSources = new ArrayList<>();
@@ -473,7 +473,7 @@ public class DataSourceDog {
 			Objects.equals(dataSource.getStatus(), "INACTIVE")) {
 
 			throw new OSBAsahException(
-				HttpStatus.BAD_REQUEST, "Data source already disconnected");
+				HttpStatus.BAD_REQUEST, "Data source is already disconnected");
 		}
 
 		_addAuditEvent(

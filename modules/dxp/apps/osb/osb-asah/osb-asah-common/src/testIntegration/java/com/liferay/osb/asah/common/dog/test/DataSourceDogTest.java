@@ -155,7 +155,7 @@ public class DataSourceDogTest
 		Assertions.assertThrows(
 			OSBAsahException.class,
 			() -> _dataSourceDog.disconnectDataSources(),
-			"Cannot disconnect data sources without an author");
+			"Unable to disconnect data sources without an author");
 	}
 
 	@Disabled
