@@ -36,7 +36,7 @@ public class AssetHistogramMetricDTO {
 				_totalValue += histogramMetric.getValue();
 			});
 
-		if (_totalValue == 0) {
+		if (getTotalValue() == 0) {
 			_histogramMetricDTOs.clear();
 		}
 
