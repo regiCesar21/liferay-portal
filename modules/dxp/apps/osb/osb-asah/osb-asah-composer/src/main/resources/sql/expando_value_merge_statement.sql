@@ -71,12 +71,7 @@ USING
 			WHERE
 				(
 					analyticsDeleteMessage.entityId IS NOT NULL OR
-					dxpEntity.uploadDate >=
-						{% if params.uploadType == 'FULL' %}
-							'1970-01-01T00:00:00'
-						{% else %}
-							CAST('{{ params['uploadDate'] }}' AS TIMESTAMP)
-						{% endif %}
+					dxpEntity.uploadDate = CAST('{{ params['uploadDate'] }}' AS TIMESTAMP)
 				) AND
 				dxpEntity.dataSourceId = CAST('{{ params['dataSourceId'] }}' AS INTEGER) AND
 				(
@@ -98,6 +93,8 @@ WHEN MATCHED AND staging.deleted IS NULL THEN
 		replica.modifiedDate = staging.modifiedDate,
 		replica.value = staging.value
 WHEN MATCHED AND staging.deleted = true THEN
+	DELETE
+WHEN NOT MATCHED BY SOURCE AND '{{ params['uploadType'] }}' = 'FULL' THEN
 	DELETE
 WHEN NOT MATCHED BY TARGET AND staging.deleted IS NULL THEN
 	INSERT (

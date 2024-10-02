@@ -85,6 +85,8 @@ WHEN MATCHED AND staging.deleted IS NULL AND staging.modifiedDate > replica.modi
 		replica.userId = staging.userId
 WHEN MATCHED AND staging.deleted = true THEN
 	DELETE
+WHEN NOT MATCHED BY SOURCE AND '{{ params['uploadType'] }}' = 'FULL' THEN
+	DELETE
 WHEN NOT MATCHED BY TARGET AND staging.deleted IS NULL THEN
 	INSERT (
 		`accountId`,

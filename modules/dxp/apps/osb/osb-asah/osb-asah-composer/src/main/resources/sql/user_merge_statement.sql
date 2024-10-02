@@ -134,12 +134,7 @@ USING
 			WHERE
 				(
 					analyticsDeleteMessage.userId IS NOT NULL OR
-					user.uploadDate >=
-						{% if params.uploadType == 'FULL' %}
-							'1970-01-01T00:00:00'
-						{% else %}
-							CAST('{{ params['uploadDate'] }}' AS TIMESTAMP)
-						{% endif %}
+					user.uploadDate = CAST('{{ params['uploadDate'] }}' AS TIMESTAMP)
 				) AND
 				user.dataSourceId = CAST('{{ params['dataSourceId'] }}' AS INTEGER) AND
 				user.type = 'com.liferay.portal.kernel.model.User'
@@ -164,6 +159,8 @@ WHEN MATCHED AND staging.deleted IS NULL THEN
 		replica.userName = staging.userName,
 		replica.uuid = COALESCE(staging.uuid, '')
 WHEN MATCHED AND staging.deleted = true THEN
+	DELETE
+WHEN NOT MATCHED BY SOURCE AND '{{ params['uploadType'] }}' = 'FULL' THEN
 	DELETE
 WHEN NOT MATCHED BY TARGET AND staging.deleted IS NULL THEN
 	INSERT (

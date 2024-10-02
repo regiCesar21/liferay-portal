@@ -61,12 +61,7 @@ USING
 			product.projectId = analyticsDeleteMessage.projectId
 		WHERE
 			product.dataSourceId = CAST('{{ params['dataSourceId'] }}' AS INTEGER) AND
-			product.uploadDate >=
-				{% if params.uploadType == 'FULL' %}
-					'1970-01-01T00:00:00'
-				{% else %}
-					CAST('{{ params['uploadDate'] }}' AS TIMESTAMP)
-				{% endif %}
+			product.uploadDate = CAST('{{ params['uploadDate'] }}' AS TIMESTAMP)
 		) AS staging
 ON
 	staging.dataSourceId = replica.dataSourceId AND
@@ -97,6 +92,8 @@ WHEN MATCHED AND staging.deleted IS NULL AND staging.modifiedDate > replica.modi
 		replica.tags = staging.tags,
 		replica.urls = staging.urls
 WHEN MATCHED AND staging.deleted = true THEN
+	DELETE
+WHEN NOT MATCHED BY SOURCE AND '{{ params['uploadType'] }}' = 'FULL' THEN
 	DELETE
 WHEN NOT MATCHED BY TARGET AND staging.deleted IS NULL THEN
 	INSERT (

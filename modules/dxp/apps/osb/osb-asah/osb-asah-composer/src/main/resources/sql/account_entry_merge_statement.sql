@@ -161,12 +161,7 @@ USING
 			WHERE
 				(
 					analyticsDeleteMessage.accountEntryId IS NOT NULL OR
-					accountEntry.uploadDate >=
-						{% if params.uploadType == 'FULL' %}
-							'1970-01-01T00:00:00'
-						{% else %}
-							CAST('{{ params['uploadDate'] }}' AS TIMESTAMP)
-						{% endif %}
+					accountEntry.uploadDate = CAST('{{ params['uploadDate'] }}' AS TIMESTAMP)
 				) AND
 				accountEntry.dataSourceId = CAST('{{ params['dataSourceId'] }}' AS INTEGER) AND
 				accountEntry.type = 'com.liferay.account.model.AccountEntry'
@@ -193,6 +188,8 @@ WHEN MATCHED AND staging.deleted IS NULL THEN
 		replica.taxIdNumber = staging.taxIdNumber,
 		replica.type = staging.accountEntryType
 WHEN MATCHED AND staging.deleted = true THEN
+	DELETE
+WHEN NOT MATCHED BY SOURCE AND '{{ params['uploadType'] }}' = 'FULL' THEN
 	DELETE
 WHEN NOT MATCHED BY TARGET AND staging.deleted IS NULL THEN
 	INSERT (

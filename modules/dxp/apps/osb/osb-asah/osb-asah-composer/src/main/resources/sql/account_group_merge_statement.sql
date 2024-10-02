@@ -105,12 +105,7 @@ USING
 			WHERE
 				(
 					analyticsDeleteMessage.accountGroupId IS NOT NULL OR
-					accountGroup.uploadDate >=
-						{% if params.uploadType == 'FULL' %}
-							'1970-01-01T00:00:00'
-						{% else %}
-							CAST('{{ params['uploadDate'] }}' AS TIMESTAMP)
-						{% endif %}
+					accountGroup.uploadDate = CAST('{{ params['uploadDate'] }}' AS TIMESTAMP)
 				) AND
 				accountGroup.dataSourceId = CAST('{{ params['dataSourceId'] }}' AS INTEGER) AND
 				accountGroup.type = 'com.liferay.account.model.AccountGroup'
@@ -130,6 +125,8 @@ WHEN MATCHED AND staging.deleted IS NULL THEN
 		replica.name = staging.name,
 		replica.type = staging.accountGroupType
 WHEN MATCHED AND staging.deleted = true THEN
+	DELETE
+WHEN NOT MATCHED BY SOURCE AND '{{ params['uploadType'] }}' = 'FULL' THEN
 	DELETE
 WHEN NOT MATCHED BY TARGET AND staging.deleted IS NULL THEN
 	INSERT (

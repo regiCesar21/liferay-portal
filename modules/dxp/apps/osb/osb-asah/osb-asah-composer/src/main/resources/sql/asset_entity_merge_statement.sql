@@ -60,13 +60,8 @@ USING
 			assetentity.id = analyticsDeleteMessage.classPK AND
 			assetentity.projectId = analyticsDeleteMessage.projectId
 		WHERE
-			assetentity.uploadDate >=
-				{% if params.uploadType == 'FULL' %}
-					'1970-01-01T00:00:00'
-				{% else %}
-					CAST('{{ params['uploadDate'] }}' AS TIMESTAMP)
-				{% endif %}
-		) AS staging
+			assetentity.uploadDate = CAST('{{ params['uploadDate'] }}' AS TIMESTAMP)
+	) AS staging
 ON
 	staging.dataSourceId = replica.dataSourceId AND
 	staging.id = replica.id AND
@@ -84,6 +79,8 @@ WHEN MATCHED AND staging.deleted IS NULL AND staging.modifiedDate > replica.modi
 		replica.publishDate = staging.publishDate,
 		replica.title = staging.title
 WHEN MATCHED AND staging.deleted = true THEN
+	DELETE
+WHEN NOT MATCHED BY SOURCE AND '{{ params['uploadType'] }}' = 'FULL' THEN
 	DELETE
 WHEN NOT MATCHED BY TARGET AND staging.deleted IS NULL THEN
 	INSERT (
