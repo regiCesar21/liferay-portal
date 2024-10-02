@@ -460,10 +460,8 @@ public class EditFragmentEntryDisplayContext {
 
 					renderFragmentEntryURL.setResourceID(
 						"/fragment/render_fragment_entry");
-
 					renderFragmentEntryURL.setParameter(
 						"p_l_mode", Constants.PREVIEW);
-
 					renderFragmentEntryURL.setWindowState(
 						LiferayWindowState.POP_UP);
 
