@@ -2228,8 +2228,8 @@
 			</library>
 			<library>
 				<file-name>com.liferay.portal.search.elasticsearch7.impl.jar!elasticsearch-cli.jar</file-name>
-				<version>7.17.21</version>
-				<project-name>org.elasticsearch#elasticsearch-cli;7.17.21</project-name>
+				<version>7.17.24</version>
+				<project-name>org.elasticsearch#elasticsearch-cli;7.17.24</project-name>
 				<project-url>https://github.com/elastic/elasticsearch</project-url>
 				<licenses>
 					<license>
@@ -2240,8 +2240,8 @@
 			</library>
 			<library>
 				<file-name>com.liferay.portal.search.elasticsearch7.impl.jar!elasticsearch-core.jar</file-name>
-				<version>7.17.21</version>
-				<project-name>org.elasticsearch#elasticsearch-core;7.17.21</project-name>
+				<version>7.17.24</version>
+				<project-name>org.elasticsearch#elasticsearch-core;7.17.24</project-name>
 				<project-url>https://github.com/elastic/elasticsearch</project-url>
 				<licenses>
 					<license>
@@ -2252,8 +2252,8 @@
 			</library>
 			<library>
 				<file-name>com.liferay.portal.search.elasticsearch7.impl.jar!elasticsearch-geo.jar</file-name>
-				<version>7.17.21</version>
-				<project-name>org.elasticsearch#elasticsearch-geo;7.17.21</project-name>
+				<version>7.17.24</version>
+				<project-name>org.elasticsearch#elasticsearch-geo;7.17.24</project-name>
 				<project-url>https://github.com/elastic/elasticsearch</project-url>
 				<licenses>
 					<license>
@@ -2264,8 +2264,8 @@
 			</library>
 			<library>
 				<file-name>com.liferay.portal.search.elasticsearch7.impl.jar!elasticsearch-lz4.jar</file-name>
-				<version>7.17.21</version>
-				<project-name>org.elasticsearch#elasticsearch-lz4;7.17.21</project-name>
+				<version>7.17.24</version>
+				<project-name>org.elasticsearch#elasticsearch-lz4;7.17.24</project-name>
 				<project-url>https://github.com/elastic/elasticsearch</project-url>
 				<licenses>
 					<license>
@@ -2276,8 +2276,8 @@
 			</library>
 			<library>
 				<file-name>com.liferay.portal.search.elasticsearch7.impl.jar!elasticsearch-rest-client.jar</file-name>
-				<version>7.17.21</version>
-				<project-name>org.elasticsearch.client#rest;7.17.21</project-name>
+				<version>7.17.24</version>
+				<project-name>org.elasticsearch.client#rest;7.17.24</project-name>
 				<project-url>https://github.com/elastic/elasticsearch</project-url>
 				<licenses>
 					<license>
@@ -2288,20 +2288,20 @@
 			</library>
 			<library>
 				<file-name>com.liferay.portal.search.elasticsearch7.impl.jar!elasticsearch-rest-high-level-client.jar</file-name>
-				<version>7.17.21</version>
-				<project-name>org.elasticsearch.client#rest-high-level;7.17.21</project-name>
+				<version>7.17.24</version>
+				<project-name>org.elasticsearch.client#rest-high-level;7.17.24</project-name>
 				<project-url>https://github.com/elastic/elasticsearch</project-url>
 				<licenses>
 					<license>
 						<license-name>Elastic License 2.0</license-name>
-						<license-url>https://raw.githubusercontent.com/elastic/elasticsearch/v7.17.21/licenses/ELASTIC-LICENSE-2.0.txt</license-url>
+						<license-url>https://raw.githubusercontent.com/elastic/elasticsearch/v7.17.24/licenses/ELASTIC-LICENSE-2.0.txt</license-url>
 					</license>
 				</licenses>
 			</library>
 			<library>
 				<file-name>com.liferay.portal.search.elasticsearch7.impl.jar!elasticsearch-x-content.jar</file-name>
-				<version>7.17.21</version>
-				<project-name>org.elasticsearch#elasticsearch-x-content;7.17.21</project-name>
+				<version>7.17.24</version>
+				<project-name>org.elasticsearch#elasticsearch-x-content;7.17.24</project-name>
 				<project-url>https://github.com/elastic/elasticsearch</project-url>
 				<licenses>
 					<license>
@@ -2312,8 +2312,8 @@
 			</library>
 			<library>
 				<file-name>com.liferay.portal.search.elasticsearch7.impl.jar!elasticsearch.jar</file-name>
-				<version>7.17.21</version>
-				<project-name>org.elasticsearch#server;7.17.21</project-name>
+				<version>7.17.24</version>
+				<project-name>org.elasticsearch#server;7.17.24</project-name>
 				<project-url>https://github.com/elastic/elasticsearch</project-url>
 				<licenses>
 					<license>
@@ -2443,8 +2443,8 @@
 			</library>
 			<library>
 				<file-name>com.liferay.portal.search.elasticsearch7.impl.jar!lang-mustache-client.jar</file-name>
-				<version>7.17.21</version>
-				<project-name>org.elasticsearch.plugin#lang-mustache;7.17.21</project-name>
+				<version>7.17.24</version>
+				<project-name>org.elasticsearch.plugin#lang-mustache;7.17.24</project-name>
 				<project-url>https://github.com/elastic/elasticsearch</project-url>
 				<licenses>
 					<license>
@@ -2556,8 +2556,8 @@
 			</library>
 			<library>
 				<file-name>com.liferay.portal.search.elasticsearch7.impl.jar!parent-join-client.jar</file-name>
-				<version>7.17.21</version>
-				<project-name>org.elasticsearch.plugin#parent-join;7.17.21</project-name>
+				<version>7.17.24</version>
+				<project-name>org.elasticsearch.plugin#parent-join;7.17.24</project-name>
 				<project-url>https://github.com/elastic/elasticsearch</project-url>
 				<licenses>
 					<license>
@@ -2568,8 +2568,8 @@
 			</library>
 			<library>
 				<file-name>com.liferay.portal.search.elasticsearch7.impl.jar!percolator-client.jar</file-name>
-				<version>7.17.21</version>
-				<project-name>org.elasticsearch.plugin#percolator;7.17.21</project-name>
+				<version>7.17.24</version>
+				<project-name>org.elasticsearch.plugin#percolator;7.17.24</project-name>
 				<project-url>https://github.com/elastic/elasticsearch</project-url>
 				<licenses>
 					<license>
@@ -2580,8 +2580,8 @@
 			</library>
 			<library>
 				<file-name>com.liferay.portal.search.elasticsearch7.impl.jar!rank-eval-client.jar</file-name>
-				<version>7.17.21</version>
-				<project-name>org.elasticsearch.plugin#rank-eval;7.17.21</project-name>
+				<version>7.17.24</version>
+				<project-name>org.elasticsearch.plugin#rank-eval;7.17.24</project-name>
 				<project-url>https://github.com/elastic/elasticsearch</project-url>
 				<licenses>
 					<license>
@@ -7835,19 +7835,6 @@
 				<comments>This does not include missing OSGi headers. See LPS-49575.</comments>
 			</library>
 			<library>
-				<file-name>lib/portal/spring-aspects.jar</file-name>
-				<version>5.3.39</version>
-				<project-name>Spring</project-name>
-				<project-url>http://www.springframework.org</project-url>
-				<licenses>
-					<license>
-						<license-name>Apache License 2.0</license-name>
-						<license-url>http://www.apache.org/licenses/LICENSE-2.0</license-url>
-					</license>
-				</licenses>
-				<comments>This does not include missing OSGi headers. See LPS-49575.</comments>
-			</library>
-			<library>
 				<file-name>lib/portal/spring-beans.jar</file-name>
 				<version>5.3.39.LIFERAY-PATCHED-1</version>
 				<project-name>Spring</project-name>
@@ -7859,19 +7846,6 @@
 					</license>
 				</licenses>
 				<comments>This includes missing OSGi headers.</comments>
-			</library>
-			<library>
-				<file-name>lib/portal/spring-context-support.jar</file-name>
-				<version>5.3.39</version>
-				<project-name>Spring</project-name>
-				<project-url>http://www.springframework.org</project-url>
-				<licenses>
-					<license>
-						<license-name>Apache License 2.0</license-name>
-						<license-url>http://www.apache.org/licenses/LICENSE-2.0</license-url>
-					</license>
-				</licenses>
-				<comments>This does not include missing OSGi headers. See LPS-49575.</comments>
 			</library>
 			<library>
 				<file-name>lib/portal/spring-context.jar</file-name>
@@ -7926,34 +7900,8 @@
 				<comments>This does not include missing OSGi headers. See LPS-49575.</comments>
 			</library>
 			<library>
-				<file-name>lib/portal/spring-jms.jar</file-name>
-				<version>5.3.39</version>
-				<project-name>Spring</project-name>
-				<project-url>http://www.springframework.org</project-url>
-				<licenses>
-					<license>
-						<license-name>Apache License 2.0</license-name>
-						<license-url>http://www.apache.org/licenses/LICENSE-2.0</license-url>
-					</license>
-				</licenses>
-				<comments>This does not include missing OSGi headers. See LPS-49575.</comments>
-			</library>
-			<library>
 				<file-name>lib/portal/spring-orm.jar</file-name>
 				<version>4.3.22.LIFERAY-PATCHED-1</version>
-				<project-name>Spring</project-name>
-				<project-url>http://www.springframework.org</project-url>
-				<licenses>
-					<license>
-						<license-name>Apache License 2.0</license-name>
-						<license-url>http://www.apache.org/licenses/LICENSE-2.0</license-url>
-					</license>
-				</licenses>
-				<comments>This does not include missing OSGi headers. See LPS-49575.</comments>
-			</library>
-			<library>
-				<file-name>lib/portal/spring-oxm.jar</file-name>
-				<version>5.3.39</version>
 				<project-name>Spring</project-name>
 				<project-url>http://www.springframework.org</project-url>
 				<licenses>
@@ -7979,19 +7927,6 @@
 			</library>
 			<library>
 				<file-name>lib/portal/spring-web.jar</file-name>
-				<version>5.3.39</version>
-				<project-name>Spring</project-name>
-				<project-url>http://www.springframework.org</project-url>
-				<licenses>
-					<license>
-						<license-name>Apache License 2.0</license-name>
-						<license-url>http://www.apache.org/licenses/LICENSE-2.0</license-url>
-					</license>
-				</licenses>
-				<comments>This does not include missing OSGi headers. See LPS-49575.</comments>
-			</library>
-			<library>
-				<file-name>lib/portal/spring-webmvc.jar</file-name>
 				<version>5.3.39</version>
 				<project-name>Spring</project-name>
 				<project-url>http://www.springframework.org</project-url>
