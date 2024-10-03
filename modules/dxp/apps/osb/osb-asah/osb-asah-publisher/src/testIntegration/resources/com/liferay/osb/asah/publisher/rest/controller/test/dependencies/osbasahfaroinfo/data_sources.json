@@ -10,6 +10,9 @@
 		},
 		"dateCreated": 1553051793294,
 		"dateModified": 1553051793294,
+		"details": {
+			"contactsSelected": true
+		},
 		"id": "345085929068798696",
 		"name": "Test Data Source 1",
 		"provider": {
@@ -40,6 +43,9 @@
 		},
 		"dateCreated": 1553051793295,
 		"dateModified": 1553051793295,
+		"details": {
+			"contactsSelected": true
+		},
 		"id": "345085929068798697",
 		"name": "Test Data Source 2",
 		"provider": {
@@ -58,5 +64,36 @@
 		"state": "READY",
 		"status": "ACTIVE",
 		"url": "liferay.example.faro2.com"
+	},
+	{
+		"contactsSelected": true,
+		"credentials": {
+			"oAuthAuthorizationURL": null,
+			"oAuthClientId": null,
+			"oAuthClientSecret": null,
+			"oAuthOwner": null,
+			"oAuthRefreshToken": null,
+			"type": "OAuth 2 Authentication"
+		},
+		"dateCreated": 1727985857000,
+		"dateModified": 1727985857295,
+		"id": "345085921727985857",
+		"name": "Test Data Source 3",
+		"provider": {
+			"analyticsConfiguration": {
+				"analyticsKey": null,
+				"enableAllSites": true,
+				"sites": null
+			},
+			"contactsConfiguration": {
+				"enableAllContacts": false,
+				"organizations": null,
+				"userGroups": null
+			},
+			"type": "LIFERAY"
+		},
+		"state": "READY",
+		"status": "ACTIVE",
+		"url": "liferay.example.faro3.com"
 	}
 ]
