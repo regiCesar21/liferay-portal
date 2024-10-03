@@ -176,18 +176,20 @@ response = requests.get(
 
 for project in response.json():
 
-	#
-	# DXP Entity
-	#
+	if project.get('accountsSelected') or project.get('contactsSelected'):
 
-	dag_id = 'dxp_entity_ingestion_{}'.format(
-		project.get('id')
-	)
+		#
+		# DXP Entity
+		#
 
-	globals()[dag_id] = create_dag(
-		project.get('id'), project.get('accountsSelected'),
-		project.get('contactsSelected'), dag_id,
-		'DXP Entity Ingestion DAG For {}'.format(
+		dag_id = 'dxp_entity_ingestion_{}'.format(
 			project.get('id')
 		)
-	)
+
+		globals()[dag_id] = create_dag(
+			project.get('id'), project.get('accountsSelected'),
+			project.get('contactsSelected'), dag_id,
+			'DXP Entity Ingestion DAG For {}'.format(
+				project.get('id')
+			)
+		)
