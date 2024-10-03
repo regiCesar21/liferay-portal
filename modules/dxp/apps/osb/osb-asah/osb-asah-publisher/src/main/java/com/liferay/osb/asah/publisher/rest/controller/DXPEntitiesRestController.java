@@ -7,14 +7,19 @@ package com.liferay.osb.asah.publisher.rest.controller;
 
 import com.liferay.osb.asah.common.constants.HeaderConstants;
 import com.liferay.osb.asah.common.date.DateUtil;
+import com.liferay.osb.asah.common.dog.DataSourceDog;
 import com.liferay.osb.asah.common.entity.DXPEntity;
+import com.liferay.osb.asah.common.entity.DataSource;
 import com.liferay.osb.asah.common.json.JSONUtil;
 import com.liferay.osb.asah.common.messaging.Channel;
 import com.liferay.osb.asah.common.messaging.MessageBus;
+import com.liferay.osb.asah.common.spring.http.exception.OSBAsahException;
 import com.liferay.osb.asah.common.util.ProjectIdThreadLocal;
 
 import java.util.Collections;
 import java.util.Date;
+
+import org.apache.commons.lang3.BooleanUtils;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -42,6 +47,10 @@ public class DXPEntitiesRestController {
 		@RequestHeader(required = false, value = HeaderConstants.DATA_SOURCE_ID)
 			String dataSourceId,
 		@RequestBody String json) {
+
+		if (dataSourceId != null) {
+			_validateDataSourceConfiguration(dataSourceId);
+		}
 
 		JSONArray jsonArray = _processMessages(dataSourceId, json);
 
@@ -92,6 +101,11 @@ public class DXPEntitiesRestController {
 
 		for (int i = 0; i < messagesJSONArray.length(); i++) {
 			JSONObject jsonObject = messagesJSONArray.getJSONObject(i);
+
+			if ((dataSourceId == null) && (i == 0)) {
+				_validateDataSourceConfiguration(
+					jsonObject.getString("dataSourceId"));
+			}
 
 			String action = jsonObject.getString("action");
 			JSONObject objectJSONObject = jsonObject.getJSONObject(
@@ -162,6 +176,22 @@ public class DXPEntitiesRestController {
 
 		return jsonArray;
 	}
+
+	private void _validateDataSourceConfiguration(String dataSourceId) {
+		DataSource dataSource = _dataSourceDog.getDataSource(
+			Long.parseLong(dataSourceId));
+
+		if (!(BooleanUtils.toBoolean(dataSource.getAccountsSelected()) ||
+			  BooleanUtils.toBoolean(dataSource.getContactsSelected()))) {
+
+			throw new OSBAsahException(
+				HttpStatus.BAD_REQUEST,
+				"Contacts synchronization is not enabled");
+		}
+	}
+
+	@Autowired
+	private DataSourceDog _dataSourceDog;
 
 	@Autowired
 	private MessageBus _messageBus;
