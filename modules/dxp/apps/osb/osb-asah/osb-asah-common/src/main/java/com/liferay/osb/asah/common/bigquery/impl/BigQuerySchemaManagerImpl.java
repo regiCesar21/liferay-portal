@@ -145,7 +145,13 @@ public class BigQuerySchemaManagerImpl implements BigQuerySchemaManager {
 			Map<String, JSONObject> jsonObjects = new HashMap<>();
 
 			for (String key : _viewsJSONObject.keySet()) {
-				jsonObjects.put(key, _viewsJSONObject.getJSONObject(key));
+				JSONObject jsonObject = _viewsJSONObject.getJSONObject(key);
+
+				if (!_validateEnvironment(jsonObject)) {
+					continue;
+				}
+
+				jsonObjects.put(key, jsonObject);
 			}
 
 			Set<Map.Entry<String, JSONObject>> entries = jsonObjects.entrySet();
