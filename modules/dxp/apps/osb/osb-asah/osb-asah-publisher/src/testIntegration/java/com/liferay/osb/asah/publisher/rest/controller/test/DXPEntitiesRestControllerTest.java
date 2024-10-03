@@ -41,6 +41,7 @@ import org.springframework.boot.test.web.client.TestRestTemplate;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 
@@ -142,6 +143,23 @@ public class DXPEntitiesRestControllerTest
 			ResourceUtil.readResourceToString(
 				"dependencies/dxp_entities_message.json", this),
 			new JSONArray(messages.get(0)), false);
+	}
+
+	@RepositoryResource(
+		repositoryClass = DataSourceRepository.class,
+		resourcePath = "osbasahfaroinfo/data_sources.json"
+	)
+	@Test
+	public void testPostNoContactsSelected() throws Exception {
+		ResponseEntity<String> responseEntity = _exchange(
+			ResourceUtil.readResourceToString(
+				"dependencies/analytics_message_3.json", this));
+
+		Assertions.assertThat(
+			responseEntity.getStatusCode()
+		).isEqualTo(
+			HttpStatus.valueOf(400)
+		);
 	}
 
 	private <T> ResponseEntity<String> _exchange(T body) {
