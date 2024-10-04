@@ -185,8 +185,7 @@ public class DXPEntitiesRestController {
 			  BooleanUtils.toBoolean(dataSource.getContactsSelected()))) {
 
 			throw new OSBAsahException(
-				HttpStatus.BAD_REQUEST,
-				"Contacts synchronization is not enabled");
+				HttpStatus.BAD_REQUEST, "Contacts synchronization is disabled");
 		}
 	}
 
