@@ -506,7 +506,7 @@ public class OpportunityMessageSubscriber extends BaseMessageSubscriber {
 			Account parentAccount, Contact[] contacts,
 			ExternalLink[] externalLinks, Account.Language language,
 			Account.Region region, PostalAddress postalAddress,
-			ProductPurchase[] productPurchases, Team[] partnerTeams,
+			Set<ProductPurchase> productPurchases, Team[] partnerTeams,
 			JSONObject jsonObject)
 		throws Exception {
 
@@ -559,7 +559,8 @@ public class OpportunityMessageSubscriber extends BaseMessageSubscriber {
 		account.setContacts(contacts);
 		account.setExternalLinks(externalLinks);
 		account.setPostalAddresses(new PostalAddress[] {postalAddress});
-		account.setProductPurchases(productPurchases);
+		account.setProductPurchases(
+			productPurchases.toArray(new ProductPurchase[0]));
 		account.setRegion(region);
 		account.setDataRegion(
 			DataRegionUtil.getDataRegion(
@@ -573,7 +574,8 @@ public class OpportunityMessageSubscriber extends BaseMessageSubscriber {
 		}
 
 		account.setProperties(
-			_salesSubscriberUtil.getAccountProperties(account, jsonObject));
+			_salesSubscriberUtil.getAccountProperties(
+				account, jsonObject, hasTamService(productPurchases)));
 
 		String soldBy = jsonObject.getString("opportunitySoldBy");
 
@@ -1058,8 +1060,7 @@ public class OpportunityMessageSubscriber extends BaseMessageSubscriber {
 				account = createAccount(
 					parentAccount, activeContacts.toArray(new Contact[0]),
 					externalLinks, language, region, postalAddress,
-					productPurchases.toArray(new ProductPurchase[0]),
-					partnerTeams, jsonObject);
+					productPurchases, partnerTeams, jsonObject);
 			}
 
 			createAccountNote(jsonObject, account);
@@ -1656,6 +1657,26 @@ public class OpportunityMessageSubscriber extends BaseMessageSubscriber {
 
 		for (String productFamilyToken : _PRODUCT_FAMILY_TOKENS) {
 			if (opportunityProductFamily.contains(productFamilyToken)) {
+				return true;
+			}
+		}
+
+		return false;
+	}
+
+	protected boolean hasTamService(Set<ProductPurchase> productPurchases) {
+		for (ProductPurchase productPurchase : productPurchases) {
+			Product product = productPurchase.getProduct();
+
+			if (StringUtil.equals(
+					product.getName(),
+					ProductConstants.
+						NAME_TECHNICAL_ACCOUNT_MANAGEMENT_SERVICES) ||
+				StringUtil.equals(
+					product.getName(),
+					ProductConstants.
+						NAME_TECHNICAL_ACCOUNT_MANAGEMENT_SERVICES_LATAM)) {
+
 				return true;
 			}
 		}
@@ -2305,7 +2326,8 @@ public class OpportunityMessageSubscriber extends BaseMessageSubscriber {
 		MapUtil.copy(account.getProperties(), oldProperties);
 
 		Map<String, String> newProperties =
-			_salesSubscriberUtil.getAccountProperties(account, jsonObject);
+			_salesSubscriberUtil.getAccountProperties(
+				account, jsonObject, hasTamService(productPurchases));
 
 		JSONObject projectJSONObject = jsonObject.getJSONObject("project");
 

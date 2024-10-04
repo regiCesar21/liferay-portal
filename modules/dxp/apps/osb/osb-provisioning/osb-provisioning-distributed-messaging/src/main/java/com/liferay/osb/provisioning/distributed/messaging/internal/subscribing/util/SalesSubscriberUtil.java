@@ -103,7 +103,7 @@ public class SalesSubscriberUtil {
 	}
 
 	public Map<String, String> getAccountProperties(
-		Account account, JSONObject jsonObject) {
+		Account account, JSONObject jsonObject, boolean tamService) {
 
 		Map<String, String> properties = new HashMap<>();
 
@@ -153,6 +153,10 @@ public class SalesSubscriberUtil {
 			properties.remove("projectSolution");
 		}
 
+		if (tamService) {
+			properties.put("tam_services", "true");
+		}
+
 		return properties;
 	}
 
@@ -177,6 +181,7 @@ public class SalesSubscriberUtil {
 		String gsOpportunity = properties.get("gsOpportunity");
 		String premiumService = properties.get("premiumService");
 		String projectSolution = properties.get("projectSolution");
+		String tamServices = properties.get("tam_services");
 
 		Set<String> criteria = new HashSet<>();
 
@@ -194,6 +199,7 @@ public class SalesSubscriberUtil {
 			tags.remove(ZendeskTagConstants.GS_OPPORTUNITY);
 			tags.remove(ZendeskTagConstants.PREMIUM_SERVICE);
 			tags.remove(ZendeskTagConstants.SERVICE_SOLUTION);
+			tags.remove(ZendeskTagConstants.TAM_SERVICES);
 
 			if (Validator.isNotNull(gsOpportunity)) {
 				tags.add(ZendeskTagConstants.GS_OPPORTUNITY);
@@ -205,6 +211,10 @@ public class SalesSubscriberUtil {
 
 			if (Validator.isNotNull(projectSolution)) {
 				tags.add(_toZendeskTag(projectSolution));
+			}
+
+			if (Validator.isNotNull(tamServices)) {
+				tags.add(ZendeskTagConstants.TAM_SERVICES);
 			}
 		}
 
