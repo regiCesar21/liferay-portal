@@ -175,13 +175,7 @@ response = requests.get(
 )
 
 for project in response.json():
-
 	if project.get('accountsSelected') or project.get('contactsSelected'):
-
-		#
-		# DXP Entity
-		#
-
 		dag_id = 'dxp_entity_ingestion_{}'.format(
 			project.get('id')
 		)
