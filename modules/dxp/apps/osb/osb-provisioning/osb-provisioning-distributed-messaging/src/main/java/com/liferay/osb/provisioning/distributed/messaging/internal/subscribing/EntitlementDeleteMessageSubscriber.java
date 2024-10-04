@@ -5,10 +5,17 @@
 
 package com.liferay.osb.provisioning.distributed.messaging.internal.subscribing;
 
+import com.liferay.osb.koroneiki.phloem.rest.client.dto.v1_0.Account;
+import com.liferay.osb.koroneiki.phloem.rest.client.serdes.v1_0.AccountSerDes;
+import com.liferay.osb.provisioning.distributed.messaging.internal.subscribing.util.SalesSubscriberUtil;
 import com.liferay.osb.provisioning.identity.management.constants.OktaConstants;
 import com.liferay.osb.provisioning.identity.management.provider.ContactIdentityProvider;
 import com.liferay.osb.provisioning.koroneiki.constants.EntitlementConstants;
+import com.liferay.osb.provisioning.koroneiki.web.service.AccountWebService;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.json.JSONObject;
+
+import java.util.Map;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -45,9 +52,33 @@ public class EntitlementDeleteMessageSubscriber extends BaseMessageSubscriber {
 				OktaConstants.GROUP_NAME_PARTNERS,
 				contactJSONObject.getString("emailAddress"));
 		}
+		else if (name.equals(EntitlementConstants.TAM_SERVICES)) {
+			Account account = AccountSerDes.toDTO(
+				jsonObject.getString("account"));
+
+			Map<String, String> properties = account.getProperties();
+
+			if (properties != null) {
+				properties.remove("tam_services");
+
+				account.setProperties(properties);
+
+				_accountWebService.updateAccount(
+					StringPool.BLANK, StringPool.BLANK, account.getKey(),
+					account);
+
+				_salesSubscriberUtil.updateTickets(account, properties);
+			}
+		}
 	}
+
+	@Reference
+	private AccountWebService _accountWebService;
 
 	@Reference(target = "(provider=okta)")
 	private ContactIdentityProvider _contactIdentityProvider;
+
+	@Reference
+	private SalesSubscriberUtil _salesSubscriberUtil;
 
 }
