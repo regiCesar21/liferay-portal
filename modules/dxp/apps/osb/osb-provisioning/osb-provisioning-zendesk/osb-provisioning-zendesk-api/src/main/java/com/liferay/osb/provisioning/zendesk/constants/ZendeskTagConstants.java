@@ -18,4 +18,6 @@ public interface ZendeskTagConstants {
 
 	public static final String SERVICE_SOLUTION = "service_solution";
 
+	public static final String TAM_SERVICES = "tam_services";
+
 }
