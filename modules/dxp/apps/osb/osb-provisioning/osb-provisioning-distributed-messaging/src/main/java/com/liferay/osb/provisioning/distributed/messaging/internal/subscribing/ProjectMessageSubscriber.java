@@ -6,13 +6,17 @@
 package com.liferay.osb.provisioning.distributed.messaging.internal.subscribing;
 
 import com.liferay.osb.koroneiki.phloem.rest.client.dto.v1_0.Account;
+import com.liferay.osb.koroneiki.phloem.rest.client.dto.v1_0.Product;
+import com.liferay.osb.koroneiki.phloem.rest.client.dto.v1_0.ProductPurchase;
 import com.liferay.osb.provisioning.distributed.messaging.internal.subscribing.util.SalesSubscriberUtil;
+import com.liferay.osb.provisioning.koroneiki.constants.ProductConstants;
 import com.liferay.osb.provisioning.koroneiki.web.service.AccountWebService;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.MapUtil;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 
 import java.util.HashMap;
@@ -54,7 +58,9 @@ public class ProjectMessageSubscriber extends BaseMessageSubscriber {
 			MapUtil.copy(account.getProperties(), oldProperties);
 
 			Map<String, String> properties =
-				_salesSubscriberUtil.getAccountProperties(account, jsonObject);
+				_salesSubscriberUtil.getAccountProperties(
+					account, jsonObject,
+					hasTamService(account.getProductPurchases()));
 
 			account.setProperties(properties);
 
@@ -65,6 +71,26 @@ public class ProjectMessageSubscriber extends BaseMessageSubscriber {
 				_salesSubscriberUtil.updateTickets(account, properties);
 			}
 		}
+	}
+
+	private boolean hasTamService(ProductPurchase[] productPurchases) {
+		for (ProductPurchase productPurchase : productPurchases) {
+			Product product = productPurchase.getProduct();
+
+			if (StringUtil.equals(
+					product.getName(),
+					ProductConstants.
+						NAME_TECHNICAL_ACCOUNT_MANAGEMENT_SERVICES) ||
+				StringUtil.equals(
+					product.getName(),
+					ProductConstants.
+						NAME_TECHNICAL_ACCOUNT_MANAGEMENT_SERVICES_LATAM)) {
+
+				return true;
+			}
+		}
+
+		return false;
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
