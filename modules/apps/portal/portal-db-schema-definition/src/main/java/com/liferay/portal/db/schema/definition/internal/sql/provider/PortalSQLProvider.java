@@ -85,7 +85,7 @@ public class PortalSQLProvider implements SQLProvider {
 		_appendSQL(
 			StringUtil.read(
 				PortalClassLoaderUtil.getClassLoader(),
-				"com/liferay/portal/tools/sql/dependencies/portal-tables.sql"),
+				"com/liferay/portal/tools/sql/dependencies/indexes.sql"),
 			StringUtil.read(
 				PortalClassLoaderUtil.getClassLoader(),
 				"com/liferay/portal/tools/sql/dependencies/portal-tables.sql"));
