@@ -6,14 +6,18 @@
 package com.liferay.portal.configuration.test.util;
 
 import com.liferay.osgi.util.service.OSGiServiceUtil;
+import com.liferay.petra.function.UnsafeRunnable;
 import com.liferay.petra.reflect.ReflectionUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.HashMapDictionary;
+import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.Validator;
 
 import java.util.Dictionary;
 import java.util.concurrent.CountDownLatch;
+import java.util.concurrent.TimeUnit;
 
 import org.osgi.framework.Bundle;
 import org.osgi.framework.BundleContext;
@@ -73,6 +77,39 @@ public class ConfigurationTestUtil {
 		throws Exception {
 
 		_updateProperties(_getConfiguration(pid), properties);
+	}
+
+	public static Configuration updateConfiguration(
+			String pid, UnsafeRunnable<Exception> unsafeRunnable)
+		throws Exception {
+
+		CountDownLatch countDownLatch = new CountDownLatch(2);
+
+		ServiceRegistration<ManagedService> serviceRegistration =
+			_bundleContext.registerService(
+				ManagedService.class, props -> countDownLatch.countDown(),
+				MapUtil.singletonDictionary(Constants.SERVICE_PID, pid));
+
+		unsafeRunnable.run();
+
+		try {
+			countDownLatch.await(1, TimeUnit.MINUTES);
+		}
+		finally {
+			serviceRegistration.unregister();
+		}
+
+		Configuration[] configurations = OSGiServiceUtil.callService(
+			_bundleContext, ConfigurationAdmin.class,
+			configurationAdmin -> configurationAdmin.listConfigurations(
+				StringBundler.concat(
+					"(", Constants.SERVICE_PID, "=", pid, ")")));
+
+		if (ArrayUtil.isEmpty(configurations)) {
+			return null;
+		}
+
+		return configurations[0];
 	}
 
 	private static Configuration _createFactoryConfiguration(String factoryPid)
