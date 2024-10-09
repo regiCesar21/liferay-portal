@@ -19,7 +19,7 @@
 				{
 					name: '<@liferay.language key="contact-us" />',
 					svgId: '#contact',
-					url: 'https://support.liferay.com/callback-form'
+					url: addLocaleParamToURI('${current_locale}', 'articles/360017784212')
 				},
 				{
 					name: '<@liferay.language key="view-my-tickets" />',
