@@ -115,7 +115,7 @@ for project in response.json():
 
 		globals()[dag_id] = create_dag(
 			project.get('id'), project.get('timeZoneId'),
-			'DISTINCT COUNT(accountId) > 5', dag_id,
+			'COUNT(DISTINCT accountId) > 5', dag_id,
 			'Commerce User Interaction Recommender DAG For {}'.format(project.get('id')),
 			data_source_ids,
 			True,
