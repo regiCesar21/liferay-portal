@@ -103,7 +103,7 @@ public class SalesSubscriberUtil {
 	}
 
 	public Map<String, String> getAccountProperties(
-		Account account, JSONObject jsonObject, boolean tamService) {
+		Account account, JSONObject jsonObject) {
 
 		Map<String, String> properties = new HashMap<>();
 
@@ -153,10 +153,6 @@ public class SalesSubscriberUtil {
 			properties.remove("projectSolution");
 		}
 
-		if (tamService) {
-			properties.put("tam_services", "true");
-		}
-
 		return properties;
 	}
 
@@ -181,7 +177,7 @@ public class SalesSubscriberUtil {
 		String gsOpportunity = properties.get("gsOpportunity");
 		String premiumService = properties.get("premiumService");
 		String projectSolution = properties.get("projectSolution");
-		String tamServices = properties.get("tam_services");
+		String tamServices = properties.get("tamServices");
 
 		Set<String> criteria = new HashSet<>();
 

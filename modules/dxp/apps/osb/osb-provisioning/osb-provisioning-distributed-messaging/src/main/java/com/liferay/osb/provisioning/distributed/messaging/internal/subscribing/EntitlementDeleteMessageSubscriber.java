@@ -12,7 +12,6 @@ import com.liferay.osb.provisioning.identity.management.constants.OktaConstants;
 import com.liferay.osb.provisioning.identity.management.provider.ContactIdentityProvider;
 import com.liferay.osb.provisioning.koroneiki.constants.EntitlementConstants;
 import com.liferay.osb.provisioning.koroneiki.web.service.AccountWebService;
-import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.json.JSONObject;
 
 import java.util.Map;
@@ -58,17 +57,9 @@ public class EntitlementDeleteMessageSubscriber extends BaseMessageSubscriber {
 
 			Map<String, String> properties = account.getProperties();
 
-			if (properties != null) {
-				properties.remove("tam_services");
+			properties.put("tamServices", Boolean.TRUE.toString());
 
-				account.setProperties(properties);
-
-				_accountWebService.updateAccount(
-					StringPool.BLANK, StringPool.BLANK, account.getKey(),
-					account);
-
-				_salesSubscriberUtil.updateTickets(account, properties);
-			}
+			_salesSubscriberUtil.updateTickets(account, properties);
 		}
 	}
 

@@ -574,8 +574,7 @@ public class OpportunityMessageSubscriber extends BaseMessageSubscriber {
 		}
 
 		account.setProperties(
-			_salesSubscriberUtil.getAccountProperties(
-				account, jsonObject, hasTamService(productPurchases)));
+			_salesSubscriberUtil.getAccountProperties(account, jsonObject));
 
 		String soldBy = jsonObject.getString("opportunitySoldBy");
 
@@ -1664,26 +1663,6 @@ public class OpportunityMessageSubscriber extends BaseMessageSubscriber {
 		return false;
 	}
 
-	protected boolean hasTamService(Set<ProductPurchase> productPurchases) {
-		for (ProductPurchase productPurchase : productPurchases) {
-			Product product = productPurchase.getProduct();
-
-			if (StringUtil.equals(
-					product.getName(),
-					ProductConstants.
-						NAME_TECHNICAL_ACCOUNT_MANAGEMENT_SERVICES) ||
-				StringUtil.equals(
-					product.getName(),
-					ProductConstants.
-						NAME_TECHNICAL_ACCOUNT_MANAGEMENT_SERVICES_LATAM)) {
-
-				return true;
-			}
-		}
-
-		return false;
-	}
-
 	protected boolean isParseMessage(Message message) {
 		String opportunityKey = _getOpportunityKey(message);
 
@@ -2326,8 +2305,7 @@ public class OpportunityMessageSubscriber extends BaseMessageSubscriber {
 		MapUtil.copy(account.getProperties(), oldProperties);
 
 		Map<String, String> newProperties =
-			_salesSubscriberUtil.getAccountProperties(
-				account, jsonObject, hasTamService(productPurchases));
+			_salesSubscriberUtil.getAccountProperties(account, jsonObject);
 
 		JSONObject projectJSONObject = jsonObject.getJSONObject("project");
 
@@ -2359,6 +2337,10 @@ public class OpportunityMessageSubscriber extends BaseMessageSubscriber {
 				StringPool.BLANK, StringPool.BLANK, accountKey, account);
 
 			if (!oldProperties.equals(newProperties)) {
+				if (_hasTamServices(productPurchases)) {
+					newProperties.put("tamServices", Boolean.TRUE.toString());
+				}
+
 				_salesSubscriberUtil.updateTickets(account, newProperties);
 			}
 		}
@@ -2717,6 +2699,23 @@ public class OpportunityMessageSubscriber extends BaseMessageSubscriber {
 			_productPurchaseExceptionsThreadLocal.get();
 
 		exceptions.add(exception);
+	}
+
+	private boolean _hasTamServices(Set<ProductPurchase> productPurchases) {
+		for (ProductPurchase productPurchase : productPurchases) {
+			Product product = productPurchase.getProduct();
+
+			String name = product.getName();
+
+			if (name.contains(
+					ProductConstants.
+						NAME_TECHNICAL_ACCOUNT_MANAGEMENT_SERVICES)) {
+
+				return true;
+			}
+		}
+
+		return false;
 	}
 
 	private boolean _isDuplicateCode(String code) throws Exception {

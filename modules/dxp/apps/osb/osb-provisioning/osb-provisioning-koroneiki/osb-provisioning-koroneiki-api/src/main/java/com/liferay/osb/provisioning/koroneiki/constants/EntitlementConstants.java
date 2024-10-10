@@ -26,11 +26,11 @@ public class EntitlementConstants {
 
 	public static final String SILVER_SUBSCRIPTION = "Silver Subscription";
 
-	public static final String TAM_SERVICES = "Technical Account Management Services";
-
 	public static final String[] SLAS = {
 		GOLD_SUBSCRIPTION, LIMITED_SUBSCRIPTION, PLATINUM_SUBSCRIPTION,
 		PREMIUM_SUBSCRIPTION, SILVER_SUBSCRIPTION
 	};
+
+	public static final String TAM_SERVICES = "TAM Services";
 
 }

@@ -189,9 +189,6 @@ public class ProductConstants {
 	public static final String NAME_TECHNICAL_ACCOUNT_MANAGEMENT_SERVICES =
 		"Technical Account Management Services";
 
-	public static final String NAME_TECHNICAL_ACCOUNT_MANAGEMENT_SERVICES_LATAM =
-		"Technical Account Management Services - LATAM";
-
 	public static final String NAME_TRAINING_PARTNERSHIP =
 		"Training Partnership";
 

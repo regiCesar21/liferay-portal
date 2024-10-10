@@ -13,7 +13,6 @@ import com.liferay.osb.provisioning.koroneiki.web.service.AccountWebService;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
-import com.liferay.portal.kernel.util.StringPool;
 
 import java.util.List;
 import java.util.Map;
@@ -45,10 +44,7 @@ public class UpgradeAccountTamServices extends UpgradeProcess {
 
 		Map<String, String> properties = account.getProperties();
 
-		properties.put("tam_services", "true");
-
-		_accountWebService.updateAccount(
-			StringPool.BLANK, StringPool.BLANK, account.getKey(), account);
+		properties.put("tamServices", "true");
 
 		_salesSubscriberUtil.updateTickets(account, properties);
 	}
