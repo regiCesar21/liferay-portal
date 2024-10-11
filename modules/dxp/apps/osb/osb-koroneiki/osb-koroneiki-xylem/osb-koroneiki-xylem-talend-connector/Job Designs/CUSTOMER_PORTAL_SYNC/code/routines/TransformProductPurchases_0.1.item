@@ -36,8 +36,6 @@ public class TransformProductPurchases {
 			String accountId, String channelId, String productPurchases)
 		throws Exception {
 
-		Date now = new Date();
-
 		Map<String, JSONObject> orderMap = new HashMap<>();
 		JSONArray orderItemsJSONArray = new JSONArray();
 
@@ -51,7 +49,6 @@ public class TransformProductPurchases {
 			}
 
 			String accountKey = jsonObject.getString("accountKey");
-			Date endDate = DateUtil.parseEndDate(jsonObject);
 			Date originalEndDate = DateUtil.parseOriginalEndDate(jsonObject);
 			JSONArray productConsumptionsJSONArray = jsonObject.getJSONArray(
 				"productConsumptions");
@@ -129,21 +126,6 @@ public class TransformProductPurchases {
 			customFieldsJSONArray.put(
 				_getCustomFieldJSONObject(
 					"provisionedCount", productConsumptionsJSONArray.length()));
-
-			String subscriptionTermStatus = null;
-
-			if ((endDate != null) && endDate.before(now)) {
-				subscriptionTermStatus = "Expired";
-			}
-			else if ((startDate != null) && startDate.after(now)) {
-				subscriptionTermStatus = "Future";
-			}
-			else {
-				subscriptionTermStatus = "Active";
-			}
-
-			customFieldsJSONArray.put(
-				_getCustomFieldJSONObject("status", subscriptionTermStatus));
 
 			orderItemJSONObject.put("customFields", customFieldsJSONArray);
 
@@ -367,6 +349,14 @@ public class TransformProductPurchases {
 					startDate = subscriptionTerm.startDate;
 				}
 
+				if (now.before(subscriptionTerm.startDate)) {
+					if ((upcomingStartDate == null) ||
+						upcomingStartDate.after(subscriptionTerm.startDate)) {
+
+						upcomingStartDate = subscriptionTerm.startDate;
+					}
+				}
+
 				if ((endDate == null) ||
 					endDate.before(subscriptionTerm.endDate)) {
 
@@ -379,27 +369,15 @@ public class TransformProductPurchases {
 					originalEndDate = subscriptionTerm.originalEndDate;
 				}
 
-				instanceSizeSubscriptionTerm =
-					_getRelevantInstanceSizeSubscriptionTerm(subscriptionTerm);
-
 				if (now.after(subscriptionTerm.startDate) &&
 					now.before(subscriptionTerm.endDate)) {
 
-					quantity += subscriptionTerm.quantity;
+					active = true;
 				}
+
+				instanceSizeSubscriptionTerm =
+					_getRelevantInstanceSizeSubscriptionTerm(subscriptionTerm);
 			}
-
-			subscriptionTerms.add(subscriptionTerm);
-		}
-
-		public JSONArray getSubscriptionTermsJSONArray() {
-			JSONArray jsonArray = new JSONArray();
-
-			for (SubscriptionTerm subscriptionTerm : subscriptionTerms) {
-				jsonArray.put(subscriptionTerm.toJSONObject());
-			}
-
-			return jsonArray;
 		}
 
 		public JSONObject toJSONObject() {
@@ -423,31 +401,20 @@ public class TransformProductPurchases {
 			jsonObject.put("name", name);
 			jsonObject.put("productKey", productKey);
 			jsonObject.put("quantity", quantity);
-			jsonObject.put("startDate", DateUtil.format(startDate));
 
-			Date now = new Date();
-
-			String subscriptionStatus = null;
-
-			if ((endDate != null) && endDate.before(now)) {
-				subscriptionStatus = "Expired";
-			}
-			else if ((startDate != null) && startDate.after(now)) {
-				subscriptionStatus = "Future";
+			if (!active && (upcomingStartDate != null)) {
+				jsonObject.put("startDate", DateUtil.format(upcomingStartDate));
 			}
 			else {
-				subscriptionStatus = "Active";
+				jsonObject.put("startDate", DateUtil.format(startDate));
 			}
-
-			jsonObject.put("subscriptionStatus", subscriptionStatus);
-			jsonObject.put(
-				"subscriptionTerms", getSubscriptionTermsJSONArray());
 
 			return jsonObject;
 		}
 
 		public String accountKey;
 		public String accountSubscriptionGroupExternalReferenceCode;
+		public boolean active;
 		public Date endDate;
 		public String externalReferenceCode;
 		public SubscriptionTerm instanceSizeSubscriptionTerm;
@@ -456,7 +423,7 @@ public class TransformProductPurchases {
 		public String productKey;
 		public int quantity;
 		public Date startDate;
-		public List<SubscriptionTerm> subscriptionTerms = new ArrayList<>();
+		public Date upcomingStartDate;
 
 		private SubscriptionTerm _getRelevantInstanceSizeSubscriptionTerm(
 			SubscriptionTerm subscriptionTerm) {
@@ -736,21 +703,15 @@ public class TransformProductPurchases {
 				JSONObject jsonObject)
 			throws Exception {
 
+			/*
 			this.accountSubscriptionGroupExternalReferenceCode =
 				accountSubscriptionGroupExternalReferenceCode;
 			this.accountSubscriptionExternalReferenceCode =
 				accountSubscriptionExternalReferenceCode;
 
 			accountKey = jsonObject.getString("accountKey");
-			endDate = DateUtil.parseEndDate(jsonObject);
+
 			externalReferenceCode = jsonObject.getString("key");
-
-			JSONObject propertiesJSONObject = jsonObject.getJSONObject(
-				"properties");
-
-			instanceSize = propertiesJSONObject.optString("sizing");
-
-			originalEndDate = DateUtil.parseOriginalEndDate(jsonObject);
 
 			JSONArray jsonArray = jsonObject.getJSONArray(
 				"productConsumptions");
@@ -758,6 +719,16 @@ public class TransformProductPurchases {
 			provisioned = jsonArray.length();
 
 			quantity = jsonObject.getInt("quantity");
+			*/
+
+			endDate = DateUtil.parseEndDate(jsonObject);
+
+			JSONObject propertiesJSONObject = jsonObject.getJSONObject(
+				"properties");
+
+			instanceSize = propertiesJSONObject.optString("sizing");
+
+			originalEndDate = DateUtil.parseOriginalEndDate(jsonObject);
 			startDate = DateUtil.parseStartDate(jsonObject);
 			status = jsonObject.getString("status");
 		}
@@ -775,36 +746,9 @@ public class TransformProductPurchases {
 			return "Active";
 		}
 
-		public JSONObject toJSONObject() {
-			JSONObject jsonObject = new JSONObject();
-
-			jsonObject.put("accountKey", accountKey);
-			jsonObject.put(
-				"accountSubscriptionERC",
-				accountSubscriptionExternalReferenceCode);
-			jsonObject.put(
-				"accountSubscriptionGroupERC",
-				accountSubscriptionGroupExternalReferenceCode);
-			jsonObject.put("endDate", DateUtil.format(originalEndDate));
-			jsonObject.put("externalReferenceCode", externalReferenceCode);
-			jsonObject.put("instanceSize", instanceSize);
-			jsonObject.put("provisioned", provisioned);
-			jsonObject.put("quantity", quantity);
-			jsonObject.put("startDate", DateUtil.format(startDate));
-			jsonObject.put("subscriptionTermStatus", getSubscriptionStatus());
-
-			return jsonObject;
-		}
-
-		public String accountKey;
-		public String accountSubscriptionExternalReferenceCode;
-		public String accountSubscriptionGroupExternalReferenceCode;
 		public Date endDate;
-		public String externalReferenceCode;
 		public String instanceSize;
 		public Date originalEndDate;
-		public int provisioned;
-		public int quantity;
 		public Date startDate;
 		public String status;
 
