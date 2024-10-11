@@ -296,6 +296,7 @@ if (!CKEDITOR.plugins.get('videoembed')) {
 			type: 'video',
 			urlSchemes: [
 				'https?:\\/\\/(?:www\\.)?youtube.com\\/watch\\?v=(\\S*)$',
+				'https?:\\/\\/(?:www\\.)?youtu.be\\/(\\S*)$'
 			],
 		},
 	];
