@@ -5,8 +5,10 @@
 
 package com.liferay.portal.db.schema.definition.internal.sql.provider;
 
+import com.liferay.petra.reflect.ReflectionUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.dao.db.BaseDB;
 import com.liferay.portal.dao.db.DBManagerImpl;
 import com.liferay.portal.kernel.dao.db.DB;
 import com.liferay.portal.kernel.dao.db.DBFactory;
@@ -20,6 +22,8 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.plugin.PluginPackageUtil;
 
 import java.io.InputStream;
+
+import java.lang.reflect.Method;
 
 import java.net.URL;
 
@@ -41,6 +45,11 @@ public class PortalSQLProvider implements SQLProvider {
 
 	public PortalSQLProvider(DBType dbType) throws Exception {
 		_db = _getDB(dbType);
+
+		_applyMaxStringIndexLengthLimitationMethod =
+			ReflectionUtil.getDeclaredMethod(
+				BaseDB.class, "applyMaxStringIndexLengthLimitation",
+				String.class);
 
 		Bundle bundle = FrameworkUtil.getBundle(getClass());
 
@@ -122,7 +131,10 @@ public class PortalSQLProvider implements SQLProvider {
 		throws Exception {
 
 		if (Validator.isNotNull(indexesSQL)) {
-			_indexesSQLSB.append(_db.buildSQL(indexesSQL));
+			_indexesSQLSB.append(
+				_db.buildSQL(
+					(String)_applyMaxStringIndexLengthLimitationMethod.invoke(
+						_db, indexesSQL)));
 		}
 
 		if (Validator.isNotNull(tablesSQL)) {
@@ -244,6 +256,7 @@ public class PortalSQLProvider implements SQLProvider {
 	private static final String _QUARTZ_BUNDLE_SYMBOLIC_NAME =
 		"com.liferay.portal.scheduler.quartz";
 
+	private final Method _applyMaxStringIndexLengthLimitationMethod;
 	private final BundleContext _bundleContext;
 	private final DB _db;
 	private final StringBundler _indexesSQLSB = new StringBundler();
