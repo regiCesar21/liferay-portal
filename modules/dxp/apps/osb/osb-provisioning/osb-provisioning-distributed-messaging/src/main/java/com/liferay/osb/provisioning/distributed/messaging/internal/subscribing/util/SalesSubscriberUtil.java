@@ -126,13 +126,6 @@ public class SalesSubscriberUtil {
 
 			liferayVersion = projectJSONObject.getString("liferayVersion");
 
-			if (Validator.isNotNull(liferayVersion)) {
-				properties.put("liferayVersion", liferayVersion);
-			}
-			else {
-				properties.remove("liferayVersion");
-			}
-
 			if (projectJSONObject.getBoolean("premiumService")) {
 				properties.put("premiumService", "true");
 			}
@@ -143,7 +136,23 @@ public class SalesSubscriberUtil {
 			projectSolution = projectJSONObject.getString("projectSolution");
 		}
 		else {
+			liferayVersion = jsonObject.getString("currentLiferayVersion");
+
+			if (jsonObject.getBoolean("premiumService")) {
+				properties.put("premiumService", "true");
+			}
+			else {
+				properties.remove("premiumService");
+			}
+
 			projectSolution = jsonObject.getString("projectSolution");
+		}
+
+		if (Validator.isNotNull(liferayVersion)) {
+			properties.put("liferayVersion", liferayVersion);
+		}
+		else {
+			properties.remove("liferayVersion");
 		}
 
 		if (Validator.isNotNull(projectSolution)) {
