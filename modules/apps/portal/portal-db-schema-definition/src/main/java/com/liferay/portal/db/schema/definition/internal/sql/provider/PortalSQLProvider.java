@@ -11,17 +11,24 @@ import com.liferay.portal.dao.db.DBManagerImpl;
 import com.liferay.portal.kernel.dao.db.DB;
 import com.liferay.portal.kernel.dao.db.DBFactory;
 import com.liferay.portal.kernel.dao.db.DBType;
+import com.liferay.portal.kernel.plugin.PluginPackage;
+import com.liferay.portal.kernel.servlet.ServletContextPool;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.PortalClassLoaderUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.plugin.PluginPackageUtil;
 
 import java.io.InputStream;
 
 import java.net.URL;
 
 import java.util.Dictionary;
+import java.util.HashSet;
 import java.util.ServiceLoader;
+import java.util.Set;
+
+import javax.servlet.ServletContext;
 
 import org.osgi.framework.Bundle;
 import org.osgi.framework.BundleContext;
@@ -42,6 +49,8 @@ public class PortalSQLProvider implements SQLProvider {
 		_appendPortalSQL();
 
 		_appendModulesSQL();
+
+		_appendPluginsSQL();
 	}
 
 	@Override
@@ -79,6 +88,24 @@ public class PortalSQLProvider implements SQLProvider {
 			null,
 			"create table Configuration_ (configurationId VARCHAR(255) not " +
 				"null primary key, dictionary TEXT);");
+	}
+
+	private void _appendPluginsSQL() throws Exception {
+		Set<String> contextNames = new HashSet<>();
+
+		for (PluginPackage pluginPackage :
+				PluginPackageUtil.getInstalledPluginPackages()) {
+
+			String contextName = pluginPackage.getArtifactId();
+
+			if (!contextNames.add(contextName)) {
+				continue;
+			}
+
+			_appendSQL(
+				_getSQLTemplateString(contextName, "indexes.sql"),
+				_getSQLTemplateString(contextName, "tables.sql"));
+		}
 	}
 
 	private void _appendPortalSQL() throws Exception {
@@ -151,6 +178,26 @@ public class PortalSQLProvider implements SQLProvider {
 		try (InputStream inputStream = resource.openStream()) {
 			return StringUtil.read(inputStream);
 		}
+	}
+
+	private String _getSQLTemplateString(
+			String contextName, String templateName)
+		throws Exception {
+
+		ServletContext servletContext = ServletContextPool.get(contextName);
+
+		if (servletContext == null) {
+			return null;
+		}
+
+		InputStream inputStream = servletContext.getResourceAsStream(
+			"/WEB-INF/sql/" + templateName);
+
+		if (inputStream == null) {
+			return null;
+		}
+
+		return StringUtil.read(inputStream);
 	}
 
 	private String _getTablesSQL(String sql) {
