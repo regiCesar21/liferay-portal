@@ -35,7 +35,7 @@ public class DataExportTaskDog {
 	public DataExportTask addDataExportTask(
 		Date fromDate, Date toDate, DataExportTask.Type type) {
 
-		_validateDateRange(fromDate, toDate);
+		_validateDateRange(fromDate, toDate, type);
 
 		DataExportTask dataExportTask = new DataExportTask();
 
@@ -110,9 +110,17 @@ public class DataExportTaskDog {
 		return _dataExportTaskRepository.save(dataExportTask);
 	}
 
-	private void _validateDateRange(Date fromUTCDate, Date toUTCDate) {
+	private void _validateDateRange(
+		Date fromUTCDate, Date toUTCDate, DataExportTask.Type type) {
+
 		if (fromUTCDate.after(toUTCDate)) {
 			throw new IllegalArgumentException("From date is after to date");
+		}
+
+		if ((type != DataExportTask.Type.EVENT) &&
+			(type != DataExportTask.Type.PAGE)) {
+
+			return;
 		}
 
 		long deltaMilliseconds = DateUtil.getDeltaMilliseconds(
