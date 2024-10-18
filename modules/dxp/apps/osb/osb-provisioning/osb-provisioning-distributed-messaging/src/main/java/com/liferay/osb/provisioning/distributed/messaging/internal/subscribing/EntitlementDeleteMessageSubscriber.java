@@ -14,8 +14,6 @@ import com.liferay.osb.provisioning.koroneiki.constants.EntitlementConstants;
 import com.liferay.osb.provisioning.koroneiki.web.service.AccountWebService;
 import com.liferay.portal.kernel.json.JSONObject;
 
-import java.util.Map;
-
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
@@ -30,16 +28,24 @@ public class EntitlementDeleteMessageSubscriber extends BaseMessageSubscriber {
 
 	@Override
 	protected void doParse(JSONObject jsonObject) throws Exception {
+		JSONObject entitlementJSONObject = jsonObject.getJSONObject(
+			"entitlement");
+
+		String name = entitlementJSONObject.getString("name");
+
+		if (name.equals(EntitlementConstants.TAM_SERVICES)) {
+			Account account = AccountSerDes.toDTO(
+				jsonObject.getString("account"));
+
+			_salesSubscriberUtil.updateTickets(
+				account, account.getProperties());
+		}
+
 		JSONObject contactJSONObject = jsonObject.getJSONObject("contact");
 
 		if (contactJSONObject == null) {
 			return;
 		}
-
-		JSONObject entitlementJSONObject = jsonObject.getJSONObject(
-			"entitlement");
-
-		String name = entitlementJSONObject.getString("name");
 
 		if (name.equals(EntitlementConstants.CUSTOMER)) {
 			_contactIdentityProvider.removeMembership(
@@ -50,16 +56,6 @@ public class EntitlementDeleteMessageSubscriber extends BaseMessageSubscriber {
 			_contactIdentityProvider.removeMembership(
 				OktaConstants.GROUP_NAME_PARTNERS,
 				contactJSONObject.getString("emailAddress"));
-		}
-		else if (name.equals(EntitlementConstants.TAM_SERVICES)) {
-			Account account = AccountSerDes.toDTO(
-				jsonObject.getString("account"));
-
-			Map<String, String> properties = account.getProperties();
-
-			properties.put("tamServices", Boolean.TRUE.toString());
-
-			_salesSubscriberUtil.updateTickets(account, properties);
 		}
 	}
 

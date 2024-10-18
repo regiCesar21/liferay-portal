@@ -2336,11 +2336,11 @@ public class OpportunityMessageSubscriber extends BaseMessageSubscriber {
 			_accountWebService.updateAccount(
 				StringPool.BLANK, StringPool.BLANK, accountKey, account);
 
-			if (!oldProperties.equals(newProperties)) {
-				if (_hasTamServices(productPurchases)) {
-					newProperties.put("tamServices", Boolean.TRUE.toString());
-				}
+			if (_hasTamServices(productPurchases)) {
+				newProperties.put("tamServices", Boolean.TRUE.toString());
+			}
 
+			if (!oldProperties.equals(newProperties)) {
 				_salesSubscriberUtil.updateTickets(account, newProperties);
 			}
 		}
