@@ -165,6 +165,12 @@ public class OktaContactIdentityProvider implements ContactIdentityProvider {
 		return contact;
 	}
 
+	public Contact fetchContactByOAuthToken(String oauthToken)
+		throws Exception {
+
+		throw new UnsupportedOperationException();
+	}
+
 	public Contact fetchContactBySessionId(String sessionId) throws Exception {
 		String emailAddress = _portalCache.get(sessionId);
 

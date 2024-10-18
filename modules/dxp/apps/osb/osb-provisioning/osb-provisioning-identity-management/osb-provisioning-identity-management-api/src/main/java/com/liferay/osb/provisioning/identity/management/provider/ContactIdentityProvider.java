@@ -27,6 +27,8 @@ public interface ContactIdentityProvider {
 	public Contact fetchContactByEmailAddress(String emailAddress, boolean sync)
 		throws Exception;
 
+	public Contact fetchContactByOAuthToken(String oauthToken) throws Exception;
+
 	public Contact fetchContactBySessionId(String sessionId) throws Exception;
 
 	public Contact fetchContactByUuid(String uuid) throws Exception;

@@ -96,16 +96,25 @@ public class ProvisioningAuthVerifier implements AuthVerifier {
 	protected String[] verify(HttpServletRequest httpServletRequest)
 		throws Exception {
 
+		String oauthToken = httpServletRequest.getHeader("OAuth-Token");
 		String oktaSessionId = httpServletRequest.getHeader("Okta-Session-ID");
 
-		if (Validator.isNull(oktaSessionId)) {
+		if (Validator.isNull(oauthToken) && Validator.isNull(oktaSessionId)) {
 			_logRequest(httpServletRequest, null);
 
 			return null;
 		}
 
-		Contact contact = _contactIdentityProvider.fetchContactBySessionId(
-			oktaSessionId);
+		Contact contact = null;
+
+		if (Validator.isNotNull(oauthToken)) {
+			contact = _supportContactIdentityProvider.fetchContactByOAuthToken(
+				oauthToken);
+		}
+		else if (Validator.isNotNull(oktaSessionId)) {
+			contact = _oktaContactIdentityProvider.fetchContactBySessionId(
+				oktaSessionId);
+		}
 
 		if (contact != null) {
 			if (!_ipAddresses.contains(httpServletRequest.getRemoteAddr())) {
@@ -160,14 +169,17 @@ public class ProvisioningAuthVerifier implements AuthVerifier {
 	private static final Log _log = LogFactoryUtil.getLog(
 		ProvisioningAuthVerifier.class);
 
-	@Reference(target = "(provider=okta)")
-	private ContactIdentityProvider _contactIdentityProvider;
-
 	private final Set<String> _ipAddresses = Collections.synchronizedSet(
 		new HashSet<>());
 
+	@Reference(target = "(provider=okta)")
+	private ContactIdentityProvider _oktaContactIdentityProvider;
+
 	@Reference
 	private Portal _portal;
+
+	@Reference(target = "(provider=support)")
+	private ContactIdentityProvider _supportContactIdentityProvider;
 
 	@Reference
 	private UserLocalService _userLocalService;
