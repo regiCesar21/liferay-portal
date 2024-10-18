@@ -1391,6 +1391,21 @@ public class LicenseKeyResourceImpl
 		filterQuery2.addEquals(
 			false, "productPurchaseKey", productPurchase.getKey());
 
+		String sizing = null;
+
+		Map<String, String> properties = productPurchase.getProperties();
+
+		if (properties != null) {
+			sizing = properties.get("sizing");
+		}
+
+		if (Validator.isNotNull(sizing)) {
+			filterQuery2.addEquals(true, "property_sizing", sizing);
+		}
+		else {
+			filterQuery2.addEquals(true, "property_sizing", (String)null);
+		}
+
 		if (includeDetached) {
 			String productPurchaseStatus = _getStatus(
 				productPurchase.getStartDate(),
