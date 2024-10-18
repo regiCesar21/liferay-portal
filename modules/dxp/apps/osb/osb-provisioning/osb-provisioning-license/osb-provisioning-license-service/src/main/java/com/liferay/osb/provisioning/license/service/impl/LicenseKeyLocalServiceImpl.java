@@ -34,6 +34,7 @@ import com.liferay.osb.provisioning.license.exception.LicenseKeyServerInfoExcept
 import com.liferay.osb.provisioning.license.exception.NoSuchLicenseKeyException;
 import com.liferay.osb.provisioning.license.generator.KeyGenerator;
 import com.liferay.osb.provisioning.license.helper.constants.LicenseServerId;
+import com.liferay.osb.provisioning.license.helper.constants.LicenseSizing;
 import com.liferay.osb.provisioning.license.helper.constants.LicenseType;
 import com.liferay.osb.provisioning.license.helper.constants.LicenseVersion;
 import com.liferay.osb.provisioning.license.helper.constants.ProductId;
@@ -338,6 +339,18 @@ public class LicenseKeyLocalServiceImpl extends LicenseKeyLocalServiceBaseImpl {
 			}
 
 			productConsumption.setStartDate(licenseKey.getStartDate());
+
+			if (Validator.isNotNull(licenseKey.getSizing())) {
+				int sizing = LicenseSizing.getSizing(licenseKey.getSizing());
+
+				Map<String, String> properties = new HashMap<>();
+
+				if (sizing > 0) {
+					properties.put("sizing", String.valueOf(sizing));
+				}
+
+				productConsumption.setProperties(properties);
+			}
 
 			ExternalLink externalLink = new ExternalLink();
 
