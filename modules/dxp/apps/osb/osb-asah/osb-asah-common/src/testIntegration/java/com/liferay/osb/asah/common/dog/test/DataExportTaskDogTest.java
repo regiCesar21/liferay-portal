@@ -66,13 +66,30 @@ public class DataExportTaskDogTest
 			Assertions.assertThrows(
 				IllegalArgumentException.class,
 				() -> _dataExportTaskDog.addDataExportTask(
-					fromDate, toDate, DataExportTask.Type.PAGE));
+					fromDate, toDate, DataExportTask.Type.EVENT));
 
 		Assertions.assertEquals(
 			"The requested data is outside of your data retention period of " +
 				"13 months. Please adjust the time range in your query " +
 					"accordingly.",
 			illegalArgumentException.getMessage());
+
+		illegalArgumentException = Assertions.assertThrows(
+			IllegalArgumentException.class,
+			() -> _dataExportTaskDog.addDataExportTask(
+				fromDate, toDate, DataExportTask.Type.PAGE));
+
+		Assertions.assertEquals(
+			"The requested data is outside of your data retention period of " +
+				"13 months. Please adjust the time range in your query " +
+					"accordingly.",
+			illegalArgumentException.getMessage());
+
+		DataExportTask dataExportTask = _dataExportTaskDog.addDataExportTask(
+			fromDate, toDate, DataExportTask.Type.INDIVIDUAL);
+
+		Assertions.assertEquals(fromDate, dataExportTask.getFromDate());
+		Assertions.assertEquals(toDate, dataExportTask.getToDate());
 	}
 
 	@SQLResource(resourcePath = "test_fetch_last_data_export_task_by_range.sql")
