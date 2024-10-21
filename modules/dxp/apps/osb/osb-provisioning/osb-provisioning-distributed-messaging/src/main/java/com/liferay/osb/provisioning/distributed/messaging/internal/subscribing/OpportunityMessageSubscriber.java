@@ -373,6 +373,10 @@ public class OpportunityMessageSubscriber extends BaseMessageSubscriber {
 
 		Set<String> inactiveProvisionedProducts = new HashSet<>();
 
+		JSONObject projectJSONObject = jsonObject.getJSONObject("project");
+
+		String liferayVersion = projectJSONObject.getString("liferayVersion");
+
 		for (ProductPurchase productPurchase : productPurchases) {
 			Map<String, String> properties = productPurchase.getProperties();
 
@@ -413,9 +417,11 @@ public class OpportunityMessageSubscriber extends BaseMessageSubscriber {
 						"of ", productConsumptionCount, "."));
 			}
 
-			if (productName.contains(ProductConstants.NAME_DXP) ||
-				productName.contains(ProductConstants.NAME_COMMERCE) ||
-				productName.contains(ProductConstants.NAME_PORTAL)) {
+			if (!liferayVersion.contains("7.3") &&
+				!liferayVersion.contains("7.4") &&
+				(productName.contains(ProductConstants.NAME_DXP) ||
+				 productName.contains(ProductConstants.NAME_COMMERCE) ||
+				 productName.contains(ProductConstants.NAME_PORTAL))) {
 
 				FilterQuery filterQuery3 = new FilterQuery();
 
