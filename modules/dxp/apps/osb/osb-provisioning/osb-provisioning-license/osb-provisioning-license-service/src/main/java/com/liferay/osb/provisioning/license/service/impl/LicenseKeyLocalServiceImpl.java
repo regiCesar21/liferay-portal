@@ -341,9 +341,9 @@ public class LicenseKeyLocalServiceImpl extends LicenseKeyLocalServiceBaseImpl {
 			productConsumption.setStartDate(licenseKey.getStartDate());
 
 			if (Validator.isNotNull(licenseKey.getSizing())) {
-				int sizing = LicenseSizing.getSizing(licenseKey.getSizing());
-
 				Map<String, String> properties = new HashMap<>();
+
+				int sizing = LicenseSizing.getSizing(licenseKey.getSizing());
 
 				if (sizing > 0) {
 					properties.put("sizing", String.valueOf(sizing));
