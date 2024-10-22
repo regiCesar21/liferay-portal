@@ -377,6 +377,8 @@ public class OpportunityMessageSubscriber extends BaseMessageSubscriber {
 
 		String liferayVersion = projectJSONObject.getString("liferayVersion");
 
+		boolean renewal = jsonObject.getBoolean("renewal");
+
 		for (ProductPurchase productPurchase : productPurchases) {
 			Map<String, String> properties = productPurchase.getProperties();
 
@@ -438,9 +440,40 @@ public class OpportunityMessageSubscriber extends BaseMessageSubscriber {
 					inactiveProvisionedProducts.add(productName);
 				}
 			}
-		}
 
-		boolean renewal = jsonObject.getBoolean("renewal");
+			if (renewal) {
+				String productEntryKey = product.getKey();
+
+				List<ProductPurchase> activeProductPurchases =
+					_getActiveProductPurchases(accountKey, productEntryKey);
+
+				for (ProductPurchase activeProductPurchase :
+						activeProductPurchases) {
+
+					Product curProduct = activeProductPurchase.getProduct();
+
+					String curProductName = curProduct.getName();
+
+					if (ArrayUtil.contains(
+							ProductConstants.NAMES_SUBSCRIPTION,
+							curProductName)) {
+
+						Date endDate = activeProductPurchase.getEndDate();
+
+						Date startDate = productPurchase.getStartDate();
+
+						if (_isOverlappingSla(endDate, startDate)) {
+							break;
+						}
+					}
+					else if (_isSizingUpdate(
+								productPurchase, activeProductPurchase)) {
+
+						break;
+					}
+				}
+			}
+		}
 
 		if (renewal) {
 			if (analyticsCloud) {
@@ -2418,45 +2451,17 @@ public class OpportunityMessageSubscriber extends BaseMessageSubscriber {
 
 		for (ProductPurchase productPurchase : productPurchases) {
 			if (renewal) {
-				FilterQuery filterQuery = new FilterQuery();
-
-				filterQuery.addEquals(true, "accountKey", account.getKey());
+				String accountKey = account.getKey();
 
 				Product product = productPurchase.getProduct();
 
-				filterQuery.addEquals(
-					true, "productEntryKey", product.getKey());
-
-				filterQuery.addEquals(true, "state", "Active");
+				String productEntryKey = product.getKey();
 
 				List<ProductPurchase> activeProductPurchases =
-					_productPurchaseWebService.search(
-						filterQuery, 1, 1000, StringPool.BLANK);
-
-				boolean hasSentWarning = false;
+					_getActiveProductPurchases(accountKey, productEntryKey);
 
 				for (ProductPurchase activeProductPurchase :
 						activeProductPurchases) {
-
-					if (!hasSentWarning) {
-						Product activeProductPurchaseProduct =
-							activeProductPurchase.getProduct();
-
-						String activeProductPurchaseProductName =
-							activeProductPurchaseProduct.getName();
-
-						if (ArrayUtil.contains(
-								ProductConstants.NAMES_SUBSCRIPTION,
-								activeProductPurchaseProductName)) {
-
-							hasSentWarning = _isOverlappingSla(
-								productPurchase, activeProductPurchase);
-						}
-						else {
-							hasSentWarning = _isSizingUpdate(
-								productPurchase, activeProductPurchase);
-						}
-					}
 
 					updateProductPurchaseEndDate(
 						activeProductPurchase, productPurchase.getStartDate());
@@ -2608,60 +2613,20 @@ public class OpportunityMessageSubscriber extends BaseMessageSubscriber {
 		return false;
 	}
 
-	private boolean _isOverlappingSla(
-		ProductPurchase newProductPurchase,
-		ProductPurchase oldProductPurchase) {
+	private List<ProductPurchase> _getActiveProductPurchases(
+			String accountKey, String productEntryKey)
+		throws Exception {
 
-		Date newProductPurchaseStartDate = newProductPurchase.getStartDate();
+		FilterQuery filterQuery = new FilterQuery();
 
-		Date oldProductPurchaseEndDate = oldProductPurchase.getEndDate();
+		filterQuery.addEquals(true, "accountKey", accountKey);
 
-		if (newProductPurchaseStartDate.before(oldProductPurchaseEndDate)) {
-			_logWarning(
-				StringBundler.concat(
-					"Warning. SLA has been changed midterm. Please be sure to ",
-					"review the account and cancel any of the previous SLAs ",
-					"or products."));
+		filterQuery.addEquals(true, "productEntryKey", productEntryKey);
 
-			return true;
-		}
+		filterQuery.addEquals(true, "state", "Active");
 
-		return false;
-	}
-
-	private boolean _isSizingUpdate(
-		ProductPurchase newProductPurchase,
-		ProductPurchase oldProductPurchase) {
-
-		Map<String, String> newProductPurchaseProperties =
-			newProductPurchase.getProperties();
-
-		String newProductPurchaseSizing = newProductPurchaseProperties.get(
-			"sizing");
-
-		Map<String, String> oldProductPurchaseProperties =
-			oldProductPurchase.getProperties();
-
-		String oldProductPurchaseSizing = oldProductPurchaseProperties.get(
-			"sizing");
-
-		if (!StringUtil.equals(
-				newProductPurchaseSizing, oldProductPurchaseSizing)) {
-
-			_logWarning(
-				StringBundler.concat(
-					"Warning. Customer has upgraded/downgraded their sizing. ",
-					"If applicable, please be sure to have the customers ",
-					"deactivate any old keys in the incorrect sizing and ",
-					"download a new key with the new purchased size. Once ",
-					"they have deactivated their old keys, please make sure ",
-					"to cancel the previous sizing product line(s), if it is ",
-					"still active"));
-
-			return true;
-		}
-
-		return false;
+		return _productPurchaseWebService.search(
+			filterQuery, 1, 1000, StringPool.BLANK);
 	}
 
 	private String _getCode(String parentAccountName, String accountName)
@@ -2784,6 +2749,57 @@ public class OpportunityMessageSubscriber extends BaseMessageSubscriber {
 			StringPool.BLANK, filterQuery, 1, 1, null);
 
 		if (!accounts.isEmpty()) {
+			return true;
+		}
+
+		return false;
+	}
+
+	private boolean _isOverlappingSla(Date endDate, Date startDate) {
+		if (endDate.after(startDate)) {
+			_logWarning(
+				StringBundler.concat(
+					"Warning. SLA has been changed midterm. Please be sure to ",
+					"review the account and cancel any of the previous SLAs ",
+					"or products."));
+
+			return true;
+		}
+
+		return false;
+	}
+
+	private boolean _isSizingUpdate(
+		ProductPurchase newProductPurchase,
+		ProductPurchase oldProductPurchase) {
+
+		Map<String, String> newProperties = newProductPurchase.getProperties();
+
+		String newSizing = null;
+
+		if (newProperties != null) {
+			newSizing = newProperties.get("sizing");
+		}
+
+		Map<String, String> oldProperties = oldProductPurchase.getProperties();
+
+		String oldSizing = null;
+
+		if (oldProperties != null) {
+			oldSizing = oldProperties.get("sizing");
+		}
+
+		if (!StringUtil.equals(newSizing, oldSizing)) {
+			_logWarning(
+				StringBundler.concat(
+					"Warning. Customer has upgraded/downgraded their sizing. ",
+					"If applicable, please be sure to have the customers ",
+					"deactivate any old keys in the incorrect sizing and ",
+					"download a new key with the new purchased size. Once ",
+					"they have deactivated their old keys, please make sure ",
+					"to cancel the previous sizing product line(s), if it is ",
+					"still active"));
+
 			return true;
 		}
 
