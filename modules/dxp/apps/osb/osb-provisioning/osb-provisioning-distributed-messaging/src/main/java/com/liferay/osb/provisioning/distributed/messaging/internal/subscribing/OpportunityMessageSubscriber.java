@@ -415,8 +415,9 @@ public class OpportunityMessageSubscriber extends BaseMessageSubscriber {
 					StringBundler.concat(
 						"The new purchase quantity of ", productName, " is ",
 						productPurchase.getQuantity(),
-						" which is lower than the current provisioned amount ",
-						"of ", productConsumptionCount, "."));
+						" which is lower than the total amount of expired ",
+						"(not deactivated) and active keys together ",
+						productConsumptionCount, "."));
 			}
 
 			if (!liferayVersion.contains("7.3") &&
