@@ -5,6 +5,9 @@
 
 package com.liferay.osb.provisioning.distributed.messaging.internal.subscribing;
 
+import com.liferay.osb.koroneiki.phloem.rest.client.dto.v1_0.Account;
+import com.liferay.osb.koroneiki.phloem.rest.client.serdes.v1_0.AccountSerDes;
+import com.liferay.osb.provisioning.distributed.messaging.internal.subscribing.util.SalesSubscriberUtil;
 import com.liferay.osb.provisioning.identity.management.constants.OktaConstants;
 import com.liferay.osb.provisioning.identity.management.provider.ContactIdentityProvider;
 import com.liferay.osb.provisioning.koroneiki.constants.EntitlementConstants;
@@ -25,16 +28,24 @@ public class EntitlementCreateMessageSubscriber extends BaseMessageSubscriber {
 
 	@Override
 	protected void doParse(JSONObject jsonObject) throws Exception {
+		JSONObject entitlementJSONObject = jsonObject.getJSONObject(
+			"entitlement");
+
+		String name = entitlementJSONObject.getString("name");
+
+		if (name.equals(EntitlementConstants.TAM_SERVICES)) {
+			Account account = AccountSerDes.toDTO(
+				jsonObject.getString("account"));
+
+			_salesSubscriberUtil.updateTickets(
+				account, true, account.getProperties());
+		}
+
 		JSONObject contactJSONObject = jsonObject.getJSONObject("contact");
 
 		if (contactJSONObject == null) {
 			return;
 		}
-
-		JSONObject entitlementJSONObject = jsonObject.getJSONObject(
-			"entitlement");
-
-		String name = entitlementJSONObject.getString("name");
 
 		Integer status =
 			_contactIdentityProvider.fetchContactStatusByEmailAddress(
@@ -66,5 +77,8 @@ public class EntitlementCreateMessageSubscriber extends BaseMessageSubscriber {
 
 	@Reference(target = "(provider=okta)")
 	private ContactIdentityProvider _contactIdentityProvider;
+
+	@Reference
+	private SalesSubscriberUtil _salesSubscriberUtil;
 
 }

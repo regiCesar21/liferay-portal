@@ -2336,12 +2336,9 @@ public class OpportunityMessageSubscriber extends BaseMessageSubscriber {
 			_accountWebService.updateAccount(
 				StringPool.BLANK, StringPool.BLANK, accountKey, account);
 
-			if (_hasTamServices(productPurchases)) {
-				newProperties.put("tamServices", Boolean.TRUE.toString());
-			}
-
 			if (!oldProperties.equals(newProperties)) {
-				_salesSubscriberUtil.updateTickets(account, newProperties);
+				_salesSubscriberUtil.updateTickets(
+					account, false, newProperties);
 			}
 		}
 
@@ -2699,23 +2696,6 @@ public class OpportunityMessageSubscriber extends BaseMessageSubscriber {
 			_productPurchaseExceptionsThreadLocal.get();
 
 		exceptions.add(exception);
-	}
-
-	private boolean _hasTamServices(Set<ProductPurchase> productPurchases) {
-		for (ProductPurchase productPurchase : productPurchases) {
-			Product product = productPurchase.getProduct();
-
-			String name = product.getName();
-
-			if (name.contains(
-					ProductConstants.
-						NAME_TECHNICAL_ACCOUNT_MANAGEMENT_SERVICES)) {
-
-				return true;
-			}
-		}
-
-		return false;
 	}
 
 	private boolean _isDuplicateCode(String code) throws Exception {

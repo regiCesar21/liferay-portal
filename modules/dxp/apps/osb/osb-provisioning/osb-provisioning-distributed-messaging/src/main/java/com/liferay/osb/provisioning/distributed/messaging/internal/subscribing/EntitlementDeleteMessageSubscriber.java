@@ -38,7 +38,7 @@ public class EntitlementDeleteMessageSubscriber extends BaseMessageSubscriber {
 				jsonObject.getString("account"));
 
 			_salesSubscriberUtil.updateTickets(
-				account, account.getProperties());
+				account, false, account.getProperties());
 		}
 
 		JSONObject contactJSONObject = jsonObject.getJSONObject("contact");

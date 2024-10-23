@@ -156,7 +156,9 @@ public class SalesSubscriberUtil {
 		return properties;
 	}
 
-	public void updateTickets(Account account, Map<String, String> properties)
+	public void updateTickets(
+			Account account, boolean hasTamServices,
+			Map<String, String> properties)
 		throws Exception {
 
 		AccountEntry accountEntry = _accountEntryWebService.fetchAccountEntry(
@@ -177,7 +179,6 @@ public class SalesSubscriberUtil {
 		String gsOpportunity = properties.get("gsOpportunity");
 		String premiumService = properties.get("premiumService");
 		String projectSolution = properties.get("projectSolution");
-		String tamServices = properties.get("tamServices");
 
 		Set<String> criteria = new HashSet<>();
 
@@ -209,7 +210,7 @@ public class SalesSubscriberUtil {
 				tags.add(_toZendeskTag(projectSolution));
 			}
 
-			if (Validator.isNotNull(tamServices)) {
+			if (hasTamServices) {
 				tags.add(ZendeskTagConstants.TAM_SERVICES);
 			}
 		}
