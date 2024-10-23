@@ -31,6 +31,7 @@ import com.liferay.osb.asah.common.model.Sort;
 import com.liferay.osb.asah.common.model.TimeRange;
 import com.liferay.osb.asah.common.repository.BQEventRepository;
 import com.liferay.osb.asah.common.repository.BQIndividualRepository;
+import com.liferay.osb.asah.common.repository.BQMembershipRepository;
 import com.liferay.osb.asah.common.util.SetUtil;
 
 import com.opencsv.CSVWriter;
@@ -71,7 +72,8 @@ public class ReportDog {
 	public ReportDog(
 		List<AssetMetricRepository> assetMetricRepositories,
 		BQEventRepository bqEventRepository,
-		BQIndividualRepository bqIndividualRepository, ChannelDog channelDog,
+		BQIndividualRepository bqIndividualRepository,
+		BQMembershipRepository bqMembershipRepository, ChannelDog channelDog,
 		TimeZoneDog timeZoneDog) {
 
 		assetMetricRepositories.forEach(
@@ -81,6 +83,7 @@ public class ReportDog {
 
 		_bqEventRepository = bqEventRepository;
 		_bqIndividualRepository = bqIndividualRepository;
+		_bqMembershipRepository = bqMembershipRepository;
 		_channelDog = channelDog;
 		_timeZoneDog = timeZoneDog;
 	}
@@ -88,8 +91,8 @@ public class ReportDog {
 	public File getCSVReport(
 			@Nullable String assetId, @Nullable String assetType,
 			Long channelId, String individualId, @Nullable String query,
-			@Nullable String[] sorts, @Nullable TimeRange timeRange,
-			String type)
+			@Nullable Long segmentId, @Nullable String[] sorts,
+			@Nullable TimeRange timeRange, String type)
 		throws Exception {
 
 		List<String[]> rows = null;
@@ -144,6 +147,9 @@ public class ReportDog {
 			rows = _getAssetJournalRows(
 				channelId, query, SetUtil.of(JournalMetricType.VIEWS.getName()),
 				sorts, timeRange, type);
+		}
+		else if (StringUtils.equals(type, "membership")) {
+			rows = _getMembershipRows(channelId, segmentId, sorts);
 		}
 		else if (StringUtils.equals(type, "page")) {
 			rows = _getAssetPageRows(
@@ -577,6 +583,62 @@ public class ReportDog {
 		return rows;
 	}
 
+	private List<String[]> _getMembershipRows(
+		Long channelId, Long segmentId, String[] sorts) {
+
+		List<String[]> rows = new ArrayList<>();
+
+		rows.add(new String[] {"Name", "Email", "First Seen"});
+
+		List<Individual> individuals =
+			_bqIndividualRepository.searchBQIndividuals(
+				null, channelId, null, null, null,
+				PageRequest.of(
+					0, _MAX_SIZE, _getSort(sorts, Order.asc("givenName"))),
+				null, segmentId);
+
+		for (Individual individual : individuals) {
+			Individual.Demographics demographics = individual.getDemographics();
+
+			Map<String, List<Field>> fieldMap = demographics.getField();
+
+			Object givenNameFieldValue = fieldMap.get(
+				"givenName"
+			).get(
+				0
+			).getValue();
+
+			Object familyNameFieldValue = fieldMap.get(
+				"familyName"
+			).get(
+				0
+			).getValue();
+
+			String firstActivityDateString = "";
+
+			Date firstActivityDate = individual.getFirstActivityDate();
+
+			if (!Objects.isNull(firstActivityDate)) {
+				firstActivityDateString = DateUtil.toUTCString(
+					firstActivityDate);
+			}
+
+			rows.add(
+				new String[] {
+					givenNameFieldValue + " " + familyNameFieldValue,
+					String.valueOf(
+						fieldMap.get(
+							"email"
+						).get(
+							0
+						).getValue()),
+					firstActivityDateString
+				});
+		}
+
+		return rows;
+	}
+
 	private MetricType _getMetricType(AssetType assetType) {
 		if (assetType == AssetType.BLOG) {
 			return PageMetricType.VIEWS;
@@ -650,6 +712,7 @@ public class ReportDog {
 		_assetMetricRepositoryMap = new HashMap<>();
 	private final BQEventRepository _bqEventRepository;
 	private final BQIndividualRepository _bqIndividualRepository;
+	private final BQMembershipRepository _bqMembershipRepository;
 	private final ChannelDog _channelDog;
 	private final TimeZoneDog _timeZoneDog;
 
