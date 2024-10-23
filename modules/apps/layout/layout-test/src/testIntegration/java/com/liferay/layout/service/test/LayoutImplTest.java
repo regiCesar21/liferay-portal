@@ -357,8 +357,6 @@ public class LayoutImplTest {
 			masterLayout.getLayoutId(), "minium_WAR_miniumtheme", "01",
 			StringPool.BLANK);
 
-		layout = _layoutLocalService.getLayout(layout.getPlid());
-
 		_assertThemeId(layout, "minium_WAR_miniumtheme");
 
 		layout = _layoutLocalService.updateLookAndFeel(
