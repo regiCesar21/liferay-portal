@@ -347,7 +347,7 @@ public class LayoutImplTest {
 		_assertThemeId(layout, "minium_WAR_miniumtheme");
 
 		layout = _layoutLocalService.updateLookAndFeel(
-			_group.getGroupId(), layout.isPrivateLayout(), layout.getLayoutId(),
+			_group.getGroupId(), false, layout.getLayoutId(),
 			"classic_WAR_classictheme", "01", StringPool.BLANK);
 
 		_assertThemeId(layout, "classic_WAR_classictheme");
