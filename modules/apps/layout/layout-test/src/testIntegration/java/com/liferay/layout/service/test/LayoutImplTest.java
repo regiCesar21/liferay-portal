@@ -14,6 +14,7 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.LayoutConstants;
+import com.liferay.portal.kernel.model.LayoutSet;
 import com.liferay.portal.kernel.model.LayoutTypeController;
 import com.liferay.portal.kernel.model.Theme;
 import com.liferay.portal.kernel.service.LayoutLocalService;
@@ -25,8 +26,10 @@ import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.HashMapBuilder;
+import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.model.impl.LayoutTypeControllerImpl;
+import com.liferay.portal.model.impl.ThemeSettingImpl;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.registry.Registry;
@@ -56,6 +59,55 @@ public class LayoutImplTest {
 		_group = GroupTestUtil.addGroup();
 
 		_layout = LayoutTestUtil.addLayout(_group);
+	}
+
+	@Test
+	public void testGetThemeSetting() throws Exception {
+		LayoutSet layoutSet = _group.getPublicLayoutSet();
+
+		String key = RandomTestUtil.randomString();
+		String value = RandomTestUtil.randomString();
+
+		layoutSet = _layoutSetLocalService.updateSettings(
+			_group.getGroupId(), false,
+			_addThemeSettingProperty(
+				key, layoutSet.getSettingsProperties(), value));
+
+		Assert.assertEquals(value, _layout.getThemeSetting(key, "regular"));
+
+		_layout = _layoutLocalService.updateLookAndFeel(
+			_layout.getGroupId(), _layout.isPrivateLayout(),
+			_layout.getLayoutId(), layoutSet.getThemeId(),
+			layoutSet.getColorSchemeId(), layoutSet.getCss());
+
+		value = RandomTestUtil.randomString();
+
+		_layout = _layoutLocalService.updateLayout(
+			_group.getGroupId(), false, _layout.getLayoutId(),
+			_addThemeSettingProperty(
+				key, _layout.getTypeSettingsProperties(), value));
+
+		Assert.assertEquals(value, _layout.getThemeSetting(key, "regular"));
+
+		Layout masterLayout = _addMasterLayout();
+
+		masterLayout = _layoutLocalService.updateLookAndFeel(
+			masterLayout.getGroupId(), masterLayout.isPrivateLayout(),
+			masterLayout.getLayoutId(), layoutSet.getThemeId(),
+			layoutSet.getColorSchemeId(), layoutSet.getCss());
+
+		value = RandomTestUtil.randomString();
+
+		masterLayout = _layoutLocalService.updateLayout(
+			_group.getGroupId(), false, masterLayout.getLayoutId(),
+			_addThemeSettingProperty(
+				key, masterLayout.getTypeSettingsProperties(), value));
+
+		_layout = _layoutLocalService.updateMasterLayoutPlid(
+			_group.getGroupId(), false, _layout.getLayoutId(),
+			masterLayout.getPlid());
+
+		Assert.assertEquals(value, _layout.getThemeSetting(key, "regular"));
 	}
 
 	@Test
@@ -317,6 +369,16 @@ public class LayoutImplTest {
 
 		return _layoutLocalService.fetchLayout(
 			masterLayoutPageTemplateEntry.getPlid());
+	}
+
+	private String _addThemeSettingProperty(
+		String key, UnicodeProperties typeSettingsUnicodeProperties,
+		String value) {
+
+		typeSettingsUnicodeProperties.put(
+			ThemeSettingImpl.namespaceProperty("regular", key), value);
+
+		return typeSettingsUnicodeProperties.toString();
 	}
 
 	private void _assertGetTheme(Layout layout) throws Exception {
