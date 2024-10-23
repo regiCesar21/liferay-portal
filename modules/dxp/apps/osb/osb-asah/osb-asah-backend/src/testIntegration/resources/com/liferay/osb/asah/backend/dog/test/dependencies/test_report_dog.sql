@@ -33,6 +33,11 @@ INSERT INTO JournalDaily (assetId, assetTitle, channelId, eventDate, userId, vie
 INSERT INTO JournalDaily (assetId, assetTitle, channelId, eventDate, userId, views) VALUES ('2', 'Journal 2', 1, TIMESTAMP(DATETIME_TRUNC(timestamp '2023-11-04T17:10:00.666Z', HOUR)), '2', 2);
 INSERT INTO JournalDaily (assetId, assetTitle, channelId, eventDate, userId, views) VALUES ('3', 'Journal 3', 1, TIMESTAMP(DATETIME_TRUNC(timestamp '2023-11-04T17:10:00.666Z', HOUR)), '3', 3);
 
+INSERT INTO Membership (channelId, createDate, identityId, individualId, modifiedDate, segmentId, status) VALUES (1, timestamp '${today}', '1', '1', timestamp '${now}', 1001, 'ACTIVE');
+INSERT INTO Membership (channelId, createDate, identityId, individualId, modifiedDate, segmentId, status) VALUES (1, timestamp '${today}', '2', '2', timestamp '${now}', 1001, 'ACTIVE');
+INSERT INTO Membership (channelId, createDate, identityId, individualId, modifiedDate, segmentId, status) VALUES (1, timestamp '${today}', '3', '3', timestamp '${now}', 1001, 'ACTIVE');
+INSERT INTO Membership (channelId, createDate, identityId, individualId, modifiedDate, segmentId, status) VALUES (1, timestamp '${today}', '4', '4', timestamp '${now}', 1001, 'ACTIVE');
+
 INSERT INTO PageDaily (bounce, canonicalUrl, channelId, entrances, eventDate, exits, timeOnPage, title, userId, views) VALUES (1, 'https://www.beryl.com/delivery', 1, 1, TIMESTAMP(DATETIME_TRUNC(timestamp '2023-11-04T17:10:00.666Z', HOUR)), 1, 1, 'Beryl Delivery', '1', 1);
 INSERT INTO PageDaily (bounce, canonicalUrl, channelId, entrances, eventDate, exits, timeOnPage, title, userId, views) VALUES (1, 'https://www.beryl.com/delivery', 1, 1, TIMESTAMP(DATETIME_TRUNC(timestamp '2023-11-04T17:10:00.666Z', HOUR)), 1, 1, 'Beryl Delivery', '2', 1);
 INSERT INTO PageDaily (bounce, canonicalUrl, channelId, entrances, eventDate, exits, timeOnPage, title, userId, views) VALUES (1, 'https://www.beryl.com/delivery', 1, 1, TIMESTAMP(DATETIME_TRUNC(timestamp '2023-11-04T17:10:00.666Z', HOUR)), 1, 1, 'Beryl Delivery', '3', 1);
