@@ -749,7 +749,7 @@ public class LayoutImpl extends LayoutBaseImpl {
 
 	@Override
 	public String getThemeSetting(String key, String device) {
-		return getThemeSetting(key, device, false);
+		return getThemeSetting(key, device, isInheritLookAndFeel());
 	}
 
 	@Override
