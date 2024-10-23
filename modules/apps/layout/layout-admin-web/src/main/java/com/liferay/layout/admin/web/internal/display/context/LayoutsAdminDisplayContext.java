@@ -46,7 +46,6 @@ import com.liferay.portal.kernel.model.LayoutSet;
 import com.liferay.portal.kernel.model.LayoutSetBranch;
 import com.liferay.portal.kernel.model.LayoutType;
 import com.liferay.portal.kernel.model.LayoutTypePortlet;
-import com.liferay.portal.kernel.model.Theme;
 import com.liferay.portal.kernel.model.role.RoleConstants;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
@@ -1141,9 +1140,7 @@ public class LayoutsAdminDisplayContext {
 		return _groupDisplayContextHelper.getStagingGroupId();
 	}
 
-	public String getStyleBookWarningMessage()
-		throws PortalException, WindowStateException {
-
+	public String getStyleBookWarningMessage() throws WindowStateException {
 		LayoutSet publicLayoutSet = LayoutSetLocalServiceUtil.fetchLayoutSet(
 			getSelGroupId(), false);
 
@@ -2004,7 +2001,7 @@ public class LayoutsAdminDisplayContext {
 			PropsValues.ROBOTS_TXT_WITHOUT_SITEMAP);
 	}
 
-	private String _getThemeId() throws PortalException {
+	private String _getThemeId() {
 		if (_themeId != null) {
 			return _themeId;
 		}
@@ -2016,9 +2013,7 @@ public class LayoutsAdminDisplayContext {
 				themeId = _selLayoutSet.getThemeId();
 			}
 			else {
-				Theme theme = _selLayout.getTheme();
-
-				themeId = theme.getThemeId();
+				themeId = _selLayout.getThemeId();
 			}
 		}
 
