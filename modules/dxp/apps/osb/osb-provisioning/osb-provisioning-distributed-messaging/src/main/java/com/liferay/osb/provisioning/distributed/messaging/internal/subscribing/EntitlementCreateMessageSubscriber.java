@@ -38,7 +38,7 @@ public class EntitlementCreateMessageSubscriber extends BaseMessageSubscriber {
 				jsonObject.getString("account"));
 
 			_salesSubscriberUtil.updateTickets(
-				account, true, account.getProperties());
+				account, account.getProperties());
 		}
 
 		JSONObject contactJSONObject = jsonObject.getJSONObject("contact");

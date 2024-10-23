@@ -8,8 +8,10 @@ package com.liferay.osb.provisioning.distributed.messaging.internal.subscribing.
 import com.liferay.osb.koroneiki.phloem.rest.client.constants.ExternalLinkDomain;
 import com.liferay.osb.koroneiki.phloem.rest.client.constants.ExternalLinkEntityName;
 import com.liferay.osb.koroneiki.phloem.rest.client.dto.v1_0.Account;
+import com.liferay.osb.koroneiki.phloem.rest.client.dto.v1_0.Entitlement;
 import com.liferay.osb.provisioning.customer.model.AccountEntry;
 import com.liferay.osb.provisioning.customer.web.service.AccountEntryWebService;
+import com.liferay.osb.provisioning.koroneiki.constants.EntitlementConstants;
 import com.liferay.osb.provisioning.koroneiki.web.service.AccountWebService;
 import com.liferay.osb.provisioning.zendesk.constants.ZendeskTagConstants;
 import com.liferay.osb.provisioning.zendesk.constants.ZendeskTicketConstants;
@@ -156,9 +158,7 @@ public class SalesSubscriberUtil {
 		return properties;
 	}
 
-	public void updateTickets(
-			Account account, boolean hasTamServices,
-			Map<String, String> properties)
+	public void updateTickets(Account account, Map<String, String> properties)
 		throws Exception {
 
 		AccountEntry accountEntry = _accountEntryWebService.fetchAccountEntry(
@@ -192,30 +192,49 @@ public class SalesSubscriberUtil {
 		for (ZendeskTicket zendeskTicket : zendeskTickets) {
 			Set<String> tags = zendeskTicket.getTags();
 
-			tags.remove(ZendeskTagConstants.COMMERCE_SOLUTION);
-			tags.remove(ZendeskTagConstants.GS_OPPORTUNITY);
-			tags.remove(ZendeskTagConstants.PREMIUM_SERVICE);
-			tags.remove(ZendeskTagConstants.SERVICE_SOLUTION);
-			tags.remove(ZendeskTagConstants.TAM_SERVICES);
-
 			if (Validator.isNotNull(gsOpportunity)) {
 				tags.add(ZendeskTagConstants.GS_OPPORTUNITY);
+			}
+			else {
+				tags.remove(ZendeskTagConstants.GS_OPPORTUNITY);
 			}
 
 			if (Validator.isNotNull(premiumService)) {
 				tags.add(ZendeskTagConstants.PREMIUM_SERVICE);
 			}
+			else {
+				tags.remove(ZendeskTagConstants.PREMIUM_SERVICE);
+			}
 
 			if (Validator.isNotNull(projectSolution)) {
 				tags.add(_toZendeskTag(projectSolution));
 			}
+			else {
+				tags.remove(ZendeskTagConstants.COMMERCE_SOLUTION);
+				tags.remove(ZendeskTagConstants.SERVICE_SOLUTION);
+			}
 
-			if (hasTamServices) {
+			if (_hasTamServices(account)) {
 				tags.add(ZendeskTagConstants.TAM_SERVICES);
+			}
+			else {
+				tags.remove(ZendeskTagConstants.TAM_SERVICES);
 			}
 		}
 
 		_zendeskTicketWebService.updateZendeskTickets(zendeskTickets);
+	}
+
+	private boolean _hasTamServices(Account account) {
+		for (Entitlement entitlement : account.getEntitlements()) {
+			String name = entitlement.getName();
+
+			if (name.equals(EntitlementConstants.TAM_SERVICES)) {
+				return true;
+			}
+		}
+
+		return false;
 	}
 
 	private String _toZendeskTag(String tag) {

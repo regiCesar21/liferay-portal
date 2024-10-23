@@ -11,7 +11,6 @@ import com.liferay.osb.provisioning.distributed.messaging.internal.subscribing.u
 import com.liferay.osb.provisioning.identity.management.constants.OktaConstants;
 import com.liferay.osb.provisioning.identity.management.provider.ContactIdentityProvider;
 import com.liferay.osb.provisioning.koroneiki.constants.EntitlementConstants;
-import com.liferay.osb.provisioning.koroneiki.web.service.AccountWebService;
 import com.liferay.portal.kernel.json.JSONObject;
 
 import org.osgi.service.component.annotations.Component;
@@ -38,7 +37,7 @@ public class EntitlementDeleteMessageSubscriber extends BaseMessageSubscriber {
 				jsonObject.getString("account"));
 
 			_salesSubscriberUtil.updateTickets(
-				account, false, account.getProperties());
+				account, account.getProperties());
 		}
 
 		JSONObject contactJSONObject = jsonObject.getJSONObject("contact");
@@ -58,9 +57,6 @@ public class EntitlementDeleteMessageSubscriber extends BaseMessageSubscriber {
 				contactJSONObject.getString("emailAddress"));
 		}
 	}
-
-	@Reference
-	private AccountWebService _accountWebService;
 
 	@Reference(target = "(provider=okta)")
 	private ContactIdentityProvider _contactIdentityProvider;

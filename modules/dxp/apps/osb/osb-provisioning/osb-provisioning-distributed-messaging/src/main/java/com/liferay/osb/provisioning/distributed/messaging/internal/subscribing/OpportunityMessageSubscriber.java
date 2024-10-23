@@ -2337,8 +2337,7 @@ public class OpportunityMessageSubscriber extends BaseMessageSubscriber {
 				StringPool.BLANK, StringPool.BLANK, accountKey, account);
 
 			if (!oldProperties.equals(newProperties)) {
-				_salesSubscriberUtil.updateTickets(
-					account, false, newProperties);
+				_salesSubscriberUtil.updateTickets(account, newProperties);
 			}
 		}
 

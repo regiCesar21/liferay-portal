@@ -8,12 +8,8 @@ package com.liferay.osb.provisioning.distributed.messaging.internal.upgrade;
 import com.liferay.osb.koroneiki.phloem.rest.client.constants.ExternalLinkDomain;
 import com.liferay.osb.koroneiki.phloem.rest.client.constants.ExternalLinkEntityName;
 import com.liferay.osb.koroneiki.phloem.rest.client.dto.v1_0.Account;
-import com.liferay.osb.koroneiki.phloem.rest.client.dto.v1_0.ProductPurchase;
 import com.liferay.osb.provisioning.distributed.messaging.internal.subscribing.util.SalesSubscriberUtil;
-import com.liferay.osb.provisioning.koroneiki.constants.ProductConstants;
 import com.liferay.osb.provisioning.koroneiki.web.service.AccountWebService;
-import com.liferay.osb.provisioning.koroneiki.web.service.ProductPurchaseWebService;
-import com.liferay.osb.provisioning.search.FilterQuery;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
@@ -54,19 +50,7 @@ public class UpgradeAccountGSInvolved extends UpgradeProcess {
 		_accountWebService.updateAccount(
 			StringPool.BLANK, StringPool.BLANK, account.getKey(), account);
 
-		FilterQuery filterQuery = new FilterQuery();
-
-		filterQuery.addEquals(true, "accountKey", account.getKey());
-		filterQuery.addContains(
-			true, "name",
-			ProductConstants.NAME_TECHNICAL_ACCOUNT_MANAGEMENT_SERVICES);
-
-		List<ProductPurchase> productPurchases =
-			_productPurchaseWebService.search(
-				filterQuery, 1, 1, StringPool.BLANK);
-
-		_salesSubscriberUtil.updateTickets(
-			account, !productPurchases.isEmpty(), properties);
+		_salesSubscriberUtil.updateTickets(account, properties);
 	}
 
 	@Override
@@ -78,9 +62,6 @@ public class UpgradeAccountGSInvolved extends UpgradeProcess {
 
 	@Reference
 	private AccountWebService _accountWebService;
-
-	@Reference
-	private ProductPurchaseWebService _productPurchaseWebService;
 
 	@Reference
 	private SalesSubscriberUtil _salesSubscriberUtil;
