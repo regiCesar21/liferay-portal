@@ -772,12 +772,19 @@ public class LayoutImpl extends LayoutBaseImpl {
 
 		Layout masterLayout = _getMasterLayout();
 
-		if ((masterLayout != null) &&
-			Validator.isNotNull(masterLayout.getThemeId()) &&
-			Validator.isNotNull(masterLayout.getColorSchemeId())) {
+		if (masterLayout != null) {
+			if (Validator.isNotNull(masterLayout.getThemeId()) &&
+				Validator.isNotNull(masterLayout.getColorSchemeId())) {
 
-			return ThemeLocalServiceUtil.getTheme(
-				masterLayout.getCompanyId(), masterLayout.getThemeId());
+				return ThemeLocalServiceUtil.getTheme(
+					masterLayout.getCompanyId(), masterLayout.getThemeId());
+			}
+
+			LayoutSet masterLayoutSet =
+				LayoutSetLocalServiceUtil.fetchLayoutSet(
+					masterLayout.getGroupId(), isPrivateLayout());
+
+			return masterLayoutSet.getTheme();
 		}
 
 		LayoutSet layoutSet = getLayoutSet();
