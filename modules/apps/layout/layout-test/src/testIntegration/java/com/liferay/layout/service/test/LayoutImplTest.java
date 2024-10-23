@@ -71,7 +71,7 @@ public class LayoutImplTest {
 		layoutSet = _layoutSetLocalService.updateSettings(
 			_group.getGroupId(), false,
 			_addThemeSettingProperty(
-				key, layoutSet.getSettingsProperties(), value));
+				key, value, layoutSet.getSettingsProperties()));
 
 		Assert.assertEquals(value, _layout.getThemeSetting(key, "regular"));
 
@@ -85,7 +85,7 @@ public class LayoutImplTest {
 		_layout = _layoutLocalService.updateLayout(
 			_group.getGroupId(), false, _layout.getLayoutId(),
 			_addThemeSettingProperty(
-				key, _layout.getTypeSettingsProperties(), value));
+				key, value, _layout.getTypeSettingsProperties()));
 
 		Assert.assertEquals(value, _layout.getThemeSetting(key, "regular"));
 
@@ -101,7 +101,7 @@ public class LayoutImplTest {
 		masterLayout = _layoutLocalService.updateLayout(
 			_group.getGroupId(), false, masterLayout.getLayoutId(),
 			_addThemeSettingProperty(
-				key, masterLayout.getTypeSettingsProperties(), value));
+				key, value, masterLayout.getTypeSettingsProperties()));
 
 		_layout = _layoutLocalService.updateMasterLayoutPlid(
 			_group.getGroupId(), false, _layout.getLayoutId(),
@@ -372,8 +372,8 @@ public class LayoutImplTest {
 	}
 
 	private String _addThemeSettingProperty(
-		String key, UnicodeProperties typeSettingsUnicodeProperties,
-		String value) {
+		String key, String value,
+		UnicodeProperties typeSettingsUnicodeProperties) {
 
 		typeSettingsUnicodeProperties.put(
 			ThemeSettingImpl.namespaceProperty("regular", key), value);
