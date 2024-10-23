@@ -1310,14 +1310,10 @@ class ReadAnalyticsEventsSparkJob(BaseSparkJob):
 					eventproperty.name, 
 					eventproperty.value
 				FROM 
-					`{self.spark_application_args.ac_project_id}`.event 
-				JOIN `{self.spark_application_args.ac_project_id}`.eventproperty ON 
-					event.id = eventproperty.id
+					`{self.spark_application_args.ac_project_id}`.event, UNNEST(event.properties) AS eventproperty
 				WHERE 
 					DATE(event.eventDate, "{time_zone}") >= {sql_start_date_string} AND
 					DATE(event.eventDate, "{time_zone}") < {sql_end_date_string} AND
-					DATE(eventproperty.eventDate, "{time_zone}") >= {sql_start_date_string} AND
-					DATE(eventproperty.eventDate, "{time_zone}") < {sql_end_date_string} AND
 					eventproperty.name = "viewDuration" AND
 					STARTS_WITH(event.contentLanguageId, 'en') AND
 					CAST(eventproperty.value AS INTEGER) >= {self._minimum_view_duration_threshold}
