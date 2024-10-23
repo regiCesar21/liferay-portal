@@ -12,7 +12,7 @@
 		<field name="accountKey" type="String" />
 		<field name="parentAccountId" type="long" />
 		<field name="name" type="String">
-			<hint name="max-length">150</hint>
+			<hint name="max-length">250</hint>
 		</field>
 		<field name="code" type="String" />
 		<field name="description" type="String">
@@ -117,7 +117,7 @@
 		<field name="teamKey" type="String" />
 		<field name="accountId" type="long" />
 		<field name="name" type="String">
-			<hint name="max-length">150</hint>
+			<hint name="max-length">250</hint>
 		</field>
 		<field name="system" type="boolean" />
 	</model>

@@ -28,6 +28,12 @@ public class TaprootServiceUpgrade implements UpgradeStepRegistrator {
 			"1.1.0", "1.2.0",
 			new com.liferay.osb.koroneiki.taproot.internal.upgrade.v1_2_0.
 				UpgradeAccountField());
+		registry.register(
+			"1.2.0", "1.3.0",
+			new com.liferay.osb.koroneiki.taproot.internal.upgrade.v1_3_0.
+				UpgradeAccount(),
+			new com.liferay.osb.koroneiki.taproot.internal.upgrade.v1_3_0.
+				UpgradeTeam());
 	}
 
 }
