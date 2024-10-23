@@ -8,7 +8,7 @@ create table Koroneiki_Account (
 	modifiedDate DATE null,
 	accountKey VARCHAR(75) null,
 	parentAccountId LONG,
-	name VARCHAR(150) null,
+	name VARCHAR(250) null,
 	code_ VARCHAR(75) null,
 	description STRING null,
 	logoId LONG,
@@ -114,7 +114,7 @@ create table Koroneiki_Team (
 	modifiedDate DATE null,
 	teamKey VARCHAR(75) null,
 	accountId LONG,
-	name VARCHAR(150) null,
+	name VARCHAR(250) null,
 	system_ BOOLEAN
 );
 

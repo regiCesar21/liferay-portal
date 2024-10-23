@@ -1,6 +1,6 @@
 create unique index IX_49B51109 on Koroneiki_Account (accountKey[$COLUMN_LENGTH:75$]);
 create index IX_812ADE3F on Koroneiki_Account (code_[$COLUMN_LENGTH:75$]);
-create index IX_68C36822 on Koroneiki_Account (name[$COLUMN_LENGTH:150$]);
+create index IX_68C36822 on Koroneiki_Account (name[$COLUMN_LENGTH:250$]);
 create index IX_B9A3F00B on Koroneiki_Account (parentAccountId);
 create index IX_946B1DD7 on Koroneiki_Account (uuid_[$COLUMN_LENGTH:75$], companyId);
 
@@ -26,9 +26,9 @@ create index IX_856F85E0 on Koroneiki_ContactRole (uuid_[$COLUMN_LENGTH:75$], co
 create index IX_CCCB218 on Koroneiki_ContactTeamRole (contactRoleId);
 create index IX_216B6075 on Koroneiki_ContactTeamRole (teamId);
 
-create index IX_98F3AB04 on Koroneiki_Team (accountId, name[$COLUMN_LENGTH:150$]);
+create index IX_98F3AB04 on Koroneiki_Team (accountId, name[$COLUMN_LENGTH:250$]);
 create index IX_28C061DB on Koroneiki_Team (accountId, system_);
-create index IX_AD200E72 on Koroneiki_Team (name[$COLUMN_LENGTH:150$]);
+create index IX_AD200E72 on Koroneiki_Team (name[$COLUMN_LENGTH:250$]);
 create unique index IX_736051DF on Koroneiki_Team (teamKey[$COLUMN_LENGTH:75$]);
 create index IX_ADF0CC27 on Koroneiki_Team (uuid_[$COLUMN_LENGTH:75$], companyId);
 

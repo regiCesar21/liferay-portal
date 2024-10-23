@@ -91,7 +91,7 @@ public class TeamModelImpl extends BaseModelImpl<Team> implements TeamModel {
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table Koroneiki_Team (mvccVersion LONG default 0 not null,uuid_ VARCHAR(75) null,teamId LONG not null primary key,companyId LONG,userId LONG,createDate DATE null,modifiedDate DATE null,teamKey VARCHAR(75) null,accountId LONG,name VARCHAR(150) null,system_ BOOLEAN)";
+		"create table Koroneiki_Team (mvccVersion LONG default 0 not null,uuid_ VARCHAR(75) null,teamId LONG not null primary key,companyId LONG,userId LONG,createDate DATE null,modifiedDate DATE null,teamKey VARCHAR(75) null,accountId LONG,name VARCHAR(250) null,system_ BOOLEAN)";
 
 	public static final String TABLE_SQL_DROP = "drop table Koroneiki_Team";
 
