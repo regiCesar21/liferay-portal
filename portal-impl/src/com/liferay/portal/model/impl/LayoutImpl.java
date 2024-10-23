@@ -759,13 +759,20 @@ public class LayoutImpl extends LayoutBaseImpl {
 	 */
 	@Override
 	public Theme getTheme() throws PortalException {
-		if (_theme != null) {
-			return _theme;
+		if (isInheritLookAndFeel()) {
+			LayoutSet layoutSet = getLayoutSet();
+
+			return layoutSet.getTheme();
 		}
 
-		_theme = _getTheme();
+		Layout masterLayout = _getMasterLayout();
 
-		return _theme;
+		if (masterLayout != null) {
+			return ThemeLocalServiceUtil.getTheme(
+				masterLayout.getCompanyId(), masterLayout.getThemeId());
+		}
+
+		return ThemeLocalServiceUtil.getTheme(getCompanyId(), getThemeId());
 	}
 
 	@Override
@@ -1455,23 +1462,6 @@ public class LayoutImpl extends LayoutBaseImpl {
 		return portletPreferences;
 	}
 
-	private Theme _getTheme() throws PortalException {
-		if (isInheritLookAndFeel()) {
-			LayoutSet layoutSet = getLayoutSet();
-
-			return layoutSet.getTheme();
-		}
-
-		Layout masterLayout = _getMasterLayout();
-
-		if (masterLayout != null) {
-			return ThemeLocalServiceUtil.getTheme(
-				masterLayout.getCompanyId(), masterLayout.getThemeId());
-		}
-
-		return ThemeLocalServiceUtil.getTheme(getCompanyId(), getThemeId());
-	}
-
 	private String _getURL(
 			HttpServletRequest httpServletRequest, boolean resetMaxState,
 			boolean resetRenderParameters)
@@ -1572,7 +1562,6 @@ public class LayoutImpl extends LayoutBaseImpl {
 	private LayoutSet _layoutSet;
 	private transient LayoutType _layoutType;
 	private Layout _masterLayout;
-	private Theme _theme;
 	private UnicodeProperties _typeSettingsUnicodeProperties;
 
 }
