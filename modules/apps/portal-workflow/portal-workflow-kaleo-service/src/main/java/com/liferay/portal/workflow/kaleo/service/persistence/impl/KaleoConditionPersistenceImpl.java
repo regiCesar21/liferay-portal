@@ -1108,7 +1108,6 @@ public class KaleoConditionPersistenceImpl
 			"kaleoCondition.kaleoDefinitionVersionId = ?";
 
 	private FinderPath _finderPathFetchByKaleoNodeId;
-	private FinderPath _finderPathCountByKaleoNodeId;
 
 	/**
 	 * Returns the kaleo condition where kaleoNodeId = &#63; or throws a <code>NoSuchConditionException</code> if it could not be found.
@@ -1281,47 +1280,13 @@ public class KaleoConditionPersistenceImpl
 	 */
 	@Override
 	public int countByKaleoNodeId(long kaleoNodeId) {
-		FinderPath finderPath = _finderPathCountByKaleoNodeId;
+		KaleoCondition kaleoCondition = fetchByKaleoNodeId(kaleoNodeId);
 
-		Object[] finderArgs = new Object[] {kaleoNodeId};
-
-		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
-
-		if (count == null) {
-			StringBundler sb = new StringBundler(2);
-
-			sb.append(_SQL_COUNT_KALEOCONDITION_WHERE);
-
-			sb.append(_FINDER_COLUMN_KALEONODEID_KALEONODEID_2);
-
-			String sql = sb.toString();
-
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				Query query = session.createQuery(sql);
-
-				QueryPos queryPos = QueryPos.getInstance(query);
-
-				queryPos.add(kaleoNodeId);
-
-				count = (Long)query.uniqueResult();
-
-				finderCache.putResult(finderPath, finderArgs, count);
-			}
-			catch (Exception exception) {
-				finderCache.removeResult(finderPath, finderArgs);
-
-				throw processException(exception);
-			}
-			finally {
-				closeSession(session);
-			}
+		if (kaleoCondition == null) {
+			return 0;
 		}
 
-		return count.intValue();
+		return 1;
 	}
 
 	private static final String _FINDER_COLUMN_KALEONODEID_KALEONODEID_2 =
@@ -2237,12 +2202,6 @@ public class KaleoConditionPersistenceImpl
 			KaleoConditionImpl.class, FINDER_CLASS_NAME_ENTITY,
 			"fetchByKaleoNodeId", new String[] {Long.class.getName()},
 			KaleoConditionModelImpl.KALEONODEID_COLUMN_BITMASK);
-
-		_finderPathCountByKaleoNodeId = new FinderPath(
-			KaleoConditionModelImpl.ENTITY_CACHE_ENABLED,
-			KaleoConditionModelImpl.FINDER_CACHE_ENABLED, Long.class,
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByKaleoNodeId",
-			new String[] {Long.class.getName()});
 
 		KaleoConditionUtil.setPersistence(this);
 	}

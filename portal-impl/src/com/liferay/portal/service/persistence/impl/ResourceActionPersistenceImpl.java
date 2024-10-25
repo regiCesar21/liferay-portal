@@ -612,7 +612,6 @@ public class ResourceActionPersistenceImpl
 		"(resourceAction.name IS NULL OR resourceAction.name = '')";
 
 	private FinderPath _finderPathFetchByN_A;
-	private FinderPath _finderPathCountByN_A;
 
 	/**
 	 * Returns the resource action where name = &#63; and actionId = &#63; or throws a <code>NoSuchResourceActionException</code> if it could not be found.
@@ -809,77 +808,13 @@ public class ResourceActionPersistenceImpl
 	 */
 	@Override
 	public int countByN_A(String name, String actionId) {
-		name = Objects.toString(name, "");
-		actionId = Objects.toString(actionId, "");
+		ResourceAction resourceAction = fetchByN_A(name, actionId);
 
-		FinderPath finderPath = _finderPathCountByN_A;
-
-		Object[] finderArgs = new Object[] {name, actionId};
-
-		Long count = (Long)FinderCacheUtil.getResult(
-			finderPath, finderArgs, this);
-
-		if (count == null) {
-			StringBundler sb = new StringBundler(3);
-
-			sb.append(_SQL_COUNT_RESOURCEACTION_WHERE);
-
-			boolean bindName = false;
-
-			if (name.isEmpty()) {
-				sb.append(_FINDER_COLUMN_N_A_NAME_3);
-			}
-			else {
-				bindName = true;
-
-				sb.append(_FINDER_COLUMN_N_A_NAME_2);
-			}
-
-			boolean bindActionId = false;
-
-			if (actionId.isEmpty()) {
-				sb.append(_FINDER_COLUMN_N_A_ACTIONID_3);
-			}
-			else {
-				bindActionId = true;
-
-				sb.append(_FINDER_COLUMN_N_A_ACTIONID_2);
-			}
-
-			String sql = sb.toString();
-
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				Query query = session.createQuery(sql);
-
-				QueryPos queryPos = QueryPos.getInstance(query);
-
-				if (bindName) {
-					queryPos.add(name);
-				}
-
-				if (bindActionId) {
-					queryPos.add(actionId);
-				}
-
-				count = (Long)query.uniqueResult();
-
-				FinderCacheUtil.putResult(finderPath, finderArgs, count);
-			}
-			catch (Exception exception) {
-				FinderCacheUtil.removeResult(finderPath, finderArgs);
-
-				throw processException(exception);
-			}
-			finally {
-				closeSession(session);
-			}
+		if (resourceAction == null) {
+			return 0;
 		}
 
-		return count.intValue();
+		return 1;
 	}
 
 	private static final String _FINDER_COLUMN_N_A_NAME_2 =
@@ -1720,12 +1655,6 @@ public class ResourceActionPersistenceImpl
 			new String[] {String.class.getName(), String.class.getName()},
 			ResourceActionModelImpl.NAME_COLUMN_BITMASK |
 			ResourceActionModelImpl.ACTIONID_COLUMN_BITMASK);
-
-		_finderPathCountByN_A = new FinderPath(
-			ResourceActionModelImpl.ENTITY_CACHE_ENABLED,
-			ResourceActionModelImpl.FINDER_CACHE_ENABLED, Long.class,
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByN_A",
-			new String[] {String.class.getName(), String.class.getName()});
 
 		ResourceActionUtil.setPersistence(this);
 	}

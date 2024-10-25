@@ -639,7 +639,6 @@ public class CPAttachmentFileEntryPersistenceImpl
 		"(cpAttachmentFileEntry.uuid IS NULL OR cpAttachmentFileEntry.uuid = '')";
 
 	private FinderPath _finderPathFetchByUUID_G;
-	private FinderPath _finderPathCountByUUID_G;
 
 	/**
 	 * Returns the cp attachment file entry where uuid = &#63; and groupId = &#63; or throws a <code>NoSuchCPAttachmentFileEntryException</code> if it could not be found.
@@ -827,64 +826,14 @@ public class CPAttachmentFileEntryPersistenceImpl
 	 */
 	@Override
 	public int countByUUID_G(String uuid, long groupId) {
-		uuid = Objects.toString(uuid, "");
+		CPAttachmentFileEntry cpAttachmentFileEntry = fetchByUUID_G(
+			uuid, groupId);
 
-		FinderPath finderPath = _finderPathCountByUUID_G;
-
-		Object[] finderArgs = new Object[] {uuid, groupId};
-
-		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
-
-		if (count == null) {
-			StringBundler sb = new StringBundler(3);
-
-			sb.append(_SQL_COUNT_CPATTACHMENTFILEENTRY_WHERE);
-
-			boolean bindUuid = false;
-
-			if (uuid.isEmpty()) {
-				sb.append(_FINDER_COLUMN_UUID_G_UUID_3);
-			}
-			else {
-				bindUuid = true;
-
-				sb.append(_FINDER_COLUMN_UUID_G_UUID_2);
-			}
-
-			sb.append(_FINDER_COLUMN_UUID_G_GROUPID_2);
-
-			String sql = sb.toString();
-
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				Query query = session.createQuery(sql);
-
-				QueryPos queryPos = QueryPos.getInstance(query);
-
-				if (bindUuid) {
-					queryPos.add(uuid);
-				}
-
-				queryPos.add(groupId);
-
-				count = (Long)query.uniqueResult();
-
-				finderCache.putResult(finderPath, finderArgs, count);
-			}
-			catch (Exception exception) {
-				finderCache.removeResult(finderPath, finderArgs);
-
-				throw processException(exception);
-			}
-			finally {
-				closeSession(session);
-			}
+		if (cpAttachmentFileEntry == null) {
+			return 0;
 		}
 
-		return count.intValue();
+		return 1;
 	}
 
 	private static final String _FINDER_COLUMN_UUID_G_UUID_2 =
@@ -2617,7 +2566,6 @@ public class CPAttachmentFileEntryPersistenceImpl
 		"cpAttachmentFileEntry.status = ?";
 
 	private FinderPath _finderPathFetchByC_C_F;
-	private FinderPath _finderPathCountByC_C_F;
 
 	/**
 	 * Returns the cp attachment file entry where classNameId = &#63; and classPK = &#63; and fileEntryId = &#63; or throws a <code>NoSuchCPAttachmentFileEntryException</code> if it could not be found.
@@ -2810,55 +2758,14 @@ public class CPAttachmentFileEntryPersistenceImpl
 	 */
 	@Override
 	public int countByC_C_F(long classNameId, long classPK, long fileEntryId) {
-		FinderPath finderPath = _finderPathCountByC_C_F;
+		CPAttachmentFileEntry cpAttachmentFileEntry = fetchByC_C_F(
+			classNameId, classPK, fileEntryId);
 
-		Object[] finderArgs = new Object[] {classNameId, classPK, fileEntryId};
-
-		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
-
-		if (count == null) {
-			StringBundler sb = new StringBundler(4);
-
-			sb.append(_SQL_COUNT_CPATTACHMENTFILEENTRY_WHERE);
-
-			sb.append(_FINDER_COLUMN_C_C_F_CLASSNAMEID_2);
-
-			sb.append(_FINDER_COLUMN_C_C_F_CLASSPK_2);
-
-			sb.append(_FINDER_COLUMN_C_C_F_FILEENTRYID_2);
-
-			String sql = sb.toString();
-
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				Query query = session.createQuery(sql);
-
-				QueryPos queryPos = QueryPos.getInstance(query);
-
-				queryPos.add(classNameId);
-
-				queryPos.add(classPK);
-
-				queryPos.add(fileEntryId);
-
-				count = (Long)query.uniqueResult();
-
-				finderCache.putResult(finderPath, finderArgs, count);
-			}
-			catch (Exception exception) {
-				finderCache.removeResult(finderPath, finderArgs);
-
-				throw processException(exception);
-			}
-			finally {
-				closeSession(session);
-			}
+		if (cpAttachmentFileEntry == null) {
+			return 0;
 		}
 
-		return count.intValue();
+		return 1;
 	}
 
 	private static final String _FINDER_COLUMN_C_C_F_CLASSNAMEID_2 =
@@ -4772,7 +4679,6 @@ public class CPAttachmentFileEntryPersistenceImpl
 		"cpAttachmentFileEntry.status != ?";
 
 	private FinderPath _finderPathFetchByC_ERC;
-	private FinderPath _finderPathCountByC_ERC;
 
 	/**
 	 * Returns the cp attachment file entry where companyId = &#63; and externalReferenceCode = &#63; or throws a <code>NoSuchCPAttachmentFileEntryException</code> if it could not be found.
@@ -4983,64 +4889,14 @@ public class CPAttachmentFileEntryPersistenceImpl
 	 */
 	@Override
 	public int countByC_ERC(long companyId, String externalReferenceCode) {
-		externalReferenceCode = Objects.toString(externalReferenceCode, "");
+		CPAttachmentFileEntry cpAttachmentFileEntry = fetchByC_ERC(
+			companyId, externalReferenceCode);
 
-		FinderPath finderPath = _finderPathCountByC_ERC;
-
-		Object[] finderArgs = new Object[] {companyId, externalReferenceCode};
-
-		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
-
-		if (count == null) {
-			StringBundler sb = new StringBundler(3);
-
-			sb.append(_SQL_COUNT_CPATTACHMENTFILEENTRY_WHERE);
-
-			sb.append(_FINDER_COLUMN_C_ERC_COMPANYID_2);
-
-			boolean bindExternalReferenceCode = false;
-
-			if (externalReferenceCode.isEmpty()) {
-				sb.append(_FINDER_COLUMN_C_ERC_EXTERNALREFERENCECODE_3);
-			}
-			else {
-				bindExternalReferenceCode = true;
-
-				sb.append(_FINDER_COLUMN_C_ERC_EXTERNALREFERENCECODE_2);
-			}
-
-			String sql = sb.toString();
-
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				Query query = session.createQuery(sql);
-
-				QueryPos queryPos = QueryPos.getInstance(query);
-
-				queryPos.add(companyId);
-
-				if (bindExternalReferenceCode) {
-					queryPos.add(externalReferenceCode);
-				}
-
-				count = (Long)query.uniqueResult();
-
-				finderCache.putResult(finderPath, finderArgs, count);
-			}
-			catch (Exception exception) {
-				finderCache.removeResult(finderPath, finderArgs);
-
-				throw processException(exception);
-			}
-			finally {
-				closeSession(session);
-			}
+		if (cpAttachmentFileEntry == null) {
+			return 0;
 		}
 
-		return count.intValue();
+		return 1;
 	}
 
 	private static final String _FINDER_COLUMN_C_ERC_COMPANYID_2 =
@@ -6237,12 +6093,6 @@ public class CPAttachmentFileEntryPersistenceImpl
 			CPAttachmentFileEntryModelImpl.UUID_COLUMN_BITMASK |
 			CPAttachmentFileEntryModelImpl.GROUPID_COLUMN_BITMASK);
 
-		_finderPathCountByUUID_G = new FinderPath(
-			CPAttachmentFileEntryModelImpl.ENTITY_CACHE_ENABLED,
-			CPAttachmentFileEntryModelImpl.FINDER_CACHE_ENABLED, Long.class,
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByUUID_G",
-			new String[] {String.class.getName(), Long.class.getName()});
-
 		_finderPathWithPaginationFindByUuid_C = new FinderPath(
 			CPAttachmentFileEntryModelImpl.ENTITY_CACHE_ENABLED,
 			CPAttachmentFileEntryModelImpl.FINDER_CACHE_ENABLED,
@@ -6325,14 +6175,6 @@ public class CPAttachmentFileEntryPersistenceImpl
 			CPAttachmentFileEntryModelImpl.CLASSNAMEID_COLUMN_BITMASK |
 			CPAttachmentFileEntryModelImpl.CLASSPK_COLUMN_BITMASK |
 			CPAttachmentFileEntryModelImpl.FILEENTRYID_COLUMN_BITMASK);
-
-		_finderPathCountByC_C_F = new FinderPath(
-			CPAttachmentFileEntryModelImpl.ENTITY_CACHE_ENABLED,
-			CPAttachmentFileEntryModelImpl.FINDER_CACHE_ENABLED, Long.class,
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByC_C_F",
-			new String[] {
-				Long.class.getName(), Long.class.getName(), Long.class.getName()
-			});
 
 		_finderPathWithPaginationFindByC_C_LtD_S = new FinderPath(
 			CPAttachmentFileEntryModelImpl.ENTITY_CACHE_ENABLED,
@@ -6421,12 +6263,6 @@ public class CPAttachmentFileEntryPersistenceImpl
 			CPAttachmentFileEntryModelImpl.COMPANYID_COLUMN_BITMASK |
 			CPAttachmentFileEntryModelImpl.
 				EXTERNALREFERENCECODE_COLUMN_BITMASK);
-
-		_finderPathCountByC_ERC = new FinderPath(
-			CPAttachmentFileEntryModelImpl.ENTITY_CACHE_ENABLED,
-			CPAttachmentFileEntryModelImpl.FINDER_CACHE_ENABLED, Long.class,
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByC_ERC",
-			new String[] {Long.class.getName(), String.class.getName()});
 
 		CPAttachmentFileEntryUtil.setPersistence(this);
 	}

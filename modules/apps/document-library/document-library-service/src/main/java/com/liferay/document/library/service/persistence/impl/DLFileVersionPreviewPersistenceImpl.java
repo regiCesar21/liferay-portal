@@ -1102,7 +1102,6 @@ public class DLFileVersionPreviewPersistenceImpl
 		"dlFileVersionPreview.fileVersionId = ?";
 
 	private FinderPath _finderPathFetchByF_F;
-	private FinderPath _finderPathCountByF_F;
 
 	/**
 	 * Returns the dl file version preview where fileEntryId = &#63; and fileVersionId = &#63; or throws a <code>NoSuchFileVersionPreviewException</code> if it could not be found.
@@ -1279,51 +1278,14 @@ public class DLFileVersionPreviewPersistenceImpl
 	 */
 	@Override
 	public int countByF_F(long fileEntryId, long fileVersionId) {
-		FinderPath finderPath = _finderPathCountByF_F;
+		DLFileVersionPreview dlFileVersionPreview = fetchByF_F(
+			fileEntryId, fileVersionId);
 
-		Object[] finderArgs = new Object[] {fileEntryId, fileVersionId};
-
-		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
-
-		if (count == null) {
-			StringBundler sb = new StringBundler(3);
-
-			sb.append(_SQL_COUNT_DLFILEVERSIONPREVIEW_WHERE);
-
-			sb.append(_FINDER_COLUMN_F_F_FILEENTRYID_2);
-
-			sb.append(_FINDER_COLUMN_F_F_FILEVERSIONID_2);
-
-			String sql = sb.toString();
-
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				Query query = session.createQuery(sql);
-
-				QueryPos queryPos = QueryPos.getInstance(query);
-
-				queryPos.add(fileEntryId);
-
-				queryPos.add(fileVersionId);
-
-				count = (Long)query.uniqueResult();
-
-				finderCache.putResult(finderPath, finderArgs, count);
-			}
-			catch (Exception exception) {
-				finderCache.removeResult(finderPath, finderArgs);
-
-				throw processException(exception);
-			}
-			finally {
-				closeSession(session);
-			}
+		if (dlFileVersionPreview == null) {
+			return 0;
 		}
 
-		return count.intValue();
+		return 1;
 	}
 
 	private static final String _FINDER_COLUMN_F_F_FILEENTRYID_2 =
@@ -1333,7 +1295,6 @@ public class DLFileVersionPreviewPersistenceImpl
 		"dlFileVersionPreview.fileVersionId = ?";
 
 	private FinderPath _finderPathFetchByF_F_P;
-	private FinderPath _finderPathCountByF_F_P;
 
 	/**
 	 * Returns the dl file version preview where fileEntryId = &#63; and fileVersionId = &#63; and previewStatus = &#63; or throws a <code>NoSuchFileVersionPreviewException</code> if it could not be found.
@@ -1530,57 +1491,14 @@ public class DLFileVersionPreviewPersistenceImpl
 	public int countByF_F_P(
 		long fileEntryId, long fileVersionId, int previewStatus) {
 
-		FinderPath finderPath = _finderPathCountByF_F_P;
+		DLFileVersionPreview dlFileVersionPreview = fetchByF_F_P(
+			fileEntryId, fileVersionId, previewStatus);
 
-		Object[] finderArgs = new Object[] {
-			fileEntryId, fileVersionId, previewStatus
-		};
-
-		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
-
-		if (count == null) {
-			StringBundler sb = new StringBundler(4);
-
-			sb.append(_SQL_COUNT_DLFILEVERSIONPREVIEW_WHERE);
-
-			sb.append(_FINDER_COLUMN_F_F_P_FILEENTRYID_2);
-
-			sb.append(_FINDER_COLUMN_F_F_P_FILEVERSIONID_2);
-
-			sb.append(_FINDER_COLUMN_F_F_P_PREVIEWSTATUS_2);
-
-			String sql = sb.toString();
-
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				Query query = session.createQuery(sql);
-
-				QueryPos queryPos = QueryPos.getInstance(query);
-
-				queryPos.add(fileEntryId);
-
-				queryPos.add(fileVersionId);
-
-				queryPos.add(previewStatus);
-
-				count = (Long)query.uniqueResult();
-
-				finderCache.putResult(finderPath, finderArgs, count);
-			}
-			catch (Exception exception) {
-				finderCache.removeResult(finderPath, finderArgs);
-
-				throw processException(exception);
-			}
-			finally {
-				closeSession(session);
-			}
+		if (dlFileVersionPreview == null) {
+			return 0;
 		}
 
-		return count.intValue();
+		return 1;
 	}
 
 	private static final String _FINDER_COLUMN_F_F_P_FILEENTRYID_2 =
@@ -2546,12 +2464,6 @@ public class DLFileVersionPreviewPersistenceImpl
 			DLFileVersionPreviewModelImpl.FILEENTRYID_COLUMN_BITMASK |
 			DLFileVersionPreviewModelImpl.FILEVERSIONID_COLUMN_BITMASK);
 
-		_finderPathCountByF_F = new FinderPath(
-			DLFileVersionPreviewModelImpl.ENTITY_CACHE_ENABLED,
-			DLFileVersionPreviewModelImpl.FINDER_CACHE_ENABLED, Long.class,
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByF_F",
-			new String[] {Long.class.getName(), Long.class.getName()});
-
 		_finderPathFetchByF_F_P = new FinderPath(
 			DLFileVersionPreviewModelImpl.ENTITY_CACHE_ENABLED,
 			DLFileVersionPreviewModelImpl.FINDER_CACHE_ENABLED,
@@ -2564,15 +2476,6 @@ public class DLFileVersionPreviewPersistenceImpl
 			DLFileVersionPreviewModelImpl.FILEENTRYID_COLUMN_BITMASK |
 			DLFileVersionPreviewModelImpl.FILEVERSIONID_COLUMN_BITMASK |
 			DLFileVersionPreviewModelImpl.PREVIEWSTATUS_COLUMN_BITMASK);
-
-		_finderPathCountByF_F_P = new FinderPath(
-			DLFileVersionPreviewModelImpl.ENTITY_CACHE_ENABLED,
-			DLFileVersionPreviewModelImpl.FINDER_CACHE_ENABLED, Long.class,
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByF_F_P",
-			new String[] {
-				Long.class.getName(), Long.class.getName(),
-				Integer.class.getName()
-			});
 
 		DLFileVersionPreviewUtil.setPersistence(this);
 	}

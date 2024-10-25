@@ -1687,7 +1687,6 @@ public class AppPersistenceImpl
 		"app.companyId = ?";
 
 	private FinderPath _finderPathFetchByRemoteAppId;
-	private FinderPath _finderPathCountByRemoteAppId;
 
 	/**
 	 * Returns the app where remoteAppId = &#63; or throws a <code>NoSuchAppException</code> if it could not be found.
@@ -1854,47 +1853,13 @@ public class AppPersistenceImpl
 	 */
 	@Override
 	public int countByRemoteAppId(long remoteAppId) {
-		FinderPath finderPath = _finderPathCountByRemoteAppId;
+		App app = fetchByRemoteAppId(remoteAppId);
 
-		Object[] finderArgs = new Object[] {remoteAppId};
-
-		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
-
-		if (count == null) {
-			StringBundler sb = new StringBundler(2);
-
-			sb.append(_SQL_COUNT_APP_WHERE);
-
-			sb.append(_FINDER_COLUMN_REMOTEAPPID_REMOTEAPPID_2);
-
-			String sql = sb.toString();
-
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				Query query = session.createQuery(sql);
-
-				QueryPos queryPos = QueryPos.getInstance(query);
-
-				queryPos.add(remoteAppId);
-
-				count = (Long)query.uniqueResult();
-
-				finderCache.putResult(finderPath, finderArgs, count);
-			}
-			catch (Exception exception) {
-				finderCache.removeResult(finderPath, finderArgs);
-
-				throw processException(exception);
-			}
-			finally {
-				closeSession(session);
-			}
+		if (app == null) {
+			return 0;
 		}
 
-		return count.intValue();
+		return 1;
 	}
 
 	private static final String _FINDER_COLUMN_REMOTEAPPID_REMOTEAPPID_2 =
@@ -3403,12 +3368,6 @@ public class AppPersistenceImpl
 			FINDER_CLASS_NAME_ENTITY, "fetchByRemoteAppId",
 			new String[] {Long.class.getName()},
 			AppModelImpl.REMOTEAPPID_COLUMN_BITMASK);
-
-		_finderPathCountByRemoteAppId = new FinderPath(
-			AppModelImpl.ENTITY_CACHE_ENABLED,
-			AppModelImpl.FINDER_CACHE_ENABLED, Long.class,
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByRemoteAppId",
-			new String[] {Long.class.getName()});
 
 		_finderPathWithPaginationFindByCategory = new FinderPath(
 			AppModelImpl.ENTITY_CACHE_ENABLED,

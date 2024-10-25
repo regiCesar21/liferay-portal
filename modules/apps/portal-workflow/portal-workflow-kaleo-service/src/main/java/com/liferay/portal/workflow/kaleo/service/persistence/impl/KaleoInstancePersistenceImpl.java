@@ -2805,7 +2805,6 @@ public class KaleoInstancePersistenceImpl
 		"kaleoInstance.classPK = ?";
 
 	private FinderPath _finderPathFetchByKII_C_U;
-	private FinderPath _finderPathCountByKII_C_U;
 
 	/**
 	 * Returns the kaleo instance where kaleoInstanceId = &#63; and companyId = &#63; and userId = &#63; or throws a <code>NoSuchInstanceException</code> if it could not be found.
@@ -3016,55 +3015,14 @@ public class KaleoInstancePersistenceImpl
 	public int countByKII_C_U(
 		long kaleoInstanceId, long companyId, long userId) {
 
-		FinderPath finderPath = _finderPathCountByKII_C_U;
+		KaleoInstance kaleoInstance = fetchByKII_C_U(
+			kaleoInstanceId, companyId, userId);
 
-		Object[] finderArgs = new Object[] {kaleoInstanceId, companyId, userId};
-
-		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
-
-		if (count == null) {
-			StringBundler sb = new StringBundler(4);
-
-			sb.append(_SQL_COUNT_KALEOINSTANCE_WHERE);
-
-			sb.append(_FINDER_COLUMN_KII_C_U_KALEOINSTANCEID_2);
-
-			sb.append(_FINDER_COLUMN_KII_C_U_COMPANYID_2);
-
-			sb.append(_FINDER_COLUMN_KII_C_U_USERID_2);
-
-			String sql = sb.toString();
-
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				Query query = session.createQuery(sql);
-
-				QueryPos queryPos = QueryPos.getInstance(query);
-
-				queryPos.add(kaleoInstanceId);
-
-				queryPos.add(companyId);
-
-				queryPos.add(userId);
-
-				count = (Long)query.uniqueResult();
-
-				finderCache.putResult(finderPath, finderArgs, count);
-			}
-			catch (Exception exception) {
-				finderCache.removeResult(finderPath, finderArgs);
-
-				throw processException(exception);
-			}
-			finally {
-				closeSession(session);
-			}
+		if (kaleoInstance == null) {
+			return 0;
 		}
 
-		return count.intValue();
+		return 1;
 	}
 
 	private static final String _FINDER_COLUMN_KII_C_U_KALEOINSTANCEID_2 =
@@ -4944,14 +4902,6 @@ public class KaleoInstancePersistenceImpl
 			KaleoInstanceModelImpl.KALEOINSTANCEID_COLUMN_BITMASK |
 			KaleoInstanceModelImpl.COMPANYID_COLUMN_BITMASK |
 			KaleoInstanceModelImpl.USERID_COLUMN_BITMASK);
-
-		_finderPathCountByKII_C_U = new FinderPath(
-			KaleoInstanceModelImpl.ENTITY_CACHE_ENABLED,
-			KaleoInstanceModelImpl.FINDER_CACHE_ENABLED, Long.class,
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByKII_C_U",
-			new String[] {
-				Long.class.getName(), Long.class.getName(), Long.class.getName()
-			});
 
 		_finderPathWithPaginationFindByC_KDN_KDV_CD = new FinderPath(
 			KaleoInstanceModelImpl.ENTITY_CACHE_ENABLED,

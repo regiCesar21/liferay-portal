@@ -1117,7 +1117,6 @@ public class TrashVersionPersistenceImpl
 		"trashVersion.classNameId = ?";
 
 	private FinderPath _finderPathFetchByC_C;
-	private FinderPath _finderPathCountByC_C;
 
 	/**
 	 * Returns the trash version where classNameId = &#63; and classPK = &#63; or throws a <code>NoSuchVersionException</code> if it could not be found.
@@ -1288,51 +1287,13 @@ public class TrashVersionPersistenceImpl
 	 */
 	@Override
 	public int countByC_C(long classNameId, long classPK) {
-		FinderPath finderPath = _finderPathCountByC_C;
+		TrashVersion trashVersion = fetchByC_C(classNameId, classPK);
 
-		Object[] finderArgs = new Object[] {classNameId, classPK};
-
-		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
-
-		if (count == null) {
-			StringBundler sb = new StringBundler(3);
-
-			sb.append(_SQL_COUNT_TRASHVERSION_WHERE);
-
-			sb.append(_FINDER_COLUMN_C_C_CLASSNAMEID_2);
-
-			sb.append(_FINDER_COLUMN_C_C_CLASSPK_2);
-
-			String sql = sb.toString();
-
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				Query query = session.createQuery(sql);
-
-				QueryPos queryPos = QueryPos.getInstance(query);
-
-				queryPos.add(classNameId);
-
-				queryPos.add(classPK);
-
-				count = (Long)query.uniqueResult();
-
-				finderCache.putResult(finderPath, finderArgs, count);
-			}
-			catch (Exception exception) {
-				finderCache.removeResult(finderPath, finderArgs);
-
-				throw processException(exception);
-			}
-			finally {
-				closeSession(session);
-			}
+		if (trashVersion == null) {
+			return 0;
 		}
 
-		return count.intValue();
+		return 1;
 	}
 
 	private static final String _FINDER_COLUMN_C_C_CLASSNAMEID_2 =
@@ -2211,12 +2172,6 @@ public class TrashVersionPersistenceImpl
 			new String[] {Long.class.getName(), Long.class.getName()},
 			TrashVersionModelImpl.CLASSNAMEID_COLUMN_BITMASK |
 			TrashVersionModelImpl.CLASSPK_COLUMN_BITMASK);
-
-		_finderPathCountByC_C = new FinderPath(
-			TrashVersionModelImpl.ENTITY_CACHE_ENABLED,
-			TrashVersionModelImpl.FINDER_CACHE_ENABLED, Long.class,
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByC_C",
-			new String[] {Long.class.getName(), Long.class.getName()});
 
 		TrashVersionUtil.setPersistence(this);
 	}

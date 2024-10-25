@@ -635,7 +635,6 @@ public class CommerceSubscriptionEntryPersistenceImpl
 		"(commerceSubscriptionEntry.uuid IS NULL OR commerceSubscriptionEntry.uuid = '')";
 
 	private FinderPath _finderPathFetchByUUID_G;
-	private FinderPath _finderPathCountByUUID_G;
 
 	/**
 	 * Returns the commerce subscription entry where uuid = &#63; and groupId = &#63; or throws a <code>NoSuchSubscriptionEntryException</code> if it could not be found.
@@ -824,64 +823,14 @@ public class CommerceSubscriptionEntryPersistenceImpl
 	 */
 	@Override
 	public int countByUUID_G(String uuid, long groupId) {
-		uuid = Objects.toString(uuid, "");
+		CommerceSubscriptionEntry commerceSubscriptionEntry = fetchByUUID_G(
+			uuid, groupId);
 
-		FinderPath finderPath = _finderPathCountByUUID_G;
-
-		Object[] finderArgs = new Object[] {uuid, groupId};
-
-		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
-
-		if (count == null) {
-			StringBundler sb = new StringBundler(3);
-
-			sb.append(_SQL_COUNT_COMMERCESUBSCRIPTIONENTRY_WHERE);
-
-			boolean bindUuid = false;
-
-			if (uuid.isEmpty()) {
-				sb.append(_FINDER_COLUMN_UUID_G_UUID_3);
-			}
-			else {
-				bindUuid = true;
-
-				sb.append(_FINDER_COLUMN_UUID_G_UUID_2);
-			}
-
-			sb.append(_FINDER_COLUMN_UUID_G_GROUPID_2);
-
-			String sql = sb.toString();
-
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				Query query = session.createQuery(sql);
-
-				QueryPos queryPos = QueryPos.getInstance(query);
-
-				if (bindUuid) {
-					queryPos.add(uuid);
-				}
-
-				queryPos.add(groupId);
-
-				count = (Long)query.uniqueResult();
-
-				finderCache.putResult(finderPath, finderArgs, count);
-			}
-			catch (Exception exception) {
-				finderCache.removeResult(finderPath, finderArgs);
-
-				throw processException(exception);
-			}
-			finally {
-				closeSession(session);
-			}
+		if (commerceSubscriptionEntry == null) {
+			return 0;
 		}
 
-		return count.intValue();
+		return 1;
 	}
 
 	private static final String _FINDER_COLUMN_UUID_G_UUID_2 =
@@ -2518,7 +2467,6 @@ public class CommerceSubscriptionEntryPersistenceImpl
 		"commerceSubscriptionEntry.companyId = ?";
 
 	private FinderPath _finderPathFetchByCommerceOrderItemId;
-	private FinderPath _finderPathCountByCommerceOrderItemId;
 
 	/**
 	 * Returns the commerce subscription entry where commerceOrderItemId = &#63; or throws a <code>NoSuchSubscriptionEntryException</code> if it could not be found.
@@ -2687,47 +2635,14 @@ public class CommerceSubscriptionEntryPersistenceImpl
 	 */
 	@Override
 	public int countByCommerceOrderItemId(long commerceOrderItemId) {
-		FinderPath finderPath = _finderPathCountByCommerceOrderItemId;
+		CommerceSubscriptionEntry commerceSubscriptionEntry =
+			fetchByCommerceOrderItemId(commerceOrderItemId);
 
-		Object[] finderArgs = new Object[] {commerceOrderItemId};
-
-		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
-
-		if (count == null) {
-			StringBundler sb = new StringBundler(2);
-
-			sb.append(_SQL_COUNT_COMMERCESUBSCRIPTIONENTRY_WHERE);
-
-			sb.append(_FINDER_COLUMN_COMMERCEORDERITEMID_COMMERCEORDERITEMID_2);
-
-			String sql = sb.toString();
-
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				Query query = session.createQuery(sql);
-
-				QueryPos queryPos = QueryPos.getInstance(query);
-
-				queryPos.add(commerceOrderItemId);
-
-				count = (Long)query.uniqueResult();
-
-				finderCache.putResult(finderPath, finderArgs, count);
-			}
-			catch (Exception exception) {
-				finderCache.removeResult(finderPath, finderArgs);
-
-				throw processException(exception);
-			}
-			finally {
-				closeSession(session);
-			}
+		if (commerceSubscriptionEntry == null) {
+			return 0;
 		}
 
-		return count.intValue();
+		return 1;
 	}
 
 	private static final String
@@ -4403,7 +4318,6 @@ public class CommerceSubscriptionEntryPersistenceImpl
 		"commerceSubscriptionEntry.userId = ?";
 
 	private FinderPath _finderPathFetchByC_C_C;
-	private FinderPath _finderPathCountByC_C_C;
 
 	/**
 	 * Returns the commerce subscription entry where CPInstanceUuid = &#63; and CProductId = &#63; and commerceOrderItemId = &#63; or throws a <code>NoSuchSubscriptionEntryException</code> if it could not be found.
@@ -4618,70 +4532,14 @@ public class CommerceSubscriptionEntryPersistenceImpl
 	public int countByC_C_C(
 		String CPInstanceUuid, long CProductId, long commerceOrderItemId) {
 
-		CPInstanceUuid = Objects.toString(CPInstanceUuid, "");
+		CommerceSubscriptionEntry commerceSubscriptionEntry = fetchByC_C_C(
+			CPInstanceUuid, CProductId, commerceOrderItemId);
 
-		FinderPath finderPath = _finderPathCountByC_C_C;
-
-		Object[] finderArgs = new Object[] {
-			CPInstanceUuid, CProductId, commerceOrderItemId
-		};
-
-		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
-
-		if (count == null) {
-			StringBundler sb = new StringBundler(4);
-
-			sb.append(_SQL_COUNT_COMMERCESUBSCRIPTIONENTRY_WHERE);
-
-			boolean bindCPInstanceUuid = false;
-
-			if (CPInstanceUuid.isEmpty()) {
-				sb.append(_FINDER_COLUMN_C_C_C_CPINSTANCEUUID_3);
-			}
-			else {
-				bindCPInstanceUuid = true;
-
-				sb.append(_FINDER_COLUMN_C_C_C_CPINSTANCEUUID_2);
-			}
-
-			sb.append(_FINDER_COLUMN_C_C_C_CPRODUCTID_2);
-
-			sb.append(_FINDER_COLUMN_C_C_C_COMMERCEORDERITEMID_2);
-
-			String sql = sb.toString();
-
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				Query query = session.createQuery(sql);
-
-				QueryPos queryPos = QueryPos.getInstance(query);
-
-				if (bindCPInstanceUuid) {
-					queryPos.add(CPInstanceUuid);
-				}
-
-				queryPos.add(CProductId);
-
-				queryPos.add(commerceOrderItemId);
-
-				count = (Long)query.uniqueResult();
-
-				finderCache.putResult(finderPath, finderArgs, count);
-			}
-			catch (Exception exception) {
-				finderCache.removeResult(finderPath, finderArgs);
-
-				throw processException(exception);
-			}
-			finally {
-				closeSession(session);
-			}
+		if (commerceSubscriptionEntry == null) {
+			return 0;
 		}
 
-		return count.intValue();
+		return 1;
 	}
 
 	private static final String _FINDER_COLUMN_C_C_C_CPINSTANCEUUID_2 =
@@ -5919,12 +5777,6 @@ public class CommerceSubscriptionEntryPersistenceImpl
 			CommerceSubscriptionEntryModelImpl.UUID_COLUMN_BITMASK |
 			CommerceSubscriptionEntryModelImpl.GROUPID_COLUMN_BITMASK);
 
-		_finderPathCountByUUID_G = new FinderPath(
-			CommerceSubscriptionEntryModelImpl.ENTITY_CACHE_ENABLED,
-			CommerceSubscriptionEntryModelImpl.FINDER_CACHE_ENABLED, Long.class,
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByUUID_G",
-			new String[] {String.class.getName(), Long.class.getName()});
-
 		_finderPathWithPaginationFindByUuid_C = new FinderPath(
 			CommerceSubscriptionEntryModelImpl.ENTITY_CACHE_ENABLED,
 			CommerceSubscriptionEntryModelImpl.FINDER_CACHE_ENABLED,
@@ -6009,12 +5861,6 @@ public class CommerceSubscriptionEntryPersistenceImpl
 			"fetchByCommerceOrderItemId", new String[] {Long.class.getName()},
 			CommerceSubscriptionEntryModelImpl.
 				COMMERCEORDERITEMID_COLUMN_BITMASK);
-
-		_finderPathCountByCommerceOrderItemId = new FinderPath(
-			CommerceSubscriptionEntryModelImpl.ENTITY_CACHE_ENABLED,
-			CommerceSubscriptionEntryModelImpl.FINDER_CACHE_ENABLED, Long.class,
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
-			"countByCommerceOrderItemId", new String[] {Long.class.getName()});
 
 		_finderPathWithPaginationFindBySubscriptionStatus = new FinderPath(
 			CommerceSubscriptionEntryModelImpl.ENTITY_CACHE_ENABLED,
@@ -6115,15 +5961,6 @@ public class CommerceSubscriptionEntryPersistenceImpl
 			CommerceSubscriptionEntryModelImpl.CPRODUCTID_COLUMN_BITMASK |
 			CommerceSubscriptionEntryModelImpl.
 				COMMERCEORDERITEMID_COLUMN_BITMASK);
-
-		_finderPathCountByC_C_C = new FinderPath(
-			CommerceSubscriptionEntryModelImpl.ENTITY_CACHE_ENABLED,
-			CommerceSubscriptionEntryModelImpl.FINDER_CACHE_ENABLED, Long.class,
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByC_C_C",
-			new String[] {
-				String.class.getName(), Long.class.getName(),
-				Long.class.getName()
-			});
 
 		CommerceSubscriptionEntryUtil.setPersistence(this);
 	}

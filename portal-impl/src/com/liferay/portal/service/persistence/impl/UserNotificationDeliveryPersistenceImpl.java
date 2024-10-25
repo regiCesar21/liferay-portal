@@ -585,7 +585,6 @@ public class UserNotificationDeliveryPersistenceImpl
 		"userNotificationDelivery.userId = ?";
 
 	private FinderPath _finderPathFetchByU_P_C_N_D;
-	private FinderPath _finderPathCountByU_P_C_N_D;
 
 	/**
 	 * Returns the user notification delivery where userId = &#63; and portletId = &#63; and classNameId = &#63; and notificationType = &#63; and deliveryType = &#63; or throws a <code>NoSuchUserNotificationDeliveryException</code> if it could not be found.
@@ -830,79 +829,14 @@ public class UserNotificationDeliveryPersistenceImpl
 		long userId, String portletId, long classNameId, int notificationType,
 		int deliveryType) {
 
-		portletId = Objects.toString(portletId, "");
+		UserNotificationDelivery userNotificationDelivery = fetchByU_P_C_N_D(
+			userId, portletId, classNameId, notificationType, deliveryType);
 
-		FinderPath finderPath = _finderPathCountByU_P_C_N_D;
-
-		Object[] finderArgs = new Object[] {
-			userId, portletId, classNameId, notificationType, deliveryType
-		};
-
-		Long count = (Long)FinderCacheUtil.getResult(
-			finderPath, finderArgs, this);
-
-		if (count == null) {
-			StringBundler sb = new StringBundler(6);
-
-			sb.append(_SQL_COUNT_USERNOTIFICATIONDELIVERY_WHERE);
-
-			sb.append(_FINDER_COLUMN_U_P_C_N_D_USERID_2);
-
-			boolean bindPortletId = false;
-
-			if (portletId.isEmpty()) {
-				sb.append(_FINDER_COLUMN_U_P_C_N_D_PORTLETID_3);
-			}
-			else {
-				bindPortletId = true;
-
-				sb.append(_FINDER_COLUMN_U_P_C_N_D_PORTLETID_2);
-			}
-
-			sb.append(_FINDER_COLUMN_U_P_C_N_D_CLASSNAMEID_2);
-
-			sb.append(_FINDER_COLUMN_U_P_C_N_D_NOTIFICATIONTYPE_2);
-
-			sb.append(_FINDER_COLUMN_U_P_C_N_D_DELIVERYTYPE_2);
-
-			String sql = sb.toString();
-
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				Query query = session.createQuery(sql);
-
-				QueryPos queryPos = QueryPos.getInstance(query);
-
-				queryPos.add(userId);
-
-				if (bindPortletId) {
-					queryPos.add(portletId);
-				}
-
-				queryPos.add(classNameId);
-
-				queryPos.add(notificationType);
-
-				queryPos.add(deliveryType);
-
-				count = (Long)query.uniqueResult();
-
-				FinderCacheUtil.putResult(finderPath, finderArgs, count);
-			}
-			catch (Exception exception) {
-				FinderCacheUtil.removeResult(finderPath, finderArgs);
-
-				throw processException(exception);
-			}
-			finally {
-				closeSession(session);
-			}
+		if (userNotificationDelivery == null) {
+			return 0;
 		}
 
-		return count.intValue();
+		return 1;
 	}
 
 	private static final String _FINDER_COLUMN_U_P_C_N_D_USERID_2 =
@@ -1819,16 +1753,6 @@ public class UserNotificationDeliveryPersistenceImpl
 			UserNotificationDeliveryModelImpl.CLASSNAMEID_COLUMN_BITMASK |
 			UserNotificationDeliveryModelImpl.NOTIFICATIONTYPE_COLUMN_BITMASK |
 			UserNotificationDeliveryModelImpl.DELIVERYTYPE_COLUMN_BITMASK);
-
-		_finderPathCountByU_P_C_N_D = new FinderPath(
-			UserNotificationDeliveryModelImpl.ENTITY_CACHE_ENABLED,
-			UserNotificationDeliveryModelImpl.FINDER_CACHE_ENABLED, Long.class,
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByU_P_C_N_D",
-			new String[] {
-				Long.class.getName(), String.class.getName(),
-				Long.class.getName(), Integer.class.getName(),
-				Integer.class.getName()
-			});
 
 		UserNotificationDeliveryUtil.setPersistence(this);
 	}

@@ -2198,7 +2198,6 @@ public class DLFileRankPersistenceImpl
 		"dlFileRank.active = ?";
 
 	private FinderPath _finderPathFetchByC_U_F;
-	private FinderPath _finderPathCountByC_U_F;
 
 	/**
 	 * Returns the document library file rank where companyId = &#63; and userId = &#63; and fileEntryId = &#63; or throws a <code>NoSuchFileRankException</code> if it could not be found.
@@ -2403,55 +2402,13 @@ public class DLFileRankPersistenceImpl
 	 */
 	@Override
 	public int countByC_U_F(long companyId, long userId, long fileEntryId) {
-		FinderPath finderPath = _finderPathCountByC_U_F;
+		DLFileRank dlFileRank = fetchByC_U_F(companyId, userId, fileEntryId);
 
-		Object[] finderArgs = new Object[] {companyId, userId, fileEntryId};
-
-		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
-
-		if (count == null) {
-			StringBundler sb = new StringBundler(4);
-
-			sb.append(_SQL_COUNT_DLFILERANK_WHERE);
-
-			sb.append(_FINDER_COLUMN_C_U_F_COMPANYID_2);
-
-			sb.append(_FINDER_COLUMN_C_U_F_USERID_2);
-
-			sb.append(_FINDER_COLUMN_C_U_F_FILEENTRYID_2);
-
-			String sql = sb.toString();
-
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				Query query = session.createQuery(sql);
-
-				QueryPos queryPos = QueryPos.getInstance(query);
-
-				queryPos.add(companyId);
-
-				queryPos.add(userId);
-
-				queryPos.add(fileEntryId);
-
-				count = (Long)query.uniqueResult();
-
-				finderCache.putResult(finderPath, finderArgs, count);
-			}
-			catch (Exception exception) {
-				finderCache.removeResult(finderPath, finderArgs);
-
-				throw processException(exception);
-			}
-			finally {
-				closeSession(session);
-			}
+		if (dlFileRank == null) {
+			return 0;
 		}
 
-		return count.intValue();
+		return 1;
 	}
 
 	private static final String _FINDER_COLUMN_C_U_F_COMPANYID_2 =
@@ -3490,14 +3447,6 @@ public class DLFileRankPersistenceImpl
 			DLFileRankModelImpl.COMPANYID_COLUMN_BITMASK |
 			DLFileRankModelImpl.USERID_COLUMN_BITMASK |
 			DLFileRankModelImpl.FILEENTRYID_COLUMN_BITMASK);
-
-		_finderPathCountByC_U_F = new FinderPath(
-			DLFileRankModelImpl.ENTITY_CACHE_ENABLED,
-			DLFileRankModelImpl.FINDER_CACHE_ENABLED, Long.class,
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByC_U_F",
-			new String[] {
-				Long.class.getName(), Long.class.getName(), Long.class.getName()
-			});
 
 		DLFileRankUtil.setPersistence(this);
 	}

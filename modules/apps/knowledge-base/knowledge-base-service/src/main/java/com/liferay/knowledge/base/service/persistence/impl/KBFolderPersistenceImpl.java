@@ -618,7 +618,6 @@ public class KBFolderPersistenceImpl
 		"(kbFolder.uuid IS NULL OR kbFolder.uuid = '')";
 
 	private FinderPath _finderPathFetchByUUID_G;
-	private FinderPath _finderPathCountByUUID_G;
 
 	/**
 	 * Returns the kb folder where uuid = &#63; and groupId = &#63; or throws a <code>NoSuchFolderException</code> if it could not be found.
@@ -803,64 +802,13 @@ public class KBFolderPersistenceImpl
 	 */
 	@Override
 	public int countByUUID_G(String uuid, long groupId) {
-		uuid = Objects.toString(uuid, "");
+		KBFolder kbFolder = fetchByUUID_G(uuid, groupId);
 
-		FinderPath finderPath = _finderPathCountByUUID_G;
-
-		Object[] finderArgs = new Object[] {uuid, groupId};
-
-		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
-
-		if (count == null) {
-			StringBundler sb = new StringBundler(3);
-
-			sb.append(_SQL_COUNT_KBFOLDER_WHERE);
-
-			boolean bindUuid = false;
-
-			if (uuid.isEmpty()) {
-				sb.append(_FINDER_COLUMN_UUID_G_UUID_3);
-			}
-			else {
-				bindUuid = true;
-
-				sb.append(_FINDER_COLUMN_UUID_G_UUID_2);
-			}
-
-			sb.append(_FINDER_COLUMN_UUID_G_GROUPID_2);
-
-			String sql = sb.toString();
-
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				Query query = session.createQuery(sql);
-
-				QueryPos queryPos = QueryPos.getInstance(query);
-
-				if (bindUuid) {
-					queryPos.add(uuid);
-				}
-
-				queryPos.add(groupId);
-
-				count = (Long)query.uniqueResult();
-
-				finderCache.putResult(finderPath, finderArgs, count);
-			}
-			catch (Exception exception) {
-				finderCache.removeResult(finderPath, finderArgs);
-
-				throw processException(exception);
-			}
-			finally {
-				closeSession(session);
-			}
+		if (kbFolder == null) {
+			return 0;
 		}
 
-		return count.intValue();
+		return 1;
 	}
 
 	private static final String _FINDER_COLUMN_UUID_G_UUID_2 =
@@ -2393,7 +2341,6 @@ public class KBFolderPersistenceImpl
 		"kbFolder.parentKBFolderId = ?";
 
 	private FinderPath _finderPathFetchByG_P_N;
-	private FinderPath _finderPathCountByG_P_N;
 
 	/**
 	 * Returns the kb folder where groupId = &#63; and parentKBFolderId = &#63; and name = &#63; or throws a <code>NoSuchFolderException</code> if it could not be found.
@@ -2613,68 +2560,13 @@ public class KBFolderPersistenceImpl
 	 */
 	@Override
 	public int countByG_P_N(long groupId, long parentKBFolderId, String name) {
-		name = Objects.toString(name, "");
+		KBFolder kbFolder = fetchByG_P_N(groupId, parentKBFolderId, name);
 
-		FinderPath finderPath = _finderPathCountByG_P_N;
-
-		Object[] finderArgs = new Object[] {groupId, parentKBFolderId, name};
-
-		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
-
-		if (count == null) {
-			StringBundler sb = new StringBundler(4);
-
-			sb.append(_SQL_COUNT_KBFOLDER_WHERE);
-
-			sb.append(_FINDER_COLUMN_G_P_N_GROUPID_2);
-
-			sb.append(_FINDER_COLUMN_G_P_N_PARENTKBFOLDERID_2);
-
-			boolean bindName = false;
-
-			if (name.isEmpty()) {
-				sb.append(_FINDER_COLUMN_G_P_N_NAME_3);
-			}
-			else {
-				bindName = true;
-
-				sb.append(_FINDER_COLUMN_G_P_N_NAME_2);
-			}
-
-			String sql = sb.toString();
-
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				Query query = session.createQuery(sql);
-
-				QueryPos queryPos = QueryPos.getInstance(query);
-
-				queryPos.add(groupId);
-
-				queryPos.add(parentKBFolderId);
-
-				if (bindName) {
-					queryPos.add(name);
-				}
-
-				count = (Long)query.uniqueResult();
-
-				finderCache.putResult(finderPath, finderArgs, count);
-			}
-			catch (Exception exception) {
-				finderCache.removeResult(finderPath, finderArgs);
-
-				throw processException(exception);
-			}
-			finally {
-				closeSession(session);
-			}
+		if (kbFolder == null) {
+			return 0;
 		}
 
-		return count.intValue();
+		return 1;
 	}
 
 	private static final String _FINDER_COLUMN_G_P_N_GROUPID_2 =
@@ -2690,7 +2582,6 @@ public class KBFolderPersistenceImpl
 		"(kbFolder.name IS NULL OR kbFolder.name = '')";
 
 	private FinderPath _finderPathFetchByG_P_UT;
-	private FinderPath _finderPathCountByG_P_UT;
 
 	/**
 	 * Returns the kb folder where groupId = &#63; and parentKBFolderId = &#63; and urlTitle = &#63; or throws a <code>NoSuchFolderException</code> if it could not be found.
@@ -2912,70 +2803,13 @@ public class KBFolderPersistenceImpl
 	public int countByG_P_UT(
 		long groupId, long parentKBFolderId, String urlTitle) {
 
-		urlTitle = Objects.toString(urlTitle, "");
+		KBFolder kbFolder = fetchByG_P_UT(groupId, parentKBFolderId, urlTitle);
 
-		FinderPath finderPath = _finderPathCountByG_P_UT;
-
-		Object[] finderArgs = new Object[] {
-			groupId, parentKBFolderId, urlTitle
-		};
-
-		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
-
-		if (count == null) {
-			StringBundler sb = new StringBundler(4);
-
-			sb.append(_SQL_COUNT_KBFOLDER_WHERE);
-
-			sb.append(_FINDER_COLUMN_G_P_UT_GROUPID_2);
-
-			sb.append(_FINDER_COLUMN_G_P_UT_PARENTKBFOLDERID_2);
-
-			boolean bindUrlTitle = false;
-
-			if (urlTitle.isEmpty()) {
-				sb.append(_FINDER_COLUMN_G_P_UT_URLTITLE_3);
-			}
-			else {
-				bindUrlTitle = true;
-
-				sb.append(_FINDER_COLUMN_G_P_UT_URLTITLE_2);
-			}
-
-			String sql = sb.toString();
-
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				Query query = session.createQuery(sql);
-
-				QueryPos queryPos = QueryPos.getInstance(query);
-
-				queryPos.add(groupId);
-
-				queryPos.add(parentKBFolderId);
-
-				if (bindUrlTitle) {
-					queryPos.add(urlTitle);
-				}
-
-				count = (Long)query.uniqueResult();
-
-				finderCache.putResult(finderPath, finderArgs, count);
-			}
-			catch (Exception exception) {
-				finderCache.removeResult(finderPath, finderArgs);
-
-				throw processException(exception);
-			}
-			finally {
-				closeSession(session);
-			}
+		if (kbFolder == null) {
+			return 0;
 		}
 
-		return count.intValue();
+		return 1;
 	}
 
 	private static final String _FINDER_COLUMN_G_P_UT_GROUPID_2 =
@@ -4000,12 +3834,6 @@ public class KBFolderPersistenceImpl
 			KBFolderModelImpl.UUID_COLUMN_BITMASK |
 			KBFolderModelImpl.GROUPID_COLUMN_BITMASK);
 
-		_finderPathCountByUUID_G = new FinderPath(
-			KBFolderModelImpl.ENTITY_CACHE_ENABLED,
-			KBFolderModelImpl.FINDER_CACHE_ENABLED, Long.class,
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByUUID_G",
-			new String[] {String.class.getName(), Long.class.getName()});
-
 		_finderPathWithPaginationFindByUuid_C = new FinderPath(
 			KBFolderModelImpl.ENTITY_CACHE_ENABLED,
 			KBFolderModelImpl.FINDER_CACHE_ENABLED, KBFolderImpl.class,
@@ -4066,15 +3894,6 @@ public class KBFolderPersistenceImpl
 			KBFolderModelImpl.PARENTKBFOLDERID_COLUMN_BITMASK |
 			KBFolderModelImpl.NAME_COLUMN_BITMASK);
 
-		_finderPathCountByG_P_N = new FinderPath(
-			KBFolderModelImpl.ENTITY_CACHE_ENABLED,
-			KBFolderModelImpl.FINDER_CACHE_ENABLED, Long.class,
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByG_P_N",
-			new String[] {
-				Long.class.getName(), Long.class.getName(),
-				String.class.getName()
-			});
-
 		_finderPathFetchByG_P_UT = new FinderPath(
 			KBFolderModelImpl.ENTITY_CACHE_ENABLED,
 			KBFolderModelImpl.FINDER_CACHE_ENABLED, KBFolderImpl.class,
@@ -4086,15 +3905,6 @@ public class KBFolderPersistenceImpl
 			KBFolderModelImpl.GROUPID_COLUMN_BITMASK |
 			KBFolderModelImpl.PARENTKBFOLDERID_COLUMN_BITMASK |
 			KBFolderModelImpl.URLTITLE_COLUMN_BITMASK);
-
-		_finderPathCountByG_P_UT = new FinderPath(
-			KBFolderModelImpl.ENTITY_CACHE_ENABLED,
-			KBFolderModelImpl.FINDER_CACHE_ENABLED, Long.class,
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByG_P_UT",
-			new String[] {
-				Long.class.getName(), Long.class.getName(),
-				String.class.getName()
-			});
 
 		KBFolderUtil.setPersistence(this);
 	}

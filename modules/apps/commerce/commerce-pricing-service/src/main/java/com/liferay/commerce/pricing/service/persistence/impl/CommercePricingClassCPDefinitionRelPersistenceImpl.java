@@ -1181,7 +1181,6 @@ public class CommercePricingClassCPDefinitionRelPersistenceImpl
 		"commercePricingClassCPDefinitionRel.CPDefinitionId = ?";
 
 	private FinderPath _finderPathFetchByC_C;
-	private FinderPath _finderPathCountByC_C;
 
 	/**
 	 * Returns the commerce pricing class cp definition rel where commercePricingClassId = &#63; and CPDefinitionId = &#63; or throws a <code>NoSuchPricingClassCPDefinitionRelException</code> if it could not be found.
@@ -1367,53 +1366,15 @@ public class CommercePricingClassCPDefinitionRelPersistenceImpl
 	 */
 	@Override
 	public int countByC_C(long commercePricingClassId, long CPDefinitionId) {
-		FinderPath finderPath = _finderPathCountByC_C;
+		CommercePricingClassCPDefinitionRel
+			commercePricingClassCPDefinitionRel = fetchByC_C(
+				commercePricingClassId, CPDefinitionId);
 
-		Object[] finderArgs = new Object[] {
-			commercePricingClassId, CPDefinitionId
-		};
-
-		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
-
-		if (count == null) {
-			StringBundler sb = new StringBundler(3);
-
-			sb.append(_SQL_COUNT_COMMERCEPRICINGCLASSCPDEFINITIONREL_WHERE);
-
-			sb.append(_FINDER_COLUMN_C_C_COMMERCEPRICINGCLASSID_2);
-
-			sb.append(_FINDER_COLUMN_C_C_CPDEFINITIONID_2);
-
-			String sql = sb.toString();
-
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				Query query = session.createQuery(sql);
-
-				QueryPos queryPos = QueryPos.getInstance(query);
-
-				queryPos.add(commercePricingClassId);
-
-				queryPos.add(CPDefinitionId);
-
-				count = (Long)query.uniqueResult();
-
-				finderCache.putResult(finderPath, finderArgs, count);
-			}
-			catch (Exception exception) {
-				finderCache.removeResult(finderPath, finderArgs);
-
-				throw processException(exception);
-			}
-			finally {
-				closeSession(session);
-			}
+		if (commercePricingClassCPDefinitionRel == null) {
+			return 0;
 		}
 
-		return count.intValue();
+		return 1;
 	}
 
 	private static final String _FINDER_COLUMN_C_C_COMMERCEPRICINGCLASSID_2 =
@@ -2499,12 +2460,6 @@ public class CommercePricingClassCPDefinitionRelPersistenceImpl
 				COMMERCEPRICINGCLASSID_COLUMN_BITMASK |
 			CommercePricingClassCPDefinitionRelModelImpl.
 				CPDEFINITIONID_COLUMN_BITMASK);
-
-		_finderPathCountByC_C = new FinderPath(
-			CommercePricingClassCPDefinitionRelModelImpl.ENTITY_CACHE_ENABLED,
-			CommercePricingClassCPDefinitionRelModelImpl.FINDER_CACHE_ENABLED,
-			Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByC_C",
-			new String[] {Long.class.getName(), Long.class.getName()});
 
 		CommercePricingClassCPDefinitionRelUtil.setPersistence(this);
 	}

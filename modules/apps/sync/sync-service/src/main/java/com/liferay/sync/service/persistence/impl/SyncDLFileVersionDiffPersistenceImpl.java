@@ -1135,7 +1135,6 @@ public class SyncDLFileVersionDiffPersistenceImpl
 		"syncDLFileVersionDiff.expirationDate < ?";
 
 	private FinderPath _finderPathFetchByF_S_T;
-	private FinderPath _finderPathCountByF_S_T;
 
 	/**
 	 * Returns the sync dl file version diff where fileEntryId = &#63; and sourceFileVersionId = &#63; and targetFileVersionId = &#63; or throws a <code>NoSuchDLFileVersionDiffException</code> if it could not be found.
@@ -1337,57 +1336,14 @@ public class SyncDLFileVersionDiffPersistenceImpl
 	public int countByF_S_T(
 		long fileEntryId, long sourceFileVersionId, long targetFileVersionId) {
 
-		FinderPath finderPath = _finderPathCountByF_S_T;
+		SyncDLFileVersionDiff syncDLFileVersionDiff = fetchByF_S_T(
+			fileEntryId, sourceFileVersionId, targetFileVersionId);
 
-		Object[] finderArgs = new Object[] {
-			fileEntryId, sourceFileVersionId, targetFileVersionId
-		};
-
-		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
-
-		if (count == null) {
-			StringBundler sb = new StringBundler(4);
-
-			sb.append(_SQL_COUNT_SYNCDLFILEVERSIONDIFF_WHERE);
-
-			sb.append(_FINDER_COLUMN_F_S_T_FILEENTRYID_2);
-
-			sb.append(_FINDER_COLUMN_F_S_T_SOURCEFILEVERSIONID_2);
-
-			sb.append(_FINDER_COLUMN_F_S_T_TARGETFILEVERSIONID_2);
-
-			String sql = sb.toString();
-
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				Query query = session.createQuery(sql);
-
-				QueryPos queryPos = QueryPos.getInstance(query);
-
-				queryPos.add(fileEntryId);
-
-				queryPos.add(sourceFileVersionId);
-
-				queryPos.add(targetFileVersionId);
-
-				count = (Long)query.uniqueResult();
-
-				finderCache.putResult(finderPath, finderArgs, count);
-			}
-			catch (Exception exception) {
-				finderCache.removeResult(finderPath, finderArgs);
-
-				throw processException(exception);
-			}
-			finally {
-				closeSession(session);
-			}
+		if (syncDLFileVersionDiff == null) {
+			return 0;
 		}
 
-		return count.intValue();
+		return 1;
 	}
 
 	private static final String _FINDER_COLUMN_F_S_T_FILEENTRYID_2 =
@@ -2308,14 +2264,6 @@ public class SyncDLFileVersionDiffPersistenceImpl
 			SyncDLFileVersionDiffModelImpl.FILEENTRYID_COLUMN_BITMASK |
 			SyncDLFileVersionDiffModelImpl.SOURCEFILEVERSIONID_COLUMN_BITMASK |
 			SyncDLFileVersionDiffModelImpl.TARGETFILEVERSIONID_COLUMN_BITMASK);
-
-		_finderPathCountByF_S_T = new FinderPath(
-			SyncDLFileVersionDiffModelImpl.ENTITY_CACHE_ENABLED,
-			SyncDLFileVersionDiffModelImpl.FINDER_CACHE_ENABLED, Long.class,
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByF_S_T",
-			new String[] {
-				Long.class.getName(), Long.class.getName(), Long.class.getName()
-			});
 
 		SyncDLFileVersionDiffUtil.setPersistence(this);
 	}

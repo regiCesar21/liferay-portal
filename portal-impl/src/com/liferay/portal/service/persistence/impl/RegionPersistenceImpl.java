@@ -1065,7 +1065,6 @@ public class RegionPersistenceImpl
 		"region.active = ?";
 
 	private FinderPath _finderPathFetchByC_R;
-	private FinderPath _finderPathCountByC_R;
 
 	/**
 	 * Returns the region where countryId = &#63; and regionCode = &#63; or throws a <code>NoSuchRegionException</code> if it could not be found.
@@ -1250,65 +1249,13 @@ public class RegionPersistenceImpl
 	 */
 	@Override
 	public int countByC_R(long countryId, String regionCode) {
-		regionCode = Objects.toString(regionCode, "");
+		Region region = fetchByC_R(countryId, regionCode);
 
-		FinderPath finderPath = _finderPathCountByC_R;
-
-		Object[] finderArgs = new Object[] {countryId, regionCode};
-
-		Long count = (Long)FinderCacheUtil.getResult(
-			finderPath, finderArgs, this);
-
-		if (count == null) {
-			StringBundler sb = new StringBundler(3);
-
-			sb.append(_SQL_COUNT_REGION_WHERE);
-
-			sb.append(_FINDER_COLUMN_C_R_COUNTRYID_2);
-
-			boolean bindRegionCode = false;
-
-			if (regionCode.isEmpty()) {
-				sb.append(_FINDER_COLUMN_C_R_REGIONCODE_3);
-			}
-			else {
-				bindRegionCode = true;
-
-				sb.append(_FINDER_COLUMN_C_R_REGIONCODE_2);
-			}
-
-			String sql = sb.toString();
-
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				Query query = session.createQuery(sql);
-
-				QueryPos queryPos = QueryPos.getInstance(query);
-
-				queryPos.add(countryId);
-
-				if (bindRegionCode) {
-					queryPos.add(regionCode);
-				}
-
-				count = (Long)query.uniqueResult();
-
-				FinderCacheUtil.putResult(finderPath, finderArgs, count);
-			}
-			catch (Exception exception) {
-				FinderCacheUtil.removeResult(finderPath, finderArgs);
-
-				throw processException(exception);
-			}
-			finally {
-				closeSession(session);
-			}
+		if (region == null) {
+			return 0;
 		}
 
-		return count.intValue();
+		return 1;
 	}
 
 	private static final String _FINDER_COLUMN_C_R_COUNTRYID_2 =
@@ -2759,12 +2706,6 @@ public class RegionPersistenceImpl
 			new String[] {Long.class.getName(), String.class.getName()},
 			RegionModelImpl.COUNTRYID_COLUMN_BITMASK |
 			RegionModelImpl.REGIONCODE_COLUMN_BITMASK);
-
-		_finderPathCountByC_R = new FinderPath(
-			RegionModelImpl.ENTITY_CACHE_ENABLED,
-			RegionModelImpl.FINDER_CACHE_ENABLED, Long.class,
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByC_R",
-			new String[] {Long.class.getName(), String.class.getName()});
 
 		_finderPathWithPaginationFindByC_A = new FinderPath(
 			RegionModelImpl.ENTITY_CACHE_ENABLED,

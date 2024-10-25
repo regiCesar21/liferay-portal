@@ -613,7 +613,6 @@ public class MBBanPersistenceImpl
 		"(mbBan.uuid IS NULL OR mbBan.uuid = '')";
 
 	private FinderPath _finderPathFetchByUUID_G;
-	private FinderPath _finderPathCountByUUID_G;
 
 	/**
 	 * Returns the message boards ban where uuid = &#63; and groupId = &#63; or throws a <code>NoSuchBanException</code> if it could not be found.
@@ -798,64 +797,13 @@ public class MBBanPersistenceImpl
 	 */
 	@Override
 	public int countByUUID_G(String uuid, long groupId) {
-		uuid = Objects.toString(uuid, "");
+		MBBan mbBan = fetchByUUID_G(uuid, groupId);
 
-		FinderPath finderPath = _finderPathCountByUUID_G;
-
-		Object[] finderArgs = new Object[] {uuid, groupId};
-
-		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
-
-		if (count == null) {
-			StringBundler sb = new StringBundler(3);
-
-			sb.append(_SQL_COUNT_MBBAN_WHERE);
-
-			boolean bindUuid = false;
-
-			if (uuid.isEmpty()) {
-				sb.append(_FINDER_COLUMN_UUID_G_UUID_3);
-			}
-			else {
-				bindUuid = true;
-
-				sb.append(_FINDER_COLUMN_UUID_G_UUID_2);
-			}
-
-			sb.append(_FINDER_COLUMN_UUID_G_GROUPID_2);
-
-			String sql = sb.toString();
-
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				Query query = session.createQuery(sql);
-
-				QueryPos queryPos = QueryPos.getInstance(query);
-
-				if (bindUuid) {
-					queryPos.add(uuid);
-				}
-
-				queryPos.add(groupId);
-
-				count = (Long)query.uniqueResult();
-
-				finderCache.putResult(finderPath, finderArgs, count);
-			}
-			catch (Exception exception) {
-				finderCache.removeResult(finderPath, finderArgs);
-
-				throw processException(exception);
-			}
-			finally {
-				closeSession(session);
-			}
+		if (mbBan == null) {
+			return 0;
 		}
 
-		return count.intValue();
+		return 1;
 	}
 
 	private static final String _FINDER_COLUMN_UUID_G_UUID_2 =
@@ -2931,7 +2879,6 @@ public class MBBanPersistenceImpl
 		"mbBan.banUserId = ?";
 
 	private FinderPath _finderPathFetchByG_B;
-	private FinderPath _finderPathCountByG_B;
 
 	/**
 	 * Returns the message boards ban where groupId = &#63; and banUserId = &#63; or throws a <code>NoSuchBanException</code> if it could not be found.
@@ -3102,51 +3049,13 @@ public class MBBanPersistenceImpl
 	 */
 	@Override
 	public int countByG_B(long groupId, long banUserId) {
-		FinderPath finderPath = _finderPathCountByG_B;
+		MBBan mbBan = fetchByG_B(groupId, banUserId);
 
-		Object[] finderArgs = new Object[] {groupId, banUserId};
-
-		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
-
-		if (count == null) {
-			StringBundler sb = new StringBundler(3);
-
-			sb.append(_SQL_COUNT_MBBAN_WHERE);
-
-			sb.append(_FINDER_COLUMN_G_B_GROUPID_2);
-
-			sb.append(_FINDER_COLUMN_G_B_BANUSERID_2);
-
-			String sql = sb.toString();
-
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				Query query = session.createQuery(sql);
-
-				QueryPos queryPos = QueryPos.getInstance(query);
-
-				queryPos.add(groupId);
-
-				queryPos.add(banUserId);
-
-				count = (Long)query.uniqueResult();
-
-				finderCache.putResult(finderPath, finderArgs, count);
-			}
-			catch (Exception exception) {
-				finderCache.removeResult(finderPath, finderArgs);
-
-				throw processException(exception);
-			}
-			finally {
-				closeSession(session);
-			}
+		if (mbBan == null) {
+			return 0;
 		}
 
-		return count.intValue();
+		return 1;
 	}
 
 	private static final String _FINDER_COLUMN_G_B_GROUPID_2 =
@@ -4145,12 +4054,6 @@ public class MBBanPersistenceImpl
 			MBBanModelImpl.UUID_COLUMN_BITMASK |
 			MBBanModelImpl.GROUPID_COLUMN_BITMASK);
 
-		_finderPathCountByUUID_G = new FinderPath(
-			MBBanModelImpl.ENTITY_CACHE_ENABLED,
-			MBBanModelImpl.FINDER_CACHE_ENABLED, Long.class,
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByUUID_G",
-			new String[] {String.class.getName(), Long.class.getName()});
-
 		_finderPathWithPaginationFindByUuid_C = new FinderPath(
 			MBBanModelImpl.ENTITY_CACHE_ENABLED,
 			MBBanModelImpl.FINDER_CACHE_ENABLED, MBBanImpl.class,
@@ -4248,12 +4151,6 @@ public class MBBanPersistenceImpl
 			new String[] {Long.class.getName(), Long.class.getName()},
 			MBBanModelImpl.GROUPID_COLUMN_BITMASK |
 			MBBanModelImpl.BANUSERID_COLUMN_BITMASK);
-
-		_finderPathCountByG_B = new FinderPath(
-			MBBanModelImpl.ENTITY_CACHE_ENABLED,
-			MBBanModelImpl.FINDER_CACHE_ENABLED, Long.class,
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByG_B",
-			new String[] {Long.class.getName(), Long.class.getName()});
 
 		MBBanUtil.setPersistence(this);
 	}

@@ -591,7 +591,6 @@ public class SamlSpIdpConnectionPersistenceImpl
 		"samlSpIdpConnection.companyId = ?";
 
 	private FinderPath _finderPathFetchByC_SIEI;
-	private FinderPath _finderPathCountByC_SIEI;
 
 	/**
 	 * Returns the saml sp idp connection where companyId = &#63; and samlIdpEntityId = &#63; or throws a <code>NoSuchSpIdpConnectionException</code> if it could not be found.
@@ -802,64 +801,14 @@ public class SamlSpIdpConnectionPersistenceImpl
 	 */
 	@Override
 	public int countByC_SIEI(long companyId, String samlIdpEntityId) {
-		samlIdpEntityId = Objects.toString(samlIdpEntityId, "");
+		SamlSpIdpConnection samlSpIdpConnection = fetchByC_SIEI(
+			companyId, samlIdpEntityId);
 
-		FinderPath finderPath = _finderPathCountByC_SIEI;
-
-		Object[] finderArgs = new Object[] {companyId, samlIdpEntityId};
-
-		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
-
-		if (count == null) {
-			StringBundler sb = new StringBundler(3);
-
-			sb.append(_SQL_COUNT_SAMLSPIDPCONNECTION_WHERE);
-
-			sb.append(_FINDER_COLUMN_C_SIEI_COMPANYID_2);
-
-			boolean bindSamlIdpEntityId = false;
-
-			if (samlIdpEntityId.isEmpty()) {
-				sb.append(_FINDER_COLUMN_C_SIEI_SAMLIDPENTITYID_3);
-			}
-			else {
-				bindSamlIdpEntityId = true;
-
-				sb.append(_FINDER_COLUMN_C_SIEI_SAMLIDPENTITYID_2);
-			}
-
-			String sql = sb.toString();
-
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				Query query = session.createQuery(sql);
-
-				QueryPos queryPos = QueryPos.getInstance(query);
-
-				queryPos.add(companyId);
-
-				if (bindSamlIdpEntityId) {
-					queryPos.add(samlIdpEntityId);
-				}
-
-				count = (Long)query.uniqueResult();
-
-				finderCache.putResult(finderPath, finderArgs, count);
-			}
-			catch (Exception exception) {
-				finderCache.removeResult(finderPath, finderArgs);
-
-				throw processException(exception);
-			}
-			finally {
-				closeSession(session);
-			}
+		if (samlSpIdpConnection == null) {
+			return 0;
 		}
 
-		return count.intValue();
+		return 1;
 	}
 
 	private static final String _FINDER_COLUMN_C_SIEI_COMPANYID_2 =
@@ -1747,12 +1696,6 @@ public class SamlSpIdpConnectionPersistenceImpl
 			new String[] {Long.class.getName(), String.class.getName()},
 			SamlSpIdpConnectionModelImpl.COMPANYID_COLUMN_BITMASK |
 			SamlSpIdpConnectionModelImpl.SAMLIDPENTITYID_COLUMN_BITMASK);
-
-		_finderPathCountByC_SIEI = new FinderPath(
-			SamlSpIdpConnectionModelImpl.ENTITY_CACHE_ENABLED,
-			SamlSpIdpConnectionModelImpl.FINDER_CACHE_ENABLED, Long.class,
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByC_SIEI",
-			new String[] {Long.class.getName(), String.class.getName()});
 
 		SamlSpIdpConnectionUtil.setPersistence(this);
 	}

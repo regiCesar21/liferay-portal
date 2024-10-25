@@ -2696,7 +2696,6 @@ public class AssetLinkPersistenceImpl
 		"assetLink.type = ?";
 
 	private FinderPath _finderPathFetchByE_E_T;
-	private FinderPath _finderPathCountByE_E_T;
 
 	/**
 	 * Returns the asset link where entryId1 = &#63; and entryId2 = &#63; and type = &#63; or throws a <code>NoSuchLinkException</code> if it could not be found.
@@ -2881,56 +2880,13 @@ public class AssetLinkPersistenceImpl
 	 */
 	@Override
 	public int countByE_E_T(long entryId1, long entryId2, int type) {
-		FinderPath finderPath = _finderPathCountByE_E_T;
+		AssetLink assetLink = fetchByE_E_T(entryId1, entryId2, type);
 
-		Object[] finderArgs = new Object[] {entryId1, entryId2, type};
-
-		Long count = (Long)FinderCacheUtil.getResult(
-			finderPath, finderArgs, this);
-
-		if (count == null) {
-			StringBundler sb = new StringBundler(4);
-
-			sb.append(_SQL_COUNT_ASSETLINK_WHERE);
-
-			sb.append(_FINDER_COLUMN_E_E_T_ENTRYID1_2);
-
-			sb.append(_FINDER_COLUMN_E_E_T_ENTRYID2_2);
-
-			sb.append(_FINDER_COLUMN_E_E_T_TYPE_2);
-
-			String sql = sb.toString();
-
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				Query query = session.createQuery(sql);
-
-				QueryPos queryPos = QueryPos.getInstance(query);
-
-				queryPos.add(entryId1);
-
-				queryPos.add(entryId2);
-
-				queryPos.add(type);
-
-				count = (Long)query.uniqueResult();
-
-				FinderCacheUtil.putResult(finderPath, finderArgs, count);
-			}
-			catch (Exception exception) {
-				FinderCacheUtil.removeResult(finderPath, finderArgs);
-
-				throw processException(exception);
-			}
-			finally {
-				closeSession(session);
-			}
+		if (assetLink == null) {
+			return 0;
 		}
 
-		return count.intValue();
+		return 1;
 	}
 
 	private static final String _FINDER_COLUMN_E_E_T_ENTRYID1_2 =
@@ -4014,15 +3970,6 @@ public class AssetLinkPersistenceImpl
 			AssetLinkModelImpl.ENTRYID1_COLUMN_BITMASK |
 			AssetLinkModelImpl.ENTRYID2_COLUMN_BITMASK |
 			AssetLinkModelImpl.TYPE_COLUMN_BITMASK);
-
-		_finderPathCountByE_E_T = new FinderPath(
-			AssetLinkModelImpl.ENTITY_CACHE_ENABLED,
-			AssetLinkModelImpl.FINDER_CACHE_ENABLED, Long.class,
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByE_E_T",
-			new String[] {
-				Long.class.getName(), Long.class.getName(),
-				Integer.class.getName()
-			});
 
 		AssetLinkUtil.setPersistence(this);
 	}

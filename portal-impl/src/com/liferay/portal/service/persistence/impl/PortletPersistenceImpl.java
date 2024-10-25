@@ -573,7 +573,6 @@ public class PortletPersistenceImpl
 		"portlet.companyId = ?";
 
 	private FinderPath _finderPathFetchByC_P;
-	private FinderPath _finderPathCountByC_P;
 
 	/**
 	 * Returns the portlet where companyId = &#63; and portletId = &#63; or throws a <code>NoSuchPortletException</code> if it could not be found.
@@ -758,65 +757,13 @@ public class PortletPersistenceImpl
 	 */
 	@Override
 	public int countByC_P(long companyId, String portletId) {
-		portletId = Objects.toString(portletId, "");
+		Portlet portlet = fetchByC_P(companyId, portletId);
 
-		FinderPath finderPath = _finderPathCountByC_P;
-
-		Object[] finderArgs = new Object[] {companyId, portletId};
-
-		Long count = (Long)FinderCacheUtil.getResult(
-			finderPath, finderArgs, this);
-
-		if (count == null) {
-			StringBundler sb = new StringBundler(3);
-
-			sb.append(_SQL_COUNT_PORTLET_WHERE);
-
-			sb.append(_FINDER_COLUMN_C_P_COMPANYID_2);
-
-			boolean bindPortletId = false;
-
-			if (portletId.isEmpty()) {
-				sb.append(_FINDER_COLUMN_C_P_PORTLETID_3);
-			}
-			else {
-				bindPortletId = true;
-
-				sb.append(_FINDER_COLUMN_C_P_PORTLETID_2);
-			}
-
-			String sql = sb.toString();
-
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				Query query = session.createQuery(sql);
-
-				QueryPos queryPos = QueryPos.getInstance(query);
-
-				queryPos.add(companyId);
-
-				if (bindPortletId) {
-					queryPos.add(portletId);
-				}
-
-				count = (Long)query.uniqueResult();
-
-				FinderCacheUtil.putResult(finderPath, finderArgs, count);
-			}
-			catch (Exception exception) {
-				FinderCacheUtil.removeResult(finderPath, finderArgs);
-
-				throw processException(exception);
-			}
-			finally {
-				closeSession(session);
-			}
+		if (portlet == null) {
+			return 0;
 		}
 
-		return count.intValue();
+		return 1;
 	}
 
 	private static final String _FINDER_COLUMN_C_P_COMPANYID_2 =
@@ -1655,12 +1602,6 @@ public class PortletPersistenceImpl
 			new String[] {Long.class.getName(), String.class.getName()},
 			PortletModelImpl.COMPANYID_COLUMN_BITMASK |
 			PortletModelImpl.PORTLETID_COLUMN_BITMASK);
-
-		_finderPathCountByC_P = new FinderPath(
-			PortletModelImpl.ENTITY_CACHE_ENABLED,
-			PortletModelImpl.FINDER_CACHE_ENABLED, Long.class,
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByC_P",
-			new String[] {Long.class.getName(), String.class.getName()});
 
 		PortletUtil.setPersistence(this);
 	}

@@ -602,7 +602,6 @@ public class FriendlyURLEntryLocalizationPersistenceImpl
 			"friendlyURLEntryLocalization.friendlyURLEntryId = ?";
 
 	private FinderPath _finderPathFetchByFriendlyURLEntryId_LanguageId;
-	private FinderPath _finderPathCountByFriendlyURLEntryId_LanguageId;
 
 	/**
 	 * Returns the friendly url entry localization where friendlyURLEntryId = &#63; and languageId = &#63; or throws a <code>NoSuchFriendlyURLEntryLocalizationException</code> if it could not be found.
@@ -808,67 +807,15 @@ public class FriendlyURLEntryLocalizationPersistenceImpl
 	public int countByFriendlyURLEntryId_LanguageId(
 		long friendlyURLEntryId, String languageId) {
 
-		languageId = Objects.toString(languageId, "");
+		FriendlyURLEntryLocalization friendlyURLEntryLocalization =
+			fetchByFriendlyURLEntryId_LanguageId(
+				friendlyURLEntryId, languageId);
 
-		FinderPath finderPath = _finderPathCountByFriendlyURLEntryId_LanguageId;
-
-		Object[] finderArgs = new Object[] {friendlyURLEntryId, languageId};
-
-		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
-
-		if (count == null) {
-			StringBundler sb = new StringBundler(3);
-
-			sb.append(_SQL_COUNT_FRIENDLYURLENTRYLOCALIZATION_WHERE);
-
-			sb.append(
-				_FINDER_COLUMN_FRIENDLYURLENTRYID_LANGUAGEID_FRIENDLYURLENTRYID_2);
-
-			boolean bindLanguageId = false;
-
-			if (languageId.isEmpty()) {
-				sb.append(
-					_FINDER_COLUMN_FRIENDLYURLENTRYID_LANGUAGEID_LANGUAGEID_3);
-			}
-			else {
-				bindLanguageId = true;
-
-				sb.append(
-					_FINDER_COLUMN_FRIENDLYURLENTRYID_LANGUAGEID_LANGUAGEID_2);
-			}
-
-			String sql = sb.toString();
-
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				Query query = session.createQuery(sql);
-
-				QueryPos queryPos = QueryPos.getInstance(query);
-
-				queryPos.add(friendlyURLEntryId);
-
-				if (bindLanguageId) {
-					queryPos.add(languageId);
-				}
-
-				count = (Long)query.uniqueResult();
-
-				finderCache.putResult(finderPath, finderArgs, count);
-			}
-			catch (Exception exception) {
-				finderCache.removeResult(finderPath, finderArgs);
-
-				throw processException(exception);
-			}
-			finally {
-				closeSession(session);
-			}
+		if (friendlyURLEntryLocalization == null) {
+			return 0;
 		}
 
-		return count.intValue();
+		return 1;
 	}
 
 	private static final String
@@ -884,7 +831,6 @@ public class FriendlyURLEntryLocalizationPersistenceImpl
 			"(friendlyURLEntryLocalization.languageId IS NULL OR friendlyURLEntryLocalization.languageId = '')";
 
 	private FinderPath _finderPathFetchByG_C_U;
-	private FinderPath _finderPathCountByG_C_U;
 
 	/**
 	 * Returns the friendly url entry localization where groupId = &#63; and classNameId = &#63; and urlTitle = &#63; or throws a <code>NoSuchFriendlyURLEntryLocalizationException</code> if it could not be found.
@@ -1094,68 +1040,14 @@ public class FriendlyURLEntryLocalizationPersistenceImpl
 	 */
 	@Override
 	public int countByG_C_U(long groupId, long classNameId, String urlTitle) {
-		urlTitle = Objects.toString(urlTitle, "");
+		FriendlyURLEntryLocalization friendlyURLEntryLocalization =
+			fetchByG_C_U(groupId, classNameId, urlTitle);
 
-		FinderPath finderPath = _finderPathCountByG_C_U;
-
-		Object[] finderArgs = new Object[] {groupId, classNameId, urlTitle};
-
-		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
-
-		if (count == null) {
-			StringBundler sb = new StringBundler(4);
-
-			sb.append(_SQL_COUNT_FRIENDLYURLENTRYLOCALIZATION_WHERE);
-
-			sb.append(_FINDER_COLUMN_G_C_U_GROUPID_2);
-
-			sb.append(_FINDER_COLUMN_G_C_U_CLASSNAMEID_2);
-
-			boolean bindUrlTitle = false;
-
-			if (urlTitle.isEmpty()) {
-				sb.append(_FINDER_COLUMN_G_C_U_URLTITLE_3);
-			}
-			else {
-				bindUrlTitle = true;
-
-				sb.append(_FINDER_COLUMN_G_C_U_URLTITLE_2);
-			}
-
-			String sql = sb.toString();
-
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				Query query = session.createQuery(sql);
-
-				QueryPos queryPos = QueryPos.getInstance(query);
-
-				queryPos.add(groupId);
-
-				queryPos.add(classNameId);
-
-				if (bindUrlTitle) {
-					queryPos.add(urlTitle);
-				}
-
-				count = (Long)query.uniqueResult();
-
-				finderCache.putResult(finderPath, finderArgs, count);
-			}
-			catch (Exception exception) {
-				finderCache.removeResult(finderPath, finderArgs);
-
-				throw processException(exception);
-			}
-			finally {
-				closeSession(session);
-			}
+		if (friendlyURLEntryLocalization == null) {
+			return 0;
 		}
 
-		return count.intValue();
+		return 1;
 	}
 
 	private static final String _FINDER_COLUMN_G_C_U_GROUPID_2 =
@@ -2132,13 +2024,6 @@ public class FriendlyURLEntryLocalizationPersistenceImpl
 				FRIENDLYURLENTRYID_COLUMN_BITMASK |
 			FriendlyURLEntryLocalizationModelImpl.LANGUAGEID_COLUMN_BITMASK);
 
-		_finderPathCountByFriendlyURLEntryId_LanguageId = new FinderPath(
-			FriendlyURLEntryLocalizationModelImpl.ENTITY_CACHE_ENABLED,
-			FriendlyURLEntryLocalizationModelImpl.FINDER_CACHE_ENABLED,
-			Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
-			"countByFriendlyURLEntryId_LanguageId",
-			new String[] {Long.class.getName(), String.class.getName()});
-
 		_finderPathFetchByG_C_U = new FinderPath(
 			FriendlyURLEntryLocalizationModelImpl.ENTITY_CACHE_ENABLED,
 			FriendlyURLEntryLocalizationModelImpl.FINDER_CACHE_ENABLED,
@@ -2151,16 +2036,6 @@ public class FriendlyURLEntryLocalizationPersistenceImpl
 			FriendlyURLEntryLocalizationModelImpl.GROUPID_COLUMN_BITMASK |
 			FriendlyURLEntryLocalizationModelImpl.CLASSNAMEID_COLUMN_BITMASK |
 			FriendlyURLEntryLocalizationModelImpl.URLTITLE_COLUMN_BITMASK);
-
-		_finderPathCountByG_C_U = new FinderPath(
-			FriendlyURLEntryLocalizationModelImpl.ENTITY_CACHE_ENABLED,
-			FriendlyURLEntryLocalizationModelImpl.FINDER_CACHE_ENABLED,
-			Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
-			"countByG_C_U",
-			new String[] {
-				Long.class.getName(), Long.class.getName(),
-				String.class.getName()
-			});
 
 		FriendlyURLEntryLocalizationUtil.setPersistence(this);
 	}
