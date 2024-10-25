@@ -2734,6 +2734,7 @@ public class AssetLinkPersistenceImpl
 		"assetLink.type = ?";
 
 	private FinderPath _finderPathFetchByE_E_T;
+	private FinderPath _finderPathCountByE_E_T;
 
 	/**
 	 * Returns the asset link where entryId1 = &#63; and entryId2 = &#63; and type = &#63; or throws a <code>NoSuchLinkException</code> if it could not be found.
@@ -2918,13 +2919,59 @@ public class AssetLinkPersistenceImpl
 	 */
 	@Override
 	public int countByE_E_T(long entryId1, long entryId2, int type) {
-		AssetLink assetLink = fetchByE_E_T(entryId1, entryId2, type);
+		try (SafeCloseable safeCloseable =
+				CTPersistenceHelperUtil.setCTCollectionIdWithSafeCloseable(
+					AssetLink.class)) {
 
-		if (assetLink == null) {
-			return 0;
+			FinderPath finderPath = _finderPathCountByE_E_T;
+
+			Object[] finderArgs = new Object[] {entryId1, entryId2, type};
+
+			Long count = (Long)FinderCacheUtil.getResult(
+				finderPath, finderArgs, this);
+
+			if (count == null) {
+				StringBundler sb = new StringBundler(4);
+
+				sb.append(_SQL_COUNT_ASSETLINK_WHERE);
+
+				sb.append(_FINDER_COLUMN_E_E_T_ENTRYID1_2);
+
+				sb.append(_FINDER_COLUMN_E_E_T_ENTRYID2_2);
+
+				sb.append(_FINDER_COLUMN_E_E_T_TYPE_2);
+
+				String sql = sb.toString();
+
+				Session session = null;
+
+				try {
+					session = openSession();
+
+					Query query = session.createQuery(sql);
+
+					QueryPos queryPos = QueryPos.getInstance(query);
+
+					queryPos.add(entryId1);
+
+					queryPos.add(entryId2);
+
+					queryPos.add(type);
+
+					count = (Long)query.uniqueResult();
+
+					FinderCacheUtil.putResult(finderPath, finderArgs, count);
+				}
+				catch (Exception exception) {
+					throw processException(exception);
+				}
+				finally {
+					closeSession(session);
+				}
+			}
+
+			return count.intValue();
 		}
-
-		return 1;
 	}
 
 	private static final String _FINDER_COLUMN_E_E_T_ENTRYID1_2 =
@@ -3864,6 +3911,14 @@ public class AssetLinkPersistenceImpl
 				Integer.class.getName()
 			},
 			new String[] {"entryId1", "entryId2", "type_"}, true);
+
+		_finderPathCountByE_E_T = _createFinderPath(
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByE_E_T",
+			new String[] {
+				Long.class.getName(), Long.class.getName(),
+				Integer.class.getName()
+			},
+			new String[] {"entryId1", "entryId2", "type_"}, false);
 
 		AssetLinkUtil.setPersistence(this);
 	}

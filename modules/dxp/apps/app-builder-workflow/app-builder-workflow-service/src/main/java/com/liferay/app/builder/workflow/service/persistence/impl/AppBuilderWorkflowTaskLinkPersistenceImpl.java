@@ -1828,6 +1828,7 @@ public class AppBuilderWorkflowTaskLinkPersistenceImpl
 		"(appBuilderWorkflowTaskLink.workflowTaskName IS NULL OR appBuilderWorkflowTaskLink.workflowTaskName = '')";
 
 	private FinderPath _finderPathFetchByA_A_D_W;
+	private FinderPath _finderPathCountByA_A_D_W;
 
 	/**
 	 * Returns the app builder workflow task link where appBuilderAppId = &#63; and appBuilderAppVersionId = &#63; and ddmStructureLayoutId = &#63; and workflowTaskName = &#63; or throws a <code>NoSuchTaskLinkException</code> if it could not be found.
@@ -2079,15 +2080,73 @@ public class AppBuilderWorkflowTaskLinkPersistenceImpl
 		long appBuilderAppId, long appBuilderAppVersionId,
 		long ddmStructureLayoutId, String workflowTaskName) {
 
-		AppBuilderWorkflowTaskLink appBuilderWorkflowTaskLink = fetchByA_A_D_W(
-			appBuilderAppId, appBuilderAppVersionId, ddmStructureLayoutId,
-			workflowTaskName);
+		workflowTaskName = Objects.toString(workflowTaskName, "");
 
-		if (appBuilderWorkflowTaskLink == null) {
-			return 0;
+		FinderPath finderPath = _finderPathCountByA_A_D_W;
+
+		Object[] finderArgs = new Object[] {
+			appBuilderAppId, appBuilderAppVersionId, ddmStructureLayoutId,
+			workflowTaskName
+		};
+
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
+
+		if (count == null) {
+			StringBundler sb = new StringBundler(5);
+
+			sb.append(_SQL_COUNT_APPBUILDERWORKFLOWTASKLINK_WHERE);
+
+			sb.append(_FINDER_COLUMN_A_A_D_W_APPBUILDERAPPID_2);
+
+			sb.append(_FINDER_COLUMN_A_A_D_W_APPBUILDERAPPVERSIONID_2);
+
+			sb.append(_FINDER_COLUMN_A_A_D_W_DDMSTRUCTURELAYOUTID_2);
+
+			boolean bindWorkflowTaskName = false;
+
+			if (workflowTaskName.isEmpty()) {
+				sb.append(_FINDER_COLUMN_A_A_D_W_WORKFLOWTASKNAME_3);
+			}
+			else {
+				bindWorkflowTaskName = true;
+
+				sb.append(_FINDER_COLUMN_A_A_D_W_WORKFLOWTASKNAME_2);
+			}
+
+			String sql = sb.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query query = session.createQuery(sql);
+
+				QueryPos queryPos = QueryPos.getInstance(query);
+
+				queryPos.add(appBuilderAppId);
+
+				queryPos.add(appBuilderAppVersionId);
+
+				queryPos.add(ddmStructureLayoutId);
+
+				if (bindWorkflowTaskName) {
+					queryPos.add(workflowTaskName);
+				}
+
+				count = (Long)query.uniqueResult();
+
+				finderCache.putResult(finderPath, finderArgs, count);
+			}
+			catch (Exception exception) {
+				throw processException(exception);
+			}
+			finally {
+				closeSession(session);
+			}
 		}
 
-		return 1;
+		return count.intValue();
 	}
 
 	private static final String _FINDER_COLUMN_A_A_D_W_APPBUILDERAPPID_2 =
@@ -2792,6 +2851,18 @@ public class AppBuilderWorkflowTaskLinkPersistenceImpl
 				"ddmStructureLayoutId", "workflowTaskName"
 			},
 			true);
+
+		_finderPathCountByA_A_D_W = _createFinderPath(
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByA_A_D_W",
+			new String[] {
+				Long.class.getName(), Long.class.getName(),
+				Long.class.getName(), String.class.getName()
+			},
+			new String[] {
+				"appBuilderAppId", "appBuilderAppVersionId",
+				"ddmStructureLayoutId", "workflowTaskName"
+			},
+			false);
 
 		AppBuilderWorkflowTaskLinkUtil.setPersistence(this);
 	}

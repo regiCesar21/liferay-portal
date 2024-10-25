@@ -2772,6 +2772,7 @@ public class ModulePersistenceImpl
 		"(module.contextName IS NULL OR module.contextName = '')";
 
 	private FinderPath _finderPathFetchByA_CN;
+	private FinderPath _finderPathCountByA_CN;
 
 	/**
 	 * Returns the module where appId = &#63; and contextName = &#63; or throws a <code>NoSuchModuleException</code> if it could not be found.
@@ -2966,13 +2967,62 @@ public class ModulePersistenceImpl
 	 */
 	@Override
 	public int countByA_CN(long appId, String contextName) {
-		Module module = fetchByA_CN(appId, contextName);
+		contextName = Objects.toString(contextName, "");
 
-		if (module == null) {
-			return 0;
+		FinderPath finderPath = _finderPathCountByA_CN;
+
+		Object[] finderArgs = new Object[] {appId, contextName};
+
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
+
+		if (count == null) {
+			StringBundler sb = new StringBundler(3);
+
+			sb.append(_SQL_COUNT_MODULE_WHERE);
+
+			sb.append(_FINDER_COLUMN_A_CN_APPID_2);
+
+			boolean bindContextName = false;
+
+			if (contextName.isEmpty()) {
+				sb.append(_FINDER_COLUMN_A_CN_CONTEXTNAME_3);
+			}
+			else {
+				bindContextName = true;
+
+				sb.append(_FINDER_COLUMN_A_CN_CONTEXTNAME_2);
+			}
+
+			String sql = sb.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query query = session.createQuery(sql);
+
+				QueryPos queryPos = QueryPos.getInstance(query);
+
+				queryPos.add(appId);
+
+				if (bindContextName) {
+					queryPos.add(contextName);
+				}
+
+				count = (Long)query.uniqueResult();
+
+				finderCache.putResult(finderPath, finderArgs, count);
+			}
+			catch (Exception exception) {
+				throw processException(exception);
+			}
+			finally {
+				closeSession(session);
+			}
 		}
 
-		return 1;
+		return count.intValue();
 	}
 
 	private static final String _FINDER_COLUMN_A_CN_APPID_2 =
@@ -2985,6 +3035,7 @@ public class ModulePersistenceImpl
 		"(module.contextName IS NULL OR module.contextName = '')";
 
 	private FinderPath _finderPathFetchByA_BSN_BV;
+	private FinderPath _finderPathCountByA_BSN_BV;
 
 	/**
 	 * Returns the module where appId = &#63; and bundleSymbolicName = &#63; and bundleVersion = &#63; or throws a <code>NoSuchModuleException</code> if it could not be found.
@@ -3218,14 +3269,80 @@ public class ModulePersistenceImpl
 	public int countByA_BSN_BV(
 		long appId, String bundleSymbolicName, String bundleVersion) {
 
-		Module module = fetchByA_BSN_BV(
-			appId, bundleSymbolicName, bundleVersion);
+		bundleSymbolicName = Objects.toString(bundleSymbolicName, "");
+		bundleVersion = Objects.toString(bundleVersion, "");
 
-		if (module == null) {
-			return 0;
+		FinderPath finderPath = _finderPathCountByA_BSN_BV;
+
+		Object[] finderArgs = new Object[] {
+			appId, bundleSymbolicName, bundleVersion
+		};
+
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
+
+		if (count == null) {
+			StringBundler sb = new StringBundler(4);
+
+			sb.append(_SQL_COUNT_MODULE_WHERE);
+
+			sb.append(_FINDER_COLUMN_A_BSN_BV_APPID_2);
+
+			boolean bindBundleSymbolicName = false;
+
+			if (bundleSymbolicName.isEmpty()) {
+				sb.append(_FINDER_COLUMN_A_BSN_BV_BUNDLESYMBOLICNAME_3);
+			}
+			else {
+				bindBundleSymbolicName = true;
+
+				sb.append(_FINDER_COLUMN_A_BSN_BV_BUNDLESYMBOLICNAME_2);
+			}
+
+			boolean bindBundleVersion = false;
+
+			if (bundleVersion.isEmpty()) {
+				sb.append(_FINDER_COLUMN_A_BSN_BV_BUNDLEVERSION_3);
+			}
+			else {
+				bindBundleVersion = true;
+
+				sb.append(_FINDER_COLUMN_A_BSN_BV_BUNDLEVERSION_2);
+			}
+
+			String sql = sb.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query query = session.createQuery(sql);
+
+				QueryPos queryPos = QueryPos.getInstance(query);
+
+				queryPos.add(appId);
+
+				if (bindBundleSymbolicName) {
+					queryPos.add(bundleSymbolicName);
+				}
+
+				if (bindBundleVersion) {
+					queryPos.add(bundleVersion);
+				}
+
+				count = (Long)query.uniqueResult();
+
+				finderCache.putResult(finderPath, finderArgs, count);
+			}
+			catch (Exception exception) {
+				throw processException(exception);
+			}
+			finally {
+				closeSession(session);
+			}
 		}
 
-		return 1;
+		return count.intValue();
 	}
 
 	private static final String _FINDER_COLUMN_A_BSN_BV_APPID_2 =
@@ -3909,6 +4026,11 @@ public class ModulePersistenceImpl
 			new String[] {Long.class.getName(), String.class.getName()},
 			new String[] {"appId", "contextName"}, true);
 
+		_finderPathCountByA_CN = _createFinderPath(
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByA_CN",
+			new String[] {Long.class.getName(), String.class.getName()},
+			new String[] {"appId", "contextName"}, false);
+
 		_finderPathFetchByA_BSN_BV = _createFinderPath(
 			FINDER_CLASS_NAME_ENTITY, "fetchByA_BSN_BV",
 			new String[] {
@@ -3917,6 +4039,15 @@ public class ModulePersistenceImpl
 			},
 			new String[] {"appId", "bundleSymbolicName", "bundleVersion"},
 			true);
+
+		_finderPathCountByA_BSN_BV = _createFinderPath(
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByA_BSN_BV",
+			new String[] {
+				Long.class.getName(), String.class.getName(),
+				String.class.getName()
+			},
+			new String[] {"appId", "bundleSymbolicName", "bundleVersion"},
+			false);
 
 		ModuleUtil.setPersistence(this);
 	}

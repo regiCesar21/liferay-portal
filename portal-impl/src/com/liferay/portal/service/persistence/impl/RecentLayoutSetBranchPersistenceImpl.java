@@ -1603,6 +1603,7 @@ public class RecentLayoutSetBranchPersistenceImpl
 			"recentLayoutSetBranch.layoutSetBranchId = ?";
 
 	private FinderPath _finderPathFetchByU_L;
+	private FinderPath _finderPathCountByU_L;
 
 	/**
 	 * Returns the recent layout set branch where userId = &#63; and layoutSetId = &#63; or throws a <code>NoSuchRecentLayoutSetBranchException</code> if it could not be found.
@@ -1772,14 +1773,50 @@ public class RecentLayoutSetBranchPersistenceImpl
 	 */
 	@Override
 	public int countByU_L(long userId, long layoutSetId) {
-		RecentLayoutSetBranch recentLayoutSetBranch = fetchByU_L(
-			userId, layoutSetId);
+		FinderPath finderPath = _finderPathCountByU_L;
 
-		if (recentLayoutSetBranch == null) {
-			return 0;
+		Object[] finderArgs = new Object[] {userId, layoutSetId};
+
+		Long count = (Long)FinderCacheUtil.getResult(
+			finderPath, finderArgs, this);
+
+		if (count == null) {
+			StringBundler sb = new StringBundler(3);
+
+			sb.append(_SQL_COUNT_RECENTLAYOUTSETBRANCH_WHERE);
+
+			sb.append(_FINDER_COLUMN_U_L_USERID_2);
+
+			sb.append(_FINDER_COLUMN_U_L_LAYOUTSETID_2);
+
+			String sql = sb.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query query = session.createQuery(sql);
+
+				QueryPos queryPos = QueryPos.getInstance(query);
+
+				queryPos.add(userId);
+
+				queryPos.add(layoutSetId);
+
+				count = (Long)query.uniqueResult();
+
+				FinderCacheUtil.putResult(finderPath, finderArgs, count);
+			}
+			catch (Exception exception) {
+				throw processException(exception);
+			}
+			finally {
+				closeSession(session);
+			}
 		}
 
-		return 1;
+		return count.intValue();
 	}
 
 	private static final String _FINDER_COLUMN_U_L_USERID_2 =
@@ -2424,6 +2461,11 @@ public class RecentLayoutSetBranchPersistenceImpl
 			FINDER_CLASS_NAME_ENTITY, "fetchByU_L",
 			new String[] {Long.class.getName(), Long.class.getName()},
 			new String[] {"userId", "layoutSetId"}, true);
+
+		_finderPathCountByU_L = _createFinderPath(
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByU_L",
+			new String[] {Long.class.getName(), Long.class.getName()},
+			new String[] {"userId", "layoutSetId"}, false);
 
 		RecentLayoutSetBranchUtil.setPersistence(this);
 	}

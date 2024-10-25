@@ -598,6 +598,7 @@ public class KaleoProcessLinkPersistenceImpl
 		"kaleoProcessLink.kaleoProcessId = ?";
 
 	private FinderPath _finderPathFetchByKPI_WTN;
+	private FinderPath _finderPathCountByKPI_WTN;
 
 	/**
 	 * Returns the kaleo process link where kaleoProcessId = &#63; and workflowTaskName = &#63; or throws a <code>NoSuchKaleoProcessLinkException</code> if it could not be found.
@@ -784,14 +785,62 @@ public class KaleoProcessLinkPersistenceImpl
 	 */
 	@Override
 	public int countByKPI_WTN(long kaleoProcessId, String workflowTaskName) {
-		KaleoProcessLink kaleoProcessLink = fetchByKPI_WTN(
-			kaleoProcessId, workflowTaskName);
+		workflowTaskName = Objects.toString(workflowTaskName, "");
 
-		if (kaleoProcessLink == null) {
-			return 0;
+		FinderPath finderPath = _finderPathCountByKPI_WTN;
+
+		Object[] finderArgs = new Object[] {kaleoProcessId, workflowTaskName};
+
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
+
+		if (count == null) {
+			StringBundler sb = new StringBundler(3);
+
+			sb.append(_SQL_COUNT_KALEOPROCESSLINK_WHERE);
+
+			sb.append(_FINDER_COLUMN_KPI_WTN_KALEOPROCESSID_2);
+
+			boolean bindWorkflowTaskName = false;
+
+			if (workflowTaskName.isEmpty()) {
+				sb.append(_FINDER_COLUMN_KPI_WTN_WORKFLOWTASKNAME_3);
+			}
+			else {
+				bindWorkflowTaskName = true;
+
+				sb.append(_FINDER_COLUMN_KPI_WTN_WORKFLOWTASKNAME_2);
+			}
+
+			String sql = sb.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query query = session.createQuery(sql);
+
+				QueryPos queryPos = QueryPos.getInstance(query);
+
+				queryPos.add(kaleoProcessId);
+
+				if (bindWorkflowTaskName) {
+					queryPos.add(workflowTaskName);
+				}
+
+				count = (Long)query.uniqueResult();
+
+				finderCache.putResult(finderPath, finderArgs, count);
+			}
+			catch (Exception exception) {
+				throw processException(exception);
+			}
+			finally {
+				closeSession(session);
+			}
 		}
 
-		return 1;
+		return count.intValue();
 	}
 
 	private static final String _FINDER_COLUMN_KPI_WTN_KALEOPROCESSID_2 =
@@ -1383,6 +1432,11 @@ public class KaleoProcessLinkPersistenceImpl
 			FINDER_CLASS_NAME_ENTITY, "fetchByKPI_WTN",
 			new String[] {Long.class.getName(), String.class.getName()},
 			new String[] {"kaleoProcessId", "workflowTaskName"}, true);
+
+		_finderPathCountByKPI_WTN = _createFinderPath(
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByKPI_WTN",
+			new String[] {Long.class.getName(), String.class.getName()},
+			new String[] {"kaleoProcessId", "workflowTaskName"}, false);
 
 		KaleoProcessLinkUtil.setPersistence(this);
 	}

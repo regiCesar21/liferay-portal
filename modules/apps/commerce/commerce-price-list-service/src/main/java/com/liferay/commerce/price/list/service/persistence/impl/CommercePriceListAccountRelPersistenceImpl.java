@@ -1748,6 +1748,7 @@ public class CommercePriceListAccountRelPersistenceImpl
 			"commercePriceListAccountRel.commercePriceListId = ?";
 
 	private FinderPath _finderPathFetchByC_C;
+	private FinderPath _finderPathCountByC_C;
 
 	/**
 	 * Returns the commerce price list account rel where commerceAccountId = &#63; and commercePriceListId = &#63; or throws a <code>NoSuchPriceListAccountRelException</code> if it could not be found.
@@ -1925,14 +1926,51 @@ public class CommercePriceListAccountRelPersistenceImpl
 	 */
 	@Override
 	public int countByC_C(long commerceAccountId, long commercePriceListId) {
-		CommercePriceListAccountRel commercePriceListAccountRel = fetchByC_C(
-			commerceAccountId, commercePriceListId);
+		FinderPath finderPath = _finderPathCountByC_C;
 
-		if (commercePriceListAccountRel == null) {
-			return 0;
+		Object[] finderArgs = new Object[] {
+			commerceAccountId, commercePriceListId
+		};
+
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
+
+		if (count == null) {
+			StringBundler sb = new StringBundler(3);
+
+			sb.append(_SQL_COUNT_COMMERCEPRICELISTACCOUNTREL_WHERE);
+
+			sb.append(_FINDER_COLUMN_C_C_COMMERCEACCOUNTID_2);
+
+			sb.append(_FINDER_COLUMN_C_C_COMMERCEPRICELISTID_2);
+
+			String sql = sb.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query query = session.createQuery(sql);
+
+				QueryPos queryPos = QueryPos.getInstance(query);
+
+				queryPos.add(commerceAccountId);
+
+				queryPos.add(commercePriceListId);
+
+				count = (Long)query.uniqueResult();
+
+				finderCache.putResult(finderPath, finderArgs, count);
+			}
+			catch (Exception exception) {
+				throw processException(exception);
+			}
+			finally {
+				closeSession(session);
+			}
 		}
 
-		return 1;
+		return count.intValue();
 	}
 
 	private static final String _FINDER_COLUMN_C_C_COMMERCEACCOUNTID_2 =
@@ -2656,6 +2694,11 @@ public class CommercePriceListAccountRelPersistenceImpl
 			FINDER_CLASS_NAME_ENTITY, "fetchByC_C",
 			new String[] {Long.class.getName(), Long.class.getName()},
 			new String[] {"commerceAccountId", "commercePriceListId"}, true);
+
+		_finderPathCountByC_C = _createFinderPath(
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByC_C",
+			new String[] {Long.class.getName(), Long.class.getName()},
+			new String[] {"commerceAccountId", "commercePriceListId"}, false);
 
 		CommercePriceListAccountRelUtil.setPersistence(this);
 	}

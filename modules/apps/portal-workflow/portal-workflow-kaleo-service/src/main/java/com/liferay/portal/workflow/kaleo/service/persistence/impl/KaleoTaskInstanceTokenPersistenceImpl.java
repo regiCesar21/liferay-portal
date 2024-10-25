@@ -1639,6 +1639,7 @@ public class KaleoTaskInstanceTokenPersistenceImpl
 			"kaleoTaskInstanceToken.kaleoInstanceId = ?";
 
 	private FinderPath _finderPathFetchByKII_KTI;
+	private FinderPath _finderPathCountByKII_KTI;
 
 	/**
 	 * Returns the kaleo task instance token where kaleoInstanceId = &#63; and kaleoTaskId = &#63; or throws a <code>NoSuchTaskInstanceTokenException</code> if it could not be found.
@@ -1830,14 +1831,49 @@ public class KaleoTaskInstanceTokenPersistenceImpl
 	 */
 	@Override
 	public int countByKII_KTI(long kaleoInstanceId, long kaleoTaskId) {
-		KaleoTaskInstanceToken kaleoTaskInstanceToken = fetchByKII_KTI(
-			kaleoInstanceId, kaleoTaskId);
+		FinderPath finderPath = _finderPathCountByKII_KTI;
 
-		if (kaleoTaskInstanceToken == null) {
-			return 0;
+		Object[] finderArgs = new Object[] {kaleoInstanceId, kaleoTaskId};
+
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
+
+		if (count == null) {
+			StringBundler sb = new StringBundler(3);
+
+			sb.append(_SQL_COUNT_KALEOTASKINSTANCETOKEN_WHERE);
+
+			sb.append(_FINDER_COLUMN_KII_KTI_KALEOINSTANCEID_2);
+
+			sb.append(_FINDER_COLUMN_KII_KTI_KALEOTASKID_2);
+
+			String sql = sb.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query query = session.createQuery(sql);
+
+				QueryPos queryPos = QueryPos.getInstance(query);
+
+				queryPos.add(kaleoInstanceId);
+
+				queryPos.add(kaleoTaskId);
+
+				count = (Long)query.uniqueResult();
+
+				finderCache.putResult(finderPath, finderArgs, count);
+			}
+			catch (Exception exception) {
+				throw processException(exception);
+			}
+			finally {
+				closeSession(session);
+			}
 		}
 
-		return 1;
+		return count.intValue();
 	}
 
 	private static final String _FINDER_COLUMN_KII_KTI_KALEOINSTANCEID_2 =
@@ -3104,6 +3140,11 @@ public class KaleoTaskInstanceTokenPersistenceImpl
 			FINDER_CLASS_NAME_ENTITY, "fetchByKII_KTI",
 			new String[] {Long.class.getName(), Long.class.getName()},
 			new String[] {"kaleoInstanceId", "kaleoTaskId"}, true);
+
+		_finderPathCountByKII_KTI = _createFinderPath(
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByKII_KTI",
+			new String[] {Long.class.getName(), Long.class.getName()},
+			new String[] {"kaleoInstanceId", "kaleoTaskId"}, false);
 
 		_finderPathWithPaginationFindByCN_CPK = _createFinderPath(
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByCN_CPK",

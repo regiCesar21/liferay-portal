@@ -1599,6 +1599,7 @@ public class RecentLayoutRevisionPersistenceImpl
 			"recentLayoutRevision.layoutRevisionId = ?";
 
 	private FinderPath _finderPathFetchByU_L_P;
+	private FinderPath _finderPathCountByU_L_P;
 
 	/**
 	 * Returns the recent layout revision where userId = &#63; and layoutSetBranchId = &#63; and plid = &#63; or throws a <code>NoSuchRecentLayoutRevisionException</code> if it could not be found.
@@ -1787,14 +1788,54 @@ public class RecentLayoutRevisionPersistenceImpl
 	 */
 	@Override
 	public int countByU_L_P(long userId, long layoutSetBranchId, long plid) {
-		RecentLayoutRevision recentLayoutRevision = fetchByU_L_P(
-			userId, layoutSetBranchId, plid);
+		FinderPath finderPath = _finderPathCountByU_L_P;
 
-		if (recentLayoutRevision == null) {
-			return 0;
+		Object[] finderArgs = new Object[] {userId, layoutSetBranchId, plid};
+
+		Long count = (Long)FinderCacheUtil.getResult(
+			finderPath, finderArgs, this);
+
+		if (count == null) {
+			StringBundler sb = new StringBundler(4);
+
+			sb.append(_SQL_COUNT_RECENTLAYOUTREVISION_WHERE);
+
+			sb.append(_FINDER_COLUMN_U_L_P_USERID_2);
+
+			sb.append(_FINDER_COLUMN_U_L_P_LAYOUTSETBRANCHID_2);
+
+			sb.append(_FINDER_COLUMN_U_L_P_PLID_2);
+
+			String sql = sb.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query query = session.createQuery(sql);
+
+				QueryPos queryPos = QueryPos.getInstance(query);
+
+				queryPos.add(userId);
+
+				queryPos.add(layoutSetBranchId);
+
+				queryPos.add(plid);
+
+				count = (Long)query.uniqueResult();
+
+				FinderCacheUtil.putResult(finderPath, finderArgs, count);
+			}
+			catch (Exception exception) {
+				throw processException(exception);
+			}
+			finally {
+				closeSession(session);
+			}
 		}
 
-		return 1;
+		return count.intValue();
 	}
 
 	private static final String _FINDER_COLUMN_U_L_P_USERID_2 =
@@ -2441,6 +2482,13 @@ public class RecentLayoutRevisionPersistenceImpl
 				Long.class.getName(), Long.class.getName(), Long.class.getName()
 			},
 			new String[] {"userId", "layoutSetBranchId", "plid"}, true);
+
+		_finderPathCountByU_L_P = _createFinderPath(
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByU_L_P",
+			new String[] {
+				Long.class.getName(), Long.class.getName(), Long.class.getName()
+			},
+			new String[] {"userId", "layoutSetBranchId", "plid"}, false);
 
 		RecentLayoutRevisionUtil.setPersistence(this);
 	}

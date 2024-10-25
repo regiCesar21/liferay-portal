@@ -1193,6 +1193,7 @@ public class CommerceDiscountCommerceAccountGroupRelPersistenceImpl
 			"commerceDiscountCommerceAccountGroupRel.commerceAccountGroupId = ?";
 
 	private FinderPath _finderPathFetchByC_C;
+	private FinderPath _finderPathCountByC_C;
 
 	/**
 	 * Returns the commerce discount commerce account group rel where commerceDiscountId = &#63; and commerceAccountGroupId = &#63; or throws a <code>NoSuchDiscountCommerceAccountGroupRelException</code> if it could not be found.
@@ -1382,15 +1383,51 @@ public class CommerceDiscountCommerceAccountGroupRelPersistenceImpl
 	public int countByC_C(
 		long commerceDiscountId, long commerceAccountGroupId) {
 
-		CommerceDiscountCommerceAccountGroupRel
-			commerceDiscountCommerceAccountGroupRel = fetchByC_C(
-				commerceDiscountId, commerceAccountGroupId);
+		FinderPath finderPath = _finderPathCountByC_C;
 
-		if (commerceDiscountCommerceAccountGroupRel == null) {
-			return 0;
+		Object[] finderArgs = new Object[] {
+			commerceDiscountId, commerceAccountGroupId
+		};
+
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
+
+		if (count == null) {
+			StringBundler sb = new StringBundler(3);
+
+			sb.append(_SQL_COUNT_COMMERCEDISCOUNTCOMMERCEACCOUNTGROUPREL_WHERE);
+
+			sb.append(_FINDER_COLUMN_C_C_COMMERCEDISCOUNTID_2);
+
+			sb.append(_FINDER_COLUMN_C_C_COMMERCEACCOUNTGROUPID_2);
+
+			String sql = sb.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query query = session.createQuery(sql);
+
+				QueryPos queryPos = QueryPos.getInstance(query);
+
+				queryPos.add(commerceDiscountId);
+
+				queryPos.add(commerceAccountGroupId);
+
+				count = (Long)query.uniqueResult();
+
+				finderCache.putResult(finderPath, finderArgs, count);
+			}
+			catch (Exception exception) {
+				throw processException(exception);
+			}
+			finally {
+				closeSession(session);
+			}
 		}
 
-		return 1;
+		return count.intValue();
 	}
 
 	private static final String _FINDER_COLUMN_C_C_COMMERCEDISCOUNTID_2 =
@@ -2129,6 +2166,12 @@ public class CommerceDiscountCommerceAccountGroupRelPersistenceImpl
 			new String[] {Long.class.getName(), Long.class.getName()},
 			new String[] {"commerceDiscountId", "commerceAccountGroupId"},
 			true);
+
+		_finderPathCountByC_C = _createFinderPath(
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByC_C",
+			new String[] {Long.class.getName(), Long.class.getName()},
+			new String[] {"commerceDiscountId", "commerceAccountGroupId"},
+			false);
 
 		CommerceDiscountCommerceAccountGroupRelUtil.setPersistence(this);
 	}

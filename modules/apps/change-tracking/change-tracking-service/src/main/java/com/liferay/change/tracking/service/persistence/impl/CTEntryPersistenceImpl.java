@@ -1132,6 +1132,7 @@ public class CTEntryPersistenceImpl
 		"ctEntry.modelClassNameId = ?";
 
 	private FinderPath _finderPathFetchByC_MCNI_MCPK;
+	private FinderPath _finderPathCountByC_MCNI_MCPK;
 
 	/**
 	 * Returns the ct entry where ctCollectionId = &#63; and modelClassNameId = &#63; and modelClassPK = &#63; or throws a <code>NoSuchEntryException</code> if it could not be found.
@@ -1323,14 +1324,55 @@ public class CTEntryPersistenceImpl
 	public int countByC_MCNI_MCPK(
 		long ctCollectionId, long modelClassNameId, long modelClassPK) {
 
-		CTEntry ctEntry = fetchByC_MCNI_MCPK(
-			ctCollectionId, modelClassNameId, modelClassPK);
+		FinderPath finderPath = _finderPathCountByC_MCNI_MCPK;
 
-		if (ctEntry == null) {
-			return 0;
+		Object[] finderArgs = new Object[] {
+			ctCollectionId, modelClassNameId, modelClassPK
+		};
+
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
+
+		if (count == null) {
+			StringBundler sb = new StringBundler(4);
+
+			sb.append(_SQL_COUNT_CTENTRY_WHERE);
+
+			sb.append(_FINDER_COLUMN_C_MCNI_MCPK_CTCOLLECTIONID_2);
+
+			sb.append(_FINDER_COLUMN_C_MCNI_MCPK_MODELCLASSNAMEID_2);
+
+			sb.append(_FINDER_COLUMN_C_MCNI_MCPK_MODELCLASSPK_2);
+
+			String sql = sb.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query query = session.createQuery(sql);
+
+				QueryPos queryPos = QueryPos.getInstance(query);
+
+				queryPos.add(ctCollectionId);
+
+				queryPos.add(modelClassNameId);
+
+				queryPos.add(modelClassPK);
+
+				count = (Long)query.uniqueResult();
+
+				finderCache.putResult(finderPath, finderArgs, count);
+			}
+			catch (Exception exception) {
+				throw processException(exception);
+			}
+			finally {
+				closeSession(session);
+			}
 		}
 
-		return 1;
+		return count.intValue();
 	}
 
 	private static final String _FINDER_COLUMN_C_MCNI_MCPK_CTCOLLECTIONID_2 =
@@ -2827,6 +2869,14 @@ public class CTEntryPersistenceImpl
 			},
 			new String[] {"ctCollectionId", "modelClassNameId", "modelClassPK"},
 			true);
+
+		_finderPathCountByC_MCNI_MCPK = _createFinderPath(
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByC_MCNI_MCPK",
+			new String[] {
+				Long.class.getName(), Long.class.getName(), Long.class.getName()
+			},
+			new String[] {"ctCollectionId", "modelClassNameId", "modelClassPK"},
+			false);
 
 		_finderPathWithPaginationFindByNotC_MCNI_MCPK = _createFinderPath(
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByNotC_MCNI_MCPK",

@@ -1620,6 +1620,7 @@ public class KaleoTransitionPersistenceImpl
 		"kaleoTransition.kaleoNodeId = ?";
 
 	private FinderPath _finderPathFetchByKNI_N;
+	private FinderPath _finderPathCountByKNI_N;
 
 	/**
 	 * Returns the kaleo transition where kaleoNodeId = &#63; and name = &#63; or throws a <code>NoSuchTransitionException</code> if it could not be found.
@@ -1814,13 +1815,62 @@ public class KaleoTransitionPersistenceImpl
 	 */
 	@Override
 	public int countByKNI_N(long kaleoNodeId, String name) {
-		KaleoTransition kaleoTransition = fetchByKNI_N(kaleoNodeId, name);
+		name = Objects.toString(name, "");
 
-		if (kaleoTransition == null) {
-			return 0;
+		FinderPath finderPath = _finderPathCountByKNI_N;
+
+		Object[] finderArgs = new Object[] {kaleoNodeId, name};
+
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
+
+		if (count == null) {
+			StringBundler sb = new StringBundler(3);
+
+			sb.append(_SQL_COUNT_KALEOTRANSITION_WHERE);
+
+			sb.append(_FINDER_COLUMN_KNI_N_KALEONODEID_2);
+
+			boolean bindName = false;
+
+			if (name.isEmpty()) {
+				sb.append(_FINDER_COLUMN_KNI_N_NAME_3);
+			}
+			else {
+				bindName = true;
+
+				sb.append(_FINDER_COLUMN_KNI_N_NAME_2);
+			}
+
+			String sql = sb.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query query = session.createQuery(sql);
+
+				QueryPos queryPos = QueryPos.getInstance(query);
+
+				queryPos.add(kaleoNodeId);
+
+				if (bindName) {
+					queryPos.add(name);
+				}
+
+				count = (Long)query.uniqueResult();
+
+				finderCache.putResult(finderPath, finderArgs, count);
+			}
+			catch (Exception exception) {
+				throw processException(exception);
+			}
+			finally {
+				closeSession(session);
+			}
 		}
 
-		return 1;
+		return count.intValue();
 	}
 
 	private static final String _FINDER_COLUMN_KNI_N_KALEONODEID_2 =
@@ -1833,6 +1883,7 @@ public class KaleoTransitionPersistenceImpl
 		"(kaleoTransition.name IS NULL OR kaleoTransition.name = '')";
 
 	private FinderPath _finderPathFetchByKNI_DT;
+	private FinderPath _finderPathCountByKNI_DT;
 
 	/**
 	 * Returns the kaleo transition where kaleoNodeId = &#63; and defaultTransition = &#63; or throws a <code>NoSuchTransitionException</code> if it could not be found.
@@ -2022,14 +2073,49 @@ public class KaleoTransitionPersistenceImpl
 	 */
 	@Override
 	public int countByKNI_DT(long kaleoNodeId, boolean defaultTransition) {
-		KaleoTransition kaleoTransition = fetchByKNI_DT(
-			kaleoNodeId, defaultTransition);
+		FinderPath finderPath = _finderPathCountByKNI_DT;
 
-		if (kaleoTransition == null) {
-			return 0;
+		Object[] finderArgs = new Object[] {kaleoNodeId, defaultTransition};
+
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
+
+		if (count == null) {
+			StringBundler sb = new StringBundler(3);
+
+			sb.append(_SQL_COUNT_KALEOTRANSITION_WHERE);
+
+			sb.append(_FINDER_COLUMN_KNI_DT_KALEONODEID_2);
+
+			sb.append(_FINDER_COLUMN_KNI_DT_DEFAULTTRANSITION_2);
+
+			String sql = sb.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query query = session.createQuery(sql);
+
+				QueryPos queryPos = QueryPos.getInstance(query);
+
+				queryPos.add(kaleoNodeId);
+
+				queryPos.add(defaultTransition);
+
+				count = (Long)query.uniqueResult();
+
+				finderCache.putResult(finderPath, finderArgs, count);
+			}
+			catch (Exception exception) {
+				throw processException(exception);
+			}
+			finally {
+				closeSession(session);
+			}
 		}
 
-		return 1;
+		return count.intValue();
 	}
 
 	private static final String _FINDER_COLUMN_KNI_DT_KALEONODEID_2 =
@@ -2702,10 +2788,20 @@ public class KaleoTransitionPersistenceImpl
 			new String[] {Long.class.getName(), String.class.getName()},
 			new String[] {"kaleoNodeId", "name"}, true);
 
+		_finderPathCountByKNI_N = _createFinderPath(
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByKNI_N",
+			new String[] {Long.class.getName(), String.class.getName()},
+			new String[] {"kaleoNodeId", "name"}, false);
+
 		_finderPathFetchByKNI_DT = _createFinderPath(
 			FINDER_CLASS_NAME_ENTITY, "fetchByKNI_DT",
 			new String[] {Long.class.getName(), Boolean.class.getName()},
 			new String[] {"kaleoNodeId", "defaultTransition"}, true);
+
+		_finderPathCountByKNI_DT = _createFinderPath(
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByKNI_DT",
+			new String[] {Long.class.getName(), Boolean.class.getName()},
+			new String[] {"kaleoNodeId", "defaultTransition"}, false);
 
 		KaleoTransitionUtil.setPersistence(this);
 	}

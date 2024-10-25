@@ -1122,6 +1122,7 @@ public class AccountGroupAccountEntryRelPersistenceImpl
 		"accountGroupAccountEntryRel.accountEntryId = ?";
 
 	private FinderPath _finderPathFetchByAGI_AEI;
+	private FinderPath _finderPathCountByAGI_AEI;
 
 	/**
 	 * Returns the account group account entry rel where accountGroupId = &#63; and accountEntryId = &#63; or throws a <code>NoSuchGroupAccountEntryRelException</code> if it could not be found.
@@ -1315,14 +1316,49 @@ public class AccountGroupAccountEntryRelPersistenceImpl
 	 */
 	@Override
 	public int countByAGI_AEI(long accountGroupId, long accountEntryId) {
-		AccountGroupAccountEntryRel accountGroupAccountEntryRel =
-			fetchByAGI_AEI(accountGroupId, accountEntryId);
+		FinderPath finderPath = _finderPathCountByAGI_AEI;
 
-		if (accountGroupAccountEntryRel == null) {
-			return 0;
+		Object[] finderArgs = new Object[] {accountGroupId, accountEntryId};
+
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
+
+		if (count == null) {
+			StringBundler sb = new StringBundler(3);
+
+			sb.append(_SQL_COUNT_ACCOUNTGROUPACCOUNTENTRYREL_WHERE);
+
+			sb.append(_FINDER_COLUMN_AGI_AEI_ACCOUNTGROUPID_2);
+
+			sb.append(_FINDER_COLUMN_AGI_AEI_ACCOUNTENTRYID_2);
+
+			String sql = sb.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query query = session.createQuery(sql);
+
+				QueryPos queryPos = QueryPos.getInstance(query);
+
+				queryPos.add(accountGroupId);
+
+				queryPos.add(accountEntryId);
+
+				count = (Long)query.uniqueResult();
+
+				finderCache.putResult(finderPath, finderArgs, count);
+			}
+			catch (Exception exception) {
+				throw processException(exception);
+			}
+			finally {
+				closeSession(session);
+			}
 		}
 
-		return 1;
+		return count.intValue();
 	}
 
 	private static final String _FINDER_COLUMN_AGI_AEI_ACCOUNTGROUPID_2 =
@@ -1976,6 +2012,11 @@ public class AccountGroupAccountEntryRelPersistenceImpl
 			FINDER_CLASS_NAME_ENTITY, "fetchByAGI_AEI",
 			new String[] {Long.class.getName(), Long.class.getName()},
 			new String[] {"accountGroupId", "accountEntryId"}, true);
+
+		_finderPathCountByAGI_AEI = _createFinderPath(
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByAGI_AEI",
+			new String[] {Long.class.getName(), Long.class.getName()},
+			new String[] {"accountGroupId", "accountEntryId"}, false);
 
 		AccountGroupAccountEntryRelUtil.setPersistence(this);
 	}

@@ -1142,6 +1142,7 @@ public class SamlIdpSpSessionPersistenceImpl
 			"samlIdpSpSession.samlIdpSsoSessionId = ?";
 
 	private FinderPath _finderPathFetchBySISSI_SSEI;
+	private FinderPath _finderPathCountBySISSI_SSEI;
 
 	/**
 	 * Returns the saml idp sp session where samlIdpSsoSessionId = &#63; and samlSpEntityId = &#63; or throws a <code>NoSuchIdpSpSessionException</code> if it could not be found.
@@ -1349,14 +1350,64 @@ public class SamlIdpSpSessionPersistenceImpl
 	public int countBySISSI_SSEI(
 		long samlIdpSsoSessionId, String samlSpEntityId) {
 
-		SamlIdpSpSession samlIdpSpSession = fetchBySISSI_SSEI(
-			samlIdpSsoSessionId, samlSpEntityId);
+		samlSpEntityId = Objects.toString(samlSpEntityId, "");
 
-		if (samlIdpSpSession == null) {
-			return 0;
+		FinderPath finderPath = _finderPathCountBySISSI_SSEI;
+
+		Object[] finderArgs = new Object[] {
+			samlIdpSsoSessionId, samlSpEntityId
+		};
+
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
+
+		if (count == null) {
+			StringBundler sb = new StringBundler(3);
+
+			sb.append(_SQL_COUNT_SAMLIDPSPSESSION_WHERE);
+
+			sb.append(_FINDER_COLUMN_SISSI_SSEI_SAMLIDPSSOSESSIONID_2);
+
+			boolean bindSamlSpEntityId = false;
+
+			if (samlSpEntityId.isEmpty()) {
+				sb.append(_FINDER_COLUMN_SISSI_SSEI_SAMLSPENTITYID_3);
+			}
+			else {
+				bindSamlSpEntityId = true;
+
+				sb.append(_FINDER_COLUMN_SISSI_SSEI_SAMLSPENTITYID_2);
+			}
+
+			String sql = sb.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query query = session.createQuery(sql);
+
+				QueryPos queryPos = QueryPos.getInstance(query);
+
+				queryPos.add(samlIdpSsoSessionId);
+
+				if (bindSamlSpEntityId) {
+					queryPos.add(samlSpEntityId);
+				}
+
+				count = (Long)query.uniqueResult();
+
+				finderCache.putResult(finderPath, finderArgs, count);
+			}
+			catch (Exception exception) {
+				throw processException(exception);
+			}
+			finally {
+				closeSession(session);
+			}
 		}
 
-		return 1;
+		return count.intValue();
 	}
 
 	private static final String
@@ -1990,6 +2041,11 @@ public class SamlIdpSpSessionPersistenceImpl
 			FINDER_CLASS_NAME_ENTITY, "fetchBySISSI_SSEI",
 			new String[] {Long.class.getName(), String.class.getName()},
 			new String[] {"samlIdpSsoSessionId", "samlSpEntityId"}, true);
+
+		_finderPathCountBySISSI_SSEI = _createFinderPath(
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countBySISSI_SSEI",
+			new String[] {Long.class.getName(), String.class.getName()},
+			new String[] {"samlIdpSsoSessionId", "samlSpEntityId"}, false);
 
 		SamlIdpSpSessionUtil.setPersistence(this);
 	}

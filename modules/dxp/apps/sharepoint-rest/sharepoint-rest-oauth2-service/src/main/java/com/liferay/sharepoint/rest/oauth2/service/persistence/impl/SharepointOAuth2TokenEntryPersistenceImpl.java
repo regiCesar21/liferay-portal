@@ -598,6 +598,7 @@ public class SharepointOAuth2TokenEntryPersistenceImpl
 		"sharepointOAuth2TokenEntry.userId = ?";
 
 	private FinderPath _finderPathFetchByU_C;
+	private FinderPath _finderPathCountByU_C;
 
 	/**
 	 * Returns the sharepoint o auth2 token entry where userId = &#63; and configurationPid = &#63; or throws a <code>NoSuch2TokenEntryException</code> if it could not be found.
@@ -787,14 +788,62 @@ public class SharepointOAuth2TokenEntryPersistenceImpl
 	 */
 	@Override
 	public int countByU_C(long userId, String configurationPid) {
-		SharepointOAuth2TokenEntry sharepointOAuth2TokenEntry = fetchByU_C(
-			userId, configurationPid);
+		configurationPid = Objects.toString(configurationPid, "");
 
-		if (sharepointOAuth2TokenEntry == null) {
-			return 0;
+		FinderPath finderPath = _finderPathCountByU_C;
+
+		Object[] finderArgs = new Object[] {userId, configurationPid};
+
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
+
+		if (count == null) {
+			StringBundler sb = new StringBundler(3);
+
+			sb.append(_SQL_COUNT_SHAREPOINTOAUTH2TOKENENTRY_WHERE);
+
+			sb.append(_FINDER_COLUMN_U_C_USERID_2);
+
+			boolean bindConfigurationPid = false;
+
+			if (configurationPid.isEmpty()) {
+				sb.append(_FINDER_COLUMN_U_C_CONFIGURATIONPID_3);
+			}
+			else {
+				bindConfigurationPid = true;
+
+				sb.append(_FINDER_COLUMN_U_C_CONFIGURATIONPID_2);
+			}
+
+			String sql = sb.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query query = session.createQuery(sql);
+
+				QueryPos queryPos = QueryPos.getInstance(query);
+
+				queryPos.add(userId);
+
+				if (bindConfigurationPid) {
+					queryPos.add(configurationPid);
+				}
+
+				count = (Long)query.uniqueResult();
+
+				finderCache.putResult(finderPath, finderArgs, count);
+			}
+			catch (Exception exception) {
+				throw processException(exception);
+			}
+			finally {
+				closeSession(session);
+			}
 		}
 
-		return 1;
+		return count.intValue();
 	}
 
 	private static final String _FINDER_COLUMN_U_C_USERID_2 =
@@ -1442,6 +1491,11 @@ public class SharepointOAuth2TokenEntryPersistenceImpl
 			FINDER_CLASS_NAME_ENTITY, "fetchByU_C",
 			new String[] {Long.class.getName(), String.class.getName()},
 			new String[] {"userId", "configurationPid"}, true);
+
+		_finderPathCountByU_C = _createFinderPath(
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByU_C",
+			new String[] {Long.class.getName(), String.class.getName()},
+			new String[] {"userId", "configurationPid"}, false);
 
 		SharepointOAuth2TokenEntryUtil.setPersistence(this);
 	}

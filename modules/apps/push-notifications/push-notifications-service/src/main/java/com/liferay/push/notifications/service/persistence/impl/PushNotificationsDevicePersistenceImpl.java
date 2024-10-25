@@ -94,6 +94,7 @@ public class PushNotificationsDevicePersistenceImpl
 	private FinderPath _finderPathWithoutPaginationFindAll;
 	private FinderPath _finderPathCountAll;
 	private FinderPath _finderPathFetchByToken;
+	private FinderPath _finderPathCountByToken;
 
 	/**
 	 * Returns the push notifications device where token = &#63; or throws a <code>NoSuchDeviceException</code> if it could not be found.
@@ -261,13 +262,58 @@ public class PushNotificationsDevicePersistenceImpl
 	 */
 	@Override
 	public int countByToken(String token) {
-		PushNotificationsDevice pushNotificationsDevice = fetchByToken(token);
+		token = Objects.toString(token, "");
 
-		if (pushNotificationsDevice == null) {
-			return 0;
+		FinderPath finderPath = _finderPathCountByToken;
+
+		Object[] finderArgs = new Object[] {token};
+
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
+
+		if (count == null) {
+			StringBundler sb = new StringBundler(2);
+
+			sb.append(_SQL_COUNT_PUSHNOTIFICATIONSDEVICE_WHERE);
+
+			boolean bindToken = false;
+
+			if (token.isEmpty()) {
+				sb.append(_FINDER_COLUMN_TOKEN_TOKEN_3);
+			}
+			else {
+				bindToken = true;
+
+				sb.append(_FINDER_COLUMN_TOKEN_TOKEN_2);
+			}
+
+			String sql = sb.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query query = session.createQuery(sql);
+
+				QueryPos queryPos = QueryPos.getInstance(query);
+
+				if (bindToken) {
+					queryPos.add(token);
+				}
+
+				count = (Long)query.uniqueResult();
+
+				finderCache.putResult(finderPath, finderArgs, count);
+			}
+			catch (Exception exception) {
+				throw processException(exception);
+			}
+			finally {
+				closeSession(session);
+			}
 		}
 
-		return 1;
+		return count.intValue();
 	}
 
 	private static final String _FINDER_COLUMN_TOKEN_TOKEN_2 =
@@ -1767,6 +1813,11 @@ public class PushNotificationsDevicePersistenceImpl
 			FINDER_CLASS_NAME_ENTITY, "fetchByToken",
 			new String[] {String.class.getName()}, new String[] {"token"},
 			true);
+
+		_finderPathCountByToken = _createFinderPath(
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByToken",
+			new String[] {String.class.getName()}, new String[] {"token"},
+			false);
 
 		_finderPathWithPaginationFindByU_P = _createFinderPath(
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByU_P",

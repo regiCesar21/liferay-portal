@@ -588,6 +588,7 @@ public class LVEntryVersionPersistenceImpl
 		"lvEntryVersion.lvEntryId = ?";
 
 	private FinderPath _finderPathFetchByLvEntryId_Version;
+	private FinderPath _finderPathCountByLvEntryId_Version;
 
 	/**
 	 * Returns the lv entry version where lvEntryId = &#63; and version = &#63; or throws a <code>NoSuchLVEntryVersionException</code> if it could not be found.
@@ -759,14 +760,49 @@ public class LVEntryVersionPersistenceImpl
 	 */
 	@Override
 	public int countByLvEntryId_Version(long lvEntryId, int version) {
-		LVEntryVersion lvEntryVersion = fetchByLvEntryId_Version(
-			lvEntryId, version);
+		FinderPath finderPath = _finderPathCountByLvEntryId_Version;
 
-		if (lvEntryVersion == null) {
-			return 0;
+		Object[] finderArgs = new Object[] {lvEntryId, version};
+
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
+
+		if (count == null) {
+			StringBundler sb = new StringBundler(3);
+
+			sb.append(_SQL_COUNT_LVENTRYVERSION_WHERE);
+
+			sb.append(_FINDER_COLUMN_LVENTRYID_VERSION_LVENTRYID_2);
+
+			sb.append(_FINDER_COLUMN_LVENTRYID_VERSION_VERSION_2);
+
+			String sql = sb.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query query = session.createQuery(sql);
+
+				QueryPos queryPos = QueryPos.getInstance(query);
+
+				queryPos.add(lvEntryId);
+
+				queryPos.add(version);
+
+				count = (Long)query.uniqueResult();
+
+				finderCache.putResult(finderPath, finderArgs, count);
+			}
+			catch (Exception exception) {
+				throw processException(exception);
+			}
+			finally {
+				closeSession(session);
+			}
 		}
 
-		return 1;
+		return count.intValue();
 	}
 
 	private static final String _FINDER_COLUMN_LVENTRYID_VERSION_LVENTRYID_2 =
@@ -2471,6 +2507,7 @@ public class LVEntryVersionPersistenceImpl
 		"lvEntryVersion.groupId = ?";
 
 	private FinderPath _finderPathFetchByUUID_G_Version;
+	private FinderPath _finderPathCountByUUID_G_Version;
 
 	/**
 	 * Returns the lv entry version where uuid = &#63; and groupId = &#63; and version = &#63; or throws a <code>NoSuchLVEntryVersionException</code> if it could not be found.
@@ -2669,14 +2706,66 @@ public class LVEntryVersionPersistenceImpl
 	 */
 	@Override
 	public int countByUUID_G_Version(String uuid, long groupId, int version) {
-		LVEntryVersion lvEntryVersion = fetchByUUID_G_Version(
-			uuid, groupId, version);
+		uuid = Objects.toString(uuid, "");
 
-		if (lvEntryVersion == null) {
-			return 0;
+		FinderPath finderPath = _finderPathCountByUUID_G_Version;
+
+		Object[] finderArgs = new Object[] {uuid, groupId, version};
+
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
+
+		if (count == null) {
+			StringBundler sb = new StringBundler(4);
+
+			sb.append(_SQL_COUNT_LVENTRYVERSION_WHERE);
+
+			boolean bindUuid = false;
+
+			if (uuid.isEmpty()) {
+				sb.append(_FINDER_COLUMN_UUID_G_VERSION_UUID_3);
+			}
+			else {
+				bindUuid = true;
+
+				sb.append(_FINDER_COLUMN_UUID_G_VERSION_UUID_2);
+			}
+
+			sb.append(_FINDER_COLUMN_UUID_G_VERSION_GROUPID_2);
+
+			sb.append(_FINDER_COLUMN_UUID_G_VERSION_VERSION_2);
+
+			String sql = sb.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query query = session.createQuery(sql);
+
+				QueryPos queryPos = QueryPos.getInstance(query);
+
+				if (bindUuid) {
+					queryPos.add(uuid);
+				}
+
+				queryPos.add(groupId);
+
+				queryPos.add(version);
+
+				count = (Long)query.uniqueResult();
+
+				finderCache.putResult(finderPath, finderArgs, count);
+			}
+			catch (Exception exception) {
+				throw processException(exception);
+			}
+			finally {
+				closeSession(session);
+			}
 		}
 
-		return 1;
+		return count.intValue();
 	}
 
 	private static final String _FINDER_COLUMN_UUID_G_VERSION_UUID_2 =
@@ -5517,6 +5606,7 @@ public class LVEntryVersionPersistenceImpl
 		"(lvEntryVersion.uniqueGroupKey IS NULL OR lvEntryVersion.uniqueGroupKey = '')";
 
 	private FinderPath _finderPathFetchByG_UGK_Version;
+	private FinderPath _finderPathCountByG_UGK_Version;
 
 	/**
 	 * Returns the lv entry version where groupId = &#63; and uniqueGroupKey = &#63; and version = &#63; or throws a <code>NoSuchLVEntryVersionException</code> if it could not be found.
@@ -5719,14 +5809,66 @@ public class LVEntryVersionPersistenceImpl
 	public int countByG_UGK_Version(
 		long groupId, String uniqueGroupKey, int version) {
 
-		LVEntryVersion lvEntryVersion = fetchByG_UGK_Version(
-			groupId, uniqueGroupKey, version);
+		uniqueGroupKey = Objects.toString(uniqueGroupKey, "");
 
-		if (lvEntryVersion == null) {
-			return 0;
+		FinderPath finderPath = _finderPathCountByG_UGK_Version;
+
+		Object[] finderArgs = new Object[] {groupId, uniqueGroupKey, version};
+
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
+
+		if (count == null) {
+			StringBundler sb = new StringBundler(4);
+
+			sb.append(_SQL_COUNT_LVENTRYVERSION_WHERE);
+
+			sb.append(_FINDER_COLUMN_G_UGK_VERSION_GROUPID_2);
+
+			boolean bindUniqueGroupKey = false;
+
+			if (uniqueGroupKey.isEmpty()) {
+				sb.append(_FINDER_COLUMN_G_UGK_VERSION_UNIQUEGROUPKEY_3);
+			}
+			else {
+				bindUniqueGroupKey = true;
+
+				sb.append(_FINDER_COLUMN_G_UGK_VERSION_UNIQUEGROUPKEY_2);
+			}
+
+			sb.append(_FINDER_COLUMN_G_UGK_VERSION_VERSION_2);
+
+			String sql = sb.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query query = session.createQuery(sql);
+
+				QueryPos queryPos = QueryPos.getInstance(query);
+
+				queryPos.add(groupId);
+
+				if (bindUniqueGroupKey) {
+					queryPos.add(uniqueGroupKey);
+				}
+
+				queryPos.add(version);
+
+				count = (Long)query.uniqueResult();
+
+				finderCache.putResult(finderPath, finderArgs, count);
+			}
+			catch (Exception exception) {
+				throw processException(exception);
+			}
+			finally {
+				closeSession(session);
+			}
 		}
 
-		return 1;
+		return count.intValue();
 	}
 
 	private static final String _FINDER_COLUMN_G_UGK_VERSION_GROUPID_2 =
@@ -6729,6 +6871,12 @@ public class LVEntryVersionPersistenceImpl
 			new String[] {Long.class.getName(), Integer.class.getName()},
 			new String[] {"lvEntryId", "version"}, true);
 
+		_finderPathCountByLvEntryId_Version = _createFinderPath(
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+			"countByLvEntryId_Version",
+			new String[] {Long.class.getName(), Integer.class.getName()},
+			new String[] {"lvEntryId", "version"}, false);
+
 		_finderPathWithPaginationFindByUuid = _createFinderPath(
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUuid",
 			new String[] {
@@ -6792,6 +6940,14 @@ public class LVEntryVersionPersistenceImpl
 				Integer.class.getName()
 			},
 			new String[] {"uuid_", "groupId", "version"}, true);
+
+		_finderPathCountByUUID_G_Version = _createFinderPath(
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByUUID_G_Version",
+			new String[] {
+				String.class.getName(), Long.class.getName(),
+				Integer.class.getName()
+			},
+			new String[] {"uuid_", "groupId", "version"}, false);
 
 		_finderPathWithPaginationFindByUuid_C = _createFinderPath(
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUuid_C",
@@ -6900,6 +7056,14 @@ public class LVEntryVersionPersistenceImpl
 				Integer.class.getName()
 			},
 			new String[] {"groupId", "uniqueGroupKey", "version"}, true);
+
+		_finderPathCountByG_UGK_Version = _createFinderPath(
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByG_UGK_Version",
+			new String[] {
+				Long.class.getName(), String.class.getName(),
+				Integer.class.getName()
+			},
+			new String[] {"groupId", "uniqueGroupKey", "version"}, false);
 
 		LVEntryVersionUtil.setPersistence(this);
 	}

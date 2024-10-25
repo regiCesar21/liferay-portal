@@ -627,6 +627,7 @@ public class StyleBookEntryVersionPersistenceImpl
 			"styleBookEntryVersion.styleBookEntryId = ?";
 
 	private FinderPath _finderPathFetchByStyleBookEntryId_Version;
+	private FinderPath _finderPathCountByStyleBookEntryId_Version;
 
 	/**
 	 * Returns the style book entry version where styleBookEntryId = &#63; and version = &#63; or throws a <code>NoSuchEntryVersionException</code> if it could not be found.
@@ -812,14 +813,56 @@ public class StyleBookEntryVersionPersistenceImpl
 	public int countByStyleBookEntryId_Version(
 		long styleBookEntryId, int version) {
 
-		StyleBookEntryVersion styleBookEntryVersion =
-			fetchByStyleBookEntryId_Version(styleBookEntryId, version);
+		try (SafeCloseable safeCloseable =
+				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
+					StyleBookEntryVersion.class)) {
 
-		if (styleBookEntryVersion == null) {
-			return 0;
+			FinderPath finderPath = _finderPathCountByStyleBookEntryId_Version;
+
+			Object[] finderArgs = new Object[] {styleBookEntryId, version};
+
+			Long count = (Long)finderCache.getResult(
+				finderPath, finderArgs, this);
+
+			if (count == null) {
+				StringBundler sb = new StringBundler(3);
+
+				sb.append(_SQL_COUNT_STYLEBOOKENTRYVERSION_WHERE);
+
+				sb.append(
+					_FINDER_COLUMN_STYLEBOOKENTRYID_VERSION_STYLEBOOKENTRYID_2);
+
+				sb.append(_FINDER_COLUMN_STYLEBOOKENTRYID_VERSION_VERSION_2);
+
+				String sql = sb.toString();
+
+				Session session = null;
+
+				try {
+					session = openSession();
+
+					Query query = session.createQuery(sql);
+
+					QueryPos queryPos = QueryPos.getInstance(query);
+
+					queryPos.add(styleBookEntryId);
+
+					queryPos.add(version);
+
+					count = (Long)query.uniqueResult();
+
+					finderCache.putResult(finderPath, finderArgs, count);
+				}
+				catch (Exception exception) {
+					throw processException(exception);
+				}
+				finally {
+					closeSession(session);
+				}
+			}
+
+			return count.intValue();
 		}
-
-		return 1;
 	}
 
 	private static final String
@@ -2574,6 +2617,7 @@ public class StyleBookEntryVersionPersistenceImpl
 		"styleBookEntryVersion.groupId = ?";
 
 	private FinderPath _finderPathFetchByUUID_G_Version;
+	private FinderPath _finderPathCountByUUID_G_Version;
 
 	/**
 	 * Returns the style book entry version where uuid = &#63; and groupId = &#63; and version = &#63; or throws a <code>NoSuchEntryVersionException</code> if it could not be found.
@@ -2780,14 +2824,72 @@ public class StyleBookEntryVersionPersistenceImpl
 	 */
 	@Override
 	public int countByUUID_G_Version(String uuid, long groupId, int version) {
-		StyleBookEntryVersion styleBookEntryVersion = fetchByUUID_G_Version(
-			uuid, groupId, version);
+		try (SafeCloseable safeCloseable =
+				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
+					StyleBookEntryVersion.class)) {
 
-		if (styleBookEntryVersion == null) {
-			return 0;
+			uuid = Objects.toString(uuid, "");
+
+			FinderPath finderPath = _finderPathCountByUUID_G_Version;
+
+			Object[] finderArgs = new Object[] {uuid, groupId, version};
+
+			Long count = (Long)finderCache.getResult(
+				finderPath, finderArgs, this);
+
+			if (count == null) {
+				StringBundler sb = new StringBundler(4);
+
+				sb.append(_SQL_COUNT_STYLEBOOKENTRYVERSION_WHERE);
+
+				boolean bindUuid = false;
+
+				if (uuid.isEmpty()) {
+					sb.append(_FINDER_COLUMN_UUID_G_VERSION_UUID_3);
+				}
+				else {
+					bindUuid = true;
+
+					sb.append(_FINDER_COLUMN_UUID_G_VERSION_UUID_2);
+				}
+
+				sb.append(_FINDER_COLUMN_UUID_G_VERSION_GROUPID_2);
+
+				sb.append(_FINDER_COLUMN_UUID_G_VERSION_VERSION_2);
+
+				String sql = sb.toString();
+
+				Session session = null;
+
+				try {
+					session = openSession();
+
+					Query query = session.createQuery(sql);
+
+					QueryPos queryPos = QueryPos.getInstance(query);
+
+					if (bindUuid) {
+						queryPos.add(uuid);
+					}
+
+					queryPos.add(groupId);
+
+					queryPos.add(version);
+
+					count = (Long)query.uniqueResult();
+
+					finderCache.putResult(finderPath, finderArgs, count);
+				}
+				catch (Exception exception) {
+					throw processException(exception);
+				}
+				finally {
+					closeSession(session);
+				}
+			}
+
+			return count.intValue();
 		}
-
-		return 1;
 	}
 
 	private static final String _FINDER_COLUMN_UUID_G_VERSION_UUID_2 =
@@ -8113,6 +8215,7 @@ public class StyleBookEntryVersionPersistenceImpl
 		"(styleBookEntryVersion.styleBookEntryKey IS NULL OR styleBookEntryVersion.styleBookEntryKey = '')";
 
 	private FinderPath _finderPathFetchByG_SBEK_Version;
+	private FinderPath _finderPathCountByG_SBEK_Version;
 
 	/**
 	 * Returns the style book entry version where groupId = &#63; and styleBookEntryKey = &#63; and version = &#63; or throws a <code>NoSuchEntryVersionException</code> if it could not be found.
@@ -8326,14 +8429,76 @@ public class StyleBookEntryVersionPersistenceImpl
 	public int countByG_SBEK_Version(
 		long groupId, String styleBookEntryKey, int version) {
 
-		StyleBookEntryVersion styleBookEntryVersion = fetchByG_SBEK_Version(
-			groupId, styleBookEntryKey, version);
+		try (SafeCloseable safeCloseable =
+				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
+					StyleBookEntryVersion.class)) {
 
-		if (styleBookEntryVersion == null) {
-			return 0;
+			styleBookEntryKey = Objects.toString(styleBookEntryKey, "");
+
+			FinderPath finderPath = _finderPathCountByG_SBEK_Version;
+
+			Object[] finderArgs = new Object[] {
+				groupId, styleBookEntryKey, version
+			};
+
+			Long count = (Long)finderCache.getResult(
+				finderPath, finderArgs, this);
+
+			if (count == null) {
+				StringBundler sb = new StringBundler(4);
+
+				sb.append(_SQL_COUNT_STYLEBOOKENTRYVERSION_WHERE);
+
+				sb.append(_FINDER_COLUMN_G_SBEK_VERSION_GROUPID_2);
+
+				boolean bindStyleBookEntryKey = false;
+
+				if (styleBookEntryKey.isEmpty()) {
+					sb.append(
+						_FINDER_COLUMN_G_SBEK_VERSION_STYLEBOOKENTRYKEY_3);
+				}
+				else {
+					bindStyleBookEntryKey = true;
+
+					sb.append(
+						_FINDER_COLUMN_G_SBEK_VERSION_STYLEBOOKENTRYKEY_2);
+				}
+
+				sb.append(_FINDER_COLUMN_G_SBEK_VERSION_VERSION_2);
+
+				String sql = sb.toString();
+
+				Session session = null;
+
+				try {
+					session = openSession();
+
+					Query query = session.createQuery(sql);
+
+					QueryPos queryPos = QueryPos.getInstance(query);
+
+					queryPos.add(groupId);
+
+					if (bindStyleBookEntryKey) {
+						queryPos.add(styleBookEntryKey);
+					}
+
+					queryPos.add(version);
+
+					count = (Long)query.uniqueResult();
+
+					finderCache.putResult(finderPath, finderArgs, count);
+				}
+				catch (Exception exception) {
+					throw processException(exception);
+				}
+				finally {
+					closeSession(session);
+				}
+			}
+
+			return count.intValue();
 		}
-
-		return 1;
 	}
 
 	private static final String _FINDER_COLUMN_G_SBEK_VERSION_GROUPID_2 =
@@ -9317,6 +9482,12 @@ public class StyleBookEntryVersionPersistenceImpl
 			new String[] {Long.class.getName(), Integer.class.getName()},
 			new String[] {"styleBookEntryId", "version"}, true);
 
+		_finderPathCountByStyleBookEntryId_Version = _createFinderPath(
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+			"countByStyleBookEntryId_Version",
+			new String[] {Long.class.getName(), Integer.class.getName()},
+			new String[] {"styleBookEntryId", "version"}, false);
+
 		_finderPathWithPaginationFindByUuid = _createFinderPath(
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUuid",
 			new String[] {
@@ -9380,6 +9551,14 @@ public class StyleBookEntryVersionPersistenceImpl
 				Integer.class.getName()
 			},
 			new String[] {"uuid_", "groupId", "version"}, true);
+
+		_finderPathCountByUUID_G_Version = _createFinderPath(
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByUUID_G_Version",
+			new String[] {
+				String.class.getName(), Long.class.getName(),
+				Integer.class.getName()
+			},
+			new String[] {"uuid_", "groupId", "version"}, false);
 
 		_finderPathWithPaginationFindByUuid_C = _createFinderPath(
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUuid_C",
@@ -9577,6 +9756,14 @@ public class StyleBookEntryVersionPersistenceImpl
 				Integer.class.getName()
 			},
 			new String[] {"groupId", "styleBookEntryKey", "version"}, true);
+
+		_finderPathCountByG_SBEK_Version = _createFinderPath(
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByG_SBEK_Version",
+			new String[] {
+				Long.class.getName(), String.class.getName(),
+				Integer.class.getName()
+			},
+			new String[] {"groupId", "styleBookEntryKey", "version"}, false);
 
 		StyleBookEntryVersionUtil.setPersistence(this);
 	}

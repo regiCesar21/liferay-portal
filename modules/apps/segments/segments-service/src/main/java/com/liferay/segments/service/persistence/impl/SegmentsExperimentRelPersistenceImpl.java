@@ -632,6 +632,7 @@ public class SegmentsExperimentRelPersistenceImpl
 			"segmentsExperimentRel.segmentsExperimentId = ?";
 
 	private FinderPath _finderPathFetchByS_S;
+	private FinderPath _finderPathCountByS_S;
 
 	/**
 	 * Returns the segments experiment rel where segmentsExperimentId = &#63; and segmentsExperienceId = &#63; or throws a <code>NoSuchExperimentRelException</code> if it could not be found.
@@ -818,14 +819,57 @@ public class SegmentsExperimentRelPersistenceImpl
 	public int countByS_S(
 		long segmentsExperimentId, long segmentsExperienceId) {
 
-		SegmentsExperimentRel segmentsExperimentRel = fetchByS_S(
-			segmentsExperimentId, segmentsExperienceId);
+		try (SafeCloseable safeCloseable =
+				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
+					SegmentsExperimentRel.class)) {
 
-		if (segmentsExperimentRel == null) {
-			return 0;
+			FinderPath finderPath = _finderPathCountByS_S;
+
+			Object[] finderArgs = new Object[] {
+				segmentsExperimentId, segmentsExperienceId
+			};
+
+			Long count = (Long)finderCache.getResult(
+				finderPath, finderArgs, this);
+
+			if (count == null) {
+				StringBundler sb = new StringBundler(3);
+
+				sb.append(_SQL_COUNT_SEGMENTSEXPERIMENTREL_WHERE);
+
+				sb.append(_FINDER_COLUMN_S_S_SEGMENTSEXPERIMENTID_2);
+
+				sb.append(_FINDER_COLUMN_S_S_SEGMENTSEXPERIENCEID_2);
+
+				String sql = sb.toString();
+
+				Session session = null;
+
+				try {
+					session = openSession();
+
+					Query query = session.createQuery(sql);
+
+					QueryPos queryPos = QueryPos.getInstance(query);
+
+					queryPos.add(segmentsExperimentId);
+
+					queryPos.add(segmentsExperienceId);
+
+					count = (Long)query.uniqueResult();
+
+					finderCache.putResult(finderPath, finderArgs, count);
+				}
+				catch (Exception exception) {
+					throw processException(exception);
+				}
+				finally {
+					closeSession(session);
+				}
+			}
+
+			return count.intValue();
 		}
-
-		return 1;
 	}
 
 	private static final String _FINDER_COLUMN_S_S_SEGMENTSEXPERIMENTID_2 =
@@ -1739,6 +1783,12 @@ public class SegmentsExperimentRelPersistenceImpl
 			new String[] {Long.class.getName(), Long.class.getName()},
 			new String[] {"segmentsExperimentId", "segmentsExperienceId"},
 			true);
+
+		_finderPathCountByS_S = _createFinderPath(
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByS_S",
+			new String[] {Long.class.getName(), Long.class.getName()},
+			new String[] {"segmentsExperimentId", "segmentsExperienceId"},
+			false);
 
 		SegmentsExperimentRelUtil.setPersistence(this);
 	}

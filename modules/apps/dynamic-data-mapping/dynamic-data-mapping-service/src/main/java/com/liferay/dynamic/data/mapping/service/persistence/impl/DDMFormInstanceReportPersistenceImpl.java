@@ -102,6 +102,7 @@ public class DDMFormInstanceReportPersistenceImpl
 	private FinderPath _finderPathWithoutPaginationFindAll;
 	private FinderPath _finderPathCountAll;
 	private FinderPath _finderPathFetchByFormInstanceId;
+	private FinderPath _finderPathCountByFormInstanceId;
 
 	/**
 	 * Returns the ddm form instance report where formInstanceId = &#63; or throws a <code>NoSuchFormInstanceReportException</code> if it could not be found.
@@ -281,14 +282,51 @@ public class DDMFormInstanceReportPersistenceImpl
 	 */
 	@Override
 	public int countByFormInstanceId(long formInstanceId) {
-		DDMFormInstanceReport ddmFormInstanceReport = fetchByFormInstanceId(
-			formInstanceId);
+		try (SafeCloseable safeCloseable =
+				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
+					DDMFormInstanceReport.class)) {
 
-		if (ddmFormInstanceReport == null) {
-			return 0;
+			FinderPath finderPath = _finderPathCountByFormInstanceId;
+
+			Object[] finderArgs = new Object[] {formInstanceId};
+
+			Long count = (Long)finderCache.getResult(
+				finderPath, finderArgs, this);
+
+			if (count == null) {
+				StringBundler sb = new StringBundler(2);
+
+				sb.append(_SQL_COUNT_DDMFORMINSTANCEREPORT_WHERE);
+
+				sb.append(_FINDER_COLUMN_FORMINSTANCEID_FORMINSTANCEID_2);
+
+				String sql = sb.toString();
+
+				Session session = null;
+
+				try {
+					session = openSession();
+
+					Query query = session.createQuery(sql);
+
+					QueryPos queryPos = QueryPos.getInstance(query);
+
+					queryPos.add(formInstanceId);
+
+					count = (Long)query.uniqueResult();
+
+					finderCache.putResult(finderPath, finderArgs, count);
+				}
+				catch (Exception exception) {
+					throw processException(exception);
+				}
+				finally {
+					closeSession(session);
+				}
+			}
+
+			return count.intValue();
 		}
-
-		return 1;
 	}
 
 	private static final String _FINDER_COLUMN_FORMINSTANCEID_FORMINSTANCEID_2 =
@@ -1176,6 +1214,11 @@ public class DDMFormInstanceReportPersistenceImpl
 			FINDER_CLASS_NAME_ENTITY, "fetchByFormInstanceId",
 			new String[] {Long.class.getName()},
 			new String[] {"formInstanceId"}, true);
+
+		_finderPathCountByFormInstanceId = _createFinderPath(
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByFormInstanceId",
+			new String[] {Long.class.getName()},
+			new String[] {"formInstanceId"}, false);
 
 		DDMFormInstanceReportUtil.setPersistence(this);
 	}

@@ -629,6 +629,7 @@ public class SamlIdpSsoSessionPersistenceImpl
 		"samlIdpSsoSession.createDate < ?";
 
 	private FinderPath _finderPathFetchBySamlIdpSsoSessionKey;
+	private FinderPath _finderPathCountBySamlIdpSsoSessionKey;
 
 	/**
 	 * Returns the saml idp sso session where samlIdpSsoSessionKey = &#63; or throws a <code>NoSuchIdpSsoSessionException</code> if it could not be found.
@@ -823,14 +824,60 @@ public class SamlIdpSsoSessionPersistenceImpl
 	 */
 	@Override
 	public int countBySamlIdpSsoSessionKey(String samlIdpSsoSessionKey) {
-		SamlIdpSsoSession samlIdpSsoSession = fetchBySamlIdpSsoSessionKey(
-			samlIdpSsoSessionKey);
+		samlIdpSsoSessionKey = Objects.toString(samlIdpSsoSessionKey, "");
 
-		if (samlIdpSsoSession == null) {
-			return 0;
+		FinderPath finderPath = _finderPathCountBySamlIdpSsoSessionKey;
+
+		Object[] finderArgs = new Object[] {samlIdpSsoSessionKey};
+
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
+
+		if (count == null) {
+			StringBundler sb = new StringBundler(2);
+
+			sb.append(_SQL_COUNT_SAMLIDPSSOSESSION_WHERE);
+
+			boolean bindSamlIdpSsoSessionKey = false;
+
+			if (samlIdpSsoSessionKey.isEmpty()) {
+				sb.append(
+					_FINDER_COLUMN_SAMLIDPSSOSESSIONKEY_SAMLIDPSSOSESSIONKEY_3);
+			}
+			else {
+				bindSamlIdpSsoSessionKey = true;
+
+				sb.append(
+					_FINDER_COLUMN_SAMLIDPSSOSESSIONKEY_SAMLIDPSSOSESSIONKEY_2);
+			}
+
+			String sql = sb.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query query = session.createQuery(sql);
+
+				QueryPos queryPos = QueryPos.getInstance(query);
+
+				if (bindSamlIdpSsoSessionKey) {
+					queryPos.add(samlIdpSsoSessionKey);
+				}
+
+				count = (Long)query.uniqueResult();
+
+				finderCache.putResult(finderPath, finderArgs, count);
+			}
+			catch (Exception exception) {
+				throw processException(exception);
+			}
+			finally {
+				closeSession(session);
+			}
 		}
 
-		return 1;
+		return count.intValue();
 	}
 
 	private static final String
@@ -1444,6 +1491,12 @@ public class SamlIdpSsoSessionPersistenceImpl
 			FINDER_CLASS_NAME_ENTITY, "fetchBySamlIdpSsoSessionKey",
 			new String[] {String.class.getName()},
 			new String[] {"samlIdpSsoSessionKey"}, true);
+
+		_finderPathCountBySamlIdpSsoSessionKey = _createFinderPath(
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+			"countBySamlIdpSsoSessionKey",
+			new String[] {String.class.getName()},
+			new String[] {"samlIdpSsoSessionKey"}, false);
 
 		SamlIdpSsoSessionUtil.setPersistence(this);
 	}

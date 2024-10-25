@@ -2156,6 +2156,7 @@ public class CTSContentPersistenceImpl
 		"(ctsContent.storeType IS NULL OR ctsContent.storeType = '')";
 
 	private FinderPath _finderPathFetchByC_R_P_V_S;
+	private FinderPath _finderPathCountByC_R_P_V_S;
 
 	/**
 	 * Returns the cts content where companyId = &#63; and repositoryId = &#63; and path = &#63; and version = &#63; and storeType = &#63; or throws a <code>NoSuchContentException</code> if it could not be found.
@@ -2419,14 +2420,106 @@ public class CTSContentPersistenceImpl
 		long companyId, long repositoryId, String path, String version,
 		String storeType) {
 
-		CTSContent ctsContent = fetchByC_R_P_V_S(
-			companyId, repositoryId, path, version, storeType);
+		try (SafeCloseable safeCloseable =
+				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
+					CTSContent.class)) {
 
-		if (ctsContent == null) {
-			return 0;
+			path = Objects.toString(path, "");
+			version = Objects.toString(version, "");
+			storeType = Objects.toString(storeType, "");
+
+			FinderPath finderPath = _finderPathCountByC_R_P_V_S;
+
+			Object[] finderArgs = new Object[] {
+				companyId, repositoryId, path, version, storeType
+			};
+
+			Long count = (Long)finderCache.getResult(
+				finderPath, finderArgs, this);
+
+			if (count == null) {
+				StringBundler sb = new StringBundler(6);
+
+				sb.append(_SQL_COUNT_CTSCONTENT_WHERE);
+
+				sb.append(_FINDER_COLUMN_C_R_P_V_S_COMPANYID_2);
+
+				sb.append(_FINDER_COLUMN_C_R_P_V_S_REPOSITORYID_2);
+
+				boolean bindPath = false;
+
+				if (path.isEmpty()) {
+					sb.append(_FINDER_COLUMN_C_R_P_V_S_PATH_3);
+				}
+				else {
+					bindPath = true;
+
+					sb.append(_FINDER_COLUMN_C_R_P_V_S_PATH_2);
+				}
+
+				boolean bindVersion = false;
+
+				if (version.isEmpty()) {
+					sb.append(_FINDER_COLUMN_C_R_P_V_S_VERSION_3);
+				}
+				else {
+					bindVersion = true;
+
+					sb.append(_FINDER_COLUMN_C_R_P_V_S_VERSION_2);
+				}
+
+				boolean bindStoreType = false;
+
+				if (storeType.isEmpty()) {
+					sb.append(_FINDER_COLUMN_C_R_P_V_S_STORETYPE_3);
+				}
+				else {
+					bindStoreType = true;
+
+					sb.append(_FINDER_COLUMN_C_R_P_V_S_STORETYPE_2);
+				}
+
+				String sql = sb.toString();
+
+				Session session = null;
+
+				try {
+					session = openSession();
+
+					Query query = session.createQuery(sql);
+
+					QueryPos queryPos = QueryPos.getInstance(query);
+
+					queryPos.add(companyId);
+
+					queryPos.add(repositoryId);
+
+					if (bindPath) {
+						queryPos.add(path);
+					}
+
+					if (bindVersion) {
+						queryPos.add(version);
+					}
+
+					if (bindStoreType) {
+						queryPos.add(storeType);
+					}
+
+					count = (Long)query.uniqueResult();
+
+					finderCache.putResult(finderPath, finderArgs, count);
+				}
+				catch (Exception exception) {
+					throw processException(exception);
+				}
+				finally {
+					closeSession(session);
+				}
+			}
+
+			return count.intValue();
 		}
-
-		return 1;
 	}
 
 	private static final String _FINDER_COLUMN_C_R_P_V_S_COMPANYID_2 =
@@ -3368,6 +3461,18 @@ public class CTSContentPersistenceImpl
 				"companyId", "repositoryId", "path_", "version", "storeType"
 			},
 			true);
+
+		_finderPathCountByC_R_P_V_S = _createFinderPath(
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByC_R_P_V_S",
+			new String[] {
+				Long.class.getName(), Long.class.getName(),
+				String.class.getName(), String.class.getName(),
+				String.class.getName()
+			},
+			new String[] {
+				"companyId", "repositoryId", "path_", "version", "storeType"
+			},
+			false);
 
 		CTSContentUtil.setPersistence(this);
 	}
