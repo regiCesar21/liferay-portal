@@ -82,7 +82,6 @@ public class CompanyPersistenceImpl
 	private FinderPath _finderPathWithoutPaginationFindAll;
 	private FinderPath _finderPathCountAll;
 	private FinderPath _finderPathFetchByWebId;
-	private FinderPath _finderPathCountByWebId;
 
 	/**
 	 * Returns the company where webId = &#63; or throws a <code>NoSuchCompanyException</code> if it could not be found.
@@ -242,59 +241,13 @@ public class CompanyPersistenceImpl
 	 */
 	@Override
 	public int countByWebId(String webId) {
-		webId = Objects.toString(webId, "");
+		Company company = fetchByWebId(webId);
 
-		FinderPath finderPath = _finderPathCountByWebId;
-
-		Object[] finderArgs = new Object[] {webId};
-
-		Long count = (Long)FinderCacheUtil.getResult(
-			finderPath, finderArgs, this);
-
-		if (count == null) {
-			StringBundler sb = new StringBundler(2);
-
-			sb.append(_SQL_COUNT_COMPANY_WHERE);
-
-			boolean bindWebId = false;
-
-			if (webId.isEmpty()) {
-				sb.append(_FINDER_COLUMN_WEBID_WEBID_3);
-			}
-			else {
-				bindWebId = true;
-
-				sb.append(_FINDER_COLUMN_WEBID_WEBID_2);
-			}
-
-			String sql = sb.toString();
-
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				Query query = session.createQuery(sql);
-
-				QueryPos queryPos = QueryPos.getInstance(query);
-
-				if (bindWebId) {
-					queryPos.add(webId);
-				}
-
-				count = (Long)query.uniqueResult();
-
-				FinderCacheUtil.putResult(finderPath, finderArgs, count);
-			}
-			catch (Exception exception) {
-				throw processException(exception);
-			}
-			finally {
-				closeSession(session);
-			}
+		if (company == null) {
+			return 0;
 		}
 
-		return count.intValue();
+		return 1;
 	}
 
 	private static final String _FINDER_COLUMN_WEBID_WEBID_2 =
@@ -304,7 +257,6 @@ public class CompanyPersistenceImpl
 		"(company.webId IS NULL OR company.webId = '')";
 
 	private FinderPath _finderPathFetchByMx;
-	private FinderPath _finderPathCountByMx;
 
 	/**
 	 * Returns the company where mx = &#63; or throws a <code>NoSuchCompanyException</code> if it could not be found.
@@ -479,59 +431,13 @@ public class CompanyPersistenceImpl
 	 */
 	@Override
 	public int countByMx(String mx) {
-		mx = Objects.toString(mx, "");
+		Company company = fetchByMx(mx);
 
-		FinderPath finderPath = _finderPathCountByMx;
-
-		Object[] finderArgs = new Object[] {mx};
-
-		Long count = (Long)FinderCacheUtil.getResult(
-			finderPath, finderArgs, this);
-
-		if (count == null) {
-			StringBundler sb = new StringBundler(2);
-
-			sb.append(_SQL_COUNT_COMPANY_WHERE);
-
-			boolean bindMx = false;
-
-			if (mx.isEmpty()) {
-				sb.append(_FINDER_COLUMN_MX_MX_3);
-			}
-			else {
-				bindMx = true;
-
-				sb.append(_FINDER_COLUMN_MX_MX_2);
-			}
-
-			String sql = sb.toString();
-
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				Query query = session.createQuery(sql);
-
-				QueryPos queryPos = QueryPos.getInstance(query);
-
-				if (bindMx) {
-					queryPos.add(mx);
-				}
-
-				count = (Long)query.uniqueResult();
-
-				FinderCacheUtil.putResult(finderPath, finderArgs, count);
-			}
-			catch (Exception exception) {
-				throw processException(exception);
-			}
-			finally {
-				closeSession(session);
-			}
+		if (company == null) {
+			return 0;
 		}
 
-		return count.intValue();
+		return 1;
 	}
 
 	private static final String _FINDER_COLUMN_MX_MX_2 = "company.mx = ?";
@@ -540,7 +446,6 @@ public class CompanyPersistenceImpl
 		"(company.mx IS NULL OR company.mx = '')";
 
 	private FinderPath _finderPathFetchByLogoId;
-	private FinderPath _finderPathCountByLogoId;
 
 	/**
 	 * Returns the company where logoId = &#63; or throws a <code>NoSuchCompanyException</code> if it could not be found.
@@ -702,46 +607,13 @@ public class CompanyPersistenceImpl
 	 */
 	@Override
 	public int countByLogoId(long logoId) {
-		FinderPath finderPath = _finderPathCountByLogoId;
+		Company company = fetchByLogoId(logoId);
 
-		Object[] finderArgs = new Object[] {logoId};
-
-		Long count = (Long)FinderCacheUtil.getResult(
-			finderPath, finderArgs, this);
-
-		if (count == null) {
-			StringBundler sb = new StringBundler(2);
-
-			sb.append(_SQL_COUNT_COMPANY_WHERE);
-
-			sb.append(_FINDER_COLUMN_LOGOID_LOGOID_2);
-
-			String sql = sb.toString();
-
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				Query query = session.createQuery(sql);
-
-				QueryPos queryPos = QueryPos.getInstance(query);
-
-				queryPos.add(logoId);
-
-				count = (Long)query.uniqueResult();
-
-				FinderCacheUtil.putResult(finderPath, finderArgs, count);
-			}
-			catch (Exception exception) {
-				throw processException(exception);
-			}
-			finally {
-				closeSession(session);
-			}
+		if (company == null) {
+			return 0;
 		}
 
-		return count.intValue();
+		return 1;
 	}
 
 	private static final String _FINDER_COLUMN_LOGOID_LOGOID_2 =
@@ -1819,27 +1691,13 @@ public class CompanyPersistenceImpl
 			new String[] {String.class.getName()}, new String[] {"webId"},
 			true);
 
-		_finderPathCountByWebId = _createFinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByWebId",
-			new String[] {String.class.getName()}, new String[] {"webId"},
-			false);
-
 		_finderPathFetchByMx = _createFinderPath(
 			FINDER_CLASS_NAME_ENTITY, "fetchByMx",
 			new String[] {String.class.getName()}, new String[] {"mx"}, true);
 
-		_finderPathCountByMx = _createFinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByMx",
-			new String[] {String.class.getName()}, new String[] {"mx"}, false);
-
 		_finderPathFetchByLogoId = _createFinderPath(
 			FINDER_CLASS_NAME_ENTITY, "fetchByLogoId",
 			new String[] {Long.class.getName()}, new String[] {"logoId"}, true);
-
-		_finderPathCountByLogoId = _createFinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByLogoId",
-			new String[] {Long.class.getName()}, new String[] {"logoId"},
-			false);
 
 		_finderPathWithPaginationFindBySystem = _createFinderPath(
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findBySystem",

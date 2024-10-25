@@ -1097,7 +1097,6 @@ public class ExpandoRowPersistenceImpl
 		"expandoRow.classPK = ?";
 
 	private FinderPath _finderPathFetchByT_C;
-	private FinderPath _finderPathCountByT_C;
 
 	/**
 	 * Returns the expando row where tableId = &#63; and classPK = &#63; or throws a <code>NoSuchRowException</code> if it could not be found.
@@ -1269,55 +1268,13 @@ public class ExpandoRowPersistenceImpl
 	 */
 	@Override
 	public int countByT_C(long tableId, long classPK) {
-		try (SafeCloseable safeCloseable =
-				CTPersistenceHelperUtil.setCTCollectionIdWithSafeCloseable(
-					ExpandoRow.class)) {
+		ExpandoRow expandoRow = fetchByT_C(tableId, classPK);
 
-			FinderPath finderPath = _finderPathCountByT_C;
-
-			Object[] finderArgs = new Object[] {tableId, classPK};
-
-			Long count = (Long)FinderCacheUtil.getResult(
-				finderPath, finderArgs, this);
-
-			if (count == null) {
-				StringBundler sb = new StringBundler(3);
-
-				sb.append(_SQL_COUNT_EXPANDOROW_WHERE);
-
-				sb.append(_FINDER_COLUMN_T_C_TABLEID_2);
-
-				sb.append(_FINDER_COLUMN_T_C_CLASSPK_2);
-
-				String sql = sb.toString();
-
-				Session session = null;
-
-				try {
-					session = openSession();
-
-					Query query = session.createQuery(sql);
-
-					QueryPos queryPos = QueryPos.getInstance(query);
-
-					queryPos.add(tableId);
-
-					queryPos.add(classPK);
-
-					count = (Long)query.uniqueResult();
-
-					FinderCacheUtil.putResult(finderPath, finderArgs, count);
-				}
-				catch (Exception exception) {
-					throw processException(exception);
-				}
-				finally {
-					closeSession(session);
-				}
-			}
-
-			return count.intValue();
+		if (expandoRow == null) {
+			return 0;
 		}
+
+		return 1;
 	}
 
 	private static final String _FINDER_COLUMN_T_C_TABLEID_2 =
@@ -2192,11 +2149,6 @@ public class ExpandoRowPersistenceImpl
 			FINDER_CLASS_NAME_ENTITY, "fetchByT_C",
 			new String[] {Long.class.getName(), Long.class.getName()},
 			new String[] {"tableId", "classPK"}, true);
-
-		_finderPathCountByT_C = _createFinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByT_C",
-			new String[] {Long.class.getName(), Long.class.getName()},
-			new String[] {"tableId", "classPK"}, false);
 
 		ExpandoRowUtil.setPersistence(this);
 	}

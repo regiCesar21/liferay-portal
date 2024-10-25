@@ -595,7 +595,6 @@ public class CommercePaymentMethodGroupRelPersistenceImpl
 		"commercePaymentMethodGroupRel.groupId = ?";
 
 	private FinderPath _finderPathFetchByG_E;
-	private FinderPath _finderPathCountByG_E;
 
 	/**
 	 * Returns the commerce payment method group rel where groupId = &#63; and engineKey = &#63; or throws a <code>NoSuchPaymentMethodGroupRelException</code> if it could not be found.
@@ -784,62 +783,14 @@ public class CommercePaymentMethodGroupRelPersistenceImpl
 	 */
 	@Override
 	public int countByG_E(long groupId, String engineKey) {
-		engineKey = Objects.toString(engineKey, "");
+		CommercePaymentMethodGroupRel commercePaymentMethodGroupRel =
+			fetchByG_E(groupId, engineKey);
 
-		FinderPath finderPath = _finderPathCountByG_E;
-
-		Object[] finderArgs = new Object[] {groupId, engineKey};
-
-		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
-
-		if (count == null) {
-			StringBundler sb = new StringBundler(3);
-
-			sb.append(_SQL_COUNT_COMMERCEPAYMENTMETHODGROUPREL_WHERE);
-
-			sb.append(_FINDER_COLUMN_G_E_GROUPID_2);
-
-			boolean bindEngineKey = false;
-
-			if (engineKey.isEmpty()) {
-				sb.append(_FINDER_COLUMN_G_E_ENGINEKEY_3);
-			}
-			else {
-				bindEngineKey = true;
-
-				sb.append(_FINDER_COLUMN_G_E_ENGINEKEY_2);
-			}
-
-			String sql = sb.toString();
-
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				Query query = session.createQuery(sql);
-
-				QueryPos queryPos = QueryPos.getInstance(query);
-
-				queryPos.add(groupId);
-
-				if (bindEngineKey) {
-					queryPos.add(engineKey);
-				}
-
-				count = (Long)query.uniqueResult();
-
-				finderCache.putResult(finderPath, finderArgs, count);
-			}
-			catch (Exception exception) {
-				throw processException(exception);
-			}
-			finally {
-				closeSession(session);
-			}
+		if (commercePaymentMethodGroupRel == null) {
+			return 0;
 		}
 
-		return count.intValue();
+		return 1;
 	}
 
 	private static final String _FINDER_COLUMN_G_E_GROUPID_2 =
@@ -2068,11 +2019,6 @@ public class CommercePaymentMethodGroupRelPersistenceImpl
 			FINDER_CLASS_NAME_ENTITY, "fetchByG_E",
 			new String[] {Long.class.getName(), String.class.getName()},
 			new String[] {"groupId", "engineKey"}, true);
-
-		_finderPathCountByG_E = _createFinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByG_E",
-			new String[] {Long.class.getName(), String.class.getName()},
-			new String[] {"groupId", "engineKey"}, false);
 
 		_finderPathWithPaginationFindByG_A = _createFinderPath(
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByG_A",

@@ -1150,7 +1150,6 @@ public class CommerceAddressRestrictionPersistenceImpl
 		"commerceAddressRestriction.classPK = ?";
 
 	private FinderPath _finderPathFetchByC_C_C;
-	private FinderPath _finderPathCountByC_C_C;
 
 	/**
 	 * Returns the commerce address restriction where classNameId = &#63; and classPK = &#63; and commerceCountryId = &#63; or throws a <code>NoSuchAddressRestrictionException</code> if it could not be found.
@@ -1342,55 +1341,14 @@ public class CommerceAddressRestrictionPersistenceImpl
 	public int countByC_C_C(
 		long classNameId, long classPK, long commerceCountryId) {
 
-		FinderPath finderPath = _finderPathCountByC_C_C;
+		CommerceAddressRestriction commerceAddressRestriction = fetchByC_C_C(
+			classNameId, classPK, commerceCountryId);
 
-		Object[] finderArgs = new Object[] {
-			classNameId, classPK, commerceCountryId
-		};
-
-		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
-
-		if (count == null) {
-			StringBundler sb = new StringBundler(4);
-
-			sb.append(_SQL_COUNT_COMMERCEADDRESSRESTRICTION_WHERE);
-
-			sb.append(_FINDER_COLUMN_C_C_C_CLASSNAMEID_2);
-
-			sb.append(_FINDER_COLUMN_C_C_C_CLASSPK_2);
-
-			sb.append(_FINDER_COLUMN_C_C_C_COMMERCECOUNTRYID_2);
-
-			String sql = sb.toString();
-
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				Query query = session.createQuery(sql);
-
-				QueryPos queryPos = QueryPos.getInstance(query);
-
-				queryPos.add(classNameId);
-
-				queryPos.add(classPK);
-
-				queryPos.add(commerceCountryId);
-
-				count = (Long)query.uniqueResult();
-
-				finderCache.putResult(finderPath, finderArgs, count);
-			}
-			catch (Exception exception) {
-				throw processException(exception);
-			}
-			finally {
-				closeSession(session);
-			}
+		if (commerceAddressRestriction == null) {
+			return 0;
 		}
 
-		return count.intValue();
+		return 1;
 	}
 
 	private static final String _FINDER_COLUMN_C_C_C_CLASSNAMEID_2 =
@@ -2074,14 +2032,6 @@ public class CommerceAddressRestrictionPersistenceImpl
 				Long.class.getName(), Long.class.getName(), Long.class.getName()
 			},
 			new String[] {"classNameId", "classPK", "commerceCountryId"}, true);
-
-		_finderPathCountByC_C_C = _createFinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByC_C_C",
-			new String[] {
-				Long.class.getName(), Long.class.getName(), Long.class.getName()
-			},
-			new String[] {"classNameId", "classPK", "commerceCountryId"},
-			false);
 
 		CommerceAddressRestrictionUtil.setPersistence(this);
 	}

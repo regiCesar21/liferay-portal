@@ -608,7 +608,6 @@ public class AppBuilderAppDataRecordLinkPersistenceImpl
 			"appBuilderAppDataRecordLink.appBuilderAppId = ?";
 
 	private FinderPath _finderPathFetchByDDLRecordId;
-	private FinderPath _finderPathCountByDDLRecordId;
 
 	/**
 	 * Returns the app builder app data record link where ddlRecordId = &#63; or throws a <code>NoSuchAppDataRecordLinkException</code> if it could not be found.
@@ -780,45 +779,14 @@ public class AppBuilderAppDataRecordLinkPersistenceImpl
 	 */
 	@Override
 	public int countByDDLRecordId(long ddlRecordId) {
-		FinderPath finderPath = _finderPathCountByDDLRecordId;
+		AppBuilderAppDataRecordLink appBuilderAppDataRecordLink =
+			fetchByDDLRecordId(ddlRecordId);
 
-		Object[] finderArgs = new Object[] {ddlRecordId};
-
-		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
-
-		if (count == null) {
-			StringBundler sb = new StringBundler(2);
-
-			sb.append(_SQL_COUNT_APPBUILDERAPPDATARECORDLINK_WHERE);
-
-			sb.append(_FINDER_COLUMN_DDLRECORDID_DDLRECORDID_2);
-
-			String sql = sb.toString();
-
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				Query query = session.createQuery(sql);
-
-				QueryPos queryPos = QueryPos.getInstance(query);
-
-				queryPos.add(ddlRecordId);
-
-				count = (Long)query.uniqueResult();
-
-				finderCache.putResult(finderPath, finderArgs, count);
-			}
-			catch (Exception exception) {
-				throw processException(exception);
-			}
-			finally {
-				closeSession(session);
-			}
+		if (appBuilderAppDataRecordLink == null) {
+			return 0;
 		}
 
-		return count.intValue();
+		return 1;
 	}
 
 	private static final String _FINDER_COLUMN_DDLRECORDID_DDLRECORDID_2 =
@@ -2280,11 +2248,6 @@ public class AppBuilderAppDataRecordLinkPersistenceImpl
 			FINDER_CLASS_NAME_ENTITY, "fetchByDDLRecordId",
 			new String[] {Long.class.getName()}, new String[] {"ddlRecordId"},
 			true);
-
-		_finderPathCountByDDLRecordId = _createFinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByDDLRecordId",
-			new String[] {Long.class.getName()}, new String[] {"ddlRecordId"},
-			false);
 
 		_finderPathWithPaginationFindByA_D = _createFinderPath(
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByA_D",

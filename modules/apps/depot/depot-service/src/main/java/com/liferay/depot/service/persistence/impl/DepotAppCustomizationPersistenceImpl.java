@@ -600,7 +600,6 @@ public class DepotAppCustomizationPersistenceImpl
 		"depotAppCustomization.depotEntryId = ?";
 
 	private FinderPath _finderPathFetchByD_E;
-	private FinderPath _finderPathCountByD_E;
 
 	/**
 	 * Returns the depot app customization where depotEntryId = &#63; and enabled = &#63; or throws a <code>NoSuchAppCustomizationException</code> if it could not be found.
@@ -789,49 +788,14 @@ public class DepotAppCustomizationPersistenceImpl
 	 */
 	@Override
 	public int countByD_E(long depotEntryId, boolean enabled) {
-		FinderPath finderPath = _finderPathCountByD_E;
+		DepotAppCustomization depotAppCustomization = fetchByD_E(
+			depotEntryId, enabled);
 
-		Object[] finderArgs = new Object[] {depotEntryId, enabled};
-
-		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
-
-		if (count == null) {
-			StringBundler sb = new StringBundler(3);
-
-			sb.append(_SQL_COUNT_DEPOTAPPCUSTOMIZATION_WHERE);
-
-			sb.append(_FINDER_COLUMN_D_E_DEPOTENTRYID_2);
-
-			sb.append(_FINDER_COLUMN_D_E_ENABLED_2);
-
-			String sql = sb.toString();
-
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				Query query = session.createQuery(sql);
-
-				QueryPos queryPos = QueryPos.getInstance(query);
-
-				queryPos.add(depotEntryId);
-
-				queryPos.add(enabled);
-
-				count = (Long)query.uniqueResult();
-
-				finderCache.putResult(finderPath, finderArgs, count);
-			}
-			catch (Exception exception) {
-				throw processException(exception);
-			}
-			finally {
-				closeSession(session);
-			}
+		if (depotAppCustomization == null) {
+			return 0;
 		}
 
-		return count.intValue();
+		return 1;
 	}
 
 	private static final String _FINDER_COLUMN_D_E_DEPOTENTRYID_2 =
@@ -841,7 +805,6 @@ public class DepotAppCustomizationPersistenceImpl
 		"depotAppCustomization.enabled = ?";
 
 	private FinderPath _finderPathFetchByD_P;
-	private FinderPath _finderPathCountByD_P;
 
 	/**
 	 * Returns the depot app customization where depotEntryId = &#63; and portletId = &#63; or throws a <code>NoSuchAppCustomizationException</code> if it could not be found.
@@ -1028,62 +991,14 @@ public class DepotAppCustomizationPersistenceImpl
 	 */
 	@Override
 	public int countByD_P(long depotEntryId, String portletId) {
-		portletId = Objects.toString(portletId, "");
+		DepotAppCustomization depotAppCustomization = fetchByD_P(
+			depotEntryId, portletId);
 
-		FinderPath finderPath = _finderPathCountByD_P;
-
-		Object[] finderArgs = new Object[] {depotEntryId, portletId};
-
-		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
-
-		if (count == null) {
-			StringBundler sb = new StringBundler(3);
-
-			sb.append(_SQL_COUNT_DEPOTAPPCUSTOMIZATION_WHERE);
-
-			sb.append(_FINDER_COLUMN_D_P_DEPOTENTRYID_2);
-
-			boolean bindPortletId = false;
-
-			if (portletId.isEmpty()) {
-				sb.append(_FINDER_COLUMN_D_P_PORTLETID_3);
-			}
-			else {
-				bindPortletId = true;
-
-				sb.append(_FINDER_COLUMN_D_P_PORTLETID_2);
-			}
-
-			String sql = sb.toString();
-
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				Query query = session.createQuery(sql);
-
-				QueryPos queryPos = QueryPos.getInstance(query);
-
-				queryPos.add(depotEntryId);
-
-				if (bindPortletId) {
-					queryPos.add(portletId);
-				}
-
-				count = (Long)query.uniqueResult();
-
-				finderCache.putResult(finderPath, finderArgs, count);
-			}
-			catch (Exception exception) {
-				throw processException(exception);
-			}
-			finally {
-				closeSession(session);
-			}
+		if (depotAppCustomization == null) {
+			return 0;
 		}
 
-		return count.intValue();
+		return 1;
 	}
 
 	private static final String _FINDER_COLUMN_D_P_DEPOTENTRYID_2 =
@@ -1715,20 +1630,10 @@ public class DepotAppCustomizationPersistenceImpl
 			new String[] {Long.class.getName(), Boolean.class.getName()},
 			new String[] {"depotEntryId", "enabled"}, true);
 
-		_finderPathCountByD_E = _createFinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByD_E",
-			new String[] {Long.class.getName(), Boolean.class.getName()},
-			new String[] {"depotEntryId", "enabled"}, false);
-
 		_finderPathFetchByD_P = _createFinderPath(
 			FINDER_CLASS_NAME_ENTITY, "fetchByD_P",
 			new String[] {Long.class.getName(), String.class.getName()},
 			new String[] {"depotEntryId", "portletId"}, true);
-
-		_finderPathCountByD_P = _createFinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByD_P",
-			new String[] {Long.class.getName(), String.class.getName()},
-			new String[] {"depotEntryId", "portletId"}, false);
 
 		DepotAppCustomizationUtil.setPersistence(this);
 	}

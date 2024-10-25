@@ -2279,7 +2279,6 @@ public class DLFileEntryMetadataPersistenceImpl
 		"dlFileEntryMetadata.fileVersionId = ?";
 
 	private FinderPath _finderPathFetchByD_F;
-	private FinderPath _finderPathCountByD_F;
 
 	/**
 	 * Returns the document library file entry metadata where DDMStructureId = &#63; and fileVersionId = &#63; or throws a <code>NoSuchFileEntryMetadataException</code> if it could not be found.
@@ -2459,55 +2458,14 @@ public class DLFileEntryMetadataPersistenceImpl
 	 */
 	@Override
 	public int countByD_F(long DDMStructureId, long fileVersionId) {
-		try (SafeCloseable safeCloseable =
-				CTPersistenceHelperUtil.setCTCollectionIdWithSafeCloseable(
-					DLFileEntryMetadata.class)) {
+		DLFileEntryMetadata dlFileEntryMetadata = fetchByD_F(
+			DDMStructureId, fileVersionId);
 
-			FinderPath finderPath = _finderPathCountByD_F;
-
-			Object[] finderArgs = new Object[] {DDMStructureId, fileVersionId};
-
-			Long count = (Long)FinderCacheUtil.getResult(
-				finderPath, finderArgs, this);
-
-			if (count == null) {
-				StringBundler sb = new StringBundler(3);
-
-				sb.append(_SQL_COUNT_DLFILEENTRYMETADATA_WHERE);
-
-				sb.append(_FINDER_COLUMN_D_F_DDMSTRUCTUREID_2);
-
-				sb.append(_FINDER_COLUMN_D_F_FILEVERSIONID_2);
-
-				String sql = sb.toString();
-
-				Session session = null;
-
-				try {
-					session = openSession();
-
-					Query query = session.createQuery(sql);
-
-					QueryPos queryPos = QueryPos.getInstance(query);
-
-					queryPos.add(DDMStructureId);
-
-					queryPos.add(fileVersionId);
-
-					count = (Long)query.uniqueResult();
-
-					FinderCacheUtil.putResult(finderPath, finderArgs, count);
-				}
-				catch (Exception exception) {
-					throw processException(exception);
-				}
-				finally {
-					closeSession(session);
-				}
-			}
-
-			return count.intValue();
+		if (dlFileEntryMetadata == null) {
+			return 0;
 		}
+
+		return 1;
 	}
 
 	private static final String _FINDER_COLUMN_D_F_DDMSTRUCTUREID_2 =
@@ -3452,11 +3410,6 @@ public class DLFileEntryMetadataPersistenceImpl
 			FINDER_CLASS_NAME_ENTITY, "fetchByD_F",
 			new String[] {Long.class.getName(), Long.class.getName()},
 			new String[] {"DDMStructureId", "fileVersionId"}, true);
-
-		_finderPathCountByD_F = _createFinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByD_F",
-			new String[] {Long.class.getName(), Long.class.getName()},
-			new String[] {"DDMStructureId", "fileVersionId"}, false);
 
 		DLFileEntryMetadataUtil.setPersistence(this);
 	}

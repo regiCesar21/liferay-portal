@@ -2902,7 +2902,6 @@ public class GadgetPersistenceImpl
 		"gadget.companyId = ?";
 
 	private FinderPath _finderPathFetchByC_U;
-	private FinderPath _finderPathCountByC_U;
 
 	/**
 	 * Returns the gadget where companyId = &#63; and url = &#63; or throws a <code>NoSuchGadgetException</code> if it could not be found.
@@ -3082,63 +3081,13 @@ public class GadgetPersistenceImpl
 	 */
 	@Override
 	public int countByC_U(long companyId, String url) {
-		url = Objects.toString(url, "");
+		Gadget gadget = fetchByC_U(companyId, url);
 
-		FinderPath finderPath = _finderPathCountByC_U;
-
-		Object[] finderArgs = new Object[] {companyId, url};
-
-		Long count = (Long)FinderCacheUtil.getResult(
-			finderPath, finderArgs, this);
-
-		if (count == null) {
-			StringBundler sb = new StringBundler(3);
-
-			sb.append(_SQL_COUNT_GADGET_WHERE);
-
-			sb.append(_FINDER_COLUMN_C_U_COMPANYID_2);
-
-			boolean bindUrl = false;
-
-			if (url.isEmpty()) {
-				sb.append(_FINDER_COLUMN_C_U_URL_3);
-			}
-			else {
-				bindUrl = true;
-
-				sb.append(_FINDER_COLUMN_C_U_URL_2);
-			}
-
-			String sql = sb.toString();
-
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				Query query = session.createQuery(sql);
-
-				QueryPos queryPos = QueryPos.getInstance(query);
-
-				queryPos.add(companyId);
-
-				if (bindUrl) {
-					queryPos.add(url);
-				}
-
-				count = (Long)query.uniqueResult();
-
-				FinderCacheUtil.putResult(finderPath, finderArgs, count);
-			}
-			catch (Exception exception) {
-				throw processException(exception);
-			}
-			finally {
-				closeSession(session);
-			}
+		if (gadget == null) {
+			return 0;
 		}
 
-		return count.intValue();
+		return 1;
 	}
 
 	private static final String _FINDER_COLUMN_C_U_COMPANYID_2 =
@@ -3783,11 +3732,6 @@ public class GadgetPersistenceImpl
 			FINDER_CLASS_NAME_ENTITY, "fetchByC_U",
 			new String[] {Long.class.getName(), String.class.getName()},
 			new String[] {"companyId", "url"}, true);
-
-		_finderPathCountByC_U = _createFinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByC_U",
-			new String[] {Long.class.getName(), String.class.getName()},
-			new String[] {"companyId", "url"}, false);
 
 		GadgetUtil.setPersistence(this);
 	}

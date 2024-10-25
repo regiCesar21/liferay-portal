@@ -1714,7 +1714,6 @@ public class CommerceRegionPersistenceImpl
 			"commerceRegion.commerceCountryId = ?";
 
 	private FinderPath _finderPathFetchByC_C;
-	private FinderPath _finderPathCountByC_C;
 
 	/**
 	 * Returns the commerce region where commerceCountryId = &#63; and code = &#63; or throws a <code>NoSuchRegionException</code> if it could not be found.
@@ -1894,62 +1893,13 @@ public class CommerceRegionPersistenceImpl
 	 */
 	@Override
 	public int countByC_C(long commerceCountryId, String code) {
-		code = Objects.toString(code, "");
+		CommerceRegion commerceRegion = fetchByC_C(commerceCountryId, code);
 
-		FinderPath finderPath = _finderPathCountByC_C;
-
-		Object[] finderArgs = new Object[] {commerceCountryId, code};
-
-		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
-
-		if (count == null) {
-			StringBundler sb = new StringBundler(3);
-
-			sb.append(_SQL_COUNT_COMMERCEREGION_WHERE);
-
-			sb.append(_FINDER_COLUMN_C_C_COMMERCECOUNTRYID_2);
-
-			boolean bindCode = false;
-
-			if (code.isEmpty()) {
-				sb.append(_FINDER_COLUMN_C_C_CODE_3);
-			}
-			else {
-				bindCode = true;
-
-				sb.append(_FINDER_COLUMN_C_C_CODE_2);
-			}
-
-			String sql = sb.toString();
-
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				Query query = session.createQuery(sql);
-
-				QueryPos queryPos = QueryPos.getInstance(query);
-
-				queryPos.add(commerceCountryId);
-
-				if (bindCode) {
-					queryPos.add(code);
-				}
-
-				count = (Long)query.uniqueResult();
-
-				finderCache.putResult(finderPath, finderArgs, count);
-			}
-			catch (Exception exception) {
-				throw processException(exception);
-			}
-			finally {
-				closeSession(session);
-			}
+		if (commerceRegion == null) {
+			return 0;
 		}
 
-		return count.intValue();
+		return 1;
 	}
 
 	private static final String _FINDER_COLUMN_C_C_COMMERCECOUNTRYID_2 =
@@ -3166,11 +3116,6 @@ public class CommerceRegionPersistenceImpl
 			FINDER_CLASS_NAME_ENTITY, "fetchByC_C",
 			new String[] {Long.class.getName(), String.class.getName()},
 			new String[] {"commerceCountryId", "code_"}, true);
-
-		_finderPathCountByC_C = _createFinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByC_C",
-			new String[] {Long.class.getName(), String.class.getName()},
-			new String[] {"commerceCountryId", "code_"}, false);
 
 		_finderPathWithPaginationFindByC_A = _createFinderPath(
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByC_A",

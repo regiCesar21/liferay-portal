@@ -580,7 +580,6 @@ public class EntryPersistenceImpl
 		"entry.userId = ?";
 
 	private FinderPath _finderPathFetchByU_EA;
-	private FinderPath _finderPathCountByU_EA;
 
 	/**
 	 * Returns the entry where userId = &#63; and emailAddress = &#63; or throws a <code>NoSuchEntryException</code> if it could not be found.
@@ -777,62 +776,13 @@ public class EntryPersistenceImpl
 	 */
 	@Override
 	public int countByU_EA(long userId, String emailAddress) {
-		emailAddress = Objects.toString(emailAddress, "");
+		Entry entry = fetchByU_EA(userId, emailAddress);
 
-		FinderPath finderPath = _finderPathCountByU_EA;
-
-		Object[] finderArgs = new Object[] {userId, emailAddress};
-
-		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
-
-		if (count == null) {
-			StringBundler sb = new StringBundler(3);
-
-			sb.append(_SQL_COUNT_ENTRY_WHERE);
-
-			sb.append(_FINDER_COLUMN_U_EA_USERID_2);
-
-			boolean bindEmailAddress = false;
-
-			if (emailAddress.isEmpty()) {
-				sb.append(_FINDER_COLUMN_U_EA_EMAILADDRESS_3);
-			}
-			else {
-				bindEmailAddress = true;
-
-				sb.append(_FINDER_COLUMN_U_EA_EMAILADDRESS_2);
-			}
-
-			String sql = sb.toString();
-
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				Query query = session.createQuery(sql);
-
-				QueryPos queryPos = QueryPos.getInstance(query);
-
-				queryPos.add(userId);
-
-				if (bindEmailAddress) {
-					queryPos.add(emailAddress);
-				}
-
-				count = (Long)query.uniqueResult();
-
-				finderCache.putResult(finderPath, finderArgs, count);
-			}
-			catch (Exception exception) {
-				throw processException(exception);
-			}
-			finally {
-				closeSession(session);
-			}
+		if (entry == null) {
+			return 0;
 		}
 
-		return count.intValue();
+		return 1;
 	}
 
 	private static final String _FINDER_COLUMN_U_EA_USERID_2 =
@@ -1419,11 +1369,6 @@ public class EntryPersistenceImpl
 			FINDER_CLASS_NAME_ENTITY, "fetchByU_EA",
 			new String[] {Long.class.getName(), String.class.getName()},
 			new String[] {"userId", "emailAddress"}, true);
-
-		_finderPathCountByU_EA = _createFinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByU_EA",
-			new String[] {Long.class.getName(), String.class.getName()},
-			new String[] {"userId", "emailAddress"}, false);
 
 		EntryUtil.setPersistence(this);
 	}

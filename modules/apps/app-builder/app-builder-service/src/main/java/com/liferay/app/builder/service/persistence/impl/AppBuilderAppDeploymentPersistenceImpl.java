@@ -607,7 +607,6 @@ public class AppBuilderAppDeploymentPersistenceImpl
 			"appBuilderAppDeployment.appBuilderAppId = ?";
 
 	private FinderPath _finderPathFetchByA_T;
-	private FinderPath _finderPathCountByA_T;
 
 	/**
 	 * Returns the app builder app deployment where appBuilderAppId = &#63; and type = &#63; or throws a <code>NoSuchAppDeploymentException</code> if it could not be found.
@@ -812,62 +811,14 @@ public class AppBuilderAppDeploymentPersistenceImpl
 	 */
 	@Override
 	public int countByA_T(long appBuilderAppId, String type) {
-		type = Objects.toString(type, "");
+		AppBuilderAppDeployment appBuilderAppDeployment = fetchByA_T(
+			appBuilderAppId, type);
 
-		FinderPath finderPath = _finderPathCountByA_T;
-
-		Object[] finderArgs = new Object[] {appBuilderAppId, type};
-
-		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
-
-		if (count == null) {
-			StringBundler sb = new StringBundler(3);
-
-			sb.append(_SQL_COUNT_APPBUILDERAPPDEPLOYMENT_WHERE);
-
-			sb.append(_FINDER_COLUMN_A_T_APPBUILDERAPPID_2);
-
-			boolean bindType = false;
-
-			if (type.isEmpty()) {
-				sb.append(_FINDER_COLUMN_A_T_TYPE_3);
-			}
-			else {
-				bindType = true;
-
-				sb.append(_FINDER_COLUMN_A_T_TYPE_2);
-			}
-
-			String sql = sb.toString();
-
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				Query query = session.createQuery(sql);
-
-				QueryPos queryPos = QueryPos.getInstance(query);
-
-				queryPos.add(appBuilderAppId);
-
-				if (bindType) {
-					queryPos.add(type);
-				}
-
-				count = (Long)query.uniqueResult();
-
-				finderCache.putResult(finderPath, finderArgs, count);
-			}
-			catch (Exception exception) {
-				throw processException(exception);
-			}
-			finally {
-				closeSession(session);
-			}
+		if (appBuilderAppDeployment == null) {
+			return 0;
 		}
 
-		return count.intValue();
+		return 1;
 	}
 
 	private static final String _FINDER_COLUMN_A_T_APPBUILDERAPPID_2 =
@@ -1498,11 +1449,6 @@ public class AppBuilderAppDeploymentPersistenceImpl
 			FINDER_CLASS_NAME_ENTITY, "fetchByA_T",
 			new String[] {Long.class.getName(), String.class.getName()},
 			new String[] {"appBuilderAppId", "type_"}, true);
-
-		_finderPathCountByA_T = _createFinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByA_T",
-			new String[] {Long.class.getName(), String.class.getName()},
-			new String[] {"appBuilderAppId", "type_"}, false);
 
 		AppBuilderAppDeploymentUtil.setPersistence(this);
 	}

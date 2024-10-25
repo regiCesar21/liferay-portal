@@ -582,7 +582,6 @@ public class AccountPersistenceImpl
 		"account.userId = ?";
 
 	private FinderPath _finderPathFetchByU_A;
-	private FinderPath _finderPathCountByU_A;
 
 	/**
 	 * Returns the account where userId = &#63; and address = &#63; or throws a <code>NoSuchAccountException</code> if it could not be found.
@@ -777,62 +776,13 @@ public class AccountPersistenceImpl
 	 */
 	@Override
 	public int countByU_A(long userId, String address) {
-		address = Objects.toString(address, "");
+		Account account = fetchByU_A(userId, address);
 
-		FinderPath finderPath = _finderPathCountByU_A;
-
-		Object[] finderArgs = new Object[] {userId, address};
-
-		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
-
-		if (count == null) {
-			StringBundler sb = new StringBundler(3);
-
-			sb.append(_SQL_COUNT_ACCOUNT_WHERE);
-
-			sb.append(_FINDER_COLUMN_U_A_USERID_2);
-
-			boolean bindAddress = false;
-
-			if (address.isEmpty()) {
-				sb.append(_FINDER_COLUMN_U_A_ADDRESS_3);
-			}
-			else {
-				bindAddress = true;
-
-				sb.append(_FINDER_COLUMN_U_A_ADDRESS_2);
-			}
-
-			String sql = sb.toString();
-
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				Query query = session.createQuery(sql);
-
-				QueryPos queryPos = QueryPos.getInstance(query);
-
-				queryPos.add(userId);
-
-				if (bindAddress) {
-					queryPos.add(address);
-				}
-
-				count = (Long)query.uniqueResult();
-
-				finderCache.putResult(finderPath, finderArgs, count);
-			}
-			catch (Exception exception) {
-				throw processException(exception);
-			}
-			finally {
-				closeSession(session);
-			}
+		if (account == null) {
+			return 0;
 		}
 
-		return count.intValue();
+		return 1;
 	}
 
 	private static final String _FINDER_COLUMN_U_A_USERID_2 =
@@ -1436,11 +1386,6 @@ public class AccountPersistenceImpl
 			FINDER_CLASS_NAME_ENTITY, "fetchByU_A",
 			new String[] {Long.class.getName(), String.class.getName()},
 			new String[] {"userId", "address"}, true);
-
-		_finderPathCountByU_A = _createFinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByU_A",
-			new String[] {Long.class.getName(), String.class.getName()},
-			new String[] {"userId", "address"}, false);
 
 		AccountUtil.setPersistence(this);
 	}

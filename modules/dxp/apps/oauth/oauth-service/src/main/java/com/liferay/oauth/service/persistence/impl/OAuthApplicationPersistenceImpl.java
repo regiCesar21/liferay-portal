@@ -1858,7 +1858,6 @@ public class OAuthApplicationPersistenceImpl
 		"oAuthApplication.userId = ?";
 
 	private FinderPath _finderPathFetchByConsumerKey;
-	private FinderPath _finderPathCountByConsumerKey;
 
 	/**
 	 * Returns the o auth application where consumerKey = &#63; or throws a <code>NoSuchApplicationException</code> if it could not be found.
@@ -2026,58 +2025,13 @@ public class OAuthApplicationPersistenceImpl
 	 */
 	@Override
 	public int countByConsumerKey(String consumerKey) {
-		consumerKey = Objects.toString(consumerKey, "");
+		OAuthApplication oAuthApplication = fetchByConsumerKey(consumerKey);
 
-		FinderPath finderPath = _finderPathCountByConsumerKey;
-
-		Object[] finderArgs = new Object[] {consumerKey};
-
-		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
-
-		if (count == null) {
-			StringBundler sb = new StringBundler(2);
-
-			sb.append(_SQL_COUNT_OAUTHAPPLICATION_WHERE);
-
-			boolean bindConsumerKey = false;
-
-			if (consumerKey.isEmpty()) {
-				sb.append(_FINDER_COLUMN_CONSUMERKEY_CONSUMERKEY_3);
-			}
-			else {
-				bindConsumerKey = true;
-
-				sb.append(_FINDER_COLUMN_CONSUMERKEY_CONSUMERKEY_2);
-			}
-
-			String sql = sb.toString();
-
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				Query query = session.createQuery(sql);
-
-				QueryPos queryPos = QueryPos.getInstance(query);
-
-				if (bindConsumerKey) {
-					queryPos.add(consumerKey);
-				}
-
-				count = (Long)query.uniqueResult();
-
-				finderCache.putResult(finderPath, finderArgs, count);
-			}
-			catch (Exception exception) {
-				throw processException(exception);
-			}
-			finally {
-				closeSession(session);
-			}
+		if (oAuthApplication == null) {
+			return 0;
 		}
 
-		return count.intValue();
+		return 1;
 	}
 
 	private static final String _FINDER_COLUMN_CONSUMERKEY_CONSUMERKEY_2 =
@@ -4729,11 +4683,6 @@ public class OAuthApplicationPersistenceImpl
 			FINDER_CLASS_NAME_ENTITY, "fetchByConsumerKey",
 			new String[] {String.class.getName()}, new String[] {"consumerKey"},
 			true);
-
-		_finderPathCountByConsumerKey = _createFinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByConsumerKey",
-			new String[] {String.class.getName()}, new String[] {"consumerKey"},
-			false);
 
 		_finderPathWithPaginationFindByC_N = _createFinderPath(
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByC_N",

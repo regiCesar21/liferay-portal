@@ -983,7 +983,6 @@ public class OAuth2ApplicationPersistenceImpl
 		"oAuth2Application.companyId = ?";
 
 	private FinderPath _finderPathFetchByC_C;
-	private FinderPath _finderPathCountByC_C;
 
 	/**
 	 * Returns the o auth2 application where companyId = &#63; and clientId = &#63; or throws a <code>NoSuchOAuth2ApplicationException</code> if it could not be found.
@@ -1178,62 +1177,13 @@ public class OAuth2ApplicationPersistenceImpl
 	 */
 	@Override
 	public int countByC_C(long companyId, String clientId) {
-		clientId = Objects.toString(clientId, "");
+		OAuth2Application oAuth2Application = fetchByC_C(companyId, clientId);
 
-		FinderPath finderPath = _finderPathCountByC_C;
-
-		Object[] finderArgs = new Object[] {companyId, clientId};
-
-		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
-
-		if (count == null) {
-			StringBundler sb = new StringBundler(3);
-
-			sb.append(_SQL_COUNT_OAUTH2APPLICATION_WHERE);
-
-			sb.append(_FINDER_COLUMN_C_C_COMPANYID_2);
-
-			boolean bindClientId = false;
-
-			if (clientId.isEmpty()) {
-				sb.append(_FINDER_COLUMN_C_C_CLIENTID_3);
-			}
-			else {
-				bindClientId = true;
-
-				sb.append(_FINDER_COLUMN_C_C_CLIENTID_2);
-			}
-
-			String sql = sb.toString();
-
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				Query query = session.createQuery(sql);
-
-				QueryPos queryPos = QueryPos.getInstance(query);
-
-				queryPos.add(companyId);
-
-				if (bindClientId) {
-					queryPos.add(clientId);
-				}
-
-				count = (Long)query.uniqueResult();
-
-				finderCache.putResult(finderPath, finderArgs, count);
-			}
-			catch (Exception exception) {
-				throw processException(exception);
-			}
-			finally {
-				closeSession(session);
-			}
+		if (oAuth2Application == null) {
+			return 0;
 		}
 
-		return count.intValue();
+		return 1;
 	}
 
 	private static final String _FINDER_COLUMN_C_C_COMPANYID_2 =
@@ -1867,11 +1817,6 @@ public class OAuth2ApplicationPersistenceImpl
 			FINDER_CLASS_NAME_ENTITY, "fetchByC_C",
 			new String[] {Long.class.getName(), String.class.getName()},
 			new String[] {"companyId", "clientId"}, true);
-
-		_finderPathCountByC_C = _createFinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByC_C",
-			new String[] {Long.class.getName(), String.class.getName()},
-			new String[] {"companyId", "clientId"}, false);
 
 		OAuth2ApplicationUtil.setPersistence(this);
 	}

@@ -601,7 +601,6 @@ public class CPDefinitionLocalizationPersistenceImpl
 		"cpDefinitionLocalization.CPDefinitionId = ?";
 
 	private FinderPath _finderPathFetchByCPDefinitionId_LanguageId;
-	private FinderPath _finderPathCountByCPDefinitionId_LanguageId;
 
 	/**
 	 * Returns the cp definition localization where CPDefinitionId = &#63; and languageId = &#63; or throws a <code>NoSuchCPDefinitionLocalizationException</code> if it could not be found.
@@ -798,65 +797,14 @@ public class CPDefinitionLocalizationPersistenceImpl
 	public int countByCPDefinitionId_LanguageId(
 		long CPDefinitionId, String languageId) {
 
-		languageId = Objects.toString(languageId, "");
+		CPDefinitionLocalization cpDefinitionLocalization =
+			fetchByCPDefinitionId_LanguageId(CPDefinitionId, languageId);
 
-		FinderPath finderPath = _finderPathCountByCPDefinitionId_LanguageId;
-
-		Object[] finderArgs = new Object[] {CPDefinitionId, languageId};
-
-		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
-
-		if (count == null) {
-			StringBundler sb = new StringBundler(3);
-
-			sb.append(_SQL_COUNT_CPDEFINITIONLOCALIZATION_WHERE);
-
-			sb.append(
-				_FINDER_COLUMN_CPDEFINITIONID_LANGUAGEID_CPDEFINITIONID_2);
-
-			boolean bindLanguageId = false;
-
-			if (languageId.isEmpty()) {
-				sb.append(
-					_FINDER_COLUMN_CPDEFINITIONID_LANGUAGEID_LANGUAGEID_3);
-			}
-			else {
-				bindLanguageId = true;
-
-				sb.append(
-					_FINDER_COLUMN_CPDEFINITIONID_LANGUAGEID_LANGUAGEID_2);
-			}
-
-			String sql = sb.toString();
-
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				Query query = session.createQuery(sql);
-
-				QueryPos queryPos = QueryPos.getInstance(query);
-
-				queryPos.add(CPDefinitionId);
-
-				if (bindLanguageId) {
-					queryPos.add(languageId);
-				}
-
-				count = (Long)query.uniqueResult();
-
-				finderCache.putResult(finderPath, finderArgs, count);
-			}
-			catch (Exception exception) {
-				throw processException(exception);
-			}
-			finally {
-				closeSession(session);
-			}
+		if (cpDefinitionLocalization == null) {
+			return 0;
 		}
 
-		return count.intValue();
+		return 1;
 	}
 
 	private static final String
@@ -1511,12 +1459,6 @@ public class CPDefinitionLocalizationPersistenceImpl
 			FINDER_CLASS_NAME_ENTITY, "fetchByCPDefinitionId_LanguageId",
 			new String[] {Long.class.getName(), String.class.getName()},
 			new String[] {"CPDefinitionId", "languageId"}, true);
-
-		_finderPathCountByCPDefinitionId_LanguageId = _createFinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
-			"countByCPDefinitionId_LanguageId",
-			new String[] {Long.class.getName(), String.class.getName()},
-			new String[] {"CPDefinitionId", "languageId"}, false);
 
 		CPDefinitionLocalizationUtil.setPersistence(this);
 	}

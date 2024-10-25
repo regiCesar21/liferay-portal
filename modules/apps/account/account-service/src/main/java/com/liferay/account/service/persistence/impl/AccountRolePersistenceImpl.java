@@ -1339,7 +1339,6 @@ public class AccountRolePersistenceImpl
 		"accountRole.accountEntryId IN (";
 
 	private FinderPath _finderPathFetchByRoleId;
-	private FinderPath _finderPathCountByRoleId;
 
 	/**
 	 * Returns the account role where roleId = &#63; or throws a <code>NoSuchRoleException</code> if it could not be found.
@@ -1501,45 +1500,13 @@ public class AccountRolePersistenceImpl
 	 */
 	@Override
 	public int countByRoleId(long roleId) {
-		FinderPath finderPath = _finderPathCountByRoleId;
+		AccountRole accountRole = fetchByRoleId(roleId);
 
-		Object[] finderArgs = new Object[] {roleId};
-
-		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
-
-		if (count == null) {
-			StringBundler sb = new StringBundler(2);
-
-			sb.append(_SQL_COUNT_ACCOUNTROLE_WHERE);
-
-			sb.append(_FINDER_COLUMN_ROLEID_ROLEID_2);
-
-			String sql = sb.toString();
-
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				Query query = session.createQuery(sql);
-
-				QueryPos queryPos = QueryPos.getInstance(query);
-
-				queryPos.add(roleId);
-
-				count = (Long)query.uniqueResult();
-
-				finderCache.putResult(finderPath, finderArgs, count);
-			}
-			catch (Exception exception) {
-				throw processException(exception);
-			}
-			finally {
-				closeSession(session);
-			}
+		if (accountRole == null) {
+			return 0;
 		}
 
-		return count.intValue();
+		return 1;
 	}
 
 	private static final String _FINDER_COLUMN_ROLEID_ROLEID_2 =
@@ -2129,11 +2096,6 @@ public class AccountRolePersistenceImpl
 		_finderPathFetchByRoleId = _createFinderPath(
 			FINDER_CLASS_NAME_ENTITY, "fetchByRoleId",
 			new String[] {Long.class.getName()}, new String[] {"roleId"}, true);
-
-		_finderPathCountByRoleId = _createFinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByRoleId",
-			new String[] {Long.class.getName()}, new String[] {"roleId"},
-			false);
 
 		AccountRoleUtil.setPersistence(this);
 	}

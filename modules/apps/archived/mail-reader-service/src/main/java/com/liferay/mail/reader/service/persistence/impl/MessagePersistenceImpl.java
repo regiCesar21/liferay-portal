@@ -1073,7 +1073,6 @@ public class MessagePersistenceImpl
 		"message.folderId = ?";
 
 	private FinderPath _finderPathFetchByF_R;
-	private FinderPath _finderPathCountByF_R;
 
 	/**
 	 * Returns the message where folderId = &#63; and remoteMessageId = &#63; or throws a <code>NoSuchMessageException</code> if it could not be found.
@@ -1257,49 +1256,13 @@ public class MessagePersistenceImpl
 	 */
 	@Override
 	public int countByF_R(long folderId, long remoteMessageId) {
-		FinderPath finderPath = _finderPathCountByF_R;
+		Message message = fetchByF_R(folderId, remoteMessageId);
 
-		Object[] finderArgs = new Object[] {folderId, remoteMessageId};
-
-		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
-
-		if (count == null) {
-			StringBundler sb = new StringBundler(3);
-
-			sb.append(_SQL_COUNT_MESSAGE_WHERE);
-
-			sb.append(_FINDER_COLUMN_F_R_FOLDERID_2);
-
-			sb.append(_FINDER_COLUMN_F_R_REMOTEMESSAGEID_2);
-
-			String sql = sb.toString();
-
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				Query query = session.createQuery(sql);
-
-				QueryPos queryPos = QueryPos.getInstance(query);
-
-				queryPos.add(folderId);
-
-				queryPos.add(remoteMessageId);
-
-				count = (Long)query.uniqueResult();
-
-				finderCache.putResult(finderPath, finderArgs, count);
-			}
-			catch (Exception exception) {
-				throw processException(exception);
-			}
-			finally {
-				closeSession(session);
-			}
+		if (message == null) {
+			return 0;
 		}
 
-		return count.intValue();
+		return 1;
 	}
 
 	private static final String _FINDER_COLUMN_F_R_FOLDERID_2 =
@@ -1922,11 +1885,6 @@ public class MessagePersistenceImpl
 			FINDER_CLASS_NAME_ENTITY, "fetchByF_R",
 			new String[] {Long.class.getName(), Long.class.getName()},
 			new String[] {"folderId", "remoteMessageId"}, true);
-
-		_finderPathCountByF_R = _createFinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByF_R",
-			new String[] {Long.class.getName(), Long.class.getName()},
-			new String[] {"folderId", "remoteMessageId"}, false);
 
 		MessageUtil.setPersistence(this);
 	}

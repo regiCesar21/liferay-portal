@@ -1079,7 +1079,6 @@ public class BlogsStatsUserPersistenceImpl
 		"blogsStatsUser.userId = ?";
 
 	private FinderPath _finderPathFetchByG_U;
-	private FinderPath _finderPathCountByG_U;
 
 	/**
 	 * Returns the blogs stats user where groupId = &#63; and userId = &#63; or throws a <code>NoSuchStatsUserException</code> if it could not be found.
@@ -1246,49 +1245,13 @@ public class BlogsStatsUserPersistenceImpl
 	 */
 	@Override
 	public int countByG_U(long groupId, long userId) {
-		FinderPath finderPath = _finderPathCountByG_U;
+		BlogsStatsUser blogsStatsUser = fetchByG_U(groupId, userId);
 
-		Object[] finderArgs = new Object[] {groupId, userId};
-
-		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
-
-		if (count == null) {
-			StringBundler sb = new StringBundler(3);
-
-			sb.append(_SQL_COUNT_BLOGSSTATSUSER_WHERE);
-
-			sb.append(_FINDER_COLUMN_G_U_GROUPID_2);
-
-			sb.append(_FINDER_COLUMN_G_U_USERID_2);
-
-			String sql = sb.toString();
-
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				Query query = session.createQuery(sql);
-
-				QueryPos queryPos = QueryPos.getInstance(query);
-
-				queryPos.add(groupId);
-
-				queryPos.add(userId);
-
-				count = (Long)query.uniqueResult();
-
-				finderCache.putResult(finderPath, finderArgs, count);
-			}
-			catch (Exception exception) {
-				throw processException(exception);
-			}
-			finally {
-				closeSession(session);
-			}
+		if (blogsStatsUser == null) {
+			return 0;
 		}
 
-		return count.intValue();
+		return 1;
 	}
 
 	private static final String _FINDER_COLUMN_G_U_GROUPID_2 =
@@ -3523,11 +3486,6 @@ public class BlogsStatsUserPersistenceImpl
 			FINDER_CLASS_NAME_ENTITY, "fetchByG_U",
 			new String[] {Long.class.getName(), Long.class.getName()},
 			new String[] {"groupId", "userId"}, true);
-
-		_finderPathCountByG_U = _createFinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByG_U",
-			new String[] {Long.class.getName(), Long.class.getName()},
-			new String[] {"groupId", "userId"}, false);
 
 		_finderPathWithPaginationFindByG_NotE = _createFinderPath(
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByG_NotE",
