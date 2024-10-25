@@ -1016,8 +1016,8 @@ public class OpportunityMessageSubscriber extends BaseMessageSubscriber {
 					OPPORTUNITY_TYPE_NEW_PROJECT_EXISTING_BUSINESS)) {
 
 			List<Contact> contacts = parseContacts(
-				jsonObject, accountKey, opportunityType, languageId,
-				customerPortal2Account);
+				jsonObject, accountKey, opportunityType, productPurchases,
+				languageId, customerPortal2Account);
 
 			for (Contact contact : contacts) {
 				Integer status =
@@ -1835,7 +1835,8 @@ public class OpportunityMessageSubscriber extends BaseMessageSubscriber {
 
 	protected List<Contact> parseContacts(
 			JSONObject jsonObject, String accountKey, int opportunityType,
-			String languageId, boolean customerPortal2Account)
+			Set<ProductPurchase> productPurchases, String languageId,
+			boolean customerPortal2Account)
 		throws Exception {
 
 		List<Contact> contacts = new ArrayList<>();
@@ -1927,8 +1928,13 @@ public class OpportunityMessageSubscriber extends BaseMessageSubscriber {
 			String contactRoleName = ContactRoleConstants.NAME_SUPPORT_USER;
 
 			if (customerPortal2Account) {
-				contactRoleName =
-					ContactRoleConstants.NAME_SUPPORT_ADMINISTRATOR;
+				if (_isPartner(productPurchases)) {
+					contactRoleName = ContactRoleConstants.NAME_PARTNER_MANAGER;
+				}
+				else {
+					contactRoleName =
+						ContactRoleConstants.NAME_SUPPORT_ADMINISTRATOR;
+				}
 			}
 
 			ContactRole contactRole = _contactRoleWebService.fetchContactRole(
@@ -2768,6 +2774,25 @@ public class OpportunityMessageSubscriber extends BaseMessageSubscriber {
 
 		if (!accounts.isEmpty()) {
 			return true;
+		}
+
+		return false;
+	}
+
+	private boolean _isPartner(Set<ProductPurchase> productPurchases) {
+		for (ProductPurchase productPurchase : productPurchases) {
+			Product product = productPurchase.getProduct();
+
+			String productName = product.getName();
+
+			if (ArrayUtil.contains(
+					ProductConstants.NAMES_PARTNERSHIP, productName) ||
+				StringUtil.equals(ProductConstants.NAME_DXP_OEM, productName) ||
+				StringUtil.equals(
+					ProductConstants.NAME_PORTAL_OEM, productName)) {
+
+				return true;
+			}
 		}
 
 		return false;
