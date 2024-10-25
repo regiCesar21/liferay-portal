@@ -26,10 +26,6 @@ public class AssetMetricUpgradeStep implements UpgradeStep {
 		_updateHourlyAssetMetricTableFunction("blogHourly");
 		_updateHourlyAssetMetricTableFunction("customAssetHourly");
 		_updateHourlyAssetMetricTableFunction("documentLibraryHourly");
-
-		_updateHourlyAssetMetricView("blogHourly");
-		_updateHourlyAssetMetricView("customAssetHourly");
-		_updateHourlyAssetMetricView("documentLibraryHourly");
 	}
 
 	private void _updateHourlyAssetMetricTableFunction(String functionName) {
@@ -40,16 +36,6 @@ public class AssetMetricUpgradeStep implements UpgradeStep {
 			_log.info(
 				String.format(
 					"Function %s successfully created", functionName));
-		}
-	}
-
-	private void _updateHourlyAssetMetricView(String functionName) {
-		_bigQuerySchemaManager.createOrReplaceView(
-			ProjectIdThreadLocal.getProjectId(), functionName);
-
-		if (_log.isInfoEnabled()) {
-			_log.info(
-				String.format("View %s successfully created", functionName));
 		}
 	}
 
