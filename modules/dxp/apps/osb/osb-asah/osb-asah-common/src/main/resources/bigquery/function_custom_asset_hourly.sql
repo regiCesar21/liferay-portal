@@ -1,21 +1,21 @@
 CREATE OR REPLACE TABLE FUNCTION `$[AC_PROJECT_ID].customasset_hourly`(endDate TIMESTAMP, startDate TIMESTAMP)
 AS (
-    CustomAssetEventProperty AS (
+    WITH CustomAssetEventProperty AS (
 		SELECT
 			Event.eventDate,
 			Event.id,
 			EventProperty.name,
 			EventProperty.value
 		FROM
-			`$[AC_PROJECT_ID].event` AS Event
-		CROSS JOIN UNNEST(Event.properties) AS EventProperty
+			`$[AC_PROJECT_ID].event` AS Event,
+			UNNEST(Event.properties) AS EventProperty
 		WHERE
 			Event.applicationId = 'Custom' AND
 			Event.assetId IS NOT NULL AND
             Event.eventDate >= startDate AND
-            Event.eventDate < endDate AND
+            Event.eventDate < endDate
 	),
-    WITH CustomAssetEvent AS (
+    CustomAssetEvent AS (
         SELECT
             Event.channelId,
             Event.eventDate,
