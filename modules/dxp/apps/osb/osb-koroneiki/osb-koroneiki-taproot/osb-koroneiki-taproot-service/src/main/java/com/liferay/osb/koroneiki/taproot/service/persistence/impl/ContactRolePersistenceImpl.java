@@ -2069,6 +2069,7 @@ public class ContactRolePersistenceImpl
 		"contactRole.companyId = ?";
 
 	private FinderPath _finderPathFetchByContactRoleKey;
+	private FinderPath _finderPathCountByContactRoleKey;
 
 	/**
 	 * Returns the contact role where contactRoleKey = &#63; or throws a <code>NoSuchContactRoleException</code> if it could not be found.
@@ -2241,13 +2242,60 @@ public class ContactRolePersistenceImpl
 	 */
 	@Override
 	public int countByContactRoleKey(String contactRoleKey) {
-		ContactRole contactRole = fetchByContactRoleKey(contactRoleKey);
+		contactRoleKey = Objects.toString(contactRoleKey, "");
 
-		if (contactRole == null) {
-			return 0;
+		FinderPath finderPath = _finderPathCountByContactRoleKey;
+
+		Object[] finderArgs = new Object[] {contactRoleKey};
+
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
+
+		if (count == null) {
+			StringBundler sb = new StringBundler(2);
+
+			sb.append(_SQL_COUNT_CONTACTROLE_WHERE);
+
+			boolean bindContactRoleKey = false;
+
+			if (contactRoleKey.isEmpty()) {
+				sb.append(_FINDER_COLUMN_CONTACTROLEKEY_CONTACTROLEKEY_3);
+			}
+			else {
+				bindContactRoleKey = true;
+
+				sb.append(_FINDER_COLUMN_CONTACTROLEKEY_CONTACTROLEKEY_2);
+			}
+
+			String sql = sb.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query query = session.createQuery(sql);
+
+				QueryPos queryPos = QueryPos.getInstance(query);
+
+				if (bindContactRoleKey) {
+					queryPos.add(contactRoleKey);
+				}
+
+				count = (Long)query.uniqueResult();
+
+				finderCache.putResult(finderPath, finderArgs, count);
+			}
+			catch (Exception exception) {
+				finderCache.removeResult(finderPath, finderArgs);
+
+				throw processException(exception);
+			}
+			finally {
+				closeSession(session);
+			}
 		}
 
-		return 1;
+		return count.intValue();
 	}
 
 	private static final String _FINDER_COLUMN_CONTACTROLEKEY_CONTACTROLEKEY_2 =
@@ -3211,6 +3259,7 @@ public class ContactRolePersistenceImpl
 		"(contactRole.type_ IS NULL OR contactRole.type_ = '')";
 
 	private FinderPath _finderPathFetchByN_T;
+	private FinderPath _finderPathCountByN_T;
 
 	/**
 	 * Returns the contact role where name = &#63; and type = &#63; or throws a <code>NoSuchContactRoleException</code> if it could not be found.
@@ -3421,13 +3470,76 @@ public class ContactRolePersistenceImpl
 	 */
 	@Override
 	public int countByN_T(String name, String type) {
-		ContactRole contactRole = fetchByN_T(name, type);
+		name = Objects.toString(name, "");
+		type = Objects.toString(type, "");
 
-		if (contactRole == null) {
-			return 0;
+		FinderPath finderPath = _finderPathCountByN_T;
+
+		Object[] finderArgs = new Object[] {name, type};
+
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
+
+		if (count == null) {
+			StringBundler sb = new StringBundler(3);
+
+			sb.append(_SQL_COUNT_CONTACTROLE_WHERE);
+
+			boolean bindName = false;
+
+			if (name.isEmpty()) {
+				sb.append(_FINDER_COLUMN_N_T_NAME_3);
+			}
+			else {
+				bindName = true;
+
+				sb.append(_FINDER_COLUMN_N_T_NAME_2);
+			}
+
+			boolean bindType = false;
+
+			if (type.isEmpty()) {
+				sb.append(_FINDER_COLUMN_N_T_TYPE_3);
+			}
+			else {
+				bindType = true;
+
+				sb.append(_FINDER_COLUMN_N_T_TYPE_2);
+			}
+
+			String sql = sb.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query query = session.createQuery(sql);
+
+				QueryPos queryPos = QueryPos.getInstance(query);
+
+				if (bindName) {
+					queryPos.add(name);
+				}
+
+				if (bindType) {
+					queryPos.add(type);
+				}
+
+				count = (Long)query.uniqueResult();
+
+				finderCache.putResult(finderPath, finderArgs, count);
+			}
+			catch (Exception exception) {
+				finderCache.removeResult(finderPath, finderArgs);
+
+				throw processException(exception);
+			}
+			finally {
+				closeSession(session);
+			}
 		}
 
-		return 1;
+		return count.intValue();
 	}
 
 	private static final String _FINDER_COLUMN_N_T_NAME_2 =
@@ -4256,6 +4368,11 @@ public class ContactRolePersistenceImpl
 			new String[] {String.class.getName()},
 			ContactRoleModelImpl.CONTACTROLEKEY_COLUMN_BITMASK);
 
+		_finderPathCountByContactRoleKey = new FinderPath(
+			entityCacheEnabled, finderCacheEnabled, Long.class,
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByContactRoleKey",
+			new String[] {String.class.getName()});
+
 		_finderPathWithPaginationFindByType = new FinderPath(
 			entityCacheEnabled, finderCacheEnabled, ContactRoleImpl.class,
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByType",
@@ -4282,6 +4399,11 @@ public class ContactRolePersistenceImpl
 			new String[] {String.class.getName(), String.class.getName()},
 			ContactRoleModelImpl.NAME_COLUMN_BITMASK |
 			ContactRoleModelImpl.TYPE_COLUMN_BITMASK);
+
+		_finderPathCountByN_T = new FinderPath(
+			entityCacheEnabled, finderCacheEnabled, Long.class,
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByN_T",
+			new String[] {String.class.getName(), String.class.getName()});
 
 		ContactRoleUtil.setPersistence(this);
 	}

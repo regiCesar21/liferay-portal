@@ -1210,6 +1210,7 @@ public class AccountNotePersistenceImpl
 		"accountNote.companyId = ?";
 
 	private FinderPath _finderPathFetchByAccountNoteKey;
+	private FinderPath _finderPathCountByAccountNoteKey;
 
 	/**
 	 * Returns the account note where accountNoteKey = &#63; or throws a <code>NoSuchAccountNoteException</code> if it could not be found.
@@ -1397,13 +1398,60 @@ public class AccountNotePersistenceImpl
 	 */
 	@Override
 	public int countByAccountNoteKey(String accountNoteKey) {
-		AccountNote accountNote = fetchByAccountNoteKey(accountNoteKey);
+		accountNoteKey = Objects.toString(accountNoteKey, "");
 
-		if (accountNote == null) {
-			return 0;
+		FinderPath finderPath = _finderPathCountByAccountNoteKey;
+
+		Object[] finderArgs = new Object[] {accountNoteKey};
+
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
+
+		if (count == null) {
+			StringBundler sb = new StringBundler(2);
+
+			sb.append(_SQL_COUNT_ACCOUNTNOTE_WHERE);
+
+			boolean bindAccountNoteKey = false;
+
+			if (accountNoteKey.isEmpty()) {
+				sb.append(_FINDER_COLUMN_ACCOUNTNOTEKEY_ACCOUNTNOTEKEY_3);
+			}
+			else {
+				bindAccountNoteKey = true;
+
+				sb.append(_FINDER_COLUMN_ACCOUNTNOTEKEY_ACCOUNTNOTEKEY_2);
+			}
+
+			String sql = sb.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query query = session.createQuery(sql);
+
+				QueryPos queryPos = QueryPos.getInstance(query);
+
+				if (bindAccountNoteKey) {
+					queryPos.add(accountNoteKey);
+				}
+
+				count = (Long)query.uniqueResult();
+
+				finderCache.putResult(finderPath, finderArgs, count);
+			}
+			catch (Exception exception) {
+				finderCache.removeResult(finderPath, finderArgs);
+
+				throw processException(exception);
+			}
+			finally {
+				closeSession(session);
+			}
 		}
 
-		return 1;
+		return count.intValue();
 	}
 
 	private static final String _FINDER_COLUMN_ACCOUNTNOTEKEY_ACCOUNTNOTEKEY_2 =
@@ -3910,6 +3958,11 @@ public class AccountNotePersistenceImpl
 			FINDER_CLASS_NAME_ENTITY, "fetchByAccountNoteKey",
 			new String[] {String.class.getName()},
 			AccountNoteModelImpl.ACCOUNTNOTEKEY_COLUMN_BITMASK);
+
+		_finderPathCountByAccountNoteKey = new FinderPath(
+			entityCacheEnabled, finderCacheEnabled, Long.class,
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByAccountNoteKey",
+			new String[] {String.class.getName()});
 
 		_finderPathWithPaginationFindByAccountId = new FinderPath(
 			entityCacheEnabled, finderCacheEnabled, AccountNoteImpl.class,

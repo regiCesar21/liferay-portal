@@ -1777,6 +1777,7 @@ public class CommonLicenseKeyPersistenceImpl
 		"(commonLicenseKey.productGroup IS NULL OR commonLicenseKey.productGroup = '')";
 
 	private FinderPath _finderPathFetchByFileName;
+	private FinderPath _finderPathCountByFileName;
 
 	/**
 	 * Returns the common license key where fileName = &#63; or throws a <code>NoSuchCommonLicenseKeyException</code> if it could not be found.
@@ -1962,13 +1963,60 @@ public class CommonLicenseKeyPersistenceImpl
 	 */
 	@Override
 	public int countByFileName(String fileName) {
-		CommonLicenseKey commonLicenseKey = fetchByFileName(fileName);
+		fileName = Objects.toString(fileName, "");
 
-		if (commonLicenseKey == null) {
-			return 0;
+		FinderPath finderPath = _finderPathCountByFileName;
+
+		Object[] finderArgs = new Object[] {fileName};
+
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
+
+		if (count == null) {
+			StringBundler sb = new StringBundler(2);
+
+			sb.append(_SQL_COUNT_COMMONLICENSEKEY_WHERE);
+
+			boolean bindFileName = false;
+
+			if (fileName.isEmpty()) {
+				sb.append(_FINDER_COLUMN_FILENAME_FILENAME_3);
+			}
+			else {
+				bindFileName = true;
+
+				sb.append(_FINDER_COLUMN_FILENAME_FILENAME_2);
+			}
+
+			String sql = sb.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query query = session.createQuery(sql);
+
+				QueryPos queryPos = QueryPos.getInstance(query);
+
+				if (bindFileName) {
+					queryPos.add(fileName);
+				}
+
+				count = (Long)query.uniqueResult();
+
+				finderCache.putResult(finderPath, finderArgs, count);
+			}
+			catch (Exception exception) {
+				finderCache.removeResult(finderPath, finderArgs);
+
+				throw processException(exception);
+			}
+			finally {
+				closeSession(session);
+			}
 		}
 
-		return 1;
+		return count.intValue();
 	}
 
 	private static final String _FINDER_COLUMN_FILENAME_FILENAME_2 =
@@ -3644,6 +3692,11 @@ public class CommonLicenseKeyPersistenceImpl
 			FINDER_CLASS_NAME_ENTITY, "fetchByFileName",
 			new String[] {String.class.getName()},
 			CommonLicenseKeyModelImpl.FILENAME_COLUMN_BITMASK);
+
+		_finderPathCountByFileName = new FinderPath(
+			entityCacheEnabled, finderCacheEnabled, Long.class,
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByFileName",
+			new String[] {String.class.getName()});
 
 		_finderPathWithPaginationFindByPG_PE_PV_gtS_ltE = new FinderPath(
 			entityCacheEnabled, finderCacheEnabled, CommonLicenseKeyImpl.class,

@@ -75,6 +75,7 @@ public class ReleasePersistenceImpl
 	private FinderPath _finderPathWithoutPaginationFindAll;
 	private FinderPath _finderPathCountAll;
 	private FinderPath _finderPathFetchByServletContextName;
+	private FinderPath _finderPathCountByServletContextName;
 
 	/**
 	 * Returns the release where servletContextName = &#63; or throws a <code>NoSuchReleaseException</code> if it could not be found.
@@ -250,13 +251,63 @@ public class ReleasePersistenceImpl
 	 */
 	@Override
 	public int countByServletContextName(String servletContextName) {
-		Release release = fetchByServletContextName(servletContextName);
+		servletContextName = Objects.toString(servletContextName, "");
 
-		if (release == null) {
-			return 0;
+		FinderPath finderPath = _finderPathCountByServletContextName;
+
+		Object[] finderArgs = new Object[] {servletContextName};
+
+		Long count = (Long)FinderCacheUtil.getResult(
+			finderPath, finderArgs, this);
+
+		if (count == null) {
+			StringBundler sb = new StringBundler(2);
+
+			sb.append(_SQL_COUNT_RELEASE__WHERE);
+
+			boolean bindServletContextName = false;
+
+			if (servletContextName.isEmpty()) {
+				sb.append(
+					_FINDER_COLUMN_SERVLETCONTEXTNAME_SERVLETCONTEXTNAME_3);
+			}
+			else {
+				bindServletContextName = true;
+
+				sb.append(
+					_FINDER_COLUMN_SERVLETCONTEXTNAME_SERVLETCONTEXTNAME_2);
+			}
+
+			String sql = sb.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query query = session.createQuery(sql);
+
+				QueryPos queryPos = QueryPos.getInstance(query);
+
+				if (bindServletContextName) {
+					queryPos.add(StringUtil.toLowerCase(servletContextName));
+				}
+
+				count = (Long)query.uniqueResult();
+
+				FinderCacheUtil.putResult(finderPath, finderArgs, count);
+			}
+			catch (Exception exception) {
+				FinderCacheUtil.removeResult(finderPath, finderArgs);
+
+				throw processException(exception);
+			}
+			finally {
+				closeSession(session);
+			}
 		}
 
-		return 1;
+		return count.intValue();
 	}
 
 	private static final String
@@ -908,6 +959,12 @@ public class ReleasePersistenceImpl
 			FINDER_CLASS_NAME_ENTITY, "fetchByServletContextName",
 			new String[] {String.class.getName()},
 			ReleaseModelImpl.SERVLETCONTEXTNAME_COLUMN_BITMASK);
+
+		_finderPathCountByServletContextName = new FinderPath(
+			ReleaseModelImpl.ENTITY_CACHE_ENABLED,
+			ReleaseModelImpl.FINDER_CACHE_ENABLED, Long.class,
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+			"countByServletContextName", new String[] {String.class.getName()});
 
 		ReleaseUtil.setPersistence(this);
 	}

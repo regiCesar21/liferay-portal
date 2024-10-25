@@ -622,6 +622,7 @@ public class CPDefinitionPersistenceImpl
 		"(cpDefinition.uuid IS NULL OR cpDefinition.uuid = '')";
 
 	private FinderPath _finderPathFetchByUUID_G;
+	private FinderPath _finderPathCountByUUID_G;
 
 	/**
 	 * Returns the cp definition where uuid = &#63; and groupId = &#63; or throws a <code>NoSuchCPDefinitionException</code> if it could not be found.
@@ -806,13 +807,64 @@ public class CPDefinitionPersistenceImpl
 	 */
 	@Override
 	public int countByUUID_G(String uuid, long groupId) {
-		CPDefinition cpDefinition = fetchByUUID_G(uuid, groupId);
+		uuid = Objects.toString(uuid, "");
 
-		if (cpDefinition == null) {
-			return 0;
+		FinderPath finderPath = _finderPathCountByUUID_G;
+
+		Object[] finderArgs = new Object[] {uuid, groupId};
+
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
+
+		if (count == null) {
+			StringBundler sb = new StringBundler(3);
+
+			sb.append(_SQL_COUNT_CPDEFINITION_WHERE);
+
+			boolean bindUuid = false;
+
+			if (uuid.isEmpty()) {
+				sb.append(_FINDER_COLUMN_UUID_G_UUID_3);
+			}
+			else {
+				bindUuid = true;
+
+				sb.append(_FINDER_COLUMN_UUID_G_UUID_2);
+			}
+
+			sb.append(_FINDER_COLUMN_UUID_G_GROUPID_2);
+
+			String sql = sb.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query query = session.createQuery(sql);
+
+				QueryPos queryPos = QueryPos.getInstance(query);
+
+				if (bindUuid) {
+					queryPos.add(uuid);
+				}
+
+				queryPos.add(groupId);
+
+				count = (Long)query.uniqueResult();
+
+				finderCache.putResult(finderPath, finderArgs, count);
+			}
+			catch (Exception exception) {
+				finderCache.removeResult(finderPath, finderArgs);
+
+				throw processException(exception);
+			}
+			finally {
+				closeSession(session);
+			}
 		}
 
-		return 1;
+		return count.intValue();
 	}
 
 	private static final String _FINDER_COLUMN_UUID_G_UUID_2 =
@@ -4014,6 +4066,7 @@ public class CPDefinitionPersistenceImpl
 		"cpDefinition.status = ?";
 
 	private FinderPath _finderPathFetchByC_V;
+	private FinderPath _finderPathCountByC_V;
 
 	/**
 	 * Returns the cp definition where CProductId = &#63; and version = &#63; or throws a <code>NoSuchCPDefinitionException</code> if it could not be found.
@@ -4199,13 +4252,51 @@ public class CPDefinitionPersistenceImpl
 	 */
 	@Override
 	public int countByC_V(long CProductId, int version) {
-		CPDefinition cpDefinition = fetchByC_V(CProductId, version);
+		FinderPath finderPath = _finderPathCountByC_V;
 
-		if (cpDefinition == null) {
-			return 0;
+		Object[] finderArgs = new Object[] {CProductId, version};
+
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
+
+		if (count == null) {
+			StringBundler sb = new StringBundler(3);
+
+			sb.append(_SQL_COUNT_CPDEFINITION_WHERE);
+
+			sb.append(_FINDER_COLUMN_C_V_CPRODUCTID_2);
+
+			sb.append(_FINDER_COLUMN_C_V_VERSION_2);
+
+			String sql = sb.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query query = session.createQuery(sql);
+
+				QueryPos queryPos = QueryPos.getInstance(query);
+
+				queryPos.add(CProductId);
+
+				queryPos.add(version);
+
+				count = (Long)query.uniqueResult();
+
+				finderCache.putResult(finderPath, finderArgs, count);
+			}
+			catch (Exception exception) {
+				finderCache.removeResult(finderPath, finderArgs);
+
+				throw processException(exception);
+			}
+			finally {
+				closeSession(session);
+			}
 		}
 
-		return 1;
+		return count.intValue();
 	}
 
 	private static final String _FINDER_COLUMN_C_V_CPRODUCTID_2 =
@@ -6452,6 +6543,12 @@ public class CPDefinitionPersistenceImpl
 			CPDefinitionModelImpl.UUID_COLUMN_BITMASK |
 			CPDefinitionModelImpl.GROUPID_COLUMN_BITMASK);
 
+		_finderPathCountByUUID_G = new FinderPath(
+			CPDefinitionModelImpl.ENTITY_CACHE_ENABLED,
+			CPDefinitionModelImpl.FINDER_CACHE_ENABLED, Long.class,
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByUUID_G",
+			new String[] {String.class.getName(), Long.class.getName()});
+
 		_finderPathWithPaginationFindByUuid_C = new FinderPath(
 			CPDefinitionModelImpl.ENTITY_CACHE_ENABLED,
 			CPDefinitionModelImpl.FINDER_CACHE_ENABLED, CPDefinitionImpl.class,
@@ -6609,6 +6706,12 @@ public class CPDefinitionPersistenceImpl
 			new String[] {Long.class.getName(), Integer.class.getName()},
 			CPDefinitionModelImpl.CPRODUCTID_COLUMN_BITMASK |
 			CPDefinitionModelImpl.VERSION_COLUMN_BITMASK);
+
+		_finderPathCountByC_V = new FinderPath(
+			CPDefinitionModelImpl.ENTITY_CACHE_ENABLED,
+			CPDefinitionModelImpl.FINDER_CACHE_ENABLED, Long.class,
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByC_V",
+			new String[] {Long.class.getName(), Integer.class.getName()});
 
 		_finderPathWithPaginationFindByC_S = new FinderPath(
 			CPDefinitionModelImpl.ENTITY_CACHE_ENABLED,

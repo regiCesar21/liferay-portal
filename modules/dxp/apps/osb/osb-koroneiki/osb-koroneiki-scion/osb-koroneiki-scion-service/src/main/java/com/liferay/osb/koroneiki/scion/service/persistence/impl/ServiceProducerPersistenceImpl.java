@@ -1214,6 +1214,7 @@ public class ServiceProducerPersistenceImpl
 		"serviceProducer.companyId = ?";
 
 	private FinderPath _finderPathFetchByAuthorizationUserId;
+	private FinderPath _finderPathCountByAuthorizationUserId;
 
 	/**
 	 * Returns the service producer where authorizationUserId = &#63; or throws a <code>NoSuchServiceProducerException</code> if it could not be found.
@@ -1393,14 +1394,47 @@ public class ServiceProducerPersistenceImpl
 	 */
 	@Override
 	public int countByAuthorizationUserId(long authorizationUserId) {
-		ServiceProducer serviceProducer = fetchByAuthorizationUserId(
-			authorizationUserId);
+		FinderPath finderPath = _finderPathCountByAuthorizationUserId;
 
-		if (serviceProducer == null) {
-			return 0;
+		Object[] finderArgs = new Object[] {authorizationUserId};
+
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
+
+		if (count == null) {
+			StringBundler sb = new StringBundler(2);
+
+			sb.append(_SQL_COUNT_SERVICEPRODUCER_WHERE);
+
+			sb.append(_FINDER_COLUMN_AUTHORIZATIONUSERID_AUTHORIZATIONUSERID_2);
+
+			String sql = sb.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query query = session.createQuery(sql);
+
+				QueryPos queryPos = QueryPos.getInstance(query);
+
+				queryPos.add(authorizationUserId);
+
+				count = (Long)query.uniqueResult();
+
+				finderCache.putResult(finderPath, finderArgs, count);
+			}
+			catch (Exception exception) {
+				finderCache.removeResult(finderPath, finderArgs);
+
+				throw processException(exception);
+			}
+			finally {
+				closeSession(session);
+			}
 		}
 
-		return 1;
+		return count.intValue();
 	}
 
 	private static final String
@@ -2151,6 +2185,11 @@ public class ServiceProducerPersistenceImpl
 			FINDER_CLASS_NAME_ENTITY, "fetchByAuthorizationUserId",
 			new String[] {Long.class.getName()},
 			ServiceProducerModelImpl.AUTHORIZATIONUSERID_COLUMN_BITMASK);
+
+		_finderPathCountByAuthorizationUserId = new FinderPath(
+			entityCacheEnabled, finderCacheEnabled, Long.class,
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+			"countByAuthorizationUserId", new String[] {Long.class.getName()});
 
 		ServiceProducerUtil.setPersistence(this);
 	}

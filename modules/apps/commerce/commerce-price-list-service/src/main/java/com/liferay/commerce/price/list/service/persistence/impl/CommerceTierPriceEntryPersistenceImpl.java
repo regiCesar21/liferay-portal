@@ -2270,6 +2270,7 @@ public class CommerceTierPriceEntryPersistenceImpl
 			"commerceTierPriceEntry.commercePriceEntryId = ?";
 
 	private FinderPath _finderPathFetchByC_M;
+	private FinderPath _finderPathCountByC_M;
 
 	/**
 	 * Returns the commerce tier price entry where commercePriceEntryId = &#63; and minQuantity = &#63; or throws a <code>NoSuchTierPriceEntryException</code> if it could not be found.
@@ -2448,14 +2449,51 @@ public class CommerceTierPriceEntryPersistenceImpl
 	 */
 	@Override
 	public int countByC_M(long commercePriceEntryId, int minQuantity) {
-		CommerceTierPriceEntry commerceTierPriceEntry = fetchByC_M(
-			commercePriceEntryId, minQuantity);
+		FinderPath finderPath = _finderPathCountByC_M;
 
-		if (commerceTierPriceEntry == null) {
-			return 0;
+		Object[] finderArgs = new Object[] {commercePriceEntryId, minQuantity};
+
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
+
+		if (count == null) {
+			StringBundler sb = new StringBundler(3);
+
+			sb.append(_SQL_COUNT_COMMERCETIERPRICEENTRY_WHERE);
+
+			sb.append(_FINDER_COLUMN_C_M_COMMERCEPRICEENTRYID_2);
+
+			sb.append(_FINDER_COLUMN_C_M_MINQUANTITY_2);
+
+			String sql = sb.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query query = session.createQuery(sql);
+
+				QueryPos queryPos = QueryPos.getInstance(query);
+
+				queryPos.add(commercePriceEntryId);
+
+				queryPos.add(minQuantity);
+
+				count = (Long)query.uniqueResult();
+
+				finderCache.putResult(finderPath, finderArgs, count);
+			}
+			catch (Exception exception) {
+				finderCache.removeResult(finderPath, finderArgs);
+
+				throw processException(exception);
+			}
+			finally {
+				closeSession(session);
+			}
 		}
 
-		return 1;
+		return count.intValue();
 	}
 
 	private static final String _FINDER_COLUMN_C_M_COMMERCEPRICEENTRYID_2 =
@@ -4751,6 +4789,7 @@ public class CommerceTierPriceEntryPersistenceImpl
 		"commerceTierPriceEntry.status = ?";
 
 	private FinderPath _finderPathFetchByC_ERC;
+	private FinderPath _finderPathCountByC_ERC;
 
 	/**
 	 * Returns the commerce tier price entry where companyId = &#63; and externalReferenceCode = &#63; or throws a <code>NoSuchTierPriceEntryException</code> if it could not be found.
@@ -4961,14 +5000,64 @@ public class CommerceTierPriceEntryPersistenceImpl
 	 */
 	@Override
 	public int countByC_ERC(long companyId, String externalReferenceCode) {
-		CommerceTierPriceEntry commerceTierPriceEntry = fetchByC_ERC(
-			companyId, externalReferenceCode);
+		externalReferenceCode = Objects.toString(externalReferenceCode, "");
 
-		if (commerceTierPriceEntry == null) {
-			return 0;
+		FinderPath finderPath = _finderPathCountByC_ERC;
+
+		Object[] finderArgs = new Object[] {companyId, externalReferenceCode};
+
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
+
+		if (count == null) {
+			StringBundler sb = new StringBundler(3);
+
+			sb.append(_SQL_COUNT_COMMERCETIERPRICEENTRY_WHERE);
+
+			sb.append(_FINDER_COLUMN_C_ERC_COMPANYID_2);
+
+			boolean bindExternalReferenceCode = false;
+
+			if (externalReferenceCode.isEmpty()) {
+				sb.append(_FINDER_COLUMN_C_ERC_EXTERNALREFERENCECODE_3);
+			}
+			else {
+				bindExternalReferenceCode = true;
+
+				sb.append(_FINDER_COLUMN_C_ERC_EXTERNALREFERENCECODE_2);
+			}
+
+			String sql = sb.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query query = session.createQuery(sql);
+
+				QueryPos queryPos = QueryPos.getInstance(query);
+
+				queryPos.add(companyId);
+
+				if (bindExternalReferenceCode) {
+					queryPos.add(externalReferenceCode);
+				}
+
+				count = (Long)query.uniqueResult();
+
+				finderCache.putResult(finderPath, finderArgs, count);
+			}
+			catch (Exception exception) {
+				finderCache.removeResult(finderPath, finderArgs);
+
+				throw processException(exception);
+			}
+			finally {
+				closeSession(session);
+			}
 		}
 
-		return 1;
+		return count.intValue();
 	}
 
 	private static final String _FINDER_COLUMN_C_ERC_COMPANYID_2 =
@@ -6196,6 +6285,12 @@ public class CommerceTierPriceEntryPersistenceImpl
 				COMMERCEPRICEENTRYID_COLUMN_BITMASK |
 			CommerceTierPriceEntryModelImpl.MINQUANTITY_COLUMN_BITMASK);
 
+		_finderPathCountByC_M = new FinderPath(
+			CommerceTierPriceEntryModelImpl.ENTITY_CACHE_ENABLED,
+			CommerceTierPriceEntryModelImpl.FINDER_CACHE_ENABLED, Long.class,
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByC_M",
+			new String[] {Long.class.getName(), Integer.class.getName()});
+
 		_finderPathWithPaginationFindByC_LtM = new FinderPath(
 			CommerceTierPriceEntryModelImpl.ENTITY_CACHE_ENABLED,
 			CommerceTierPriceEntryModelImpl.FINDER_CACHE_ENABLED,
@@ -6276,6 +6371,12 @@ public class CommerceTierPriceEntryPersistenceImpl
 			CommerceTierPriceEntryModelImpl.COMPANYID_COLUMN_BITMASK |
 			CommerceTierPriceEntryModelImpl.
 				EXTERNALREFERENCECODE_COLUMN_BITMASK);
+
+		_finderPathCountByC_ERC = new FinderPath(
+			CommerceTierPriceEntryModelImpl.ENTITY_CACHE_ENABLED,
+			CommerceTierPriceEntryModelImpl.FINDER_CACHE_ENABLED, Long.class,
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByC_ERC",
+			new String[] {Long.class.getName(), String.class.getName()});
 
 		CommerceTierPriceEntryUtil.setPersistence(this);
 	}

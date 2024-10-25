@@ -1215,6 +1215,7 @@ public class ProductBundlePersistenceImpl
 		"productBundle.companyId = ?";
 
 	private FinderPath _finderPathFetchByName;
+	private FinderPath _finderPathCountByName;
 
 	/**
 	 * Returns the product bundle where name = &#63; or throws a <code>NoSuchProductBundleException</code> if it could not be found.
@@ -1398,13 +1399,60 @@ public class ProductBundlePersistenceImpl
 	 */
 	@Override
 	public int countByName(String name) {
-		ProductBundle productBundle = fetchByName(name);
+		name = Objects.toString(name, "");
 
-		if (productBundle == null) {
-			return 0;
+		FinderPath finderPath = _finderPathCountByName;
+
+		Object[] finderArgs = new Object[] {name};
+
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
+
+		if (count == null) {
+			StringBundler sb = new StringBundler(2);
+
+			sb.append(_SQL_COUNT_PRODUCTBUNDLE_WHERE);
+
+			boolean bindName = false;
+
+			if (name.isEmpty()) {
+				sb.append(_FINDER_COLUMN_NAME_NAME_3);
+			}
+			else {
+				bindName = true;
+
+				sb.append(_FINDER_COLUMN_NAME_NAME_2);
+			}
+
+			String sql = sb.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query query = session.createQuery(sql);
+
+				QueryPos queryPos = QueryPos.getInstance(query);
+
+				if (bindName) {
+					queryPos.add(name);
+				}
+
+				count = (Long)query.uniqueResult();
+
+				finderCache.putResult(finderPath, finderArgs, count);
+			}
+			catch (Exception exception) {
+				finderCache.removeResult(finderPath, finderArgs);
+
+				throw processException(exception);
+			}
+			finally {
+				closeSession(session);
+			}
 		}
 
-		return 1;
+		return count.intValue();
 	}
 
 	private static final String _FINDER_COLUMN_NAME_NAME_2 =
@@ -2162,6 +2210,11 @@ public class ProductBundlePersistenceImpl
 			FINDER_CLASS_NAME_ENTITY, "fetchByName",
 			new String[] {String.class.getName()},
 			ProductBundleModelImpl.NAME_COLUMN_BITMASK);
+
+		_finderPathCountByName = new FinderPath(
+			entityCacheEnabled, finderCacheEnabled, Long.class,
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByName",
+			new String[] {String.class.getName()});
 
 		ProductBundleUtil.setPersistence(this);
 	}

@@ -624,6 +624,7 @@ public class CPMeasurementUnitPersistenceImpl
 		"(cpMeasurementUnit.uuid IS NULL OR cpMeasurementUnit.uuid = '')";
 
 	private FinderPath _finderPathFetchByUUID_G;
+	private FinderPath _finderPathCountByUUID_G;
 
 	/**
 	 * Returns the cp measurement unit where uuid = &#63; and groupId = &#63; or throws a <code>NoSuchCPMeasurementUnitException</code> if it could not be found.
@@ -808,13 +809,64 @@ public class CPMeasurementUnitPersistenceImpl
 	 */
 	@Override
 	public int countByUUID_G(String uuid, long groupId) {
-		CPMeasurementUnit cpMeasurementUnit = fetchByUUID_G(uuid, groupId);
+		uuid = Objects.toString(uuid, "");
 
-		if (cpMeasurementUnit == null) {
-			return 0;
+		FinderPath finderPath = _finderPathCountByUUID_G;
+
+		Object[] finderArgs = new Object[] {uuid, groupId};
+
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
+
+		if (count == null) {
+			StringBundler sb = new StringBundler(3);
+
+			sb.append(_SQL_COUNT_CPMEASUREMENTUNIT_WHERE);
+
+			boolean bindUuid = false;
+
+			if (uuid.isEmpty()) {
+				sb.append(_FINDER_COLUMN_UUID_G_UUID_3);
+			}
+			else {
+				bindUuid = true;
+
+				sb.append(_FINDER_COLUMN_UUID_G_UUID_2);
+			}
+
+			sb.append(_FINDER_COLUMN_UUID_G_GROUPID_2);
+
+			String sql = sb.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query query = session.createQuery(sql);
+
+				QueryPos queryPos = QueryPos.getInstance(query);
+
+				if (bindUuid) {
+					queryPos.add(uuid);
+				}
+
+				queryPos.add(groupId);
+
+				count = (Long)query.uniqueResult();
+
+				finderCache.putResult(finderPath, finderArgs, count);
+			}
+			catch (Exception exception) {
+				finderCache.removeResult(finderPath, finderArgs);
+
+				throw processException(exception);
+			}
+			finally {
+				closeSession(session);
+			}
 		}
 
-		return 1;
+		return count.intValue();
 	}
 
 	private static final String _FINDER_COLUMN_UUID_G_UUID_2 =
@@ -2472,6 +2524,7 @@ public class CPMeasurementUnitPersistenceImpl
 		"cpMeasurementUnit.type = ?";
 
 	private FinderPath _finderPathFetchByC_K_T;
+	private FinderPath _finderPathCountByC_K_T;
 
 	/**
 	 * Returns the cp measurement unit where companyId = &#63; and key = &#63; and type = &#63; or throws a <code>NoSuchCPMeasurementUnitException</code> if it could not be found.
@@ -2672,14 +2725,68 @@ public class CPMeasurementUnitPersistenceImpl
 	 */
 	@Override
 	public int countByC_K_T(long companyId, String key, int type) {
-		CPMeasurementUnit cpMeasurementUnit = fetchByC_K_T(
-			companyId, key, type);
+		key = Objects.toString(key, "");
 
-		if (cpMeasurementUnit == null) {
-			return 0;
+		FinderPath finderPath = _finderPathCountByC_K_T;
+
+		Object[] finderArgs = new Object[] {companyId, key, type};
+
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
+
+		if (count == null) {
+			StringBundler sb = new StringBundler(4);
+
+			sb.append(_SQL_COUNT_CPMEASUREMENTUNIT_WHERE);
+
+			sb.append(_FINDER_COLUMN_C_K_T_COMPANYID_2);
+
+			boolean bindKey = false;
+
+			if (key.isEmpty()) {
+				sb.append(_FINDER_COLUMN_C_K_T_KEY_3);
+			}
+			else {
+				bindKey = true;
+
+				sb.append(_FINDER_COLUMN_C_K_T_KEY_2);
+			}
+
+			sb.append(_FINDER_COLUMN_C_K_T_TYPE_2);
+
+			String sql = sb.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query query = session.createQuery(sql);
+
+				QueryPos queryPos = QueryPos.getInstance(query);
+
+				queryPos.add(companyId);
+
+				if (bindKey) {
+					queryPos.add(StringUtil.toLowerCase(key));
+				}
+
+				queryPos.add(type);
+
+				count = (Long)query.uniqueResult();
+
+				finderCache.putResult(finderPath, finderArgs, count);
+			}
+			catch (Exception exception) {
+				finderCache.removeResult(finderPath, finderArgs);
+
+				throw processException(exception);
+			}
+			finally {
+				closeSession(session);
+			}
 		}
 
-		return 1;
+		return count.intValue();
 	}
 
 	private static final String _FINDER_COLUMN_C_K_T_COMPANYID_2 =
@@ -4346,6 +4453,12 @@ public class CPMeasurementUnitPersistenceImpl
 			CPMeasurementUnitModelImpl.UUID_COLUMN_BITMASK |
 			CPMeasurementUnitModelImpl.GROUPID_COLUMN_BITMASK);
 
+		_finderPathCountByUUID_G = new FinderPath(
+			CPMeasurementUnitModelImpl.ENTITY_CACHE_ENABLED,
+			CPMeasurementUnitModelImpl.FINDER_CACHE_ENABLED, Long.class,
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByUUID_G",
+			new String[] {String.class.getName(), Long.class.getName()});
+
 		_finderPathWithPaginationFindByUuid_C = new FinderPath(
 			CPMeasurementUnitModelImpl.ENTITY_CACHE_ENABLED,
 			CPMeasurementUnitModelImpl.FINDER_CACHE_ENABLED,
@@ -4437,6 +4550,15 @@ public class CPMeasurementUnitPersistenceImpl
 			CPMeasurementUnitModelImpl.COMPANYID_COLUMN_BITMASK |
 			CPMeasurementUnitModelImpl.KEY_COLUMN_BITMASK |
 			CPMeasurementUnitModelImpl.TYPE_COLUMN_BITMASK);
+
+		_finderPathCountByC_K_T = new FinderPath(
+			CPMeasurementUnitModelImpl.ENTITY_CACHE_ENABLED,
+			CPMeasurementUnitModelImpl.FINDER_CACHE_ENABLED, Long.class,
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByC_K_T",
+			new String[] {
+				Long.class.getName(), String.class.getName(),
+				Integer.class.getName()
+			});
 
 		_finderPathWithPaginationFindByC_P_T = new FinderPath(
 			CPMeasurementUnitModelImpl.ENTITY_CACHE_ENABLED,

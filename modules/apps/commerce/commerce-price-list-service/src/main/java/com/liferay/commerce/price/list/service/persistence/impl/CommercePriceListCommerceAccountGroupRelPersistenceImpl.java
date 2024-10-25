@@ -1851,6 +1851,7 @@ public class CommercePriceListCommerceAccountGroupRelPersistenceImpl
 			"commercePriceListCommerceAccountGroupRel.commercePriceListId = ?";
 
 	private FinderPath _finderPathFetchByC_C;
+	private FinderPath _finderPathCountByC_C;
 
 	/**
 	 * Returns the commerce price list commerce account group rel where commercePriceListId = &#63; and commerceAccountGroupId = &#63; or throws a <code>NoSuchPriceListCommerceAccountGroupRelException</code> if it could not be found.
@@ -2044,15 +2045,54 @@ public class CommercePriceListCommerceAccountGroupRelPersistenceImpl
 	public int countByC_C(
 		long commercePriceListId, long commerceAccountGroupId) {
 
-		CommercePriceListCommerceAccountGroupRel
-			commercePriceListCommerceAccountGroupRel = fetchByC_C(
-				commercePriceListId, commerceAccountGroupId);
+		FinderPath finderPath = _finderPathCountByC_C;
 
-		if (commercePriceListCommerceAccountGroupRel == null) {
-			return 0;
+		Object[] finderArgs = new Object[] {
+			commercePriceListId, commerceAccountGroupId
+		};
+
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
+
+		if (count == null) {
+			StringBundler sb = new StringBundler(3);
+
+			sb.append(
+				_SQL_COUNT_COMMERCEPRICELISTCOMMERCEACCOUNTGROUPREL_WHERE);
+
+			sb.append(_FINDER_COLUMN_C_C_COMMERCEPRICELISTID_2);
+
+			sb.append(_FINDER_COLUMN_C_C_COMMERCEACCOUNTGROUPID_2);
+
+			String sql = sb.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query query = session.createQuery(sql);
+
+				QueryPos queryPos = QueryPos.getInstance(query);
+
+				queryPos.add(commercePriceListId);
+
+				queryPos.add(commerceAccountGroupId);
+
+				count = (Long)query.uniqueResult();
+
+				finderCache.putResult(finderPath, finderArgs, count);
+			}
+			catch (Exception exception) {
+				finderCache.removeResult(finderPath, finderArgs);
+
+				throw processException(exception);
+			}
+			finally {
+				closeSession(session);
+			}
 		}
 
-		return 1;
+		return count.intValue();
 	}
 
 	private static final String _FINDER_COLUMN_C_C_COMMERCEPRICELISTID_2 =
@@ -3257,6 +3297,14 @@ public class CommercePriceListCommerceAccountGroupRelPersistenceImpl
 				COMMERCEPRICELISTID_COLUMN_BITMASK |
 			CommercePriceListCommerceAccountGroupRelModelImpl.
 				COMMERCEACCOUNTGROUPID_COLUMN_BITMASK);
+
+		_finderPathCountByC_C = new FinderPath(
+			CommercePriceListCommerceAccountGroupRelModelImpl.
+				ENTITY_CACHE_ENABLED,
+			CommercePriceListCommerceAccountGroupRelModelImpl.
+				FINDER_CACHE_ENABLED,
+			Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByC_C",
+			new String[] {Long.class.getName(), Long.class.getName()});
 
 		CommercePriceListCommerceAccountGroupRelUtil.setPersistence(this);
 	}

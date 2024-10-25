@@ -2050,6 +2050,7 @@ public class TeamPersistenceImpl
 		"team.companyId = ?";
 
 	private FinderPath _finderPathFetchByTeamKey;
+	private FinderPath _finderPathCountByTeamKey;
 
 	/**
 	 * Returns the team where teamKey = &#63; or throws a <code>NoSuchTeamException</code> if it could not be found.
@@ -2214,13 +2215,60 @@ public class TeamPersistenceImpl
 	 */
 	@Override
 	public int countByTeamKey(String teamKey) {
-		Team team = fetchByTeamKey(teamKey);
+		teamKey = Objects.toString(teamKey, "");
 
-		if (team == null) {
-			return 0;
+		FinderPath finderPath = _finderPathCountByTeamKey;
+
+		Object[] finderArgs = new Object[] {teamKey};
+
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
+
+		if (count == null) {
+			StringBundler sb = new StringBundler(2);
+
+			sb.append(_SQL_COUNT_TEAM_WHERE);
+
+			boolean bindTeamKey = false;
+
+			if (teamKey.isEmpty()) {
+				sb.append(_FINDER_COLUMN_TEAMKEY_TEAMKEY_3);
+			}
+			else {
+				bindTeamKey = true;
+
+				sb.append(_FINDER_COLUMN_TEAMKEY_TEAMKEY_2);
+			}
+
+			String sql = sb.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query query = session.createQuery(sql);
+
+				QueryPos queryPos = QueryPos.getInstance(query);
+
+				if (bindTeamKey) {
+					queryPos.add(teamKey);
+				}
+
+				count = (Long)query.uniqueResult();
+
+				finderCache.putResult(finderPath, finderArgs, count);
+			}
+			catch (Exception exception) {
+				finderCache.removeResult(finderPath, finderArgs);
+
+				throw processException(exception);
+			}
+			finally {
+				closeSession(session);
+			}
 		}
 
-		return 1;
+		return count.intValue();
 	}
 
 	private static final String _FINDER_COLUMN_TEAMKEY_TEAMKEY_2 =
@@ -3098,6 +3146,7 @@ public class TeamPersistenceImpl
 		"team.accountId = ?";
 
 	private FinderPath _finderPathFetchByAI_N;
+	private FinderPath _finderPathCountByAI_N;
 
 	/**
 	 * Returns the team where accountId = &#63; and name = &#63; or throws a <code>NoSuchTeamException</code> if it could not be found.
@@ -3297,13 +3346,64 @@ public class TeamPersistenceImpl
 	 */
 	@Override
 	public int countByAI_N(long accountId, String name) {
-		Team team = fetchByAI_N(accountId, name);
+		name = Objects.toString(name, "");
 
-		if (team == null) {
-			return 0;
+		FinderPath finderPath = _finderPathCountByAI_N;
+
+		Object[] finderArgs = new Object[] {accountId, name};
+
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
+
+		if (count == null) {
+			StringBundler sb = new StringBundler(3);
+
+			sb.append(_SQL_COUNT_TEAM_WHERE);
+
+			sb.append(_FINDER_COLUMN_AI_N_ACCOUNTID_2);
+
+			boolean bindName = false;
+
+			if (name.isEmpty()) {
+				sb.append(_FINDER_COLUMN_AI_N_NAME_3);
+			}
+			else {
+				bindName = true;
+
+				sb.append(_FINDER_COLUMN_AI_N_NAME_2);
+			}
+
+			String sql = sb.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query query = session.createQuery(sql);
+
+				QueryPos queryPos = QueryPos.getInstance(query);
+
+				queryPos.add(accountId);
+
+				if (bindName) {
+					queryPos.add(name);
+				}
+
+				count = (Long)query.uniqueResult();
+
+				finderCache.putResult(finderPath, finderArgs, count);
+			}
+			catch (Exception exception) {
+				finderCache.removeResult(finderPath, finderArgs);
+
+				throw processException(exception);
+			}
+			finally {
+				closeSession(session);
+			}
 		}
 
-		return 1;
+		return count.intValue();
 	}
 
 	private static final String _FINDER_COLUMN_AI_N_ACCOUNTID_2 =
@@ -3315,6 +3415,7 @@ public class TeamPersistenceImpl
 		"(team.name IS NULL OR team.name = '')";
 
 	private FinderPath _finderPathFetchByAI_S;
+	private FinderPath _finderPathCountByAI_S;
 
 	/**
 	 * Returns the team where accountId = &#63; and system = &#63; or throws a <code>NoSuchTeamException</code> if it could not be found.
@@ -3501,13 +3602,51 @@ public class TeamPersistenceImpl
 	 */
 	@Override
 	public int countByAI_S(long accountId, boolean system) {
-		Team team = fetchByAI_S(accountId, system);
+		FinderPath finderPath = _finderPathCountByAI_S;
 
-		if (team == null) {
-			return 0;
+		Object[] finderArgs = new Object[] {accountId, system};
+
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
+
+		if (count == null) {
+			StringBundler sb = new StringBundler(3);
+
+			sb.append(_SQL_COUNT_TEAM_WHERE);
+
+			sb.append(_FINDER_COLUMN_AI_S_ACCOUNTID_2);
+
+			sb.append(_FINDER_COLUMN_AI_S_SYSTEM_2);
+
+			String sql = sb.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query query = session.createQuery(sql);
+
+				QueryPos queryPos = QueryPos.getInstance(query);
+
+				queryPos.add(accountId);
+
+				queryPos.add(system);
+
+				count = (Long)query.uniqueResult();
+
+				finderCache.putResult(finderPath, finderArgs, count);
+			}
+			catch (Exception exception) {
+				finderCache.removeResult(finderPath, finderArgs);
+
+				throw processException(exception);
+			}
+			finally {
+				closeSession(session);
+			}
 		}
 
-		return 1;
+		return count.intValue();
 	}
 
 	private static final String _FINDER_COLUMN_AI_S_ACCOUNTID_2 =
@@ -4336,6 +4475,11 @@ public class TeamPersistenceImpl
 			new String[] {String.class.getName()},
 			TeamModelImpl.TEAMKEY_COLUMN_BITMASK);
 
+		_finderPathCountByTeamKey = new FinderPath(
+			entityCacheEnabled, finderCacheEnabled, Long.class,
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByTeamKey",
+			new String[] {String.class.getName()});
+
 		_finderPathWithPaginationFindByAccountId = new FinderPath(
 			entityCacheEnabled, finderCacheEnabled, TeamImpl.class,
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByAccountId",
@@ -4362,12 +4506,22 @@ public class TeamPersistenceImpl
 			TeamModelImpl.ACCOUNTID_COLUMN_BITMASK |
 			TeamModelImpl.NAME_COLUMN_BITMASK);
 
+		_finderPathCountByAI_N = new FinderPath(
+			entityCacheEnabled, finderCacheEnabled, Long.class,
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByAI_N",
+			new String[] {Long.class.getName(), String.class.getName()});
+
 		_finderPathFetchByAI_S = new FinderPath(
 			entityCacheEnabled, finderCacheEnabled, TeamImpl.class,
 			FINDER_CLASS_NAME_ENTITY, "fetchByAI_S",
 			new String[] {Long.class.getName(), Boolean.class.getName()},
 			TeamModelImpl.ACCOUNTID_COLUMN_BITMASK |
 			TeamModelImpl.SYSTEM_COLUMN_BITMASK);
+
+		_finderPathCountByAI_S = new FinderPath(
+			entityCacheEnabled, finderCacheEnabled, Long.class,
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByAI_S",
+			new String[] {Long.class.getName(), Boolean.class.getName()});
 
 		TeamUtil.setPersistence(this);
 	}

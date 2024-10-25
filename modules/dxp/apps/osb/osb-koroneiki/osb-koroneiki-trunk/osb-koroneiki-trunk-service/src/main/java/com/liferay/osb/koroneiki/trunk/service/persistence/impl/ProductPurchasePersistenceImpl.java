@@ -2088,6 +2088,7 @@ public class ProductPurchasePersistenceImpl
 		"productPurchase.companyId = ?";
 
 	private FinderPath _finderPathFetchByProductPurchaseKey;
+	private FinderPath _finderPathCountByProductPurchaseKey;
 
 	/**
 	 * Returns the product purchase where productPurchaseKey = &#63; or throws a <code>NoSuchProductPurchaseException</code> if it could not be found.
@@ -2268,14 +2269,62 @@ public class ProductPurchasePersistenceImpl
 	 */
 	@Override
 	public int countByProductPurchaseKey(String productPurchaseKey) {
-		ProductPurchase productPurchase = fetchByProductPurchaseKey(
-			productPurchaseKey);
+		productPurchaseKey = Objects.toString(productPurchaseKey, "");
 
-		if (productPurchase == null) {
-			return 0;
+		FinderPath finderPath = _finderPathCountByProductPurchaseKey;
+
+		Object[] finderArgs = new Object[] {productPurchaseKey};
+
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
+
+		if (count == null) {
+			StringBundler sb = new StringBundler(2);
+
+			sb.append(_SQL_COUNT_PRODUCTPURCHASE_WHERE);
+
+			boolean bindProductPurchaseKey = false;
+
+			if (productPurchaseKey.isEmpty()) {
+				sb.append(
+					_FINDER_COLUMN_PRODUCTPURCHASEKEY_PRODUCTPURCHASEKEY_3);
+			}
+			else {
+				bindProductPurchaseKey = true;
+
+				sb.append(
+					_FINDER_COLUMN_PRODUCTPURCHASEKEY_PRODUCTPURCHASEKEY_2);
+			}
+
+			String sql = sb.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query query = session.createQuery(sql);
+
+				QueryPos queryPos = QueryPos.getInstance(query);
+
+				if (bindProductPurchaseKey) {
+					queryPos.add(productPurchaseKey);
+				}
+
+				count = (Long)query.uniqueResult();
+
+				finderCache.putResult(finderPath, finderArgs, count);
+			}
+			catch (Exception exception) {
+				finderCache.removeResult(finderPath, finderArgs);
+
+				throw processException(exception);
+			}
+			finally {
+				closeSession(session);
+			}
 		}
 
-		return 1;
+		return count.intValue();
 	}
 
 	private static final String
@@ -5877,6 +5926,11 @@ public class ProductPurchasePersistenceImpl
 			FINDER_CLASS_NAME_ENTITY, "fetchByProductPurchaseKey",
 			new String[] {String.class.getName()},
 			ProductPurchaseModelImpl.PRODUCTPURCHASEKEY_COLUMN_BITMASK);
+
+		_finderPathCountByProductPurchaseKey = new FinderPath(
+			entityCacheEnabled, finderCacheEnabled, Long.class,
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+			"countByProductPurchaseKey", new String[] {String.class.getName()});
 
 		_finderPathWithPaginationFindByAccountId = new FinderPath(
 			entityCacheEnabled, finderCacheEnabled, ProductPurchaseImpl.class,

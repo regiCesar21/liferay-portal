@@ -620,6 +620,7 @@ public class AssetTagPersistenceImpl
 		"(assetTag.uuid IS NULL OR assetTag.uuid = '')";
 
 	private FinderPath _finderPathFetchByUUID_G;
+	private FinderPath _finderPathCountByUUID_G;
 
 	/**
 	 * Returns the asset tag where uuid = &#63; and groupId = &#63; or throws a <code>NoSuchTagException</code> if it could not be found.
@@ -804,13 +805,65 @@ public class AssetTagPersistenceImpl
 	 */
 	@Override
 	public int countByUUID_G(String uuid, long groupId) {
-		AssetTag assetTag = fetchByUUID_G(uuid, groupId);
+		uuid = Objects.toString(uuid, "");
 
-		if (assetTag == null) {
-			return 0;
+		FinderPath finderPath = _finderPathCountByUUID_G;
+
+		Object[] finderArgs = new Object[] {uuid, groupId};
+
+		Long count = (Long)FinderCacheUtil.getResult(
+			finderPath, finderArgs, this);
+
+		if (count == null) {
+			StringBundler sb = new StringBundler(3);
+
+			sb.append(_SQL_COUNT_ASSETTAG_WHERE);
+
+			boolean bindUuid = false;
+
+			if (uuid.isEmpty()) {
+				sb.append(_FINDER_COLUMN_UUID_G_UUID_3);
+			}
+			else {
+				bindUuid = true;
+
+				sb.append(_FINDER_COLUMN_UUID_G_UUID_2);
+			}
+
+			sb.append(_FINDER_COLUMN_UUID_G_GROUPID_2);
+
+			String sql = sb.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query query = session.createQuery(sql);
+
+				QueryPos queryPos = QueryPos.getInstance(query);
+
+				if (bindUuid) {
+					queryPos.add(uuid);
+				}
+
+				queryPos.add(groupId);
+
+				count = (Long)query.uniqueResult();
+
+				FinderCacheUtil.putResult(finderPath, finderArgs, count);
+			}
+			catch (Exception exception) {
+				FinderCacheUtil.removeResult(finderPath, finderArgs);
+
+				throw processException(exception);
+			}
+			finally {
+				closeSession(session);
+			}
 		}
 
-		return 1;
+		return count.intValue();
 	}
 
 	private static final String _FINDER_COLUMN_UUID_G_UUID_2 =
@@ -2978,6 +3031,7 @@ public class AssetTagPersistenceImpl
 		"(assetTag.name IS NULL OR assetTag.name = '')";
 
 	private FinderPath _finderPathFetchByG_N;
+	private FinderPath _finderPathCountByG_N;
 
 	/**
 	 * Returns the asset tag where groupId = &#63; and name = &#63; or throws a <code>NoSuchTagException</code> if it could not be found.
@@ -3162,13 +3216,65 @@ public class AssetTagPersistenceImpl
 	 */
 	@Override
 	public int countByG_N(long groupId, String name) {
-		AssetTag assetTag = fetchByG_N(groupId, name);
+		name = Objects.toString(name, "");
 
-		if (assetTag == null) {
-			return 0;
+		FinderPath finderPath = _finderPathCountByG_N;
+
+		Object[] finderArgs = new Object[] {groupId, name};
+
+		Long count = (Long)FinderCacheUtil.getResult(
+			finderPath, finderArgs, this);
+
+		if (count == null) {
+			StringBundler sb = new StringBundler(3);
+
+			sb.append(_SQL_COUNT_ASSETTAG_WHERE);
+
+			sb.append(_FINDER_COLUMN_G_N_GROUPID_2);
+
+			boolean bindName = false;
+
+			if (name.isEmpty()) {
+				sb.append(_FINDER_COLUMN_G_N_NAME_3);
+			}
+			else {
+				bindName = true;
+
+				sb.append(_FINDER_COLUMN_G_N_NAME_2);
+			}
+
+			String sql = sb.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query query = session.createQuery(sql);
+
+				QueryPos queryPos = QueryPos.getInstance(query);
+
+				queryPos.add(groupId);
+
+				if (bindName) {
+					queryPos.add(StringUtil.toLowerCase(name));
+				}
+
+				count = (Long)query.uniqueResult();
+
+				FinderCacheUtil.putResult(finderPath, finderArgs, count);
+			}
+			catch (Exception exception) {
+				FinderCacheUtil.removeResult(finderPath, finderArgs);
+
+				throw processException(exception);
+			}
+			finally {
+				closeSession(session);
+			}
 		}
 
-		return 1;
+		return count.intValue();
 	}
 
 	private static final String _FINDER_COLUMN_G_N_GROUPID_2 =
@@ -5201,6 +5307,12 @@ public class AssetTagPersistenceImpl
 			AssetTagModelImpl.UUID_COLUMN_BITMASK |
 			AssetTagModelImpl.GROUPID_COLUMN_BITMASK);
 
+		_finderPathCountByUUID_G = new FinderPath(
+			AssetTagModelImpl.ENTITY_CACHE_ENABLED,
+			AssetTagModelImpl.FINDER_CACHE_ENABLED, Long.class,
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByUUID_G",
+			new String[] {String.class.getName(), Long.class.getName()});
+
 		_finderPathWithPaginationFindByUuid_C = new FinderPath(
 			AssetTagModelImpl.ENTITY_CACHE_ENABLED,
 			AssetTagModelImpl.FINDER_CACHE_ENABLED, AssetTagImpl.class,
@@ -5290,6 +5402,12 @@ public class AssetTagPersistenceImpl
 			new String[] {Long.class.getName(), String.class.getName()},
 			AssetTagModelImpl.GROUPID_COLUMN_BITMASK |
 			AssetTagModelImpl.NAME_COLUMN_BITMASK);
+
+		_finderPathCountByG_N = new FinderPath(
+			AssetTagModelImpl.ENTITY_CACHE_ENABLED,
+			AssetTagModelImpl.FINDER_CACHE_ENABLED, Long.class,
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByG_N",
+			new String[] {Long.class.getName(), String.class.getName()});
 
 		_finderPathWithPaginationFindByG_LikeN = new FinderPath(
 			AssetTagModelImpl.ENTITY_CACHE_ENABLED,

@@ -625,6 +625,7 @@ public class MBMailingListPersistenceImpl
 		"(mbMailingList.uuid IS NULL OR mbMailingList.uuid = '')";
 
 	private FinderPath _finderPathFetchByUUID_G;
+	private FinderPath _finderPathCountByUUID_G;
 
 	/**
 	 * Returns the message boards mailing list where uuid = &#63; and groupId = &#63; or throws a <code>NoSuchMailingListException</code> if it could not be found.
@@ -809,13 +810,64 @@ public class MBMailingListPersistenceImpl
 	 */
 	@Override
 	public int countByUUID_G(String uuid, long groupId) {
-		MBMailingList mbMailingList = fetchByUUID_G(uuid, groupId);
+		uuid = Objects.toString(uuid, "");
 
-		if (mbMailingList == null) {
-			return 0;
+		FinderPath finderPath = _finderPathCountByUUID_G;
+
+		Object[] finderArgs = new Object[] {uuid, groupId};
+
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
+
+		if (count == null) {
+			StringBundler sb = new StringBundler(3);
+
+			sb.append(_SQL_COUNT_MBMAILINGLIST_WHERE);
+
+			boolean bindUuid = false;
+
+			if (uuid.isEmpty()) {
+				sb.append(_FINDER_COLUMN_UUID_G_UUID_3);
+			}
+			else {
+				bindUuid = true;
+
+				sb.append(_FINDER_COLUMN_UUID_G_UUID_2);
+			}
+
+			sb.append(_FINDER_COLUMN_UUID_G_GROUPID_2);
+
+			String sql = sb.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query query = session.createQuery(sql);
+
+				QueryPos queryPos = QueryPos.getInstance(query);
+
+				if (bindUuid) {
+					queryPos.add(uuid);
+				}
+
+				queryPos.add(groupId);
+
+				count = (Long)query.uniqueResult();
+
+				finderCache.putResult(finderPath, finderArgs, count);
+			}
+			catch (Exception exception) {
+				finderCache.removeResult(finderPath, finderArgs);
+
+				throw processException(exception);
+			}
+			finally {
+				closeSession(session);
+			}
 		}
 
-		return 1;
+		return count.intValue();
 	}
 
 	private static final String _FINDER_COLUMN_UUID_G_UUID_2 =
@@ -1916,6 +1968,7 @@ public class MBMailingListPersistenceImpl
 		"mbMailingList.active = ?";
 
 	private FinderPath _finderPathFetchByG_C;
+	private FinderPath _finderPathCountByG_C;
 
 	/**
 	 * Returns the message boards mailing list where groupId = &#63; and categoryId = &#63; or throws a <code>NoSuchMailingListException</code> if it could not be found.
@@ -2086,13 +2139,51 @@ public class MBMailingListPersistenceImpl
 	 */
 	@Override
 	public int countByG_C(long groupId, long categoryId) {
-		MBMailingList mbMailingList = fetchByG_C(groupId, categoryId);
+		FinderPath finderPath = _finderPathCountByG_C;
 
-		if (mbMailingList == null) {
-			return 0;
+		Object[] finderArgs = new Object[] {groupId, categoryId};
+
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
+
+		if (count == null) {
+			StringBundler sb = new StringBundler(3);
+
+			sb.append(_SQL_COUNT_MBMAILINGLIST_WHERE);
+
+			sb.append(_FINDER_COLUMN_G_C_GROUPID_2);
+
+			sb.append(_FINDER_COLUMN_G_C_CATEGORYID_2);
+
+			String sql = sb.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query query = session.createQuery(sql);
+
+				QueryPos queryPos = QueryPos.getInstance(query);
+
+				queryPos.add(groupId);
+
+				queryPos.add(categoryId);
+
+				count = (Long)query.uniqueResult();
+
+				finderCache.putResult(finderPath, finderArgs, count);
+			}
+			catch (Exception exception) {
+				finderCache.removeResult(finderPath, finderArgs);
+
+				throw processException(exception);
+			}
+			finally {
+				closeSession(session);
+			}
 		}
 
-		return 1;
+		return count.intValue();
 	}
 
 	private static final String _FINDER_COLUMN_G_C_GROUPID_2 =
@@ -2904,6 +2995,11 @@ public class MBMailingListPersistenceImpl
 			MBMailingListModelImpl.UUID_COLUMN_BITMASK |
 			MBMailingListModelImpl.GROUPID_COLUMN_BITMASK);
 
+		_finderPathCountByUUID_G = new FinderPath(
+			entityCacheEnabled, finderCacheEnabled, Long.class,
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByUUID_G",
+			new String[] {String.class.getName(), Long.class.getName()});
+
 		_finderPathWithPaginationFindByUuid_C = new FinderPath(
 			entityCacheEnabled, finderCacheEnabled, MBMailingListImpl.class,
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUuid_C",
@@ -2950,6 +3046,11 @@ public class MBMailingListPersistenceImpl
 			new String[] {Long.class.getName(), Long.class.getName()},
 			MBMailingListModelImpl.GROUPID_COLUMN_BITMASK |
 			MBMailingListModelImpl.CATEGORYID_COLUMN_BITMASK);
+
+		_finderPathCountByG_C = new FinderPath(
+			entityCacheEnabled, finderCacheEnabled, Long.class,
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByG_C",
+			new String[] {Long.class.getName(), Long.class.getName()});
 
 		MBMailingListUtil.setPersistence(this);
 	}

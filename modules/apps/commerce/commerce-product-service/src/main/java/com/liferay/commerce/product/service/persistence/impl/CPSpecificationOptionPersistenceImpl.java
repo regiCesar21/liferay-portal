@@ -3911,6 +3911,7 @@ public class CPSpecificationOptionPersistenceImpl
 			"cpSpecificationOption.CPOptionCategoryId = ?";
 
 	private FinderPath _finderPathFetchByC_K;
+	private FinderPath _finderPathCountByC_K;
 
 	/**
 	 * Returns the cp specification option where companyId = &#63; and key = &#63; or throws a <code>NoSuchCPSpecificationOptionException</code> if it could not be found.
@@ -4096,14 +4097,64 @@ public class CPSpecificationOptionPersistenceImpl
 	 */
 	@Override
 	public int countByC_K(long companyId, String key) {
-		CPSpecificationOption cpSpecificationOption = fetchByC_K(
-			companyId, key);
+		key = Objects.toString(key, "");
 
-		if (cpSpecificationOption == null) {
-			return 0;
+		FinderPath finderPath = _finderPathCountByC_K;
+
+		Object[] finderArgs = new Object[] {companyId, key};
+
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
+
+		if (count == null) {
+			StringBundler sb = new StringBundler(3);
+
+			sb.append(_SQL_COUNT_CPSPECIFICATIONOPTION_WHERE);
+
+			sb.append(_FINDER_COLUMN_C_K_COMPANYID_2);
+
+			boolean bindKey = false;
+
+			if (key.isEmpty()) {
+				sb.append(_FINDER_COLUMN_C_K_KEY_3);
+			}
+			else {
+				bindKey = true;
+
+				sb.append(_FINDER_COLUMN_C_K_KEY_2);
+			}
+
+			String sql = sb.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query query = session.createQuery(sql);
+
+				QueryPos queryPos = QueryPos.getInstance(query);
+
+				queryPos.add(companyId);
+
+				if (bindKey) {
+					queryPos.add(key);
+				}
+
+				count = (Long)query.uniqueResult();
+
+				finderCache.putResult(finderPath, finderArgs, count);
+			}
+			catch (Exception exception) {
+				finderCache.removeResult(finderPath, finderArgs);
+
+				throw processException(exception);
+			}
+			finally {
+				closeSession(session);
+			}
 		}
 
-		return 1;
+		return count.intValue();
 	}
 
 	private static final String _FINDER_COLUMN_C_K_COMPANYID_2 =
@@ -5206,6 +5257,12 @@ public class CPSpecificationOptionPersistenceImpl
 			new String[] {Long.class.getName(), String.class.getName()},
 			CPSpecificationOptionModelImpl.COMPANYID_COLUMN_BITMASK |
 			CPSpecificationOptionModelImpl.KEY_COLUMN_BITMASK);
+
+		_finderPathCountByC_K = new FinderPath(
+			CPSpecificationOptionModelImpl.ENTITY_CACHE_ENABLED,
+			CPSpecificationOptionModelImpl.FINDER_CACHE_ENABLED, Long.class,
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByC_K",
+			new String[] {Long.class.getName(), String.class.getName()});
 
 		CPSpecificationOptionUtil.setPersistence(this);
 	}

@@ -643,6 +643,7 @@ public class AssetListEntryAssetEntryRelPersistenceImpl
 		"(assetListEntryAssetEntryRel.uuid IS NULL OR assetListEntryAssetEntryRel.uuid = '')";
 
 	private FinderPath _finderPathFetchByUUID_G;
+	private FinderPath _finderPathCountByUUID_G;
 
 	/**
 	 * Returns the asset list entry asset entry rel where uuid = &#63; and groupId = &#63; or throws a <code>NoSuchEntryAssetEntryRelException</code> if it could not be found.
@@ -833,14 +834,64 @@ public class AssetListEntryAssetEntryRelPersistenceImpl
 	 */
 	@Override
 	public int countByUUID_G(String uuid, long groupId) {
-		AssetListEntryAssetEntryRel assetListEntryAssetEntryRel = fetchByUUID_G(
-			uuid, groupId);
+		uuid = Objects.toString(uuid, "");
 
-		if (assetListEntryAssetEntryRel == null) {
-			return 0;
+		FinderPath finderPath = _finderPathCountByUUID_G;
+
+		Object[] finderArgs = new Object[] {uuid, groupId};
+
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
+
+		if (count == null) {
+			StringBundler sb = new StringBundler(3);
+
+			sb.append(_SQL_COUNT_ASSETLISTENTRYASSETENTRYREL_WHERE);
+
+			boolean bindUuid = false;
+
+			if (uuid.isEmpty()) {
+				sb.append(_FINDER_COLUMN_UUID_G_UUID_3);
+			}
+			else {
+				bindUuid = true;
+
+				sb.append(_FINDER_COLUMN_UUID_G_UUID_2);
+			}
+
+			sb.append(_FINDER_COLUMN_UUID_G_GROUPID_2);
+
+			String sql = sb.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query query = session.createQuery(sql);
+
+				QueryPos queryPos = QueryPos.getInstance(query);
+
+				if (bindUuid) {
+					queryPos.add(uuid);
+				}
+
+				queryPos.add(groupId);
+
+				count = (Long)query.uniqueResult();
+
+				finderCache.putResult(finderPath, finderArgs, count);
+			}
+			catch (Exception exception) {
+				finderCache.removeResult(finderPath, finderArgs);
+
+				throw processException(exception);
+			}
+			finally {
+				closeSession(session);
+			}
 		}
 
-		return 1;
+		return count.intValue();
 	}
 
 	private static final String _FINDER_COLUMN_UUID_G_UUID_2 =
@@ -2827,6 +2878,7 @@ public class AssetListEntryAssetEntryRelPersistenceImpl
 		"assetListEntryAssetEntryRel.segmentsEntryId IN (";
 
 	private FinderPath _finderPathFetchByA_S_P;
+	private FinderPath _finderPathCountByA_S_P;
 
 	/**
 	 * Returns the asset list entry asset entry rel where assetListEntryId = &#63; and segmentsEntryId = &#63; and position = &#63; or throws a <code>NoSuchEntryAssetEntryRelException</code> if it could not be found.
@@ -3026,14 +3078,57 @@ public class AssetListEntryAssetEntryRelPersistenceImpl
 	public int countByA_S_P(
 		long assetListEntryId, long segmentsEntryId, int position) {
 
-		AssetListEntryAssetEntryRel assetListEntryAssetEntryRel = fetchByA_S_P(
-			assetListEntryId, segmentsEntryId, position);
+		FinderPath finderPath = _finderPathCountByA_S_P;
 
-		if (assetListEntryAssetEntryRel == null) {
-			return 0;
+		Object[] finderArgs = new Object[] {
+			assetListEntryId, segmentsEntryId, position
+		};
+
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
+
+		if (count == null) {
+			StringBundler sb = new StringBundler(4);
+
+			sb.append(_SQL_COUNT_ASSETLISTENTRYASSETENTRYREL_WHERE);
+
+			sb.append(_FINDER_COLUMN_A_S_P_ASSETLISTENTRYID_2);
+
+			sb.append(_FINDER_COLUMN_A_S_P_SEGMENTSENTRYID_2);
+
+			sb.append(_FINDER_COLUMN_A_S_P_POSITION_2);
+
+			String sql = sb.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query query = session.createQuery(sql);
+
+				QueryPos queryPos = QueryPos.getInstance(query);
+
+				queryPos.add(assetListEntryId);
+
+				queryPos.add(segmentsEntryId);
+
+				queryPos.add(position);
+
+				count = (Long)query.uniqueResult();
+
+				finderCache.putResult(finderPath, finderArgs, count);
+			}
+			catch (Exception exception) {
+				finderCache.removeResult(finderPath, finderArgs);
+
+				throw processException(exception);
+			}
+			finally {
+				closeSession(session);
+			}
 		}
 
-		return 1;
+		return count.intValue();
 	}
 
 	private static final String _FINDER_COLUMN_A_S_P_ASSETLISTENTRYID_2 =
@@ -4564,6 +4659,11 @@ public class AssetListEntryAssetEntryRelPersistenceImpl
 			AssetListEntryAssetEntryRelModelImpl.UUID_COLUMN_BITMASK |
 			AssetListEntryAssetEntryRelModelImpl.GROUPID_COLUMN_BITMASK);
 
+		_finderPathCountByUUID_G = new FinderPath(
+			entityCacheEnabled, finderCacheEnabled, Long.class,
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByUUID_G",
+			new String[] {String.class.getName(), Long.class.getName()});
+
 		_finderPathWithPaginationFindByUuid_C = new FinderPath(
 			entityCacheEnabled, finderCacheEnabled,
 			AssetListEntryAssetEntryRelImpl.class,
@@ -4655,6 +4755,14 @@ public class AssetListEntryAssetEntryRelPersistenceImpl
 			AssetListEntryAssetEntryRelModelImpl.
 				SEGMENTSENTRYID_COLUMN_BITMASK |
 			AssetListEntryAssetEntryRelModelImpl.POSITION_COLUMN_BITMASK);
+
+		_finderPathCountByA_S_P = new FinderPath(
+			entityCacheEnabled, finderCacheEnabled, Long.class,
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByA_S_P",
+			new String[] {
+				Long.class.getName(), Long.class.getName(),
+				Integer.class.getName()
+			});
 
 		_finderPathWithPaginationFindByA_S_GtP = new FinderPath(
 			entityCacheEnabled, finderCacheEnabled,

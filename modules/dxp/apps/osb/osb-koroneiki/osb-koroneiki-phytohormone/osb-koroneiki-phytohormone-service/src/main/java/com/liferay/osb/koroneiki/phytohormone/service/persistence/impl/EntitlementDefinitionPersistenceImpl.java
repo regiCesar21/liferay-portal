@@ -2109,6 +2109,7 @@ public class EntitlementDefinitionPersistenceImpl
 		"entitlementDefinition.companyId = ?";
 
 	private FinderPath _finderPathFetchByEntitlementDefinitionKey;
+	private FinderPath _finderPathCountByEntitlementDefinitionKey;
 
 	/**
 	 * Returns the entitlement definition where entitlementDefinitionKey = &#63; or throws a <code>NoSuchEntitlementDefinitionException</code> if it could not be found.
@@ -2295,14 +2296,63 @@ public class EntitlementDefinitionPersistenceImpl
 	public int countByEntitlementDefinitionKey(
 		String entitlementDefinitionKey) {
 
-		EntitlementDefinition entitlementDefinition =
-			fetchByEntitlementDefinitionKey(entitlementDefinitionKey);
+		entitlementDefinitionKey = Objects.toString(
+			entitlementDefinitionKey, "");
 
-		if (entitlementDefinition == null) {
-			return 0;
+		FinderPath finderPath = _finderPathCountByEntitlementDefinitionKey;
+
+		Object[] finderArgs = new Object[] {entitlementDefinitionKey};
+
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
+
+		if (count == null) {
+			StringBundler sb = new StringBundler(2);
+
+			sb.append(_SQL_COUNT_ENTITLEMENTDEFINITION_WHERE);
+
+			boolean bindEntitlementDefinitionKey = false;
+
+			if (entitlementDefinitionKey.isEmpty()) {
+				sb.append(
+					_FINDER_COLUMN_ENTITLEMENTDEFINITIONKEY_ENTITLEMENTDEFINITIONKEY_3);
+			}
+			else {
+				bindEntitlementDefinitionKey = true;
+
+				sb.append(
+					_FINDER_COLUMN_ENTITLEMENTDEFINITIONKEY_ENTITLEMENTDEFINITIONKEY_2);
+			}
+
+			String sql = sb.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query query = session.createQuery(sql);
+
+				QueryPos queryPos = QueryPos.getInstance(query);
+
+				if (bindEntitlementDefinitionKey) {
+					queryPos.add(entitlementDefinitionKey);
+				}
+
+				count = (Long)query.uniqueResult();
+
+				finderCache.putResult(finderPath, finderArgs, count);
+			}
+			catch (Exception exception) {
+				finderCache.removeResult(finderPath, finderArgs);
+
+				throw processException(exception);
+			}
+			finally {
+				closeSession(session);
+			}
 		}
 
-		return 1;
+		return count.intValue();
 	}
 
 	private static final String
@@ -2314,6 +2364,7 @@ public class EntitlementDefinitionPersistenceImpl
 			"(entitlementDefinition.entitlementDefinitionKey IS NULL OR entitlementDefinition.entitlementDefinitionKey = '')";
 
 	private FinderPath _finderPathFetchByC_N;
+	private FinderPath _finderPathCountByC_N;
 
 	/**
 	 * Returns the entitlement definition where classNameId = &#63; and name = &#63; or throws a <code>NoSuchEntitlementDefinitionException</code> if it could not be found.
@@ -2515,14 +2566,64 @@ public class EntitlementDefinitionPersistenceImpl
 	 */
 	@Override
 	public int countByC_N(long classNameId, String name) {
-		EntitlementDefinition entitlementDefinition = fetchByC_N(
-			classNameId, name);
+		name = Objects.toString(name, "");
 
-		if (entitlementDefinition == null) {
-			return 0;
+		FinderPath finderPath = _finderPathCountByC_N;
+
+		Object[] finderArgs = new Object[] {classNameId, name};
+
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
+
+		if (count == null) {
+			StringBundler sb = new StringBundler(3);
+
+			sb.append(_SQL_COUNT_ENTITLEMENTDEFINITION_WHERE);
+
+			sb.append(_FINDER_COLUMN_C_N_CLASSNAMEID_2);
+
+			boolean bindName = false;
+
+			if (name.isEmpty()) {
+				sb.append(_FINDER_COLUMN_C_N_NAME_3);
+			}
+			else {
+				bindName = true;
+
+				sb.append(_FINDER_COLUMN_C_N_NAME_2);
+			}
+
+			String sql = sb.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query query = session.createQuery(sql);
+
+				QueryPos queryPos = QueryPos.getInstance(query);
+
+				queryPos.add(classNameId);
+
+				if (bindName) {
+					queryPos.add(name);
+				}
+
+				count = (Long)query.uniqueResult();
+
+				finderCache.putResult(finderPath, finderArgs, count);
+			}
+			catch (Exception exception) {
+				finderCache.removeResult(finderPath, finderArgs);
+
+				throw processException(exception);
+			}
+			finally {
+				closeSession(session);
+			}
 		}
 
-		return 1;
+		return count.intValue();
 	}
 
 	private static final String _FINDER_COLUMN_C_N_CLASSNAMEID_2 =
@@ -5395,6 +5496,12 @@ public class EntitlementDefinitionPersistenceImpl
 			EntitlementDefinitionModelImpl.
 				ENTITLEMENTDEFINITIONKEY_COLUMN_BITMASK);
 
+		_finderPathCountByEntitlementDefinitionKey = new FinderPath(
+			entityCacheEnabled, finderCacheEnabled, Long.class,
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+			"countByEntitlementDefinitionKey",
+			new String[] {String.class.getName()});
+
 		_finderPathFetchByC_N = new FinderPath(
 			entityCacheEnabled, finderCacheEnabled,
 			EntitlementDefinitionImpl.class, FINDER_CLASS_NAME_ENTITY,
@@ -5402,6 +5509,11 @@ public class EntitlementDefinitionPersistenceImpl
 			new String[] {Long.class.getName(), String.class.getName()},
 			EntitlementDefinitionModelImpl.CLASSNAMEID_COLUMN_BITMASK |
 			EntitlementDefinitionModelImpl.NAME_COLUMN_BITMASK);
+
+		_finderPathCountByC_N = new FinderPath(
+			entityCacheEnabled, finderCacheEnabled, Long.class,
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByC_N",
+			new String[] {Long.class.getName(), String.class.getName()});
 
 		_finderPathWithPaginationFindByC_LikeN = new FinderPath(
 			entityCacheEnabled, finderCacheEnabled,

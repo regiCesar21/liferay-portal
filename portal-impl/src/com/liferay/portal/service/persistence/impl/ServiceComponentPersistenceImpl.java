@@ -631,6 +631,7 @@ public class ServiceComponentPersistenceImpl
 		"(serviceComponent.buildNamespace IS NULL OR serviceComponent.buildNamespace = '')";
 
 	private FinderPath _finderPathFetchByBNS_BNU;
+	private FinderPath _finderPathCountByBNS_BNU;
 
 	/**
 	 * Returns the service component where buildNamespace = &#63; and buildNumber = &#63; or throws a <code>NoSuchServiceComponentException</code> if it could not be found.
@@ -822,14 +823,65 @@ public class ServiceComponentPersistenceImpl
 	 */
 	@Override
 	public int countByBNS_BNU(String buildNamespace, long buildNumber) {
-		ServiceComponent serviceComponent = fetchByBNS_BNU(
-			buildNamespace, buildNumber);
+		buildNamespace = Objects.toString(buildNamespace, "");
 
-		if (serviceComponent == null) {
-			return 0;
+		FinderPath finderPath = _finderPathCountByBNS_BNU;
+
+		Object[] finderArgs = new Object[] {buildNamespace, buildNumber};
+
+		Long count = (Long)FinderCacheUtil.getResult(
+			finderPath, finderArgs, this);
+
+		if (count == null) {
+			StringBundler sb = new StringBundler(3);
+
+			sb.append(_SQL_COUNT_SERVICECOMPONENT_WHERE);
+
+			boolean bindBuildNamespace = false;
+
+			if (buildNamespace.isEmpty()) {
+				sb.append(_FINDER_COLUMN_BNS_BNU_BUILDNAMESPACE_3);
+			}
+			else {
+				bindBuildNamespace = true;
+
+				sb.append(_FINDER_COLUMN_BNS_BNU_BUILDNAMESPACE_2);
+			}
+
+			sb.append(_FINDER_COLUMN_BNS_BNU_BUILDNUMBER_2);
+
+			String sql = sb.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query query = session.createQuery(sql);
+
+				QueryPos queryPos = QueryPos.getInstance(query);
+
+				if (bindBuildNamespace) {
+					queryPos.add(buildNamespace);
+				}
+
+				queryPos.add(buildNumber);
+
+				count = (Long)query.uniqueResult();
+
+				FinderCacheUtil.putResult(finderPath, finderArgs, count);
+			}
+			catch (Exception exception) {
+				FinderCacheUtil.removeResult(finderPath, finderArgs);
+
+				throw processException(exception);
+			}
+			finally {
+				closeSession(session);
+			}
 		}
 
-		return 1;
+		return count.intValue();
 	}
 
 	private static final String _FINDER_COLUMN_BNS_BNU_BUILDNAMESPACE_2 =
@@ -1542,6 +1594,12 @@ public class ServiceComponentPersistenceImpl
 			new String[] {String.class.getName(), Long.class.getName()},
 			ServiceComponentModelImpl.BUILDNAMESPACE_COLUMN_BITMASK |
 			ServiceComponentModelImpl.BUILDNUMBER_COLUMN_BITMASK);
+
+		_finderPathCountByBNS_BNU = new FinderPath(
+			ServiceComponentModelImpl.ENTITY_CACHE_ENABLED,
+			ServiceComponentModelImpl.FINDER_CACHE_ENABLED, Long.class,
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByBNS_BNU",
+			new String[] {String.class.getName(), Long.class.getName()});
 
 		ServiceComponentUtil.setPersistence(this);
 	}

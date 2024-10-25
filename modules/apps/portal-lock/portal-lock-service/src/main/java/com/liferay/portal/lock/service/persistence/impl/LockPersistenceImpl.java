@@ -2272,6 +2272,7 @@ public class LockPersistenceImpl
 			"lock_.expirationDate < ?";
 
 	private FinderPath _finderPathFetchByC_K;
+	private FinderPath _finderPathCountByC_K;
 
 	/**
 	 * Returns the lock where className = &#63; and key = &#63; or throws a <code>NoSuchLockException</code> if it could not be found.
@@ -2467,13 +2468,76 @@ public class LockPersistenceImpl
 	 */
 	@Override
 	public int countByC_K(String className, String key) {
-		Lock lock = fetchByC_K(className, key);
+		className = Objects.toString(className, "");
+		key = Objects.toString(key, "");
 
-		if (lock == null) {
-			return 0;
+		FinderPath finderPath = _finderPathCountByC_K;
+
+		Object[] finderArgs = new Object[] {className, key};
+
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
+
+		if (count == null) {
+			StringBundler sb = new StringBundler(3);
+
+			sb.append(_SQL_COUNT_LOCK__WHERE);
+
+			boolean bindClassName = false;
+
+			if (className.isEmpty()) {
+				sb.append(_FINDER_COLUMN_C_K_CLASSNAME_3);
+			}
+			else {
+				bindClassName = true;
+
+				sb.append(_FINDER_COLUMN_C_K_CLASSNAME_2);
+			}
+
+			boolean bindKey = false;
+
+			if (key.isEmpty()) {
+				sb.append(_FINDER_COLUMN_C_K_KEY_3);
+			}
+			else {
+				bindKey = true;
+
+				sb.append(_FINDER_COLUMN_C_K_KEY_2);
+			}
+
+			String sql = sb.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query query = session.createQuery(sql);
+
+				QueryPos queryPos = QueryPos.getInstance(query);
+
+				if (bindClassName) {
+					queryPos.add(className);
+				}
+
+				if (bindKey) {
+					queryPos.add(key);
+				}
+
+				count = (Long)query.uniqueResult();
+
+				finderCache.putResult(finderPath, finderArgs, count);
+			}
+			catch (Exception exception) {
+				finderCache.removeResult(finderPath, finderArgs);
+
+				throw processException(exception);
+			}
+			finally {
+				closeSession(session);
+			}
 		}
 
-		return 1;
+		return count.intValue();
 	}
 
 	private static final String _FINDER_COLUMN_C_K_CLASSNAME_2 =
@@ -3270,6 +3334,11 @@ public class LockPersistenceImpl
 			new String[] {String.class.getName(), String.class.getName()},
 			LockModelImpl.CLASSNAME_COLUMN_BITMASK |
 			LockModelImpl.KEY_COLUMN_BITMASK);
+
+		_finderPathCountByC_K = new FinderPath(
+			entityCacheEnabled, finderCacheEnabled, Long.class,
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByC_K",
+			new String[] {String.class.getName(), String.class.getName()});
 
 		LockUtil.setPersistence(this);
 	}

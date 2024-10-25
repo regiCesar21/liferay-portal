@@ -625,6 +625,7 @@ public class SharingEntryPersistenceImpl
 		"(sharingEntry.uuid IS NULL OR sharingEntry.uuid = '')";
 
 	private FinderPath _finderPathFetchByUUID_G;
+	private FinderPath _finderPathCountByUUID_G;
 
 	/**
 	 * Returns the sharing entry where uuid = &#63; and groupId = &#63; or throws a <code>NoSuchEntryException</code> if it could not be found.
@@ -809,13 +810,64 @@ public class SharingEntryPersistenceImpl
 	 */
 	@Override
 	public int countByUUID_G(String uuid, long groupId) {
-		SharingEntry sharingEntry = fetchByUUID_G(uuid, groupId);
+		uuid = Objects.toString(uuid, "");
 
-		if (sharingEntry == null) {
-			return 0;
+		FinderPath finderPath = _finderPathCountByUUID_G;
+
+		Object[] finderArgs = new Object[] {uuid, groupId};
+
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
+
+		if (count == null) {
+			StringBundler sb = new StringBundler(3);
+
+			sb.append(_SQL_COUNT_SHARINGENTRY_WHERE);
+
+			boolean bindUuid = false;
+
+			if (uuid.isEmpty()) {
+				sb.append(_FINDER_COLUMN_UUID_G_UUID_3);
+			}
+			else {
+				bindUuid = true;
+
+				sb.append(_FINDER_COLUMN_UUID_G_UUID_2);
+			}
+
+			sb.append(_FINDER_COLUMN_UUID_G_GROUPID_2);
+
+			String sql = sb.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query query = session.createQuery(sql);
+
+				QueryPos queryPos = QueryPos.getInstance(query);
+
+				if (bindUuid) {
+					queryPos.add(uuid);
+				}
+
+				queryPos.add(groupId);
+
+				count = (Long)query.uniqueResult();
+
+				finderCache.putResult(finderPath, finderArgs, count);
+			}
+			catch (Exception exception) {
+				finderCache.removeResult(finderPath, finderArgs);
+
+				throw processException(exception);
+			}
+			finally {
+				closeSession(session);
+			}
 		}
 
-		return 1;
+		return count.intValue();
 	}
 
 	private static final String _FINDER_COLUMN_UUID_G_UUID_2 =
@@ -5080,6 +5132,7 @@ public class SharingEntryPersistenceImpl
 		"sharingEntry.classPK = ?";
 
 	private FinderPath _finderPathFetchByTU_C_C;
+	private FinderPath _finderPathCountByTU_C_C;
 
 	/**
 	 * Returns the sharing entry where toUserId = &#63; and classNameId = &#63; and classPK = &#63; or throws a <code>NoSuchEntryException</code> if it could not be found.
@@ -5270,14 +5323,55 @@ public class SharingEntryPersistenceImpl
 	 */
 	@Override
 	public int countByTU_C_C(long toUserId, long classNameId, long classPK) {
-		SharingEntry sharingEntry = fetchByTU_C_C(
-			toUserId, classNameId, classPK);
+		FinderPath finderPath = _finderPathCountByTU_C_C;
 
-		if (sharingEntry == null) {
-			return 0;
+		Object[] finderArgs = new Object[] {toUserId, classNameId, classPK};
+
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
+
+		if (count == null) {
+			StringBundler sb = new StringBundler(4);
+
+			sb.append(_SQL_COUNT_SHARINGENTRY_WHERE);
+
+			sb.append(_FINDER_COLUMN_TU_C_C_TOUSERID_2);
+
+			sb.append(_FINDER_COLUMN_TU_C_C_CLASSNAMEID_2);
+
+			sb.append(_FINDER_COLUMN_TU_C_C_CLASSPK_2);
+
+			String sql = sb.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query query = session.createQuery(sql);
+
+				QueryPos queryPos = QueryPos.getInstance(query);
+
+				queryPos.add(toUserId);
+
+				queryPos.add(classNameId);
+
+				queryPos.add(classPK);
+
+				count = (Long)query.uniqueResult();
+
+				finderCache.putResult(finderPath, finderArgs, count);
+			}
+			catch (Exception exception) {
+				finderCache.removeResult(finderPath, finderArgs);
+
+				throw processException(exception);
+			}
+			finally {
+				closeSession(session);
+			}
 		}
 
-		return 1;
+		return count.intValue();
 	}
 
 	private static final String _FINDER_COLUMN_TU_C_C_TOUSERID_2 =
@@ -6238,6 +6332,11 @@ public class SharingEntryPersistenceImpl
 			SharingEntryModelImpl.UUID_COLUMN_BITMASK |
 			SharingEntryModelImpl.GROUPID_COLUMN_BITMASK);
 
+		_finderPathCountByUUID_G = new FinderPath(
+			entityCacheEnabled, finderCacheEnabled, Long.class,
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByUUID_G",
+			new String[] {String.class.getName(), Long.class.getName()});
+
 		_finderPathWithPaginationFindByUuid_C = new FinderPath(
 			entityCacheEnabled, finderCacheEnabled, SharingEntryImpl.class,
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUuid_C",
@@ -6401,6 +6500,13 @@ public class SharingEntryPersistenceImpl
 			SharingEntryModelImpl.TOUSERID_COLUMN_BITMASK |
 			SharingEntryModelImpl.CLASSNAMEID_COLUMN_BITMASK |
 			SharingEntryModelImpl.CLASSPK_COLUMN_BITMASK);
+
+		_finderPathCountByTU_C_C = new FinderPath(
+			entityCacheEnabled, finderCacheEnabled, Long.class,
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByTU_C_C",
+			new String[] {
+				Long.class.getName(), Long.class.getName(), Long.class.getName()
+			});
 
 		SharingEntryUtil.setPersistence(this);
 	}

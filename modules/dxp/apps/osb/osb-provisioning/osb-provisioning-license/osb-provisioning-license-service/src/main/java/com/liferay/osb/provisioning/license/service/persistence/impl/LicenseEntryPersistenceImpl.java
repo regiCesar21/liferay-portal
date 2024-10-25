@@ -1698,6 +1698,7 @@ public class LicenseEntryPersistenceImpl
 		"(licenseEntry.type IS NULL OR licenseEntry.type = '')";
 
 	private FinderPath _finderPathFetchByPK_T;
+	private FinderPath _finderPathCountByPK_T;
 
 	/**
 	 * Returns the license entry where productKey = &#63; and type = &#63; or throws a <code>NoSuchLicenseEntryException</code> if it could not be found.
@@ -1894,13 +1895,76 @@ public class LicenseEntryPersistenceImpl
 	 */
 	@Override
 	public int countByPK_T(String productKey, String type) {
-		LicenseEntry licenseEntry = fetchByPK_T(productKey, type);
+		productKey = Objects.toString(productKey, "");
+		type = Objects.toString(type, "");
 
-		if (licenseEntry == null) {
-			return 0;
+		FinderPath finderPath = _finderPathCountByPK_T;
+
+		Object[] finderArgs = new Object[] {productKey, type};
+
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
+
+		if (count == null) {
+			StringBundler sb = new StringBundler(3);
+
+			sb.append(_SQL_COUNT_LICENSEENTRY_WHERE);
+
+			boolean bindProductKey = false;
+
+			if (productKey.isEmpty()) {
+				sb.append(_FINDER_COLUMN_PK_T_PRODUCTKEY_3);
+			}
+			else {
+				bindProductKey = true;
+
+				sb.append(_FINDER_COLUMN_PK_T_PRODUCTKEY_2);
+			}
+
+			boolean bindType = false;
+
+			if (type.isEmpty()) {
+				sb.append(_FINDER_COLUMN_PK_T_TYPE_3);
+			}
+			else {
+				bindType = true;
+
+				sb.append(_FINDER_COLUMN_PK_T_TYPE_2);
+			}
+
+			String sql = sb.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query query = session.createQuery(sql);
+
+				QueryPos queryPos = QueryPos.getInstance(query);
+
+				if (bindProductKey) {
+					queryPos.add(productKey);
+				}
+
+				if (bindType) {
+					queryPos.add(type);
+				}
+
+				count = (Long)query.uniqueResult();
+
+				finderCache.putResult(finderPath, finderArgs, count);
+			}
+			catch (Exception exception) {
+				finderCache.removeResult(finderPath, finderArgs);
+
+				throw processException(exception);
+			}
+			finally {
+				closeSession(session);
+			}
 		}
 
-		return 1;
+		return count.intValue();
 	}
 
 	private static final String _FINDER_COLUMN_PK_T_PRODUCTKEY_2 =
@@ -2667,6 +2731,11 @@ public class LicenseEntryPersistenceImpl
 			new String[] {String.class.getName(), String.class.getName()},
 			LicenseEntryModelImpl.PRODUCTKEY_COLUMN_BITMASK |
 			LicenseEntryModelImpl.TYPE_COLUMN_BITMASK);
+
+		_finderPathCountByPK_T = new FinderPath(
+			entityCacheEnabled, finderCacheEnabled, Long.class,
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByPK_T",
+			new String[] {String.class.getName(), String.class.getName()});
 
 		LicenseEntryUtil.setPersistence(this);
 	}

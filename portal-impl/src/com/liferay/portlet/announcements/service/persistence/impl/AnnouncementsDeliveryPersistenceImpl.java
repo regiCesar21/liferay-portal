@@ -1095,6 +1095,7 @@ public class AnnouncementsDeliveryPersistenceImpl
 		"announcementsDelivery.userId = ?";
 
 	private FinderPath _finderPathFetchByU_T;
+	private FinderPath _finderPathCountByU_T;
 
 	/**
 	 * Returns the announcements delivery where userId = &#63; and type = &#63; or throws a <code>NoSuchDeliveryException</code> if it could not be found.
@@ -1280,13 +1281,65 @@ public class AnnouncementsDeliveryPersistenceImpl
 	 */
 	@Override
 	public int countByU_T(long userId, String type) {
-		AnnouncementsDelivery announcementsDelivery = fetchByU_T(userId, type);
+		type = Objects.toString(type, "");
 
-		if (announcementsDelivery == null) {
-			return 0;
+		FinderPath finderPath = _finderPathCountByU_T;
+
+		Object[] finderArgs = new Object[] {userId, type};
+
+		Long count = (Long)FinderCacheUtil.getResult(
+			finderPath, finderArgs, this);
+
+		if (count == null) {
+			StringBundler sb = new StringBundler(3);
+
+			sb.append(_SQL_COUNT_ANNOUNCEMENTSDELIVERY_WHERE);
+
+			sb.append(_FINDER_COLUMN_U_T_USERID_2);
+
+			boolean bindType = false;
+
+			if (type.isEmpty()) {
+				sb.append(_FINDER_COLUMN_U_T_TYPE_3);
+			}
+			else {
+				bindType = true;
+
+				sb.append(_FINDER_COLUMN_U_T_TYPE_2);
+			}
+
+			String sql = sb.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query query = session.createQuery(sql);
+
+				QueryPos queryPos = QueryPos.getInstance(query);
+
+				queryPos.add(userId);
+
+				if (bindType) {
+					queryPos.add(type);
+				}
+
+				count = (Long)query.uniqueResult();
+
+				FinderCacheUtil.putResult(finderPath, finderArgs, count);
+			}
+			catch (Exception exception) {
+				FinderCacheUtil.removeResult(finderPath, finderArgs);
+
+				throw processException(exception);
+			}
+			finally {
+				closeSession(session);
+			}
 		}
 
-		return 1;
+		return count.intValue();
 	}
 
 	private static final String _FINDER_COLUMN_U_T_USERID_2 =
@@ -2070,6 +2123,12 @@ public class AnnouncementsDeliveryPersistenceImpl
 			new String[] {Long.class.getName(), String.class.getName()},
 			AnnouncementsDeliveryModelImpl.USERID_COLUMN_BITMASK |
 			AnnouncementsDeliveryModelImpl.TYPE_COLUMN_BITMASK);
+
+		_finderPathCountByU_T = new FinderPath(
+			AnnouncementsDeliveryModelImpl.ENTITY_CACHE_ENABLED,
+			AnnouncementsDeliveryModelImpl.FINDER_CACHE_ENABLED, Long.class,
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByU_T",
+			new String[] {Long.class.getName(), String.class.getName()});
 
 		AnnouncementsDeliveryUtil.setPersistence(this);
 	}

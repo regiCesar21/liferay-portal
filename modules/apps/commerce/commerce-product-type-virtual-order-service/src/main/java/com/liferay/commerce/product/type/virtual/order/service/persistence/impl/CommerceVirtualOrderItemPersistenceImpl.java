@@ -633,6 +633,7 @@ public class CommerceVirtualOrderItemPersistenceImpl
 		"(commerceVirtualOrderItem.uuid IS NULL OR commerceVirtualOrderItem.uuid = '')";
 
 	private FinderPath _finderPathFetchByUUID_G;
+	private FinderPath _finderPathCountByUUID_G;
 
 	/**
 	 * Returns the commerce virtual order item where uuid = &#63; and groupId = &#63; or throws a <code>NoSuchVirtualOrderItemException</code> if it could not be found.
@@ -821,14 +822,64 @@ public class CommerceVirtualOrderItemPersistenceImpl
 	 */
 	@Override
 	public int countByUUID_G(String uuid, long groupId) {
-		CommerceVirtualOrderItem commerceVirtualOrderItem = fetchByUUID_G(
-			uuid, groupId);
+		uuid = Objects.toString(uuid, "");
 
-		if (commerceVirtualOrderItem == null) {
-			return 0;
+		FinderPath finderPath = _finderPathCountByUUID_G;
+
+		Object[] finderArgs = new Object[] {uuid, groupId};
+
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
+
+		if (count == null) {
+			StringBundler sb = new StringBundler(3);
+
+			sb.append(_SQL_COUNT_COMMERCEVIRTUALORDERITEM_WHERE);
+
+			boolean bindUuid = false;
+
+			if (uuid.isEmpty()) {
+				sb.append(_FINDER_COLUMN_UUID_G_UUID_3);
+			}
+			else {
+				bindUuid = true;
+
+				sb.append(_FINDER_COLUMN_UUID_G_UUID_2);
+			}
+
+			sb.append(_FINDER_COLUMN_UUID_G_GROUPID_2);
+
+			String sql = sb.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query query = session.createQuery(sql);
+
+				QueryPos queryPos = QueryPos.getInstance(query);
+
+				if (bindUuid) {
+					queryPos.add(uuid);
+				}
+
+				queryPos.add(groupId);
+
+				count = (Long)query.uniqueResult();
+
+				finderCache.putResult(finderPath, finderArgs, count);
+			}
+			catch (Exception exception) {
+				finderCache.removeResult(finderPath, finderArgs);
+
+				throw processException(exception);
+			}
+			finally {
+				closeSession(session);
+			}
 		}
 
-		return 1;
+		return count.intValue();
 	}
 
 	private static final String _FINDER_COLUMN_UUID_G_UUID_2 =
@@ -1435,6 +1486,7 @@ public class CommerceVirtualOrderItemPersistenceImpl
 		"commerceVirtualOrderItem.companyId = ?";
 
 	private FinderPath _finderPathFetchByCommerceOrderItemId;
+	private FinderPath _finderPathCountByCommerceOrderItemId;
 
 	/**
 	 * Returns the commerce virtual order item where commerceOrderItemId = &#63; or throws a <code>NoSuchVirtualOrderItemException</code> if it could not be found.
@@ -1603,14 +1655,47 @@ public class CommerceVirtualOrderItemPersistenceImpl
 	 */
 	@Override
 	public int countByCommerceOrderItemId(long commerceOrderItemId) {
-		CommerceVirtualOrderItem commerceVirtualOrderItem =
-			fetchByCommerceOrderItemId(commerceOrderItemId);
+		FinderPath finderPath = _finderPathCountByCommerceOrderItemId;
 
-		if (commerceVirtualOrderItem == null) {
-			return 0;
+		Object[] finderArgs = new Object[] {commerceOrderItemId};
+
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
+
+		if (count == null) {
+			StringBundler sb = new StringBundler(2);
+
+			sb.append(_SQL_COUNT_COMMERCEVIRTUALORDERITEM_WHERE);
+
+			sb.append(_FINDER_COLUMN_COMMERCEORDERITEMID_COMMERCEORDERITEMID_2);
+
+			String sql = sb.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query query = session.createQuery(sql);
+
+				QueryPos queryPos = QueryPos.getInstance(query);
+
+				queryPos.add(commerceOrderItemId);
+
+				count = (Long)query.uniqueResult();
+
+				finderCache.putResult(finderPath, finderArgs, count);
+			}
+			catch (Exception exception) {
+				finderCache.removeResult(finderPath, finderArgs);
+
+				throw processException(exception);
+			}
+			finally {
+				closeSession(session);
+			}
 		}
 
-		return 1;
+		return count.intValue();
 	}
 
 	private static final String
@@ -2626,6 +2711,12 @@ public class CommerceVirtualOrderItemPersistenceImpl
 			CommerceVirtualOrderItemModelImpl.UUID_COLUMN_BITMASK |
 			CommerceVirtualOrderItemModelImpl.GROUPID_COLUMN_BITMASK);
 
+		_finderPathCountByUUID_G = new FinderPath(
+			CommerceVirtualOrderItemModelImpl.ENTITY_CACHE_ENABLED,
+			CommerceVirtualOrderItemModelImpl.FINDER_CACHE_ENABLED, Long.class,
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByUUID_G",
+			new String[] {String.class.getName(), Long.class.getName()});
+
 		_finderPathWithPaginationFindByUuid_C = new FinderPath(
 			CommerceVirtualOrderItemModelImpl.ENTITY_CACHE_ENABLED,
 			CommerceVirtualOrderItemModelImpl.FINDER_CACHE_ENABLED,
@@ -2660,6 +2751,12 @@ public class CommerceVirtualOrderItemPersistenceImpl
 			"fetchByCommerceOrderItemId", new String[] {Long.class.getName()},
 			CommerceVirtualOrderItemModelImpl.
 				COMMERCEORDERITEMID_COLUMN_BITMASK);
+
+		_finderPathCountByCommerceOrderItemId = new FinderPath(
+			CommerceVirtualOrderItemModelImpl.ENTITY_CACHE_ENABLED,
+			CommerceVirtualOrderItemModelImpl.FINDER_CACHE_ENABLED, Long.class,
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+			"countByCommerceOrderItemId", new String[] {Long.class.getName()});
 
 		CommerceVirtualOrderItemUtil.setPersistence(this);
 	}

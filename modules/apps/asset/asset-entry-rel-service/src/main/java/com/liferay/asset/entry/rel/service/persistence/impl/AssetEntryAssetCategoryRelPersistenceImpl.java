@@ -1123,6 +1123,7 @@ public class AssetEntryAssetCategoryRelPersistenceImpl
 			"assetEntryAssetCategoryRel.assetCategoryId = ?";
 
 	private FinderPath _finderPathFetchByA_A;
+	private FinderPath _finderPathCountByA_A;
 
 	/**
 	 * Returns the asset entry asset category rel where assetEntryId = &#63; and assetCategoryId = &#63; or throws a <code>NoSuchEntryAssetCategoryRelException</code> if it could not be found.
@@ -1320,14 +1321,51 @@ public class AssetEntryAssetCategoryRelPersistenceImpl
 	 */
 	@Override
 	public int countByA_A(long assetEntryId, long assetCategoryId) {
-		AssetEntryAssetCategoryRel assetEntryAssetCategoryRel = fetchByA_A(
-			assetEntryId, assetCategoryId);
+		FinderPath finderPath = _finderPathCountByA_A;
 
-		if (assetEntryAssetCategoryRel == null) {
-			return 0;
+		Object[] finderArgs = new Object[] {assetEntryId, assetCategoryId};
+
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
+
+		if (count == null) {
+			StringBundler sb = new StringBundler(3);
+
+			sb.append(_SQL_COUNT_ASSETENTRYASSETCATEGORYREL_WHERE);
+
+			sb.append(_FINDER_COLUMN_A_A_ASSETENTRYID_2);
+
+			sb.append(_FINDER_COLUMN_A_A_ASSETCATEGORYID_2);
+
+			String sql = sb.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query query = session.createQuery(sql);
+
+				QueryPos queryPos = QueryPos.getInstance(query);
+
+				queryPos.add(assetEntryId);
+
+				queryPos.add(assetCategoryId);
+
+				count = (Long)query.uniqueResult();
+
+				finderCache.putResult(finderPath, finderArgs, count);
+			}
+			catch (Exception exception) {
+				finderCache.removeResult(finderPath, finderArgs);
+
+				throw processException(exception);
+			}
+			finally {
+				closeSession(session);
+			}
 		}
 
-		return 1;
+		return count.intValue();
 	}
 
 	private static final String _FINDER_COLUMN_A_A_ASSETENTRYID_2 =
@@ -2108,6 +2146,11 @@ public class AssetEntryAssetCategoryRelPersistenceImpl
 			new String[] {Long.class.getName(), Long.class.getName()},
 			AssetEntryAssetCategoryRelModelImpl.ASSETENTRYID_COLUMN_BITMASK |
 			AssetEntryAssetCategoryRelModelImpl.ASSETCATEGORYID_COLUMN_BITMASK);
+
+		_finderPathCountByA_A = new FinderPath(
+			entityCacheEnabled, finderCacheEnabled, Long.class,
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByA_A",
+			new String[] {Long.class.getName(), Long.class.getName()});
 
 		AssetEntryAssetCategoryRelUtil.setPersistence(this);
 	}

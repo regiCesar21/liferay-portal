@@ -629,6 +629,7 @@ public class JournalFolderPersistenceImpl
 		"(journalFolder.uuid IS NULL OR journalFolder.uuid = '')";
 
 	private FinderPath _finderPathFetchByUUID_G;
+	private FinderPath _finderPathCountByUUID_G;
 
 	/**
 	 * Returns the journal folder where uuid = &#63; and groupId = &#63; or throws a <code>NoSuchFolderException</code> if it could not be found.
@@ -813,13 +814,64 @@ public class JournalFolderPersistenceImpl
 	 */
 	@Override
 	public int countByUUID_G(String uuid, long groupId) {
-		JournalFolder journalFolder = fetchByUUID_G(uuid, groupId);
+		uuid = Objects.toString(uuid, "");
 
-		if (journalFolder == null) {
-			return 0;
+		FinderPath finderPath = _finderPathCountByUUID_G;
+
+		Object[] finderArgs = new Object[] {uuid, groupId};
+
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
+
+		if (count == null) {
+			StringBundler sb = new StringBundler(3);
+
+			sb.append(_SQL_COUNT_JOURNALFOLDER_WHERE);
+
+			boolean bindUuid = false;
+
+			if (uuid.isEmpty()) {
+				sb.append(_FINDER_COLUMN_UUID_G_UUID_3);
+			}
+			else {
+				bindUuid = true;
+
+				sb.append(_FINDER_COLUMN_UUID_G_UUID_2);
+			}
+
+			sb.append(_FINDER_COLUMN_UUID_G_GROUPID_2);
+
+			String sql = sb.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query query = session.createQuery(sql);
+
+				QueryPos queryPos = QueryPos.getInstance(query);
+
+				if (bindUuid) {
+					queryPos.add(uuid);
+				}
+
+				queryPos.add(groupId);
+
+				count = (Long)query.uniqueResult();
+
+				finderCache.putResult(finderPath, finderArgs, count);
+			}
+			catch (Exception exception) {
+				finderCache.removeResult(finderPath, finderArgs);
+
+				throw processException(exception);
+			}
+			finally {
+				closeSession(session);
+			}
 		}
 
-		return 1;
+		return count.intValue();
 	}
 
 	private static final String _FINDER_COLUMN_UUID_G_UUID_2 =
@@ -3751,6 +3803,7 @@ public class JournalFolderPersistenceImpl
 		"journalFolder.parentFolderId = ?";
 
 	private FinderPath _finderPathFetchByG_N;
+	private FinderPath _finderPathCountByG_N;
 
 	/**
 	 * Returns the journal folder where groupId = &#63; and name = &#63; or throws a <code>NoSuchFolderException</code> if it could not be found.
@@ -3949,13 +4002,64 @@ public class JournalFolderPersistenceImpl
 	 */
 	@Override
 	public int countByG_N(long groupId, String name) {
-		JournalFolder journalFolder = fetchByG_N(groupId, name);
+		name = Objects.toString(name, "");
 
-		if (journalFolder == null) {
-			return 0;
+		FinderPath finderPath = _finderPathCountByG_N;
+
+		Object[] finderArgs = new Object[] {groupId, name};
+
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
+
+		if (count == null) {
+			StringBundler sb = new StringBundler(3);
+
+			sb.append(_SQL_COUNT_JOURNALFOLDER_WHERE);
+
+			sb.append(_FINDER_COLUMN_G_N_GROUPID_2);
+
+			boolean bindName = false;
+
+			if (name.isEmpty()) {
+				sb.append(_FINDER_COLUMN_G_N_NAME_3);
+			}
+			else {
+				bindName = true;
+
+				sb.append(_FINDER_COLUMN_G_N_NAME_2);
+			}
+
+			String sql = sb.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query query = session.createQuery(sql);
+
+				QueryPos queryPos = QueryPos.getInstance(query);
+
+				queryPos.add(groupId);
+
+				if (bindName) {
+					queryPos.add(name);
+				}
+
+				count = (Long)query.uniqueResult();
+
+				finderCache.putResult(finderPath, finderArgs, count);
+			}
+			catch (Exception exception) {
+				finderCache.removeResult(finderPath, finderArgs);
+
+				throw processException(exception);
+			}
+			finally {
+				closeSession(session);
+			}
 		}
 
-		return 1;
+		return count.intValue();
 	}
 
 	private static final String _FINDER_COLUMN_G_N_GROUPID_2 =
@@ -4503,6 +4607,7 @@ public class JournalFolderPersistenceImpl
 		"journalFolder.status != ?";
 
 	private FinderPath _finderPathFetchByG_P_N;
+	private FinderPath _finderPathCountByG_P_N;
 
 	/**
 	 * Returns the journal folder where groupId = &#63; and parentFolderId = &#63; and name = &#63; or throws a <code>NoSuchFolderException</code> if it could not be found.
@@ -4707,14 +4812,68 @@ public class JournalFolderPersistenceImpl
 	 */
 	@Override
 	public int countByG_P_N(long groupId, long parentFolderId, String name) {
-		JournalFolder journalFolder = fetchByG_P_N(
-			groupId, parentFolderId, name);
+		name = Objects.toString(name, "");
 
-		if (journalFolder == null) {
-			return 0;
+		FinderPath finderPath = _finderPathCountByG_P_N;
+
+		Object[] finderArgs = new Object[] {groupId, parentFolderId, name};
+
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
+
+		if (count == null) {
+			StringBundler sb = new StringBundler(4);
+
+			sb.append(_SQL_COUNT_JOURNALFOLDER_WHERE);
+
+			sb.append(_FINDER_COLUMN_G_P_N_GROUPID_2);
+
+			sb.append(_FINDER_COLUMN_G_P_N_PARENTFOLDERID_2);
+
+			boolean bindName = false;
+
+			if (name.isEmpty()) {
+				sb.append(_FINDER_COLUMN_G_P_N_NAME_3);
+			}
+			else {
+				bindName = true;
+
+				sb.append(_FINDER_COLUMN_G_P_N_NAME_2);
+			}
+
+			String sql = sb.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query query = session.createQuery(sql);
+
+				QueryPos queryPos = QueryPos.getInstance(query);
+
+				queryPos.add(groupId);
+
+				queryPos.add(parentFolderId);
+
+				if (bindName) {
+					queryPos.add(name);
+				}
+
+				count = (Long)query.uniqueResult();
+
+				finderCache.putResult(finderPath, finderArgs, count);
+			}
+			catch (Exception exception) {
+				finderCache.removeResult(finderPath, finderArgs);
+
+				throw processException(exception);
+			}
+			finally {
+				closeSession(session);
+			}
 		}
 
-		return 1;
+		return count.intValue();
 	}
 
 	private static final String _FINDER_COLUMN_G_P_N_GROUPID_2 =
@@ -8119,6 +8278,11 @@ public class JournalFolderPersistenceImpl
 			JournalFolderModelImpl.UUID_COLUMN_BITMASK |
 			JournalFolderModelImpl.GROUPID_COLUMN_BITMASK);
 
+		_finderPathCountByUUID_G = new FinderPath(
+			entityCacheEnabled, finderCacheEnabled, Long.class,
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByUUID_G",
+			new String[] {String.class.getName(), Long.class.getName()});
+
 		_finderPathWithPaginationFindByUuid_C = new FinderPath(
 			entityCacheEnabled, finderCacheEnabled, JournalFolderImpl.class,
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUuid_C",
@@ -8213,6 +8377,11 @@ public class JournalFolderPersistenceImpl
 			JournalFolderModelImpl.GROUPID_COLUMN_BITMASK |
 			JournalFolderModelImpl.NAME_COLUMN_BITMASK);
 
+		_finderPathCountByG_N = new FinderPath(
+			entityCacheEnabled, finderCacheEnabled, Long.class,
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByG_N",
+			new String[] {Long.class.getName(), String.class.getName()});
+
 		_finderPathWithPaginationFindByC_NotS = new FinderPath(
 			entityCacheEnabled, finderCacheEnabled, JournalFolderImpl.class,
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByC_NotS",
@@ -8237,6 +8406,14 @@ public class JournalFolderPersistenceImpl
 			JournalFolderModelImpl.GROUPID_COLUMN_BITMASK |
 			JournalFolderModelImpl.PARENTFOLDERID_COLUMN_BITMASK |
 			JournalFolderModelImpl.NAME_COLUMN_BITMASK);
+
+		_finderPathCountByG_P_N = new FinderPath(
+			entityCacheEnabled, finderCacheEnabled, Long.class,
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByG_P_N",
+			new String[] {
+				Long.class.getName(), Long.class.getName(),
+				String.class.getName()
+			});
 
 		_finderPathWithPaginationFindByG_P_S = new FinderPath(
 			entityCacheEnabled, finderCacheEnabled, JournalFolderImpl.class,

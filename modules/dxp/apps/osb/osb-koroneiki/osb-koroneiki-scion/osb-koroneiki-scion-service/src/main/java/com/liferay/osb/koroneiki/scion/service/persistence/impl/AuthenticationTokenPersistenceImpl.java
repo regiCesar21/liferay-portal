@@ -999,6 +999,7 @@ public class AuthenticationTokenPersistenceImpl
 			"authenticationToken.serviceProducerId = ?";
 
 	private FinderPath _finderPathFetchByD_S;
+	private FinderPath _finderPathCountByD_S;
 
 	/**
 	 * Returns the authentication token where digest = &#63; and status = &#63; or throws a <code>NoSuchAuthenticationTokenException</code> if it could not be found.
@@ -1198,13 +1199,64 @@ public class AuthenticationTokenPersistenceImpl
 	 */
 	@Override
 	public int countByD_S(String digest, int status) {
-		AuthenticationToken authenticationToken = fetchByD_S(digest, status);
+		digest = Objects.toString(digest, "");
 
-		if (authenticationToken == null) {
-			return 0;
+		FinderPath finderPath = _finderPathCountByD_S;
+
+		Object[] finderArgs = new Object[] {digest, status};
+
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
+
+		if (count == null) {
+			StringBundler sb = new StringBundler(3);
+
+			sb.append(_SQL_COUNT_AUTHENTICATIONTOKEN_WHERE);
+
+			boolean bindDigest = false;
+
+			if (digest.isEmpty()) {
+				sb.append(_FINDER_COLUMN_D_S_DIGEST_3);
+			}
+			else {
+				bindDigest = true;
+
+				sb.append(_FINDER_COLUMN_D_S_DIGEST_2);
+			}
+
+			sb.append(_FINDER_COLUMN_D_S_STATUS_2);
+
+			String sql = sb.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query query = session.createQuery(sql);
+
+				QueryPos queryPos = QueryPos.getInstance(query);
+
+				if (bindDigest) {
+					queryPos.add(digest);
+				}
+
+				queryPos.add(status);
+
+				count = (Long)query.uniqueResult();
+
+				finderCache.putResult(finderPath, finderArgs, count);
+			}
+			catch (Exception exception) {
+				finderCache.removeResult(finderPath, finderArgs);
+
+				throw processException(exception);
+			}
+			finally {
+				closeSession(session);
+			}
 		}
 
-		return 1;
+		return count.intValue();
 	}
 
 	private static final String _FINDER_COLUMN_D_S_DIGEST_2 =
@@ -1927,6 +1979,11 @@ public class AuthenticationTokenPersistenceImpl
 			new String[] {String.class.getName(), Integer.class.getName()},
 			AuthenticationTokenModelImpl.DIGEST_COLUMN_BITMASK |
 			AuthenticationTokenModelImpl.STATUS_COLUMN_BITMASK);
+
+		_finderPathCountByD_S = new FinderPath(
+			entityCacheEnabled, finderCacheEnabled, Long.class,
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByD_S",
+			new String[] {String.class.getName(), Integer.class.getName()});
 
 		AuthenticationTokenUtil.setPersistence(this);
 	}

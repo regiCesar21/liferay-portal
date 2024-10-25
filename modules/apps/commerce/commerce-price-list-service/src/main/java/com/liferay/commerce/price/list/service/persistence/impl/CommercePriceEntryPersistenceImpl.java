@@ -2818,6 +2818,7 @@ public class CommercePriceEntryPersistenceImpl
 		"(commercePriceEntry.CPInstanceUuid IS NULL OR commercePriceEntry.CPInstanceUuid = '')";
 
 	private FinderPath _finderPathFetchByC_C;
+	private FinderPath _finderPathCountByC_C;
 
 	/**
 	 * Returns the commerce price entry where commercePriceListId = &#63; and CPInstanceUuid = &#63; or throws a <code>NoSuchPriceEntryException</code> if it could not be found.
@@ -3010,14 +3011,66 @@ public class CommercePriceEntryPersistenceImpl
 	 */
 	@Override
 	public int countByC_C(long commercePriceListId, String CPInstanceUuid) {
-		CommercePriceEntry commercePriceEntry = fetchByC_C(
-			commercePriceListId, CPInstanceUuid);
+		CPInstanceUuid = Objects.toString(CPInstanceUuid, "");
 
-		if (commercePriceEntry == null) {
-			return 0;
+		FinderPath finderPath = _finderPathCountByC_C;
+
+		Object[] finderArgs = new Object[] {
+			commercePriceListId, CPInstanceUuid
+		};
+
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
+
+		if (count == null) {
+			StringBundler sb = new StringBundler(3);
+
+			sb.append(_SQL_COUNT_COMMERCEPRICEENTRY_WHERE);
+
+			sb.append(_FINDER_COLUMN_C_C_COMMERCEPRICELISTID_2);
+
+			boolean bindCPInstanceUuid = false;
+
+			if (CPInstanceUuid.isEmpty()) {
+				sb.append(_FINDER_COLUMN_C_C_CPINSTANCEUUID_3);
+			}
+			else {
+				bindCPInstanceUuid = true;
+
+				sb.append(_FINDER_COLUMN_C_C_CPINSTANCEUUID_2);
+			}
+
+			String sql = sb.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query query = session.createQuery(sql);
+
+				QueryPos queryPos = QueryPos.getInstance(query);
+
+				queryPos.add(commercePriceListId);
+
+				if (bindCPInstanceUuid) {
+					queryPos.add(CPInstanceUuid);
+				}
+
+				count = (Long)query.uniqueResult();
+
+				finderCache.putResult(finderPath, finderArgs, count);
+			}
+			catch (Exception exception) {
+				finderCache.removeResult(finderPath, finderArgs);
+
+				throw processException(exception);
+			}
+			finally {
+				closeSession(session);
+			}
 		}
 
-		return 1;
+		return count.intValue();
 	}
 
 	private static final String _FINDER_COLUMN_C_C_COMMERCEPRICELISTID_2 =
@@ -4182,6 +4235,7 @@ public class CommercePriceEntryPersistenceImpl
 		"commercePriceEntry.status = ?";
 
 	private FinderPath _finderPathFetchByC_C_S;
+	private FinderPath _finderPathCountByC_C_S;
 
 	/**
 	 * Returns the commerce price entry where commercePriceListId = &#63; and CPInstanceUuid = &#63; and status = &#63; or throws a <code>NoSuchPriceEntryException</code> if it could not be found.
@@ -4392,14 +4446,70 @@ public class CommercePriceEntryPersistenceImpl
 	public int countByC_C_S(
 		long commercePriceListId, String CPInstanceUuid, int status) {
 
-		CommercePriceEntry commercePriceEntry = fetchByC_C_S(
-			commercePriceListId, CPInstanceUuid, status);
+		CPInstanceUuid = Objects.toString(CPInstanceUuid, "");
 
-		if (commercePriceEntry == null) {
-			return 0;
+		FinderPath finderPath = _finderPathCountByC_C_S;
+
+		Object[] finderArgs = new Object[] {
+			commercePriceListId, CPInstanceUuid, status
+		};
+
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
+
+		if (count == null) {
+			StringBundler sb = new StringBundler(4);
+
+			sb.append(_SQL_COUNT_COMMERCEPRICEENTRY_WHERE);
+
+			sb.append(_FINDER_COLUMN_C_C_S_COMMERCEPRICELISTID_2);
+
+			boolean bindCPInstanceUuid = false;
+
+			if (CPInstanceUuid.isEmpty()) {
+				sb.append(_FINDER_COLUMN_C_C_S_CPINSTANCEUUID_3);
+			}
+			else {
+				bindCPInstanceUuid = true;
+
+				sb.append(_FINDER_COLUMN_C_C_S_CPINSTANCEUUID_2);
+			}
+
+			sb.append(_FINDER_COLUMN_C_C_S_STATUS_2);
+
+			String sql = sb.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query query = session.createQuery(sql);
+
+				QueryPos queryPos = QueryPos.getInstance(query);
+
+				queryPos.add(commercePriceListId);
+
+				if (bindCPInstanceUuid) {
+					queryPos.add(CPInstanceUuid);
+				}
+
+				queryPos.add(status);
+
+				count = (Long)query.uniqueResult();
+
+				finderCache.putResult(finderPath, finderArgs, count);
+			}
+			catch (Exception exception) {
+				finderCache.removeResult(finderPath, finderArgs);
+
+				throw processException(exception);
+			}
+			finally {
+				closeSession(session);
+			}
 		}
 
-		return 1;
+		return count.intValue();
 	}
 
 	private static final String _FINDER_COLUMN_C_C_S_COMMERCEPRICELISTID_2 =
@@ -4415,6 +4525,7 @@ public class CommercePriceEntryPersistenceImpl
 		"commercePriceEntry.status = ?";
 
 	private FinderPath _finderPathFetchByC_ERC;
+	private FinderPath _finderPathCountByC_ERC;
 
 	/**
 	 * Returns the commerce price entry where companyId = &#63; and externalReferenceCode = &#63; or throws a <code>NoSuchPriceEntryException</code> if it could not be found.
@@ -4624,14 +4735,64 @@ public class CommercePriceEntryPersistenceImpl
 	 */
 	@Override
 	public int countByC_ERC(long companyId, String externalReferenceCode) {
-		CommercePriceEntry commercePriceEntry = fetchByC_ERC(
-			companyId, externalReferenceCode);
+		externalReferenceCode = Objects.toString(externalReferenceCode, "");
 
-		if (commercePriceEntry == null) {
-			return 0;
+		FinderPath finderPath = _finderPathCountByC_ERC;
+
+		Object[] finderArgs = new Object[] {companyId, externalReferenceCode};
+
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
+
+		if (count == null) {
+			StringBundler sb = new StringBundler(3);
+
+			sb.append(_SQL_COUNT_COMMERCEPRICEENTRY_WHERE);
+
+			sb.append(_FINDER_COLUMN_C_ERC_COMPANYID_2);
+
+			boolean bindExternalReferenceCode = false;
+
+			if (externalReferenceCode.isEmpty()) {
+				sb.append(_FINDER_COLUMN_C_ERC_EXTERNALREFERENCECODE_3);
+			}
+			else {
+				bindExternalReferenceCode = true;
+
+				sb.append(_FINDER_COLUMN_C_ERC_EXTERNALREFERENCECODE_2);
+			}
+
+			String sql = sb.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query query = session.createQuery(sql);
+
+				QueryPos queryPos = QueryPos.getInstance(query);
+
+				queryPos.add(companyId);
+
+				if (bindExternalReferenceCode) {
+					queryPos.add(externalReferenceCode);
+				}
+
+				count = (Long)query.uniqueResult();
+
+				finderCache.putResult(finderPath, finderArgs, count);
+			}
+			catch (Exception exception) {
+				finderCache.removeResult(finderPath, finderArgs);
+
+				throw processException(exception);
+			}
+			finally {
+				closeSession(session);
+			}
 		}
 
-		return 1;
+		return count.intValue();
 	}
 
 	private static final String _FINDER_COLUMN_C_ERC_COMPANYID_2 =
@@ -5926,6 +6087,12 @@ public class CommercePriceEntryPersistenceImpl
 			CommercePriceEntryModelImpl.COMMERCEPRICELISTID_COLUMN_BITMASK |
 			CommercePriceEntryModelImpl.CPINSTANCEUUID_COLUMN_BITMASK);
 
+		_finderPathCountByC_C = new FinderPath(
+			CommercePriceEntryModelImpl.ENTITY_CACHE_ENABLED,
+			CommercePriceEntryModelImpl.FINDER_CACHE_ENABLED, Long.class,
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByC_C",
+			new String[] {Long.class.getName(), String.class.getName()});
+
 		_finderPathWithPaginationFindByLtD_S = new FinderPath(
 			CommercePriceEntryModelImpl.ENTITY_CACHE_ENABLED,
 			CommercePriceEntryModelImpl.FINDER_CACHE_ENABLED,
@@ -5973,6 +6140,15 @@ public class CommercePriceEntryPersistenceImpl
 			CommercePriceEntryModelImpl.CPINSTANCEUUID_COLUMN_BITMASK |
 			CommercePriceEntryModelImpl.STATUS_COLUMN_BITMASK);
 
+		_finderPathCountByC_C_S = new FinderPath(
+			CommercePriceEntryModelImpl.ENTITY_CACHE_ENABLED,
+			CommercePriceEntryModelImpl.FINDER_CACHE_ENABLED, Long.class,
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByC_C_S",
+			new String[] {
+				Long.class.getName(), String.class.getName(),
+				Integer.class.getName()
+			});
+
 		_finderPathFetchByC_ERC = new FinderPath(
 			CommercePriceEntryModelImpl.ENTITY_CACHE_ENABLED,
 			CommercePriceEntryModelImpl.FINDER_CACHE_ENABLED,
@@ -5981,6 +6157,12 @@ public class CommercePriceEntryPersistenceImpl
 			new String[] {Long.class.getName(), String.class.getName()},
 			CommercePriceEntryModelImpl.COMPANYID_COLUMN_BITMASK |
 			CommercePriceEntryModelImpl.EXTERNALREFERENCECODE_COLUMN_BITMASK);
+
+		_finderPathCountByC_ERC = new FinderPath(
+			CommercePriceEntryModelImpl.ENTITY_CACHE_ENABLED,
+			CommercePriceEntryModelImpl.FINDER_CACHE_ENABLED, Long.class,
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByC_ERC",
+			new String[] {Long.class.getName(), String.class.getName()});
 
 		CommercePriceEntryUtil.setPersistence(this);
 	}

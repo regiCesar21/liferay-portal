@@ -2128,6 +2128,7 @@ public class KaleoTaskFormPersistenceImpl
 		"kaleoTaskForm.kaleoTaskId = ?";
 
 	private FinderPath _finderPathFetchByFormUuid_KTI;
+	private FinderPath _finderPathCountByFormUuid_KTI;
 
 	/**
 	 * Returns the kaleo task form where kaleoTaskId = &#63; and formUuid = &#63; or throws a <code>NoSuchTaskFormException</code> if it could not be found.
@@ -2332,14 +2333,64 @@ public class KaleoTaskFormPersistenceImpl
 	 */
 	@Override
 	public int countByFormUuid_KTI(long kaleoTaskId, String formUuid) {
-		KaleoTaskForm kaleoTaskForm = fetchByFormUuid_KTI(
-			kaleoTaskId, formUuid);
+		formUuid = Objects.toString(formUuid, "");
 
-		if (kaleoTaskForm == null) {
-			return 0;
+		FinderPath finderPath = _finderPathCountByFormUuid_KTI;
+
+		Object[] finderArgs = new Object[] {kaleoTaskId, formUuid};
+
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
+
+		if (count == null) {
+			StringBundler sb = new StringBundler(3);
+
+			sb.append(_SQL_COUNT_KALEOTASKFORM_WHERE);
+
+			sb.append(_FINDER_COLUMN_FORMUUID_KTI_KALEOTASKID_2);
+
+			boolean bindFormUuid = false;
+
+			if (formUuid.isEmpty()) {
+				sb.append(_FINDER_COLUMN_FORMUUID_KTI_FORMUUID_3);
+			}
+			else {
+				bindFormUuid = true;
+
+				sb.append(_FINDER_COLUMN_FORMUUID_KTI_FORMUUID_2);
+			}
+
+			String sql = sb.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query query = session.createQuery(sql);
+
+				QueryPos queryPos = QueryPos.getInstance(query);
+
+				queryPos.add(kaleoTaskId);
+
+				if (bindFormUuid) {
+					queryPos.add(formUuid);
+				}
+
+				count = (Long)query.uniqueResult();
+
+				finderCache.putResult(finderPath, finderArgs, count);
+			}
+			catch (Exception exception) {
+				finderCache.removeResult(finderPath, finderArgs);
+
+				throw processException(exception);
+			}
+			finally {
+				closeSession(session);
+			}
 		}
 
-		return 1;
+		return count.intValue();
 	}
 
 	private static final String _FINDER_COLUMN_FORMUUID_KTI_KALEOTASKID_2 =
@@ -3191,6 +3242,11 @@ public class KaleoTaskFormPersistenceImpl
 			new String[] {Long.class.getName(), String.class.getName()},
 			KaleoTaskFormModelImpl.KALEOTASKID_COLUMN_BITMASK |
 			KaleoTaskFormModelImpl.FORMUUID_COLUMN_BITMASK);
+
+		_finderPathCountByFormUuid_KTI = new FinderPath(
+			entityCacheEnabled, finderCacheEnabled, Long.class,
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByFormUuid_KTI",
+			new String[] {Long.class.getName(), String.class.getName()});
 
 		KaleoTaskFormUtil.setPersistence(this);
 	}
