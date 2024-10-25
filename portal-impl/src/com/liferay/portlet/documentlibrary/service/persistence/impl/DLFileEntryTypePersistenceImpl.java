@@ -635,7 +635,6 @@ public class DLFileEntryTypePersistenceImpl
 		"(dlFileEntryType.uuid IS NULL OR dlFileEntryType.uuid = '')";
 
 	private FinderPath _finderPathFetchByUUID_G;
-	private FinderPath _finderPathCountByUUID_G;
 
 	/**
 	 * Returns the document library file entry type where uuid = &#63; and groupId = &#63; or throws a <code>NoSuchFileEntryTypeException</code> if it could not be found.
@@ -820,65 +819,13 @@ public class DLFileEntryTypePersistenceImpl
 	 */
 	@Override
 	public int countByUUID_G(String uuid, long groupId) {
-		uuid = Objects.toString(uuid, "");
+		DLFileEntryType dlFileEntryType = fetchByUUID_G(uuid, groupId);
 
-		FinderPath finderPath = _finderPathCountByUUID_G;
-
-		Object[] finderArgs = new Object[] {uuid, groupId};
-
-		Long count = (Long)FinderCacheUtil.getResult(
-			finderPath, finderArgs, this);
-
-		if (count == null) {
-			StringBundler sb = new StringBundler(3);
-
-			sb.append(_SQL_COUNT_DLFILEENTRYTYPE_WHERE);
-
-			boolean bindUuid = false;
-
-			if (uuid.isEmpty()) {
-				sb.append(_FINDER_COLUMN_UUID_G_UUID_3);
-			}
-			else {
-				bindUuid = true;
-
-				sb.append(_FINDER_COLUMN_UUID_G_UUID_2);
-			}
-
-			sb.append(_FINDER_COLUMN_UUID_G_GROUPID_2);
-
-			String sql = sb.toString();
-
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				Query query = session.createQuery(sql);
-
-				QueryPos queryPos = QueryPos.getInstance(query);
-
-				if (bindUuid) {
-					queryPos.add(uuid);
-				}
-
-				queryPos.add(groupId);
-
-				count = (Long)query.uniqueResult();
-
-				FinderCacheUtil.putResult(finderPath, finderArgs, count);
-			}
-			catch (Exception exception) {
-				FinderCacheUtil.removeResult(finderPath, finderArgs);
-
-				throw processException(exception);
-			}
-			finally {
-				closeSession(session);
-			}
+		if (dlFileEntryType == null) {
+			return 0;
 		}
 
-		return count.intValue();
+		return 1;
 	}
 
 	private static final String _FINDER_COLUMN_UUID_G_UUID_2 =
@@ -2832,7 +2779,6 @@ public class DLFileEntryTypePersistenceImpl
 		"dlFileEntryType.groupId IN (";
 
 	private FinderPath _finderPathFetchByG_F;
-	private FinderPath _finderPathCountByG_F;
 
 	/**
 	 * Returns the document library file entry type where groupId = &#63; and fileEntryTypeKey = &#63; or throws a <code>NoSuchFileEntryTypeException</code> if it could not be found.
@@ -3018,65 +2964,13 @@ public class DLFileEntryTypePersistenceImpl
 	 */
 	@Override
 	public int countByG_F(long groupId, String fileEntryTypeKey) {
-		fileEntryTypeKey = Objects.toString(fileEntryTypeKey, "");
+		DLFileEntryType dlFileEntryType = fetchByG_F(groupId, fileEntryTypeKey);
 
-		FinderPath finderPath = _finderPathCountByG_F;
-
-		Object[] finderArgs = new Object[] {groupId, fileEntryTypeKey};
-
-		Long count = (Long)FinderCacheUtil.getResult(
-			finderPath, finderArgs, this);
-
-		if (count == null) {
-			StringBundler sb = new StringBundler(3);
-
-			sb.append(_SQL_COUNT_DLFILEENTRYTYPE_WHERE);
-
-			sb.append(_FINDER_COLUMN_G_F_GROUPID_2);
-
-			boolean bindFileEntryTypeKey = false;
-
-			if (fileEntryTypeKey.isEmpty()) {
-				sb.append(_FINDER_COLUMN_G_F_FILEENTRYTYPEKEY_3);
-			}
-			else {
-				bindFileEntryTypeKey = true;
-
-				sb.append(_FINDER_COLUMN_G_F_FILEENTRYTYPEKEY_2);
-			}
-
-			String sql = sb.toString();
-
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				Query query = session.createQuery(sql);
-
-				QueryPos queryPos = QueryPos.getInstance(query);
-
-				queryPos.add(groupId);
-
-				if (bindFileEntryTypeKey) {
-					queryPos.add(fileEntryTypeKey);
-				}
-
-				count = (Long)query.uniqueResult();
-
-				FinderCacheUtil.putResult(finderPath, finderArgs, count);
-			}
-			catch (Exception exception) {
-				FinderCacheUtil.removeResult(finderPath, finderArgs);
-
-				throw processException(exception);
-			}
-			finally {
-				closeSession(session);
-			}
+		if (dlFileEntryType == null) {
+			return 0;
 		}
 
-		return count.intValue();
+		return 1;
 	}
 
 	private static final String _FINDER_COLUMN_G_F_GROUPID_2 =
@@ -4418,12 +4312,6 @@ public class DLFileEntryTypePersistenceImpl
 			DLFileEntryTypeModelImpl.UUID_COLUMN_BITMASK |
 			DLFileEntryTypeModelImpl.GROUPID_COLUMN_BITMASK);
 
-		_finderPathCountByUUID_G = new FinderPath(
-			DLFileEntryTypeModelImpl.ENTITY_CACHE_ENABLED,
-			DLFileEntryTypeModelImpl.FINDER_CACHE_ENABLED, Long.class,
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByUUID_G",
-			new String[] {String.class.getName(), Long.class.getName()});
-
 		_finderPathWithPaginationFindByUuid_C = new FinderPath(
 			DLFileEntryTypeModelImpl.ENTITY_CACHE_ENABLED,
 			DLFileEntryTypeModelImpl.FINDER_CACHE_ENABLED,
@@ -4487,12 +4375,6 @@ public class DLFileEntryTypePersistenceImpl
 			new String[] {Long.class.getName(), String.class.getName()},
 			DLFileEntryTypeModelImpl.GROUPID_COLUMN_BITMASK |
 			DLFileEntryTypeModelImpl.FILEENTRYTYPEKEY_COLUMN_BITMASK);
-
-		_finderPathCountByG_F = new FinderPath(
-			DLFileEntryTypeModelImpl.ENTITY_CACHE_ENABLED,
-			DLFileEntryTypeModelImpl.FINDER_CACHE_ENABLED, Long.class,
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByG_F",
-			new String[] {Long.class.getName(), String.class.getName()});
 
 		DLFileEntryTypeUtil.setPersistence(this);
 	}

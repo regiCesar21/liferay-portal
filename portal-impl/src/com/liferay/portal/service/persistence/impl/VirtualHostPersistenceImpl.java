@@ -77,7 +77,6 @@ public class VirtualHostPersistenceImpl
 	private FinderPath _finderPathWithoutPaginationFindAll;
 	private FinderPath _finderPathCountAll;
 	private FinderPath _finderPathFetchByHostname;
-	private FinderPath _finderPathCountByHostname;
 
 	/**
 	 * Returns the virtual host where hostname = &#63; or throws a <code>NoSuchVirtualHostException</code> if it could not be found.
@@ -248,61 +247,13 @@ public class VirtualHostPersistenceImpl
 	 */
 	@Override
 	public int countByHostname(String hostname) {
-		hostname = Objects.toString(hostname, "");
+		VirtualHost virtualHost = fetchByHostname(hostname);
 
-		FinderPath finderPath = _finderPathCountByHostname;
-
-		Object[] finderArgs = new Object[] {hostname};
-
-		Long count = (Long)FinderCacheUtil.getResult(
-			finderPath, finderArgs, this);
-
-		if (count == null) {
-			StringBundler sb = new StringBundler(2);
-
-			sb.append(_SQL_COUNT_VIRTUALHOST_WHERE);
-
-			boolean bindHostname = false;
-
-			if (hostname.isEmpty()) {
-				sb.append(_FINDER_COLUMN_HOSTNAME_HOSTNAME_3);
-			}
-			else {
-				bindHostname = true;
-
-				sb.append(_FINDER_COLUMN_HOSTNAME_HOSTNAME_2);
-			}
-
-			String sql = sb.toString();
-
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				Query query = session.createQuery(sql);
-
-				QueryPos queryPos = QueryPos.getInstance(query);
-
-				if (bindHostname) {
-					queryPos.add(hostname);
-				}
-
-				count = (Long)query.uniqueResult();
-
-				FinderCacheUtil.putResult(finderPath, finderArgs, count);
-			}
-			catch (Exception exception) {
-				FinderCacheUtil.removeResult(finderPath, finderArgs);
-
-				throw processException(exception);
-			}
-			finally {
-				closeSession(session);
-			}
+		if (virtualHost == null) {
+			return 0;
 		}
 
-		return count.intValue();
+		return 1;
 	}
 
 	private static final String _FINDER_COLUMN_HOSTNAME_HOSTNAME_2 =
@@ -312,7 +263,6 @@ public class VirtualHostPersistenceImpl
 		"(virtualHost.hostname IS NULL OR virtualHost.hostname = '')";
 
 	private FinderPath _finderPathFetchByC_L;
-	private FinderPath _finderPathCountByC_L;
 
 	/**
 	 * Returns the virtual host where companyId = &#63; and layoutSetId = &#63; or throws a <code>NoSuchVirtualHostException</code> if it could not be found.
@@ -484,52 +434,13 @@ public class VirtualHostPersistenceImpl
 	 */
 	@Override
 	public int countByC_L(long companyId, long layoutSetId) {
-		FinderPath finderPath = _finderPathCountByC_L;
+		VirtualHost virtualHost = fetchByC_L(companyId, layoutSetId);
 
-		Object[] finderArgs = new Object[] {companyId, layoutSetId};
-
-		Long count = (Long)FinderCacheUtil.getResult(
-			finderPath, finderArgs, this);
-
-		if (count == null) {
-			StringBundler sb = new StringBundler(3);
-
-			sb.append(_SQL_COUNT_VIRTUALHOST_WHERE);
-
-			sb.append(_FINDER_COLUMN_C_L_COMPANYID_2);
-
-			sb.append(_FINDER_COLUMN_C_L_LAYOUTSETID_2);
-
-			String sql = sb.toString();
-
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				Query query = session.createQuery(sql);
-
-				QueryPos queryPos = QueryPos.getInstance(query);
-
-				queryPos.add(companyId);
-
-				queryPos.add(layoutSetId);
-
-				count = (Long)query.uniqueResult();
-
-				FinderCacheUtil.putResult(finderPath, finderArgs, count);
-			}
-			catch (Exception exception) {
-				FinderCacheUtil.removeResult(finderPath, finderArgs);
-
-				throw processException(exception);
-			}
-			finally {
-				closeSession(session);
-			}
+		if (virtualHost == null) {
+			return 0;
 		}
 
-		return count.intValue();
+		return 1;
 	}
 
 	private static final String _FINDER_COLUMN_C_L_COMPANYID_2 =
@@ -1337,12 +1248,6 @@ public class VirtualHostPersistenceImpl
 			new String[] {String.class.getName()},
 			VirtualHostModelImpl.HOSTNAME_COLUMN_BITMASK);
 
-		_finderPathCountByHostname = new FinderPath(
-			VirtualHostModelImpl.ENTITY_CACHE_ENABLED,
-			VirtualHostModelImpl.FINDER_CACHE_ENABLED, Long.class,
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByHostname",
-			new String[] {String.class.getName()});
-
 		_finderPathFetchByC_L = new FinderPath(
 			VirtualHostModelImpl.ENTITY_CACHE_ENABLED,
 			VirtualHostModelImpl.FINDER_CACHE_ENABLED, VirtualHostImpl.class,
@@ -1350,12 +1255,6 @@ public class VirtualHostPersistenceImpl
 			new String[] {Long.class.getName(), Long.class.getName()},
 			VirtualHostModelImpl.COMPANYID_COLUMN_BITMASK |
 			VirtualHostModelImpl.LAYOUTSETID_COLUMN_BITMASK);
-
-		_finderPathCountByC_L = new FinderPath(
-			VirtualHostModelImpl.ENTITY_CACHE_ENABLED,
-			VirtualHostModelImpl.FINDER_CACHE_ENABLED, Long.class,
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByC_L",
-			new String[] {Long.class.getName(), Long.class.getName()});
 
 		VirtualHostUtil.setPersistence(this);
 	}

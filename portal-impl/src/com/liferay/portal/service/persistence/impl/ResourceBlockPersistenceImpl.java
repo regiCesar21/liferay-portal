@@ -1291,7 +1291,6 @@ public class ResourceBlockPersistenceImpl
 		"(resourceBlock.name IS NULL OR resourceBlock.name = '')";
 
 	private FinderPath _finderPathFetchByC_G_N_P;
-	private FinderPath _finderPathCountByC_G_N_P;
 
 	/**
 	 * Returns the resource block where companyId = &#63; and groupId = &#63; and name = &#63; and permissionsHash = &#63; or throws a <code>NoSuchResourceBlockException</code> if it could not be found.
@@ -1526,87 +1525,14 @@ public class ResourceBlockPersistenceImpl
 	public int countByC_G_N_P(
 		long companyId, long groupId, String name, String permissionsHash) {
 
-		name = Objects.toString(name, "");
-		permissionsHash = Objects.toString(permissionsHash, "");
+		ResourceBlock resourceBlock = fetchByC_G_N_P(
+			companyId, groupId, name, permissionsHash);
 
-		FinderPath finderPath = _finderPathCountByC_G_N_P;
-
-		Object[] finderArgs = new Object[] {
-			companyId, groupId, name, permissionsHash
-		};
-
-		Long count = (Long)FinderCacheUtil.getResult(
-			finderPath, finderArgs, this);
-
-		if (count == null) {
-			StringBundler sb = new StringBundler(5);
-
-			sb.append(_SQL_COUNT_RESOURCEBLOCK_WHERE);
-
-			sb.append(_FINDER_COLUMN_C_G_N_P_COMPANYID_2);
-
-			sb.append(_FINDER_COLUMN_C_G_N_P_GROUPID_2);
-
-			boolean bindName = false;
-
-			if (name.isEmpty()) {
-				sb.append(_FINDER_COLUMN_C_G_N_P_NAME_3);
-			}
-			else {
-				bindName = true;
-
-				sb.append(_FINDER_COLUMN_C_G_N_P_NAME_2);
-			}
-
-			boolean bindPermissionsHash = false;
-
-			if (permissionsHash.isEmpty()) {
-				sb.append(_FINDER_COLUMN_C_G_N_P_PERMISSIONSHASH_3);
-			}
-			else {
-				bindPermissionsHash = true;
-
-				sb.append(_FINDER_COLUMN_C_G_N_P_PERMISSIONSHASH_2);
-			}
-
-			String sql = sb.toString();
-
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				Query query = session.createQuery(sql);
-
-				QueryPos queryPos = QueryPos.getInstance(query);
-
-				queryPos.add(companyId);
-
-				queryPos.add(groupId);
-
-				if (bindName) {
-					queryPos.add(name);
-				}
-
-				if (bindPermissionsHash) {
-					queryPos.add(permissionsHash);
-				}
-
-				count = (Long)query.uniqueResult();
-
-				FinderCacheUtil.putResult(finderPath, finderArgs, count);
-			}
-			catch (Exception exception) {
-				FinderCacheUtil.removeResult(finderPath, finderArgs);
-
-				throw processException(exception);
-			}
-			finally {
-				closeSession(session);
-			}
+		if (resourceBlock == null) {
+			return 0;
 		}
 
-		return count.intValue();
+		return 1;
 	}
 
 	private static final String _FINDER_COLUMN_C_G_N_P_COMPANYID_2 =
@@ -2544,15 +2470,6 @@ public class ResourceBlockPersistenceImpl
 			ResourceBlockModelImpl.GROUPID_COLUMN_BITMASK |
 			ResourceBlockModelImpl.NAME_COLUMN_BITMASK |
 			ResourceBlockModelImpl.PERMISSIONSHASH_COLUMN_BITMASK);
-
-		_finderPathCountByC_G_N_P = new FinderPath(
-			ResourceBlockModelImpl.ENTITY_CACHE_ENABLED,
-			ResourceBlockModelImpl.FINDER_CACHE_ENABLED, Long.class,
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByC_G_N_P",
-			new String[] {
-				Long.class.getName(), Long.class.getName(),
-				String.class.getName(), String.class.getName()
-			});
 
 		ResourceBlockUtil.setPersistence(this);
 	}

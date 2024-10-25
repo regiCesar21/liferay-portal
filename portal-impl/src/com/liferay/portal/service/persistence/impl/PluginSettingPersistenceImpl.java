@@ -584,7 +584,6 @@ public class PluginSettingPersistenceImpl
 		"pluginSetting.companyId = ?";
 
 	private FinderPath _finderPathFetchByC_I_T;
-	private FinderPath _finderPathCountByC_I_T;
 
 	/**
 	 * Returns the plugin setting where companyId = &#63; and pluginId = &#63; and pluginType = &#63; or throws a <code>NoSuchPluginSettingException</code> if it could not be found.
@@ -803,81 +802,14 @@ public class PluginSettingPersistenceImpl
 	public int countByC_I_T(
 		long companyId, String pluginId, String pluginType) {
 
-		pluginId = Objects.toString(pluginId, "");
-		pluginType = Objects.toString(pluginType, "");
+		PluginSetting pluginSetting = fetchByC_I_T(
+			companyId, pluginId, pluginType);
 
-		FinderPath finderPath = _finderPathCountByC_I_T;
-
-		Object[] finderArgs = new Object[] {companyId, pluginId, pluginType};
-
-		Long count = (Long)FinderCacheUtil.getResult(
-			finderPath, finderArgs, this);
-
-		if (count == null) {
-			StringBundler sb = new StringBundler(4);
-
-			sb.append(_SQL_COUNT_PLUGINSETTING_WHERE);
-
-			sb.append(_FINDER_COLUMN_C_I_T_COMPANYID_2);
-
-			boolean bindPluginId = false;
-
-			if (pluginId.isEmpty()) {
-				sb.append(_FINDER_COLUMN_C_I_T_PLUGINID_3);
-			}
-			else {
-				bindPluginId = true;
-
-				sb.append(_FINDER_COLUMN_C_I_T_PLUGINID_2);
-			}
-
-			boolean bindPluginType = false;
-
-			if (pluginType.isEmpty()) {
-				sb.append(_FINDER_COLUMN_C_I_T_PLUGINTYPE_3);
-			}
-			else {
-				bindPluginType = true;
-
-				sb.append(_FINDER_COLUMN_C_I_T_PLUGINTYPE_2);
-			}
-
-			String sql = sb.toString();
-
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				Query query = session.createQuery(sql);
-
-				QueryPos queryPos = QueryPos.getInstance(query);
-
-				queryPos.add(companyId);
-
-				if (bindPluginId) {
-					queryPos.add(pluginId);
-				}
-
-				if (bindPluginType) {
-					queryPos.add(pluginType);
-				}
-
-				count = (Long)query.uniqueResult();
-
-				FinderCacheUtil.putResult(finderPath, finderArgs, count);
-			}
-			catch (Exception exception) {
-				FinderCacheUtil.removeResult(finderPath, finderArgs);
-
-				throw processException(exception);
-			}
-			finally {
-				closeSession(session);
-			}
+		if (pluginSetting == null) {
+			return 0;
 		}
 
-		return count.intValue();
+		return 1;
 	}
 
 	private static final String _FINDER_COLUMN_C_I_T_COMPANYID_2 =
@@ -1755,15 +1687,6 @@ public class PluginSettingPersistenceImpl
 			PluginSettingModelImpl.COMPANYID_COLUMN_BITMASK |
 			PluginSettingModelImpl.PLUGINID_COLUMN_BITMASK |
 			PluginSettingModelImpl.PLUGINTYPE_COLUMN_BITMASK);
-
-		_finderPathCountByC_I_T = new FinderPath(
-			PluginSettingModelImpl.ENTITY_CACHE_ENABLED,
-			PluginSettingModelImpl.FINDER_CACHE_ENABLED, Long.class,
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByC_I_T",
-			new String[] {
-				Long.class.getName(), String.class.getName(),
-				String.class.getName()
-			});
 
 		PluginSettingUtil.setPersistence(this);
 	}

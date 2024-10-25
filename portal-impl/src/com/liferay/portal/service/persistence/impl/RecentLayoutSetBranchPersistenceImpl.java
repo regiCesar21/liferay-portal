@@ -1619,7 +1619,6 @@ public class RecentLayoutSetBranchPersistenceImpl
 			"recentLayoutSetBranch.layoutSetBranchId = ?";
 
 	private FinderPath _finderPathFetchByU_L;
-	private FinderPath _finderPathCountByU_L;
 
 	/**
 	 * Returns the recent layout set branch where userId = &#63; and layoutSetId = &#63; or throws a <code>NoSuchRecentLayoutSetBranchException</code> if it could not be found.
@@ -1794,52 +1793,14 @@ public class RecentLayoutSetBranchPersistenceImpl
 	 */
 	@Override
 	public int countByU_L(long userId, long layoutSetId) {
-		FinderPath finderPath = _finderPathCountByU_L;
+		RecentLayoutSetBranch recentLayoutSetBranch = fetchByU_L(
+			userId, layoutSetId);
 
-		Object[] finderArgs = new Object[] {userId, layoutSetId};
-
-		Long count = (Long)FinderCacheUtil.getResult(
-			finderPath, finderArgs, this);
-
-		if (count == null) {
-			StringBundler sb = new StringBundler(3);
-
-			sb.append(_SQL_COUNT_RECENTLAYOUTSETBRANCH_WHERE);
-
-			sb.append(_FINDER_COLUMN_U_L_USERID_2);
-
-			sb.append(_FINDER_COLUMN_U_L_LAYOUTSETID_2);
-
-			String sql = sb.toString();
-
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				Query query = session.createQuery(sql);
-
-				QueryPos queryPos = QueryPos.getInstance(query);
-
-				queryPos.add(userId);
-
-				queryPos.add(layoutSetId);
-
-				count = (Long)query.uniqueResult();
-
-				FinderCacheUtil.putResult(finderPath, finderArgs, count);
-			}
-			catch (Exception exception) {
-				FinderCacheUtil.removeResult(finderPath, finderArgs);
-
-				throw processException(exception);
-			}
-			finally {
-				closeSession(session);
-			}
+		if (recentLayoutSetBranch == null) {
+			return 0;
 		}
 
-		return count.intValue();
+		return 1;
 	}
 
 	private static final String _FINDER_COLUMN_U_L_USERID_2 =
@@ -2823,12 +2784,6 @@ public class RecentLayoutSetBranchPersistenceImpl
 			new String[] {Long.class.getName(), Long.class.getName()},
 			RecentLayoutSetBranchModelImpl.USERID_COLUMN_BITMASK |
 			RecentLayoutSetBranchModelImpl.LAYOUTSETID_COLUMN_BITMASK);
-
-		_finderPathCountByU_L = new FinderPath(
-			RecentLayoutSetBranchModelImpl.ENTITY_CACHE_ENABLED,
-			RecentLayoutSetBranchModelImpl.FINDER_CACHE_ENABLED, Long.class,
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByU_L",
-			new String[] {Long.class.getName(), Long.class.getName()});
 
 		RecentLayoutSetBranchUtil.setPersistence(this);
 	}

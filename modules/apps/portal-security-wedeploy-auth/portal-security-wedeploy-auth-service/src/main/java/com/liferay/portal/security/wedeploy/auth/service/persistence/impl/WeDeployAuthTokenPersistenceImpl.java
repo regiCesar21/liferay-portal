@@ -85,7 +85,6 @@ public class WeDeployAuthTokenPersistenceImpl
 	private FinderPath _finderPathWithoutPaginationFindAll;
 	private FinderPath _finderPathCountAll;
 	private FinderPath _finderPathFetchByT_T;
-	private FinderPath _finderPathCountByT_T;
 
 	/**
 	 * Returns the we deploy auth token where token = &#63; and type = &#63; or throws a <code>NoSuchTokenException</code> if it could not be found.
@@ -284,64 +283,13 @@ public class WeDeployAuthTokenPersistenceImpl
 	 */
 	@Override
 	public int countByT_T(String token, int type) {
-		token = Objects.toString(token, "");
+		WeDeployAuthToken weDeployAuthToken = fetchByT_T(token, type);
 
-		FinderPath finderPath = _finderPathCountByT_T;
-
-		Object[] finderArgs = new Object[] {token, type};
-
-		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
-
-		if (count == null) {
-			StringBundler sb = new StringBundler(3);
-
-			sb.append(_SQL_COUNT_WEDEPLOYAUTHTOKEN_WHERE);
-
-			boolean bindToken = false;
-
-			if (token.isEmpty()) {
-				sb.append(_FINDER_COLUMN_T_T_TOKEN_3);
-			}
-			else {
-				bindToken = true;
-
-				sb.append(_FINDER_COLUMN_T_T_TOKEN_2);
-			}
-
-			sb.append(_FINDER_COLUMN_T_T_TYPE_2);
-
-			String sql = sb.toString();
-
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				Query query = session.createQuery(sql);
-
-				QueryPos queryPos = QueryPos.getInstance(query);
-
-				if (bindToken) {
-					queryPos.add(token);
-				}
-
-				queryPos.add(type);
-
-				count = (Long)query.uniqueResult();
-
-				finderCache.putResult(finderPath, finderArgs, count);
-			}
-			catch (Exception exception) {
-				finderCache.removeResult(finderPath, finderArgs);
-
-				throw processException(exception);
-			}
-			finally {
-				closeSession(session);
-			}
+		if (weDeployAuthToken == null) {
+			return 0;
 		}
 
-		return count.intValue();
+		return 1;
 	}
 
 	private static final String _FINDER_COLUMN_T_T_TOKEN_2 =
@@ -354,7 +302,6 @@ public class WeDeployAuthTokenPersistenceImpl
 		"weDeployAuthToken.type = ?";
 
 	private FinderPath _finderPathFetchByCI_T_T;
-	private FinderPath _finderPathCountByCI_T_T;
 
 	/**
 	 * Returns the we deploy auth token where clientId = &#63; and token = &#63; and type = &#63; or throws a <code>NoSuchTokenException</code> if it could not be found.
@@ -587,80 +534,14 @@ public class WeDeployAuthTokenPersistenceImpl
 	 */
 	@Override
 	public int countByCI_T_T(String clientId, String token, int type) {
-		clientId = Objects.toString(clientId, "");
-		token = Objects.toString(token, "");
+		WeDeployAuthToken weDeployAuthToken = fetchByCI_T_T(
+			clientId, token, type);
 
-		FinderPath finderPath = _finderPathCountByCI_T_T;
-
-		Object[] finderArgs = new Object[] {clientId, token, type};
-
-		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
-
-		if (count == null) {
-			StringBundler sb = new StringBundler(4);
-
-			sb.append(_SQL_COUNT_WEDEPLOYAUTHTOKEN_WHERE);
-
-			boolean bindClientId = false;
-
-			if (clientId.isEmpty()) {
-				sb.append(_FINDER_COLUMN_CI_T_T_CLIENTID_3);
-			}
-			else {
-				bindClientId = true;
-
-				sb.append(_FINDER_COLUMN_CI_T_T_CLIENTID_2);
-			}
-
-			boolean bindToken = false;
-
-			if (token.isEmpty()) {
-				sb.append(_FINDER_COLUMN_CI_T_T_TOKEN_3);
-			}
-			else {
-				bindToken = true;
-
-				sb.append(_FINDER_COLUMN_CI_T_T_TOKEN_2);
-			}
-
-			sb.append(_FINDER_COLUMN_CI_T_T_TYPE_2);
-
-			String sql = sb.toString();
-
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				Query query = session.createQuery(sql);
-
-				QueryPos queryPos = QueryPos.getInstance(query);
-
-				if (bindClientId) {
-					queryPos.add(clientId);
-				}
-
-				if (bindToken) {
-					queryPos.add(token);
-				}
-
-				queryPos.add(type);
-
-				count = (Long)query.uniqueResult();
-
-				finderCache.putResult(finderPath, finderArgs, count);
-			}
-			catch (Exception exception) {
-				finderCache.removeResult(finderPath, finderArgs);
-
-				throw processException(exception);
-			}
-			finally {
-				closeSession(session);
-			}
+		if (weDeployAuthToken == null) {
+			return 0;
 		}
 
-		return count.intValue();
+		return 1;
 	}
 
 	private static final String _FINDER_COLUMN_CI_T_T_CLIENTID_2 =
@@ -1558,12 +1439,6 @@ public class WeDeployAuthTokenPersistenceImpl
 			WeDeployAuthTokenModelImpl.TOKEN_COLUMN_BITMASK |
 			WeDeployAuthTokenModelImpl.TYPE_COLUMN_BITMASK);
 
-		_finderPathCountByT_T = new FinderPath(
-			WeDeployAuthTokenModelImpl.ENTITY_CACHE_ENABLED,
-			WeDeployAuthTokenModelImpl.FINDER_CACHE_ENABLED, Long.class,
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByT_T",
-			new String[] {String.class.getName(), Integer.class.getName()});
-
 		_finderPathFetchByCI_T_T = new FinderPath(
 			WeDeployAuthTokenModelImpl.ENTITY_CACHE_ENABLED,
 			WeDeployAuthTokenModelImpl.FINDER_CACHE_ENABLED,
@@ -1576,15 +1451,6 @@ public class WeDeployAuthTokenPersistenceImpl
 			WeDeployAuthTokenModelImpl.CLIENTID_COLUMN_BITMASK |
 			WeDeployAuthTokenModelImpl.TOKEN_COLUMN_BITMASK |
 			WeDeployAuthTokenModelImpl.TYPE_COLUMN_BITMASK);
-
-		_finderPathCountByCI_T_T = new FinderPath(
-			WeDeployAuthTokenModelImpl.ENTITY_CACHE_ENABLED,
-			WeDeployAuthTokenModelImpl.FINDER_CACHE_ENABLED, Long.class,
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByCI_T_T",
-			new String[] {
-				String.class.getName(), String.class.getName(),
-				Integer.class.getName()
-			});
 
 		WeDeployAuthTokenUtil.setPersistence(this);
 	}

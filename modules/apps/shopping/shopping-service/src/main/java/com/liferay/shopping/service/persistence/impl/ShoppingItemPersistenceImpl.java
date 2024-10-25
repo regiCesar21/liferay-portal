@@ -87,7 +87,6 @@ public class ShoppingItemPersistenceImpl
 	private FinderPath _finderPathWithoutPaginationFindAll;
 	private FinderPath _finderPathCountAll;
 	private FinderPath _finderPathFetchBySmallImageId;
-	private FinderPath _finderPathCountBySmallImageId;
 
 	/**
 	 * Returns the shopping item where smallImageId = &#63; or throws a <code>NoSuchItemException</code> if it could not be found.
@@ -260,54 +259,19 @@ public class ShoppingItemPersistenceImpl
 	 */
 	@Override
 	public int countBySmallImageId(long smallImageId) {
-		FinderPath finderPath = _finderPathCountBySmallImageId;
+		ShoppingItem shoppingItem = fetchBySmallImageId(smallImageId);
 
-		Object[] finderArgs = new Object[] {smallImageId};
-
-		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
-
-		if (count == null) {
-			StringBundler sb = new StringBundler(2);
-
-			sb.append(_SQL_COUNT_SHOPPINGITEM_WHERE);
-
-			sb.append(_FINDER_COLUMN_SMALLIMAGEID_SMALLIMAGEID_2);
-
-			String sql = sb.toString();
-
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				Query query = session.createQuery(sql);
-
-				QueryPos queryPos = QueryPos.getInstance(query);
-
-				queryPos.add(smallImageId);
-
-				count = (Long)query.uniqueResult();
-
-				finderCache.putResult(finderPath, finderArgs, count);
-			}
-			catch (Exception exception) {
-				finderCache.removeResult(finderPath, finderArgs);
-
-				throw processException(exception);
-			}
-			finally {
-				closeSession(session);
-			}
+		if (shoppingItem == null) {
+			return 0;
 		}
 
-		return count.intValue();
+		return 1;
 	}
 
 	private static final String _FINDER_COLUMN_SMALLIMAGEID_SMALLIMAGEID_2 =
 		"shoppingItem.smallImageId = ?";
 
 	private FinderPath _finderPathFetchByMediumImageId;
-	private FinderPath _finderPathCountByMediumImageId;
 
 	/**
 	 * Returns the shopping item where mediumImageId = &#63; or throws a <code>NoSuchItemException</code> if it could not be found.
@@ -480,54 +444,19 @@ public class ShoppingItemPersistenceImpl
 	 */
 	@Override
 	public int countByMediumImageId(long mediumImageId) {
-		FinderPath finderPath = _finderPathCountByMediumImageId;
+		ShoppingItem shoppingItem = fetchByMediumImageId(mediumImageId);
 
-		Object[] finderArgs = new Object[] {mediumImageId};
-
-		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
-
-		if (count == null) {
-			StringBundler sb = new StringBundler(2);
-
-			sb.append(_SQL_COUNT_SHOPPINGITEM_WHERE);
-
-			sb.append(_FINDER_COLUMN_MEDIUMIMAGEID_MEDIUMIMAGEID_2);
-
-			String sql = sb.toString();
-
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				Query query = session.createQuery(sql);
-
-				QueryPos queryPos = QueryPos.getInstance(query);
-
-				queryPos.add(mediumImageId);
-
-				count = (Long)query.uniqueResult();
-
-				finderCache.putResult(finderPath, finderArgs, count);
-			}
-			catch (Exception exception) {
-				finderCache.removeResult(finderPath, finderArgs);
-
-				throw processException(exception);
-			}
-			finally {
-				closeSession(session);
-			}
+		if (shoppingItem == null) {
+			return 0;
 		}
 
-		return count.intValue();
+		return 1;
 	}
 
 	private static final String _FINDER_COLUMN_MEDIUMIMAGEID_MEDIUMIMAGEID_2 =
 		"shoppingItem.mediumImageId = ?";
 
 	private FinderPath _finderPathFetchByLargeImageId;
-	private FinderPath _finderPathCountByLargeImageId;
 
 	/**
 	 * Returns the shopping item where largeImageId = &#63; or throws a <code>NoSuchItemException</code> if it could not be found.
@@ -700,47 +629,13 @@ public class ShoppingItemPersistenceImpl
 	 */
 	@Override
 	public int countByLargeImageId(long largeImageId) {
-		FinderPath finderPath = _finderPathCountByLargeImageId;
+		ShoppingItem shoppingItem = fetchByLargeImageId(largeImageId);
 
-		Object[] finderArgs = new Object[] {largeImageId};
-
-		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
-
-		if (count == null) {
-			StringBundler sb = new StringBundler(2);
-
-			sb.append(_SQL_COUNT_SHOPPINGITEM_WHERE);
-
-			sb.append(_FINDER_COLUMN_LARGEIMAGEID_LARGEIMAGEID_2);
-
-			String sql = sb.toString();
-
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				Query query = session.createQuery(sql);
-
-				QueryPos queryPos = QueryPos.getInstance(query);
-
-				queryPos.add(largeImageId);
-
-				count = (Long)query.uniqueResult();
-
-				finderCache.putResult(finderPath, finderArgs, count);
-			}
-			catch (Exception exception) {
-				finderCache.removeResult(finderPath, finderArgs);
-
-				throw processException(exception);
-			}
-			finally {
-				closeSession(session);
-			}
+		if (shoppingItem == null) {
+			return 0;
 		}
 
-		return count.intValue();
+		return 1;
 	}
 
 	private static final String _FINDER_COLUMN_LARGEIMAGEID_LARGEIMAGEID_2 =
@@ -1691,7 +1586,6 @@ public class ShoppingItemPersistenceImpl
 		"shoppingItem.categoryId = ?";
 
 	private FinderPath _finderPathFetchByC_S;
-	private FinderPath _finderPathCountByC_S;
 
 	/**
 	 * Returns the shopping item where companyId = &#63; and sku = &#63; or throws a <code>NoSuchItemException</code> if it could not be found.
@@ -1875,64 +1769,13 @@ public class ShoppingItemPersistenceImpl
 	 */
 	@Override
 	public int countByC_S(long companyId, String sku) {
-		sku = Objects.toString(sku, "");
+		ShoppingItem shoppingItem = fetchByC_S(companyId, sku);
 
-		FinderPath finderPath = _finderPathCountByC_S;
-
-		Object[] finderArgs = new Object[] {companyId, sku};
-
-		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
-
-		if (count == null) {
-			StringBundler sb = new StringBundler(3);
-
-			sb.append(_SQL_COUNT_SHOPPINGITEM_WHERE);
-
-			sb.append(_FINDER_COLUMN_C_S_COMPANYID_2);
-
-			boolean bindSku = false;
-
-			if (sku.isEmpty()) {
-				sb.append(_FINDER_COLUMN_C_S_SKU_3);
-			}
-			else {
-				bindSku = true;
-
-				sb.append(_FINDER_COLUMN_C_S_SKU_2);
-			}
-
-			String sql = sb.toString();
-
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				Query query = session.createQuery(sql);
-
-				QueryPos queryPos = QueryPos.getInstance(query);
-
-				queryPos.add(companyId);
-
-				if (bindSku) {
-					queryPos.add(sku);
-				}
-
-				count = (Long)query.uniqueResult();
-
-				finderCache.putResult(finderPath, finderArgs, count);
-			}
-			catch (Exception exception) {
-				finderCache.removeResult(finderPath, finderArgs);
-
-				throw processException(exception);
-			}
-			finally {
-				closeSession(session);
-			}
+		if (shoppingItem == null) {
+			return 0;
 		}
 
-		return count.intValue();
+		return 1;
 	}
 
 	private static final String _FINDER_COLUMN_C_S_COMPANYID_2 =
@@ -2884,12 +2727,6 @@ public class ShoppingItemPersistenceImpl
 			new String[] {Long.class.getName()},
 			ShoppingItemModelImpl.SMALLIMAGEID_COLUMN_BITMASK);
 
-		_finderPathCountBySmallImageId = new FinderPath(
-			ShoppingItemModelImpl.ENTITY_CACHE_ENABLED,
-			ShoppingItemModelImpl.FINDER_CACHE_ENABLED, Long.class,
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countBySmallImageId",
-			new String[] {Long.class.getName()});
-
 		_finderPathFetchByMediumImageId = new FinderPath(
 			ShoppingItemModelImpl.ENTITY_CACHE_ENABLED,
 			ShoppingItemModelImpl.FINDER_CACHE_ENABLED, ShoppingItemImpl.class,
@@ -2897,24 +2734,12 @@ public class ShoppingItemPersistenceImpl
 			new String[] {Long.class.getName()},
 			ShoppingItemModelImpl.MEDIUMIMAGEID_COLUMN_BITMASK);
 
-		_finderPathCountByMediumImageId = new FinderPath(
-			ShoppingItemModelImpl.ENTITY_CACHE_ENABLED,
-			ShoppingItemModelImpl.FINDER_CACHE_ENABLED, Long.class,
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByMediumImageId",
-			new String[] {Long.class.getName()});
-
 		_finderPathFetchByLargeImageId = new FinderPath(
 			ShoppingItemModelImpl.ENTITY_CACHE_ENABLED,
 			ShoppingItemModelImpl.FINDER_CACHE_ENABLED, ShoppingItemImpl.class,
 			FINDER_CLASS_NAME_ENTITY, "fetchByLargeImageId",
 			new String[] {Long.class.getName()},
 			ShoppingItemModelImpl.LARGEIMAGEID_COLUMN_BITMASK);
-
-		_finderPathCountByLargeImageId = new FinderPath(
-			ShoppingItemModelImpl.ENTITY_CACHE_ENABLED,
-			ShoppingItemModelImpl.FINDER_CACHE_ENABLED, Long.class,
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByLargeImageId",
-			new String[] {Long.class.getName()});
 
 		_finderPathWithPaginationFindByG_C = new FinderPath(
 			ShoppingItemModelImpl.ENTITY_CACHE_ENABLED,
@@ -2947,12 +2772,6 @@ public class ShoppingItemPersistenceImpl
 			new String[] {Long.class.getName(), String.class.getName()},
 			ShoppingItemModelImpl.COMPANYID_COLUMN_BITMASK |
 			ShoppingItemModelImpl.SKU_COLUMN_BITMASK);
-
-		_finderPathCountByC_S = new FinderPath(
-			ShoppingItemModelImpl.ENTITY_CACHE_ENABLED,
-			ShoppingItemModelImpl.FINDER_CACHE_ENABLED, Long.class,
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByC_S",
-			new String[] {Long.class.getName(), String.class.getName()});
 
 		ShoppingItemUtil.setPersistence(this);
 	}

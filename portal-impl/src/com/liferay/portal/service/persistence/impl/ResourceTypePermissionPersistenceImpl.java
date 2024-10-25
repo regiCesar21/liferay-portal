@@ -1216,7 +1216,6 @@ public class ResourceTypePermissionPersistenceImpl
 		"resourceTypePermission.roleId = ?";
 
 	private FinderPath _finderPathFetchByC_G_N_R;
-	private FinderPath _finderPathCountByC_G_N_R;
 
 	/**
 	 * Returns the resource type permission where companyId = &#63; and groupId = &#63; and name = &#63; and roleId = &#63; or throws a <code>NoSuchResourceTypePermissionException</code> if it could not be found.
@@ -1437,73 +1436,14 @@ public class ResourceTypePermissionPersistenceImpl
 	public int countByC_G_N_R(
 		long companyId, long groupId, String name, long roleId) {
 
-		name = Objects.toString(name, "");
+		ResourceTypePermission resourceTypePermission = fetchByC_G_N_R(
+			companyId, groupId, name, roleId);
 
-		FinderPath finderPath = _finderPathCountByC_G_N_R;
-
-		Object[] finderArgs = new Object[] {companyId, groupId, name, roleId};
-
-		Long count = (Long)FinderCacheUtil.getResult(
-			finderPath, finderArgs, this);
-
-		if (count == null) {
-			StringBundler sb = new StringBundler(5);
-
-			sb.append(_SQL_COUNT_RESOURCETYPEPERMISSION_WHERE);
-
-			sb.append(_FINDER_COLUMN_C_G_N_R_COMPANYID_2);
-
-			sb.append(_FINDER_COLUMN_C_G_N_R_GROUPID_2);
-
-			boolean bindName = false;
-
-			if (name.isEmpty()) {
-				sb.append(_FINDER_COLUMN_C_G_N_R_NAME_3);
-			}
-			else {
-				bindName = true;
-
-				sb.append(_FINDER_COLUMN_C_G_N_R_NAME_2);
-			}
-
-			sb.append(_FINDER_COLUMN_C_G_N_R_ROLEID_2);
-
-			String sql = sb.toString();
-
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				Query query = session.createQuery(sql);
-
-				QueryPos queryPos = QueryPos.getInstance(query);
-
-				queryPos.add(companyId);
-
-				queryPos.add(groupId);
-
-				if (bindName) {
-					queryPos.add(name);
-				}
-
-				queryPos.add(roleId);
-
-				count = (Long)query.uniqueResult();
-
-				FinderCacheUtil.putResult(finderPath, finderArgs, count);
-			}
-			catch (Exception exception) {
-				FinderCacheUtil.removeResult(finderPath, finderArgs);
-
-				throw processException(exception);
-			}
-			finally {
-				closeSession(session);
-			}
+		if (resourceTypePermission == null) {
+			return 0;
 		}
 
-		return count.intValue();
+		return 1;
 	}
 
 	private static final String _FINDER_COLUMN_C_G_N_R_COMPANYID_2 =
@@ -2474,15 +2414,6 @@ public class ResourceTypePermissionPersistenceImpl
 			ResourceTypePermissionModelImpl.GROUPID_COLUMN_BITMASK |
 			ResourceTypePermissionModelImpl.NAME_COLUMN_BITMASK |
 			ResourceTypePermissionModelImpl.ROLEID_COLUMN_BITMASK);
-
-		_finderPathCountByC_G_N_R = new FinderPath(
-			ResourceTypePermissionModelImpl.ENTITY_CACHE_ENABLED,
-			ResourceTypePermissionModelImpl.FINDER_CACHE_ENABLED, Long.class,
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByC_G_N_R",
-			new String[] {
-				Long.class.getName(), Long.class.getName(),
-				String.class.getName(), Long.class.getName()
-			});
 
 		ResourceTypePermissionUtil.setPersistence(this);
 	}

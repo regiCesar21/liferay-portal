@@ -598,7 +598,6 @@ public class MeetupsRegistrationPersistenceImpl
 		"meetupsRegistration.meetupsEntryId = ?";
 
 	private FinderPath _finderPathFetchByU_ME;
-	private FinderPath _finderPathCountByU_ME;
 
 	/**
 	 * Returns the meetups registration where userId = &#63; and meetupsEntryId = &#63; or throws a <code>NoSuchMeetupsRegistrationException</code> if it could not be found.
@@ -790,51 +789,14 @@ public class MeetupsRegistrationPersistenceImpl
 	 */
 	@Override
 	public int countByU_ME(long userId, long meetupsEntryId) {
-		FinderPath finderPath = _finderPathCountByU_ME;
+		MeetupsRegistration meetupsRegistration = fetchByU_ME(
+			userId, meetupsEntryId);
 
-		Object[] finderArgs = new Object[] {userId, meetupsEntryId};
-
-		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
-
-		if (count == null) {
-			StringBundler sb = new StringBundler(3);
-
-			sb.append(_SQL_COUNT_MEETUPSREGISTRATION_WHERE);
-
-			sb.append(_FINDER_COLUMN_U_ME_USERID_2);
-
-			sb.append(_FINDER_COLUMN_U_ME_MEETUPSENTRYID_2);
-
-			String sql = sb.toString();
-
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				Query query = session.createQuery(sql);
-
-				QueryPos queryPos = QueryPos.getInstance(query);
-
-				queryPos.add(userId);
-
-				queryPos.add(meetupsEntryId);
-
-				count = (Long)query.uniqueResult();
-
-				finderCache.putResult(finderPath, finderArgs, count);
-			}
-			catch (Exception exception) {
-				finderCache.removeResult(finderPath, finderArgs);
-
-				throw processException(exception);
-			}
-			finally {
-				closeSession(session);
-			}
+		if (meetupsRegistration == null) {
+			return 0;
 		}
 
-		return count.intValue();
+		return 1;
 	}
 
 	private static final String _FINDER_COLUMN_U_ME_USERID_2 =
@@ -2305,12 +2267,6 @@ public class MeetupsRegistrationPersistenceImpl
 			new String[] {Long.class.getName(), Long.class.getName()},
 			MeetupsRegistrationModelImpl.USERID_COLUMN_BITMASK |
 			MeetupsRegistrationModelImpl.MEETUPSENTRYID_COLUMN_BITMASK);
-
-		_finderPathCountByU_ME = new FinderPath(
-			MeetupsRegistrationModelImpl.ENTITY_CACHE_ENABLED,
-			MeetupsRegistrationModelImpl.FINDER_CACHE_ENABLED, Long.class,
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByU_ME",
-			new String[] {Long.class.getName(), Long.class.getName()});
 
 		_finderPathWithPaginationFindByME_S = new FinderPath(
 			MeetupsRegistrationModelImpl.ENTITY_CACHE_ENABLED,

@@ -585,7 +585,6 @@ public class ShoppingCouponPersistenceImpl
 		"shoppingCoupon.groupId = ?";
 
 	private FinderPath _finderPathFetchByCode;
-	private FinderPath _finderPathCountByCode;
 
 	/**
 	 * Returns the shopping coupon where code = &#63; or throws a <code>NoSuchCouponException</code> if it could not be found.
@@ -752,60 +751,13 @@ public class ShoppingCouponPersistenceImpl
 	 */
 	@Override
 	public int countByCode(String code) {
-		code = Objects.toString(code, "");
+		ShoppingCoupon shoppingCoupon = fetchByCode(code);
 
-		FinderPath finderPath = _finderPathCountByCode;
-
-		Object[] finderArgs = new Object[] {code};
-
-		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
-
-		if (count == null) {
-			StringBundler sb = new StringBundler(2);
-
-			sb.append(_SQL_COUNT_SHOPPINGCOUPON_WHERE);
-
-			boolean bindCode = false;
-
-			if (code.isEmpty()) {
-				sb.append(_FINDER_COLUMN_CODE_CODE_3);
-			}
-			else {
-				bindCode = true;
-
-				sb.append(_FINDER_COLUMN_CODE_CODE_2);
-			}
-
-			String sql = sb.toString();
-
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				Query query = session.createQuery(sql);
-
-				QueryPos queryPos = QueryPos.getInstance(query);
-
-				if (bindCode) {
-					queryPos.add(code);
-				}
-
-				count = (Long)query.uniqueResult();
-
-				finderCache.putResult(finderPath, finderArgs, count);
-			}
-			catch (Exception exception) {
-				finderCache.removeResult(finderPath, finderArgs);
-
-				throw processException(exception);
-			}
-			finally {
-				closeSession(session);
-			}
+		if (shoppingCoupon == null) {
+			return 0;
 		}
 
-		return count.intValue();
+		return 1;
 	}
 
 	private static final String _FINDER_COLUMN_CODE_CODE_2 =
@@ -1677,12 +1629,6 @@ public class ShoppingCouponPersistenceImpl
 			ShoppingCouponImpl.class, FINDER_CLASS_NAME_ENTITY, "fetchByCode",
 			new String[] {String.class.getName()},
 			ShoppingCouponModelImpl.CODE_COLUMN_BITMASK);
-
-		_finderPathCountByCode = new FinderPath(
-			ShoppingCouponModelImpl.ENTITY_CACHE_ENABLED,
-			ShoppingCouponModelImpl.FINDER_CACHE_ENABLED, Long.class,
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByCode",
-			new String[] {String.class.getName()});
 
 		ShoppingCouponUtil.setPersistence(this);
 	}

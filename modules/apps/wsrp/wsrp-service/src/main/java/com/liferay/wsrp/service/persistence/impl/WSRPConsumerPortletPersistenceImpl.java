@@ -1738,7 +1738,6 @@ public class WSRPConsumerPortletPersistenceImpl
 		"wsrpConsumerPortlet.wsrpConsumerId = ?";
 
 	private FinderPath _finderPathFetchByW_P;
-	private FinderPath _finderPathCountByW_P;
 
 	/**
 	 * Returns the wsrp consumer portlet where wsrpConsumerId = &#63; and portletHandle = &#63; or throws a <code>NoSuchConsumerPortletException</code> if it could not be found.
@@ -1947,64 +1946,14 @@ public class WSRPConsumerPortletPersistenceImpl
 	 */
 	@Override
 	public int countByW_P(long wsrpConsumerId, String portletHandle) {
-		portletHandle = Objects.toString(portletHandle, "");
+		WSRPConsumerPortlet wsrpConsumerPortlet = fetchByW_P(
+			wsrpConsumerId, portletHandle);
 
-		FinderPath finderPath = _finderPathCountByW_P;
-
-		Object[] finderArgs = new Object[] {wsrpConsumerId, portletHandle};
-
-		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
-
-		if (count == null) {
-			StringBundler sb = new StringBundler(3);
-
-			sb.append(_SQL_COUNT_WSRPCONSUMERPORTLET_WHERE);
-
-			sb.append(_FINDER_COLUMN_W_P_WSRPCONSUMERID_2);
-
-			boolean bindPortletHandle = false;
-
-			if (portletHandle.isEmpty()) {
-				sb.append(_FINDER_COLUMN_W_P_PORTLETHANDLE_3);
-			}
-			else {
-				bindPortletHandle = true;
-
-				sb.append(_FINDER_COLUMN_W_P_PORTLETHANDLE_2);
-			}
-
-			String sql = sb.toString();
-
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				Query query = session.createQuery(sql);
-
-				QueryPos queryPos = QueryPos.getInstance(query);
-
-				queryPos.add(wsrpConsumerId);
-
-				if (bindPortletHandle) {
-					queryPos.add(portletHandle);
-				}
-
-				count = (Long)query.uniqueResult();
-
-				finderCache.putResult(finderPath, finderArgs, count);
-			}
-			catch (Exception exception) {
-				finderCache.removeResult(finderPath, finderArgs);
-
-				throw processException(exception);
-			}
-			finally {
-				closeSession(session);
-			}
+		if (wsrpConsumerPortlet == null) {
+			return 0;
 		}
 
-		return count.intValue();
+		return 1;
 	}
 
 	private static final String _FINDER_COLUMN_W_P_WSRPCONSUMERID_2 =
@@ -3039,12 +2988,6 @@ public class WSRPConsumerPortletPersistenceImpl
 			new String[] {Long.class.getName(), String.class.getName()},
 			WSRPConsumerPortletModelImpl.WSRPCONSUMERID_COLUMN_BITMASK |
 			WSRPConsumerPortletModelImpl.PORTLETHANDLE_COLUMN_BITMASK);
-
-		_finderPathCountByW_P = new FinderPath(
-			WSRPConsumerPortletModelImpl.ENTITY_CACHE_ENABLED,
-			WSRPConsumerPortletModelImpl.FINDER_CACHE_ENABLED, Long.class,
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByW_P",
-			new String[] {Long.class.getName(), String.class.getName()});
 
 		WSRPConsumerPortletUtil.setPersistence(this);
 	}

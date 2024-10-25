@@ -1209,7 +1209,6 @@ public class DDMStorageLinkPersistenceImpl
 		"ddmStorageLink.companyId = ?";
 
 	private FinderPath _finderPathFetchByClassPK;
-	private FinderPath _finderPathCountByClassPK;
 
 	/**
 	 * Returns the ddm storage link where classPK = &#63; or throws a <code>NoSuchStorageLinkException</code> if it could not be found.
@@ -1365,47 +1364,13 @@ public class DDMStorageLinkPersistenceImpl
 	 */
 	@Override
 	public int countByClassPK(long classPK) {
-		FinderPath finderPath = _finderPathCountByClassPK;
+		DDMStorageLink ddmStorageLink = fetchByClassPK(classPK);
 
-		Object[] finderArgs = new Object[] {classPK};
-
-		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
-
-		if (count == null) {
-			StringBundler sb = new StringBundler(2);
-
-			sb.append(_SQL_COUNT_DDMSTORAGELINK_WHERE);
-
-			sb.append(_FINDER_COLUMN_CLASSPK_CLASSPK_2);
-
-			String sql = sb.toString();
-
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				Query query = session.createQuery(sql);
-
-				QueryPos queryPos = QueryPos.getInstance(query);
-
-				queryPos.add(classPK);
-
-				count = (Long)query.uniqueResult();
-
-				finderCache.putResult(finderPath, finderArgs, count);
-			}
-			catch (Exception exception) {
-				finderCache.removeResult(finderPath, finderArgs);
-
-				throw processException(exception);
-			}
-			finally {
-				closeSession(session);
-			}
+		if (ddmStorageLink == null) {
+			return 0;
 		}
 
-		return count.intValue();
+		return 1;
 	}
 
 	private static final String _FINDER_COLUMN_CLASSPK_CLASSPK_2 =
@@ -2848,12 +2813,6 @@ public class DDMStorageLinkPersistenceImpl
 			DDMStorageLinkImpl.class, FINDER_CLASS_NAME_ENTITY,
 			"fetchByClassPK", new String[] {Long.class.getName()},
 			DDMStorageLinkModelImpl.CLASSPK_COLUMN_BITMASK);
-
-		_finderPathCountByClassPK = new FinderPath(
-			DDMStorageLinkModelImpl.ENTITY_CACHE_ENABLED,
-			DDMStorageLinkModelImpl.FINDER_CACHE_ENABLED, Long.class,
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByClassPK",
-			new String[] {Long.class.getName()});
 
 		_finderPathWithPaginationFindByStructureId = new FinderPath(
 			DDMStorageLinkModelImpl.ENTITY_CACHE_ENABLED,
