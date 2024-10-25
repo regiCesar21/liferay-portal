@@ -77,6 +77,7 @@ public class PortalPreferencesPersistenceImpl
 	private FinderPath _finderPathWithoutPaginationFindAll;
 	private FinderPath _finderPathCountAll;
 	private FinderPath _finderPathFetchByO_O;
+	private FinderPath _finderPathCountByO_O;
 
 	/**
 	 * Returns the portal preferences where ownerId = &#63; and ownerType = &#63; or throws a <code>NoSuchPreferencesException</code> if it could not be found.
@@ -263,13 +264,52 @@ public class PortalPreferencesPersistenceImpl
 	 */
 	@Override
 	public int countByO_O(long ownerId, int ownerType) {
-		PortalPreferences portalPreferences = fetchByO_O(ownerId, ownerType);
+		FinderPath finderPath = _finderPathCountByO_O;
 
-		if (portalPreferences == null) {
-			return 0;
+		Object[] finderArgs = new Object[] {ownerId, ownerType};
+
+		Long count = (Long)FinderCacheUtil.getResult(
+			finderPath, finderArgs, this);
+
+		if (count == null) {
+			StringBundler sb = new StringBundler(3);
+
+			sb.append(_SQL_COUNT_PORTALPREFERENCES_WHERE);
+
+			sb.append(_FINDER_COLUMN_O_O_OWNERID_2);
+
+			sb.append(_FINDER_COLUMN_O_O_OWNERTYPE_2);
+
+			String sql = sb.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query query = session.createQuery(sql);
+
+				QueryPos queryPos = QueryPos.getInstance(query);
+
+				queryPos.add(ownerId);
+
+				queryPos.add(ownerType);
+
+				count = (Long)query.uniqueResult();
+
+				FinderCacheUtil.putResult(finderPath, finderArgs, count);
+			}
+			catch (Exception exception) {
+				FinderCacheUtil.removeResult(finderPath, finderArgs);
+
+				throw processException(exception);
+			}
+			finally {
+				closeSession(session);
+			}
 		}
 
-		return 1;
+		return count.intValue();
 	}
 
 	private static final String _FINDER_COLUMN_O_O_OWNERID_2 =
@@ -1066,6 +1106,12 @@ public class PortalPreferencesPersistenceImpl
 			new String[] {Long.class.getName(), Integer.class.getName()},
 			PortalPreferencesModelImpl.OWNERID_COLUMN_BITMASK |
 			PortalPreferencesModelImpl.OWNERTYPE_COLUMN_BITMASK);
+
+		_finderPathCountByO_O = new FinderPath(
+			PortalPreferencesModelImpl.ENTITY_CACHE_ENABLED,
+			PortalPreferencesModelImpl.FINDER_CACHE_ENABLED, Long.class,
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByO_O",
+			new String[] {Long.class.getName(), Integer.class.getName()});
 
 		PortalPreferencesUtil.setPersistence(this);
 	}

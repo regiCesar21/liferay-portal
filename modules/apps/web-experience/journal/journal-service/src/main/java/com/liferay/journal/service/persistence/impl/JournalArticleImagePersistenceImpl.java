@@ -1725,6 +1725,7 @@ public class JournalArticleImagePersistenceImpl
 		"journalArticleImage.version = ?";
 
 	private FinderPath _finderPathFetchByG_A_V_E_E_L;
+	private FinderPath _finderPathCountByG_A_V_E_E_L;
 
 	/**
 	 * Returns the journal article image where groupId = &#63; and articleId = &#63; and version = &#63; and elInstanceId = &#63; and elName = &#63; and languageId = &#63; or throws a <code>NoSuchArticleImageException</code> if it could not be found.
@@ -2018,14 +2019,118 @@ public class JournalArticleImagePersistenceImpl
 		long groupId, String articleId, double version, String elInstanceId,
 		String elName, String languageId) {
 
-		JournalArticleImage journalArticleImage = fetchByG_A_V_E_E_L(
-			groupId, articleId, version, elInstanceId, elName, languageId);
+		articleId = Objects.toString(articleId, "");
+		elInstanceId = Objects.toString(elInstanceId, "");
+		elName = Objects.toString(elName, "");
+		languageId = Objects.toString(languageId, "");
 
-		if (journalArticleImage == null) {
-			return 0;
+		FinderPath finderPath = _finderPathCountByG_A_V_E_E_L;
+
+		Object[] finderArgs = new Object[] {
+			groupId, articleId, version, elInstanceId, elName, languageId
+		};
+
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
+
+		if (count == null) {
+			StringBundler sb = new StringBundler(7);
+
+			sb.append(_SQL_COUNT_JOURNALARTICLEIMAGE_WHERE);
+
+			sb.append(_FINDER_COLUMN_G_A_V_E_E_L_GROUPID_2);
+
+			boolean bindArticleId = false;
+
+			if (articleId.isEmpty()) {
+				sb.append(_FINDER_COLUMN_G_A_V_E_E_L_ARTICLEID_3);
+			}
+			else {
+				bindArticleId = true;
+
+				sb.append(_FINDER_COLUMN_G_A_V_E_E_L_ARTICLEID_2);
+			}
+
+			sb.append(_FINDER_COLUMN_G_A_V_E_E_L_VERSION_2);
+
+			boolean bindElInstanceId = false;
+
+			if (elInstanceId.isEmpty()) {
+				sb.append(_FINDER_COLUMN_G_A_V_E_E_L_ELINSTANCEID_3);
+			}
+			else {
+				bindElInstanceId = true;
+
+				sb.append(_FINDER_COLUMN_G_A_V_E_E_L_ELINSTANCEID_2);
+			}
+
+			boolean bindElName = false;
+
+			if (elName.isEmpty()) {
+				sb.append(_FINDER_COLUMN_G_A_V_E_E_L_ELNAME_3);
+			}
+			else {
+				bindElName = true;
+
+				sb.append(_FINDER_COLUMN_G_A_V_E_E_L_ELNAME_2);
+			}
+
+			boolean bindLanguageId = false;
+
+			if (languageId.isEmpty()) {
+				sb.append(_FINDER_COLUMN_G_A_V_E_E_L_LANGUAGEID_3);
+			}
+			else {
+				bindLanguageId = true;
+
+				sb.append(_FINDER_COLUMN_G_A_V_E_E_L_LANGUAGEID_2);
+			}
+
+			String sql = sb.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query query = session.createQuery(sql);
+
+				QueryPos queryPos = QueryPos.getInstance(query);
+
+				queryPos.add(groupId);
+
+				if (bindArticleId) {
+					queryPos.add(articleId);
+				}
+
+				queryPos.add(version);
+
+				if (bindElInstanceId) {
+					queryPos.add(elInstanceId);
+				}
+
+				if (bindElName) {
+					queryPos.add(elName);
+				}
+
+				if (bindLanguageId) {
+					queryPos.add(languageId);
+				}
+
+				count = (Long)query.uniqueResult();
+
+				finderCache.putResult(finderPath, finderArgs, count);
+			}
+			catch (Exception exception) {
+				finderCache.removeResult(finderPath, finderArgs);
+
+				throw processException(exception);
+			}
+			finally {
+				closeSession(session);
+			}
 		}
 
-		return 1;
+		return count.intValue();
 	}
 
 	private static final String _FINDER_COLUMN_G_A_V_E_E_L_GROUPID_2 =
@@ -3051,6 +3156,16 @@ public class JournalArticleImagePersistenceImpl
 			JournalArticleImageModelImpl.ELINSTANCEID_COLUMN_BITMASK |
 			JournalArticleImageModelImpl.ELNAME_COLUMN_BITMASK |
 			JournalArticleImageModelImpl.LANGUAGEID_COLUMN_BITMASK);
+
+		_finderPathCountByG_A_V_E_E_L = new FinderPath(
+			JournalArticleImageModelImpl.ENTITY_CACHE_ENABLED,
+			JournalArticleImageModelImpl.FINDER_CACHE_ENABLED, Long.class,
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByG_A_V_E_E_L",
+			new String[] {
+				Long.class.getName(), String.class.getName(),
+				Double.class.getName(), String.class.getName(),
+				String.class.getName(), String.class.getName()
+			});
 
 		JournalArticleImageUtil.setPersistence(this);
 	}

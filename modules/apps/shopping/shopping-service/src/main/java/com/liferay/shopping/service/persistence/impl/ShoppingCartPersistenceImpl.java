@@ -1075,6 +1075,7 @@ public class ShoppingCartPersistenceImpl
 		"shoppingCart.userId = ?";
 
 	private FinderPath _finderPathFetchByG_U;
+	private FinderPath _finderPathCountByG_U;
 
 	/**
 	 * Returns the shopping cart where groupId = &#63; and userId = &#63; or throws a <code>NoSuchCartException</code> if it could not be found.
@@ -1245,13 +1246,51 @@ public class ShoppingCartPersistenceImpl
 	 */
 	@Override
 	public int countByG_U(long groupId, long userId) {
-		ShoppingCart shoppingCart = fetchByG_U(groupId, userId);
+		FinderPath finderPath = _finderPathCountByG_U;
 
-		if (shoppingCart == null) {
-			return 0;
+		Object[] finderArgs = new Object[] {groupId, userId};
+
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
+
+		if (count == null) {
+			StringBundler sb = new StringBundler(3);
+
+			sb.append(_SQL_COUNT_SHOPPINGCART_WHERE);
+
+			sb.append(_FINDER_COLUMN_G_U_GROUPID_2);
+
+			sb.append(_FINDER_COLUMN_G_U_USERID_2);
+
+			String sql = sb.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query query = session.createQuery(sql);
+
+				QueryPos queryPos = QueryPos.getInstance(query);
+
+				queryPos.add(groupId);
+
+				queryPos.add(userId);
+
+				count = (Long)query.uniqueResult();
+
+				finderCache.putResult(finderPath, finderArgs, count);
+			}
+			catch (Exception exception) {
+				finderCache.removeResult(finderPath, finderArgs);
+
+				throw processException(exception);
+			}
+			finally {
+				closeSession(session);
+			}
 		}
 
-		return 1;
+		return count.intValue();
 	}
 
 	private static final String _FINDER_COLUMN_G_U_GROUPID_2 =
@@ -2144,6 +2183,12 @@ public class ShoppingCartPersistenceImpl
 			new String[] {Long.class.getName(), Long.class.getName()},
 			ShoppingCartModelImpl.GROUPID_COLUMN_BITMASK |
 			ShoppingCartModelImpl.USERID_COLUMN_BITMASK);
+
+		_finderPathCountByG_U = new FinderPath(
+			ShoppingCartModelImpl.ENTITY_CACHE_ENABLED,
+			ShoppingCartModelImpl.FINDER_CACHE_ENABLED, Long.class,
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByG_U",
+			new String[] {Long.class.getName(), Long.class.getName()});
 
 		ShoppingCartUtil.setPersistence(this);
 	}

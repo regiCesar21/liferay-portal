@@ -1074,6 +1074,7 @@ public class MessagePersistenceImpl
 		"message.folderId = ?";
 
 	private FinderPath _finderPathFetchByF_R;
+	private FinderPath _finderPathCountByF_R;
 
 	/**
 	 * Returns the message where folderId = &#63; and remoteMessageId = &#63; or throws a <code>NoSuchMessageException</code> if it could not be found.
@@ -1261,13 +1262,51 @@ public class MessagePersistenceImpl
 	 */
 	@Override
 	public int countByF_R(long folderId, long remoteMessageId) {
-		Message message = fetchByF_R(folderId, remoteMessageId);
+		FinderPath finderPath = _finderPathCountByF_R;
 
-		if (message == null) {
-			return 0;
+		Object[] finderArgs = new Object[] {folderId, remoteMessageId};
+
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
+
+		if (count == null) {
+			StringBundler sb = new StringBundler(3);
+
+			sb.append(_SQL_COUNT_MESSAGE_WHERE);
+
+			sb.append(_FINDER_COLUMN_F_R_FOLDERID_2);
+
+			sb.append(_FINDER_COLUMN_F_R_REMOTEMESSAGEID_2);
+
+			String sql = sb.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query query = session.createQuery(sql);
+
+				QueryPos queryPos = QueryPos.getInstance(query);
+
+				queryPos.add(folderId);
+
+				queryPos.add(remoteMessageId);
+
+				count = (Long)query.uniqueResult();
+
+				finderCache.putResult(finderPath, finderArgs, count);
+			}
+			catch (Exception exception) {
+				finderCache.removeResult(finderPath, finderArgs);
+
+				throw processException(exception);
+			}
+			finally {
+				closeSession(session);
+			}
 		}
 
-		return 1;
+		return count.intValue();
 	}
 
 	private static final String _FINDER_COLUMN_F_R_FOLDERID_2 =
@@ -2178,6 +2217,12 @@ public class MessagePersistenceImpl
 			new String[] {Long.class.getName(), Long.class.getName()},
 			MessageModelImpl.FOLDERID_COLUMN_BITMASK |
 			MessageModelImpl.REMOTEMESSAGEID_COLUMN_BITMASK);
+
+		_finderPathCountByF_R = new FinderPath(
+			MessageModelImpl.ENTITY_CACHE_ENABLED,
+			MessageModelImpl.FINDER_CACHE_ENABLED, Long.class,
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByF_R",
+			new String[] {Long.class.getName(), Long.class.getName()});
 
 		MessageUtil.setPersistence(this);
 	}

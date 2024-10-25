@@ -82,6 +82,7 @@ public class FeedPersistenceImpl
 	private FinderPath _finderPathWithoutPaginationFindAll;
 	private FinderPath _finderPathCountAll;
 	private FinderPath _finderPathFetchByU_TSN;
+	private FinderPath _finderPathCountByU_TSN;
 
 	/**
 	 * Returns the feed where userId = &#63; and twitterScreenName = &#63; or throws a <code>NoSuchFeedException</code> if it could not be found.
@@ -284,13 +285,64 @@ public class FeedPersistenceImpl
 	 */
 	@Override
 	public int countByU_TSN(long userId, String twitterScreenName) {
-		Feed feed = fetchByU_TSN(userId, twitterScreenName);
+		twitterScreenName = Objects.toString(twitterScreenName, "");
 
-		if (feed == null) {
-			return 0;
+		FinderPath finderPath = _finderPathCountByU_TSN;
+
+		Object[] finderArgs = new Object[] {userId, twitterScreenName};
+
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
+
+		if (count == null) {
+			StringBundler sb = new StringBundler(3);
+
+			sb.append(_SQL_COUNT_FEED_WHERE);
+
+			sb.append(_FINDER_COLUMN_U_TSN_USERID_2);
+
+			boolean bindTwitterScreenName = false;
+
+			if (twitterScreenName.isEmpty()) {
+				sb.append(_FINDER_COLUMN_U_TSN_TWITTERSCREENNAME_3);
+			}
+			else {
+				bindTwitterScreenName = true;
+
+				sb.append(_FINDER_COLUMN_U_TSN_TWITTERSCREENNAME_2);
+			}
+
+			String sql = sb.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query query = session.createQuery(sql);
+
+				QueryPos queryPos = QueryPos.getInstance(query);
+
+				queryPos.add(userId);
+
+				if (bindTwitterScreenName) {
+					queryPos.add(twitterScreenName);
+				}
+
+				count = (Long)query.uniqueResult();
+
+				finderCache.putResult(finderPath, finderArgs, count);
+			}
+			catch (Exception exception) {
+				finderCache.removeResult(finderPath, finderArgs);
+
+				throw processException(exception);
+			}
+			finally {
+				closeSession(session);
+			}
 		}
 
-		return 1;
+		return count.intValue();
 	}
 
 	private static final String _FINDER_COLUMN_U_TSN_USERID_2 =
@@ -1072,6 +1124,12 @@ public class FeedPersistenceImpl
 			new String[] {Long.class.getName(), String.class.getName()},
 			FeedModelImpl.USERID_COLUMN_BITMASK |
 			FeedModelImpl.TWITTERSCREENNAME_COLUMN_BITMASK);
+
+		_finderPathCountByU_TSN = new FinderPath(
+			FeedModelImpl.ENTITY_CACHE_ENABLED,
+			FeedModelImpl.FINDER_CACHE_ENABLED, Long.class,
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByU_TSN",
+			new String[] {Long.class.getName(), String.class.getName()});
 
 		FeedUtil.setPersistence(this);
 	}

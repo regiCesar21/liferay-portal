@@ -1146,6 +1146,7 @@ public class LayoutSetPersistenceImpl
 			"(layoutSet.layoutSetPrototypeUuid IS NULL OR layoutSet.layoutSetPrototypeUuid = '')";
 
 	private FinderPath _finderPathFetchByG_P;
+	private FinderPath _finderPathCountByG_P;
 
 	/**
 	 * Returns the layout set where groupId = &#63; and privateLayout = &#63; or throws a <code>NoSuchLayoutSetException</code> if it could not be found.
@@ -1317,13 +1318,52 @@ public class LayoutSetPersistenceImpl
 	 */
 	@Override
 	public int countByG_P(long groupId, boolean privateLayout) {
-		LayoutSet layoutSet = fetchByG_P(groupId, privateLayout);
+		FinderPath finderPath = _finderPathCountByG_P;
 
-		if (layoutSet == null) {
-			return 0;
+		Object[] finderArgs = new Object[] {groupId, privateLayout};
+
+		Long count = (Long)FinderCacheUtil.getResult(
+			finderPath, finderArgs, this);
+
+		if (count == null) {
+			StringBundler sb = new StringBundler(3);
+
+			sb.append(_SQL_COUNT_LAYOUTSET_WHERE);
+
+			sb.append(_FINDER_COLUMN_G_P_GROUPID_2);
+
+			sb.append(_FINDER_COLUMN_G_P_PRIVATELAYOUT_2);
+
+			String sql = sb.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query query = session.createQuery(sql);
+
+				QueryPos queryPos = QueryPos.getInstance(query);
+
+				queryPos.add(groupId);
+
+				queryPos.add(privateLayout);
+
+				count = (Long)query.uniqueResult();
+
+				FinderCacheUtil.putResult(finderPath, finderArgs, count);
+			}
+			catch (Exception exception) {
+				FinderCacheUtil.removeResult(finderPath, finderArgs);
+
+				throw processException(exception);
+			}
+			finally {
+				closeSession(session);
+			}
 		}
 
-		return 1;
+		return count.intValue();
 	}
 
 	private static final String _FINDER_COLUMN_G_P_GROUPID_2 =
@@ -1333,6 +1373,7 @@ public class LayoutSetPersistenceImpl
 		"layoutSet.privateLayout = ?";
 
 	private FinderPath _finderPathFetchByP_L;
+	private FinderPath _finderPathCountByP_L;
 
 	/**
 	 * Returns the layout set where privateLayout = &#63; and logoId = &#63; or throws a <code>NoSuchLayoutSetException</code> if it could not be found.
@@ -1521,13 +1562,52 @@ public class LayoutSetPersistenceImpl
 	 */
 	@Override
 	public int countByP_L(boolean privateLayout, long logoId) {
-		LayoutSet layoutSet = fetchByP_L(privateLayout, logoId);
+		FinderPath finderPath = _finderPathCountByP_L;
 
-		if (layoutSet == null) {
-			return 0;
+		Object[] finderArgs = new Object[] {privateLayout, logoId};
+
+		Long count = (Long)FinderCacheUtil.getResult(
+			finderPath, finderArgs, this);
+
+		if (count == null) {
+			StringBundler sb = new StringBundler(3);
+
+			sb.append(_SQL_COUNT_LAYOUTSET_WHERE);
+
+			sb.append(_FINDER_COLUMN_P_L_PRIVATELAYOUT_2);
+
+			sb.append(_FINDER_COLUMN_P_L_LOGOID_2);
+
+			String sql = sb.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query query = session.createQuery(sql);
+
+				QueryPos queryPos = QueryPos.getInstance(query);
+
+				queryPos.add(privateLayout);
+
+				queryPos.add(logoId);
+
+				count = (Long)query.uniqueResult();
+
+				FinderCacheUtil.putResult(finderPath, finderArgs, count);
+			}
+			catch (Exception exception) {
+				FinderCacheUtil.removeResult(finderPath, finderArgs);
+
+				throw processException(exception);
+			}
+			finally {
+				closeSession(session);
+			}
 		}
 
-		return 1;
+		return count.intValue();
 	}
 
 	private static final String _FINDER_COLUMN_P_L_PRIVATELAYOUT_2 =
@@ -2502,6 +2582,12 @@ public class LayoutSetPersistenceImpl
 			LayoutSetModelImpl.GROUPID_COLUMN_BITMASK |
 			LayoutSetModelImpl.PRIVATELAYOUT_COLUMN_BITMASK);
 
+		_finderPathCountByG_P = new FinderPath(
+			LayoutSetModelImpl.ENTITY_CACHE_ENABLED,
+			LayoutSetModelImpl.FINDER_CACHE_ENABLED, Long.class,
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByG_P",
+			new String[] {Long.class.getName(), Boolean.class.getName()});
+
 		_finderPathFetchByP_L = new FinderPath(
 			LayoutSetModelImpl.ENTITY_CACHE_ENABLED,
 			LayoutSetModelImpl.FINDER_CACHE_ENABLED, LayoutSetImpl.class,
@@ -2509,6 +2595,12 @@ public class LayoutSetPersistenceImpl
 			new String[] {Boolean.class.getName(), Long.class.getName()},
 			LayoutSetModelImpl.PRIVATELAYOUT_COLUMN_BITMASK |
 			LayoutSetModelImpl.LOGOID_COLUMN_BITMASK);
+
+		_finderPathCountByP_L = new FinderPath(
+			LayoutSetModelImpl.ENTITY_CACHE_ENABLED,
+			LayoutSetModelImpl.FINDER_CACHE_ENABLED, Long.class,
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByP_L",
+			new String[] {Boolean.class.getName(), Long.class.getName()});
 
 		LayoutSetUtil.setPersistence(this);
 	}

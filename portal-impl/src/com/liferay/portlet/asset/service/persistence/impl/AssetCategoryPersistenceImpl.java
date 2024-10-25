@@ -640,6 +640,7 @@ public class AssetCategoryPersistenceImpl
 		"(assetCategory.uuid IS NULL OR assetCategory.uuid = '')";
 
 	private FinderPath _finderPathFetchByUUID_G;
+	private FinderPath _finderPathCountByUUID_G;
 
 	/**
 	 * Returns the asset category where uuid = &#63; and groupId = &#63; or throws a <code>NoSuchCategoryException</code> if it could not be found.
@@ -824,13 +825,65 @@ public class AssetCategoryPersistenceImpl
 	 */
 	@Override
 	public int countByUUID_G(String uuid, long groupId) {
-		AssetCategory assetCategory = fetchByUUID_G(uuid, groupId);
+		uuid = Objects.toString(uuid, "");
 
-		if (assetCategory == null) {
-			return 0;
+		FinderPath finderPath = _finderPathCountByUUID_G;
+
+		Object[] finderArgs = new Object[] {uuid, groupId};
+
+		Long count = (Long)FinderCacheUtil.getResult(
+			finderPath, finderArgs, this);
+
+		if (count == null) {
+			StringBundler sb = new StringBundler(3);
+
+			sb.append(_SQL_COUNT_ASSETCATEGORY_WHERE);
+
+			boolean bindUuid = false;
+
+			if (uuid.isEmpty()) {
+				sb.append(_FINDER_COLUMN_UUID_G_UUID_3);
+			}
+			else {
+				bindUuid = true;
+
+				sb.append(_FINDER_COLUMN_UUID_G_UUID_2);
+			}
+
+			sb.append(_FINDER_COLUMN_UUID_G_GROUPID_2);
+
+			String sql = sb.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query query = session.createQuery(sql);
+
+				QueryPos queryPos = QueryPos.getInstance(query);
+
+				if (bindUuid) {
+					queryPos.add(uuid);
+				}
+
+				queryPos.add(groupId);
+
+				count = (Long)query.uniqueResult();
+
+				FinderCacheUtil.putResult(finderPath, finderArgs, count);
+			}
+			catch (Exception exception) {
+				FinderCacheUtil.removeResult(finderPath, finderArgs);
+
+				throw processException(exception);
+			}
+			finally {
+				closeSession(session);
+			}
 		}
 
-		return 1;
+		return count.intValue();
 	}
 
 	private static final String _FINDER_COLUMN_UUID_G_UUID_2 =
@@ -9233,6 +9286,7 @@ public class AssetCategoryPersistenceImpl
 		"assetCategory.vocabularyId IN (";
 
 	private FinderPath _finderPathFetchByP_N_V;
+	private FinderPath _finderPathCountByP_N_V;
 
 	/**
 	 * Returns the asset category where parentCategoryId = &#63; and name = &#63; and vocabularyId = &#63; or throws a <code>NoSuchCategoryException</code> if it could not be found.
@@ -9439,14 +9493,71 @@ public class AssetCategoryPersistenceImpl
 	public int countByP_N_V(
 		long parentCategoryId, String name, long vocabularyId) {
 
-		AssetCategory assetCategory = fetchByP_N_V(
-			parentCategoryId, name, vocabularyId);
+		name = Objects.toString(name, "");
 
-		if (assetCategory == null) {
-			return 0;
+		FinderPath finderPath = _finderPathCountByP_N_V;
+
+		Object[] finderArgs = new Object[] {
+			parentCategoryId, name, vocabularyId
+		};
+
+		Long count = (Long)FinderCacheUtil.getResult(
+			finderPath, finderArgs, this);
+
+		if (count == null) {
+			StringBundler sb = new StringBundler(4);
+
+			sb.append(_SQL_COUNT_ASSETCATEGORY_WHERE);
+
+			sb.append(_FINDER_COLUMN_P_N_V_PARENTCATEGORYID_2);
+
+			boolean bindName = false;
+
+			if (name.isEmpty()) {
+				sb.append(_FINDER_COLUMN_P_N_V_NAME_3);
+			}
+			else {
+				bindName = true;
+
+				sb.append(_FINDER_COLUMN_P_N_V_NAME_2);
+			}
+
+			sb.append(_FINDER_COLUMN_P_N_V_VOCABULARYID_2);
+
+			String sql = sb.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query query = session.createQuery(sql);
+
+				QueryPos queryPos = QueryPos.getInstance(query);
+
+				queryPos.add(parentCategoryId);
+
+				if (bindName) {
+					queryPos.add(name);
+				}
+
+				queryPos.add(vocabularyId);
+
+				count = (Long)query.uniqueResult();
+
+				FinderCacheUtil.putResult(finderPath, finderArgs, count);
+			}
+			catch (Exception exception) {
+				FinderCacheUtil.removeResult(finderPath, finderArgs);
+
+				throw processException(exception);
+			}
+			finally {
+				closeSession(session);
+			}
 		}
 
-		return 1;
+		return count.intValue();
 	}
 
 	private static final String _FINDER_COLUMN_P_N_V_PARENTCATEGORYID_2 =
@@ -12529,6 +12640,12 @@ public class AssetCategoryPersistenceImpl
 			AssetCategoryModelImpl.UUID_COLUMN_BITMASK |
 			AssetCategoryModelImpl.GROUPID_COLUMN_BITMASK);
 
+		_finderPathCountByUUID_G = new FinderPath(
+			AssetCategoryModelImpl.ENTITY_CACHE_ENABLED,
+			AssetCategoryModelImpl.FINDER_CACHE_ENABLED, Long.class,
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByUUID_G",
+			new String[] {String.class.getName(), Long.class.getName()});
+
 		_finderPathWithPaginationFindByUuid_C = new FinderPath(
 			AssetCategoryModelImpl.ENTITY_CACHE_ENABLED,
 			AssetCategoryModelImpl.FINDER_CACHE_ENABLED,
@@ -12803,6 +12920,15 @@ public class AssetCategoryPersistenceImpl
 			AssetCategoryModelImpl.PARENTCATEGORYID_COLUMN_BITMASK |
 			AssetCategoryModelImpl.NAME_COLUMN_BITMASK |
 			AssetCategoryModelImpl.VOCABULARYID_COLUMN_BITMASK);
+
+		_finderPathCountByP_N_V = new FinderPath(
+			AssetCategoryModelImpl.ENTITY_CACHE_ENABLED,
+			AssetCategoryModelImpl.FINDER_CACHE_ENABLED, Long.class,
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByP_N_V",
+			new String[] {
+				Long.class.getName(), String.class.getName(),
+				Long.class.getName()
+			});
 
 		_finderPathWithPaginationFindByG_P_N_V = new FinderPath(
 			AssetCategoryModelImpl.ENTITY_CACHE_ENABLED,

@@ -624,6 +624,7 @@ public class ExpandoTablePersistenceImpl
 		"expandoTable.classNameId = ?";
 
 	private FinderPath _finderPathFetchByC_C_N;
+	private FinderPath _finderPathCountByC_C_N;
 
 	/**
 	 * Returns the expando table where companyId = &#63; and classNameId = &#63; and name = &#63; or throws a <code>NoSuchTableException</code> if it could not be found.
@@ -825,13 +826,69 @@ public class ExpandoTablePersistenceImpl
 	 */
 	@Override
 	public int countByC_C_N(long companyId, long classNameId, String name) {
-		ExpandoTable expandoTable = fetchByC_C_N(companyId, classNameId, name);
+		name = Objects.toString(name, "");
 
-		if (expandoTable == null) {
-			return 0;
+		FinderPath finderPath = _finderPathCountByC_C_N;
+
+		Object[] finderArgs = new Object[] {companyId, classNameId, name};
+
+		Long count = (Long)FinderCacheUtil.getResult(
+			finderPath, finderArgs, this);
+
+		if (count == null) {
+			StringBundler sb = new StringBundler(4);
+
+			sb.append(_SQL_COUNT_EXPANDOTABLE_WHERE);
+
+			sb.append(_FINDER_COLUMN_C_C_N_COMPANYID_2);
+
+			sb.append(_FINDER_COLUMN_C_C_N_CLASSNAMEID_2);
+
+			boolean bindName = false;
+
+			if (name.isEmpty()) {
+				sb.append(_FINDER_COLUMN_C_C_N_NAME_3);
+			}
+			else {
+				bindName = true;
+
+				sb.append(_FINDER_COLUMN_C_C_N_NAME_2);
+			}
+
+			String sql = sb.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query query = session.createQuery(sql);
+
+				QueryPos queryPos = QueryPos.getInstance(query);
+
+				queryPos.add(companyId);
+
+				queryPos.add(classNameId);
+
+				if (bindName) {
+					queryPos.add(name);
+				}
+
+				count = (Long)query.uniqueResult();
+
+				FinderCacheUtil.putResult(finderPath, finderArgs, count);
+			}
+			catch (Exception exception) {
+				FinderCacheUtil.removeResult(finderPath, finderArgs);
+
+				throw processException(exception);
+			}
+			finally {
+				closeSession(session);
+			}
 		}
 
-		return 1;
+		return count.intValue();
 	}
 
 	private static final String _FINDER_COLUMN_C_C_N_COMPANYID_2 =
@@ -1680,6 +1737,15 @@ public class ExpandoTablePersistenceImpl
 			ExpandoTableModelImpl.COMPANYID_COLUMN_BITMASK |
 			ExpandoTableModelImpl.CLASSNAMEID_COLUMN_BITMASK |
 			ExpandoTableModelImpl.NAME_COLUMN_BITMASK);
+
+		_finderPathCountByC_C_N = new FinderPath(
+			ExpandoTableModelImpl.ENTITY_CACHE_ENABLED,
+			ExpandoTableModelImpl.FINDER_CACHE_ENABLED, Long.class,
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByC_C_N",
+			new String[] {
+				Long.class.getName(), Long.class.getName(),
+				String.class.getName()
+			});
 
 		ExpandoTableUtil.setPersistence(this);
 	}

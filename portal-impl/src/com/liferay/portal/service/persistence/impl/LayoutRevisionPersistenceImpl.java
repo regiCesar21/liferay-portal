@@ -5017,6 +5017,7 @@ public class LayoutRevisionPersistenceImpl
 		"layoutRevision.plid = ?";
 
 	private FinderPath _finderPathFetchByL_H_P;
+	private FinderPath _finderPathCountByL_H_P;
 
 	/**
 	 * Returns the layout revision where layoutSetBranchId = &#63; and head = &#63; and plid = &#63; or throws a <code>NoSuchLayoutRevisionException</code> if it could not be found.
@@ -5225,14 +5226,56 @@ public class LayoutRevisionPersistenceImpl
 	 */
 	@Override
 	public int countByL_H_P(long layoutSetBranchId, boolean head, long plid) {
-		LayoutRevision layoutRevision = fetchByL_H_P(
-			layoutSetBranchId, head, plid);
+		FinderPath finderPath = _finderPathCountByL_H_P;
 
-		if (layoutRevision == null) {
-			return 0;
+		Object[] finderArgs = new Object[] {layoutSetBranchId, head, plid};
+
+		Long count = (Long)FinderCacheUtil.getResult(
+			finderPath, finderArgs, this);
+
+		if (count == null) {
+			StringBundler sb = new StringBundler(4);
+
+			sb.append(_SQL_COUNT_LAYOUTREVISION_WHERE);
+
+			sb.append(_FINDER_COLUMN_L_H_P_LAYOUTSETBRANCHID_2);
+
+			sb.append(_FINDER_COLUMN_L_H_P_HEAD_2);
+
+			sb.append(_FINDER_COLUMN_L_H_P_PLID_2);
+
+			String sql = sb.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query query = session.createQuery(sql);
+
+				QueryPos queryPos = QueryPos.getInstance(query);
+
+				queryPos.add(layoutSetBranchId);
+
+				queryPos.add(head);
+
+				queryPos.add(plid);
+
+				count = (Long)query.uniqueResult();
+
+				FinderCacheUtil.putResult(finderPath, finderArgs, count);
+			}
+			catch (Exception exception) {
+				FinderCacheUtil.removeResult(finderPath, finderArgs);
+
+				throw processException(exception);
+			}
+			finally {
+				closeSession(session);
+			}
 		}
 
-		return 1;
+		return count.intValue();
 	}
 
 	private static final String _FINDER_COLUMN_L_H_P_LAYOUTSETBRANCHID_2 =
@@ -7009,6 +7052,7 @@ public class LayoutRevisionPersistenceImpl
 		"layoutRevision.status = ?";
 
 	private FinderPath _finderPathFetchByL_L_H_P;
+	private FinderPath _finderPathCountByL_L_H_P;
 
 	/**
 	 * Returns the layout revision where layoutSetBranchId = &#63; and layoutBranchId = &#63; and head = &#63; and plid = &#63; or throws a <code>NoSuchLayoutRevisionException</code> if it could not be found.
@@ -7238,14 +7282,62 @@ public class LayoutRevisionPersistenceImpl
 	public int countByL_L_H_P(
 		long layoutSetBranchId, long layoutBranchId, boolean head, long plid) {
 
-		LayoutRevision layoutRevision = fetchByL_L_H_P(
-			layoutSetBranchId, layoutBranchId, head, plid);
+		FinderPath finderPath = _finderPathCountByL_L_H_P;
 
-		if (layoutRevision == null) {
-			return 0;
+		Object[] finderArgs = new Object[] {
+			layoutSetBranchId, layoutBranchId, head, plid
+		};
+
+		Long count = (Long)FinderCacheUtil.getResult(
+			finderPath, finderArgs, this);
+
+		if (count == null) {
+			StringBundler sb = new StringBundler(5);
+
+			sb.append(_SQL_COUNT_LAYOUTREVISION_WHERE);
+
+			sb.append(_FINDER_COLUMN_L_L_H_P_LAYOUTSETBRANCHID_2);
+
+			sb.append(_FINDER_COLUMN_L_L_H_P_LAYOUTBRANCHID_2);
+
+			sb.append(_FINDER_COLUMN_L_L_H_P_HEAD_2);
+
+			sb.append(_FINDER_COLUMN_L_L_H_P_PLID_2);
+
+			String sql = sb.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query query = session.createQuery(sql);
+
+				QueryPos queryPos = QueryPos.getInstance(query);
+
+				queryPos.add(layoutSetBranchId);
+
+				queryPos.add(layoutBranchId);
+
+				queryPos.add(head);
+
+				queryPos.add(plid);
+
+				count = (Long)query.uniqueResult();
+
+				FinderCacheUtil.putResult(finderPath, finderArgs, count);
+			}
+			catch (Exception exception) {
+				FinderCacheUtil.removeResult(finderPath, finderArgs);
+
+				throw processException(exception);
+			}
+			finally {
+				closeSession(session);
+			}
 		}
 
-		return 1;
+		return count.intValue();
 	}
 
 	private static final String _FINDER_COLUMN_L_L_H_P_LAYOUTSETBRANCHID_2 =
@@ -8719,6 +8811,15 @@ public class LayoutRevisionPersistenceImpl
 			LayoutRevisionModelImpl.HEAD_COLUMN_BITMASK |
 			LayoutRevisionModelImpl.PLID_COLUMN_BITMASK);
 
+		_finderPathCountByL_H_P = new FinderPath(
+			LayoutRevisionModelImpl.ENTITY_CACHE_ENABLED,
+			LayoutRevisionModelImpl.FINDER_CACHE_ENABLED, Long.class,
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByL_H_P",
+			new String[] {
+				Long.class.getName(), Boolean.class.getName(),
+				Long.class.getName()
+			});
+
 		_finderPathWithPaginationFindByL_H_P_Collection = new FinderPath(
 			LayoutRevisionModelImpl.ENTITY_CACHE_ENABLED,
 			LayoutRevisionModelImpl.FINDER_CACHE_ENABLED,
@@ -8835,6 +8936,15 @@ public class LayoutRevisionPersistenceImpl
 			LayoutRevisionModelImpl.LAYOUTBRANCHID_COLUMN_BITMASK |
 			LayoutRevisionModelImpl.HEAD_COLUMN_BITMASK |
 			LayoutRevisionModelImpl.PLID_COLUMN_BITMASK);
+
+		_finderPathCountByL_L_H_P = new FinderPath(
+			LayoutRevisionModelImpl.ENTITY_CACHE_ENABLED,
+			LayoutRevisionModelImpl.FINDER_CACHE_ENABLED, Long.class,
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByL_L_H_P",
+			new String[] {
+				Long.class.getName(), Long.class.getName(),
+				Boolean.class.getName(), Long.class.getName()
+			});
 
 		LayoutRevisionUtil.setPersistence(this);
 	}

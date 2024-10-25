@@ -1926,6 +1926,7 @@ public class ShoppingCategoryPersistenceImpl
 		"shoppingCategory.parentCategoryId = ?";
 
 	private FinderPath _finderPathFetchByG_N;
+	private FinderPath _finderPathCountByG_N;
 
 	/**
 	 * Returns the shopping category where groupId = &#63; and name = &#63; or throws a <code>NoSuchCategoryException</code> if it could not be found.
@@ -2124,13 +2125,64 @@ public class ShoppingCategoryPersistenceImpl
 	 */
 	@Override
 	public int countByG_N(long groupId, String name) {
-		ShoppingCategory shoppingCategory = fetchByG_N(groupId, name);
+		name = Objects.toString(name, "");
 
-		if (shoppingCategory == null) {
-			return 0;
+		FinderPath finderPath = _finderPathCountByG_N;
+
+		Object[] finderArgs = new Object[] {groupId, name};
+
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
+
+		if (count == null) {
+			StringBundler sb = new StringBundler(3);
+
+			sb.append(_SQL_COUNT_SHOPPINGCATEGORY_WHERE);
+
+			sb.append(_FINDER_COLUMN_G_N_GROUPID_2);
+
+			boolean bindName = false;
+
+			if (name.isEmpty()) {
+				sb.append(_FINDER_COLUMN_G_N_NAME_3);
+			}
+			else {
+				bindName = true;
+
+				sb.append(_FINDER_COLUMN_G_N_NAME_2);
+			}
+
+			String sql = sb.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query query = session.createQuery(sql);
+
+				QueryPos queryPos = QueryPos.getInstance(query);
+
+				queryPos.add(groupId);
+
+				if (bindName) {
+					queryPos.add(name);
+				}
+
+				count = (Long)query.uniqueResult();
+
+				finderCache.putResult(finderPath, finderArgs, count);
+			}
+			catch (Exception exception) {
+				finderCache.removeResult(finderPath, finderArgs);
+
+				throw processException(exception);
+			}
+			finally {
+				closeSession(session);
+			}
 		}
 
-		return 1;
+		return count.intValue();
 	}
 
 	private static final String _FINDER_COLUMN_G_N_GROUPID_2 =
@@ -3063,6 +3115,12 @@ public class ShoppingCategoryPersistenceImpl
 			new String[] {Long.class.getName(), String.class.getName()},
 			ShoppingCategoryModelImpl.GROUPID_COLUMN_BITMASK |
 			ShoppingCategoryModelImpl.NAME_COLUMN_BITMASK);
+
+		_finderPathCountByG_N = new FinderPath(
+			ShoppingCategoryModelImpl.ENTITY_CACHE_ENABLED,
+			ShoppingCategoryModelImpl.FINDER_CACHE_ENABLED, Long.class,
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByG_N",
+			new String[] {Long.class.getName(), String.class.getName()});
 
 		ShoppingCategoryUtil.setPersistence(this);
 	}

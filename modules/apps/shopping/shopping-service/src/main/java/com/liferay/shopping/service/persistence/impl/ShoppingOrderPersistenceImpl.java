@@ -965,6 +965,7 @@ public class ShoppingOrderPersistenceImpl
 		"shoppingOrder.groupId = ?";
 
 	private FinderPath _finderPathFetchByNumber;
+	private FinderPath _finderPathCountByNumber;
 
 	/**
 	 * Returns the shopping order where number = &#63; or throws a <code>NoSuchOrderException</code> if it could not be found.
@@ -1133,13 +1134,60 @@ public class ShoppingOrderPersistenceImpl
 	 */
 	@Override
 	public int countByNumber(String number) {
-		ShoppingOrder shoppingOrder = fetchByNumber(number);
+		number = Objects.toString(number, "");
 
-		if (shoppingOrder == null) {
-			return 0;
+		FinderPath finderPath = _finderPathCountByNumber;
+
+		Object[] finderArgs = new Object[] {number};
+
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
+
+		if (count == null) {
+			StringBundler sb = new StringBundler(2);
+
+			sb.append(_SQL_COUNT_SHOPPINGORDER_WHERE);
+
+			boolean bindNumber = false;
+
+			if (number.isEmpty()) {
+				sb.append(_FINDER_COLUMN_NUMBER_NUMBER_3);
+			}
+			else {
+				bindNumber = true;
+
+				sb.append(_FINDER_COLUMN_NUMBER_NUMBER_2);
+			}
+
+			String sql = sb.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query query = session.createQuery(sql);
+
+				QueryPos queryPos = QueryPos.getInstance(query);
+
+				if (bindNumber) {
+					queryPos.add(number);
+				}
+
+				count = (Long)query.uniqueResult();
+
+				finderCache.putResult(finderPath, finderArgs, count);
+			}
+			catch (Exception exception) {
+				finderCache.removeResult(finderPath, finderArgs);
+
+				throw processException(exception);
+			}
+			finally {
+				closeSession(session);
+			}
 		}
 
-		return 1;
+		return count.intValue();
 	}
 
 	private static final String _FINDER_COLUMN_NUMBER_NUMBER_2 =
@@ -1149,6 +1197,7 @@ public class ShoppingOrderPersistenceImpl
 		"(shoppingOrder.number IS NULL OR shoppingOrder.number = '')";
 
 	private FinderPath _finderPathFetchByPPTxnId;
+	private FinderPath _finderPathCountByPPTxnId;
 
 	/**
 	 * Returns the shopping order where ppTxnId = &#63; or throws a <code>NoSuchOrderException</code> if it could not be found.
@@ -1334,13 +1383,60 @@ public class ShoppingOrderPersistenceImpl
 	 */
 	@Override
 	public int countByPPTxnId(String ppTxnId) {
-		ShoppingOrder shoppingOrder = fetchByPPTxnId(ppTxnId);
+		ppTxnId = Objects.toString(ppTxnId, "");
 
-		if (shoppingOrder == null) {
-			return 0;
+		FinderPath finderPath = _finderPathCountByPPTxnId;
+
+		Object[] finderArgs = new Object[] {ppTxnId};
+
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
+
+		if (count == null) {
+			StringBundler sb = new StringBundler(2);
+
+			sb.append(_SQL_COUNT_SHOPPINGORDER_WHERE);
+
+			boolean bindPpTxnId = false;
+
+			if (ppTxnId.isEmpty()) {
+				sb.append(_FINDER_COLUMN_PPTXNID_PPTXNID_3);
+			}
+			else {
+				bindPpTxnId = true;
+
+				sb.append(_FINDER_COLUMN_PPTXNID_PPTXNID_2);
+			}
+
+			String sql = sb.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query query = session.createQuery(sql);
+
+				QueryPos queryPos = QueryPos.getInstance(query);
+
+				if (bindPpTxnId) {
+					queryPos.add(ppTxnId);
+				}
+
+				count = (Long)query.uniqueResult();
+
+				finderCache.putResult(finderPath, finderArgs, count);
+			}
+			catch (Exception exception) {
+				finderCache.removeResult(finderPath, finderArgs);
+
+				throw processException(exception);
+			}
+			finally {
+				closeSession(session);
+			}
 		}
 
-		return 1;
+		return count.intValue();
 	}
 
 	private static final String _FINDER_COLUMN_PPTXNID_PPTXNID_2 =
@@ -3369,12 +3465,24 @@ public class ShoppingOrderPersistenceImpl
 			new String[] {String.class.getName()},
 			ShoppingOrderModelImpl.NUMBER_COLUMN_BITMASK);
 
+		_finderPathCountByNumber = new FinderPath(
+			ShoppingOrderModelImpl.ENTITY_CACHE_ENABLED,
+			ShoppingOrderModelImpl.FINDER_CACHE_ENABLED, Long.class,
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByNumber",
+			new String[] {String.class.getName()});
+
 		_finderPathFetchByPPTxnId = new FinderPath(
 			ShoppingOrderModelImpl.ENTITY_CACHE_ENABLED,
 			ShoppingOrderModelImpl.FINDER_CACHE_ENABLED,
 			ShoppingOrderImpl.class, FINDER_CLASS_NAME_ENTITY, "fetchByPPTxnId",
 			new String[] {String.class.getName()},
 			ShoppingOrderModelImpl.PPTXNID_COLUMN_BITMASK);
+
+		_finderPathCountByPPTxnId = new FinderPath(
+			ShoppingOrderModelImpl.ENTITY_CACHE_ENABLED,
+			ShoppingOrderModelImpl.FINDER_CACHE_ENABLED, Long.class,
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByPPTxnId",
+			new String[] {String.class.getName()});
 
 		_finderPathWithPaginationFindByG_U_PPPS = new FinderPath(
 			ShoppingOrderModelImpl.ENTITY_CACHE_ENABLED,

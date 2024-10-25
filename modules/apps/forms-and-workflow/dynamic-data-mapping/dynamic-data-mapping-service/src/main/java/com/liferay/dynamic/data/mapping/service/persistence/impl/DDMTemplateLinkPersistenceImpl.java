@@ -1095,6 +1095,7 @@ public class DDMTemplateLinkPersistenceImpl
 		"ddmTemplateLink.templateId = ?";
 
 	private FinderPath _finderPathFetchByC_C;
+	private FinderPath _finderPathCountByC_C;
 
 	/**
 	 * Returns the ddm template link where classNameId = &#63; and classPK = &#63; or throws a <code>NoSuchTemplateLinkException</code> if it could not be found.
@@ -1265,13 +1266,51 @@ public class DDMTemplateLinkPersistenceImpl
 	 */
 	@Override
 	public int countByC_C(long classNameId, long classPK) {
-		DDMTemplateLink ddmTemplateLink = fetchByC_C(classNameId, classPK);
+		FinderPath finderPath = _finderPathCountByC_C;
 
-		if (ddmTemplateLink == null) {
-			return 0;
+		Object[] finderArgs = new Object[] {classNameId, classPK};
+
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
+
+		if (count == null) {
+			StringBundler sb = new StringBundler(3);
+
+			sb.append(_SQL_COUNT_DDMTEMPLATELINK_WHERE);
+
+			sb.append(_FINDER_COLUMN_C_C_CLASSNAMEID_2);
+
+			sb.append(_FINDER_COLUMN_C_C_CLASSPK_2);
+
+			String sql = sb.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query query = session.createQuery(sql);
+
+				QueryPos queryPos = QueryPos.getInstance(query);
+
+				queryPos.add(classNameId);
+
+				queryPos.add(classPK);
+
+				count = (Long)query.uniqueResult();
+
+				finderCache.putResult(finderPath, finderArgs, count);
+			}
+			catch (Exception exception) {
+				finderCache.removeResult(finderPath, finderArgs);
+
+				throw processException(exception);
+			}
+			finally {
+				closeSession(session);
+			}
 		}
 
-		return 1;
+		return count.intValue();
 	}
 
 	private static final String _FINDER_COLUMN_C_C_CLASSNAMEID_2 =
@@ -2164,6 +2203,12 @@ public class DDMTemplateLinkPersistenceImpl
 			new String[] {Long.class.getName(), Long.class.getName()},
 			DDMTemplateLinkModelImpl.CLASSNAMEID_COLUMN_BITMASK |
 			DDMTemplateLinkModelImpl.CLASSPK_COLUMN_BITMASK);
+
+		_finderPathCountByC_C = new FinderPath(
+			DDMTemplateLinkModelImpl.ENTITY_CACHE_ENABLED,
+			DDMTemplateLinkModelImpl.FINDER_CACHE_ENABLED, Long.class,
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByC_C",
+			new String[] {Long.class.getName(), Long.class.getName()});
 
 		DDMTemplateLinkUtil.setPersistence(this);
 	}

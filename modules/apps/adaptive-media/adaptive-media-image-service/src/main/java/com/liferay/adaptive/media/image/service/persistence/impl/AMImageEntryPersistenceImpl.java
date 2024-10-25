@@ -621,6 +621,7 @@ public class AMImageEntryPersistenceImpl
 		"(amImageEntry.uuid IS NULL OR amImageEntry.uuid = '')";
 
 	private FinderPath _finderPathFetchByUUID_G;
+	private FinderPath _finderPathCountByUUID_G;
 
 	/**
 	 * Returns the am image entry where uuid = &#63; and groupId = &#63; or throws a <code>NoSuchAMImageEntryException</code> if it could not be found.
@@ -805,13 +806,64 @@ public class AMImageEntryPersistenceImpl
 	 */
 	@Override
 	public int countByUUID_G(String uuid, long groupId) {
-		AMImageEntry amImageEntry = fetchByUUID_G(uuid, groupId);
+		uuid = Objects.toString(uuid, "");
 
-		if (amImageEntry == null) {
-			return 0;
+		FinderPath finderPath = _finderPathCountByUUID_G;
+
+		Object[] finderArgs = new Object[] {uuid, groupId};
+
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
+
+		if (count == null) {
+			StringBundler sb = new StringBundler(3);
+
+			sb.append(_SQL_COUNT_AMIMAGEENTRY_WHERE);
+
+			boolean bindUuid = false;
+
+			if (uuid.isEmpty()) {
+				sb.append(_FINDER_COLUMN_UUID_G_UUID_3);
+			}
+			else {
+				bindUuid = true;
+
+				sb.append(_FINDER_COLUMN_UUID_G_UUID_2);
+			}
+
+			sb.append(_FINDER_COLUMN_UUID_G_GROUPID_2);
+
+			String sql = sb.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query query = session.createQuery(sql);
+
+				QueryPos queryPos = QueryPos.getInstance(query);
+
+				if (bindUuid) {
+					queryPos.add(uuid);
+				}
+
+				queryPos.add(groupId);
+
+				count = (Long)query.uniqueResult();
+
+				finderCache.putResult(finderPath, finderArgs, count);
+			}
+			catch (Exception exception) {
+				finderCache.removeResult(finderPath, finderArgs);
+
+				throw processException(exception);
+			}
+			finally {
+				closeSession(session);
+			}
 		}
 
-		return 1;
+		return count.intValue();
 	}
 
 	private static final String _FINDER_COLUMN_UUID_G_UUID_2 =
@@ -4066,6 +4118,7 @@ public class AMImageEntryPersistenceImpl
 		"(amImageEntry.configurationUuid IS NULL OR amImageEntry.configurationUuid = '')";
 
 	private FinderPath _finderPathFetchByC_F;
+	private FinderPath _finderPathCountByC_F;
 
 	/**
 	 * Returns the am image entry where configurationUuid = &#63; and fileVersionId = &#63; or throws a <code>NoSuchAMImageEntryException</code> if it could not be found.
@@ -4254,14 +4307,64 @@ public class AMImageEntryPersistenceImpl
 	 */
 	@Override
 	public int countByC_F(String configurationUuid, long fileVersionId) {
-		AMImageEntry amImageEntry = fetchByC_F(
-			configurationUuid, fileVersionId);
+		configurationUuid = Objects.toString(configurationUuid, "");
 
-		if (amImageEntry == null) {
-			return 0;
+		FinderPath finderPath = _finderPathCountByC_F;
+
+		Object[] finderArgs = new Object[] {configurationUuid, fileVersionId};
+
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
+
+		if (count == null) {
+			StringBundler sb = new StringBundler(3);
+
+			sb.append(_SQL_COUNT_AMIMAGEENTRY_WHERE);
+
+			boolean bindConfigurationUuid = false;
+
+			if (configurationUuid.isEmpty()) {
+				sb.append(_FINDER_COLUMN_C_F_CONFIGURATIONUUID_3);
+			}
+			else {
+				bindConfigurationUuid = true;
+
+				sb.append(_FINDER_COLUMN_C_F_CONFIGURATIONUUID_2);
+			}
+
+			sb.append(_FINDER_COLUMN_C_F_FILEVERSIONID_2);
+
+			String sql = sb.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query query = session.createQuery(sql);
+
+				QueryPos queryPos = QueryPos.getInstance(query);
+
+				if (bindConfigurationUuid) {
+					queryPos.add(configurationUuid);
+				}
+
+				queryPos.add(fileVersionId);
+
+				count = (Long)query.uniqueResult();
+
+				finderCache.putResult(finderPath, finderArgs, count);
+			}
+			catch (Exception exception) {
+				finderCache.removeResult(finderPath, finderArgs);
+
+				throw processException(exception);
+			}
+			finally {
+				closeSession(session);
+			}
 		}
 
-		return 1;
+		return count.intValue();
 	}
 
 	private static final String _FINDER_COLUMN_C_F_CONFIGURATIONUUID_2 =
@@ -5344,6 +5447,12 @@ public class AMImageEntryPersistenceImpl
 			AMImageEntryModelImpl.UUID_COLUMN_BITMASK |
 			AMImageEntryModelImpl.GROUPID_COLUMN_BITMASK);
 
+		_finderPathCountByUUID_G = new FinderPath(
+			AMImageEntryModelImpl.ENTITY_CACHE_ENABLED,
+			AMImageEntryModelImpl.FINDER_CACHE_ENABLED, Long.class,
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByUUID_G",
+			new String[] {String.class.getName(), Long.class.getName()});
+
 		_finderPathWithPaginationFindByUuid_C = new FinderPath(
 			AMImageEntryModelImpl.ENTITY_CACHE_ENABLED,
 			AMImageEntryModelImpl.FINDER_CACHE_ENABLED, AMImageEntryImpl.class,
@@ -5487,6 +5596,12 @@ public class AMImageEntryPersistenceImpl
 			new String[] {String.class.getName(), Long.class.getName()},
 			AMImageEntryModelImpl.CONFIGURATIONUUID_COLUMN_BITMASK |
 			AMImageEntryModelImpl.FILEVERSIONID_COLUMN_BITMASK);
+
+		_finderPathCountByC_F = new FinderPath(
+			AMImageEntryModelImpl.ENTITY_CACHE_ENABLED,
+			AMImageEntryModelImpl.FINDER_CACHE_ENABLED, Long.class,
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByC_F",
+			new String[] {String.class.getName(), Long.class.getName()});
 
 		AMImageEntryUtil.setPersistence(this);
 	}

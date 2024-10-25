@@ -1080,6 +1080,7 @@ public class UserThreadPersistenceImpl
 		"userThread.mbThreadId = ?";
 
 	private FinderPath _finderPathFetchByU_M;
+	private FinderPath _finderPathCountByU_M;
 
 	/**
 	 * Returns the user thread where userId = &#63; and mbThreadId = &#63; or throws a <code>NoSuchUserThreadException</code> if it could not be found.
@@ -1265,13 +1266,51 @@ public class UserThreadPersistenceImpl
 	 */
 	@Override
 	public int countByU_M(long userId, long mbThreadId) {
-		UserThread userThread = fetchByU_M(userId, mbThreadId);
+		FinderPath finderPath = _finderPathCountByU_M;
 
-		if (userThread == null) {
-			return 0;
+		Object[] finderArgs = new Object[] {userId, mbThreadId};
+
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
+
+		if (count == null) {
+			StringBundler sb = new StringBundler(3);
+
+			sb.append(_SQL_COUNT_USERTHREAD_WHERE);
+
+			sb.append(_FINDER_COLUMN_U_M_USERID_2);
+
+			sb.append(_FINDER_COLUMN_U_M_MBTHREADID_2);
+
+			String sql = sb.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query query = session.createQuery(sql);
+
+				QueryPos queryPos = QueryPos.getInstance(query);
+
+				queryPos.add(userId);
+
+				queryPos.add(mbThreadId);
+
+				count = (Long)query.uniqueResult();
+
+				finderCache.putResult(finderPath, finderArgs, count);
+			}
+			catch (Exception exception) {
+				finderCache.removeResult(finderPath, finderArgs);
+
+				throw processException(exception);
+			}
+			finally {
+				closeSession(session);
+			}
 		}
 
-		return 1;
+		return count.intValue();
 	}
 
 	private static final String _FINDER_COLUMN_U_M_USERID_2 =
@@ -3374,6 +3413,12 @@ public class UserThreadPersistenceImpl
 			new String[] {Long.class.getName(), Long.class.getName()},
 			UserThreadModelImpl.USERID_COLUMN_BITMASK |
 			UserThreadModelImpl.MBTHREADID_COLUMN_BITMASK);
+
+		_finderPathCountByU_M = new FinderPath(
+			UserThreadModelImpl.ENTITY_CACHE_ENABLED,
+			UserThreadModelImpl.FINDER_CACHE_ENABLED, Long.class,
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByU_M",
+			new String[] {Long.class.getName(), Long.class.getName()});
 
 		_finderPathWithPaginationFindByU_D = new FinderPath(
 			UserThreadModelImpl.ENTITY_CACHE_ENABLED,
