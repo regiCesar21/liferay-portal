@@ -1120,6 +1120,7 @@ public class VersionedEntryPersistenceImpl
 		"versionedEntry.head = ?";
 
 	private FinderPath _finderPathFetchByHeadId;
+	private FinderPath _finderPathCountByHeadId;
 
 	/**
 	 * Returns the versioned entry where headId = &#63; or throws a <code>NoSuchVersionedEntryException</code> if it could not be found.
@@ -1275,13 +1276,47 @@ public class VersionedEntryPersistenceImpl
 	 */
 	@Override
 	public int countByHeadId(long headId) {
-		VersionedEntry versionedEntry = fetchByHeadId(headId);
+		FinderPath finderPath = _finderPathCountByHeadId;
 
-		if (versionedEntry == null) {
-			return 0;
+		Object[] finderArgs = new Object[] {headId};
+
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
+
+		if (count == null) {
+			StringBundler sb = new StringBundler(2);
+
+			sb.append(_SQL_COUNT_VERSIONEDENTRY_WHERE);
+
+			sb.append(_FINDER_COLUMN_HEADID_HEADID_2);
+
+			String sql = sb.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query query = session.createQuery(sql);
+
+				QueryPos queryPos = QueryPos.getInstance(query);
+
+				queryPos.add(headId);
+
+				count = (Long)query.uniqueResult();
+
+				finderCache.putResult(finderPath, finderArgs, count);
+			}
+			catch (Exception exception) {
+				finderCache.removeResult(finderPath, finderArgs);
+
+				throw processException(exception);
+			}
+			finally {
+				closeSession(session);
+			}
 		}
 
-		return 1;
+		return count.intValue();
 	}
 
 	private static final String _FINDER_COLUMN_HEADID_HEADID_2 =
@@ -2158,6 +2193,12 @@ public class VersionedEntryPersistenceImpl
 			VersionedEntryImpl.class, FINDER_CLASS_NAME_ENTITY, "fetchByHeadId",
 			new String[] {Long.class.getName()},
 			VersionedEntryModelImpl.HEADID_COLUMN_BITMASK);
+
+		_finderPathCountByHeadId = new FinderPath(
+			VersionedEntryModelImpl.ENTITY_CACHE_ENABLED,
+			VersionedEntryModelImpl.FINDER_CACHE_ENABLED, Long.class,
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByHeadId",
+			new String[] {Long.class.getName()});
 
 		VersionedEntryUtil.setPersistence(this);
 	}

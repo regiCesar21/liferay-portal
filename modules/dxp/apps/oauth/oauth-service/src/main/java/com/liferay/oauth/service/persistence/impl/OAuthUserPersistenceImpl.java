@@ -1085,6 +1085,7 @@ public class OAuthUserPersistenceImpl
 			"oAuthUser.oAuthApplicationId = ?";
 
 	private FinderPath _finderPathFetchByAccessToken;
+	private FinderPath _finderPathCountByAccessToken;
 
 	/**
 	 * Returns the o auth user where accessToken = &#63; or throws a <code>NoSuchUserException</code> if it could not be found.
@@ -1255,13 +1256,60 @@ public class OAuthUserPersistenceImpl
 	 */
 	@Override
 	public int countByAccessToken(String accessToken) {
-		OAuthUser oAuthUser = fetchByAccessToken(accessToken);
+		accessToken = Objects.toString(accessToken, "");
 
-		if (oAuthUser == null) {
-			return 0;
+		FinderPath finderPath = _finderPathCountByAccessToken;
+
+		Object[] finderArgs = new Object[] {accessToken};
+
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
+
+		if (count == null) {
+			StringBundler sb = new StringBundler(2);
+
+			sb.append(_SQL_COUNT_OAUTHUSER_WHERE);
+
+			boolean bindAccessToken = false;
+
+			if (accessToken.isEmpty()) {
+				sb.append(_FINDER_COLUMN_ACCESSTOKEN_ACCESSTOKEN_3);
+			}
+			else {
+				bindAccessToken = true;
+
+				sb.append(_FINDER_COLUMN_ACCESSTOKEN_ACCESSTOKEN_2);
+			}
+
+			String sql = sb.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query query = session.createQuery(sql);
+
+				QueryPos queryPos = QueryPos.getInstance(query);
+
+				if (bindAccessToken) {
+					queryPos.add(accessToken);
+				}
+
+				count = (Long)query.uniqueResult();
+
+				finderCache.putResult(finderPath, finderArgs, count);
+			}
+			catch (Exception exception) {
+				finderCache.removeResult(finderPath, finderArgs);
+
+				throw processException(exception);
+			}
+			finally {
+				closeSession(session);
+			}
 		}
 
-		return 1;
+		return count.intValue();
 	}
 
 	private static final String _FINDER_COLUMN_ACCESSTOKEN_ACCESSTOKEN_2 =
@@ -1271,6 +1319,7 @@ public class OAuthUserPersistenceImpl
 		"(oAuthUser.accessToken IS NULL OR oAuthUser.accessToken = '')";
 
 	private FinderPath _finderPathFetchByU_OAI;
+	private FinderPath _finderPathCountByU_OAI;
 
 	/**
 	 * Returns the o auth user where userId = &#63; and oAuthApplicationId = &#63; or throws a <code>NoSuchUserException</code> if it could not be found.
@@ -1442,13 +1491,51 @@ public class OAuthUserPersistenceImpl
 	 */
 	@Override
 	public int countByU_OAI(long userId, long oAuthApplicationId) {
-		OAuthUser oAuthUser = fetchByU_OAI(userId, oAuthApplicationId);
+		FinderPath finderPath = _finderPathCountByU_OAI;
 
-		if (oAuthUser == null) {
-			return 0;
+		Object[] finderArgs = new Object[] {userId, oAuthApplicationId};
+
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
+
+		if (count == null) {
+			StringBundler sb = new StringBundler(3);
+
+			sb.append(_SQL_COUNT_OAUTHUSER_WHERE);
+
+			sb.append(_FINDER_COLUMN_U_OAI_USERID_2);
+
+			sb.append(_FINDER_COLUMN_U_OAI_OAUTHAPPLICATIONID_2);
+
+			String sql = sb.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query query = session.createQuery(sql);
+
+				QueryPos queryPos = QueryPos.getInstance(query);
+
+				queryPos.add(userId);
+
+				queryPos.add(oAuthApplicationId);
+
+				count = (Long)query.uniqueResult();
+
+				finderCache.putResult(finderPath, finderArgs, count);
+			}
+			catch (Exception exception) {
+				finderCache.removeResult(finderPath, finderArgs);
+
+				throw processException(exception);
+			}
+			finally {
+				closeSession(session);
+			}
 		}
 
-		return 1;
+		return count.intValue();
 	}
 
 	private static final String _FINDER_COLUMN_U_OAI_USERID_2 =
@@ -2372,6 +2459,12 @@ public class OAuthUserPersistenceImpl
 			new String[] {String.class.getName()},
 			OAuthUserModelImpl.ACCESSTOKEN_COLUMN_BITMASK);
 
+		_finderPathCountByAccessToken = new FinderPath(
+			OAuthUserModelImpl.ENTITY_CACHE_ENABLED,
+			OAuthUserModelImpl.FINDER_CACHE_ENABLED, Long.class,
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByAccessToken",
+			new String[] {String.class.getName()});
+
 		_finderPathFetchByU_OAI = new FinderPath(
 			OAuthUserModelImpl.ENTITY_CACHE_ENABLED,
 			OAuthUserModelImpl.FINDER_CACHE_ENABLED, OAuthUserImpl.class,
@@ -2379,6 +2472,12 @@ public class OAuthUserPersistenceImpl
 			new String[] {Long.class.getName(), Long.class.getName()},
 			OAuthUserModelImpl.USERID_COLUMN_BITMASK |
 			OAuthUserModelImpl.OAUTHAPPLICATIONID_COLUMN_BITMASK);
+
+		_finderPathCountByU_OAI = new FinderPath(
+			OAuthUserModelImpl.ENTITY_CACHE_ENABLED,
+			OAuthUserModelImpl.FINDER_CACHE_ENABLED, Long.class,
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByU_OAI",
+			new String[] {Long.class.getName(), Long.class.getName()});
 
 		OAuthUserUtil.setPersistence(this);
 	}

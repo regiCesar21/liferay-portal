@@ -634,6 +634,7 @@ public class CPInstanceOptionValueRelPersistenceImpl
 		"(cpInstanceOptionValueRel.uuid IS NULL OR cpInstanceOptionValueRel.uuid = '')";
 
 	private FinderPath _finderPathFetchByUUID_G;
+	private FinderPath _finderPathCountByUUID_G;
 
 	/**
 	 * Returns the cp instance option value rel where uuid = &#63; and groupId = &#63; or throws a <code>NoSuchCPInstanceOptionValueRelException</code> if it could not be found.
@@ -822,14 +823,64 @@ public class CPInstanceOptionValueRelPersistenceImpl
 	 */
 	@Override
 	public int countByUUID_G(String uuid, long groupId) {
-		CPInstanceOptionValueRel cpInstanceOptionValueRel = fetchByUUID_G(
-			uuid, groupId);
+		uuid = Objects.toString(uuid, "");
 
-		if (cpInstanceOptionValueRel == null) {
-			return 0;
+		FinderPath finderPath = _finderPathCountByUUID_G;
+
+		Object[] finderArgs = new Object[] {uuid, groupId};
+
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
+
+		if (count == null) {
+			StringBundler sb = new StringBundler(3);
+
+			sb.append(_SQL_COUNT_CPINSTANCEOPTIONVALUEREL_WHERE);
+
+			boolean bindUuid = false;
+
+			if (uuid.isEmpty()) {
+				sb.append(_FINDER_COLUMN_UUID_G_UUID_3);
+			}
+			else {
+				bindUuid = true;
+
+				sb.append(_FINDER_COLUMN_UUID_G_UUID_2);
+			}
+
+			sb.append(_FINDER_COLUMN_UUID_G_GROUPID_2);
+
+			String sql = sb.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query query = session.createQuery(sql);
+
+				QueryPos queryPos = QueryPos.getInstance(query);
+
+				if (bindUuid) {
+					queryPos.add(uuid);
+				}
+
+				queryPos.add(groupId);
+
+				count = (Long)query.uniqueResult();
+
+				finderCache.putResult(finderPath, finderArgs, count);
+			}
+			catch (Exception exception) {
+				finderCache.removeResult(finderPath, finderArgs);
+
+				throw processException(exception);
+			}
+			finally {
+				closeSession(session);
+			}
 		}
 
-		return 1;
+		return count.intValue();
 	}
 
 	private static final String _FINDER_COLUMN_UUID_G_UUID_2 =
@@ -3055,6 +3106,7 @@ public class CPInstanceOptionValueRelPersistenceImpl
 		"cpInstanceOptionValueRel.CPInstanceId = ?";
 
 	private FinderPath _finderPathFetchByCDOVRI_CII;
+	private FinderPath _finderPathCountByCDOVRI_CII;
 
 	/**
 	 * Returns the cp instance option value rel where CPDefinitionOptionValueRelId = &#63; and CPInstanceId = &#63; or throws a <code>NoSuchCPInstanceOptionValueRelException</code> if it could not be found.
@@ -3259,14 +3311,53 @@ public class CPInstanceOptionValueRelPersistenceImpl
 	public int countByCDOVRI_CII(
 		long CPDefinitionOptionValueRelId, long CPInstanceId) {
 
-		CPInstanceOptionValueRel cpInstanceOptionValueRel = fetchByCDOVRI_CII(
-			CPDefinitionOptionValueRelId, CPInstanceId);
+		FinderPath finderPath = _finderPathCountByCDOVRI_CII;
 
-		if (cpInstanceOptionValueRel == null) {
-			return 0;
+		Object[] finderArgs = new Object[] {
+			CPDefinitionOptionValueRelId, CPInstanceId
+		};
+
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
+
+		if (count == null) {
+			StringBundler sb = new StringBundler(3);
+
+			sb.append(_SQL_COUNT_CPINSTANCEOPTIONVALUEREL_WHERE);
+
+			sb.append(_FINDER_COLUMN_CDOVRI_CII_CPDEFINITIONOPTIONVALUERELID_2);
+
+			sb.append(_FINDER_COLUMN_CDOVRI_CII_CPINSTANCEID_2);
+
+			String sql = sb.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query query = session.createQuery(sql);
+
+				QueryPos queryPos = QueryPos.getInstance(query);
+
+				queryPos.add(CPDefinitionOptionValueRelId);
+
+				queryPos.add(CPInstanceId);
+
+				count = (Long)query.uniqueResult();
+
+				finderCache.putResult(finderPath, finderArgs, count);
+			}
+			catch (Exception exception) {
+				finderCache.removeResult(finderPath, finderArgs);
+
+				throw processException(exception);
+			}
+			finally {
+				closeSession(session);
+			}
 		}
 
-		return 1;
+		return count.intValue();
 	}
 
 	private static final String
@@ -3277,6 +3368,7 @@ public class CPInstanceOptionValueRelPersistenceImpl
 		"cpInstanceOptionValueRel.CPInstanceId = ?";
 
 	private FinderPath _finderPathFetchByCDORI_CDOVRI_CII;
+	private FinderPath _finderPathCountByCDORI_CDOVRI_CII;
 
 	/**
 	 * Returns the cp instance option value rel where CPDefinitionOptionRelId = &#63; and CPDefinitionOptionValueRelId = &#63; and CPInstanceId = &#63; or throws a <code>NoSuchCPInstanceOptionValueRelException</code> if it could not be found.
@@ -3491,16 +3583,59 @@ public class CPInstanceOptionValueRelPersistenceImpl
 		long CPDefinitionOptionRelId, long CPDefinitionOptionValueRelId,
 		long CPInstanceId) {
 
-		CPInstanceOptionValueRel cpInstanceOptionValueRel =
-			fetchByCDORI_CDOVRI_CII(
-				CPDefinitionOptionRelId, CPDefinitionOptionValueRelId,
-				CPInstanceId);
+		FinderPath finderPath = _finderPathCountByCDORI_CDOVRI_CII;
 
-		if (cpInstanceOptionValueRel == null) {
-			return 0;
+		Object[] finderArgs = new Object[] {
+			CPDefinitionOptionRelId, CPDefinitionOptionValueRelId, CPInstanceId
+		};
+
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
+
+		if (count == null) {
+			StringBundler sb = new StringBundler(4);
+
+			sb.append(_SQL_COUNT_CPINSTANCEOPTIONVALUEREL_WHERE);
+
+			sb.append(
+				_FINDER_COLUMN_CDORI_CDOVRI_CII_CPDEFINITIONOPTIONRELID_2);
+
+			sb.append(
+				_FINDER_COLUMN_CDORI_CDOVRI_CII_CPDEFINITIONOPTIONVALUERELID_2);
+
+			sb.append(_FINDER_COLUMN_CDORI_CDOVRI_CII_CPINSTANCEID_2);
+
+			String sql = sb.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query query = session.createQuery(sql);
+
+				QueryPos queryPos = QueryPos.getInstance(query);
+
+				queryPos.add(CPDefinitionOptionRelId);
+
+				queryPos.add(CPDefinitionOptionValueRelId);
+
+				queryPos.add(CPInstanceId);
+
+				count = (Long)query.uniqueResult();
+
+				finderCache.putResult(finderPath, finderArgs, count);
+			}
+			catch (Exception exception) {
+				finderCache.removeResult(finderPath, finderArgs);
+
+				throw processException(exception);
+			}
+			finally {
+				closeSession(session);
+			}
 		}
 
-		return 1;
+		return count.intValue();
 	}
 
 	private static final String
@@ -4671,6 +4806,12 @@ public class CPInstanceOptionValueRelPersistenceImpl
 			CPInstanceOptionValueRelModelImpl.UUID_COLUMN_BITMASK |
 			CPInstanceOptionValueRelModelImpl.GROUPID_COLUMN_BITMASK);
 
+		_finderPathCountByUUID_G = new FinderPath(
+			CPInstanceOptionValueRelModelImpl.ENTITY_CACHE_ENABLED,
+			CPInstanceOptionValueRelModelImpl.FINDER_CACHE_ENABLED, Long.class,
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByUUID_G",
+			new String[] {String.class.getName(), Long.class.getName()});
+
 		_finderPathWithPaginationFindByUuid_C = new FinderPath(
 			CPInstanceOptionValueRelModelImpl.ENTITY_CACHE_ENABLED,
 			CPInstanceOptionValueRelModelImpl.FINDER_CACHE_ENABLED,
@@ -4787,6 +4928,12 @@ public class CPInstanceOptionValueRelPersistenceImpl
 				CPDEFINITIONOPTIONVALUERELID_COLUMN_BITMASK |
 			CPInstanceOptionValueRelModelImpl.CPINSTANCEID_COLUMN_BITMASK);
 
+		_finderPathCountByCDOVRI_CII = new FinderPath(
+			CPInstanceOptionValueRelModelImpl.ENTITY_CACHE_ENABLED,
+			CPInstanceOptionValueRelModelImpl.FINDER_CACHE_ENABLED, Long.class,
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByCDOVRI_CII",
+			new String[] {Long.class.getName(), Long.class.getName()});
+
 		_finderPathFetchByCDORI_CDOVRI_CII = new FinderPath(
 			CPInstanceOptionValueRelModelImpl.ENTITY_CACHE_ENABLED,
 			CPInstanceOptionValueRelModelImpl.FINDER_CACHE_ENABLED,
@@ -4800,6 +4947,15 @@ public class CPInstanceOptionValueRelPersistenceImpl
 			CPInstanceOptionValueRelModelImpl.
 				CPDEFINITIONOPTIONVALUERELID_COLUMN_BITMASK |
 			CPInstanceOptionValueRelModelImpl.CPINSTANCEID_COLUMN_BITMASK);
+
+		_finderPathCountByCDORI_CDOVRI_CII = new FinderPath(
+			CPInstanceOptionValueRelModelImpl.ENTITY_CACHE_ENABLED,
+			CPInstanceOptionValueRelModelImpl.FINDER_CACHE_ENABLED, Long.class,
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+			"countByCDORI_CDOVRI_CII",
+			new String[] {
+				Long.class.getName(), Long.class.getName(), Long.class.getName()
+			});
 
 		CPInstanceOptionValueRelUtil.setPersistence(this);
 	}

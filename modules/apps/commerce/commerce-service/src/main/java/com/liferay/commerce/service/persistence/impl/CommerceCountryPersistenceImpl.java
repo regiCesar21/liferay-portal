@@ -1715,6 +1715,7 @@ public class CommerceCountryPersistenceImpl
 		"commerceCountry.companyId = ?";
 
 	private FinderPath _finderPathFetchByC_Tw;
+	private FinderPath _finderPathCountByC_Tw;
 
 	/**
 	 * Returns the commerce country where companyId = &#63; and twoLettersISOCode = &#63; or throws a <code>NoSuchCountryException</code> if it could not be found.
@@ -1906,14 +1907,64 @@ public class CommerceCountryPersistenceImpl
 	 */
 	@Override
 	public int countByC_Tw(long companyId, String twoLettersISOCode) {
-		CommerceCountry commerceCountry = fetchByC_Tw(
-			companyId, twoLettersISOCode);
+		twoLettersISOCode = Objects.toString(twoLettersISOCode, "");
 
-		if (commerceCountry == null) {
-			return 0;
+		FinderPath finderPath = _finderPathCountByC_Tw;
+
+		Object[] finderArgs = new Object[] {companyId, twoLettersISOCode};
+
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
+
+		if (count == null) {
+			StringBundler sb = new StringBundler(3);
+
+			sb.append(_SQL_COUNT_COMMERCECOUNTRY_WHERE);
+
+			sb.append(_FINDER_COLUMN_C_TW_COMPANYID_2);
+
+			boolean bindTwoLettersISOCode = false;
+
+			if (twoLettersISOCode.isEmpty()) {
+				sb.append(_FINDER_COLUMN_C_TW_TWOLETTERSISOCODE_3);
+			}
+			else {
+				bindTwoLettersISOCode = true;
+
+				sb.append(_FINDER_COLUMN_C_TW_TWOLETTERSISOCODE_2);
+			}
+
+			String sql = sb.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query query = session.createQuery(sql);
+
+				QueryPos queryPos = QueryPos.getInstance(query);
+
+				queryPos.add(companyId);
+
+				if (bindTwoLettersISOCode) {
+					queryPos.add(twoLettersISOCode);
+				}
+
+				count = (Long)query.uniqueResult();
+
+				finderCache.putResult(finderPath, finderArgs, count);
+			}
+			catch (Exception exception) {
+				finderCache.removeResult(finderPath, finderArgs);
+
+				throw processException(exception);
+			}
+			finally {
+				closeSession(session);
+			}
 		}
 
-		return 1;
+		return count.intValue();
 	}
 
 	private static final String _FINDER_COLUMN_C_TW_COMPANYID_2 =
@@ -1926,6 +1977,7 @@ public class CommerceCountryPersistenceImpl
 		"(commerceCountry.twoLettersISOCode IS NULL OR commerceCountry.twoLettersISOCode = '')";
 
 	private FinderPath _finderPathFetchByC_N;
+	private FinderPath _finderPathCountByC_N;
 
 	/**
 	 * Returns the commerce country where companyId = &#63; and numericISOCode = &#63; or throws a <code>NoSuchCountryException</code> if it could not be found.
@@ -2096,13 +2148,51 @@ public class CommerceCountryPersistenceImpl
 	 */
 	@Override
 	public int countByC_N(long companyId, int numericISOCode) {
-		CommerceCountry commerceCountry = fetchByC_N(companyId, numericISOCode);
+		FinderPath finderPath = _finderPathCountByC_N;
 
-		if (commerceCountry == null) {
-			return 0;
+		Object[] finderArgs = new Object[] {companyId, numericISOCode};
+
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
+
+		if (count == null) {
+			StringBundler sb = new StringBundler(3);
+
+			sb.append(_SQL_COUNT_COMMERCECOUNTRY_WHERE);
+
+			sb.append(_FINDER_COLUMN_C_N_COMPANYID_2);
+
+			sb.append(_FINDER_COLUMN_C_N_NUMERICISOCODE_2);
+
+			String sql = sb.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query query = session.createQuery(sql);
+
+				QueryPos queryPos = QueryPos.getInstance(query);
+
+				queryPos.add(companyId);
+
+				queryPos.add(numericISOCode);
+
+				count = (Long)query.uniqueResult();
+
+				finderCache.putResult(finderPath, finderArgs, count);
+			}
+			catch (Exception exception) {
+				finderCache.removeResult(finderPath, finderArgs);
+
+				throw processException(exception);
+			}
+			finally {
+				closeSession(session);
+			}
 		}
 
-		return 1;
+		return count.intValue();
 	}
 
 	private static final String _FINDER_COLUMN_C_N_COMPANYID_2 =
@@ -4988,6 +5078,12 @@ public class CommerceCountryPersistenceImpl
 			CommerceCountryModelImpl.COMPANYID_COLUMN_BITMASK |
 			CommerceCountryModelImpl.TWOLETTERSISOCODE_COLUMN_BITMASK);
 
+		_finderPathCountByC_Tw = new FinderPath(
+			CommerceCountryModelImpl.ENTITY_CACHE_ENABLED,
+			CommerceCountryModelImpl.FINDER_CACHE_ENABLED, Long.class,
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByC_Tw",
+			new String[] {Long.class.getName(), String.class.getName()});
+
 		_finderPathFetchByC_N = new FinderPath(
 			CommerceCountryModelImpl.ENTITY_CACHE_ENABLED,
 			CommerceCountryModelImpl.FINDER_CACHE_ENABLED,
@@ -4995,6 +5091,12 @@ public class CommerceCountryPersistenceImpl
 			new String[] {Long.class.getName(), Integer.class.getName()},
 			CommerceCountryModelImpl.COMPANYID_COLUMN_BITMASK |
 			CommerceCountryModelImpl.NUMERICISOCODE_COLUMN_BITMASK);
+
+		_finderPathCountByC_N = new FinderPath(
+			CommerceCountryModelImpl.ENTITY_CACHE_ENABLED,
+			CommerceCountryModelImpl.FINDER_CACHE_ENABLED, Long.class,
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByC_N",
+			new String[] {Long.class.getName(), Integer.class.getName()});
 
 		_finderPathWithPaginationFindByC_A = new FinderPath(
 			CommerceCountryModelImpl.ENTITY_CACHE_ENABLED,

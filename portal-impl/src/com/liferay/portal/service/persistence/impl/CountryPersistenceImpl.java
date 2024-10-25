@@ -74,6 +74,7 @@ public class CountryPersistenceImpl
 	private FinderPath _finderPathWithoutPaginationFindAll;
 	private FinderPath _finderPathCountAll;
 	private FinderPath _finderPathFetchByName;
+	private FinderPath _finderPathCountByName;
 
 	/**
 	 * Returns the country where name = &#63; or throws a <code>NoSuchCountryException</code> if it could not be found.
@@ -238,13 +239,61 @@ public class CountryPersistenceImpl
 	 */
 	@Override
 	public int countByName(String name) {
-		Country country = fetchByName(name);
+		name = Objects.toString(name, "");
 
-		if (country == null) {
-			return 0;
+		FinderPath finderPath = _finderPathCountByName;
+
+		Object[] finderArgs = new Object[] {name};
+
+		Long count = (Long)FinderCacheUtil.getResult(
+			finderPath, finderArgs, this);
+
+		if (count == null) {
+			StringBundler sb = new StringBundler(2);
+
+			sb.append(_SQL_COUNT_COUNTRY_WHERE);
+
+			boolean bindName = false;
+
+			if (name.isEmpty()) {
+				sb.append(_FINDER_COLUMN_NAME_NAME_3);
+			}
+			else {
+				bindName = true;
+
+				sb.append(_FINDER_COLUMN_NAME_NAME_2);
+			}
+
+			String sql = sb.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query query = session.createQuery(sql);
+
+				QueryPos queryPos = QueryPos.getInstance(query);
+
+				if (bindName) {
+					queryPos.add(name);
+				}
+
+				count = (Long)query.uniqueResult();
+
+				FinderCacheUtil.putResult(finderPath, finderArgs, count);
+			}
+			catch (Exception exception) {
+				FinderCacheUtil.removeResult(finderPath, finderArgs);
+
+				throw processException(exception);
+			}
+			finally {
+				closeSession(session);
+			}
 		}
 
-		return 1;
+		return count.intValue();
 	}
 
 	private static final String _FINDER_COLUMN_NAME_NAME_2 = "country.name = ?";
@@ -253,6 +302,7 @@ public class CountryPersistenceImpl
 		"(country.name IS NULL OR country.name = '')";
 
 	private FinderPath _finderPathFetchByA2;
+	private FinderPath _finderPathCountByA2;
 
 	/**
 	 * Returns the country where a2 = &#63; or throws a <code>NoSuchCountryException</code> if it could not be found.
@@ -417,13 +467,61 @@ public class CountryPersistenceImpl
 	 */
 	@Override
 	public int countByA2(String a2) {
-		Country country = fetchByA2(a2);
+		a2 = Objects.toString(a2, "");
 
-		if (country == null) {
-			return 0;
+		FinderPath finderPath = _finderPathCountByA2;
+
+		Object[] finderArgs = new Object[] {a2};
+
+		Long count = (Long)FinderCacheUtil.getResult(
+			finderPath, finderArgs, this);
+
+		if (count == null) {
+			StringBundler sb = new StringBundler(2);
+
+			sb.append(_SQL_COUNT_COUNTRY_WHERE);
+
+			boolean bindA2 = false;
+
+			if (a2.isEmpty()) {
+				sb.append(_FINDER_COLUMN_A2_A2_3);
+			}
+			else {
+				bindA2 = true;
+
+				sb.append(_FINDER_COLUMN_A2_A2_2);
+			}
+
+			String sql = sb.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query query = session.createQuery(sql);
+
+				QueryPos queryPos = QueryPos.getInstance(query);
+
+				if (bindA2) {
+					queryPos.add(a2);
+				}
+
+				count = (Long)query.uniqueResult();
+
+				FinderCacheUtil.putResult(finderPath, finderArgs, count);
+			}
+			catch (Exception exception) {
+				FinderCacheUtil.removeResult(finderPath, finderArgs);
+
+				throw processException(exception);
+			}
+			finally {
+				closeSession(session);
+			}
 		}
 
-		return 1;
+		return count.intValue();
 	}
 
 	private static final String _FINDER_COLUMN_A2_A2_2 = "country.a2 = ?";
@@ -432,6 +530,7 @@ public class CountryPersistenceImpl
 		"(country.a2 IS NULL OR country.a2 = '')";
 
 	private FinderPath _finderPathFetchByA3;
+	private FinderPath _finderPathCountByA3;
 
 	/**
 	 * Returns the country where a3 = &#63; or throws a <code>NoSuchCountryException</code> if it could not be found.
@@ -596,13 +695,61 @@ public class CountryPersistenceImpl
 	 */
 	@Override
 	public int countByA3(String a3) {
-		Country country = fetchByA3(a3);
+		a3 = Objects.toString(a3, "");
 
-		if (country == null) {
-			return 0;
+		FinderPath finderPath = _finderPathCountByA3;
+
+		Object[] finderArgs = new Object[] {a3};
+
+		Long count = (Long)FinderCacheUtil.getResult(
+			finderPath, finderArgs, this);
+
+		if (count == null) {
+			StringBundler sb = new StringBundler(2);
+
+			sb.append(_SQL_COUNT_COUNTRY_WHERE);
+
+			boolean bindA3 = false;
+
+			if (a3.isEmpty()) {
+				sb.append(_FINDER_COLUMN_A3_A3_3);
+			}
+			else {
+				bindA3 = true;
+
+				sb.append(_FINDER_COLUMN_A3_A3_2);
+			}
+
+			String sql = sb.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query query = session.createQuery(sql);
+
+				QueryPos queryPos = QueryPos.getInstance(query);
+
+				if (bindA3) {
+					queryPos.add(a3);
+				}
+
+				count = (Long)query.uniqueResult();
+
+				FinderCacheUtil.putResult(finderPath, finderArgs, count);
+			}
+			catch (Exception exception) {
+				FinderCacheUtil.removeResult(finderPath, finderArgs);
+
+				throw processException(exception);
+			}
+			finally {
+				closeSession(session);
+			}
 		}
 
-		return 1;
+		return count.intValue();
 	}
 
 	private static final String _FINDER_COLUMN_A3_A3_2 = "country.a3 = ?";
@@ -1953,6 +2100,12 @@ public class CountryPersistenceImpl
 			new String[] {String.class.getName()},
 			CountryModelImpl.NAME_COLUMN_BITMASK);
 
+		_finderPathCountByName = new FinderPath(
+			CountryModelImpl.ENTITY_CACHE_ENABLED,
+			CountryModelImpl.FINDER_CACHE_ENABLED, Long.class,
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByName",
+			new String[] {String.class.getName()});
+
 		_finderPathFetchByA2 = new FinderPath(
 			CountryModelImpl.ENTITY_CACHE_ENABLED,
 			CountryModelImpl.FINDER_CACHE_ENABLED, CountryImpl.class,
@@ -1960,12 +2113,24 @@ public class CountryPersistenceImpl
 			new String[] {String.class.getName()},
 			CountryModelImpl.A2_COLUMN_BITMASK);
 
+		_finderPathCountByA2 = new FinderPath(
+			CountryModelImpl.ENTITY_CACHE_ENABLED,
+			CountryModelImpl.FINDER_CACHE_ENABLED, Long.class,
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByA2",
+			new String[] {String.class.getName()});
+
 		_finderPathFetchByA3 = new FinderPath(
 			CountryModelImpl.ENTITY_CACHE_ENABLED,
 			CountryModelImpl.FINDER_CACHE_ENABLED, CountryImpl.class,
 			FINDER_CLASS_NAME_ENTITY, "fetchByA3",
 			new String[] {String.class.getName()},
 			CountryModelImpl.A3_COLUMN_BITMASK);
+
+		_finderPathCountByA3 = new FinderPath(
+			CountryModelImpl.ENTITY_CACHE_ENABLED,
+			CountryModelImpl.FINDER_CACHE_ENABLED, Long.class,
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByA3",
+			new String[] {String.class.getName()});
 
 		_finderPathWithPaginationFindByActive = new FinderPath(
 			CountryModelImpl.ENTITY_CACHE_ENABLED,

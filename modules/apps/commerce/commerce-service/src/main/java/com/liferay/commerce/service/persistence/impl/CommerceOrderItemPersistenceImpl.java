@@ -2163,6 +2163,7 @@ public class CommerceOrderItemPersistenceImpl
 			"commerceOrderItem.parentCommerceOrderItemId = ?";
 
 	private FinderPath _finderPathFetchByBookedQuantityId;
+	private FinderPath _finderPathCountByBookedQuantityId;
 
 	/**
 	 * Returns the commerce order item where bookedQuantityId = &#63; or throws a <code>NoSuchOrderItemException</code> if it could not be found.
@@ -2338,14 +2339,47 @@ public class CommerceOrderItemPersistenceImpl
 	 */
 	@Override
 	public int countByBookedQuantityId(long bookedQuantityId) {
-		CommerceOrderItem commerceOrderItem = fetchByBookedQuantityId(
-			bookedQuantityId);
+		FinderPath finderPath = _finderPathCountByBookedQuantityId;
 
-		if (commerceOrderItem == null) {
-			return 0;
+		Object[] finderArgs = new Object[] {bookedQuantityId};
+
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
+
+		if (count == null) {
+			StringBundler sb = new StringBundler(2);
+
+			sb.append(_SQL_COUNT_COMMERCEORDERITEM_WHERE);
+
+			sb.append(_FINDER_COLUMN_BOOKEDQUANTITYID_BOOKEDQUANTITYID_2);
+
+			String sql = sb.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query query = session.createQuery(sql);
+
+				QueryPos queryPos = QueryPos.getInstance(query);
+
+				queryPos.add(bookedQuantityId);
+
+				count = (Long)query.uniqueResult();
+
+				finderCache.putResult(finderPath, finderArgs, count);
+			}
+			catch (Exception exception) {
+				finderCache.removeResult(finderPath, finderArgs);
+
+				throw processException(exception);
+			}
+			finally {
+				closeSession(session);
+			}
 		}
 
-		return 1;
+		return count.intValue();
 	}
 
 	private static final String
@@ -3458,6 +3492,7 @@ public class CommerceOrderItemPersistenceImpl
 		"commerceOrderItem.subscription = ?";
 
 	private FinderPath _finderPathFetchByC_ERC;
+	private FinderPath _finderPathCountByC_ERC;
 
 	/**
 	 * Returns the commerce order item where companyId = &#63; and externalReferenceCode = &#63; or throws a <code>NoSuchOrderItemException</code> if it could not be found.
@@ -3667,14 +3702,64 @@ public class CommerceOrderItemPersistenceImpl
 	 */
 	@Override
 	public int countByC_ERC(long companyId, String externalReferenceCode) {
-		CommerceOrderItem commerceOrderItem = fetchByC_ERC(
-			companyId, externalReferenceCode);
+		externalReferenceCode = Objects.toString(externalReferenceCode, "");
 
-		if (commerceOrderItem == null) {
-			return 0;
+		FinderPath finderPath = _finderPathCountByC_ERC;
+
+		Object[] finderArgs = new Object[] {companyId, externalReferenceCode};
+
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
+
+		if (count == null) {
+			StringBundler sb = new StringBundler(3);
+
+			sb.append(_SQL_COUNT_COMMERCEORDERITEM_WHERE);
+
+			sb.append(_FINDER_COLUMN_C_ERC_COMPANYID_2);
+
+			boolean bindExternalReferenceCode = false;
+
+			if (externalReferenceCode.isEmpty()) {
+				sb.append(_FINDER_COLUMN_C_ERC_EXTERNALREFERENCECODE_3);
+			}
+			else {
+				bindExternalReferenceCode = true;
+
+				sb.append(_FINDER_COLUMN_C_ERC_EXTERNALREFERENCECODE_2);
+			}
+
+			String sql = sb.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query query = session.createQuery(sql);
+
+				QueryPos queryPos = QueryPos.getInstance(query);
+
+				queryPos.add(companyId);
+
+				if (bindExternalReferenceCode) {
+					queryPos.add(externalReferenceCode);
+				}
+
+				count = (Long)query.uniqueResult();
+
+				finderCache.putResult(finderPath, finderArgs, count);
+			}
+			catch (Exception exception) {
+				finderCache.removeResult(finderPath, finderArgs);
+
+				throw processException(exception);
+			}
+			finally {
+				closeSession(session);
+			}
 		}
 
-		return 1;
+		return count.intValue();
 	}
 
 	private static final String _FINDER_COLUMN_C_ERC_COMPANYID_2 =
@@ -4926,6 +5011,12 @@ public class CommerceOrderItemPersistenceImpl
 			"fetchByBookedQuantityId", new String[] {Long.class.getName()},
 			CommerceOrderItemModelImpl.BOOKEDQUANTITYID_COLUMN_BITMASK);
 
+		_finderPathCountByBookedQuantityId = new FinderPath(
+			CommerceOrderItemModelImpl.ENTITY_CACHE_ENABLED,
+			CommerceOrderItemModelImpl.FINDER_CACHE_ENABLED, Long.class,
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+			"countByBookedQuantityId", new String[] {Long.class.getName()});
+
 		_finderPathWithPaginationFindByC_I = new FinderPath(
 			CommerceOrderItemModelImpl.ENTITY_CACHE_ENABLED,
 			CommerceOrderItemModelImpl.FINDER_CACHE_ENABLED,
@@ -4988,6 +5079,12 @@ public class CommerceOrderItemPersistenceImpl
 			new String[] {Long.class.getName(), String.class.getName()},
 			CommerceOrderItemModelImpl.COMPANYID_COLUMN_BITMASK |
 			CommerceOrderItemModelImpl.EXTERNALREFERENCECODE_COLUMN_BITMASK);
+
+		_finderPathCountByC_ERC = new FinderPath(
+			CommerceOrderItemModelImpl.ENTITY_CACHE_ENABLED,
+			CommerceOrderItemModelImpl.FINDER_CACHE_ENABLED, Long.class,
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByC_ERC",
+			new String[] {Long.class.getName(), String.class.getName()});
 
 		CommerceOrderItemUtil.setPersistence(this);
 	}

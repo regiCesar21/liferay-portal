@@ -592,6 +592,7 @@ public class JournalArticleLocalizationPersistenceImpl
 		"journalArticleLocalization.articlePK = ?";
 
 	private FinderPath _finderPathFetchByA_L;
+	private FinderPath _finderPathCountByA_L;
 
 	/**
 	 * Returns the journal article localization where articlePK = &#63; and languageId = &#63; or throws a <code>NoSuchArticleLocalizationException</code> if it could not be found.
@@ -784,14 +785,64 @@ public class JournalArticleLocalizationPersistenceImpl
 	 */
 	@Override
 	public int countByA_L(long articlePK, String languageId) {
-		JournalArticleLocalization journalArticleLocalization = fetchByA_L(
-			articlePK, languageId);
+		languageId = Objects.toString(languageId, "");
 
-		if (journalArticleLocalization == null) {
-			return 0;
+		FinderPath finderPath = _finderPathCountByA_L;
+
+		Object[] finderArgs = new Object[] {articlePK, languageId};
+
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
+
+		if (count == null) {
+			StringBundler sb = new StringBundler(3);
+
+			sb.append(_SQL_COUNT_JOURNALARTICLELOCALIZATION_WHERE);
+
+			sb.append(_FINDER_COLUMN_A_L_ARTICLEPK_2);
+
+			boolean bindLanguageId = false;
+
+			if (languageId.isEmpty()) {
+				sb.append(_FINDER_COLUMN_A_L_LANGUAGEID_3);
+			}
+			else {
+				bindLanguageId = true;
+
+				sb.append(_FINDER_COLUMN_A_L_LANGUAGEID_2);
+			}
+
+			String sql = sb.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query query = session.createQuery(sql);
+
+				QueryPos queryPos = QueryPos.getInstance(query);
+
+				queryPos.add(articlePK);
+
+				if (bindLanguageId) {
+					queryPos.add(languageId);
+				}
+
+				count = (Long)query.uniqueResult();
+
+				finderCache.putResult(finderPath, finderArgs, count);
+			}
+			catch (Exception exception) {
+				finderCache.removeResult(finderPath, finderArgs);
+
+				throw processException(exception);
+			}
+			finally {
+				closeSession(session);
+			}
 		}
 
-		return 1;
+		return count.intValue();
 	}
 
 	private static final String _FINDER_COLUMN_A_L_ARTICLEPK_2 =
@@ -1693,6 +1744,12 @@ public class JournalArticleLocalizationPersistenceImpl
 			new String[] {Long.class.getName(), String.class.getName()},
 			JournalArticleLocalizationModelImpl.ARTICLEPK_COLUMN_BITMASK |
 			JournalArticleLocalizationModelImpl.LANGUAGEID_COLUMN_BITMASK);
+
+		_finderPathCountByA_L = new FinderPath(
+			JournalArticleLocalizationModelImpl.ENTITY_CACHE_ENABLED,
+			JournalArticleLocalizationModelImpl.FINDER_CACHE_ENABLED,
+			Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByA_L",
+			new String[] {Long.class.getName(), String.class.getName()});
 
 		JournalArticleLocalizationUtil.setPersistence(this);
 	}

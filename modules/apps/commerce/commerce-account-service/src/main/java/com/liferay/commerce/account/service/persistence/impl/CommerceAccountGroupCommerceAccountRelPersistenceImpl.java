@@ -1200,6 +1200,7 @@ public class CommerceAccountGroupCommerceAccountRelPersistenceImpl
 			"commerceAccountGroupCommerceAccountRel.commerceAccountId = ?";
 
 	private FinderPath _finderPathFetchByC_C;
+	private FinderPath _finderPathCountByC_C;
 
 	/**
 	 * Returns the commerce account group commerce account rel where commerceAccountGroupId = &#63; and commerceAccountId = &#63; or throws a <code>NoSuchAccountGroupCommerceAccountRelException</code> if it could not be found.
@@ -1390,15 +1391,53 @@ public class CommerceAccountGroupCommerceAccountRelPersistenceImpl
 	 */
 	@Override
 	public int countByC_C(long commerceAccountGroupId, long commerceAccountId) {
-		CommerceAccountGroupCommerceAccountRel
-			commerceAccountGroupCommerceAccountRel = fetchByC_C(
-				commerceAccountGroupId, commerceAccountId);
+		FinderPath finderPath = _finderPathCountByC_C;
 
-		if (commerceAccountGroupCommerceAccountRel == null) {
-			return 0;
+		Object[] finderArgs = new Object[] {
+			commerceAccountGroupId, commerceAccountId
+		};
+
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
+
+		if (count == null) {
+			StringBundler sb = new StringBundler(3);
+
+			sb.append(_SQL_COUNT_COMMERCEACCOUNTGROUPCOMMERCEACCOUNTREL_WHERE);
+
+			sb.append(_FINDER_COLUMN_C_C_COMMERCEACCOUNTGROUPID_2);
+
+			sb.append(_FINDER_COLUMN_C_C_COMMERCEACCOUNTID_2);
+
+			String sql = sb.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query query = session.createQuery(sql);
+
+				QueryPos queryPos = QueryPos.getInstance(query);
+
+				queryPos.add(commerceAccountGroupId);
+
+				queryPos.add(commerceAccountId);
+
+				count = (Long)query.uniqueResult();
+
+				finderCache.putResult(finderPath, finderArgs, count);
+			}
+			catch (Exception exception) {
+				finderCache.removeResult(finderPath, finderArgs);
+
+				throw processException(exception);
+			}
+			finally {
+				closeSession(session);
+			}
 		}
 
-		return 1;
+		return count.intValue();
 	}
 
 	private static final String _FINDER_COLUMN_C_C_COMMERCEACCOUNTGROUPID_2 =
@@ -1408,6 +1447,7 @@ public class CommerceAccountGroupCommerceAccountRelPersistenceImpl
 		"commerceAccountGroupCommerceAccountRel.commerceAccountId = ?";
 
 	private FinderPath _finderPathFetchByC_ERC;
+	private FinderPath _finderPathCountByC_ERC;
 
 	/**
 	 * Returns the commerce account group commerce account rel where companyId = &#63; and externalReferenceCode = &#63; or throws a <code>NoSuchAccountGroupCommerceAccountRelException</code> if it could not be found.
@@ -1626,15 +1666,64 @@ public class CommerceAccountGroupCommerceAccountRelPersistenceImpl
 	 */
 	@Override
 	public int countByC_ERC(long companyId, String externalReferenceCode) {
-		CommerceAccountGroupCommerceAccountRel
-			commerceAccountGroupCommerceAccountRel = fetchByC_ERC(
-				companyId, externalReferenceCode);
+		externalReferenceCode = Objects.toString(externalReferenceCode, "");
 
-		if (commerceAccountGroupCommerceAccountRel == null) {
-			return 0;
+		FinderPath finderPath = _finderPathCountByC_ERC;
+
+		Object[] finderArgs = new Object[] {companyId, externalReferenceCode};
+
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
+
+		if (count == null) {
+			StringBundler sb = new StringBundler(3);
+
+			sb.append(_SQL_COUNT_COMMERCEACCOUNTGROUPCOMMERCEACCOUNTREL_WHERE);
+
+			sb.append(_FINDER_COLUMN_C_ERC_COMPANYID_2);
+
+			boolean bindExternalReferenceCode = false;
+
+			if (externalReferenceCode.isEmpty()) {
+				sb.append(_FINDER_COLUMN_C_ERC_EXTERNALREFERENCECODE_3);
+			}
+			else {
+				bindExternalReferenceCode = true;
+
+				sb.append(_FINDER_COLUMN_C_ERC_EXTERNALREFERENCECODE_2);
+			}
+
+			String sql = sb.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query query = session.createQuery(sql);
+
+				QueryPos queryPos = QueryPos.getInstance(query);
+
+				queryPos.add(companyId);
+
+				if (bindExternalReferenceCode) {
+					queryPos.add(externalReferenceCode);
+				}
+
+				count = (Long)query.uniqueResult();
+
+				finderCache.putResult(finderPath, finderArgs, count);
+			}
+			catch (Exception exception) {
+				finderCache.removeResult(finderPath, finderArgs);
+
+				throw processException(exception);
+			}
+			finally {
+				closeSession(session);
+			}
 		}
 
-		return 1;
+		return count.intValue();
 	}
 
 	private static final String _FINDER_COLUMN_C_ERC_COMPANYID_2 =
@@ -2887,6 +2976,14 @@ public class CommerceAccountGroupCommerceAccountRelPersistenceImpl
 			CommerceAccountGroupCommerceAccountRelModelImpl.
 				COMMERCEACCOUNTID_COLUMN_BITMASK);
 
+		_finderPathCountByC_C = new FinderPath(
+			CommerceAccountGroupCommerceAccountRelModelImpl.
+				ENTITY_CACHE_ENABLED,
+			CommerceAccountGroupCommerceAccountRelModelImpl.
+				FINDER_CACHE_ENABLED,
+			Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByC_C",
+			new String[] {Long.class.getName(), Long.class.getName()});
+
 		_finderPathFetchByC_ERC = new FinderPath(
 			CommerceAccountGroupCommerceAccountRelModelImpl.
 				ENTITY_CACHE_ENABLED,
@@ -2899,6 +2996,15 @@ public class CommerceAccountGroupCommerceAccountRelPersistenceImpl
 				COMPANYID_COLUMN_BITMASK |
 			CommerceAccountGroupCommerceAccountRelModelImpl.
 				EXTERNALREFERENCECODE_COLUMN_BITMASK);
+
+		_finderPathCountByC_ERC = new FinderPath(
+			CommerceAccountGroupCommerceAccountRelModelImpl.
+				ENTITY_CACHE_ENABLED,
+			CommerceAccountGroupCommerceAccountRelModelImpl.
+				FINDER_CACHE_ENABLED,
+			Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+			"countByC_ERC",
+			new String[] {Long.class.getName(), String.class.getName()});
 
 		CommerceAccountGroupCommerceAccountRelUtil.setPersistence(this);
 	}

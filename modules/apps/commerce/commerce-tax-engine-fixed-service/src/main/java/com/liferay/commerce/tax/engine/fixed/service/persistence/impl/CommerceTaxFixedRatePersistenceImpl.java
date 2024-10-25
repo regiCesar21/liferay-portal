@@ -1118,6 +1118,7 @@ public class CommerceTaxFixedRatePersistenceImpl
 			"commerceTaxFixedRate.commerceTaxMethodId = ?";
 
 	private FinderPath _finderPathFetchByC_C;
+	private FinderPath _finderPathCountByC_C;
 
 	/**
 	 * Returns the commerce tax fixed rate where CPTaxCategoryId = &#63; and commerceTaxMethodId = &#63; or throws a <code>NoSuchTaxFixedRateException</code> if it could not be found.
@@ -1298,14 +1299,53 @@ public class CommerceTaxFixedRatePersistenceImpl
 	 */
 	@Override
 	public int countByC_C(long CPTaxCategoryId, long commerceTaxMethodId) {
-		CommerceTaxFixedRate commerceTaxFixedRate = fetchByC_C(
-			CPTaxCategoryId, commerceTaxMethodId);
+		FinderPath finderPath = _finderPathCountByC_C;
 
-		if (commerceTaxFixedRate == null) {
-			return 0;
+		Object[] finderArgs = new Object[] {
+			CPTaxCategoryId, commerceTaxMethodId
+		};
+
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
+
+		if (count == null) {
+			StringBundler sb = new StringBundler(3);
+
+			sb.append(_SQL_COUNT_COMMERCETAXFIXEDRATE_WHERE);
+
+			sb.append(_FINDER_COLUMN_C_C_CPTAXCATEGORYID_2);
+
+			sb.append(_FINDER_COLUMN_C_C_COMMERCETAXMETHODID_2);
+
+			String sql = sb.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query query = session.createQuery(sql);
+
+				QueryPos queryPos = QueryPos.getInstance(query);
+
+				queryPos.add(CPTaxCategoryId);
+
+				queryPos.add(commerceTaxMethodId);
+
+				count = (Long)query.uniqueResult();
+
+				finderCache.putResult(finderPath, finderArgs, count);
+			}
+			catch (Exception exception) {
+				finderCache.removeResult(finderPath, finderArgs);
+
+				throw processException(exception);
+			}
+			finally {
+				closeSession(session);
+			}
 		}
 
-		return 1;
+		return count.intValue();
 	}
 
 	private static final String _FINDER_COLUMN_C_C_CPTAXCATEGORYID_2 =
@@ -2259,6 +2299,12 @@ public class CommerceTaxFixedRatePersistenceImpl
 			new String[] {Long.class.getName(), Long.class.getName()},
 			CommerceTaxFixedRateModelImpl.CPTAXCATEGORYID_COLUMN_BITMASK |
 			CommerceTaxFixedRateModelImpl.COMMERCETAXMETHODID_COLUMN_BITMASK);
+
+		_finderPathCountByC_C = new FinderPath(
+			CommerceTaxFixedRateModelImpl.ENTITY_CACHE_ENABLED,
+			CommerceTaxFixedRateModelImpl.FINDER_CACHE_ENABLED, Long.class,
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByC_C",
+			new String[] {Long.class.getName(), Long.class.getName()});
 
 		CommerceTaxFixedRateUtil.setPersistence(this);
 	}

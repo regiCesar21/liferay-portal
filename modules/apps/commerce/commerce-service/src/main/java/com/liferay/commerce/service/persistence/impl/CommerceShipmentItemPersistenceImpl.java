@@ -2190,6 +2190,7 @@ public class CommerceShipmentItemPersistenceImpl
 		"commerceShipmentItem.commerceOrderItemId = ?";
 
 	private FinderPath _finderPathFetchByC_C_C;
+	private FinderPath _finderPathCountByC_C_C;
 
 	/**
 	 * Returns the commerce shipment item where commerceShipmentId = &#63; and commerceOrderItemId = &#63; and commerceInventoryWarehouseId = &#63; or throws a <code>NoSuchShipmentItemException</code> if it could not be found.
@@ -2398,15 +2399,58 @@ public class CommerceShipmentItemPersistenceImpl
 		long commerceShipmentId, long commerceOrderItemId,
 		long commerceInventoryWarehouseId) {
 
-		CommerceShipmentItem commerceShipmentItem = fetchByC_C_C(
-			commerceShipmentId, commerceOrderItemId,
-			commerceInventoryWarehouseId);
+		FinderPath finderPath = _finderPathCountByC_C_C;
 
-		if (commerceShipmentItem == null) {
-			return 0;
+		Object[] finderArgs = new Object[] {
+			commerceShipmentId, commerceOrderItemId,
+			commerceInventoryWarehouseId
+		};
+
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
+
+		if (count == null) {
+			StringBundler sb = new StringBundler(4);
+
+			sb.append(_SQL_COUNT_COMMERCESHIPMENTITEM_WHERE);
+
+			sb.append(_FINDER_COLUMN_C_C_C_COMMERCESHIPMENTID_2);
+
+			sb.append(_FINDER_COLUMN_C_C_C_COMMERCEORDERITEMID_2);
+
+			sb.append(_FINDER_COLUMN_C_C_C_COMMERCEINVENTORYWAREHOUSEID_2);
+
+			String sql = sb.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query query = session.createQuery(sql);
+
+				QueryPos queryPos = QueryPos.getInstance(query);
+
+				queryPos.add(commerceShipmentId);
+
+				queryPos.add(commerceOrderItemId);
+
+				queryPos.add(commerceInventoryWarehouseId);
+
+				count = (Long)query.uniqueResult();
+
+				finderCache.putResult(finderPath, finderArgs, count);
+			}
+			catch (Exception exception) {
+				finderCache.removeResult(finderPath, finderArgs);
+
+				throw processException(exception);
+			}
+			finally {
+				closeSession(session);
+			}
 		}
 
-		return 1;
+		return count.intValue();
 	}
 
 	private static final String _FINDER_COLUMN_C_C_C_COMMERCESHIPMENTID_2 =
@@ -3490,6 +3534,14 @@ public class CommerceShipmentItemPersistenceImpl
 			CommerceShipmentItemModelImpl.COMMERCEORDERITEMID_COLUMN_BITMASK |
 			CommerceShipmentItemModelImpl.
 				COMMERCEINVENTORYWAREHOUSEID_COLUMN_BITMASK);
+
+		_finderPathCountByC_C_C = new FinderPath(
+			CommerceShipmentItemModelImpl.ENTITY_CACHE_ENABLED,
+			CommerceShipmentItemModelImpl.FINDER_CACHE_ENABLED, Long.class,
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByC_C_C",
+			new String[] {
+				Long.class.getName(), Long.class.getName(), Long.class.getName()
+			});
 
 		CommerceShipmentItemUtil.setPersistence(this);
 	}

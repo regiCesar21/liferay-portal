@@ -75,6 +75,7 @@ public class RenameFinderColumnEntryPersistenceImpl
 	private FinderPath _finderPathWithoutPaginationFindAll;
 	private FinderPath _finderPathCountAll;
 	private FinderPath _finderPathFetchByColumnToRename;
+	private FinderPath _finderPathCountByColumnToRename;
 
 	/**
 	 * Returns the rename finder column entry where renamedColumn = &#63; or throws a <code>NoSuchRenameFinderColumnEntryException</code> if it could not be found.
@@ -267,14 +268,60 @@ public class RenameFinderColumnEntryPersistenceImpl
 	 */
 	@Override
 	public int countByColumnToRename(String renamedColumn) {
-		RenameFinderColumnEntry renameFinderColumnEntry = fetchByColumnToRename(
-			renamedColumn);
+		renamedColumn = Objects.toString(renamedColumn, "");
 
-		if (renameFinderColumnEntry == null) {
-			return 0;
+		FinderPath finderPath = _finderPathCountByColumnToRename;
+
+		Object[] finderArgs = new Object[] {renamedColumn};
+
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
+
+		if (count == null) {
+			StringBundler sb = new StringBundler(2);
+
+			sb.append(_SQL_COUNT_RENAMEFINDERCOLUMNENTRY_WHERE);
+
+			boolean bindRenamedColumn = false;
+
+			if (renamedColumn.isEmpty()) {
+				sb.append(_FINDER_COLUMN_COLUMNTORENAME_RENAMEDCOLUMN_3);
+			}
+			else {
+				bindRenamedColumn = true;
+
+				sb.append(_FINDER_COLUMN_COLUMNTORENAME_RENAMEDCOLUMN_2);
+			}
+
+			String sql = sb.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query query = session.createQuery(sql);
+
+				QueryPos queryPos = QueryPos.getInstance(query);
+
+				if (bindRenamedColumn) {
+					queryPos.add(renamedColumn);
+				}
+
+				count = (Long)query.uniqueResult();
+
+				finderCache.putResult(finderPath, finderArgs, count);
+			}
+			catch (Exception exception) {
+				finderCache.removeResult(finderPath, finderArgs);
+
+				throw processException(exception);
+			}
+			finally {
+				closeSession(session);
+			}
 		}
 
-		return 1;
+		return count.intValue();
 	}
 
 	private static final String _FINDER_COLUMN_COLUMNTORENAME_RENAMEDCOLUMN_2 =
@@ -1091,6 +1138,12 @@ public class RenameFinderColumnEntryPersistenceImpl
 			RenameFinderColumnEntryImpl.class, FINDER_CLASS_NAME_ENTITY,
 			"fetchByColumnToRename", new String[] {String.class.getName()},
 			RenameFinderColumnEntryModelImpl.RENAMEDCOLUMN_COLUMN_BITMASK);
+
+		_finderPathCountByColumnToRename = new FinderPath(
+			RenameFinderColumnEntryModelImpl.ENTITY_CACHE_ENABLED,
+			RenameFinderColumnEntryModelImpl.FINDER_CACHE_ENABLED, Long.class,
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByColumnToRename",
+			new String[] {String.class.getName()});
 
 		RenameFinderColumnEntryUtil.setPersistence(this);
 	}

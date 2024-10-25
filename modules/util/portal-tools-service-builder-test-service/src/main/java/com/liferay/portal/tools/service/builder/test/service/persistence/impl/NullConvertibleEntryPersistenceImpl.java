@@ -74,6 +74,7 @@ public class NullConvertibleEntryPersistenceImpl
 	private FinderPath _finderPathWithoutPaginationFindAll;
 	private FinderPath _finderPathCountAll;
 	private FinderPath _finderPathFetchByName;
+	private FinderPath _finderPathCountByName;
 
 	/**
 	 * Returns the null convertible entry where name = &#63; or throws a <code>NoSuchNullConvertibleEntryException</code> if it could not be found.
@@ -245,13 +246,60 @@ public class NullConvertibleEntryPersistenceImpl
 	 */
 	@Override
 	public int countByName(String name) {
-		NullConvertibleEntry nullConvertibleEntry = fetchByName(name);
+		name = Objects.toString(name, "");
 
-		if (nullConvertibleEntry == null) {
-			return 0;
+		FinderPath finderPath = _finderPathCountByName;
+
+		Object[] finderArgs = new Object[] {name};
+
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
+
+		if (count == null) {
+			StringBundler sb = new StringBundler(2);
+
+			sb.append(_SQL_COUNT_NULLCONVERTIBLEENTRY_WHERE);
+
+			boolean bindName = false;
+
+			if (name.isEmpty()) {
+				sb.append(_FINDER_COLUMN_NAME_NAME_3);
+			}
+			else {
+				bindName = true;
+
+				sb.append(_FINDER_COLUMN_NAME_NAME_2);
+			}
+
+			String sql = sb.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query query = session.createQuery(sql);
+
+				QueryPos queryPos = QueryPos.getInstance(query);
+
+				if (bindName) {
+					queryPos.add(name);
+				}
+
+				count = (Long)query.uniqueResult();
+
+				finderCache.putResult(finderPath, finderArgs, count);
+			}
+			catch (Exception exception) {
+				finderCache.removeResult(finderPath, finderArgs);
+
+				throw processException(exception);
+			}
+			finally {
+				closeSession(session);
+			}
 		}
 
-		return 1;
+		return count.intValue();
 	}
 
 	private static final String _FINDER_COLUMN_NAME_NAME_2 =
@@ -1051,6 +1099,12 @@ public class NullConvertibleEntryPersistenceImpl
 			NullConvertibleEntryImpl.class, FINDER_CLASS_NAME_ENTITY,
 			"fetchByName", new String[] {String.class.getName()},
 			NullConvertibleEntryModelImpl.NAME_COLUMN_BITMASK);
+
+		_finderPathCountByName = new FinderPath(
+			NullConvertibleEntryModelImpl.ENTITY_CACHE_ENABLED,
+			NullConvertibleEntryModelImpl.FINDER_CACHE_ENABLED, Long.class,
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByName",
+			new String[] {String.class.getName()});
 
 		NullConvertibleEntryUtil.setPersistence(this);
 	}

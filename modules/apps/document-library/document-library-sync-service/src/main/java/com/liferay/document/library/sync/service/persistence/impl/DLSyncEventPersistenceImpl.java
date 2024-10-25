@@ -565,6 +565,7 @@ public class DLSyncEventPersistenceImpl
 		"dlSyncEvent.modifiedTime > ?";
 
 	private FinderPath _finderPathFetchByTypePK;
+	private FinderPath _finderPathCountByTypePK;
 
 	/**
 	 * Returns the dl sync event where typePK = &#63; or throws a <code>NoSuchEventException</code> if it could not be found.
@@ -716,13 +717,47 @@ public class DLSyncEventPersistenceImpl
 	 */
 	@Override
 	public int countByTypePK(long typePK) {
-		DLSyncEvent dlSyncEvent = fetchByTypePK(typePK);
+		FinderPath finderPath = _finderPathCountByTypePK;
 
-		if (dlSyncEvent == null) {
-			return 0;
+		Object[] finderArgs = new Object[] {typePK};
+
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
+
+		if (count == null) {
+			StringBundler sb = new StringBundler(2);
+
+			sb.append(_SQL_COUNT_DLSYNCEVENT_WHERE);
+
+			sb.append(_FINDER_COLUMN_TYPEPK_TYPEPK_2);
+
+			String sql = sb.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query query = session.createQuery(sql);
+
+				QueryPos queryPos = QueryPos.getInstance(query);
+
+				queryPos.add(typePK);
+
+				count = (Long)query.uniqueResult();
+
+				finderCache.putResult(finderPath, finderArgs, count);
+			}
+			catch (Exception exception) {
+				finderCache.removeResult(finderPath, finderArgs);
+
+				throw processException(exception);
+			}
+			finally {
+				closeSession(session);
+			}
 		}
 
-		return 1;
+		return count.intValue();
 	}
 
 	private static final String _FINDER_COLUMN_TYPEPK_TYPEPK_2 =
@@ -1520,6 +1555,12 @@ public class DLSyncEventPersistenceImpl
 			FINDER_CLASS_NAME_ENTITY, "fetchByTypePK",
 			new String[] {Long.class.getName()},
 			DLSyncEventModelImpl.TYPEPK_COLUMN_BITMASK);
+
+		_finderPathCountByTypePK = new FinderPath(
+			DLSyncEventModelImpl.ENTITY_CACHE_ENABLED,
+			DLSyncEventModelImpl.FINDER_CACHE_ENABLED, Long.class,
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByTypePK",
+			new String[] {Long.class.getName()});
 
 		DLSyncEventUtil.setPersistence(this);
 	}

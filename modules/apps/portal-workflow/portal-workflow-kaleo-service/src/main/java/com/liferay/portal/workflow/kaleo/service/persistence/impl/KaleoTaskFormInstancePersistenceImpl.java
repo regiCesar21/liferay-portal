@@ -2686,6 +2686,7 @@ public class KaleoTaskFormInstancePersistenceImpl
 			"kaleoTaskFormInstance.kaleoTaskInstanceTokenId = ?";
 
 	private FinderPath _finderPathFetchByKaleoTaskFormId;
+	private FinderPath _finderPathCountByKaleoTaskFormId;
 
 	/**
 	 * Returns the kaleo task form instance where kaleoTaskFormId = &#63; or throws a <code>NoSuchTaskFormInstanceException</code> if it could not be found.
@@ -2862,14 +2863,47 @@ public class KaleoTaskFormInstancePersistenceImpl
 	 */
 	@Override
 	public int countByKaleoTaskFormId(long kaleoTaskFormId) {
-		KaleoTaskFormInstance kaleoTaskFormInstance = fetchByKaleoTaskFormId(
-			kaleoTaskFormId);
+		FinderPath finderPath = _finderPathCountByKaleoTaskFormId;
 
-		if (kaleoTaskFormInstance == null) {
-			return 0;
+		Object[] finderArgs = new Object[] {kaleoTaskFormId};
+
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
+
+		if (count == null) {
+			StringBundler sb = new StringBundler(2);
+
+			sb.append(_SQL_COUNT_KALEOTASKFORMINSTANCE_WHERE);
+
+			sb.append(_FINDER_COLUMN_KALEOTASKFORMID_KALEOTASKFORMID_2);
+
+			String sql = sb.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query query = session.createQuery(sql);
+
+				QueryPos queryPos = QueryPos.getInstance(query);
+
+				queryPos.add(kaleoTaskFormId);
+
+				count = (Long)query.uniqueResult();
+
+				finderCache.putResult(finderPath, finderArgs, count);
+			}
+			catch (Exception exception) {
+				finderCache.removeResult(finderPath, finderArgs);
+
+				throw processException(exception);
+			}
+			finally {
+				closeSession(session);
+			}
 		}
 
-		return 1;
+		return count.intValue();
 	}
 
 	private static final String
@@ -3998,6 +4032,12 @@ public class KaleoTaskFormInstancePersistenceImpl
 			KaleoTaskFormInstanceImpl.class, FINDER_CLASS_NAME_ENTITY,
 			"fetchByKaleoTaskFormId", new String[] {Long.class.getName()},
 			KaleoTaskFormInstanceModelImpl.KALEOTASKFORMID_COLUMN_BITMASK);
+
+		_finderPathCountByKaleoTaskFormId = new FinderPath(
+			KaleoTaskFormInstanceModelImpl.ENTITY_CACHE_ENABLED,
+			KaleoTaskFormInstanceModelImpl.FINDER_CACHE_ENABLED, Long.class,
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByKaleoTaskFormId",
+			new String[] {Long.class.getName()});
 
 		KaleoTaskFormInstanceUtil.setPersistence(this);
 	}

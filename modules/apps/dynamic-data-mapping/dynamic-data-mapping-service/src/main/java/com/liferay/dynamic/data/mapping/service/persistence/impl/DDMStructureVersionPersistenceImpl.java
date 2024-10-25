@@ -593,6 +593,7 @@ public class DDMStructureVersionPersistenceImpl
 		"ddmStructureVersion.structureId = ?";
 
 	private FinderPath _finderPathFetchByS_V;
+	private FinderPath _finderPathCountByS_V;
 
 	/**
 	 * Returns the ddm structure version where structureId = &#63; and version = &#63; or throws a <code>NoSuchStructureVersionException</code> if it could not be found.
@@ -779,14 +780,64 @@ public class DDMStructureVersionPersistenceImpl
 	 */
 	@Override
 	public int countByS_V(long structureId, String version) {
-		DDMStructureVersion ddmStructureVersion = fetchByS_V(
-			structureId, version);
+		version = Objects.toString(version, "");
 
-		if (ddmStructureVersion == null) {
-			return 0;
+		FinderPath finderPath = _finderPathCountByS_V;
+
+		Object[] finderArgs = new Object[] {structureId, version};
+
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
+
+		if (count == null) {
+			StringBundler sb = new StringBundler(3);
+
+			sb.append(_SQL_COUNT_DDMSTRUCTUREVERSION_WHERE);
+
+			sb.append(_FINDER_COLUMN_S_V_STRUCTUREID_2);
+
+			boolean bindVersion = false;
+
+			if (version.isEmpty()) {
+				sb.append(_FINDER_COLUMN_S_V_VERSION_3);
+			}
+			else {
+				bindVersion = true;
+
+				sb.append(_FINDER_COLUMN_S_V_VERSION_2);
+			}
+
+			String sql = sb.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query query = session.createQuery(sql);
+
+				QueryPos queryPos = QueryPos.getInstance(query);
+
+				queryPos.add(structureId);
+
+				if (bindVersion) {
+					queryPos.add(version);
+				}
+
+				count = (Long)query.uniqueResult();
+
+				finderCache.putResult(finderPath, finderArgs, count);
+			}
+			catch (Exception exception) {
+				finderCache.removeResult(finderPath, finderArgs);
+
+				throw processException(exception);
+			}
+			finally {
+				closeSession(session);
+			}
 		}
 
-		return 1;
+		return count.intValue();
 	}
 
 	private static final String _FINDER_COLUMN_S_V_STRUCTUREID_2 =
@@ -2275,6 +2326,12 @@ public class DDMStructureVersionPersistenceImpl
 			new String[] {Long.class.getName(), String.class.getName()},
 			DDMStructureVersionModelImpl.STRUCTUREID_COLUMN_BITMASK |
 			DDMStructureVersionModelImpl.VERSION_COLUMN_BITMASK);
+
+		_finderPathCountByS_V = new FinderPath(
+			DDMStructureVersionModelImpl.ENTITY_CACHE_ENABLED,
+			DDMStructureVersionModelImpl.FINDER_CACHE_ENABLED, Long.class,
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByS_V",
+			new String[] {Long.class.getName(), String.class.getName()});
 
 		_finderPathWithPaginationFindByS_S = new FinderPath(
 			DDMStructureVersionModelImpl.ENTITY_CACHE_ENABLED,

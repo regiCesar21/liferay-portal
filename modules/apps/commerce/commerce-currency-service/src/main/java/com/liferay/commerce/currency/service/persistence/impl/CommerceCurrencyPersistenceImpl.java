@@ -1718,6 +1718,7 @@ public class CommerceCurrencyPersistenceImpl
 		"commerceCurrency.companyId = ?";
 
 	private FinderPath _finderPathFetchByC_C;
+	private FinderPath _finderPathCountByC_C;
 
 	/**
 	 * Returns the commerce currency where companyId = &#63; and code = &#63; or throws a <code>NoSuchCurrencyException</code> if it could not be found.
@@ -1901,13 +1902,64 @@ public class CommerceCurrencyPersistenceImpl
 	 */
 	@Override
 	public int countByC_C(long companyId, String code) {
-		CommerceCurrency commerceCurrency = fetchByC_C(companyId, code);
+		code = Objects.toString(code, "");
 
-		if (commerceCurrency == null) {
-			return 0;
+		FinderPath finderPath = _finderPathCountByC_C;
+
+		Object[] finderArgs = new Object[] {companyId, code};
+
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
+
+		if (count == null) {
+			StringBundler sb = new StringBundler(3);
+
+			sb.append(_SQL_COUNT_COMMERCECURRENCY_WHERE);
+
+			sb.append(_FINDER_COLUMN_C_C_COMPANYID_2);
+
+			boolean bindCode = false;
+
+			if (code.isEmpty()) {
+				sb.append(_FINDER_COLUMN_C_C_CODE_3);
+			}
+			else {
+				bindCode = true;
+
+				sb.append(_FINDER_COLUMN_C_C_CODE_2);
+			}
+
+			String sql = sb.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query query = session.createQuery(sql);
+
+				QueryPos queryPos = QueryPos.getInstance(query);
+
+				queryPos.add(companyId);
+
+				if (bindCode) {
+					queryPos.add(code);
+				}
+
+				count = (Long)query.uniqueResult();
+
+				finderCache.putResult(finderPath, finderArgs, count);
+			}
+			catch (Exception exception) {
+				finderCache.removeResult(finderPath, finderArgs);
+
+				throw processException(exception);
+			}
+			finally {
+				closeSession(session);
+			}
 		}
 
-		return 1;
+		return count.intValue();
 	}
 
 	private static final String _FINDER_COLUMN_C_C_COMPANYID_2 =
@@ -4700,6 +4752,12 @@ public class CommerceCurrencyPersistenceImpl
 			new String[] {Long.class.getName(), String.class.getName()},
 			CommerceCurrencyModelImpl.COMPANYID_COLUMN_BITMASK |
 			CommerceCurrencyModelImpl.CODE_COLUMN_BITMASK);
+
+		_finderPathCountByC_C = new FinderPath(
+			CommerceCurrencyModelImpl.ENTITY_CACHE_ENABLED,
+			CommerceCurrencyModelImpl.FINDER_CACHE_ENABLED, Long.class,
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByC_C",
+			new String[] {Long.class.getName(), String.class.getName()});
 
 		_finderPathWithPaginationFindByC_P = new FinderPath(
 			CommerceCurrencyModelImpl.ENTITY_CACHE_ENABLED,

@@ -1107,6 +1107,7 @@ public class ResourceBlockPermissionPersistenceImpl
 		"resourceBlockPermission.roleId = ?";
 
 	private FinderPath _finderPathFetchByR_R;
+	private FinderPath _finderPathCountByR_R;
 
 	/**
 	 * Returns the resource block permission where resourceBlockId = &#63; and roleId = &#63; or throws a <code>NoSuchResourceBlockPermissionException</code> if it could not be found.
@@ -1286,14 +1287,52 @@ public class ResourceBlockPermissionPersistenceImpl
 	 */
 	@Override
 	public int countByR_R(long resourceBlockId, long roleId) {
-		ResourceBlockPermission resourceBlockPermission = fetchByR_R(
-			resourceBlockId, roleId);
+		FinderPath finderPath = _finderPathCountByR_R;
 
-		if (resourceBlockPermission == null) {
-			return 0;
+		Object[] finderArgs = new Object[] {resourceBlockId, roleId};
+
+		Long count = (Long)FinderCacheUtil.getResult(
+			finderPath, finderArgs, this);
+
+		if (count == null) {
+			StringBundler sb = new StringBundler(3);
+
+			sb.append(_SQL_COUNT_RESOURCEBLOCKPERMISSION_WHERE);
+
+			sb.append(_FINDER_COLUMN_R_R_RESOURCEBLOCKID_2);
+
+			sb.append(_FINDER_COLUMN_R_R_ROLEID_2);
+
+			String sql = sb.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query query = session.createQuery(sql);
+
+				QueryPos queryPos = QueryPos.getInstance(query);
+
+				queryPos.add(resourceBlockId);
+
+				queryPos.add(roleId);
+
+				count = (Long)query.uniqueResult();
+
+				FinderCacheUtil.putResult(finderPath, finderArgs, count);
+			}
+			catch (Exception exception) {
+				FinderCacheUtil.removeResult(finderPath, finderArgs);
+
+				throw processException(exception);
+			}
+			finally {
+				closeSession(session);
+			}
 		}
 
-		return 1;
+		return count.intValue();
 	}
 
 	private static final String _FINDER_COLUMN_R_R_RESOURCEBLOCKID_2 =
@@ -2231,6 +2270,12 @@ public class ResourceBlockPermissionPersistenceImpl
 			new String[] {Long.class.getName(), Long.class.getName()},
 			ResourceBlockPermissionModelImpl.RESOURCEBLOCKID_COLUMN_BITMASK |
 			ResourceBlockPermissionModelImpl.ROLEID_COLUMN_BITMASK);
+
+		_finderPathCountByR_R = new FinderPath(
+			ResourceBlockPermissionModelImpl.ENTITY_CACHE_ENABLED,
+			ResourceBlockPermissionModelImpl.FINDER_CACHE_ENABLED, Long.class,
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByR_R",
+			new String[] {Long.class.getName(), Long.class.getName()});
 
 		ResourceBlockPermissionUtil.setPersistence(this);
 	}
