@@ -8,8 +8,8 @@ AS (
                 EventProperty.name,
                 EventProperty.value
             FROM
-                `$[AC_PROJECT_ID].event` AS Event
-            CROSS JOIN UNNEST(Event.properties) AS EventProperty
+                `$[AC_PROJECT_ID].event` AS Event,
+            	UNNEST(Event.properties) AS EventProperty
             WHERE
                 (
                     (

@@ -1,13 +1,13 @@
 WITH
 	EventProperty AS (
 		SELECT
-		Event.eventDate,
-		Event.id,
-		EventProperty.name,
-		EventProperty.value
-	FROM
-		`$[AC_PROJECT_ID].event` AS Event
-	CROSS JOIN UNNEST(Event.properties) AS EventProperty
+			Event.eventDate,
+			Event.id,
+			EventProperty.name,
+			EventProperty.value
+		FROM
+			`$[AC_PROJECT_ID].event` AS Event,
+			UNNEST(Event.properties) AS EventProperty
 		WHERE
 			Event.applicationId IN ('Comment', 'Document', 'Ratings') AND
 			Event.assetId IS NOT NULL AND
