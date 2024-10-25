@@ -50,7 +50,7 @@ public class ReportRestController {
 			@RequestParam(required = false) String individualId,
 			@RequestParam(required = false) String query,
 			@RequestParam(defaultValue = "30") int rangeKey,
-			@RequestParam(required = false) String segmentId,
+			@RequestParam(required = false) Long segmentId,
 			@RequestParam(name = "sort", required = false) String[] sorts,
 			@RequestParam(name = "toDate", required = false) String toDate,
 			@PathVariable String type)
@@ -93,7 +93,7 @@ public class ReportRestController {
 
 		File file = _reportDog.getCSVReport(
 			assetId, assetType, Long.valueOf(channelId), individualId, query,
-			Long.valueOf(segmentId), sorts, timeRange, type);
+			segmentId, sorts, timeRange, type);
 
 		return bodyBuilder.body(new FileSystemResource(file.getAbsolutePath()));
 	}
