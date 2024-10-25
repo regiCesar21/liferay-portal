@@ -626,7 +626,6 @@ public class LayoutSEOEntryPersistenceImpl
 		"(layoutSEOEntry.uuid IS NULL OR layoutSEOEntry.uuid = '')";
 
 	private FinderPath _finderPathFetchByUUID_G;
-	private FinderPath _finderPathCountByUUID_G;
 
 	/**
 	 * Returns the layout seo entry where uuid = &#63; and groupId = &#63; or throws a <code>NoSuchEntryException</code> if it could not be found.
@@ -811,64 +810,13 @@ public class LayoutSEOEntryPersistenceImpl
 	 */
 	@Override
 	public int countByUUID_G(String uuid, long groupId) {
-		uuid = Objects.toString(uuid, "");
+		LayoutSEOEntry layoutSEOEntry = fetchByUUID_G(uuid, groupId);
 
-		FinderPath finderPath = _finderPathCountByUUID_G;
-
-		Object[] finderArgs = new Object[] {uuid, groupId};
-
-		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
-
-		if (count == null) {
-			StringBundler sb = new StringBundler(3);
-
-			sb.append(_SQL_COUNT_LAYOUTSEOENTRY_WHERE);
-
-			boolean bindUuid = false;
-
-			if (uuid.isEmpty()) {
-				sb.append(_FINDER_COLUMN_UUID_G_UUID_3);
-			}
-			else {
-				bindUuid = true;
-
-				sb.append(_FINDER_COLUMN_UUID_G_UUID_2);
-			}
-
-			sb.append(_FINDER_COLUMN_UUID_G_GROUPID_2);
-
-			String sql = sb.toString();
-
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				Query query = session.createQuery(sql);
-
-				QueryPos queryPos = QueryPos.getInstance(query);
-
-				if (bindUuid) {
-					queryPos.add(uuid);
-				}
-
-				queryPos.add(groupId);
-
-				count = (Long)query.uniqueResult();
-
-				finderCache.putResult(finderPath, finderArgs, count);
-			}
-			catch (Exception exception) {
-				finderCache.removeResult(finderPath, finderArgs);
-
-				throw processException(exception);
-			}
-			finally {
-				closeSession(session);
-			}
+		if (layoutSEOEntry == null) {
+			return 0;
 		}
 
-		return count.intValue();
+		return 1;
 	}
 
 	private static final String _FINDER_COLUMN_UUID_G_UUID_2 =
@@ -1469,7 +1417,6 @@ public class LayoutSEOEntryPersistenceImpl
 		"layoutSEOEntry.companyId = ?";
 
 	private FinderPath _finderPathFetchByG_P_L;
-	private FinderPath _finderPathCountByG_P_L;
 
 	/**
 	 * Returns the layout seo entry where groupId = &#63; and privateLayout = &#63; and layoutId = &#63; or throws a <code>NoSuchEntryException</code> if it could not be found.
@@ -1663,55 +1610,14 @@ public class LayoutSEOEntryPersistenceImpl
 	public int countByG_P_L(
 		long groupId, boolean privateLayout, long layoutId) {
 
-		FinderPath finderPath = _finderPathCountByG_P_L;
+		LayoutSEOEntry layoutSEOEntry = fetchByG_P_L(
+			groupId, privateLayout, layoutId);
 
-		Object[] finderArgs = new Object[] {groupId, privateLayout, layoutId};
-
-		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
-
-		if (count == null) {
-			StringBundler sb = new StringBundler(4);
-
-			sb.append(_SQL_COUNT_LAYOUTSEOENTRY_WHERE);
-
-			sb.append(_FINDER_COLUMN_G_P_L_GROUPID_2);
-
-			sb.append(_FINDER_COLUMN_G_P_L_PRIVATELAYOUT_2);
-
-			sb.append(_FINDER_COLUMN_G_P_L_LAYOUTID_2);
-
-			String sql = sb.toString();
-
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				Query query = session.createQuery(sql);
-
-				QueryPos queryPos = QueryPos.getInstance(query);
-
-				queryPos.add(groupId);
-
-				queryPos.add(privateLayout);
-
-				queryPos.add(layoutId);
-
-				count = (Long)query.uniqueResult();
-
-				finderCache.putResult(finderPath, finderArgs, count);
-			}
-			catch (Exception exception) {
-				finderCache.removeResult(finderPath, finderArgs);
-
-				throw processException(exception);
-			}
-			finally {
-				closeSession(session);
-			}
+		if (layoutSEOEntry == null) {
+			return 0;
 		}
 
-		return count.intValue();
+		return 1;
 	}
 
 	private static final String _FINDER_COLUMN_G_P_L_GROUPID_2 =
@@ -2509,11 +2415,6 @@ public class LayoutSEOEntryPersistenceImpl
 			LayoutSEOEntryModelImpl.UUID_COLUMN_BITMASK |
 			LayoutSEOEntryModelImpl.GROUPID_COLUMN_BITMASK);
 
-		_finderPathCountByUUID_G = new FinderPath(
-			entityCacheEnabled, finderCacheEnabled, Long.class,
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByUUID_G",
-			new String[] {String.class.getName(), Long.class.getName()});
-
 		_finderPathWithPaginationFindByUuid_C = new FinderPath(
 			entityCacheEnabled, finderCacheEnabled, LayoutSEOEntryImpl.class,
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUuid_C",
@@ -2545,14 +2446,6 @@ public class LayoutSEOEntryPersistenceImpl
 			LayoutSEOEntryModelImpl.GROUPID_COLUMN_BITMASK |
 			LayoutSEOEntryModelImpl.PRIVATELAYOUT_COLUMN_BITMASK |
 			LayoutSEOEntryModelImpl.LAYOUTID_COLUMN_BITMASK);
-
-		_finderPathCountByG_P_L = new FinderPath(
-			entityCacheEnabled, finderCacheEnabled, Long.class,
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByG_P_L",
-			new String[] {
-				Long.class.getName(), Boolean.class.getName(),
-				Long.class.getName()
-			});
 
 		LayoutSEOEntryUtil.setPersistence(this);
 	}

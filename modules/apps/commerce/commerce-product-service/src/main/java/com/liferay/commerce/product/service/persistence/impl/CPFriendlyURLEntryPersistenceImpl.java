@@ -631,7 +631,6 @@ public class CPFriendlyURLEntryPersistenceImpl
 		"(cpFriendlyURLEntry.uuid IS NULL OR cpFriendlyURLEntry.uuid = '')";
 
 	private FinderPath _finderPathFetchByUUID_G;
-	private FinderPath _finderPathCountByUUID_G;
 
 	/**
 	 * Returns the cp friendly url entry where uuid = &#63; and groupId = &#63; or throws a <code>NoSuchCPFriendlyURLEntryException</code> if it could not be found.
@@ -816,64 +815,13 @@ public class CPFriendlyURLEntryPersistenceImpl
 	 */
 	@Override
 	public int countByUUID_G(String uuid, long groupId) {
-		uuid = Objects.toString(uuid, "");
+		CPFriendlyURLEntry cpFriendlyURLEntry = fetchByUUID_G(uuid, groupId);
 
-		FinderPath finderPath = _finderPathCountByUUID_G;
-
-		Object[] finderArgs = new Object[] {uuid, groupId};
-
-		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
-
-		if (count == null) {
-			StringBundler sb = new StringBundler(3);
-
-			sb.append(_SQL_COUNT_CPFRIENDLYURLENTRY_WHERE);
-
-			boolean bindUuid = false;
-
-			if (uuid.isEmpty()) {
-				sb.append(_FINDER_COLUMN_UUID_G_UUID_3);
-			}
-			else {
-				bindUuid = true;
-
-				sb.append(_FINDER_COLUMN_UUID_G_UUID_2);
-			}
-
-			sb.append(_FINDER_COLUMN_UUID_G_GROUPID_2);
-
-			String sql = sb.toString();
-
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				Query query = session.createQuery(sql);
-
-				QueryPos queryPos = QueryPos.getInstance(query);
-
-				if (bindUuid) {
-					queryPos.add(uuid);
-				}
-
-				queryPos.add(groupId);
-
-				count = (Long)query.uniqueResult();
-
-				finderCache.putResult(finderPath, finderArgs, count);
-			}
-			catch (Exception exception) {
-				finderCache.removeResult(finderPath, finderArgs);
-
-				throw processException(exception);
-			}
-			finally {
-				closeSession(session);
-			}
+		if (cpFriendlyURLEntry == null) {
+			return 0;
 		}
 
-		return count.intValue();
+		return 1;
 	}
 
 	private static final String _FINDER_COLUMN_UUID_G_UUID_2 =
@@ -3866,7 +3814,6 @@ public class CPFriendlyURLEntryPersistenceImpl
 		"cpFriendlyURLEntry.main = ?";
 
 	private FinderPath _finderPathFetchByG_C_L_U;
-	private FinderPath _finderPathCountByG_C_L_U;
 
 	/**
 	 * Returns the cp friendly url entry where groupId = &#63; and classNameId = &#63; and languageId = &#63; and urlTitle = &#63; or throws a <code>NoSuchCPFriendlyURLEntryException</code> if it could not be found.
@@ -4118,86 +4065,14 @@ public class CPFriendlyURLEntryPersistenceImpl
 	public int countByG_C_L_U(
 		long groupId, long classNameId, String languageId, String urlTitle) {
 
-		languageId = Objects.toString(languageId, "");
-		urlTitle = Objects.toString(urlTitle, "");
+		CPFriendlyURLEntry cpFriendlyURLEntry = fetchByG_C_L_U(
+			groupId, classNameId, languageId, urlTitle);
 
-		FinderPath finderPath = _finderPathCountByG_C_L_U;
-
-		Object[] finderArgs = new Object[] {
-			groupId, classNameId, languageId, urlTitle
-		};
-
-		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
-
-		if (count == null) {
-			StringBundler sb = new StringBundler(5);
-
-			sb.append(_SQL_COUNT_CPFRIENDLYURLENTRY_WHERE);
-
-			sb.append(_FINDER_COLUMN_G_C_L_U_GROUPID_2);
-
-			sb.append(_FINDER_COLUMN_G_C_L_U_CLASSNAMEID_2);
-
-			boolean bindLanguageId = false;
-
-			if (languageId.isEmpty()) {
-				sb.append(_FINDER_COLUMN_G_C_L_U_LANGUAGEID_3);
-			}
-			else {
-				bindLanguageId = true;
-
-				sb.append(_FINDER_COLUMN_G_C_L_U_LANGUAGEID_2);
-			}
-
-			boolean bindUrlTitle = false;
-
-			if (urlTitle.isEmpty()) {
-				sb.append(_FINDER_COLUMN_G_C_L_U_URLTITLE_3);
-			}
-			else {
-				bindUrlTitle = true;
-
-				sb.append(_FINDER_COLUMN_G_C_L_U_URLTITLE_2);
-			}
-
-			String sql = sb.toString();
-
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				Query query = session.createQuery(sql);
-
-				QueryPos queryPos = QueryPos.getInstance(query);
-
-				queryPos.add(groupId);
-
-				queryPos.add(classNameId);
-
-				if (bindLanguageId) {
-					queryPos.add(languageId);
-				}
-
-				if (bindUrlTitle) {
-					queryPos.add(urlTitle);
-				}
-
-				count = (Long)query.uniqueResult();
-
-				finderCache.putResult(finderPath, finderArgs, count);
-			}
-			catch (Exception exception) {
-				finderCache.removeResult(finderPath, finderArgs);
-
-				throw processException(exception);
-			}
-			finally {
-				closeSession(session);
-			}
+		if (cpFriendlyURLEntry == null) {
+			return 0;
 		}
 
-		return count.intValue();
+		return 1;
 	}
 
 	private static final String _FINDER_COLUMN_G_C_L_U_GROUPID_2 =
@@ -4219,7 +4094,6 @@ public class CPFriendlyURLEntryPersistenceImpl
 		"(cpFriendlyURLEntry.urlTitle IS NULL OR cpFriendlyURLEntry.urlTitle = '')";
 
 	private FinderPath _finderPathFetchByG_C_C_L_U;
-	private FinderPath _finderPathCountByG_C_C_L_U;
 
 	/**
 	 * Returns the cp friendly url entry where groupId = &#63; and classNameId = &#63; and classPK = &#63; and languageId = &#63; and urlTitle = &#63; or throws a <code>NoSuchCPFriendlyURLEntryException</code> if it could not be found.
@@ -4490,90 +4364,14 @@ public class CPFriendlyURLEntryPersistenceImpl
 		long groupId, long classNameId, long classPK, String languageId,
 		String urlTitle) {
 
-		languageId = Objects.toString(languageId, "");
-		urlTitle = Objects.toString(urlTitle, "");
+		CPFriendlyURLEntry cpFriendlyURLEntry = fetchByG_C_C_L_U(
+			groupId, classNameId, classPK, languageId, urlTitle);
 
-		FinderPath finderPath = _finderPathCountByG_C_C_L_U;
-
-		Object[] finderArgs = new Object[] {
-			groupId, classNameId, classPK, languageId, urlTitle
-		};
-
-		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
-
-		if (count == null) {
-			StringBundler sb = new StringBundler(6);
-
-			sb.append(_SQL_COUNT_CPFRIENDLYURLENTRY_WHERE);
-
-			sb.append(_FINDER_COLUMN_G_C_C_L_U_GROUPID_2);
-
-			sb.append(_FINDER_COLUMN_G_C_C_L_U_CLASSNAMEID_2);
-
-			sb.append(_FINDER_COLUMN_G_C_C_L_U_CLASSPK_2);
-
-			boolean bindLanguageId = false;
-
-			if (languageId.isEmpty()) {
-				sb.append(_FINDER_COLUMN_G_C_C_L_U_LANGUAGEID_3);
-			}
-			else {
-				bindLanguageId = true;
-
-				sb.append(_FINDER_COLUMN_G_C_C_L_U_LANGUAGEID_2);
-			}
-
-			boolean bindUrlTitle = false;
-
-			if (urlTitle.isEmpty()) {
-				sb.append(_FINDER_COLUMN_G_C_C_L_U_URLTITLE_3);
-			}
-			else {
-				bindUrlTitle = true;
-
-				sb.append(_FINDER_COLUMN_G_C_C_L_U_URLTITLE_2);
-			}
-
-			String sql = sb.toString();
-
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				Query query = session.createQuery(sql);
-
-				QueryPos queryPos = QueryPos.getInstance(query);
-
-				queryPos.add(groupId);
-
-				queryPos.add(classNameId);
-
-				queryPos.add(classPK);
-
-				if (bindLanguageId) {
-					queryPos.add(languageId);
-				}
-
-				if (bindUrlTitle) {
-					queryPos.add(urlTitle);
-				}
-
-				count = (Long)query.uniqueResult();
-
-				finderCache.putResult(finderPath, finderArgs, count);
-			}
-			catch (Exception exception) {
-				finderCache.removeResult(finderPath, finderArgs);
-
-				throw processException(exception);
-			}
-			finally {
-				closeSession(session);
-			}
+		if (cpFriendlyURLEntry == null) {
+			return 0;
 		}
 
-		return count.intValue();
+		return 1;
 	}
 
 	private static final String _FINDER_COLUMN_G_C_C_L_U_GROUPID_2 =
@@ -4598,7 +4396,6 @@ public class CPFriendlyURLEntryPersistenceImpl
 		"(cpFriendlyURLEntry.urlTitle IS NULL OR cpFriendlyURLEntry.urlTitle = '')";
 
 	private FinderPath _finderPathFetchByG_C_C_L_M;
-	private FinderPath _finderPathCountByG_C_C_L_M;
 
 	/**
 	 * Returns the cp friendly url entry where groupId = &#63; and classNameId = &#63; and classPK = &#63; and languageId = &#63; and main = &#63; or throws a <code>NoSuchCPFriendlyURLEntryException</code> if it could not be found.
@@ -4857,78 +4654,14 @@ public class CPFriendlyURLEntryPersistenceImpl
 		long groupId, long classNameId, long classPK, String languageId,
 		boolean main) {
 
-		languageId = Objects.toString(languageId, "");
+		CPFriendlyURLEntry cpFriendlyURLEntry = fetchByG_C_C_L_M(
+			groupId, classNameId, classPK, languageId, main);
 
-		FinderPath finderPath = _finderPathCountByG_C_C_L_M;
-
-		Object[] finderArgs = new Object[] {
-			groupId, classNameId, classPK, languageId, main
-		};
-
-		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
-
-		if (count == null) {
-			StringBundler sb = new StringBundler(6);
-
-			sb.append(_SQL_COUNT_CPFRIENDLYURLENTRY_WHERE);
-
-			sb.append(_FINDER_COLUMN_G_C_C_L_M_GROUPID_2);
-
-			sb.append(_FINDER_COLUMN_G_C_C_L_M_CLASSNAMEID_2);
-
-			sb.append(_FINDER_COLUMN_G_C_C_L_M_CLASSPK_2);
-
-			boolean bindLanguageId = false;
-
-			if (languageId.isEmpty()) {
-				sb.append(_FINDER_COLUMN_G_C_C_L_M_LANGUAGEID_3);
-			}
-			else {
-				bindLanguageId = true;
-
-				sb.append(_FINDER_COLUMN_G_C_C_L_M_LANGUAGEID_2);
-			}
-
-			sb.append(_FINDER_COLUMN_G_C_C_L_M_MAIN_2);
-
-			String sql = sb.toString();
-
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				Query query = session.createQuery(sql);
-
-				QueryPos queryPos = QueryPos.getInstance(query);
-
-				queryPos.add(groupId);
-
-				queryPos.add(classNameId);
-
-				queryPos.add(classPK);
-
-				if (bindLanguageId) {
-					queryPos.add(languageId);
-				}
-
-				queryPos.add(main);
-
-				count = (Long)query.uniqueResult();
-
-				finderCache.putResult(finderPath, finderArgs, count);
-			}
-			catch (Exception exception) {
-				finderCache.removeResult(finderPath, finderArgs);
-
-				throw processException(exception);
-			}
-			finally {
-				closeSession(session);
-			}
+		if (cpFriendlyURLEntry == null) {
+			return 0;
 		}
 
-		return count.intValue();
+		return 1;
 	}
 
 	private static final String _FINDER_COLUMN_G_C_C_L_M_GROUPID_2 =
@@ -6183,12 +5916,6 @@ public class CPFriendlyURLEntryPersistenceImpl
 			CPFriendlyURLEntryModelImpl.UUID_COLUMN_BITMASK |
 			CPFriendlyURLEntryModelImpl.GROUPID_COLUMN_BITMASK);
 
-		_finderPathCountByUUID_G = new FinderPath(
-			CPFriendlyURLEntryModelImpl.ENTITY_CACHE_ENABLED,
-			CPFriendlyURLEntryModelImpl.FINDER_CACHE_ENABLED, Long.class,
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByUUID_G",
-			new String[] {String.class.getName(), Long.class.getName()});
-
 		_finderPathWithPaginationFindByUuid_C = new FinderPath(
 			CPFriendlyURLEntryModelImpl.ENTITY_CACHE_ENABLED,
 			CPFriendlyURLEntryModelImpl.FINDER_CACHE_ENABLED,
@@ -6361,15 +6088,6 @@ public class CPFriendlyURLEntryPersistenceImpl
 			CPFriendlyURLEntryModelImpl.LANGUAGEID_COLUMN_BITMASK |
 			CPFriendlyURLEntryModelImpl.URLTITLE_COLUMN_BITMASK);
 
-		_finderPathCountByG_C_L_U = new FinderPath(
-			CPFriendlyURLEntryModelImpl.ENTITY_CACHE_ENABLED,
-			CPFriendlyURLEntryModelImpl.FINDER_CACHE_ENABLED, Long.class,
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByG_C_L_U",
-			new String[] {
-				Long.class.getName(), Long.class.getName(),
-				String.class.getName(), String.class.getName()
-			});
-
 		_finderPathFetchByG_C_C_L_U = new FinderPath(
 			CPFriendlyURLEntryModelImpl.ENTITY_CACHE_ENABLED,
 			CPFriendlyURLEntryModelImpl.FINDER_CACHE_ENABLED,
@@ -6386,16 +6104,6 @@ public class CPFriendlyURLEntryPersistenceImpl
 			CPFriendlyURLEntryModelImpl.LANGUAGEID_COLUMN_BITMASK |
 			CPFriendlyURLEntryModelImpl.URLTITLE_COLUMN_BITMASK);
 
-		_finderPathCountByG_C_C_L_U = new FinderPath(
-			CPFriendlyURLEntryModelImpl.ENTITY_CACHE_ENABLED,
-			CPFriendlyURLEntryModelImpl.FINDER_CACHE_ENABLED, Long.class,
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByG_C_C_L_U",
-			new String[] {
-				Long.class.getName(), Long.class.getName(),
-				Long.class.getName(), String.class.getName(),
-				String.class.getName()
-			});
-
 		_finderPathFetchByG_C_C_L_M = new FinderPath(
 			CPFriendlyURLEntryModelImpl.ENTITY_CACHE_ENABLED,
 			CPFriendlyURLEntryModelImpl.FINDER_CACHE_ENABLED,
@@ -6411,16 +6119,6 @@ public class CPFriendlyURLEntryPersistenceImpl
 			CPFriendlyURLEntryModelImpl.CLASSPK_COLUMN_BITMASK |
 			CPFriendlyURLEntryModelImpl.LANGUAGEID_COLUMN_BITMASK |
 			CPFriendlyURLEntryModelImpl.MAIN_COLUMN_BITMASK);
-
-		_finderPathCountByG_C_C_L_M = new FinderPath(
-			CPFriendlyURLEntryModelImpl.ENTITY_CACHE_ENABLED,
-			CPFriendlyURLEntryModelImpl.FINDER_CACHE_ENABLED, Long.class,
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByG_C_C_L_M",
-			new String[] {
-				Long.class.getName(), Long.class.getName(),
-				Long.class.getName(), String.class.getName(),
-				Boolean.class.getName()
-			});
 
 		CPFriendlyURLEntryUtil.setPersistence(this);
 	}

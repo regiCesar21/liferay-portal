@@ -572,7 +572,6 @@ public class LayoutVersionPersistenceImpl
 		"layoutVersion.plid = ?";
 
 	private FinderPath _finderPathFetchByPlid_Version;
-	private FinderPath _finderPathCountByPlid_Version;
 
 	/**
 	 * Returns the layout version where plid = &#63; and version = &#63; or throws a <code>NoSuchLayoutVersionException</code> if it could not be found.
@@ -744,52 +743,13 @@ public class LayoutVersionPersistenceImpl
 	 */
 	@Override
 	public int countByPlid_Version(long plid, int version) {
-		FinderPath finderPath = _finderPathCountByPlid_Version;
+		LayoutVersion layoutVersion = fetchByPlid_Version(plid, version);
 
-		Object[] finderArgs = new Object[] {plid, version};
-
-		Long count = (Long)FinderCacheUtil.getResult(
-			finderPath, finderArgs, this);
-
-		if (count == null) {
-			StringBundler sb = new StringBundler(3);
-
-			sb.append(_SQL_COUNT_LAYOUTVERSION_WHERE);
-
-			sb.append(_FINDER_COLUMN_PLID_VERSION_PLID_2);
-
-			sb.append(_FINDER_COLUMN_PLID_VERSION_VERSION_2);
-
-			String sql = sb.toString();
-
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				Query query = session.createQuery(sql);
-
-				QueryPos queryPos = QueryPos.getInstance(query);
-
-				queryPos.add(plid);
-
-				queryPos.add(version);
-
-				count = (Long)query.uniqueResult();
-
-				FinderCacheUtil.putResult(finderPath, finderArgs, count);
-			}
-			catch (Exception exception) {
-				FinderCacheUtil.removeResult(finderPath, finderArgs);
-
-				throw processException(exception);
-			}
-			finally {
-				closeSession(session);
-			}
+		if (layoutVersion == null) {
+			return 0;
 		}
 
-		return count.intValue();
+		return 1;
 	}
 
 	private static final String _FINDER_COLUMN_PLID_VERSION_PLID_2 =
@@ -2554,7 +2514,6 @@ public class LayoutVersionPersistenceImpl
 		"layoutVersion.privateLayout = ?";
 
 	private FinderPath _finderPathFetchByUUID_G_P_Version;
-	private FinderPath _finderPathCountByUUID_G_P_Version;
 
 	/**
 	 * Returns the layout version where uuid = &#63; and groupId = &#63; and privateLayout = &#63; and version = &#63; or throws a <code>NoSuchLayoutVersionException</code> if it could not be found.
@@ -2776,75 +2735,14 @@ public class LayoutVersionPersistenceImpl
 	public int countByUUID_G_P_Version(
 		String uuid, long groupId, boolean privateLayout, int version) {
 
-		uuid = Objects.toString(uuid, "");
+		LayoutVersion layoutVersion = fetchByUUID_G_P_Version(
+			uuid, groupId, privateLayout, version);
 
-		FinderPath finderPath = _finderPathCountByUUID_G_P_Version;
-
-		Object[] finderArgs = new Object[] {
-			uuid, groupId, privateLayout, version
-		};
-
-		Long count = (Long)FinderCacheUtil.getResult(
-			finderPath, finderArgs, this);
-
-		if (count == null) {
-			StringBundler sb = new StringBundler(5);
-
-			sb.append(_SQL_COUNT_LAYOUTVERSION_WHERE);
-
-			boolean bindUuid = false;
-
-			if (uuid.isEmpty()) {
-				sb.append(_FINDER_COLUMN_UUID_G_P_VERSION_UUID_3);
-			}
-			else {
-				bindUuid = true;
-
-				sb.append(_FINDER_COLUMN_UUID_G_P_VERSION_UUID_2);
-			}
-
-			sb.append(_FINDER_COLUMN_UUID_G_P_VERSION_GROUPID_2);
-
-			sb.append(_FINDER_COLUMN_UUID_G_P_VERSION_PRIVATELAYOUT_2);
-
-			sb.append(_FINDER_COLUMN_UUID_G_P_VERSION_VERSION_2);
-
-			String sql = sb.toString();
-
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				Query query = session.createQuery(sql);
-
-				QueryPos queryPos = QueryPos.getInstance(query);
-
-				if (bindUuid) {
-					queryPos.add(uuid);
-				}
-
-				queryPos.add(groupId);
-
-				queryPos.add(privateLayout);
-
-				queryPos.add(version);
-
-				count = (Long)query.uniqueResult();
-
-				FinderCacheUtil.putResult(finderPath, finderArgs, count);
-			}
-			catch (Exception exception) {
-				FinderCacheUtil.removeResult(finderPath, finderArgs);
-
-				throw processException(exception);
-			}
-			finally {
-				closeSession(session);
-			}
+		if (layoutVersion == null) {
+			return 0;
 		}
 
-		return count.intValue();
+		return 1;
 	}
 
 	private static final String _FINDER_COLUMN_UUID_G_P_VERSION_UUID_2 =
@@ -17126,7 +17024,6 @@ public class LayoutVersionPersistenceImpl
 		"layoutVersion.layoutId = ?";
 
 	private FinderPath _finderPathFetchByG_P_L_Version;
-	private FinderPath _finderPathCountByG_P_L_Version;
 
 	/**
 	 * Returns the layout version where groupId = &#63; and privateLayout = &#63; and layoutId = &#63; and version = &#63; or throws a <code>NoSuchLayoutVersionException</code> if it could not be found.
@@ -17336,62 +17233,14 @@ public class LayoutVersionPersistenceImpl
 	public int countByG_P_L_Version(
 		long groupId, boolean privateLayout, long layoutId, int version) {
 
-		FinderPath finderPath = _finderPathCountByG_P_L_Version;
+		LayoutVersion layoutVersion = fetchByG_P_L_Version(
+			groupId, privateLayout, layoutId, version);
 
-		Object[] finderArgs = new Object[] {
-			groupId, privateLayout, layoutId, version
-		};
-
-		Long count = (Long)FinderCacheUtil.getResult(
-			finderPath, finderArgs, this);
-
-		if (count == null) {
-			StringBundler sb = new StringBundler(5);
-
-			sb.append(_SQL_COUNT_LAYOUTVERSION_WHERE);
-
-			sb.append(_FINDER_COLUMN_G_P_L_VERSION_GROUPID_2);
-
-			sb.append(_FINDER_COLUMN_G_P_L_VERSION_PRIVATELAYOUT_2);
-
-			sb.append(_FINDER_COLUMN_G_P_L_VERSION_LAYOUTID_2);
-
-			sb.append(_FINDER_COLUMN_G_P_L_VERSION_VERSION_2);
-
-			String sql = sb.toString();
-
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				Query query = session.createQuery(sql);
-
-				QueryPos queryPos = QueryPos.getInstance(query);
-
-				queryPos.add(groupId);
-
-				queryPos.add(privateLayout);
-
-				queryPos.add(layoutId);
-
-				queryPos.add(version);
-
-				count = (Long)query.uniqueResult();
-
-				FinderCacheUtil.putResult(finderPath, finderArgs, count);
-			}
-			catch (Exception exception) {
-				FinderCacheUtil.removeResult(finderPath, finderArgs);
-
-				throw processException(exception);
-			}
-			finally {
-				closeSession(session);
-			}
+		if (layoutVersion == null) {
+			return 0;
 		}
 
-		return count.intValue();
+		return 1;
 	}
 
 	private static final String _FINDER_COLUMN_G_P_L_VERSION_GROUPID_2 =
@@ -20574,7 +20423,6 @@ public class LayoutVersionPersistenceImpl
 		"(layoutVersion.friendlyURL IS NULL OR layoutVersion.friendlyURL = '')";
 
 	private FinderPath _finderPathFetchByG_P_F_Version;
-	private FinderPath _finderPathCountByG_P_F_Version;
 
 	/**
 	 * Returns the layout version where groupId = &#63; and privateLayout = &#63; and friendlyURL = &#63; and version = &#63; or throws a <code>NoSuchLayoutVersionException</code> if it could not be found.
@@ -20799,75 +20647,14 @@ public class LayoutVersionPersistenceImpl
 	public int countByG_P_F_Version(
 		long groupId, boolean privateLayout, String friendlyURL, int version) {
 
-		friendlyURL = Objects.toString(friendlyURL, "");
+		LayoutVersion layoutVersion = fetchByG_P_F_Version(
+			groupId, privateLayout, friendlyURL, version);
 
-		FinderPath finderPath = _finderPathCountByG_P_F_Version;
-
-		Object[] finderArgs = new Object[] {
-			groupId, privateLayout, friendlyURL, version
-		};
-
-		Long count = (Long)FinderCacheUtil.getResult(
-			finderPath, finderArgs, this);
-
-		if (count == null) {
-			StringBundler sb = new StringBundler(5);
-
-			sb.append(_SQL_COUNT_LAYOUTVERSION_WHERE);
-
-			sb.append(_FINDER_COLUMN_G_P_F_VERSION_GROUPID_2);
-
-			sb.append(_FINDER_COLUMN_G_P_F_VERSION_PRIVATELAYOUT_2);
-
-			boolean bindFriendlyURL = false;
-
-			if (friendlyURL.isEmpty()) {
-				sb.append(_FINDER_COLUMN_G_P_F_VERSION_FRIENDLYURL_3);
-			}
-			else {
-				bindFriendlyURL = true;
-
-				sb.append(_FINDER_COLUMN_G_P_F_VERSION_FRIENDLYURL_2);
-			}
-
-			sb.append(_FINDER_COLUMN_G_P_F_VERSION_VERSION_2);
-
-			String sql = sb.toString();
-
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				Query query = session.createQuery(sql);
-
-				QueryPos queryPos = QueryPos.getInstance(query);
-
-				queryPos.add(groupId);
-
-				queryPos.add(privateLayout);
-
-				if (bindFriendlyURL) {
-					queryPos.add(friendlyURL);
-				}
-
-				queryPos.add(version);
-
-				count = (Long)query.uniqueResult();
-
-				FinderCacheUtil.putResult(finderPath, finderArgs, count);
-			}
-			catch (Exception exception) {
-				FinderCacheUtil.removeResult(finderPath, finderArgs);
-
-				throw processException(exception);
-			}
-			finally {
-				closeSession(session);
-			}
+		if (layoutVersion == null) {
+			return 0;
 		}
 
-		return count.intValue();
+		return 1;
 	}
 
 	private static final String _FINDER_COLUMN_G_P_F_VERSION_GROUPID_2 =
@@ -27090,12 +26877,6 @@ public class LayoutVersionPersistenceImpl
 			LayoutVersionModelImpl.PLID_COLUMN_BITMASK |
 			LayoutVersionModelImpl.VERSION_COLUMN_BITMASK);
 
-		_finderPathCountByPlid_Version = new FinderPath(
-			LayoutVersionModelImpl.ENTITY_CACHE_ENABLED,
-			LayoutVersionModelImpl.FINDER_CACHE_ENABLED, Long.class,
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByPlid_Version",
-			new String[] {Long.class.getName(), Integer.class.getName()});
-
 		_finderPathWithPaginationFindByUuid = new FinderPath(
 			LayoutVersionModelImpl.ENTITY_CACHE_ENABLED,
 			LayoutVersionModelImpl.FINDER_CACHE_ENABLED,
@@ -27193,16 +26974,6 @@ public class LayoutVersionPersistenceImpl
 			LayoutVersionModelImpl.GROUPID_COLUMN_BITMASK |
 			LayoutVersionModelImpl.PRIVATELAYOUT_COLUMN_BITMASK |
 			LayoutVersionModelImpl.VERSION_COLUMN_BITMASK);
-
-		_finderPathCountByUUID_G_P_Version = new FinderPath(
-			LayoutVersionModelImpl.ENTITY_CACHE_ENABLED,
-			LayoutVersionModelImpl.FINDER_CACHE_ENABLED, Long.class,
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
-			"countByUUID_G_P_Version",
-			new String[] {
-				String.class.getName(), Long.class.getName(),
-				Boolean.class.getName(), Integer.class.getName()
-			});
 
 		_finderPathWithPaginationFindByUuid_C = new FinderPath(
 			LayoutVersionModelImpl.ENTITY_CACHE_ENABLED,
@@ -27931,15 +27702,6 @@ public class LayoutVersionPersistenceImpl
 			LayoutVersionModelImpl.LAYOUTID_COLUMN_BITMASK |
 			LayoutVersionModelImpl.VERSION_COLUMN_BITMASK);
 
-		_finderPathCountByG_P_L_Version = new FinderPath(
-			LayoutVersionModelImpl.ENTITY_CACHE_ENABLED,
-			LayoutVersionModelImpl.FINDER_CACHE_ENABLED, Long.class,
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByG_P_L_Version",
-			new String[] {
-				Long.class.getName(), Boolean.class.getName(),
-				Long.class.getName(), Integer.class.getName()
-			});
-
 		_finderPathWithPaginationFindByG_P_P = new FinderPath(
 			LayoutVersionModelImpl.ENTITY_CACHE_ENABLED,
 			LayoutVersionModelImpl.FINDER_CACHE_ENABLED,
@@ -28125,15 +27887,6 @@ public class LayoutVersionPersistenceImpl
 			LayoutVersionModelImpl.PRIVATELAYOUT_COLUMN_BITMASK |
 			LayoutVersionModelImpl.FRIENDLYURL_COLUMN_BITMASK |
 			LayoutVersionModelImpl.VERSION_COLUMN_BITMASK);
-
-		_finderPathCountByG_P_F_Version = new FinderPath(
-			LayoutVersionModelImpl.ENTITY_CACHE_ENABLED,
-			LayoutVersionModelImpl.FINDER_CACHE_ENABLED, Long.class,
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByG_P_F_Version",
-			new String[] {
-				Long.class.getName(), Boolean.class.getName(),
-				String.class.getName(), Integer.class.getName()
-			});
 
 		_finderPathWithPaginationFindByG_P_SPLU = new FinderPath(
 			LayoutVersionModelImpl.ENTITY_CACHE_ENABLED,

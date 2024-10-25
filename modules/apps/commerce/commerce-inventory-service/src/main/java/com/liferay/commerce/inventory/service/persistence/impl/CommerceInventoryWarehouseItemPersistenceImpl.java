@@ -1768,7 +1768,6 @@ public class CommerceInventoryWarehouseItemPersistenceImpl
 		"(commerceInventoryWarehouseItem.sku IS NULL OR commerceInventoryWarehouseItem.sku = '')";
 
 	private FinderPath _finderPathFetchByC_S;
-	private FinderPath _finderPathCountByC_S;
 
 	/**
 	 * Returns the commerce inventory warehouse item where commerceInventoryWarehouseId = &#63; and sku = &#63; or throws a <code>NoSuchInventoryWarehouseItemException</code> if it could not be found.
@@ -1962,64 +1961,14 @@ public class CommerceInventoryWarehouseItemPersistenceImpl
 	 */
 	@Override
 	public int countByC_S(long commerceInventoryWarehouseId, String sku) {
-		sku = Objects.toString(sku, "");
+		CommerceInventoryWarehouseItem commerceInventoryWarehouseItem =
+			fetchByC_S(commerceInventoryWarehouseId, sku);
 
-		FinderPath finderPath = _finderPathCountByC_S;
-
-		Object[] finderArgs = new Object[] {commerceInventoryWarehouseId, sku};
-
-		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
-
-		if (count == null) {
-			StringBundler sb = new StringBundler(3);
-
-			sb.append(_SQL_COUNT_COMMERCEINVENTORYWAREHOUSEITEM_WHERE);
-
-			sb.append(_FINDER_COLUMN_C_S_COMMERCEINVENTORYWAREHOUSEID_2);
-
-			boolean bindSku = false;
-
-			if (sku.isEmpty()) {
-				sb.append(_FINDER_COLUMN_C_S_SKU_3);
-			}
-			else {
-				bindSku = true;
-
-				sb.append(_FINDER_COLUMN_C_S_SKU_2);
-			}
-
-			String sql = sb.toString();
-
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				Query query = session.createQuery(sql);
-
-				QueryPos queryPos = QueryPos.getInstance(query);
-
-				queryPos.add(commerceInventoryWarehouseId);
-
-				if (bindSku) {
-					queryPos.add(sku);
-				}
-
-				count = (Long)query.uniqueResult();
-
-				finderCache.putResult(finderPath, finderArgs, count);
-			}
-			catch (Exception exception) {
-				finderCache.removeResult(finderPath, finderArgs);
-
-				throw processException(exception);
-			}
-			finally {
-				closeSession(session);
-			}
+		if (commerceInventoryWarehouseItem == null) {
+			return 0;
 		}
 
-		return count.intValue();
+		return 1;
 	}
 
 	private static final String
@@ -2033,7 +1982,6 @@ public class CommerceInventoryWarehouseItemPersistenceImpl
 		"(commerceInventoryWarehouseItem.sku IS NULL OR commerceInventoryWarehouseItem.sku = '')";
 
 	private FinderPath _finderPathFetchByC_ERC;
-	private FinderPath _finderPathCountByC_ERC;
 
 	/**
 	 * Returns the commerce inventory warehouse item where companyId = &#63; and externalReferenceCode = &#63; or throws a <code>NoSuchInventoryWarehouseItemException</code> if it could not be found.
@@ -2246,64 +2194,14 @@ public class CommerceInventoryWarehouseItemPersistenceImpl
 	 */
 	@Override
 	public int countByC_ERC(long companyId, String externalReferenceCode) {
-		externalReferenceCode = Objects.toString(externalReferenceCode, "");
+		CommerceInventoryWarehouseItem commerceInventoryWarehouseItem =
+			fetchByC_ERC(companyId, externalReferenceCode);
 
-		FinderPath finderPath = _finderPathCountByC_ERC;
-
-		Object[] finderArgs = new Object[] {companyId, externalReferenceCode};
-
-		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
-
-		if (count == null) {
-			StringBundler sb = new StringBundler(3);
-
-			sb.append(_SQL_COUNT_COMMERCEINVENTORYWAREHOUSEITEM_WHERE);
-
-			sb.append(_FINDER_COLUMN_C_ERC_COMPANYID_2);
-
-			boolean bindExternalReferenceCode = false;
-
-			if (externalReferenceCode.isEmpty()) {
-				sb.append(_FINDER_COLUMN_C_ERC_EXTERNALREFERENCECODE_3);
-			}
-			else {
-				bindExternalReferenceCode = true;
-
-				sb.append(_FINDER_COLUMN_C_ERC_EXTERNALREFERENCECODE_2);
-			}
-
-			String sql = sb.toString();
-
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				Query query = session.createQuery(sql);
-
-				QueryPos queryPos = QueryPos.getInstance(query);
-
-				queryPos.add(companyId);
-
-				if (bindExternalReferenceCode) {
-					queryPos.add(externalReferenceCode);
-				}
-
-				count = (Long)query.uniqueResult();
-
-				finderCache.putResult(finderPath, finderArgs, count);
-			}
-			catch (Exception exception) {
-				finderCache.removeResult(finderPath, finderArgs);
-
-				throw processException(exception);
-			}
-			finally {
-				closeSession(session);
-			}
+		if (commerceInventoryWarehouseItem == null) {
+			return 0;
 		}
 
-		return count.intValue();
+		return 1;
 	}
 
 	private static final String _FINDER_COLUMN_C_ERC_COMPANYID_2 =
@@ -3526,12 +3424,6 @@ public class CommerceInventoryWarehouseItemPersistenceImpl
 				COMMERCEINVENTORYWAREHOUSEID_COLUMN_BITMASK |
 			CommerceInventoryWarehouseItemModelImpl.SKU_COLUMN_BITMASK);
 
-		_finderPathCountByC_S = new FinderPath(
-			CommerceInventoryWarehouseItemModelImpl.ENTITY_CACHE_ENABLED,
-			CommerceInventoryWarehouseItemModelImpl.FINDER_CACHE_ENABLED,
-			Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByC_S",
-			new String[] {Long.class.getName(), String.class.getName()});
-
 		_finderPathFetchByC_ERC = new FinderPath(
 			CommerceInventoryWarehouseItemModelImpl.ENTITY_CACHE_ENABLED,
 			CommerceInventoryWarehouseItemModelImpl.FINDER_CACHE_ENABLED,
@@ -3541,13 +3433,6 @@ public class CommerceInventoryWarehouseItemPersistenceImpl
 			CommerceInventoryWarehouseItemModelImpl.COMPANYID_COLUMN_BITMASK |
 			CommerceInventoryWarehouseItemModelImpl.
 				EXTERNALREFERENCECODE_COLUMN_BITMASK);
-
-		_finderPathCountByC_ERC = new FinderPath(
-			CommerceInventoryWarehouseItemModelImpl.ENTITY_CACHE_ENABLED,
-			CommerceInventoryWarehouseItemModelImpl.FINDER_CACHE_ENABLED,
-			Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
-			"countByC_ERC",
-			new String[] {Long.class.getName(), String.class.getName()});
 
 		CommerceInventoryWarehouseItemUtil.setPersistence(this);
 	}

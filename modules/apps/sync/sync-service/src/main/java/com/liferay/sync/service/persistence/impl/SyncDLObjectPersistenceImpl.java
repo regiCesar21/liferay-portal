@@ -4104,7 +4104,6 @@ public class SyncDLObjectPersistenceImpl
 		"(syncDLObject.type IS NULL OR syncDLObject.type = '')";
 
 	private FinderPath _finderPathFetchByT_T;
-	private FinderPath _finderPathCountByT_T;
 
 	/**
 	 * Returns the sync dl object where type = &#63; and typePK = &#63; or throws a <code>NoSuchDLObjectException</code> if it could not be found.
@@ -4288,64 +4287,13 @@ public class SyncDLObjectPersistenceImpl
 	 */
 	@Override
 	public int countByT_T(String type, long typePK) {
-		type = Objects.toString(type, "");
+		SyncDLObject syncDLObject = fetchByT_T(type, typePK);
 
-		FinderPath finderPath = _finderPathCountByT_T;
-
-		Object[] finderArgs = new Object[] {type, typePK};
-
-		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
-
-		if (count == null) {
-			StringBundler sb = new StringBundler(3);
-
-			sb.append(_SQL_COUNT_SYNCDLOBJECT_WHERE);
-
-			boolean bindType = false;
-
-			if (type.isEmpty()) {
-				sb.append(_FINDER_COLUMN_T_T_TYPE_3);
-			}
-			else {
-				bindType = true;
-
-				sb.append(_FINDER_COLUMN_T_T_TYPE_2);
-			}
-
-			sb.append(_FINDER_COLUMN_T_T_TYPEPK_2);
-
-			String sql = sb.toString();
-
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				Query query = session.createQuery(sql);
-
-				QueryPos queryPos = QueryPos.getInstance(query);
-
-				if (bindType) {
-					queryPos.add(type);
-				}
-
-				queryPos.add(typePK);
-
-				count = (Long)query.uniqueResult();
-
-				finderCache.putResult(finderPath, finderArgs, count);
-			}
-			catch (Exception exception) {
-				finderCache.removeResult(finderPath, finderArgs);
-
-				throw processException(exception);
-			}
-			finally {
-				closeSession(session);
-			}
+		if (syncDLObject == null) {
+			return 0;
 		}
 
-		return count.intValue();
+		return 1;
 	}
 
 	private static final String _FINDER_COLUMN_T_T_TYPE_2 =
@@ -7164,11 +7112,6 @@ public class SyncDLObjectPersistenceImpl
 			new String[] {String.class.getName(), Long.class.getName()},
 			SyncDLObjectModelImpl.TYPE_COLUMN_BITMASK |
 			SyncDLObjectModelImpl.TYPEPK_COLUMN_BITMASK);
-
-		_finderPathCountByT_T = new FinderPath(
-			entityCacheEnabled, finderCacheEnabled, Long.class,
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByT_T",
-			new String[] {String.class.getName(), Long.class.getName()});
 
 		_finderPathWithPaginationFindByM_R_NotE = new FinderPath(
 			entityCacheEnabled, finderCacheEnabled, SyncDLObjectImpl.class,

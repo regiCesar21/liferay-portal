@@ -69,7 +69,6 @@ public class ClassNamePersistenceImpl
 	private FinderPath _finderPathWithoutPaginationFindAll;
 	private FinderPath _finderPathCountAll;
 	private FinderPath _finderPathFetchByValue;
-	private FinderPath _finderPathCountByValue;
 
 	/**
 	 * Returns the class name where value = &#63; or throws a <code>NoSuchClassNameException</code> if it could not be found.
@@ -236,61 +235,13 @@ public class ClassNamePersistenceImpl
 	 */
 	@Override
 	public int countByValue(String value) {
-		value = Objects.toString(value, "");
+		ClassName className = fetchByValue(value);
 
-		FinderPath finderPath = _finderPathCountByValue;
-
-		Object[] finderArgs = new Object[] {value};
-
-		Long count = (Long)FinderCacheUtil.getResult(
-			finderPath, finderArgs, this);
-
-		if (count == null) {
-			StringBundler sb = new StringBundler(2);
-
-			sb.append(_SQL_COUNT_CLASSNAME_WHERE);
-
-			boolean bindValue = false;
-
-			if (value.isEmpty()) {
-				sb.append(_FINDER_COLUMN_VALUE_VALUE_3);
-			}
-			else {
-				bindValue = true;
-
-				sb.append(_FINDER_COLUMN_VALUE_VALUE_2);
-			}
-
-			String sql = sb.toString();
-
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				Query query = session.createQuery(sql);
-
-				QueryPos queryPos = QueryPos.getInstance(query);
-
-				if (bindValue) {
-					queryPos.add(value);
-				}
-
-				count = (Long)query.uniqueResult();
-
-				FinderCacheUtil.putResult(finderPath, finderArgs, count);
-			}
-			catch (Exception exception) {
-				FinderCacheUtil.removeResult(finderPath, finderArgs);
-
-				throw processException(exception);
-			}
-			finally {
-				closeSession(session);
-			}
+		if (className == null) {
+			return 0;
 		}
 
-		return count.intValue();
+		return 1;
 	}
 
 	private static final String _FINDER_COLUMN_VALUE_VALUE_2 =
@@ -901,12 +852,6 @@ public class ClassNamePersistenceImpl
 			FINDER_CLASS_NAME_ENTITY, "fetchByValue",
 			new String[] {String.class.getName()},
 			ClassNameModelImpl.VALUE_COLUMN_BITMASK);
-
-		_finderPathCountByValue = new FinderPath(
-			ClassNameModelImpl.ENTITY_CACHE_ENABLED,
-			ClassNameModelImpl.FINDER_CACHE_ENABLED, Long.class,
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByValue",
-			new String[] {String.class.getName()});
 
 		ClassNameUtil.setPersistence(this);
 	}

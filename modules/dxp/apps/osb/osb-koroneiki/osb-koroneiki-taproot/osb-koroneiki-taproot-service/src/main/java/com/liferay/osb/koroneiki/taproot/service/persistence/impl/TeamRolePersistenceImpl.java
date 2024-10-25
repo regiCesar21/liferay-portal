@@ -2056,7 +2056,6 @@ public class TeamRolePersistenceImpl
 		"teamRole.companyId = ?";
 
 	private FinderPath _finderPathFetchByTeamRoleKey;
-	private FinderPath _finderPathCountByTeamRoleKey;
 
 	/**
 	 * Returns the team role where teamRoleKey = &#63; or throws a <code>NoSuchTeamRoleException</code> if it could not be found.
@@ -2227,60 +2226,13 @@ public class TeamRolePersistenceImpl
 	 */
 	@Override
 	public int countByTeamRoleKey(String teamRoleKey) {
-		teamRoleKey = Objects.toString(teamRoleKey, "");
+		TeamRole teamRole = fetchByTeamRoleKey(teamRoleKey);
 
-		FinderPath finderPath = _finderPathCountByTeamRoleKey;
-
-		Object[] finderArgs = new Object[] {teamRoleKey};
-
-		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
-
-		if (count == null) {
-			StringBundler sb = new StringBundler(2);
-
-			sb.append(_SQL_COUNT_TEAMROLE_WHERE);
-
-			boolean bindTeamRoleKey = false;
-
-			if (teamRoleKey.isEmpty()) {
-				sb.append(_FINDER_COLUMN_TEAMROLEKEY_TEAMROLEKEY_3);
-			}
-			else {
-				bindTeamRoleKey = true;
-
-				sb.append(_FINDER_COLUMN_TEAMROLEKEY_TEAMROLEKEY_2);
-			}
-
-			String sql = sb.toString();
-
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				Query query = session.createQuery(sql);
-
-				QueryPos queryPos = QueryPos.getInstance(query);
-
-				if (bindTeamRoleKey) {
-					queryPos.add(teamRoleKey);
-				}
-
-				count = (Long)query.uniqueResult();
-
-				finderCache.putResult(finderPath, finderArgs, count);
-			}
-			catch (Exception exception) {
-				finderCache.removeResult(finderPath, finderArgs);
-
-				throw processException(exception);
-			}
-			finally {
-				closeSession(session);
-			}
+		if (teamRole == null) {
+			return 0;
 		}
 
-		return count.intValue();
+		return 1;
 	}
 
 	private static final String _FINDER_COLUMN_TEAMROLEKEY_TEAMROLEKEY_2 =
@@ -3238,7 +3190,6 @@ public class TeamRolePersistenceImpl
 		"(teamRole.type_ IS NULL OR teamRole.type_ = '')";
 
 	private FinderPath _finderPathFetchByN_T;
-	private FinderPath _finderPathCountByN_T;
 
 	/**
 	 * Returns the team role where name = &#63; and type = &#63; or throws a <code>NoSuchTeamRoleException</code> if it could not be found.
@@ -3449,76 +3400,13 @@ public class TeamRolePersistenceImpl
 	 */
 	@Override
 	public int countByN_T(String name, String type) {
-		name = Objects.toString(name, "");
-		type = Objects.toString(type, "");
+		TeamRole teamRole = fetchByN_T(name, type);
 
-		FinderPath finderPath = _finderPathCountByN_T;
-
-		Object[] finderArgs = new Object[] {name, type};
-
-		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
-
-		if (count == null) {
-			StringBundler sb = new StringBundler(3);
-
-			sb.append(_SQL_COUNT_TEAMROLE_WHERE);
-
-			boolean bindName = false;
-
-			if (name.isEmpty()) {
-				sb.append(_FINDER_COLUMN_N_T_NAME_3);
-			}
-			else {
-				bindName = true;
-
-				sb.append(_FINDER_COLUMN_N_T_NAME_2);
-			}
-
-			boolean bindType = false;
-
-			if (type.isEmpty()) {
-				sb.append(_FINDER_COLUMN_N_T_TYPE_3);
-			}
-			else {
-				bindType = true;
-
-				sb.append(_FINDER_COLUMN_N_T_TYPE_2);
-			}
-
-			String sql = sb.toString();
-
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				Query query = session.createQuery(sql);
-
-				QueryPos queryPos = QueryPos.getInstance(query);
-
-				if (bindName) {
-					queryPos.add(name);
-				}
-
-				if (bindType) {
-					queryPos.add(type);
-				}
-
-				count = (Long)query.uniqueResult();
-
-				finderCache.putResult(finderPath, finderArgs, count);
-			}
-			catch (Exception exception) {
-				finderCache.removeResult(finderPath, finderArgs);
-
-				throw processException(exception);
-			}
-			finally {
-				closeSession(session);
-			}
+		if (teamRole == null) {
+			return 0;
 		}
 
-		return count.intValue();
+		return 1;
 	}
 
 	private static final String _FINDER_COLUMN_N_T_NAME_2 =
@@ -4335,11 +4223,6 @@ public class TeamRolePersistenceImpl
 			new String[] {String.class.getName()},
 			TeamRoleModelImpl.TEAMROLEKEY_COLUMN_BITMASK);
 
-		_finderPathCountByTeamRoleKey = new FinderPath(
-			entityCacheEnabled, finderCacheEnabled, Long.class,
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByTeamRoleKey",
-			new String[] {String.class.getName()});
-
 		_finderPathWithPaginationFindByType = new FinderPath(
 			entityCacheEnabled, finderCacheEnabled, TeamRoleImpl.class,
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByType",
@@ -4366,11 +4249,6 @@ public class TeamRolePersistenceImpl
 			new String[] {String.class.getName(), String.class.getName()},
 			TeamRoleModelImpl.NAME_COLUMN_BITMASK |
 			TeamRoleModelImpl.TYPE_COLUMN_BITMASK);
-
-		_finderPathCountByN_T = new FinderPath(
-			entityCacheEnabled, finderCacheEnabled, Long.class,
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByN_T",
-			new String[] {String.class.getName(), String.class.getName()});
 
 		TeamRoleUtil.setPersistence(this);
 	}

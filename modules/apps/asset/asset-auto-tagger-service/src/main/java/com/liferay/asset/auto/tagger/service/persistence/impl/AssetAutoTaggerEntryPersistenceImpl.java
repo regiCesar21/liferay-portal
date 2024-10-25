@@ -1111,7 +1111,6 @@ public class AssetAutoTaggerEntryPersistenceImpl
 		"assetAutoTaggerEntry.assetTagId = ?";
 
 	private FinderPath _finderPathFetchByA_A;
-	private FinderPath _finderPathCountByA_A;
 
 	/**
 	 * Returns the asset auto tagger entry where assetEntryId = &#63; and assetTagId = &#63; or throws a <code>NoSuchEntryException</code> if it could not be found.
@@ -1285,51 +1284,14 @@ public class AssetAutoTaggerEntryPersistenceImpl
 	 */
 	@Override
 	public int countByA_A(long assetEntryId, long assetTagId) {
-		FinderPath finderPath = _finderPathCountByA_A;
+		AssetAutoTaggerEntry assetAutoTaggerEntry = fetchByA_A(
+			assetEntryId, assetTagId);
 
-		Object[] finderArgs = new Object[] {assetEntryId, assetTagId};
-
-		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
-
-		if (count == null) {
-			StringBundler sb = new StringBundler(3);
-
-			sb.append(_SQL_COUNT_ASSETAUTOTAGGERENTRY_WHERE);
-
-			sb.append(_FINDER_COLUMN_A_A_ASSETENTRYID_2);
-
-			sb.append(_FINDER_COLUMN_A_A_ASSETTAGID_2);
-
-			String sql = sb.toString();
-
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				Query query = session.createQuery(sql);
-
-				QueryPos queryPos = QueryPos.getInstance(query);
-
-				queryPos.add(assetEntryId);
-
-				queryPos.add(assetTagId);
-
-				count = (Long)query.uniqueResult();
-
-				finderCache.putResult(finderPath, finderArgs, count);
-			}
-			catch (Exception exception) {
-				finderCache.removeResult(finderPath, finderArgs);
-
-				throw processException(exception);
-			}
-			finally {
-				closeSession(session);
-			}
+		if (assetAutoTaggerEntry == null) {
+			return 0;
 		}
 
-		return count.intValue();
+		return 1;
 	}
 
 	private static final String _FINDER_COLUMN_A_A_ASSETENTRYID_2 =
@@ -2103,11 +2065,6 @@ public class AssetAutoTaggerEntryPersistenceImpl
 			new String[] {Long.class.getName(), Long.class.getName()},
 			AssetAutoTaggerEntryModelImpl.ASSETENTRYID_COLUMN_BITMASK |
 			AssetAutoTaggerEntryModelImpl.ASSETTAGID_COLUMN_BITMASK);
-
-		_finderPathCountByA_A = new FinderPath(
-			entityCacheEnabled, finderCacheEnabled, Long.class,
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByA_A",
-			new String[] {Long.class.getName(), Long.class.getName()});
 
 		AssetAutoTaggerEntryUtil.setPersistence(this);
 	}

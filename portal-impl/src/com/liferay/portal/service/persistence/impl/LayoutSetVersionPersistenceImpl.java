@@ -589,7 +589,6 @@ public class LayoutSetVersionPersistenceImpl
 		"layoutSetVersion.layoutSetId = ?";
 
 	private FinderPath _finderPathFetchByLayoutSetId_Version;
-	private FinderPath _finderPathCountByLayoutSetId_Version;
 
 	/**
 	 * Returns the layout set version where layoutSetId = &#63; and version = &#63; or throws a <code>NoSuchLayoutSetVersionException</code> if it could not be found.
@@ -768,52 +767,14 @@ public class LayoutSetVersionPersistenceImpl
 	 */
 	@Override
 	public int countByLayoutSetId_Version(long layoutSetId, int version) {
-		FinderPath finderPath = _finderPathCountByLayoutSetId_Version;
+		LayoutSetVersion layoutSetVersion = fetchByLayoutSetId_Version(
+			layoutSetId, version);
 
-		Object[] finderArgs = new Object[] {layoutSetId, version};
-
-		Long count = (Long)FinderCacheUtil.getResult(
-			finderPath, finderArgs, this);
-
-		if (count == null) {
-			StringBundler sb = new StringBundler(3);
-
-			sb.append(_SQL_COUNT_LAYOUTSETVERSION_WHERE);
-
-			sb.append(_FINDER_COLUMN_LAYOUTSETID_VERSION_LAYOUTSETID_2);
-
-			sb.append(_FINDER_COLUMN_LAYOUTSETID_VERSION_VERSION_2);
-
-			String sql = sb.toString();
-
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				Query query = session.createQuery(sql);
-
-				QueryPos queryPos = QueryPos.getInstance(query);
-
-				queryPos.add(layoutSetId);
-
-				queryPos.add(version);
-
-				count = (Long)query.uniqueResult();
-
-				FinderCacheUtil.putResult(finderPath, finderArgs, count);
-			}
-			catch (Exception exception) {
-				FinderCacheUtil.removeResult(finderPath, finderArgs);
-
-				throw processException(exception);
-			}
-			finally {
-				closeSession(session);
-			}
+		if (layoutSetVersion == null) {
+			return 0;
 		}
 
-		return count.intValue();
+		return 1;
 	}
 
 	private static final String
@@ -3619,7 +3580,6 @@ public class LayoutSetVersionPersistenceImpl
 		"layoutSetVersion.privateLayout = ?";
 
 	private FinderPath _finderPathFetchByG_P_Version;
-	private FinderPath _finderPathCountByG_P_Version;
 
 	/**
 	 * Returns the layout set version where groupId = &#63; and privateLayout = &#63; and version = &#63; or throws a <code>NoSuchLayoutSetVersionException</code> if it could not be found.
@@ -3813,56 +3773,14 @@ public class LayoutSetVersionPersistenceImpl
 	public int countByG_P_Version(
 		long groupId, boolean privateLayout, int version) {
 
-		FinderPath finderPath = _finderPathCountByG_P_Version;
+		LayoutSetVersion layoutSetVersion = fetchByG_P_Version(
+			groupId, privateLayout, version);
 
-		Object[] finderArgs = new Object[] {groupId, privateLayout, version};
-
-		Long count = (Long)FinderCacheUtil.getResult(
-			finderPath, finderArgs, this);
-
-		if (count == null) {
-			StringBundler sb = new StringBundler(4);
-
-			sb.append(_SQL_COUNT_LAYOUTSETVERSION_WHERE);
-
-			sb.append(_FINDER_COLUMN_G_P_VERSION_GROUPID_2);
-
-			sb.append(_FINDER_COLUMN_G_P_VERSION_PRIVATELAYOUT_2);
-
-			sb.append(_FINDER_COLUMN_G_P_VERSION_VERSION_2);
-
-			String sql = sb.toString();
-
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				Query query = session.createQuery(sql);
-
-				QueryPos queryPos = QueryPos.getInstance(query);
-
-				queryPos.add(groupId);
-
-				queryPos.add(privateLayout);
-
-				queryPos.add(version);
-
-				count = (Long)query.uniqueResult();
-
-				FinderCacheUtil.putResult(finderPath, finderArgs, count);
-			}
-			catch (Exception exception) {
-				FinderCacheUtil.removeResult(finderPath, finderArgs);
-
-				throw processException(exception);
-			}
-			finally {
-				closeSession(session);
-			}
+		if (layoutSetVersion == null) {
+			return 0;
 		}
 
-		return count.intValue();
+		return 1;
 	}
 
 	private static final String _FINDER_COLUMN_G_P_VERSION_GROUPID_2 =
@@ -7345,13 +7263,6 @@ public class LayoutSetVersionPersistenceImpl
 			LayoutSetVersionModelImpl.LAYOUTSETID_COLUMN_BITMASK |
 			LayoutSetVersionModelImpl.VERSION_COLUMN_BITMASK);
 
-		_finderPathCountByLayoutSetId_Version = new FinderPath(
-			LayoutSetVersionModelImpl.ENTITY_CACHE_ENABLED,
-			LayoutSetVersionModelImpl.FINDER_CACHE_ENABLED, Long.class,
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
-			"countByLayoutSetId_Version",
-			new String[] {Long.class.getName(), Integer.class.getName()});
-
 		_finderPathWithPaginationFindByGroupId = new FinderPath(
 			LayoutSetVersionModelImpl.ENTITY_CACHE_ENABLED,
 			LayoutSetVersionModelImpl.FINDER_CACHE_ENABLED,
@@ -7503,15 +7414,6 @@ public class LayoutSetVersionPersistenceImpl
 			LayoutSetVersionModelImpl.GROUPID_COLUMN_BITMASK |
 			LayoutSetVersionModelImpl.PRIVATELAYOUT_COLUMN_BITMASK |
 			LayoutSetVersionModelImpl.VERSION_COLUMN_BITMASK);
-
-		_finderPathCountByG_P_Version = new FinderPath(
-			LayoutSetVersionModelImpl.ENTITY_CACHE_ENABLED,
-			LayoutSetVersionModelImpl.FINDER_CACHE_ENABLED, Long.class,
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByG_P_Version",
-			new String[] {
-				Long.class.getName(), Boolean.class.getName(),
-				Integer.class.getName()
-			});
 
 		_finderPathWithPaginationFindByC_L = new FinderPath(
 			LayoutSetVersionModelImpl.ENTITY_CACHE_ENABLED,

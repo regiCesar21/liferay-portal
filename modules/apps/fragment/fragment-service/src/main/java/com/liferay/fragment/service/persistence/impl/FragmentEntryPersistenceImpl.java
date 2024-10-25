@@ -626,7 +626,6 @@ public class FragmentEntryPersistenceImpl
 		"(fragmentEntry.uuid IS NULL OR fragmentEntry.uuid = '')";
 
 	private FinderPath _finderPathFetchByUUID_G;
-	private FinderPath _finderPathCountByUUID_G;
 
 	/**
 	 * Returns the fragment entry where uuid = &#63; and groupId = &#63; or throws a <code>NoSuchEntryException</code> if it could not be found.
@@ -811,64 +810,13 @@ public class FragmentEntryPersistenceImpl
 	 */
 	@Override
 	public int countByUUID_G(String uuid, long groupId) {
-		uuid = Objects.toString(uuid, "");
+		FragmentEntry fragmentEntry = fetchByUUID_G(uuid, groupId);
 
-		FinderPath finderPath = _finderPathCountByUUID_G;
-
-		Object[] finderArgs = new Object[] {uuid, groupId};
-
-		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
-
-		if (count == null) {
-			StringBundler sb = new StringBundler(3);
-
-			sb.append(_SQL_COUNT_FRAGMENTENTRY_WHERE);
-
-			boolean bindUuid = false;
-
-			if (uuid.isEmpty()) {
-				sb.append(_FINDER_COLUMN_UUID_G_UUID_3);
-			}
-			else {
-				bindUuid = true;
-
-				sb.append(_FINDER_COLUMN_UUID_G_UUID_2);
-			}
-
-			sb.append(_FINDER_COLUMN_UUID_G_GROUPID_2);
-
-			String sql = sb.toString();
-
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				Query query = session.createQuery(sql);
-
-				QueryPos queryPos = QueryPos.getInstance(query);
-
-				if (bindUuid) {
-					queryPos.add(uuid);
-				}
-
-				queryPos.add(groupId);
-
-				count = (Long)query.uniqueResult();
-
-				finderCache.putResult(finderPath, finderArgs, count);
-			}
-			catch (Exception exception) {
-				finderCache.removeResult(finderPath, finderArgs);
-
-				throw processException(exception);
-			}
-			finally {
-				closeSession(session);
-			}
+		if (fragmentEntry == null) {
+			return 0;
 		}
 
-		return count.intValue();
+		return 1;
 	}
 
 	private static final String _FINDER_COLUMN_UUID_G_UUID_2 =
@@ -3038,7 +2986,6 @@ public class FragmentEntryPersistenceImpl
 		"fragmentEntry.fragmentCollectionId = ?";
 
 	private FinderPath _finderPathFetchByG_FEK;
-	private FinderPath _finderPathCountByG_FEK;
 
 	/**
 	 * Returns the fragment entry where groupId = &#63; and fragmentEntryKey = &#63; or throws a <code>NoSuchEntryException</code> if it could not be found.
@@ -3224,64 +3171,13 @@ public class FragmentEntryPersistenceImpl
 	 */
 	@Override
 	public int countByG_FEK(long groupId, String fragmentEntryKey) {
-		fragmentEntryKey = Objects.toString(fragmentEntryKey, "");
+		FragmentEntry fragmentEntry = fetchByG_FEK(groupId, fragmentEntryKey);
 
-		FinderPath finderPath = _finderPathCountByG_FEK;
-
-		Object[] finderArgs = new Object[] {groupId, fragmentEntryKey};
-
-		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
-
-		if (count == null) {
-			StringBundler sb = new StringBundler(3);
-
-			sb.append(_SQL_COUNT_FRAGMENTENTRY_WHERE);
-
-			sb.append(_FINDER_COLUMN_G_FEK_GROUPID_2);
-
-			boolean bindFragmentEntryKey = false;
-
-			if (fragmentEntryKey.isEmpty()) {
-				sb.append(_FINDER_COLUMN_G_FEK_FRAGMENTENTRYKEY_3);
-			}
-			else {
-				bindFragmentEntryKey = true;
-
-				sb.append(_FINDER_COLUMN_G_FEK_FRAGMENTENTRYKEY_2);
-			}
-
-			String sql = sb.toString();
-
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				Query query = session.createQuery(sql);
-
-				QueryPos queryPos = QueryPos.getInstance(query);
-
-				queryPos.add(groupId);
-
-				if (bindFragmentEntryKey) {
-					queryPos.add(fragmentEntryKey);
-				}
-
-				count = (Long)query.uniqueResult();
-
-				finderCache.putResult(finderPath, finderArgs, count);
-			}
-			catch (Exception exception) {
-				finderCache.removeResult(finderPath, finderArgs);
-
-				throw processException(exception);
-			}
-			finally {
-				closeSession(session);
-			}
+		if (fragmentEntry == null) {
+			return 0;
 		}
 
-		return count.intValue();
+		return 1;
 	}
 
 	private static final String _FINDER_COLUMN_G_FEK_GROUPID_2 =
@@ -7386,11 +7282,6 @@ public class FragmentEntryPersistenceImpl
 			FragmentEntryModelImpl.UUID_COLUMN_BITMASK |
 			FragmentEntryModelImpl.GROUPID_COLUMN_BITMASK);
 
-		_finderPathCountByUUID_G = new FinderPath(
-			entityCacheEnabled, finderCacheEnabled, Long.class,
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByUUID_G",
-			new String[] {String.class.getName(), Long.class.getName()});
-
 		_finderPathWithPaginationFindByUuid_C = new FinderPath(
 			entityCacheEnabled, finderCacheEnabled, FragmentEntryImpl.class,
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUuid_C",
@@ -7482,11 +7373,6 @@ public class FragmentEntryPersistenceImpl
 			new String[] {Long.class.getName(), String.class.getName()},
 			FragmentEntryModelImpl.GROUPID_COLUMN_BITMASK |
 			FragmentEntryModelImpl.FRAGMENTENTRYKEY_COLUMN_BITMASK);
-
-		_finderPathCountByG_FEK = new FinderPath(
-			entityCacheEnabled, finderCacheEnabled, Long.class,
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByG_FEK",
-			new String[] {Long.class.getName(), String.class.getName()});
 
 		_finderPathWithPaginationFindByG_FCI_LikeN = new FinderPath(
 			entityCacheEnabled, finderCacheEnabled, FragmentEntryImpl.class,

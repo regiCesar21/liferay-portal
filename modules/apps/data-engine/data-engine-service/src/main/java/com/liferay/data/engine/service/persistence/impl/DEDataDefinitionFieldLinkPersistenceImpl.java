@@ -637,7 +637,6 @@ public class DEDataDefinitionFieldLinkPersistenceImpl
 		"(deDataDefinitionFieldLink.uuid IS NULL OR deDataDefinitionFieldLink.uuid = '')";
 
 	private FinderPath _finderPathFetchByUUID_G;
-	private FinderPath _finderPathCountByUUID_G;
 
 	/**
 	 * Returns the de data definition field link where uuid = &#63; and groupId = &#63; or throws a <code>NoSuchDataDefinitionFieldLinkException</code> if it could not be found.
@@ -826,64 +825,14 @@ public class DEDataDefinitionFieldLinkPersistenceImpl
 	 */
 	@Override
 	public int countByUUID_G(String uuid, long groupId) {
-		uuid = Objects.toString(uuid, "");
+		DEDataDefinitionFieldLink deDataDefinitionFieldLink = fetchByUUID_G(
+			uuid, groupId);
 
-		FinderPath finderPath = _finderPathCountByUUID_G;
-
-		Object[] finderArgs = new Object[] {uuid, groupId};
-
-		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
-
-		if (count == null) {
-			StringBundler sb = new StringBundler(3);
-
-			sb.append(_SQL_COUNT_DEDATADEFINITIONFIELDLINK_WHERE);
-
-			boolean bindUuid = false;
-
-			if (uuid.isEmpty()) {
-				sb.append(_FINDER_COLUMN_UUID_G_UUID_3);
-			}
-			else {
-				bindUuid = true;
-
-				sb.append(_FINDER_COLUMN_UUID_G_UUID_2);
-			}
-
-			sb.append(_FINDER_COLUMN_UUID_G_GROUPID_2);
-
-			String sql = sb.toString();
-
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				Query query = session.createQuery(sql);
-
-				QueryPos queryPos = QueryPos.getInstance(query);
-
-				if (bindUuid) {
-					queryPos.add(uuid);
-				}
-
-				queryPos.add(groupId);
-
-				count = (Long)query.uniqueResult();
-
-				finderCache.putResult(finderPath, finderArgs, count);
-			}
-			catch (Exception exception) {
-				finderCache.removeResult(finderPath, finderArgs);
-
-				throw processException(exception);
-			}
-			finally {
-				closeSession(session);
-			}
+		if (deDataDefinitionFieldLink == null) {
+			return 0;
 		}
 
-		return count.intValue();
+		return 1;
 	}
 
 	private static final String _FINDER_COLUMN_UUID_G_UUID_2 =
@@ -896,7 +845,6 @@ public class DEDataDefinitionFieldLinkPersistenceImpl
 		"deDataDefinitionFieldLink.groupId = ?";
 
 	private FinderPath _finderPathFetchByC_C_D_F;
-	private FinderPath _finderPathCountByC_C_D_F;
 
 	/**
 	 * Returns the de data definition field link where classNameId = &#63; and classPK = &#63; and ddmStructureId = &#63; and fieldName = &#63; or throws a <code>NoSuchDataDefinitionFieldLinkException</code> if it could not be found.
@@ -1125,74 +1073,14 @@ public class DEDataDefinitionFieldLinkPersistenceImpl
 	public int countByC_C_D_F(
 		long classNameId, long classPK, long ddmStructureId, String fieldName) {
 
-		fieldName = Objects.toString(fieldName, "");
+		DEDataDefinitionFieldLink deDataDefinitionFieldLink = fetchByC_C_D_F(
+			classNameId, classPK, ddmStructureId, fieldName);
 
-		FinderPath finderPath = _finderPathCountByC_C_D_F;
-
-		Object[] finderArgs = new Object[] {
-			classNameId, classPK, ddmStructureId, fieldName
-		};
-
-		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
-
-		if (count == null) {
-			StringBundler sb = new StringBundler(5);
-
-			sb.append(_SQL_COUNT_DEDATADEFINITIONFIELDLINK_WHERE);
-
-			sb.append(_FINDER_COLUMN_C_C_D_F_CLASSNAMEID_2);
-
-			sb.append(_FINDER_COLUMN_C_C_D_F_CLASSPK_2);
-
-			sb.append(_FINDER_COLUMN_C_C_D_F_DDMSTRUCTUREID_2);
-
-			boolean bindFieldName = false;
-
-			if (fieldName.isEmpty()) {
-				sb.append(_FINDER_COLUMN_C_C_D_F_FIELDNAME_3);
-			}
-			else {
-				bindFieldName = true;
-
-				sb.append(_FINDER_COLUMN_C_C_D_F_FIELDNAME_2);
-			}
-
-			String sql = sb.toString();
-
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				Query query = session.createQuery(sql);
-
-				QueryPos queryPos = QueryPos.getInstance(query);
-
-				queryPos.add(classNameId);
-
-				queryPos.add(classPK);
-
-				queryPos.add(ddmStructureId);
-
-				if (bindFieldName) {
-					queryPos.add(fieldName);
-				}
-
-				count = (Long)query.uniqueResult();
-
-				finderCache.putResult(finderPath, finderArgs, count);
-			}
-			catch (Exception exception) {
-				finderCache.removeResult(finderPath, finderArgs);
-
-				throw processException(exception);
-			}
-			finally {
-				closeSession(session);
-			}
+		if (deDataDefinitionFieldLink == null) {
+			return 0;
 		}
 
-		return count.intValue();
+		return 1;
 	}
 
 	private static final String _FINDER_COLUMN_C_C_D_F_CLASSNAMEID_2 =
@@ -1993,11 +1881,6 @@ public class DEDataDefinitionFieldLinkPersistenceImpl
 			DEDataDefinitionFieldLinkModelImpl.UUID_COLUMN_BITMASK |
 			DEDataDefinitionFieldLinkModelImpl.GROUPID_COLUMN_BITMASK);
 
-		_finderPathCountByUUID_G = new FinderPath(
-			entityCacheEnabled, finderCacheEnabled, Long.class,
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByUUID_G",
-			new String[] {String.class.getName(), Long.class.getName()});
-
 		_finderPathFetchByC_C_D_F = new FinderPath(
 			entityCacheEnabled, finderCacheEnabled,
 			DEDataDefinitionFieldLinkImpl.class, FINDER_CLASS_NAME_ENTITY,
@@ -2010,14 +1893,6 @@ public class DEDataDefinitionFieldLinkPersistenceImpl
 			DEDataDefinitionFieldLinkModelImpl.CLASSPK_COLUMN_BITMASK |
 			DEDataDefinitionFieldLinkModelImpl.DDMSTRUCTUREID_COLUMN_BITMASK |
 			DEDataDefinitionFieldLinkModelImpl.FIELDNAME_COLUMN_BITMASK);
-
-		_finderPathCountByC_C_D_F = new FinderPath(
-			entityCacheEnabled, finderCacheEnabled, Long.class,
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByC_C_D_F",
-			new String[] {
-				Long.class.getName(), Long.class.getName(),
-				Long.class.getName(), String.class.getName()
-			});
 
 		DEDataDefinitionFieldLinkUtil.setPersistence(this);
 	}

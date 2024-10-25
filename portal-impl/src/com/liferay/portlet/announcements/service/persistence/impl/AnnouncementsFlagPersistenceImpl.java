@@ -1088,7 +1088,6 @@ public class AnnouncementsFlagPersistenceImpl
 		"announcementsFlag.entryId = ?";
 
 	private FinderPath _finderPathFetchByU_E_V;
-	private FinderPath _finderPathCountByU_E_V;
 
 	/**
 	 * Returns the announcements flag where userId = &#63; and entryId = &#63; and value = &#63; or throws a <code>NoSuchFlagException</code> if it could not be found.
@@ -1277,56 +1276,14 @@ public class AnnouncementsFlagPersistenceImpl
 	 */
 	@Override
 	public int countByU_E_V(long userId, long entryId, int value) {
-		FinderPath finderPath = _finderPathCountByU_E_V;
+		AnnouncementsFlag announcementsFlag = fetchByU_E_V(
+			userId, entryId, value);
 
-		Object[] finderArgs = new Object[] {userId, entryId, value};
-
-		Long count = (Long)FinderCacheUtil.getResult(
-			finderPath, finderArgs, this);
-
-		if (count == null) {
-			StringBundler sb = new StringBundler(4);
-
-			sb.append(_SQL_COUNT_ANNOUNCEMENTSFLAG_WHERE);
-
-			sb.append(_FINDER_COLUMN_U_E_V_USERID_2);
-
-			sb.append(_FINDER_COLUMN_U_E_V_ENTRYID_2);
-
-			sb.append(_FINDER_COLUMN_U_E_V_VALUE_2);
-
-			String sql = sb.toString();
-
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				Query query = session.createQuery(sql);
-
-				QueryPos queryPos = QueryPos.getInstance(query);
-
-				queryPos.add(userId);
-
-				queryPos.add(entryId);
-
-				queryPos.add(value);
-
-				count = (Long)query.uniqueResult();
-
-				FinderCacheUtil.putResult(finderPath, finderArgs, count);
-			}
-			catch (Exception exception) {
-				FinderCacheUtil.removeResult(finderPath, finderArgs);
-
-				throw processException(exception);
-			}
-			finally {
-				closeSession(session);
-			}
+		if (announcementsFlag == null) {
+			return 0;
 		}
 
-		return count.intValue();
+		return 1;
 	}
 
 	private static final String _FINDER_COLUMN_U_E_V_USERID_2 =
@@ -2100,15 +2057,6 @@ public class AnnouncementsFlagPersistenceImpl
 			AnnouncementsFlagModelImpl.USERID_COLUMN_BITMASK |
 			AnnouncementsFlagModelImpl.ENTRYID_COLUMN_BITMASK |
 			AnnouncementsFlagModelImpl.VALUE_COLUMN_BITMASK);
-
-		_finderPathCountByU_E_V = new FinderPath(
-			AnnouncementsFlagModelImpl.ENTITY_CACHE_ENABLED,
-			AnnouncementsFlagModelImpl.FINDER_CACHE_ENABLED, Long.class,
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByU_E_V",
-			new String[] {
-				Long.class.getName(), Long.class.getName(),
-				Integer.class.getName()
-			});
 
 		AnnouncementsFlagUtil.setPersistence(this);
 	}

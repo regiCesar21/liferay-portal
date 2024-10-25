@@ -83,7 +83,6 @@ public class AuditEntryPersistenceImpl
 	private FinderPath _finderPathWithoutPaginationFindAll;
 	private FinderPath _finderPathCountAll;
 	private FinderPath _finderPathFetchByAuditEntryKey;
-	private FinderPath _finderPathCountByAuditEntryKey;
 
 	/**
 	 * Returns the audit entry where auditEntryKey = &#63; or throws a <code>NoSuchAuditEntryException</code> if it could not be found.
@@ -254,60 +253,13 @@ public class AuditEntryPersistenceImpl
 	 */
 	@Override
 	public int countByAuditEntryKey(String auditEntryKey) {
-		auditEntryKey = Objects.toString(auditEntryKey, "");
+		AuditEntry auditEntry = fetchByAuditEntryKey(auditEntryKey);
 
-		FinderPath finderPath = _finderPathCountByAuditEntryKey;
-
-		Object[] finderArgs = new Object[] {auditEntryKey};
-
-		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
-
-		if (count == null) {
-			StringBundler sb = new StringBundler(2);
-
-			sb.append(_SQL_COUNT_AUDITENTRY_WHERE);
-
-			boolean bindAuditEntryKey = false;
-
-			if (auditEntryKey.isEmpty()) {
-				sb.append(_FINDER_COLUMN_AUDITENTRYKEY_AUDITENTRYKEY_3);
-			}
-			else {
-				bindAuditEntryKey = true;
-
-				sb.append(_FINDER_COLUMN_AUDITENTRYKEY_AUDITENTRYKEY_2);
-			}
-
-			String sql = sb.toString();
-
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				Query query = session.createQuery(sql);
-
-				QueryPos queryPos = QueryPos.getInstance(query);
-
-				if (bindAuditEntryKey) {
-					queryPos.add(auditEntryKey);
-				}
-
-				count = (Long)query.uniqueResult();
-
-				finderCache.putResult(finderPath, finderArgs, count);
-			}
-			catch (Exception exception) {
-				finderCache.removeResult(finderPath, finderArgs);
-
-				throw processException(exception);
-			}
-			finally {
-				closeSession(session);
-			}
+		if (auditEntry == null) {
+			return 0;
 		}
 
-		return count.intValue();
+		return 1;
 	}
 
 	private static final String _FINDER_COLUMN_AUDITENTRYKEY_AUDITENTRYKEY_2 =
@@ -2199,11 +2151,6 @@ public class AuditEntryPersistenceImpl
 			FINDER_CLASS_NAME_ENTITY, "fetchByAuditEntryKey",
 			new String[] {String.class.getName()},
 			AuditEntryModelImpl.AUDITENTRYKEY_COLUMN_BITMASK);
-
-		_finderPathCountByAuditEntryKey = new FinderPath(
-			entityCacheEnabled, finderCacheEnabled, Long.class,
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByAuditEntryKey",
-			new String[] {String.class.getName()});
 
 		_finderPathWithPaginationFindByC_C = new FinderPath(
 			entityCacheEnabled, finderCacheEnabled, AuditEntryImpl.class,

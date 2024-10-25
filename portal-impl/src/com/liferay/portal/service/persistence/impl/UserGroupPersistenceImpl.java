@@ -3883,7 +3883,6 @@ public class UserGroupPersistenceImpl
 		"userGroup.parentUserGroupId = ?";
 
 	private FinderPath _finderPathFetchByC_N;
-	private FinderPath _finderPathCountByC_N;
 
 	/**
 	 * Returns the user group where companyId = &#63; and name = &#63; or throws a <code>NoSuchUserGroupException</code> if it could not be found.
@@ -4068,65 +4067,13 @@ public class UserGroupPersistenceImpl
 	 */
 	@Override
 	public int countByC_N(long companyId, String name) {
-		name = Objects.toString(name, "");
+		UserGroup userGroup = fetchByC_N(companyId, name);
 
-		FinderPath finderPath = _finderPathCountByC_N;
-
-		Object[] finderArgs = new Object[] {companyId, name};
-
-		Long count = (Long)FinderCacheUtil.getResult(
-			finderPath, finderArgs, this);
-
-		if (count == null) {
-			StringBundler sb = new StringBundler(3);
-
-			sb.append(_SQL_COUNT_USERGROUP_WHERE);
-
-			sb.append(_FINDER_COLUMN_C_N_COMPANYID_2);
-
-			boolean bindName = false;
-
-			if (name.isEmpty()) {
-				sb.append(_FINDER_COLUMN_C_N_NAME_3);
-			}
-			else {
-				bindName = true;
-
-				sb.append(_FINDER_COLUMN_C_N_NAME_2);
-			}
-
-			String sql = sb.toString();
-
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				Query query = session.createQuery(sql);
-
-				QueryPos queryPos = QueryPos.getInstance(query);
-
-				queryPos.add(companyId);
-
-				if (bindName) {
-					queryPos.add(StringUtil.toLowerCase(name));
-				}
-
-				count = (Long)query.uniqueResult();
-
-				FinderCacheUtil.putResult(finderPath, finderArgs, count);
-			}
-			catch (Exception exception) {
-				FinderCacheUtil.removeResult(finderPath, finderArgs);
-
-				throw processException(exception);
-			}
-			finally {
-				closeSession(session);
-			}
+		if (userGroup == null) {
+			return 0;
 		}
 
-		return count.intValue();
+		return 1;
 	}
 
 	private static final String _FINDER_COLUMN_C_N_COMPANYID_2 =
@@ -5772,7 +5719,6 @@ public class UserGroupPersistenceImpl
 		"userGroup.parentUserGroupId = ?";
 
 	private FinderPath _finderPathFetchByC_ERC;
-	private FinderPath _finderPathCountByC_ERC;
 
 	/**
 	 * Returns the user group where companyId = &#63; and externalReferenceCode = &#63; or throws a <code>NoSuchUserGroupException</code> if it could not be found.
@@ -5978,65 +5924,13 @@ public class UserGroupPersistenceImpl
 	 */
 	@Override
 	public int countByC_ERC(long companyId, String externalReferenceCode) {
-		externalReferenceCode = Objects.toString(externalReferenceCode, "");
+		UserGroup userGroup = fetchByC_ERC(companyId, externalReferenceCode);
 
-		FinderPath finderPath = _finderPathCountByC_ERC;
-
-		Object[] finderArgs = new Object[] {companyId, externalReferenceCode};
-
-		Long count = (Long)FinderCacheUtil.getResult(
-			finderPath, finderArgs, this);
-
-		if (count == null) {
-			StringBundler sb = new StringBundler(3);
-
-			sb.append(_SQL_COUNT_USERGROUP_WHERE);
-
-			sb.append(_FINDER_COLUMN_C_ERC_COMPANYID_2);
-
-			boolean bindExternalReferenceCode = false;
-
-			if (externalReferenceCode.isEmpty()) {
-				sb.append(_FINDER_COLUMN_C_ERC_EXTERNALREFERENCECODE_3);
-			}
-			else {
-				bindExternalReferenceCode = true;
-
-				sb.append(_FINDER_COLUMN_C_ERC_EXTERNALREFERENCECODE_2);
-			}
-
-			String sql = sb.toString();
-
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				Query query = session.createQuery(sql);
-
-				QueryPos queryPos = QueryPos.getInstance(query);
-
-				queryPos.add(companyId);
-
-				if (bindExternalReferenceCode) {
-					queryPos.add(externalReferenceCode);
-				}
-
-				count = (Long)query.uniqueResult();
-
-				FinderCacheUtil.putResult(finderPath, finderArgs, count);
-			}
-			catch (Exception exception) {
-				FinderCacheUtil.removeResult(finderPath, finderArgs);
-
-				throw processException(exception);
-			}
-			finally {
-				closeSession(session);
-			}
+		if (userGroup == null) {
+			return 0;
 		}
 
-		return count.intValue();
+		return 1;
 	}
 
 	private static final String _FINDER_COLUMN_C_ERC_COMPANYID_2 =
@@ -7958,12 +7852,6 @@ public class UserGroupPersistenceImpl
 			UserGroupModelImpl.COMPANYID_COLUMN_BITMASK |
 			UserGroupModelImpl.NAME_COLUMN_BITMASK);
 
-		_finderPathCountByC_N = new FinderPath(
-			UserGroupModelImpl.ENTITY_CACHE_ENABLED,
-			UserGroupModelImpl.FINDER_CACHE_ENABLED, Long.class,
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByC_N",
-			new String[] {Long.class.getName(), String.class.getName()});
-
 		_finderPathWithPaginationFindByC_LikeN = new FinderPath(
 			UserGroupModelImpl.ENTITY_CACHE_ENABLED,
 			UserGroupModelImpl.FINDER_CACHE_ENABLED, UserGroupImpl.class,
@@ -8005,12 +7893,6 @@ public class UserGroupPersistenceImpl
 			new String[] {Long.class.getName(), String.class.getName()},
 			UserGroupModelImpl.COMPANYID_COLUMN_BITMASK |
 			UserGroupModelImpl.EXTERNALREFERENCECODE_COLUMN_BITMASK);
-
-		_finderPathCountByC_ERC = new FinderPath(
-			UserGroupModelImpl.ENTITY_CACHE_ENABLED,
-			UserGroupModelImpl.FINDER_CACHE_ENABLED, Long.class,
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByC_ERC",
-			new String[] {Long.class.getName(), String.class.getName()});
 
 		UserGroupUtil.setPersistence(this);
 	}

@@ -1139,7 +1139,6 @@ public class KBArticlePersistenceImpl
 		"(kbArticle.uuid IS NULL OR kbArticle.uuid = '')";
 
 	private FinderPath _finderPathFetchByUUID_G;
-	private FinderPath _finderPathCountByUUID_G;
 
 	/**
 	 * Returns the kb article where uuid = &#63; and groupId = &#63; or throws a <code>NoSuchArticleException</code> if it could not be found.
@@ -1324,64 +1323,13 @@ public class KBArticlePersistenceImpl
 	 */
 	@Override
 	public int countByUUID_G(String uuid, long groupId) {
-		uuid = Objects.toString(uuid, "");
+		KBArticle kbArticle = fetchByUUID_G(uuid, groupId);
 
-		FinderPath finderPath = _finderPathCountByUUID_G;
-
-		Object[] finderArgs = new Object[] {uuid, groupId};
-
-		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
-
-		if (count == null) {
-			StringBundler sb = new StringBundler(3);
-
-			sb.append(_SQL_COUNT_KBARTICLE_WHERE);
-
-			boolean bindUuid = false;
-
-			if (uuid.isEmpty()) {
-				sb.append(_FINDER_COLUMN_UUID_G_UUID_3);
-			}
-			else {
-				bindUuid = true;
-
-				sb.append(_FINDER_COLUMN_UUID_G_UUID_2);
-			}
-
-			sb.append(_FINDER_COLUMN_UUID_G_GROUPID_2);
-
-			String sql = sb.toString();
-
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				Query query = session.createQuery(sql);
-
-				QueryPos queryPos = QueryPos.getInstance(query);
-
-				if (bindUuid) {
-					queryPos.add(uuid);
-				}
-
-				queryPos.add(groupId);
-
-				count = (Long)query.uniqueResult();
-
-				finderCache.putResult(finderPath, finderArgs, count);
-			}
-			catch (Exception exception) {
-				finderCache.removeResult(finderPath, finderArgs);
-
-				throw processException(exception);
-			}
-			finally {
-				closeSession(session);
-			}
+		if (kbArticle == null) {
+			return 0;
 		}
 
-		return count.intValue();
+		return 1;
 	}
 
 	private static final String _FINDER_COLUMN_UUID_G_UUID_2 =
@@ -2918,7 +2866,6 @@ public class KBArticlePersistenceImpl
 		"kbArticle.groupId = ?";
 
 	private FinderPath _finderPathFetchByR_V;
-	private FinderPath _finderPathCountByR_V;
 
 	/**
 	 * Returns the kb article where resourcePrimKey = &#63; and version = &#63; or throws a <code>NoSuchArticleException</code> if it could not be found.
@@ -3089,51 +3036,13 @@ public class KBArticlePersistenceImpl
 	 */
 	@Override
 	public int countByR_V(long resourcePrimKey, int version) {
-		FinderPath finderPath = _finderPathCountByR_V;
+		KBArticle kbArticle = fetchByR_V(resourcePrimKey, version);
 
-		Object[] finderArgs = new Object[] {resourcePrimKey, version};
-
-		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
-
-		if (count == null) {
-			StringBundler sb = new StringBundler(3);
-
-			sb.append(_SQL_COUNT_KBARTICLE_WHERE);
-
-			sb.append(_FINDER_COLUMN_R_V_RESOURCEPRIMKEY_2);
-
-			sb.append(_FINDER_COLUMN_R_V_VERSION_2);
-
-			String sql = sb.toString();
-
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				Query query = session.createQuery(sql);
-
-				QueryPos queryPos = QueryPos.getInstance(query);
-
-				queryPos.add(resourcePrimKey);
-
-				queryPos.add(version);
-
-				count = (Long)query.uniqueResult();
-
-				finderCache.putResult(finderPath, finderArgs, count);
-			}
-			catch (Exception exception) {
-				finderCache.removeResult(finderPath, finderArgs);
-
-				throw processException(exception);
-			}
-			finally {
-				closeSession(session);
-			}
+		if (kbArticle == null) {
+			return 0;
 		}
 
-		return count.intValue();
+		return 1;
 	}
 
 	private static final String _FINDER_COLUMN_R_V_RESOURCEPRIMKEY_2 =
@@ -12577,7 +12486,6 @@ public class KBArticlePersistenceImpl
 		"kbArticle.status = ?";
 
 	private FinderPath _finderPathFetchByR_G_V;
-	private FinderPath _finderPathCountByR_G_V;
 
 	/**
 	 * Returns the kb article where resourcePrimKey = &#63; and groupId = &#63; and version = &#63; or throws a <code>NoSuchArticleException</code> if it could not be found.
@@ -12767,55 +12675,13 @@ public class KBArticlePersistenceImpl
 	 */
 	@Override
 	public int countByR_G_V(long resourcePrimKey, long groupId, int version) {
-		FinderPath finderPath = _finderPathCountByR_G_V;
+		KBArticle kbArticle = fetchByR_G_V(resourcePrimKey, groupId, version);
 
-		Object[] finderArgs = new Object[] {resourcePrimKey, groupId, version};
-
-		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
-
-		if (count == null) {
-			StringBundler sb = new StringBundler(4);
-
-			sb.append(_SQL_COUNT_KBARTICLE_WHERE);
-
-			sb.append(_FINDER_COLUMN_R_G_V_RESOURCEPRIMKEY_2);
-
-			sb.append(_FINDER_COLUMN_R_G_V_GROUPID_2);
-
-			sb.append(_FINDER_COLUMN_R_G_V_VERSION_2);
-
-			String sql = sb.toString();
-
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				Query query = session.createQuery(sql);
-
-				QueryPos queryPos = QueryPos.getInstance(query);
-
-				queryPos.add(resourcePrimKey);
-
-				queryPos.add(groupId);
-
-				queryPos.add(version);
-
-				count = (Long)query.uniqueResult();
-
-				finderCache.putResult(finderPath, finderArgs, count);
-			}
-			catch (Exception exception) {
-				finderCache.removeResult(finderPath, finderArgs);
-
-				throw processException(exception);
-			}
-			finally {
-				closeSession(session);
-			}
+		if (kbArticle == null) {
+			return 0;
 		}
 
-		return count.intValue();
+		return 1;
 	}
 
 	private static final String _FINDER_COLUMN_R_G_V_RESOURCEPRIMKEY_2 =
@@ -35422,11 +35288,6 @@ public class KBArticlePersistenceImpl
 			KBArticleModelImpl.UUID_COLUMN_BITMASK |
 			KBArticleModelImpl.GROUPID_COLUMN_BITMASK);
 
-		_finderPathCountByUUID_G = new FinderPath(
-			entityCacheEnabled, finderCacheEnabled, Long.class,
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByUUID_G",
-			new String[] {String.class.getName(), Long.class.getName()});
-
 		_finderPathWithPaginationFindByUuid_C = new FinderPath(
 			entityCacheEnabled, finderCacheEnabled, KBArticleImpl.class,
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUuid_C",
@@ -35477,11 +35338,6 @@ public class KBArticlePersistenceImpl
 			new String[] {Long.class.getName(), Integer.class.getName()},
 			KBArticleModelImpl.RESOURCEPRIMKEY_COLUMN_BITMASK |
 			KBArticleModelImpl.VERSION_COLUMN_BITMASK);
-
-		_finderPathCountByR_V = new FinderPath(
-			entityCacheEnabled, finderCacheEnabled, Long.class,
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByR_V",
-			new String[] {Long.class.getName(), Integer.class.getName()});
 
 		_finderPathWithPaginationFindByR_L = new FinderPath(
 			entityCacheEnabled, finderCacheEnabled, KBArticleImpl.class,
@@ -35787,14 +35643,6 @@ public class KBArticlePersistenceImpl
 			KBArticleModelImpl.RESOURCEPRIMKEY_COLUMN_BITMASK |
 			KBArticleModelImpl.GROUPID_COLUMN_BITMASK |
 			KBArticleModelImpl.VERSION_COLUMN_BITMASK);
-
-		_finderPathCountByR_G_V = new FinderPath(
-			entityCacheEnabled, finderCacheEnabled, Long.class,
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByR_G_V",
-			new String[] {
-				Long.class.getName(), Long.class.getName(),
-				Integer.class.getName()
-			});
 
 		_finderPathWithPaginationFindByR_G_L = new FinderPath(
 			entityCacheEnabled, finderCacheEnabled, KBArticleImpl.class,

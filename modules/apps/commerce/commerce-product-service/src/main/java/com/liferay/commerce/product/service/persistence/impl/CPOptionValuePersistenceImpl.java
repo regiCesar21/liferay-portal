@@ -2222,7 +2222,6 @@ public class CPOptionValuePersistenceImpl
 		"cpOptionValue.CPOptionId = ?";
 
 	private FinderPath _finderPathFetchByC_K;
-	private FinderPath _finderPathCountByC_K;
 
 	/**
 	 * Returns the cp option value where CPOptionId = &#63; and key = &#63; or throws a <code>NoSuchCPOptionValueException</code> if it could not be found.
@@ -2406,64 +2405,13 @@ public class CPOptionValuePersistenceImpl
 	 */
 	@Override
 	public int countByC_K(long CPOptionId, String key) {
-		key = Objects.toString(key, "");
+		CPOptionValue cpOptionValue = fetchByC_K(CPOptionId, key);
 
-		FinderPath finderPath = _finderPathCountByC_K;
-
-		Object[] finderArgs = new Object[] {CPOptionId, key};
-
-		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
-
-		if (count == null) {
-			StringBundler sb = new StringBundler(3);
-
-			sb.append(_SQL_COUNT_CPOPTIONVALUE_WHERE);
-
-			sb.append(_FINDER_COLUMN_C_K_CPOPTIONID_2);
-
-			boolean bindKey = false;
-
-			if (key.isEmpty()) {
-				sb.append(_FINDER_COLUMN_C_K_KEY_3);
-			}
-			else {
-				bindKey = true;
-
-				sb.append(_FINDER_COLUMN_C_K_KEY_2);
-			}
-
-			String sql = sb.toString();
-
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				Query query = session.createQuery(sql);
-
-				QueryPos queryPos = QueryPos.getInstance(query);
-
-				queryPos.add(CPOptionId);
-
-				if (bindKey) {
-					queryPos.add(key);
-				}
-
-				count = (Long)query.uniqueResult();
-
-				finderCache.putResult(finderPath, finderArgs, count);
-			}
-			catch (Exception exception) {
-				finderCache.removeResult(finderPath, finderArgs);
-
-				throw processException(exception);
-			}
-			finally {
-				closeSession(session);
-			}
+		if (cpOptionValue == null) {
+			return 0;
 		}
 
-		return count.intValue();
+		return 1;
 	}
 
 	private static final String _FINDER_COLUMN_C_K_CPOPTIONID_2 =
@@ -2476,7 +2424,6 @@ public class CPOptionValuePersistenceImpl
 		"(cpOptionValue.key IS NULL OR cpOptionValue.key = '')";
 
 	private FinderPath _finderPathFetchByC_ERC;
-	private FinderPath _finderPathCountByC_ERC;
 
 	/**
 	 * Returns the cp option value where companyId = &#63; and externalReferenceCode = &#63; or throws a <code>NoSuchCPOptionValueException</code> if it could not be found.
@@ -2686,64 +2633,14 @@ public class CPOptionValuePersistenceImpl
 	 */
 	@Override
 	public int countByC_ERC(long companyId, String externalReferenceCode) {
-		externalReferenceCode = Objects.toString(externalReferenceCode, "");
+		CPOptionValue cpOptionValue = fetchByC_ERC(
+			companyId, externalReferenceCode);
 
-		FinderPath finderPath = _finderPathCountByC_ERC;
-
-		Object[] finderArgs = new Object[] {companyId, externalReferenceCode};
-
-		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
-
-		if (count == null) {
-			StringBundler sb = new StringBundler(3);
-
-			sb.append(_SQL_COUNT_CPOPTIONVALUE_WHERE);
-
-			sb.append(_FINDER_COLUMN_C_ERC_COMPANYID_2);
-
-			boolean bindExternalReferenceCode = false;
-
-			if (externalReferenceCode.isEmpty()) {
-				sb.append(_FINDER_COLUMN_C_ERC_EXTERNALREFERENCECODE_3);
-			}
-			else {
-				bindExternalReferenceCode = true;
-
-				sb.append(_FINDER_COLUMN_C_ERC_EXTERNALREFERENCECODE_2);
-			}
-
-			String sql = sb.toString();
-
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				Query query = session.createQuery(sql);
-
-				QueryPos queryPos = QueryPos.getInstance(query);
-
-				queryPos.add(companyId);
-
-				if (bindExternalReferenceCode) {
-					queryPos.add(externalReferenceCode);
-				}
-
-				count = (Long)query.uniqueResult();
-
-				finderCache.putResult(finderPath, finderArgs, count);
-			}
-			catch (Exception exception) {
-				finderCache.removeResult(finderPath, finderArgs);
-
-				throw processException(exception);
-			}
-			finally {
-				closeSession(session);
-			}
+		if (cpOptionValue == null) {
+			return 0;
 		}
 
-		return count.intValue();
+		return 1;
 	}
 
 	private static final String _FINDER_COLUMN_C_ERC_COMPANYID_2 =
@@ -3902,12 +3799,6 @@ public class CPOptionValuePersistenceImpl
 			CPOptionValueModelImpl.CPOPTIONID_COLUMN_BITMASK |
 			CPOptionValueModelImpl.KEY_COLUMN_BITMASK);
 
-		_finderPathCountByC_K = new FinderPath(
-			CPOptionValueModelImpl.ENTITY_CACHE_ENABLED,
-			CPOptionValueModelImpl.FINDER_CACHE_ENABLED, Long.class,
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByC_K",
-			new String[] {Long.class.getName(), String.class.getName()});
-
 		_finderPathFetchByC_ERC = new FinderPath(
 			CPOptionValueModelImpl.ENTITY_CACHE_ENABLED,
 			CPOptionValueModelImpl.FINDER_CACHE_ENABLED,
@@ -3915,12 +3806,6 @@ public class CPOptionValuePersistenceImpl
 			new String[] {Long.class.getName(), String.class.getName()},
 			CPOptionValueModelImpl.COMPANYID_COLUMN_BITMASK |
 			CPOptionValueModelImpl.EXTERNALREFERENCECODE_COLUMN_BITMASK);
-
-		_finderPathCountByC_ERC = new FinderPath(
-			CPOptionValueModelImpl.ENTITY_CACHE_ENABLED,
-			CPOptionValueModelImpl.FINDER_CACHE_ENABLED, Long.class,
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByC_ERC",
-			new String[] {Long.class.getName(), String.class.getName()});
 
 		CPOptionValueUtil.setPersistence(this);
 	}

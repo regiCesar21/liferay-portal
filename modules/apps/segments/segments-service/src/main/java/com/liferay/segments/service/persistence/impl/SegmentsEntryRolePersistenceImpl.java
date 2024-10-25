@@ -1102,7 +1102,6 @@ public class SegmentsEntryRolePersistenceImpl
 		"segmentsEntryRole.roleId = ?";
 
 	private FinderPath _finderPathFetchByS_R;
-	private FinderPath _finderPathCountByS_R;
 
 	/**
 	 * Returns the segments entry role where segmentsEntryId = &#63; and roleId = &#63; or throws a <code>NoSuchEntryRoleException</code> if it could not be found.
@@ -1275,51 +1274,14 @@ public class SegmentsEntryRolePersistenceImpl
 	 */
 	@Override
 	public int countByS_R(long segmentsEntryId, long roleId) {
-		FinderPath finderPath = _finderPathCountByS_R;
+		SegmentsEntryRole segmentsEntryRole = fetchByS_R(
+			segmentsEntryId, roleId);
 
-		Object[] finderArgs = new Object[] {segmentsEntryId, roleId};
-
-		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
-
-		if (count == null) {
-			StringBundler sb = new StringBundler(3);
-
-			sb.append(_SQL_COUNT_SEGMENTSENTRYROLE_WHERE);
-
-			sb.append(_FINDER_COLUMN_S_R_SEGMENTSENTRYID_2);
-
-			sb.append(_FINDER_COLUMN_S_R_ROLEID_2);
-
-			String sql = sb.toString();
-
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				Query query = session.createQuery(sql);
-
-				QueryPos queryPos = QueryPos.getInstance(query);
-
-				queryPos.add(segmentsEntryId);
-
-				queryPos.add(roleId);
-
-				count = (Long)query.uniqueResult();
-
-				finderCache.putResult(finderPath, finderArgs, count);
-			}
-			catch (Exception exception) {
-				finderCache.removeResult(finderPath, finderArgs);
-
-				throw processException(exception);
-			}
-			finally {
-				closeSession(session);
-			}
+		if (segmentsEntryRole == null) {
+			return 0;
 		}
 
-		return count.intValue();
+		return 1;
 	}
 
 	private static final String _FINDER_COLUMN_S_R_SEGMENTSENTRYID_2 =
@@ -2075,11 +2037,6 @@ public class SegmentsEntryRolePersistenceImpl
 			new String[] {Long.class.getName(), Long.class.getName()},
 			SegmentsEntryRoleModelImpl.SEGMENTSENTRYID_COLUMN_BITMASK |
 			SegmentsEntryRoleModelImpl.ROLEID_COLUMN_BITMASK);
-
-		_finderPathCountByS_R = new FinderPath(
-			entityCacheEnabled, finderCacheEnabled, Long.class,
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByS_R",
-			new String[] {Long.class.getName(), Long.class.getName()});
 
 		SegmentsEntryRoleUtil.setPersistence(this);
 	}

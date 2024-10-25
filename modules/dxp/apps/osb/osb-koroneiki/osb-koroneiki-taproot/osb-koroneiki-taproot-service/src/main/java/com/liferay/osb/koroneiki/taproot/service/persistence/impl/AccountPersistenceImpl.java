@@ -2055,7 +2055,6 @@ public class AccountPersistenceImpl
 		"account.companyId = ?";
 
 	private FinderPath _finderPathFetchByAccountKey;
-	private FinderPath _finderPathCountByAccountKey;
 
 	/**
 	 * Returns the account where accountKey = &#63; or throws a <code>NoSuchAccountException</code> if it could not be found.
@@ -2226,60 +2225,13 @@ public class AccountPersistenceImpl
 	 */
 	@Override
 	public int countByAccountKey(String accountKey) {
-		accountKey = Objects.toString(accountKey, "");
+		Account account = fetchByAccountKey(accountKey);
 
-		FinderPath finderPath = _finderPathCountByAccountKey;
-
-		Object[] finderArgs = new Object[] {accountKey};
-
-		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
-
-		if (count == null) {
-			StringBundler sb = new StringBundler(2);
-
-			sb.append(_SQL_COUNT_ACCOUNT_WHERE);
-
-			boolean bindAccountKey = false;
-
-			if (accountKey.isEmpty()) {
-				sb.append(_FINDER_COLUMN_ACCOUNTKEY_ACCOUNTKEY_3);
-			}
-			else {
-				bindAccountKey = true;
-
-				sb.append(_FINDER_COLUMN_ACCOUNTKEY_ACCOUNTKEY_2);
-			}
-
-			String sql = sb.toString();
-
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				Query query = session.createQuery(sql);
-
-				QueryPos queryPos = QueryPos.getInstance(query);
-
-				if (bindAccountKey) {
-					queryPos.add(accountKey);
-				}
-
-				count = (Long)query.uniqueResult();
-
-				finderCache.putResult(finderPath, finderArgs, count);
-			}
-			catch (Exception exception) {
-				finderCache.removeResult(finderPath, finderArgs);
-
-				throw processException(exception);
-			}
-			finally {
-				closeSession(session);
-			}
+		if (account == null) {
+			return 0;
 		}
 
-		return count.intValue();
+		return 1;
 	}
 
 	private static final String _FINDER_COLUMN_ACCOUNTKEY_ACCOUNTKEY_2 =
@@ -3166,7 +3118,6 @@ public class AccountPersistenceImpl
 			"account.parentAccountId = ?";
 
 	private FinderPath _finderPathFetchByName;
-	private FinderPath _finderPathCountByName;
 
 	/**
 	 * Returns the account where name = &#63; or throws a <code>NoSuchAccountException</code> if it could not be found.
@@ -3346,60 +3297,13 @@ public class AccountPersistenceImpl
 	 */
 	@Override
 	public int countByName(String name) {
-		name = Objects.toString(name, "");
+		Account account = fetchByName(name);
 
-		FinderPath finderPath = _finderPathCountByName;
-
-		Object[] finderArgs = new Object[] {name};
-
-		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
-
-		if (count == null) {
-			StringBundler sb = new StringBundler(2);
-
-			sb.append(_SQL_COUNT_ACCOUNT_WHERE);
-
-			boolean bindName = false;
-
-			if (name.isEmpty()) {
-				sb.append(_FINDER_COLUMN_NAME_NAME_3);
-			}
-			else {
-				bindName = true;
-
-				sb.append(_FINDER_COLUMN_NAME_NAME_2);
-			}
-
-			String sql = sb.toString();
-
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				Query query = session.createQuery(sql);
-
-				QueryPos queryPos = QueryPos.getInstance(query);
-
-				if (bindName) {
-					queryPos.add(name);
-				}
-
-				count = (Long)query.uniqueResult();
-
-				finderCache.putResult(finderPath, finderArgs, count);
-			}
-			catch (Exception exception) {
-				finderCache.removeResult(finderPath, finderArgs);
-
-				throw processException(exception);
-			}
-			finally {
-				closeSession(session);
-			}
+		if (account == null) {
+			return 0;
 		}
 
-		return count.intValue();
+		return 1;
 	}
 
 	private static final String _FINDER_COLUMN_NAME_NAME_2 = "account.name = ?";
@@ -3408,7 +3312,6 @@ public class AccountPersistenceImpl
 		"(account.name IS NULL OR account.name = '')";
 
 	private FinderPath _finderPathFetchByCode;
-	private FinderPath _finderPathCountByCode;
 
 	/**
 	 * Returns the account where code = &#63; or throws a <code>NoSuchAccountException</code> if it could not be found.
@@ -3588,60 +3491,13 @@ public class AccountPersistenceImpl
 	 */
 	@Override
 	public int countByCode(String code) {
-		code = Objects.toString(code, "");
+		Account account = fetchByCode(code);
 
-		FinderPath finderPath = _finderPathCountByCode;
-
-		Object[] finderArgs = new Object[] {code};
-
-		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
-
-		if (count == null) {
-			StringBundler sb = new StringBundler(2);
-
-			sb.append(_SQL_COUNT_ACCOUNT_WHERE);
-
-			boolean bindCode = false;
-
-			if (code.isEmpty()) {
-				sb.append(_FINDER_COLUMN_CODE_CODE_3);
-			}
-			else {
-				bindCode = true;
-
-				sb.append(_FINDER_COLUMN_CODE_CODE_2);
-			}
-
-			String sql = sb.toString();
-
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				Query query = session.createQuery(sql);
-
-				QueryPos queryPos = QueryPos.getInstance(query);
-
-				if (bindCode) {
-					queryPos.add(code);
-				}
-
-				count = (Long)query.uniqueResult();
-
-				finderCache.putResult(finderPath, finderArgs, count);
-			}
-			catch (Exception exception) {
-				finderCache.removeResult(finderPath, finderArgs);
-
-				throw processException(exception);
-			}
-			finally {
-				closeSession(session);
-			}
+		if (account == null) {
+			return 0;
 		}
 
-		return count.intValue();
+		return 1;
 	}
 
 	private static final String _FINDER_COLUMN_CODE_CODE_2 = "account.code = ?";
@@ -4467,11 +4323,6 @@ public class AccountPersistenceImpl
 			new String[] {String.class.getName()},
 			AccountModelImpl.ACCOUNTKEY_COLUMN_BITMASK);
 
-		_finderPathCountByAccountKey = new FinderPath(
-			entityCacheEnabled, finderCacheEnabled, Long.class,
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByAccountKey",
-			new String[] {String.class.getName()});
-
 		_finderPathWithPaginationFindByParentAccountId = new FinderPath(
 			entityCacheEnabled, finderCacheEnabled, AccountImpl.class,
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByParentAccountId",
@@ -4497,21 +4348,11 @@ public class AccountPersistenceImpl
 			new String[] {String.class.getName()},
 			AccountModelImpl.NAME_COLUMN_BITMASK);
 
-		_finderPathCountByName = new FinderPath(
-			entityCacheEnabled, finderCacheEnabled, Long.class,
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByName",
-			new String[] {String.class.getName()});
-
 		_finderPathFetchByCode = new FinderPath(
 			entityCacheEnabled, finderCacheEnabled, AccountImpl.class,
 			FINDER_CLASS_NAME_ENTITY, "fetchByCode",
 			new String[] {String.class.getName()},
 			AccountModelImpl.CODE_COLUMN_BITMASK);
-
-		_finderPathCountByCode = new FinderPath(
-			entityCacheEnabled, finderCacheEnabled, Long.class,
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByCode",
-			new String[] {String.class.getName()});
 
 		AccountUtil.setPersistence(this);
 	}

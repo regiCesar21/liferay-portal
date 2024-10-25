@@ -2707,7 +2707,6 @@ public class ChangesetEntryPersistenceImpl
 		"changesetEntry.classNameId = ?";
 
 	private FinderPath _finderPathFetchByC_C_C;
-	private FinderPath _finderPathCountByC_C_C;
 
 	/**
 	 * Returns the changeset entry where changesetCollectionId = &#63; and classNameId = &#63; and classPK = &#63; or throws a <code>NoSuchEntryException</code> if it could not be found.
@@ -2904,57 +2903,14 @@ public class ChangesetEntryPersistenceImpl
 	public int countByC_C_C(
 		long changesetCollectionId, long classNameId, long classPK) {
 
-		FinderPath finderPath = _finderPathCountByC_C_C;
+		ChangesetEntry changesetEntry = fetchByC_C_C(
+			changesetCollectionId, classNameId, classPK);
 
-		Object[] finderArgs = new Object[] {
-			changesetCollectionId, classNameId, classPK
-		};
-
-		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
-
-		if (count == null) {
-			StringBundler sb = new StringBundler(4);
-
-			sb.append(_SQL_COUNT_CHANGESETENTRY_WHERE);
-
-			sb.append(_FINDER_COLUMN_C_C_C_CHANGESETCOLLECTIONID_2);
-
-			sb.append(_FINDER_COLUMN_C_C_C_CLASSNAMEID_2);
-
-			sb.append(_FINDER_COLUMN_C_C_C_CLASSPK_2);
-
-			String sql = sb.toString();
-
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				Query query = session.createQuery(sql);
-
-				QueryPos queryPos = QueryPos.getInstance(query);
-
-				queryPos.add(changesetCollectionId);
-
-				queryPos.add(classNameId);
-
-				queryPos.add(classPK);
-
-				count = (Long)query.uniqueResult();
-
-				finderCache.putResult(finderPath, finderArgs, count);
-			}
-			catch (Exception exception) {
-				finderCache.removeResult(finderPath, finderArgs);
-
-				throw processException(exception);
-			}
-			finally {
-				closeSession(session);
-			}
+		if (changesetEntry == null) {
+			return 0;
 		}
 
-		return count.intValue();
+		return 1;
 	}
 
 	private static final String _FINDER_COLUMN_C_C_C_CHANGESETCOLLECTIONID_2 =
@@ -3870,13 +3826,6 @@ public class ChangesetEntryPersistenceImpl
 			ChangesetEntryModelImpl.CHANGESETCOLLECTIONID_COLUMN_BITMASK |
 			ChangesetEntryModelImpl.CLASSNAMEID_COLUMN_BITMASK |
 			ChangesetEntryModelImpl.CLASSPK_COLUMN_BITMASK);
-
-		_finderPathCountByC_C_C = new FinderPath(
-			entityCacheEnabled, finderCacheEnabled, Long.class,
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByC_C_C",
-			new String[] {
-				Long.class.getName(), Long.class.getName(), Long.class.getName()
-			});
 
 		ChangesetEntryUtil.setPersistence(this);
 	}

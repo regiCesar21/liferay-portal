@@ -570,7 +570,6 @@ public class UserIdMapperPersistenceImpl
 		"userIdMapper.userId = ?";
 
 	private FinderPath _finderPathFetchByU_T;
-	private FinderPath _finderPathCountByU_T;
 
 	/**
 	 * Returns the user ID mapper where userId = &#63; and type = &#63; or throws a <code>NoSuchUserIdMapperException</code> if it could not be found.
@@ -755,65 +754,13 @@ public class UserIdMapperPersistenceImpl
 	 */
 	@Override
 	public int countByU_T(long userId, String type) {
-		type = Objects.toString(type, "");
+		UserIdMapper userIdMapper = fetchByU_T(userId, type);
 
-		FinderPath finderPath = _finderPathCountByU_T;
-
-		Object[] finderArgs = new Object[] {userId, type};
-
-		Long count = (Long)FinderCacheUtil.getResult(
-			finderPath, finderArgs, this);
-
-		if (count == null) {
-			StringBundler sb = new StringBundler(3);
-
-			sb.append(_SQL_COUNT_USERIDMAPPER_WHERE);
-
-			sb.append(_FINDER_COLUMN_U_T_USERID_2);
-
-			boolean bindType = false;
-
-			if (type.isEmpty()) {
-				sb.append(_FINDER_COLUMN_U_T_TYPE_3);
-			}
-			else {
-				bindType = true;
-
-				sb.append(_FINDER_COLUMN_U_T_TYPE_2);
-			}
-
-			String sql = sb.toString();
-
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				Query query = session.createQuery(sql);
-
-				QueryPos queryPos = QueryPos.getInstance(query);
-
-				queryPos.add(userId);
-
-				if (bindType) {
-					queryPos.add(type);
-				}
-
-				count = (Long)query.uniqueResult();
-
-				FinderCacheUtil.putResult(finderPath, finderArgs, count);
-			}
-			catch (Exception exception) {
-				FinderCacheUtil.removeResult(finderPath, finderArgs);
-
-				throw processException(exception);
-			}
-			finally {
-				closeSession(session);
-			}
+		if (userIdMapper == null) {
+			return 0;
 		}
 
-		return count.intValue();
+		return 1;
 	}
 
 	private static final String _FINDER_COLUMN_U_T_USERID_2 =
@@ -826,7 +773,6 @@ public class UserIdMapperPersistenceImpl
 		"(userIdMapper.type IS NULL OR userIdMapper.type = '')";
 
 	private FinderPath _finderPathFetchByT_E;
-	private FinderPath _finderPathCountByT_E;
 
 	/**
 	 * Returns the user ID mapper where type = &#63; and externalUserId = &#63; or throws a <code>NoSuchUserIdMapperException</code> if it could not be found.
@@ -1024,77 +970,13 @@ public class UserIdMapperPersistenceImpl
 	 */
 	@Override
 	public int countByT_E(String type, String externalUserId) {
-		type = Objects.toString(type, "");
-		externalUserId = Objects.toString(externalUserId, "");
+		UserIdMapper userIdMapper = fetchByT_E(type, externalUserId);
 
-		FinderPath finderPath = _finderPathCountByT_E;
-
-		Object[] finderArgs = new Object[] {type, externalUserId};
-
-		Long count = (Long)FinderCacheUtil.getResult(
-			finderPath, finderArgs, this);
-
-		if (count == null) {
-			StringBundler sb = new StringBundler(3);
-
-			sb.append(_SQL_COUNT_USERIDMAPPER_WHERE);
-
-			boolean bindType = false;
-
-			if (type.isEmpty()) {
-				sb.append(_FINDER_COLUMN_T_E_TYPE_3);
-			}
-			else {
-				bindType = true;
-
-				sb.append(_FINDER_COLUMN_T_E_TYPE_2);
-			}
-
-			boolean bindExternalUserId = false;
-
-			if (externalUserId.isEmpty()) {
-				sb.append(_FINDER_COLUMN_T_E_EXTERNALUSERID_3);
-			}
-			else {
-				bindExternalUserId = true;
-
-				sb.append(_FINDER_COLUMN_T_E_EXTERNALUSERID_2);
-			}
-
-			String sql = sb.toString();
-
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				Query query = session.createQuery(sql);
-
-				QueryPos queryPos = QueryPos.getInstance(query);
-
-				if (bindType) {
-					queryPos.add(type);
-				}
-
-				if (bindExternalUserId) {
-					queryPos.add(externalUserId);
-				}
-
-				count = (Long)query.uniqueResult();
-
-				FinderCacheUtil.putResult(finderPath, finderArgs, count);
-			}
-			catch (Exception exception) {
-				FinderCacheUtil.removeResult(finderPath, finderArgs);
-
-				throw processException(exception);
-			}
-			finally {
-				closeSession(session);
-			}
+		if (userIdMapper == null) {
+			return 0;
 		}
 
-		return count.intValue();
+		return 1;
 	}
 
 	private static final String _FINDER_COLUMN_T_E_TYPE_2 =
@@ -1825,12 +1707,6 @@ public class UserIdMapperPersistenceImpl
 			UserIdMapperModelImpl.USERID_COLUMN_BITMASK |
 			UserIdMapperModelImpl.TYPE_COLUMN_BITMASK);
 
-		_finderPathCountByU_T = new FinderPath(
-			UserIdMapperModelImpl.ENTITY_CACHE_ENABLED,
-			UserIdMapperModelImpl.FINDER_CACHE_ENABLED, Long.class,
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByU_T",
-			new String[] {Long.class.getName(), String.class.getName()});
-
 		_finderPathFetchByT_E = new FinderPath(
 			UserIdMapperModelImpl.ENTITY_CACHE_ENABLED,
 			UserIdMapperModelImpl.FINDER_CACHE_ENABLED, UserIdMapperImpl.class,
@@ -1838,12 +1714,6 @@ public class UserIdMapperPersistenceImpl
 			new String[] {String.class.getName(), String.class.getName()},
 			UserIdMapperModelImpl.TYPE_COLUMN_BITMASK |
 			UserIdMapperModelImpl.EXTERNALUSERID_COLUMN_BITMASK);
-
-		_finderPathCountByT_E = new FinderPath(
-			UserIdMapperModelImpl.ENTITY_CACHE_ENABLED,
-			UserIdMapperModelImpl.FINDER_CACHE_ENABLED, Long.class,
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByT_E",
-			new String[] {String.class.getName(), String.class.getName()});
 
 		UserIdMapperUtil.setPersistence(this);
 	}

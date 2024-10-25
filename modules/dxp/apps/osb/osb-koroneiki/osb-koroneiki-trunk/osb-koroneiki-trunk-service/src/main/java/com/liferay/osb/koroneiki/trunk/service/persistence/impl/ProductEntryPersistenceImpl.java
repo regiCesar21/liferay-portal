@@ -2078,7 +2078,6 @@ public class ProductEntryPersistenceImpl
 		"productEntry.companyId = ?";
 
 	private FinderPath _finderPathFetchByProductEntryKey;
-	private FinderPath _finderPathCountByProductEntryKey;
 
 	/**
 	 * Returns the product entry where productEntryKey = &#63; or throws a <code>NoSuchProductEntryException</code> if it could not be found.
@@ -2252,60 +2251,13 @@ public class ProductEntryPersistenceImpl
 	 */
 	@Override
 	public int countByProductEntryKey(String productEntryKey) {
-		productEntryKey = Objects.toString(productEntryKey, "");
+		ProductEntry productEntry = fetchByProductEntryKey(productEntryKey);
 
-		FinderPath finderPath = _finderPathCountByProductEntryKey;
-
-		Object[] finderArgs = new Object[] {productEntryKey};
-
-		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
-
-		if (count == null) {
-			StringBundler sb = new StringBundler(2);
-
-			sb.append(_SQL_COUNT_PRODUCTENTRY_WHERE);
-
-			boolean bindProductEntryKey = false;
-
-			if (productEntryKey.isEmpty()) {
-				sb.append(_FINDER_COLUMN_PRODUCTENTRYKEY_PRODUCTENTRYKEY_3);
-			}
-			else {
-				bindProductEntryKey = true;
-
-				sb.append(_FINDER_COLUMN_PRODUCTENTRYKEY_PRODUCTENTRYKEY_2);
-			}
-
-			String sql = sb.toString();
-
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				Query query = session.createQuery(sql);
-
-				QueryPos queryPos = QueryPos.getInstance(query);
-
-				if (bindProductEntryKey) {
-					queryPos.add(productEntryKey);
-				}
-
-				count = (Long)query.uniqueResult();
-
-				finderCache.putResult(finderPath, finderArgs, count);
-			}
-			catch (Exception exception) {
-				finderCache.removeResult(finderPath, finderArgs);
-
-				throw processException(exception);
-			}
-			finally {
-				closeSession(session);
-			}
+		if (productEntry == null) {
+			return 0;
 		}
 
-		return count.intValue();
+		return 1;
 	}
 
 	private static final String
@@ -2317,7 +2269,6 @@ public class ProductEntryPersistenceImpl
 			"(productEntry.productEntryKey IS NULL OR productEntry.productEntryKey = '')";
 
 	private FinderPath _finderPathFetchByName;
-	private FinderPath _finderPathCountByName;
 
 	/**
 	 * Returns the product entry where name = &#63; or throws a <code>NoSuchProductEntryException</code> if it could not be found.
@@ -2501,60 +2452,13 @@ public class ProductEntryPersistenceImpl
 	 */
 	@Override
 	public int countByName(String name) {
-		name = Objects.toString(name, "");
+		ProductEntry productEntry = fetchByName(name);
 
-		FinderPath finderPath = _finderPathCountByName;
-
-		Object[] finderArgs = new Object[] {name};
-
-		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
-
-		if (count == null) {
-			StringBundler sb = new StringBundler(2);
-
-			sb.append(_SQL_COUNT_PRODUCTENTRY_WHERE);
-
-			boolean bindName = false;
-
-			if (name.isEmpty()) {
-				sb.append(_FINDER_COLUMN_NAME_NAME_3);
-			}
-			else {
-				bindName = true;
-
-				sb.append(_FINDER_COLUMN_NAME_NAME_2);
-			}
-
-			String sql = sb.toString();
-
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				Query query = session.createQuery(sql);
-
-				QueryPos queryPos = QueryPos.getInstance(query);
-
-				if (bindName) {
-					queryPos.add(name);
-				}
-
-				count = (Long)query.uniqueResult();
-
-				finderCache.putResult(finderPath, finderArgs, count);
-			}
-			catch (Exception exception) {
-				finderCache.removeResult(finderPath, finderArgs);
-
-				throw processException(exception);
-			}
-			finally {
-				closeSession(session);
-			}
+		if (productEntry == null) {
+			return 0;
 		}
 
-		return count.intValue();
+		return 1;
 	}
 
 	private static final String _FINDER_COLUMN_NAME_NAME_2 =
@@ -3345,21 +3249,11 @@ public class ProductEntryPersistenceImpl
 			new String[] {String.class.getName()},
 			ProductEntryModelImpl.PRODUCTENTRYKEY_COLUMN_BITMASK);
 
-		_finderPathCountByProductEntryKey = new FinderPath(
-			entityCacheEnabled, finderCacheEnabled, Long.class,
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByProductEntryKey",
-			new String[] {String.class.getName()});
-
 		_finderPathFetchByName = new FinderPath(
 			entityCacheEnabled, finderCacheEnabled, ProductEntryImpl.class,
 			FINDER_CLASS_NAME_ENTITY, "fetchByName",
 			new String[] {String.class.getName()},
 			ProductEntryModelImpl.NAME_COLUMN_BITMASK);
-
-		_finderPathCountByName = new FinderPath(
-			entityCacheEnabled, finderCacheEnabled, Long.class,
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByName",
-			new String[] {String.class.getName()});
 
 		ProductEntryUtil.setPersistence(this);
 	}

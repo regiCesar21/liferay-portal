@@ -1083,7 +1083,6 @@ public class AssetTagStatsPersistenceImpl
 		"assetTagStats.classNameId = ?";
 
 	private FinderPath _finderPathFetchByT_C;
-	private FinderPath _finderPathCountByT_C;
 
 	/**
 	 * Returns the asset tag stats where tagId = &#63; and classNameId = &#63; or throws a <code>NoSuchTagStatsException</code> if it could not be found.
@@ -1254,51 +1253,13 @@ public class AssetTagStatsPersistenceImpl
 	 */
 	@Override
 	public int countByT_C(long tagId, long classNameId) {
-		FinderPath finderPath = _finderPathCountByT_C;
+		AssetTagStats assetTagStats = fetchByT_C(tagId, classNameId);
 
-		Object[] finderArgs = new Object[] {tagId, classNameId};
-
-		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
-
-		if (count == null) {
-			StringBundler sb = new StringBundler(3);
-
-			sb.append(_SQL_COUNT_ASSETTAGSTATS_WHERE);
-
-			sb.append(_FINDER_COLUMN_T_C_TAGID_2);
-
-			sb.append(_FINDER_COLUMN_T_C_CLASSNAMEID_2);
-
-			String sql = sb.toString();
-
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				Query query = session.createQuery(sql);
-
-				QueryPos queryPos = QueryPos.getInstance(query);
-
-				queryPos.add(tagId);
-
-				queryPos.add(classNameId);
-
-				count = (Long)query.uniqueResult();
-
-				finderCache.putResult(finderPath, finderArgs, count);
-			}
-			catch (Exception exception) {
-				finderCache.removeResult(finderPath, finderArgs);
-
-				throw processException(exception);
-			}
-			finally {
-				closeSession(session);
-			}
+		if (assetTagStats == null) {
+			return 0;
 		}
 
-		return count.intValue();
+		return 1;
 	}
 
 	private static final String _FINDER_COLUMN_T_C_TAGID_2 =
@@ -2015,11 +1976,6 @@ public class AssetTagStatsPersistenceImpl
 			new String[] {Long.class.getName(), Long.class.getName()},
 			AssetTagStatsModelImpl.TAGID_COLUMN_BITMASK |
 			AssetTagStatsModelImpl.CLASSNAMEID_COLUMN_BITMASK);
-
-		_finderPathCountByT_C = new FinderPath(
-			entityCacheEnabled, finderCacheEnabled, Long.class,
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByT_C",
-			new String[] {Long.class.getName(), Long.class.getName()});
 
 		AssetTagStatsUtil.setPersistence(this);
 	}

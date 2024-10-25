@@ -2054,7 +2054,6 @@ public class ContactPersistenceImpl
 		"contact.companyId = ?";
 
 	private FinderPath _finderPathFetchByContactKey;
-	private FinderPath _finderPathCountByContactKey;
 
 	/**
 	 * Returns the contact where contactKey = &#63; or throws a <code>NoSuchContactException</code> if it could not be found.
@@ -2225,60 +2224,13 @@ public class ContactPersistenceImpl
 	 */
 	@Override
 	public int countByContactKey(String contactKey) {
-		contactKey = Objects.toString(contactKey, "");
+		Contact contact = fetchByContactKey(contactKey);
 
-		FinderPath finderPath = _finderPathCountByContactKey;
-
-		Object[] finderArgs = new Object[] {contactKey};
-
-		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
-
-		if (count == null) {
-			StringBundler sb = new StringBundler(2);
-
-			sb.append(_SQL_COUNT_CONTACT_WHERE);
-
-			boolean bindContactKey = false;
-
-			if (contactKey.isEmpty()) {
-				sb.append(_FINDER_COLUMN_CONTACTKEY_CONTACTKEY_3);
-			}
-			else {
-				bindContactKey = true;
-
-				sb.append(_FINDER_COLUMN_CONTACTKEY_CONTACTKEY_2);
-			}
-
-			String sql = sb.toString();
-
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				Query query = session.createQuery(sql);
-
-				QueryPos queryPos = QueryPos.getInstance(query);
-
-				if (bindContactKey) {
-					queryPos.add(contactKey);
-				}
-
-				count = (Long)query.uniqueResult();
-
-				finderCache.putResult(finderPath, finderArgs, count);
-			}
-			catch (Exception exception) {
-				finderCache.removeResult(finderPath, finderArgs);
-
-				throw processException(exception);
-			}
-			finally {
-				closeSession(session);
-			}
+		if (contact == null) {
+			return 0;
 		}
 
-		return count.intValue();
+		return 1;
 	}
 
 	private static final String _FINDER_COLUMN_CONTACTKEY_CONTACTKEY_2 =
@@ -2288,7 +2240,6 @@ public class ContactPersistenceImpl
 		"(contact.contactKey IS NULL OR contact.contactKey = '')";
 
 	private FinderPath _finderPathFetchByEmailAddress;
-	private FinderPath _finderPathCountByEmailAddress;
 
 	/**
 	 * Returns the contact where emailAddress = &#63; or throws a <code>NoSuchContactException</code> if it could not be found.
@@ -2459,60 +2410,13 @@ public class ContactPersistenceImpl
 	 */
 	@Override
 	public int countByEmailAddress(String emailAddress) {
-		emailAddress = Objects.toString(emailAddress, "");
+		Contact contact = fetchByEmailAddress(emailAddress);
 
-		FinderPath finderPath = _finderPathCountByEmailAddress;
-
-		Object[] finderArgs = new Object[] {emailAddress};
-
-		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
-
-		if (count == null) {
-			StringBundler sb = new StringBundler(2);
-
-			sb.append(_SQL_COUNT_CONTACT_WHERE);
-
-			boolean bindEmailAddress = false;
-
-			if (emailAddress.isEmpty()) {
-				sb.append(_FINDER_COLUMN_EMAILADDRESS_EMAILADDRESS_3);
-			}
-			else {
-				bindEmailAddress = true;
-
-				sb.append(_FINDER_COLUMN_EMAILADDRESS_EMAILADDRESS_2);
-			}
-
-			String sql = sb.toString();
-
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				Query query = session.createQuery(sql);
-
-				QueryPos queryPos = QueryPos.getInstance(query);
-
-				if (bindEmailAddress) {
-					queryPos.add(StringUtil.toLowerCase(emailAddress));
-				}
-
-				count = (Long)query.uniqueResult();
-
-				finderCache.putResult(finderPath, finderArgs, count);
-			}
-			catch (Exception exception) {
-				finderCache.removeResult(finderPath, finderArgs);
-
-				throw processException(exception);
-			}
-			finally {
-				closeSession(session);
-			}
+		if (contact == null) {
+			return 0;
 		}
 
-		return count.intValue();
+		return 1;
 	}
 
 	private static final String _FINDER_COLUMN_EMAILADDRESS_EMAILADDRESS_2 =
@@ -3287,21 +3191,11 @@ public class ContactPersistenceImpl
 			new String[] {String.class.getName()},
 			ContactModelImpl.CONTACTKEY_COLUMN_BITMASK);
 
-		_finderPathCountByContactKey = new FinderPath(
-			entityCacheEnabled, finderCacheEnabled, Long.class,
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByContactKey",
-			new String[] {String.class.getName()});
-
 		_finderPathFetchByEmailAddress = new FinderPath(
 			entityCacheEnabled, finderCacheEnabled, ContactImpl.class,
 			FINDER_CLASS_NAME_ENTITY, "fetchByEmailAddress",
 			new String[] {String.class.getName()},
 			ContactModelImpl.EMAILADDRESS_COLUMN_BITMASK);
-
-		_finderPathCountByEmailAddress = new FinderPath(
-			entityCacheEnabled, finderCacheEnabled, Long.class,
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByEmailAddress",
-			new String[] {String.class.getName()});
 
 		ContactUtil.setPersistence(this);
 	}

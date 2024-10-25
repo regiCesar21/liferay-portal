@@ -2101,7 +2101,6 @@ public class ProductConsumptionPersistenceImpl
 		"productConsumption.companyId = ?";
 
 	private FinderPath _finderPathFetchByProductConsumptionKey;
-	private FinderPath _finderPathCountByProductConsumptionKey;
 
 	/**
 	 * Returns the product consumption where productConsumptionKey = &#63; or throws a <code>NoSuchProductConsumptionException</code> if it could not be found.
@@ -2284,62 +2283,14 @@ public class ProductConsumptionPersistenceImpl
 	 */
 	@Override
 	public int countByProductConsumptionKey(String productConsumptionKey) {
-		productConsumptionKey = Objects.toString(productConsumptionKey, "");
+		ProductConsumption productConsumption = fetchByProductConsumptionKey(
+			productConsumptionKey);
 
-		FinderPath finderPath = _finderPathCountByProductConsumptionKey;
-
-		Object[] finderArgs = new Object[] {productConsumptionKey};
-
-		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
-
-		if (count == null) {
-			StringBundler sb = new StringBundler(2);
-
-			sb.append(_SQL_COUNT_PRODUCTCONSUMPTION_WHERE);
-
-			boolean bindProductConsumptionKey = false;
-
-			if (productConsumptionKey.isEmpty()) {
-				sb.append(
-					_FINDER_COLUMN_PRODUCTCONSUMPTIONKEY_PRODUCTCONSUMPTIONKEY_3);
-			}
-			else {
-				bindProductConsumptionKey = true;
-
-				sb.append(
-					_FINDER_COLUMN_PRODUCTCONSUMPTIONKEY_PRODUCTCONSUMPTIONKEY_2);
-			}
-
-			String sql = sb.toString();
-
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				Query query = session.createQuery(sql);
-
-				QueryPos queryPos = QueryPos.getInstance(query);
-
-				if (bindProductConsumptionKey) {
-					queryPos.add(productConsumptionKey);
-				}
-
-				count = (Long)query.uniqueResult();
-
-				finderCache.putResult(finderPath, finderArgs, count);
-			}
-			catch (Exception exception) {
-				finderCache.removeResult(finderPath, finderArgs);
-
-				throw processException(exception);
-			}
-			finally {
-				closeSession(session);
-			}
+		if (productConsumption == null) {
+			return 0;
 		}
 
-		return count.intValue();
+		return 1;
 	}
 
 	private static final String
@@ -7982,12 +7933,6 @@ public class ProductConsumptionPersistenceImpl
 			"fetchByProductConsumptionKey",
 			new String[] {String.class.getName()},
 			ProductConsumptionModelImpl.PRODUCTCONSUMPTIONKEY_COLUMN_BITMASK);
-
-		_finderPathCountByProductConsumptionKey = new FinderPath(
-			entityCacheEnabled, finderCacheEnabled, Long.class,
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
-			"countByProductConsumptionKey",
-			new String[] {String.class.getName()});
 
 		_finderPathWithPaginationFindByAccountId = new FinderPath(
 			entityCacheEnabled, finderCacheEnabled,

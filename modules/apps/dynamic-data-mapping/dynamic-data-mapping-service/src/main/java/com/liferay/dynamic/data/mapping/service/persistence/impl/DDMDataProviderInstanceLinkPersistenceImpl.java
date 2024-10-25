@@ -1135,7 +1135,6 @@ public class DDMDataProviderInstanceLinkPersistenceImpl
 		"ddmDataProviderInstanceLink.structureId = ?";
 
 	private FinderPath _finderPathFetchByD_S;
-	private FinderPath _finderPathCountByD_S;
 
 	/**
 	 * Returns the ddm data provider instance link where dataProviderInstanceId = &#63; and structureId = &#63; or throws a <code>NoSuchDataProviderInstanceLinkException</code> if it could not be found.
@@ -1315,53 +1314,14 @@ public class DDMDataProviderInstanceLinkPersistenceImpl
 	 */
 	@Override
 	public int countByD_S(long dataProviderInstanceId, long structureId) {
-		FinderPath finderPath = _finderPathCountByD_S;
+		DDMDataProviderInstanceLink ddmDataProviderInstanceLink = fetchByD_S(
+			dataProviderInstanceId, structureId);
 
-		Object[] finderArgs = new Object[] {
-			dataProviderInstanceId, structureId
-		};
-
-		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
-
-		if (count == null) {
-			StringBundler sb = new StringBundler(3);
-
-			sb.append(_SQL_COUNT_DDMDATAPROVIDERINSTANCELINK_WHERE);
-
-			sb.append(_FINDER_COLUMN_D_S_DATAPROVIDERINSTANCEID_2);
-
-			sb.append(_FINDER_COLUMN_D_S_STRUCTUREID_2);
-
-			String sql = sb.toString();
-
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				Query query = session.createQuery(sql);
-
-				QueryPos queryPos = QueryPos.getInstance(query);
-
-				queryPos.add(dataProviderInstanceId);
-
-				queryPos.add(structureId);
-
-				count = (Long)query.uniqueResult();
-
-				finderCache.putResult(finderPath, finderArgs, count);
-			}
-			catch (Exception exception) {
-				finderCache.removeResult(finderPath, finderArgs);
-
-				throw processException(exception);
-			}
-			finally {
-				closeSession(session);
-			}
+		if (ddmDataProviderInstanceLink == null) {
+			return 0;
 		}
 
-		return count.intValue();
+		return 1;
 	}
 
 	private static final String _FINDER_COLUMN_D_S_DATAPROVIDERINSTANCEID_2 =
@@ -2160,11 +2120,6 @@ public class DDMDataProviderInstanceLinkPersistenceImpl
 			DDMDataProviderInstanceLinkModelImpl.
 				DATAPROVIDERINSTANCEID_COLUMN_BITMASK |
 			DDMDataProviderInstanceLinkModelImpl.STRUCTUREID_COLUMN_BITMASK);
-
-		_finderPathCountByD_S = new FinderPath(
-			entityCacheEnabled, finderCacheEnabled, Long.class,
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByD_S",
-			new String[] {Long.class.getName(), Long.class.getName()});
 
 		DDMDataProviderInstanceLinkUtil.setPersistence(this);
 	}

@@ -86,7 +86,6 @@ public class DLOpenerFileEntryReferencePersistenceImpl
 	private FinderPath _finderPathWithoutPaginationFindAll;
 	private FinderPath _finderPathCountAll;
 	private FinderPath _finderPathFetchByFileEntryId;
-	private FinderPath _finderPathCountByFileEntryId;
 
 	/**
 	 * Returns the dl opener file entry reference where fileEntryId = &#63; or throws a <code>NoSuchFileEntryReferenceException</code> if it could not be found.
@@ -248,54 +247,20 @@ public class DLOpenerFileEntryReferencePersistenceImpl
 	 */
 	@Override
 	public int countByFileEntryId(long fileEntryId) {
-		FinderPath finderPath = _finderPathCountByFileEntryId;
+		DLOpenerFileEntryReference dlOpenerFileEntryReference =
+			fetchByFileEntryId(fileEntryId);
 
-		Object[] finderArgs = new Object[] {fileEntryId};
-
-		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
-
-		if (count == null) {
-			StringBundler sb = new StringBundler(2);
-
-			sb.append(_SQL_COUNT_DLOPENERFILEENTRYREFERENCE_WHERE);
-
-			sb.append(_FINDER_COLUMN_FILEENTRYID_FILEENTRYID_2);
-
-			String sql = sb.toString();
-
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				Query query = session.createQuery(sql);
-
-				QueryPos queryPos = QueryPos.getInstance(query);
-
-				queryPos.add(fileEntryId);
-
-				count = (Long)query.uniqueResult();
-
-				finderCache.putResult(finderPath, finderArgs, count);
-			}
-			catch (Exception exception) {
-				finderCache.removeResult(finderPath, finderArgs);
-
-				throw processException(exception);
-			}
-			finally {
-				closeSession(session);
-			}
+		if (dlOpenerFileEntryReference == null) {
+			return 0;
 		}
 
-		return count.intValue();
+		return 1;
 	}
 
 	private static final String _FINDER_COLUMN_FILEENTRYID_FILEENTRYID_2 =
 		"dlOpenerFileEntryReference.fileEntryId = ?";
 
 	private FinderPath _finderPathFetchByR_F;
-	private FinderPath _finderPathCountByR_F;
 
 	/**
 	 * Returns the dl opener file entry reference where referenceType = &#63; and fileEntryId = &#63; or throws a <code>NoSuchFileEntryReferenceException</code> if it could not be found.
@@ -489,64 +454,14 @@ public class DLOpenerFileEntryReferencePersistenceImpl
 	 */
 	@Override
 	public int countByR_F(String referenceType, long fileEntryId) {
-		referenceType = Objects.toString(referenceType, "");
+		DLOpenerFileEntryReference dlOpenerFileEntryReference = fetchByR_F(
+			referenceType, fileEntryId);
 
-		FinderPath finderPath = _finderPathCountByR_F;
-
-		Object[] finderArgs = new Object[] {referenceType, fileEntryId};
-
-		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
-
-		if (count == null) {
-			StringBundler sb = new StringBundler(3);
-
-			sb.append(_SQL_COUNT_DLOPENERFILEENTRYREFERENCE_WHERE);
-
-			boolean bindReferenceType = false;
-
-			if (referenceType.isEmpty()) {
-				sb.append(_FINDER_COLUMN_R_F_REFERENCETYPE_3);
-			}
-			else {
-				bindReferenceType = true;
-
-				sb.append(_FINDER_COLUMN_R_F_REFERENCETYPE_2);
-			}
-
-			sb.append(_FINDER_COLUMN_R_F_FILEENTRYID_2);
-
-			String sql = sb.toString();
-
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				Query query = session.createQuery(sql);
-
-				QueryPos queryPos = QueryPos.getInstance(query);
-
-				if (bindReferenceType) {
-					queryPos.add(referenceType);
-				}
-
-				queryPos.add(fileEntryId);
-
-				count = (Long)query.uniqueResult();
-
-				finderCache.putResult(finderPath, finderArgs, count);
-			}
-			catch (Exception exception) {
-				finderCache.removeResult(finderPath, finderArgs);
-
-				throw processException(exception);
-			}
-			finally {
-				closeSession(session);
-			}
+		if (dlOpenerFileEntryReference == null) {
+			return 0;
 		}
 
-		return count.intValue();
+		return 1;
 	}
 
 	private static final String _FINDER_COLUMN_R_F_REFERENCETYPE_2 =
@@ -1298,11 +1213,6 @@ public class DLOpenerFileEntryReferencePersistenceImpl
 			"fetchByFileEntryId", new String[] {Long.class.getName()},
 			DLOpenerFileEntryReferenceModelImpl.FILEENTRYID_COLUMN_BITMASK);
 
-		_finderPathCountByFileEntryId = new FinderPath(
-			entityCacheEnabled, finderCacheEnabled, Long.class,
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByFileEntryId",
-			new String[] {Long.class.getName()});
-
 		_finderPathFetchByR_F = new FinderPath(
 			entityCacheEnabled, finderCacheEnabled,
 			DLOpenerFileEntryReferenceImpl.class, FINDER_CLASS_NAME_ENTITY,
@@ -1310,11 +1220,6 @@ public class DLOpenerFileEntryReferencePersistenceImpl
 			new String[] {String.class.getName(), Long.class.getName()},
 			DLOpenerFileEntryReferenceModelImpl.REFERENCETYPE_COLUMN_BITMASK |
 			DLOpenerFileEntryReferenceModelImpl.FILEENTRYID_COLUMN_BITMASK);
-
-		_finderPathCountByR_F = new FinderPath(
-			entityCacheEnabled, finderCacheEnabled, Long.class,
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByR_F",
-			new String[] {String.class.getName(), Long.class.getName()});
 
 		DLOpenerFileEntryReferenceUtil.setPersistence(this);
 	}

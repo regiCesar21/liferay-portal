@@ -88,7 +88,6 @@ public class MemberRequestPersistenceImpl
 	private FinderPath _finderPathWithoutPaginationFindAll;
 	private FinderPath _finderPathCountAll;
 	private FinderPath _finderPathFetchByKey;
-	private FinderPath _finderPathCountByKey;
 
 	/**
 	 * Returns the member request where key = &#63; or throws a <code>NoSuchMemberRequestException</code> if it could not be found.
@@ -271,60 +270,13 @@ public class MemberRequestPersistenceImpl
 	 */
 	@Override
 	public int countByKey(String key) {
-		key = Objects.toString(key, "");
+		MemberRequest memberRequest = fetchByKey(key);
 
-		FinderPath finderPath = _finderPathCountByKey;
-
-		Object[] finderArgs = new Object[] {key};
-
-		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
-
-		if (count == null) {
-			StringBundler sb = new StringBundler(2);
-
-			sb.append(_SQL_COUNT_MEMBERREQUEST_WHERE);
-
-			boolean bindKey = false;
-
-			if (key.isEmpty()) {
-				sb.append(_FINDER_COLUMN_KEY_KEY_3);
-			}
-			else {
-				bindKey = true;
-
-				sb.append(_FINDER_COLUMN_KEY_KEY_2);
-			}
-
-			String sql = sb.toString();
-
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				Query query = session.createQuery(sql);
-
-				QueryPos queryPos = QueryPos.getInstance(query);
-
-				if (bindKey) {
-					queryPos.add(key);
-				}
-
-				count = (Long)query.uniqueResult();
-
-				finderCache.putResult(finderPath, finderArgs, count);
-			}
-			catch (Exception exception) {
-				finderCache.removeResult(finderPath, finderArgs);
-
-				throw processException(exception);
-			}
-			finally {
-				closeSession(session);
-			}
+		if (memberRequest == null) {
+			return 0;
 		}
 
-		return count.intValue();
+		return 1;
 	}
 
 	private static final String _FINDER_COLUMN_KEY_KEY_2 =
@@ -1391,7 +1343,6 @@ public class MemberRequestPersistenceImpl
 		"memberRequest.status = ?";
 
 	private FinderPath _finderPathFetchByG_R_S;
-	private FinderPath _finderPathCountByG_R_S;
 
 	/**
 	 * Returns the member request where groupId = &#63; and receiverUserId = &#63; and status = &#63; or throws a <code>NoSuchMemberRequestException</code> if it could not be found.
@@ -1599,55 +1550,14 @@ public class MemberRequestPersistenceImpl
 	 */
 	@Override
 	public int countByG_R_S(long groupId, long receiverUserId, int status) {
-		FinderPath finderPath = _finderPathCountByG_R_S;
+		MemberRequest memberRequest = fetchByG_R_S(
+			groupId, receiverUserId, status);
 
-		Object[] finderArgs = new Object[] {groupId, receiverUserId, status};
-
-		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
-
-		if (count == null) {
-			StringBundler sb = new StringBundler(4);
-
-			sb.append(_SQL_COUNT_MEMBERREQUEST_WHERE);
-
-			sb.append(_FINDER_COLUMN_G_R_S_GROUPID_2);
-
-			sb.append(_FINDER_COLUMN_G_R_S_RECEIVERUSERID_2);
-
-			sb.append(_FINDER_COLUMN_G_R_S_STATUS_2);
-
-			String sql = sb.toString();
-
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				Query query = session.createQuery(sql);
-
-				QueryPos queryPos = QueryPos.getInstance(query);
-
-				queryPos.add(groupId);
-
-				queryPos.add(receiverUserId);
-
-				queryPos.add(status);
-
-				count = (Long)query.uniqueResult();
-
-				finderCache.putResult(finderPath, finderArgs, count);
-			}
-			catch (Exception exception) {
-				finderCache.removeResult(finderPath, finderArgs);
-
-				throw processException(exception);
-			}
-			finally {
-				closeSession(session);
-			}
+		if (memberRequest == null) {
+			return 0;
 		}
 
-		return count.intValue();
+		return 1;
 	}
 
 	private static final String _FINDER_COLUMN_G_R_S_GROUPID_2 =
@@ -2408,11 +2318,6 @@ public class MemberRequestPersistenceImpl
 			new String[] {String.class.getName()},
 			MemberRequestModelImpl.KEY_COLUMN_BITMASK);
 
-		_finderPathCountByKey = new FinderPath(
-			entityCacheEnabled, finderCacheEnabled, Long.class,
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByKey",
-			new String[] {String.class.getName()});
-
 		_finderPathWithPaginationFindByReceiverUserId = new FinderPath(
 			entityCacheEnabled, finderCacheEnabled, MemberRequestImpl.class,
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByReceiverUserId",
@@ -2465,14 +2370,6 @@ public class MemberRequestPersistenceImpl
 			MemberRequestModelImpl.GROUPID_COLUMN_BITMASK |
 			MemberRequestModelImpl.RECEIVERUSERID_COLUMN_BITMASK |
 			MemberRequestModelImpl.STATUS_COLUMN_BITMASK);
-
-		_finderPathCountByG_R_S = new FinderPath(
-			entityCacheEnabled, finderCacheEnabled, Long.class,
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByG_R_S",
-			new String[] {
-				Long.class.getName(), Long.class.getName(),
-				Integer.class.getName()
-			});
 
 		MemberRequestUtil.setPersistence(this);
 	}

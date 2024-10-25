@@ -635,7 +635,6 @@ public class DDMStructureLayoutPersistenceImpl
 		"(ddmStructureLayout.uuid IS NULL OR ddmStructureLayout.uuid = '')";
 
 	private FinderPath _finderPathFetchByUUID_G;
-	private FinderPath _finderPathCountByUUID_G;
 
 	/**
 	 * Returns the ddm structure layout where uuid = &#63; and groupId = &#63; or throws a <code>NoSuchStructureLayoutException</code> if it could not be found.
@@ -820,64 +819,13 @@ public class DDMStructureLayoutPersistenceImpl
 	 */
 	@Override
 	public int countByUUID_G(String uuid, long groupId) {
-		uuid = Objects.toString(uuid, "");
+		DDMStructureLayout ddmStructureLayout = fetchByUUID_G(uuid, groupId);
 
-		FinderPath finderPath = _finderPathCountByUUID_G;
-
-		Object[] finderArgs = new Object[] {uuid, groupId};
-
-		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
-
-		if (count == null) {
-			StringBundler sb = new StringBundler(3);
-
-			sb.append(_SQL_COUNT_DDMSTRUCTURELAYOUT_WHERE);
-
-			boolean bindUuid = false;
-
-			if (uuid.isEmpty()) {
-				sb.append(_FINDER_COLUMN_UUID_G_UUID_3);
-			}
-			else {
-				bindUuid = true;
-
-				sb.append(_FINDER_COLUMN_UUID_G_UUID_2);
-			}
-
-			sb.append(_FINDER_COLUMN_UUID_G_GROUPID_2);
-
-			String sql = sb.toString();
-
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				Query query = session.createQuery(sql);
-
-				QueryPos queryPos = QueryPos.getInstance(query);
-
-				if (bindUuid) {
-					queryPos.add(uuid);
-				}
-
-				queryPos.add(groupId);
-
-				count = (Long)query.uniqueResult();
-
-				finderCache.putResult(finderPath, finderArgs, count);
-			}
-			catch (Exception exception) {
-				finderCache.removeResult(finderPath, finderArgs);
-
-				throw processException(exception);
-			}
-			finally {
-				closeSession(session);
-			}
+		if (ddmStructureLayout == null) {
+			return 0;
 		}
 
-		return count.intValue();
+		return 1;
 	}
 
 	private static final String _FINDER_COLUMN_UUID_G_UUID_2 =
@@ -2551,7 +2499,6 @@ public class DDMStructureLayoutPersistenceImpl
 			"(ddmStructureLayout.structureLayoutKey IS NULL OR ddmStructureLayout.structureLayoutKey = '')";
 
 	private FinderPath _finderPathFetchByStructureVersionId;
-	private FinderPath _finderPathCountByStructureVersionId;
 
 	/**
 	 * Returns the ddm structure layout where structureVersionId = &#63; or throws a <code>NoSuchStructureLayoutException</code> if it could not be found.
@@ -2732,47 +2679,14 @@ public class DDMStructureLayoutPersistenceImpl
 	 */
 	@Override
 	public int countByStructureVersionId(long structureVersionId) {
-		FinderPath finderPath = _finderPathCountByStructureVersionId;
+		DDMStructureLayout ddmStructureLayout = fetchByStructureVersionId(
+			structureVersionId);
 
-		Object[] finderArgs = new Object[] {structureVersionId};
-
-		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
-
-		if (count == null) {
-			StringBundler sb = new StringBundler(2);
-
-			sb.append(_SQL_COUNT_DDMSTRUCTURELAYOUT_WHERE);
-
-			sb.append(_FINDER_COLUMN_STRUCTUREVERSIONID_STRUCTUREVERSIONID_2);
-
-			String sql = sb.toString();
-
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				Query query = session.createQuery(sql);
-
-				QueryPos queryPos = QueryPos.getInstance(query);
-
-				queryPos.add(structureVersionId);
-
-				count = (Long)query.uniqueResult();
-
-				finderCache.putResult(finderPath, finderArgs, count);
-			}
-			catch (Exception exception) {
-				finderCache.removeResult(finderPath, finderArgs);
-
-				throw processException(exception);
-			}
-			finally {
-				closeSession(session);
-			}
+		if (ddmStructureLayout == null) {
+			return 0;
 		}
 
-		return count.intValue();
+		return 1;
 	}
 
 	private static final String
@@ -3328,7 +3242,6 @@ public class DDMStructureLayoutPersistenceImpl
 		"ddmStructureLayout.classNameId = ?";
 
 	private FinderPath _finderPathFetchByG_C_S;
-	private FinderPath _finderPathCountByG_C_S;
 
 	/**
 	 * Returns the ddm structure layout where groupId = &#63; and classNameId = &#63; and structureLayoutKey = &#63; or throws a <code>NoSuchStructureLayoutException</code> if it could not be found.
@@ -3539,70 +3452,14 @@ public class DDMStructureLayoutPersistenceImpl
 	public int countByG_C_S(
 		long groupId, long classNameId, String structureLayoutKey) {
 
-		structureLayoutKey = Objects.toString(structureLayoutKey, "");
+		DDMStructureLayout ddmStructureLayout = fetchByG_C_S(
+			groupId, classNameId, structureLayoutKey);
 
-		FinderPath finderPath = _finderPathCountByG_C_S;
-
-		Object[] finderArgs = new Object[] {
-			groupId, classNameId, structureLayoutKey
-		};
-
-		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
-
-		if (count == null) {
-			StringBundler sb = new StringBundler(4);
-
-			sb.append(_SQL_COUNT_DDMSTRUCTURELAYOUT_WHERE);
-
-			sb.append(_FINDER_COLUMN_G_C_S_GROUPID_2);
-
-			sb.append(_FINDER_COLUMN_G_C_S_CLASSNAMEID_2);
-
-			boolean bindStructureLayoutKey = false;
-
-			if (structureLayoutKey.isEmpty()) {
-				sb.append(_FINDER_COLUMN_G_C_S_STRUCTURELAYOUTKEY_3);
-			}
-			else {
-				bindStructureLayoutKey = true;
-
-				sb.append(_FINDER_COLUMN_G_C_S_STRUCTURELAYOUTKEY_2);
-			}
-
-			String sql = sb.toString();
-
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				Query query = session.createQuery(sql);
-
-				QueryPos queryPos = QueryPos.getInstance(query);
-
-				queryPos.add(groupId);
-
-				queryPos.add(classNameId);
-
-				if (bindStructureLayoutKey) {
-					queryPos.add(structureLayoutKey);
-				}
-
-				count = (Long)query.uniqueResult();
-
-				finderCache.putResult(finderPath, finderArgs, count);
-			}
-			catch (Exception exception) {
-				finderCache.removeResult(finderPath, finderArgs);
-
-				throw processException(exception);
-			}
-			finally {
-				closeSession(session);
-			}
+		if (ddmStructureLayout == null) {
+			return 0;
 		}
 
-		return count.intValue();
+		return 1;
 	}
 
 	private static final String _FINDER_COLUMN_G_C_S_GROUPID_2 =
@@ -5191,11 +5048,6 @@ public class DDMStructureLayoutPersistenceImpl
 			DDMStructureLayoutModelImpl.UUID_COLUMN_BITMASK |
 			DDMStructureLayoutModelImpl.GROUPID_COLUMN_BITMASK);
 
-		_finderPathCountByUUID_G = new FinderPath(
-			entityCacheEnabled, finderCacheEnabled, Long.class,
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByUUID_G",
-			new String[] {String.class.getName(), Long.class.getName()});
-
 		_finderPathWithPaginationFindByUuid_C = new FinderPath(
 			entityCacheEnabled, finderCacheEnabled,
 			DDMStructureLayoutImpl.class,
@@ -5267,11 +5119,6 @@ public class DDMStructureLayoutPersistenceImpl
 			"fetchByStructureVersionId", new String[] {Long.class.getName()},
 			DDMStructureLayoutModelImpl.STRUCTUREVERSIONID_COLUMN_BITMASK);
 
-		_finderPathCountByStructureVersionId = new FinderPath(
-			entityCacheEnabled, finderCacheEnabled, Long.class,
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
-			"countByStructureVersionId", new String[] {Long.class.getName()});
-
 		_finderPathWithPaginationFindByG_C = new FinderPath(
 			entityCacheEnabled, finderCacheEnabled,
 			DDMStructureLayoutImpl.class,
@@ -5306,14 +5153,6 @@ public class DDMStructureLayoutPersistenceImpl
 			DDMStructureLayoutModelImpl.GROUPID_COLUMN_BITMASK |
 			DDMStructureLayoutModelImpl.CLASSNAMEID_COLUMN_BITMASK |
 			DDMStructureLayoutModelImpl.STRUCTURELAYOUTKEY_COLUMN_BITMASK);
-
-		_finderPathCountByG_C_S = new FinderPath(
-			entityCacheEnabled, finderCacheEnabled, Long.class,
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByG_C_S",
-			new String[] {
-				Long.class.getName(), Long.class.getName(),
-				String.class.getName()
-			});
 
 		_finderPathWithPaginationFindByG_C_SV = new FinderPath(
 			entityCacheEnabled, finderCacheEnabled,

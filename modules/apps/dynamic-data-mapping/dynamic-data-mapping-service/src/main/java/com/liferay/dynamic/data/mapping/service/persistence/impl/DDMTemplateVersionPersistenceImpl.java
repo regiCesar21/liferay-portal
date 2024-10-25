@@ -596,7 +596,6 @@ public class DDMTemplateVersionPersistenceImpl
 		"ddmTemplateVersion.templateId = ?";
 
 	private FinderPath _finderPathFetchByT_V;
-	private FinderPath _finderPathCountByT_V;
 
 	/**
 	 * Returns the ddm template version where templateId = &#63; and version = &#63; or throws a <code>NoSuchTemplateVersionException</code> if it could not be found.
@@ -780,64 +779,13 @@ public class DDMTemplateVersionPersistenceImpl
 	 */
 	@Override
 	public int countByT_V(long templateId, String version) {
-		version = Objects.toString(version, "");
+		DDMTemplateVersion ddmTemplateVersion = fetchByT_V(templateId, version);
 
-		FinderPath finderPath = _finderPathCountByT_V;
-
-		Object[] finderArgs = new Object[] {templateId, version};
-
-		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
-
-		if (count == null) {
-			StringBundler sb = new StringBundler(3);
-
-			sb.append(_SQL_COUNT_DDMTEMPLATEVERSION_WHERE);
-
-			sb.append(_FINDER_COLUMN_T_V_TEMPLATEID_2);
-
-			boolean bindVersion = false;
-
-			if (version.isEmpty()) {
-				sb.append(_FINDER_COLUMN_T_V_VERSION_3);
-			}
-			else {
-				bindVersion = true;
-
-				sb.append(_FINDER_COLUMN_T_V_VERSION_2);
-			}
-
-			String sql = sb.toString();
-
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				Query query = session.createQuery(sql);
-
-				QueryPos queryPos = QueryPos.getInstance(query);
-
-				queryPos.add(templateId);
-
-				if (bindVersion) {
-					queryPos.add(version);
-				}
-
-				count = (Long)query.uniqueResult();
-
-				finderCache.putResult(finderPath, finderArgs, count);
-			}
-			catch (Exception exception) {
-				finderCache.removeResult(finderPath, finderArgs);
-
-				throw processException(exception);
-			}
-			finally {
-				closeSession(session);
-			}
+		if (ddmTemplateVersion == null) {
+			return 0;
 		}
 
-		return count.intValue();
+		return 1;
 	}
 
 	private static final String _FINDER_COLUMN_T_V_TEMPLATEID_2 =
@@ -2127,11 +2075,6 @@ public class DDMTemplateVersionPersistenceImpl
 			new String[] {Long.class.getName(), String.class.getName()},
 			DDMTemplateVersionModelImpl.TEMPLATEID_COLUMN_BITMASK |
 			DDMTemplateVersionModelImpl.VERSION_COLUMN_BITMASK);
-
-		_finderPathCountByT_V = new FinderPath(
-			entityCacheEnabled, finderCacheEnabled, Long.class,
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByT_V",
-			new String[] {Long.class.getName(), String.class.getName()});
 
 		_finderPathWithPaginationFindByT_S = new FinderPath(
 			entityCacheEnabled, finderCacheEnabled,

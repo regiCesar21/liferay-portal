@@ -1783,7 +1783,6 @@ public class SubscriptionEntryPersistenceImpl
 		"(subscriptionEntry.contactUuid IS NULL OR subscriptionEntry.contactUuid = '')";
 
 	private FinderPath _finderPathFetchByC_C_CU;
-	private FinderPath _finderPathCountByC_C_CU;
 
 	/**
 	 * Returns the subscription entry where classNameId = &#63; and classPK = &#63; and contactUuid = &#63; or throws a <code>NoSuchSubscriptionEntryException</code> if it could not be found.
@@ -2008,68 +2007,14 @@ public class SubscriptionEntryPersistenceImpl
 	public int countByC_C_CU(
 		long classNameId, long classPK, String contactUuid) {
 
-		contactUuid = Objects.toString(contactUuid, "");
+		SubscriptionEntry subscriptionEntry = fetchByC_C_CU(
+			classNameId, classPK, contactUuid);
 
-		FinderPath finderPath = _finderPathCountByC_C_CU;
-
-		Object[] finderArgs = new Object[] {classNameId, classPK, contactUuid};
-
-		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
-
-		if (count == null) {
-			StringBundler sb = new StringBundler(4);
-
-			sb.append(_SQL_COUNT_SUBSCRIPTIONENTRY_WHERE);
-
-			sb.append(_FINDER_COLUMN_C_C_CU_CLASSNAMEID_2);
-
-			sb.append(_FINDER_COLUMN_C_C_CU_CLASSPK_2);
-
-			boolean bindContactUuid = false;
-
-			if (contactUuid.isEmpty()) {
-				sb.append(_FINDER_COLUMN_C_C_CU_CONTACTUUID_3);
-			}
-			else {
-				bindContactUuid = true;
-
-				sb.append(_FINDER_COLUMN_C_C_CU_CONTACTUUID_2);
-			}
-
-			String sql = sb.toString();
-
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				Query query = session.createQuery(sql);
-
-				QueryPos queryPos = QueryPos.getInstance(query);
-
-				queryPos.add(classNameId);
-
-				queryPos.add(classPK);
-
-				if (bindContactUuid) {
-					queryPos.add(contactUuid);
-				}
-
-				count = (Long)query.uniqueResult();
-
-				finderCache.putResult(finderPath, finderArgs, count);
-			}
-			catch (Exception exception) {
-				finderCache.removeResult(finderPath, finderArgs);
-
-				throw processException(exception);
-			}
-			finally {
-				closeSession(session);
-			}
+		if (subscriptionEntry == null) {
+			return 0;
 		}
 
-		return count.intValue();
+		return 1;
 	}
 
 	private static final String _FINDER_COLUMN_C_C_CU_CLASSNAMEID_2 =
@@ -2887,14 +2832,6 @@ public class SubscriptionEntryPersistenceImpl
 			SubscriptionEntryModelImpl.CLASSNAMEID_COLUMN_BITMASK |
 			SubscriptionEntryModelImpl.CLASSPK_COLUMN_BITMASK |
 			SubscriptionEntryModelImpl.CONTACTUUID_COLUMN_BITMASK);
-
-		_finderPathCountByC_C_CU = new FinderPath(
-			entityCacheEnabled, finderCacheEnabled, Long.class,
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByC_C_CU",
-			new String[] {
-				Long.class.getName(), Long.class.getName(),
-				String.class.getName()
-			});
 
 		SubscriptionEntryUtil.setPersistence(this);
 	}

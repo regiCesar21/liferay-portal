@@ -581,7 +581,6 @@ public class FolderPersistenceImpl
 		"folder.accountId = ?";
 
 	private FinderPath _finderPathFetchByA_F;
-	private FinderPath _finderPathCountByA_F;
 
 	/**
 	 * Returns the folder where accountId = &#63; and fullName = &#63; or throws a <code>NoSuchFolderException</code> if it could not be found.
@@ -780,64 +779,13 @@ public class FolderPersistenceImpl
 	 */
 	@Override
 	public int countByA_F(long accountId, String fullName) {
-		fullName = Objects.toString(fullName, "");
+		Folder folder = fetchByA_F(accountId, fullName);
 
-		FinderPath finderPath = _finderPathCountByA_F;
-
-		Object[] finderArgs = new Object[] {accountId, fullName};
-
-		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
-
-		if (count == null) {
-			StringBundler sb = new StringBundler(3);
-
-			sb.append(_SQL_COUNT_FOLDER_WHERE);
-
-			sb.append(_FINDER_COLUMN_A_F_ACCOUNTID_2);
-
-			boolean bindFullName = false;
-
-			if (fullName.isEmpty()) {
-				sb.append(_FINDER_COLUMN_A_F_FULLNAME_3);
-			}
-			else {
-				bindFullName = true;
-
-				sb.append(_FINDER_COLUMN_A_F_FULLNAME_2);
-			}
-
-			String sql = sb.toString();
-
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				Query query = session.createQuery(sql);
-
-				QueryPos queryPos = QueryPos.getInstance(query);
-
-				queryPos.add(accountId);
-
-				if (bindFullName) {
-					queryPos.add(fullName);
-				}
-
-				count = (Long)query.uniqueResult();
-
-				finderCache.putResult(finderPath, finderArgs, count);
-			}
-			catch (Exception exception) {
-				finderCache.removeResult(finderPath, finderArgs);
-
-				throw processException(exception);
-			}
-			finally {
-				closeSession(session);
-			}
+		if (folder == null) {
+			return 0;
 		}
 
-		return count.intValue();
+		return 1;
 	}
 
 	private static final String _FINDER_COLUMN_A_F_ACCOUNTID_2 =
@@ -1515,11 +1463,6 @@ public class FolderPersistenceImpl
 			new String[] {Long.class.getName(), String.class.getName()},
 			FolderModelImpl.ACCOUNTID_COLUMN_BITMASK |
 			FolderModelImpl.FULLNAME_COLUMN_BITMASK);
-
-		_finderPathCountByA_F = new FinderPath(
-			entityCacheEnabled, finderCacheEnabled, Long.class,
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByA_F",
-			new String[] {Long.class.getName(), String.class.getName()});
 
 		FolderUtil.setPersistence(this);
 	}

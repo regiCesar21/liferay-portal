@@ -1759,7 +1759,6 @@ public class CommercePriceListChannelRelPersistenceImpl
 			"commercePriceListChannelRel.commercePriceListId = ?";
 
 	private FinderPath _finderPathFetchByC_C;
-	private FinderPath _finderPathCountByC_C;
 
 	/**
 	 * Returns the commerce price list channel rel where commerceChannelId = &#63; and commercePriceListId = &#63; or throws a <code>NoSuchPriceListChannelRelException</code> if it could not be found.
@@ -1941,53 +1940,14 @@ public class CommercePriceListChannelRelPersistenceImpl
 	 */
 	@Override
 	public int countByC_C(long commerceChannelId, long commercePriceListId) {
-		FinderPath finderPath = _finderPathCountByC_C;
+		CommercePriceListChannelRel commercePriceListChannelRel = fetchByC_C(
+			commerceChannelId, commercePriceListId);
 
-		Object[] finderArgs = new Object[] {
-			commerceChannelId, commercePriceListId
-		};
-
-		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
-
-		if (count == null) {
-			StringBundler sb = new StringBundler(3);
-
-			sb.append(_SQL_COUNT_COMMERCEPRICELISTCHANNELREL_WHERE);
-
-			sb.append(_FINDER_COLUMN_C_C_COMMERCECHANNELID_2);
-
-			sb.append(_FINDER_COLUMN_C_C_COMMERCEPRICELISTID_2);
-
-			String sql = sb.toString();
-
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				Query query = session.createQuery(sql);
-
-				QueryPos queryPos = QueryPos.getInstance(query);
-
-				queryPos.add(commerceChannelId);
-
-				queryPos.add(commercePriceListId);
-
-				count = (Long)query.uniqueResult();
-
-				finderCache.putResult(finderPath, finderArgs, count);
-			}
-			catch (Exception exception) {
-				finderCache.removeResult(finderPath, finderArgs);
-
-				throw processException(exception);
-			}
-			finally {
-				closeSession(session);
-			}
+		if (commercePriceListChannelRel == null) {
+			return 0;
 		}
 
-		return count.intValue();
+		return 1;
 	}
 
 	private static final String _FINDER_COLUMN_C_C_COMMERCECHANNELID_2 =
@@ -3081,12 +3041,6 @@ public class CommercePriceListChannelRelPersistenceImpl
 				COMMERCECHANNELID_COLUMN_BITMASK |
 			CommercePriceListChannelRelModelImpl.
 				COMMERCEPRICELISTID_COLUMN_BITMASK);
-
-		_finderPathCountByC_C = new FinderPath(
-			CommercePriceListChannelRelModelImpl.ENTITY_CACHE_ENABLED,
-			CommercePriceListChannelRelModelImpl.FINDER_CACHE_ENABLED,
-			Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByC_C",
-			new String[] {Long.class.getName(), Long.class.getName()});
 
 		CommercePriceListChannelRelUtil.setPersistence(this);
 	}

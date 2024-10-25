@@ -5391,7 +5391,6 @@ public class SocialRelationPersistenceImpl
 		"socialRelation.type = ?";
 
 	private FinderPath _finderPathFetchByU1_U2_T;
-	private FinderPath _finderPathCountByU1_U2_T;
 
 	/**
 	 * Returns the social relation where userId1 = &#63; and userId2 = &#63; and type = &#63; or throws a <code>NoSuchRelationException</code> if it could not be found.
@@ -5576,56 +5575,13 @@ public class SocialRelationPersistenceImpl
 	 */
 	@Override
 	public int countByU1_U2_T(long userId1, long userId2, int type) {
-		FinderPath finderPath = _finderPathCountByU1_U2_T;
+		SocialRelation socialRelation = fetchByU1_U2_T(userId1, userId2, type);
 
-		Object[] finderArgs = new Object[] {userId1, userId2, type};
-
-		Long count = (Long)FinderCacheUtil.getResult(
-			finderPath, finderArgs, this);
-
-		if (count == null) {
-			StringBundler sb = new StringBundler(4);
-
-			sb.append(_SQL_COUNT_SOCIALRELATION_WHERE);
-
-			sb.append(_FINDER_COLUMN_U1_U2_T_USERID1_2);
-
-			sb.append(_FINDER_COLUMN_U1_U2_T_USERID2_2);
-
-			sb.append(_FINDER_COLUMN_U1_U2_T_TYPE_2);
-
-			String sql = sb.toString();
-
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				Query query = session.createQuery(sql);
-
-				QueryPos queryPos = QueryPos.getInstance(query);
-
-				queryPos.add(userId1);
-
-				queryPos.add(userId2);
-
-				queryPos.add(type);
-
-				count = (Long)query.uniqueResult();
-
-				FinderCacheUtil.putResult(finderPath, finderArgs, count);
-			}
-			catch (Exception exception) {
-				FinderCacheUtil.removeResult(finderPath, finderArgs);
-
-				throw processException(exception);
-			}
-			finally {
-				closeSession(session);
-			}
+		if (socialRelation == null) {
+			return 0;
 		}
 
-		return count.intValue();
+		return 1;
 	}
 
 	private static final String _FINDER_COLUMN_U1_U2_T_USERID1_2 =
@@ -6825,15 +6781,6 @@ public class SocialRelationPersistenceImpl
 			SocialRelationModelImpl.USERID1_COLUMN_BITMASK |
 			SocialRelationModelImpl.USERID2_COLUMN_BITMASK |
 			SocialRelationModelImpl.TYPE_COLUMN_BITMASK);
-
-		_finderPathCountByU1_U2_T = new FinderPath(
-			SocialRelationModelImpl.ENTITY_CACHE_ENABLED,
-			SocialRelationModelImpl.FINDER_CACHE_ENABLED, Long.class,
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByU1_U2_T",
-			new String[] {
-				Long.class.getName(), Long.class.getName(),
-				Integer.class.getName()
-			});
 
 		SocialRelationUtil.setPersistence(this);
 	}
