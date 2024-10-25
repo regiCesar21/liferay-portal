@@ -2,22 +2,22 @@ CREATE OR REPLACE TABLE FUNCTION `$[AC_PROJECT_ID].documentlibrary_hourly`(endDa
 AS (
     WITH
         EventProperty AS (
-            SELECT
-            Event.eventDate,
-            Event.id,
-            EventProperty.name,
-            EventProperty.value
-        FROM
-            `$[AC_PROJECT_ID].event` AS Event
-        CROSS JOIN UNNEST(Event.properties) AS EventProperty
-            WHERE
-                Event.applicationId IN ('Comment', 'Document', 'Ratings') AND
-                Event.assetId IS NOT NULL AND
-                Event.canonicalUrl IS NOT NULL AND
-                Event.eventDate >= startDate AND
-                Event.eventDate < endDate AND
-                Event.eventId IN ('documentDownloaded', 'documentPreviewed', 'posted', 'VOTE') AND
-                Event.title IS NOT NULL
+			SELECT
+				Event.eventDate,
+				Event.id,
+				EventProperty.name,
+				EventProperty.value
+			FROM
+				`$[AC_PROJECT_ID].event` AS Event,
+				UNNEST(Event.properties) AS EventProperty
+			WHERE
+				Event.applicationId IN ('Comment', 'Document', 'Ratings') AND
+				Event.assetId IS NOT NULL AND
+				Event.canonicalUrl IS NOT NULL AND
+				Event.eventDate >= startDate AND
+				Event.eventDate < endDate AND
+				Event.eventId IN ('documentDownloaded', 'documentPreviewed', 'posted', 'VOTE') AND
+				Event.title IS NOT NULL
         ),
         CommentEvent AS (
             SELECT
@@ -29,7 +29,7 @@ AS (
                 Event.userId
             FROM
                 `$[AC_PROJECT_ID].event` AS Event
-            LEFT JOIN `$[AC_PROJECT_ID].eventproperty` AS className ON (
+            LEFT JOIN EventProperty AS className ON (
                 className.eventDate >= startDate AND
                 className.eventDate < endDate AND
                 className.id = Event.id AND
@@ -64,7 +64,7 @@ AS (
                 Event.userId
             FROM
                 `$[AC_PROJECT_ID].event` AS Event
-            LEFT JOIN `$[AC_PROJECT_ID].eventproperty` AS className ON (
+            LEFT JOIN EventProperty AS className ON (
                 className.eventDate >= startDate AND
                 className.eventDate < endDate AND
                 className.id = Event.id AND
@@ -130,21 +130,21 @@ AS (
                 Event.userId
             FROM
                 `$[AC_PROJECT_ID].event` AS Event
-            LEFT JOIN `$[AC_PROJECT_ID].eventproperty` AS className ON (
+            LEFT JOIN EventProperty AS className ON (
                 className.eventDate >= startDate AND
                 className.eventDate < endDate AND
                 className.id = Event.id AND
                 className.name = 'className' AND
                 className.value = 'com.liferay.document.library.kernel.model.DLFileEntry'
             )
-            LEFT JOIN `$[AC_PROJECT_ID].eventproperty` AS ratingType ON (
+            LEFT JOIN EventProperty AS ratingType ON (
                 ratingType.eventDate >= startDate AND
                 ratingType.eventDate < endDate AND
                 ratingType.id = Event.id AND
                 ratingType.name = 'ratingType' AND
                 ratingtype.value = 'stars'
             )
-            LEFT JOIN `$[AC_PROJECT_ID].eventproperty` AS score ON (
+            LEFT JOIN EventProperty AS score ON (
                 score.eventDate >= startDate AND
                 score.eventDate < endDate AND
                 score.id = Event.id AND
