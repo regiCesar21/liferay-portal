@@ -13,8 +13,7 @@ import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.MapperFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
-
-import org.codehaus.jackson.map.util.ISO8601DateFormat;
+import com.fasterxml.jackson.databind.util.ISO8601DateFormat;
 
 /**
  * @author Marcellus Tavares
