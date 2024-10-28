@@ -143,8 +143,6 @@ public class EventIngestionPipeline {
 			);
 
 		eventsPCollection.apply("Write Events", new EventBigQueryWriter());
-		eventsPCollection.apply(
-			"Write Event Properties", new EventPropertyBigQueryWriter());
 		sessionsPCollection.apply(
 			"Write Sessions", new SessionBigQueryWriter());
 
@@ -377,66 +375,6 @@ public class EventIngestionPipeline {
 
 	}
 
-	public static class EventPropertyBigQueryWriter
-		extends PTransform
-			<PCollection<KV<String, Iterable<AnalyticsEvent>>>, WriteResult> {
-
-		@Override
-		public WriteResult expand(
-			PCollection<KV<String, Iterable<AnalyticsEvent>>> pCollection) {
-
-			return pCollection.apply(
-				"Create Event Properties Table Rows",
-				ParDo.of(
-					new DoFn<KV<String, Iterable<AnalyticsEvent>>, TableRow>() {
-
-						@ProcessElement
-						public void process(ProcessContext processContext) {
-							KV<String, Iterable<AnalyticsEvent>> element =
-								processContext.element();
-
-							for (AnalyticsEvent analyticsEvent :
-									element.getValue()) {
-
-								_outputEventPropertyTableRows(
-									analyticsEvent, processContext);
-							}
-						}
-
-					})
-			).apply(
-				"Write Event Property Rows to Big Query",
-				BigQueryIO.writeTableRows(
-				).to(
-					new SerializableFunction
-						<ValueInSingleWindow<TableRow>, TableDestination>() {
-
-						@Override
-						public TableDestination apply(
-							ValueInSingleWindow<TableRow> valueInSingleWindow) {
-
-							TableRow tableRow = valueInSingleWindow.getValue();
-
-							return new TableDestination(
-								String.format(
-									"%s.%s", tableRow.get("projectId"),
-									"eventproperty"),
-								null);
-						}
-
-					}
-				).withCreateDisposition(
-					BigQueryIO.Write.CreateDisposition.CREATE_NEVER
-				).withMethod(
-					BigQueryIO.Write.Method.STREAMING_INSERTS
-				).withWriteDisposition(
-					BigQueryIO.Write.WriteDisposition.WRITE_APPEND
-				).withoutValidation()
-			);
-		}
-
-	}
-
 	public static class SessionBigQueryWriter
 		extends PTransform
 			<PCollection<KV<String, Iterable<AnalyticsEvent>>>, WriteResult> {
@@ -584,25 +522,6 @@ public class EventIngestionPipeline {
 		}
 
 		return null;
-	}
-
-	private static void _outputEventPropertyTableRows(
-		AnalyticsEvent analyticsEvent, DoFn.ProcessContext processContext) {
-
-		Map<String, String> eventProperties = analyticsEvent.eventProperties;
-
-		for (Map.Entry<String, String> entry : eventProperties.entrySet()) {
-			TableRow tableRow = new TableRow();
-
-			tableRow.set("channelId", Long.parseLong(analyticsEvent.channelId));
-			tableRow.set("eventDate", analyticsEvent.eventDate);
-			tableRow.set("id", analyticsEvent.id);
-			tableRow.set("name", entry.getKey());
-			tableRow.set("projectId", analyticsEvent.projectId);
-			tableRow.set("value", entry.getValue());
-
-			processContext.output(tableRow);
-		}
 	}
 
 	private static void _outputEventTableRow(

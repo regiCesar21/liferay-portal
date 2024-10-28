@@ -158,39 +158,6 @@ public class BatchEventIngestionPipeline {
 			)
 		);
 
-		eventsPCollection.apply(
-			"Create Event Properties Table Rows",
-			ParDo.of(
-				new DoFn<KV<String, Iterable<AnalyticsEvent>>, TableRow>() {
-
-					@ProcessElement
-					public void process(ProcessContext processContext) {
-						KV<String, Iterable<AnalyticsEvent>> element =
-							processContext.element();
-
-						for (AnalyticsEvent analyticsEvent :
-								element.getValue()) {
-
-							_outputEventPropertyTableRows(
-								analyticsEvent, processContext);
-						}
-					}
-
-				})
-		).apply(
-			"Event Properties TableRow JSON writer", AsJsons.of(TableRow.class)
-		).apply(
-			"Write Event Properties Files",
-			TextIO.write(
-			).to(
-				batchEventIngestionPipelineOptions.getOutputDirectory() +
-					"/eventproperties/eventproperties"
-			).withWindowedWrites(
-			).withSuffix(
-				".jsonl"
-			)
-		);
-
 		sessionsPCollection.apply(
 			"Create Session Table Rows",
 			ParDo.of(
@@ -470,25 +437,6 @@ public class BatchEventIngestionPipeline {
 		return null;
 	}
 
-	private static void _outputEventPropertyTableRows(
-		AnalyticsEvent analyticsEvent, DoFn.ProcessContext processContext) {
-
-		Map<String, String> eventProperties = analyticsEvent.eventProperties;
-
-		for (Map.Entry<String, String> entry : eventProperties.entrySet()) {
-			TableRow tableRow = new TableRow();
-
-			tableRow.set("channelId", Long.parseLong(analyticsEvent.channelId));
-			tableRow.set("eventDate", analyticsEvent.eventDate);
-			tableRow.set("id", analyticsEvent.id);
-			tableRow.set("name", entry.getKey());
-			tableRow.set("projectId", analyticsEvent.projectId);
-			tableRow.set("value", entry.getValue());
-
-			processContext.output(tableRow);
-		}
-	}
-
 	private static void _outputEventTableRow(
 		AnalyticsEvent analyticsEvent, DoFn.ProcessContext processContext,
 		String sessionId) {
@@ -524,10 +472,6 @@ public class BatchEventIngestionPipeline {
 
 		tableRow.set("eventDate", analyticsEvent.eventDate);
 		tableRow.set("eventId", analyticsEvent.eventId);
-		tableRow.set(
-			"eventProperties",
-			ObjectMapperUtil.writeValueAsString(
-				analyticsEvent.eventProperties));
 		tableRow.set("experienceId", context.get("experienceId"));
 
 		String experimentId = context.get("experimentId");
