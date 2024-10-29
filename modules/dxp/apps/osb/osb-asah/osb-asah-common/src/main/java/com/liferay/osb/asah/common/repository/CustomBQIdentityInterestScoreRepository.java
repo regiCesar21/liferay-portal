@@ -34,7 +34,8 @@ public interface CustomBQIdentityInterestScoreRepository {
 
 	public long countByIndividualId(String individualId);
 
-	public long countKeywords(@Nullable String keywords);
+	public long countKeywords(
+		@Nullable Long channelId, @Nullable String keywords);
 
 	@Modifying
 	public void deleteByKeywordAndRecordedDateGreaterThanEqual(
@@ -78,7 +79,7 @@ public interface CustomBQIdentityInterestScoreRepository {
 		@Nullable Long segmentId, Pageable pageable);
 
 	public List<String> getKeywords(
-		@Nullable String keywords, Pageable pageable);
+		@Nullable Long channelId, @Nullable String keywords, Pageable pageable);
 
 	public List<String> getTopKeywordsByIndividualId(
 		String individualId, int size);

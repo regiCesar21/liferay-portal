@@ -70,12 +70,13 @@ public class InterestsRestController
 
 	@GetMapping("/keywords")
 	public String getInterestKeywords(
+		@RequestParam(required = false) Long channelId,
 		@RequestParam(required = false) String name,
 		@RequestParam(defaultValue = "0") int page,
 		@RequestParam(defaultValue = "20") int size) {
 
 		Page<String> keywordsPage = _bqIdentityInterestScoreDog.getKeywordsPage(
-			name, page, size);
+			channelId, name, page, size);
 
 		return JSONUtil.put(
 			"_embedded",

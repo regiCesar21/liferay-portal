@@ -230,7 +230,9 @@ public class BQIdentityInterestScoreRepositoryImpl
 			));
 	}
 
-	public long countKeywords(@Nullable String keywords) {
+	public long countKeywords(
+		@Nullable Long channelId, @Nullable String keywords) {
+
 		return _queryExecutor.queryForLong(
 			_dslContext.select(
 				DSL.countDistinct(DSL.field("LOWER(keyword)", String.class))
@@ -241,7 +243,7 @@ public class BQIdentityInterestScoreRepositoryImpl
 					"IdentityInterestScore"
 				)
 			).where(
-				_getConditions(null, null, null, keywords, null)
+				_getConditions(channelId, null, null, keywords, null)
 			));
 	}
 
@@ -923,7 +925,8 @@ public class BQIdentityInterestScoreRepositoryImpl
 	}
 
 	public List<String> getKeywords(
-		@Nullable String keywords, Pageable pageable) {
+		@Nullable Long channelId, @Nullable String keywords,
+		Pageable pageable) {
 
 		Field<String> field = _getKeywordField("keyword");
 
@@ -939,7 +942,7 @@ public class BQIdentityInterestScoreRepositoryImpl
 					"IdentityInterestScore"
 				)
 			).where(
-				_getConditions(null, null, null, keywords, null)
+				_getConditions(channelId, null, null, keywords, null)
 			).orderBy(
 				field.asc()
 			).limit(

@@ -173,7 +173,7 @@
 			"templated": true
 		},
 		"interest-keywords": {
-			"href": "{url}/interests/keywords{?name,page,size}",
+			"href": "{url}/interests/keywords{?channelId,name,page,size}",
 			"templated": true
 		},
 		"interest-terms": {
