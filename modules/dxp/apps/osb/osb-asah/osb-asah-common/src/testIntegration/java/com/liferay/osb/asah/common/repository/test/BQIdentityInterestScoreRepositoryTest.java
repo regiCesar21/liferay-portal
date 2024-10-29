@@ -19,6 +19,7 @@ import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -121,7 +122,13 @@ public class BQIdentityInterestScoreRepositoryTest
 	@Test
 	public void testCountKeywords() {
 		Assertions.assertEquals(
-			3, _bqIdentityInterestScoreRepository.countKeywords(null));
+			3, _bqIdentityInterestScoreRepository.countKeywords(null, null));
+
+		Assertions.assertEquals(
+			3, _bqIdentityInterestScoreRepository.countKeywords(1L, null));
+
+		Assertions.assertEquals(
+			0, _bqIdentityInterestScoreRepository.countKeywords(2L, null));
 	}
 
 	@BQSQLResource(
@@ -130,7 +137,7 @@ public class BQIdentityInterestScoreRepositoryTest
 	@Test
 	public void testCountKeywordsWithFilter() {
 		Assertions.assertEquals(
-			1, _bqIdentityInterestScoreRepository.countKeywords("le"));
+			1, _bqIdentityInterestScoreRepository.countKeywords(null, "le"));
 	}
 
 	@BQSQLResource(
@@ -371,7 +378,7 @@ public class BQIdentityInterestScoreRepositoryTest
 				}
 			},
 			_bqIdentityInterestScoreRepository.getKeywords(
-				null, PageRequest.of(0, 20)));
+				null, null, PageRequest.of(0, 20)));
 
 		Assertions.assertEquals(
 			new ArrayList<String>() {
@@ -380,7 +387,21 @@ public class BQIdentityInterestScoreRepositoryTest
 				}
 			},
 			_bqIdentityInterestScoreRepository.getKeywords(
-				"rick's", PageRequest.of(0, 20)));
+				null, "rick's", PageRequest.of(0, 20)));
+
+		Assertions.assertEquals(
+			new ArrayList<String>() {
+				{
+					add("rick's garage");
+				}
+			},
+			_bqIdentityInterestScoreRepository.getKeywords(
+				1L, "rick's", PageRequest.of(0, 20)));
+
+		Assertions.assertEquals(
+			Collections.emptyList(),
+			_bqIdentityInterestScoreRepository.getKeywords(
+				3L, "rick's", PageRequest.of(0, 20)));
 	}
 
 	@BQSQLResource(
@@ -395,7 +416,7 @@ public class BQIdentityInterestScoreRepositoryTest
 				}
 			},
 			_bqIdentityInterestScoreRepository.getKeywords(
-				null, PageRequest.of(1, 1)));
+				null, null, PageRequest.of(1, 1)));
 	}
 
 	@BQSQLResource(
@@ -410,7 +431,7 @@ public class BQIdentityInterestScoreRepositoryTest
 				}
 			},
 			_bqIdentityInterestScoreRepository.getKeywords(
-				"le", PageRequest.of(0, 20)));
+				null, "le", PageRequest.of(0, 20)));
 	}
 
 	@BQSQLResource(

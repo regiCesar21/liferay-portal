@@ -124,7 +124,8 @@ public class InterestsRestControllerTest
 				"dependencies/expected_interest_keywords.json", this),
 			(JSONArray)JSONUtil.getValue(
 				new JSONObject(
-					_interestsRestController.getInterestKeywords(null, 0, 20)),
+					_interestsRestController.getInterestKeywords(
+						1L, null, 0, 20)),
 				"JSONObject/_embedded", "JSONArray/interest-keywords"),
 			false);
 
@@ -136,7 +137,16 @@ public class InterestsRestControllerTest
 			(JSONArray)JSONUtil.getValue(
 				new JSONObject(
 					_interestsRestController.getInterestKeywords(
-						"compel", 0, 20)),
+						1L, "compel", 0, 20)),
+				"JSONObject/_embedded", "JSONArray/interest-keywords"),
+			false);
+
+		JSONAssert.assertEquals(
+			new JSONArray(),
+			(JSONArray)JSONUtil.getValue(
+				new JSONObject(
+					_interestsRestController.getInterestKeywords(
+						2L, "compel", 0, 20)),
 				"JSONObject/_embedded", "JSONArray/interest-keywords"),
 			false);
 	}
@@ -145,7 +155,7 @@ public class InterestsRestControllerTest
 	public void testGetInterestKeywordsNoAssets() throws Exception {
 		JSONArray keywordsJSONArray = (JSONArray)JSONUtil.getValue(
 			new JSONObject(
-				_interestsRestController.getInterestKeywords(null, 0, 20)),
+				_interestsRestController.getInterestKeywords(1L, null, 0, 20)),
 			"JSONObject/_embedded", "JSONArray/interest-keywords");
 
 		Assertions.assertEquals(0, keywordsJSONArray.length());
