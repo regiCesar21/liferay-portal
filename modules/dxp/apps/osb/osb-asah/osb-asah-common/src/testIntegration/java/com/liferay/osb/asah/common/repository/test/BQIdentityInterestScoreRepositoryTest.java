@@ -8,6 +8,8 @@ package com.liferay.osb.asah.common.repository.test;
 import com.liferay.osb.asah.common.OSBAsahCommonSpringTestContext;
 import com.liferay.osb.asah.common.date.DateUtil;
 import com.liferay.osb.asah.common.entity.BQIdentityInterestScore;
+import com.liferay.osb.asah.common.model.Composition;
+import com.liferay.osb.asah.common.model.CompositionResultBag;
 import com.liferay.osb.asah.common.repository.BQIdentityInterestScoreRepository;
 import com.liferay.osb.asah.test.util.annotation.BQSQLResource;
 import com.liferay.osb.asah.test.util.spring.OSBAsahTestExecutionListenersContext;
@@ -16,8 +18,13 @@ import java.math.BigDecimal;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collection;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
@@ -271,6 +278,39 @@ public class BQIdentityInterestScoreRepositoryTest
 
 		Assertions.assertEquals(
 			_bqIdentityInterestScore2, bqIdentityInterestScore);
+	}
+
+	@BQSQLResource(
+		resourcePath = "test_bq_identity_interest_score_composition_bag.sql"
+	)
+	@Test
+	public void testGetInterestCompositionResultBag() {
+		CompositionResultBag compositionResultBag =
+			_bqIdentityInterestScoreRepository.getInterestCompositionResultBag(
+				false, 1L, null, null, PageRequest.of(0, 10));
+
+		List<Composition> compositions = compositionResultBag.getResults();
+
+		Stream<Composition> stream = compositions.stream();
+
+		Map<String, Long> keywords = stream.collect(
+			Collectors.toMap(
+				Composition::getName, Composition::getCount,
+				(name, count) -> name, LinkedHashMap::new));
+
+		Set<String> keys = keywords.keySet();
+
+		Assertions.assertArrayEquals(
+			new String[] {
+				"clicks-and-mortar e-tailers", "compelling metrics",
+				"javascript", "rick's garage", "sales"
+			},
+			keys.toArray(new String[0]));
+
+		Collection<Long> counts = keywords.values();
+
+		Assertions.assertArrayEquals(
+			new Long[] {2L, 1L, 3L, 1L, 2L}, counts.toArray(new Long[0]));
 	}
 
 	@BQSQLResource(
