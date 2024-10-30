@@ -28,9 +28,9 @@ public class BQIdentityInterestPageDogTest
 	implements OSBAsahCommonSpringTestContext,
 			   OSBAsahTestExecutionListenersContext {
 
-	@BQSQLResource(resourcePath = "test_bq_identity_interest_page_dog.sql")
+	@BQSQLResource(resourcePath = "test_bq_identity_interest_page_dog_1.sql")
 	@Test
-	public void testGetVisitedPagesTransformationsActivePages() {
+	public void testGetVisitedPagesTransformationsActivePages1() {
 		JSONAssert.assertEquals(
 			JSONUtil.putAll(
 				JSONUtil.put(
@@ -55,9 +55,9 @@ public class BQIdentityInterestPageDogTest
 			true);
 	}
 
-	@BQSQLResource(resourcePath = "test_bq_identity_interest_page_dog.sql")
+	@BQSQLResource(resourcePath = "test_bq_identity_interest_page_dog_1.sql")
 	@Test
-	public void testGetVisitedPagesTransformationsInactivePages() {
+	public void testGetVisitedPagesTransformationsInactivePages1() {
 		JSONAssert.assertEquals(
 			JSONUtil.put(
 				JSONUtil.put(
