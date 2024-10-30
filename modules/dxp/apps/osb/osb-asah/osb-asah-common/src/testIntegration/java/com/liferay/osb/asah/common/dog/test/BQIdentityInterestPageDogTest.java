@@ -55,6 +55,32 @@ public class BQIdentityInterestPageDogTest
 			true);
 	}
 
+	@BQSQLResource(resourcePath = "test_bq_identity_interest_page_dog_2.sql")
+	@Test
+	public void testGetVisitedPagesTransformationsActivePages2() {
+		JSONAssert.assertEquals(
+			JSONUtil.putAll(
+				JSONUtil.put(
+					"title", "Liferay - Football Club"
+				).put(
+					"uniqueVisitsCount", BigDecimal.valueOf(10)
+				).put(
+					"url", "https://www.liferay-fc.com/football"
+				),
+				JSONUtil.put(
+					"title", "These are my interests - Football"
+				).put(
+					"uniqueVisitsCount", BigDecimal.valueOf(7)
+				).put(
+					"url", "https://www.these-are-my-interests.com/football"
+				)),
+			new JSONArray(
+				_bqIdentityInterestPageDog.getActivePagesTransformations(
+					1L, "interestName eq 'football'", "1", "individual", 0, 2,
+					new String[] {"uniqueVisitsCount", "desc"})),
+			true);
+	}
+
 	@BQSQLResource(resourcePath = "test_bq_identity_interest_page_dog_1.sql")
 	@Test
 	public void testGetVisitedPagesTransformationsInactivePages1() {
@@ -71,6 +97,25 @@ public class BQIdentityInterestPageDogTest
 				_bqIdentityInterestPageDog.getInactivePagesTransformations(
 					1L, "interestName eq 'ratio'", "3456789101112",
 					"individual-segment", 1, 2,
+					new String[] {"title", "desc"})),
+			true);
+	}
+
+	@BQSQLResource(resourcePath = "test_bq_identity_interest_page_dog_2.sql")
+	@Test
+	public void testGetVisitedPagesTransformationsInactivePages2() {
+		JSONAssert.assertEquals(
+			JSONUtil.putAll(
+				JSONUtil.put(
+					"title", "Liferay Latam - Football Club"
+				).put(
+					"uniqueVisitsCount", BigDecimal.valueOf(0)
+				).put(
+					"url", "https://www.liferay-latam-fc.com/football"
+				)),
+			new JSONArray(
+				_bqIdentityInterestPageDog.getInactivePagesTransformations(
+					1L, "interestName eq 'football'", "1", "individual", 0, 2,
 					new String[] {"title", "desc"})),
 			true);
 	}
