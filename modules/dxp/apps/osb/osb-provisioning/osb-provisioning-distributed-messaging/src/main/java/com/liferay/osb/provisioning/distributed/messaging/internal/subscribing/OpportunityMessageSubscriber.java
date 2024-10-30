@@ -1927,14 +1927,12 @@ public class OpportunityMessageSubscriber extends BaseMessageSubscriber {
 
 			String contactRoleName = ContactRoleConstants.NAME_SUPPORT_USER;
 
-			if (customerPortal2Account) {
-				if (_isPartner(productPurchases)) {
-					contactRoleName = ContactRoleConstants.NAME_PARTNER_MANAGER;
-				}
-				else {
-					contactRoleName =
-						ContactRoleConstants.NAME_SUPPORT_ADMINISTRATOR;
-				}
+			if (_isPartner(productPurchases)) {
+				contactRoleName = ContactRoleConstants.NAME_PARTNER_MANAGER;
+			}
+			else if (customerPortal2Account) {
+				contactRoleName =
+					ContactRoleConstants.NAME_SUPPORT_ADMINISTRATOR;
 			}
 
 			ContactRole contactRole = _contactRoleWebService.fetchContactRole(
