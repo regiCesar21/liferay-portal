@@ -10,6 +10,7 @@ PROJECT_ID=$(gcloud config get-value project)
 
 DXP_CLOUD_PROJECT=${1}
 MAIN_CLASS_NAME=com.liferay.osb.asah.dataflow.ingestion.event.EventIngestionPipeline
+MAX_NUMBER_WORKERS=10
 NETWORK=${2}
 OUTPUT_FOLDER=gs://${PROJECT_ID}-analytics-events
 PIPELINE_FOLDER=gs://${PROJECT_ID}-dataflow
@@ -21,8 +22,10 @@ SUBNETWORK=${3}
 
 ../gradlew clean assemble execute \
 	-Dexec.args=" \
+		--enableStreamingEngine \
 		--inputSubscription=projects/${PROJECT_ID}/subscriptions/${DXP_CLOUD_PROJECT}_analytics_events_dataflow \
 		--jobName=eventingestionpipeline-${DXP_CLOUD_PROJECT} \
+		--maxNumWorkers=${MAX_NUMBER_WORKERS} \
 		--network=${NETWORK} \
 		--outputDirectory=${OUTPUT_FOLDER} \
 		--outputFileNamePrefix=analytics-events \
