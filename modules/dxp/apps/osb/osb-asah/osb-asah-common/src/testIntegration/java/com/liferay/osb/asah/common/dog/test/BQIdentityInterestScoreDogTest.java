@@ -63,13 +63,14 @@ public class BQIdentityInterestScoreDogTest
 		resourcePath = "osbasahfaroinfo/bq_identity_interest_score_info.json"
 	)
 	@Test
-	public void testGetBQIdentityInterestScorePageByFilterString() {
+	public void testGetBQIdentityInterestScorePageBIndividual() {
 		Page<IdentityInterestScore> individualInterestScorePage =
 			_bqIdentityInterestScoreDog.getIdentityInterestScorePage(
-				null, null, null, 0, 20, new String[] {"keyword,ASC"});
+				null, "774790575409131045", null, 0, 20,
+				new String[] {"keyword,ASC"});
 
 		Assertions.assertEquals(
-			2, individualInterestScorePage.getTotalElements());
+			3, individualInterestScorePage.getTotalElements());
 
 		List<IdentityInterestScore> individualInterestScores =
 			individualInterestScorePage.getContent();
@@ -77,12 +78,58 @@ public class BQIdentityInterestScoreDogTest
 		IdentityInterestScore identityInterestScore1 =
 			individualInterestScores.get(0);
 
+		Assertions.assertEquals("cars", identityInterestScore1.getKeyword());
+		Assertions.assertEquals(
+			3L, identityInterestScore1.getContributingPagesCount());
+
+		IdentityInterestScore identityInterestScore2 =
+			individualInterestScores.get(1);
+
+		Assertions.assertEquals("dog", identityInterestScore2.getKeyword());
+		Assertions.assertEquals(
+			1L, identityInterestScore2.getContributingPagesCount());
+
+		IdentityInterestScore identityInterestScore3 =
+			individualInterestScores.get(2);
+
+		Assertions.assertEquals(
+			"football", identityInterestScore3.getKeyword());
+		Assertions.assertEquals(
+			1L, identityInterestScore3.getContributingPagesCount());
+	}
+
+	@BQSQLResource(
+		resourcePath = "osbasahfaroinfo/bq_identity_interest_page.sql"
+	)
+	@RepositoryResource(
+		repositoryClass = BQIdentityRepository.class,
+		resourcePath = "osbasahfaroinfo/bq_identity_interest_score_identities.json"
+	)
+	@RepositoryResource(
+		repositoryClass = BQIdentityInterestScoreRepository.class,
+		resourcePath = "osbasahfaroinfo/bq_identity_interest_score_info.json"
+	)
+	@Test
+	public void testGetBQIdentityInterestScorePageByFilterString() {
+		Page<IdentityInterestScore> individualInterestScorePage =
+			_bqIdentityInterestScoreDog.getIdentityInterestScorePage(
+				null, null, null, 0, 20, new String[] {"keyword,ASC"});
+
+		Assertions.assertEquals(
+			8, individualInterestScorePage.getTotalElements());
+
+		List<IdentityInterestScore> individualInterestScores =
+			individualInterestScorePage.getContent();
+
+		IdentityInterestScore identityInterestScore1 =
+			individualInterestScores.get(6);
+
 		Assertions.assertEquals("java", identityInterestScore1.getKeyword());
 		Assertions.assertEquals(
 			1L, identityInterestScore1.getContributingPagesCount());
 
 		IdentityInterestScore identityInterestScore2 =
-			individualInterestScores.get(1);
+			individualInterestScores.get(7);
 
 		Assertions.assertEquals(
 			"javascript", identityInterestScore2.getKeyword());

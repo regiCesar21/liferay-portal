@@ -90,5 +90,95 @@
 		"interestScore": 0.01,
 		"interested": false,
 		"keyword": "javascript"
+	},
+	{
+		"channelId": 1,
+		"dateRecorded": "2019-05-16T00:00:00.000Z",
+		"id": "73545216843652143",
+		"identityId": "374790569167317526",
+		"interestScore": 1.814959778036198,
+		"interested": true,
+		"keyword": "football"
+	},
+	{
+		"channelId": 1,
+		"dateRecorded": "2019-05-17T00:00:00.000Z",
+		"id": "73545216843652143",
+		"identityId": "374790569167317526",
+		"interestScore": 2.814959778036198,
+		"interested": true,
+		"keyword": "football"
+	},
+	{
+		"channelId": 1,
+		"dateRecorded": "2019-05-17T00:00:00.000Z",
+		"id": "13545216843652777",
+		"identityId": "374790569167317526",
+		"interestScore": 2.414959778036235,
+		"interested": true,
+		"keyword": "cars"
+	},
+	{
+		"channelId": 1,
+		"dateRecorded": "2019-05-17T00:00:00.000Z",
+		"id": "53545216843652096",
+		"identityId": "374790569167317526",
+		"interestScore": 1.414959778036235,
+		"interested": true,
+		"keyword": "cars"
+	},
+	{
+		"channelId": 1,
+		"dateRecorded": "2019-05-17T00:00:00.000Z",
+		"id": "73545217843652122",
+		"identityId": "374790569167317526",
+		"interestScore": 2.014959778036235,
+		"interested": true,
+		"keyword": "cars"
+	},
+	{
+		"channelId": 1,
+		"dateRecorded": "2019-05-16T00:00:00.000Z",
+		"id": "73545217843652122",
+		"identityId": "374790569167317526",
+		"interestScore": 0.914959778036235,
+		"interested": true,
+		"keyword": "cars"
+	},
+	{
+		"channelId": 1,
+		"dateRecorded": "2019-05-17T00:00:00.000Z",
+		"id": "73545216843652143",
+		"identityId": "374790569167317526",
+		"interestScore": 2.214959778036765,
+		"interested": true,
+		"keyword": "dog"
+	},
+	{
+		"channelId": 1,
+		"dateRecorded": "2019-05-17T00:00:00.000Z",
+		"id": "73545216843652143",
+		"identityId": "374790569167317527",
+		"interestScore": 3.814959778036198,
+		"interested": true,
+		"keyword": "football"
+	},
+	{
+		"channelId": 1,
+		"dateRecorded": "2019-05-17T00:00:00.000Z",
+		"id": "73545216843652143",
+		"identityId": "374790569167317527",
+		"interestScore": 3.414959778036235,
+		"interested": true,
+		"keyword": "bikes"
+	},
+	{
+		"channelId": 1,
+		"dateRecorded": "2019-05-17T00:00:00.000Z",
+		"id": "73545216843652143",
+		"identityId": "374790569167317527",
+		"interestScore": 3.214959778036765,
+		"interested": true,
+		"keyword": "cats"
 	}
 ]

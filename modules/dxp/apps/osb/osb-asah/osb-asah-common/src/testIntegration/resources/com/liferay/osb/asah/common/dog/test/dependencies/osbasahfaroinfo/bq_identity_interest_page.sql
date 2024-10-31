@@ -3,3 +3,11 @@ INSERT INTO IdentityInterestPage (canonicalUrl, channelId, identityId, keyword, 
 INSERT INTO IdentityInterestPage (canonicalUrl, channelId, identityId, keyword, title, views) VALUES ('http://www.liferay.com/is-javascript-good', 2, '374790569167317525', 'javascript', 'Is Javascript Good?', 1);
 INSERT INTO IdentityInterestPage (canonicalUrl, channelId, identityId, keyword, title, views) VALUES ('http://www.liferay.com/java-is-great', 1, '374790569167317525', 'java', 'Java is Great', 1);
 INSERT INTO IdentityInterestPage (canonicalUrl, channelId, identityId, keyword, title, views) VALUES ('http://www.liferay.com/java-is-great', 1, '374790569167317525', 'java', 'Java is Great', 1);
+INSERT INTO IdentityInterestPage (canonicalUrl, channelId, identityId, keyword, title, views) VALUES ('http://www.liferay.com/football-is-great', 1, '374790569167317526', 'football', 'Football is Great', 1);
+INSERT INTO IdentityInterestPage (canonicalUrl, channelId, identityId, keyword, title, views) VALUES ('http://www.liferay.com/cars-are-great', 1, '374790569167317526', 'cars', 'Cars are Great', 1);
+INSERT INTO IdentityInterestPage (canonicalUrl, channelId, identityId, keyword, title, views) VALUES ('http://www.liferay.com/cars-are-good', 1, '374790569167317526', 'cars', 'Cars are Good', 1);
+INSERT INTO IdentityInterestPage (canonicalUrl, channelId, identityId, keyword, title, views) VALUES ('http://www.liferay.com/we-need-cars', 1, '374790569167317526', 'cars', 'We need Cars', 1);
+INSERT INTO IdentityInterestPage (canonicalUrl, channelId, identityId, keyword, title, views) VALUES ('http://www.liferay.com/dog-is-great', 4, '374790569167317526', 'dog', 'Dogs are Great', 1);
+INSERT INTO IdentityInterestPage (canonicalUrl, channelId, identityId, keyword, title, views) VALUES ('http://www.liferay.com/football-is-great', 1, '374790569167317527', 'football', 'Football is Great', 1);
+INSERT INTO IdentityInterestPage (canonicalUrl, channelId, identityId, keyword, title, views) VALUES ('http://www.liferay.com/bikes-are-great', 3, '374790569167317527', 'bikes', 'Bikes are Great', 1);
+INSERT INTO IdentityInterestPage (canonicalUrl, channelId, identityId, keyword, title, views) VALUES ('http://www.liferay.com/cats-are-great', 2, '374790569167317527', 'cats', 'Cats are Great', 1);
