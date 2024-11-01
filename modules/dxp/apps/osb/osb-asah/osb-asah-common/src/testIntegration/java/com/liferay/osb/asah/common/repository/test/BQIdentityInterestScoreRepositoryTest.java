@@ -123,10 +123,8 @@ public class BQIdentityInterestScoreRepositoryTest
 	public void testCountKeywords() {
 		Assertions.assertEquals(
 			3, _bqIdentityInterestScoreRepository.countKeywords(null, null));
-
 		Assertions.assertEquals(
 			3, _bqIdentityInterestScoreRepository.countKeywords(1L, null));
-
 		Assertions.assertEquals(
 			0, _bqIdentityInterestScoreRepository.countKeywords(2L, null));
 	}
@@ -379,7 +377,6 @@ public class BQIdentityInterestScoreRepositoryTest
 			},
 			_bqIdentityInterestScoreRepository.getKeywords(
 				null, null, PageRequest.of(0, 20)));
-
 		Assertions.assertEquals(
 			new ArrayList<String>() {
 				{
@@ -388,7 +385,6 @@ public class BQIdentityInterestScoreRepositoryTest
 			},
 			_bqIdentityInterestScoreRepository.getKeywords(
 				null, "rick's", PageRequest.of(0, 20)));
-
 		Assertions.assertEquals(
 			new ArrayList<String>() {
 				{
@@ -397,7 +393,6 @@ public class BQIdentityInterestScoreRepositoryTest
 			},
 			_bqIdentityInterestScoreRepository.getKeywords(
 				1L, "rick's", PageRequest.of(0, 20)));
-
 		Assertions.assertEquals(
 			Collections.emptyList(),
 			_bqIdentityInterestScoreRepository.getKeywords(
