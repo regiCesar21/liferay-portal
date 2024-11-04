@@ -105,7 +105,9 @@ public class BQIdentityInterestPageRepositoryTest
 		resourcePath = "test_bq_identity_interest_page_repository.sql"
 	)
 	@Test
-	public void testGetActivePagesTransformationsIndividual() throws Exception {
+	public void testGetActivePagesTransformationsIndividual1()
+		throws Exception {
+
 		JSONAssert.assertEquals(
 			ResourceUtil.readResourceToJSONArray(
 				"dependencies" +
@@ -117,6 +119,27 @@ public class BQIdentityInterestPageRepositoryTest
 					"ae9fbeefab123032b0ce91e946ec50930aeb2f55116ee887d142a6c3" +
 						"2f4fd9f4",
 					"individual", PageRequest.of(0, 5))),
+			true);
+	}
+
+	@BQSQLResource(
+		resourcePath = "test_bq_identity_interest_page_repository_1.sql"
+	)
+	@Test
+	public void testGetActivePagesTransformationsIndividual2()
+		throws Exception {
+
+		JSONAssert.assertEquals(
+			ResourceUtil.readResourceToJSONArray(
+				"dependencies" +
+					"/expected_active_pages_transformations_individual_1.json",
+				this),
+			new JSONArray(
+				_bqIdentityInterestPageRepository.getActivePagesTransformations(
+					1L, "interestName eq 'ratio'",
+					"e99bd0305d9cf1caf3f2fb436bd298ba4cd86e8660e182962b0878bb" +
+						"b1fe7bbe",
+					"individual", PageRequest.of(0, 10))),
 			true);
 	}
 
