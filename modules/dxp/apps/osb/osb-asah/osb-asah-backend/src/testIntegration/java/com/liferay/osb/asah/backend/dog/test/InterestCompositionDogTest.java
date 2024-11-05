@@ -183,6 +183,39 @@ public class InterestCompositionDogTest extends BaseCompositionDogTestCase {
 			2, 3, 2);
 	}
 
+	@BQSQLResource(
+		resourcePath = "bq_identity_interest_score_identity_activities.sql"
+	)
+	@RepositoryResource(
+		repositoryClass = BQIdentityRepository.class,
+		resourcePath = "osbasahfaroinfo/bq_identity_top_interest_score_identities.json"
+	)
+	@RepositoryResource(
+		repositoryClass = BQMembershipRepository.class,
+		resourcePath = "osbasahfaroinfo/bq_identity_interest_score_memberships.json"
+	)
+	@RepositoryResource(
+		repositoryClass = BQIdentityInterestScoreRepository.class,
+		resourcePath = "osbasahfaroinfo/bq_identity_top_interest_scores_info.json"
+	)
+	@Test
+	public void testGetIndividualSegmentTopInterests() {
+		checkResults(
+			_interestCompositionDog.getIndividualSegmentCompositionResultBag(
+				Boolean.TRUE, 1L, null, 366637689379787780L, 5,
+				Sort.desc("count"), 0),
+			new LinkedHashMap<String, Long>() {
+				{
+					put("keyword2", 2L);
+					put("keyword3", 2L);
+					put("keyword6", 2L);
+					put("keyword1", 1L);
+					put("keyword10", 1L);
+				}
+			},
+			2, 12, 2);
+	}
+
 	@Autowired
 	private InterestCompositionDog _interestCompositionDog;
 

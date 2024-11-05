@@ -1,0 +1,122 @@
+[
+	{
+		"channelId": 1,
+		"dateRecorded": "${now}",
+		"identityId": "374790575409131097",
+		"interestScore": 2.614959778036198,
+		"interested": true,
+		"keyword": "keyword1"
+	},
+	{
+		"channelId": 1,
+		"dateRecorded": "${now}",
+		"identityId": "374790575409131097",
+		"interestScore": 2.1041341542702074,
+		"interested": true,
+		"keyword": "keyword2"
+	},
+	{
+		"channelId": 1,
+		"dateRecorded": "${now}",
+		"identityId": "374790575409131097",
+		"interestScore": 1.4546849849874945,
+		"interested": true,
+		"keyword": "keyword3"
+	},
+	{
+		"channelId": 1,
+		"dateRecorded": "${now}",
+		"identityId": "374790575409131097",
+		"interestScore": 2.1041341542702074,
+		"interested": true,
+		"keyword": "keyword4"
+	},
+	{
+		"channelId": 1,
+		"dateRecorded": "${now}",
+		"identityId": "374790575409131097",
+		"interestScore": 0.7702225204735745,
+		"interested": true,
+		"keyword": "keyword5"
+	},
+	{
+		"channelId": 1,
+		"dateRecorded": "${now}",
+		"identityId": "374790575409131097",
+		"interestScore": 0.7702225204735745,
+		"interested": true,
+		"keyword": "keyword6"
+	},
+	{
+		"channelId": 1,
+		"dateRecorded": "${now}",
+		"identityId": "374790575409131097",
+		"interestScore": 2.614959778036198,
+		"interested": true,
+		"keyword": "keyword7"
+	},
+	{
+		"channelId": 1,
+		"dateRecorded": "${now}",
+		"identityId": "374790575409131098",
+		"interestScore": 2.1041341542702074,
+		"interested": true,
+		"keyword": "keyword6"
+	},
+	{
+		"channelId": 1,
+		"dateRecorded": "${now}",
+		"identityId": "374790575409131098",
+		"interestScore": 1.7676619176489945,
+		"interested": true,
+		"keyword": "keyword8"
+	},
+	{
+		"channelId": 1,
+		"dateRecorded": "${now}",
+		"identityId": "374790575409131098",
+		"interestScore": 2.614959778036198,
+		"interested": true,
+		"keyword": "keyword2"
+	},
+	{
+		"channelId": 1,
+		"dateRecorded": "${now}",
+		"identityId": "374790575409131098",
+		"interestScore": 1.7676619176489945,
+		"interested": true,
+		"keyword": "keyword3"
+	},
+	{
+		"channelId": 1,
+		"dateRecorded": "${now}",
+		"identityId": "374790575409131098",
+		"interestScore": 2.1041341542702074,
+		"interested": true,
+		"keyword": "keyword9"
+	},
+	{
+		"channelId": 1,
+		"dateRecorded": "${now}",
+		"identityId": "374790575409131098",
+		"interestScore": 1.7676619176489945,
+		"interested": true,
+		"keyword": "keyword10"
+	},
+	{
+		"channelId": 1,
+		"dateRecorded": "${now}",
+		"identityId": "374790575409131098",
+		"interestScore": 2.1041341542702074,
+		"interested": true,
+		"keyword": "keyword11"
+	},
+	{
+		"channelId": 1,
+		"dateRecorded": "${now}",
+		"identityId": "374790575409131098",
+		"interestScore": 0.7702225204735745,
+		"interested": true,
+		"keyword": "keyword12"
+	}
+]
