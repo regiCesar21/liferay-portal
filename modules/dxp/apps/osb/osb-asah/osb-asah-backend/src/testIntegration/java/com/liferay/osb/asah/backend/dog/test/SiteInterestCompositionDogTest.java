@@ -154,6 +154,24 @@ public class SiteInterestCompositionDogTest extends BaseCompositionDogTestCase {
 			1, 1, 1);
 	}
 
+	@BQSQLResource(resourcePath = "session_top_interest_score_info.sql")
+	@Test
+	public void testGetTopInterestsCompositionResultBagLast30Days() {
+		checkResults(
+			_siteInterestCompositionDog.getCompositionResultBag(
+				2L, 5, 0, TimeRange.of(30)),
+			new LinkedHashMap<String, Long>() {
+				{
+					put("keyword1", 1L);
+					put("keyword2", 1L);
+					put("keyword3", 1L);
+					put("keyword4", 1L);
+					put("keyword5", 1L);
+				}
+			},
+			1, 7, 3);
+	}
+
 	@Autowired
 	private SiteInterestCompositionDog _siteInterestCompositionDog;
 
