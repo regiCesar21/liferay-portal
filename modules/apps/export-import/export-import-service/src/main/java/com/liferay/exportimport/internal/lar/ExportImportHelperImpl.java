@@ -836,7 +836,7 @@ public class ExportImportHelperImpl implements ExportImportHelper {
 
 		String referencedContentBehavior = "include-always";
 
-		if (!ArrayUtil.isEmpty(referencedContentBehaviorArray)) {
+		if (ArrayUtil.isNotEmpty(referencedContentBehaviorArray)) {
 			referencedContentBehavior = referencedContentBehaviorArray[0];
 		}
 

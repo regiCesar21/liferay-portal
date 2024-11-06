@@ -144,7 +144,7 @@ public class ModifiedFacetBuilder {
 			return rangeString;
 		}
 
-		if (!ArrayUtil.isEmpty(_selectedRanges)) {
+		if (ArrayUtil.isNotEmpty(_selectedRanges)) {
 			Map<String, String> rangesMap = getRangesMap(_rangesJSONArray);
 
 			String selectedRange = _selectedRanges[_selectedRanges.length - 1];

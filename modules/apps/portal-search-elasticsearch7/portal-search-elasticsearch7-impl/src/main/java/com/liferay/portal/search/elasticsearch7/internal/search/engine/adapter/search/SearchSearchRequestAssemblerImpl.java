@@ -261,7 +261,7 @@ public class SearchSearchRequestAssemblerImpl
 		String[] selectedFieldNames =
 			searchSearchRequest.getSelectedFieldNames();
 
-		if (!ArrayUtil.isEmpty(selectedFieldNames)) {
+		if (ArrayUtil.isNotEmpty(selectedFieldNames)) {
 			searchRequestBuilder.storedFields(selectedFieldNames);
 		}
 		else {

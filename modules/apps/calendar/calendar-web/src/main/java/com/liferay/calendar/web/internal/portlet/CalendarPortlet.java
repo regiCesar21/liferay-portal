@@ -1286,7 +1286,7 @@ public class CalendarPortlet extends MVCPortlet {
 		long[] calendarIds = ParamUtil.getLongValues(
 			resourceRequest, "calendarIds");
 
-		if (!ArrayUtil.isEmpty(calendarIds)) {
+		if (ArrayUtil.isNotEmpty(calendarIds)) {
 			java.util.Calendar endTimeJCalendar = getJCalendar(
 				resourceRequest, "endTime");
 			java.util.Calendar startTimeJCalendar = getJCalendar(

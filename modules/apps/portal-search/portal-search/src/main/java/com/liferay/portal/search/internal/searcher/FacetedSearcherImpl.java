@@ -257,7 +257,7 @@ public class FacetedSearcherImpl
 	private String[] _getEntryClassNames(SearchContext searchContext) {
 		String[] entryClassNames = searchContext.getEntryClassNames();
 
-		if (!ArrayUtil.isEmpty(entryClassNames)) {
+		if (ArrayUtil.isNotEmpty(entryClassNames)) {
 			return entryClassNames;
 		}
 

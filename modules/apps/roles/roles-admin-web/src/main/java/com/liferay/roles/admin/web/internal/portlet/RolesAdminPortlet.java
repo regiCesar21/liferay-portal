@@ -251,8 +251,8 @@ public class RolesAdminPortlet extends MVCPortlet {
 		long[] removeUserIds = StringUtil.split(
 			ParamUtil.getString(actionRequest, "removeUserIds"), 0L);
 
-		if (!ArrayUtil.isEmpty(addUserIds) ||
-			!ArrayUtil.isEmpty(removeUserIds)) {
+		if (ArrayUtil.isNotEmpty(addUserIds) ||
+			ArrayUtil.isNotEmpty(removeUserIds)) {
 
 			try (ProxyModeThreadLocalCloseable proxyModeThreadLocalCloseable =
 					new ProxyModeThreadLocalCloseable()) {
@@ -274,8 +274,8 @@ public class RolesAdminPortlet extends MVCPortlet {
 		long[] removeGroupIds = StringUtil.split(
 			ParamUtil.getString(actionRequest, "removeGroupIds"), 0L);
 
-		if (!ArrayUtil.isEmpty(addGroupIds) ||
-			!ArrayUtil.isEmpty(removeGroupIds)) {
+		if (ArrayUtil.isNotEmpty(addGroupIds) ||
+			ArrayUtil.isNotEmpty(removeGroupIds)) {
 
 			_groupService.addRoleGroups(roleId, addGroupIds);
 			_groupService.unsetRoleGroups(roleId, removeGroupIds);

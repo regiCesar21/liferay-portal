@@ -795,7 +795,7 @@ public abstract class BaseIndexer<T> implements Indexer<T> {
 
 		Set<String> selectedFieldNames = null;
 
-		if (!ArrayUtil.isEmpty(getDefaultSelectedFieldNames())) {
+		if (ArrayUtil.isNotEmpty(getDefaultSelectedFieldNames())) {
 			selectedFieldNames = SetUtil.fromArray(
 				getDefaultSelectedFieldNames());
 
@@ -807,7 +807,7 @@ public abstract class BaseIndexer<T> implements Indexer<T> {
 			}
 		}
 
-		if (!ArrayUtil.isEmpty(getDefaultSelectedLocalizedFieldNames())) {
+		if (ArrayUtil.isNotEmpty(getDefaultSelectedLocalizedFieldNames())) {
 			if (selectedFieldNames == null) {
 				selectedFieldNames = new HashSet<>();
 			}

@@ -88,7 +88,7 @@ public class ModifiedFacetCalendarDisplayBuilder {
 	protected void buildBounds() {
 		String[] bounds = _getBounds();
 
-		if (!ArrayUtil.isEmpty(bounds)) {
+		if (ArrayUtil.isNotEmpty(bounds)) {
 			_parseFrom(bounds[0]);
 			_parseTo(bounds[1]);
 		}

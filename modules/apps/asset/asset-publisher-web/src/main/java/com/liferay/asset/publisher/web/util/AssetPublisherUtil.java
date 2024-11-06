@@ -554,12 +554,12 @@ public class AssetPublisherUtil {
 			return assetEntries;
 		}
 
-		if (!ArrayUtil.isEmpty(allCategoryIds)) {
+		if (ArrayUtil.isNotEmpty(allCategoryIds)) {
 			assetEntries = _filterAssetCategoriesAssetEntries(
 				assetEntries, allCategoryIds);
 		}
 
-		if (!ArrayUtil.isEmpty(allTagNames)) {
+		if (ArrayUtil.isNotEmpty(allTagNames)) {
 			assetEntries = _filterAssetTagNamesAssetEntries(
 				assetEntries, allTagNames);
 		}
