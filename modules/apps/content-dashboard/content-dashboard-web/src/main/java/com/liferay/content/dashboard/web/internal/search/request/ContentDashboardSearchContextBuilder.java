@@ -72,7 +72,7 @@ public class ContentDashboardSearchContextBuilder {
 				_httpServletRequest, "contentDashboardItemTypePayload",
 				new String[0], false);
 
-		if (!ArrayUtil.isEmpty(contentDashboardItemTypePayloads)) {
+		if (ArrayUtil.isNotEmpty(contentDashboardItemTypePayloads)) {
 			searchContext.setClassTypeIds(
 				Stream.of(
 					contentDashboardItemTypePayloads

@@ -49,7 +49,7 @@ public class HttpHelperImpl implements HttpHelper {
 
 			String[] parameterValues = parameterMap.get(parameterName);
 
-			if (!ArrayUtil.isEmpty(parameterValues)) {
+			if (ArrayUtil.isNotEmpty(parameterValues)) {
 				return parameterValues[0];
 			}
 

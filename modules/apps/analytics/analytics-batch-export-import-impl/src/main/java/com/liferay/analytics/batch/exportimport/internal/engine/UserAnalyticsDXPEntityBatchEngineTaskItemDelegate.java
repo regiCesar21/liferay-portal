@@ -110,7 +110,7 @@ public class UserAnalyticsDXPEntityBatchEngineTaskItemDelegate
 			String[] syncedOrganizationIds =
 				analyticsConfiguration.syncedOrganizationIds();
 
-			if (!ArrayUtil.isEmpty(syncedOrganizationIds)) {
+			if (ArrayUtil.isNotEmpty(syncedOrganizationIds)) {
 				joinStep = joinStep.leftJoinOn(
 					Users_OrgsTable.INSTANCE,
 					Users_OrgsTable.INSTANCE.userId.eq(
@@ -124,7 +124,7 @@ public class UserAnalyticsDXPEntityBatchEngineTaskItemDelegate
 			String[] syncedUserGroupIds =
 				analyticsConfiguration.syncedUserGroupIds();
 
-			if (!ArrayUtil.isEmpty(syncedUserGroupIds)) {
+			if (ArrayUtil.isNotEmpty(syncedUserGroupIds)) {
 				joinStep = joinStep.leftJoinOn(
 					Users_UserGroupsTable.INSTANCE,
 					Users_UserGroupsTable.INSTANCE.userId.eq(
@@ -171,7 +171,7 @@ public class UserAnalyticsDXPEntityBatchEngineTaskItemDelegate
 			String[] syncedOrganizationIds =
 				analyticsConfiguration.syncedOrganizationIds();
 
-			if (!ArrayUtil.isEmpty(syncedOrganizationIds)) {
+			if (ArrayUtil.isNotEmpty(syncedOrganizationIds)) {
 				joinStep = joinStep.leftJoinOn(
 					Users_OrgsTable.INSTANCE,
 					Users_OrgsTable.INSTANCE.userId.eq(
@@ -185,7 +185,7 @@ public class UserAnalyticsDXPEntityBatchEngineTaskItemDelegate
 			String[] syncedUserGroupIds =
 				analyticsConfiguration.syncedUserGroupIds();
 
-			if (!ArrayUtil.isEmpty(syncedUserGroupIds)) {
+			if (ArrayUtil.isNotEmpty(syncedUserGroupIds)) {
 				joinStep = joinStep.leftJoinOn(
 					Users_UserGroupsTable.INSTANCE,
 					Users_UserGroupsTable.INSTANCE.userId.eq(

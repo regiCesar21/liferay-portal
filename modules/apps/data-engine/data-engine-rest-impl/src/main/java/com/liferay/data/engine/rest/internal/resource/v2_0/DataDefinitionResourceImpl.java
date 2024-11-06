@@ -1222,7 +1222,8 @@ public class DataDefinitionResourceImpl
 				dataLayoutPage.setDataLayoutRows(
 					ArrayUtil.filter(
 						dataLayoutPage.getDataLayoutRows(),
-						row -> !ArrayUtil.isEmpty(row.getDataLayoutColumns())));
+						row -> ArrayUtil.isNotEmpty(
+							row.getDataLayoutColumns())));
 			});
 	}
 

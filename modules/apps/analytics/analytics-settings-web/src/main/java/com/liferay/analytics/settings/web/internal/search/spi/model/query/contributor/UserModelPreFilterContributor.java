@@ -35,7 +35,7 @@ public class UserModelPreFilterContributor
 		long[] excludedRoleIds = GetterUtil.getLongValues(
 			searchContext.getAttribute("excludedRoleIds"));
 
-		if (!ArrayUtil.isEmpty(excludedRoleIds)) {
+		if (ArrayUtil.isNotEmpty(excludedRoleIds)) {
 			booleanFilter.add(
 				_createTermsFilter(
 					"roleIds", ArrayUtil.toStringArray(excludedRoleIds)),
@@ -47,7 +47,7 @@ public class UserModelPreFilterContributor
 		long[] selectedOrganizationIds = GetterUtil.getLongValues(
 			searchContext.getAttribute("selectedOrganizationIds"));
 
-		if (!ArrayUtil.isEmpty(selectedOrganizationIds)) {
+		if (ArrayUtil.isNotEmpty(selectedOrganizationIds)) {
 			innerBooleanFilter.add(
 				_createTermsFilter(
 					"organizationIds",
@@ -58,7 +58,7 @@ public class UserModelPreFilterContributor
 		long[] selectedUserGroupIds = GetterUtil.getLongValues(
 			searchContext.getAttribute("selectedUserGroupIds"));
 
-		if (!ArrayUtil.isEmpty(selectedUserGroupIds)) {
+		if (ArrayUtil.isNotEmpty(selectedUserGroupIds)) {
 			innerBooleanFilter.add(
 				_createTermsFilter(
 					"userGroupIds",

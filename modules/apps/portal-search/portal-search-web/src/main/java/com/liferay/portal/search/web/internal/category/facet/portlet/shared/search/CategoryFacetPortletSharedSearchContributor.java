@@ -55,7 +55,7 @@ public class CategoryFacetPortletSharedSearchContributor
 	}
 
 	protected static long[] toLongArray(String[] parameterValues) {
-		if (!ArrayUtil.isEmpty(parameterValues)) {
+		if (ArrayUtil.isNotEmpty(parameterValues)) {
 			return ListUtil.toLongArray(
 				Arrays.asList(parameterValues), GetterUtil::getLong);
 		}

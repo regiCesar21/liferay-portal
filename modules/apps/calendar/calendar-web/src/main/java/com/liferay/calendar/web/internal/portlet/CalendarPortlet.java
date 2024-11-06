@@ -1323,7 +1323,7 @@ public class CalendarPortlet extends MVCPortlet {
 			resourceRequest, "calendarIds");
 		TimeZone timeZone = getTimeZone(resourceRequest);
 
-		if (!ArrayUtil.isEmpty(calendarIds)) {
+		if (ArrayUtil.isNotEmpty(calendarIds)) {
 			java.util.Calendar endTimeJCalendar = getJCalendar(
 				resourceRequest, "endTime");
 			java.util.Calendar startTimeJCalendar = getJCalendar(

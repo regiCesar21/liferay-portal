@@ -373,12 +373,12 @@ public class AssetPublisherDisplayContext {
 				return assetEntries;
 			}
 
-			if (!ArrayUtil.isEmpty(getAllAssetCategoryIds())) {
+			if (ArrayUtil.isNotEmpty(getAllAssetCategoryIds())) {
 				assetEntries = _filterAssetCategoriesAssetEntries(
 					assetEntries, getAllAssetCategoryIds());
 			}
 
-			if (!ArrayUtil.isEmpty(getAllAssetTagNames())) {
+			if (ArrayUtil.isNotEmpty(getAllAssetTagNames())) {
 				assetEntries = _filterAssetTagNamesAssetEntries(
 					assetEntries, getAllAssetTagNames());
 			}

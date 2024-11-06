@@ -40,7 +40,7 @@ public class AnalyticsConfigurationModelListener
 		String[] syncedContactFieldNames =
 			analyticsConfiguration.syncedContactFieldNames();
 
-		if (!ArrayUtil.isEmpty(syncedContactFieldNames)) {
+		if (ArrayUtil.isNotEmpty(syncedContactFieldNames)) {
 			properties.put(
 				"previousSyncedContactFieldNames", syncedContactFieldNames);
 		}
@@ -48,7 +48,7 @@ public class AnalyticsConfigurationModelListener
 		String[] syncedUserFieldNames =
 			analyticsConfiguration.syncedUserFieldNames();
 
-		if (!ArrayUtil.isEmpty(syncedUserFieldNames)) {
+		if (ArrayUtil.isNotEmpty(syncedUserFieldNames)) {
 			properties.put(
 				"previousSyncedUserFieldNames", syncedUserFieldNames);
 		}
