@@ -5,16 +5,17 @@
 
 package com.liferay.osb.asah.dataflow.io;
 
-import org.apache.beam.sdk.io.FileBasedSink;
+import org.apache.beam.sdk.coders.StringUtf8Coder;
+import org.apache.beam.sdk.io.Compression;
+import org.apache.beam.sdk.io.FileIO;
 import org.apache.beam.sdk.io.TextIO;
-import org.apache.beam.sdk.io.fs.ResolveOptions;
-import org.apache.beam.sdk.io.fs.ResourceId;
+import org.apache.beam.sdk.io.WriteFilesResult;
 import org.apache.beam.sdk.transforms.PTransform;
+import org.apache.beam.sdk.transforms.SerializableFunction;
 import org.apache.beam.sdk.transforms.windowing.BoundedWindow;
 import org.apache.beam.sdk.transforms.windowing.IntervalWindow;
 import org.apache.beam.sdk.transforms.windowing.PaneInfo;
 import org.apache.beam.sdk.values.PCollection;
-import org.apache.beam.sdk.values.PDone;
 
 import org.joda.time.format.DateTimeFormatter;
 import org.joda.time.format.ISODateTimeFormat;
@@ -24,79 +25,72 @@ import org.joda.time.format.ISODateTimeFormat;
  */
 public class WriteToText {
 
-	public static class WriteOneFilePerWindow
-		extends PTransform<PCollection<String>, PDone> {
+	public static class WriteOneFilePerProjectIdPerWindow
+		extends PTransform<PCollection<String>, WriteFilesResult<String>> {
 
-		public WriteOneFilePerWindow(
-			String fileNamePrefix, String outputDirectory) {
+		public WriteOneFilePerProjectIdPerWindow(
+			String fileNamePrefix, String outputDirectory,
+			SerializableFunction<String, String> projectIdMessageMapper) {
 
 			_fileNamePrefix = fileNamePrefix;
 			_outputDirectory = outputDirectory;
+			_projectIdMessageMapper = projectIdMessageMapper;
 		}
 
 		@Override
-		public PDone expand(PCollection<String> pCollection) {
-			ResourceId resource = FileBasedSink.convertToFileResourceIfPossible(
-				_outputDirectory + "/" + _fileNamePrefix);
+		public WriteFilesResult<String> expand(
+			PCollection<String> pCollection) {
 
 			return pCollection.apply(
-				TextIO.write(
+				FileIO.<String, String>writeDynamic(
+				).by(
+					_projectIdMessageMapper
+				).via(
+					TextIO.sink()
+				).withDestinationCoder(
+					StringUtf8Coder.of()
+				).withNaming(
+					projectId -> new PerWindowPartitionedFiles(
+						_outputDirectory + "/" + projectId, _fileNamePrefix)
 				).withNumShards(
 					1
-				).withTempDirectory(
-					resource.getCurrentDirectory()
-				).withWindowedWrites(
-				).to(
-					new PerWindowFiles(resource)
 				));
 		}
 
 		private final String _fileNamePrefix;
 		private final String _outputDirectory;
+		private final SerializableFunction<String, String>
+			_projectIdMessageMapper;
 
 	}
 
-	protected static class PerWindowFiles extends FileBasedSink.FilenamePolicy {
+	protected static class PerWindowPartitionedFiles
+		implements FileIO.Write.FileNaming {
 
-		public PerWindowFiles(ResourceId resourceId) {
-			_resourceId = resourceId;
+		public PerWindowPartitionedFiles(
+			String outputFolder, String filePrefix) {
+
+			_outputFolder = outputFolder;
+			_filePrefix = filePrefix;
 		}
 
 		@Override
-		public ResourceId unwindowedFilename(
-			int shardNumber, int numShards,
-			FileBasedSink.OutputFileHints outputFileHints) {
-
-			throw new UnsupportedOperationException();
-		}
-
-		@Override
-		public ResourceId windowedFilename(
-			int shardNumber, int numShards, BoundedWindow boundedWindow,
-			PaneInfo paneInfo, FileBasedSink.OutputFileHints outputFileHints) {
-
-			ResourceId resourceId = _resourceId.getCurrentDirectory();
+		public String getFilename(
+			BoundedWindow boundedWindow, PaneInfo paneInfo, int numShards,
+			int shardIndex, Compression compression) {
 
 			IntervalWindow intervalWindow = (IntervalWindow)boundedWindow;
 
-			return resourceId.resolve(
-				String.format(
-					"%s/%s%s",
-					_dateDateTimeFormatter.print(intervalWindow.start()),
-					_getFileNameForWindow(intervalWindow),
-					outputFileHints.getSuggestedFilenameSuffix()),
-				ResolveOptions.StandardResolveOptions.RESOLVE_FILE);
+			return String.format(
+				"%s/%s/%s%s", _outputFolder,
+				_dateDateTimeFormatter.print(intervalWindow.start()),
+				_getFileNameForWindow(intervalWindow),
+				compression.getSuggestedSuffix());
 		}
 
 		private String _getFileNameForWindow(IntervalWindow intervalWindow) {
-			String filePrefix = "";
-
-			if (!_resourceId.isDirectory()) {
-				filePrefix = _resourceId.getFilename();
-			}
-
 			return String.format(
-				"%s-%s-to-%s", filePrefix,
+				"%s-%s-to-%s", _filePrefix,
 				_timeDateTimeFormatter.print(intervalWindow.start()),
 				_timeDateTimeFormatter.print(intervalWindow.end()));
 		}
@@ -108,7 +102,8 @@ public class WriteToText {
 			ISODateTimeFormat.hourMinute(
 			).withZoneUTC();
 
-		private final ResourceId _resourceId;
+		private final String _filePrefix;
+		private final String _outputFolder;
 
 	}
 

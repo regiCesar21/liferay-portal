@@ -30,6 +30,7 @@ import java.util.Set;
 
 import org.apache.beam.sdk.Pipeline;
 import org.apache.beam.sdk.PipelineResult;
+import org.apache.beam.sdk.io.WriteFilesResult;
 import org.apache.beam.sdk.io.gcp.bigquery.BigQueryIO;
 import org.apache.beam.sdk.io.gcp.bigquery.TableDestination;
 import org.apache.beam.sdk.io.gcp.bigquery.WriteResult;
@@ -53,7 +54,6 @@ import org.apache.beam.sdk.transforms.windowing.Window;
 import org.apache.beam.sdk.values.KV;
 import org.apache.beam.sdk.values.PBegin;
 import org.apache.beam.sdk.values.PCollection;
-import org.apache.beam.sdk.values.PDone;
 import org.apache.beam.sdk.values.TypeDescriptor;
 import org.apache.beam.sdk.values.ValueInSingleWindow;
 import org.apache.commons.codec.digest.DigestUtils;
@@ -293,7 +293,8 @@ public class EventIngestionPipeline {
 
 	}
 
-	public static class BackupPubsubMessages extends PTransform<PBegin, PDone> {
+	public static class BackupPubsubMessages
+		extends PTransform<PBegin, WriteFilesResult<String>> {
 
 		public BackupPubsubMessages(
 			String inputSubscription, String outputDirectory,
@@ -306,7 +307,7 @@ public class EventIngestionPipeline {
 		}
 
 		@Override
-		public PDone expand(PBegin pBegin) {
+		public WriteFilesResult<String> expand(PBegin pBegin) {
 			return pBegin.apply(
 				PubsubIO.readStrings(
 				).fromSubscription(
@@ -319,8 +320,25 @@ public class EventIngestionPipeline {
 						Duration.standardMinutes(_writeIntervalInMinutes)))
 			).apply(
 				"Write Files",
-				new WriteToText.WriteOneFilePerWindow(
-					_outputFileNamePrefix, _outputDirectory)
+				new WriteToText.WriteOneFilePerProjectIdPerWindow(
+					_outputFileNamePrefix, _outputDirectory,
+					new SerializableFunction<String, String>() {
+
+						@Override
+						public String apply(String input) {
+							try {
+								AnalyticsEvent analyticsEvent =
+									ObjectMapperUtil.readValue(
+										AnalyticsEvent.class, input);
+
+								return analyticsEvent.projectId;
+							}
+							catch (Exception exception) {
+								return "undefined";
+							}
+						}
+
+					})
 			);
 		}
 
