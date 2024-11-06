@@ -413,7 +413,7 @@ public class ImageToolImpl implements ImageTool {
 
 		String[] keys = renderedImage.getPropertyNames();
 
-		if (!ArrayUtil.isEmpty(keys)) {
+		if (ArrayUtil.isNotEmpty(keys)) {
 			for (String key : keys) {
 				properties.put(key, renderedImage.getProperty(key));
 			}

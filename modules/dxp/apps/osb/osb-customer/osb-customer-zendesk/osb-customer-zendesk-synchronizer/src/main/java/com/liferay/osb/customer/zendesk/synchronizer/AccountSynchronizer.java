@@ -282,7 +282,7 @@ public class AccountSynchronizer {
 
 		Contact[] contacts = account.getCustomerContacts();
 
-		if (!ArrayUtil.isEmpty(contacts)) {
+		if (ArrayUtil.isNotEmpty(contacts)) {
 			for (Contact contact : contacts) {
 				String emailAddress = contact.getEmailAddress();
 
@@ -588,7 +588,7 @@ public class AccountSynchronizer {
 
 		PostalAddress[] postalAddresses = account.getPostalAddresses();
 
-		if (!ArrayUtil.isEmpty(postalAddresses)) {
+		if (ArrayUtil.isNotEmpty(postalAddresses)) {
 			address = AddressUtil.convertAddressToString(postalAddresses[0]);
 			countryName = postalAddresses[0].getAddressCountry();
 		}

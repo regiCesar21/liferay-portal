@@ -73,7 +73,7 @@ public static class AlloyControllerImpl extends TestrayAlloyControllerImpl {
 
 		long[] testrayRunIdsArray = ParamUtil.getLongValues(request, "testrayRunIds");
 
-		if (!ArrayUtil.isEmpty(testrayRunIdsArray)) {
+		if (ArrayUtil.isNotEmpty(testrayRunIdsArray)) {
 			testrayRunIds = ListUtil.toList(testrayRunIdsArray);
 		}
 		else {

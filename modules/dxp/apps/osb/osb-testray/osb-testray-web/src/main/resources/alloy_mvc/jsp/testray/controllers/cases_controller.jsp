@@ -471,7 +471,7 @@ public static class AlloyControllerImpl extends TestrayAlloyControllerImpl {
 			clazz = TestrayRun.class;
 			classPK = testrayRunId;
 		}
-		else if (!ArrayUtil.isEmpty(testrayRunIds)) {
+		else if (ArrayUtil.isNotEmpty(testrayRunIds)) {
 			clazz = TestrayRun.class;
 			classPK = testrayRunIds[0];
 		}

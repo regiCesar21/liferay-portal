@@ -1153,7 +1153,7 @@ public class CalendarPortlet extends MVCPortlet {
 		List<CalendarBooking> calendarBookings =
 			Collections.<CalendarBooking>emptyList();
 
-		if (!ArrayUtil.isEmpty(calendarIds)) {
+		if (ArrayUtil.isNotEmpty(calendarIds)) {
 			calendarBookings = _calendarBookingService.search(
 				themeDisplay.getCompanyId(), new long[0], calendarIds,
 				new long[0], -1, null, startTimeJCalendar.getTimeInMillis(),

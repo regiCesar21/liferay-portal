@@ -580,13 +580,13 @@ public class WebXMLDefinitionLoader extends DefaultHandler {
 		FilterDefinition filterDefinition, String[] value,
 		String[] urlPatterns) {
 
-		if (!ArrayUtil.isEmpty(value)) {
+		if (ArrayUtil.isNotEmpty(value)) {
 			for (String urlPattern : value) {
 				filterDefinition.addURLPattern(urlPattern);
 			}
 		}
 
-		if (!ArrayUtil.isEmpty(urlPatterns)) {
+		if (ArrayUtil.isNotEmpty(urlPatterns)) {
 			if (ListUtil.isNotEmpty(filterDefinition.getURLPatterns())) {
 				throw new IllegalStateException(
 					"Both value and URL patterns are declared");
@@ -611,13 +611,13 @@ public class WebXMLDefinitionLoader extends DefaultHandler {
 		ServletDefinition servletDefinition, String[] value,
 		String[] urlPatterns) {
 
-		if (!ArrayUtil.isEmpty(value)) {
+		if (ArrayUtil.isNotEmpty(value)) {
 			for (String urlPattern : value) {
 				servletDefinition.addURLPattern(urlPattern);
 			}
 		}
 
-		if (!ArrayUtil.isEmpty(urlPatterns)) {
+		if (ArrayUtil.isNotEmpty(urlPatterns)) {
 			if (ListUtil.isNotEmpty(servletDefinition.getURLPatterns())) {
 				throw new IllegalStateException(
 					"Both value and URL patterns are declared");
@@ -1010,7 +1010,7 @@ public class WebXMLDefinitionLoader extends DefaultHandler {
 
 			DispatcherType[] dispatcherTypes = webFilter.dispatcherTypes();
 
-			if (!ArrayUtil.isEmpty(dispatcherTypes)) {
+			if (ArrayUtil.isNotEmpty(dispatcherTypes)) {
 				for (DispatcherType dispatcherType : dispatcherTypes) {
 					filterDefinition.addDispatcher(dispatcherType.name());
 				}
@@ -1032,7 +1032,7 @@ public class WebXMLDefinitionLoader extends DefaultHandler {
 
 			String[] servletNames = webFilter.servletNames();
 
-			if (!ArrayUtil.isEmpty(servletNames)) {
+			if (ArrayUtil.isNotEmpty(servletNames)) {
 				for (String servletName : servletNames) {
 					filterDefinition.addServletName(servletName);
 				}
@@ -1130,7 +1130,7 @@ public class WebXMLDefinitionLoader extends DefaultHandler {
 	private void _setInitParameters(
 		WebInitParam[] webInitParams, Map<String, String> initParametersMap) {
 
-		if (!ArrayUtil.isEmpty(webInitParams)) {
+		if (ArrayUtil.isNotEmpty(webInitParams)) {
 			for (WebInitParam webInitParam : webInitParams) {
 				initParametersMap.put(
 					webInitParam.name(), webInitParam.value());

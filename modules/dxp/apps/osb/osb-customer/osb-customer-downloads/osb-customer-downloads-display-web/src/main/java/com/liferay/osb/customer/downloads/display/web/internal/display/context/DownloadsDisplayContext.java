@@ -220,7 +220,7 @@ public class DownloadsDisplayContext {
 				assetCategoryIds, productAssetCategory.getCategoryId());
 		}
 
-		if (!ArrayUtil.isEmpty(assetCategoryIds)) {
+		if (ArrayUtil.isNotEmpty(assetCategoryIds)) {
 			searchContext.setAttribute(
 				Field.ASSET_CATEGORY_IDS, assetCategoryIds);
 		}

@@ -580,7 +580,7 @@ public class AccountEnvironmentConstants {
 
 			listTypeIds = getEnvListTypeIds(envLFR, envListType + sublistType);
 
-			if (!ArrayUtil.isEmpty(listTypeIds)) {
+			if (ArrayUtil.isNotEmpty(listTypeIds)) {
 				break;
 			}
 		}

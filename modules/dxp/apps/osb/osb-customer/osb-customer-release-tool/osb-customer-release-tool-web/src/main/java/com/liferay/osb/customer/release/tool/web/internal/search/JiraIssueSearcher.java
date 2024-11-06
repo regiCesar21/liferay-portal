@@ -122,7 +122,7 @@ public class JiraIssueSearcher extends BaseSearcher {
 			sb.append(")");
 		}
 
-		if (!ArrayUtil.isEmpty(components)) {
+		if (ArrayUtil.isNotEmpty(components)) {
 			sb.append(" AND ");
 
 			sb.append("component in (\"");

@@ -279,7 +279,7 @@ public class AccountEntryLocalServiceImpl
 		accountEntry.setActiveTicketSupport(activeTicketSupport);
 		accountEntry.setStatus(status);
 
-		if (!ArrayUtil.isEmpty(languageIds)) {
+		if (ArrayUtil.isNotEmpty(languageIds)) {
 			accountEntryLanguageLocalService.setAccountEntryLanguageIds(
 				accountEntryId, languageIds);
 		}
@@ -383,7 +383,7 @@ public class AccountEntryLocalServiceImpl
 
 		// Languages
 
-		if (!ArrayUtil.isEmpty(languageIds)) {
+		if (ArrayUtil.isNotEmpty(languageIds)) {
 			accountEntryLanguageLocalService.setAccountEntryLanguageIds(
 				accountEntryId, languageIds);
 		}

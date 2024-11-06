@@ -2275,7 +2275,7 @@ public class PortalImpl implements Portal {
 
 			if (displayType.equals(
 					ExpandoColumnConstants.PROPERTY_DISPLAY_TYPE_TEXT_BOX) &&
-				!ArrayUtil.isEmpty(values)) {
+				ArrayUtil.isNotEmpty(values)) {
 
 				values = StringUtil.splitLines(values[0]);
 			}
@@ -2290,7 +2290,7 @@ public class PortalImpl implements Portal {
 
 			if (displayType.equals(
 					ExpandoColumnConstants.PROPERTY_DISPLAY_TYPE_TEXT_BOX) &&
-				!ArrayUtil.isEmpty(values)) {
+				ArrayUtil.isNotEmpty(values)) {
 
 				values = StringUtil.splitLines(values[0]);
 			}
@@ -2305,7 +2305,7 @@ public class PortalImpl implements Portal {
 
 			if (displayType.equals(
 					ExpandoColumnConstants.PROPERTY_DISPLAY_TYPE_TEXT_BOX) &&
-				!ArrayUtil.isEmpty(values)) {
+				ArrayUtil.isNotEmpty(values)) {
 
 				values = StringUtil.splitLines(values[0]);
 			}
@@ -2320,7 +2320,7 @@ public class PortalImpl implements Portal {
 
 			if (displayType.equals(
 					ExpandoColumnConstants.PROPERTY_DISPLAY_TYPE_TEXT_BOX) &&
-				!ArrayUtil.isEmpty(values)) {
+				ArrayUtil.isNotEmpty(values)) {
 
 				values = StringUtil.splitLines(values[0]);
 			}
@@ -2335,7 +2335,7 @@ public class PortalImpl implements Portal {
 
 			if (displayType.equals(
 					ExpandoColumnConstants.PROPERTY_DISPLAY_TYPE_TEXT_BOX) &&
-				!ArrayUtil.isEmpty(values)) {
+				ArrayUtil.isNotEmpty(values)) {
 
 				values = StringUtil.splitLines(values[0]);
 			}
@@ -2350,7 +2350,7 @@ public class PortalImpl implements Portal {
 
 			if (displayType.equals(
 					ExpandoColumnConstants.PROPERTY_DISPLAY_TYPE_TEXT_BOX) &&
-				!ArrayUtil.isEmpty(values)) {
+				ArrayUtil.isNotEmpty(values)) {
 
 				values = StringUtil.splitLines(values[0]);
 			}
@@ -2362,7 +2362,7 @@ public class PortalImpl implements Portal {
 
 			if (displayType.equals(
 					ExpandoColumnConstants.PROPERTY_DISPLAY_TYPE_TEXT_BOX) &&
-				!ArrayUtil.isEmpty(values)) {
+				ArrayUtil.isNotEmpty(values)) {
 
 				values = StringUtil.splitLines(values[0]);
 			}

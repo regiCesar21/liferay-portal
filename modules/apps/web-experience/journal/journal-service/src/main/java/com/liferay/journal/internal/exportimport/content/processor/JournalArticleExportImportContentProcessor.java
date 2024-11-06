@@ -633,7 +633,7 @@ public class JournalArticleExportImportContentProcessor
 
 		String referencedContentBehavior = "include-if-modified";
 
-		if (!ArrayUtil.isEmpty(referencedContentBehaviorArray)) {
+		if (ArrayUtil.isNotEmpty(referencedContentBehaviorArray)) {
 			referencedContentBehavior = referencedContentBehaviorArray[0];
 		}
 

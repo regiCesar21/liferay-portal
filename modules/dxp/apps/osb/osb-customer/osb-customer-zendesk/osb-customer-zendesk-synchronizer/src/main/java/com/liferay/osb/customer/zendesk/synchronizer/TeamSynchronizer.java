@@ -40,7 +40,7 @@ public class TeamSynchronizer {
 
 		long[] zendeskOrganizationIds = getZendeskOrganizationIds(team);
 
-		if (!ArrayUtil.isEmpty(zendeskOrganizationIds)) {
+		if (ArrayUtil.isNotEmpty(zendeskOrganizationIds)) {
 			long zendeskUserId = _userSynchronizer.update(user, null);
 
 			addOrganizationMemberships(zendeskUserId, zendeskOrganizationIds);
@@ -56,7 +56,9 @@ public class TeamSynchronizer {
 		long zendeskUserId = _zendeskMapperUtil.fetchZendeskUserId(
 			user.getUserId());
 
-		if (!ArrayUtil.isEmpty(zendeskOrganizationIds) && (zendeskUserId > 0)) {
+		if (ArrayUtil.isNotEmpty(zendeskOrganizationIds) &&
+			(zendeskUserId > 0)) {
+
 			removeOrganizationMemberships(
 				zendeskUserId, zendeskOrganizationIds);
 
