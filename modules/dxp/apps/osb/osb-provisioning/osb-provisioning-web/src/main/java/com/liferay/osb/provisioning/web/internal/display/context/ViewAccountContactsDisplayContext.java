@@ -144,7 +144,7 @@ public class ViewAccountContactsDisplayContext
 		String[] contactRoleKeys = ParamUtil.getStringValues(
 			renderRequest, "contactRoleKeys");
 
-		if (!ArrayUtil.isEmpty(contactRoleKeys)) {
+		if (ArrayUtil.isNotEmpty(contactRoleKeys)) {
 			String[] accountKeysContactRoleKeys =
 				new String[contactRoleKeys.length];
 

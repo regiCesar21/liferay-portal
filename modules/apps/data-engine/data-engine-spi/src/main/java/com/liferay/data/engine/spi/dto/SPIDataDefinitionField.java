@@ -188,7 +188,7 @@ public class SPIDataDefinitionField {
 	public void setNestedSPIDataDefinitionFields(
 		SPIDataDefinitionField[] nestedSPIDataDefinitionFields) {
 
-		if (!ArrayUtil.isEmpty(nestedSPIDataDefinitionFields)) {
+		if (ArrayUtil.isNotEmpty(nestedSPIDataDefinitionFields)) {
 			_nestedSPIDataDefinitionFields = nestedSPIDataDefinitionFields;
 		}
 	}

@@ -150,7 +150,7 @@ public class ProductResourceImpl
 			_productEntryService.addProductEntry(
 				product.getName(), productFields));
 
-		if (!ArrayUtil.isEmpty(product.getExternalLinks())) {
+		if (ArrayUtil.isNotEmpty(product.getExternalLinks())) {
 			for (ExternalLink externalLink : product.getExternalLinks()) {
 				_externalLinkResource.postProductProductKeyExternalLink(
 					agentName, agentUID, curProduct.getKey(), externalLink);

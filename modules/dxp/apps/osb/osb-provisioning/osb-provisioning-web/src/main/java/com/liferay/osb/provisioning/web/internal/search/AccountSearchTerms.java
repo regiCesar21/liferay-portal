@@ -32,13 +32,13 @@ public class AccountSearchTerms extends AccountDisplayTerms {
 
 		FilterQuery filterQuery = new FilterQuery();
 
-		if (!ArrayUtil.isEmpty(subscriptionStates)) {
+		if (ArrayUtil.isNotEmpty(subscriptionStates)) {
 			filterQuery.addFilterQuery(
 				andOperator,
 				_getSubscriptionStateFilter(subscriptionProductKeys));
 		}
 
-		if (!ArrayUtil.isEmpty(receivesFLS)) {
+		if (ArrayUtil.isNotEmpty(receivesFLS)) {
 			FilterQuery nestedFilterQuery = new FilterQuery();
 
 			for (boolean receivesFLSValue : receivesFLS) {
@@ -50,12 +50,12 @@ public class AccountSearchTerms extends AccountDisplayTerms {
 			filterQuery.addFilterQuery(andOperator, nestedFilterQuery);
 		}
 
-		if (!ArrayUtil.isEmpty(activeSLAs)) {
+		if (ArrayUtil.isNotEmpty(activeSLAs)) {
 			filterQuery.addLambdaEquals(
 				andOperator, "entitlements", activeSLAs);
 		}
 
-		if (!ArrayUtil.isEmpty(partners)) {
+		if (ArrayUtil.isNotEmpty(partners)) {
 			FilterQuery nestedFilterQuery = new FilterQuery();
 
 			for (boolean partner : partners) {
@@ -79,7 +79,7 @@ public class AccountSearchTerms extends AccountDisplayTerms {
 			filterQuery.addFilterQuery(andOperator, nestedFilterQuery);
 		}
 
-		if (!ArrayUtil.isEmpty(internals)) {
+		if (ArrayUtil.isNotEmpty(internals)) {
 			FilterQuery nestedFilterQuery = new FilterQuery();
 
 			for (boolean internal : internals) {
@@ -89,7 +89,7 @@ public class AccountSearchTerms extends AccountDisplayTerms {
 			filterQuery.addFilterQuery(andOperator, nestedFilterQuery);
 		}
 
-		if (!ArrayUtil.isEmpty(providesFLS)) {
+		if (ArrayUtil.isNotEmpty(providesFLS)) {
 			FilterQuery nestedFilterQuery = new FilterQuery();
 
 			for (boolean providesFLSValue : providesFLS) {
@@ -160,7 +160,7 @@ public class AccountSearchTerms extends AccountDisplayTerms {
 				andOperator, "postalAddressCountries", countryName);
 		}
 
-		if (!ArrayUtil.isEmpty(regions)) {
+		if (ArrayUtil.isNotEmpty(regions)) {
 			filterQuery.addEquals(andOperator, "region", regions);
 		}
 
@@ -169,7 +169,7 @@ public class AccountSearchTerms extends AccountDisplayTerms {
 				andOperator, "salesNoteContent", salesInfo);
 		}
 
-		if (!ArrayUtil.isEmpty(tiers)) {
+		if (ArrayUtil.isNotEmpty(tiers)) {
 			filterQuery.addEquals(andOperator, "tier", tiers);
 		}
 
@@ -185,7 +185,7 @@ public class AccountSearchTerms extends AccountDisplayTerms {
 	public FilterQuery getBasicSearchFilter(String[] subscriptionProductKeys) {
 		FilterQuery filterQuery = new FilterQuery();
 
-		if (!ArrayUtil.isEmpty(subscriptionStates)) {
+		if (ArrayUtil.isNotEmpty(subscriptionStates)) {
 			filterQuery.addFilterQuery(
 				andOperator,
 				_getSubscriptionStateFilter(subscriptionProductKeys));
@@ -200,25 +200,26 @@ public class AccountSearchTerms extends AccountDisplayTerms {
 
 	public boolean hasSearchTerms() {
 		if (isAdvancedSearch()) {
-			if (!ArrayUtil.isEmpty(activeSLAs) || Validator.isNotNull(code) ||
+			if (ArrayUtil.isNotEmpty(activeSLAs) || Validator.isNotNull(code) ||
 				Validator.isNotNull(countryName) ||
 				Validator.isNotNull(createDateGT) ||
 				Validator.isNotNull(createDateLT) ||
 				Validator.isNotNull(createdByEmailAddress) ||
 				Validator.isNotNull(externalAccountKey) ||
 				Validator.isNotNull(flsTeamKey) ||
-				!ArrayUtil.isEmpty(internals) ||
+				ArrayUtil.isNotEmpty(internals) ||
 				Validator.isNotNull(modifiedDateGT) ||
 				Validator.isNotNull(modifiedDateLT) ||
 				Validator.isNotNull(name) || Validator.isNotNull(notes) ||
 				Validator.isNotNull(parentAccountKey) ||
-				!ArrayUtil.isEmpty(partners) ||
+				ArrayUtil.isNotEmpty(partners) ||
 				Validator.isNotNull(partnerTeamKey) ||
-				!ArrayUtil.isEmpty(providesFLS) ||
-				!ArrayUtil.isEmpty(receivesFLS) ||
-				!ArrayUtil.isEmpty(regions) || Validator.isNotNull(salesInfo) ||
-				!ArrayUtil.isEmpty(subscriptionStates) ||
-				!ArrayUtil.isEmpty(tiers) ||
+				ArrayUtil.isNotEmpty(providesFLS) ||
+				ArrayUtil.isNotEmpty(receivesFLS) ||
+				ArrayUtil.isNotEmpty(regions) ||
+				Validator.isNotNull(salesInfo) ||
+				ArrayUtil.isNotEmpty(subscriptionStates) ||
+				ArrayUtil.isNotEmpty(tiers) ||
 				Validator.isNotNull(workerContactEmailAddress)) {
 
 				return true;

@@ -145,12 +145,12 @@ public class EditTeamMVCActionCommand extends BaseMVCActionCommand {
 		String[] deleteEmailAddresses = ParamUtil.getStringValues(
 			actionRequest, "deleteEmailAddresses");
 
-		if (!ArrayUtil.isEmpty(addEmailAddresses)) {
+		if (ArrayUtil.isNotEmpty(addEmailAddresses)) {
 			_teamWebService.assignContactsByEmailAddress(
 				user.getFullName(), user.getUuid(), teamKey, addEmailAddresses);
 		}
 
-		if (!ArrayUtil.isEmpty(deleteEmailAddresses)) {
+		if (ArrayUtil.isNotEmpty(deleteEmailAddresses)) {
 			for (String emailAddress : deleteEmailAddresses) {
 				_zendeskValidator.validateFLSPartnerZendeskTickets(
 					teamKey, emailAddress);

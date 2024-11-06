@@ -79,7 +79,7 @@ public class AssetCategoryIndexer extends BaseIndexer<AssetCategory> {
 		long[] parentCategoryIds = (long[])searchContext.getAttribute(
 			Field.ASSET_PARENT_CATEGORY_IDS);
 
-		if (!ArrayUtil.isEmpty(parentCategoryIds)) {
+		if (ArrayUtil.isNotEmpty(parentCategoryIds)) {
 			TermsFilter parentCategoryTermsFilter = new TermsFilter(
 				Field.ASSET_PARENT_CATEGORY_ID);
 
@@ -93,7 +93,7 @@ public class AssetCategoryIndexer extends BaseIndexer<AssetCategory> {
 		long[] vocabularyIds = (long[])searchContext.getAttribute(
 			Field.ASSET_VOCABULARY_IDS);
 
-		if (!ArrayUtil.isEmpty(vocabularyIds)) {
+		if (ArrayUtil.isNotEmpty(vocabularyIds)) {
 			TermsFilter vocabularyTermsFilter = new TermsFilter(
 				Field.ASSET_VOCABULARY_ID);
 

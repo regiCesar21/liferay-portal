@@ -406,11 +406,11 @@ public class AccountResourceImpl
 				GetterUtil.getBoolean(account.getInternal()), status,
 				accountFields));
 
-		if (!ArrayUtil.isEmpty(account.getContacts())) {
+		if (ArrayUtil.isNotEmpty(account.getContacts())) {
 			for (Contact contact : account.getContacts()) {
 				String[] contactRoleKeys = new String[0];
 
-				if (!ArrayUtil.isEmpty(contact.getContactRoles())) {
+				if (ArrayUtil.isNotEmpty(contact.getContactRoles())) {
 					for (ContactRole contactRole : contact.getContactRoles()) {
 						contactRoleKeys = ArrayUtil.append(
 							contactRoleKeys,
@@ -434,21 +434,21 @@ public class AccountResourceImpl
 			}
 		}
 
-		if (!ArrayUtil.isEmpty(account.getExternalLinks())) {
+		if (ArrayUtil.isNotEmpty(account.getExternalLinks())) {
 			for (ExternalLink externalLink : account.getExternalLinks()) {
 				_externalLinkResource.postAccountAccountKeyExternalLink(
 					agentName, agentUID, curAccount.getKey(), externalLink);
 			}
 		}
 
-		if (!ArrayUtil.isEmpty(account.getPostalAddresses())) {
+		if (ArrayUtil.isNotEmpty(account.getPostalAddresses())) {
 			for (PostalAddress postalAddress : account.getPostalAddresses()) {
 				_postalAddressResource.postAccountAccountKeyPostalAddress(
 					agentName, agentUID, curAccount.getKey(), postalAddress);
 			}
 		}
 
-		if (!ArrayUtil.isEmpty(account.getProductPurchases())) {
+		if (ArrayUtil.isNotEmpty(account.getProductPurchases())) {
 			for (ProductPurchase productPurchase :
 					account.getProductPurchases()) {
 
@@ -457,7 +457,7 @@ public class AccountResourceImpl
 			}
 		}
 
-		if (!ArrayUtil.isEmpty(account.getAssignedTeams())) {
+		if (ArrayUtil.isNotEmpty(account.getAssignedTeams())) {
 			for (Team team : account.getAssignedTeams()) {
 				for (TeamRole teamRole : team.getTeamRoles()) {
 					_teamAccountRoleService.addTeamAccountRole(

@@ -73,7 +73,7 @@ public class DefaultZendeskTicketWebService implements ZendeskTicketWebService {
 
 		ticketJSONObject.put("custom_fields", customFieldsJSONArray);
 
-		if (!ArrayUtil.isEmpty(zendeskTicket.getEmailCCs())) {
+		if (ArrayUtil.isNotEmpty(zendeskTicket.getEmailCCs())) {
 			JSONArray emailCCsJSONArray = JSONFactoryUtil.createJSONArray();
 
 			for (String emailAddress : zendeskTicket.getEmailCCs()) {

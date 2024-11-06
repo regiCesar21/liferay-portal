@@ -67,7 +67,7 @@ public class EditAccountHierarchyMVCActionCommand extends BaseMVCActionCommand {
 			_accountWebService.updateAccount(
 				user.getFullName(), user.getUuid(), accountKey, account);
 
-			if (!ArrayUtil.isEmpty(addChildAccountKeys)) {
+			if (ArrayUtil.isNotEmpty(addChildAccountKeys)) {
 				for (String childAccountKey : addChildAccountKeys) {
 					Account childAccount = new Account();
 
@@ -79,7 +79,7 @@ public class EditAccountHierarchyMVCActionCommand extends BaseMVCActionCommand {
 				}
 			}
 
-			if (!ArrayUtil.isEmpty(deleteChildAccountKeys)) {
+			if (ArrayUtil.isNotEmpty(deleteChildAccountKeys)) {
 				for (String childAccountKey : deleteChildAccountKeys) {
 					Account childAccount = new Account();
 

@@ -98,7 +98,7 @@ public class DataDefinitionFieldUtil {
 			GetterUtil.getBoolean(dataDefinitionField.getLocalizable()));
 		spiDataDefinitionField.setName(dataDefinitionField.getName());
 
-		if (!ArrayUtil.isEmpty(
+		if (ArrayUtil.isNotEmpty(
 				dataDefinitionField.getNestedDataDefinitionFields())) {
 
 			spiDataDefinitionField.setNestedSPIDataDefinitionFields(

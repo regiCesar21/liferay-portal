@@ -486,7 +486,7 @@ public class OktaContactIdentityProvider implements ContactIdentityProvider {
 
 		List<String> entitlements = new ArrayList<>();
 
-		if (!ArrayUtil.isEmpty(contact.getEntitlements())) {
+		if (ArrayUtil.isNotEmpty(contact.getEntitlements())) {
 			for (Entitlement entitlement : contact.getEntitlements()) {
 				entitlements.add(entitlement.getName());
 			}

@@ -1250,7 +1250,7 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 
 		// Groups
 
-		if (!ArrayUtil.isEmpty(groupIds)) {
+		if (ArrayUtil.isNotEmpty(groupIds)) {
 			List<Group> groups = new ArrayList<>();
 
 			for (long groupId : groupIds) {
@@ -3674,7 +3674,7 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 			LinkedHashMapBuilder.<String, Object>put(
 				"usersGroups",
 				() -> {
-					if (!ArrayUtil.isEmpty(groupIds)) {
+					if (ArrayUtil.isNotEmpty(groupIds)) {
 						return ArrayUtil.toLongArray(groupIds);
 					}
 
@@ -3683,7 +3683,7 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 			).put(
 				"usersUserGroups",
 				() -> {
-					if (!ArrayUtil.isEmpty(userGroupIds)) {
+					if (ArrayUtil.isNotEmpty(userGroupIds)) {
 						return ArrayUtil.toLongArray(userGroupIds);
 					}
 

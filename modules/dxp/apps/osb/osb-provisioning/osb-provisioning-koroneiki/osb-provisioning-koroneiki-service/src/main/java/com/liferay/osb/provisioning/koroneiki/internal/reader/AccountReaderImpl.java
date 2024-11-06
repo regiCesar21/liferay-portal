@@ -451,7 +451,7 @@ public class AccountReaderImpl implements AccountReader {
 	}
 
 	public boolean isEWSA(Account account) throws Exception {
-		if (!ArrayUtil.isEmpty(account.getProductPurchases())) {
+		if (ArrayUtil.isNotEmpty(account.getProductPurchases())) {
 			for (ProductPurchase productPurchase :
 					account.getProductPurchases()) {
 

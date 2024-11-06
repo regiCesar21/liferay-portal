@@ -186,7 +186,7 @@ public class AssignAccountContactRolesMVCActionCommand
 			account.getKey(), emailAddress, contactRoleType,
 			addContactRoleKeys);
 
-		if (!ArrayUtil.isEmpty(addContactRoleKeys)) {
+		if (ArrayUtil.isNotEmpty(addContactRoleKeys)) {
 			_accountWebService.assignContactRolesByEmailAddress(
 				user.getFullName(), user.getUuid(), account.getKey(),
 				emailAddress, addContactRoleKeys);
@@ -230,13 +230,13 @@ public class AssignAccountContactRolesMVCActionCommand
 			account.getKey(), contact.getEmailAddress(), addContactRoleKeys,
 			deleteContactRoleKeys);
 
-		if (!ArrayUtil.isEmpty(addContactRoleKeys)) {
+		if (ArrayUtil.isNotEmpty(addContactRoleKeys)) {
 			_accountWebService.assignContactRolesByEmailAddress(
 				user.getFullName(), user.getUuid(), account.getKey(),
 				contact.getEmailAddress(), addContactRoleKeys);
 		}
 
-		if (!ArrayUtil.isEmpty(deleteContactRoleKeys)) {
+		if (ArrayUtil.isNotEmpty(deleteContactRoleKeys)) {
 			_accountWebService.unassignContactRolesByEmailAddress(
 				user.getFullName(), user.getUuid(), account.getKey(),
 				contact.getEmailAddress(), deleteContactRoleKeys);
@@ -283,7 +283,7 @@ public class AssignAccountContactRolesMVCActionCommand
 			String[] deleteContactRoleKeys)
 		throws Exception {
 
-		if (!ArrayUtil.isEmpty(addContactRoleKeys)) {
+		if (ArrayUtil.isNotEmpty(addContactRoleKeys)) {
 			_validateAccountWorkerContactRole(
 				accountKey, ContactRoleConstants.NAME_PRIMARY_CONTACT,
 				emailAddress, addContactRoleKeys);
@@ -293,7 +293,7 @@ public class AssignAccountContactRolesMVCActionCommand
 				emailAddress, addContactRoleKeys);
 		}
 
-		if (!ArrayUtil.isEmpty(deleteContactRoleKeys)) {
+		if (ArrayUtil.isNotEmpty(deleteContactRoleKeys)) {
 			ContactRole supportAdministratorContactRole =
 				_contactRoleWebService.getContactRole(
 					ContactRole.Type.ACCOUNT_CUSTOMER.toString(),

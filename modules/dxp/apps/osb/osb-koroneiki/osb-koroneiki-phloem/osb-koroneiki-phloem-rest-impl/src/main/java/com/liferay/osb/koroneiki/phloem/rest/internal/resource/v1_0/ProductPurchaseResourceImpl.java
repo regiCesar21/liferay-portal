@@ -248,7 +248,7 @@ public class ProductPurchaseResourceImpl
 					accountKey, productKey, startDate, endDate, originalEndDate,
 					quantity, status, productFields));
 
-		if (!ArrayUtil.isEmpty(productPurchase.getExternalLinks())) {
+		if (ArrayUtil.isNotEmpty(productPurchase.getExternalLinks())) {
 			for (ExternalLink externalLink :
 					productPurchase.getExternalLinks()) {
 
@@ -318,7 +318,7 @@ public class ProductPurchaseResourceImpl
 			productPurchase.getProperties(),
 			curProductPurchase.getProductFields());
 
-		if (!ArrayUtil.isEmpty(productPurchase.getExternalLinks())) {
+		if (ArrayUtil.isNotEmpty(productPurchase.getExternalLinks())) {
 			for (ExternalLink externalLink :
 					productPurchase.getExternalLinks()) {
 

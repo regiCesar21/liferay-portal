@@ -223,7 +223,7 @@ public class ProductConsumptionResourceImpl
 					productConsumption.getStartDate(),
 					productConsumption.getEndDate(), productFields));
 
-		if (!ArrayUtil.isEmpty(productConsumption.getExternalLinks())) {
+		if (ArrayUtil.isNotEmpty(productConsumption.getExternalLinks())) {
 			for (ExternalLink externalLink :
 					productConsumption.getExternalLinks()) {
 
@@ -254,7 +254,7 @@ public class ProductConsumptionResourceImpl
 			productConsumption.getProperties(),
 			curProductConsumption.getProductFields());
 
-		if (!ArrayUtil.isEmpty(productConsumption.getExternalLinks())) {
+		if (ArrayUtil.isNotEmpty(productConsumption.getExternalLinks())) {
 			for (ExternalLink externalLink :
 					productConsumption.getExternalLinks()) {
 

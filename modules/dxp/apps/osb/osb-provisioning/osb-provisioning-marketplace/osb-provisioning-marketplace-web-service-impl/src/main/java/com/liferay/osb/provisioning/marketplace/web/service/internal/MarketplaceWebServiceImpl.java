@@ -112,7 +112,7 @@ public class MarketplaceWebServiceImpl
 
 		PostalAddress[] postalAddresses = account.getPostalAddresses();
 
-		if (!ArrayUtil.isEmpty(postalAddresses)) {
+		if (ArrayUtil.isNotEmpty(postalAddresses)) {
 			for (PostalAddress postalAddress : postalAddresses) {
 				_postPostalAddress(
 					authHeaders, account.getKey(), postalAddress);

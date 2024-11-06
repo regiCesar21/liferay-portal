@@ -52,7 +52,7 @@ public class AssignTeamContactsDisplayContext extends ViewTeamDisplayContext {
 		String[] contactRoleKeys = ParamUtil.getStringValues(
 			renderRequest, "contactRoleKeys");
 
-		if (!ArrayUtil.isEmpty(contactRoleKeys)) {
+		if (ArrayUtil.isNotEmpty(contactRoleKeys)) {
 			filterQuery.addLambdaEquals(
 				true, "accountKeysContactRoleKeys", contactRoleKeys);
 		}
