@@ -99,11 +99,11 @@ public class CKEditorCreoleConfigContributor
 		Map<String, Object> inputEditorTaglibAttributes) {
 
 		JSONArray jsonArray = JSONUtil.putAll(
-			toJSONArray("['Bold', 'Italic', 'Underline', '-' ,'RemoveFormat']"),
+			toJSONArray("['Bold', 'Italic', 'Underline', '-', 'RemoveFormat']"),
 			toJSONArray("['NumberedList', 'BulletedList', '-']"),
 			toJSONArray("['Format']"), toJSONArray("['Link', 'Unlink']"),
 			toJSONArray(
-				"['Table', '-','ImageSelector', '-', 'HorizontalRule']"));
+				"['Table', '-', 'ImageSelector', '-', 'HorizontalRule']"));
 
 		if (isShowSource(inputEditorTaglibAttributes)) {
 			jsonArray.put(toJSONArray("['Source']"));
