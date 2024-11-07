@@ -255,7 +255,7 @@ public class CKEditorConfigContributor extends BaseCKEditorConfigContributor {
 				"['JustifyLeft', 'JustifyCenter', 'JustifyRight', " +
 					"'JustifyBlock']"),
 			toJSONArray(
-				"['NumberedList', 'BulletedList', '-' ,'Outdent', 'Indent', " +
+				"['NumberedList', 'BulletedList', '-', 'Outdent', 'Indent', " +
 					"'-', 'Blockquote']"),
 			"/", toJSONArray("['Styles', 'FontSize']"),
 			toJSONArray("['Link', 'Unlink', 'Anchor']"), toJSONArray(buttons),
