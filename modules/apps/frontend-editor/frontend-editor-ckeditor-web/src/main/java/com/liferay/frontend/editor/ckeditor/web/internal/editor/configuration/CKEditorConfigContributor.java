@@ -267,7 +267,7 @@ public class CKEditorConfigContributor extends BaseCKEditorConfigContributor {
 					"'JustifyBlock']"));
 		jsonArray.put(
 			toJSONArray(
-				"['NumberedList', 'BulletedList', '-' ,'Outdent', 'Indent', " +
+				"['NumberedList', 'BulletedList', '-', 'Outdent', 'Indent', " +
 					"'-', 'Blockquote']"));
 		jsonArray.put("/");
 		jsonArray.put(toJSONArray("['Styles', 'FontSize']"));

@@ -93,7 +93,7 @@ public class CKEditorCreoleConfigContributor
 
 		JSONArray jsonArray = JSONFactoryUtil.createJSONArray();
 
-		jsonArray.put(toJSONArray("['Bold', 'Italic', '-' ,'RemoveFormat']"));
+		jsonArray.put(toJSONArray("['Bold', 'Italic', '-', 'RemoveFormat']"));
 		jsonArray.put(
 			toJSONArray(
 				"['NumberedList', 'BulletedList', '-', 'Outdent', 'Indent']"));
@@ -101,14 +101,14 @@ public class CKEditorCreoleConfigContributor
 		jsonArray.put(toJSONArray("['Link', 'Unlink']"));
 		jsonArray.put(
 			toJSONArray(
-				"['Table', '-','ImageSelector', '-', 'HorizontalRule', '-', " +
+				"['Table', '-', 'ImageSelector', '-', 'HorizontalRule', '-', " +
 					"'SpecialChar']"));
 		jsonArray.put("/");
 		jsonArray.put(
 			toJSONArray(
 				"['Cut', 'Copy', 'Paste', '-', 'PasteText', 'PasteFromWord', " +
 					"'-', 'SelectAll', '-', 'Undo', 'Redo']"));
-		jsonArray.put(toJSONArray("['Find','Replace']"));
+		jsonArray.put(toJSONArray("['Find', 'Replace']"));
 
 		if (isShowSource(inputEditorTaglibAttributes)) {
 			jsonArray.put(toJSONArray("['Source']"));
