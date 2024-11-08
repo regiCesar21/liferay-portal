@@ -19,11 +19,14 @@ import com.liferay.osb.provisioning.search.FilterQuery;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.search.Document;
+import com.liferay.portal.kernel.search.Hits;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
 
-import java.util.HashMap;
+import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -34,10 +37,10 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Karoline Silva
  */
-@Component(service = UpgradeConsumptionsSizing.class)
-public class UpgradeConsumptionsSizing extends UpgradeProcess {
+@Component(service = UpgradeProductConsumptionsSizing.class)
+public class UpgradeProductConsumptionsSizing extends UpgradeProcess {
 
-	public void upgradeConsumptions() {
+	public void upgradeProductConsumptionsSizing() {
 		try {
 			FilterQuery filterQuery = new FilterQuery();
 
@@ -96,18 +99,34 @@ public class UpgradeConsumptionsSizing extends UpgradeProcess {
 		String accountKey, String productPurchaseKey) {
 
 		try {
-			List<LicenseKey> licenseKeys = _licenseKeyLocalService.search(
-				null, null, null, null, null, null, accountKey,
-				productPurchaseKey, null, null, null, new long[0],
-				new String[0], null, null, new String[0], new long[0], null,
-				null, null, null, null, null, null, null, null,
-				new LinkedHashMap<>(), false, QueryUtil.ALL_POS,
+			Hits hits = _licenseKeyLocalService.search(
+				0, null, null, null, null, null, null, accountKey,
+				productPurchaseKey, null, null, null, null, null, null, null,
+				null, null, null, null, null, null, null, null, null, null,
+				true, new LinkedHashMap<>(), false, QueryUtil.ALL_POS,
 				QueryUtil.ALL_POS, null);
 
-			boolean isSameSizing = _isSameSizing(licenseKeys);
+			List<LicenseKey> licenseKeys = new ArrayList<>();
 
-			for (LicenseKey licenseKey : licenseKeys) {
-				_updateProductConsumptions(licenseKey, isSameSizing);
+			for (Document document : hits.getDocs()) {
+				long licenseKeyId = GetterUtil.getLong(
+					document.get("licenseKeyId"));
+
+				LicenseKey licenseKey = _licenseKeyLocalService.fetchLicenseKey(
+					licenseKeyId);
+
+				if (licenseKey != null) {
+					licenseKeys.add(licenseKey);
+				}
+			}
+
+			if (_isSameSizing(licenseKeys)) {
+				for (LicenseKey licenseKey : licenseKeys) {
+					_updateProductConsumptions(licenseKey);
+				}
+			}
+			else if (_log.isInfoEnabled()) {
+				_log.info("Inconsistent sizing for accountKey: " + accountKey);
 			}
 		}
 		catch (Exception exception) {
@@ -117,9 +136,7 @@ public class UpgradeConsumptionsSizing extends UpgradeProcess {
 		}
 	}
 
-	private void _updateProductConsumptions(
-		LicenseKey licenseKey, boolean isSameSizing) {
-
+	private void _updateProductConsumptions(LicenseKey licenseKey) {
 		try {
 			List<ProductConsumption> productConsumptions =
 				_productConsumptionWebService.getProductConsumptions(
@@ -128,14 +145,14 @@ public class UpgradeConsumptionsSizing extends UpgradeProcess {
 					String.valueOf(licenseKey.getLicenseKeyId()), 1, 1000);
 
 			for (ProductConsumption productConsumption : productConsumptions) {
-				productConsumption.setEndDate(licenseKey.getExpirationDate());
-				productConsumption.setStartDate(licenseKey.getStartDate());
+				Map<String, String> properties =
+					productConsumption.getProperties();
 
-				Map<String, String> properties = new HashMap<>();
+				if ((properties != null) && properties.containsKey("sizing")) {
+					continue;
+				}
 
-				if (Validator.isNotNull(licenseKey.getSizing()) &&
-					isSameSizing) {
-
+				if (Validator.isNotNull(licenseKey.getSizing())) {
 					int sizing = LicenseSizing.getSizing(
 						licenseKey.getSizing());
 
@@ -143,21 +160,12 @@ public class UpgradeConsumptionsSizing extends UpgradeProcess {
 						properties.put("sizing", String.valueOf(sizing));
 					}
 				}
-				else {
-					properties.put("sizing", "");
-				}
 
 				productConsumption.setProperties(properties);
 
 				_productConsumptionWebService.updateProductConsumption(
 					StringPool.BLANK, StringPool.BLANK,
 					productConsumption.getKey(), productConsumption);
-			}
-
-			if (_log.isInfoEnabled()) {
-				_log.info(
-					"Updates completed for LicenseKey: " +
-						licenseKey.getLicenseKeyId());
 			}
 		}
 		catch (Exception exception) {
@@ -169,7 +177,7 @@ public class UpgradeConsumptionsSizing extends UpgradeProcess {
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
-		UpgradeConsumptionsSizing.class);
+		UpgradeProductConsumptionsSizing.class);
 
 	@Reference
 	private LicenseKeyLocalService _licenseKeyLocalService;
