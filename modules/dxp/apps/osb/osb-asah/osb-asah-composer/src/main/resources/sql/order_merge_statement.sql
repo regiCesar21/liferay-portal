@@ -2,7 +2,7 @@ MERGE INTO
 	`{{ dag.default_args['ac_project_id'] }}.order` AS replica
 USING
 	(
-		SELECT
+		SELECT DISTINCT
 			analyticsDeleteMessage.deleted,
 			`order`.* EXCEPT (rowNumber)
 		FROM (
