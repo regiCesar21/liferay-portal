@@ -15,6 +15,8 @@ import io.gatling.javaapi.http.HttpDsl;
 import io.gatling.javaapi.http.HttpProtocolBuilder;
 
 import java.util.Collections;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Random;
 
 import org.apache.commons.codec.digest.DigestUtils;
@@ -105,14 +107,28 @@ public class SimulationUtil {
 	}
 
 	public static ChainBuilder post(Body body, String name, String path) {
+		return post(body, name, path, null);
+	}
+
+	public static ChainBuilder post(
+		Body body, String name, String path, String projectId) {
+
+		Map<String, String> headers = new HashMap<>();
+
+		headers.put("Content-Type", "application/json");
+
+		if (projectId != null) {
+			headers.put("OSB-Asah-Project-ID", projectId);
+		}
+
 		return CoreDsl.exec(
 			CoreDsl.exec(
 				HttpDsl.http(
 					name
 				).post(
 					path
-				).header(
-					"Content-Type", "application/json"
+				).headers(
+					headers
 				).body(
 					body
 				).check(
@@ -121,6 +137,10 @@ public class SimulationUtil {
 						200
 					)
 				)));
+	}
+
+	public static String projectId() {
+		return _CONFIG.getString("osb.asah.projectId");
 	}
 
 	public static int spikeConstantUsersPerSec() {
