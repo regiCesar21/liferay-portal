@@ -23,10 +23,12 @@ import com.liferay.portal.kernel.search.Document;
 import com.liferay.portal.kernel.search.Hits;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -126,7 +128,10 @@ public class UpgradeProductConsumptionsSizing extends UpgradeProcess {
 				}
 			}
 			else if (_log.isInfoEnabled()) {
-				_log.info("Inconsistent sizing for accountKey: " + accountKey);
+				_log.info(
+					StringBundler.concat(
+						"Inconsistent sizing for accountKey: ", accountKey,
+						", productPurchaseKey: ", productPurchaseKey));
 			}
 		}
 		catch (Exception exception) {
@@ -148,17 +153,18 @@ public class UpgradeProductConsumptionsSizing extends UpgradeProcess {
 				Map<String, String> properties =
 					productConsumption.getProperties();
 
-				if ((properties != null) && properties.containsKey("sizing")) {
+				if (properties == null) {
+					properties = new HashMap<>();
+				}
+
+				if (properties.containsKey("sizing")) {
 					continue;
 				}
 
-				if (Validator.isNotNull(licenseKey.getSizing())) {
-					int sizing = LicenseSizing.getSizing(
-						licenseKey.getSizing());
+				int sizing = LicenseSizing.getSizing(licenseKey.getSizing());
 
-					if (sizing > 0) {
-						properties.put("sizing", String.valueOf(sizing));
-					}
+				if (sizing > 0) {
+					properties.put("sizing", String.valueOf(sizing));
 				}
 
 				productConsumption.setProperties(properties);
