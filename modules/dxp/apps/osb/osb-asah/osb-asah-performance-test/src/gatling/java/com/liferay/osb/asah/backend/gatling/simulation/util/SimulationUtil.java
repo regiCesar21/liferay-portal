@@ -82,7 +82,7 @@ public class SimulationUtil {
 		return HttpDsl.http.baseUrl(
 			_CONFIG.getString("gatling.baseUrl")
 		).header(
-			"OSB-Asah-Project-ID", _CONFIG.getString("osb.asah.projectId")
+			"OSB-Asah-Project-ID", _firstProjectId()
 		).header(
 			"OSB-Asah-Faro-Backend-Security-Signature",
 			DigestUtils.sha256Hex(
@@ -139,8 +139,10 @@ public class SimulationUtil {
 				)));
 	}
 
-	public static String projectId() {
-		return _CONFIG.getString("osb.asah.projectId");
+	public static String[] projectIds() {
+		String projectIds = _CONFIG.getString("osb.asah.projectIds");
+
+		return projectIds.split(",");
 	}
 
 	public static int spikeConstantUsersPerSec() {
@@ -157,6 +159,12 @@ public class SimulationUtil {
 
 	public static int spikeRequestsPerSec() {
 		return _CONFIG.getInt("gatling.spike.requestsPerSec");
+	}
+
+	private static String _firstProjectId() {
+		String[] projectIds = projectIds();
+
+		return projectIds[0];
 	}
 
 	private static final Config _CONFIG = ConfigFactory.load();

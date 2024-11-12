@@ -44,11 +44,7 @@ public class PostAnalyticsEventsLoadToManyProjectsSimulation
 	{
 		List<PopulationBuilder> populationBuilders = new ArrayList<>();
 
-		String projectId = SimulationUtil.projectId();
-
-		String[] projectIds = projectId.split(",");
-
-		for (String currentProjectId : projectIds) {
+		for (String currentProjectId : SimulationUtil.projectIds()) {
 			populationBuilders.add(
 				_getPopulationBuilder(
 					SimulationUtil.post(
