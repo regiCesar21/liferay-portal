@@ -23,9 +23,7 @@ import com.liferay.portal.kernel.search.Document;
 import com.liferay.portal.kernel.search.Hits;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 import com.liferay.portal.kernel.util.GetterUtil;
-import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
-import com.liferay.portal.kernel.util.Validator;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -67,34 +65,12 @@ public class UpgradeProductConsumptionsSizing extends UpgradeProcess {
 			}
 		}
 		catch (Exception exception) {
-			_log.error("Error during upgradeConsumptions process", exception);
+			_log.error(exception, exception);
 		}
 	}
 
 	@Override
 	protected void doUpgrade() throws Exception {
-	}
-
-	private boolean _isSameSizing(List<LicenseKey> licenseKeys) {
-		String sizing = null;
-
-		for (LicenseKey licenseKey : licenseKeys) {
-			String curSizing = licenseKey.getSizing();
-
-			if (Validator.isNull(curSizing)) {
-				return false;
-			}
-
-			if (sizing == null) {
-				sizing = curSizing;
-			}
-
-			if (!curSizing.equals(sizing)) {
-				return false;
-			}
-		}
-
-		return true;
 	}
 
 	private void _processLicenseKeys(
@@ -110,6 +86,9 @@ public class UpgradeProductConsumptionsSizing extends UpgradeProcess {
 
 			List<LicenseKey> licenseKeys = new ArrayList<>();
 
+			int sizing = 0;
+			boolean sameSizing = true;
+
 			for (Document document : hits.getDocs()) {
 				long licenseKeyId = GetterUtil.getLong(
 					document.get("licenseKeyId"));
@@ -118,25 +97,49 @@ public class UpgradeProductConsumptionsSizing extends UpgradeProcess {
 					licenseKeyId);
 
 				if (licenseKey != null) {
+					int curSizing = LicenseSizing.getSizing(licenseKey.getSizing());
+
+					if (curSizing == 0) {
+						if (sizing != 0) {
+							sameSizing = false;
+
+							break;
+						}
+
+						continue;
+					}
+
+					if (sizing == 0l) {
+						sizing = curSizing;
+					}
+
+					if (curSizing != sizing) {
+						sameSizing = false;
+
+						break;
+					}
+
 					licenseKeys.add(licenseKey);
 				}
 			}
 
-			if (_isSameSizing(licenseKeys)) {
-				for (LicenseKey licenseKey : licenseKeys) {
-					_updateProductConsumptions(licenseKey);
+			if (!sameSizing) {
+				if (_log.isInfoEnabled()) {
+					_log.info(
+						"Inconsistent sizing for product purchase " +
+							productPurchaseKey);
 				}
+
+				return;
 			}
-			else if (_log.isInfoEnabled()) {
-				_log.info(
-					StringBundler.concat(
-						"Inconsistent sizing for accountKey: ", accountKey,
-						", productPurchaseKey: ", productPurchaseKey));
+
+			for (LicenseKey licenseKey : licenseKeys) {
+				_updateProductConsumptions(licenseKey);
 			}
 		}
 		catch (Exception exception) {
 			_log.error(
-				"Error processing LicenseKeys for accountKey: " + accountKey,
+				"Error processing license keys for account " + accountKey,
 				exception);
 		}
 	}
@@ -176,7 +179,7 @@ public class UpgradeProductConsumptionsSizing extends UpgradeProcess {
 		}
 		catch (Exception exception) {
 			_log.error(
-				"Error updating consumptions for LicenseKey: " +
+				"Error updating consumptions for license key " +
 					licenseKey.getLicenseKeyId(),
 				exception);
 		}
