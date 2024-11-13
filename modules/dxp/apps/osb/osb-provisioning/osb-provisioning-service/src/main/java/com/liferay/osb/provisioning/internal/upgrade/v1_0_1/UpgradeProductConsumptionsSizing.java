@@ -97,7 +97,8 @@ public class UpgradeProductConsumptionsSizing extends UpgradeProcess {
 					licenseKeyId);
 
 				if (licenseKey != null) {
-					int curSizing = LicenseSizing.getSizing(licenseKey.getSizing());
+					int curSizing = LicenseSizing.getSizing(
+						licenseKey.getSizing());
 
 					if (curSizing == 0) {
 						if (sizing != 0) {
@@ -109,7 +110,7 @@ public class UpgradeProductConsumptionsSizing extends UpgradeProcess {
 						continue;
 					}
 
-					if (sizing == 0l) {
+					if (sizing == 0L) {
 						sizing = curSizing;
 					}
 
