@@ -373,9 +373,13 @@ public class OpportunityMessageSubscriber extends BaseMessageSubscriber {
 
 		Set<String> inactiveProvisionedProducts = new HashSet<>();
 
+		String liferayVersion = StringPool.BLANK;
+
 		JSONObject projectJSONObject = jsonObject.getJSONObject("project");
 
-		String liferayVersion = projectJSONObject.getString("liferayVersion");
+		if (projectJSONObject != null) {
+			liferayVersion = projectJSONObject.getString("liferayVersion");
+		}
 
 		boolean renewal = jsonObject.getBoolean("renewal");
 
