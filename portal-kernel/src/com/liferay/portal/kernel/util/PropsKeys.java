@@ -1280,6 +1280,10 @@ public interface PropsKeys {
 	public static final String EDITOR_WYSIWYG_DEFAULT =
 		"editor.wysiwyg.default";
 
+	public static final String
+		EDITOR_WYSIWYG_PORTAL_IMPL_PORTLET_DDM_TEXT_HTML_FTL_SANITIZE =
+			"editor.wysiwyg.portal-impl.portlet.ddm.text_html.ftl.sanitize";
+
 	public static final String EHCACHE_BLOCKING_CACHE_ALLOWED =
 		"ehcache.blocking.cache.allowed";
 

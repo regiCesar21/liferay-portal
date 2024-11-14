@@ -1208,6 +1208,12 @@ public class PropsValues {
 	public static final String EDITOR_WYSIWYG_DEFAULT = PropsUtil.get(
 		PropsKeys.EDITOR_WYSIWYG_DEFAULT);
 
+	public static final String
+		EDITOR_WYSIWYG_PORTAL_IMPL_PORTLET_DDM_TEXT_HTML_FTL_SANITIZE =
+			PropsUtil.get(
+				PropsKeys.
+					EDITOR_WYSIWYG_PORTAL_IMPL_PORTLET_DDM_TEXT_HTML_FTL_SANITIZE);
+
 	public static final int ETAG_RESPONSE_SIZE_MAX = GetterUtil.getInteger(
 		PropsUtil.get(PropsKeys.ETAG_RESPONSE_SIZE_MAX));
 

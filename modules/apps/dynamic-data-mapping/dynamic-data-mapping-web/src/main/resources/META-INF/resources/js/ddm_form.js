@@ -810,22 +810,26 @@ AUI.add(
 				getFieldByNameInFieldDefinition(name) {
 					let field;
 
-					const findField = (definitionFields) => {
-						definitionFields?.forEach((definitionField) => {
-							if (definitionField.name === name) {
-								field = definitionField;
-							}
-							else {
-								findField(definitionField.nestedFields);
-							}
-						});
+					const findField = definitionFields => {
+						if (definitionFields) {
+							definitionFields.forEach(definitionField => {
+								if (definitionField.name === name) {
+									field = definitionField;
+								}
+								else {
+									findField(definitionField.nestedFields);
+								}
+							});
+						}
 					};
 
 					const instance = this;
 
 					var definition = instance.get('definition');
 
-					findField(definition?.fields);
+					if (definition && definition.fields) {
+						findField(definition.fields);
+					}
 
 					return field;
 				},
@@ -3708,11 +3712,9 @@ AUI.add(
 				_onBlur() {
 					var instance = this;
 
-					const value = instance.getValue();
-
-					const sanitizedValue = instance.sanitizeHTML(value);
-
-					instance.setValue(sanitizedValue);
+					instance.setValue(
+						instance.sanitizeHTML(instance.getValue())
+					);
 				},
 
 				_onSetData(event) {
@@ -3726,8 +3728,6 @@ AUI.add(
 						const sanitizedValue = instance.sanitizeHTML(value);
 
 						event.data.dataValue = sanitizedValue;
-
-						return event.data.dataValue;
 					}
 				},
 
@@ -3803,6 +3803,16 @@ AUI.add(
 				},
 
 				sanitizeHTML(html) {
+					const instance = this;
+
+					const editor = instance.getEditor();
+
+					const nativeEditor = editor.getNativeEditor();
+
+					if (!nativeEditor.config.sanitizeHTML) {
+						return html;
+					}
+
 					const ALERT_REGEX = /alert\((.*?)\)/;
 					const ASP_CODE_REGEX = /<%[\s\S]*?%>/g;
 					const ASP_NET_CODE_REGEX = /(<asp:[^]+>[\s|\S]*?<\/asp:[^]+>)|(<asp:[^]+\/>)/gi;
@@ -4068,7 +4078,7 @@ AUI.add(
 						.all('option')
 						.val();
 
-					const parseValues = (values) => {
+					const parseValues = values => {
 						if (values) {
 							return JSON.parse(values);
 						}
@@ -4083,7 +4093,7 @@ AUI.add(
 						values = parseValues(values);
 					}
 
-					values.forEach((value) => {
+					values.forEach(value => {
 						if (!currentlyAvailableValues.includes(value)) {
 							const predefinedValues = parseValues(
 								instance.getFieldByNameInFieldDefinition(

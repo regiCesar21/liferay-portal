@@ -462,6 +462,7 @@ name = HtmlUtil.escapeJS(name);
 			filebrowserImageBrowseLinkUrl: '',
 			filebrowserImageBrowseUrl: '',
 			filebrowserUploadUrl: null,
+			sanitizeHTML: <%= PropsValues.EDITOR_WYSIWYG_PORTAL_IMPL_PORTLET_DDM_TEXT_HTML_FTL_SANITIZE %>,
 			toolbar: currentToolbarSet
 		};
 
