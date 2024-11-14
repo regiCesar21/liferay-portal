@@ -20,9 +20,11 @@ import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.search.Document;
+import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.Hits;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.StringPool;
 
 import java.util.ArrayList;
@@ -78,11 +80,11 @@ public class UpgradeProductConsumptionsSizing extends UpgradeProcess {
 
 		try {
 			Hits hits = _licenseKeyLocalService.search(
-				0, null, null, null, null, null, null, accountKey,
-				productPurchaseKey, null, null, null, null, null, null, null,
+				_portal.getDefaultCompanyId(), null, null, null, null, null,
+				null, accountKey, productPurchaseKey, null, null, null, null,
 				null, null, null, null, null, null, null, null, null, null,
-				true, new LinkedHashMap<>(), false, QueryUtil.ALL_POS,
-				QueryUtil.ALL_POS, null);
+				null, null, null, true, new LinkedHashMap<>(), false,
+				QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
 
 			List<LicenseKey> licenseKeys = new ArrayList<>();
 
@@ -91,7 +93,7 @@ public class UpgradeProductConsumptionsSizing extends UpgradeProcess {
 
 			for (Document document : hits.getDocs()) {
 				long licenseKeyId = GetterUtil.getLong(
-					document.get("licenseKeyId"));
+					document.get(Field.ENTRY_CLASS_PK));
 
 				LicenseKey licenseKey = _licenseKeyLocalService.fetchLicenseKey(
 					licenseKeyId);
@@ -191,6 +193,9 @@ public class UpgradeProductConsumptionsSizing extends UpgradeProcess {
 
 	@Reference
 	private LicenseKeyLocalService _licenseKeyLocalService;
+
+	@Reference
+	private Portal _portal;
 
 	@Reference
 	private ProductConsumptionWebService _productConsumptionWebService;
