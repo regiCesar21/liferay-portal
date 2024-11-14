@@ -3705,6 +3705,16 @@ AUI.add(
 					instance.editorContainer.placeAfter(instance.readOnlyText);
 				},
 
+				_onBlur() {
+					var instance = this;
+
+					const value = instance.getValue();
+
+					const sanitizedValue = instance.sanitizeHTML(value);
+
+					instance.setValue(sanitizedValue);
+				},
+
 				_onSetData(event) {
 					var instance = this;
 
@@ -3761,6 +3771,10 @@ AUI.add(
 						'#' + editorComponentName + 'Container'
 					);
 
+					instance.editorSource = A.one(
+						'#' + editorComponentName + 'Source'
+					);
+
 					instance.readOnlyText = A.Node.create(
 						'<div class="cke_editable hide"></div>'
 					);
@@ -3770,7 +3784,22 @@ AUI.add(
 							instance._afterRenderTextHTMLField
 					});
 
-					nativeEditor.on('setData', instance._onSetData, instance);
+					const alloyEditorSourceElement = instance.editorSource;
+
+					if (alloyEditorSourceElement) {
+						alloyEditorSourceElement.on(
+							'blur',
+							instance._onBlur,
+							instance
+						);
+					}
+					else {
+						nativeEditor.on(
+							'setData',
+							instance._onSetData,
+							instance
+						);
+					}
 				},
 
 				sanitizeHTML(html) {
