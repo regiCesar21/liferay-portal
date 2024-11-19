@@ -16,6 +16,7 @@ import java.io.InputStreamReader;
 import java.nio.charset.StandardCharsets;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
@@ -51,6 +52,97 @@ import org.junit.Test;
  * @author Leslie Wong
  */
 public class EventIngestionPipelineTest {
+
+	@Test
+	public void testAnalyticsEventDeduper() {
+		AnalyticsEvent event1 = _createTestAnalyticsEvent(
+			"Page", "1", "https://liferay.com/web/guest/home/", "1",
+			"2024-11-18T09:34:45.000Z", "pageViewed", Collections.emptyMap(),
+			"Liferay Home", "asah123", "user1");
+
+		AnalyticsEvent event2 = _createTestAnalyticsEvent(
+			"Page", "1", "https://liferay.com/web/guest/home/", "1",
+			"2024-11-18T09:34:47.000Z", "pageViewed", Collections.emptyMap(),
+			"Liferay Home", "asah123", "user1");
+
+		AnalyticsEvent event3 = _createTestAnalyticsEvent(
+			"Page", "1", "https://liferay.com/web/guest/home/", "1",
+			"2024-11-18T09:34:48.000Z", "pageScroll", Collections.emptyMap(),
+			"Liferay Home", "asah123", "user1");
+
+		AnalyticsEvent event4 = _createTestAnalyticsEvent(
+			"Page", "1", "https://liferay.com/web/guest/home/", "1",
+			"2024-11-18T09:34:48.000Z", "pageViewed", Collections.emptyMap(),
+			"Liferay Home", "asah123", "user2");
+
+		AnalyticsEvent event5 = _createTestAnalyticsEvent(
+			"WebContent", "1", "https://liferay.com/web/guest/home/", "1",
+			"2024-11-18T09:34:00.000Z", "webContentViewed",
+			new HashMap<String, String>() {
+				{
+					put("articleId", "1");
+					put("title", "title-1");
+				}
+			},
+			"Liferay Home", "asah123", "user3");
+
+		AnalyticsEvent event6 = _createTestAnalyticsEvent(
+			"WebContent", "1", "https://liferay.com/web/guest/home/", "1",
+			"2024-11-18T09:34:03.000Z", "webContentViewed",
+			new HashMap<String, String>() {
+				{
+					put("articleId", "1");
+					put("title", "title-1");
+				}
+			},
+			"Liferay Home", "asah123", "user3");
+
+		AnalyticsEvent event7 = _createTestAnalyticsEvent(
+			"WebContent", "1", "https://liferay.com/web/guest/home/", "1",
+			"2024-11-18T09:37:06.000Z", "webContentViewed",
+			new HashMap<String, String>() {
+				{
+					put("articleId", "1");
+					put("title", "title-1");
+				}
+			},
+			"Liferay Home", "asah123", "user3");
+
+		AnalyticsEvent event8 = _createTestAnalyticsEvent(
+			"WebContent", "1", "https://liferay.com/web/guest/home/", "1",
+			"2024-11-18T09:37:07.000Z", "webContentViewed",
+			new HashMap<String, String>() {
+				{
+					put("articleId", "1");
+					put("title", "title-1");
+				}
+			},
+			"Liferay Home", "asah123", "user3");
+
+		PCollection<KV<String, Iterable<AnalyticsEvent>>> collection =
+			testPipeline.apply(
+				"Create Test Batch",
+				Create.of(
+					KV.of("user1", Arrays.asList(event1, event2, event3)),
+					KV.of("user2", Arrays.asList(event4)),
+					KV.of(
+						"user3",
+						Arrays.asList(event5, event6, event7, event8))));
+
+		PCollection<KV<String, Iterable<AnalyticsEvent>>> pCollection =
+			collection.apply(
+				ParDo.of(new EventIngestionPipeline.AnalyticsEventsDeduper()));
+
+		PAssert.that(
+			pCollection
+		).containsInAnyOrder(
+			KV.of("user1", Arrays.asList(event1, event3)),
+			KV.of("user2", Arrays.asList(event4)),
+			KV.of("user3", Arrays.asList(event5, event7))
+		);
+
+		testPipeline.run();
+	}
 
 	@Test
 	public void testAnalyticsEventExtractor() {
@@ -531,6 +623,22 @@ public class EventIngestionPipelineTest {
 		return _createAnalyticsEvent(
 			"", "", "", context, "", "", "", "", "", Collections.emptyMap(), "",
 			"", "", "");
+	}
+
+	private AnalyticsEvent _createTestAnalyticsEvent(
+		String applicationId, String channelId, String canonicalUrl,
+		String dataSourceId, String eventDate, String eventId,
+		Map<String, String> eventProperties, String pageTitle, String projectId,
+		String userId) {
+
+		Map<String, String> context = new HashMap<>();
+
+		context.put("canonicalUrl", canonicalUrl);
+		context.put("title", pageTitle);
+
+		return _createAnalyticsEvent(
+			applicationId, channelId, "", context, "", dataSourceId, "",
+			eventDate, eventId, eventProperties, "", projectId, "UTC", userId);
 	}
 
 	private String _readResourceAsString(String resourcePath)
