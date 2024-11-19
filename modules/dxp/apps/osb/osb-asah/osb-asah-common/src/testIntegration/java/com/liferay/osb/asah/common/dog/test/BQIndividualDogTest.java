@@ -252,28 +252,6 @@ public class BQIndividualDogTest
 		Assertions.assertEquals(10, fieldValuePage.getTotalElements());
 	}
 
-	@BQSQLResource(resourcePath = "test_search_bq_individual_page_1.sql")
-	@Test
-	public void testSearchBQIndividualPage1() {
-		Page<Individual> bqIndividualPage =
-			_bqIndividualDog.searchBQIndividualPage(null, 0, null, 10);
-
-		Assertions.assertEquals(15, bqIndividualPage.getTotalElements());
-		Assertions.assertEquals(2, bqIndividualPage.getTotalPages());
-
-		Assertions.assertEquals(
-			Arrays.asList(
-				"1", "11", "12", "13", "14", "15", "16", "17", "18", "19"),
-			ListUtil.map(bqIndividualPage.getContent(), Individual::getId));
-
-		bqIndividualPage = _bqIndividualDog.searchBQIndividualPage(
-			null, 1, null, 10);
-
-		Assertions.assertEquals(
-			Arrays.asList("20", "3", "5", "7", "9"),
-			ListUtil.map(bqIndividualPage.getContent(), Individual::getId));
-	}
-
 	@BQSQLResource(resourcePath = "test_search_bq_individual_page_2.sql")
 	@Test
 	public void testSearchBQIndividualPage2() {
@@ -314,6 +292,44 @@ public class BQIndividualDogTest
 		Assertions.assertEquals(
 			Arrays.asList("9"),
 			ListUtil.map(bqIndividualPage.getContent(), Individual::getId));
+	}
+
+	@BQSQLResource(resourcePath = "test_search_bq_individual_page_4.sql")
+	@Test
+	public void testSearchBQIndividualPageWithInterestName() {
+		Page<Individual> bqIndividualPage =
+			_bqIndividualDog.searchBQIndividualPage(
+				null, 1L, null, null, null, "bike", null, 0, null, 1L, 10,
+				null);
+
+		Assertions.assertEquals(0, bqIndividualPage.getTotalElements());
+
+		bqIndividualPage = _bqIndividualDog.searchBQIndividualPage(
+			null, 1L, null, null, null, "car", null, 0, null, 1L, 10, null);
+
+		Assertions.assertEquals(1, bqIndividualPage.getTotalElements());
+
+		List<Individual> individuals = bqIndividualPage.getContent();
+
+		Individual individual = individuals.get(0);
+
+		Assertions.assertEquals("1", individual.getId());
+
+		bqIndividualPage = _bqIndividualDog.searchBQIndividualPage(
+			null, 1L, null, null, null, "football", null, 0, null, 1L, 10,
+			null);
+
+		Assertions.assertEquals(2, bqIndividualPage.getTotalElements());
+
+		individuals = bqIndividualPage.getContent();
+
+		individual = individuals.get(0);
+
+		Assertions.assertEquals("1", individual.getId());
+
+		individual = individuals.get(1);
+
+		Assertions.assertEquals("2", individual.getId());
 	}
 
 	@BQSQLResource(resourcePath = "test_get_bq_individual_page.sql")
