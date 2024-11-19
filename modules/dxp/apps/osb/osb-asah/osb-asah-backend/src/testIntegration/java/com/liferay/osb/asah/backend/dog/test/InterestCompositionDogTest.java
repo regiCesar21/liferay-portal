@@ -92,6 +92,24 @@ public class InterestCompositionDogTest extends BaseCompositionDogTestCase {
 			2, 3, 5);
 	}
 
+	@BQSQLResource(resourcePath = "test_bq_interest_composition_dog.sql")
+	@Test
+	public void testGetIndividualSegmentCompositionResultBag() {
+		checkResults(
+			_interestCompositionDog.getIndividualSegmentCompositionResultBag(
+				Boolean.TRUE, 1L, null, 1L, 5, Sort.desc("count"), 0),
+			new LinkedHashMap<String, Long>() {
+				{
+					put("football", 2L);
+					put("car", 1L);
+					put("cat", 1L);
+					put("dog", 1L);
+					put("motorcycle", 1L);
+				}
+			},
+			2, 5, 2);
+	}
+
 	@BQSQLResource(
 		resourcePath = "bq_identity_interest_score_identity_activities.sql"
 	)
