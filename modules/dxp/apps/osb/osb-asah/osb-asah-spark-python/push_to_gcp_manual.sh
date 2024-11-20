@@ -1,6 +1,6 @@
 #!/bin/bash
 
-../gradlew clean formatSource assemble
+../gradlew clean formatSource assemble -Dinclude.spark.python=true
 
 if [ -n "$(git status . --porcelain -uno)" ]
 then
