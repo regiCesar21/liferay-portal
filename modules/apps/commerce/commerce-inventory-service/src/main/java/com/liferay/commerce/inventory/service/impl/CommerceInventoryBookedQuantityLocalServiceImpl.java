@@ -131,6 +131,10 @@ public class CommerceInventoryBookedQuantityLocalServiceImpl
 			int quantity, Date expirationDate, Map<String, String> context)
 		throws PortalException {
 
+		if (commerceBookedQuantityId < 1) {
+			return null;
+		}
+
 		CommerceInventoryBookedQuantity commerceBookedQuantity =
 			commerceInventoryBookedQuantityPersistence.fetchByPrimaryKey(
 				commerceBookedQuantityId);
