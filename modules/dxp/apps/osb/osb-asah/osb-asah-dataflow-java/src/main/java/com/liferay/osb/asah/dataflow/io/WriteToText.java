@@ -49,6 +49,8 @@ public class WriteToText {
 					TextIO.sink()
 				).withDestinationCoder(
 					StringUtf8Coder.of()
+				).withTempDirectory(
+					_outputDirectory
 				).withNaming(
 					projectId -> new PerWindowPartitionedFiles(
 						_outputDirectory + "/" + projectId, _fileNamePrefix)
