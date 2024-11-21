@@ -37,6 +37,7 @@ import org.apache.beam.sdk.io.gcp.bigquery.TableDestination;
 import org.apache.beam.sdk.io.gcp.bigquery.WriteResult;
 import org.apache.beam.sdk.io.gcp.pubsub.PubsubIO;
 import org.apache.beam.sdk.options.PipelineOptionsFactory;
+import org.apache.beam.sdk.state.TimeDomain;
 import org.apache.beam.sdk.transforms.Deduplicate;
 import org.apache.beam.sdk.transforms.DoFn;
 import org.apache.beam.sdk.transforms.GroupByKey;
@@ -112,7 +113,12 @@ public class EventIngestionPipeline {
 		).apply(
 			"Deduplicate Analytics Events",
 			Deduplicate.withRepresentativeValueFn(
-				new AnalyticsDeduplicationSerializableFunction())
+				new AnalyticsDeduplicationSerializableFunction()
+			).withDuration(
+				Duration.standardSeconds(5)
+			).withTimeDomain(
+				TimeDomain.EVENT_TIME
+			)
 		).apply(
 			"Add Session Key", _buildWithKeysPTransform()
 		);
