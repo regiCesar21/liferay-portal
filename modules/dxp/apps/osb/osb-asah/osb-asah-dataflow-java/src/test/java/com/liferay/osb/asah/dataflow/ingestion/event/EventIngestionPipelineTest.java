@@ -8,6 +8,7 @@ package com.liferay.osb.asah.dataflow.ingestion.event;
 import com.google.api.services.bigquery.model.TableRow;
 
 import com.liferay.osb.asah.dataflow.common.ObjectMapperUtil;
+import com.liferay.osb.asah.dataflow.ingestion.event.EventIngestionPipeline.AnalyticsDeduplicationSerializableFunction;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -16,7 +17,6 @@ import java.io.InputStreamReader;
 import java.nio.charset.StandardCharsets;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
@@ -31,7 +31,9 @@ import org.apache.beam.sdk.extensions.avro.coders.AvroCoder;
 import org.apache.beam.sdk.testing.PAssert;
 import org.apache.beam.sdk.testing.TestPipeline;
 import org.apache.beam.sdk.testing.TestStream;
+import org.apache.beam.sdk.transforms.Count;
 import org.apache.beam.sdk.transforms.Create;
+import org.apache.beam.sdk.transforms.Deduplicate;
 import org.apache.beam.sdk.transforms.GroupByKey;
 import org.apache.beam.sdk.transforms.ParDo;
 import org.apache.beam.sdk.transforms.WithKeys;
@@ -45,6 +47,7 @@ import org.apache.beam.sdk.values.TimestampedValue;
 import org.joda.time.Duration;
 import org.joda.time.Instant;
 
+import org.junit.Assert;
 import org.junit.Rule;
 import org.junit.Test;
 
@@ -55,27 +58,54 @@ public class EventIngestionPipelineTest {
 
 	@Test
 	public void testAnalyticsEventDeduper() {
-		AnalyticsEvent event1 = _createTestAnalyticsEvent(
+		List<AnalyticsEvent> testAnalyticsEvents = new ArrayList<>();
+
+		List<String> expectedAnalyticsEventKeys = new ArrayList();
+
+		AnalyticsEvent testAnalyticsEvent = _createTestAnalyticsEvent(
 			"Page", "1", "https://liferay.com/web/guest/home/", "1",
 			"2024-11-18T09:34:45.000Z", "pageViewed", Collections.emptyMap(),
 			"Liferay Home", "asah123", "user1");
 
-		AnalyticsEvent event2 = _createTestAnalyticsEvent(
-			"Page", "1", "https://liferay.com/web/guest/home/", "1",
-			"2024-11-18T09:34:47.000Z", "pageViewed", Collections.emptyMap(),
-			"Liferay Home", "asah123", "user1");
+		testAnalyticsEvents.add(testAnalyticsEvent);
 
-		AnalyticsEvent event3 = _createTestAnalyticsEvent(
+		AnalyticsDeduplicationSerializableFunction
+			analyticsDeduplicationSerializableFunction =
+				new AnalyticsDeduplicationSerializableFunction();
+
+		expectedAnalyticsEventKeys.add(
+			analyticsDeduplicationSerializableFunction.apply(
+				testAnalyticsEvent));
+
+		testAnalyticsEvents.add(
+			_createTestAnalyticsEvent(
+				"Page", "1", "https://liferay.com/web/guest/home/", "1",
+				"2024-11-18T09:34:47.000Z", "pageViewed",
+				Collections.emptyMap(), "Liferay Home", "asah123", "user1"));
+
+		testAnalyticsEvent = _createTestAnalyticsEvent(
 			"Page", "1", "https://liferay.com/web/guest/home/", "1",
 			"2024-11-18T09:34:48.000Z", "pageScroll", Collections.emptyMap(),
 			"Liferay Home", "asah123", "user1");
 
-		AnalyticsEvent event4 = _createTestAnalyticsEvent(
+		testAnalyticsEvents.add(testAnalyticsEvent);
+
+		expectedAnalyticsEventKeys.add(
+			analyticsDeduplicationSerializableFunction.apply(
+				testAnalyticsEvent));
+
+		testAnalyticsEvent = _createTestAnalyticsEvent(
 			"Page", "1", "https://liferay.com/web/guest/home/", "1",
 			"2024-11-18T09:34:48.000Z", "pageViewed", Collections.emptyMap(),
 			"Liferay Home", "asah123", "user2");
 
-		AnalyticsEvent event5 = _createTestAnalyticsEvent(
+		testAnalyticsEvents.add(testAnalyticsEvent);
+
+		expectedAnalyticsEventKeys.add(
+			analyticsDeduplicationSerializableFunction.apply(
+				testAnalyticsEvent));
+
+		testAnalyticsEvent = _createTestAnalyticsEvent(
 			"WebContent", "1", "https://liferay.com/web/guest/home/", "1",
 			"2024-11-18T09:34:00.000Z", "webContentViewed",
 			new HashMap<String, String>() {
@@ -86,18 +116,25 @@ public class EventIngestionPipelineTest {
 			},
 			"Liferay Home", "asah123", "user3");
 
-		AnalyticsEvent event6 = _createTestAnalyticsEvent(
-			"WebContent", "1", "https://liferay.com/web/guest/home/", "1",
-			"2024-11-18T09:34:03.000Z", "webContentViewed",
-			new HashMap<String, String>() {
-				{
-					put("articleId", "1");
-					put("title", "title-1");
-				}
-			},
-			"Liferay Home", "asah123", "user3");
+		testAnalyticsEvents.add(testAnalyticsEvent);
 
-		AnalyticsEvent event7 = _createTestAnalyticsEvent(
+		expectedAnalyticsEventKeys.add(
+			analyticsDeduplicationSerializableFunction.apply(
+				testAnalyticsEvent));
+
+		testAnalyticsEvents.add(
+			_createTestAnalyticsEvent(
+				"WebContent", "1", "https://liferay.com/web/guest/home/", "1",
+				"2024-11-18T09:34:03.000Z", "webContentViewed",
+				new HashMap<String, String>() {
+					{
+						put("articleId", "1");
+						put("title", "title-1");
+					}
+				},
+				"Liferay Home", "asah123", "user3"));
+
+		testAnalyticsEvent = _createTestAnalyticsEvent(
 			"WebContent", "1", "https://liferay.com/web/guest/home/", "1",
 			"2024-11-18T09:37:06.000Z", "webContentViewed",
 			new HashMap<String, String>() {
@@ -108,37 +145,54 @@ public class EventIngestionPipelineTest {
 			},
 			"Liferay Home", "asah123", "user3");
 
-		AnalyticsEvent event8 = _createTestAnalyticsEvent(
-			"WebContent", "1", "https://liferay.com/web/guest/home/", "1",
-			"2024-11-18T09:37:07.000Z", "webContentViewed",
-			new HashMap<String, String>() {
-				{
-					put("articleId", "1");
-					put("title", "title-1");
-				}
-			},
-			"Liferay Home", "asah123", "user3");
+		testAnalyticsEvents.add(testAnalyticsEvent);
 
-		PCollection<KV<String, Iterable<AnalyticsEvent>>> collection =
-			testPipeline.apply(
-				"Create Test Batch",
-				Create.of(
-					KV.of("user1", Arrays.asList(event1, event2, event3)),
-					KV.of("user2", Arrays.asList(event4)),
-					KV.of(
-						"user3",
-						Arrays.asList(event5, event6, event7, event8))));
+		expectedAnalyticsEventKeys.add(
+			analyticsDeduplicationSerializableFunction.apply(
+				testAnalyticsEvent));
 
-		PCollection<KV<String, Iterable<AnalyticsEvent>>> pCollection =
-			collection.apply(
-				ParDo.of(new EventIngestionPipeline.AnalyticsEventsDeduper()));
+		testAnalyticsEvents.add(
+			_createTestAnalyticsEvent(
+				"WebContent", "1", "https://liferay.com/web/guest/home/", "1",
+				"2024-11-18T09:37:07.000Z", "webContentViewed",
+				new HashMap<String, String>() {
+					{
+						put("articleId", "1");
+						put("title", "title-1");
+					}
+				},
+				"Liferay Home", "asah123", "user3"));
+
+		PCollection<AnalyticsEvent> pCollection = testPipeline.apply(
+			"Create Test Batch",
+			Create.of(
+				testAnalyticsEvents
+			).withCoder(
+				AvroCoder.of(AnalyticsEvent.class)
+			)
+		).apply(
+			Deduplicate.withRepresentativeValueFn(
+				new AnalyticsDeduplicationSerializableFunction())
+		);
+
+		PAssert.that(
+			pCollection.apply(Count.globally())
+		).containsInAnyOrder(
+			5L
+		);
 
 		PAssert.that(
 			pCollection
-		).containsInAnyOrder(
-			KV.of("user1", Arrays.asList(event1, event3)),
-			KV.of("user2", Arrays.asList(event4)),
-			KV.of("user3", Arrays.asList(event5, event7))
+		).satisfies(
+			analyticsEvents -> {
+				analyticsEvents.forEach(
+					analyticsEvent -> Assert.assertTrue(
+						expectedAnalyticsEventKeys.contains(
+							analyticsDeduplicationSerializableFunction.apply(
+								analyticsEvent))));
+
+				return null;
+			}
 		);
 
 		testPipeline.run();
