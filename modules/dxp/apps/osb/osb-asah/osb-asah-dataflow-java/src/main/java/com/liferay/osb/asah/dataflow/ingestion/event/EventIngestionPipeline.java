@@ -18,7 +18,6 @@ import com.liferay.osb.asah.dataflow.io.WriteToText;
 
 import java.time.ZoneId;
 import java.time.ZonedDateTime;
-import java.time.temporal.ChronoUnit;
 
 import java.util.ArrayList;
 import java.util.Comparator;
@@ -173,35 +172,13 @@ public class EventIngestionPipeline {
 		public String apply(AnalyticsEvent analyticsEvent) {
 			Map<String, String> context = analyticsEvent.context;
 
-			ZonedDateTime utcZonedDateTime = DateUtil.toUTCZonedDateTime(
-				analyticsEvent.eventDate);
-
-			ZonedDateTime projectZonedDateTime =
-				utcZonedDateTime.withZoneSameInstant(
-					ZoneId.of(analyticsEvent.projectTimeZoneId));
-
-			ZonedDateTime roundedProjectZonedDateTime =
-				projectZonedDateTime.truncatedTo(ChronoUnit.SECONDS);
-
-			int second = roundedProjectZonedDateTime.getSecond();
-
-			if ((second % _MIN_EVENT_SECOND_DELTA) != 0) {
-				roundedProjectZonedDateTime =
-					roundedProjectZonedDateTime.minusSeconds(
-						second % _MIN_EVENT_SECOND_DELTA);
-			}
-
 			return String.format(
-				"%s#%s#%s#%s#%s#%s#%s#%s#%s#%s", analyticsEvent.projectId,
+				"%s#%s#%s#%s#%s#%s#%s#%s#%s", analyticsEvent.projectId,
 				analyticsEvent.dataSourceId, analyticsEvent.channelId,
-				analyticsEvent.userId,
-				roundedProjectZonedDateTime.toLocalDateTime(),
-				context.get("canonicalUrl"), analyticsEvent.applicationId,
-				analyticsEvent.eventId, _getAssetId(analyticsEvent),
-				_getAssetTitle(analyticsEvent));
+				analyticsEvent.userId, context.get("canonicalUrl"),
+				analyticsEvent.applicationId, analyticsEvent.eventId,
+				_getAssetId(analyticsEvent), _getAssetTitle(analyticsEvent));
 		}
-
-		private static final long _MIN_EVENT_SECOND_DELTA = 5;
 
 	}
 
