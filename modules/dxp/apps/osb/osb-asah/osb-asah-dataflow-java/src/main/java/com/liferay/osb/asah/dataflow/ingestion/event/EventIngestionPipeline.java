@@ -37,6 +37,7 @@ import org.apache.beam.sdk.io.gcp.bigquery.TableDestination;
 import org.apache.beam.sdk.io.gcp.bigquery.WriteResult;
 import org.apache.beam.sdk.io.gcp.pubsub.PubsubIO;
 import org.apache.beam.sdk.options.PipelineOptionsFactory;
+import org.apache.beam.sdk.transforms.Deduplicate;
 import org.apache.beam.sdk.transforms.DoFn;
 import org.apache.beam.sdk.transforms.GroupByKey;
 import org.apache.beam.sdk.transforms.PTransform;
@@ -109,6 +110,10 @@ public class EventIngestionPipeline {
 			"Extract Geolocation/Device Information",
 			ParDo.of(new AnalyticsEventExtractor())
 		).apply(
+			"Deduplicate Events",
+			Deduplicate.withRepresentativeValueFn(
+				new AnalyticsDeduplicationSerializableFunction())
+		).apply(
 			"Add Session Key", _buildWithKeysPTransform()
 		);
 
@@ -136,8 +141,6 @@ public class EventIngestionPipeline {
 						)))
 			).apply(
 				GroupByKey.create()
-			).apply(
-				ParDo.of(new AnalyticsEventsDeduper())
 			);
 
 		eventsPCollection.apply("Write Events", new EventBigQueryWriter());
@@ -149,14 +152,51 @@ public class EventIngestionPipeline {
 				"Create Sessions Windowing", window.accumulatingFiredPanes()
 			).apply(
 				GroupByKey.create()
-			).apply(
-				ParDo.of(new AnalyticsEventsDeduper())
 			);
 
 		sessionsPCollection.apply(
 			"Write Sessions", new SessionBigQueryWriter());
 
 		return pipeline.run();
+	}
+
+	public static class AnalyticsDeduplicationSerializableFunction
+		implements SerializableFunction<AnalyticsEvent, String> {
+
+		@Override
+		public String apply(AnalyticsEvent analyticsEvent) {
+			Map<String, String> context = analyticsEvent.context;
+
+			ZonedDateTime utcZonedDateTime = DateUtil.toUTCZonedDateTime(
+				analyticsEvent.eventDate);
+
+			ZonedDateTime projectZonedDateTime =
+				utcZonedDateTime.withZoneSameInstant(
+					ZoneId.of(analyticsEvent.projectTimeZoneId));
+
+			ZonedDateTime roundedProjectZonedDateTime =
+				projectZonedDateTime.truncatedTo(ChronoUnit.SECONDS);
+
+			int second = roundedProjectZonedDateTime.getSecond();
+
+			if ((second % _MIN_EVENT_SECOND_DELTA) != 0) {
+				roundedProjectZonedDateTime =
+					roundedProjectZonedDateTime.minusSeconds(
+						second % _MIN_EVENT_SECOND_DELTA);
+			}
+
+			return String.format(
+				"%s#%s#%s#%s#%s#%s#%s#%s#%s#%s", analyticsEvent.projectId,
+				analyticsEvent.dataSourceId, analyticsEvent.channelId,
+				analyticsEvent.userId,
+				roundedProjectZonedDateTime.toLocalDateTime(),
+				context.get("canonicalUrl"), analyticsEvent.applicationId,
+				analyticsEvent.eventId, _getAssetId(analyticsEvent),
+				_getAssetTitle(analyticsEvent));
+		}
+
+		private static final long _MIN_EVENT_SECOND_DELTA = 5;
+
 	}
 
 	public static class AnalyticsEventExtractor
@@ -279,68 +319,6 @@ public class EventIngestionPipeline {
 
 		private static final Logger _logger = LoggerFactory.getLogger(
 			AnalyticsEventParser.class);
-
-	}
-
-	public static class AnalyticsEventsDeduper
-		extends DoFn
-			<KV<String, Iterable<AnalyticsEvent>>,
-			 KV<String, Iterable<AnalyticsEvent>>> {
-
-		@ProcessElement
-		public void process(ProcessContext processContext) {
-			KV<String, Iterable<AnalyticsEvent>> element =
-				processContext.element();
-
-			List<AnalyticsEvent> dedupedAnalyticsEvents = new ArrayList<>();
-			Map<String, ZonedDateTime> lastAnalyticsEventTimestamps =
-				new HashMap<>();
-
-			List<AnalyticsEvent> analyticsEvents = Lists.newArrayList(
-				element.getValue());
-
-			analyticsEvents.sort(
-				Comparator.comparing(
-					analyticsEvent -> DateUtil.toUTCZonedDateTime(
-						analyticsEvent.eventDate)));
-
-			for (AnalyticsEvent analyticsEvent : analyticsEvents) {
-				String cacheKey = _getCacheKey(analyticsEvent);
-
-				ZonedDateTime lastAnalyticsEventZonedDateTime =
-					lastAnalyticsEventTimestamps.get(cacheKey);
-
-				ZonedDateTime utcZonedDateTime = DateUtil.toUTCZonedDateTime(
-					analyticsEvent.eventDate);
-
-				if ((lastAnalyticsEventZonedDateTime == null) ||
-					(ChronoUnit.MILLIS.between(
-						lastAnalyticsEventZonedDateTime, utcZonedDateTime) >
-							_MIN_EVENT_TIMESTAMP_DELTA)) {
-
-					dedupedAnalyticsEvents.add(analyticsEvent);
-
-					lastAnalyticsEventTimestamps.put(
-						cacheKey, utcZonedDateTime);
-				}
-			}
-
-			processContext.output(
-				KV.of(element.getKey(), dedupedAnalyticsEvents));
-		}
-
-		private String _getCacheKey(AnalyticsEvent analyticsEvent) {
-			Map<String, String> context = analyticsEvent.context;
-			String assetId = _getAssetId(analyticsEvent);
-			String assetTitle = _getAssetTitle(analyticsEvent);
-
-			return String.format(
-				"%s#%s#%s#%s#%s", context.get("canonicalUrl"),
-				analyticsEvent.applicationId, analyticsEvent.eventId, assetId,
-				assetTitle);
-		}
-
-		private static final long _MIN_EVENT_TIMESTAMP_DELTA = 5000;
 
 	}
 
