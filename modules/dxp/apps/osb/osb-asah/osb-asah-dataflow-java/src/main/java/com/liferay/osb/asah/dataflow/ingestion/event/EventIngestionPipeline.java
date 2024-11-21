@@ -110,7 +110,7 @@ public class EventIngestionPipeline {
 			"Extract Geolocation/Device Information",
 			ParDo.of(new AnalyticsEventExtractor())
 		).apply(
-			"Deduplicate Events",
+			"Deduplicate Analytics Events",
 			Deduplicate.withRepresentativeValueFn(
 				new AnalyticsDeduplicationSerializableFunction())
 		).apply(
