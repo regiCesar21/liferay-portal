@@ -113,7 +113,7 @@ Export-Package:\
 	\
 	com.sun.security.auth.module,\
 	\
-	com.thoughtworks.xstream.*;version='1.4.20',\
+	com.thoughtworks.xstream.*;version='1.4.21',\
 	\
 	io.netty.*;version='4.1',\
 	\
