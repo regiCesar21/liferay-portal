@@ -107,9 +107,6 @@ public class EventIngestionPipeline {
 		).apply(
 			"Parse Analytics Events", ParDo.of(new AnalyticsEventParser())
 		).apply(
-			"Extract Geolocation/Device Information",
-			ParDo.of(new AnalyticsEventExtractor())
-		).apply(
 			"Deduplicate Analytics Events",
 			Deduplicate.withRepresentativeValueFn(
 				new AnalyticsDeduplicationSerializableFunction()
@@ -118,6 +115,9 @@ public class EventIngestionPipeline {
 			).withTimeDomain(
 				TimeDomain.EVENT_TIME
 			)
+		).apply(
+			"Extract Geolocation/Device Information",
+			ParDo.of(new AnalyticsEventExtractor())
 		).apply(
 			"Add Session Key", _buildWithKeysPTransform()
 		);
