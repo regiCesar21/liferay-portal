@@ -234,7 +234,8 @@ public class StyleBookEntryActionDropdownItemsProvider {
 			new UploadItemSelectorCriterion(
 				StyleBookPortletKeys.STYLE_BOOK, uploadURL.toString(),
 				LanguageUtil.get(_httpServletRequest, "style-book"),
-				UploadServletRequestConfigurationHelperUtil.getMaxSize());
+				UploadServletRequestConfigurationHelperUtil.getMaxSize(),
+				new String[] {".bmp", ".jpeg", ".jpg", ".png", ".tiff"});
 
 		itemSelectorCriterion.setDesiredItemSelectorReturnTypes(
 			new FileEntryItemSelectorReturnType());

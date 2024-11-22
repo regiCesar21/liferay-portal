@@ -23,6 +23,7 @@ page import="com.liferay.petra.string.StringPool" %><%@
 page import="com.liferay.petra.string.StringUtil" %><%@
 page import="com.liferay.portal.kernel.language.LanguageUtil" %><%@
 page import="com.liferay.portal.kernel.model.Group" %><%@
+page import="com.liferay.portal.kernel.servlet.SessionErrors" %><%@
 page import="com.liferay.portal.kernel.util.ListUtil" %><%@
 page import="com.liferay.portal.kernel.util.ParamUtil" %><%@
 page import="com.liferay.style.book.exception.DuplicateStyleBookEntryKeyException" %><%@
