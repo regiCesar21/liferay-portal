@@ -62,22 +62,18 @@ public class EventIngestionPipelineTest {
 			"Page", "1", "https://liferay.com/web/guest/home/", "1",
 			"2024-11-18T00:00:00.000Z", "pageViewed", Collections.emptyMap(),
 			"Liferay Home", "asah123", "user1");
-
 		AnalyticsEvent analyticsEvent1 = _createTestAnalyticsEvent(
 			"Page", "1", "https://liferay.com/web/guest/home/", "1",
 			"2024-11-18T00:00:01.000Z", "pageViewed", Collections.emptyMap(),
 			"Liferay Home", "asah123", "user1");
-
 		AnalyticsEvent analyticsEvent2 = _createTestAnalyticsEvent(
 			"Page", "1", "https://liferay.com/web/guest/home/", "1",
 			"2024-11-18T00:00:02.000Z", "pageViewed", Collections.emptyMap(),
 			"Liferay Home", "asah123", "user1");
-
 		AnalyticsEvent analyticsEvent3 = _createTestAnalyticsEvent(
 			"Page", "1", "https://liferay.com/web/guest/home/", "1",
 			"2024-11-18T00:00:03.000Z", "pageViewed", Collections.emptyMap(),
 			"Liferay Home", "asah123", "user1");
-
 		AnalyticsEvent analyticsEvent4 = _createTestAnalyticsEvent(
 			"Page", "1", "https://liferay.com/web/guest/home/", "1",
 			"2024-11-18T00:00:04.000Z", "pageViewed", Collections.emptyMap(),
