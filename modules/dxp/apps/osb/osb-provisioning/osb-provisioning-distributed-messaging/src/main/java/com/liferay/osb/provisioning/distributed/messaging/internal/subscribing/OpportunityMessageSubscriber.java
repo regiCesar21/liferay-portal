@@ -2371,23 +2371,28 @@ public class OpportunityMessageSubscriber extends BaseMessageSubscriber {
 		Map<String, String> newProperties =
 			_salesSubscriberUtil.getAccountProperties(account, jsonObject);
 
-		JSONObject projectJSONObject = jsonObject.getJSONObject("project");
+		JSONObject ownerJSONObject = _getOwnerJSONObject(jsonObject);
 
-		if (((projectJSONObject != null) &&
-			 !oldProperties.equals(newProperties)) ||
-			Validator.isNull(account.getContactEmailAddress()) ||
-			Validator.isNull(account.getRegion()) || (parentAccount != null)) {
+		String contactEmailAddress = StringPool.BLANK;
+
+		if (ownerJSONObject != null) {
+			contactEmailAddress = ownerJSONObject.getString("emailAddress");
+		}
+
+		String parentAccountKey = StringPool.BLANK;
+
+		if (parentAccount != null) {
+			parentAccountKey = parentAccount.getKey();
+		}
+
+		if (!oldProperties.equals(newProperties) ||
+			!contactEmailAddress.equals(account.getContactEmailAddress()) ||
+			(Validator.isNull(account.getRegion()) && (region != null)) ||
+			(Validator.isNotNull(parentAccountKey) &&
+			 !parentAccountKey.equals(account.getParentAccountKey()))) {
 
 			if (parentAccount != null) {
 				account.setParentAccountKey(parentAccount.getKey());
-			}
-
-			JSONObject ownerJSONObject = _getOwnerJSONObject(jsonObject);
-
-			String contactEmailAddress = StringPool.BLANK;
-
-			if (ownerJSONObject != null) {
-				contactEmailAddress = ownerJSONObject.getString("emailAddress");
 			}
 
 			if (!contactEmailAddress.equals(account.getContactEmailAddress())) {
@@ -2414,7 +2419,7 @@ public class OpportunityMessageSubscriber extends BaseMessageSubscriber {
 
 			account.setContactEmailAddress(contactEmailAddress);
 
-			if (Validator.isNull(account.getRegion())) {
+			if (account.getRegion() == null) {
 				account.setRegion(region);
 			}
 
