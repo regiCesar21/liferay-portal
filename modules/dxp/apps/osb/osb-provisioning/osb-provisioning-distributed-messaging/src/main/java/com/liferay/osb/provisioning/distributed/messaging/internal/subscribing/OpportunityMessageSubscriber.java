@@ -609,7 +609,7 @@ public class OpportunityMessageSubscriber extends BaseMessageSubscriber {
 			_logWarning("Account name must not contain the | character");
 		}
 
-		JSONObject ownerJSONObject = jsonObject.getJSONObject("owner");
+		JSONObject ownerJSONObject = _getOwnerJSONObject(jsonObject);
 
 		if (ownerJSONObject != null) {
 			account.setContactEmailAddress(
@@ -1845,7 +1845,7 @@ public class OpportunityMessageSubscriber extends BaseMessageSubscriber {
 
 		List<Contact> contacts = new ArrayList<>();
 
-		JSONObject ownerJSONObject = jsonObject.getJSONObject("owner");
+		JSONObject ownerJSONObject = _getOwnerJSONObject(jsonObject);
 
 		if ((ownerJSONObject != null) &&
 			Validator.isNotNull(ownerJSONObject.getString("emailAddress"))) {
@@ -2382,14 +2382,37 @@ public class OpportunityMessageSubscriber extends BaseMessageSubscriber {
 				account.setParentAccountKey(parentAccount.getKey());
 			}
 
-			if (Validator.isNull(account.getContactEmailAddress())) {
-				JSONObject ownerJSONObject = jsonObject.getJSONObject("owner");
+			JSONObject ownerJSONObject = _getOwnerJSONObject(jsonObject);
 
-				if (ownerJSONObject != null) {
-					account.setContactEmailAddress(
-						ownerJSONObject.getString("emailAddress"));
-				}
+			String contactEmailAddress = StringPool.BLANK;
+
+			if (ownerJSONObject != null) {
+				contactEmailAddress = ownerJSONObject.getString("emailAddress");
 			}
+
+			if (!contactEmailAddress.equals(account.getContactEmailAddress())) {
+				ContactRole salesContactRole =
+					_contactRoleWebService.fetchContactRole(
+						ContactRole.Type.ACCOUNT_WORKER.toString(),
+						ContactRoleConstants.NAME_LIFERAY_SALES);
+
+				_accountWebService.unassignContactRolesByEmailAddress(
+					StringPool.BLANK, StringPool.BLANK, accountKey,
+					account.getContactEmailAddress(),
+					new String[] {salesContactRole.getKey()});
+
+				ContactRole secondaryContactRole =
+					_contactRoleWebService.fetchContactRole(
+						ContactRole.Type.ACCOUNT_WORKER.toString(),
+						ContactRoleConstants.NAME_SECONDARY_CONTACT);
+
+				_accountWebService.unassignContactRolesByEmailAddress(
+					StringPool.BLANK, StringPool.BLANK, accountKey,
+					account.getContactEmailAddress(),
+					new String[] {secondaryContactRole.getKey()});
+			}
+
+			account.setContactEmailAddress(contactEmailAddress);
 
 			if (Validator.isNull(account.getRegion())) {
 				account.setRegion(region);
@@ -2736,6 +2759,36 @@ public class OpportunityMessageSubscriber extends BaseMessageSubscriber {
 		}
 
 		return StringPool.BLANK;
+	}
+
+	private JSONObject _getOwnerJSONObject(JSONObject jsonObject)
+		throws Exception {
+
+		JSONObject accountOwnerJSONObject = jsonObject.getJSONObject(
+			"accountOwner");
+
+		if ((accountOwnerJSONObject != null) &&
+			Validator.isNotNull(
+				accountOwnerJSONObject.getString("emailAddress"))) {
+
+			Integer status =
+				_contactIdentityProvider.fetchContactStatusByEmailAddress(
+					accountOwnerJSONObject.getString("emailAddress"));
+
+			if (status == WorkflowConstants.STATUS_APPROVED) {
+				return accountOwnerJSONObject;
+			}
+		}
+
+		JSONObject ownerJSONObject = jsonObject.getJSONObject("owner");
+
+		if ((ownerJSONObject != null) &&
+			Validator.isNotNull(ownerJSONObject.getString("emailAddress"))) {
+
+			return ownerJSONObject;
+		}
+
+		return null;
 	}
 
 	private Product _getProduct(String productName) throws Exception {
