@@ -82,11 +82,15 @@ public class DataSourceDog {
 		dataSource.setId(_timeOrderedUuidGenerator.generateIdAsLong());
 		dataSource.setIsNew(Boolean.TRUE);
 		dataSource.setModifiedDate(date);
-		dataSource.setName(_getDataSourceName(dataSource.getName()));
+
+		String name = dataSource.getName();
+
+		dataSource.setName(_getDataSourceName(name));
+
 		dataSource.setState("CREDENTIALS_VALID");
 		dataSource.setStatus("ACTIVE");
 
-		_addDefaultChannel(dataSource);
+		_addDefaultChannel(dataSource.getId(), name);
 
 		return _dataSourceRepository.save(dataSource);
 	}
@@ -366,11 +370,10 @@ public class DataSourceDog {
 			AuthorThreadLocal.getUserId(), AuthorThreadLocal.getUserName());
 	}
 
-	private void _addDefaultChannel(DataSource dataSource) {
+	private void _addDefaultChannel(long dataSourceId, String name) {
 		_channelDog.addChannel(
-			Collections.singletonMap(
-				dataSource.getId(), Collections.emptySet()),
-			true, dataSource.getName(), true);
+			Collections.singletonMap(dataSourceId, Collections.emptySet()),
+			true, name, true);
 	}
 
 	private void _clearChannels(Long dataSourceId) {
