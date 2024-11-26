@@ -34,6 +34,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
+import java.util.Optional;
 import java.util.Set;
 
 import org.apache.commons.collections4.IterableUtils;
@@ -55,12 +56,43 @@ public class DataSourceDogTest
 	implements OSBAsahTestExecutionListenersContext {
 
 	@Test
-	public void testAddDataSourceWithDefaultChannel() {
+	public void testAddDataSourceWithDefaultChannel1() {
 		DataSource dataSource = _dataSourceDog.addDataSource(
 			FaroInfoTestUtil.buildLiferayDataSource());
 
 		Assertions.assertNotNull(
 			_dataSourceDog.fetchDefaultChannelId(dataSource.getId()));
+	}
+
+	@Test
+	public void testAddDataSourceWithDefaultChannel2() {
+		_channelRepository.save(new Channel("Liferay DXP (1)"));
+
+		String name = "Liferay DXP";
+
+		DataSource dataSource = FaroInfoTestUtil.buildLiferayDataSource();
+
+		dataSource.setName(name);
+
+		dataSource = _dataSourceDog.addDataSource(dataSource);
+
+		Assertions.assertEquals("Liferay DXP", dataSource.getName());
+
+		dataSource = _dataSourceDog.addDataSource(dataSource);
+
+		Assertions.assertEquals("Liferay DXP (1)", dataSource.getName());
+
+		Long channelId = _dataSourceDog.fetchDefaultChannelId(
+			dataSource.getId());
+
+		Assertions.assertNotNull(channelId);
+
+		Optional<Channel> channelOptional = _channelRepository.findById(
+			channelId);
+
+		Channel channel = channelOptional.get();
+
+		Assertions.assertEquals("Liferay DXP (2)", channel.getName());
 	}
 
 	@Test
