@@ -127,9 +127,9 @@
 			},
 			{
 				description: '<@liferay.language key="information-and-fixes-for-known-vulnerabilities" />',
-				name: '<@liferay.language key="security-advisories" />',
-				svgId: '#security-advisories',
-				url: addLocaleParamToURI('${current_locale}', 'articles/360018875952')
+				name: '<@liferay.language key="security-vulnerabilities" />',
+				svgId: '#security-vulnerabilities',
+				url: 'https://support.liferay.com/security-vulnerabilities'
 			},
 			{
 				description: '<@liferay.language key="process-for-reporting-security-vulnerabilities" />',
