@@ -22,11 +22,11 @@ gcloud projects add-iam-policy-binding ${PROJECT_ID} \
 
 gcloud composer environments create ${COMPOSER_ENVIRONMENT_NAME} \
 	--airflow-configs=core-dagbag_import_timeout=120,scheduler-min_file_process_interval=1800 \
-	--airflow-version=2 \
 	--async \
 	--enable-master-authorized-networks \
 	--environment-size large \
 	--env-variables GOOGLE_PROJECT_ID=${PROJECT_ID},GOOGLE_REGION=${REGION},LCP_PROJECT_ID=${LCP_PROJECT_ID},NETWORK=${NETWORK},SUBNETWORK=${SUBNETWORK} \
+	--image-version=composer-2.6.5-airflow-2.7.3 \
 	--location ${REGION} \
 	--master-authorized-networks ${MASTER_AUTHORIZED_NETWORKS} \
 	--network ${NETWORK} \
