@@ -79,7 +79,11 @@ public class DataSourceDog {
 
 		dataSource.setFaroBackendSecuritySignature(
 			String.valueOf(UUID.randomUUID()));
-		dataSource.setId(_timeOrderedUuidGenerator.generateIdAsLong());
+
+		long id = _timeOrderedUuidGenerator.generateIdAsLong();
+
+		dataSource.setId(id);
+
 		dataSource.setIsNew(Boolean.TRUE);
 		dataSource.setModifiedDate(date);
 
@@ -90,7 +94,7 @@ public class DataSourceDog {
 		dataSource.setState("CREDENTIALS_VALID");
 		dataSource.setStatus("ACTIVE");
 
-		_addDefaultChannel(dataSource.getId(), name);
+		_addDefaultChannel(id, name);
 
 		return _dataSourceRepository.save(dataSource);
 	}
