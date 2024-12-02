@@ -99,7 +99,7 @@ public class UpdateStyleBookEntryPreviewMVCActionCommandTest {
 	}
 
 	@Test
-	public void testUpdateStyleBookEntryPreview() throws Exception {
+	public void testProcessAction() throws Exception {
 		Class<?> clazz = getClass();
 
 		FileEntry fileEntry = PortletFileRepositoryUtil.addPortletFileEntry(
@@ -142,7 +142,7 @@ public class UpdateStyleBookEntryPreviewMVCActionCommandTest {
 			Assert.assertNotNull(noSuchFileEntryException);
 		}
 
-		_testUpdateStyleBookEntryPreview("thumbnail1.png");
+		_testProcessAction("thumbnail1.png");
 
 		StyleBookEntry updatedStyleBookEntry =
 			_styleBookEntryLocalService.fetchStyleBookEntry(
@@ -150,7 +150,7 @@ public class UpdateStyleBookEntryPreviewMVCActionCommandTest {
 
 		long previewFileEntryId = updatedStyleBookEntry.getPreviewFileEntryId();
 
-		_testUpdateStyleBookEntryPreview("thumbnail2.png");
+		_testProcessAction("thumbnail2.png");
 
 		updatedStyleBookEntry = _styleBookEntryLocalService.fetchStyleBookEntry(
 			_styleBookEntry.getStyleBookEntryId());
@@ -203,7 +203,7 @@ public class UpdateStyleBookEntryPreviewMVCActionCommandTest {
 			mockLiferayPortletActionRequest, new MockActionResponse());
 	}
 
-	private void _testUpdateStyleBookEntryPreview(String fileName)
+	private void _testProcessAction(String fileName)
 		throws Exception {
 
 		FileEntry tempFileEntry = _addFileEntry(fileName);
