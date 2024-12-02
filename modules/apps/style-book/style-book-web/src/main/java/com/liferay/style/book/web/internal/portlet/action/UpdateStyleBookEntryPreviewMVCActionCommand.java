@@ -75,9 +75,6 @@ public class UpdateStyleBookEntryPreviewMVCActionCommand
 				"styleBookEntryPreviewFileExtensionInvalid");
 		}
 		else {
-			long styleBookEntryId = ParamUtil.getLong(
-				actionRequest, "styleBookEntryId");
-
 			ThemeDisplay themeDisplay =
 				(ThemeDisplay)actionRequest.getAttribute(WebKeys.THEME_DISPLAY);
 
@@ -96,6 +93,9 @@ public class UpdateStyleBookEntryPreviewMVCActionCommand
 					themeDisplay.getScopeGroupId(),
 					StyleBookPortletKeys.STYLE_BOOK, serviceContext);
 			}
+
+			long styleBookEntryId = ParamUtil.getLong(
+				actionRequest, "styleBookEntryId");
 
 			String fileName = StringBundler.concat(
 				styleBookEntryId, "_preview.", extension);
