@@ -9392,29 +9392,31 @@ public class StyleBookEntryVersionPersistenceImpl
 	static {
 		Set<String> ctControlColumnNames = new HashSet<String>();
 		Set<String> ctIgnoreColumnNames = new HashSet<String>();
+		Set<String> ctMergeColumnNames = new HashSet<String>();
 		Set<String> ctStrictColumnNames = new HashSet<String>();
 
 		ctControlColumnNames.add("mvccVersion");
 		ctControlColumnNames.add("ctCollectionId");
-		ctStrictColumnNames.add("version");
+		ctMergeColumnNames.add("version");
 		ctStrictColumnNames.add("uuid_");
-		ctStrictColumnNames.add("styleBookEntryId");
+		ctMergeColumnNames.add("styleBookEntryId");
 		ctStrictColumnNames.add("groupId");
 		ctStrictColumnNames.add("companyId");
 		ctStrictColumnNames.add("userId");
 		ctStrictColumnNames.add("userName");
 		ctStrictColumnNames.add("createDate");
 		ctIgnoreColumnNames.add("modifiedDate");
-		ctStrictColumnNames.add("defaultStyleBookEntry");
-		ctStrictColumnNames.add("frontendTokensValues");
-		ctStrictColumnNames.add("name");
-		ctStrictColumnNames.add("previewFileEntryId");
-		ctStrictColumnNames.add("styleBookEntryKey");
+		ctMergeColumnNames.add("defaultStyleBookEntry");
+		ctMergeColumnNames.add("frontendTokensValues");
+		ctMergeColumnNames.add("name");
+		ctMergeColumnNames.add("previewFileEntryId");
+		ctMergeColumnNames.add("styleBookEntryKey");
 
 		_ctColumnNamesMap.put(
 			CTColumnResolutionType.CONTROL, ctControlColumnNames);
 		_ctColumnNamesMap.put(
 			CTColumnResolutionType.IGNORE, ctIgnoreColumnNames);
+		_ctColumnNamesMap.put(CTColumnResolutionType.MERGE, ctMergeColumnNames);
 		_ctColumnNamesMap.put(
 			CTColumnResolutionType.PK,
 			Collections.singleton("styleBookEntryVersionId"));

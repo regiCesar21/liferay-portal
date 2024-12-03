@@ -10251,6 +10251,7 @@ public class FragmentEntryLinkPersistenceImpl
 	static {
 		Set<String> ctControlColumnNames = new HashSet<String>();
 		Set<String> ctIgnoreColumnNames = new HashSet<String>();
+		Set<String> ctMergeColumnNames = new HashSet<String>();
 		Set<String> ctStrictColumnNames = new HashSet<String>();
 
 		ctControlColumnNames.add("mvccVersion");
@@ -10262,27 +10263,28 @@ public class FragmentEntryLinkPersistenceImpl
 		ctStrictColumnNames.add("userName");
 		ctStrictColumnNames.add("createDate");
 		ctIgnoreColumnNames.add("modifiedDate");
-		ctStrictColumnNames.add("originalFragmentEntryLinkId");
-		ctStrictColumnNames.add("fragmentEntryId");
-		ctStrictColumnNames.add("segmentsExperienceId");
+		ctMergeColumnNames.add("originalFragmentEntryLinkId");
+		ctMergeColumnNames.add("fragmentEntryId");
+		ctMergeColumnNames.add("segmentsExperienceId");
 		ctStrictColumnNames.add("classNameId");
 		ctStrictColumnNames.add("classPK");
-		ctStrictColumnNames.add("plid");
-		ctStrictColumnNames.add("css");
-		ctStrictColumnNames.add("html");
-		ctStrictColumnNames.add("js");
-		ctStrictColumnNames.add("configuration");
-		ctStrictColumnNames.add("editableValues");
-		ctStrictColumnNames.add("namespace");
-		ctStrictColumnNames.add("position");
-		ctStrictColumnNames.add("rendererKey");
-		ctStrictColumnNames.add("lastPropagationDate");
-		ctStrictColumnNames.add("lastPublishDate");
+		ctMergeColumnNames.add("plid");
+		ctMergeColumnNames.add("css");
+		ctMergeColumnNames.add("html");
+		ctMergeColumnNames.add("js");
+		ctMergeColumnNames.add("configuration");
+		ctMergeColumnNames.add("editableValues");
+		ctMergeColumnNames.add("namespace");
+		ctMergeColumnNames.add("position");
+		ctMergeColumnNames.add("rendererKey");
+		ctMergeColumnNames.add("lastPropagationDate");
+		ctMergeColumnNames.add("lastPublishDate");
 
 		_ctColumnNamesMap.put(
 			CTColumnResolutionType.CONTROL, ctControlColumnNames);
 		_ctColumnNamesMap.put(
 			CTColumnResolutionType.IGNORE, ctIgnoreColumnNames);
+		_ctColumnNamesMap.put(CTColumnResolutionType.MERGE, ctMergeColumnNames);
 		_ctColumnNamesMap.put(
 			CTColumnResolutionType.PK,
 			Collections.singleton("fragmentEntryLinkId"));

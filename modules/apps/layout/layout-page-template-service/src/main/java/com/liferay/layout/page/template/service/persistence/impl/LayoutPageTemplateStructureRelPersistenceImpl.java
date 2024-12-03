@@ -3816,8 +3816,8 @@ public class LayoutPageTemplateStructureRelPersistenceImpl
 		ctStrictColumnNames.add("userName");
 		ctStrictColumnNames.add("createDate");
 		ctIgnoreColumnNames.add("modifiedDate");
-		ctStrictColumnNames.add("layoutPageTemplateStructureId");
-		ctStrictColumnNames.add("segmentsExperienceId");
+		ctMergeColumnNames.add("layoutPageTemplateStructureId");
+		ctMergeColumnNames.add("segmentsExperienceId");
 		ctMergeColumnNames.add("data_");
 
 		_ctColumnNamesMap.put(

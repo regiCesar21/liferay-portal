@@ -2668,6 +2668,7 @@ public class MBStatsUserPersistenceImpl
 
 	static {
 		Set<String> ctControlColumnNames = new HashSet<String>();
+		Set<String> ctMergeColumnNames = new HashSet<String>();
 		Set<String> ctStrictColumnNames = new HashSet<String>();
 
 		ctControlColumnNames.add("mvccVersion");
@@ -2675,11 +2676,12 @@ public class MBStatsUserPersistenceImpl
 		ctStrictColumnNames.add("groupId");
 		ctStrictColumnNames.add("companyId");
 		ctStrictColumnNames.add("userId");
-		ctStrictColumnNames.add("messageCount");
-		ctStrictColumnNames.add("lastPostDate");
+		ctMergeColumnNames.add("messageCount");
+		ctMergeColumnNames.add("lastPostDate");
 
 		_ctColumnNamesMap.put(
 			CTColumnResolutionType.CONTROL, ctControlColumnNames);
+		_ctColumnNamesMap.put(CTColumnResolutionType.MERGE, ctMergeColumnNames);
 		_ctColumnNamesMap.put(
 			CTColumnResolutionType.PK, Collections.singleton("statsUserId"));
 		_ctColumnNamesMap.put(

@@ -2593,6 +2593,7 @@ public class LayoutSEOEntryPersistenceImpl
 	static {
 		Set<String> ctControlColumnNames = new HashSet<String>();
 		Set<String> ctIgnoreColumnNames = new HashSet<String>();
+		Set<String> ctMergeColumnNames = new HashSet<String>();
 		Set<String> ctStrictColumnNames = new HashSet<String>();
 
 		ctControlColumnNames.add("mvccVersion");
@@ -2604,23 +2605,24 @@ public class LayoutSEOEntryPersistenceImpl
 		ctStrictColumnNames.add("userName");
 		ctStrictColumnNames.add("createDate");
 		ctIgnoreColumnNames.add("modifiedDate");
-		ctStrictColumnNames.add("privateLayout");
-		ctStrictColumnNames.add("layoutId");
-		ctStrictColumnNames.add("canonicalURL");
-		ctStrictColumnNames.add("canonicalURLEnabled");
-		ctStrictColumnNames.add("DDMStorageId");
-		ctStrictColumnNames.add("openGraphDescription");
-		ctStrictColumnNames.add("openGraphDescriptionEnabled");
-		ctStrictColumnNames.add("openGraphImageAlt");
-		ctStrictColumnNames.add("openGraphImageFileEntryId");
-		ctStrictColumnNames.add("openGraphTitle");
-		ctStrictColumnNames.add("openGraphTitleEnabled");
-		ctStrictColumnNames.add("lastPublishDate");
+		ctMergeColumnNames.add("privateLayout");
+		ctMergeColumnNames.add("layoutId");
+		ctMergeColumnNames.add("canonicalURL");
+		ctMergeColumnNames.add("canonicalURLEnabled");
+		ctMergeColumnNames.add("DDMStorageId");
+		ctMergeColumnNames.add("openGraphDescription");
+		ctMergeColumnNames.add("openGraphDescriptionEnabled");
+		ctMergeColumnNames.add("openGraphImageAlt");
+		ctMergeColumnNames.add("openGraphImageFileEntryId");
+		ctMergeColumnNames.add("openGraphTitle");
+		ctMergeColumnNames.add("openGraphTitleEnabled");
+		ctMergeColumnNames.add("lastPublishDate");
 
 		_ctColumnNamesMap.put(
 			CTColumnResolutionType.CONTROL, ctControlColumnNames);
 		_ctColumnNamesMap.put(
 			CTColumnResolutionType.IGNORE, ctIgnoreColumnNames);
+		_ctColumnNamesMap.put(CTColumnResolutionType.MERGE, ctMergeColumnNames);
 		_ctColumnNamesMap.put(
 			CTColumnResolutionType.PK,
 			Collections.singleton("layoutSEOEntryId"));
