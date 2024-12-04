@@ -6489,10 +6489,10 @@ public class PortletPreferencesPersistenceImpl
 		ctControlColumnNames.add("mvccVersion");
 		ctControlColumnNames.add("ctCollectionId");
 		ctStrictColumnNames.add("companyId");
-		ctStrictColumnNames.add("ownerId");
-		ctStrictColumnNames.add("ownerType");
-		ctStrictColumnNames.add("plid");
-		ctStrictColumnNames.add("portletId");
+		ctMergeColumnNames.add("ownerId");
+		ctMergeColumnNames.add("ownerType");
+		ctMergeColumnNames.add("plid");
+		ctMergeColumnNames.add("portletId");
 		ctMergeColumnNames.add("preferences");
 
 		_ctColumnNamesMap.put(

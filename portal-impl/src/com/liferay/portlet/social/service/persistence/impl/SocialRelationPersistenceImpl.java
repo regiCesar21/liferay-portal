@@ -6494,6 +6494,7 @@ public class SocialRelationPersistenceImpl
 
 	static {
 		Set<String> ctControlColumnNames = new HashSet<String>();
+		Set<String> ctMergeColumnNames = new HashSet<String>();
 		Set<String> ctStrictColumnNames = new HashSet<String>();
 
 		ctControlColumnNames.add("mvccVersion");
@@ -6501,12 +6502,13 @@ public class SocialRelationPersistenceImpl
 		ctStrictColumnNames.add("uuid_");
 		ctStrictColumnNames.add("companyId");
 		ctStrictColumnNames.add("createDate");
-		ctStrictColumnNames.add("userId1");
-		ctStrictColumnNames.add("userId2");
-		ctStrictColumnNames.add("type_");
+		ctMergeColumnNames.add("userId1");
+		ctMergeColumnNames.add("userId2");
+		ctMergeColumnNames.add("type_");
 
 		_ctColumnNamesMap.put(
 			CTColumnResolutionType.CONTROL, ctControlColumnNames);
+		_ctColumnNamesMap.put(CTColumnResolutionType.MERGE, ctMergeColumnNames);
 		_ctColumnNamesMap.put(
 			CTColumnResolutionType.PK, Collections.singleton("relationId"));
 		_ctColumnNamesMap.put(

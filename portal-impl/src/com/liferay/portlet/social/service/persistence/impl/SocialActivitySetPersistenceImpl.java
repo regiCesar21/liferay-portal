@@ -4314,6 +4314,7 @@ public class SocialActivitySetPersistenceImpl
 
 	static {
 		Set<String> ctControlColumnNames = new HashSet<String>();
+		Set<String> ctMergeColumnNames = new HashSet<String>();
 		Set<String> ctStrictColumnNames = new HashSet<String>();
 
 		ctControlColumnNames.add("mvccVersion");
@@ -4322,15 +4323,16 @@ public class SocialActivitySetPersistenceImpl
 		ctStrictColumnNames.add("companyId");
 		ctStrictColumnNames.add("userId");
 		ctStrictColumnNames.add("createDate");
-		ctStrictColumnNames.add("modifiedDate");
+		ctMergeColumnNames.add("modifiedDate");
 		ctStrictColumnNames.add("classNameId");
 		ctStrictColumnNames.add("classPK");
-		ctStrictColumnNames.add("type_");
-		ctStrictColumnNames.add("extraData");
-		ctStrictColumnNames.add("activityCount");
+		ctMergeColumnNames.add("type_");
+		ctMergeColumnNames.add("extraData");
+		ctMergeColumnNames.add("activityCount");
 
 		_ctColumnNamesMap.put(
 			CTColumnResolutionType.CONTROL, ctControlColumnNames);
+		_ctColumnNamesMap.put(CTColumnResolutionType.MERGE, ctMergeColumnNames);
 		_ctColumnNamesMap.put(
 			CTColumnResolutionType.PK, Collections.singleton("activitySetId"));
 		_ctColumnNamesMap.put(

@@ -3069,6 +3069,7 @@ public class LayoutSetPersistenceImpl
 	static {
 		Set<String> ctControlColumnNames = new HashSet<String>();
 		Set<String> ctIgnoreColumnNames = new HashSet<String>();
+		Set<String> ctMergeColumnNames = new HashSet<String>();
 		Set<String> ctStrictColumnNames = new HashSet<String>();
 
 		ctControlColumnNames.add("mvccVersion");
@@ -3077,19 +3078,20 @@ public class LayoutSetPersistenceImpl
 		ctStrictColumnNames.add("companyId");
 		ctStrictColumnNames.add("createDate");
 		ctIgnoreColumnNames.add("modifiedDate");
-		ctStrictColumnNames.add("privateLayout");
-		ctStrictColumnNames.add("logoId");
-		ctStrictColumnNames.add("themeId");
-		ctStrictColumnNames.add("colorSchemeId");
-		ctStrictColumnNames.add("css");
-		ctStrictColumnNames.add("settings_");
-		ctStrictColumnNames.add("layoutSetPrototypeUuid");
-		ctStrictColumnNames.add("layoutSetPrototypeLinkEnabled");
+		ctMergeColumnNames.add("privateLayout");
+		ctMergeColumnNames.add("logoId");
+		ctMergeColumnNames.add("themeId");
+		ctMergeColumnNames.add("colorSchemeId");
+		ctMergeColumnNames.add("css");
+		ctMergeColumnNames.add("settings_");
+		ctMergeColumnNames.add("layoutSetPrototypeUuid");
+		ctMergeColumnNames.add("layoutSetPrototypeLinkEnabled");
 
 		_ctColumnNamesMap.put(
 			CTColumnResolutionType.CONTROL, ctControlColumnNames);
 		_ctColumnNamesMap.put(
 			CTColumnResolutionType.IGNORE, ctIgnoreColumnNames);
+		_ctColumnNamesMap.put(CTColumnResolutionType.MERGE, ctMergeColumnNames);
 		_ctColumnNamesMap.put(
 			CTColumnResolutionType.PK, Collections.singleton("layoutSetId"));
 		_ctColumnNamesMap.put(

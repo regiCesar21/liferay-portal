@@ -3324,19 +3324,21 @@ public class DLFileEntryMetadataPersistenceImpl
 
 	static {
 		Set<String> ctControlColumnNames = new HashSet<String>();
+		Set<String> ctMergeColumnNames = new HashSet<String>();
 		Set<String> ctStrictColumnNames = new HashSet<String>();
 
 		ctControlColumnNames.add("mvccVersion");
 		ctControlColumnNames.add("ctCollectionId");
 		ctStrictColumnNames.add("uuid_");
 		ctStrictColumnNames.add("companyId");
-		ctStrictColumnNames.add("DDMStorageId");
-		ctStrictColumnNames.add("DDMStructureId");
-		ctStrictColumnNames.add("fileEntryId");
-		ctStrictColumnNames.add("fileVersionId");
+		ctMergeColumnNames.add("DDMStorageId");
+		ctMergeColumnNames.add("DDMStructureId");
+		ctMergeColumnNames.add("fileEntryId");
+		ctMergeColumnNames.add("fileVersionId");
 
 		_ctColumnNamesMap.put(
 			CTColumnResolutionType.CONTROL, ctControlColumnNames);
+		_ctColumnNamesMap.put(CTColumnResolutionType.MERGE, ctMergeColumnNames);
 		_ctColumnNamesMap.put(
 			CTColumnResolutionType.PK,
 			Collections.singleton("fileEntryMetadataId"));
