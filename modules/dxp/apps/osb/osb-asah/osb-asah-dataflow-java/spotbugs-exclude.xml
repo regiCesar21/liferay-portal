@@ -12,6 +12,9 @@
 		<Class name="com.liferay.osb.asah.dataflow.ingestion.dxp.DXPEntityIngestionPipeline" />
 	</Match>
 	<Match>
+		<Class name="com.liferay.osb.asah.dataflow.ingestion.dxp.DXPOrderIngestionPipelineTest" />
+	</Match>
+	<Match>
 		<Class name="com.liferay.osb.asah.dataflow.ingestion.dxp.entity.Field" />
 	</Match>
 	<Match>
