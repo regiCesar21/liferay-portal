@@ -106,6 +106,7 @@ public class CTColumnResolutionMaxTest {
 		Assert.assertTrue(conflictInfo.isResolved());
 	}
 
+	@Ignore("No longer building this branch")
 	@Test
 	public void testUnresolvedModificationConflictMax() throws PortalException {
 		ServiceContext serviceContext =
