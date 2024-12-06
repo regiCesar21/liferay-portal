@@ -7,7 +7,7 @@ then
 	exit 1
 fi
 
-COMPOSER_ENVIRONMENT_NAME=ac-composer-${LCP_PROJECT_ID}
+COMPOSER_ENVIRONMENT_NAME=ac-${LCP_PROJECT_ID}
 
 cd src/main/python
 
