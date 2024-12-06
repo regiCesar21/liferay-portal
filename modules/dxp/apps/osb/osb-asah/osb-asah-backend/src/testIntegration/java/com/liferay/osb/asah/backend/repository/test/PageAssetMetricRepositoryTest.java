@@ -10,12 +10,15 @@ import com.liferay.osb.asah.backend.model.IdentityType;
 import com.liferay.osb.asah.backend.model.Metric;
 import com.liferay.osb.asah.backend.model.PageMetric;
 import com.liferay.osb.asah.backend.repository.AssetMetricRepository;
+import com.liferay.osb.asah.common.date.dog.TimeZoneDog;
 import com.liferay.osb.asah.common.model.Interval;
 import com.liferay.osb.asah.common.model.PageMetricType;
 import com.liferay.osb.asah.common.model.TimeRange;
 import com.liferay.osb.asah.common.model.Tuple2;
 import com.liferay.osb.asah.common.util.SetUtil;
 import com.liferay.osb.asah.test.util.annotation.BQSQLResource;
+
+import java.time.ZoneId;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -28,6 +31,8 @@ import org.apache.commons.lang3.tuple.Pair;
 
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
+
+import org.mockito.Mockito;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -336,6 +341,84 @@ public class PageAssetMetricRepositoryTest
 		Assertions.assertEquals(2D, visitorsMetric.getValue(), 0);
 	}
 
+	@BQSQLResource(resourcePath = "page_asset_metric.sql")
+	@Test
+	public void testGetVisitorMetricsWithTimeZone() {
+		PageMetric pageMetric = _assetMetricRepository.getAssetMetric(
+			"https://www.beryl.com/products/commercial/irrigation/FF-2100",
+			null, 1L,
+			SetUtil.of(
+				PageMetricType.VISITORS.getName(),
+				PageMetricType.VIEWS.getName()),
+			TimeRange.LAST_24_HOURS);
+
+		Assertions.assertNotNull(pageMetric);
+
+		Metric visitorsMetric = pageMetric.getVisitorsMetric();
+
+		Assertions.assertEquals(2D, visitorsMetric.getValue(), 0);
+
+		Metric viewsMetric = pageMetric.getViewsMetric();
+
+		Assertions.assertEquals(7D, viewsMetric.getValue(), 0);
+
+		pageMetric = _assetMetricRepository.getAssetMetric(
+			"https://www.beryl.com/delivery", null, 1L,
+			SetUtil.of(
+				PageMetricType.VISITORS.getName(),
+				PageMetricType.VIEWS.getName()),
+			TimeRange.LAST_7_DAYS);
+
+		Assertions.assertNotNull(pageMetric);
+
+		visitorsMetric = pageMetric.getVisitorsMetric();
+
+		Assertions.assertEquals(2D, visitorsMetric.getValue(), 0);
+
+		viewsMetric = pageMetric.getViewsMetric();
+
+		Assertions.assertEquals(4D, viewsMetric.getValue(), 0);
+
+		Mockito.when(
+			_timeZoneDog.getZoneId()
+		).thenReturn(
+			ZoneId.of("-07:00")
+		);
+
+		pageMetric = _assetMetricRepository.getAssetMetric(
+			"https://www.beryl.com/products/commercial/irrigation/FF-2100",
+			null, 1L,
+			SetUtil.of(
+				PageMetricType.VISITORS.getName(),
+				PageMetricType.VIEWS.getName()),
+			TimeRange.LAST_24_HOURS);
+
+		visitorsMetric = pageMetric.getVisitorsMetric();
+
+		Assertions.assertEquals(4D, visitorsMetric.getValue(), 0);
+
+		viewsMetric = pageMetric.getViewsMetric();
+
+		Assertions.assertEquals(14D, viewsMetric.getValue(), 0);
+
+		pageMetric = _assetMetricRepository.getAssetMetric(
+			"https://www.beryl.com/delivery", null, 1L,
+			SetUtil.of(
+				PageMetricType.VISITORS.getName(),
+				PageMetricType.VIEWS.getName()),
+			TimeRange.LAST_7_DAYS);
+
+		Assertions.assertNotNull(pageMetric);
+
+		visitorsMetric = pageMetric.getVisitorsMetric();
+
+		Assertions.assertEquals(2D, visitorsMetric.getValue(), 0);
+
+		viewsMetric = pageMetric.getViewsMetric();
+
+		Assertions.assertEquals(4D, viewsMetric.getValue(), 0);
+	}
+
 	@Override
 	protected AssetMetricRepository<PageMetric> getAssetMetricRepository() {
 		return _assetMetricRepository;
@@ -344,5 +427,8 @@ public class PageAssetMetricRepositoryTest
 	@Autowired
 	@Qualifier("PageAssetMetricRepository")
 	private AssetMetricRepository<PageMetric> _assetMetricRepository;
+
+	@Autowired
+	private TimeZoneDog _timeZoneDog;
 
 }
