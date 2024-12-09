@@ -62,6 +62,8 @@ public class DataSourcesRestController {
 		Boolean accountsSelected = null;
 		Boolean commerceChannelsSelected = null;
 		Boolean contactsSelected = null;
+		Boolean contentRecommenderMostPopularItemsEnabled = null;
+		Boolean contentRecommenderUserPersonalizationEnabled = null;
 		Boolean sitesSelected = null;
 
 		JSONObject detailJSONObject = new JSONObject(json);
@@ -79,13 +81,28 @@ public class DataSourcesRestController {
 			contactsSelected = detailJSONObject.getBoolean("contactsSelected");
 		}
 
+		if (detailJSONObject.has("contentRecommenderMostPopularItemsEnabled")) {
+			contentRecommenderMostPopularItemsEnabled =
+				detailJSONObject.getBoolean(
+					"contentRecommenderMostPopularItemsEnabled");
+		}
+
+		if (detailJSONObject.has(
+				"contentRecommenderUserPersonalizationEnabled")) {
+
+			contentRecommenderUserPersonalizationEnabled =
+				detailJSONObject.getBoolean(
+					"contentRecommenderUserPersonalizationEnabled");
+		}
+
 		if (detailJSONObject.has("sitesSelected")) {
 			sitesSelected = detailJSONObject.getBoolean("sitesSelected");
 		}
 
 		DataSource dataSource = _dataSourceDog.updateDataSourceDetails(
 			id, accountsSelected, commerceChannelsSelected, contactsSelected,
-			sitesSelected);
+			contentRecommenderMostPopularItemsEnabled,
+			contentRecommenderUserPersonalizationEnabled, sitesSelected);
 
 		_sanitize(dataSource);
 
