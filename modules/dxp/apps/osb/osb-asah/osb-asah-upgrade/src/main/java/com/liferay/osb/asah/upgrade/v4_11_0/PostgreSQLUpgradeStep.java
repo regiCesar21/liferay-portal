@@ -6,15 +6,17 @@
 package com.liferay.osb.asah.upgrade.v4_11_0;
 
 import com.liferay.osb.asah.upgrade.UpgradeStep;
+
+import javax.sql.DataSource;
+
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.jdbc.datasource.init.DatabasePopulatorUtils;
 import org.springframework.jdbc.datasource.init.ResourceDatabasePopulator;
 import org.springframework.stereotype.Component;
-
-import javax.sql.DataSource;
 
 /**
  * @author Rachael Koestartyo
