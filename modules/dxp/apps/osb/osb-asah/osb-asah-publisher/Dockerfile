@@ -28,6 +28,8 @@ RUN if [ "$GLOWROOT_ENABLED" = "true" ] \
 		\
 		unzip -q glowroot-0.14.2-dist.zip -d / && \
 		\
+		echo "{\"web\": {\"bindAddress\": \"0.0.0.0\"}}" > /glowroot/admin.json && \
+		\
 		chmod -R 777 /glowroot \
 	fi
 
