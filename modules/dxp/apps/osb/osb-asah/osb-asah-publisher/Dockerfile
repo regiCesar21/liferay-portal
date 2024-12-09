@@ -20,11 +20,14 @@ USER root
 
 WORKDIR /root
 
-RUN if [ "$GLOWROOT_ENABLED" = "true" ]; then \
-        wget -q https://github.com/glowroot/glowroot/releases/download/v0.14.2/glowroot-0.14.2-dist.zip && \
-        unzip -q glowroot-0.14.2-dist.zip -d / && \
-        chmod -R 777 /glowroot; \
-    fi
+RUN if [ "$GLOWROOT_ENABLED" = "true" ] \
+	then \
+		wget -q https://github.com/glowroot/glowroot/releases/download/v0.14.2/glowroot-0.14.2-dist.zip && \
+		\
+		unzip -q glowroot-0.14.2-dist.zip -d / && \
+		\
+		chmod -R 777 /glowroot \
+	fi
 
 COPY --from=builder /builder/dependencies .
 COPY --from=builder /builder/spring-boot-loader .
