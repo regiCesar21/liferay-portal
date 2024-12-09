@@ -20,7 +20,7 @@ import os
 import pendulum
 import requests
 
-def create_dag(ac_project_id, ac_project_time_zone_id, application_name, dag_id, dag_description, data_source_ids, is_paused_upon_creation, schedule_interval, table_name):
+def create_dag(ac_project_id, ac_project_time_zone_id, application_name, dag_id, dag_description, data_source_ids, schedule_interval, table_name):
 	with airflow.DAG(
 		dag_id=dag_id,
 		default_args={
@@ -36,7 +36,6 @@ def create_dag(ac_project_id, ac_project_time_zone_id, application_name, dag_id,
 			'subnetwork': os.environ['SUBNETWORK']
 		},
 		description=dag_description,
-		is_paused_upon_creation=is_paused_upon_creation,
 		max_active_runs=1,
 		schedule_interval=schedule_interval,
 		start_date=pendulum.now(ac_project_time_zone_id) - pendulum.duration(days=2)
@@ -112,26 +111,26 @@ for project in response.json():
 	if data_source_ids is None or len(data_source_ids) == 0:
 		continue
 
-	dag_id = 'most_viewed_content_recommender_{}'.format(project.get('id'))
+	if project.get('contentRecommenderMostPopularItemsEnabled'):
+		dag_id = 'most_viewed_content_recommender_{}'.format(project.get('id')
 
-	globals()[dag_id] = create_dag(
-		project.get('id'), project.get('timeZoneId'),
-		'MostViewedContentRecommendation', dag_id,
-		'Most Viewed Content Recommender DAG For {}'.format(project.get('id')),
-		data_source_ids,
-		True,
-		'0 1 * * 7',
-		'assetentity'
-	)
+		globals()[dag_id] = create_dag(
+			project.get('id'), project.get('timeZoneId'),
+			'MostViewedContentRecommendation', dag_id,
+			'Most Viewed Content Recommender DAG For {}'.format(project.get('id')),
+			data_source_ids,
+			'0 1 * * 7',
+			'assetentity'
+		)
 
-	dag_id = 'user_content_recommender_{}'.format(project.get('id'))
+	if project.get('contentRecommenderUserPersonalizationEnabled'):
+		dag_id = 'user_content_recommender_{}'.format(project.get('id'))
 
-	globals()[dag_id] = create_dag(
-		project.get('id'), project.get('timeZoneId'),
-		'UserContentRecommendation', dag_id,
-		'User Content Recommender DAG For {}'.format(project.get('id')),
-		data_source_ids,
-		True,
-		'0 1 * * *',
-		'assetentity'
-	)
+		globals()[dag_id] = create_dag(
+			project.get('id'), project.get('timeZoneId'),
+			'UserContentRecommendation', dag_id,
+			'User Content Recommender DAG For {}'.format(project.get('id')),
+			data_source_ids,
+			'0 1 * * *',
+			'assetentity'
+		)
