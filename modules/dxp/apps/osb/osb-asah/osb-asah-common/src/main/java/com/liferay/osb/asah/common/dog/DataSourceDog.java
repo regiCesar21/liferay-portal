@@ -341,6 +341,8 @@ public class DataSourceDog {
 	public DataSource updateDataSourceDetails(
 		Long dataSourceId, Boolean accountsSelected,
 		Boolean commerceChannelsSelected, Boolean contactsSelected,
+		Boolean contentRecommenderMostPopularItemsEnabled,
+		Boolean contentRecommenderUserPersonalizationEnabled,
 		Boolean sitesSelected) {
 
 		DataSource dataSource = getDataSource(dataSourceId);
@@ -357,6 +359,16 @@ public class DataSourceDog {
 
 		if (contactsSelected != null) {
 			dataSource.setContactsSelected(contactsSelected);
+		}
+
+		if (contentRecommenderMostPopularItemsEnabled != null) {
+			dataSource.setContentRecommenderMostPopularItemsEnabled(
+				contentRecommenderMostPopularItemsEnabled);
+		}
+
+		if (contentRecommenderMostPopularItemsEnabled != null) {
+			dataSource.setContentRecommenderUserPersonalizationEnabled(
+				contentRecommenderUserPersonalizationEnabled);
 		}
 
 		if (sitesSelected != null) {

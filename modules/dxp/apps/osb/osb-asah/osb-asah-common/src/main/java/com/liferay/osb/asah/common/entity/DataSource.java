@@ -201,6 +201,26 @@ public class DataSource implements Persistable<Long> {
 	}
 
 	@AccessType(AccessType.Type.PROPERTY)
+	@JsonIgnore
+	public Boolean getContentRecommenderMostPopularItemsEnabled() {
+		if (_detail == null) {
+			return null;
+		}
+
+		return _detail.getContentRecommenderMostPopularItemsEnabled();
+	}
+
+	@AccessType(AccessType.Type.PROPERTY)
+	@JsonIgnore
+	public Boolean getContentRecommenderUserPersonalizationEnabled() {
+		if (_detail == null) {
+			return null;
+		}
+
+		return _detail.getContentRecommenderUserPersonalizationEnabled();
+	}
+
+	@AccessType(AccessType.Type.PROPERTY)
 	@JsonAlias("createDate")
 	@JsonFormat(
 		pattern = DateUtil.PATTERN_ISO_8601, shape = JsonFormat.Shape.STRING,
@@ -627,6 +647,36 @@ public class DataSource implements Persistable<Long> {
 		}
 
 		_detail.setContactsSelected(contactsSelected);
+	}
+
+	public void setContentRecommenderMostPopularItemsEnabled(
+		Boolean contentRecommenderMostPopularItemsEnabled) {
+
+		if (contentRecommenderMostPopularItemsEnabled == null) {
+			return;
+		}
+
+		if (_detail == null) {
+			_detail = new Detail();
+		}
+
+		_detail.setContentRecommenderMostPopularItemsEnabled(
+			contentRecommenderMostPopularItemsEnabled);
+	}
+
+	public void setContentRecommenderUserPersonalizationEnabled(
+		Boolean contentRecommenderUserPersonalizationEnabled) {
+
+		if (contentRecommenderUserPersonalizationEnabled == null) {
+			return;
+		}
+
+		if (_detail == null) {
+			_detail = new Detail();
+		}
+
+		_detail.setContentRecommenderUserPersonalizationEnabled(
+			contentRecommenderUserPersonalizationEnabled);
 	}
 
 	public void setCreateDate(Date createDate) {
@@ -1672,6 +1722,12 @@ public class DataSource implements Persistable<Long> {
 					_commerceChannelsSelected,
 					detail._commerceChannelsSelected) &&
 				Objects.equals(_contactsSelected, detail._contactsSelected) &&
+				Objects.equals(
+					_contentRecommenderMostPopularItemsEnabled,
+					detail._contentRecommenderMostPopularItemsEnabled) &&
+				Objects.equals(
+					_contentRecommenderUserPersonalizationEnabled,
+					detail._contentRecommenderUserPersonalizationEnabled) &&
 				Objects.equals(_sitesSelected, detail._sitesSelected)) {
 
 				return true;
@@ -1695,6 +1751,16 @@ public class DataSource implements Persistable<Long> {
 			return _contactsSelected;
 		}
 
+		@JsonProperty("contentRecommenderMostPopularItemsEnabled")
+		public Boolean getContentRecommenderMostPopularItemsEnabled() {
+			return _contentRecommenderMostPopularItemsEnabled;
+		}
+
+		@JsonProperty("contentRecommenderUserPersonalizationEnabled")
+		public Boolean getContentRecommenderUserPersonalizationEnabled() {
+			return _contentRecommenderUserPersonalizationEnabled;
+		}
+
 		@JsonProperty("sitesSelected")
 		public Boolean getSitesSelected() {
 			return _sitesSelected;
@@ -1704,7 +1770,8 @@ public class DataSource implements Persistable<Long> {
 		public int hashCode() {
 			return Objects.hash(
 				_accountsSelected, _commerceChannelsSelected, _contactsSelected,
-				_sitesSelected);
+				_contentRecommenderMostPopularItemsEnabled,
+				_contentRecommenderUserPersonalizationEnabled, _sitesSelected);
 		}
 
 		public void setAccountsSelected(Boolean accountsSelected) {
@@ -1721,6 +1788,20 @@ public class DataSource implements Persistable<Long> {
 			_contactsSelected = contactsSelected;
 		}
 
+		public void setContentRecommenderMostPopularItemsEnabled(
+			Boolean contentRecommenderMostPopularItemsEnabled) {
+
+			_contentRecommenderMostPopularItemsEnabled =
+				contentRecommenderMostPopularItemsEnabled;
+		}
+
+		public void setContentRecommenderUserPersonalizationEnabled(
+			Boolean contentRecommenderUserPersonalizationEnabled) {
+
+			_contentRecommenderUserPersonalizationEnabled =
+				contentRecommenderUserPersonalizationEnabled;
+		}
+
 		public void setSitesSelected(Boolean sitesSelected) {
 			_sitesSelected = sitesSelected;
 		}
@@ -1728,6 +1809,8 @@ public class DataSource implements Persistable<Long> {
 		private Boolean _accountsSelected;
 		private Boolean _commerceChannelsSelected;
 		private Boolean _contactsSelected;
+		private Boolean _contentRecommenderMostPopularItemsEnabled;
+		private Boolean _contentRecommenderUserPersonalizationEnabled;
 		private Boolean _sitesSelected;
 
 	}
