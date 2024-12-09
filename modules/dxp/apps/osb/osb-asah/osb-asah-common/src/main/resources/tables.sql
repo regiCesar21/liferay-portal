@@ -37,8 +37,8 @@ CREATE TABLE IF NOT EXISTS Channel (
 CREATE TABLE IF NOT EXISTS ChannelDataSource (
 	channelId BIGINT,
 	dataSourceId BIGINT,
-    commerceChannelIds BIGINT[],
-    groupIds BIGINT[],
+	commerceChannelIds BIGINT[],
+	groupIds BIGINT[],
 	PRIMARY KEY (channelId, dataSourceId)
 );
 
@@ -87,8 +87,10 @@ CREATE TABLE IF NOT EXISTS DataSource (
 	accountsSelected BOOLEAN,
 	authorId BIGINT,
 	authorName TEXT,
-    commerceChannelsSelected BOOLEAN,
+	commerceChannelsSelected BOOLEAN,
 	contactsSelected BOOLEAN,
+	contentRecommenderMostPopularItemsEnabled BOOLEAN,
+	contentRecommenderUserPersonalizationEnabled BOOLEAN,
 	createDate TIMESTAMPTZ,
 	credentialType TEXT,
 	deletionDate TIMESTAMPTZ,
