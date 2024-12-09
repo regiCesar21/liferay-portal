@@ -66,6 +66,8 @@ public class ProjectsRestController extends BaseRestController {
 				boolean accountsSelected = false;
 				boolean commerceChannelsSelected = false;
 				boolean contactsSelected = false;
+				boolean contentRecommenderMostPopularItemsEnabled = false;
+				boolean contentRecommenderUserPersonalizationEnabled = false;
 				List<Long> dataSourceIds = new ArrayList<>();
 				boolean sitesSelected = false;
 
@@ -99,6 +101,20 @@ public class ProjectsRestController extends BaseRestController {
 							contactsSelected = true;
 						}
 
+						if (BooleanUtils.isTrue(
+								dataSource.
+									getContentRecommenderMostPopularItemsEnabled())) {
+
+							contentRecommenderMostPopularItemsEnabled = true;
+						}
+
+						if (BooleanUtils.isTrue(
+								dataSource.
+									getContentRecommenderUserPersonalizationEnabled())) {
+
+							contentRecommenderUserPersonalizationEnabled = true;
+						}
+
 						dataSourceIds.add(dataSource.getId());
 
 						if (BooleanUtils.isTrue(
@@ -118,9 +134,11 @@ public class ProjectsRestController extends BaseRestController {
 				projectDetailDTOs.add(
 					new ProjectDetailDTO(
 						accountsSelected, commerceChannelsSelected,
-						contactsSelected, dataSourceIds,
-						ProjectIdThreadLocal.getProjectId(), sitesSelected,
-						preference.getValue()));
+						contactsSelected,
+						contentRecommenderMostPopularItemsEnabled,
+						contentRecommenderUserPersonalizationEnabled,
+						dataSourceIds, ProjectIdThreadLocal.getProjectId(),
+						sitesSelected, preference.getValue()));
 			});
 
 		return projectDetailDTOs;
