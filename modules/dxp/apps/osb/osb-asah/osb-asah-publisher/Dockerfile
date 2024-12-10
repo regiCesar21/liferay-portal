@@ -32,9 +32,9 @@ RUN if [ "$GLOWROOT_ENABLED" = "true" ]; \
 		chmod -R 777 /glowroot; \
 	fi
 
-COPY docker-resources/glowroot-config.json /glowroot/config.json
 COPY --from=builder /builder/dependencies .
 COPY --from=builder /builder/spring-boot-loader .
+COPY docker-resources/glowroot-config.json /glowroot/config.json
 
 ENV LABEL_BUILD_DATE=${LABEL_BUILD_DATE}
 ENV LABEL_VCS_REF=${LABEL_VCS_REF}
