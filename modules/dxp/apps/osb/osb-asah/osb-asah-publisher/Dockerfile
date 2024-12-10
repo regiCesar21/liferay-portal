@@ -22,7 +22,7 @@ WORKDIR /root
 
 RUN mkdir /glowroot
 
-RUN if [ "$GLOWROOT_ENABLED" = "true" ] \
+RUN if [ "$GLOWROOT_ENABLED" = "true" ]; \
 	then \
 		wget -q https://github.com/glowroot/glowroot/releases/download/v0.14.2/glowroot-0.14.2-dist.zip && \
 		\
@@ -30,7 +30,7 @@ RUN if [ "$GLOWROOT_ENABLED" = "true" ] \
 		\
 		echo "{\"web\": {\"bindAddress\": \"0.0.0.0\"}}" > /glowroot/admin.json && \
 		\
-		chmod -R 777 /glowroot \
+		chmod -R 777 /glowroot; \
 	fi
 
 COPY docker-resources/glowroot-config.json /glowroot/config.json
