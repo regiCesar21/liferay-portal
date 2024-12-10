@@ -11,6 +11,7 @@ import com.liferay.osb.asah.upgrade.v4_10_0.EventUpgradeStep;
 import com.liferay.osb.asah.upgrade.v4_11_0.PostgreSQLUpgradeStep;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
@@ -45,6 +46,7 @@ public class UpgradeProcessConfiguration {
 	private EventUpgradeStep _eventUpgradeStep;
 
 	@Autowired
+	@Qualifier("com.liferay.osb.asah.upgrade.v4_11_0.PostgreSQLUpgradeStep")
 	private PostgreSQLUpgradeStep _postgreSQLUpgradeStep;
 
 }
