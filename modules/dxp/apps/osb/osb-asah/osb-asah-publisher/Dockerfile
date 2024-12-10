@@ -20,7 +20,7 @@ USER root
 
 WORKDIR /root
 
-RUN mkdir /glowroot \
+RUN mkdir /glowroot; \
 	\
 	if [ "$GLOWROOT_ENABLED" = "true" ]; \
 	then \
