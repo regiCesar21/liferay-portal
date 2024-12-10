@@ -20,8 +20,9 @@ USER root
 
 WORKDIR /root
 
-RUN mkdir /glowroot
-RUN if [ "$GLOWROOT_ENABLED" = "true" ]; \
+RUN mkdir /glowroot \
+	\
+	if [ "$GLOWROOT_ENABLED" = "true" ]; \
 	then \
 		wget -q https://github.com/glowroot/glowroot/releases/download/v0.14.2/glowroot-0.14.2-dist.zip && \
 		\
