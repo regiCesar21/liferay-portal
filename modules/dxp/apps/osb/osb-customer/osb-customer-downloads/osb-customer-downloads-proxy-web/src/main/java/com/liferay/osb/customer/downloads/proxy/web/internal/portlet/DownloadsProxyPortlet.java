@@ -82,13 +82,7 @@ public class DownloadsProxyPortlet extends MVCPortlet {
 
 		String fileName = ParamUtil.getString(actionRequest, "fileName");
 
-		String url = _URL_PREFIX + fileName;
-
-		String key = _http.URLtoString(url, true);
-
-		url = _URL_PREFIX + StringPool.SLASH + key;
-
-		actionResponse.sendRedirect(url);
+		actionResponse.sendRedirect(_URL_PREFIX + fileName);
 
 		sendAudit(actionRequest, fileName);
 	}
