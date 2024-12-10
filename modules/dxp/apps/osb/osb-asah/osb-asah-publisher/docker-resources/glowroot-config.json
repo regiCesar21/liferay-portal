@@ -216,5 +216,37 @@
       },
       "id": "spring"
     }
+  ],
+  "instrumentation": [
+    {
+      "className": "com.liferay.osb.asah.common.messaging.MessageBus",
+      "methodName": "sendMessage",
+      "methodParameterTypes": [
+        ".."
+      ],
+      "order": 0,
+      "captureKind": "transaction",
+      "transactionType": "Web",
+      "transactionNameTemplate": "SendMessage",
+      "alreadyInTransactionBehavior": "capture-trace-entry",
+      "traceEntryMessageTemplate": "{{methodName}}({{0}},{{1}})",
+      "traceEntryStackThresholdMillis": 2000,
+      "timerName": "SendMessage"
+    },
+    {
+      "className": "com.liferay.osb.asah.common.spring.cache.OSBAsahCache",
+      "methodName": "get",
+      "methodParameterTypes": [
+        ".."
+      ],
+      "order": 0,
+      "captureKind": "transaction",
+      "transactionType": "Web",
+      "transactionNameTemplate": "CacheGet",
+      "alreadyInTransactionBehavior": "capture-trace-entry",
+      "traceEntryMessageTemplate": "{{methodName}}",
+      "traceEntryStackThresholdMillis": 2000,
+      "timerName": "CacheGet"
+    }
   ]
 }
