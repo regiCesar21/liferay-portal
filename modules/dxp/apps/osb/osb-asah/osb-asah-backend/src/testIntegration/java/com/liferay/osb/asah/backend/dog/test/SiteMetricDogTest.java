@@ -15,6 +15,7 @@ import com.liferay.osb.asah.backend.model.HeatMapMetric;
 import com.liferay.osb.asah.backend.model.Metric;
 import com.liferay.osb.asah.backend.model.SiteMetric;
 import com.liferay.osb.asah.backend.model.SiteMetricType;
+import com.liferay.osb.asah.common.dog.PreferenceDog;
 import com.liferay.osb.asah.common.model.AcquisitionType;
 import com.liferay.osb.asah.common.model.Composition;
 import com.liferay.osb.asah.common.model.CompositionResultBag;
@@ -636,6 +637,84 @@ public class SiteMetricDogTest
 		Assertions.assertEquals(4, visitorsMetrics.getValue());
 	}
 
+	@BQSQLResource(resourcePath = "test_bq_events_5.sql")
+	@Test
+	public void testGetSiteMetricVisitorsWithTimeZone() {
+		SearchQueryContext searchQueryContext = _getSearchQueryContext();
+
+		searchQueryContext.setTimeRange(TimeRange.LAST_24_HOURS);
+
+		SiteMetric siteMetric = _siteMetricDog.getSiteMetric(
+			searchQueryContext);
+
+		Metric anonymousVisitorsMetrics =
+			siteMetric.getAnonymousVisitorsMetric();
+
+		Assertions.assertNull(anonymousVisitorsMetrics.getPreviousValue());
+		Assertions.assertEquals(1, anonymousVisitorsMetrics.getValue());
+
+		Metric knownVisitorsMetrics = siteMetric.getKnownVisitorsMetric();
+
+		Assertions.assertEquals(2, knownVisitorsMetrics.getValue());
+
+		Metric visitorsMetrics = siteMetric.getVisitorsMetric();
+
+		Assertions.assertEquals(3, visitorsMetrics.getValue());
+
+		searchQueryContext.setTimeRange(TimeRange.LAST_7_DAYS);
+
+		siteMetric = _siteMetricDog.getSiteMetric(searchQueryContext);
+
+		anonymousVisitorsMetrics = siteMetric.getAnonymousVisitorsMetric();
+
+		Assertions.assertEquals(2, anonymousVisitorsMetrics.getPreviousValue());
+		Assertions.assertEquals(1, anonymousVisitorsMetrics.getValue());
+
+		knownVisitorsMetrics = siteMetric.getKnownVisitorsMetric();
+
+		Assertions.assertEquals(1, knownVisitorsMetrics.getValue());
+
+		visitorsMetrics = siteMetric.getVisitorsMetric();
+
+		Assertions.assertEquals(2, visitorsMetrics.getValue());
+
+		_preferenceDog.savePreference("time-zone-id", "-07:00");
+
+		searchQueryContext.setTimeRange(TimeRange.LAST_24_HOURS);
+
+		siteMetric = _siteMetricDog.getSiteMetric(searchQueryContext);
+
+		anonymousVisitorsMetrics = siteMetric.getAnonymousVisitorsMetric();
+
+		Assertions.assertNull(anonymousVisitorsMetrics.getPreviousValue());
+		Assertions.assertEquals(1, anonymousVisitorsMetrics.getValue());
+
+		knownVisitorsMetrics = siteMetric.getKnownVisitorsMetric();
+
+		Assertions.assertEquals(2, knownVisitorsMetrics.getValue());
+
+		visitorsMetrics = siteMetric.getVisitorsMetric();
+
+		Assertions.assertEquals(3, visitorsMetrics.getValue());
+
+		searchQueryContext.setTimeRange(TimeRange.LAST_7_DAYS);
+
+		siteMetric = _siteMetricDog.getSiteMetric(searchQueryContext);
+
+		anonymousVisitorsMetrics = siteMetric.getAnonymousVisitorsMetric();
+
+		Assertions.assertEquals(2, anonymousVisitorsMetrics.getPreviousValue());
+		Assertions.assertEquals(2, anonymousVisitorsMetrics.getValue());
+
+		knownVisitorsMetrics = siteMetric.getKnownVisitorsMetric();
+
+		Assertions.assertEquals(1, knownVisitorsMetrics.getValue());
+
+		visitorsMetrics = siteMetric.getVisitorsMetric();
+
+		Assertions.assertEquals(3, visitorsMetrics.getValue());
+	}
+
 	@BQSQLResource(resourcePath = "test_bq_events_search_terms.sql")
 	@Test
 	public void testSearchTerms7Days() {
@@ -855,6 +934,9 @@ public class SiteMetricDogTest
 
 		return searchQueryContext;
 	}
+
+	@Autowired
+	private PreferenceDog _preferenceDog;
 
 	@Autowired
 	private SiteMetricDog _siteMetricDog;
