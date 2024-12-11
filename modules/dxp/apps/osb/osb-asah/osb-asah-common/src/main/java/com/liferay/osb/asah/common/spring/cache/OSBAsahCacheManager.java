@@ -12,10 +12,6 @@ import com.esotericsoftware.kryo.util.Pool;
 
 import com.github.benmanes.caffeine.cache.Caffeine;
 
-import com.liferay.osb.asah.common.prometheus.PrometheusUtil;
-
-import io.prometheus.client.Histogram;
-
 import java.time.Duration;
 
 import java.util.Collection;
@@ -91,8 +87,7 @@ public class OSBAsahCacheManager implements CacheManager {
 
 		return new OSBAsahCache(
 			_caffeineCacheManager.getCache(name), _kryoPool, name,
-			_redisCacheManager.getCache(name), _redisRequestDurationHistogram,
-			_redisTemplate);
+			_redisCacheManager.getCache(name), _redisTemplate);
 	}
 
 	private RedisCacheManager _createRedisCacheManager(
@@ -116,11 +111,6 @@ public class OSBAsahCacheManager implements CacheManager {
 
 	private static final Log _log = LogFactory.getLog(
 		OSBAsahCacheManager.class);
-
-	private static final Histogram _redisRequestDurationHistogram =
-		PrometheusUtil.histogram(
-			"redis_requests_seconds", "Redis requests duration in seconds",
-			"operation");
 
 	private final CaffeineCacheManager _caffeineCacheManager;
 

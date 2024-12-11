@@ -29,11 +29,9 @@ import com.liferay.osb.asah.common.messaging.MessageBus;
 import com.liferay.osb.asah.common.messaging.MessageListener;
 import com.liferay.osb.asah.common.messaging.MessageStreamingSubscriber;
 import com.liferay.osb.asah.common.messaging.MessageSubscriber;
-import com.liferay.osb.asah.common.prometheus.PrometheusUtil;
 import com.liferay.osb.asah.common.util.ProjectIdThreadLocal;
 
-import io.prometheus.client.Histogram;
-import io.prometheus.client.SimpleTimer;
+import io.micrometer.core.instrument.Metrics;
 
 import java.util.Collections;
 import java.util.HashSet;
@@ -163,7 +161,7 @@ public class PubSubMessageBusImpl implements MessageBus {
 			throw new IllegalArgumentException("Message is blank");
 		}
 
-		SimpleTimer simpleTimer = new SimpleTimer();
+		long startTime = System.nanoTime();
 
 		try {
 			Publisher publisher = _getOrCreatePublisher(channel);
@@ -184,7 +182,11 @@ public class PubSubMessageBusImpl implements MessageBus {
 			_log.error(exception, exception);
 		}
 
-		_pubsubPublishRequestDuration.observe(simpleTimer.elapsedSeconds());
+		Metrics.timer(
+			"pubsub_requests_seconds", "operation", "publish"
+		).record(
+			System.nanoTime() - startTime, TimeUnit.NANOSECONDS
+		);
 	}
 
 	@Override
@@ -402,11 +404,6 @@ public class PubSubMessageBusImpl implements MessageBus {
 
 	private static final Log _log = LogFactory.getLog(
 		PubSubMessageBusImpl.class);
-
-	private static final Histogram _pubsubPublishRequestDuration =
-		PrometheusUtil.histogram(
-			"pubsub_publish_requests_seconds",
-			"PubSub publish requests duration in seconds");
 
 	private final Map<Channel, Publisher> _channels = new ConcurrentHashMap<>();
 

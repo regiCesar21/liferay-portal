@@ -14,8 +14,7 @@ import com.esotericsoftware.kryo.util.Pool;
 import com.liferay.osb.asah.common.lock.KeyReentrantLock;
 import com.liferay.osb.asah.common.util.ProjectIdThreadLocal;
 
-import io.prometheus.client.Histogram;
-import io.prometheus.client.SimpleTimer;
+import io.micrometer.core.instrument.Metrics;
 
 import java.net.InetAddress;
 import java.net.UnknownHostException;
@@ -37,7 +36,6 @@ public class OSBAsahCache extends AbstractValueAdaptingCache {
 
 	public OSBAsahCache(
 		Cache caffeineCache, Pool<Kryo> kryoPool, String name, Cache redisCache,
-		Histogram redisRequestDurationHistogram,
 		RedisTemplate<Object, Object> redisTemplate) {
 
 		super(true);
@@ -46,7 +44,6 @@ public class OSBAsahCache extends AbstractValueAdaptingCache {
 		_kryoPool = kryoPool;
 		_name = name;
 		_redisCache = redisCache;
-		_redisRequestDurationHistogram = redisRequestDurationHistogram;
 		_redisTemplate = redisTemplate;
 	}
 
@@ -170,14 +167,10 @@ public class OSBAsahCache extends AbstractValueAdaptingCache {
 			return object;
 		}
 
-		SimpleTimer simpleTimer = new SimpleTimer();
-
-		valueWrapper = _redisCache.get(key);
-
-		_redisRequestDurationHistogram.labels(
-			"get"
-		).observe(
-			simpleTimer.elapsedSeconds()
+		valueWrapper = Metrics.timer(
+			"redis_requests_seconds", "operation", "get"
+		).record(
+			() -> _redisCache.get(key)
 		);
 
 		if (valueWrapper != null) {
@@ -200,14 +193,10 @@ public class OSBAsahCache extends AbstractValueAdaptingCache {
 
 	private void _clearRedisCache(Object key) {
 		if (key == null) {
-			SimpleTimer simpleTimer = new SimpleTimer();
-
-			_redisCache.clear();
-
-			_redisRequestDurationHistogram.labels(
-				"clear"
-			).observe(
-				simpleTimer.elapsedSeconds()
+			Metrics.timer(
+				"redis_requests_seconds", "operation", "clear"
+			).record(
+				_redisCache::clear
 			);
 
 			_sendRedisMessage(
@@ -219,14 +208,10 @@ public class OSBAsahCache extends AbstractValueAdaptingCache {
 			}
 		}
 		else {
-			SimpleTimer simpleTimer = new SimpleTimer();
-
-			_redisCache.evict(key);
-
-			_redisRequestDurationHistogram.labels(
-				"evict"
-			).observe(
-				simpleTimer.elapsedSeconds()
+			Metrics.timer(
+				"redis_requests_seconds", "operation", "evict"
+			).record(
+				() -> _redisCache.evict(key)
 			);
 
 			_sendRedisMessage(
@@ -296,14 +281,10 @@ public class OSBAsahCache extends AbstractValueAdaptingCache {
 
 		byte[] bytes = _serialize(value);
 
-		SimpleTimer simpleTimer = new SimpleTimer();
-
-		_redisCache.put(key, bytes);
-
-		_redisRequestDurationHistogram.labels(
-			"put"
-		).observe(
-			simpleTimer.elapsedSeconds()
+		Metrics.timer(
+			"redis_requests_seconds", "operation", "put"
+		).record(
+			() -> _redisCache.put(key, bytes)
 		);
 
 		_sendRedisMessage(
@@ -313,16 +294,8 @@ public class OSBAsahCache extends AbstractValueAdaptingCache {
 	}
 
 	private void _sendRedisMessage(OSBAsahCacheMessage osbAsahCacheMessage) {
-		SimpleTimer simpleTimer = new SimpleTimer();
-
 		_redisTemplate.convertAndSend(
 			"cache:redis:caffeine:topic", osbAsahCacheMessage);
-
-		_redisRequestDurationHistogram.labels(
-			"evict"
-		).observe(
-			simpleTimer.elapsedSeconds()
-		);
 	}
 
 	private byte[] _serialize(Object object) {
@@ -354,7 +327,6 @@ public class OSBAsahCache extends AbstractValueAdaptingCache {
 	private final Pool<Kryo> _kryoPool;
 	private final String _name;
 	private final Cache _redisCache;
-	private final Histogram _redisRequestDurationHistogram;
 	private final RedisTemplate<Object, Object> _redisTemplate;
 
 }
