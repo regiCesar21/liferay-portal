@@ -642,6 +642,8 @@ public class SiteMetricDogTest
 	public void testGetSiteMetricVisitorsWithTimeZone() {
 		SearchQueryContext searchQueryContext = _getSearchQueryContext();
 
+		_preferenceDog.savePreference("time-zone-id", "UTC");
+
 		searchQueryContext.setTimeRange(TimeRange.LAST_24_HOURS);
 
 		SiteMetric siteMetric = _siteMetricDog.getSiteMetric(
@@ -704,7 +706,7 @@ public class SiteMetricDogTest
 		anonymousVisitorsMetrics = siteMetric.getAnonymousVisitorsMetric();
 
 		Assertions.assertEquals(2, anonymousVisitorsMetrics.getPreviousValue());
-		Assertions.assertEquals(2, anonymousVisitorsMetrics.getValue());
+		Assertions.assertEquals(1, anonymousVisitorsMetrics.getValue());
 
 		knownVisitorsMetrics = siteMetric.getKnownVisitorsMetric();
 
@@ -712,7 +714,7 @@ public class SiteMetricDogTest
 
 		visitorsMetrics = siteMetric.getVisitorsMetric();
 
-		Assertions.assertEquals(3, visitorsMetrics.getValue());
+		Assertions.assertEquals(2, visitorsMetrics.getValue());
 	}
 
 	@BQSQLResource(resourcePath = "test_bq_events_search_terms.sql")
