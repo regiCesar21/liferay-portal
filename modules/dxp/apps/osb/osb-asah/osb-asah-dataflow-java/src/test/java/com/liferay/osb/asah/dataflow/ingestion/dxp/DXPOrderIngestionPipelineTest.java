@@ -58,13 +58,13 @@ public class DXPOrderIngestionPipelineTest {
 
 	@Test
 	public void testOrderExtractor() throws Exception {
+		File orderTempFile = File.createTempFile("order", ".json");
+
 		URL url = DXPOrderIngestionPipelineTest.class.getResource(
 			"dependencies");
 
 		String json = FileUtils.readFileToString(
 			new File(url.getPath() + "/order.json"));
-
-		File orderTempFile = File.createTempFile("order", ".json");
 
 		FileUtils.write(
 			orderTempFile, json.replaceAll("[\\n\\t ]", ""),
