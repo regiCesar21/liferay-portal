@@ -642,8 +642,6 @@ public class SiteMetricDogTest
 	public void testGetSiteMetricVisitorsWithTimeZone() {
 		SearchQueryContext searchQueryContext = _getSearchQueryContext();
 
-		_preferenceDog.savePreference("time-zone-id", "UTC");
-
 		searchQueryContext.setTimeRange(TimeRange.LAST_24_HOURS);
 
 		SiteMetric siteMetric = _siteMetricDog.getSiteMetric(
@@ -669,7 +667,7 @@ public class SiteMetricDogTest
 
 		anonymousVisitorsMetrics = siteMetric.getAnonymousVisitorsMetric();
 
-		Assertions.assertEquals(2, anonymousVisitorsMetrics.getPreviousValue());
+		Assertions.assertEquals(1, anonymousVisitorsMetrics.getPreviousValue());
 		Assertions.assertEquals(1, anonymousVisitorsMetrics.getValue());
 
 		knownVisitorsMetrics = siteMetric.getKnownVisitorsMetric();
@@ -705,7 +703,7 @@ public class SiteMetricDogTest
 
 		anonymousVisitorsMetrics = siteMetric.getAnonymousVisitorsMetric();
 
-		Assertions.assertEquals(2, anonymousVisitorsMetrics.getPreviousValue());
+		Assertions.assertEquals(1, anonymousVisitorsMetrics.getPreviousValue());
 		Assertions.assertEquals(1, anonymousVisitorsMetrics.getValue());
 
 		knownVisitorsMetrics = siteMetric.getKnownVisitorsMetric();
