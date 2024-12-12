@@ -241,7 +241,7 @@ public class DXPOrderIngestionPipelineTest {
 
 			zipOutputStream.putNextEntry(zipEntry);
 
-			int length;
+			int length = 0;
 			byte[] buffer = new byte[1024];
 
 			while ((length = fileInputStream.read(buffer)) >= 0) {
