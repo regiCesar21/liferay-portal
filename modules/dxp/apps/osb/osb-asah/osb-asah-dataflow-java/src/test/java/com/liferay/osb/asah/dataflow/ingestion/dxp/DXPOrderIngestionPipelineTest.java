@@ -262,33 +262,34 @@ public class DXPOrderIngestionPipelineTest {
 		}
 
 		@Override
-		public Map.Entry<Long, Long> decode(InputStream inStream)
+		public Map.Entry<Long, Long> decode(InputStream inputStream)
 			throws IOException {
 
 			Long key = VarLongCoder.of(
 			).decode(
-				inStream
+				inputStream
 			);
 			Long value = VarLongCoder.of(
 			).decode(
-				inStream
+				inputStream
 			);
 
 			return new HashMap.SimpleEntry<>(key, value);
 		}
 
 		@Override
-		public void encode(Map.Entry<Long, Long> value, OutputStream outStream)
+		public void encode(
+				Map.Entry<Long, Long> value, OutputStream outputStream)
 			throws IOException {
 
 			VarLongCoder.of(
 			).encode(
-				value.getKey(), outStream
+				value.getKey(), outputStream
 			);
 
 			VarLongCoder.of(
 			).encode(
-				value.getValue(), outStream
+				value.getValue(), outputStream
 			);
 		}
 
