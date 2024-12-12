@@ -61,13 +61,13 @@ public class DXPOrderIngestionPipelineTest {
 		URL url = DXPOrderIngestionPipelineTest.class.getResource(
 			"dependencies");
 
-		String source = FileUtils.readFileToString(
+		String json = FileUtils.readFileToString(
 			new File(url.getPath() + "/order.json"));
 
 		File orderTempFile = File.createTempFile("order", ".json");
 
 		FileUtils.write(
-			orderTempFile, source.replaceAll("[\\n\\t ]", ""),
+			orderTempFile, json.replaceAll("[\\n\\t ]", ""),
 			Charset.defaultCharset());
 
 		Path tempDirPath = Files.createTempDirectory("order");
