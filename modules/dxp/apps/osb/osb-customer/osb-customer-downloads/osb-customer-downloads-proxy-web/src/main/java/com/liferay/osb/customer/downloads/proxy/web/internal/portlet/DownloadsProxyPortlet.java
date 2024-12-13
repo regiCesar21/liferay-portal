@@ -23,6 +23,8 @@ import com.liferay.portal.kernel.util.DigesterUtil;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
+import com.liferay.portal.kernel.util.StringBundler;
+import com.liferay.portal.kernel.util.URLCodec;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 
@@ -73,7 +75,20 @@ public class DownloadsProxyPortlet extends MVCPortlet {
 
 		String fileName = ParamUtil.getString(actionRequest, "fileName");
 
-		actionResponse.sendRedirect(_URL_PREFIX + fileName);
+		StringBundler sb = new StringBundler(4);
+
+		sb.append(_URL_PREFIX);
+		sb.append(FileUtil.getPath(fileName));
+		sb.append(StringPool.SLASH);
+
+		String shortFileName = FileUtil.getShortFileName(fileName);
+
+		shortFileName = shortFileName.replace(
+			StringPool.PLUS, StringPool.SPACE);
+
+		sb.append(URLCodec.encodeURL(shortFileName, true));
+
+		actionResponse.sendRedirect(sb.toString());
 
 		sendAudit(actionRequest, fileName);
 	}
