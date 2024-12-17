@@ -200,7 +200,7 @@ public class AuditEntryResourceImpl extends BaseAuditEntryResourceImpl {
 	@Reference
 	private ClassNameLocalService _classNameLocalService;
 
-	@Reference
+	@Reference(target = "(provider=okta)")
 	private ContactIdentityProvider _contactIdentityProvider;
 
 	@Reference
