@@ -1346,7 +1346,7 @@ public class LicenseKeyLocalServiceImpl extends LicenseKeyLocalServiceBaseImpl {
 	@Reference
 	private AccountWebService _accountWebService;
 
-	@Reference
+	@Reference(target = "(provider=okta)")
 	private ContactIdentityProvider _contactIdentityProvider;
 
 	private final Format _dateFormat =
