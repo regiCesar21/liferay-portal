@@ -2112,14 +2112,6 @@ public class OpportunityMessageSubscriber extends BaseMessageSubscriber {
 					productPurchase.setStartDate(startDate);
 
 					productPurchase.setOriginalEndDate(originalEndDate);
-
-					Calendar calendar = Calendar.getInstance();
-
-					calendar.setTime(originalEndDate);
-
-					calendar.add(Calendar.DATE, 30);
-
-					productPurchase.setEndDate(calendar.getTime());
 				}
 				else {
 					productPurchase.setPerpetual(true);
@@ -2192,6 +2184,49 @@ public class OpportunityMessageSubscriber extends BaseMessageSubscriber {
 			productPurchase.setQuantity(entry.getValue());
 
 			productPurchases.add(productPurchase);
+		}
+
+		Map<String, ProductPurchase> latestEndDatePerProduct = new HashMap<>();
+
+		for (ProductPurchase productPurchase : productPurchases) {
+			Product product = productPurchase.getProduct();
+
+			String productKey = product.getKey();
+
+			Date originalEndDate = productPurchase.getOriginalEndDate();
+
+			if (originalEndDate != null) {
+				ProductPurchase curLatestProductPurchase =
+					latestEndDatePerProduct.get(productKey);
+
+				if ((curLatestProductPurchase == null) ||
+					originalEndDate.after(
+						curLatestProductPurchase.getOriginalEndDate())) {
+
+					latestEndDatePerProduct.put(productKey, productPurchase);
+				}
+			}
+		}
+
+		for (ProductPurchase productPurchase : productPurchases) {
+			Date originalEndDate = productPurchase.getOriginalEndDate();
+
+			if (originalEndDate == null) {
+				continue;
+			}
+
+			if (latestEndDatePerProduct.containsValue(productPurchase)) {
+				Calendar calendar = Calendar.getInstance();
+
+				calendar.setTime(originalEndDate);
+
+				calendar.add(Calendar.DATE, 30);
+
+				productPurchase.setEndDate(calendar.getTime());
+			}
+			else {
+				productPurchase.setEndDate(originalEndDate);
+			}
 		}
 
 		return productPurchases;
