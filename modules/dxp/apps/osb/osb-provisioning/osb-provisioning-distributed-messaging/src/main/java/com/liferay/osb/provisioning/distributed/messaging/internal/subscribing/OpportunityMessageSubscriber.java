@@ -2068,7 +2068,9 @@ public class OpportunityMessageSubscriber extends BaseMessageSubscriber {
 			return Collections.emptySet();
 		}
 
+		Map<String, ProductPurchase> latestProductEndDates = new HashMap<>();
 		Map<ProductPurchase, Integer> productPurchasesMap = new HashMap<>();
+		Set<ProductPurchase> productPurchases = new HashSet<>();
 
 		ExternalLink externalLink = getOpportunityExternalLink(jsonObject);
 
@@ -2171,10 +2173,21 @@ public class OpportunityMessageSubscriber extends BaseMessageSubscriber {
 				}
 
 				productPurchasesMap.put(productPurchase, quantity);
+
+				String productKey = product.getKey();
+
+				ProductPurchase curLatestProductPurchase =
+					latestProductEndDates.get(productKey);
+
+				if ((originalEndDate != null) &&
+					((curLatestProductPurchase == null) ||
+					 originalEndDate.after(
+						 curLatestProductPurchase.getOriginalEndDate()))) {
+
+					latestProductEndDates.put(productKey, productPurchase);
+				}
 			}
 		}
-
-		Set<ProductPurchase> productPurchases = new HashSet<>();
 
 		for (Map.Entry<ProductPurchase, Integer> entry :
 				productPurchasesMap.entrySet()) {
@@ -2183,50 +2196,24 @@ public class OpportunityMessageSubscriber extends BaseMessageSubscriber {
 
 			productPurchase.setQuantity(entry.getValue());
 
-			productPurchases.add(productPurchase);
-		}
-
-		Map<String, ProductPurchase> latestEndDatePerProduct = new HashMap<>();
-
-		for (ProductPurchase productPurchase : productPurchases) {
-			Product product = productPurchase.getProduct();
-
-			String productKey = product.getKey();
-
 			Date originalEndDate = productPurchase.getOriginalEndDate();
 
 			if (originalEndDate != null) {
-				ProductPurchase curLatestProductPurchase =
-					latestEndDatePerProduct.get(productKey);
+				if (latestProductEndDates.containsValue(productPurchase)) {
+					Calendar calendar = Calendar.getInstance();
 
-				if ((curLatestProductPurchase == null) ||
-					originalEndDate.after(
-						curLatestProductPurchase.getOriginalEndDate())) {
+					calendar.setTime(originalEndDate);
 
-					latestEndDatePerProduct.put(productKey, productPurchase);
+					calendar.add(Calendar.DATE, 30);
+
+					productPurchase.setEndDate(calendar.getTime());
+				}
+				else {
+					productPurchase.setEndDate(originalEndDate);
 				}
 			}
-		}
 
-		for (ProductPurchase productPurchase : productPurchases) {
-			Date originalEndDate = productPurchase.getOriginalEndDate();
-
-			if (originalEndDate == null) {
-				continue;
-			}
-
-			if (latestEndDatePerProduct.containsValue(productPurchase)) {
-				Calendar calendar = Calendar.getInstance();
-
-				calendar.setTime(originalEndDate);
-
-				calendar.add(Calendar.DATE, 30);
-
-				productPurchase.setEndDate(calendar.getTime());
-			}
-			else {
-				productPurchase.setEndDate(originalEndDate);
-			}
+			productPurchases.add(productPurchase);
 		}
 
 		return productPurchases;
