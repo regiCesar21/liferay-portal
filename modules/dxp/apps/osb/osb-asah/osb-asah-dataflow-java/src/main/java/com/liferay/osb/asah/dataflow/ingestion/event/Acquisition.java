@@ -51,9 +51,9 @@ public class Acquisition {
 				}
 			}
 
-			_campaign = decode(queryParams.get("utm_campaign"));
-			_content = decode(queryParams.get("utm_content"));
-			_medium = decode(queryParams.get("utm_medium"));
+			_campaign = decode("utm_campaign", queryParams);
+			_content = decode("utm_content", queryParams);
+			_medium = decode("utm_medium", queryParams);
 
 			if (StringUtils.isNotEmpty(referrer)) {
 				URI referrerURI = new URI(referrer);
@@ -61,8 +61,8 @@ public class Acquisition {
 				_referrerHost = referrerURI.getHost();
 			}
 
-			_source = decode(queryParams.get("utm_source"));
-			_term = decode(queryParams.get("utm_term"));
+			_source = decode("utm_source", queryParams);
+			_term = decode("utm_term", queryParams);
 		}
 		catch (Exception exception) {
 			if (_log.isWarnEnabled()) {
@@ -213,7 +213,13 @@ public class Acquisition {
 		_term = term;
 	}
 
-	protected String decode(String value) {
+	protected String decode(String key, Map<String, String> queryParams) {
+		if (StringUtils.isBlank(key)) {
+			return null;
+		}
+
+		String value = queryParams.get(key);
+
 		if (Objects.isNull(value)) {
 			return null;
 		}
@@ -222,7 +228,11 @@ public class Acquisition {
 			return URLDecoder.decode(value, StandardCharsets.UTF_8.name());
 		}
 		catch (Exception exception) {
-			_log.error(exception, exception);
+			if (_log.isWarnEnabled()) {
+				_log.warn(
+					String.format("Unable to decode %s value %s", key, value),
+					exception);
+			}
 
 			return null;
 		}
