@@ -220,7 +220,7 @@ public class Acquisition {
 
 		String value = queryParams.get(key);
 
-		if (Objects.isNull(value)) {
+		if (StringUtils.isBlank(value)) {
 			return null;
 		}
 
