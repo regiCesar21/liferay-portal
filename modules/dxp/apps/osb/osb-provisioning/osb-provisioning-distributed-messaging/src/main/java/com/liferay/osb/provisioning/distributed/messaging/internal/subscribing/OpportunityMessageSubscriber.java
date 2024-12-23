@@ -2395,7 +2395,9 @@ public class OpportunityMessageSubscriber extends BaseMessageSubscriber {
 				account.setParentAccountKey(parentAccount.getKey());
 			}
 
-			if (!contactEmailAddress.equals(account.getContactEmailAddress())) {
+			if (Validator.isNotNull(account.getContactEmailAddress()) &&
+				!contactEmailAddress.equals(account.getContactEmailAddress())) {
+
 				ContactRole salesContactRole =
 					_contactRoleWebService.fetchContactRole(
 						ContactRole.Type.ACCOUNT_WORKER.toString(),
