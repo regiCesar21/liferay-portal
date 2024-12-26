@@ -2068,7 +2068,7 @@ public class OpportunityMessageSubscriber extends BaseMessageSubscriber {
 			return Collections.emptySet();
 		}
 
-		Map<String, ProductPurchase> latestProductEndDates = new HashMap<>();
+		Map<String, Date> latestProductEndDates = new HashMap<>();
 		Map<ProductPurchase, Integer> productPurchasesMap = new HashMap<>();
 		Set<ProductPurchase> productPurchases = new HashSet<>();
 
@@ -2174,17 +2174,16 @@ public class OpportunityMessageSubscriber extends BaseMessageSubscriber {
 
 				productPurchasesMap.put(productPurchase, quantity);
 
-				String productKey = product.getKey();
+				if (originalEndDate != null) {
+					Date curLatestEndDate = latestProductEndDates.get(
+						product.getKey());
 
-				ProductPurchase curLatestProductPurchase =
-					latestProductEndDates.get(productKey);
+					if ((curLatestEndDate == null) ||
+						originalEndDate.after(curLatestEndDate)) {
 
-				if ((originalEndDate != null) &&
-					((curLatestProductPurchase == null) ||
-					 originalEndDate.after(
-						 curLatestProductPurchase.getOriginalEndDate()))) {
-
-					latestProductEndDates.put(productKey, productPurchase);
+						latestProductEndDates.put(
+							product.getKey(), originalEndDate);
+					}
 				}
 			}
 		}
@@ -2199,7 +2198,7 @@ public class OpportunityMessageSubscriber extends BaseMessageSubscriber {
 			Date originalEndDate = productPurchase.getOriginalEndDate();
 
 			if (originalEndDate != null) {
-				if (latestProductEndDates.containsValue(productPurchase)) {
+				if (latestProductEndDates.containsValue(originalEndDate)) {
 					Calendar calendar = Calendar.getInstance();
 
 					calendar.setTime(originalEndDate);
