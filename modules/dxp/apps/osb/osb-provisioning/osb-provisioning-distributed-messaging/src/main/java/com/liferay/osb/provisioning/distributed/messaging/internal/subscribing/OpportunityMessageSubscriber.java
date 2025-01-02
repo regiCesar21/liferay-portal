@@ -2070,7 +2070,6 @@ public class OpportunityMessageSubscriber extends BaseMessageSubscriber {
 
 		Map<String, Date> latestProductEndDates = new HashMap<>();
 		Map<ProductPurchase, Integer> productPurchasesMap = new HashMap<>();
-		Set<ProductPurchase> productPurchases = new HashSet<>();
 
 		ExternalLink externalLink = getOpportunityExternalLink(jsonObject);
 
@@ -2188,6 +2187,8 @@ public class OpportunityMessageSubscriber extends BaseMessageSubscriber {
 			}
 		}
 
+		Set<ProductPurchase> productPurchases = new HashSet<>();
+
 		for (Map.Entry<ProductPurchase, Integer> entry :
 				productPurchasesMap.entrySet()) {
 
@@ -2198,7 +2199,14 @@ public class OpportunityMessageSubscriber extends BaseMessageSubscriber {
 			Date originalEndDate = productPurchase.getOriginalEndDate();
 
 			if (originalEndDate != null) {
-				if (latestProductEndDates.containsValue(originalEndDate)) {
+				Product product = productPurchase.getProduct();
+
+				Date latestEndDate = latestProductEndDates.get(
+					product.getKey());
+
+				if ((latestEndDate != null) &&
+					latestEndDate.equals(originalEndDate)) {
+
 					Calendar calendar = Calendar.getInstance();
 
 					calendar.setTime(originalEndDate);
