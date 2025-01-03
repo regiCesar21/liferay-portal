@@ -10,6 +10,7 @@ import com.liferay.osb.koroneiki.phloem.rest.client.constants.ExternalLinkEntity
 import com.liferay.osb.koroneiki.phloem.rest.client.dto.v1_0.ProductConsumption;
 import com.liferay.osb.koroneiki.phloem.rest.client.dto.v1_0.ProductPurchase;
 import com.liferay.osb.provisioning.koroneiki.constants.ProductPurchaseConstants;
+import com.liferay.osb.provisioning.koroneiki.web.service.AccountWebService;
 import com.liferay.osb.provisioning.koroneiki.web.service.ProductConsumptionWebService;
 import com.liferay.osb.provisioning.koroneiki.web.service.ProductPurchaseWebService;
 import com.liferay.osb.provisioning.license.helper.constants.LicenseSizing;
@@ -26,6 +27,7 @@ import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.kernel.util.Validator;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -41,6 +43,43 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(service = UpgradeProductConsumptionsSizing.class)
 public class UpgradeProductConsumptionsSizing extends UpgradeProcess {
+
+	public void upgradeInconsistentProductConsumptionsSizing(
+		String accountKey) {
+
+		try {
+			LinkedHashMap<String, Object> params = new LinkedHashMap<>();
+
+			params.put("active", true);
+
+			List<LicenseKey> licenseKeys = _licenseKeyLocalService.search(
+				null, null, null, null, null, null, accountKey, null, null,
+				null, null, new long[0], new String[0], null, null,
+				new String[0], new long[0], null, null, null, null, null, null,
+				null, null, null, params, false, QueryUtil.ALL_POS,
+				QueryUtil.ALL_POS, null);
+
+			for (LicenseKey licenseKey : licenseKeys) {
+				if (Validator.isNull(licenseKey.getAccountKey())) {
+					continue;
+				}
+
+				int sizing = LicenseSizing.getSizing(licenseKey.getSizing());
+
+				if (sizing <= 0) {
+					sizing = 1;
+				}
+
+				_updateProductConsumptions(licenseKey, sizing);
+			}
+		}
+		catch (Exception exception) {
+			_log.error(
+				"Error processing product consumptions for accountKey: " +
+					accountKey,
+				exception);
+		}
+	}
 
 	public void upgradeProductConsumptionsSizing() {
 		try {
@@ -137,7 +176,7 @@ public class UpgradeProductConsumptionsSizing extends UpgradeProcess {
 			}
 
 			for (LicenseKey licenseKey : licenseKeys) {
-				_updateProductConsumptions(licenseKey);
+				_updateProductConsumptions(licenseKey, sizing);
 			}
 		}
 		catch (Exception exception) {
@@ -147,7 +186,7 @@ public class UpgradeProductConsumptionsSizing extends UpgradeProcess {
 		}
 	}
 
-	private void _updateProductConsumptions(LicenseKey licenseKey) {
+	private void _updateProductConsumptions(LicenseKey licenseKey, int sizing) {
 		try {
 			List<ProductConsumption> productConsumptions =
 				_productConsumptionWebService.getProductConsumptions(
@@ -167,11 +206,7 @@ public class UpgradeProductConsumptionsSizing extends UpgradeProcess {
 					continue;
 				}
 
-				int sizing = LicenseSizing.getSizing(licenseKey.getSizing());
-
-				if (sizing > 0) {
-					properties.put("sizing", String.valueOf(sizing));
-				}
+				properties.put("sizing", String.valueOf(sizing));
 
 				productConsumption.setProperties(properties);
 
@@ -190,6 +225,9 @@ public class UpgradeProductConsumptionsSizing extends UpgradeProcess {
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		UpgradeProductConsumptionsSizing.class);
+
+	@Reference
+	private AccountWebService _accountWebService;
 
 	@Reference
 	private LicenseKeyLocalService _licenseKeyLocalService;
