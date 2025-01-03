@@ -21,3 +21,4 @@ INSERT INTO Individual (id) VALUES ('3');
 
 INSERT INTO Membership (identityId, segmentId) VALUES ('1', 1);
 INSERT INTO Membership (identityId, segmentId) VALUES ('2', 1);
+INSERT INTO Membership (identityId, segmentId) VALUES ('3', 2)
