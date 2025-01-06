@@ -1,5 +1,5 @@
 /**
- * SPDX-FileCopyrightText: (c) 2024 Liferay, Inc. https://liferay.com
+ * SPDX-FileCopyrightText: (c) 2025 Liferay, Inc. https://liferay.com
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
@@ -30,6 +30,7 @@ import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -45,39 +46,45 @@ import org.osgi.service.component.annotations.Reference;
 public class UpgradeProductConsumptionsSizing extends UpgradeProcess {
 
 	public void upgradeInconsistentProductConsumptionsSizing(
-		String accountKey) {
+		Date createDateLT) {
 
 		try {
 			LinkedHashMap<String, Object> params = new LinkedHashMap<>();
 
 			params.put("active", true);
 
-			List<LicenseKey> licenseKeys = _licenseKeyLocalService.search(
-				null, null, null, null, null, null, accountKey, null, null,
-				null, null, new long[0], new String[0], null, null,
-				new String[0], new long[0], null, null, null, null, null, null,
-				null, null, null, params, false, QueryUtil.ALL_POS,
+			Hits hits = _licenseKeyLocalService.search(
+				_portal.getDefaultCompanyId(), null, null, createDateLT, null,
+				null, null, null, null, null, null, null, null, null, null,
+				null, null, null, null, null, null, null, null, null, null,
+				null, true, new LinkedHashMap<>(), false, QueryUtil.ALL_POS,
 				QueryUtil.ALL_POS, null);
 
-			for (LicenseKey licenseKey : licenseKeys) {
-				if (Validator.isNull(licenseKey.getAccountKey())) {
-					continue;
+			for (Document document : hits.getDocs()) {
+				long licenseKeyId = GetterUtil.getLong(
+					document.get(Field.ENTRY_CLASS_PK));
+
+				LicenseKey licenseKey = _licenseKeyLocalService.fetchLicenseKey(
+					licenseKeyId);
+
+				if (licenseKey != null) {
+					if (Validator.isNull(licenseKey.getAccountKey())) {
+						continue;
+					}
+
+					int sizing = LicenseSizing.getSizing(
+						licenseKey.getSizing());
+
+					if (sizing <= 0) {
+						sizing = 1;
+					}
+
+					_updateProductConsumptions(licenseKey, sizing);
 				}
-
-				int sizing = LicenseSizing.getSizing(licenseKey.getSizing());
-
-				if (sizing <= 0) {
-					sizing = 1;
-				}
-
-				_updateProductConsumptions(licenseKey, sizing);
 			}
 		}
 		catch (Exception exception) {
-			_log.error(
-				"Error processing product consumptions for accountKey: " +
-					accountKey,
-				exception);
+			_log.error(exception, exception);
 		}
 	}
 
