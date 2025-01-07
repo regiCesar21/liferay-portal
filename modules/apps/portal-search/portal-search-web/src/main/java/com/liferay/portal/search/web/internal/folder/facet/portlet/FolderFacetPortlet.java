@@ -7,7 +7,6 @@ package com.liferay.portal.search.web.internal.folder.facet.portlet;
 
 import com.liferay.portal.kernel.module.configuration.ConfigurationException;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
-import com.liferay.portal.kernel.search.facet.Facet;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.search.searcher.SearchRequest;
@@ -88,14 +87,8 @@ public class FolderFacetPortlet extends MVCPortlet {
 		PortletSharedSearchResponse portletSharedSearchResponse,
 		RenderRequest renderRequest) {
 
-		Facet facet = portletSharedSearchResponse.getFacet(
-			getAggregationName(renderRequest));
-
 		FolderTitleLookup folderTitleLookup = new FolderTitleLookupImpl(
 			new FolderSearcher(), portal.getHttpServletRequest(renderRequest));
-
-		FolderFacetConfiguration folderFacetConfiguration =
-			new FolderFacetConfigurationImpl(facet.getFacetConfiguration());
 
 		FolderFacetPortletPreferences folderFacetPortletPreferences =
 			new FolderFacetPortletPreferencesImpl(
@@ -105,14 +98,16 @@ public class FolderFacetPortlet extends MVCPortlet {
 		FolderSearchFacetDisplayBuilder folderSearchFacetDisplayBuilder =
 			createFolderSearchFacetDisplayBuilder(renderRequest);
 
-		folderSearchFacetDisplayBuilder.setFacet(facet);
+		folderSearchFacetDisplayBuilder.setFacet(
+			portletSharedSearchResponse.getFacet(
+				getAggregationName(renderRequest)));
 		folderSearchFacetDisplayBuilder.setFolderTitleLookup(folderTitleLookup);
 		folderSearchFacetDisplayBuilder.setFrequenciesVisible(
 			folderFacetPortletPreferences.isFrequenciesVisible());
 		folderSearchFacetDisplayBuilder.setFrequencyThreshold(
-			folderFacetConfiguration.getFrequencyThreshold());
+			folderFacetPortletPreferences.getFrequencyThreshold());
 		folderSearchFacetDisplayBuilder.setMaxTerms(
-			folderFacetConfiguration.getMaxTerms());
+			folderFacetPortletPreferences.getMaxTerms());
 		folderSearchFacetDisplayBuilder.setPaginationStartParameterName(
 			getPaginationStartParameterName(portletSharedSearchResponse));
 

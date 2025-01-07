@@ -8,14 +8,11 @@ package com.liferay.portal.search.web.internal.category.facet.portlet;
 import com.liferay.asset.kernel.service.AssetCategoryLocalService;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
-import com.liferay.portal.kernel.search.facet.Facet;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.search.searcher.SearchRequest;
 import com.liferay.portal.search.searcher.SearchResponse;
-import com.liferay.portal.search.web.internal.category.facet.builder.AssetCategoriesFacetConfiguration;
-import com.liferay.portal.search.web.internal.category.facet.builder.AssetCategoriesFacetConfigurationImpl;
 import com.liferay.portal.search.web.internal.category.facet.constants.CategoryFacetPortletKeys;
 import com.liferay.portal.search.web.internal.facet.display.builder.AssetCategoriesSearchFacetDisplayBuilder;
 import com.liferay.portal.search.web.internal.facet.display.builder.AssetCategoryPermissionCheckerImpl;
@@ -92,17 +89,10 @@ public class CategoryFacetPortlet extends MVCPortlet {
 		PortletSharedSearchResponse portletSharedSearchResponse,
 		RenderRequest renderRequest) {
 
-		Facet facet = portletSharedSearchResponse.getFacet(
-			getAggregationName(renderRequest));
-
 		CategoryFacetPortletPreferences categoryFacetPortletPreferences =
 			new CategoryFacetPortletPreferencesImpl(
 				portletSharedSearchResponse.getPortletPreferences(
 					renderRequest));
-
-		AssetCategoriesFacetConfiguration assetCategoriesFacetConfiguration =
-			new AssetCategoriesFacetConfigurationImpl(
-				facet.getFacetConfiguration());
 
 		AssetCategoriesSearchFacetDisplayBuilder
 			assetCategoriesSearchFacetDisplayBuilder =
@@ -112,13 +102,15 @@ public class CategoryFacetPortlet extends MVCPortlet {
 			assetCategoryLocalService);
 		assetCategoriesSearchFacetDisplayBuilder.setDisplayStyle(
 			categoryFacetPortletPreferences.getDisplayStyle());
-		assetCategoriesSearchFacetDisplayBuilder.setFacet(facet);
+		assetCategoriesSearchFacetDisplayBuilder.setFacet(
+			portletSharedSearchResponse.getFacet(
+				getAggregationName(renderRequest)));
 		assetCategoriesSearchFacetDisplayBuilder.setFrequenciesVisible(
 			categoryFacetPortletPreferences.isFrequenciesVisible());
 		assetCategoriesSearchFacetDisplayBuilder.setFrequencyThreshold(
-			assetCategoriesFacetConfiguration.getFrequencyThreshold());
+			categoryFacetPortletPreferences.getFrequencyThreshold());
 		assetCategoriesSearchFacetDisplayBuilder.setMaxTerms(
-			assetCategoriesFacetConfiguration.getMaxTerms());
+			categoryFacetPortletPreferences.getMaxTerms());
 		assetCategoriesSearchFacetDisplayBuilder.
 			setPaginationStartParameterName(
 				getPaginationStartParameterName(portletSharedSearchResponse));

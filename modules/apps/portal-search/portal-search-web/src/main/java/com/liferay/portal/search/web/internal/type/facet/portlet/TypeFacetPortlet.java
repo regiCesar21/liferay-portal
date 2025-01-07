@@ -7,7 +7,6 @@ package com.liferay.portal.search.web.internal.type.facet.portlet;
 
 import com.liferay.portal.kernel.module.configuration.ConfigurationException;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
-import com.liferay.portal.kernel.search.facet.Facet;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.WebKeys;
@@ -92,13 +91,6 @@ public class TypeFacetPortlet extends MVCPortlet {
 		PortletSharedSearchResponse portletSharedSearchResponse,
 		RenderRequest renderRequest) {
 
-		Facet facet = portletSharedSearchResponse.getFacet(
-			getAggregationName(renderRequest));
-
-		AssetEntriesFacetConfiguration assetEntriesFacetConfiguration =
-			new AssetEntriesFacetConfigurationImpl(
-				facet.getFacetConfiguration());
-
 		TypeFacetPortletPreferences typeFacetPortletPreferences =
 			new TypeFacetPortletPreferencesImpl(
 				portletSharedSearchResponse.getPortletPreferences(
@@ -115,9 +107,11 @@ public class TypeFacetPortlet extends MVCPortlet {
 		assetEntriesSearchFacetDisplayBuilder.setClassNames(
 			getAssetTypesClassNames(typeFacetPortletPreferences, themeDisplay));
 
-		assetEntriesSearchFacetDisplayBuilder.setFacet(facet);
+		assetEntriesSearchFacetDisplayBuilder.setFacet(
+			portletSharedSearchResponse.getFacet(
+				getAggregationName(renderRequest)));
 		assetEntriesSearchFacetDisplayBuilder.setFrequencyThreshold(
-			assetEntriesFacetConfiguration.getFrequencyThreshold());
+			typeFacetPortletPreferences.getFrequencyThreshold());
 		assetEntriesSearchFacetDisplayBuilder.setFrequenciesVisible(
 			typeFacetPortletPreferences.isFrequenciesVisible());
 		assetEntriesSearchFacetDisplayBuilder.setLocale(
