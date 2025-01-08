@@ -1,10 +1,14 @@
 dependencies {
 <<<<<<< HEAD
+<<<<<<< HEAD
 	classpath group: "com.liferay", name: "com.liferay.gradle.plugins.defaults", version: "10.1.223"
 	classpath group: "com.liferay", name: "com.liferay.gradle.plugins.maven.plugin.builder", version: "2.0.2"
 	classpath group: "com.liferay", name: "org.apache.xalan", version: "2.7.2.LIFERAY-PATCHED-1"
 =======
 	classpath group: "com.liferay", name: "com.liferay.gradle.plugins.defaults", version: "10.1.224"
+=======
+	classpath group: "com.liferay", name: "com.liferay.gradle.plugins.defaults", version: "10.1.225"
+>>>>>>> 28e613c (LPD-45405 prep next)
 	classpath group: "com.liferay", name: "com.liferay.gradle.plugins.maven.plugin.builder", version: "2.0.3"
 >>>>>>> ec42616 (LPD-X prep next)
 	classpath group: "de.undercouch", name: "gradle-download-task", version: "5.4.0"
