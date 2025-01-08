@@ -178,9 +178,9 @@ public class DataControlTaskDogTest
 		repositoryClass = DXPEntityRepository.class,
 		resourcePath = "osbasahdxpraw/users.json"
 	)
-	@SQLResource(resourcePath = "test_data_control_task_delete.sql")
+	@SQLResource(resourcePath = "test_data_control_task_delete_1.sql")
 	@Test
-	public void testDeleteData() {
+	public void testDeleteData1() {
 		Optional<DataControlTask> dataControlTaskOptional =
 			_dataControlTaskRepository.findById(2222L);
 
@@ -248,6 +248,75 @@ public class DataControlTaskDogTest
 		Assertions.assertEquals(
 			DateUtil.toUTCDate("2023-08-23T00:00:00.000Z"),
 			bqIdentity.getCreateDate());
+	}
+
+	@BQSQLResource(resourcePath = "test_data_control_task_delete_bq.sql")
+	@RepositoryResource(
+		repositoryClass = DataSourceRepository.class,
+		resourcePath = "osbasahfaroinfo/data_sources.json"
+	)
+	@RepositoryResource(
+		repositoryClass = DXPEntityRepository.class,
+		resourcePath = "osbasahdxpraw/users.json"
+	)
+	@SQLResource(resourcePath = "test_data_control_task_delete_2.sql")
+	@Test
+	public void testDeleteData2() {
+		Assertions.assertEquals(1, _bqExpandoValueRepository.count());
+		Assertions.assertEquals(
+			8,
+			_bqEventRepository.countBQEvents(
+				null, null, null, LocalDateTime.parse("2023-12-31T00:00:00"),
+				LocalDateTime.parse("2023-01-01T00:00:00"), "UTC"));
+		Assertions.assertEquals(
+			1,
+			_bqIndividualRepository.countBQIndividuals(
+				null, "email eq 'test1@liferay.com'", null, null, null));
+
+		Optional<Segment> segmentOptional = _segmentRepository.findById(1L);
+
+		Segment segment = segmentOptional.get();
+
+		Assertions.assertEquals(
+			2, _bqMembershipRepository.countBySegmentId(segment.getId()));
+
+		Assertions.assertEquals(2, _bqUserRepository.count());
+
+		Optional<DataControlTask> dataControlTaskOptional =
+			_dataControlTaskRepository.findById(2222L);
+
+		Assertions.assertTrue(dataControlTaskOptional.isPresent());
+
+		_dataControlTaskDog.run(dataControlTaskOptional.get());
+
+		Assertions.assertEquals(0, _bqExpandoValueRepository.count());
+		Assertions.assertEquals(
+			0,
+			_bqIndividualRepository.countBQIndividuals(
+				null, "email eq 'test1@liferay.com'", null, null, null));
+		Assertions.assertEquals(1, _bqUserRepository.count());
+
+		String individualId =
+			"c2ca75aa0f15bdaf918f704df63b6012bc8c92cf0000764f1016fd84b5d7e485";
+
+		Assertions.assertEquals(
+			0,
+			_bqEventRepository.countBQEvents(
+				null, individualId, null,
+				LocalDateTime.parse("2023-12-31T00:00:00"),
+				LocalDateTime.parse("2023-01-01T00:00:00"), "UTC"));
+
+		Assertions.assertEquals(
+			8,
+			_bqEventRepository.countBQEvents(
+				null, null, null, LocalDateTime.parse("2023-12-31T00:00:00"),
+				LocalDateTime.parse("2023-01-01T00:00:00"), "UTC"));
+
+		_bqMembershipRepository.updateBQMemberships(
+			1L, segment.getFilter(), false, segment.getId());
+
+		Assertions.assertEquals(
+			1, _bqMembershipRepository.countBySegmentId(1L));
 	}
 
 	@BQSQLResource(resourcePath = "test_data_control_task_delete_bq.sql")
