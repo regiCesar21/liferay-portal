@@ -43,7 +43,7 @@ public class AssetCategoriesSearchFacetDisplayBuilder implements Serializable {
 	}
 
 	public AssetCategoriesSearchFacetDisplayContext build() {
-		_buckets = collectBuckets(_facet.getFacetCollector());
+		_buckets = collectBuckets(_facet);
 
 		AssetCategoriesSearchFacetDisplayContext
 			assetCategoriesSearchFacetDisplayContext =
@@ -241,7 +241,13 @@ public class AssetCategoriesSearchFacetDisplayBuilder implements Serializable {
 		return assetCategoriesSearchFacetTermDisplayContexts;
 	}
 
-	protected List<Tuple> collectBuckets(FacetCollector facetCollector) {
+	protected List<Tuple> collectBuckets(Facet facet) {
+		if (facet == null) {
+			return Collections.emptyList();
+		}
+
+		FacetCollector facetCollector = facet.getFacetCollector();
+
 		List<TermCollector> termCollectors = facetCollector.getTermCollectors();
 
 		List<Tuple> buckets = new ArrayList<>(termCollectors.size());
