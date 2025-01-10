@@ -865,17 +865,27 @@ jdbc.counter.connectionProperties=oracle.jdbc.ReadTimeout=0;oracle.net.CONNECT_T
 							srcFile="${tstamp.value}-dir/fixpack_documentation.json"
 						/>
 
-						<script language="javascript">
-							var json = project.getProperty("json.content");
+						<beanshell>
+							<![CDATA[
+								import com.liferay.jenkins.results.parser.JenkinsResultsParserUtil;
 
-							var fixpackDocumentation = JSON.parse(json);
+								import java.io.File;
 
-							var patchRequirements = fixpackDocumentation["patch"]["requirements"];
+								import org.json.JSONObject;
 
-							if (patchRequirements != null) {
-								project.setProperty("patch.requirements", patchRequirements);
-							}
-						</script>
+								JSONObject fixPackDocumentationJSONObject = new JSONObject(project.getProperty("json.content"));
+
+								JSONObject patchJSONObject = fixPackDocumentationJSONObject.getJSONObject("patch");
+
+								if (patchJSONObject != null) {
+									String patchRequirements = patchJSONObject.getString("requirements");
+
+									if (!JenkinsResultsParserUtil.isNullOrEmpty(patchRequirements)) {
+										project.setProperty("patch.requirements", patchRequirements);
+									}
+								}
+							]]>
+						</beanshell>
 					</then>
 				</elseif>
 			</if>
