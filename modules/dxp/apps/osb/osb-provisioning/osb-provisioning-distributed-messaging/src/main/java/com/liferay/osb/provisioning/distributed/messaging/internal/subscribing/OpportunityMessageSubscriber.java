@@ -64,6 +64,7 @@ import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.ModelHintsUtil;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.util.ArrayUtil;
+import com.liferay.portal.kernel.util.DateUtil;
 import com.liferay.portal.kernel.util.FastDateFormatFactoryUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
@@ -447,29 +448,61 @@ public class OpportunityMessageSubscriber extends BaseMessageSubscriber {
 			}
 
 			if (renewal) {
-				List<ProductPurchase> activeProductPurchases =
-					_getActiveProductPurchases(accountKey, product.getKey());
+				if (ArrayUtil.contains(
+						ProductConstants.NAMES_SUBSCRIPTION, productName)) {
 
-				for (ProductPurchase activeProductPurchase :
-						activeProductPurchases) {
+					int daysBetween = 0;
 
-					if (ArrayUtil.contains(
-							ProductConstants.NAMES_SUBSCRIPTION, productName)) {
+					Date slaEndDate = null;
 
-						Date curEndDate = activeProductPurchase.getEndDate();
+					ProductPurchase slaProductPurchase =
+						_accountReader.getSLAProductPurchase(account);
 
-						if (curEndDate.after(productPurchase.getStartDate())) {
+					if (slaProductPurchase != null) {
+						slaEndDate = slaProductPurchase.getEndDate();
+
+						Product slaProduct = slaProductPurchase.getProduct();
+
+						if (((slaEndDate == null) ||
+							 !slaEndDate.before(
+								 productPurchase.getStartDate())) &&
+							!StringUtil.equals(
+								product.getKey(), slaProduct.getKey())) {
+
 							_logWarning(
 								StringBundler.concat(
 									"Warning. SLA has been changed midterm. ",
 									"Please be sure to review the account and ",
 									"cancel any of the previous SLAs or ",
 									"products."));
-
-							break;
+						}
+						else {
+							daysBetween = DateUtil.getDaysBetween(
+								productPurchase.getStartDate(), slaEndDate);
 						}
 					}
-					else {
+
+					if ((slaProductPurchase == null) ||
+						((daysBetween > 1) &&
+						 slaEndDate.before(productPurchase.getStartDate()))) {
+
+						_logWarning(
+							StringBundler.concat(
+								"Warning. There is a gap between the previous ",
+								"end date and start date of the SLA renewal. ",
+								"Please double check the customer’s ",
+								"subscription to ensure they retain SLA and ",
+								"Zendesk privileges."));
+					}
+				}
+				else {
+					List<ProductPurchase> activeProductPurchases =
+						_getActiveProductPurchases(
+							accountKey, product.getKey());
+
+					for (ProductPurchase activeProductPurchase :
+							activeProductPurchases) {
+
 						Map<String, String> curProperties =
 							activeProductPurchase.getProperties();
 
