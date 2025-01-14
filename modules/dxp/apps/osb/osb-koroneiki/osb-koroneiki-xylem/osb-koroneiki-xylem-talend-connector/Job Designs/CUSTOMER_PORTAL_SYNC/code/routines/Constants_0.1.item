@@ -38,8 +38,14 @@ public class Constants {
 	public static final String EXTERNAL_LINK_ENTITY_NAME_LXC_PROJECT =
 		"project";
 
+	public static final String EXTERNAL_LINK_ENTITY_NAME_SALESFORCE_ACCOUNT =
+		"account";
+
 	public static final String
 		EXTERNAL_LINK_ENTITY_NAME_SALESFORCE_OPPORTUNITY = "opportunity";
+
+	public static final String EXTERNAL_LINK_ENTITY_NAME_SALESFORCE_PROJECT =
+		"project";
 
 	public static final String LANGUAGE_ID_US = "en_US";
 

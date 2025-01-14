@@ -34,23 +34,9 @@ public class TransformAccount {
 		"Secondary Contact";
 
 	public static String getACWorkspaceGroupId(String externalLinks) {
-		JSONArray jsonArray = new JSONArray(externalLinks);
-
-		for (int i = 0; i < jsonArray.length(); i++) {
-			JSONObject jsonObject = jsonArray.getJSONObject(i);
-
-			String domain = jsonObject.getString("domain");
-			String entityName = jsonObject.getString("entityName");
-
-			if (domain.equals(Constants.EXTERNAL_LINK_DOMAIN_AC) &&
-				entityName.equals(
-					Constants.EXTERNAL_LINK_ENTITY_NAME_AC_GROUP)) {
-
-				return jsonObject.getString("entityId");
-			}
-		}
-
-		return "";
+		return _getExternalLinkEntityId(
+			externalLinks, Constants.EXTERNAL_LINK_DOMAIN_AC,
+			Constants.EXTERNAL_LINK_ENTITY_NAME_AC_GROUP);
 	}
 
 	public static boolean getAllowSelfProvisioning(String properties) {
@@ -313,23 +299,9 @@ public class TransformAccount {
 	}
 
 	public static String getLXCProjectId(String externalLinks) {
-		JSONArray jsonArray = new JSONArray(externalLinks);
-
-		for (int i = 0; i < jsonArray.length(); i++) {
-			JSONObject jsonObject = jsonArray.getJSONObject(i);
-
-			String domain = jsonObject.getString("domain");
-			String entityName = jsonObject.getString("entityName");
-
-			if (domain.equals(Constants.EXTERNAL_LINK_DOMAIN_LXC) &&
-				entityName.equals(
-					Constants.EXTERNAL_LINK_ENTITY_NAME_LXC_PROJECT)) {
-
-				return jsonObject.getString("entityId");
-			}
-		}
-
-		return "";
+		return _getExternalLinkEntityId(
+			externalLinks, Constants.EXTERNAL_LINK_DOMAIN_LXC,
+			Constants.EXTERNAL_LINK_ENTITY_NAME_LXC_PROJECT);
 	}
 
 	public static int getMaxRequestors(String productPurchases)
@@ -685,6 +657,18 @@ public class TransformAccount {
 		return _getEarliestStartDate(productPurchases, partnershipFuture);
 	}
 
+	public static String getSalesforceAccountKey(String externalLinks) {
+		return _getExternalLinkEntityId(
+			externalLinks, Constants.EXTERNAL_LINK_DOMAIN_SALESFORCE,
+			Constants.EXTERNAL_LINK_ENTITY_NAME_SALESFORCE_ACCOUNT);
+	}
+
+	public static String getSalesforceProjectKey(String externalLinks) {
+		return _getExternalLinkEntityId(
+			externalLinks, Constants.EXTERNAL_LINK_DOMAIN_SALESFORCE,
+			Constants.EXTERNAL_LINK_ENTITY_NAME_SALESFORCE_PROJECT);
+	}
+
 	public static String getSLACurrent(String productPurchases)
 		throws Exception {
 
@@ -915,6 +899,24 @@ public class TransformAccount {
 		}
 
 		return DateUtil.format(earliestStartDate);
+	}
+
+	private static String _getExternalLinkEntityId(
+		String externalLinks, String domain, String entityName) {
+
+		JSONArray jsonArray = new JSONArray(externalLinks);
+
+		for (int i = 0; i < jsonArray.length(); i++) {
+			JSONObject jsonObject = jsonArray.getJSONObject(i);
+
+			if (domain.equals(jsonObject.getString("domain")) &&
+				entityName.equals(jsonObject.getString("entityName"))) {
+
+				return jsonObject.getString("entityId");
+			}
+		}
+
+		return "";
 	}
 
 	private static String _getLatestEndDate(
