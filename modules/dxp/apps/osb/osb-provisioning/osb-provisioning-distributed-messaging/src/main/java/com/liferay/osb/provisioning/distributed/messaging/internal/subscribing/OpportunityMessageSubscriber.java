@@ -451,41 +451,21 @@ public class OpportunityMessageSubscriber extends BaseMessageSubscriber {
 				if (ArrayUtil.contains(
 						ProductConstants.NAMES_SUBSCRIPTION, productName)) {
 
-					int daysBetween = 0;
-
-					Date slaEndDate = null;
-
 					ProductPurchase slaProductPurchase =
 						_accountReader.getSLAProductPurchase(account);
 
-					if (slaProductPurchase != null) {
-						slaEndDate = slaProductPurchase.getEndDate();
+					if (_isSLAMidtermChange(
+							productPurchase, slaProductPurchase)) {
 
-						Product slaProduct = slaProductPurchase.getProduct();
-
-						if (((slaEndDate == null) ||
-							 !slaEndDate.before(
-								 productPurchase.getStartDate())) &&
-							!StringUtil.equals(
-								product.getKey(), slaProduct.getKey())) {
-
-							_logWarning(
-								StringBundler.concat(
-									"Warning. SLA has been changed midterm. ",
-									"Please be sure to review the account and ",
-									"cancel any of the previous SLAs or ",
-									"products."));
-						}
-						else {
-							daysBetween = DateUtil.getDaysBetween(
-								productPurchase.getStartDate(), slaEndDate);
-						}
+						_logWarning(
+							StringBundler.concat(
+								"Warning. SLA has been changed midterm. ",
+								"Please be sure to review the account and ",
+								"cancel any of the previous SLAs or ",
+								"products."));
 					}
 
-					if ((slaProductPurchase == null) ||
-						((daysBetween > 1) &&
-						 slaEndDate.before(productPurchase.getStartDate()))) {
-
+					if (_isSLAGap(productPurchase, slaProductPurchase)) {
 						_logWarning(
 							StringBundler.concat(
 								"Warning. There is a gap between the previous ",
@@ -2917,6 +2897,52 @@ public class OpportunityMessageSubscriber extends BaseMessageSubscriber {
 
 				return true;
 			}
+		}
+
+		return false;
+	}
+
+	private boolean _isSLAGap(
+		ProductPurchase productPurchase, ProductPurchase slaProductPurchase) {
+
+		if (slaProductPurchase == null) {
+			return true;
+		}
+
+		Date slaEndDate = slaProductPurchase.getEndDate();
+
+		if (slaEndDate.before(productPurchase.getStartDate())) {
+			int daysBetween = DateUtil.getDaysBetween(
+				productPurchase.getStartDate(), slaEndDate);
+
+			if (daysBetween > 1) {
+				return true;
+			}
+		}
+
+		return false;
+	}
+
+	private boolean _isSLAMidtermChange(
+		ProductPurchase productPurchase, ProductPurchase slaProductPurchase) {
+
+		if (slaProductPurchase == null) {
+			return false;
+		}
+
+		Date slaEndDate = slaProductPurchase.getEndDate();
+
+		if (slaEndDate == null) {
+			return true;
+		}
+
+		Product product = productPurchase.getProduct();
+		Product slaProduct = slaProductPurchase.getProduct();
+
+		if (!slaEndDate.before(productPurchase.getStartDate()) &&
+			!StringUtil.equals(product.getKey(), slaProduct.getKey())) {
+
+			return true;
 		}
 
 		return false;
