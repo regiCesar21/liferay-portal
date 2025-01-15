@@ -405,8 +405,6 @@ public class OpportunityMessageSubscriber extends BaseMessageSubscriber {
 
 			filterQuery2.addEquals(true, "accountKey", accountKey);
 			filterQuery2.addEquals(true, "productKey", product.getKey());
-			filterQuery2.addEquals(false, "endDate", (String)null);
-			filterQuery2.addLessThanEquals(false, "endDate", new Date());
 
 			int productConsumptionCount =
 				(int)_productConsumptionWebService.searchCount(filterQuery2);
