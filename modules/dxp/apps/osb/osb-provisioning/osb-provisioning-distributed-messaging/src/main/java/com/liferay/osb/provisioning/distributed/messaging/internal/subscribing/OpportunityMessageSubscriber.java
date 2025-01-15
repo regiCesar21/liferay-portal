@@ -454,18 +454,7 @@ public class OpportunityMessageSubscriber extends BaseMessageSubscriber {
 					ProductPurchase slaProductPurchase =
 						_accountReader.getSLAProductPurchase(account);
 
-					if (_isSLAMidtermChange(
-							productPurchase, slaProductPurchase)) {
-
-						_logWarning(
-							StringBundler.concat(
-								"Warning. SLA has been changed midterm. ",
-								"Please be sure to review the account and ",
-								"cancel any of the previous SLAs or ",
-								"products."));
-					}
-
-					if (_isSLAGap(productPurchase, slaProductPurchase)) {
+					if (_isRenewalGap(slaProductPurchase, productPurchase)) {
 						_logWarning(
 							StringBundler.concat(
 								"Warning. There is a gap between the previous ",
@@ -473,6 +462,16 @@ public class OpportunityMessageSubscriber extends BaseMessageSubscriber {
 								"Please double check the customer’s ",
 								"subscription to ensure they retain SLA and ",
 								"Zendesk privileges."));
+					}
+					else if (_isRenewalMidtermChange(
+								slaProductPurchase, productPurchase)) {
+
+						_logWarning(
+							StringBundler.concat(
+								"Warning. SLA has been changed midterm. ",
+								"Please be sure to review the account and ",
+								"cancel any of the previous SLAs or ",
+								"products."));
 					}
 				}
 				else {
@@ -2902,18 +2901,23 @@ public class OpportunityMessageSubscriber extends BaseMessageSubscriber {
 		return false;
 	}
 
-	private boolean _isSLAGap(
-		ProductPurchase productPurchase, ProductPurchase slaProductPurchase) {
+	private boolean _isRenewalGap(
+		ProductPurchase curProductPurchase,
+		ProductPurchase newProductPurchase) {
 
-		if (slaProductPurchase == null) {
+		if (curProductPurchase == null) {
 			return true;
 		}
 
-		Date slaEndDate = slaProductPurchase.getEndDate();
+		Date curEndDate = curProductPurchase.getEndDate();
 
-		if (slaEndDate.before(productPurchase.getStartDate())) {
+		if (curEndDate == null) {
+			return false;
+		}
+
+		if (curEndDate.before(newProductPurchase.getStartDate())) {
 			int daysBetween = DateUtil.getDaysBetween(
-				productPurchase.getStartDate(), slaEndDate);
+				newProductPurchase.getStartDate(), curEndDate);
 
 			if (daysBetween > 1) {
 				return true;
@@ -2923,24 +2927,25 @@ public class OpportunityMessageSubscriber extends BaseMessageSubscriber {
 		return false;
 	}
 
-	private boolean _isSLAMidtermChange(
-		ProductPurchase productPurchase, ProductPurchase slaProductPurchase) {
+	private boolean _isRenewalMidtermChange(
+		ProductPurchase curProductPurchase,
+		ProductPurchase newProductPurchase) {
 
-		if (slaProductPurchase == null) {
+		if (curProductPurchase == null) {
 			return false;
 		}
 
-		Date slaEndDate = slaProductPurchase.getEndDate();
+		Product curPoduct = curProductPurchase.getProduct();
+		Product newProduct = newProductPurchase.getProduct();
 
-		if (slaEndDate == null) {
-			return true;
+		if (StringUtil.equals(curPoduct.getKey(), newProduct.getKey())) {
+			return false;
 		}
 
-		Product product = productPurchase.getProduct();
-		Product slaProduct = slaProductPurchase.getProduct();
+		Date curOriginalEndDate = curProductPurchase.getOriginalEndDate();
 
-		if (!slaEndDate.before(productPurchase.getStartDate()) &&
-			!StringUtil.equals(product.getKey(), slaProduct.getKey())) {
+		if ((curOriginalEndDate == null) ||
+			!curOriginalEndDate.before(newProductPurchase.getStartDate())) {
 
 			return true;
 		}
