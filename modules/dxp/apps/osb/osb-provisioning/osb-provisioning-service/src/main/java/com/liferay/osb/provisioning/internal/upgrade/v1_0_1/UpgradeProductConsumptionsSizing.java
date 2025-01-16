@@ -53,21 +53,27 @@ public class UpgradeProductConsumptionsSizing extends UpgradeProcess {
 
 			params.put("active", true);
 
-			Hits hits = _licenseKeyLocalService.search(
-				_portal.getDefaultCompanyId(), null, null, createDateLT, null,
-				null, null, null, null, null, null, null, null, null, null,
-				null, null, null, null, null, null, null, null, null, null,
-				null, true, new LinkedHashMap<>(), false, QueryUtil.ALL_POS,
-				QueryUtil.ALL_POS, null);
+			int count = _licenseKeyLocalService.searchCount(
+				null, null, createDateLT, null, null, null, null, null, null,
+				null, null, new long[0], new String[0], null, null,
+				new String[0], new long[0], null, null, null, null, null, null,
+				null, null, null, params, false);
 
-			for (Document document : hits.getDocs()) {
-				long licenseKeyId = GetterUtil.getLong(
-					document.get(Field.ENTRY_CLASS_PK));
+			int pageSize = 10000;
 
-				LicenseKey licenseKey = _licenseKeyLocalService.fetchLicenseKey(
-					licenseKeyId);
+			int pagesCount = (int)Math.ceil((double)count / pageSize);
 
-				if (licenseKey != null) {
+			for (int i = 1; i <= pagesCount; i++) {
+				int start = (i - 1) * pageSize;
+				int end = Math.min((i * pageSize) - 1, count - 1);
+
+				List<LicenseKey> licenseKeys = _licenseKeyLocalService.search(
+					null, null, createDateLT, null, null, null, null, null,
+					null, null, null, new long[0], new String[0], null, null,
+					new String[0], new long[0], null, null, null, null, null,
+					null, null, null, null, params, false, start, end, null);
+
+				for (LicenseKey licenseKey : licenseKeys) {
 					if (Validator.isNull(licenseKey.getAccountKey())) {
 						continue;
 					}
