@@ -6,8 +6,8 @@ apply plugin: "antlr"
 apply plugin: "com.liferay.spring.boot.defaults"
 apply plugin: "io.spring.dependency-management"
 
-sourceCompatibility = "21"
-targetCompatibility = "21"
+sourceCompatibility = JavaVersion.VERSION_21
+targetCompatibility = JavaVersion.VERSION_21
 
 String parserDirName = "com/liferay/osb/asah/common/filter/expression/parser"
 List<String> startParameterTaskNames = gradle.startParameter.taskNames
