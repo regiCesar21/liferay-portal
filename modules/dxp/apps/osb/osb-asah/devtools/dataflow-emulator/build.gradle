@@ -1,12 +1,12 @@
 apply plugin: "com.liferay.spring.boot.defaults"
 apply plugin: "io.spring.dependency-management"
 
+sourceCompatibility = JavaVersion.VERSION_21
+targetCompatibility = JavaVersion.VERSION_21
+
 bootJar {
 	archiveClassifier = "application"
 }
-
-sourceCompatibility = JavaVersion.VERSION_21
-targetCompatibility = JavaVersion.VERSION_21
 
 dependencies {
 	api group: "com.blueconic", name: "browscap-java", version: "latest.release"

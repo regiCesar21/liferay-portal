@@ -22,6 +22,10 @@ buildscript {
 
 apply plugin: CoverallsPlugin
 
+ext {
+	set("commons-lang3.version", "3.13.0")
+}
+
 task jacocoRootReport(type: JacocoReport)
 task jacocoTestCoverageVerification(type: JacocoCoverageVerification)
 
@@ -35,7 +39,7 @@ allprojects {
 	apply plugin: "pmd"
 
 	jacoco {
-		toolVersion = "0.8.2"
+		toolVersion = "0.8.12"
 	}
 
 	pmd {
@@ -45,11 +49,12 @@ allprojects {
 
 	spotbugs {
 		showProgress = true
+		toolVersion = "4.8.6"
 	}
 
 	tasks.withType(SpotBugsTask) {
 		dependencies {
-			spotbugsPlugins group: "com.h3xstream.findsecbugs", name: "findsecbugs-plugin", version: "1.11.0"
+			spotbugsPlugins group: "com.h3xstream.findsecbugs", name: "findsecbugs-plugin", version: "1.13.0"
 		}
 
 		String customConfigFile = rootDir.toString() + "/find-security-bugs-config.txt"
