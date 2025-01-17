@@ -5,6 +5,9 @@ bootJar {
 	archiveClassifier = "application"
 }
 
+sourceCompatibility = "21"
+targetCompatibility = "21"
+
 dependencies {
 	api group: "com.blueconic", name: "browscap-java", version: "latest.release"
 	api group: "org.apache.commons", name: "commons-lang3", version: "3.7"
