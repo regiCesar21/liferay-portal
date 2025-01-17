@@ -1,4 +1,4 @@
-FROM azul/zulu-openjdk-alpine:8u392-8.74.0.17-jre AS builder
+FROM azul/zulu-openjdk-alpine:21.0.4-jre AS builder
 
 WORKDIR /builder
 
@@ -6,7 +6,7 @@ COPY ./build/libs/*application.jar app.jar
 
 RUN java -Djarmode=layertools -jar app.jar extract
 
-FROM azul/zulu-openjdk-alpine:8u392-8.74.0.17-jre
+FROM azul/zulu-openjdk-alpine:21.0.4-jre
 
 ARG LABEL_BUILD_DATE
 ARG LABEL_VCS_REF
