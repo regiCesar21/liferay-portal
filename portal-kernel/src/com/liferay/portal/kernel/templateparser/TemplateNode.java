@@ -26,6 +26,7 @@ import com.liferay.portal.kernel.service.GroupLocalServiceUtil;
 import com.liferay.portal.kernel.service.LayoutLocalServiceUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.HttpUtil;
 import com.liferay.portal.kernel.util.JavaConstants;
 import com.liferay.portal.kernel.util.LocaleUtil;
@@ -147,6 +148,9 @@ public class TemplateNode extends LinkedHashMap<String, Object> {
 		}
 		else if (type.equals("link_to_layout")) {
 			return _getLinkToLayoutData();
+		}
+		else if (type.equals("text_box")) {
+			return HtmlUtil.escape((String)get("data"));
 		}
 
 		return (String)get("data");
