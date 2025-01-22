@@ -8,6 +8,7 @@ package com.liferay.osb.asah.upgrade;
 import com.liferay.osb.asah.upgrade.v4_10_0.AssetHourlyViewsUpgradeStep;
 import com.liferay.osb.asah.upgrade.v4_10_0.AssetMetricUpgradeStep;
 import com.liferay.osb.asah.upgrade.v4_10_0.EventUpgradeStep;
+import com.liferay.osb.asah.upgrade.v4_11_0.EventPropertyUpgradeStep;
 import com.liferay.osb.asah.upgrade.v4_11_0.PostgreSQLUpgradeStep;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,6 +33,8 @@ public class UpgradeProcessConfiguration {
 		upgradeProcess.addUpgradeSteps("4.0.38", "4.0.39", _eventUpgradeStep);
 		upgradeProcess.addUpgradeSteps(
 			"4.0.39", "4.0.40", _postgreSQLUpgradeStep);
+		upgradeProcess.addUpgradeSteps(
+			"4.0.40", "4.0.41", _eventPropertyUpgradeStep);
 
 		return upgradeProcess;
 	}
@@ -41,6 +44,9 @@ public class UpgradeProcessConfiguration {
 
 	@Autowired
 	private AssetMetricUpgradeStep _assetMetricUpgradeStep;
+
+	@Autowired
+	private EventPropertyUpgradeStep _eventPropertyUpgradeStep;
 
 	@Autowired
 	private EventUpgradeStep _eventUpgradeStep;
