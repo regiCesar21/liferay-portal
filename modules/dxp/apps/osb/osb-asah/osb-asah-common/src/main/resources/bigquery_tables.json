@@ -907,48 +907,6 @@
 			"type": "DAY"
 		}
 	},
-	"eventproperty": {
-		"clusteringFields": [
-			"channelId"
-		],
-		"fields": [
-			{
-				"mode": "REQUIRED",
-				"name": "channelId",
-				"type": "INT64"
-			},
-			{
-				"mode": "REQUIRED",
-				"name": "eventDate",
-				"type": "TIMESTAMP"
-			},
-			{
-				"mode": "REQUIRED",
-				"name": "id",
-				"type": "STRING"
-			},
-			{
-				"mode": "REQUIRED",
-				"name": "name",
-				"type": "STRING"
-			},
-			{
-				"mode": "REQUIRED",
-				"name": "projectId",
-				"type": "STRING"
-			},
-			{
-				"mode": "NULLABLE",
-				"name": "value",
-				"type": "STRING"
-			}
-		],
-		"timePartitioning": {
-			"expirable": true,
-			"field": "eventDate",
-			"type": "DAY"
-		}
-	},
 	"expandocolumn": {
 		"clusteringFields": [
 			"dataSourceId",
