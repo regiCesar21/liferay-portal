@@ -21,7 +21,7 @@ import org.springframework.stereotype.Component;
 /**
  * @author Rachael Koestartyo
  */
-@Component("com.liferay.osb.asah.upgrade.v4_11_0.PostgreSQLUpgradeStep")
+@Component
 public class PostgreSQLUpgradeStep implements UpgradeStep {
 
 	@Override
