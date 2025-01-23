@@ -110,7 +110,7 @@ configure(javaSubprojects) {
 
 		jacoco {
 			destinationFile = new File(buildDir, "jacoco/jacocoTest.exec")
-			enabled = FileUtil.exists(project, "src/test")
+			enabled = false
 			excludes = ["**/joestelmach/natty/**", "**/maxmind/geoip/**"]
 		}
 
@@ -130,7 +130,7 @@ configure(javaSubprojects) {
 
 		jacoco {
 			destinationFile = new File(buildDir, "jacoco/jacocoIntegrationTest.exec")
-			enabled = FileUtil.exists(project, "src/testIntegration")
+			enabled = false
 			excludes = ["**/joestelmach/natty/**"]
 		}
 
