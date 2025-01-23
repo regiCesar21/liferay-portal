@@ -13,7 +13,7 @@ env:
     global:
         - _JAVA_OPTIONS=-Xmx3g
 install: true
-jdk: openjdk8
+jdk: openjdk21
 jobs:
     include:
         - name: "Analysis"
