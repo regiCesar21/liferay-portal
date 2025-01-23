@@ -60,7 +60,6 @@ dependencies {
 	api group: "org.springframework.security.oauth", name: "spring-security-oauth", version: "2.5.0.RELEASE"
 	api group: "org.springframework.security.oauth", name: "spring-security-oauth2", version: "2.5.0.RELEASE"
 	api project(configuration: "default", path: ":dxp:apps:osb:osb-asah:osb-asah-filter-expression-parser")
-
 	testImplementation group: "io.rest-assured", name: "json-schema-validator", version: "3.2.0"
 	testImplementation group: "io.rest-assured", name: "rest-assured", version: "3.2.0"
 	testImplementation group: "org.skyscreamer", name: "jsonassert", transitive: false

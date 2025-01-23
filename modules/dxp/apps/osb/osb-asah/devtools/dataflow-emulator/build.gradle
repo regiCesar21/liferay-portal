@@ -9,7 +9,6 @@ dependencies {
 	api group: "com.blueconic", name: "browscap-java", version: "latest.release"
 	api group: "org.apache.commons", name: "commons-lang3", version: "3.7"
 	api project(configuration: "default", path: ":dxp:apps:osb:osb-asah:osb-asah-common")
-
 	testImplementation project(configuration: "default", path: ":dxp:apps:osb:osb-asah:osb-asah-test-util")
 }
 
