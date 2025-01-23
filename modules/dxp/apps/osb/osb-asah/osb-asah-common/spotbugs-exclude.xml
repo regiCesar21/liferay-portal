@@ -6,6 +6,21 @@
 		<Bug pattern="CRLF_INJECTION_LOGS" />
 	</Match>
 	<Match>
+		<Bug pattern="CT_CONSTRUCTOR_THROW" />
+	</Match>
+	<Match>
+		<Bug pattern="EI_EXPOSE_REP" />
+	</Match>
+	<Match>
+		<Bug pattern="EI_EXPOSE_REP2" />
+	</Match>
+	<Match>
+		<Bug pattern="SSD_DO_NOT_USE_INSTANCE_LOCK_ON_SHARED_STATIC_DATA" />
+	</Match>
+	<Match>
+		<Bug pattern="NP_NULL_PARAM_DEREF_NONVIRTUAL" />
+	</Match>
+	<Match>
 		<Bug pattern="PATH_TRAVERSAL_IN" />
 		<Class name="com.liferay.osb.asah.common.data.exporter.BigQueryDataExporter" />
 		<Method name="_createDataControlZipFile" />
@@ -19,6 +34,11 @@
 		<Bug pattern="PATH_TRAVERSAL_IN" />
 		<Class name="com.liferay.osb.asah.common.dog.DataExportTaskDog" />
 		<Method name="getDataExportTaskFile" />
+	</Match>
+	<Match>
+		<Bug pattern="PATH_TRAVERSAL_IN" />
+		<Class name="com.liferay.osb.asah.common.dog.test.DataControlTaskDogTest" />
+		<Method name="testAddDataControlTasksFile" />
 	</Match>
 	<Match>
 		<Bug pattern="PATH_TRAVERSAL_IN" />

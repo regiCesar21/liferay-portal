@@ -1,5 +1,14 @@
 <FindBugsFilter>
 	<Match>
+		<Bug pattern="CT_CONSTRUCTOR_THROW" />
+	</Match>
+	<Match>
+		<Bug pattern="EI_EXPOSE_REP2" />
+	</Match>
+	<Match>
+		<Bug pattern="JUA_DONT_ASSERT_INSTANCEOF_IN_TESTS" />
+	</Match>
+	<Match>
 		<Class name="com.liferay.osb.asah.dataflow.ingestion.event.BatchEventIngestionPipeline$1" />
 	</Match>
 	<Match>

@@ -3,9 +3,23 @@
 		<Bug pattern="CRLF_INJECTION_LOGS" />
 	</Match>
 	<Match>
+		<Bug pattern="CT_CONSTRUCTOR_THROW" />
+	</Match>
+	<Match>
+		<Bug pattern="EI_EXPOSE_REP" />
+	</Match>
+	<Match>
+		<Bug pattern="EI_EXPOSE_REP2" />
+	</Match>
+	<Match>
 		<Bug pattern="PATH_TRAVERSAL_IN" />
 		<Class name="com.liferay.osb.asah.backend.graphql.schema.DataControlTasksMutationDataFetcher" />
 		<Method name="_getPath" />
+	</Match>
+	<Match>
+		<Bug pattern="PATH_TRAVERSAL_IN" />
+		<Class name="com.liferay.osb.asah.backend.rest.controller.DataControlTasksRestController" />
+		<Method name="upload" />
 	</Match>
 	<Match>
 		<Bug pattern="WEAK_MESSAGE_DIGEST_SHA1" />

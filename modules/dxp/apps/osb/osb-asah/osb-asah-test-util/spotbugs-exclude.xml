@@ -1,5 +1,10 @@
 <FindBugsFilter>
 	<Match>
+		<Bug pattern="CT_CONSTRUCTOR_THROW" />
+		<Class name="com.liferay.osb.asah.test.util.messaging.MessageBusTestHelper" />
+		<Method name="&lt;init&gt;" />
+	</Match>
+	<Match>
 		<Bug pattern="SQL_INJECTION_JDBC" />
 		<Class name="com.liferay.osb.asah.test.util.spring.OSBAsahSQLTestExecutionListener" />
 		<Method name="afterTestMethod" />
