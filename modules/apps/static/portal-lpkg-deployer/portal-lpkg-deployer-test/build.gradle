@@ -4,7 +4,6 @@ copyLibs {
 
 dependencies {
 	compileOnly project(":apps:static:portal-lpkg-deployer:portal-lpkg-deployer-api")
-
 	testImplementation group: "com.liferay.portal", name: "com.liferay.portal.impl", version: "default"
 	testImplementation group: "com.liferay.portal", name: "com.liferay.portal.kernel", version: "default"
 	testImplementation group: "com.liferay.portal", name: "com.liferay.util.java", version: "default"
@@ -16,7 +15,6 @@ dependencies {
 	testImplementation project(":apps:static:portal-lpkg-deployer:portal-lpkg-deployer-test-util")
 	testImplementation project(":core:petra:petra-lang")
 	testImplementation project(":core:petra:petra-string")
-
 	testIntegrationImplementation group: "com.liferay", name: "com.liferay.arquillian.extension.junit.bridge", version: "1.0.19"
 }
 

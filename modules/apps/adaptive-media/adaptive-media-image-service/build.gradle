@@ -17,7 +17,6 @@ dependencies {
 	compileOnly project(":apps:static:osgi:osgi-util")
 	compileOnly project(":core:osgi-service-tracker-collections")
 	compileOnly project(":core:petra:petra-string")
-
 	testImplementation group: "org.mockito", name: "mockito-core", version: "1.10.8"
 	testImplementation project(":core:petra:petra-lang")
 }

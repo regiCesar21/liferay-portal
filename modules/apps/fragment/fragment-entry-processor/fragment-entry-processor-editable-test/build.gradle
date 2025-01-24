@@ -4,7 +4,6 @@ copyLibs {
 
 dependencies {
 	compileOnly group: "org.jsoup", name: "jsoup", version: "1.15.3"
-
 	testIntegrationImplementation group: "com.liferay", name: "com.liferay.arquillian.extension.junit.bridge", version: "1.0.19"
 	testIntegrationImplementation group: "com.liferay.portal", name: "com.liferay.portal.impl", version: "default"
 	testIntegrationImplementation project (":apps:fragment:fragment-api")

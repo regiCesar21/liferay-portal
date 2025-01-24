@@ -1,6 +1,5 @@
 dependencies {
 	compileInclude group: "wsdl4j", name: "wsdl4j", version: "1.6.3"
-
 	compileOnly group: "com.fasterxml.woodstox", name: "woodstox-core", version: "6.4.0"
 	compileOnly group: "com.liferay.portal", name: "com.liferay.portal.kernel", version: "default"
 	compileOnly group: "com.sun.xml.bind", name: "jaxb-osgi", version: "2.3.4"

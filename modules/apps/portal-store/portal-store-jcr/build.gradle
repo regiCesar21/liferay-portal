@@ -7,7 +7,6 @@ dependencies {
 	compileInclude group: "org.apache.jackrabbit", name: "jackrabbit-jcr-commons", version: "2.21.11"
 	compileInclude group: "org.apache.jackrabbit", name: "jackrabbit-spi", version: "2.21.11"
 	compileInclude group: "org.apache.jackrabbit", name: "jackrabbit-spi-commons", version: "2.21.11"
-
 	compileOnly group: "biz.aQute.bnd", name: "biz.aQute.bndlib", version: "3.1.0"
 	compileOnly group: "com.liferay.portal", name: "com.liferay.portal.kernel", version: "default"
 	compileOnly group: "commons-lang", name: "commons-lang", version: "2.6"
