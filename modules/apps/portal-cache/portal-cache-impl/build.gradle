@@ -7,7 +7,6 @@ dependencies {
 	compileOnly project(":apps:static:osgi:osgi-util")
 	compileOnly project(":core:petra:petra-lang")
 	compileOnly project(":core:petra:petra-string")
-
 	testImplementation project(":core:petra:petra-concurrent")
 	testImplementation project(":core:petra:petra-memory")
 	testImplementation project(":core:registry-api")

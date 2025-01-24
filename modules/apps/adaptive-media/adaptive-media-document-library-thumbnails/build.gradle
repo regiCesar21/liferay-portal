@@ -9,6 +9,5 @@ dependencies {
 	compileOnly project(":apps:portal:portal-upgrade-api")
 	compileOnly project(":apps:static:portal-configuration:portal-configuration-metatype-api")
 	compileOnly project(":core:petra:petra-string")
-
 	testImplementation group: "com.liferay.portal", name: "com.liferay.util.java", version: "default"
 }

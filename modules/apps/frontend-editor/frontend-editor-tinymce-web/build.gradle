@@ -70,6 +70,5 @@ dependencies {
 	compileOnly project(":apps:item-selector:item-selector-criteria-api")
 	compileOnly project(":core:petra:petra-lang")
 	compileOnly project(":core:petra:petra-string")
-
 	tinyMCE group: "org.webjars.npm", name: "tinymce", transitive: false, version: tinyMCEVersion
 }

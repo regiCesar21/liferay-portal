@@ -13,7 +13,6 @@ configurations {
 dependencies {
 	alloyTaglib group: "org.apache.felix", name: "org.apache.felix.http.servlet-api", version: "1.1.2"
 	alloyTaglib project(":apps:dynamic-data-mapping:dynamic-data-mapping-api")
-
 	compileOnly group: "com.liferay.portal", name: "com.liferay.portal.impl", version: "default"
 	compileOnly group: "com.liferay.portal", name: "com.liferay.portal.kernel", version: "default"
 	compileOnly group: "com.liferay.portal", name: "com.liferay.util.taglib", version: "default"

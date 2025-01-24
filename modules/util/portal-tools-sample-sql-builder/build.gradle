@@ -46,13 +46,11 @@ dependencies {
 	api project(":apps:subscription:subscription-service")
 	api project(":apps:wiki:wiki-api")
 	api project(":apps:wiki:wiki-service")
-
 	compileOnly group: "com.liferay", name: "com.liferay.petra.reflect", version: "3.0.0"
 	compileOnly group: "com.liferay", name: "com.liferay.petra.string", version: "3.0.0"
 	compileOnly group: "com.liferay", name: "org.freemarker", version: "2.3.30.LIFERAY-PATCHED-2"
 	compileOnly group: "com.liferay.portal", name: "com.liferay.portal.impl", version: "default"
 	compileOnly group: "com.liferay.portal", name: "com.liferay.portal.kernel", version: "default"
-
 	testImplementation classifier: "jdk8", group: "org.hsqldb", name: "hsqldb", version: "2.7.1"
 	testImplementation group: "com.liferay", name: "com.ibm.icu4j", version: "54.1.1.LIFERAY-PATCHED-2"
 	testImplementation group: "com.liferay", name: "com.sun.syndication", version: "1.0.LIFERAY-PATCHED-1"

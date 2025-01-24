@@ -8,7 +8,6 @@ dependencies {
 	compileInclude group: "io.netty", name: "netty-common", version: "4.1.100.Final"
 	compileInclude group: "io.netty", name: "netty-handler-proxy", version: "4.1.100.Final"
 	compileInclude group: "io.netty", name: "netty-resolver-dns", version: "4.1.100.Final"
-
 	compileOnly group: "biz.aQute.bnd", name: "biz.aQute.bnd.annotation", version: "4.2.0"
 	compileOnly group: "com.fasterxml.jackson.core", name: "jackson-annotations", version: "2.13.4"
 	compileOnly group: "com.fasterxml.jackson.core", name: "jackson-core", version: "2.13.4"

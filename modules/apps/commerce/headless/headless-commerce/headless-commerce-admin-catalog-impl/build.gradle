@@ -24,6 +24,5 @@ dependencies {
 	compileOnly project(":apps:upload:upload-api")
 	compileOnly project(":core:petra:petra-function")
 	compileOnly project(":core:petra:petra-string")
-
 	testImplementation group: "org.mockito", name: "mockito-core", version: "1.10.8"
 }

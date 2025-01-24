@@ -10,7 +10,6 @@ dependencies {
 	compileInclude group: "net.minidev", name: "json-smart", version: "2.4.10"
 	compileInclude group: "org.apache.commons", name: "commons-lang3", version: "3.4"
 	compileInclude group: "org.ow2.asm", name: "asm", version: "5.0.4"
-
 	compileOnly group: "biz.aQute.bnd", name: "biz.aQute.bnd.annotation", version: "4.2.0"
 	compileOnly group: "com.liferay.portal", name: "com.liferay.portal.impl", version: "default"
 	compileOnly group: "com.liferay.portal", name: "com.liferay.portal.kernel", version: "default"

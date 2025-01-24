@@ -23,7 +23,6 @@ dependencies {
 	testImplementation project(":core:petra:petra-memory")
 	testImplementation project(":core:petra:petra-reflect")
 	testImplementation project(":core:petra:petra-string")
-
 	testIntegrationImplementation group: "com.liferay", name: "com.liferay.arquillian.extension.junit.bridge", version: "1.0.19"
 	testIntegrationImplementation group: "com.liferay", name: "org.springframework.web", version: "4.3.30.LIFERAY-PATCHED-2"
 	testIntegrationImplementation group: "org.osgi", name: "org.osgi.service.cm", version: "1.5.0"

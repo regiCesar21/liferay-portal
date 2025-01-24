@@ -30,7 +30,6 @@ dependencies {
 	compileOnly project(":core:petra:petra-function")
 	compileOnly project(":core:petra:petra-lang")
 	compileOnly project(":core:petra:petra-string")
-
 	testImplementation group: "com.liferay", name: "org.springframework.web", version: "4.3.30.LIFERAY-PATCHED-2"
 	testImplementation group: "commons-configuration", name: "commons-configuration", version: "1.10"
 	testImplementation group: "org.apache.httpcomponents", name: "httpclient", version: "4.5.13"
