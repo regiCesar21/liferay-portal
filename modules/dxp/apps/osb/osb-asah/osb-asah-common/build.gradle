@@ -62,6 +62,10 @@ dependencies {
 	api project(configuration: "default", path: ":dxp:apps:osb:osb-asah:osb-asah-filter-expression-parser")
 	testImplementation group: "io.rest-assured", name: "json-schema-validator", version: "3.2.0"
 	testImplementation group: "io.rest-assured", name: "rest-assured", version: "3.2.0"
+	testImplementation group: "net.bytebuddy", name: "byte-buddy", version: "1.16.1"
+	testImplementation group: "org.junit.jupiter", name: "junit-jupiter", version: "5.11.4"
+	testImplementation group: "org.mockito", name: "mockito-core", version: "5.15.2"
+	testImplementation group: "org.mockito", name: "mockito-junit-jupiter", version: "5.15.2"
 	testImplementation group: "org.skyscreamer", name: "jsonassert", transitive: false
 	testImplementation group: "org.springframework.boot", name: "spring-boot-starter-test"
 	testImplementation group: "uk.org.webcompere", name: "system-stubs-jupiter", version: "2.0.1"
