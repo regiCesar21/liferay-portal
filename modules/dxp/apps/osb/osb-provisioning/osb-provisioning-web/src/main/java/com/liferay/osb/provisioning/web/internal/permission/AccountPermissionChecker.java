@@ -56,6 +56,15 @@ public class AccountPermissionChecker {
 
 		if (_roleLocalService.hasUserRole(
 				permissionChecker.getUserId(), permissionChecker.getCompanyId(),
+				RoleConstants.PROVISIONING_SUBSCRIPTION_WORKER, false) &&
+			ArrayUtil.contains(
+				_PROVISIONING_SUBSCRIPTION_WORKER_ACTION_IDS, actionId)) {
+
+			return true;
+		}
+
+		if (_roleLocalService.hasUserRole(
+				permissionChecker.getUserId(), permissionChecker.getCompanyId(),
 				RoleConstants.PROVISIONING_WATCHER, false) &&
 			ArrayUtil.contains(_PROVISIONING_WATCHER_ACTION_IDS, actionId)) {
 
@@ -91,6 +100,9 @@ public class AccountPermissionChecker {
 	private static final String[] _PROVISIONING_CONTACT_WORKER_ACTION_IDS = {
 		ProvisioningActionKeys.ASSIGN_CONTACTS
 	};
+
+	private static final String[] _PROVISIONING_SUBSCRIPTION_WORKER_ACTION_IDS =
+		{ProvisioningActionKeys.MANAGE_GRACE_PERIOD};
 
 	private static final String[] _PROVISIONING_WATCHER_ACTION_IDS = {
 		ProvisioningActionKeys.UPDATE_INSTRUCTIONS,

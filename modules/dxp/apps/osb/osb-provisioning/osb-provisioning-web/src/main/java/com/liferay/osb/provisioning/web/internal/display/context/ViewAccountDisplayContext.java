@@ -180,6 +180,8 @@ public class ViewAccountDisplayContext {
 		data.put("details", getAccountDisplay());
 		data.put("hasManageAccountsPermission", hasManageAccountsPermission());
 		data.put(
+			"hasManageGracePeriodPermission", hasManageGracePeriodPermission());
+		data.put(
 			"hasUpdateExternalLinksPermission",
 			_hasPermission(ProvisioningActionKeys.UPDATE_EXTERNAL_LINKS));
 
@@ -720,6 +722,10 @@ public class ViewAccountDisplayContext {
 
 	public boolean hasManageAccountsPermission() throws Exception {
 		return _hasPermission(ProvisioningActionKeys.MANAGE_ACCOUNTS);
+	}
+
+	public boolean hasManageGracePeriodPermission() throws Exception {
+		return _hasPermission(ProvisioningActionKeys.MANAGE_GRACE_PERIOD);
 	}
 
 	public boolean hasManageLicenseKeysPermission() throws Exception {

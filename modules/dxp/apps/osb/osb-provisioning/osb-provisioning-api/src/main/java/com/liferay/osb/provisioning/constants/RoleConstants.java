@@ -18,6 +18,9 @@ public class RoleConstants {
 	public static final String PROVISIONING_CONTACT_WORKER =
 		"Provisioning Contact Worker";
 
+	public static final String PROVISIONING_SUBSCRIPTION_WORKER =
+		"Provisioning Subscription Worker";
+
 	public static final String PROVISIONING_WATCHER = "Provisioning Watcher";
 
 	public static final String PROVISIONING_WORKER = "Provisioning Worker";

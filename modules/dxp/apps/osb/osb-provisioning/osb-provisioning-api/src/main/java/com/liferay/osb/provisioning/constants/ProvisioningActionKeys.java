@@ -18,6 +18,8 @@ public class ProvisioningActionKeys extends ActionKeys {
 
 	public static final String MANAGE_CONTACTS = "MANAGE_CONTACTS";
 
+	public static final String MANAGE_GRACE_PERIOD = "MANAGE_GRACE_PERIOD";
+
 	public static final String MANAGE_LICENSE_KEYS = "MANAGE_LICENSE_KEYS";
 
 	public static final String MANAGE_PRODUCT_BUNDLES =
