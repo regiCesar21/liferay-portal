@@ -29,7 +29,8 @@ dependencies {
 	api group: "org.everit.json", name: "org.everit.json.schema", version: "1.5.1"
 	api group: "org.springframework.boot", name: "spring-boot-starter-hateoas"
 	api project(configuration: "default", path: ":dxp:apps:osb:osb-asah:osb-asah-common")
-	testImplementation group: "nl.jqno.equalsverifier", name: "equalsverifier", version: "2.5.1"
+	testImplementation group: "net.bytebuddy", name: "byte-buddy", version: "1.16.1"
+	testImplementation group: "nl.jqno.equalsverifier", name: "equalsverifier", version: "3.18.1"
 	testImplementation project(configuration: "default", path: ":dxp:apps:osb:osb-asah:osb-asah-test-util")
 	testIntegrationImplementation group: "io.rest-assured", name: "json-schema-validator", version: "3.2.0"
 	testIntegrationImplementation group: "io.rest-assured", name: "rest-assured", version: "3.2.0"

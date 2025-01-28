@@ -9,6 +9,7 @@ import com.liferay.osb.asah.backend.test.util.BaseBeanTestCase;
 
 import nl.jqno.equalsverifier.EqualsVerifier;
 import nl.jqno.equalsverifier.Warning;
+import nl.jqno.equalsverifier.api.SingleTypeEqualsVerifierApi;
 
 import org.junit.jupiter.api.Test;
 
@@ -20,10 +21,10 @@ public class DataConstantsTest extends BaseBeanTestCase<DataConstants> {
 	@Override
 	@Test
 	public void testEqualsAndHashCode() {
-		EqualsVerifier<? extends Object> equalsVerifier =
-			EqualsVerifier.forClass(DataConstants.class);
+		SingleTypeEqualsVerifierApi<?> equalsVerifier = EqualsVerifier.forClass(
+			DataConstants.class);
 
-		equalsVerifier.suppress(
+		equalsVerifier = equalsVerifier.suppress(
 			Warning.INHERITED_DIRECTLY_FROM_OBJECT, Warning.NONFINAL_FIELDS,
 			Warning.STRICT_INHERITANCE);
 

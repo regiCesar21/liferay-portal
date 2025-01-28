@@ -19,6 +19,7 @@ import java.util.function.Supplier;
 
 import nl.jqno.equalsverifier.EqualsVerifier;
 import nl.jqno.equalsverifier.Warning;
+import nl.jqno.equalsverifier.api.SingleTypeEqualsVerifierApi;
 
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
@@ -80,17 +81,18 @@ public class MetricTest extends BaseBeanTestCase<Metric> {
 	@Override
 	@Test
 	public void testEqualsAndHashCode() {
-		EqualsVerifier<? extends Object> equalsVerifier =
-			EqualsVerifier.forClass(Metric.class);
+		SingleTypeEqualsVerifierApi<?> equalsVerifier = EqualsVerifier.forClass(
+			Metric.class);
 
-		equalsVerifier.suppress(
+		equalsVerifier = equalsVerifier.suppress(
 			Warning.NONFINAL_FIELDS, Warning.STRICT_INHERITANCE);
 
 		Metric metric = new Metric(null);
 
 		metric.setMetrics(Collections.emptyList());
 
-		equalsVerifier.withPrefabValues(Metric.class, metric, new Metric(null));
+		equalsVerifier = equalsVerifier.withPrefabValues(
+			Metric.class, metric, new Metric(null));
 
 		equalsVerifier.verify();
 	}

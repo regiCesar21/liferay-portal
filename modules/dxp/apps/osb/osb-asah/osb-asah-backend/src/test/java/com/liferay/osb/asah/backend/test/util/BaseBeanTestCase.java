@@ -30,6 +30,7 @@ import java.util.function.Supplier;
 
 import nl.jqno.equalsverifier.EqualsVerifier;
 import nl.jqno.equalsverifier.Warning;
+import nl.jqno.equalsverifier.api.SingleTypeEqualsVerifierApi;
 
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
@@ -43,11 +44,12 @@ public abstract class BaseBeanTestCase<T> {
 	public void testEqualsAndHashCode() {
 		T instance = newInstance();
 
-		EqualsVerifier<? extends Object> equalsVerifier =
-			EqualsVerifier.forClass(instance.getClass());
+		SingleTypeEqualsVerifierApi<?> equalsVerifier = EqualsVerifier.forClass(
+			instance.getClass());
 
-		equalsVerifier.suppress(
-			Warning.NONFINAL_FIELDS, Warning.STRICT_INHERITANCE);
+		equalsVerifier = equalsVerifier.suppress(
+			Warning.BIGDECIMAL_EQUALITY, Warning.NONFINAL_FIELDS,
+			Warning.STRICT_INHERITANCE);
 
 		equalsVerifier.verify();
 	}

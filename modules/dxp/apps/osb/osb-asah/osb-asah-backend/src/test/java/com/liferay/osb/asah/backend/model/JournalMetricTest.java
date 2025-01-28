@@ -14,6 +14,7 @@ import java.util.function.Supplier;
 
 import nl.jqno.equalsverifier.EqualsVerifier;
 import nl.jqno.equalsverifier.Warning;
+import nl.jqno.equalsverifier.api.SingleTypeEqualsVerifierApi;
 
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
@@ -37,26 +38,27 @@ public class JournalMetricTest extends BaseBeanTestCase<JournalMetric> {
 	@Override
 	@Test
 	public void testEqualsAndHashCode() {
-		EqualsVerifier<? extends Object> equalsVerifier =
-			EqualsVerifier.forClass(JournalMetric.class);
+		SingleTypeEqualsVerifierApi<?> equalsVerifier = EqualsVerifier.forClass(
+			JournalMetric.class);
 
-		equalsVerifier.suppress(
+		equalsVerifier = equalsVerifier.suppress(
 			Warning.NONFINAL_FIELDS, Warning.STRICT_INHERITANCE);
 
 		Metric metric = new Metric(null);
 
 		metric.setMetrics(Collections.emptyList());
 
-		equalsVerifier.withPrefabValues(Metric.class, metric, new Metric(null));
+		equalsVerifier = equalsVerifier.withPrefabValues(
+			Metric.class, metric, new Metric(null));
 
 		JournalMetric journalMetric = new JournalMetric();
 
 		journalMetric.setAssetMetrics(Collections.emptyList());
 
-		equalsVerifier.withPrefabValues(
+		equalsVerifier = equalsVerifier.withPrefabValues(
 			AssetMetric.class, journalMetric, new JournalMetric());
 
-		equalsVerifier.withRedefinedSuperclass();
+		equalsVerifier = equalsVerifier.withRedefinedSuperclass();
 
 		equalsVerifier.verify();
 	}
