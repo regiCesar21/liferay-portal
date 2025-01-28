@@ -22,6 +22,7 @@ import com.liferay.osb.asah.common.spring.http.exception.OSBAsahException;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.time.ZoneOffset;
+import java.time.temporal.ChronoUnit;
 
 import java.util.Collections;
 import java.util.Comparator;
@@ -53,7 +54,11 @@ public class JobRunDog {
 		JSONObject contextJSONObject, Job job, JobRunStatus jobRunStatus,
 		String step, String trigger) {
 
-		LocalDateTime nowLocalDateTime = LocalDateTime.now(ZoneOffset.UTC);
+		LocalDateTime nowLocalDateTime = LocalDateTime.now(
+			ZoneOffset.UTC
+		).truncatedTo(
+			ChronoUnit.MICROS
+		);
 
 		JobRun jobRun = new JobRun();
 

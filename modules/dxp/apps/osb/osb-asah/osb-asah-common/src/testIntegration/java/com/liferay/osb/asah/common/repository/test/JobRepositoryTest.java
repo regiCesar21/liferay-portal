@@ -16,6 +16,7 @@ import com.liferay.osb.asah.test.util.configuration.JDBCTestConfiguration;
 
 import java.time.LocalDateTime;
 import java.time.ZoneOffset;
+import java.time.temporal.ChronoUnit;
 
 import org.junit.jupiter.api.BeforeEach;
 
@@ -33,7 +34,11 @@ public class JobRepositoryTest extends BaseRepositoryTestCase<Job, Long> {
 	public void setUp() {
 		Job job = new Job();
 
-		LocalDateTime localDateTime = LocalDateTime.now(ZoneOffset.UTC);
+		LocalDateTime localDateTime = LocalDateTime.now(
+			ZoneOffset.UTC
+		).truncatedTo(
+			ChronoUnit.MICROS
+		);
 
 		job.setCreateLocalDateTime(localDateTime);
 

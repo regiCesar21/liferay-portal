@@ -26,6 +26,7 @@ import com.liferay.osb.asah.common.util.TimeOrderedUuidGenerator;
 
 import java.time.LocalDateTime;
 import java.time.ZoneOffset;
+import java.time.temporal.ChronoUnit;
 
 import java.util.Date;
 import java.util.HashMap;
@@ -58,7 +59,11 @@ public class JobDog {
 
 		Job job = new Job();
 
-		LocalDateTime nowLocalDateTime = LocalDateTime.now(ZoneOffset.UTC);
+		LocalDateTime nowLocalDateTime = LocalDateTime.now(
+			ZoneOffset.UTC
+		).truncatedTo(
+			ChronoUnit.MICROS
+		);
 
 		job.setCreateLocalDateTime(nowLocalDateTime);
 

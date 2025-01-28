@@ -52,7 +52,12 @@ public class JobRunRepositoryTest extends BaseRepositoryTestCase<JobRun, Long> {
 
 		jobRun1.setCompletedDate(new Date());
 		jobRun1.setContextJSONObject(JSONUtil.put("key1", "value1"));
-		jobRun1.setCreateLocalDateTime(LocalDateTime.now(ZoneOffset.UTC));
+		jobRun1.setCreateLocalDateTime(
+			LocalDateTime.now(
+				ZoneOffset.UTC
+			).truncatedTo(
+				ChronoUnit.MICROS
+			));
 		jobRun1.setJobId(job.getId());
 		jobRun1.setJobRunStatus(JobRunStatus.RUNNING);
 		jobRun1.setJobType(String.valueOf(job.getJobType()));
@@ -63,7 +68,12 @@ public class JobRunRepositoryTest extends BaseRepositoryTestCase<JobRun, Long> {
 
 		jobRun2.setCompletedDate(new Date());
 		jobRun2.setContextJSONObject(JSONUtil.put("key2", "value2"));
-		jobRun2.setCreateLocalDateTime(LocalDateTime.now(ZoneOffset.UTC));
+		jobRun2.setCreateLocalDateTime(
+			LocalDateTime.now(
+				ZoneOffset.UTC
+			).truncatedTo(
+				ChronoUnit.MICROS
+			));
 		jobRun2.setJobId(job.getId());
 		jobRun2.setJobRunStatus(JobRunStatus.PUBLISHED);
 		jobRun2.setJobType(String.valueOf(job.getJobType()));
