@@ -14,7 +14,6 @@ bootJar {
 }
 
 dependencies {
-	api group: "commons-fileupload", name: "commons-fileupload", version: "1.5"
 	api project(configuration: "default", path: ":dxp:apps:osb:osb-asah:osb-asah-common")
 	testImplementation project(configuration: "default", path: ":dxp:apps:osb:osb-asah:osb-asah-test-util")
 }
