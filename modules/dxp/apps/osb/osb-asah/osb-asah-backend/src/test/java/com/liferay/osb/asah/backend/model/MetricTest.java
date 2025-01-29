@@ -8,7 +8,6 @@ package com.liferay.osb.asah.backend.model;
 import com.liferay.osb.asah.backend.test.util.BaseBeanTestCase;
 import com.liferay.osb.asah.common.model.MetricType;
 import com.liferay.osb.asah.common.model.TrendClassification;
-import com.liferay.petra.string.StringPool;
 
 import java.math.BigDecimal;
 
@@ -225,17 +224,17 @@ public class MetricTest extends BaseBeanTestCase<Metric> {
 
 		@Override
 		public String getAggregationName() {
-			return StringPool.BLANK;
+			return "";
 		}
 
 		@Override
 		public String getFieldName() {
-			return StringPool.BLANK;
+			return "";
 		}
 
 		@Override
 		public String getName() {
-			return StringPool.BLANK;
+			return "";
 		}
 
 		@Override

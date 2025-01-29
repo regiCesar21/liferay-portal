@@ -12,7 +12,6 @@ import com.liferay.osb.asah.common.date.DateUtil;
 import com.liferay.osb.asah.common.model.Interval;
 import com.liferay.osb.asah.common.model.MetricType;
 import com.liferay.osb.asah.common.model.TimeRange;
-import com.liferay.petra.string.StringPool;
 
 import java.time.Clock;
 import java.time.DayOfWeek;
@@ -288,8 +287,7 @@ public class MetricHelper {
 
 			LocalDate lastWeekdayLocalDate = firstWeekdayLocalDate.plusDays(6);
 
-			return firstWeekdayLocalDate + StringPool.SLASH +
-				lastWeekdayLocalDate;
+			return firstWeekdayLocalDate + "/" + lastWeekdayLocalDate;
 		}
 
 		if (Interval.MONTH.equals(interval)) {
@@ -308,8 +306,7 @@ public class MetricHelper {
 				firstMonthDayLocalDate.withDayOfMonth(
 					firstMonthDayLocalDate.lengthOfMonth());
 
-			return firstMonthDayLocalDate + StringPool.SLASH +
-				lastMonthDayLocalDate;
+			return firstMonthDayLocalDate + "/" + lastMonthDayLocalDate;
 		}
 
 		LocalDateTime previousPeriodLocalDateTime = LocalDateTime.from(
@@ -329,7 +326,7 @@ public class MetricHelper {
 
 			LocalDate endLocalDate = startLocalDate.plusDays(6);
 
-			return startLocalDate + StringPool.SLASH + endLocalDate;
+			return startLocalDate + "/" + endLocalDate;
 		}
 
 		if (Interval.MONTH.equals(interval)) {
@@ -339,7 +336,7 @@ public class MetricHelper {
 			LocalDate endLocalDate = localDate.withDayOfMonth(
 				localDate.lengthOfMonth());
 
-			return startLocalDate + StringPool.SLASH + endLocalDate;
+			return startLocalDate + "/" + endLocalDate;
 		}
 
 		return localDateTime.toString();

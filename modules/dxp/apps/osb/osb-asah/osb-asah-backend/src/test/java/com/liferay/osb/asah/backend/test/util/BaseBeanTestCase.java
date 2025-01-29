@@ -6,7 +6,6 @@
 package com.liferay.osb.asah.backend.test.util;
 
 import com.liferay.osb.asah.backend.model.GetterAndSetterPair;
-import com.liferay.petra.string.StringPool;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
@@ -91,8 +90,7 @@ public abstract class BaseBeanTestCase<T> {
 				Field field = null;
 
 				try {
-					field = clazz.getDeclaredField(
-						StringPool.UNDERLINE + fieldName);
+					field = clazz.getDeclaredField("_" + fieldName);
 				}
 				catch (Exception exception) {
 					field = clazz.getDeclaredField(fieldName);

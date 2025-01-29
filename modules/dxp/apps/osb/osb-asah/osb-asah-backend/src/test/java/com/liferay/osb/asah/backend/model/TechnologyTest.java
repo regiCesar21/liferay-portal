@@ -7,7 +7,6 @@ package com.liferay.osb.asah.backend.model;
 
 import com.liferay.osb.asah.backend.constants.DataConstants;
 import com.liferay.osb.asah.backend.test.util.BaseBeanTestCase;
-import com.liferay.petra.string.StringPool;
 
 import java.util.Arrays;
 
@@ -32,7 +31,7 @@ public class TechnologyTest extends BaseBeanTestCase<Technology> {
 
 	@Test
 	public void testBrowserName2() {
-		Technology technology = Technology.browserName(StringPool.BLANK);
+		Technology technology = Technology.browserName("");
 
 		Assertions.assertEquals(Technology.any(), technology);
 	}
@@ -53,7 +52,7 @@ public class TechnologyTest extends BaseBeanTestCase<Technology> {
 
 	@Test
 	public void testDeviceType2() {
-		Technology technology = Technology.deviceType(StringPool.BLANK);
+		Technology technology = Technology.deviceType("");
 
 		Assertions.assertEquals(Technology.any(), technology);
 	}
@@ -105,7 +104,7 @@ public class TechnologyTest extends BaseBeanTestCase<Technology> {
 
 	@Test
 	public void testPlatformName2() {
-		Technology technology = Technology.platformName(StringPool.BLANK);
+		Technology technology = Technology.platformName("");
 
 		Assertions.assertEquals(Technology.any(), technology);
 	}

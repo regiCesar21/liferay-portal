@@ -12,7 +12,6 @@ import com.liferay.osb.asah.backend.model.HistogramMetricBag;
 import com.liferay.osb.asah.backend.model.Metric;
 import com.liferay.osb.asah.common.date.dog.TimeZoneDog;
 import com.liferay.osb.asah.common.model.MetricType;
-import com.liferay.petra.string.StringPool;
 
 import java.time.Clock;
 import java.time.LocalDate;
@@ -52,8 +51,8 @@ public class IndividualHistogramDog {
 	private LocalDate _getLocalDate(Metric metric) {
 		String key = metric.getValueKey();
 
-		if (key.contains(StringPool.SLASH)) {
-			String[] parts = key.split(StringPool.SLASH);
+		if (key.contains("/")) {
+			String[] parts = key.split("/");
 
 			return LocalDate.parse(parts[1]);
 		}
