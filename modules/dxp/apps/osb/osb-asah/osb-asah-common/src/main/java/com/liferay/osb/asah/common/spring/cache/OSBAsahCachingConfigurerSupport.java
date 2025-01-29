@@ -16,7 +16,7 @@ import java.time.Duration;
 
 import java.util.Arrays;
 
-import org.apache.commons.lang.StringUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.pool2.impl.GenericObjectPoolConfig;
 
 import org.springframework.beans.factory.annotation.Value;
