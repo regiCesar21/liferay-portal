@@ -35,6 +35,7 @@ import java.util.stream.Stream;
 
 import org.apache.commons.lang3.tuple.Pair;
 
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
@@ -51,6 +52,11 @@ import org.springframework.test.context.BootstrapWith;
 public class SiteMetricDogTest
 	implements OSBAsahBackendSpringTestContext,
 			   OSBAsahTestExecutionListenersContext {
+
+	@AfterEach
+	public void tearDown() {
+		_preferenceDog.savePreference("time-zone-id", "UTC");
+	}
 
 	@BQSQLResource(resourcePath = "test_bq_sessions_acquisition.sql")
 	@Test
@@ -639,7 +645,49 @@ public class SiteMetricDogTest
 
 	@BQSQLResource(resourcePath = "test_bq_events_5.sql")
 	@Test
-	public void testGetSiteMetricVisitorsWithTimeZone() {
+	public void testGetSiteMetricVisitorsWithTimeZoneLast7Days() {
+		SearchQueryContext searchQueryContext = _getSearchQueryContext();
+
+		searchQueryContext.setTimeRange(TimeRange.LAST_7_DAYS);
+
+		SiteMetric siteMetric = _siteMetricDog.getSiteMetric(
+			searchQueryContext);
+
+		Metric anonymousVisitorsMetrics =
+			siteMetric.getAnonymousVisitorsMetric();
+
+		Assertions.assertEquals(1, anonymousVisitorsMetrics.getPreviousValue());
+		Assertions.assertEquals(1, anonymousVisitorsMetrics.getValue());
+
+		Metric knownVisitorsMetrics = siteMetric.getKnownVisitorsMetric();
+
+		Assertions.assertEquals(1, knownVisitorsMetrics.getValue());
+
+		Metric visitorsMetrics = siteMetric.getVisitorsMetric();
+
+		Assertions.assertEquals(2, visitorsMetrics.getValue());
+
+		_preferenceDog.savePreference("time-zone-id", "-07:00");
+
+		siteMetric = _siteMetricDog.getSiteMetric(searchQueryContext);
+
+		anonymousVisitorsMetrics = siteMetric.getAnonymousVisitorsMetric();
+
+		Assertions.assertEquals(1, anonymousVisitorsMetrics.getPreviousValue());
+		Assertions.assertEquals(1, anonymousVisitorsMetrics.getValue());
+
+		knownVisitorsMetrics = siteMetric.getKnownVisitorsMetric();
+
+		Assertions.assertEquals(1, knownVisitorsMetrics.getValue());
+
+		visitorsMetrics = siteMetric.getVisitorsMetric();
+
+		Assertions.assertEquals(2, visitorsMetrics.getValue());
+	}
+
+	@BQSQLResource(resourcePath = "test_bq_events_6.sql")
+	@Test
+	public void testGetSiteMetricVisitorsWithTimeZoneLast24Hours() {
 		SearchQueryContext searchQueryContext = _getSearchQueryContext();
 
 		searchQueryContext.setTimeRange(TimeRange.LAST_24_HOURS);
@@ -661,26 +709,7 @@ public class SiteMetricDogTest
 
 		Assertions.assertEquals(3, visitorsMetrics.getValue());
 
-		searchQueryContext.setTimeRange(TimeRange.LAST_7_DAYS);
-
-		siteMetric = _siteMetricDog.getSiteMetric(searchQueryContext);
-
-		anonymousVisitorsMetrics = siteMetric.getAnonymousVisitorsMetric();
-
-		Assertions.assertEquals(1, anonymousVisitorsMetrics.getPreviousValue());
-		Assertions.assertEquals(1, anonymousVisitorsMetrics.getValue());
-
-		knownVisitorsMetrics = siteMetric.getKnownVisitorsMetric();
-
-		Assertions.assertEquals(1, knownVisitorsMetrics.getValue());
-
-		visitorsMetrics = siteMetric.getVisitorsMetric();
-
-		Assertions.assertEquals(2, visitorsMetrics.getValue());
-
 		_preferenceDog.savePreference("time-zone-id", "-07:00");
-
-		searchQueryContext.setTimeRange(TimeRange.LAST_24_HOURS);
 
 		siteMetric = _siteMetricDog.getSiteMetric(searchQueryContext);
 
@@ -696,23 +725,6 @@ public class SiteMetricDogTest
 		visitorsMetrics = siteMetric.getVisitorsMetric();
 
 		Assertions.assertEquals(3, visitorsMetrics.getValue());
-
-		searchQueryContext.setTimeRange(TimeRange.LAST_7_DAYS);
-
-		siteMetric = _siteMetricDog.getSiteMetric(searchQueryContext);
-
-		anonymousVisitorsMetrics = siteMetric.getAnonymousVisitorsMetric();
-
-		Assertions.assertEquals(1, anonymousVisitorsMetrics.getPreviousValue());
-		Assertions.assertEquals(1, anonymousVisitorsMetrics.getValue());
-
-		knownVisitorsMetrics = siteMetric.getKnownVisitorsMetric();
-
-		Assertions.assertEquals(1, knownVisitorsMetrics.getValue());
-
-		visitorsMetrics = siteMetric.getVisitorsMetric();
-
-		Assertions.assertEquals(2, visitorsMetrics.getValue());
 	}
 
 	@BQSQLResource(resourcePath = "test_bq_events_search_terms.sql")
