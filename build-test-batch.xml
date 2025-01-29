@@ -3413,6 +3413,232 @@ log.sanitizer.enabled=false</echo>
 		</sequential>
 	</macrodef>
 
+	<macrodef name="subrepository-compile">
+		<attribute default="x64" name="java.jdk.architecture" />
+		<attribute default="jdk" name="java.jdk.type" />
+		<attribute default="8" name="java.jdk.version" />
+
+		<sequential>
+			<fail message="Please set the property ${subrepository.name}." unless="subrepository.name" />
+
+			<get-module-base-dir-from-subrepository-name subrepository.name="${subrepository.name}" />
+
+			<local name="path" />
+
+			<local name="java.jdk.home" />
+			<local name="java.jdk.opts" />
+
+			<get-java-jdk-home architecture="@{java.jdk.architecture}" type="@{java.jdk.type}" version="@{java.jdk.version}" />
+			<get-java-jdk-opts architecture="@{java.jdk.architecture}" type="@{java.jdk.type}" version="@{java.jdk.version}" />
+
+			<propertyregex
+				input="${env.PATH}"
+				override="true"
+				property="path"
+				regexp="/opt/java/(jdk|openjdk|zulu(-x64)?)[^/]*/bin"
+				replace="${java.jdk.home}/bin"
+			/>
+
+			<gradle-execute
+				checktask="true"
+				dir="${module.base.dir}"
+				refreshdependencies="true"
+				task="compileJava"
+			>
+				<env key="JAVA_HOME" value="${java.jdk.home}" />
+				<env key="JAVA_OPTS" value="${java.jdk.opts}" />
+				<env key="PATH" value="${path}" />
+			</gradle-execute>
+		</sequential>
+	</macrodef>
+
+	<macrodef name="subrepository-pmd">
+		<attribute default="x64" name="java.jdk.architecture" />
+		<attribute default="jdk" name="java.jdk.type" />
+		<attribute default="8" name="java.jdk.version" />
+
+		<sequential>
+			<fail message="Please set the property ${subrepository.name}." unless="subrepository.name" />
+
+			<get-module-base-dir-from-subrepository-name subrepository.name="${subrepository.name}" />
+
+			<local name="path" />
+
+			<local name="java.jdk.home" />
+			<local name="java.jdk.opts" />
+
+			<get-java-jdk-home architecture="@{java.jdk.architecture}" type="@{java.jdk.type}" version="@{java.jdk.version}" />
+			<get-java-jdk-opts architecture="@{java.jdk.architecture}" type="@{java.jdk.type}" version="@{java.jdk.version}" />
+
+			<propertyregex
+				input="${env.PATH}"
+				override="true"
+				property="path"
+				regexp="/opt/java/(jdk|openjdk|zulu(-x64)?)[^/]*/bin"
+				replace="${java.jdk.home}/bin"
+			/>
+
+			<gradle-execute checktask="true" dir="${module.base.dir}" refreshdependencies="true" task="pmdMain">
+				<env key="JAVA_HOME" value="${java.jdk.home}" />
+				<env key="JAVA_OPTS" value="${java.jdk.opts}" />
+				<env key="PATH" value="${path}" />
+				<arg value="pmdTest" />
+				<arg value="pmdTestIntegration" />
+			</gradle-execute>
+		</sequential>
+	</macrodef>
+
+	<macrodef name="subrepository-semantic-versioning">
+		<attribute default="x64" name="java.jdk.architecture" />
+		<attribute default="jdk" name="java.jdk.type" />
+		<attribute default="8" name="java.jdk.version" />
+
+		<sequential>
+			<fail message="Please set the property ${subrepository.name}." unless="subrepository.name" />
+
+			<get-module-base-dir-from-subrepository-name subrepository.name="${subrepository.name}" />
+
+			<echo>Deleting stale baseline log files.</echo>
+
+			<delete failonerror="false">
+				<fileset
+					dir="${project.dir}"
+				>
+					<include name="baseline-reports/*.log" />
+					<include name="modules/**/baseline.log" />
+				</fileset>
+			</delete>
+
+			<echo file="build.${user.name}.properties">baseline.jar.report.level=persist</echo>
+
+			<echo>Executing baseline on ${module.base.dir}.</echo>
+
+			<local name="path" />
+
+			<local name="java.jdk.home" />
+			<local name="java.jdk.opts" />
+
+			<get-java-jdk-home architecture="@{java.jdk.architecture}" type="@{java.jdk.type}" version="@{java.jdk.version}" />
+			<get-java-jdk-opts architecture="@{java.jdk.architecture}" type="@{java.jdk.type}" version="@{java.jdk.version}" />
+
+			<propertyregex
+				input="${env.PATH}"
+				override="true"
+				property="path"
+				regexp="/opt/java/(jdk|openjdk|zulu(-x64)?)[^/]*/bin"
+				replace="${java.jdk.home}/bin"
+			/>
+
+			<gradle-execute
+				checktask="true"
+				dir="${module.base.dir}"
+				forcedcacheenabled="false"
+				refreshdependencies="true"
+				task="baseline"
+			>
+				<env key="JAVA_HOME" value="${java.jdk.home}" />
+				<env key="JAVA_OPTS" value="${java.jdk.opts}" />
+				<env key="PATH" value="${path}" />
+			</gradle-execute>
+
+			<echo>Checking for baseline log files.</echo>
+
+			<var name="log.files" unset="true" />
+
+			<fileset
+				dir="${project.dir}"
+				id="log.files"
+			>
+				<include name="baseline-reports/*.log" />
+				<include name="modules/**/baseline.log" />
+			</fileset>
+
+			<pathconvert pathsep="," property="log.files" refid="log.files" />
+
+			<for list="${log.files}" param="log.file">
+				<sequential>
+					<print-file file.name="@{log.file}" />
+				</sequential>
+			</for>
+
+			<if>
+				<not>
+					<equals arg1="${log.files}" arg2="" />
+				</not>
+				<then>
+					<fail message="Semantic versioning is incorrect." />
+				</then>
+			</if>
+
+			<echo>Check for baseline log files completed.</echo>
+		</sequential>
+	</macrodef>
+
+	<macrodef name="subrepository-unit">
+		<attribute default="x64" name="java.jdk.architecture" />
+		<attribute default="jdk" name="java.jdk.type" />
+		<attribute default="8" name="java.jdk.version" />
+
+		<sequential>
+			<fail message="Please set the property ${subrepository.name}." unless="subrepository.name" />
+
+			<gradle-execute dir="${project.dir}/modules/apps/foundation/petra" task="deploy">
+				<arg value="-Dportal.build=true" />
+			</gradle-execute>
+
+			<local name="path" />
+
+			<local name="java.jdk.home" />
+			<local name="java.jdk.opts" />
+
+			<get-java-jdk-home architecture="@{java.jdk.architecture}" type="@{java.jdk.type}" version="@{java.jdk.version}" />
+			<get-java-jdk-opts architecture="@{java.jdk.architecture}" type="@{java.jdk.type}" version="@{java.jdk.version}" />
+
+			<propertyregex
+				input="${env.PATH}"
+				override="true"
+				property="path"
+				regexp="/opt/java/(jdk|openjdk|zulu(-x64)?)[^/]*/bin"
+				replace="${java.jdk.home}/bin"
+			/>
+
+			<if>
+				<equals arg1="${subrepository.validation}" arg2="true" />
+				<then>
+					<get-module-base-dir-from-subrepository-name subrepository.name="${subrepository.name}" />
+
+					<if>
+						<contains string="${module.base.dir}" substring="dxp" />
+						<then>
+							<antcall inheritAll="false" target="setup-profile-dxp" />
+						</then>
+					</if>
+
+					<gradle-execute checktask="true" dir="${module.base.dir}" forcedcacheenabled="false" refreshdependencies="true" task="test">
+						<env key="JAVA_HOME" value="${java.jdk.home}" />
+						<env key="JAVA_OPTS" value="${java.jdk.opts}" />
+						<env key="PATH" value="${path}" />
+					</gradle-execute>
+				</then>
+				<else>
+					<antcall inheritAll="false" target="record-test-class-file-names">
+						<param name="test.class.groups.size" value="${test.batch.size}" />
+					</antcall>
+
+					<gradle-execute checktask="true" dir="modules" forcedcacheenabled="false" refreshdependencies="true" task="test">
+						<env key="JAVA_HOME" value="${java.jdk.home}" />
+						<env key="JAVA_OPTS" value="${java.jdk.opts}" />
+						<env key="PATH" value="${path}" />
+						<arg value="-Dbuild.exclude.ant.plugin=true" />
+						<arg value="-Dtest.class.group.index=${axis.variable}" />
+					</gradle-execute>
+				</else>
+			</if>
+
+			<merge-test-results />
+		</sequential>
+	</macrodef>
+
 	<target name="blade-samples-jdk8">
 		<propertycopy from="app.server.${app.server.type}.version" name="app.server.version" />
 
@@ -6268,12 +6494,28 @@ information. Make sure to commit in all build services results.
 		</run-batch-test>
 	</target>
 
+	<target name="subrepository-compile-jdk17_zulu">
+		<subrepository-compile
+			java.jdk.architecture="x64"
+			java.jdk.type="zulu"
+			java.jdk.version="17"
+		/>
+	</target>
+
+	<target name="subrepository-compile-jdk21_zulu">
+		<subrepository-compile
+			java.jdk.architecture="x64"
+			java.jdk.type="zulu"
+			java.jdk.version="21"
+		/>
+	</target>
+
 	<target name="subrepository-compile-jdk8">
-		<fail message="Please set the property ${subrepository.name}." unless="subrepository.name" />
-
-		<get-module-base-dir-from-subrepository-name subrepository.name="${subrepository.name}" />
-
-		<gradle-execute checktask="true" dir="${module.base.dir}" refreshdependencies="true" task="compileJava" />
+		<subrepository-compile
+			java.jdk.architecture="x64"
+			java.jdk.type="jdk"
+			java.jdk.version="8"
+		/>
 	</target>
 
 	<target name="subrepository-functional-bundle-tomcat80-mysql56-jdk8">
@@ -6294,69 +6536,52 @@ information. Make sure to commit in all build services results.
 		<run-modules-integration-test database.type="mysql" refreshdependencies="true" subrepository.name="${subrepository.name}" />
 	</target>
 
+	<target name="subrepository-pmd-jdk17_zulu">
+		<subrepository-pmd
+			java.jdk.architecture="x64"
+			java.jdk.type="zulu"
+			java.jdk.version="17"
+		/>
+	</target>
+
+	<target name="subrepository-pmd-jdk21_zulu">
+		<subrepository-pmd
+			java.jdk.architecture="x64"
+			java.jdk.type="zulu"
+			java.jdk.version="21"
+		/>
+	</target>
+
 	<target name="subrepository-pmd-jdk8">
-		<fail message="Please set the property ${subrepository.name}." unless="subrepository.name" />
+		<subrepository-pmd
+			java.jdk.architecture="x64"
+			java.jdk.type="jdk"
+			java.jdk.version="8"
+		/>
+	</target>
 
-		<get-module-base-dir-from-subrepository-name subrepository.name="${subrepository.name}" />
+	<target name="subrepository-semantic-versioning-jdk17_zulu">
+		<subrepository-semantic-versioning
+			java.jdk.architecture="x64"
+			java.jdk.type="zulu"
+			java.jdk.version="17"
+		/>
+	</target>
 
-		<gradle-execute checktask="true" dir="${module.base.dir}" refreshdependencies="true" task="pmdMain">
-			<arg value="pmdTest" />
-			<arg value="pmdTestIntegration" />
-		</gradle-execute>
+	<target name="subrepository-semantic-versioning-jdk21_zulu">
+		<subrepository-semantic-versioning
+			java.jdk.architecture="x64"
+			java.jdk.type="zulu"
+			java.jdk.version="21"
+		/>
 	</target>
 
 	<target name="subrepository-semantic-versioning-jdk8">
-		<fail message="Please set the property ${subrepository.name}." unless="subrepository.name" />
-
-		<get-module-base-dir-from-subrepository-name subrepository.name="${subrepository.name}" />
-
-		<echo>Deleting stale baseline log files.</echo>
-
-		<delete failonerror="false">
-			<fileset
-				dir="${project.dir}"
-			>
-				<include name="baseline-reports/*.log" />
-				<include name="modules/**/baseline.log" />
-			</fileset>
-		</delete>
-
-		<echo file="build.${user.name}.properties">baseline.jar.report.level=persist</echo>
-
-		<echo>Executing baseline on ${module.base.dir}.</echo>
-
-		<gradle-execute checktask="true" dir="${module.base.dir}" forcedcacheenabled="false" refreshdependencies="true" task="baseline" />
-
-		<echo>Checking for baseline log files.</echo>
-
-		<var name="log.files" unset="true" />
-
-		<fileset
-			dir="${project.dir}"
-			id="log.files"
-		>
-			<include name="baseline-reports/*.log" />
-			<include name="modules/**/baseline.log" />
-		</fileset>
-
-		<pathconvert pathsep="," property="log.files" refid="log.files" />
-
-		<for list="${log.files}" param="log.file">
-			<sequential>
-				<print-file file.name="@{log.file}" />
-			</sequential>
-		</for>
-
-		<if>
-			<not>
-				<equals arg1="${log.files}" arg2="" />
-			</not>
-			<then>
-				<fail message="Semantic versioning is incorrect." />
-			</then>
-		</if>
-
-		<echo>Check for baseline log files completed.</echo>
+		<subrepository-semantic-versioning
+			java.jdk.architecture="x64"
+			java.jdk.type="jdk"
+			java.jdk.version="8"
+		/>
 	</target>
 
 	<target name="subrepository-source-format-jdk8">
@@ -6369,40 +6594,28 @@ information. Make sure to commit in all build services results.
 		</gradle-execute>
 	</target>
 
+	<target name="subrepository-unit-jdk17_zulu">
+		<subrepository-unit
+			java.jdk.architecture="x64"
+			java.jdk.type="zulu"
+			java.jdk.version="17"
+		/>
+	</target>
+
+	<target name="subrepository-unit-jdk21_zulu">
+		<subrepository-unit
+			java.jdk.architecture="x64"
+			java.jdk.type="zulu"
+			java.jdk.version="21"
+		/>
+	</target>
+
 	<target name="subrepository-unit-jdk8">
-		<fail message="Please set the property ${subrepository.name}." unless="subrepository.name" />
-
-		<gradle-execute dir="${project.dir}/modules/apps/foundation/petra" task="deploy">
-			<arg value="-Dportal.build=true" />
-		</gradle-execute>
-
-		<if>
-			<equals arg1="${subrepository.validation}" arg2="true" />
-			<then>
-				<get-module-base-dir-from-subrepository-name subrepository.name="${subrepository.name}" />
-
-				<if>
-					<contains string="${module.base.dir}" substring="dxp" />
-					<then>
-						<antcall inheritAll="false" target="setup-profile-dxp" />
-					</then>
-				</if>
-
-				<gradle-execute checktask="true" dir="${module.base.dir}" forcedcacheenabled="false" refreshdependencies="true" task="test" />
-			</then>
-			<else>
-				<antcall inheritAll="false" target="record-test-class-file-names">
-					<param name="test.class.groups.size" value="${test.batch.size}" />
-				</antcall>
-
-				<gradle-execute checktask="true" dir="modules" forcedcacheenabled="false" refreshdependencies="true" task="test">
-					<arg value="-Dbuild.exclude.ant.plugin=true" />
-					<arg value="-Dtest.class.group.index=${axis.variable}" />
-				</gradle-execute>
-			</else>
-		</if>
-
-		<merge-test-results />
+		<subrepository-unit
+			java.jdk.architecture="x64"
+			java.jdk.type="jdk"
+			java.jdk.version="8"
+		/>
 	</target>
 
 	<target name="sybase-service-start">
