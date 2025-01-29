@@ -18,8 +18,6 @@ public class ProvisioningActionKeys extends ActionKeys {
 
 	public static final String MANAGE_CONTACTS = "MANAGE_CONTACTS";
 
-	public static final String MANAGE_GRACE_PERIOD = "MANAGE_GRACE_PERIOD";
-
 	public static final String MANAGE_LICENSE_KEYS = "MANAGE_LICENSE_KEYS";
 
 	public static final String MANAGE_PRODUCT_BUNDLES =
@@ -28,6 +26,8 @@ public class ProvisioningActionKeys extends ActionKeys {
 	public static final String MANAGE_PRODUCTS = "MANAGE_PRODUCTS";
 
 	public static final String UPDATE_EXTERNAL_LINKS = "UPDATE_EXTERNAL_LINKS";
+
+	public static final String UPDATE_GRACE_PERIOD = "UPDATE_GRACE_PERIOD";
 
 	public static final String UPDATE_INSTRUCTIONS = "UPDATE_INSTRUCTIONS";
 

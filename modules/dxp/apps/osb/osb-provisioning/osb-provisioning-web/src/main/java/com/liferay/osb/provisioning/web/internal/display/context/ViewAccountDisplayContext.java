@@ -180,10 +180,10 @@ public class ViewAccountDisplayContext {
 		data.put("details", getAccountDisplay());
 		data.put("hasManageAccountsPermission", hasManageAccountsPermission());
 		data.put(
-			"hasManageGracePeriodPermission", hasManageGracePeriodPermission());
-		data.put(
 			"hasUpdateExternalLinksPermission",
 			_hasPermission(ProvisioningActionKeys.UPDATE_EXTERNAL_LINKS));
+		data.put(
+			"hasUpdateGracePeriodPermission", hasUpdateGracePeriodPermission());
 
 		List<String> liferayVersionNames = new ArrayList<>();
 
@@ -724,14 +724,14 @@ public class ViewAccountDisplayContext {
 		return _hasPermission(ProvisioningActionKeys.MANAGE_ACCOUNTS);
 	}
 
-	public boolean hasManageGracePeriodPermission() throws Exception {
-		return _hasPermission(ProvisioningActionKeys.MANAGE_GRACE_PERIOD);
-	}
-
 	public boolean hasManageLicenseKeysPermission() throws Exception {
 		return licenseKeyPermission.contains(
 			themeDisplay.getPermissionChecker(),
 			ProvisioningActionKeys.MANAGE_LICENSE_KEYS);
+	}
+
+	public boolean hasUpdateGracePeriodPermission() throws Exception {
+		return _hasPermission(ProvisioningActionKeys.UPDATE_GRACE_PERIOD);
 	}
 
 	public void init(
