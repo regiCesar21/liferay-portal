@@ -6494,6 +6494,14 @@ information. Make sure to commit in all build services results.
 		</run-batch-test>
 	</target>
 
+	<target name="subrepository-compile-jdk8">
+		<subrepository-compile
+			java.jdk.architecture="x64"
+			java.jdk.type="jdk"
+			java.jdk.version="8"
+		/>
+	</target>
+
 	<target name="subrepository-compile-jdk17_zulu">
 		<subrepository-compile
 			java.jdk.architecture="x64"
@@ -6507,14 +6515,6 @@ information. Make sure to commit in all build services results.
 			java.jdk.architecture="x64"
 			java.jdk.type="zulu"
 			java.jdk.version="21"
-		/>
-	</target>
-
-	<target name="subrepository-compile-jdk8">
-		<subrepository-compile
-			java.jdk.architecture="x64"
-			java.jdk.type="jdk"
-			java.jdk.version="8"
 		/>
 	</target>
 
@@ -6536,6 +6536,14 @@ information. Make sure to commit in all build services results.
 		<run-modules-integration-test database.type="mysql" refreshdependencies="true" subrepository.name="${subrepository.name}" />
 	</target>
 
+	<target name="subrepository-pmd-jdk8">
+		<subrepository-pmd
+			java.jdk.architecture="x64"
+			java.jdk.type="jdk"
+			java.jdk.version="8"
+		/>
+	</target>
+
 	<target name="subrepository-pmd-jdk17_zulu">
 		<subrepository-pmd
 			java.jdk.architecture="x64"
@@ -6552,8 +6560,8 @@ information. Make sure to commit in all build services results.
 		/>
 	</target>
 
-	<target name="subrepository-pmd-jdk8">
-		<subrepository-pmd
+	<target name="subrepository-semantic-versioning-jdk8">
+		<subrepository-semantic-versioning
 			java.jdk.architecture="x64"
 			java.jdk.type="jdk"
 			java.jdk.version="8"
@@ -6576,14 +6584,6 @@ information. Make sure to commit in all build services results.
 		/>
 	</target>
 
-	<target name="subrepository-semantic-versioning-jdk8">
-		<subrepository-semantic-versioning
-			java.jdk.architecture="x64"
-			java.jdk.type="jdk"
-			java.jdk.version="8"
-		/>
-	</target>
-
 	<target name="subrepository-source-format-jdk8">
 		<fail message="Please set the property ${subrepository.name}." unless="subrepository.name" />
 
@@ -6592,6 +6592,14 @@ information. Make sure to commit in all build services results.
 		<gradle-execute dir="${module.base.dir}" refreshdependencies="true" task="checkSourceFormatting">
 			<arg value="-PdependencyCheckerIgnoreFailures=false" />
 		</gradle-execute>
+	</target>
+
+	<target name="subrepository-unit-jdk8">
+		<subrepository-unit
+			java.jdk.architecture="x64"
+			java.jdk.type="jdk"
+			java.jdk.version="8"
+		/>
 	</target>
 
 	<target name="subrepository-unit-jdk17_zulu">
@@ -6607,14 +6615,6 @@ information. Make sure to commit in all build services results.
 			java.jdk.architecture="x64"
 			java.jdk.type="zulu"
 			java.jdk.version="21"
-		/>
-	</target>
-
-	<target name="subrepository-unit-jdk8">
-		<subrepository-unit
-			java.jdk.architecture="x64"
-			java.jdk.type="jdk"
-			java.jdk.version="8"
 		/>
 	</target>
 
