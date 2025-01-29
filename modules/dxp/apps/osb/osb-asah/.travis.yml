@@ -18,7 +18,7 @@ jobs:
     include:
         - name: "Analysis"
           script:
-              - ./gradlew checkSourceFormatting pmdMain pmdTest pmdTestIntegration --configure-on-demand --continue --parallel
+              - ./gradlew checkSourceFormatting pmdMain pmdTest pmdTestIntegration spotbugsMain spotbugsTest spotbugsTestIntegration --configure-on-demand --continue --parallel
         - name: "Tests"
           after_script:
               - docker-compose -f docker-compose.integration-test.yml down
