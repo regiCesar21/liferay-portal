@@ -3,13 +3,13 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-package com.liferay.osb.asah.upgrade.v4_11_0.test;
+package com.liferay.osb.asah.upgrade.v4_11_1.test;
 
 import com.liferay.osb.asah.common.entity.DataSource;
 import com.liferay.osb.asah.common.repository.DataSourceRepository;
 import com.liferay.osb.asah.test.util.spring.OSBAsahTestExecutionListenersContext;
 import com.liferay.osb.asah.upgrade.OSBAsahUpgradeSpringTestContext;
-import com.liferay.osb.asah.upgrade.v4_11_0.DataSourcesUpgradeStep;
+import com.liferay.osb.asah.upgrade.v4_11_1.DataSourcesUpgradeStep;
 
 import java.util.Optional;
 

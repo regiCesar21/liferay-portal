@@ -5,9 +5,9 @@
 
 package com.liferay.osb.asah.upgrade;
 
-import com.liferay.osb.asah.upgrade.v4_11_0.DataSourcesUpgradeStep;
 import com.liferay.osb.asah.upgrade.v4_11_0.EventPropertyUpgradeStep;
 import com.liferay.osb.asah.upgrade.v4_11_0.PostgreSQLUpgradeStep;
+import com.liferay.osb.asah.upgrade.v4_11_1.DataSourcesUpgradeStep;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
