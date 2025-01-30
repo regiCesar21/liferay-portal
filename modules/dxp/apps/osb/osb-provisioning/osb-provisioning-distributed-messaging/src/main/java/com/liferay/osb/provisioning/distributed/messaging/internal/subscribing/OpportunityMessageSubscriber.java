@@ -2437,25 +2437,31 @@ public class OpportunityMessageSubscriber extends BaseMessageSubscriber {
 			if (Validator.isNotNull(account.getContactEmailAddress()) &&
 				!contactEmailAddress.equals(account.getContactEmailAddress())) {
 
-				ContactRole salesContactRole =
-					_contactRoleWebService.fetchContactRole(
-						ContactRole.Type.ACCOUNT_WORKER.toString(),
-						ContactRoleConstants.NAME_LIFERAY_SALES);
+				Contact ownerContact =
+					_contactWebService.fetchContactByEmailAddress(
+						account.getContactEmailAddress());
 
-				_accountWebService.unassignContactRolesByEmailAddress(
-					StringPool.BLANK, StringPool.BLANK, accountKey,
-					account.getContactEmailAddress(),
-					new String[] {salesContactRole.getKey()});
+				if (ownerContact != null) {
+					ContactRole salesContactRole =
+						_contactRoleWebService.fetchContactRole(
+							ContactRole.Type.ACCOUNT_WORKER.toString(),
+							ContactRoleConstants.NAME_LIFERAY_SALES);
 
-				ContactRole secondaryContactRole =
-					_contactRoleWebService.fetchContactRole(
-						ContactRole.Type.ACCOUNT_WORKER.toString(),
-						ContactRoleConstants.NAME_SECONDARY_CONTACT);
+					_accountWebService.unassignContactRolesByEmailAddress(
+						StringPool.BLANK, StringPool.BLANK, accountKey,
+						account.getContactEmailAddress(),
+						new String[] {salesContactRole.getKey()});
 
-				_accountWebService.unassignContactRolesByEmailAddress(
-					StringPool.BLANK, StringPool.BLANK, accountKey,
-					account.getContactEmailAddress(),
-					new String[] {secondaryContactRole.getKey()});
+					ContactRole secondaryContactRole =
+						_contactRoleWebService.fetchContactRole(
+							ContactRole.Type.ACCOUNT_WORKER.toString(),
+							ContactRoleConstants.NAME_SECONDARY_CONTACT);
+
+					_accountWebService.unassignContactRolesByEmailAddress(
+						StringPool.BLANK, StringPool.BLANK, accountKey,
+						account.getContactEmailAddress(),
+						new String[] {secondaryContactRole.getKey()});
+				}
 			}
 
 			account.setContactEmailAddress(contactEmailAddress);
