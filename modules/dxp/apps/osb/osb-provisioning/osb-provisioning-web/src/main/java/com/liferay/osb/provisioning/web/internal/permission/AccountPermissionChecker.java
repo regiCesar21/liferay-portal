@@ -114,6 +114,7 @@ public class AccountPermissionChecker {
 	private static final String[] _PROVISIONING_WORKER_ACTION_IDS = {
 		ProvisioningActionKeys.ASSIGN_CONTACTS,
 		ProvisioningActionKeys.MANAGE_ACCOUNTS,
+		ProvisioningActionKeys.UPDATE_GRACE_PERIOD,
 		ProvisioningActionKeys.UPDATE_INSTRUCTIONS,
 		ProvisioningActionKeys.UPDATE_LANGUAGE_ID,
 		ProvisioningActionKeys.UPDATE_NOTES,
