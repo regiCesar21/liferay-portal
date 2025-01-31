@@ -21,14 +21,14 @@ public class DataConstantsTest extends BaseBeanTestCase<DataConstants> {
 	@Override
 	@Test
 	public void testEqualsAndHashCode() {
-		SingleTypeEqualsVerifierApi<?> equalsVerifier = EqualsVerifier.forClass(
-			DataConstants.class);
+		SingleTypeEqualsVerifierApi<?> singleTypeEqualsVerifierApi =
+			EqualsVerifier.forClass(DataConstants.class);
 
-		equalsVerifier = equalsVerifier.suppress(
+		singleTypeEqualsVerifierApi = singleTypeEqualsVerifierApi.suppress(
 			Warning.INHERITED_DIRECTLY_FROM_OBJECT, Warning.NONFINAL_FIELDS,
 			Warning.STRICT_INHERITANCE);
 
-		equalsVerifier.verify();
+		singleTypeEqualsVerifierApi.verify();
 	}
 
 	@Override

@@ -56,10 +56,10 @@ public class DocumentLibraryMetricTest
 	@Override
 	@Test
 	public void testEqualsAndHashCode() {
-		SingleTypeEqualsVerifierApi<?> equalsVerifier = EqualsVerifier.forClass(
-			DocumentLibraryMetric.class);
+		SingleTypeEqualsVerifierApi<?> singleTypeEqualsVerifierApi =
+			EqualsVerifier.forClass(DocumentLibraryMetric.class);
 
-		equalsVerifier = equalsVerifier.suppress(
+		singleTypeEqualsVerifierApi = singleTypeEqualsVerifierApi.suppress(
 			Warning.NONFINAL_FIELDS, Warning.STRICT_INHERITANCE);
 
 		DocumentLibraryMetric documentLibraryMetric =
@@ -67,20 +67,23 @@ public class DocumentLibraryMetricTest
 
 		documentLibraryMetric.setAssetMetrics(Collections.emptyList());
 
-		equalsVerifier = equalsVerifier.withPrefabValues(
-			AssetMetric.class, documentLibraryMetric,
-			new DocumentLibraryMetric());
+		singleTypeEqualsVerifierApi =
+			singleTypeEqualsVerifierApi.withPrefabValues(
+				AssetMetric.class, documentLibraryMetric,
+				new DocumentLibraryMetric());
 
 		Metric metric = new Metric(null);
 
 		metric.setMetrics(Collections.emptyList());
 
-		equalsVerifier = equalsVerifier.withPrefabValues(
-			Metric.class, metric, new Metric(null));
+		singleTypeEqualsVerifierApi =
+			singleTypeEqualsVerifierApi.withPrefabValues(
+				Metric.class, metric, new Metric(null));
 
-		equalsVerifier = equalsVerifier.withRedefinedSuperclass();
+		singleTypeEqualsVerifierApi =
+			singleTypeEqualsVerifierApi.withRedefinedSuperclass();
 
-		equalsVerifier.verify();
+		singleTypeEqualsVerifierApi.verify();
 	}
 
 	@Override

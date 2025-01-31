@@ -80,20 +80,21 @@ public class MetricTest extends BaseBeanTestCase<Metric> {
 	@Override
 	@Test
 	public void testEqualsAndHashCode() {
-		SingleTypeEqualsVerifierApi<?> equalsVerifier = EqualsVerifier.forClass(
-			Metric.class);
+		SingleTypeEqualsVerifierApi<?> singleTypeEqualsVerifierApi =
+			EqualsVerifier.forClass(Metric.class);
 
-		equalsVerifier = equalsVerifier.suppress(
+		singleTypeEqualsVerifierApi = singleTypeEqualsVerifierApi.suppress(
 			Warning.NONFINAL_FIELDS, Warning.STRICT_INHERITANCE);
 
 		Metric metric = new Metric(null);
 
 		metric.setMetrics(Collections.emptyList());
 
-		equalsVerifier = equalsVerifier.withPrefabValues(
-			Metric.class, metric, new Metric(null));
+		singleTypeEqualsVerifierApi =
+			singleTypeEqualsVerifierApi.withPrefabValues(
+				Metric.class, metric, new Metric(null));
 
-		equalsVerifier.verify();
+		singleTypeEqualsVerifierApi.verify();
 	}
 
 	@Test

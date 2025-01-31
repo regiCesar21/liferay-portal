@@ -28,22 +28,24 @@ public class HistogramMetricTest extends BaseBeanTestCase<HistogramMetric> {
 	@Override
 	@Test
 	public void testEqualsAndHashCode() {
-		SingleTypeEqualsVerifierApi<?> equalsVerifier = EqualsVerifier.forClass(
-			HistogramMetric.class);
+		SingleTypeEqualsVerifierApi<?> singleTypeEqualsVerifierApi =
+			EqualsVerifier.forClass(HistogramMetric.class);
 
 		Metric metric = new Metric(null);
 
 		metric.setMetrics(Collections.emptyList());
 
-		equalsVerifier = equalsVerifier.withPrefabValues(
-			Metric.class, metric, new Metric(null));
+		singleTypeEqualsVerifierApi =
+			singleTypeEqualsVerifierApi.withPrefabValues(
+				Metric.class, metric, new Metric(null));
 
-		equalsVerifier = equalsVerifier.suppress(
+		singleTypeEqualsVerifierApi = singleTypeEqualsVerifierApi.suppress(
 			Warning.NONFINAL_FIELDS, Warning.STRICT_INHERITANCE);
 
-		equalsVerifier = equalsVerifier.withRedefinedSuperclass();
+		singleTypeEqualsVerifierApi =
+			singleTypeEqualsVerifierApi.withRedefinedSuperclass();
 
-		equalsVerifier.verify();
+		singleTypeEqualsVerifierApi.verify();
 	}
 
 	@Override

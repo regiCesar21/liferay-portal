@@ -38,29 +38,32 @@ public class JournalMetricTest extends BaseBeanTestCase<JournalMetric> {
 	@Override
 	@Test
 	public void testEqualsAndHashCode() {
-		SingleTypeEqualsVerifierApi<?> equalsVerifier = EqualsVerifier.forClass(
-			JournalMetric.class);
+		SingleTypeEqualsVerifierApi<?> singleTypeEqualsVerifierApi =
+			EqualsVerifier.forClass(JournalMetric.class);
 
-		equalsVerifier = equalsVerifier.suppress(
+		singleTypeEqualsVerifierApi = singleTypeEqualsVerifierApi.suppress(
 			Warning.NONFINAL_FIELDS, Warning.STRICT_INHERITANCE);
 
 		Metric metric = new Metric(null);
 
 		metric.setMetrics(Collections.emptyList());
 
-		equalsVerifier = equalsVerifier.withPrefabValues(
-			Metric.class, metric, new Metric(null));
+		singleTypeEqualsVerifierApi =
+			singleTypeEqualsVerifierApi.withPrefabValues(
+				Metric.class, metric, new Metric(null));
 
 		JournalMetric journalMetric = new JournalMetric();
 
 		journalMetric.setAssetMetrics(Collections.emptyList());
 
-		equalsVerifier = equalsVerifier.withPrefabValues(
-			AssetMetric.class, journalMetric, new JournalMetric());
+		singleTypeEqualsVerifierApi =
+			singleTypeEqualsVerifierApi.withPrefabValues(
+				AssetMetric.class, journalMetric, new JournalMetric());
 
-		equalsVerifier = equalsVerifier.withRedefinedSuperclass();
+		singleTypeEqualsVerifierApi =
+			singleTypeEqualsVerifierApi.withRedefinedSuperclass();
 
-		equalsVerifier.verify();
+		singleTypeEqualsVerifierApi.verify();
 	}
 
 	@Test

@@ -38,29 +38,32 @@ public class BlogMetricTest extends BaseBeanTestCase<BlogMetric> {
 	@Override
 	@Test
 	public void testEqualsAndHashCode() {
-		SingleTypeEqualsVerifierApi<?> equalsVerifier = EqualsVerifier.forClass(
-			BlogMetric.class);
+		SingleTypeEqualsVerifierApi<?> singleTypeEqualsVerifierApi =
+			EqualsVerifier.forClass(BlogMetric.class);
 
-		equalsVerifier = equalsVerifier.suppress(
+		singleTypeEqualsVerifierApi = singleTypeEqualsVerifierApi.suppress(
 			Warning.NONFINAL_FIELDS, Warning.STRICT_INHERITANCE);
 
 		BlogMetric blogMetric = new BlogMetric();
 
 		blogMetric.setAssetMetrics(Collections.emptyList());
 
-		equalsVerifier = equalsVerifier.withPrefabValues(
-			AssetMetric.class, blogMetric, new BlogMetric());
+		singleTypeEqualsVerifierApi =
+			singleTypeEqualsVerifierApi.withPrefabValues(
+				AssetMetric.class, blogMetric, new BlogMetric());
 
 		Metric metric = new Metric(null);
 
 		metric.setMetrics(Collections.emptyList());
 
-		equalsVerifier = equalsVerifier.withPrefabValues(
-			Metric.class, metric, new Metric(null));
+		singleTypeEqualsVerifierApi =
+			singleTypeEqualsVerifierApi.withPrefabValues(
+				Metric.class, metric, new Metric(null));
 
-		equalsVerifier = equalsVerifier.withRedefinedSuperclass();
+		singleTypeEqualsVerifierApi =
+			singleTypeEqualsVerifierApi.withRedefinedSuperclass();
 
-		equalsVerifier.verify();
+		singleTypeEqualsVerifierApi.verify();
 	}
 
 	@Test

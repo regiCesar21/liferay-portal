@@ -43,14 +43,14 @@ public abstract class BaseBeanTestCase<T> {
 	public void testEqualsAndHashCode() {
 		T instance = newInstance();
 
-		SingleTypeEqualsVerifierApi<?> equalsVerifier = EqualsVerifier.forClass(
-			instance.getClass());
+		SingleTypeEqualsVerifierApi<?> singleTypeEqualsVerifierApi =
+			EqualsVerifier.forClass(instance.getClass());
 
-		equalsVerifier = equalsVerifier.suppress(
+		singleTypeEqualsVerifierApi = singleTypeEqualsVerifierApi.suppress(
 			Warning.BIGDECIMAL_EQUALITY, Warning.NONFINAL_FIELDS,
 			Warning.STRICT_INHERITANCE);
 
-		equalsVerifier.verify();
+		singleTypeEqualsVerifierApi.verify();
 	}
 
 	@Test
