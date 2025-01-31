@@ -1,6 +1,0 @@
-<?xml version="1.0"?>
-
-<configuration>
-	<include resource="logback-common.xml" />
-	<logger level="error" name="io.improbable.keanu.algorithms.mcmc.nuts.NUTSSampler" />
-</configuration>
