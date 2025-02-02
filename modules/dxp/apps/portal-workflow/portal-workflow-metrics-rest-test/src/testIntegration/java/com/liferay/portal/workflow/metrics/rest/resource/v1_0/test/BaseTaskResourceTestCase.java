@@ -102,9 +102,8 @@ public abstract class BaseTaskResourceTestCase {
 		com.liferay.portal.kernel.model.User testCompanyAdminUser =
 			UserTestUtil.getAdminUser(testCompany.getCompanyId());
 
-		TaskResource.Builder builder = TaskResource.builder();
-
-		taskResource = builder.authentication(
+		taskResource = TaskResource.builder(
+		).authentication(
 			testCompanyAdminUser.getEmailAddress(),
 			PropsValues.DEFAULT_ADMIN_PASSWORD
 		).endpoint(
