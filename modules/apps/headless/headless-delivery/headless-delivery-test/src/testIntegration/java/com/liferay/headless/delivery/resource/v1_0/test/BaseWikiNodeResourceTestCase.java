@@ -105,9 +105,8 @@ public abstract class BaseWikiNodeResourceTestCase {
 		com.liferay.portal.kernel.model.User testCompanyAdminUser =
 			UserTestUtil.getAdminUser(testCompany.getCompanyId());
 
-		WikiNodeResource.Builder builder = WikiNodeResource.builder();
-
-		wikiNodeResource = builder.authentication(
+		wikiNodeResource = WikiNodeResource.builder(
+		).authentication(
 			testCompanyAdminUser.getEmailAddress(),
 			PropsValues.DEFAULT_ADMIN_PASSWORD
 		).endpoint(

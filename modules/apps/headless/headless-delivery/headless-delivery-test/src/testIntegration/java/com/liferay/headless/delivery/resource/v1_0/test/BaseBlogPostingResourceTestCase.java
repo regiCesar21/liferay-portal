@@ -106,9 +106,8 @@ public abstract class BaseBlogPostingResourceTestCase {
 		com.liferay.portal.kernel.model.User testCompanyAdminUser =
 			UserTestUtil.getAdminUser(testCompany.getCompanyId());
 
-		BlogPostingResource.Builder builder = BlogPostingResource.builder();
-
-		blogPostingResource = builder.authentication(
+		blogPostingResource = BlogPostingResource.builder(
+		).authentication(
 			testCompanyAdminUser.getEmailAddress(),
 			PropsValues.DEFAULT_ADMIN_PASSWORD
 		).endpoint(

@@ -98,17 +98,16 @@ public abstract class BaseAppWorkflowDataRecordLinkResourceTestCase {
 		com.liferay.portal.kernel.model.User testCompanyAdminUser =
 			UserTestUtil.getAdminUser(testCompany.getCompanyId());
 
-		AppWorkflowDataRecordLinkResource.Builder builder =
-			AppWorkflowDataRecordLinkResource.builder();
-
-		appWorkflowDataRecordLinkResource = builder.authentication(
-			testCompanyAdminUser.getEmailAddress(),
-			PropsValues.DEFAULT_ADMIN_PASSWORD
-		).endpoint(
-			testCompany.getVirtualHostname(), 8080, "http"
-		).locale(
-			LocaleUtil.getDefault()
-		).build();
+		appWorkflowDataRecordLinkResource =
+			AppWorkflowDataRecordLinkResource.builder(
+			).authentication(
+				testCompanyAdminUser.getEmailAddress(),
+				PropsValues.DEFAULT_ADMIN_PASSWORD
+			).endpoint(
+				testCompany.getVirtualHostname(), 8080, "http"
+			).locale(
+				LocaleUtil.getDefault()
+			).build();
 	}
 
 	@After
