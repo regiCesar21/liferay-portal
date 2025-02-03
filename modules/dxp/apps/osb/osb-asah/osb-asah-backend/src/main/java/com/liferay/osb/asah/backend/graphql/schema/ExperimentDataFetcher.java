@@ -35,7 +35,7 @@ public class ExperimentDataFetcher implements DataFetcher<ExperimentDTO> {
 		Long experimentId = Long.valueOf(
 			dataFetchingEnvironment.getArgument("experimentId"));
 
-		Experiment experiment = _experimentDog.fetchExperiment(experimentId);
+		Experiment experiment = _experimentDog.getExperiment(experimentId);
 
 		if (!Objects.equals(channelId, experiment.getChannelId())) {
 			throw new OSBAsahException(
