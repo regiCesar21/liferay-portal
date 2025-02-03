@@ -29,18 +29,17 @@ public class ExperimentDataFetcher implements DataFetcher<ExperimentDTO> {
 
 	@Override
 	public ExperimentDTO get(DataFetchingEnvironment dataFetchingEnvironment) {
-		String experimentId = dataFetchingEnvironment.getArgument(
-			"experimentId");
+		Long channelId = Long.valueOf(
+			dataFetchingEnvironment.getArgument("channelId"));
 
-		String channelId = dataFetchingEnvironment.getArgument("channelId");
-		Experiment experiment = _experimentDog.fetchExperiment(
-			Long.valueOf(experimentId));
+		Long experimentId = Long.valueOf(
+			dataFetchingEnvironment.getArgument("experimentId"));
 
-		if (!Objects.equals(
-				Long.valueOf(channelId), experiment.getChannelId())) {
+		Experiment experiment = _experimentDog.fetchExperiment(experimentId);
 
+		if (!Objects.equals(channelId, experiment.getChannelId())) {
 			throw new OSBAsahException(
-				HttpStatus.NOT_FOUND, "no experiment was found");
+				HttpStatus.NOT_FOUND, "No experiment was found");
 		}
 
 		return new ExperimentDTO(experiment);
