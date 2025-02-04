@@ -58,7 +58,9 @@ public class ExperimentDataFetcherTest
 			_experimentRepository.save(experiment));
 
 		ExperimentDTO actualExperimentDTO = _experimentDataFetcher.get(
-			_getDataFetchingEnvironment(expectedExperimentDTO.getId()));
+			_getDataFetchingEnvironment(
+				String.valueOf(expectedExperimentDTO.getChannelId()),
+				expectedExperimentDTO.getId()));
 
 		Assertions.assertEquals(
 			expectedExperimentDTO.getDataSourceId(),
@@ -79,13 +81,16 @@ public class ExperimentDataFetcherTest
 			expectedExperimentDTO.getName(), actualExperimentDTO.getName());
 	}
 
-	private DataFetchingEnvironment _getDataFetchingEnvironment(String value) {
+	private DataFetchingEnvironment _getDataFetchingEnvironment(
+		String channelId, String experimentId) {
+
 		DataFetchingEnvironmentImpl.Builder builder =
 			DataFetchingEnvironmentImpl.newDataFetchingEnvironment();
 
 		Map<String, Object> arguments = new HashMap<>();
 
-		arguments.put("experimentId", value);
+		arguments.put("channelId", String.valueOf(channelId));
+		arguments.put("experimentId", experimentId);
 
 		builder.arguments(arguments);
 
