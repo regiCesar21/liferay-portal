@@ -201,25 +201,21 @@ public class DXPEntityRepositoryImpl
 		@Nullable Long after, Map<String, Object> fields, int size,
 		DXPEntity.Type type) {
 
-		SelectSelectStep<Record> selectSelectStep = _dslContext.select();
+		List<Condition> conditions = new ArrayList<>();
 
-		SelectConditionStep<Record> selectConditionStep = selectSelectStep.from(
-			"DXPEntity"
-		).where(
+		conditions.add(
 			DSL.field(
 				"type"
 			).eq(
 				type.toString()
-			)
-		);
+			));
 
 		for (Map.Entry<String, Object> field : fields.entrySet()) {
-			selectConditionStep.and(
-				_createCondition(field.getKey(), field.getValue()));
+			conditions.add(_createCondition(field.getKey(), field.getValue()));
 		}
 
 		if (after != null) {
-			selectConditionStep.and(
+			conditions.add(
 				DSL.field(
 					"id"
 				).greaterThan(
@@ -227,41 +223,49 @@ public class DXPEntityRepositoryImpl
 				));
 		}
 
-		if (size > 0) {
-			selectConditionStep.limit(size);
-		}
-
-		selectConditionStep.orderBy(DSL.field("id"));
-
-		return selectConditionStep.fetch(
-			record -> new DXPEntity(record.intoMap()));
+		return _dslContext.select(
+		).from(
+			"DXPEntity"
+		).where(
+			conditions
+		).orderBy(
+			DSL.field("id")
+		).limit(
+			size
+		).fetch(
+			record -> new DXPEntity(record.intoMap())
+		);
 	}
 
 	@Override
 	public List<DXPEntity> findByFieldsAndType(
 		Map<String, Object> fields, DXPEntity.Type type) {
 
-		SelectSelectStep<Record> selectSelectStep = _dslContext.select();
-
-		SelectConditionStep<Record> selectConditionStep = selectSelectStep.from(
-			"DXPEntity"
-		).where(
-			DSL.field(
-				"type"
-			).eq(
-				type.toString()
-			)
-		);
+		List<Condition> conditions = new ArrayList<>() {
+			{
+				add(
+					DSL.field(
+						"type"
+					).eq(
+						type.toString()
+					));
+			}
+		};
 
 		for (Map.Entry<String, Object> field : fields.entrySet()) {
-			selectConditionStep.and(
-				_createCondition(field.getKey(), field.getValue()));
+			conditions.add(_createCondition(field.getKey(), field.getValue()));
 		}
 
-		selectConditionStep.orderBy(DSL.field("id"));
-
-		return selectConditionStep.fetch(
-			record -> new DXPEntity(record.intoMap()));
+		return _dslContext.select(
+		).from(
+			"DXPEntity"
+		).where(
+			conditions
+		).orderBy(
+			DSL.field("id")
+		).fetch(
+			record -> new DXPEntity(record.intoMap())
+		);
 	}
 
 	@Override
