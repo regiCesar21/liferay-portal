@@ -4,7 +4,7 @@ EXPORT DATA
         format = 'CSV',
         header = false,
         overwrite = true,
-        uri = "gs://{{ dag.default_args['google_project_id'] }}-data-replica/{{ dag.default_args['ac_project_id'] }}/individual/{{ ts }}/*.csv"
+        uri = "gs://{{dag.default_args['google_project_id']}}-data-replica/{{dag.default_args['ac_project_id']}}/individual/{{ts}}/*.csv"
     )
 AS (
     SELECT
