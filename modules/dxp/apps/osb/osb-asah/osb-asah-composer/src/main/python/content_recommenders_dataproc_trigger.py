@@ -112,7 +112,7 @@ for project in response.json():
 		continue
 
 	if project.get('contentRecommenderMostPopularItemsEnabled'):
-		dag_id = 'most_viewed_content_recommender_{}'.format(project.get('id')
+		dag_id = 'most_viewed_content_recommender_{}'.format(project.get('id'))
 
 		globals()[dag_id] = create_dag(
 			project.get('id'), project.get('timeZoneId'),
