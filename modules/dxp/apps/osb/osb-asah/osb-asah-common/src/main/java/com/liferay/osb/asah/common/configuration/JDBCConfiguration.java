@@ -13,6 +13,8 @@ import com.liferay.osb.asah.common.postgresql.converter.JSONObjectToPGobjectConv
 import com.liferay.osb.asah.common.postgresql.converter.PGobjectToJSONArrayConverter;
 import com.liferay.osb.asah.common.postgresql.converter.PGobjectToJSONObjectConverter;
 
+import java.nio.charset.StandardCharsets;
+
 import java.util.Arrays;
 
 import javax.sql.DataSource;
@@ -25,6 +27,7 @@ import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Primary;
 import org.springframework.context.annotation.Profile;
+import org.springframework.core.io.ByteArrayResource;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.data.jdbc.core.convert.JdbcCustomConversions;
 import org.springframework.data.jdbc.repository.config.AbstractJdbcConfiguration;
@@ -39,7 +42,6 @@ import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.jdbc.datasource.DataSourceTransactionManager;
 import org.springframework.jdbc.datasource.init.DatabasePopulatorUtils;
 import org.springframework.jdbc.datasource.init.ResourceDatabasePopulator;
-import org.springframework.security.util.InMemoryResource;
 import org.springframework.transaction.TransactionManager;
 
 /**
@@ -129,10 +131,11 @@ public class JDBCConfiguration extends AbstractJdbcConfiguration {
 		pgSimpleDataSource.setServerName(ServiceConstants.POSTGRESQL_SERVER_IP);
 		pgSimpleDataSource.setUser(CredentialConstants.POSTGRESQL_USER);
 
+		String query = "SET TIME ZONE 'UTC'; CREATE SCHEMA IF NOT EXISTS test";
+
 		DatabasePopulatorUtils.execute(
 			new ResourceDatabasePopulator(
-				new InMemoryResource(
-					"SET TIME ZONE 'UTC'; CREATE SCHEMA IF NOT EXISTS test")),
+				new ByteArrayResource(query.getBytes(StandardCharsets.UTF_8))),
 			pgSimpleDataSource);
 
 		DatabasePopulatorUtils.execute(
