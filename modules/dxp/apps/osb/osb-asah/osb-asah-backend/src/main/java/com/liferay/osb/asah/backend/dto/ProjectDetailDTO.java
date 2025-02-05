@@ -36,10 +36,6 @@ public class ProjectDetailDTO {
 		_timeZoneId = timeZoneId;
 	}
 
-	public Boolean get_contentRecommenderMostPopularItemsEnabled() {
-		return _contentRecommenderMostPopularItemsEnabled;
-	}
-
 	public Boolean getAccountsSelected() {
 		return _accountsSelected;
 	}
@@ -50,6 +46,10 @@ public class ProjectDetailDTO {
 
 	public Boolean getContactsSelected() {
 		return _contactsSelected;
+	}
+
+	public Boolean getContentRecommenderMostPopularItemsEnabled() {
+		return _contentRecommenderMostPopularItemsEnabled;
 	}
 
 	public Boolean getContentRecommenderUserPersonalizationEnabled() {
