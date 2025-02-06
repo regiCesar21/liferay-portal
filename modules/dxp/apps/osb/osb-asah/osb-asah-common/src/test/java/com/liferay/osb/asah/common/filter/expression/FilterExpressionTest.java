@@ -44,18 +44,14 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
 
 import org.mockito.Mockito;
 
 import org.springframework.core.io.ClassPathResource;
 
-import uk.org.webcompere.systemstubs.jupiter.SystemStubsExtension;
-
 /**
  * @author Marcellus Tavares
  */
-@ExtendWith(SystemStubsExtension.class)
 public class FilterExpressionTest {
 
 	@BeforeEach

@@ -28,20 +28,14 @@ import org.apache.commons.codec.binary.Hex;
 
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
-
-import uk.org.webcompere.systemstubs.environment.EnvironmentVariables;
-import uk.org.webcompere.systemstubs.jupiter.SystemStub;
-import uk.org.webcompere.systemstubs.jupiter.SystemStubsExtension;
 
 /**
  * @author Michael Bowerman
  * @author Vishal Reddy
  */
-@ExtendWith(SystemStubsExtension.class)
 public class BQMembershipDogTest
 	extends BaseFaroInfoDogTestCase
 	implements OSBAsahTestExecutionListenersContext {
@@ -613,13 +607,6 @@ public class BQMembershipDogTest
 		Assertions.assertEquals(
 			1L, _bqMembershipDog.getBQMembershipsCount(segment.getId()));
 
-		_environmentVariables.set(
-			"feature.flag.LPD-24648", String.valueOf(Boolean.TRUE));
-
-		Assertions.assertEquals(
-			String.valueOf(Boolean.TRUE),
-			System.getenv("feature.flag.LPD-24648"));
-
 		encodedName = Hex.encodeHexString(
 			"item name".getBytes(StandardCharsets.UTF_8));
 
@@ -1189,8 +1176,5 @@ public class BQMembershipDogTest
 
 	@Autowired
 	private BQMembershipRepository _bqMembershipRepository;
-
-	@SystemStub
-	private EnvironmentVariables _environmentVariables;
 
 }
