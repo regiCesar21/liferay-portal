@@ -11,10 +11,13 @@
 
 from airflow.models import Variable
 from airflow.models.baseoperator import chain
+from airflow.providers.google.cloud.operators.cloud_sql import \
+	CloudSQLExecuteQueryOperator
 from airflow.providers.google.cloud.operators.bigquery import \
 	BigQueryCreateExternalTableOperator, BigQueryDeleteTableOperator
 
 from liferay.bigquery import BigQueryInsertJobFromTemplateOperator
+from liferay.cloud_sql import CloudSQLCSVImportOperator
 
 import airflow
 import os
@@ -25,6 +28,7 @@ def create_dag(ac_project_id, dag_id, dag_description):
 	with airflow.DAG(
 		dag_id=dag_id,
 		default_args={
+			'ac_sql_instance': Variable.get('osb.asah.sql.instance'),
 			'ac_project_id': ac_project_id,
 			'google_project_id': os.environ['GOOGLE_PROJECT_ID'],
 			'owner': 'Liferay'
@@ -35,11 +39,30 @@ def create_dag(ac_project_id, dag_id, dag_description):
 		start_date=pendulum.now() - pendulum.duration(days=2)
 	) as dag:
 
-		individual_export_insert_job  = BigQueryInsertJobFromTemplateOperator(
+		bq_individual_export_job  = BigQueryInsertJobFromTemplateOperator(
 			task_id='individual_export'
 		)
 
-		chain(individual_export_insert_job)
+		truncate_individual_table_job = CloudSQLExecuteQueryOperator(
+			gcp_cloudsql_conn_id="google_cloud_sql",
+			sql="TRUNCATE TABLE {{dag.default_args['ac_project_id']}}.individual",
+			task_id="truncate_individual_table"
+		)
+
+		individual_import_job = CloudSQLCSVImportOperator(
+			bucket_name="{{dag.default_args['google_project_id']}}-data-replica",
+			bucket_prefix="{{dag.default_args['ac_project_id']}}/individual/{{ts}}",
+			database="osbasah",
+			gcp_conn_id="google_cloud_default",
+			instance="{{dag.default_args['ac_sql_instance']}}",
+			table="{{dag.default_args['ac_project_id']}}/individual",
+			task_id='cloudsql_individual_import'
+		)
+
+		chain(
+			bq_individual_export_job, truncate_individual_table_job,
+			individual_import_job
+		)
 
 		return dag
 
