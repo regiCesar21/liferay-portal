@@ -1,1 +1,0 @@
-ALTER TABLE BQEvent DROP COLUMN IF EXISTS eventProperties

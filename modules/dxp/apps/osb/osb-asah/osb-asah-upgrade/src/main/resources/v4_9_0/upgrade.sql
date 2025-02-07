@@ -1,1 +1,0 @@
-ALTER TABLE Segment ADD IF NOT EXISTS referencedCustomEventIds VARCHAR[];
