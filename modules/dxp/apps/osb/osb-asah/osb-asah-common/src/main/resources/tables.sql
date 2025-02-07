@@ -259,6 +259,12 @@ CREATE TABLE IF NOT EXISTS ExperimentVariantMetric (
 	probabilityToWin REAL
 );
 
+CREATE TABLE IF NOT EXISTS Individual (
+    id TEXT PRIMARY KEY,
+    emalAddress TEXT,
+    fields JSON
+);
+
 CREATE TABLE IF NOT EXISTS InterestTopic (
 	id BIGSERIAL PRIMARY KEY,
 	term TEXT,
