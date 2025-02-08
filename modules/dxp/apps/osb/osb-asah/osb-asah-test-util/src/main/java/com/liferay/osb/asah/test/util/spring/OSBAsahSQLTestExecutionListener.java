@@ -6,6 +6,7 @@
 package com.liferay.osb.asah.test.util.spring;
 
 import com.liferay.osb.asah.common.util.ResourceTemplateUtil;
+import com.liferay.osb.asah.common.util.SQLUtil;
 import com.liferay.osb.asah.test.util.annotation.SQLResource;
 
 import java.io.File;
@@ -31,7 +32,6 @@ import org.springframework.boot.test.context.TestComponent;
 import org.springframework.cache.Cache;
 import org.springframework.cache.CacheManager;
 import org.springframework.core.annotation.AnnotatedElementUtils;
-import org.springframework.core.io.ByteArrayResource;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.jdbc.datasource.init.DatabasePopulatorUtils;
 import org.springframework.jdbc.datasource.init.ResourceDatabasePopulator;
@@ -158,16 +158,13 @@ public class OSBAsahSQLTestExecutionListener
 
 			File file = classPathResource.getFile();
 
-			String replaceSQLVariables =
-				ResourceTemplateUtil.replaceSQLVariables(
-					new String(
-						Files.readAllBytes(file.toPath()),
-						StandardCharsets.UTF_8));
-
 			DatabasePopulatorUtils.execute(
 				new ResourceDatabasePopulator(
-					new ByteArrayResource(
-						replaceSQLVariables.getBytes(StandardCharsets.UTF_8))),
+					SQLUtil.toByteArrayResource(
+						ResourceTemplateUtil.replaceSQLVariables(
+							new String(
+								Files.readAllBytes(file.toPath()),
+								StandardCharsets.UTF_8)))),
 				_postgreSQLDataSource);
 		}
 	}

@@ -9,8 +9,7 @@ import com.liferay.osb.asah.common.entity.Project;
 import com.liferay.osb.asah.common.postgresql.PostgreSQLDataSource;
 import com.liferay.osb.asah.common.postgresql.PostgreSQLSchemaManager;
 import com.liferay.osb.asah.common.util.ProjectIdThreadLocal;
-
-import java.nio.charset.StandardCharsets;
+import com.liferay.osb.asah.common.util.SQLUtil;
 
 import java.sql.Connection;
 import java.sql.DatabaseMetaData;
@@ -25,7 +24,6 @@ import org.apache.commons.logging.LogFactory;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.core.io.ByteArrayResource;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.jdbc.datasource.init.DatabasePopulatorUtils;
 import org.springframework.jdbc.datasource.init.ResourceDatabasePopulator;
@@ -54,7 +52,7 @@ public class PostgreSQLSchemaManagerImpl implements PostgreSQLSchemaManager {
 
 			DatabasePopulatorUtils.execute(
 				new ResourceDatabasePopulator(
-					_getByteArrayResource(
+					SQLUtil.toByteArrayResource(
 						"CREATE SCHEMA IF NOT EXISTS " +
 							ProjectIdThreadLocal.getProjectId())),
 				_dataSource);
@@ -89,7 +87,7 @@ public class PostgreSQLSchemaManagerImpl implements PostgreSQLSchemaManager {
 
 			DatabasePopulatorUtils.execute(
 				new ResourceDatabasePopulator(
-					_getByteArrayResource(
+					SQLUtil.toByteArrayResource(
 						"CREATE SCHEMA IF NOT EXISTS " +
 							ProjectIdThreadLocal.getProjectId())),
 				_dataSource);
@@ -138,7 +136,7 @@ public class PostgreSQLSchemaManagerImpl implements PostgreSQLSchemaManager {
 
 			DatabasePopulatorUtils.execute(
 				new ResourceDatabasePopulator(
-					_getByteArrayResource(
+					SQLUtil.toByteArrayResource(
 						"DROP SCHEMA IF EXISTS " +
 							ProjectIdThreadLocal.getProjectId() + " CASCADE")),
 				_dataSource);
@@ -191,10 +189,6 @@ public class PostgreSQLSchemaManagerImpl implements PostgreSQLSchemaManager {
 		finally {
 			ProjectIdThreadLocal.remove();
 		}
-	}
-
-	private ByteArrayResource _getByteArrayResource(String query) {
-		return new ByteArrayResource(query.getBytes(StandardCharsets.UTF_8));
 	}
 
 	private static final Log _log = LogFactory.getLog(

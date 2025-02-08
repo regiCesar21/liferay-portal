@@ -10,10 +10,9 @@ import com.liferay.osb.asah.common.constants.CredentialConstants;
 import com.liferay.osb.asah.common.constants.ServiceConstants;
 import com.liferay.osb.asah.common.entity.Project;
 import com.liferay.osb.asah.common.postgresql.PostgreSQLSchemaManager;
+import com.liferay.osb.asah.common.util.SQLUtil;
 import com.liferay.osb.asah.test.util.configuration.JDBCTestConfiguration;
 import com.liferay.osb.asah.test.util.spring.OSBAsahTestExecutionListenersContext;
-
-import java.nio.charset.StandardCharsets;
 
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
@@ -22,7 +21,6 @@ import org.postgresql.ds.PGSimpleDataSource;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Import;
-import org.springframework.core.io.ByteArrayResource;
 import org.springframework.jdbc.datasource.init.DatabasePopulatorUtils;
 import org.springframework.jdbc.datasource.init.ResourceDatabasePopulator;
 
@@ -72,13 +70,11 @@ public class PostgreSQLSchemaManagerImplTest
 		pgSimpleDataSource.setServerName(ServiceConstants.POSTGRESQL_SERVER_IP);
 		pgSimpleDataSource.setUser(CredentialConstants.POSTGRESQL_USER);
 
-		String query =
-			"SET TIME ZONE 'UTC'; CREATE SCHEMA IF NOT EXISTS " +
-				project.getId();
-
 		DatabasePopulatorUtils.execute(
 			new ResourceDatabasePopulator(
-				new ByteArrayResource(query.getBytes(StandardCharsets.UTF_8))),
+				SQLUtil.toByteArrayResource(
+					"SET TIME ZONE 'UTC'; CREATE SCHEMA IF NOT EXISTS " +
+						project.getId())),
 			pgSimpleDataSource);
 	}
 
