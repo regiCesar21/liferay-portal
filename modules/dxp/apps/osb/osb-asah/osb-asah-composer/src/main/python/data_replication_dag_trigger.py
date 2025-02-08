@@ -55,7 +55,7 @@ def create_dag(ac_project_id, dag_id, dag_description):
 			database="osbasah",
 			gcp_conn_id="google_cloud_default",
 			instance="{{dag.default_args['ac_sql_instance']}}",
-			table="{{dag.default_args['ac_project_id']}}/individual",
+			table="{{dag.default_args['ac_project_id']}}.individual",
 			task_id='cloudsql_individual_import'
 		)
 

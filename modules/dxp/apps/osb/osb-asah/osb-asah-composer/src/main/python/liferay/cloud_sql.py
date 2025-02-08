@@ -43,11 +43,11 @@ class CloudSQLCSVImportOperator(CloudSQLBaseOperator):
 		self.table = table
 
 		super().__init__(
-			project_id=project_id,
-			instance=instance,
-			gcp_conn_id=gcp_conn_id,
 			api_version=api_version,
+			gcp_conn_id=gcp_conn_id,
 			impersonation_chain=impersonation_chain,
+			instance=instance,
+			project_id=project_id,
 			**kwargs)
 
 	def execute(self, context):
@@ -73,17 +73,17 @@ class CloudSQLCSVImportOperator(CloudSQLBaseOperator):
 		for csv_file_uri in csv_file_uris:
 			body = {
 				"importContext": {
-					"fileType": "CSV",
-					"uri": csv_file_uri,
-					"database": self.database,
 					"csvImportOptions": {
 						"table": self.table,
 						"quoteCharacter": "22",
 						"fieldsTerminatedBy": "3B"
-					}
+					},
+					"database": self.database,
+					"fileType": "CSV",
+					"uri": csv_file_uri
 				}
 			}
 
 			cloud_sql_hook.import_instance(
-				project_id=self.project_id, instance=self.instance, body=body
+				body=body, instance=self.instance, project_id=self.project_id
 			)
