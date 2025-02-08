@@ -44,7 +44,7 @@ dependencies {
 	api group: "org.apache.commons", name: "commons-pool2", version: "2.4.3"
 	api group: "org.apache.httpcomponents", name: "httpclient", version: "4.5.13"
 	api group: "org.aspectj", name: "aspectjweaver", version: "1.9.6"
-	api group: "org.jooq", name: "jooq", version: "3.14.8"
+	api group: "org.jooq", name: "jooq", version: "3.19.18"
 	api group: "org.json", name: "json"
 	api group: "org.postgresql", name: "postgresql", version: "42.2.18"
 	api group: "org.springframework.boot", name: "spring-boot-starter-actuator"

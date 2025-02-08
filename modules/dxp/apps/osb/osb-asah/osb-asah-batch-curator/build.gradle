@@ -21,6 +21,7 @@ dependencies {
 	api group: "com.fasterxml.jackson.datatype", name: "jackson-datatype-json-org", version: "2.13.5"
 	api group: "org.apache.commons", name: "commons-collections4", version: "4.4"
 	api group: "org.apache.commons", name: "commons-lang3", version: "3.7"
+	api group: "org.jooq", name: "jooq", version: "3.19.18"
 	api project(configuration: "default", path: ":dxp:apps:osb:osb-asah:osb-asah-common")
 	testImplementation project(configuration: "default", path: ":dxp:apps:osb:osb-asah:osb-asah-test-util")
 }
