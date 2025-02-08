@@ -5,6 +5,7 @@
 
 package com.liferay.osb.asah.common.repository.test;
 
+import com.liferay.osb.asah.common.date.DateUtil;
 import com.liferay.osb.asah.common.entity.Job;
 import com.liferay.osb.asah.common.entity.JobParameter;
 import com.liferay.osb.asah.common.model.JobRunDataPeriod;
@@ -15,8 +16,6 @@ import com.liferay.osb.asah.common.util.SetUtil;
 import com.liferay.osb.asah.test.util.configuration.JDBCTestConfiguration;
 
 import java.time.LocalDateTime;
-import java.time.ZoneOffset;
-import java.time.temporal.ChronoUnit;
 
 import org.junit.jupiter.api.BeforeEach;
 
@@ -34,11 +33,7 @@ public class JobRepositoryTest extends BaseRepositoryTestCase<Job, Long> {
 	public void setUp() {
 		Job job = new Job();
 
-		LocalDateTime localDateTime = LocalDateTime.now(
-			ZoneOffset.UTC
-		).truncatedTo(
-			ChronoUnit.MICROS
-		);
+		LocalDateTime localDateTime = DateUtil.newLocalDateTime();
 
 		job.setCreateLocalDateTime(localDateTime);
 

@@ -418,7 +418,7 @@ public class DataControlTaskDog {
 			return null;
 		}
 
-		LocalDateTime localDateTime = LocalDateTime.now(
+		LocalDateTime localDateTime = DateUtil.newLocalDateTime(
 			_timeZoneDog.getZoneId());
 
 		localDateTime = localDateTime.minusDays(rangeKey);

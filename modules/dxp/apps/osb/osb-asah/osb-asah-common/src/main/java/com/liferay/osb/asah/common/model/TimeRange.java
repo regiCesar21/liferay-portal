@@ -42,7 +42,7 @@ public class TimeRange {
 
 		@Override
 		public LocalDateTime getEndLocalDateTime() {
-			return LocalDateTime.now(TimeZoneDogUtil.getZoneId());
+			return DateUtil.newLocalDateTime(TimeZoneDogUtil.getZoneId());
 		}
 
 		@Override
@@ -117,8 +117,8 @@ public class TimeRange {
 
 		@Override
 		public LocalDateTime getEndLocalDateTime() {
-			LocalDateTime localDateTime = LocalDateTime.of(
-				LocalDate.now(getClock()), LocalTime.MAX);
+			LocalDateTime localDateTime = DateUtil.newEndOfDayLocalDateTime(
+				getClock());
 
 			return localDateTime.minusDays(1);
 		}

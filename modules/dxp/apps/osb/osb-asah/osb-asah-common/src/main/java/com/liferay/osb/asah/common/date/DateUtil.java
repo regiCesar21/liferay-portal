@@ -9,6 +9,7 @@ import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 
+import java.time.Clock;
 import java.time.DayOfWeek;
 import java.time.Instant;
 import java.time.LocalDate;
@@ -18,6 +19,7 @@ import java.time.ZoneId;
 import java.time.ZoneOffset;
 import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
+import java.time.temporal.ChronoUnit;
 
 import java.util.Calendar;
 import java.util.Date;
@@ -277,6 +279,14 @@ public class DateUtil {
 		return toUTCString(newEndOfDayDate(toUTCDate(dateString)));
 	}
 
+	public static LocalDateTime newEndOfDayLocalDateTime(Clock clock) {
+		return LocalDateTime.of(
+			LocalDate.now(clock), LocalTime.MAX
+		).truncatedTo(
+			ChronoUnit.MICROS
+		);
+	}
+
 	public static Date newEndOfMonthDate(String dateString) {
 		Calendar calendar = new GregorianCalendar(TimeZone.getTimeZone("UTC"));
 
@@ -303,8 +313,16 @@ public class DateUtil {
 		return toUTCString(newEpochDate());
 	}
 
+	public static LocalDateTime newLocalDateTime() {
+		return newLocalDateTime(ZoneOffset.UTC);
+	}
+
 	public static LocalDateTime newLocalDateTime(ZoneId zoneId) {
-		return LocalDateTime.now(zoneId);
+		return LocalDateTime.now(
+			zoneId
+		).truncatedTo(
+			ChronoUnit.MICROS
+		);
 	}
 
 	public static String newMonthDateString() {
@@ -333,7 +351,10 @@ public class DateUtil {
 
 		ZonedDateTime zonedDateTime = instant.atZone(zoneId);
 
-		return zonedDateTime.toLocalDateTime();
+		return zonedDateTime.toLocalDateTime(
+		).truncatedTo(
+			ChronoUnit.MICROS
+		);
 	}
 
 	public static String toString(Date date) {
