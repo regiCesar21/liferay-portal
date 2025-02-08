@@ -497,7 +497,7 @@ public class DataControlTaskRepositoryImpl
 
 	@Override
 	public List<DataControlTask> searchPendingSuppressDataControlTasks() {
-		SelectFinalStep selectFinalStep =
+		SelectFinalStep<Record> selectFinalStep =
 			_getAvailableDataControlTaskSelectFinalStep(
 				DataControlTask.Type.SUPPRESS);
 
@@ -507,7 +507,7 @@ public class DataControlTaskRepositoryImpl
 
 	@Override
 	public List<DataControlTask> searchPendingUnsuppressDataControlTasks() {
-		SelectFinalStep selectFinalStep =
+		SelectFinalStep<Record> selectFinalStep =
 			_getAvailableDataControlTaskSelectFinalStep(
 				DataControlTask.Type.UNSUPPRESS);
 
@@ -515,10 +515,10 @@ public class DataControlTaskRepositoryImpl
 			record -> new DataControlTask(record.intoMap()));
 	}
 
-	private SelectFinalStep _getAvailableDataControlTaskSelectFinalStep(
+	private SelectFinalStep<Record> _getAvailableDataControlTaskSelectFinalStep(
 		DataControlTask.Type type) {
 
-		List<Field> fields = Arrays.asList(
+		List<Field<?>> fields = Arrays.asList(
 			DSL.field("id"), DSL.field("batchId"), DSL.field("completeDate"),
 			DSL.field("continueDate"), DSL.field("createDate"),
 			DSL.field("emailAddress"), DSL.field("ownerId"),
