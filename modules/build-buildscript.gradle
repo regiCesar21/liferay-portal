@@ -1,5 +1,5 @@
 dependencies {
-	classpath(group: "com.liferay", name: "com.liferay.gradle.plugins.defaults", version: "10.1.239") {
+	classpath(group: "com.liferay", name: "com.liferay.gradle.plugins.defaults", version: "10.1.240") {
 		exclude group: "com.liferay", module: "com.liferay.gradle.plugins.jasper.jspc"
 	}
 	classpath group: "com.liferay", name: "com.liferay.gradle.plugins.jasper.jspc", version: "2.0.16"
