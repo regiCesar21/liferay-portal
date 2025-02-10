@@ -12,6 +12,8 @@ import java.io.InputStreamReader;
 
 import java.nio.charset.StandardCharsets;
 
+import org.springframework.core.io.ByteArrayResource;
+
 /**
  * @author Marcellus Tavares
  */
@@ -30,6 +32,10 @@ public class IOUtil {
 		}
 
 		return lines;
+	}
+
+	public static ByteArrayResource toByteArrayResource(String string) {
+		return new ByteArrayResource(string.getBytes(StandardCharsets.UTF_8));
 	}
 
 }

@@ -5,8 +5,8 @@
 
 package com.liferay.osb.asah.test.util.spring;
 
+import com.liferay.osb.asah.common.util.IOUtil;
 import com.liferay.osb.asah.common.util.ResourceTemplateUtil;
-import com.liferay.osb.asah.common.util.SQLUtil;
 import com.liferay.osb.asah.test.util.annotation.SQLResource;
 
 import java.io.File;
@@ -160,7 +160,7 @@ public class OSBAsahSQLTestExecutionListener
 
 			DatabasePopulatorUtils.execute(
 				new ResourceDatabasePopulator(
-					SQLUtil.toByteArrayResource(
+					IOUtil.toByteArrayResource(
 						ResourceTemplateUtil.replaceSQLVariables(
 							new String(
 								Files.readAllBytes(file.toPath()),

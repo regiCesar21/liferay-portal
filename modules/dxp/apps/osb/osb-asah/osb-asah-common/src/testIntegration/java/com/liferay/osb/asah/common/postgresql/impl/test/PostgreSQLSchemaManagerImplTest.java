@@ -10,7 +10,7 @@ import com.liferay.osb.asah.common.constants.CredentialConstants;
 import com.liferay.osb.asah.common.constants.ServiceConstants;
 import com.liferay.osb.asah.common.entity.Project;
 import com.liferay.osb.asah.common.postgresql.PostgreSQLSchemaManager;
-import com.liferay.osb.asah.common.util.SQLUtil;
+import com.liferay.osb.asah.common.util.IOUtil;
 import com.liferay.osb.asah.test.util.configuration.JDBCTestConfiguration;
 import com.liferay.osb.asah.test.util.spring.OSBAsahTestExecutionListenersContext;
 
@@ -72,7 +72,7 @@ public class PostgreSQLSchemaManagerImplTest
 
 		DatabasePopulatorUtils.execute(
 			new ResourceDatabasePopulator(
-				SQLUtil.toByteArrayResource(
+				IOUtil.toByteArrayResource(
 					"SET TIME ZONE 'UTC'; CREATE SCHEMA IF NOT EXISTS " +
 						project.getId())),
 			pgSimpleDataSource);

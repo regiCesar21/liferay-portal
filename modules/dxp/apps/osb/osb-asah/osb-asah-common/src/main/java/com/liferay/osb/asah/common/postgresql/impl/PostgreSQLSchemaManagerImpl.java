@@ -8,8 +8,8 @@ package com.liferay.osb.asah.common.postgresql.impl;
 import com.liferay.osb.asah.common.entity.Project;
 import com.liferay.osb.asah.common.postgresql.PostgreSQLDataSource;
 import com.liferay.osb.asah.common.postgresql.PostgreSQLSchemaManager;
+import com.liferay.osb.asah.common.util.IOUtil;
 import com.liferay.osb.asah.common.util.ProjectIdThreadLocal;
-import com.liferay.osb.asah.common.util.SQLUtil;
 
 import java.sql.Connection;
 import java.sql.DatabaseMetaData;
@@ -52,7 +52,7 @@ public class PostgreSQLSchemaManagerImpl implements PostgreSQLSchemaManager {
 
 			DatabasePopulatorUtils.execute(
 				new ResourceDatabasePopulator(
-					SQLUtil.toByteArrayResource(
+					IOUtil.toByteArrayResource(
 						"CREATE SCHEMA IF NOT EXISTS " +
 							ProjectIdThreadLocal.getProjectId())),
 				_dataSource);
@@ -87,7 +87,7 @@ public class PostgreSQLSchemaManagerImpl implements PostgreSQLSchemaManager {
 
 			DatabasePopulatorUtils.execute(
 				new ResourceDatabasePopulator(
-					SQLUtil.toByteArrayResource(
+					IOUtil.toByteArrayResource(
 						"CREATE SCHEMA IF NOT EXISTS " +
 							ProjectIdThreadLocal.getProjectId())),
 				_dataSource);
@@ -136,7 +136,7 @@ public class PostgreSQLSchemaManagerImpl implements PostgreSQLSchemaManager {
 
 			DatabasePopulatorUtils.execute(
 				new ResourceDatabasePopulator(
-					SQLUtil.toByteArrayResource(
+					IOUtil.toByteArrayResource(
 						"DROP SCHEMA IF EXISTS " +
 							ProjectIdThreadLocal.getProjectId() + " CASCADE")),
 				_dataSource);

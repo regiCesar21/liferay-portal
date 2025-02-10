@@ -12,7 +12,7 @@ import com.liferay.osb.asah.common.postgresql.converter.JSONArrayToPGobjectConve
 import com.liferay.osb.asah.common.postgresql.converter.JSONObjectToPGobjectConverter;
 import com.liferay.osb.asah.common.postgresql.converter.PGobjectToJSONArrayConverter;
 import com.liferay.osb.asah.common.postgresql.converter.PGobjectToJSONObjectConverter;
-import com.liferay.osb.asah.common.util.SQLUtil;
+import com.liferay.osb.asah.common.util.IOUtil;
 
 import java.util.Arrays;
 
@@ -131,7 +131,7 @@ public class JDBCConfiguration extends AbstractJdbcConfiguration {
 
 		DatabasePopulatorUtils.execute(
 			new ResourceDatabasePopulator(
-				SQLUtil.toByteArrayResource(
+				IOUtil.toByteArrayResource(
 					"SET TIME ZONE 'UTC'; CREATE SCHEMA IF NOT EXISTS test")),
 			pgSimpleDataSource);
 
