@@ -1,9 +1,9 @@
 {
 	"operationName": "EventAttributeValues",
 	"variables": {
-		"channelId": 1,
-		"eventAttributeDefinitionId": 3001,
-		"eventDefinitionId": 3002,
+		"channelId": "1",
+		"eventAttributeDefinitionId": "3001",
+		"eventDefinitionId": "3002",
 		"keywords": "Attribute Value",
 		"size": 100,
 		"start": 0
