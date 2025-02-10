@@ -1,4 +1,5 @@
 buildscript {
+	apply from: "build-buildscript-constraints.gradle", to: buildscript
 	apply from: "build-buildscript.gradle", to: buildscript
 
 	File buildFile = gradle.startParameter.buildFile
