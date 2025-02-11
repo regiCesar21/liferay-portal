@@ -11,6 +11,8 @@ import com.liferay.osb.asah.backend.graphql.annotation.GraphQLTypeWiring;
 import com.liferay.osb.asah.common.entity.Experiment;
 import com.liferay.osb.asah.common.spring.http.exception.OSBAsahException;
 
+import graphql.GraphQLContext;
+
 import graphql.schema.DataFetcher;
 import graphql.schema.DataFetchingEnvironment;
 
@@ -29,15 +31,21 @@ public class ExperimentDataFetcher implements DataFetcher<ExperimentDTO> {
 
 	@Override
 	public ExperimentDTO get(DataFetchingEnvironment dataFetchingEnvironment) {
-		Long channelId = Long.valueOf(
-			dataFetchingEnvironment.getArgument("channelId"));
+		String experimentId = dataFetchingEnvironment.getArgument(
+			"experimentId");
 
-		Long experimentId = Long.valueOf(
-			dataFetchingEnvironment.getArgument("experimentId"));
+		GraphQLContext graphQLContext =
+			dataFetchingEnvironment.getGraphQlContext();
 
-		Experiment experiment = _experimentDog.getExperiment(experimentId);
+		graphQLContext.put("experimentId", experimentId);
 
-		if (!Objects.equals(channelId, experiment.getChannelId())) {
+		Experiment experiment = _experimentDog.getExperiment(
+			Long.valueOf(experimentId));
+
+		if (!Objects.equals(
+				Long.valueOf(dataFetchingEnvironment.getArgument("channelId")),
+				experiment.getChannelId())) {
+
 			throw new OSBAsahException(
 				HttpStatus.NOT_FOUND, "No experiment was found");
 		}
