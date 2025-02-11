@@ -20,6 +20,7 @@ import com.liferay.osb.asah.common.zip.ZipFileBuilder;
 import java.io.File;
 import java.io.FileInputStream;
 
+import java.util.Arrays;
 import java.util.Date;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -31,6 +32,7 @@ import org.json.JSONObject;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -46,6 +48,17 @@ import org.springframework.web.multipart.MultipartFile;
 @RequestMapping("/data-control-tasks")
 @RestController
 public class DataControlTasksRestController extends BaseRestController {
+
+	@PostMapping("/create")
+	public ResponseEntity createDataControlTask(
+		String[] emailAddresses, String[] types) {
+
+		_dataControlTaskDog.addDataControlTasks(
+			Arrays.asList(emailAddresses), null, "0", Arrays.asList(types), "0",
+			"");
+
+		return new ResponseEntity(HttpStatus.NO_CONTENT);
+	}
 
 	@GetMapping("/{id}")
 	public ResponseEntity download(@PathVariable String id) {
