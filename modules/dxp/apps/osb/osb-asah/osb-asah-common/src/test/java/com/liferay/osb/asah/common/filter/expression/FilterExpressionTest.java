@@ -3830,6 +3830,14 @@ public class FilterExpressionTest {
 	}
 
 	private void _assertEquals(
+		Condition expectedCondition, FilterExpression filterExpression) {
+
+		Assertions.assertEquals(
+			String.valueOf(expectedCondition),
+			String.valueOf(filterExpression.getCondition()));
+	}
+
+	private void _assertEquals(
 		Condition expectedCondition, String actualFilterExpressionString) {
 
 		_assertEquals(expectedCondition, actualFilterExpressionString, false);
@@ -3839,11 +3847,9 @@ public class FilterExpressionTest {
 		Condition expectedCondition, String actualFilterExpressionString,
 		boolean segment) {
 
-		FilterExpression filterExpression = new FilterExpression(
-			null, actualFilterExpressionString, segment);
-
-		Assertions.assertEquals(
-			expectedCondition, filterExpression.getCondition());
+		_assertEquals(
+			expectedCondition,
+			new FilterExpression(null, actualFilterExpressionString, segment));
 	}
 
 	private void _assertEquals(
@@ -3853,8 +3859,7 @@ public class FilterExpressionTest {
 		FilterExpression filterExpression = new FilterExpression(
 			channelId, actualFilterExpressionString, segment);
 
-		Assertions.assertEquals(
-			expectedCondition, filterExpression.getCondition());
+		_assertEquals(expectedCondition, filterExpression);
 
 		Assertions.assertEquals(
 			includedTableNames, filterExpression.getReferencedTableNames());
