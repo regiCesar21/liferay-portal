@@ -2410,21 +2410,14 @@ public class FilterExpressionTest {
 
 	@Test
 	public void testIndividualSegmentIdsFilterExpression() {
-		FilterExpression filterExpression = new FilterExpression(
-			null, "individualSegmentIds eq '1'", true);
-
-		Assertions.assertEquals(
+		_assertEquals(
 			DSL.field(
 				"Membership.segmentId"
 			).eq(
 				DSL.val(1)
 			),
-			filterExpression.getCondition());
-
-		Set<String> referencedTableNames =
-			filterExpression.getReferencedTableNames();
-
-		Assertions.assertTrue(referencedTableNames.contains("Membership"));
+			"individualSegmentIds eq '1'",
+			new HashSet<>(Arrays.asList("Individual", "Membership")), true);
 	}
 
 	@Test
