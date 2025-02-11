@@ -319,14 +319,16 @@ public class FilterExpressionTest {
 				).eq(
 					"app"
 				),
-				DSL.field(
-					"DATE(Session.sessionEnd, 'UTC')"
+				DSL.function(
+					"DATE", Date.class, DSL.field("Session.sessionEnd"),
+					DSL.val("UTC")
 				).between(
 					DSL.function("DATE", Date.class, DSL.val("2022-05-15")),
 					DSL.function("DATE", Date.class, DSL.val("2022-05-20"))
 				),
-				DSL.field(
-					"DATE(Session.sessionEnd, 'UTC')"
+				DSL.function(
+					"DATE", Date.class, DSL.field("Session.sessionEnd"),
+					DSL.val("UTC")
 				).gt(
 					DSL.function("DATE", Date.class, DSL.val("2022-05-15"))
 				)),
@@ -342,7 +344,7 @@ public class FilterExpressionTest {
 		Mockito.when(
 			timeZoneDog.getZoneId()
 		).thenReturn(
-			ZoneId.of("Japan")
+			ZoneId.of("Asia/Tokyo")
 		);
 
 		TimeZoneDogUtil.setTimeZoneDog(timeZoneDog);
@@ -354,14 +356,16 @@ public class FilterExpressionTest {
 				).eq(
 					"app"
 				),
-				DSL.field(
-					"DATE(Session.sessionEnd, 'Japan')"
+				DSL.function(
+					"DATE", Date.class, DSL.field("Session.sessionEnd"),
+					DSL.val("Asia/Tokyo")
 				).between(
 					DSL.function("DATE", Date.class, DSL.val("2022-05-15")),
 					DSL.function("DATE", Date.class, DSL.val("2022-05-20"))
 				),
-				DSL.field(
-					"DATE(Session.sessionEnd, 'Japan')"
+				DSL.function(
+					"DATE", Date.class, DSL.field("Session.sessionEnd"),
+					DSL.val("Asia/Tokyo")
 				).gt(
 					DSL.function("DATE", Date.class, DSL.val("2022-05-15"))
 				)),
@@ -546,14 +550,14 @@ public class FilterExpressionTest {
 		Mockito.when(
 			timeZoneDog.getZoneId()
 		).thenReturn(
-			ZoneId.of("Japan")
+			ZoneId.of("Asia/Tokyo")
 		);
 
 		TimeZoneDogUtil.setTimeZoneDog(timeZoneDog);
 
 		_assertEquals(
-			DSL.field(
-				"DATE(day, 'Japan')"
+			DSL.function(
+				"DATE", Date.class, DSL.field("day"), DSL.val("Asia/Tokyo")
 			).eq(
 				DSL.function("DATE", Date.class, DSL.val("2023-09-14"))
 			),
@@ -567,14 +571,14 @@ public class FilterExpressionTest {
 		Mockito.when(
 			timeZoneDog.getZoneId()
 		).thenReturn(
-			ZoneId.of("Japan")
+			ZoneId.of("Asia/Tokyo")
 		);
 
 		TimeZoneDogUtil.setTimeZoneDog(timeZoneDog);
 
 		_assertEquals(
-			DSL.field(
-				"DATE(day, 'Japan')"
+			DSL.function(
+				"DATE", Date.class, DSL.field("day"), DSL.val("Asia/Tokyo")
 			).gt(
 				DSL.function("DATE", Date.class, DSL.val("2023-09-14"))
 			),
@@ -588,14 +592,14 @@ public class FilterExpressionTest {
 		Mockito.when(
 			timeZoneDog.getZoneId()
 		).thenReturn(
-			ZoneId.of("Japan")
+			ZoneId.of("Asia/Tokyo")
 		);
 
 		TimeZoneDogUtil.setTimeZoneDog(timeZoneDog);
 
 		_assertEquals(
-			DSL.field(
-				"DATE(day, 'Japan')"
+			DSL.function(
+				"DATE", Date.class, DSL.field("day"), DSL.val("Asia/Tokyo")
 			).lt(
 				DSL.function("DATE", Date.class, DSL.val("2023-09-14"))
 			),
@@ -2413,7 +2417,7 @@ public class FilterExpressionTest {
 			DSL.field(
 				"Membership.segmentId"
 			).eq(
-				1
+				DSL.val(1)
 			),
 			filterExpression.getCondition());
 

@@ -94,12 +94,12 @@ public class FilterOperatorTest {
 				DSL.field(
 					"testField"
 				).ge(
-					3600
+					DSL.val(3600L)
 				),
 				DSL.field(
 					"testField"
 				).le(
-					36000
+					DSL.val(36000L)
 				)),
 			filterOperator.getCondition(DSL.field("testField")));
 	}
@@ -120,12 +120,12 @@ public class FilterOperatorTest {
 				DSL.field(
 					"testField"
 				).ge(
-					20.0
+					DSL.val(20F)
 				),
 				DSL.field(
 					"testField"
 				).le(
-					27.0
+					DSL.val(27F)
 				)),
 			filterOperator.getCondition(DSL.field("testField")));
 	}
@@ -197,7 +197,7 @@ public class FilterOperatorTest {
 			DSL.field(
 				"testField"
 			).eq(
-				123
+				DSL.val(123L)
 			),
 			filterOperator.getCondition(DSL.field("testField")));
 	}
@@ -288,7 +288,7 @@ public class FilterOperatorTest {
 			DSL.field(
 				"testField"
 			).ge(
-				123
+				DSL.val(123L)
 			),
 			filterOperator.getCondition(DSL.field("testField")));
 	}
@@ -303,7 +303,7 @@ public class FilterOperatorTest {
 			DSL.field(
 				"testField"
 			).ge(
-				123.0
+				DSL.val(123F)
 			),
 			filterOperator.getCondition(DSL.field("testField")));
 	}
@@ -338,7 +338,7 @@ public class FilterOperatorTest {
 			DSL.field(
 				"testField"
 			).gt(
-				123
+				DSL.val(123L)
 			),
 			filterOperator.getCondition(DSL.field("testField")));
 	}
@@ -353,7 +353,7 @@ public class FilterOperatorTest {
 			DSL.field(
 				"testField"
 			).gt(
-				123.0
+				DSL.val(123F)
 			),
 			filterOperator.getCondition(DSL.field("testField")));
 	}
@@ -388,7 +388,7 @@ public class FilterOperatorTest {
 			DSL.field(
 				"testField"
 			).le(
-				123
+				DSL.val(123L)
 			),
 			filterOperator.getCondition(DSL.field("testField")));
 	}
@@ -403,7 +403,7 @@ public class FilterOperatorTest {
 			DSL.field(
 				"testField"
 			).le(
-				123.0
+				DSL.val(123F)
 			),
 			filterOperator.getCondition(DSL.field("testField")));
 	}
@@ -438,7 +438,7 @@ public class FilterOperatorTest {
 			DSL.field(
 				"testField"
 			).lt(
-				123
+				DSL.val(123L)
 			),
 			filterOperator.getCondition(DSL.field("testField")));
 	}
@@ -453,7 +453,7 @@ public class FilterOperatorTest {
 			DSL.field(
 				"testField"
 			).lt(
-				123.0
+				DSL.val(123F)
 			),
 			filterOperator.getCondition(DSL.field("testField")));
 	}
@@ -491,7 +491,7 @@ public class FilterOperatorTest {
 			DSL.field(
 				"testField"
 			).ne(
-				123
+				DSL.val(123L)
 			),
 			filterOperator.getCondition(DSL.field("testField")));
 	}
