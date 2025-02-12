@@ -37,6 +37,8 @@ import java.util.Map;
 import java.util.Optional;
 import java.util.Set;
 import java.util.function.Function;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import org.apache.commons.collections4.IterableUtils;
 import org.apache.commons.lang3.StringUtils;
@@ -466,9 +468,33 @@ public class BigQueryQueryExecutor implements QueryExecutor {
 				_getBigQueryTableName(name));
 		}
 
-		query = query.replace("as varchar", "as string");
+		query = query.replace("as double precision)", "as float64)");
+		query = query.replace("as real)", "as bignumeric)");
+		query = query.replace("as varchar)", "as string)");
+		query = query.replace("\\''", "\'");
 
-		return query.replace("\\''", "\'");
+		Matcher matcher = _limitOffsetPattern.matcher(query);
+
+		if (matcher.find()) {
+			query = matcher.replaceAll(
+				String.format(
+					"limit %s%soffset %s", matcher.group("limit"),
+					matcher.group("whitespace"), matcher.group("offset")));
+		}
+
+		matcher = _limitPattern.matcher(query);
+
+		if (matcher.find()) {
+			query = matcher.replaceAll("limit " + matcher.group("limit"));
+		}
+
+		matcher = _offsetPattern.matcher(query);
+
+		if (matcher.find()) {
+			query = matcher.replaceAll("offset " + matcher.group("offset"));
+		}
+
+		return query;
 	}
 
 	private static final String[] _FUNCTION_AND_TABLE_NAMES = {
@@ -489,6 +515,14 @@ public class BigQueryQueryExecutor implements QueryExecutor {
 
 	private static final Log _log = LogFactory.getLog(
 		BigQueryQueryExecutor.class);
+
+	private static final Pattern _limitOffsetPattern = Pattern.compile(
+		"offset (?<offset>\\d+) rows(?<whitespace>\n\\s*)fetch next " +
+			"(?<limit>\\d+) rows only");
+	private static final Pattern _limitPattern = Pattern.compile(
+		"fetch next (?<limit>\\d+) rows only");
+	private static final Pattern _offsetPattern = Pattern.compile(
+		"offset (?<offset>\\d+) rows");
 
 	private final BigQuery _bigQuery;
 	private final BigQueryOptions _bigQueryOptions;
