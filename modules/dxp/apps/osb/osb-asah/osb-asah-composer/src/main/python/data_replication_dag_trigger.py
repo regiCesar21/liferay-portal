@@ -39,17 +39,17 @@ def create_dag(ac_project_id, dag_id, dag_description):
 		start_date=pendulum.now() - pendulum.duration(days=2)
 	) as dag:
 
-		bq_individual_export_job  = BigQueryInsertJobFromTemplateOperator(
+		bq_individual_export_job = BigQueryInsertJobFromTemplateOperator(
 			task_id='individual_export'
 		)
 
-		truncate_individual_table_job = CloudSQLExecuteQueryOperator(
+		psql_truncate_individual_table_job = CloudSQLExecuteQueryOperator(
 			gcp_cloudsql_conn_id="google_cloud_sql",
 			sql="TRUNCATE TABLE {{dag.default_args['ac_project_id']}}.individual",
 			task_id="truncate_individual_table"
 		)
 
-		individual_import_job = CloudSQLCSVImportOperator(
+		psql_individual_import_job = CloudSQLCSVImportOperator(
 			bucket_name="{{dag.default_args['google_project_id']}}-data-replica",
 			bucket_prefix="{{dag.default_args['ac_project_id']}}/individual/{{ts}}",
 			database="osbasah",
@@ -60,8 +60,8 @@ def create_dag(ac_project_id, dag_id, dag_description):
 		)
 
 		chain(
-			bq_individual_export_job, truncate_individual_table_job,
-			individual_import_job
+			bq_individual_export_job, psql_truncate_individual_table_job,
+			psql_individual_import_job
 		)
 
 		return dag
