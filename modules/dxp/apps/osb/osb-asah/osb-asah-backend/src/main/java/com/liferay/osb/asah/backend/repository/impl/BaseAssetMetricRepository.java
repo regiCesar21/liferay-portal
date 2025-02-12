@@ -1045,7 +1045,7 @@ public abstract class BaseAssetMetricRepository<T extends AssetMetric>
 			);
 		}
 
-		selectJoinStep.join(
+		selectJoinStep = selectJoinStep.join(
 			"TopAppearsOn"
 		).on(
 			DSL.and(
