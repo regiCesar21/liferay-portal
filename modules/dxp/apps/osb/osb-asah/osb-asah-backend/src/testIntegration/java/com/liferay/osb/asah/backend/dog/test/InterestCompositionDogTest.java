@@ -7,7 +7,6 @@ package com.liferay.osb.asah.backend.dog.test;
 
 import com.liferay.osb.asah.backend.dog.InterestCompositionDog;
 import com.liferay.osb.asah.common.model.Sort;
-import com.liferay.osb.asah.common.repository.BQIdentityInterestScoreRepository;
 import com.liferay.osb.asah.common.repository.BQIdentityRepository;
 import com.liferay.osb.asah.common.repository.BQMembershipRepository;
 import com.liferay.osb.asah.test.util.annotation.BQSQLResource;
@@ -34,10 +33,6 @@ public class InterestCompositionDogTest extends BaseCompositionDogTestCase {
 	@RepositoryResource(
 		repositoryClass = BQMembershipRepository.class,
 		resourcePath = "osbasahfaroinfo/bq_identity_interest_score_memberships.json"
-	)
-	@RepositoryResource(
-		repositoryClass = BQIdentityInterestScoreRepository.class,
-		resourcePath = "osbasahfaroinfo/bq_identity_interest_scores_info.json"
 	)
 	@Test
 	public void testGetIndividualCompositionResultBag() {
@@ -72,10 +67,6 @@ public class InterestCompositionDogTest extends BaseCompositionDogTestCase {
 	@RepositoryResource(
 		repositoryClass = BQMembershipRepository.class,
 		resourcePath = "osbasahfaroinfo/bq_identity_interest_score_memberships.json"
-	)
-	@RepositoryResource(
-		repositoryClass = BQIdentityInterestScoreRepository.class,
-		resourcePath = "osbasahfaroinfo/bq_identity_interest_scores_info.json"
 	)
 	@Test
 	public void testGetIndividualCompositionResultBagWithOrderByAsc() {
@@ -131,10 +122,6 @@ public class InterestCompositionDogTest extends BaseCompositionDogTestCase {
 		repositoryClass = BQMembershipRepository.class,
 		resourcePath = "osbasahfaroinfo/bq_identity_interest_score_memberships.json"
 	)
-	@RepositoryResource(
-		repositoryClass = BQIdentityInterestScoreRepository.class,
-		resourcePath = "osbasahfaroinfo/bq_identity_interest_scores_info.json"
-	)
 	@Test
 	public void testGetIndividualSegmentCompositionResultBagWithKeyword() {
 		checkResults(
@@ -159,10 +146,6 @@ public class InterestCompositionDogTest extends BaseCompositionDogTestCase {
 	@RepositoryResource(
 		repositoryClass = BQMembershipRepository.class,
 		resourcePath = "osbasahfaroinfo/bq_identity_interest_score_memberships.json"
-	)
-	@RepositoryResource(
-		repositoryClass = BQIdentityInterestScoreRepository.class,
-		resourcePath = "osbasahfaroinfo/bq_identity_interest_scores_info.json"
 	)
 	@Test
 	public void testGetIndividualSegmentCompositionResultBagWithSortAsc() {
@@ -191,10 +174,6 @@ public class InterestCompositionDogTest extends BaseCompositionDogTestCase {
 		repositoryClass = BQMembershipRepository.class,
 		resourcePath = "osbasahfaroinfo/bq_identity_interest_score_memberships.json"
 	)
-	@RepositoryResource(
-		repositoryClass = BQIdentityInterestScoreRepository.class,
-		resourcePath = "osbasahfaroinfo/bq_identity_interest_scores_info.json"
-	)
 	@Test
 	public void testGetIndividualSegmentCompositionResultBagWithSortName() {
 		checkResults(
@@ -212,7 +191,7 @@ public class InterestCompositionDogTest extends BaseCompositionDogTestCase {
 	}
 
 	@BQSQLResource(
-		resourcePath = "bq_identity_interest_score_identity_activities.sql"
+		resourcePath = "test_get_individual_segment_top_interests.sql"
 	)
 	@RepositoryResource(
 		repositoryClass = BQIdentityRepository.class,
@@ -221,10 +200,6 @@ public class InterestCompositionDogTest extends BaseCompositionDogTestCase {
 	@RepositoryResource(
 		repositoryClass = BQMembershipRepository.class,
 		resourcePath = "osbasahfaroinfo/bq_identity_interest_score_memberships.json"
-	)
-	@RepositoryResource(
-		repositoryClass = BQIdentityInterestScoreRepository.class,
-		resourcePath = "osbasahfaroinfo/bq_identity_top_interest_scores_info.json"
 	)
 	@Test
 	public void testGetIndividualSegmentTopInterests() {

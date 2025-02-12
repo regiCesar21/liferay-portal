@@ -9,7 +9,6 @@ import com.liferay.osb.asah.common.OSBAsahCommonSpringTestContext;
 import com.liferay.osb.asah.common.dog.BQIdentityInterestScoreDog;
 import com.liferay.osb.asah.common.entity.BQIdentityInterestScore;
 import com.liferay.osb.asah.common.model.IdentityInterestScore;
-import com.liferay.osb.asah.common.repository.BQIdentityInterestScoreRepository;
 import com.liferay.osb.asah.common.repository.BQIdentityRepository;
 import com.liferay.osb.asah.test.util.annotation.BQSQLResource;
 import com.liferay.osb.asah.test.util.annotation.RepositoryResource;
@@ -58,12 +57,43 @@ public class BQIdentityInterestScoreDogTest
 		repositoryClass = BQIdentityRepository.class,
 		resourcePath = "osbasahfaroinfo/bq_identity_interest_score_identities.json"
 	)
+	@Test
+	public void testGetBQIdentityInterestScorePageByFilterString() {
+		Page<IdentityInterestScore> individualInterestScorePage =
+			_bqIdentityInterestScoreDog.getIdentityInterestScorePage(
+				null, null, null, 0, 20, new String[] {"keyword,ASC"});
+
+		Assertions.assertEquals(
+			8, individualInterestScorePage.getTotalElements());
+
+		List<IdentityInterestScore> individualInterestScores =
+			individualInterestScorePage.getContent();
+
+		IdentityInterestScore identityInterestScore1 =
+			individualInterestScores.get(6);
+
+		Assertions.assertEquals("java", identityInterestScore1.getKeyword());
+		Assertions.assertEquals(
+			1L, identityInterestScore1.getContributingPagesCount());
+
+		IdentityInterestScore identityInterestScore2 =
+			individualInterestScores.get(7);
+
+		Assertions.assertEquals(
+			"javascript", identityInterestScore2.getKeyword());
+		Assertions.assertEquals(
+			2L, identityInterestScore2.getContributingPagesCount());
+	}
+
+	@BQSQLResource(
+		resourcePath = "osbasahfaroinfo/bq_identity_interest_page.sql"
+	)
 	@RepositoryResource(
-		repositoryClass = BQIdentityInterestScoreRepository.class,
-		resourcePath = "osbasahfaroinfo/bq_identity_interest_score_info.json"
+		repositoryClass = BQIdentityRepository.class,
+		resourcePath = "osbasahfaroinfo/bq_identity_interest_score_identities.json"
 	)
 	@Test
-	public void testGetBQIdentityInterestScorePageBIndividual() {
+	public void testGetBQIdentityInterestScorePageByIndividual() {
 		Page<IdentityInterestScore> individualInterestScorePage =
 			_bqIdentityInterestScoreDog.getIdentityInterestScorePage(
 				null, "774790575409131045", null, 0, 20,
@@ -96,45 +126,6 @@ public class BQIdentityInterestScoreDogTest
 			"football", identityInterestScore3.getKeyword());
 		Assertions.assertEquals(
 			1L, identityInterestScore3.getContributingPagesCount());
-	}
-
-	@BQSQLResource(
-		resourcePath = "osbasahfaroinfo/bq_identity_interest_page.sql"
-	)
-	@RepositoryResource(
-		repositoryClass = BQIdentityRepository.class,
-		resourcePath = "osbasahfaroinfo/bq_identity_interest_score_identities.json"
-	)
-	@RepositoryResource(
-		repositoryClass = BQIdentityInterestScoreRepository.class,
-		resourcePath = "osbasahfaroinfo/bq_identity_interest_score_info.json"
-	)
-	@Test
-	public void testGetBQIdentityInterestScorePageByFilterString() {
-		Page<IdentityInterestScore> individualInterestScorePage =
-			_bqIdentityInterestScoreDog.getIdentityInterestScorePage(
-				null, null, null, 0, 20, new String[] {"keyword,ASC"});
-
-		Assertions.assertEquals(
-			8, individualInterestScorePage.getTotalElements());
-
-		List<IdentityInterestScore> individualInterestScores =
-			individualInterestScorePage.getContent();
-
-		IdentityInterestScore identityInterestScore1 =
-			individualInterestScores.get(6);
-
-		Assertions.assertEquals("java", identityInterestScore1.getKeyword());
-		Assertions.assertEquals(
-			1L, identityInterestScore1.getContributingPagesCount());
-
-		IdentityInterestScore identityInterestScore2 =
-			individualInterestScores.get(7);
-
-		Assertions.assertEquals(
-			"javascript", identityInterestScore2.getKeyword());
-		Assertions.assertEquals(
-			2L, identityInterestScore2.getContributingPagesCount());
 	}
 
 	@BQSQLResource(

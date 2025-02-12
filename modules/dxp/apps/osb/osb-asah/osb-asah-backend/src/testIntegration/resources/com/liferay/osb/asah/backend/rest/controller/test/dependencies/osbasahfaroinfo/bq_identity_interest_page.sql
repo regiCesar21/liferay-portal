@@ -12,3 +12,18 @@ INSERT INTO IdentityInterestPage (canonicalUrl, channelId, identityId, keyword, 
 INSERT INTO IdentityInterestPage (canonicalUrl, channelId, identityId, keyword, title, views) VALUES ('http://www.liferay.com/javascript-php', 1, '337984659206412898', 'javascript php', 'javascript php', 1);
 INSERT INTO IdentityInterestPage (canonicalUrl, channelId, identityId, keyword, title, views) VALUES ('http://www.liferay.com/my-php-title', 1, '337984659206412898', 'My Php Title', 'My Php Title', 1);
 INSERT INTO IdentityInterestPage (canonicalUrl, channelId, identityId, keyword, title, views) VALUES ('http://www.liferay.com/my-javascript-title', 1, '337984659206412898', 'My Javascript title', 'My Javascript title', 1);
+
+INSERT INTO IdentityInterestScore (channelId, identityId, interested, interestScore, keyword, recordedDate) VALUES (1, "337984659206412898", true, 2.614959778036198, "productize best-of-breed web services", "2019-05-15");
+INSERT INTO IdentityInterestScore (channelId, identityId, interested, interestScore, keyword, recordedDate) VALUES (1, "337984659206412898", true, 1.7676619176489945, "clicks-and-mortar e-tailers", "2019-05-15");
+INSERT INTO IdentityInterestScore (channelId, identityId, interested, interestScore, keyword, recordedDate) VALUES (1, "346287653729332051", true, 1.7676619176489945, "clicks-and-mortar e-tailers", "2019-05-15");
+INSERT INTO IdentityInterestScore (channelId, identityId, interested, interestScore, keyword, recordedDate) VALUES (1, "346287655690647357", true, 1.7676619176489945, "clicks-and-mortar e-tailers", "2019-05-15");
+INSERT INTO IdentityInterestScore (channelId, identityId, interested, interestScore, keyword, recordedDate) VALUES (1, "337984659206412898", true, 2.1041341542702074, "compelling metrics", "2019-05-15");
+INSERT INTO IdentityInterestScore (channelId, identityId, interested, interestScore, keyword, recordedDate) VALUES (1, "346287681638899660", true, 2.1041341542702074, "compelling metrics", "2019-05-15");
+INSERT INTO IdentityInterestScore (channelId, identityId, interested, interestScore, keyword, recordedDate) VALUES (1, "346287660247040704", true, 1.5163474893680884, "holistic ROI", "2019-05-15");
+INSERT INTO IdentityInterestScore (channelId, identityId, interested, interestScore, keyword, recordedDate) VALUES (1, "346287671371031768", true, 1.5163474893680884, "holistic ROI", "2019-05-15");
+INSERT INTO IdentityInterestScore (channelId, identityId, interested, interestScore, keyword, recordedDate) VALUES (1, "337984659206412898", true, 1.5163474893680882, "php", "2019-05-15");
+INSERT INTO IdentityInterestScore (channelId, identityId, interested, interestScore, keyword, recordedDate) VALUES (1, "337984659206412898", true, 1.5163474893680886, "javascript", "2019-05-15");
+INSERT INTO IdentityInterestScore (channelId, identityId, interested, interestScore, keyword, recordedDate) VALUES (1, "337984659206412898", true, 1.5163474893680884, "web", "2019-05-15");
+INSERT INTO IdentityInterestScore (channelId, identityId, interested, interestScore, keyword, recordedDate) VALUES (1, "337984659206412898", true, 1.5163474893680884, "javascript php", "2019-05-15");
+INSERT INTO IdentityInterestScore (channelId, identityId, interested, interestScore, keyword, recordedDate) VALUES (1, "337984659206412898", true, 1.5163474893680884, "My Php Title", "2019-05-15");
+INSERT INTO IdentityInterestScore (channelId, identityId, interested, interestScore, keyword, recordedDate) VALUES (1, "337984659206412898", true, 1.5163474893680884, "My Javascript title", "2019-05-15");

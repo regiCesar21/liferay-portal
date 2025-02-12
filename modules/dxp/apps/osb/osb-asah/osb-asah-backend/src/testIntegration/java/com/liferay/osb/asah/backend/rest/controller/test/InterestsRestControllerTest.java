@@ -57,10 +57,6 @@ public class InterestsRestControllerTest
 		repositoryClass = BQIdentityRepository.class,
 		resourcePath = "osbasahfaroinfo/bq_identity_interest_score_identities.json"
 	)
-	@RepositoryResource(
-		repositoryClass = BQIdentityInterestScoreRepository.class,
-		resourcePath = "osbasahfaroinfo/bq_identity_interest_scores.json"
-	)
 	@Test
 	public void testGetInterestDTOPageDTO() throws Exception {
 		JSONAssert.assertEquals(
@@ -82,10 +78,6 @@ public class InterestsRestControllerTest
 	@RepositoryResource(
 		repositoryClass = BQIdentityRepository.class,
 		resourcePath = "osbasahfaroinfo/bq_identity_interest_score_identities.json"
-	)
-	@RepositoryResource(
-		repositoryClass = BQIdentityInterestScoreRepository.class,
-		resourcePath = "osbasahfaroinfo/bq_identity_interest_scores.json"
 	)
 	@Test
 	public void testGetInterestDTOsPageDTOOrderByName() {
@@ -290,10 +282,6 @@ public class InterestsRestControllerTest
 	}
 
 	@BQSQLResource(resourcePath = "test_get_terms.sql")
-	@RepositoryResource(
-		repositoryClass = BQIdentityInterestScoreRepository.class,
-		resourcePath = "osbasahfaroinfo/bq_identity_interest_scores.json"
-	)
 	@Test
 	public void testGetTermsWithNoIndividualInterestTerms() throws Exception {
 		_assertTermsByTopic(
@@ -304,10 +292,6 @@ public class InterestsRestControllerTest
 	}
 
 	@BQSQLResource(resourcePath = "test_get_terms.sql")
-	@RepositoryResource(
-		repositoryClass = BQIdentityInterestScoreRepository.class,
-		resourcePath = "osbasahfaroinfo/bq_identity_interest_scores.json"
-	)
 	@Test
 	public void testGetTermsWithNoTopicsRelatedToIndividualInterestTerms()
 		throws Exception {
