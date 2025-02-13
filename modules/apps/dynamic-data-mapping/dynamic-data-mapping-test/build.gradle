@@ -1,6 +1,5 @@
 dependencies {
 	compileOnly project(":core:petra:petra-function")
-
 	testImplementation group: "com.google.template", name: "soy", version: "2015-04-10"
 	testImplementation group: "com.liferay.portal", name: "com.liferay.portal.impl", version: "default"
 	testImplementation group: "com.liferay.portal", name: "com.liferay.portal.kernel", version: "default"
@@ -27,7 +26,6 @@ dependencies {
 	testImplementation project(":core:petra:petra-reflect")
 	testImplementation project(":core:petra:petra-sql-dsl-api")
 	testImplementation project(":core:petra:petra-string")
-
 	testIntegrationImplementation group: "com.liferay", name: "com.liferay.arquillian.extension.junit.bridge", version: "1.0.19"
 	testIntegrationImplementation group: "org.osgi", name: "org.osgi.service.cm", version: "1.5.0"
 	testIntegrationImplementation group: "org.springframework", name: "spring-web", version: "5.3.39"

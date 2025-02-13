@@ -22,7 +22,6 @@ dependencies {
 	compileInclude group: "xalan", name: "serializer", version: "2.7.2"
 	compileInclude group: "xerces", name: "xercesImpl", version: "2.12.2"
 	compileInclude group: "xml-resolver", name: "xml-resolver", version: "1.2"
-
 	compileOnly group: "biz.aQute.bnd", name: "biz.aQute.bnd.annotation", version: "4.2.0"
 	compileOnly group: "com.google.code.findbugs", name: "jsr305", version: "3.0.2"
 	compileOnly group: "com.google.guava", name: "guava", version: "32.0.1-jre"
@@ -56,7 +55,6 @@ dependencies {
 	compileOnly project(":core:petra:petra-string")
 	compileOnly project(":dxp:apps:saml:saml-api")
 	compileOnly project(":dxp:apps:saml:saml-persistence-api")
-
 	testImplementation group: "com.liferay.portal", name: "com.liferay.portal.impl", version: "default"
 	testImplementation project(":apps:static:portal-configuration:portal-configuration-persistence-api")
 	testImplementation project(":core:petra:petra-lang")

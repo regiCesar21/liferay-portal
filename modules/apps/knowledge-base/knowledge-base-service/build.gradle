@@ -5,7 +5,6 @@ buildService {
 
 dependencies {
 	compileInclude group: "net.htmlparser.jericho", name: "jericho-html", version: "3.1"
-
 	compileOnly group: "com.liferay.portal", name: "com.liferay.portal.impl", version: "default"
 	compileOnly group: "com.liferay.portal", name: "com.liferay.portal.kernel", version: "default"
 	compileOnly group: "com.liferay.portal", name: "com.liferay.util.java", version: "default"
@@ -31,7 +30,6 @@ dependencies {
 	compileOnly project(":core:petra:petra-sql-dsl-api")
 	compileOnly project(":core:petra:petra-string")
 	compileOnly project(":core:registry-api")
-
 	testImplementation group: "org.mockito", name: "mockito-core", version: "1.10.8"
 	testImplementation group: "org.pegdown", name: "pegdown", version: "1.1.0"
 }

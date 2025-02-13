@@ -1,6 +1,5 @@
 dependencies {
 	compileInclude group: "commons-fileupload", name: "commons-fileupload", version: "1.5"
-
 	compileOnly group: "com.liferay.portal", name: "com.liferay.portal.impl", version: "default"
 	compileOnly group: "com.liferay.portal", name: "com.liferay.portal.kernel", version: "default"
 	compileOnly group: "commons-io", name: "commons-io", version: "2.15.1"

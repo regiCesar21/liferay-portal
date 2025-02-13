@@ -18,7 +18,6 @@ dependencies {
 	compileOnly project(":core:petra:petra-string")
 	compileOnly project(":dxp:apps:portal-reports-engine-console:portal-reports-engine-console-api")
 	compileOnly project(":dxp:apps:portal-reports-engine-console:portal-reports-engine-console-service")
-
 	testImplementation group: "com.liferay.portal", name: "com.liferay.portal.impl", version: "default"
 	testImplementation group: "commons-lang", name: "commons-lang", version: "2.6"
 }

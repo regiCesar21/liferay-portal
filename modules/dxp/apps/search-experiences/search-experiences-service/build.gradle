@@ -10,7 +10,6 @@ dependencies {
 	compileInclude group: "joda-time", name: "joda-time", version: "2.9.1"
 	compileInclude group: "org.joda", name: "joda-convert", version: "2.2.1"
 	compileInclude group: "org.json", name: "json", version: "20231013"
-
 	compileOnly group: "biz.aQute.bnd", name: "biz.aQute.bnd.annotation", version: "4.2.0"
 	compileOnly group: "com.liferay.portal", name: "com.liferay.portal.impl", version: "default"
 	compileOnly group: "com.liferay.portal", name: "com.liferay.portal.kernel", version: "default"
@@ -42,7 +41,6 @@ dependencies {
 	compileOnly project(":core:petra:petra-string")
 	compileOnly project(":dxp:apps:search-experiences:search-experiences-api")
 	compileOnly project(":dxp:apps:search-experiences:search-experiences-rest-api")
-
 	testImplementation group: "com.fasterxml.jackson.core", name: "jackson-annotations", version: "2.13.4"
 	testImplementation group: "com.fasterxml.jackson.core", name: "jackson-core", version: "2.13.4"
 	testImplementation group: "org.apache.commons", name: "commons-lang3", version: "3.12.0"

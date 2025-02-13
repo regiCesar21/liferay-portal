@@ -21,6 +21,5 @@ dependencies {
 	compileOnly project(":core:petra:petra-lang")
 	compileOnly project(":core:petra:petra-sql-dsl-api")
 	compileOnly project(":core:petra:petra-string")
-
 	testImplementation group: "org.mockito", name: "mockito-core", version: "1.10.8"
 }

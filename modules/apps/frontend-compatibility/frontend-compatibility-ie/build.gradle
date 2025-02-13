@@ -72,9 +72,7 @@ dependencies {
 	compileOnly group: "org.osgi", name: "osgi.core", version: "6.0.0"
 	compileOnly project(":apps:frontend-taglib:frontend-taglib-clay")
 	compileOnly project(":apps:portal-url-builder:portal-url-builder-api")
-
 	coreJSBundle group: "org.webjars.npm", name: "core-js-bundle", transitive: false, version: "3.1.4"
-
 	fetch group: "org.webjars.npm", name: "whatwg-fetch", transitive: false, version: "2.0.4"
 }
 

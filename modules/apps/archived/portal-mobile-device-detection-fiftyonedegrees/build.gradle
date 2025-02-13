@@ -2,7 +2,6 @@ import com.liferay.gradle.util.FileUtil
 
 dependencies {
 	compileInclude group: "com.51degrees", name: "device-detection-core", version: "3.2.14.2"
-
 	compileOnly group: "biz.aQute.bnd", name: "biz.aQute.bnd.annotation", version: "4.2.0"
 	compileOnly group: "com.liferay.portal", name: "com.liferay.portal.kernel", version: "default"
 	compileOnly group: "commons-io", name: "commons-io", version: "2.15.1"

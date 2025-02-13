@@ -1,6 +1,5 @@
 dependencies {
 	compileOnly project(":core:petra:petra-function")
-
 	testIntegrationImplementation group: "com.liferay", name: "com.liferay.arquillian.extension.junit.bridge", version: "1.0.19"
 	testIntegrationImplementation group: "org.osgi", name: "org.osgi.service.component.annotations", version: "1.3.0"
 	testIntegrationImplementation project(":apps:info:info-api")

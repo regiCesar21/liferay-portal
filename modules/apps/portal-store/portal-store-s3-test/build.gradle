@@ -53,7 +53,6 @@ dependencies {
 	testImplementation group: "com.liferay.portal", name: "com.liferay.portal.impl", version: "default"
 	testImplementation group: "com.liferay.portal", name: "com.liferay.portal.kernel", version: "default"
 	testImplementation project(":apps:portal-store:portal-store-s3")
-
 	testIntegrationImplementation group: "com.liferay", name: "com.liferay.arquillian.extension.junit.bridge", version: "1.0.19"
 	testIntegrationImplementation group: "org.osgi", name: "org.osgi.service.cm", version: "1.5.0"
 	testIntegrationImplementation project(":apps:portal-configuration:portal-configuration-test-util")

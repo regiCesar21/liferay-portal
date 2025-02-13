@@ -2,7 +2,6 @@ dependencies {
 	compileInclude group: "org.apache.httpcomponents", name: "httpclient", version: "4.5.13"
 	compileInclude group: "org.apache.httpcomponents", name: "httpcore", version: "4.4.14"
 	compileInclude group: "org.apache.httpcomponents", name: "httpmime", version: "4.5.13"
-
 	compileOnly group: "biz.aQute.bnd", name: "biz.aQute.bndlib", version: "3.1.0"
 	compileOnly group: "com.fasterxml.jackson.core", name: "jackson-annotations", version: "2.13.4"
 	compileOnly group: "com.fasterxml.jackson.core", name: "jackson-core", version: "2.13.4"
@@ -34,6 +33,5 @@ dependencies {
 	compileOnly project(":dxp:apps:commerce:commerce-data-integration-api")
 	compileOnly project(":dxp:apps:commerce:commerce-machine-learning-api")
 	compileOnly project(":dxp:apps:commerce:headless:headless-commerce-machine-learning-api")
-
 	testImplementation group: "org.mockito", name: "mockito-core", version: "1.10.8"
 }
