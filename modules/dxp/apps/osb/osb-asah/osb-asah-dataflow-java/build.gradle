@@ -75,6 +75,15 @@ repositories {
 	maven {
 		url "https://packages.confluent.io/maven"
 	}
+
+	maven {
+		url System.getProperty("repository.private.url")
+
+		credentials {
+			username System.getenv("REPOSITORY_PRIVATE_USERNAME")
+			password System.getenv("REPOSITORY_PRIVATE_PASSWORD")
+		}
+	}
 }
 
 shadowJar {
