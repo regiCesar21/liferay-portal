@@ -13,11 +13,11 @@ buildscript {
 apply plugin: 'com.github.johnrengelman.shadow'
 
 ext {
-	maxmindGeoIPVersion = "20180327"
+	dbIPVersion = "2025-02"
 }
 
 configurations {
-	dat
+	mmdb
 }
 
 configurations.all {
@@ -45,7 +45,7 @@ dependencies {
 	api group: "org.apache.commons", name: "commons-lang3", version: "3.7"
 	api group: "org.postgresql", name: "postgresql", version: "42.7.5"
 	api group: "org.slf4j", name: "slf4j-api", version: "1.7.32"
-	dat ext: "gz", group: "com.liferay", name: "com.maxmind.geoip.dat", version: "${maxmindGeoIPVersion}"
+	mmdb ext: "gz", group: "com.liferay.osb.dbip", name: "dbip.location.mmdb", version: "${dbIPVersion}"
 	testImplementation group: "junit", name: "junit", version: "4.13.1"
 	testImplementation group: "org.apache.beam", name: "beam-sdks-java-extensions-avro", version: "2.60.0"
 	testImplementation group: "org.hamcrest", name: "hamcrest-all", version: "1.3"
@@ -63,10 +63,10 @@ execute {
 
 processResources {
 	into("META-INF") {
-		from configurations.dat
+		from configurations.mmdb
 
 		rename {
-			String fileName -> fileName.replace("-${maxmindGeoIPVersion}", "")
+			String fileName -> fileName.replace("-${dbIPVersion}", "")
 		}
 	}
 }

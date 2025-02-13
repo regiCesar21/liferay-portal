@@ -74,7 +74,7 @@ public class IPGeocoder {
 			_databaseReader = builder.build();
 		}
 		catch (IOException ioException) {
-			_log.error("Unable to load MaxMind Geo IP data", ioException);
+			_log.error("Unable to load DB-IP data", ioException);
 
 			throw new IllegalStateException(ioException);
 		}
@@ -89,7 +89,8 @@ public class IPGeocoder {
 
 		ClassLoader classLoader = clazz.getClassLoader();
 
-		return classLoader.getResourceAsStream("META-INF/GeoIP2-City.mmdb.gz");
+		return classLoader.getResourceAsStream(
+			"META-INF/dbip.location.mmdb.gz");
 	}
 
 	private File _getIPGeocoderFile() throws IOException {
