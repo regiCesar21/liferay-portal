@@ -80,7 +80,7 @@ WHEN MATCHED AND staging.deleted IS NULL AND staging.modifiedDate > replica.modi
 		replica.title = staging.title
 WHEN MATCHED AND staging.deleted = true THEN
 	DELETE
-WHEN NOT MATCHED BY SOURCE AND '{{ params['uploadType'] }}' = 'FULL' THEN
+WHEN NOT MATCHED BY SOURCE AND replica.dataSourceId = CAST('{{ params['dataSourceId'] }}' AS INTEGER) AND '{{ params['uploadType'] }}' = 'FULL' THEN
 	DELETE
 WHEN NOT MATCHED BY TARGET AND staging.deleted IS NULL THEN
 	INSERT (

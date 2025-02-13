@@ -126,7 +126,7 @@ WHEN MATCHED AND staging.deleted IS NULL THEN
 		replica.type = staging.accountGroupType
 WHEN MATCHED AND staging.deleted = true THEN
 	DELETE
-WHEN NOT MATCHED BY SOURCE AND '{{ params['uploadType'] }}' = 'FULL' THEN
+WHEN NOT MATCHED BY SOURCE AND replica.dataSourceId = CAST('{{ params['dataSourceId'] }}' AS INTEGER) AND '{{ params['uploadType'] }}' = 'FULL' THEN
 	DELETE
 WHEN NOT MATCHED BY TARGET AND staging.deleted IS NULL THEN
 	INSERT (
