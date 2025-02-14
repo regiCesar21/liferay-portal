@@ -9,7 +9,6 @@
 # distribution rights of the Software.
 #
 
-
 from airflow.providers.google.cloud.hooks.cloud_sql import CloudSQLHook
 from airflow.providers.google.cloud.hooks.gcs import GCSHook
 from airflow.providers.google.cloud.operators.cloud_sql import CloudSQLBaseOperator
@@ -22,22 +21,21 @@ class CloudSQLCSVImportOperator(CloudSQLBaseOperator):
 		"gcp_conn_id", "api_version", "impersonation_chain",
 	)
 
-	def __init__(
-		self, *, instance, bucket_name, bucket_prefix, database, table,
+	def __init__(self, instance, bucket_name, bucket_prefix, database, table,
 		project_id = PROVIDE_PROJECT_ID, gcp_conn_id = "google_cloud_default",
 		api_version = "v1beta4", impersonation_chain = None, **kwargs):
-
-		self.bucket_name = bucket_name
-		self.bucket_prefix = bucket_prefix
-		self.database = database
-		self.instance = instance
-		self.table = table
 
 		super().__init__(
 			api_version=api_version, gcp_conn_id=gcp_conn_id,
 			impersonation_chain=impersonation_chain, instance=instance,
 			project_id=project_id, **kwargs
 		)
+
+		self.bucket_name = bucket_name
+		self.bucket_prefix = bucket_prefix
+		self.database = database
+		self.instance = instance
+		self.table = table
 
 	def execute(self, context):
 		gcs_hook = GCSHook(gcp_conn_id=self.gcp_conn_id)
