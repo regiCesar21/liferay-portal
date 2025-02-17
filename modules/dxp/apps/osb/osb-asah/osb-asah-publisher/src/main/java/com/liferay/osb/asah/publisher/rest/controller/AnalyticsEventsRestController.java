@@ -212,6 +212,52 @@ public class AnalyticsEventsRestController {
 		return new ResponseEntity<>(Collections.emptyList(), HttpStatus.OK);
 	}
 
+	private AnalyticsEvent _createAnalyticsEvent(
+		AnalyticsEventsMessage analyticsEventsMessage, String channelId,
+		String dataSourceId, AnalyticsEventsMessage.Event event,
+		String projectTimeZoneId, Set<String> suppressedEmailAddresses) {
+
+		AnalyticsEvent analyticsEvent = new AnalyticsEvent();
+
+		analyticsEvent.setApplicationId(event.getApplicationId());
+		analyticsEvent.setChannelId(channelId);
+		analyticsEvent.setClientIP(analyticsEventsMessage.getClientIP());
+		analyticsEvent.setContext(analyticsEventsMessage.getContext());
+		analyticsEvent.setCreateDate(analyticsEventsMessage.getCreateDate());
+		analyticsEvent.setDataSourceId(dataSourceId);
+
+		Set<String> suppressedEmailAddressHashedSet = SetUtil.map(
+			suppressedEmailAddresses,
+			emailAddress -> DigestUtils.sha256Hex(
+				StringUtils.lowerCase(emailAddress)));
+
+		String emailAddressHashed =
+			analyticsEventsMessage.getEmailAddressHashed();
+
+		if (!suppressedEmailAddressHashedSet.contains(emailAddressHashed)) {
+			analyticsEvent.setEmailAddressHashed(emailAddressHashed);
+		}
+
+		analyticsEvent.setEventDate(event.getEventDate());
+		analyticsEvent.setEventId(event.getEventId());
+		analyticsEvent.setEventProperties(event.getProperties());
+		analyticsEvent.setId(
+			AnalyticsEventUtil.generateAnalyticsEventId(
+				dataSourceId, event, analyticsEventsMessage.getProjectId(),
+				analyticsEventsMessage.getUserId()));
+		analyticsEvent.setProjectId(ProjectIdThreadLocal.getProjectId());
+		analyticsEvent.setProjectTimeZoneId(projectTimeZoneId);
+		analyticsEvent.setUserId(analyticsEventsMessage.getUserId());
+
+		if (_log.isDebugEnabled()) {
+			_log.debug(
+				"Pushing analytics event message to the queue: " +
+					analyticsEvent.toJSON());
+		}
+
+		return analyticsEvent;
+	}
+
 	private Set<Integer> _getInvalidEventIndices(List<FieldError> fieldErrors) {
 		Set<Integer> indices = new TreeSet<>(Collections.reverseOrder());
 
@@ -287,49 +333,10 @@ public class AnalyticsEventsRestController {
 					event.getEventId());
 
 			if ((eventDefinition == null) || !eventDefinition.isBlocked()) {
-				AnalyticsEvent analyticsEvent = new AnalyticsEvent();
-
-				analyticsEvent.setApplicationId(event.getApplicationId());
-				analyticsEvent.setChannelId(channelId);
-				analyticsEvent.setClientIP(
-					analyticsEventsMessage.getClientIP());
-				analyticsEvent.setContext(analyticsEventsMessage.getContext());
-				analyticsEvent.setCreateDate(
-					analyticsEventsMessage.getCreateDate());
-				analyticsEvent.setDataSourceId(dataSourceId);
-
-				Set<String> suppressedEmailAddressHashedSet = SetUtil.map(
-					_dataControlTaskDog.getSuppressedEmailAddresses(),
-					emailAddress -> DigestUtils.sha256Hex(
-						StringUtils.lowerCase(emailAddress)));
-
-				String emailAddressHashed =
-					analyticsEventsMessage.getEmailAddressHashed();
-
-				if (!suppressedEmailAddressHashedSet.contains(
-						emailAddressHashed)) {
-
-					analyticsEvent.setEmailAddressHashed(emailAddressHashed);
-				}
-
-				analyticsEvent.setEventDate(event.getEventDate());
-				analyticsEvent.setEventId(event.getEventId());
-				analyticsEvent.setEventProperties(event.getProperties());
-				analyticsEvent.setId(
-					AnalyticsEventUtil.generateAnalyticsEventId(
-						dataSourceId, event,
-						analyticsEventsMessage.getProjectId(),
-						analyticsEventsMessage.getUserId()));
-				analyticsEvent.setProjectId(
-					ProjectIdThreadLocal.getProjectId());
-				analyticsEvent.setProjectTimeZoneId(projectTimeZoneId);
-				analyticsEvent.setUserId(analyticsEventsMessage.getUserId());
-
-				if (_log.isDebugEnabled()) {
-					_log.debug(
-						"Pushing analytics event message to the queue: " +
-							analyticsEvent.toJSON());
-				}
+				AnalyticsEvent analyticsEvent = _createAnalyticsEvent(
+					analyticsEventsMessage, channelId, dataSourceId, event,
+					projectTimeZoneId,
+					_dataControlTaskDog.getSuppressedEmailAddresses());
 
 				Map<String, String> messageAttributes = new HashMap<>();
 
