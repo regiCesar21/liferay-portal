@@ -58,6 +58,8 @@ public class AnalyticsEventsRestControllerTest {
 			analyticsEventsMessage, "1", "1", event, "UTC",
 			Collections.emptySet());
 
+		Assertions.assertNotNull(analyticsEvent);
+
 		Assertions.assertEquals("Page", analyticsEvent.getApplicationId());
 		Assertions.assertEquals("1", analyticsEvent.getChannelId());
 		Assertions.assertEquals(
@@ -76,6 +78,8 @@ public class AnalyticsEventsRestControllerTest {
 			_analyticsEventsRestController, "_createAnalyticsEvent",
 			analyticsEventsMessage, "1", "1", event, "UTC",
 			Collections.singleton("test@liferay.com"));
+
+		Assertions.assertNotNull(analyticsEvent);
 
 		Assertions.assertNull(analyticsEvent.getEmailAddressHashed());
 	}
