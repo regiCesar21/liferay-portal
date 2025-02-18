@@ -249,12 +249,6 @@ public class AnalyticsEventsRestController {
 		analyticsEvent.setProjectTimeZoneId(projectTimeZoneId);
 		analyticsEvent.setUserId(analyticsEventsMessage.getUserId());
 
-		if (_log.isDebugEnabled()) {
-			_log.debug(
-				"Pushing analytics event message to the queue: " +
-					analyticsEvent.toJSON());
-		}
-
 		return analyticsEvent;
 	}
 
@@ -337,6 +331,12 @@ public class AnalyticsEventsRestController {
 					analyticsEventsMessage, channelId, dataSourceId, event,
 					projectTimeZoneId,
 					_dataControlTaskDog.getSuppressedEmailAddresses());
+
+				if (_log.isDebugEnabled()) {
+					_log.debug(
+						"Pushing analytics event message to the queue: " +
+							analyticsEvent.toJSON());
+				}
 
 				Map<String, String> messageAttributes = new HashMap<>();
 
