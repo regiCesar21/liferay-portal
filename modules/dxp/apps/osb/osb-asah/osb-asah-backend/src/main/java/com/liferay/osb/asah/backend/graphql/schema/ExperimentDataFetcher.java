@@ -31,11 +31,11 @@ public class ExperimentDataFetcher implements DataFetcher<ExperimentDTO> {
 
 	@Override
 	public ExperimentDTO get(DataFetchingEnvironment dataFetchingEnvironment) {
-		String experimentId = dataFetchingEnvironment.getArgument(
-			"experimentId");
-
 		GraphQLContext graphQLContext =
 			dataFetchingEnvironment.getGraphQlContext();
+
+		String experimentId = dataFetchingEnvironment.getArgument(
+			"experimentId");
 
 		graphQLContext.put("experimentId", experimentId);
 
