@@ -24,12 +24,13 @@ import os
 import pendulum
 import requests
 
-def create_dag(ac_project_id, dag_id, dag_description):
+def create_dag(ac_project_id, ac_project_time_zone_id, dag_id, dag_description):
 	with airflow.DAG(
 		dag_id=dag_id,
 		default_args={
 			'ac_sql_instance': Variable.get('osb.asah.sql.instance'),
 			'ac_project_id': ac_project_id,
+			'ac_project_time_zone_id': ac_project_time_zone_id,
 			'google_project_id': os.environ['GOOGLE_PROJECT_ID'],
 			'owner': 'Liferay'
 		},
@@ -41,6 +42,10 @@ def create_dag(ac_project_id, dag_id, dag_description):
 
 		bq_individual_export_job = BigQueryInsertJobFromTemplateOperator(
 			task_id='individual_export'
+		)
+
+		bq_individual_activity_export_job = BigQueryInsertJobFromTemplateOperator(
+			task_id='individual_activity_export'
 		)
 
 		psql_truncate_individual_table_job = CloudSQLExecuteQueryOperator(
@@ -60,8 +65,8 @@ def create_dag(ac_project_id, dag_id, dag_description):
 		)
 
 		chain(
-			bq_individual_export_job, psql_truncate_individual_table_job,
-			psql_individual_import_job
+			bq_individual_export_job, bq_individual_activities_export_job,
+			psql_truncate_individual_table_job, psql_individual_import_job
 		)
 
 		return dag
@@ -81,7 +86,7 @@ for project in response.json():
 	)
 
 	globals()[dag_id] = create_dag(
-		project.get('id'), dag_id,
+		project.get('id'), project.get('timeZoneId'), dag_id,
 		'BigQuery Data Replication DAG For {}'.format(
 			project.get('id')
 		)
