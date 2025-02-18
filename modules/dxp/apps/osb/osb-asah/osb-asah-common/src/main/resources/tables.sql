@@ -265,6 +265,17 @@ CREATE TABLE IF NOT EXISTS Individual (
     fields JSON
 );
 
+CREATE TABLE IF NOT EXISTS IndividualActivity (
+	id TEXT PRIMARY KEY,
+	applicationId TEXT,
+	channelId BIGINT,
+	context JSON,
+	eventDate TIMESTAMPTZ,
+	eventId TEXT,
+	properties JSON,
+	individualId TEXT
+);
+
 CREATE TABLE IF NOT EXISTS InterestTopic (
 	id BIGSERIAL PRIMARY KEY,
 	term TEXT,
