@@ -64,9 +64,20 @@ def create_dag(ac_project_id, ac_project_time_zone_id, dag_id, dag_description):
 			task_id='cloudsql_individual_import'
 		)
 
+		psql_individual_activity_import_job = CloudSQLCSVImportOperator(
+			bucket_name="{{dag.default_args['google_project_id']}}-data-replica",
+			bucket_prefix="{{dag.default_args['ac_project_id']}}/individual-activity/{{ts}}",
+			database="osbasah",
+			gcp_conn_id="google_cloud_default",
+			instance="{{dag.default_args['ac_sql_instance']}}",
+			table="{{dag.default_args['ac_project_id']}}.individualactivity",
+			task_id='cloudsql_individual_activity_import'
+		)
+
 		chain(
-			bq_individual_export_job, bq_individual_activities_export_job,
-			psql_truncate_individual_table_job, psql_individual_import_job
+			bq_individual_export_job, bq_individual_activity_export_job,
+			psql_truncate_individual_table_job, psql_individual_import_job,
+			psql_individual_activity_import_job
 		)
 
 		return dag
