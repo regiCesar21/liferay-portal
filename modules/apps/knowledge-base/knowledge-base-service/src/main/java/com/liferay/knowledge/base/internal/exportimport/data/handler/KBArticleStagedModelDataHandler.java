@@ -8,6 +8,8 @@ package com.liferay.knowledge.base.internal.exportimport.data.handler;
 import com.liferay.document.library.kernel.exception.DuplicateFileEntryException;
 import com.liferay.document.library.kernel.exception.NoSuchFileException;
 import com.liferay.document.library.kernel.model.DLFileEntry;
+import com.liferay.document.library.kernel.service.DLFileEntryLocalService;
+import com.liferay.exportimport.content.processor.ExportImportContentProcessor;
 import com.liferay.exportimport.kernel.lar.BaseStagedModelDataHandler;
 import com.liferay.exportimport.kernel.lar.ExportImportPathUtil;
 import com.liferay.exportimport.kernel.lar.PortletDataContext;
@@ -43,6 +45,7 @@ import com.liferay.portlet.documentlibrary.lar.FileEntryUtil;
 import java.io.InputStream;
 import java.io.Serializable;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -291,22 +294,57 @@ public class KBArticleStagedModelDataHandler
 		serviceContext.setCompanyId(portletDataContext.getCompanyId());
 		serviceContext.setScopeGroupId(portletDataContext.getScopeGroupId());
 
+		Map<String, FileEntry> attachments = new HashMap<>();
+
+		for (FileEntry attachment :
+			importedKBArticle.getAttachmentsFileEntries()) {
+
+			attachments.put(attachment.getUuid(), attachment);
+		}
+
 		for (Element dlFileEntryElement : dlFileEntryElements) {
 			String path = dlFileEntryElement.attributeValue("path");
 
 			FileEntry fileEntry =
 				(FileEntry)portletDataContext.getZipEntryAsObject(path);
 
+			if (attachments.get(fileEntry.getUuid()) != null) {
+				attachments.remove(fileEntry.getUuid());
+
+				continue;
+			}
+
+			DLFileEntry importedFileEntry =
+				_dlFileEntryLocalService.getFileEntryByUuidAndGroupId(
+					fileEntry.getUuid(), portletDataContext.getScopeGroupId());
+
+			if (importedFileEntry != null) {
+				if (importedFileEntry.getFolderId() !=
+					importedKBArticle.getAttachmentsFolderId()) {
+
+					importedFileEntry.setClassName(KBArticle.class.getName());
+					importedFileEntry.setClassPK(
+						importedKBArticle.getClassPK());
+					importedFileEntry.setFolderId(
+						importedKBArticle.getAttachmentsFolderId());
+
+					_dlFileEntryLocalService.updateDLFileEntry(
+						importedFileEntry);
+				}
+
+				continue;
+			}
+
 			String binPath = dlFileEntryElement.attributeValue("bin-path");
 
 			try (InputStream inputStream = _getKBArticalAttachmentInputStream(
-					binPath, portletDataContext, fileEntry)) {
+				binPath, portletDataContext, fileEntry)) {
 
 				if (inputStream == null) {
 					if (_log.isWarnEnabled()) {
 						_log.warn(
 							"Unable to import attachment for file entry " +
-								fileEntry.getFileEntryId());
+							fileEntry.getFileEntryId());
 					}
 
 					continue;
@@ -326,11 +364,14 @@ public class KBArticleStagedModelDataHandler
 				// LPS-52675
 
 				if (_log.isDebugEnabled()) {
-					_log.debug(
-						duplicateFileEntryException,
-						duplicateFileEntryException);
+					_log.debug(duplicateFileEntryException);
 				}
 			}
+		}
+
+		for (FileEntry unreferencedAttachment : attachments.values()) {
+			_portletFileRepository.deletePortletFileEntry(
+				unreferencedAttachment.getFileEntryId());
 		}
 	}
 
@@ -505,6 +546,9 @@ public class KBArticleStagedModelDataHandler
 
 	@Reference
 	private ClassNameLocalService _classNameLocalService;
+
+	@Reference
+	private DLFileEntryLocalService _dlFileEntryLocalService;
 
 	@Reference
 	private KBArticleExportImportContentProcessor
