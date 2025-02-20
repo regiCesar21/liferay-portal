@@ -58,7 +58,7 @@ public class PortalImplGroupFriendlyURLTest {
 
 	@BeforeClass
 	public static void setUpClass() throws Exception {
-		_originalVirtualHostDefaultSiteName =
+		_originalVirtualHostsDefaultSiteName =
 			ReflectionTestUtil.getAndSetFieldValue(
 				PropsValues.class, "VIRTUAL_HOSTS_DEFAULT_SITE_NAME",
 				GroupConstants.GUEST);
@@ -87,7 +87,7 @@ public class PortalImplGroupFriendlyURLTest {
 	public static void tearDownClass() throws PortalException {
 		ReflectionTestUtil.setFieldValue(
 			PropsValues.class, "VIRTUAL_HOSTS_DEFAULT_SITE_NAME",
-			_originalVirtualHostDefaultSiteName);
+			_originalVirtualHostsDefaultSiteName);
 
 		_companyLocalService.deleteCompany(_company);
 	}
@@ -281,7 +281,7 @@ public class PortalImplGroupFriendlyURLTest {
 	@Inject
 	private static GroupLocalService _groupLocalService;
 
-	private static String _originalVirtualHostDefaultSiteName;
+	private static String _originalVirtualHostsDefaultSiteName;
 
 	@Inject
 	private static VirtualHostLocalService _virtualHostLocalService;

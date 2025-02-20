@@ -172,8 +172,10 @@ public class UserGroupLocalServiceTest {
 	public void testSearchUserGroupsWithNullParamsAndIndexerDisabled()
 		throws Exception {
 
-		Object value = ReflectionTestUtil.getAndSetFieldValue(
-			PropsValues.class, "USER_GROUPS_SEARCH_WITH_INDEX", Boolean.FALSE);
+		Object userGroupsSearchWithIndex =
+			ReflectionTestUtil.getAndSetFieldValue(
+				PropsValues.class, "USER_GROUPS_SEARCH_WITH_INDEX",
+				Boolean.FALSE);
 
 		try {
 			LinkedHashMap<String, Object> nullParams = null;
@@ -187,7 +189,8 @@ public class UserGroupLocalServiceTest {
 		}
 		finally {
 			ReflectionTestUtil.setFieldValue(
-				PropsValues.class, "USER_GROUPS_SEARCH_WITH_INDEX", value);
+				PropsValues.class, "USER_GROUPS_SEARCH_WITH_INDEX",
+				userGroupsSearchWithIndex);
 		}
 	}
 

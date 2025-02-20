@@ -1678,7 +1678,7 @@ public class TableMapperTest {
 
 	@Test
 	public void testTableMapperFactoryCache() {
-		Set<String> cacheMappingTableNames =
+		Set<String> cachelessMappingTableNames =
 			ReflectionTestUtil.getAndSetFieldValue(
 				TableMapperFactory.class, "_cachelessMappingTableNames",
 				new HashSet<String>() {
@@ -1696,7 +1696,7 @@ public class TableMapperTest {
 		finally {
 			ReflectionTestUtil.setFieldValue(
 				TableMapperFactory.class, "_cachelessMappingTableNames",
-				cacheMappingTableNames);
+				cachelessMappingTableNames);
 		}
 	}
 
