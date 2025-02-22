@@ -36,6 +36,16 @@ public interface PostgreSQLReplicationPipelineOptions
 			"fields in the CSV files"
 	)
 	@Validation.Required
+	public String getIndividualActivityColumns();
+
+	@Validation.Required
+	public String getIndividualActivityInputDirectory();
+
+	@Description(
+		"Return the comma-separated list of column names corresponding to the " +
+			"fields in the CSV files"
+	)
+	@Validation.Required
 	public String getIndividualColumns();
 
 	@Validation.Required
@@ -54,6 +64,11 @@ public interface PostgreSQLReplicationPipelineOptions
 	public void setDatabaseUser(String databaseUser);
 
 	public void setDatasourceMaxConnections(Integer maxConnections);
+
+	public void setIndividualActivityColumns(String individualActivityColumns);
+
+	public void setIndividualActivityInputDirectory(
+		String individualActivityInputDirectory);
 
 	public void setIndividualColumns(String individualColumns);
 

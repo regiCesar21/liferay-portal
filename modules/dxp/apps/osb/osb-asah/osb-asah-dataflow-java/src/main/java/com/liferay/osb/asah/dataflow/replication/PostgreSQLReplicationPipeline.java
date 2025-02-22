@@ -34,6 +34,9 @@ public class PostgreSQLReplicationPipeline {
 		IndividualReplication.extend(
 			pipeline, postgreSQLReplicationPipelineOptions);
 
+		IndividualActivityReplication.extend(
+			pipeline, postgreSQLReplicationPipelineOptions);
+
 		PipelineResult pipelineResult = pipeline.run();
 
 		pipelineResult.waitUntilFinish();
