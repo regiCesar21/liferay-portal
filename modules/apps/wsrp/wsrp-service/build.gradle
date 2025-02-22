@@ -10,7 +10,6 @@ buildWSDD {
 dependencies {
 	compileInclude group: "org.apache.ws.security", name: "wss4j", version: "1.5.12"
 	compileInclude group: "org.bouncycastle", name: "bcprov-jdk18on", version: "1.78"
-
 	compileOnly group: "biz.aQute.bnd", name: "biz.aQute.bndlib", version: "3.1.0"
 	compileOnly group: "com.liferay", name: "oasis.names.tc.wsrp", version: "1.0.1"
 	compileOnly group: "com.liferay", name: "org.apache.axis", version: "1.4.LIFERAY-PATCHED-8"

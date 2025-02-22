@@ -42,7 +42,6 @@ dependencies {
 	compileInclude group: "org.ow2.asm", name: "asm", version: "5.0.4"
 	compileInclude group: "org.ow2.asm", name: "asm-commons", version: "5.0.4"
 	compileInclude group: "org.yaml", name: "snakeyaml", version: "2.0"
-
 	compileOnly group: "biz.aQute.bnd", name: "biz.aQute.bndlib", version: "3.1.0"
 	compileOnly group: "com.google.guava", name: "failureaccess", version: "1.0.1"
 	compileOnly group: "com.google.guava", name: "guava", version: "32.0.1-jre"
@@ -57,12 +56,10 @@ dependencies {
 	compileOnly project(":apps:foundation:portal-search:portal-search-api")
 	compileOnly project(":apps:static:portal-configuration:portal-configuration-metatype")
 	compileOnly project(":core:petra:petra-string")
-
 	elasticsearchPlugins ext: "zip", group: "org.elasticsearch.plugin", name: "analysis-icu", version: elasticsearchVersion
 	elasticsearchPlugins ext: "zip", group: "org.elasticsearch.plugin", name: "analysis-kuromoji", version: elasticsearchVersion
 	elasticsearchPlugins ext: "zip", group: "org.elasticsearch.plugin", name: "analysis-smartcn", version: elasticsearchVersion
 	elasticsearchPlugins ext: "zip", group: "org.elasticsearch.plugin", name: "analysis-stempel", version: elasticsearchVersion
-
 	testImplementation group: "ch.qos.reload4j", name: "reload4j", version: "1.2.18.4"
 	testImplementation group: "com.liferay.portal", name: "com.liferay.util.java", version: "default"
 	testImplementation group: "commons-configuration", name: "commons-configuration", version: "1.10"

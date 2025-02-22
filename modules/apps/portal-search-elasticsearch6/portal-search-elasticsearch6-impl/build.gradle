@@ -9,7 +9,6 @@ configurations {
 
 dependencies {
 	annotationProcessor group: "org.apache.logging.log4j", name: "log4j-core", version: "2.17.1"
-
 	compileInclude group: "com.carrotsearch", name: "hppc", version: "0.7.1"
 	compileInclude group: "com.fasterxml.jackson.core", name: "jackson-core", version: "2.13.4"
 	compileInclude group: "com.fasterxml.jackson.dataformat", name: "jackson-dataformat-cbor", version: "2.12.6"
@@ -70,7 +69,6 @@ dependencies {
 	compileInclude group: "org.hdrhistogram", name: "HdrHistogram", version: "2.1.9"
 	compileInclude group: "org.locationtech.spatial4j", name: "spatial4j", version: "0.6"
 	compileInclude group: "org.yaml", name: "snakeyaml", version: "2.0"
-
 	compileOnly group: "biz.aQute.bnd", name: "biz.aQute.bndlib", version: "3.1.0"
 	compileOnly group: "com.ibm.icu", name: "icu4j", version: "61.1"
 	compileOnly group: "com.liferay.portal", name: "com.liferay.portal.impl", version: "default"
@@ -82,12 +80,10 @@ dependencies {
 	compileOnly project(":apps:portal-search-elasticsearch6:portal-search-elasticsearch6-api")
 	compileOnly project(":apps:static:portal-configuration:portal-configuration-metatype")
 	compileOnly project(":core:petra:petra-string")
-
 	elasticsearchPlugins ext: "zip", group: "com.liferay", name: "org.elasticsearch.plugin.analysis.icu", version: elasticsearchVersion
 	elasticsearchPlugins ext: "zip", group: "com.liferay", name: "org.elasticsearch.plugin.analysis.kuromoji", version: elasticsearchVersion
 	elasticsearchPlugins ext: "zip", group: "com.liferay", name: "org.elasticsearch.plugin.analysis.smartcn", version: elasticsearchVersion
 	elasticsearchPlugins ext: "zip", group: "com.liferay", name: "org.elasticsearch.plugin.analysis.stempel", version: elasticsearchVersion
-
 	testImplementation group: "ch.qos.reload4j", name: "reload4j", version: "1.2.18.4"
 	testImplementation group: "com.liferay.portal", name: "com.liferay.util.java", version: "default"
 	testImplementation group: "commons-configuration", name: "commons-configuration", version: "1.10"

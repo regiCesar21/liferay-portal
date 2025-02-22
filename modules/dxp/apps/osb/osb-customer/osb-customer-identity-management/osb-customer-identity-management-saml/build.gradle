@@ -1,7 +1,6 @@
 dependencies {
 	compileInclude group: "joda-time", name: "joda-time", version: "2.9"
 	compileInclude group: "org.joda", name: "joda-convert", version: "1.2"
-
 	compileOnly group: "com.liferay", name: "com.liferay.petra.string", version: "1.0.0"
 	compileOnly group: "com.liferay", name: "com.liferay.saml.opensaml.integration", version: "1.1.8"
 	compileOnly group: "com.liferay.portal", name: "com.liferay.portal.kernel", version: "2.50.0"

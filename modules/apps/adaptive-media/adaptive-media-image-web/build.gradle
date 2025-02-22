@@ -32,6 +32,5 @@ dependencies {
 	compileOnly project(":apps:adaptive-media:adaptive-media-api")
 	compileOnly project(":apps:adaptive-media:adaptive-media-image-api")
 	compileOnly project(":core:petra:petra-string")
-
 	picturefill group: "org.webjars.bower", name: "picturefill", transitive: false, version: pictureFillVersion
 }

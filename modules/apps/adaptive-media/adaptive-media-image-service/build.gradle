@@ -16,6 +16,5 @@ dependencies {
 	compileOnly project(":apps:static:osgi:osgi-util")
 	compileOnly project(":apps:web-experience:export-import:export-import-api")
 	compileOnly project(":core:osgi-service-tracker-collections")
-
 	testImplementation group: "org.mockito", name: "mockito-core", version: "1.10.8"
 }

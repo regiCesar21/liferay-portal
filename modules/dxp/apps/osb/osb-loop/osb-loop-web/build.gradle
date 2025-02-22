@@ -9,7 +9,6 @@ dependencies {
 	compileInclude group: "net.sourceforge.cssparser", name: "cssparser", version: "0.9.24"
 	compileInclude group: "org.nibor.autolink", name: "autolink", version: "0.6.0"
 	compileInclude group: "org.w3c.css", name: "sac", version: "1.3"
-
 	compileOnly group: "com.liferay", name: "com.liferay.alloy.mvc", version: "2.3.0"
 	compileOnly group: "com.liferay", name: "com.liferay.journal.taglib", version: "1.0.0"
 	compileOnly group: "com.liferay", name: "com.liferay.petra.content", version: "1.0.0"

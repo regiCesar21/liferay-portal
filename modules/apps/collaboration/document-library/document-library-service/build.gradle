@@ -28,7 +28,6 @@ dependencies {
 	compileOnly project(":core:petra:petra-function")
 	compileOnly project(":core:petra:petra-lang")
 	compileOnly project(":core:petra:petra-string")
-
 	testImplementation project(":apps:foundation:portal-search:portal-search")
 	testImplementation project(":core:petra:petra-io")
 }

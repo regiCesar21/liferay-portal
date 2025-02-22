@@ -1,6 +1,5 @@
 dependencies {
 	compileInclude group: "com.liferay", name: "oasis.names.tc.wsrp", version: "1.0.1"
-
 	compileOnly group: "biz.aQute.bnd", name: "biz.aQute.bndlib", version: "3.1.0"
 	compileOnly group: "com.liferay", name: "org.apache.axis", version: "1.4.LIFERAY-PATCHED-8"
 	compileOnly group: "com.liferay.portal", name: "com.liferay.portal.kernel", version: "default"

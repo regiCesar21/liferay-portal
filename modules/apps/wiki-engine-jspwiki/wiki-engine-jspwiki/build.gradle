@@ -6,7 +6,6 @@ dependencies {
 	compileInclude group: "opensymphony", name: "oscache", version: "2.4.1"
 	compileInclude group: "org.freshcookies", name: "freshcookies-security", version: "0.60"
 	compileInclude group: "oro", name: "oro", version: "2.0.8"
-
 	compileOnly fileTree(dir: "../../../../lib/portal", includes: ["ecs.jar", "freshcookies-security.jar"])
 	compileOnly group: "com.liferay.portal", name: "com.liferay.portal.impl", version: "default"
 	compileOnly group: "com.liferay.portal", name: "com.liferay.portal.kernel", version: "default"

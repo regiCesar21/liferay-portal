@@ -7,6 +7,5 @@ dependencies {
 	testImplementation project(":apps:cookies:cookies-impl")
 	testImplementation project(":core:petra:petra-string")
 	testImplementation project(":core:registry-api")
-
 	testIntegrationImplementation group: "com.liferay", name: "com.liferay.arquillian.extension.junit.bridge", version: "1.0.19"
 }

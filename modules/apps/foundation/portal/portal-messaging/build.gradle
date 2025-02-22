@@ -7,6 +7,5 @@ dependencies {
 	compileOnly project(":apps:foundation:portal:portal-upgrade-api")
 	compileOnly project(":apps:static:portal-configuration:portal-configuration-metatype")
 	compileOnly project(":apps:static:portal-configuration:portal-configuration-persistence")
-
 	testImplementation project(":core:registry-api")
 }

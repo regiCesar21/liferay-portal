@@ -6,7 +6,6 @@ dependencies {
 	compileOnly project(":apps:adaptive-media:adaptive-media-image-api")
 	compileOnly project(":apps:collaboration:document-library:document-library-api")
 	compileOnly project(":apps:foundation:portal:portal-upgrade-api")
-
 	testImplementation group: "com.liferay.portal", name: "com.liferay.util.java", version: "default"
 	testImplementation group: "easyconf", name: "easyconf", version: "0.9.5"
 }

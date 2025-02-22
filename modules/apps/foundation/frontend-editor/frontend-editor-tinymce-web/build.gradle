@@ -67,6 +67,5 @@ dependencies {
 	compileOnly project(":apps:foundation:frontend-taglib:frontend-taglib")
 	compileOnly project(":core:petra:petra-lang")
 	compileOnly project(":core:petra:petra-string")
-
 	tinyMCE group: "org.webjars.bower", name: "tinymce", transitive: false, version: tinyMCEVersion
 }

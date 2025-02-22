@@ -7,7 +7,6 @@ dependencies {
 	compileOnly project(":apps:forms-and-workflow:dynamic-data-mapping:dynamic-data-mapping-api")
 	compileOnly project(":apps:forms-and-workflow:dynamic-data-mapping:dynamic-data-mapping-form-field-type")
 	compileOnly project(":apps:static:osgi:osgi-util")
-
 	testImplementation group: "org.skyscreamer", name: "jsonassert", version: "1.2.3"
 	testImplementation project(":apps:forms-and-workflow:dynamic-data-mapping:dynamic-data-mapping-test-util")
 }

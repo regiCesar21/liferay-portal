@@ -7,7 +7,6 @@ dependencies {
 	testImplementation project(":apps:forms-and-workflow:dynamic-data-mapping:dynamic-data-mapping-io")
 	testImplementation project(":apps:web-experience:export-import:export-import-api")
 	testImplementation project(":apps:web-experience:export-import:export-import-service")
-
 	testIntegrationImplementation group: "com.liferay", name: "com.liferay.arquillian.extension.junit.bridge", version: "1.0.19"
 	testIntegrationImplementation group: "com.liferay.portal", name: "com.liferay.portal.impl", version: "default"
 	testIntegrationImplementation project(":apps:forms-and-workflow:dynamic-data-mapping:dynamic-data-mapping-test-util")

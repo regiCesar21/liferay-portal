@@ -5,7 +5,6 @@ buildService {
 
 dependencies {
 	compileInclude group: "net.htmlparser.jericho", name: "jericho-html", version: "3.1"
-
 	compileOnly group: "biz.aQute.bnd", name: "biz.aQute.bndlib", version: "3.1.0"
 	compileOnly group: "com.liferay.portal", name: "com.liferay.portal.impl", version: "default"
 	compileOnly group: "com.liferay.portal", name: "com.liferay.portal.kernel", version: "default"
@@ -26,7 +25,6 @@ dependencies {
 	compileOnly project(":apps:web-experience:rss:rss-util")
 	compileOnly project(":core:petra:petra-string")
 	compileOnly project(":core:registry-api")
-
 	testImplementation group: "org.mockito", name: "mockito-core", version: "1.10.8"
 }
 

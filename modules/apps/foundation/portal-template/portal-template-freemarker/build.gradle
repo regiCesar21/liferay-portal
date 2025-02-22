@@ -1,6 +1,5 @@
 dependencies {
 	compileInclude group: "com.liferay", name: "org.freemarker", version: "2.3.23.LIFERAY-PATCHED-4"
-
 	compileOnly group: "biz.aQute.bnd", name: "biz.aQute.bndlib", version: "3.1.0"
 	compileOnly group: "com.liferay.portal", name: "com.liferay.portal.impl", version: "default"
 	compileOnly group: "com.liferay.portal", name: "com.liferay.portal.kernel", version: "default"
@@ -16,7 +15,6 @@ dependencies {
 	compileOnly project(":core:petra:petra-lang")
 	compileOnly project(":core:petra:petra-memory")
 	compileOnly project(":core:petra:petra-string")
-
 	testImplementation project(":core:registry-api")
 }
 

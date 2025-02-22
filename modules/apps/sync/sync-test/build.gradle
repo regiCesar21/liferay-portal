@@ -3,6 +3,5 @@ dependencies {
 	testImplementation group: "com.liferay.portal", name: "com.liferay.portal.kernel", version: "default"
 	testImplementation project(":apps:sync:sync-api")
 	testImplementation project(":apps:sync:sync-service")
-
 	testIntegrationImplementation group: "com.liferay", name: "com.liferay.arquillian.extension.junit.bridge", version: "1.0.19"
 }

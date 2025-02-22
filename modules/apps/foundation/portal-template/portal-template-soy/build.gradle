@@ -13,7 +13,6 @@ dependencies {
 	compileInclude group: "javax.inject", name: "javax.inject", version: "1"
 	compileInclude group: "org.apache.commons", name: "commons-lang3", version: "3.4"
 	compileInclude group: "org.sonatype.sisu.inject", name: "cglib", version: "2.2.1-v20090111"
-
 	compileOnly group: "biz.aQute.bnd", name: "biz.aQute.bndlib", version: "3.1.0"
 	compileOnly group: "com.google.guava", name: "guava", version: "32.0.1-jre"
 	compileOnly group: "com.liferay.portal", name: "com.liferay.portal.impl", version: "default"

@@ -7,7 +7,6 @@ dependencies {
 	compileOnly project(":apps:collaboration:blogs:blogs-item-selector-api")
 	compileOnly project(":apps:collaboration:item-selector:item-selector-api")
 	compileOnly project(":apps:collaboration:item-selector:item-selector-criteria-api")
-
 	testImplementation group: "com.liferay.portal", name: "com.liferay.portal.impl", version: "default"
 	testImplementation group: "javax.servlet", name: "javax.servlet-api", version: "3.0.1"
 	testImplementation group: "org.jabsorb", name: "jabsorb", version: "1.3.1"

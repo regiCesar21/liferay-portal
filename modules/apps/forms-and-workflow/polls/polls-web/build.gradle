@@ -1,7 +1,6 @@
 dependencies {
 	compileInclude group: "org.jfree", name: "jcommon", version: "1.0.24"
 	compileInclude group: "org.jfree", name: "jfreechart", version: "1.0.19"
-
 	compileOnly group: "com.liferay.portal", name: "com.liferay.portal.impl", version: "default"
 	compileOnly group: "com.liferay.portal", name: "com.liferay.portal.kernel", version: "default"
 	compileOnly group: "com.liferay.portal", name: "com.liferay.util.java", version: "default"

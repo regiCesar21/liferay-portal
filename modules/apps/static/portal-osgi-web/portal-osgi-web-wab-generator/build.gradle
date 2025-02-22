@@ -1,6 +1,5 @@
 dependencies {
 	compileInclude group: "biz.aQute.bnd", name: "biz.aQute.bndlib", version: "3.3.0"
-
 	compileOnly group: "com.liferay", name: "com.liferay.ant.bnd", version: "3.2.10"
 	compileOnly group: "com.liferay", name: "com.liferay.whip", version: "1.0.2"
 	compileOnly group: "com.liferay", name: "org.apache.felix.fileinstall", version: "3.5.4.LIFERAY-PATCHED-4"
@@ -14,7 +13,6 @@ dependencies {
 	compileOnly group: "org.springframework", name: "spring-context", version: "4.3.30.RELEASE"
 	compileOnly group: "org.springframework", name: "spring-core", version: "4.3.30.RELEASE"
 	compileOnly group: "org.springframework", name: "spring-web", version: "4.3.30.RELEASE"
-
 	testImplementation group: "commons-beanutils", name: "commons-beanutils", version: "1.9.4"
 	testImplementation group: "commons-configuration", name: "commons-configuration", version: "1.10"
 	testImplementation group: "commons-digester", name: "commons-digester", version: "1.8.1"

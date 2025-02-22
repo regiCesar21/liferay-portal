@@ -23,7 +23,6 @@ dependencies {
 	api project(":apps:collaboration:document-library:document-library-api")
 	api project(":apps:collaboration:wiki:wiki-api")
 	api project(":apps:collaboration:wiki:wiki-service")
-
 	compileOnly group: "com.liferay", name: "com.liferay.petra.string", version: "1.0.0"
 	compileOnly group: "com.liferay", name: "org.freemarker", version: "2.3.23.LIFERAY-PATCHED-4"
 	compileOnly group: "com.liferay.portal", name: "com.liferay.portal.impl", version: "default"

@@ -1,7 +1,6 @@
 dependencies {
 	compileInclude group: "org.jabsorb", name: "jabsorb", version: "1.3.2"
 	compileInclude group: "org.scribe", name: "scribe", version: "1.3.6"
-
 	compileOnly group: "com.liferay", name: "com.liferay.alloy.mvc", version: "2.3.0"
 	compileOnly group: "com.liferay", name: "com.liferay.petra.lang", version: "1.0.0"
 	compileOnly group: "com.liferay", name: "com.liferay.petra.string", version: "1.0.0"

@@ -15,7 +15,6 @@ dependencies {
 	compileInclude group: "org.eclipse.jdt.core.compiler", name: "ecj", version: "4.5.1"
 	compileInclude group: "org.jfree", name: "jcommon", version: "1.0.24"
 	compileInclude group: "org.jfree", name: "jfreechart", version: "1.0.19"
-
 	compileOnly group: "com.liferay", name: "org.apache.xalan", version: "2.7.2.LIFERAY-PATCHED-1"
 	compileOnly group: "com.liferay.portal", name: "com.liferay.portal.kernel", version: "default"
 	compileOnly group: "commons-collections", name: "commons-collections", version: "3.2.2"

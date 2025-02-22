@@ -13,7 +13,6 @@ dependencies {
 	compileInclude group: "com.vladsch.flexmark", name: "flexmark-formatter", version: "0.28.32"
 	compileInclude group: "com.vladsch.flexmark", name: "flexmark-util", version: "0.28.32"
 	compileInclude group: "org.nibor.autolink", name: "autolink", version: "0.6.0"
-
 	compileOnly group: "com.liferay", name: "com.liferay.alloy.mvc", version: "2.3.0"
 	compileOnly group: "com.liferay", name: "com.liferay.frontend.taglib", version: "2.0.0"
 	compileOnly group: "com.liferay", name: "com.liferay.petra.lang", version: "1.0.0"

@@ -18,7 +18,6 @@ copyJAMWiki {
 
 dependencies {
 	compileInclude group: "com.liferay", name: "org.jamwiki", version: jamWikiVersion
-
 	compileOnly group: "com.liferay.portal", name: "com.liferay.portal.impl", version: "default"
 	compileOnly group: "com.liferay.portal", name: "com.liferay.portal.kernel", version: "default"
 	compileOnly group: "com.liferay.portal", name: "com.liferay.util.taglib", version: "default"

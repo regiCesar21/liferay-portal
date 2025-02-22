@@ -8,6 +8,5 @@ dependencies {
 	compileOnly project(":apps:collaboration:item-selector:item-selector-criteria-api")
 	compileOnly project(":apps:collaboration:wiki:wiki-api")
 	compileOnly project(":apps:collaboration:wiki:wiki-service")
-
 	testImplementation group: "org.skyscreamer", name: "jsonassert", version: "1.2.3"
 }

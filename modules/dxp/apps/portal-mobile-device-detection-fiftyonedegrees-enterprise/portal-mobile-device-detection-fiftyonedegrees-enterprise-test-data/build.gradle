@@ -9,7 +9,6 @@ dependencies {
 	compileOnly group: "org.osgi", name: "osgi.core", version: "6.0.0"
 	compileOnly project(":apps:portal-mobile-device-detection-fiftyonedegrees:portal-mobile-device-detection-fiftyonedegrees-api")
 	compileOnly project(":apps:static:portal-configuration:portal-configuration-metatype")
-
 	dat ext: "gz", group: "com.liferay", name: "com.51degrees.dat.test", version: "3.2"
 }
 
