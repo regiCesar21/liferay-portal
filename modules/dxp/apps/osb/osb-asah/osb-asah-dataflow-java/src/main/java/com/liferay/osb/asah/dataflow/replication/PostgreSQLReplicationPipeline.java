@@ -7,6 +7,7 @@ package com.liferay.osb.asah.dataflow.replication;
 
 import org.apache.beam.sdk.Pipeline;
 import org.apache.beam.sdk.PipelineResult;
+import org.apache.beam.sdk.io.TextIO;
 import org.apache.beam.sdk.options.PipelineOptionsFactory;
 
 /**
@@ -31,11 +32,34 @@ public class PostgreSQLReplicationPipeline {
 		Pipeline pipeline = Pipeline.create(
 			postgreSQLReplicationPipelineOptions);
 
-		IndividualReplication.extend(
-			pipeline, postgreSQLReplicationPipelineOptions);
+		// Individual
 
-		IndividualActivityReplication.extend(
-			pipeline, postgreSQLReplicationPipelineOptions);
+		pipeline.apply(
+			TextIO.read(
+			).from(
+				postgreSQLReplicationPipelineOptions.
+					getIndividualInputDirectory()
+			)
+		).apply(
+			JdbcIOUtil.createJdbcIOWrite(
+				postgreSQLReplicationPipelineOptions.getIndividualColumns(),
+				"individual", postgreSQLReplicationPipelineOptions)
+		);
+
+		// Individual Activity
+
+		pipeline.apply(
+			TextIO.read(
+			).from(
+				postgreSQLReplicationPipelineOptions.
+					getIndividualActivityInputDirectory()
+			)
+		).apply(
+			JdbcIOUtil.createJdbcIOWrite(
+				postgreSQLReplicationPipelineOptions.
+					getIndividualActivityColumns(),
+				"individualactivity", postgreSQLReplicationPipelineOptions)
+		);
 
 		PipelineResult pipelineResult = pipeline.run();
 

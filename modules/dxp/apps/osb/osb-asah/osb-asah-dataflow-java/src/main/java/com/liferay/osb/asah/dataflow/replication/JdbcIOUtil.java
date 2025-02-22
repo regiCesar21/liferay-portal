@@ -5,6 +5,11 @@
 
 package com.liferay.osb.asah.dataflow.replication;
 
+import com.opencsv.CSVParser;
+import com.opencsv.CSVParserBuilder;
+
+import java.sql.PreparedStatement;
+
 import java.util.Map;
 import java.util.Properties;
 import java.util.Set;
@@ -12,28 +17,46 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 import org.apache.beam.sdk.io.jdbc.JdbcIO;
+import org.apache.commons.lang3.StringUtils;
 
 /**
  * @author Marcellus Tavares
  */
 public class JdbcIOUtil {
 
-	public static JdbcIO.DataSourceConfiguration createDataSourceConfiguration(
+	public static JdbcIO.Write<String> createJdbcIOWrite(
+		String csvColumns, String tableName,
 		PostgreSQLReplicationPipelineOptions
 			postgreSQLReplicationPipelineOptions) {
 
-		return JdbcIO.DataSourceConfiguration.create(
-			"org.postgresql.Driver",
-			String.format(
-				"jdbc:postgresql:///%s",
-				postgreSQLReplicationPipelineOptions.getDatabaseName())
-		).withConnectionProperties(
-			_createDataSourceConnectionPropertiesString(
+		String[] columns = StringUtils.split(csvColumns, ",");
+
+		return JdbcIO.<String>write(
+		).withBatchSize(
+			postgreSQLReplicationPipelineOptions.getBatchSize()
+		).withDataSourceConfiguration(
+			JdbcIO.DataSourceConfiguration.create(
+				"org.postgresql.Driver",
+				String.format(
+					"jdbc:postgresql:///%s",
+					postgreSQLReplicationPipelineOptions.getDatabaseName())
+			).withConnectionProperties(
+				_createDataSourceConnectionPropertiesString(
+					postgreSQLReplicationPipelineOptions.
+						getCloudSQLConnectionName(),
+					postgreSQLReplicationPipelineOptions.getDatabaseUser())
+			).withMaxConnections(
 				postgreSQLReplicationPipelineOptions.
-					getCloudSQLConnectionName(),
-				postgreSQLReplicationPipelineOptions.getDatabaseUser())
-		).withMaxConnections(
-			postgreSQLReplicationPipelineOptions.getDatasourceMaxConnections()
+					getDatasourceMaxConnections()
+			)
+		).withPreparedStatementSetter(
+			new DefaultPreparedStatementSetter()
+		).withStatement(
+			String.format(
+				"insert into %s.%s(%s) values(%s)",
+				postgreSQLReplicationPipelineOptions.getProjectId(), tableName,
+				StringUtils.join(columns, ","),
+				StringUtils.repeat("?", ",", columns.length))
 		);
 	}
 
@@ -60,6 +83,33 @@ public class JdbcIOUtil {
 		).collect(
 			Collectors.joining(";")
 		);
+	}
+
+	private static class DefaultPreparedStatementSetter
+		implements JdbcIO.PreparedStatementSetter<String> {
+
+		@Override
+		public void setParameters(
+				String element, PreparedStatement preparedStatement)
+			throws Exception {
+
+			CSVParser csvParser = _buildCSVParser();
+
+			String[] columnValues = csvParser.parseLine(element);
+
+			for (int i = 0; i < columnValues.length; i++) {
+				preparedStatement.setString(i + 1, columnValues[i]);
+			}
+		}
+
+		private CSVParser _buildCSVParser() {
+			CSVParserBuilder csvParserBuilder = new CSVParserBuilder();
+
+			csvParserBuilder.withSeparator(';');
+
+			return csvParserBuilder.build();
+		}
+
 	}
 
 }
