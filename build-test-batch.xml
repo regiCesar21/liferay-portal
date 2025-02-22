@@ -3639,12 +3639,7 @@ log.sanitizer.enabled=false</echo>
 				replace="${java.jdk.home}/bin"
 			/>
 
-			<gradle-execute
-				checktask="true"
-				dir="${module.base.dir}"
-				refreshdependencies="true"
-				task="compileJava"
-			>
+			<gradle-execute checktask="true" dir="${module.base.dir}" refreshdependencies="true" task="compileJava">
 				<env key="JAVA_HOME" value="${java.jdk.home}" />
 				<env key="JAVA_OPTS" value="${java.jdk.opts}" />
 				<env key="PATH" value="${path}" />
@@ -3729,13 +3724,7 @@ log.sanitizer.enabled=false</echo>
 				replace="${java.jdk.home}/bin"
 			/>
 
-			<gradle-execute
-				checktask="true"
-				dir="${module.base.dir}"
-				forcedcacheenabled="false"
-				refreshdependencies="true"
-				task="baseline"
-			>
+			<gradle-execute checktask="true" dir="${module.base.dir}" forcedcacheenabled="false" refreshdependencies="true" task="baseline">
 				<env key="JAVA_HOME" value="${java.jdk.home}" />
 				<env key="JAVA_OPTS" value="${java.jdk.opts}" />
 				<env key="PATH" value="${path}" />
