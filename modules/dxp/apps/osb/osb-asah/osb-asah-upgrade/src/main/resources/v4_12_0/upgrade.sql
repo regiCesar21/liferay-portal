@@ -1,6 +1,6 @@
 CREATE TABLE IF NOT EXISTS Individual (
     id TEXT PRIMARY KEY,
-    emalAddress TEXT,
+    emailAddress TEXT,
     fields JSON
 );
 
