@@ -10,12 +10,8 @@ import com.liferay.portal.instances.web.internal.constants.PortalInstancesPortle
 import com.liferay.portal.kernel.exception.CompanyMxException;
 import com.liferay.portal.kernel.exception.CompanyVirtualHostException;
 import com.liferay.portal.kernel.exception.CompanyWebIdException;
-import com.liferay.portal.kernel.exception.ContactNameException;
 import com.liferay.portal.kernel.exception.NoSuchCompanyException;
 import com.liferay.portal.kernel.exception.RequiredCompanyException;
-import com.liferay.portal.kernel.exception.UserEmailAddressException;
-import com.liferay.portal.kernel.exception.UserPasswordException;
-import com.liferay.portal.kernel.exception.UserScreenNameException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Company;
@@ -93,18 +89,7 @@ public class EditInstanceMVCActionCommand extends BaseMVCActionCommand {
 			}
 			else if (exception instanceof CompanyMxException ||
 					 exception instanceof CompanyVirtualHostException ||
-					 exception instanceof CompanyWebIdException ||
-					 exception instanceof
-						 ContactNameException.MustHaveFirstName ||
-					 exception instanceof
-						 ContactNameException.MustHaveLastName ||
-					 exception instanceof
-						 ContactNameException.MustHaveMiddleName ||
-					 exception instanceof
-						 ContactNameException.MustHaveValidFullName ||
-					 exception instanceof UserEmailAddressException ||
-					 exception instanceof UserPasswordException ||
-					 exception instanceof UserScreenNameException) {
+					 exception instanceof CompanyWebIdException) {
 
 				long companyId = ParamUtil.getLong(actionRequest, "companyId");
 
@@ -157,24 +142,9 @@ public class EditInstanceMVCActionCommand extends BaseMVCActionCommand {
 			// Add instance
 
 			String webId = ParamUtil.getString(actionRequest, "webId");
-			String defaultAdminPassword = ParamUtil.getString(
-				actionRequest, "defaultAdminPassword", null);
-			String defaultAdminScreenName = ParamUtil.getString(
-				actionRequest, "defaultAdminScreenName", null);
-			String defaultAdminEmailAddress = ParamUtil.getString(
-				actionRequest, "defaultAdminEmailAddress", null);
-			String defaultAdminFirstName = ParamUtil.getString(
-				actionRequest, "defaultAdminFirstName", null);
-			String defaultAdminMiddleName = ParamUtil.getString(
-				actionRequest, "defaultAdminMiddleName", null);
-			String defaultAdminLastName = ParamUtil.getString(
-				actionRequest, "defaultAdminLastName", null);
 
 			Company company = _companyService.addCompany(
-				webId, virtualHostname, mx, false, maxUsers, active,
-				defaultAdminPassword, defaultAdminScreenName,
-				defaultAdminEmailAddress, defaultAdminFirstName,
-				defaultAdminMiddleName, defaultAdminLastName);
+				webId, virtualHostname, mx, false, maxUsers, active);
 
 			String siteInitializerKey = ParamUtil.getString(
 				actionRequest, "siteInitializerKey");

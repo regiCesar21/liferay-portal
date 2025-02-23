@@ -233,12 +233,9 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 		long creatorUserId = 0;
 		boolean autoPassword = false;
 
-		boolean passwordReset = false;
+		String password1 = PropsValues.DEFAULT_ADMIN_PASSWORD;
 
-		if (Validator.isNull(password)) {
-			autoPassword = true;
-			passwordReset = true;
-		}
+		String password2 = password1;
 
 		boolean autoScreenName = false;
 
@@ -290,25 +287,18 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 		serviceContext.setPortalURL(company.getPortalURL(0));
 
 		User defaultAdminUser = addUser(
-			creatorUserId, companyId, autoPassword, password, password,
+			creatorUserId, companyId, autoPassword, password1, password2,
 			autoScreenName, screenName, emailAddress, facebookId, openId,
 			locale, firstName, middleName, lastName, prefixId, suffixId, male,
 			birthdayMonth, birthdayDay, birthdayYear, jobTitle, groupIds,
 			organizationIds, roleIds, userGroupIds, sendEmail, serviceContext);
-
-		if (autoPassword) {
-			defaultAdminUser.setReminderQueryAnswer(
-				WorkflowConstants.LABEL_PENDING);
-
-			defaultAdminUser = userPersistence.update(defaultAdminUser);
-		}
 
 		updateEmailAddressVerified(defaultAdminUser.getUserId(), true);
 
 		updateLastLogin(
 			defaultAdminUser.getUserId(), defaultAdminUser.getLoginIP());
 
-		updatePasswordReset(defaultAdminUser.getUserId(), passwordReset);
+		updatePasswordReset(defaultAdminUser.getUserId(), false);
 
 		return defaultAdminUser;
 	}

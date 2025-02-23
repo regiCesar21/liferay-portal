@@ -67,7 +67,6 @@ import com.liferay.portal.kernel.transaction.Isolation;
 import com.liferay.portal.kernel.transaction.TransactionCommitCallbackUtil;
 import com.liferay.portal.kernel.transaction.Transactional;
 import com.liferay.portal.kernel.util.ArrayUtil;
-import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleThreadLocal;
 import com.liferay.portal.kernel.util.LocaleUtil;
@@ -273,10 +272,7 @@ public class CompanyLocalServiceImpl extends CompanyLocalServiceBaseImpl {
 				return company;
 			}
 
-			company = _checkCompany(
-				company, mx, defaultAdminPassword, defaultAdminScreenName,
-				defaultAdminEmailAddress, defaultAdminFirstName,
-				defaultAdminMiddleName, defaultAdminLastName);
+			company = _checkCompany(company, mx);
 
 			TransactionCommitCallbackUtil.registerCallback(
 				new Callable<Void>() {
@@ -363,7 +359,7 @@ public class CompanyLocalServiceImpl extends CompanyLocalServiceBaseImpl {
 
 		Company company = getCompanyByWebId(webId);
 
-		return _checkCompany(company, mx, null, null, null, null, null, null);
+		return _checkCompany(company, mx);
 	}
 
 	/**
@@ -1953,11 +1949,7 @@ public class CompanyLocalServiceImpl extends CompanyLocalServiceBaseImpl {
 		}
 	}
 
-	private Company _checkCompany(
-			Company company, String mx, String defaultAdminPassword,
-			String defaultAdminScreenName, String defaultAdminEmailAddress,
-			String defaultAdminFirstName, String defaultAdminMiddleName,
-			String defaultAdminLastName)
+	private Company _checkCompany(Company company, String mx)
 		throws PortalException {
 
 		Locale localeThreadLocalDefaultLocale =
@@ -2023,28 +2015,16 @@ public class CompanyLocalServiceImpl extends CompanyLocalServiceBaseImpl {
 			// Default admin
 
 			if (userPersistence.countByCompanyId(company.getCompanyId()) == 0) {
+				String emailAddress =
+					PropsValues.DEFAULT_ADMIN_EMAIL_ADDRESS_PREFIX + "@" + mx;
+
 				userLocalService.addDefaultAdminUser(
 					company.getCompanyId(),
-					GetterUtil.getString(
-						defaultAdminPassword,
-						PropsValues.DEFAULT_ADMIN_PASSWORD),
-					GetterUtil.getString(
-						defaultAdminScreenName,
-						PropsValues.DEFAULT_ADMIN_SCREEN_NAME),
-					GetterUtil.getString(
-						defaultAdminEmailAddress,
-						PropsValues.DEFAULT_ADMIN_EMAIL_ADDRESS_PREFIX + "@" +
-							mx),
+					PropsValues.DEFAULT_ADMIN_SCREEN_NAME, emailAddress,
 					defaultUser.getLocale(),
-					GetterUtil.getString(
-						defaultAdminFirstName,
-						PropsValues.DEFAULT_ADMIN_FIRST_NAME),
-					GetterUtil.getString(
-						defaultAdminMiddleName,
-						PropsValues.DEFAULT_ADMIN_MIDDLE_NAME),
-					GetterUtil.getString(
-						defaultAdminLastName,
-						PropsValues.DEFAULT_ADMIN_LAST_NAME));
+					PropsValues.DEFAULT_ADMIN_FIRST_NAME,
+					PropsValues.DEFAULT_ADMIN_MIDDLE_NAME,
+					PropsValues.DEFAULT_ADMIN_LAST_NAME);
 			}
 
 			// Portlets
