@@ -26,27 +26,29 @@ public class JdbcIOUtil {
 
 	public static JdbcIO.Write<String> createJdbcIOWrite(
 		String csvColumns, String tableName,
-		PostgreSQLReplicationPipelineOptions
-			postgreSQLReplicationPipelineOptions) {
+		PostgreSQLReplicationDataflowPipelineOptions
+			postgreSQLReplicationDataflowPipelineOptions) {
 
 		String[] columns = StringUtils.split(csvColumns, ",");
 
 		return JdbcIO.<String>write(
 		).withBatchSize(
-			postgreSQLReplicationPipelineOptions.getBatchSize()
+			postgreSQLReplicationDataflowPipelineOptions.getBatchSize()
 		).withDataSourceConfiguration(
 			JdbcIO.DataSourceConfiguration.create(
 				"org.postgresql.Driver",
 				String.format(
 					"jdbc:postgresql:///%s",
-					postgreSQLReplicationPipelineOptions.getDatabaseName())
+					postgreSQLReplicationDataflowPipelineOptions.
+						getDatabaseName())
 			).withConnectionProperties(
 				_createDataSourceConnectionPropertiesString(
-					postgreSQLReplicationPipelineOptions.
+					postgreSQLReplicationDataflowPipelineOptions.
 						getCloudSQLConnectionName(),
-					postgreSQLReplicationPipelineOptions.getDatabaseUser())
+					postgreSQLReplicationDataflowPipelineOptions.
+						getDatabaseUser())
 			).withMaxConnections(
-				postgreSQLReplicationPipelineOptions.
+				postgreSQLReplicationDataflowPipelineOptions.
 					getDatasourceMaxConnections()
 			)
 		).withPreparedStatementSetter(
@@ -54,8 +56,8 @@ public class JdbcIOUtil {
 		).withStatement(
 			String.format(
 				"insert into %s.%s(%s) values(%s)",
-				postgreSQLReplicationPipelineOptions.getProjectId(), tableName,
-				StringUtils.join(columns, ","),
+				postgreSQLReplicationDataflowPipelineOptions.getProjectId(),
+				tableName, StringUtils.join(columns, ","),
 				StringUtils.repeat("?", ",", columns.length))
 		);
 	}

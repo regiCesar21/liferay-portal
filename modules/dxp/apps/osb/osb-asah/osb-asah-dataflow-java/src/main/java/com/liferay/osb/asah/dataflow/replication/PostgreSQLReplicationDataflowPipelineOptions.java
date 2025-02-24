@@ -13,7 +13,7 @@ import org.apache.beam.sdk.options.Validation;
 /**
  * @author Marcellus Tavares
  */
-public interface PostgreSQLReplicationPipelineOptions
+public interface PostgreSQLReplicationDataflowPipelineOptions
 	extends DataflowPipelineOptions {
 
 	@Default.Integer(500)

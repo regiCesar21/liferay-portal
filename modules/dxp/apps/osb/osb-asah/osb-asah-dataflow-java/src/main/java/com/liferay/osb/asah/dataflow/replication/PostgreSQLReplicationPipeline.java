@@ -21,29 +21,30 @@ public class PostgreSQLReplicationPipeline {
 				args
 			).withValidation(
 			).as(
-				PostgreSQLReplicationPipelineOptions.class
+				PostgreSQLReplicationDataflowPipelineOptions.class
 			));
 	}
 
 	public static void run(
-		PostgreSQLReplicationPipelineOptions
-			postgreSQLReplicationPipelineOptions) {
+		PostgreSQLReplicationDataflowPipelineOptions
+			postgreSQLReplicationDataflowPipelineOptions) {
 
 		Pipeline pipeline = Pipeline.create(
-			postgreSQLReplicationPipelineOptions);
+			postgreSQLReplicationDataflowPipelineOptions);
 
 		// Individual
 
 		pipeline.apply(
 			TextIO.read(
 			).from(
-				postgreSQLReplicationPipelineOptions.
+				postgreSQLReplicationDataflowPipelineOptions.
 					getIndividualInputDirectory()
 			)
 		).apply(
 			JdbcIOUtil.createJdbcIOWrite(
-				postgreSQLReplicationPipelineOptions.getIndividualColumns(),
-				"individual", postgreSQLReplicationPipelineOptions)
+				postgreSQLReplicationDataflowPipelineOptions.
+					getIndividualColumns(),
+				"individual", postgreSQLReplicationDataflowPipelineOptions)
 		);
 
 		// Individual Activity
@@ -51,14 +52,15 @@ public class PostgreSQLReplicationPipeline {
 		pipeline.apply(
 			TextIO.read(
 			).from(
-				postgreSQLReplicationPipelineOptions.
+				postgreSQLReplicationDataflowPipelineOptions.
 					getIndividualActivityInputDirectory()
 			)
 		).apply(
 			JdbcIOUtil.createJdbcIOWrite(
-				postgreSQLReplicationPipelineOptions.
+				postgreSQLReplicationDataflowPipelineOptions.
 					getIndividualActivityColumns(),
-				"individualactivity", postgreSQLReplicationPipelineOptions)
+				"individualactivity",
+				postgreSQLReplicationDataflowPipelineOptions)
 		);
 
 		PipelineResult pipelineResult = pipeline.run();
