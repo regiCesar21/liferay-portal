@@ -315,7 +315,7 @@ public class KBArticleStagedModelDataHandler
 			}
 
 			DLFileEntry importedFileEntry =
-				_dlFileEntryLocalService.getFileEntryByUuidAndGroupId(
+				_dlFileEntryLocalService.fetchFileEntry(
 					fileEntry.getUuid(), portletDataContext.getScopeGroupId());
 
 			if (importedFileEntry != null) {
