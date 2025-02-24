@@ -5,6 +5,7 @@
 
 package com.liferay.osb.asah.publisher.rest.controller;
 
+import com.liferay.osb.asah.common.findbugs.SuppressFBWarnings;
 import com.liferay.osb.asah.common.model.AnalyticsEvent;
 import com.liferay.osb.asah.common.model.AnalyticsEventsMessage;
 import com.liferay.osb.asah.common.util.ProjectIdThreadLocal;
@@ -24,6 +25,7 @@ import org.springframework.test.util.ReflectionTestUtils;
 /**
  * @author Marcos Martins
  */
+@SuppressFBWarnings("NP_NULL_ON_SOME_PATH_FROM_RETURN_VALUE")
 public class AnalyticsEventsRestControllerTest {
 
 	@BeforeEach
@@ -58,8 +60,6 @@ public class AnalyticsEventsRestControllerTest {
 			analyticsEventsMessage, "1", "1", event, "UTC",
 			Collections.emptySet());
 
-		Assertions.assertNotNull(analyticsEvent);
-
 		Assertions.assertEquals("Page", analyticsEvent.getApplicationId());
 		Assertions.assertEquals("1", analyticsEvent.getChannelId());
 		Assertions.assertEquals(
@@ -78,8 +78,6 @@ public class AnalyticsEventsRestControllerTest {
 			_analyticsEventsRestController, "_createAnalyticsEvent",
 			analyticsEventsMessage, "1", "1", event, "UTC",
 			Collections.singleton("test@liferay.com"));
-
-		Assertions.assertNotNull(analyticsEvent);
 
 		Assertions.assertNull(analyticsEvent.getEmailAddressHashed());
 	}
