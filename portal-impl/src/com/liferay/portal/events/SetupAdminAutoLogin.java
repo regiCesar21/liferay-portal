@@ -7,14 +7,9 @@ package com.liferay.portal.events;
 
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.model.Company;
-import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.security.auto.login.AutoLoginException;
 import com.liferay.portal.kernel.security.auto.login.BaseAutoLogin;
-import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portal.kernel.workflow.WorkflowConstants;
-import com.liferay.portal.security.DefaultAdminUtil;
 import com.liferay.portal.util.PropsValues;
 
 import javax.servlet.http.HttpServletRequest;
@@ -48,30 +43,7 @@ public class SetupAdminAutoLogin extends BaseAutoLogin {
 			return null;
 		}
 
-		Company company = PortalUtil.getCompany(httpServletRequest);
-
-		User user = DefaultAdminUtil.fetchDefaultAdmin(company.getCompanyId());
-
-		if (user == null) {
-			return null;
-		}
-
-		String reminderQueryAnswer = user.getReminderQueryAnswer();
-
-		if (user.isPasswordReset() &&
-			reminderQueryAnswer.equals(WorkflowConstants.LABEL_PENDING) &&
-			Validator.isNull(user.getReminderQueryQuestion()) &&
-			Validator.isNull(user.getLastFailedLoginDate()) &&
-			Validator.isNull(user.getLockoutDate())) {
-
-			String[] credentials = new String[3];
-
-			credentials[0] = String.valueOf(user.getUserId());
-			credentials[1] = user.getPassword();
-			credentials[2] = Boolean.TRUE.toString();
-
-			return credentials;
-		}
+		_log.error("Default admin password is blank");
 
 		return null;
 	}

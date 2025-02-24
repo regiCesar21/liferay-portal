@@ -473,28 +473,15 @@ public class CompanyLocalServiceImpl extends CompanyLocalServiceBaseImpl {
 			// Default admin
 
 			if (userPersistence.countByCompanyId(companyId) == 0) {
+				String emailAddress =
+					PropsValues.DEFAULT_ADMIN_EMAIL_ADDRESS_PREFIX + "@" + mx;
+
 				userLocalService.addDefaultAdminUser(
-					companyId,
-					GetterUtil.getString(
-						defaultAdminPassword,
-						PropsValues.DEFAULT_ADMIN_PASSWORD),
-					GetterUtil.getString(
-						defaultAdminScreenName,
-						PropsValues.DEFAULT_ADMIN_SCREEN_NAME),
-					GetterUtil.getString(
-						defaultAdminEmailAddress,
-						PropsValues.DEFAULT_ADMIN_EMAIL_ADDRESS_PREFIX + "@" +
-							mx),
-					defaultUser.getLocale(),
-					GetterUtil.getString(
-						defaultAdminFirstName,
-						PropsValues.DEFAULT_ADMIN_FIRST_NAME),
-					GetterUtil.getString(
-						defaultAdminMiddleName,
-						PropsValues.DEFAULT_ADMIN_MIDDLE_NAME),
-					GetterUtil.getString(
-						defaultAdminLastName,
-						PropsValues.DEFAULT_ADMIN_LAST_NAME));
+					companyId, PropsValues.DEFAULT_ADMIN_SCREEN_NAME,
+					emailAddress, defaultUser.getLocale(),
+					PropsValues.DEFAULT_ADMIN_FIRST_NAME,
+					PropsValues.DEFAULT_ADMIN_MIDDLE_NAME,
+					PropsValues.DEFAULT_ADMIN_LAST_NAME);
 			}
 
 			// Portlets
