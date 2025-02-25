@@ -15,6 +15,10 @@ AS (
 		`{{dag.default_args['ac_project_id']}}.identity` Identity
 	ON
 		IdentityInterestScore.identityId = Identity.id
+	INNER JOIN
+		`{{dag.default_args['ac_project_id']}}.individual` Individual
+	ON
+		Identity.individualId = Individual.id
 	WHERE
 		DATE(CAST(recordedDate AS TIMESTAMP), '{{dag.default_args['ac_project_time_zone_id']}}') = DATE(TIMESTAMP('{{data_interval_start.to_datetime_string()}}'), '{{dag.default_args['ac_project_time_zone_id']}}')
 );
