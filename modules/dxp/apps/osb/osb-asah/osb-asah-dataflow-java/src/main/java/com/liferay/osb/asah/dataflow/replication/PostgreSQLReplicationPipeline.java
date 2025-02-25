@@ -63,6 +63,22 @@ public class PostgreSQLReplicationPipeline {
 				postgreSQLReplicationDataflowPipelineOptions)
 		);
 
+		// Individual Interest
+
+		pipeline.apply(
+			TextIO.read(
+			).from(
+				postgreSQLReplicationDataflowPipelineOptions.
+					getIndividualInterestInputDirectory()
+			)
+		).apply(
+			JdbcIOUtil.createJdbcIOWrite(
+				postgreSQLReplicationDataflowPipelineOptions.
+					getIndividualInterestColumns(),
+				"identityinterestscore",
+				postgreSQLReplicationDataflowPipelineOptions)
+		);
+
 		PipelineResult pipelineResult = pipeline.run();
 
 		pipelineResult.waitUntilFinish();
