@@ -32,8 +32,8 @@ public interface PostgreSQLReplicationDataflowPipelineOptions
 	public Integer getDatasourceMaxConnections();
 
 	@Description(
-		"Return the comma-separated list of column names corresponding to the " +
-			"fields in the CSV files"
+		"Return the comma-separated list of column names corresponding to " +
+			"the fields in the CSV files"
 	)
 	@Validation.Required
 	public String getIndividualActivityColumns();
@@ -42,8 +42,8 @@ public interface PostgreSQLReplicationDataflowPipelineOptions
 	public String getIndividualActivityInputDirectory();
 
 	@Description(
-		"Return the comma-separated list of column names corresponding to the " +
-			"fields in the CSV files"
+		"Return the comma-separated list of column names corresponding to " +
+			"the fields in the CSV files"
 	)
 	@Validation.Required
 	public String getIndividualColumns();
@@ -52,8 +52,8 @@ public interface PostgreSQLReplicationDataflowPipelineOptions
 	public String getIndividualInputDirectory();
 
 	@Description(
-		"Return the comma-separated list of column names corresponding to the " +
-			"fields in the CSV files"
+		"Return the comma-separated list of column names corresponding to " +
+			"the fields in the CSV files"
 	)
 	@Validation.Required
 	public String getIndividualInterestColumns();

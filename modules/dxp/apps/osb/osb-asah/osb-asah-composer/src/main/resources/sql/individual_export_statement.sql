@@ -10,5 +10,5 @@ AS (
 	SELECT
 		id, emailAddress, TO_JSON_STRING(fields) AS fields
 	FROM
-	   `{{ dag.default_args['ac_project_id'] }}.individual`
+		`{{ dag.default_args['ac_project_id'] }}.individual`
 );
