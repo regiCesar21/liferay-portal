@@ -45,12 +45,10 @@ import com.liferay.osb.asah.common.date.DateUtil;
 import com.liferay.osb.asah.common.dog.BQEventDog;
 import com.liferay.osb.asah.common.dog.BQIdentityDog;
 import com.liferay.osb.asah.common.dog.BQIdentityInterestScoreDog;
-import com.liferay.osb.asah.common.dog.BQMembershipChangeDog;
 import com.liferay.osb.asah.common.dog.DataExportTaskDog;
 import com.liferay.osb.asah.common.dog.SegmentDog;
 import com.liferay.osb.asah.common.entity.BQEvent;
 import com.liferay.osb.asah.common.entity.BQIdentityInterestScore;
-import com.liferay.osb.asah.common.entity.BQMembershipChange;
 import com.liferay.osb.asah.common.entity.DataExportTask;
 import com.liferay.osb.asah.common.entity.Segment;
 import com.liferay.osb.asah.common.model.MetricType;
@@ -764,8 +762,6 @@ public class ReportRestController extends BaseRestController {
 		@PathVariable Long segmentId) {
 
 		return _toReportSegmentDTOEntityModel(
-			_bqMembershipChangeDog.getLastBQMembershipChangeBySegmentId(
-				segmentId),
 			_segmentDog.getSegment(segmentId));
 	}
 
@@ -780,9 +776,6 @@ public class ReportRestController extends BaseRestController {
 
 		List<Segment> segments = segmentPage.getContent();
 
-		Map<Long, BQMembershipChange> bqMembershipChanges =
-			_bqMembershipChangeDog.getLastBQMembershipChanges(segments);
-
 		return _toResultBagEntityModel(
 			_getLink(
 				channelId, _REL_NEXT,
@@ -792,9 +785,7 @@ public class ReportRestController extends BaseRestController {
 				channelId, _REL_PREV,
 				_getSegmentResultBagEntityModel(channelId, page - 1)),
 			segments, segmentPage.getTotalElements(),
-			segment -> _toReportSegmentDTOEntityModel(
-				bqMembershipChanges.getOrDefault(segment.getId(), null),
-				segment));
+			segment -> _toReportSegmentDTOEntityModel(segment));
 	}
 
 	@GetMapping("/segments/{segmentId}/individuals")
@@ -1305,10 +1296,10 @@ public class ReportRestController extends BaseRestController {
 	}
 
 	private EntityModel<ReportSegmentDTO> _toReportSegmentDTOEntityModel(
-		BQMembershipChange bqMembershipChange, Segment segment) {
+		Segment segment) {
 
 		return EntityModel.of(
-			new ReportSegmentDTO(bqMembershipChange, segment),
+			new ReportSegmentDTO(segment),
 			WebMvcLinkBuilder.linkTo(
 				WebMvcLinkBuilder.methodOn(
 					ReportRestController.class
@@ -1390,9 +1381,6 @@ public class ReportRestController extends BaseRestController {
 
 	@Autowired
 	private BQIdentityInterestScoreDog _bqIdentityInterestScoreDog;
-
-	@Autowired
-	private BQMembershipChangeDog _bqMembershipChangeDog;
 
 	@Autowired
 	private DataExportTaskDog _dataExportTaskDog;

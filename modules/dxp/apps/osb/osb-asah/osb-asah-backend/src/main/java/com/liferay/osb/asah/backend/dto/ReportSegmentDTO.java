@@ -12,11 +12,11 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonRootName;
 
 import com.liferay.osb.asah.common.date.DateUtil;
-import com.liferay.osb.asah.common.entity.BQMembershipChange;
 import com.liferay.osb.asah.common.entity.Segment;
 import com.liferay.osb.asah.common.util.StringUtil;
 
 import java.util.Date;
+import java.util.Objects;
 
 /**
  * @author Marcellus Tavares
@@ -25,22 +25,14 @@ import java.util.Date;
 @JsonRootName("segments")
 public class ReportSegmentDTO {
 
-	public ReportSegmentDTO(
-		BQMembershipChange bqMembershipChange, Segment segment) {
-
+	public ReportSegmentDTO(Segment segment) {
 		_createDate = segment.getCreateDate();
 		_id = StringUtil.get(segment.getId());
-
-		if (bqMembershipChange != null) {
-			_identitiesCount = bqMembershipChange.getIdentitiesCount();
-			_knownIdentitiesCount = bqMembershipChange.getIndividualsCount();
-		}
-		else {
-			_identitiesCount = 0L;
-			_knownIdentitiesCount = 0L;
-		}
-
+		_identitiesCount = Objects.requireNonNullElse(
+			segment.getIdentitiesCount(), 0L);
 		_includeAnonymousUsers = segment.getIncludeAnonymousUsers();
+		_knownIdentitiesCount = Objects.requireNonNullElse(
+			segment.getIndividualsCount(), 0L);
 		_name = segment.getName();
 		_segmentType = String.valueOf(segment.getType());
 	}
