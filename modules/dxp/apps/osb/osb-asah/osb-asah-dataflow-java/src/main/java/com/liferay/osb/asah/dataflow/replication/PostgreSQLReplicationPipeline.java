@@ -75,7 +75,7 @@ public class PostgreSQLReplicationPipeline {
 			JdbcIOUtil.createJdbcIOWrite(
 				postgreSQLReplicationDataflowPipelineOptions.
 					getIndividualInterestColumns(),
-				"identityinterestscore",
+				"individualinterest",
 				postgreSQLReplicationDataflowPipelineOptions)
 		);
 
