@@ -96,17 +96,17 @@ pipeline {
 					}
 				}
 
-                dir('osb-asah-performance-test') {
-                    script {
-                        withDockerRegistry([credentialsId: "dockerhub", url: ""]) {
-                            osbAsahPerformanceTestImage = docker.build(
-                                "${IMAGE_NAME}:osb-asah-performance-test-${IMAGE_TAG_SUFFIX}",
-                                "--file ./Dockerfile --no-cache ../")
+				dir('osb-asah-performance-test') {
+					script {
+						withDockerRegistry([credentialsId: "dockerhub", url: ""]) {
+							osbAsahPerformanceTestImage = docker.build(
+								"${IMAGE_NAME}:osb-asah-performance-test-${IMAGE_TAG_SUFFIX}",
+								"--file ./Dockerfile --no-cache ../")
 
-                            osbAsahPerformanceTestImage.push()
-                        }
-                    }
-                }
+							osbAsahPerformanceTestImage.push()
+						}
+					}
+				}
 
 				dir('osb-asah-publisher') {
 					script {
