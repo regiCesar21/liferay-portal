@@ -8,6 +8,8 @@ pipeline {
 	environment {
 		GIT_HASH = "${sh(script: 'git rev-parse --short=7 ${GIT_COMMIT}', returnStdout: true).trim()}"
 
+		JAVA_HOME = "${JAVA_21_HOME}"
+
 		LABEL_BUILD_DATE = "${sh(script: 'date -u +%Y-%m-%dT%H:%M:%SZ', returnStdout: true).trim()}"
 		IMAGE_NAME = "liferaycloud/com-liferay-osb-asah-private"
 		IMAGE_TAG_SUFFIX = "${sh(script: 'date +%Y%m%d', returnStdout: true).trim()}-${GIT_HASH}"
