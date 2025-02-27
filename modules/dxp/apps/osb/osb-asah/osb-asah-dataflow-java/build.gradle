@@ -80,8 +80,8 @@ repositories {
 		url System.getProperty("repository.private.url")
 
 		credentials {
-			username System.getenv("REPOSITORY_PRIVATE_USERNAME")
-			password System.getenv("REPOSITORY_PRIVATE_PASSWORD")
+			username System.getProperty("repository.private.username", System.getenv("REPOSITORY_PRIVATE_USERNAME"))
+			password System.getProperty("repository.private.password", System.getenv("REPOSITORY_PRIVATE_PASSWORD"))
 		}
 	}
 }
