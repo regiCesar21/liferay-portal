@@ -286,6 +286,16 @@ CREATE TABLE IF NOT EXISTS IndividualInterest (
 	recordedDate DATE
 );
 
+CREATE TABLE IF NOT EXISTS IndividualSegment (
+	createDate TIMESTAMPTZ,
+	identityId TEXT,
+	channelId BIGINT,
+	individualId TEXT,
+	modifiedDate TIMESTAMPTZ,
+	segmentId BIGINT,
+	status TEXT
+);
+
 CREATE TABLE IF NOT EXISTS InterestTopic (
 	id BIGSERIAL PRIMARY KEY,
 	term TEXT,
