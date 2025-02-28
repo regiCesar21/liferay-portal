@@ -1,0 +1,38 @@
+/**
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
+ */
+
+package com.liferay.osb.asah.common.dog;
+
+import com.liferay.osb.asah.common.entity.ProjectFeature;
+import com.liferay.osb.asah.common.model.Feature;
+import com.liferay.osb.asah.common.repository.ProjectFeatureRepository;
+
+import java.util.Optional;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
+
+/**
+ * @author Marcellus Tavares
+ */
+@Component
+public class ProjectFeatureDog {
+
+	public boolean isFeatureEnabled(Feature feature, String projectId) {
+		Optional<ProjectFeature> projectFeatureOptional =
+			_projectFeatureRepository.findByFeatureAndProjectId(
+				feature, projectId);
+
+		return projectFeatureOptional.map(
+			ProjectFeature::getEnabled
+		).orElse(
+			Boolean.FALSE
+		);
+	}
+
+	@Autowired
+	private ProjectFeatureRepository _projectFeatureRepository;
+
+}
