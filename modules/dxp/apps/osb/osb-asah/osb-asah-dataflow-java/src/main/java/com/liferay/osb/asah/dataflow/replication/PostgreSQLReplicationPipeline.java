@@ -79,6 +79,22 @@ public class PostgreSQLReplicationPipeline {
 				postgreSQLReplicationDataflowPipelineOptions)
 		);
 
+		// Individual Segment
+
+		pipeline.apply(
+			TextIO.read(
+			).from(
+				postgreSQLReplicationDataflowPipelineOptions.
+					getIndividualSegmentInputDirectory()
+			)
+		).apply(
+			JdbcIOUtil.createJdbcIOWrite(
+				postgreSQLReplicationDataflowPipelineOptions.
+					getIndividualSegmentColumns(),
+				"individualsegment",
+				postgreSQLReplicationDataflowPipelineOptions)
+		);
+
 		PipelineResult pipelineResult = pipeline.run();
 
 		pipelineResult.waitUntilFinish();

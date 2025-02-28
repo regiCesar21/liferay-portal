@@ -61,6 +61,16 @@ public interface PostgreSQLReplicationDataflowPipelineOptions
 	@Validation.Required
 	public String getIndividualInterestInputDirectory();
 
+	@Description(
+		"Return the comma-separated list of column names corresponding to " +
+			"the fields in the CSV files"
+	)
+	@Validation.Required
+	public String getIndividualSegmentColumns();
+
+	@Validation.Required
+	public String getIndividualSegmentInputDirectory();
+
 	@Description("Return the Analytics Cloud project ID")
 	@Validation.Required
 	public String getProjectId();
