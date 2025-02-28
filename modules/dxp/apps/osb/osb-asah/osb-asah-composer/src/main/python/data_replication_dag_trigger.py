@@ -46,8 +46,13 @@ def create_dag(ac_project_id, ac_project_time_zone_id, dag_id, dag_description):
 			task_id='individual_interest_export'
 		)
 
+		bq_membership_export_job = BigQueryInsertJobFromTemplateOperator(
+			task_id='membership_export'
+		)
+
 		chain(
-			bq_individual_export_job, bq_individual_activity_export_job, bq_individual_interest_export_job
+			bq_individual_export_job, bq_individual_activity_export_job, bq_individual_interest_export_job,
+			bq_membership_export_job
 		)
 
 		return dag
