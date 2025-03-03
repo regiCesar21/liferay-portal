@@ -165,6 +165,16 @@ gradle.beforeProject {
 				}
 			}
 
+			pluginManager.withPlugin("com.liferay.osgi.plugin") {
+				if (configurations.findByName("compileIncludePlatform") != null ) {
+					dependencies {
+						compileInclude provider {
+							files(configurations.compileIncludePlatform)
+						}
+					}
+				}
+			}
+
 			pluginManager.withPlugin("eclipse") {
 				if (tasks.eclipse.ext.has("gradleVersion")) {
 					String gradleVersion = tasks.eclipse.ext.get("gradleVersion")
@@ -477,6 +487,9 @@ gradle.beforeProject {
 
 		pluginManager.withPlugin("com.liferay.osgi.plugin") {
 			configurations {
+				compileIncludePlatform {
+					visible = false
+				}
 				xmltask
 			}
 
