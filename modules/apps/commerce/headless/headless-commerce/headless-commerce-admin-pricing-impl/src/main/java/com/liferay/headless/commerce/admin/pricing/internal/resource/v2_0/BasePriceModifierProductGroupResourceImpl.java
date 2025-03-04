@@ -444,10 +444,33 @@ public abstract class BasePriceModifierProductGroupResourceImpl
 			Map<String, Serializable> parameters)
 		throws Exception {
 
-		for (PriceModifierProductGroup priceModifierProductGroup :
-				priceModifierProductGroups) {
+		UnsafeFunction
+			<PriceModifierProductGroup, PriceModifierProductGroup, Exception>
+				priceModifierProductGroupUnsafeFunction =
+					priceModifierProductGroup -> {
+						deletePriceModifierProductGroup(
+							priceModifierProductGroup.getId());
 
-			deletePriceModifierProductGroup(priceModifierProductGroup.getId());
+						return priceModifierProductGroup;
+					};
+
+		if (contextBatchUnsafeBiConsumer != null) {
+			contextBatchUnsafeBiConsumer.accept(
+				priceModifierProductGroups,
+				priceModifierProductGroupUnsafeFunction);
+		}
+		else if (contextBatchUnsafeConsumer != null) {
+			contextBatchUnsafeConsumer.accept(
+				priceModifierProductGroups,
+				priceModifierProductGroupUnsafeFunction::apply);
+		}
+		else {
+			for (PriceModifierProductGroup priceModifierProductGroup :
+					priceModifierProductGroups) {
+
+				priceModifierProductGroupUnsafeFunction.apply(
+					priceModifierProductGroup);
+			}
 		}
 	}
 
