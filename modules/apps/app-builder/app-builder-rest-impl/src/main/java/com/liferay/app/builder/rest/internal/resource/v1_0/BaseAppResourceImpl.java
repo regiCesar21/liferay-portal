@@ -547,8 +547,22 @@ public abstract class BaseAppResourceImpl
 			Collection<App> apps, Map<String, Serializable> parameters)
 		throws Exception {
 
-		for (App app : apps) {
+		UnsafeFunction<App, App, Exception> appUnsafeFunction = app -> {
 			deleteApp(app.getId());
+
+			return app;
+		};
+
+		if (contextBatchUnsafeBiConsumer != null) {
+			contextBatchUnsafeBiConsumer.accept(apps, appUnsafeFunction);
+		}
+		else if (contextBatchUnsafeConsumer != null) {
+			contextBatchUnsafeConsumer.accept(apps, appUnsafeFunction::apply);
+		}
+		else {
+			for (App app : apps) {
+				appUnsafeFunction.apply(app);
+			}
 		}
 	}
 
