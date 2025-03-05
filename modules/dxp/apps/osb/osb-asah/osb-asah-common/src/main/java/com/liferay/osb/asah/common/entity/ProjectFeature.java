@@ -26,10 +26,10 @@ public class ProjectFeature implements Persistable<Long> {
 	public ProjectFeature() {
 	}
 
-	public ProjectFeature(Feature feature, String projectId, Boolean enabled) {
+	public ProjectFeature(Boolean enabled, Feature feature, String projectId) {
+		_enabled = enabled;
 		_feature = feature;
 		_projectId = projectId;
-		_enabled = enabled;
 	}
 
 	@Override
@@ -44,8 +44,8 @@ public class ProjectFeature implements Persistable<Long> {
 
 		ProjectFeature projectFeature = (ProjectFeature)obj;
 
-		if (Objects.equals(_feature, projectFeature._feature) &&
-			Objects.equals(_enabled, projectFeature._enabled) &&
+		if (Objects.equals(_enabled, projectFeature._enabled) &&
+			Objects.equals(_feature, projectFeature._feature) &&
 			Objects.equals(_id, projectFeature._id) &&
 			Objects.equals(_projectId, projectFeature._projectId)) {
 
@@ -79,7 +79,7 @@ public class ProjectFeature implements Persistable<Long> {
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(_feature, _id, _projectId, _enabled);
+		return Objects.hash(_enabled, _feature, _id, _projectId);
 	}
 
 	@JsonIgnore
