@@ -29,7 +29,6 @@ import org.jooq.impl.DSL;
 
 import org.postgresql.jdbc.PgArray;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
 import org.springframework.lang.Nullable;
 

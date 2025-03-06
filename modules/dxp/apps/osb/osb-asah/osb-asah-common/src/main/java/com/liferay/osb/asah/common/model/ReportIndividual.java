@@ -5,8 +5,6 @@
 
 package com.liferay.osb.asah.common.model;
 
-import com.liferay.osb.asah.common.entity.BQIndividual;
-
 import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
