@@ -262,7 +262,8 @@ CREATE TABLE IF NOT EXISTS ExperimentVariantMetric (
 CREATE TABLE IF NOT EXISTS Individual (
 	id TEXT PRIMARY KEY,
 	emailAddress TEXT,
-	fields JSON
+	fields JSON,
+	suppressed BOOLEAN
 );
 
 CREATE TABLE IF NOT EXISTS IndividualActivity (
