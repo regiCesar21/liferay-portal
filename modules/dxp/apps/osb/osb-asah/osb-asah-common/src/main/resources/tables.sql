@@ -289,7 +289,6 @@ CREATE TABLE IF NOT EXISTS IndividualInterest (
 
 CREATE TABLE IF NOT EXISTS IndividualSegment (
 	createDate TIMESTAMPTZ,
-	identityId TEXT,
 	channelId BIGINT,
 	individualId TEXT,
 	modifiedDate TIMESTAMPTZ,

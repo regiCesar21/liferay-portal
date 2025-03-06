@@ -8,8 +8,8 @@ EXPORT DATA
 	)
 AS (
 	SELECT
-		Membership.createDate, Membership.identityId, Membership.channelId, Membership.individualId,
-		Membership.modifiedDate, Membership.segmentId, Membership.status
+		Membership.createDate, Membership.channelId, Membership.individualId, Membership.modifiedDate,
+		Membership.segmentId, Membership.status
 	FROM
 		`{{ dag.default_args['ac_project_id'] }}.membership` Membership
 	INNER JOIN
