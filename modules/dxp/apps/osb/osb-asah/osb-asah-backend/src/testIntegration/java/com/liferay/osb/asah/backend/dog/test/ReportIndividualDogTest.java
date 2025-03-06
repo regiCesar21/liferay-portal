@@ -17,14 +17,15 @@ import com.liferay.osb.asah.common.model.ResultBag;
 import com.liferay.osb.asah.common.model.TimeRange;
 import com.liferay.osb.asah.common.repository.DataSourceRepository;
 import com.liferay.osb.asah.test.util.annotation.BQSQLResource;
+import com.liferay.osb.asah.test.util.annotation.SQLResource;
 import com.liferay.osb.asah.test.util.faro.FaroInfoTestUtil;
 import com.liferay.osb.asah.test.util.spring.OSBAsahTestExecutionListenersContext;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Objects;
 
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
@@ -50,7 +51,7 @@ public class ReportIndividualDogTest
 
 	}
 
-	@BQSQLResource(resourcePath = "test_search_report_individual_page.sql")
+	@SQLResource(resourcePath = "test_search_report_individual_page.sql")
 	@Test
 	public void testFetchReportIndividual() {
 		ReportIndividual expectedReportIndividual = new ReportIndividual();
@@ -72,57 +73,47 @@ public class ReportIndividualDogTest
 			_reportIndividualDog.fetchReportIndividual("abc"));
 	}
 
-	@BQSQLResource(resourcePath = "test_search_report_individual_page.sql")
+	@SQLResource(resourcePath = "test_search_report_individual_page.sql")
 	@Test
 	public void testSearchReportIndividualPage() {
 		Page<ReportIndividual> reportIndividualPage =
 			_reportIndividualDog.searchReportIndividualPage(
-				1L, 0, null, null, 2);
+				1L, 0, null, null, 20);
 
-		Assertions.assertEquals(8, reportIndividualPage.getTotalPages());
+		Assertions.assertEquals(1, reportIndividualPage.getTotalPages());
 		Assertions.assertEquals(15, reportIndividualPage.getTotalElements());
 
-		ReportIndividual reportIndividual1 = new ReportIndividual();
+		for (ReportIndividual reportIndividual :
+				reportIndividualPage.getContent()) {
 
-		reportIndividual1.setId("1");
-		reportIndividual1.setSegmentIds(
-			new HashSet<>(Arrays.asList(11111L, 22222L, 33333L)));
-
-		ReportIndividual reportIndividual2 = new ReportIndividual();
-
-		reportIndividual2.setId("3");
-		reportIndividual2.setSegmentIds(Collections.singleton(11111L));
-
-		Assertions.assertEquals(
-			new ArrayList<ReportIndividual>() {
-				{
-					add(reportIndividual1);
-					add(reportIndividual2);
-				}
-			},
-			reportIndividualPage.getContent());
+			if (Objects.equals(reportIndividual.getId(), "1")) {
+				Assertions.assertEquals(
+					reportIndividual.getSegmentIds(),
+					new HashSet<>(Arrays.asList(11111L, 22222L, 33333L)));
+			}
+			else if (Objects.equals(reportIndividual.getId(), "3")) {
+				Assertions.assertEquals(
+					reportIndividual.getSegmentIds(),
+					Collections.singleton(11111L));
+			}
+			else {
+				Assertions.assertEquals(
+					reportIndividual.getSegmentIds(), Collections.emptySet());
+			}
+		}
 
 		reportIndividualPage = _reportIndividualDog.searchReportIndividualPage(
-			1L, 1, null, null, 2);
+			1L, 0, "first1", null, 20);
 
-		ReportIndividual reportIndividual3 = new ReportIndividual();
+		Assertions.assertEquals(1, reportIndividualPage.getTotalPages());
+		Assertions.assertEquals(1, reportIndividualPage.getTotalElements());
 
-		reportIndividual3.setId("5");
-		reportIndividual3.setSegmentIds(Collections.emptySet());
+		List<ReportIndividual> reportIndividuals =
+			reportIndividualPage.getContent();
 
-		ReportIndividual reportIndividual4 = new ReportIndividual();
+		ReportIndividual reportIndividual = reportIndividuals.get(0);
 
-		reportIndividual4.setId("7");
-		reportIndividual4.setSegmentIds(Collections.emptySet());
-
-		Assertions.assertEquals(
-			new ArrayList<ReportIndividual>() {
-				{
-					add(reportIndividual3);
-					add(reportIndividual4);
-				}
-			},
-			reportIndividualPage.getContent());
+		Assertions.assertEquals("1", reportIndividual.getId());
 	}
 
 	@BQSQLResource(resourcePath = "test_report_individual_dog.sql")

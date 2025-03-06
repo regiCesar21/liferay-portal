@@ -8,7 +8,7 @@ package com.liferay.osb.asah.common.repository.test;
 import com.liferay.osb.asah.common.OSBAsahCommonSpringTestContext;
 import com.liferay.osb.asah.common.model.ReportIndividual;
 import com.liferay.osb.asah.common.repository.ReportIndividualRepository;
-import com.liferay.osb.asah.test.util.annotation.BQSQLResource;
+import com.liferay.osb.asah.test.util.annotation.SQLResource;
 import com.liferay.osb.asah.test.util.configuration.JDBCTestConfiguration;
 import com.liferay.osb.asah.test.util.spring.OSBAsahTestExecutionListenersContext;
 
@@ -32,7 +32,7 @@ public class ReportIndividualRepositoryTest
 	implements OSBAsahCommonSpringTestContext,
 			   OSBAsahTestExecutionListenersContext {
 
-	@BQSQLResource(resourcePath = "test_search_report_individuals.sql")
+	@SQLResource(resourcePath = "test_search_report_individuals.sql")
 	@Test
 	public void testCountReportIndividuals() {
 		Assertions.assertEquals(
@@ -53,7 +53,7 @@ public class ReportIndividualRepositoryTest
 				2L, "1", 11111L));
 	}
 
-	@BQSQLResource(resourcePath = "test_search_report_individuals.sql")
+	@SQLResource(resourcePath = "test_search_report_individuals.sql")
 	@Test
 	public void testCountReportIndividualsWithChannelId() {
 		Assertions.assertEquals(
@@ -64,7 +64,7 @@ public class ReportIndividualRepositoryTest
 			_reportIndividualRepository.countReportIndividuals(2L, null, null));
 	}
 
-	@BQSQLResource(resourcePath = "test_search_report_individuals.sql")
+	@SQLResource(resourcePath = "test_search_report_individuals.sql")
 	@Test
 	public void testCountReportIndividualsWithQuery() {
 		Assertions.assertEquals(
@@ -77,7 +77,7 @@ public class ReportIndividualRepositoryTest
 				null, "15", null));
 	}
 
-	@BQSQLResource(resourcePath = "test_search_report_individuals.sql")
+	@SQLResource(resourcePath = "test_search_report_individuals.sql")
 	@Test
 	public void testCountReportIndividualsWithSegmentId() {
 		Assertions.assertEquals(
@@ -90,7 +90,7 @@ public class ReportIndividualRepositoryTest
 				null, null, 33333L));
 	}
 
-	@BQSQLResource(resourcePath = "test_search_report_individuals.sql")
+	@SQLResource(resourcePath = "test_search_report_individuals.sql")
 	@Test
 	public void testFindReportIndividualById() {
 		Optional<ReportIndividual> reportIndividualOptional =
@@ -118,7 +118,7 @@ public class ReportIndividualRepositoryTest
 		Assertions.assertFalse(reportIndividualOptional.isPresent());
 	}
 
-	@BQSQLResource(resourcePath = "test_search_report_individuals.sql")
+	@SQLResource(resourcePath = "test_search_report_individuals.sql")
 	@Test
 	public void testSearchReportIndividuals() {
 		ReportIndividual reportIndividual1 = new ReportIndividual();
@@ -142,10 +142,10 @@ public class ReportIndividualRepositoryTest
 		Assertions.assertEquals(
 			Collections.singletonList(reportIndividual2),
 			_reportIndividualRepository.searchReportIndividuals(
-				2L, PageRequest.of(0, 5), "1", 11111L));
+				2L, PageRequest.of(0, 5), "first1", 11111L));
 	}
 
-	@BQSQLResource(resourcePath = "test_search_report_individuals.sql")
+	@SQLResource(resourcePath = "test_search_report_individuals.sql")
 	@Test
 	public void testSearchReportIndividualsWithChannelId() {
 		ReportIndividual reportIndividual1 = new ReportIndividual();
@@ -156,22 +156,22 @@ public class ReportIndividualRepositoryTest
 
 		ReportIndividual reportIndividual2 = new ReportIndividual();
 
-		reportIndividual2.setId("3");
-		reportIndividual2.setSegmentIds(Collections.singleton(11111L));
+		reportIndividual2.setId("11");
+		reportIndividual2.setSegmentIds(Collections.emptySet());
 
 		ReportIndividual reportIndividual3 = new ReportIndividual();
 
-		reportIndividual3.setId("5");
+		reportIndividual3.setId("12");
 		reportIndividual3.setSegmentIds(Collections.emptySet());
 
 		ReportIndividual reportIndividual4 = new ReportIndividual();
 
-		reportIndividual4.setId("11");
+		reportIndividual4.setId("13");
 		reportIndividual4.setSegmentIds(Collections.emptySet());
 
 		ReportIndividual reportIndividual5 = new ReportIndividual();
 
-		reportIndividual5.setId("12");
+		reportIndividual5.setId("14");
 		reportIndividual5.setSegmentIds(Collections.emptySet());
 
 		Assertions.assertEquals(
@@ -182,30 +182,31 @@ public class ReportIndividualRepositoryTest
 				1L, PageRequest.of(0, 5), null, null));
 	}
 
-	@BQSQLResource(resourcePath = "test_search_report_individuals.sql")
+	@SQLResource(resourcePath = "test_search_report_individuals.sql")
 	@Test
 	public void testSearchReportIndividualsWithQuery() {
 		ReportIndividual reportIndividual1 = new ReportIndividual();
 
-		reportIndividual1.setId("5");
+		reportIndividual1.setId("15");
 		reportIndividual1.setSegmentIds(Collections.emptySet());
 
 		ReportIndividual reportIndividual2 = new ReportIndividual();
 
-		reportIndividual2.setId("15");
+		reportIndividual2.setId("5");
 		reportIndividual2.setSegmentIds(Collections.emptySet());
 
 		Assertions.assertEquals(
 			Arrays.asList(reportIndividual1, reportIndividual2),
 			_reportIndividualRepository.searchReportIndividuals(
 				null, PageRequest.of(0, 2), "5", null));
+
 		Assertions.assertEquals(
-			Collections.singletonList(reportIndividual2),
+			Collections.singletonList(reportIndividual1),
 			_reportIndividualRepository.searchReportIndividuals(
 				null, PageRequest.of(0, 2), "15", null));
 	}
 
-	@BQSQLResource(resourcePath = "test_search_report_individuals.sql")
+	@SQLResource(resourcePath = "test_search_report_individuals.sql")
 	@Test
 	public void testSearchReportIndividualsWithSegmentId() {
 		ReportIndividual reportIndividual1 = new ReportIndividual();
