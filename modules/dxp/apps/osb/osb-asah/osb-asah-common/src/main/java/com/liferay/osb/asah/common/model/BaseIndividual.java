@@ -23,6 +23,10 @@ import java.util.stream.Stream;
 import org.apache.commons.collections4.ListUtils;
 import org.apache.commons.lang3.math.NumberUtils;
 
+import org.json.JSONObject;
+
+import org.postgresql.util.PGobject;
+
 /**
  * @author Leslie Wong
  */
@@ -99,6 +103,63 @@ public abstract class BaseIndividual {
 		customDemographics = new Demographics(customFields);
 		demographics = new Demographics(this.fields);
 		id = StringUtil.get(bqIndividual.getId(), null);
+	}
+
+	public BaseIndividual(Map<String, Object> source) {
+		PGobject fieldsPGobject = (PGobject)source.get("fields");
+
+		String fieldsJSON = "{}";
+
+		if ((fieldsPGobject != null) && (fieldsPGobject.getValue() != null)) {
+			fieldsJSON = fieldsPGobject.getValue();
+		}
+
+		JSONObject jsonObject = new JSONObject(fieldsJSON);
+
+		if (!jsonObject.isEmpty()) {
+			Set<String> keys = jsonObject.keySet();
+
+			Set<String> demographicsFieldNames =
+				FieldMappingConstants.demographicsDisplayNames.keySet();
+
+			keys.forEach(
+				key -> {
+					if (demographicsFieldNames.contains(key)) {
+						String displayName =
+							FieldMappingConstants.demographicsDisplayNames.
+								getOrDefault(key, key);
+
+						Field field = new Field();
+
+						field.setName(displayName);
+
+						if (displayName.endsWith("Date")) {
+							long value = NumberUtils.toLong(
+								(String)field.getValue());
+
+							field.setValue(
+								DateUtil.toUTCString(new Date(value)));
+						}
+						else {
+							field.setValue(jsonObject.getString(key));
+						}
+
+						fields.add(field);
+					}
+					else {
+						Field field = new Field();
+
+						field.setName(key);
+						field.setValue(jsonObject.getString(key));
+
+						customFields.add(field);
+					}
+				});
+		}
+
+		customDemographics = new Demographics(customFields);
+		demographics = new Demographics(fields);
+		id = StringUtil.get(source.get("id"), null);
 	}
 
 	public Demographics getCustomDemographics() {
