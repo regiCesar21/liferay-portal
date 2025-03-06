@@ -41,7 +41,6 @@ public class IndividualInterest {
 		IndividualInterest individualInterest = (IndividualInterest)obj;
 
 		if (Objects.equals(_channelId, individualInterest._channelId) &&
-			Objects.equals(_identityId, individualInterest._identityId) &&
 			Objects.equals(_interested, individualInterest._interested) &&
 			Objects.equals(_interestScore, individualInterest._interestScore) &&
 			Objects.equals(_keyword, individualInterest._keyword) &&
@@ -55,10 +54,6 @@ public class IndividualInterest {
 
 	public Long getChannelId() {
 		return _channelId;
-	}
-
-	public String getIdentityId() {
-		return _identityId;
 	}
 
 	public Boolean getInterested() {
@@ -90,8 +85,7 @@ public class IndividualInterest {
 	@Override
 	public int hashCode() {
 		return Objects.hash(
-			_channelId, _identityId, _interested, _interestScore, _keyword,
-			_recordedDate);
+			_channelId, _interested, _interestScore, _keyword, _recordedDate);
 	}
 
 	public Boolean isInterested() {
@@ -100,10 +94,6 @@ public class IndividualInterest {
 
 	public void setChannelId(Long channelId) {
 		_channelId = channelId;
-	}
-
-	public void setIdentityId(String identityId) {
-		_identityId = identityId;
 	}
 
 	public void setInterested(Boolean interested) {
@@ -125,7 +115,6 @@ public class IndividualInterest {
 	}
 
 	private Long _channelId;
-	private String _identityId;
 	private Boolean _interested;
 	private Double _interestScore;
 	private String _keyword;
