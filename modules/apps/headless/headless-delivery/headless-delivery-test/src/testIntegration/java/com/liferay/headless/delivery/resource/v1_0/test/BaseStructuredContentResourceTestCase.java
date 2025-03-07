@@ -103,13 +103,11 @@ public abstract class BaseStructuredContentResourceTestCase {
 
 		_structuredContentResource.setContextCompany(testCompany);
 
-		com.liferay.portal.kernel.model.User testCompanyAdminUser =
-			UserTestUtil.getAdminUser(testCompany.getCompanyId());
+		_user = UserTestUtil.getAdminUser(testCompany.getCompanyId());
 
 		structuredContentResource = StructuredContentResource.builder(
 		).authentication(
-			testCompanyAdminUser.getEmailAddress(),
-			PropsValues.DEFAULT_ADMIN_PASSWORD
+			_user.getEmailAddress(), PropsValues.DEFAULT_ADMIN_PASSWORD
 		).endpoint(
 			testCompany.getVirtualHostname(), 8080, "http"
 		).locale(
@@ -4165,6 +4163,7 @@ public abstract class BaseStructuredContentResourceTestCase {
 		LogFactoryUtil.getLog(BaseStructuredContentResourceTestCase.class);
 
 	private static DateFormat _dateFormat;
+	private static com.liferay.portal.kernel.model.User _user;
 
 	@Inject
 	private
