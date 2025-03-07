@@ -44,13 +44,16 @@ import com.liferay.osb.asah.backend.rest.controller.BaseRestController;
 import com.liferay.osb.asah.common.date.DateUtil;
 import com.liferay.osb.asah.common.dog.BQEventDog;
 import com.liferay.osb.asah.common.dog.BQIdentityDog;
+import com.liferay.osb.asah.common.dog.BQIdentityInterestScoreDog;
 import com.liferay.osb.asah.common.dog.DataExportTaskDog;
 import com.liferay.osb.asah.common.dog.IndividualInterestDog;
+import com.liferay.osb.asah.common.dog.ProjectFeatureDog;
 import com.liferay.osb.asah.common.dog.SegmentDog;
 import com.liferay.osb.asah.common.entity.BQEvent;
 import com.liferay.osb.asah.common.entity.DataExportTask;
 import com.liferay.osb.asah.common.entity.IndividualInterest;
 import com.liferay.osb.asah.common.entity.Segment;
+import com.liferay.osb.asah.common.model.Feature;
 import com.liferay.osb.asah.common.model.MetricType;
 import com.liferay.osb.asah.common.model.PageMetricType;
 import com.liferay.osb.asah.common.model.ReportIndividual;
@@ -58,6 +61,7 @@ import com.liferay.osb.asah.common.model.ResultBag;
 import com.liferay.osb.asah.common.model.Sort;
 import com.liferay.osb.asah.common.model.TimeRange;
 import com.liferay.osb.asah.common.util.ListUtil;
+import com.liferay.osb.asah.common.util.ProjectIdThreadLocal;
 import com.liferay.osb.asah.common.util.StringUtil;
 
 import java.io.File;
@@ -484,9 +488,21 @@ public class ReportRestController extends BaseRestController {
 			@PathVariable String individualId,
 			@RequestParam(defaultValue = "0") Integer page) {
 
-		Page<IndividualInterest> individualInterestPage =
-			_individualInterestDog.getIndividualInterestPage(
-				channelId, individualId, _PAGE_SIZE, page * _PAGE_SIZE);
+		Page<? extends IndividualInterest> individualInterests;
+
+		if (_projectFeatureDog.isFeatureEnabled(
+				Feature.API_REPORTS_POSTGRES_CACHE,
+				ProjectIdThreadLocal.getProjectId())) {
+
+			individualInterests =
+				_individualInterestDog.getIndividualInterestPage(
+					channelId, individualId, _PAGE_SIZE, page * _PAGE_SIZE);
+		}
+		else {
+			individualInterests =
+				_bqIdentityInterestScoreDog.getBQIdentityInterestScorePage(
+					channelId, individualId, _PAGE_SIZE, page * _PAGE_SIZE);
+		}
 
 		return _toResultBagEntityModel(
 			_getLink(
@@ -499,8 +515,8 @@ public class ReportRestController extends BaseRestController {
 				_getIndividualInterestResultBagEntityModel(
 					channelId, individualId, page - 1)),
 			new ResultBag<>(
-				individualInterestPage.getContent(),
-				individualInterestPage.getTotalElements()),
+				individualInterests.getContent(),
+				individualInterests.getTotalElements()),
 			interest -> _toChildEntityModel(individualId, interest));
 	}
 
@@ -1380,6 +1396,9 @@ public class ReportRestController extends BaseRestController {
 	private BQIdentityDog _bqIdentityDog;
 
 	@Autowired
+	private BQIdentityInterestScoreDog _bqIdentityInterestScoreDog;
+
+	@Autowired
 	private DataExportTaskDog _dataExportTaskDog;
 
 	@Value("${osb.asah.data.export.task.expiration.minutes:30}")
@@ -1399,6 +1418,9 @@ public class ReportRestController extends BaseRestController {
 
 	@Autowired
 	private ObjectMapper _objectMapper;
+
+	@Autowired
+	private ProjectFeatureDog _projectFeatureDog;
 
 	@Autowired
 	private ReportIndividualDog _reportIndividualDog;
