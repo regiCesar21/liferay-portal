@@ -103,13 +103,11 @@ public abstract class BaseDataDefinitionResourceTestCase {
 
 		_dataDefinitionResource.setContextCompany(testCompany);
 
-		com.liferay.portal.kernel.model.User testCompanyAdminUser =
-			UserTestUtil.getAdminUser(testCompany.getCompanyId());
+		_user = UserTestUtil.getAdminUser(testCompany.getCompanyId());
 
 		dataDefinitionResource = DataDefinitionResource.builder(
 		).authentication(
-			testCompanyAdminUser.getEmailAddress(),
-			PropsValues.DEFAULT_ADMIN_PASSWORD
+			_user.getEmailAddress(), PropsValues.DEFAULT_ADMIN_PASSWORD
 		).endpoint(
 			testCompany.getVirtualHostname(), 8080, "http"
 		).locale(
@@ -2535,6 +2533,7 @@ public abstract class BaseDataDefinitionResourceTestCase {
 		LogFactoryUtil.getLog(BaseDataDefinitionResourceTestCase.class);
 
 	private static DateFormat _dateFormat;
+	private static com.liferay.portal.kernel.model.User _user;
 
 	@Inject
 	private com.liferay.data.engine.rest.resource.v2_0.DataDefinitionResource

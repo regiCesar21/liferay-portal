@@ -100,13 +100,11 @@ public abstract class BaseNavigationMenuResourceTestCase {
 
 		_navigationMenuResource.setContextCompany(testCompany);
 
-		com.liferay.portal.kernel.model.User testCompanyAdminUser =
-			UserTestUtil.getAdminUser(testCompany.getCompanyId());
+		_user = UserTestUtil.getAdminUser(testCompany.getCompanyId());
 
 		navigationMenuResource = NavigationMenuResource.builder(
 		).authentication(
-			testCompanyAdminUser.getEmailAddress(),
-			PropsValues.DEFAULT_ADMIN_PASSWORD
+			_user.getEmailAddress(), PropsValues.DEFAULT_ADMIN_PASSWORD
 		).endpoint(
 			testCompany.getVirtualHostname(), 8080, "http"
 		).locale(
@@ -1597,6 +1595,7 @@ public abstract class BaseNavigationMenuResourceTestCase {
 		LogFactoryUtil.getLog(BaseNavigationMenuResourceTestCase.class);
 
 	private static DateFormat _dateFormat;
+	private static com.liferay.portal.kernel.model.User _user;
 
 	@Inject
 	private com.liferay.headless.delivery.resource.v1_0.NavigationMenuResource
