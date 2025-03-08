@@ -72,11 +72,6 @@ public class IndividualInterestRepositoryImpl
 				"channelId"
 			),
 			DSL.field(
-				"IndividualInterest.identityId"
-			).as(
-				"identityId"
-			),
-			DSL.field(
 				"IndividualInterest.interestScore"
 			).as(
 				"interestScore"
