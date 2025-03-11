@@ -488,7 +488,7 @@ public class ReportRestController extends BaseRestController {
 			@PathVariable String individualId,
 			@RequestParam(defaultValue = "0") Integer page) {
 
-		Page<? extends IndividualInterest> individualInterests;
+		Page<? extends IndividualInterest> individualInterests = null;
 
 		if (_projectFeatureDog.isFeatureEnabled(
 				Feature.API_REPORTS_POSTGRES_CACHE,
