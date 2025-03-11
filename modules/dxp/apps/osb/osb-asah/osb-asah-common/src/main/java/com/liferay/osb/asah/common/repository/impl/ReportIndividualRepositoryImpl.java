@@ -1,5 +1,5 @@
 /**
- * SPDX-FileCopyrightText: (c) 2024 Liferay, Inc. https://liferay.com
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
@@ -7,11 +7,12 @@ package com.liferay.osb.asah.common.repository.impl;
 
 import com.liferay.osb.asah.common.model.ReportIndividual;
 import com.liferay.osb.asah.common.repository.CustomReportIndividualRepository;
+import com.liferay.osb.asah.common.repository.executor.QueryExecutor;
+import com.liferay.osb.asah.common.util.SetUtil;
 
-import java.sql.SQLException;
+import java.math.BigDecimal;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
@@ -21,14 +22,11 @@ import org.apache.commons.lang3.StringUtils;
 
 import org.jooq.Condition;
 import org.jooq.DSLContext;
-import org.jooq.Record;
-import org.jooq.Record1;
 import org.jooq.SelectConditionStep;
 import org.jooq.SelectSelectStep;
 import org.jooq.impl.DSL;
 
-import org.postgresql.jdbc.PgArray;
-
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
 import org.springframework.lang.Nullable;
 
@@ -47,20 +45,14 @@ public class ReportIndividualRepositoryImpl
 		@Nullable Long channelId, @Nullable String query,
 		@Nullable Long segmentId) {
 
-		SelectConditionStep<Record1<Integer>> selectConditionStep =
+		return _queryExecutor.queryForLong(
 			_getReportIndividualsSelectConditionStep(
-				channelId, null, query, segmentId, _dslContext.selectCount());
-
-		return selectConditionStep.fetchOptional(
-			0, Long.class
-		).orElse(
-			0L
-		);
+				channelId, null, query, segmentId, _dslContext.selectCount()));
 	}
 
 	@Override
 	public Optional<ReportIndividual> findReportIndividualById(String id) {
-		SelectConditionStep<Record> selectConditionStep =
+		SelectConditionStep selectConditionStep =
 			_getReportIndividualsSelectConditionStep(
 				null, id, null, null,
 				_dslContext.select(
@@ -80,7 +72,20 @@ public class ReportIndividualRepositoryImpl
 						"segmentIds"
 					)));
 
-		return selectConditionStep.fetchOptional(this::_toReportIndividual);
+		return _queryExecutor.queryForObject(
+			record -> {
+				Object object = record.get("segmentIds");
+
+				Set<Long> segmentIds = new HashSet<>();
+
+				if (object instanceof List) {
+					segmentIds = SetUtil.map(
+						(List<BigDecimal>)object, BigDecimal::longValue);
+				}
+
+				return new ReportIndividual(segmentIds, record);
+			},
+			selectConditionStep);
 	}
 
 	@Override
@@ -88,7 +93,7 @@ public class ReportIndividualRepositoryImpl
 		@Nullable Long channelId, Pageable pageable, @Nullable String query,
 		@Nullable Long segmentId) {
 
-		SelectConditionStep<Record> selectConditionStep =
+		SelectConditionStep selectConditionStep =
 			_getReportIndividualsSelectConditionStep(
 				channelId, null, query, segmentId,
 				_dslContext.select(
@@ -108,31 +113,44 @@ public class ReportIndividualRepositoryImpl
 						"segmentIds"
 					)));
 
-		return selectConditionStep.orderBy(
-			DSL.field("id")
-		).limit(
-			pageable.getPageSize()
-		).offset(
-			pageable.getOffset()
-		).fetch(
-			this::_toReportIndividual
-		);
+		return _queryExecutor.queryForList(
+			record -> {
+				Object object = record.get("segmentIds");
+
+				Set<Long> segmentIds = new HashSet<>();
+
+				if (object instanceof List) {
+					segmentIds = SetUtil.map(
+						(List<BigDecimal>)object, BigDecimal::longValue);
+				}
+
+				return new ReportIndividual(segmentIds, record);
+			},
+			selectConditionStep.limit(
+				pageable.getPageSize()
+			).offset(
+				pageable.getOffset()
+			));
 	}
 
 	private Condition _getChannelIdCondition(Long channelId) {
 		return DSL.exists(
 			DSL.selectOne(
 			).from(
-				DSL.table("IndividualActivity")
+				DSL.table(
+					"BQIdentityActivity"
+				).as(
+					"IdentityActivity"
+				)
 			).where(
 				DSL.and(
 					DSL.field(
-						"IndividualActivity.channelId"
+						"IdentityActivity.channelId"
 					).eq(
 						channelId
 					),
 					DSL.field(
-						"IndividualActivity.individualId"
+						"IdentityActivity.individualId"
 					).eq(
 						DSL.field("Individual.id")
 					))
@@ -145,16 +163,20 @@ public class ReportIndividualRepositoryImpl
 		return DSL.exists(
 			DSL.selectOne(
 			).from(
-				DSL.table("IndividualSegment")
+				DSL.table(
+					"BQMembership"
+				).as(
+					"Membership"
+				)
 			).where(
 				DSL.and(
 					DSL.field(
-						"IndividualSegment.segmentId"
+						"Membership.segmentId"
 					).eq(
 						individualSegmentId
 					),
 					DSL.field(
-						"IndividualSegment.individualId"
+						"Membership.individualId"
 					).eq(
 						DSL.field("Individual.id")
 					))
@@ -177,10 +199,10 @@ public class ReportIndividualRepositoryImpl
 
 			for (String column : searchColumns) {
 				wordConditions.add(
-					DSL.field(
-						"fields->>'" + column + "'", String.class
-					).contains(
-						word
+					DSL.lower(
+						DSL.field(column, String.class)
+					).like(
+						DSL.lower(StringUtils.wrap(word, "%"))
 					));
 			}
 
@@ -233,18 +255,21 @@ public class ReportIndividualRepositoryImpl
 		}
 
 		return selectSelectStep.from(
-			DSL.table("Individual")
+			DSL.table(
+				"BQIndividual"
+			).as(
+				"Individual"
+			)
 		).leftJoin(
 			_dslContext.select(
 				DSL.field("individualId"),
 				DSL.field(
-					"ARRAY_AGG(DISTINCT segmentId) FILTER (WHERE segmentId " +
-						"IS NOT NULL)"
+					"ARRAY_AGG(DISTINCT segmentId IGNORE NULLS)"
 				).as(
 					"segmentIds"
 				)
 			).from(
-				DSL.table("IndividualSegment")
+				DSL.table("BQMembership")
 			).where(
 				membershipCondition
 			).groupBy(
@@ -263,28 +288,13 @@ public class ReportIndividualRepositoryImpl
 		);
 	}
 
-	private ReportIndividual _toReportIndividual(Record reportIndividual) {
-		PgArray pgArray = (PgArray)reportIndividual.get("segmentIds");
-
-		Set<Long> segmentIds = new HashSet<>();
-
-		if (pgArray != null) {
-			try {
-				segmentIds = new HashSet<>(
-					Arrays.asList((Long[])pgArray.getArray()));
-			}
-			catch (SQLException sqlException) {
-				throw new RuntimeException(sqlException);
-			}
-		}
-
-		return new ReportIndividual(segmentIds, reportIndividual.intoMap());
-	}
-
 	private static final String[] _SEARCH_COLUMNS = {
 		"emailAddress", "firstName", "jobTitle", "lastName", "middleName"
 	};
 
 	private final DSLContext _dslContext;
+
+	@Autowired
+	private QueryExecutor _queryExecutor;
 
 }
