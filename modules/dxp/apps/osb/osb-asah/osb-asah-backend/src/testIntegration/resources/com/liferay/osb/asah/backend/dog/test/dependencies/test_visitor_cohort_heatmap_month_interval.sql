@@ -11,13 +11,13 @@ INSERT INTO Individual (createDate, emailAddress, id, modifiedDate) values (CURR
 INSERT INTO Individual (createDate, emailAddress, id, modifiedDate) values (CURRENT_TIMESTAMP, 'user3@gmail.com', 'user3', CURRENT_TIMESTAMP);
 INSERT INTO Individual (createDate, emailAddress, id, modifiedDate) values (CURRENT_TIMESTAMP, 'user4@gmail.com', 'user4', CURRENT_TIMESTAMP);
 
-INSERT INTO Session (bounce, channelId, duration, id, sessionEnd, sessionStart, userId) values (1, 1, 60000, 'session1', TIMESTAMP '${today-5M}', TIMESTAMP '${today-5M}', 'identity1');
-INSERT INTO Session (bounce, channelId, duration, id, sessionEnd, sessionStart, userId) values (1, 1, 60000, 'session2', TIMESTAMP '${today-5M}', TIMESTAMP '${today-5M}', 'identity2');
-INSERT INTO Session (bounce, channelId, duration, id, sessionEnd, sessionStart, userId) values (1, 1, 60000, 'session3', TIMESTAMP '${today-5M}', TIMESTAMP '${today-5M}', 'identity5');
-INSERT INTO Session (bounce, channelId, duration, id, sessionEnd, sessionStart, userId) values (1, 1, 60000, 'session4', TIMESTAMP '${today-5M}', TIMESTAMP '${today-5M}', 'identity6');
-INSERT INTO Session (bounce, channelId, duration, id, sessionEnd, sessionStart, userId) values (1, 1, 60000, 'session5', TIMESTAMP '${today-4M}', TIMESTAMP '${today-4M}', 'identity2');
-INSERT INTO Session (bounce, channelId, duration, id, sessionEnd, sessionStart, userId) values (1, 1, 60000, 'session6', TIMESTAMP '${today-4M}', TIMESTAMP '${today-4M}', 'identity6');
-INSERT INTO Session (bounce, channelId, duration, id, sessionEnd, sessionStart, userId) values (1, 1, 60000, 'session7', TIMESTAMP '${today-4M}', TIMESTAMP '${today-4M}', 'identity1');
-INSERT INTO Session (bounce, channelId, duration, id, sessionEnd, sessionStart, userId) values (1, 1, 60000, 'session8', TIMESTAMP '${today-1M}', TIMESTAMP '${today-1M}', 'identity7');
-INSERT INTO Session (bounce, channelId, duration, id, sessionEnd, sessionStart, userId) values (1, 1, 60000, 'session9', TIMESTAMP '${today}', TIMESTAMP '${today}', 'identity4');
-INSERT INTO Session (bounce, channelId, duration, id, sessionEnd, sessionStart, userId) values (1, 1, 60000, 'session10', TIMESTAMP '${today}', TIMESTAMP '${today}', 'identity3');
+INSERT INTO Session (bounce, channelId, duration, id, sessionEnd, sessionStart, userId) values (1, 1, 60000, 'session1', TIMESTAMP '${today-5MT14:00:00.000Z}', TIMESTAMP '${today-5MT13:00:00.000Z}', 'identity1');
+INSERT INTO Session (bounce, channelId, duration, id, sessionEnd, sessionStart, userId) values (1, 1, 60000, 'session2', TIMESTAMP '${today-5MT14:00:00.000Z}', TIMESTAMP '${today-5MT13:00:00.000Z}', 'identity2');
+INSERT INTO Session (bounce, channelId, duration, id, sessionEnd, sessionStart, userId) values (1, 1, 60000, 'session3', TIMESTAMP '${today-5MT14:00:00.000Z}', TIMESTAMP '${today-5MT13:00:00.000Z}', 'identity5');
+INSERT INTO Session (bounce, channelId, duration, id, sessionEnd, sessionStart, userId) values (1, 1, 60000, 'session4', TIMESTAMP '${today-5MT14:00:00.000Z}', TIMESTAMP '${today-5MT13:00:00.000Z}', 'identity6');
+INSERT INTO Session (bounce, channelId, duration, id, sessionEnd, sessionStart, userId) values (1, 1, 60000, 'session5', TIMESTAMP '${today-4MT14:00:00.000Z}', TIMESTAMP '${today-4MT13:00:00.000Z}', 'identity2');
+INSERT INTO Session (bounce, channelId, duration, id, sessionEnd, sessionStart, userId) values (1, 1, 60000, 'session6', TIMESTAMP '${today-4MT14:00:00.000Z}', TIMESTAMP '${today-4MT13:00:00.000Z}', 'identity6');
+INSERT INTO Session (bounce, channelId, duration, id, sessionEnd, sessionStart, userId) values (1, 1, 60000, 'session7', TIMESTAMP '${today-4MT14:00:00.000Z}', TIMESTAMP '${today-4MT13:00:00.000Z}', 'identity1');
+INSERT INTO Session (bounce, channelId, duration, id, sessionEnd, sessionStart, userId) values (1, 1, 60000, 'session8', TIMESTAMP '${today-1MT14:00:00.000Z}', TIMESTAMP '${today-1MT13:00:00.000Z}', 'identity7');
+INSERT INTO Session (bounce, channelId, duration, id, sessionEnd, sessionStart, userId) values (1, 1, 60000, 'session9', TIMESTAMP '${today+14h}', TIMESTAMP '${today+13h}', 'identity4');
+INSERT INTO Session (bounce, channelId, duration, id, sessionEnd, sessionStart, userId) values (1, 1, 60000, 'session10', TIMESTAMP '${today+14h}', TIMESTAMP '${today+13h}', 'identity3');

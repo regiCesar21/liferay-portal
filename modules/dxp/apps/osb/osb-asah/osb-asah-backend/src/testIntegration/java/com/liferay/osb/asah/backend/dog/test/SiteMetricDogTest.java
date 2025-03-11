@@ -208,6 +208,65 @@ public class SiteMetricDogTest
 				},
 				visitorsCohortHeatMapMetrics.size(), 8),
 			_getActualCohortRetentions(visitorsCohortHeatMapMetrics), 0);
+
+		_preferenceDog.savePreference("time-zone-id", "+13:00");
+
+		cohortMetric = _siteMetricDog.getCohortMetric(
+			_getVisitorCohortSearchQueryContext(Interval.DAY));
+
+		anonymousCohortHeatMapMetrics =
+			cohortMetric.getAnonymousCohortHeatMapMetrics();
+
+		Assertions.assertArrayEquals(
+			_getExpectedCohortRetentions(
+				new HashMap<Pair<Integer, Integer>, Double>() {
+					{
+						put(Pair.of(0, 0), 100.0);
+						put(Pair.of(1, 0), 33.33333333333333);
+						put(Pair.of(0, 3), 100.0);
+						put(Pair.of(1, 3), 50.0);
+						put(Pair.of(0, 7), 100.0);
+					}
+				},
+				anonymousCohortHeatMapMetrics.size(), 8),
+			_getActualCohortRetentions(anonymousCohortHeatMapMetrics), 0);
+
+		knownCohortHeatMapMetrics = cohortMetric.getKnownCohortHeatMapMetrics();
+
+		Assertions.assertArrayEquals(
+			_getExpectedCohortRetentions(
+				new HashMap<Pair<Integer, Integer>, Double>() {
+					{
+						put(Pair.of(0, 0), 100.0);
+						put(Pair.of(1, 0), 100.0);
+						put(Pair.of(2, 0), 0.0);
+						put(Pair.of(0, 3), 100.0);
+						put(Pair.of(1, 3), 100.0);
+						put(Pair.of(0, 7), 0.0);
+						put(Pair.of(1, 7), 0.0);
+					}
+				},
+				knownCohortHeatMapMetrics.size(), 8),
+			_getActualCohortRetentions(knownCohortHeatMapMetrics), 0);
+
+		visitorsCohortHeatMapMetrics =
+			cohortMetric.getVisitorsCohortHeatMapMetrics();
+
+		Assertions.assertArrayEquals(
+			_getExpectedCohortRetentions(
+				new HashMap<Pair<Integer, Integer>, Double>() {
+					{
+						put(Pair.of(0, 0), 100.0);
+						put(Pair.of(1, 0), 60.0);
+						put(Pair.of(2, 0), 0.0);
+						put(Pair.of(0, 3), 100.0);
+						put(Pair.of(1, 3), 75.0);
+						put(Pair.of(0, 7), 100.0);
+						put(Pair.of(1, 7), 0.0);
+					}
+				},
+				visitorsCohortHeatMapMetrics.size(), 8),
+			_getActualCohortRetentions(visitorsCohortHeatMapMetrics), 0);
 	}
 
 	@BQSQLResource(
@@ -272,6 +331,65 @@ public class SiteMetricDogTest
 				},
 				visitorsCohortHeatMapMetrics.size(), 7),
 			_getActualCohortRetentions(visitorsCohortHeatMapMetrics), 0);
+
+		_preferenceDog.savePreference("time-zone-id", "+13:00");
+
+		cohortMetric = _siteMetricDog.getCohortMetric(
+			_getVisitorCohortSearchQueryContext(Interval.MONTH));
+
+		anonymousCohortHeatMapMetrics =
+			cohortMetric.getAnonymousCohortHeatMapMetrics();
+
+		Assertions.assertArrayEquals(
+			_getExpectedCohortRetentions(
+				new HashMap<Pair<Integer, Integer>, Double>() {
+					{
+						put(Pair.of(0, 0), 100.0);
+						put(Pair.of(1, 0), 33.33333333333333);
+						put(Pair.of(0, 2), 100.0);
+						put(Pair.of(1, 2), 50.0);
+						put(Pair.of(0, 6), 100.0);
+					}
+				},
+				anonymousCohortHeatMapMetrics.size(), 7),
+			_getActualCohortRetentions(anonymousCohortHeatMapMetrics), 0);
+
+		knownCohortHeatMapMetrics = cohortMetric.getKnownCohortHeatMapMetrics();
+
+		Assertions.assertArrayEquals(
+			_getExpectedCohortRetentions(
+				new HashMap<Pair<Integer, Integer>, Double>() {
+					{
+						put(Pair.of(0, 0), 100.0);
+						put(Pair.of(1, 0), 100.0);
+						put(Pair.of(2, 0), 0.0);
+						put(Pair.of(0, 2), 100.0);
+						put(Pair.of(1, 2), 100.0);
+						put(Pair.of(1, 5), 0.0);
+						put(Pair.of(0, 6), 0.0);
+					}
+				},
+				knownCohortHeatMapMetrics.size(), 7),
+			_getActualCohortRetentions(knownCohortHeatMapMetrics), 0);
+
+		visitorsCohortHeatMapMetrics =
+			cohortMetric.getVisitorsCohortHeatMapMetrics();
+
+		Assertions.assertArrayEquals(
+			_getExpectedCohortRetentions(
+				new HashMap<Pair<Integer, Integer>, Double>() {
+					{
+						put(Pair.of(0, 0), 100.0);
+						put(Pair.of(1, 0), 60.0);
+						put(Pair.of(2, 0), 0.0);
+						put(Pair.of(0, 2), 100.0);
+						put(Pair.of(1, 2), 75.0);
+						put(Pair.of(0, 6), 100.0);
+						put(Pair.of(1, 6), 0.0);
+					}
+				},
+				visitorsCohortHeatMapMetrics.size(), 7),
+			_getActualCohortRetentions(visitorsCohortHeatMapMetrics), 0);
 	}
 
 	@BQSQLResource(
@@ -319,6 +437,65 @@ public class SiteMetricDogTest
 			_getActualCohortRetentions(knownCohortHeatMapMetrics), 0);
 
 		List<CohortHeatMapMetric> visitorsCohortHeatMapMetrics =
+			cohortMetric.getVisitorsCohortHeatMapMetrics();
+
+		Assertions.assertArrayEquals(
+			_getExpectedCohortRetentions(
+				new HashMap<Pair<Integer, Integer>, Double>() {
+					{
+						put(Pair.of(0, 0), 100.0);
+						put(Pair.of(1, 0), 60.0);
+						put(Pair.of(2, 0), 0.0);
+						put(Pair.of(0, 2), 100.0);
+						put(Pair.of(1, 2), 75.0);
+						put(Pair.of(0, 6), 100.0);
+						put(Pair.of(1, 6), 0.0);
+					}
+				},
+				visitorsCohortHeatMapMetrics.size(), 7),
+			_getActualCohortRetentions(visitorsCohortHeatMapMetrics), 0);
+
+		_preferenceDog.savePreference("time-zone-id", "+13:00");
+
+		cohortMetric = _siteMetricDog.getCohortMetric(
+			_getVisitorCohortSearchQueryContext(Interval.WEEK));
+
+		anonymousCohortHeatMapMetrics =
+			cohortMetric.getAnonymousCohortHeatMapMetrics();
+
+		Assertions.assertArrayEquals(
+			_getExpectedCohortRetentions(
+				new HashMap<Pair<Integer, Integer>, Double>() {
+					{
+						put(Pair.of(0, 0), 100.0);
+						put(Pair.of(1, 0), 33.33333333333333);
+						put(Pair.of(0, 2), 100.0);
+						put(Pair.of(1, 2), 50.0);
+						put(Pair.of(0, 6), 100.0);
+					}
+				},
+				anonymousCohortHeatMapMetrics.size(), 7),
+			_getActualCohortRetentions(anonymousCohortHeatMapMetrics), 0);
+
+		knownCohortHeatMapMetrics = cohortMetric.getKnownCohortHeatMapMetrics();
+
+		Assertions.assertArrayEquals(
+			_getExpectedCohortRetentions(
+				new HashMap<Pair<Integer, Integer>, Double>() {
+					{
+						put(Pair.of(0, 0), 100.0);
+						put(Pair.of(1, 0), 100.0);
+						put(Pair.of(2, 0), 0.0);
+						put(Pair.of(0, 2), 100.0);
+						put(Pair.of(1, 2), 100.0);
+						put(Pair.of(1, 5), 0.0);
+						put(Pair.of(0, 6), 0.0);
+					}
+				},
+				knownCohortHeatMapMetrics.size(), 7),
+			_getActualCohortRetentions(knownCohortHeatMapMetrics), 0);
+
+		visitorsCohortHeatMapMetrics =
 			cohortMetric.getVisitorsCohortHeatMapMetrics();
 
 		Assertions.assertArrayEquals(
@@ -679,6 +856,23 @@ public class SiteMetricDogTest
 		visitorsMetrics = siteMetric.getVisitorsMetric();
 
 		Assertions.assertEquals(2, visitorsMetrics.getValue());
+
+		_preferenceDog.savePreference("time-zone-id", "+13:00");
+
+		siteMetric = _siteMetricDog.getSiteMetric(searchQueryContext);
+
+		anonymousVisitorsMetrics = siteMetric.getAnonymousVisitorsMetric();
+
+		Assertions.assertEquals(1, anonymousVisitorsMetrics.getPreviousValue());
+		Assertions.assertEquals(1, anonymousVisitorsMetrics.getValue());
+
+		knownVisitorsMetrics = siteMetric.getKnownVisitorsMetric();
+
+		Assertions.assertEquals(1, knownVisitorsMetrics.getValue());
+
+		visitorsMetrics = siteMetric.getVisitorsMetric();
+
+		Assertions.assertEquals(2, visitorsMetrics.getValue());
 	}
 
 	@BQSQLResource(resourcePath = "test_bq_events_6.sql")
@@ -706,6 +900,23 @@ public class SiteMetricDogTest
 		Assertions.assertEquals(3, visitorsMetrics.getValue());
 
 		_preferenceDog.savePreference("time-zone-id", "-07:00");
+
+		siteMetric = _siteMetricDog.getSiteMetric(searchQueryContext);
+
+		anonymousVisitorsMetrics = siteMetric.getAnonymousVisitorsMetric();
+
+		Assertions.assertNull(anonymousVisitorsMetrics.getPreviousValue());
+		Assertions.assertEquals(1, anonymousVisitorsMetrics.getValue());
+
+		knownVisitorsMetrics = siteMetric.getKnownVisitorsMetric();
+
+		Assertions.assertEquals(2, knownVisitorsMetrics.getValue());
+
+		visitorsMetrics = siteMetric.getVisitorsMetric();
+
+		Assertions.assertEquals(3, visitorsMetrics.getValue());
+
+		_preferenceDog.savePreference("time-zone-id", "+13:00");
 
 		siteMetric = _siteMetricDog.getSiteMetric(searchQueryContext);
 
