@@ -1,5 +1,5 @@
-apply plugin: "com.liferay.spring.boot.defaults"
 apply plugin: "io.gatling.gradle"
+apply plugin: "org.springframework.boot"
 
 ext {
 	set("junit-jupiter.version", "5.8.2")

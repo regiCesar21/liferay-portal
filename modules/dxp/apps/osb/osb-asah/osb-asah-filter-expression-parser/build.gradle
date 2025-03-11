@@ -3,8 +3,8 @@ import com.liferay.gradle.util.FileUtil
 import org.apache.tools.ant.filters.FixCrLfFilter
 
 apply plugin: "antlr"
-apply plugin: "com.liferay.spring.boot.defaults"
 apply plugin: "io.spring.dependency-management"
+apply plugin: "org.springframework.boot"
 
 sourceCompatibility = JavaVersion.VERSION_21
 targetCompatibility = JavaVersion.VERSION_21
