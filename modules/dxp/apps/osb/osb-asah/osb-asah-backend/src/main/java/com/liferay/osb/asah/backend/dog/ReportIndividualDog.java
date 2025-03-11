@@ -9,10 +9,14 @@ import com.liferay.osb.asah.backend.dog.helper.SearchQueryContext;
 import com.liferay.osb.asah.backend.model.AssetType;
 import com.liferay.osb.asah.backend.model.Individual;
 import com.liferay.osb.asah.backend.repository.AssetMetricRepository;
+import com.liferay.osb.asah.common.dog.ProjectFeatureDog;
+import com.liferay.osb.asah.common.model.Feature;
 import com.liferay.osb.asah.common.model.MetricType;
 import com.liferay.osb.asah.common.model.ReportIndividual;
 import com.liferay.osb.asah.common.model.ResultBag;
 import com.liferay.osb.asah.common.repository.BQReportIndividualRepository;
+import com.liferay.osb.asah.common.repository.ReportIndividualRepository;
+import com.liferay.osb.asah.common.util.ProjectIdThreadLocal;
 
 import java.util.HashMap;
 import java.util.List;
@@ -37,19 +41,32 @@ public class ReportIndividualDog {
 	@Autowired
 	public ReportIndividualDog(
 		List<AssetMetricRepository> assetMetricRepositories,
-		BQReportIndividualRepository BQReportIndividualRepository) {
+		BQReportIndividualRepository bqReportIndividualRepository,
+		ReportIndividualRepository reportIndividualRepository) {
 
 		assetMetricRepositories.forEach(
 			assetMetricAssetMetricRepository -> _assetMetricRepositoryMap.put(
 				assetMetricAssetMetricRepository.getAssetType(),
 				assetMetricAssetMetricRepository));
 
-		_bqReportIndividualRepository = BQReportIndividualRepository;
+		_bqReportIndividualRepository = bqReportIndividualRepository;
+		_reportIndividualRepository = reportIndividualRepository;
 	}
 
 	public ReportIndividual fetchReportIndividual(String id) {
-		Optional<ReportIndividual> reportIndividualOptional =
-			_bqReportIndividualRepository.findReportIndividualById(id);
+		Optional<ReportIndividual> reportIndividualOptional = null;
+
+		if (_projectFeatureDog.isFeatureEnabled(
+				Feature.API_REPORTS_POSTGRES_CACHE,
+				ProjectIdThreadLocal.getProjectId())) {
+
+			reportIndividualOptional =
+				_reportIndividualRepository.findReportIndividualById(id);
+		}
+		else {
+			reportIndividualOptional =
+				_bqReportIndividualRepository.findReportIndividualById(id);
+		}
 
 		return reportIndividualOptional.orElse(null);
 	}
@@ -86,6 +103,18 @@ public class ReportIndividualDog {
 		@Nullable Long channelId, int page, @Nullable String query,
 		@Nullable Long segmentId, int size) {
 
+		if (_projectFeatureDog.isFeatureEnabled(
+				Feature.API_REPORTS_POSTGRES_CACHE,
+				ProjectIdThreadLocal.getProjectId())) {
+
+			return PageableExecutionUtils.getPage(
+				_reportIndividualRepository.searchReportIndividuals(
+					channelId, PageRequest.of(page, size), query, segmentId),
+				PageRequest.of(page, size),
+				() -> _reportIndividualRepository.countReportIndividuals(
+					channelId, query, segmentId));
+		}
+
 		return PageableExecutionUtils.getPage(
 			_bqReportIndividualRepository.searchReportIndividuals(
 				channelId, PageRequest.of(page, size), query, segmentId),
@@ -97,5 +126,10 @@ public class ReportIndividualDog {
 	private final Map<AssetType, AssetMetricRepository>
 		_assetMetricRepositoryMap = new HashMap<>();
 	private final BQReportIndividualRepository _bqReportIndividualRepository;
+
+	@Autowired
+	private ProjectFeatureDog _projectFeatureDog;
+
+	private final ReportIndividualRepository _reportIndividualRepository;
 
 }

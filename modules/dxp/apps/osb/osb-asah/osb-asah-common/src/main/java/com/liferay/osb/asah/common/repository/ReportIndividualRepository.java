@@ -20,13 +20,13 @@ import org.springframework.lang.Nullable;
 public interface ReportIndividualRepository
 	extends Repository<ReportIndividual, String> {
 
-	public long countIndividuals(
+	public long countReportIndividuals(
 		@Nullable Long channelId, @Nullable String query,
 		@Nullable Long segmentId);
 
-	public Optional<ReportIndividual> findIndividualById(String id);
+	public Optional<ReportIndividual> findReportIndividualById(String id);
 
-	public List<ReportIndividual> searchIndividuals(
+	public List<ReportIndividual> searchReportIndividuals(
 		@Nullable Long channelId, Pageable pageable, @Nullable String query,
 		@Nullable Long segmentId);
 

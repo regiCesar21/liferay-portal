@@ -45,7 +45,7 @@ public class ReportIndividualRepositoryImpl
 	}
 
 	@Override
-	public long countIndividuals(
+	public long countReportIndividuals(
 		@Nullable Long channelId, @Nullable String query,
 		@Nullable Long segmentId) {
 
@@ -61,7 +61,7 @@ public class ReportIndividualRepositoryImpl
 	}
 
 	@Override
-	public Optional<ReportIndividual> findIndividualById(String id) {
+	public Optional<ReportIndividual> findReportIndividualById(String id) {
 		SelectConditionStep<Record> selectConditionStep =
 			_getReportIndividualsSelectConditionStep(
 				null, id, null, null,
@@ -86,7 +86,7 @@ public class ReportIndividualRepositoryImpl
 	}
 
 	@Override
-	public List<ReportIndividual> searchIndividuals(
+	public List<ReportIndividual> searchReportIndividuals(
 		@Nullable Long channelId, Pageable pageable, @Nullable String query,
 		@Nullable Long segmentId) {
 
