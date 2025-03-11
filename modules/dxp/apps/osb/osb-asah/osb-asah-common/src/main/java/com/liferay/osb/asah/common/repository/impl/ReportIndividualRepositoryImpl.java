@@ -6,7 +6,7 @@
 package com.liferay.osb.asah.common.repository.impl;
 
 import com.liferay.osb.asah.common.model.ReportIndividual;
-import com.liferay.osb.asah.common.repository.IndividualRepository;
+import com.liferay.osb.asah.common.repository.ReportIndividualRepository;
 
 import java.sql.SQLException;
 
@@ -37,9 +37,10 @@ import org.springframework.stereotype.Repository;
  * @author Marcellus Tavares
  */
 @Repository
-public class IndividualRepositoryImpl implements IndividualRepository {
+public class ReportIndividualRepositoryImpl
+	implements ReportIndividualRepository {
 
-	public IndividualRepositoryImpl(DSLContext dslContext) {
+	public ReportIndividualRepositoryImpl(DSLContext dslContext) {
 		_dslContext = dslContext;
 	}
 

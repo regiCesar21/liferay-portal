@@ -5,7 +5,6 @@
 
 package com.liferay.osb.asah.common.repository;
 
-import com.liferay.osb.asah.common.entity.Individual;
 import com.liferay.osb.asah.common.model.ReportIndividual;
 
 import java.util.List;
@@ -18,7 +17,8 @@ import org.springframework.lang.Nullable;
 /**
  * @author Marcellus Tavares
  */
-public interface IndividualRepository extends Repository<Individual, String> {
+public interface ReportIndividualRepository
+	extends Repository<ReportIndividual, String> {
 
 	public long countIndividuals(
 		@Nullable Long channelId, @Nullable String query,
