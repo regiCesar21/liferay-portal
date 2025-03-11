@@ -10,7 +10,7 @@ import com.liferay.osb.asah.common.model.ReportIndividual;
 /**
  * @author Marcellus Tavares
  */
-public interface ReportIndividualRepository
+public interface BQReportIndividualRepository
 	extends BigQueryRepository<ReportIndividual, String>,
-			CustomReportIndividualRepository {
+			CustomBQReportIndividualRepository {
 }

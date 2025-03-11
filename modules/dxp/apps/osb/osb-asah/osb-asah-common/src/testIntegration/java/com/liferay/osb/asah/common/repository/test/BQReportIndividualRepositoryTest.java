@@ -7,7 +7,7 @@ package com.liferay.osb.asah.common.repository.test;
 
 import com.liferay.osb.asah.common.OSBAsahCommonSpringTestContext;
 import com.liferay.osb.asah.common.model.ReportIndividual;
-import com.liferay.osb.asah.common.repository.ReportIndividualRepository;
+import com.liferay.osb.asah.common.repository.BQReportIndividualRepository;
 import com.liferay.osb.asah.test.util.annotation.SQLResource;
 import com.liferay.osb.asah.test.util.configuration.JDBCTestConfiguration;
 import com.liferay.osb.asah.test.util.spring.OSBAsahTestExecutionListenersContext;
@@ -28,7 +28,7 @@ import org.springframework.data.domain.PageRequest;
  * @author Marcellus Tavares
  */
 @Import(JDBCTestConfiguration.class)
-public class ReportIndividualRepositoryTest
+public class BQReportIndividualRepositoryTest
 	implements OSBAsahCommonSpringTestContext,
 			   OSBAsahTestExecutionListenersContext {
 
@@ -37,19 +37,19 @@ public class ReportIndividualRepositoryTest
 	public void testCountReportIndividuals() {
 		Assertions.assertEquals(
 			15L,
-			_reportIndividualRepository.countReportIndividuals(
+			_bqReportIndividualRepository.countReportIndividuals(
 				null, null, null));
 		Assertions.assertEquals(
 			1L,
-			_reportIndividualRepository.countReportIndividuals(
+			_bqReportIndividualRepository.countReportIndividuals(
 				1L, "3", 11111L));
 		Assertions.assertEquals(
 			0L,
-			_reportIndividualRepository.countReportIndividuals(
+			_bqReportIndividualRepository.countReportIndividuals(
 				2L, "3", 11111L));
 		Assertions.assertEquals(
 			1,
-			_reportIndividualRepository.countReportIndividuals(
+			_bqReportIndividualRepository.countReportIndividuals(
 				2L, "1", 11111L));
 	}
 
@@ -58,10 +58,12 @@ public class ReportIndividualRepositoryTest
 	public void testCountReportIndividualsWithChannelId() {
 		Assertions.assertEquals(
 			8L,
-			_reportIndividualRepository.countReportIndividuals(1L, null, null));
+			_bqReportIndividualRepository.countReportIndividuals(
+				1L, null, null));
 		Assertions.assertEquals(
 			8L,
-			_reportIndividualRepository.countReportIndividuals(2L, null, null));
+			_bqReportIndividualRepository.countReportIndividuals(
+				2L, null, null));
 	}
 
 	@SQLResource(resourcePath = "test_search_report_individuals.sql")
@@ -69,11 +71,11 @@ public class ReportIndividualRepositoryTest
 	public void testCountReportIndividualsWithQuery() {
 		Assertions.assertEquals(
 			2L,
-			_reportIndividualRepository.countReportIndividuals(
+			_bqReportIndividualRepository.countReportIndividuals(
 				null, "5", null));
 		Assertions.assertEquals(
 			1L,
-			_reportIndividualRepository.countReportIndividuals(
+			_bqReportIndividualRepository.countReportIndividuals(
 				null, "15", null));
 	}
 
@@ -82,11 +84,11 @@ public class ReportIndividualRepositoryTest
 	public void testCountReportIndividualsWithSegmentId() {
 		Assertions.assertEquals(
 			2L,
-			_reportIndividualRepository.countReportIndividuals(
+			_bqReportIndividualRepository.countReportIndividuals(
 				null, null, 11111L));
 		Assertions.assertEquals(
 			1L,
-			_reportIndividualRepository.countReportIndividuals(
+			_bqReportIndividualRepository.countReportIndividuals(
 				null, null, 33333L));
 	}
 
@@ -94,7 +96,7 @@ public class ReportIndividualRepositoryTest
 	@Test
 	public void testFindReportIndividualById() {
 		Optional<ReportIndividual> reportIndividualOptional =
-			_reportIndividualRepository.findReportIndividualById("1");
+			_bqReportIndividualRepository.findReportIndividualById("1");
 
 		Assertions.assertTrue(reportIndividualOptional.isPresent());
 
@@ -108,12 +110,12 @@ public class ReportIndividualRepositoryTest
 			reportIndividual, reportIndividualOptional.get());
 
 		reportIndividualOptional =
-			_reportIndividualRepository.findReportIndividualById("2");
+			_bqReportIndividualRepository.findReportIndividualById("2");
 
 		Assertions.assertFalse(reportIndividualOptional.isPresent());
 
 		reportIndividualOptional =
-			_reportIndividualRepository.findReportIndividualById("abc");
+			_bqReportIndividualRepository.findReportIndividualById("abc");
 
 		Assertions.assertFalse(reportIndividualOptional.isPresent());
 	}
@@ -133,15 +135,15 @@ public class ReportIndividualRepositoryTest
 
 		Assertions.assertEquals(
 			Collections.singletonList(reportIndividual1),
-			_reportIndividualRepository.searchReportIndividuals(
+			_bqReportIndividualRepository.searchReportIndividuals(
 				1L, PageRequest.of(0, 5), "3", 11111L));
 		Assertions.assertEquals(
 			Collections.emptyList(),
-			_reportIndividualRepository.searchReportIndividuals(
+			_bqReportIndividualRepository.searchReportIndividuals(
 				2L, PageRequest.of(0, 5), "3", 11111L));
 		Assertions.assertEquals(
 			Collections.singletonList(reportIndividual2),
-			_reportIndividualRepository.searchReportIndividuals(
+			_bqReportIndividualRepository.searchReportIndividuals(
 				2L, PageRequest.of(0, 5), "first1", 11111L));
 	}
 
@@ -178,7 +180,7 @@ public class ReportIndividualRepositoryTest
 			Arrays.asList(
 				reportIndividual1, reportIndividual2, reportIndividual3,
 				reportIndividual4, reportIndividual5),
-			_reportIndividualRepository.searchReportIndividuals(
+			_bqReportIndividualRepository.searchReportIndividuals(
 				1L, PageRequest.of(0, 5), null, null));
 	}
 
@@ -197,12 +199,12 @@ public class ReportIndividualRepositoryTest
 
 		Assertions.assertEquals(
 			Arrays.asList(reportIndividual1, reportIndividual2),
-			_reportIndividualRepository.searchReportIndividuals(
+			_bqReportIndividualRepository.searchReportIndividuals(
 				null, PageRequest.of(0, 2), "5", null));
 
 		Assertions.assertEquals(
 			Collections.singletonList(reportIndividual1),
-			_reportIndividualRepository.searchReportIndividuals(
+			_bqReportIndividualRepository.searchReportIndividuals(
 				null, PageRequest.of(0, 2), "15", null));
 	}
 
@@ -222,15 +224,15 @@ public class ReportIndividualRepositoryTest
 
 		Assertions.assertEquals(
 			Collections.singletonList(reportIndividual1),
-			_reportIndividualRepository.searchReportIndividuals(
+			_bqReportIndividualRepository.searchReportIndividuals(
 				null, PageRequest.of(0, 2), null, 33333L));
 		Assertions.assertEquals(
 			Arrays.asList(reportIndividual1, reportIndividual2),
-			_reportIndividualRepository.searchReportIndividuals(
+			_bqReportIndividualRepository.searchReportIndividuals(
 				null, PageRequest.of(0, 2), null, 11111L));
 	}
 
 	@Autowired
-	private ReportIndividualRepository _reportIndividualRepository;
+	private BQReportIndividualRepository _bqReportIndividualRepository;
 
 }

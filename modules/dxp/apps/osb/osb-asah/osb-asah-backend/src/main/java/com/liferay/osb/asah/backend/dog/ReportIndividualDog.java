@@ -12,7 +12,7 @@ import com.liferay.osb.asah.backend.repository.AssetMetricRepository;
 import com.liferay.osb.asah.common.model.MetricType;
 import com.liferay.osb.asah.common.model.ReportIndividual;
 import com.liferay.osb.asah.common.model.ResultBag;
-import com.liferay.osb.asah.common.repository.ReportIndividualRepository;
+import com.liferay.osb.asah.common.repository.BQReportIndividualRepository;
 
 import java.util.HashMap;
 import java.util.List;
@@ -37,19 +37,19 @@ public class ReportIndividualDog {
 	@Autowired
 	public ReportIndividualDog(
 		List<AssetMetricRepository> assetMetricRepositories,
-		ReportIndividualRepository reportIndividualRepository) {
+		BQReportIndividualRepository BQReportIndividualRepository) {
 
 		assetMetricRepositories.forEach(
 			assetMetricAssetMetricRepository -> _assetMetricRepositoryMap.put(
 				assetMetricAssetMetricRepository.getAssetType(),
 				assetMetricAssetMetricRepository));
 
-		_reportIndividualRepository = reportIndividualRepository;
+		_bqReportIndividualRepository = BQReportIndividualRepository;
 	}
 
 	public ReportIndividual fetchReportIndividual(String id) {
 		Optional<ReportIndividual> reportIndividualOptional =
-			_reportIndividualRepository.findReportIndividualById(id);
+			_bqReportIndividualRepository.findReportIndividualById(id);
 
 		return reportIndividualOptional.orElse(null);
 	}
@@ -87,15 +87,15 @@ public class ReportIndividualDog {
 		@Nullable Long segmentId, int size) {
 
 		return PageableExecutionUtils.getPage(
-			_reportIndividualRepository.searchReportIndividuals(
+			_bqReportIndividualRepository.searchReportIndividuals(
 				channelId, PageRequest.of(page, size), query, segmentId),
 			PageRequest.of(page, size),
-			() -> _reportIndividualRepository.countReportIndividuals(
+			() -> _bqReportIndividualRepository.countReportIndividuals(
 				channelId, query, segmentId));
 	}
 
 	private final Map<AssetType, AssetMetricRepository>
 		_assetMetricRepositoryMap = new HashMap<>();
-	private final ReportIndividualRepository _reportIndividualRepository;
+	private final BQReportIndividualRepository _bqReportIndividualRepository;
 
 }

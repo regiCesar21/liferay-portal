@@ -16,7 +16,7 @@ import org.springframework.lang.Nullable;
 /**
  * @author Marcellus Tavares
  */
-public interface CustomReportIndividualRepository {
+public interface CustomBQReportIndividualRepository {
 
 	public long countReportIndividuals(
 		@Nullable Long channelId, @Nullable String query,

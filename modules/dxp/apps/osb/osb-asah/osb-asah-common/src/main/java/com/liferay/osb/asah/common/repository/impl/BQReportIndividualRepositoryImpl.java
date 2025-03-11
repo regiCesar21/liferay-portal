@@ -6,7 +6,7 @@
 package com.liferay.osb.asah.common.repository.impl;
 
 import com.liferay.osb.asah.common.model.ReportIndividual;
-import com.liferay.osb.asah.common.repository.CustomReportIndividualRepository;
+import com.liferay.osb.asah.common.repository.CustomBQReportIndividualRepository;
 import com.liferay.osb.asah.common.repository.executor.QueryExecutor;
 import com.liferay.osb.asah.common.util.SetUtil;
 
@@ -33,10 +33,10 @@ import org.springframework.lang.Nullable;
 /**
  * @author Marcellus Tavares
  */
-public class ReportIndividualRepositoryImpl
-	extends BaseRepository implements CustomReportIndividualRepository {
+public class BQReportIndividualRepositoryImpl
+	extends BaseRepository implements CustomBQReportIndividualRepository {
 
-	public ReportIndividualRepositoryImpl(DSLContext dslContext) {
+	public BQReportIndividualRepositoryImpl(DSLContext dslContext) {
 		_dslContext = dslContext;
 	}
 
