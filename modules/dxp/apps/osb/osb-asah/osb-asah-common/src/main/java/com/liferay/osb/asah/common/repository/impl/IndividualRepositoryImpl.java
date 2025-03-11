@@ -5,12 +5,17 @@
 
 package com.liferay.osb.asah.common.repository.impl;
 
-import com.liferay.osb.asah.common.entity.Individual;
+import com.liferay.osb.asah.common.model.ReportIndividual;
 import com.liferay.osb.asah.common.repository.IndividualRepository;
 
+import java.sql.SQLException;
+
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 
 import org.apache.commons.lang3.StringUtils;
 
@@ -21,6 +26,8 @@ import org.jooq.Record1;
 import org.jooq.SelectConditionStep;
 import org.jooq.SelectSelectStep;
 import org.jooq.impl.DSL;
+
+import org.postgresql.jdbc.PgArray;
 
 import org.springframework.data.domain.Pageable;
 import org.springframework.lang.Nullable;
@@ -53,7 +60,7 @@ public class IndividualRepositoryImpl implements IndividualRepository {
 	}
 
 	@Override
-	public Optional<Individual> findIndividualById(String id) {
+	public Optional<ReportIndividual> findIndividualById(String id) {
 		SelectConditionStep<Record> selectConditionStep =
 			_getReportIndividualsSelectConditionStep(
 				null, id, null, null,
@@ -74,12 +81,11 @@ public class IndividualRepositoryImpl implements IndividualRepository {
 						"segmentIds"
 					)));
 
-		return selectConditionStep.fetchOptional(
-			record -> new Individual(record.intoMap()));
+		return selectConditionStep.fetchOptional(this::_toReportIndividual);
 	}
 
 	@Override
-	public List<Individual> searchIndividuals(
+	public List<ReportIndividual> searchIndividuals(
 		@Nullable Long channelId, Pageable pageable, @Nullable String query,
 		@Nullable Long segmentId) {
 
@@ -103,12 +109,14 @@ public class IndividualRepositoryImpl implements IndividualRepository {
 						"segmentIds"
 					)));
 
-		return selectConditionStep.limit(
+		return selectConditionStep.orderBy(
+			DSL.field("id")
+		).limit(
 			pageable.getPageSize()
 		).offset(
 			pageable.getOffset()
 		).fetch(
-			record -> new Individual(record.intoMap())
+			this::_toReportIndividual
 		);
 	}
 
@@ -254,6 +262,24 @@ public class IndividualRepositoryImpl implements IndividualRepository {
 		).where(
 			conditions
 		);
+	}
+
+	private ReportIndividual _toReportIndividual(Record reportIndividual) {
+		PgArray pgArray = (PgArray)reportIndividual.get("segmentIds");
+
+		Set<Long> segmentIds = new HashSet<>();
+
+		if (pgArray != null) {
+			try {
+				segmentIds = new HashSet<>(
+					Arrays.asList((Long[])pgArray.getArray()));
+			}
+			catch (SQLException sqlException) {
+				throw new RuntimeException(sqlException);
+			}
+		}
+
+		return new ReportIndividual(segmentIds, reportIndividual.intoMap());
 	}
 
 	private static final String[] _SEARCH_COLUMNS = {

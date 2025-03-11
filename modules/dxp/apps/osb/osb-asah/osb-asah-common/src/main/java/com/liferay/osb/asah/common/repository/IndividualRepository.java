@@ -6,6 +6,7 @@
 package com.liferay.osb.asah.common.repository;
 
 import com.liferay.osb.asah.common.entity.Individual;
+import com.liferay.osb.asah.common.model.ReportIndividual;
 
 import java.util.List;
 import java.util.Optional;
@@ -23,9 +24,9 @@ public interface IndividualRepository extends Repository<Individual, String> {
 		@Nullable Long channelId, @Nullable String query,
 		@Nullable Long segmentId);
 
-	public Optional<Individual> findIndividualById(String id);
+	public Optional<ReportIndividual> findIndividualById(String id);
 
-	public List<Individual> searchIndividuals(
+	public List<ReportIndividual> searchIndividuals(
 		@Nullable Long channelId, Pageable pageable, @Nullable String query,
 		@Nullable Long segmentId);
 
