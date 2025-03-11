@@ -108,7 +108,9 @@ public class ReportIndividualRepositoryImpl
 						"segmentIds"
 					)));
 
-		return selectConditionStep.limit(
+		return selectConditionStep.orderBy(
+			DSL.field("id")
+		).limit(
 			pageable.getPageSize()
 		).offset(
 			pageable.getOffset()
