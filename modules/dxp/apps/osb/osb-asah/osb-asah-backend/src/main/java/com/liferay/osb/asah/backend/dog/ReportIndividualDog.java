@@ -40,17 +40,12 @@ public class ReportIndividualDog {
 
 	@Autowired
 	public ReportIndividualDog(
-		List<AssetMetricRepository> assetMetricRepositories,
-		BQReportIndividualRepository bqReportIndividualRepository,
-		ReportIndividualRepository reportIndividualRepository) {
+		List<AssetMetricRepository> assetMetricRepositories) {
 
 		assetMetricRepositories.forEach(
 			assetMetricAssetMetricRepository -> _assetMetricRepositoryMap.put(
 				assetMetricAssetMetricRepository.getAssetType(),
 				assetMetricAssetMetricRepository));
-
-		_bqReportIndividualRepository = bqReportIndividualRepository;
-		_reportIndividualRepository = reportIndividualRepository;
 	}
 
 	public ReportIndividual fetchReportIndividual(String id) {
@@ -125,11 +120,14 @@ public class ReportIndividualDog {
 
 	private final Map<AssetType, AssetMetricRepository>
 		_assetMetricRepositoryMap = new HashMap<>();
-	private final BQReportIndividualRepository _bqReportIndividualRepository;
+
+	@Autowired
+	private BQReportIndividualRepository _bqReportIndividualRepository;
 
 	@Autowired
 	private ProjectFeatureDog _projectFeatureDog;
 
-	private final ReportIndividualRepository _reportIndividualRepository;
+	@Autowired
+	private ReportIndividualRepository _reportIndividualRepository;
 
 }
