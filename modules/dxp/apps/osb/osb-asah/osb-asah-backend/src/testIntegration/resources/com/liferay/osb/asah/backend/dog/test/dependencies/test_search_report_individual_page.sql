@@ -1,24 +1,3 @@
-INSERT INTO IndividualActivity (id, applicationId, channelId, eventDate, eventId, properties, individualId) VALUES (1, 'Page', 1, timestamp '${today}', 'pageViewed', '{}', '1');
-INSERT INTO IndividualActivity (id, applicationId, channelId, eventDate, eventId, properties, individualId) VALUES (2, 'Page', 1, timestamp '${today}', 'pageViewed', '{}', '2');
-INSERT INTO IndividualActivity (id, applicationId, channelId, eventDate, eventId, properties, individualId) VALUES (3, 'Page', 1, timestamp '${today}', 'pageViewed', '{}', '3');
-INSERT INTO IndividualActivity (id, applicationId, channelId, eventDate, eventId, properties, individualId) VALUES (4, 'Page', 1, timestamp '${today}', 'pageViewed', '{}', '4');
-INSERT INTO IndividualActivity (id, applicationId, channelId, eventDate, eventId, properties, individualId) VALUES (5, 'Page', 1, timestamp '${today}', 'pageViewed', '{}', '5');
-INSERT INTO IndividualActivity (id, applicationId, channelId, eventDate, eventId, properties, individualId) VALUES (6, 'Page', 1, timestamp '${today}', 'pageViewed', '{}', '6');
-INSERT INTO IndividualActivity (id, applicationId, channelId, eventDate, eventId, properties, individualId) VALUES (7, 'Page', 1, timestamp '${today}', 'pageViewed', '{}', '7');
-INSERT INTO IndividualActivity (id, applicationId, channelId, eventDate, eventId, properties, individualId) VALUES (8, 'Page', 1, timestamp '${today}', 'pageViewed', '{}', '8');
-INSERT INTO IndividualActivity (id, applicationId, channelId, eventDate, eventId, properties, individualId) VALUES (9, 'Page', 1, timestamp '${today}', 'pageViewed', '{}', '9');
-INSERT INTO IndividualActivity (id, applicationId, channelId, eventDate, eventId, properties, individualId) VALUES (10, 'Page', 1, timestamp '${today}', 'pageViewed', '{}', '10');
-INSERT INTO IndividualActivity (id, applicationId, channelId, eventDate, eventId, properties, individualId) VALUES (11, 'Page', 1, timestamp '${today}', 'pageViewed', '{}', '11');
-INSERT INTO IndividualActivity (id, applicationId, channelId, eventDate, eventId, properties, individualId) VALUES (12, 'Page', 1, timestamp '${today}', 'pageViewed', '{}', '12');
-INSERT INTO IndividualActivity (id, applicationId, channelId, eventDate, eventId, properties, individualId) VALUES (13, 'Page', 1, timestamp '${today}', 'pageViewed', '{}', '13');
-INSERT INTO IndividualActivity (id, applicationId, channelId, eventDate, eventId, properties, individualId) VALUES (14, 'Page', 1, timestamp '${today}', 'pageViewed', '{}', '14');
-INSERT INTO IndividualActivity (id, applicationId, channelId, eventDate, eventId, properties, individualId) VALUES (15, 'Page', 1, timestamp '${today}', 'pageViewed', '{}', '15');
-INSERT INTO IndividualActivity (id, applicationId, channelId, eventDate, eventId, properties, individualId) VALUES (16, 'Page', 1, timestamp '${today}', 'pageViewed', '{}', '16');
-INSERT INTO IndividualActivity (id, applicationId, channelId, eventDate, eventId, properties, individualId) VALUES (17, 'Page', 1, timestamp '${today}', 'pageViewed', '{}', '17');
-INSERT INTO IndividualActivity (id, applicationId, channelId, eventDate, eventId, properties, individualId) VALUES (18, 'Page', 1, timestamp '${today}', 'pageViewed', '{}', '18');
-INSERT INTO IndividualActivity (id, applicationId, channelId, eventDate, eventId, properties, individualId) VALUES (19, 'Page', 1, timestamp '${today}', 'pageViewed', '{}', '19');
-INSERT INTO IndividualActivity (id, applicationId, channelId, eventDate, eventId, properties, individualId) VALUES (20, 'Page', 1, timestamp '${today}', 'pageViewed', '{}', '20');
-
 INSERT INTO Individual (emailAddress, fields, id, suppressed) VALUES ('test1@liferay.com', '{"firstName":"first1", "lastName":"last1"}', '1', false);
 INSERT INTO Individual (emailAddress, fields, id, suppressed) VALUES ('test2@liferay.com', '{}', '2', true);
 INSERT INTO Individual (emailAddress, fields, id, suppressed) VALUES ('test3@liferay.com', '{"firstName":"first3", "lastName":"last3"}', '3', false);
@@ -39,6 +18,27 @@ INSERT INTO Individual (emailAddress, fields, id, suppressed) VALUES ('test17@li
 INSERT INTO Individual (emailAddress, fields, id, suppressed) VALUES ('test18@liferay.com', '{}', '18', false);
 INSERT INTO Individual (emailAddress, fields, id, suppressed) VALUES ('test19@liferay.com', '{}', '19', false);
 INSERT INTO Individual (emailAddress, fields, id, suppressed) VALUES ('test20@liferay.com', '{}', '20', false);
+
+INSERT INTO IndividualActivity (id, applicationId, channelId, eventDate, eventId, properties, individualId) VALUES (1, 'Page', 1, timestamp '${today}', 'pageViewed', '{}', '1');
+INSERT INTO IndividualActivity (id, applicationId, channelId, eventDate, eventId, properties, individualId) VALUES (2, 'Page', 1, timestamp '${today}', 'pageViewed', '{}', '2');
+INSERT INTO IndividualActivity (id, applicationId, channelId, eventDate, eventId, properties, individualId) VALUES (3, 'Page', 1, timestamp '${today}', 'pageViewed', '{}', '3');
+INSERT INTO IndividualActivity (id, applicationId, channelId, eventDate, eventId, properties, individualId) VALUES (4, 'Page', 1, timestamp '${today}', 'pageViewed', '{}', '4');
+INSERT INTO IndividualActivity (id, applicationId, channelId, eventDate, eventId, properties, individualId) VALUES (5, 'Page', 1, timestamp '${today}', 'pageViewed', '{}', '5');
+INSERT INTO IndividualActivity (id, applicationId, channelId, eventDate, eventId, properties, individualId) VALUES (6, 'Page', 1, timestamp '${today}', 'pageViewed', '{}', '6');
+INSERT INTO IndividualActivity (id, applicationId, channelId, eventDate, eventId, properties, individualId) VALUES (7, 'Page', 1, timestamp '${today}', 'pageViewed', '{}', '7');
+INSERT INTO IndividualActivity (id, applicationId, channelId, eventDate, eventId, properties, individualId) VALUES (8, 'Page', 1, timestamp '${today}', 'pageViewed', '{}', '8');
+INSERT INTO IndividualActivity (id, applicationId, channelId, eventDate, eventId, properties, individualId) VALUES (9, 'Page', 1, timestamp '${today}', 'pageViewed', '{}', '9');
+INSERT INTO IndividualActivity (id, applicationId, channelId, eventDate, eventId, properties, individualId) VALUES (10, 'Page', 1, timestamp '${today}', 'pageViewed', '{}', '10');
+INSERT INTO IndividualActivity (id, applicationId, channelId, eventDate, eventId, properties, individualId) VALUES (11, 'Page', 1, timestamp '${today}', 'pageViewed', '{}', '11');
+INSERT INTO IndividualActivity (id, applicationId, channelId, eventDate, eventId, properties, individualId) VALUES (12, 'Page', 1, timestamp '${today}', 'pageViewed', '{}', '12');
+INSERT INTO IndividualActivity (id, applicationId, channelId, eventDate, eventId, properties, individualId) VALUES (13, 'Page', 1, timestamp '${today}', 'pageViewed', '{}', '13');
+INSERT INTO IndividualActivity (id, applicationId, channelId, eventDate, eventId, properties, individualId) VALUES (14, 'Page', 1, timestamp '${today}', 'pageViewed', '{}', '14');
+INSERT INTO IndividualActivity (id, applicationId, channelId, eventDate, eventId, properties, individualId) VALUES (15, 'Page', 1, timestamp '${today}', 'pageViewed', '{}', '15');
+INSERT INTO IndividualActivity (id, applicationId, channelId, eventDate, eventId, properties, individualId) VALUES (16, 'Page', 1, timestamp '${today}', 'pageViewed', '{}', '16');
+INSERT INTO IndividualActivity (id, applicationId, channelId, eventDate, eventId, properties, individualId) VALUES (17, 'Page', 1, timestamp '${today}', 'pageViewed', '{}', '17');
+INSERT INTO IndividualActivity (id, applicationId, channelId, eventDate, eventId, properties, individualId) VALUES (18, 'Page', 1, timestamp '${today}', 'pageViewed', '{}', '18');
+INSERT INTO IndividualActivity (id, applicationId, channelId, eventDate, eventId, properties, individualId) VALUES (19, 'Page', 1, timestamp '${today}', 'pageViewed', '{}', '19');
+INSERT INTO IndividualActivity (id, applicationId, channelId, eventDate, eventId, properties, individualId) VALUES (20, 'Page', 1, timestamp '${today}', 'pageViewed', '{}', '20');
 
 INSERT INTO IndividualSegment (channelId, individualId, segmentId) VALUES (1, '1', 11111);
 INSERT INTO IndividualSegment (channelId, individualId, segmentId) VALUES (1, '2', 11111);

@@ -278,7 +278,7 @@ public class ReportIndividualRepositoryImpl
 			}
 		}
 
-		return new ReportIndividual(reportIndividual.intoMap(), segmentIds);
+		return new ReportIndividual(segmentIds, reportIndividual.intoMap());
 	}
 
 	private static final String[] _SEARCH_COLUMNS = {

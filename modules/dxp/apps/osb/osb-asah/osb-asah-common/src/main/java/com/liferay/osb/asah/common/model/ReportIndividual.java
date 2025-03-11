@@ -17,7 +17,7 @@ public class ReportIndividual extends BaseIndividual {
 	public ReportIndividual() {
 	}
 
-	public ReportIndividual(Map<String, Object> source, Set<Long> segmentIds) {
+	public ReportIndividual(Set<Long> segmentIds, Map<String, Object> source) {
 		super(source);
 
 		_segmentIds = segmentIds;

@@ -1,3 +1,24 @@
+INSERT INTO Individual (emailAddress, fields, id, suppressed) VALUES ('test1@liferay.com', '{"firstName":"first1", "lastName":"last1"}', '1', false);
+INSERT INTO Individual (emailAddress, fields, id, suppressed) VALUES ('test2@liferay.com', '{}', '2', true);
+INSERT INTO Individual (emailAddress, fields, id, suppressed) VALUES ('test3@liferay.com', '{"firstName":"first3", "lastName":"last3"}', '3', false);
+INSERT INTO Individual (emailAddress, fields, id, suppressed) VALUES ('test4@liferay.com', '{}', '4', true);
+INSERT INTO Individual (emailAddress, fields, id, suppressed) VALUES ('test5@liferay.com', '{"firstName":"first5", "lastName":"last5"}', '5', false);
+INSERT INTO Individual (emailAddress, fields, id, suppressed) VALUES ('test6@liferay.com', '{}', '6', true);
+INSERT INTO Individual (emailAddress, fields, id, suppressed) VALUES ('test7@liferay.com', '{}', '7', false);
+INSERT INTO Individual (emailAddress, fields, id, suppressed) VALUES ('test8@liferay.com', '{}', '8', true);
+INSERT INTO Individual (emailAddress, fields, id, suppressed) VALUES ('test9@liferay.com', '{}', '9', false);
+INSERT INTO Individual (emailAddress, fields, id, suppressed) VALUES ('test10@liferay.com', '{}', '10', true);
+INSERT INTO Individual (emailAddress, fields, id, suppressed) VALUES ('test11@liferay.com', '{}', '11', false);
+INSERT INTO Individual (emailAddress, fields, id, suppressed) VALUES ('test12@liferay.com', '{}', '12', false);
+INSERT INTO Individual (emailAddress, fields, id, suppressed) VALUES ('test13@liferay.com', '{}', '13', null);
+INSERT INTO Individual (emailAddress, fields, id, suppressed) VALUES ('test14@liferay.com', '{}', '14', null);
+INSERT INTO Individual (emailAddress, fields, id, suppressed) VALUES ('test15@liferay.com', '{"firstName":"first15", "lastName":"last15"}', '15', null);
+INSERT INTO Individual (emailAddress, fields, id, suppressed) VALUES ('test16@liferay.com', '{}', '16', null);
+INSERT INTO Individual (emailAddress, fields, id, suppressed) VALUES ('test17@liferay.com', '{}', '17', false);
+INSERT INTO Individual (emailAddress, fields, id, suppressed) VALUES ('test18@liferay.com', '{}', '18', false);
+INSERT INTO Individual (emailAddress, fields, id, suppressed) VALUES ('test19@liferay.com', '{}', '19', false);
+INSERT INTO Individual (emailAddress, fields, id, suppressed) VALUES ('test20@liferay.com', '{}', '20', false);
+
 INSERT INTO IndividualActivity (id, applicationId, channelId, eventDate, eventId, properties, individualId) VALUES (1, 'Page', 1, timestamp '${today}', 'pageViewed', '{}', '1');
 INSERT INTO IndividualActivity (id, applicationId, channelId, eventDate, eventId, properties, individualId) VALUES (2, 'Page', 1, timestamp '${today}', 'pageViewed', '{}', '2');
 INSERT INTO IndividualActivity (id, applicationId, channelId, eventDate, eventId, properties, individualId) VALUES (3, 'Page', 1, timestamp '${today}', 'pageViewed', '{}', '3');
@@ -19,27 +40,6 @@ INSERT INTO IndividualActivity (id, applicationId, channelId, eventDate, eventId
 INSERT INTO IndividualActivity (id, applicationId, channelId, eventDate, eventId, properties, individualId) VALUES (19, 'Page', 2, timestamp '${today}', 'pageViewed', '{}', '19');
 INSERT INTO IndividualActivity (id, applicationId, channelId, eventDate, eventId, properties, individualId) VALUES (20, 'Page', 2, timestamp '${today}', 'pageViewed', '{}', '20');
 INSERT INTO IndividualActivity (id, applicationId, channelId, eventDate, eventId, properties, individualId) VALUES (21, 'Page', 2, timestamp '${today}', 'pageViewed', '{}', '1');
-
-INSERT INTO Individual (emailAddress, fields, id, suppressed) VALUES ('test1@liferay.com', '{"firstName":"first1", "lastName":"last1"}', '1', false);
-INSERT INTO Individual (emailAddress, fields, id, suppressed) VALUES ('test2@liferay.com', '{}', '2', true);
-INSERT INTO Individual (emailAddress, fields, id, suppressed) VALUES ('test3@liferay.com', '{"firstName":"first3", "lastName":"last3"}', '3', false);
-INSERT INTO Individual (emailAddress, fields, id, suppressed) VALUES ('test4@liferay.com', '{}', '4', true);
-INSERT INTO Individual (emailAddress, fields, id, suppressed) VALUES ('test5@liferay.com', '{"firstName":"first5", "lastName":"last5"}', '5', false);
-INSERT INTO Individual (emailAddress, fields, id, suppressed) VALUES ('test6@liferay.com', '{}', '6', true);
-INSERT INTO Individual (emailAddress, fields, id, suppressed) VALUES ('test7@liferay.com', '{}', '7', false);
-INSERT INTO Individual (emailAddress, fields, id, suppressed) VALUES ('test8@liferay.com', '{}', '8', true);
-INSERT INTO Individual (emailAddress, fields, id, suppressed) VALUES ('test9@liferay.com', '{}', '9', false);
-INSERT INTO Individual (emailAddress, fields, id, suppressed) VALUES ('test10@liferay.com', '{}', '10', true);
-INSERT INTO Individual (emailAddress, fields, id, suppressed) VALUES ('test11@liferay.com', '{}', '11', false);
-INSERT INTO Individual (emailAddress, fields, id, suppressed) VALUES ('test12@liferay.com', '{}', '12', false);
-INSERT INTO Individual (emailAddress, fields, id, suppressed) VALUES ('test13@liferay.com', '{}', '13', null);
-INSERT INTO Individual (emailAddress, fields, id, suppressed) VALUES ('test14@liferay.com', '{}', '14', null);
-INSERT INTO Individual (emailAddress, fields, id, suppressed) VALUES ('test15@liferay.com', '{"firstName":"first15", "lastName":"last15"}', '15', null);
-INSERT INTO Individual (emailAddress, fields, id, suppressed) VALUES ('test16@liferay.com', '{}', '16', null);
-INSERT INTO Individual (emailAddress, fields, id, suppressed) VALUES ('test17@liferay.com', '{}', '17', false);
-INSERT INTO Individual (emailAddress, fields, id, suppressed) VALUES ('test18@liferay.com', '{}', '18', false);
-INSERT INTO Individual (emailAddress, fields, id, suppressed) VALUES ('test19@liferay.com', '{}', '19', false);
-INSERT INTO Individual (emailAddress, fields, id, suppressed) VALUES ('test20@liferay.com', '{}', '20', false);
 
 INSERT INTO IndividualSegment (channelId, individualId, segmentId) VALUES (1, '1', 11111);
 INSERT INTO IndividualSegment (channelId, individualId, segmentId) VALUES (1, '2', 11111);
