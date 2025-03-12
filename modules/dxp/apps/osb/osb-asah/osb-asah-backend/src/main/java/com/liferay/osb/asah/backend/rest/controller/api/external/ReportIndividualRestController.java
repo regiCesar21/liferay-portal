@@ -144,7 +144,7 @@ public class ReportIndividualRestController extends BaseRestController {
 		getIndividualSegmentResultBagEntityModel(
 			@PathVariable String individualId) {
 
-		List<Segment> segments = _segmentDog.getBQIndividualSegments(
+		List<Segment> segments = _segmentDog.getIndividualSegments(
 			individualId);
 
 		return _toResultBagEntityModel(

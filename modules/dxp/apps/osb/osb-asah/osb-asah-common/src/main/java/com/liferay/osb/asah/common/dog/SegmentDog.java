@@ -22,6 +22,7 @@ import com.liferay.osb.asah.common.filter.expression.FilterExpression;
 import com.liferay.osb.asah.common.filter.expression.FilterExpressionReferencedObjectsVisitor;
 import com.liferay.osb.asah.common.filter.expression.FilterExpressionValidatorVisitor;
 import com.liferay.osb.asah.common.json.JSONUtil;
+import com.liferay.osb.asah.common.model.Feature;
 import com.liferay.osb.asah.common.model.Individual;
 import com.liferay.osb.asah.common.model.MembershipCountSnapshot;
 import com.liferay.osb.asah.common.model.Transformation;
@@ -34,6 +35,7 @@ import com.liferay.osb.asah.common.spring.http.exception.OSBAsahException;
 import com.liferay.osb.asah.common.spring.http.exception.OSBAsahNameException;
 import com.liferay.osb.asah.common.util.BeanUtils;
 import com.liferay.osb.asah.common.util.ListUtil;
+import com.liferay.osb.asah.common.util.ProjectIdThreadLocal;
 import com.liferay.osb.asah.common.util.SetUtil;
 import com.liferay.osb.asah.common.util.TimeOrderedUuidGenerator;
 
@@ -183,6 +185,21 @@ public class SegmentDog {
 			individualId);
 
 		return IterableUtils.toList(_segmentRepository.findAllById(segmentIds));
+	}
+
+	public List<Segment> getIndividualSegments(String individualId) {
+		if (_projectFeatureDog.isFeatureEnabled(
+				Feature.API_REPORTS_POSTGRES_CACHE,
+				ProjectIdThreadLocal.getProjectId())) {
+
+			List<Long> segmentIds =
+				_individualSegmentDog.getIndividualSegmentIds(individualId);
+
+			return IterableUtils.toList(
+				_segmentRepository.findAllById(segmentIds));
+		}
+
+		return getBQIndividualSegments(individualId);
 	}
 
 	public Date getLastActivityDate(Segment segment) {
@@ -669,7 +686,13 @@ public class SegmentDog {
 	private ChannelRepository _channelRepository;
 
 	@Autowired
+	private IndividualSegmentDog _individualSegmentDog;
+
+	@Autowired
 	private ObjectMapper _objectMapper;
+
+	@Autowired
+	private ProjectFeatureDog _projectFeatureDog;
 
 	@Autowired
 	private SegmentRepository _segmentRepository;
