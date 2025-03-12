@@ -8,6 +8,7 @@ package com.liferay.osb.asah.common.dog;
 import com.liferay.osb.asah.common.entity.ProjectFeature;
 import com.liferay.osb.asah.common.model.Feature;
 import com.liferay.osb.asah.common.repository.ProjectFeatureRepository;
+import com.liferay.osb.asah.common.util.ProjectIdThreadLocal;
 
 import java.util.Optional;
 
@@ -21,15 +22,22 @@ import org.springframework.stereotype.Component;
 public class ProjectFeatureDog {
 
 	public boolean isFeatureEnabled(Feature feature, String projectId) {
-		Optional<ProjectFeature> projectFeatureOptional =
-			_projectFeatureRepository.findByFeatureAndProjectId(
-				feature, projectId);
+		try {
+			ProjectIdThreadLocal.setGlobalContext(true);
 
-		return projectFeatureOptional.map(
-			ProjectFeature::getEnabled
-		).orElse(
-			Boolean.FALSE
-		);
+			Optional<ProjectFeature> projectFeatureOptional =
+				_projectFeatureRepository.findByFeatureAndProjectId(
+					feature, projectId);
+
+			return projectFeatureOptional.map(
+				ProjectFeature::getEnabled
+			).orElse(
+				Boolean.FALSE
+			);
+		}
+		finally {
+			ProjectIdThreadLocal.setGlobalContext(false);
+		}
 	}
 
 	@Autowired
