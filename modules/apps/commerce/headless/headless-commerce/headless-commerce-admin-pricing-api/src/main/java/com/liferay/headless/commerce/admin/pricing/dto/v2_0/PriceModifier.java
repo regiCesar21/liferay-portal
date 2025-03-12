@@ -16,8 +16,6 @@ import com.liferay.portal.vulcan.graphql.annotation.GraphQLField;
 import com.liferay.portal.vulcan.graphql.annotation.GraphQLName;
 import com.liferay.portal.vulcan.util.ObjectMapperUtil;
 
-import io.swagger.v3.oas.annotations.media.Schema;
-
 import java.io.Serializable;
 
 import java.math.BigDecimal;
@@ -47,10 +45,10 @@ import javax.xml.bind.annotation.XmlRootElement;
  */
 @Generated("")
 @GraphQLName("PriceModifier")
-@JsonFilter("Liferay.Vulcan")
-@Schema(
+@io.swagger.v3.oas.annotations.media.Schema(
 	requiredProperties = {"modifierAmount", "modifierType", "target", "title"}
 )
+@JsonFilter("Liferay.Vulcan")
 @XmlRootElement(name = "PriceModifier")
 public class PriceModifier implements Serializable {
 
@@ -62,7 +60,7 @@ public class PriceModifier implements Serializable {
 		return ObjectMapperUtil.unsafeReadValue(PriceModifier.class, json);
 	}
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	@Valid
 	public Map<String, Map<String, String>> getActions() {
 		if (_actionsSupplier != null) {
@@ -105,7 +103,7 @@ public class PriceModifier implements Serializable {
 	@JsonIgnore
 	private Supplier<Map<String, Map<String, String>>> _actionsSupplier;
 
-	@Schema(example = "true")
+	@io.swagger.v3.oas.annotations.media.Schema(example = "true")
 	public Boolean getActive() {
 		if (_activeSupplier != null) {
 			active = _activeSupplier.get();
@@ -146,7 +144,7 @@ public class PriceModifier implements Serializable {
 	@JsonIgnore
 	private Supplier<Boolean> _activeSupplier;
 
-	@Schema(example = "2017-07-21")
+	@io.swagger.v3.oas.annotations.media.Schema(example = "2017-07-21")
 	public Date getDisplayDate() {
 		if (_displayDateSupplier != null) {
 			displayDate = _displayDateSupplier.get();
@@ -187,7 +185,7 @@ public class PriceModifier implements Serializable {
 	@JsonIgnore
 	private Supplier<Date> _displayDateSupplier;
 
-	@Schema(example = "2017-08-21")
+	@io.swagger.v3.oas.annotations.media.Schema(example = "2017-08-21")
 	public Date getExpirationDate() {
 		if (_expirationDateSupplier != null) {
 			expirationDate = _expirationDateSupplier.get();
@@ -228,7 +226,7 @@ public class PriceModifier implements Serializable {
 	@JsonIgnore
 	private Supplier<Date> _expirationDateSupplier;
 
-	@Schema(example = "AB-34098-789-N")
+	@io.swagger.v3.oas.annotations.media.Schema(example = "AB-34098-789-N")
 	public String getExternalReferenceCode() {
 		if (_externalReferenceCodeSupplier != null) {
 			externalReferenceCode = _externalReferenceCodeSupplier.get();
@@ -270,7 +268,7 @@ public class PriceModifier implements Serializable {
 	private Supplier<String> _externalReferenceCodeSupplier;
 
 	@DecimalMin("0")
-	@Schema(example = "30130")
+	@io.swagger.v3.oas.annotations.media.Schema(example = "30130")
 	public Long getId() {
 		if (_idSupplier != null) {
 			id = _idSupplier.get();
@@ -310,7 +308,7 @@ public class PriceModifier implements Serializable {
 	private Supplier<Long> _idSupplier;
 
 	@DecimalMin("0")
-	@Schema(example = "25")
+	@io.swagger.v3.oas.annotations.media.Schema(example = "25")
 	@Valid
 	public BigDecimal getModifierAmount() {
 		if (_modifierAmountSupplier != null) {
@@ -353,7 +351,7 @@ public class PriceModifier implements Serializable {
 	@JsonIgnore
 	private Supplier<BigDecimal> _modifierAmountSupplier;
 
-	@Schema(example = "percentage")
+	@io.swagger.v3.oas.annotations.media.Schema(example = "percentage")
 	public String getModifierType() {
 		if (_modifierTypeSupplier != null) {
 			modifierType = _modifierTypeSupplier.get();
@@ -395,7 +393,7 @@ public class PriceModifier implements Serializable {
 	@JsonIgnore
 	private Supplier<String> _modifierTypeSupplier;
 
-	@Schema(example = "true")
+	@io.swagger.v3.oas.annotations.media.Schema(example = "true")
 	public Boolean getNeverExpire() {
 		if (_neverExpireSupplier != null) {
 			neverExpire = _neverExpireSupplier.get();
@@ -436,7 +434,7 @@ public class PriceModifier implements Serializable {
 	@JsonIgnore
 	private Supplier<Boolean> _neverExpireSupplier;
 
-	@Schema(example = "PLAB-34098-789-N")
+	@io.swagger.v3.oas.annotations.media.Schema(example = "PLAB-34098-789-N")
 	public String getPriceListExternalReferenceCode() {
 		if (_priceListExternalReferenceCodeSupplier != null) {
 			priceListExternalReferenceCode =
@@ -482,7 +480,7 @@ public class PriceModifier implements Serializable {
 	private Supplier<String> _priceListExternalReferenceCodeSupplier;
 
 	@DecimalMin("0")
-	@Schema(example = "20078")
+	@io.swagger.v3.oas.annotations.media.Schema(example = "20078")
 	public Long getPriceListId() {
 		if (_priceListIdSupplier != null) {
 			priceListId = _priceListIdSupplier.get();
@@ -523,7 +521,7 @@ public class PriceModifier implements Serializable {
 	@JsonIgnore
 	private Supplier<Long> _priceListIdSupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	@Valid
 	public PriceModifierCategory[] getPriceModifierCategory() {
 		if (_priceModifierCategorySupplier != null) {
@@ -568,7 +566,7 @@ public class PriceModifier implements Serializable {
 	@JsonIgnore
 	private Supplier<PriceModifierCategory[]> _priceModifierCategorySupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	@Valid
 	public PriceModifierProduct[] getPriceModifierProduct() {
 		if (_priceModifierProductSupplier != null) {
@@ -613,7 +611,7 @@ public class PriceModifier implements Serializable {
 	@JsonIgnore
 	private Supplier<PriceModifierProduct[]> _priceModifierProductSupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	@Valid
 	public PriceModifierProductGroup[] getPriceModifierProductGroup() {
 		if (_priceModifierProductGroupSupplier != null) {
@@ -660,7 +658,7 @@ public class PriceModifier implements Serializable {
 	private Supplier<PriceModifierProductGroup[]>
 		_priceModifierProductGroupSupplier;
 
-	@Schema(example = "1.2")
+	@io.swagger.v3.oas.annotations.media.Schema(example = "1.2")
 	public Double getPriority() {
 		if (_prioritySupplier != null) {
 			priority = _prioritySupplier.get();
@@ -701,7 +699,7 @@ public class PriceModifier implements Serializable {
 	@JsonIgnore
 	private Supplier<Double> _prioritySupplier;
 
-	@Schema(example = "product")
+	@io.swagger.v3.oas.annotations.media.Schema(example = "product")
 	public String getTarget() {
 		if (_targetSupplier != null) {
 			target = _targetSupplier.get();
@@ -743,7 +741,7 @@ public class PriceModifier implements Serializable {
 	@JsonIgnore
 	private Supplier<String> _targetSupplier;
 
-	@Schema(example = "20% Off")
+	@io.swagger.v3.oas.annotations.media.Schema(example = "20% Off")
 	public String getTitle() {
 		if (_titleSupplier != null) {
 			title = _titleSupplier.get();
@@ -1085,8 +1083,8 @@ public class PriceModifier implements Serializable {
 		return sb.toString();
 	}
 
-	@Schema(
-		accessMode = Schema.AccessMode.READ_ONLY,
+	@io.swagger.v3.oas.annotations.media.Schema(
+		accessMode = io.swagger.v3.oas.annotations.media.Schema.AccessMode.READ_ONLY,
 		defaultValue = "com.liferay.headless.commerce.admin.pricing.dto.v2_0.PriceModifier",
 		name = "x-class-name"
 	)

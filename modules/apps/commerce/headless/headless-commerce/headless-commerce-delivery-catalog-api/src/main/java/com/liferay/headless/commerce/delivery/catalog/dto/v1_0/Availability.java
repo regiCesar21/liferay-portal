@@ -16,8 +16,6 @@ import com.liferay.portal.vulcan.graphql.annotation.GraphQLField;
 import com.liferay.portal.vulcan.graphql.annotation.GraphQLName;
 import com.liferay.portal.vulcan.util.ObjectMapperUtil;
 
-import io.swagger.v3.oas.annotations.media.Schema;
-
 import java.io.Serializable;
 
 import java.util.Iterator;
@@ -48,7 +46,7 @@ public class Availability implements Serializable {
 		return ObjectMapperUtil.unsafeReadValue(Availability.class, json);
 	}
 
-	@Schema(example = "Available")
+	@io.swagger.v3.oas.annotations.media.Schema(example = "Available")
 	public String getLabel() {
 		if (_labelSupplier != null) {
 			label = _labelSupplier.get();
@@ -89,7 +87,7 @@ public class Availability implements Serializable {
 	@JsonIgnore
 	private Supplier<String> _labelSupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	public Integer getStockQuantity() {
 		if (_stockQuantitySupplier != null) {
 			stockQuantity = _stockQuantitySupplier.get();
@@ -190,8 +188,8 @@ public class Availability implements Serializable {
 		return sb.toString();
 	}
 
-	@Schema(
-		accessMode = Schema.AccessMode.READ_ONLY,
+	@io.swagger.v3.oas.annotations.media.Schema(
+		accessMode = io.swagger.v3.oas.annotations.media.Schema.AccessMode.READ_ONLY,
 		defaultValue = "com.liferay.headless.commerce.delivery.catalog.dto.v1_0.Availability",
 		name = "x-class-name"
 	)

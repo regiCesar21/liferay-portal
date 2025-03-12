@@ -16,8 +16,6 @@ import com.liferay.portal.vulcan.graphql.annotation.GraphQLField;
 import com.liferay.portal.vulcan.graphql.annotation.GraphQLName;
 import com.liferay.portal.vulcan.util.ObjectMapperUtil;
 
-import io.swagger.v3.oas.annotations.media.Schema;
-
 import java.io.Serializable;
 
 import java.util.Iterator;
@@ -48,7 +46,7 @@ public class Breadcrumb implements Serializable {
 		return ObjectMapperUtil.unsafeReadValue(Breadcrumb.class, json);
 	}
 
-	@Schema(example = "Item 1")
+	@io.swagger.v3.oas.annotations.media.Schema(example = "Item 1")
 	public String getLabel() {
 		if (_labelSupplier != null) {
 			label = _labelSupplier.get();
@@ -89,7 +87,7 @@ public class Breadcrumb implements Serializable {
 	@JsonIgnore
 	private Supplier<String> _labelSupplier;
 
-	@Schema(example = "/folder/32344")
+	@io.swagger.v3.oas.annotations.media.Schema(example = "/folder/32344")
 	public String getUrl() {
 		if (_urlSupplier != null) {
 			url = _urlSupplier.get();
@@ -192,8 +190,8 @@ public class Breadcrumb implements Serializable {
 		return sb.toString();
 	}
 
-	@Schema(
-		accessMode = Schema.AccessMode.READ_ONLY,
+	@io.swagger.v3.oas.annotations.media.Schema(
+		accessMode = io.swagger.v3.oas.annotations.media.Schema.AccessMode.READ_ONLY,
 		defaultValue = "com.liferay.headless.commerce.bom.dto.v1_0.Breadcrumb",
 		name = "x-class-name"
 	)

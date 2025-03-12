@@ -16,8 +16,6 @@ import com.liferay.portal.vulcan.graphql.annotation.GraphQLField;
 import com.liferay.portal.vulcan.graphql.annotation.GraphQLName;
 import com.liferay.portal.vulcan.util.ObjectMapperUtil;
 
-import io.swagger.v3.oas.annotations.media.Schema;
-
 import java.io.Serializable;
 
 import java.text.DateFormat;
@@ -57,7 +55,7 @@ public class WorkflowLog implements Serializable {
 		return ObjectMapperUtil.unsafeReadValue(WorkflowLog.class, json);
 	}
 
-	@Schema(
+	@io.swagger.v3.oas.annotations.media.Schema(
 		description = "The user account of the person auditing the workflow."
 	)
 	@Valid
@@ -103,7 +101,9 @@ public class WorkflowLog implements Serializable {
 	@JsonIgnore
 	private Supplier<Creator> _auditPersonSupplier;
 
-	@Schema(description = "The log's comments.")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "The log's comments."
+	)
 	public String getCommentLog() {
 		if (_commentLogSupplier != null) {
 			commentLog = _commentLogSupplier.get();
@@ -144,7 +144,9 @@ public class WorkflowLog implements Serializable {
 	@JsonIgnore
 	private Supplier<String> _commentLogSupplier;
 
-	@Schema(description = "The log's creation date.")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "The log's creation date."
+	)
 	public Date getDateCreated() {
 		if (_dateCreatedSupplier != null) {
 			dateCreated = _dateCreatedSupplier.get();
@@ -185,7 +187,7 @@ public class WorkflowLog implements Serializable {
 	@JsonIgnore
 	private Supplier<Date> _dateCreatedSupplier;
 
-	@Schema(description = "The log's ID.")
+	@io.swagger.v3.oas.annotations.media.Schema(description = "The log's ID.")
 	public Long getId() {
 		if (_idSupplier != null) {
 			id = _idSupplier.get();
@@ -224,7 +226,9 @@ public class WorkflowLog implements Serializable {
 	@JsonIgnore
 	private Supplier<Long> _idSupplier;
 
-	@Schema(description = "The person assigned to the workflow.")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "The person assigned to the workflow."
+	)
 	@Valid
 	public Creator getPerson() {
 		if (_personSupplier != null) {
@@ -266,7 +270,9 @@ public class WorkflowLog implements Serializable {
 	@JsonIgnore
 	private Supplier<Creator> _personSupplier;
 
-	@Schema(description = "The previous person assigned to the workflow.")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "The previous person assigned to the workflow."
+	)
 	@Valid
 	public Creator getPreviousPerson() {
 		if (_previousPersonSupplier != null) {
@@ -308,7 +314,9 @@ public class WorkflowLog implements Serializable {
 	@JsonIgnore
 	private Supplier<Creator> _previousPersonSupplier;
 
-	@Schema(description = "The workflow's previous state.")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "The workflow's previous state."
+	)
 	public String getPreviousState() {
 		if (_previousStateSupplier != null) {
 			previousState = _previousStateSupplier.get();
@@ -349,7 +357,9 @@ public class WorkflowLog implements Serializable {
 	@JsonIgnore
 	private Supplier<String> _previousStateSupplier;
 
-	@Schema(description = "The workflow's current state.")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "The workflow's current state."
+	)
 	public String getState() {
 		if (_stateSupplier != null) {
 			state = _stateSupplier.get();
@@ -390,7 +400,9 @@ public class WorkflowLog implements Serializable {
 	@JsonIgnore
 	private Supplier<String> _stateSupplier;
 
-	@Schema(description = "The task asociated with this workflow log.")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "The task asociated with this workflow log."
+	)
 	public Long getTaskId() {
 		if (_taskIdSupplier != null) {
 			taskId = _taskIdSupplier.get();
@@ -431,7 +443,9 @@ public class WorkflowLog implements Serializable {
 	@JsonIgnore
 	private Supplier<Long> _taskIdSupplier;
 
-	@Schema(description = "The workflow log's type.")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "The workflow log's type."
+	)
 	public String getType() {
 		if (_typeSupplier != null) {
 			type = _typeSupplier.get();
@@ -645,8 +659,8 @@ public class WorkflowLog implements Serializable {
 		return sb.toString();
 	}
 
-	@Schema(
-		accessMode = Schema.AccessMode.READ_ONLY,
+	@io.swagger.v3.oas.annotations.media.Schema(
+		accessMode = io.swagger.v3.oas.annotations.media.Schema.AccessMode.READ_ONLY,
 		defaultValue = "com.liferay.headless.admin.workflow.dto.v1_0.WorkflowLog",
 		name = "x-class-name"
 	)

@@ -16,8 +16,6 @@ import com.liferay.portal.vulcan.graphql.annotation.GraphQLField;
 import com.liferay.portal.vulcan.graphql.annotation.GraphQLName;
 import com.liferay.portal.vulcan.util.ObjectMapperUtil;
 
-import io.swagger.v3.oas.annotations.media.Schema;
-
 import java.io.Serializable;
 
 import java.util.Iterator;
@@ -50,7 +48,7 @@ public class AreaData implements Serializable {
 		return ObjectMapperUtil.unsafeReadValue(AreaData.class, json);
 	}
 
-	@Schema(example = "Name 1")
+	@io.swagger.v3.oas.annotations.media.Schema(example = "Name 1")
 	public String getId() {
 		if (_idSupplier != null) {
 			id = _idSupplier.get();
@@ -89,7 +87,7 @@ public class AreaData implements Serializable {
 	@JsonIgnore
 	private Supplier<String> _idSupplier;
 
-	@Schema(example = "Name 1")
+	@io.swagger.v3.oas.annotations.media.Schema(example = "Name 1")
 	public String getImageUrl() {
 		if (_imageUrlSupplier != null) {
 			imageUrl = _imageUrlSupplier.get();
@@ -130,7 +128,7 @@ public class AreaData implements Serializable {
 	@JsonIgnore
 	private Supplier<String> _imageUrlSupplier;
 
-	@Schema(example = "Name 1")
+	@io.swagger.v3.oas.annotations.media.Schema(example = "Name 1")
 	public String getName() {
 		if (_nameSupplier != null) {
 			name = _nameSupplier.get();
@@ -169,7 +167,7 @@ public class AreaData implements Serializable {
 	@JsonIgnore
 	private Supplier<String> _nameSupplier;
 
-	@Schema(
+	@io.swagger.v3.oas.annotations.media.Schema(
 		example = "[{id=29130, name=Product 1, price=$ 12.99, sku=SKU01, thumbnailUrl=/product_thumbnail.png, url=/productUrl}]"
 	)
 	@Valid
@@ -213,7 +211,7 @@ public class AreaData implements Serializable {
 	@JsonIgnore
 	private Supplier<Product[]> _productsSupplier;
 
-	@Schema(
+	@io.swagger.v3.oas.annotations.media.Schema(
 		example = "[{id=34130, number=3, positionX=33.54, positionY=33.54, productId=29130}]"
 	)
 	@Valid
@@ -381,8 +379,8 @@ public class AreaData implements Serializable {
 		return sb.toString();
 	}
 
-	@Schema(
-		accessMode = Schema.AccessMode.READ_ONLY,
+	@io.swagger.v3.oas.annotations.media.Schema(
+		accessMode = io.swagger.v3.oas.annotations.media.Schema.AccessMode.READ_ONLY,
 		defaultValue = "com.liferay.headless.commerce.bom.dto.v1_0.AreaData",
 		name = "x-class-name"
 	)

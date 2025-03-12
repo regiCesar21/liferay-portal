@@ -19,8 +19,6 @@ import com.liferay.portal.vulcan.graphql.annotation.GraphQLField;
 import com.liferay.portal.vulcan.graphql.annotation.GraphQLName;
 import com.liferay.portal.vulcan.util.ObjectMapperUtil;
 
-import io.swagger.v3.oas.annotations.media.Schema;
-
 import java.io.Serializable;
 
 import java.text.DateFormat;
@@ -49,11 +47,11 @@ import javax.xml.bind.annotation.XmlRootElement;
 	description = "Represents a vocabulary, which is a grouping of categories for a specific purpose (e.g., classification, sorting, etc.).",
 	value = "TaxonomyVocabulary"
 )
-@JsonFilter("Liferay.Vulcan")
-@Schema(
+@io.swagger.v3.oas.annotations.media.Schema(
 	description = "Represents a vocabulary, which is a grouping of categories for a specific purpose (e.g., classification, sorting, etc.).",
 	requiredProperties = {"name"}
 )
+@JsonFilter("Liferay.Vulcan")
 @XmlRootElement(name = "TaxonomyVocabulary")
 public class TaxonomyVocabulary implements Serializable {
 
@@ -65,7 +63,7 @@ public class TaxonomyVocabulary implements Serializable {
 		return ObjectMapperUtil.unsafeReadValue(TaxonomyVocabulary.class, json);
 	}
 
-	@Schema(
+	@io.swagger.v3.oas.annotations.media.Schema(
 		description = "A list of asset types that can be associated with this vocabulary."
 	)
 	@Valid
@@ -111,7 +109,7 @@ public class TaxonomyVocabulary implements Serializable {
 	@JsonIgnore
 	private Supplier<AssetType[]> _assetTypesSupplier;
 
-	@Schema(
+	@io.swagger.v3.oas.annotations.media.Schema(
 		description = "A list of languages the vocabulary has a translation for."
 	)
 	public String[] getAvailableLanguages() {
@@ -156,7 +154,9 @@ public class TaxonomyVocabulary implements Serializable {
 	@JsonIgnore
 	private Supplier<String[]> _availableLanguagesSupplier;
 
-	@Schema(description = "The vocabulary's creator.")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "The vocabulary's creator."
+	)
 	@Valid
 	public Creator getCreator() {
 		if (_creatorSupplier != null) {
@@ -198,7 +198,9 @@ public class TaxonomyVocabulary implements Serializable {
 	@JsonIgnore
 	private Supplier<Creator> _creatorSupplier;
 
-	@Schema(description = "The vocabulary's creation date.")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "The vocabulary's creation date."
+	)
 	public Date getDateCreated() {
 		if (_dateCreatedSupplier != null) {
 			dateCreated = _dateCreatedSupplier.get();
@@ -239,7 +241,9 @@ public class TaxonomyVocabulary implements Serializable {
 	@JsonIgnore
 	private Supplier<Date> _dateCreatedSupplier;
 
-	@Schema(description = "The vocabulary's most recent modification date.")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "The vocabulary's most recent modification date."
+	)
 	public Date getDateModified() {
 		if (_dateModifiedSupplier != null) {
 			dateModified = _dateModifiedSupplier.get();
@@ -282,7 +286,9 @@ public class TaxonomyVocabulary implements Serializable {
 	@JsonIgnore
 	private Supplier<Date> _dateModifiedSupplier;
 
-	@Schema(description = "The vocabulary's text description.")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "The vocabulary's text description."
+	)
 	public String getDescription() {
 		if (_descriptionSupplier != null) {
 			description = _descriptionSupplier.get();
@@ -323,7 +329,7 @@ public class TaxonomyVocabulary implements Serializable {
 	@JsonIgnore
 	private Supplier<String> _descriptionSupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	@Valid
 	public Map<String, String> getDescription_i18n() {
 		if (_description_i18nSupplier != null) {
@@ -366,7 +372,9 @@ public class TaxonomyVocabulary implements Serializable {
 	@JsonIgnore
 	private Supplier<Map<String, String>> _description_i18nSupplier;
 
-	@Schema(description = "The vocabulary's ID.")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "The vocabulary's ID."
+	)
 	public Long getId() {
 		if (_idSupplier != null) {
 			id = _idSupplier.get();
@@ -405,7 +413,9 @@ public class TaxonomyVocabulary implements Serializable {
 	@JsonIgnore
 	private Supplier<Long> _idSupplier;
 
-	@Schema(description = "The vocabulary's name.")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "The vocabulary's name."
+	)
 	public String getName() {
 		if (_nameSupplier != null) {
 			name = _nameSupplier.get();
@@ -445,7 +455,7 @@ public class TaxonomyVocabulary implements Serializable {
 	@JsonIgnore
 	private Supplier<String> _nameSupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	@Valid
 	public Map<String, String> getName_i18n() {
 		if (_name_i18nSupplier != null) {
@@ -488,7 +498,7 @@ public class TaxonomyVocabulary implements Serializable {
 	@JsonIgnore
 	private Supplier<Map<String, String>> _name_i18nSupplier;
 
-	@Schema(
+	@io.swagger.v3.oas.annotations.media.Schema(
 		description = "The number of categories that directly depend on this vocabulary."
 	)
 	public Integer getNumberOfTaxonomyCategories() {
@@ -537,7 +547,7 @@ public class TaxonomyVocabulary implements Serializable {
 	@JsonIgnore
 	private Supplier<Integer> _numberOfTaxonomyCategoriesSupplier;
 
-	@Schema(
+	@io.swagger.v3.oas.annotations.media.Schema(
 		description = "The ID of the site to which this vocabulary is scoped."
 	)
 	public Long getSiteId() {
@@ -582,10 +592,10 @@ public class TaxonomyVocabulary implements Serializable {
 	@JsonIgnore
 	private Supplier<Long> _siteIdSupplier;
 
-	@JsonGetter("viewableBy")
-	@Schema(
+	@io.swagger.v3.oas.annotations.media.Schema(
 		description = "A write-only property that specifies the vocabulary's default permissions."
 	)
+	@JsonGetter("viewableBy")
 	@Valid
 	public ViewableBy getViewableBy() {
 		if (_viewableBySupplier != null) {
@@ -875,8 +885,8 @@ public class TaxonomyVocabulary implements Serializable {
 		return sb.toString();
 	}
 
-	@Schema(
-		accessMode = Schema.AccessMode.READ_ONLY,
+	@io.swagger.v3.oas.annotations.media.Schema(
+		accessMode = io.swagger.v3.oas.annotations.media.Schema.AccessMode.READ_ONLY,
 		defaultValue = "com.liferay.headless.admin.taxonomy.dto.v1_0.TaxonomyVocabulary",
 		name = "x-class-name"
 	)

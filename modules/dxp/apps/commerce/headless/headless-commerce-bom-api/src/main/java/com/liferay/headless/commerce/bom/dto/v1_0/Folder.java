@@ -16,8 +16,6 @@ import com.liferay.portal.vulcan.graphql.annotation.GraphQLField;
 import com.liferay.portal.vulcan.graphql.annotation.GraphQLName;
 import com.liferay.portal.vulcan.util.ObjectMapperUtil;
 
-import io.swagger.v3.oas.annotations.media.Schema;
-
 import java.io.Serializable;
 
 import java.util.Iterator;
@@ -50,7 +48,7 @@ public class Folder implements Serializable {
 		return ObjectMapperUtil.unsafeReadValue(Folder.class, json);
 	}
 
-	@Schema(
+	@io.swagger.v3.oas.annotations.media.Schema(
 		example = "[{id=31130, name=Item 1, slug=/Item-1, street2=/Item/31130, thumbnail=/schema.jpg}]"
 	)
 	@Valid
@@ -94,7 +92,7 @@ public class Folder implements Serializable {
 	@JsonIgnore
 	private Supplier<Breadcrumb[]> _breadcrumbsSupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	@Valid
 	public ItemData getData() {
 		if (_dataSupplier != null) {
@@ -202,8 +200,8 @@ public class Folder implements Serializable {
 		return sb.toString();
 	}
 
-	@Schema(
-		accessMode = Schema.AccessMode.READ_ONLY,
+	@io.swagger.v3.oas.annotations.media.Schema(
+		accessMode = io.swagger.v3.oas.annotations.media.Schema.AccessMode.READ_ONLY,
 		defaultValue = "com.liferay.headless.commerce.bom.dto.v1_0.Folder",
 		name = "x-class-name"
 	)

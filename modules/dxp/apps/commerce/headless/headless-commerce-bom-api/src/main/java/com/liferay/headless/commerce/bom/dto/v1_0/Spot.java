@@ -16,8 +16,6 @@ import com.liferay.portal.vulcan.graphql.annotation.GraphQLField;
 import com.liferay.portal.vulcan.graphql.annotation.GraphQLName;
 import com.liferay.portal.vulcan.util.ObjectMapperUtil;
 
-import io.swagger.v3.oas.annotations.media.Schema;
-
 import java.io.Serializable;
 
 import java.util.Iterator;
@@ -52,7 +50,7 @@ public class Spot implements Serializable {
 	}
 
 	@DecimalMin("0")
-	@Schema(example = "33130")
+	@io.swagger.v3.oas.annotations.media.Schema(example = "33130")
 	public Long getId() {
 		if (_idSupplier != null) {
 			id = _idSupplier.get();
@@ -92,7 +90,7 @@ public class Spot implements Serializable {
 	private Supplier<Long> _idSupplier;
 
 	@DecimalMin("0")
-	@Schema(example = "3")
+	@io.swagger.v3.oas.annotations.media.Schema(example = "3")
 	public Integer getNumber() {
 		if (_numberSupplier != null) {
 			number = _numberSupplier.get();
@@ -133,7 +131,7 @@ public class Spot implements Serializable {
 	@JsonIgnore
 	private Supplier<Integer> _numberSupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	@Valid
 	public Position getPosition() {
 		if (_positionSupplier != null) {
@@ -175,7 +173,9 @@ public class Spot implements Serializable {
 	@JsonIgnore
 	private Supplier<Position> _positionSupplier;
 
-	@Schema(example = "123e4567-e89b-12d3-a456-426655440000")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		example = "123e4567-e89b-12d3-a456-426655440000"
+	)
 	public String getProductId() {
 		if (_productIdSupplier != null) {
 			productId = _productIdSupplier.get();
@@ -216,7 +216,7 @@ public class Spot implements Serializable {
 	@JsonIgnore
 	private Supplier<String> _productIdSupplier;
 
-	@Schema(example = "SKU01")
+	@io.swagger.v3.oas.annotations.media.Schema(example = "SKU01")
 	public String getSku() {
 		if (_skuSupplier != null) {
 			sku = _skuSupplier.get();
@@ -355,8 +355,8 @@ public class Spot implements Serializable {
 		return sb.toString();
 	}
 
-	@Schema(
-		accessMode = Schema.AccessMode.READ_ONLY,
+	@io.swagger.v3.oas.annotations.media.Schema(
+		accessMode = io.swagger.v3.oas.annotations.media.Schema.AccessMode.READ_ONLY,
 		defaultValue = "com.liferay.headless.commerce.bom.dto.v1_0.Spot",
 		name = "x-class-name"
 	)

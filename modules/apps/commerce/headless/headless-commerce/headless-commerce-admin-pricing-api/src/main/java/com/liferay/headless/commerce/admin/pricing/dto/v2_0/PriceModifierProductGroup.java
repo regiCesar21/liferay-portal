@@ -16,8 +16,6 @@ import com.liferay.portal.vulcan.graphql.annotation.GraphQLField;
 import com.liferay.portal.vulcan.graphql.annotation.GraphQLName;
 import com.liferay.portal.vulcan.util.ObjectMapperUtil;
 
-import io.swagger.v3.oas.annotations.media.Schema;
-
 import java.io.Serializable;
 
 import java.util.Iterator;
@@ -40,8 +38,10 @@ import javax.xml.bind.annotation.XmlRootElement;
  */
 @Generated("")
 @GraphQLName("PriceModifierProductGroup")
+@io.swagger.v3.oas.annotations.media.Schema(
+	requiredProperties = {"priceModifierId", "productGroupId"}
+)
 @JsonFilter("Liferay.Vulcan")
-@Schema(requiredProperties = {"priceModifierId", "productGroupId"})
 @XmlRootElement(name = "PriceModifierProductGroup")
 public class PriceModifierProductGroup implements Serializable {
 
@@ -55,7 +55,7 @@ public class PriceModifierProductGroup implements Serializable {
 			PriceModifierProductGroup.class, json);
 	}
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	@Valid
 	public Map<String, Map<String, String>> getActions() {
 		if (_actionsSupplier != null) {
@@ -99,7 +99,7 @@ public class PriceModifierProductGroup implements Serializable {
 	private Supplier<Map<String, Map<String, String>>> _actionsSupplier;
 
 	@DecimalMin("0")
-	@Schema(example = "30643")
+	@io.swagger.v3.oas.annotations.media.Schema(example = "30643")
 	public Long getId() {
 		if (_idSupplier != null) {
 			id = _idSupplier.get();
@@ -138,7 +138,7 @@ public class PriceModifierProductGroup implements Serializable {
 	@JsonIgnore
 	private Supplier<Long> _idSupplier;
 
-	@Schema(example = "DAB-34098-789-N")
+	@io.swagger.v3.oas.annotations.media.Schema(example = "DAB-34098-789-N")
 	public String getPriceModifierExternalReferenceCode() {
 		if (_priceModifierExternalReferenceCodeSupplier != null) {
 			priceModifierExternalReferenceCode =
@@ -185,7 +185,7 @@ public class PriceModifierProductGroup implements Serializable {
 	private Supplier<String> _priceModifierExternalReferenceCodeSupplier;
 
 	@DecimalMin("0")
-	@Schema(example = "30324")
+	@io.swagger.v3.oas.annotations.media.Schema(example = "30324")
 	public Long getPriceModifierId() {
 		if (_priceModifierIdSupplier != null) {
 			priceModifierId = _priceModifierIdSupplier.get();
@@ -227,7 +227,7 @@ public class PriceModifierProductGroup implements Serializable {
 	@JsonIgnore
 	private Supplier<Long> _priceModifierIdSupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	@Valid
 	public ProductGroup getProductGroup() {
 		if (_productGroupSupplier != null) {
@@ -269,7 +269,7 @@ public class PriceModifierProductGroup implements Serializable {
 	@JsonIgnore
 	private Supplier<ProductGroup> _productGroupSupplier;
 
-	@Schema(example = "PAB-34098-789-N")
+	@io.swagger.v3.oas.annotations.media.Schema(example = "PAB-34098-789-N")
 	public String getProductGroupExternalReferenceCode() {
 		if (_productGroupExternalReferenceCodeSupplier != null) {
 			productGroupExternalReferenceCode =
@@ -316,7 +316,7 @@ public class PriceModifierProductGroup implements Serializable {
 	private Supplier<String> _productGroupExternalReferenceCodeSupplier;
 
 	@DecimalMin("0")
-	@Schema(example = "30130")
+	@io.swagger.v3.oas.annotations.media.Schema(example = "30130")
 	public Long getProductGroupId() {
 		if (_productGroupIdSupplier != null) {
 			productGroupId = _productGroupIdSupplier.get();
@@ -485,8 +485,8 @@ public class PriceModifierProductGroup implements Serializable {
 		return sb.toString();
 	}
 
-	@Schema(
-		accessMode = Schema.AccessMode.READ_ONLY,
+	@io.swagger.v3.oas.annotations.media.Schema(
+		accessMode = io.swagger.v3.oas.annotations.media.Schema.AccessMode.READ_ONLY,
 		defaultValue = "com.liferay.headless.commerce.admin.pricing.dto.v2_0.PriceModifierProductGroup",
 		name = "x-class-name"
 	)

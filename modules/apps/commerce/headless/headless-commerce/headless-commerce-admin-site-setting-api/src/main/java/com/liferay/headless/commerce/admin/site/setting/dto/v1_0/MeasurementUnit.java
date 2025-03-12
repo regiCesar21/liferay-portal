@@ -16,8 +16,6 @@ import com.liferay.portal.vulcan.graphql.annotation.GraphQLField;
 import com.liferay.portal.vulcan.graphql.annotation.GraphQLName;
 import com.liferay.portal.vulcan.util.ObjectMapperUtil;
 
-import io.swagger.v3.oas.annotations.media.Schema;
-
 import java.io.Serializable;
 
 import java.util.Iterator;
@@ -42,8 +40,10 @@ import javax.xml.bind.annotation.XmlRootElement;
  */
 @Generated("")
 @GraphQLName("MeasurementUnit")
+@io.swagger.v3.oas.annotations.media.Schema(
+	requiredProperties = {"key", "name"}
+)
 @JsonFilter("Liferay.Vulcan")
-@Schema(requiredProperties = {"key", "name"})
 @XmlRootElement(name = "MeasurementUnit")
 public class MeasurementUnit implements Serializable {
 
@@ -56,7 +56,7 @@ public class MeasurementUnit implements Serializable {
 	}
 
 	@DecimalMin("0")
-	@Schema(example = "23130")
+	@io.swagger.v3.oas.annotations.media.Schema(example = "23130")
 	public Long getGroupId() {
 		if (_groupIdSupplier != null) {
 			groupId = _groupIdSupplier.get();
@@ -98,7 +98,7 @@ public class MeasurementUnit implements Serializable {
 	private Supplier<Long> _groupIdSupplier;
 
 	@DecimalMin("0")
-	@Schema(example = "30130")
+	@io.swagger.v3.oas.annotations.media.Schema(example = "30130")
 	public Long getId() {
 		if (_idSupplier != null) {
 			id = _idSupplier.get();
@@ -137,7 +137,7 @@ public class MeasurementUnit implements Serializable {
 	@JsonIgnore
 	private Supplier<Long> _idSupplier;
 
-	@Schema(example = "kg")
+	@io.swagger.v3.oas.annotations.media.Schema(example = "kg")
 	public String getKey() {
 		if (_keySupplier != null) {
 			key = _keySupplier.get();
@@ -177,7 +177,9 @@ public class MeasurementUnit implements Serializable {
 	@JsonIgnore
 	private Supplier<String> _keySupplier;
 
-	@Schema(example = "{en_US=Croatia, hr_HR=Hrvatska, hu_HU=Horvatorszag}")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		example = "{en_US=Croatia, hr_HR=Hrvatska, hu_HU=Horvatorszag}"
+	)
 	@Valid
 	public Map<String, String> getName() {
 		if (_nameSupplier != null) {
@@ -220,7 +222,7 @@ public class MeasurementUnit implements Serializable {
 	@JsonIgnore
 	private Supplier<Map<String, String>> _nameSupplier;
 
-	@Schema(example = "true")
+	@io.swagger.v3.oas.annotations.media.Schema(example = "true")
 	public Boolean getPrimary() {
 		if (_primarySupplier != null) {
 			primary = _primarySupplier.get();
@@ -262,7 +264,7 @@ public class MeasurementUnit implements Serializable {
 	private Supplier<Boolean> _primarySupplier;
 
 	@DecimalMin("0")
-	@Schema(example = "1.1")
+	@io.swagger.v3.oas.annotations.media.Schema(example = "1.1")
 	public Double getPriority() {
 		if (_prioritySupplier != null) {
 			priority = _prioritySupplier.get();
@@ -304,7 +306,7 @@ public class MeasurementUnit implements Serializable {
 	private Supplier<Double> _prioritySupplier;
 
 	@DecimalMin("0")
-	@Schema(example = "1")
+	@io.swagger.v3.oas.annotations.media.Schema(example = "1")
 	public Double getRate() {
 		if (_rateSupplier != null) {
 			rate = _rateSupplier.get();
@@ -345,7 +347,7 @@ public class MeasurementUnit implements Serializable {
 
 	@DecimalMax("1")
 	@DecimalMin("0")
-	@Schema(example = "0")
+	@io.swagger.v3.oas.annotations.media.Schema(example = "0")
 	public Integer getType() {
 		if (_typeSupplier != null) {
 			type = _typeSupplier.get();
@@ -516,8 +518,8 @@ public class MeasurementUnit implements Serializable {
 		return sb.toString();
 	}
 
-	@Schema(
-		accessMode = Schema.AccessMode.READ_ONLY,
+	@io.swagger.v3.oas.annotations.media.Schema(
+		accessMode = io.swagger.v3.oas.annotations.media.Schema.AccessMode.READ_ONLY,
 		defaultValue = "com.liferay.headless.commerce.admin.site.setting.dto.v1_0.MeasurementUnit",
 		name = "x-class-name"
 	)

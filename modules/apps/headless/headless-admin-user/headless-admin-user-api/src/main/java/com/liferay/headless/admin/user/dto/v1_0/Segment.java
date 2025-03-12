@@ -16,8 +16,6 @@ import com.liferay.portal.vulcan.graphql.annotation.GraphQLField;
 import com.liferay.portal.vulcan.graphql.annotation.GraphQLName;
 import com.liferay.portal.vulcan.util.ObjectMapperUtil;
 
-import io.swagger.v3.oas.annotations.media.Schema;
-
 import java.io.Serializable;
 
 import java.text.DateFormat;
@@ -45,11 +43,11 @@ import javax.xml.bind.annotation.XmlRootElement;
 	description = "Represents a set of users that meet certain criteria. Segments may be used to create customized experiences for users.",
 	value = "Segment"
 )
-@JsonFilter("Liferay.Vulcan")
-@Schema(
+@io.swagger.v3.oas.annotations.media.Schema(
 	description = "Represents a set of users that meet certain criteria. Segments may be used to create customized experiences for users.",
 	requiredProperties = {"criteria", "name"}
 )
+@JsonFilter("Liferay.Vulcan")
 @XmlRootElement(name = "Segment")
 public class Segment implements Serializable {
 
@@ -61,7 +59,7 @@ public class Segment implements Serializable {
 		return ObjectMapperUtil.unsafeReadValue(Segment.class, json);
 	}
 
-	@Schema(
+	@io.swagger.v3.oas.annotations.media.Schema(
 		description = "A flag that indicates whether the segment is active."
 	)
 	public Boolean getActive() {
@@ -106,7 +104,9 @@ public class Segment implements Serializable {
 	@JsonIgnore
 	private Supplier<Boolean> _activeSupplier;
 
-	@Schema(description = "The segment's criteria.")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "The segment's criteria."
+	)
 	public String getCriteria() {
 		if (_criteriaSupplier != null) {
 			criteria = _criteriaSupplier.get();
@@ -148,7 +148,9 @@ public class Segment implements Serializable {
 	@JsonIgnore
 	private Supplier<String> _criteriaSupplier;
 
-	@Schema(description = "The segment's creation date.")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "The segment's creation date."
+	)
 	public Date getDateCreated() {
 		if (_dateCreatedSupplier != null) {
 			dateCreated = _dateCreatedSupplier.get();
@@ -189,7 +191,9 @@ public class Segment implements Serializable {
 	@JsonIgnore
 	private Supplier<Date> _dateCreatedSupplier;
 
-	@Schema(description = "The segment's most recent modification date.")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "The segment's most recent modification date."
+	)
 	public Date getDateModified() {
 		if (_dateModifiedSupplier != null) {
 			dateModified = _dateModifiedSupplier.get();
@@ -230,7 +234,9 @@ public class Segment implements Serializable {
 	@JsonIgnore
 	private Supplier<Date> _dateModifiedSupplier;
 
-	@Schema(description = "The segment's ID.")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "The segment's ID."
+	)
 	public Long getId() {
 		if (_idSupplier != null) {
 			id = _idSupplier.get();
@@ -269,7 +275,9 @@ public class Segment implements Serializable {
 	@JsonIgnore
 	private Supplier<Long> _idSupplier;
 
-	@Schema(description = "The segment's name.")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "The segment's name."
+	)
 	public String getName() {
 		if (_nameSupplier != null) {
 			name = _nameSupplier.get();
@@ -309,7 +317,9 @@ public class Segment implements Serializable {
 	@JsonIgnore
 	private Supplier<String> _nameSupplier;
 
-	@Schema(description = "The ID of the segment's site.")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "The ID of the segment's site."
+	)
 	public Long getSiteId() {
 		if (_siteIdSupplier != null) {
 			siteId = _siteIdSupplier.get();
@@ -350,7 +360,9 @@ public class Segment implements Serializable {
 	@JsonIgnore
 	private Supplier<Long> _siteIdSupplier;
 
-	@Schema(description = "The segment's source.")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "The segment's source."
+	)
 	public String getSource() {
 		if (_sourceSupplier != null) {
 			source = _sourceSupplier.get();
@@ -542,8 +554,8 @@ public class Segment implements Serializable {
 		return sb.toString();
 	}
 
-	@Schema(
-		accessMode = Schema.AccessMode.READ_ONLY,
+	@io.swagger.v3.oas.annotations.media.Schema(
+		accessMode = io.swagger.v3.oas.annotations.media.Schema.AccessMode.READ_ONLY,
 		defaultValue = "com.liferay.headless.admin.user.dto.v1_0.Segment",
 		name = "x-class-name"
 	)

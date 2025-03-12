@@ -16,8 +16,6 @@ import com.liferay.portal.vulcan.graphql.annotation.GraphQLField;
 import com.liferay.portal.vulcan.graphql.annotation.GraphQLName;
 import com.liferay.portal.vulcan.util.ObjectMapperUtil;
 
-import io.swagger.v3.oas.annotations.media.Schema;
-
 import java.io.Serializable;
 
 import java.text.DateFormat;
@@ -57,7 +55,7 @@ public class ContentStructure implements Serializable {
 		return ObjectMapperUtil.unsafeReadValue(ContentStructure.class, json);
 	}
 
-	@Schema(
+	@io.swagger.v3.oas.annotations.media.Schema(
 		description = "The list of languages the structure has a translation for."
 	)
 	public String[] getAvailableLanguages() {
@@ -102,7 +100,9 @@ public class ContentStructure implements Serializable {
 	@JsonIgnore
 	private Supplier<String[]> _availableLanguagesSupplier;
 
-	@Schema(description = "The list of the content structure's fields.")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "The list of the content structure's fields."
+	)
 	@Valid
 	public ContentStructureField[] getContentStructureFields() {
 		if (_contentStructureFieldsSupplier != null) {
@@ -147,7 +147,9 @@ public class ContentStructure implements Serializable {
 	@JsonIgnore
 	private Supplier<ContentStructureField[]> _contentStructureFieldsSupplier;
 
-	@Schema(description = "The content structure's creator.")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "The content structure's creator."
+	)
 	@Valid
 	public Creator getCreator() {
 		if (_creatorSupplier != null) {
@@ -189,7 +191,9 @@ public class ContentStructure implements Serializable {
 	@JsonIgnore
 	private Supplier<Creator> _creatorSupplier;
 
-	@Schema(description = "The content structure's creation date.")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "The content structure's creation date."
+	)
 	public Date getDateCreated() {
 		if (_dateCreatedSupplier != null) {
 			dateCreated = _dateCreatedSupplier.get();
@@ -230,7 +234,7 @@ public class ContentStructure implements Serializable {
 	@JsonIgnore
 	private Supplier<Date> _dateCreatedSupplier;
 
-	@Schema(
+	@io.swagger.v3.oas.annotations.media.Schema(
 		description = "The last time a field of the content structure changed."
 	)
 	public Date getDateModified() {
@@ -275,7 +279,9 @@ public class ContentStructure implements Serializable {
 	@JsonIgnore
 	private Supplier<Date> _dateModifiedSupplier;
 
-	@Schema(description = "The content structure's description.")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "The content structure's description."
+	)
 	public String getDescription() {
 		if (_descriptionSupplier != null) {
 			description = _descriptionSupplier.get();
@@ -316,7 +322,7 @@ public class ContentStructure implements Serializable {
 	@JsonIgnore
 	private Supplier<String> _descriptionSupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	@Valid
 	public Map<String, String> getDescription_i18n() {
 		if (_description_i18nSupplier != null) {
@@ -359,7 +365,9 @@ public class ContentStructure implements Serializable {
 	@JsonIgnore
 	private Supplier<Map<String, String>> _description_i18nSupplier;
 
-	@Schema(description = "The content structure's ID.")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "The content structure's ID."
+	)
 	public Long getId() {
 		if (_idSupplier != null) {
 			id = _idSupplier.get();
@@ -398,7 +406,9 @@ public class ContentStructure implements Serializable {
 	@JsonIgnore
 	private Supplier<Long> _idSupplier;
 
-	@Schema(description = "The content structure's name.")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "The content structure's name."
+	)
 	public String getName() {
 		if (_nameSupplier != null) {
 			name = _nameSupplier.get();
@@ -437,7 +447,7 @@ public class ContentStructure implements Serializable {
 	@JsonIgnore
 	private Supplier<String> _nameSupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	@Valid
 	public Map<String, String> getName_i18n() {
 		if (_name_i18nSupplier != null) {
@@ -480,7 +490,7 @@ public class ContentStructure implements Serializable {
 	@JsonIgnore
 	private Supplier<Map<String, String>> _name_i18nSupplier;
 
-	@Schema(
+	@io.swagger.v3.oas.annotations.media.Schema(
 		description = "The ID of the site to which the content structure is scoped."
 	)
 	public Long getSiteId() {
@@ -733,8 +743,8 @@ public class ContentStructure implements Serializable {
 		return sb.toString();
 	}
 
-	@Schema(
-		accessMode = Schema.AccessMode.READ_ONLY,
+	@io.swagger.v3.oas.annotations.media.Schema(
+		accessMode = io.swagger.v3.oas.annotations.media.Schema.AccessMode.READ_ONLY,
 		defaultValue = "com.liferay.headless.delivery.dto.v1_0.ContentStructure",
 		name = "x-class-name"
 	)
