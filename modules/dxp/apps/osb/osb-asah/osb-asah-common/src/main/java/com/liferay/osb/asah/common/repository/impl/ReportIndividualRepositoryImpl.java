@@ -31,12 +31,10 @@ import org.postgresql.jdbc.PgArray;
 
 import org.springframework.data.domain.Pageable;
 import org.springframework.lang.Nullable;
-import org.springframework.stereotype.Repository;
 
 /**
  * @author Marcellus Tavares
  */
-@Repository
 public class ReportIndividualRepositoryImpl
 	implements ReportIndividualRepository {
 
