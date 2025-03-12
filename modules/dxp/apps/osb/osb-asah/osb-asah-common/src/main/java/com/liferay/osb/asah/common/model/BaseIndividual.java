@@ -25,8 +25,6 @@ import org.apache.commons.lang3.math.NumberUtils;
 
 import org.json.JSONObject;
 
-import org.postgresql.util.PGobject;
-
 /**
  * @author Leslie Wong
  */
@@ -106,15 +104,7 @@ public abstract class BaseIndividual {
 	}
 
 	public BaseIndividual(Map<String, Object> source) {
-		PGobject fieldsPGobject = (PGobject)source.get("fields");
-
-		String fieldsJSON = "{}";
-
-		if ((fieldsPGobject != null) && (fieldsPGobject.getValue() != null)) {
-			fieldsJSON = fieldsPGobject.getValue();
-		}
-
-		JSONObject jsonObject = new JSONObject(fieldsJSON);
+		JSONObject jsonObject = (JSONObject)source.get("fields");
 
 		if (!jsonObject.isEmpty()) {
 			Set<String> keys = jsonObject.keySet();
@@ -122,39 +112,37 @@ public abstract class BaseIndividual {
 			Set<String> demographicsFieldNames =
 				FieldMappingConstants.demographicsDisplayNames.keySet();
 
-			keys.forEach(
-				key -> {
-					if (demographicsFieldNames.contains(key)) {
-						String displayName =
-							FieldMappingConstants.demographicsDisplayNames.
-								getOrDefault(key, key);
+			for (String key : keys) {
+				if (demographicsFieldNames.contains(key)) {
+					String displayName =
+						FieldMappingConstants.demographicsDisplayNames.
+							getOrDefault(key, key);
 
-						Field field = new Field();
+					Field field = new Field();
 
-						field.setName(displayName);
+					field.setName(displayName);
 
-						if (displayName.endsWith("Date")) {
-							long value = NumberUtils.toLong(
-								(String)field.getValue());
+					if (displayName.endsWith("Date")) {
+						long value = NumberUtils.toLong(
+							(String)field.getValue());
 
-							field.setValue(
-								DateUtil.toUTCString(new Date(value)));
-						}
-						else {
-							field.setValue(jsonObject.getString(key));
-						}
-
-						fields.add(field);
+						field.setValue(DateUtil.toUTCString(new Date(value)));
 					}
 					else {
-						Field field = new Field();
-
-						field.setName(key);
 						field.setValue(jsonObject.getString(key));
-
-						customFields.add(field);
 					}
-				});
+
+					fields.add(field);
+				}
+				else {
+					Field field = new Field();
+
+					field.setName(key);
+					field.setValue(jsonObject.getString(key));
+
+					customFields.add(field);
+				}
+			}
 		}
 
 		customDemographics = new Demographics(customFields);

@@ -14,6 +14,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 import java.util.Set;
 
@@ -27,7 +28,10 @@ import org.jooq.SelectConditionStep;
 import org.jooq.SelectSelectStep;
 import org.jooq.impl.DSL;
 
+import org.json.JSONObject;
+
 import org.postgresql.jdbc.PgArray;
+import org.postgresql.util.PGobject;
 
 import org.springframework.data.domain.Pageable;
 import org.springframework.lang.Nullable;
@@ -280,7 +284,19 @@ public class ReportIndividualRepositoryImpl
 			}
 		}
 
-		return new ReportIndividual(segmentIds, reportIndividual.intoMap());
+		Map<String, Object> reportIndividualMap = reportIndividual.intoMap();
+
+		PGobject fieldsPGobject = (PGobject)reportIndividual.get("fields");
+
+		JSONObject fieldsJSONObject = new JSONObject();
+
+		if ((fieldsPGobject != null) && (fieldsPGobject.getValue() != null)) {
+			fieldsJSONObject = new JSONObject(fieldsPGobject.getValue());
+		}
+
+		reportIndividualMap.put("fields", fieldsJSONObject);
+
+		return new ReportIndividual(segmentIds, reportIndividualMap);
 	}
 
 	private static final String[] _SEARCH_COLUMNS = {
