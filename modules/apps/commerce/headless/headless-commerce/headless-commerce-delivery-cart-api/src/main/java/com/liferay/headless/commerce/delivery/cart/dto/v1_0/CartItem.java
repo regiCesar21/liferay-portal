@@ -16,8 +16,6 @@ import com.liferay.portal.vulcan.graphql.annotation.GraphQLField;
 import com.liferay.portal.vulcan.graphql.annotation.GraphQLName;
 import com.liferay.portal.vulcan.util.ObjectMapperUtil;
 
-import io.swagger.v3.oas.annotations.media.Schema;
-
 import java.io.Serializable;
 
 import java.util.Iterator;
@@ -50,7 +48,7 @@ public class CartItem implements Serializable {
 		return ObjectMapperUtil.unsafeReadValue(CartItem.class, json);
 	}
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	@Valid
 	public CartItem[] getCartItems() {
 		if (_cartItemsSupplier != null) {
@@ -92,7 +90,7 @@ public class CartItem implements Serializable {
 	@JsonIgnore
 	private Supplier<CartItem[]> _cartItemsSupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	@Valid
 	public Map<String, ?> getCustomFields() {
 		if (_customFieldsSupplier != null) {
@@ -134,7 +132,7 @@ public class CartItem implements Serializable {
 	@JsonIgnore
 	private Supplier<Map<String, ?>> _customFieldsSupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	public String[] getErrorMessages() {
 		if (_errorMessagesSupplier != null) {
 			errorMessages = _errorMessagesSupplier.get();
@@ -175,7 +173,7 @@ public class CartItem implements Serializable {
 	@JsonIgnore
 	private Supplier<String[]> _errorMessagesSupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	public Long getId() {
 		if (_idSupplier != null) {
 			id = _idSupplier.get();
@@ -214,7 +212,7 @@ public class CartItem implements Serializable {
 	@JsonIgnore
 	private Supplier<Long> _idSupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	public String getName() {
 		if (_nameSupplier != null) {
 			name = _nameSupplier.get();
@@ -253,7 +251,7 @@ public class CartItem implements Serializable {
 	@JsonIgnore
 	private Supplier<String> _nameSupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	public String getOptions() {
 		if (_optionsSupplier != null) {
 			options = _optionsSupplier.get();
@@ -294,7 +292,7 @@ public class CartItem implements Serializable {
 	@JsonIgnore
 	private Supplier<String> _optionsSupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	public Long getParentCartItemId() {
 		if (_parentCartItemIdSupplier != null) {
 			parentCartItemId = _parentCartItemIdSupplier.get();
@@ -335,7 +333,7 @@ public class CartItem implements Serializable {
 	@JsonIgnore
 	private Supplier<Long> _parentCartItemIdSupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	@Valid
 	public Price getPrice() {
 		if (_priceSupplier != null) {
@@ -375,7 +373,7 @@ public class CartItem implements Serializable {
 	@JsonIgnore
 	private Supplier<Price> _priceSupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	public Long getProductId() {
 		if (_productIdSupplier != null) {
 			productId = _productIdSupplier.get();
@@ -416,7 +414,7 @@ public class CartItem implements Serializable {
 	@JsonIgnore
 	private Supplier<Long> _productIdSupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	public Integer getQuantity() {
 		if (_quantitySupplier != null) {
 			quantity = _quantitySupplier.get();
@@ -457,7 +455,7 @@ public class CartItem implements Serializable {
 	@JsonIgnore
 	private Supplier<Integer> _quantitySupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	@Valid
 	public Settings getSettings() {
 		if (_settingsSupplier != null) {
@@ -499,7 +497,7 @@ public class CartItem implements Serializable {
 	@JsonIgnore
 	private Supplier<Settings> _settingsSupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	public String getSku() {
 		if (_skuSupplier != null) {
 			sku = _skuSupplier.get();
@@ -538,7 +536,7 @@ public class CartItem implements Serializable {
 	@JsonIgnore
 	private Supplier<String> _skuSupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	public Long getSkuId() {
 		if (_skuIdSupplier != null) {
 			skuId = _skuIdSupplier.get();
@@ -577,7 +575,7 @@ public class CartItem implements Serializable {
 	@JsonIgnore
 	private Supplier<Long> _skuIdSupplier;
 
-	@Schema(example = "true")
+	@io.swagger.v3.oas.annotations.media.Schema(example = "true")
 	public Boolean getSubscription() {
 		if (_subscriptionSupplier != null) {
 			subscription = _subscriptionSupplier.get();
@@ -618,7 +616,7 @@ public class CartItem implements Serializable {
 	@JsonIgnore
 	private Supplier<Boolean> _subscriptionSupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	public String getThumbnail() {
 		if (_thumbnailSupplier != null) {
 			thumbnail = _thumbnailSupplier.get();
@@ -659,7 +657,7 @@ public class CartItem implements Serializable {
 	@JsonIgnore
 	private Supplier<String> _thumbnailSupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	public Boolean getValid() {
 		if (_validSupplier != null) {
 			valid = _validSupplier.get();
@@ -964,8 +962,8 @@ public class CartItem implements Serializable {
 		return sb.toString();
 	}
 
-	@Schema(
-		accessMode = Schema.AccessMode.READ_ONLY,
+	@io.swagger.v3.oas.annotations.media.Schema(
+		accessMode = io.swagger.v3.oas.annotations.media.Schema.AccessMode.READ_ONLY,
 		defaultValue = "com.liferay.headless.commerce.delivery.cart.dto.v1_0.CartItem",
 		name = "x-class-name"
 	)

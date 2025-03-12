@@ -16,8 +16,6 @@ import com.liferay.portal.vulcan.graphql.annotation.GraphQLField;
 import com.liferay.portal.vulcan.graphql.annotation.GraphQLName;
 import com.liferay.portal.vulcan.util.ObjectMapperUtil;
 
-import io.swagger.v3.oas.annotations.media.Schema;
-
 import java.io.Serializable;
 
 import java.util.Iterator;
@@ -41,8 +39,10 @@ import javax.xml.bind.annotation.XmlRootElement;
  */
 @Generated("")
 @GraphQLName("Warehouse")
+@io.swagger.v3.oas.annotations.media.Schema(
+	requiredProperties = {"commerceCountryId", "name"}
+)
 @JsonFilter("Liferay.Vulcan")
-@Schema(requiredProperties = {"commerceCountryId", "name"})
 @XmlRootElement(name = "Warehouse")
 public class Warehouse implements Serializable {
 
@@ -54,7 +54,7 @@ public class Warehouse implements Serializable {
 		return ObjectMapperUtil.unsafeReadValue(Warehouse.class, json);
 	}
 
-	@Schema(example = "true")
+	@io.swagger.v3.oas.annotations.media.Schema(example = "true")
 	public Boolean getActive() {
 		if (_activeSupplier != null) {
 			active = _activeSupplier.get();
@@ -95,7 +95,7 @@ public class Warehouse implements Serializable {
 	@JsonIgnore
 	private Supplier<Boolean> _activeSupplier;
 
-	@Schema(example = "Diamond Bar")
+	@io.swagger.v3.oas.annotations.media.Schema(example = "Diamond Bar")
 	public String getCity() {
 		if (_citySupplier != null) {
 			city = _citySupplier.get();
@@ -135,7 +135,7 @@ public class Warehouse implements Serializable {
 	private Supplier<String> _citySupplier;
 
 	@DecimalMin("0")
-	@Schema(example = "30130")
+	@io.swagger.v3.oas.annotations.media.Schema(example = "30130")
 	public Long getCommerceCountryId() {
 		if (_commerceCountryIdSupplier != null) {
 			commerceCountryId = _commerceCountryIdSupplier.get();
@@ -178,7 +178,7 @@ public class Warehouse implements Serializable {
 	private Supplier<Long> _commerceCountryIdSupplier;
 
 	@DecimalMin("0")
-	@Schema(example = "30234")
+	@io.swagger.v3.oas.annotations.media.Schema(example = "30234")
 	public Long getCommerceRegionId() {
 		if (_commerceRegionIdSupplier != null) {
 			commerceRegionId = _commerceRegionIdSupplier.get();
@@ -219,7 +219,9 @@ public class Warehouse implements Serializable {
 	@JsonIgnore
 	private Supplier<Long> _commerceRegionIdSupplier;
 
-	@Schema(example = "right stairs, first room on the left")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		example = "right stairs, first room on the left"
+	)
 	public String getDescription() {
 		if (_descriptionSupplier != null) {
 			description = _descriptionSupplier.get();
@@ -261,7 +263,7 @@ public class Warehouse implements Serializable {
 	private Supplier<String> _descriptionSupplier;
 
 	@DecimalMin("0")
-	@Schema(example = "23130")
+	@io.swagger.v3.oas.annotations.media.Schema(example = "23130")
 	public Long getGroupId() {
 		if (_groupIdSupplier != null) {
 			groupId = _groupIdSupplier.get();
@@ -303,7 +305,7 @@ public class Warehouse implements Serializable {
 	private Supplier<Long> _groupIdSupplier;
 
 	@DecimalMin("0")
-	@Schema(example = "30130")
+	@io.swagger.v3.oas.annotations.media.Schema(example = "30130")
 	public Long getId() {
 		if (_idSupplier != null) {
 			id = _idSupplier.get();
@@ -342,7 +344,7 @@ public class Warehouse implements Serializable {
 	@JsonIgnore
 	private Supplier<Long> _idSupplier;
 
-	@Schema(example = "33.9976884")
+	@io.swagger.v3.oas.annotations.media.Schema(example = "33.9976884")
 	public Double getLatitude() {
 		if (_latitudeSupplier != null) {
 			latitude = _latitudeSupplier.get();
@@ -383,7 +385,7 @@ public class Warehouse implements Serializable {
 	@JsonIgnore
 	private Supplier<Double> _latitudeSupplier;
 
-	@Schema(example = "-117.8144595")
+	@io.swagger.v3.oas.annotations.media.Schema(example = "-117.8144595")
 	public Double getLongitude() {
 		if (_longitudeSupplier != null) {
 			longitude = _longitudeSupplier.get();
@@ -424,7 +426,7 @@ public class Warehouse implements Serializable {
 	@JsonIgnore
 	private Supplier<Double> _longitudeSupplier;
 
-	@Schema(example = "0")
+	@io.swagger.v3.oas.annotations.media.Schema(example = "0")
 	@Valid
 	public Number getMvccVersion() {
 		if (_mvccVersionSupplier != null) {
@@ -466,7 +468,7 @@ public class Warehouse implements Serializable {
 	@JsonIgnore
 	private Supplier<Number> _mvccVersionSupplier;
 
-	@Schema(example = "Warehouse Name")
+	@io.swagger.v3.oas.annotations.media.Schema(example = "Warehouse Name")
 	public String getName() {
 		if (_nameSupplier != null) {
 			name = _nameSupplier.get();
@@ -506,7 +508,7 @@ public class Warehouse implements Serializable {
 	@JsonIgnore
 	private Supplier<String> _nameSupplier;
 
-	@Schema(example = "true")
+	@io.swagger.v3.oas.annotations.media.Schema(example = "true")
 	public Boolean getPrimary() {
 		if (_primarySupplier != null) {
 			primary = _primarySupplier.get();
@@ -547,7 +549,7 @@ public class Warehouse implements Serializable {
 	@JsonIgnore
 	private Supplier<Boolean> _primarySupplier;
 
-	@Schema(example = "1400 Montefino Ave")
+	@io.swagger.v3.oas.annotations.media.Schema(example = "1400 Montefino Ave")
 	public String getStreet1() {
 		if (_street1Supplier != null) {
 			street1 = _street1Supplier.get();
@@ -588,7 +590,7 @@ public class Warehouse implements Serializable {
 	@JsonIgnore
 	private Supplier<String> _street1Supplier;
 
-	@Schema(example = "1st floor")
+	@io.swagger.v3.oas.annotations.media.Schema(example = "1st floor")
 	public String getStreet2() {
 		if (_street2Supplier != null) {
 			street2 = _street2Supplier.get();
@@ -629,7 +631,7 @@ public class Warehouse implements Serializable {
 	@JsonIgnore
 	private Supplier<String> _street2Supplier;
 
-	@Schema(example = "suite 200")
+	@io.swagger.v3.oas.annotations.media.Schema(example = "suite 200")
 	public String getStreet3() {
 		if (_street3Supplier != null) {
 			street3 = _street3Supplier.get();
@@ -670,7 +672,7 @@ public class Warehouse implements Serializable {
 	@JsonIgnore
 	private Supplier<String> _street3Supplier;
 
-	@Schema(example = "91765")
+	@io.swagger.v3.oas.annotations.media.Schema(example = "91765")
 	public String getZip() {
 		if (_zipSupplier != null) {
 			zip = _zipSupplier.get();
@@ -961,8 +963,8 @@ public class Warehouse implements Serializable {
 		return sb.toString();
 	}
 
-	@Schema(
-		accessMode = Schema.AccessMode.READ_ONLY,
+	@io.swagger.v3.oas.annotations.media.Schema(
+		accessMode = io.swagger.v3.oas.annotations.media.Schema.AccessMode.READ_ONLY,
 		defaultValue = "com.liferay.headless.commerce.admin.site.setting.dto.v1_0.Warehouse",
 		name = "x-class-name"
 	)

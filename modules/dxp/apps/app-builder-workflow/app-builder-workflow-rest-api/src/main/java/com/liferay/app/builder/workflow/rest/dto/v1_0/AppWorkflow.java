@@ -16,8 +16,6 @@ import com.liferay.portal.vulcan.graphql.annotation.GraphQLField;
 import com.liferay.portal.vulcan.graphql.annotation.GraphQLName;
 import com.liferay.portal.vulcan.util.ObjectMapperUtil;
 
-import io.swagger.v3.oas.annotations.media.Schema;
-
 import java.io.Serializable;
 
 import java.util.Iterator;
@@ -50,7 +48,7 @@ public class AppWorkflow implements Serializable {
 		return ObjectMapperUtil.unsafeReadValue(AppWorkflow.class, json);
 	}
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	public Long getAppId() {
 		if (_appIdSupplier != null) {
 			appId = _appIdSupplier.get();
@@ -89,7 +87,7 @@ public class AppWorkflow implements Serializable {
 	@JsonIgnore
 	private Supplier<Long> _appIdSupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	public String getAppVersion() {
 		if (_appVersionSupplier != null) {
 			appVersion = _appVersionSupplier.get();
@@ -130,7 +128,7 @@ public class AppWorkflow implements Serializable {
 	@JsonIgnore
 	private Supplier<String> _appVersionSupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	public Long getAppWorkflowDefinitionId() {
 		if (_appWorkflowDefinitionIdSupplier != null) {
 			appWorkflowDefinitionId = _appWorkflowDefinitionIdSupplier.get();
@@ -171,7 +169,7 @@ public class AppWorkflow implements Serializable {
 	@JsonIgnore
 	private Supplier<Long> _appWorkflowDefinitionIdSupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	@Valid
 	public AppWorkflowState[] getAppWorkflowStates() {
 		if (_appWorkflowStatesSupplier != null) {
@@ -214,7 +212,7 @@ public class AppWorkflow implements Serializable {
 	@JsonIgnore
 	private Supplier<AppWorkflowState[]> _appWorkflowStatesSupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	@Valid
 	public AppWorkflowTask[] getAppWorkflowTasks() {
 		if (_appWorkflowTasksSupplier != null) {
@@ -373,8 +371,8 @@ public class AppWorkflow implements Serializable {
 		return sb.toString();
 	}
 
-	@Schema(
-		accessMode = Schema.AccessMode.READ_ONLY,
+	@io.swagger.v3.oas.annotations.media.Schema(
+		accessMode = io.swagger.v3.oas.annotations.media.Schema.AccessMode.READ_ONLY,
 		defaultValue = "com.liferay.app.builder.workflow.rest.dto.v1_0.AppWorkflow",
 		name = "x-class-name"
 	)

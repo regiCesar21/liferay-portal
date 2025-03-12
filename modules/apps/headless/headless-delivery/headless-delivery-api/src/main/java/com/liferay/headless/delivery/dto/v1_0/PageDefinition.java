@@ -16,8 +16,6 @@ import com.liferay.portal.vulcan.graphql.annotation.GraphQLField;
 import com.liferay.portal.vulcan.graphql.annotation.GraphQLName;
 import com.liferay.portal.vulcan.util.ObjectMapperUtil;
 
-import io.swagger.v3.oas.annotations.media.Schema;
-
 import java.io.Serializable;
 
 import java.util.Iterator;
@@ -50,7 +48,7 @@ public class PageDefinition implements Serializable {
 		return ObjectMapperUtil.unsafeReadValue(PageDefinition.class, json);
 	}
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	@Valid
 	public PageElement getPageElement() {
 		if (_pageElementSupplier != null) {
@@ -92,7 +90,7 @@ public class PageDefinition implements Serializable {
 	@JsonIgnore
 	private Supplier<PageElement> _pageElementSupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	@Valid
 	public Settings getSettings() {
 		if (_settingsSupplier != null) {
@@ -190,8 +188,8 @@ public class PageDefinition implements Serializable {
 		return sb.toString();
 	}
 
-	@Schema(
-		accessMode = Schema.AccessMode.READ_ONLY,
+	@io.swagger.v3.oas.annotations.media.Schema(
+		accessMode = io.swagger.v3.oas.annotations.media.Schema.AccessMode.READ_ONLY,
 		defaultValue = "com.liferay.headless.delivery.dto.v1_0.PageDefinition",
 		name = "x-class-name"
 	)

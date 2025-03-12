@@ -16,8 +16,6 @@ import com.liferay.portal.vulcan.graphql.annotation.GraphQLField;
 import com.liferay.portal.vulcan.graphql.annotation.GraphQLName;
 import com.liferay.portal.vulcan.util.ObjectMapperUtil;
 
-import io.swagger.v3.oas.annotations.media.Schema;
-
 import java.io.Serializable;
 
 import java.text.DateFormat;
@@ -54,7 +52,7 @@ public class UserAccount implements Serializable {
 		return ObjectMapperUtil.unsafeReadValue(UserAccount.class, json);
 	}
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	@Valid
 	public Map<String, Map<String, String>> getActions() {
 		if (_actionsSupplier != null) {
@@ -97,7 +95,9 @@ public class UserAccount implements Serializable {
 	@JsonIgnore
 	private Supplier<Map<String, Map<String, String>>> _actionsSupplier;
 
-	@Schema(description = "The user's additional name (e.g., middle name).")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "The user's additional name (e.g., middle name)."
+	)
 	public String getAdditionalName() {
 		if (_additionalNameSupplier != null) {
 			additionalName = _additionalNameSupplier.get();
@@ -140,7 +140,9 @@ public class UserAccount implements Serializable {
 	@JsonIgnore
 	private Supplier<String> _additionalNameSupplier;
 
-	@Schema(description = "The user's alias or screen name.")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "The user's alias or screen name."
+	)
 	public String getAlternateName() {
 		if (_alternateNameSupplier != null) {
 			alternateName = _alternateNameSupplier.get();
@@ -181,7 +183,9 @@ public class UserAccount implements Serializable {
 	@JsonIgnore
 	private Supplier<String> _alternateNameSupplier;
 
-	@Schema(description = "The user's date of birth, in ISO 8601 format.")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "The user's date of birth, in ISO 8601 format."
+	)
 	public Date getBirthDate() {
 		if (_birthDateSupplier != null) {
 			birthDate = _birthDateSupplier.get();
@@ -222,7 +226,7 @@ public class UserAccount implements Serializable {
 	@JsonIgnore
 	private Supplier<Date> _birthDateSupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	@Valid
 	public CustomField[] getCustomFields() {
 		if (_customFieldsSupplier != null) {
@@ -264,7 +268,9 @@ public class UserAccount implements Serializable {
 	@JsonIgnore
 	private Supplier<CustomField[]> _customFieldsSupplier;
 
-	@Schema(description = "A relative URL to the user's dashboard.")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "A relative URL to the user's dashboard."
+	)
 	public String getDashboardURL() {
 		if (_dashboardURLSupplier != null) {
 			dashboardURL = _dashboardURLSupplier.get();
@@ -305,7 +311,9 @@ public class UserAccount implements Serializable {
 	@JsonIgnore
 	private Supplier<String> _dashboardURLSupplier;
 
-	@Schema(description = "The creation date of the user's account.")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "The creation date of the user's account."
+	)
 	public Date getDateCreated() {
 		if (_dateCreatedSupplier != null) {
 			dateCreated = _dateCreatedSupplier.get();
@@ -346,7 +354,7 @@ public class UserAccount implements Serializable {
 	@JsonIgnore
 	private Supplier<Date> _dateCreatedSupplier;
 
-	@Schema(
+	@io.swagger.v3.oas.annotations.media.Schema(
 		description = "The last time any field of the user's account was changed."
 	)
 	public Date getDateModified() {
@@ -391,7 +399,9 @@ public class UserAccount implements Serializable {
 	@JsonIgnore
 	private Supplier<Date> _dateModifiedSupplier;
 
-	@Schema(description = "The user's main email address.")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "The user's main email address."
+	)
 	public String getEmailAddress() {
 		if (_emailAddressSupplier != null) {
 			emailAddress = _emailAddressSupplier.get();
@@ -432,7 +442,9 @@ public class UserAccount implements Serializable {
 	@JsonIgnore
 	private Supplier<String> _emailAddressSupplier;
 
-	@Schema(description = "The user's surname (last name).")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "The user's surname (last name)."
+	)
 	public String getFamilyName() {
 		if (_familyNameSupplier != null) {
 			familyName = _familyNameSupplier.get();
@@ -473,7 +485,9 @@ public class UserAccount implements Serializable {
 	@JsonIgnore
 	private Supplier<String> _familyNameSupplier;
 
-	@Schema(description = "The user's first name.")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "The user's first name."
+	)
 	public String getGivenName() {
 		if (_givenNameSupplier != null) {
 			givenName = _givenNameSupplier.get();
@@ -514,7 +528,9 @@ public class UserAccount implements Serializable {
 	@JsonIgnore
 	private Supplier<String> _givenNameSupplier;
 
-	@Schema(description = "The user's title (e.g., Dr., Mr., Mrs, Ms., etc.).")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "The user's title (e.g., Dr., Mr., Mrs, Ms., etc.)."
+	)
 	public String getHonorificPrefix() {
 		if (_honorificPrefixSupplier != null) {
 			honorificPrefix = _honorificPrefixSupplier.get();
@@ -557,7 +573,9 @@ public class UserAccount implements Serializable {
 	@JsonIgnore
 	private Supplier<String> _honorificPrefixSupplier;
 
-	@Schema(description = "The user's suffix (e.g., II, Jr., PhD, etc.).")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "The user's suffix (e.g., II, Jr., PhD, etc.)."
+	)
 	public String getHonorificSuffix() {
 		if (_honorificSuffixSupplier != null) {
 			honorificSuffix = _honorificSuffixSupplier.get();
@@ -598,7 +616,7 @@ public class UserAccount implements Serializable {
 	@JsonIgnore
 	private Supplier<String> _honorificSuffixSupplier;
 
-	@Schema(description = "The user's ID.")
+	@io.swagger.v3.oas.annotations.media.Schema(description = "The user's ID.")
 	public Long getId() {
 		if (_idSupplier != null) {
 			id = _idSupplier.get();
@@ -637,7 +655,9 @@ public class UserAccount implements Serializable {
 	@JsonIgnore
 	private Supplier<Long> _idSupplier;
 
-	@Schema(description = "A relative URL to the user's profile image.")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "A relative URL to the user's profile image."
+	)
 	public String getImage() {
 		if (_imageSupplier != null) {
 			image = _imageSupplier.get();
@@ -678,7 +698,9 @@ public class UserAccount implements Serializable {
 	@JsonIgnore
 	private Supplier<String> _imageSupplier;
 
-	@Schema(description = "The user's job title.")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "The user's job title."
+	)
 	public String getJobTitle() {
 		if (_jobTitleSupplier != null) {
 			jobTitle = _jobTitleSupplier.get();
@@ -719,7 +741,9 @@ public class UserAccount implements Serializable {
 	@JsonIgnore
 	private Supplier<String> _jobTitleSupplier;
 
-	@Schema(description = "A list of keywords describing the user.")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "A list of keywords describing the user."
+	)
 	public String[] getKeywords() {
 		if (_keywordsSupplier != null) {
 			keywords = _keywordsSupplier.get();
@@ -760,7 +784,9 @@ public class UserAccount implements Serializable {
 	@JsonIgnore
 	private Supplier<String[]> _keywordsSupplier;
 
-	@Schema(description = "The user's full name.")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "The user's full name."
+	)
 	public String getName() {
 		if (_nameSupplier != null) {
 			name = _nameSupplier.get();
@@ -799,7 +825,9 @@ public class UserAccount implements Serializable {
 	@JsonIgnore
 	private Supplier<String> _nameSupplier;
 
-	@Schema(description = "A list of the user's organizations.")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "A list of the user's organizations."
+	)
 	@Valid
 	public OrganizationBrief[] getOrganizationBriefs() {
 		if (_organizationBriefsSupplier != null) {
@@ -842,7 +870,9 @@ public class UserAccount implements Serializable {
 	@JsonIgnore
 	private Supplier<OrganizationBrief[]> _organizationBriefsSupplier;
 
-	@Schema(description = "A relative URL to the user's profile.")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "A relative URL to the user's profile."
+	)
 	public String getProfileURL() {
 		if (_profileURLSupplier != null) {
 			profileURL = _profileURLSupplier.get();
@@ -883,7 +913,9 @@ public class UserAccount implements Serializable {
 	@JsonIgnore
 	private Supplier<String> _profileURLSupplier;
 
-	@Schema(description = "A list of the user's roles.")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "A list of the user's roles."
+	)
 	@Valid
 	public RoleBrief[] getRoleBriefs() {
 		if (_roleBriefsSupplier != null) {
@@ -925,7 +957,9 @@ public class UserAccount implements Serializable {
 	@JsonIgnore
 	private Supplier<RoleBrief[]> _roleBriefsSupplier;
 
-	@Schema(description = "A list of the user's sites.")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "A list of the user's sites."
+	)
 	@Valid
 	public SiteBrief[] getSiteBriefs() {
 		if (_siteBriefsSupplier != null) {
@@ -967,7 +1001,9 @@ public class UserAccount implements Serializable {
 	@JsonIgnore
 	private Supplier<SiteBrief[]> _siteBriefsSupplier;
 
-	@Schema(description = "The user's contact information.")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "The user's contact information."
+	)
 	@Valid
 	public UserAccountContactInformation getUserAccountContactInformation() {
 		if (_userAccountContactInformationSupplier != null) {
@@ -1440,8 +1476,8 @@ public class UserAccount implements Serializable {
 		return sb.toString();
 	}
 
-	@Schema(
-		accessMode = Schema.AccessMode.READ_ONLY,
+	@io.swagger.v3.oas.annotations.media.Schema(
+		accessMode = io.swagger.v3.oas.annotations.media.Schema.AccessMode.READ_ONLY,
 		defaultValue = "com.liferay.headless.admin.user.dto.v1_0.UserAccount",
 		name = "x-class-name"
 	)

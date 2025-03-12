@@ -16,8 +16,6 @@ import com.liferay.portal.vulcan.graphql.annotation.GraphQLField;
 import com.liferay.portal.vulcan.graphql.annotation.GraphQLName;
 import com.liferay.portal.vulcan.util.ObjectMapperUtil;
 
-import io.swagger.v3.oas.annotations.media.Schema;
-
 import java.io.Serializable;
 
 import java.text.DateFormat;
@@ -54,7 +52,7 @@ public class PageTemplate implements Serializable {
 		return ObjectMapperUtil.unsafeReadValue(PageTemplate.class, json);
 	}
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	@Valid
 	public Creator getCreator() {
 		if (_creatorSupplier != null) {
@@ -96,7 +94,7 @@ public class PageTemplate implements Serializable {
 	@JsonIgnore
 	private Supplier<Creator> _creatorSupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	public Date getDateCreated() {
 		if (_dateCreatedSupplier != null) {
 			dateCreated = _dateCreatedSupplier.get();
@@ -137,7 +135,7 @@ public class PageTemplate implements Serializable {
 	@JsonIgnore
 	private Supplier<Date> _dateCreatedSupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	public Date getDateModified() {
 		if (_dateModifiedSupplier != null) {
 			dateModified = _dateModifiedSupplier.get();
@@ -178,7 +176,7 @@ public class PageTemplate implements Serializable {
 	@JsonIgnore
 	private Supplier<Date> _dateModifiedSupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	public Long getId() {
 		if (_idSupplier != null) {
 			id = _idSupplier.get();
@@ -217,7 +215,7 @@ public class PageTemplate implements Serializable {
 	@JsonIgnore
 	private Supplier<Long> _idSupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	public String[] getKeywords() {
 		if (_keywordsSupplier != null) {
 			keywords = _keywordsSupplier.get();
@@ -258,7 +256,7 @@ public class PageTemplate implements Serializable {
 	@JsonIgnore
 	private Supplier<String[]> _keywordsSupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	public String getName() {
 		if (_nameSupplier != null) {
 			name = _nameSupplier.get();
@@ -297,7 +295,7 @@ public class PageTemplate implements Serializable {
 	@JsonIgnore
 	private Supplier<String> _nameSupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	@Valid
 	public PageDefinition getPageDefinition() {
 		if (_pageDefinitionSupplier != null) {
@@ -340,7 +338,7 @@ public class PageTemplate implements Serializable {
 	@JsonIgnore
 	private Supplier<PageDefinition> _pageDefinitionSupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	@Valid
 	public PageTemplateCollection getPageTemplateCollection() {
 		if (_pageTemplateCollectionSupplier != null) {
@@ -385,7 +383,9 @@ public class PageTemplate implements Serializable {
 	@JsonIgnore
 	private Supplier<PageTemplateCollection> _pageTemplateCollectionSupplier;
 
-	@Schema(description = "The categories associated with this page template.")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "The categories associated with this page template."
+	)
 	@Valid
 	public TaxonomyCategoryBrief[] getTaxonomyCategoryBriefs() {
 		if (_taxonomyCategoryBriefsSupplier != null) {
@@ -432,7 +432,7 @@ public class PageTemplate implements Serializable {
 	@JsonIgnore
 	private Supplier<TaxonomyCategoryBrief[]> _taxonomyCategoryBriefsSupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	public Long[] getTaxonomyCategoryIds() {
 		if (_taxonomyCategoryIdsSupplier != null) {
 			taxonomyCategoryIds = _taxonomyCategoryIdsSupplier.get();
@@ -473,7 +473,7 @@ public class PageTemplate implements Serializable {
 	@JsonIgnore
 	private Supplier<Long[]> _taxonomyCategoryIdsSupplier;
 
-	@Schema(
+	@io.swagger.v3.oas.annotations.media.Schema(
 		description = "A valid external identifier to reference this page template."
 	)
 	public String getUuid() {
@@ -735,8 +735,8 @@ public class PageTemplate implements Serializable {
 		return sb.toString();
 	}
 
-	@Schema(
-		accessMode = Schema.AccessMode.READ_ONLY,
+	@io.swagger.v3.oas.annotations.media.Schema(
+		accessMode = io.swagger.v3.oas.annotations.media.Schema.AccessMode.READ_ONLY,
 		defaultValue = "com.liferay.headless.delivery.dto.v1_0.PageTemplate",
 		name = "x-class-name"
 	)

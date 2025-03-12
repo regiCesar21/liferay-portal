@@ -16,8 +16,6 @@ import com.liferay.portal.vulcan.graphql.annotation.GraphQLField;
 import com.liferay.portal.vulcan.graphql.annotation.GraphQLName;
 import com.liferay.portal.vulcan.util.ObjectMapperUtil;
 
-import io.swagger.v3.oas.annotations.media.Schema;
-
 import java.io.Serializable;
 
 import java.util.Iterator;
@@ -41,8 +39,10 @@ import javax.xml.bind.annotation.XmlRootElement;
  */
 @Generated("")
 @GraphQLName("OptionValue")
+@io.swagger.v3.oas.annotations.media.Schema(
+	requiredProperties = {"key", "name"}
+)
 @JsonFilter("Liferay.Vulcan")
-@Schema(requiredProperties = {"key", "name"})
 @XmlRootElement(name = "OptionValue")
 public class OptionValue implements Serializable {
 
@@ -54,7 +54,7 @@ public class OptionValue implements Serializable {
 		return ObjectMapperUtil.unsafeReadValue(OptionValue.class, json);
 	}
 
-	@Schema(example = "AB-34098-789-N")
+	@io.swagger.v3.oas.annotations.media.Schema(example = "AB-34098-789-N")
 	public String getExternalReferenceCode() {
 		if (_externalReferenceCodeSupplier != null) {
 			externalReferenceCode = _externalReferenceCodeSupplier.get();
@@ -96,7 +96,7 @@ public class OptionValue implements Serializable {
 	private Supplier<String> _externalReferenceCodeSupplier;
 
 	@DecimalMin("0")
-	@Schema(example = "30130")
+	@io.swagger.v3.oas.annotations.media.Schema(example = "30130")
 	public Long getId() {
 		if (_idSupplier != null) {
 			id = _idSupplier.get();
@@ -135,7 +135,7 @@ public class OptionValue implements Serializable {
 	@JsonIgnore
 	private Supplier<Long> _idSupplier;
 
-	@Schema(example = "black")
+	@io.swagger.v3.oas.annotations.media.Schema(example = "black")
 	public String getKey() {
 		if (_keySupplier != null) {
 			key = _keySupplier.get();
@@ -175,7 +175,9 @@ public class OptionValue implements Serializable {
 	@JsonIgnore
 	private Supplier<String> _keySupplier;
 
-	@Schema(example = "{en_US=Black, hr_HR=Black HR, hu_HU=Black HU}")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		example = "{en_US=Black, hr_HR=Black HR, hu_HU=Black HU}"
+	)
 	@Valid
 	public Map<String, String> getName() {
 		if (_nameSupplier != null) {
@@ -218,7 +220,7 @@ public class OptionValue implements Serializable {
 	@JsonIgnore
 	private Supplier<Map<String, String>> _nameSupplier;
 
-	@Schema(example = "1.2")
+	@io.swagger.v3.oas.annotations.media.Schema(example = "1.2")
 	public Double getPriority() {
 		if (_prioritySupplier != null) {
 			priority = _prioritySupplier.get();
@@ -359,8 +361,8 @@ public class OptionValue implements Serializable {
 		return sb.toString();
 	}
 
-	@Schema(
-		accessMode = Schema.AccessMode.READ_ONLY,
+	@io.swagger.v3.oas.annotations.media.Schema(
+		accessMode = io.swagger.v3.oas.annotations.media.Schema.AccessMode.READ_ONLY,
 		defaultValue = "com.liferay.headless.commerce.admin.catalog.dto.v1_0.OptionValue",
 		name = "x-class-name"
 	)

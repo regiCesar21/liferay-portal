@@ -16,8 +16,6 @@ import com.liferay.portal.vulcan.graphql.annotation.GraphQLField;
 import com.liferay.portal.vulcan.graphql.annotation.GraphQLName;
 import com.liferay.portal.vulcan.util.ObjectMapperUtil;
 
-import io.swagger.v3.oas.annotations.media.Schema;
-
 import java.io.Serializable;
 
 import java.text.DateFormat;
@@ -54,7 +52,7 @@ public class NavigationMenuItem implements Serializable {
 		return ObjectMapperUtil.unsafeReadValue(NavigationMenuItem.class, json);
 	}
 
-	@Schema(
+	@io.swagger.v3.oas.annotations.media.Schema(
 		description = "The list of languages the structure has a translation for."
 	)
 	public String[] getAvailableLanguages() {
@@ -99,7 +97,7 @@ public class NavigationMenuItem implements Serializable {
 	@JsonIgnore
 	private Supplier<String[]> _availableLanguagesSupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	@Valid
 	public Creator getCreator() {
 		if (_creatorSupplier != null) {
@@ -141,7 +139,7 @@ public class NavigationMenuItem implements Serializable {
 	@JsonIgnore
 	private Supplier<Creator> _creatorSupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	public Date getDateCreated() {
 		if (_dateCreatedSupplier != null) {
 			dateCreated = _dateCreatedSupplier.get();
@@ -182,7 +180,7 @@ public class NavigationMenuItem implements Serializable {
 	@JsonIgnore
 	private Supplier<Date> _dateCreatedSupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	public Date getDateModified() {
 		if (_dateModifiedSupplier != null) {
 			dateModified = _dateModifiedSupplier.get();
@@ -223,7 +221,7 @@ public class NavigationMenuItem implements Serializable {
 	@JsonIgnore
 	private Supplier<Date> _dateModifiedSupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	public Long getId() {
 		if (_idSupplier != null) {
 			id = _idSupplier.get();
@@ -262,7 +260,9 @@ public class NavigationMenuItem implements Serializable {
 	@JsonIgnore
 	private Supplier<Long> _idSupplier;
 
-	@Schema(description = "A link to a page on the server.")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "A link to a page on the server."
+	)
 	public String getLink() {
 		if (_linkSupplier != null) {
 			link = _linkSupplier.get();
@@ -301,7 +301,7 @@ public class NavigationMenuItem implements Serializable {
 	@JsonIgnore
 	private Supplier<String> _linkSupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	public String getName() {
 		if (_nameSupplier != null) {
 			name = _nameSupplier.get();
@@ -340,7 +340,7 @@ public class NavigationMenuItem implements Serializable {
 	@JsonIgnore
 	private Supplier<String> _nameSupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	@Valid
 	public Map<String, String> getName_i18n() {
 		if (_name_i18nSupplier != null) {
@@ -383,7 +383,7 @@ public class NavigationMenuItem implements Serializable {
 	@JsonIgnore
 	private Supplier<Map<String, String>> _name_i18nSupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	@Valid
 	public NavigationMenuItem[] getNavigationMenuItems() {
 		if (_navigationMenuItemsSupplier != null) {
@@ -428,7 +428,7 @@ public class NavigationMenuItem implements Serializable {
 	@JsonIgnore
 	private Supplier<NavigationMenuItem[]> _navigationMenuItemsSupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	public Long getParentNavigationMenuId() {
 		if (_parentNavigationMenuIdSupplier != null) {
 			parentNavigationMenuId = _parentNavigationMenuIdSupplier.get();
@@ -469,7 +469,7 @@ public class NavigationMenuItem implements Serializable {
 	@JsonIgnore
 	private Supplier<Long> _parentNavigationMenuIdSupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	public String getType() {
 		if (_typeSupplier != null) {
 			type = _typeSupplier.get();
@@ -508,7 +508,7 @@ public class NavigationMenuItem implements Serializable {
 	@JsonIgnore
 	private Supplier<String> _typeSupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	public String getUrl() {
 		if (_urlSupplier != null) {
 			url = _urlSupplier.get();
@@ -547,7 +547,7 @@ public class NavigationMenuItem implements Serializable {
 	@JsonIgnore
 	private Supplier<String> _urlSupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	public Boolean getUseCustomName() {
 		if (_useCustomNameSupplier != null) {
 			useCustomName = _useCustomNameSupplier.get();
@@ -827,8 +827,8 @@ public class NavigationMenuItem implements Serializable {
 		return sb.toString();
 	}
 
-	@Schema(
-		accessMode = Schema.AccessMode.READ_ONLY,
+	@io.swagger.v3.oas.annotations.media.Schema(
+		accessMode = io.swagger.v3.oas.annotations.media.Schema.AccessMode.READ_ONLY,
 		defaultValue = "com.liferay.headless.delivery.dto.v1_0.NavigationMenuItem",
 		name = "x-class-name"
 	)

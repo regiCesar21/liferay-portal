@@ -16,8 +16,6 @@ import com.liferay.portal.vulcan.graphql.annotation.GraphQLField;
 import com.liferay.portal.vulcan.graphql.annotation.GraphQLName;
 import com.liferay.portal.vulcan.util.ObjectMapperUtil;
 
-import io.swagger.v3.oas.annotations.media.Schema;
-
 import java.io.Serializable;
 
 import java.util.Iterator;
@@ -51,7 +49,7 @@ public class PageSectionDefinition implements Serializable {
 			PageSectionDefinition.class, json);
 	}
 
-	@Schema(deprecated = true)
+	@io.swagger.v3.oas.annotations.media.Schema(deprecated = true)
 	public String getBackgroundColor() {
 		if (_backgroundColorSupplier != null) {
 			backgroundColor = _backgroundColorSupplier.get();
@@ -93,7 +91,7 @@ public class PageSectionDefinition implements Serializable {
 	@JsonIgnore
 	private Supplier<String> _backgroundColorSupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	@Valid
 	public FragmentImage getBackgroundFragmentImage() {
 		if (_backgroundFragmentImageSupplier != null) {
@@ -138,7 +136,7 @@ public class PageSectionDefinition implements Serializable {
 	@JsonIgnore
 	private Supplier<FragmentImage> _backgroundFragmentImageSupplier;
 
-	@Schema(
+	@io.swagger.v3.oas.annotations.media.Schema(
 		deprecated = true,
 		description = "Deprecated as of Athanasius (7.3.x), replaced by backgroundFragmentImage"
 	)
@@ -187,7 +185,7 @@ public class PageSectionDefinition implements Serializable {
 	@JsonIgnore
 	private Supplier<BackgroundImage> _backgroundImageSupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	@Valid
 	public FragmentLink getFragmentLink() {
 		if (_fragmentLinkSupplier != null) {
@@ -229,7 +227,7 @@ public class PageSectionDefinition implements Serializable {
 	@JsonIgnore
 	private Supplier<FragmentLink> _fragmentLinkSupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	@Valid
 	public FragmentStyle getFragmentStyle() {
 		if (_fragmentStyleSupplier != null) {
@@ -271,7 +269,7 @@ public class PageSectionDefinition implements Serializable {
 	@JsonIgnore
 	private Supplier<FragmentStyle> _fragmentStyleSupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	@Valid
 	public FragmentViewport[] getFragmentViewports() {
 		if (_fragmentViewportsSupplier != null) {
@@ -314,7 +312,7 @@ public class PageSectionDefinition implements Serializable {
 	@JsonIgnore
 	private Supplier<FragmentViewport[]> _fragmentViewportsSupplier;
 
-	@Schema(
+	@io.swagger.v3.oas.annotations.media.Schema(
 		description = "A flag that indicates whether the page section is indexed or not."
 	)
 	public Boolean getIndexed() {
@@ -359,7 +357,7 @@ public class PageSectionDefinition implements Serializable {
 	@JsonIgnore
 	private Supplier<Boolean> _indexedSupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	@Valid
 	public Layout getLayout() {
 		if (_layoutSupplier != null) {
@@ -544,8 +542,8 @@ public class PageSectionDefinition implements Serializable {
 		return sb.toString();
 	}
 
-	@Schema(
-		accessMode = Schema.AccessMode.READ_ONLY,
+	@io.swagger.v3.oas.annotations.media.Schema(
+		accessMode = io.swagger.v3.oas.annotations.media.Schema.AccessMode.READ_ONLY,
 		defaultValue = "com.liferay.headless.delivery.dto.v1_0.PageSectionDefinition",
 		name = "x-class-name"
 	)

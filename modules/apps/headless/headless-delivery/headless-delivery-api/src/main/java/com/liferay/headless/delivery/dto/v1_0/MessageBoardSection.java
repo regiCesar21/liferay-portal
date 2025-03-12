@@ -19,8 +19,6 @@ import com.liferay.portal.vulcan.graphql.annotation.GraphQLField;
 import com.liferay.portal.vulcan.graphql.annotation.GraphQLName;
 import com.liferay.portal.vulcan.util.ObjectMapperUtil;
 
-import io.swagger.v3.oas.annotations.media.Schema;
-
 import java.io.Serializable;
 
 import java.text.DateFormat;
@@ -49,11 +47,11 @@ import javax.xml.bind.annotation.XmlRootElement;
 	description = "Represents a section/folder on a message board, used to organize messages.",
 	value = "MessageBoardSection"
 )
-@JsonFilter("Liferay.Vulcan")
-@Schema(
+@io.swagger.v3.oas.annotations.media.Schema(
 	description = "Represents a section/folder on a message board, used to organize messages.",
 	requiredProperties = {"title"}
 )
+@JsonFilter("Liferay.Vulcan")
 @XmlRootElement(name = "MessageBoardSection")
 public class MessageBoardSection implements Serializable {
 
@@ -66,7 +64,7 @@ public class MessageBoardSection implements Serializable {
 			MessageBoardSection.class, json);
 	}
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	@Valid
 	public Map<String, Map<String, String>> getActions() {
 		if (_actionsSupplier != null) {
@@ -109,7 +107,9 @@ public class MessageBoardSection implements Serializable {
 	@JsonIgnore
 	private Supplier<Map<String, Map<String, String>>> _actionsSupplier;
 
-	@Schema(description = "The section's creator.")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "The section's creator."
+	)
 	@Valid
 	public Creator getCreator() {
 		if (_creatorSupplier != null) {
@@ -151,7 +151,7 @@ public class MessageBoardSection implements Serializable {
 	@JsonIgnore
 	private Supplier<Creator> _creatorSupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	@Valid
 	public CustomField[] getCustomFields() {
 		if (_customFieldsSupplier != null) {
@@ -193,7 +193,9 @@ public class MessageBoardSection implements Serializable {
 	@JsonIgnore
 	private Supplier<CustomField[]> _customFieldsSupplier;
 
-	@Schema(description = "The date the section was created.")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "The date the section was created."
+	)
 	public Date getDateCreated() {
 		if (_dateCreatedSupplier != null) {
 			dateCreated = _dateCreatedSupplier.get();
@@ -234,7 +236,9 @@ public class MessageBoardSection implements Serializable {
 	@JsonIgnore
 	private Supplier<Date> _dateCreatedSupplier;
 
-	@Schema(description = "The last time the section was changed.")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "The last time the section was changed."
+	)
 	public Date getDateModified() {
 		if (_dateModifiedSupplier != null) {
 			dateModified = _dateModifiedSupplier.get();
@@ -275,7 +279,9 @@ public class MessageBoardSection implements Serializable {
 	@JsonIgnore
 	private Supplier<Date> _dateModifiedSupplier;
 
-	@Schema(description = "The section's description.")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "The section's description."
+	)
 	public String getDescription() {
 		if (_descriptionSupplier != null) {
 			description = _descriptionSupplier.get();
@@ -316,7 +322,9 @@ public class MessageBoardSection implements Serializable {
 	@JsonIgnore
 	private Supplier<String> _descriptionSupplier;
 
-	@Schema(description = "The section's ID.")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "The section's ID."
+	)
 	public Long getId() {
 		if (_idSupplier != null) {
 			id = _idSupplier.get();
@@ -355,7 +363,9 @@ public class MessageBoardSection implements Serializable {
 	@JsonIgnore
 	private Supplier<Long> _idSupplier;
 
-	@Schema(description = "The number of this section's child sections.")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "The number of this section's child sections."
+	)
 	public Integer getNumberOfMessageBoardSections() {
 		if (_numberOfMessageBoardSectionsSupplier != null) {
 			numberOfMessageBoardSections =
@@ -400,7 +410,7 @@ public class MessageBoardSection implements Serializable {
 	@JsonIgnore
 	private Supplier<Integer> _numberOfMessageBoardSectionsSupplier;
 
-	@Schema(
+	@io.swagger.v3.oas.annotations.media.Schema(
 		description = "The number of message board threads in this section."
 	)
 	public Integer getNumberOfMessageBoardThreads() {
@@ -449,7 +459,7 @@ public class MessageBoardSection implements Serializable {
 	@JsonIgnore
 	private Supplier<Integer> _numberOfMessageBoardThreadsSupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	public Long getParentMessageBoardSectionId() {
 		if (_parentMessageBoardSectionIdSupplier != null) {
 			parentMessageBoardSectionId =
@@ -494,7 +504,9 @@ public class MessageBoardSection implements Serializable {
 	@JsonIgnore
 	private Supplier<Long> _parentMessageBoardSectionIdSupplier;
 
-	@Schema(description = "The ID of the site to which this section is scoped.")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "The ID of the site to which this section is scoped."
+	)
 	public Long getSiteId() {
 		if (_siteIdSupplier != null) {
 			siteId = _siteIdSupplier.get();
@@ -537,7 +549,7 @@ public class MessageBoardSection implements Serializable {
 	@JsonIgnore
 	private Supplier<Long> _siteIdSupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	public Boolean getSubscribed() {
 		if (_subscribedSupplier != null) {
 			subscribed = _subscribedSupplier.get();
@@ -578,7 +590,9 @@ public class MessageBoardSection implements Serializable {
 	@JsonIgnore
 	private Supplier<Boolean> _subscribedSupplier;
 
-	@Schema(description = "The section's main title.")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "The section's main title."
+	)
 	public String getTitle() {
 		if (_titleSupplier != null) {
 			title = _titleSupplier.get();
@@ -620,10 +634,10 @@ public class MessageBoardSection implements Serializable {
 	@JsonIgnore
 	private Supplier<String> _titleSupplier;
 
-	@JsonGetter("viewableBy")
-	@Schema(
+	@io.swagger.v3.oas.annotations.media.Schema(
 		description = "A write-only property that specifies the default permissions."
 	)
+	@JsonGetter("viewableBy")
 	@Valid
 	public ViewableBy getViewableBy() {
 		if (_viewableBySupplier != null) {
@@ -912,8 +926,8 @@ public class MessageBoardSection implements Serializable {
 		return sb.toString();
 	}
 
-	@Schema(
-		accessMode = Schema.AccessMode.READ_ONLY,
+	@io.swagger.v3.oas.annotations.media.Schema(
+		accessMode = io.swagger.v3.oas.annotations.media.Schema.AccessMode.READ_ONLY,
 		defaultValue = "com.liferay.headless.delivery.dto.v1_0.MessageBoardSection",
 		name = "x-class-name"
 	)

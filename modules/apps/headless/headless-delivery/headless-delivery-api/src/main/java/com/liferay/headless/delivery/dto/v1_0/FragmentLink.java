@@ -20,8 +20,6 @@ import com.liferay.portal.vulcan.graphql.annotation.GraphQLField;
 import com.liferay.portal.vulcan.graphql.annotation.GraphQLName;
 import com.liferay.portal.vulcan.util.ObjectMapperUtil;
 
-import io.swagger.v3.oas.annotations.media.Schema;
-
 import java.io.Serializable;
 
 import java.util.Iterator;
@@ -54,7 +52,7 @@ public class FragmentLink implements Serializable {
 		return ObjectMapperUtil.unsafeReadValue(FragmentLink.class, json);
 	}
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	@Valid
 	public Object getHref() {
 		if (_hrefSupplier != null) {
@@ -94,8 +92,8 @@ public class FragmentLink implements Serializable {
 	@JsonIgnore
 	private Supplier<Object> _hrefSupplier;
 
+	@io.swagger.v3.oas.annotations.media.Schema
 	@JsonGetter("target")
-	@Schema
 	@Valid
 	public Target getTarget() {
 		if (_targetSupplier != null) {
@@ -218,8 +216,8 @@ public class FragmentLink implements Serializable {
 		return sb.toString();
 	}
 
-	@Schema(
-		accessMode = Schema.AccessMode.READ_ONLY,
+	@io.swagger.v3.oas.annotations.media.Schema(
+		accessMode = io.swagger.v3.oas.annotations.media.Schema.AccessMode.READ_ONLY,
 		defaultValue = "com.liferay.headless.delivery.dto.v1_0.FragmentLink",
 		name = "x-class-name"
 	)

@@ -16,8 +16,6 @@ import com.liferay.portal.vulcan.graphql.annotation.GraphQLField;
 import com.liferay.portal.vulcan.graphql.annotation.GraphQLName;
 import com.liferay.portal.vulcan.util.ObjectMapperUtil;
 
-import io.swagger.v3.oas.annotations.media.Schema;
-
 import java.io.Serializable;
 
 import java.util.Iterator;
@@ -52,7 +50,7 @@ public class PageFragmentInstanceDefinition implements Serializable {
 			PageFragmentInstanceDefinition.class, json);
 	}
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	@Valid
 	public Fragment getFragment() {
 		if (_fragmentSupplier != null) {
@@ -94,7 +92,7 @@ public class PageFragmentInstanceDefinition implements Serializable {
 	@JsonIgnore
 	private Supplier<Fragment> _fragmentSupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	@Valid
 	public Map<String, Object> getFragmentConfig() {
 		if (_fragmentConfigSupplier != null) {
@@ -137,7 +135,7 @@ public class PageFragmentInstanceDefinition implements Serializable {
 	@JsonIgnore
 	private Supplier<Map<String, Object>> _fragmentConfigSupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	@Valid
 	public FragmentField[] getFragmentFields() {
 		if (_fragmentFieldsSupplier != null) {
@@ -180,7 +178,7 @@ public class PageFragmentInstanceDefinition implements Serializable {
 	@JsonIgnore
 	private Supplier<FragmentField[]> _fragmentFieldsSupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	@Valid
 	public FragmentStyle getFragmentStyle() {
 		if (_fragmentStyleSupplier != null) {
@@ -222,7 +220,7 @@ public class PageFragmentInstanceDefinition implements Serializable {
 	@JsonIgnore
 	private Supplier<FragmentStyle> _fragmentStyleSupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	@Valid
 	public FragmentViewport[] getFragmentViewports() {
 		if (_fragmentViewportsSupplier != null) {
@@ -265,7 +263,7 @@ public class PageFragmentInstanceDefinition implements Serializable {
 	@JsonIgnore
 	private Supplier<FragmentViewport[]> _fragmentViewportsSupplier;
 
-	@Schema(
+	@io.swagger.v3.oas.annotations.media.Schema(
 		description = "A flag that indicates whether the page fragment instance is indexed or not."
 	)
 	public Boolean getIndexed() {
@@ -310,7 +308,7 @@ public class PageFragmentInstanceDefinition implements Serializable {
 	@JsonIgnore
 	private Supplier<Boolean> _indexedSupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	@Valid
 	public WidgetInstance[] getWidgetInstances() {
 		if (_widgetInstancesSupplier != null) {
@@ -501,8 +499,8 @@ public class PageFragmentInstanceDefinition implements Serializable {
 		return sb.toString();
 	}
 
-	@Schema(
-		accessMode = Schema.AccessMode.READ_ONLY,
+	@io.swagger.v3.oas.annotations.media.Schema(
+		accessMode = io.swagger.v3.oas.annotations.media.Schema.AccessMode.READ_ONLY,
 		defaultValue = "com.liferay.headless.delivery.dto.v1_0.PageFragmentInstanceDefinition",
 		name = "x-class-name"
 	)

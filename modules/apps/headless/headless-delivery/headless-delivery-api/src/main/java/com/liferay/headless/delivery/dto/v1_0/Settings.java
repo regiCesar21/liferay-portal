@@ -17,8 +17,6 @@ import com.liferay.portal.vulcan.graphql.annotation.GraphQLField;
 import com.liferay.portal.vulcan.graphql.annotation.GraphQLName;
 import com.liferay.portal.vulcan.util.ObjectMapperUtil;
 
-import io.swagger.v3.oas.annotations.media.Schema;
-
 import java.io.Serializable;
 
 import java.util.Iterator;
@@ -51,7 +49,7 @@ public class Settings implements Serializable {
 		return ObjectMapperUtil.unsafeReadValue(Settings.class, json);
 	}
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	public String getColorSchemeName() {
 		if (_colorSchemeNameSupplier != null) {
 			colorSchemeName = _colorSchemeNameSupplier.get();
@@ -92,7 +90,7 @@ public class Settings implements Serializable {
 	@JsonIgnore
 	private Supplier<String> _colorSchemeNameSupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	public String getCss() {
 		if (_cssSupplier != null) {
 			css = _cssSupplier.get();
@@ -131,7 +129,7 @@ public class Settings implements Serializable {
 	@JsonIgnore
 	private Supplier<String> _cssSupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	public String getJavascript() {
 		if (_javascriptSupplier != null) {
 			javascript = _javascriptSupplier.get();
@@ -172,7 +170,7 @@ public class Settings implements Serializable {
 	@JsonIgnore
 	private Supplier<String> _javascriptSupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	@Valid
 	public MasterPage getMasterPage() {
 		if (_masterPageSupplier != null) {
@@ -214,7 +212,7 @@ public class Settings implements Serializable {
 	@JsonIgnore
 	private Supplier<MasterPage> _masterPageSupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	public String getThemeName() {
 		if (_themeNameSupplier != null) {
 			themeName = _themeNameSupplier.get();
@@ -255,7 +253,7 @@ public class Settings implements Serializable {
 	@JsonIgnore
 	private Supplier<String> _themeNameSupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	@Valid
 	public Object getThemeSettings() {
 		if (_themeSettingsSupplier != null) {
@@ -428,8 +426,8 @@ public class Settings implements Serializable {
 		return sb.toString();
 	}
 
-	@Schema(
-		accessMode = Schema.AccessMode.READ_ONLY,
+	@io.swagger.v3.oas.annotations.media.Schema(
+		accessMode = io.swagger.v3.oas.annotations.media.Schema.AccessMode.READ_ONLY,
 		defaultValue = "com.liferay.headless.delivery.dto.v1_0.Settings",
 		name = "x-class-name"
 	)

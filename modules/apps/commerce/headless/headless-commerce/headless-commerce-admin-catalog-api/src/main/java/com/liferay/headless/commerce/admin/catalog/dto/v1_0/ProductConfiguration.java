@@ -16,8 +16,6 @@ import com.liferay.portal.vulcan.graphql.annotation.GraphQLField;
 import com.liferay.portal.vulcan.graphql.annotation.GraphQLName;
 import com.liferay.portal.vulcan.util.ObjectMapperUtil;
 
-import io.swagger.v3.oas.annotations.media.Schema;
-
 import java.io.Serializable;
 
 import java.util.Iterator;
@@ -49,7 +47,7 @@ public class ProductConfiguration implements Serializable {
 			ProductConfiguration.class, json);
 	}
 
-	@Schema(example = "true")
+	@io.swagger.v3.oas.annotations.media.Schema(example = "true")
 	public Boolean getAllowBackOrder() {
 		if (_allowBackOrderSupplier != null) {
 			allowBackOrder = _allowBackOrderSupplier.get();
@@ -90,7 +88,7 @@ public class ProductConfiguration implements Serializable {
 	@JsonIgnore
 	private Supplier<Boolean> _allowBackOrderSupplier;
 
-	@Schema(example = "[10, 20, 30, 40]")
+	@io.swagger.v3.oas.annotations.media.Schema(example = "[10, 20, 30, 40]")
 	public Integer[] getAllowedOrderQuantities() {
 		if (_allowedOrderQuantitiesSupplier != null) {
 			allowedOrderQuantities = _allowedOrderQuantitiesSupplier.get();
@@ -132,7 +130,7 @@ public class ProductConfiguration implements Serializable {
 	@JsonIgnore
 	private Supplier<Integer[]> _allowedOrderQuantitiesSupplier;
 
-	@Schema(example = "true")
+	@io.swagger.v3.oas.annotations.media.Schema(example = "true")
 	public Boolean getDisplayAvailability() {
 		if (_displayAvailabilitySupplier != null) {
 			displayAvailability = _displayAvailabilitySupplier.get();
@@ -173,7 +171,7 @@ public class ProductConfiguration implements Serializable {
 	@JsonIgnore
 	private Supplier<Boolean> _displayAvailabilitySupplier;
 
-	@Schema(example = "true")
+	@io.swagger.v3.oas.annotations.media.Schema(example = "true")
 	public Boolean getDisplayStockQuantity() {
 		if (_displayStockQuantitySupplier != null) {
 			displayStockQuantity = _displayStockQuantitySupplier.get();
@@ -214,7 +212,7 @@ public class ProductConfiguration implements Serializable {
 	@JsonIgnore
 	private Supplier<Boolean> _displayStockQuantitySupplier;
 
-	@Schema(
+	@io.swagger.v3.oas.annotations.media.Schema(
 		description = "The inventory engine that will be used to manage the product inventory"
 	)
 	public String getInventoryEngine() {
@@ -259,7 +257,7 @@ public class ProductConfiguration implements Serializable {
 	@JsonIgnore
 	private Supplier<String> _inventoryEngineSupplier;
 
-	@Schema(
+	@io.swagger.v3.oas.annotations.media.Schema(
 		description = "The low stock action that will be performed when a product is out of stock"
 	)
 	public String getLowStockAction() {
@@ -304,7 +302,7 @@ public class ProductConfiguration implements Serializable {
 	@JsonIgnore
 	private Supplier<String> _lowStockActionSupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	public Integer getMaxOrderQuantity() {
 		if (_maxOrderQuantitySupplier != null) {
 			maxOrderQuantity = _maxOrderQuantitySupplier.get();
@@ -345,7 +343,7 @@ public class ProductConfiguration implements Serializable {
 	@JsonIgnore
 	private Supplier<Integer> _maxOrderQuantitySupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	public Integer getMinOrderQuantity() {
 		if (_minOrderQuantitySupplier != null) {
 			minOrderQuantity = _minOrderQuantitySupplier.get();
@@ -386,7 +384,7 @@ public class ProductConfiguration implements Serializable {
 	@JsonIgnore
 	private Supplier<Integer> _minOrderQuantitySupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	public Integer getMinStockQuantity() {
 		if (_minStockQuantitySupplier != null) {
 			minStockQuantity = _minStockQuantitySupplier.get();
@@ -427,7 +425,7 @@ public class ProductConfiguration implements Serializable {
 	@JsonIgnore
 	private Supplier<Integer> _minStockQuantitySupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	public Integer getMultipleOrderQuantity() {
 		if (_multipleOrderQuantitySupplier != null) {
 			multipleOrderQuantity = _multipleOrderQuantitySupplier.get();
@@ -640,8 +638,8 @@ public class ProductConfiguration implements Serializable {
 		return sb.toString();
 	}
 
-	@Schema(
-		accessMode = Schema.AccessMode.READ_ONLY,
+	@io.swagger.v3.oas.annotations.media.Schema(
+		accessMode = io.swagger.v3.oas.annotations.media.Schema.AccessMode.READ_ONLY,
 		defaultValue = "com.liferay.headless.commerce.admin.catalog.dto.v1_0.ProductConfiguration",
 		name = "x-class-name"
 	)

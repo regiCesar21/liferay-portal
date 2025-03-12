@@ -16,8 +16,6 @@ import com.liferay.portal.vulcan.graphql.annotation.GraphQLField;
 import com.liferay.portal.vulcan.graphql.annotation.GraphQLName;
 import com.liferay.portal.vulcan.util.ObjectMapperUtil;
 
-import io.swagger.v3.oas.annotations.media.Schema;
-
 import java.io.Serializable;
 
 import java.text.DateFormat;
@@ -44,8 +42,10 @@ import javax.xml.bind.annotation.XmlRootElement;
  */
 @Generated("")
 @GraphQLName("ContentTemplate")
+@io.swagger.v3.oas.annotations.media.Schema(
+	requiredProperties = {"contentStructureId", "name"}
+)
 @JsonFilter("Liferay.Vulcan")
-@Schema(requiredProperties = {"contentStructureId", "name"})
 @XmlRootElement(name = "ContentTemplate")
 public class ContentTemplate implements Serializable {
 
@@ -57,7 +57,7 @@ public class ContentTemplate implements Serializable {
 		return ObjectMapperUtil.unsafeReadValue(ContentTemplate.class, json);
 	}
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	@Valid
 	public Map<String, Map<String, String>> getActions() {
 		if (_actionsSupplier != null) {
@@ -100,7 +100,7 @@ public class ContentTemplate implements Serializable {
 	@JsonIgnore
 	private Supplier<Map<String, Map<String, String>>> _actionsSupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	public String getAssetLibraryKey() {
 		if (_assetLibraryKeySupplier != null) {
 			assetLibraryKey = _assetLibraryKeySupplier.get();
@@ -141,7 +141,7 @@ public class ContentTemplate implements Serializable {
 	@JsonIgnore
 	private Supplier<String> _assetLibraryKeySupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	public String[] getAvailableLanguages() {
 		if (_availableLanguagesSupplier != null) {
 			availableLanguages = _availableLanguagesSupplier.get();
@@ -182,7 +182,7 @@ public class ContentTemplate implements Serializable {
 	@JsonIgnore
 	private Supplier<String[]> _availableLanguagesSupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	public Long getContentStructureId() {
 		if (_contentStructureIdSupplier != null) {
 			contentStructureId = _contentStructureIdSupplier.get();
@@ -224,7 +224,9 @@ public class ContentTemplate implements Serializable {
 	@JsonIgnore
 	private Supplier<Long> _contentStructureIdSupplier;
 
-	@Schema(description = "The content template's creator.")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "The content template's creator."
+	)
 	@Valid
 	public Creator getCreator() {
 		if (_creatorSupplier != null) {
@@ -266,7 +268,7 @@ public class ContentTemplate implements Serializable {
 	@JsonIgnore
 	private Supplier<Creator> _creatorSupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	public Date getDateCreated() {
 		if (_dateCreatedSupplier != null) {
 			dateCreated = _dateCreatedSupplier.get();
@@ -307,7 +309,7 @@ public class ContentTemplate implements Serializable {
 	@JsonIgnore
 	private Supplier<Date> _dateCreatedSupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	public Date getDateModified() {
 		if (_dateModifiedSupplier != null) {
 			dateModified = _dateModifiedSupplier.get();
@@ -348,7 +350,7 @@ public class ContentTemplate implements Serializable {
 	@JsonIgnore
 	private Supplier<Date> _dateModifiedSupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	public String getDescription() {
 		if (_descriptionSupplier != null) {
 			description = _descriptionSupplier.get();
@@ -389,7 +391,7 @@ public class ContentTemplate implements Serializable {
 	@JsonIgnore
 	private Supplier<String> _descriptionSupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	@Valid
 	public Map<String, String> getDescription_i18n() {
 		if (_description_i18nSupplier != null) {
@@ -432,7 +434,7 @@ public class ContentTemplate implements Serializable {
 	@JsonIgnore
 	private Supplier<Map<String, String>> _description_i18nSupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	public String getId() {
 		if (_idSupplier != null) {
 			id = _idSupplier.get();
@@ -471,7 +473,7 @@ public class ContentTemplate implements Serializable {
 	@JsonIgnore
 	private Supplier<String> _idSupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	public String getName() {
 		if (_nameSupplier != null) {
 			name = _nameSupplier.get();
@@ -511,7 +513,7 @@ public class ContentTemplate implements Serializable {
 	@JsonIgnore
 	private Supplier<String> _nameSupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	@Valid
 	public Map<String, String> getName_i18n() {
 		if (_name_i18nSupplier != null) {
@@ -554,7 +556,7 @@ public class ContentTemplate implements Serializable {
 	@JsonIgnore
 	private Supplier<Map<String, String>> _name_i18nSupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	public String getProgrammingLanguage() {
 		if (_programmingLanguageSupplier != null) {
 			programmingLanguage = _programmingLanguageSupplier.get();
@@ -595,7 +597,7 @@ public class ContentTemplate implements Serializable {
 	@JsonIgnore
 	private Supplier<String> _programmingLanguageSupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	public Long getSiteId() {
 		if (_siteIdSupplier != null) {
 			siteId = _siteIdSupplier.get();
@@ -636,7 +638,7 @@ public class ContentTemplate implements Serializable {
 	@JsonIgnore
 	private Supplier<Long> _siteIdSupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	public String getTemplateScript() {
 		if (_templateScriptSupplier != null) {
 			templateScript = _templateScriptSupplier.get();
@@ -938,8 +940,8 @@ public class ContentTemplate implements Serializable {
 		return sb.toString();
 	}
 
-	@Schema(
-		accessMode = Schema.AccessMode.READ_ONLY,
+	@io.swagger.v3.oas.annotations.media.Schema(
+		accessMode = io.swagger.v3.oas.annotations.media.Schema.AccessMode.READ_ONLY,
 		defaultValue = "com.liferay.headless.delivery.dto.v1_0.ContentTemplate",
 		name = "x-class-name"
 	)

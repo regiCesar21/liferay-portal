@@ -16,8 +16,6 @@ import com.liferay.portal.vulcan.graphql.annotation.GraphQLField;
 import com.liferay.portal.vulcan.graphql.annotation.GraphQLName;
 import com.liferay.portal.vulcan.util.ObjectMapperUtil;
 
-import io.swagger.v3.oas.annotations.media.Schema;
-
 import java.io.Serializable;
 
 import java.util.Iterator;
@@ -53,7 +51,7 @@ public class RenderedContent implements Serializable {
 		return ObjectMapperUtil.unsafeReadValue(RenderedContent.class, json);
 	}
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	public String getContentTemplateId() {
 		if (_contentTemplateIdSupplier != null) {
 			contentTemplateId = _contentTemplateIdSupplier.get();
@@ -94,7 +92,7 @@ public class RenderedContent implements Serializable {
 	@JsonIgnore
 	private Supplier<String> _contentTemplateIdSupplier;
 
-	@Schema(
+	@io.swagger.v3.oas.annotations.media.Schema(
 		description = "The name of the template used to render the content."
 	)
 	public String getContentTemplateName() {
@@ -139,7 +137,7 @@ public class RenderedContent implements Serializable {
 	@JsonIgnore
 	private Supplier<String> _contentTemplateNameSupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	@Valid
 	public Map<String, String> getContentTemplateName_i18n() {
 		if (_contentTemplateName_i18nSupplier != null) {
@@ -184,7 +182,9 @@ public class RenderedContent implements Serializable {
 	@JsonIgnore
 	private Supplier<Map<String, String>> _contentTemplateName_i18nSupplier;
 
-	@Schema(description = "An absolute URL to the rendered content.")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "An absolute URL to the rendered content."
+	)
 	public String getRenderedContentURL() {
 		if (_renderedContentURLSupplier != null) {
 			renderedContentURL = _renderedContentURLSupplier.get();
@@ -225,7 +225,7 @@ public class RenderedContent implements Serializable {
 	@JsonIgnore
 	private Supplier<String> _renderedContentURLSupplier;
 
-	@Schema(
+	@io.swagger.v3.oas.annotations.media.Schema(
 		description = "optional field with the rendered content, can be embedded with nestedFields"
 	)
 	public String getRenderedContentValue() {
@@ -379,8 +379,8 @@ public class RenderedContent implements Serializable {
 		return sb.toString();
 	}
 
-	@Schema(
-		accessMode = Schema.AccessMode.READ_ONLY,
+	@io.swagger.v3.oas.annotations.media.Schema(
+		accessMode = io.swagger.v3.oas.annotations.media.Schema.AccessMode.READ_ONLY,
 		defaultValue = "com.liferay.headless.delivery.dto.v1_0.RenderedContent",
 		name = "x-class-name"
 	)

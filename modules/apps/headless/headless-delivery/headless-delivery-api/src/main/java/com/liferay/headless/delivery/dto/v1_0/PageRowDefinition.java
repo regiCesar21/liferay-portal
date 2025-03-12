@@ -16,8 +16,6 @@ import com.liferay.portal.vulcan.graphql.annotation.GraphQLField;
 import com.liferay.portal.vulcan.graphql.annotation.GraphQLName;
 import com.liferay.portal.vulcan.util.ObjectMapperUtil;
 
-import io.swagger.v3.oas.annotations.media.Schema;
-
 import java.io.Serializable;
 
 import java.util.Iterator;
@@ -50,7 +48,7 @@ public class PageRowDefinition implements Serializable {
 		return ObjectMapperUtil.unsafeReadValue(PageRowDefinition.class, json);
 	}
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	@Valid
 	public FragmentStyle getFragmentStyle() {
 		if (_fragmentStyleSupplier != null) {
@@ -92,7 +90,7 @@ public class PageRowDefinition implements Serializable {
 	@JsonIgnore
 	private Supplier<FragmentStyle> _fragmentStyleSupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	@Valid
 	public FragmentViewport[] getFragmentViewports() {
 		if (_fragmentViewportsSupplier != null) {
@@ -135,7 +133,7 @@ public class PageRowDefinition implements Serializable {
 	@JsonIgnore
 	private Supplier<FragmentViewport[]> _fragmentViewportsSupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	public Boolean getGutters() {
 		if (_guttersSupplier != null) {
 			gutters = _guttersSupplier.get();
@@ -176,7 +174,7 @@ public class PageRowDefinition implements Serializable {
 	@JsonIgnore
 	private Supplier<Boolean> _guttersSupplier;
 
-	@Schema(
+	@io.swagger.v3.oas.annotations.media.Schema(
 		description = "A flag that indicates whether the page row is indexed or not."
 	)
 	public Boolean getIndexed() {
@@ -221,7 +219,7 @@ public class PageRowDefinition implements Serializable {
 	@JsonIgnore
 	private Supplier<Boolean> _indexedSupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	public Integer getModulesPerRow() {
 		if (_modulesPerRowSupplier != null) {
 			modulesPerRow = _modulesPerRowSupplier.get();
@@ -262,7 +260,7 @@ public class PageRowDefinition implements Serializable {
 	@JsonIgnore
 	private Supplier<Integer> _modulesPerRowSupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	public Integer getNumberOfColumns() {
 		if (_numberOfColumnsSupplier != null) {
 			numberOfColumns = _numberOfColumnsSupplier.get();
@@ -303,7 +301,7 @@ public class PageRowDefinition implements Serializable {
 	@JsonIgnore
 	private Supplier<Integer> _numberOfColumnsSupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	public Boolean getReverseOrder() {
 		if (_reverseOrderSupplier != null) {
 			reverseOrder = _reverseOrderSupplier.get();
@@ -344,7 +342,7 @@ public class PageRowDefinition implements Serializable {
 	@JsonIgnore
 	private Supplier<Boolean> _reverseOrderSupplier;
 
-	@Schema(
+	@io.swagger.v3.oas.annotations.media.Schema(
 		deprecated = true,
 		description = "Deprecated as of Athanasius (7.3.x), replaced by rowViewports"
 	)
@@ -393,7 +391,7 @@ public class PageRowDefinition implements Serializable {
 	@JsonIgnore
 	private Supplier<RowViewportConfig> _rowViewportConfigSupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	@Valid
 	public RowViewport[] getRowViewports() {
 		if (_rowViewportsSupplier != null) {
@@ -435,7 +433,7 @@ public class PageRowDefinition implements Serializable {
 	@JsonIgnore
 	private Supplier<RowViewport[]> _rowViewportsSupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	public String getVerticalAlignment() {
 		if (_verticalAlignmentSupplier != null) {
 			verticalAlignment = _verticalAlignmentSupplier.get();
@@ -652,8 +650,8 @@ public class PageRowDefinition implements Serializable {
 		return sb.toString();
 	}
 
-	@Schema(
-		accessMode = Schema.AccessMode.READ_ONLY,
+	@io.swagger.v3.oas.annotations.media.Schema(
+		accessMode = io.swagger.v3.oas.annotations.media.Schema.AccessMode.READ_ONLY,
 		defaultValue = "com.liferay.headless.delivery.dto.v1_0.PageRowDefinition",
 		name = "x-class-name"
 	)

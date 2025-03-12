@@ -16,8 +16,6 @@ import com.liferay.portal.vulcan.graphql.annotation.GraphQLField;
 import com.liferay.portal.vulcan.graphql.annotation.GraphQLName;
 import com.liferay.portal.vulcan.util.ObjectMapperUtil;
 
-import io.swagger.v3.oas.annotations.media.Schema;
-
 import java.io.Serializable;
 
 import java.util.Iterator;
@@ -51,7 +49,7 @@ public class Account implements Serializable {
 		return ObjectMapperUtil.unsafeReadValue(Account.class, json);
 	}
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	public String getDescription() {
 		if (_descriptionSupplier != null) {
 			description = _descriptionSupplier.get();
@@ -92,7 +90,7 @@ public class Account implements Serializable {
 	@JsonIgnore
 	private Supplier<String> _descriptionSupplier;
 
-	@Schema(
+	@io.swagger.v3.oas.annotations.media.Schema(
 		description = "The account's email domains. Users assigned to this account generally will have email addresses under one of these domains."
 	)
 	public String[] getDomains() {
@@ -137,7 +135,9 @@ public class Account implements Serializable {
 	@JsonIgnore
 	private Supplier<String[]> _domainsSupplier;
 
-	@Schema(description = "The optional external key of this account.")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "The optional external key of this account."
+	)
 	public String getExternalReferenceCode() {
 		if (_externalReferenceCodeSupplier != null) {
 			externalReferenceCode = _externalReferenceCodeSupplier.get();
@@ -178,7 +178,7 @@ public class Account implements Serializable {
 	@JsonIgnore
 	private Supplier<String> _externalReferenceCodeSupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	public Long getId() {
 		if (_idSupplier != null) {
 			id = _idSupplier.get();
@@ -217,7 +217,7 @@ public class Account implements Serializable {
 	@JsonIgnore
 	private Supplier<Long> _idSupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	public String getName() {
 		if (_nameSupplier != null) {
 			name = _nameSupplier.get();
@@ -256,7 +256,7 @@ public class Account implements Serializable {
 	@JsonIgnore
 	private Supplier<String> _nameSupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	public Long[] getOrganizationIds() {
 		if (_organizationIdsSupplier != null) {
 			organizationIds = _organizationIdsSupplier.get();
@@ -297,7 +297,7 @@ public class Account implements Serializable {
 	@JsonIgnore
 	private Supplier<Long[]> _organizationIdsSupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	public Long getParentAccountId() {
 		if (_parentAccountIdSupplier != null) {
 			parentAccountId = _parentAccountIdSupplier.get();
@@ -338,7 +338,7 @@ public class Account implements Serializable {
 	@JsonIgnore
 	private Supplier<Long> _parentAccountIdSupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	public Integer getStatus() {
 		if (_statusSupplier != null) {
 			status = _statusSupplier.get();
@@ -543,8 +543,8 @@ public class Account implements Serializable {
 		return sb.toString();
 	}
 
-	@Schema(
-		accessMode = Schema.AccessMode.READ_ONLY,
+	@io.swagger.v3.oas.annotations.media.Schema(
+		accessMode = io.swagger.v3.oas.annotations.media.Schema.AccessMode.READ_ONLY,
 		defaultValue = "com.liferay.account.rest.dto.v1_0.Account",
 		name = "x-class-name"
 	)

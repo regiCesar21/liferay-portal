@@ -16,8 +16,6 @@ import com.liferay.portal.vulcan.graphql.annotation.GraphQLField;
 import com.liferay.portal.vulcan.graphql.annotation.GraphQLName;
 import com.liferay.portal.vulcan.util.ObjectMapperUtil;
 
-import io.swagger.v3.oas.annotations.media.Schema;
-
 import java.io.Serializable;
 
 import java.util.Iterator;
@@ -52,7 +50,7 @@ public class AppWorkflowDataRecordLink implements Serializable {
 			AppWorkflowDataRecordLink.class, json);
 	}
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	@Valid
 	public AppWorkflow getAppWorkflow() {
 		if (_appWorkflowSupplier != null) {
@@ -94,7 +92,7 @@ public class AppWorkflowDataRecordLink implements Serializable {
 	@JsonIgnore
 	private Supplier<AppWorkflow> _appWorkflowSupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	public Long getDataRecordId() {
 		if (_dataRecordIdSupplier != null) {
 			dataRecordId = _dataRecordIdSupplier.get();
@@ -192,8 +190,8 @@ public class AppWorkflowDataRecordLink implements Serializable {
 		return sb.toString();
 	}
 
-	@Schema(
-		accessMode = Schema.AccessMode.READ_ONLY,
+	@io.swagger.v3.oas.annotations.media.Schema(
+		accessMode = io.swagger.v3.oas.annotations.media.Schema.AccessMode.READ_ONLY,
 		defaultValue = "com.liferay.app.builder.workflow.rest.dto.v1_0.AppWorkflowDataRecordLink",
 		name = "x-class-name"
 	)

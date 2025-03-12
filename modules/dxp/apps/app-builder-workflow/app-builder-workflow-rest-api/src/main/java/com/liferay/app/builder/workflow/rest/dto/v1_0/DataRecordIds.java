@@ -16,8 +16,6 @@ import com.liferay.portal.vulcan.graphql.annotation.GraphQLField;
 import com.liferay.portal.vulcan.graphql.annotation.GraphQLName;
 import com.liferay.portal.vulcan.util.ObjectMapperUtil;
 
-import io.swagger.v3.oas.annotations.media.Schema;
-
 import java.io.Serializable;
 
 import java.util.Iterator;
@@ -48,7 +46,7 @@ public class DataRecordIds implements Serializable {
 		return ObjectMapperUtil.unsafeReadValue(DataRecordIds.class, json);
 	}
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	public Long[] getDataRecordIds() {
 		if (_dataRecordIdsSupplier != null) {
 			dataRecordIds = _dataRecordIdsSupplier.get();
@@ -143,8 +141,8 @@ public class DataRecordIds implements Serializable {
 		return sb.toString();
 	}
 
-	@Schema(
-		accessMode = Schema.AccessMode.READ_ONLY,
+	@io.swagger.v3.oas.annotations.media.Schema(
+		accessMode = io.swagger.v3.oas.annotations.media.Schema.AccessMode.READ_ONLY,
 		defaultValue = "com.liferay.app.builder.workflow.rest.dto.v1_0.DataRecordIds",
 		name = "x-class-name"
 	)

@@ -16,8 +16,6 @@ import com.liferay.portal.vulcan.graphql.annotation.GraphQLField;
 import com.liferay.portal.vulcan.graphql.annotation.GraphQLName;
 import com.liferay.portal.vulcan.util.ObjectMapperUtil;
 
-import io.swagger.v3.oas.annotations.media.Schema;
-
 import java.io.Serializable;
 
 import java.util.Iterator;
@@ -49,7 +47,7 @@ public class FragmentViewportStyle implements Serializable {
 			FragmentViewportStyle.class, json);
 	}
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	public String getMarginBottom() {
 		if (_marginBottomSupplier != null) {
 			marginBottom = _marginBottomSupplier.get();
@@ -90,7 +88,7 @@ public class FragmentViewportStyle implements Serializable {
 	@JsonIgnore
 	private Supplier<String> _marginBottomSupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	public String getMarginLeft() {
 		if (_marginLeftSupplier != null) {
 			marginLeft = _marginLeftSupplier.get();
@@ -131,7 +129,7 @@ public class FragmentViewportStyle implements Serializable {
 	@JsonIgnore
 	private Supplier<String> _marginLeftSupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	public String getMarginRight() {
 		if (_marginRightSupplier != null) {
 			marginRight = _marginRightSupplier.get();
@@ -172,7 +170,7 @@ public class FragmentViewportStyle implements Serializable {
 	@JsonIgnore
 	private Supplier<String> _marginRightSupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	public String getMarginTop() {
 		if (_marginTopSupplier != null) {
 			marginTop = _marginTopSupplier.get();
@@ -213,7 +211,7 @@ public class FragmentViewportStyle implements Serializable {
 	@JsonIgnore
 	private Supplier<String> _marginTopSupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	public String getPaddingBottom() {
 		if (_paddingBottomSupplier != null) {
 			paddingBottom = _paddingBottomSupplier.get();
@@ -254,7 +252,7 @@ public class FragmentViewportStyle implements Serializable {
 	@JsonIgnore
 	private Supplier<String> _paddingBottomSupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	public String getPaddingLeft() {
 		if (_paddingLeftSupplier != null) {
 			paddingLeft = _paddingLeftSupplier.get();
@@ -295,7 +293,7 @@ public class FragmentViewportStyle implements Serializable {
 	@JsonIgnore
 	private Supplier<String> _paddingLeftSupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	public String getPaddingRight() {
 		if (_paddingRightSupplier != null) {
 			paddingRight = _paddingRightSupplier.get();
@@ -336,7 +334,7 @@ public class FragmentViewportStyle implements Serializable {
 	@JsonIgnore
 	private Supplier<String> _paddingRightSupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	public String getPaddingTop() {
 		if (_paddingTopSupplier != null) {
 			paddingTop = _paddingTopSupplier.get();
@@ -538,8 +536,8 @@ public class FragmentViewportStyle implements Serializable {
 		return sb.toString();
 	}
 
-	@Schema(
-		accessMode = Schema.AccessMode.READ_ONLY,
+	@io.swagger.v3.oas.annotations.media.Schema(
+		accessMode = io.swagger.v3.oas.annotations.media.Schema.AccessMode.READ_ONLY,
 		defaultValue = "com.liferay.headless.delivery.dto.v1_0.FragmentViewportStyle",
 		name = "x-class-name"
 	)

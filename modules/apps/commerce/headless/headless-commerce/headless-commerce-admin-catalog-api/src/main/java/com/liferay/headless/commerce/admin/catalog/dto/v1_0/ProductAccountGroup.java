@@ -16,8 +16,6 @@ import com.liferay.portal.vulcan.graphql.annotation.GraphQLField;
 import com.liferay.portal.vulcan.graphql.annotation.GraphQLName;
 import com.liferay.portal.vulcan.util.ObjectMapperUtil;
 
-import io.swagger.v3.oas.annotations.media.Schema;
-
 import java.io.Serializable;
 
 import java.util.Iterator;
@@ -39,8 +37,8 @@ import javax.xml.bind.annotation.XmlRootElement;
  */
 @Generated("")
 @GraphQLName("ProductAccountGroup")
+@io.swagger.v3.oas.annotations.media.Schema(requiredProperties = {"id"})
 @JsonFilter("Liferay.Vulcan")
-@Schema(requiredProperties = {"id"})
 @XmlRootElement(name = "ProductAccountGroup")
 public class ProductAccountGroup implements Serializable {
 
@@ -54,7 +52,7 @@ public class ProductAccountGroup implements Serializable {
 	}
 
 	@DecimalMin("0")
-	@Schema(example = "31130")
+	@io.swagger.v3.oas.annotations.media.Schema(example = "31130")
 	public Long getAccountGroupId() {
 		if (_accountGroupIdSupplier != null) {
 			accountGroupId = _accountGroupIdSupplier.get();
@@ -95,7 +93,7 @@ public class ProductAccountGroup implements Serializable {
 	@JsonIgnore
 	private Supplier<Long> _accountGroupIdSupplier;
 
-	@Schema(example = "AB-34098-789-N")
+	@io.swagger.v3.oas.annotations.media.Schema(example = "AB-34098-789-N")
 	public String getExternalReferenceCode() {
 		if (_externalReferenceCodeSupplier != null) {
 			externalReferenceCode = _externalReferenceCodeSupplier.get();
@@ -137,7 +135,7 @@ public class ProductAccountGroup implements Serializable {
 	private Supplier<String> _externalReferenceCodeSupplier;
 
 	@DecimalMin("0")
-	@Schema(example = "31130")
+	@io.swagger.v3.oas.annotations.media.Schema(example = "31130")
 	public Long getId() {
 		if (_idSupplier != null) {
 			id = _idSupplier.get();
@@ -177,7 +175,9 @@ public class ProductAccountGroup implements Serializable {
 	@JsonIgnore
 	private Supplier<Long> _idSupplier;
 
-	@Schema(example = "Alessio Antonio Rendina")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		example = "Alessio Antonio Rendina"
+	)
 	public String getName() {
 		if (_nameSupplier != null) {
 			name = _nameSupplier.get();
@@ -304,8 +304,8 @@ public class ProductAccountGroup implements Serializable {
 		return sb.toString();
 	}
 
-	@Schema(
-		accessMode = Schema.AccessMode.READ_ONLY,
+	@io.swagger.v3.oas.annotations.media.Schema(
+		accessMode = io.swagger.v3.oas.annotations.media.Schema.AccessMode.READ_ONLY,
 		defaultValue = "com.liferay.headless.commerce.admin.catalog.dto.v1_0.ProductAccountGroup",
 		name = "x-class-name"
 	)

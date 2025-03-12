@@ -16,8 +16,6 @@ import com.liferay.portal.vulcan.graphql.annotation.GraphQLField;
 import com.liferay.portal.vulcan.graphql.annotation.GraphQLName;
 import com.liferay.portal.vulcan.util.ObjectMapperUtil;
 
-import io.swagger.v3.oas.annotations.media.Schema;
-
 import java.io.Serializable;
 
 import java.text.DateFormat;
@@ -54,7 +52,7 @@ public class DataLayout implements Serializable {
 		return ObjectMapperUtil.unsafeReadValue(DataLayout.class, json);
 	}
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	public String getContentType() {
 		if (_contentTypeSupplier != null) {
 			contentType = _contentTypeSupplier.get();
@@ -95,7 +93,7 @@ public class DataLayout implements Serializable {
 	@JsonIgnore
 	private Supplier<String> _contentTypeSupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	public Long getDataDefinitionId() {
 		if (_dataDefinitionIdSupplier != null) {
 			dataDefinitionId = _dataDefinitionIdSupplier.get();
@@ -136,7 +134,7 @@ public class DataLayout implements Serializable {
 	@JsonIgnore
 	private Supplier<Long> _dataDefinitionIdSupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	public String getDataLayoutKey() {
 		if (_dataLayoutKeySupplier != null) {
 			dataLayoutKey = _dataLayoutKeySupplier.get();
@@ -177,7 +175,7 @@ public class DataLayout implements Serializable {
 	@JsonIgnore
 	private Supplier<String> _dataLayoutKeySupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	@Valid
 	public DataLayoutPage[] getDataLayoutPages() {
 		if (_dataLayoutPagesSupplier != null) {
@@ -220,7 +218,7 @@ public class DataLayout implements Serializable {
 	@JsonIgnore
 	private Supplier<DataLayoutPage[]> _dataLayoutPagesSupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	@Valid
 	public DataRule[] getDataRules() {
 		if (_dataRulesSupplier != null) {
@@ -262,7 +260,7 @@ public class DataLayout implements Serializable {
 	@JsonIgnore
 	private Supplier<DataRule[]> _dataRulesSupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	public Date getDateCreated() {
 		if (_dateCreatedSupplier != null) {
 			dateCreated = _dateCreatedSupplier.get();
@@ -303,7 +301,7 @@ public class DataLayout implements Serializable {
 	@JsonIgnore
 	private Supplier<Date> _dateCreatedSupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	public Date getDateModified() {
 		if (_dateModifiedSupplier != null) {
 			dateModified = _dateModifiedSupplier.get();
@@ -344,7 +342,7 @@ public class DataLayout implements Serializable {
 	@JsonIgnore
 	private Supplier<Date> _dateModifiedSupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	@Valid
 	public Map<String, Object> getDescription() {
 		if (_descriptionSupplier != null) {
@@ -387,7 +385,7 @@ public class DataLayout implements Serializable {
 	@JsonIgnore
 	private Supplier<Map<String, Object>> _descriptionSupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	public Long getId() {
 		if (_idSupplier != null) {
 			id = _idSupplier.get();
@@ -426,7 +424,7 @@ public class DataLayout implements Serializable {
 	@JsonIgnore
 	private Supplier<Long> _idSupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	@Valid
 	public Map<String, Object> getName() {
 		if (_nameSupplier != null) {
@@ -468,7 +466,7 @@ public class DataLayout implements Serializable {
 	@JsonIgnore
 	private Supplier<Map<String, Object>> _nameSupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	public String getPaginationMode() {
 		if (_paginationModeSupplier != null) {
 			paginationMode = _paginationModeSupplier.get();
@@ -509,7 +507,7 @@ public class DataLayout implements Serializable {
 	@JsonIgnore
 	private Supplier<String> _paginationModeSupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	public Long getSiteId() {
 		if (_siteIdSupplier != null) {
 			siteId = _siteIdSupplier.get();
@@ -550,7 +548,7 @@ public class DataLayout implements Serializable {
 	@JsonIgnore
 	private Supplier<Long> _siteIdSupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	public Long getUserId() {
 		if (_userIdSupplier != null) {
 			userId = _userIdSupplier.get();
@@ -822,8 +820,8 @@ public class DataLayout implements Serializable {
 		return sb.toString();
 	}
 
-	@Schema(
-		accessMode = Schema.AccessMode.READ_ONLY,
+	@io.swagger.v3.oas.annotations.media.Schema(
+		accessMode = io.swagger.v3.oas.annotations.media.Schema.AccessMode.READ_ONLY,
 		defaultValue = "com.liferay.data.engine.rest.dto.v2_0.DataLayout",
 		name = "x-class-name"
 	)

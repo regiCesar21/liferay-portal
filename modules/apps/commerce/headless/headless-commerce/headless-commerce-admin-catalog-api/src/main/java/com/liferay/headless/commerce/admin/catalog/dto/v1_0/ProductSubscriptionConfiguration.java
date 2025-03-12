@@ -19,8 +19,6 @@ import com.liferay.portal.vulcan.graphql.annotation.GraphQLField;
 import com.liferay.portal.vulcan.graphql.annotation.GraphQLName;
 import com.liferay.portal.vulcan.util.ObjectMapperUtil;
 
-import io.swagger.v3.oas.annotations.media.Schema;
-
 import java.io.Serializable;
 
 import java.util.Iterator;
@@ -55,7 +53,7 @@ public class ProductSubscriptionConfiguration implements Serializable {
 			ProductSubscriptionConfiguration.class, json);
 	}
 
-	@Schema(example = "true")
+	@io.swagger.v3.oas.annotations.media.Schema(example = "true")
 	public Boolean getEnable() {
 		if (_enableSupplier != null) {
 			enable = _enableSupplier.get();
@@ -96,7 +94,7 @@ public class ProductSubscriptionConfiguration implements Serializable {
 	@JsonIgnore
 	private Supplier<Boolean> _enableSupplier;
 
-	@Schema(example = "2")
+	@io.swagger.v3.oas.annotations.media.Schema(example = "2")
 	public Integer getLength() {
 		if (_lengthSupplier != null) {
 			length = _lengthSupplier.get();
@@ -137,7 +135,7 @@ public class ProductSubscriptionConfiguration implements Serializable {
 	@JsonIgnore
 	private Supplier<Integer> _lengthSupplier;
 
-	@Schema(example = "12")
+	@io.swagger.v3.oas.annotations.media.Schema(example = "12")
 	public Long getNumberOfLength() {
 		if (_numberOfLengthSupplier != null) {
 			numberOfLength = _numberOfLengthSupplier.get();
@@ -178,8 +176,8 @@ public class ProductSubscriptionConfiguration implements Serializable {
 	@JsonIgnore
 	private Supplier<Long> _numberOfLengthSupplier;
 
+	@io.swagger.v3.oas.annotations.media.Schema(example = "month")
 	@JsonGetter("subscriptionType")
-	@Schema(example = "month")
 	@Valid
 	public SubscriptionType getSubscriptionType() {
 		if (_subscriptionTypeSupplier != null) {
@@ -233,7 +231,9 @@ public class ProductSubscriptionConfiguration implements Serializable {
 	@JsonIgnore
 	private Supplier<SubscriptionType> _subscriptionTypeSupplier;
 
-	@Schema(example = "{monthDay=1, monthlyMode=0}")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		example = "{monthDay=1, monthlyMode=0}"
+	)
 	@Valid
 	public Map<String, String> getSubscriptionTypeSettings() {
 		if (_subscriptionTypeSettingsSupplier != null) {
@@ -377,8 +377,8 @@ public class ProductSubscriptionConfiguration implements Serializable {
 		return sb.toString();
 	}
 
-	@Schema(
-		accessMode = Schema.AccessMode.READ_ONLY,
+	@io.swagger.v3.oas.annotations.media.Schema(
+		accessMode = io.swagger.v3.oas.annotations.media.Schema.AccessMode.READ_ONLY,
 		defaultValue = "com.liferay.headless.commerce.admin.catalog.dto.v1_0.ProductSubscriptionConfiguration",
 		name = "x-class-name"
 	)

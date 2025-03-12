@@ -16,8 +16,6 @@ import com.liferay.portal.vulcan.graphql.annotation.GraphQLField;
 import com.liferay.portal.vulcan.graphql.annotation.GraphQLName;
 import com.liferay.portal.vulcan.util.ObjectMapperUtil;
 
-import io.swagger.v3.oas.annotations.media.Schema;
-
 import java.io.Serializable;
 
 import java.util.Iterator;
@@ -41,8 +39,10 @@ import javax.xml.bind.annotation.XmlRootElement;
  */
 @Generated("")
 @GraphQLName("ProductSpecification")
+@io.swagger.v3.oas.annotations.media.Schema(
+	requiredProperties = {"specificationKey", "value"}
+)
 @JsonFilter("Liferay.Vulcan")
-@Schema(requiredProperties = {"specificationKey", "value"})
 @XmlRootElement(name = "ProductSpecification")
 public class ProductSpecification implements Serializable {
 
@@ -56,7 +56,7 @@ public class ProductSpecification implements Serializable {
 	}
 
 	@DecimalMin("0")
-	@Schema(example = "31130")
+	@io.swagger.v3.oas.annotations.media.Schema(example = "31130")
 	public Long getId() {
 		if (_idSupplier != null) {
 			id = _idSupplier.get();
@@ -95,7 +95,7 @@ public class ProductSpecification implements Serializable {
 	@JsonIgnore
 	private Supplier<Long> _idSupplier;
 
-	@Schema(
+	@io.swagger.v3.oas.annotations.media.Schema(
 		example = "{en_US=Hand Saw, hr_HR=Product Name HR, hu_HU=Product Name HU}"
 	)
 	@Valid
@@ -140,7 +140,7 @@ public class ProductSpecification implements Serializable {
 	private Supplier<Map<String, String>> _labelSupplier;
 
 	@DecimalMin("0")
-	@Schema(example = "30129")
+	@io.swagger.v3.oas.annotations.media.Schema(example = "30129")
 	public Long getOptionCategoryId() {
 		if (_optionCategoryIdSupplier != null) {
 			optionCategoryId = _optionCategoryIdSupplier.get();
@@ -182,7 +182,7 @@ public class ProductSpecification implements Serializable {
 	private Supplier<Long> _optionCategoryIdSupplier;
 
 	@DecimalMin("0")
-	@Schema(example = "1.2")
+	@io.swagger.v3.oas.annotations.media.Schema(example = "1.2")
 	public Double getPriority() {
 		if (_prioritySupplier != null) {
 			priority = _prioritySupplier.get();
@@ -224,7 +224,7 @@ public class ProductSpecification implements Serializable {
 	private Supplier<Double> _prioritySupplier;
 
 	@DecimalMin("0")
-	@Schema(example = "30129")
+	@io.swagger.v3.oas.annotations.media.Schema(example = "30129")
 	public Long getProductId() {
 		if (_productIdSupplier != null) {
 			productId = _productIdSupplier.get();
@@ -266,7 +266,7 @@ public class ProductSpecification implements Serializable {
 	private Supplier<Long> _productIdSupplier;
 
 	@DecimalMin("0")
-	@Schema(example = "30129")
+	@io.swagger.v3.oas.annotations.media.Schema(example = "30129")
 	public Long getSpecificationId() {
 		if (_specificationIdSupplier != null) {
 			specificationId = _specificationIdSupplier.get();
@@ -307,7 +307,7 @@ public class ProductSpecification implements Serializable {
 	@JsonIgnore
 	private Supplier<Long> _specificationIdSupplier;
 
-	@Schema(example = "specification-key")
+	@io.swagger.v3.oas.annotations.media.Schema(example = "specification-key")
 	public String getSpecificationKey() {
 		if (_specificationKeySupplier != null) {
 			specificationKey = _specificationKeySupplier.get();
@@ -349,7 +349,9 @@ public class ProductSpecification implements Serializable {
 	@JsonIgnore
 	private Supplier<String> _specificationKeySupplier;
 
-	@Schema(example = "{en_US=Croatia, hr_HR=Hrvatska, hu_HU=Horvatorszag}")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		example = "{en_US=Croatia, hr_HR=Hrvatska, hu_HU=Horvatorszag}"
+	)
 	@Valid
 	public Map<String, String> getValue() {
 		if (_valueSupplier != null) {
@@ -525,8 +527,8 @@ public class ProductSpecification implements Serializable {
 		return sb.toString();
 	}
 
-	@Schema(
-		accessMode = Schema.AccessMode.READ_ONLY,
+	@io.swagger.v3.oas.annotations.media.Schema(
+		accessMode = io.swagger.v3.oas.annotations.media.Schema.AccessMode.READ_ONLY,
 		defaultValue = "com.liferay.headless.commerce.admin.catalog.dto.v1_0.ProductSpecification",
 		name = "x-class-name"
 	)

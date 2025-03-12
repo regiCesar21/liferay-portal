@@ -16,8 +16,6 @@ import com.liferay.portal.vulcan.graphql.annotation.GraphQLField;
 import com.liferay.portal.vulcan.graphql.annotation.GraphQLName;
 import com.liferay.portal.vulcan.util.ObjectMapperUtil;
 
-import io.swagger.v3.oas.annotations.media.Schema;
-
 import java.io.Serializable;
 
 import java.util.Iterator;
@@ -51,7 +49,7 @@ public class AccountUser implements Serializable {
 		return ObjectMapperUtil.unsafeReadValue(AccountUser.class, json);
 	}
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	public String getEmailAddress() {
 		if (_emailAddressSupplier != null) {
 			emailAddress = _emailAddressSupplier.get();
@@ -92,7 +90,9 @@ public class AccountUser implements Serializable {
 	@JsonIgnore
 	private Supplier<String> _emailAddressSupplier;
 
-	@Schema(description = "The optional external key of this account user.")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "The optional external key of this account user."
+	)
 	public String getExternalReferenceCode() {
 		if (_externalReferenceCodeSupplier != null) {
 			externalReferenceCode = _externalReferenceCodeSupplier.get();
@@ -135,7 +135,7 @@ public class AccountUser implements Serializable {
 	@JsonIgnore
 	private Supplier<String> _externalReferenceCodeSupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	public String getFirstName() {
 		if (_firstNameSupplier != null) {
 			firstName = _firstNameSupplier.get();
@@ -176,7 +176,7 @@ public class AccountUser implements Serializable {
 	@JsonIgnore
 	private Supplier<String> _firstNameSupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	public Long getId() {
 		if (_idSupplier != null) {
 			id = _idSupplier.get();
@@ -215,7 +215,7 @@ public class AccountUser implements Serializable {
 	@JsonIgnore
 	private Supplier<Long> _idSupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	public String getLastName() {
 		if (_lastNameSupplier != null) {
 			lastName = _lastNameSupplier.get();
@@ -256,7 +256,7 @@ public class AccountUser implements Serializable {
 	@JsonIgnore
 	private Supplier<String> _lastNameSupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	public String getMiddleName() {
 		if (_middleNameSupplier != null) {
 			middleName = _middleNameSupplier.get();
@@ -297,7 +297,7 @@ public class AccountUser implements Serializable {
 	@JsonIgnore
 	private Supplier<String> _middleNameSupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	public String getPrefix() {
 		if (_prefixSupplier != null) {
 			prefix = _prefixSupplier.get();
@@ -338,7 +338,7 @@ public class AccountUser implements Serializable {
 	@JsonIgnore
 	private Supplier<String> _prefixSupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	public String getScreenName() {
 		if (_screenNameSupplier != null) {
 			screenName = _screenNameSupplier.get();
@@ -379,7 +379,7 @@ public class AccountUser implements Serializable {
 	@JsonIgnore
 	private Supplier<String> _screenNameSupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	public String getSuffix() {
 		if (_suffixSupplier != null) {
 			suffix = _suffixSupplier.get();
@@ -592,8 +592,8 @@ public class AccountUser implements Serializable {
 		return sb.toString();
 	}
 
-	@Schema(
-		accessMode = Schema.AccessMode.READ_ONLY,
+	@io.swagger.v3.oas.annotations.media.Schema(
+		accessMode = io.swagger.v3.oas.annotations.media.Schema.AccessMode.READ_ONLY,
 		defaultValue = "com.liferay.account.rest.dto.v1_0.AccountUser",
 		name = "x-class-name"
 	)

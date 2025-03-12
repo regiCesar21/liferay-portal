@@ -16,8 +16,6 @@ import com.liferay.portal.vulcan.graphql.annotation.GraphQLField;
 import com.liferay.portal.vulcan.graphql.annotation.GraphQLName;
 import com.liferay.portal.vulcan.util.ObjectMapperUtil;
 
-import io.swagger.v3.oas.annotations.media.Schema;
-
 import java.io.Serializable;
 
 import java.text.DateFormat;
@@ -45,8 +43,10 @@ import javax.xml.bind.annotation.XmlRootElement;
  */
 @Generated("")
 @GraphQLName("Product")
+@io.swagger.v3.oas.annotations.media.Schema(
+	requiredProperties = {"active", "catalogId", "name", "productType"}
+)
 @JsonFilter("Liferay.Vulcan")
-@Schema(requiredProperties = {"active", "catalogId", "name", "productType"})
 @XmlRootElement(name = "Product")
 public class Product implements Serializable {
 
@@ -58,7 +58,7 @@ public class Product implements Serializable {
 		return ObjectMapperUtil.unsafeReadValue(Product.class, json);
 	}
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	@Valid
 	public Map<String, Map<String, String>> getActions() {
 		if (_actionsSupplier != null) {
@@ -101,7 +101,7 @@ public class Product implements Serializable {
 	@JsonIgnore
 	private Supplier<Map<String, Map<String, String>>> _actionsSupplier;
 
-	@Schema(example = "true")
+	@io.swagger.v3.oas.annotations.media.Schema(example = "true")
 	public Boolean getActive() {
 		if (_activeSupplier != null) {
 			active = _activeSupplier.get();
@@ -143,7 +143,7 @@ public class Product implements Serializable {
 	@JsonIgnore
 	private Supplier<Boolean> _activeSupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	@Valid
 	public Attachment[] getAttachments() {
 		if (_attachmentsSupplier != null) {
@@ -185,7 +185,7 @@ public class Product implements Serializable {
 	@JsonIgnore
 	private Supplier<Attachment[]> _attachmentsSupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	@Valid
 	public Catalog getCatalog() {
 		if (_catalogSupplier != null) {
@@ -228,7 +228,7 @@ public class Product implements Serializable {
 	private Supplier<Catalog> _catalogSupplier;
 
 	@DecimalMin("0")
-	@Schema(example = "30054")
+	@io.swagger.v3.oas.annotations.media.Schema(example = "30054")
 	public Long getCatalogId() {
 		if (_catalogIdSupplier != null) {
 			catalogId = _catalogIdSupplier.get();
@@ -270,7 +270,7 @@ public class Product implements Serializable {
 	@JsonIgnore
 	private Supplier<Long> _catalogIdSupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	@Valid
 	public Category[] getCategories() {
 		if (_categoriesSupplier != null) {
@@ -312,7 +312,7 @@ public class Product implements Serializable {
 	@JsonIgnore
 	private Supplier<Category[]> _categoriesSupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	@Valid
 	public ProductConfiguration getConfiguration() {
 		if (_configurationSupplier != null) {
@@ -355,7 +355,7 @@ public class Product implements Serializable {
 	@JsonIgnore
 	private Supplier<ProductConfiguration> _configurationSupplier;
 
-	@Schema(example = "2017-07-21")
+	@io.swagger.v3.oas.annotations.media.Schema(example = "2017-07-21")
 	public Date getCreateDate() {
 		if (_createDateSupplier != null) {
 			createDate = _createDateSupplier.get();
@@ -396,7 +396,7 @@ public class Product implements Serializable {
 	@JsonIgnore
 	private Supplier<Date> _createDateSupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	@Valid
 	public CustomField[] getCustomFields() {
 		if (_customFieldsSupplier != null) {
@@ -438,7 +438,9 @@ public class Product implements Serializable {
 	@JsonIgnore
 	private Supplier<CustomField[]> _customFieldsSupplier;
 
-	@Schema(example = "Blue handle, 00001l, 70cm, lifetime warranty")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		example = "Blue handle, 00001l, 70cm, lifetime warranty"
+	)
 	public String getDefaultSku() {
 		if (_defaultSkuSupplier != null) {
 			defaultSku = _defaultSkuSupplier.get();
@@ -479,7 +481,7 @@ public class Product implements Serializable {
 	@JsonIgnore
 	private Supplier<String> _defaultSkuSupplier;
 
-	@Schema(
+	@io.swagger.v3.oas.annotations.media.Schema(
 		example = "{hu_HU=Product Description HU, hr_HR=Product Description HR, en_US=Professional hand stainless steel saw for wood. Made to last and saw forever. Made of best steel}"
 	)
 	@Valid
@@ -524,7 +526,7 @@ public class Product implements Serializable {
 	@JsonIgnore
 	private Supplier<Map<String, String>> _descriptionSupplier;
 
-	@Schema(example = "2017-07-21")
+	@io.swagger.v3.oas.annotations.media.Schema(example = "2017-07-21")
 	public Date getDisplayDate() {
 		if (_displayDateSupplier != null) {
 			displayDate = _displayDateSupplier.get();
@@ -565,7 +567,7 @@ public class Product implements Serializable {
 	@JsonIgnore
 	private Supplier<Date> _displayDateSupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	@Valid
 	public Map<String, ?> getExpando() {
 		if (_expandoSupplier != null) {
@@ -607,7 +609,7 @@ public class Product implements Serializable {
 	@JsonIgnore
 	private Supplier<Map<String, ?>> _expandoSupplier;
 
-	@Schema(example = "2017-08-21")
+	@io.swagger.v3.oas.annotations.media.Schema(example = "2017-08-21")
 	public Date getExpirationDate() {
 		if (_expirationDateSupplier != null) {
 			expirationDate = _expirationDateSupplier.get();
@@ -648,7 +650,7 @@ public class Product implements Serializable {
 	@JsonIgnore
 	private Supplier<Date> _expirationDateSupplier;
 
-	@Schema(example = "AB-34098-789-N")
+	@io.swagger.v3.oas.annotations.media.Schema(example = "AB-34098-789-N")
 	public String getExternalReferenceCode() {
 		if (_externalReferenceCodeSupplier != null) {
 			externalReferenceCode = _externalReferenceCodeSupplier.get();
@@ -690,7 +692,7 @@ public class Product implements Serializable {
 	private Supplier<String> _externalReferenceCodeSupplier;
 
 	@DecimalMin("0")
-	@Schema(example = "30130")
+	@io.swagger.v3.oas.annotations.media.Schema(example = "30130")
 	public Long getId() {
 		if (_idSupplier != null) {
 			id = _idSupplier.get();
@@ -729,7 +731,7 @@ public class Product implements Serializable {
 	@JsonIgnore
 	private Supplier<Long> _idSupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	@Valid
 	public Attachment[] getImages() {
 		if (_imagesSupplier != null) {
@@ -771,7 +773,7 @@ public class Product implements Serializable {
 	@JsonIgnore
 	private Supplier<Attachment[]> _imagesSupplier;
 
-	@Schema(
+	@io.swagger.v3.oas.annotations.media.Schema(
 		example = "{en_US=Meta description HU, hr_HR=Meta description HU, hu_HU=Meta description HU}"
 	)
 	@Valid
@@ -816,7 +818,7 @@ public class Product implements Serializable {
 	@JsonIgnore
 	private Supplier<Map<String, String>> _metaDescriptionSupplier;
 
-	@Schema(
+	@io.swagger.v3.oas.annotations.media.Schema(
 		example = "{en_US=Meta keyword HU, hr_HR=Meta keyword HU, hu_HU=Meta keyword HU}"
 	)
 	@Valid
@@ -861,7 +863,7 @@ public class Product implements Serializable {
 	@JsonIgnore
 	private Supplier<Map<String, String>> _metaKeywordSupplier;
 
-	@Schema(
+	@io.swagger.v3.oas.annotations.media.Schema(
 		example = "{en_US=Meta title HU, hr_HR=Meta title HU, hu_HU=Meta title HU}"
 	)
 	@Valid
@@ -906,7 +908,7 @@ public class Product implements Serializable {
 	@JsonIgnore
 	private Supplier<Map<String, String>> _metaTitleSupplier;
 
-	@Schema(example = "2017-08-21")
+	@io.swagger.v3.oas.annotations.media.Schema(example = "2017-08-21")
 	public Date getModifiedDate() {
 		if (_modifiedDateSupplier != null) {
 			modifiedDate = _modifiedDateSupplier.get();
@@ -947,7 +949,7 @@ public class Product implements Serializable {
 	@JsonIgnore
 	private Supplier<Date> _modifiedDateSupplier;
 
-	@Schema(
+	@io.swagger.v3.oas.annotations.media.Schema(
 		example = "{en_US=Hand Saw, hr_HR=Product Name HR, hu_HU=Product Name HU}"
 	)
 	@Valid
@@ -992,7 +994,7 @@ public class Product implements Serializable {
 	@JsonIgnore
 	private Supplier<Map<String, String>> _nameSupplier;
 
-	@Schema(example = "true")
+	@io.swagger.v3.oas.annotations.media.Schema(example = "true")
 	public Boolean getNeverExpire() {
 		if (_neverExpireSupplier != null) {
 			neverExpire = _neverExpireSupplier.get();
@@ -1033,7 +1035,7 @@ public class Product implements Serializable {
 	@JsonIgnore
 	private Supplier<Boolean> _neverExpireSupplier;
 
-	@Schema(example = "true")
+	@io.swagger.v3.oas.annotations.media.Schema(example = "true")
 	public Boolean getProductAccountGroupFilter() {
 		if (_productAccountGroupFilterSupplier != null) {
 			productAccountGroupFilter =
@@ -1078,7 +1080,7 @@ public class Product implements Serializable {
 	@JsonIgnore
 	private Supplier<Boolean> _productAccountGroupFilterSupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	@Valid
 	public ProductAccountGroup[] getProductAccountGroups() {
 		if (_productAccountGroupsSupplier != null) {
@@ -1123,7 +1125,7 @@ public class Product implements Serializable {
 	@JsonIgnore
 	private Supplier<ProductAccountGroup[]> _productAccountGroupsSupplier;
 
-	@Schema(example = "true")
+	@io.swagger.v3.oas.annotations.media.Schema(example = "true")
 	public Boolean getProductChannelFilter() {
 		if (_productChannelFilterSupplier != null) {
 			productChannelFilter = _productChannelFilterSupplier.get();
@@ -1164,7 +1166,7 @@ public class Product implements Serializable {
 	@JsonIgnore
 	private Supplier<Boolean> _productChannelFilterSupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	@Valid
 	public ProductChannel[] getProductChannels() {
 		if (_productChannelsSupplier != null) {
@@ -1207,7 +1209,7 @@ public class Product implements Serializable {
 	@JsonIgnore
 	private Supplier<ProductChannel[]> _productChannelsSupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	public Long getProductId() {
 		if (_productIdSupplier != null) {
 			productId = _productIdSupplier.get();
@@ -1248,7 +1250,7 @@ public class Product implements Serializable {
 	@JsonIgnore
 	private Supplier<Long> _productIdSupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	@Valid
 	public ProductOption[] getProductOptions() {
 		if (_productOptionsSupplier != null) {
@@ -1291,7 +1293,7 @@ public class Product implements Serializable {
 	@JsonIgnore
 	private Supplier<ProductOption[]> _productOptionsSupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	@Valid
 	public ProductSpecification[] getProductSpecifications() {
 		if (_productSpecificationsSupplier != null) {
@@ -1336,7 +1338,7 @@ public class Product implements Serializable {
 	@JsonIgnore
 	private Supplier<ProductSpecification[]> _productSpecificationsSupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	public Integer getProductStatus() {
 		if (_productStatusSupplier != null) {
 			productStatus = _productStatusSupplier.get();
@@ -1377,7 +1379,7 @@ public class Product implements Serializable {
 	@JsonIgnore
 	private Supplier<Integer> _productStatusSupplier;
 
-	@Schema(example = "simple")
+	@io.swagger.v3.oas.annotations.media.Schema(example = "simple")
 	public String getProductType() {
 		if (_productTypeSupplier != null) {
 			productType = _productTypeSupplier.get();
@@ -1419,7 +1421,7 @@ public class Product implements Serializable {
 	@JsonIgnore
 	private Supplier<String> _productTypeSupplier;
 
-	@Schema(example = "simple")
+	@io.swagger.v3.oas.annotations.media.Schema(example = "simple")
 	public String getProductTypeI18n() {
 		if (_productTypeI18nSupplier != null) {
 			productTypeI18n = _productTypeI18nSupplier.get();
@@ -1460,7 +1462,7 @@ public class Product implements Serializable {
 	@JsonIgnore
 	private Supplier<String> _productTypeI18nSupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	@Valid
 	public RelatedProduct[] getRelatedProducts() {
 		if (_relatedProductsSupplier != null) {
@@ -1503,7 +1505,7 @@ public class Product implements Serializable {
 	@JsonIgnore
 	private Supplier<RelatedProduct[]> _relatedProductsSupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	@Valid
 	public ProductShippingConfiguration getShippingConfiguration() {
 		if (_shippingConfigurationSupplier != null) {
@@ -1549,7 +1551,7 @@ public class Product implements Serializable {
 	private Supplier<ProductShippingConfiguration>
 		_shippingConfigurationSupplier;
 
-	@Schema(
+	@io.swagger.v3.oas.annotations.media.Schema(
 		example = "{en_US=Hand stainless steel saw for wood, hr_HR=Product Short Description HR, hu_HU=Product Short Description HU}"
 	)
 	@Valid
@@ -1594,7 +1596,7 @@ public class Product implements Serializable {
 	@JsonIgnore
 	private Supplier<Map<String, String>> _shortDescriptionSupplier;
 
-	@Schema(example = "default")
+	@io.swagger.v3.oas.annotations.media.Schema(example = "default")
 	public String getSkuFormatted() {
 		if (_skuFormattedSupplier != null) {
 			skuFormatted = _skuFormattedSupplier.get();
@@ -1635,7 +1637,7 @@ public class Product implements Serializable {
 	@JsonIgnore
 	private Supplier<String> _skuFormattedSupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	@Valid
 	public Sku[] getSkus() {
 		if (_skusSupplier != null) {
@@ -1675,7 +1677,7 @@ public class Product implements Serializable {
 	@JsonIgnore
 	private Supplier<Sku[]> _skusSupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	@Valid
 	public ProductSubscriptionConfiguration getSubscriptionConfiguration() {
 		if (_subscriptionConfigurationSupplier != null) {
@@ -1722,7 +1724,7 @@ public class Product implements Serializable {
 	private Supplier<ProductSubscriptionConfiguration>
 		_subscriptionConfigurationSupplier;
 
-	@Schema(example = "[tag1, tag2, tag3]")
+	@io.swagger.v3.oas.annotations.media.Schema(example = "[tag1, tag2, tag3]")
 	public String[] getTags() {
 		if (_tagsSupplier != null) {
 			tags = _tagsSupplier.get();
@@ -1763,7 +1765,7 @@ public class Product implements Serializable {
 	@JsonIgnore
 	private Supplier<String[]> _tagsSupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	@Valid
 	public ProductTaxConfiguration getTaxConfiguration() {
 		if (_taxConfigurationSupplier != null) {
@@ -1806,7 +1808,7 @@ public class Product implements Serializable {
 	@JsonIgnore
 	private Supplier<ProductTaxConfiguration> _taxConfigurationSupplier;
 
-	@Schema(example = "simple")
+	@io.swagger.v3.oas.annotations.media.Schema(example = "simple")
 	public String getThumbnail() {
 		if (_thumbnailSupplier != null) {
 			thumbnail = _thumbnailSupplier.get();
@@ -1847,7 +1849,7 @@ public class Product implements Serializable {
 	@JsonIgnore
 	private Supplier<String> _thumbnailSupplier;
 
-	@Schema(
+	@io.swagger.v3.oas.annotations.media.Schema(
 		example = "{en_US=product-url-us, hr_HR=product-url-hr, hu_HU=product-url-hu}"
 	)
 	@Valid
@@ -1891,7 +1893,7 @@ public class Product implements Serializable {
 	@JsonIgnore
 	private Supplier<Map<String, String>> _urlsSupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	@Valid
 	public Status getWorkflowStatusInfo() {
 		if (_workflowStatusInfoSupplier != null) {
@@ -2653,8 +2655,8 @@ public class Product implements Serializable {
 		return sb.toString();
 	}
 
-	@Schema(
-		accessMode = Schema.AccessMode.READ_ONLY,
+	@io.swagger.v3.oas.annotations.media.Schema(
+		accessMode = io.swagger.v3.oas.annotations.media.Schema.AccessMode.READ_ONLY,
 		defaultValue = "com.liferay.headless.commerce.admin.catalog.dto.v1_0.Product",
 		name = "x-class-name"
 	)

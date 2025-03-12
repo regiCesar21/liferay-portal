@@ -16,8 +16,6 @@ import com.liferay.portal.vulcan.graphql.annotation.GraphQLField;
 import com.liferay.portal.vulcan.graphql.annotation.GraphQLName;
 import com.liferay.portal.vulcan.util.ObjectMapperUtil;
 
-import io.swagger.v3.oas.annotations.media.Schema;
-
 import java.io.Serializable;
 
 import java.text.DateFormat;
@@ -54,7 +52,7 @@ public class App implements Serializable {
 		return ObjectMapperUtil.unsafeReadValue(App.class, json);
 	}
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	public Boolean getActive() {
 		if (_activeSupplier != null) {
 			active = _activeSupplier.get();
@@ -95,7 +93,7 @@ public class App implements Serializable {
 	@JsonIgnore
 	private Supplier<Boolean> _activeSupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	@Valid
 	public AppDeployment[] getAppDeployments() {
 		if (_appDeploymentsSupplier != null) {
@@ -138,7 +136,7 @@ public class App implements Serializable {
 	@JsonIgnore
 	private Supplier<AppDeployment[]> _appDeploymentsSupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	public Long getDataDefinitionId() {
 		if (_dataDefinitionIdSupplier != null) {
 			dataDefinitionId = _dataDefinitionIdSupplier.get();
@@ -179,7 +177,7 @@ public class App implements Serializable {
 	@JsonIgnore
 	private Supplier<Long> _dataDefinitionIdSupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	public String getDataDefinitionName() {
 		if (_dataDefinitionNameSupplier != null) {
 			dataDefinitionName = _dataDefinitionNameSupplier.get();
@@ -220,7 +218,7 @@ public class App implements Serializable {
 	@JsonIgnore
 	private Supplier<String> _dataDefinitionNameSupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	public Long getDataLayoutId() {
 		if (_dataLayoutIdSupplier != null) {
 			dataLayoutId = _dataLayoutIdSupplier.get();
@@ -261,7 +259,7 @@ public class App implements Serializable {
 	@JsonIgnore
 	private Supplier<Long> _dataLayoutIdSupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	public Long getDataListViewId() {
 		if (_dataListViewIdSupplier != null) {
 			dataListViewId = _dataListViewIdSupplier.get();
@@ -302,7 +300,7 @@ public class App implements Serializable {
 	@JsonIgnore
 	private Supplier<Long> _dataListViewIdSupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	public Long getDataRecordCollectionId() {
 		if (_dataRecordCollectionIdSupplier != null) {
 			dataRecordCollectionId = _dataRecordCollectionIdSupplier.get();
@@ -343,7 +341,7 @@ public class App implements Serializable {
 	@JsonIgnore
 	private Supplier<Long> _dataRecordCollectionIdSupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	public Date getDateCreated() {
 		if (_dateCreatedSupplier != null) {
 			dateCreated = _dateCreatedSupplier.get();
@@ -384,7 +382,7 @@ public class App implements Serializable {
 	@JsonIgnore
 	private Supplier<Date> _dateCreatedSupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	public Date getDateModified() {
 		if (_dateModifiedSupplier != null) {
 			dateModified = _dateModifiedSupplier.get();
@@ -425,7 +423,7 @@ public class App implements Serializable {
 	@JsonIgnore
 	private Supplier<Date> _dateModifiedSupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	public Long getId() {
 		if (_idSupplier != null) {
 			id = _idSupplier.get();
@@ -464,7 +462,7 @@ public class App implements Serializable {
 	@JsonIgnore
 	private Supplier<Long> _idSupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	@Valid
 	public Map<String, Object> getName() {
 		if (_nameSupplier != null) {
@@ -506,7 +504,7 @@ public class App implements Serializable {
 	@JsonIgnore
 	private Supplier<Map<String, Object>> _nameSupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	public String getScope() {
 		if (_scopeSupplier != null) {
 			scope = _scopeSupplier.get();
@@ -547,7 +545,7 @@ public class App implements Serializable {
 	@JsonIgnore
 	private Supplier<String> _scopeSupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	public Long getSiteId() {
 		if (_siteIdSupplier != null) {
 			siteId = _siteIdSupplier.get();
@@ -588,7 +586,7 @@ public class App implements Serializable {
 	@JsonIgnore
 	private Supplier<Long> _siteIdSupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	public Long getUserId() {
 		if (_userIdSupplier != null) {
 			userId = _userIdSupplier.get();
@@ -629,7 +627,7 @@ public class App implements Serializable {
 	@JsonIgnore
 	private Supplier<Long> _userIdSupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	public String getVersion() {
 		if (_versionSupplier != null) {
 			version = _versionSupplier.get();
@@ -915,8 +913,8 @@ public class App implements Serializable {
 		return sb.toString();
 	}
 
-	@Schema(
-		accessMode = Schema.AccessMode.READ_ONLY,
+	@io.swagger.v3.oas.annotations.media.Schema(
+		accessMode = io.swagger.v3.oas.annotations.media.Schema.AccessMode.READ_ONLY,
 		defaultValue = "com.liferay.app.builder.rest.dto.v1_0.App",
 		name = "x-class-name"
 	)

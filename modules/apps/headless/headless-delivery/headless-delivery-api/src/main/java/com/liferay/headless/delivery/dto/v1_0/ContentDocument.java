@@ -16,8 +16,6 @@ import com.liferay.portal.vulcan.graphql.annotation.GraphQLField;
 import com.liferay.portal.vulcan.graphql.annotation.GraphQLName;
 import com.liferay.portal.vulcan.util.ObjectMapperUtil;
 
-import io.swagger.v3.oas.annotations.media.Schema;
-
 import java.io.Serializable;
 
 import java.util.Iterator;
@@ -53,7 +51,7 @@ public class ContentDocument implements Serializable {
 		return ObjectMapperUtil.unsafeReadValue(ContentDocument.class, json);
 	}
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	@Valid
 	public Map<String, Map<String, String>> getActions() {
 		if (_actionsSupplier != null) {
@@ -96,7 +94,7 @@ public class ContentDocument implements Serializable {
 	@JsonIgnore
 	private Supplier<Map<String, Map<String, String>>> _actionsSupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	public String getContentType() {
 		if (_contentTypeSupplier != null) {
 			contentType = _contentTypeSupplier.get();
@@ -137,7 +135,9 @@ public class ContentDocument implements Serializable {
 	@JsonIgnore
 	private Supplier<String> _contentTypeSupplier;
 
-	@Schema(description = "The document's relative URL.")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "The document's relative URL."
+	)
 	public String getContentUrl() {
 		if (_contentUrlSupplier != null) {
 			contentUrl = _contentUrlSupplier.get();
@@ -178,7 +178,7 @@ public class ContentDocument implements Serializable {
 	@JsonIgnore
 	private Supplier<String> _contentUrlSupplier;
 
-	@Schema(
+	@io.swagger.v3.oas.annotations.media.Schema(
 		description = "optional field with the content of the document in Base64, can be embedded with nestedFields"
 	)
 	public String getContentValue() {
@@ -223,7 +223,9 @@ public class ContentDocument implements Serializable {
 	@JsonIgnore
 	private Supplier<String> _contentValueSupplier;
 
-	@Schema(description = "The document's description.")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "The document's description."
+	)
 	public String getDescription() {
 		if (_descriptionSupplier != null) {
 			description = _descriptionSupplier.get();
@@ -264,7 +266,7 @@ public class ContentDocument implements Serializable {
 	@JsonIgnore
 	private Supplier<String> _descriptionSupplier;
 
-	@Schema(
+	@io.swagger.v3.oas.annotations.media.Schema(
 		description = "The document's content type (e.g., `application/pdf`, etc.)."
 	)
 	public String getEncodingFormat() {
@@ -309,7 +311,9 @@ public class ContentDocument implements Serializable {
 	@JsonIgnore
 	private Supplier<String> _encodingFormatSupplier;
 
-	@Schema(description = "The document's file extension.")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "The document's file extension."
+	)
 	public String getFileExtension() {
 		if (_fileExtensionSupplier != null) {
 			fileExtension = _fileExtensionSupplier.get();
@@ -350,7 +354,9 @@ public class ContentDocument implements Serializable {
 	@JsonIgnore
 	private Supplier<String> _fileExtensionSupplier;
 
-	@Schema(description = "The document's ID.")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "The document's ID."
+	)
 	public Long getId() {
 		if (_idSupplier != null) {
 			id = _idSupplier.get();
@@ -389,7 +395,9 @@ public class ContentDocument implements Serializable {
 	@JsonIgnore
 	private Supplier<Long> _idSupplier;
 
-	@Schema(description = "The document's file size in bytes.")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "The document's file size in bytes."
+	)
 	public Long getSizeInBytes() {
 		if (_sizeInBytesSupplier != null) {
 			sizeInBytes = _sizeInBytesSupplier.get();
@@ -430,7 +438,9 @@ public class ContentDocument implements Serializable {
 	@JsonIgnore
 	private Supplier<Long> _sizeInBytesSupplier;
 
-	@Schema(description = "The document's title.")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "The document's title."
+	)
 	public String getTitle() {
 		if (_titleSupplier != null) {
 			title = _titleSupplier.get();
@@ -651,8 +661,8 @@ public class ContentDocument implements Serializable {
 		return sb.toString();
 	}
 
-	@Schema(
-		accessMode = Schema.AccessMode.READ_ONLY,
+	@io.swagger.v3.oas.annotations.media.Schema(
+		accessMode = io.swagger.v3.oas.annotations.media.Schema.AccessMode.READ_ONLY,
 		defaultValue = "com.liferay.headless.delivery.dto.v1_0.ContentDocument",
 		name = "x-class-name"
 	)
