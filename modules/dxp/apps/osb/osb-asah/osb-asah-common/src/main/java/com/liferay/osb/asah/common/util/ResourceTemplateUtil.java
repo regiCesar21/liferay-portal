@@ -160,6 +160,6 @@ public class ResourceTemplateUtil {
 		DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss.SSSS'Z'");
 	private static final Pattern _timeExpressionPattern = Pattern.compile(
 		"\\$\\{(now!?|today)([-+][0-9]+)([Mhdmy])(T{0,1}\\d{2}:\\d{2})?" +
-			"(:\\d{2}\\.\\d{3}Z{0,1})?}");
+			"(:\\d{2}\\.\\d{3}Z{0,1})?\\}");
 
 }
