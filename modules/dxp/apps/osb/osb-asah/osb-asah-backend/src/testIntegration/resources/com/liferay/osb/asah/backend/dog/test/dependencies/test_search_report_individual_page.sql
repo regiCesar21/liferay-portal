@@ -45,3 +45,7 @@ INSERT INTO IndividualSegment (channelId, individualId, segmentId) VALUES (1, '2
 INSERT INTO IndividualSegment (channelId, individualId, segmentId) VALUES (1, '3', 11111);
 INSERT INTO IndividualSegment (channelId, individualId, segmentId) VALUES (1, '1', 22222);
 INSERT INTO IndividualSegment (channelId, individualId, segmentId) VALUES (1, '1', 33333);
+
+INSERT INTO Project (id, version) VALUES ('test', '4.0.0');
+
+INSERT INTO ProjectFeature (id, enabled, feature, projectId) VALUES (1, true, 'API_REPORTS_POSTGRES_CACHE', 'test');

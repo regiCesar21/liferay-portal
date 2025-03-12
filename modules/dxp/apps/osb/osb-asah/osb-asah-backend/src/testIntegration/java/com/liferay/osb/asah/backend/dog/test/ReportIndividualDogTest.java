@@ -16,6 +16,7 @@ import com.liferay.osb.asah.common.model.ReportIndividual;
 import com.liferay.osb.asah.common.model.ResultBag;
 import com.liferay.osb.asah.common.model.TimeRange;
 import com.liferay.osb.asah.common.repository.DataSourceRepository;
+import com.liferay.osb.asah.common.util.ProjectIdThreadLocal;
 import com.liferay.osb.asah.test.util.annotation.BQSQLResource;
 import com.liferay.osb.asah.test.util.annotation.SQLResource;
 import com.liferay.osb.asah.test.util.faro.FaroInfoTestUtil;
@@ -43,6 +44,8 @@ public class ReportIndividualDogTest
 
 	@BeforeEach
 	public void setUp() {
+		ProjectIdThreadLocal.setProjectId("test");
+
 		DataSource dataSource = FaroInfoTestUtil.buildLiferayDataSource();
 
 		_dataSourceRepository.save(dataSource);
