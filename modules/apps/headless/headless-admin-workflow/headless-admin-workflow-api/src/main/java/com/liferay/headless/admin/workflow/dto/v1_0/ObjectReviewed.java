@@ -16,8 +16,6 @@ import com.liferay.portal.vulcan.graphql.annotation.GraphQLField;
 import com.liferay.portal.vulcan.graphql.annotation.GraphQLName;
 import com.liferay.portal.vulcan.util.ObjectMapperUtil;
 
-import io.swagger.v3.oas.annotations.media.Schema;
-
 import java.io.Serializable;
 
 import java.util.Iterator;
@@ -51,7 +49,9 @@ public class ObjectReviewed implements Serializable {
 		return ObjectMapperUtil.unsafeReadValue(ObjectReviewed.class, json);
 	}
 
-	@Schema(description = "The resource's ID.")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "The resource's ID."
+	)
 	public Long getId() {
 		if (_idSupplier != null) {
 			id = _idSupplier.get();
@@ -90,7 +90,9 @@ public class ObjectReviewed implements Serializable {
 	@JsonIgnore
 	private Supplier<Long> _idSupplier;
 
-	@Schema(description = "The resource's type.")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "The resource's type."
+	)
 	public String getResourceType() {
 		if (_resourceTypeSupplier != null) {
 			resourceType = _resourceTypeSupplier.get();
@@ -191,8 +193,8 @@ public class ObjectReviewed implements Serializable {
 		return sb.toString();
 	}
 
-	@Schema(
-		accessMode = Schema.AccessMode.READ_ONLY,
+	@io.swagger.v3.oas.annotations.media.Schema(
+		accessMode = io.swagger.v3.oas.annotations.media.Schema.AccessMode.READ_ONLY,
 		defaultValue = "com.liferay.headless.admin.workflow.dto.v1_0.ObjectReviewed",
 		name = "x-class-name"
 	)

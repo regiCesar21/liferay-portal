@@ -16,8 +16,6 @@ import com.liferay.portal.vulcan.graphql.annotation.GraphQLField;
 import com.liferay.portal.vulcan.graphql.annotation.GraphQLName;
 import com.liferay.portal.vulcan.util.ObjectMapperUtil;
 
-import io.swagger.v3.oas.annotations.media.Schema;
-
 import java.io.Serializable;
 
 import java.util.Iterator;
@@ -50,7 +48,7 @@ public class DataRecordCollectionPermission implements Serializable {
 			DataRecordCollectionPermission.class, json);
 	}
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	public Boolean getAddDataRecord() {
 		if (_addDataRecordSupplier != null) {
 			addDataRecord = _addDataRecordSupplier.get();
@@ -91,7 +89,7 @@ public class DataRecordCollectionPermission implements Serializable {
 	@JsonIgnore
 	private Supplier<Boolean> _addDataRecordSupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	public Boolean getAddDataRecordCollection() {
 		if (_addDataRecordCollectionSupplier != null) {
 			addDataRecordCollection = _addDataRecordCollectionSupplier.get();
@@ -133,7 +131,7 @@ public class DataRecordCollectionPermission implements Serializable {
 	@JsonIgnore
 	private Supplier<Boolean> _addDataRecordCollectionSupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	public Boolean getDefinePermissions() {
 		if (_definePermissionsSupplier != null) {
 			definePermissions = _definePermissionsSupplier.get();
@@ -174,7 +172,7 @@ public class DataRecordCollectionPermission implements Serializable {
 	@JsonIgnore
 	private Supplier<Boolean> _definePermissionsSupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	public Boolean getDelete() {
 		if (_deleteSupplier != null) {
 			delete = _deleteSupplier.get();
@@ -215,7 +213,7 @@ public class DataRecordCollectionPermission implements Serializable {
 	@JsonIgnore
 	private Supplier<Boolean> _deleteSupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	public Boolean getDeleteDataRecord() {
 		if (_deleteDataRecordSupplier != null) {
 			deleteDataRecord = _deleteDataRecordSupplier.get();
@@ -256,7 +254,7 @@ public class DataRecordCollectionPermission implements Serializable {
 	@JsonIgnore
 	private Supplier<Boolean> _deleteDataRecordSupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	public Boolean getExportDataRecord() {
 		if (_exportDataRecordSupplier != null) {
 			exportDataRecord = _exportDataRecordSupplier.get();
@@ -297,7 +295,7 @@ public class DataRecordCollectionPermission implements Serializable {
 	@JsonIgnore
 	private Supplier<Boolean> _exportDataRecordSupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	public String[] getRoleNames() {
 		if (_roleNamesSupplier != null) {
 			roleNames = _roleNamesSupplier.get();
@@ -338,7 +336,7 @@ public class DataRecordCollectionPermission implements Serializable {
 	@JsonIgnore
 	private Supplier<String[]> _roleNamesSupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	public Boolean getUpdate() {
 		if (_updateSupplier != null) {
 			update = _updateSupplier.get();
@@ -379,7 +377,7 @@ public class DataRecordCollectionPermission implements Serializable {
 	@JsonIgnore
 	private Supplier<Boolean> _updateSupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	public Boolean getUpdateDataRecord() {
 		if (_updateDataRecordSupplier != null) {
 			updateDataRecord = _updateDataRecordSupplier.get();
@@ -420,7 +418,7 @@ public class DataRecordCollectionPermission implements Serializable {
 	@JsonIgnore
 	private Supplier<Boolean> _updateDataRecordSupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	public Boolean getView() {
 		if (_viewSupplier != null) {
 			view = _viewSupplier.get();
@@ -459,7 +457,7 @@ public class DataRecordCollectionPermission implements Serializable {
 	@JsonIgnore
 	private Supplier<Boolean> _viewSupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	public Boolean getViewDataRecord() {
 		if (_viewDataRecordSupplier != null) {
 			viewDataRecord = _viewDataRecordSupplier.get();
@@ -680,8 +678,8 @@ public class DataRecordCollectionPermission implements Serializable {
 		return sb.toString();
 	}
 
-	@Schema(
-		accessMode = Schema.AccessMode.READ_ONLY,
+	@io.swagger.v3.oas.annotations.media.Schema(
+		accessMode = io.swagger.v3.oas.annotations.media.Schema.AccessMode.READ_ONLY,
 		defaultValue = "com.liferay.data.engine.rest.dto.v1_0.DataRecordCollectionPermission",
 		name = "x-class-name"
 	)

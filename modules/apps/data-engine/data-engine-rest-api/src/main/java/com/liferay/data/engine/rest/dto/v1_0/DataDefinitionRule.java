@@ -16,8 +16,6 @@ import com.liferay.portal.vulcan.graphql.annotation.GraphQLField;
 import com.liferay.portal.vulcan.graphql.annotation.GraphQLName;
 import com.liferay.portal.vulcan.util.ObjectMapperUtil;
 
-import io.swagger.v3.oas.annotations.media.Schema;
-
 import java.io.Serializable;
 
 import java.util.Iterator;
@@ -50,7 +48,7 @@ public class DataDefinitionRule implements Serializable {
 		return ObjectMapperUtil.unsafeReadValue(DataDefinitionRule.class, json);
 	}
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	public String[] getDataDefinitionFieldNames() {
 		if (_dataDefinitionFieldNamesSupplier != null) {
 			dataDefinitionFieldNames = _dataDefinitionFieldNamesSupplier.get();
@@ -92,7 +90,7 @@ public class DataDefinitionRule implements Serializable {
 	@JsonIgnore
 	private Supplier<String[]> _dataDefinitionFieldNamesSupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	@Valid
 	public Map<String, Object> getDataDefinitionRuleParameters() {
 		if (_dataDefinitionRuleParametersSupplier != null) {
@@ -138,7 +136,7 @@ public class DataDefinitionRule implements Serializable {
 	@JsonIgnore
 	private Supplier<Map<String, Object>> _dataDefinitionRuleParametersSupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	public String getName() {
 		if (_nameSupplier != null) {
 			name = _nameSupplier.get();
@@ -177,7 +175,7 @@ public class DataDefinitionRule implements Serializable {
 	@JsonIgnore
 	private Supplier<String> _nameSupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	public String getRuleType() {
 		if (_ruleTypeSupplier != null) {
 			ruleType = _ruleTypeSupplier.get();
@@ -321,8 +319,8 @@ public class DataDefinitionRule implements Serializable {
 		return sb.toString();
 	}
 
-	@Schema(
-		accessMode = Schema.AccessMode.READ_ONLY,
+	@io.swagger.v3.oas.annotations.media.Schema(
+		accessMode = io.swagger.v3.oas.annotations.media.Schema.AccessMode.READ_ONLY,
 		defaultValue = "com.liferay.data.engine.rest.dto.v1_0.DataDefinitionRule",
 		name = "x-class-name"
 	)

@@ -16,8 +16,6 @@ import com.liferay.portal.vulcan.graphql.annotation.GraphQLField;
 import com.liferay.portal.vulcan.graphql.annotation.GraphQLName;
 import com.liferay.portal.vulcan.util.ObjectMapperUtil;
 
-import io.swagger.v3.oas.annotations.media.Schema;
-
 import java.io.Serializable;
 
 import java.text.DateFormat;
@@ -46,11 +44,11 @@ import javax.xml.bind.annotation.XmlRootElement;
 	description = "Represents a keyword that describes content. Properties follow the [keywords](https://schema.org/keywords) specification.",
 	value = "Keyword"
 )
-@JsonFilter("Liferay.Vulcan")
-@Schema(
+@io.swagger.v3.oas.annotations.media.Schema(
 	description = "Represents a keyword that describes content. Properties follow the [keywords](https://schema.org/keywords) specification.",
 	requiredProperties = {"name"}
 )
+@JsonFilter("Liferay.Vulcan")
 @XmlRootElement(name = "Keyword")
 public class Keyword implements Serializable {
 
@@ -62,7 +60,9 @@ public class Keyword implements Serializable {
 		return ObjectMapperUtil.unsafeReadValue(Keyword.class, json);
 	}
 
-	@Schema(description = "The keyword's creator.")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "The keyword's creator."
+	)
 	@Valid
 	public Creator getCreator() {
 		if (_creatorSupplier != null) {
@@ -104,7 +104,9 @@ public class Keyword implements Serializable {
 	@JsonIgnore
 	private Supplier<Creator> _creatorSupplier;
 
-	@Schema(description = "The keyword's creation date.")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "The keyword's creation date."
+	)
 	public Date getDateCreated() {
 		if (_dateCreatedSupplier != null) {
 			dateCreated = _dateCreatedSupplier.get();
@@ -145,7 +147,9 @@ public class Keyword implements Serializable {
 	@JsonIgnore
 	private Supplier<Date> _dateCreatedSupplier;
 
-	@Schema(description = "The keyword's most recent modification date.")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "The keyword's most recent modification date."
+	)
 	public Date getDateModified() {
 		if (_dateModifiedSupplier != null) {
 			dateModified = _dateModifiedSupplier.get();
@@ -186,7 +190,9 @@ public class Keyword implements Serializable {
 	@JsonIgnore
 	private Supplier<Date> _dateModifiedSupplier;
 
-	@Schema(description = "The keyword's ID.")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "The keyword's ID."
+	)
 	public Long getId() {
 		if (_idSupplier != null) {
 			id = _idSupplier.get();
@@ -225,7 +231,7 @@ public class Keyword implements Serializable {
 	@JsonIgnore
 	private Supplier<Long> _idSupplier;
 
-	@Schema(
+	@io.swagger.v3.oas.annotations.media.Schema(
 		description = "The number of times this keyword has been used with other assets."
 	)
 	public Integer getKeywordUsageCount() {
@@ -270,7 +276,9 @@ public class Keyword implements Serializable {
 	@JsonIgnore
 	private Supplier<Integer> _keywordUsageCountSupplier;
 
-	@Schema(description = "The keyword's name.")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "The keyword's name."
+	)
 	public String getName() {
 		if (_nameSupplier != null) {
 			name = _nameSupplier.get();
@@ -310,7 +318,9 @@ public class Keyword implements Serializable {
 	@JsonIgnore
 	private Supplier<String> _nameSupplier;
 
-	@Schema(description = "The ID of the site to which this keyword is scoped.")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "The ID of the site to which this keyword is scoped."
+	)
 	public Long getSiteId() {
 		if (_siteIdSupplier != null) {
 			siteId = _siteIdSupplier.get();
@@ -484,8 +494,8 @@ public class Keyword implements Serializable {
 		return sb.toString();
 	}
 
-	@Schema(
-		accessMode = Schema.AccessMode.READ_ONLY,
+	@io.swagger.v3.oas.annotations.media.Schema(
+		accessMode = io.swagger.v3.oas.annotations.media.Schema.AccessMode.READ_ONLY,
 		defaultValue = "com.liferay.headless.admin.taxonomy.dto.v1_0.Keyword",
 		name = "x-class-name"
 	)

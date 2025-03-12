@@ -16,8 +16,6 @@ import com.liferay.portal.vulcan.graphql.annotation.GraphQLField;
 import com.liferay.portal.vulcan.graphql.annotation.GraphQLName;
 import com.liferay.portal.vulcan.util.ObjectMapperUtil;
 
-import io.swagger.v3.oas.annotations.media.Schema;
-
 import java.io.Serializable;
 
 import java.util.Iterator;
@@ -48,7 +46,7 @@ public class Process implements Serializable {
 		return ObjectMapperUtil.unsafeReadValue(Process.class, json);
 	}
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	public Long getId() {
 		if (_idSupplier != null) {
 			id = _idSupplier.get();
@@ -87,7 +85,7 @@ public class Process implements Serializable {
 	@JsonIgnore
 	private Supplier<Long> _idSupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	public Long getInstanceCount() {
 		if (_instanceCountSupplier != null) {
 			instanceCount = _instanceCountSupplier.get();
@@ -128,7 +126,7 @@ public class Process implements Serializable {
 	@JsonIgnore
 	private Supplier<Long> _instanceCountSupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	public Long getOnTimeInstanceCount() {
 		if (_onTimeInstanceCountSupplier != null) {
 			onTimeInstanceCount = _onTimeInstanceCountSupplier.get();
@@ -169,7 +167,7 @@ public class Process implements Serializable {
 	@JsonIgnore
 	private Supplier<Long> _onTimeInstanceCountSupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	public Long getOverdueInstanceCount() {
 		if (_overdueInstanceCountSupplier != null) {
 			overdueInstanceCount = _overdueInstanceCountSupplier.get();
@@ -210,7 +208,7 @@ public class Process implements Serializable {
 	@JsonIgnore
 	private Supplier<Long> _overdueInstanceCountSupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	public String getTitle() {
 		if (_titleSupplier != null) {
 			title = _titleSupplier.get();
@@ -251,7 +249,7 @@ public class Process implements Serializable {
 	@JsonIgnore
 	private Supplier<String> _titleSupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	public Long getUntrackedInstanceCount() {
 		if (_untrackedInstanceCountSupplier != null) {
 			untrackedInstanceCount = _untrackedInstanceCountSupplier.get();
@@ -400,8 +398,8 @@ public class Process implements Serializable {
 		return sb.toString();
 	}
 
-	@Schema(
-		accessMode = Schema.AccessMode.READ_ONLY,
+	@io.swagger.v3.oas.annotations.media.Schema(
+		accessMode = io.swagger.v3.oas.annotations.media.Schema.AccessMode.READ_ONLY,
 		defaultValue = "com.liferay.portal.workflow.metrics.rest.dto.v1_0.Process",
 		name = "x-class-name"
 	)

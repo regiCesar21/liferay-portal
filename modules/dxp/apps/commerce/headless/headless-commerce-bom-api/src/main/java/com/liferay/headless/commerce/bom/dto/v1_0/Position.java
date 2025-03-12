@@ -16,8 +16,6 @@ import com.liferay.portal.vulcan.graphql.annotation.GraphQLField;
 import com.liferay.portal.vulcan.graphql.annotation.GraphQLName;
 import com.liferay.portal.vulcan.util.ObjectMapperUtil;
 
-import io.swagger.v3.oas.annotations.media.Schema;
-
 import java.io.Serializable;
 
 import java.util.Iterator;
@@ -48,7 +46,7 @@ public class Position implements Serializable {
 		return ObjectMapperUtil.unsafeReadValue(Position.class, json);
 	}
 
-	@Schema(example = "33.54")
+	@io.swagger.v3.oas.annotations.media.Schema(example = "33.54")
 	public Double getX() {
 		if (_xSupplier != null) {
 			x = _xSupplier.get();
@@ -87,7 +85,7 @@ public class Position implements Serializable {
 	@JsonIgnore
 	private Supplier<Double> _xSupplier;
 
-	@Schema(example = "33.54")
+	@io.swagger.v3.oas.annotations.media.Schema(example = "33.54")
 	public Double getY() {
 		if (_ySupplier != null) {
 			y = _ySupplier.get();
@@ -182,8 +180,8 @@ public class Position implements Serializable {
 		return sb.toString();
 	}
 
-	@Schema(
-		accessMode = Schema.AccessMode.READ_ONLY,
+	@io.swagger.v3.oas.annotations.media.Schema(
+		accessMode = io.swagger.v3.oas.annotations.media.Schema.AccessMode.READ_ONLY,
 		defaultValue = "com.liferay.headless.commerce.bom.dto.v1_0.Position",
 		name = "x-class-name"
 	)

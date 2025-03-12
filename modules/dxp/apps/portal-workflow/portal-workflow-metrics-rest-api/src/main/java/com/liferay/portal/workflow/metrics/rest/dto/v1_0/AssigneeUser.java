@@ -16,8 +16,6 @@ import com.liferay.portal.vulcan.graphql.annotation.GraphQLField;
 import com.liferay.portal.vulcan.graphql.annotation.GraphQLName;
 import com.liferay.portal.vulcan.util.ObjectMapperUtil;
 
-import io.swagger.v3.oas.annotations.media.Schema;
-
 import java.io.Serializable;
 
 import java.util.Iterator;
@@ -50,7 +48,7 @@ public class AssigneeUser implements Serializable {
 		return ObjectMapperUtil.unsafeReadValue(AssigneeUser.class, json);
 	}
 
-	@Schema(description = "The user's ID.")
+	@io.swagger.v3.oas.annotations.media.Schema(description = "The user's ID.")
 	public Long getId() {
 		if (_idSupplier != null) {
 			id = _idSupplier.get();
@@ -89,7 +87,9 @@ public class AssigneeUser implements Serializable {
 	@JsonIgnore
 	private Supplier<Long> _idSupplier;
 
-	@Schema(description = "A relative URL to the user's profile image.")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "A relative URL to the user's profile image."
+	)
 	public String getImage() {
 		if (_imageSupplier != null) {
 			image = _imageSupplier.get();
@@ -130,7 +130,9 @@ public class AssigneeUser implements Serializable {
 	@JsonIgnore
 	private Supplier<String> _imageSupplier;
 
-	@Schema(description = "The user's full name.")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "The user's full name."
+	)
 	public String getName() {
 		if (_nameSupplier != null) {
 			name = _nameSupplier.get();
@@ -245,8 +247,8 @@ public class AssigneeUser implements Serializable {
 		return sb.toString();
 	}
 
-	@Schema(
-		accessMode = Schema.AccessMode.READ_ONLY,
+	@io.swagger.v3.oas.annotations.media.Schema(
+		accessMode = io.swagger.v3.oas.annotations.media.Schema.AccessMode.READ_ONLY,
 		defaultValue = "com.liferay.portal.workflow.metrics.rest.dto.v1_0.AssigneeUser",
 		name = "x-class-name"
 	)

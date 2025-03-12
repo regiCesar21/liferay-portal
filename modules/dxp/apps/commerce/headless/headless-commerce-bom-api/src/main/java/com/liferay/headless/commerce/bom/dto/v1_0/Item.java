@@ -19,8 +19,6 @@ import com.liferay.portal.vulcan.graphql.annotation.GraphQLField;
 import com.liferay.portal.vulcan.graphql.annotation.GraphQLName;
 import com.liferay.portal.vulcan.util.ObjectMapperUtil;
 
-import io.swagger.v3.oas.annotations.media.Schema;
-
 import java.io.Serializable;
 
 import java.util.Iterator;
@@ -55,7 +53,7 @@ public class Item implements Serializable {
 	}
 
 	@DecimalMin("0")
-	@Schema(example = "31130")
+	@io.swagger.v3.oas.annotations.media.Schema(example = "31130")
 	public Long getId() {
 		if (_idSupplier != null) {
 			id = _idSupplier.get();
@@ -94,7 +92,7 @@ public class Item implements Serializable {
 	@JsonIgnore
 	private Supplier<Long> _idSupplier;
 
-	@Schema(example = "Item 1")
+	@io.swagger.v3.oas.annotations.media.Schema(example = "Item 1")
 	public String getName() {
 		if (_nameSupplier != null) {
 			name = _nameSupplier.get();
@@ -133,7 +131,7 @@ public class Item implements Serializable {
 	@JsonIgnore
 	private Supplier<String> _nameSupplier;
 
-	@Schema(example = "Item-1")
+	@io.swagger.v3.oas.annotations.media.Schema(example = "Item-1")
 	public String getSlug() {
 		if (_slugSupplier != null) {
 			slug = _slugSupplier.get();
@@ -172,7 +170,7 @@ public class Item implements Serializable {
 	@JsonIgnore
 	private Supplier<String> _slugSupplier;
 
-	@Schema(example = "/schema.jpg")
+	@io.swagger.v3.oas.annotations.media.Schema(example = "/schema.jpg")
 	public String getThumbnail() {
 		if (_thumbnailSupplier != null) {
 			thumbnail = _thumbnailSupplier.get();
@@ -213,8 +211,8 @@ public class Item implements Serializable {
 	@JsonIgnore
 	private Supplier<String> _thumbnailSupplier;
 
+	@io.swagger.v3.oas.annotations.media.Schema(example = "folder")
 	@JsonGetter("type")
-	@Schema(example = "folder")
 	@Valid
 	public Type getType() {
 		if (_typeSupplier != null) {
@@ -265,7 +263,7 @@ public class Item implements Serializable {
 	@JsonIgnore
 	private Supplier<Type> _typeSupplier;
 
-	@Schema(example = "/folder/31130")
+	@io.swagger.v3.oas.annotations.media.Schema(example = "/folder/31130")
 	public String getUrl() {
 		if (_urlSupplier != null) {
 			url = _urlSupplier.get();
@@ -428,8 +426,8 @@ public class Item implements Serializable {
 		return sb.toString();
 	}
 
-	@Schema(
-		accessMode = Schema.AccessMode.READ_ONLY,
+	@io.swagger.v3.oas.annotations.media.Schema(
+		accessMode = io.swagger.v3.oas.annotations.media.Schema.AccessMode.READ_ONLY,
 		defaultValue = "com.liferay.headless.commerce.bom.dto.v1_0.Item",
 		name = "x-class-name"
 	)

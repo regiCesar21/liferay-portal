@@ -16,8 +16,6 @@ import com.liferay.portal.vulcan.graphql.annotation.GraphQLField;
 import com.liferay.portal.vulcan.graphql.annotation.GraphQLName;
 import com.liferay.portal.vulcan.util.ObjectMapperUtil;
 
-import io.swagger.v3.oas.annotations.media.Schema;
-
 import java.io.Serializable;
 
 import java.util.Iterator;
@@ -41,8 +39,10 @@ import javax.xml.bind.annotation.XmlRootElement;
  */
 @Generated("")
 @GraphQLName("Specification")
+@io.swagger.v3.oas.annotations.media.Schema(
+	requiredProperties = {"key", "title"}
+)
 @JsonFilter("Liferay.Vulcan")
-@Schema(requiredProperties = {"key", "title"})
 @XmlRootElement(name = "Specification")
 public class Specification implements Serializable {
 
@@ -54,7 +54,9 @@ public class Specification implements Serializable {
 		return ObjectMapperUtil.unsafeReadValue(Specification.class, json);
 	}
 
-	@Schema(example = "{hu_HU=Horvatorszag, hr_HR=Hrvatska, en_US=Croatia}")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		example = "{hu_HU=Horvatorszag, hr_HR=Hrvatska, en_US=Croatia}"
+	)
 	@Valid
 	public Map<String, String> getDescription() {
 		if (_descriptionSupplier != null) {
@@ -97,7 +99,7 @@ public class Specification implements Serializable {
 	@JsonIgnore
 	private Supplier<Map<String, String>> _descriptionSupplier;
 
-	@Schema(example = "true")
+	@io.swagger.v3.oas.annotations.media.Schema(example = "true")
 	public Boolean getFacetable() {
 		if (_facetableSupplier != null) {
 			facetable = _facetableSupplier.get();
@@ -139,7 +141,7 @@ public class Specification implements Serializable {
 	private Supplier<Boolean> _facetableSupplier;
 
 	@DecimalMin("0")
-	@Schema(example = "31130")
+	@io.swagger.v3.oas.annotations.media.Schema(example = "31130")
 	public Long getId() {
 		if (_idSupplier != null) {
 			id = _idSupplier.get();
@@ -178,7 +180,7 @@ public class Specification implements Serializable {
 	@JsonIgnore
 	private Supplier<Long> _idSupplier;
 
-	@Schema(example = "specification-key")
+	@io.swagger.v3.oas.annotations.media.Schema(example = "specification-key")
 	public String getKey() {
 		if (_keySupplier != null) {
 			key = _keySupplier.get();
@@ -218,7 +220,7 @@ public class Specification implements Serializable {
 	@JsonIgnore
 	private Supplier<String> _keySupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	@Valid
 	public OptionCategory getOptionCategory() {
 		if (_optionCategorySupplier != null) {
@@ -261,7 +263,9 @@ public class Specification implements Serializable {
 	@JsonIgnore
 	private Supplier<OptionCategory> _optionCategorySupplier;
 
-	@Schema(example = "{en_US=Croatia, hr_HR=Hrvatska, hu_HU=Horvatorszag}")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		example = "{en_US=Croatia, hr_HR=Hrvatska, hu_HU=Horvatorszag}"
+	)
 	@Valid
 	public Map<String, String> getTitle() {
 		if (_titleSupplier != null) {
@@ -412,8 +416,8 @@ public class Specification implements Serializable {
 		return sb.toString();
 	}
 
-	@Schema(
-		accessMode = Schema.AccessMode.READ_ONLY,
+	@io.swagger.v3.oas.annotations.media.Schema(
+		accessMode = io.swagger.v3.oas.annotations.media.Schema.AccessMode.READ_ONLY,
 		defaultValue = "com.liferay.headless.commerce.admin.catalog.dto.v1_0.Specification",
 		name = "x-class-name"
 	)

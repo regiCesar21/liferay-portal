@@ -16,8 +16,6 @@ import com.liferay.portal.vulcan.graphql.annotation.GraphQLField;
 import com.liferay.portal.vulcan.graphql.annotation.GraphQLName;
 import com.liferay.portal.vulcan.util.ObjectMapperUtil;
 
-import io.swagger.v3.oas.annotations.media.Schema;
-
 import java.io.Serializable;
 
 import java.util.Iterator;
@@ -52,7 +50,7 @@ public class Brand implements Serializable {
 	}
 
 	@DecimalMin("0")
-	@Schema(example = "31130")
+	@io.swagger.v3.oas.annotations.media.Schema(example = "31130")
 	public Long getId() {
 		if (_idSupplier != null) {
 			id = _idSupplier.get();
@@ -91,7 +89,9 @@ public class Brand implements Serializable {
 	@JsonIgnore
 	private Supplier<Long> _idSupplier;
 
-	@Schema(example = "[{id=31231, name=Model 1, year=2019}]")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		example = "[{id=31231, name=Model 1, year=2019}]"
+	)
 	@Valid
 	public Model[] getModels() {
 		if (_modelsSupplier != null) {
@@ -133,7 +133,7 @@ public class Brand implements Serializable {
 	@JsonIgnore
 	private Supplier<Model[]> _modelsSupplier;
 
-	@Schema(example = "Brand 1")
+	@io.swagger.v3.oas.annotations.media.Schema(example = "Brand 1")
 	public String getName() {
 		if (_nameSupplier != null) {
 			name = _nameSupplier.get();
@@ -254,8 +254,8 @@ public class Brand implements Serializable {
 		return sb.toString();
 	}
 
-	@Schema(
-		accessMode = Schema.AccessMode.READ_ONLY,
+	@io.swagger.v3.oas.annotations.media.Schema(
+		accessMode = io.swagger.v3.oas.annotations.media.Schema.AccessMode.READ_ONLY,
 		defaultValue = "com.liferay.headless.commerce.bom.dto.v1_0.Brand",
 		name = "x-class-name"
 	)

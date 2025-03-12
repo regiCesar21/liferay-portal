@@ -16,8 +16,6 @@ import com.liferay.portal.vulcan.graphql.annotation.GraphQLField;
 import com.liferay.portal.vulcan.graphql.annotation.GraphQLName;
 import com.liferay.portal.vulcan.util.ObjectMapperUtil;
 
-import io.swagger.v3.oas.annotations.media.Schema;
-
 import java.io.Serializable;
 
 import java.util.Iterator;
@@ -40,8 +38,10 @@ import javax.xml.bind.annotation.XmlRootElement;
  */
 @Generated("")
 @GraphQLName("DiscountAccountGroup")
+@io.swagger.v3.oas.annotations.media.Schema(
+	requiredProperties = {"accountGroupId", "discountId"}
+)
 @JsonFilter("Liferay.Vulcan")
-@Schema(requiredProperties = {"accountGroupId", "discountId"})
 @XmlRootElement(name = "DiscountAccountGroup")
 public class DiscountAccountGroup implements Serializable {
 
@@ -54,7 +54,7 @@ public class DiscountAccountGroup implements Serializable {
 			DiscountAccountGroup.class, json);
 	}
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	@Valid
 	public AccountGroup getAccountGroup() {
 		if (_accountGroupSupplier != null) {
@@ -96,7 +96,7 @@ public class DiscountAccountGroup implements Serializable {
 	@JsonIgnore
 	private Supplier<AccountGroup> _accountGroupSupplier;
 
-	@Schema(example = "PAB-34098-789-N")
+	@io.swagger.v3.oas.annotations.media.Schema(example = "PAB-34098-789-N")
 	public String getAccountGroupExternalReferenceCode() {
 		if (_accountGroupExternalReferenceCodeSupplier != null) {
 			accountGroupExternalReferenceCode =
@@ -143,7 +143,7 @@ public class DiscountAccountGroup implements Serializable {
 	private Supplier<String> _accountGroupExternalReferenceCodeSupplier;
 
 	@DecimalMin("0")
-	@Schema(example = "30130")
+	@io.swagger.v3.oas.annotations.media.Schema(example = "30130")
 	public Long getAccountGroupId() {
 		if (_accountGroupIdSupplier != null) {
 			accountGroupId = _accountGroupIdSupplier.get();
@@ -185,7 +185,7 @@ public class DiscountAccountGroup implements Serializable {
 	@JsonIgnore
 	private Supplier<Long> _accountGroupIdSupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	@Valid
 	public Map<String, Map<String, String>> getActions() {
 		if (_actionsSupplier != null) {
@@ -228,7 +228,7 @@ public class DiscountAccountGroup implements Serializable {
 	@JsonIgnore
 	private Supplier<Map<String, Map<String, String>>> _actionsSupplier;
 
-	@Schema(example = "DAB-34098-789-N")
+	@io.swagger.v3.oas.annotations.media.Schema(example = "DAB-34098-789-N")
 	public String getDiscountExternalReferenceCode() {
 		if (_discountExternalReferenceCodeSupplier != null) {
 			discountExternalReferenceCode =
@@ -274,7 +274,7 @@ public class DiscountAccountGroup implements Serializable {
 	private Supplier<String> _discountExternalReferenceCodeSupplier;
 
 	@DecimalMin("0")
-	@Schema(example = "30324")
+	@io.swagger.v3.oas.annotations.media.Schema(example = "30324")
 	public Long getDiscountId() {
 		if (_discountIdSupplier != null) {
 			discountId = _discountIdSupplier.get();
@@ -317,7 +317,7 @@ public class DiscountAccountGroup implements Serializable {
 	private Supplier<Long> _discountIdSupplier;
 
 	@DecimalMin("0")
-	@Schema(example = "30643")
+	@io.swagger.v3.oas.annotations.media.Schema(example = "30643")
 	public Long getId() {
 		if (_idSupplier != null) {
 			id = _idSupplier.get();
@@ -483,8 +483,8 @@ public class DiscountAccountGroup implements Serializable {
 		return sb.toString();
 	}
 
-	@Schema(
-		accessMode = Schema.AccessMode.READ_ONLY,
+	@io.swagger.v3.oas.annotations.media.Schema(
+		accessMode = io.swagger.v3.oas.annotations.media.Schema.AccessMode.READ_ONLY,
 		defaultValue = "com.liferay.headless.commerce.admin.pricing.dto.v2_0.DiscountAccountGroup",
 		name = "x-class-name"
 	)

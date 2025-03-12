@@ -19,8 +19,6 @@ import com.liferay.portal.vulcan.graphql.annotation.GraphQLField;
 import com.liferay.portal.vulcan.graphql.annotation.GraphQLName;
 import com.liferay.portal.vulcan.util.ObjectMapperUtil;
 
-import io.swagger.v3.oas.annotations.media.Schema;
-
 import java.io.Serializable;
 
 import java.text.DateFormat;
@@ -58,7 +56,7 @@ public class ImportTask implements Serializable {
 		return ObjectMapperUtil.unsafeReadValue(ImportTask.class, json);
 	}
 
-	@Schema(
+	@io.swagger.v3.oas.annotations.media.Schema(
 		description = "The item class name for which data will be processed in batch.",
 		example = "com.liferay.headless.delivery.dto.v1_0.BlogPosting"
 	)
@@ -104,7 +102,9 @@ public class ImportTask implements Serializable {
 	@JsonIgnore
 	private Supplier<String> _classNameSupplier;
 
-	@Schema(description = "The file content type.", example = "JSON")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "The file content type.", example = "JSON"
+	)
 	public String getContentType() {
 		if (_contentTypeSupplier != null) {
 			contentType = _contentTypeSupplier.get();
@@ -145,7 +145,7 @@ public class ImportTask implements Serializable {
 	@JsonIgnore
 	private Supplier<String> _contentTypeSupplier;
 
-	@Schema(
+	@io.swagger.v3.oas.annotations.media.Schema(
 		description = "The end time of import task operation.",
 		example = "2019-27-09'T'08:33:33'Z'"
 	)
@@ -189,7 +189,7 @@ public class ImportTask implements Serializable {
 	@JsonIgnore
 	private Supplier<Date> _endTimeSupplier;
 
-	@Schema(
+	@io.swagger.v3.oas.annotations.media.Schema(
 		description = "The error message in case of import task's failed execution.",
 		example = "File import failed"
 	)
@@ -235,11 +235,11 @@ public class ImportTask implements Serializable {
 	@JsonIgnore
 	private Supplier<String> _errorMessageSupplier;
 
-	@JsonGetter("executeStatus")
-	@Schema(
+	@io.swagger.v3.oas.annotations.media.Schema(
 		description = "The status of import task's execution.",
 		example = "INITIALIZED"
 	)
+	@JsonGetter("executeStatus")
 	@Valid
 	public ExecuteStatus getExecuteStatus() {
 		if (_executeStatusSupplier != null) {
@@ -293,7 +293,9 @@ public class ImportTask implements Serializable {
 	private Supplier<ExecuteStatus> _executeStatusSupplier;
 
 	@DecimalMin("0")
-	@Schema(description = "The task's ID.", example = "30130")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "The task's ID.", example = "30130"
+	)
 	public Long getId() {
 		if (_idSupplier != null) {
 			id = _idSupplier.get();
@@ -332,8 +334,10 @@ public class ImportTask implements Serializable {
 	@JsonIgnore
 	private Supplier<Long> _idSupplier;
 
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "The operation of import task.", example = "CREATE"
+	)
 	@JsonGetter("operation")
-	@Schema(description = "The operation of import task.", example = "CREATE")
 	@Valid
 	public Operation getOperation() {
 		if (_operationSupplier != null) {
@@ -386,7 +390,7 @@ public class ImportTask implements Serializable {
 	@JsonIgnore
 	private Supplier<Operation> _operationSupplier;
 
-	@Schema(
+	@io.swagger.v3.oas.annotations.media.Schema(
 		description = "The start time of import task operation.",
 		example = "2019-27-09'T'08:23:33'Z'"
 	)
@@ -589,8 +593,8 @@ public class ImportTask implements Serializable {
 		return sb.toString();
 	}
 
-	@Schema(
-		accessMode = Schema.AccessMode.READ_ONLY,
+	@io.swagger.v3.oas.annotations.media.Schema(
+		accessMode = io.swagger.v3.oas.annotations.media.Schema.AccessMode.READ_ONLY,
 		defaultValue = "com.liferay.headless.batch.engine.dto.v1_0.ImportTask",
 		name = "x-class-name"
 	)

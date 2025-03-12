@@ -19,8 +19,6 @@ import com.liferay.portal.vulcan.graphql.annotation.GraphQLField;
 import com.liferay.portal.vulcan.graphql.annotation.GraphQLName;
 import com.liferay.portal.vulcan.util.ObjectMapperUtil;
 
-import io.swagger.v3.oas.annotations.media.Schema;
-
 import java.io.Serializable;
 
 import java.text.DateFormat;
@@ -59,7 +57,7 @@ public class Instance implements Serializable {
 		return ObjectMapperUtil.unsafeReadValue(Instance.class, json);
 	}
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	public String getAssetTitle() {
 		if (_assetTitleSupplier != null) {
 			assetTitle = _assetTitleSupplier.get();
@@ -100,7 +98,7 @@ public class Instance implements Serializable {
 	@JsonIgnore
 	private Supplier<String> _assetTitleSupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	public String getAssetType() {
 		if (_assetTypeSupplier != null) {
 			assetType = _assetTypeSupplier.get();
@@ -141,7 +139,7 @@ public class Instance implements Serializable {
 	@JsonIgnore
 	private Supplier<String> _assetTypeSupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	@Valid
 	public AssigneeUser[] getAssigneeUsers() {
 		if (_assigneeUsersSupplier != null) {
@@ -183,7 +181,7 @@ public class Instance implements Serializable {
 	@JsonIgnore
 	private Supplier<AssigneeUser[]> _assigneeUsersSupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	@Valid
 	public CreatorUser getCreatorUser() {
 		if (_creatorUserSupplier != null) {
@@ -225,7 +223,7 @@ public class Instance implements Serializable {
 	@JsonIgnore
 	private Supplier<CreatorUser> _creatorUserSupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	public Date getDateCompletion() {
 		if (_dateCompletionSupplier != null) {
 			dateCompletion = _dateCompletionSupplier.get();
@@ -266,7 +264,7 @@ public class Instance implements Serializable {
 	@JsonIgnore
 	private Supplier<Date> _dateCompletionSupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	public Date getDateCreated() {
 		if (_dateCreatedSupplier != null) {
 			dateCreated = _dateCreatedSupplier.get();
@@ -307,7 +305,7 @@ public class Instance implements Serializable {
 	@JsonIgnore
 	private Supplier<Date> _dateCreatedSupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	public Long getId() {
 		if (_idSupplier != null) {
 			id = _idSupplier.get();
@@ -346,7 +344,7 @@ public class Instance implements Serializable {
 	@JsonIgnore
 	private Supplier<Long> _idSupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	public Long getProcessId() {
 		if (_processIdSupplier != null) {
 			processId = _processIdSupplier.get();
@@ -387,7 +385,7 @@ public class Instance implements Serializable {
 	@JsonIgnore
 	private Supplier<Long> _processIdSupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	@Valid
 	public SLAResult[] getSlaResults() {
 		if (_slaResultsSupplier != null) {
@@ -429,8 +427,8 @@ public class Instance implements Serializable {
 	@JsonIgnore
 	private Supplier<SLAResult[]> _slaResultsSupplier;
 
+	@io.swagger.v3.oas.annotations.media.Schema
 	@JsonGetter("slaStatus")
-	@Schema
 	@Valid
 	public SLAStatus getSLAStatus() {
 		if (_slaStatusSupplier != null) {
@@ -483,8 +481,8 @@ public class Instance implements Serializable {
 	@JsonIgnore
 	private Supplier<SLAStatus> _slaStatusSupplier;
 
+	@io.swagger.v3.oas.annotations.media.Schema
 	@JsonGetter("status")
-	@Schema
 	@Valid
 	public Status getStatus() {
 		if (_statusSupplier != null) {
@@ -537,7 +535,7 @@ public class Instance implements Serializable {
 	@JsonIgnore
 	private Supplier<Status> _statusSupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	public String[] getTaskNames() {
 		if (_taskNamesSupplier != null) {
 			taskNames = _taskNamesSupplier.get();
@@ -815,8 +813,8 @@ public class Instance implements Serializable {
 		return sb.toString();
 	}
 
-	@Schema(
-		accessMode = Schema.AccessMode.READ_ONLY,
+	@io.swagger.v3.oas.annotations.media.Schema(
+		accessMode = io.swagger.v3.oas.annotations.media.Schema.AccessMode.READ_ONLY,
 		defaultValue = "com.liferay.portal.workflow.metrics.rest.dto.v1_0.Instance",
 		name = "x-class-name"
 	)
