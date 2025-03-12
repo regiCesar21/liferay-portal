@@ -5,6 +5,8 @@
 
 package com.liferay.osb.asah.common.model;
 
+import com.liferay.osb.asah.common.entity.BQIndividual;
+
 import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
@@ -15,6 +17,12 @@ import java.util.Set;
 public class ReportIndividual extends BaseIndividual {
 
 	public ReportIndividual() {
+	}
+
+	public ReportIndividual(BQIndividual bqIndividual, Set<Long> segmentIds) {
+		super(bqIndividual);
+
+		_segmentIds = segmentIds;
 	}
 
 	public ReportIndividual(Set<Long> segmentIds, Map<String, Object> source) {

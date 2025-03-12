@@ -5,6 +5,7 @@
 
 package com.liferay.osb.asah.common.repository.impl;
 
+import com.liferay.osb.asah.common.entity.BQIndividual;
 import com.liferay.osb.asah.common.model.ReportIndividual;
 import com.liferay.osb.asah.common.repository.CustomBQReportIndividualRepository;
 import com.liferay.osb.asah.common.repository.executor.QueryExecutor;
@@ -83,7 +84,8 @@ public class BQReportIndividualRepositoryImpl
 						(List<BigDecimal>)object, BigDecimal::longValue);
 				}
 
-				return new ReportIndividual(segmentIds, record);
+				return new ReportIndividual(
+					new BQIndividual(record), segmentIds);
 			},
 			selectConditionStep);
 	}
@@ -124,7 +126,8 @@ public class BQReportIndividualRepositoryImpl
 						(List<BigDecimal>)object, BigDecimal::longValue);
 				}
 
-				return new ReportIndividual(segmentIds, record);
+				return new ReportIndividual(
+					new BQIndividual(record), segmentIds);
 			},
 			selectConditionStep.limit(
 				pageable.getPageSize()
