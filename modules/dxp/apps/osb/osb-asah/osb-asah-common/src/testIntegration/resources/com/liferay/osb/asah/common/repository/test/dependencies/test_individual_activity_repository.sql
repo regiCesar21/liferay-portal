@@ -1,0 +1,4 @@
+INSERT INTO Individual (emailAddress, fields, id, suppressed) VALUES ('test1@liferay.com', '{"firstName":"first1", "lastName":"last1"}', '1', false);
+
+INSERT INTO IndividualActivity (id, applicationId, channelId, context, eventDate, eventId, properties, individualId) VALUES (1, 'Page', 1, '{"country":"Brazil","screenWidth":"1920","screenHeightSize":"462","keywords":"","city":"Recife","contentLanguageId":"en-US","groupId":"20117","description":"","title":"tracking-blogs - Liferay DXP","devicePixelRatio":"1","experienceId":"DEFAULT","timezoneOffset":"-03:00","browserName":"Chrome"}', timestamp '${today-2d}', 'pageViewed', '{"page":"http://localhost:7400/impression"}', '1');
+INSERT INTO IndividualActivity (id, applicationId, channelId, context, eventDate, eventId, properties, individualId) VALUES (21, 'Page', 2, '{}', timestamp '${today-3d}', 'pageViewed', '{}', '1');
