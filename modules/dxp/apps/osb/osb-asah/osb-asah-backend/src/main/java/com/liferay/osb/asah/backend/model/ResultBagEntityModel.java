@@ -15,8 +15,8 @@ import org.springframework.hateoas.EntityModel;
 public class ResultBagEntityModel<T>
 	extends EntityModel<ResultBag<EntityModel<T>>> {
 
-	public ResultBagEntityModel(ResultBag<EntityModel<T>> content) {
-		super(content);
+	public ResultBagEntityModel(ResultBag<EntityModel<T>> resultBag) {
+		super(resultBag);
 	}
 
 }
