@@ -65,7 +65,7 @@ public class ReportIndividualRestController extends BaseRestController {
 			@PathVariable String individualId,
 			@RequestParam(defaultValue = "0") Integer page) {
 
-		Page<ActivityDTO> activityDTOs = null;
+		Page<ActivityDTO> activityDTOPage = null;
 
 		if (_projectFeatureDog.isFeatureEnabled(
 				Feature.API_REPORTS_POSTGRES_CACHE,
@@ -76,14 +76,14 @@ public class ReportIndividualRestController extends BaseRestController {
 					channelId, individualId, page, _PAGE_SIZE,
 					TimeRange.LAST_30_DAYS);
 
-			activityDTOs = individualActivityPage.map(ActivityDTO::new);
+			activityDTOPage = individualActivityPage.map(ActivityDTO::new);
 		}
 		else {
 			Page<BQEvent> bqEventPage = _bqEventDog.getBQEventPage(
 				channelId, null, page, _PAGE_SIZE, TimeRange.LAST_30_DAYS,
 				_bqIdentityDog.getBQIdentityIds(individualId));
 
-			activityDTOs = bqEventPage.map(
+			activityDTOPage = bqEventPage.map(
 				bqEvent -> {
 					try {
 						return new ActivityDTO(
@@ -101,7 +101,7 @@ public class ReportIndividualRestController extends BaseRestController {
 		}
 
 		ResultBag<ActivityDTO> activityResultBag = new ResultBag<>(
-			activityDTOs.getContent(), activityDTOs.getTotalElements());
+			activityDTOPage.getContent(), activityDTOPage.getTotalElements());
 
 		return _toResultBagEntityModel(
 			_getLink(
@@ -124,18 +124,18 @@ public class ReportIndividualRestController extends BaseRestController {
 			@PathVariable String individualId,
 			@RequestParam(defaultValue = "0") Integer page) {
 
-		Page<? extends IndividualInterest> individualInterests = null;
+		Page<? extends IndividualInterest> individualInterestPage = null;
 
 		if (_projectFeatureDog.isFeatureEnabled(
 				Feature.API_REPORTS_POSTGRES_CACHE,
 				ProjectIdThreadLocal.getProjectId())) {
 
-			individualInterests =
+			individualInterestPage =
 				_individualInterestDog.getIndividualInterestPage(
 					channelId, individualId, _PAGE_SIZE, page * _PAGE_SIZE);
 		}
 		else {
-			individualInterests =
+			individualInterestPage =
 				_bqIdentityInterestScoreDog.getBQIdentityInterestScorePage(
 					channelId, individualId, _PAGE_SIZE, page * _PAGE_SIZE);
 		}
@@ -151,8 +151,8 @@ public class ReportIndividualRestController extends BaseRestController {
 				_getIndividualInterestResultBagEntityModel(
 					channelId, individualId, page - 1)),
 			new ResultBag<>(
-				individualInterests.getContent(),
-				individualInterests.getTotalElements()),
+				individualInterestPage.getContent(),
+				individualInterestPage.getTotalElements()),
 			interest -> _toChildEntityModel(individualId, interest));
 	}
 
@@ -187,16 +187,16 @@ public class ReportIndividualRestController extends BaseRestController {
 			@RequestParam(defaultValue = "0") Integer page,
 			@RequestParam(defaultValue = "") String query) {
 
-		Page<ReportIndividual> reportIndividulaPage =
+		Page<ReportIndividual> reportIndividualPage =
 			_reportIndividualDog.searchReportIndividualPage(
 				channelId, page, query, null, _PAGE_SIZE);
 
 		ResultBag<ReportIndividualDTO> reportIndividualDTOResultBag =
 			new ResultBag<>(
 				ListUtil.map(
-					reportIndividulaPage.getContent(),
+					reportIndividualPage.getContent(),
 					ReportIndividualDTO::new),
-				reportIndividulaPage.getTotalElements());
+				reportIndividualPage.getTotalElements());
 
 		return _toResultBagEntityModel(
 			_getLink(

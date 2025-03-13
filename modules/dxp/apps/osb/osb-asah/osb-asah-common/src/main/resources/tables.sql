@@ -273,8 +273,8 @@ CREATE TABLE IF NOT EXISTS IndividualActivity (
 	context JSON,
 	eventDate TIMESTAMPTZ,
 	eventId TEXT,
-	properties JSON,
-	individualId TEXT
+	individualId TEXT,
+	properties JSON
 );
 
 CREATE TABLE IF NOT EXISTS IndividualInterest (
