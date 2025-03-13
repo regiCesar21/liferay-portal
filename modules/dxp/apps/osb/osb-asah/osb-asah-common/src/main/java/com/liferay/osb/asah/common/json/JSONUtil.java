@@ -634,6 +634,20 @@ public class JSONUtil {
 		return values;
 	}
 
+	public static Map<String, String> toStringMap(JSONObject jsonObject) {
+		if (jsonObject == null) {
+			return null;
+		}
+
+		Map<String, String> values = new HashMap<>();
+
+		for (String key : jsonObject.keySet()) {
+			values.put(key, jsonObject.getString(key));
+		}
+
+		return values;
+	}
+
 	public static Set<String> toStringSet(JSONArray jsonArray) {
 		if (jsonArray == null) {
 			return new HashSet<>();
