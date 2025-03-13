@@ -9,6 +9,8 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 
 import com.liferay.osb.asah.common.date.DateUtil;
 import com.liferay.osb.asah.common.entity.BQEvent;
+import com.liferay.osb.asah.common.entity.IndividualActivity;
+import com.liferay.osb.asah.common.json.JSONUtil;
 
 import java.util.Date;
 import java.util.Map;
@@ -31,6 +33,18 @@ public class ActivityDTO {
 		_id = bqEvent.getId();
 		_ownerId = bqIndividualId;
 		_startTime = bqEvent.getEventDate();
+	}
+
+	public ActivityDTO(IndividualActivity individualActivity) {
+		_applicationId = individualActivity.getApplicationId();
+		_eventContext = JSONUtil.toStringMap(
+			individualActivity.getContextJSONObject());
+		_eventId = individualActivity.getEventId();
+		_eventProperties = JSONUtil.toStringMap(
+			individualActivity.getPropertiesJSONObject());
+		_id = individualActivity.getId();
+		_ownerId = individualActivity.getIndividualId();
+		_startTime = individualActivity.getEventDate();
 	}
 
 	@Override

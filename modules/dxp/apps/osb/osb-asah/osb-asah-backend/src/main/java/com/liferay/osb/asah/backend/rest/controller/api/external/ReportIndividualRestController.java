@@ -17,10 +17,12 @@ import com.liferay.osb.asah.backend.rest.controller.BaseRestController;
 import com.liferay.osb.asah.common.dog.BQEventDog;
 import com.liferay.osb.asah.common.dog.BQIdentityDog;
 import com.liferay.osb.asah.common.dog.BQIdentityInterestScoreDog;
+import com.liferay.osb.asah.common.dog.IndividualActivityDog;
 import com.liferay.osb.asah.common.dog.IndividualInterestDog;
 import com.liferay.osb.asah.common.dog.ProjectFeatureDog;
 import com.liferay.osb.asah.common.dog.SegmentDog;
 import com.liferay.osb.asah.common.entity.BQEvent;
+import com.liferay.osb.asah.common.entity.IndividualActivity;
 import com.liferay.osb.asah.common.entity.IndividualInterest;
 import com.liferay.osb.asah.common.entity.Segment;
 import com.liferay.osb.asah.common.model.Feature;
@@ -63,25 +65,40 @@ public class ReportIndividualRestController extends BaseRestController {
 			@PathVariable String individualId,
 			@RequestParam(defaultValue = "0") Integer page) {
 
-		Page<BQEvent> bqEventPage = _bqEventDog.getBQEventPage(
-			channelId, null, page, _PAGE_SIZE, TimeRange.LAST_30_DAYS,
-			_bqIdentityDog.getBQIdentityIds(individualId));
+		Page<ActivityDTO> activityDTOs = null;
 
-		Page<ActivityDTO> activityDTOs = bqEventPage.map(
-			bqEvent -> {
-				try {
-					return new ActivityDTO(
-						bqEvent, individualId,
-						_objectMapper.readValue(
-							bqEvent.getContext(),
-							new TypeReference<Map<String, String>>() {
-							}),
-						_toMap(bqEvent.getProperties()));
-				}
-				catch (JsonProcessingException jsonProcessingException) {
-					throw new RuntimeException(jsonProcessingException);
-				}
-			});
+		if (_projectFeatureDog.isFeatureEnabled(
+				Feature.API_REPORTS_POSTGRES_CACHE,
+				ProjectIdThreadLocal.getProjectId())) {
+
+			Page<IndividualActivity> individualActivityPage =
+				_individualActivityDog.getIndividualActivityPage(
+					channelId, individualId, page, _PAGE_SIZE,
+					TimeRange.LAST_30_DAYS);
+
+			activityDTOs = individualActivityPage.map(ActivityDTO::new);
+		}
+		else {
+			Page<BQEvent> bqEventPage = _bqEventDog.getBQEventPage(
+				channelId, null, page, _PAGE_SIZE, TimeRange.LAST_30_DAYS,
+				_bqIdentityDog.getBQIdentityIds(individualId));
+
+			activityDTOs = bqEventPage.map(
+				bqEvent -> {
+					try {
+						return new ActivityDTO(
+							bqEvent, individualId,
+							_objectMapper.readValue(
+								bqEvent.getContext(),
+								new TypeReference<Map<String, String>>() {
+								}),
+							_toMap(bqEvent.getProperties()));
+					}
+					catch (JsonProcessingException jsonProcessingException) {
+						throw new RuntimeException(jsonProcessingException);
+					}
+				});
+		}
 
 		ResultBag<ActivityDTO> activityResultBag = new ResultBag<>(
 			activityDTOs.getContent(), activityDTOs.getTotalElements());
@@ -350,6 +367,9 @@ public class ReportIndividualRestController extends BaseRestController {
 
 	@Autowired
 	private BQIdentityInterestScoreDog _bqIdentityInterestScoreDog;
+
+	@Autowired
+	private IndividualActivityDog _individualActivityDog;
 
 	@Autowired
 	private IndividualInterestDog _individualInterestDog;
