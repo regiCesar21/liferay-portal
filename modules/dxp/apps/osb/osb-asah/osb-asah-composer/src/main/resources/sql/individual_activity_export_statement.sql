@@ -9,9 +9,10 @@ EXPORT DATA
 AS (
 	SELECT
 		Event.id, applicationId, channelId, context, eventDate, eventId,
-		TO_JSON_STRING(properties), Individual.id AS individualId
+		JSON_OBJECT(ARRAY_AGG(properties.name), ARRAY_AGG(properties.value)), Individual.id AS individualId
 	FROM
-		`{{dag.default_args['ac_project_id']}}.event` Event
+		`{{dag.default_args['ac_project_id']}}.event` Event,
+		UNNEST(properties) AS properties
 	INNER JOIN
 		`{{dag.default_args['ac_project_id']}}.identity` Identity
 	ON
@@ -22,4 +23,6 @@ AS (
 		Identity.individualId = Individual.id
 	WHERE
 		DATE(eventDate, '{{dag.default_args['ac_project_time_zone_id']}}') = DATE(TIMESTAMP('{{data_interval_start.to_datetime_string()}}'), '{{dag.default_args['ac_project_time_zone_id']}}')
+	GROUP BY
+		Event.id, applicationId, channelId, context, eventDate, eventId, individualId
 );
