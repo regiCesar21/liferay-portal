@@ -60,4 +60,5 @@ gcloud dataflow flex-template build gs://${PROJECT_ID}-dataflow/flex-templates/$
 	--flex-template-base-image JAVA21 \
 	--image-gcr-path "${REGION}-docker.pkg.dev/${PROJECT_ID}/ac-dataflow/${FLEX_TEMPLATE_NAME}:$FLEX_TEMPLATE_VERSION" \
 	--jar "build/libs/osb-asah-dataflow-java-all.jar" \
+	--metadata-file "flex-templates/metadata/${FLEX_TEMPLATE_NAME}.json" \
 	--sdk-language "JAVA"
