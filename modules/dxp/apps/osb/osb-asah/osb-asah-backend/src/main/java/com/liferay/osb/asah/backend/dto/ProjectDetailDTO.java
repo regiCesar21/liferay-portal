@@ -20,8 +20,8 @@ public class ProjectDetailDTO {
 		Boolean contactsSelected,
 		Boolean contentRecommenderMostPopularItemsEnabled,
 		Boolean contentRecommenderUserPersonalizationEnabled,
-		List<Long> dataSourceIds, String id, Boolean sitesSelected,
-		String timeZoneId) {
+		List<Long> dataSourceIds, List<String> enabledFeatures, String id,
+		Boolean sitesSelected, String timeZoneId) {
 
 		_accountsSelected = accountsSelected;
 		_commerceChannelsSelected = commerceChannelsSelected;
@@ -31,6 +31,7 @@ public class ProjectDetailDTO {
 		_contentRecommenderUserPersonalizationEnabled =
 			contentRecommenderUserPersonalizationEnabled;
 		_dataSourceIds = dataSourceIds;
+		_enabledFeatures = enabledFeatures;
 		_id = id;
 		_sitesSelected = sitesSelected;
 		_timeZoneId = timeZoneId;
@@ -60,6 +61,10 @@ public class ProjectDetailDTO {
 		return _dataSourceIds;
 	}
 
+	public List<String> getEnabledFeatures() {
+		return _enabledFeatures;
+	}
+
 	public String getId() {
 		return _id;
 	}
@@ -78,6 +83,7 @@ public class ProjectDetailDTO {
 	private final Boolean _contentRecommenderMostPopularItemsEnabled;
 	private final Boolean _contentRecommenderUserPersonalizationEnabled;
 	private final List<Long> _dataSourceIds;
+	private final List<String> _enabledFeatures;
 	private final String _id;
 	private final Boolean _sitesSelected;
 	private final String _timeZoneId;

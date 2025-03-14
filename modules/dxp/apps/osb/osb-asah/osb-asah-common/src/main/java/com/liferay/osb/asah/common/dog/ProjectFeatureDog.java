@@ -10,6 +10,7 @@ import com.liferay.osb.asah.common.model.Feature;
 import com.liferay.osb.asah.common.repository.ProjectFeatureRepository;
 import com.liferay.osb.asah.common.util.ProjectIdThreadLocal;
 
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,6 +21,18 @@ import org.springframework.stereotype.Component;
  */
 @Component
 public class ProjectFeatureDog {
+
+	public List<ProjectFeature> getEnabledFeatures(String projectId) {
+		try {
+			ProjectIdThreadLocal.setGlobalContext(true);
+
+			return _projectFeatureRepository.findByEnabledAndProjectId(
+				Boolean.TRUE, projectId);
+		}
+		finally {
+			ProjectIdThreadLocal.setGlobalContext(false);
+		}
+	}
 
 	public boolean isFeatureEnabled(Feature feature, String projectId) {
 		try {

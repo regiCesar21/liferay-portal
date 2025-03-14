@@ -8,6 +8,7 @@ package com.liferay.osb.asah.common.repository;
 import com.liferay.osb.asah.common.entity.ProjectFeature;
 import com.liferay.osb.asah.common.model.Feature;
 
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.cache.annotation.Cacheable;
@@ -17,6 +18,10 @@ import org.springframework.cache.annotation.Cacheable;
  */
 public interface ProjectFeatureRepository
 	extends Repository<ProjectFeature, Long> {
+
+	@Cacheable
+	public List<ProjectFeature> findByEnabledAndProjectId(
+		Boolean enabled, String projectId);
 
 	@Cacheable
 	public Optional<ProjectFeature> findByFeatureAndProjectId(

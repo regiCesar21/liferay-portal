@@ -10,8 +10,10 @@ import com.liferay.osb.asah.backend.dto.ProjectDetailDTO;
 import com.liferay.osb.asah.common.dog.DataSourceDog;
 import com.liferay.osb.asah.common.dog.PreferenceDog;
 import com.liferay.osb.asah.common.dog.ProjectDog;
+import com.liferay.osb.asah.common.dog.ProjectFeatureDog;
 import com.liferay.osb.asah.common.entity.DataSource;
 import com.liferay.osb.asah.common.entity.Preference;
+import com.liferay.osb.asah.common.entity.ProjectFeature;
 import com.liferay.osb.asah.common.util.ListUtil;
 import com.liferay.osb.asah.common.util.ProjectIdThreadLocal;
 
@@ -19,6 +21,8 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Objects;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import org.apache.commons.lang3.BooleanUtils;
 import org.apache.commons.logging.Log;
@@ -137,8 +141,9 @@ public class ProjectsRestController extends BaseRestController {
 						contactsSelected,
 						contentRecommenderMostPopularItemsEnabled,
 						contentRecommenderUserPersonalizationEnabled,
-						dataSourceIds, ProjectIdThreadLocal.getProjectId(),
-						sitesSelected, preference.getValue()));
+						dataSourceIds, _getEnabledFeatures(),
+						ProjectIdThreadLocal.getProjectId(), sitesSelected,
+						preference.getValue()));
 			});
 
 		return projectDetailDTOs;
@@ -154,6 +159,22 @@ public class ProjectsRestController extends BaseRestController {
 		_projectDog.addProject(projectDTO.getId());
 	}
 
+	private List<String> _getEnabledFeatures() {
+		List<ProjectFeature> enabledFeatures =
+			_projectFeatureDog.getEnabledFeatures(
+				ProjectIdThreadLocal.getProjectId());
+
+		Stream<ProjectFeature> stream = enabledFeatures.stream();
+
+		return stream.map(
+			ProjectFeature::getFeature
+		).map(
+			String::valueOf
+		).collect(
+			Collectors.toUnmodifiableList()
+		);
+	}
+
 	private static final Log _log = LogFactory.getLog(
 		ProjectsRestController.class);
 
@@ -165,5 +186,8 @@ public class ProjectsRestController extends BaseRestController {
 
 	@Autowired
 	private ProjectDog _projectDog;
+
+	@Autowired
+	private ProjectFeatureDog _projectFeatureDog;
 
 }
