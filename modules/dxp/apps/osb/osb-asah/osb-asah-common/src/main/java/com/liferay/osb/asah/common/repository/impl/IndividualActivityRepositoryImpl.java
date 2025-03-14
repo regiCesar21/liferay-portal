@@ -12,7 +12,7 @@ import com.liferay.osb.asah.common.repository.helper.DSLHelper;
 
 import java.time.LocalDateTime;
 
-import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import org.jooq.Condition;
@@ -89,33 +89,29 @@ public class IndividualActivityRepositoryImpl
 		LocalDateTime rangeEndLocalDateTime,
 		LocalDateTime rangeStartLocalDateTime, String timeZoneId) {
 
-		List<Condition> conditions = new ArrayList<Condition>() {
-			{
-				add(
-					DSL.field(
-						"applicationId"
-					).in(
-						_eventDefinitionRepository.
-							getEventDefinitionApplicationIds(false)
-					));
-				add(
-					DSL.field(
-						"eventDate"
-					).between(
-						_dslHelper.getDateParam(
-							rangeStartLocalDateTime, timeZoneId),
-						_dslHelper.getDateParam(
-							rangeEndLocalDateTime, timeZoneId)
-					));
-				add(
-					DSL.field(
-						"eventId"
-					).in(
-						_eventDefinitionRepository.getEventDefinitionNames(
-							false)
-					));
-			}
-		};
+		List<Condition> conditions = Arrays.asList(
+			DSL.field(
+				"applicationId"
+			).in(
+				_eventDefinitionRepository.getEventDefinitionApplicationIds(
+					false)
+			),
+			DSL.field(
+				"eventDate"
+			).between(
+				_dslHelper.getDateParam(rangeStartLocalDateTime, timeZoneId),
+				_dslHelper.getDateParam(rangeEndLocalDateTime, timeZoneId)
+			),
+			DSL.field(
+				"eventId"
+			).in(
+				_eventDefinitionRepository.getEventDefinitionNames(false)
+			),
+			DSL.field(
+				"individualId"
+			).eq(
+				individualId
+			));
 
 		if (channelId != null) {
 			conditions.add(
@@ -125,13 +121,6 @@ public class IndividualActivityRepositoryImpl
 					channelId
 				));
 		}
-
-		conditions.add(
-			DSL.field(
-				"individualId"
-			).eq(
-				individualId
-			));
 
 		return conditions;
 	}
