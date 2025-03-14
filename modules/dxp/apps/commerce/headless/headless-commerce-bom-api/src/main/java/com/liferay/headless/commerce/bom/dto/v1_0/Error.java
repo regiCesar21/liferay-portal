@@ -16,8 +16,6 @@ import com.liferay.portal.vulcan.graphql.annotation.GraphQLField;
 import com.liferay.portal.vulcan.graphql.annotation.GraphQLName;
 import com.liferay.portal.vulcan.util.ObjectMapperUtil;
 
-import io.swagger.v3.oas.annotations.media.Schema;
-
 import java.io.Serializable;
 
 import java.util.Iterator;
@@ -39,10 +37,10 @@ import javax.xml.bind.annotation.XmlRootElement;
  */
 @Generated("")
 @GraphQLName("Error")
-@JsonFilter("Liferay.Vulcan")
-@Schema(
+@io.swagger.v3.oas.annotations.media.Schema(
 	requiredProperties = {"errorCode", "errorDescription", "message", "status"}
 )
+@JsonFilter("Liferay.Vulcan")
 @XmlRootElement(name = "Error")
 public class Error implements Serializable {
 
@@ -54,7 +52,9 @@ public class Error implements Serializable {
 		return ObjectMapperUtil.unsafeReadValue(Error.class, json);
 	}
 
-	@Schema(description = "Internal error code mapping", example = "996")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "Internal error code mapping", example = "996"
+	)
 	public Integer getErrorCode() {
 		if (_errorCodeSupplier != null) {
 			errorCode = _errorCodeSupplier.get();
@@ -96,7 +96,9 @@ public class Error implements Serializable {
 	@JsonIgnore
 	private Supplier<Integer> _errorCodeSupplier;
 
-	@Schema(example = "Unable to find Item.")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		example = "Unable to find Item."
+	)
 	public String getErrorDescription() {
 		if (_errorDescriptionSupplier != null) {
 			errorDescription = _errorDescriptionSupplier.get();
@@ -138,7 +140,9 @@ public class Error implements Serializable {
 	@JsonIgnore
 	private Supplier<String> _errorDescriptionSupplier;
 
-	@Schema(example = "No CommerceBOMItem exists with commerceBOMItemId 31300")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		example = "No CommerceBOMItem exists with commerceBOMItemId 31300"
+	)
 	public String getMessage() {
 		if (_messageSupplier != null) {
 			message = _messageSupplier.get();
@@ -180,7 +184,9 @@ public class Error implements Serializable {
 	@JsonIgnore
 	private Supplier<String> _messageSupplier;
 
-	@Schema(description = "HTTP Status code", example = "404")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "HTTP Status code", example = "404"
+	)
 	public Integer getStatus() {
 		if (_statusSupplier != null) {
 			status = _statusSupplier.get();
@@ -310,8 +316,8 @@ public class Error implements Serializable {
 		return sb.toString();
 	}
 
-	@Schema(
-		accessMode = Schema.AccessMode.READ_ONLY,
+	@io.swagger.v3.oas.annotations.media.Schema(
+		accessMode = io.swagger.v3.oas.annotations.media.Schema.AccessMode.READ_ONLY,
 		defaultValue = "com.liferay.headless.commerce.bom.dto.v1_0.Error",
 		name = "x-class-name"
 	)

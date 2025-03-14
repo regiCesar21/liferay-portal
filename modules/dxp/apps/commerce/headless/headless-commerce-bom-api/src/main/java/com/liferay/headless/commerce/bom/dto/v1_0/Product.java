@@ -16,8 +16,6 @@ import com.liferay.portal.vulcan.graphql.annotation.GraphQLField;
 import com.liferay.portal.vulcan.graphql.annotation.GraphQLName;
 import com.liferay.portal.vulcan.util.ObjectMapperUtil;
 
-import io.swagger.v3.oas.annotations.media.Schema;
-
 import java.io.Serializable;
 
 import java.util.Iterator;
@@ -48,7 +46,7 @@ public class Product implements Serializable {
 		return ObjectMapperUtil.unsafeReadValue(Product.class, json);
 	}
 
-	@Schema(example = "sar2-fa3w-ffaw-waw3")
+	@io.swagger.v3.oas.annotations.media.Schema(example = "sar2-fa3w-ffaw-waw3")
 	public String getId() {
 		if (_idSupplier != null) {
 			id = _idSupplier.get();
@@ -87,7 +85,7 @@ public class Product implements Serializable {
 	@JsonIgnore
 	private Supplier<String> _idSupplier;
 
-	@Schema(example = "Product 1")
+	@io.swagger.v3.oas.annotations.media.Schema(example = "Product 1")
 	public String getName() {
 		if (_nameSupplier != null) {
 			name = _nameSupplier.get();
@@ -126,7 +124,7 @@ public class Product implements Serializable {
 	@JsonIgnore
 	private Supplier<String> _nameSupplier;
 
-	@Schema(example = "$ 12.99")
+	@io.swagger.v3.oas.annotations.media.Schema(example = "$ 12.99")
 	public String getPrice() {
 		if (_priceSupplier != null) {
 			price = _priceSupplier.get();
@@ -167,7 +165,7 @@ public class Product implements Serializable {
 	@JsonIgnore
 	private Supplier<String> _priceSupplier;
 
-	@Schema(example = "SKU01")
+	@io.swagger.v3.oas.annotations.media.Schema(example = "SKU01")
 	public String getSku() {
 		if (_skuSupplier != null) {
 			sku = _skuSupplier.get();
@@ -206,7 +204,9 @@ public class Product implements Serializable {
 	@JsonIgnore
 	private Supplier<String> _skuSupplier;
 
-	@Schema(example = "/product_thumbnail.jpg")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		example = "/product_thumbnail.jpg"
+	)
 	public String getThumbnailUrl() {
 		if (_thumbnailUrlSupplier != null) {
 			thumbnailUrl = _thumbnailUrlSupplier.get();
@@ -247,7 +247,7 @@ public class Product implements Serializable {
 	@JsonIgnore
 	private Supplier<String> _thumbnailUrlSupplier;
 
-	@Schema(example = "/productUrl")
+	@io.swagger.v3.oas.annotations.media.Schema(example = "/productUrl")
 	public String getUrl() {
 		if (_urlSupplier != null) {
 			url = _urlSupplier.get();
@@ -414,8 +414,8 @@ public class Product implements Serializable {
 		return sb.toString();
 	}
 
-	@Schema(
-		accessMode = Schema.AccessMode.READ_ONLY,
+	@io.swagger.v3.oas.annotations.media.Schema(
+		accessMode = io.swagger.v3.oas.annotations.media.Schema.AccessMode.READ_ONLY,
 		defaultValue = "com.liferay.headless.commerce.bom.dto.v1_0.Product",
 		name = "x-class-name"
 	)
