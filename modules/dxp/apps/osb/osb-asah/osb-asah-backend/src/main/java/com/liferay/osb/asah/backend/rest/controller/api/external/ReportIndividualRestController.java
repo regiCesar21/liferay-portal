@@ -92,21 +92,9 @@ public class ReportIndividualRestController extends BaseRestController {
 			@PathVariable String individualId,
 			@RequestParam(defaultValue = "0") Integer page) {
 
-		Page<? extends IndividualInterest> individualInterestPage = null;
-
-		if (_projectFeatureDog.isFeatureEnabled(
-				Feature.API_REPORTS_POSTGRES_CACHE,
-				ProjectIdThreadLocal.getProjectId())) {
-
-			individualInterestPage =
-				_individualInterestDog.getIndividualInterestPage(
-					channelId, individualId, _PAGE_SIZE, page * _PAGE_SIZE);
-		}
-		else {
-			individualInterestPage =
-				_bqIdentityInterestScoreDog.getBQIdentityInterestScorePage(
-					channelId, individualId, _PAGE_SIZE, page * _PAGE_SIZE);
-		}
+		Page<IndividualInterest> individualInterestPage =
+			_individualInterestDog.getIndividualInterestPage(
+				channelId, individualId, _PAGE_SIZE, page * _PAGE_SIZE);
 
 		return _toResultBagEntityModel(
 			_getLink(

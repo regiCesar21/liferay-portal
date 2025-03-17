@@ -7,6 +7,7 @@ package com.liferay.osb.asah.common.entity;
 
 import com.fasterxml.jackson.annotation.JsonAlias;
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import com.liferay.osb.asah.common.date.DateUtil;
@@ -42,6 +43,7 @@ public class IndividualInterest {
 
 		if (Objects.equals(_channelId, individualInterest._channelId) &&
 			Objects.equals(_identityId, individualInterest._identityId) &&
+			Objects.equals(_individualId, individualInterest._individualId) &&
 			Objects.equals(_interested, individualInterest._interested) &&
 			Objects.equals(_interestScore, individualInterest._interestScore) &&
 			Objects.equals(_keyword, individualInterest._keyword) &&
@@ -59,6 +61,11 @@ public class IndividualInterest {
 
 	public String getIdentityId() {
 		return _identityId;
+	}
+
+	@JsonIgnore
+	public String getIndividualId() {
+		return _individualId;
 	}
 
 	public Boolean getInterested() {
@@ -90,16 +97,12 @@ public class IndividualInterest {
 	@Override
 	public int hashCode() {
 		return Objects.hash(
-			_channelId, _identityId, _interested, _interestScore, _keyword,
-			_recordedDate);
+			_channelId, _identityId, _individualId, _interested, _interestScore,
+			_keyword, _recordedDate);
 	}
 
 	public Boolean isInterested() {
 		return _interested;
-	}
-
-	public void setInterested(Boolean interested) {
-		_interested = interested;
 	}
 
 	public void setChannelId(Long channelId) {
@@ -108,6 +111,14 @@ public class IndividualInterest {
 
 	public void setIdentityId(String identityId) {
 		_identityId = identityId;
+	}
+
+	public void setIndividualId(String individualId) {
+		_individualId = individualId;
+	}
+
+	public void setInterested(Boolean interested) {
+		_interested = interested;
 	}
 
 	public void setInterestScore(Double interestScore) {
@@ -126,6 +137,7 @@ public class IndividualInterest {
 
 	private Long _channelId;
 	private String _identityId;
+	private String _individualId;
 	private Boolean _interested;
 	private Double _interestScore;
 	private String _keyword;
