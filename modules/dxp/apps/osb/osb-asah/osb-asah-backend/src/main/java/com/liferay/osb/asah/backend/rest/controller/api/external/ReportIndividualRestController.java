@@ -65,40 +65,8 @@ public class ReportIndividualRestController extends BaseRestController {
 			@PathVariable String individualId,
 			@RequestParam(defaultValue = "0") Integer page) {
 
-		Page<ActivityDTO> activityDTOPage = null;
-
-		if (_projectFeatureDog.isFeatureEnabled(
-				Feature.API_REPORTS_POSTGRES_CACHE,
-				ProjectIdThreadLocal.getProjectId())) {
-
-			Page<IndividualActivity> individualActivityPage =
-				_individualActivityDog.getIndividualActivityPage(
-					channelId, individualId, page, _PAGE_SIZE,
-					TimeRange.LAST_30_DAYS);
-
-			activityDTOPage = individualActivityPage.map(ActivityDTO::new);
-		}
-		else {
-			Page<BQEvent> bqEventPage = _bqEventDog.getBQEventPage(
-				channelId, null, page, _PAGE_SIZE, TimeRange.LAST_30_DAYS,
-				_bqIdentityDog.getBQIdentityIds(individualId));
-
-			activityDTOPage = bqEventPage.map(
-				bqEvent -> {
-					try {
-						return new ActivityDTO(
-							bqEvent, individualId,
-							_objectMapper.readValue(
-								bqEvent.getContext(),
-								new TypeReference<Map<String, String>>() {
-								}),
-							_toMap(bqEvent.getProperties()));
-					}
-					catch (JsonProcessingException jsonProcessingException) {
-						throw new RuntimeException(jsonProcessingException);
-					}
-				});
-		}
+		Page<ActivityDTO> activityDTOPage = _getActivityDTOPage(
+			channelId, individualId, page);
 
 		ResultBag<ActivityDTO> activityResultBag = new ResultBag<>(
 			activityDTOPage.getContent(), activityDTOPage.getTotalElements());
@@ -210,6 +178,42 @@ public class ReportIndividualRestController extends BaseRestController {
 					channelId, page - 1, query)),
 			reportIndividualDTOResultBag,
 			this::_toReportIndividualDTOEntityModel);
+	}
+
+	private Page<ActivityDTO> _getActivityDTOPage(
+		Long channelId, String individualId, Integer page) {
+
+		if (_projectFeatureDog.isFeatureEnabled(
+				Feature.API_REPORTS_POSTGRES_CACHE,
+				ProjectIdThreadLocal.getProjectId())) {
+
+			Page<IndividualActivity> individualActivityPage =
+				_individualActivityDog.getIndividualActivityPage(
+					channelId, individualId, page, _PAGE_SIZE,
+					TimeRange.LAST_30_DAYS);
+
+			return individualActivityPage.map(ActivityDTO::new);
+		}
+
+		Page<BQEvent> bqEventPage = _bqEventDog.getBQEventPage(
+			channelId, null, page, _PAGE_SIZE, TimeRange.LAST_30_DAYS,
+			_bqIdentityDog.getBQIdentityIds(individualId));
+
+		return bqEventPage.map(
+			bqEvent -> {
+				try {
+					return new ActivityDTO(
+						bqEvent, individualId,
+						_objectMapper.readValue(
+							bqEvent.getContext(),
+							new TypeReference<Map<String, String>>() {
+							}),
+						_toMap(bqEvent.getProperties()));
+				}
+				catch (JsonProcessingException jsonProcessingException) {
+					throw new RuntimeException(jsonProcessingException);
+				}
+			});
 	}
 
 	private ResultBagEntityModel<ActivityDTO>
