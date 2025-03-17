@@ -57,7 +57,7 @@ FLEX_TEMPLATE_BUCKET=$(gcloud storage ls gs://${PROJECT_ID}-dataflow/flex-templa
 
 if [ -z "${FLEX_TEMPLATE_BUCKET}" ]
 then
-	echo "Unable to find GCS bucket for flex templates. Please run create_flex_template_bucket.sh and try again."
+	echo "Unable to find flex templates folder in gs://${PROJECT_ID}-dataflow/. Please run create_flex_template_folder.sh and try again."
 
 	exit 1
 fi
