@@ -1,6 +1,6 @@
 #!/bin/bash
 
-declare -A templates=( ["postgresql-replication-pipeline"]="com.liferay.osb.asah.dataflow.replication.PostgreSQLReplicationPipeline" )
+declare -A templates=(["postgresql-replication-pipeline"]="com.liferay.osb.asah.dataflow.replication.PostgreSQLReplicationPipeline")
 
 if [ "$#" -lt 2 ]
 then
@@ -33,7 +33,7 @@ fi
 
 if [ ! -f build/libs/osb-asah-dataflow-java-all.jar ]
 then
-	echo "Unable to find JAR file build/libs/osb-asah-dataflow-java.jar. Please run gradlew clean shadowJar --refresh-dependencies."
+	echo "Unable to find JAR file build/libs/osb-asah-dataflow-java.jar. Run gradlew clean shadowJar --refresh-dependencies."
 
 	exit 1
 fi
@@ -48,7 +48,7 @@ ARTIFACT_REPOSITORY=$(gcloud artifacts repositories list --location=${REGION} --
 
 if [ -z "${ARTIFACT_REPOSITORY}" ]
 then
-	echo "Unable to find repository in artifact registry. Please run create_flex_template_repository.sh and try again."
+	echo "Unable to find repository in artifact registry. Run create_flex_template_repository.sh and try again."
 
 	exit 1
 fi
@@ -57,7 +57,7 @@ FLEX_TEMPLATE_BUCKET=$(gcloud storage ls gs://${PROJECT_ID}-dataflow/flex-templa
 
 if [ -z "${FLEX_TEMPLATE_BUCKET}" ]
 then
-	echo "Unable to find flex templates folder in gs://${PROJECT_ID}-dataflow/. Please run create_flex_template_folder.sh and try again."
+	echo "Unable to find flex templates folder in gs://${PROJECT_ID}-dataflow/. Run create_flex_template_folder.sh and try again."
 
 	exit 1
 fi
