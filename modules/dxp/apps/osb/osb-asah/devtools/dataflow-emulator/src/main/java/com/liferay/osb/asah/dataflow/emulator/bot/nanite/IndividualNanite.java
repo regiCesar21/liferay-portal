@@ -19,6 +19,7 @@ import com.liferay.osb.asah.common.repository.SuppressionRepository;
 import com.liferay.osb.asah.common.util.ProjectIdThreadLocal;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.Comparator;
@@ -249,10 +250,11 @@ public class IndividualNanite {
 		bqIndividual.setModifiedDate(bqUser.getModifiedDate());
 		bqIndividual.setScreenName(bqUser.getScreenName());
 
-		Optional<Suppression> suppressionOptional =
-			_suppressionRepository.findByEmailAddress(bqUser.getEmailAddress());
+		List<Suppression> suppression =
+			_suppressionRepository.findByEmailAddressIn(
+				Arrays.asList(bqUser.getEmailAddress()));
 
-		if (suppressionOptional.isPresent()) {
+		if (!suppression.isEmpty()) {
 			bqIndividual.setSuppressed(true);
 		}
 

@@ -24,6 +24,7 @@ import com.liferay.osb.asah.common.spring.resource.ResourceUtil;
 import com.liferay.osb.asah.common.storage.GoogleStorage;
 import com.liferay.osb.asah.common.util.ListUtil;
 import com.liferay.osb.asah.common.util.ProjectIdThreadLocal;
+import com.liferay.osb.asah.common.util.SetUtil;
 import com.liferay.osb.asah.common.util.TimeOrderedUuidGenerator;
 
 import com.univocity.parsers.csv.CsvParser;
@@ -427,14 +428,14 @@ public class DataControlTaskDog {
 		return Date.from(localDateTime.toInstant(ZoneOffset.UTC));
 	}
 
-	private List<String> _readFile(File file) {
+	private Set<String> _readFile(File file) {
 		CsvParserSettings csvParserSettings = new CsvParserSettings();
 
 		csvParserSettings.setHeaderExtractionEnabled(false);
 
 		CsvParser csvParser = new CsvParser(csvParserSettings);
 
-		return ListUtil.map(csvParser.parseAll(file), row -> row[0]);
+		return SetUtil.map(csvParser.parseAll(file), row -> row[0]);
 	}
 
 	private boolean _skipSuppression(String emailAddress) {

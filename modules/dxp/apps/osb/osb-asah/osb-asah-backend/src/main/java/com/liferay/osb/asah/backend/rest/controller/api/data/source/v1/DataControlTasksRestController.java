@@ -8,7 +8,9 @@ package com.liferay.osb.asah.backend.rest.controller.api.data.source.v1;
 import com.liferay.osb.asah.common.dog.DataControlTaskDog;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -36,7 +38,7 @@ public class DataControlTasksRestController {
 	public ResponseEntity createDataControlTask(@RequestBody String json) {
 		JSONObject jsonObject = new JSONObject(json);
 
-		List<String> emailAddresses = new ArrayList<>();
+		Set<String> emailAddresses = new HashSet<>();
 
 		JSONArray emailAddressesJSONArray = jsonObject.getJSONArray(
 			"emailAddresses");

@@ -322,7 +322,7 @@ type DataControlTask {
 	batchId: String
 	completeDate: String
 	createDate: String
-	emailAddress: String
+	emailAddresses: [String]
 	id: String
 	ownerId: String
 	startDate: String

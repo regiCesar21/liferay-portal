@@ -145,7 +145,7 @@ public class DataControlNanite extends BaseNanite {
 			_auditEventDog.addAuditEvent(
 				String.format(
 					"Request created for %s",
-					dataControlTask.getEmailAddress()),
+					dataControlTask.getEmailAddresses()),
 				type.getAuditEventType(), dataControlTask.getUserId(),
 				dataControlTask.getUserName());
 

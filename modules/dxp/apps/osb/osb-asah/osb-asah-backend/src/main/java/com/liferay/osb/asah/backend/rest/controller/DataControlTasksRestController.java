@@ -20,6 +20,7 @@ import com.liferay.osb.asah.common.zip.ZipFileBuilder;
 import java.io.File;
 import java.io.FileInputStream;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -129,8 +130,16 @@ public class DataControlTasksRestController extends BaseRestController {
 		File file = CSVUtil.createCSVFile(
 			_fieldNames, "data-control-task-logs-",
 			stream.map(
-				dataControlTask -> _objectMapper.convertValue(
-					dataControlTask, JSONObject.class)
+				dataControlTask -> {
+					JSONObject jsonObject = _objectMapper.convertValue(
+						dataControlTask, JSONObject.class);
+
+					jsonObject.put(
+						"emailAddresses",
+						String.join(" ", dataControlTask.getEmailAddresses()));
+
+					return jsonObject;
+				}
 			).collect(
 				Collectors.toList()
 			));
@@ -166,7 +175,14 @@ public class DataControlTasksRestController extends BaseRestController {
 	private String _getExportFileName(
 		DataControlTask dataControlTask, File file) {
 
-		return dataControlTask.getEmailAddress() + "-" + file.getName();
+		List<String> emailAddresses = new ArrayList<>(
+			dataControlTask.getEmailAddresses());
+
+		if (emailAddresses.size() == 1) {
+			return emailAddresses.get(0) + "-" + file.getName();
+		}
+
+		return dataControlTask.getId() + "-" + file.getName();
 	}
 
 	private static final Map<String, String> _fieldNames =
@@ -175,7 +191,7 @@ public class DataControlTasksRestController extends BaseRestController {
 				put("batchId", "Request ID");
 				put("completeDate", "Complete Date");
 				put("createDate", "Request Date");
-				put("emailAddress", "Email");
+				put("emailAddresses", "Email");
 				put("startDate", "Process Date");
 				put("status", "Request Status");
 				put("type", "Request Type");
