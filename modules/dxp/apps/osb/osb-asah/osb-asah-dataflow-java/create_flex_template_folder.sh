@@ -8,7 +8,7 @@ FLEX_TEMPLATE_BUCKET=$(gcloud storage ls --project=${PROJECT_ID} | grep -e "^gs:
 
 if [ -z "${FLEX_TEMPLATE_BUCKET}" ]
 then
-	echo "Unable to find bucket ${BUCKET_NAME}"
+	echo "Unable to find bucket ${BUCKET_NAME}."
 
 	exit 1
 fi
