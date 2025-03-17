@@ -16,6 +16,7 @@ import com.liferay.osb.asah.common.util.BeanUtils;
 import java.util.Date;
 import java.util.Map;
 import java.util.Objects;
+import java.util.Set;
 
 import org.springframework.data.annotation.AccessType;
 import org.springframework.data.annotation.Id;
@@ -52,7 +53,7 @@ public final class DataControlTask implements Persistable<Long> {
 			Objects.equals(_completeDate, dataControlTask._completeDate) &&
 			Objects.equals(_continueDate, dataControlTask._continueDate) &&
 			Objects.equals(_createDate, dataControlTask._createDate) &&
-			Objects.equals(_emailAddress, dataControlTask._emailAddress) &&
+			Objects.equals(_emailAddresses, dataControlTask._emailAddresses) &&
 			Objects.equals(_id, dataControlTask._id) &&
 			Objects.equals(_startDate, dataControlTask._startDate) &&
 			Objects.equals(_status, dataControlTask._status) &&
@@ -110,8 +111,8 @@ public final class DataControlTask implements Persistable<Long> {
 	}
 
 	@AccessType(AccessType.Type.PROPERTY)
-	public String getEmailAddress() {
-		return _emailAddress;
+	public Set<String> getEmailAddresses() {
+		return _emailAddresses;
 	}
 
 	@AccessType(AccessType.Type.PROPERTY)
@@ -163,8 +164,8 @@ public final class DataControlTask implements Persistable<Long> {
 	@Override
 	public int hashCode() {
 		return Objects.hash(
-			_batchId, _completeDate, _continueDate, _createDate, _emailAddress,
-			_id, _type, _status, _userId, _userName);
+			_batchId, _completeDate, _continueDate, _createDate,
+			_emailAddresses, _id, _type, _status, _userId, _userName);
 	}
 
 	@JsonIgnore
@@ -199,8 +200,8 @@ public final class DataControlTask implements Persistable<Long> {
 		}
 	}
 
-	public void setEmailAddress(String emailAddress) {
-		_emailAddress = emailAddress;
+	public void setEmailAddresses(Set<String> emailAddresses) {
+		_emailAddresses = emailAddresses;
 	}
 
 	public void setId(Long id) {
@@ -275,7 +276,7 @@ public final class DataControlTask implements Persistable<Long> {
 	private Date _createDate;
 
 	@Transient
-	private String _emailAddress;
+	private Set<String> _emailAddresses;
 
 	@Transient
 	private Long _id;

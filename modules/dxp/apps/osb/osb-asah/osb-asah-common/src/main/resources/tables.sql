@@ -62,7 +62,7 @@ CREATE TABLE IF NOT EXISTS DataControlTask (
 	completeDate TIMESTAMPTZ,
 	continueDate TIMESTAMPTZ,
 	createDate TIMESTAMPTZ,
-	emailAddress TEXT,
+	emailAddresses TEXT[],
 	ownerId TEXT,
 	startDate TIMESTAMPTZ,
 	status TEXT,
