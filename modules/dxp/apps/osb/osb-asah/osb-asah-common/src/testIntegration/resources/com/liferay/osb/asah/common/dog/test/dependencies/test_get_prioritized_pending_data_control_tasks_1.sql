@@ -1,5 +1,5 @@
-INSERT INTO DataControlTask (id, batchId, createDate, emailAddress, status, type) VALUES (1111, 1234, timestamp '${now}', 'test1@liferay.com', 'PENDING', 'SUPPRESS');
-INSERT INTO DataControlTask (id, batchId, createDate, emailAddress, status, type) VALUES (2222, 2345, timestamp '${now}', 'test2@liferay.com', 'PENDING', 'ACCESS');
-INSERT INTO DataControlTask (id, batchId, createDate, emailAddress, status, type) VALUES (3333, 3456, timestamp '${now}', 'test3@liferay.com', 'PENDING', 'UNSUPPRESS');
-INSERT INTO DataControlTask (id, batchId, createDate, emailAddress, status, type) VALUES (4444, 1234, timestamp '${now}', 'test4@liferay.com', 'PENDING', 'ACCESS');
-INSERT INTO DataControlTask (id, batchId, createDate, emailAddress, status, type) VALUES (5555, 1234, timestamp '${now}', 'test5@liferay.com', 'PENDING', 'SUPPRESS');
+INSERT INTO DataControlTask (id, batchId, createDate, emailAddresses, status, type) VALUES (1111, 1234, timestamp '${now}', ARRAY ['test1@liferay.com'], 'PENDING', 'SUPPRESS');
+INSERT INTO DataControlTask (id, batchId, createDate, emailAddresses, status, type) VALUES (2222, 2345, timestamp '${now}', ARRAY ['test2@liferay.com'], 'PENDING', 'ACCESS');
+INSERT INTO DataControlTask (id, batchId, createDate, emailAddresses, status, type) VALUES (3333, 3456, timestamp '${now}', ARRAY ['test3@liferay.com'], 'PENDING', 'UNSUPPRESS');
+INSERT INTO DataControlTask (id, batchId, createDate, emailAddresses, status, type) VALUES (4444, 1234, timestamp '${now}', ARRAY ['test4@liferay.com'], 'PENDING', 'ACCESS');
+INSERT INTO DataControlTask (id, batchId, createDate, emailAddresses, status, type) VALUES (5555, 1234, timestamp '${now}', ARRAY ['test5@liferay.com'], 'PENDING', 'SUPPRESS');

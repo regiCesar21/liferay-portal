@@ -3,7 +3,9 @@
 		"batchId": "100",
 		"completeDate": "2022-01-27T20:07:53.251Z",
 		"createDate": "2022-01-27T20:07:53.251Z",
-		"emailAddress": "test@liferay.com",
+		"emailAddresses": [
+			"test@liferay.com"
+		],
 		"id": "1",
 		"ownerId": "1000",
 		"startDate": "2022-01-27T20:07:53.251Z",
@@ -14,7 +16,9 @@
 		"batchId": "101",
 		"completeDate": "2022-03-07T20:07:53.252Z",
 		"createDate": "2022-03-07T20:07:53.252Z",
-		"emailAddress": "john.doe@liferay.com",
+		"emailAddresses": [
+			"john.doe@liferay.com"
+		],
 		"id": "2",
 		"ownerId": "1000",
 		"startDate": "2022-03-07T20:07:53.252Z",
@@ -25,7 +29,9 @@
 		"batchId": "102",
 		"completeDate": "2022-03-08T20:07:53.251Z",
 		"createDate": "2022-03-08T20:07:53.251Z",
-		"emailAddress": "test@liferay.com",
+		"emailAddresses": [
+			"test@liferay.com"
+		],
 		"id": "3",
 		"ownerId": "1000",
 		"startDate": "2022-03-08T20:07:53.251Z",
@@ -36,7 +42,9 @@
 		"batchId": "102",
 		"completeDate": null,
 		"createDate": "2022-03-08T20:07:53.251Z",
-		"emailAddress": "jane.doe@liferay.com",
+		"emailAddresses": [
+			"jane.doe@liferay.com"
+		],
 		"id": "4",
 		"ownerId": "1000",
 		"startDate": null,

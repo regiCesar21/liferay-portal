@@ -49,7 +49,9 @@ import java.text.SimpleDateFormat;
 
 import java.time.LocalDateTime;
 
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
@@ -132,7 +134,7 @@ public class DataControlTaskDogTest
 			_dataControlTaskDog.getPrioritizedDataControlTasks(
 				null, null, null);
 
-		Assertions.assertEquals(6, dataControlTasks.size());
+		Assertions.assertEquals(5, dataControlTasks.size());
 
 		Assertions.assertEquals(
 			1,
@@ -155,15 +157,19 @@ public class DataControlTaskDogTest
 	@Test
 	public void testAddDataControlTasksUnsuppress() {
 		_dataControlTaskDog.addDataControlTasks(
-			Collections.singletonList("test@liferay.com"), null, null,
+			Collections.singleton("test@liferay.com"), null, null,
 			Collections.singletonList(
 				DataControlTask.Type.UNSUPPRESS.toString()),
 			"12345", "Test Test");
 
-		Optional<Suppression> suppressionOptional =
-			_suppressionRepository.findByEmailAddress("test@liferay.com");
+		List<Suppression> suppressions =
+			_suppressionRepository.findByEmailAddressIn(
+				Collections.singletonList("test@liferay.com"));
 
-		Suppression suppression = suppressionOptional.orElse(null);
+		Assertions.assertEquals(
+			1, suppressions.size(), suppressions.toString());
+
+		Suppression suppression = suppressions.get(0);
 
 		Assertions.assertNotNull(suppression);
 		Assertions.assertTrue(suppression.getHidden());
@@ -479,14 +485,15 @@ public class DataControlTaskDogTest
 				"jane.doe@liferay.com", "john.doe@liferay.com",
 				"test@liferay.com", "test@liferay.com"),
 			_dataControlTaskDog.getDataControlTaskPage(
-				null, null, null, 0, 10, Sort.asc("emailAddress"), null, null));
+				null, null, null, 0, 10, Sort.asc("emailAddresses"), null,
+				null));
 		_checkResults(
 			4,
 			Arrays.asList(
 				"test@liferay.com", "test@liferay.com", "john.doe@liferay.com",
 				"jane.doe@liferay.com"),
 			_dataControlTaskDog.getDataControlTaskPage(
-				null, null, null, 0, 10, Sort.desc("emailAddress"), null,
+				null, null, null, 0, 10, Sort.desc("emailAddresses"), null,
 				null));
 		_checkResults(
 			4,
@@ -686,7 +693,7 @@ public class DataControlTaskDogTest
 	@Test
 	public void testGetSuppressedEmailAddresses() {
 		_dataControlTaskDog.addDataControlTasks(
-			Arrays.asList(
+			SetUtil.of(
 				"test1@liferay.com", "test1@liferay.com", "test2@liferay.com"),
 			null, "1000",
 			Collections.singletonList(DataControlTask.Type.SUPPRESS.toString()),
@@ -745,21 +752,22 @@ public class DataControlTaskDogTest
 			DataControlTaskStatus.COMPLETED.toString(),
 			dataControlTask.getStatus());
 
-		Optional<BQIndividual> bqIndividualOptional =
-			_bqIndividualRepository.findByEmailAddress(
-				dataControlTask.getEmailAddress());
+		for (String emailAddress : dataControlTask.getEmailAddresses()) {
+			Optional<BQIndividual> bqIndividualOptional =
+				_bqIndividualRepository.findByEmailAddress(emailAddress);
 
-		BQIndividual bqIndividual = bqIndividualOptional.orElse(null);
+			BQIndividual bqIndividual = bqIndividualOptional.orElse(null);
 
-		Assertions.assertNotNull(bqIndividual);
+			Assertions.assertNotNull(bqIndividual);
 
-		Assertions.assertTrue(bqIndividual.getSuppressed());
+			Assertions.assertTrue(bqIndividual.getSuppressed());
+		}
 
-		Optional<Suppression> suppressionOptional =
-			_suppressionRepository.findByEmailAddress(
-				dataControlTask.getEmailAddress());
+		List<Suppression> suppressions =
+			_suppressionRepository.findByEmailAddressIn(
+				new ArrayList<>(dataControlTask.getEmailAddresses()));
 
-		Assertions.assertTrue(suppressionOptional.isPresent());
+		Assertions.assertFalse(suppressions.isEmpty());
 
 		Map<Long, String> expectedSegmentStates = new HashMap<Long, String>() {
 			{
@@ -822,21 +830,22 @@ public class DataControlTaskDogTest
 			DataControlTaskStatus.RUNNING.toString(),
 			dataControlTask.getStatus());
 
-		Optional<BQIndividual> bqIndividualOptional =
-			_bqIndividualRepository.findByEmailAddress(
-				dataControlTask.getEmailAddress());
+		for (String emailAddress : dataControlTask.getEmailAddresses()) {
+			Optional<BQIndividual> bqIndividualOptional =
+				_bqIndividualRepository.findByEmailAddress(emailAddress);
 
-		BQIndividual bqIndividual = bqIndividualOptional.orElse(null);
+			BQIndividual bqIndividual = bqIndividualOptional.orElse(null);
 
-		Assertions.assertNotNull(bqIndividual);
+			Assertions.assertNotNull(bqIndividual);
 
-		Assertions.assertFalse(bqIndividual.getSuppressed());
+			Assertions.assertFalse(bqIndividual.getSuppressed());
+		}
 
-		Optional<Suppression> suppressionOptional =
-			_suppressionRepository.findByEmailAddress(
-				dataControlTask.getEmailAddress());
+		List<Suppression> suppressions =
+			_suppressionRepository.findByEmailAddressIn(
+				new ArrayList<String>(dataControlTask.getEmailAddresses()));
 
-		Assertions.assertFalse(suppressionOptional.isPresent());
+		Assertions.assertTrue(suppressions.isEmpty());
 
 		Map<Long, String> expectedSegmentStates = new HashMap<Long, String>() {
 			{
@@ -918,7 +927,7 @@ public class DataControlTaskDogTest
 		Assertions.assertEquals(
 			Collections.emptyList(),
 			_bqIdentityRepository.getBQIdentityIds(
-				bqIndividual.getId(), false));
+				Arrays.asList(bqIndividual.getId()), false));
 
 		Assertions.assertEquals(
 			0,
@@ -927,10 +936,11 @@ public class DataControlTaskDogTest
 				LocalDateTime.parse("2023-08-10T00:00:00"),
 				LocalDateTime.parse("2023-07-15T00:00:00"), "UTC"));
 
-		Optional<Suppression> suppressionOptional =
-			_suppressionRepository.findByEmailAddress("test1@liferay.com");
+		List<Suppression> suppressions =
+			_suppressionRepository.findByEmailAddressIn(
+				Arrays.asList("test1@liferay.com"));
 
-		Assertions.assertFalse(suppressionOptional.isPresent());
+		Assertions.assertTrue(suppressions.isEmpty());
 	}
 
 	private void _checkResults(
@@ -940,11 +950,17 @@ public class DataControlTaskDogTest
 		Assertions.assertEquals(
 			expectedTotal, dataControlTaskPage.getTotalElements());
 
-		Assertions.assertEquals(
-			expectedResults,
-			ListUtil.map(
-				dataControlTaskPage.getContent(),
-				DataControlTask::getEmailAddress));
+		List<String> emailAddresses = dataControlTaskPage.getContent(
+		).stream(
+		).map(
+			DataControlTask::getEmailAddresses
+		).flatMap(
+			Collection::stream
+		).collect(
+			Collectors.toList()
+		);
+
+		Assertions.assertEquals(expectedResults, emailAddresses);
 	}
 
 	private static final Log _log = LogFactory.getLog(

@@ -10,6 +10,7 @@ import com.liferay.osb.asah.common.entity.DataControlTask;
 import com.liferay.osb.asah.common.model.DataControlTaskStatus;
 import com.liferay.osb.asah.common.model.Sort;
 import com.liferay.osb.asah.common.repository.DataControlTaskRepository;
+import com.liferay.osb.asah.common.util.SetUtil;
 import com.liferay.osb.asah.test.util.annotation.SQLResource;
 import com.liferay.osb.asah.test.util.configuration.JDBCTestConfiguration;
 
@@ -53,7 +54,8 @@ public class DataControlTaskRepositoryTest
 
 		dataControlTask1.setBatchId(123456L);
 		dataControlTask1.setCreateDate(date1);
-		dataControlTask1.setEmailAddress("joe.bloggs@liferay.com");
+		dataControlTask1.setEmailAddresses(
+			SetUtil.of("joe.bloggs@liferay.com"));
 		dataControlTask1.setOwnerId("1");
 		dataControlTask1.setStatus(
 			String.valueOf(DataControlTaskStatus.PENDING));
@@ -64,7 +66,7 @@ public class DataControlTaskRepositoryTest
 		dataControlTask2.setBatchId(123457L);
 		dataControlTask2.setCompleteDate(date1);
 		dataControlTask2.setCreateDate(date1);
-		dataControlTask2.setEmailAddress("john.doe@liferay.com");
+		dataControlTask2.setEmailAddresses(SetUtil.of("john.doe@liferay.com"));
 		dataControlTask2.setOwnerId("2");
 		dataControlTask2.setStartDate(date1);
 		dataControlTask2.setStatus(
@@ -76,7 +78,7 @@ public class DataControlTaskRepositoryTest
 		dataControlTask3.setBatchId(123457L);
 		dataControlTask3.setCompleteDate(date1);
 		dataControlTask3.setCreateDate(date1);
-		dataControlTask3.setEmailAddress("jane.doe@liferay.com");
+		dataControlTask3.setEmailAddresses(SetUtil.of("jane.doe@liferay.com"));
 		dataControlTask3.setOwnerId("3");
 		dataControlTask3.setStartDate(date1);
 		dataControlTask3.setStatus(
@@ -89,7 +91,7 @@ public class DataControlTaskRepositoryTest
 
 		dataControlTask4.setBatchId(123458L);
 		dataControlTask4.setCreateDate(date2);
-		dataControlTask4.setEmailAddress("jack.doe@liferay.com");
+		dataControlTask4.setEmailAddresses(SetUtil.of("jack.doe@liferay.com"));
 		dataControlTask4.setOwnerId("7");
 		dataControlTask4.setStatus(
 			String.valueOf(DataControlTaskStatus.PENDING));
@@ -99,7 +101,7 @@ public class DataControlTaskRepositoryTest
 
 		dataControlTask5.setBatchId(123458L);
 		dataControlTask5.setCreateDate(date2);
-		dataControlTask5.setEmailAddress("jack.doe@liferay.com");
+		dataControlTask5.setEmailAddresses(SetUtil.of("jack.doe@liferay.com"));
 		dataControlTask5.setOwnerId("7");
 		dataControlTask5.setStatus(
 			String.valueOf(DataControlTaskStatus.PENDING));
@@ -109,7 +111,7 @@ public class DataControlTaskRepositoryTest
 
 		dataControlTask6.setBatchId(123458L);
 		dataControlTask6.setCreateDate(date2);
-		dataControlTask6.setEmailAddress("jack.doe@liferay.com");
+		dataControlTask6.setEmailAddresses(SetUtil.of("jack.doe@liferay.com"));
 		dataControlTask6.setOwnerId("7");
 		dataControlTask6.setStatus(
 			String.valueOf(DataControlTaskStatus.PENDING));
@@ -121,7 +123,7 @@ public class DataControlTaskRepositoryTest
 
 		dataControlTask7.setBatchId(123459L);
 		dataControlTask7.setCreateDate(date3);
-		dataControlTask7.setEmailAddress("jeff.doe@liferay.com");
+		dataControlTask7.setEmailAddresses(SetUtil.of("jeff.doe@liferay.com"));
 		dataControlTask7.setOwnerId("7");
 		dataControlTask7.setStatus(
 			String.valueOf(DataControlTaskStatus.PENDING));
@@ -131,7 +133,7 @@ public class DataControlTaskRepositoryTest
 
 		dataControlTask8.setBatchId(123459L);
 		dataControlTask8.setCreateDate(date3);
-		dataControlTask8.setEmailAddress("jeff.doe@liferay.com");
+		dataControlTask8.setEmailAddresses(SetUtil.of("jeff.doe@liferay.com"));
 		dataControlTask8.setOwnerId("7");
 		dataControlTask8.setStatus(
 			String.valueOf(DataControlTaskStatus.PENDING));
@@ -143,7 +145,7 @@ public class DataControlTaskRepositoryTest
 
 		dataControlTask9.setBatchId(123460L);
 		dataControlTask9.setCreateDate(date4);
-		dataControlTask9.setEmailAddress("jane.doe@liferay.com");
+		dataControlTask9.setEmailAddresses(SetUtil.of("jane.doe@liferay.com"));
 		dataControlTask9.setOwnerId("7");
 		dataControlTask9.setStatus(
 			String.valueOf(DataControlTaskStatus.COMPLETED));
@@ -205,7 +207,8 @@ public class DataControlTaskRepositoryTest
 		DataControlTask dataControlTask = dataControlTaskOptional.get();
 
 		Assertions.assertEquals(
-			"jane.doe@liferay.com", dataControlTask.getEmailAddress());
+			SetUtil.of("jane.doe@liferay.com"),
+			dataControlTask.getEmailAddresses());
 		Assertions.assertEquals(
 			String.valueOf(DataControlTaskStatus.COMPLETED),
 			dataControlTask.getStatus());
@@ -367,7 +370,8 @@ public class DataControlTaskRepositoryTest
 		DataControlTask dataControlTask = dataControlTasks.get(0);
 
 		Assertions.assertEquals(
-			"joe.bloggs@liferay.com", dataControlTask.getEmailAddress());
+			SetUtil.of("joe.bloggs@liferay.com"),
+			dataControlTask.getEmailAddresses());
 	}
 
 	@Test
@@ -384,7 +388,8 @@ public class DataControlTaskRepositoryTest
 		DataControlTask dataControlTask = dataControlTasks.get(0);
 
 		Assertions.assertEquals(
-			"joe.bloggs@liferay.com", dataControlTask.getEmailAddress());
+			SetUtil.of("joe.bloggs@liferay.com"),
+			dataControlTask.getEmailAddresses());
 	}
 
 	@Override
