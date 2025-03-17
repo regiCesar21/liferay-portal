@@ -3,85 +3,85 @@
 	"name": "PostgreSQL Replication Importer",
 	"parameters": [
 		{
-			"helpText": "Batch size to write to PostgreSQL.",
+			"helpText": "",
 			"isOptional": true,
 			"label": "Batch size",
 			"name": "batchSize"
 		},
 		{
-			"helpText": "Name of the CloudSQL connection.",
+			"helpText": "",
 			"isOptional": false,
 			"label": "CloudSQL Connection Name",
 			"name": "cloudSQLConnectionName"
 		},
 		{
-			"helpText": "Name of database in the CloudSQL instance to run in.",
+			"helpText": "",
 			"isOptional": false,
 			"label": "Database Name",
 			"name": "databaseName"
 		},
 		{
-			"helpText": "Database User to use in the CloudSQL instance.",
+			"helpText": "",
 			"isOptional": false,
 			"label": "Database User",
 			"name": "databaseUser"
 		},
 		{
-			"helpText": "Max Number of Connections to Data Source.",
+			"helpText": "",
 			"isOptional": true,
 			"label": "Data Source Max Connections",
 			"name": "datasourceMaxConnections"
 		},
 		{
-			"helpText": "Comma-separated list of column names corresponding to the fields in the CSV files.",
+			"helpText": "",
 			"isOptional": false,
 			"label": "Individual Activity Columns",
 			"name": "individualActivityColumns"
 		},
 		{
-			"helpText": "Input Directory of Individual Activity Data.",
+			"helpText": "",
 			"isOptional": false,
 			"label": "Individual Activity Input Directory",
 			"name": "individualActivityInputDirectory"
 		},
 		{
-			"helpText": "Comma-separated list of column names corresponding to the fields in the CSV files.",
+			"helpText": "",
 			"isOptional": false,
 			"label": "Individual Columns",
 			"name": "individualColumns"
 		},
 		{
-			"helpText": "Input Directory of Individual Data.",
+			"helpText": "",
 			"isOptional": false,
 			"label": "Individual Input Directory",
 			"name": "individualInputDirectory"
 		},
 		{
-			"helpText": "Comma-separated list of column names corresponding to the fields in the CSV files.",
+			"helpText": "",
 			"isOptional": false,
 			"label": "Individual Interest Columns",
 			"name": "individualInterestColumns"
 		},
 		{
-			"helpText": "Input Directory of Individual Interest Data.",
+			"helpText": "",
 			"isOptional": false,
 			"label": "Individual Interest Input Directory",
 			"name": "individualInterestInputDirectory"
 		},
 		{
-			"helpText": "Comma-separated list of column names corresponding to the fields in the CSV files.",
+			"helpText": "",
 			"isOptional": false,
 			"label": "Individual Segment Columns",
 			"name": "individualSegmentColumns"
 		},
 		{
-			"helpText": "Input Directory of Individual Segment Data.",
+			"helpText": "",
 			"isOptional": false,
 			"label": "Individual Segment Input Directory",
 			"name": "individualSegmentInputDirectory"
 		},
 		{
-			"helpText": "Analytics Cloud project ID.",
+			"helpText": "",
 			"isOptional": false,
 			"label": "Project ID",
 			"name": "projectId"
