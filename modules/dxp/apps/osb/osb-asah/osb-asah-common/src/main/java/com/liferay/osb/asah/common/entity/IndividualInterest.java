@@ -40,11 +40,12 @@ public class IndividualInterest {
 
 		IndividualInterest individualInterest = (IndividualInterest)obj;
 
-		if (Objects.equals(channelId, individualInterest.channelId) &&
-			Objects.equals(interested, individualInterest.interested) &&
-			Objects.equals(interestScore, individualInterest.interestScore) &&
-			Objects.equals(keyword, individualInterest.keyword) &&
-			Objects.equals(recordedDate, individualInterest.recordedDate)) {
+		if (Objects.equals(_channelId, individualInterest._channelId) &&
+			Objects.equals(_identityId, individualInterest._identityId) &&
+			Objects.equals(_interested, individualInterest._interested) &&
+			Objects.equals(_interestScore, individualInterest._interestScore) &&
+			Objects.equals(_keyword, individualInterest._keyword) &&
+			Objects.equals(_recordedDate, individualInterest._recordedDate)) {
 
 			return true;
 		}
@@ -53,19 +54,23 @@ public class IndividualInterest {
 	}
 
 	public Long getChannelId() {
-		return channelId;
+		return _channelId;
+	}
+
+	public String getIdentityId() {
+		return _identityId;
 	}
 
 	public Boolean getInterested() {
-		return interested;
+		return _interested;
 	}
 
 	public Double getInterestScore() {
-		return interestScore;
+		return _interestScore;
 	}
 
 	public String getKeyword() {
-		return keyword;
+		return _keyword;
 	}
 
 	@JsonAlias("recordedDate")
@@ -75,49 +80,55 @@ public class IndividualInterest {
 	)
 	@JsonProperty("dateRecorded")
 	public Date getRecordedDate() {
-		if (recordedDate == null) {
+		if (_recordedDate == null) {
 			return null;
 		}
 
-		return new Date(recordedDate.getTime());
+		return new Date(_recordedDate.getTime());
 	}
 
 	@Override
 	public int hashCode() {
 		return Objects.hash(
-			channelId, interested, interestScore, keyword, recordedDate);
+			_channelId, _identityId, _interested, _interestScore, _keyword,
+			_recordedDate);
 	}
 
 	public Boolean isInterested() {
-		return interested;
-	}
-
-	public void setChannelId(Long channelId) {
-		this.channelId = channelId;
+		return _interested;
 	}
 
 	public void setInterested(Boolean interested) {
-		this.interested = interested;
+		_interested = interested;
+	}
+
+	public void setChannelId(Long channelId) {
+		_channelId = channelId;
+	}
+
+	public void setIdentityId(String identityId) {
+		_identityId = identityId;
 	}
 
 	public void setInterestScore(Double interestScore) {
-		this.interestScore = interestScore;
+		_interestScore = interestScore;
 	}
 
 	public void setKeyword(String keyword) {
-		this.keyword = keyword;
+		_keyword = keyword;
 	}
 
 	public void setRecordedDate(Date recordedDate) {
 		if (recordedDate != null) {
-			this.recordedDate = new Date(recordedDate.getTime());
+			_recordedDate = new Date(recordedDate.getTime());
 		}
 	}
 
-	protected Long channelId;
-	protected Boolean interested;
-	protected Double interestScore;
-	protected String keyword;
-	protected Date recordedDate;
+	private Long _channelId;
+	private String _identityId;
+	private Boolean _interested;
+	private Double _interestScore;
+	private String _keyword;
+	private Date _recordedDate;
 
 }

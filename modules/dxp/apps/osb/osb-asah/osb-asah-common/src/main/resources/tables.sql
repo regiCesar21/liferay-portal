@@ -279,6 +279,7 @@ CREATE TABLE IF NOT EXISTS IndividualActivity (
 
 CREATE TABLE IF NOT EXISTS IndividualInterest (
 	channelId BIGINT,
+	indentityId TEXT,
 	individualId TEXT,
 	interested BOOLEAN,
 	interestScore DOUBLE PRECISION,

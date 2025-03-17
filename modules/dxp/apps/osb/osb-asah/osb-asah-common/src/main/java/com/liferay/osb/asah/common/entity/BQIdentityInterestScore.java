@@ -8,7 +8,6 @@ package com.liferay.osb.asah.common.entity;
 import com.liferay.osb.asah.common.util.BeanUtils;
 
 import java.util.Map;
-import java.util.Objects;
 
 /**
  * @author Marcellus Tavares
@@ -21,42 +20,5 @@ public class BQIdentityInterestScore extends IndividualInterest {
 	public BQIdentityInterestScore(Map<String, Object> source) {
 		BeanUtils.copyProperties(source, this);
 	}
-
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj) {
-			return true;
-		}
-
-		if (!super.equals(obj) || !(obj instanceof BQIdentityInterestScore)) {
-			return false;
-		}
-
-		BQIdentityInterestScore bqIdentityInterestScore =
-			(BQIdentityInterestScore)obj;
-
-		if (Objects.equals(_identityId, bqIdentityInterestScore._identityId)) {
-			return true;
-		}
-
-		return false;
-	}
-
-	public String getIdentityId() {
-		return _identityId;
-	}
-
-	@Override
-	public int hashCode() {
-		return Objects.hash(
-			_identityId, channelId, interested, interestScore, keyword,
-			recordedDate);
-	}
-
-	public void setIdentityId(String identityId) {
-		_identityId = identityId;
-	}
-
-	private String _identityId;
 
 }
