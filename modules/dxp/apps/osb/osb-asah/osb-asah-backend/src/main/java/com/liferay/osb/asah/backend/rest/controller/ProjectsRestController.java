@@ -13,7 +13,7 @@ import com.liferay.osb.asah.common.dog.ProjectDog;
 import com.liferay.osb.asah.common.dog.ProjectFeatureDog;
 import com.liferay.osb.asah.common.entity.DataSource;
 import com.liferay.osb.asah.common.entity.Preference;
-import com.liferay.osb.asah.common.entity.ProjectFeature;
+import com.liferay.osb.asah.common.model.Feature;
 import com.liferay.osb.asah.common.util.ListUtil;
 import com.liferay.osb.asah.common.util.ProjectIdThreadLocal;
 
@@ -160,15 +160,12 @@ public class ProjectsRestController extends BaseRestController {
 	}
 
 	private List<String> _getEnabledFeatures() {
-		List<ProjectFeature> enabledFeatures =
-			_projectFeatureDog.getEnabledFeatures(
-				ProjectIdThreadLocal.getProjectId());
+		List<Feature> enabledFeatures = _projectFeatureDog.getEnabledFeatures(
+			ProjectIdThreadLocal.getProjectId());
 
-		Stream<ProjectFeature> stream = enabledFeatures.stream();
+		Stream<Feature> stream = enabledFeatures.stream();
 
 		return stream.map(
-			ProjectFeature::getFeature
-		).map(
 			String::valueOf
 		).collect(
 			Collectors.toUnmodifiableList()
