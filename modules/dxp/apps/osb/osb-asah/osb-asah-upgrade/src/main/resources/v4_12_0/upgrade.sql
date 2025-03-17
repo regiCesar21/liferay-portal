@@ -12,12 +12,13 @@ CREATE TABLE IF NOT EXISTS IndividualActivity (
 	context JSON,
 	eventDate TIMESTAMPTZ,
 	eventId TEXT,
-	properties JSON,
-	individualId TEXT
+	individualId TEXT,
+	properties JSON
 );
 
 CREATE TABLE IF NOT EXISTS IndividualInterest (
 	channelId BIGINT,
+	indentityId TEXT,
 	individualId TEXT,
 	interested BOOLEAN,
 	interestScore DOUBLE PRECISION,
@@ -33,3 +34,7 @@ CREATE TABLE IF NOT EXISTS IndividualSegment (
 	segmentId BIGINT,
 	status TEXT
 );
+
+CREATE INDEX IF NOT EXISTS IX_INDIVIDUALACTIVITY_EDII ON IndividualActivity (eventDate, individualId);
+
+CREATE INDEX IF NOT EXISTS IX_INDIVIDUALINTEREST_II ON IndividualInterest (individualId);
