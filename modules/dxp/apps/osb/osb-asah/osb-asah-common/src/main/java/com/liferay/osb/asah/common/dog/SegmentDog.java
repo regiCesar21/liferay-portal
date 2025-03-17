@@ -180,9 +180,16 @@ public class SegmentDog {
 		return segmentOptional.orElse(null);
 	}
 
+	public List<Segment> getBQIndividualSegments(List<String> individualIds) {
+		List<Long> segmentIds = _bqMembershipDog.getIndividualSegmentIds(
+			individualIds);
+
+		return IterableUtils.toList(_segmentRepository.findAllById(segmentIds));
+	}
+
 	public List<Segment> getBQIndividualSegments(String individualId) {
 		List<Long> segmentIds = _bqMembershipDog.getIndividualSegmentIds(
-			individualId);
+			Collections.singletonList(individualId));
 
 		return IterableUtils.toList(_segmentRepository.findAllById(segmentIds));
 	}

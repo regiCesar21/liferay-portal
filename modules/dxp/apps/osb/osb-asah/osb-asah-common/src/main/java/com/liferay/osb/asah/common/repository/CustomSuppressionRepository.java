@@ -8,7 +8,6 @@ package com.liferay.osb.asah.common.repository;
 import com.liferay.osb.asah.common.entity.Suppression;
 
 import java.util.List;
-import java.util.Optional;
 
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jdbc.repository.query.Modifying;
@@ -26,7 +25,7 @@ public interface CustomSuppressionRepository {
 
 	public List<Suppression> findAll();
 
-	public Optional<Suppression> findByEmailAddress(String emailAddress);
+	public List<Suppression> findByEmailAddressIn(List<String> emailAddresses);
 
 	public List<Suppression> getSuppressions(@Nullable String filterString);
 

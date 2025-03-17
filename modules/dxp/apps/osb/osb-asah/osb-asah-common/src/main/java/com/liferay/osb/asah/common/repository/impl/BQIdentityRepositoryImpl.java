@@ -93,7 +93,7 @@ public class BQIdentityRepositoryImpl
 
 	@Override
 	public List<String> getBQIdentityIds(
-		String bqIndividualId, @Nullable Boolean ignoreSuppression) {
+		List<String> bqIndividualIds, @Nullable Boolean ignoreSuppression) {
 
 		Condition condition;
 
@@ -101,8 +101,8 @@ public class BQIdentityRepositoryImpl
 			condition = DSL.and(
 				DSL.field(
 					"individualId", String.class
-				).eq(
-					bqIndividualId
+				).in(
+					bqIndividualIds
 				),
 				DSL.field(
 					"individualId"

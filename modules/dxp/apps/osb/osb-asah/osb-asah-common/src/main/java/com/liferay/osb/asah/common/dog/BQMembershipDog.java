@@ -138,9 +138,9 @@ public class BQMembershipDog {
 		return _bqMembershipRepository.countBySegmentId(segmentId);
 	}
 
-	public List<Long> getIndividualSegmentIds(String individualId) {
-		return _bqMembershipRepository.findSegmentIdByIndividualId(
-			individualId);
+	public List<Long> getIndividualSegmentIds(List<String> individualIds) {
+		return _bqMembershipRepository.findSegmentIdByIndividualIdsIn(
+			individualIds);
 	}
 
 	public MembershipCountSnapshot getMembershipCountSnapshot(Segment segment) {

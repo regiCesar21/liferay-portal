@@ -13,7 +13,6 @@ import com.liferay.osb.asah.common.repository.executor.QueryExecutor;
 import com.liferay.osb.asah.common.repository.helper.DSLHelper;
 
 import java.util.List;
-import java.util.Optional;
 
 import org.apache.commons.lang3.StringUtils;
 
@@ -73,8 +72,8 @@ public class SuppressionRepositoryImpl
 	}
 
 	@Override
-	public Optional<Suppression> findByEmailAddress(String emailAddress) {
-		return _queryExecutor.queryForObject(
+	public List<Suppression> findByEmailAddressIn(List<String> emailAddresses) {
+		return _queryExecutor.queryForList(
 			Suppression::new,
 			_dslContext.select(
 			).from(
@@ -82,8 +81,8 @@ public class SuppressionRepositoryImpl
 			).where(
 				DSL.field(
 					"emailAddress"
-				).eq(
-					emailAddress
+				).in(
+					emailAddresses
 				)
 			));
 	}

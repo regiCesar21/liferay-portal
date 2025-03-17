@@ -296,11 +296,16 @@ public class BigQueryDataExporter implements DataExporter {
 	private void _runBigQueryDataControlExportJob(
 		String exportBucket, String exportBucketFolder, String tableName) {
 
-		String emailAddress = StringUtils.lowerCase(
-			_dataControlTask.getEmailAddress());
 		String query = null;
 
 		if (tableName.equalsIgnoreCase("BQEvent")) {
+			List<String> emailAddressHashedList = new ArrayList<>();
+
+			for (String emailAddress : _dataControlTask.getEmailAddresses()) {
+				emailAddressHashedList.add(
+					DigestUtils.sha256Hex(StringUtils.lowerCase(emailAddress)));
+			}
+
 			query = _dslContext.select(
 				_getFields()
 			).from(
@@ -308,12 +313,20 @@ public class BigQueryDataExporter implements DataExporter {
 			).where(
 				DSL.field(
 					"emailAddressHashed"
-				).eq(
-					DigestUtils.sha256Hex(emailAddress)
+				).in(
+					emailAddressHashedList
 				)
+			).orderBy(
+				DSL.field("emailAddressHashed")
 			).toString();
 		}
 		else if (tableName.equalsIgnoreCase("BQExpandoValue")) {
+			List<String> emailAddresses = new ArrayList<>();
+
+			for (String emailAddress : _dataControlTask.getEmailAddresses()) {
+				emailAddresses.add(StringUtils.lowerCase(emailAddress));
+			}
+
 			query = _dslContext.select(
 				DSL.field("user.emailAddress"), DSL.field("expandoValue.*")
 			).from(
@@ -337,17 +350,25 @@ public class BigQueryDataExporter implements DataExporter {
 			).where(
 				DSL.field(
 					"user.emailAddress"
-				).eq(
-					emailAddress
+				).in(
+					emailAddresses
 				)
+			).orderBy(
+				DSL.field("emailAddressHashed")
 			).toString();
 		}
 		else if (tableName.equalsIgnoreCase("BQUser")) {
+			List<String> quotedEmailAddresses = new ArrayList<>();
+
+			for (String emailAddress : _dataControlTask.getEmailAddresses()) {
+				quotedEmailAddresses.add(StringUtils.wrap(emailAddress, "'"));
+			}
+
 			query = String.join(
 				"", "SELECT * EXCEPT(fields), (SELECT '{' || STRING_AGG(",
 				"format('\"%s\": \"%s\"', name, value)) || '}' FROM UNNEST(",
-				"fields)) AS fields FROM ", "BQUser", " WHERE emailAddress = '",
-				emailAddress, "'");
+				"fields)) AS fields FROM ", "BQUser", " WHERE emailAddress IN ",
+				"(", String.join(",", quotedEmailAddresses), ")");
 		}
 
 		_bigQueryQueryExecutor.queryExecute(

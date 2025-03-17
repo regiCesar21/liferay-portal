@@ -8,6 +8,7 @@ package com.liferay.osb.asah.common.dog;
 import com.liferay.osb.asah.common.entity.BQIdentity;
 import com.liferay.osb.asah.common.repository.BQIdentityRepository;
 
+import java.util.Collections;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,13 +25,14 @@ public class BQIdentityDog {
 	}
 
 	public List<String> getBQIdentityIds(String bqIndividualId) {
-		return _bqIdentityRepository.getBQIdentityIds(bqIndividualId, false);
+		return _bqIdentityRepository.getBQIdentityIds(
+			Collections.singletonList(bqIndividualId), false);
 	}
 
 	public List<String> getBQIdentityIdsIgnoreSuppresion(
-		String bqIndividualId) {
+		List<String> bqIndividualIds) {
 
-		return _bqIdentityRepository.getBQIdentityIds(bqIndividualId, true);
+		return _bqIdentityRepository.getBQIdentityIds(bqIndividualIds, true);
 	}
 
 	public String getBQIndividualId(String bqIdentityId) {

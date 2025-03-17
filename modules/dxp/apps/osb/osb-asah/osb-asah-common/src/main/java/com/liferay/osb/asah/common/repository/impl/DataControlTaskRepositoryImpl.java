@@ -87,11 +87,18 @@ public class DataControlTaskRepositoryImpl
 		String emailAddress) {
 
 		Condition condition = DSL.and(
-			DSL.field(
-				"emailAddress"
-			).eq(
-				emailAddress
-			),
+			DSL.exists(
+				DSL.select(
+					DSL.val(1)
+				).from(
+					"UNNEST(emailAddresses) as emailAddress"
+				).where(
+					DSL.field(
+						"emailAddress"
+					).eq(
+						emailAddress
+					)
+				)),
 			DSL.field(
 				"status"
 			).eq(
@@ -117,11 +124,18 @@ public class DataControlTaskRepositoryImpl
 			"DataControlTask"
 		).where(
 			DSL.and(
-				DSL.field(
-					"emailAddress"
-				).eq(
-					emailAddress
-				),
+				DSL.exists(
+					DSL.select(
+						DSL.val(1)
+					).from(
+						"UNNEST(emailAddresses) as emailAddress"
+					).where(
+						DSL.field(
+							"emailAddress"
+						).eq(
+							emailAddress
+						)
+					)),
 				DSL.field(
 					"type"
 				).eq(
@@ -187,11 +201,18 @@ public class DataControlTaskRepositoryImpl
 			types);
 
 		conditions.add(
-			DSL.field(
-				"encode(sha256(emailAddress::bytea), 'hex')"
-			).eq(
-				emailAddressHashed
-			));
+			DSL.exists(
+				DSL.select(
+					DSL.val(1)
+				).from(
+					"UNNEST(emailAddresses) as emailAddress"
+				).where(
+					DSL.field(
+						"encode(sha256(emailAddress::bytea), 'hex')"
+					).eq(
+						emailAddressHashed
+					)
+				)));
 
 		return selectSelectStep.from(
 			"DataControlTask"
@@ -246,6 +267,8 @@ public class DataControlTaskRepositoryImpl
 					)
 				).from(
 					"DataControlTask"
+				).crossJoin(
+					"UNNEST(emailAddresses) as emailAddress"
 				).where(
 					DSL.or(
 						DSL.and(
@@ -470,9 +493,9 @@ public class DataControlTaskRepositoryImpl
 						DSL.field("SuppressDataControlTask.batchId")
 					),
 					DSL.field(
-						"DataControlTask.emailAddress"
+						"DataControlTask.emailAddresses"
 					).eq(
-						DSL.field("SuppressDataControlTask.emailAddress")
+						DSL.field("SuppressDataControlTask.emailAddresses")
 					))
 			).where(
 				DSL.and(
@@ -521,7 +544,7 @@ public class DataControlTaskRepositoryImpl
 		List<Field<?>> fields = Arrays.asList(
 			DSL.field("id"), DSL.field("batchId"), DSL.field("completeDate"),
 			DSL.field("continueDate"), DSL.field("createDate"),
-			DSL.field("emailAddress"), DSL.field("ownerId"),
+			DSL.field("emailAddresses", String[].class), DSL.field("ownerId"),
 			DSL.field("startDate"), DSL.field("status"), DSL.field("type"),
 			DSL.field("userId"), DSL.field("userName"));
 
@@ -554,7 +577,7 @@ public class DataControlTaskRepositoryImpl
 					DSL.rowNumber(
 					).over(
 						DSL.partitionBy(
-							DSL.field("PendingDataControlTask.emailAddress"),
+							DSL.field("PendingDataControlTask.emailAddresses"),
 							DSL.field("PendingDataControlTask.type")
 						).orderBy(
 							DSL.field(
@@ -591,9 +614,9 @@ public class DataControlTaskRepositoryImpl
 					)
 				).on(
 					DSL.field(
-						"PendingDataControlTask.emailAddress"
+						"PendingDataControlTask.emailAddresses"
 					).eq(
-						DSL.field("RunningDataControlTask.emailAddress")
+						DSL.field("RunningDataControlTask.emailAddresses")
 					)
 				).where(
 					DSL.field(
@@ -639,11 +662,18 @@ public class DataControlTaskRepositoryImpl
 
 		if (!StringUtils.isBlank(emailAddress)) {
 			conditions.add(
-				DSL.field(
-					"emailAddress"
-				).containsIgnoreCase(
-					emailAddress
-				));
+				DSL.exists(
+					DSL.select(
+						DSL.val(1)
+					).from(
+						"UNNEST(emailAddresses) AS emailAddress"
+					).where(
+						DSL.field(
+							"emailAddress"
+						).containsIgnoreCase(
+							emailAddress
+						)
+					)));
 		}
 
 		if (endCompleteDate != null) {

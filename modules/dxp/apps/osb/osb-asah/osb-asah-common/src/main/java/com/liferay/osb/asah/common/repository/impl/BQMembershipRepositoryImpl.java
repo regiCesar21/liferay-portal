@@ -481,7 +481,9 @@ public class BQMembershipRepositoryImpl
 	}
 
 	@Override
-	public List<Long> findSegmentIdByIndividualId(String individualId) {
+	public List<Long> findSegmentIdByIndividualIdsIn(
+		List<String> individualIds) {
+
 		Field<Long> segmentIdField = DSL.field(
 			"BQMembership.segmentId", Long.class);
 
@@ -501,7 +503,7 @@ public class BQMembershipRepositoryImpl
 				"BQMembership"
 			).where(
 				DSL.and(
-					individualIdField.eq(individualId),
+					individualIdField.in(individualIds),
 					individualIdField.notIn(
 						_dslContext.select(
 							DSL.field(

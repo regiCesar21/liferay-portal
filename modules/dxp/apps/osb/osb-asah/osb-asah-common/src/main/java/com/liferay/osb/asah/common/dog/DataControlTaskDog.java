@@ -44,7 +44,6 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.Date;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
@@ -106,7 +105,7 @@ public class DataControlTaskDog {
 				DataControlTask.Type.valueOf(type);
 
 			if (dataControlTaskType == DataControlTask.Type.UNSUPPRESS) {
-				for (String emailAddress : new HashSet<>(emailAddresses)) {
+				for (String emailAddress : emailAddresses) {
 					_suppressionDog.hideSuppressionByEmailAddress(emailAddress);
 				}
 			}
@@ -293,8 +292,12 @@ public class DataControlTaskDog {
 			_log.error(exception, exception);
 
 			if (type == DataControlTask.Type.UNSUPPRESS) {
-				_suppressionDog.unhideSuppressionByEmailAddress(
-					dataControlTask.getEmailAddress());
+				for (String emailAddress :
+						dataControlTask.getEmailAddresses()) {
+
+					_suppressionDog.unhideSuppressionByEmailAddress(
+						emailAddress);
+				}
 			}
 
 			_updateDataControlTaskStatus(
@@ -341,14 +344,12 @@ public class DataControlTaskDog {
 
 	private boolean _delete(DataControlTask dataControlTask) throws Exception {
 		DataControlTask suppressDataControlTask =
-			_dataControlTaskRepository.
-				findByBatchIdAndEmailAddressAndStatusInAndType(
-					dataControlTask.getBatchId(),
-					dataControlTask.getEmailAddress(),
-					Arrays.asList(
-						DataControlTaskStatus.COMPLETED.toString(),
-						DataControlTaskStatus.ERROR.toString()),
-					DataControlTask.Type.SUPPRESS.toString());
+			_dataControlTaskRepository.findByBatchIdAndStatusInAndType(
+				dataControlTask.getBatchId(),
+				Arrays.asList(
+					DataControlTaskStatus.COMPLETED.toString(),
+					DataControlTaskStatus.ERROR.toString()),
+				DataControlTask.Type.SUPPRESS.toString());
 
 		if (suppressDataControlTask == null) {
 			throw new RuntimeException(
@@ -368,7 +369,7 @@ public class DataControlTaskDog {
 
 		List<DXPEntity> dxpEntities = _dxpEntityDog.fetchAllByFieldsAndType(
 			Collections.singletonMap(
-				"fields.emailAddress", dataControlTask.getEmailAddress()),
+				"fields.emailAddress", dataControlTask.getEmailAddresses()),
 			DXPEntity.Type.USER);
 
 		if (!dxpEntities.isEmpty()) {
@@ -377,12 +378,20 @@ public class DataControlTaskDog {
 			if (_log.isInfoEnabled()) {
 				_log.info(
 					String.format(
-						"%s DXP user(s) with email %s deleted successfully",
-						dxpEntities.size(), dataControlTask.getEmailAddress()));
+						"%s DXP user(s) with emails %s deleted successfully",
+						dxpEntities.size(),
+						dataControlTask.getEmailAddresses()));
 			}
 		}
 
 		// BigQuery
+
+		List<String> individualIds = new ArrayList<>();
+
+		for (String emailAddress : dataControlTask.getEmailAddresses()) {
+			individualIds.add(
+				StringUtils.wrap(DigestUtils.sha256Hex(emailAddress), "'"));
+		}
 
 		_bigQueryQueryExecutor.queryExecute(
 			StringUtils.replaceEach(
@@ -390,11 +399,11 @@ public class DataControlTaskDog {
 					"dependencies/delete_individual_data_statement.sql",
 					getClass()),
 				new String[] {
-					"${individual_id}", "${new_identity_id}",
+					"${individual_ids}", "${new_identity_id}",
 					"${range_end_date}"
 				},
 				new String[] {
-					DigestUtils.sha256Hex(dataControlTask.getEmailAddress()),
+					String.join(",", individualIds),
 					String.valueOf(UUID.randomUUID()),
 					DateUtil.toUTCString(suppressDataControlTask.getStartDate())
 				}));
@@ -402,9 +411,9 @@ public class DataControlTaskDog {
 		if (_log.isInfoEnabled()) {
 			_log.info(
 				String.format(
-					"Individual data associated with email %s deleted " +
+					"Individuals data associated with emails %s deleted " +
 						"successfully",
-					dataControlTask.getEmailAddress()));
+					dataControlTask.getEmailAddresses()));
 		}
 
 		return true;
@@ -457,9 +466,19 @@ public class DataControlTaskDog {
 	private boolean _suppress(DataControlTask dataControlTask)
 		throws Exception {
 
-		String emailAddress = dataControlTask.getEmailAddress();
+		List<String> emailAddressesToSuppress = new ArrayList<>();
 
-		if (_skipSuppression(emailAddress)) {
+		Set<String> emailAddresses = dataControlTask.getEmailAddresses();
+
+		for (String emailAddress : emailAddresses) {
+			if (_skipSuppression(emailAddress)) {
+				continue;
+			}
+
+			emailAddressesToSuppress.add(emailAddress);
+		}
+
+		if (emailAddressesToSuppress.isEmpty()) {
 			return true;
 		}
 
@@ -474,10 +493,18 @@ public class DataControlTaskDog {
 			return false;
 		}
 
-		String individualId = DigestUtils.sha256Hex(emailAddress);
+		List<String> individualIds = new ArrayList<>();
+		List<String> quotedIndividualIds = new ArrayList<>();
+
+		for (String emailAddress : emailAddressesToSuppress) {
+			String emailAddressHashed = DigestUtils.sha256Hex(emailAddress);
+
+			individualIds.add(emailAddressHashed);
+			quotedIndividualIds.add(StringUtils.wrap(emailAddressHashed, "'"));
+		}
 
 		List<Segment> segments = _segmentDog.getBQIndividualSegments(
-			individualId);
+			individualIds);
 
 		Stream<Segment> stream = segments.stream();
 
@@ -493,41 +520,44 @@ public class DataControlTaskDog {
 
 		if (!updateSegments.isEmpty()) {
 			deleteMembershipStatement = String.format(
-				"DELETE FROM BQMembership WHERE individualId = '%s' AND " +
+				"DELETE FROM BQMembership WHERE individualId IN (%s) AND " +
 					"segmentId IN (%s);",
-				individualId,
+				String.join(",", quotedIndividualIds),
 				StringUtils.join(
 					ListUtil.map(updateSegments, Segment::getId), ", "));
 		}
 
-		_bigQueryQueryExecutor.queryExecute(
-			StringUtils.replaceEach(
-				ResourceUtil.readResourceToString(
-					"dependencies/suppress_individual_statement.sql",
-					getClass()),
-				new String[] {
-					"${data_control_task_batch_id}",
-					"${data_control_task_create_date}",
-					"${delete_membership_statement}", "${email_address}",
-					"${individual_id}", "${new_identity_id}",
-					"${range_end_date}"
-				},
-				new String[] {
-					String.valueOf(dataControlTask.getBatchId()),
-					DateUtil.toUTCString(dataControlTask.getCreateDate()),
-					deleteMembershipStatement, emailAddress, individualId,
-					String.valueOf(UUID.randomUUID()),
-					DateUtil.toUTCString(dataControlTask.getStartDate())
-				}));
+		for (String emailAddress : emailAddressesToSuppress) {
+			_bigQueryQueryExecutor.queryExecute(
+				StringUtils.replaceEach(
+					ResourceUtil.readResourceToString(
+						"dependencies/suppress_individual_statement.sql",
+						getClass()),
+					new String[] {
+						"${data_control_task_batch_id}",
+						"${data_control_task_create_date}",
+						"${delete_membership_statement}", "${email_address}",
+						"${individual_id}", "${new_identity_id}",
+						"${range_end_date}"
+					},
+					new String[] {
+						String.valueOf(dataControlTask.getBatchId()),
+						DateUtil.toUTCString(dataControlTask.getCreateDate()),
+						deleteMembershipStatement, emailAddress,
+						DigestUtils.sha256Hex(emailAddress),
+						String.valueOf(UUID.randomUUID()),
+						DateUtil.toUTCString(dataControlTask.getStartDate())
+					}));
+		}
 
 		_updateSegments(updateSegments);
 
 		if (_log.isInfoEnabled()) {
 			_log.info(
 				String.format(
-					"Individual associated with email address %s suppressed " +
-						"successfully",
-					emailAddress));
+					"Individuals associated with email addresses %s " +
+						"suppressed successfully",
+					emailAddressesToSuppress));
 		}
 
 		return true;
@@ -536,14 +566,14 @@ public class DataControlTaskDog {
 	private boolean _unsuppress(DataControlTask dataControlTask)
 		throws Exception {
 
-		String emailAddress = dataControlTask.getEmailAddress();
+		Set<String> emailAddresses = dataControlTask.getEmailAddresses();
 
-		Suppression suppression = _suppressionDog.fetchSuppression(
-			emailAddress);
+		List<Suppression> suppressions = _suppressionDog.fetchSuppressions(
+			new ArrayList<String>(dataControlTask.getEmailAddresses()));
 
-		if (suppression == null) {
+		if (suppressions == null) {
 			if (_log.isWarnEnabled()) {
-				_log.warn("Unable to find suppression for " + emailAddress);
+				_log.warn("Unable to find suppression for " + emailAddresses);
 			}
 
 			return true;
@@ -560,85 +590,114 @@ public class DataControlTaskDog {
 			return false;
 		}
 
-		DataControlTask suppressionDataControlTask =
-			_dataControlTaskRepository.
-				findByBatchIdAndEmailAddressAndStatusInAndType(
-					suppression.getDataControlTaskBatchId(),
-					suppression.getEmailAddress(),
+		Set<Long> dataControlTaskBatchIds = suppressions.stream(
+		).map(
+			Suppression::getDataControlTaskBatchId
+		).collect(
+			Collectors.toSet()
+		);
+
+		for (Long dataControlTaskBatchId : dataControlTaskBatchIds) {
+			DataControlTask suppressionDataControlTask =
+				_dataControlTaskRepository.findByBatchIdAndStatusInAndType(
+					dataControlTaskBatchId,
 					Collections.singletonList(
 						DataControlTaskStatus.COMPLETED.toString()),
 					DataControlTask.Type.SUPPRESS.toString());
 
-		if (suppressionDataControlTask == null) {
-			throw new RuntimeException(
-				"Unable to find the corresponding suppression task for " +
-					"unsuppression");
-		}
+			if ((suppressionDataControlTask == null) ||
+				!Objects.equals(
+					emailAddresses,
+					suppressionDataControlTask.getEmailAddresses())) {
 
-		String individualId = DigestUtils.sha256Hex(
-			dataControlTask.getEmailAddress());
+				if (_log.isDebugEnabled()) {
+					_log.debug(
+						"Unable to find the corresponding suppression task " +
+							"for unsuppression");
+				}
 
-		if (_environment.acceptsProfiles(Profiles.of("prod"))) {
-			_bigQueryQueryExecutor.queryExecute(
-				StringUtils.replaceEach(
-					ResourceUtil.readResourceToString(
-						"dependencies/unsuppress_individual_statement.sql",
-						getClass()),
-					new String[] {
-						"${email_address}", "${individual_id}",
-						"${range_end_date}", "${range_start_date}"
-					},
-					new String[] {
-						emailAddress, individualId,
-						DateUtil.toUTCString(dataControlTask.getStartDate()),
-						DateUtil.toUTCString(
-							suppressionDataControlTask.getStartDate())
-					}));
-		}
-		else {
-			StringBuilder sb = new StringBuilder();
+				continue;
+			}
 
-			List<String> identityIds =
-				_bqIdentityDog.getBQIdentityIdsIgnoreSuppresion(individualId);
+			List<String> individualIds = new ArrayList<>();
+			List<String> quotedEmailAddressed = new ArrayList<>();
+			List<String> quotedIndividualIds = new ArrayList<>();
 
-			for (String identityId : identityIds) {
-				sb.append(
+			for (String emailAddress : emailAddresses) {
+				individualIds.add(DigestUtils.sha256Hex(emailAddress));
+				quotedEmailAddressed.add(StringUtils.wrap(emailAddress, "'"));
+				quotedIndividualIds.add(
+					StringUtils.wrap(DigestUtils.sha256Hex(emailAddress), "'"));
+			}
+
+			if (_environment.acceptsProfiles(Profiles.of("prod"))) {
+				_bigQueryQueryExecutor.queryExecute(
 					StringUtils.replaceEach(
 						ResourceUtil.readResourceToString(
-							"dependencies" +
-								"/anonymize_activities_statement_emulator.sql",
+							"dependencies/unsuppress_individual_statement.sql",
 							getClass()),
 						new String[] {
-							"${new_identity_id}", "${old_identity_id}",
+							"${email_addresses}", "${individual_ids}",
 							"${range_end_date}", "${range_start_date}"
 						},
 						new String[] {
-							String.valueOf(UUID.randomUUID()), identityId,
+							String.join(",", quotedEmailAddressed),
+							String.join(",", quotedIndividualIds),
 							DateUtil.toUTCString(
 								dataControlTask.getStartDate()),
 							DateUtil.toUTCString(
 								suppressionDataControlTask.getStartDate())
 						}));
-				sb.append("\n");
 			}
+			else {
+				StringBuilder sb = new StringBuilder();
 
-			_bigQueryQueryExecutor.queryExecute(
-				StringUtils.replaceEach(
-					ResourceUtil.readResourceToString(
-						"dependencies" +
-							"/unsuppress_individual_statement_emulator.sql",
-						getClass()),
-					new String[] {
-						"${anonymize_activities_statement}", "${email_address}",
-						"${individual_id}", "${range_end_date}",
-						"${range_start_date}"
-					},
-					new String[] {
-						sb.toString(), emailAddress, individualId,
-						DateUtil.toUTCString(dataControlTask.getStartDate()),
-						DateUtil.toUTCString(
-							suppressionDataControlTask.getStartDate())
-					}));
+				List<String> identityIds =
+					_bqIdentityDog.getBQIdentityIdsIgnoreSuppresion(
+						individualIds);
+
+				for (String identityId : identityIds) {
+					sb.append(
+						StringUtils.replaceEach(
+							ResourceUtil.readResourceToString(
+								"dependencies/anonymize_" +
+									"activities_statement_emulator.sql",
+								getClass()),
+							new String[] {
+								"${new_identity_id}", "${old_identity_id}",
+								"${range_end_date}", "${range_start_date}"
+							},
+							new String[] {
+								String.valueOf(UUID.randomUUID()), identityId,
+								DateUtil.toUTCString(
+									dataControlTask.getStartDate()),
+								DateUtil.toUTCString(
+									suppressionDataControlTask.getStartDate())
+							}));
+					sb.append("\n");
+				}
+
+				_bigQueryQueryExecutor.queryExecute(
+					StringUtils.replaceEach(
+						ResourceUtil.readResourceToString(
+							"dependencies" +
+								"/unsuppress_individual_statement_emulator.sql",
+							getClass()),
+						new String[] {
+							"${anonymize_activities_statement}",
+							"${email_addresses}", "${individual_ids}",
+							"${range_end_date}", "${range_start_date}"
+						},
+						new String[] {
+							sb.toString(),
+							String.join(",", quotedEmailAddressed),
+							String.join(",", quotedIndividualIds),
+							DateUtil.toUTCString(
+								dataControlTask.getStartDate()),
+							DateUtil.toUTCString(
+								suppressionDataControlTask.getStartDate())
+						}));
+			}
 		}
 
 		return true;

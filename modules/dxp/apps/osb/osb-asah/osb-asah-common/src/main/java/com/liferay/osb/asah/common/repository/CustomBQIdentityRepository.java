@@ -28,7 +28,7 @@ public interface CustomBQIdentityRepository {
 	public List<BQIdentity> findByIdIn(Collection<String> ids);
 
 	public List<String> getBQIdentityIds(
-		String bqIndividualId, @Nullable Boolean ignoreSuppression);
+		List<String> bqIndividualIds, @Nullable Boolean ignoreSuppression);
 
 	public String getBQIndividualId(String id);
 

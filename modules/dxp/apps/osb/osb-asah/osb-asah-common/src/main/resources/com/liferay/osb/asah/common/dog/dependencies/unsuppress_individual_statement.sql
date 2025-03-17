@@ -1,7 +1,7 @@
 DECLARE new_identity_id STRING;
 BEGIN
 	BEGIN TRANSACTION;
-	FOR Identity IN (SELECT id FROM BQIdentity WHERE individualId = '${individual_id}')
+	FOR Identity IN (SELECT id FROM BQIdentity WHERE individualId IN (${individual_ids}))
 	DO
 		SET new_identity_id = GENERATE_UUID();
 
@@ -20,11 +20,11 @@ BEGIN
 		UPDATE BQIdentity_Raw SET id = new_identity_id WHERE id = Identity.id AND createDate BETWEEN timestamp '${range_start_date}' AND timestamp '${range_end_date}';
 	END FOR;
 
-	DELETE FROM Suppression WHERE emailAddress = '${email_address}';
+	DELETE FROM Suppression WHERE emailAddress IN (${email_addresses});
 
-	UPDATE BQIndividual SET suppressed = false WHERE emailAddress = '${email_address}';
+	UPDATE BQIndividual SET suppressed = false WHERE emailAddress IN (${email_addresses});
 
-	UPDATE Identity_Raw SET individualId = NULL WHERE individualId = '${individual_id}' AND createDate BETWEEN timestamp '${range_start_date}' AND timestamp '${range_end_date}';
+	UPDATE Identity_Raw SET individualId = NULL WHERE individualId IN (${individual_ids}) AND createDate BETWEEN timestamp '${range_start_date}' AND timestamp '${range_end_date}';
 	
 	COMMIT TRANSACTION;
 

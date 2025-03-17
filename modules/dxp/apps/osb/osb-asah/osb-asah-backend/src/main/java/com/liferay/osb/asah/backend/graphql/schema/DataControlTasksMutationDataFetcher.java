@@ -15,6 +15,8 @@ import graphql.schema.DataFetchingEnvironment;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 
+import java.util.HashSet;
+
 import org.apache.commons.io.FilenameUtils;
 import org.apache.commons.lang3.StringUtils;
 
@@ -33,7 +35,8 @@ public class DataControlTasksMutationDataFetcher
 	@Override
 	public Boolean get(DataFetchingEnvironment dataFetchingEnvironment) {
 		return _dataControlTaskDog.addDataControlTasks(
-			dataFetchingEnvironment.getArgument("emailAddresses"),
+			new HashSet<String>(
+				dataFetchingEnvironment.getArgument("emailAddresses")),
 			_getPath(dataFetchingEnvironment.getArgument("fileName")),
 			dataFetchingEnvironment.getArgument("ownerId"),
 			dataFetchingEnvironment.getArgument("types"),

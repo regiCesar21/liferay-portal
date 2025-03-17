@@ -11,7 +11,6 @@ import com.liferay.osb.asah.common.repository.SuppressionRepository;
 
 import java.util.Date;
 import java.util.List;
-import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -44,11 +43,8 @@ public class SuppressionDog {
 		_suppressionRepository.deleteByEmailAddress(emailAddress);
 	}
 
-	public Suppression fetchSuppression(String emailAddress) {
-		Optional<Suppression> suppressionOptional =
-			_suppressionRepository.findByEmailAddress(emailAddress);
-
-		return suppressionOptional.orElse(null);
+	public List<Suppression> fetchSuppressions(List<String> emailAddresses) {
+		return _suppressionRepository.findByEmailAddressIn(emailAddresses);
 	}
 
 	public Page<Suppression> getSuppressionPage(
