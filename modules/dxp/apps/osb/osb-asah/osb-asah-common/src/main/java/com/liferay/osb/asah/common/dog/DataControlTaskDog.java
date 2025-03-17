@@ -79,7 +79,7 @@ public class DataControlTaskDog {
 
 	@Transactional
 	public boolean addDataControlTasks(
-		List<String> emailAddresses, Path path, String ownerId,
+		Set<String> emailAddresses, Path path, String ownerId,
 		List<String> types, String userId, String userName) {
 
 		if (path != null) {
@@ -101,34 +101,30 @@ public class DataControlTaskDog {
 		Long batchId = _timeOrderedUuidGenerator.generateIdAsLong();
 		Date date = new Date();
 
-		for (String emailAddress : new HashSet<>(emailAddresses)) {
-			emailAddress = StringUtils.lowerCase(emailAddress);
+		for (String type : types) {
+			DataControlTask.Type dataControlTaskType =
+				DataControlTask.Type.valueOf(type);
 
-			for (String type : types) {
-				DataControlTask.Type dataControlTaskType =
-					DataControlTask.Type.valueOf(type);
-
-				if (dataControlTaskType == DataControlTask.Type.UNSUPPRESS) {
+			if (dataControlTaskType == DataControlTask.Type.UNSUPPRESS) {
+				for (String emailAddress : new HashSet<>(emailAddresses)) {
 					_suppressionDog.hideSuppressionByEmailAddress(emailAddress);
 				}
-
-				DataControlTask dataControlTask = new DataControlTask();
-
-				dataControlTask.setBatchId(batchId);
-				dataControlTask.setCreateDate(date);
-				dataControlTask.setEmailAddress(emailAddress);
-				dataControlTask.setId(
-					_timeOrderedUuidGenerator.generateIdAsLong());
-				dataControlTask.setIsNew(Boolean.TRUE);
-				dataControlTask.setOwnerId(ownerId);
-				dataControlTask.setStatus(
-					DataControlTaskStatus.PENDING.toString());
-				dataControlTask.setType(dataControlTaskType);
-				dataControlTask.setUserId(userId);
-				dataControlTask.setUserName(userName);
-
-				dataControlTasks.add(dataControlTask);
 			}
+
+			DataControlTask dataControlTask = new DataControlTask();
+
+			dataControlTask.setBatchId(batchId);
+			dataControlTask.setCreateDate(date);
+			dataControlTask.setEmailAddresses(emailAddresses);
+			dataControlTask.setId(_timeOrderedUuidGenerator.generateIdAsLong());
+			dataControlTask.setIsNew(Boolean.TRUE);
+			dataControlTask.setOwnerId(ownerId);
+			dataControlTask.setStatus(DataControlTaskStatus.PENDING.toString());
+			dataControlTask.setType(dataControlTaskType);
+			dataControlTask.setUserId(userId);
+			dataControlTask.setUserName(userName);
+
+			dataControlTasks.add(dataControlTask);
 		}
 
 		_dataControlTaskRepository.saveAll(dataControlTasks);
