@@ -1,87 +1,87 @@
 {
-	"description": "An Apache Beam batch pipeline that reads dump files created from BigQuery, and writes into PostgreSQL",
+	"description": "An Apache Beam batch pipeline that reads dump files created from BigQuery, and writes into Cloud SQL for PostgreSQL",
 	"name": "PostgreSQL Replication Importer",
 	"parameters": [
 		{
-			"helpText": "",
+			"helpText": "Provide the batch size to write to PostgreSQL (default is 500).",
 			"isOptional": true,
 			"label": "Batch size",
 			"name": "batchSize"
 		},
 		{
-			"helpText": "",
+			"helpText": "Provide the name of the CloudSQL connection.",
 			"isOptional": false,
 			"label": "CloudSQL Connection Name",
 			"name": "cloudSQLConnectionName"
 		},
 		{
-			"helpText": "",
-			"isOptional": false,
+			"helpText": "Provide the name of database in the CloudSQL instance to run in (default is osbasah).",
+			"isOptional": true,
 			"label": "Database Name",
 			"name": "databaseName"
 		},
 		{
-			"helpText": "",
+			"helpText": "Provide the database user to use in the CloudSQL instance.",
 			"isOptional": false,
 			"label": "Database User",
 			"name": "databaseUser"
 		},
 		{
-			"helpText": "",
+			"helpText": "Provide the max number of connections to data source (default is 3).",
 			"isOptional": true,
 			"label": "Data Source Max Connections",
 			"name": "datasourceMaxConnections"
 		},
 		{
-			"helpText": "",
+			"helpText": "Provide a comma-separated list of column names corresponding to the fields in the CSV files.",
 			"isOptional": false,
 			"label": "Individual Activity Columns",
 			"name": "individualActivityColumns"
 		},
 		{
-			"helpText": "",
+			"helpText": "Provide the input directory of individual activity data.",
 			"isOptional": false,
 			"label": "Individual Activity Input Directory",
 			"name": "individualActivityInputDirectory"
 		},
 		{
-			"helpText": "",
+			"helpText": "Provide a comma-separated list of column names corresponding to the fields in the CSV files.",
 			"isOptional": false,
 			"label": "Individual Columns",
 			"name": "individualColumns"
 		},
 		{
-			"helpText": "",
+			"helpText": "Provide the input directory of individual data.",
 			"isOptional": false,
 			"label": "Individual Input Directory",
 			"name": "individualInputDirectory"
 		},
 		{
-			"helpText": "",
+			"helpText": "Provide a comma-separated list of column names corresponding to the fields in the CSV files.",
 			"isOptional": false,
 			"label": "Individual Interest Columns",
 			"name": "individualInterestColumns"
 		},
 		{
-			"helpText": "",
+			"helpText": "Provide the input directory of individual interest data.",
 			"isOptional": false,
 			"label": "Individual Interest Input Directory",
 			"name": "individualInterestInputDirectory"
 		},
 		{
-			"helpText": "",
+			"helpText": "Provide a comma-separated list of column names corresponding to the fields in the CSV files.",
 			"isOptional": false,
 			"label": "Individual Segment Columns",
 			"name": "individualSegmentColumns"
 		},
 		{
-			"helpText": "",
+			"helpText": "Provide the input directory of individual segment data.",
 			"isOptional": false,
 			"label": "Individual Segment Input Directory",
 			"name": "individualSegmentInputDirectory"
 		},
 		{
-			"helpText": "",
+			"helpText": "Provide the Analytics Cloud project ID.",
 			"isOptional": false,
 			"label": "Project ID",
 			"name": "projectId"
