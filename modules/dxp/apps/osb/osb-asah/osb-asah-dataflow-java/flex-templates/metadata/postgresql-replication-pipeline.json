@@ -33,7 +33,7 @@
 			"name": "datasourceMaxConnections"
 		},
 		{
-			"helpText": "Provide a comma-separated list of column names corresponding to the fields in the CSV files.",
+			"helpText": "Provide a comma separated list of column names corresponding to the fields in the CSV files.",
 			"isOptional": false,
 			"label": "Individual Activity Columns",
 			"name": "individualActivityColumns"
@@ -45,7 +45,7 @@
 			"name": "individualActivityInputDirectory"
 		},
 		{
-			"helpText": "Provide a comma-separated list of column names corresponding to the fields in the CSV files.",
+			"helpText": "Provide a comma separated list of column names corresponding to the fields in the CSV files.",
 			"isOptional": false,
 			"label": "Individual Columns",
 			"name": "individualColumns"
@@ -57,7 +57,7 @@
 			"name": "individualInputDirectory"
 		},
 		{
-			"helpText": "Provide a comma-separated list of column names corresponding to the fields in the CSV files.",
+			"helpText": "Provide a comma separated list of column names corresponding to the fields in the CSV files.",
 			"isOptional": false,
 			"label": "Individual Interest Columns",
 			"name": "individualInterestColumns"
@@ -69,7 +69,7 @@
 			"name": "individualInterestInputDirectory"
 		},
 		{
-			"helpText": "Provide a comma-separated list of column names corresponding to the fields in the CSV files.",
+			"helpText": "Provide a comma separated list of column names corresponding to the fields in the CSV files.",
 			"isOptional": false,
 			"label": "Individual Segment Columns",
 			"name": "individualSegmentColumns"
