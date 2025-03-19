@@ -41,4 +41,4 @@ CREATE INDEX IF NOT EXISTS IX_INDIVIDUALACTIVITY_EDII ON IndividualActivity (eve
 
 CREATE INDEX IF NOT EXISTS IX_INDIVIDUALINTEREST_II ON IndividualInterest (individualId);
 
-UPDATE datacontroltask SET emailaddresses = ARRAY[emailaddress] WHERE emailaddress IS NOT null;
+UPDATE DataControlTask SET emailAddresses = ARRAY[emailAddress] WHERE emailAddress IS NOT null;
