@@ -15,6 +15,8 @@ import com.liferay.osb.asah.backend.model.HeatMapMetric;
 import com.liferay.osb.asah.backend.model.Metric;
 import com.liferay.osb.asah.backend.model.SiteMetric;
 import com.liferay.osb.asah.backend.model.SiteMetricType;
+import com.liferay.osb.asah.common.date.dog.TimeZoneDog;
+import com.liferay.osb.asah.common.date.dog.util.TimeZoneDogUtil;
 import com.liferay.osb.asah.common.dog.PreferenceDog;
 import com.liferay.osb.asah.common.model.AcquisitionType;
 import com.liferay.osb.asah.common.model.Composition;
@@ -25,6 +27,7 @@ import com.liferay.osb.asah.test.util.annotation.BQSQLResource;
 import com.liferay.osb.asah.test.util.spring.OSBAsahTestExecutionListenersContext;
 
 import java.time.LocalDate;
+import java.time.ZoneId;
 
 import java.util.HashMap;
 import java.util.LinkedHashMap;
@@ -37,10 +40,14 @@ import org.apache.commons.lang3.tuple.Pair;
 
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+
+import org.mockito.Mockito;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTestContextBootstrapper;
+import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.context.BootstrapWith;
 
 /**
@@ -52,9 +59,16 @@ public class SiteMetricDogTest
 	implements OSBAsahBackendSpringTestContext,
 			   OSBAsahTestExecutionListenersContext {
 
+	@BeforeEach
+	public void setUp() {
+		_setTimeZoneId("UTC");
+	}
+
 	@AfterEach
 	public void tearDown() {
 		_preferenceDog.savePreference("time-zone-id", "UTC");
+
+		TimeZoneDogUtil.setTimeZoneDog(null);
 	}
 
 	@BQSQLResource(resourcePath = "test_bq_sessions_acquisition.sql")
@@ -209,7 +223,7 @@ public class SiteMetricDogTest
 				visitorsCohortHeatMapMetrics.size(), 8),
 			_getActualCohortRetentions(visitorsCohortHeatMapMetrics), 0);
 
-		_preferenceDog.savePreference("time-zone-id", "+13:00");
+		_setTimeZoneId("+13:00");
 
 		cohortMetric = _siteMetricDog.getCohortMetric(
 			_getVisitorCohortSearchQueryContext(Interval.DAY));
@@ -332,7 +346,7 @@ public class SiteMetricDogTest
 				visitorsCohortHeatMapMetrics.size(), 7),
 			_getActualCohortRetentions(visitorsCohortHeatMapMetrics), 0);
 
-		_preferenceDog.savePreference("time-zone-id", "+13:00");
+		_setTimeZoneId("+13:00");
 
 		cohortMetric = _siteMetricDog.getCohortMetric(
 			_getVisitorCohortSearchQueryContext(Interval.MONTH));
@@ -455,7 +469,7 @@ public class SiteMetricDogTest
 				visitorsCohortHeatMapMetrics.size(), 7),
 			_getActualCohortRetentions(visitorsCohortHeatMapMetrics), 0);
 
-		_preferenceDog.savePreference("time-zone-id", "+13:00");
+		_setTimeZoneId("+13:00");
 
 		cohortMetric = _siteMetricDog.getCohortMetric(
 			_getVisitorCohortSearchQueryContext(Interval.WEEK));
@@ -840,7 +854,7 @@ public class SiteMetricDogTest
 
 		Assertions.assertEquals(2, visitorsMetrics.getValue());
 
-		_preferenceDog.savePreference("time-zone-id", "-07:00");
+		_setTimeZoneId("-07:00");
 
 		siteMetric = _siteMetricDog.getSiteMetric(searchQueryContext);
 
@@ -857,7 +871,7 @@ public class SiteMetricDogTest
 
 		Assertions.assertEquals(2, visitorsMetrics.getValue());
 
-		_preferenceDog.savePreference("time-zone-id", "+13:00");
+		_setTimeZoneId("+13:00");
 
 		siteMetric = _siteMetricDog.getSiteMetric(searchQueryContext);
 
@@ -899,7 +913,7 @@ public class SiteMetricDogTest
 
 		Assertions.assertEquals(3, visitorsMetrics.getValue());
 
-		_preferenceDog.savePreference("time-zone-id", "-07:00");
+		_setTimeZoneId("-07:00");
 
 		siteMetric = _siteMetricDog.getSiteMetric(searchQueryContext);
 
@@ -916,7 +930,7 @@ public class SiteMetricDogTest
 
 		Assertions.assertEquals(3, visitorsMetrics.getValue());
 
-		_preferenceDog.savePreference("time-zone-id", "+13:00");
+		_setTimeZoneId("+13:00");
 
 		siteMetric = _siteMetricDog.getSiteMetric(searchQueryContext);
 
@@ -1154,10 +1168,31 @@ public class SiteMetricDogTest
 		return searchQueryContext;
 	}
 
+	private void _setTimeZoneId(String timeZoneId) {
+		_preferenceDog.savePreference("time-zone-id", timeZoneId);
+
+		Mockito.when(
+			_timeZoneDog.getTimeZoneId()
+		).thenReturn(
+			timeZoneId
+		);
+
+		Mockito.when(
+			_timeZoneDog.getZoneId()
+		).thenReturn(
+			ZoneId.of(timeZoneId)
+		);
+
+		TimeZoneDogUtil.setTimeZoneDog(_timeZoneDog);
+	}
+
 	@Autowired
 	private PreferenceDog _preferenceDog;
 
 	@Autowired
 	private SiteMetricDog _siteMetricDog;
+
+	@MockBean
+	private TimeZoneDog _timeZoneDog;
 
 }
