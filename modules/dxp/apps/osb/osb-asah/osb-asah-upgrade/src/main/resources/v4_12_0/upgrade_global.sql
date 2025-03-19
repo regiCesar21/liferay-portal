@@ -1,0 +1,7 @@
+CREATE TABLE IF NOT EXISTS ProjectFeature (
+	id BIGSERIAL PRIMARY KEY,
+	enabled BOOLEAN DEFAULT TRUE,
+	feature VARCHAR(50),
+	projectId VARCHAR(50) REFERENCES Project(id) ON DELETE CASCADE,
+	UNIQUE (feature, projectId)
+);

@@ -11,12 +11,17 @@ import com.liferay.osb.asah.common.util.ProjectIdThreadLocal;
 
 import java.util.List;
 
+import javax.sql.DataSource;
+
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
+import org.springframework.core.io.ClassPathResource;
+import org.springframework.jdbc.datasource.init.DatabasePopulatorUtils;
+import org.springframework.jdbc.datasource.init.ResourceDatabasePopulator;
 import org.springframework.stereotype.Component;
 
 /**
@@ -33,10 +38,31 @@ public class UpgradeProcessRunner {
 			_log.info("Upgrade started");
 		}
 
+		runGlobalUpgrades();
 		runProjectUpgrades();
 
 		if (_log.isInfoEnabled()) {
 			_log.info("Upgrade finished");
+		}
+	}
+
+	public void runGlobalUpgrades() {
+		try {
+			ProjectIdThreadLocal.setGlobalContext(true);
+
+			DatabasePopulatorUtils.execute(
+				new ResourceDatabasePopulator(
+					new ClassPathResource("v4_12_0/upgrade_global.sql")),
+				_dataSource);
+
+			if (_log.isInfoEnabled()) {
+				_log.info(
+					"ProjectFeature table has been been successfully created " +
+						"in the global namespace");
+			}
+		}
+		finally {
+			ProjectIdThreadLocal.setGlobalContext(false);
 		}
 	}
 
@@ -115,6 +141,9 @@ public class UpgradeProcessRunner {
 
 	private static final Log _log = LogFactory.getLog(
 		UpgradeProcessRunner.class);
+
+	@Autowired
+	private DataSource _dataSource;
 
 	@Value("${osb.asah.upgrade.legacy.mode:true}")
 	private boolean _legacyMode;
