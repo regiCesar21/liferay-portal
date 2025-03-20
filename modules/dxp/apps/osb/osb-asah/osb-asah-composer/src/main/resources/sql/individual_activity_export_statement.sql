@@ -8,8 +8,8 @@ EXPORT DATA
 	)
 AS (
 	SELECT
-		Event.id, applicationId, channelId, context, eventDate, eventId,
-		JSON_OBJECT(ARRAY_AGG(properties.name), ARRAY_AGG(properties.value)), Individual.id AS individualId
+		Event.id AS id, applicationId, channelId, context, eventDate, eventId,
+		JSON_OBJECT(ARRAY_AGG(properties.name), ARRAY_AGG(properties.value)) AS properties, Individual.id AS individualId
 	FROM
 		`{{dag.default_args['ac_project_id']}}.event` Event,
 		UNNEST(properties) AS properties
