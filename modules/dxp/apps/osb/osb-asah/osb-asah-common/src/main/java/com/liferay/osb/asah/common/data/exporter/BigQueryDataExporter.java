@@ -368,7 +368,7 @@ public class BigQueryDataExporter implements DataExporter {
 				"", "SELECT * EXCEPT(fields), (SELECT '{' || STRING_AGG(",
 				"format('\"%s\": \"%s\"', name, value)) || '}' FROM UNNEST(",
 				"fields)) AS fields FROM ", "BQUser", " WHERE emailAddress IN ",
-				"(", String.join(",", quotedEmailAddresses), ")");
+				"(", String.join(", ", quotedEmailAddresses), ")");
 		}
 
 		_bigQueryQueryExecutor.queryExecute(

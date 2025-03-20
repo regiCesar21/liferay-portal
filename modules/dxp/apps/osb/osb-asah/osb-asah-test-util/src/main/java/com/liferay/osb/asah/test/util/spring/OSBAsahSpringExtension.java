@@ -58,7 +58,7 @@ public class OSBAsahSpringExtension extends SpringExtension {
 		System.setProperty(
 			"spring.autoconfigure.exclude",
 			String.join(
-				",", JooqAutoConfiguration.class.getName(),
+				", ", JooqAutoConfiguration.class.getName(),
 				ManagementWebSecurityAutoConfiguration.class.getName(),
 				SecurityAutoConfiguration.class.getName()));
 		System.setProperty(

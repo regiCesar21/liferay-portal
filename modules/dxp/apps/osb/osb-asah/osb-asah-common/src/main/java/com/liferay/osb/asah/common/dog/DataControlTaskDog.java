@@ -404,7 +404,7 @@ public class DataControlTaskDog {
 					"${range_end_date}"
 				},
 				new String[] {
-					String.join(",", individualIds),
+					String.join(", ", individualIds),
 					String.valueOf(UUID.randomUUID()),
 					DateUtil.toUTCString(suppressDataControlTask.getStartDate())
 				}));
@@ -523,7 +523,7 @@ public class DataControlTaskDog {
 			deleteMembershipStatement = String.format(
 				"DELETE FROM BQMembership WHERE individualId IN (%s) AND " +
 					"segmentId IN (%s);",
-				String.join(",", quotedIndividualIds),
+				String.join(", ", quotedIndividualIds),
 				StringUtils.join(
 					ListUtil.map(updateSegments, Segment::getId), ", "));
 		}
@@ -642,8 +642,8 @@ public class DataControlTaskDog {
 							"${range_end_date}", "${range_start_date}"
 						},
 						new String[] {
-							String.join(",", quotedEmailAddressed),
-							String.join(",", quotedIndividualIds),
+							String.join(", ", quotedEmailAddressed),
+							String.join(", ", quotedIndividualIds),
 							DateUtil.toUTCString(
 								dataControlTask.getStartDate()),
 							DateUtil.toUTCString(
@@ -691,8 +691,8 @@ public class DataControlTaskDog {
 						},
 						new String[] {
 							sb.toString(),
-							String.join(",", quotedEmailAddressed),
-							String.join(",", quotedIndividualIds),
+							String.join(", ", quotedEmailAddressed),
+							String.join(", ", quotedIndividualIds),
 							DateUtil.toUTCString(
 								dataControlTask.getStartDate()),
 							DateUtil.toUTCString(
