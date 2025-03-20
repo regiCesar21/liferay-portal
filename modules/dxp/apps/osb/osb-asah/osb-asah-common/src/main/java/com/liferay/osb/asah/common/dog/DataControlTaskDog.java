@@ -110,20 +110,21 @@ public class DataControlTaskDog {
 				}
 			}
 
-			DataControlTask dataControlTask = new DataControlTask();
-
-			dataControlTask.setBatchId(batchId);
-			dataControlTask.setCreateDate(date);
-			dataControlTask.setEmailAddresses(emailAddresses);
-			dataControlTask.setId(_timeOrderedUuidGenerator.generateIdAsLong());
-			dataControlTask.setIsNew(Boolean.TRUE);
-			dataControlTask.setOwnerId(ownerId);
-			dataControlTask.setStatus(DataControlTaskStatus.PENDING.toString());
-			dataControlTask.setType(dataControlTaskType);
-			dataControlTask.setUserId(userId);
-			dataControlTask.setUserName(userName);
-
-			dataControlTasks.add(dataControlTask);
+			if (dataControlTaskType == DataControlTask.Type.ACCESS) {
+				for (String emailAddress : emailAddresses) {
+					dataControlTasks.add(
+						_createDataControlTask(
+							batchId, dataControlTaskType, date,
+							Collections.singleton(emailAddress), ownerId,
+							userId, userName));
+				}
+			}
+			else {
+				dataControlTasks.add(
+					_createDataControlTask(
+						batchId, dataControlTaskType, date, emailAddresses,
+						ownerId, userId, userName));
+			}
 		}
 
 		_dataControlTaskRepository.saveAll(dataControlTasks);
@@ -340,6 +341,27 @@ public class DataControlTaskDog {
 			ProjectIdThreadLocal.getProjectId());
 
 		return true;
+	}
+
+	private DataControlTask _createDataControlTask(
+		Long batchId, DataControlTask.Type dataControlTaskType, Date date,
+		Set<String> emailAddresses, String ownerId, String userId,
+		String userName) {
+
+		DataControlTask dataControlTask = new DataControlTask();
+
+		dataControlTask.setBatchId(batchId);
+		dataControlTask.setCreateDate(date);
+		dataControlTask.setEmailAddresses(emailAddresses);
+		dataControlTask.setId(_timeOrderedUuidGenerator.generateIdAsLong());
+		dataControlTask.setIsNew(Boolean.TRUE);
+		dataControlTask.setOwnerId(ownerId);
+		dataControlTask.setStatus(DataControlTaskStatus.PENDING.toString());
+		dataControlTask.setType(dataControlTaskType);
+		dataControlTask.setUserId(userId);
+		dataControlTask.setUserName(userName);
+
+		return dataControlTask;
 	}
 
 	private boolean _delete(DataControlTask dataControlTask) throws Exception {
