@@ -250,11 +250,11 @@ public class IndividualNanite {
 		bqIndividual.setModifiedDate(bqUser.getModifiedDate());
 		bqIndividual.setScreenName(bqUser.getScreenName());
 
-		List<Suppression> suppression =
+		List<Suppression> suppressions =
 			_suppressionRepository.findByEmailAddressIn(
 				Arrays.asList(bqUser.getEmailAddress()));
 
-		if (!suppression.isEmpty()) {
+		if (!suppressions.isEmpty()) {
 			bqIndividual.setSuppressed(true);
 		}
 
