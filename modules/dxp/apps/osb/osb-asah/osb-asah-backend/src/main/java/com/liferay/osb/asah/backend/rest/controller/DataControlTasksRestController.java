@@ -187,7 +187,7 @@ public class DataControlTasksRestController extends BaseRestController {
 				put("batchId", "Request ID");
 				put("completeDate", "Complete Date");
 				put("createDate", "Request Date");
-				put("emailAddresses", "Email");
+				put("emailAddresses", "Email Addresses");
 				put("startDate", "Process Date");
 				put("status", "Request Status");
 				put("type", "Request Type");
