@@ -188,8 +188,8 @@ public abstract class BaseAppResourceTestCase {
 	@Test
 	public void testGetAppsPage() throws Exception {
 		Page<App> page = appResource.getAppsPage(
-			null, null, RandomTestUtil.randomString(),
-			RandomTestUtil.randomString(), null, Pagination.of(1, 10), null);
+			null, null, null, RandomTestUtil.randomString(), null,
+			Pagination.of(1, 10), null);
 
 		long totalCount = page.getTotalCount();
 
@@ -632,8 +632,8 @@ public abstract class BaseAppResourceTestCase {
 			testGetDataDefinitionAppsPage_getIrrelevantDataDefinitionId();
 
 		Page<App> page = appResource.getDataDefinitionAppsPage(
-			dataDefinitionId, RandomTestUtil.randomString(),
-			RandomTestUtil.randomString(), Pagination.of(1, 10), null);
+			dataDefinitionId, null, RandomTestUtil.randomString(),
+			Pagination.of(1, 10), null);
 
 		long totalCount = page.getTotalCount();
 
@@ -943,8 +943,8 @@ public abstract class BaseAppResourceTestCase {
 		Long irrelevantSiteId = testGetSiteAppsPage_getIrrelevantSiteId();
 
 		Page<App> page = appResource.getSiteAppsPage(
-			siteId, RandomTestUtil.randomString(),
-			RandomTestUtil.randomString(), Pagination.of(1, 10), null);
+			siteId, null, RandomTestUtil.randomString(), Pagination.of(1, 10),
+			null);
 
 		long totalCount = page.getTotalCount();
 

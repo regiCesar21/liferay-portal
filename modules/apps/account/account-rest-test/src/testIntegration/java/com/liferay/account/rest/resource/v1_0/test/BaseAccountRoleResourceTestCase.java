@@ -265,8 +265,7 @@ public abstract class BaseAccountRoleResourceTestCase {
 
 		Page<AccountRole> page =
 			accountRoleResource.getAccountRolesByExternalReferenceCodePage(
-				externalReferenceCode, RandomTestUtil.randomString(),
-				Pagination.of(1, 10), null);
+				externalReferenceCode, null, Pagination.of(1, 10), null);
 
 		long totalCount = page.getTotalCount();
 
@@ -623,8 +622,7 @@ public abstract class BaseAccountRoleResourceTestCase {
 			testGetAccountRolesPage_getIrrelevantAccountId();
 
 		Page<AccountRole> page = accountRoleResource.getAccountRolesPage(
-			accountId, RandomTestUtil.randomString(), Pagination.of(1, 10),
-			null);
+			accountId, null, Pagination.of(1, 10), null);
 
 		long totalCount = page.getTotalCount();
 
