@@ -178,11 +178,7 @@ public class DataControlTasksRestController extends BaseRestController {
 		List<String> emailAddresses = new ArrayList<>(
 			dataControlTask.getEmailAddresses());
 
-		if (emailAddresses.size() == 1) {
-			return emailAddresses.get(0) + "-" + file.getName();
-		}
-
-		return dataControlTask.getId() + "-" + file.getName();
+		return emailAddresses.get(0) + "-" + file.getName();
 	}
 
 	private static final Map<String, String> _fieldNames =
