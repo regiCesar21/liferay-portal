@@ -1,4 +1,4 @@
-Request ID,Complete Date,Request Date,Email,Process Date,Request Status,Request Type
+Request ID,Complete Date,Request Date,Email Addresses,Process Date,Request Status,Request Type
 100,2022-01-27T20:07:53.251Z,2022-01-27T20:07:53.251Z,test@liferay.com,2022-01-27T20:07:53.251Z,COMPLETED,SUPPRESS
 101,2022-03-07T20:07:53.252Z,2022-03-07T20:07:53.252Z,john.doe@liferay.com,2022-03-07T20:07:53.252Z,COMPLETED,SUPPRESS
 102,2022-03-08T20:07:53.251Z,2022-03-08T20:07:53.251Z,test@liferay.com,2022-03-08T20:07:53.251Z,COMPLETED,UNSUPPRESS
