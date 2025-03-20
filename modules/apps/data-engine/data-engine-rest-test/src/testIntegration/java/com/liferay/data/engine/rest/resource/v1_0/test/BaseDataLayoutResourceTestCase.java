@@ -194,8 +194,7 @@ public abstract class BaseDataLayoutResourceTestCase {
 
 		Page<DataLayout> page =
 			dataLayoutResource.getDataDefinitionDataLayoutsPage(
-				dataDefinitionId, RandomTestUtil.randomString(),
-				Pagination.of(1, 10), null);
+				dataDefinitionId, null, Pagination.of(1, 10), null);
 
 		long totalCount = page.getTotalCount();
 
@@ -763,7 +762,7 @@ public abstract class BaseDataLayoutResourceTestCase {
 			testGetSiteDataLayoutsPage_getIrrelevantSiteId();
 
 		Page<DataLayout> page = dataLayoutResource.getSiteDataLayoutsPage(
-			siteId, RandomTestUtil.randomString(), Pagination.of(1, 10), null);
+			siteId, null, Pagination.of(1, 10), null);
 
 		long totalCount = page.getTotalCount();
 
