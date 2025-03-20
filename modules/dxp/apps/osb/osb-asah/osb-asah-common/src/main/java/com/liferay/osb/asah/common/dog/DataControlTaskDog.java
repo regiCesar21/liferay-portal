@@ -378,7 +378,8 @@ public class DataControlTaskDog {
 			if (_log.isInfoEnabled()) {
 				_log.info(
 					String.format(
-						"%s DXP user(s) with emails %s deleted successfully",
+						"%s DXP users with email addresses %s deleted " +
+							"successfully",
 						dxpEntities.size(),
 						dataControlTask.getEmailAddresses()));
 			}
@@ -411,8 +412,8 @@ public class DataControlTaskDog {
 		if (_log.isInfoEnabled()) {
 			_log.info(
 				String.format(
-					"Individuals data associated with emails %s deleted " +
-						"successfully",
+					"Individuals data associated with email addresses %s " +
+						"deleted successfully",
 					dataControlTask.getEmailAddresses()));
 		}
 
