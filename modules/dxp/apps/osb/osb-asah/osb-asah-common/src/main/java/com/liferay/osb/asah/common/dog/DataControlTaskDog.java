@@ -467,7 +467,7 @@ public class DataControlTaskDog {
 	private boolean _suppress(DataControlTask dataControlTask)
 		throws Exception {
 
-		List<String> emailAddressesToSuppress = new ArrayList<>();
+		List<String> suppressEmailAddresses = new ArrayList<>();
 
 		Set<String> emailAddresses = dataControlTask.getEmailAddresses();
 
@@ -476,10 +476,10 @@ public class DataControlTaskDog {
 				continue;
 			}
 
-			emailAddressesToSuppress.add(emailAddress);
+			suppressEmailAddresses.add(emailAddress);
 		}
 
-		if (emailAddressesToSuppress.isEmpty()) {
+		if (suppressEmailAddresses.isEmpty()) {
 			return true;
 		}
 
@@ -497,7 +497,7 @@ public class DataControlTaskDog {
 		List<String> individualIds = new ArrayList<>();
 		List<String> quotedIndividualIds = new ArrayList<>();
 
-		for (String emailAddress : emailAddressesToSuppress) {
+		for (String emailAddress : suppressEmailAddresses) {
 			String emailAddressHashed = DigestUtils.sha256Hex(emailAddress);
 
 			individualIds.add(emailAddressHashed);
@@ -528,7 +528,7 @@ public class DataControlTaskDog {
 					ListUtil.map(updateSegments, Segment::getId), ", "));
 		}
 
-		for (String emailAddress : emailAddressesToSuppress) {
+		for (String emailAddress : suppressEmailAddresses) {
 			_bigQueryQueryExecutor.queryExecute(
 				StringUtils.replaceEach(
 					ResourceUtil.readResourceToString(
@@ -558,7 +558,7 @@ public class DataControlTaskDog {
 				String.format(
 					"Individuals associated with email addresses %s " +
 						"suppressed successfully",
-					emailAddressesToSuppress));
+					suppressEmailAddresses));
 		}
 
 		return true;
