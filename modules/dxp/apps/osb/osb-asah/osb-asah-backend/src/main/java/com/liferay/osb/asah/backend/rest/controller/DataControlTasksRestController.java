@@ -136,7 +136,7 @@ public class DataControlTasksRestController extends BaseRestController {
 
 					jsonObject.put(
 						"emailAddresses",
-						String.join(" ", dataControlTask.getEmailAddresses()));
+						String.join(", ", dataControlTask.getEmailAddresses()));
 
 					return jsonObject;
 				}
