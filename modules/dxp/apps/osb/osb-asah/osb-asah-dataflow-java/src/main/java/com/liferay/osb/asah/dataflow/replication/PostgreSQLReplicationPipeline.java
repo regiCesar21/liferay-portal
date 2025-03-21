@@ -6,7 +6,6 @@
 package com.liferay.osb.asah.dataflow.replication;
 
 import org.apache.beam.sdk.Pipeline;
-import org.apache.beam.sdk.PipelineResult;
 import org.apache.beam.sdk.io.TextIO;
 import org.apache.beam.sdk.options.PipelineOptionsFactory;
 
@@ -95,9 +94,7 @@ public class PostgreSQLReplicationPipeline {
 				postgreSQLReplicationDataflowPipelineOptions)
 		);
 
-		PipelineResult pipelineResult = pipeline.run();
-
-		pipelineResult.waitUntilFinish();
+		pipeline.run();
 	}
 
 }
