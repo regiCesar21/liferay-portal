@@ -11,12 +11,16 @@
 
 from airflow.models import Variable
 from airflow.models.baseoperator import chain
+from airflow.providers.google.cloud.operators.dataflow import DataflowStartFlexTemplateOperator
+
+from datetime import date
 
 from liferay.bigquery import BigQueryInsertJobFromTemplateOperator
 
 import airflow
 import os
 import pendulum
+import re
 import requests
 
 def create_dag(ac_project_id, ac_project_time_zone_id, dag_id, dag_description):
@@ -50,9 +54,42 @@ def create_dag(ac_project_id, ac_project_time_zone_id, dag_id, dag_description):
 			task_id='membership_export'
 		)
 
+		postgresql_replication_dataflow_trigger = DataflowStartFlexTemplateOperator(
+			task_id='replication_dataflow_trigger',
+			body={
+				'launchParameter': {
+					'containerSpecGcsPath': 'gs://{}-dataflow/flex-templates/postgresql-replication-pipeline.json'.format(os.environ['GOOGLE_PROJECT_ID']),
+					'environment': {
+						'maxWorkers': 1,
+						'numWorkers': 1,
+						'serviceAccountEmail': Variable.get('osb.asah.service.account.email'),
+						'subnetwork': 'https://www.googleapis.com/compute/v1/projects/{}/regions/{}/subnetworks/{}'.format(os.environ['GOOGLE_PROJECT_ID'], os.environ['GOOGLE_REGION'], re.sub('(-analytics-internal|-ac-internal)$', '', os.environ['SUBNETWORK']))
+					},
+					'jobName': 'postgresql-replication-pipeline-{}-{}'.format(ac_project_id, date.today()),
+					'parameters': {
+						'cloudSQLConnectionName': '{}:{}:{}'.format(os.environ['GOOGLE_PROJECT_ID'], os.environ['GOOGLE_REGION'], Variable.get('osb.asah.sql.instance')),
+						'databaseUser': re.sub('.gserviceaccount.com', '', Variable.get('osb.asah.service.account.email')),
+						'individualActivityColumns': 'id,applicationId,channelId,context,eventDate,eventId,individualId,properties',
+						'individualActivityInputDirectory': 'gs://{}-data-replica/{}/{}/individual-activity/*.csv'.format(os.environ['GOOGLE_PROJECT_ID'], ac_project_id, '{{ts}}'),
+						'individualColumns': 'id,emailAddress,fields,suppressed',
+						'individualInputDirectory': 'gs://{}-data-replica/{}/{}/individual/*.csv'.format(os.environ['GOOGLE_PROJECT_ID'], ac_project_id, '{{ts}}'),
+						'individualInterestColumns': 'channelId,identityId,individualId,interested,interestScore,keyword,recordedDate',
+						'individualInterestInputDirectory': 'gs://{}-data-replica/{}/{}/individual-interest/*.csv'.format(os.environ['GOOGLE_PROJECT_ID'], ac_project_id, '{{ts}}'),
+						'individualSegmentColumns': 'createDate,channelId,individualId,modifiedDate,segmentId,status',
+						'individualSegmentInputDirectory': 'gs://{}-data-replica/{}/{}/individual-segment/*.csv'.format(os.environ['GOOGLE_PROJECT_ID'], ac_project_id, '{{ts}}'),
+						'projectId': ac_project_id,
+					}
+				}
+			},
+			location=os.environ['GOOGLE_REGION'],
+			project_id=os.environ['GOOGLE_PROJECT_ID'],
+			gcp_conn_id='google_cloud_default',
+			wait_until_finished=True
+		)
+
 		chain(
 			bq_individual_export_job, bq_individual_activity_export_job, bq_individual_interest_export_job,
-			bq_membership_export_job
+			bq_membership_export_job, postgresql_replication_dataflow_trigger
 		)
 
 		return dag
