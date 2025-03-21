@@ -94,6 +94,16 @@ public interface PostgreSQLReplicationDataflowPipelineOptions
 
 	public void setIndividualInputDirectory(String individualInputDirectory);
 
+	public void setIndividualInterestColumns(String individualInterestColumns);
+
+	public void setIndividualInterestInputDirectory(
+		String individualInterestInputDirectory);
+
+	public void setIndividualSegmentColumns(String individualSegmentColumns);
+
+	public void setIndividualSegmentInputDirectory(
+		String individualSegmentInputDirectory);
+
 	public void setProjectId(String projectId);
 
 }
