@@ -34,8 +34,8 @@ def create_dag(ac_project_id, ac_project_time_zone_id, dag_id, dag_description):
 		},
 		description=dag_description,
 		max_active_runs=1,
-		schedule_interval=None,
-		start_date=pendulum.now() - pendulum.duration(days=2)
+		schedule_interval='0 2 * * *',
+		start_date=pendulum.now(ac_project_time_zone_id) - pendulum.duration(days=2)
 	) as dag:
 
 		bq_individual_activity_export_job = BigQueryInsertJobFromTemplateOperator(
