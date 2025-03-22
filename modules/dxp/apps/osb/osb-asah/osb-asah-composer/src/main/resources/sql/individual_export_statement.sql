@@ -8,7 +8,7 @@ EXPORT DATA
 	)
 AS (
 	SELECT
-		id, emailAddress, JSON_OBJECT(ARRAY_AGG(fields.name), ARRAY_AGG(fields.value)) AS fields, suppressed
+		id, emailAddress, JSON_OBJECT(ARRAY_AGG(fields.name), ARRAY_AGG(fields.value)) AS fields, COALESCE(suppressed, false)
 	FROM
 		`{{ dag.default_args['ac_project_id'] }}.individual`, UNNEST(fields) AS fields
 	GROUP BY
