@@ -55,11 +55,19 @@ public class DocumentLibrariesRestController extends BaseRestController {
 		@RequestParam(name = "startDate", required = false)
 		LocalDate startLocalDate) {
 
+		Integer documentImpressionMadeCountBQEvents = _bqEventDog.countBQEvents(
+			"Document", assetId, Long.valueOf(channelId),
+			Long.valueOf(dataSourceId), endLocalDate, "documentImpressionMade",
+			startLocalDate);
+
+		Integer documentPreviewedCountBQEvents = _bqEventDog.countBQEvents(
+			"Document", assetId, Long.valueOf(channelId),
+			Long.valueOf(dataSourceId), endLocalDate, "documentPreviewed",
+			startLocalDate);
+
 		return String.valueOf(
-			_bqEventDog.countBQEvents(
-				"Document", assetId, Long.valueOf(channelId),
-				Long.valueOf(dataSourceId), endLocalDate, "documentPreviewed",
-				startLocalDate));
+			documentImpressionMadeCountBQEvents +
+				documentPreviewedCountBQEvents);
 	}
 
 	@Autowired
