@@ -101,7 +101,7 @@ WITH
 			deviceType,
 			TIMESTAMP_TRUNC(eventDate, HOUR) AS normalizedEventDate,
 			platformName,
-			COUNTIF(eventId = 'documentPreviewed') AS previews,
+			COUNTIF(eventId = 'documentImpressionMade' OR eventId = 'documentPreviewed') AS impressions,
 			region,
 			title AS pageTitle,
 			userId
