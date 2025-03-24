@@ -66,8 +66,8 @@ AS (
             PageFinalizedEvent
         WHERE
             PageFinalizedEvent.eventId NOT IN (
-                'blogViewed', 'documentPreviewed', 'formViewed', 'pageLoaded',
-                'pageUnloaded', 'webContentViewed'
+                'blogViewed', 'documentImpressionMade', 'documentPreviewed',
+                'formViewed', 'pageLoaded','pageUnloaded', 'webContentViewed'
             )
         GROUP BY
             channelId, sessionId, userId

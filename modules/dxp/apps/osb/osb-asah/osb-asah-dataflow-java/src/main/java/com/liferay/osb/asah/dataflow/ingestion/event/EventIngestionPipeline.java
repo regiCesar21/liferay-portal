@@ -703,6 +703,7 @@ public class EventIngestionPipeline {
 			}
 
 			if (!eventId.equals("blogViewed") &&
+				!eventId.equals("documentImpressionMade") &&
 				!eventId.equals("documentPreviewed") &&
 				!eventId.equals("formViewed") &&
 				!eventId.equals("pageLoaded") &&

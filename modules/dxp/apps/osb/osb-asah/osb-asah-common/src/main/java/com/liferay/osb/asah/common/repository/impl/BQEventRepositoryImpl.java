@@ -2139,8 +2139,8 @@ public class BQEventRepositoryImpl
 					),
 					DSL.field(
 						"eventId"
-					).eq(
-						contentType.getEventId()
+					).in(
+						contentType.getEventIds()
 					)));
 		}
 

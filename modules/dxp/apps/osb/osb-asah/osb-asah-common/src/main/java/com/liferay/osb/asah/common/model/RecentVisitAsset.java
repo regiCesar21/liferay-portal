@@ -6,11 +6,14 @@
 package com.liferay.osb.asah.common.model;
 
 import com.liferay.osb.asah.common.util.BeanUtils;
+import com.liferay.osb.asah.common.util.SetUtil;
 
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
+import java.util.Set;
 
 /**
  * @author Leslie Wong
@@ -93,12 +96,15 @@ public class RecentVisitAsset extends RecentVisit {
 
 	public enum ContentType {
 
-		BLOG("Blog", "blogViewed", "blog"),
-		DOCUMENT("Document", "documentPreviewed", "document"),
-		FORM("Form", "formViewed", "form"),
+		BLOG("Blog", Collections.singleton("blogViewed"), "blog"),
+		DOCUMENT(
+			"Document",
+			SetUtil.of("documentImpressionMade", "documentPreviewed"),
+			"document"),
+		FORM("Form", Collections.singleton("formViewed"), "form"),
 		WEBCONTENT(
-			"WebContent", "webContentResourcePk", "webContentViewed",
-			"web-content");
+			"WebContent", "webContentResourcePk",
+			Collections.singleton("webContentViewed"), "web-content");
 
 		public static ContentType of(String value) {
 			return Optional.ofNullable(
@@ -116,8 +122,8 @@ public class RecentVisitAsset extends RecentVisit {
 			return _assetIdFieldName;
 		}
 
-		public String getEventId() {
-			return _eventId;
+		public Set<String> getEventIds() {
+			return _eventIds;
 		}
 
 		public String getValue() {
@@ -125,21 +131,21 @@ public class RecentVisitAsset extends RecentVisit {
 		}
 
 		private ContentType(
-			String applicationId, String eventId, String value) {
+			String applicationId, Set<String> eventIds, String value) {
 
 			_applicationId = applicationId;
-			_eventId = eventId;
+			_eventIds = eventIds;
 			_value = value;
 
 			_assetIdFieldName = null;
 		}
 
 		private ContentType(
-			String applicationId, String assetiIdFieldName, String eventId,
-			String value) {
+			String applicationId, String assetiIdFieldName,
+			Set<String> eventIds, String value) {
 
 			_applicationId = applicationId;
-			_eventId = eventId;
+			_eventIds = eventIds;
 			_value = value;
 
 			_assetIdFieldName = assetiIdFieldName;
@@ -156,7 +162,7 @@ public class RecentVisitAsset extends RecentVisit {
 
 		private final String _applicationId;
 		private final String _assetIdFieldName;
-		private final String _eventId;
+		private final Set<String> _eventIds;
 		private final String _value;
 
 	}

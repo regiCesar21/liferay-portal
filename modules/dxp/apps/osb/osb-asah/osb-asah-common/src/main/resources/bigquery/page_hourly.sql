@@ -62,7 +62,7 @@ PageBounces AS (
 		PageFinalizedEvent
 	WHERE
 		PageFinalizedEvent.eventId NOT IN (
-			'blogViewed', 'documentPreviewed', 'formViewed', 'pageLoaded',
+			'blogViewed', 'documentImpressionMade', 'documentPreviewed', 'formViewed', 'pageLoaded',
 			'pageUnloaded', 'webContentViewed'
 	  	)
 	GROUP BY

@@ -281,7 +281,7 @@ public class EventDefinitionDogTest
 		long count = _eventDefinitionDog.countEventDefinitions(
 			false, null, null, EventDefinition.Type.DEFAULT);
 
-		Assertions.assertEquals(27, count);
+		Assertions.assertEquals(28, count);
 
 		count = _eventDefinitionDog.countEventDefinitions(
 			false, null, null, EventDefinition.Type.CUSTOM);
@@ -359,6 +359,7 @@ public class EventDefinitionDogTest
 					add("blogViewed");
 					add("ctaClicked");
 					add("documentDownloaded");
+					add("documentImpressionMade");
 					add("documentPreviewed");
 					add("formSubmitted");
 					add("formViewed");

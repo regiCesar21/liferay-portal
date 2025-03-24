@@ -13,7 +13,7 @@ WITH
 			Event.assetId IS NOT NULL AND
 			Event.canonicalUrl IS NOT NULL AND
 			Event.eventDate > TIMESTAMP_SUB(CURRENT_TIMESTAMP(), INTERVAL 48 HOUR) AND
-			Event.eventId IN ('documentDownloaded', 'documentPreviewed', 'posted', 'VOTE') AND
+			Event.eventId IN ('documentDownloaded', 'documentImpressionMade', 'documentPreviewed', 'posted', 'VOTE') AND
 			Event.title IS NOT NULL
 	),
 	CommentEvent AS (
@@ -70,7 +70,7 @@ WITH
 			Event.assetId IS NOT NULL AND
 			Event.assetTitle IS NOT NULL AND
 			Event.canonicalUrl IS NOT NULL AND
-			Event.eventId IN ('documentDownloaded', 'documentPreviewed') AND
+			Event.eventId IN ('documentDownloaded', 'documentImpressionMade', 'documentPreviewed') AND
 			Event.eventDate > TIMESTAMP_SUB(CURRENT_TIMESTAMP(), INTERVAL 48 HOUR) AND
 			Event.title IS NOT NULL
 	),

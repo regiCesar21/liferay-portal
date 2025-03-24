@@ -625,6 +625,7 @@ public class AnalyticsEventsIngestionNanite {
 		new HashSet<String>() {
 			{
 				add("blogViewed");
+				add("documentImpressionMade");
 				add("documentPreviewed");
 				add("formViewed");
 				add("pageLoaded");

@@ -114,6 +114,7 @@ public class AnalyticsEvents {
 		new HashSet<String>() {
 			{
 				add("blogViewed");
+				add("documentImpressionMade");
 				add("documentPreviewed");
 				add("formViewed");
 				add("pageLoaded");

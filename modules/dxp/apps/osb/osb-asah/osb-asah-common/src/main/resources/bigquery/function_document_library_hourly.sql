@@ -16,7 +16,7 @@ AS (
 				Event.canonicalUrl IS NOT NULL AND
 				Event.eventDate >= startDate AND
 				Event.eventDate < endDate AND
-				Event.eventId IN ('documentDownloaded', 'documentPreviewed', 'posted', 'VOTE') AND
+				Event.eventId IN ('documentDownloaded', 'documentImpressionMade', 'documentPreviewed', 'posted', 'VOTE') AND
 				Event.title IS NOT NULL
         ),
         CommentEvent AS (
@@ -76,7 +76,7 @@ AS (
                 Event.assetId IS NOT NULL AND
                 Event.assetTitle IS NOT NULL AND
                 Event.canonicalUrl IS NOT NULL AND
-                Event.eventId IN ('documentDownloaded', 'documentPreviewed') AND
+                Event.eventId IN ('documentDownloaded', 'documentImpressionMade', 'documentPreviewed') AND
                 Event.eventDate >= startDate AND
                 Event.eventDate < endDate AND
                 Event.title IS NOT NULL

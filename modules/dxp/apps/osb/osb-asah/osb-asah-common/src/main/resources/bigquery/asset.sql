@@ -46,7 +46,7 @@ WITH NotPageEvent AS (
 			Event.assetId IS NOT NULL AND
 			Event.eventId IN (
 				'blogViewed', 'formViewed', 'formSubmitted', 'documentDownloaded',
-				'documentPreviewed', 'webContentViewed'
+				'documentImpressionMade', 'documentPreviewed', 'webContentViewed'
 			)
 		) OR
 		(

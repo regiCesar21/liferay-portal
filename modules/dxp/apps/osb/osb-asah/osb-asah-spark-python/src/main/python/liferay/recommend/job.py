@@ -163,7 +163,7 @@ class MostViewedContentRecommendationEventsBigQueryDataFrameReaderSparkJob(BaseB
 
 		self._event_ids = [
 			'assetViewed', 'blogViewed', 'documentDownloaded',
-			'documentPreviewed', 'webContentViewed'
+			'documentImpressionMade', 'documentPreviewed', 'webContentViewed'
 		]
 
 		self._window_days = configuration.get(
@@ -438,7 +438,7 @@ class UserContentRecommendationEventsBigQueryDataFrameReaderSparkJob(BaseBigQuer
 
 		self._event_ids = [
 			'assetViewed', 'blogViewed', 'documentDownloaded',
-			'documentPreviewed', 'webContentViewed'
+			'documentImpressionMade', 'documentPreviewed', 'webContentViewed'
 		]
 
 		self._initial_run_day_range = 7
