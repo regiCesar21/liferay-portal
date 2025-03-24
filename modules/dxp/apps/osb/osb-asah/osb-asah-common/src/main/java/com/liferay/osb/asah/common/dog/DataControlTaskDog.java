@@ -104,12 +104,6 @@ public class DataControlTaskDog {
 			DataControlTask.Type dataControlTaskType =
 				DataControlTask.Type.valueOf(type);
 
-			if (dataControlTaskType == DataControlTask.Type.UNSUPPRESS) {
-				for (String emailAddress : emailAddresses) {
-					_suppressionDog.hideSuppressionByEmailAddress(emailAddress);
-				}
-			}
-
 			if (dataControlTaskType == DataControlTask.Type.ACCESS) {
 				for (String emailAddress : emailAddresses) {
 					dataControlTasks.add(
@@ -124,6 +118,12 @@ public class DataControlTaskDog {
 					_createDataControlTask(
 						batchId, dataControlTaskType, date, emailAddresses,
 						ownerId, userId, userName));
+			}
+
+			if (dataControlTaskType == DataControlTask.Type.UNSUPPRESS) {
+				for (String emailAddress : emailAddresses) {
+					_suppressionDog.hideSuppressionByEmailAddress(emailAddress);
+				}
 			}
 		}
 
