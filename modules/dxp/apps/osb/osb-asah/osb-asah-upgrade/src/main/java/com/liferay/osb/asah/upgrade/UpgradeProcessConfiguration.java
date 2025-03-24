@@ -5,6 +5,7 @@
 
 package com.liferay.osb.asah.upgrade;
 
+import com.liferay.osb.asah.upgrade.v4_12_0.DataControlTaskUpgradeStep;
 import com.liferay.osb.asah.upgrade.v4_12_0.PostgreSQLUpgradeStep;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,8 +25,14 @@ public class UpgradeProcessConfiguration {
 		upgradeProcess.addUpgradeSteps(
 			"4.0.43", "4.0.44", _postgreSQLUpgradeStep);
 
+		upgradeProcess.addUpgradeSteps(
+			"4.0.44", "4.0.45", _dataControlTaskUpgradeStep);
+
 		return upgradeProcess;
 	}
+
+	@Autowired
+	private DataControlTaskUpgradeStep _dataControlTaskUpgradeStep;
 
 	@Autowired
 	private PostgreSQLUpgradeStep _postgreSQLUpgradeStep;

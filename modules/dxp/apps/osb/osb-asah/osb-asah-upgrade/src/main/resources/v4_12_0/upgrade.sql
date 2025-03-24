@@ -1,5 +1,3 @@
-ALTER TABLE DataControlTask ADD COLUMN emailAddresses TEXT[];
-
 CREATE TABLE IF NOT EXISTS Individual (
 	id TEXT PRIMARY KEY,
 	emailAddress TEXT,
@@ -40,5 +38,3 @@ CREATE TABLE IF NOT EXISTS IndividualSegment (
 CREATE INDEX IF NOT EXISTS IX_INDIVIDUALACTIVITY_EDII ON IndividualActivity (eventDate, individualId);
 
 CREATE INDEX IF NOT EXISTS IX_INDIVIDUALINTEREST_II ON IndividualInterest (individualId);
-
-UPDATE DataControlTask SET emailAddresses = ARRAY[emailAddress] WHERE emailAddress IS NOT null;
