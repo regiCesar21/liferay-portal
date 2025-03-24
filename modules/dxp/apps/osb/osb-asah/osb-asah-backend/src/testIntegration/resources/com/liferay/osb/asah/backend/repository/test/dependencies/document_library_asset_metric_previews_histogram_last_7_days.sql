@@ -1,3 +1,3 @@
-INSERT INTO DocumentLibraryDaily (assetId, channelId, eventDate, previews) VALUES ('e131fabc', 1, TIMESTAMP(DATETIME_TRUNC(timestamp '${today-4d}', HOUR)), 1);
-INSERT INTO DocumentLibraryDaily (assetId, channelId, eventDate, previews) VALUES ('e131fabc', 1, TIMESTAMP(DATETIME_TRUNC(timestamp '${today-4d}', HOUR)), 1);
-INSERT INTO DocumentLibraryDaily (assetId, channelId, eventDate, previews) VALUES ('e131fabc', 1, TIMESTAMP(DATETIME_TRUNC(timestamp '${today-4d}', HOUR)), 1);
+INSERT INTO DocumentLibraryDaily (assetId, channelId, eventDate, impressions) VALUES ('e131fabc', 1, TIMESTAMP(DATETIME_TRUNC(timestamp '${today-4d}', HOUR)), 1);
+INSERT INTO DocumentLibraryDaily (assetId, channelId, eventDate, impressions) VALUES ('e131fabc', 1, TIMESTAMP(DATETIME_TRUNC(timestamp '${today-4d}', HOUR)), 1);
+INSERT INTO DocumentLibraryDaily (assetId, channelId, eventDate, impressions) VALUES ('e131fabc', 1, TIMESTAMP(DATETIME_TRUNC(timestamp '${today-4d}', HOUR)), 1);

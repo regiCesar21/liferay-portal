@@ -404,7 +404,7 @@ public class AssetMetricRestControllerTest
 			assetAppearsOnHistogramMetricDTOs.get(2);
 
 		Assertions.assertEquals(
-			"previewsMetric",
+			"impressionMadeMetric",
 			childAssetAppearsOnHistogramMetricDTO.getMetricName());
 
 		appearsOnHistogramMetricDTOs = new ArrayList(
@@ -485,7 +485,7 @@ public class AssetMetricRestControllerTest
 			assetAppearsOnHistogramMetricDTOs.get(2);
 
 		Assertions.assertEquals(
-			"previewsMetric",
+			"impressionMadeMetric",
 			childAssetAppearsOnHistogramMetricDTO.getMetricName());
 
 		appearsOnHistogramMetricDTOs = new ArrayList(
@@ -563,7 +563,7 @@ public class AssetMetricRestControllerTest
 			assetAppearsOnHistogramMetricDTOs.get(2);
 
 		Assertions.assertEquals(
-			"previewsMetric",
+			"impressionMadeMetric",
 			childAssetAppearsOnHistogramMetricDTO.getMetricName());
 
 		appearsOnHistogramMetricDTOs = new ArrayList(
@@ -752,7 +752,7 @@ public class AssetMetricRestControllerTest
 					_getActualValues(histogramMetricDTOs));
 			}
 			else if (metricName.equals(
-						DocumentLibraryMetricType.PREVIEWS.getName())) {
+						DocumentLibraryMetricType.IMPRESSIONS.getName())) {
 
 				Assertions.assertEquals(
 					3D, curAssetHistogramMetricDTO.getTotalValue());
@@ -809,7 +809,7 @@ public class AssetMetricRestControllerTest
 					_getActualValues(histogramMetricDTOs));
 			}
 			else if (metricName.equals(
-						DocumentLibraryMetricType.PREVIEWS.getName())) {
+						DocumentLibraryMetricType.IMPRESSIONS.getName())) {
 
 				Assertions.assertEquals(
 					4D, curAssetHistogramMetricDTO.getTotalValue());
@@ -870,7 +870,7 @@ public class AssetMetricRestControllerTest
 					_getActualValues(histogramMetricDTOs));
 			}
 			else if (metricName.equals(
-						DocumentLibraryMetricType.PREVIEWS.getName())) {
+						DocumentLibraryMetricType.IMPRESSIONS.getName())) {
 
 				Assertions.assertEquals(
 					4D, curAssetHistogramMetricDTO.getTotalValue());
@@ -1105,21 +1105,21 @@ public class AssetMetricRestControllerTest
 				_createMetric(
 					DocumentLibraryMetricType.DOWNLOADS, null, null, 1D,
 					"Mobile")));
-		DeviceMetricDTO previewsDeviceMetricDTO = new DeviceMetricDTO(
-			DocumentLibraryMetricType.PREVIEWS.getName(),
+		DeviceMetricDTO impressionsDeviceMetricDTO = new DeviceMetricDTO(
+			DocumentLibraryMetricType.IMPRESSIONS.getName(),
 			Arrays.asList(
 				_createMetric(
-					DocumentLibraryMetricType.PREVIEWS, null, null, 7D,
+					DocumentLibraryMetricType.IMPRESSIONS, null, null, 7D,
 					"Tablet"),
 				_createMetric(
-					DocumentLibraryMetricType.PREVIEWS, null, null, 4D,
+					DocumentLibraryMetricType.IMPRESSIONS, null, null, 4D,
 					"Mobile")));
 
 		Assertions.assertEquals(
 			new DeviceMetricDTO(
 				SetUtil.of(
 					commentsDeviceMetricDTO, downloadsDeviceMetricDTO,
-					previewsDeviceMetricDTO)),
+					impressionsDeviceMetricDTO)),
 			deviceMetricDTO);
 
 		deviceMetricDTO = _assetMetricRestController.getDeviceMetricDTO(
@@ -1137,18 +1137,18 @@ public class AssetMetricRestControllerTest
 				_createMetric(
 					DocumentLibraryMetricType.DOWNLOADS, null, null, 1D,
 					"Mobile")));
-		previewsDeviceMetricDTO = new DeviceMetricDTO(
-			DocumentLibraryMetricType.PREVIEWS.getName(),
+		impressionsDeviceMetricDTO = new DeviceMetricDTO(
+			DocumentLibraryMetricType.IMPRESSIONS.getName(),
 			Arrays.asList(
 				_createMetric(
-					DocumentLibraryMetricType.PREVIEWS, null, null, 4D,
+					DocumentLibraryMetricType.IMPRESSIONS, null, null, 4D,
 					"Mobile")));
 
 		Assertions.assertEquals(
 			new DeviceMetricDTO(
 				SetUtil.of(
 					commentsDeviceMetricDTO, downloadsDeviceMetricDTO,
-					previewsDeviceMetricDTO)),
+					impressionsDeviceMetricDTO)),
 			deviceMetricDTO);
 
 		deviceMetricDTO = _assetMetricRestController.getDeviceMetricDTO(
@@ -1166,18 +1166,18 @@ public class AssetMetricRestControllerTest
 				_createMetric(
 					DocumentLibraryMetricType.DOWNLOADS, null, null, 2D,
 					"Tablet")));
-		previewsDeviceMetricDTO = new DeviceMetricDTO(
-			DocumentLibraryMetricType.PREVIEWS.getName(),
+		impressionsDeviceMetricDTO = new DeviceMetricDTO(
+			DocumentLibraryMetricType.IMPRESSIONS.getName(),
 			Arrays.asList(
 				_createMetric(
-					DocumentLibraryMetricType.PREVIEWS, null, null, 7D,
+					DocumentLibraryMetricType.IMPRESSIONS, null, null, 7D,
 					"Tablet")));
 
 		Assertions.assertEquals(
 			new DeviceMetricDTO(
 				SetUtil.of(
 					commentsDeviceMetricDTO, downloadsDeviceMetricDTO,
-					previewsDeviceMetricDTO)),
+					impressionsDeviceMetricDTO)),
 			deviceMetricDTO);
 	}
 

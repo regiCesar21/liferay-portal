@@ -20,7 +20,8 @@ public enum DocumentLibraryMetricType implements MetricType {
 
 	COMMENTS("comments", "commentsMetric", TrendClassification.Order.ASC),
 	DOWNLOADS("downloads", "downloadsMetric", TrendClassification.Order.ASC),
-	PREVIEWS("previews", "previewsMetric", TrendClassification.Order.ASC),
+	IMPRESSIONS(
+		"impressions", "impressionMadeMetric", TrendClassification.Order.ASC),
 	RATINGS("ratingsScore", "ratingsMetric", TrendClassification.Order.ASC);
 
 	public static DocumentLibraryMetricType of(String name) {

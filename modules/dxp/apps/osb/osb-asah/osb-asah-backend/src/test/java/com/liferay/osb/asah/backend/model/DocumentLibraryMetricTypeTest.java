@@ -74,27 +74,27 @@ public class DocumentLibraryMetricTypeTest
 	}
 
 	@Test
-	public void testPreviews() {
+	public void testImpressions() {
 		DocumentLibraryMetricType documentLibraryMetricType =
-			DocumentLibraryMetricType.of("previewsMetric");
+			DocumentLibraryMetricType.of("impressionMadeMetric");
 
 		Assertions.assertEquals(
-			DocumentLibraryMetricType.PREVIEWS, documentLibraryMetricType);
+			DocumentLibraryMetricType.IMPRESSIONS, documentLibraryMetricType);
 	}
 
 	@Test
-	public void testPreviewsFieldName() {
+	public void testImpressionsFieldName() {
 		DocumentLibraryMetricType documentLibraryMetricType =
-			DocumentLibraryMetricType.PREVIEWS;
+			DocumentLibraryMetricType.IMPRESSIONS;
 
 		Assertions.assertEquals(
-			"previews", documentLibraryMetricType.getFieldName());
+			"impressions", documentLibraryMetricType.getFieldName());
 	}
 
 	@Test
-	public void testPreviewsTrendClassificationOrder() {
+	public void testImpressionsTrendClassificationOrder() {
 		DocumentLibraryMetricType documentLibraryMetricType =
-			DocumentLibraryMetricType.PREVIEWS;
+			DocumentLibraryMetricType.IMPRESSIONS;
 
 		Assertions.assertEquals(
 			TrendClassification.Order.ASC,

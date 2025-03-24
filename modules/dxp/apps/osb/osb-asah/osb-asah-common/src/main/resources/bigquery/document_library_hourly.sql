@@ -88,7 +88,7 @@ WITH
 		GROUP BY
 			assetId, canonicalUrl, channelId, normalizedEventDate, title, userId
 	),
-	DocumentDownloadAndPreviews AS (
+	DocumentDownloadAndImpressions AS (
 		SELECT
 			assetId,
 			assetTitle,
@@ -175,39 +175,39 @@ WITH
 			title, userId
 	)
 SELECT
-	DocumentDownloadAndPreviews.assetId,
-	DocumentDownloadAndPreviews.assetTitle,
-	DocumentDownloadAndPreviews.browserName,
-	DocumentDownloadAndPreviews.canonicalUrl,
-	DocumentDownloadAndPreviews.channelId,
-	DocumentDownloadAndPreviews.city,
+	DocumentDownloadAndImpressions.assetId,
+	DocumentDownloadAndImpressions.assetTitle,
+	DocumentDownloadAndImpressions.browserName,
+	DocumentDownloadAndImpressions.canonicalUrl,
+	DocumentDownloadAndImpressions.channelId,
+	DocumentDownloadAndImpressions.city,
 	DocumentComments.comments,
-	DocumentDownloadAndPreviews.country,
-	DocumentDownloadAndPreviews.deviceType,
-	DocumentDownloadAndPreviews.downloads,
-	DocumentDownloadAndPreviews.normalizedEventDate AS eventDate,
-	DocumentDownloadAndPreviews.pageTitle,
-	DocumentDownloadAndPreviews.platformName,
-	DocumentDownloadAndPreviews.previews,
+	DocumentDownloadAndImpressions.country,
+	DocumentDownloadAndImpressions.deviceType,
+	DocumentDownloadAndImpressions.downloads,
+	DocumentDownloadAndImpressions.normalizedEventDate AS eventDate,
+	DocumentDownloadAndImpressions.pageTitle,
+	DocumentDownloadAndImpressions.platformName,
+	DocumentDownloadAndImpressions.impressions,
 	DocumentRatings.ratings,
 	DocumentRatings.ratingsScore,
-	DocumentDownloadAndPreviews.region,
-	DocumentDownloadAndPreviews.userId
+	DocumentDownloadAndImpressions.region,
+	DocumentDownloadAndImpressions.userId
 FROM
-	DocumentDownloadAndPreviews
+	DocumentDownloadAndImpressions
 LEFT JOIN DocumentRatings ON (
-	DocumentDownloadAndPreviews.assetId = DocumentRatings.assetId AND
-	DocumentDownloadAndPreviews.canonicalUrl = DocumentRatings.canonicalUrl AND
-	DocumentDownloadAndPreviews.channelId = DocumentRatings.channelId AND
-	DocumentDownloadAndPreviews.normalizedEventDate = DocumentRatings.normalizedEventDate AND
-	DocumentDownloadAndPreviews.pageTitle = DocumentRatings.pageTitle AND
-	DocumentDownloadAndPreviews.userId = DocumentRatings.userId
+	DocumentDownloadAndImpressions.assetId = DocumentRatings.assetId AND
+	DocumentDownloadAndImpressions.canonicalUrl = DocumentRatings.canonicalUrl AND
+	DocumentDownloadAndImpressions.channelId = DocumentRatings.channelId AND
+	DocumentDownloadAndImpressions.normalizedEventDate = DocumentRatings.normalizedEventDate AND
+	DocumentDownloadAndImpressions.pageTitle = DocumentRatings.pageTitle AND
+	DocumentDownloadAndImpressions.userId = DocumentRatings.userId
 )
 LEFT JOIN DocumentComments ON (
-	DocumentDownloadAndPreviews.assetId = DocumentComments.assetId AND
-	DocumentDownloadAndPreviews.canonicalUrl = DocumentComments.canonicalUrl AND
-	DocumentDownloadAndPreviews.channelId = DocumentComments.channelId AND
-	DocumentDownloadAndPreviews.normalizedEventDate = DocumentComments.normalizedEventDate AND
-	DocumentDownloadAndPreviews.pageTitle = DocumentComments.pageTitle AND
-	DocumentDownloadAndPreviews.userId = DocumentComments.userId
+	DocumentDownloadAndImpressions.assetId = DocumentComments.assetId AND
+	DocumentDownloadAndImpressions.canonicalUrl = DocumentComments.canonicalUrl AND
+	DocumentDownloadAndImpressions.channelId = DocumentComments.channelId AND
+	DocumentDownloadAndImpressions.normalizedEventDate = DocumentComments.normalizedEventDate AND
+	DocumentDownloadAndImpressions.pageTitle = DocumentComments.pageTitle AND
+	DocumentDownloadAndImpressions.userId = DocumentComments.userId
 )

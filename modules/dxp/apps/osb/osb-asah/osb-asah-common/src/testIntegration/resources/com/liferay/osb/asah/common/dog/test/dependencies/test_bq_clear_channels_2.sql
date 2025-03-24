@@ -2,9 +2,9 @@ INSERT INTO BlogDaily (assetId, channelId, eventDate, views) VALUES ('e131fabc',
 INSERT INTO BlogDaily (assetId, channelId, eventDate, views) VALUES ('e131fabc', 1, timestamp '${now-6d}', 1);
 INSERT INTO BlogDaily (assetId, channelId, eventDate, views) VALUES ('e131fabc', 1, timestamp '${now-7d}', 1);
 
-INSERT INTO DocumentLibraryDaily (assetId, canonicalUrl, channelId, eventDate, previews) VALUES ('e131fabc', 'https://www.beryl.com/delivery', 1, timestamp '${today-2d}', 1);
-INSERT INTO DocumentLibraryDaily (assetId, canonicalUrl, channelId, eventDate, previews) VALUES ('e131fabc', 'https://www.beryl.com/delivery', 1, timestamp '${today-6d}', 1);
-INSERT INTO DocumentLibraryDaily (assetId, canonicalUrl, channelId, eventDate, previews) VALUES ('e131fabc', 'https://www.beryl.com/delivery', 1, timestamp '${today-8d}', 1);
+INSERT INTO DocumentLibraryDaily (assetId, canonicalUrl, channelId, eventDate, impressions) VALUES ('e131fabc', 'https://www.beryl.com/delivery', 1, timestamp '${today-2d}', 1);
+INSERT INTO DocumentLibraryDaily (assetId, canonicalUrl, channelId, eventDate, impressions) VALUES ('e131fabc', 'https://www.beryl.com/delivery', 1, timestamp '${today-6d}', 1);
+INSERT INTO DocumentLibraryDaily (assetId, canonicalUrl, channelId, eventDate, impressions) VALUES ('e131fabc', 'https://www.beryl.com/delivery', 1, timestamp '${today-8d}', 1);
 
 INSERT INTO Event (applicationId, channelId, eventDate, eventId, id, properties, sessionId, userId) VALUES ('CustomEvent', 1, timestamp '${today-1d}', 'testEvent1', '1', ARRAY<STRUCT<name STRING, value STRING>> [], '366909399944213421', '1');
 INSERT INTO Event (applicationId, channelId, eventDate, eventId, id, properties, sessionId, userId) VALUES ('CustomEvent', 1, timestamp '${today-1d}', 'testEvent2', '2', ARRAY<STRUCT<name STRING, value STRING>> [], '366909399944215919', '1');

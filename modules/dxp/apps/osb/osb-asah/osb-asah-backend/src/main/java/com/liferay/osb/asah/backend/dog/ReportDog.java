@@ -112,7 +112,7 @@ public class ReportDog {
 				channelId, query,
 				SetUtil.of(
 					DocumentLibraryMetricType.DOWNLOADS.getName(),
-					DocumentLibraryMetricType.PREVIEWS.getName(),
+					DocumentLibraryMetricType.IMPRESSIONS.getName(),
 					DocumentLibraryMetricType.COMMENTS.getName(),
 					DocumentLibraryMetricType.RATINGS.getName()),
 				sorts, timeRange, type);
@@ -269,7 +269,7 @@ public class ReportDog {
 
 		rows.add(
 			new String[] {
-				"Name", "Id", "Downloads", "Previews", "Comments", "Rating",
+				"Name", "Id", "Downloads", "Impressions", "Comments", "Rating",
 				"Property Name"
 			});
 
@@ -293,7 +293,7 @@ public class ReportDog {
 					_getMetricValueAsString(
 						documentLibraryMetric.getDownloadsMetric()),
 					_getMetricValueAsString(
-						documentLibraryMetric.getPreviewsMetric()),
+						documentLibraryMetric.getImpressionMadeMetric()),
 					_getMetricValueAsString(
 						documentLibraryMetric.getCommentsMetric()),
 					_getMetricValueAsString(

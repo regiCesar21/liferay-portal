@@ -56,8 +56,8 @@ public class DocumentLibraryAssetMetricRepositoryImpl
 					DocumentLibraryMetricType.DOWNLOADS.getName(),
 					DocumentLibraryMetric::setDownloadsMetric);
 				put(
-					DocumentLibraryMetricType.PREVIEWS.getName(),
-					DocumentLibraryMetric::setPreviewsMetric);
+					DocumentLibraryMetricType.IMPRESSIONS.getName(),
+					DocumentLibraryMetric::setImpressionMadeMetric);
 				put(
 					DocumentLibraryMetricType.RATINGS.getName(),
 					DocumentLibraryMetric::setRatingsMetric);

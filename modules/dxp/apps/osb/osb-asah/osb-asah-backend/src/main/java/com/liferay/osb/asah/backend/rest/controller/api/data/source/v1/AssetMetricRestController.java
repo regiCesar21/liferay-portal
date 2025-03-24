@@ -97,8 +97,9 @@ public class AssetMetricRestController {
 				new AssetHistogramMetricDTO(
 					_histogramDog.getHistogramMetricBag(
 						channelIds, IdentityType.valueOf(identityType),
-						DocumentLibraryMetricType.PREVIEWS, searchQueryContext),
-					DocumentLibraryMetricType.PREVIEWS.getName()));
+						DocumentLibraryMetricType.IMPRESSIONS,
+						searchQueryContext),
+					DocumentLibraryMetricType.IMPRESSIONS.getName()));
 		}
 		else if (assetType == AssetType.JOURNAL) {
 			assetHistogramMetricDTOs.add(
@@ -188,10 +189,10 @@ public class AssetMetricRestController {
 						searchQueryContext)));
 			deviceMetricDTOs.add(
 				new DeviceMetricDTO(
-					DocumentLibraryMetricType.PREVIEWS.getName(),
+					DocumentLibraryMetricType.IMPRESSIONS.getName(),
 					_metricDog.getDeviceMetrics(
 						IdentityType.valueOf(identityType),
-						DocumentLibraryMetricType.PREVIEWS,
+						DocumentLibraryMetricType.IMPRESSIONS,
 						searchQueryContext)));
 		}
 		else if (assetType == AssetType.JOURNAL) {
@@ -252,7 +253,7 @@ public class AssetMetricRestController {
 			assetAppearsOnHistogramMetricDTOs.add(
 				_getAssetAppearsOnHistogramMetricDTO(
 					channelIds, identityType,
-					DocumentLibraryMetricType.PREVIEWS, searchQueryContext));
+					DocumentLibraryMetricType.IMPRESSIONS, searchQueryContext));
 		}
 		else if (assetType == AssetType.JOURNAL) {
 			assetAppearsOnHistogramMetricDTOs.add(

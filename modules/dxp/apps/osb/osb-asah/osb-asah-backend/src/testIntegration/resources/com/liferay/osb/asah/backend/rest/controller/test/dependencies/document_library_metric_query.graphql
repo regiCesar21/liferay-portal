@@ -82,7 +82,7 @@ query DocumentLibraryMetric($assetId: String!, $canonicalUrl: String, $channelId
 			...metricFragment
 			...segmentFragment
 		}
-		previewsMetric {
+		impressionMadeMetric {
 			...metricFragment
 		}
 		ratingsMetric {

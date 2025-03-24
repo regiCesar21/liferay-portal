@@ -121,7 +121,7 @@ public class HistogramDogTest implements OSBAsahTestExecutionListenersContext {
 	public void testGetDocumentPreviewsHistogramMetricsLast7Days() {
 		HistogramMetricBag histogramMetricBag =
 			_histogramDog.getHistogramMetricBag(
-				DocumentLibraryMetricType.PREVIEWS,
+				DocumentLibraryMetricType.IMPRESSIONS,
 				new SearchQueryContext() {
 					{
 						setAssetId("e131fabc");

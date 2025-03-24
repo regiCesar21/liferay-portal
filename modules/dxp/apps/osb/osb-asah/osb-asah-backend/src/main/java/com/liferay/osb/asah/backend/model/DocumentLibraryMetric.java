@@ -42,7 +42,8 @@ public class DocumentLibraryMetric implements AssetMetric {
 			Objects.equals(
 				_downloadsMetric, documentLibraryMetric._downloadsMetric) &&
 			Objects.equals(
-				_previewsMetric, documentLibraryMetric._previewsMetric) &&
+				_impressionMadeMetric,
+				documentLibraryMetric._impressionMadeMetric) &&
 			Objects.equals(
 				_ratingsMetric, documentLibraryMetric._ratingsMetric) &&
 			Objects.equals(_urls, documentLibraryMetric._urls)) {
@@ -101,8 +102,8 @@ public class DocumentLibraryMetric implements AssetMetric {
 		return _downloadsMetric;
 	}
 
-	public Metric getPreviewsMetric() {
-		return _previewsMetric;
+	public Metric getImpressionMadeMetric() {
+		return _impressionMadeMetric;
 	}
 
 	public Metric getRatingsMetric() {
@@ -118,8 +119,8 @@ public class DocumentLibraryMetric implements AssetMetric {
 	public int hashCode() {
 		return Objects.hash(
 			_assetId, _assetMetrics, _assetTitle, _canonicalUrls,
-			_commentsMetric, _dataSourceId, _downloadsMetric, _previewsMetric,
-			_ratingsMetric, _urls);
+			_commentsMetric, _dataSourceId, _downloadsMetric,
+			_impressionMadeMetric, _ratingsMetric, _urls);
 	}
 
 	@Override
@@ -155,8 +156,8 @@ public class DocumentLibraryMetric implements AssetMetric {
 		_downloadsMetric = downloadsMetric;
 	}
 
-	public void setPreviewsMetric(Metric previewsMetric) {
-		_previewsMetric = previewsMetric;
+	public void setImpressionMadeMetric(Metric impressionMadeMetric) {
+		_impressionMadeMetric = impressionMadeMetric;
 	}
 
 	public void setRatingsMetric(Metric ratingsMetric) {
@@ -177,8 +178,8 @@ public class DocumentLibraryMetric implements AssetMetric {
 	private String _dataSourceId;
 	private Metric _downloadsMetric = new Metric(
 		DocumentLibraryMetricType.DOWNLOADS);
-	private Metric _previewsMetric = new Metric(
-		DocumentLibraryMetricType.PREVIEWS);
+	private Metric _impressionMadeMetric = new Metric(
+		DocumentLibraryMetricType.IMPRESSIONS);
 	private Metric _ratingsMetric = new Metric(
 		DocumentLibraryMetricType.RATINGS);
 	private List<String> _urls;

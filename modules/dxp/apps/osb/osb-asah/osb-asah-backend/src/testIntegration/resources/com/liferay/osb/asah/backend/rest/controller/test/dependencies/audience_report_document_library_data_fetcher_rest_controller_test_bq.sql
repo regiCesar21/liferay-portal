@@ -1,6 +1,6 @@
-INSERT INTO DocumentLibraryDaily (assetId, assetTitle, canonicalUrl, downloads, channelId, eventDate, pageTitle, previews, userId) VALUES ('DocumentLibrary1', 'Document 1', 'https://www.beryl.com/documents/document-1', 1, 12345, TIMESTAMP '${today-4d}', 'Document Page 1', 1, 'identity_a');
-INSERT INTO DocumentLibraryDaily (assetId, assetTitle, canonicalUrl, downloads, channelId, eventDate, pageTitle, previews, userId) VALUES ('DocumentLibrary1', 'Document 1', 'https://www.beryl.com/documents/document-1', 1, 12345, TIMESTAMP '${today-4d}', 'Document Page 1', 1, 'identity_b');
-INSERT INTO DocumentLibraryDaily (assetId, assetTitle, canonicalUrl, downloads, channelId, eventDate, pageTitle, previews, userId) VALUES ('DocumentLibrary2', 'Document 2', 'https://www.beryl.com/documents/document-2', 1, 12345, TIMESTAMP '${today-4d}', 'Document Page 2', 1, 'identity_c');
+INSERT INTO DocumentLibraryDaily (assetId, assetTitle, canonicalUrl, downloads, channelId, eventDate, pageTitle, impressions, userId) VALUES ('DocumentLibrary1', 'Document 1', 'https://www.beryl.com/documents/document-1', 1, 12345, TIMESTAMP '${today-4d}', 'Document Page 1', 1, 'identity_a');
+INSERT INTO DocumentLibraryDaily (assetId, assetTitle, canonicalUrl, downloads, channelId, eventDate, pageTitle, impressions, userId) VALUES ('DocumentLibrary1', 'Document 1', 'https://www.beryl.com/documents/document-1', 1, 12345, TIMESTAMP '${today-4d}', 'Document Page 1', 1, 'identity_b');
+INSERT INTO DocumentLibraryDaily (assetId, assetTitle, canonicalUrl, downloads, channelId, eventDate, pageTitle, impressions, userId) VALUES ('DocumentLibrary2', 'Document 2', 'https://www.beryl.com/documents/document-2', 1, 12345, TIMESTAMP '${today-4d}', 'Document Page 2', 1, 'identity_c');
 
 INSERT INTO Identity_Raw (id, individualId) VALUES ('identity_a', 'individual_a');
 INSERT INTO Identity_Raw (id, individualId) VALUES ('identity_b', 'individual_b');

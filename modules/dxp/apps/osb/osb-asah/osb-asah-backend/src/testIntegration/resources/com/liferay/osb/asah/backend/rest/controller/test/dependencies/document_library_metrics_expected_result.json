@@ -11,7 +11,7 @@
 					"downloadsMetric": {
 						"value": 3
 					},
-					"previewsMetric": {
+					"impressionMadeMetric": {
 						"value": 2
 					},
 					"ratingsMetric": {
@@ -27,7 +27,7 @@
 					"downloadsMetric": {
 						"value": 2
 					},
-					"previewsMetric": {
+					"impressionMadeMetric": {
 						"value": 1
 					},
 					"ratingsMetric": {
@@ -43,7 +43,7 @@
 					"downloadsMetric": {
 						"value": 2
 					},
-					"previewsMetric": {
+					"impressionMadeMetric": {
 						"value": 2
 					},
 					"ratingsMetric": {
@@ -59,7 +59,7 @@
 					"downloadsMetric": {
 						"value": 2
 					},
-					"previewsMetric": {
+					"impressionMadeMetric": {
 						"value": 1
 					},
 					"ratingsMetric": {
@@ -75,7 +75,7 @@
 					"downloadsMetric": {
 						"value": 1
 					},
-					"previewsMetric": {
+					"impressionMadeMetric": {
 						"value": 1
 					},
 					"ratingsMetric": {
@@ -91,7 +91,7 @@
 					"downloadsMetric": {
 						"value": 1
 					},
-					"previewsMetric": {
+					"impressionMadeMetric": {
 						"value": 0
 					},
 					"ratingsMetric": {

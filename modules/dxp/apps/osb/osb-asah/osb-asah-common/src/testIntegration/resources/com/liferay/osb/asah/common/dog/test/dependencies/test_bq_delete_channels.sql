@@ -1,6 +1,6 @@
 INSERT INTO BlogDaily (assetId, channelId, eventDate, views) VALUES ('e131fabc', 1, TIMESTAMP(DATETIME_TRUNC(timestamp '${now-6d}', HOUR)), 1);
 
-INSERT INTO DocumentLibraryDaily (assetId, canonicalUrl, channelId, eventDate, previews) VALUES ('e131fabc', 'https://www.beryl.com/delivery', 1, DATETIME_TRUNC(timestamp '${today-6d}', HOUR), 1);
+INSERT INTO DocumentLibraryDaily (assetId, canonicalUrl, channelId, eventDate, impressions) VALUES ('e131fabc', 'https://www.beryl.com/delivery', 1, DATETIME_TRUNC(timestamp '${today-6d}', HOUR), 1);
 
 INSERT INTO Event (applicationId, channelId, eventDate, eventId, id, properties, sessionId, userId) VALUES ('CustomEvent', 1, '2021-05-14', 'testEvent1', '1', ARRAY<STRUCT<name STRING, value STRING>> [], '366909399944213421', '1');
 

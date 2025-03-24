@@ -359,8 +359,8 @@ type DocumentMetric implements AssetMetric {
 	dataSourceId: String
 	defaultMetric: Metric
 	downloadsMetric: Metric
+	impressionMadeMetric: Metric
 	selectedMetrics: [Metric]
-	previewsMetric: Metric
 	ratingsMetric: Metric
 	urls: [String]
 }

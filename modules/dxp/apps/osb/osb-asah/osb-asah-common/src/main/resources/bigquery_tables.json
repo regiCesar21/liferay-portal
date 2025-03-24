@@ -595,7 +595,7 @@
 			},
 			{
 				"mode": "NULLABLE",
-				"name": "previews",
+				"name": "impressions",
 				"type": "INT64"
 			},
 			{

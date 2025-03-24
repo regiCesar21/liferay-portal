@@ -10,7 +10,7 @@ query DocumentLibraryMetrics($channelId: String, $keywords: String, $rangeKey: I
 				downloadsMetric {
 					value
 				}
-				previewsMetric {
+				impressionMadeMetric {
 					value
 				}
 				ratingsMetric {

@@ -63,7 +63,7 @@ public class BQDocumentLibrary implements Persistable<Long> {
 			Objects.equals(
 				_knownIndividual, documentLibrary._knownIndividual) &&
 			Objects.equals(_platformName, documentLibrary._platformName) &&
-			Objects.equals(_previews, documentLibrary._previews) &&
+			Objects.equals(_impressions, documentLibrary._impressions) &&
 			Objects.equals(_ratings, documentLibrary._ratings) &&
 			Objects.equals(_ratingsScore, documentLibrary._ratingsScore) &&
 			Objects.equals(_region, documentLibrary._region) &&
@@ -152,6 +152,11 @@ public class BQDocumentLibrary implements Persistable<Long> {
 	}
 
 	@AccessType(AccessType.Type.PROPERTY)
+	public Long getImpressions() {
+		return _impressions;
+	}
+
+	@AccessType(AccessType.Type.PROPERTY)
 	public Long getIndividualId() {
 		return _individualId;
 	}
@@ -159,11 +164,6 @@ public class BQDocumentLibrary implements Persistable<Long> {
 	@AccessType(AccessType.Type.PROPERTY)
 	public Boolean getKnownIndividual() {
 		return _knownIndividual;
-	}
-
-	@AccessType(AccessType.Type.PROPERTY)
-	public Long getPreviews() {
-		return _previews;
 	}
 
 	@AccessType(AccessType.Type.PROPERTY)
@@ -212,7 +212,7 @@ public class BQDocumentLibrary implements Persistable<Long> {
 			_id, _assetId, _assetPrimaryKey, _browserName, _canonicalUrl,
 			_channelId, _city, _comments, _country, _dataSourceId, _deviceType,
 			_downloads, _eventDate, _individualId, _knownIndividual,
-			_platformName, _previews, _ratings, _ratingsScore, _region,
+			_platformName, _impressions, _ratings, _ratingsScore, _region,
 			_segmentNames, _sessionId, _title, _userId, _variantId);
 	}
 
@@ -283,6 +283,10 @@ public class BQDocumentLibrary implements Persistable<Long> {
 		_id = id;
 	}
 
+	public void setImpressions(Long impressions) {
+		_impressions = impressions;
+	}
+
 	public void setIndividualId(Long individualId) {
 		_individualId = individualId;
 	}
@@ -297,10 +301,6 @@ public class BQDocumentLibrary implements Persistable<Long> {
 
 	public void setPlatformName(String platformName) {
 		_platformName = platformName;
-	}
-
-	public void setPreviews(Long previews) {
-		_previews = previews;
 	}
 
 	public void setRatings(Long ratings) {
@@ -375,6 +375,9 @@ public class BQDocumentLibrary implements Persistable<Long> {
 	private Long _id;
 
 	@Transient
+	private Long _impressions;
+
+	@Transient
 	private Long _individualId;
 
 	@Transient
@@ -385,9 +388,6 @@ public class BQDocumentLibrary implements Persistable<Long> {
 
 	@Transient
 	private String _platformName;
-
-	@Transient
-	private Long _previews;
 
 	@Transient
 	private Long _ratings;

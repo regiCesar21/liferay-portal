@@ -1,8 +1,8 @@
 INSERT INTO BlogDaily (assetId, channelId, eventDate, views) VALUES ('e131fabc', 1, timestamp '${now-6d}', 1);
 INSERT INTO BlogDaily (assetId, channelId, eventDate, views) VALUES ('e131fabc', 1, timestamp '${now-7d}', 1);
 
-INSERT INTO DocumentLibraryDaily (assetId, canonicalUrl, channelId, eventDate, previews) VALUES ('e131fabc', 'https://www.beryl.com/delivery', 1, timestamp '${today-6d}', 1);
-INSERT INTO DocumentLibraryDaily (assetId, canonicalUrl, channelId, eventDate, previews) VALUES ('e131fabc', 'https://www.beryl.com/delivery', 1, timestamp '${today-8d}', 1);
+INSERT INTO DocumentLibraryDaily (assetId, canonicalUrl, channelId, eventDate, impressions) VALUES ('e131fabc', 'https://www.beryl.com/delivery', 1, timestamp '${today-6d}', 1);
+INSERT INTO DocumentLibraryDaily (assetId, canonicalUrl, channelId, eventDate, impressions) VALUES ('e131fabc', 'https://www.beryl.com/delivery', 1, timestamp '${today-8d}', 1);
 
 INSERT INTO Event (applicationId, channelId, eventDate, eventId, id, sessionId, userId) VALUES ('CustomEvent', 1, timestamp '${today-12d}', 'testEvent2', '7', '366909399944215925', '1');
 INSERT INTO Event (applicationId, channelId, eventDate, eventId, id, sessionId, userId) VALUES ('CustomEvent', 1, timestamp '${today-14d}', 'testEvent2', '8', '366909399944215926', '2');

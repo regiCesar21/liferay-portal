@@ -114,6 +114,11 @@ public class BQDocumentLibraryDailyRestController {
 		}
 
 		@BigQueryColumn
+		public long getImpressions() {
+			return _impressions;
+		}
+
+		@BigQueryColumn
 		public String getPageTitle() {
 			return _pageTitle;
 		}
@@ -121,11 +126,6 @@ public class BQDocumentLibraryDailyRestController {
 		@BigQueryColumn
 		public String getPlatformName() {
 			return _platformName;
-		}
-
-		@BigQueryColumn
-		public long getPreviews() {
-			return _previews;
 		}
 
 		@BigQueryColumn
@@ -194,16 +194,16 @@ public class BQDocumentLibraryDailyRestController {
 			}
 		}
 
+		public void setImpressions(long impressions) {
+			_impressions = impressions;
+		}
+
 		public void setPageTitle(String pageTitle) {
 			_pageTitle = pageTitle;
 		}
 
 		public void setPlatformName(String platformName) {
 			_platformName = platformName;
-		}
-
-		public void setPreviews(long previews) {
-			_previews = previews;
 		}
 
 		public void setRatings(long ratings) {
@@ -233,9 +233,9 @@ public class BQDocumentLibraryDailyRestController {
 		private String _deviceType;
 		private long _downloads;
 		private Date _eventDate;
+		private long _impressions;
 		private String _pageTitle;
 		private String _platformName;
-		private long _previews;
 		private long _ratings;
 		private double _ratingsScore;
 		private String _region;

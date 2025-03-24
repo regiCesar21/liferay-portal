@@ -42,7 +42,7 @@ public class DocumentLibraryAssetMetricRepositoryTest
 		super.assertAppearsOnMetric(
 			SetUtil.of(
 				DocumentLibraryMetricType.DOWNLOADS,
-				DocumentLibraryMetricType.PREVIEWS),
+				DocumentLibraryMetricType.IMPRESSIONS),
 			TimeRange.LAST_7_DAYS);
 	}
 
@@ -61,7 +61,7 @@ public class DocumentLibraryAssetMetricRepositoryTest
 		Assertions.assertEquals(
 			audienceReport,
 			_assetMetricRepository.getAudienceReport(
-				"e131fabc", null, 1L, DocumentLibraryMetricType.PREVIEWS,
+				"e131fabc", null, 1L, DocumentLibraryMetricType.IMPRESSIONS,
 				TimeRange.LAST_7_DAYS));
 	}
 
@@ -80,7 +80,7 @@ public class DocumentLibraryAssetMetricRepositoryTest
 		Assertions.assertEquals(
 			audienceReport,
 			_assetMetricRepository.getAudienceReport(
-				"e131fabc", null, 1L, DocumentLibraryMetricType.PREVIEWS,
+				"e131fabc", null, 1L, DocumentLibraryMetricType.IMPRESSIONS,
 				TimeRange.LAST_24_HOURS));
 	}
 
@@ -94,7 +94,7 @@ public class DocumentLibraryAssetMetricRepositoryTest
 				new Tuple2("Firefox", 14D), new Tuple2("Chrome", 9D),
 				new Tuple2("Opera Desktop", 3D)),
 			_assetMetricRepository.getBrowserMetrics(
-				"e131fabc", null, 1L, DocumentLibraryMetricType.PREVIEWS,
+				"e131fabc", null, 1L, DocumentLibraryMetricType.IMPRESSIONS,
 				TimeRange.LAST_30_DAYS));
 	}
 
@@ -109,7 +109,7 @@ public class DocumentLibraryAssetMetricRepositoryTest
 				new Tuple2("Mobile", 12D), new Tuple2("Phone", 9D)),
 			_assetMetricRepository.getDeviceMetrics(
 				"e131fabc", null, 1L, IdentityType.ALL,
-				DocumentLibraryMetricType.PREVIEWS, TimeRange.LAST_30_DAYS));
+				DocumentLibraryMetricType.IMPRESSIONS, TimeRange.LAST_30_DAYS));
 	}
 
 	@BQSQLResource(
@@ -120,7 +120,7 @@ public class DocumentLibraryAssetMetricRepositoryTest
 		assertDeviceMetricsOrdering(
 			_assetMetricRepository.getDeviceMetrics(
 				"e131fabc", null, 1L, IdentityType.ALL,
-				DocumentLibraryMetricType.PREVIEWS, TimeRange.LAST_30_DAYS));
+				DocumentLibraryMetricType.IMPRESSIONS, TimeRange.LAST_30_DAYS));
 	}
 
 	@BQSQLResource(
@@ -133,7 +133,7 @@ public class DocumentLibraryAssetMetricRepositoryTest
 				new Tuple2("France", 9D), new Tuple2("Japan", 7D),
 				new Tuple2("United States", 5D)),
 			_assetMetricRepository.getGeolocationMetrics(
-				"e131fabc", null, 1L, DocumentLibraryMetricType.PREVIEWS,
+				"e131fabc", null, 1L, DocumentLibraryMetricType.IMPRESSIONS,
 				TimeRange.LAST_30_DAYS));
 	}
 
@@ -145,14 +145,15 @@ public class DocumentLibraryAssetMetricRepositoryTest
 		DocumentLibraryMetric documentLibraryMetric =
 			_assetMetricRepository.getAssetMetric(
 				"e131fabc", null, 1L,
-				SetUtil.of(DocumentLibraryMetricType.PREVIEWS.getName()),
+				SetUtil.of(DocumentLibraryMetricType.IMPRESSIONS.getName()),
 				TimeRange.LAST_24_HOURS);
 
 		Assertions.assertNotNull(documentLibraryMetric);
 
-		Metric previewsMetric = documentLibraryMetric.getPreviewsMetric();
+		Metric impressionMadeMetric =
+			documentLibraryMetric.getImpressionMadeMetric();
 
-		Assertions.assertEquals(7D, previewsMetric.getValue(), 0);
+		Assertions.assertEquals(7D, impressionMadeMetric.getValue(), 0);
 	}
 
 	@BQSQLResource(
@@ -164,9 +165,9 @@ public class DocumentLibraryAssetMetricRepositoryTest
 			new Double[] {7D, 6D},
 			_assetMetricRepository.getAssetMetrics(
 				1L, null, null, PageRequest.of(0, 10),
-				SetUtil.of(DocumentLibraryMetricType.PREVIEWS.getName()),
+				SetUtil.of(DocumentLibraryMetricType.IMPRESSIONS.getName()),
 				TimeRange.LAST_24_HOURS),
-			DocumentLibraryMetric::getPreviewsMetric);
+			DocumentLibraryMetric::getImpressionMadeMetric);
 	}
 
 	@BQSQLResource(
@@ -178,7 +179,7 @@ public class DocumentLibraryAssetMetricRepositoryTest
 			SetUtil.of((double)3),
 			_assetMetricRepository.getHistogramMetrics(
 				"e131fabc", null, Collections.singleton(1L), IdentityType.ALL,
-				false, Interval.DAY, DocumentLibraryMetricType.PREVIEWS,
+				false, Interval.DAY, DocumentLibraryMetricType.IMPRESSIONS,
 				TimeRange.LAST_7_DAYS));
 	}
 
@@ -191,7 +192,7 @@ public class DocumentLibraryAssetMetricRepositoryTest
 			SetUtil.of((double)1, (double)2, (double)4),
 			_assetMetricRepository.getHistogramMetrics(
 				"e131fabc", null, Collections.singleton(1L), IdentityType.ALL,
-				false, Interval.HOUR, DocumentLibraryMetricType.PREVIEWS,
+				false, Interval.HOUR, DocumentLibraryMetricType.IMPRESSIONS,
 				TimeRange.LAST_24_HOURS));
 	}
 
@@ -201,7 +202,7 @@ public class DocumentLibraryAssetMetricRepositoryTest
 	@Test
 	public void testGetPreviewsHistogramMetricsLast24HoursDifferentTimezone() {
 		assertHistogramMetricsDifferentTimezone(
-			"e131fabc", 1L, DocumentLibraryMetricType.PREVIEWS, -3,
+			"e131fabc", 1L, DocumentLibraryMetricType.IMPRESSIONS, -3,
 			"America/Fortaleza");
 	}
 
@@ -229,7 +230,7 @@ public class DocumentLibraryAssetMetricRepositoryTest
 		assertMetrics(
 			Collections.singletonList(new Tuple2("192837465", 2D)),
 			_assetMetricRepository.getSegmentMetrics(
-				"e131fabc", null, 1L, DocumentLibraryMetricType.PREVIEWS,
+				"e131fabc", null, 1L, DocumentLibraryMetricType.IMPRESSIONS,
 				TimeRange.LAST_7_DAYS));
 	}
 
@@ -239,7 +240,7 @@ public class DocumentLibraryAssetMetricRepositoryTest
 		assertMetrics(
 			Collections.singletonList(new Tuple2("192837465", 2D)),
 			_assetMetricRepository.getSegmentMetrics(
-				"e131fabc", null, 1L, DocumentLibraryMetricType.PREVIEWS,
+				"e131fabc", null, 1L, DocumentLibraryMetricType.IMPRESSIONS,
 				TimeRange.LAST_24_HOURS));
 	}
 
