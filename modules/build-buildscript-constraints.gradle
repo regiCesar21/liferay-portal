@@ -2,7 +2,7 @@ dependencies {
 	constraints {
 		classpath(group: "com.liferay", name: "com.liferay.gradle.plugins.jasper.jspc") {
 			version {
-				strictly "2.0.16"
+				strictly "2.1.0"
 			}
 		}
 	}
