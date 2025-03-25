@@ -97,7 +97,7 @@ public class JdbcIOUtil {
 
 			CSVParser csvParser = _buildCSVParser();
 
-			String[] columnValues = csvParser.parseLine(element);
+			String[] columnValues = csvParser.parseLine(element.trim());
 
 			for (int i = 0; i < columnValues.length; i++) {
 				preparedStatement.setString(i + 1, columnValues[i]);
