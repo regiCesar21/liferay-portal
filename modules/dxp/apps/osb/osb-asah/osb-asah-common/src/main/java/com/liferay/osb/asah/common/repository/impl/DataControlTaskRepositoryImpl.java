@@ -254,7 +254,12 @@ public class DataControlTaskRepositoryImpl
 				)
 			).from(
 				_dslContext.select(
-					emailAddressField, typeField,
+					DSL.field(
+						"dataControlTaskEmailAddress"
+					).as(
+						"emailAddress"
+					),
+					typeField,
 					DSL.when(
 						DSL.field(
 							"completeDate"
@@ -268,7 +273,7 @@ public class DataControlTaskRepositoryImpl
 				).from(
 					"DataControlTask"
 				).crossJoin(
-					"UNNEST(emailAddresses) as emailAddress"
+					"UNNEST(emailAddresses) as dataControlTaskEmailAddress"
 				).where(
 					DSL.or(
 						DSL.and(
