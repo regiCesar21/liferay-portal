@@ -354,7 +354,7 @@ public class BigQueryDataExporter implements DataExporter {
 					emailAddresses
 				)
 			).orderBy(
-				DSL.field("emailAddressHashed")
+				DSL.field("emailAddress")
 			).toString();
 		}
 		else if (tableName.equalsIgnoreCase("BQUser")) {
