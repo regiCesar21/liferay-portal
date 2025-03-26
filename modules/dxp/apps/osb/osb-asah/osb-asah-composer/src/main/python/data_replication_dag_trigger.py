@@ -9,19 +9,52 @@
 # distribution rights of the Software.
 #
 
-from airflow.models import Variable
-from airflow.models.baseoperator import chain
+from airflow.models import DagRun, \
+	Variable
+from airflow.models.baseoperator import BaseOperator, \
+	chain
 from airflow.providers.google.cloud.operators.dataflow import DataflowStartFlexTemplateOperator
+from airflow.utils.context import Context
+from airflow.utils.dates import days_ago
+from airflow.utils.session import provide_session
 
 from datetime import date
 
 from liferay.bigquery import BigQueryInsertJobFromTemplateOperator
+
+from sqlalchemy import func
 
 import airflow
 import os
 import pendulum
 import re
 import requests
+
+class GetDataReplicationStartDateDateOperator(BaseOperator):
+
+	def __init__(self, **kwargs):
+		super().__init__(**kwargs)
+
+	@provide_session
+	def execute(self, context: Context, session=None) -> date:
+		dag_id = context["dag"].dag_id
+
+		previous_successful_dag_run = session.query(
+			func.max(DagRun.execution_date)
+		).filter(
+			DagRun.dag_id == dag_id, DagRun.state == "success",
+			DagRun.execution_date < context["execution_date"]
+		).scalar()
+
+		if previous_successful_dag_run:
+			result_date = previous_successful_dag_run.date()
+		else:
+			result_date = days_ago(30).date()
+
+		context["ti"].xcom_push(
+			key="data_replication_start_date", value=result_date)
+
+		return result_date
 
 def create_dag(ac_project_id, ac_project_time_zone_id, dag_id, dag_description):
 	with airflow.DAG(
