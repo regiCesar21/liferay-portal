@@ -35,5 +35,5 @@ AS (
 	ON
 		Event.id = EventProperties.id
 	WHERE
-		DATE(eventDate, '{{dag.default_args['ac_project_time_zone_id']}}') = DATE(TIMESTAMP('{{data_interval_start.to_datetime_string()}}'), '{{dag.default_args['ac_project_time_zone_id']}}')
+		DATE(eventDate, '{{dag.default_args['ac_project_time_zone_id']}}') BETWEEN DATE_SUB(DATE(TIMESTAMP('{{data_interval_start.to_datetime_string()}}'), '{{dag.default_args['ac_project_time_zone_id']}}'), INTERVAL 30 DAY) AND DATE(TIMESTAMP('{{data_interval_start.to_datetime_string()}}'), '{{dag.default_args['ac_project_time_zone_id']}}')
 );
