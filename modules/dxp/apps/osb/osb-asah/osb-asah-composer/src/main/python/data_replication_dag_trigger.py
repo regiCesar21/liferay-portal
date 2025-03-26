@@ -106,7 +106,7 @@ response = requests.get(
 for project in response.json():
 	enabled_features = project.get('enabledFeatures')
 
-	if (enabled_features is None or 'API_REPORTS_POSTGRES_CACHE' not in enabled_features):
+	if (enabled_features is None or 'API_REPORTS_POSTGRES_DATA_REPLICATION' not in enabled_features):
 		continue
 
 	dag_id = 'data_replication_{}'.format(
