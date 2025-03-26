@@ -71,6 +71,10 @@ def create_dag(ac_project_id, ac_project_time_zone_id, dag_id, dag_description):
 		start_date=pendulum.now(ac_project_time_zone_id) - pendulum.duration(days=2)
 	) as dag:
 
+		get_data_replication_start_date = GetDataReplicationStartDateDateOperator(
+			task_id='get_data_replication_start_date'
+		)
+
 		bq_individual_activity_export_job = BigQueryInsertJobFromTemplateOperator(
 			task_id='individual_activity_export'
 		)
@@ -121,8 +125,10 @@ def create_dag(ac_project_id, ac_project_time_zone_id, dag_id, dag_description):
 		)
 
 		chain(
-			bq_individual_export_job, bq_individual_activity_export_job, bq_individual_interest_export_job,
-			bq_membership_export_job, postgresql_replication_dataflow_trigger
+			get_data_replication_start_date, bq_individual_export_job,
+			bq_individual_activity_export_job,
+			bq_individual_interest_export_job, bq_membership_export_job,
+			postgresql_replication_dataflow_trigger
 		)
 
 		return dag

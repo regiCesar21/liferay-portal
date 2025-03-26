@@ -35,5 +35,5 @@ AS (
 	ON
 		Event.id = EventProperties.id
 	WHERE
-		DATE(eventDate, '{{dag.default_args['ac_project_time_zone_id']}}') BETWEEN DATE_SUB(DATE(TIMESTAMP('{{data_interval_start.to_datetime_string()}}'), '{{dag.default_args['ac_project_time_zone_id']}}'), INTERVAL 30 DAY) AND DATE(TIMESTAMP('{{data_interval_start.to_datetime_string()}}'), '{{dag.default_args['ac_project_time_zone_id']}}')
+		DATE(eventDate, '{{dag.default_args['ac_project_time_zone_id']}}') BETWEEN DATE('{{ti.xcom_pull(task_ids='get_data_replication_start_date', key='data_replication_start_date')}}', '{{dag.default_args['ac_project_time_zone_id']}}') AND DATE(TIMESTAMP('{{data_interval_start.to_datetime_string()}}'), '{{dag.default_args['ac_project_time_zone_id']}}')
 );
