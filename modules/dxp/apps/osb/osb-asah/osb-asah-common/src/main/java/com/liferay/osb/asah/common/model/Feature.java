@@ -10,6 +10,6 @@ package com.liferay.osb.asah.common.model;
  */
 public enum Feature {
 
-	API_REPORTS_POSTGRES_CACHE
+	API_REPORTS_POSTGRES_CACHE, API_REPORTS_POSTGRES_DATA_REPLICATION
 
 }
