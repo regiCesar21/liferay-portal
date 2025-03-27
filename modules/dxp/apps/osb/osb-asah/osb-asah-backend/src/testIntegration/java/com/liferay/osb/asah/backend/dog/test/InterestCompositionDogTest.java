@@ -25,38 +25,6 @@ import org.springframework.beans.factory.annotation.Autowired;
  */
 public class InterestCompositionDogTest extends BaseCompositionDogTestCase {
 
-	@BQSQLResource(resourcePath = "test_bq_individual_interest_segment.sql")
-	@Test
-	public void testCheckInterestAndSegments() {
-		checkResults(
-			_interestCompositionDog.getIndividualSegmentCompositionResultBag(
-				Boolean.TRUE, 1L, null, 1L, 5, Sort.desc("count"), 0),
-			new LinkedHashMap<String, Long>() {
-				{
-					put("analytics", 2L);
-					put("cat", 1L);
-				}
-			},
-			2, 2, 3);
-		checkResults(
-			_interestCompositionDog.getIndividualCompositionResultBag(
-				1L, null, 5, Sort.desc("count"), 0),
-			new LinkedHashMap<String, Long>() {
-				{
-					put("analytics", 2L);
-					put("cat", 1L);
-				}
-			},
-			2, 2, 3);
-		Assertions.assertEquals(
-			2,
-			_bqIndividualRepository.countBQIndividuals(
-				1L,
-				"(interests.filter(filter='(name eq ''analytics'' and score " +
-					"eq ''true'')'))",
-				false, null, null));
-	}
-
 	@BQSQLResource(
 		resourcePath = "bq_identity_interest_score_identity_activities.sql"
 	)
@@ -89,6 +57,38 @@ public class InterestCompositionDogTest extends BaseCompositionDogTestCase {
 				}
 			},
 			2, 2, 5);
+	}
+
+	@BQSQLResource(resourcePath = "test_bq_individual_interest_segment.sql")
+	@Test
+	public void testGetIndividualCompositionResultBagInSegment() {
+		Assertions.assertEquals(
+			2,
+			_bqIndividualRepository.countBQIndividuals(
+				1L,
+				"(interests.filter(filter='(name eq ''analytics'' and score " +
+					"eq ''true'')'))",
+				false, null, null));
+		checkResults(
+			_interestCompositionDog.getIndividualCompositionResultBag(
+				1L, null, 5, Sort.desc("count"), 0),
+			new LinkedHashMap<String, Long>() {
+				{
+					put("analytics", 2L);
+					put("cat", 1L);
+				}
+			},
+			2, 2, 3);
+		checkResults(
+			_interestCompositionDog.getIndividualSegmentCompositionResultBag(
+				Boolean.TRUE, 1L, null, 1L, 5, Sort.desc("count"), 0),
+			new LinkedHashMap<String, Long>() {
+				{
+					put("analytics", 2L);
+					put("cat", 1L);
+				}
+			},
+			2, 2, 3);
 	}
 
 	@BQSQLResource(
