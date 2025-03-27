@@ -8,12 +8,14 @@ package com.liferay.osb.asah.backend.dog.test;
 import com.liferay.osb.asah.backend.dog.InterestCompositionDog;
 import com.liferay.osb.asah.common.model.Sort;
 import com.liferay.osb.asah.common.repository.BQIdentityRepository;
+import com.liferay.osb.asah.common.repository.BQIndividualRepository;
 import com.liferay.osb.asah.common.repository.BQMembershipRepository;
 import com.liferay.osb.asah.test.util.annotation.BQSQLResource;
 import com.liferay.osb.asah.test.util.annotation.RepositoryResource;
 
 import java.util.LinkedHashMap;
 
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,6 +24,38 @@ import org.springframework.beans.factory.annotation.Autowired;
  * @author Matthew Kong
  */
 public class InterestCompositionDogTest extends BaseCompositionDogTestCase {
+
+	@BQSQLResource(resourcePath = "test_bq_individual_interest_segment.sql")
+	@Test
+	public void testCheckInterestAndSegments() {
+		checkResults(
+			_interestCompositionDog.getIndividualSegmentCompositionResultBag(
+				Boolean.TRUE, 1L, null, 1L, 5, Sort.desc("count"), 0),
+			new LinkedHashMap<String, Long>() {
+				{
+					put("analytics", 2L);
+					put("cat", 1L);
+				}
+			},
+			2, 2, 3);
+		checkResults(
+			_interestCompositionDog.getIndividualCompositionResultBag(
+				1L, null, 5, Sort.desc("count"), 0),
+			new LinkedHashMap<String, Long>() {
+				{
+					put("analytics", 2L);
+					put("cat", 1L);
+				}
+			},
+			2, 2, 3);
+		Assertions.assertEquals(
+			2,
+			_bqIndividualRepository.countBQIndividuals(
+				1L,
+				"(interests.filter(filter='(name eq ''analytics'' and score " +
+					"eq ''true'')'))",
+				false, null, null));
+	}
 
 	@BQSQLResource(
 		resourcePath = "bq_identity_interest_score_identity_activities.sql"
@@ -218,6 +252,9 @@ public class InterestCompositionDogTest extends BaseCompositionDogTestCase {
 			},
 			2, 12, 2);
 	}
+
+	@Autowired
+	private BQIndividualRepository _bqIndividualRepository;
 
 	@Autowired
 	private InterestCompositionDog _interestCompositionDog;
