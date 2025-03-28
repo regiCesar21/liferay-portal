@@ -25,7 +25,7 @@ import org.apache.commons.lang3.StringUtils;
 public class JdbcIOUtil {
 
 	public static JdbcIO.Write<String> createJdbcIOWrite(
-		String csvColumns, String tableName,
+		String csvColumns, String primaryKey, String tableName,
 		PostgreSQLReplicationDataflowPipelineOptions
 			postgreSQLReplicationDataflowPipelineOptions) {
 
@@ -55,10 +55,10 @@ public class JdbcIOUtil {
 			new DefaultPreparedStatementSetter()
 		).withStatement(
 			String.format(
-				"insert into %s.%s(%s) values(%s)",
+				"insert into %s.%s(%s) values(%s) on conflict(%s) do nothing;",
 				postgreSQLReplicationDataflowPipelineOptions.getProjectId(),
 				tableName, StringUtils.join(columns, ","),
-				StringUtils.repeat("?", ",", columns.length))
+				StringUtils.repeat("?", ",", columns.length), primaryKey)
 		);
 	}
 

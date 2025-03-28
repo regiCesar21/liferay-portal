@@ -47,6 +47,8 @@ public class PostgreSQLReplicationPipeline {
 			JdbcIOUtil.createJdbcIOWrite(
 				postgreSQLReplicationDataflowPipelineOptions.
 					getIndividualColumns(),
+				postgreSQLReplicationDataflowPipelineOptions.
+					getIndividualPrimaryKey(),
 				StringUtils.wrap("individual_" + tempTableSuffix, "\""),
 				postgreSQLReplicationDataflowPipelineOptions)
 		);
@@ -63,6 +65,8 @@ public class PostgreSQLReplicationPipeline {
 			JdbcIOUtil.createJdbcIOWrite(
 				postgreSQLReplicationDataflowPipelineOptions.
 					getIndividualActivityColumns(),
+				postgreSQLReplicationDataflowPipelineOptions.
+					getIndividualActivityPrimaryKey(),
 				StringUtils.wrap("individualactivity_" + tempTableSuffix, "\""),
 				postgreSQLReplicationDataflowPipelineOptions)
 		);
@@ -79,6 +83,8 @@ public class PostgreSQLReplicationPipeline {
 			JdbcIOUtil.createJdbcIOWrite(
 				postgreSQLReplicationDataflowPipelineOptions.
 					getIndividualInterestColumns(),
+				postgreSQLReplicationDataflowPipelineOptions.
+					getIndividualInterestPrimaryKey(),
 				StringUtils.wrap("individualinterest_" + tempTableSuffix, "\""),
 				postgreSQLReplicationDataflowPipelineOptions)
 		);
@@ -95,6 +101,8 @@ public class PostgreSQLReplicationPipeline {
 			JdbcIOUtil.createJdbcIOWrite(
 				postgreSQLReplicationDataflowPipelineOptions.
 					getIndividualSegmentColumns(),
+				postgreSQLReplicationDataflowPipelineOptions.
+					getIndividualSegmentPrimaryKey(),
 				StringUtils.wrap("individualsegment_" + tempTableSuffix, "\""),
 				postgreSQLReplicationDataflowPipelineOptions)
 		);

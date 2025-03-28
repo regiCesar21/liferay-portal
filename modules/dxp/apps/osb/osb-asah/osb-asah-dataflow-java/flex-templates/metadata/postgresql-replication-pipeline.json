@@ -45,6 +45,12 @@
 			"name": "individualActivityInputDirectory"
 		},
 		{
+			"helpText": "Provide a comma separated list of column names used as primary key.",
+			"isOptional": false,
+			"label": "Individual Activity Primary Key",
+			"name": "individualActivityPrimaryKey"
+		},
+		{
 			"helpText": "Provide a comma separated list of column names corresponding to the fields in the CSV files.",
 			"isOptional": false,
 			"label": "Individual Columns",
@@ -69,6 +75,18 @@
 			"name": "individualInterestInputDirectory"
 		},
 		{
+			"helpText": "Provide a comma separated list of column names used as primary key.",
+			"isOptional": false,
+			"label": "Individual Interest Primary Key",
+			"name": "individualInterestPrimaryKey"
+		},
+		{
+			"helpText": "Provide a comma separated list of column names used as primary key.",
+			"isOptional": false,
+			"label": "Individual Primary Key",
+			"name": "individualPrimaryKey"
+		},
+		{
 			"helpText": "Provide a comma separated list of column names corresponding to the fields in the CSV files.",
 			"isOptional": false,
 			"label": "Individual Segment Columns",
@@ -79,6 +97,12 @@
 			"isOptional": false,
 			"label": "Individual Segment Input Directory",
 			"name": "individualSegmentInputDirectory"
+		},
+		{
+			"helpText": "Provide a comma separated list of column names used as primary key.",
+			"isOptional": false,
+			"label": "Individual Segment Primary Key",
+			"name": "individualSegmentPrimaryKey"
 		},
 		{
 			"helpText": "Provide the Analytics Cloud project ID.",

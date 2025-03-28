@@ -42,6 +42,12 @@ public interface PostgreSQLReplicationDataflowPipelineOptions
 	public String getIndividualActivityInputDirectory();
 
 	@Description(
+		"Return the comma-separated list of column names used as primary key"
+	)
+	@Validation.Required
+	public String getIndividualActivityPrimaryKey();
+
+	@Description(
 		"Return the comma-separated list of column names corresponding to " +
 			"the fields in the CSV files"
 	)
@@ -62,6 +68,18 @@ public interface PostgreSQLReplicationDataflowPipelineOptions
 	public String getIndividualInterestInputDirectory();
 
 	@Description(
+		"Return the comma-separated list of column names used as primary key"
+	)
+	@Validation.Required
+	public String getIndividualInterestPrimaryKey();
+
+	@Description(
+		"Return the comma-separated list of column names used as primary key"
+	)
+	@Validation.Required
+	public String getIndividualPrimaryKey();
+
+	@Description(
 		"Return the comma-separated list of column names corresponding to " +
 			"the fields in the CSV files"
 	)
@@ -70,6 +88,12 @@ public interface PostgreSQLReplicationDataflowPipelineOptions
 
 	@Validation.Required
 	public String getIndividualSegmentInputDirectory();
+
+	@Description(
+		"Return the comma-separated list of column names used as primary key"
+	)
+	@Validation.Required
+	public String getIndividualSegmentPrimaryKey();
 
 	@Description("Return the Analytics Cloud project ID")
 	@Validation.Required
@@ -94,6 +118,9 @@ public interface PostgreSQLReplicationDataflowPipelineOptions
 	public void setIndividualActivityInputDirectory(
 		String individualActivityInputDirectory);
 
+	public void setIndividualActivityPrimaryKey(
+		String individualActivityPrimaryKey);
+
 	public void setIndividualColumns(String individualColumns);
 
 	public void setIndividualInputDirectory(String individualInputDirectory);
@@ -103,10 +130,18 @@ public interface PostgreSQLReplicationDataflowPipelineOptions
 	public void setIndividualInterestInputDirectory(
 		String individualInterestInputDirectory);
 
+	public void setIndividualInterestPrimaryKey(
+		String individualInterestPrimaryKey);
+
+	public void setIndividualPrimaryKey(String individualPrimaryKey);
+
 	public void setIndividualSegmentColumns(String individualSegmentColumns);
 
 	public void setIndividualSegmentInputDirectory(
 		String individualSegmentInputDirectory);
+
+	public void setIndividualSegmentPrimaryKey(
+		String individualSegmentPrimaryKey);
 
 	public void setProjectId(String projectId);
 
