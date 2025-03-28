@@ -85,6 +85,12 @@
 			"isOptional": false,
 			"label": "Project ID",
 			"name": "projectId"
+		},
+		{
+			"helpText": "Provide the suffix of the temporary table to write to.",
+			"isOptional": false,
+			"label": "Temporary Table Suffix",
+			"name": "tempTableSuffix"
 		}
 	]
 }

@@ -75,6 +75,10 @@ public interface PostgreSQLReplicationDataflowPipelineOptions
 	@Validation.Required
 	public String getProjectId();
 
+	@Description("Return the suffix of the temporary table to write to")
+	@Validation.Required
+	public String getTempTableSuffix();
+
 	public void setBatchSize(Integer batchSize);
 
 	public void setCloudSQLConnectionName(String cloudSQLConnectionName);
@@ -105,5 +109,7 @@ public interface PostgreSQLReplicationDataflowPipelineOptions
 		String individualSegmentInputDirectory);
 
 	public void setProjectId(String projectId);
+
+	public void setTempTableSuffix(String tempTableSuffix);
 
 }
