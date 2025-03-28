@@ -154,6 +154,66 @@ def create_dag(ac_project_id, ac_project_time_zone_id, dag_id, dag_description):
 			wait_until_finished=True
 		)
 
+		postgresql_merge_temp_individual_table_job = CloudSQLExecuteQueryOperator(
+			gcp_cloudsql_conn_id='google_cloud_sql',
+			sql= """
+				BEGIN;
+
+				TRUNCATE TABLE {{dag.default_args["ac_project_id"]}}.individual;
+
+				INSERT INTO {{dag.default_args["ac_project_id"]}}.individual(id, emailAddress, fields, suppressed)
+					SELECT id, emailAddress, fields, suppressed FROM {{dag.default_args["ac_project_id"]}}."individual_{{ts}}";
+
+				COMMIT;
+			""",
+			task_id='merge_temp_individual_table'
+		)
+
+		postgresql_merge_temp_individualactivity_table_job = CloudSQLExecuteQueryOperator(
+			gcp_cloudsql_conn_id='google_cloud_sql',
+			sql= """
+				MERGE INTO {{dag.default_args["ac_project_id"]}}.individualactivity AS replica
+					USING {{dag.default_args["ac_project_id"]}}."individualactivity_{{ts}}" AS staging
+					ON replica.id = staging.id
+					WHEN MATCHED THEN DO NOTHING
+					WHEN NOT MATCHED THEN INSERT (id, applicationId, channelId, eventDate, eventId, properties, individualId) VALUES (staging.id, staging.applicationId, staging.channelId, staging.eventDate, staging.eventId, staging.properties, staging.individualId);
+			""",
+			task_id='merge_temp_individualactivity_table'
+		)
+
+		postgresql_merge_temp_individualinterest_table_job = CloudSQLExecuteQueryOperator(
+			gcp_cloudsql_conn_id='google_cloud_sql',
+			sql= """
+				MERGE INTO {{dag.default_args["ac_project_id"]}}.individualinterest AS replica
+					USING {{dag.default_args["ac_project_id"]}}."individualinterest_{{ts}}" AS staging
+					ON (
+						replica.channelId = staging.channelId
+						AND replica.identityId = staging.identityId
+						AND replica.individualId = staging.individualId
+						AND replica.keyword = staging.keyword
+						AND replica.recordedDate = staging.recordedDate
+					)
+					WHEN MATCHED THEN DO NOTHING
+					WHEN NOT MATCHED THEN INSERT (channelId, identityId, individualId, interested, interestScore, keyword, recordedDate) VALUES (staging.channelId, staging.identityId, staging.individualId, staging.interested, staging.interestScore, staging.keyword, staging.recordedDate);
+			""",
+			task_id='merge_temp_individualinterest_table'
+		)
+
+		postgresql_merge_temp_individualsegment_table_job = CloudSQLExecuteQueryOperator(
+			gcp_cloudsql_conn_id='google_cloud_sql',
+			sql= """
+				BEGIN;
+
+				TRUNCATE TABLE {{dag.default_args["ac_project_id"]}}.individualsegment;
+
+				INSERT INTO {{dag.default_args["ac_project_id"]}}.individualsegment(createDate, channelId, individualId, modifiedDate, segmentId, status)
+					SELECT createDate, channelId, individualId, modifiedDate, segmentId, status FROM {{dag.default_args["ac_project_id"]}}."individualsegment_{{ts}}";
+
+				COMMIT;
+			""",
+			task_id='merge_temp_individualsegment_table'
+		)
+
 		postgresql_cleanup_temp_individual_table_job = CloudSQLExecuteQueryOperator(
 			gcp_cloudsql_conn_id='google_cloud_sql',
 			sql= 'DROP TABLE IF EXISTS {{dag.default_args["ac_project_id"]}}."individual_{{ts}}";',
@@ -184,6 +244,7 @@ def create_dag(ac_project_id, ac_project_time_zone_id, dag_id, dag_description):
 			bq_individual_interest_export_job, bq_membership_export_job,
 			[postgresql_create_temp_individual_table_job, postgresql_create_temp_individualactivity_table_job, postgresql_create_temp_individualinterest_table_job, postgresql_create_temp_individualsegment_table_job],
 			postgresql_replication_dataflow_trigger,
+			[postgresql_merge_temp_individual_table_job, postgresql_merge_temp_individualactivity_table_job, postgresql_merge_temp_individualinterest_table_job, postgresql_merge_temp_individualsegment_table_job],
 			[postgresql_cleanup_temp_individual_table_job, postgresql_cleanup_temp_individualactivity_table_job, postgresql_cleanup_temp_individualinterest_table_job, postgresql_cleanup_temp_individualsegment_table_job]
 		)
 
