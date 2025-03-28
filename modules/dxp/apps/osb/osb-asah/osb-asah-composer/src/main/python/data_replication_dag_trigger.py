@@ -13,6 +13,7 @@ from airflow.models import DagRun, \
 	Variable
 from airflow.models.baseoperator import BaseOperator, \
 	chain
+from airflow.providers.google.cloud.operators.cloud_sql import CloudSQLExecuteQueryOperator
 from airflow.providers.google.cloud.operators.dataflow import DataflowStartFlexTemplateOperator
 from airflow.utils.context import Context
 from airflow.utils.dates import days_ago
@@ -91,6 +92,30 @@ def create_dag(ac_project_id, ac_project_time_zone_id, dag_id, dag_description):
 			task_id='membership_export'
 		)
 
+		postgresql_create_temp_individual_table_job = CloudSQLExecuteQueryOperator(
+			gcp_cloudsql_conn_id='google_cloud_sql',
+			sql= 'CREATE TABLE IF NOT EXISTS {{dag.default_args["ac_project_id"]}}."individual_{{ts}}"(LIKE {{dag.default_args["ac_project_id"]}}.individual INCLUDING CONSTRAINTS INCLUDING DEFAULTS INCLUDING INDEXES);',
+			task_id='create_temp_individual_table'
+		)
+
+		postgresql_create_temp_individualactivity_table_job = CloudSQLExecuteQueryOperator(
+			gcp_cloudsql_conn_id='google_cloud_sql',
+			sql= 'CREATE TABLE IF NOT EXISTS {{dag.default_args["ac_project_id"]}}."individualactivity_{{ts}}"(LIKE {{dag.default_args["ac_project_id"]}}.individualactivity INCLUDING CONSTRAINTS INCLUDING DEFAULTS INCLUDING INDEXES);',
+			task_id='create_temp_individualactivity_table'
+		)
+
+		postgresql_create_temp_individualinterest_table_job = CloudSQLExecuteQueryOperator(
+			gcp_cloudsql_conn_id='google_cloud_sql',
+			sql= 'CREATE TABLE IF NOT EXISTS {{dag.default_args["ac_project_id"]}}."individualinterest_{{ts}}"(LIKE {{dag.default_args["ac_project_id"]}}.individualinterest INCLUDING CONSTRAINTS INCLUDING DEFAULTS INCLUDING INDEXES);',
+			task_id='create_temp_individualinterest_table'
+		)
+
+		postgresql_create_temp_individualsegment_table_job = CloudSQLExecuteQueryOperator(
+			gcp_cloudsql_conn_id='google_cloud_sql',
+			sql= 'CREATE TABLE IF NOT EXISTS {{dag.default_args["ac_project_id"]}}."individualsegment_{{ts}}"(LIKE {{dag.default_args["ac_project_id"]}}.individualsegment INCLUDING CONSTRAINTS INCLUDING DEFAULTS INCLUDING INDEXES);',
+			task_id='create_temp_individualsegment_table'
+		)
+
 		postgresql_replication_dataflow_trigger = DataflowStartFlexTemplateOperator(
 			task_id='replication_dataflow_trigger',
 			body={
@@ -124,11 +149,37 @@ def create_dag(ac_project_id, ac_project_time_zone_id, dag_id, dag_description):
 			wait_until_finished=True
 		)
 
+		postgresql_cleanup_temp_individual_table_job = CloudSQLExecuteQueryOperator(
+			gcp_cloudsql_conn_id='google_cloud_sql',
+			sql= 'DROP TABLE IF EXISTS {{dag.default_args["ac_project_id"]}}."individual_{{ts}}";',
+			task_id='cleanup_temp_individual_table'
+		)
+
+		postgresql_cleanup_temp_individualactivity_table_job = CloudSQLExecuteQueryOperator(
+			gcp_cloudsql_conn_id='google_cloud_sql',
+			sql= 'DROP TABLE IF EXISTS {{dag.default_args["ac_project_id"]}}."individualactivity_{{ts}}";',
+			task_id='cleanup_temp_individualactivity_table'
+		)
+
+		postgresql_cleanup_temp_individualinterest_table_job = CloudSQLExecuteQueryOperator(
+			gcp_cloudsql_conn_id='google_cloud_sql',
+			sql= 'DROP TABLE IF EXISTS {{dag.default_args["ac_project_id"]}}."individualinterest_{{ts}}";',
+			task_id='cleanup_temp_individualinterest_table'
+		)
+
+		postgresql_cleanup_temp_individualsegment_table_job = CloudSQLExecuteQueryOperator(
+			gcp_cloudsql_conn_id='google_cloud_sql',
+			sql= 'DROP TABLE IF EXISTS {{dag.default_args["ac_project_id"]}}."individualsegment_{{ts}}";',
+			task_id='cleanup_temp_individualsegment_table'
+		)
+
 		chain(
 			get_data_replication_start_date, bq_individual_export_job,
 			bq_individual_activity_export_job,
 			bq_individual_interest_export_job, bq_membership_export_job,
-			postgresql_replication_dataflow_trigger
+			[postgresql_create_temp_individual_table_job, postgresql_create_temp_individualactivity_table_job, postgresql_create_temp_individualinterest_table_job, postgresql_create_temp_individualsegment_table_job],
+			postgresql_replication_dataflow_trigger,
+			[postgresql_cleanup_temp_individual_table_job, postgresql_cleanup_temp_individualactivity_table_job, postgresql_cleanup_temp_individualinterest_table_job, postgresql_cleanup_temp_individualsegment_table_job]
 		)
 
 		return dag
