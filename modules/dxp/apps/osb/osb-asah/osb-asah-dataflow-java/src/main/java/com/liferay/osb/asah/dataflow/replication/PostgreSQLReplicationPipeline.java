@@ -8,6 +8,7 @@ package com.liferay.osb.asah.dataflow.replication;
 import org.apache.beam.sdk.Pipeline;
 import org.apache.beam.sdk.io.TextIO;
 import org.apache.beam.sdk.options.PipelineOptionsFactory;
+import org.apache.commons.lang3.StringUtils;
 
 /**
  * @author Marcellus Tavares
@@ -31,6 +32,9 @@ public class PostgreSQLReplicationPipeline {
 		Pipeline pipeline = Pipeline.create(
 			postgreSQLReplicationDataflowPipelineOptions);
 
+		String tempTableSuffix =
+			postgreSQLReplicationDataflowPipelineOptions.getTempTableSuffix();
+
 		// Individual
 
 		pipeline.apply(
@@ -43,7 +47,8 @@ public class PostgreSQLReplicationPipeline {
 			JdbcIOUtil.createJdbcIOWrite(
 				postgreSQLReplicationDataflowPipelineOptions.
 					getIndividualColumns(),
-				"individual", postgreSQLReplicationDataflowPipelineOptions)
+				StringUtils.wrap("individual_" + tempTableSuffix, "\""),
+				postgreSQLReplicationDataflowPipelineOptions)
 		);
 
 		// Individual Activity
@@ -58,7 +63,7 @@ public class PostgreSQLReplicationPipeline {
 			JdbcIOUtil.createJdbcIOWrite(
 				postgreSQLReplicationDataflowPipelineOptions.
 					getIndividualActivityColumns(),
-				"individualactivity",
+				StringUtils.wrap("individualactivity_" + tempTableSuffix, "\""),
 				postgreSQLReplicationDataflowPipelineOptions)
 		);
 
@@ -74,7 +79,7 @@ public class PostgreSQLReplicationPipeline {
 			JdbcIOUtil.createJdbcIOWrite(
 				postgreSQLReplicationDataflowPipelineOptions.
 					getIndividualInterestColumns(),
-				"individualinterest",
+				StringUtils.wrap("individualinterest_" + tempTableSuffix, "\""),
 				postgreSQLReplicationDataflowPipelineOptions)
 		);
 
@@ -90,7 +95,7 @@ public class PostgreSQLReplicationPipeline {
 			JdbcIOUtil.createJdbcIOWrite(
 				postgreSQLReplicationDataflowPipelineOptions.
 					getIndividualSegmentColumns(),
-				"individualsegment",
+				StringUtils.wrap("individualsegment_" + tempTableSuffix, "\""),
 				postgreSQLReplicationDataflowPipelineOptions)
 		);
 
