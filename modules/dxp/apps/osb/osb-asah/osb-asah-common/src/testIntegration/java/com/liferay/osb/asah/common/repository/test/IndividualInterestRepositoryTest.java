@@ -50,6 +50,7 @@ public class IndividualInterestRepositoryTest
 		IndividualInterest individualInterest1 = new IndividualInterest();
 
 		individualInterest1.setChannelId(1L);
+		individualInterest1.setIdentityId("identity3");
 		individualInterest1.setInterested(Boolean.FALSE);
 		individualInterest1.setInterestScore(0.77022254);
 		individualInterest1.setKeyword("compelling metrics");
@@ -59,6 +60,7 @@ public class IndividualInterestRepositoryTest
 		IndividualInterest individualInterest2 = new IndividualInterest();
 
 		individualInterest2.setChannelId(1L);
+		individualInterest2.setIdentityId("identity4");
 		individualInterest2.setInterested(Boolean.TRUE);
 		individualInterest2.setInterestScore(1.454685);
 		individualInterest2.setKeyword("sales");
