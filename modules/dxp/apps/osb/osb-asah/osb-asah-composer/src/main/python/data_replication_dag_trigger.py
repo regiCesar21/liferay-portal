@@ -133,13 +133,18 @@ def create_dag(ac_project_id, ac_project_time_zone_id, dag_id, dag_description):
 						'databaseUser': re.sub('.gserviceaccount.com', '', Variable.get('osb.asah.service.account.email')),
 						'individualActivityColumns': 'id,applicationId,channelId,context,eventDate,eventId,individualId,properties',
 						'individualActivityInputDirectory': 'gs://{}-data-replica/{}/{}/individual-activity/*.csv'.format(os.environ['GOOGLE_PROJECT_ID'], ac_project_id, '{{ts}}'),
+						'individualActivityPrimaryKey': 'id',
 						'individualColumns': 'id,emailAddress,fields,suppressed',
 						'individualInputDirectory': 'gs://{}-data-replica/{}/{}/individual/*.csv'.format(os.environ['GOOGLE_PROJECT_ID'], ac_project_id, '{{ts}}'),
 						'individualInterestColumns': 'channelId,identityId,individualId,interested,interestScore,keyword,recordedDate',
 						'individualInterestInputDirectory': 'gs://{}-data-replica/{}/{}/individual-interest/*.csv'.format(os.environ['GOOGLE_PROJECT_ID'], ac_project_id, '{{ts}}'),
+						'individualInterestPrimaryKey': 'channelId,identityId,individualId,keyword,recordedDate',
+						'individualPrimaryKey': 'id',
 						'individualSegmentColumns': 'createDate,channelId,individualId,modifiedDate,segmentId,status',
 						'individualSegmentInputDirectory': 'gs://{}-data-replica/{}/{}/individual-segment/*.csv'.format(os.environ['GOOGLE_PROJECT_ID'], ac_project_id, '{{ts}}'),
+						'individualSegmentPrimaryKey': 'channelId,individualId,segmentId',
 						'projectId': ac_project_id,
+						'tempTableSuffix': '{{ts}}'
 					}
 				}
 			},
