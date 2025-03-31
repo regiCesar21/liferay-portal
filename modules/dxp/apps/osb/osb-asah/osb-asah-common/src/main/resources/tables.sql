@@ -284,7 +284,8 @@ CREATE TABLE IF NOT EXISTS IndividualInterest (
 	interested BOOLEAN,
 	interestScore DOUBLE PRECISION,
 	keyword TEXT,
-	recordedDate DATE
+	recordedDate DATE,
+	PRIMARY KEY (channelId, identityId, individualId, keyword, recordedDate)
 );
 
 CREATE TABLE IF NOT EXISTS IndividualSegment (
@@ -293,7 +294,8 @@ CREATE TABLE IF NOT EXISTS IndividualSegment (
 	individualId TEXT,
 	modifiedDate TIMESTAMPTZ,
 	segmentId BIGINT,
-	status TEXT
+	status TEXT,
+	PRIMARY KEY (channelId, individualId, segmentId)
 );
 
 CREATE TABLE IF NOT EXISTS InterestTopic (
