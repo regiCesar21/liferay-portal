@@ -18,6 +18,7 @@ from airflow.providers.google.cloud.operators.dataflow import DataflowStartFlexT
 from airflow.utils.context import Context
 from airflow.utils.dates import days_ago
 from airflow.utils.session import provide_session
+from airflow.utils.trigger_rule import TriggerRule
 
 from datetime import date
 
@@ -217,25 +218,29 @@ def create_dag(ac_project_id, ac_project_time_zone_id, dag_id, dag_description):
 		postgresql_cleanup_temp_individual_table_job = CloudSQLExecuteQueryOperator(
 			gcp_cloudsql_conn_id='google_cloud_sql',
 			sql= 'DROP TABLE IF EXISTS {{dag.default_args["ac_project_id"]}}."individual_{{ts}}";',
-			task_id='cleanup_temp_individual_table'
+			task_id='cleanup_temp_individual_table',
+			trigger_rule=TriggerRule.ALL_DONE
 		)
 
 		postgresql_cleanup_temp_individualactivity_table_job = CloudSQLExecuteQueryOperator(
 			gcp_cloudsql_conn_id='google_cloud_sql',
 			sql= 'DROP TABLE IF EXISTS {{dag.default_args["ac_project_id"]}}."individualactivity_{{ts}}";',
-			task_id='cleanup_temp_individualactivity_table'
+			task_id='cleanup_temp_individualactivity_table',
+			trigger_rule=TriggerRule.ALL_DONE
 		)
 
 		postgresql_cleanup_temp_individualinterest_table_job = CloudSQLExecuteQueryOperator(
 			gcp_cloudsql_conn_id='google_cloud_sql',
 			sql= 'DROP TABLE IF EXISTS {{dag.default_args["ac_project_id"]}}."individualinterest_{{ts}}";',
-			task_id='cleanup_temp_individualinterest_table'
+			task_id='cleanup_temp_individualinterest_table',
+			trigger_rule=TriggerRule.ALL_DONE
 		)
 
 		postgresql_cleanup_temp_individualsegment_table_job = CloudSQLExecuteQueryOperator(
 			gcp_cloudsql_conn_id='google_cloud_sql',
 			sql= 'DROP TABLE IF EXISTS {{dag.default_args["ac_project_id"]}}."individualsegment_{{ts}}";',
-			task_id='cleanup_temp_individualsegment_table'
+			task_id='cleanup_temp_individualsegment_table',
+			trigger_rule=TriggerRule.ALL_DONE
 		)
 
 		chain(
