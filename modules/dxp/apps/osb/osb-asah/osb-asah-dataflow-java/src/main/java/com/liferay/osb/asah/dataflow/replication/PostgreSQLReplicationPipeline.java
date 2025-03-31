@@ -35,9 +35,8 @@ public class PostgreSQLReplicationPipeline {
 		String tempTableSuffix =
 			postgreSQLReplicationDataflowPipelineOptions.getTempTableSuffix();
 
-		// Individual
-
 		pipeline.apply(
+			"Read Individual Directory",
 			TextIO.read(
 			).from(
 				postgreSQLReplicationDataflowPipelineOptions.
@@ -53,9 +52,8 @@ public class PostgreSQLReplicationPipeline {
 				postgreSQLReplicationDataflowPipelineOptions)
 		);
 
-		// Individual Activity
-
 		pipeline.apply(
+			"Read Individual Activity Directory",
 			TextIO.read(
 			).from(
 				postgreSQLReplicationDataflowPipelineOptions.
@@ -71,9 +69,8 @@ public class PostgreSQLReplicationPipeline {
 				postgreSQLReplicationDataflowPipelineOptions)
 		);
 
-		// Individual Interest
-
 		pipeline.apply(
+			"Read Individual Interest Directory",
 			TextIO.read(
 			).from(
 				postgreSQLReplicationDataflowPipelineOptions.
@@ -89,9 +86,8 @@ public class PostgreSQLReplicationPipeline {
 				postgreSQLReplicationDataflowPipelineOptions)
 		);
 
-		// Individual Segment
-
 		pipeline.apply(
+			"Read Individual Segment Directory",
 			TextIO.read(
 			).from(
 				postgreSQLReplicationDataflowPipelineOptions.
