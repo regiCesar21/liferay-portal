@@ -10,6 +10,7 @@
 #
 
 from airflow.models import DagRun, \
+	TaskInstance, \
 	Variable
 from airflow.models.baseoperator import BaseOperator, \
 	chain
@@ -31,6 +32,23 @@ import os
 import pendulum
 import re
 import requests
+
+class CheckDagStatusOperator(BaseOperator):
+
+	@provide_session
+	def execute(self, context: Context, session=None):
+		dag_run = context["dag_run"]
+
+		task_instances = session.query(
+			TaskInstance
+		).filter(
+			TaskInstance.dag_id == dag_run.dag_id,
+			TaskInstance.execution_date == dag_run.execution_date,
+		).all()
+
+		for ti in task_instances:
+			if ti.task_id != context["task"].task_id and ti.state == "failed":
+				raise Exception("Upstream task failed, failing this task.")
 
 class GetDataReplicationStartDateDateOperator(BaseOperator):
 
@@ -243,6 +261,10 @@ def create_dag(ac_project_id, ac_project_time_zone_id, dag_id, dag_description):
 			trigger_rule=TriggerRule.ALL_DONE
 		)
 
+		check_dag_status = CheckDagStatusOperator(
+			task_id='check_dag_status'
+		)
+
 		chain(
 			get_data_replication_start_date, bq_individual_export_job,
 			bq_individual_activity_export_job,
@@ -250,7 +272,8 @@ def create_dag(ac_project_id, ac_project_time_zone_id, dag_id, dag_description):
 			[postgresql_create_temp_individual_table_job, postgresql_create_temp_individualactivity_table_job, postgresql_create_temp_individualinterest_table_job, postgresql_create_temp_individualsegment_table_job],
 			postgresql_replication_dataflow_trigger,
 			[postgresql_merge_temp_individual_table_job, postgresql_merge_temp_individualactivity_table_job, postgresql_merge_temp_individualinterest_table_job, postgresql_merge_temp_individualsegment_table_job],
-			[postgresql_cleanup_temp_individual_table_job, postgresql_cleanup_temp_individualactivity_table_job, postgresql_cleanup_temp_individualinterest_table_job, postgresql_cleanup_temp_individualsegment_table_job]
+			[postgresql_cleanup_temp_individual_table_job, postgresql_cleanup_temp_individualactivity_table_job, postgresql_cleanup_temp_individualinterest_table_job, postgresql_cleanup_temp_individualsegment_table_job],
+			check_dag_status
 		)
 
 		return dag
