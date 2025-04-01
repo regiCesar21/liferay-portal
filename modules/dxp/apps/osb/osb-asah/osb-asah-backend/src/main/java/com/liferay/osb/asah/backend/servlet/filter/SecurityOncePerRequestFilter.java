@@ -9,12 +9,18 @@ import com.liferay.osb.asah.common.constants.HeaderConstants;
 import com.liferay.osb.asah.common.dog.DataSourceDog;
 import com.liferay.osb.asah.common.servlet.filter.BaseSecurityOncePerRequestFilter;
 
+import java.util.HashSet;
+import java.util.Set;
+
 import javax.servlet.http.HttpServletRequest;
 
 import org.apache.commons.lang3.StringUtils;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
+import org.springframework.core.env.Environment;
+import org.springframework.core.env.Profiles;
 import org.springframework.http.HttpMethod;
 import org.springframework.stereotype.Component;
 
@@ -53,6 +59,16 @@ public class SecurityOncePerRequestFilter
 			return false;
 		}
 
+		if (_environment.acceptsProfiles(Profiles.of("!prod")) &&
+			StringUtils.equals(httpServletRequest.getMethod(), "POST") &&
+			_functionalRequestURIs.contains(
+				httpServletRequest.getRequestURI()) &&
+			StringUtils.isNotBlank(_functionalRequestToken) &&
+			_functionalRequestToken.equals(faroBackendSecuritySignature)) {
+
+			return false;
+		}
+
 		if (StringUtils.contains(httpServletRequest.getRequestURI(), "/api/") &&
 			!StringUtils.contains(
 				httpServletRequest.getRequestURI(), "/recommendations") &&
@@ -74,7 +90,27 @@ public class SecurityOncePerRequestFilter
 		return super.isInvalidRequest(httpServletRequest);
 	}
 
+	private static final Set<String> _functionalRequestURIs = new HashSet<>() {
+		{
+			add("/functional/blogsdaily");
+			add("/functional/documentlibrariesdaily");
+			add("/functional/event-definition");
+			add("/functional/events");
+			add("/functional/identities");
+			add("/functional/individuals");
+			add("/functional/journalsdaily");
+			add("/functional/pagesdaily");
+			add("/functional/sessions");
+		}
+	};
+
 	@Autowired
 	private DataSourceDog _dataSourceDog;
+
+	@Autowired
+	private Environment _environment;
+
+	@Value("${osb.asah.functional.request.token:}")
+	private String _functionalRequestToken;
 
 }
