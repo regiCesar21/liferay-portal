@@ -27,7 +27,7 @@ import org.springframework.web.bind.annotation.RestController;
 /**
  * @author Marcos Martins
  */
-@Profile("dev")
+@Profile("!prod")
 @RequestMapping(produces = "application/json", value = "/functional/blogsdaily")
 @RestController(
 	"com.liferay.osb.asah.backend.rest.controller.functional.BQBlogDailyRestController"

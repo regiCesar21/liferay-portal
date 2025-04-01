@@ -30,7 +30,7 @@ import org.springframework.web.bind.annotation.RestController;
 /**
  * @author Vinicius Lopes
  */
-@Profile("dev")
+@Profile("!prod")
 @RequestMapping(
 	produces = "application/json", value = "/functional/event-definition"
 )
