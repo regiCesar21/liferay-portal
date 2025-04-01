@@ -108,7 +108,7 @@ public class JDBCConfiguration extends AbstractJdbcConfiguration {
 
 	@Bean("postgreSQLDataSource")
 	@Primary
-	@Profile({"dev", "prod"})
+	@Profile({"dev", "prod", "staging"})
 	public DataSource postgreSQLDataSource() {
 		return new PostgreSQLDataSource(
 			_hikariConnectionTimeout, _hikariIdleTimeout,

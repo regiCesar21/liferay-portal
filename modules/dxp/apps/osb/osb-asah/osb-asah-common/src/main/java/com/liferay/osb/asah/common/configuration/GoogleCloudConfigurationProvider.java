@@ -26,7 +26,7 @@ public class GoogleCloudConfigurationProvider {
 
 	@Bean
 	@Primary
-	@Profile("prod")
+	@Profile({"prod", "staging"})
 	public GoogleCloudConfiguration prodConfiguration(Environment environment) {
 		return new GoogleCloudConfiguration(
 			environment.getRequiredProperty("osb.asah.composer.endpoint"),
