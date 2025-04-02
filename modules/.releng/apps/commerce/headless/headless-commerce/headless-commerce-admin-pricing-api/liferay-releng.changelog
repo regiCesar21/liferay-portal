@@ -202,3 +202,8 @@ a4c121221db141be8ee0f40869e02cff424e896d^..aeddf4dc0dfad2ab4ad67c56fdf43ffd3cf83
 # Bundle Version 24.2.1
 #
 aeddf4dc0dfad2ab4ad67c56fdf43ffd3cf8334c^..8b71e924d63c1bea9a8bf3c7ef1770ede8c578b9=LPS-203406 LPS-204572
+
+#
+# Bundle Version 24.2.2
+#
+8b71e924d63c1bea9a8bf3c7ef1770ede8c578b9^..410542e0077aed1c6511d1d0e7d5915d3a279578=LPD-31166 LPD-51230 LPD-51258
