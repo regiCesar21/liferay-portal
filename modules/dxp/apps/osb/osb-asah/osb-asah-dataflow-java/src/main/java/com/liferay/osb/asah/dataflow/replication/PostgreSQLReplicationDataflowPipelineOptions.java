@@ -47,6 +47,9 @@ public interface PostgreSQLReplicationDataflowPipelineOptions
 	@Validation.Required
 	public String getIndividualActivityPrimaryKey();
 
+	@Default.String("individualactivity")
+	public String getIndividualActivityTargetTable();
+
 	@Description(
 		"Return the comma-separated list of column names corresponding to " +
 			"the fields in the CSV files"
@@ -73,6 +76,9 @@ public interface PostgreSQLReplicationDataflowPipelineOptions
 	@Validation.Required
 	public String getIndividualInterestPrimaryKey();
 
+	@Default.String("individualinterest")
+	public String getIndividualInterestTargetTable();
+
 	@Description(
 		"Return the comma-separated list of column names used as primary key"
 	)
@@ -95,13 +101,15 @@ public interface PostgreSQLReplicationDataflowPipelineOptions
 	@Validation.Required
 	public String getIndividualSegmentPrimaryKey();
 
+	@Default.String("individualsegment")
+	public String getIndividualSegmentTargetTable();
+
+	@Default.String("individual")
+	public String getIndividualTargetTable();
+
 	@Description("Return the Analytics Cloud project ID")
 	@Validation.Required
 	public String getProjectId();
-
-	@Description("Return the suffix of the temporary table to write to")
-	@Validation.Required
-	public String getTempTableSuffix();
 
 	public void setBatchSize(Integer batchSize);
 
@@ -121,6 +129,9 @@ public interface PostgreSQLReplicationDataflowPipelineOptions
 	public void setIndividualActivityPrimaryKey(
 		String individualActivityPrimaryKey);
 
+	public void setIndividualActivityTargetTable(
+		String individualActivityTargetTable);
+
 	public void setIndividualColumns(String individualColumns);
 
 	public void setIndividualInputDirectory(String individualInputDirectory);
@@ -133,6 +144,9 @@ public interface PostgreSQLReplicationDataflowPipelineOptions
 	public void setIndividualInterestPrimaryKey(
 		String individualInterestPrimaryKey);
 
+	public void setIndividualInterestTargetTable(
+		String individualInterestTargetTable);
+
 	public void setIndividualPrimaryKey(String individualPrimaryKey);
 
 	public void setIndividualSegmentColumns(String individualSegmentColumns);
@@ -143,8 +157,11 @@ public interface PostgreSQLReplicationDataflowPipelineOptions
 	public void setIndividualSegmentPrimaryKey(
 		String individualSegmentPrimaryKey);
 
-	public void setProjectId(String projectId);
+	public void setIndividualSegmentTargetTable(
+		String individualSegmentTargetTable);
 
-	public void setTempTableSuffix(String tempTableSuffix);
+	public void setIndividualTargetTable(String individualTargetTable);
+
+	public void setProjectId(String projectId);
 
 }

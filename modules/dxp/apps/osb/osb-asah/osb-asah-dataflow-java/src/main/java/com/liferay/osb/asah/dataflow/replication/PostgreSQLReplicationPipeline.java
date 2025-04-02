@@ -8,7 +8,6 @@ package com.liferay.osb.asah.dataflow.replication;
 import org.apache.beam.sdk.Pipeline;
 import org.apache.beam.sdk.io.TextIO;
 import org.apache.beam.sdk.options.PipelineOptionsFactory;
-import org.apache.commons.lang3.StringUtils;
 
 /**
  * @author Marcellus Tavares
@@ -32,9 +31,6 @@ public class PostgreSQLReplicationPipeline {
 		Pipeline pipeline = Pipeline.create(
 			postgreSQLReplicationDataflowPipelineOptions);
 
-		String tempTableSuffix =
-			postgreSQLReplicationDataflowPipelineOptions.getTempTableSuffix();
-
 		pipeline.apply(
 			"Read Individual Directory",
 			TextIO.read(
@@ -48,7 +44,8 @@ public class PostgreSQLReplicationPipeline {
 					getIndividualColumns(),
 				postgreSQLReplicationDataflowPipelineOptions.
 					getIndividualPrimaryKey(),
-				StringUtils.wrap("individual_" + tempTableSuffix, "\""),
+				postgreSQLReplicationDataflowPipelineOptions.
+					getIndividualTargetTable(),
 				postgreSQLReplicationDataflowPipelineOptions)
 		);
 
@@ -65,7 +62,8 @@ public class PostgreSQLReplicationPipeline {
 					getIndividualActivityColumns(),
 				postgreSQLReplicationDataflowPipelineOptions.
 					getIndividualActivityPrimaryKey(),
-				StringUtils.wrap("individualactivity_" + tempTableSuffix, "\""),
+				postgreSQLReplicationDataflowPipelineOptions.
+					getIndividualActivityTargetTable(),
 				postgreSQLReplicationDataflowPipelineOptions)
 		);
 
@@ -82,7 +80,8 @@ public class PostgreSQLReplicationPipeline {
 					getIndividualInterestColumns(),
 				postgreSQLReplicationDataflowPipelineOptions.
 					getIndividualInterestPrimaryKey(),
-				StringUtils.wrap("individualinterest_" + tempTableSuffix, "\""),
+				postgreSQLReplicationDataflowPipelineOptions.
+					getIndividualInterestTargetTable(),
 				postgreSQLReplicationDataflowPipelineOptions)
 		);
 
@@ -99,7 +98,8 @@ public class PostgreSQLReplicationPipeline {
 					getIndividualSegmentColumns(),
 				postgreSQLReplicationDataflowPipelineOptions.
 					getIndividualSegmentPrimaryKey(),
-				StringUtils.wrap("individualsegment_" + tempTableSuffix, "\""),
+				postgreSQLReplicationDataflowPipelineOptions.
+					getIndividualSegmentTargetTable(),
 				postgreSQLReplicationDataflowPipelineOptions)
 		);
 

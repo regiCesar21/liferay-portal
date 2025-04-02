@@ -51,6 +51,12 @@
 			"name": "individualActivityPrimaryKey"
 		},
 		{
+			"helpText": "Provide the name of the target table for individual activities.",
+			"isOptional": true,
+			"label": "Individual Activity Target Table",
+			"name": "individualActivityTargetTable"
+		},
+		{
 			"helpText": "Provide a comma separated list of column names corresponding to the fields in the CSV files.",
 			"isOptional": false,
 			"label": "Individual Columns",
@@ -81,6 +87,12 @@
 			"name": "individualInterestPrimaryKey"
 		},
 		{
+			"helpText": "Provide the name of the target table for individual interests.",
+			"isOptional": true,
+			"label": "Individual Interest Target Table",
+			"name": "individualInterestTargetTable"
+		},
+		{
 			"helpText": "Provide a comma separated list of column names used as primary key.",
 			"isOptional": false,
 			"label": "Individual Primary Key",
@@ -105,16 +117,22 @@
 			"name": "individualSegmentPrimaryKey"
 		},
 		{
+			"helpText": "Provide the name of the target table for individual segments.",
+			"isOptional": true,
+			"label": "Individual Segment Target Table",
+			"name": "individualSegmentTargetTable"
+		},
+		{
+			"helpText": "Provide the name of the target table for individuals.",
+			"isOptional": true,
+			"label": "Individual Target Table",
+			"name": "individualTargetTable"
+		},
+		{
 			"helpText": "Provide the Analytics Cloud project ID.",
 			"isOptional": false,
 			"label": "Project ID",
 			"name": "projectId"
-		},
-		{
-			"helpText": "Provide the suffix of the temporary table to write to.",
-			"isOptional": false,
-			"label": "Temporary Table Suffix",
-			"name": "tempTableSuffix"
 		}
 	]
 }
