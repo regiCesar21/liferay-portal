@@ -72,3 +72,8 @@ b2b826fa9199b5b2552734efc58d8fe8fd4e8541^..bb14d3f2e22d1cc7cdc668edcafcb1b997e84
 # Bundle Version 1.0.18
 #
 bb14d3f2e22d1cc7cdc668edcafcb1b997e84bb3^..b82aede535a5f6e0f53ec6db455913a1df369df0=LPS-189793
+
+#
+# Bundle Version 1.0.19
+#
+b82aede535a5f6e0f53ec6db455913a1df369df0^..e1f446665ac31111a0511cacdc752e87718e3d35=LPD-37838
