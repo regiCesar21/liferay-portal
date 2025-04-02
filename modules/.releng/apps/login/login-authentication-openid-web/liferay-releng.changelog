@@ -112,3 +112,8 @@ e19ecf32727eb0af4ba1fee9e43102196b8e61bd^..fac1a859f55d17d8100f8b4abc61a1cb5cdfb
 # Bundle Version 3.0.26
 #
 fac1a859f55d17d8100f8b4abc61a1cb5cdfb24e^..a526c6fcd487b6fdfd7970fec0066b13df807c42=LPS-77699
+
+#
+# Bundle Version 3.0.27
+#
+a526c6fcd487b6fdfd7970fec0066b13df807c42^..974be3e28e57124ba1878edad65a3574ac1609ee=LPD-41655 LPD-42921
