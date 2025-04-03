@@ -208,7 +208,6 @@ public abstract class BaseBlogPostingResourceTestCase {
 			404,
 			blogPostingResource.getBlogPostingHttpResponse(
 				blogPosting.getId()));
-
 		assertHttpResponseStatusCode(
 			404, blogPostingResource.getBlogPostingHttpResponse(0L));
 	}
@@ -398,7 +397,6 @@ public abstract class BaseBlogPostingResourceTestCase {
 			404,
 			blogPostingResource.getBlogPostingMyRatingHttpResponse(
 				blogPosting.getId()));
-
 		assertHttpResponseStatusCode(
 			404, blogPostingResource.getBlogPostingMyRatingHttpResponse(0L));
 	}

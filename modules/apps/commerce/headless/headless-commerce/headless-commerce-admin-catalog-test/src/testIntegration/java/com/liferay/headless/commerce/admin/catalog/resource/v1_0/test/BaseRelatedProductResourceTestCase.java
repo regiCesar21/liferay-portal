@@ -635,11 +635,8 @@ public abstract class BaseRelatedProductResourceTestCase {
 			404,
 			relatedProductResource.getRelatedProductHttpResponse(
 				relatedProduct.getId()));
-
 		assertHttpResponseStatusCode(
-			404,
-			relatedProductResource.getRelatedProductHttpResponse(
-				relatedProduct.getId()));
+			404, relatedProductResource.getRelatedProductHttpResponse(0L));
 	}
 
 	protected RelatedProduct testDeleteRelatedProduct_addRelatedProduct()

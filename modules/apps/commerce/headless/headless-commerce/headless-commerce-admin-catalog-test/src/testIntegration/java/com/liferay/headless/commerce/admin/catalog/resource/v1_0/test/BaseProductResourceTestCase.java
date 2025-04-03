@@ -580,7 +580,6 @@ public abstract class BaseProductResourceTestCase {
 			404,
 			productResource.getProductByExternalReferenceCodeHttpResponse(
 				product.getExternalReferenceCode()));
-
 		assertHttpResponseStatusCode(
 			404,
 			productResource.getProductByExternalReferenceCodeHttpResponse(
@@ -713,9 +712,8 @@ public abstract class BaseProductResourceTestCase {
 
 		assertHttpResponseStatusCode(
 			404, productResource.getProductHttpResponse(product.getId()));
-
 		assertHttpResponseStatusCode(
-			404, productResource.getProductHttpResponse(product.getId()));
+			404, productResource.getProductHttpResponse(0L));
 	}
 
 	protected Product testDeleteProduct_addProduct() throws Exception {

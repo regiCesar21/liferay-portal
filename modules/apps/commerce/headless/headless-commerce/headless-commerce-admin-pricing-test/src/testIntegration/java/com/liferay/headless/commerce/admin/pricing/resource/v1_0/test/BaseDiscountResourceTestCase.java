@@ -374,7 +374,6 @@ public abstract class BaseDiscountResourceTestCase {
 			404,
 			discountResource.getDiscountByExternalReferenceCodeHttpResponse(
 				discount.getExternalReferenceCode()));
-
 		assertHttpResponseStatusCode(
 			404,
 			discountResource.getDiscountByExternalReferenceCodeHttpResponse(
@@ -489,9 +488,8 @@ public abstract class BaseDiscountResourceTestCase {
 
 		assertHttpResponseStatusCode(
 			404, discountResource.getDiscountHttpResponse(discount.getId()));
-
 		assertHttpResponseStatusCode(
-			404, discountResource.getDiscountHttpResponse(discount.getId()));
+			404, discountResource.getDiscountHttpResponse(0L));
 	}
 
 	protected Discount testDeleteDiscount_addDiscount() throws Exception {

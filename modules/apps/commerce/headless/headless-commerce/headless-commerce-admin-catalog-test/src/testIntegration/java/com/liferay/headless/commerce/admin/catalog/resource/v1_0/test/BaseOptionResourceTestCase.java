@@ -570,7 +570,6 @@ public abstract class BaseOptionResourceTestCase {
 			404,
 			optionResource.getOptionByExternalReferenceCodeHttpResponse(
 				option.getExternalReferenceCode()));
-
 		assertHttpResponseStatusCode(
 			404,
 			optionResource.getOptionByExternalReferenceCodeHttpResponse(
@@ -679,9 +678,8 @@ public abstract class BaseOptionResourceTestCase {
 
 		assertHttpResponseStatusCode(
 			404, optionResource.getOptionHttpResponse(option.getId()));
-
 		assertHttpResponseStatusCode(
-			404, optionResource.getOptionHttpResponse(option.getId()));
+			404, optionResource.getOptionHttpResponse(0L));
 	}
 
 	protected Option testDeleteOption_addOption() throws Exception {

@@ -214,7 +214,6 @@ public abstract class BaseCartResourceTestCase {
 
 		assertHttpResponseStatusCode(
 			404, cartResource.getCartHttpResponse(cart.getId()));
-
 		assertHttpResponseStatusCode(404, cartResource.getCartHttpResponse(0L));
 	}
 

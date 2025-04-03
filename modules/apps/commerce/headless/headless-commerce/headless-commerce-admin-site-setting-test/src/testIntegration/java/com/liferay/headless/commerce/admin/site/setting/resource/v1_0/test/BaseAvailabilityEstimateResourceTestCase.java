@@ -194,11 +194,10 @@ public abstract class BaseAvailabilityEstimateResourceTestCase {
 			404,
 			availabilityEstimateResource.getAvailabilityEstimateHttpResponse(
 				availabilityEstimate.getId()));
-
 		assertHttpResponseStatusCode(
 			404,
 			availabilityEstimateResource.getAvailabilityEstimateHttpResponse(
-				availabilityEstimate.getId()));
+				0L));
 	}
 
 	protected AvailabilityEstimate

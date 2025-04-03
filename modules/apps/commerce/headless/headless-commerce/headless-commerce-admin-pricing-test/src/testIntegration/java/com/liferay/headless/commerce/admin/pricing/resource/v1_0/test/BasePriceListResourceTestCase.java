@@ -594,7 +594,6 @@ public abstract class BasePriceListResourceTestCase {
 			404,
 			priceListResource.getPriceListByExternalReferenceCodeHttpResponse(
 				priceList.getExternalReferenceCode()));
-
 		assertHttpResponseStatusCode(
 			404,
 			priceListResource.getPriceListByExternalReferenceCodeHttpResponse(
@@ -711,9 +710,8 @@ public abstract class BasePriceListResourceTestCase {
 
 		assertHttpResponseStatusCode(
 			404, priceListResource.getPriceListHttpResponse(priceList.getId()));
-
 		assertHttpResponseStatusCode(
-			404, priceListResource.getPriceListHttpResponse(priceList.getId()));
+			404, priceListResource.getPriceListHttpResponse(0L));
 	}
 
 	protected PriceList testDeletePriceList_addPriceList() throws Exception {

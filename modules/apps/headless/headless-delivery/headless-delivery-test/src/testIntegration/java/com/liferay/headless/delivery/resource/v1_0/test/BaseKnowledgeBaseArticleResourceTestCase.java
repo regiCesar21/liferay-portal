@@ -211,7 +211,6 @@ public abstract class BaseKnowledgeBaseArticleResourceTestCase {
 			404,
 			knowledgeBaseArticleResource.getKnowledgeBaseArticleHttpResponse(
 				knowledgeBaseArticle.getId()));
-
 		assertHttpResponseStatusCode(
 			404,
 			knowledgeBaseArticleResource.getKnowledgeBaseArticleHttpResponse(
@@ -435,7 +434,6 @@ public abstract class BaseKnowledgeBaseArticleResourceTestCase {
 			knowledgeBaseArticleResource.
 				getKnowledgeBaseArticleMyRatingHttpResponse(
 					knowledgeBaseArticle.getId()));
-
 		assertHttpResponseStatusCode(
 			404,
 			knowledgeBaseArticleResource.
