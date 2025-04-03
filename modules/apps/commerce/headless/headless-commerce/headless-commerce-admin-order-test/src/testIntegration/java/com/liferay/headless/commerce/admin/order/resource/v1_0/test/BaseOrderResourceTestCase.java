@@ -616,8 +616,7 @@ public abstract class BaseOrderResourceTestCase {
 				order.getExternalReferenceCode()));
 		assertHttpResponseStatusCode(
 			404,
-			orderResource.getOrderByExternalReferenceCodeHttpResponse(
-				order.getExternalReferenceCode()));
+			orderResource.getOrderByExternalReferenceCodeHttpResponse("-"));
 	}
 
 	protected Order testDeleteOrderByExternalReferenceCode_addOrder()

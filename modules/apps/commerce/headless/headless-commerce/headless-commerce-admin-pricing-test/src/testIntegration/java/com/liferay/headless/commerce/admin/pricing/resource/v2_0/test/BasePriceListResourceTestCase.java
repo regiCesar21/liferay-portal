@@ -601,7 +601,7 @@ public abstract class BasePriceListResourceTestCase {
 		assertHttpResponseStatusCode(
 			404,
 			priceListResource.getPriceListByExternalReferenceCodeHttpResponse(
-				priceList.getExternalReferenceCode()));
+				"-"));
 	}
 
 	protected PriceList

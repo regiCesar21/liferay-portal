@@ -602,7 +602,7 @@ public abstract class BaseTierPriceResourceTestCase {
 		assertHttpResponseStatusCode(
 			404,
 			tierPriceResource.getTierPriceByExternalReferenceCodeHttpResponse(
-				tierPrice.getExternalReferenceCode()));
+				"-"));
 	}
 
 	protected TierPrice

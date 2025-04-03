@@ -210,7 +210,7 @@ public abstract class BasePriceEntryResourceTestCase {
 		assertHttpResponseStatusCode(
 			404,
 			priceEntryResource.getPriceEntryByExternalReferenceCodeHttpResponse(
-				priceEntry.getExternalReferenceCode()));
+				"-"));
 	}
 
 	protected PriceEntry

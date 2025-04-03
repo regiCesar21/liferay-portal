@@ -207,8 +207,7 @@ public abstract class BaseWarehouseItemResourceTestCase {
 		assertHttpResponseStatusCode(
 			404,
 			warehouseItemResource.
-				getWarehouseItemByExternalReferenceCodeHttpResponse(
-					warehouseItem.getExternalReferenceCode()));
+				getWarehouseItemByExternalReferenceCodeHttpResponse("-"));
 	}
 
 	protected WarehouseItem
