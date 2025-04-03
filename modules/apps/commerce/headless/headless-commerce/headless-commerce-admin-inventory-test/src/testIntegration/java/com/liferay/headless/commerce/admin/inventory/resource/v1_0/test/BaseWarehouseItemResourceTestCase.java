@@ -204,12 +204,10 @@ public abstract class BaseWarehouseItemResourceTestCase {
 			warehouseItemResource.
 				getWarehouseItemByExternalReferenceCodeHttpResponse(
 					warehouseItem.getExternalReferenceCode()));
-
 		assertHttpResponseStatusCode(
 			404,
 			warehouseItemResource.
-				getWarehouseItemByExternalReferenceCodeHttpResponse(
-					warehouseItem.getExternalReferenceCode()));
+				getWarehouseItemByExternalReferenceCodeHttpResponse("-"));
 	}
 
 	protected WarehouseItem
@@ -352,11 +350,8 @@ public abstract class BaseWarehouseItemResourceTestCase {
 			404,
 			warehouseItemResource.getWarehouseItemHttpResponse(
 				warehouseItem.getId()));
-
 		assertHttpResponseStatusCode(
-			404,
-			warehouseItemResource.getWarehouseItemHttpResponse(
-				warehouseItem.getId()));
+			404, warehouseItemResource.getWarehouseItemHttpResponse(0L));
 	}
 
 	protected WarehouseItem testDeleteWarehouseItem_addWarehouseItem()

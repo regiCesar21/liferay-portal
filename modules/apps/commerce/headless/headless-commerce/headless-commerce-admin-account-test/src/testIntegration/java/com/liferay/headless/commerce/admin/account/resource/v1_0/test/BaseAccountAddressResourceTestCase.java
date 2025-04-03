@@ -219,12 +219,10 @@ public abstract class BaseAccountAddressResourceTestCase {
 			accountAddressResource.
 				getAccountAddressByExternalReferenceCodeHttpResponse(
 					accountAddress.getExternalReferenceCode()));
-
 		assertHttpResponseStatusCode(
 			404,
 			accountAddressResource.
-				getAccountAddressByExternalReferenceCodeHttpResponse(
-					accountAddress.getExternalReferenceCode()));
+				getAccountAddressByExternalReferenceCodeHttpResponse("-"));
 	}
 
 	protected AccountAddress
@@ -346,11 +344,8 @@ public abstract class BaseAccountAddressResourceTestCase {
 			404,
 			accountAddressResource.getAccountAddressHttpResponse(
 				accountAddress.getId()));
-
 		assertHttpResponseStatusCode(
-			404,
-			accountAddressResource.getAccountAddressHttpResponse(
-				accountAddress.getId()));
+			404, accountAddressResource.getAccountAddressHttpResponse(0L));
 	}
 
 	protected AccountAddress testDeleteAccountAddress_addAccountAddress()

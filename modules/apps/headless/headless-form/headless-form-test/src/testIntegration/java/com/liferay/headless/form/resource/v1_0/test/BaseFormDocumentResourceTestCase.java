@@ -199,7 +199,6 @@ public abstract class BaseFormDocumentResourceTestCase {
 			404,
 			formDocumentResource.getFormDocumentHttpResponse(
 				formDocument.getId()));
-
 		assertHttpResponseStatusCode(
 			404, formDocumentResource.getFormDocumentHttpResponse(0L));
 	}

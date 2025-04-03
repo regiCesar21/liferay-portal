@@ -572,7 +572,6 @@ public abstract class BaseChannelResourceTestCase {
 
 		assertHttpResponseStatusCode(
 			404, channelResource.getChannelHttpResponse(channel.getId()));
-
 		assertHttpResponseStatusCode(
 			404, channelResource.getChannelHttpResponse(0L));
 	}

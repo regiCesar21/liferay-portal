@@ -894,11 +894,8 @@ public abstract class BaseSkuResourceTestCase {
 			404,
 			skuResource.getSkuByExternalReferenceCodeHttpResponse(
 				sku.getExternalReferenceCode()));
-
 		assertHttpResponseStatusCode(
-			404,
-			skuResource.getSkuByExternalReferenceCodeHttpResponse(
-				sku.getExternalReferenceCode()));
+			404, skuResource.getSkuByExternalReferenceCodeHttpResponse("-"));
 	}
 
 	protected Sku testDeleteSkuByExternalReferenceCode_addSku()
@@ -1000,9 +997,7 @@ public abstract class BaseSkuResourceTestCase {
 
 		assertHttpResponseStatusCode(
 			404, skuResource.getSkuHttpResponse(sku.getId()));
-
-		assertHttpResponseStatusCode(
-			404, skuResource.getSkuHttpResponse(sku.getId()));
+		assertHttpResponseStatusCode(404, skuResource.getSkuHttpResponse(0L));
 	}
 
 	protected Sku testDeleteSku_addSku() throws Exception {

@@ -207,11 +207,10 @@ public abstract class BasePriceEntryResourceTestCase {
 			404,
 			priceEntryResource.getPriceEntryByExternalReferenceCodeHttpResponse(
 				priceEntry.getExternalReferenceCode()));
-
 		assertHttpResponseStatusCode(
 			404,
 			priceEntryResource.getPriceEntryByExternalReferenceCodeHttpResponse(
-				priceEntry.getExternalReferenceCode()));
+				"-"));
 	}
 
 	protected PriceEntry
@@ -356,10 +355,8 @@ public abstract class BasePriceEntryResourceTestCase {
 		assertHttpResponseStatusCode(
 			404,
 			priceEntryResource.getPriceEntryHttpResponse(priceEntry.getId()));
-
 		assertHttpResponseStatusCode(
-			404,
-			priceEntryResource.getPriceEntryHttpResponse(priceEntry.getId()));
+			404, priceEntryResource.getPriceEntryHttpResponse(0L));
 	}
 
 	protected PriceEntry testDeletePriceEntry_addPriceEntry() throws Exception {

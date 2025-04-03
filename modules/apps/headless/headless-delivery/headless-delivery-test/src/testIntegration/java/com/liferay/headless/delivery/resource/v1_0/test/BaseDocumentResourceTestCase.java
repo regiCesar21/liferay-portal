@@ -658,7 +658,6 @@ public abstract class BaseDocumentResourceTestCase {
 
 		assertHttpResponseStatusCode(
 			404, documentResource.getDocumentHttpResponse(document.getId()));
-
 		assertHttpResponseStatusCode(
 			404, documentResource.getDocumentHttpResponse(0L));
 	}
@@ -844,7 +843,6 @@ public abstract class BaseDocumentResourceTestCase {
 		assertHttpResponseStatusCode(
 			404,
 			documentResource.getDocumentMyRatingHttpResponse(document.getId()));
-
 		assertHttpResponseStatusCode(
 			404, documentResource.getDocumentMyRatingHttpResponse(0L));
 	}
