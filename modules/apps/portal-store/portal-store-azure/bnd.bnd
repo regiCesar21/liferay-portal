@@ -126,4 +126,4 @@ Import-Package:\
 	!zipkin2.internal.gson.internal.bind,\
 	\
 	*
--fixupmessages: "^Classes found in the wrong directory: \\\\{META-INF/versions/11/";is:=warning
+-fixupmessages: "^Classes found in the wrong directory: ...";is:=warning
