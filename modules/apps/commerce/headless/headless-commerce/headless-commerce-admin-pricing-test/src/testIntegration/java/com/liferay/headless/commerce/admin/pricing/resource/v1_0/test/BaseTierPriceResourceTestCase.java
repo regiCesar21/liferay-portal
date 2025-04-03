@@ -599,11 +599,10 @@ public abstract class BaseTierPriceResourceTestCase {
 			404,
 			tierPriceResource.getTierPriceByExternalReferenceCodeHttpResponse(
 				tierPrice.getExternalReferenceCode()));
-
 		assertHttpResponseStatusCode(
 			404,
 			tierPriceResource.getTierPriceByExternalReferenceCodeHttpResponse(
-				tierPrice.getExternalReferenceCode()));
+				"-"));
 	}
 
 	protected TierPrice
@@ -716,9 +715,8 @@ public abstract class BaseTierPriceResourceTestCase {
 
 		assertHttpResponseStatusCode(
 			404, tierPriceResource.getTierPriceHttpResponse(tierPrice.getId()));
-
 		assertHttpResponseStatusCode(
-			404, tierPriceResource.getTierPriceHttpResponse(tierPrice.getId()));
+			404, tierPriceResource.getTierPriceHttpResponse(0L));
 	}
 
 	protected TierPrice testDeleteTierPrice_addTierPrice() throws Exception {

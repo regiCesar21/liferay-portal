@@ -211,7 +211,6 @@ public abstract class BaseProcessResourceTestCase {
 
 		assertHttpResponseStatusCode(
 			404, processResource.getProcessHttpResponse(process.getId()));
-
 		assertHttpResponseStatusCode(
 			404, processResource.getProcessHttpResponse(0L));
 	}

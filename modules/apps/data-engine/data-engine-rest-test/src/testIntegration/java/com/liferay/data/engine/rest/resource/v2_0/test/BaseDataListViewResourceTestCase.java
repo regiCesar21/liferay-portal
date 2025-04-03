@@ -596,7 +596,6 @@ public abstract class BaseDataListViewResourceTestCase {
 			404,
 			dataListViewResource.getDataListViewHttpResponse(
 				dataListView.getId()));
-
 		assertHttpResponseStatusCode(
 			404, dataListViewResource.getDataListViewHttpResponse(0L));
 	}

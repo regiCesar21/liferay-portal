@@ -574,11 +574,9 @@ public abstract class BaseAccountResourceTestCase {
 			404,
 			accountResource.getAccountByExternalReferenceCodeHttpResponse(
 				account.getExternalReferenceCode()));
-
 		assertHttpResponseStatusCode(
 			404,
-			accountResource.getAccountByExternalReferenceCodeHttpResponse(
-				account.getExternalReferenceCode()));
+			accountResource.getAccountByExternalReferenceCodeHttpResponse("-"));
 	}
 
 	protected Account testDeleteAccountByExternalReferenceCode_addAccount()
@@ -763,7 +761,6 @@ public abstract class BaseAccountResourceTestCase {
 
 		assertHttpResponseStatusCode(
 			404, accountResource.getAccountHttpResponse(account.getId()));
-
 		assertHttpResponseStatusCode(
 			404, accountResource.getAccountHttpResponse(0L));
 	}

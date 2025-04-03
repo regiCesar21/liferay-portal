@@ -196,7 +196,6 @@ public abstract class BaseNavigationMenuResourceTestCase {
 			404,
 			navigationMenuResource.getNavigationMenuHttpResponse(
 				navigationMenu.getId()));
-
 		assertHttpResponseStatusCode(
 			404, navigationMenuResource.getNavigationMenuHttpResponse(0L));
 	}

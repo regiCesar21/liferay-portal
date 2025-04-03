@@ -709,7 +709,6 @@ public abstract class BaseWikiPageResourceTestCase {
 
 		assertHttpResponseStatusCode(
 			404, wikiPageResource.getWikiPageHttpResponse(wikiPage.getId()));
-
 		assertHttpResponseStatusCode(
 			404, wikiPageResource.getWikiPageHttpResponse(0L));
 	}

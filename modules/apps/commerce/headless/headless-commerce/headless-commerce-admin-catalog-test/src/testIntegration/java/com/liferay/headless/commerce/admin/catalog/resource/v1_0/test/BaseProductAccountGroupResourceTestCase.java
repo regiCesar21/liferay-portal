@@ -198,11 +198,9 @@ public abstract class BaseProductAccountGroupResourceTestCase {
 			404,
 			productAccountGroupResource.getProductAccountGroupHttpResponse(
 				productAccountGroup.getId()));
-
 		assertHttpResponseStatusCode(
 			404,
-			productAccountGroupResource.getProductAccountGroupHttpResponse(
-				productAccountGroup.getId()));
+			productAccountGroupResource.getProductAccountGroupHttpResponse(0L));
 	}
 
 	protected ProductAccountGroup

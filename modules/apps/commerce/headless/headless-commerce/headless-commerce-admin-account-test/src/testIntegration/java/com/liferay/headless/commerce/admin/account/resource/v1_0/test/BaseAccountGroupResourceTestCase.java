@@ -625,12 +625,10 @@ public abstract class BaseAccountGroupResourceTestCase {
 			accountGroupResource.
 				getAccountGroupByExternalReferenceCodeHttpResponse(
 					accountGroup.getExternalReferenceCode()));
-
 		assertHttpResponseStatusCode(
 			404,
 			accountGroupResource.
-				getAccountGroupByExternalReferenceCodeHttpResponse(
-					accountGroup.getExternalReferenceCode()));
+				getAccountGroupByExternalReferenceCodeHttpResponse("-"));
 	}
 
 	protected AccountGroup
@@ -749,11 +747,8 @@ public abstract class BaseAccountGroupResourceTestCase {
 			404,
 			accountGroupResource.getAccountGroupHttpResponse(
 				accountGroup.getId()));
-
 		assertHttpResponseStatusCode(
-			404,
-			accountGroupResource.getAccountGroupHttpResponse(
-				accountGroup.getId()));
+			404, accountGroupResource.getAccountGroupHttpResponse(0L));
 	}
 
 	protected AccountGroup testDeleteAccountGroup_addAccountGroup()

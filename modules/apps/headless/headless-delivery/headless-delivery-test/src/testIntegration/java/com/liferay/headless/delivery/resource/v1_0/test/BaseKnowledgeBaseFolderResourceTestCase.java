@@ -199,7 +199,6 @@ public abstract class BaseKnowledgeBaseFolderResourceTestCase {
 			404,
 			knowledgeBaseFolderResource.getKnowledgeBaseFolderHttpResponse(
 				knowledgeBaseFolder.getId()));
-
 		assertHttpResponseStatusCode(
 			404,
 			knowledgeBaseFolderResource.getKnowledgeBaseFolderHttpResponse(0L));

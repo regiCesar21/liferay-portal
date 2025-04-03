@@ -1512,7 +1512,6 @@ public abstract class BaseUserAccountResourceTestCase {
 			404,
 			userAccountResource.getUserAccountHttpResponse(
 				userAccount.getId()));
-
 		assertHttpResponseStatusCode(
 			404, userAccountResource.getUserAccountHttpResponse(0L));
 	}

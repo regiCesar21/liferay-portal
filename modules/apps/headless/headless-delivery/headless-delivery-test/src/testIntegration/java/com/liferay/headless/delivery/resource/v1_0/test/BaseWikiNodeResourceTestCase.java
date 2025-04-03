@@ -654,7 +654,6 @@ public abstract class BaseWikiNodeResourceTestCase {
 
 		assertHttpResponseStatusCode(
 			404, wikiNodeResource.getWikiNodeHttpResponse(wikiNode.getId()));
-
 		assertHttpResponseStatusCode(
 			404, wikiNodeResource.getWikiNodeHttpResponse(0L));
 	}

@@ -596,7 +596,6 @@ public abstract class BaseSXPBlueprintResourceTestCase {
 			404,
 			sxpBlueprintResource.getSXPBlueprintHttpResponse(
 				sxpBlueprint.getId()));
-
 		assertHttpResponseStatusCode(
 			404, sxpBlueprintResource.getSXPBlueprintHttpResponse(0L));
 	}

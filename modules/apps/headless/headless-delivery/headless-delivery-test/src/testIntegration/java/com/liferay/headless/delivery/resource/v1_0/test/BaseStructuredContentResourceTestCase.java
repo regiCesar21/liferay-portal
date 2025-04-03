@@ -2547,7 +2547,6 @@ public abstract class BaseStructuredContentResourceTestCase {
 			404,
 			structuredContentResource.getStructuredContentHttpResponse(
 				structuredContent.getId()));
-
 		assertHttpResponseStatusCode(
 			404,
 			structuredContentResource.getStructuredContentHttpResponse(0L));
@@ -2764,7 +2763,6 @@ public abstract class BaseStructuredContentResourceTestCase {
 			404,
 			structuredContentResource.getStructuredContentMyRatingHttpResponse(
 				structuredContent.getId()));
-
 		assertHttpResponseStatusCode(
 			404,
 			structuredContentResource.getStructuredContentMyRatingHttpResponse(

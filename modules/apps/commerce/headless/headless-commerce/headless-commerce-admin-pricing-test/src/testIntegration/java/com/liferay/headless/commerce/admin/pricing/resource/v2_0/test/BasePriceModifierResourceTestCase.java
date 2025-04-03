@@ -899,12 +899,10 @@ public abstract class BasePriceModifierResourceTestCase {
 			priceModifierResource.
 				getPriceModifierByExternalReferenceCodeHttpResponse(
 					priceModifier.getExternalReferenceCode()));
-
 		assertHttpResponseStatusCode(
 			404,
 			priceModifierResource.
-				getPriceModifierByExternalReferenceCodeHttpResponse(
-					priceModifier.getExternalReferenceCode()));
+				getPriceModifierByExternalReferenceCodeHttpResponse("-"));
 	}
 
 	protected PriceModifier
@@ -1024,11 +1022,8 @@ public abstract class BasePriceModifierResourceTestCase {
 			404,
 			priceModifierResource.getPriceModifierHttpResponse(
 				priceModifier.getId()));
-
 		assertHttpResponseStatusCode(
-			404,
-			priceModifierResource.getPriceModifierHttpResponse(
-				priceModifier.getId()));
+			404, priceModifierResource.getPriceModifierHttpResponse(0L));
 	}
 
 	protected PriceModifier testDeletePriceModifier_addPriceModifier()

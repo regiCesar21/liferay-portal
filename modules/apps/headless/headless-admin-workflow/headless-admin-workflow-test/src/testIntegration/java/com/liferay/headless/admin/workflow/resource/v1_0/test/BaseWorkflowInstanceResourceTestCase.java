@@ -418,7 +418,6 @@ public abstract class BaseWorkflowInstanceResourceTestCase {
 			404,
 			workflowInstanceResource.getWorkflowInstanceHttpResponse(
 				workflowInstance.getId()));
-
 		assertHttpResponseStatusCode(
 			404, workflowInstanceResource.getWorkflowInstanceHttpResponse(0L));
 	}

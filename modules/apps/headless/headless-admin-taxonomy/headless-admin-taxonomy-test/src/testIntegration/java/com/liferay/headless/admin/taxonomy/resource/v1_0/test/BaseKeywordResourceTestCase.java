@@ -756,7 +756,6 @@ public abstract class BaseKeywordResourceTestCase {
 
 		assertHttpResponseStatusCode(
 			404, keywordResource.getKeywordHttpResponse(keyword.getId()));
-
 		assertHttpResponseStatusCode(
 			404, keywordResource.getKeywordHttpResponse(0L));
 	}

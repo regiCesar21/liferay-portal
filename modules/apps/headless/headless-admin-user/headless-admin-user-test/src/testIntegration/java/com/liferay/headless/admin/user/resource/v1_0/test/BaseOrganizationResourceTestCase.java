@@ -629,7 +629,6 @@ public abstract class BaseOrganizationResourceTestCase {
 			404,
 			organizationResource.getOrganizationHttpResponse(
 				organization.getId()));
-
 		assertHttpResponseStatusCode(
 			404, organizationResource.getOrganizationHttpResponse("-"));
 	}
