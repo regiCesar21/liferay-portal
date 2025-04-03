@@ -42,3 +42,8 @@ ec53f9c68c3910e0b06f27424a48fa4bd93faadc^..2a3de0747a0f6d4e324b0b393f1a61c37bb08
 # Bundle Version 3.0.15
 #
 cccfb5f31adb8cecf3f447671ae69f365b62a2ac^..d1d6adfced0ac494b749c822857ed0c913100daf=LPS-197001
+
+#
+# Bundle Version 3.0.16
+#
+d1d6adfced0ac494b749c822857ed0c913100daf^..9852c70b5ceda9adb96a5dac70ec0966123dcc2c=LPD-34926 LPD-46473
