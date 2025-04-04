@@ -13,6 +13,7 @@ import org.json.JSONArray;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpMethod;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
 
 /**
@@ -22,37 +23,37 @@ import org.springframework.stereotype.Component;
 public class NanitesHttpImpl implements NanitesHttp {
 
 	@Override
-	public void removeSchedule() {
-		_http.exchangeIfUp(
+	public ResponseEntity<String> removeSchedule() {
+		return _http.exchangeResponseEntityIfUp(
 			ServiceConstants.URL_BATCH_CURATOR, "/nanites/remove-schedule",
 			HttpMethod.POST, null);
 	}
 
 	@Override
-	public void rescheduleNanites() {
-		_http.exchangeIfUp(
+	public ResponseEntity<String> rescheduleNanites() {
+		return _http.exchangeResponseEntityIfUp(
 			ServiceConstants.URL_BATCH_CURATOR, "/nanites/reschedule",
 			HttpMethod.POST, null);
 	}
 
 	@Override
-	public void run(JSONArray jsonArray) {
-		_http.exchangeIfUp(
+	public ResponseEntity<String> run(JSONArray jsonArray) {
+		return _http.exchangeResponseEntityIfUp(
 			ServiceConstants.URL_BATCH_CURATOR, "/nanites/run", HttpMethod.POST,
 			jsonArray.toString());
 	}
 
 	@Override
-	public void scheduleAsahTask(Long asahTaskId) {
-		_http.exchangeIfUp(
+	public ResponseEntity<String> scheduleAsahTask(Long asahTaskId) {
+		return _http.exchangeResponseEntityIfUp(
 			ServiceConstants.URL_BATCH_CURATOR,
 			String.format("/nanites/schedule/%d", asahTaskId), HttpMethod.POST,
 			null);
 	}
 
 	@Override
-	public void unscheduleAsahTask(Long asahTaskId) {
-		_http.exchangeIfUp(
+	public ResponseEntity<String> unscheduleAsahTask(Long asahTaskId) {
+		return _http.exchangeResponseEntityIfUp(
 			ServiceConstants.URL_BATCH_CURATOR,
 			String.format("/nanites/unschedule/%d", asahTaskId),
 			HttpMethod.POST, null);

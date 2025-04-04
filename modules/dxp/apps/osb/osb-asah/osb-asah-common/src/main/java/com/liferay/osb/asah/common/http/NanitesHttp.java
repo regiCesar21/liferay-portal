@@ -7,19 +7,21 @@ package com.liferay.osb.asah.common.http;
 
 import org.json.JSONArray;
 
+import org.springframework.http.ResponseEntity;
+
 /**
  * @author Shinn Lok
  */
 public interface NanitesHttp {
 
-	public void removeSchedule();
+	public ResponseEntity<String> removeSchedule();
 
-	public void rescheduleNanites();
+	public ResponseEntity<String> rescheduleNanites();
 
-	public void run(JSONArray jsonArray);
+	public ResponseEntity<String> run(JSONArray jsonArray);
 
-	public void scheduleAsahTask(Long asahTaskId);
+	public ResponseEntity<String> scheduleAsahTask(Long asahTaskId);
 
-	public void unscheduleAsahTask(Long asahTaskId);
+	public ResponseEntity<String> unscheduleAsahTask(Long asahTaskId);
 
 }
