@@ -119,6 +119,28 @@ public class Http {
 			_getHttpEntity(body, httpHeaders));
 	}
 
+	public ResponseEntity<String> exchangeResponseEntityIfUp(
+		String url, String path, HttpMethod httpMethod, Object body) {
+
+		try {
+			return exchangeResponseEntity(url, path, httpMethod, body);
+		}
+		catch (ResourceAccessException resourceAccessException) {
+			Throwable throwable = resourceAccessException.getCause();
+
+			if (!(throwable instanceof UnknownHostException)) {
+				throw resourceAccessException;
+			}
+
+			if (_log.isWarnEnabled()) {
+				_log.warn(
+					"Unable to reach " + url + ": " + resourceAccessException);
+			}
+		}
+
+		return null;
+	}
+
 	private void _configureRestTemplate(RestTemplate restTemplate) {
 		List<ClientHttpRequestInterceptor> clientHttpRequestInterceptors =
 			restTemplate.getInterceptors();
