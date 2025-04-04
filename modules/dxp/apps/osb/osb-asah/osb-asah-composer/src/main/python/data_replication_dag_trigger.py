@@ -117,6 +117,18 @@ def create_dag(ac_project_id, ac_project_time_zone_id, dag_id, dag_description):
 			task_id='create_temp_individual_table'
 		)
 
+		postgresql_create_temp_individualactivity_table_job = CloudSQLExecuteQueryOperator(
+			gcp_cloudsql_conn_id='google_cloud_sql',
+			sql= 'CREATE TABLE IF NOT EXISTS {{dag.default_args["ac_project_id"]}}."individualactivity_{{ts}}"(LIKE {{dag.default_args["ac_project_id"]}}.individualactivity INCLUDING CONSTRAINTS INCLUDING DEFAULTS INCLUDING INDEXES);',
+			task_id='create_temp_individualactivity_table'
+		)
+
+		postgresql_create_temp_individualinterest_table_job = CloudSQLExecuteQueryOperator(
+			gcp_cloudsql_conn_id='google_cloud_sql',
+			sql= 'CREATE TABLE IF NOT EXISTS {{dag.default_args["ac_project_id"]}}."individualinterest_{{ts}}"(LIKE {{dag.default_args["ac_project_id"]}}.individualinterest INCLUDING CONSTRAINTS INCLUDING DEFAULTS INCLUDING INDEXES);',
+			task_id='create_temp_individualinterest_table'
+		)
+
 		postgresql_create_temp_individualsegment_table_job = CloudSQLExecuteQueryOperator(
 			gcp_cloudsql_conn_id='google_cloud_sql',
 			sql= 'CREATE TABLE IF NOT EXISTS {{dag.default_args["ac_project_id"]}}."individualsegment_{{ts}}"(LIKE {{dag.default_args["ac_project_id"]}}.individualsegment INCLUDING CONSTRAINTS INCLUDING DEFAULTS INCLUDING INDEXES);',
@@ -141,19 +153,20 @@ def create_dag(ac_project_id, ac_project_time_zone_id, dag_id, dag_description):
 						'individualActivityColumns': 'id,applicationId,channelId,context,eventDate,eventId,individualId,properties',
 						'individualActivityInputDirectory': 'gs://{}-data-replica/{}/{}/individual-activity/*.csv'.format(os.environ['GOOGLE_PROJECT_ID'], ac_project_id, '{{ts}}'),
 						'individualActivityPrimaryKey': 'id',
+						'individualActivityTargetTable': '"individualactivity_{}"'.format('{{ts}}'),
 						'individualColumns': 'id,emailAddress,fields,suppressed',
 						'individualInputDirectory': 'gs://{}-data-replica/{}/{}/individual/*.csv'.format(os.environ['GOOGLE_PROJECT_ID'], ac_project_id, '{{ts}}'),
 						'individualInterestColumns': 'channelId,identityId,individualId,interested,interestScore,keyword,recordedDate',
 						'individualInterestInputDirectory': 'gs://{}-data-replica/{}/{}/individual-interest/*.csv'.format(os.environ['GOOGLE_PROJECT_ID'], ac_project_id, '{{ts}}'),
 						'individualInterestPrimaryKey': 'channelId,identityId,individualId,keyword,recordedDate',
+						'individualInterestTargetTable': '"individualinterest_{}"'.format('{{ts}}'),
 						'individualPrimaryKey': 'id',
 						'individualSegmentColumns': 'createDate,channelId,individualId,modifiedDate,segmentId,status',
 						'individualSegmentInputDirectory': 'gs://{}-data-replica/{}/{}/individual-segment/*.csv'.format(os.environ['GOOGLE_PROJECT_ID'], ac_project_id, '{{ts}}'),
 						'individualSegmentPrimaryKey': 'channelId,individualId,segmentId',
 						'individualSegmentTargetTable': '"individualsegment_{}"'.format('{{ts}}'),
 						'individualTargetTable': '"individual_{}"'.format('{{ts}}'),
-						'projectId': ac_project_id,
-						'tempTableSuffix': '{{ts}}'
+						'projectId': ac_project_id
 					}
 				}
 			},
@@ -163,7 +176,7 @@ def create_dag(ac_project_id, ac_project_time_zone_id, dag_id, dag_description):
 			wait_until_finished=True
 		)
 
-		postgresql_merge_temp_individual_table_job = CloudSQLExecuteQueryOperator(
+		postgresql_merge_temp_tables_job = CloudSQLExecuteQueryOperator(
 			gcp_cloudsql_conn_id='google_cloud_sql',
 			sql= """
 				BEGIN;
@@ -173,15 +186,11 @@ def create_dag(ac_project_id, ac_project_time_zone_id, dag_id, dag_description):
 				INSERT INTO {{dag.default_args["ac_project_id"]}}.individual(id, emailAddress, fields, suppressed)
 					SELECT id, emailAddress, fields, suppressed FROM {{dag.default_args["ac_project_id"]}}."individual_{{ts}}";
 
-				COMMIT;
-			""",
-			task_id='merge_temp_individual_table'
-		)
+				INSERT INTO {{dag.default_args["ac_project_id"]}}.individualactivity
+					SELECT * FROM {{dag.default_args["ac_project_id"]}}."individualactivity_{{ts}}" ON CONFLICT (id) DO NOTHING;
 
-		postgresql_merge_temp_individualsegment_table_job = CloudSQLExecuteQueryOperator(
-			gcp_cloudsql_conn_id='google_cloud_sql',
-			sql= """
-				BEGIN;
+				INSERT INTO {{dag.default_args["ac_project_id"]}}.individualinterest
+					SELECT * FROM {{dag.default_args["ac_project_id"]}}."individualinterest_{{ts}}" ON CONFLICT (channelId, identityId, individualId, keyword, recordedDate) DO NOTHING;
 
 				TRUNCATE TABLE {{dag.default_args["ac_project_id"]}}.individualsegment;
 
@@ -190,13 +199,27 @@ def create_dag(ac_project_id, ac_project_time_zone_id, dag_id, dag_description):
 
 				COMMIT;
 			""",
-			task_id='merge_temp_individualsegment_table'
+			task_id='merge_temp_tables'
 		)
 
 		postgresql_cleanup_temp_individual_table_job = CloudSQLExecuteQueryOperator(
 			gcp_cloudsql_conn_id='google_cloud_sql',
 			sql= 'DROP TABLE IF EXISTS {{dag.default_args["ac_project_id"]}}."individual_{{ts}}";',
 			task_id='cleanup_temp_individual_table',
+			trigger_rule=TriggerRule.ALL_DONE
+		)
+
+		postgresql_cleanup_temp_individualactivity_table_job = CloudSQLExecuteQueryOperator(
+			gcp_cloudsql_conn_id='google_cloud_sql',
+			sql= 'DROP TABLE IF EXISTS {{dag.default_args["ac_project_id"]}}."individualactivity_{{ts}}";',
+			task_id='cleanup_temp_individualactivity_table',
+			trigger_rule=TriggerRule.ALL_DONE
+		)
+
+		postgresql_cleanup_temp_individualinterest_table_job = CloudSQLExecuteQueryOperator(
+			gcp_cloudsql_conn_id='google_cloud_sql',
+			sql= 'DROP TABLE IF EXISTS {{dag.default_args["ac_project_id"]}}."individualinterest_{{ts}}";',
+			task_id='cleanup_temp_individualinterest_table',
 			trigger_rule=TriggerRule.ALL_DONE
 		)
 
@@ -215,10 +238,10 @@ def create_dag(ac_project_id, ac_project_time_zone_id, dag_id, dag_description):
 			get_data_replication_start_date, bq_individual_export_job,
 			bq_individual_activity_export_job,
 			bq_individual_interest_export_job, bq_membership_export_job,
-			[postgresql_create_temp_individual_table_job, postgresql_create_temp_individualsegment_table_job],
+			[postgresql_create_temp_individual_table_job, postgresql_create_temp_individualactivity_table_job, postgresql_create_temp_individualinterest_table_job, postgresql_create_temp_individualsegment_table_job],
 			postgresql_replication_dataflow_trigger,
-			[postgresql_merge_temp_individual_table_job, postgresql_merge_temp_individualsegment_table_job],
-			[postgresql_cleanup_temp_individual_table_job, postgresql_cleanup_temp_individualsegment_table_job],
+			postgresql_merge_temp_tables_job,
+			[postgresql_cleanup_temp_individual_table_job, postgresql_cleanup_temp_individualactivity_table_job, postgresql_cleanup_temp_individualinterest_table_job, postgresql_cleanup_temp_individualsegment_table_job],
 			check_dag_status
 		)
 
