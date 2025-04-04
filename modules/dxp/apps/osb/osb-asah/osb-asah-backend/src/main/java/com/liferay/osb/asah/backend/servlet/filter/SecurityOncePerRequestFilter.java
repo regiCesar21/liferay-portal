@@ -61,8 +61,10 @@ public class SecurityOncePerRequestFilter
 
 		if (_environment.acceptsProfiles(Profiles.of("!prod")) &&
 			StringUtils.equals(httpServletRequest.getMethod(), "POST") &&
-			_functionalRequestURIs.contains(
-				httpServletRequest.getRequestURI()) &&
+			(_functionalRequestURIs.contains(
+				httpServletRequest.getRequestURI()) ||
+			 StringUtils.contains(
+				 httpServletRequest.getRequestURI(), "/nanites/")) &&
 			StringUtils.isNotBlank(_functionalRequestToken) &&
 			_functionalRequestToken.equals(faroBackendSecuritySignature)) {
 
