@@ -217,6 +217,7 @@ jarSources {
 	mustRunAfter buildClay
 	mustRunAfter buildClayFonts
 	mustRunAfter buildClayIcons
+	mustRunAfter buildFontAwesome
 	mustRunAfter buildLexiconIcons
 }
 
