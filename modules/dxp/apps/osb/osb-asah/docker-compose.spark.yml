@@ -3,5 +3,5 @@ services:
         build: ./osb-asah-spark-python
         container_name: osbasahsparkpython
         ports:
-            - "8998:8998"
+            -   "8998:8998"
 version: "2.4"

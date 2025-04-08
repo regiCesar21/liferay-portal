@@ -3,9 +3,9 @@ services:
         build: ./osb-asah-dxp-server/7.4
         container_name: osbasahdxpserver74
         env_file:
-            - common.env
-            - local.env
+            -   common.env
+            -   local.env
         network_mode: bridge
         ports:
-            - "8089:8080"
+            -   "8089:8080"
 version: "2.4"

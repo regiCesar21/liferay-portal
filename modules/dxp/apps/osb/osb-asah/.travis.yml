@@ -1,45 +1,45 @@
 before_cache:
-    - rm -f .gradle/caches/modules-2/modules-2.lock
-    - rm -fr .gradle/caches/6.6.1/
-    - rm -fr .gradle/caches/*/plugin-resolution/
+    -   rm -f .gradle/caches/modules-2/modules-2.lock
+    -   rm -fr .gradle/caches/6.6.1/
+    -   rm -fr .gradle/caches/*/plugin-resolution/
 cache:
     directories:
-        - .gradle/caches/
-        - .gradle/wrapper/
-        - docker_images
+        -   .gradle/caches/
+        -   .gradle/wrapper/
+        -   docker_images
     timeout: 600
 dist: jammy
 env:
     global:
-        - _JAVA_OPTIONS=-Xmx3g
+        -   _JAVA_OPTIONS=-Xmx3g
 install: true
 jdk: openjdk21
 jobs:
     include:
-        - name: "Analysis"
+        -   name: "Analysis"
           script:
-              - ./gradlew checkSourceFormatting pmdMain pmdTest pmdTestIntegration spotbugsMain spotbugsTest spotbugsTestIntegration --configure-on-demand --continue --parallel
-        - name: "Tests"
+              -   ./gradlew checkSourceFormatting pmdMain pmdTest pmdTestIntegration spotbugsMain spotbugsTest spotbugsTestIntegration --configure-on-demand --continue --parallel
+        -   name: "Tests"
           after_script:
-              - docker-compose -f docker-compose.integration-test.yml down
+              -   docker-compose -f docker-compose.integration-test.yml down
           after_success:
-              - test ${TRAVIS_BRANCH} = "7.0.x" &&
+              -   test ${TRAVIS_BRANCH} = "7.0.x" &&
                 test ${TRAVIS_EVENT_TYPE} = "push" &&
                 test ${TRAVIS_REPO_SLUG} = "liferay/com-liferay-osb-asah-private" &&
                 ./gradlew coveralls
           before_script:
-              - docker load -i docker_images/images.tar || true
-              - docker-compose -f docker-compose.integration-test.yml up -d
-              - git diff --name-only ${TRAVIS_COMMIT_RANGE} | grep docker-compose.integration-test.yml || [ ! -f docker_images/images.tar ]; DOCKER_CHANGED=$?
-              - |
+              -   docker load -i docker_images/images.tar || true
+              -   docker-compose -f docker-compose.integration-test.yml up -d
+              -   git diff --name-only ${TRAVIS_COMMIT_RANGE} | grep docker-compose.integration-test.yml || [ ! -f docker_images/images.tar ]; DOCKER_CHANGED=$?
+              -   |
                   if (( ${DOCKER_CHANGED} == 0 )); then
                      docker save $(docker images --format '{{.Repository}}:{{.Tag}}') -o docker_images/images.tar
                   fi
           script:
-              - ./gradlew test --configure-on-demand --continue --parallel
-              - ./gradlew testIntegration --configure-on-demand --continue
-              - ./gradlew jacocoTestCoverageVerification
+              -   ./gradlew test --configure-on-demand --continue --parallel
+              -   ./gradlew testIntegration --configure-on-demand --continue
+              -   ./gradlew jacocoTestCoverageVerification
 language: java
 os: linux
 services:
-    - docker
+    -   docker

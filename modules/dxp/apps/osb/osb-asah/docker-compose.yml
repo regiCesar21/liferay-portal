@@ -5,21 +5,21 @@ services:
         image: marcellustavares/bigquery-emulator:0.3.1-LIFERAY-PATCH-2
         mem_limit: 2g
         ports:
-            - "9050:9050"
-            - "9060:9060"
+            -   "9050:9050"
+            -   "9060:9060"
         volumes:
-            - bigquerydata:/bigquerydata
+            -   bigquerydata:/bigquerydata
     dataflowemulator:
         build: ./devtools/dataflow-emulator
         container_name: dataflowemulator
         env_file:
-            - common.env
-            - local.env
+            -   common.env
+            -   local.env
         ports:
-            - "5013:5005"
-            - "8090:8080"
+            -   "5013:5005"
+            -   "8090:8080"
         volumes:
-            - storage:/storage
+            -   storage:/storage
     dxpcloudemulator:
         build: ./devtools/dxp-cloud-emulator
         container_name: dxpcloudemulator
@@ -29,7 +29,7 @@ services:
             start_period: 10s
             test: [ "CMD", "wget", "--quiet", "--tries=1", "--spider", "http://localhost:3000/status" ]
         ports:
-            - "3001:3000"
+            -   "3001:3000"
     konggateway:
         container_name: konggateway
         environment:
@@ -49,24 +49,24 @@ services:
             timeout: 10s
         image: kong/kong-gateway:3.4.0.0
         ports:
-            - "8001:8001"
-            - "8444:8444"
-            - "8000:8000"
-            - "8002:8002"
-            - "8443:8443"
-            - "9080:9080"
-            - "9081:9081"
+            -   "8001:8001"
+            -   "8444:8444"
+            -   "8000:8000"
+            -   "8002:8002"
+            -   "8443:8443"
+            -   "9080:9080"
+            -   "9081:9081"
         volumes:
-            - ./devtools/kong-gateway/declarative:/usr/local/kong/declarative
+            -   ./devtools/kong-gateway/declarative:/usr/local/kong/declarative
     mariadb:
         container_name: mariadb
         env_file:
-            - mariadb.env
+            -   mariadb.env
         image: mariadb
         ports:
-            - "3306:3306"
+            -   "3306:3306"
         volumes:
-            - mariadbdata:/var/lib/mysql
+            -   mariadbdata:/var/lib/mysql
     osbapiemulator:
         build: ./devtools/osb-api-emulator
         container_name: osbapiemulator
@@ -76,7 +76,7 @@ services:
             start_period: 10s
             test: [ "CMD", "wget", "--quiet", "--tries=1", "--spider", "http://localhost:3000/status" ]
         ports:
-            - "3002:3000"
+            -   "3002:3000"
     osbasahbackend:
         build:
             args:
@@ -85,24 +85,24 @@ services:
             context: ./osb-asah-backend
         container_name: osbasahbackend
         depends_on:
-            - konggateway
-            - osbasahupgrade
+            -   konggateway
+            -   osbasahupgrade
         env_file:
-            - common.env
-            - local.env
+            -   common.env
+            -   local.env
         environment:
-            - JAVA_OPTS=-Xmx256m
+            -   JAVA_OPTS=-Xmx256m
         healthcheck:
             interval: 10s
             retries: 30
             start_period: 120s
             test: ["CMD", "wget", "--quiet", "--tries=1", "--spider", "http://localhost:8080/context"]
         ports:
-            - "5010:5005"
-            - "8086:8080"
+            -   "5010:5005"
+            -   "8086:8080"
         volumes:
-            - export:/export
-            - temp:/temp
+            -   export:/export
+            -   temp:/temp
     osbasahbatchcurator:
         build:
             args:
@@ -111,24 +111,24 @@ services:
             context: ./osb-asah-batch-curator
         container_name: osbasahbatchcurator
         depends_on:
-            - osbasahupgrade
+            -   osbasahupgrade
         env_file:
-            - common.env
-            - local.env
+            -   common.env
+            -   local.env
         environment:
-            - JAVA_OPTS=-Xmx512m
+            -   JAVA_OPTS=-Xmx512m
         healthcheck:
             interval: 10s
             retries: 30
             start_period: 120s
             test: ["CMD", "wget", "--quiet", "--tries=1", "--spider", "http://localhost:8080/context"]
         ports:
-            - "5011:5005"
-            - "8087:8080"
+            -   "5011:5005"
+            -   "8087:8080"
         volumes:
-            - export:/export
-            - storage:/storage
-            - temp:/temp
+            -   export:/export
+            -   storage:/storage
+            -   temp:/temp
     osbasahpublisher:
         build:
             args:
@@ -137,29 +137,29 @@ services:
             context: ./osb-asah-publisher
         container_name: osbasahpublisher
         depends_on:
-            - konggateway
-            - osbasahupgrade
-            - pubsubemulator
+            -   konggateway
+            -   osbasahupgrade
+            -   pubsubemulator
         env_file:
-            - common.env
-            - local.env
+            -   common.env
+            -   local.env
         environment:
-            - JAVA_OPTS=-Xms96m -Xmx96m
+            -   JAVA_OPTS=-Xms96m -Xmx96m
         healthcheck:
             interval: 10s
             retries: 30
             start_period: 120s
             test: ["CMD", "wget", "--quiet", "--tries=1", "--spider", "http://localhost:8080/context"]
         ports:
-            - "5008:5005"
-            - "8084:8080"
+            -   "5008:5005"
+            -   "8084:8080"
         volumes:
-            - storage:/storage
+            -   storage:/storage
     osbasahredis:
         build: ./devtools/osb-asah-redis
         container_name: osbasahredis
         ports:
-            - "6379:6379"
+            -   "6379:6379"
     osbasahstreamcurator:
         build:
             args:
@@ -168,21 +168,21 @@ services:
             context: ./osb-asah-stream-curator
         container_name: osbasahstreamcurator
         depends_on:
-            - osbasahupgrade
-            - pubsubemulator
+            -   osbasahupgrade
+            -   pubsubemulator
         env_file:
-            - common.env
-            - local.env
+            -   common.env
+            -   local.env
         environment:
-            - JAVA_OPTS=-Xms96m -Xmx1g
+            -   JAVA_OPTS=-Xms96m -Xmx1g
         healthcheck:
             interval: 10s
             retries: 30
             start_period: 120s
             test: ["CMD", "wget", "--quiet", "--tries=1", "--spider", "http://localhost:8080/context"]
         ports:
-            - "5006:5005"
-            - "8082:8080"
+            -   "5006:5005"
+            -   "8082:8080"
     osbasahupgrade:
         build:
             args:
@@ -191,44 +191,44 @@ services:
             context: ./osb-asah-upgrade
         container_name: osbasahupgrade
         depends_on:
-             - osbasahredis
+             -   osbasahredis
         env_file:
-            - common.env
-            - local.env
+            -   common.env
+            -   local.env
         environment:
-            - JAVA_OPTS=-Xmx256m
+            -   JAVA_OPTS=-Xmx256m
     osbfarofrontend:
         container_name: faro
         depends_on:
-            - mariadb
+            -   mariadb
         environment:
-            - FARO_DXP_CLOUD_API_URL=http://dxpcloudemulator:3000/projects/
-            - FARO_WEDEPLOY_EMAIL_ADDRESS=test@liferay.com
-            - FARO_WEDEPLOY_PASSWORD=test
-            - OSB_ASAH_LOCAL_CLUSTER_URL=http://{service}:8080
-            - OSB_API_URL=http://osbapiemulator:3000
-            - OSB_ASAH_SECURITY_TOKEN=2FKFRgScjV5jOuBR9x0Vu1FGYMtxtmKK
+            -   FARO_DXP_CLOUD_API_URL=http://dxpcloudemulator:3000/projects/
+            -   FARO_WEDEPLOY_EMAIL_ADDRESS=test@liferay.com
+            -   FARO_WEDEPLOY_PASSWORD=test
+            -   OSB_ASAH_LOCAL_CLUSTER_URL=http://{service}:8080
+            -   OSB_API_URL=http://osbapiemulator:3000
+            -   OSB_ASAH_SECURITY_TOKEN=2FKFRgScjV5jOuBR9x0Vu1FGYMtxtmKK
         image: liferay/com-liferay-osb-faro:master
         ports:
-            - "11311:11311"
-            - "6000:8000"
-            - "8080:8080"
+            -   "11311:11311"
+            -   "6000:8000"
+            -   "8080:8080"
         volumes:
-            - faro:/opt/liferay/data
+            -   faro:/opt/liferay/data
     postgresql:
         container_name: postgresql
         env_file:
-            - postgresql.env
+            -   postgresql.env
         image: postgres:15.4
         ports:
-            - "5432:5432"
+            -   "5432:5432"
         volumes:
-            - psqldata:/var/lib/postgresql/data
+            -   psqldata:/var/lib/postgresql/data
     pubsubemulator:
         build: ./devtools/pubsub-emulator
         container_name: pubsubemulator
         ports:
-            - "8095:8095"
+            -   "8095:8095"
 version: "2.4"
 volumes:
     backup:

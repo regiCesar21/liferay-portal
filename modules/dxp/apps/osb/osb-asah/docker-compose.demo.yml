@@ -2,29 +2,29 @@ services:
     analytics-backend:
         container_name: analytics-backend
         depends_on:
-            - analytics-elasticsearch
+            -   analytics-elasticsearch
         environment:
-            - JAVA_OPTS=-Xms2048m -Xmx2560m -XX:MaxMetaspaceSize=512m # increase Xmx in case of out of memory
-            - LCP_ENGINE_ELASTICSEARCH_SERVER_IP=analytics-elasticsearch
-            - LCP_PROJECT_ID=local
-            - OSB_ASAH_BACKEND_URL=http://localhost:8082
-            - OSB_ASAH_PUBLISHER_URL=http://localhost:8082
-            - OSB_ASAH_SECURITY_TOKEN=2FKFRgScjV5jOuBR9x0Vu1FGYMtxtmKK
-            - OSB_FARO_FRONTEND_URL=http://analytics-frontend:8080
-            - SPRING_PROFILES_ACTIVE=dev
+            -   JAVA_OPTS=-Xms2048m -Xmx2560m -XX:MaxMetaspaceSize=512m # increase Xmx in case of out of memory
+            -   LCP_ENGINE_ELASTICSEARCH_SERVER_IP=analytics-elasticsearch
+            -   LCP_PROJECT_ID=local
+            -   OSB_ASAH_BACKEND_URL=http://localhost:8082
+            -   OSB_ASAH_PUBLISHER_URL=http://localhost:8082
+            -   OSB_ASAH_SECURITY_TOKEN=2FKFRgScjV5jOuBR9x0Vu1FGYMtxtmKK
+            -   OSB_FARO_FRONTEND_URL=http://analytics-frontend:8080
+            -   SPRING_PROFILES_ACTIVE=dev
         image: liferay/com-liferay-osb-asah:latest-demo
         ports:
-            - "8082:8080"
+            -   "8082:8080"
         volumes:
-            - export:/export
-            - temp:/temp
+            -   export:/export
+            -   temp:/temp
     analytics-elasticsearch:
         container_name: analytics-elasticsearch
         environment:
-            - ES_JAVA_OPTS=-Xms512m -Xmx512m
-            - discovery.type=single-node
-            - http.cors.allow-origin=*
-            - http.cors.enabled=true
+            -   ES_JAVA_OPTS=-Xms512m -Xmx512m
+            -   discovery.type=single-node
+            -   http.cors.allow-origin=*
+            -   http.cors.enabled=true
         healthcheck:
             interval: 10s
             retries: 3
@@ -33,23 +33,23 @@ services:
             timeout: 10s
         image: docker.elastic.co/elasticsearch/elasticsearch-oss:7.9.2
         ports:
-            - "9200:9200"
+            -   "9200:9200"
         volumes:
-            - analytics-data1:/usr/share/elasticsearch/data
+            -   analytics-data1:/usr/share/elasticsearch/data
     analytics-frontend:
         container_name: analytics-frontend
         environment:
-            - FARO_DEFAULT_WE_DEPLOY_KEY=local.lfr.cloud
-            - FARO_URL=http://localhost:8081
-            - OSB_ASAH_BACKEND_URL=http://analytics-backend:8080
-            - OSB_ASAH_PUBLISHER_URL=http://analytics-backend:8080
-            - OSB_ASAH_SECURITY_TOKEN=2FKFRgScjV5jOuBR9x0Vu1FGYMtxtmKK
-            - OSB_ASAH_TOKEN=2FKFRgScjV5jOuBR9x0Vu1FGYMtxtmKK
+            -   FARO_DEFAULT_WE_DEPLOY_KEY=local.lfr.cloud
+            -   FARO_URL=http://localhost:8081
+            -   OSB_ASAH_BACKEND_URL=http://analytics-backend:8080
+            -   OSB_ASAH_PUBLISHER_URL=http://analytics-backend:8080
+            -   OSB_ASAH_SECURITY_TOKEN=2FKFRgScjV5jOuBR9x0Vu1FGYMtxtmKK
+            -   OSB_ASAH_TOKEN=2FKFRgScjV5jOuBR9x0Vu1FGYMtxtmKK
         image: liferay/com-liferay-osb-faro:latest-demo
         ports:
-            - "8081:8080"
+            -   "8081:8080"
         volumes:
-            - analytics-data2:/opt/liferay/data
+            -   analytics-data2:/opt/liferay/data
 version: "2.4"
 volumes:
     analytics-data1:

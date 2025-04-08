@@ -1,17 +1,17 @@
 scrape_configs:
-    - job_name: 'osbasahbackend'
+    -   job_name: 'osbasahbackend'
       metrics_path: /actuator/prometheus
       static_configs:
-          - targets: ['osbasahbackend:8080']
-    - job_name: 'osbasahbatchcurator'
+          -   targets: ['osbasahbackend:8080']
+    -   job_name: 'osbasahbatchcurator'
       metrics_path: /actuator/prometheus
       static_configs:
-          - targets: ['osbasahbatchcurator:8080']
-    - job_name: 'osbasahpublisher'
+          -   targets: ['osbasahbatchcurator:8080']
+    -   job_name: 'osbasahpublisher'
       metrics_path: /actuator/prometheus
       static_configs:
-          - targets: ['osbasahpublisher:8080']
-    - job_name: 'osbasahstreamcurator'
+          -   targets: ['osbasahpublisher:8080']
+    -   job_name: 'osbasahstreamcurator'
       metrics_path: /actuator/prometheus
       static_configs:
-          - targets: ['osbasahstreamcurator:8080']
+          -   targets: ['osbasahstreamcurator:8080']

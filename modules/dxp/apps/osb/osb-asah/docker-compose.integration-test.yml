@@ -5,28 +5,28 @@ services:
         image: marcellustavares/bigquery-emulator:0.3.1-LIFERAY-PATCH-2
         mem_limit: 4g
         ports:
-            - "9050:9050"
-            - "9060:9060"
+            -   "9050:9050"
+            -   "9060:9060"
         restart: always
     test_postgresql:
         container_name: test_postgresql
         env_file:
-            - postgresql.env
+            -   postgresql.env
         image: postgres:15.4
         mem_limit: 2g
         ports:
-            - "5432:5432"
+            -   "5432:5432"
         restart: always
     test_pubsubemulator:
         build: ./devtools/pubsub-emulator
         container_name: test_pubsubemulator
         mem_limit: 1g
         ports:
-            - "8095:8095"
+            -   "8095:8095"
         restart: always
     test_redis:
         build: ./devtools/osb-asah-redis
         container_name: test_redis
         ports:
-            - "6379:6379"
+            -   "6379:6379"
 version: "2.3"

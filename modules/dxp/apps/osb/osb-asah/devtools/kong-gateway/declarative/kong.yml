@@ -1,17 +1,17 @@
 _format_version: "3.0"
 plugins:
-  - config:
+  -   config:
       cache_control: false
       cache_ttl: 30
       content_type:
-        - application/json; charset=utf-8
+        -   application/json; charset=utf-8
       ignore_uri_case: false
       memory:
         dictionary_name: kong_db_cache
       request_method:
-        - GET
+        -   GET
       response_code:
-        - 200
+        -   200
       storage_ttl: null
       strategy: memory
       vary_headers: null
@@ -19,9 +19,9 @@ plugins:
     enabled: true
     name: proxy-cache
     protocols:
-      - http
+      -   http
 services:
-  - connect_timeout: 60000
+  -   connect_timeout: 60000
     enabled: true
     host: backend.ac.dev.internal
     name: ac_backend_service
@@ -30,20 +30,20 @@ services:
     read_timeout: 60000
     retries: 5
     routes:
-      - hosts:
-          - backend.ac.dev.internal
+      -   hosts:
+          -   backend.ac.dev.internal
         https_redirect_status_code: 426
         name: ac_backend_route
         path_handling: v0
         preserve_host: true
         protocols:
-          - http
+          -   http
         regex_priority: 0
         request_buffering: true
         response_buffering: true
         strip_path: true
     write_timeout: 60000
-  - connect_timeout: 60000
+  -   connect_timeout: 60000
     enabled: true
     host: publisher.ac.dev.internal
     name: ac_publisher_service
@@ -52,14 +52,14 @@ services:
     read_timeout: 60000
     retries: 5
     routes:
-      - hosts:
-          - publisher.ac.dev.internal
+      -   hosts:
+          -   publisher.ac.dev.internal
         https_redirect_status_code: 426
         name: ac_publisher_route
         path_handling: v0
         preserve_host: true
         protocols:
-          - http
+          -   http
         regex_priority: 0
         request_buffering: true
         response_buffering: true

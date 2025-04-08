@@ -1,6 +1,6 @@
 apiVersion: 1
 providers:
-    - disableDeletion: false
+    -   disableDeletion: false
       folder: 'osbasah'
       name: 'default'
       options:

@@ -1,6 +1,6 @@
 apiVersion: 1
 datasources:
-    - access: proxy
+    -   access: proxy
       editable: true
       isDefault: true
       jsonData:
