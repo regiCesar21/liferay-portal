@@ -1,0 +1,2 @@
+ALTER TABLE IndividualInterest ADD CONSTRAINT individualinterest_pkey PRIMARY KEY (channelId, identityId, individualId, keyword, recordedDate);
+ALTER TABLE IndividualSegment ADD CONSTRAINT individualsegment_pkey PRIMARY KEY (channelId, individualId, segmentId);
