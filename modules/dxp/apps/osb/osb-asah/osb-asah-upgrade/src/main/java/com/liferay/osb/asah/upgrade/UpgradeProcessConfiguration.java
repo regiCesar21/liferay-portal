@@ -5,6 +5,7 @@
 
 package com.liferay.osb.asah.upgrade;
 
+import com.liferay.osb.asah.upgrade.v4_12_0.BigQuerySchemaUpgradeStep;
 import com.liferay.osb.asah.upgrade.v4_12_0.DataControlTaskUpgradeStep;
 import com.liferay.osb.asah.upgrade.v4_12_0.DataReplicationTablePrimaryKeyUpgradeStep;
 import com.liferay.osb.asah.upgrade.v4_12_0.PostgreSQLUpgradeStep;
@@ -25,6 +26,8 @@ public class UpgradeProcessConfiguration {
 
 		upgradeProcess.addUpgradeSteps(
 			"4.0.43", "4.0.44", _postgreSQLUpgradeStep);
+		upgradeProcess.addUpgradeSteps(
+			"4.0.46", "4.0.47", _bigQuerySchemaUpgradeStep);
 
 		upgradeProcess.addUpgradeSteps(
 			"4.0.44", "4.0.45", _dataControlTaskUpgradeStep);
@@ -34,6 +37,9 @@ public class UpgradeProcessConfiguration {
 
 		return upgradeProcess;
 	}
+
+	@Autowired
+	private BigQuerySchemaUpgradeStep _bigQuerySchemaUpgradeStep;
 
 	@Autowired
 	private DataControlTaskUpgradeStep _dataControlTaskUpgradeStep;

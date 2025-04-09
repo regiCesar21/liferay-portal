@@ -1,0 +1,60 @@
+/**
+ * SPDX-FileCopyrightText: (c) 2025 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
+ */
+
+package com.liferay.osb.asah.upgrade.v4_12_0;
+
+import com.liferay.osb.asah.common.bigquery.BigQuerySchemaManager;
+import com.liferay.osb.asah.common.repository.executor.QueryExecutor;
+import com.liferay.osb.asah.common.spring.resource.ResourceUtil;
+import com.liferay.osb.asah.common.util.ProjectIdThreadLocal;
+import com.liferay.osb.asah.upgrade.UpgradeStep;
+
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
+
+/**
+ * @author Caio Pinheiro
+ */
+@Component
+public class BigQuerySchemaUpgradeStep implements UpgradeStep {
+
+	@Override
+	public void upgrade(String version) throws Exception {
+		_bigQuerySchemaManager.createFunction(
+			"documentLibraryHourly", ProjectIdThreadLocal.getProjectId());
+		_bigQuerySchemaManager.createFunction(
+			"pageHourly", ProjectIdThreadLocal.getProjectId());
+		_bigQuerySchemaManager.createOrReplaceView(
+			ProjectIdThreadLocal.getProjectId(), "asset");
+		_bigQuerySchemaManager.createOrReplaceView(
+			ProjectIdThreadLocal.getProjectId(), "documentlibraryhourly");
+		_bigQuerySchemaManager.createOrReplaceView(
+			ProjectIdThreadLocal.getProjectId(), "pagehourly");
+
+		_queryExecutor.queryExecute(
+			ResourceUtil.readResourceToString(
+				"v4_12_0/big_query_upgrade_schema.sql"));
+		_queryExecutor.queryExecute(
+			ResourceUtil.readResourceToString(
+				"v4_12_0/event_definition_upgrade.sql"));
+
+		if (_log.isInfoEnabled()) {
+			_log.info("the schemas were updated successfully");
+		}
+	}
+
+	private static final Log _log = LogFactory.getLog(
+		BigQuerySchemaUpgradeStep.class);
+
+	@Autowired
+	private BigQuerySchemaManager _bigQuerySchemaManager;
+
+	@Autowired
+	private QueryExecutor _queryExecutor;
+
+}
