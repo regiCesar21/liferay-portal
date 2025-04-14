@@ -25,6 +25,7 @@ import com.liferay.osb.asah.test.util.annotation.SQLResource;
 import com.liferay.osb.asah.test.util.configuration.JDBCTestConfiguration;
 import com.liferay.osb.asah.test.util.spring.OSBAsahTestExecutionListenersContext;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.ZoneOffset;
 
@@ -79,7 +80,7 @@ public class BQEventDogTest
 		BQEvent bqEvent3 = new BQEvent();
 
 		bqEvent3.setApplicationId("Document");
-		bqEvent3.setEventId("documentDownloaded");
+		bqEvent3.setEventId("documentPreviewed");
 		bqEvent3.setEventDate(date);
 
 		_bqEventRepository.insert(bqEvent3);
@@ -97,6 +98,40 @@ public class BQEventDogTest
 			_bqEventDog.countBQEvents(
 				"Page", null, null, null, endLocalDateTime, "pageViewed",
 				endLocalDateTime.minusDays(1)));
+	}
+
+	@Test
+	public void testCountBQEventsWithMultipleEventIds() {
+		Date date = DateUtil.newDate();
+
+		BQEvent bqEvent1 = new BQEvent();
+
+		bqEvent1.setApplicationId("Document");
+		bqEvent1.setEventId("documentPreviewed");
+		bqEvent1.setEventDate(date);
+
+		_bqEventRepository.insert(bqEvent1);
+
+		BQEvent bqEvent2 = new BQEvent();
+
+		bqEvent2.setApplicationId("Document");
+		bqEvent2.setEventId("documentImpressionMade");
+		bqEvent2.setEventDate(date);
+
+		_bqEventRepository.insert(bqEvent2);
+
+		LocalDate endLocalDate = LocalDate.now(ZoneOffset.UTC);
+
+		List<String> eventIds = new ArrayList<>();
+
+		eventIds.add("documentPreviewed");
+		eventIds.add("documentImpressionMade");
+
+		Assertions.assertEquals(
+			2,
+			_bqEventDog.countBQEvents(
+				"Document", null, null, null, eventIds, endLocalDate,
+				endLocalDate.minusDays(1)));
 	}
 
 	@BQSQLResource(resourcePath = "test_get_recent_assets_bq.sql")
