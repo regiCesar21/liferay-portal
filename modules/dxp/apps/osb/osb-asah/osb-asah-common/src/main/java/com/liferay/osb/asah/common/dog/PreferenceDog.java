@@ -62,7 +62,7 @@ public class PreferenceDog {
 
 		preference = _preferenceRepository.save(preference);
 
-		if (_environment.acceptsProfiles(Profiles.of("prod")) &&
+		if (_environment.acceptsProfiles(Profiles.of("prod", "staging")) &&
 			StringUtils.equals(id, "data-retention-period")) {
 
 			_bigQuerySchemaManager.updateTablesExpiration(

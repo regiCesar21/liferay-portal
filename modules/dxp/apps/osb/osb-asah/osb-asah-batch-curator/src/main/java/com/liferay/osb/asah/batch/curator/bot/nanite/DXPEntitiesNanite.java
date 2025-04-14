@@ -291,7 +291,7 @@ public class DXPEntitiesNanite extends BaseNanite {
 			String uploadType)
 		throws Exception {
 
-		if (_environment.acceptsProfiles(Profiles.of("prod"))) {
+		if (_environment.acceptsProfiles(Profiles.of("prod", "staging"))) {
 			String folderName = String.format(
 				"%s/%s/%s", dataSourceId, _CLASS_NAME_DXP_ENTITY, uploadType);
 

@@ -91,7 +91,7 @@ public class BQMembershipIndividualRepositoryImpl
 	public void updateMembershipIndividuals() {
 		Select select = _getMembershipIndividualsSelect(null);
 
-		if (_environment.acceptsProfiles(Profiles.of("prod"))) {
+		if (_environment.acceptsProfiles(Profiles.of("prod", "staging"))) {
 			_queryExecutor.queryExecute(
 				StringUtils.replaceEach(
 					_membershipIndividualMergeStatement,

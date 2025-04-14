@@ -653,7 +653,7 @@ public class DataControlTaskDog {
 					StringUtils.wrap(DigestUtils.sha256Hex(emailAddress), "'"));
 			}
 
-			if (_environment.acceptsProfiles(Profiles.of("prod"))) {
+			if (_environment.acceptsProfiles(Profiles.of("prod", "staging"))) {
 				_bigQueryQueryExecutor.queryExecute(
 					StringUtils.replaceEach(
 						ResourceUtil.readResourceToString(

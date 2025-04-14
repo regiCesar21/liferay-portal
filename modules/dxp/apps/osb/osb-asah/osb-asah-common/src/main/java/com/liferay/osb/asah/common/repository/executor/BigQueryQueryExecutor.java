@@ -54,6 +54,7 @@ import org.jooq.SelectFinalStep;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.env.Environment;
+import org.springframework.core.env.Profiles;
 import org.springframework.stereotype.Component;
 
 /**
@@ -239,7 +240,7 @@ public class BigQueryQueryExecutor implements QueryExecutor {
 	private String _getBigQueryTableName(String tableName) {
 		BigQueryOptions bigQueryOptions = _bigQuery.getOptions();
 
-		if (_environment.acceptsProfiles("prod")) {
+		if (_environment.acceptsProfiles(Profiles.of("prod", "staging"))) {
 			if (tableName.equals("BQIdentityActivity")) {
 				return "`" + bigQueryOptions.getProjectId() + "." +
 					ProjectIdThreadLocal.getProjectId() +

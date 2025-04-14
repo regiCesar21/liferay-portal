@@ -165,7 +165,7 @@ public class BigQuerySchemaManagerImpl implements BigQuerySchemaManager {
 					dataset.getDatasetId(), projectId, entry.getKey())
 			);
 
-			if (_environment.acceptsProfiles("prod")) {
+			if (_environment.acceptsProfiles(Profiles.of("prod", "staging"))) {
 				for (String functionName : _functionsJSONObject.keySet()) {
 					JSONObject jsonObject = _functionsJSONObject.getJSONObject(
 						functionName);
@@ -437,7 +437,7 @@ public class BigQuerySchemaManagerImpl implements BigQuerySchemaManager {
 				});
 
 			if (materialized &&
-				_environment.acceptsProfiles(Profiles.of("prod"))) {
+				_environment.acceptsProfiles(Profiles.of("prod", "staging"))) {
 
 				tableDefinition = MaterializedViewDefinition.newBuilder(
 					translatedQuery
@@ -569,8 +569,8 @@ public class BigQuerySchemaManagerImpl implements BigQuerySchemaManager {
 
 	private boolean _validateEnvironment(JSONObject jsonObject) {
 		if (jsonObject.has("production") &&
-			(_environment.acceptsProfiles("prod") != jsonObject.getBoolean(
-				"production"))) {
+			(_environment.acceptsProfiles(Profiles.of("prod", "staging")) !=
+				jsonObject.getBoolean("production"))) {
 
 			return false;
 		}

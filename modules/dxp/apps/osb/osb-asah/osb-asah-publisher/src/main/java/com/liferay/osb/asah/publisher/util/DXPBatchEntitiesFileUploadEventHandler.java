@@ -46,7 +46,7 @@ public class DXPBatchEntitiesFileUploadEventHandler {
 
 		String fileName = uploadDateString + "." + fileSuffix;
 
-		if (_environment.acceptsProfiles(Profiles.of("prod"))) {
+		if (_environment.acceptsProfiles(Profiles.of("prod", "staging"))) {
 			String bucketName =
 				_googleCloudConfiguration.getDXPEntitiesBucketName();
 
