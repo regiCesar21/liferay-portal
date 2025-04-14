@@ -48,6 +48,12 @@ public interface CustomBQEventRepository {
 
 	public Integer countBQEvents(
 		String applicationId, @Nullable String assetId,
+		@Nullable Long channelId, @Nullable Long dataSourceId,
+		List<String> eventIds, LocalDateTime rangeEndLocalDateTime,
+		LocalDateTime rangeStartLocalDateTime);
+
+	public Integer countBQEvents(
+		String applicationId, @Nullable String assetId,
 		@Nullable Long channelId, @Nullable Long dataSourceId, String eventId,
 		@Nullable LocalDateTime rangeEndLocalDateTime,
 		@Nullable LocalDateTime rangeStartLocalDateTime);

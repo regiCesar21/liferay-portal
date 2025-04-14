@@ -131,6 +131,85 @@ public class BQEventRepositoryImpl
 	@Override
 	public Integer countBQEvents(
 		String applicationId, @Nullable String assetId,
+		@Nullable Long channelId, @Nullable Long dataSourceId,
+		List<String> eventIds, @Nullable LocalDateTime rangeEndLocalDateTime,
+		@Nullable LocalDateTime rangeStartLocalDateTime) {
+
+		SelectSelectStep<Record1<Integer>> selectSelectStep =
+			_dslContext.selectCount();
+
+		List<Condition> conditions = new ArrayList<>();
+
+		conditions.add(
+			DSL.field(
+				"applicationId"
+			).eq(
+				applicationId
+			));
+
+		if (assetId != null) {
+			conditions.add(
+				DSL.field(
+					"assetId"
+				).eq(
+					assetId
+				));
+		}
+
+		if (channelId != null) {
+			conditions.add(
+				DSL.field(
+					"channelId"
+				).eq(
+					channelId
+				));
+		}
+
+		if (dataSourceId != null) {
+			conditions.add(
+				DSL.field(
+					"dataSourceId"
+				).eq(
+					dataSourceId
+				));
+		}
+
+		conditions.add(
+			DSL.field(
+				"eventId"
+			).in(
+				eventIds
+			));
+
+		if (EndLocalDate != null) {
+			conditions.add(
+				DSL.field(
+					"eventDate"
+				).lt(
+					EndLocalDate
+				));
+		}
+
+		if (StartLocalDate != null) {
+			conditions.add(
+				DSL.field(
+					"eventDate"
+				).ge(
+					StartLocalDate
+				));
+		}
+
+		return (int)_queryExecutor.queryForLong(
+			selectSelectStep.from(
+				"BQEvent"
+			).where(
+				conditions
+			));
+	}
+
+	@Override
+	public Integer countBQEvents(
+		String applicationId, @Nullable String assetId,
 		@Nullable Long channelId, @Nullable Long dataSourceId, String eventId,
 		@Nullable LocalDateTime rangeEndLocalDateTime,
 		@Nullable LocalDateTime rangeStartLocalDateTime) {

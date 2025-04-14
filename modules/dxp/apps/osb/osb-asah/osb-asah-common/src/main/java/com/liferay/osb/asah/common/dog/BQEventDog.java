@@ -120,6 +120,18 @@ public class BQEventDog {
 	public Integer countBQEvents(
 		String applicationId, @Nullable String assetId,
 		@Nullable Long channelId, @Nullable Long dataSourceId,
+		List<String> eventIds, LocalDate endLocalDate,
+		LocalDate startLocalDate) {
+
+		return _bqEventRepository.countBQEvents(
+			applicationId, assetId, channelId, dataSourceId, eventIds,
+			endLocalDate.atTime(LocalTime.MAX),
+			startLocalDate.atTime(LocalTime.MIN));
+	}
+
+	public Integer countBQEvents(
+		String applicationId, @Nullable String assetId,
+		@Nullable Long channelId, @Nullable Long dataSourceId,
 		LocalDate endLocalDate, String eventId, LocalDate startLocalDate) {
 
 		return _bqEventRepository.countBQEvents(
