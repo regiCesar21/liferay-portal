@@ -29,15 +29,12 @@ public class UpgradeProcessConfiguration {
 		upgradeProcess.addUpgradeSteps(
 				"4.0.44", "4.0.45", _dataControlTaskUpgradeStep);
 		upgradeProcess.addUpgradeSteps(
+				"4.0.45", "4.0.46", _dataReplicationTablePrimaryKeyUpgradeStep);
+		upgradeProcess.addUpgradeSteps(
 				"4.0.46", "4.0.47", _postgreSQLUpgradeStep);
 		upgradeProcess.addUpgradeSteps(
 				"4.0.47", "4.0.48", _bigQuerySchemaUpgradeStep);
 
-		upgradeProcess.addUpgradeSteps(
-			"4.0.44", "4.0.45", _dataControlTaskUpgradeStep);
-
-		upgradeProcess.addUpgradeSteps(
-			"4.0.45", "4.0.46", _dataReplicationTablePrimaryKeyUpgradeStep);
 
 		return upgradeProcess;
 	}
@@ -52,9 +49,6 @@ public class UpgradeProcessConfiguration {
 	private DataReplicationTablePrimaryKeyUpgradeStep
 		_dataReplicationTablePrimaryKeyUpgradeStep;
 
-	private DataControlTaskUpgradeStep _dataControlTaskUpgradeStep;
 	@Autowired
 	private PostgreSQLUpgradeStep _postgreSQLUpgradeStep;
-	@Autowired
-	private BigQuerySchemaUpgradeStep _bigQuerySchemaUpgradeStep;
 }

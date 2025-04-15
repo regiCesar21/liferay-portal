@@ -181,21 +181,21 @@ public class BQEventRepositoryImpl
 				eventIds
 			));
 
-		if (EndLocalDate != null) {
+		if (rangeEndLocalDateTime != null) {
 			conditions.add(
 				DSL.field(
 					"eventDate"
 				).lt(
-					EndLocalDate
+					rangeEndLocalDateTime
 				));
 		}
 
-		if (StartLocalDate != null) {
+		if (rangeStartLocalDateTime != null) {
 			conditions.add(
 				DSL.field(
 					"eventDate"
 				).ge(
-					StartLocalDate
+					rangeStartLocalDateTime
 				));
 		}
 
