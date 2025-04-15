@@ -25,16 +25,15 @@ public class UpgradeProcessConfiguration {
 		UpgradeProcess upgradeProcess = new UpgradeProcess();
 
 		upgradeProcess.addUpgradeSteps(
-				"4.0.43", "4.0.44", _postgreSQLUpgradeStep);
+			"4.0.43", "4.0.44", _postgreSQLUpgradeStep);
 		upgradeProcess.addUpgradeSteps(
-				"4.0.44", "4.0.45", _dataControlTaskUpgradeStep);
+			"4.0.44", "4.0.45", _dataControlTaskUpgradeStep);
 		upgradeProcess.addUpgradeSteps(
-				"4.0.45", "4.0.46", _dataReplicationTablePrimaryKeyUpgradeStep);
+			"4.0.45", "4.0.46", _dataReplicationTablePrimaryKeyUpgradeStep);
 		upgradeProcess.addUpgradeSteps(
-				"4.0.46", "4.0.47", _postgreSQLUpgradeStep);
+			"4.0.46", "4.0.47", _postgreSQLUpgradeStep);
 		upgradeProcess.addUpgradeSteps(
-				"4.0.47", "4.0.48", _bigQuerySchemaUpgradeStep);
-
+			"4.0.47", "4.0.48", _bigQuerySchemaUpgradeStep);
 
 		return upgradeProcess;
 	}
@@ -51,4 +50,5 @@ public class UpgradeProcessConfiguration {
 
 	@Autowired
 	private PostgreSQLUpgradeStep _postgreSQLUpgradeStep;
+
 }
