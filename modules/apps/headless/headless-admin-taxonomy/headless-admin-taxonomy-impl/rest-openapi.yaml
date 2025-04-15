@@ -84,7 +84,7 @@ components:
                     type: string
                 creator:
                     allOf:
-                        - $ref: "#/components/schemas/Creator"
+                        -   $ref: "#/components/schemas/Creator"
                     description:
                         The keyword's creator.
                     readOnly: true
@@ -122,7 +122,7 @@ components:
                     readOnly: true
                     type: integer
             required:
-                - name
+                -   name
             type: object
         TaxonomyCategory:
             description:
@@ -145,7 +145,7 @@ components:
                     type: array
                 creator:
                     allOf:
-                        - $ref: "#/components/schemas/Creator"
+                        -   $ref: "#/components/schemas/Creator"
                     description:
                         The category's creator.
                     readOnly: true
@@ -221,7 +221,7 @@ components:
                     type: string
                     writeOnly: true
             required:
-                - name
+                -   name
             type: object
         TaxonomyVocabulary:
             description:
@@ -253,7 +253,7 @@ components:
                     type: array
                 creator:
                     allOf:
-                        - $ref: "#/components/schemas/Creator"
+                        -   $ref: "#/components/schemas/Creator"
                     description:
                         The vocabulary's creator.
                     readOnly: true
@@ -309,7 +309,7 @@ components:
                     type: string
                     writeOnly: true
             required:
-                - name
+                -   name
             type: object
 info:
     description:
@@ -326,32 +326,32 @@ paths:
         get:
             operationId: getAssetLibraryKeywordsPage
             parameters:
-                - in: path
-                  name: assetLibraryId
-                  required: true
-                  schema:
-                      format: int64
-                      type: integer
-                - in: query
-                  name: filter
-                  schema:
-                      type: string
-                - in: query
-                  name: page
-                  schema:
-                      type: integer
-                - in: query
-                  name: pageSize
-                  schema:
-                      type: integer
-                - in: query
-                  name: search
-                  schema:
-                      type: string
-                - in: query
-                  name: sort
-                  schema:
-                      type: string
+                -   in: path
+                    name: assetLibraryId
+                    required: true
+                    schema:
+                        format: int64
+                        type: integer
+                -   in: query
+                    name: filter
+                    schema:
+                        type: string
+                -   in: query
+                    name: page
+                    schema:
+                        type: integer
+                -   in: query
+                    name: pageSize
+                    schema:
+                        type: integer
+                -   in: query
+                    name: search
+                    schema:
+                        type: string
+                -   in: query
+                    name: sort
+                    schema:
+                        type: string
             responses:
                 200:
                     content:
@@ -369,12 +369,12 @@ paths:
         post:
             operationId: postAssetLibraryKeyword
             parameters:
-                - in: path
-                  name: assetLibraryId
-                  required: true
-                  schema:
-                      format: int64
-                      type: integer
+                -   in: path
+                    name: assetLibraryId
+                    required: true
+                    schema:
+                        format: int64
+                        type: integer
             requestBody:
                 content:
                     application/json:
@@ -397,32 +397,32 @@ paths:
         get:
             operationId: getAssetLibraryTaxonomyVocabulariesPage
             parameters:
-                - in: path
-                  name: assetLibraryId
-                  required: true
-                  schema:
-                      format: int64
-                      type: integer
-                - in: query
-                  name: filter
-                  schema:
-                      type: string
-                - in: query
-                  name: page
-                  schema:
-                      type: integer
-                - in: query
-                  name: pageSize
-                  schema:
-                      type: integer
-                - in: query
-                  name: search
-                  schema:
-                      type: string
-                - in: query
-                  name: sort
-                  schema:
-                      type: string
+                -   in: path
+                    name: assetLibraryId
+                    required: true
+                    schema:
+                        format: int64
+                        type: integer
+                -   in: query
+                    name: filter
+                    schema:
+                        type: string
+                -   in: query
+                    name: page
+                    schema:
+                        type: integer
+                -   in: query
+                    name: pageSize
+                    schema:
+                        type: integer
+                -   in: query
+                    name: search
+                    schema:
+                        type: string
+                -   in: query
+                    name: sort
+                    schema:
+                        type: string
             responses:
                 200:
                     content:
@@ -440,12 +440,12 @@ paths:
         post:
             operationId: postAssetLibraryTaxonomyVocabulary
             parameters:
-                - in: path
-                  name: assetLibraryId
-                  required: true
-                  schema:
-                      format: int64
-                      type: integer
+                -   in: path
+                    name: assetLibraryId
+                    required: true
+                    schema:
+                        format: int64
+                        type: integer
             requestBody:
                 content:
                     application/json:
@@ -468,23 +468,23 @@ paths:
         get:
             operationId: getKeywordsRankedPage
             parameters:
-                - in: query
-                  name: page
-                  schema:
-                      type: integer
-                - in: query
-                  name: pageSize
-                  schema:
-                      type: integer
-                - in: query
-                  name: search
-                  schema:
-                      type: string
-                - in: query
-                  name: siteId
-                  schema:
-                      format: int64
-                      type: integer
+                -   in: query
+                    name: page
+                    schema:
+                        type: integer
+                -   in: query
+                    name: pageSize
+                    schema:
+                        type: integer
+                -   in: query
+                    name: search
+                    schema:
+                        type: string
+                -   in: query
+                    name: siteId
+                    schema:
+                        format: int64
+                        type: integer
             responses:
                 200:
                     content:
@@ -505,12 +505,12 @@ paths:
                 Deletes the keyword and returns a 204 if the operation succeeds.
             operationId: deleteKeyword
             parameters:
-                - in: path
-                  name: keywordId
-                  required: true
-                  schema:
-                      format: int64
-                      type: integer
+                -   in: path
+                    name: keywordId
+                    required: true
+                    schema:
+                        format: int64
+                        type: integer
             responses:
                 204:
                     content:
@@ -522,12 +522,12 @@ paths:
                 Retrieves a keyword.
             operationId: getKeyword
             parameters:
-                - in: path
-                  name: keywordId
-                  required: true
-                  schema:
-                      format: int64
-                      type: integer
+                -   in: path
+                    name: keywordId
+                    required: true
+                    schema:
+                        format: int64
+                        type: integer
             responses:
                 200:
                     content:
@@ -544,12 +544,12 @@ paths:
                 unless required.
             operationId: putKeyword
             parameters:
-                - in: path
-                  name: keywordId
-                  required: true
-                  schema:
-                      format: int64
-                      type: integer
+                -   in: path
+                    name: keywordId
+                    required: true
+                    schema:
+                        format: int64
+                        type: integer
             requestBody:
                 content:
                     application/json:
@@ -574,32 +574,32 @@ paths:
                 Retrieves a Site's keywords. Results can be paginated, filtered, searched, and sorted.
             operationId: getSiteKeywordsPage
             parameters:
-                - in: path
-                  name: siteId
-                  required: true
-                  schema:
-                      format: int64
-                      type: integer
-                - in: query
-                  name: filter
-                  schema:
-                      type: string
-                - in: query
-                  name: page
-                  schema:
-                      type: integer
-                - in: query
-                  name: pageSize
-                  schema:
-                      type: integer
-                - in: query
-                  name: search
-                  schema:
-                      type: string
-                - in: query
-                  name: sort
-                  schema:
-                      type: string
+                -   in: path
+                    name: siteId
+                    required: true
+                    schema:
+                        format: int64
+                        type: integer
+                -   in: query
+                    name: filter
+                    schema:
+                        type: string
+                -   in: query
+                    name: page
+                    schema:
+                        type: integer
+                -   in: query
+                    name: pageSize
+                    schema:
+                        type: integer
+                -   in: query
+                    name: search
+                    schema:
+                        type: string
+                -   in: query
+                    name: sort
+                    schema:
+                        type: string
             responses:
                 200:
                     content:
@@ -619,12 +619,12 @@ paths:
                 Inserts a new keyword in a Site.
             operationId: postSiteKeyword
             parameters:
-                - in: path
-                  name: siteId
-                  required: true
-                  schema:
-                      format: int64
-                      type: integer
+                -   in: path
+                    name: siteId
+                    required: true
+                    schema:
+                        format: int64
+                        type: integer
             requestBody:
                 content:
                     application/json:
@@ -649,32 +649,32 @@ paths:
                 Retrieves a Site's taxonomy vocabularies. Results can be paginated, filtered, searched, and sorted.
             operationId: getSiteTaxonomyVocabulariesPage
             parameters:
-                - in: path
-                  name: siteId
-                  required: true
-                  schema:
-                      format: int64
-                      type: integer
-                - in: query
-                  name: filter
-                  schema:
-                      type: string
-                - in: query
-                  name: page
-                  schema:
-                      type: integer
-                - in: query
-                  name: pageSize
-                  schema:
-                      type: integer
-                - in: query
-                  name: search
-                  schema:
-                      type: string
-                - in: query
-                  name: sort
-                  schema:
-                      type: string
+                -   in: path
+                    name: siteId
+                    required: true
+                    schema:
+                        format: int64
+                        type: integer
+                -   in: query
+                    name: filter
+                    schema:
+                        type: string
+                -   in: query
+                    name: page
+                    schema:
+                        type: integer
+                -   in: query
+                    name: pageSize
+                    schema:
+                        type: integer
+                -   in: query
+                    name: search
+                    schema:
+                        type: string
+                -   in: query
+                    name: sort
+                    schema:
+                        type: string
             responses:
                 200:
                     content:
@@ -694,12 +694,12 @@ paths:
                 Inserts a new taxonomy vocabulary in a Site.
             operationId: postSiteTaxonomyVocabulary
             parameters:
-                - in: path
-                  name: siteId
-                  required: true
-                  schema:
-                      format: int64
-                      type: integer
+                -   in: path
+                    name: siteId
+                    required: true
+                    schema:
+                        format: int64
+                        type: integer
             requestBody:
                 content:
                     application/json:
@@ -722,19 +722,19 @@ paths:
         get:
             operationId: getTaxonomyCategoryRankedPage
             parameters:
-                - in: query
-                  name: page
-                  schema:
-                      type: integer
-                - in: query
-                  name: pageSize
-                  schema:
-                      type: integer
-                - in: query
-                  name: siteId
-                  schema:
-                      format: int64
-                      type: integer
+                -   in: query
+                    name: page
+                    schema:
+                        type: integer
+                -   in: query
+                    name: pageSize
+                    schema:
+                        type: integer
+                -   in: query
+                    name: siteId
+                    schema:
+                        format: int64
+                        type: integer
             responses:
                 200:
                     content:
@@ -756,31 +756,31 @@ paths:
                 and sorted.
             operationId: getTaxonomyCategoryTaxonomyCategoriesPage
             parameters:
-                - in: path
-                  name: parentTaxonomyCategoryId
-                  required: true
-                  schema:
-                      type: string
-                - in: query
-                  name: filter
-                  schema:
-                      type: string
-                - in: query
-                  name: page
-                  schema:
-                      type: integer
-                - in: query
-                  name: pageSize
-                  schema:
-                      type: integer
-                - in: query
-                  name: search
-                  schema:
-                      type: string
-                - in: query
-                  name: sort
-                  schema:
-                      type: string
+                -   in: path
+                    name: parentTaxonomyCategoryId
+                    required: true
+                    schema:
+                        type: string
+                -   in: query
+                    name: filter
+                    schema:
+                        type: string
+                -   in: query
+                    name: page
+                    schema:
+                        type: integer
+                -   in: query
+                    name: pageSize
+                    schema:
+                        type: integer
+                -   in: query
+                    name: search
+                    schema:
+                        type: string
+                -   in: query
+                    name: sort
+                    schema:
+                        type: string
             responses:
                 200:
                     content:
@@ -800,11 +800,11 @@ paths:
                 Inserts a new child taxonomy category.
             operationId: postTaxonomyCategoryTaxonomyCategory
             parameters:
-                - in: path
-                  name: parentTaxonomyCategoryId
-                  required: true
-                  schema:
-                      type: string
+                -   in: path
+                    name: parentTaxonomyCategoryId
+                    required: true
+                    schema:
+                        type: string
             requestBody:
                 content:
                     application/json:
@@ -829,11 +829,11 @@ paths:
                 Deletes the taxonomy category and returns a 204 if the operation succeeds.
             operationId: deleteTaxonomyCategory
             parameters:
-                - in: path
-                  name: taxonomyCategoryId
-                  required: true
-                  schema:
-                      type: string
+                -   in: path
+                    name: taxonomyCategoryId
+                    required: true
+                    schema:
+                        type: string
             responses:
                 204:
                     content:
@@ -845,11 +845,11 @@ paths:
                 Retrieves a taxonomy category.
             operationId: getTaxonomyCategory
             parameters:
-                - in: path
-                  name: taxonomyCategoryId
-                  required: true
-                  schema:
-                      type: string
+                -   in: path
+                    name: taxonomyCategoryId
+                    required: true
+                    schema:
+                        type: string
             responses:
                 200:
                     content:
@@ -865,11 +865,11 @@ paths:
                 Updates only the fields received in the request body. Other fields are left untouched.
             operationId: patchTaxonomyCategory
             parameters:
-                - in: path
-                  name: taxonomyCategoryId
-                  required: true
-                  schema:
-                      type: string
+                -   in: path
+                    name: taxonomyCategoryId
+                    required: true
+                    schema:
+                        type: string
             requestBody:
                 content:
                     application/json:
@@ -894,11 +894,11 @@ paths:
                 deleted unless they are required.
             operationId: putTaxonomyCategory
             parameters:
-                - in: path
-                  name: taxonomyCategoryId
-                  required: true
-                  schema:
-                      type: string
+                -   in: path
+                    name: taxonomyCategoryId
+                    required: true
+                    schema:
+                        type: string
             requestBody:
                 content:
                     application/json:
@@ -923,12 +923,12 @@ paths:
                 Deletes the taxonomy vocabulary and returns a 204 if the operation succeeds.
             operationId: deleteTaxonomyVocabulary
             parameters:
-                - in: path
-                  name: taxonomyVocabularyId
-                  required: true
-                  schema:
-                      format: int64
-                      type: integer
+                -   in: path
+                    name: taxonomyVocabularyId
+                    required: true
+                    schema:
+                        format: int64
+                        type: integer
             responses:
                 204:
                     content:
@@ -940,12 +940,12 @@ paths:
                 Retrieves a taxonomy vocabulary.
             operationId: getTaxonomyVocabulary
             parameters:
-                - in: path
-                  name: taxonomyVocabularyId
-                  required: true
-                  schema:
-                      format: int64
-                      type: integer
+                -   in: path
+                    name: taxonomyVocabularyId
+                    required: true
+                    schema:
+                        format: int64
+                        type: integer
             responses:
                 200:
                     content:
@@ -961,12 +961,12 @@ paths:
                 Updates only the fields received in the request body. Any other fields are left untouched.
             operationId: patchTaxonomyVocabulary
             parameters:
-                - in: path
-                  name: taxonomyVocabularyId
-                  required: true
-                  schema:
-                      format: int64
-                      type: integer
+                -   in: path
+                    name: taxonomyVocabularyId
+                    required: true
+                    schema:
+                        format: int64
+                        type: integer
             requestBody:
                 content:
                     application/json:
@@ -991,12 +991,12 @@ paths:
                 deleted unless they are required.
             operationId: putTaxonomyVocabulary
             parameters:
-                - in: path
-                  name: taxonomyVocabularyId
-                  required: true
-                  schema:
-                      format: int64
-                      type: integer
+                -   in: path
+                    name: taxonomyVocabularyId
+                    required: true
+                    schema:
+                        format: int64
+                        type: integer
             requestBody:
                 content:
                     application/json:
@@ -1021,32 +1021,32 @@ paths:
                 Retrieves a vocabulary's taxonomy categories. Results can be paginated, filtered, searched, and sorted.
             operationId: getTaxonomyVocabularyTaxonomyCategoriesPage
             parameters:
-                - in: path
-                  name: taxonomyVocabularyId
-                  required: true
-                  schema:
-                      format: int64
-                      type: integer
-                - in: query
-                  name: filter
-                  schema:
-                      type: string
-                - in: query
-                  name: page
-                  schema:
-                      type: integer
-                - in: query
-                  name: pageSize
-                  schema:
-                      type: integer
-                - in: query
-                  name: search
-                  schema:
-                      type: string
-                - in: query
-                  name: sort
-                  schema:
-                      type: string
+                -   in: path
+                    name: taxonomyVocabularyId
+                    required: true
+                    schema:
+                        format: int64
+                        type: integer
+                -   in: query
+                    name: filter
+                    schema:
+                        type: string
+                -   in: query
+                    name: page
+                    schema:
+                        type: integer
+                -   in: query
+                    name: pageSize
+                    schema:
+                        type: integer
+                -   in: query
+                    name: search
+                    schema:
+                        type: string
+                -   in: query
+                    name: sort
+                    schema:
+                        type: string
             responses:
                 200:
                     content:
@@ -1066,12 +1066,12 @@ paths:
                 Inserts a new taxonomy category in a taxonomy vocabulary.
             operationId: postTaxonomyVocabularyTaxonomyCategory
             parameters:
-                - in: path
-                  name: taxonomyVocabularyId
-                  required: true
-                  schema:
-                      format: int64
-                      type: integer
+                -   in: path
+                    name: taxonomyVocabularyId
+                    required: true
+                    schema:
+                        format: int64
+                        type: integer
             requestBody:
                 content:
                     application/json:

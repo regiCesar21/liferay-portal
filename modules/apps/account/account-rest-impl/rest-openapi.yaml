@@ -116,26 +116,26 @@ paths:
                 Retrieves the accounts. Results can be paginated, filtered, searched, and sorted.
             operationId: getAccountsPage
             parameters:
-                - in: query
-                  name: filter
-                  schema:
-                      type: string
-                - in: query
-                  name: keywords
-                  schema:
-                      type: string
-                - in: query
-                  name: page
-                  schema:
-                      type: integer
-                - in: query
-                  name: pageSize
-                  schema:
-                      type: integer
-                - in: query
-                  name: sort
-                  schema:
-                      type: string
+                -   in: query
+                    name: filter
+                    schema:
+                        type: string
+                -   in: query
+                    name: keywords
+                    schema:
+                        type: string
+                -   in: query
+                    name: page
+                    schema:
+                        type: integer
+                -   in: query
+                    name: pageSize
+                    schema:
+                        type: integer
+                -   in: query
+                    name: sort
+                    schema:
+                        type: string
             responses:
                 200:
                     content:
@@ -182,22 +182,22 @@ paths:
                 Unassigns account users to the account role
             operationId: deleteAccountRoleUserAssociationByExternalReferenceCode
             parameters:
-                - in: path
-                  name: accountExternalReferenceCode
-                  required: true
-                  schema:
-                      type: string
-                - in: path
-                  name: accountRoleId
-                  required: true
-                  schema:
-                      format: int64
-                      type: integer
-                - in: path
-                  name: accountUserExternalReferenceCode
-                  required: true
-                  schema:
-                      type: string
+                -   in: path
+                    name: accountExternalReferenceCode
+                    required: true
+                    schema:
+                        type: string
+                -   in: path
+                    name: accountRoleId
+                    required: true
+                    schema:
+                        format: int64
+                        type: integer
+                -   in: path
+                    name: accountUserExternalReferenceCode
+                    required: true
+                    schema:
+                        type: string
             responses:
                 204:
                     content:
@@ -210,22 +210,22 @@ paths:
                 Assigns account users to the account role
             operationId: postAccountRoleUserAssociationByExternalReferenceCode
             parameters:
-                - in: path
-                  name: accountExternalReferenceCode
-                  required: true
-                  schema:
-                      type: string
-                - in: path
-                  name: accountRoleId
-                  required: true
-                  schema:
-                      format: int64
-                      type: integer
-                - in: path
-                  name: accountUserExternalReferenceCode
-                  required: true
-                  schema:
-                      type: string
+                -   in: path
+                    name: accountExternalReferenceCode
+                    required: true
+                    schema:
+                        type: string
+                -   in: path
+                    name: accountRoleId
+                    required: true
+                    schema:
+                        format: int64
+                        type: integer
+                -   in: path
+                    name: accountUserExternalReferenceCode
+                    required: true
+                    schema:
+                        type: string
             responses:
                 204:
                     content:
@@ -239,11 +239,11 @@ paths:
                 Deletes an account.
             operationId: deleteAccountByExternalReferenceCode
             parameters:
-                - in: path
-                  name: externalReferenceCode
-                  required: true
-                  schema:
-                      type: string
+                -   in: path
+                    name: externalReferenceCode
+                    required: true
+                    schema:
+                        type: string
             responses:
                 204:
                     content:
@@ -253,11 +253,11 @@ paths:
         get:
             operationId: getAccountByExternalReferenceCode
             parameters:
-                - in: path
-                  name: externalReferenceCode
-                  required: true
-                  schema:
-                      type: string
+                -   in: path
+                    name: externalReferenceCode
+                    required: true
+                    schema:
+                        type: string
             responses:
                 200:
                     content:
@@ -275,11 +275,11 @@ paths:
                 are updated.
             operationId: patchAccountByExternalReferenceCode
             parameters:
-                - in: path
-                  name: externalReferenceCode
-                  required: true
-                  schema:
-                      type: string
+                -   in: path
+                    name: externalReferenceCode
+                    required: true
+                    schema:
+                        type: string
             requestBody:
                 content:
                     application/json:
@@ -308,11 +308,11 @@ paths:
                 unless they are required.
             operationId: putAccountByExternalReferenceCode
             parameters:
-                - in: path
-                  name: externalReferenceCode
-                  required: true
-                  schema:
-                      type: string
+                -   in: path
+                    name: externalReferenceCode
+                    required: true
+                    schema:
+                        type: string
             requestBody:
                 content:
                     application/json:
@@ -341,27 +341,27 @@ paths:
                 Gets the account's roles
             operationId: getAccountRolesByExternalReferenceCodePage
             parameters:
-                - in: path
-                  name: externalReferenceCode
-                  required: true
-                  schema:
-                      type: string
-                - in: query
-                  name: keywords
-                  schema:
-                      type: string
-                - in: query
-                  name: page
-                  schema:
-                      type: integer
-                - in: query
-                  name: pageSize
-                  schema:
-                      type: integer
-                - in: query
-                  name: sort
-                  schema:
-                      type: string
+                -   in: path
+                    name: externalReferenceCode
+                    required: true
+                    schema:
+                        type: string
+                -   in: query
+                    name: keywords
+                    schema:
+                        type: string
+                -   in: query
+                    name: page
+                    schema:
+                        type: integer
+                -   in: query
+                    name: pageSize
+                    schema:
+                        type: integer
+                -   in: query
+                    name: sort
+                    schema:
+                        type: string
             responses:
                 200:
                     content:
@@ -383,11 +383,11 @@ paths:
                 Adds a role for the account
             operationId: postAccountRoleByExternalReferenceCode
             parameters:
-                - in: path
-                  name: externalReferenceCode
-                  required: true
-                  schema:
-                      type: string
+                -   in: path
+                    name: externalReferenceCode
+                    required: true
+                    schema:
+                        type: string
             requestBody:
                 content:
                     application/json:
@@ -414,31 +414,31 @@ paths:
                 Gets the users assigned to an account
             operationId: getAccountUsersByExternalReferenceCodePage
             parameters:
-                - in: path
-                  name: externalReferenceCode
-                  required: true
-                  schema:
-                      type: string
-                - in: query
-                  name: filter
-                  schema:
-                      type: string
-                - in: query
-                  name: page
-                  schema:
-                      type: integer
-                - in: query
-                  name: pageSize
-                  schema:
-                      type: integer
-                - in: query
-                  name: search
-                  schema:
-                      type: string
-                - in: query
-                  name: sort
-                  schema:
-                      type: string
+                -   in: path
+                    name: externalReferenceCode
+                    required: true
+                    schema:
+                        type: string
+                -   in: query
+                    name: filter
+                    schema:
+                        type: string
+                -   in: query
+                    name: page
+                    schema:
+                        type: integer
+                -   in: query
+                    name: pageSize
+                    schema:
+                        type: integer
+                -   in: query
+                    name: search
+                    schema:
+                        type: string
+                -   in: query
+                    name: sort
+                    schema:
+                        type: string
             responses:
                 200:
                     content:
@@ -459,11 +459,11 @@ paths:
                 Creates a user and assigns them to the account
             operationId: postAccountUserByExternalReferenceCode
             parameters:
-                - in: path
-                  name: externalReferenceCode
-                  required: true
-                  schema:
-                      type: string
+                -   in: path
+                    name: externalReferenceCode
+                    required: true
+                    schema:
+                        type: string
             requestBody:
                 content:
                     application/json:
@@ -489,12 +489,12 @@ paths:
                 Deletes an account.
             operationId: deleteAccount
             parameters:
-                - in: path
-                  name: accountId
-                  required: true
-                  schema:
-                      format: int64
-                      type: integer
+                -   in: path
+                    name: accountId
+                    required: true
+                    schema:
+                        format: int64
+                        type: integer
             responses:
                 204:
                     content:
@@ -504,12 +504,12 @@ paths:
         get:
             operationId: getAccount
             parameters:
-                - in: path
-                  name: accountId
-                  required: true
-                  schema:
-                      format: int64
-                      type: integer
+                -   in: path
+                    name: accountId
+                    required: true
+                    schema:
+                        format: int64
+                        type: integer
             responses:
                 200:
                     content:
@@ -527,12 +527,12 @@ paths:
                 are updated.
             operationId: patchAccount
             parameters:
-                - in: path
-                  name: accountId
-                  required: true
-                  schema:
-                      format: int64
-                      type: integer
+                -   in: path
+                    name: accountId
+                    required: true
+                    schema:
+                        format: int64
+                        type: integer
             requestBody:
                 content:
                     application/json:
@@ -561,12 +561,12 @@ paths:
                 unless they are required.
             operationId: putAccount
             parameters:
-                - in: path
-                  name: accountId
-                  required: true
-                  schema:
-                      format: int64
-                      type: integer
+                -   in: path
+                    name: accountId
+                    required: true
+                    schema:
+                        format: int64
+                        type: integer
             requestBody:
                 content:
                     application/json:
@@ -595,28 +595,28 @@ paths:
                 Gets the account's roles
             operationId: getAccountRolesPage
             parameters:
-                - in: path
-                  name: accountId
-                  required: true
-                  schema:
-                      format: int64
-                      type: integer
-                - in: query
-                  name: keywords
-                  schema:
-                      type: string
-                - in: query
-                  name: page
-                  schema:
-                      type: integer
-                - in: query
-                  name: pageSize
-                  schema:
-                      type: integer
-                - in: query
-                  name: sort
-                  schema:
-                      type: string
+                -   in: path
+                    name: accountId
+                    required: true
+                    schema:
+                        format: int64
+                        type: integer
+                -   in: query
+                    name: keywords
+                    schema:
+                        type: string
+                -   in: query
+                    name: page
+                    schema:
+                        type: integer
+                -   in: query
+                    name: pageSize
+                    schema:
+                        type: integer
+                -   in: query
+                    name: sort
+                    schema:
+                        type: string
             responses:
                 200:
                     content:
@@ -638,12 +638,12 @@ paths:
                 Adds a role for the account
             operationId: postAccountRole
             parameters:
-                - in: path
-                  name: accountId
-                  required: true
-                  schema:
-                      format: int64
-                      type: integer
+                -   in: path
+                    name: accountId
+                    required: true
+                    schema:
+                        format: int64
+                        type: integer
             requestBody:
                 content:
                     application/json:
@@ -670,24 +670,24 @@ paths:
                 Unassigns account users to the account role
             operationId: deleteAccountRoleUserAssociation
             parameters:
-                - in: path
-                  name: accountId
-                  required: true
-                  schema:
-                      format: int64
-                      type: integer
-                - in: path
-                  name: accountRoleId
-                  required: true
-                  schema:
-                      format: int64
-                      type: integer
-                - in: path
-                  name: accountUserId
-                  required: true
-                  schema:
-                      format: int64
-                      type: integer
+                -   in: path
+                    name: accountId
+                    required: true
+                    schema:
+                        format: int64
+                        type: integer
+                -   in: path
+                    name: accountRoleId
+                    required: true
+                    schema:
+                        format: int64
+                        type: integer
+                -   in: path
+                    name: accountUserId
+                    required: true
+                    schema:
+                        format: int64
+                        type: integer
             responses:
                 204:
                     content:
@@ -700,24 +700,24 @@ paths:
                 Assigns account users to the account role
             operationId: postAccountRoleUserAssociation
             parameters:
-                - in: path
-                  name: accountId
-                  required: true
-                  schema:
-                      format: int64
-                      type: integer
-                - in: path
-                  name: accountRoleId
-                  required: true
-                  schema:
-                      format: int64
-                      type: integer
-                - in: path
-                  name: accountUserId
-                  required: true
-                  schema:
-                      format: int64
-                      type: integer
+                -   in: path
+                    name: accountId
+                    required: true
+                    schema:
+                        format: int64
+                        type: integer
+                -   in: path
+                    name: accountRoleId
+                    required: true
+                    schema:
+                        format: int64
+                        type: integer
+                -   in: path
+                    name: accountUserId
+                    required: true
+                    schema:
+                        format: int64
+                        type: integer
             responses:
                 204:
                     content:
@@ -731,32 +731,32 @@ paths:
                 Gets the users assigned to an account
             operationId: getAccountUsersPage
             parameters:
-                - in: path
-                  name: accountId
-                  required: true
-                  schema:
-                      format: int64
-                      type: integer
-                - in: query
-                  name: filter
-                  schema:
-                      type: string
-                - in: query
-                  name: page
-                  schema:
-                      type: integer
-                - in: query
-                  name: pageSize
-                  schema:
-                      type: integer
-                - in: query
-                  name: search
-                  schema:
-                      type: string
-                - in: query
-                  name: sort
-                  schema:
-                      type: string
+                -   in: path
+                    name: accountId
+                    required: true
+                    schema:
+                        format: int64
+                        type: integer
+                -   in: query
+                    name: filter
+                    schema:
+                        type: string
+                -   in: query
+                    name: page
+                    schema:
+                        type: integer
+                -   in: query
+                    name: pageSize
+                    schema:
+                        type: integer
+                -   in: query
+                    name: search
+                    schema:
+                        type: string
+                -   in: query
+                    name: sort
+                    schema:
+                        type: string
             responses:
                 200:
                     content:
@@ -777,12 +777,12 @@ paths:
                 Creates a user and assigns them to the account
             operationId: postAccountUser
             parameters:
-                - in: path
-                  name: accountId
-                  required: true
-                  schema:
-                      format: int64
-                      type: integer
+                -   in: path
+                    name: accountId
+                    required: true
+                    schema:
+                        format: int64
+                        type: integer
             requestBody:
                 content:
                     application/json:

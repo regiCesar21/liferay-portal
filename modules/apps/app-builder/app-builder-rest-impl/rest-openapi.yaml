@@ -71,45 +71,45 @@ paths:
         get:
             operationId: getAppsPage
             parameters:
-                - in: query
-                  name: active
-                  schema:
-                      type: boolean
-                - in: query
-                  name: deploymentTypes
-                  schema:
-                      items:
-                          enum: [productMenu, standalone, widget]
-                          type: string
-                      type: array
-                - in: query
-                  name: keywords
-                  schema:
-                      type: string
-                - in: query
-                  name: page
-                  schema:
-                      type: integer
-                - in: query
-                  name: pageSize
-                  schema:
-                      type: integer
-                - in: query
-                  name: scope
-                  schema:
-                      type: string
-                - in: query
-                  name: sort
-                  required: false
-                  schema:
-                      type: string
-                - in: query
-                  name: userIds
-                  schema:
-                      items:
-                          format: int64
-                          type: integer
-                      type: array
+                -   in: query
+                    name: active
+                    schema:
+                        type: boolean
+                -   in: query
+                    name: deploymentTypes
+                    schema:
+                        items:
+                            enum: [productMenu, standalone, widget]
+                            type: string
+                        type: array
+                -   in: query
+                    name: keywords
+                    schema:
+                        type: string
+                -   in: query
+                    name: page
+                    schema:
+                        type: integer
+                -   in: query
+                    name: pageSize
+                    schema:
+                        type: integer
+                -   in: query
+                    name: scope
+                    schema:
+                        type: string
+                -   in: query
+                    name: sort
+                    required: false
+                    schema:
+                        type: string
+                -   in: query
+                    name: userIds
+                    schema:
+                        items:
+                            format: int64
+                            type: integer
+                        type: array
             responses:
                 200:
                     content:
@@ -128,12 +128,12 @@ paths:
         delete:
             operationId: deleteApp
             parameters:
-                - in: path
-                  name: appId
-                  required: true
-                  schema:
-                      format: int64
-                      type: integer
+                -   in: path
+                    name: appId
+                    required: true
+                    schema:
+                        format: int64
+                        type: integer
             responses:
                 204:
                     content:
@@ -143,12 +143,12 @@ paths:
         get:
             operationId: getApp
             parameters:
-                - in: path
-                  name: appId
-                  required: true
-                  schema:
-                      format: int64
-                      type: integer
+                -   in: path
+                    name: appId
+                    required: true
+                    schema:
+                        format: int64
+                        type: integer
             responses:
                 200:
                     content:
@@ -162,12 +162,12 @@ paths:
         put:
             operationId: putApp
             parameters:
-                - in: path
-                  name: appId
-                  required: true
-                  schema:
-                      format: int64
-                      type: integer
+                -   in: path
+                    name: appId
+                    required: true
+                    schema:
+                        format: int64
+                        type: integer
             requestBody:
                 content:
                     application/json:
@@ -190,12 +190,12 @@ paths:
         put:
             operationId: putAppDeploy
             parameters:
-                - in: path
-                  name: appId
-                  required: true
-                  schema:
-                      format: int64
-                      type: integer
+                -   in: path
+                    name: appId
+                    required: true
+                    schema:
+                        format: int64
+                        type: integer
             responses:
                 200:
                     description:
@@ -205,12 +205,12 @@ paths:
         put:
             operationId: putAppUndeploy
             parameters:
-                - in: path
-                  name: appId
-                  required: true
-                  schema:
-                      format: int64
-                      type: integer
+                -   in: path
+                    name: appId
+                    required: true
+                    schema:
+                        format: int64
+                        type: integer
             responses:
                 200:
                     description:
@@ -220,33 +220,33 @@ paths:
         get:
             operationId: getDataDefinitionAppsPage
             parameters:
-                - in: path
-                  name: dataDefinitionId
-                  required: true
-                  schema:
-                      format: int64
-                      type: integer
-                - in: query
-                  name: keywords
-                  schema:
-                      type: string
-                - in: query
-                  name: page
-                  schema:
-                      type: integer
-                - in: query
-                  name: pageSize
-                  schema:
-                      type: integer
-                - in: query
-                  name: scope
-                  schema:
-                      type: string
-                - in: query
-                  name: sort
-                  required: false
-                  schema:
-                      type: string
+                -   in: path
+                    name: dataDefinitionId
+                    required: true
+                    schema:
+                        format: int64
+                        type: integer
+                -   in: query
+                    name: keywords
+                    schema:
+                        type: string
+                -   in: query
+                    name: page
+                    schema:
+                        type: integer
+                -   in: query
+                    name: pageSize
+                    schema:
+                        type: integer
+                -   in: query
+                    name: scope
+                    schema:
+                        type: string
+                -   in: query
+                    name: sort
+                    required: false
+                    schema:
+                        type: string
             responses:
                 200:
                     content:
@@ -264,12 +264,12 @@ paths:
         post:
             operationId: postDataDefinitionApp
             parameters:
-                - in: path
-                  name: dataDefinitionId
-                  required: true
-                  schema:
-                      format: int64
-                      type: integer
+                -   in: path
+                    name: dataDefinitionId
+                    required: true
+                    schema:
+                        format: int64
+                        type: integer
             requestBody:
                 content:
                     application/json:
@@ -292,33 +292,33 @@ paths:
         get:
             operationId: getSiteAppsPage
             parameters:
-                - in: path
-                  name: siteId
-                  required: true
-                  schema:
-                      format: int64
-                      type: integer
-                - in: query
-                  name: keywords
-                  schema:
-                      type: string
-                - in: query
-                  name: page
-                  schema:
-                      type: integer
-                - in: query
-                  name: pageSize
-                  schema:
-                      type: integer
-                - in: query
-                  name: scope
-                  schema:
-                      type: string
-                - in: query
-                  name: sort
-                  required: false
-                  schema:
-                      type: string
+                -   in: path
+                    name: siteId
+                    required: true
+                    schema:
+                        format: int64
+                        type: integer
+                -   in: query
+                    name: keywords
+                    schema:
+                        type: string
+                -   in: query
+                    name: page
+                    schema:
+                        type: integer
+                -   in: query
+                    name: pageSize
+                    schema:
+                        type: integer
+                -   in: query
+                    name: scope
+                    schema:
+                        type: string
+                -   in: query
+                    name: sort
+                    required: false
+                    schema:
+                        type: string
             responses:
                 200:
                     content:

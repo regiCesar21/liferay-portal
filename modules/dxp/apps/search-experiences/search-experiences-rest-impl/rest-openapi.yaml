@@ -535,18 +535,18 @@ paths:
         post:
             operationId: postSearch
             parameters:
-                - in: query
-                  name: page
-                  schema:
-                      type: integer
-                - in: query
-                  name: pageSize
-                  schema:
-                      type: integer
-                - in: query
-                  name: query
-                  schema:
-                      type: string
+                -   in: query
+                    name: page
+                    schema:
+                        type: integer
+                -   in: query
+                    name: pageSize
+                    schema:
+                        type: integer
+                -   in: query
+                    name: query
+                    schema:
+                        type: string
             requestBody:
                 content:
                     application/json:
@@ -569,10 +569,10 @@ paths:
         get:
             operationId: getFieldMappingInfosPage
             parameters:
-                - in: query
-                  name: query
-                  schema:
-                      type: string
+                -   in: query
+                    name: query
+                    schema:
+                        type: string
             responses:
                 200:
                     content:
@@ -659,11 +659,11 @@ paths:
         get:
             operationId: getSearchableAssetNameLanguagePage
             parameters:
-                - in: path
-                  name: languageId
-                  required: true
-                  schema:
-                      type: string
+                -   in: path
+                    name: languageId
+                    required: true
+                    schema:
+                        type: string
             responses:
                 200:
                     content:
@@ -682,26 +682,26 @@ paths:
         get:
             operationId: getSXPBlueprintsPage
             parameters:
-                - in: query
-                  name: filter
-                  schema:
-                      type: string
-                - in: query
-                  name: page
-                  schema:
-                      type: integer
-                - in: query
-                  name: pageSize
-                  schema:
-                      type: integer
-                - in: query
-                  name: search
-                  schema:
-                      type: string
-                - in: query
-                  name: sort
-                  schema:
-                      type: string
+                -   in: query
+                    name: filter
+                    schema:
+                        type: string
+                -   in: query
+                    name: page
+                    schema:
+                        type: integer
+                -   in: query
+                    name: pageSize
+                    schema:
+                        type: integer
+                -   in: query
+                    name: search
+                    schema:
+                        type: string
+                -   in: query
+                    name: sort
+                    schema:
+                        type: string
             responses:
                 200:
                     content:
@@ -761,12 +761,12 @@ paths:
         delete:
             operationId: deleteSXPBlueprint
             parameters:
-                - in: path
-                  name: sxpBlueprintId
-                  required: true
-                  schema:
-                      format: int64
-                      type: integer
+                -   in: path
+                    name: sxpBlueprintId
+                    required: true
+                    schema:
+                        format: int64
+                        type: integer
             responses:
                 204:
                     content:
@@ -776,12 +776,12 @@ paths:
         get:
             operationId: getSXPBlueprint
             parameters:
-                - in: path
-                  name: sxpBlueprintId
-                  required: true
-                  schema:
-                      format: int64
-                      type: integer
+                -   in: path
+                    name: sxpBlueprintId
+                    required: true
+                    schema:
+                        format: int64
+                        type: integer
             responses:
                 200:
                     content:
@@ -795,12 +795,12 @@ paths:
         patch:
             operationId: patchSXPBlueprint
             parameters:
-                - in: path
-                  name: sxpBlueprintId
-                  required: true
-                  schema:
-                      format: int64
-                      type: integer
+                -   in: path
+                    name: sxpBlueprintId
+                    required: true
+                    schema:
+                        format: int64
+                        type: integer
             requestBody:
                 content:
                     application/json:
@@ -823,12 +823,12 @@ paths:
         post:
             operationId: postSXPBlueprintCopy
             parameters:
-                - in: path
-                  name: sxpBlueprintId
-                  required: true
-                  schema:
-                      format: int64
-                      type: integer
+                -   in: path
+                    name: sxpBlueprintId
+                    required: true
+                    schema:
+                        format: int64
+                        type: integer
             responses:
                 200:
                     content:
@@ -843,12 +843,12 @@ paths:
         get:
             operationId: getSXPBlueprintExport
             parameters:
-                - in: path
-                  name: sxpBlueprintId
-                  required: true
-                  schema:
-                      format: int64
-                      type: integer
+                -   in: path
+                    name: sxpBlueprintId
+                    required: true
+                    schema:
+                        format: int64
+                        type: integer
             responses:
                 200:
                     content:
@@ -869,26 +869,26 @@ paths:
         get:
             operationId: getSXPElementsPage
             parameters:
-                - in: query
-                  name: filter
-                  schema:
-                      type: string
-                - in: query
-                  name: page
-                  schema:
-                      type: integer
-                - in: query
-                  name: pageSize
-                  schema:
-                      type: integer
-                - in: query
-                  name: search
-                  schema:
-                      type: string
-                - in: query
-                  name: sort
-                  schema:
-                      type: string
+                -   in: query
+                    name: filter
+                    schema:
+                        type: string
+                -   in: query
+                    name: page
+                    schema:
+                        type: integer
+                -   in: query
+                    name: pageSize
+                    schema:
+                        type: integer
+                -   in: query
+                    name: search
+                    schema:
+                        type: string
+                -   in: query
+                    name: sort
+                    schema:
+                        type: string
             responses:
                 200:
                     content:
@@ -948,12 +948,12 @@ paths:
         delete:
             operationId: deleteSXPElement
             parameters:
-                - in: path
-                  name: sxpElementId
-                  required: true
-                  schema:
-                      format: int64
-                      type: integer
+                -   in: path
+                    name: sxpElementId
+                    required: true
+                    schema:
+                        format: int64
+                        type: integer
             responses:
                 204:
                     content:
@@ -963,12 +963,12 @@ paths:
         get:
             operationId: getSXPElement
             parameters:
-                - in: path
-                  name: sxpElementId
-                  required: true
-                  schema:
-                      format: int64
-                      type: integer
+                -   in: path
+                    name: sxpElementId
+                    required: true
+                    schema:
+                        format: int64
+                        type: integer
             responses:
                 200:
                     content:
@@ -982,12 +982,12 @@ paths:
         patch:
             operationId: patchSXPElement
             parameters:
-                - in: path
-                  name: sxpElementId
-                  required: true
-                  schema:
-                      format: int64
-                      type: integer
+                -   in: path
+                    name: sxpElementId
+                    required: true
+                    schema:
+                        format: int64
+                        type: integer
             requestBody:
                 content:
                     application/json:
@@ -1010,12 +1010,12 @@ paths:
         post:
             operationId: postSXPElementCopy
             parameters:
-                - in: path
-                  name: sxpElementId
-                  required: true
-                  schema:
-                      format: int64
-                      type: integer
+                -   in: path
+                    name: sxpElementId
+                    required: true
+                    schema:
+                        format: int64
+                        type: integer
             responses:
                 200:
                     content:
@@ -1030,12 +1030,12 @@ paths:
         get:
             operationId: getSXPElementExport
             parameters:
-                - in: path
-                  name: sxpElementId
-                  required: true
-                  schema:
-                      format: int64
-                      type: integer
+                -   in: path
+                    name: sxpElementId
+                    required: true
+                    schema:
+                        format: int64
+                        type: integer
             responses:
                 200:
                     content:

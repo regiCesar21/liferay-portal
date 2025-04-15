@@ -48,11 +48,11 @@ components:
             properties:
                 breadcrumbs:
                     example:
-                        - id: 31130
-                          name: Item 1
-                          slug: /Item-1
-                          street2: /Item/31130
-                          thumbnail: /schema.jpg
+                        -   id: 31130
+                            name: Item 1
+                            slug: /Item-1
+                            street2: /Item/31130
+                            thumbnail: /schema.jpg
                     items:
                         $ref: "#/components/schemas/Breadcrumb"
                     type: array
@@ -72,22 +72,22 @@ components:
                     type: string
                 products:
                     example:
-                        - id: 29130
-                          name: Product 1
-                          price: $ 12.99
-                          sku: SKU01
-                          thumbnailUrl: /product_thumbnail.png
-                          url: /productUrl
+                        -   id: 29130
+                            name: Product 1
+                            price: $ 12.99
+                            sku: SKU01
+                            thumbnailUrl: /product_thumbnail.png
+                            url: /productUrl
                     items:
                         $ref: "#/components/schemas/Product"
                     type: array
                 spots:
                     example:
-                        - id: 34130
-                          number: 3
-                          positionX: 33.54
-                          positionY: 33.54
-                          productId: 29130
+                        -   id: 34130
+                            number: 3
+                            positionX: 33.54
+                            positionY: 33.54
+                            productId: 29130
                     items:
                         $ref: "#/components/schemas/Spot"
                     type: array
@@ -100,9 +100,9 @@ components:
                     type: integer
                 models:
                     example:
-                        - id: 31231
-                          name: Model 1
-                          year: "2019"
+                        -   id: 31231
+                            name: Model 1
+                            year: "2019"
                     items:
                         $ref: "#/components/schemas/Model"
                     type: array
@@ -142,20 +142,20 @@ components:
                     readOnly: true
                     type: integer
             required:
-                - errorCode
-                - errorDescription
-                - message
-                - status
+                -   errorCode
+                -   errorDescription
+                -   message
+                -   status
             type: object
         Folder:
             properties:
                 breadcrumbs:
                     example:
-                        - id: 31130
-                          name: Item 1
-                          slug: /Item-1
-                          street2: /Item/31130
-                          thumbnail: /schema.jpg
+                        -   id: 31130
+                            name: Item 1
+                            slug: /Item-1
+                            street2: /Item/31130
+                            thumbnail: /schema.jpg
                     items:
                         $ref: "#/components/schemas/Breadcrumb"
                     type: array
@@ -180,8 +180,8 @@ components:
                     type: string
                 type:
                     enum:
-                        - area
-                        - folder
+                        -   area
+                        -   folder
                     example: folder
                     type: string
                 url:
@@ -192,42 +192,42 @@ components:
             properties:
                 brands:
                     example:
-                        - models:
-                              - id: 31231
-                                name: Model 1
-                                year: "2019"
-                          name: Brand 1
+                        -   models:
+                                -   id: 31231
+                                    name: Model 1
+                                    year: "2019"
+                            name: Brand 1
                     items:
                         $ref: "#/components/schemas/Brand"
                     type: array
                 items:
                     example:
-                        - id: 31130
-                          name: Item 1
-                          slug: /Item-1
-                          street2: /Item/31130
-                          thumbnail: /schema.jpg
+                        -   id: 31130
+                            name: Item 1
+                            slug: /Item-1
+                            street2: /Item/31130
+                            thumbnail: /schema.jpg
                     items:
                         $ref: "#/components/schemas/Item"
                     type: array
                 products:
                     example:
-                        - id: 29130
-                          name: Product 1
-                          price: $ 12.99
-                          sku: SKU01
-                          thumbnailUrl: /product_thumbnail.png
-                          url: /productUrl
+                        -   id: 29130
+                            name: Product 1
+                            price: $ 12.99
+                            sku: SKU01
+                            thumbnailUrl: /product_thumbnail.png
+                            url: /productUrl
                     items:
                         $ref: "#/components/schemas/Product"
                     type: array
                 spots:
                     example:
-                        - id: 34130
-                          number: 3
-                          positionX: 33.54
-                          positionY: 33.54
-                          productId: 29130
+                        -   id: 34130
+                            number: 3
+                            positionX: 33.54
+                            positionY: 33.54
+                            productId: 29130
                     items:
                         $ref: "#/components/schemas/Spot"
                     type: array
@@ -333,18 +333,18 @@ paths:
         get:
             operationId: getArea
             parameters:
-                - in: path
-                  explode: false
-                  name: id
-                  required: true
-                  schema:
-                      description:
-                          The resource Id
-                      example: 30130
-                      format: int64
-                      minimum: 0
-                      type: integer
-                  style: simple
+                -   in: path
+                    explode: false
+                    name: id
+                    required: true
+                    schema:
+                        description:
+                            The resource Id
+                        example: 30130
+                        format: int64
+                        minimum: 0
+                        type: integer
+                    style: simple
             responses:
                 200:
                     content:
@@ -390,29 +390,29 @@ paths:
                     description:
                         Unexpected error
             security:
-                - BasicAuth: []
-                - BearerAuth: []
-                - OAuth2:
-                      - CommerceBOM.read
+                -   BasicAuth: []
+                -   BearerAuth: []
+                -   OAuth2:
+                        -   CommerceBOM.read
             summary: Gets the Area by ID.
             tags:
-                - Area
+                -   Area
     /areas/{id}/spot:
         post:
             operationId: postAreaIdSpot
             parameters:
-                - in: path
-                  explode: false
-                  name: id
-                  required: true
-                  schema:
-                      description:
-                          The resource Id
-                      example: 30130
-                      format: int64
-                      minimum: 0
-                      type: integer
-                  style: simple
+                -   in: path
+                    explode: false
+                    name: id
+                    required: true
+                    schema:
+                        description:
+                            The resource Id
+                        example: 30130
+                        format: int64
+                        minimum: 0
+                        type: integer
+                    style: simple
             requestBody:
                 content:
                     application/json:
@@ -467,41 +467,41 @@ paths:
                     description:
                         Unexpected error
             security:
-                - BasicAuth: []
-                - BearerAuth: []
-                - OAuth2:
-                      - CommerceBOM.write
+                -   BasicAuth: []
+                -   BearerAuth: []
+                -   OAuth2:
+                        -   CommerceBOM.write
             summary: Creates a Spot related to an area.
             tags:
-                - Spot
+                -   Spot
     /areas/{id}/spot/{spotId}:
         delete:
             operationId: deleteAreaIdSpot
             parameters:
-                - in: path
-                  explode: false
-                  name: id
-                  required: true
-                  schema:
-                      description:
-                          The resource Id
-                      example: 30130
-                      format: int64
-                      minimum: 0
-                      type: integer
-                  style: simple
-                - in: path
-                  explode: false
-                  name: spotId
-                  required: true
-                  schema:
-                      description:
-                          The spot Id
-                      example: 30130
-                      format: int64
-                      minimum: 0
-                      type: integer
-                  style: simple
+                -   in: path
+                    explode: false
+                    name: id
+                    required: true
+                    schema:
+                        description:
+                            The resource Id
+                        example: 30130
+                        format: int64
+                        minimum: 0
+                        type: integer
+                    style: simple
+                -   in: path
+                    explode: false
+                    name: spotId
+                    required: true
+                    schema:
+                        description:
+                            The spot Id
+                        example: 30130
+                        format: int64
+                        minimum: 0
+                        type: integer
+                    style: simple
             responses:
                 200:
                     description:
@@ -517,40 +517,40 @@ paths:
                     description:
                         Authentication information is missing or invalid
             security:
-                - BasicAuth: []
-                - BearerAuth: []
-                - OAuth2:
-                      - CommerceBOM.write
+                -   BasicAuth: []
+                -   BearerAuth: []
+                -   OAuth2:
+                        -   CommerceBOM.write
             summary: Deletes a Spot by its ID.
             tags:
-                - Spot
+                -   Spot
         put:
             operationId: putAreaIdSpot
             parameters:
-                - in: path
-                  explode: false
-                  name: id
-                  required: true
-                  schema:
-                      description:
-                          The resource Id
-                      example: 30130
-                      format: int64
-                      minimum: 0
-                      type: integer
-                  style: simple
-                - in: path
-                  explode: false
-                  name: spotId
-                  required: true
-                  schema:
-                      description:
-                          The spot Id
-                      example: 30130
-                      format: int64
-                      minimum: 0
-                      type: integer
-                  style: simple
+                -   in: path
+                    explode: false
+                    name: id
+                    required: true
+                    schema:
+                        description:
+                            The resource Id
+                        example: 30130
+                        format: int64
+                        minimum: 0
+                        type: integer
+                    style: simple
+                -   in: path
+                    explode: false
+                    name: spotId
+                    required: true
+                    schema:
+                        description:
+                            The spot Id
+                        example: 30130
+                        format: int64
+                        minimum: 0
+                        type: integer
+                    style: simple
             requestBody:
                 content:
                     application/json:
@@ -598,29 +598,29 @@ paths:
                     description:
                         Unexpected error
             security:
-                - BasicAuth: []
-                - BearerAuth: []
-                - OAuth2:
-                      - CommerceBOM.write
+                -   BasicAuth: []
+                -   BearerAuth: []
+                -   OAuth2:
+                        -   CommerceBOM.write
             summary: Updates a Spot by its ID.
             tags:
-                - Spot
+                -   Spot
     /folders/{id}:
         get:
             operationId: getFolder
             parameters:
-                - in: path
-                  explode: false
-                  name: id
-                  required: true
-                  schema:
-                      description:
-                          The resource Id
-                      example: 30130
-                      format: int64
-                      minimum: 0
-                      type: integer
-                  style: simple
+                -   in: path
+                    explode: false
+                    name: id
+                    required: true
+                    schema:
+                        description:
+                            The resource Id
+                        example: 30130
+                        format: int64
+                        minimum: 0
+                        type: integer
+                    style: simple
             responses:
                 200:
                     content:
@@ -666,25 +666,25 @@ paths:
                     description:
                         Unexpected error
             security:
-                - BasicAuth: []
-                - BearerAuth: []
-                - OAuth2:
-                      - CommerceBOM.read
+                -   BasicAuth: []
+                -   BearerAuth: []
+                -   OAuth2:
+                        -   CommerceBOM.read
             summary: Gets the Folder by ID.
             tags:
-                - Folder
+                -   Folder
     /products:
         get:
             operationId: getProductsPage
             parameters:
-                - in: query
-                  explode: true
-                  name: q
-                  required: false
-                  schema:
-                      example: Product1
-                      type: string
-                  style: form
+                -   in: query
+                    explode: true
+                    name: q
+                    required: false
+                    schema:
+                        example: Product1
+                        type: string
+                    style: form
             responses:
                 200:
                     content:
@@ -734,58 +734,58 @@ paths:
                     description:
                         Unexpected error
             security:
-                - BasicAuth: []
-                - BearerAuth: []
-                - OAuth2:
-                      - CommerceBOM.read
+                -   BasicAuth: []
+                -   BearerAuth: []
+                -   OAuth2:
+                        -   CommerceBOM.read
             summary: Gets a list of Product.
             tags:
-                - Product
+                -   Product
 servers:
-    - description:
-          Liferay Commerce API server
-      url: https://commerce.{environment}.liferay.com/commerce-bom/{basePath}
-      variables:
-          basePath:
-              default: v1.0
-          environment:
-              default: api
-              enum:
-                  - api
-                  - api.dev
-                  - api.uat
-    - description:
-          Liferay Commerce Local Development (Hosts file)
-      url: "{protocol}://{host}:{port}/o/commerce-bom/{basePath}"
-      variables:
-          basePath:
-              default: v1.0
-          host:
-              default: test.dev
-          port:
-              default: "8080"
-              enum:
-                  - "443"
-                  - "8080"
-                  - "8443"
-          protocol:
-              default: http
-              enum:
-                  - http
-                  - https
-    - description:
-          Liferay Commerce Local Development with Ngrok
-      url: "{protocol}://{host}.ngrok.io/o/commerce-bom/{basePath}"
-      variables:
-          basePath:
-              default: v1.0
-          host:
-              default: commerce
-          protocol:
-              default: http
-              enum:
-                  - http
-                  - https
-    - description:
-          SwaggerHub API Auto Mocking
-      url: https://virtserver.swaggerhub.com/liferayinc/commerce-bom/1.0
+    -   description:
+            Liferay Commerce API server
+        url: https://commerce.{environment}.liferay.com/commerce-bom/{basePath}
+        variables:
+            basePath:
+                default: v1.0
+            environment:
+                default: api
+                enum:
+                    -   api
+                    -   api.dev
+                    -   api.uat
+    -   description:
+            Liferay Commerce Local Development (Hosts file)
+        url: "{protocol}://{host}:{port}/o/commerce-bom/{basePath}"
+        variables:
+            basePath:
+                default: v1.0
+            host:
+                default: test.dev
+            port:
+                default: "8080"
+                enum:
+                    -   "443"
+                    -   "8080"
+                    -   "8443"
+            protocol:
+                default: http
+                enum:
+                    -   http
+                    -   https
+    -   description:
+            Liferay Commerce Local Development with Ngrok
+        url: "{protocol}://{host}.ngrok.io/o/commerce-bom/{basePath}"
+        variables:
+            basePath:
+                default: v1.0
+            host:
+                default: commerce
+            protocol:
+                default: http
+                enum:
+                    -   http
+                    -   https
+    -   description:
+            SwaggerHub API Auto Mocking
+        url: https://virtserver.swaggerhub.com/liferayinc/commerce-bom/1.0
