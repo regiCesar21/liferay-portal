@@ -93,43 +93,43 @@ components:
             properties:
                 accountAddresses:
                     example:
-                        - city: Diamond Bar
-                          commerceCountryId: 30130
-                          commerceRegionId: 30234
-                          defaultBilling: true
-                          defaultShipping: true
-                          description:
-                              right stairs, first room on the left
-                          id: 31130
-                          latitude: 33.9976884
-                          longitude: -117.8144595
-                          name: Alessio Antonio Rendina
-                          phoneNumber: (123) 456 7890
-                          street1: 1400 Montefino Ave
-                          street2: 1st floor
-                          street3: suite 200
-                          zip: "91765"
+                        -   city: Diamond Bar
+                            commerceCountryId: 30130
+                            commerceRegionId: 30234
+                            defaultBilling: true
+                            defaultShipping: true
+                            description:
+                                right stairs, first room on the left
+                            id: 31130
+                            latitude: 33.9976884
+                            longitude: -117.8144595
+                            name: Alessio Antonio Rendina
+                            phoneNumber: (123) 456 7890
+                            street1: 1400 Montefino Ave
+                            street2: 1st floor
+                            street3: suite 200
+                            zip: "91765"
                     items:
                         $ref: "#/components/schemas/AccountAddress"
                     type: array
                 accountMembers:
                     example:
-                        - description:
-                              en_US: Account Administrator Description US
-                              hr_HR: Account Administrator Description HR
-                              hu_HU: Account Administrator Description HU
-                        - id: 31256
-                          name: Alessio Antonio Rendina
-                          roles:
+                        -   description:
+                                en_US: Account Administrator Description US
+                                hr_HR: Account Administrator Description HR
+                                hu_HU: Account Administrator Description HU
+                        -   id: 31256
+                            name: Alessio Antonio Rendina
+                            roles:
                     items:
                         $ref: "#/components/schemas/AccountMember"
                     type: array
                 accountOrganizations:
                     example:
-                        - id: 20546
-                          name: Liferay Italy
-                          organizationId: 20433
-                          treePath: /Liferay/Liferay Italy
+                        -   id: 20546
+                            name: Liferay Italy
+                            organizationId: 20433
+                            treePath: /Liferay/Liferay Italy
                     items:
                         $ref: "#/components/schemas/AccountOrganization"
                     type: array
@@ -148,9 +148,9 @@ components:
                     type: integer
                 emailAddresses:
                     example:
-                        - joe.1@commerce.com
-                        - joe.2@commerce.com
-                        - joe.3@commerce.com
+                        -   joe.1@commerce.com
+                        -   joe.2@commerce.com
+                        -   joe.3@commerce.com
                     items:
                         format: email
                         type: string
@@ -184,8 +184,8 @@ components:
                     minimum: 0
                     type: integer
             required:
-                - externalReferenceCode
-                - name
+                -   externalReferenceCode
+                -   name
             type: object
         AccountAddress:
             properties:
@@ -248,10 +248,10 @@ components:
                     example: "91765"
                     type: string
             required:
-                - city
-                - countryISOCode
-                - name
-                - street1
+                -   city
+                -   countryISOCode
+                -   name
+                -   street1
             type: object
         AccountGroup:
             properties:
@@ -271,7 +271,7 @@ components:
                     example: AccountGroup Name
                     type: string
             required:
-                - name
+                -   name
             type: object
         AccountMember:
             properties:
@@ -282,14 +282,14 @@ components:
                     type: integer
                 accountRoles:
                     example:
-                        - description:
-                              en_US: Account Administrator Description US
-                              hr_HR: Account Administrator Description HR
-                              hu_HU: Account Administrator Description HU
-                        - description:
-                              en_US: Order Manager Description US
-                              hr_HR: Order Manager Description HR
-                              hu_HU: Order Manager Description HU
+                        -   description:
+                                en_US: Account Administrator Description US
+                                hr_HR: Account Administrator Description HR
+                                hu_HU: Account Administrator Description HU
+                        -   description:
+                                en_US: Order Manager Description US
+                                hr_HR: Order Manager Description HR
+                                hu_HU: Order Manager Description HU
                     items:
                         $ref: "#/components/schemas/AccountRole"
                     type: array
@@ -311,7 +311,7 @@ components:
                     minimum: 0
                     type: integer
             required:
-                - email
+                -   email
             type: object
         AccountOrganization:
             properties:
@@ -362,7 +362,7 @@ components:
                         hu_HU: Role Title HU
                     type: object
             required:
-                - name
+                -   name
             type: object
         Error:
             properties:
@@ -389,10 +389,10 @@ components:
                     readOnly: true
                     type: integer
             required:
-                - errorCode
-                - errorDescription
-                - message
-                - status
+                -   errorCode
+                -   errorDescription
+                -   message
+                -   status
             type: object
         User:
             properties:
@@ -423,9 +423,9 @@ components:
                         type: string
                     type: array
             required:
-                - email
-                - firstName
-                - lastName
+                -   email
+                -   firstName
+                -   lastName
             type: object
         body:
             properties:
@@ -474,17 +474,17 @@ paths:
         delete:
             operationId: deleteAccountAddressByExternalReferenceCode
             parameters:
-                - in: path
-                  explode: false
-                  name: externalReferenceCode
-                  required: true
-                  schema:
-                      description:
-                          The resource external reference code
-                      example: AB-34098-789-N
-                      minLength: 1
-                      type: string
-                  style: simple
+                -   in: path
+                    explode: false
+                    name: externalReferenceCode
+                    required: true
+                    schema:
+                        description:
+                            The resource external reference code
+                        example: AB-34098-789-N
+                        minLength: 1
+                        type: string
+                    style: simple
             responses:
                 204:
                     description:
@@ -500,27 +500,27 @@ paths:
                     description:
                         Authentication information is missing or invalid
             security:
-                - BasicAuth: []
-                - BearerAuth: []
-                - OAuth2:
-                      - CommerceOpenApiAdmin.write
+                -   BasicAuth: []
+                -   BearerAuth: []
+                -   OAuth2:
+                        -   CommerceOpenApiAdmin.write
             summary: Deletes an AccountAddress by external reference code.
             tags:
-                - AccountAddress
+                -   AccountAddress
         get:
             operationId: getAccountAddressByExternalReferenceCode
             parameters:
-                - in: path
-                  explode: false
-                  name: externalReferenceCode
-                  required: true
-                  schema:
-                      description:
-                          The resource external reference code
-                      example: AB-34098-789-N
-                      minLength: 1
-                      type: string
-                  style: simple
+                -   in: path
+                    explode: false
+                    name: externalReferenceCode
+                    required: true
+                    schema:
+                        description:
+                            The resource external reference code
+                        example: AB-34098-789-N
+                        minLength: 1
+                        type: string
+                    style: simple
             responses:
                 200:
                     content:
@@ -566,27 +566,27 @@ paths:
                     description:
                         Unexpected error
             security:
-                - BasicAuth: []
-                - BearerAuth: []
-                - OAuth2:
-                      - CommerceOpenApiAdmin.read
+                -   BasicAuth: []
+                -   BearerAuth: []
+                -   OAuth2:
+                        -   CommerceOpenApiAdmin.read
             summary: Gets the Addresses by External reference Code
             tags:
-                - AccountAddress
+                -   AccountAddress
         patch:
             operationId: patchAccountAddressByExternalReferenceCode
             parameters:
-                - in: path
-                  explode: false
-                  name: externalReferenceCode
-                  required: true
-                  schema:
-                      description:
-                          The resource external reference code
-                      example: AB-34098-789-N
-                      minLength: 1
-                      type: string
-                  style: simple
+                -   in: path
+                    explode: false
+                    name: externalReferenceCode
+                    required: true
+                    schema:
+                        description:
+                            The resource external reference code
+                        example: AB-34098-789-N
+                        minLength: 1
+                        type: string
+                    style: simple
             requestBody:
                 content:
                     application/json:
@@ -637,29 +637,29 @@ paths:
                     description:
                         Unexpected error
             security:
-                - BasicAuth: []
-                - BearerAuth: []
-                - OAuth2:
-                      - CommerceOpenApiAdmin.write
+                -   BasicAuth: []
+                -   BearerAuth: []
+                -   OAuth2:
+                        -   CommerceOpenApiAdmin.write
             summary: Updates an AccountAddress by external reference code.
             tags:
-                - AccountAddress
+                -   AccountAddress
     /accountAddresses/{id}:
         delete:
             operationId: deleteAccountAddress
             parameters:
-                - in: path
-                  explode: false
-                  name: id
-                  required: true
-                  schema:
-                      description:
-                          The resource Id
-                      example: 30130
-                      format: int64
-                      minimum: 0
-                      type: integer
-                  style: simple
+                -   in: path
+                    explode: false
+                    name: id
+                    required: true
+                    schema:
+                        description:
+                            The resource Id
+                        example: 30130
+                        format: int64
+                        minimum: 0
+                        type: integer
+                    style: simple
             responses:
                 204:
                     description:
@@ -675,27 +675,27 @@ paths:
                     description:
                         Authentication information is missing or invalid
             security:
-                - BasicAuth: []
-                - BearerAuth: []
-                - OAuth2:
-                      - CommerceOpenApiAdmin.write
+                -   BasicAuth: []
+                -   BearerAuth: []
+                -   OAuth2:
+                        -   CommerceOpenApiAdmin.write
             summary: Deletes an Account Address by ID.
             tags:
-                - AccountAddress
+                -   AccountAddress
         get:
             parameters:
-                - in: path
-                  explode: false
-                  name: id
-                  required: true
-                  schema:
-                      description:
-                          The resource Id
-                      example: 30130
-                      format: int64
-                      minimum: 0
-                      type: integer
-                  style: simple
+                -   in: path
+                    explode: false
+                    name: id
+                    required: true
+                    schema:
+                        description:
+                            The resource Id
+                        example: 30130
+                        format: int64
+                        minimum: 0
+                        type: integer
+                    style: simple
             responses:
                 200:
                     content:
@@ -741,27 +741,27 @@ paths:
                     description:
                         Unexpected error
             security:
-                - BasicAuth: []
-                - BearerAuth: []
-                - OAuth2:
-                      - CommerceOpenApiAdmin.read
+                -   BasicAuth: []
+                -   BearerAuth: []
+                -   OAuth2:
+                        -   CommerceOpenApiAdmin.read
             summary: Gets the Addresses by External reference Code
             tags:
-                - AccountAddress
+                -   AccountAddress
         patch:
             parameters:
-                - in: path
-                  explode: false
-                  name: id
-                  required: true
-                  schema:
-                      description:
-                          The resource Id
-                      example: 30130
-                      format: int64
-                      minimum: 0
-                      type: integer
-                  style: simple
+                -   in: path
+                    explode: false
+                    name: id
+                    required: true
+                    schema:
+                        description:
+                            The resource Id
+                        example: 30130
+                        format: int64
+                        minimum: 0
+                        type: integer
+                    style: simple
             requestBody:
                 content:
                     application/json:
@@ -816,27 +816,27 @@ paths:
                     description:
                         Unexpected error
             security:
-                - BasicAuth: []
-                - BearerAuth: []
-                - OAuth2:
-                      - CommerceOpenApiAdmin.write
+                -   BasicAuth: []
+                -   BearerAuth: []
+                -   OAuth2:
+                        -   CommerceOpenApiAdmin.write
             summary: Updates an AccountAddress by external reference code.
             tags:
-                - AccountAddress
+                -   AccountAddress
         put:
             parameters:
-                - in: path
-                  explode: false
-                  name: id
-                  required: true
-                  schema:
-                      description:
-                          The resource Id
-                      example: 30130
-                      format: int64
-                      minimum: 0
-                      type: integer
-                  style: simple
+                -   in: path
+                    explode: false
+                    name: id
+                    required: true
+                    schema:
+                        description:
+                            The resource Id
+                        example: 30130
+                        format: int64
+                        minimum: 0
+                        type: integer
+                    style: simple
             requestBody:
                 content:
                     application/json:
@@ -891,37 +891,37 @@ paths:
                     description:
                         Unexpected error
             security:
-                - BasicAuth: []
-                - BearerAuth: []
-                - OAuth2:
-                      - CommerceOpenApiAdmin.write
+                -   BasicAuth: []
+                -   BearerAuth: []
+                -   OAuth2:
+                        -   CommerceOpenApiAdmin.write
             summary: Updates an AccountAddress by external reference code.
             tags:
-                - AccountAddress
+                -   AccountAddress
     /accountGroups:
         get:
             operationId: getAccountGroupsPage
             parameters:
-                - in: query
-                  name: filter
-                  required: false
-                  schema:
-                      type: string
-                - in: query
-                  name: page
-                  required: false
-                  schema:
-                      type: integer
-                - in: query
-                  name: pageSize
-                  required: false
-                  schema:
-                      type: integer
-                - in: query
-                  name: sort
-                  required: false
-                  schema:
-                      type: string
+                -   in: query
+                    name: filter
+                    required: false
+                    schema:
+                        type: string
+                -   in: query
+                    name: page
+                    required: false
+                    schema:
+                        type: integer
+                -   in: query
+                    name: pageSize
+                    required: false
+                    schema:
+                        type: integer
+                -   in: query
+                    name: sort
+                    required: false
+                    schema:
+                        type: string
             responses:
                 200:
                     content:
@@ -968,13 +968,13 @@ paths:
                     description:
                         Unexpected error
             security:
-                - BasicAuth: []
-                - BearerAuth: []
-                - OAuth2:
-                      - CommerceOpenApiAdmin.read
+                -   BasicAuth: []
+                -   BearerAuth: []
+                -   OAuth2:
+                        -   CommerceOpenApiAdmin.read
             summary: Gets a list of AccountGroups.
             tags:
-                - AccountGroup
+                -   AccountGroup
         post:
             operationId: postAccountGroup
             requestBody:
@@ -1037,28 +1037,28 @@ paths:
                     description:
                         Unexpected error
             security:
-                - BasicAuth: []
-                - BearerAuth: []
-                - OAuth2:
-                      - CommerceOpenApiAdmin.write
+                -   BasicAuth: []
+                -   BearerAuth: []
+                -   OAuth2:
+                        -   CommerceOpenApiAdmin.write
             summary: Creates or updates an AccountGroup.
             tags:
-                - AccountGroup
+                -   AccountGroup
     /accountGroups/by-externalReferenceCode/{externalReferenceCode}:
         delete:
             operationId: deleteAccountGroupByExternalReferenceCode
             parameters:
-                - in: path
-                  explode: false
-                  name: externalReferenceCode
-                  required: true
-                  schema:
-                      description:
-                          The resource external reference code
-                      example: AB-34098-789-N
-                      minLength: 1
-                      type: string
-                  style: simple
+                -   in: path
+                    explode: false
+                    name: externalReferenceCode
+                    required: true
+                    schema:
+                        description:
+                            The resource external reference code
+                        example: AB-34098-789-N
+                        minLength: 1
+                        type: string
+                    style: simple
             responses:
                 204:
                     description:
@@ -1074,27 +1074,27 @@ paths:
                     description:
                         Authentication information is missing or invalid
             security:
-                - BasicAuth: []
-                - BearerAuth: []
-                - OAuth2:
-                      - CommerceOpenApiAdmin.write
+                -   BasicAuth: []
+                -   BearerAuth: []
+                -   OAuth2:
+                        -   CommerceOpenApiAdmin.write
             summary: Deletes an AccountGroup by external reference code.
             tags:
-                - AccountGroup
+                -   AccountGroup
         get:
             operationId: getAccountGroupByExternalReferenceCode
             parameters:
-                - in: path
-                  explode: false
-                  name: externalReferenceCode
-                  required: true
-                  schema:
-                      description:
-                          The resource external reference code
-                      example: AB-34098-789-N
-                      minLength: 1
-                      type: string
-                  style: simple
+                -   in: path
+                    explode: false
+                    name: externalReferenceCode
+                    required: true
+                    schema:
+                        description:
+                            The resource external reference code
+                        example: AB-34098-789-N
+                        minLength: 1
+                        type: string
+                    style: simple
             responses:
                 200:
                     content:
@@ -1140,27 +1140,27 @@ paths:
                     description:
                         Unexpected error
             security:
-                - BasicAuth: []
-                - BearerAuth: []
-                - OAuth2:
-                      - CommerceOpenApiAdmin.read
+                -   BasicAuth: []
+                -   BearerAuth: []
+                -   OAuth2:
+                        -   CommerceOpenApiAdmin.read
             summary: Gets an AccountGroup by external reference code.
             tags:
-                - AccountGroup
+                -   AccountGroup
         patch:
             operationId: patchAccountGroupByExternalReferenceCode
             parameters:
-                - in: path
-                  explode: false
-                  name: externalReferenceCode
-                  required: true
-                  schema:
-                      description:
-                          The resource external reference code
-                      example: AB-34098-789-N
-                      minLength: 1
-                      type: string
-                  style: simple
+                -   in: path
+                    explode: false
+                    name: externalReferenceCode
+                    required: true
+                    schema:
+                        description:
+                            The resource external reference code
+                        example: AB-34098-789-N
+                        minLength: 1
+                        type: string
+                    style: simple
             requestBody:
                 content:
                     application/json:
@@ -1211,28 +1211,28 @@ paths:
                     description:
                         Unexpected error
             security:
-                - BasicAuth: []
-                - BearerAuth: []
-                - OAuth2:
-                      - CommerceOpenApiAdmin.write
+                -   BasicAuth: []
+                -   BearerAuth: []
+                -   OAuth2:
+                        -   CommerceOpenApiAdmin.write
             summary: Updates an AccountGroup by external reference code.
             tags:
-                - AccountGroup
+                -   AccountGroup
     /accountGroups/by-externalReferenceCode/{externalReferenceCode}/accounts:
         post:
             operationId: postAccountGroupByExternalReferenceCodeAccount
             parameters:
-                - in: path
-                  explode: false
-                  name: externalReferenceCode
-                  required: true
-                  schema:
-                      description:
-                          The resource external reference code
-                      example: AB-34098-789-N
-                      minLength: 1
-                      type: string
-                  style: simple
+                -   in: path
+                    explode: false
+                    name: externalReferenceCode
+                    required: true
+                    schema:
+                        description:
+                            The resource external reference code
+                        example: AB-34098-789-N
+                        minLength: 1
+                        type: string
+                    style: simple
             requestBody:
                 content:
                     application/json:
@@ -1286,39 +1286,39 @@ paths:
                     description:
                         Unexpected error
             security:
-                - BasicAuth: []
-                - BearerAuth: []
-                - OAuth2:
-                      - CommerceOpenApiAdmin.write
+                -   BasicAuth: []
+                -   BearerAuth: []
+                -   OAuth2:
+                        -   CommerceOpenApiAdmin.write
             summary: Creates or updates an Account.
             tags:
-                - Account
+                -   Account
     /accountGroups/by-externalReferenceCode/{externalReferenceCode}/accounts/{accountExternalReferenceCode}:
         delete:
             operationId: deleteAccountGroupByExternalReferenceCodeAccount
             parameters:
-                - in: path
-                  explode: false
-                  name: accountExternalReferenceCode
-                  required: true
-                  schema:
-                      description:
-                          The resource external reference code
-                      example: AB-34098-789-N
-                      minLength: 1
-                      type: string
-                  style: simple
-                - in: path
-                  explode: false
-                  name: externalReferenceCode
-                  required: true
-                  schema:
-                      description:
-                          The resource external reference code
-                      example: AB-34098-789-N
-                      minLength: 1
-                      type: string
-                  style: simple
+                -   in: path
+                    explode: false
+                    name: accountExternalReferenceCode
+                    required: true
+                    schema:
+                        description:
+                            The resource external reference code
+                        example: AB-34098-789-N
+                        minLength: 1
+                        type: string
+                    style: simple
+                -   in: path
+                    explode: false
+                    name: externalReferenceCode
+                    required: true
+                    schema:
+                        description:
+                            The resource external reference code
+                        example: AB-34098-789-N
+                        minLength: 1
+                        type: string
+                    style: simple
             responses:
                 201:
                     description:
@@ -1363,29 +1363,29 @@ paths:
                     description:
                         Unexpected error
             security:
-                - BasicAuth: []
-                - BearerAuth: []
-                - OAuth2:
-                      - CommerceOpenApiAdmin.write
+                -   BasicAuth: []
+                -   BearerAuth: []
+                -   OAuth2:
+                        -   CommerceOpenApiAdmin.write
             summary: Creates or updates an Account.
             tags:
-                - Account
+                -   Account
     /accountGroups/{id}:
         delete:
             operationId: deleteAccountGroup
             parameters:
-                - in: path
-                  explode: false
-                  name: id
-                  required: true
-                  schema:
-                      description:
-                          The resource Id
-                      example: 30130
-                      format: int64
-                      minimum: 0
-                      type: integer
-                  style: simple
+                -   in: path
+                    explode: false
+                    name: id
+                    required: true
+                    schema:
+                        description:
+                            The resource Id
+                        example: 30130
+                        format: int64
+                        minimum: 0
+                        type: integer
+                    style: simple
             responses:
                 204:
                     description:
@@ -1401,28 +1401,28 @@ paths:
                     description:
                         Authentication information is missing or invalid
             security:
-                - BasicAuth: []
-                - BearerAuth: []
-                - OAuth2:
-                      - CommerceOpenApiAdmin.write
+                -   BasicAuth: []
+                -   BearerAuth: []
+                -   OAuth2:
+                        -   CommerceOpenApiAdmin.write
             summary: Deletes an AccountGroup by ID.
             tags:
-                - AccountGroup
+                -   AccountGroup
         get:
             operationId: getAccountGroup
             parameters:
-                - in: path
-                  explode: false
-                  name: id
-                  required: true
-                  schema:
-                      description:
-                          The resource Id
-                      example: 30130
-                      format: int64
-                      minimum: 0
-                      type: integer
-                  style: simple
+                -   in: path
+                    explode: false
+                    name: id
+                    required: true
+                    schema:
+                        description:
+                            The resource Id
+                        example: 30130
+                        format: int64
+                        minimum: 0
+                        type: integer
+                    style: simple
             responses:
                 200:
                     content:
@@ -1468,28 +1468,28 @@ paths:
                     description:
                         Unexpected error
             security:
-                - BasicAuth: []
-                - BearerAuth: []
-                - OAuth2:
-                      - CommerceOpenApiAdmin.read
+                -   BasicAuth: []
+                -   BearerAuth: []
+                -   OAuth2:
+                        -   CommerceOpenApiAdmin.read
             summary: Gets an AccountGroup by ID.
             tags:
-                - AccountGroup
+                -   AccountGroup
         patch:
             operationId: patchAccountGroup
             parameters:
-                - in: path
-                  explode: false
-                  name: id
-                  required: true
-                  schema:
-                      description:
-                          The resource Id
-                      example: 30130
-                      format: int64
-                      minimum: 0
-                      type: integer
-                  style: simple
+                -   in: path
+                    explode: false
+                    name: id
+                    required: true
+                    schema:
+                        description:
+                            The resource Id
+                        example: 30130
+                        format: int64
+                        minimum: 0
+                        type: integer
+                    style: simple
             requestBody:
                 content:
                     application/json:
@@ -1540,42 +1540,42 @@ paths:
                     description:
                         Unexpected error
             security:
-                - BasicAuth: []
-                - BearerAuth: []
-                - OAuth2:
-                      - CommerceOpenApiAdmin.write
+                -   BasicAuth: []
+                -   BearerAuth: []
+                -   OAuth2:
+                        -   CommerceOpenApiAdmin.write
             summary: Updates an AccountGroup by ID.
             tags:
-                - AccountGroup
+                -   AccountGroup
     /accounts:
         get:
             operationId: getAccountsPage
             parameters:
-                - in: query
-                  name: filter
-                  required: false
-                  schema:
-                      type: string
-                - in: query
-                  name: page
-                  required: false
-                  schema:
-                      type: integer
-                - in: query
-                  name: pageSize
-                  required: false
-                  schema:
-                      type: integer
-                - in: query
-                  name: search
-                  required: false
-                  schema:
-                      type: string
-                - in: query
-                  name: sort
-                  required: false
-                  schema:
-                      type: string
+                -   in: query
+                    name: filter
+                    required: false
+                    schema:
+                        type: string
+                -   in: query
+                    name: page
+                    required: false
+                    schema:
+                        type: integer
+                -   in: query
+                    name: pageSize
+                    required: false
+                    schema:
+                        type: integer
+                -   in: query
+                    name: search
+                    required: false
+                    schema:
+                        type: string
+                -   in: query
+                    name: sort
+                    required: false
+                    schema:
+                        type: string
             responses:
                 200:
                     content:
@@ -1622,13 +1622,13 @@ paths:
                     description:
                         Unexpected error
             security:
-                - BasicAuth: []
-                - BearerAuth: []
-                - OAuth2:
-                      - CommerceOpenApiAdmin.read
+                -   BasicAuth: []
+                -   BearerAuth: []
+                -   OAuth2:
+                        -   CommerceOpenApiAdmin.read
             summary: Gets a list of Accounts.
             tags:
-                - Account
+                -   Account
         post:
             operationId: postAccount
             requestBody:
@@ -1691,28 +1691,28 @@ paths:
                     description:
                         Unexpected error
             security:
-                - BasicAuth: []
-                - BearerAuth: []
-                - OAuth2:
-                      - CommerceOpenApiAdmin.write
+                -   BasicAuth: []
+                -   BearerAuth: []
+                -   OAuth2:
+                        -   CommerceOpenApiAdmin.write
             summary: Creates or updates an Account.
             tags:
-                - Account
+                -   Account
     /accounts/by-externalReferenceCode/{externalReferenceCode}:
         delete:
             operationId: deleteAccountByExternalReferenceCode
             parameters:
-                - in: path
-                  explode: false
-                  name: externalReferenceCode
-                  required: true
-                  schema:
-                      description:
-                          The resource external reference code
-                      example: AB-34098-789-N
-                      minLength: 1
-                      type: string
-                  style: simple
+                -   in: path
+                    explode: false
+                    name: externalReferenceCode
+                    required: true
+                    schema:
+                        description:
+                            The resource external reference code
+                        example: AB-34098-789-N
+                        minLength: 1
+                        type: string
+                    style: simple
             responses:
                 204:
                     description:
@@ -1728,27 +1728,27 @@ paths:
                     description:
                         Authentication information is missing or invalid
             security:
-                - BasicAuth: []
-                - BearerAuth: []
-                - OAuth2:
-                      - CommerceOpenApiAdmin.write
+                -   BasicAuth: []
+                -   BearerAuth: []
+                -   OAuth2:
+                        -   CommerceOpenApiAdmin.write
             summary: Deletes an Account by external reference code.
             tags:
-                - Account
+                -   Account
         get:
             operationId: getAccountByExternalReferenceCode
             parameters:
-                - in: path
-                  explode: false
-                  name: externalReferenceCode
-                  required: true
-                  schema:
-                      description:
-                          The resource external reference code
-                      example: AB-34098-789-N
-                      minLength: 1
-                      type: string
-                  style: simple
+                -   in: path
+                    explode: false
+                    name: externalReferenceCode
+                    required: true
+                    schema:
+                        description:
+                            The resource external reference code
+                        example: AB-34098-789-N
+                        minLength: 1
+                        type: string
+                    style: simple
             responses:
                 200:
                     content:
@@ -1794,27 +1794,27 @@ paths:
                     description:
                         Unexpected error
             security:
-                - BasicAuth: []
-                - BearerAuth: []
-                - OAuth2:
-                      - CommerceOpenApiAdmin.read
+                -   BasicAuth: []
+                -   BearerAuth: []
+                -   OAuth2:
+                        -   CommerceOpenApiAdmin.read
             summary: Gets an Account by external reference code.
             tags:
-                - Account
+                -   Account
         patch:
             operationId: patchAccountByExternalReferenceCode
             parameters:
-                - in: path
-                  explode: false
-                  name: externalReferenceCode
-                  required: true
-                  schema:
-                      description:
-                          The resource external reference code
-                      example: AB-34098-789-N
-                      minLength: 1
-                      type: string
-                  style: simple
+                -   in: path
+                    explode: false
+                    name: externalReferenceCode
+                    required: true
+                    schema:
+                        description:
+                            The resource external reference code
+                        example: AB-34098-789-N
+                        minLength: 1
+                        type: string
+                    style: simple
             requestBody:
                 content:
                     application/json:
@@ -1865,42 +1865,42 @@ paths:
                     description:
                         Unexpected error
             security:
-                - BasicAuth: []
-                - BearerAuth: []
-                - OAuth2:
-                      - CommerceOpenApiAdmin.write
+                -   BasicAuth: []
+                -   BearerAuth: []
+                -   OAuth2:
+                        -   CommerceOpenApiAdmin.write
             summary: Updates an Account by external reference code.
             tags:
-                - Account
+                -   Account
     /accounts/by-externalReferenceCode/{externalReferenceCode}/accountAddresses:
         get:
             operationId: getAccountByExternalReferenceCodeAccountAddressesPage
             parameters:
-                - in: path
-                  explode: false
-                  name: externalReferenceCode
-                  required: true
-                  schema:
-                      description:
-                          The resource external reference code
-                      example: AB-34098-789-N
-                      minLength: 1
-                      type: string
-                  style: simple
-                - in: query
-                  explode: true
-                  name: page
-                  required: false
-                  schema:
-                      type: integer
-                  style: form
-                - in: query
-                  explode: true
-                  name: pageSize
-                  required: false
-                  schema:
-                      type: integer
-                  style: form
+                -   in: path
+                    explode: false
+                    name: externalReferenceCode
+                    required: true
+                    schema:
+                        description:
+                            The resource external reference code
+                        example: AB-34098-789-N
+                        minLength: 1
+                        type: string
+                    style: simple
+                -   in: query
+                    explode: true
+                    name: page
+                    required: false
+                    schema:
+                        type: integer
+                    style: form
+                -   in: query
+                    explode: true
+                    name: pageSize
+                    required: false
+                    schema:
+                        type: integer
+                    style: form
             responses:
                 200:
                     content:
@@ -1950,27 +1950,27 @@ paths:
                     description:
                         Unexpected error
             security:
-                - BasicAuth: []
-                - BearerAuth: []
-                - OAuth2:
-                      - CommerceOpenApiAdmin.read
+                -   BasicAuth: []
+                -   BearerAuth: []
+                -   OAuth2:
+                        -   CommerceOpenApiAdmin.read
             summary: Gets a list of Addresses related to an Account.
             tags:
-                - AccountAddress
+                -   AccountAddress
         post:
             operationId: postAccountByExternalReferenceCodeAccountAddress
             parameters:
-                - in: path
-                  explode: false
-                  name: externalReferenceCode
-                  required: true
-                  schema:
-                      description:
-                          The resource external reference code
-                      example: AB-34098-789-N
-                      minLength: 1
-                      type: string
-                  style: simple
+                -   in: path
+                    explode: false
+                    name: externalReferenceCode
+                    required: true
+                    schema:
+                        description:
+                            The resource external reference code
+                        example: AB-34098-789-N
+                        minLength: 1
+                        type: string
+                    style: simple
             requestBody:
                 content:
                     application/json:
@@ -2031,42 +2031,42 @@ paths:
                     description:
                         Unexpected error
             security:
-                - BasicAuth: []
-                - BearerAuth: []
-                - OAuth2:
-                      - CommerceOpenApiAdmin.write
+                -   BasicAuth: []
+                -   BearerAuth: []
+                -   OAuth2:
+                        -   CommerceOpenApiAdmin.write
             summary: Creates an Address.
             tags:
-                - AccountAddress
+                -   AccountAddress
     /accounts/by-externalReferenceCode/{externalReferenceCode}/accountMembers:
         get:
             operationId: getAccountByExternalReferenceCodeAccountMembersPage
             parameters:
-                - in: path
-                  explode: false
-                  name: externalReferenceCode
-                  required: true
-                  schema:
-                      description:
-                          The resource external reference code
-                      example: AB-34098-789-N
-                      minLength: 1
-                      type: string
-                  style: simple
-                - in: query
-                  explode: true
-                  name: page
-                  required: false
-                  schema:
-                      type: integer
-                  style: form
-                - in: query
-                  explode: true
-                  name: pageSize
-                  required: false
-                  schema:
-                      type: integer
-                  style: form
+                -   in: path
+                    explode: false
+                    name: externalReferenceCode
+                    required: true
+                    schema:
+                        description:
+                            The resource external reference code
+                        example: AB-34098-789-N
+                        minLength: 1
+                        type: string
+                    style: simple
+                -   in: query
+                    explode: true
+                    name: page
+                    required: false
+                    schema:
+                        type: integer
+                    style: form
+                -   in: query
+                    explode: true
+                    name: pageSize
+                    required: false
+                    schema:
+                        type: integer
+                    style: form
             responses:
                 200:
                     content:
@@ -2116,27 +2116,27 @@ paths:
                     description:
                         Unexpected error
             security:
-                - BasicAuth: []
-                - BearerAuth: []
-                - OAuth2:
-                      - CommerceOpenApiAdmin.read
+                -   BasicAuth: []
+                -   BearerAuth: []
+                -   OAuth2:
+                        -   CommerceOpenApiAdmin.read
             summary: Gets a list of Members related to an Account.
             tags:
-                - AccountMember
+                -   AccountMember
         post:
             operationId: postAccountByExternalReferenceCodeAccountMember
             parameters:
-                - in: path
-                  explode: false
-                  name: externalReferenceCode
-                  required: true
-                  schema:
-                      description:
-                          The resource external reference code
-                      example: AB-34098-789-N
-                      minLength: 1
-                      type: string
-                  style: simple
+                -   in: path
+                    explode: false
+                    name: externalReferenceCode
+                    required: true
+                    schema:
+                        description:
+                            The resource external reference code
+                        example: AB-34098-789-N
+                        minLength: 1
+                        type: string
+                    style: simple
             requestBody:
                 content:
                     application/json:
@@ -2197,28 +2197,28 @@ paths:
                     description:
                         Unexpected error
             security:
-                - BasicAuth: []
-                - BearerAuth: []
-                - OAuth2:
-                      - CommerceOpenApiAdmin.write
+                -   BasicAuth: []
+                -   BearerAuth: []
+                -   OAuth2:
+                        -   CommerceOpenApiAdmin.write
             summary: Creates an Account Member.
             tags:
-                - AccountMember
+                -   AccountMember
     /accounts/by-externalReferenceCode/{externalReferenceCode}/accountMembers/createUser:
         post:
             operationId: postAccountByExternalReferenceCodeAccountMemberCreateUser
             parameters:
-                - in: path
-                  explode: false
-                  name: externalReferenceCode
-                  required: true
-                  schema:
-                      description:
-                          The resource external reference code
-                      example: AB-34098-789-N
-                      minLength: 1
-                      type: string
-                  style: simple
+                -   in: path
+                    explode: false
+                    name: externalReferenceCode
+                    required: true
+                    schema:
+                        description:
+                            The resource external reference code
+                        example: AB-34098-789-N
+                        minLength: 1
+                        type: string
+                    style: simple
             requestBody:
                 content:
                     application/json:
@@ -2279,40 +2279,40 @@ paths:
                     description:
                         Unexpected error
             security:
-                - BasicAuth: []
-                - BearerAuth: []
-                - OAuth2:
-                      - CommerceOpenApiAdmin.write
+                -   BasicAuth: []
+                -   BearerAuth: []
+                -   OAuth2:
+                        -   CommerceOpenApiAdmin.write
             summary: Creates an User.
             tags:
-                - User
+                -   User
     /accounts/by-externalReferenceCode/{externalReferenceCode}/accountMembers/{userId}:
         delete:
             operationId: deleteAccountByExternalReferenceCodeAccountMember
             parameters:
-                - in: path
-                  explode: false
-                  name: externalReferenceCode
-                  required: true
-                  schema:
-                      description:
-                          The resource external reference code
-                      example: AB-34098-789-N
-                      minLength: 1
-                      type: string
-                  style: simple
-                - in: path
-                  explode: false
-                  name: userId
-                  required: true
-                  schema:
-                      description:
-                          The resource Id
-                      example: 30130
-                      format: int64
-                      minimum: 0
-                      type: integer
-                  style: simple
+                -   in: path
+                    explode: false
+                    name: externalReferenceCode
+                    required: true
+                    schema:
+                        description:
+                            The resource external reference code
+                        example: AB-34098-789-N
+                        minLength: 1
+                        type: string
+                    style: simple
+                -   in: path
+                    explode: false
+                    name: userId
+                    required: true
+                    schema:
+                        description:
+                            The resource Id
+                        example: 30130
+                        format: int64
+                        minimum: 0
+                        type: integer
+                    style: simple
             responses:
                 204:
                     description:
@@ -2328,40 +2328,40 @@ paths:
                     description:
                         Authentication information is missing or invalid
             security:
-                - BasicAuth: []
-                - BearerAuth: []
-                - OAuth2:
-                      - CommerceOpenApiAdmin.write
+                -   BasicAuth: []
+                -   BearerAuth: []
+                -   OAuth2:
+                        -   CommerceOpenApiAdmin.write
             summary: Deletes an Account Member by Account external reference code and User
                 ID.
             tags:
-                - AccountMember
+                -   AccountMember
         get:
             operationId: getAccountByExternalReferenceCodeAccountMember
             parameters:
-                - in: path
-                  explode: false
-                  name: externalReferenceCode
-                  required: true
-                  schema:
-                      description:
-                          The resource external reference code
-                      example: AB-34098-789-N
-                      minLength: 1
-                      type: string
-                  style: simple
-                - in: path
-                  explode: false
-                  name: userId
-                  required: true
-                  schema:
-                      description:
-                          The resource Id
-                      example: 30130
-                      format: int64
-                      minimum: 0
-                      type: integer
-                  style: simple
+                -   in: path
+                    explode: false
+                    name: externalReferenceCode
+                    required: true
+                    schema:
+                        description:
+                            The resource external reference code
+                        example: AB-34098-789-N
+                        minLength: 1
+                        type: string
+                    style: simple
+                -   in: path
+                    explode: false
+                    name: userId
+                    required: true
+                    schema:
+                        description:
+                            The resource Id
+                        example: 30130
+                        format: int64
+                        minimum: 0
+                        type: integer
+                    style: simple
             responses:
                 200:
                     content:
@@ -2407,40 +2407,40 @@ paths:
                     description:
                         Unexpected error
             security:
-                - BasicAuth: []
-                - BearerAuth: []
-                - OAuth2:
-                      - CommerceOpenApiAdmin.read
+                -   BasicAuth: []
+                -   BearerAuth: []
+                -   OAuth2:
+                        -   CommerceOpenApiAdmin.read
             summary: Gets an Account Member by Account external reference code and User
                 ID.
             tags:
-                - AccountMember
+                -   AccountMember
         patch:
             operationId: patchAccountByExternalReferenceCodeAccountMember
             parameters:
-                - in: path
-                  explode: false
-                  name: externalReferenceCode
-                  required: true
-                  schema:
-                      description:
-                          The resource external reference code
-                      example: AB-34098-789-N
-                      minLength: 1
-                      type: string
-                  style: simple
-                - in: path
-                  explode: false
-                  name: userId
-                  required: true
-                  schema:
-                      description:
-                          The resource Id
-                      example: 30130
-                      format: int64
-                      minimum: 0
-                      type: integer
-                  style: simple
+                -   in: path
+                    explode: false
+                    name: externalReferenceCode
+                    required: true
+                    schema:
+                        description:
+                            The resource external reference code
+                        example: AB-34098-789-N
+                        minLength: 1
+                        type: string
+                    style: simple
+                -   in: path
+                    explode: false
+                    name: userId
+                    required: true
+                    schema:
+                        description:
+                            The resource Id
+                        example: 30130
+                        format: int64
+                        minimum: 0
+                        type: integer
+                    style: simple
             requestBody:
                 content:
                     application/json:
@@ -2491,43 +2491,43 @@ paths:
                     description:
                         Unexpected error
             security:
-                - BasicAuth: []
-                - BearerAuth: []
-                - OAuth2:
-                      - CommerceOpenApiAdmin.write
+                -   BasicAuth: []
+                -   BearerAuth: []
+                -   OAuth2:
+                        -   CommerceOpenApiAdmin.write
             summary: Updates an Account Member by Account external reference code and User
                 ID.
             tags:
-                - AccountMember
+                -   AccountMember
     /accounts/by-externalReferenceCode/{externalReferenceCode}/accountOrganizations:
         get:
             operationId: getAccountByExternalReferenceCodeAccountOrganizationsPage
             parameters:
-                - in: path
-                  explode: false
-                  name: externalReferenceCode
-                  required: true
-                  schema:
-                      description:
-                          The resource external reference code
-                      example: AB-34098-789-N
-                      minLength: 1
-                      type: string
-                  style: simple
-                - in: query
-                  explode: true
-                  name: page
-                  required: false
-                  schema:
-                      type: integer
-                  style: form
-                - in: query
-                  explode: true
-                  name: pageSize
-                  required: false
-                  schema:
-                      type: integer
-                  style: form
+                -   in: path
+                    explode: false
+                    name: externalReferenceCode
+                    required: true
+                    schema:
+                        description:
+                            The resource external reference code
+                        example: AB-34098-789-N
+                        minLength: 1
+                        type: string
+                    style: simple
+                -   in: query
+                    explode: true
+                    name: page
+                    required: false
+                    schema:
+                        type: integer
+                    style: form
+                -   in: query
+                    explode: true
+                    name: pageSize
+                    required: false
+                    schema:
+                        type: integer
+                    style: form
             responses:
                 200:
                     content:
@@ -2577,27 +2577,27 @@ paths:
                     description:
                         Unexpected error
             security:
-                - BasicAuth: []
-                - BearerAuth: []
-                - OAuth2:
-                      - CommerceOpenApiAdmin.read
+                -   BasicAuth: []
+                -   BearerAuth: []
+                -   OAuth2:
+                        -   CommerceOpenApiAdmin.read
             summary: Gets a list of Organizations related to an Account.
             tags:
-                - AccountOrganization
+                -   AccountOrganization
         post:
             operationId: postAccountByExternalReferenceCodeAccountOrganization
             parameters:
-                - in: path
-                  explode: false
-                  name: externalReferenceCode
-                  required: true
-                  schema:
-                      description:
-                          The resource external reference code
-                      example: AB-34098-789-N
-                      minLength: 1
-                      type: string
-                  style: simple
+                -   in: path
+                    explode: false
+                    name: externalReferenceCode
+                    required: true
+                    schema:
+                        description:
+                            The resource external reference code
+                        example: AB-34098-789-N
+                        minLength: 1
+                        type: string
+                    style: simple
             requestBody:
                 content:
                     application/json:
@@ -2658,40 +2658,40 @@ paths:
                     description:
                         Unexpected error
             security:
-                - BasicAuth: []
-                - BearerAuth: []
-                - OAuth2:
-                      - CommerceOpenApiAdmin.write
+                -   BasicAuth: []
+                -   BearerAuth: []
+                -   OAuth2:
+                        -   CommerceOpenApiAdmin.write
             summary: Creates an Account Organization.
             tags:
-                - AccountOrganization
+                -   AccountOrganization
     /accounts/by-externalReferenceCode/{externalReferenceCode}/accountOrganizations/{organizationId}:
         delete:
             operationId: deleteAccountByExternalReferenceCodeAccountOrganization
             parameters:
-                - in: path
-                  explode: false
-                  name: externalReferenceCode
-                  required: true
-                  schema:
-                      description:
-                          The resource external reference code
-                      example: AB-34098-789-N
-                      minLength: 1
-                      type: string
-                  style: simple
-                - in: path
-                  explode: false
-                  name: organizationId
-                  required: true
-                  schema:
-                      description:
-                          The resource Id
-                      example: 30130
-                      format: int64
-                      minimum: 0
-                      type: integer
-                  style: simple
+                -   in: path
+                    explode: false
+                    name: externalReferenceCode
+                    required: true
+                    schema:
+                        description:
+                            The resource external reference code
+                        example: AB-34098-789-N
+                        minLength: 1
+                        type: string
+                    style: simple
+                -   in: path
+                    explode: false
+                    name: organizationId
+                    required: true
+                    schema:
+                        description:
+                            The resource Id
+                        example: 30130
+                        format: int64
+                        minimum: 0
+                        type: integer
+                    style: simple
             responses:
                 204:
                     description:
@@ -2707,40 +2707,40 @@ paths:
                     description:
                         Authentication information is missing or invalid
             security:
-                - BasicAuth: []
-                - BearerAuth: []
-                - OAuth2:
-                      - CommerceOpenApiAdmin.write
+                -   BasicAuth: []
+                -   BearerAuth: []
+                -   OAuth2:
+                        -   CommerceOpenApiAdmin.write
             summary: Deletes an Account Organization by Account external reference code
                 and Organization ID.
             tags:
-                - AccountOrganization
+                -   AccountOrganization
         get:
             operationId: getAccountByExternalReferenceCodeAccountOrganization
             parameters:
-                - in: path
-                  explode: false
-                  name: externalReferenceCode
-                  required: true
-                  schema:
-                      description:
-                          The resource external reference code
-                      example: AB-34098-789-N
-                      minLength: 1
-                      type: string
-                  style: simple
-                - in: path
-                  explode: false
-                  name: organizationId
-                  required: true
-                  schema:
-                      description:
-                          The resource Id
-                      example: 30130
-                      format: int64
-                      minimum: 0
-                      type: integer
-                  style: simple
+                -   in: path
+                    explode: false
+                    name: externalReferenceCode
+                    required: true
+                    schema:
+                        description:
+                            The resource external reference code
+                        example: AB-34098-789-N
+                        minLength: 1
+                        type: string
+                    style: simple
+                -   in: path
+                    explode: false
+                    name: organizationId
+                    required: true
+                    schema:
+                        description:
+                            The resource Id
+                        example: 30130
+                        format: int64
+                        minimum: 0
+                        type: integer
+                    style: simple
             responses:
                 200:
                     content:
@@ -2786,29 +2786,29 @@ paths:
                     description:
                         Unexpected error
             security:
-                - BasicAuth: []
-                - BearerAuth: []
-                - OAuth2:
-                      - CommerceOpenApiAdmin.read
+                -   BasicAuth: []
+                -   BearerAuth: []
+                -   OAuth2:
+                        -   CommerceOpenApiAdmin.read
             summary: Gets an Account Organization by Account external reference code and
                 Organization ID.
             tags:
-                - AccountOrganization
+                -   AccountOrganization
     /accounts/by-externalReferenceCode/{externalReferenceCode}/logo:
         post:
             operationId: postAccountByExternalReferenceCodeLogo
             parameters:
-                - in: path
-                  explode: false
-                  name: externalReferenceCode
-                  required: true
-                  schema:
-                      description:
-                          The resource external reference code
-                      example: AB-34098-789-N
-                      minLength: 1
-                      type: string
-                  style: simple
+                -   in: path
+                    explode: false
+                    name: externalReferenceCode
+                    required: true
+                    schema:
+                        description:
+                            The resource external reference code
+                        example: AB-34098-789-N
+                        minLength: 1
+                        type: string
+                    style: simple
             requestBody:
                 content:
                     multipart/form-data:
@@ -2859,29 +2859,29 @@ paths:
                     description:
                         Unexpected error
             security:
-                - BasicAuth: []
-                - BearerAuth: []
-                - OAuth2:
-                      - CommerceOpenApiAdmin.write
+                -   BasicAuth: []
+                -   BearerAuth: []
+                -   OAuth2:
+                        -   CommerceOpenApiAdmin.write
             summary: Creates or updates an Account Logo.
             tags:
-                - Account
+                -   Account
     /accounts/{id}:
         delete:
             operationId: deleteAccount
             parameters:
-                - in: path
-                  explode: false
-                  name: id
-                  required: true
-                  schema:
-                      description:
-                          The resource Id
-                      example: 30130
-                      format: int64
-                      minimum: 0
-                      type: integer
-                  style: simple
+                -   in: path
+                    explode: false
+                    name: id
+                    required: true
+                    schema:
+                        description:
+                            The resource Id
+                        example: 30130
+                        format: int64
+                        minimum: 0
+                        type: integer
+                    style: simple
             responses:
                 204:
                     description:
@@ -2897,28 +2897,28 @@ paths:
                     description:
                         Authentication information is missing or invalid
             security:
-                - BasicAuth: []
-                - BearerAuth: []
-                - OAuth2:
-                      - CommerceOpenApiAdmin.write
+                -   BasicAuth: []
+                -   BearerAuth: []
+                -   OAuth2:
+                        -   CommerceOpenApiAdmin.write
             summary: Deletes an Account by ID.
             tags:
-                - Account
+                -   Account
         get:
             operationId: getAccount
             parameters:
-                - in: path
-                  explode: false
-                  name: id
-                  required: true
-                  schema:
-                      description:
-                          The resource Id
-                      example: 30130
-                      format: int64
-                      minimum: 0
-                      type: integer
-                  style: simple
+                -   in: path
+                    explode: false
+                    name: id
+                    required: true
+                    schema:
+                        description:
+                            The resource Id
+                        example: 30130
+                        format: int64
+                        minimum: 0
+                        type: integer
+                    style: simple
             responses:
                 200:
                     content:
@@ -2964,28 +2964,28 @@ paths:
                     description:
                         Unexpected error
             security:
-                - BasicAuth: []
-                - BearerAuth: []
-                - OAuth2:
-                      - CommerceOpenApiAdmin.read
+                -   BasicAuth: []
+                -   BearerAuth: []
+                -   OAuth2:
+                        -   CommerceOpenApiAdmin.read
             summary: Gets an Account by ID.
             tags:
-                - Account
+                -   Account
         patch:
             operationId: patchAccount
             parameters:
-                - in: path
-                  explode: false
-                  name: id
-                  required: true
-                  schema:
-                      description:
-                          The resource Id
-                      example: 30130
-                      format: int64
-                      minimum: 0
-                      type: integer
-                  style: simple
+                -   in: path
+                    explode: false
+                    name: id
+                    required: true
+                    schema:
+                        description:
+                            The resource Id
+                        example: 30130
+                        format: int64
+                        minimum: 0
+                        type: integer
+                    style: simple
             requestBody:
                 content:
                     application/json:
@@ -3036,43 +3036,43 @@ paths:
                     description:
                         Unexpected error
             security:
-                - BasicAuth: []
-                - BearerAuth: []
-                - OAuth2:
-                      - CommerceOpenApiAdmin.write
+                -   BasicAuth: []
+                -   BearerAuth: []
+                -   OAuth2:
+                        -   CommerceOpenApiAdmin.write
             summary: Updates an Account by ID.
             tags:
-                - Account
+                -   Account
     /accounts/{id}/accountAddresses:
         get:
             operationId: getAccountIdAccountAddressesPage
             parameters:
-                - in: path
-                  explode: false
-                  name: id
-                  required: true
-                  schema:
-                      description:
-                          The resource Id
-                      example: 30130
-                      format: int64
-                      minimum: 0
-                      type: integer
-                  style: simple
-                - in: query
-                  explode: true
-                  name: page
-                  required: false
-                  schema:
-                      type: integer
-                  style: form
-                - in: query
-                  explode: true
-                  name: pageSize
-                  required: false
-                  schema:
-                      type: integer
-                  style: form
+                -   in: path
+                    explode: false
+                    name: id
+                    required: true
+                    schema:
+                        description:
+                            The resource Id
+                        example: 30130
+                        format: int64
+                        minimum: 0
+                        type: integer
+                    style: simple
+                -   in: query
+                    explode: true
+                    name: page
+                    required: false
+                    schema:
+                        type: integer
+                    style: form
+                -   in: query
+                    explode: true
+                    name: pageSize
+                    required: false
+                    schema:
+                        type: integer
+                    style: form
             responses:
                 200:
                     content:
@@ -3122,28 +3122,28 @@ paths:
                     description:
                         Unexpected error
             security:
-                - BasicAuth: []
-                - BearerAuth: []
-                - OAuth2:
-                      - CommerceOpenApiAdmin.read
+                -   BasicAuth: []
+                -   BearerAuth: []
+                -   OAuth2:
+                        -   CommerceOpenApiAdmin.read
             summary: Gets a list of Addresses related to an Account.
             tags:
-                - AccountAddress
+                -   AccountAddress
         post:
             operationId: postAccountIdAccountAddress
             parameters:
-                - in: path
-                  explode: false
-                  name: id
-                  required: true
-                  schema:
-                      description:
-                          The resource Id
-                      example: 30130
-                      format: int64
-                      minimum: 0
-                      type: integer
-                  style: simple
+                -   in: path
+                    explode: false
+                    name: id
+                    required: true
+                    schema:
+                        description:
+                            The resource Id
+                        example: 30130
+                        format: int64
+                        minimum: 0
+                        type: integer
+                    style: simple
             requestBody:
                 content:
                     application/json:
@@ -3204,43 +3204,43 @@ paths:
                     description:
                         Unexpected error
             security:
-                - BasicAuth: []
-                - BearerAuth: []
-                - OAuth2:
-                      - CommerceOpenApiAdmin.write
+                -   BasicAuth: []
+                -   BearerAuth: []
+                -   OAuth2:
+                        -   CommerceOpenApiAdmin.write
             summary: Creates an Address.
             tags:
-                - AccountAddress
+                -   AccountAddress
     /accounts/{id}/accountMembers:
         get:
             operationId: getAccountIdAccountMembersPage
             parameters:
-                - in: path
-                  explode: false
-                  name: id
-                  required: true
-                  schema:
-                      description:
-                          The resource Id
-                      example: 30130
-                      format: int64
-                      minimum: 0
-                      type: integer
-                  style: simple
-                - in: query
-                  explode: true
-                  name: page
-                  required: false
-                  schema:
-                      type: integer
-                  style: form
-                - in: query
-                  explode: true
-                  name: pageSize
-                  required: false
-                  schema:
-                      type: integer
-                  style: form
+                -   in: path
+                    explode: false
+                    name: id
+                    required: true
+                    schema:
+                        description:
+                            The resource Id
+                        example: 30130
+                        format: int64
+                        minimum: 0
+                        type: integer
+                    style: simple
+                -   in: query
+                    explode: true
+                    name: page
+                    required: false
+                    schema:
+                        type: integer
+                    style: form
+                -   in: query
+                    explode: true
+                    name: pageSize
+                    required: false
+                    schema:
+                        type: integer
+                    style: form
             responses:
                 200:
                     content:
@@ -3290,28 +3290,28 @@ paths:
                     description:
                         Unexpected error
             security:
-                - BasicAuth: []
-                - BearerAuth: []
-                - OAuth2:
-                      - CommerceOpenApiAdmin.read
+                -   BasicAuth: []
+                -   BearerAuth: []
+                -   OAuth2:
+                        -   CommerceOpenApiAdmin.read
             summary: Gets a list of Members related to an Account.
             tags:
-                - AccountMember
+                -   AccountMember
         post:
             operationId: postAccountIdAccountMember
             parameters:
-                - in: path
-                  explode: false
-                  name: id
-                  required: true
-                  schema:
-                      description:
-                          The resource Id
-                      example: 30130
-                      format: int64
-                      minimum: 0
-                      type: integer
-                  style: simple
+                -   in: path
+                    explode: false
+                    name: id
+                    required: true
+                    schema:
+                        description:
+                            The resource Id
+                        example: 30130
+                        format: int64
+                        minimum: 0
+                        type: integer
+                    style: simple
             requestBody:
                 content:
                     application/json:
@@ -3372,41 +3372,41 @@ paths:
                     description:
                         Unexpected error
             security:
-                - BasicAuth: []
-                - BearerAuth: []
-                - OAuth2:
-                      - CommerceOpenApiAdmin.write
+                -   BasicAuth: []
+                -   BearerAuth: []
+                -   OAuth2:
+                        -   CommerceOpenApiAdmin.write
             summary: Creates an Account Member.
             tags:
-                - AccountMember
+                -   AccountMember
     /accounts/{id}/accountMembers/{userId}:
         delete:
             operationId: deleteAccountIdAccountMember
             parameters:
-                - in: path
-                  explode: false
-                  name: id
-                  required: true
-                  schema:
-                      description:
-                          The resource Id
-                      example: 30130
-                      format: int64
-                      minimum: 0
-                      type: integer
-                  style: simple
-                - in: path
-                  explode: false
-                  name: userId
-                  required: true
-                  schema:
-                      description:
-                          The resource Id
-                      example: 30130
-                      format: int64
-                      minimum: 0
-                      type: integer
-                  style: simple
+                -   in: path
+                    explode: false
+                    name: id
+                    required: true
+                    schema:
+                        description:
+                            The resource Id
+                        example: 30130
+                        format: int64
+                        minimum: 0
+                        type: integer
+                    style: simple
+                -   in: path
+                    explode: false
+                    name: userId
+                    required: true
+                    schema:
+                        description:
+                            The resource Id
+                        example: 30130
+                        format: int64
+                        minimum: 0
+                        type: integer
+                    style: simple
             responses:
                 204:
                     description:
@@ -3422,40 +3422,40 @@ paths:
                     description:
                         Authentication information is missing or invalid
             security:
-                - BasicAuth: []
-                - BearerAuth: []
-                - OAuth2:
-                      - CommerceOpenApiAdmin.write
+                -   BasicAuth: []
+                -   BearerAuth: []
+                -   OAuth2:
+                        -   CommerceOpenApiAdmin.write
             summary: Deletes an Account Member by Account ID and User ID.
             tags:
-                - AccountMember
+                -   AccountMember
         get:
             operationId: getAccountIdAccountMember
             parameters:
-                - in: path
-                  explode: false
-                  name: id
-                  required: true
-                  schema:
-                      description:
-                          The resource Id
-                      example: 30130
-                      format: int64
-                      minimum: 0
-                      type: integer
-                  style: simple
-                - in: path
-                  explode: false
-                  name: userId
-                  required: true
-                  schema:
-                      description:
-                          The resource Id
-                      example: 30130
-                      format: int64
-                      minimum: 0
-                      type: integer
-                  style: simple
+                -   in: path
+                    explode: false
+                    name: id
+                    required: true
+                    schema:
+                        description:
+                            The resource Id
+                        example: 30130
+                        format: int64
+                        minimum: 0
+                        type: integer
+                    style: simple
+                -   in: path
+                    explode: false
+                    name: userId
+                    required: true
+                    schema:
+                        description:
+                            The resource Id
+                        example: 30130
+                        format: int64
+                        minimum: 0
+                        type: integer
+                    style: simple
             responses:
                 200:
                     content:
@@ -3501,40 +3501,40 @@ paths:
                     description:
                         Unexpected error
             security:
-                - BasicAuth: []
-                - BearerAuth: []
-                - OAuth2:
-                      - CommerceOpenApiAdmin.read
+                -   BasicAuth: []
+                -   BearerAuth: []
+                -   OAuth2:
+                        -   CommerceOpenApiAdmin.read
             summary: Gets an Account Member by Account ID and User ID.
             tags:
-                - AccountMember
+                -   AccountMember
         patch:
             operationId: patchAccountIdAccountMember
             parameters:
-                - in: path
-                  explode: false
-                  name: id
-                  required: true
-                  schema:
-                      description:
-                          The resource Id
-                      example: 30130
-                      format: int64
-                      minimum: 0
-                      type: integer
-                  style: simple
-                - in: path
-                  explode: false
-                  name: userId
-                  required: true
-                  schema:
-                      description:
-                          The resource Id
-                      example: 30130
-                      format: int64
-                      minimum: 0
-                      type: integer
-                  style: simple
+                -   in: path
+                    explode: false
+                    name: id
+                    required: true
+                    schema:
+                        description:
+                            The resource Id
+                        example: 30130
+                        format: int64
+                        minimum: 0
+                        type: integer
+                    style: simple
+                -   in: path
+                    explode: false
+                    name: userId
+                    required: true
+                    schema:
+                        description:
+                            The resource Id
+                        example: 30130
+                        format: int64
+                        minimum: 0
+                        type: integer
+                    style: simple
             requestBody:
                 content:
                     application/json:
@@ -3585,43 +3585,43 @@ paths:
                     description:
                         Unexpected error
             security:
-                - BasicAuth: []
-                - BearerAuth: []
-                - OAuth2:
-                      - CommerceOpenApiAdmin.write
+                -   BasicAuth: []
+                -   BearerAuth: []
+                -   OAuth2:
+                        -   CommerceOpenApiAdmin.write
             summary: Updates an Account Member by Account ID and User ID.
             tags:
-                - AccountMember
+                -   AccountMember
     /accounts/{id}/accountOrganizations:
         get:
             operationId: getAccountIdAccountOrganizationsPage
             parameters:
-                - in: path
-                  explode: false
-                  name: id
-                  required: true
-                  schema:
-                      description:
-                          The resource Id
-                      example: 30130
-                      format: int64
-                      minimum: 0
-                      type: integer
-                  style: simple
-                - in: query
-                  explode: true
-                  name: page
-                  required: false
-                  schema:
-                      type: integer
-                  style: form
-                - in: query
-                  explode: true
-                  name: pageSize
-                  required: false
-                  schema:
-                      type: integer
-                  style: form
+                -   in: path
+                    explode: false
+                    name: id
+                    required: true
+                    schema:
+                        description:
+                            The resource Id
+                        example: 30130
+                        format: int64
+                        minimum: 0
+                        type: integer
+                    style: simple
+                -   in: query
+                    explode: true
+                    name: page
+                    required: false
+                    schema:
+                        type: integer
+                    style: form
+                -   in: query
+                    explode: true
+                    name: pageSize
+                    required: false
+                    schema:
+                        type: integer
+                    style: form
             responses:
                 200:
                     content:
@@ -3671,28 +3671,28 @@ paths:
                     description:
                         Unexpected error
             security:
-                - BasicAuth: []
-                - BearerAuth: []
-                - OAuth2:
-                      - CommerceOpenApiAdmin.read
+                -   BasicAuth: []
+                -   BearerAuth: []
+                -   OAuth2:
+                        -   CommerceOpenApiAdmin.read
             summary: Gets a list of Organizations related to an Account.
             tags:
-                - AccountOrganization
+                -   AccountOrganization
         post:
             operationId: postAccountIdAccountOrganization
             parameters:
-                - in: path
-                  explode: false
-                  name: id
-                  required: true
-                  schema:
-                      description:
-                          The resource Id
-                      example: 30130
-                      format: int64
-                      minimum: 0
-                      type: integer
-                  style: simple
+                -   in: path
+                    explode: false
+                    name: id
+                    required: true
+                    schema:
+                        description:
+                            The resource Id
+                        example: 30130
+                        format: int64
+                        minimum: 0
+                        type: integer
+                    style: simple
             requestBody:
                 content:
                     application/json:
@@ -3753,41 +3753,41 @@ paths:
                     description:
                         Unexpected error
             security:
-                - BasicAuth: []
-                - BearerAuth: []
-                - OAuth2:
-                      - CommerceOpenApiAdmin.write
+                -   BasicAuth: []
+                -   BearerAuth: []
+                -   OAuth2:
+                        -   CommerceOpenApiAdmin.write
             summary: Creates an Account Organization.
             tags:
-                - AccountOrganization
+                -   AccountOrganization
     /accounts/{id}/accountOrganizations/{organizationId}:
         delete:
             operationId: deleteAccountIdAccountOrganization
             parameters:
-                - in: path
-                  explode: false
-                  name: id
-                  required: true
-                  schema:
-                      description:
-                          The resource Id
-                      example: 30130
-                      format: int64
-                      minimum: 0
-                      type: integer
-                  style: simple
-                - in: path
-                  explode: false
-                  name: organizationId
-                  required: true
-                  schema:
-                      description:
-                          The resource Id
-                      example: 30130
-                      format: int64
-                      minimum: 0
-                      type: integer
-                  style: simple
+                -   in: path
+                    explode: false
+                    name: id
+                    required: true
+                    schema:
+                        description:
+                            The resource Id
+                        example: 30130
+                        format: int64
+                        minimum: 0
+                        type: integer
+                    style: simple
+                -   in: path
+                    explode: false
+                    name: organizationId
+                    required: true
+                    schema:
+                        description:
+                            The resource Id
+                        example: 30130
+                        format: int64
+                        minimum: 0
+                        type: integer
+                    style: simple
             responses:
                 204:
                     description:
@@ -3803,40 +3803,40 @@ paths:
                     description:
                         Authentication information is missing or invalid
             security:
-                - BasicAuth: []
-                - BearerAuth: []
-                - OAuth2:
-                      - CommerceOpenApiAdmin.write
+                -   BasicAuth: []
+                -   BearerAuth: []
+                -   OAuth2:
+                        -   CommerceOpenApiAdmin.write
             summary: Deletes an Account Member by Account ID and Organization ID.
             tags:
-                - AccountOrganization
+                -   AccountOrganization
         get:
             operationId: getAccountIdAccountOrganization
             parameters:
-                - in: path
-                  explode: false
-                  name: id
-                  required: true
-                  schema:
-                      description:
-                          The resource Id
-                      example: 30130
-                      format: int64
-                      minimum: 0
-                      type: integer
-                  style: simple
-                - in: path
-                  explode: false
-                  name: organizationId
-                  required: true
-                  schema:
-                      description:
-                          The resource Id
-                      example: 30130
-                      format: int64
-                      minimum: 0
-                      type: integer
-                  style: simple
+                -   in: path
+                    explode: false
+                    name: id
+                    required: true
+                    schema:
+                        description:
+                            The resource Id
+                        example: 30130
+                        format: int64
+                        minimum: 0
+                        type: integer
+                    style: simple
+                -   in: path
+                    explode: false
+                    name: organizationId
+                    required: true
+                    schema:
+                        description:
+                            The resource Id
+                        example: 30130
+                        format: int64
+                        minimum: 0
+                        type: integer
+                    style: simple
             responses:
                 200:
                     content:
@@ -3882,29 +3882,29 @@ paths:
                     description:
                         Unexpected error
             security:
-                - BasicAuth: []
-                - BearerAuth: []
-                - OAuth2:
-                      - CommerceOpenApiAdmin.read
+                -   BasicAuth: []
+                -   BearerAuth: []
+                -   OAuth2:
+                        -   CommerceOpenApiAdmin.read
             summary: Gets an Account Organization by Account ID and Organization ID.
             tags:
-                - AccountOrganization
+                -   AccountOrganization
     /accounts/{id}/logo:
         post:
             operationId: postAccountLogo
             parameters:
-                - in: path
-                  explode: false
-                  name: id
-                  required: true
-                  schema:
-                      description:
-                          The resource Id
-                      example: 30130
-                      format: int64
-                      minimum: 0
-                      type: integer
-                  style: simple
+                -   in: path
+                    explode: false
+                    name: id
+                    required: true
+                    schema:
+                        description:
+                            The resource Id
+                        example: 30130
+                        format: int64
+                        minimum: 0
+                        type: integer
+                    style: simple
             requestBody:
                 content:
                     multipart/form-data:
@@ -3955,61 +3955,61 @@ paths:
                     description:
                         Unexpected error
             security:
-                - BasicAuth: []
-                - BearerAuth: []
-                - OAuth2:
-                      - CommerceOpenApiAdmin.write
+                -   BasicAuth: []
+                -   BearerAuth: []
+                -   OAuth2:
+                        -   CommerceOpenApiAdmin.write
             summary: Creates or updates an Account Logo.
             tags:
-                - Account
+                -   Account
 servers:
-    - description:
-          Liferay Commerce API server
-      url: https://commerce.{environment}.liferay.com/commerce-admin/{basePath}
-      variables:
-          basePath:
-              default: v1.0
-          environment:
-              default: api
-              enum:
-                  - api
-                  - api.dev
-                  - api.uat
-    - description:
-          Liferay Commerce Local Development (Hosts file)
-      url: "{protocol}://{host}:{port}/o/commerce-admin/{basePath}"
-      variables:
-          basePath:
-              default: v2.0
-          host:
-              default: test.dev
-          port:
-              default: "8080"
-              enum:
-                  - "443"
-                  - "8080"
-                  - "8443"
-          protocol:
-              default: http
-              enum:
-                  - http
-                  - https
-    - description:
-          Liferay Commerce Local Development with Ngrok
-      url: "{protocol}://{host}.ngrok.io/o/commerce-admin/{basePath}"
-      variables:
-          basePath:
-              default: v1.0
-          host:
-              default: commerce
-          protocol:
-              default: http
-              enum:
-                  - http
-                  - https
-    - description:
-          SwaggerHub API Auto Mocking
-      url: https://virtserver.swaggerhub.com/liferay6/commerce-admin-account/v1.0
-    - description:
-          SwaggerHub API Auto Mocking
-      url: https://virtserver.swaggerhub.com/liferayinc/commerce-admin-account/v1.0
+    -   description:
+            Liferay Commerce API server
+        url: https://commerce.{environment}.liferay.com/commerce-admin/{basePath}
+        variables:
+            basePath:
+                default: v1.0
+            environment:
+                default: api
+                enum:
+                    -   api
+                    -   api.dev
+                    -   api.uat
+    -   description:
+            Liferay Commerce Local Development (Hosts file)
+        url: "{protocol}://{host}:{port}/o/commerce-admin/{basePath}"
+        variables:
+            basePath:
+                default: v2.0
+            host:
+                default: test.dev
+            port:
+                default: "8080"
+                enum:
+                    -   "443"
+                    -   "8080"
+                    -   "8443"
+            protocol:
+                default: http
+                enum:
+                    -   http
+                    -   https
+    -   description:
+            Liferay Commerce Local Development with Ngrok
+        url: "{protocol}://{host}.ngrok.io/o/commerce-admin/{basePath}"
+        variables:
+            basePath:
+                default: v1.0
+            host:
+                default: commerce
+            protocol:
+                default: http
+                enum:
+                    -   http
+                    -   https
+    -   description:
+            SwaggerHub API Auto Mocking
+        url: https://virtserver.swaggerhub.com/liferay6/commerce-admin-account/v1.0
+    -   description:
+            SwaggerHub API Auto Mocking
+        url: https://virtserver.swaggerhub.com/liferayinc/commerce-admin-account/v1.0
