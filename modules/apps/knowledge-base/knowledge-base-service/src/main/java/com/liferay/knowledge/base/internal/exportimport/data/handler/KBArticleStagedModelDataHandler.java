@@ -9,7 +9,6 @@ import com.liferay.document.library.kernel.exception.DuplicateFileEntryException
 import com.liferay.document.library.kernel.exception.NoSuchFileException;
 import com.liferay.document.library.kernel.model.DLFileEntry;
 import com.liferay.document.library.kernel.service.DLFileEntryLocalService;
-import com.liferay.exportimport.content.processor.ExportImportContentProcessor;
 import com.liferay.exportimport.kernel.lar.BaseStagedModelDataHandler;
 import com.liferay.exportimport.kernel.lar.ExportImportPathUtil;
 import com.liferay.exportimport.kernel.lar.PortletDataContext;
@@ -297,7 +296,7 @@ public class KBArticleStagedModelDataHandler
 		Map<String, FileEntry> fileEntries = new HashMap<>();
 
 		for (FileEntry fileEntry :
-			importedKBArticle.getAttachmentsFileEntries()) {
+				importedKBArticle.getAttachmentsFileEntries()) {
 
 			fileEntries.put(fileEntry.getUuid(), fileEntry);
 		}
@@ -320,7 +319,7 @@ public class KBArticleStagedModelDataHandler
 
 			if (importedFileEntry != null) {
 				if (importedFileEntry.getFolderId() !=
-					importedKBArticle.getAttachmentsFolderId()) {
+						importedKBArticle.getAttachmentsFolderId()) {
 
 					importedFileEntry.setClassName(KBArticle.class.getName());
 					importedFileEntry.setClassPK(
@@ -338,13 +337,13 @@ public class KBArticleStagedModelDataHandler
 			String binPath = dlFileEntryElement.attributeValue("bin-path");
 
 			try (InputStream inputStream = _getKBArticalAttachmentInputStream(
-				binPath, portletDataContext, fileEntry)) {
+					binPath, portletDataContext, fileEntry)) {
 
 				if (inputStream == null) {
 					if (_log.isWarnEnabled()) {
 						_log.warn(
 							"Unable to import attachment for file entry " +
-							fileEntry.getFileEntryId());
+								fileEntry.getFileEntryId());
 					}
 
 					continue;
