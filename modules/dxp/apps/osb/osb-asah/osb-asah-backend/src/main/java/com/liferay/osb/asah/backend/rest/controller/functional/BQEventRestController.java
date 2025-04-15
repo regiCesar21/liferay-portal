@@ -10,6 +10,8 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.liferay.osb.asah.common.entity.BQEvent;
 import com.liferay.osb.asah.common.repository.BQEventRepository;
 
+import java.util.UUID;
+
 import org.json.JSONArray;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -36,8 +38,14 @@ public class BQEventRestController {
 		JSONArray jsonArray = new JSONArray(json);
 
 		jsonArray.forEach(
-			jsonObject -> _bqEventRepository.insert(
-				_objectMapper.convertValue(jsonObject, BQEvent.class)));
+			jsonObject -> {
+				BQEvent BQEvent = _objectMapper.convertValue(
+					jsonObject, BQEvent.class);
+
+				BQEvent.setId(String.valueOf(UUID.randomUUID()));
+
+				_bqEventRepository.insert(BQEvent);
+			});
 
 		return new ResponseEntity(HttpStatus.NO_CONTENT);
 	}
