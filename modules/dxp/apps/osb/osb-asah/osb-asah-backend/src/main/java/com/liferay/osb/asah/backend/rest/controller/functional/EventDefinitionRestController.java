@@ -14,6 +14,7 @@ import com.liferay.osb.asah.common.repository.EventAttributeDefinitionRepository
 import com.liferay.osb.asah.common.repository.EventDefinitionRepository;
 
 import java.util.Collections;
+import java.util.Optional;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -40,16 +41,28 @@ import org.springframework.web.bind.annotation.RestController;
 public class EventDefinitionRestController {
 
 	@PostMapping
-	public ResponseEntity postEventDefinition(@RequestBody String json) {
+	public ResponseEntity postEventDefinitions(@RequestBody String json) {
 		JSONArray eventDefinitionJSONArray = new JSONArray(json);
 
 		for (int i = 0; i < eventDefinitionJSONArray.length(); i++) {
 			JSONObject eventDefinitionJSONObject =
 				eventDefinitionJSONArray.getJSONObject(i);
 
-			EventDefinition eventDefinition = _eventDefinitionRepository.save(
-				_objectMapper.convertValue(
-					eventDefinitionJSONObject, EventDefinition.class));
+			EventDefinition eventDefinition = _objectMapper.convertValue(
+				eventDefinitionJSONObject, EventDefinition.class);
+
+			Optional<EventDefinition> eventDefinitionOptional =
+				_eventDefinitionRepository.findByName(
+					eventDefinition.getName());
+
+			if (eventDefinitionOptional.isPresent()) {
+				EventDefinition existingEventDefinition =
+					eventDefinitionOptional.get();
+
+				eventDefinition.setId(existingEventDefinition.getId());
+			}
+
+			eventDefinition = _eventDefinitionRepository.save(eventDefinition);
 
 			_saveEventAttributeDefinitions(
 				eventDefinition.getId(), eventDefinitionJSONObject);
@@ -73,6 +86,19 @@ public class EventDefinitionRestController {
 				_objectMapper.convertValue(
 					eventAttributeDefinitionJSONArray.getJSONObject(i),
 					EventAttributeDefinition.class);
+
+			Optional<EventAttributeDefinition>
+				eventAttributeDefinitionOptional =
+					_eventAttributeDefinitionRepository.findByName(
+						eventAttributeDefinition.getName());
+
+			if (eventAttributeDefinitionOptional.isPresent()) {
+				EventAttributeDefinition existingEventAttributeDefinition =
+					eventAttributeDefinitionOptional.get();
+
+				eventAttributeDefinition.setId(
+					existingEventAttributeDefinition.getId());
+			}
 
 			eventAttributeDefinition.
 				setEventDefinitionEventAttributeDefinitions(
