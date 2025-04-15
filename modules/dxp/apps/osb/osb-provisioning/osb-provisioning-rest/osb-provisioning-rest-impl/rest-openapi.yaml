@@ -320,23 +320,23 @@ paths:
             description:
                 Unassigns roles from the contact for the account.
             parameters:
-                - in: path
-                  name: accountKey
-                  required: true
-                  schema:
-                      type: string
-                - in: path
-                  name: contactEmailAddress
-                  required: true
-                  schema:
-                      type: string
-                - in: query
-                  name: contactRoleNames
-                  required: true
-                  schema:
-                      items:
-                          type: string
-                      type: array
+                -   in: path
+                    name: accountKey
+                    required: true
+                    schema:
+                        type: string
+                -   in: path
+                    name: contactEmailAddress
+                    required: true
+                    schema:
+                        type: string
+                -   in: query
+                    name: contactRoleNames
+                    required: true
+                    schema:
+                        items:
+                            type: string
+                        type: array
             responses:
                 204:
                     content:
@@ -347,31 +347,31 @@ paths:
             description:
                 Assigns roles to the contact for the account.
             parameters:
-                - in: path
-                  name: accountKey
-                  required: true
-                  schema:
-                      type: string
-                - in: path
-                  name: contactEmailAddress
-                  required: true
-                  schema:
-                      type: string
-                - in: query
-                  name: contactRoleNames
-                  required: true
-                  schema:
-                      items:
-                          type: string
-                      type: array
-                - in: query
-                  name: firstName
-                  schema:
-                      type: string
-                - in: query
-                  name: lastName
-                  schema:
-                      type: string
+                -   in: path
+                    name: accountKey
+                    required: true
+                    schema:
+                        type: string
+                -   in: path
+                    name: contactEmailAddress
+                    required: true
+                    schema:
+                        type: string
+                -   in: query
+                    name: contactRoleNames
+                    required: true
+                    schema:
+                        items:
+                            type: string
+                        type: array
+                -   in: query
+                    name: firstName
+                    schema:
+                        type: string
+                -   in: query
+                    name: lastName
+                    schema:
+                        type: string
             responses:
                 204:
                     content:
@@ -384,31 +384,31 @@ paths:
                 Retrieves the account's license keys. Results can be paginated, filtered, searched, and sorted.
             operationId: getAccountAccountKeyLicenseKeysPage
             parameters:
-                - in: path
-                  name: accountKey
-                  required: true
-                  schema:
-                      type: string
-                - in: query
-                  name: filter
-                  schema:
-                      type: string
-                - in: query
-                  name: page
-                  schema:
-                      type: integer
-                - in: query
-                  name: pageSize
-                  schema:
-                      type: integer
-                - in: query
-                  name: search
-                  schema:
-                      type: string
-                - in: query
-                  name: sort
-                  schema:
-                      type: string
+                -   in: path
+                    name: accountKey
+                    required: true
+                    schema:
+                        type: string
+                -   in: query
+                    name: filter
+                    schema:
+                        type: string
+                -   in: query
+                    name: page
+                    schema:
+                        type: integer
+                -   in: query
+                    name: pageSize
+                    schema:
+                        type: integer
+                -   in: query
+                    name: search
+                    schema:
+                        type: string
+                -   in: query
+                    name: sort
+                    schema:
+                        type: string
             responses:
                 200:
                     content:
@@ -428,11 +428,11 @@ paths:
                 Generates license keys for an account.
             operationId: postAccountAccountKeyLicenseKeysPage
             parameters:
-                - in: path
-                  name: accountKey
-                  required: true
-                  schema:
-                      type: string
+                -   in: path
+                    name: accountKey
+                    required: true
+                    schema:
+                        type: string
             requestBody:
                 content:
                     application/json:
@@ -466,19 +466,19 @@ paths:
                 Exports a CSV file of the account's license key details. Results can be filtered and sorted.
             operationId: getAccountAccountKeyLicenseKeyExport
             parameters:
-                - in: path
-                  name: accountKey
-                  required: true
-                  schema:
-                      type: string
-                - in: query
-                  name: filter
-                  schema:
-                      type: string
-                - in: query
-                  name: sort
-                  schema:
-                      type: string
+                -   in: path
+                    name: accountKey
+                    required: true
+                    schema:
+                        type: string
+                -   in: query
+                    name: filter
+                    schema:
+                        type: string
+                -   in: query
+                    name: sort
+                    schema:
+                        type: string
             responses:
                 200:
                     content:
@@ -493,16 +493,16 @@ paths:
                 Retrieves the license key generation options for the given account.
             operationId: getAccountAccountKeyProductGroupProductGroupNameGenerateForm
             parameters:
-                - in: path
-                  name: accountKey
-                  required: true
-                  schema:
-                      type: string
-                - in: path
-                  name: productGroupName
-                  required: true
-                  schema:
-                      type: string
+                -   in: path
+                    name: accountKey
+                    required: true
+                    schema:
+                        type: string
+                -   in: path
+                    name: productGroupName
+                    required: true
+                    schema:
+                        type: string
             responses:
                 200:
                     content:
@@ -518,33 +518,33 @@ paths:
             description:
                 Retrieves the product group's common license based on date and environment.
             parameters:
-                - in: path
-                  name: accountKey
-                  required: true
-                  schema:
-                      type: string
-                - in: path
-                  name: productGroupName
-                  required: true
-                  schema:
-                      type: string
-                - in: path
-                  name: productEnvironmentName
-                  required: true
-                  schema:
-                      type: string
-                - in: query
-                  name: dateEnd
-                  required: true
-                  schema:
-                      format: date-time
-                      type: string
-                - in: query
-                  name: dateStart
-                  required: true
-                  schema:
-                      format: date-time
-                      type: string
+                -   in: path
+                    name: accountKey
+                    required: true
+                    schema:
+                        type: string
+                -   in: path
+                    name: productGroupName
+                    required: true
+                    schema:
+                        type: string
+                -   in: path
+                    name: productEnvironmentName
+                    required: true
+                    schema:
+                        type: string
+                -   in: query
+                    name: dateEnd
+                    required: true
+                    schema:
+                        format: date-time
+                        type: string
+                -   in: query
+                    name: dateStart
+                    required: true
+                    schema:
+                        format: date-time
+                        type: string
             responses:
                 200:
                     content:
@@ -559,21 +559,21 @@ paths:
                 Downloads the account's product development license key.
             operationId: getAccountAccountKeyProductGroupProductGroupNameProductVersionDevelopmentLicenseKey
             parameters:
-                - in: path
-                  name: accountKey
-                  required: true
-                  schema:
-                      type: string
-                - in: path
-                  name: productGroupName
-                  required: true
-                  schema:
-                      type: string
-                - in: path
-                  name: productVersion
-                  required: true
-                  schema:
-                      type: string
+                -   in: path
+                    name: accountKey
+                    required: true
+                    schema:
+                        type: string
+                -   in: path
+                    name: productGroupName
+                    required: true
+                    schema:
+                        type: string
+                -   in: path
+                    name: productVersion
+                    required: true
+                    schema:
+                        type: string
             responses:
                 200:
                     content:
@@ -589,16 +589,16 @@ paths:
                 year. Also includes the current usage at the time of invoking this API.
             operationId: getAccountAccountKeyProductProductKeyUsage
             parameters:
-                - in: path
-                  name: accountKey
-                  required: true
-                  schema:
-                      type: string
-                - in: path
-                  name: productKey
-                  required: true
-                  schema:
-                      type: string
+                -   in: path
+                    name: accountKey
+                    required: true
+                    schema:
+                        type: string
+                -   in: path
+                    name: productKey
+                    required: true
+                    schema:
+                        type: string
             responses:
                 200:
                     content:
@@ -616,11 +616,11 @@ paths:
             description:
                 Check if the provided email address exists or can be added.
             parameters:
-                - in: path
-                  name: contactEmailAddress
-                  required: true
-                  schema:
-                      type: string
+                -   in: path
+                    name: contactEmailAddress
+                    required: true
+                    schema:
+                        type: string
             responses:
                 200:
                     content:
@@ -639,14 +639,14 @@ paths:
                 Activates license keys.
             operationId: putLicenseKeyActivate
             parameters:
-                - in: query
-                  name: licenseKeyIds
-                  required: true
-                  schema:
-                      items:
-                          format: int64
-                          type: integer
-                      type: array
+                -   in: query
+                    name: licenseKeyIds
+                    required: true
+                    schema:
+                        items:
+                            format: int64
+                            type: integer
+                        type: array
             responses:
                 204:
                     content:
@@ -659,14 +659,14 @@ paths:
                 Deactivates license keys.
             operationId: putLicenseKeyDeactivate
             parameters:
-                - in: query
-                  name: licenseKeyIds
-                  required: true
-                  schema:
-                      items:
-                          format: int64
-                          type: integer
-                      type: array
+                -   in: query
+                    name: licenseKeyIds
+                    required: true
+                    schema:
+                        items:
+                            format: int64
+                            type: integer
+                        type: array
             responses:
                 204:
                     content:
@@ -679,14 +679,14 @@ paths:
                 Downloads an aggregated license key of the specified license keys.
             operationId: getLicenseKeyDownload
             parameters:
-                - in: query
-                  name: licenseKeyIds
-                  required: true
-                  schema:
-                      items:
-                          format: int64
-                          type: integer
-                      type: array
+                -   in: query
+                    name: licenseKeyIds
+                    required: true
+                    schema:
+                        items:
+                            format: int64
+                            type: integer
+                        type: array
             responses:
                 200:
                     content:
@@ -701,14 +701,14 @@ paths:
                 Downloads a zip file that includes all of the specified license keys.
             operationId: getLicenseKeyDownloadZip
             parameters:
-                - in: query
-                  name: licenseKeyIds
-                  required: true
-                  schema:
-                      items:
-                          format: int64
-                          type: integer
-                      type: array
+                -   in: query
+                    name: licenseKeyIds
+                    required: true
+                    schema:
+                        items:
+                            format: int64
+                            type: integer
+                        type: array
             responses:
                 200:
                     content:
@@ -723,14 +723,14 @@ paths:
                 Exports a CSV file of the license key details.
             operationId: getLicenseKeyExport
             parameters:
-                - in: query
-                  name: licenseKeyIds
-                  required: true
-                  schema:
-                      items:
-                          format: int64
-                          type: integer
-                      type: array
+                -   in: query
+                    name: licenseKeyIds
+                    required: true
+                    schema:
+                        items:
+                            format: int64
+                            type: integer
+                        type: array
             responses:
                 200:
                     content:
@@ -777,14 +777,14 @@ paths:
                 Unsubscribes from license keys.
             operationId: deleteLicenseKeySubscription
             parameters:
-                - in: query
-                  name: licenseKeyIds
-                  required: true
-                  schema:
-                      items:
-                          format: int64
-                          type: integer
-                      type: array
+                -   in: query
+                    name: licenseKeyIds
+                    required: true
+                    schema:
+                        items:
+                            format: int64
+                            type: integer
+                        type: array
             responses:
                 204:
                     content:
@@ -796,12 +796,12 @@ paths:
                 Gets the subscriptions to the license keys.
             operationId: getLicenseKeySubscription
             parameters:
-                - in: query
-                  name: licenseKeyId
-                  required: true
-                  schema:
-                      format: int64
-                      type: integer
+                -   in: query
+                    name: licenseKeyId
+                    required: true
+                    schema:
+                        format: int64
+                        type: integer
             responses:
                 200:
                     content:
@@ -817,14 +817,14 @@ paths:
                 Subscribes to license keys.
             operationId: putLicenseKeySubscription
             parameters:
-                - in: query
-                  name: licenseKeyIds
-                  required: true
-                  schema:
-                      items:
-                          format: int64
-                          type: integer
-                      type: array
+                -   in: query
+                    name: licenseKeyIds
+                    required: true
+                    schema:
+                        items:
+                            format: int64
+                            type: integer
+                        type: array
             responses:
                 204:
                     content:
@@ -836,12 +836,12 @@ paths:
             description:
                 Downloads the license key.
             parameters:
-                - in: path
-                  name: licenseKeyId
-                  required: true
-                  schema:
-                      format: int64
-                      type: integer
+                -   in: path
+                    name: licenseKeyId
+                    required: true
+                    schema:
+                        format: int64
+                        type: integer
             responses:
                 200:
                     content:
@@ -856,21 +856,21 @@ paths:
                 Retrives the account's product development license key download.
             operationId: getProductGroupProductGroupNameDevelopmentLicenseKey
             parameters:
-                - in: path
-                  name: productGroupName
-                  required: true
-                  schema:
-                      type: string
-                - in: query
-                  name: accountKey
-                  required: true
-                  schema:
-                      type: string
-                - in: query
-                  name: productVersion
-                  required: true
-                  schema:
-                      type: string
+                -   in: path
+                    name: productGroupName
+                    required: true
+                    schema:
+                        type: string
+                -   in: query
+                    name: accountKey
+                    required: true
+                    schema:
+                        type: string
+                -   in: query
+                    name: productVersion
+                    required: true
+                    schema:
+                        type: string
             responses:
                 200:
                     content:

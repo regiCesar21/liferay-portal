@@ -343,9 +343,9 @@ components:
                         A universal identifier to reference this contact.
                     type: string
             required:
-                - emailAddress
-                - firstName
-                - lastName
+                -   emailAddress
+                -   firstName
+                -   lastName
             type: object
         ContactAccountView:
             description:
@@ -427,8 +427,8 @@ components:
                     enum: ["Account Customer", "Account Worker", "Team"]
                     type: string
             required:
-                - name
-                - type
+                -   name
+                -   type
             type: object
         ContactRolePermission:
             properties:
@@ -576,7 +576,7 @@ components:
                     enum: ["Approved", "Inactive"]
                     type: string
             required:
-                - name
+                -   name
             type: object
         ExternalLink:
             description:
@@ -610,9 +610,9 @@ components:
                     readOnly: true
                     type: string
             required:
-                - domain
-                - entityId
-                - entityName
+                -   domain
+                -   entityId
+                -   entityName
             type: object
         Note:
             description:
@@ -701,9 +701,9 @@ components:
                         A universal identifier to reference this user.
                     type: string
             required:
-                - emailAddress
-                - firstName
-                - lastName
+                -   emailAddress
+                -   firstName
+                -   lastName
             type: object
         Phone:
             description:
@@ -813,7 +813,7 @@ components:
                         type: string
                     type: object
             required:
-                - name
+                -   name
             type: object
         ProductConsumption:
             description:
@@ -864,7 +864,7 @@ components:
                     format: date-time
                     type: string
             required:
-                - productKey
+                -   productKey
             type: object
         ProductConsumptionPermission:
             properties:
@@ -1073,7 +1073,7 @@ components:
                         $ref: "#/components/schemas/TeamRole"
                     type: array
             required:
-                - name
+                -   name
             type: object
         TeamPermission:
             properties:
@@ -1127,8 +1127,8 @@ components:
                     enum: ["Account", "Regular"]
                     type: string
             required:
-                - name
-                - type
+                -   name
+                -   type
             type: object
         TeamRolePermission:
             properties:
@@ -1165,26 +1165,26 @@ paths:
                 Retrieves the accounts. Results can be paginated, filtered, searched, and sorted.
             operationId: getAccountsPage
             parameters:
-                - in: query
-                  name: filter
-                  schema:
-                      type: string
-                - in: query
-                  name: page
-                  schema:
-                      type: integer
-                - in: query
-                  name: pageSize
-                  schema:
-                      type: integer
-                - in: query
-                  name: search
-                  schema:
-                      type: string
-                - in: query
-                  name: sort
-                  schema:
-                      type: string
+                -   in: query
+                    name: filter
+                    schema:
+                        type: string
+                -   in: query
+                    name: page
+                    schema:
+                        type: integer
+                -   in: query
+                    name: pageSize
+                    schema:
+                        type: integer
+                -   in: query
+                    name: search
+                    schema:
+                        type: string
+                -   in: query
+                    name: sort
+                    schema:
+                        type: string
             responses:
                 200:
                     content:
@@ -1202,8 +1202,8 @@ paths:
         post:
             operationId: postAccount
             parameters:
-                - $ref: "#/components/parameters/AgentName"
-                - $ref: "#/components/parameters/AgentUID"
+                -   $ref: "#/components/parameters/AgentName"
+                -   $ref: "#/components/parameters/AgentUID"
             requestBody:
                 content:
                     application/json:
@@ -1229,29 +1229,29 @@ paths:
                 Retrieves the account by the external link.
             operationId: getAccountByExternalLinkDomainEntityNameEntityPage
             parameters:
-                - in: path
-                  name: domain
-                  required: true
-                  schema:
-                      type: string
-                - in: path
-                  name: entityName
-                  required: true
-                  schema:
-                      type: string
-                - in: path
-                  name: entityId
-                  required: true
-                  schema:
-                      type: string
-                - in: query
-                  name: page
-                  schema:
-                      type: integer
-                - in: query
-                  name: pageSize
-                  schema:
-                      type: integer
+                -   in: path
+                    name: domain
+                    required: true
+                    schema:
+                        type: string
+                -   in: path
+                    name: entityName
+                    required: true
+                    schema:
+                        type: string
+                -   in: path
+                    name: entityId
+                    required: true
+                    schema:
+                        type: string
+                -   in: query
+                    name: page
+                    schema:
+                        type: integer
+                -   in: query
+                    name: pageSize
+                    schema:
+                        type: integer
             responses:
                 200:
                     content:
@@ -1272,18 +1272,18 @@ paths:
                 Retrieves the account entitlement definitions. Results can be paginated, filtered, searched, and sorted.
             operationId: getAccountEntitlementDefinitionsPage
             parameters:
-                - in: query
-                  name: page
-                  schema:
-                      type: integer
-                - in: query
-                  name: pageSize
-                  schema:
-                      type: integer
-                - in: query
-                  name: search
-                  schema:
-                      type: string
+                -   in: query
+                    name: page
+                    schema:
+                        type: integer
+                -   in: query
+                    name: pageSize
+                    schema:
+                        type: integer
+                -   in: query
+                    name: search
+                    schema:
+                        type: string
             responses:
                 200:
                     content:
@@ -1301,8 +1301,8 @@ paths:
         post:
             operationId: postAccountEntitlementDefinition
             parameters:
-                - $ref: "#/components/parameters/AgentName"
-                - $ref: "#/components/parameters/AgentUID"
+                -   $ref: "#/components/parameters/AgentName"
+                -   $ref: "#/components/parameters/AgentUID"
             requestBody:
                 content:
                     application/json:
@@ -1326,13 +1326,13 @@ paths:
         delete:
             operationId: deleteAccount
             parameters:
-                - $ref: "#/components/parameters/AgentName"
-                - $ref: "#/components/parameters/AgentUID"
-                - in: path
-                  name: accountKey
-                  required: true
-                  schema:
-                      type: string
+                -   $ref: "#/components/parameters/AgentName"
+                -   $ref: "#/components/parameters/AgentUID"
+                -   in: path
+                    name: accountKey
+                    required: true
+                    schema:
+                        type: string
             responses:
                 204:
                     content:
@@ -1344,11 +1344,11 @@ paths:
                 Retrieves the account.
             operationId: getAccount
             parameters:
-                - in: path
-                  name: accountKey
-                  required: true
-                  schema:
-                      type: string
+                -   in: path
+                    name: accountKey
+                    required: true
+                    schema:
+                        type: string
             responses:
                 200:
                     content:
@@ -1362,13 +1362,13 @@ paths:
         put:
             operationId: putAccount
             parameters:
-                - $ref: "#/components/parameters/AgentName"
-                - $ref: "#/components/parameters/AgentUID"
-                - in: path
-                  name: accountKey
-                  required: true
-                  schema:
-                      type: string
+                -   $ref: "#/components/parameters/AgentName"
+                -   $ref: "#/components/parameters/AgentUID"
+                -   in: path
+                    name: accountKey
+                    required: true
+                    schema:
+                        type: string
             requestBody:
                 content:
                     application/json:
@@ -1392,13 +1392,13 @@ paths:
         delete:
             operationId: deleteAccountAccountPermission
             parameters:
-                - $ref: "#/components/parameters/AgentName"
-                - $ref: "#/components/parameters/AgentUID"
-                - in: path
-                  name: accountKey
-                  required: true
-                  schema:
-                      type: string
+                -   $ref: "#/components/parameters/AgentName"
+                -   $ref: "#/components/parameters/AgentUID"
+                -   in: path
+                    name: accountKey
+                    required: true
+                    schema:
+                        type: string
             requestBody:
                 content:
                     application/json:
@@ -1416,13 +1416,13 @@ paths:
         put:
             operationId: putAccountAccountPermission
             parameters:
-                - $ref: "#/components/parameters/AgentName"
-                - $ref: "#/components/parameters/AgentUID"
-                - in: path
-                  name: accountKey
-                  required: true
-                  schema:
-                      type: string
+                -   $ref: "#/components/parameters/AgentName"
+                -   $ref: "#/components/parameters/AgentUID"
+                -   in: path
+                    name: accountKey
+                    required: true
+                    schema:
+                        type: string
             requestBody:
                 content:
                     application/json:
@@ -1443,19 +1443,19 @@ paths:
                 Retrieves the teams assigned to the account.
             operationId: getAccountAccountKeyAssignedTeamsPage
             parameters:
-                - in: path
-                  name: accountKey
-                  required: true
-                  schema:
-                      type: string
-                - in: query
-                  name: page
-                  schema:
-                      type: integer
-                - in: query
-                  name: pageSize
-                  schema:
-                      type: integer
+                -   in: path
+                    name: accountKey
+                    required: true
+                    schema:
+                        type: string
+                -   in: query
+                    name: page
+                    schema:
+                        type: integer
+                -   in: query
+                    name: pageSize
+                    schema:
+                        type: integer
             responses:
                 200:
                     content:
@@ -1476,25 +1476,25 @@ paths:
                 Unassigns roles from the team for the account.
             operationId: deleteAccountAssignedTeamTeamKeyRole
             parameters:
-                - $ref: "#/components/parameters/AgentName"
-                - $ref: "#/components/parameters/AgentUID"
-                - in: path
-                  name: accountKey
-                  required: true
-                  schema:
-                      type: string
-                - in: path
-                  name: teamKey
-                  required: true
-                  schema:
-                      type: string
-                - in: query
-                  name: teamRoleKeys
-                  required: true
-                  schema:
-                      items:
-                          type: string
-                      type: array
+                -   $ref: "#/components/parameters/AgentName"
+                -   $ref: "#/components/parameters/AgentUID"
+                -   in: path
+                    name: accountKey
+                    required: true
+                    schema:
+                        type: string
+                -   in: path
+                    name: teamKey
+                    required: true
+                    schema:
+                        type: string
+                -   in: query
+                    name: teamRoleKeys
+                    required: true
+                    schema:
+                        items:
+                            type: string
+                        type: array
             responses:
                 204:
                     content:
@@ -1506,24 +1506,24 @@ paths:
                 Retrieves the roles of the team for the account.
             operationId: getAccountAccountKeyAssignedTeamTeamKeyRolesPage
             parameters:
-                - in: path
-                  name: accountKey
-                  required: true
-                  schema:
-                      type: string
-                - in: path
-                  name: teamKey
-                  required: true
-                  schema:
-                      type: string
-                - in: query
-                  name: page
-                  schema:
-                      type: integer
-                - in: query
-                  name: pageSize
-                  schema:
-                      type: integer
+                -   in: path
+                    name: accountKey
+                    required: true
+                    schema:
+                        type: string
+                -   in: path
+                    name: teamKey
+                    required: true
+                    schema:
+                        type: string
+                -   in: query
+                    name: page
+                    schema:
+                        type: integer
+                -   in: query
+                    name: pageSize
+                    schema:
+                        type: integer
             responses:
                 200:
                     content:
@@ -1543,25 +1543,25 @@ paths:
                 Assigns roles to the team for the account.
             operationId: putAccountAssignedTeamTeamKeyRole
             parameters:
-                - $ref: "#/components/parameters/AgentName"
-                - $ref: "#/components/parameters/AgentUID"
-                - in: path
-                  name: accountKey
-                  required: true
-                  schema:
-                      type: string
-                - in: path
-                  name: teamKey
-                  required: true
-                  schema:
-                      type: string
-                - in: query
-                  name: teamRoleKeys
-                  required: true
-                  schema:
-                      items:
-                          type: string
-                      type: array
+                -   $ref: "#/components/parameters/AgentName"
+                -   $ref: "#/components/parameters/AgentUID"
+                -   in: path
+                    name: accountKey
+                    required: true
+                    schema:
+                        type: string
+                -   in: path
+                    name: teamKey
+                    required: true
+                    schema:
+                        type: string
+                -   in: query
+                    name: teamRoleKeys
+                    required: true
+                    schema:
+                        items:
+                            type: string
+                        type: array
             responses:
                 204:
                     content:
@@ -1574,19 +1574,19 @@ paths:
                 Retrieves the account's audit history.
             operationId: getAccountAccountKeyAuditEntriesPage
             parameters:
-                - in: path
-                  name: accountKey
-                  required: true
-                  schema:
-                      type: string
-                - in: query
-                  name: page
-                  schema:
-                      type: integer
-                - in: query
-                  name: pageSize
-                  schema:
-                      type: integer
+                -   in: path
+                    name: accountKey
+                    required: true
+                    schema:
+                        type: string
+                -   in: query
+                    name: page
+                    schema:
+                        type: integer
+                -   in: query
+                    name: pageSize
+                    schema:
+                        type: integer
             responses:
                 200:
                     content:
@@ -1604,13 +1604,13 @@ paths:
         post:
             operationId: postAccountAccountKeyAuditEntriesPage
             parameters:
-                - $ref: "#/components/parameters/AgentName"
-                - $ref: "#/components/parameters/AgentUID"
-                - in: path
-                  name: accountKey
-                  required: true
-                  schema:
-                      type: string
+                -   $ref: "#/components/parameters/AgentName"
+                -   $ref: "#/components/parameters/AgentUID"
+                -   in: path
+                    name: accountKey
+                    required: true
+                    schema:
+                        type: string
             requestBody:
                 content:
                     application/json:
@@ -1644,19 +1644,19 @@ paths:
                 Retrieves the account's child accounts.
             operationId: getAccountChildAccountsPage
             parameters:
-                - in: path
-                  name: accountKey
-                  required: true
-                  schema:
-                      type: string
-                - in: query
-                  name: page
-                  schema:
-                      type: integer
-                - in: query
-                  name: pageSize
-                  schema:
-                      type: integer
+                -   in: path
+                    name: accountKey
+                    required: true
+                    schema:
+                        type: string
+                -   in: query
+                    name: page
+                    schema:
+                        type: integer
+                -   in: query
+                    name: pageSize
+                    schema:
+                        type: integer
             responses:
                 200:
                     content:
@@ -1677,19 +1677,19 @@ paths:
                 Retrieves the account's customer and worker contacts.
             operationId: getAccountAccountKeyContactsPage
             parameters:
-                - in: path
-                  name: accountKey
-                  required: true
-                  schema:
-                      type: string
-                - in: query
-                  name: page
-                  schema:
-                      type: integer
-                - in: query
-                  name: pageSize
-                  schema:
-                      type: integer
+                -   in: path
+                    name: accountKey
+                    required: true
+                    schema:
+                        type: string
+                -   in: query
+                    name: page
+                    schema:
+                        type: integer
+                -   in: query
+                    name: pageSize
+                    schema:
+                        type: integer
             responses:
                 200:
                     content:
@@ -1710,25 +1710,25 @@ paths:
                 Unassigns roles from the contact for the account.
             operationId: deleteAccountContactByEmailAddresContactEmailAddressRole
             parameters:
-                - $ref: "#/components/parameters/AgentName"
-                - $ref: "#/components/parameters/AgentUID"
-                - in: path
-                  name: accountKey
-                  required: true
-                  schema:
-                      type: string
-                - in: path
-                  name: contactEmailAddress
-                  required: true
-                  schema:
-                      type: string
-                - in: query
-                  name: contactRoleKeys
-                  required: true
-                  schema:
-                      items:
-                          type: string
-                      type: array
+                -   $ref: "#/components/parameters/AgentName"
+                -   $ref: "#/components/parameters/AgentUID"
+                -   in: path
+                    name: accountKey
+                    required: true
+                    schema:
+                        type: string
+                -   in: path
+                    name: contactEmailAddress
+                    required: true
+                    schema:
+                        type: string
+                -   in: query
+                    name: contactRoleKeys
+                    required: true
+                    schema:
+                        items:
+                            type: string
+                        type: array
             responses:
                 204:
                     content:
@@ -1740,24 +1740,24 @@ paths:
                 Retrieves the account's contact's customer and worker contact roles.
             operationId: getAccountAccountKeyContactByEmailAddresContactEmailAddressRolesPage
             parameters:
-                - in: path
-                  name: accountKey
-                  required: true
-                  schema:
-                      type: string
-                - in: path
-                  name: contactEmailAddress
-                  required: true
-                  schema:
-                      type: string
-                - in: query
-                  name: page
-                  schema:
-                      type: integer
-                - in: query
-                  name: pageSize
-                  schema:
-                      type: integer
+                -   in: path
+                    name: accountKey
+                    required: true
+                    schema:
+                        type: string
+                -   in: path
+                    name: contactEmailAddress
+                    required: true
+                    schema:
+                        type: string
+                -   in: query
+                    name: page
+                    schema:
+                        type: integer
+                -   in: query
+                    name: pageSize
+                    schema:
+                        type: integer
             responses:
                 200:
                     content:
@@ -1777,25 +1777,25 @@ paths:
                 Assigns roles to the contact for the account.
             operationId: putAccountContactByEmailAddresContactEmailAddressRole
             parameters:
-                - $ref: "#/components/parameters/AgentName"
-                - $ref: "#/components/parameters/AgentUID"
-                - in: path
-                  name: accountKey
-                  required: true
-                  schema:
-                      type: string
-                - in: path
-                  name: contactEmailAddress
-                  required: true
-                  schema:
-                      type: string
-                - in: query
-                  name: contactRoleKeys
-                  required: true
-                  schema:
-                      items:
-                          type: string
-                      type: array
+                -   $ref: "#/components/parameters/AgentName"
+                -   $ref: "#/components/parameters/AgentUID"
+                -   in: path
+                    name: accountKey
+                    required: true
+                    schema:
+                        type: string
+                -   in: path
+                    name: contactEmailAddress
+                    required: true
+                    schema:
+                        type: string
+                -   in: query
+                    name: contactRoleKeys
+                    required: true
+                    schema:
+                        items:
+                            type: string
+                        type: array
             responses:
                 204:
                     content:
@@ -1808,25 +1808,25 @@ paths:
                 Unassigns roles from the contact for the account.
             operationId: deleteAccountContactByUuidContactUuidRole
             parameters:
-                - $ref: "#/components/parameters/AgentName"
-                - $ref: "#/components/parameters/AgentUID"
-                - in: path
-                  name: accountKey
-                  required: true
-                  schema:
-                      type: string
-                - in: path
-                  name: contactUuid
-                  required: true
-                  schema:
-                      type: string
-                - in: query
-                  name: contactRoleKeys
-                  required: true
-                  schema:
-                      items:
-                          type: string
-                      type: array
+                -   $ref: "#/components/parameters/AgentName"
+                -   $ref: "#/components/parameters/AgentUID"
+                -   in: path
+                    name: accountKey
+                    required: true
+                    schema:
+                        type: string
+                -   in: path
+                    name: contactUuid
+                    required: true
+                    schema:
+                        type: string
+                -   in: query
+                    name: contactRoleKeys
+                    required: true
+                    schema:
+                        items:
+                            type: string
+                        type: array
             responses:
                 204:
                     content:
@@ -1838,24 +1838,24 @@ paths:
                 Retrieves the account's contact's customer and worker contact roles.
             operationId: getAccountAccountKeyContactByUuidContactUuidRolesPage
             parameters:
-                - in: path
-                  name: accountKey
-                  required: true
-                  schema:
-                      type: string
-                - in: path
-                  name: contactUuid
-                  required: true
-                  schema:
-                      type: string
-                - in: query
-                  name: page
-                  schema:
-                      type: integer
-                - in: query
-                  name: pageSize
-                  schema:
-                      type: integer
+                -   in: path
+                    name: accountKey
+                    required: true
+                    schema:
+                        type: string
+                -   in: path
+                    name: contactUuid
+                    required: true
+                    schema:
+                        type: string
+                -   in: query
+                    name: page
+                    schema:
+                        type: integer
+                -   in: query
+                    name: pageSize
+                    schema:
+                        type: integer
             responses:
                 200:
                     content:
@@ -1875,25 +1875,25 @@ paths:
                 Assigns roles to the contact for the account.
             operationId: putAccountContactByUuidContactUuidRole
             parameters:
-                - $ref: "#/components/parameters/AgentName"
-                - $ref: "#/components/parameters/AgentUID"
-                - in: path
-                  name: accountKey
-                  required: true
-                  schema:
-                      type: string
-                - in: path
-                  name: contactUuid
-                  required: true
-                  schema:
-                      type: string
-                - in: query
-                  name: contactRoleKeys
-                  required: true
-                  schema:
-                      items:
-                          type: string
-                      type: array
+                -   $ref: "#/components/parameters/AgentName"
+                -   $ref: "#/components/parameters/AgentUID"
+                -   in: path
+                    name: accountKey
+                    required: true
+                    schema:
+                        type: string
+                -   in: path
+                    name: contactUuid
+                    required: true
+                    schema:
+                        type: string
+                -   in: query
+                    name: contactRoleKeys
+                    required: true
+                    schema:
+                        items:
+                            type: string
+                        type: array
             responses:
                 204:
                     content:
@@ -1906,19 +1906,19 @@ paths:
                 Retrieves the account's customer contacts.
             operationId: getAccountAccountKeyCustomerContactsPage
             parameters:
-                - in: path
-                  name: accountKey
-                  required: true
-                  schema:
-                      type: string
-                - in: query
-                  name: page
-                  schema:
-                      type: integer
-                - in: query
-                  name: pageSize
-                  schema:
-                      type: integer
+                -   in: path
+                    name: accountKey
+                    required: true
+                    schema:
+                        type: string
+                -   in: query
+                    name: page
+                    schema:
+                        type: integer
+                -   in: query
+                    name: pageSize
+                    schema:
+                        type: integer
             responses:
                 200:
                     content:
@@ -1939,20 +1939,20 @@ paths:
                 Unassigns customer contacts from the account.
             operationId: deleteAccountCustomerContactByEmailAddres
             parameters:
-                - $ref: "#/components/parameters/AgentName"
-                - $ref: "#/components/parameters/AgentUID"
-                - in: path
-                  name: accountKey
-                  required: true
-                  schema:
-                      type: string
-                - in: query
-                  name: contactEmailAddresses
-                  required: true
-                  schema:
-                      items:
-                          type: string
-                      type: array
+                -   $ref: "#/components/parameters/AgentName"
+                -   $ref: "#/components/parameters/AgentUID"
+                -   in: path
+                    name: accountKey
+                    required: true
+                    schema:
+                        type: string
+                -   in: query
+                    name: contactEmailAddresses
+                    required: true
+                    schema:
+                        items:
+                            type: string
+                        type: array
             responses:
                 204:
                     content:
@@ -1965,24 +1965,24 @@ paths:
                 Retrieves the account's contact's customer contact roles.
             operationId: getAccountAccountKeyCustomerContactByEmailAddresContactEmailAddressRolesPage
             parameters:
-                - in: path
-                  name: accountKey
-                  required: true
-                  schema:
-                      type: string
-                - in: path
-                  name: contactEmailAddress
-                  required: true
-                  schema:
-                      type: string
-                - in: query
-                  name: page
-                  schema:
-                      type: integer
-                - in: query
-                  name: pageSize
-                  schema:
-                      type: integer
+                -   in: path
+                    name: accountKey
+                    required: true
+                    schema:
+                        type: string
+                -   in: path
+                    name: contactEmailAddress
+                    required: true
+                    schema:
+                        type: string
+                -   in: query
+                    name: page
+                    schema:
+                        type: integer
+                -   in: query
+                    name: pageSize
+                    schema:
+                        type: integer
             responses:
                 200:
                     content:
@@ -2003,20 +2003,20 @@ paths:
                 Unassigns contacts from the account.
             operationId: deleteAccountCustomerContactByUuid
             parameters:
-                - $ref: "#/components/parameters/AgentName"
-                - $ref: "#/components/parameters/AgentUID"
-                - in: path
-                  name: accountKey
-                  required: true
-                  schema:
-                      type: string
-                - in: query
-                  name: contactUuids
-                  required: true
-                  schema:
-                      items:
-                          type: string
-                      type: array
+                -   $ref: "#/components/parameters/AgentName"
+                -   $ref: "#/components/parameters/AgentUID"
+                -   in: path
+                    name: accountKey
+                    required: true
+                    schema:
+                        type: string
+                -   in: query
+                    name: contactUuids
+                    required: true
+                    schema:
+                        items:
+                            type: string
+                        type: array
             responses:
                 204:
                     content:
@@ -2029,24 +2029,24 @@ paths:
                 Retrieves the account's contact's customer contact roles.
             operationId: getAccountAccountKeyCustomerContactByUuidContactUuidRolesPage
             parameters:
-                - in: path
-                  name: accountKey
-                  required: true
-                  schema:
-                      type: string
-                - in: path
-                  name: contactUuid
-                  required: true
-                  schema:
-                      type: string
-                - in: query
-                  name: page
-                  schema:
-                      type: integer
-                - in: query
-                  name: pageSize
-                  schema:
-                      type: integer
+                -   in: path
+                    name: accountKey
+                    required: true
+                    schema:
+                        type: string
+                -   in: path
+                    name: contactUuid
+                    required: true
+                    schema:
+                        type: string
+                -   in: query
+                    name: page
+                    schema:
+                        type: integer
+                -   in: query
+                    name: pageSize
+                    schema:
+                        type: integer
             responses:
                 200:
                     content:
@@ -2067,19 +2067,19 @@ paths:
                 Retrieves the account's external links.
             operationId: getAccountAccountKeyExternalLinksPage
             parameters:
-                - in: path
-                  name: accountKey
-                  required: true
-                  schema:
-                      type: string
-                - in: query
-                  name: page
-                  schema:
-                      type: integer
-                - in: query
-                  name: pageSize
-                  schema:
-                      type: integer
+                -   in: path
+                    name: accountKey
+                    required: true
+                    schema:
+                        type: string
+                -   in: query
+                    name: page
+                    schema:
+                        type: integer
+                -   in: query
+                    name: pageSize
+                    schema:
+                        type: integer
             responses:
                 200:
                     content:
@@ -2099,13 +2099,13 @@ paths:
                 Adds an external link to the account.
             operationId: postAccountAccountKeyExternalLink
             parameters:
-                - $ref: "#/components/parameters/AgentName"
-                - $ref: "#/components/parameters/AgentUID"
-                - in: path
-                  name: accountKey
-                  required: true
-                  schema:
-                      type: string
+                -   $ref: "#/components/parameters/AgentName"
+                -   $ref: "#/components/parameters/AgentUID"
+                -   in: path
+                    name: accountKey
+                    required: true
+                    schema:
+                        type: string
             requestBody:
                 content:
                     application/json:
@@ -2131,31 +2131,31 @@ paths:
                 Retrieves the account's notes.
             operationId: getAccountAccountKeyNotesPage
             parameters:
-                - in: path
-                  name: accountKey
-                  required: true
-                  schema:
-                      type: string
-                - in: query
-                  name: page
-                  schema:
-                      type: integer
-                - in: query
-                  name: pageSize
-                  schema:
-                      type: integer
-                - in: query
-                  name: priority
-                  schema:
-                      type: integer
-                - in: query
-                  name: status
-                  schema:
-                      type: string
-                - in: query
-                  name: type
-                  schema:
-                      type: string
+                -   in: path
+                    name: accountKey
+                    required: true
+                    schema:
+                        type: string
+                -   in: query
+                    name: page
+                    schema:
+                        type: integer
+                -   in: query
+                    name: pageSize
+                    schema:
+                        type: integer
+                -   in: query
+                    name: priority
+                    schema:
+                        type: integer
+                -   in: query
+                    name: status
+                    schema:
+                        type: string
+                -   in: query
+                    name: type
+                    schema:
+                        type: string
             responses:
                 200:
                     content:
@@ -2173,13 +2173,13 @@ paths:
         post:
             operationId: postAccountAccountKeyNote
             parameters:
-                - $ref: "#/components/parameters/AgentName"
-                - $ref: "#/components/parameters/AgentUID"
-                - in: path
-                  name: accountKey
-                  required: true
-                  schema:
-                      type: string
+                -   $ref: "#/components/parameters/AgentName"
+                -   $ref: "#/components/parameters/AgentUID"
+                -   in: path
+                    name: accountKey
+                    required: true
+                    schema:
+                        type: string
             requestBody:
                 content:
                     application/json:
@@ -2205,11 +2205,11 @@ paths:
                 Retrieves the account's postal addresses.
             operationId: getAccountAccountKeyPostalAddressesPage
             parameters:
-                - in: path
-                  name: accountKey
-                  required: true
-                  schema:
-                      type: string
+                -   in: path
+                    name: accountKey
+                    required: true
+                    schema:
+                        type: string
             responses:
                 200:
                     content:
@@ -2227,13 +2227,13 @@ paths:
         post:
             operationId: postAccountAccountKeyPostalAddress
             parameters:
-                - $ref: "#/components/parameters/AgentName"
-                - $ref: "#/components/parameters/AgentUID"
-                - in: path
-                  name: accountKey
-                  required: true
-                  schema:
-                      type: string
+                -   $ref: "#/components/parameters/AgentName"
+                -   $ref: "#/components/parameters/AgentUID"
+                -   in: path
+                    name: accountKey
+                    required: true
+                    schema:
+                        type: string
             requestBody:
                 content:
                     application/json:
@@ -2259,19 +2259,19 @@ paths:
                 Retrieves the account's product consumptions.
             operationId: getAccountAccountKeyProductConsumptionsPage
             parameters:
-                - in: path
-                  name: accountKey
-                  required: true
-                  schema:
-                      type: string
-                - in: query
-                  name: page
-                  schema:
-                      type: integer
-                - in: query
-                  name: pageSize
-                  schema:
-                      type: integer
+                -   in: path
+                    name: accountKey
+                    required: true
+                    schema:
+                        type: string
+                -   in: query
+                    name: page
+                    schema:
+                        type: integer
+                -   in: query
+                    name: pageSize
+                    schema:
+                        type: integer
             responses:
                 200:
                     content:
@@ -2289,13 +2289,13 @@ paths:
         post:
             operationId: postAccountAccountKeyProductConsumption
             parameters:
-                - $ref: "#/components/parameters/AgentName"
-                - $ref: "#/components/parameters/AgentUID"
-                - in: path
-                  name: accountKey
-                  required: true
-                  schema:
-                      type: string
+                -   $ref: "#/components/parameters/AgentName"
+                -   $ref: "#/components/parameters/AgentUID"
+                -   in: path
+                    name: accountKey
+                    required: true
+                    schema:
+                        type: string
             requestBody:
                 content:
                     application/json:
@@ -2321,19 +2321,19 @@ paths:
                 Retrieves the account's product purchases.
             operationId: getAccountAccountKeyProductPurchasesPage
             parameters:
-                - in: path
-                  name: accountKey
-                  required: true
-                  schema:
-                      type: string
-                - in: query
-                  name: page
-                  schema:
-                      type: integer
-                - in: query
-                  name: pageSize
-                  schema:
-                      type: integer
+                -   in: path
+                    name: accountKey
+                    required: true
+                    schema:
+                        type: string
+                -   in: query
+                    name: page
+                    schema:
+                        type: integer
+                -   in: query
+                    name: pageSize
+                    schema:
+                        type: integer
             responses:
                 200:
                     content:
@@ -2351,13 +2351,13 @@ paths:
         post:
             operationId: postAccountAccountKeyProductPurchase
             parameters:
-                - $ref: "#/components/parameters/AgentName"
-                - $ref: "#/components/parameters/AgentUID"
-                - in: path
-                  name: accountKey
-                  required: true
-                  schema:
-                      type: string
+                -   $ref: "#/components/parameters/AgentName"
+                -   $ref: "#/components/parameters/AgentUID"
+                -   in: path
+                    name: accountKey
+                    required: true
+                    schema:
+                        type: string
             requestBody:
                 content:
                     application/json:
@@ -2383,16 +2383,16 @@ paths:
                 Retrieves the account's product consumptions and product purchases based on product.
             operationId: getAccountAccountKeyProductProductKeyProductPurchaseView
             parameters:
-                - in: path
-                  name: accountKey
-                  required: true
-                  schema:
-                      type: string
-                - in: path
-                  name: productKey
-                  required: true
-                  schema:
-                      type: string
+                -   in: path
+                    name: accountKey
+                    required: true
+                    schema:
+                        type: string
+                -   in: path
+                    name: productKey
+                    required: true
+                    schema:
+                        type: string
             responses:
                 200:
                     content:
@@ -2409,19 +2409,19 @@ paths:
                 Retrieves the account's teams.
             operationId: getAccountAccountKeyTeamsPage
             parameters:
-                - in: path
-                  name: accountKey
-                  required: true
-                  schema:
-                      type: string
-                - in: query
-                  name: page
-                  schema:
-                      type: integer
-                - in: query
-                  name: pageSize
-                  schema:
-                      type: integer
+                -   in: path
+                    name: accountKey
+                    required: true
+                    schema:
+                        type: string
+                -   in: query
+                    name: page
+                    schema:
+                        type: integer
+                -   in: query
+                    name: pageSize
+                    schema:
+                        type: integer
             responses:
                 200:
                     content:
@@ -2439,13 +2439,13 @@ paths:
         post:
             operationId: postAccountAccountKeyTeam
             parameters:
-                - $ref: "#/components/parameters/AgentName"
-                - $ref: "#/components/parameters/AgentUID"
-                - in: path
-                  name: accountKey
-                  required: true
-                  schema:
-                      type: string
+                -   $ref: "#/components/parameters/AgentName"
+                -   $ref: "#/components/parameters/AgentUID"
+                -   in: path
+                    name: accountKey
+                    required: true
+                    schema:
+                        type: string
             requestBody:
                 content:
                     application/json:
@@ -2471,19 +2471,19 @@ paths:
                 Retrieves the account's worker contacts.
             operationId: getAccountAccountKeyWorkerContactsPage
             parameters:
-                - in: path
-                  name: accountKey
-                  required: true
-                  schema:
-                      type: string
-                - in: query
-                  name: page
-                  schema:
-                      type: integer
-                - in: query
-                  name: pageSize
-                  schema:
-                      type: integer
+                -   in: path
+                    name: accountKey
+                    required: true
+                    schema:
+                        type: string
+                -   in: query
+                    name: page
+                    schema:
+                        type: integer
+                -   in: query
+                    name: pageSize
+                    schema:
+                        type: integer
             responses:
                 200:
                     content:
@@ -2504,20 +2504,20 @@ paths:
                 Unassigns worker contacts from the account.
             operationId: deleteAccountWorkerContactByEmailAddres
             parameters:
-                - $ref: "#/components/parameters/AgentName"
-                - $ref: "#/components/parameters/AgentUID"
-                - in: path
-                  name: accountKey
-                  required: true
-                  schema:
-                      type: string
-                - in: query
-                  name: contactEmailAddresses
-                  required: true
-                  schema:
-                      items:
-                          type: string
-                      type: array
+                -   $ref: "#/components/parameters/AgentName"
+                -   $ref: "#/components/parameters/AgentUID"
+                -   in: path
+                    name: accountKey
+                    required: true
+                    schema:
+                        type: string
+                -   in: query
+                    name: contactEmailAddresses
+                    required: true
+                    schema:
+                        items:
+                            type: string
+                        type: array
             responses:
                 204:
                     content:
@@ -2530,24 +2530,24 @@ paths:
                 Retrieves the account's contact's customer contact roles.
             operationId: getAccountAccountKeyWorkerContactByEmailAddresContactEmailAddressRolesPage
             parameters:
-                - in: path
-                  name: accountKey
-                  required: true
-                  schema:
-                      type: string
-                - in: path
-                  name: contactEmailAddress
-                  required: true
-                  schema:
-                      type: string
-                - in: query
-                  name: page
-                  schema:
-                      type: integer
-                - in: query
-                  name: pageSize
-                  schema:
-                      type: integer
+                -   in: path
+                    name: accountKey
+                    required: true
+                    schema:
+                        type: string
+                -   in: path
+                    name: contactEmailAddress
+                    required: true
+                    schema:
+                        type: string
+                -   in: query
+                    name: page
+                    schema:
+                        type: integer
+                -   in: query
+                    name: pageSize
+                    schema:
+                        type: integer
             responses:
                 200:
                     content:
@@ -2568,20 +2568,20 @@ paths:
                 Unassigns contacts from the account.
             operationId: deleteAccountWorkerContactByUuid
             parameters:
-                - $ref: "#/components/parameters/AgentName"
-                - $ref: "#/components/parameters/AgentUID"
-                - in: path
-                  name: accountKey
-                  required: true
-                  schema:
-                      type: string
-                - in: query
-                  name: contactUuids
-                  required: true
-                  schema:
-                      items:
-                          type: string
-                      type: array
+                -   $ref: "#/components/parameters/AgentName"
+                -   $ref: "#/components/parameters/AgentUID"
+                -   in: path
+                    name: accountKey
+                    required: true
+                    schema:
+                        type: string
+                -   in: query
+                    name: contactUuids
+                    required: true
+                    schema:
+                        items:
+                            type: string
+                        type: array
             responses:
                 204:
                     content:
@@ -2594,24 +2594,24 @@ paths:
                 Retrieves the account's contact's customer contact roles.
             operationId: getAccountAccountKeyWorkerContactByUuidContactUuidRolesPage
             parameters:
-                - in: path
-                  name: accountKey
-                  required: true
-                  schema:
-                      type: string
-                - in: path
-                  name: contactUuid
-                  required: true
-                  schema:
-                      type: string
-                - in: query
-                  name: page
-                  schema:
-                      type: integer
-                - in: query
-                  name: pageSize
-                  schema:
-                      type: integer
+                -   in: path
+                    name: accountKey
+                    required: true
+                    schema:
+                        type: string
+                -   in: path
+                    name: contactUuid
+                    required: true
+                    schema:
+                        type: string
+                -   in: query
+                    name: page
+                    schema:
+                        type: integer
+                -   in: query
+                    name: pageSize
+                    schema:
+                        type: integer
             responses:
                 200:
                     content:
@@ -2632,11 +2632,11 @@ paths:
                 Retrieves the audit entry.
             operationId: getAuditEntry
             parameters:
-                - in: path
-                  name: auditEntryKey
-                  required: true
-                  schema:
-                      type: string
+                -   in: path
+                    name: auditEntryKey
+                    required: true
+                    schema:
+                        type: string
             responses:
                 200:
                     content:
@@ -2653,26 +2653,26 @@ paths:
                 Retrieves the contact roles. Results can be paginated, filtered, searched, and sorted.
             operationId: getContactRolesPage
             parameters:
-                - in: query
-                  name: filter
-                  schema:
-                      type: string
-                - in: query
-                  name: page
-                  schema:
-                      type: integer
-                - in: query
-                  name: pageSize
-                  schema:
-                      type: integer
-                - in: query
-                  name: search
-                  schema:
-                      type: string
-                - in: query
-                  name: sort
-                  schema:
-                      type: string
+                -   in: query
+                    name: filter
+                    schema:
+                        type: string
+                -   in: query
+                    name: page
+                    schema:
+                        type: integer
+                -   in: query
+                    name: pageSize
+                    schema:
+                        type: integer
+                -   in: query
+                    name: search
+                    schema:
+                        type: string
+                -   in: query
+                    name: sort
+                    schema:
+                        type: string
             responses:
                 200:
                     content:
@@ -2690,8 +2690,8 @@ paths:
         post:
             operationId: postContactRole
             parameters:
-                - $ref: "#/components/parameters/AgentName"
-                - $ref: "#/components/parameters/AgentUID"
+                -   $ref: "#/components/parameters/AgentName"
+                -   $ref: "#/components/parameters/AgentUID"
             requestBody:
                 content:
                     application/json:
@@ -2717,16 +2717,16 @@ paths:
                 Retrieves the contact role by name.
             operationId: getContactRoleByTypeContactRoleTypeByNameContactRoleName
             parameters:
-                - in: path
-                  name: contactRoleType
-                  required: true
-                  schema:
-                      type: string
-                - in: path
-                  name: contactRoleName
-                  required: true
-                  schema:
-                      type: string
+                -   in: path
+                    name: contactRoleType
+                    required: true
+                    schema:
+                        type: string
+                -   in: path
+                    name: contactRoleName
+                    required: true
+                    schema:
+                        type: string
             responses:
                 200:
                     content:
@@ -2741,13 +2741,13 @@ paths:
         delete:
             operationId: deleteContactRole
             parameters:
-                - $ref: "#/components/parameters/AgentName"
-                - $ref: "#/components/parameters/AgentUID"
-                - in: path
-                  name: contactRoleKey
-                  required: true
-                  schema:
-                      type: string
+                -   $ref: "#/components/parameters/AgentName"
+                -   $ref: "#/components/parameters/AgentUID"
+                -   in: path
+                    name: contactRoleKey
+                    required: true
+                    schema:
+                        type: string
             responses:
                 204:
                     content:
@@ -2759,11 +2759,11 @@ paths:
                 Retrieves the contact role.
             operationId: getContactRole
             parameters:
-                - in: path
-                  name: contactRoleKey
-                  required: true
-                  schema:
-                      type: string
+                -   in: path
+                    name: contactRoleKey
+                    required: true
+                    schema:
+                        type: string
             responses:
                 200:
                     content:
@@ -2777,13 +2777,13 @@ paths:
         put:
             operationId: putContactRole
             parameters:
-                - $ref: "#/components/parameters/AgentName"
-                - $ref: "#/components/parameters/AgentUID"
-                - in: path
-                  name: contactRoleKey
-                  required: true
-                  schema:
-                      type: string
+                -   $ref: "#/components/parameters/AgentName"
+                -   $ref: "#/components/parameters/AgentUID"
+                -   in: path
+                    name: contactRoleKey
+                    required: true
+                    schema:
+                        type: string
             requestBody:
                 content:
                     application/json:
@@ -2809,19 +2809,19 @@ paths:
                 Retrieves the contact role's audit history.
             operationId: getContactRoleContactRoleKeyAuditEntriesPage
             parameters:
-                - in: path
-                  name: contactRoleKey
-                  required: true
-                  schema:
-                      type: string
-                - in: query
-                  name: page
-                  schema:
-                      type: integer
-                - in: query
-                  name: pageSize
-                  schema:
-                      type: integer
+                -   in: path
+                    name: contactRoleKey
+                    required: true
+                    schema:
+                        type: string
+                -   in: query
+                    name: page
+                    schema:
+                        type: integer
+                -   in: query
+                    name: pageSize
+                    schema:
+                        type: integer
             responses:
                 200:
                     content:
@@ -2840,13 +2840,13 @@ paths:
         delete:
             operationId: deleteContactRoleContactRolePermission
             parameters:
-                - $ref: "#/components/parameters/AgentName"
-                - $ref: "#/components/parameters/AgentUID"
-                - in: path
-                  name: contactRoleKey
-                  required: true
-                  schema:
-                      type: string
+                -   $ref: "#/components/parameters/AgentName"
+                -   $ref: "#/components/parameters/AgentUID"
+                -   in: path
+                    name: contactRoleKey
+                    required: true
+                    schema:
+                        type: string
             requestBody:
                 content:
                     application/json:
@@ -2864,13 +2864,13 @@ paths:
         put:
             operationId: putContactRoleContactRolePermission
             parameters:
-                - $ref: "#/components/parameters/AgentName"
-                - $ref: "#/components/parameters/AgentUID"
-                - in: path
-                  name: contactRoleKey
-                  required: true
-                  schema:
-                      type: string
+                -   $ref: "#/components/parameters/AgentName"
+                -   $ref: "#/components/parameters/AgentUID"
+                -   in: path
+                    name: contactRoleKey
+                    required: true
+                    schema:
+                        type: string
             requestBody:
                 content:
                     application/json:
@@ -2891,19 +2891,19 @@ paths:
                 Retrieves the contact role's external links.
             operationId: getContactRoleContactRoleKeyExternalLinksPage
             parameters:
-                - in: path
-                  name: contactRoleKey
-                  required: true
-                  schema:
-                      type: string
-                - in: query
-                  name: page
-                  schema:
-                      type: integer
-                - in: query
-                  name: pageSize
-                  schema:
-                      type: integer
+                -   in: path
+                    name: contactRoleKey
+                    required: true
+                    schema:
+                        type: string
+                -   in: query
+                    name: page
+                    schema:
+                        type: integer
+                -   in: query
+                    name: pageSize
+                    schema:
+                        type: integer
             responses:
                 200:
                     content:
@@ -2923,13 +2923,13 @@ paths:
                 Adds an external link to the contact role.
             operationId: postContactRoleContactRoleKeyExternalLink
             parameters:
-                - $ref: "#/components/parameters/AgentName"
-                - $ref: "#/components/parameters/AgentUID"
-                - in: path
-                  name: contactRoleKey
-                  required: true
-                  schema:
-                      type: string
+                -   $ref: "#/components/parameters/AgentName"
+                -   $ref: "#/components/parameters/AgentUID"
+                -   in: path
+                    name: contactRoleKey
+                    required: true
+                    schema:
+                        type: string
             requestBody:
                 content:
                     application/json:
@@ -2956,16 +2956,16 @@ paths:
                 Retrieves the contact role by name.
             operationId: getContactRolesContactRoleTypeContactRoleName
             parameters:
-                - in: path
-                  name: contactRoleType
-                  required: true
-                  schema:
-                      type: string
-                - in: path
-                  name: contactRoleName
-                  required: true
-                  schema:
-                      type: string
+                -   in: path
+                    name: contactRoleType
+                    required: true
+                    schema:
+                        type: string
+                -   in: path
+                    name: contactRoleName
+                    required: true
+                    schema:
+                        type: string
             responses:
                 200:
                     content:
@@ -2982,26 +2982,26 @@ paths:
                 Retrieves the contacts. Results can be paginated, filtered, searched, and sorted.
             operationId: getContactsPage
             parameters:
-                - in: query
-                  name: filter
-                  schema:
-                      type: string
-                - in: query
-                  name: page
-                  schema:
-                      type: integer
-                - in: query
-                  name: pageSize
-                  schema:
-                      type: integer
-                - in: query
-                  name: search
-                  schema:
-                      type: string
-                - in: query
-                  name: sort
-                  schema:
-                      type: string
+                -   in: query
+                    name: filter
+                    schema:
+                        type: string
+                -   in: query
+                    name: page
+                    schema:
+                        type: integer
+                -   in: query
+                    name: pageSize
+                    schema:
+                        type: integer
+                -   in: query
+                    name: search
+                    schema:
+                        type: string
+                -   in: query
+                    name: sort
+                    schema:
+                        type: string
             responses:
                 200:
                     content:
@@ -3019,8 +3019,8 @@ paths:
         post:
             operationId: postContact
             parameters:
-                - $ref: "#/components/parameters/AgentName"
-                - $ref: "#/components/parameters/AgentUID"
+                -   $ref: "#/components/parameters/AgentName"
+                -   $ref: "#/components/parameters/AgentUID"
             requestBody:
                 content:
                     application/json:
@@ -3044,13 +3044,13 @@ paths:
         delete:
             operationId: deleteContactByEmailAddresEmailAddress
             parameters:
-                - $ref: "#/components/parameters/AgentName"
-                - $ref: "#/components/parameters/AgentUID"
-                - in: path
-                  name: emailAddress
-                  required: true
-                  schema:
-                      type: string
+                -   $ref: "#/components/parameters/AgentName"
+                -   $ref: "#/components/parameters/AgentUID"
+                -   in: path
+                    name: emailAddress
+                    required: true
+                    schema:
+                        type: string
             responses:
                 204:
                     content:
@@ -3062,11 +3062,11 @@ paths:
                 Retrieves the contact.
             operationId: getContactByEmailAddresEmailAddress
             parameters:
-                - in: path
-                  name: emailAddress
-                  required: true
-                  schema:
-                      type: string
+                -   in: path
+                    name: emailAddress
+                    required: true
+                    schema:
+                        type: string
             responses:
                 200:
                     content:
@@ -3080,13 +3080,13 @@ paths:
         put:
             operationId: putContactByEmailAddresEmailAddress
             parameters:
-                - $ref: "#/components/parameters/AgentName"
-                - $ref: "#/components/parameters/AgentUID"
-                - in: path
-                  name: emailAddress
-                  required: true
-                  schema:
-                      type: string
+                -   $ref: "#/components/parameters/AgentName"
+                -   $ref: "#/components/parameters/AgentUID"
+                -   in: path
+                    name: emailAddress
+                    required: true
+                    schema:
+                        type: string
             requestBody:
                 content:
                     application/json:
@@ -3110,13 +3110,13 @@ paths:
         delete:
             operationId: deleteContactByUuidContactUuid
             parameters:
-                - $ref: "#/components/parameters/AgentName"
-                - $ref: "#/components/parameters/AgentUID"
-                - in: path
-                  name: contactUuid
-                  required: true
-                  schema:
-                      type: string
+                -   $ref: "#/components/parameters/AgentName"
+                -   $ref: "#/components/parameters/AgentUID"
+                -   in: path
+                    name: contactUuid
+                    required: true
+                    schema:
+                        type: string
             responses:
                 204:
                     content:
@@ -3128,11 +3128,11 @@ paths:
                 Retrieves the contact.
             operationId: getContactByUuidContactUuid
             parameters:
-                - in: path
-                  name: contactUuid
-                  required: true
-                  schema:
-                      type: string
+                -   in: path
+                    name: contactUuid
+                    required: true
+                    schema:
+                        type: string
             responses:
                 200:
                     content:
@@ -3146,13 +3146,13 @@ paths:
         put:
             operationId: putContactByUuidContactUuid
             parameters:
-                - $ref: "#/components/parameters/AgentName"
-                - $ref: "#/components/parameters/AgentUID"
-                - in: path
-                  name: contactUuid
-                  required: true
-                  schema:
-                      type: string
+                -   $ref: "#/components/parameters/AgentName"
+                -   $ref: "#/components/parameters/AgentUID"
+                -   in: path
+                    name: contactUuid
+                    required: true
+                    schema:
+                        type: string
             requestBody:
                 content:
                     application/json:
@@ -3178,19 +3178,19 @@ paths:
                 Retrieves the contact's accounts.
             operationId: getContactByUuidContactUuidAccountsPage
             parameters:
-                - in: path
-                  name: contactUuid
-                  required: true
-                  schema:
-                      type: string
-                - in: query
-                  name: page
-                  schema:
-                      type: integer
-                - in: query
-                  name: pageSize
-                  schema:
-                      type: integer
+                -   in: path
+                    name: contactUuid
+                    required: true
+                    schema:
+                        type: string
+                -   in: query
+                    name: page
+                    schema:
+                        type: integer
+                -   in: query
+                    name: pageSize
+                    schema:
+                        type: integer
             responses:
                 200:
                     content:
@@ -3211,19 +3211,19 @@ paths:
                 Retrieves the contact's audit history.
             operationId: getContactByUuidContactUuidAuditEntriesPage
             parameters:
-                - in: path
-                  name: contactUuid
-                  required: true
-                  schema:
-                      type: string
-                - in: query
-                  name: page
-                  schema:
-                      type: integer
-                - in: query
-                  name: pageSize
-                  schema:
-                      type: integer
+                -   in: path
+                    name: contactUuid
+                    required: true
+                    schema:
+                        type: string
+                -   in: query
+                    name: page
+                    schema:
+                        type: integer
+                -   in: query
+                    name: pageSize
+                    schema:
+                        type: integer
             responses:
                 200:
                     content:
@@ -3240,13 +3240,13 @@ paths:
         post:
             operationId: postContactByUuidContactUuidAuditEntriesPage
             parameters:
-                - $ref: "#/components/parameters/AgentName"
-                - $ref: "#/components/parameters/AgentUID"
-                - in: path
-                  name: contactUuid
-                  required: true
-                  schema:
-                      type: string
+                -   $ref: "#/components/parameters/AgentName"
+                -   $ref: "#/components/parameters/AgentUID"
+                -   in: path
+                    name: contactUuid
+                    required: true
+                    schema:
+                        type: string
             requestBody:
                 content:
                     application/json:
@@ -3280,19 +3280,19 @@ paths:
                 Retrieves the contact's accounts and associated contact roles.
             operationId: getContactByUuidContactUuidContactAccountViewsPage
             parameters:
-                - in: path
-                  name: contactUuid
-                  required: true
-                  schema:
-                      type: string
-                - in: query
-                  name: page
-                  schema:
-                      type: integer
-                - in: query
-                  name: pageSize
-                  schema:
-                      type: integer
+                -   in: path
+                    name: contactUuid
+                    required: true
+                    schema:
+                        type: string
+                -   in: query
+                    name: page
+                    schema:
+                        type: integer
+                -   in: query
+                    name: pageSize
+                    schema:
+                        type: integer
             responses:
                 200:
                     content:
@@ -3311,13 +3311,13 @@ paths:
         delete:
             operationId: deleteContactByUuidContactUuidContactPermission
             parameters:
-                - $ref: "#/components/parameters/AgentName"
-                - $ref: "#/components/parameters/AgentUID"
-                - in: path
-                  name: contactUuid
-                  required: true
-                  schema:
-                      type: string
+                -   $ref: "#/components/parameters/AgentName"
+                -   $ref: "#/components/parameters/AgentUID"
+                -   in: path
+                    name: contactUuid
+                    required: true
+                    schema:
+                        type: string
             requestBody:
                 content:
                     application/json:
@@ -3335,13 +3335,13 @@ paths:
         put:
             operationId: putContactByUuidContactUuidContactPermission
             parameters:
-                - $ref: "#/components/parameters/AgentName"
-                - $ref: "#/components/parameters/AgentUID"
-                - in: path
-                  name: contactUuid
-                  required: true
-                  schema:
-                      type: string
+                -   $ref: "#/components/parameters/AgentName"
+                -   $ref: "#/components/parameters/AgentUID"
+                -   in: path
+                    name: contactUuid
+                    required: true
+                    schema:
+                        type: string
             requestBody:
                 content:
                     application/json:
@@ -3362,19 +3362,19 @@ paths:
                 Retrieves the contact's external links.
             operationId: getContactByUuidContactUuidExternalLinksPage
             parameters:
-                - in: path
-                  name: contactUuid
-                  required: true
-                  schema:
-                      type: string
-                - in: query
-                  name: page
-                  schema:
-                      type: integer
-                - in: query
-                  name: pageSize
-                  schema:
-                      type: integer
+                -   in: path
+                    name: contactUuid
+                    required: true
+                    schema:
+                        type: string
+                -   in: query
+                    name: page
+                    schema:
+                        type: integer
+                -   in: query
+                    name: pageSize
+                    schema:
+                        type: integer
             responses:
                 200:
                     content:
@@ -3394,13 +3394,13 @@ paths:
                 Adds an external link to the contact.
             operationId: postContactByUuidContactUuidExternalLink
             parameters:
-                - $ref: "#/components/parameters/AgentName"
-                - $ref: "#/components/parameters/AgentUID"
-                - in: path
-                  name: contactUuid
-                  required: true
-                  schema:
-                      type: string
+                -   $ref: "#/components/parameters/AgentName"
+                -   $ref: "#/components/parameters/AgentUID"
+                -   in: path
+                    name: contactUuid
+                    required: true
+                    schema:
+                        type: string
             requestBody:
                 content:
                     application/json:
@@ -3426,19 +3426,19 @@ paths:
                 Retrieves the contacts product consumptions.
             operationId: getContactByUuidContactUuidProductConsumptionsPage
             parameters:
-                - in: path
-                  name: contactUuid
-                  required: true
-                  schema:
-                      type: string
-                - in: query
-                  name: page
-                  schema:
-                      type: integer
-                - in: query
-                  name: pageSize
-                  schema:
-                      type: integer
+                -   in: path
+                    name: contactUuid
+                    required: true
+                    schema:
+                        type: string
+                -   in: query
+                    name: page
+                    schema:
+                        type: integer
+                -   in: query
+                    name: pageSize
+                    schema:
+                        type: integer
             responses:
                 200:
                     content:
@@ -3459,19 +3459,19 @@ paths:
                 Retrieves the contacts product purchases.
             operationId: getContactByUuidContactUuidProductPurchasesPage
             parameters:
-                - in: path
-                  name: contactUuid
-                  required: true
-                  schema:
-                      type: string
-                - in: query
-                  name: page
-                  schema:
-                      type: integer
-                - in: query
-                  name: pageSize
-                  schema:
-                      type: integer
+                -   in: path
+                    name: contactUuid
+                    required: true
+                    schema:
+                        type: string
+                -   in: query
+                    name: page
+                    schema:
+                        type: integer
+                -   in: query
+                    name: pageSize
+                    schema:
+                        type: integer
             responses:
                 200:
                     content:
@@ -3492,18 +3492,18 @@ paths:
                 Retrieves the contact entitlement definitions.
             operationId: getContactEntitlementDefinitionsPage
             parameters:
-                - in: query
-                  name: page
-                  schema:
-                      type: integer
-                - in: query
-                  name: pageSize
-                  schema:
-                      type: integer
-                - in: query
-                  name: search
-                  schema:
-                      type: string
+                -   in: query
+                    name: page
+                    schema:
+                        type: integer
+                -   in: query
+                    name: pageSize
+                    schema:
+                        type: integer
+                -   in: query
+                    name: search
+                    schema:
+                        type: string
             responses:
                 200:
                     content:
@@ -3521,8 +3521,8 @@ paths:
         post:
             operationId: postContactEntitlementDefinition
             parameters:
-                - $ref: "#/components/parameters/AgentName"
-                - $ref: "#/components/parameters/AgentUID"
+                -   $ref: "#/components/parameters/AgentName"
+                -   $ref: "#/components/parameters/AgentUID"
             requestBody:
                 content:
                     application/json:
@@ -3584,13 +3584,13 @@ paths:
         delete:
             operationId: deleteEntitlementDefinition
             parameters:
-                - $ref: "#/components/parameters/AgentName"
-                - $ref: "#/components/parameters/AgentUID"
-                - in: path
-                  name: entitlementDefinitionKey
-                  required: true
-                  schema:
-                      type: string
+                -   $ref: "#/components/parameters/AgentName"
+                -   $ref: "#/components/parameters/AgentUID"
+                -   in: path
+                    name: entitlementDefinitionKey
+                    required: true
+                    schema:
+                        type: string
             responses:
                 204:
                     content:
@@ -3602,11 +3602,11 @@ paths:
                 Retrieves the entitlement definition.
             operationId: getEntitlementDefinition
             parameters:
-                - in: path
-                  name: entitlementDefinitionKey
-                  required: true
-                  schema:
-                      type: string
+                -   in: path
+                    name: entitlementDefinitionKey
+                    required: true
+                    schema:
+                        type: string
             responses:
                 200:
                     content:
@@ -3623,13 +3623,13 @@ paths:
                 Immediately runs a synchronization of the entitlement definition.
             operationId: postEntitlementDefinitionSynchronize
             parameters:
-                - $ref: "#/components/parameters/AgentName"
-                - $ref: "#/components/parameters/AgentUID"
-                - in: path
-                  name: entitlementDefinitionKey
-                  required: true
-                  schema:
-                      type: string
+                -   $ref: "#/components/parameters/AgentName"
+                -   $ref: "#/components/parameters/AgentUID"
+                -   in: path
+                    name: entitlementDefinitionKey
+                    required: true
+                    schema:
+                        type: string
             responses:
                 204:
                     content:
@@ -3640,13 +3640,13 @@ paths:
         delete:
             operationId: deleteExternalLink
             parameters:
-                - $ref: "#/components/parameters/AgentName"
-                - $ref: "#/components/parameters/AgentUID"
-                - in: path
-                  name: externalLinkKey
-                  required: true
-                  schema:
-                      type: string
+                -   $ref: "#/components/parameters/AgentName"
+                -   $ref: "#/components/parameters/AgentUID"
+                -   in: path
+                    name: externalLinkKey
+                    required: true
+                    schema:
+                        type: string
             responses:
                 204:
                     content:
@@ -3658,11 +3658,11 @@ paths:
                 Retrieves the external link.
             operationId: getExternalLink
             parameters:
-                - in: path
-                  name: externalLinkKey
-                  required: true
-                  schema:
-                      type: string
+                -   in: path
+                    name: externalLinkKey
+                    required: true
+                    schema:
+                        type: string
             responses:
                 200:
                     content:
@@ -3678,13 +3678,13 @@ paths:
                 Updates the external link. Only the entityId field can be updated.
             operationId: putExternalLink
             parameters:
-                - $ref: "#/components/parameters/AgentName"
-                - $ref: "#/components/parameters/AgentUID"
-                - in: path
-                  name: externalLinkKey
-                  required: true
-                  schema:
-                      type: string
+                -   $ref: "#/components/parameters/AgentName"
+                -   $ref: "#/components/parameters/AgentUID"
+                -   in: path
+                    name: externalLinkKey
+                    required: true
+                    schema:
+                        type: string
             requestBody:
                 content:
                     application/json:
@@ -3708,13 +3708,13 @@ paths:
         delete:
             operationId: deleteNote
             parameters:
-                - $ref: "#/components/parameters/AgentName"
-                - $ref: "#/components/parameters/AgentUID"
-                - in: path
-                  name: noteKey
-                  required: true
-                  schema:
-                      type: string
+                -   $ref: "#/components/parameters/AgentName"
+                -   $ref: "#/components/parameters/AgentUID"
+                -   in: path
+                    name: noteKey
+                    required: true
+                    schema:
+                        type: string
             responses:
                 204:
                     content:
@@ -3726,11 +3726,11 @@ paths:
                 Retrieves the note.
             operationId: getNote
             parameters:
-                - in: path
-                  name: noteKey
-                  required: true
-                  schema:
-                      type: string
+                -   in: path
+                    name: noteKey
+                    required: true
+                    schema:
+                        type: string
             responses:
                 200:
                     content:
@@ -3744,13 +3744,13 @@ paths:
         put:
             operationId: putNote
             parameters:
-                - $ref: "#/components/parameters/AgentName"
-                - $ref: "#/components/parameters/AgentUID"
-                - in: path
-                  name: noteKey
-                  required: true
-                  schema:
-                      type: string
+                -   $ref: "#/components/parameters/AgentName"
+                -   $ref: "#/components/parameters/AgentUID"
+                -   in: path
+                    name: noteKey
+                    required: true
+                    schema:
+                        type: string
             requestBody:
                 content:
                     application/json:
@@ -3773,8 +3773,8 @@ paths:
     "/okta-users":
         post:
             parameters:
-                - $ref: "#/components/parameters/AgentName"
-                - $ref: "#/components/parameters/AgentUID"
+                -   $ref: "#/components/parameters/AgentName"
+                -   $ref: "#/components/parameters/AgentUID"
             requestBody:
                 content:
                     application/json:
@@ -3794,14 +3794,14 @@ paths:
         delete:
             operationId: deletePostalAddress
             parameters:
-                - $ref: "#/components/parameters/AgentName"
-                - $ref: "#/components/parameters/AgentUID"
-                - in: path
-                  name: postalAddressId
-                  required: true
-                  schema:
-                      format: int64
-                      type: integer
+                -   $ref: "#/components/parameters/AgentName"
+                -   $ref: "#/components/parameters/AgentUID"
+                -   in: path
+                    name: postalAddressId
+                    required: true
+                    schema:
+                        format: int64
+                        type: integer
             responses:
                 204:
                     content:
@@ -3813,12 +3813,12 @@ paths:
                 Retrieves the postal address.
             operationId: getPostalAddress
             parameters:
-                - in: path
-                  name: postalAddressId
-                  required: true
-                  schema:
-                      format: int64
-                      type: integer
+                -   in: path
+                    name: postalAddressId
+                    required: true
+                    schema:
+                        format: int64
+                        type: integer
             responses:
                 200:
                     content:
@@ -3832,14 +3832,14 @@ paths:
         put:
             operationId: putPostalAddress
             parameters:
-                - $ref: "#/components/parameters/AgentName"
-                - $ref: "#/components/parameters/AgentUID"
-                - in: path
-                  name: postalAddressId
-                  required: true
-                  schema:
-                      format: int64
-                      type: integer
+                -   $ref: "#/components/parameters/AgentName"
+                -   $ref: "#/components/parameters/AgentUID"
+                -   in: path
+                    name: postalAddressId
+                    required: true
+                    schema:
+                        format: int64
+                        type: integer
             requestBody:
                 content:
                     application/json:
@@ -3865,26 +3865,26 @@ paths:
                 Retrieves the product consumptions. Results can be paginated, filtered, searched, and sorted.
             operationId: getProductConsumptionsPage
             parameters:
-                - in: query
-                  name: filter
-                  schema:
-                      type: string
-                - in: query
-                  name: page
-                  schema:
-                      type: integer
-                - in: query
-                  name: pageSize
-                  schema:
-                      type: integer
-                - in: query
-                  name: search
-                  schema:
-                      type: string
-                - in: query
-                  name: sort
-                  schema:
-                      type: string
+                -   in: query
+                    name: filter
+                    schema:
+                        type: string
+                -   in: query
+                    name: page
+                    schema:
+                        type: integer
+                -   in: query
+                    name: pageSize
+                    schema:
+                        type: integer
+                -   in: query
+                    name: search
+                    schema:
+                        type: string
+                -   in: query
+                    name: sort
+                    schema:
+                        type: string
             responses:
                 200:
                     content:
@@ -3905,29 +3905,29 @@ paths:
                 Retrieves the product consumptions by the external link.
             operationId: getProductConsumptionByExternalLinkDomainEntityNameEntityPage
             parameters:
-                - in: path
-                  name: domain
-                  required: true
-                  schema:
-                      type: string
-                - in: path
-                  name: entityName
-                  required: true
-                  schema:
-                      type: string
-                - in: path
-                  name: entityId
-                  required: true
-                  schema:
-                      type: string
-                - in: query
-                  name: page
-                  schema:
-                      type: integer
-                - in: query
-                  name: pageSize
-                  schema:
-                      type: integer
+                -   in: path
+                    name: domain
+                    required: true
+                    schema:
+                        type: string
+                -   in: path
+                    name: entityName
+                    required: true
+                    schema:
+                        type: string
+                -   in: path
+                    name: entityId
+                    required: true
+                    schema:
+                        type: string
+                -   in: query
+                    name: page
+                    schema:
+                        type: integer
+                -   in: query
+                    name: pageSize
+                    schema:
+                        type: integer
             responses:
                 200:
                     content:
@@ -3946,13 +3946,13 @@ paths:
         delete:
             operationId: deleteProductConsumption
             parameters:
-                - $ref: "#/components/parameters/AgentName"
-                - $ref: "#/components/parameters/AgentUID"
-                - in: path
-                  name: productConsumptionKey
-                  required: true
-                  schema:
-                      type: string
+                -   $ref: "#/components/parameters/AgentName"
+                -   $ref: "#/components/parameters/AgentUID"
+                -   in: path
+                    name: productConsumptionKey
+                    required: true
+                    schema:
+                        type: string
             responses:
                 204:
                     content:
@@ -3964,11 +3964,11 @@ paths:
                 Retrieves the product consumption.
             operationId: getProductConsumption
             parameters:
-                - in: path
-                  name: productConsumptionKey
-                  required: true
-                  schema:
-                      type: string
+                -   in: path
+                    name: productConsumptionKey
+                    required: true
+                    schema:
+                        type: string
             responses:
                 200:
                     content:
@@ -3982,13 +3982,13 @@ paths:
         put:
             operationId: putProductConsumption
             parameters:
-                - $ref: "#/components/parameters/AgentName"
-                - $ref: "#/components/parameters/AgentUID"
-                - in: path
-                  name: productConsumptionKey
-                  required: true
-                  schema:
-                      type: string
+                -   $ref: "#/components/parameters/AgentName"
+                -   $ref: "#/components/parameters/AgentUID"
+                -   in: path
+                    name: productConsumptionKey
+                    required: true
+                    schema:
+                        type: string
             requestBody:
                 content:
                     application/json:
@@ -4014,19 +4014,19 @@ paths:
                 Retrieves the product consumption's external links.
             operationId: getProductConsumptionProductConsumptionKeyExternalLinksPage
             parameters:
-                - in: path
-                  name: productConsumptionKey
-                  required: true
-                  schema:
-                      type: string
-                - in: query
-                  name: page
-                  schema:
-                      type: integer
-                - in: query
-                  name: pageSize
-                  schema:
-                      type: integer
+                -   in: path
+                    name: productConsumptionKey
+                    required: true
+                    schema:
+                        type: string
+                -   in: query
+                    name: page
+                    schema:
+                        type: integer
+                -   in: query
+                    name: pageSize
+                    schema:
+                        type: integer
             responses:
                 200:
                     content:
@@ -4046,13 +4046,13 @@ paths:
                 Adds an external link to the product consumption.
             operationId: postProductConsumptionProductConsumptionKeyExternalLink
             parameters:
-                - $ref: "#/components/parameters/AgentName"
-                - $ref: "#/components/parameters/AgentUID"
-                - in: path
-                  name: productConsumptionKey
-                  required: true
-                  schema:
-                      type: string
+                -   $ref: "#/components/parameters/AgentName"
+                -   $ref: "#/components/parameters/AgentUID"
+                -   in: path
+                    name: productConsumptionKey
+                    required: true
+                    schema:
+                        type: string
             requestBody:
                 content:
                     application/json:
@@ -4076,13 +4076,13 @@ paths:
         delete:
             operationId: deleteProductConsumptionProductConsumptionPermission
             parameters:
-                - $ref: "#/components/parameters/AgentName"
-                - $ref: "#/components/parameters/AgentUID"
-                - in: path
-                  name: productConsumptionKey
-                  required: true
-                  schema:
-                      type: string
+                -   $ref: "#/components/parameters/AgentName"
+                -   $ref: "#/components/parameters/AgentUID"
+                -   in: path
+                    name: productConsumptionKey
+                    required: true
+                    schema:
+                        type: string
             requestBody:
                 content:
                     application/json:
@@ -4100,13 +4100,13 @@ paths:
         put:
             operationId: putProductConsumptionProductConsumptionPermission
             parameters:
-                - $ref: "#/components/parameters/AgentName"
-                - $ref: "#/components/parameters/AgentUID"
-                - in: path
-                  name: productConsumptionKey
-                  required: true
-                  schema:
-                      type: string
+                -   $ref: "#/components/parameters/AgentName"
+                -   $ref: "#/components/parameters/AgentUID"
+                -   in: path
+                    name: productConsumptionKey
+                    required: true
+                    schema:
+                        type: string
             requestBody:
                 content:
                     application/json:
@@ -4127,26 +4127,26 @@ paths:
                 Retrieves the account's products and related product consumptions and product purchases.
             operationId: getProductPurchaseViewsPage
             parameters:
-                - in: query
-                  name: filter
-                  schema:
-                      type: string
-                - in: query
-                  name: page
-                  schema:
-                      type: integer
-                - in: query
-                  name: pageSize
-                  schema:
-                      type: integer
-                - in: query
-                  name: search
-                  schema:
-                      type: string
-                - in: query
-                  name: sort
-                  schema:
-                      type: string
+                -   in: query
+                    name: filter
+                    schema:
+                        type: string
+                -   in: query
+                    name: page
+                    schema:
+                        type: integer
+                -   in: query
+                    name: pageSize
+                    schema:
+                        type: integer
+                -   in: query
+                    name: search
+                    schema:
+                        type: string
+                -   in: query
+                    name: sort
+                    schema:
+                        type: string
             responses:
                 200:
                     content:
@@ -4167,26 +4167,26 @@ paths:
                 Retrieves the product purchases. Results can be paginated, filtered, searched, and sorted.
             operationId: getProductPurchasesPage
             parameters:
-                - in: query
-                  name: filter
-                  schema:
-                      type: string
-                - in: query
-                  name: page
-                  schema:
-                      type: integer
-                - in: query
-                  name: pageSize
-                  schema:
-                      type: integer
-                - in: query
-                  name: search
-                  schema:
-                      type: string
-                - in: query
-                  name: sort
-                  schema:
-                      type: string
+                -   in: query
+                    name: filter
+                    schema:
+                        type: string
+                -   in: query
+                    name: page
+                    schema:
+                        type: integer
+                -   in: query
+                    name: pageSize
+                    schema:
+                        type: integer
+                -   in: query
+                    name: search
+                    schema:
+                        type: string
+                -   in: query
+                    name: sort
+                    schema:
+                        type: string
             responses:
                 200:
                     content:
@@ -4207,29 +4207,29 @@ paths:
                 Retrieves the product purchases by the external link.
             operationId: getProductPurchaseByExternalLinkDomainEntityNameEntityPage
             parameters:
-                - in: path
-                  name: domain
-                  required: true
-                  schema:
-                      type: string
-                - in: path
-                  name: entityName
-                  required: true
-                  schema:
-                      type: string
-                - in: path
-                  name: entityId
-                  required: true
-                  schema:
-                      type: string
-                - in: query
-                  name: page
-                  schema:
-                      type: integer
-                - in: query
-                  name: pageSize
-                  schema:
-                      type: integer
+                -   in: path
+                    name: domain
+                    required: true
+                    schema:
+                        type: string
+                -   in: path
+                    name: entityName
+                    required: true
+                    schema:
+                        type: string
+                -   in: path
+                    name: entityId
+                    required: true
+                    schema:
+                        type: string
+                -   in: query
+                    name: page
+                    schema:
+                        type: integer
+                -   in: query
+                    name: pageSize
+                    schema:
+                        type: integer
             responses:
                 200:
                     content:
@@ -4248,13 +4248,13 @@ paths:
         delete:
             operationId: deleteProductPurchase
             parameters:
-                - $ref: "#/components/parameters/AgentName"
-                - $ref: "#/components/parameters/AgentUID"
-                - in: path
-                  name: productPurchaseKey
-                  required: true
-                  schema:
-                      type: string
+                -   $ref: "#/components/parameters/AgentName"
+                -   $ref: "#/components/parameters/AgentUID"
+                -   in: path
+                    name: productPurchaseKey
+                    required: true
+                    schema:
+                        type: string
             responses:
                 204:
                     content:
@@ -4266,11 +4266,11 @@ paths:
                 Retrieves the product purchase.
             operationId: getProductPurchase
             parameters:
-                - in: path
-                  name: productPurchaseKey
-                  required: true
-                  schema:
-                      type: string
+                -   in: path
+                    name: productPurchaseKey
+                    required: true
+                    schema:
+                        type: string
             responses:
                 200:
                     content:
@@ -4284,13 +4284,13 @@ paths:
         put:
             operationId: putProductPurchase
             parameters:
-                - $ref: "#/components/parameters/AgentName"
-                - $ref: "#/components/parameters/AgentUID"
-                - in: path
-                  name: productPurchaseKey
-                  required: true
-                  schema:
-                      type: string
+                -   $ref: "#/components/parameters/AgentName"
+                -   $ref: "#/components/parameters/AgentUID"
+                -   in: path
+                    name: productPurchaseKey
+                    required: true
+                    schema:
+                        type: string
             requestBody:
                 content:
                     application/json:
@@ -4316,19 +4316,19 @@ paths:
                 Retrieves the product purchase's external links.
             operationId: getProductPurchaseProductPurchaseKeyExternalLinksPage
             parameters:
-                - in: path
-                  name: productPurchaseKey
-                  required: true
-                  schema:
-                      type: string
-                - in: query
-                  name: page
-                  schema:
-                      type: integer
-                - in: query
-                  name: pageSize
-                  schema:
-                      type: integer
+                -   in: path
+                    name: productPurchaseKey
+                    required: true
+                    schema:
+                        type: string
+                -   in: query
+                    name: page
+                    schema:
+                        type: integer
+                -   in: query
+                    name: pageSize
+                    schema:
+                        type: integer
             responses:
                 200:
                     content:
@@ -4348,13 +4348,13 @@ paths:
                 Adds an external link to the product purchase.
             operationId: postProductPurchaseProductPurchaseKeyExternalLink
             parameters:
-                - $ref: "#/components/parameters/AgentName"
-                - $ref: "#/components/parameters/AgentUID"
-                - in: path
-                  name: productPurchaseKey
-                  required: true
-                  schema:
-                      type: string
+                -   $ref: "#/components/parameters/AgentName"
+                -   $ref: "#/components/parameters/AgentUID"
+                -   in: path
+                    name: productPurchaseKey
+                    required: true
+                    schema:
+                        type: string
             requestBody:
                 content:
                     application/json:
@@ -4378,13 +4378,13 @@ paths:
         delete:
             operationId: deleteProductPurchaseProductPurchasePermission
             parameters:
-                - $ref: "#/components/parameters/AgentName"
-                - $ref: "#/components/parameters/AgentUID"
-                - in: path
-                  name: productPurchaseKey
-                  required: true
-                  schema:
-                      type: string
+                -   $ref: "#/components/parameters/AgentName"
+                -   $ref: "#/components/parameters/AgentUID"
+                -   in: path
+                    name: productPurchaseKey
+                    required: true
+                    schema:
+                        type: string
             requestBody:
                 content:
                     application/json:
@@ -4402,13 +4402,13 @@ paths:
         put:
             operationId: putProductPurchaseProductPurchasePermission
             parameters:
-                - $ref: "#/components/parameters/AgentName"
-                - $ref: "#/components/parameters/AgentUID"
-                - in: path
-                  name: productPurchaseKey
-                  required: true
-                  schema:
-                      type: string
+                -   $ref: "#/components/parameters/AgentName"
+                -   $ref: "#/components/parameters/AgentUID"
+                -   in: path
+                    name: productPurchaseKey
+                    required: true
+                    schema:
+                        type: string
             requestBody:
                 content:
                     application/json:
@@ -4429,26 +4429,26 @@ paths:
                 Retrieves the products. Results can be paginated, filtered, searched, and sorted.
             operationId: getProductsPage
             parameters:
-                - in: query
-                  name: filter
-                  schema:
-                      type: string
-                - in: query
-                  name: page
-                  schema:
-                      type: integer
-                - in: query
-                  name: pageSize
-                  schema:
-                      type: integer
-                - in: query
-                  name: search
-                  schema:
-                      type: string
-                - in: query
-                  name: sort
-                  schema:
-                      type: string
+                -   in: query
+                    name: filter
+                    schema:
+                        type: string
+                -   in: query
+                    name: page
+                    schema:
+                        type: integer
+                -   in: query
+                    name: pageSize
+                    schema:
+                        type: integer
+                -   in: query
+                    name: search
+                    schema:
+                        type: string
+                -   in: query
+                    name: sort
+                    schema:
+                        type: string
             responses:
                 200:
                     content:
@@ -4466,8 +4466,8 @@ paths:
         post:
             operationId: postProduct
             parameters:
-                - $ref: "#/components/parameters/AgentName"
-                - $ref: "#/components/parameters/AgentUID"
+                -   $ref: "#/components/parameters/AgentName"
+                -   $ref: "#/components/parameters/AgentUID"
             requestBody:
                 content:
                     application/json:
@@ -4493,29 +4493,29 @@ paths:
                 Retrieves the products by the external link.
             operationId: getProductByExternalLinkDomainEntityNameEntityPage
             parameters:
-                - in: path
-                  name: domain
-                  required: true
-                  schema:
-                      type: string
-                - in: path
-                  name: entityName
-                  required: true
-                  schema:
-                      type: string
-                - in: path
-                  name: entityId
-                  required: true
-                  schema:
-                      type: string
-                - in: query
-                  name: page
-                  schema:
-                      type: integer
-                - in: query
-                  name: pageSize
-                  schema:
-                      type: integer
+                -   in: path
+                    name: domain
+                    required: true
+                    schema:
+                        type: string
+                -   in: path
+                    name: entityName
+                    required: true
+                    schema:
+                        type: string
+                -   in: path
+                    name: entityId
+                    required: true
+                    schema:
+                        type: string
+                -   in: query
+                    name: page
+                    schema:
+                        type: integer
+                -   in: query
+                    name: pageSize
+                    schema:
+                        type: integer
             responses:
                 200:
                     content:
@@ -4536,11 +4536,11 @@ paths:
                 Retrieves the product with the exact name.
             operationId: getProductByNameProductName
             parameters:
-                - in: path
-                  name: productName
-                  required: true
-                  schema:
-                      type: string
+                -   in: path
+                    name: productName
+                    required: true
+                    schema:
+                        type: string
             responses:
                 200:
                     content:
@@ -4555,13 +4555,13 @@ paths:
         delete:
             operationId: deleteProduct
             parameters:
-                - $ref: "#/components/parameters/AgentName"
-                - $ref: "#/components/parameters/AgentUID"
-                - in: path
-                  name: productKey
-                  required: true
-                  schema:
-                      type: string
+                -   $ref: "#/components/parameters/AgentName"
+                -   $ref: "#/components/parameters/AgentUID"
+                -   in: path
+                    name: productKey
+                    required: true
+                    schema:
+                        type: string
             responses:
                 204:
                     content:
@@ -4573,11 +4573,11 @@ paths:
                 Retrieves the product.
             operationId: getProduct
             parameters:
-                - in: path
-                  name: productKey
-                  required: true
-                  schema:
-                      type: string
+                -   in: path
+                    name: productKey
+                    required: true
+                    schema:
+                        type: string
             responses:
                 200:
                     content:
@@ -4591,13 +4591,13 @@ paths:
         put:
             operationId: putProduct
             parameters:
-                - $ref: "#/components/parameters/AgentName"
-                - $ref: "#/components/parameters/AgentUID"
-                - in: path
-                  name: productKey
-                  required: true
-                  schema:
-                      type: string
+                -   $ref: "#/components/parameters/AgentName"
+                -   $ref: "#/components/parameters/AgentUID"
+                -   in: path
+                    name: productKey
+                    required: true
+                    schema:
+                        type: string
             requestBody:
                 content:
                     application/json:
@@ -4623,19 +4623,19 @@ paths:
                 Retrieves the product's external links.
             operationId: getProductProductKeyExternalLinksPage
             parameters:
-                - in: path
-                  name: productKey
-                  required: true
-                  schema:
-                      type: string
-                - in: query
-                  name: page
-                  schema:
-                      type: integer
-                - in: query
-                  name: pageSize
-                  schema:
-                      type: integer
+                -   in: path
+                    name: productKey
+                    required: true
+                    schema:
+                        type: string
+                -   in: query
+                    name: page
+                    schema:
+                        type: integer
+                -   in: query
+                    name: pageSize
+                    schema:
+                        type: integer
             responses:
                 200:
                     content:
@@ -4655,13 +4655,13 @@ paths:
                 Adds an external link to the product.
             operationId: postProductProductKeyExternalLink
             parameters:
-                - $ref: "#/components/parameters/AgentName"
-                - $ref: "#/components/parameters/AgentUID"
-                - in: path
-                  name: productKey
-                  required: true
-                  schema:
-                      type: string
+                -   $ref: "#/components/parameters/AgentName"
+                -   $ref: "#/components/parameters/AgentUID"
+                -   in: path
+                    name: productKey
+                    required: true
+                    schema:
+                        type: string
             requestBody:
                 content:
                     application/json:
@@ -4685,13 +4685,13 @@ paths:
         delete:
             operationId: deleteProductProductPermission
             parameters:
-                - $ref: "#/components/parameters/AgentName"
-                - $ref: "#/components/parameters/AgentUID"
-                - in: path
-                  name: productKey
-                  required: true
-                  schema:
-                      type: string
+                -   $ref: "#/components/parameters/AgentName"
+                -   $ref: "#/components/parameters/AgentUID"
+                -   in: path
+                    name: productKey
+                    required: true
+                    schema:
+                        type: string
             requestBody:
                 content:
                     application/json:
@@ -4709,13 +4709,13 @@ paths:
         put:
             operationId: putProductProductPermission
             parameters:
-                - $ref: "#/components/parameters/AgentName"
-                - $ref: "#/components/parameters/AgentUID"
-                - in: path
-                  name: productKey
-                  required: true
-                  schema:
-                      type: string
+                -   $ref: "#/components/parameters/AgentName"
+                -   $ref: "#/components/parameters/AgentUID"
+                -   in: path
+                    name: productKey
+                    required: true
+                    schema:
+                        type: string
             requestBody:
                 content:
                     application/json:
@@ -4736,26 +4736,26 @@ paths:
                 Retrieves the team roles. Results can be paginated, filtered, searched, and sorted.
             operationId: getTeamRolesPage
             parameters:
-                - in: query
-                  name: filter
-                  schema:
-                      type: string
-                - in: query
-                  name: page
-                  schema:
-                      type: integer
-                - in: query
-                  name: pageSize
-                  schema:
-                      type: integer
-                - in: query
-                  name: search
-                  schema:
-                      type: string
-                - in: query
-                  name: sort
-                  schema:
-                      type: string
+                -   in: query
+                    name: filter
+                    schema:
+                        type: string
+                -   in: query
+                    name: page
+                    schema:
+                        type: integer
+                -   in: query
+                    name: pageSize
+                    schema:
+                        type: integer
+                -   in: query
+                    name: search
+                    schema:
+                        type: string
+                -   in: query
+                    name: sort
+                    schema:
+                        type: string
             responses:
                 200:
                     content:
@@ -4773,8 +4773,8 @@ paths:
         post:
             operationId: postTeamRole
             parameters:
-                - $ref: "#/components/parameters/AgentName"
-                - $ref: "#/components/parameters/AgentUID"
+                -   $ref: "#/components/parameters/AgentName"
+                -   $ref: "#/components/parameters/AgentUID"
             requestBody:
                 content:
                     application/json:
@@ -4800,16 +4800,16 @@ paths:
                 Retrieves the team role by name.
             operationId: getTeamRoleByTypeTeamRoleTypeByNameTeamRoleName
             parameters:
-                - in: path
-                  name: teamRoleType
-                  required: true
-                  schema:
-                      type: string
-                - in: path
-                  name: teamRoleName
-                  required: true
-                  schema:
-                      type: string
+                -   in: path
+                    name: teamRoleType
+                    required: true
+                    schema:
+                        type: string
+                -   in: path
+                    name: teamRoleName
+                    required: true
+                    schema:
+                        type: string
             responses:
                 200:
                     content:
@@ -4824,13 +4824,13 @@ paths:
         delete:
             operationId: deleteTeamRole
             parameters:
-                - $ref: "#/components/parameters/AgentName"
-                - $ref: "#/components/parameters/AgentUID"
-                - in: path
-                  name: teamRoleKey
-                  required: true
-                  schema:
-                      type: string
+                -   $ref: "#/components/parameters/AgentName"
+                -   $ref: "#/components/parameters/AgentUID"
+                -   in: path
+                    name: teamRoleKey
+                    required: true
+                    schema:
+                        type: string
             responses:
                 204:
                     content:
@@ -4842,11 +4842,11 @@ paths:
                 Retrieves the team role.
             operationId: getTeamRole
             parameters:
-                - in: path
-                  name: teamRoleKey
-                  required: true
-                  schema:
-                      type: string
+                -   in: path
+                    name: teamRoleKey
+                    required: true
+                    schema:
+                        type: string
             responses:
                 200:
                     content:
@@ -4860,13 +4860,13 @@ paths:
         put:
             operationId: putTeamRole
             parameters:
-                - $ref: "#/components/parameters/AgentName"
-                - $ref: "#/components/parameters/AgentUID"
-                - in: path
-                  name: teamRoleKey
-                  required: true
-                  schema:
-                      type: string
+                -   $ref: "#/components/parameters/AgentName"
+                -   $ref: "#/components/parameters/AgentUID"
+                -   in: path
+                    name: teamRoleKey
+                    required: true
+                    schema:
+                        type: string
             requestBody:
                 content:
                     application/json:
@@ -4892,19 +4892,19 @@ paths:
                 Retrieves the team role's audit history.
             operationId: getTeamRoleTeamRoleKeyAuditEntriesPage
             parameters:
-                - in: path
-                  name: teamRoleKey
-                  required: true
-                  schema:
-                      type: string
-                - in: query
-                  name: page
-                  schema:
-                      type: integer
-                - in: query
-                  name: pageSize
-                  schema:
-                      type: integer
+                -   in: path
+                    name: teamRoleKey
+                    required: true
+                    schema:
+                        type: string
+                -   in: query
+                    name: page
+                    schema:
+                        type: integer
+                -   in: query
+                    name: pageSize
+                    schema:
+                        type: integer
             responses:
                 200:
                     content:
@@ -4923,13 +4923,13 @@ paths:
         delete:
             operationId: deleteTeamRoleTeamRolePermission
             parameters:
-                - $ref: "#/components/parameters/AgentName"
-                - $ref: "#/components/parameters/AgentUID"
-                - in: path
-                  name: teamRoleKey
-                  required: true
-                  schema:
-                      type: string
+                -   $ref: "#/components/parameters/AgentName"
+                -   $ref: "#/components/parameters/AgentUID"
+                -   in: path
+                    name: teamRoleKey
+                    required: true
+                    schema:
+                        type: string
             requestBody:
                 content:
                     application/json:
@@ -4947,13 +4947,13 @@ paths:
         put:
             operationId: putTeamRoleTeamRolePermission
             parameters:
-                - $ref: "#/components/parameters/AgentName"
-                - $ref: "#/components/parameters/AgentUID"
-                - in: path
-                  name: teamRoleKey
-                  required: true
-                  schema:
-                      type: string
+                -   $ref: "#/components/parameters/AgentName"
+                -   $ref: "#/components/parameters/AgentUID"
+                -   in: path
+                    name: teamRoleKey
+                    required: true
+                    schema:
+                        type: string
             requestBody:
                 content:
                     application/json:
@@ -4975,16 +4975,16 @@ paths:
                 Retrieves the team role by name.
             operationId: getTeamRolesTeamRoleTypeTeamRoleName
             parameters:
-                - in: path
-                  name: teamRoleType
-                  required: true
-                  schema:
-                      type: string
-                - in: path
-                  name: teamRoleName
-                  required: true
-                  schema:
-                      type: string
+                -   in: path
+                    name: teamRoleType
+                    required: true
+                    schema:
+                        type: string
+                -   in: path
+                    name: teamRoleName
+                    required: true
+                    schema:
+                        type: string
             responses:
                 200:
                     content:
@@ -5001,26 +5001,26 @@ paths:
                 Retrieves the teams. Results can be paginated, filtered, searched, and sorted.
             operationId: getTeamsPage
             parameters:
-                - in: query
-                  name: filter
-                  schema:
-                      type: string
-                - in: query
-                  name: page
-                  schema:
-                      type: integer
-                - in: query
-                  name: pageSize
-                  schema:
-                      type: integer
-                - in: query
-                  name: search
-                  schema:
-                      type: string
-                - in: query
-                  name: sort
-                  schema:
-                      type: string
+                -   in: query
+                    name: filter
+                    schema:
+                        type: string
+                -   in: query
+                    name: page
+                    schema:
+                        type: integer
+                -   in: query
+                    name: pageSize
+                    schema:
+                        type: integer
+                -   in: query
+                    name: search
+                    schema:
+                        type: string
+                -   in: query
+                    name: sort
+                    schema:
+                        type: string
             responses:
                 200:
                     content:
@@ -5041,29 +5041,29 @@ paths:
                 Retrieves the team by the external link.
             operationId: getTeamByExternalLinkDomainEntityNameEntityPage
             parameters:
-                - in: path
-                  name: domain
-                  required: true
-                  schema:
-                      type: string
-                - in: path
-                  name: entityName
-                  required: true
-                  schema:
-                      type: string
-                - in: path
-                  name: entityId
-                  required: true
-                  schema:
-                      type: string
-                - in: query
-                  name: page
-                  schema:
-                      type: integer
-                - in: query
-                  name: pageSize
-                  schema:
-                      type: integer
+                -   in: path
+                    name: domain
+                    required: true
+                    schema:
+                        type: string
+                -   in: path
+                    name: entityName
+                    required: true
+                    schema:
+                        type: string
+                -   in: path
+                    name: entityId
+                    required: true
+                    schema:
+                        type: string
+                -   in: query
+                    name: page
+                    schema:
+                        type: integer
+                -   in: query
+                    name: pageSize
+                    schema:
+                        type: integer
             responses:
                 200:
                     content:
@@ -5082,13 +5082,13 @@ paths:
         delete:
             operationId: deleteTeam
             parameters:
-                - $ref: "#/components/parameters/AgentName"
-                - $ref: "#/components/parameters/AgentUID"
-                - in: path
-                  name: teamKey
-                  required: true
-                  schema:
-                      type: string
+                -   $ref: "#/components/parameters/AgentName"
+                -   $ref: "#/components/parameters/AgentUID"
+                -   in: path
+                    name: teamKey
+                    required: true
+                    schema:
+                        type: string
             responses:
                 204:
                     content:
@@ -5100,11 +5100,11 @@ paths:
                 Retrieves the team.
             operationId: getTeam
             parameters:
-                - in: path
-                  name: teamKey
-                  required: true
-                  schema:
-                      type: string
+                -   in: path
+                    name: teamKey
+                    required: true
+                    schema:
+                        type: string
             responses:
                 200:
                     content:
@@ -5118,13 +5118,13 @@ paths:
         put:
             operationId: putTeam
             parameters:
-                - $ref: "#/components/parameters/AgentName"
-                - $ref: "#/components/parameters/AgentUID"
-                - in: path
-                  name: teamKey
-                  required: true
-                  schema:
-                      type: string
+                -   $ref: "#/components/parameters/AgentName"
+                -   $ref: "#/components/parameters/AgentUID"
+                -   in: path
+                    name: teamKey
+                    required: true
+                    schema:
+                        type: string
             requestBody:
                 content:
                     application/json:
@@ -5150,19 +5150,19 @@ paths:
                 Retrieves the team's assigned accounts.
             operationId: getTeamTeamKeyAssignedAccountsPage
             parameters:
-                - in: path
-                  name: teamKey
-                  required: true
-                  schema:
-                      type: string
-                - in: query
-                  name: page
-                  schema:
-                      type: integer
-                - in: query
-                  name: pageSize
-                  schema:
-                      type: integer
+                -   in: path
+                    name: teamKey
+                    required: true
+                    schema:
+                        type: string
+                -   in: query
+                    name: page
+                    schema:
+                        type: integer
+                -   in: query
+                    name: pageSize
+                    schema:
+                        type: integer
             responses:
                 200:
                     content:
@@ -5183,19 +5183,19 @@ paths:
                 Retrieves the team's audit history.
             operationId: getTeamTeamKeyAuditEntriesPage
             parameters:
-                - in: path
-                  name: teamKey
-                  required: true
-                  schema:
-                      type: string
-                - in: query
-                  name: page
-                  schema:
-                      type: integer
-                - in: query
-                  name: pageSize
-                  schema:
-                      type: integer
+                -   in: path
+                    name: teamKey
+                    required: true
+                    schema:
+                        type: string
+                -   in: query
+                    name: page
+                    schema:
+                        type: integer
+                -   in: query
+                    name: pageSize
+                    schema:
+                        type: integer
             responses:
                 200:
                     content:
@@ -5216,19 +5216,19 @@ paths:
                 Retrieves the team's contacts.
             operationId: getTeamTeamKeyContactsPage
             parameters:
-                - in: path
-                  name: teamKey
-                  required: true
-                  schema:
-                      type: string
-                - in: query
-                  name: page
-                  schema:
-                      type: integer
-                - in: query
-                  name: pageSize
-                  schema:
-                      type: integer
+                -   in: path
+                    name: teamKey
+                    required: true
+                    schema:
+                        type: string
+                -   in: query
+                    name: page
+                    schema:
+                        type: integer
+                -   in: query
+                    name: pageSize
+                    schema:
+                        type: integer
             responses:
                 200:
                     content:
@@ -5249,20 +5249,20 @@ paths:
                 Unassigns contacts from the team.
             operationId: deleteTeamContactByEmailAddres
             parameters:
-                - $ref: "#/components/parameters/AgentName"
-                - $ref: "#/components/parameters/AgentUID"
-                - in: path
-                  name: teamKey
-                  required: true
-                  schema:
-                      type: string
-                - in: query
-                  name: emailAddresses
-                  required: true
-                  schema:
-                      items:
-                          type: string
-                      type: array
+                -   $ref: "#/components/parameters/AgentName"
+                -   $ref: "#/components/parameters/AgentUID"
+                -   in: path
+                    name: teamKey
+                    required: true
+                    schema:
+                        type: string
+                -   in: query
+                    name: emailAddresses
+                    required: true
+                    schema:
+                        items:
+                            type: string
+                        type: array
             responses:
                 204:
                     content:
@@ -5274,20 +5274,20 @@ paths:
                 Assigns contacts to the team.
             operationId: putTeamContactByEmailAddres
             parameters:
-                - $ref: "#/components/parameters/AgentName"
-                - $ref: "#/components/parameters/AgentUID"
-                - in: path
-                  name: teamKey
-                  required: true
-                  schema:
-                      type: string
-                - in: query
-                  name: emailAddresses
-                  required: true
-                  schema:
-                      items:
-                          type: string
-                      type: array
+                -   $ref: "#/components/parameters/AgentName"
+                -   $ref: "#/components/parameters/AgentUID"
+                -   in: path
+                    name: teamKey
+                    required: true
+                    schema:
+                        type: string
+                -   in: query
+                    name: emailAddresses
+                    required: true
+                    schema:
+                        items:
+                            type: string
+                        type: array
             responses:
                 204:
                     content:
@@ -5300,25 +5300,25 @@ paths:
                 Unassigns roles from the contact for the team.
             operationId: deleteTeamContactByEmailAddresEmailAddressRole
             parameters:
-                - $ref: "#/components/parameters/AgentName"
-                - $ref: "#/components/parameters/AgentUID"
-                - in: path
-                  name: teamKey
-                  required: true
-                  schema:
-                      type: string
-                - in: path
-                  name: emailAddress
-                  required: true
-                  schema:
-                      type: string
-                - in: query
-                  name: contactRoleKeys
-                  required: true
-                  schema:
-                      items:
-                          type: string
-                      type: array
+                -   $ref: "#/components/parameters/AgentName"
+                -   $ref: "#/components/parameters/AgentUID"
+                -   in: path
+                    name: teamKey
+                    required: true
+                    schema:
+                        type: string
+                -   in: path
+                    name: emailAddress
+                    required: true
+                    schema:
+                        type: string
+                -   in: query
+                    name: contactRoleKeys
+                    required: true
+                    schema:
+                        items:
+                            type: string
+                        type: array
             responses:
                 204:
                     content:
@@ -5330,24 +5330,24 @@ paths:
                 Retrieves the team's contact's contact roles.
             operationId: getTeamTeamKeyContactByEmailAddresEmailAddressRolesPage
             parameters:
-                - in: path
-                  name: teamKey
-                  required: true
-                  schema:
-                      type: string
-                - in: path
-                  name: emailAddress
-                  required: true
-                  schema:
-                      type: string
-                - in: query
-                  name: page
-                  schema:
-                      type: integer
-                - in: query
-                  name: pageSize
-                  schema:
-                      type: integer
+                -   in: path
+                    name: teamKey
+                    required: true
+                    schema:
+                        type: string
+                -   in: path
+                    name: emailAddress
+                    required: true
+                    schema:
+                        type: string
+                -   in: query
+                    name: page
+                    schema:
+                        type: integer
+                -   in: query
+                    name: pageSize
+                    schema:
+                        type: integer
             responses:
                 200:
                     content:
@@ -5367,25 +5367,25 @@ paths:
                 Assigns roles to the contact for the team.
             operationId: putTeamContactByEmailAddresEmailAddressRole
             parameters:
-                - $ref: "#/components/parameters/AgentName"
-                - $ref: "#/components/parameters/AgentUID"
-                - in: path
-                  name: teamKey
-                  required: true
-                  schema:
-                      type: string
-                - in: path
-                  name: emailAddress
-                  required: true
-                  schema:
-                      type: string
-                - in: query
-                  name: contactRoleKeys
-                  required: true
-                  schema:
-                      items:
-                          type: string
-                      type: array
+                -   $ref: "#/components/parameters/AgentName"
+                -   $ref: "#/components/parameters/AgentUID"
+                -   in: path
+                    name: teamKey
+                    required: true
+                    schema:
+                        type: string
+                -   in: path
+                    name: emailAddress
+                    required: true
+                    schema:
+                        type: string
+                -   in: query
+                    name: contactRoleKeys
+                    required: true
+                    schema:
+                        items:
+                            type: string
+                        type: array
             responses:
                 204:
                     content:
@@ -5398,20 +5398,20 @@ paths:
                 Unassigns contacts from the team.
             operationId: deleteTeamContactByUuid
             parameters:
-                - $ref: "#/components/parameters/AgentName"
-                - $ref: "#/components/parameters/AgentUID"
-                - in: path
-                  name: teamKey
-                  required: true
-                  schema:
-                      type: string
-                - in: query
-                  name: contactUuids
-                  required: true
-                  schema:
-                      items:
-                          type: string
-                      type: array
+                -   $ref: "#/components/parameters/AgentName"
+                -   $ref: "#/components/parameters/AgentUID"
+                -   in: path
+                    name: teamKey
+                    required: true
+                    schema:
+                        type: string
+                -   in: query
+                    name: contactUuids
+                    required: true
+                    schema:
+                        items:
+                            type: string
+                        type: array
             responses:
                 204:
                     content:
@@ -5423,20 +5423,20 @@ paths:
                 Assigns contacts to the team.
             operationId: putTeamContactByUuid
             parameters:
-                - $ref: "#/components/parameters/AgentName"
-                - $ref: "#/components/parameters/AgentUID"
-                - in: path
-                  name: teamKey
-                  required: true
-                  schema:
-                      type: string
-                - in: query
-                  name: contactUuids
-                  required: true
-                  schema:
-                      items:
-                          type: string
-                      type: array
+                -   $ref: "#/components/parameters/AgentName"
+                -   $ref: "#/components/parameters/AgentUID"
+                -   in: path
+                    name: teamKey
+                    required: true
+                    schema:
+                        type: string
+                -   in: query
+                    name: contactUuids
+                    required: true
+                    schema:
+                        items:
+                            type: string
+                        type: array
             responses:
                 204:
                     content:
@@ -5449,25 +5449,25 @@ paths:
                 Unassigns roles from the contact for the team.
             operationId: deleteTeamContactByUuidContactUuidRole
             parameters:
-                - $ref: "#/components/parameters/AgentName"
-                - $ref: "#/components/parameters/AgentUID"
-                - in: path
-                  name: teamKey
-                  required: true
-                  schema:
-                      type: string
-                - in: path
-                  name: contactUuid
-                  required: true
-                  schema:
-                      type: string
-                - in: query
-                  name: contactRoleKeys
-                  required: true
-                  schema:
-                      items:
-                          type: string
-                      type: array
+                -   $ref: "#/components/parameters/AgentName"
+                -   $ref: "#/components/parameters/AgentUID"
+                -   in: path
+                    name: teamKey
+                    required: true
+                    schema:
+                        type: string
+                -   in: path
+                    name: contactUuid
+                    required: true
+                    schema:
+                        type: string
+                -   in: query
+                    name: contactRoleKeys
+                    required: true
+                    schema:
+                        items:
+                            type: string
+                        type: array
             responses:
                 204:
                     content:
@@ -5479,24 +5479,24 @@ paths:
                 Retrieves the team's contact's contact roles.
             operationId: getTeamTeamKeyContactByUuidContactUuidRolesPage
             parameters:
-                - in: path
-                  name: teamKey
-                  required: true
-                  schema:
-                      type: string
-                - in: path
-                  name: contactUuid
-                  required: true
-                  schema:
-                      type: string
-                - in: query
-                  name: page
-                  schema:
-                      type: integer
-                - in: query
-                  name: pageSize
-                  schema:
-                      type: integer
+                -   in: path
+                    name: teamKey
+                    required: true
+                    schema:
+                        type: string
+                -   in: path
+                    name: contactUuid
+                    required: true
+                    schema:
+                        type: string
+                -   in: query
+                    name: page
+                    schema:
+                        type: integer
+                -   in: query
+                    name: pageSize
+                    schema:
+                        type: integer
             responses:
                 200:
                     content:
@@ -5516,25 +5516,25 @@ paths:
                 Assigns roles to the contact for the team.
             operationId: putTeamContactByUuidContactUuidRole
             parameters:
-                - $ref: "#/components/parameters/AgentName"
-                - $ref: "#/components/parameters/AgentUID"
-                - in: path
-                  name: teamKey
-                  required: true
-                  schema:
-                      type: string
-                - in: path
-                  name: contactUuid
-                  required: true
-                  schema:
-                      type: string
-                - in: query
-                  name: contactRoleKeys
-                  required: true
-                  schema:
-                      items:
-                          type: string
-                      type: array
+                -   $ref: "#/components/parameters/AgentName"
+                -   $ref: "#/components/parameters/AgentUID"
+                -   in: path
+                    name: teamKey
+                    required: true
+                    schema:
+                        type: string
+                -   in: path
+                    name: contactUuid
+                    required: true
+                    schema:
+                        type: string
+                -   in: query
+                    name: contactRoleKeys
+                    required: true
+                    schema:
+                        items:
+                            type: string
+                        type: array
             responses:
                 204:
                     content:
@@ -5547,19 +5547,19 @@ paths:
                 Retrieves the team's external links.
             operationId: getTeamTeamKeyExternalLinksPage
             parameters:
-                - in: path
-                  name: teamKey
-                  required: true
-                  schema:
-                      type: string
-                - in: query
-                  name: page
-                  schema:
-                      type: integer
-                - in: query
-                  name: pageSize
-                  schema:
-                      type: integer
+                -   in: path
+                    name: teamKey
+                    required: true
+                    schema:
+                        type: string
+                -   in: query
+                    name: page
+                    schema:
+                        type: integer
+                -   in: query
+                    name: pageSize
+                    schema:
+                        type: integer
             responses:
                 200:
                     content:
@@ -5579,13 +5579,13 @@ paths:
                 Adds an external link to the team.
             operationId: postTeamTeamKeyExternalLink
             parameters:
-                - $ref: "#/components/parameters/AgentName"
-                - $ref: "#/components/parameters/AgentUID"
-                - in: path
-                  name: teamKey
-                  required: true
-                  schema:
-                      type: string
+                -   $ref: "#/components/parameters/AgentName"
+                -   $ref: "#/components/parameters/AgentUID"
+                -   in: path
+                    name: teamKey
+                    required: true
+                    schema:
+                        type: string
             requestBody:
                 content:
                     application/json:
@@ -5609,13 +5609,13 @@ paths:
         delete:
             operationId: deleteTeamTeamPermission
             parameters:
-                - $ref: "#/components/parameters/AgentName"
-                - $ref: "#/components/parameters/AgentUID"
-                - in: path
-                  name: teamKey
-                  required: true
-                  schema:
-                      type: string
+                -   $ref: "#/components/parameters/AgentName"
+                -   $ref: "#/components/parameters/AgentUID"
+                -   in: path
+                    name: teamKey
+                    required: true
+                    schema:
+                        type: string
             requestBody:
                 content:
                     application/json:
@@ -5633,13 +5633,13 @@ paths:
         put:
             operationId: putTeamTeamPermission
             parameters:
-                - $ref: "#/components/parameters/AgentName"
-                - $ref: "#/components/parameters/AgentUID"
-                - in: path
-                  name: teamKey
-                  required: true
-                  schema:
-                      type: string
+                -   $ref: "#/components/parameters/AgentName"
+                -   $ref: "#/components/parameters/AgentUID"
+                -   in: path
+                    name: teamKey
+                    required: true
+                    schema:
+                        type: string
             requestBody:
                 content:
                     application/json:

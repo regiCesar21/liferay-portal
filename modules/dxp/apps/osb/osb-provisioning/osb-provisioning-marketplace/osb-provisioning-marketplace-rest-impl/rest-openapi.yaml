@@ -137,7 +137,7 @@ components:
                     readOnly: true
                     type: string
             required:
-                - productPurchaseKey
+                -   productPurchaseKey
             type: object
 info:
     description:
@@ -156,26 +156,26 @@ paths:
                 Retrieves the app license keys. Results can be paginated, filtered, searched, and sorted.
             operationId: getAppLicenseKeysPage
             parameters:
-                - in: query
-                  name: filter
-                  schema:
-                      type: string
-                - in: query
-                  name: page
-                  schema:
-                      type: integer
-                - in: query
-                  name: pageSize
-                  schema:
-                      type: integer
-                - in: query
-                  name: search
-                  schema:
-                      type: string
-                - in: query
-                  name: sort
-                  schema:
-                      type: string
+                -   in: query
+                    name: filter
+                    schema:
+                        type: string
+                -   in: query
+                    name: page
+                    schema:
+                        type: integer
+                -   in: query
+                    name: pageSize
+                    schema:
+                        type: integer
+                -   in: query
+                    name: search
+                    schema:
+                        type: string
+                -   in: query
+                    name: sort
+                    schema:
+                        type: string
             responses:
                 200:
                     content:
@@ -195,8 +195,8 @@ paths:
                 Generates an app license key.
             operationId: postAppLicenseKey
             parameters:
-                - $ref: "#/components/parameters/AgentName"
-                - $ref: "#/components/parameters/AgentUID"
+                -   $ref: "#/components/parameters/AgentName"
+                -   $ref: "#/components/parameters/AgentUID"
             requestBody:
                 content:
                     application/json:
@@ -222,16 +222,16 @@ paths:
                 Activates app license keys.
             operationId: putAppLicenseKeyActivate
             parameters:
-                - $ref: "#/components/parameters/AgentName"
-                - $ref: "#/components/parameters/AgentUID"
-                - in: query
-                  name: appLicenseKeyIds
-                  required: true
-                  schema:
-                      items:
-                          format: int64
-                          type: integer
-                      type: array
+                -   $ref: "#/components/parameters/AgentName"
+                -   $ref: "#/components/parameters/AgentUID"
+                -   in: query
+                    name: appLicenseKeyIds
+                    required: true
+                    schema:
+                        items:
+                            format: int64
+                            type: integer
+                        type: array
             responses:
                 204:
                     content:
@@ -244,16 +244,16 @@ paths:
                 Deactivates app license keys.
             operationId: putAppLicenseKeyDeactivate
             parameters:
-                - $ref: "#/components/parameters/AgentName"
-                - $ref: "#/components/parameters/AgentUID"
-                - in: query
-                  name: appLicenseKeyIds
-                  required: true
-                  schema:
-                      items:
-                          format: int64
-                          type: integer
-                      type: array
+                -   $ref: "#/components/parameters/AgentName"
+                -   $ref: "#/components/parameters/AgentUID"
+                -   in: query
+                    name: appLicenseKeyIds
+                    required: true
+                    schema:
+                        items:
+                            format: int64
+                            type: integer
+                        type: array
             responses:
                 204:
                     content:
@@ -266,12 +266,12 @@ paths:
                 Retrieves the app license key.
             operationId: getAppLicenseKey
             parameters:
-                - in: path
-                  name: appLicenseKeyId
-                  required: true
-                  schema:
-                      format: int64
-                      type: integer
+                -   in: path
+                    name: appLicenseKeyId
+                    required: true
+                    schema:
+                        format: int64
+                        type: integer
             responses:
                 200:
                     content:
@@ -288,12 +288,12 @@ paths:
                 Downloads an XML of the app license key.
             operationId: getAppLicenseKeyDownload
             parameters:
-                - in: path
-                  name: appLicenseKeyId
-                  required: true
-                  schema:
-                      format: int64
-                      type: integer
+                -   in: path
+                    name: appLicenseKeyId
+                    required: true
+                    schema:
+                        format: int64
+                        type: integer
             responses:
                 200:
                     content:

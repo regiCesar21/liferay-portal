@@ -80,7 +80,7 @@ components:
                     type: integer
                 structure:
                     allOf:
-                        - $ref: "#/components/schemas/FormStructure"
+                        -   $ref: "#/components/schemas/FormStructure"
                     readOnly: true
                 structureId:
                     format: int64
@@ -299,7 +299,7 @@ components:
                 properties:
                     formDocument:
                         allOf:
-                            - $ref: "#/components/schemas/FormDocument"
+                            -   $ref: "#/components/schemas/FormDocument"
                         readOnly: true
                     formDocumentId:
                         format: int64
@@ -444,12 +444,12 @@ paths:
         delete:
             operationId: deleteFormDocument
             parameters:
-                - in: path
-                  name: formDocumentId
-                  required: true
-                  schema:
-                      format: int64
-                      type: integer
+                -   in: path
+                    name: formDocumentId
+                    required: true
+                    schema:
+                        format: int64
+                        type: integer
             responses:
                 204:
                     content:
@@ -459,12 +459,12 @@ paths:
         get:
             operationId: getFormDocument
             parameters:
-                - in: path
-                  name: formDocumentId
-                  required: true
-                  schema:
-                      format: int64
-                      type: integer
+                -   in: path
+                    name: formDocumentId
+                    required: true
+                    schema:
+                        format: int64
+                        type: integer
             responses:
                 200:
                     content:
@@ -479,12 +479,12 @@ paths:
         get:
             operationId: getFormRecord
             parameters:
-                - in: path
-                  name: formRecordId
-                  required: true
-                  schema:
-                      format: int64
-                      type: integer
+                -   in: path
+                    name: formRecordId
+                    required: true
+                    schema:
+                        format: int64
+                        type: integer
             responses:
                 200:
                     content:
@@ -498,16 +498,16 @@ paths:
         put:
             operationId: putFormRecord
             parameters:
-                - in: path
-                  name: formRecordId
-                  required: true
-                  schema:
-                      format: int64
-                      type: integer
-                - in: header
-                  name: Accept-Language
-                  schema:
-                      type: string
+                -   in: path
+                    name: formRecordId
+                    required: true
+                    schema:
+                        format: int64
+                        type: integer
+                -   in: header
+                    name: Accept-Language
+                    schema:
+                        type: string
             requestBody:
                 content:
                     application/json:
@@ -530,12 +530,12 @@ paths:
         get:
             operationId: getFormStructure
             parameters:
-                - in: path
-                  name: formStructureId
-                  required: true
-                  schema:
-                      format: int64
-                      type: integer
+                -   in: path
+                    name: formStructureId
+                    required: true
+                    schema:
+                        format: int64
+                        type: integer
             responses:
                 200:
                     content:
@@ -550,12 +550,12 @@ paths:
         get:
             operationId: getForm
             parameters:
-                - in: path
-                  name: formId
-                  required: true
-                  schema:
-                      format: int64
-                      type: integer
+                -   in: path
+                    name: formId
+                    required: true
+                    schema:
+                        format: int64
+                        type: integer
             responses:
                 200:
                     content:
@@ -570,16 +570,16 @@ paths:
         post:
             operationId: postFormEvaluateContext
             parameters:
-                - in: path
-                  name: formId
-                  required: true
-                  schema:
-                      format: int64
-                      type: integer
-                - in: header
-                  name: Accept-Language
-                  schema:
-                      type: string
+                -   in: path
+                    name: formId
+                    required: true
+                    schema:
+                        format: int64
+                        type: integer
+                -   in: header
+                    name: Accept-Language
+                    schema:
+                        type: string
             requestBody:
                 content:
                     application/json:
@@ -602,12 +602,12 @@ paths:
         post:
             operationId: postFormFormDocument
             parameters:
-                - in: path
-                  name: formId
-                  required: true
-                  schema:
-                      format: int64
-                      type: integer
+                -   in: path
+                    name: formId
+                    required: true
+                    schema:
+                        format: int64
+                        type: integer
             requestBody:
                 content:
                     multipart/form-data:
@@ -633,20 +633,20 @@ paths:
         get:
             operationId: getFormFormRecordsPage
             parameters:
-                - in: path
-                  name: formId
-                  required: true
-                  schema:
-                      format: int64
-                      type: integer
-                - in: query
-                  name: page
-                  schema:
-                      type: integer
-                - in: query
-                  name: pageSize
-                  schema:
-                      type: integer
+                -   in: path
+                    name: formId
+                    required: true
+                    schema:
+                        format: int64
+                        type: integer
+                -   in: query
+                    name: page
+                    schema:
+                        type: integer
+                -   in: query
+                    name: pageSize
+                    schema:
+                        type: integer
             responses:
                 200:
                     content:
@@ -664,16 +664,16 @@ paths:
         post:
             operationId: postFormFormRecord
             parameters:
-                - in: path
-                  name: formId
-                  required: true
-                  schema:
-                      format: int64
-                      type: integer
-                - in: header
-                  name: Accept-Language
-                  schema:
-                      type: string
+                -   in: path
+                    name: formId
+                    required: true
+                    schema:
+                        format: int64
+                        type: integer
+                -   in: header
+                    name: Accept-Language
+                    schema:
+                        type: string
             requestBody:
                 content:
                     application/json:
@@ -696,12 +696,12 @@ paths:
         get:
             operationId: getFormFormRecordByLatestDraft
             parameters:
-                - in: path
-                  name: formId
-                  required: true
-                  schema:
-                      format: int64
-                      type: integer
+                -   in: path
+                    name: formId
+                    required: true
+                    schema:
+                        format: int64
+                        type: integer
             responses:
                 200:
                     content:
@@ -716,20 +716,20 @@ paths:
         get:
             operationId: getSiteFormStructuresPage
             parameters:
-                - in: path
-                  name: siteId
-                  required: true
-                  schema:
-                      format: int64
-                      type: integer
-                - in: query
-                  name: page
-                  schema:
-                      type: integer
-                - in: query
-                  name: pageSize
-                  schema:
-                      type: integer
+                -   in: path
+                    name: siteId
+                    required: true
+                    schema:
+                        format: int64
+                        type: integer
+                -   in: query
+                    name: page
+                    schema:
+                        type: integer
+                -   in: query
+                    name: pageSize
+                    schema:
+                        type: integer
             responses:
                 200:
                     content:
@@ -748,20 +748,20 @@ paths:
         get:
             operationId: getSiteFormsPage
             parameters:
-                - in: path
-                  name: siteId
-                  required: true
-                  schema:
-                      format: int64
-                      type: integer
-                - in: query
-                  name: page
-                  schema:
-                      type: integer
-                - in: query
-                  name: pageSize
-                  schema:
-                      type: integer
+                -   in: path
+                    name: siteId
+                    required: true
+                    schema:
+                        format: int64
+                        type: integer
+                -   in: query
+                    name: page
+                    schema:
+                        type: integer
+                -   in: query
+                    name: pageSize
+                    schema:
+                        type: integer
             responses:
                 200:
                     content:
